@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.3.0\n"
-"POT-Creation-Date: 2001-11-12 18:33+0100\n"
+"POT-Creation-Date: 2001-11-23 01:09+0100\n"
 "PO-Revision-Date: 2001-11-13 14:41+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -16,9 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:283
-#: plug-ins/FractalExplorer/Dialogs.c:1373 plug-ins/gdyntext/gdyntext_ui.c:600
-#: plug-ins/gfig/gfig.c:3383 plug-ins/imagemap/imap_about.c:36
-#: plug-ins/webbrowser/webbrowser.c:279
+#: plug-ins/FractalExplorer/Dialogs.c:1373 plug-ins/gfig/gfig.c:3383
+#: plug-ins/imagemap/imap_about.c:36 plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
 msgstr "關於"
 
@@ -247,7 +246,6 @@ msgstr "顏色"
 
 #. Number of Colors frame
 #: plug-ins/FractalExplorer/Dialogs.c:626 plug-ins/common/borderaverage.c:413
-#: plug-ins/gap/gap_range_ops.c:346
 msgid "Number of Colors"
 msgstr "顏色數目"
 
@@ -349,7 +347,7 @@ msgstr "餘弦"
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2718 plug-ins/common/ps.c:2731
 #: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1582
-#: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:299
+#: plug-ins/fits/fits.c:1032
 msgid "None"
 msgstr "無"
 
@@ -715,14 +713,13 @@ msgid "Position"
 msgstr "位置"
 
 #. X
-#. table col, row
 #: plug-ins/Lighting/lighting_ui.c:622 plug-ins/Lighting/lighting_ui.c:674
 #: plug-ins/MapObject/mapobject_ui.c:766 plug-ins/MapObject/mapobject_ui.c:818
 #: plug-ins/MapObject/mapobject_ui.c:1059
 #: plug-ins/MapObject/mapobject_ui.c:1103 plug-ins/common/flarefx.c:788
 #: plug-ins/common/nova.c:631 plug-ins/common/papertile.c:285
-#: plug-ins/flame/flame.c:1191 plug-ins/gap/gap_mov_dialog.c:1825
-#: plug-ins/gflare/gflare.c:2950 plug-ins/ifscompose/ifscompose.c:532
+#: plug-ins/flame/flame.c:1191 plug-ins/gflare/gflare.c:2950
+#: plug-ins/ifscompose/ifscompose.c:532
 msgid "X:"
 msgstr "X："
 
@@ -731,7 +728,6 @@ msgid "Light source X position in XYZ space"
 msgstr "三維空間中光源的 X 座標"
 
 #. Y
-#. table col, row
 #: plug-ins/Lighting/lighting_ui.c:635 plug-ins/Lighting/lighting_ui.c:686
 #: plug-ins/MapObject/mapobject_ui.c:779 plug-ins/MapObject/mapobject_ui.c:830
 #: plug-ins/MapObject/mapobject_ui.c:1070
@@ -739,8 +735,7 @@ msgstr "三維空間中光源的 X 座標"
 #: plug-ins/MapObject/mapobject_ui.c:1208 plug-ins/common/flarefx.c:806
 #: plug-ins/common/nova.c:649 plug-ins/common/papertile.c:294
 #: plug-ins/common/xbm.c:1248 plug-ins/flame/flame.c:1204
-#: plug-ins/gap/gap_mov_dialog.c:1843 plug-ins/gflare/gflare.c:2954
-#: plug-ins/ifscompose/ifscompose.c:546
+#: plug-ins/gflare/gflare.c:2954 plug-ins/ifscompose/ifscompose.c:546
 msgid "Y:"
 msgstr "Y："
 
@@ -907,8 +902,7 @@ msgstr ""
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1080 plug-ins/MapObject/mapobject_ui.c:1333
 #: plug-ins/common/lic.c:1037 plug-ins/common/ripple.c:604
-#: plug-ins/gap/gap_mov_dialog.c:860 plug-ins/gfig/gfig.c:4019
-#: plug-ins/mosaic/mosaic.c:597
+#: plug-ins/gfig/gfig.c:4019 plug-ins/mosaic/mosaic.c:597
 msgid "Options"
 msgstr "選項"
 
@@ -933,7 +927,6 @@ msgid "Lighting Effects"
 msgstr "光線效果"
 
 #: plug-ins/Lighting/lighting_ui.c:1195 plug-ins/common/grid.c:705
-#: plug-ins/gap/gap_mov_dialog.c:495
 msgid "Update Preview"
 msgstr "更新預覽"
 
@@ -1025,7 +1018,6 @@ msgstr "三維空間中物體的 Z 方向"
 
 #. Rotation
 #: plug-ins/MapObject/mapobject_ui.c:1091 plug-ins/common/ps.c:2896
-#: plug-ins/gdyntext/gdyntext_ui.c:510
 msgid "Rotation"
 msgstr "旋轉"
 
@@ -1655,7 +1647,7 @@ msgstr ""
 #: plug-ins/common/CML_explorer.c:299 plug-ins/common/CML_explorer.c:1282
 #: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1058
 #: plug-ins/fp/fp_gtk.c:283 plug-ins/fp/fp_gtk.c:415
-#: plug-ins/gap/gap_mov_dialog.c:272 plug-ins/gimpressionist/orientation.c:188
+#: plug-ins/gimpressionist/orientation.c:188
 #: plug-ins/gimpressionist/size.c:186
 msgid "Hue"
 msgstr "色相"
@@ -1663,14 +1655,13 @@ msgstr "色相"
 #: plug-ins/common/CML_explorer.c:300 plug-ins/common/CML_explorer.c:1287
 #: plug-ins/common/decompose.c:123 plug-ins/common/lic.c:1059
 #: plug-ins/fp/fp_gtk.c:287 plug-ins/fp/fp_gtk.c:419 plug-ins/fp/fp_gtk.c:483
-#: plug-ins/gap/gap_mov_dialog.c:273 plug-ins/rcm/rcm_dialog.c:516
+#: plug-ins/rcm/rcm_dialog.c:516
 msgid "Saturation"
 msgstr "飽和度"
 
 #: plug-ins/common/CML_explorer.c:301 plug-ins/common/CML_explorer.c:1292
 #: plug-ins/common/decompose.c:124 plug-ins/fp/fp_gtk.c:291
-#: plug-ins/fp/fp_gtk.c:423 plug-ins/gap/gap_mov_dialog.c:275
-#: plug-ins/gimpressionist/orientation.c:131
+#: plug-ins/fp/fp_gtk.c:423 plug-ins/gimpressionist/orientation.c:131
 #: plug-ins/gimpressionist/size.c:130
 msgid "Value"
 msgstr "亮度"
@@ -2012,7 +2003,7 @@ msgid "Left Edge"
 msgstr ""
 
 #: plug-ins/common/align_layers.c:473 plug-ins/common/align_layers.c:506
-#: plug-ins/gap/gap_mov_dialog.c:286 plug-ins/gflare/gflare.c:2938
+#: plug-ins/gflare/gflare.c:2938
 msgid "Center"
 msgstr ""
 
@@ -2326,11 +2317,11 @@ msgstr ""
 msgid "Elevation:"
 msgstr ""
 
-#: plug-ins/common/bumpmap.c:1061 plug-ins/gap/resize.c:197
+#: plug-ins/common/bumpmap.c:1061
 msgid "X Offset:"
 msgstr "X 偏移量："
 
-#: plug-ins/common/bumpmap.c:1071 plug-ins/gap/resize.c:214
+#: plug-ins/common/bumpmap.c:1071
 msgid "Y Offset:"
 msgstr "Y 偏移量："
 
@@ -2392,9 +2383,8 @@ msgstr ""
 
 #: plug-ins/common/colorify.c:322 plug-ins/common/colortoalpha.c:432
 #: plug-ins/common/ps.c:2702 plug-ins/common/xpm.c:439
-#: plug-ins/gap/gap_mov_dialog.c:274 plug-ins/gimpressionist/color.c:51
-#: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:328
-#: plug-ins/print/gimp_main_window.c:758
+#: plug-ins/gimpressionist/color.c:51 plug-ins/gimpressionist/color.c:56
+#: plug-ins/imagemap/imap_menu.c:328 plug-ins/print/gimp_main_window.c:758
 msgid "Color"
 msgstr "色彩"
 
@@ -2419,9 +2409,6 @@ msgid "Color to Alpha"
 msgstr "色彩轉為透明"
 
 #: plug-ins/common/colortoalpha.c:443 plug-ins/common/mapcolor.c:645
-#: plug-ins/gap/gap_decode_mpeg_main.c:653 plug-ins/gap/gap_decode_xanim.c:224
-#: plug-ins/gap/gap_lib.c:2126 plug-ins/gap/gap_lib.c:2321
-#: plug-ins/gap/gap_range_ops.c:253 plug-ins/gap/gap_range_ops.c:602
 #: plug-ins/gfli/gfli.c:849 plug-ins/gfli/gfli.c:918
 msgid "From:"
 msgstr "從："
@@ -2473,7 +2460,6 @@ msgid "Saturation:"
 msgstr "飽和度："
 
 #: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:468
-#: plug-ins/gap/gap_arr_dialog.c:813
 msgid "Value:"
 msgstr "亮度："
 
@@ -2677,12 +2663,9 @@ msgstr ""
 msgid "Save Alpha Channel (RGBA/RGB)"
 msgstr "儲存透明色版（RGBA/RGB）"
 
-#. Opacity
-#. table col, row
 #: plug-ins/common/csource.c:760 plug-ins/common/sparkle.c:444
-#: plug-ins/common/tileit.c:588 plug-ins/gap/gap_mov_dialog.c:1895
-#: plug-ins/gflare/gflare.c:3678 plug-ins/gflare/gflare.c:3708
-#: plug-ins/gflare/gflare.c:3738
+#: plug-ins/common/tileit.c:588 plug-ins/gflare/gflare.c:3678
+#: plug-ins/gflare/gflare.c:3708 plug-ins/gflare/gflare.c:3738
 msgid "Opacity:"
 msgstr "不透明度："
 
@@ -2739,10 +2722,9 @@ msgstr ""
 msgid "Curve Bend"
 msgstr ""
 
-#. menu_item copy
-#: plug-ins/common/curve_bend.c:1363 plug-ins/gap/gap_navigator_dialog.c:2922
-#: plug-ins/gfig/gfig.c:2844 plug-ins/gfig/gfig.c:5291
-#: plug-ins/gflare/gflare.c:3175 plug-ins/imagemap/imap_cmd_copy.c:52
+#: plug-ins/common/curve_bend.c:1363 plug-ins/gfig/gfig.c:2844
+#: plug-ins/gfig/gfig.c:5291 plug-ins/gflare/gflare.c:3175
+#: plug-ins/imagemap/imap_cmd_copy.c:52
 #: plug-ins/imagemap/imap_cmd_copy_object.c:53
 #: plug-ins/imagemap/imap_menu.c:290 plug-ins/imagemap/imap_toolbar.c:136
 msgid "Copy"
@@ -3047,12 +3029,10 @@ msgstr "去條紋"
 msgid "Create Histogram"
 msgstr ""
 
-#. Widht Scale
-#. table col, row
 #: plug-ins/common/destripe.c:672 plug-ins/common/gtm.c:551
 #: plug-ins/common/ps.c:2659 plug-ins/common/ps.c:2836
 #: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:428
-#: plug-ins/gap/gap_mov_dialog.c:1861 plug-ins/imagemap/imap_rectangle.c:390
+#: plug-ins/imagemap/imap_rectangle.c:390
 #: plug-ins/print/gimp_main_window.c:638
 msgid "Width:"
 msgstr "寬度："
@@ -3199,13 +3179,10 @@ msgstr "雕刻..."
 msgid "Limit Line Width"
 msgstr "限制線寬"
 
-#. Height Scale
-#. table col, row
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1228
 #: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2668
 #: plug-ins/common/ps.c:2845 plug-ins/common/smooth_palette.c:439
-#: plug-ins/common/tile.c:432 plug-ins/gap/gap_mov_dialog.c:1878
-#: plug-ins/imagemap/imap_rectangle.c:396
+#: plug-ins/common/tile.c:432 plug-ins/imagemap/imap_rectangle.c:396
 #: plug-ins/print/gimp_main_window.c:652
 msgid "Height:"
 msgstr "高度："
@@ -3663,7 +3640,7 @@ msgstr ""
 msgid "GIF: error writing output file\n"
 msgstr "GIF：寫到輸出檔時發生錯誤\n"
 
-#: plug-ins/common/gif.c:2457
+#: plug-ins/common/gif.c:2455
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr ""
@@ -4118,8 +4095,8 @@ msgstr ""
 
 #. parameter settings
 #: plug-ins/common/iwarp.c:1127 plug-ins/common/sample_colorize.c:1384
-#: plug-ins/common/sinus.c:1837 plug-ins/gap/gap_mod_layer.c:222
-#: plug-ins/gfig/gfig.c:3976 plug-ins/gflare/gflare.c:3115
+#: plug-ins/common/sinus.c:1837 plug-ins/gfig/gfig.c:3976
+#: plug-ins/gflare/gflare.c:3115
 msgid "Settings"
 msgstr ""
 
@@ -4460,10 +4437,7 @@ msgstr "來源色彩範圍"
 msgid "Destination color range"
 msgstr "目的色彩範圍"
 
-#: plug-ins/common/mapcolor.c:645 plug-ins/gap/gap_decode_mpeg_main.c:663
-#: plug-ins/gap/gap_decode_xanim.c:234 plug-ins/gap/gap_lib.c:2134
-#: plug-ins/gap/gap_lib.c:2329 plug-ins/gap/gap_range_ops.c:260
-#: plug-ins/gap/gap_range_ops.c:610 plug-ins/gfli/gfli.c:858
+#: plug-ins/common/mapcolor.c:645 plug-ins/gfli/gfli.c:858
 #: plug-ins/gfli/gfli.c:927
 msgid "To:"
 msgstr "到："
@@ -4586,8 +4560,7 @@ msgid "Output LPI:"
 msgstr ""
 
 #. screen settings
-#: plug-ins/common/newsprint.c:1289 plug-ins/gap/gap_mov_dialog.c:265
-#: plug-ins/gflare/gflare.c:592
+#: plug-ins/common/newsprint.c:1289 plug-ins/gflare/gflare.c:592
 msgid "Screen"
 msgstr "螢幕"
 
@@ -4878,20 +4851,17 @@ msgstr "選單路徑："
 #. show the name
 #: plug-ins/common/plugindetails.c:353
 #: plug-ins/dbbrowser/dbbrowser_utils.c:351
-#: plug-ins/gap/gap_dbbrowser_utils.c:335
 msgid "Name:"
 msgstr "名稱："
 
 #. show the description
 #: plug-ins/common/plugindetails.c:375
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
-#: plug-ins/gap/gap_dbbrowser_utils.c:352
 msgid "Blurb:"
 msgstr "簡介："
 
 #: plug-ins/common/plugindetails.c:397
 #: plug-ins/dbbrowser/dbbrowser_utils.c:473
-#: plug-ins/gap/gap_dbbrowser_utils.c:469
 msgid "Help:"
 msgstr "說明："
 
@@ -4907,7 +4877,6 @@ msgstr "增效模組描述"
 #: plug-ins/common/plugindetails.c:1001
 #: plug-ins/dbbrowser/dbbrowser_utils.c:147
 #: plug-ins/dbbrowser/dbbrowser_utils.c:166
-#: plug-ins/gap/gap_dbbrowser_utils.c:185
 msgid "Search by Name"
 msgstr "依名稱搜尋"
 
@@ -4943,7 +4912,6 @@ msgstr "樹狀檢視模式"
 
 #: plug-ins/common/plugindetails.c:1100
 #: plug-ins/dbbrowser/dbbrowser_utils.c:220
-#: plug-ins/gap/gap_dbbrowser_utils.c:148
 msgid "Search:"
 msgstr "搜尋："
 
@@ -5392,8 +5360,7 @@ msgstr ""
 
 #. gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
 #: plug-ins/common/sample_colorize.c:1368 plug-ins/common/tileit.c:565
-#: plug-ins/gdyntext/gdyntext_ui.c:626 plug-ins/gimpressionist/presets.c:669
-#: plug-ins/gimpressionist/sizemap.c:492
+#: plug-ins/gimpressionist/presets.c:669 plug-ins/gimpressionist/sizemap.c:492
 #: plug-ins/imagemap/imap_default_dialog.c:128
 msgid "Apply"
 msgstr "套用"
@@ -6348,7 +6315,7 @@ msgstr "<Image>/濾鏡/扭曲/視像..."
 msgid "Video/RGB..."
 msgstr "視像/RGB..."
 
-#: plug-ins/common/video.c:2150 plug-ins/gap/gap_decode_mpeg_main.c:643
+#: plug-ins/common/video.c:2150
 msgid "Video"
 msgstr "視像"
 
@@ -6943,33 +6910,27 @@ msgstr "資料庫瀏覽器（正在初始化...）"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
 #: plug-ins/dbbrowser/dbbrowser_utils.c:168
-#: plug-ins/gap/gap_dbbrowser_utils.c:193
 msgid "Search by Blurb"
 msgstr "依簡介搜尋"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:372
-#: plug-ins/gap/gap_dbbrowser_utils.c:374
 msgid "In:"
 msgstr "輸入參數："
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:419
-#: plug-ins/gap/gap_dbbrowser_utils.c:420
 msgid "Out:"
 msgstr "輸出參數："
 
-#. show the author & the copyright
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/gap/gap_dbbrowser_utils.c:507 plug-ins/imagemap/imap_settings.c:94
+#: plug-ins/imagemap/imap_settings.c:94
 msgid "Author:"
 msgstr "作者："
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:511
-#: plug-ins/gap/gap_dbbrowser_utils.c:522
 msgid "Date:"
 msgstr "日期："
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:519
-#: plug-ins/gap/gap_dbbrowser_utils.c:537
 msgid "Copyright:"
 msgstr "版權："
 
@@ -7288,2591 +7249,6 @@ msgstr "拖曳時同時更新預覽圖"
 msgid "Preview Size"
 msgstr "預覽尺寸"
 
-#. Button  to invoke filebrowser
-#: plug-ins/gap/gap_arr_dialog.c:291
-msgid "File-Browser"
-msgstr "檔案瀏覽器"
-
-#. parameter settings
-#: plug-ins/gap/gap_arr_dialog.c:794
-msgid "Enter Values"
-msgstr ""
-
-#: plug-ins/gap/gap_arr_dialog.c:879
-msgid "Value: "
-msgstr ""
-
-#: plug-ins/gap/gap_arr_dialog.c:1041
-msgid "Press Button"
-msgstr ""
-
-#: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:4014
-#: plug-ins/imagemap/imap_cmd_select.c:52 plug-ins/imagemap/imap_tools.c:133
-msgid "Select"
-msgstr ""
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:76
-msgid "GAP Animated Filter apply"
-msgstr ""
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:97
-msgid "Animated Filter apply (init)"
-msgstr ""
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:176
-msgid "Gen Code by name"
-msgstr ""
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:676
-msgid "Animated Filter apply (by name - please wait)"
-msgstr ""
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:700
-msgid "Animated Filter apply (by blurb - please wait)"
-msgstr ""
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:708
-msgid "Animated Filter apply (please wait)"
-msgstr ""
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:755
-#: plug-ins/gap/gap_filter_foreach.c:163 plug-ins/gap/gap_mod_layer.c:287
-msgid "Animated Filter apply"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:102
-msgid "<Image>/Video/Split Video to Frames"
-msgstr "<Image>/視像/分解視像檔為畫格"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:103
-msgid "<Toolbox>/Xtns/Split Video to Frames"
-msgstr "<Toolbox>/視像/分解視像檔為畫格"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:179
-msgid "<Image>/Video/Split Video to Frames/MPEG1"
-msgstr "<Image>/視像/分解視像檔為畫格/MPEG1"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:191
-msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-msgstr "<Toolbox>/視像/分解視像檔為畫格/MPEG1"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:333 plug-ins/gap/gap_decode_xanim.c:337
-#: plug-ins/gap/gap_range_ops.c:1240
-msgid "Overwrite Frame"
-msgstr "覆寫畫格"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:335 plug-ins/gap/gap_decode_xanim.c:339
-#: plug-ins/gap/gap_range_ops.c:1242
-msgid "Overwrite All"
-msgstr "覆寫全部"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:347
-#: plug-ins/gap/gap_lib.c:1042 plug-ins/gap/gap_range_ops.c:1247
-msgid "GAP Question"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:344 plug-ins/gap/gap_decode_xanim.c:348
-msgid "File already exists"
-msgstr "檔案已經存在"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:438
-msgid "Decoding MPEG Movie..."
-msgstr "正在將 MPEG 視像檔解碼..."
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:644
-msgid ""
-"Name of the MPEG1 videofile to READ.\n"
-"Frames are extracted from the videofile\n"
-"and written to seperate diskfiles.\n"
-"Audiotracks in the videofile are ignored."
-msgstr ""
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:654 plug-ins/gap/gap_decode_xanim.c:225
-msgid "Framenumber of 1st frame to extract"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:664 plug-ins/gap/gap_decode_xanim.c:235
-msgid "Framenumber of last frame to extract"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:673 plug-ins/gap/gap_decode_xanim.c:244
-msgid "Framenames:"
-msgstr "畫格名稱："
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:674
-msgid ""
-"Basename for the AnimFrames to write on disk\n"
-"(framenumber and .xcf is added)"
-msgstr ""
-"要寫入磁碟的動畫畫格基本名稱\n"
-"（會自動加入畫格編號及 .xcf）"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
-#: plug-ins/imagemap/imap_toolbar.c:114
-msgid "Open"
-msgstr "開啟"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:682 plug-ins/gap/gap_decode_xanim.c:284
-msgid "Open the 1st one of the extracted frames"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:686
-msgid ""
-"\n"
-"WARNING: Do not attempt to split other files than MPEG1 videos.\n"
-"Before you proceed, you should save all open images."
-msgstr ""
-"\n"
-"警告：請勿嘗試分解任何不是 MPEG1 視像檔的檔案。\n"
-"進行之前，你應該先儲存任何仍開啟的圖像。"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:689
-msgid "Split MPEG1 Video to Frames"
-msgstr "將 MPEG1 視像檔分解為畫格"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:690 plug-ins/gap/gap_decode_xanim.c:298
-#: plug-ins/gap/gap_range_ops.c:1462
-msgid "Select Frame Range"
-msgstr "選擇畫格範圍"
-
-#: plug-ins/gap/gap_decode_xanim.c:114
-msgid "Conditions to run the xanim based video split"
-msgstr "執行以 xanim 為基礎的分解視像檔程序的先決條件"
-
-#: plug-ins/gap/gap_decode_xanim.c:122
-msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
-msgstr "１）你必須安裝 xanim 2.80.0 支援匯出檔案的版本"
-
-#: plug-ins/gap/gap_decode_xanim.c:126
-msgid "    must be installed somewhere in your PATH"
-msgstr "　　（即 loki 版本）而且 PATH 中有該執行檔路徑"
-
-#: plug-ins/gap/gap_decode_xanim.c:130
-msgid "    you can get xanim exporting edition at"
-msgstr "　　你可以在以下位置取得 xanim 支援匯出檔案的版本"
-
-#: plug-ins/gap/gap_decode_xanim.c:146
-msgid ""
-"2.) if your xanim exporting edition is not in your PATH or is not named xanim"
-msgstr "２）如果 xanim 支援匯出檔案的版本不在 PATH 或者檔名"
-
-#: plug-ins/gap/gap_decode_xanim.c:150
-msgid "    you have to set Environment variable GAP_XANIM_PROG "
-msgstr "　　不是稱為 xanim，就必須要設定環境變數 GAP_XANIM_PROG "
-
-#: plug-ins/gap/gap_decode_xanim.c:154
-msgid "    to your xanim exporting program and restart gimp"
-msgstr "　　為支援匯出檔案的 xanim 程式並重新啟動 gimp"
-
-#: plug-ins/gap/gap_decode_xanim.c:162
-msgid "An ERROR occured while trying to call xanim:"
-msgstr "當呼叫 xanim 時發生錯誤："
-
-#: plug-ins/gap/gap_decode_xanim.c:181
-msgid "XANIM Information"
-msgstr "XANIM 資訊"
-
-#: plug-ins/gap/gap_decode_xanim.c:214
-msgid "Video:"
-msgstr "視像："
-
-#: plug-ins/gap/gap_decode_xanim.c:215
-msgid ""
-"Name of a videofile to READ by xanim.\n"
-"Frames are extracted from the videofile\n"
-"and written to seprate diskfiles.\n"
-"xanim exporting edition is required."
-msgstr ""
-
-#: plug-ins/gap/gap_decode_xanim.c:245
-msgid ""
-"Basename for the AnimFrames to write on disk\n"
-"(framenumber and extension is added)"
-msgstr ""
-"要寫入磁碟的動畫畫格基本名稱\n"
-"（會自動加入畫格編號及延伸檔名）"
-
-#: plug-ins/gap/gap_decode_xanim.c:252
-msgid "Format"
-msgstr "格式"
-
-#: plug-ins/gap/gap_decode_xanim.c:253
-msgid ""
-"Fileformat for the extracted AnimFrames\n"
-"(xcf is extracted as ppm and converted to xcf)"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_xanim.c:260
-msgid "Extract Frames"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_xanim.c:261
-msgid "Enable extraction of Frames"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_xanim.c:265
-msgid "Extract Audio"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_xanim.c:266
-msgid ""
-"Enable extraction of audio to raw audiofile\n"
-"(frame range limits are ignored for audio)"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_xanim.c:271
-msgid "Jpeg Quality:"
-msgstr "Jpeg 品質："
-
-#: plug-ins/gap/gap_decode_xanim.c:272
-msgid ""
-"Quality for resulting Jpeg frames\n"
-"(is ignored when other formats are used)"
-msgstr ""
-"最後 Jpeg 畫格的品質\n"
-"（若使用其它格式會忽略此選項）"
-
-#: plug-ins/gap/gap_decode_xanim.c:288
-msgid "Run asynchronously"
-msgstr "非同步執行"
-
-#: plug-ins/gap/gap_decode_xanim.c:289
-msgid ""
-"Run xanim asynchronously and delete unwanted frames\n"
-"(out of the specified range) while xanim is still running"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_xanim.c:294
-msgid ""
-"\n"
-"Warning: xanim 2.80 has only limited MPEG support.\n"
-"Most of the frames (type P and B) will be skipped."
-msgstr ""
-"\n"
-"警告：xanim 2.80 只有有限度的 MPEG 支援。\n"
-"絕大部份的畫格（P 及 B 類型）都會被忽略。"
-
-#: plug-ins/gap/gap_decode_xanim.c:297
-msgid "Split any Xanim readable Video to Frames"
-msgstr "將任何 Xanim 支援的視像檔分解為畫格"
-
-#: plug-ins/gap/gap_decode_xanim.c:540
-#, c-format
-msgid ""
-"can't find any extracted frames,\n"
-"%s\n"
-"maybe xanim has failed or was cancelled"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_xanim.c:565
-#, c-format
-msgid "frames are not extracted, because overwrite of %s was cancelled"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_xanim.c:575
-#, c-format
-msgid "failed to overwrite %s (check permissions ?)"
-msgstr "無法覆寫 %s（請檢查權限？）"
-
-#: plug-ins/gap/gap_decode_xanim.c:597
-#, c-format
-msgid "failed to write %s (check permissions ?)"
-msgstr "無法寫入 %s（請檢查權限？）"
-
-#: plug-ins/gap/gap_decode_xanim.c:723
-#, c-format
-msgid "could not execute %s (check if xanim is installed)"
-msgstr "無法執行 %s（請檢查是否已安裝 xanim）"
-
-#: plug-ins/gap/gap_decode_xanim.c:731
-#, c-format
-msgid "%s does not look like xanim"
-msgstr "%s 不像是 xanim"
-
-#: plug-ins/gap/gap_decode_xanim.c:755
-#, c-format
-msgid ""
-"The xanim program on your system \"%s\"\n"
-"does not support the exporting options Ea, Ee, Eq"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_xanim.c:762
-#, c-format
-msgid ""
-"The xanim program on your system \"%s\"\n"
-"does not support exporting of single frames"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_xanim.c:1025
-#, c-format
-msgid "videofile %s not existent or empty\n"
-msgstr "視像檔「%s」不存在或是空白的\n"
-
-#: plug-ins/gap/gap_decode_xanim.c:1078
-#, c-format
-msgid ""
-"could not create %s directory\n"
-"(that is required for xanim frame export)"
-msgstr ""
-"無法建立 %s 目錄\n"
-"（作為 xanim 匯出畫格之用）"
-
-#: plug-ins/gap/gap_decode_xanim.c:1089
-msgid "extracting frames..."
-msgstr ""
-
-#: plug-ins/gap/gap_decode_xanim.c:1114
-#, c-format
-msgid ""
-"could not start xanim process\n"
-"(program=%s)"
-msgstr ""
-"無法開始 xanim 程序\n"
-"（program=%s）"
-
-#: plug-ins/gap/gap_decode_xanim.c:1135
-msgid ""
-"can't find any extracted frames,\n"
-"xanim has failed or was cancelled"
-msgstr ""
-
-#: plug-ins/gap/gap_decode_xanim.c:1154
-msgid "renaming frames..."
-msgstr ""
-
-#: plug-ins/gap/gap_decode_xanim.c:1159
-msgid "converting frames..."
-msgstr ""
-
-#: plug-ins/gap/gap_filter_foreach.c:126
-msgid "backup to file"
-msgstr "備份至檔案"
-
-#. pixel
-#: plug-ins/gap/gap_filter_foreach.c:128
-msgid "Make backup of the image after each step"
-msgstr "每一步後都製作圖像的備份檔"
-
-#: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:262
-msgid "Continue"
-msgstr "繼續"
-
-#: plug-ins/gap/gap_filter_foreach.c:136
-#, c-format
-msgid "Skip %d"
-msgstr ""
-
-#: plug-ins/gap/gap_filter_foreach.c:155 plug-ins/gap/gap_mod_layer.c:281
-#, c-format
-msgid ""
-"2nd call of %s\n"
-"(define end-settings)"
-msgstr ""
-
-#: plug-ins/gap/gap_filter_foreach.c:159
-#, c-format
-msgid ""
-"Non-Interactive call of %s\n"
-"(for all layers in between)"
-msgstr ""
-
-#: plug-ins/gap/gap_filter_foreach.c:278
-msgid "Applying Filter to all Layers..."
-msgstr "套用濾鏡到所有的圖層..."
-
-#: plug-ins/gap/gap_filter_foreach.c:552
-msgid "Select Filter for Animated apply"
-msgstr ""
-
-#: plug-ins/gap/gap_filter_foreach.c:553 plug-ins/gap/gap_mod_layer.c:664
-msgid "Apply Constant"
-msgstr ""
-
-#: plug-ins/gap/gap_filter_foreach.c:554 plug-ins/gap/gap_mod_layer.c:665
-msgid "Apply Varying"
-msgstr ""
-
-#: plug-ins/gap/gap_filter_main.c:106
-msgid "<Image>/Filters/Filter all Layers..."
-msgstr "<Image>/濾鏡/過濾所有圖層..."
-
-#: plug-ins/gap/gap_frontends_main.c:128
-msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
-msgstr "<Image>/視像/分解視像檔為畫格/任何 XANIM 支援的檔案..."
-
-#: plug-ins/gap/gap_frontends_main.c:140
-msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
-msgstr "<Toolbox>/視像/分解視像檔為畫格/任何 XANIM 支援的檔案..."
-
-#: plug-ins/gap/gap_frontends_main.c:152
-msgid "<Image>/Video/Encode/MPEG1..."
-msgstr "<Image>/視像/編碼/MPEG1..."
-
-#: plug-ins/gap/gap_frontends_main.c:165
-msgid "<Image>/Video/Encode/MPEG2..."
-msgstr "<Image>/視像/編碼/MPEG2..."
-
-#: plug-ins/gap/gap_lib.c:246
-msgid "GAP Message"
-msgstr "GAP 訊息"
-
-#: plug-ins/gap/gap_lib.c:911
-msgid ""
-"OPERATION CANCELLED.\n"
-"Current frame changed while dialog was open."
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:933 plug-ins/gap/gap_lib.c:2198
-msgid ""
-"OPERATION CANCELLED.\n"
-"GAP plug-ins only work with filenames\n"
-"that end in numbers like _0001.xcf.\n"
-"==> Rename your image, then try again."
-msgstr ""
-"操作已取消。\n"
-"GAP 增效模組只能使用類似 _0001.xcf 般\n"
-"以數字作結尾的檔案名稱。\n"
-"─→請更改圖像檔名，並再試一次。"
-
-#: plug-ins/gap/gap_lib.c:1020
-msgid ""
-"You are using a file format != xcf\n"
-"Save Operations may result\n"
-"in loss of layer information."
-msgstr ""
-"你所使用的檔案格式不是 xcf。\n"
-"儲存檔案可能會引致圖層資料遺失。"
-
-#: plug-ins/gap/gap_lib.c:1036
-msgid "Save Flattened"
-msgstr "平面化後再儲存"
-
-#: plug-ins/gap/gap_lib.c:1038
-msgid "Save As Is"
-msgstr "強迫儲存"
-
-#: plug-ins/gap/gap_lib.c:1513 plug-ins/gap/gap_lib.c:1637
-#: plug-ins/gap/gap_lib.c:1716 plug-ins/gap/gap_lib.c:1723
-#: plug-ins/gap/gap_lib.c:1730 plug-ins/gap/gap_lib.c:1813
-#: plug-ins/gap/gap_lib.c:1835 plug-ins/gap/gap_lib.c:2740
-#, c-format
-msgid "Error: could not rename frame %ld to %ld"
-msgstr "錯誤：無法將畫格 %ld 改名為 %ld"
-
-#: plug-ins/gap/gap_lib.c:1576
-#, c-format
-msgid "Error: could not save frame %s"
-msgstr "錯誤：無法儲存畫格 %s"
-
-#: plug-ins/gap/gap_lib.c:1625
-msgid "Duplicating frames..."
-msgstr "正在複製畫格..."
-
-#: plug-ins/gap/gap_lib.c:1801
-msgid "Renumber Framesequence..."
-msgstr "重新編排畫格順序..."
-
-#: plug-ins/gap/gap_lib.c:1987
-#, c-format
-msgid "Goto Frame (%ld/%ld)"
-msgstr "移至畫格（%ld/%ld）"
-
-#: plug-ins/gap/gap_lib.c:1990
-#, c-format
-msgid "Destination Frame Number (%ld  - %ld)"
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:1994 plug-ins/gap/gap_lib.c:2071
-#: plug-ins/gap/gap_lib.c:2275
-msgid "Number:"
-msgstr "編號："
-
-#: plug-ins/gap/gap_lib.c:2055
-#, c-format
-msgid "Delete Frames (%ld/%ld)"
-msgstr "刪除畫格（%ld/%ld）"
-
-#: plug-ins/gap/gap_lib.c:2058
-#, c-format
-msgid "Delete Frames from %ld to (number)"
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:2121
-#, c-format
-msgid "Duplicate Frames (%ld/%ld)"
-msgstr "複製畫格（%ld/%ld）"
-
-#: plug-ins/gap/gap_lib.c:2131
-msgid "Source Range starts at this framenumber"
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:2139
-msgid "Source Range ends at this framenumber"
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:2142
-msgid "N times:"
-msgstr "N 次："
-
-#: plug-ins/gap/gap_lib.c:2149
-msgid ""
-"Copy selected Range n-times  \n"
-"(you may type in Values > 99)"
-msgstr ""
-"複製選擇範圍 n 次\n"
-"（可輸入 > 99 的數值）"
-
-#: plug-ins/gap/gap_lib.c:2152
-msgid "Duplicate Frame Range"
-msgstr "複製畫格範圍"
-
-#: plug-ins/gap/gap_lib.c:2270
-#, c-format
-msgid "Exchange current Frame (%ld)"
-msgstr "交換目前的畫格（%ld）"
-
-#: plug-ins/gap/gap_lib.c:2274
-msgid "With Frame (number)"
-msgstr "和畫格（編號）"
-
-#: plug-ins/gap/gap_lib.c:2316
-#, c-format
-msgid "Framesequence Shift (%ld/%ld)"
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:2326
-msgid "Affected Range starts at this framenumber"
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:2334
-msgid "Affected Range ends at this framenumber"
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:2337
-msgid "N-Shift:"
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:2342
-msgid ""
-"Renumber the affected framesequence     \n"
-"(numbers are shifted in circle by N)"
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:2344
-msgid "Framesequence shift"
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:2952
-#, c-format
-msgid ""
-"Can't execute more than 1 Video Function\n"
-"on the same AnimFrame Image at the same time\n"
-"LOCK ID:%s\n"
-msgstr ""
-
-#: plug-ins/gap/gap_main.c:482
-msgid "<Image>/Video/Goto/Next Frame"
-msgstr "<Image>/視像/移至/下個畫格"
-
-#: plug-ins/gap/gap_main.c:494
-msgid "<Image>/Video/Goto/Previous Frame"
-msgstr "<Image>/視像/移至/上個畫格"
-
-#: plug-ins/gap/gap_main.c:506
-msgid "<Image>/Video/Goto/First Frame"
-msgstr "<Image>/視像/移至/第一個畫格"
-
-#: plug-ins/gap/gap_main.c:518
-msgid "<Image>/Video/Goto/Last Frame"
-msgstr "<Image>/視像/移至/最後一個畫格"
-
-#: plug-ins/gap/gap_main.c:530
-msgid "<Image>/Video/Goto/Any Frame..."
-msgstr "<Image>/視像/移至/任何畫格..."
-
-#: plug-ins/gap/gap_main.c:542
-msgid "<Image>/Video/Delete Frames..."
-msgstr "<Image>/視像/刪除畫格..."
-
-#: plug-ins/gap/gap_main.c:554
-msgid "<Image>/Video/Duplicate Frames..."
-msgstr "<Image>/視像/複製畫格..."
-
-#: plug-ins/gap/gap_main.c:566
-msgid "<Image>/Video/Exchange Frame..."
-msgstr "<Image>/視像/交換畫格..."
-
-#: plug-ins/gap/gap_main.c:578
-msgid "<Image>/Video/Move Path..."
-msgstr "<Image>/視像/移動路徑..."
-
-#: plug-ins/gap/gap_main.c:649
-msgid "<Image>/Video/Frames to Image..."
-msgstr "<Image>/視像/畫格轉為圖像..."
-
-#: plug-ins/gap/gap_main.c:661
-msgid "<Image>/Video/Frames Flatten..."
-msgstr "<Image>/視像/畫格平面化..."
-
-#: plug-ins/gap/gap_main.c:673
-msgid "<Image>/Video/Frames LayerDel..."
-msgstr "<Image>/視像/刪除畫格圖層..."
-
-#: plug-ins/gap/gap_main.c:697
-msgid "<Image>/Video/Frames Convert..."
-msgstr "<Image>/視像/畫格轉換..."
-
-#: plug-ins/gap/gap_main.c:709
-msgid "<Image>/Video/Frames Resize..."
-msgstr "<Image>/視像/重定畫格尺寸..."
-
-#: plug-ins/gap/gap_main.c:721
-msgid "<Image>/Video/Frames Crop..."
-msgstr "<Image>/視像/畫格裁剪..."
-
-#: plug-ins/gap/gap_main.c:733
-msgid "<Image>/Video/Frames Scale..."
-msgstr "<Image>/視像/縮放畫格..."
-
-#: plug-ins/gap/gap_main.c:745
-msgid "<Image>/Video/Split Image to Frames..."
-msgstr "<Image>/視像/分解圖像為畫格..."
-
-#: plug-ins/gap/gap_main.c:758
-msgid "<Image>/Video/Framesequence Shift..."
-msgstr "<Image>/視像/改變畫格次序..."
-
-#: plug-ins/gap/gap_main.c:770
-msgid "<Image>/Video/Frames Modify..."
-msgstr "<Image>/視像/修改畫格..."
-
-#. Layer select modes
-#: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:574
-msgid "Pattern is equal to LayerName"
-msgstr "圖樣和圖層名稱相同"
-
-#: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:575
-msgid "Pattern is Start of LayerName"
-msgstr "圖樣和圖層名稱開始部份相同"
-
-#: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:576
-msgid "Pattern is End of Layername"
-msgstr "圖樣和圖層名稱末端部份相同"
-
-#: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:577
-msgid "Pattern is a Part of LayerName"
-msgstr "圖樣是圖層名稱的一部份"
-
-#: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:578
-msgid "Pattern is LayerstackNumber List"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:89 plug-ins/gap/gap_range_ops.c:579
-msgid "Pattern is REVERSE-stack List"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:90 plug-ins/gap/gap_range_ops.c:580
-msgid "All Visible (ignore Pattern)"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:92
-msgid "Select all Layers where Layername is equal to Pattern"
-msgstr "選擇所有名稱與樣式一樣的圖層"
-
-#: plug-ins/gap/gap_mod_layer.c:93
-msgid "Select all Layers where Layername starts with Pattern"
-msgstr "選擇所有名稱開始部份與樣式一樣的圖層"
-
-#: plug-ins/gap/gap_mod_layer.c:94
-msgid "Select all Layers where Layername ends up with Pattern"
-msgstr "選擇所有名稱結尾部份與樣式一樣的圖層"
-
-#: plug-ins/gap/gap_mod_layer.c:95
-msgid "Select all Layers where Layername contains Pattern"
-msgstr "選擇所有名稱含有樣式的圖層"
-
-#: plug-ins/gap/gap_mod_layer.c:96
-msgid ""
-"Select Layerstack positions.\n"
-"0, 4-5, 8\n"
-"where 0 == Top-layer"
-msgstr ""
-"選取圖層堆疊位置。\n"
-"0, 4-5, 8\n"
-"其中 0 == 最頂層"
-
-#: plug-ins/gap/gap_mod_layer.c:97
-msgid ""
-"Select Layerstack positions.\n"
-"0, 4-5, 8\n"
-"where 0 == BG-layer"
-msgstr ""
-"選取圖層堆疊位置。\n"
-"0, 4-5, 8\n"
-"其中 0 == 背景圖層"
-
-#: plug-ins/gap/gap_mod_layer.c:98
-msgid "Select all visible Layers"
-msgstr "選擇所有可見圖層"
-
-#. action items what to do with the selected layer(s)
-#: plug-ins/gap/gap_mod_layer.c:102
-msgid "Set Layer(s) visible"
-msgstr "設定圖層為可見圖層"
-
-#: plug-ins/gap/gap_mod_layer.c:103
-msgid "Set Layer(s) invisible"
-msgstr "設定圖層為隱藏圖層"
-
-#: plug-ins/gap/gap_mod_layer.c:104
-msgid "Set Layer(s) linked"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:105
-msgid "Set Layer(s) unlinked"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:106
-msgid "Raise Layer(s)"
-msgstr "提升圖層"
-
-#: plug-ins/gap/gap_mod_layer.c:107
-msgid "Lower Layer(s)"
-msgstr "降低圖層"
-
-#: plug-ins/gap/gap_mod_layer.c:108
-msgid "Merge Layer(s) expand as necessary"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:109
-msgid "Merge Layer(s) clipped to image"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:110
-msgid "Merge Layer(s) clipped to bg-layer"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:111
-msgid "Apply filter on Layer(s)"
-msgstr "套用濾鏡到圖層上"
-
-#: plug-ins/gap/gap_mod_layer.c:112
-msgid "Duplicate Layer(s)"
-msgstr "複製圖層"
-
-#: plug-ins/gap/gap_mod_layer.c:113
-msgid "Delete Layer(s)"
-msgstr "刪除圖層"
-
-#: plug-ins/gap/gap_mod_layer.c:114
-msgid "Rename Layer(s)"
-msgstr "更改圖層名稱"
-
-#: plug-ins/gap/gap_mod_layer.c:153
-msgid ""
-"Perform function on one or more Layer(s)\n"
-"in all frames of the selected frame range\n"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:157 plug-ins/gap/gap_mpege.c:258
-#: plug-ins/gap/gap_range_ops.c:443
-msgid "From Frame:"
-msgstr "從畫格："
-
-#: plug-ins/gap/gap_mod_layer.c:158 plug-ins/gap/gap_mpege.c:259
-#: plug-ins/gap/gap_range_ops.c:444 plug-ins/gap/gap_range_ops.c:603
-msgid "first handled frame"
-msgstr "第一個處理的畫格"
-
-#: plug-ins/gap/gap_mod_layer.c:165 plug-ins/gap/gap_range_ops.c:451
-msgid "To Frame:"
-msgstr "到畫格："
-
-#: plug-ins/gap/gap_mod_layer.c:166 plug-ins/gap/gap_mpege.c:267
-#: plug-ins/gap/gap_range_ops.c:452 plug-ins/gap/gap_range_ops.c:611
-msgid "last handled frame"
-msgstr "最後一個處理的畫格"
-
-#: plug-ins/gap/gap_mod_layer.c:174 plug-ins/gap/gap_range_ops.c:650
-msgid "Select Layer(s):"
-msgstr "選擇圖層："
-
-#: plug-ins/gap/gap_mod_layer.c:184 plug-ins/gap/gap_range_ops.c:659
-msgid "Select Pattern:"
-msgstr "選擇圖樣："
-
-#. pixel
-#: plug-ins/gap/gap_mod_layer.c:186 plug-ins/gap/gap_range_ops.c:661
-msgid ""
-"String to identify layer names    \n"
-"or layerstack position numbers\n"
-"0,3-5"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:192 plug-ins/gap/gap_range_ops.c:667
-msgid "Case sensitive"
-msgstr "區分大小寫"
-
-#: plug-ins/gap/gap_mod_layer.c:193 plug-ins/gap/gap_range_ops.c:668
-msgid "Lowercase and UPPERCASE letters are considered as different"
-msgstr "小寫和大寫有分別"
-
-#: plug-ins/gap/gap_mod_layer.c:198 plug-ins/gap/gap_range_ops.c:673
-msgid "Invert Selection"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:199
-msgid "Perform actions on all unselected Layers"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:204
-msgid "Function:"
-msgstr ""
-
-#. argv[7].radio_help_argv = action_help
-#: plug-ins/gap/gap_mod_layer.c:208
-msgid "Function to be performed on all selected layers"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:214
-msgid "New Layername:"
-msgstr "新圖層名稱："
-
-#. pixel
-#: plug-ins/gap/gap_mod_layer.c:216
-msgid ""
-"New Layername for all handled layers \n"
-"[####] is replaced by frame number\n"
-"(is used on function rename only)"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:221
-msgid "Frames Modify"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:285
-#, c-format
-msgid ""
-"Non-Interactive call of %s\n"
-"(for all selected layers)"
-msgstr ""
-
-#. GAP-PDB-Browser Dialog
-#. ----------------------
-#: plug-ins/gap/gap_mod_layer.c:663
-msgid "Select Filter for Animated frames-apply"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:805
-msgid "GAP Modify: No layer selected in last handled frame"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:891
-msgid "Modifying Frames/Layer(s)..."
-msgstr "修改畫格/圖層..."
-
-#: plug-ins/gap/gap_mod_layer.c:972
-msgid "No selected Layer in start frame"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:262 plug-ins/gfig/gfig.c:3328
-#: plug-ins/gflare/gflare.c:589 plug-ins/gimpressionist/orientmap.c:590
-msgid "Normal"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:263
-msgid "Dissolve"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:264
-msgid "Multiply"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:266 plug-ins/gflare/gflare.c:591
-#: plug-ins/gimpressionist/paper.c:152
-msgid "Overlay"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:267
-msgid "Difference"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:268 plug-ins/gflare/gflare.c:590
-msgid "Addition"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:269 plug-ins/gfig/gfig.c:3147
-msgid "Subtract"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:270
-msgid "Darken Only"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:271
-msgid "Lighten Only"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:282
-msgid "Left  Top"
-msgstr "左上"
-
-#: plug-ins/gap/gap_mov_dialog.c:283
-msgid "Left  Bottom"
-msgstr "左下"
-
-#: plug-ins/gap/gap_mov_dialog.c:284
-msgid "Right Top"
-msgstr "右上"
-
-#: plug-ins/gap/gap_mov_dialog.c:285
-msgid "Right Bottom"
-msgstr "右下"
-
-#: plug-ins/gap/gap_mov_dialog.c:294
-msgid "Loop"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:295
-msgid "Loop Reverse"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:296
-msgid "Once"
-msgstr "一次"
-
-#: plug-ins/gap/gap_mov_dialog.c:297
-msgid "OnceReverse"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:298
-msgid "PingPong"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:300
-msgid "Frame Loop"
-msgstr "畫格循環"
-
-#: plug-ins/gap/gap_mov_dialog.c:301
-msgid "Frame Loop Reverse"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:302
-msgid "Frame Once"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:303
-msgid "Frame OnceReverse"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:304
-msgid "Frame PingPong"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:305
-msgid "Frame None"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:468
-msgid "Move Path"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:502
-msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:506
-msgid "Anim Preview"
-msgstr "動畫預覽"
-
-#: plug-ins/gap/gap_mov_dialog.c:513
-msgid "Generate Animated Preview as multilayer image"
-msgstr "以多圖層的圖像方式產生動畫預覽"
-
-#. parameter settings
-#: plug-ins/gap/gap_mov_dialog.c:526
-msgid "Copy moving source-layer(s) into frames"
-msgstr ""
-
-#. the start frame scale_entry
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:559
-msgid "Start Frame:"
-msgstr "開始畫格︰"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:567
-msgid "First handled frame"
-msgstr "第一個處理的畫格"
-
-#. the end frame scale_entry
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:574
-msgid "End Frame:"
-msgstr "終止畫格︰"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:582
-msgid "Last handled frame"
-msgstr "最後一個處理的畫格"
-
-#. the Preview Frame scale_entry
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:589
-msgid "Preview Frame:"
-msgstr "預覽畫格︰"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:597
-msgid "Frame to show when UpdPreview button is pressed"
-msgstr "當按下「更新預覽」時顯示的畫格"
-
-#. the Layerstack scale_entry
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:605 plug-ins/gap/gap_range_ops.c:267
-msgid "Layerstack:"
-msgstr "圖層堆疊︰"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:613
-msgid ""
-"How to insert SrcLayer into the Dst. Frame's Layerstack\n"
-"0 means on top i.e. in front"
-msgstr ""
-
-#. toggle force visibility
-#: plug-ins/gap/gap_mov_dialog.c:625
-msgid "Force visibility"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:632
-msgid "Force visibility for all copied Src-Layers"
-msgstr ""
-
-#. toggle clip_to_image
-#: plug-ins/gap/gap_mov_dialog.c:638
-msgid "Clip To Frame"
-msgstr "依畫格範圍裁剪"
-
-#: plug-ins/gap/gap_mov_dialog.c:645
-msgid "Clip all copied Src-Layers at Frame Boundaries"
-msgstr "裁剪所有已複製的來源圖層至畫格範圍之內"
-
-#: plug-ins/gap/gap_mov_dialog.c:693
-msgid ""
-"No Source Image was selected\n"
-"(Please open a 2nd Image of the same type before opening Move Path)"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:789
-msgid "Object on empty frames"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:790
-msgid "Object on one frame"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:791
-msgid "Exact Object on frames"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:821
-msgid "Anim Preview Mode"
-msgstr "動畫預覽模式"
-
-#: plug-ins/gap/gap_mov_dialog.c:829
-msgid "Scale Preview"
-msgstr "縮放預覽"
-
-#: plug-ins/gap/gap_mov_dialog.c:830
-msgid "Scale down size of the generated animated preview (in %)"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:838
-msgid "Framerate"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:839
-msgid "Framerate to use in the animated preview in frames/sec"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:853
-msgid "Copy to Video Buffer"
-msgstr "複製至視像緩衝區"
-
-#: plug-ins/gap/gap_mov_dialog.c:854
-msgid ""
-"Save all single frames of animated preview to video buffer\n"
-"(configured in gimprc by video-paste-dir and video-paste-basename)"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:859
-msgid "Move Path Animated Preview"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:905
-msgid "Generate Animated Preview failed\n"
-msgstr "產生動畫預覽失敗\n"
-
-#. filesel is already open
-#: plug-ins/gap/gap_mov_dialog.c:1190
-msgid "Load Path Points from file"
-msgstr "由檔案載入路徑控制點"
-
-#. filesel is already open
-#: plug-ins/gap/gap_mov_dialog.c:1226
-msgid "Save Path Points to file"
-msgstr "將路徑控制點儲存至檔案"
-
-#: plug-ins/gap/gap_mov_dialog.c:1555
-#, c-format
-msgid "Current Point: [ %3d ] of [ %3d ]"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:1641
-msgid "Source Select"
-msgstr ""
-
-#. Source Layer menu
-#: plug-ins/gap/gap_mov_dialog.c:1657
-msgid "Source Image/Layer:"
-msgstr "來源圖像/圖層："
-
-#: plug-ins/gap/gap_mov_dialog.c:1667
-msgid "Source Object to insert into Frame Range"
-msgstr ""
-
-#. Paintmode menu
-#: plug-ins/gap/gap_mov_dialog.c:1682
-msgid "Mode:"
-msgstr "模式："
-
-#: plug-ins/gap/gap_mov_dialog.c:1691
-msgid "Paintmode"
-msgstr ""
-
-#. Loop Stepmode menu
-#: plug-ins/gap/gap_mov_dialog.c:1706
-msgid "Stepmode:"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:1724
-msgid "How to fetch the next SrcLayer at the next handled frame"
-msgstr "在下一個處理的畫格中如何取得下一個來源圖層"
-
-#. Source Image Handle menu
-#: plug-ins/gap/gap_mov_dialog.c:1730
-msgid "Handle:"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:1748
-msgid "How to place the SrcLayer at Controlpoint Coordinates"
-msgstr "如何將來源圖層放至控制點座標"
-
-#. to avoid side effects while initialization
-#. the frame
-#: plug-ins/gap/gap_mov_dialog.c:1802
-msgid "Move Path Preview"
-msgstr "移動路徑預覽"
-
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1834
-msgid "X Coordinate"
-msgstr "X 座標"
-
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1852
-msgid "Y Coordinate"
-msgstr "Y 座標"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1869
-msgid "Scale Source Layer's Width in percent"
-msgstr "縮放來源圖層寬度（百分比）"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1886
-msgid "Scale SrcLayer's Height in percent"
-msgstr "縮放來源圖層高度（百分比）"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1903
-msgid "SrcLayer's Opacity in percent"
-msgstr "來源圖層不透明度（百分比）"
-
-#. Rotation
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:1912
-msgid "Rotate:"
-msgstr "旋轉："
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1920
-msgid "Rotate SrcLayer (in degree)"
-msgstr "旋轉圖層（角度）"
-
-#. Keyframe
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:1930
-msgid "Keyframe:"
-msgstr ""
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1938
-msgid ""
-"Fix Controlpoint to Keyframe number\n"
-"(0 == No Keyframe)"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2013
-msgid "Add Point"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2021
-msgid ""
-"Add Controlpoint at end\n"
-"(the last Point is duplicated)"
-msgstr ""
-
-#. toggle clip_to_image
-#: plug-ins/gap/gap_mov_dialog.c:2026
-msgid "Show Path"
-msgstr "顯示路徑"
-
-#: plug-ins/gap/gap_mov_dialog.c:2033
-msgid ""
-"Show Path Lines and enable pick/drag with left button or move with right "
-"button"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2043
-#: plug-ins/imagemap/imap_cmd_insert_point.c:60
-#: plug-ins/imagemap/imap_polygon.c:685
-msgid "Insert Point"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2051
-msgid ""
-"Insert Controlpoint\n"
-"(the current Point is duplicated)"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2055
-#: plug-ins/imagemap/imap_cmd_delete_point.c:60
-#: plug-ins/imagemap/imap_polygon.c:671
-msgid "Delete Point"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2063
-msgid "Delete current Controlpoint"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2069
-msgid "Prev Point"
-msgstr "上一點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2077
-msgid "Show Previous Controlpoint"
-msgstr "顯示上一個控制點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2081
-msgid "Next Point"
-msgstr "下一點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2089
-msgid "Show Next Controlpoint"
-msgstr "顯示下一個控制點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2095
-msgid "First Point"
-msgstr "第一點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2103
-msgid "Show First Controlpoint"
-msgstr "顯示第一個控制點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2107
-msgid "Last Point"
-msgstr "最後一點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2115
-msgid "Show Last Controlpoint"
-msgstr "顯示最後一個控制點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2121
-msgid "Clear Point"
-msgstr "清除控制點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2129
-msgid "Reset the current Controlpoint to default Values"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2133
-msgid "Clear All Points"
-msgstr "清除所有控制點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2141
-msgid ""
-"Reset all Controlpoints to default Values but dont change the path (X/Y "
-"Values)"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2148
-msgid "Rotate Follow"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2159
-msgid ""
-"Set Rotation for all Controlpoints to follow the shape of the path.\n"
-"(Shift: use Rotation of contolpoint 1 as offset)"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2166
-msgid "Delete All Points"
-msgstr "刪除所有控制點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2174
-msgid "Delete all Controlpoints"
-msgstr "刪除所有控制點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2181
-msgid "Load Points"
-msgstr "載入控制點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2189
-msgid "Load Controlpoints from file"
-msgstr "由檔案載入控制點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2193
-msgid "Save Points"
-msgstr "儲存控制點"
-
-#: plug-ins/gap/gap_mov_dialog.c:2201
-msgid "Save Controlpoints to file"
-msgstr "將控制點存檔"
-
-#: plug-ins/gap/gap_mov_dialog.c:2661
-msgid ""
-"Can't operate with current Controlpoint\n"
-"or Keyframe settings"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2668
-msgid "Reset Keyframes"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2673
-msgid "Move Path Controlpointcheck"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2674
-msgid "Errors:"
-msgstr "錯誤："
-
-#: plug-ins/gap/gap_mov_exec.c:444
-msgid ""
-"No Source Image was selected.\n"
-"Please open a 2nd Image of the same type before opening Move Path."
-msgstr ""
-
-#: plug-ins/gap/gap_mov_exec.c:455
-msgid "Copying Layers into Frames..."
-msgstr "正在複製圖層到畫格..."
-
-#: plug-ins/gap/gap_mov_exec.c:459
-msgid "Generating Animated Preview..."
-msgstr "正在產生動畫預覽..."
-
-#: plug-ins/gap/gap_mov_exec.c:1376
-#, c-format
-msgid ""
-"\n"
-"Error: Keyframe %d at point [%d] higher or equal than last handled frame"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_exec.c:1384
-#, c-format
-msgid ""
-"\n"
-"Error: Keyframe %d at point [%d] leaves not enough space (frames)\n"
-"for the previous controlpoints"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_exec.c:1394
-#, c-format
-msgid ""
-"\n"
-"Error: Keyframe %d is not in sequence at point [%d]"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_exec.c:1412
-#, c-format
-msgid ""
-"\n"
-"Error: controlpoint [%d] is out of handled framerange"
-msgstr ""
-"\n"
-"錯誤︰控制點 [%d] 在處理的畫格範圍之外"
-
-#: plug-ins/gap/gap_mov_exec.c:1426
-#, c-format
-msgid ""
-"\n"
-"Error: more controlpoints (%d) than handled frames (%d)\n"
-"please reduce controlpoints or select more frames"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:111
-msgid "Conditions to run mpeg_encode 1.5:"
-msgstr "執行 mpeg_encode 1.5 所需條件："
-
-#: plug-ins/gap/gap_mpege.c:114
-msgid "Conditions to run mpeg2encode 1.2:"
-msgstr "執行 mpeg2_encode 1.2 所需條件："
-
-#: plug-ins/gap/gap_mpege.c:124
-msgid "1.) mpeg_encode 1.5 must be installed"
-msgstr "１）必須先安裝 mpeg_encode 1.5"
-
-#: plug-ins/gap/gap_mpege.c:127
-msgid "1.) mpeg2encode 1.2 must be installed"
-msgstr "１）必須先安裝 mpeg2_encode 1.2"
-
-#: plug-ins/gap/gap_mpege.c:132
-msgid "    you can get mpeg_encode at"
-msgstr "　　你可在下列網址取得 mpeg_encode："
-
-#: plug-ins/gap/gap_mpege.c:135
-msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
-msgstr "　　你可以在 http://www.mpeg.org/MSSG 取得 mpeg2encode"
-
-#: plug-ins/gap/gap_mpege.c:140
-msgid "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
-msgstr "　　ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
-
-#: plug-ins/gap/gap_mpege.c:143
-msgid "   or at ftp://ftp.mpeg.org/pub/mpeg/mssg "
-msgstr "　　或是 ftp://ftp.mpeg.org/pub/mpeg/mssg "
-
-#: plug-ins/gap/gap_mpege.c:148
-msgid "2.) You need a series of single Images on disk (AnimFrames)"
-msgstr "２）磁碟上需要有一系列的單一圖像（動畫畫格）"
-
-#: plug-ins/gap/gap_mpege.c:152
-msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
-msgstr "　　而全部的檔案格式都是 JPEG（或 YUV、PNM、PPM）"
-
-#: plug-ins/gap/gap_mpege.c:155
-msgid "   all with fileformat PPM (or YUV)"
-msgstr "　　而全部的檔案格式都是 PPM（或 YUV）"
-
-#: plug-ins/gap/gap_mpege.c:160
-msgid "    (use 'Frames Convert' from the Video Menu"
-msgstr "　　（使用視像選單中的「畫格轉換」或是"
-
-#: plug-ins/gap/gap_mpege.c:164
-msgid "    or 'Split Image to Frames' from the Video Menu)"
-msgstr "　　視像選單中的「分解圖像為畫格」）"
-
-#: plug-ins/gap/gap_mpege.c:168
-msgid "3.) All Images must have the same size,"
-msgstr "３）所有圖像的尺寸必須一樣，"
-
-#: plug-ins/gap/gap_mpege.c:175
-msgid "    width and height must be a multiple of 16"
-msgstr "　　寬度和高度都必須是 16 的倍數"
-
-#: plug-ins/gap/gap_mpege.c:179
-msgid "    (use Scale or Crop from the Video Menu)"
-msgstr "　　（可在視像選單中選取縮放或裁剪）"
-
-#: plug-ins/gap/gap_mpege.c:194
-msgid "MPEG_ENCODE Information"
-msgstr "MPEG_ENCODE 資訊"
-
-#: plug-ins/gap/gap_mpege.c:231
-msgid "generate MPEG1 (ISO/IEC 11172-2) stream"
-msgstr "產生 MPEG1（ISO/IEC 11172-2）串流"
-
-#: plug-ins/gap/gap_mpege.c:232
-msgid "generate MPEG2 (ISO/IEC DIS 13818-2) stream"
-msgstr "產生 MPEG2（ISO/IEC DIS 13818-2）串流"
-
-#: plug-ins/gap/gap_mpege.c:242
-msgid "GenParams"
-msgstr "產生參數"
-
-#: plug-ins/gap/gap_mpege.c:244
-msgid "Gen + Encode"
-msgstr "產生＋編碼"
-
-#: plug-ins/gap/gap_mpege.c:266
-msgid "To   Frame:"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:273
-msgid "Framerate :"
-msgstr "畫格速率："
-
-#: plug-ins/gap/gap_mpege.c:274
-msgid "framerate in frames/second"
-msgstr "畫格速率（畫格/秒）"
-
-#: plug-ins/gap/gap_mpege.c:281
-msgid "Bitrate:"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:282
-msgid ""
-"used for constant bitrates (bit/sec)                  \n"
-"(low rate gives good compression + bad quality)"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:296
-msgid "Outputfile:"
-msgstr "輸出檔："
-
-#. pixel
-#: plug-ins/gap/gap_mpege.c:298
-msgid "Name of the resulting MPEG outputfile"
-msgstr "MPEG 輸出檔的名稱"
-
-#: plug-ins/gap/gap_mpege.c:304
-msgid "Paramfile:"
-msgstr "參數檔："
-
-#. pixel
-#: plug-ins/gap/gap_mpege.c:306
-msgid ""
-"Name of the Encoder-Parameterfile\n"
-"(is generated)"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:312
-msgid "Startscript:"
-msgstr ""
-
-#. pixel
-#: plug-ins/gap/gap_mpege.c:314
-msgid ""
-"Name of the Startscript           \n"
-"(is generated/executed)"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:320
-msgid ""
-"Generate parameterfile for mpeg_encode 1.5\n"
-"(the freely distributed Berkeley MPEG-1 Video  Encoder.)\n"
-msgstr ""
-"產生 mpeg_encode 1.5 的參數檔\n"
-"（自由散佈的柏克萊 MPEG-1 視像檔編碼程式。）\n"
-
-#: plug-ins/gap/gap_mpege.c:324
-msgid "Constant Bitrate :"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:325
-msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:330
-msgid "Pattern:"
-msgstr ""
-
-#. pixel
-#: plug-ins/gap/gap_mpege.c:332
-msgid "How to encode MPEG framesequence (I/P/B frames)"
-msgstr "如何將 MPEG 畫格序列編碼（I/P/B 畫格）"
-
-#: plug-ins/gap/gap_mpege.c:338
-msgid "IQSCALE:"
-msgstr "I 品質尺度："
-
-#: plug-ins/gap/gap_mpege.c:339
-msgid ""
-"Quality scale for I-Frames                       \n"
-"(1 = best quality, 31 = best comression)"
-msgstr ""
-"I-畫格的品質尺度\n"
-"（1 = 最佳品質，31 = 最佳壓縮率）"
-
-#: plug-ins/gap/gap_mpege.c:346
-msgid "PQSCALE:"
-msgstr "P 品質尺度："
-
-#: plug-ins/gap/gap_mpege.c:347
-msgid ""
-"Quality scale for P-Frames                  \n"
-"(1 = best quality, 31 = best comression)"
-msgstr ""
-"P-畫格的品質尺度\n"
-"（1 = 最佳品質，31 = 最佳壓縮率）"
-
-#: plug-ins/gap/gap_mpege.c:354
-msgid "BQSCALE:"
-msgstr "B 品質尺度："
-
-#: plug-ins/gap/gap_mpege.c:355
-msgid ""
-"Quality scale for B-Frames                  \n"
-"(1 = best quality, 31 = best comression)"
-msgstr ""
-"B-畫格的品質尺度\n"
-"（1 = 最佳品質，31 = 最佳壓縮率）"
-
-#: plug-ins/gap/gap_mpege.c:362
-msgid "P-Search :"
-msgstr "P-搜尋："
-
-#: plug-ins/gap/gap_mpege.c:363
-msgid "Search Algorithmus used for P-frames"
-msgstr "P-畫格使用的搜尋演算法"
-
-#: plug-ins/gap/gap_mpege.c:369
-msgid "B-Search :"
-msgstr "B-搜尋："
-
-#: plug-ins/gap/gap_mpege.c:370
-msgid "Search Algorithmus used for B-frames"
-msgstr "B-畫格使用的搜尋演算法"
-
-#: plug-ins/gap/gap_mpege.c:375
-msgid "Gen MPEG_ENCODE Parameters"
-msgstr "產生 MPEG_ENCODE 參數"
-
-#: plug-ins/gap/gap_mpege.c:376 plug-ins/gap/gap_mpege.c:414
-msgid "Encode Values"
-msgstr "編碼值"
-
-#: plug-ins/gap/gap_mpege.c:392
-msgid ""
-"Generate parameterfile for mpeg2encode 1.2\n"
-"(MPEG-2 Video  Encoder.)\n"
-msgstr ""
-"產生 mpeg2encode 1.2 的參數檔\n"
-"（MPEG-2 視像檔編碼程式。）\n"
-
-#: plug-ins/gap/gap_mpege.c:395
-msgid "MPEG-type :"
-msgstr "MPEG-類型："
-
-#: plug-ins/gap/gap_mpege.c:404
-msgid "Videoformat :"
-msgstr "視像格式："
-
-#: plug-ins/gap/gap_mpege.c:405
-msgid "Videoformat"
-msgstr "視像格式"
-
-#. framerates above 30 ar not allowed in mpeg2encode
-#: plug-ins/gap/gap_mpege.c:413
-msgid "Gen MPEG2ENCODE Parameters"
-msgstr "產生 MPEG2ENCODE 參數"
-
-#: plug-ins/gap/gap_mpege.c:978
-msgid ""
-"\n"
-"WARNING: mpeg_encode does not support Fileformat "
-msgstr ""
-"\n"
-"警告：mpeg_encode 不支援檔案格式 "
-
-#: plug-ins/gap/gap_mpege.c:981
-msgid ""
-"\n"
-"ERROR: width not a multiple of 16"
-msgstr ""
-"\n"
-"錯誤: 寬度不是 16 的倍數"
-
-#: plug-ins/gap/gap_mpege.c:982
-msgid ""
-"\n"
-"ERROR: height not a multiple of 16"
-msgstr ""
-"\n"
-"錯誤: 高度不是 16 的倍數"
-
-#: plug-ins/gap/gap_mpege.c:988
-msgid ""
-"\n"
-"WARNING: mpeg2encode does not support Fileformat "
-msgstr ""
-"\n"
-"警告：mpeg2encode 不支援檔案格式 "
-
-#: plug-ins/gap/gap_mpege.c:993
-msgid ""
-"\n"
-"ERROR: invoked from a single image, animframe required"
-msgstr ""
-
-#: plug-ins/gap/gap_navigator_dialog.c:368
-msgid ""
-"Playback         \n"
-"<Shift> optimized"
-msgstr ""
-"播放\n"
-"<Shift>最優化"
-
-#: plug-ins/gap/gap_navigator_dialog.c:373
-msgid ""
-"Smart Update .xvpics\n"
-"<Shift> forced upd"
-msgstr ""
-"智慧型更新 .xvpics\n"
-"<Shift>強制更新"
-
-#: plug-ins/gap/gap_navigator_dialog.c:378
-msgid "Duplicate selected Frames"
-msgstr "複製所選的畫格"
-
-#: plug-ins/gap/gap_navigator_dialog.c:382
-msgid "Delete selected Frames"
-msgstr "刪除所選的畫格"
-
-#: plug-ins/gap/gap_navigator_dialog.c:391
-msgid "Goto 1st Frame"
-msgstr "移至第一個畫格"
-
-#: plug-ins/gap/gap_navigator_dialog.c:395
-msgid ""
-"Goto prev Frame\n"
-"<Shift> use timezoom stepsize"
-msgstr ""
-
-#: plug-ins/gap/gap_navigator_dialog.c:400
-msgid ""
-"Goto next Frame\n"
-"<Shift> use timezoom stepsize"
-msgstr ""
-
-#: plug-ins/gap/gap_navigator_dialog.c:405
-msgid "Goto last Frame"
-msgstr "移至最後一個畫格"
-
-#: plug-ins/gap/gap_navigator_dialog.c:463
-msgid "<Image>/Video/VCR Navigator..."
-msgstr "<Image>/視像/錄影控制器..."
-
-#: plug-ins/gap/gap_navigator_dialog.c:526
-msgid "Cant open two or more Video Navigator Windows."
-msgstr "不可開啟兩個或更多的錄影控制器視窗。"
-
-#. menu_item cut
-#: plug-ins/gap/gap_navigator_dialog.c:2932
-#: plug-ins/imagemap/imap_cmd_cut.c:56
-#: plug-ins/imagemap/imap_cmd_cut_object.c:54
-#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:133
-msgid "Cut"
-msgstr "剪下"
-
-#. menu_item paste before
-#: plug-ins/gap/gap_navigator_dialog.c:2942
-msgid "Paste before"
-msgstr "貼到前一格"
-
-#. menu_item copy
-#: plug-ins/gap/gap_navigator_dialog.c:2952
-msgid "Paste after"
-msgstr "貼到後一格"
-
-#. menu_item copy
-#: plug-ins/gap/gap_navigator_dialog.c:2962
-msgid "Paste replace"
-msgstr "貼上並取代"
-
-#. menu_item copy
-#: plug-ins/gap/gap_navigator_dialog.c:2972
-msgid "Clear Video Buffer"
-msgstr "清除視像緩衝區"
-
-#: plug-ins/gap/gap_navigator_dialog.c:2997
-msgid "Videoframes:"
-msgstr "視像畫格："
-
-#: plug-ins/gap/gap_navigator_dialog.c:3012
-msgid "Framerate:"
-msgstr "畫格速率："
-
-#: plug-ins/gap/gap_navigator_dialog.c:3035
-msgid "Timezoom:"
-msgstr ""
-
-#. The main shell
-#: plug-ins/gap/gap_navigator_dialog.c:3119
-msgid "Video Navigator"
-msgstr "錄影控制器"
-
-#: plug-ins/gap/gap_range_ops.c:120
-msgid "New Width:"
-msgstr "新的寬度："
-
-#: plug-ins/gap/gap_range_ops.c:129
-msgid "New Height:"
-msgstr "新的高度："
-
-#: plug-ins/gap/gap_range_ops.c:138
-msgid "Offset X:"
-msgstr "X 偏移量："
-
-#: plug-ins/gap/gap_range_ops.c:147
-msgid "Offset Y:"
-msgstr "Y 偏移量："
-
-#: plug-ins/gap/gap_range_ops.c:158
-msgid "Crop AnimFrames (all)"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:159
-#, c-format
-msgid "Crop (original %dx%d)"
-msgstr "裁剪（原來尺寸 %d×%d）"
-
-#: plug-ins/gap/gap_range_ops.c:169
-msgid "Resize AnimFrames (all)"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:170
-#, c-format
-msgid "Resize (original %dx%d)"
-msgstr "重定尺寸（原來尺寸 %d×%d）"
-
-#: plug-ins/gap/gap_range_ops.c:176
-msgid "Scale AnimFrames (all)"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:177
-#, c-format
-msgid "Scale (original %dx%d)"
-msgstr "縮放（原來尺寸 %d×%d）"
-
-#: plug-ins/gap/gap_range_ops.c:308
-msgid "Generate Optimal Palette"
-msgstr "產生最佳色盤"
-
-#: plug-ins/gap/gap_range_ops.c:309
-msgid "WEB Palette"
-msgstr "網頁色盤"
-
-#: plug-ins/gap/gap_range_ops.c:310
-msgid "Use Custom Palette"
-msgstr "使用自訂色盤"
-
-#: plug-ins/gap/gap_range_ops.c:311
-msgid "Use Black/White (1-Bit) Palette"
-msgstr "使用黑/白（1 位元）色盤"
-
-#: plug-ins/gap/gap_range_ops.c:313
-msgid "Floyd-Steinberg Color Dithering (Normal)"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:314
-msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:315
-msgid "Positioned Color Dithering"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:316
-msgid "No Color Dithering"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:327
-msgid "Palette Type"
-msgstr "色盤類型"
-
-#: plug-ins/gap/gap_range_ops.c:334
-msgid "Custom Palette"
-msgstr "自訂色盤"
-
-#: plug-ins/gap/gap_range_ops.c:335
-msgid ""
-"Name of a cutom palette\n"
-"(is ignored if Palette Type is not custom)"
-msgstr ""
-"自訂色盤名稱\n"
-"（若色盤類型不是自訂則會忽略）"
-
-#: plug-ins/gap/gap_range_ops.c:340
-msgid "Remove Unused"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:341
-msgid ""
-"Remove unused or double colors\n"
-"(is ignored if Palette Type is not custom)"
-msgstr ""
-"移除未用到或重複的顏色\n"
-"（若色盤類型不是自訂則會忽略）"
-
-#: plug-ins/gap/gap_range_ops.c:347
-msgid ""
-"Number of resulting Colors\t\t \n"
-"(ignored if Palette Type is not Generate optimal palette)"
-msgstr ""
-"移除未用到或重複的顏色\t\t \n"
-"（若色盤類型不是自訂則會忽略）"
-
-#: plug-ins/gap/gap_range_ops.c:354
-msgid "Dither Options"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:361
-msgid "Enable transparency"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:362
-msgid "Enable dithering of transparency"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:365
-msgid "Convert Frames to Indexed"
-msgstr "轉換畫格到索引色模式"
-
-#: plug-ins/gap/gap_range_ops.c:366
-msgid "Palette and Dither Settings"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:431
-msgid "Keep Type"
-msgstr "保持類型"
-
-#: plug-ins/gap/gap_range_ops.c:432
-msgid "Convert to RGB"
-msgstr "轉換成 RGB"
-
-#: plug-ins/gap/gap_range_ops.c:433
-msgid "Convert to Gray"
-msgstr "轉換成灰階"
-
-#: plug-ins/gap/gap_range_ops.c:434
-msgid "Convert to Indexed"
-msgstr "轉換成索引色"
-
-#: plug-ins/gap/gap_range_ops.c:458
-msgid ""
-"\n"
-"Select destination fileformat by extension\n"
-"optionally convert imagetype\n"
-msgstr ""
-"\n"
-"依延伸檔名選擇目的檔的檔案格式\n"
-"可選擇性地轉換圖像類型\n"
-
-#: plug-ins/gap/gap_range_ops.c:461
-msgid "Basename:"
-msgstr "基本檔名︰"
-
-#: plug-ins/gap/gap_range_ops.c:462
-msgid ""
-"basename of the resulting frames       \n"
-"(0001.ext is added)"
-msgstr ""
-"產生出來的畫格的基本檔名\n"
-"（會加上 0001.ext）"
-
-#: plug-ins/gap/gap_range_ops.c:467 plug-ins/gap/gap_split.c:235
-msgid "Extension:"
-msgstr "延伸檔名："
-
-#: plug-ins/gap/gap_range_ops.c:468
-msgid ""
-"extension of resulting frames       \n"
-"(is also used to define Fileformat)"
-msgstr ""
-"產生出來的畫格的延伸檔名\n"
-"（也用來定義檔案格式）"
-
-#: plug-ins/gap/gap_range_ops.c:474
-msgid "Imagetype:"
-msgstr "圖像類型："
-
-#: plug-ins/gap/gap_range_ops.c:475
-msgid ""
-"Convert to, or keep imagetype           \n"
-"(most fileformats can't handle all types)"
-msgstr ""
-"轉換，或保持圖像類型\n"
-"（大部分的檔案格式無法處理所有類型）"
-
-#: plug-ins/gap/gap_range_ops.c:481 plug-ins/gap/gap_split.c:246
-msgid "Flatten:"
-msgstr "平面化："
-
-#: plug-ins/gap/gap_range_ops.c:482
-msgid ""
-"Flatten all resulting frames               \n"
-"(most fileformats need flattened frames)"
-msgstr ""
-"將所有產生出來的畫格平面化\n"
-"（大部分的檔案格式都需要平面化的畫格）"
-
-#: plug-ins/gap/gap_range_ops.c:487
-msgid "Convert Frames to other Formats"
-msgstr "轉換畫格成其它格式"
-
-#: plug-ins/gap/gap_range_ops.c:488
-msgid "Convert Settings"
-msgstr "轉換設定"
-
-#: plug-ins/gap/gap_range_ops.c:565
-msgid "Expand as necessary"
-msgstr "必要時擴大"
-
-#: plug-ins/gap/gap_range_ops.c:566
-msgid "Clipped to image"
-msgstr "裁剪成圖像尺寸"
-
-#: plug-ins/gap/gap_range_ops.c:567
-msgid "Clipped to bottom layer"
-msgstr "裁剪成最底圖層的尺寸"
-
-#: plug-ins/gap/gap_range_ops.c:568
-msgid "Flattened image"
-msgstr "平面化圖像"
-
-#: plug-ins/gap/gap_range_ops.c:569
-msgid ""
-"Resulting Layer Size is made of the outline-rectangle \n"
-"of all visible layers (may differ from frame to frame)"
-msgstr ""
-"最後的圖層尺寸是由所有可見圖層\n"
-"的外框所組成的（各畫格之間可能不同）"
-
-#: plug-ins/gap/gap_range_ops.c:570
-msgid "Resulting Layer Size is the frame size"
-msgstr "最終的圖層尺寸是畫格的尺寸"
-
-#: plug-ins/gap/gap_range_ops.c:571
-msgid ""
-"Resulting Layer Size is the size of the bottom layer\n"
-"(may differ from frame to frame)"
-msgstr ""
-"最後的圖層尺寸是最底圖層的尺寸\n"
-"（各畫格之間可能不同）"
-
-#: plug-ins/gap/gap_range_ops.c:572
-msgid ""
-"Resulting Layer Size is the frame size     \n"
-"transparent parts are filled with BG color"
-msgstr ""
-"最後的圖層尺寸是畫格的尺寸\n"
-"透明部份會以背景顏色填上"
-
-#: plug-ins/gap/gap_range_ops.c:582
-msgid "select all Layers where Layername is equal to Pattern"
-msgstr "選擇所有圖層名稱符合樣式的圖層"
-
-#: plug-ins/gap/gap_range_ops.c:583
-msgid "select all Layers where Layername starts with Pattern"
-msgstr "選擇所有圖層名稱以某式樣開始的圖層"
-
-#: plug-ins/gap/gap_range_ops.c:584
-msgid "select all Layers where Layername ends up with Pattern"
-msgstr "選擇所有圖層名稱以某式樣結尾的圖層"
-
-#: plug-ins/gap/gap_range_ops.c:585
-msgid "select all Layers where Layername contains Pattern"
-msgstr "選擇所有圖層名稱含有某式樣的圖層"
-
-#: plug-ins/gap/gap_range_ops.c:586
-msgid ""
-"select Layerstack positions.\n"
-"0, 4-5, 8\n"
-"where 0 == Top-layer"
-msgstr ""
-"選擇圖層堆疊位置。\n"
-"0, 4-5, 8\n"
-"其中 0 == 最頂層"
-
-#: plug-ins/gap/gap_range_ops.c:587
-msgid ""
-"select Layerstack positions.\n"
-"0, 4-5, 8\n"
-"where 0 == BG-layer"
-msgstr ""
-"選擇圖層堆疊位置。\n"
-"0, 4-5, 8\n"
-"其中 0 == 背景圖層"
-
-#: plug-ins/gap/gap_range_ops.c:588
-msgid "select all visible Layers"
-msgstr "選擇所有可見圖層"
-
-#: plug-ins/gap/gap_range_ops.c:617
-msgid "Layer Basename:"
-msgstr "圖層基本名稱："
-
-#: plug-ins/gap/gap_range_ops.c:618
-msgid ""
-"Basename for all Layers    \n"
-"[####] is replaced by frame number"
-msgstr ""
-"所有圖層的基本名稱\n"
-"[####] 會以畫格編號取代"
-
-#: plug-ins/gap/gap_range_ops.c:636
-msgid "Layer Mergemode:"
-msgstr "圖層合併模式："
-
-#: plug-ins/gap/gap_range_ops.c:643
-msgid "Exclude BG-Layer"
-msgstr "排除背景圖層"
-
-#: plug-ins/gap/gap_range_ops.c:644
-msgid ""
-"Exclude the BG-Layers    \n"
-"in all handled frames\n"
-"regardless to selection"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:674
-msgid "Use all unselected Layers"
-msgstr "使用所有未選取的圖層"
-
-#: plug-ins/gap/gap_range_ops.c:748
-msgid "Creating Layer-Animated Image..."
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:970
-msgid "Frames to Image"
-msgstr "畫格轉為圖像"
-
-#: plug-ins/gap/gap_range_ops.c:971
-msgid "Create Multilayer-Image from Frames"
-msgstr "由畫格建立多圖層的圖像"
-
-#: plug-ins/gap/gap_range_ops.c:1112
-msgid "Flattening Frames..."
-msgstr "正在平面化畫格..."
-
-#: plug-ins/gap/gap_range_ops.c:1113
-msgid "Converting Frames..."
-msgstr "正在轉換畫格..."
-
-#: plug-ins/gap/gap_range_ops.c:1261
-msgid ""
-"Convert Frames: SAVE operation FAILED.\n"
-"Desired save plugin can't handle type\n"
-"or desired save plugin not available."
-msgstr ""
-"轉換畫格︰儲存操作失敗。\n"
-"需要的儲存增效模組無法處理該類型\n"
-"或是找不到所需的儲存增效模組。"
-
-#: plug-ins/gap/gap_range_ops.c:1369
-msgid "Cropping all Animation Frames..."
-msgstr "正在裁剪所有動畫畫格..."
-
-#: plug-ins/gap/gap_range_ops.c:1372
-msgid "Resizing all Animation Frames..."
-msgstr "正在重設所有動畫畫格尺寸..."
-
-#: plug-ins/gap/gap_range_ops.c:1375
-msgid "Scaling all Animation Frames..."
-msgstr "正在縮放所有動畫畫格..."
-
-#: plug-ins/gap/gap_range_ops.c:1461
-msgid "Flatten Frames"
-msgstr "平面化畫格"
-
-#: plug-ins/gap/gap_range_ops.c:1517
-#, c-format
-msgid "Removing Layer (pos:%ld) from Frames..."
-msgstr "由畫格移除圖層（位置︰%ld）"
-
-#: plug-ins/gap/gap_range_ops.c:1634
-msgid "Delete Layers in Frames"
-msgstr "刪除畫格中的圖層"
-
-#: plug-ins/gap/gap_range_ops.c:1635
-msgid "Select Frame Range & Position"
-msgstr "選擇畫格範圍及位置"
-
-#: plug-ins/gap/gap_split.c:101
-msgid "Splitting into Frames..."
-msgstr "分解成畫格..."
-
-#: plug-ins/gap/gap_split.c:176
-msgid ""
-"Split Frames: SAVE operation FAILED.\n"
-"desired save plugin can't handle type\n"
-"or desired save plugin not available."
-msgstr ""
-"分解畫格︰儲存操作失敗。\n"
-"需要的儲存增效模組無法處理該類型\n"
-"或是找不到所需的儲存增效模組。"
-
-#: plug-ins/gap/gap_split.c:226
-#, c-format
-msgid ""
-"%s\n"
-"%s\n"
-"(%s_0001.%s)\n"
-msgstr ""
-"%s\n"
-"%s\n"
-"(%s_0001.%s)\n"
-
-#: plug-ins/gap/gap_split.c:227
-msgid "Make a frame (diskfile) from each Layer"
-msgstr ""
-
-#: plug-ins/gap/gap_split.c:228
-msgid "frames are named: base_nr.extension"
-msgstr "畫格名稱為︰「基本名稱_編號.延伸檔名」"
-
-#: plug-ins/gap/gap_split.c:236
-msgid "extension of resulting frames (is also used to define Fileformat)"
-msgstr "產生出來的畫格的延伸檔案（也用來定義檔案格式）"
-
-#: plug-ins/gap/gap_split.c:241
-msgid "Inverse Order:"
-msgstr ""
-
-#: plug-ins/gap/gap_split.c:242
-msgid "Start frame 0001 at Top Layer"
-msgstr "從最頂圖層開始編號 0001 的畫格"
-
-#: plug-ins/gap/gap_split.c:247
-msgid ""
-"Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
-"BG color."
-msgstr "移除所產生的畫格的透明色版。透明部份會以背景顏色填上。"
-
-#: plug-ins/gap/gap_split.c:250
-msgid "Split Image into Frames"
-msgstr "分解圖像為畫格"
-
-#: plug-ins/gap/gap_split.c:251
-msgid "Split Settings"
-msgstr "分解設定"
-
-#: plug-ins/gap/gap_split.c:298
-msgid ""
-"OPERATION CANCELLED.\n"
-"This image is already an AnimFrame.\n"
-"Try again on a Duplicate (Image/Duplicate)."
-msgstr ""
-
-#: plug-ins/gap/resize.c:107
-msgid "Scale"
-msgstr "縮放"
-
-#: plug-ins/gap/resize.c:111
-msgid "Resize"
-msgstr "重定尺寸"
-
-#: plug-ins/gap/resize.c:127
-msgid "New width:"
-msgstr "新的寬度："
-
-#: plug-ins/gap/resize.c:144
-msgid "New height:"
-msgstr "新的高度："
-
-#: plug-ins/gap/resize.c:161
-msgid "X ratio:"
-msgstr "X 比例："
-
-#: plug-ins/gap/resize.c:178
-msgid "Y ratio:"
-msgstr "Y 比例："
-
-#. the constrain toggle button
-#: plug-ins/gap/resize.c:231
-msgid "Constrain Ratio"
-msgstr "限制比例"
-
-#: plug-ins/gdyntext/charmap.c:121
-#, c-format
-msgid "Char: %c, %d, 0x%02x"
-msgstr "字元：%c，%d，0x%02x"
-
-#: plug-ins/gdyntext/charmap_window.c:119
-msgid "Selected char:"
-msgstr "選擇的字元︰"
-
-#: plug-ins/gdyntext/charmap_window.c:133 plug-ins/imagemap/imap_polygon.c:454
-msgid "Insert"
-msgstr "插入"
-
-#: plug-ins/gdyntext/charmap_window.c:136
-msgid "Insert the selected char at the cursor position"
-msgstr "在游標處插入所選的字元"
-
-#: plug-ins/gdyntext/font_selection.c:166
-#: plug-ins/gdyntext/font_selection.c:309 plug-ins/imagemap/imap_circle.c:265
-#: plug-ins/imagemap/imap_circle.c:271 plug-ins/imagemap/imap_circle.c:277
-#: plug-ins/imagemap/imap_grid.c:202 plug-ins/imagemap/imap_grid.c:208
-#: plug-ins/imagemap/imap_polygon.c:439 plug-ins/imagemap/imap_polygon.c:446
-#: plug-ins/imagemap/imap_rectangle.c:382
-#: plug-ins/imagemap/imap_rectangle.c:388
-#: plug-ins/imagemap/imap_rectangle.c:394
-#: plug-ins/imagemap/imap_rectangle.c:400
-msgid "pixels"
-msgstr "像素"
-
-#: plug-ins/gdyntext/font_selection.c:167
-msgid "points"
-msgstr "點"
-
-#: plug-ins/gdyntext/gdyntext.c:94
-#, fuzzy
-msgid "<Image>/Filters/Text/Dynamic Text..."
-msgstr "<Image>/濾鏡/描繪/動態文字..."
-
-#: plug-ins/gdyntext/gdyntext.c:230
-msgid ""
-" Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
-"new layer creation."
-msgstr "目前的圖層不是 GDynText 圖層，或是它沒有透明色版。強制建立新的圖層。"
-
-#: plug-ins/gdyntext/gdyntext.c:325 plug-ins/gdyntext/gdyntext.c:448
-msgid "GDynText Layer"
-msgstr "GDynText 圖層"
-
-#: plug-ins/gdyntext/gdyntext.c:357
-msgid "GIMP Dynamic Text"
-msgstr "GIMP 動態文字"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:150
-msgid "GDynText: Messages Window"
-msgstr "GDynText：訊息視窗"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:181
-msgid "GDynText: About ..."
-msgstr "GDynText：關於..."
-
-#: plug-ins/gdyntext/gdyntext_ui.c:273 plug-ins/gflare/gflare.c:4816
-msgid "none"
-msgstr "無"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:274
-msgid "bottom-left"
-msgstr "左下"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:275
-msgid "bottom-center"
-msgstr "底部"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:276
-msgid "bottom-right"
-msgstr "右下"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:277
-msgid "middle-left"
-msgstr "左方"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:278
-msgid "center"
-msgstr "中央"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:279
-msgid "middle-right"
-msgstr "右方"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:280
-msgid "top-left"
-msgstr "左上"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:281
-msgid "top-center"
-msgstr "頂部"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:282
-msgid "top-right"
-msgstr "右上"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:291
-msgid "GDynText"
-msgstr "GDynText"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:327
-msgid "Toggle creation of a new layer"
-msgstr "切換是否建立新的圖層"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:340
-msgid "Load text from file"
-msgstr "從檔案載入文字"
-
-#. FONT COLOR
-#: plug-ins/gdyntext/gdyntext_ui.c:348
-msgid "GDynText: Select Color"
-msgstr "GDynText：選擇顏色"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:358
-msgid "Text color"
-msgstr "文字顏色"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:369
-msgid "Toggle anti-aliased text"
-msgstr "切換是否使用反鋸齒文字"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:388
-msgid "Left aligned text"
-msgstr "文字靠左對齊"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:405
-msgid "Centered text"
-msgstr "文字置中"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:421
-msgid "Right aligned text"
-msgstr "文字靠右對齊"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:433
-msgid "Toggle text font preview"
-msgstr "切換字型預覽"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:445
-msgid "Toggle CharMap window"
-msgstr ""
-
-#. Layer Alignment
-#: plug-ins/gdyntext/gdyntext_ui.c:459
-msgid ""
-"Layer\n"
-"Alignment"
-msgstr ""
-"圖層\n"
-"對齊方式"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:467
-msgid "Set layer alignment"
-msgstr "設定圖層對齊方式"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:497
-msgid ""
-"Line\n"
-"Spacing"
-msgstr "行距"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:519
-msgid "Set text rotation (degrees)"
-msgstr "設定文字旋轉（角度）"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:551
-msgid "Editable text sample"
-msgstr "可編輯的文字樣本"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:564
-msgid "Clear preview"
-msgstr "清除預覽"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:571
-msgid "Preview default text sample"
-msgstr "預覽預設的文字樣本"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:623
-msgid ""
-"Holding the Shift key while pressing this button will force GDynText in "
-"changing the layer name as done in GIMP 1.0."
-msgstr ""
-"按下此按鈕時同時按著 Shift 鍵會強制令 GDynText 改變圖層名稱，如同 GIMP 1.0 時"
-"一樣"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:904
-msgid "GDynText: CharMap"
-msgstr ""
-
-#: plug-ins/gdyntext/gdyntext_ui.c:971
-msgid "GDynText: Load text"
-msgstr "GDynText：載入文字"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:1016
-#, c-format
-msgid ""
-"Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
-msgstr "警告：檔案「%s」大於文字長度的最大限制（%d）。\n"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:1027
-#, c-format
-msgid "Error opening \"%s\"!\n"
-msgstr "開啟「%s」發生錯誤！\n"
-
-#: plug-ins/gdyntext/gdyntextcompat.c:122
-#, c-format
-msgid ""
-" WARNING: GDynText is too old! A newer version is required to handle this "
-"layer. Get it from %s"
-msgstr ""
-"警告︰GDynText 版本太舊了！需要較新版本才可處理此圖層。可在以下位置取得︰%s"
-
-#: plug-ins/gdyntext/gdyntextcompat.c:176
-#, c-format
-msgid " Upgrading old GDynText layer to %s."
-msgstr "正在將舊的 GDynText 圖層更新至 %s"
-
-#: plug-ins/gdyntext/message_window.c:121
-msgid "Dismiss"
-msgstr "取消"
-
 #: plug-ins/gfig/gfig.c:674
 msgid "<Image>/Filters/Render/Gfig..."
 msgstr "<Image>/濾鏡/描繪/Gfig..."
@@ -10163,6 +7539,10 @@ msgstr "設定筆刷..."
 msgid "Add"
 msgstr "相加"
 
+#: plug-ins/gfig/gfig.c:3147
+msgid "Subtract"
+msgstr ""
+
 #: plug-ins/gfig/gfig.c:3148
 msgid "Replace"
 msgstr "取代"
@@ -10234,6 +7614,11 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:3319
 msgid "Grid Type:"
 msgstr "格線類型："
+
+#: plug-ins/gfig/gfig.c:3328 plug-ins/gflare/gflare.c:589
+#: plug-ins/gimpressionist/orientmap.c:590
+msgid "Normal"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:3332
 msgid "Darker"
@@ -10332,6 +7717,11 @@ msgstr "完成"
 #: plug-ins/gfig/gfig.c:3934 plug-ins/gfig/gfig.c:4001
 msgid "Paint"
 msgstr "繪畫"
+
+#: plug-ins/gfig/gfig.c:4014 plug-ins/imagemap/imap_cmd_select.c:52
+#: plug-ins/imagemap/imap_tools.c:133
+msgid "Select"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:4082
 #, c-format
@@ -10433,6 +7823,14 @@ msgstr "讀取檔案發生錯誤"
 #: plug-ins/gfig/gfig.c:6518
 msgid "Hey where has the object gone ?"
 msgstr "嘿，物件到哪裡去了？"
+
+#: plug-ins/gflare/gflare.c:590
+msgid "Addition"
+msgstr ""
+
+#: plug-ins/gflare/gflare.c:591 plug-ins/gimpressionist/paper.c:152
+msgid "Overlay"
+msgstr ""
 
 #. don't translate <Image>, it's a special
 #. * keyword for the gtk toolkit
@@ -10687,6 +8085,10 @@ msgstr "多邊形"
 msgid "Second Flares"
 msgstr ""
 
+#: plug-ins/gflare/gflare.c:4816
+msgid "none"
+msgstr "無"
+
 #: plug-ins/gflare/gflare.c:4829
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
@@ -10917,7 +8319,7 @@ msgstr "起始角度："
 msgid "Angle span:"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:96 plug-ins/gimpressionist/size.c:95
+#: plug-ins/gimpressionist/orientation.c:96
 msgid "The number of directions (i.e. brushes) to use"
 msgstr ""
 
@@ -11235,6 +8637,11 @@ msgstr "最小尺寸："
 msgid "Max size:"
 msgstr "最大尺寸："
 
+#: plug-ins/gimpressionist/size.c:95
+#, fuzzy
+msgid "The number of sizes of brushes to use"
+msgstr "表格邊框的寬度（像素）。"
+
 #: plug-ins/gimpressionist/size.c:104
 msgid "The smallest brush to create"
 msgstr ""
@@ -11320,79 +8727,6 @@ msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr ""
-
-#: plug-ins/helpbrowser/helpbrowser.c:95
-#, c-format
-msgid ""
-"<html><head><title>Document not found</title></head><body bgcolor=\"#ffffff"
-"\"><center><p>%s<h3>Couldn't find document</h3><tt>%s</tt></"
-"center><p><small>This either means that the help for this topic has not been "
-"written yet or that something is wrong with your installation. Please check "
-"carefully before you report this as a bug.</small></body></html>"
-msgstr ""
-
-#: plug-ins/helpbrowser/helpbrowser.c:111
-#, c-format
-msgid ""
-"<html><head><title>Directory not found</title></head><body bgcolor=\"#ffffff"
-"\"><center><p>%s<h3>Couldn't change to directory</h3><tt>%s</tt><h3>while "
-"trying to access</h3><tt>%s</tt></center><p><small>This either means that "
-"the help for this topic has not been written yet or that something is wrong "
-"with your installation. Please check carefully before you report this as a "
-"bug.</small></body></html>"
-msgstr ""
-
-#: plug-ins/helpbrowser/helpbrowser.c:137
-msgid "Contents"
-msgstr "目錄"
-
-#: plug-ins/helpbrowser/helpbrowser.c:146
-msgid "Index"
-msgstr "索引"
-
-#: plug-ins/helpbrowser/helpbrowser.c:419 plug-ins/imagemap/imap_main.c:512
-#: plug-ins/imagemap/imap_settings.c:154
-msgid "<Untitled>"
-msgstr "<無標題>"
-
-#: plug-ins/helpbrowser/helpbrowser.c:776
-#: plug-ins/helpbrowser/helpbrowser.c:792
-#, c-format
-msgid ""
-"GIMP Help Browser Error.\n"
-"\n"
-"Couldn't find my root html directory.\n"
-"(%s)"
-msgstr ""
-"GIMP 說明瀏覽器發生錯誤。\n"
-"\n"
-"找不到 html 主目錄。\n"
-"(%s)"
-
-#: plug-ins/helpbrowser/helpbrowser.c:808
-msgid "GIMP Help Browser"
-msgstr "GIMP 說明瀏覽器"
-
-#: plug-ins/helpbrowser/helpbrowser.c:823
-msgid "Back"
-msgstr ""
-
-#: plug-ins/helpbrowser/helpbrowser.c:832
-msgid "Forward"
-msgstr ""
-
-#: plug-ins/helpbrowser/helpbrowser.c:1212
-#, c-format
-msgid ""
-"GIMP Help Browser Error.\n"
-"\n"
-"Couldn't find GIMP_HELP_ROOT html directory.\n"
-"(%s)"
-msgstr ""
-"GIMP 說明瀏覽器發生錯誤。\n"
-"\n"
-"找不到 GIMP_HELP_ROOT html 目錄。\n"
-"(%s)"
 
 #: plug-ins/ifscompose/ifscompose.c:362
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
@@ -11548,6 +8882,16 @@ msgstr ""
 msgid "Center x:"
 msgstr "x 中心點："
 
+#: plug-ins/imagemap/imap_circle.c:265 plug-ins/imagemap/imap_circle.c:271
+#: plug-ins/imagemap/imap_circle.c:277 plug-ins/imagemap/imap_grid.c:202
+#: plug-ins/imagemap/imap_grid.c:208 plug-ins/imagemap/imap_polygon.c:439
+#: plug-ins/imagemap/imap_polygon.c:446 plug-ins/imagemap/imap_rectangle.c:382
+#: plug-ins/imagemap/imap_rectangle.c:388
+#: plug-ins/imagemap/imap_rectangle.c:394
+#: plug-ins/imagemap/imap_rectangle.c:400
+msgid "pixels"
+msgstr "像素"
+
 #: plug-ins/imagemap/imap_circle.c:267
 msgid "Center y:"
 msgstr "y 中心點："
@@ -11558,6 +8902,17 @@ msgstr "清除"
 
 #: plug-ins/imagemap/imap_cmd_create.c:55
 msgid "Create"
+msgstr ""
+
+#: plug-ins/imagemap/imap_cmd_cut.c:56
+#: plug-ins/imagemap/imap_cmd_cut_object.c:54
+#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:133
+msgid "Cut"
+msgstr "剪下"
+
+#: plug-ins/imagemap/imap_cmd_delete_point.c:60
+#: plug-ins/imagemap/imap_polygon.c:671
+msgid "Delete Point"
 msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_edit_object.c:53
@@ -11630,6 +8985,11 @@ msgstr ""
 #: plug-ins/imagemap/imap_cmd_guides.c:266
 msgid "Guides"
 msgstr "參考線"
+
+#: plug-ins/imagemap/imap_cmd_insert_point.c:60
+#: plug-ins/imagemap/imap_polygon.c:685
+msgid "Insert Point"
+msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:55
 #: plug-ins/imagemap/imap_cmd_object_down.c:54
@@ -11848,6 +9208,10 @@ msgstr ""
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/濾鏡/網頁/Imagemap..."
 
+#: plug-ins/imagemap/imap_main.c:512 plug-ins/imagemap/imap_settings.c:154
+msgid "<Untitled>"
+msgstr "<無標題>"
+
 #: plug-ins/imagemap/imap_main.c:663
 msgid "Data changed"
 msgstr "資料已改變"
@@ -11986,6 +9350,10 @@ msgstr "x（像素）"
 msgid "y (pixels)"
 msgstr "y（像素）"
 
+#: plug-ins/imagemap/imap_polygon.c:454
+msgid "Insert"
+msgstr "插入"
+
 #: plug-ins/imagemap/imap_polygon.c:460
 msgid "Append"
 msgstr ""
@@ -12117,6 +9485,10 @@ msgstr ""
 #: plug-ins/imagemap/imap_source.c:61
 msgid "View Source"
 msgstr ""
+
+#: plug-ins/imagemap/imap_toolbar.c:114
+msgid "Open"
+msgstr "開啟"
 
 #: plug-ins/imagemap/imap_toolbar.c:119
 msgid "Preferences"
@@ -12837,6 +10209,1317 @@ msgstr "錯誤：無法讀取 XJT 屬性檔 %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "錯誤：XJT 屬性檔 %s 是空的"
+
+#~ msgid "File-Browser"
+#~ msgstr "檔案瀏覽器"
+
+#~ msgid "<Image>/Video/Split Video to Frames"
+#~ msgstr "<Image>/視像/分解視像檔為畫格"
+
+#~ msgid "<Toolbox>/Xtns/Split Video to Frames"
+#~ msgstr "<Toolbox>/視像/分解視像檔為畫格"
+
+#~ msgid "<Image>/Video/Split Video to Frames/MPEG1"
+#~ msgstr "<Image>/視像/分解視像檔為畫格/MPEG1"
+
+#~ msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
+#~ msgstr "<Toolbox>/視像/分解視像檔為畫格/MPEG1"
+
+#~ msgid "Overwrite Frame"
+#~ msgstr "覆寫畫格"
+
+#~ msgid "Overwrite All"
+#~ msgstr "覆寫全部"
+
+#~ msgid "File already exists"
+#~ msgstr "檔案已經存在"
+
+#~ msgid "Decoding MPEG Movie..."
+#~ msgstr "正在將 MPEG 視像檔解碼..."
+
+#~ msgid "Framenames:"
+#~ msgstr "畫格名稱："
+
+#~ msgid ""
+#~ "Basename for the AnimFrames to write on disk\n"
+#~ "(framenumber and .xcf is added)"
+#~ msgstr ""
+#~ "要寫入磁碟的動畫畫格基本名稱\n"
+#~ "（會自動加入畫格編號及 .xcf）"
+
+#~ msgid ""
+#~ "\n"
+#~ "WARNING: Do not attempt to split other files than MPEG1 videos.\n"
+#~ "Before you proceed, you should save all open images."
+#~ msgstr ""
+#~ "\n"
+#~ "警告：請勿嘗試分解任何不是 MPEG1 視像檔的檔案。\n"
+#~ "進行之前，你應該先儲存任何仍開啟的圖像。"
+
+#~ msgid "Split MPEG1 Video to Frames"
+#~ msgstr "將 MPEG1 視像檔分解為畫格"
+
+#~ msgid "Select Frame Range"
+#~ msgstr "選擇畫格範圍"
+
+#~ msgid "Conditions to run the xanim based video split"
+#~ msgstr "執行以 xanim 為基礎的分解視像檔程序的先決條件"
+
+#~ msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
+#~ msgstr "１）你必須安裝 xanim 2.80.0 支援匯出檔案的版本"
+
+#~ msgid "    must be installed somewhere in your PATH"
+#~ msgstr "　　（即 loki 版本）而且 PATH 中有該執行檔路徑"
+
+#~ msgid "    you can get xanim exporting edition at"
+#~ msgstr "　　你可以在以下位置取得 xanim 支援匯出檔案的版本"
+
+#~ msgid ""
+#~ "2.) if your xanim exporting edition is not in your PATH or is not named "
+#~ "xanim"
+#~ msgstr "２）如果 xanim 支援匯出檔案的版本不在 PATH 或者檔名"
+
+#~ msgid "    you have to set Environment variable GAP_XANIM_PROG "
+#~ msgstr "　　不是稱為 xanim，就必須要設定環境變數 GAP_XANIM_PROG "
+
+#~ msgid "    to your xanim exporting program and restart gimp"
+#~ msgstr "　　為支援匯出檔案的 xanim 程式並重新啟動 gimp"
+
+#~ msgid "An ERROR occured while trying to call xanim:"
+#~ msgstr "當呼叫 xanim 時發生錯誤："
+
+#~ msgid "XANIM Information"
+#~ msgstr "XANIM 資訊"
+
+#~ msgid "Video:"
+#~ msgstr "視像："
+
+#~ msgid ""
+#~ "Basename for the AnimFrames to write on disk\n"
+#~ "(framenumber and extension is added)"
+#~ msgstr ""
+#~ "要寫入磁碟的動畫畫格基本名稱\n"
+#~ "（會自動加入畫格編號及延伸檔名）"
+
+#~ msgid "Format"
+#~ msgstr "格式"
+
+#~ msgid "Jpeg Quality:"
+#~ msgstr "Jpeg 品質："
+
+#~ msgid ""
+#~ "Quality for resulting Jpeg frames\n"
+#~ "(is ignored when other formats are used)"
+#~ msgstr ""
+#~ "最後 Jpeg 畫格的品質\n"
+#~ "（若使用其它格式會忽略此選項）"
+
+#~ msgid "Run asynchronously"
+#~ msgstr "非同步執行"
+
+#~ msgid ""
+#~ "\n"
+#~ "Warning: xanim 2.80 has only limited MPEG support.\n"
+#~ "Most of the frames (type P and B) will be skipped."
+#~ msgstr ""
+#~ "\n"
+#~ "警告：xanim 2.80 只有有限度的 MPEG 支援。\n"
+#~ "絕大部份的畫格（P 及 B 類型）都會被忽略。"
+
+#~ msgid "Split any Xanim readable Video to Frames"
+#~ msgstr "將任何 Xanim 支援的視像檔分解為畫格"
+
+#~ msgid "failed to overwrite %s (check permissions ?)"
+#~ msgstr "無法覆寫 %s（請檢查權限？）"
+
+#~ msgid "failed to write %s (check permissions ?)"
+#~ msgstr "無法寫入 %s（請檢查權限？）"
+
+#~ msgid "could not execute %s (check if xanim is installed)"
+#~ msgstr "無法執行 %s（請檢查是否已安裝 xanim）"
+
+#~ msgid "%s does not look like xanim"
+#~ msgstr "%s 不像是 xanim"
+
+#~ msgid "videofile %s not existent or empty\n"
+#~ msgstr "視像檔「%s」不存在或是空白的\n"
+
+#~ msgid ""
+#~ "could not create %s directory\n"
+#~ "(that is required for xanim frame export)"
+#~ msgstr ""
+#~ "無法建立 %s 目錄\n"
+#~ "（作為 xanim 匯出畫格之用）"
+
+#~ msgid ""
+#~ "could not start xanim process\n"
+#~ "(program=%s)"
+#~ msgstr ""
+#~ "無法開始 xanim 程序\n"
+#~ "（program=%s）"
+
+#~ msgid "backup to file"
+#~ msgstr "備份至檔案"
+
+#~ msgid "Make backup of the image after each step"
+#~ msgstr "每一步後都製作圖像的備份檔"
+
+#~ msgid "Continue"
+#~ msgstr "繼續"
+
+#~ msgid "Applying Filter to all Layers..."
+#~ msgstr "套用濾鏡到所有的圖層..."
+
+#~ msgid "<Image>/Filters/Filter all Layers..."
+#~ msgstr "<Image>/濾鏡/過濾所有圖層..."
+
+#~ msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
+#~ msgstr "<Image>/視像/分解視像檔為畫格/任何 XANIM 支援的檔案..."
+
+#~ msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
+#~ msgstr "<Toolbox>/視像/分解視像檔為畫格/任何 XANIM 支援的檔案..."
+
+#~ msgid "<Image>/Video/Encode/MPEG1..."
+#~ msgstr "<Image>/視像/編碼/MPEG1..."
+
+#~ msgid "<Image>/Video/Encode/MPEG2..."
+#~ msgstr "<Image>/視像/編碼/MPEG2..."
+
+#~ msgid "GAP Message"
+#~ msgstr "GAP 訊息"
+
+#~ msgid ""
+#~ "OPERATION CANCELLED.\n"
+#~ "GAP plug-ins only work with filenames\n"
+#~ "that end in numbers like _0001.xcf.\n"
+#~ "==> Rename your image, then try again."
+#~ msgstr ""
+#~ "操作已取消。\n"
+#~ "GAP 增效模組只能使用類似 _0001.xcf 般\n"
+#~ "以數字作結尾的檔案名稱。\n"
+#~ "─→請更改圖像檔名，並再試一次。"
+
+#~ msgid ""
+#~ "You are using a file format != xcf\n"
+#~ "Save Operations may result\n"
+#~ "in loss of layer information."
+#~ msgstr ""
+#~ "你所使用的檔案格式不是 xcf。\n"
+#~ "儲存檔案可能會引致圖層資料遺失。"
+
+#~ msgid "Save Flattened"
+#~ msgstr "平面化後再儲存"
+
+#~ msgid "Save As Is"
+#~ msgstr "強迫儲存"
+
+#~ msgid "Error: could not rename frame %ld to %ld"
+#~ msgstr "錯誤：無法將畫格 %ld 改名為 %ld"
+
+#~ msgid "Error: could not save frame %s"
+#~ msgstr "錯誤：無法儲存畫格 %s"
+
+#~ msgid "Duplicating frames..."
+#~ msgstr "正在複製畫格..."
+
+#~ msgid "Renumber Framesequence..."
+#~ msgstr "重新編排畫格順序..."
+
+#~ msgid "Goto Frame (%ld/%ld)"
+#~ msgstr "移至畫格（%ld/%ld）"
+
+#~ msgid "Number:"
+#~ msgstr "編號："
+
+#~ msgid "Delete Frames (%ld/%ld)"
+#~ msgstr "刪除畫格（%ld/%ld）"
+
+#~ msgid "Duplicate Frames (%ld/%ld)"
+#~ msgstr "複製畫格（%ld/%ld）"
+
+#~ msgid "N times:"
+#~ msgstr "N 次："
+
+#~ msgid ""
+#~ "Copy selected Range n-times  \n"
+#~ "(you may type in Values > 99)"
+#~ msgstr ""
+#~ "複製選擇範圍 n 次\n"
+#~ "（可輸入 > 99 的數值）"
+
+#~ msgid "Duplicate Frame Range"
+#~ msgstr "複製畫格範圍"
+
+#~ msgid "Exchange current Frame (%ld)"
+#~ msgstr "交換目前的畫格（%ld）"
+
+#~ msgid "With Frame (number)"
+#~ msgstr "和畫格（編號）"
+
+#~ msgid "<Image>/Video/Goto/Next Frame"
+#~ msgstr "<Image>/視像/移至/下個畫格"
+
+#~ msgid "<Image>/Video/Goto/Previous Frame"
+#~ msgstr "<Image>/視像/移至/上個畫格"
+
+#~ msgid "<Image>/Video/Goto/First Frame"
+#~ msgstr "<Image>/視像/移至/第一個畫格"
+
+#~ msgid "<Image>/Video/Goto/Last Frame"
+#~ msgstr "<Image>/視像/移至/最後一個畫格"
+
+#~ msgid "<Image>/Video/Goto/Any Frame..."
+#~ msgstr "<Image>/視像/移至/任何畫格..."
+
+#~ msgid "<Image>/Video/Delete Frames..."
+#~ msgstr "<Image>/視像/刪除畫格..."
+
+#~ msgid "<Image>/Video/Duplicate Frames..."
+#~ msgstr "<Image>/視像/複製畫格..."
+
+#~ msgid "<Image>/Video/Exchange Frame..."
+#~ msgstr "<Image>/視像/交換畫格..."
+
+#~ msgid "<Image>/Video/Move Path..."
+#~ msgstr "<Image>/視像/移動路徑..."
+
+#~ msgid "<Image>/Video/Frames to Image..."
+#~ msgstr "<Image>/視像/畫格轉為圖像..."
+
+#~ msgid "<Image>/Video/Frames Flatten..."
+#~ msgstr "<Image>/視像/畫格平面化..."
+
+#~ msgid "<Image>/Video/Frames LayerDel..."
+#~ msgstr "<Image>/視像/刪除畫格圖層..."
+
+#~ msgid "<Image>/Video/Frames Convert..."
+#~ msgstr "<Image>/視像/畫格轉換..."
+
+#~ msgid "<Image>/Video/Frames Resize..."
+#~ msgstr "<Image>/視像/重定畫格尺寸..."
+
+#~ msgid "<Image>/Video/Frames Crop..."
+#~ msgstr "<Image>/視像/畫格裁剪..."
+
+#~ msgid "<Image>/Video/Frames Scale..."
+#~ msgstr "<Image>/視像/縮放畫格..."
+
+#~ msgid "<Image>/Video/Split Image to Frames..."
+#~ msgstr "<Image>/視像/分解圖像為畫格..."
+
+#~ msgid "<Image>/Video/Framesequence Shift..."
+#~ msgstr "<Image>/視像/改變畫格次序..."
+
+#~ msgid "<Image>/Video/Frames Modify..."
+#~ msgstr "<Image>/視像/修改畫格..."
+
+#~ msgid "Pattern is equal to LayerName"
+#~ msgstr "圖樣和圖層名稱相同"
+
+#~ msgid "Pattern is Start of LayerName"
+#~ msgstr "圖樣和圖層名稱開始部份相同"
+
+#~ msgid "Pattern is End of Layername"
+#~ msgstr "圖樣和圖層名稱末端部份相同"
+
+#~ msgid "Pattern is a Part of LayerName"
+#~ msgstr "圖樣是圖層名稱的一部份"
+
+#~ msgid "Select all Layers where Layername is equal to Pattern"
+#~ msgstr "選擇所有名稱與樣式一樣的圖層"
+
+#~ msgid "Select all Layers where Layername starts with Pattern"
+#~ msgstr "選擇所有名稱開始部份與樣式一樣的圖層"
+
+#~ msgid "Select all Layers where Layername ends up with Pattern"
+#~ msgstr "選擇所有名稱結尾部份與樣式一樣的圖層"
+
+#~ msgid "Select all Layers where Layername contains Pattern"
+#~ msgstr "選擇所有名稱含有樣式的圖層"
+
+#~ msgid ""
+#~ "Select Layerstack positions.\n"
+#~ "0, 4-5, 8\n"
+#~ "where 0 == Top-layer"
+#~ msgstr ""
+#~ "選取圖層堆疊位置。\n"
+#~ "0, 4-5, 8\n"
+#~ "其中 0 == 最頂層"
+
+#~ msgid ""
+#~ "Select Layerstack positions.\n"
+#~ "0, 4-5, 8\n"
+#~ "where 0 == BG-layer"
+#~ msgstr ""
+#~ "選取圖層堆疊位置。\n"
+#~ "0, 4-5, 8\n"
+#~ "其中 0 == 背景圖層"
+
+#~ msgid "Select all visible Layers"
+#~ msgstr "選擇所有可見圖層"
+
+#~ msgid "Set Layer(s) visible"
+#~ msgstr "設定圖層為可見圖層"
+
+#~ msgid "Set Layer(s) invisible"
+#~ msgstr "設定圖層為隱藏圖層"
+
+#~ msgid "Raise Layer(s)"
+#~ msgstr "提升圖層"
+
+#~ msgid "Lower Layer(s)"
+#~ msgstr "降低圖層"
+
+#~ msgid "Apply filter on Layer(s)"
+#~ msgstr "套用濾鏡到圖層上"
+
+#~ msgid "Duplicate Layer(s)"
+#~ msgstr "複製圖層"
+
+#~ msgid "Delete Layer(s)"
+#~ msgstr "刪除圖層"
+
+#~ msgid "Rename Layer(s)"
+#~ msgstr "更改圖層名稱"
+
+#~ msgid "From Frame:"
+#~ msgstr "從畫格："
+
+#~ msgid "first handled frame"
+#~ msgstr "第一個處理的畫格"
+
+#~ msgid "To Frame:"
+#~ msgstr "到畫格："
+
+#~ msgid "last handled frame"
+#~ msgstr "最後一個處理的畫格"
+
+#~ msgid "Select Layer(s):"
+#~ msgstr "選擇圖層："
+
+#~ msgid "Select Pattern:"
+#~ msgstr "選擇圖樣："
+
+#~ msgid "Case sensitive"
+#~ msgstr "區分大小寫"
+
+#~ msgid "Lowercase and UPPERCASE letters are considered as different"
+#~ msgstr "小寫和大寫有分別"
+
+#~ msgid "New Layername:"
+#~ msgstr "新圖層名稱："
+
+#~ msgid "Modifying Frames/Layer(s)..."
+#~ msgstr "修改畫格/圖層..."
+
+#~ msgid "Left  Top"
+#~ msgstr "左上"
+
+#~ msgid "Left  Bottom"
+#~ msgstr "左下"
+
+#~ msgid "Right Top"
+#~ msgstr "右上"
+
+#~ msgid "Right Bottom"
+#~ msgstr "右下"
+
+#~ msgid "Once"
+#~ msgstr "一次"
+
+#~ msgid "Frame Loop"
+#~ msgstr "畫格循環"
+
+#~ msgid "Anim Preview"
+#~ msgstr "動畫預覽"
+
+#~ msgid "Generate Animated Preview as multilayer image"
+#~ msgstr "以多圖層的圖像方式產生動畫預覽"
+
+#~ msgid "Start Frame:"
+#~ msgstr "開始畫格︰"
+
+#~ msgid "First handled frame"
+#~ msgstr "第一個處理的畫格"
+
+#~ msgid "End Frame:"
+#~ msgstr "終止畫格︰"
+
+#~ msgid "Last handled frame"
+#~ msgstr "最後一個處理的畫格"
+
+#~ msgid "Preview Frame:"
+#~ msgstr "預覽畫格︰"
+
+#~ msgid "Frame to show when UpdPreview button is pressed"
+#~ msgstr "當按下「更新預覽」時顯示的畫格"
+
+#~ msgid "Layerstack:"
+#~ msgstr "圖層堆疊︰"
+
+#~ msgid "Clip To Frame"
+#~ msgstr "依畫格範圍裁剪"
+
+#~ msgid "Clip all copied Src-Layers at Frame Boundaries"
+#~ msgstr "裁剪所有已複製的來源圖層至畫格範圍之內"
+
+#~ msgid "Anim Preview Mode"
+#~ msgstr "動畫預覽模式"
+
+#~ msgid "Scale Preview"
+#~ msgstr "縮放預覽"
+
+#~ msgid "Copy to Video Buffer"
+#~ msgstr "複製至視像緩衝區"
+
+#~ msgid "Generate Animated Preview failed\n"
+#~ msgstr "產生動畫預覽失敗\n"
+
+#~ msgid "Load Path Points from file"
+#~ msgstr "由檔案載入路徑控制點"
+
+#~ msgid "Save Path Points to file"
+#~ msgstr "將路徑控制點儲存至檔案"
+
+#~ msgid "Source Image/Layer:"
+#~ msgstr "來源圖像/圖層："
+
+#~ msgid "Mode:"
+#~ msgstr "模式："
+
+#~ msgid "How to fetch the next SrcLayer at the next handled frame"
+#~ msgstr "在下一個處理的畫格中如何取得下一個來源圖層"
+
+#~ msgid "How to place the SrcLayer at Controlpoint Coordinates"
+#~ msgstr "如何將來源圖層放至控制點座標"
+
+#~ msgid "Move Path Preview"
+#~ msgstr "移動路徑預覽"
+
+#~ msgid "X Coordinate"
+#~ msgstr "X 座標"
+
+#~ msgid "Y Coordinate"
+#~ msgstr "Y 座標"
+
+#~ msgid "Scale Source Layer's Width in percent"
+#~ msgstr "縮放來源圖層寬度（百分比）"
+
+#~ msgid "Scale SrcLayer's Height in percent"
+#~ msgstr "縮放來源圖層高度（百分比）"
+
+#~ msgid "SrcLayer's Opacity in percent"
+#~ msgstr "來源圖層不透明度（百分比）"
+
+#~ msgid "Rotate:"
+#~ msgstr "旋轉："
+
+#~ msgid "Rotate SrcLayer (in degree)"
+#~ msgstr "旋轉圖層（角度）"
+
+#~ msgid "Show Path"
+#~ msgstr "顯示路徑"
+
+#~ msgid "Prev Point"
+#~ msgstr "上一點"
+
+#~ msgid "Show Previous Controlpoint"
+#~ msgstr "顯示上一個控制點"
+
+#~ msgid "Next Point"
+#~ msgstr "下一點"
+
+#~ msgid "Show Next Controlpoint"
+#~ msgstr "顯示下一個控制點"
+
+#~ msgid "First Point"
+#~ msgstr "第一點"
+
+#~ msgid "Show First Controlpoint"
+#~ msgstr "顯示第一個控制點"
+
+#~ msgid "Last Point"
+#~ msgstr "最後一點"
+
+#~ msgid "Show Last Controlpoint"
+#~ msgstr "顯示最後一個控制點"
+
+#~ msgid "Clear Point"
+#~ msgstr "清除控制點"
+
+#~ msgid "Clear All Points"
+#~ msgstr "清除所有控制點"
+
+#~ msgid "Delete All Points"
+#~ msgstr "刪除所有控制點"
+
+#~ msgid "Delete all Controlpoints"
+#~ msgstr "刪除所有控制點"
+
+#~ msgid "Load Points"
+#~ msgstr "載入控制點"
+
+#~ msgid "Load Controlpoints from file"
+#~ msgstr "由檔案載入控制點"
+
+#~ msgid "Save Points"
+#~ msgstr "儲存控制點"
+
+#~ msgid "Save Controlpoints to file"
+#~ msgstr "將控制點存檔"
+
+#~ msgid "Errors:"
+#~ msgstr "錯誤："
+
+#~ msgid "Copying Layers into Frames..."
+#~ msgstr "正在複製圖層到畫格..."
+
+#~ msgid "Generating Animated Preview..."
+#~ msgstr "正在產生動畫預覽..."
+
+#~ msgid ""
+#~ "\n"
+#~ "Error: controlpoint [%d] is out of handled framerange"
+#~ msgstr ""
+#~ "\n"
+#~ "錯誤︰控制點 [%d] 在處理的畫格範圍之外"
+
+#~ msgid "Conditions to run mpeg_encode 1.5:"
+#~ msgstr "執行 mpeg_encode 1.5 所需條件："
+
+#~ msgid "Conditions to run mpeg2encode 1.2:"
+#~ msgstr "執行 mpeg2_encode 1.2 所需條件："
+
+#~ msgid "1.) mpeg_encode 1.5 must be installed"
+#~ msgstr "１）必須先安裝 mpeg_encode 1.5"
+
+#~ msgid "1.) mpeg2encode 1.2 must be installed"
+#~ msgstr "１）必須先安裝 mpeg2_encode 1.2"
+
+#~ msgid "    you can get mpeg_encode at"
+#~ msgstr "　　你可在下列網址取得 mpeg_encode："
+
+#~ msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
+#~ msgstr "　　你可以在 http://www.mpeg.org/MSSG 取得 mpeg2encode"
+
+#~ msgid "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
+#~ msgstr "　　ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
+
+#~ msgid "   or at ftp://ftp.mpeg.org/pub/mpeg/mssg "
+#~ msgstr "　　或是 ftp://ftp.mpeg.org/pub/mpeg/mssg "
+
+#~ msgid "2.) You need a series of single Images on disk (AnimFrames)"
+#~ msgstr "２）磁碟上需要有一系列的單一圖像（動畫畫格）"
+
+#~ msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
+#~ msgstr "　　而全部的檔案格式都是 JPEG（或 YUV、PNM、PPM）"
+
+#~ msgid "   all with fileformat PPM (or YUV)"
+#~ msgstr "　　而全部的檔案格式都是 PPM（或 YUV）"
+
+#~ msgid "    (use 'Frames Convert' from the Video Menu"
+#~ msgstr "　　（使用視像選單中的「畫格轉換」或是"
+
+#~ msgid "    or 'Split Image to Frames' from the Video Menu)"
+#~ msgstr "　　視像選單中的「分解圖像為畫格」）"
+
+#~ msgid "3.) All Images must have the same size,"
+#~ msgstr "３）所有圖像的尺寸必須一樣，"
+
+#~ msgid "    width and height must be a multiple of 16"
+#~ msgstr "　　寬度和高度都必須是 16 的倍數"
+
+#~ msgid "    (use Scale or Crop from the Video Menu)"
+#~ msgstr "　　（可在視像選單中選取縮放或裁剪）"
+
+#~ msgid "MPEG_ENCODE Information"
+#~ msgstr "MPEG_ENCODE 資訊"
+
+#~ msgid "generate MPEG1 (ISO/IEC 11172-2) stream"
+#~ msgstr "產生 MPEG1（ISO/IEC 11172-2）串流"
+
+#~ msgid "generate MPEG2 (ISO/IEC DIS 13818-2) stream"
+#~ msgstr "產生 MPEG2（ISO/IEC DIS 13818-2）串流"
+
+#~ msgid "GenParams"
+#~ msgstr "產生參數"
+
+#~ msgid "Gen + Encode"
+#~ msgstr "產生＋編碼"
+
+#~ msgid "Framerate :"
+#~ msgstr "畫格速率："
+
+#~ msgid "framerate in frames/second"
+#~ msgstr "畫格速率（畫格/秒）"
+
+#~ msgid "Outputfile:"
+#~ msgstr "輸出檔："
+
+#~ msgid "Name of the resulting MPEG outputfile"
+#~ msgstr "MPEG 輸出檔的名稱"
+
+#~ msgid "Paramfile:"
+#~ msgstr "參數檔："
+
+#~ msgid ""
+#~ "Generate parameterfile for mpeg_encode 1.5\n"
+#~ "(the freely distributed Berkeley MPEG-1 Video  Encoder.)\n"
+#~ msgstr ""
+#~ "產生 mpeg_encode 1.5 的參數檔\n"
+#~ "（自由散佈的柏克萊 MPEG-1 視像檔編碼程式。）\n"
+
+#~ msgid "How to encode MPEG framesequence (I/P/B frames)"
+#~ msgstr "如何將 MPEG 畫格序列編碼（I/P/B 畫格）"
+
+#~ msgid "IQSCALE:"
+#~ msgstr "I 品質尺度："
+
+#~ msgid ""
+#~ "Quality scale for I-Frames                       \n"
+#~ "(1 = best quality, 31 = best comression)"
+#~ msgstr ""
+#~ "I-畫格的品質尺度\n"
+#~ "（1 = 最佳品質，31 = 最佳壓縮率）"
+
+#~ msgid "PQSCALE:"
+#~ msgstr "P 品質尺度："
+
+#~ msgid ""
+#~ "Quality scale for P-Frames                  \n"
+#~ "(1 = best quality, 31 = best comression)"
+#~ msgstr ""
+#~ "P-畫格的品質尺度\n"
+#~ "（1 = 最佳品質，31 = 最佳壓縮率）"
+
+#~ msgid "BQSCALE:"
+#~ msgstr "B 品質尺度："
+
+#~ msgid ""
+#~ "Quality scale for B-Frames                  \n"
+#~ "(1 = best quality, 31 = best comression)"
+#~ msgstr ""
+#~ "B-畫格的品質尺度\n"
+#~ "（1 = 最佳品質，31 = 最佳壓縮率）"
+
+#~ msgid "P-Search :"
+#~ msgstr "P-搜尋："
+
+#~ msgid "Search Algorithmus used for P-frames"
+#~ msgstr "P-畫格使用的搜尋演算法"
+
+#~ msgid "B-Search :"
+#~ msgstr "B-搜尋："
+
+#~ msgid "Search Algorithmus used for B-frames"
+#~ msgstr "B-畫格使用的搜尋演算法"
+
+#~ msgid "Gen MPEG_ENCODE Parameters"
+#~ msgstr "產生 MPEG_ENCODE 參數"
+
+#~ msgid "Encode Values"
+#~ msgstr "編碼值"
+
+#~ msgid ""
+#~ "Generate parameterfile for mpeg2encode 1.2\n"
+#~ "(MPEG-2 Video  Encoder.)\n"
+#~ msgstr ""
+#~ "產生 mpeg2encode 1.2 的參數檔\n"
+#~ "（MPEG-2 視像檔編碼程式。）\n"
+
+#~ msgid "MPEG-type :"
+#~ msgstr "MPEG-類型："
+
+#~ msgid "Videoformat :"
+#~ msgstr "視像格式："
+
+#~ msgid "Videoformat"
+#~ msgstr "視像格式"
+
+#~ msgid "Gen MPEG2ENCODE Parameters"
+#~ msgstr "產生 MPEG2ENCODE 參數"
+
+#~ msgid ""
+#~ "\n"
+#~ "WARNING: mpeg_encode does not support Fileformat "
+#~ msgstr ""
+#~ "\n"
+#~ "警告：mpeg_encode 不支援檔案格式 "
+
+#~ msgid ""
+#~ "\n"
+#~ "ERROR: width not a multiple of 16"
+#~ msgstr ""
+#~ "\n"
+#~ "錯誤: 寬度不是 16 的倍數"
+
+#~ msgid ""
+#~ "\n"
+#~ "ERROR: height not a multiple of 16"
+#~ msgstr ""
+#~ "\n"
+#~ "錯誤: 高度不是 16 的倍數"
+
+#~ msgid ""
+#~ "\n"
+#~ "WARNING: mpeg2encode does not support Fileformat "
+#~ msgstr ""
+#~ "\n"
+#~ "警告：mpeg2encode 不支援檔案格式 "
+
+#~ msgid ""
+#~ "Playback         \n"
+#~ "<Shift> optimized"
+#~ msgstr ""
+#~ "播放\n"
+#~ "<Shift>最優化"
+
+#~ msgid ""
+#~ "Smart Update .xvpics\n"
+#~ "<Shift> forced upd"
+#~ msgstr ""
+#~ "智慧型更新 .xvpics\n"
+#~ "<Shift>強制更新"
+
+#~ msgid "Duplicate selected Frames"
+#~ msgstr "複製所選的畫格"
+
+#~ msgid "Delete selected Frames"
+#~ msgstr "刪除所選的畫格"
+
+#~ msgid "Goto 1st Frame"
+#~ msgstr "移至第一個畫格"
+
+#~ msgid "Goto last Frame"
+#~ msgstr "移至最後一個畫格"
+
+#~ msgid "<Image>/Video/VCR Navigator..."
+#~ msgstr "<Image>/視像/錄影控制器..."
+
+#~ msgid "Cant open two or more Video Navigator Windows."
+#~ msgstr "不可開啟兩個或更多的錄影控制器視窗。"
+
+#~ msgid "Paste before"
+#~ msgstr "貼到前一格"
+
+#~ msgid "Paste after"
+#~ msgstr "貼到後一格"
+
+#~ msgid "Paste replace"
+#~ msgstr "貼上並取代"
+
+#~ msgid "Clear Video Buffer"
+#~ msgstr "清除視像緩衝區"
+
+#~ msgid "Videoframes:"
+#~ msgstr "視像畫格："
+
+#~ msgid "Framerate:"
+#~ msgstr "畫格速率："
+
+#~ msgid "Video Navigator"
+#~ msgstr "錄影控制器"
+
+#~ msgid "New Width:"
+#~ msgstr "新的寬度："
+
+#~ msgid "New Height:"
+#~ msgstr "新的高度："
+
+#~ msgid "Offset X:"
+#~ msgstr "X 偏移量："
+
+#~ msgid "Offset Y:"
+#~ msgstr "Y 偏移量："
+
+#~ msgid "Crop (original %dx%d)"
+#~ msgstr "裁剪（原來尺寸 %d×%d）"
+
+#~ msgid "Resize (original %dx%d)"
+#~ msgstr "重定尺寸（原來尺寸 %d×%d）"
+
+#~ msgid "Scale (original %dx%d)"
+#~ msgstr "縮放（原來尺寸 %d×%d）"
+
+#~ msgid "Generate Optimal Palette"
+#~ msgstr "產生最佳色盤"
+
+#~ msgid "WEB Palette"
+#~ msgstr "網頁色盤"
+
+#~ msgid "Use Custom Palette"
+#~ msgstr "使用自訂色盤"
+
+#~ msgid "Use Black/White (1-Bit) Palette"
+#~ msgstr "使用黑/白（1 位元）色盤"
+
+#~ msgid "Palette Type"
+#~ msgstr "色盤類型"
+
+#~ msgid "Custom Palette"
+#~ msgstr "自訂色盤"
+
+#~ msgid ""
+#~ "Name of a cutom palette\n"
+#~ "(is ignored if Palette Type is not custom)"
+#~ msgstr ""
+#~ "自訂色盤名稱\n"
+#~ "（若色盤類型不是自訂則會忽略）"
+
+#~ msgid ""
+#~ "Remove unused or double colors\n"
+#~ "(is ignored if Palette Type is not custom)"
+#~ msgstr ""
+#~ "移除未用到或重複的顏色\n"
+#~ "（若色盤類型不是自訂則會忽略）"
+
+#~ msgid ""
+#~ "Number of resulting Colors\t\t \n"
+#~ "(ignored if Palette Type is not Generate optimal palette)"
+#~ msgstr ""
+#~ "移除未用到或重複的顏色\t\t \n"
+#~ "（若色盤類型不是自訂則會忽略）"
+
+#~ msgid "Convert Frames to Indexed"
+#~ msgstr "轉換畫格到索引色模式"
+
+#~ msgid "Keep Type"
+#~ msgstr "保持類型"
+
+#~ msgid "Convert to RGB"
+#~ msgstr "轉換成 RGB"
+
+#~ msgid "Convert to Gray"
+#~ msgstr "轉換成灰階"
+
+#~ msgid "Convert to Indexed"
+#~ msgstr "轉換成索引色"
+
+#~ msgid ""
+#~ "\n"
+#~ "Select destination fileformat by extension\n"
+#~ "optionally convert imagetype\n"
+#~ msgstr ""
+#~ "\n"
+#~ "依延伸檔名選擇目的檔的檔案格式\n"
+#~ "可選擇性地轉換圖像類型\n"
+
+#~ msgid "Basename:"
+#~ msgstr "基本檔名︰"
+
+#~ msgid ""
+#~ "basename of the resulting frames       \n"
+#~ "(0001.ext is added)"
+#~ msgstr ""
+#~ "產生出來的畫格的基本檔名\n"
+#~ "（會加上 0001.ext）"
+
+#~ msgid "Extension:"
+#~ msgstr "延伸檔名："
+
+#~ msgid ""
+#~ "extension of resulting frames       \n"
+#~ "(is also used to define Fileformat)"
+#~ msgstr ""
+#~ "產生出來的畫格的延伸檔名\n"
+#~ "（也用來定義檔案格式）"
+
+#~ msgid "Imagetype:"
+#~ msgstr "圖像類型："
+
+#~ msgid ""
+#~ "Convert to, or keep imagetype           \n"
+#~ "(most fileformats can't handle all types)"
+#~ msgstr ""
+#~ "轉換，或保持圖像類型\n"
+#~ "（大部分的檔案格式無法處理所有類型）"
+
+#~ msgid "Flatten:"
+#~ msgstr "平面化："
+
+#~ msgid ""
+#~ "Flatten all resulting frames               \n"
+#~ "(most fileformats need flattened frames)"
+#~ msgstr ""
+#~ "將所有產生出來的畫格平面化\n"
+#~ "（大部分的檔案格式都需要平面化的畫格）"
+
+#~ msgid "Convert Frames to other Formats"
+#~ msgstr "轉換畫格成其它格式"
+
+#~ msgid "Convert Settings"
+#~ msgstr "轉換設定"
+
+#~ msgid "Expand as necessary"
+#~ msgstr "必要時擴大"
+
+#~ msgid "Clipped to image"
+#~ msgstr "裁剪成圖像尺寸"
+
+#~ msgid "Clipped to bottom layer"
+#~ msgstr "裁剪成最底圖層的尺寸"
+
+#~ msgid "Flattened image"
+#~ msgstr "平面化圖像"
+
+#~ msgid ""
+#~ "Resulting Layer Size is made of the outline-rectangle \n"
+#~ "of all visible layers (may differ from frame to frame)"
+#~ msgstr ""
+#~ "最後的圖層尺寸是由所有可見圖層\n"
+#~ "的外框所組成的（各畫格之間可能不同）"
+
+#~ msgid "Resulting Layer Size is the frame size"
+#~ msgstr "最終的圖層尺寸是畫格的尺寸"
+
+#~ msgid ""
+#~ "Resulting Layer Size is the size of the bottom layer\n"
+#~ "(may differ from frame to frame)"
+#~ msgstr ""
+#~ "最後的圖層尺寸是最底圖層的尺寸\n"
+#~ "（各畫格之間可能不同）"
+
+#~ msgid ""
+#~ "Resulting Layer Size is the frame size     \n"
+#~ "transparent parts are filled with BG color"
+#~ msgstr ""
+#~ "最後的圖層尺寸是畫格的尺寸\n"
+#~ "透明部份會以背景顏色填上"
+
+#~ msgid "select all Layers where Layername is equal to Pattern"
+#~ msgstr "選擇所有圖層名稱符合樣式的圖層"
+
+#~ msgid "select all Layers where Layername starts with Pattern"
+#~ msgstr "選擇所有圖層名稱以某式樣開始的圖層"
+
+#~ msgid "select all Layers where Layername ends up with Pattern"
+#~ msgstr "選擇所有圖層名稱以某式樣結尾的圖層"
+
+#~ msgid "select all Layers where Layername contains Pattern"
+#~ msgstr "選擇所有圖層名稱含有某式樣的圖層"
+
+#~ msgid ""
+#~ "select Layerstack positions.\n"
+#~ "0, 4-5, 8\n"
+#~ "where 0 == Top-layer"
+#~ msgstr ""
+#~ "選擇圖層堆疊位置。\n"
+#~ "0, 4-5, 8\n"
+#~ "其中 0 == 最頂層"
+
+#~ msgid ""
+#~ "select Layerstack positions.\n"
+#~ "0, 4-5, 8\n"
+#~ "where 0 == BG-layer"
+#~ msgstr ""
+#~ "選擇圖層堆疊位置。\n"
+#~ "0, 4-5, 8\n"
+#~ "其中 0 == 背景圖層"
+
+#~ msgid "select all visible Layers"
+#~ msgstr "選擇所有可見圖層"
+
+#~ msgid "Layer Basename:"
+#~ msgstr "圖層基本名稱："
+
+#~ msgid ""
+#~ "Basename for all Layers    \n"
+#~ "[####] is replaced by frame number"
+#~ msgstr ""
+#~ "所有圖層的基本名稱\n"
+#~ "[####] 會以畫格編號取代"
+
+#~ msgid "Layer Mergemode:"
+#~ msgstr "圖層合併模式："
+
+#~ msgid "Exclude BG-Layer"
+#~ msgstr "排除背景圖層"
+
+#~ msgid "Use all unselected Layers"
+#~ msgstr "使用所有未選取的圖層"
+
+#~ msgid "Frames to Image"
+#~ msgstr "畫格轉為圖像"
+
+#~ msgid "Create Multilayer-Image from Frames"
+#~ msgstr "由畫格建立多圖層的圖像"
+
+#~ msgid "Flattening Frames..."
+#~ msgstr "正在平面化畫格..."
+
+#~ msgid "Converting Frames..."
+#~ msgstr "正在轉換畫格..."
+
+#~ msgid ""
+#~ "Convert Frames: SAVE operation FAILED.\n"
+#~ "Desired save plugin can't handle type\n"
+#~ "or desired save plugin not available."
+#~ msgstr ""
+#~ "轉換畫格︰儲存操作失敗。\n"
+#~ "需要的儲存增效模組無法處理該類型\n"
+#~ "或是找不到所需的儲存增效模組。"
+
+#~ msgid "Cropping all Animation Frames..."
+#~ msgstr "正在裁剪所有動畫畫格..."
+
+#~ msgid "Resizing all Animation Frames..."
+#~ msgstr "正在重設所有動畫畫格尺寸..."
+
+#~ msgid "Scaling all Animation Frames..."
+#~ msgstr "正在縮放所有動畫畫格..."
+
+#~ msgid "Flatten Frames"
+#~ msgstr "平面化畫格"
+
+#~ msgid "Removing Layer (pos:%ld) from Frames..."
+#~ msgstr "由畫格移除圖層（位置︰%ld）"
+
+#~ msgid "Delete Layers in Frames"
+#~ msgstr "刪除畫格中的圖層"
+
+#~ msgid "Select Frame Range & Position"
+#~ msgstr "選擇畫格範圍及位置"
+
+#~ msgid "Splitting into Frames..."
+#~ msgstr "分解成畫格..."
+
+#~ msgid ""
+#~ "Split Frames: SAVE operation FAILED.\n"
+#~ "desired save plugin can't handle type\n"
+#~ "or desired save plugin not available."
+#~ msgstr ""
+#~ "分解畫格︰儲存操作失敗。\n"
+#~ "需要的儲存增效模組無法處理該類型\n"
+#~ "或是找不到所需的儲存增效模組。"
+
+#~ msgid ""
+#~ "%s\n"
+#~ "%s\n"
+#~ "(%s_0001.%s)\n"
+#~ msgstr ""
+#~ "%s\n"
+#~ "%s\n"
+#~ "(%s_0001.%s)\n"
+
+#~ msgid "frames are named: base_nr.extension"
+#~ msgstr "畫格名稱為︰「基本名稱_編號.延伸檔名」"
+
+#~ msgid "extension of resulting frames (is also used to define Fileformat)"
+#~ msgstr "產生出來的畫格的延伸檔案（也用來定義檔案格式）"
+
+#~ msgid "Start frame 0001 at Top Layer"
+#~ msgstr "從最頂圖層開始編號 0001 的畫格"
+
+#~ msgid ""
+#~ "Remove Alpha Channel in resulting Frames. Transparent parts are filled "
+#~ "with BG color."
+#~ msgstr "移除所產生的畫格的透明色版。透明部份會以背景顏色填上。"
+
+#~ msgid "Split Image into Frames"
+#~ msgstr "分解圖像為畫格"
+
+#~ msgid "Split Settings"
+#~ msgstr "分解設定"
+
+#~ msgid "Scale"
+#~ msgstr "縮放"
+
+#~ msgid "Resize"
+#~ msgstr "重定尺寸"
+
+#~ msgid "New width:"
+#~ msgstr "新的寬度："
+
+#~ msgid "New height:"
+#~ msgstr "新的高度："
+
+#~ msgid "X ratio:"
+#~ msgstr "X 比例："
+
+#~ msgid "Y ratio:"
+#~ msgstr "Y 比例："
+
+#~ msgid "Constrain Ratio"
+#~ msgstr "限制比例"
+
+#~ msgid "Char: %c, %d, 0x%02x"
+#~ msgstr "字元：%c，%d，0x%02x"
+
+#~ msgid "Selected char:"
+#~ msgstr "選擇的字元︰"
+
+#~ msgid "Insert the selected char at the cursor position"
+#~ msgstr "在游標處插入所選的字元"
+
+#~ msgid "points"
+#~ msgstr "點"
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Text/Dynamic Text..."
+#~ msgstr "<Image>/濾鏡/描繪/動態文字..."
+
+#~ msgid ""
+#~ " Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
+#~ "new layer creation."
+#~ msgstr ""
+#~ "目前的圖層不是 GDynText 圖層，或是它沒有透明色版。強制建立新的圖層。"
+
+#~ msgid "GDynText Layer"
+#~ msgstr "GDynText 圖層"
+
+#~ msgid "GIMP Dynamic Text"
+#~ msgstr "GIMP 動態文字"
+
+#~ msgid "GDynText: Messages Window"
+#~ msgstr "GDynText：訊息視窗"
+
+#~ msgid "GDynText: About ..."
+#~ msgstr "GDynText：關於..."
+
+#~ msgid "bottom-left"
+#~ msgstr "左下"
+
+#~ msgid "bottom-center"
+#~ msgstr "底部"
+
+#~ msgid "bottom-right"
+#~ msgstr "右下"
+
+#~ msgid "middle-left"
+#~ msgstr "左方"
+
+#~ msgid "center"
+#~ msgstr "中央"
+
+#~ msgid "middle-right"
+#~ msgstr "右方"
+
+#~ msgid "top-left"
+#~ msgstr "左上"
+
+#~ msgid "top-center"
+#~ msgstr "頂部"
+
+#~ msgid "top-right"
+#~ msgstr "右上"
+
+#~ msgid "GDynText"
+#~ msgstr "GDynText"
+
+#~ msgid "Toggle creation of a new layer"
+#~ msgstr "切換是否建立新的圖層"
+
+#~ msgid "Load text from file"
+#~ msgstr "從檔案載入文字"
+
+#~ msgid "GDynText: Select Color"
+#~ msgstr "GDynText：選擇顏色"
+
+#~ msgid "Text color"
+#~ msgstr "文字顏色"
+
+#~ msgid "Toggle anti-aliased text"
+#~ msgstr "切換是否使用反鋸齒文字"
+
+#~ msgid "Left aligned text"
+#~ msgstr "文字靠左對齊"
+
+#~ msgid "Centered text"
+#~ msgstr "文字置中"
+
+#~ msgid "Right aligned text"
+#~ msgstr "文字靠右對齊"
+
+#~ msgid "Toggle text font preview"
+#~ msgstr "切換字型預覽"
+
+#~ msgid ""
+#~ "Layer\n"
+#~ "Alignment"
+#~ msgstr ""
+#~ "圖層\n"
+#~ "對齊方式"
+
+#~ msgid "Set layer alignment"
+#~ msgstr "設定圖層對齊方式"
+
+#~ msgid ""
+#~ "Line\n"
+#~ "Spacing"
+#~ msgstr "行距"
+
+#~ msgid "Set text rotation (degrees)"
+#~ msgstr "設定文字旋轉（角度）"
+
+#~ msgid "Editable text sample"
+#~ msgstr "可編輯的文字樣本"
+
+#~ msgid "Clear preview"
+#~ msgstr "清除預覽"
+
+#~ msgid "Preview default text sample"
+#~ msgstr "預覽預設的文字樣本"
+
+#~ msgid ""
+#~ "Holding the Shift key while pressing this button will force GDynText in "
+#~ "changing the layer name as done in GIMP 1.0."
+#~ msgstr ""
+#~ "按下此按鈕時同時按著 Shift 鍵會強制令 GDynText 改變圖層名稱，如同 GIMP "
+#~ "1.0 時一樣"
+
+#~ msgid "GDynText: Load text"
+#~ msgstr "GDynText：載入文字"
+
+#~ msgid ""
+#~ "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
+#~ msgstr "警告：檔案「%s」大於文字長度的最大限制（%d）。\n"
+
+#~ msgid "Error opening \"%s\"!\n"
+#~ msgstr "開啟「%s」發生錯誤！\n"
+
+#~ msgid ""
+#~ " WARNING: GDynText is too old! A newer version is required to handle this "
+#~ "layer. Get it from %s"
+#~ msgstr ""
+#~ "警告︰GDynText 版本太舊了！需要較新版本才可處理此圖層。可在以下位置取得︰%"
+#~ "s"
+
+#~ msgid " Upgrading old GDynText layer to %s."
+#~ msgstr "正在將舊的 GDynText 圖層更新至 %s"
+
+#~ msgid "Dismiss"
+#~ msgstr "取消"
+
+#~ msgid "Contents"
+#~ msgstr "目錄"
+
+#~ msgid "Index"
+#~ msgstr "索引"
+
+#~ msgid ""
+#~ "GIMP Help Browser Error.\n"
+#~ "\n"
+#~ "Couldn't find my root html directory.\n"
+#~ "(%s)"
+#~ msgstr ""
+#~ "GIMP 說明瀏覽器發生錯誤。\n"
+#~ "\n"
+#~ "找不到 html 主目錄。\n"
+#~ "(%s)"
+
+#~ msgid "GIMP Help Browser"
+#~ msgstr "GIMP 說明瀏覽器"
+
+#~ msgid ""
+#~ "GIMP Help Browser Error.\n"
+#~ "\n"
+#~ "Couldn't find GIMP_HELP_ROOT html directory.\n"
+#~ "(%s)"
+#~ msgstr ""
+#~ "GIMP 說明瀏覽器發生錯誤。\n"
+#~ "\n"
+#~ "找不到 GIMP_HELP_ROOT html 目錄。\n"
+#~ "(%s)"
 
 #~ msgid "OK"
 #~ msgstr "確定"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
-"POT-Creation-Date: 2001-11-11 22:48+0100\n"
+"POT-Creation-Date: 2001-11-23 23:54+0100\n"
 "PO-Revision-Date: dom feb  6 16:47:39 CET 2000\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -201,15 +201,30 @@ msgstr "pica"
 msgid "percent"
 msgstr "percento"
 
-#: libgimpwidgets/gimpcolorbutton.c:78
-msgid "/Use Foreground Color"
+#: libgimpwidgets/gimpcolorbutton.c:82
+#, fuzzy
+msgid "/Foreground Color"
 msgstr "/Utilizza colore primo piano"
 
-#: libgimpwidgets/gimpcolorbutton.c:79
-msgid "/Use Background Color"
+#: libgimpwidgets/gimpcolorbutton.c:84
+#, fuzzy
+msgid "/Background Color"
 msgstr "/Utilizza colore di sfondo"
 
-#: libgimpwidgets/gimpfileselection.c:362
+#: libgimpwidgets/gimpcolorbutton.c:87
+msgid "/Black"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorbutton.c:89
+msgid "/White"
+msgstr ""
+
+#: libgimpwidgets/gimpfileselection.c:352
+#, fuzzy
+msgid "Select Directory"
+msgstr "Seleziona file"
+
+#: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
 msgstr "Seleziona file"
 
@@ -221,15 +236,15 @@ msgstr "Altri..."
 msgid "Unit Selection"
 msgstr "Selezione delle unità"
 
-#: libgimpwidgets/gimpunitmenu.c:570
+#: libgimpwidgets/gimpunitmenu.c:571
 msgid "Unit"
 msgstr "Unità"
 
-#: libgimpwidgets/gimpunitmenu.c:574
+#: libgimpwidgets/gimpunitmenu.c:575
 msgid "Factor"
 msgstr "Fattore"
 
-#: libgimpwidgets/gimpwidgets.c:724
+#: libgimpwidgets/gimpwidgets.c:769
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -238,11 +253,11 @@ msgstr ""
 "generazione del seme di casualità - questo vi permette di ripetereuna data "
 "operazione in modalità \"casuale\"."
 
-#: libgimpwidgets/gimpwidgets.c:729
+#: libgimpwidgets/gimpwidgets.c:774
 msgid "Time"
 msgstr "Tempo"
 
-#: libgimpwidgets/gimpwidgets.c:738
+#: libgimpwidgets/gimpwidgets.c:783
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -250,15 +265,15 @@ msgstr ""
 "Generazione del seme di casualità dall'ora corrente - questo garantisceuna "
 "casualità ragionevole"
 
-#: libgimpwidgets/gimpwidgets.c:1052
+#: libgimpwidgets/gimpwidgets.c:1097
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimpwidgets/gimpwidgets.c:1053
+#: libgimpwidgets/gimpwidgets.c:1098
 msgid "KiloBytes"
 msgstr "KByte"
 
-#: libgimpwidgets/gimpwidgets.c:1054
+#: libgimpwidgets/gimpwidgets.c:1099
 msgid "MegaBytes"
 msgstr "MByte"
 

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2001-11-12 18:33+0100\n"
+"POT-Creation-Date: 2001-11-23 01:09+0100\n"
 "PO-Revision-Date: 2000-12-07 00:41+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -15,9 +15,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:283
-#: plug-ins/FractalExplorer/Dialogs.c:1373 plug-ins/gdyntext/gdyntext_ui.c:600
-#: plug-ins/gfig/gfig.c:3383 plug-ins/imagemap/imap_about.c:36
-#: plug-ins/webbrowser/webbrowser.c:279
+#: plug-ins/FractalExplorer/Dialogs.c:1373 plug-ins/gfig/gfig.c:3383
+#: plug-ins/imagemap/imap_about.c:36 plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
 msgstr "このプラグインについて"
 
@@ -251,7 +250,6 @@ msgstr "カラー"
 
 #. Number of Colors frame
 #: plug-ins/FractalExplorer/Dialogs.c:626 plug-ins/common/borderaverage.c:413
-#: plug-ins/gap/gap_range_ops.c:346
 msgid "Number of Colors"
 msgstr "色数"
 
@@ -353,7 +351,7 @@ msgstr "Cos"
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2718 plug-ins/common/ps.c:2731
 #: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1582
-#: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:299
+#: plug-ins/fits/fits.c:1032
 msgid "None"
 msgstr "なし"
 
@@ -726,14 +724,13 @@ msgid "Position"
 msgstr "位置"
 
 #. X
-#. table col, row
 #: plug-ins/Lighting/lighting_ui.c:622 plug-ins/Lighting/lighting_ui.c:674
 #: plug-ins/MapObject/mapobject_ui.c:766 plug-ins/MapObject/mapobject_ui.c:818
 #: plug-ins/MapObject/mapobject_ui.c:1059
 #: plug-ins/MapObject/mapobject_ui.c:1103 plug-ins/common/flarefx.c:788
 #: plug-ins/common/nova.c:631 plug-ins/common/papertile.c:285
-#: plug-ins/flame/flame.c:1191 plug-ins/gap/gap_mov_dialog.c:1825
-#: plug-ins/gflare/gflare.c:2950 plug-ins/ifscompose/ifscompose.c:532
+#: plug-ins/flame/flame.c:1191 plug-ins/gflare/gflare.c:2950
+#: plug-ins/ifscompose/ifscompose.c:532
 msgid "X:"
 msgstr "X:"
 
@@ -742,7 +739,6 @@ msgid "Light source X position in XYZ space"
 msgstr "XYZ 空間中の光源の X 位置"
 
 #. Y
-#. table col, row
 #: plug-ins/Lighting/lighting_ui.c:635 plug-ins/Lighting/lighting_ui.c:686
 #: plug-ins/MapObject/mapobject_ui.c:779 plug-ins/MapObject/mapobject_ui.c:830
 #: plug-ins/MapObject/mapobject_ui.c:1070
@@ -750,8 +746,7 @@ msgstr "XYZ 空間中の光源の X 位置"
 #: plug-ins/MapObject/mapobject_ui.c:1208 plug-ins/common/flarefx.c:806
 #: plug-ins/common/nova.c:649 plug-ins/common/papertile.c:294
 #: plug-ins/common/xbm.c:1248 plug-ins/flame/flame.c:1204
-#: plug-ins/gap/gap_mov_dialog.c:1843 plug-ins/gflare/gflare.c:2954
-#: plug-ins/ifscompose/ifscompose.c:546
+#: plug-ins/gflare/gflare.c:2954 plug-ins/ifscompose/ifscompose.c:546
 msgid "Y:"
 msgstr "Y:"
 
@@ -918,8 +913,7 @@ msgstr "使用する環境画像"
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1080 plug-ins/MapObject/mapobject_ui.c:1333
 #: plug-ins/common/lic.c:1037 plug-ins/common/ripple.c:604
-#: plug-ins/gap/gap_mov_dialog.c:860 plug-ins/gfig/gfig.c:4019
-#: plug-ins/mosaic/mosaic.c:597
+#: plug-ins/gfig/gfig.c:4019 plug-ins/mosaic/mosaic.c:597
 msgid "Options"
 msgstr "オプション"
 
@@ -944,7 +938,6 @@ msgid "Lighting Effects"
 msgstr "ライト効果"
 
 #: plug-ins/Lighting/lighting_ui.c:1195 plug-ins/common/grid.c:705
-#: plug-ins/gap/gap_mov_dialog.c:495
 msgid "Update Preview"
 msgstr "プレビュー更新"
 
@@ -1036,7 +1029,6 @@ msgstr "XYZ 空間中のオブジェクトの Z 位置"
 
 #. Rotation
 #: plug-ins/MapObject/mapobject_ui.c:1091 plug-ins/common/ps.c:2896
-#: plug-ins/gdyntext/gdyntext_ui.c:510
 msgid "Rotation"
 msgstr "回転"
 
@@ -1666,7 +1658,7 @@ msgstr "共通種を元にした乱数"
 #: plug-ins/common/CML_explorer.c:299 plug-ins/common/CML_explorer.c:1282
 #: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1058
 #: plug-ins/fp/fp_gtk.c:283 plug-ins/fp/fp_gtk.c:415
-#: plug-ins/gap/gap_mov_dialog.c:272 plug-ins/gimpressionist/orientation.c:188
+#: plug-ins/gimpressionist/orientation.c:188
 #: plug-ins/gimpressionist/size.c:186
 msgid "Hue"
 msgstr "色相"
@@ -1674,14 +1666,13 @@ msgstr "色相"
 #: plug-ins/common/CML_explorer.c:300 plug-ins/common/CML_explorer.c:1287
 #: plug-ins/common/decompose.c:123 plug-ins/common/lic.c:1059
 #: plug-ins/fp/fp_gtk.c:287 plug-ins/fp/fp_gtk.c:419 plug-ins/fp/fp_gtk.c:483
-#: plug-ins/gap/gap_mov_dialog.c:273 plug-ins/rcm/rcm_dialog.c:516
+#: plug-ins/rcm/rcm_dialog.c:516
 msgid "Saturation"
 msgstr "彩度"
 
 #: plug-ins/common/CML_explorer.c:301 plug-ins/common/CML_explorer.c:1292
 #: plug-ins/common/decompose.c:124 plug-ins/fp/fp_gtk.c:291
-#: plug-ins/fp/fp_gtk.c:423 plug-ins/gap/gap_mov_dialog.c:275
-#: plug-ins/gimpressionist/orientation.c:131
+#: plug-ins/fp/fp_gtk.c:423 plug-ins/gimpressionist/orientation.c:131
 #: plug-ins/gimpressionist/size.c:130
 msgid "Value"
 msgstr "明度"
@@ -2027,7 +2018,7 @@ msgid "Left Edge"
 msgstr "左端"
 
 #: plug-ins/common/align_layers.c:473 plug-ins/common/align_layers.c:506
-#: plug-ins/gap/gap_mov_dialog.c:286 plug-ins/gflare/gflare.c:2938
+#: plug-ins/gflare/gflare.c:2938
 msgid "Center"
 msgstr "中央"
 
@@ -2341,11 +2332,11 @@ msgstr "方向:"
 msgid "Elevation:"
 msgstr "持ち上げ:"
 
-#: plug-ins/common/bumpmap.c:1061 plug-ins/gap/resize.c:197
+#: plug-ins/common/bumpmap.c:1061
 msgid "X Offset:"
 msgstr "X オフセット:"
 
-#: plug-ins/common/bumpmap.c:1071 plug-ins/gap/resize.c:214
+#: plug-ins/common/bumpmap.c:1071
 msgid "Y Offset:"
 msgstr "Y オフセット:"
 
@@ -2407,9 +2398,8 @@ msgstr "単色塗り"
 
 #: plug-ins/common/colorify.c:322 plug-ins/common/colortoalpha.c:432
 #: plug-ins/common/ps.c:2702 plug-ins/common/xpm.c:439
-#: plug-ins/gap/gap_mov_dialog.c:274 plug-ins/gimpressionist/color.c:51
-#: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:328
-#: plug-ins/print/gimp_main_window.c:758
+#: plug-ins/gimpressionist/color.c:51 plug-ins/gimpressionist/color.c:56
+#: plug-ins/imagemap/imap_menu.c:328 plug-ins/print/gimp_main_window.c:758
 msgid "Color"
 msgstr "カラー"
 
@@ -2435,9 +2425,6 @@ msgid "Color to Alpha"
 msgstr "色を透明度に"
 
 #: plug-ins/common/colortoalpha.c:443 plug-ins/common/mapcolor.c:645
-#: plug-ins/gap/gap_decode_mpeg_main.c:653 plug-ins/gap/gap_decode_xanim.c:224
-#: plug-ins/gap/gap_lib.c:2126 plug-ins/gap/gap_lib.c:2321
-#: plug-ins/gap/gap_range_ops.c:253 plug-ins/gap/gap_range_ops.c:602
 #: plug-ins/gfli/gfli.c:849 plug-ins/gfli/gfli.c:918
 msgid "From:"
 msgstr "最初:"
@@ -2489,7 +2476,6 @@ msgid "Saturation:"
 msgstr "彩度:"
 
 #: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:468
-#: plug-ins/gap/gap_arr_dialog.c:813
 msgid "Value:"
 msgstr "明度:"
 
@@ -2693,12 +2679,9 @@ msgstr "1 Byte Run-Length-Encoding を使う"
 msgid "Save Alpha Channel (RGBA/RGB)"
 msgstr "アルファチャンネルも保存する (RGBA/RGB)"
 
-#. Opacity
-#. table col, row
 #: plug-ins/common/csource.c:760 plug-ins/common/sparkle.c:444
-#: plug-ins/common/tileit.c:588 plug-ins/gap/gap_mov_dialog.c:1895
-#: plug-ins/gflare/gflare.c:3678 plug-ins/gflare/gflare.c:3708
-#: plug-ins/gflare/gflare.c:3738
+#: plug-ins/common/tileit.c:588 plug-ins/gflare/gflare.c:3678
+#: plug-ins/gflare/gflare.c:3708 plug-ins/gflare/gflare.c:3738
 msgid "Opacity:"
 msgstr "不透明度:"
 
@@ -2757,10 +2740,9 @@ msgstr ""
 msgid "Curve Bend"
 msgstr "ひん曲げる"
 
-#. menu_item copy
-#: plug-ins/common/curve_bend.c:1363 plug-ins/gap/gap_navigator_dialog.c:2922
-#: plug-ins/gfig/gfig.c:2844 plug-ins/gfig/gfig.c:5291
-#: plug-ins/gflare/gflare.c:3175 plug-ins/imagemap/imap_cmd_copy.c:52
+#: plug-ins/common/curve_bend.c:1363 plug-ins/gfig/gfig.c:2844
+#: plug-ins/gfig/gfig.c:5291 plug-ins/gflare/gflare.c:3175
+#: plug-ins/imagemap/imap_cmd_copy.c:52
 #: plug-ins/imagemap/imap_cmd_copy_object.c:53
 #: plug-ins/imagemap/imap_menu.c:290 plug-ins/imagemap/imap_toolbar.c:136
 msgid "Copy"
@@ -3065,12 +3047,10 @@ msgstr "非ストライプ化"
 msgid "Create Histogram"
 msgstr "ヒストグラム作成"
 
-#. Widht Scale
-#. table col, row
 #: plug-ins/common/destripe.c:672 plug-ins/common/gtm.c:551
 #: plug-ins/common/ps.c:2659 plug-ins/common/ps.c:2836
 #: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:428
-#: plug-ins/gap/gap_mov_dialog.c:1861 plug-ins/imagemap/imap_rectangle.c:390
+#: plug-ins/imagemap/imap_rectangle.c:390
 #: plug-ins/print/gimp_main_window.c:638
 msgid "Width:"
 msgstr "幅:"
@@ -3217,13 +3197,10 @@ msgstr "彫金風"
 msgid "Limit Line Width"
 msgstr "線幅を制限する"
 
-#. Height Scale
-#. table col, row
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1228
 #: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2668
 #: plug-ins/common/ps.c:2845 plug-ins/common/smooth_palette.c:439
-#: plug-ins/common/tile.c:432 plug-ins/gap/gap_mov_dialog.c:1878
-#: plug-ins/imagemap/imap_rectangle.c:396
+#: plug-ins/common/tile.c:432 plug-ins/imagemap/imap_rectangle.c:396
 #: plug-ins/print/gimp_main_window.c:652
 msgid "Height:"
 msgstr "高さ:"
@@ -3693,7 +3670,7 @@ msgstr "レイヤー毎に1フレーム (置換)"
 msgid "GIF: error writing output file\n"
 msgstr "GIF: 出力ファイル書き込みエラー\n"
 
-#: plug-ins/common/gif.c:2457
+#: plug-ins/common/gif.c:2455
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr ""
@@ -4153,8 +4130,8 @@ msgstr "最大深度:"
 
 #. parameter settings
 #: plug-ins/common/iwarp.c:1127 plug-ins/common/sample_colorize.c:1384
-#: plug-ins/common/sinus.c:1837 plug-ins/gap/gap_mod_layer.c:222
-#: plug-ins/gfig/gfig.c:3976 plug-ins/gflare/gflare.c:3115
+#: plug-ins/common/sinus.c:1837 plug-ins/gfig/gfig.c:3976
+#: plug-ins/gflare/gflare.c:3115
 msgid "Settings"
 msgstr "設定"
 
@@ -4493,10 +4470,7 @@ msgstr "元の色範囲"
 msgid "Destination color range"
 msgstr "適用後の色範囲"
 
-#: plug-ins/common/mapcolor.c:645 plug-ins/gap/gap_decode_mpeg_main.c:663
-#: plug-ins/gap/gap_decode_xanim.c:234 plug-ins/gap/gap_lib.c:2134
-#: plug-ins/gap/gap_lib.c:2329 plug-ins/gap/gap_range_ops.c:260
-#: plug-ins/gap/gap_range_ops.c:610 plug-ins/gfli/gfli.c:858
+#: plug-ins/common/mapcolor.c:645 plug-ins/gfli/gfli.c:858
 #: plug-ins/gfli/gfli.c:927
 msgid "To:"
 msgstr "宛:"
@@ -4619,8 +4593,7 @@ msgid "Output LPI:"
 msgstr "出力 LPI:"
 
 #. screen settings
-#: plug-ins/common/newsprint.c:1289 plug-ins/gap/gap_mov_dialog.c:265
-#: plug-ins/gflare/gflare.c:592
+#: plug-ins/common/newsprint.c:1289 plug-ins/gflare/gflare.c:592
 msgid "Screen"
 msgstr "スクリーン"
 
@@ -4912,20 +4885,17 @@ msgstr "メニューパス:"
 #. show the name
 #: plug-ins/common/plugindetails.c:353
 #: plug-ins/dbbrowser/dbbrowser_utils.c:351
-#: plug-ins/gap/gap_dbbrowser_utils.c:335
 msgid "Name:"
 msgstr "名称:"
 
 #. show the description
 #: plug-ins/common/plugindetails.c:375
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
-#: plug-ins/gap/gap_dbbrowser_utils.c:352
 msgid "Blurb:"
 msgstr "説明:"
 
 #: plug-ins/common/plugindetails.c:397
 #: plug-ins/dbbrowser/dbbrowser_utils.c:473
-#: plug-ins/gap/gap_dbbrowser_utils.c:469
 msgid "Help:"
 msgstr "ヘルプ:"
 
@@ -4941,7 +4911,6 @@ msgstr "プラグインの説明"
 #: plug-ins/common/plugindetails.c:1001
 #: plug-ins/dbbrowser/dbbrowser_utils.c:147
 #: plug-ins/dbbrowser/dbbrowser_utils.c:166
-#: plug-ins/gap/gap_dbbrowser_utils.c:185
 msgid "Search by Name"
 msgstr "名前で検索"
 
@@ -4977,7 +4946,6 @@ msgstr "ツリー表示"
 
 #: plug-ins/common/plugindetails.c:1100
 #: plug-ins/dbbrowser/dbbrowser_utils.c:220
-#: plug-ins/gap/gap_dbbrowser_utils.c:148
 msgid "Search:"
 msgstr "検索:"
 
@@ -5433,8 +5401,7 @@ msgstr "サンプル色付け"
 
 #. gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
 #: plug-ins/common/sample_colorize.c:1368 plug-ins/common/tileit.c:565
-#: plug-ins/gdyntext/gdyntext_ui.c:626 plug-ins/gimpressionist/presets.c:669
-#: plug-ins/gimpressionist/sizemap.c:492
+#: plug-ins/gimpressionist/presets.c:669 plug-ins/gimpressionist/sizemap.c:492
 #: plug-ins/imagemap/imap_default_dialog.c:128
 msgid "Apply"
 msgstr "適用"
@@ -6390,7 +6357,7 @@ msgstr "<Image>/フィルタ/歪み/ビデオ..."
 msgid "Video/RGB..."
 msgstr "ビデオ/RGB..."
 
-#: plug-ins/common/video.c:2150 plug-ins/gap/gap_decode_mpeg_main.c:643
+#: plug-ins/common/video.c:2150
 msgid "Video"
 msgstr "ビデオ"
 
@@ -6998,33 +6965,27 @@ msgstr "DB ブラウザ (初期化しています...)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
 #: plug-ins/dbbrowser/dbbrowser_utils.c:168
-#: plug-ins/gap/gap_dbbrowser_utils.c:193
 msgid "Search by Blurb"
 msgstr "説明で検索"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:372
-#: plug-ins/gap/gap_dbbrowser_utils.c:374
 msgid "In:"
 msgstr "入力:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:419
-#: plug-ins/gap/gap_dbbrowser_utils.c:420
 msgid "Out:"
 msgstr "出力:"
 
-#. show the author & the copyright
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/gap/gap_dbbrowser_utils.c:507 plug-ins/imagemap/imap_settings.c:94
+#: plug-ins/imagemap/imap_settings.c:94
 msgid "Author:"
 msgstr "作者:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:511
-#: plug-ins/gap/gap_dbbrowser_utils.c:522
 msgid "Date:"
 msgstr "日付:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:519
-#: plug-ins/gap/gap_dbbrowser_utils.c:537
 msgid "Copyright:"
 msgstr "著作権表示:"
 
@@ -7343,2688 +7304,6 @@ msgstr "ドラッグに合わせてプレビュー"
 msgid "Preview Size"
 msgstr "プレビューサイズ"
 
-#. Button  to invoke filebrowser
-#: plug-ins/gap/gap_arr_dialog.c:291
-msgid "File-Browser"
-msgstr "ファイルブラウザ"
-
-#. parameter settings
-#: plug-ins/gap/gap_arr_dialog.c:794
-msgid "Enter Values"
-msgstr "値を入力"
-
-#: plug-ins/gap/gap_arr_dialog.c:879
-msgid "Value: "
-msgstr "値: "
-
-#: plug-ins/gap/gap_arr_dialog.c:1041
-msgid "Press Button"
-msgstr "押しボタン"
-
-#: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:4014
-#: plug-ins/imagemap/imap_cmd_select.c:52 plug-ins/imagemap/imap_tools.c:133
-msgid "Select"
-msgstr "選択"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:76
-msgid "GAP Animated Filter apply"
-msgstr "GAP 動画フィルタ適用"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:97
-msgid "Animated Filter apply (init)"
-msgstr "動画フィルタ適用 (初期)"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:176
-msgid "Gen Code by name"
-msgstr "名前で元コードを検索"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:676
-msgid "Animated Filter apply (by name - please wait)"
-msgstr "動画フィルタ適用 (名前で - お待ち下さい)"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:700
-msgid "Animated Filter apply (by blurb - please wait)"
-msgstr "動画フィルタ適用 (説明で - お待ち下さい)"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:708
-msgid "Animated Filter apply (please wait)"
-msgstr "動画フィルタ適用 (お待ち下さい)"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:755
-#: plug-ins/gap/gap_filter_foreach.c:163 plug-ins/gap/gap_mod_layer.c:287
-msgid "Animated Filter apply"
-msgstr "動画フィルタ適用"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:102
-msgid "<Image>/Video/Split Video to Frames"
-msgstr "<Image>/動画/フレームに分割"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:103
-msgid "<Toolbox>/Xtns/Split Video to Frames"
-msgstr "<Toolbox>/拡張/フレームに分割"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:179
-msgid "<Image>/Video/Split Video to Frames/MPEG1"
-msgstr "<Image>/動画/フレームに分割/MPEG1"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:191
-msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-msgstr "<Toolbox>/拡張/フレームに分割/MPEG1"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:333 plug-ins/gap/gap_decode_xanim.c:337
-#: plug-ins/gap/gap_range_ops.c:1240
-msgid "Overwrite Frame"
-msgstr "フレームを上書き"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:335 plug-ins/gap/gap_decode_xanim.c:339
-#: plug-ins/gap/gap_range_ops.c:1242
-msgid "Overwrite All"
-msgstr "全て上書き"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:347
-#: plug-ins/gap/gap_lib.c:1042 plug-ins/gap/gap_range_ops.c:1247
-msgid "GAP Question"
-msgstr "GAP 質問"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:344 plug-ins/gap/gap_decode_xanim.c:348
-msgid "File already exists"
-msgstr "ファイルは既に存在します"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:438
-msgid "Decoding MPEG Movie..."
-msgstr "MPEG 動画をデコードしています..."
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:644
-msgid ""
-"Name of the MPEG1 videofile to READ.\n"
-"Frames are extracted from the videofile\n"
-"and written to seperate diskfiles.\n"
-"Audiotracks in the videofile are ignored."
-msgstr ""
-"読み込む MPEG1 動画ファイルの名前です.\n"
-"動画ファイルから各フレームを取り出して\n"
-"個々にディスク上のファイルに書き出します.\n"
-"動画ファイル中の音声トラックは無視されます."
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:654 plug-ins/gap/gap_decode_xanim.c:225
-msgid "Framenumber of 1st frame to extract"
-msgstr "最初に取り出すフレーム番号"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:664 plug-ins/gap/gap_decode_xanim.c:235
-msgid "Framenumber of last frame to extract"
-msgstr "最後に取り出すフレーム番号"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:673 plug-ins/gap/gap_decode_xanim.c:244
-msgid "Framenames:"
-msgstr "フレーム名:"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:674
-msgid ""
-"Basename for the AnimFrames to write on disk\n"
-"(framenumber and .xcf is added)"
-msgstr ""
-"ディスクに書く動画フレームの Basename.\n"
-"(フレーム番号と .xcf が付けられます)"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
-#: plug-ins/imagemap/imap_toolbar.c:114
-msgid "Open"
-msgstr "開く"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:682 plug-ins/gap/gap_decode_xanim.c:284
-msgid "Open the 1st one of the extracted frames"
-msgstr "取り出されたフレームの最初のものを開く"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:686
-msgid ""
-"\n"
-"WARNING: Do not attempt to split other files than MPEG1 videos.\n"
-"Before you proceed, you should save all open images."
-msgstr ""
-"\n"
-"警告: MPEG1 動画以外のファイルを分割しないで下さい.\n"
-"続行する前に作業中の全ての画像を保存して下さい."
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:689
-msgid "Split MPEG1 Video to Frames"
-msgstr "MPEG1 動画をフレームに分割"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:690 plug-ins/gap/gap_decode_xanim.c:298
-#: plug-ins/gap/gap_range_ops.c:1462
-msgid "Select Frame Range"
-msgstr "フレーム範囲選択"
-
-#: plug-ins/gap/gap_decode_xanim.c:114
-msgid "Conditions to run the xanim based video split"
-msgstr "xanim による画像分割に必要な設定"
-
-#: plug-ins/gap/gap_decode_xanim.c:122
-msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
-msgstr "1.) xanim 2.80.0 国際版 (loki バージョン)"
-
-#: plug-ins/gap/gap_decode_xanim.c:126
-msgid "    must be installed somewhere in your PATH"
-msgstr "    が PATH の通ったところにインストールされていること"
-
-#: plug-ins/gap/gap_decode_xanim.c:130
-msgid "    you can get xanim exporting edition at"
-msgstr "    国際版の xanim は以下の場所で手に入れられます"
-
-#: plug-ins/gap/gap_decode_xanim.c:146
-msgid ""
-"2.) if your xanim exporting edition is not in your PATH or is not named xanim"
-msgstr ""
-"2.) xanim が国際版でなかったり PATH が通ってなかったり xanim という名前ではな"
-"い場合"
-
-#: plug-ins/gap/gap_decode_xanim.c:150
-msgid "    you have to set Environment variable GAP_XANIM_PROG "
-msgstr "    環境変数 GAP_XANIM_PROG が国際版 xanim を指すようにして"
-
-#: plug-ins/gap/gap_decode_xanim.c:154
-msgid "    to your xanim exporting program and restart gimp"
-msgstr "    gimp を再起動して下さい"
-
-#: plug-ins/gap/gap_decode_xanim.c:162
-msgid "An ERROR occured while trying to call xanim:"
-msgstr "xanim 呼び出し中にエラー発生"
-
-#: plug-ins/gap/gap_decode_xanim.c:181
-msgid "XANIM Information"
-msgstr "XANIM 情報"
-
-#: plug-ins/gap/gap_decode_xanim.c:214
-msgid "Video:"
-msgstr "動画:"
-
-#: plug-ins/gap/gap_decode_xanim.c:215
-msgid ""
-"Name of a videofile to READ by xanim.\n"
-"Frames are extracted from the videofile\n"
-"and written to seprate diskfiles.\n"
-"xanim exporting edition is required."
-msgstr ""
-"xanim で読み込む動画ファイル名です.\n"
-"各フレームを xanim を用いて読みだし,\n"
-"それぞれ別のファイルに書き出します.\n"
-"xanim は国際版でなければなりません."
-
-#: plug-ins/gap/gap_decode_xanim.c:245
-msgid ""
-"Basename for the AnimFrames to write on disk\n"
-"(framenumber and extension is added)"
-msgstr ""
-"ディスクに書き出す動画フレームの Basename です.\n"
-"(フレーム番号と拡張子が付け加えられます)"
-
-#: plug-ins/gap/gap_decode_xanim.c:252
-msgid "Format"
-msgstr "形式"
-
-#: plug-ins/gap/gap_decode_xanim.c:253
-msgid ""
-"Fileformat for the extracted AnimFrames\n"
-"(xcf is extracted as ppm and converted to xcf)"
-msgstr ""
-"抽出する動画のファイル形式です.\n"
-"(xcf を指定すると ppm で抽出して xcf に変換します)"
-
-#: plug-ins/gap/gap_decode_xanim.c:260
-msgid "Extract Frames"
-msgstr "フレーム抽出"
-
-#: plug-ins/gap/gap_decode_xanim.c:261
-msgid "Enable extraction of Frames"
-msgstr "フレーム取り出しを有効にする"
-
-#: plug-ins/gap/gap_decode_xanim.c:265
-msgid "Extract Audio"
-msgstr "音声抽出"
-
-#: plug-ins/gap/gap_decode_xanim.c:266
-msgid ""
-"Enable extraction of audio to raw audiofile\n"
-"(frame range limits are ignored for audio)"
-msgstr ""
-"音声を raw 音声ファイルに取り出します\n"
-"(フレーム範囲指定は無視されます)"
-
-#: plug-ins/gap/gap_decode_xanim.c:271
-msgid "Jpeg Quality:"
-msgstr "JPEG 品質:"
-
-#: plug-ins/gap/gap_decode_xanim.c:272
-msgid ""
-"Quality for resulting Jpeg frames\n"
-"(is ignored when other formats are used)"
-msgstr ""
-"出力 JPEG フレームの品質です\n"
-"(他の形式の場合は無視されます)"
-
-#: plug-ins/gap/gap_decode_xanim.c:288
-msgid "Run asynchronously"
-msgstr "非同期実行"
-
-#: plug-ins/gap/gap_decode_xanim.c:289
-msgid ""
-"Run xanim asynchronously and delete unwanted frames\n"
-"(out of the specified range) while xanim is still running"
-msgstr ""
-"xanim を非同期実行し xanim が実行中でも指定した\n"
-"範囲外の不要なフレームを削除する."
-
-#: plug-ins/gap/gap_decode_xanim.c:294
-msgid ""
-"\n"
-"Warning: xanim 2.80 has only limited MPEG support.\n"
-"Most of the frames (type P and B) will be skipped."
-msgstr ""
-"\n"
-"警告: xanim 2.80 は限定された MPEG サポートしか行いません.\n"
-"P や B タイプのフレームは無視されます."
-
-#: plug-ins/gap/gap_decode_xanim.c:297
-msgid "Split any Xanim readable Video to Frames"
-msgstr "Xanim で読める動画ファイルをフレームに分割する"
-
-#: plug-ins/gap/gap_decode_xanim.c:540
-#, c-format
-msgid ""
-"can't find any extracted frames,\n"
-"%s\n"
-"maybe xanim has failed or was cancelled"
-msgstr ""
-"抽出したフレーム %s\n"
-"が見つかりません.\n"
-"xanim が転んだかキャンセルされた可能性があります"
-
-#: plug-ins/gap/gap_decode_xanim.c:565
-#, c-format
-msgid "frames are not extracted, because overwrite of %s was cancelled"
-msgstr "%s の上書きがキャンセルされたため, フレームは抽出されませんでした."
-
-#: plug-ins/gap/gap_decode_xanim.c:575
-#, c-format
-msgid "failed to overwrite %s (check permissions ?)"
-msgstr "%s の上書き失敗 (許可されていますか?)"
-
-#: plug-ins/gap/gap_decode_xanim.c:597
-#, c-format
-msgid "failed to write %s (check permissions ?)"
-msgstr "%s の書き込み失敗 (許可されていますか?)"
-
-#: plug-ins/gap/gap_decode_xanim.c:723
-#, c-format
-msgid "could not execute %s (check if xanim is installed)"
-msgstr "%s を実行できません (xanim は導入されていますか?)"
-
-#: plug-ins/gap/gap_decode_xanim.c:731
-#, c-format
-msgid "%s does not look like xanim"
-msgstr "%s は xanim ではないようです"
-
-#: plug-ins/gap/gap_decode_xanim.c:755
-#, c-format
-msgid ""
-"The xanim program on your system \"%s\"\n"
-"does not support the exporting options Ea, Ee, Eq"
-msgstr ""
-"あなたのシステムの xanim である \"%s\" は\n"
-"エクスポートオプション Ea, Ee, Eq が使えないようです."
-
-#: plug-ins/gap/gap_decode_xanim.c:762
-#, c-format
-msgid ""
-"The xanim program on your system \"%s\"\n"
-"does not support exporting of single frames"
-msgstr ""
-"あなたのシステムの xanim である \"%s\" は\n"
-"単一フレームのエクスポートができないようです."
-
-#: plug-ins/gap/gap_decode_xanim.c:1025
-#, c-format
-msgid "videofile %s not existent or empty\n"
-msgstr "動画ファイル %s は存在しないか空のようです\n"
-
-#: plug-ins/gap/gap_decode_xanim.c:1078
-#, c-format
-msgid ""
-"could not create %s directory\n"
-"(that is required for xanim frame export)"
-msgstr ""
-"xanim によるフレーム抽出に必要な\n"
-"%s ディレクトリが作れません"
-
-#: plug-ins/gap/gap_decode_xanim.c:1089
-msgid "extracting frames..."
-msgstr "フレームを抽出しています..."
-
-#: plug-ins/gap/gap_decode_xanim.c:1114
-#, c-format
-msgid ""
-"could not start xanim process\n"
-"(program=%s)"
-msgstr ""
-"xanim プロセスを開始できません\n"
-"(プログラム=%s) "
-
-#: plug-ins/gap/gap_decode_xanim.c:1135
-msgid ""
-"can't find any extracted frames,\n"
-"xanim has failed or was cancelled"
-msgstr ""
-"抽出したフレームが見つかりません,\n"
-"xanim の実行に失敗したかキャンセルされました."
-
-#: plug-ins/gap/gap_decode_xanim.c:1154
-msgid "renaming frames..."
-msgstr "フレーム名を変更しています..."
-
-#: plug-ins/gap/gap_decode_xanim.c:1159
-msgid "converting frames..."
-msgstr "フレームを変換しています..."
-
-#: plug-ins/gap/gap_filter_foreach.c:126
-msgid "backup to file"
-msgstr "ファイルにバックアップ"
-
-#. pixel
-#: plug-ins/gap/gap_filter_foreach.c:128
-msgid "Make backup of the image after each step"
-msgstr "各過程の毎にバックアップ画像を作る"
-
-#: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:262
-msgid "Continue"
-msgstr "続ける"
-
-#: plug-ins/gap/gap_filter_foreach.c:136
-#, c-format
-msgid "Skip %d"
-msgstr ""
-
-#: plug-ins/gap/gap_filter_foreach.c:155 plug-ins/gap/gap_mod_layer.c:281
-#, c-format
-msgid ""
-"2nd call of %s\n"
-"(define end-settings)"
-msgstr ""
-"%s の2度目の呼び出し\n"
-"(終了設定の定義)"
-
-#: plug-ins/gap/gap_filter_foreach.c:159
-#, c-format
-msgid ""
-"Non-Interactive call of %s\n"
-"(for all layers in between)"
-msgstr ""
-"%s の非インタラクティブ呼び出し\n"
-"(全ての中間レイヤーに対して)"
-
-#: plug-ins/gap/gap_filter_foreach.c:278
-msgid "Applying Filter to all Layers..."
-msgstr "全てのレイヤーにフィルタを適用しています..."
-
-#: plug-ins/gap/gap_filter_foreach.c:552
-msgid "Select Filter for Animated apply"
-msgstr "変化させつつ適用するフィルタを選択"
-
-#: plug-ins/gap/gap_filter_foreach.c:553 plug-ins/gap/gap_mod_layer.c:664
-msgid "Apply Constant"
-msgstr "一様に適用"
-
-#: plug-ins/gap/gap_filter_foreach.c:554 plug-ins/gap/gap_mod_layer.c:665
-msgid "Apply Varying"
-msgstr "変化させつつ適用"
-
-#: plug-ins/gap/gap_filter_main.c:106
-msgid "<Image>/Filters/Filter all Layers..."
-msgstr "<Image>/フィルタ/全レイヤーに適用..."
-
-#: plug-ins/gap/gap_frontends_main.c:128
-msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
-msgstr "<Image>/動画/フレームに分割/XANIM で読み込めるもの全て..."
-
-#: plug-ins/gap/gap_frontends_main.c:140
-msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
-msgstr "<Toolbox>/拡張/フレームに分割/XANIM で読み込めるもの全て..."
-
-#: plug-ins/gap/gap_frontends_main.c:152
-msgid "<Image>/Video/Encode/MPEG1..."
-msgstr "<Image>/動画/エンコード/MPEG1..."
-
-#: plug-ins/gap/gap_frontends_main.c:165
-msgid "<Image>/Video/Encode/MPEG2..."
-msgstr "<Image>/動画/エンコード/MPEG2..."
-
-#: plug-ins/gap/gap_lib.c:246
-msgid "GAP Message"
-msgstr "GAP メッセージ"
-
-#: plug-ins/gap/gap_lib.c:911
-msgid ""
-"OPERATION CANCELLED.\n"
-"Current frame changed while dialog was open."
-msgstr ""
-"操作はキャンセルされました.\n"
-"ダイアログが開かれている間に現在のフレームに変更が加えられました."
-
-#: plug-ins/gap/gap_lib.c:933 plug-ins/gap/gap_lib.c:2198
-#, fuzzy
-msgid ""
-"OPERATION CANCELLED.\n"
-"GAP plug-ins only work with filenames\n"
-"that end in numbers like _0001.xcf.\n"
-"==> Rename your image, then try again."
-msgstr ""
-"操作はキャンセルされました.\n"
-"GAP-プラグインは _0001.xcf で終わる\n"
-"ファイル名に対してのみ動作します.\n"
-"==> ファイル名を変更してからやり直して下さい."
-
-#: plug-ins/gap/gap_lib.c:1020
-msgid ""
-"You are using a file format != xcf\n"
-"Save Operations may result\n"
-"in loss of layer information."
-msgstr ""
-"xcf ではないファイル形式を選択しています\n"
-"保存した場合にレイヤー情報が失われる\n"
-"可能性があります"
-
-#: plug-ins/gap/gap_lib.c:1036
-msgid "Save Flattened"
-msgstr "統合して保存"
-
-#: plug-ins/gap/gap_lib.c:1038
-msgid "Save As Is"
-msgstr "そのまま保存"
-
-#: plug-ins/gap/gap_lib.c:1513 plug-ins/gap/gap_lib.c:1637
-#: plug-ins/gap/gap_lib.c:1716 plug-ins/gap/gap_lib.c:1723
-#: plug-ins/gap/gap_lib.c:1730 plug-ins/gap/gap_lib.c:1813
-#: plug-ins/gap/gap_lib.c:1835 plug-ins/gap/gap_lib.c:2740
-#, c-format
-msgid "Error: could not rename frame %ld to %ld"
-msgstr "エラー: フレーム %ld から %ld を名称変更できません"
-
-#: plug-ins/gap/gap_lib.c:1576
-#, fuzzy, c-format
-msgid "Error: could not save frame %s"
-msgstr "エラー: フレーム %ld から %ld を名称変更できません"
-
-#: plug-ins/gap/gap_lib.c:1625
-msgid "Duplicating frames..."
-msgstr "フレームを複製しています..."
-
-#: plug-ins/gap/gap_lib.c:1801
-msgid "Renumber Framesequence..."
-msgstr "フレームを並べ直しています..."
-
-#: plug-ins/gap/gap_lib.c:1987
-#, c-format
-msgid "Goto Frame (%ld/%ld)"
-msgstr "指定フレームへ移動 (%ld/%ld)"
-
-#: plug-ins/gap/gap_lib.c:1990
-#, c-format
-msgid "Destination Frame Number (%ld  - %ld)"
-msgstr "宛先フレーム番号 (%ld - %ld)"
-
-#: plug-ins/gap/gap_lib.c:1994 plug-ins/gap/gap_lib.c:2071
-#: plug-ins/gap/gap_lib.c:2275
-msgid "Number:"
-msgstr "番号:"
-
-#: plug-ins/gap/gap_lib.c:2055
-#, c-format
-msgid "Delete Frames (%ld/%ld)"
-msgstr "フレーム削除 (%ld/%ld)"
-
-#: plug-ins/gap/gap_lib.c:2058
-#, c-format
-msgid "Delete Frames from %ld to (number)"
-msgstr "削除するフレームは %ld から"
-
-#: plug-ins/gap/gap_lib.c:2121
-#, c-format
-msgid "Duplicate Frames (%ld/%ld)"
-msgstr "フレーム複製 (%ld/%ld)"
-
-#: plug-ins/gap/gap_lib.c:2131
-msgid "Source Range starts at this framenumber"
-msgstr "元範囲はこのフレームから開始"
-
-#: plug-ins/gap/gap_lib.c:2139
-msgid "Source Range ends at this framenumber"
-msgstr "元範囲がこのフレームで終り"
-
-#: plug-ins/gap/gap_lib.c:2142
-msgid "N times:"
-msgstr "回数:"
-
-#: plug-ins/gap/gap_lib.c:2149
-msgid ""
-"Copy selected Range n-times  \n"
-"(you may type in Values > 99)"
-msgstr ""
-"選択範囲を n 回コピー  \n"
-"(99 より大きい回数)"
-
-#: plug-ins/gap/gap_lib.c:2152
-msgid "Duplicate Frame Range"
-msgstr "複製するフレーム範囲"
-
-#: plug-ins/gap/gap_lib.c:2270
-#, c-format
-msgid "Exchange current Frame (%ld)"
-msgstr "現在のフレーム (%ld) と交換"
-
-#: plug-ins/gap/gap_lib.c:2274
-msgid "With Frame (number)"
-msgstr "するフレーム番号は"
-
-#: plug-ins/gap/gap_lib.c:2316
-#, c-format
-msgid "Framesequence Shift (%ld/%ld)"
-msgstr "フレーム並びずらし (%ld/%ld)"
-
-#: plug-ins/gap/gap_lib.c:2326
-msgid "Affected Range starts at this framenumber"
-msgstr "適用する範囲はこのフレームから開始"
-
-#: plug-ins/gap/gap_lib.c:2334
-msgid "Affected Range ends at this framenumber"
-msgstr "適用する範囲はこのフレームで終り"
-
-#: plug-ins/gap/gap_lib.c:2337
-msgid "N-Shift:"
-msgstr "ずらす量:"
-
-#: plug-ins/gap/gap_lib.c:2342
-msgid ""
-"Renumber the affected framesequence     \n"
-"(numbers are shifted in circle by N)"
-msgstr ""
-"適用部分のフレーム並びを再割り付け    \n"
-"(番号はずらし量分ずれる)"
-
-#: plug-ins/gap/gap_lib.c:2344
-msgid "Framesequence shift"
-msgstr "フレーム並びずらし"
-
-#: plug-ins/gap/gap_lib.c:2952
-#, c-format
-msgid ""
-"Can't execute more than 1 Video Function\n"
-"on the same AnimFrame Image at the same time\n"
-"LOCK ID:%s\n"
-msgstr ""
-
-#: plug-ins/gap/gap_main.c:482
-msgid "<Image>/Video/Goto/Next Frame"
-msgstr "<Image>/動画/移動/次のフレーム"
-
-#: plug-ins/gap/gap_main.c:494
-msgid "<Image>/Video/Goto/Previous Frame"
-msgstr "<Image>/動画/移動/前のフレーム"
-
-#: plug-ins/gap/gap_main.c:506
-msgid "<Image>/Video/Goto/First Frame"
-msgstr "<Image>/動画/移動/最初のフレーム"
-
-#: plug-ins/gap/gap_main.c:518
-msgid "<Image>/Video/Goto/Last Frame"
-msgstr "<Image>/動画/移動/最後のフレーム"
-
-#: plug-ins/gap/gap_main.c:530
-msgid "<Image>/Video/Goto/Any Frame..."
-msgstr "<Image>/動画/移動/指定したフレーム..."
-
-#: plug-ins/gap/gap_main.c:542
-msgid "<Image>/Video/Delete Frames..."
-msgstr "<Image>/動画/フレーム削除..."
-
-#: plug-ins/gap/gap_main.c:554
-msgid "<Image>/Video/Duplicate Frames..."
-msgstr "<Image>/動画/フレーム複製..."
-
-#: plug-ins/gap/gap_main.c:566
-msgid "<Image>/Video/Exchange Frame..."
-msgstr "<Image>/動画/フレーム交換..."
-
-#: plug-ins/gap/gap_main.c:578
-msgid "<Image>/Video/Move Path..."
-msgstr "<Image>/動画/パス移動..."
-
-#: plug-ins/gap/gap_main.c:649
-msgid "<Image>/Video/Frames to Image..."
-msgstr "<Image>/動画/フレームを画像に..."
-
-#: plug-ins/gap/gap_main.c:661
-msgid "<Image>/Video/Frames Flatten..."
-msgstr "<Image>/動画/フレーム統合..."
-
-#: plug-ins/gap/gap_main.c:673
-msgid "<Image>/Video/Frames LayerDel..."
-msgstr "<Image>/動画/フレームレイヤー削除..."
-
-#: plug-ins/gap/gap_main.c:697
-msgid "<Image>/Video/Frames Convert..."
-msgstr "<Image>/動画/フレーム変換..."
-
-#: plug-ins/gap/gap_main.c:709
-msgid "<Image>/Video/Frames Resize..."
-msgstr "<Image>/動画/フレームサイズ変更..."
-
-#: plug-ins/gap/gap_main.c:721
-msgid "<Image>/Video/Frames Crop..."
-msgstr "<Image>/動画/フレーム切り抜き..."
-
-#: plug-ins/gap/gap_main.c:733
-msgid "<Image>/Video/Frames Scale..."
-msgstr "<Image>/動画/フレーム拡大縮小..."
-
-#: plug-ins/gap/gap_main.c:745
-msgid "<Image>/Video/Split Image to Frames..."
-msgstr "<Image>/動画/画像をフレームに分割..."
-
-#: plug-ins/gap/gap_main.c:758
-msgid "<Image>/Video/Framesequence Shift..."
-msgstr "<Image>/動画/フレーム並びずらし..."
-
-#: plug-ins/gap/gap_main.c:770
-msgid "<Image>/Video/Frames Modify..."
-msgstr "<Image>/動画/フレーム修正..."
-
-#. Layer select modes
-#: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:574
-msgid "Pattern is equal to LayerName"
-msgstr "パターンはレイヤー名に等しい"
-
-#: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:575
-msgid "Pattern is Start of LayerName"
-msgstr "パターンはレイヤー名で始まる"
-
-#: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:576
-msgid "Pattern is End of Layername"
-msgstr "パターンはレイヤー名で終わる"
-
-#: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:577
-msgid "Pattern is a Part of LayerName"
-msgstr "パターンはレイヤー名の一部分"
-
-#: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:578
-msgid "Pattern is LayerstackNumber List"
-msgstr "パターンはレイヤースタック番号リスト"
-
-#: plug-ins/gap/gap_mod_layer.c:89 plug-ins/gap/gap_range_ops.c:579
-msgid "Pattern is REVERSE-stack List"
-msgstr "パターンは逆転スタックリスト"
-
-#: plug-ins/gap/gap_mod_layer.c:90 plug-ins/gap/gap_range_ops.c:580
-msgid "All Visible (ignore Pattern)"
-msgstr "可視レイヤー全て (パターン無視)"
-
-#: plug-ins/gap/gap_mod_layer.c:92
-msgid "Select all Layers where Layername is equal to Pattern"
-msgstr "レイヤー名がパターンと等しい全てのレイヤーを選ぶ"
-
-#: plug-ins/gap/gap_mod_layer.c:93
-msgid "Select all Layers where Layername starts with Pattern"
-msgstr "レイヤー名がパターンから始まる全てのレイヤーを選ぶ"
-
-#: plug-ins/gap/gap_mod_layer.c:94
-msgid "Select all Layers where Layername ends up with Pattern"
-msgstr "レイヤー名がパターンで終わる全てのレイヤーを選ぶ"
-
-#: plug-ins/gap/gap_mod_layer.c:95
-msgid "Select all Layers where Layername contains Pattern"
-msgstr "レイヤー名がパターンを含む全てのレイヤーを選ぶ"
-
-#: plug-ins/gap/gap_mod_layer.c:96
-msgid ""
-"Select Layerstack positions.\n"
-"0, 4-5, 8\n"
-"where 0 == Top-layer"
-msgstr ""
-"レイヤースタック位置を選ぶ..\n"
-"0, 4-5, 8\n"
-"0 == 最上層レイヤー"
-
-#: plug-ins/gap/gap_mod_layer.c:97
-msgid ""
-"Select Layerstack positions.\n"
-"0, 4-5, 8\n"
-"where 0 == BG-layer"
-msgstr ""
-"レイヤースタック位置を選ぶ.\n"
-"0, 4-5, 8\n"
-"0 == 背景レイヤー"
-
-#: plug-ins/gap/gap_mod_layer.c:98
-msgid "Select all visible Layers"
-msgstr "可視レイヤーを全て選ぶ"
-
-#. action items what to do with the selected layer(s)
-#: plug-ins/gap/gap_mod_layer.c:102
-msgid "Set Layer(s) visible"
-msgstr "レイヤーを可視状態に"
-
-#: plug-ins/gap/gap_mod_layer.c:103
-msgid "Set Layer(s) invisible"
-msgstr "レイヤーを不可視状態に"
-
-#: plug-ins/gap/gap_mod_layer.c:104
-msgid "Set Layer(s) linked"
-msgstr "レイヤーをリンクする"
-
-#: plug-ins/gap/gap_mod_layer.c:105
-msgid "Set Layer(s) unlinked"
-msgstr "レイヤをリンクしない"
-
-#: plug-ins/gap/gap_mod_layer.c:106
-msgid "Raise Layer(s)"
-msgstr "レイヤーを上げる"
-
-#: plug-ins/gap/gap_mod_layer.c:107
-msgid "Lower Layer(s)"
-msgstr "レイヤーを下げる"
-
-#: plug-ins/gap/gap_mod_layer.c:108
-msgid "Merge Layer(s) expand as necessary"
-msgstr "必要に応じて拡大したレイヤーを結合"
-
-#: plug-ins/gap/gap_mod_layer.c:109
-msgid "Merge Layer(s) clipped to image"
-msgstr "画像に切り取られたレイヤーを結合"
-
-#: plug-ins/gap/gap_mod_layer.c:110
-msgid "Merge Layer(s) clipped to bg-layer"
-msgstr "背景に切り取られたレイヤーを結合"
-
-#: plug-ins/gap/gap_mod_layer.c:111
-msgid "Apply filter on Layer(s)"
-msgstr "レイヤーにフィルターを適用"
-
-#: plug-ins/gap/gap_mod_layer.c:112
-msgid "Duplicate Layer(s)"
-msgstr "レイヤーを複製する"
-
-#: plug-ins/gap/gap_mod_layer.c:113
-msgid "Delete Layer(s)"
-msgstr "レイヤーを削除する"
-
-#: plug-ins/gap/gap_mod_layer.c:114
-msgid "Rename Layer(s)"
-msgstr "レイヤーの名称変更"
-
-#: plug-ins/gap/gap_mod_layer.c:153
-msgid ""
-"Perform function on one or more Layer(s)\n"
-"in all frames of the selected frame range\n"
-msgstr ""
-"選択されたフレーム範囲内の全てのフレームで\n"
-"一つ以上のレイヤーに対して機能を実行する\n"
-
-#: plug-ins/gap/gap_mod_layer.c:157 plug-ins/gap/gap_mpege.c:258
-#: plug-ins/gap/gap_range_ops.c:443
-msgid "From Frame:"
-msgstr "元フレーム:"
-
-#: plug-ins/gap/gap_mod_layer.c:158 plug-ins/gap/gap_mpege.c:259
-#: plug-ins/gap/gap_range_ops.c:444 plug-ins/gap/gap_range_ops.c:603
-msgid "first handled frame"
-msgstr "最初に扱われるフレーム"
-
-#: plug-ins/gap/gap_mod_layer.c:165 plug-ins/gap/gap_range_ops.c:451
-msgid "To Frame:"
-msgstr "宛フレーム:"
-
-#: plug-ins/gap/gap_mod_layer.c:166 plug-ins/gap/gap_mpege.c:267
-#: plug-ins/gap/gap_range_ops.c:452 plug-ins/gap/gap_range_ops.c:611
-msgid "last handled frame"
-msgstr "最後に扱われるフレーム"
-
-#: plug-ins/gap/gap_mod_layer.c:174 plug-ins/gap/gap_range_ops.c:650
-msgid "Select Layer(s):"
-msgstr "レイヤー選択:"
-
-#: plug-ins/gap/gap_mod_layer.c:184 plug-ins/gap/gap_range_ops.c:659
-msgid "Select Pattern:"
-msgstr "パターン選択:"
-
-#. pixel
-#: plug-ins/gap/gap_mod_layer.c:186 plug-ins/gap/gap_range_ops.c:661
-msgid ""
-"String to identify layer names    \n"
-"or layerstack position numbers\n"
-"0,3-5"
-msgstr ""
-"レイヤーの名前を区別する文字列    \n"
-"またはレイヤースタック位置の番号\n"
-"0,3-5"
-
-#: plug-ins/gap/gap_mod_layer.c:192 plug-ins/gap/gap_range_ops.c:667
-msgid "Case sensitive"
-msgstr "大文字と小文字を区別する"
-
-#: plug-ins/gap/gap_mod_layer.c:193 plug-ins/gap/gap_range_ops.c:668
-msgid "Lowercase and UPPERCASE letters are considered as different"
-msgstr "小文字と大文字の文字は異なる物だとみなす"
-
-#: plug-ins/gap/gap_mod_layer.c:198 plug-ins/gap/gap_range_ops.c:673
-msgid "Invert Selection"
-msgstr "選択領域反転"
-
-#: plug-ins/gap/gap_mod_layer.c:199
-msgid "Perform actions on all unselected Layers"
-msgstr "全ての非選択レイヤーにアクションを行う"
-
-#: plug-ins/gap/gap_mod_layer.c:204
-msgid "Function:"
-msgstr "機能:"
-
-#. argv[7].radio_help_argv = action_help
-#: plug-ins/gap/gap_mod_layer.c:208
-msgid "Function to be performed on all selected layers"
-msgstr "全ての選択したレイヤーに実行される機能"
-
-#: plug-ins/gap/gap_mod_layer.c:214
-msgid "New Layername:"
-msgstr "新規レイヤー名"
-
-#. pixel
-#: plug-ins/gap/gap_mod_layer.c:216
-msgid ""
-"New Layername for all handled layers \n"
-"[####] is replaced by frame number\n"
-"(is used on function rename only)"
-msgstr ""
-"取り扱う全レイヤーのための新規レイヤー名\n"
-"[####] はフレーム番号によって置きかえられる\n"
-"(名前変更だけのための機能として使われる)"
-
-#: plug-ins/gap/gap_mod_layer.c:221
-msgid "Frames Modify"
-msgstr "フレーム修正"
-
-#: plug-ins/gap/gap_mod_layer.c:285
-#, c-format
-msgid ""
-"Non-Interactive call of %s\n"
-"(for all selected layers)"
-msgstr ""
-"ノンインタラクティブは %s を呼び出しました\n"
-"(全ての非選択レイヤーのために)"
-
-#. GAP-PDB-Browser Dialog
-#. ----------------------
-#: plug-ins/gap/gap_mod_layer.c:663
-msgid "Select Filter for Animated frames-apply"
-msgstr "動画フレームに適用するフィルタの選択"
-
-#: plug-ins/gap/gap_mod_layer.c:805
-msgid "GAP Modify: No layer selected in last handled frame"
-msgstr "GAP 修正: 選択した最後に扱うフレームにはレイヤーがありません"
-
-#: plug-ins/gap/gap_mod_layer.c:891
-msgid "Modifying Frames/Layer(s)..."
-msgstr "フレーム/レイヤーの修正中..."
-
-#: plug-ins/gap/gap_mod_layer.c:972
-msgid "No selected Layer in start frame"
-msgstr "開始フレームのレイヤーが選択されていません"
-
-#: plug-ins/gap/gap_mov_dialog.c:262 plug-ins/gfig/gfig.c:3328
-#: plug-ins/gflare/gflare.c:589 plug-ins/gimpressionist/orientmap.c:590
-msgid "Normal"
-msgstr "標準"
-
-#: plug-ins/gap/gap_mov_dialog.c:263
-msgid "Dissolve"
-msgstr "消算"
-
-#: plug-ins/gap/gap_mov_dialog.c:264
-msgid "Multiply"
-msgstr "乗算"
-
-#: plug-ins/gap/gap_mov_dialog.c:266 plug-ins/gflare/gflare.c:591
-#: plug-ins/gimpressionist/paper.c:152
-msgid "Overlay"
-msgstr "オーバーレイ"
-
-#: plug-ins/gap/gap_mov_dialog.c:267
-msgid "Difference"
-msgstr "差分"
-
-#: plug-ins/gap/gap_mov_dialog.c:268 plug-ins/gflare/gflare.c:590
-msgid "Addition"
-msgstr "加算"
-
-#: plug-ins/gap/gap_mov_dialog.c:269 plug-ins/gfig/gfig.c:3147
-msgid "Subtract"
-msgstr "減算"
-
-#: plug-ins/gap/gap_mov_dialog.c:270
-msgid "Darken Only"
-msgstr "比較(暗)"
-
-#: plug-ins/gap/gap_mov_dialog.c:271
-msgid "Lighten Only"
-msgstr "比較(明)"
-
-#: plug-ins/gap/gap_mov_dialog.c:282
-msgid "Left  Top"
-msgstr "左上"
-
-#: plug-ins/gap/gap_mov_dialog.c:283
-msgid "Left  Bottom"
-msgstr "左"
-
-#: plug-ins/gap/gap_mov_dialog.c:284
-msgid "Right Top"
-msgstr "左下"
-
-#: plug-ins/gap/gap_mov_dialog.c:285
-msgid "Right Bottom"
-msgstr "右"
-
-#: plug-ins/gap/gap_mov_dialog.c:294
-msgid "Loop"
-msgstr "ループ"
-
-#: plug-ins/gap/gap_mov_dialog.c:295
-msgid "Loop Reverse"
-msgstr "逆ループ"
-
-#: plug-ins/gap/gap_mov_dialog.c:296
-msgid "Once"
-msgstr "一回"
-
-#: plug-ins/gap/gap_mov_dialog.c:297
-msgid "OnceReverse"
-msgstr "逆一回"
-
-#: plug-ins/gap/gap_mov_dialog.c:298
-msgid "PingPong"
-msgstr "双方向"
-
-#: plug-ins/gap/gap_mov_dialog.c:300
-#, fuzzy
-msgid "Frame Loop"
-msgstr "フレーム %d"
-
-#: plug-ins/gap/gap_mov_dialog.c:301
-#, fuzzy
-msgid "Frame Loop Reverse"
-msgstr "逆ループ"
-
-#: plug-ins/gap/gap_mov_dialog.c:302
-#, fuzzy
-msgid "Frame Once"
-msgstr "フレーム %d"
-
-#: plug-ins/gap/gap_mov_dialog.c:303
-#, fuzzy
-msgid "Frame OnceReverse"
-msgstr "逆一回"
-
-#: plug-ins/gap/gap_mov_dialog.c:304
-#, fuzzy
-msgid "Frame PingPong"
-msgstr "双方向"
-
-#: plug-ins/gap/gap_mov_dialog.c:305
-#, fuzzy
-msgid "Frame None"
-msgstr "フレーム %d"
-
-#: plug-ins/gap/gap_mov_dialog.c:468
-msgid "Move Path"
-msgstr "パス移動"
-
-#: plug-ins/gap/gap_mov_dialog.c:502
-msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
-msgstr "現在のコントロールポイントがある元レイヤーでプレビューフレームを表示"
-
-#: plug-ins/gap/gap_mov_dialog.c:506
-msgid "Anim Preview"
-msgstr "動画プレビュー"
-
-#: plug-ins/gap/gap_mov_dialog.c:513
-msgid "Generate Animated Preview as multilayer image"
-msgstr "複数枚レイヤー画像として動画プレビューを生成する"
-
-#. parameter settings
-#: plug-ins/gap/gap_mov_dialog.c:526
-msgid "Copy moving source-layer(s) into frames"
-msgstr "移動するソースレイヤーをフレームにコピー"
-
-#. the start frame scale_entry
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:559
-msgid "Start Frame:"
-msgstr "開始フレーム"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:567
-msgid "First handled frame"
-msgstr "最初に扱うフレーム"
-
-#. the end frame scale_entry
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:574
-msgid "End Frame:"
-msgstr "終了フレーム"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:582
-msgid "Last handled frame"
-msgstr "最後に扱うフレーム"
-
-#. the Preview Frame scale_entry
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:589
-msgid "Preview Frame:"
-msgstr "プレビューフレーム:"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:597
-msgid "Frame to show when UpdPreview button is pressed"
-msgstr "プレビュー更新ボタンが押された時に表示するフレーム"
-
-#. the Layerstack scale_entry
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:605 plug-ins/gap/gap_range_ops.c:267
-msgid "Layerstack:"
-msgstr "レイヤースタック:"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:613
-msgid ""
-"How to insert SrcLayer into the Dst. Frame's Layerstack\n"
-"0 means on top i.e. in front"
-msgstr ""
-"元レイヤーを Dst に挿入する方法. フレームのレイヤースタック\n"
-"0 というのは一番上, つまり最前面です"
-
-#. toggle force visibility
-#: plug-ins/gap/gap_mov_dialog.c:625
-msgid "Force visibility"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:632
-msgid "Force visibility for all copied Src-Layers"
-msgstr ""
-
-#. toggle clip_to_image
-#: plug-ins/gap/gap_mov_dialog.c:638
-msgid "Clip To Frame"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:645
-msgid "Clip all copied Src-Layers at Frame Boundaries"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:693
-msgid ""
-"No Source Image was selected\n"
-"(Please open a 2nd Image of the same type before opening Move Path)"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:789
-msgid "Object on empty frames"
-msgstr "空フレームオブジェクト"
-
-#: plug-ins/gap/gap_mov_dialog.c:790
-msgid "Object on one frame"
-msgstr "一つのフレームオブジェクト"
-
-#: plug-ins/gap/gap_mov_dialog.c:791
-msgid "Exact Object on frames"
-msgstr "フレームは正確なオブジェクト"
-
-#: plug-ins/gap/gap_mov_dialog.c:821
-msgid "Anim Preview Mode"
-msgstr "動画プレビューモード"
-
-#: plug-ins/gap/gap_mov_dialog.c:829
-msgid "Scale Preview"
-msgstr "縮小プレビュー"
-
-#: plug-ins/gap/gap_mov_dialog.c:830
-msgid "Scale down size of the generated animated preview (in %)"
-msgstr "作成する動画プレビューのサイズを縮小する (% で)"
-
-#: plug-ins/gap/gap_mov_dialog.c:838
-msgid "Framerate"
-msgstr "フレームレート"
-
-#: plug-ins/gap/gap_mov_dialog.c:839
-msgid "Framerate to use in the animated preview in frames/sec"
-msgstr "動画プレビューで フレーム/秒 として使われるフレームレート"
-
-#: plug-ins/gap/gap_mov_dialog.c:853
-msgid "Copy to Video Buffer"
-msgstr "ビデオバッファにコピー"
-
-#: plug-ins/gap/gap_mov_dialog.c:854
-msgid ""
-"Save all single frames of animated preview to video buffer\n"
-"(configured in gimprc by video-paste-dir and video-paste-basename)"
-msgstr ""
-"全ての動画プレビューのフレームそれぞれをビデオバッファに保存する\n"
-"(video-paste-dir と video-paste-basename によって gimprc で設定される)"
-
-#: plug-ins/gap/gap_mov_dialog.c:859
-msgid "Move Path Animated Preview"
-msgstr "移動パス動画プレビュー"
-
-#: plug-ins/gap/gap_mov_dialog.c:905
-msgid "Generate Animated Preview failed\n"
-msgstr "最適動画プレビュー生成失敗\n"
-
-#. filesel is already open
-#: plug-ins/gap/gap_mov_dialog.c:1190
-msgid "Load Path Points from file"
-msgstr "ファイルからパス端点の読み込み"
-
-#. filesel is already open
-#: plug-ins/gap/gap_mov_dialog.c:1226
-msgid "Save Path Points to file"
-msgstr "ファイルにパス端点を保存"
-
-#: plug-ins/gap/gap_mov_dialog.c:1555
-#, c-format
-msgid "Current Point: [ %3d ] of [ %3d ]"
-msgstr "現在の端点 : [ %3d ] 中 [ %3d ]"
-
-#: plug-ins/gap/gap_mov_dialog.c:1641
-msgid "Source Select"
-msgstr "元選択"
-
-#. Source Layer menu
-#: plug-ins/gap/gap_mov_dialog.c:1657
-msgid "Source Image/Layer:"
-msgstr "元画像/レイヤー:"
-
-#: plug-ins/gap/gap_mov_dialog.c:1667
-msgid "Source Object to insert into Frame Range"
-msgstr "フレーム間に挿入する元オブジェクト"
-
-#. Paintmode menu
-#: plug-ins/gap/gap_mov_dialog.c:1682
-msgid "Mode:"
-msgstr "モード:"
-
-#: plug-ins/gap/gap_mov_dialog.c:1691
-msgid "Paintmode"
-msgstr "描画モード"
-
-#. Loop Stepmode menu
-#: plug-ins/gap/gap_mov_dialog.c:1706
-msgid "Stepmode:"
-msgstr "ステップモード:"
-
-#: plug-ins/gap/gap_mov_dialog.c:1724
-msgid "How to fetch the next SrcLayer at the next handled frame"
-msgstr "次に扱うフレームが次の元レイヤーを取ってくる方法"
-
-#. Source Image Handle menu
-#: plug-ins/gap/gap_mov_dialog.c:1730
-msgid "Handle:"
-msgstr "扱い:"
-
-#: plug-ins/gap/gap_mov_dialog.c:1748
-msgid "How to place the SrcLayer at Controlpoint Coordinates"
-msgstr "元レイヤーのコントロールポイント座標の配置方法"
-
-#. to avoid side effects while initialization
-#. the frame
-#: plug-ins/gap/gap_mov_dialog.c:1802
-msgid "Move Path Preview"
-msgstr "移動パスプレビュー"
-
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1834
-msgid "X Coordinate"
-msgstr "X 座標"
-
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1852
-msgid "Y Coordinate"
-msgstr "Y 座標"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1869
-msgid "Scale Source Layer's Width in percent"
-msgstr "元レイヤーの幅を％で拡大縮小"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1886
-msgid "Scale SrcLayer's Height in percent"
-msgstr "元レイヤーの高さを％で拡大縮小"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1903
-msgid "SrcLayer's Opacity in percent"
-msgstr "％で元レイヤーの不透明度"
-
-#. Rotation
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:1912
-msgid "Rotate:"
-msgstr "回転:"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1920
-msgid "Rotate SrcLayer (in degree)"
-msgstr "元レイヤーの回転 (角度)"
-
-#. Keyframe
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:1930
-msgid "Keyframe:"
-msgstr "キーフレーム:"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1938
-msgid ""
-"Fix Controlpoint to Keyframe number\n"
-"(0 == No Keyframe)"
-msgstr ""
-"コントロールポイントをキーフレーム番号で修正\n"
-"(0 == キーフレーム無し)"
-
-#: plug-ins/gap/gap_mov_dialog.c:2013
-msgid "Add Point"
-msgstr "端点追加"
-
-#: plug-ins/gap/gap_mov_dialog.c:2021
-msgid ""
-"Add Controlpoint at end\n"
-"(the last Point is duplicated)"
-msgstr ""
-"最後にコントロールポイントを追加します\n"
-"(最後の端点が複製される)"
-
-#. toggle clip_to_image
-#: plug-ins/gap/gap_mov_dialog.c:2026
-msgid "Show Path"
-msgstr "パス表示"
-
-#: plug-ins/gap/gap_mov_dialog.c:2033
-msgid ""
-"Show Path Lines and enable pick/drag with left button or move with right "
-"button"
-msgstr ""
-"パス線を表示して左ボタンで選択/ドラッグまたは右ボタンで移動できるようにします"
-
-#: plug-ins/gap/gap_mov_dialog.c:2043
-#: plug-ins/imagemap/imap_cmd_insert_point.c:60
-#: plug-ins/imagemap/imap_polygon.c:685
-msgid "Insert Point"
-msgstr "端点挿入"
-
-#: plug-ins/gap/gap_mov_dialog.c:2051
-msgid ""
-"Insert Controlpoint\n"
-"(the current Point is duplicated)"
-msgstr ""
-"コントロールポイントを挿入します\n"
-"(現在の端点が複製される)"
-
-#: plug-ins/gap/gap_mov_dialog.c:2055
-#: plug-ins/imagemap/imap_cmd_delete_point.c:60
-#: plug-ins/imagemap/imap_polygon.c:671
-msgid "Delete Point"
-msgstr "端点削除"
-
-#: plug-ins/gap/gap_mov_dialog.c:2063
-msgid "Delete current Controlpoint"
-msgstr "現在のコントロールポイントを削除します"
-
-#: plug-ins/gap/gap_mov_dialog.c:2069
-msgid "Prev Point"
-msgstr "前の端点"
-
-#: plug-ins/gap/gap_mov_dialog.c:2077
-msgid "Show Previous Controlpoint"
-msgstr "前のコントロールポイントを表示します"
-
-#: plug-ins/gap/gap_mov_dialog.c:2081
-msgid "Next Point"
-msgstr "次の端点"
-
-#: plug-ins/gap/gap_mov_dialog.c:2089
-msgid "Show Next Controlpoint"
-msgstr "次のコントロールポイントを表示します"
-
-#: plug-ins/gap/gap_mov_dialog.c:2095
-msgid "First Point"
-msgstr "先頭の端点"
-
-#: plug-ins/gap/gap_mov_dialog.c:2103
-msgid "Show First Controlpoint"
-msgstr "最初のコントロールポイントを表示します"
-
-#: plug-ins/gap/gap_mov_dialog.c:2107
-msgid "Last Point"
-msgstr "最後の端点"
-
-#: plug-ins/gap/gap_mov_dialog.c:2115
-msgid "Show Last Controlpoint"
-msgstr "最後のコントロールポイントを表示します"
-
-#: plug-ins/gap/gap_mov_dialog.c:2121
-msgid "Clear Point"
-msgstr "端点クリア"
-
-#: plug-ins/gap/gap_mov_dialog.c:2129
-msgid "Reset the current Controlpoint to default Values"
-msgstr "現在のコントロールポイントを標準値にリセットします"
-
-#: plug-ins/gap/gap_mov_dialog.c:2133
-msgid "Clear All Points"
-msgstr "全端点クリア"
-
-#: plug-ins/gap/gap_mov_dialog.c:2141
-msgid ""
-"Reset all Controlpoints to default Values but dont change the path (X/Y "
-"Values)"
-msgstr ""
-"全てのコントロールポイントを標準値にリセットしますがパス (X/Y 値) は変えませ"
-"ん"
-
-#: plug-ins/gap/gap_mov_dialog.c:2148
-msgid "Rotate Follow"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2159
-msgid ""
-"Set Rotation for all Controlpoints to follow the shape of the path.\n"
-"(Shift: use Rotation of contolpoint 1 as offset)"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2166
-msgid "Delete All Points"
-msgstr "全端点の削除"
-
-#: plug-ins/gap/gap_mov_dialog.c:2174
-msgid "Delete all Controlpoints"
-msgstr "全てのコントロールポイントを削除します"
-
-#: plug-ins/gap/gap_mov_dialog.c:2181
-msgid "Load Points"
-msgstr "端点読み込み"
-
-#: plug-ins/gap/gap_mov_dialog.c:2189
-msgid "Load Controlpoints from file"
-msgstr "コントロールポイントをファイルから読み込みます"
-
-#: plug-ins/gap/gap_mov_dialog.c:2193
-msgid "Save Points"
-msgstr "端点保存"
-
-#: plug-ins/gap/gap_mov_dialog.c:2201
-msgid "Save Controlpoints to file"
-msgstr "コントロールポイントをファイルに保存します"
-
-#: plug-ins/gap/gap_mov_dialog.c:2661
-msgid ""
-"Can't operate with current Controlpoint\n"
-"or Keyframe settings"
-msgstr ""
-"現在のコントロールポイントかキーフレームの設定では\n"
-"操作することができません"
-
-#: plug-ins/gap/gap_mov_dialog.c:2668
-msgid "Reset Keyframes"
-msgstr "キーフレームリセット"
-
-#: plug-ins/gap/gap_mov_dialog.c:2673
-msgid "Move Path Controlpointcheck"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2674
-msgid "Errors:"
-msgstr "エラー:"
-
-#: plug-ins/gap/gap_mov_exec.c:444
-msgid ""
-"No Source Image was selected.\n"
-"Please open a 2nd Image of the same type before opening Move Path."
-msgstr ""
-"元画像が選択されていません.\n"
-"パス移動を開く前に同じ型の 2 番目の画像を開いて下さい."
-
-#: plug-ins/gap/gap_mov_exec.c:455
-msgid "Copying Layers into Frames..."
-msgstr "レイヤーをフレームにコピーしています..."
-
-#: plug-ins/gap/gap_mov_exec.c:459
-msgid "Generating Animated Preview..."
-msgstr "動画プレビューを生成しています..."
-
-#: plug-ins/gap/gap_mov_exec.c:1376
-#, c-format
-msgid ""
-"\n"
-"Error: Keyframe %d at point [%d] higher or equal than last handled frame"
-msgstr ""
-"\n"
-"エラー: キーフレーム %d の端点 [%d] は最終フレームよりも高過ぎるか同等です"
-
-#: plug-ins/gap/gap_mov_exec.c:1384
-#, c-format
-msgid ""
-"\n"
-"Error: Keyframe %d at point [%d] leaves not enough space (frames)\n"
-"for the previous controlpoints"
-msgstr ""
-"\n"
-"エラー: キーフレーム %d の端点 [%d] には前のコントロールポイントのための\n"
-"十分な空間 (フレーム) がありません"
-
-#: plug-ins/gap/gap_mov_exec.c:1394
-#, c-format
-msgid ""
-"\n"
-"Error: Keyframe %d is not in sequence at point [%d]"
-msgstr ""
-"\n"
-"エラー: キーフレーム %d は連続した端点 [%d] ではありません"
-
-#: plug-ins/gap/gap_mov_exec.c:1412
-#, c-format
-msgid ""
-"\n"
-"Error: controlpoint [%d] is out of handled framerange"
-msgstr ""
-"\n"
-"エラー: コントロールポイント [%d] フレーム範囲の扱いを超えています"
-
-#: plug-ins/gap/gap_mov_exec.c:1426
-#, c-format
-msgid ""
-"\n"
-"Error: more controlpoints (%d) than handled frames (%d)\n"
-"please reduce controlpoints or select more frames"
-msgstr ""
-"\n"
-"エラー:  コントロールポイント (%d) が扱うフレーム (%d) よりも多いので\n"
-"コントロールポイントを減らすかもっと多くのフレームを選んで下さい"
-
-#: plug-ins/gap/gap_mpege.c:111
-msgid "Conditions to run mpeg_encode 1.5:"
-msgstr "mpeg_encode 1.5 を実行するには:"
-
-#: plug-ins/gap/gap_mpege.c:114
-msgid "Conditions to run mpeg2encode 1.2:"
-msgstr "mpeg2encode 1.2 を実行するには:"
-
-#: plug-ins/gap/gap_mpege.c:124
-msgid "1.) mpeg_encode 1.5 must be installed"
-msgstr "1.) mpeg_encode 1.5 がインストール済みである"
-
-#: plug-ins/gap/gap_mpege.c:127
-msgid "1.) mpeg2encode 1.2 must be installed"
-msgstr "1.) mpeg2encode 1.2 がインストール済みである"
-
-#: plug-ins/gap/gap_mpege.c:132
-msgid "    you can get mpeg_encode at"
-msgstr "    mpeg_encode はここで入手可能"
-
-#: plug-ins/gap/gap_mpege.c:135
-msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
-msgstr "    mpeg2encode はここで入手可能 http://www.mpeg.org/MSSG"
-
-#: plug-ins/gap/gap_mpege.c:140
-msgid "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
-msgstr "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
-
-#: plug-ins/gap/gap_mpege.c:143
-msgid "   or at ftp://ftp.mpeg.org/pub/mpeg/mssg "
-msgstr "    または ftp://ftp.mpeg.org/pub/mpeg/mssg "
-
-#: plug-ins/gap/gap_mpege.c:148
-msgid "2.) You need a series of single Images on disk (AnimFrames)"
-msgstr "2.) ディスクに一続きの画像 (動画フレーム) が必要"
-
-#: plug-ins/gap/gap_mpege.c:152
-msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
-msgstr "    全てのファイル形式が JPRG (または YUV か PNM か PPM)"
-
-#: plug-ins/gap/gap_mpege.c:155
-msgid "   all with fileformat PPM (or YUV)"
-msgstr "    全てのファイル形式が PPM (または YUV)"
-
-#: plug-ins/gap/gap_mpege.c:160
-msgid "    (use 'Frames Convert' from the Video Menu"
-msgstr "    (動画メニューの 'フレーム変換' を使うか"
-
-#: plug-ins/gap/gap_mpege.c:164
-msgid "    or 'Split Image to Frames' from the Video Menu)"
-msgstr "    動画メニューの '画像をフレームに分割' を使う)"
-
-#: plug-ins/gap/gap_mpege.c:168
-msgid "3.) All Images must have the same size,"
-msgstr "3.) 全ての画像は同じサイズである必要があり,"
-
-#: plug-ins/gap/gap_mpege.c:175
-msgid "    width and height must be a multiple of 16"
-msgstr "    幅と高さが 16 の倍数である必要があります"
-
-#: plug-ins/gap/gap_mpege.c:179
-msgid "    (use Scale or Crop from the Video Menu)"
-msgstr "    (動画メニューの拡大縮小か切り抜きを使う)"
-
-#: plug-ins/gap/gap_mpege.c:194
-msgid "MPEG_ENCODE Information"
-msgstr "MPEG エンコード情報"
-
-#: plug-ins/gap/gap_mpege.c:231
-msgid "generate MPEG1 (ISO/IEC 11172-2) stream"
-msgstr "MPEG1 (ISO/IEC 11172-2) ストリームの生成"
-
-#: plug-ins/gap/gap_mpege.c:232
-msgid "generate MPEG2 (ISO/IEC DIS 13818-2) stream"
-msgstr "MPEG2 (ISO/IEC DIS 13818-2) ストリームの生成"
-
-#: plug-ins/gap/gap_mpege.c:242
-msgid "GenParams"
-msgstr "パラメータ生成"
-
-#: plug-ins/gap/gap_mpege.c:244
-msgid "Gen + Encode"
-msgstr "生成 + エンコード"
-
-#: plug-ins/gap/gap_mpege.c:266
-msgid "To   Frame:"
-msgstr "宛フレーム:"
-
-#: plug-ins/gap/gap_mpege.c:273
-msgid "Framerate :"
-msgstr "フレームレート :"
-
-#: plug-ins/gap/gap_mpege.c:274
-msgid "framerate in frames/second"
-msgstr "フレーム/秒のフレームレート"
-
-#: plug-ins/gap/gap_mpege.c:281
-msgid "Bitrate:"
-msgstr "ビットレート:"
-
-#: plug-ins/gap/gap_mpege.c:282
-msgid ""
-"used for constant bitrates (bit/sec)                  \n"
-"(low rate gives good compression + bad quality)"
-msgstr ""
-"一定のビットレートを使用する (ビット/秒)              \n"
-"(低いレートは圧縮良好 + 低品質を与える)"
-
-#: plug-ins/gap/gap_mpege.c:296
-msgid "Outputfile:"
-msgstr "出力ファイル:"
-
-#. pixel
-#: plug-ins/gap/gap_mpege.c:298
-msgid "Name of the resulting MPEG outputfile"
-msgstr "生成する MPEG 出力ファイルの名前"
-
-#: plug-ins/gap/gap_mpege.c:304
-msgid "Paramfile:"
-msgstr "パラメータファイル:"
-
-#. pixel
-#: plug-ins/gap/gap_mpege.c:306
-msgid ""
-"Name of the Encoder-Parameterfile\n"
-"(is generated)"
-msgstr ""
-"エンコーダーパラメータファイルの名前\n"
-"(が生成される)"
-
-#: plug-ins/gap/gap_mpege.c:312
-msgid "Startscript:"
-msgstr "開始スクリプト:"
-
-#. pixel
-#: plug-ins/gap/gap_mpege.c:314
-msgid ""
-"Name of the Startscript           \n"
-"(is generated/executed)"
-msgstr ""
-"開始スクリプトの名前              \n"
-"(が生成される/実行される)"
-
-#: plug-ins/gap/gap_mpege.c:320
-msgid ""
-"Generate parameterfile for mpeg_encode 1.5\n"
-"(the freely distributed Berkeley MPEG-1 Video  Encoder.)\n"
-msgstr ""
-"mpeg_encode 1.5 のためのパラメータファイルの生成\n"
-"(配布フリーな Berkeley MPEG-1 動画エンコーダー.)\n"
-
-#: plug-ins/gap/gap_mpege.c:324
-msgid "Constant Bitrate :"
-msgstr "固定ビットレート :"
-
-#: plug-ins/gap/gap_mpege.c:325
-msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
-msgstr "I/P/Q 拡大縮小値を無視して固定ビットレートを使う"
-
-#: plug-ins/gap/gap_mpege.c:330
-msgid "Pattern:"
-msgstr "パターン:"
-
-#. pixel
-#: plug-ins/gap/gap_mpege.c:332
-msgid "How to encode MPEG framesequence (I/P/B frames)"
-msgstr "MPEG フレームシーケンスのエンコード方法 (I/P/B フレーム)"
-
-#: plug-ins/gap/gap_mpege.c:338
-msgid "IQSCALE:"
-msgstr "I 品質拡大縮小:"
-
-#: plug-ins/gap/gap_mpege.c:339
-msgid ""
-"Quality scale for I-Frames                       \n"
-"(1 = best quality, 31 = best comression)"
-msgstr ""
-"I-フレームの品質拡大縮小                         \n"
-"(1 = 最高品質, 31 = 圧縮最大)"
-
-#: plug-ins/gap/gap_mpege.c:346
-msgid "PQSCALE:"
-msgstr "P 品質拡大縮小:"
-
-#: plug-ins/gap/gap_mpege.c:347
-msgid ""
-"Quality scale for P-Frames                  \n"
-"(1 = best quality, 31 = best comression)"
-msgstr ""
-"P-フレームの品質拡大縮小                    \n"
-"(1 = 最高品質, 31 = 圧縮最大)"
-
-#: plug-ins/gap/gap_mpege.c:354
-msgid "BQSCALE:"
-msgstr "B 品質拡大縮小:"
-
-#: plug-ins/gap/gap_mpege.c:355
-msgid ""
-"Quality scale for B-Frames                  \n"
-"(1 = best quality, 31 = best comression)"
-msgstr ""
-"B-フレームの品質拡大縮小                    \n"
-"(1 = 最高品質, 31 = 圧縮最大)"
-
-#: plug-ins/gap/gap_mpege.c:362
-msgid "P-Search :"
-msgstr "P-検索 :"
-
-#: plug-ins/gap/gap_mpege.c:363
-msgid "Search Algorithmus used for P-frames"
-msgstr "P-フレームで使われるアルゴリズムの検索"
-
-#: plug-ins/gap/gap_mpege.c:369
-msgid "B-Search :"
-msgstr "B-検索 :"
-
-#: plug-ins/gap/gap_mpege.c:370
-msgid "Search Algorithmus used for B-frames"
-msgstr "B-フレームで使われるアルゴリズムの検索"
-
-#: plug-ins/gap/gap_mpege.c:375
-msgid "Gen MPEG_ENCODE Parameters"
-msgstr "MPEG_ENCODE パラメータ生成"
-
-#: plug-ins/gap/gap_mpege.c:376 plug-ins/gap/gap_mpege.c:414
-msgid "Encode Values"
-msgstr "エンコード値"
-
-#: plug-ins/gap/gap_mpege.c:392
-msgid ""
-"Generate parameterfile for mpeg2encode 1.2\n"
-"(MPEG-2 Video  Encoder.)\n"
-msgstr ""
-"mpeg2encode 1.2 のためのパラメータファイルの生成\n"
-"(MPEG-2 動画エンコーダー.)\n"
-
-#: plug-ins/gap/gap_mpege.c:395
-msgid "MPEG-type :"
-msgstr "MPEG 種:"
-
-#: plug-ins/gap/gap_mpege.c:404
-msgid "Videoformat :"
-msgstr "動画形式 :"
-
-#: plug-ins/gap/gap_mpege.c:405
-msgid "Videoformat"
-msgstr "動画形式"
-
-#. framerates above 30 ar not allowed in mpeg2encode
-#: plug-ins/gap/gap_mpege.c:413
-msgid "Gen MPEG2ENCODE Parameters"
-msgstr "MPEG2ENCODE パラメータ生成"
-
-#: plug-ins/gap/gap_mpege.c:978
-msgid ""
-"\n"
-"WARNING: mpeg_encode does not support Fileformat "
-msgstr ""
-"\n"
-"警告: mpeg_encode が 対応しないファイル形式 "
-
-#: plug-ins/gap/gap_mpege.c:981
-msgid ""
-"\n"
-"ERROR: width not a multiple of 16"
-msgstr ""
-"\n"
-"エラー: 幅が 16 の倍数ではありません"
-
-#: plug-ins/gap/gap_mpege.c:982
-msgid ""
-"\n"
-"ERROR: height not a multiple of 16"
-msgstr ""
-"\n"
-"エラー: 高さが 16 の倍数ではありません"
-
-#: plug-ins/gap/gap_mpege.c:988
-msgid ""
-"\n"
-"WARNING: mpeg2encode does not support Fileformat "
-msgstr ""
-"\n"
-"警告: mpeg2encode が対応しないファイル形式 "
-
-#: plug-ins/gap/gap_mpege.c:993
-msgid ""
-"\n"
-"ERROR: invoked from a single image, animframe required"
-msgstr ""
-"\n"
-"エラー: 一枚の画像が呼び出されました, 動画フレームが必要です"
-
-#: plug-ins/gap/gap_navigator_dialog.c:368
-msgid ""
-"Playback         \n"
-"<Shift> optimized"
-msgstr ""
-"プレイバック     \n"
-"<Shift> 最適化"
-
-#: plug-ins/gap/gap_navigator_dialog.c:373
-msgid ""
-"Smart Update .xvpics\n"
-"<Shift> forced upd"
-msgstr ""
-"すぐに .xvpics を更新\n"
-"<Shift> で強制更新"
-
-#: plug-ins/gap/gap_navigator_dialog.c:378
-msgid "Duplicate selected Frames"
-msgstr "選択したフレームを複製"
-
-#: plug-ins/gap/gap_navigator_dialog.c:382
-msgid "Delete selected Frames"
-msgstr "選択したフレームを削除"
-
-#: plug-ins/gap/gap_navigator_dialog.c:391
-msgid "Goto 1st Frame"
-msgstr "最初のフレームへ"
-
-#: plug-ins/gap/gap_navigator_dialog.c:395
-msgid ""
-"Goto prev Frame\n"
-"<Shift> use timezoom stepsize"
-msgstr ""
-
-#: plug-ins/gap/gap_navigator_dialog.c:400
-msgid ""
-"Goto next Frame\n"
-"<Shift> use timezoom stepsize"
-msgstr ""
-
-#: plug-ins/gap/gap_navigator_dialog.c:405
-msgid "Goto last Frame"
-msgstr "最後のフレームへ"
-
-#: plug-ins/gap/gap_navigator_dialog.c:463
-msgid "<Image>/Video/VCR Navigator..."
-msgstr "<Image>/動画/VCR ナビゲータ..."
-
-#: plug-ins/gap/gap_navigator_dialog.c:526
-msgid "Cant open two or more Video Navigator Windows."
-msgstr "2 つ以上のビデオナビゲータウィンドウは開けません."
-
-#. menu_item cut
-#: plug-ins/gap/gap_navigator_dialog.c:2932
-#: plug-ins/imagemap/imap_cmd_cut.c:56
-#: plug-ins/imagemap/imap_cmd_cut_object.c:54
-#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:133
-msgid "Cut"
-msgstr "カット"
-
-#. menu_item paste before
-#: plug-ins/gap/gap_navigator_dialog.c:2942
-msgid "Paste before"
-msgstr "前にペースト"
-
-#. menu_item copy
-#: plug-ins/gap/gap_navigator_dialog.c:2952
-msgid "Paste after"
-msgstr "後ろにペースト"
-
-#. menu_item copy
-#: plug-ins/gap/gap_navigator_dialog.c:2962
-msgid "Paste replace"
-msgstr "置き換えてペースト"
-
-#. menu_item copy
-#: plug-ins/gap/gap_navigator_dialog.c:2972
-msgid "Clear Video Buffer"
-msgstr "ビデオバッファのクリア"
-
-#: plug-ins/gap/gap_navigator_dialog.c:2997
-msgid "Videoframes:"
-msgstr "ビデオフレーム:"
-
-#: plug-ins/gap/gap_navigator_dialog.c:3012
-msgid "Framerate:"
-msgstr "フレームレート:"
-
-#: plug-ins/gap/gap_navigator_dialog.c:3035
-msgid "Timezoom:"
-msgstr "時間ズーム:"
-
-#. The main shell
-#: plug-ins/gap/gap_navigator_dialog.c:3119
-msgid "Video Navigator"
-msgstr "動画ナビゲータ"
-
-#: plug-ins/gap/gap_range_ops.c:120
-msgid "New Width:"
-msgstr "新しい幅:"
-
-#: plug-ins/gap/gap_range_ops.c:129
-msgid "New Height:"
-msgstr "新しい高さ:"
-
-#: plug-ins/gap/gap_range_ops.c:138
-msgid "Offset X:"
-msgstr "X オフセット:"
-
-#: plug-ins/gap/gap_range_ops.c:147
-msgid "Offset Y:"
-msgstr "Y オフセット:"
-
-#: plug-ins/gap/gap_range_ops.c:158
-msgid "Crop AnimFrames (all)"
-msgstr "動画フレーム切り抜き (全部)"
-
-#: plug-ins/gap/gap_range_ops.c:159
-#, c-format
-msgid "Crop (original %dx%d)"
-msgstr "切り抜き (原画 %dx%d)"
-
-#: plug-ins/gap/gap_range_ops.c:169
-msgid "Resize AnimFrames (all)"
-msgstr "動画フレームサイズ変更 (全部)"
-
-#: plug-ins/gap/gap_range_ops.c:170
-#, c-format
-msgid "Resize (original %dx%d)"
-msgstr "サイズ変更 (原画 %dx%d)"
-
-#: plug-ins/gap/gap_range_ops.c:176
-msgid "Scale AnimFrames (all)"
-msgstr "動画フレーム拡大縮小 (全部)"
-
-#: plug-ins/gap/gap_range_ops.c:177
-#, c-format
-msgid "Scale (original %dx%d)"
-msgstr "拡大縮小 (原画 %dx%d)"
-
-#: plug-ins/gap/gap_range_ops.c:308
-msgid "Generate Optimal Palette"
-msgstr "最適パレットを生成する"
-
-#: plug-ins/gap/gap_range_ops.c:309
-msgid "WEB Palette"
-msgstr "Web パレット"
-
-#: plug-ins/gap/gap_range_ops.c:310
-msgid "Use Custom Palette"
-msgstr "カスタムパレットを使う"
-
-#: plug-ins/gap/gap_range_ops.c:311
-msgid "Use Black/White (1-Bit) Palette"
-msgstr "白黒 (1-ビット) パレットを使う"
-
-#: plug-ins/gap/gap_range_ops.c:313
-msgid "Floyd-Steinberg Color Dithering (Normal)"
-msgstr "フロイド・スタインバーグ色ディザリング (普通)"
-
-#: plug-ins/gap/gap_range_ops.c:314
-msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
-msgstr "フロイド・スタインバーグ色ディザリング (色混合減少)"
-
-#: plug-ins/gap/gap_range_ops.c:315
-msgid "Positioned Color Dithering"
-msgstr "ポジション色ディザリング"
-
-#: plug-ins/gap/gap_range_ops.c:316
-msgid "No Color Dithering"
-msgstr "色ディザリング無し"
-
-#: plug-ins/gap/gap_range_ops.c:327
-msgid "Palette Type"
-msgstr "パレット型"
-
-#: plug-ins/gap/gap_range_ops.c:334
-msgid "Custom Palette"
-msgstr "カスタムパレット"
-
-#: plug-ins/gap/gap_range_ops.c:335
-msgid ""
-"Name of a cutom palette\n"
-"(is ignored if Palette Type is not custom)"
-msgstr ""
-"カスタムパレットの名前\n"
-"(パレット型がカスタムではないと無視される)"
-
-#: plug-ins/gap/gap_range_ops.c:340
-msgid "Remove Unused"
-msgstr "未使用の色を取り除く"
-
-#: plug-ins/gap/gap_range_ops.c:341
-msgid ""
-"Remove unused or double colors\n"
-"(is ignored if Palette Type is not custom)"
-msgstr ""
-"未使用か重複している色を取り除く\n"
-"(パレット型がカスタムではないと無視される)"
-
-#: plug-ins/gap/gap_range_ops.c:347
-msgid ""
-"Number of resulting Colors\t\t \n"
-"(ignored if Palette Type is not Generate optimal palette)"
-msgstr ""
-"最終的な色の数\t\t \n"
-"(パレット型が一般的な最適パレットではないと無視される)"
-
-#: plug-ins/gap/gap_range_ops.c:354
-msgid "Dither Options"
-msgstr "ディザリングオプション"
-
-#: plug-ins/gap/gap_range_ops.c:361
-msgid "Enable transparency"
-msgstr "透明有効"
-
-#: plug-ins/gap/gap_range_ops.c:362
-msgid "Enable dithering of transparency"
-msgstr "透明のディザリングを有効にする"
-
-#: plug-ins/gap/gap_range_ops.c:365
-msgid "Convert Frames to Indexed"
-msgstr "フレームをインデックスに変換"
-
-#: plug-ins/gap/gap_range_ops.c:366
-msgid "Palette and Dither Settings"
-msgstr "パレットとディザリングの設定:"
-
-#: plug-ins/gap/gap_range_ops.c:431
-msgid "Keep Type"
-msgstr "そのまま"
-
-#: plug-ins/gap/gap_range_ops.c:432
-msgid "Convert to RGB"
-msgstr "RGB 画像に変換:"
-
-#: plug-ins/gap/gap_range_ops.c:433
-msgid "Convert to Gray"
-msgstr "グレースケール画像に変換:"
-
-#: plug-ins/gap/gap_range_ops.c:434
-msgid "Convert to Indexed"
-msgstr "インデックス画像に変換:"
-
-#: plug-ins/gap/gap_range_ops.c:458
-msgid ""
-"\n"
-"Select destination fileformat by extension\n"
-"optionally convert imagetype\n"
-msgstr ""
-"\n"
-"画像型変換オプションとして拡張子に\n"
-"よって目当てのファイル形式を選びます\n"
-
-#: plug-ins/gap/gap_range_ops.c:461
-msgid "Basename:"
-msgstr "ベース名:"
-
-#: plug-ins/gap/gap_range_ops.c:462
-msgid ""
-"basename of the resulting frames       \n"
-"(0001.ext is added)"
-msgstr ""
-"生成フレームのベース名                 \n"
-"(0001.ext が追加される)"
-
-#: plug-ins/gap/gap_range_ops.c:467 plug-ins/gap/gap_split.c:235
-msgid "Extension:"
-msgstr "拡張子:"
-
-#: plug-ins/gap/gap_range_ops.c:468
-msgid ""
-"extension of resulting frames       \n"
-"(is also used to define Fileformat)"
-msgstr ""
-"生成フレームの拡張子                \n"
-"(ファイル形式を定義するためにも使われる)"
-
-#: plug-ins/gap/gap_range_ops.c:474
-msgid "Imagetype:"
-msgstr "画像種:"
-
-#: plug-ins/gap/gap_range_ops.c:475
-msgid ""
-"Convert to, or keep imagetype           \n"
-"(most fileformats can't handle all types)"
-msgstr ""
-"変換するか, 画像種をそのままに          \n"
-"(ほとんどのファイル形式は全ての型を扱えない)"
-
-#: plug-ins/gap/gap_range_ops.c:481 plug-ins/gap/gap_split.c:246
-msgid "Flatten:"
-msgstr "統合:"
-
-#: plug-ins/gap/gap_range_ops.c:482
-msgid ""
-"Flatten all resulting frames               \n"
-"(most fileformats need flattened frames)"
-msgstr ""
-"生成フレーム全てを統合する                 \n"
-"(ほとんどのファイル形式は統合されたフレームが必要)"
-
-#: plug-ins/gap/gap_range_ops.c:487
-msgid "Convert Frames to other Formats"
-msgstr "フレームを他形式に変換"
-
-#: plug-ins/gap/gap_range_ops.c:488
-msgid "Convert Settings"
-msgstr "変換設定"
-
-#: plug-ins/gap/gap_range_ops.c:565
-msgid "Expand as necessary"
-msgstr "必要に応じて拡大"
-
-#: plug-ins/gap/gap_range_ops.c:566
-msgid "Clipped to image"
-msgstr "画像の切り抜き"
-
-#: plug-ins/gap/gap_range_ops.c:567
-msgid "Clipped to bottom layer"
-msgstr "最下レイヤーの切り抜き"
-
-#: plug-ins/gap/gap_range_ops.c:568
-msgid "Flattened image"
-msgstr "画像統合"
-
-#: plug-ins/gap/gap_range_ops.c:569
-msgid ""
-"Resulting Layer Size is made of the outline-rectangle \n"
-"of all visible layers (may differ from frame to frame)"
-msgstr ""
-"レイヤーサイズは全可視レイヤーの輪郭を変えたもの\n"
-"(フレームからフレーム間で違っているかもしれない)"
-
-#: plug-ins/gap/gap_range_ops.c:570
-msgid "Resulting Layer Size is the frame size"
-msgstr "レイヤーサイズはフレームサイズになる"
-
-#: plug-ins/gap/gap_range_ops.c:571
-msgid ""
-"Resulting Layer Size is the size of the bottom layer\n"
-"(may differ from frame to frame)"
-msgstr ""
-"レイヤーサイズは一番下のレイヤの大きさになる\n"
-"(フレームからフレーム間で違っているかもしれない)"
-
-#: plug-ins/gap/gap_range_ops.c:572
-msgid ""
-"Resulting Layer Size is the frame size     \n"
-"transparent parts are filled with BG color"
-msgstr ""
-"レイヤーサイズは透明な部分が背景色で塗りつ\n"
-"ぶされたフレームサイズになる"
-
-#: plug-ins/gap/gap_range_ops.c:582
-msgid "select all Layers where Layername is equal to Pattern"
-msgstr "レイヤー名がパターンに等しい全てのレイヤーを選ぶ"
-
-#: plug-ins/gap/gap_range_ops.c:583
-msgid "select all Layers where Layername starts with Pattern"
-msgstr "レイヤー名がパターンで始まる全てのレイヤーを選ぶ"
-
-#: plug-ins/gap/gap_range_ops.c:584
-msgid "select all Layers where Layername ends up with Pattern"
-msgstr "レイヤー名がパターンで終わる全てのレイヤーを選ぶ"
-
-#: plug-ins/gap/gap_range_ops.c:585
-msgid "select all Layers where Layername contains Pattern"
-msgstr "レイヤー名がパターンを含む全てのレイヤーを選ぶ"
-
-#: plug-ins/gap/gap_range_ops.c:586
-msgid ""
-"select Layerstack positions.\n"
-"0, 4-5, 8\n"
-"where 0 == Top-layer"
-msgstr ""
-"レイヤースタック位置で選ぶ.\n"
-"0, 4-5, 8\n"
-"0 == 最上層レイヤー"
-
-#: plug-ins/gap/gap_range_ops.c:587
-msgid ""
-"select Layerstack positions.\n"
-"0, 4-5, 8\n"
-"where 0 == BG-layer"
-msgstr ""
-"レイヤースタック位置で選ぶ.\n"
-"0, 4-5, 8\n"
-"0 == 背景レイヤー"
-
-#: plug-ins/gap/gap_range_ops.c:588
-msgid "select all visible Layers"
-msgstr "全ての可視レイヤーを選択"
-
-#: plug-ins/gap/gap_range_ops.c:617
-msgid "Layer Basename:"
-msgstr "レイヤー基本名:"
-
-#: plug-ins/gap/gap_range_ops.c:618
-msgid ""
-"Basename for all Layers    \n"
-"[####] is replaced by frame number"
-msgstr ""
-"全てのレイヤーの基本名     \n"
-"[####] はフレーム番号で置き換えられる"
-
-#: plug-ins/gap/gap_range_ops.c:636
-msgid "Layer Mergemode:"
-msgstr "レイヤー結合モード:"
-
-#: plug-ins/gap/gap_range_ops.c:643
-msgid "Exclude BG-Layer"
-msgstr "背景レイヤーを除く"
-
-#: plug-ins/gap/gap_range_ops.c:644
-msgid ""
-"Exclude the BG-Layers    \n"
-"in all handled frames\n"
-"regardless to selection"
-msgstr ""
-"選択とは無関係に         \n"
-"全対象フレームの\n"
-"背景を取り除く"
-
-#: plug-ins/gap/gap_range_ops.c:674
-msgid "Use all unselected Layers"
-msgstr "全ての非選択レイヤーを使う"
-
-#: plug-ins/gap/gap_range_ops.c:748
-msgid "Creating Layer-Animated Image..."
-msgstr "レイヤー-動画画像の作成中..."
-
-#: plug-ins/gap/gap_range_ops.c:970
-msgid "Frames to Image"
-msgstr "フレームを画像に"
-
-#: plug-ins/gap/gap_range_ops.c:971
-msgid "Create Multilayer-Image from Frames"
-msgstr "フレームから複数画像を作成する"
-
-#: plug-ins/gap/gap_range_ops.c:1112
-msgid "Flattening Frames..."
-msgstr "フレームを統合しています..."
-
-#: plug-ins/gap/gap_range_ops.c:1113
-msgid "Converting Frames..."
-msgstr "フレームを変換しています..."
-
-#: plug-ins/gap/gap_range_ops.c:1261
-msgid ""
-"Convert Frames: SAVE operation FAILED.\n"
-"Desired save plugin can't handle type\n"
-"or desired save plugin not available."
-msgstr ""
-"フレーム変換: 保存操作は失敗しました.\n"
-"要求した保存プラグインがこの型を扱えないか\n"
-"要求した保存プラグインが利用可能ではありません."
-
-#: plug-ins/gap/gap_range_ops.c:1369
-msgid "Cropping all Animation Frames..."
-msgstr "全動画フレームを切り抜いています..."
-
-#: plug-ins/gap/gap_range_ops.c:1372
-msgid "Resizing all Animation Frames..."
-msgstr "全動画フレームの大きさを変更しています..."
-
-#: plug-ins/gap/gap_range_ops.c:1375
-msgid "Scaling all Animation Frames..."
-msgstr "全動画フレームを拡大縮小しています..."
-
-#: plug-ins/gap/gap_range_ops.c:1461
-msgid "Flatten Frames"
-msgstr "フレーム統合"
-
-#: plug-ins/gap/gap_range_ops.c:1517
-#, c-format
-msgid "Removing Layer (pos:%ld) from Frames..."
-msgstr "フレームからレイヤー (位置:%ld) を取り除いています..."
-
-#: plug-ins/gap/gap_range_ops.c:1634
-msgid "Delete Layers in Frames"
-msgstr "フレームのレイヤー削除"
-
-#: plug-ins/gap/gap_range_ops.c:1635
-msgid "Select Frame Range & Position"
-msgstr "フレーム範囲 & 位置の選択"
-
-#: plug-ins/gap/gap_split.c:101
-msgid "Splitting into Frames..."
-msgstr "フレームに分割しています..."
-
-#: plug-ins/gap/gap_split.c:176
-msgid ""
-"Split Frames: SAVE operation FAILED.\n"
-"desired save plugin can't handle type\n"
-"or desired save plugin not available."
-msgstr ""
-"フレーム分割: 保存操作は失敗しました.\n"
-"要求された保存プラグインがこの型を扱えないか\n"
-"要求された保存プラグインが利用可能でありません."
-
-#: plug-ins/gap/gap_split.c:226
-#, c-format
-msgid ""
-"%s\n"
-"%s\n"
-"(%s_0001.%s)\n"
-msgstr ""
-"%s\n"
-"%s\n"
-"(%s_0001.%s)\n"
-
-#: plug-ins/gap/gap_split.c:227
-msgid "Make a frame (diskfile) from each Layer"
-msgstr "それぞれのレイヤーからフレーム (ディスクファイル) を作成"
-
-#: plug-ins/gap/gap_split.c:228
-msgid "frames are named: base_nr.extension"
-msgstr "フレームの名前は: 基本名_番号.拡張子"
-
-#: plug-ins/gap/gap_split.c:236
-msgid "extension of resulting frames (is also used to define Fileformat)"
-msgstr "生成フレームの拡張子 (ファイル形式の定義ためにも使われる)"
-
-#: plug-ins/gap/gap_split.c:241
-msgid "Inverse Order:"
-msgstr "逆順:"
-
-#: plug-ins/gap/gap_split.c:242
-msgid "Start frame 0001 at Top Layer"
-msgstr "001 フレームを最上層レイヤーとして始める"
-
-#: plug-ins/gap/gap_split.c:247
-msgid ""
-"Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
-"BG color."
-msgstr ""
-"生成フレームからアルファチャンネルを取り除く. 透明な部分は背景色で塗りつぶさ"
-"れる."
-
-#: plug-ins/gap/gap_split.c:250
-msgid "Split Image into Frames"
-msgstr "画像をフレームに分割"
-
-#: plug-ins/gap/gap_split.c:251
-msgid "Split Settings"
-msgstr "分割設定"
-
-#: plug-ins/gap/gap_split.c:298
-msgid ""
-"OPERATION CANCELLED.\n"
-"This image is already an AnimFrame.\n"
-"Try again on a Duplicate (Image/Duplicate)."
-msgstr ""
-"操作は取り消されました.\n"
-"画像は既に動画フレームになっています.\n"
-"複製してからもう一度試して下さい (画像/複製)."
-
-#: plug-ins/gap/resize.c:107
-msgid "Scale"
-msgstr "拡大縮小"
-
-#: plug-ins/gap/resize.c:111
-msgid "Resize"
-msgstr "サイズ変更"
-
-#: plug-ins/gap/resize.c:127
-msgid "New width:"
-msgstr "新しい幅:"
-
-#: plug-ins/gap/resize.c:144
-msgid "New height:"
-msgstr "新しい高さ:"
-
-#: plug-ins/gap/resize.c:161
-msgid "X ratio:"
-msgstr "比率 X:"
-
-#: plug-ins/gap/resize.c:178
-msgid "Y ratio:"
-msgstr "比率 Y:"
-
-#. the constrain toggle button
-#: plug-ins/gap/resize.c:231
-msgid "Constrain Ratio"
-msgstr "縦横比固定"
-
-#: plug-ins/gdyntext/charmap.c:121
-#, c-format
-msgid "Char: %c, %d, 0x%02x"
-msgstr "文字: %c, %d, 0x%02x"
-
-#: plug-ins/gdyntext/charmap_window.c:119
-msgid "Selected char:"
-msgstr "選択された文字:"
-
-#: plug-ins/gdyntext/charmap_window.c:133 plug-ins/imagemap/imap_polygon.c:454
-msgid "Insert"
-msgstr "挿入"
-
-#: plug-ins/gdyntext/charmap_window.c:136
-msgid "Insert the selected char at the cursor position"
-msgstr "カーソル位置に選択された文字を挿入"
-
-#: plug-ins/gdyntext/font_selection.c:166
-#: plug-ins/gdyntext/font_selection.c:309 plug-ins/imagemap/imap_circle.c:265
-#: plug-ins/imagemap/imap_circle.c:271 plug-ins/imagemap/imap_circle.c:277
-#: plug-ins/imagemap/imap_grid.c:202 plug-ins/imagemap/imap_grid.c:208
-#: plug-ins/imagemap/imap_polygon.c:439 plug-ins/imagemap/imap_polygon.c:446
-#: plug-ins/imagemap/imap_rectangle.c:382
-#: plug-ins/imagemap/imap_rectangle.c:388
-#: plug-ins/imagemap/imap_rectangle.c:394
-#: plug-ins/imagemap/imap_rectangle.c:400
-msgid "pixels"
-msgstr "ピクセル"
-
-#: plug-ins/gdyntext/font_selection.c:167
-msgid "points"
-msgstr "ポイント"
-
-#: plug-ins/gdyntext/gdyntext.c:94
-#, fuzzy
-msgid "<Image>/Filters/Text/Dynamic Text..."
-msgstr "<Image>/フィルタ/下塗り/ダイナミック文字..."
-
-#: plug-ins/gdyntext/gdyntext.c:230
-msgid ""
-" Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
-"new layer creation."
-msgstr ""
-" 現在のレイヤーは GDynText レイヤーでないかアルファチャンネルがありません. 強"
-"制的に新規レイヤーを作成します. "
-
-#: plug-ins/gdyntext/gdyntext.c:325 plug-ins/gdyntext/gdyntext.c:448
-msgid "GDynText Layer"
-msgstr "GDynText レイヤー"
-
-#: plug-ins/gdyntext/gdyntext.c:357
-msgid "GIMP Dynamic Text"
-msgstr "GIMP ダイナミック文字"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:150
-msgid "GDynText: Messages Window"
-msgstr "GDynText メッセージ窓"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:181
-msgid "GDynText: About ..."
-msgstr "GDynText: GDynText について..."
-
-#: plug-ins/gdyntext/gdyntext_ui.c:273 plug-ins/gflare/gflare.c:4816
-msgid "none"
-msgstr "なし"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:274
-msgid "bottom-left"
-msgstr "左下"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:275
-msgid "bottom-center"
-msgstr "中央下"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:276
-msgid "bottom-right"
-msgstr "右下"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:277
-msgid "middle-left"
-msgstr "中央左"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:278
-msgid "center"
-msgstr "中央"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:279
-msgid "middle-right"
-msgstr "中央右"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:280
-msgid "top-left"
-msgstr "左上"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:281
-msgid "top-center"
-msgstr "中央上"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:282
-msgid "top-right"
-msgstr "右上"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:291
-msgid "GDynText"
-msgstr "GDynText"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:327
-msgid "Toggle creation of a new layer"
-msgstr "新規レイヤー作成切替え"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:340
-msgid "Load text from file"
-msgstr "テキストをファイルから読み込む"
-
-#. FONT COLOR
-#: plug-ins/gdyntext/gdyntext_ui.c:348
-msgid "GDynText: Select Color"
-msgstr "GDynText: 色選択"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:358
-msgid "Text color"
-msgstr "文字色"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:369
-msgid "Toggle anti-aliased text"
-msgstr "アンチエイリアス切替え"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:388
-msgid "Left aligned text"
-msgstr "左揃え"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:405
-msgid "Centered text"
-msgstr "中央寄せ"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:421
-msgid "Right aligned text"
-msgstr "右揃え"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:433
-msgid "Toggle text font preview"
-msgstr "文字フォントプレビュー切替え"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:445
-msgid "Toggle CharMap window"
-msgstr "CharMap ウィンドウ切替え"
-
-#. Layer Alignment
-#: plug-ins/gdyntext/gdyntext_ui.c:459
-msgid ""
-"Layer\n"
-"Alignment"
-msgstr ""
-"レイヤー\n"
-"整列"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:467
-msgid "Set layer alignment"
-msgstr "レイヤー整列方法の指定"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:497
-msgid ""
-"Line\n"
-"Spacing"
-msgstr "行間隔"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:519
-msgid "Set text rotation (degrees)"
-msgstr "文字回転設定 (度)"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:551
-msgid "Editable text sample"
-msgstr "編集可能文字サンプル"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:564
-msgid "Clear preview"
-msgstr "プレビュー消去"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:571
-msgid "Preview default text sample"
-msgstr "デフォルト文字サンプルをプレビュー"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:623
-msgid ""
-"Holding the Shift key while pressing this button will force GDynText in "
-"changing the layer name as done in GIMP 1.0."
-msgstr ""
-"Shift キーを押しながらこのボタンを押すと GDynText は GIMP 1.0 のようにレイ"
-"ヤー名を強制的に変更します."
-
-#: plug-ins/gdyntext/gdyntext_ui.c:904
-msgid "GDynText: CharMap"
-msgstr ""
-
-#: plug-ins/gdyntext/gdyntext_ui.c:971
-msgid "GDynText: Load text"
-msgstr "GDynText: テキスト読み込み"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:1016
-#, c-format
-msgid ""
-"Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
-msgstr "警告 ファイル \"%s\" は最大文字数 (%d) を越えています.\n"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:1027
-#, c-format
-msgid "Error opening \"%s\"!\n"
-msgstr "\"%s\" を開く際にエラー発生!\n"
-
-#: plug-ins/gdyntext/gdyntextcompat.c:122
-#, c-format
-msgid ""
-" WARNING: GDynText is too old! A newer version is required to handle this "
-"layer. Get it from %s"
-msgstr ""
-"警告: GDynText が古すぎます! このレイヤーを編集するには新しい版が必要です. %"
-"s から取得して下さい"
-
-#: plug-ins/gdyntext/gdyntextcompat.c:176
-#, c-format
-msgid " Upgrading old GDynText layer to %s."
-msgstr "古い GDynText レイヤー を %s にアップグレードしています."
-
-#: plug-ins/gdyntext/message_window.c:121
-msgid "Dismiss"
-msgstr "閉じる"
-
 #: plug-ins/gfig/gfig.c:674
 msgid "<Image>/Filters/Render/Gfig..."
 msgstr "<Image>/フィルタ/下塗り/Gfig..."
@@ -10321,6 +7600,10 @@ msgstr "ブラシ形式で保存"
 msgid "Add"
 msgstr "追加"
 
+#: plug-ins/gfig/gfig.c:3147
+msgid "Subtract"
+msgstr "減算"
+
 #: plug-ins/gfig/gfig.c:3148
 msgid "Replace"
 msgstr "置換"
@@ -10392,6 +7675,11 @@ msgstr "正三角形"
 #: plug-ins/gfig/gfig.c:3319
 msgid "Grid Type:"
 msgstr "格子種:"
+
+#: plug-ins/gfig/gfig.c:3328 plug-ins/gflare/gflare.c:589
+#: plug-ins/gimpressionist/orientmap.c:590
+msgid "Normal"
+msgstr "標準"
 
 #: plug-ins/gfig/gfig.c:3332
 msgid "Darker"
@@ -10490,6 +7778,11 @@ msgstr "完了"
 #: plug-ins/gfig/gfig.c:3934 plug-ins/gfig/gfig.c:4001
 msgid "Paint"
 msgstr "描画"
+
+#: plug-ins/gfig/gfig.c:4014 plug-ins/imagemap/imap_cmd_select.c:52
+#: plug-ins/imagemap/imap_tools.c:133
+msgid "Select"
+msgstr "選択"
 
 #: plug-ins/gfig/gfig.c:4082
 #, c-format
@@ -10591,6 +7884,14 @@ msgstr "ファイル読み込みエラー"
 #: plug-ins/gfig/gfig.c:6518
 msgid "Hey where has the object gone ?"
 msgstr "オブジェクトはどこに行ってしまったのでしょう?"
+
+#: plug-ins/gflare/gflare.c:590
+msgid "Addition"
+msgstr "加算"
+
+#: plug-ins/gflare/gflare.c:591 plug-ins/gimpressionist/paper.c:152
+msgid "Overlay"
+msgstr "オーバーレイ"
 
 #. don't translate <Image>, it's a special
 #. * keyword for the gtk toolkit
@@ -10849,6 +8150,10 @@ msgstr "ポリゴン"
 msgid "Second Flares"
 msgstr "二次フレア"
 
+#: plug-ins/gflare/gflare.c:4816
+msgid "none"
+msgstr "なし"
+
 #: plug-ins/gflare/gflare.c:4829
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
@@ -11080,7 +8385,7 @@ msgstr "開始角度:"
 msgid "Angle span:"
 msgstr "角度範囲:"
 
-#: plug-ins/gimpressionist/orientation.c:96 plug-ins/gimpressionist/size.c:95
+#: plug-ins/gimpressionist/orientation.c:96
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "使用する方向 (ブラシ) の数"
 
@@ -11405,6 +8710,11 @@ msgstr "最小サイズ:"
 msgid "Max size:"
 msgstr "最大サイズ:"
 
+#: plug-ins/gimpressionist/size.c:95
+#, fuzzy
+msgid "The number of sizes of brushes to use"
+msgstr "使用する方向 (ブラシ) の数"
+
 #: plug-ins/gimpressionist/size.c:104
 msgid "The smallest brush to create"
 msgstr "作成する最小ブラシサイズ"
@@ -11492,90 +8802,6 @@ msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr ""
-
-#: plug-ins/helpbrowser/helpbrowser.c:95
-#, c-format
-msgid ""
-"<html><head><title>Document not found</title></head><body bgcolor=\"#ffffff"
-"\"><center><p>%s<h3>Couldn't find document</h3><tt>%s</tt></"
-"center><p><small>This either means that the help for this topic has not been "
-"written yet or that something is wrong with your installation. Please check "
-"carefully before you report this as a bug.</small></body></html>"
-msgstr ""
-"<html><head><title>文書が見付からない</title></head><body bgcolor=\"#ffffff"
-"\"><center><p>%s<h3>文書が見付かりません</h3><tt>%s</tt></center><p><small>こ"
-"の話題のためのヘルプがまだ書かれていないかあなたのインストールのどこかが間"
-"違っています. あなたがこれをバグとして報告する前に慎重に調べて下さい</"
-"small></body></html>"
-
-#: plug-ins/helpbrowser/helpbrowser.c:111
-#, c-format
-msgid ""
-"<html><head><title>Directory not found</title></head><body bgcolor=\"#ffffff"
-"\"><center><p>%s<h3>Couldn't change to directory</h3><tt>%s</tt><h3>while "
-"trying to access</h3><tt>%s</tt></center><p><small>This either means that "
-"the help for this topic has not been written yet or that something is wrong "
-"with your installation. Please check carefully before you report this as a "
-"bug.</small></body></html>"
-msgstr ""
-"<html><head><title>ディレクトリが見付かりません</title></head><body bgcolor="
-"\"#ffffff\"><center><p>%s<h3>ディレクトリ</h3><tt>%s</tt><h3>に変えられませ"
-"ん.</h3><h3>これはファイル</h3><tt>%s</tt><h3>にアクセスしようとして発生しま"
-"した</h3></center><p><small>この話題のためのヘルプがまだ書かれていないかあな"
-"たのインストールのどこかが間違っています. あなたがこれをバグとして報告する前"
-"に慎重に調べて下さい</small></body></html>"
-
-#: plug-ins/helpbrowser/helpbrowser.c:137
-msgid "Contents"
-msgstr "目次"
-
-#: plug-ins/helpbrowser/helpbrowser.c:146
-msgid "Index"
-msgstr "索引"
-
-#: plug-ins/helpbrowser/helpbrowser.c:419 plug-ins/imagemap/imap_main.c:512
-#: plug-ins/imagemap/imap_settings.c:154
-msgid "<Untitled>"
-msgstr "<名称未設定>"
-
-#: plug-ins/helpbrowser/helpbrowser.c:776
-#: plug-ins/helpbrowser/helpbrowser.c:792
-#, c-format
-msgid ""
-"GIMP Help Browser Error.\n"
-"\n"
-"Couldn't find my root html directory.\n"
-"(%s)"
-msgstr ""
-"GIMP ヘルプブラウザエラー.\n"
-"\n"
-"ルート HTML ディレクトリが見つかりません.\n"
-"(%s)"
-
-#: plug-ins/helpbrowser/helpbrowser.c:808
-msgid "GIMP Help Browser"
-msgstr "GIMP ヘルプブラウザ"
-
-#: plug-ins/helpbrowser/helpbrowser.c:823
-msgid "Back"
-msgstr "戻る"
-
-#: plug-ins/helpbrowser/helpbrowser.c:832
-msgid "Forward"
-msgstr "進む"
-
-#: plug-ins/helpbrowser/helpbrowser.c:1212
-#, fuzzy, c-format
-msgid ""
-"GIMP Help Browser Error.\n"
-"\n"
-"Couldn't find GIMP_HELP_ROOT html directory.\n"
-"(%s)"
-msgstr ""
-"GIMP ヘルプブラウザエラー.\n"
-"\n"
-"ルート HTML ディレクトリが見つかりません.\n"
-"(%s)"
 
 #: plug-ins/ifscompose/ifscompose.c:362
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
@@ -11731,6 +8957,16 @@ msgstr ""
 msgid "Center x:"
 msgstr "中心 X:"
 
+#: plug-ins/imagemap/imap_circle.c:265 plug-ins/imagemap/imap_circle.c:271
+#: plug-ins/imagemap/imap_circle.c:277 plug-ins/imagemap/imap_grid.c:202
+#: plug-ins/imagemap/imap_grid.c:208 plug-ins/imagemap/imap_polygon.c:439
+#: plug-ins/imagemap/imap_polygon.c:446 plug-ins/imagemap/imap_rectangle.c:382
+#: plug-ins/imagemap/imap_rectangle.c:388
+#: plug-ins/imagemap/imap_rectangle.c:394
+#: plug-ins/imagemap/imap_rectangle.c:400
+msgid "pixels"
+msgstr "ピクセル"
+
 #: plug-ins/imagemap/imap_circle.c:267
 msgid "Center y:"
 msgstr "中心 Y:"
@@ -11742,6 +8978,17 @@ msgstr "消去"
 #: plug-ins/imagemap/imap_cmd_create.c:55
 msgid "Create"
 msgstr "作成"
+
+#: plug-ins/imagemap/imap_cmd_cut.c:56
+#: plug-ins/imagemap/imap_cmd_cut_object.c:54
+#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:133
+msgid "Cut"
+msgstr "カット"
+
+#: plug-ins/imagemap/imap_cmd_delete_point.c:60
+#: plug-ins/imagemap/imap_polygon.c:671
+msgid "Delete Point"
+msgstr "端点削除"
 
 #: plug-ins/imagemap/imap_cmd_edit_object.c:53
 msgid "Edit Object"
@@ -11818,6 +9065,11 @@ msgstr "ガイド範囲の結果: 0,0 (0 マス)"
 #: plug-ins/imagemap/imap_cmd_guides.c:266
 msgid "Guides"
 msgstr "ガイド"
+
+#: plug-ins/imagemap/imap_cmd_insert_point.c:60
+#: plug-ins/imagemap/imap_polygon.c:685
+msgid "Insert Point"
+msgstr "端点挿入"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:55
 #: plug-ins/imagemap/imap_cmd_object_down.c:54
@@ -12037,6 +9289,10 @@ msgstr "ピクセル下へ"
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/フィルタ/Web/イメージマップ..."
 
+#: plug-ins/imagemap/imap_main.c:512 plug-ins/imagemap/imap_settings.c:154
+msgid "<Untitled>"
+msgstr "<名称未設定>"
+
 #: plug-ins/imagemap/imap_main.c:663
 msgid "Data changed"
 msgstr "データが変更されました"
@@ -12178,6 +9434,10 @@ msgstr "X (ピクセル)"
 msgid "y (pixels)"
 msgstr "Y (ピクセル)"
 
+#: plug-ins/imagemap/imap_polygon.c:454
+msgid "Insert"
+msgstr "挿入"
+
 #: plug-ins/imagemap/imap_polygon.c:460
 msgid "Append"
 msgstr "追加"
@@ -12309,6 +9569,10 @@ msgstr "マップファイル形式"
 #: plug-ins/imagemap/imap_source.c:61
 msgid "View Source"
 msgstr "ソースを表示"
+
+#: plug-ins/imagemap/imap_toolbar.c:114
+msgid "Open"
+msgstr "開く"
 
 #: plug-ins/imagemap/imap_toolbar.c:119
 msgid "Preferences"
@@ -13031,6 +10295,1957 @@ msgstr "エラー: XJT プロパティファイル %s が読めません"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "エラー: XJT プロパティファイル %s が空です"
+
+#~ msgid "File-Browser"
+#~ msgstr "ファイルブラウザ"
+
+#~ msgid "Enter Values"
+#~ msgstr "値を入力"
+
+#~ msgid "Value: "
+#~ msgstr "値: "
+
+#~ msgid "Press Button"
+#~ msgstr "押しボタン"
+
+#~ msgid "GAP Animated Filter apply"
+#~ msgstr "GAP 動画フィルタ適用"
+
+#~ msgid "Animated Filter apply (init)"
+#~ msgstr "動画フィルタ適用 (初期)"
+
+#~ msgid "Gen Code by name"
+#~ msgstr "名前で元コードを検索"
+
+#~ msgid "Animated Filter apply (by name - please wait)"
+#~ msgstr "動画フィルタ適用 (名前で - お待ち下さい)"
+
+#~ msgid "Animated Filter apply (by blurb - please wait)"
+#~ msgstr "動画フィルタ適用 (説明で - お待ち下さい)"
+
+#~ msgid "Animated Filter apply (please wait)"
+#~ msgstr "動画フィルタ適用 (お待ち下さい)"
+
+#~ msgid "Animated Filter apply"
+#~ msgstr "動画フィルタ適用"
+
+#~ msgid "<Image>/Video/Split Video to Frames"
+#~ msgstr "<Image>/動画/フレームに分割"
+
+#~ msgid "<Toolbox>/Xtns/Split Video to Frames"
+#~ msgstr "<Toolbox>/拡張/フレームに分割"
+
+#~ msgid "<Image>/Video/Split Video to Frames/MPEG1"
+#~ msgstr "<Image>/動画/フレームに分割/MPEG1"
+
+#~ msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
+#~ msgstr "<Toolbox>/拡張/フレームに分割/MPEG1"
+
+#~ msgid "Overwrite Frame"
+#~ msgstr "フレームを上書き"
+
+#~ msgid "Overwrite All"
+#~ msgstr "全て上書き"
+
+#~ msgid "GAP Question"
+#~ msgstr "GAP 質問"
+
+#~ msgid "File already exists"
+#~ msgstr "ファイルは既に存在します"
+
+#~ msgid "Decoding MPEG Movie..."
+#~ msgstr "MPEG 動画をデコードしています..."
+
+#~ msgid ""
+#~ "Name of the MPEG1 videofile to READ.\n"
+#~ "Frames are extracted from the videofile\n"
+#~ "and written to seperate diskfiles.\n"
+#~ "Audiotracks in the videofile are ignored."
+#~ msgstr ""
+#~ "読み込む MPEG1 動画ファイルの名前です.\n"
+#~ "動画ファイルから各フレームを取り出して\n"
+#~ "個々にディスク上のファイルに書き出します.\n"
+#~ "動画ファイル中の音声トラックは無視されます."
+
+#~ msgid "Framenumber of 1st frame to extract"
+#~ msgstr "最初に取り出すフレーム番号"
+
+#~ msgid "Framenumber of last frame to extract"
+#~ msgstr "最後に取り出すフレーム番号"
+
+#~ msgid "Framenames:"
+#~ msgstr "フレーム名:"
+
+#~ msgid ""
+#~ "Basename for the AnimFrames to write on disk\n"
+#~ "(framenumber and .xcf is added)"
+#~ msgstr ""
+#~ "ディスクに書く動画フレームの Basename.\n"
+#~ "(フレーム番号と .xcf が付けられます)"
+
+#~ msgid "Open the 1st one of the extracted frames"
+#~ msgstr "取り出されたフレームの最初のものを開く"
+
+#~ msgid ""
+#~ "\n"
+#~ "WARNING: Do not attempt to split other files than MPEG1 videos.\n"
+#~ "Before you proceed, you should save all open images."
+#~ msgstr ""
+#~ "\n"
+#~ "警告: MPEG1 動画以外のファイルを分割しないで下さい.\n"
+#~ "続行する前に作業中の全ての画像を保存して下さい."
+
+#~ msgid "Split MPEG1 Video to Frames"
+#~ msgstr "MPEG1 動画をフレームに分割"
+
+#~ msgid "Select Frame Range"
+#~ msgstr "フレーム範囲選択"
+
+#~ msgid "Conditions to run the xanim based video split"
+#~ msgstr "xanim による画像分割に必要な設定"
+
+#~ msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
+#~ msgstr "1.) xanim 2.80.0 国際版 (loki バージョン)"
+
+#~ msgid "    must be installed somewhere in your PATH"
+#~ msgstr "    が PATH の通ったところにインストールされていること"
+
+#~ msgid "    you can get xanim exporting edition at"
+#~ msgstr "    国際版の xanim は以下の場所で手に入れられます"
+
+#~ msgid ""
+#~ "2.) if your xanim exporting edition is not in your PATH or is not named "
+#~ "xanim"
+#~ msgstr ""
+#~ "2.) xanim が国際版でなかったり PATH が通ってなかったり xanim という名前で"
+#~ "はない場合"
+
+#~ msgid "    you have to set Environment variable GAP_XANIM_PROG "
+#~ msgstr "    環境変数 GAP_XANIM_PROG が国際版 xanim を指すようにして"
+
+#~ msgid "    to your xanim exporting program and restart gimp"
+#~ msgstr "    gimp を再起動して下さい"
+
+#~ msgid "An ERROR occured while trying to call xanim:"
+#~ msgstr "xanim 呼び出し中にエラー発生"
+
+#~ msgid "XANIM Information"
+#~ msgstr "XANIM 情報"
+
+#~ msgid "Video:"
+#~ msgstr "動画:"
+
+#~ msgid ""
+#~ "Name of a videofile to READ by xanim.\n"
+#~ "Frames are extracted from the videofile\n"
+#~ "and written to seprate diskfiles.\n"
+#~ "xanim exporting edition is required."
+#~ msgstr ""
+#~ "xanim で読み込む動画ファイル名です.\n"
+#~ "各フレームを xanim を用いて読みだし,\n"
+#~ "それぞれ別のファイルに書き出します.\n"
+#~ "xanim は国際版でなければなりません."
+
+#~ msgid ""
+#~ "Basename for the AnimFrames to write on disk\n"
+#~ "(framenumber and extension is added)"
+#~ msgstr ""
+#~ "ディスクに書き出す動画フレームの Basename です.\n"
+#~ "(フレーム番号と拡張子が付け加えられます)"
+
+#~ msgid "Format"
+#~ msgstr "形式"
+
+#~ msgid ""
+#~ "Fileformat for the extracted AnimFrames\n"
+#~ "(xcf is extracted as ppm and converted to xcf)"
+#~ msgstr ""
+#~ "抽出する動画のファイル形式です.\n"
+#~ "(xcf を指定すると ppm で抽出して xcf に変換します)"
+
+#~ msgid "Extract Frames"
+#~ msgstr "フレーム抽出"
+
+#~ msgid "Enable extraction of Frames"
+#~ msgstr "フレーム取り出しを有効にする"
+
+#~ msgid "Extract Audio"
+#~ msgstr "音声抽出"
+
+#~ msgid ""
+#~ "Enable extraction of audio to raw audiofile\n"
+#~ "(frame range limits are ignored for audio)"
+#~ msgstr ""
+#~ "音声を raw 音声ファイルに取り出します\n"
+#~ "(フレーム範囲指定は無視されます)"
+
+#~ msgid "Jpeg Quality:"
+#~ msgstr "JPEG 品質:"
+
+#~ msgid ""
+#~ "Quality for resulting Jpeg frames\n"
+#~ "(is ignored when other formats are used)"
+#~ msgstr ""
+#~ "出力 JPEG フレームの品質です\n"
+#~ "(他の形式の場合は無視されます)"
+
+#~ msgid "Run asynchronously"
+#~ msgstr "非同期実行"
+
+#~ msgid ""
+#~ "Run xanim asynchronously and delete unwanted frames\n"
+#~ "(out of the specified range) while xanim is still running"
+#~ msgstr ""
+#~ "xanim を非同期実行し xanim が実行中でも指定した\n"
+#~ "範囲外の不要なフレームを削除する."
+
+#~ msgid ""
+#~ "\n"
+#~ "Warning: xanim 2.80 has only limited MPEG support.\n"
+#~ "Most of the frames (type P and B) will be skipped."
+#~ msgstr ""
+#~ "\n"
+#~ "警告: xanim 2.80 は限定された MPEG サポートしか行いません.\n"
+#~ "P や B タイプのフレームは無視されます."
+
+#~ msgid "Split any Xanim readable Video to Frames"
+#~ msgstr "Xanim で読める動画ファイルをフレームに分割する"
+
+#~ msgid ""
+#~ "can't find any extracted frames,\n"
+#~ "%s\n"
+#~ "maybe xanim has failed or was cancelled"
+#~ msgstr ""
+#~ "抽出したフレーム %s\n"
+#~ "が見つかりません.\n"
+#~ "xanim が転んだかキャンセルされた可能性があります"
+
+#~ msgid "frames are not extracted, because overwrite of %s was cancelled"
+#~ msgstr "%s の上書きがキャンセルされたため, フレームは抽出されませんでした."
+
+#~ msgid "failed to overwrite %s (check permissions ?)"
+#~ msgstr "%s の上書き失敗 (許可されていますか?)"
+
+#~ msgid "failed to write %s (check permissions ?)"
+#~ msgstr "%s の書き込み失敗 (許可されていますか?)"
+
+#~ msgid "could not execute %s (check if xanim is installed)"
+#~ msgstr "%s を実行できません (xanim は導入されていますか?)"
+
+#~ msgid "%s does not look like xanim"
+#~ msgstr "%s は xanim ではないようです"
+
+#~ msgid ""
+#~ "The xanim program on your system \"%s\"\n"
+#~ "does not support the exporting options Ea, Ee, Eq"
+#~ msgstr ""
+#~ "あなたのシステムの xanim である \"%s\" は\n"
+#~ "エクスポートオプション Ea, Ee, Eq が使えないようです."
+
+#~ msgid ""
+#~ "The xanim program on your system \"%s\"\n"
+#~ "does not support exporting of single frames"
+#~ msgstr ""
+#~ "あなたのシステムの xanim である \"%s\" は\n"
+#~ "単一フレームのエクスポートができないようです."
+
+#~ msgid "videofile %s not existent or empty\n"
+#~ msgstr "動画ファイル %s は存在しないか空のようです\n"
+
+#~ msgid ""
+#~ "could not create %s directory\n"
+#~ "(that is required for xanim frame export)"
+#~ msgstr ""
+#~ "xanim によるフレーム抽出に必要な\n"
+#~ "%s ディレクトリが作れません"
+
+#~ msgid "extracting frames..."
+#~ msgstr "フレームを抽出しています..."
+
+#~ msgid ""
+#~ "could not start xanim process\n"
+#~ "(program=%s)"
+#~ msgstr ""
+#~ "xanim プロセスを開始できません\n"
+#~ "(プログラム=%s) "
+
+#~ msgid ""
+#~ "can't find any extracted frames,\n"
+#~ "xanim has failed or was cancelled"
+#~ msgstr ""
+#~ "抽出したフレームが見つかりません,\n"
+#~ "xanim の実行に失敗したかキャンセルされました."
+
+#~ msgid "renaming frames..."
+#~ msgstr "フレーム名を変更しています..."
+
+#~ msgid "converting frames..."
+#~ msgstr "フレームを変換しています..."
+
+#~ msgid "backup to file"
+#~ msgstr "ファイルにバックアップ"
+
+#~ msgid "Make backup of the image after each step"
+#~ msgstr "各過程の毎にバックアップ画像を作る"
+
+#~ msgid "Continue"
+#~ msgstr "続ける"
+
+#~ msgid ""
+#~ "2nd call of %s\n"
+#~ "(define end-settings)"
+#~ msgstr ""
+#~ "%s の2度目の呼び出し\n"
+#~ "(終了設定の定義)"
+
+#~ msgid ""
+#~ "Non-Interactive call of %s\n"
+#~ "(for all layers in between)"
+#~ msgstr ""
+#~ "%s の非インタラクティブ呼び出し\n"
+#~ "(全ての中間レイヤーに対して)"
+
+#~ msgid "Applying Filter to all Layers..."
+#~ msgstr "全てのレイヤーにフィルタを適用しています..."
+
+#~ msgid "Select Filter for Animated apply"
+#~ msgstr "変化させつつ適用するフィルタを選択"
+
+#~ msgid "Apply Constant"
+#~ msgstr "一様に適用"
+
+#~ msgid "Apply Varying"
+#~ msgstr "変化させつつ適用"
+
+#~ msgid "<Image>/Filters/Filter all Layers..."
+#~ msgstr "<Image>/フィルタ/全レイヤーに適用..."
+
+#~ msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
+#~ msgstr "<Image>/動画/フレームに分割/XANIM で読み込めるもの全て..."
+
+#~ msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
+#~ msgstr "<Toolbox>/拡張/フレームに分割/XANIM で読み込めるもの全て..."
+
+#~ msgid "<Image>/Video/Encode/MPEG1..."
+#~ msgstr "<Image>/動画/エンコード/MPEG1..."
+
+#~ msgid "<Image>/Video/Encode/MPEG2..."
+#~ msgstr "<Image>/動画/エンコード/MPEG2..."
+
+#~ msgid "GAP Message"
+#~ msgstr "GAP メッセージ"
+
+#~ msgid ""
+#~ "OPERATION CANCELLED.\n"
+#~ "Current frame changed while dialog was open."
+#~ msgstr ""
+#~ "操作はキャンセルされました.\n"
+#~ "ダイアログが開かれている間に現在のフレームに変更が加えられました."
+
+#, fuzzy
+#~ msgid ""
+#~ "OPERATION CANCELLED.\n"
+#~ "GAP plug-ins only work with filenames\n"
+#~ "that end in numbers like _0001.xcf.\n"
+#~ "==> Rename your image, then try again."
+#~ msgstr ""
+#~ "操作はキャンセルされました.\n"
+#~ "GAP-プラグインは _0001.xcf で終わる\n"
+#~ "ファイル名に対してのみ動作します.\n"
+#~ "==> ファイル名を変更してからやり直して下さい."
+
+#~ msgid ""
+#~ "You are using a file format != xcf\n"
+#~ "Save Operations may result\n"
+#~ "in loss of layer information."
+#~ msgstr ""
+#~ "xcf ではないファイル形式を選択しています\n"
+#~ "保存した場合にレイヤー情報が失われる\n"
+#~ "可能性があります"
+
+#~ msgid "Save Flattened"
+#~ msgstr "統合して保存"
+
+#~ msgid "Save As Is"
+#~ msgstr "そのまま保存"
+
+#~ msgid "Error: could not rename frame %ld to %ld"
+#~ msgstr "エラー: フレーム %ld から %ld を名称変更できません"
+
+#, fuzzy
+#~ msgid "Error: could not save frame %s"
+#~ msgstr "エラー: フレーム %ld から %ld を名称変更できません"
+
+#~ msgid "Duplicating frames..."
+#~ msgstr "フレームを複製しています..."
+
+#~ msgid "Renumber Framesequence..."
+#~ msgstr "フレームを並べ直しています..."
+
+#~ msgid "Goto Frame (%ld/%ld)"
+#~ msgstr "指定フレームへ移動 (%ld/%ld)"
+
+#~ msgid "Destination Frame Number (%ld  - %ld)"
+#~ msgstr "宛先フレーム番号 (%ld - %ld)"
+
+#~ msgid "Number:"
+#~ msgstr "番号:"
+
+#~ msgid "Delete Frames (%ld/%ld)"
+#~ msgstr "フレーム削除 (%ld/%ld)"
+
+#~ msgid "Delete Frames from %ld to (number)"
+#~ msgstr "削除するフレームは %ld から"
+
+#~ msgid "Duplicate Frames (%ld/%ld)"
+#~ msgstr "フレーム複製 (%ld/%ld)"
+
+#~ msgid "Source Range starts at this framenumber"
+#~ msgstr "元範囲はこのフレームから開始"
+
+#~ msgid "Source Range ends at this framenumber"
+#~ msgstr "元範囲がこのフレームで終り"
+
+#~ msgid "N times:"
+#~ msgstr "回数:"
+
+#~ msgid ""
+#~ "Copy selected Range n-times  \n"
+#~ "(you may type in Values > 99)"
+#~ msgstr ""
+#~ "選択範囲を n 回コピー  \n"
+#~ "(99 より大きい回数)"
+
+#~ msgid "Duplicate Frame Range"
+#~ msgstr "複製するフレーム範囲"
+
+#~ msgid "Exchange current Frame (%ld)"
+#~ msgstr "現在のフレーム (%ld) と交換"
+
+#~ msgid "With Frame (number)"
+#~ msgstr "するフレーム番号は"
+
+#~ msgid "Framesequence Shift (%ld/%ld)"
+#~ msgstr "フレーム並びずらし (%ld/%ld)"
+
+#~ msgid "Affected Range starts at this framenumber"
+#~ msgstr "適用する範囲はこのフレームから開始"
+
+#~ msgid "Affected Range ends at this framenumber"
+#~ msgstr "適用する範囲はこのフレームで終り"
+
+#~ msgid "N-Shift:"
+#~ msgstr "ずらす量:"
+
+#~ msgid ""
+#~ "Renumber the affected framesequence     \n"
+#~ "(numbers are shifted in circle by N)"
+#~ msgstr ""
+#~ "適用部分のフレーム並びを再割り付け    \n"
+#~ "(番号はずらし量分ずれる)"
+
+#~ msgid "Framesequence shift"
+#~ msgstr "フレーム並びずらし"
+
+#~ msgid "<Image>/Video/Goto/Next Frame"
+#~ msgstr "<Image>/動画/移動/次のフレーム"
+
+#~ msgid "<Image>/Video/Goto/Previous Frame"
+#~ msgstr "<Image>/動画/移動/前のフレーム"
+
+#~ msgid "<Image>/Video/Goto/First Frame"
+#~ msgstr "<Image>/動画/移動/最初のフレーム"
+
+#~ msgid "<Image>/Video/Goto/Last Frame"
+#~ msgstr "<Image>/動画/移動/最後のフレーム"
+
+#~ msgid "<Image>/Video/Goto/Any Frame..."
+#~ msgstr "<Image>/動画/移動/指定したフレーム..."
+
+#~ msgid "<Image>/Video/Delete Frames..."
+#~ msgstr "<Image>/動画/フレーム削除..."
+
+#~ msgid "<Image>/Video/Duplicate Frames..."
+#~ msgstr "<Image>/動画/フレーム複製..."
+
+#~ msgid "<Image>/Video/Exchange Frame..."
+#~ msgstr "<Image>/動画/フレーム交換..."
+
+#~ msgid "<Image>/Video/Move Path..."
+#~ msgstr "<Image>/動画/パス移動..."
+
+#~ msgid "<Image>/Video/Frames to Image..."
+#~ msgstr "<Image>/動画/フレームを画像に..."
+
+#~ msgid "<Image>/Video/Frames Flatten..."
+#~ msgstr "<Image>/動画/フレーム統合..."
+
+#~ msgid "<Image>/Video/Frames LayerDel..."
+#~ msgstr "<Image>/動画/フレームレイヤー削除..."
+
+#~ msgid "<Image>/Video/Frames Convert..."
+#~ msgstr "<Image>/動画/フレーム変換..."
+
+#~ msgid "<Image>/Video/Frames Resize..."
+#~ msgstr "<Image>/動画/フレームサイズ変更..."
+
+#~ msgid "<Image>/Video/Frames Crop..."
+#~ msgstr "<Image>/動画/フレーム切り抜き..."
+
+#~ msgid "<Image>/Video/Frames Scale..."
+#~ msgstr "<Image>/動画/フレーム拡大縮小..."
+
+#~ msgid "<Image>/Video/Split Image to Frames..."
+#~ msgstr "<Image>/動画/画像をフレームに分割..."
+
+#~ msgid "<Image>/Video/Framesequence Shift..."
+#~ msgstr "<Image>/動画/フレーム並びずらし..."
+
+#~ msgid "<Image>/Video/Frames Modify..."
+#~ msgstr "<Image>/動画/フレーム修正..."
+
+#~ msgid "Pattern is equal to LayerName"
+#~ msgstr "パターンはレイヤー名に等しい"
+
+#~ msgid "Pattern is Start of LayerName"
+#~ msgstr "パターンはレイヤー名で始まる"
+
+#~ msgid "Pattern is End of Layername"
+#~ msgstr "パターンはレイヤー名で終わる"
+
+#~ msgid "Pattern is a Part of LayerName"
+#~ msgstr "パターンはレイヤー名の一部分"
+
+#~ msgid "Pattern is LayerstackNumber List"
+#~ msgstr "パターンはレイヤースタック番号リスト"
+
+#~ msgid "Pattern is REVERSE-stack List"
+#~ msgstr "パターンは逆転スタックリスト"
+
+#~ msgid "All Visible (ignore Pattern)"
+#~ msgstr "可視レイヤー全て (パターン無視)"
+
+#~ msgid "Select all Layers where Layername is equal to Pattern"
+#~ msgstr "レイヤー名がパターンと等しい全てのレイヤーを選ぶ"
+
+#~ msgid "Select all Layers where Layername starts with Pattern"
+#~ msgstr "レイヤー名がパターンから始まる全てのレイヤーを選ぶ"
+
+#~ msgid "Select all Layers where Layername ends up with Pattern"
+#~ msgstr "レイヤー名がパターンで終わる全てのレイヤーを選ぶ"
+
+#~ msgid "Select all Layers where Layername contains Pattern"
+#~ msgstr "レイヤー名がパターンを含む全てのレイヤーを選ぶ"
+
+#~ msgid ""
+#~ "Select Layerstack positions.\n"
+#~ "0, 4-5, 8\n"
+#~ "where 0 == Top-layer"
+#~ msgstr ""
+#~ "レイヤースタック位置を選ぶ..\n"
+#~ "0, 4-5, 8\n"
+#~ "0 == 最上層レイヤー"
+
+#~ msgid ""
+#~ "Select Layerstack positions.\n"
+#~ "0, 4-5, 8\n"
+#~ "where 0 == BG-layer"
+#~ msgstr ""
+#~ "レイヤースタック位置を選ぶ.\n"
+#~ "0, 4-5, 8\n"
+#~ "0 == 背景レイヤー"
+
+#~ msgid "Select all visible Layers"
+#~ msgstr "可視レイヤーを全て選ぶ"
+
+#~ msgid "Set Layer(s) visible"
+#~ msgstr "レイヤーを可視状態に"
+
+#~ msgid "Set Layer(s) invisible"
+#~ msgstr "レイヤーを不可視状態に"
+
+#~ msgid "Set Layer(s) linked"
+#~ msgstr "レイヤーをリンクする"
+
+#~ msgid "Set Layer(s) unlinked"
+#~ msgstr "レイヤをリンクしない"
+
+#~ msgid "Raise Layer(s)"
+#~ msgstr "レイヤーを上げる"
+
+#~ msgid "Lower Layer(s)"
+#~ msgstr "レイヤーを下げる"
+
+#~ msgid "Merge Layer(s) expand as necessary"
+#~ msgstr "必要に応じて拡大したレイヤーを結合"
+
+#~ msgid "Merge Layer(s) clipped to image"
+#~ msgstr "画像に切り取られたレイヤーを結合"
+
+#~ msgid "Merge Layer(s) clipped to bg-layer"
+#~ msgstr "背景に切り取られたレイヤーを結合"
+
+#~ msgid "Apply filter on Layer(s)"
+#~ msgstr "レイヤーにフィルターを適用"
+
+#~ msgid "Duplicate Layer(s)"
+#~ msgstr "レイヤーを複製する"
+
+#~ msgid "Delete Layer(s)"
+#~ msgstr "レイヤーを削除する"
+
+#~ msgid "Rename Layer(s)"
+#~ msgstr "レイヤーの名称変更"
+
+#~ msgid ""
+#~ "Perform function on one or more Layer(s)\n"
+#~ "in all frames of the selected frame range\n"
+#~ msgstr ""
+#~ "選択されたフレーム範囲内の全てのフレームで\n"
+#~ "一つ以上のレイヤーに対して機能を実行する\n"
+
+#~ msgid "From Frame:"
+#~ msgstr "元フレーム:"
+
+#~ msgid "first handled frame"
+#~ msgstr "最初に扱われるフレーム"
+
+#~ msgid "To Frame:"
+#~ msgstr "宛フレーム:"
+
+#~ msgid "last handled frame"
+#~ msgstr "最後に扱われるフレーム"
+
+#~ msgid "Select Layer(s):"
+#~ msgstr "レイヤー選択:"
+
+#~ msgid "Select Pattern:"
+#~ msgstr "パターン選択:"
+
+#~ msgid ""
+#~ "String to identify layer names    \n"
+#~ "or layerstack position numbers\n"
+#~ "0,3-5"
+#~ msgstr ""
+#~ "レイヤーの名前を区別する文字列    \n"
+#~ "またはレイヤースタック位置の番号\n"
+#~ "0,3-5"
+
+#~ msgid "Case sensitive"
+#~ msgstr "大文字と小文字を区別する"
+
+#~ msgid "Lowercase and UPPERCASE letters are considered as different"
+#~ msgstr "小文字と大文字の文字は異なる物だとみなす"
+
+#~ msgid "Invert Selection"
+#~ msgstr "選択領域反転"
+
+#~ msgid "Perform actions on all unselected Layers"
+#~ msgstr "全ての非選択レイヤーにアクションを行う"
+
+#~ msgid "Function:"
+#~ msgstr "機能:"
+
+#~ msgid "Function to be performed on all selected layers"
+#~ msgstr "全ての選択したレイヤーに実行される機能"
+
+#~ msgid "New Layername:"
+#~ msgstr "新規レイヤー名"
+
+#~ msgid ""
+#~ "New Layername for all handled layers \n"
+#~ "[####] is replaced by frame number\n"
+#~ "(is used on function rename only)"
+#~ msgstr ""
+#~ "取り扱う全レイヤーのための新規レイヤー名\n"
+#~ "[####] はフレーム番号によって置きかえられる\n"
+#~ "(名前変更だけのための機能として使われる)"
+
+#~ msgid "Frames Modify"
+#~ msgstr "フレーム修正"
+
+#~ msgid ""
+#~ "Non-Interactive call of %s\n"
+#~ "(for all selected layers)"
+#~ msgstr ""
+#~ "ノンインタラクティブは %s を呼び出しました\n"
+#~ "(全ての非選択レイヤーのために)"
+
+#~ msgid "Select Filter for Animated frames-apply"
+#~ msgstr "動画フレームに適用するフィルタの選択"
+
+#~ msgid "GAP Modify: No layer selected in last handled frame"
+#~ msgstr "GAP 修正: 選択した最後に扱うフレームにはレイヤーがありません"
+
+#~ msgid "Modifying Frames/Layer(s)..."
+#~ msgstr "フレーム/レイヤーの修正中..."
+
+#~ msgid "No selected Layer in start frame"
+#~ msgstr "開始フレームのレイヤーが選択されていません"
+
+#~ msgid "Dissolve"
+#~ msgstr "消算"
+
+#~ msgid "Multiply"
+#~ msgstr "乗算"
+
+#~ msgid "Difference"
+#~ msgstr "差分"
+
+#~ msgid "Darken Only"
+#~ msgstr "比較(暗)"
+
+#~ msgid "Lighten Only"
+#~ msgstr "比較(明)"
+
+#~ msgid "Left  Top"
+#~ msgstr "左上"
+
+#~ msgid "Left  Bottom"
+#~ msgstr "左"
+
+#~ msgid "Right Top"
+#~ msgstr "左下"
+
+#~ msgid "Right Bottom"
+#~ msgstr "右"
+
+#~ msgid "Loop"
+#~ msgstr "ループ"
+
+#~ msgid "Loop Reverse"
+#~ msgstr "逆ループ"
+
+#~ msgid "Once"
+#~ msgstr "一回"
+
+#~ msgid "OnceReverse"
+#~ msgstr "逆一回"
+
+#~ msgid "PingPong"
+#~ msgstr "双方向"
+
+#, fuzzy
+#~ msgid "Frame Loop"
+#~ msgstr "フレーム %d"
+
+#, fuzzy
+#~ msgid "Frame Loop Reverse"
+#~ msgstr "逆ループ"
+
+#, fuzzy
+#~ msgid "Frame Once"
+#~ msgstr "フレーム %d"
+
+#, fuzzy
+#~ msgid "Frame OnceReverse"
+#~ msgstr "逆一回"
+
+#, fuzzy
+#~ msgid "Frame PingPong"
+#~ msgstr "双方向"
+
+#, fuzzy
+#~ msgid "Frame None"
+#~ msgstr "フレーム %d"
+
+#~ msgid "Move Path"
+#~ msgstr "パス移動"
+
+#~ msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
+#~ msgstr ""
+#~ "現在のコントロールポイントがある元レイヤーでプレビューフレームを表示"
+
+#~ msgid "Anim Preview"
+#~ msgstr "動画プレビュー"
+
+#~ msgid "Generate Animated Preview as multilayer image"
+#~ msgstr "複数枚レイヤー画像として動画プレビューを生成する"
+
+#~ msgid "Copy moving source-layer(s) into frames"
+#~ msgstr "移動するソースレイヤーをフレームにコピー"
+
+#~ msgid "Start Frame:"
+#~ msgstr "開始フレーム"
+
+#~ msgid "First handled frame"
+#~ msgstr "最初に扱うフレーム"
+
+#~ msgid "End Frame:"
+#~ msgstr "終了フレーム"
+
+#~ msgid "Last handled frame"
+#~ msgstr "最後に扱うフレーム"
+
+#~ msgid "Preview Frame:"
+#~ msgstr "プレビューフレーム:"
+
+#~ msgid "Frame to show when UpdPreview button is pressed"
+#~ msgstr "プレビュー更新ボタンが押された時に表示するフレーム"
+
+#~ msgid "Layerstack:"
+#~ msgstr "レイヤースタック:"
+
+#~ msgid ""
+#~ "How to insert SrcLayer into the Dst. Frame's Layerstack\n"
+#~ "0 means on top i.e. in front"
+#~ msgstr ""
+#~ "元レイヤーを Dst に挿入する方法. フレームのレイヤースタック\n"
+#~ "0 というのは一番上, つまり最前面です"
+
+#~ msgid "Object on empty frames"
+#~ msgstr "空フレームオブジェクト"
+
+#~ msgid "Object on one frame"
+#~ msgstr "一つのフレームオブジェクト"
+
+#~ msgid "Exact Object on frames"
+#~ msgstr "フレームは正確なオブジェクト"
+
+#~ msgid "Anim Preview Mode"
+#~ msgstr "動画プレビューモード"
+
+#~ msgid "Scale Preview"
+#~ msgstr "縮小プレビュー"
+
+#~ msgid "Scale down size of the generated animated preview (in %)"
+#~ msgstr "作成する動画プレビューのサイズを縮小する (% で)"
+
+#~ msgid "Framerate"
+#~ msgstr "フレームレート"
+
+#~ msgid "Framerate to use in the animated preview in frames/sec"
+#~ msgstr "動画プレビューで フレーム/秒 として使われるフレームレート"
+
+#~ msgid "Copy to Video Buffer"
+#~ msgstr "ビデオバッファにコピー"
+
+#~ msgid ""
+#~ "Save all single frames of animated preview to video buffer\n"
+#~ "(configured in gimprc by video-paste-dir and video-paste-basename)"
+#~ msgstr ""
+#~ "全ての動画プレビューのフレームそれぞれをビデオバッファに保存する\n"
+#~ "(video-paste-dir と video-paste-basename によって gimprc で設定される)"
+
+#~ msgid "Move Path Animated Preview"
+#~ msgstr "移動パス動画プレビュー"
+
+#~ msgid "Generate Animated Preview failed\n"
+#~ msgstr "最適動画プレビュー生成失敗\n"
+
+#~ msgid "Load Path Points from file"
+#~ msgstr "ファイルからパス端点の読み込み"
+
+#~ msgid "Save Path Points to file"
+#~ msgstr "ファイルにパス端点を保存"
+
+#~ msgid "Current Point: [ %3d ] of [ %3d ]"
+#~ msgstr "現在の端点 : [ %3d ] 中 [ %3d ]"
+
+#~ msgid "Source Select"
+#~ msgstr "元選択"
+
+#~ msgid "Source Image/Layer:"
+#~ msgstr "元画像/レイヤー:"
+
+#~ msgid "Source Object to insert into Frame Range"
+#~ msgstr "フレーム間に挿入する元オブジェクト"
+
+#~ msgid "Mode:"
+#~ msgstr "モード:"
+
+#~ msgid "Paintmode"
+#~ msgstr "描画モード"
+
+#~ msgid "Stepmode:"
+#~ msgstr "ステップモード:"
+
+#~ msgid "How to fetch the next SrcLayer at the next handled frame"
+#~ msgstr "次に扱うフレームが次の元レイヤーを取ってくる方法"
+
+#~ msgid "Handle:"
+#~ msgstr "扱い:"
+
+#~ msgid "How to place the SrcLayer at Controlpoint Coordinates"
+#~ msgstr "元レイヤーのコントロールポイント座標の配置方法"
+
+#~ msgid "Move Path Preview"
+#~ msgstr "移動パスプレビュー"
+
+#~ msgid "X Coordinate"
+#~ msgstr "X 座標"
+
+#~ msgid "Y Coordinate"
+#~ msgstr "Y 座標"
+
+#~ msgid "Scale Source Layer's Width in percent"
+#~ msgstr "元レイヤーの幅を％で拡大縮小"
+
+#~ msgid "Scale SrcLayer's Height in percent"
+#~ msgstr "元レイヤーの高さを％で拡大縮小"
+
+#~ msgid "SrcLayer's Opacity in percent"
+#~ msgstr "％で元レイヤーの不透明度"
+
+#~ msgid "Rotate:"
+#~ msgstr "回転:"
+
+#~ msgid "Rotate SrcLayer (in degree)"
+#~ msgstr "元レイヤーの回転 (角度)"
+
+#~ msgid "Keyframe:"
+#~ msgstr "キーフレーム:"
+
+#~ msgid ""
+#~ "Fix Controlpoint to Keyframe number\n"
+#~ "(0 == No Keyframe)"
+#~ msgstr ""
+#~ "コントロールポイントをキーフレーム番号で修正\n"
+#~ "(0 == キーフレーム無し)"
+
+#~ msgid "Add Point"
+#~ msgstr "端点追加"
+
+#~ msgid ""
+#~ "Add Controlpoint at end\n"
+#~ "(the last Point is duplicated)"
+#~ msgstr ""
+#~ "最後にコントロールポイントを追加します\n"
+#~ "(最後の端点が複製される)"
+
+#~ msgid "Show Path"
+#~ msgstr "パス表示"
+
+#~ msgid ""
+#~ "Show Path Lines and enable pick/drag with left button or move with right "
+#~ "button"
+#~ msgstr ""
+#~ "パス線を表示して左ボタンで選択/ドラッグまたは右ボタンで移動できるようにし"
+#~ "ます"
+
+#~ msgid ""
+#~ "Insert Controlpoint\n"
+#~ "(the current Point is duplicated)"
+#~ msgstr ""
+#~ "コントロールポイントを挿入します\n"
+#~ "(現在の端点が複製される)"
+
+#~ msgid "Delete current Controlpoint"
+#~ msgstr "現在のコントロールポイントを削除します"
+
+#~ msgid "Prev Point"
+#~ msgstr "前の端点"
+
+#~ msgid "Show Previous Controlpoint"
+#~ msgstr "前のコントロールポイントを表示します"
+
+#~ msgid "Next Point"
+#~ msgstr "次の端点"
+
+#~ msgid "Show Next Controlpoint"
+#~ msgstr "次のコントロールポイントを表示します"
+
+#~ msgid "First Point"
+#~ msgstr "先頭の端点"
+
+#~ msgid "Show First Controlpoint"
+#~ msgstr "最初のコントロールポイントを表示します"
+
+#~ msgid "Last Point"
+#~ msgstr "最後の端点"
+
+#~ msgid "Show Last Controlpoint"
+#~ msgstr "最後のコントロールポイントを表示します"
+
+#~ msgid "Clear Point"
+#~ msgstr "端点クリア"
+
+#~ msgid "Reset the current Controlpoint to default Values"
+#~ msgstr "現在のコントロールポイントを標準値にリセットします"
+
+#~ msgid "Clear All Points"
+#~ msgstr "全端点クリア"
+
+#~ msgid ""
+#~ "Reset all Controlpoints to default Values but dont change the path (X/Y "
+#~ "Values)"
+#~ msgstr ""
+#~ "全てのコントロールポイントを標準値にリセットしますがパス (X/Y 値) は変えま"
+#~ "せん"
+
+#~ msgid "Delete All Points"
+#~ msgstr "全端点の削除"
+
+#~ msgid "Delete all Controlpoints"
+#~ msgstr "全てのコントロールポイントを削除します"
+
+#~ msgid "Load Points"
+#~ msgstr "端点読み込み"
+
+#~ msgid "Load Controlpoints from file"
+#~ msgstr "コントロールポイントをファイルから読み込みます"
+
+#~ msgid "Save Points"
+#~ msgstr "端点保存"
+
+#~ msgid "Save Controlpoints to file"
+#~ msgstr "コントロールポイントをファイルに保存します"
+
+#~ msgid ""
+#~ "Can't operate with current Controlpoint\n"
+#~ "or Keyframe settings"
+#~ msgstr ""
+#~ "現在のコントロールポイントかキーフレームの設定では\n"
+#~ "操作することができません"
+
+#~ msgid "Reset Keyframes"
+#~ msgstr "キーフレームリセット"
+
+#~ msgid "Errors:"
+#~ msgstr "エラー:"
+
+#~ msgid ""
+#~ "No Source Image was selected.\n"
+#~ "Please open a 2nd Image of the same type before opening Move Path."
+#~ msgstr ""
+#~ "元画像が選択されていません.\n"
+#~ "パス移動を開く前に同じ型の 2 番目の画像を開いて下さい."
+
+#~ msgid "Copying Layers into Frames..."
+#~ msgstr "レイヤーをフレームにコピーしています..."
+
+#~ msgid "Generating Animated Preview..."
+#~ msgstr "動画プレビューを生成しています..."
+
+#~ msgid ""
+#~ "\n"
+#~ "Error: Keyframe %d at point [%d] higher or equal than last handled frame"
+#~ msgstr ""
+#~ "\n"
+#~ "エラー: キーフレーム %d の端点 [%d] は最終フレームよりも高過ぎるか同等です"
+
+#~ msgid ""
+#~ "\n"
+#~ "Error: Keyframe %d at point [%d] leaves not enough space (frames)\n"
+#~ "for the previous controlpoints"
+#~ msgstr ""
+#~ "\n"
+#~ "エラー: キーフレーム %d の端点 [%d] には前のコントロールポイントのための\n"
+#~ "十分な空間 (フレーム) がありません"
+
+#~ msgid ""
+#~ "\n"
+#~ "Error: Keyframe %d is not in sequence at point [%d]"
+#~ msgstr ""
+#~ "\n"
+#~ "エラー: キーフレーム %d は連続した端点 [%d] ではありません"
+
+#~ msgid ""
+#~ "\n"
+#~ "Error: controlpoint [%d] is out of handled framerange"
+#~ msgstr ""
+#~ "\n"
+#~ "エラー: コントロールポイント [%d] フレーム範囲の扱いを超えています"
+
+#~ msgid ""
+#~ "\n"
+#~ "Error: more controlpoints (%d) than handled frames (%d)\n"
+#~ "please reduce controlpoints or select more frames"
+#~ msgstr ""
+#~ "\n"
+#~ "エラー:  コントロールポイント (%d) が扱うフレーム (%d) よりも多いので\n"
+#~ "コントロールポイントを減らすかもっと多くのフレームを選んで下さい"
+
+#~ msgid "Conditions to run mpeg_encode 1.5:"
+#~ msgstr "mpeg_encode 1.5 を実行するには:"
+
+#~ msgid "Conditions to run mpeg2encode 1.2:"
+#~ msgstr "mpeg2encode 1.2 を実行するには:"
+
+#~ msgid "1.) mpeg_encode 1.5 must be installed"
+#~ msgstr "1.) mpeg_encode 1.5 がインストール済みである"
+
+#~ msgid "1.) mpeg2encode 1.2 must be installed"
+#~ msgstr "1.) mpeg2encode 1.2 がインストール済みである"
+
+#~ msgid "    you can get mpeg_encode at"
+#~ msgstr "    mpeg_encode はここで入手可能"
+
+#~ msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
+#~ msgstr "    mpeg2encode はここで入手可能 http://www.mpeg.org/MSSG"
+
+#~ msgid "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
+#~ msgstr "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
+
+#~ msgid "   or at ftp://ftp.mpeg.org/pub/mpeg/mssg "
+#~ msgstr "    または ftp://ftp.mpeg.org/pub/mpeg/mssg "
+
+#~ msgid "2.) You need a series of single Images on disk (AnimFrames)"
+#~ msgstr "2.) ディスクに一続きの画像 (動画フレーム) が必要"
+
+#~ msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
+#~ msgstr "    全てのファイル形式が JPRG (または YUV か PNM か PPM)"
+
+#~ msgid "   all with fileformat PPM (or YUV)"
+#~ msgstr "    全てのファイル形式が PPM (または YUV)"
+
+#~ msgid "    (use 'Frames Convert' from the Video Menu"
+#~ msgstr "    (動画メニューの 'フレーム変換' を使うか"
+
+#~ msgid "    or 'Split Image to Frames' from the Video Menu)"
+#~ msgstr "    動画メニューの '画像をフレームに分割' を使う)"
+
+#~ msgid "3.) All Images must have the same size,"
+#~ msgstr "3.) 全ての画像は同じサイズである必要があり,"
+
+#~ msgid "    width and height must be a multiple of 16"
+#~ msgstr "    幅と高さが 16 の倍数である必要があります"
+
+#~ msgid "    (use Scale or Crop from the Video Menu)"
+#~ msgstr "    (動画メニューの拡大縮小か切り抜きを使う)"
+
+#~ msgid "MPEG_ENCODE Information"
+#~ msgstr "MPEG エンコード情報"
+
+#~ msgid "generate MPEG1 (ISO/IEC 11172-2) stream"
+#~ msgstr "MPEG1 (ISO/IEC 11172-2) ストリームの生成"
+
+#~ msgid "generate MPEG2 (ISO/IEC DIS 13818-2) stream"
+#~ msgstr "MPEG2 (ISO/IEC DIS 13818-2) ストリームの生成"
+
+#~ msgid "GenParams"
+#~ msgstr "パラメータ生成"
+
+#~ msgid "Gen + Encode"
+#~ msgstr "生成 + エンコード"
+
+#~ msgid "To   Frame:"
+#~ msgstr "宛フレーム:"
+
+#~ msgid "Framerate :"
+#~ msgstr "フレームレート :"
+
+#~ msgid "framerate in frames/second"
+#~ msgstr "フレーム/秒のフレームレート"
+
+#~ msgid "Bitrate:"
+#~ msgstr "ビットレート:"
+
+#~ msgid ""
+#~ "used for constant bitrates (bit/sec)                  \n"
+#~ "(low rate gives good compression + bad quality)"
+#~ msgstr ""
+#~ "一定のビットレートを使用する (ビット/秒)              \n"
+#~ "(低いレートは圧縮良好 + 低品質を与える)"
+
+#~ msgid "Outputfile:"
+#~ msgstr "出力ファイル:"
+
+#~ msgid "Name of the resulting MPEG outputfile"
+#~ msgstr "生成する MPEG 出力ファイルの名前"
+
+#~ msgid "Paramfile:"
+#~ msgstr "パラメータファイル:"
+
+#~ msgid ""
+#~ "Name of the Encoder-Parameterfile\n"
+#~ "(is generated)"
+#~ msgstr ""
+#~ "エンコーダーパラメータファイルの名前\n"
+#~ "(が生成される)"
+
+#~ msgid "Startscript:"
+#~ msgstr "開始スクリプト:"
+
+#~ msgid ""
+#~ "Name of the Startscript           \n"
+#~ "(is generated/executed)"
+#~ msgstr ""
+#~ "開始スクリプトの名前              \n"
+#~ "(が生成される/実行される)"
+
+#~ msgid ""
+#~ "Generate parameterfile for mpeg_encode 1.5\n"
+#~ "(the freely distributed Berkeley MPEG-1 Video  Encoder.)\n"
+#~ msgstr ""
+#~ "mpeg_encode 1.5 のためのパラメータファイルの生成\n"
+#~ "(配布フリーな Berkeley MPEG-1 動画エンコーダー.)\n"
+
+#~ msgid "Constant Bitrate :"
+#~ msgstr "固定ビットレート :"
+
+#~ msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
+#~ msgstr "I/P/Q 拡大縮小値を無視して固定ビットレートを使う"
+
+#~ msgid "Pattern:"
+#~ msgstr "パターン:"
+
+#~ msgid "How to encode MPEG framesequence (I/P/B frames)"
+#~ msgstr "MPEG フレームシーケンスのエンコード方法 (I/P/B フレーム)"
+
+#~ msgid "IQSCALE:"
+#~ msgstr "I 品質拡大縮小:"
+
+#~ msgid ""
+#~ "Quality scale for I-Frames                       \n"
+#~ "(1 = best quality, 31 = best comression)"
+#~ msgstr ""
+#~ "I-フレームの品質拡大縮小                         \n"
+#~ "(1 = 最高品質, 31 = 圧縮最大)"
+
+#~ msgid "PQSCALE:"
+#~ msgstr "P 品質拡大縮小:"
+
+#~ msgid ""
+#~ "Quality scale for P-Frames                  \n"
+#~ "(1 = best quality, 31 = best comression)"
+#~ msgstr ""
+#~ "P-フレームの品質拡大縮小                    \n"
+#~ "(1 = 最高品質, 31 = 圧縮最大)"
+
+#~ msgid "BQSCALE:"
+#~ msgstr "B 品質拡大縮小:"
+
+#~ msgid ""
+#~ "Quality scale for B-Frames                  \n"
+#~ "(1 = best quality, 31 = best comression)"
+#~ msgstr ""
+#~ "B-フレームの品質拡大縮小                    \n"
+#~ "(1 = 最高品質, 31 = 圧縮最大)"
+
+#~ msgid "P-Search :"
+#~ msgstr "P-検索 :"
+
+#~ msgid "Search Algorithmus used for P-frames"
+#~ msgstr "P-フレームで使われるアルゴリズムの検索"
+
+#~ msgid "B-Search :"
+#~ msgstr "B-検索 :"
+
+#~ msgid "Search Algorithmus used for B-frames"
+#~ msgstr "B-フレームで使われるアルゴリズムの検索"
+
+#~ msgid "Gen MPEG_ENCODE Parameters"
+#~ msgstr "MPEG_ENCODE パラメータ生成"
+
+#~ msgid "Encode Values"
+#~ msgstr "エンコード値"
+
+#~ msgid ""
+#~ "Generate parameterfile for mpeg2encode 1.2\n"
+#~ "(MPEG-2 Video  Encoder.)\n"
+#~ msgstr ""
+#~ "mpeg2encode 1.2 のためのパラメータファイルの生成\n"
+#~ "(MPEG-2 動画エンコーダー.)\n"
+
+#~ msgid "MPEG-type :"
+#~ msgstr "MPEG 種:"
+
+#~ msgid "Videoformat :"
+#~ msgstr "動画形式 :"
+
+#~ msgid "Videoformat"
+#~ msgstr "動画形式"
+
+#~ msgid "Gen MPEG2ENCODE Parameters"
+#~ msgstr "MPEG2ENCODE パラメータ生成"
+
+#~ msgid ""
+#~ "\n"
+#~ "WARNING: mpeg_encode does not support Fileformat "
+#~ msgstr ""
+#~ "\n"
+#~ "警告: mpeg_encode が 対応しないファイル形式 "
+
+#~ msgid ""
+#~ "\n"
+#~ "ERROR: width not a multiple of 16"
+#~ msgstr ""
+#~ "\n"
+#~ "エラー: 幅が 16 の倍数ではありません"
+
+#~ msgid ""
+#~ "\n"
+#~ "ERROR: height not a multiple of 16"
+#~ msgstr ""
+#~ "\n"
+#~ "エラー: 高さが 16 の倍数ではありません"
+
+#~ msgid ""
+#~ "\n"
+#~ "WARNING: mpeg2encode does not support Fileformat "
+#~ msgstr ""
+#~ "\n"
+#~ "警告: mpeg2encode が対応しないファイル形式 "
+
+#~ msgid ""
+#~ "\n"
+#~ "ERROR: invoked from a single image, animframe required"
+#~ msgstr ""
+#~ "\n"
+#~ "エラー: 一枚の画像が呼び出されました, 動画フレームが必要です"
+
+#~ msgid ""
+#~ "Playback         \n"
+#~ "<Shift> optimized"
+#~ msgstr ""
+#~ "プレイバック     \n"
+#~ "<Shift> 最適化"
+
+#~ msgid ""
+#~ "Smart Update .xvpics\n"
+#~ "<Shift> forced upd"
+#~ msgstr ""
+#~ "すぐに .xvpics を更新\n"
+#~ "<Shift> で強制更新"
+
+#~ msgid "Duplicate selected Frames"
+#~ msgstr "選択したフレームを複製"
+
+#~ msgid "Delete selected Frames"
+#~ msgstr "選択したフレームを削除"
+
+#~ msgid "Goto 1st Frame"
+#~ msgstr "最初のフレームへ"
+
+#~ msgid "Goto last Frame"
+#~ msgstr "最後のフレームへ"
+
+#~ msgid "<Image>/Video/VCR Navigator..."
+#~ msgstr "<Image>/動画/VCR ナビゲータ..."
+
+#~ msgid "Cant open two or more Video Navigator Windows."
+#~ msgstr "2 つ以上のビデオナビゲータウィンドウは開けません."
+
+#~ msgid "Paste before"
+#~ msgstr "前にペースト"
+
+#~ msgid "Paste after"
+#~ msgstr "後ろにペースト"
+
+#~ msgid "Paste replace"
+#~ msgstr "置き換えてペースト"
+
+#~ msgid "Clear Video Buffer"
+#~ msgstr "ビデオバッファのクリア"
+
+#~ msgid "Videoframes:"
+#~ msgstr "ビデオフレーム:"
+
+#~ msgid "Framerate:"
+#~ msgstr "フレームレート:"
+
+#~ msgid "Timezoom:"
+#~ msgstr "時間ズーム:"
+
+#~ msgid "Video Navigator"
+#~ msgstr "動画ナビゲータ"
+
+#~ msgid "New Width:"
+#~ msgstr "新しい幅:"
+
+#~ msgid "New Height:"
+#~ msgstr "新しい高さ:"
+
+#~ msgid "Offset X:"
+#~ msgstr "X オフセット:"
+
+#~ msgid "Offset Y:"
+#~ msgstr "Y オフセット:"
+
+#~ msgid "Crop AnimFrames (all)"
+#~ msgstr "動画フレーム切り抜き (全部)"
+
+#~ msgid "Crop (original %dx%d)"
+#~ msgstr "切り抜き (原画 %dx%d)"
+
+#~ msgid "Resize AnimFrames (all)"
+#~ msgstr "動画フレームサイズ変更 (全部)"
+
+#~ msgid "Resize (original %dx%d)"
+#~ msgstr "サイズ変更 (原画 %dx%d)"
+
+#~ msgid "Scale AnimFrames (all)"
+#~ msgstr "動画フレーム拡大縮小 (全部)"
+
+#~ msgid "Scale (original %dx%d)"
+#~ msgstr "拡大縮小 (原画 %dx%d)"
+
+#~ msgid "Generate Optimal Palette"
+#~ msgstr "最適パレットを生成する"
+
+#~ msgid "WEB Palette"
+#~ msgstr "Web パレット"
+
+#~ msgid "Use Custom Palette"
+#~ msgstr "カスタムパレットを使う"
+
+#~ msgid "Use Black/White (1-Bit) Palette"
+#~ msgstr "白黒 (1-ビット) パレットを使う"
+
+#~ msgid "Floyd-Steinberg Color Dithering (Normal)"
+#~ msgstr "フロイド・スタインバーグ色ディザリング (普通)"
+
+#~ msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
+#~ msgstr "フロイド・スタインバーグ色ディザリング (色混合減少)"
+
+#~ msgid "Positioned Color Dithering"
+#~ msgstr "ポジション色ディザリング"
+
+#~ msgid "No Color Dithering"
+#~ msgstr "色ディザリング無し"
+
+#~ msgid "Palette Type"
+#~ msgstr "パレット型"
+
+#~ msgid "Custom Palette"
+#~ msgstr "カスタムパレット"
+
+#~ msgid ""
+#~ "Name of a cutom palette\n"
+#~ "(is ignored if Palette Type is not custom)"
+#~ msgstr ""
+#~ "カスタムパレットの名前\n"
+#~ "(パレット型がカスタムではないと無視される)"
+
+#~ msgid "Remove Unused"
+#~ msgstr "未使用の色を取り除く"
+
+#~ msgid ""
+#~ "Remove unused or double colors\n"
+#~ "(is ignored if Palette Type is not custom)"
+#~ msgstr ""
+#~ "未使用か重複している色を取り除く\n"
+#~ "(パレット型がカスタムではないと無視される)"
+
+#~ msgid ""
+#~ "Number of resulting Colors\t\t \n"
+#~ "(ignored if Palette Type is not Generate optimal palette)"
+#~ msgstr ""
+#~ "最終的な色の数\t\t \n"
+#~ "(パレット型が一般的な最適パレットではないと無視される)"
+
+#~ msgid "Dither Options"
+#~ msgstr "ディザリングオプション"
+
+#~ msgid "Enable transparency"
+#~ msgstr "透明有効"
+
+#~ msgid "Enable dithering of transparency"
+#~ msgstr "透明のディザリングを有効にする"
+
+#~ msgid "Convert Frames to Indexed"
+#~ msgstr "フレームをインデックスに変換"
+
+#~ msgid "Palette and Dither Settings"
+#~ msgstr "パレットとディザリングの設定:"
+
+#~ msgid "Keep Type"
+#~ msgstr "そのまま"
+
+#~ msgid "Convert to RGB"
+#~ msgstr "RGB 画像に変換:"
+
+#~ msgid "Convert to Gray"
+#~ msgstr "グレースケール画像に変換:"
+
+#~ msgid "Convert to Indexed"
+#~ msgstr "インデックス画像に変換:"
+
+#~ msgid ""
+#~ "\n"
+#~ "Select destination fileformat by extension\n"
+#~ "optionally convert imagetype\n"
+#~ msgstr ""
+#~ "\n"
+#~ "画像型変換オプションとして拡張子に\n"
+#~ "よって目当てのファイル形式を選びます\n"
+
+#~ msgid "Basename:"
+#~ msgstr "ベース名:"
+
+#~ msgid ""
+#~ "basename of the resulting frames       \n"
+#~ "(0001.ext is added)"
+#~ msgstr ""
+#~ "生成フレームのベース名                 \n"
+#~ "(0001.ext が追加される)"
+
+#~ msgid "Extension:"
+#~ msgstr "拡張子:"
+
+#~ msgid ""
+#~ "extension of resulting frames       \n"
+#~ "(is also used to define Fileformat)"
+#~ msgstr ""
+#~ "生成フレームの拡張子                \n"
+#~ "(ファイル形式を定義するためにも使われる)"
+
+#~ msgid "Imagetype:"
+#~ msgstr "画像種:"
+
+#~ msgid ""
+#~ "Convert to, or keep imagetype           \n"
+#~ "(most fileformats can't handle all types)"
+#~ msgstr ""
+#~ "変換するか, 画像種をそのままに          \n"
+#~ "(ほとんどのファイル形式は全ての型を扱えない)"
+
+#~ msgid "Flatten:"
+#~ msgstr "統合:"
+
+#~ msgid ""
+#~ "Flatten all resulting frames               \n"
+#~ "(most fileformats need flattened frames)"
+#~ msgstr ""
+#~ "生成フレーム全てを統合する                 \n"
+#~ "(ほとんどのファイル形式は統合されたフレームが必要)"
+
+#~ msgid "Convert Frames to other Formats"
+#~ msgstr "フレームを他形式に変換"
+
+#~ msgid "Convert Settings"
+#~ msgstr "変換設定"
+
+#~ msgid "Expand as necessary"
+#~ msgstr "必要に応じて拡大"
+
+#~ msgid "Clipped to image"
+#~ msgstr "画像の切り抜き"
+
+#~ msgid "Clipped to bottom layer"
+#~ msgstr "最下レイヤーの切り抜き"
+
+#~ msgid "Flattened image"
+#~ msgstr "画像統合"
+
+#~ msgid ""
+#~ "Resulting Layer Size is made of the outline-rectangle \n"
+#~ "of all visible layers (may differ from frame to frame)"
+#~ msgstr ""
+#~ "レイヤーサイズは全可視レイヤーの輪郭を変えたもの\n"
+#~ "(フレームからフレーム間で違っているかもしれない)"
+
+#~ msgid "Resulting Layer Size is the frame size"
+#~ msgstr "レイヤーサイズはフレームサイズになる"
+
+#~ msgid ""
+#~ "Resulting Layer Size is the size of the bottom layer\n"
+#~ "(may differ from frame to frame)"
+#~ msgstr ""
+#~ "レイヤーサイズは一番下のレイヤの大きさになる\n"
+#~ "(フレームからフレーム間で違っているかもしれない)"
+
+#~ msgid ""
+#~ "Resulting Layer Size is the frame size     \n"
+#~ "transparent parts are filled with BG color"
+#~ msgstr ""
+#~ "レイヤーサイズは透明な部分が背景色で塗りつ\n"
+#~ "ぶされたフレームサイズになる"
+
+#~ msgid "select all Layers where Layername is equal to Pattern"
+#~ msgstr "レイヤー名がパターンに等しい全てのレイヤーを選ぶ"
+
+#~ msgid "select all Layers where Layername starts with Pattern"
+#~ msgstr "レイヤー名がパターンで始まる全てのレイヤーを選ぶ"
+
+#~ msgid "select all Layers where Layername ends up with Pattern"
+#~ msgstr "レイヤー名がパターンで終わる全てのレイヤーを選ぶ"
+
+#~ msgid "select all Layers where Layername contains Pattern"
+#~ msgstr "レイヤー名がパターンを含む全てのレイヤーを選ぶ"
+
+#~ msgid ""
+#~ "select Layerstack positions.\n"
+#~ "0, 4-5, 8\n"
+#~ "where 0 == Top-layer"
+#~ msgstr ""
+#~ "レイヤースタック位置で選ぶ.\n"
+#~ "0, 4-5, 8\n"
+#~ "0 == 最上層レイヤー"
+
+#~ msgid ""
+#~ "select Layerstack positions.\n"
+#~ "0, 4-5, 8\n"
+#~ "where 0 == BG-layer"
+#~ msgstr ""
+#~ "レイヤースタック位置で選ぶ.\n"
+#~ "0, 4-5, 8\n"
+#~ "0 == 背景レイヤー"
+
+#~ msgid "select all visible Layers"
+#~ msgstr "全ての可視レイヤーを選択"
+
+#~ msgid "Layer Basename:"
+#~ msgstr "レイヤー基本名:"
+
+#~ msgid ""
+#~ "Basename for all Layers    \n"
+#~ "[####] is replaced by frame number"
+#~ msgstr ""
+#~ "全てのレイヤーの基本名     \n"
+#~ "[####] はフレーム番号で置き換えられる"
+
+#~ msgid "Layer Mergemode:"
+#~ msgstr "レイヤー結合モード:"
+
+#~ msgid "Exclude BG-Layer"
+#~ msgstr "背景レイヤーを除く"
+
+#~ msgid ""
+#~ "Exclude the BG-Layers    \n"
+#~ "in all handled frames\n"
+#~ "regardless to selection"
+#~ msgstr ""
+#~ "選択とは無関係に         \n"
+#~ "全対象フレームの\n"
+#~ "背景を取り除く"
+
+#~ msgid "Use all unselected Layers"
+#~ msgstr "全ての非選択レイヤーを使う"
+
+#~ msgid "Creating Layer-Animated Image..."
+#~ msgstr "レイヤー-動画画像の作成中..."
+
+#~ msgid "Frames to Image"
+#~ msgstr "フレームを画像に"
+
+#~ msgid "Create Multilayer-Image from Frames"
+#~ msgstr "フレームから複数画像を作成する"
+
+#~ msgid "Flattening Frames..."
+#~ msgstr "フレームを統合しています..."
+
+#~ msgid "Converting Frames..."
+#~ msgstr "フレームを変換しています..."
+
+#~ msgid ""
+#~ "Convert Frames: SAVE operation FAILED.\n"
+#~ "Desired save plugin can't handle type\n"
+#~ "or desired save plugin not available."
+#~ msgstr ""
+#~ "フレーム変換: 保存操作は失敗しました.\n"
+#~ "要求した保存プラグインがこの型を扱えないか\n"
+#~ "要求した保存プラグインが利用可能ではありません."
+
+#~ msgid "Cropping all Animation Frames..."
+#~ msgstr "全動画フレームを切り抜いています..."
+
+#~ msgid "Resizing all Animation Frames..."
+#~ msgstr "全動画フレームの大きさを変更しています..."
+
+#~ msgid "Scaling all Animation Frames..."
+#~ msgstr "全動画フレームを拡大縮小しています..."
+
+#~ msgid "Flatten Frames"
+#~ msgstr "フレーム統合"
+
+#~ msgid "Removing Layer (pos:%ld) from Frames..."
+#~ msgstr "フレームからレイヤー (位置:%ld) を取り除いています..."
+
+#~ msgid "Delete Layers in Frames"
+#~ msgstr "フレームのレイヤー削除"
+
+#~ msgid "Select Frame Range & Position"
+#~ msgstr "フレーム範囲 & 位置の選択"
+
+#~ msgid "Splitting into Frames..."
+#~ msgstr "フレームに分割しています..."
+
+#~ msgid ""
+#~ "Split Frames: SAVE operation FAILED.\n"
+#~ "desired save plugin can't handle type\n"
+#~ "or desired save plugin not available."
+#~ msgstr ""
+#~ "フレーム分割: 保存操作は失敗しました.\n"
+#~ "要求された保存プラグインがこの型を扱えないか\n"
+#~ "要求された保存プラグインが利用可能でありません."
+
+#~ msgid ""
+#~ "%s\n"
+#~ "%s\n"
+#~ "(%s_0001.%s)\n"
+#~ msgstr ""
+#~ "%s\n"
+#~ "%s\n"
+#~ "(%s_0001.%s)\n"
+
+#~ msgid "Make a frame (diskfile) from each Layer"
+#~ msgstr "それぞれのレイヤーからフレーム (ディスクファイル) を作成"
+
+#~ msgid "frames are named: base_nr.extension"
+#~ msgstr "フレームの名前は: 基本名_番号.拡張子"
+
+#~ msgid "extension of resulting frames (is also used to define Fileformat)"
+#~ msgstr "生成フレームの拡張子 (ファイル形式の定義ためにも使われる)"
+
+#~ msgid "Inverse Order:"
+#~ msgstr "逆順:"
+
+#~ msgid "Start frame 0001 at Top Layer"
+#~ msgstr "001 フレームを最上層レイヤーとして始める"
+
+#~ msgid ""
+#~ "Remove Alpha Channel in resulting Frames. Transparent parts are filled "
+#~ "with BG color."
+#~ msgstr ""
+#~ "生成フレームからアルファチャンネルを取り除く. 透明な部分は背景色で塗りつぶ"
+#~ "される."
+
+#~ msgid "Split Image into Frames"
+#~ msgstr "画像をフレームに分割"
+
+#~ msgid "Split Settings"
+#~ msgstr "分割設定"
+
+#~ msgid ""
+#~ "OPERATION CANCELLED.\n"
+#~ "This image is already an AnimFrame.\n"
+#~ "Try again on a Duplicate (Image/Duplicate)."
+#~ msgstr ""
+#~ "操作は取り消されました.\n"
+#~ "画像は既に動画フレームになっています.\n"
+#~ "複製してからもう一度試して下さい (画像/複製)."
+
+#~ msgid "Scale"
+#~ msgstr "拡大縮小"
+
+#~ msgid "Resize"
+#~ msgstr "サイズ変更"
+
+#~ msgid "New width:"
+#~ msgstr "新しい幅:"
+
+#~ msgid "New height:"
+#~ msgstr "新しい高さ:"
+
+#~ msgid "X ratio:"
+#~ msgstr "比率 X:"
+
+#~ msgid "Y ratio:"
+#~ msgstr "比率 Y:"
+
+#~ msgid "Constrain Ratio"
+#~ msgstr "縦横比固定"
+
+#~ msgid "Char: %c, %d, 0x%02x"
+#~ msgstr "文字: %c, %d, 0x%02x"
+
+#~ msgid "Selected char:"
+#~ msgstr "選択された文字:"
+
+#~ msgid "Insert the selected char at the cursor position"
+#~ msgstr "カーソル位置に選択された文字を挿入"
+
+#~ msgid "points"
+#~ msgstr "ポイント"
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Text/Dynamic Text..."
+#~ msgstr "<Image>/フィルタ/下塗り/ダイナミック文字..."
+
+#~ msgid ""
+#~ " Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
+#~ "new layer creation."
+#~ msgstr ""
+#~ " 現在のレイヤーは GDynText レイヤーでないかアルファチャンネルがありませ"
+#~ "ん. 強制的に新規レイヤーを作成します. "
+
+#~ msgid "GDynText Layer"
+#~ msgstr "GDynText レイヤー"
+
+#~ msgid "GIMP Dynamic Text"
+#~ msgstr "GIMP ダイナミック文字"
+
+#~ msgid "GDynText: Messages Window"
+#~ msgstr "GDynText メッセージ窓"
+
+#~ msgid "GDynText: About ..."
+#~ msgstr "GDynText: GDynText について..."
+
+#~ msgid "bottom-left"
+#~ msgstr "左下"
+
+#~ msgid "bottom-center"
+#~ msgstr "中央下"
+
+#~ msgid "bottom-right"
+#~ msgstr "右下"
+
+#~ msgid "middle-left"
+#~ msgstr "中央左"
+
+#~ msgid "center"
+#~ msgstr "中央"
+
+#~ msgid "middle-right"
+#~ msgstr "中央右"
+
+#~ msgid "top-left"
+#~ msgstr "左上"
+
+#~ msgid "top-center"
+#~ msgstr "中央上"
+
+#~ msgid "top-right"
+#~ msgstr "右上"
+
+#~ msgid "GDynText"
+#~ msgstr "GDynText"
+
+#~ msgid "Toggle creation of a new layer"
+#~ msgstr "新規レイヤー作成切替え"
+
+#~ msgid "Load text from file"
+#~ msgstr "テキストをファイルから読み込む"
+
+#~ msgid "GDynText: Select Color"
+#~ msgstr "GDynText: 色選択"
+
+#~ msgid "Text color"
+#~ msgstr "文字色"
+
+#~ msgid "Toggle anti-aliased text"
+#~ msgstr "アンチエイリアス切替え"
+
+#~ msgid "Left aligned text"
+#~ msgstr "左揃え"
+
+#~ msgid "Centered text"
+#~ msgstr "中央寄せ"
+
+#~ msgid "Right aligned text"
+#~ msgstr "右揃え"
+
+#~ msgid "Toggle text font preview"
+#~ msgstr "文字フォントプレビュー切替え"
+
+#~ msgid "Toggle CharMap window"
+#~ msgstr "CharMap ウィンドウ切替え"
+
+#~ msgid ""
+#~ "Layer\n"
+#~ "Alignment"
+#~ msgstr ""
+#~ "レイヤー\n"
+#~ "整列"
+
+#~ msgid "Set layer alignment"
+#~ msgstr "レイヤー整列方法の指定"
+
+#~ msgid ""
+#~ "Line\n"
+#~ "Spacing"
+#~ msgstr "行間隔"
+
+#~ msgid "Set text rotation (degrees)"
+#~ msgstr "文字回転設定 (度)"
+
+#~ msgid "Editable text sample"
+#~ msgstr "編集可能文字サンプル"
+
+#~ msgid "Clear preview"
+#~ msgstr "プレビュー消去"
+
+#~ msgid "Preview default text sample"
+#~ msgstr "デフォルト文字サンプルをプレビュー"
+
+#~ msgid ""
+#~ "Holding the Shift key while pressing this button will force GDynText in "
+#~ "changing the layer name as done in GIMP 1.0."
+#~ msgstr ""
+#~ "Shift キーを押しながらこのボタンを押すと GDynText は GIMP 1.0 のようにレイ"
+#~ "ヤー名を強制的に変更します."
+
+#~ msgid "GDynText: Load text"
+#~ msgstr "GDynText: テキスト読み込み"
+
+#~ msgid ""
+#~ "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
+#~ msgstr "警告 ファイル \"%s\" は最大文字数 (%d) を越えています.\n"
+
+#~ msgid "Error opening \"%s\"!\n"
+#~ msgstr "\"%s\" を開く際にエラー発生!\n"
+
+#~ msgid ""
+#~ " WARNING: GDynText is too old! A newer version is required to handle this "
+#~ "layer. Get it from %s"
+#~ msgstr ""
+#~ "警告: GDynText が古すぎます! このレイヤーを編集するには新しい版が必要で"
+#~ "す. %s から取得して下さい"
+
+#~ msgid " Upgrading old GDynText layer to %s."
+#~ msgstr "古い GDynText レイヤー を %s にアップグレードしています."
+
+#~ msgid "Dismiss"
+#~ msgstr "閉じる"
+
+#~ msgid ""
+#~ "<html><head><title>Document not found</title></head><body bgcolor="
+#~ "\"#ffffff\"><center><p>%s<h3>Couldn't find document</h3><tt>%s</tt></"
+#~ "center><p><small>This either means that the help for this topic has not "
+#~ "been written yet or that something is wrong with your installation. "
+#~ "Please check carefully before you report this as a bug.</small></body></"
+#~ "html>"
+#~ msgstr ""
+#~ "<html><head><title>文書が見付からない</title></head><body bgcolor="
+#~ "\"#ffffff\"><center><p>%s<h3>文書が見付かりません</h3><tt>%s</tt></"
+#~ "center><p><small>この話題のためのヘルプがまだ書かれていないかあなたのイン"
+#~ "ストールのどこかが間違っています. あなたがこれをバグとして報告する前に慎重"
+#~ "に調べて下さい</small></body></html>"
+
+#~ msgid ""
+#~ "<html><head><title>Directory not found</title></head><body bgcolor="
+#~ "\"#ffffff\"><center><p>%s<h3>Couldn't change to directory</h3><tt>%s</"
+#~ "tt><h3>while trying to access</h3><tt>%s</tt></center><p><small>This "
+#~ "either means that the help for this topic has not been written yet or "
+#~ "that something is wrong with your installation. Please check carefully "
+#~ "before you report this as a bug.</small></body></html>"
+#~ msgstr ""
+#~ "<html><head><title>ディレクトリが見付かりません</title></head><body "
+#~ "bgcolor=\"#ffffff\"><center><p>%s<h3>ディレクトリ</h3><tt>%s</tt><h3>に変"
+#~ "えられません.</h3><h3>これはファイル</h3><tt>%s</tt><h3>にアクセスしようと"
+#~ "して発生しました</h3></center><p><small>この話題のためのヘルプがまだ書かれ"
+#~ "ていないかあなたのインストールのどこかが間違っています. あなたがこれをバグ"
+#~ "として報告する前に慎重に調べて下さい</small></body></html>"
+
+#~ msgid "Contents"
+#~ msgstr "目次"
+
+#~ msgid "Index"
+#~ msgstr "索引"
+
+#~ msgid ""
+#~ "GIMP Help Browser Error.\n"
+#~ "\n"
+#~ "Couldn't find my root html directory.\n"
+#~ "(%s)"
+#~ msgstr ""
+#~ "GIMP ヘルプブラウザエラー.\n"
+#~ "\n"
+#~ "ルート HTML ディレクトリが見つかりません.\n"
+#~ "(%s)"
+
+#~ msgid "GIMP Help Browser"
+#~ msgstr "GIMP ヘルプブラウザ"
+
+#~ msgid "Back"
+#~ msgstr "戻る"
+
+#~ msgid "Forward"
+#~ msgstr "進む"
+
+#, fuzzy
+#~ msgid ""
+#~ "GIMP Help Browser Error.\n"
+#~ "\n"
+#~ "Couldn't find GIMP_HELP_ROOT html directory.\n"
+#~ "(%s)"
+#~ msgstr ""
+#~ "GIMP ヘルプブラウザエラー.\n"
+#~ "\n"
+#~ "ルート HTML ディレクトリが見つかりません.\n"
+#~ "(%s)"
 
 #~ msgid "OK"
 #~ msgstr "了解"

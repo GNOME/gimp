@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.3\n"
-"POT-Creation-Date: 2001-11-18 22:48+0300\n"
+"POT-Creation-Date: 2001-11-23 01:09+0100\n"
 "PO-Revision-Date: 2001-11-18 22:53+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -3688,7 +3688,7 @@ msgstr "Один кадр на слой (замена)"
 msgid "GIF: error writing output file\n"
 msgstr "GIF: возникла ошибка при записи в файл вывода\n"
 
-#: plug-ins/common/gif.c:2457
+#: plug-ins/common/gif.c:2455
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Комментарий по умолчанию ограничен длиною в %d символов."
@@ -8409,7 +8409,7 @@ msgstr "Начальный угол:"
 msgid "Angle span:"
 msgstr "Диапазон углов:"
 
-#: plug-ins/gimpressionist/orientation.c:96 plug-ins/gimpressionist/size.c:95
+#: plug-ins/gimpressionist/orientation.c:96
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Используемое число направлений (т.е. кистей)"
 
@@ -8736,6 +8736,11 @@ msgstr "Мин. размер:"
 #: plug-ins/gimpressionist/size.c:80
 msgid "Max size:"
 msgstr "Макс. размер:"
+
+#: plug-ins/gimpressionist/size.c:95
+#, fuzzy
+msgid "The number of sizes of brushes to use"
+msgstr "Используемое число направлений (т.е. кистей)"
 
 #: plug-ins/gimpressionist/size.c:104
 msgid "The smallest brush to create"

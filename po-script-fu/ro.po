@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2001-11-12 23:06+0100\n"
+"POT-Creation-Date: 2001-11-22 20:11+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Românã <ro@li.org>\n"
@@ -49,97 +49,102 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1209
-#: plug-ins/script-fu/script-fu-scripts.c:1212
+#: plug-ins/script-fu/script-fu-scripts.c:1216
+#: plug-ins/script-fu/script-fu-scripts.c:1219
 msgid "/Script-Fu/"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1211
-#: plug-ins/script-fu/script-fu-scripts.c:1214
+#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1221
 #, c-format
 msgid "Script-Fu: %s"
 msgstr ""
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1238
+#: plug-ins/script-fu/script-fu-scripts.c:1245
 msgid "Script Arguments"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1261
+#: plug-ins/script-fu/script-fu-scripts.c:1268
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1308
+#: plug-ins/script-fu/script-fu-scripts.c:1315
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Selecþie culoare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1387
+#: plug-ins/script-fu/script-fu-scripts.c:1396
 #, fuzzy
 msgid "Script-Fu File Selection"
 msgstr "Micºoreazã selecþia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1421
+#: plug-ins/script-fu/script-fu-scripts.c:1401
+#, fuzzy
+msgid "Script-Fu Directory Selection"
+msgstr "Micºoreazã selecþia"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1436
 #, fuzzy
 msgid "Script-fu Pattern Selection"
 msgstr "Selecþie model"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1428
+#: plug-ins/script-fu/script-fu-scripts.c:1443
 #, fuzzy
 msgid "Script-Fu Gradient Selection"
 msgstr "Selectie Gradient"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1436
+#: plug-ins/script-fu/script-fu-scripts.c:1451
 #, fuzzy
 msgid "Script-Fu Brush Selection"
 msgstr "Selecþie pensulã"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1484
+#: plug-ins/script-fu/script-fu-scripts.c:1499
 msgid "Reset to Defaults"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1512
+#: plug-ins/script-fu/script-fu-scripts.c:1527
 #, fuzzy
 msgid "About"
 msgstr "Automat"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1700
+#: plug-ins/script-fu/script-fu-scripts.c:1715
 msgid "NOT SET"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1730
+#: plug-ins/script-fu/script-fu-scripts.c:1745
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:2024
+#: plug-ins/script-fu/script-fu-scripts.c:2042
 msgid "Author:"
 msgstr "Autor:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:519
-#: plug-ins/script-fu/script-fu-scripts.c:2030
+#: plug-ins/script-fu/script-fu-scripts.c:2048
 msgid "Copyright:"
 msgstr "Copyright:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:511
-#: plug-ins/script-fu/script-fu-scripts.c:2036
+#: plug-ins/script-fu/script-fu-scripts.c:2054
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2044
+#: plug-ins/script-fu/script-fu-scripts.c:2062
 #, fuzzy
 msgid "Image Types:"
 msgstr "Tip imagine"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2188
+#: plug-ins/script-fu/script-fu-scripts.c:2207
 #, fuzzy
 msgid "Script-Fu Font Selection"
 msgstr "Micºoreazã selecþia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2258
+#: plug-ins/script-fu/script-fu-scripts.c:2277
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -362,10 +367,6 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr ""
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
@@ -836,10 +837,6 @@ msgstr ""
 #, fuzzy
 msgid "Angle"
 msgstr "Unghi:"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Anim-Filter for all Copies"
-msgstr ""
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 #, fuzzy
@@ -1392,11 +1389,6 @@ msgstr "Tip umplere"
 msgid "Fill BG with Pattern"
 msgstr ""
 
-#: plug-ins/gap/sel-to-anim-img.scm:0
-#, fuzzy
-msgid "Fill with BG Color"
-msgstr "/Modificare/Umple cu culoarea de fundal"
-
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 #, fuzzy
 msgid "Fill with BG"
@@ -1787,11 +1779,6 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 #, fuzzy
 msgid "Number of Colors"
-msgstr "Numãrul minim de culori:"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-#, fuzzy
-msgid "Number of Copies"
 msgstr "Numãrul minim de culori:"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
@@ -2442,6 +2429,14 @@ msgstr "Lãþime"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Fill with BG Color"
+#~ msgstr "/Modificare/Umple cu culoarea de fundal"
+
+#, fuzzy
+#~ msgid "Number of Copies"
+#~ msgstr "Numãrul minim de culori:"
 
 #~ msgid "Close"
 #~ msgstr "Închide"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
-"POT-Creation-Date: 2001-11-12 18:33+0100\n"
+"POT-Creation-Date: 2001-11-23 01:09+0100\n"
 "PO-Revision-Date: 2000-11-04 15:00+0100\n"
 "Last-Translator: ®eljan Rikalo <zeljko@linuxfreak.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -14,9 +14,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:283
-#: plug-ins/FractalExplorer/Dialogs.c:1373 plug-ins/gdyntext/gdyntext_ui.c:600
-#: plug-ins/gfig/gfig.c:3383 plug-ins/imagemap/imap_about.c:36
-#: plug-ins/webbrowser/webbrowser.c:279
+#: plug-ins/FractalExplorer/Dialogs.c:1373 plug-ins/gfig/gfig.c:3383
+#: plug-ins/imagemap/imap_about.c:36 plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
 msgstr "O"
 
@@ -271,7 +270,6 @@ msgstr "Boje"
 #
 #. Number of Colors frame
 #: plug-ins/FractalExplorer/Dialogs.c:626 plug-ins/common/borderaverage.c:413
-#: plug-ins/gap/gap_range_ops.c:346
 msgid "Number of Colors"
 msgstr "Broj Boja"
 
@@ -380,7 +378,7 @@ msgstr "Kosinus"
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2718 plug-ins/common/ps.c:2731
 #: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1582
-#: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:299
+#: plug-ins/fits/fits.c:1032
 msgid "None"
 msgstr "Ne"
 
@@ -787,14 +785,13 @@ msgid "Position"
 msgstr "Pozicija"
 
 #. X
-#. table col, row
 #: plug-ins/Lighting/lighting_ui.c:622 plug-ins/Lighting/lighting_ui.c:674
 #: plug-ins/MapObject/mapobject_ui.c:766 plug-ins/MapObject/mapobject_ui.c:818
 #: plug-ins/MapObject/mapobject_ui.c:1059
 #: plug-ins/MapObject/mapobject_ui.c:1103 plug-ins/common/flarefx.c:788
 #: plug-ins/common/nova.c:631 plug-ins/common/papertile.c:285
-#: plug-ins/flame/flame.c:1191 plug-ins/gap/gap_mov_dialog.c:1825
-#: plug-ins/gflare/gflare.c:2950 plug-ins/ifscompose/ifscompose.c:532
+#: plug-ins/flame/flame.c:1191 plug-ins/gflare/gflare.c:2950
+#: plug-ins/ifscompose/ifscompose.c:532
 msgid "X:"
 msgstr "X:"
 
@@ -803,7 +800,6 @@ msgid "Light source X position in XYZ space"
 msgstr "Pozicija izvora svjetla X u XYZ prostoru"
 
 #. Y
-#. table col, row
 #: plug-ins/Lighting/lighting_ui.c:635 plug-ins/Lighting/lighting_ui.c:686
 #: plug-ins/MapObject/mapobject_ui.c:779 plug-ins/MapObject/mapobject_ui.c:830
 #: plug-ins/MapObject/mapobject_ui.c:1070
@@ -811,8 +807,7 @@ msgstr "Pozicija izvora svjetla X u XYZ prostoru"
 #: plug-ins/MapObject/mapobject_ui.c:1208 plug-ins/common/flarefx.c:806
 #: plug-ins/common/nova.c:649 plug-ins/common/papertile.c:294
 #: plug-ins/common/xbm.c:1248 plug-ins/flame/flame.c:1204
-#: plug-ins/gap/gap_mov_dialog.c:1843 plug-ins/gflare/gflare.c:2954
-#: plug-ins/ifscompose/ifscompose.c:546
+#: plug-ins/gflare/gflare.c:2954 plug-ins/ifscompose/ifscompose.c:546
 msgid "Y:"
 msgstr "Y:"
 
@@ -997,8 +992,7 @@ msgstr "Slika suèelja koju æu koristiti"
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1080 plug-ins/MapObject/mapobject_ui.c:1333
 #: plug-ins/common/lic.c:1037 plug-ins/common/ripple.c:604
-#: plug-ins/gap/gap_mov_dialog.c:860 plug-ins/gfig/gfig.c:4019
-#: plug-ins/mosaic/mosaic.c:597
+#: plug-ins/gfig/gfig.c:4019 plug-ins/mosaic/mosaic.c:597
 msgid "Options"
 msgstr "Moguænosti"
 
@@ -1027,7 +1021,6 @@ msgstr "Svjetlosni efekti"
 
 #
 #: plug-ins/Lighting/lighting_ui.c:1195 plug-ins/common/grid.c:705
-#: plug-ins/gap/gap_mov_dialog.c:495
 msgid "Update Preview"
 msgstr "Osvje¾i Pregled"
 
@@ -1134,7 +1127,6 @@ msgstr "Pozicija izvora svjetla Z u XYZ prostoru"
 
 #. Rotation
 #: plug-ins/MapObject/mapobject_ui.c:1091 plug-ins/common/ps.c:2896
-#: plug-ins/gdyntext/gdyntext_ui.c:510
 msgid "Rotation"
 msgstr "Rotacija"
 
@@ -1805,7 +1797,7 @@ msgstr "Nasumièno iz zametka (djeljeno)"
 #: plug-ins/common/CML_explorer.c:299 plug-ins/common/CML_explorer.c:1282
 #: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1058
 #: plug-ins/fp/fp_gtk.c:283 plug-ins/fp/fp_gtk.c:415
-#: plug-ins/gap/gap_mov_dialog.c:272 plug-ins/gimpressionist/orientation.c:188
+#: plug-ins/gimpressionist/orientation.c:188
 #: plug-ins/gimpressionist/size.c:186
 msgid "Hue"
 msgstr "Nijansa"
@@ -1813,14 +1805,13 @@ msgstr "Nijansa"
 #: plug-ins/common/CML_explorer.c:300 plug-ins/common/CML_explorer.c:1287
 #: plug-ins/common/decompose.c:123 plug-ins/common/lic.c:1059
 #: plug-ins/fp/fp_gtk.c:287 plug-ins/fp/fp_gtk.c:419 plug-ins/fp/fp_gtk.c:483
-#: plug-ins/gap/gap_mov_dialog.c:273 plug-ins/rcm/rcm_dialog.c:516
+#: plug-ins/rcm/rcm_dialog.c:516
 msgid "Saturation"
 msgstr "Zasiæenje"
 
 #: plug-ins/common/CML_explorer.c:301 plug-ins/common/CML_explorer.c:1292
 #: plug-ins/common/decompose.c:124 plug-ins/fp/fp_gtk.c:291
-#: plug-ins/fp/fp_gtk.c:423 plug-ins/gap/gap_mov_dialog.c:275
-#: plug-ins/gimpressionist/orientation.c:131
+#: plug-ins/fp/fp_gtk.c:423 plug-ins/gimpressionist/orientation.c:131
 #: plug-ins/gimpressionist/size.c:130
 msgid "Value"
 msgstr "Vrijednost"
@@ -2196,7 +2187,7 @@ msgid "Left Edge"
 msgstr "Lijevi rub"
 
 #: plug-ins/common/align_layers.c:473 plug-ins/common/align_layers.c:506
-#: plug-ins/gap/gap_mov_dialog.c:286 plug-ins/gflare/gflare.c:2938
+#: plug-ins/gflare/gflare.c:2938
 msgid "Center"
 msgstr "Sredina"
 
@@ -2512,11 +2503,11 @@ msgstr "Azimut:"
 msgid "Elevation:"
 msgstr "Elevacija:"
 
-#: plug-ins/common/bumpmap.c:1061 plug-ins/gap/resize.c:197
+#: plug-ins/common/bumpmap.c:1061
 msgid "X Offset:"
 msgstr "X Ofset:"
 
-#: plug-ins/common/bumpmap.c:1071 plug-ins/gap/resize.c:214
+#: plug-ins/common/bumpmap.c:1071
 msgid "Y Offset:"
 msgstr "Y Ofset:"
 
@@ -2578,9 +2569,8 @@ msgstr "Obojanost"
 
 #: plug-ins/common/colorify.c:322 plug-ins/common/colortoalpha.c:432
 #: plug-ins/common/ps.c:2702 plug-ins/common/xpm.c:439
-#: plug-ins/gap/gap_mov_dialog.c:274 plug-ins/gimpressionist/color.c:51
-#: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:328
-#: plug-ins/print/gimp_main_window.c:758
+#: plug-ins/gimpressionist/color.c:51 plug-ins/gimpressionist/color.c:56
+#: plug-ins/imagemap/imap_menu.c:328 plug-ins/print/gimp_main_window.c:758
 msgid "Color"
 msgstr "Boja"
 
@@ -2606,9 +2596,6 @@ msgid "Color to Alpha"
 msgstr "Boja u Alfu"
 
 #: plug-ins/common/colortoalpha.c:443 plug-ins/common/mapcolor.c:645
-#: plug-ins/gap/gap_decode_mpeg_main.c:653 plug-ins/gap/gap_decode_xanim.c:224
-#: plug-ins/gap/gap_lib.c:2126 plug-ins/gap/gap_lib.c:2321
-#: plug-ins/gap/gap_range_ops.c:253 plug-ins/gap/gap_range_ops.c:602
 #: plug-ins/gfli/gfli.c:849 plug-ins/gfli/gfli.c:918
 msgid "From:"
 msgstr "Od:"
@@ -2660,7 +2647,6 @@ msgid "Saturation:"
 msgstr "Zasiæenje:"
 
 #: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:468
-#: plug-ins/gap/gap_arr_dialog.c:813
 msgid "Value:"
 msgstr "Vrijednost:"
 
@@ -2879,12 +2865,9 @@ msgid "Save Alpha Channel (RGBA/RGB)"
 msgstr "Alfa kanali"
 
 #
-#. Opacity
-#. table col, row
 #: plug-ins/common/csource.c:760 plug-ins/common/sparkle.c:444
-#: plug-ins/common/tileit.c:588 plug-ins/gap/gap_mov_dialog.c:1895
-#: plug-ins/gflare/gflare.c:3678 plug-ins/gflare/gflare.c:3708
-#: plug-ins/gflare/gflare.c:3738
+#: plug-ins/common/tileit.c:588 plug-ins/gflare/gflare.c:3678
+#: plug-ins/gflare/gflare.c:3708 plug-ins/gflare/gflare.c:3738
 msgid "Opacity:"
 msgstr "Neprozirnost:"
 
@@ -2949,10 +2932,9 @@ msgstr ""
 msgid "Curve Bend"
 msgstr "Svinutost Krivulje"
 
-#. menu_item copy
-#: plug-ins/common/curve_bend.c:1363 plug-ins/gap/gap_navigator_dialog.c:2922
-#: plug-ins/gfig/gfig.c:2844 plug-ins/gfig/gfig.c:5291
-#: plug-ins/gflare/gflare.c:3175 plug-ins/imagemap/imap_cmd_copy.c:52
+#: plug-ins/common/curve_bend.c:1363 plug-ins/gfig/gfig.c:2844
+#: plug-ins/gfig/gfig.c:5291 plug-ins/gflare/gflare.c:3175
+#: plug-ins/imagemap/imap_cmd_copy.c:52
 #: plug-ins/imagemap/imap_cmd_copy_object.c:53
 #: plug-ins/imagemap/imap_menu.c:290 plug-ins/imagemap/imap_toolbar.c:136
 msgid "Copy"
@@ -3287,12 +3269,10 @@ msgstr "Destripe"
 msgid "Create Histogram"
 msgstr "Kreiraj Histogram"
 
-#. Widht Scale
-#. table col, row
 #: plug-ins/common/destripe.c:672 plug-ins/common/gtm.c:551
 #: plug-ins/common/ps.c:2659 plug-ins/common/ps.c:2836
 #: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:428
-#: plug-ins/gap/gap_mov_dialog.c:1861 plug-ins/imagemap/imap_rectangle.c:390
+#: plug-ins/imagemap/imap_rectangle.c:390
 #: plug-ins/print/gimp_main_window.c:638
 msgid "Width:"
 msgstr "©irina:"
@@ -3465,13 +3445,10 @@ msgstr "Rezbarenje"
 msgid "Limit Line Width"
 msgstr "Ogranièi ¹irinu crte"
 
-#. Height Scale
-#. table col, row
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1228
 #: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2668
 #: plug-ins/common/ps.c:2845 plug-ins/common/smooth_palette.c:439
-#: plug-ins/common/tile.c:432 plug-ins/gap/gap_mov_dialog.c:1878
-#: plug-ins/imagemap/imap_rectangle.c:396
+#: plug-ins/common/tile.c:432 plug-ins/imagemap/imap_rectangle.c:396
 #: plug-ins/print/gimp_main_window.c:652
 msgid "Height:"
 msgstr "Visina:"
@@ -4003,7 +3980,7 @@ msgstr "Jedan okvir po sloju (premjesti)"
 msgid "GIF: error writing output file\n"
 msgstr "GIF: gre¹ka zapisivanja izlazne datoteke\n"
 
-#: plug-ins/common/gif.c:2457
+#: plug-ins/common/gif.c:2455
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr ""
@@ -4506,8 +4483,8 @@ msgstr "Maks. Dubina:"
 
 #. parameter settings
 #: plug-ins/common/iwarp.c:1127 plug-ins/common/sample_colorize.c:1384
-#: plug-ins/common/sinus.c:1837 plug-ins/gap/gap_mod_layer.c:222
-#: plug-ins/gfig/gfig.c:3976 plug-ins/gflare/gflare.c:3115
+#: plug-ins/common/sinus.c:1837 plug-ins/gfig/gfig.c:3976
+#: plug-ins/gflare/gflare.c:3115
 msgid "Settings"
 msgstr "Osobnosti"
 
@@ -4904,10 +4881,7 @@ msgid "Destination color range"
 msgstr "Odredi¹no podruèje boje"
 
 #
-#: plug-ins/common/mapcolor.c:645 plug-ins/gap/gap_decode_mpeg_main.c:663
-#: plug-ins/gap/gap_decode_xanim.c:234 plug-ins/gap/gap_lib.c:2134
-#: plug-ins/gap/gap_lib.c:2329 plug-ins/gap/gap_range_ops.c:260
-#: plug-ins/gap/gap_range_ops.c:610 plug-ins/gfli/gfli.c:858
+#: plug-ins/common/mapcolor.c:645 plug-ins/gfli/gfli.c:858
 #: plug-ins/gfli/gfli.c:927
 msgid "To:"
 msgstr "Do:"
@@ -5048,8 +5022,7 @@ msgid "Output LPI:"
 msgstr "Izlaz LPI:"
 
 #. screen settings
-#: plug-ins/common/newsprint.c:1289 plug-ins/gap/gap_mov_dialog.c:265
-#: plug-ins/gflare/gflare.c:592
+#: plug-ins/common/newsprint.c:1289 plug-ins/gflare/gflare.c:592
 msgid "Screen"
 msgstr "Zaslon"
 
@@ -5397,7 +5370,6 @@ msgstr "Staza Menija:"
 #. show the name
 #: plug-ins/common/plugindetails.c:353
 #: plug-ins/dbbrowser/dbbrowser_utils.c:351
-#: plug-ins/gap/gap_dbbrowser_utils.c:335
 msgid "Name:"
 msgstr "Naziv:"
 
@@ -5405,14 +5377,12 @@ msgstr "Naziv:"
 #. show the description
 #: plug-ins/common/plugindetails.c:375
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
-#: plug-ins/gap/gap_dbbrowser_utils.c:352
 msgid "Blurb:"
 msgstr "Opis :"
 
 #
 #: plug-ins/common/plugindetails.c:397
 #: plug-ins/dbbrowser/dbbrowser_utils.c:473
-#: plug-ins/gap/gap_dbbrowser_utils.c:469
 msgid "Help:"
 msgstr "Pomoæ :"
 
@@ -5430,7 +5400,6 @@ msgstr "Poja¹njenje Prikljuèka:"
 #: plug-ins/common/plugindetails.c:1001
 #: plug-ins/dbbrowser/dbbrowser_utils.c:147
 #: plug-ins/dbbrowser/dbbrowser_utils.c:166
-#: plug-ins/gap/gap_dbbrowser_utils.c:185
 msgid "Search by Name"
 msgstr "Tra¾i po imenu"
 
@@ -5473,7 +5442,6 @@ msgstr "Vidi kao Stablo"
 #
 #: plug-ins/common/plugindetails.c:1100
 #: plug-ins/dbbrowser/dbbrowser_utils.c:220
-#: plug-ins/gap/gap_dbbrowser_utils.c:148
 msgid "Search:"
 msgstr "Tra¾i :"
 
@@ -5970,8 +5938,7 @@ msgstr "Primjer Bojanja"
 
 #. gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
 #: plug-ins/common/sample_colorize.c:1368 plug-ins/common/tileit.c:565
-#: plug-ins/gdyntext/gdyntext_ui.c:626 plug-ins/gimpressionist/presets.c:669
-#: plug-ins/gimpressionist/sizemap.c:492
+#: plug-ins/gimpressionist/presets.c:669 plug-ins/gimpressionist/sizemap.c:492
 #: plug-ins/imagemap/imap_default_dialog.c:128
 msgid "Apply"
 msgstr "Prihvati"
@@ -6987,7 +6954,7 @@ msgstr "<Image>/Filteri/Distorzije/Video..."
 msgid "Video/RGB..."
 msgstr "Video/RGB..."
 
-#: plug-ins/common/video.c:2150 plug-ins/gap/gap_decode_mpeg_main.c:643
+#: plug-ins/common/video.c:2150
 msgid "Video"
 msgstr "Video"
 
@@ -7609,37 +7576,31 @@ msgstr "DB Pretra¾ivaè (init...)"
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
 #: plug-ins/dbbrowser/dbbrowser_utils.c:168
-#: plug-ins/gap/gap_dbbrowser_utils.c:193
 msgid "Search by Blurb"
 msgstr "Tra¾i po Opisu"
 
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:372
-#: plug-ins/gap/gap_dbbrowser_utils.c:374
 msgid "In:"
 msgstr "U:"
 
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:419
-#: plug-ins/gap/gap_dbbrowser_utils.c:420
 msgid "Out:"
 msgstr "Van :"
 
-#. show the author & the copyright
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/gap/gap_dbbrowser_utils.c:507 plug-ins/imagemap/imap_settings.c:94
+#: plug-ins/imagemap/imap_settings.c:94
 msgid "Author:"
 msgstr "Autor:"
 
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:511
-#: plug-ins/gap/gap_dbbrowser_utils.c:522
 msgid "Date:"
 msgstr "Datum:"
 
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:519
-#: plug-ins/gap/gap_dbbrowser_utils.c:537
 msgid "Copyright:"
 msgstr "Autorska prava:"
 
@@ -7968,2593 +7929,6 @@ msgstr "Pregled kako Povlaèite"
 msgid "Preview Size"
 msgstr "Velièina Pregleda"
 
-#. Button  to invoke filebrowser
-#: plug-ins/gap/gap_arr_dialog.c:291
-msgid "File-Browser"
-msgstr "Pretra¾ivaè Datoteka"
-
-#. parameter settings
-#: plug-ins/gap/gap_arr_dialog.c:794
-msgid "Enter Values"
-msgstr "Unesi Vrijednosti"
-
-#: plug-ins/gap/gap_arr_dialog.c:879
-msgid "Value: "
-msgstr "Vrijednost:"
-
-#: plug-ins/gap/gap_arr_dialog.c:1041
-msgid "Press Button"
-msgstr "Stisni Dugme"
-
-#: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:4014
-#: plug-ins/imagemap/imap_cmd_select.c:52 plug-ins/imagemap/imap_tools.c:133
-msgid "Select"
-msgstr "Odaberi"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:76
-msgid "GAP Animated Filter apply"
-msgstr "Prihvati GAP Animirani Filter"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:97
-msgid "Animated Filter apply (init)"
-msgstr "Prihvati Animirani filter (init)"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:176
-msgid "Gen Code by name"
-msgstr "Gen. kod po imenu"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:676
-msgid "Animated Filter apply (by name - please wait)"
-msgstr "Prihvati animirani filter (po imenu - molim saèekajte)"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:700
-msgid "Animated Filter apply (by blurb - please wait)"
-msgstr "Prihvati animirani filter (po opisu - molim saèekajte"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:708
-msgid "Animated Filter apply (please wait)"
-msgstr "Prihvaæam Animirani Filter (molim prièekajte)"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:755
-#: plug-ins/gap/gap_filter_foreach.c:163 plug-ins/gap/gap_mod_layer.c:287
-msgid "Animated Filter apply"
-msgstr "Prihvati Animirani Filter"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:102
-msgid "<Image>/Video/Split Video to Frames"
-msgstr "<Image>/Video/Stopi Video u Okvire..."
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:103
-msgid "<Toolbox>/Xtns/Split Video to Frames"
-msgstr "<Toolbox>/Xtns/Stopi Video u Okvire..."
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:179
-msgid "<Image>/Video/Split Video to Frames/MPEG1"
-msgstr "<Image>/Video/Stopi Video u Okvire..."
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:191
-msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-msgstr "<Toolbox>/Xtns/Stopi Video u Okvire/MPEG1"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:333 plug-ins/gap/gap_decode_xanim.c:337
-#: plug-ins/gap/gap_range_ops.c:1240
-msgid "Overwrite Frame"
-msgstr "Prepi¹i Okvir"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:335 plug-ins/gap/gap_decode_xanim.c:339
-#: plug-ins/gap/gap_range_ops.c:1242
-msgid "Overwrite All"
-msgstr "Prepi¹i Sve"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:347
-#: plug-ins/gap/gap_lib.c:1042 plug-ins/gap/gap_range_ops.c:1247
-msgid "GAP Question"
-msgstr "GAP pitanje"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:344 plug-ins/gap/gap_decode_xanim.c:348
-msgid "File already exists"
-msgstr "Datoteka postoji!"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:438
-msgid "Decoding MPEG Movie..."
-msgstr "Dekodiram MPEG Zapis..."
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:644
-msgid ""
-"Name of the MPEG1 videofile to READ.\n"
-"Frames are extracted from the videofile\n"
-"and written to seperate diskfiles.\n"
-"Audiotracks in the videofile are ignored."
-msgstr ""
-"Naziv MPEG1 videozapisa koji èitam.\n"
-"Okviri su izvuèeni iz videozapisa\n"
-"i zapisani u odvojene datoteke na disku.\n"
-"Audiozapisi u Videozapisu su odbaèeni."
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:654 plug-ins/gap/gap_decode_xanim.c:225
-msgid "Framenumber of 1st frame to extract"
-msgstr "Broj okvira iz prvog okvira za ekstrakciju"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:664 plug-ins/gap/gap_decode_xanim.c:235
-msgid "Framenumber of last frame to extract"
-msgstr "Broj okvira iz zadnjeg okvira za ekstrakciju"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:673 plug-ins/gap/gap_decode_xanim.c:244
-msgid "Framenames:"
-msgstr "Imena okvira:"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:674
-msgid ""
-"Basename for the AnimFrames to write on disk\n"
-"(framenumber and .xcf is added)"
-msgstr ""
-"Naziv Animiranih Okvira za pohranu na disk\n"
-"(spremnik_okvira i .xcf je dodano)"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
-#: plug-ins/imagemap/imap_toolbar.c:114
-msgid "Open"
-msgstr "Otvori"
-
-#
-#: plug-ins/gap/gap_decode_mpeg_main.c:682 plug-ins/gap/gap_decode_xanim.c:284
-msgid "Open the 1st one of the extracted frames"
-msgstr "Otvori prvi ektraktirani okvir"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:686
-msgid ""
-"\n"
-"WARNING: Do not attempt to split other files than MPEG1 videos.\n"
-"Before you proceed, you should save all open images."
-msgstr ""
-"\n"
-"POZOR:Ne poku¹avajte spojiti neke druge formate osim MPEG1.\n"
-"Prije nego nastavite morate spremiti sve otvorene slike."
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:689
-msgid "Split MPEG1 Video to Frames"
-msgstr "Stopi MPEG1 Videozapis u Okvire"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:690 plug-ins/gap/gap_decode_xanim.c:298
-#: plug-ins/gap/gap_range_ops.c:1462
-msgid "Select Frame Range"
-msgstr "Odredi Podruèje Okvira"
-
-#: plug-ins/gap/gap_decode_xanim.c:114
-msgid "Conditions to run the xanim based video split"
-msgstr "Uvjeti za rad xanim baziranog video stapanja"
-
-#: plug-ins/gap/gap_decode_xanim.c:122
-msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
-msgstr "1.) xanim 2.80.0 izvozno izdanje (loki verzija)"
-
-#: plug-ins/gap/gap_decode_xanim.c:126
-msgid "    must be installed somewhere in your PATH"
-msgstr "   mora biti instalirana negdje u va¹oj STAZI"
-
-#: plug-ins/gap/gap_decode_xanim.c:130
-msgid "    you can get xanim exporting edition at"
-msgstr "   xanim izvozno izdanje mo¾ete naæi na"
-
-#: plug-ins/gap/gap_decode_xanim.c:146
-msgid ""
-"2.) if your xanim exporting edition is not in your PATH or is not named xanim"
-msgstr "2.) ako va¹ xanim nije u STAZI ili nije nazvan xanim"
-
-#: plug-ins/gap/gap_decode_xanim.c:150
-msgid "    you have to set Environment variable GAP_XANIM_PROG "
-msgstr "     morate podesiti ENV varijablu GAP_XANIM _PROG "
-
-#: plug-ins/gap/gap_decode_xanim.c:154
-msgid "    to your xanim exporting program and restart gimp"
-msgstr " za va¹ xanim izvozni program i restartati GIMP"
-
-#: plug-ins/gap/gap_decode_xanim.c:162
-msgid "An ERROR occured while trying to call xanim:"
-msgstr "Gre¹ka prilikom poziva programa xanim:"
-
-#: plug-ins/gap/gap_decode_xanim.c:181
-msgid "XANIM Information"
-msgstr "XANIM Informacija"
-
-#: plug-ins/gap/gap_decode_xanim.c:214
-msgid "Video:"
-msgstr "Video:"
-
-#: plug-ins/gap/gap_decode_xanim.c:215
-msgid ""
-"Name of a videofile to READ by xanim.\n"
-"Frames are extracted from the videofile\n"
-"and written to seprate diskfiles.\n"
-"xanim exporting edition is required."
-msgstr ""
-"Naziv videozapisa koji æe èitati xanim.\n"
-"Okviri su izvuèeni iz videozapisa\n"
-"i pohranjeni u odvojene datoteke na disku.\n"
-"zahtijeva xanim izvozno izdanje."
-
-#: plug-ins/gap/gap_decode_xanim.c:245
-msgid ""
-"Basename for the AnimFrames to write on disk\n"
-"(framenumber and extension is added)"
-msgstr ""
-"Naziv Animiranih Okvira koji æu spremiti na disk.\n"
-"(spremnik_okvira i ekstenzija su dodani)"
-
-#: plug-ins/gap/gap_decode_xanim.c:252
-msgid "Format"
-msgstr "Format"
-
-#: plug-ins/gap/gap_decode_xanim.c:253
-msgid ""
-"Fileformat for the extracted AnimFrames\n"
-"(xcf is extracted as ppm and converted to xcf)"
-msgstr ""
-"Format datoteke izvuèenih Animiranih Okvira\n"
-"(xcf je izvuèen kao ppm i konvertiran u xcf)"
-
-#: plug-ins/gap/gap_decode_xanim.c:260
-msgid "Extract Frames"
-msgstr "Izluèi Okvire:"
-
-#: plug-ins/gap/gap_decode_xanim.c:261
-msgid "Enable extraction of Frames"
-msgstr "Ukljuèi ekstrakciju Okvira"
-
-#: plug-ins/gap/gap_decode_xanim.c:265
-msgid "Extract Audio"
-msgstr "Audio Ekstrakcija"
-
-#: plug-ins/gap/gap_decode_xanim.c:266
-msgid ""
-"Enable extraction of audio to raw audiofile\n"
-"(frame range limits are ignored for audio)"
-msgstr ""
-"Ukljuèi audio ekstrakciju u raw datoteku\n"
-"(osobitosti okvira su ignorirane za audio)"
-
-#: plug-ins/gap/gap_decode_xanim.c:271
-msgid "Jpeg Quality:"
-msgstr "Jpeg Kvaliteta"
-
-#: plug-ins/gap/gap_decode_xanim.c:272
-msgid ""
-"Quality for resulting Jpeg frames\n"
-"(is ignored when other formats are used)"
-msgstr ""
-"Kvaliteta rezultirajuæih Jpeg Okvira\n"
-"(ignoriram kad koristite drugi format)"
-
-#: plug-ins/gap/gap_decode_xanim.c:288
-msgid "Run asynchronously"
-msgstr "Radi Asinkrono"
-
-#: plug-ins/gap/gap_decode_xanim.c:289
-msgid ""
-"Run xanim asynchronously and delete unwanted frames\n"
-"(out of the specified range) while xanim is still running"
-msgstr ""
-"Pokreni xanim asinkrono i izbri¹i ne¾eljene okvire\n"
-"(van moguænosti) dok je xanim pokrenut"
-
-#: plug-ins/gap/gap_decode_xanim.c:294
-msgid ""
-"\n"
-"Warning: xanim 2.80 has only limited MPEG support.\n"
-"Most of the frames (type P and B) will be skipped."
-msgstr ""
-"\n"
-"Upozorenje: xanim 2.80 ima ogranièenu MPEG podr¹ku.\n"
-"Veæina okvira (vrsta P i B) æe biti izuzeta."
-
-#: plug-ins/gap/gap_decode_xanim.c:297
-msgid "Split any Xanim readable Video to Frames"
-msgstr "Stopi bilo koji Xanim Video u Okvire"
-
-#: plug-ins/gap/gap_decode_xanim.c:540
-#, c-format
-msgid ""
-"can't find any extracted frames,\n"
-"%s\n"
-"maybe xanim has failed or was cancelled"
-msgstr ""
-"ne mogu pronaæi ekstraktirane okvire,\n"
-"%s\n"
-"mo¾da je xanim pogrije¹io ili je zaustavljen"
-
-#: plug-ins/gap/gap_decode_xanim.c:565
-#, c-format
-msgid "frames are not extracted, because overwrite of %s was cancelled"
-msgstr "okviri nisu ekstraktirani, zato ¹to je preisivanje %s zaustavljeno"
-
-#: plug-ins/gap/gap_decode_xanim.c:575
-#, c-format
-msgid "failed to overwrite %s (check permissions ?)"
-msgstr "ne mogu prepisati %s (da provjerite dozvole ?)"
-
-#: plug-ins/gap/gap_decode_xanim.c:597
-#, c-format
-msgid "failed to write %s (check permissions ?)"
-msgstr "ne mogu zapisati %s (da provjerite dozvole ?)"
-
-#: plug-ins/gap/gap_decode_xanim.c:723
-#, c-format
-msgid "could not execute %s (check if xanim is installed)"
-msgstr "ne mogu pokrenuti %s (provjerite da li je xanim instaliran)"
-
-#: plug-ins/gap/gap_decode_xanim.c:731
-#, c-format
-msgid "%s does not look like xanim"
-msgstr "%s ne izgleda kao xanim"
-
-#: plug-ins/gap/gap_decode_xanim.c:755
-#, c-format
-msgid ""
-"The xanim program on your system \"%s\"\n"
-"does not support the exporting options Ea, Ee, Eq"
-msgstr ""
-"xanim program na va¹em sustavu \"%s\"\n"
-"ne podr¾ava izvozne moguænosti Ea, Ee, Eq"
-
-#: plug-ins/gap/gap_decode_xanim.c:762
-#, c-format
-msgid ""
-"The xanim program on your system \"%s\"\n"
-"does not support exporting of single frames"
-msgstr ""
-"xanim program na Va¹em sustavu \"%s\"\n"
-"ne podr¾ava izvozne moguænosti samo jednog okvira"
-
-#: plug-ins/gap/gap_decode_xanim.c:1025
-#, c-format
-msgid "videofile %s not existent or empty\n"
-msgstr "videozapis %s ne postoji ili je prazan\n"
-
-#: plug-ins/gap/gap_decode_xanim.c:1078
-#, c-format
-msgid ""
-"could not create %s directory\n"
-"(that is required for xanim frame export)"
-msgstr ""
-"ne mogu kreirati direktorij %s\n"
-"(potreban xanim-u za izvoz okvira)"
-
-#
-#: plug-ins/gap/gap_decode_xanim.c:1089
-msgid "extracting frames..."
-msgstr "ekstraktiram okvire .."
-
-#: plug-ins/gap/gap_decode_xanim.c:1114
-#, c-format
-msgid ""
-"could not start xanim process\n"
-"(program=%s)"
-msgstr ""
-"ne mogu zapoèeti xanim proces\n"
-"(program=%s)"
-
-#: plug-ins/gap/gap_decode_xanim.c:1135
-msgid ""
-"can't find any extracted frames,\n"
-"xanim has failed or was cancelled"
-msgstr ""
-"ne mogu pronaæi ekstraktirane okvire,\n"
-"xanim je pogrije¹io ili je zaustavljen"
-
-#: plug-ins/gap/gap_decode_xanim.c:1154
-msgid "renaming frames..."
-msgstr "preimenujem okvire .."
-
-#: plug-ins/gap/gap_decode_xanim.c:1159
-msgid "converting frames..."
-msgstr "konvertiram okvire..."
-
-#: plug-ins/gap/gap_filter_foreach.c:126
-msgid "backup to file"
-msgstr "pohrana u datoteku"
-
-#. pixel
-#: plug-ins/gap/gap_filter_foreach.c:128
-msgid "Make backup of the image after each step"
-msgstr "Pohrani sliku nakon svakog koraka"
-
-#: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:262
-msgid "Continue"
-msgstr "Nastavi"
-
-#: plug-ins/gap/gap_filter_foreach.c:136
-#, c-format
-msgid "Skip %d"
-msgstr ""
-
-#: plug-ins/gap/gap_filter_foreach.c:155 plug-ins/gap/gap_mod_layer.c:281
-#, c-format
-msgid ""
-"2nd call of %s\n"
-"(define end-settings)"
-msgstr ""
-"Drugi poziv %s\n"
-"(namjesti osobitosti)"
-
-#: plug-ins/gap/gap_filter_foreach.c:159
-#, c-format
-msgid ""
-"Non-Interactive call of %s\n"
-"(for all layers in between)"
-msgstr ""
-"Ne-interaktivni poziv iz %s\n"
-"(za sve meðuslojeve)"
-
-#: plug-ins/gap/gap_filter_foreach.c:278
-msgid "Applying Filter to all Layers..."
-msgstr "Prihvaæam Filter za sve Slojeve .."
-
-#: plug-ins/gap/gap_filter_foreach.c:552
-msgid "Select Filter for Animated apply"
-msgstr "Prihvati odabrani filter za Animaciju"
-
-#: plug-ins/gap/gap_filter_foreach.c:553 plug-ins/gap/gap_mod_layer.c:664
-msgid "Apply Constant"
-msgstr "Prihvati Konstantu"
-
-#: plug-ins/gap/gap_filter_foreach.c:554 plug-ins/gap/gap_mod_layer.c:665
-msgid "Apply Varying"
-msgstr "Prihvati Varijaciju"
-
-#: plug-ins/gap/gap_filter_main.c:106
-msgid "<Image>/Filters/Filter all Layers..."
-msgstr "<Image>/Filteri/Filtriraj sve Slojeve..."
-
-#: plug-ins/gap/gap_frontends_main.c:128
-msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
-msgstr "<Image>/Video/Stopi Video u Okvire/Bilo koji Xanim..."
-
-#: plug-ins/gap/gap_frontends_main.c:140
-msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
-msgstr "<Toolbox>/Xtns/Stopi Video u Okvire/Bilo koji Xanim..."
-
-#: plug-ins/gap/gap_frontends_main.c:152
-msgid "<Image>/Video/Encode/MPEG1..."
-msgstr "<Image>/Video/Enkoder/MPEG1..."
-
-#
-#: plug-ins/gap/gap_frontends_main.c:165
-msgid "<Image>/Video/Encode/MPEG2..."
-msgstr "<Image>/Video/Enkoder/MPEG2..."
-
-#: plug-ins/gap/gap_lib.c:246
-msgid "GAP Message"
-msgstr "GAP poruka"
-
-#: plug-ins/gap/gap_lib.c:911
-msgid ""
-"OPERATION CANCELLED.\n"
-"Current frame changed while dialog was open."
-msgstr ""
-"OPERACIJA OBUSTAVLJENA.\n"
-"Trenutni okvir mijenjan dok se otvarao dijalog."
-
-#: plug-ins/gap/gap_lib.c:933 plug-ins/gap/gap_lib.c:2198
-#, fuzzy
-msgid ""
-"OPERATION CANCELLED.\n"
-"GAP plug-ins only work with filenames\n"
-"that end in numbers like _0001.xcf.\n"
-"==> Rename your image, then try again."
-msgstr ""
-"OPERACIJA OBUSTAVLJENA.\n"
-"GAP-prikljuèci rade samo sa nazivima\n"
-"koji zavr¹avaju sa _0001.xcf.\n"
-"==>Preimenujte sliku pa poku¹ajte ponovo."
-
-#: plug-ins/gap/gap_lib.c:1020
-msgid ""
-"You are using a file format != xcf\n"
-"Save Operations may result\n"
-"in loss of layer information."
-msgstr ""
-"Upotrebljavate format != xcf\n"
-"Rezultat pohrane mo¾e biti\n"
-"gubitak podataka o slojevima."
-
-#: plug-ins/gap/gap_lib.c:1036
-msgid "Save Flattened"
-msgstr "Spremi Uravnjenost"
-
-#: plug-ins/gap/gap_lib.c:1038
-msgid "Save As Is"
-msgstr "Spremi kao Takovo"
-
-#: plug-ins/gap/gap_lib.c:1513 plug-ins/gap/gap_lib.c:1637
-#: plug-ins/gap/gap_lib.c:1716 plug-ins/gap/gap_lib.c:1723
-#: plug-ins/gap/gap_lib.c:1730 plug-ins/gap/gap_lib.c:1813
-#: plug-ins/gap/gap_lib.c:1835 plug-ins/gap/gap_lib.c:2740
-#, c-format
-msgid "Error: could not rename frame %ld to %ld"
-msgstr "Pogre¹ka: ne mogu preimenovati okvir %ld u %ld"
-
-#: plug-ins/gap/gap_lib.c:1576
-#, fuzzy, c-format
-msgid "Error: could not save frame %s"
-msgstr "Pogre¹ka: ne mogu preimenovati okvir %ld u %ld"
-
-#: plug-ins/gap/gap_lib.c:1625
-msgid "Duplicating frames..."
-msgstr "Dupliciram okvire .."
-
-#: plug-ins/gap/gap_lib.c:1801
-msgid "Renumber Framesequence..."
-msgstr "Renumeriram Sekvence Okvira .."
-
-#: plug-ins/gap/gap_lib.c:1987
-#, c-format
-msgid "Goto Frame (%ld/%ld)"
-msgstr "Idi na Okvir (%ld/%ld)"
-
-#: plug-ins/gap/gap_lib.c:1990
-#, c-format
-msgid "Destination Frame Number (%ld  - %ld)"
-msgstr "Odredi¹te Okvira Broj (%ld - %ld)"
-
-#: plug-ins/gap/gap_lib.c:1994 plug-ins/gap/gap_lib.c:2071
-#: plug-ins/gap/gap_lib.c:2275
-msgid "Number:"
-msgstr "Broj:"
-
-#: plug-ins/gap/gap_lib.c:2055
-#, c-format
-msgid "Delete Frames (%ld/%ld)"
-msgstr "Izbri¹i Okvire (%ld/%ld)"
-
-#: plug-ins/gap/gap_lib.c:2058
-#, c-format
-msgid "Delete Frames from %ld to (number)"
-msgstr "Izbri¹i Okvire od %ld do (Broj)"
-
-#: plug-ins/gap/gap_lib.c:2121
-#, c-format
-msgid "Duplicate Frames (%ld/%ld)"
-msgstr "Dupliciraj Okvire (%ld/%ld)"
-
-#: plug-ins/gap/gap_lib.c:2131
-msgid "Source Range starts at this framenumber"
-msgstr "Podruèje izvora poèinje na ovom broju okvira"
-
-#: plug-ins/gap/gap_lib.c:2139
-msgid "Source Range ends at this framenumber"
-msgstr "Podruèje izvora zavr¹ava na ovom broju okvira"
-
-#: plug-ins/gap/gap_lib.c:2142
-msgid "N times:"
-msgstr "N-puta :"
-
-#: plug-ins/gap/gap_lib.c:2149
-msgid ""
-"Copy selected Range n-times  \n"
-"(you may type in Values > 99)"
-msgstr ""
-"Kopiraj odabrano podruèje n-puta \n"
-"(mo¾ete upisati vrijednosti > 99)"
-
-#: plug-ins/gap/gap_lib.c:2152
-msgid "Duplicate Frame Range"
-msgstr "Dupliciraj Podruèje Okvira"
-
-#: plug-ins/gap/gap_lib.c:2270
-#, c-format
-msgid "Exchange current Frame (%ld)"
-msgstr "Promjeni trenutni Okvir (%ld)"
-
-#: plug-ins/gap/gap_lib.c:2274
-msgid "With Frame (number)"
-msgstr "S Okvirom (broj)"
-
-#: plug-ins/gap/gap_lib.c:2316
-#, c-format
-msgid "Framesequence Shift (%ld/%ld)"
-msgstr "Zadr¾ana sekvenca (%ld/%ld)"
-
-#: plug-ins/gap/gap_lib.c:2326
-msgid "Affected Range starts at this framenumber"
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:2334
-msgid "Affected Range ends at this framenumber"
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:2337
-msgid "N-Shift:"
-msgstr "N-Shift"
-
-#: plug-ins/gap/gap_lib.c:2342
-msgid ""
-"Renumber the affected framesequence     \n"
-"(numbers are shifted in circle by N)"
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:2344
-msgid "Framesequence shift"
-msgstr ""
-
-#: plug-ins/gap/gap_lib.c:2952
-#, c-format
-msgid ""
-"Can't execute more than 1 Video Function\n"
-"on the same AnimFrame Image at the same time\n"
-"LOCK ID:%s\n"
-msgstr ""
-
-#: plug-ins/gap/gap_main.c:482
-msgid "<Image>/Video/Goto/Next Frame"
-msgstr "<Image>/Video/Idi/Na Sljedeæi"
-
-#: plug-ins/gap/gap_main.c:494
-msgid "<Image>/Video/Goto/Previous Frame"
-msgstr "<Image>/Video/Idi/Na Prethodni"
-
-#: plug-ins/gap/gap_main.c:506
-msgid "<Image>/Video/Goto/First Frame"
-msgstr "<Image>/Video/Idi/Na Prvi"
-
-#: plug-ins/gap/gap_main.c:518
-msgid "<Image>/Video/Goto/Last Frame"
-msgstr "<Image>/Video/Idi/Na Zadnji"
-
-#: plug-ins/gap/gap_main.c:530
-msgid "<Image>/Video/Goto/Any Frame..."
-msgstr "<Image>/Video/Idi/Na Bilo Koji..."
-
-#: plug-ins/gap/gap_main.c:542
-msgid "<Image>/Video/Delete Frames..."
-msgstr "<Image>/Video/Izbri¹i okvire..."
-
-#: plug-ins/gap/gap_main.c:554
-msgid "<Image>/Video/Duplicate Frames..."
-msgstr "<Image>/Video/Dupliciraj Okvire..."
-
-#: plug-ins/gap/gap_main.c:566
-msgid "<Image>/Video/Exchange Frame..."
-msgstr "<Image>/Video/Promijeni Okvir..."
-
-#: plug-ins/gap/gap_main.c:578
-msgid "<Image>/Video/Move Path..."
-msgstr "<Image>/Video/Pomakni Stazu..."
-
-#: plug-ins/gap/gap_main.c:649
-msgid "<Image>/Video/Frames to Image..."
-msgstr "<Image>/Video/Okviri u Sliku..."
-
-#: plug-ins/gap/gap_main.c:661
-msgid "<Image>/Video/Frames Flatten..."
-msgstr "<Image>/Video/Ravni Okviri..."
-
-#: plug-ins/gap/gap_main.c:673
-msgid "<Image>/Video/Frames LayerDel..."
-msgstr "<Image>/Video/Okviri brisanje Sloja..."
-
-#
-#: plug-ins/gap/gap_main.c:697
-msgid "<Image>/Video/Frames Convert..."
-msgstr "<Image>/Video/Konverzija Okvira..."
-
-#: plug-ins/gap/gap_main.c:709
-msgid "<Image>/Video/Frames Resize..."
-msgstr "<Image>/Video/Promjena veliè. Okvira..."
-
-#: plug-ins/gap/gap_main.c:721
-msgid "<Image>/Video/Frames Crop..."
-msgstr "<Image>/Video/Odsjeèak Okvira..."
-
-#: plug-ins/gap/gap_main.c:733
-msgid "<Image>/Video/Frames Scale..."
-msgstr "<Image>/Video/Ljestvica Okvira..."
-
-#
-#: plug-ins/gap/gap_main.c:745
-msgid "<Image>/Video/Split Image to Frames..."
-msgstr "<Image>/Video/Stopi Slike u Okvire..."
-
-#: plug-ins/gap/gap_main.c:758
-msgid "<Image>/Video/Framesequence Shift..."
-msgstr "<Image>/Video/Zadr¾ana Sekvenca Okvira..."
-
-#: plug-ins/gap/gap_main.c:770
-msgid "<Image>/Video/Frames Modify..."
-msgstr "<Image>/Video/Modificiraj Okvir..."
-
-#. Layer select modes
-#: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:574
-msgid "Pattern is equal to LayerName"
-msgstr "Uzorak je jednak nazivu sloja"
-
-#: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:575
-msgid "Pattern is Start of LayerName"
-msgstr "Uzorak je poèetak naziva sloja"
-
-#: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:576
-msgid "Pattern is End of Layername"
-msgstr "Uzorak je zavr¹etak naziva sloja"
-
-#: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:577
-msgid "Pattern is a Part of LayerName"
-msgstr "Uzorak je dio naziva sloja"
-
-#: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:578
-msgid "Pattern is LayerstackNumber List"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:89 plug-ins/gap/gap_range_ops.c:579
-msgid "Pattern is REVERSE-stack List"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:90 plug-ins/gap/gap_range_ops.c:580
-msgid "All Visible (ignore Pattern)"
-msgstr "Sve vidljivo (ignoriraj uzorak)"
-
-#: plug-ins/gap/gap_mod_layer.c:92
-msgid "Select all Layers where Layername is equal to Pattern"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:93
-msgid "Select all Layers where Layername starts with Pattern"
-msgstr "Odaberi sve Slojeve kojima ImeSloja poèinje Uzorkom"
-
-#: plug-ins/gap/gap_mod_layer.c:94
-msgid "Select all Layers where Layername ends up with Pattern"
-msgstr "Odaberi sve Slojeve kojima ImeSloja zavr¹ava Uzorkom"
-
-#: plug-ins/gap/gap_mod_layer.c:95
-msgid "Select all Layers where Layername contains Pattern"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:96
-msgid ""
-"Select Layerstack positions.\n"
-"0, 4-5, 8\n"
-"where 0 == Top-layer"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:97
-msgid ""
-"Select Layerstack positions.\n"
-"0, 4-5, 8\n"
-"where 0 == BG-layer"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:98
-msgid "Select all visible Layers"
-msgstr "Stopi vidljive slojeve"
-
-#. action items what to do with the selected layer(s)
-#: plug-ins/gap/gap_mod_layer.c:102
-msgid "Set Layer(s) visible"
-msgstr "Napravi Sloj(eve) vidljivim"
-
-#: plug-ins/gap/gap_mod_layer.c:103
-msgid "Set Layer(s) invisible"
-msgstr "Napravi Sloj(eve) nevidljivim"
-
-#: plug-ins/gap/gap_mod_layer.c:104
-msgid "Set Layer(s) linked"
-msgstr "Napravi linkane Sloj(eva)"
-
-#: plug-ins/gap/gap_mod_layer.c:105
-msgid "Set Layer(s) unlinked"
-msgstr "Skini Linkove Sloja(eva)"
-
-#: plug-ins/gap/gap_mod_layer.c:106
-msgid "Raise Layer(s)"
-msgstr "Podigni Sloj(eve)"
-
-#: plug-ins/gap/gap_mod_layer.c:107
-msgid "Lower Layer(s)"
-msgstr "Spusti Sloj(eve)"
-
-#: plug-ins/gap/gap_mod_layer.c:108
-msgid "Merge Layer(s) expand as necessary"
-msgstr "Stopi pro¹ireni sloj(eve) kao nu¾no"
-
-#: plug-ins/gap/gap_mod_layer.c:109
-msgid "Merge Layer(s) clipped to image"
-msgstr "Stopi odsjeèak sloja(eva) u sliku"
-
-#: plug-ins/gap/gap_mod_layer.c:110
-msgid "Merge Layer(s) clipped to bg-layer"
-msgstr "Stopi odsjeèak sloja(eva) u pozadinski sloj"
-
-#: plug-ins/gap/gap_mod_layer.c:111
-msgid "Apply filter on Layer(s)"
-msgstr "Prihvati filter na sloj(evima)"
-
-#: plug-ins/gap/gap_mod_layer.c:112
-msgid "Duplicate Layer(s)"
-msgstr "Dupliciraj sloj(eve)"
-
-#: plug-ins/gap/gap_mod_layer.c:113
-msgid "Delete Layer(s)"
-msgstr "izbri¹i sloj(eve)"
-
-#: plug-ins/gap/gap_mod_layer.c:114
-msgid "Rename Layer(s)"
-msgstr "Preimenuj Sloj(eve)"
-
-#: plug-ins/gap/gap_mod_layer.c:153
-msgid ""
-"Perform function on one or more Layer(s)\n"
-"in all frames of the selected frame range\n"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:157 plug-ins/gap/gap_mpege.c:258
-#: plug-ins/gap/gap_range_ops.c:443
-msgid "From Frame:"
-msgstr "Iz Okvira:"
-
-#: plug-ins/gap/gap_mod_layer.c:158 plug-ins/gap/gap_mpege.c:259
-#: plug-ins/gap/gap_range_ops.c:444 plug-ins/gap/gap_range_ops.c:603
-msgid "first handled frame"
-msgstr "prvi obraðeni sloj"
-
-#: plug-ins/gap/gap_mod_layer.c:165 plug-ins/gap/gap_range_ops.c:451
-msgid "To Frame:"
-msgstr "U  Okvir:"
-
-#: plug-ins/gap/gap_mod_layer.c:166 plug-ins/gap/gap_mpege.c:267
-#: plug-ins/gap/gap_range_ops.c:452 plug-ins/gap/gap_range_ops.c:611
-msgid "last handled frame"
-msgstr "zadnji obraðeni sloj"
-
-#: plug-ins/gap/gap_mod_layer.c:174 plug-ins/gap/gap_range_ops.c:650
-msgid "Select Layer(s):"
-msgstr "Odaberi Sloj(eve)"
-
-#: plug-ins/gap/gap_mod_layer.c:184 plug-ins/gap/gap_range_ops.c:659
-msgid "Select Pattern:"
-msgstr "Odaberi Uzorak:"
-
-#. pixel
-#: plug-ins/gap/gap_mod_layer.c:186 plug-ins/gap/gap_range_ops.c:661
-msgid ""
-"String to identify layer names    \n"
-"or layerstack position numbers\n"
-"0,3-5"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:192 plug-ins/gap/gap_range_ops.c:667
-msgid "Case sensitive"
-msgstr "Osjetlj. na V/m slova:"
-
-#: plug-ins/gap/gap_mod_layer.c:193 plug-ins/gap/gap_range_ops.c:668
-msgid "Lowercase and UPPERCASE letters are considered as different"
-msgstr "Mala i VELIKA slova se razlièito tretiraju"
-
-#: plug-ins/gap/gap_mod_layer.c:198 plug-ins/gap/gap_range_ops.c:673
-msgid "Invert Selection"
-msgstr "Inverzni odabir"
-
-#: plug-ins/gap/gap_mod_layer.c:199
-msgid "Perform actions on all unselected Layers"
-msgstr "Pokren obradu na svim neodabranim slojevima"
-
-#: plug-ins/gap/gap_mod_layer.c:204
-msgid "Function:"
-msgstr "Funkcija :"
-
-#. argv[7].radio_help_argv = action_help
-#: plug-ins/gap/gap_mod_layer.c:208
-msgid "Function to be performed on all selected layers"
-msgstr "Funkcija koja æe biti kori¹tena na svim odabranim slojevima"
-
-#: plug-ins/gap/gap_mod_layer.c:214
-msgid "New Layername:"
-msgstr "Novi naziv sloja:"
-
-#. pixel
-#: plug-ins/gap/gap_mod_layer.c:216
-msgid ""
-"New Layername for all handled layers \n"
-"[####] is replaced by frame number\n"
-"(is used on function rename only)"
-msgstr ""
-
-#: plug-ins/gap/gap_mod_layer.c:221
-msgid "Frames Modify"
-msgstr "Preinake Okvira"
-
-#: plug-ins/gap/gap_mod_layer.c:285
-#, c-format
-msgid ""
-"Non-Interactive call of %s\n"
-"(for all selected layers)"
-msgstr ""
-
-#. GAP-PDB-Browser Dialog
-#. ----------------------
-#: plug-ins/gap/gap_mod_layer.c:663
-msgid "Select Filter for Animated frames-apply"
-msgstr "Odredi filter za kori¹tenje u animiranim okvirima"
-
-#: plug-ins/gap/gap_mod_layer.c:805
-msgid "GAP Modify: No layer selected in last handled frame"
-msgstr "GAP promjena:Nema odabranog sloja u zadnjem obraðivanom okviru"
-
-#: plug-ins/gap/gap_mod_layer.c:891
-msgid "Modifying Frames/Layer(s)..."
-msgstr "Preinaèujem Okvire/Sloj(eve) .."
-
-#: plug-ins/gap/gap_mod_layer.c:972
-msgid "No selected Layer in start frame"
-msgstr "Nema odabranog sloja u poèetnom okviru"
-
-#: plug-ins/gap/gap_mov_dialog.c:262 plug-ins/gfig/gfig.c:3328
-#: plug-ins/gflare/gflare.c:589 plug-ins/gimpressionist/orientmap.c:590
-msgid "Normal"
-msgstr "Normalno"
-
-#: plug-ins/gap/gap_mov_dialog.c:263
-msgid "Dissolve"
-msgstr "Otapanje"
-
-#: plug-ins/gap/gap_mov_dialog.c:264
-msgid "Multiply"
-msgstr "Multiplicirano"
-
-#: plug-ins/gap/gap_mov_dialog.c:266 plug-ins/gflare/gflare.c:591
-#: plug-ins/gimpressionist/paper.c:152
-msgid "Overlay"
-msgstr "Prekrivanje"
-
-#: plug-ins/gap/gap_mov_dialog.c:267
-msgid "Difference"
-msgstr "Razlika"
-
-#: plug-ins/gap/gap_mov_dialog.c:268 plug-ins/gflare/gflare.c:590
-msgid "Addition"
-msgstr "Dodavanje"
-
-#: plug-ins/gap/gap_mov_dialog.c:269 plug-ins/gfig/gfig.c:3147
-msgid "Subtract"
-msgstr "Oduzimanje"
-
-#: plug-ins/gap/gap_mov_dialog.c:270
-msgid "Darken Only"
-msgstr "Samo Tamnije"
-
-#: plug-ins/gap/gap_mov_dialog.c:271
-msgid "Lighten Only"
-msgstr "Samo Svjetlije"
-
-#: plug-ins/gap/gap_mov_dialog.c:282
-msgid "Left  Top"
-msgstr "Lijevo Vrh"
-
-#: plug-ins/gap/gap_mov_dialog.c:283
-msgid "Left  Bottom"
-msgstr "Lijevo Dno"
-
-#: plug-ins/gap/gap_mov_dialog.c:284
-msgid "Right Top"
-msgstr "Desno Vrh"
-
-#: plug-ins/gap/gap_mov_dialog.c:285
-msgid "Right Bottom"
-msgstr "Desno Dno"
-
-#: plug-ins/gap/gap_mov_dialog.c:294
-msgid "Loop"
-msgstr "Petlja"
-
-#: plug-ins/gap/gap_mov_dialog.c:295
-msgid "Loop Reverse"
-msgstr "Petlja Unatrag"
-
-#: plug-ins/gap/gap_mov_dialog.c:296
-msgid "Once"
-msgstr "Jednom"
-
-#: plug-ins/gap/gap_mov_dialog.c:297
-msgid "OnceReverse"
-msgstr "Jednom Unatrag"
-
-#: plug-ins/gap/gap_mov_dialog.c:298
-msgid "PingPong"
-msgstr "PingPong"
-
-#: plug-ins/gap/gap_mov_dialog.c:300
-#, fuzzy
-msgid "Frame Loop"
-msgstr "Okvir %d"
-
-#: plug-ins/gap/gap_mov_dialog.c:301
-#, fuzzy
-msgid "Frame Loop Reverse"
-msgstr "Petlja Unatrag"
-
-#: plug-ins/gap/gap_mov_dialog.c:302
-#, fuzzy
-msgid "Frame Once"
-msgstr "Okvir %d"
-
-#: plug-ins/gap/gap_mov_dialog.c:303
-#, fuzzy
-msgid "Frame OnceReverse"
-msgstr "Jednom Unatrag"
-
-#: plug-ins/gap/gap_mov_dialog.c:304
-#, fuzzy
-msgid "Frame PingPong"
-msgstr "PingPong"
-
-#: plug-ins/gap/gap_mov_dialog.c:305
-#, fuzzy
-msgid "Frame None"
-msgstr "Okvir %d"
-
-#: plug-ins/gap/gap_mov_dialog.c:468
-msgid "Move Path"
-msgstr "Makni Stazu"
-
-#: plug-ins/gap/gap_mov_dialog.c:502
-msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
-msgstr "Prika¾i Pregled okvira odabranim Slojem na trenutnoj kontrolnoj toèki"
-
-#: plug-ins/gap/gap_mov_dialog.c:506
-msgid "Anim Preview"
-msgstr "Pregled Anim."
-
-#: plug-ins/gap/gap_mov_dialog.c:513
-msgid "Generate Animated Preview as multilayer image"
-msgstr "Generiraj Animirani pregled kao vi¹eslojnu sliku"
-
-#. parameter settings
-#: plug-ins/gap/gap_mov_dialog.c:526
-msgid "Copy moving source-layer(s) into frames"
-msgstr ""
-
-#. the start frame scale_entry
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:559
-msgid "Start Frame:"
-msgstr "Poèetni okvir:"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:567
-msgid "First handled frame"
-msgstr "Prvi obraðeni sloj"
-
-#. the end frame scale_entry
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:574
-msgid "End Frame:"
-msgstr "Zavr¹ni okvir:"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:582
-msgid "Last handled frame"
-msgstr "Zadnji obraðeni sloj"
-
-#. the Preview Frame scale_entry
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:589
-msgid "Preview Frame:"
-msgstr "Pregled Okvira:"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:597
-msgid "Frame to show when UpdPreview button is pressed"
-msgstr ""
-
-#. the Layerstack scale_entry
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:605 plug-ins/gap/gap_range_ops.c:267
-msgid "Layerstack:"
-msgstr "Hrpa Slojeva:"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:613
-msgid ""
-"How to insert SrcLayer into the Dst. Frame's Layerstack\n"
-"0 means on top i.e. in front"
-msgstr ""
-
-#. toggle force visibility
-#: plug-ins/gap/gap_mov_dialog.c:625
-msgid "Force visibility"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:632
-msgid "Force visibility for all copied Src-Layers"
-msgstr ""
-
-#. toggle clip_to_image
-#: plug-ins/gap/gap_mov_dialog.c:638
-msgid "Clip To Frame"
-msgstr "Ubaci u Okvir"
-
-#: plug-ins/gap/gap_mov_dialog.c:645
-msgid "Clip all copied Src-Layers at Frame Boundaries"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:693
-msgid ""
-"No Source Image was selected\n"
-"(Please open a 2nd Image of the same type before opening Move Path)"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:789
-msgid "Object on empty frames"
-msgstr "Objekt na praznim okvirima"
-
-#: plug-ins/gap/gap_mov_dialog.c:790
-msgid "Object on one frame"
-msgstr "Objekt na jednom okviru"
-
-#: plug-ins/gap/gap_mov_dialog.c:791
-msgid "Exact Object on frames"
-msgstr "Ukljuèi objekt na okvirima"
-
-#: plug-ins/gap/gap_mov_dialog.c:821
-msgid "Anim Preview Mode"
-msgstr "Velièina pregleda"
-
-#: plug-ins/gap/gap_mov_dialog.c:829
-msgid "Scale Preview"
-msgstr "Pregled slike"
-
-#: plug-ins/gap/gap_mov_dialog.c:830
-msgid "Scale down size of the generated animated preview (in %)"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:838
-msgid "Framerate"
-msgstr "Mjera Okvira:"
-
-#: plug-ins/gap/gap_mov_dialog.c:839
-msgid "Framerate to use in the animated preview in frames/sec"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:853
-msgid "Copy to Video Buffer"
-msgstr "Kopiraj u Video Spremnik"
-
-#: plug-ins/gap/gap_mov_dialog.c:854
-msgid ""
-"Save all single frames of animated preview to video buffer\n"
-"(configured in gimprc by video-paste-dir and video-paste-basename)"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:859
-msgid "Move Path Animated Preview"
-msgstr "Makni pregled staze"
-
-#: plug-ins/gap/gap_mov_dialog.c:905
-msgid "Generate Animated Preview failed\n"
-msgstr "Gre¹ka kod kreiranja Animiranog Pregleda\n"
-
-#. filesel is already open
-#: plug-ins/gap/gap_mov_dialog.c:1190
-msgid "Load Path Points from file"
-msgstr "Uèitaj stazu toèaka iz datoteke"
-
-#. filesel is already open
-#: plug-ins/gap/gap_mov_dialog.c:1226
-msgid "Save Path Points to file"
-msgstr "Spremi stazu toèaka u datoteku"
-
-#: plug-ins/gap/gap_mov_dialog.c:1555
-#, c-format
-msgid "Current Point: [ %3d ] of [ %3d ]"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:1641
-msgid "Source Select"
-msgstr "Odabir izvora"
-
-#. Source Layer menu
-#: plug-ins/gap/gap_mov_dialog.c:1657
-msgid "Source Image/Layer:"
-msgstr "Izvorna slika/sloj:"
-
-#: plug-ins/gap/gap_mov_dialog.c:1667
-msgid "Source Object to insert into Frame Range"
-msgstr "Izvorni objekt za umetnuti u podruèje okvira"
-
-#. Paintmode menu
-#: plug-ins/gap/gap_mov_dialog.c:1682
-msgid "Mode:"
-msgstr "Naèin:"
-
-#: plug-ins/gap/gap_mov_dialog.c:1691
-msgid "Paintmode"
-msgstr "Naèin slikanja"
-
-#. Loop Stepmode menu
-#: plug-ins/gap/gap_mov_dialog.c:1706
-msgid "Stepmode:"
-msgstr "Naèin koraka:"
-
-#: plug-ins/gap/gap_mov_dialog.c:1724
-msgid "How to fetch the next SrcLayer at the next handled frame"
-msgstr ""
-
-#. Source Image Handle menu
-#: plug-ins/gap/gap_mov_dialog.c:1730
-msgid "Handle:"
-msgstr "Rukovanje:"
-
-#: plug-ins/gap/gap_mov_dialog.c:1748
-msgid "How to place the SrcLayer at Controlpoint Coordinates"
-msgstr ""
-
-#. to avoid side effects while initialization
-#. the frame
-#: plug-ins/gap/gap_mov_dialog.c:1802
-msgid "Move Path Preview"
-msgstr "Makni pregled staze"
-
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1834
-msgid "X Coordinate"
-msgstr "X Koordinate"
-
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1852
-msgid "Y Coordinate"
-msgstr "Y Koordinate"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1869
-msgid "Scale Source Layer's Width in percent"
-msgstr "Razmjeri ©irinu Izvornih Okvira u postotku"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1886
-msgid "Scale SrcLayer's Height in percent"
-msgstr "Razmjeri Visinu Izvornih Okvira u postotku"
-
-#
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1903
-msgid "SrcLayer's Opacity in percent"
-msgstr "Dubina Prozirnosti Izvornog Sloja u postotku:"
-
-#
-#. Rotation
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:1912
-msgid "Rotate:"
-msgstr "Rotiraj:"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1920
-msgid "Rotate SrcLayer (in degree)"
-msgstr "Rotiraj Izvorni Sloj (u stupnjevima)"
-
-#. Keyframe
-#. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:1930
-msgid "Keyframe:"
-msgstr "Kljuèni Okvir:"
-
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1938
-msgid ""
-"Fix Controlpoint to Keyframe number\n"
-"(0 == No Keyframe)"
-msgstr ""
-"Zaustavi KOntrolnu toèku na Okviru broj\n"
-"(0 == Nema Kljuènog Okvira)"
-
-#: plug-ins/gap/gap_mov_dialog.c:2013
-msgid "Add Point"
-msgstr "Dodaj Toèku"
-
-#
-#: plug-ins/gap/gap_mov_dialog.c:2021
-msgid ""
-"Add Controlpoint at end\n"
-"(the last Point is duplicated)"
-msgstr ""
-"Dodaj kontrolnu toèku na kraj\n"
-"(zadnja toèka je duplicirana)"
-
-#. toggle clip_to_image
-#: plug-ins/gap/gap_mov_dialog.c:2026
-msgid "Show Path"
-msgstr "Makni Stazu"
-
-#: plug-ins/gap/gap_mov_dialog.c:2033
-msgid ""
-"Show Path Lines and enable pick/drag with left button or move with right "
-"button"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2043
-#: plug-ins/imagemap/imap_cmd_insert_point.c:60
-#: plug-ins/imagemap/imap_polygon.c:685
-msgid "Insert Point"
-msgstr "Umetni toèku"
-
-#: plug-ins/gap/gap_mov_dialog.c:2051
-msgid ""
-"Insert Controlpoint\n"
-"(the current Point is duplicated)"
-msgstr ""
-"Dodaj Kontrolnu Toèku\n"
-"(zadnja toèka je duplicirana)"
-
-#: plug-ins/gap/gap_mov_dialog.c:2055
-#: plug-ins/imagemap/imap_cmd_delete_point.c:60
-#: plug-ins/imagemap/imap_polygon.c:671
-msgid "Delete Point"
-msgstr "Izbri¹i toèku"
-
-#: plug-ins/gap/gap_mov_dialog.c:2063
-msgid "Delete current Controlpoint"
-msgstr "Izbri¹i sada¹nju Kontrolnu Toèku"
-
-#: plug-ins/gap/gap_mov_dialog.c:2069
-msgid "Prev Point"
-msgstr "Prethodna toèka"
-
-#: plug-ins/gap/gap_mov_dialog.c:2077
-msgid "Show Previous Controlpoint"
-msgstr "Prika¾i prethodnu kontrolnu toèku"
-
-#: plug-ins/gap/gap_mov_dialog.c:2081
-msgid "Next Point"
-msgstr "Sljedeæa toèka"
-
-#: plug-ins/gap/gap_mov_dialog.c:2089
-msgid "Show Next Controlpoint"
-msgstr "Prika¾i sljedeæu kontrolnu toèku"
-
-#
-#: plug-ins/gap/gap_mov_dialog.c:2095
-msgid "First Point"
-msgstr "Prva Toèka"
-
-#: plug-ins/gap/gap_mov_dialog.c:2103
-msgid "Show First Controlpoint"
-msgstr "Prika¾i prvu kontrolnu toèku"
-
-#: plug-ins/gap/gap_mov_dialog.c:2107
-msgid "Last Point"
-msgstr "Zadnja Toèka"
-
-#: plug-ins/gap/gap_mov_dialog.c:2115
-msgid "Show Last Controlpoint"
-msgstr "Prika¾i zadnju kontrolnu toèku"
-
-#: plug-ins/gap/gap_mov_dialog.c:2121
-msgid "Clear Point"
-msgstr "Izbri¹i Toèku"
-
-#: plug-ins/gap/gap_mov_dialog.c:2129
-msgid "Reset the current Controlpoint to default Values"
-msgstr "Vrati Uobièajene Osobitosti Kontrolne Toèke"
-
-#: plug-ins/gap/gap_mov_dialog.c:2133
-msgid "Clear All Points"
-msgstr "Izbri¹i Sve Toèke"
-
-#: plug-ins/gap/gap_mov_dialog.c:2141
-msgid ""
-"Reset all Controlpoints to default Values but dont change the path (X/Y "
-"Values)"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2148
-msgid "Rotate Follow"
-msgstr "Slijedi Rotaciju:"
-
-#: plug-ins/gap/gap_mov_dialog.c:2159
-msgid ""
-"Set Rotation for all Controlpoints to follow the shape of the path.\n"
-"(Shift: use Rotation of contolpoint 1 as offset)"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:2166
-msgid "Delete All Points"
-msgstr "Izbri¹i Sve toèke"
-
-#: plug-ins/gap/gap_mov_dialog.c:2174
-msgid "Delete all Controlpoints"
-msgstr "Izbri¹i sve kontrolne toèke"
-
-#: plug-ins/gap/gap_mov_dialog.c:2181
-msgid "Load Points"
-msgstr "Uèitaj Toèke"
-
-#: plug-ins/gap/gap_mov_dialog.c:2189
-msgid "Load Controlpoints from file"
-msgstr "Uèitaj kontrolne toèke iz datoteke"
-
-#: plug-ins/gap/gap_mov_dialog.c:2193
-msgid "Save Points"
-msgstr "Spremi Toèke"
-
-#: plug-ins/gap/gap_mov_dialog.c:2201
-msgid "Save Controlpoints to file"
-msgstr "Spremi kontrolne toèke u datoteku"
-
-#: plug-ins/gap/gap_mov_dialog.c:2661
-msgid ""
-"Can't operate with current Controlpoint\n"
-"or Keyframe settings"
-msgstr ""
-"Ne mogu raditi s trenutno namje¹tenim\n"
-"osobitostima Kontrolne Toèke"
-
-#: plug-ins/gap/gap_mov_dialog.c:2668
-msgid "Reset Keyframes"
-msgstr "Vrati Kljuène Okvire"
-
-#: plug-ins/gap/gap_mov_dialog.c:2673
-msgid "Move Path Controlpointcheck"
-msgstr "Pomakni Stazu kontrolne toèke"
-
-#: plug-ins/gap/gap_mov_dialog.c:2674
-msgid "Errors:"
-msgstr "Gre¹ke:"
-
-#: plug-ins/gap/gap_mov_exec.c:444
-msgid ""
-"No Source Image was selected.\n"
-"Please open a 2nd Image of the same type before opening Move Path."
-msgstr ""
-
-#: plug-ins/gap/gap_mov_exec.c:455
-msgid "Copying Layers into Frames..."
-msgstr "Kopiram Slojeve u Okvire .."
-
-#: plug-ins/gap/gap_mov_exec.c:459
-msgid "Generating Animated Preview..."
-msgstr "Kreiram Animirani Pregled ..."
-
-#: plug-ins/gap/gap_mov_exec.c:1376
-#, c-format
-msgid ""
-"\n"
-"Error: Keyframe %d at point [%d] higher or equal than last handled frame"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_exec.c:1384
-#, c-format
-msgid ""
-"\n"
-"Error: Keyframe %d at point [%d] leaves not enough space (frames)\n"
-"for the previous controlpoints"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_exec.c:1394
-#, c-format
-msgid ""
-"\n"
-"Error: Keyframe %d is not in sequence at point [%d]"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_exec.c:1412
-#, c-format
-msgid ""
-"\n"
-"Error: controlpoint [%d] is out of handled framerange"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_exec.c:1426
-#, c-format
-msgid ""
-"\n"
-"Error: more controlpoints (%d) than handled frames (%d)\n"
-"please reduce controlpoints or select more frames"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:111
-msgid "Conditions to run mpeg_encode 1.5:"
-msgstr "Uvjeti za rad mpeg_enkodera 1.5"
-
-#: plug-ins/gap/gap_mpege.c:114
-msgid "Conditions to run mpeg2encode 1.2:"
-msgstr "Uvjeti za rad mpeg2 enkodera 1.2:"
-
-#: plug-ins/gap/gap_mpege.c:124
-msgid "1.) mpeg_encode 1.5 must be installed"
-msgstr "1.) mpeg_enkoder 1.5 mora biti instaliran"
-
-#: plug-ins/gap/gap_mpege.c:127
-msgid "1.) mpeg2encode 1.2 must be installed"
-msgstr "1.) mpeg2 enkoder 1.2 mora biti instaliran"
-
-#: plug-ins/gap/gap_mpege.c:132
-msgid "    you can get mpeg_encode at"
-msgstr "    mpeg_enkoder mo¾ete naæi na"
-
-#: plug-ins/gap/gap_mpege.c:135
-msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
-msgstr "mpeg2 enkoder mo¾ete naæi na http://www.mpeg.org/MSSG"
-
-#: plug-ins/gap/gap_mpege.c:140
-msgid "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
-msgstr "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
-
-#: plug-ins/gap/gap_mpege.c:143
-msgid "   or at ftp://ftp.mpeg.org/pub/mpeg/mssg "
-msgstr "  ili na ftp://ftp.mpeg.org/pub/mpeg/mssg"
-
-#: plug-ins/gap/gap_mpege.c:148
-msgid "2.) You need a series of single Images on disk (AnimFrames)"
-msgstr "2.) Morate imati niz slika na disku (Animirani okviri)"
-
-#: plug-ins/gap/gap_mpege.c:152
-msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
-msgstr "    sve u JPEG formatu (ili YUV ili PNM ili PPM)"
-
-#: plug-ins/gap/gap_mpege.c:155
-msgid "   all with fileformat PPM (or YUV)"
-msgstr "   sve u formatu PPM (ili YUV)"
-
-#: plug-ins/gap/gap_mpege.c:160
-msgid "    (use 'Frames Convert' from the Video Menu"
-msgstr "    (koristite 'Konverziju okvira' iz izbornika Anim.Okviri"
-
-#: plug-ins/gap/gap_mpege.c:164
-msgid "    or 'Split Image to Frames' from the Video Menu)"
-msgstr "   ili 'Spoji sliku u okvire' iz izbornika Anim.Okviri)"
-
-#: plug-ins/gap/gap_mpege.c:168
-msgid "3.) All Images must have the same size,"
-msgstr "3.) Sve slike moraju imati istu velièinu,"
-
-#: plug-ins/gap/gap_mpege.c:175
-msgid "    width and height must be a multiple of 16"
-msgstr "   ¹irina i visina moraju biti multiplikatori broja 16"
-
-#: plug-ins/gap/gap_mpege.c:179
-msgid "    (use Scale or Crop from the Video Menu)"
-msgstr "   (koristite Odsjeèak ili Srazmjer iz Video Izbornika"
-
-#: plug-ins/gap/gap_mpege.c:194
-msgid "MPEG_ENCODE Information"
-msgstr "MPEG_ENKODER Informacija"
-
-#: plug-ins/gap/gap_mpege.c:231
-msgid "generate MPEG1 (ISO/IEC 11172-2) stream"
-msgstr "kreiraj MPEG1 (ISO/IEC 11172-2) zapis"
-
-#: plug-ins/gap/gap_mpege.c:232
-msgid "generate MPEG2 (ISO/IEC DIS 13818-2) stream"
-msgstr "kreiraj MPEG2 (ISO/IEC DIS 13818-2) zapis"
-
-#: plug-ins/gap/gap_mpege.c:242
-msgid "GenParams"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:244
-msgid "Gen + Encode"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:266
-msgid "To   Frame:"
-msgstr "U  Okvir:"
-
-#: plug-ins/gap/gap_mpege.c:273
-msgid "Framerate :"
-msgstr "Mjera:"
-
-#: plug-ins/gap/gap_mpege.c:274
-msgid "framerate in frames/second"
-msgstr "Slièica po sekundi"
-
-#: plug-ins/gap/gap_mpege.c:281
-msgid "Bitrate:"
-msgstr "Bitrate:"
-
-#: plug-ins/gap/gap_mpege.c:282
-msgid ""
-"used for constant bitrates (bit/sec)                  \n"
-"(low rate gives good compression + bad quality)"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:296
-msgid "Outputfile:"
-msgstr "Izlazna datoteka:"
-
-#. pixel
-#: plug-ins/gap/gap_mpege.c:298
-msgid "Name of the resulting MPEG outputfile"
-msgstr "Naziv rezultirajuæe MPEG datoteke "
-
-#: plug-ins/gap/gap_mpege.c:304
-msgid "Paramfile:"
-msgstr "Paramfile:"
-
-#. pixel
-#: plug-ins/gap/gap_mpege.c:306
-msgid ""
-"Name of the Encoder-Parameterfile\n"
-"(is generated)"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:312
-msgid "Startscript:"
-msgstr "Startna skripta:"
-
-#. pixel
-#: plug-ins/gap/gap_mpege.c:314
-msgid ""
-"Name of the Startscript           \n"
-"(is generated/executed)"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:320
-msgid ""
-"Generate parameterfile for mpeg_encode 1.5\n"
-"(the freely distributed Berkeley MPEG-1 Video  Encoder.)\n"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:324
-msgid "Constant Bitrate :"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:325
-msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:330
-msgid "Pattern:"
-msgstr "Uzorak:"
-
-#. pixel
-#: plug-ins/gap/gap_mpege.c:332
-msgid "How to encode MPEG framesequence (I/P/B frames)"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:338
-msgid "IQSCALE:"
-msgstr "IQ-SKALA"
-
-#: plug-ins/gap/gap_mpege.c:339
-msgid ""
-"Quality scale for I-Frames                       \n"
-"(1 = best quality, 31 = best comression)"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:346
-msgid "PQSCALE:"
-msgstr "PQ-SKALA:"
-
-#: plug-ins/gap/gap_mpege.c:347
-msgid ""
-"Quality scale for P-Frames                  \n"
-"(1 = best quality, 31 = best comression)"
-msgstr ""
-"Omjer kvalitete za P-okvire                 \n"
-"(1 = najbolja kvaliteta, 31 = najbolja kompresija)"
-
-#: plug-ins/gap/gap_mpege.c:354
-msgid "BQSCALE:"
-msgstr "BQ-SKALA"
-
-#: plug-ins/gap/gap_mpege.c:355
-msgid ""
-"Quality scale for B-Frames                  \n"
-"(1 = best quality, 31 = best comression)"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:362
-msgid "P-Search :"
-msgstr "P-Tra¾enje:"
-
-#: plug-ins/gap/gap_mpege.c:363
-msgid "Search Algorithmus used for P-frames"
-msgstr "Tra¾i algoritme kori¹tene za P-okvire"
-
-#: plug-ins/gap/gap_mpege.c:369
-msgid "B-Search :"
-msgstr "B-tra¾enje"
-
-#: plug-ins/gap/gap_mpege.c:370
-msgid "Search Algorithmus used for B-frames"
-msgstr "Tra¾i algoritme kori¹tene za B-okvire"
-
-#: plug-ins/gap/gap_mpege.c:375
-msgid "Gen MPEG_ENCODE Parameters"
-msgstr "Opæe osobitosti MPEG_ENKODERA"
-
-#: plug-ins/gap/gap_mpege.c:376 plug-ins/gap/gap_mpege.c:414
-msgid "Encode Values"
-msgstr "Enkodirane vrijednosti"
-
-#: plug-ins/gap/gap_mpege.c:392
-msgid ""
-"Generate parameterfile for mpeg2encode 1.2\n"
-"(MPEG-2 Video  Encoder.)\n"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:395
-msgid "MPEG-type :"
-msgstr "MPEG-vrsta:"
-
-#: plug-ins/gap/gap_mpege.c:404
-msgid "Videoformat :"
-msgstr "Videoformat:"
-
-#: plug-ins/gap/gap_mpege.c:405
-msgid "Videoformat"
-msgstr "Videoformat"
-
-#. framerates above 30 ar not allowed in mpeg2encode
-#: plug-ins/gap/gap_mpege.c:413
-msgid "Gen MPEG2ENCODE Parameters"
-msgstr "Opæe osobitosti MPEG2 enkodera"
-
-#: plug-ins/gap/gap_mpege.c:978
-msgid ""
-"\n"
-"WARNING: mpeg_encode does not support Fileformat "
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:981
-msgid ""
-"\n"
-"ERROR: width not a multiple of 16"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:982
-msgid ""
-"\n"
-"ERROR: height not a multiple of 16"
-msgstr ""
-
-#: plug-ins/gap/gap_mpege.c:988
-msgid ""
-"\n"
-"WARNING: mpeg2encode does not support Fileformat "
-msgstr ""
-"\n"
-"UPOZORENJE: mpeg2 enkoder ne podr¾ava taj format"
-
-#: plug-ins/gap/gap_mpege.c:993
-msgid ""
-"\n"
-"ERROR: invoked from a single image, animframe required"
-msgstr ""
-
-#: plug-ins/gap/gap_navigator_dialog.c:368
-msgid ""
-"Playback         \n"
-"<Shift> optimized"
-msgstr ""
-
-#: plug-ins/gap/gap_navigator_dialog.c:373
-msgid ""
-"Smart Update .xvpics\n"
-"<Shift> forced upd"
-msgstr ""
-"Pametna Nadogradnja .xvpics\n"
-"<Shift> Prisilna Nadogradnja"
-
-#: plug-ins/gap/gap_navigator_dialog.c:378
-msgid "Duplicate selected Frames"
-msgstr "Izbri¹i odabrano podruèje"
-
-#: plug-ins/gap/gap_navigator_dialog.c:382
-msgid "Delete selected Frames"
-msgstr "Izbri¹i odabrano podruèje"
-
-#: plug-ins/gap/gap_navigator_dialog.c:391
-msgid "Goto 1st Frame"
-msgstr "Idi u prvi okvir:"
-
-#: plug-ins/gap/gap_navigator_dialog.c:395
-msgid ""
-"Goto prev Frame\n"
-"<Shift> use timezoom stepsize"
-msgstr ""
-
-#: plug-ins/gap/gap_navigator_dialog.c:400
-msgid ""
-"Goto next Frame\n"
-"<Shift> use timezoom stepsize"
-msgstr ""
-
-#: plug-ins/gap/gap_navigator_dialog.c:405
-msgid "Goto last Frame"
-msgstr "Idi na zadnji okvir:"
-
-#: plug-ins/gap/gap_navigator_dialog.c:463
-msgid "<Image>/Video/VCR Navigator..."
-msgstr "<Image>/Video/VCR Navigator..."
-
-#: plug-ins/gap/gap_navigator_dialog.c:526
-msgid "Cant open two or more Video Navigator Windows."
-msgstr "Ne mogu otvoriti dva ili vi¹e prozora Video Navigatora"
-
-#. menu_item cut
-#: plug-ins/gap/gap_navigator_dialog.c:2932
-#: plug-ins/imagemap/imap_cmd_cut.c:56
-#: plug-ins/imagemap/imap_cmd_cut_object.c:54
-#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:133
-msgid "Cut"
-msgstr "Odre¾i"
-
-#. menu_item paste before
-#: plug-ins/gap/gap_navigator_dialog.c:2942
-msgid "Paste before"
-msgstr "Ubaci prije"
-
-#
-#. menu_item copy
-#: plug-ins/gap/gap_navigator_dialog.c:2952
-msgid "Paste after"
-msgstr "Ubaci poslije"
-
-#. menu_item copy
-#: plug-ins/gap/gap_navigator_dialog.c:2962
-msgid "Paste replace"
-msgstr "Ubaci i Izmjesti"
-
-#. menu_item copy
-#: plug-ins/gap/gap_navigator_dialog.c:2972
-msgid "Clear Video Buffer"
-msgstr "Isprazni Video Spremnik"
-
-#
-#: plug-ins/gap/gap_navigator_dialog.c:2997
-msgid "Videoframes:"
-msgstr "Video Okviri:"
-
-#: plug-ins/gap/gap_navigator_dialog.c:3012
-msgid "Framerate:"
-msgstr "Br. slika/sec:"
-
-#: plug-ins/gap/gap_navigator_dialog.c:3035
-msgid "Timezoom:"
-msgstr "Vremensko poveæanje:"
-
-#. The main shell
-#: plug-ins/gap/gap_navigator_dialog.c:3119
-msgid "Video Navigator"
-msgstr "Video Navigator"
-
-#: plug-ins/gap/gap_range_ops.c:120
-msgid "New Width:"
-msgstr "Nova ©irina:"
-
-#
-#: plug-ins/gap/gap_range_ops.c:129
-msgid "New Height:"
-msgstr "Nova Visina:"
-
-#
-#: plug-ins/gap/gap_range_ops.c:138
-msgid "Offset X:"
-msgstr "Ofset X:"
-
-#
-#: plug-ins/gap/gap_range_ops.c:147
-msgid "Offset Y:"
-msgstr "Ofset Y:"
-
-#: plug-ins/gap/gap_range_ops.c:158
-msgid "Crop AnimFrames (all)"
-msgstr "Odsijeci anim. okvire (sve)"
-
-#: plug-ins/gap/gap_range_ops.c:159
-#, c-format
-msgid "Crop (original %dx%d)"
-msgstr "Odsjeèak (original %dx%d)"
-
-#: plug-ins/gap/gap_range_ops.c:169
-msgid "Resize AnimFrames (all)"
-msgstr "Promjeni vel. anim. okvira (sve)"
-
-#: plug-ins/gap/gap_range_ops.c:170
-#, c-format
-msgid "Resize (original %dx%d)"
-msgstr "Promjena vel. (orig. %dx%d)"
-
-#: plug-ins/gap/gap_range_ops.c:176
-msgid "Scale AnimFrames (all)"
-msgstr "Skaliraj Anim.Okvire (sve)"
-
-#: plug-ins/gap/gap_range_ops.c:177
-#, c-format
-msgid "Scale (original %dx%d)"
-msgstr "Skala (original %dx%d)"
-
-#: plug-ins/gap/gap_range_ops.c:308
-msgid "Generate Optimal Palette"
-msgstr "Kreiraj optimalnu paletu"
-
-#: plug-ins/gap/gap_range_ops.c:309
-msgid "WEB Palette"
-msgstr "WEB Paleta"
-
-#: plug-ins/gap/gap_range_ops.c:310
-msgid "Use Custom Palette"
-msgstr "Koristi Posebnu Paletu"
-
-#: plug-ins/gap/gap_range_ops.c:311
-msgid "Use Black/White (1-Bit) Palette"
-msgstr "Koristi crno/bijelu (1-bit) paletu"
-
-#: plug-ins/gap/gap_range_ops.c:313
-msgid "Floyd-Steinberg Color Dithering (Normal)"
-msgstr "Floyd-Steinberg boje (Normalno)"
-
-#: plug-ins/gap/gap_range_ops.c:314
-msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
-msgstr "Floyd-Steinberg boje (reducirano)"
-
-#: plug-ins/gap/gap_range_ops.c:315
-msgid "Positioned Color Dithering"
-msgstr "Positioned Color Dithering"
-
-#
-#: plug-ins/gap/gap_range_ops.c:316
-msgid "No Color Dithering"
-msgstr "Bez drhtanja boje"
-
-#: plug-ins/gap/gap_range_ops.c:327
-msgid "Palette Type"
-msgstr "Vrsta palete"
-
-#: plug-ins/gap/gap_range_ops.c:334
-msgid "Custom Palette"
-msgstr "Posebna paleta"
-
-#: plug-ins/gap/gap_range_ops.c:335
-msgid ""
-"Name of a cutom palette\n"
-"(is ignored if Palette Type is not custom)"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:340
-msgid "Remove Unused"
-msgstr "Ukloni nekori¹teno"
-
-#: plug-ins/gap/gap_range_ops.c:341
-msgid ""
-"Remove unused or double colors\n"
-"(is ignored if Palette Type is not custom)"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:347
-msgid ""
-"Number of resulting Colors\t\t \n"
-"(ignored if Palette Type is not Generate optimal palette)"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:354
-msgid "Dither Options"
-msgstr "Opcije Podrhtavanja"
-
-#: plug-ins/gap/gap_range_ops.c:361
-msgid "Enable transparency"
-msgstr "Ukljuèi prozirnost"
-
-#: plug-ins/gap/gap_range_ops.c:362
-msgid "Enable dithering of transparency"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:365
-msgid "Convert Frames to Indexed"
-msgstr "Konvertiraj okvire u indeksirane"
-
-#: plug-ins/gap/gap_range_ops.c:366
-msgid "Palette and Dither Settings"
-msgstr "Osobnosti Palete"
-
-#: plug-ins/gap/gap_range_ops.c:431
-msgid "Keep Type"
-msgstr "Vrsta medija:"
-
-#: plug-ins/gap/gap_range_ops.c:432
-msgid "Convert to RGB"
-msgstr "Konv. u RGB"
-
-#: plug-ins/gap/gap_range_ops.c:433
-msgid "Convert to Gray"
-msgstr "Konv. u RGB"
-
-#: plug-ins/gap/gap_range_ops.c:434
-msgid "Convert to Indexed"
-msgstr "Konvertiraj okvire u indeksirane"
-
-#: plug-ins/gap/gap_range_ops.c:458
-msgid ""
-"\n"
-"Select destination fileformat by extension\n"
-"optionally convert imagetype\n"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:461
-msgid "Basename:"
-msgstr "Bazno ime"
-
-#: plug-ins/gap/gap_range_ops.c:462
-msgid ""
-"basename of the resulting frames       \n"
-"(0001.ext is added)"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:467 plug-ins/gap/gap_split.c:235
-msgid "Extension:"
-msgstr "Ekstenzija:"
-
-#: plug-ins/gap/gap_range_ops.c:468
-msgid ""
-"extension of resulting frames       \n"
-"(is also used to define Fileformat)"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:474
-msgid "Imagetype:"
-msgstr "Vrsta slike:"
-
-#: plug-ins/gap/gap_range_ops.c:475
-msgid ""
-"Convert to, or keep imagetype           \n"
-"(most fileformats can't handle all types)"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:481 plug-ins/gap/gap_split.c:246
-msgid "Flatten:"
-msgstr "Uravnjenost:"
-
-#: plug-ins/gap/gap_range_ops.c:482
-msgid ""
-"Flatten all resulting frames               \n"
-"(most fileformats need flattened frames)"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:487
-msgid "Convert Frames to other Formats"
-msgstr "Konvertiraj okvire u druge formate"
-
-#: plug-ins/gap/gap_range_ops.c:488
-msgid "Convert Settings"
-msgstr "Osobnosti Konverzije:"
-
-#: plug-ins/gap/gap_range_ops.c:565
-msgid "Expand as necessary"
-msgstr "Pro¹iri kao nu¾no"
-
-#: plug-ins/gap/gap_range_ops.c:566
-msgid "Clipped to image"
-msgstr "Ubaèeno u sliku"
-
-#: plug-ins/gap/gap_range_ops.c:567
-msgid "Clipped to bottom layer"
-msgstr "Ubaèeno u najdonji sloj"
-
-#: plug-ins/gap/gap_range_ops.c:568
-msgid "Flattened image"
-msgstr "Uravnjena slika"
-
-#: plug-ins/gap/gap_range_ops.c:569
-msgid ""
-"Resulting Layer Size is made of the outline-rectangle \n"
-"of all visible layers (may differ from frame to frame)"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:570
-msgid "Resulting Layer Size is the frame size"
-msgstr "Rezultirajuæa velièina sloja je velièina okvira"
-
-#: plug-ins/gap/gap_range_ops.c:571
-msgid ""
-"Resulting Layer Size is the size of the bottom layer\n"
-"(may differ from frame to frame)"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:572
-msgid ""
-"Resulting Layer Size is the frame size     \n"
-"transparent parts are filled with BG color"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:582
-msgid "select all Layers where Layername is equal to Pattern"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:583
-msgid "select all Layers where Layername starts with Pattern"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:584
-msgid "select all Layers where Layername ends up with Pattern"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:585
-msgid "select all Layers where Layername contains Pattern"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:586
-msgid ""
-"select Layerstack positions.\n"
-"0, 4-5, 8\n"
-"where 0 == Top-layer"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:587
-msgid ""
-"select Layerstack positions.\n"
-"0, 4-5, 8\n"
-"where 0 == BG-layer"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:588
-msgid "select all visible Layers"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:617
-msgid "Layer Basename:"
-msgstr "Bazno ime sloja:"
-
-#: plug-ins/gap/gap_range_ops.c:618
-msgid ""
-"Basename for all Layers    \n"
-"[####] is replaced by frame number"
-msgstr ""
-
-#
-#: plug-ins/gap/gap_range_ops.c:636
-msgid "Layer Mergemode:"
-msgstr "Naèin stapanja sloja:"
-
-#: plug-ins/gap/gap_range_ops.c:643
-msgid "Exclude BG-Layer"
-msgstr "Iskljuèi BG-Sloj"
-
-#: plug-ins/gap/gap_range_ops.c:644
-msgid ""
-"Exclude the BG-Layers    \n"
-"in all handled frames\n"
-"regardless to selection"
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:674
-msgid "Use all unselected Layers"
-msgstr "Koristi sve neoznaèene Slojeve"
-
-#: plug-ins/gap/gap_range_ops.c:748
-msgid "Creating Layer-Animated Image..."
-msgstr "Kreiram Sloj-Animiranu sliku .."
-
-#: plug-ins/gap/gap_range_ops.c:970
-msgid "Frames to Image"
-msgstr "Okviri u Sliku"
-
-#: plug-ins/gap/gap_range_ops.c:971
-msgid "Create Multilayer-Image from Frames"
-msgstr "Kreiraj vi¹e slojnu sliku iz okvira"
-
-#: plug-ins/gap/gap_range_ops.c:1112
-msgid "Flattening Frames..."
-msgstr "Ravnam Okvire .."
-
-#: plug-ins/gap/gap_range_ops.c:1113
-msgid "Converting Frames..."
-msgstr "Konvertiram Okvire .."
-
-#: plug-ins/gap/gap_range_ops.c:1261
-msgid ""
-"Convert Frames: SAVE operation FAILED.\n"
-"Desired save plugin can't handle type\n"
-"or desired save plugin not available."
-msgstr ""
-
-#: plug-ins/gap/gap_range_ops.c:1369
-msgid "Cropping all Animation Frames..."
-msgstr "Odsjecam sve Animirane Okvire .."
-
-#: plug-ins/gap/gap_range_ops.c:1372
-msgid "Resizing all Animation Frames..."
-msgstr "Mijenjam velièinu svih anim. okvira .."
-
-#: plug-ins/gap/gap_range_ops.c:1375
-msgid "Scaling all Animation Frames..."
-msgstr "Skaliram sve animirane okvire .."
-
-#: plug-ins/gap/gap_range_ops.c:1461
-msgid "Flatten Frames"
-msgstr "Ravni Okviri"
-
-#: plug-ins/gap/gap_range_ops.c:1517
-#, c-format
-msgid "Removing Layer (pos:%ld) from Frames..."
-msgstr "Uklanjam sloj (pos:%ld) iz okvira .."
-
-#: plug-ins/gap/gap_range_ops.c:1634
-msgid "Delete Layers in Frames"
-msgstr "Izbri¹i slojeve u okvirima"
-
-#: plug-ins/gap/gap_range_ops.c:1635
-msgid "Select Frame Range & Position"
-msgstr "Odredi Podruèje&Poziciju Okvira"
-
-#: plug-ins/gap/gap_split.c:101
-msgid "Splitting into Frames..."
-msgstr "Stapam u Okvire .."
-
-#: plug-ins/gap/gap_split.c:176
-msgid ""
-"Split Frames: SAVE operation FAILED.\n"
-"desired save plugin can't handle type\n"
-"or desired save plugin not available."
-msgstr ""
-
-#: plug-ins/gap/gap_split.c:226
-#, c-format
-msgid ""
-"%s\n"
-"%s\n"
-"(%s_0001.%s)\n"
-msgstr ""
-
-#: plug-ins/gap/gap_split.c:227
-msgid "Make a frame (diskfile) from each Layer"
-msgstr "Naprav okvir (datoteku) iz svakog sloja"
-
-#: plug-ins/gap/gap_split.c:228
-msgid "frames are named: base_nr.extension"
-msgstr "Okviri su imenovani: base_nr.extensoin"
-
-#: plug-ins/gap/gap_split.c:236
-msgid "extension of resulting frames (is also used to define Fileformat)"
-msgstr ""
-
-#: plug-ins/gap/gap_split.c:241
-msgid "Inverse Order:"
-msgstr "Obratni naèin:"
-
-#: plug-ins/gap/gap_split.c:242
-msgid "Start frame 0001 at Top Layer"
-msgstr "Pokreni okvir 0001 na najgornjem sloju"
-
-#: plug-ins/gap/gap_split.c:247
-msgid ""
-"Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
-"BG color."
-msgstr ""
-
-#: plug-ins/gap/gap_split.c:250
-msgid "Split Image into Frames"
-msgstr "Spoji sliku u okvire"
-
-#: plug-ins/gap/gap_split.c:251
-msgid "Split Settings"
-msgstr "Osobnosti Stapanja:"
-
-#: plug-ins/gap/gap_split.c:298
-msgid ""
-"OPERATION CANCELLED.\n"
-"This image is already an AnimFrame.\n"
-"Try again on a Duplicate (Image/Duplicate)."
-msgstr ""
-
-#: plug-ins/gap/resize.c:107
-msgid "Scale"
-msgstr "Ljestvica"
-
-#: plug-ins/gap/resize.c:111
-msgid "Resize"
-msgstr "Promjena velièine"
-
-#: plug-ins/gap/resize.c:127
-msgid "New width:"
-msgstr "Nova ¹irina:"
-
-#: plug-ins/gap/resize.c:144
-msgid "New height:"
-msgstr "Nova visina:"
-
-#: plug-ins/gap/resize.c:161
-msgid "X ratio:"
-msgstr "X omjer:"
-
-#: plug-ins/gap/resize.c:178
-msgid "Y ratio:"
-msgstr "Y omjer"
-
-#. the constrain toggle button
-#: plug-ins/gap/resize.c:231
-msgid "Constrain Ratio"
-msgstr "Proporcije"
-
-#: plug-ins/gdyntext/charmap.c:121
-#, c-format
-msgid "Char: %c, %d, 0x%02x"
-msgstr "Karakter: %c, %d, 0x%02x"
-
-#
-#: plug-ins/gdyntext/charmap_window.c:119
-msgid "Selected char:"
-msgstr "Odaberani karakter:"
-
-#: plug-ins/gdyntext/charmap_window.c:133 plug-ins/imagemap/imap_polygon.c:454
-msgid "Insert"
-msgstr "Umetni"
-
-#: plug-ins/gdyntext/charmap_window.c:136
-msgid "Insert the selected char at the cursor position"
-msgstr "Umetnite odabrani karakter na poziciju kursora"
-
-#: plug-ins/gdyntext/font_selection.c:166
-#: plug-ins/gdyntext/font_selection.c:309 plug-ins/imagemap/imap_circle.c:265
-#: plug-ins/imagemap/imap_circle.c:271 plug-ins/imagemap/imap_circle.c:277
-#: plug-ins/imagemap/imap_grid.c:202 plug-ins/imagemap/imap_grid.c:208
-#: plug-ins/imagemap/imap_polygon.c:439 plug-ins/imagemap/imap_polygon.c:446
-#: plug-ins/imagemap/imap_rectangle.c:382
-#: plug-ins/imagemap/imap_rectangle.c:388
-#: plug-ins/imagemap/imap_rectangle.c:394
-#: plug-ins/imagemap/imap_rectangle.c:400
-msgid "pixels"
-msgstr "piksela"
-
-#: plug-ins/gdyntext/font_selection.c:167
-msgid "points"
-msgstr "toèaka"
-
-#: plug-ins/gdyntext/gdyntext.c:94
-#, fuzzy
-msgid "<Image>/Filters/Text/Dynamic Text..."
-msgstr "<Image>/Filteri/Renderiranje/Dinamièki Tekst..."
-
-#: plug-ins/gdyntext/gdyntext.c:230
-msgid ""
-" Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
-"new layer creation."
-msgstr ""
-
-#: plug-ins/gdyntext/gdyntext.c:325 plug-ins/gdyntext/gdyntext.c:448
-msgid "GDynText Layer"
-msgstr "GDyn tekst sloj"
-
-#: plug-ins/gdyntext/gdyntext.c:357
-msgid "GIMP Dynamic Text"
-msgstr "GIMP Dinamièki Tekst"
-
-#
-#: plug-ins/gdyntext/gdyntext_ui.c:150
-msgid "GDynText: Messages Window"
-msgstr "GDyn tekst :Prozor s Porukama"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:181
-msgid "GDynText: About ..."
-msgstr "GDynText: uèitaj tekst"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:273 plug-ins/gflare/gflare.c:4816
-msgid "none"
-msgstr "ne"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:274
-msgid "bottom-left"
-msgstr "dno-lijevo"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:275
-msgid "bottom-center"
-msgstr "dno-sredina"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:276
-msgid "bottom-right"
-msgstr "dno-desno"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:277
-msgid "middle-left"
-msgstr "srednje-lijevo"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:278
-msgid "center"
-msgstr "sredina"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:279
-msgid "middle-right"
-msgstr "srednje-desno"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:280
-msgid "top-left"
-msgstr "vrh-lijevo"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:281
-msgid "top-center"
-msgstr "sredi¹te"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:282
-msgid "top-right"
-msgstr "vrh-desno"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:291
-msgid "GDynText"
-msgstr "GDyn Tekst"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:327
-msgid "Toggle creation of a new layer"
-msgstr "Zapoèni kreaciju novog sloja"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:340
-msgid "Load text from file"
-msgstr "Uèitaj tekst iz datoteke"
-
-# #: libgimp/gimpfileselection.c:355
-# #: libgimp/gimpunitmenu.c:510
-# msgid "Select"
-# msgstr "Odabir"
-#. FONT COLOR
-#: plug-ins/gdyntext/gdyntext_ui.c:348
-msgid "GDynText: Select Color"
-msgstr "GDyn Tekst:Odaberi boju"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:358
-msgid "Text color"
-msgstr "Boja teksta"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:369
-msgid "Toggle anti-aliased text"
-msgstr "Uèitaj anti-aliased tekst"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:388
-msgid "Left aligned text"
-msgstr "Lijevo poravnani tekst"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:405
-msgid "Centered text"
-msgstr "Centrirani tekst"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:421
-msgid "Right aligned text"
-msgstr "Desno poravnani tekst"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:433
-msgid "Toggle text font preview"
-msgstr "Prika¾i pregled fonta teksta"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:445
-msgid "Toggle CharMap window"
-msgstr "Prika¾i prozor sa mapom karaktera"
-
-#. Layer Alignment
-#: plug-ins/gdyntext/gdyntext_ui.c:459
-msgid ""
-"Layer\n"
-"Alignment"
-msgstr ""
-"Poravnanje\n"
-"Sloja"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:467
-msgid "Set layer alignment"
-msgstr "Namjesti poravnanje sloja"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:497
-msgid ""
-"Line\n"
-"Spacing"
-msgstr ""
-"Razmak\n"
-"crta"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:519
-msgid "Set text rotation (degrees)"
-msgstr "Namjesti rotaciju teksta (stupnjevi)"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:551
-msgid "Editable text sample"
-msgstr "Primjer teksta za ureðivanje"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:564
-msgid "Clear preview"
-msgstr "Èisti pregled"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:571
-msgid "Preview default text sample"
-msgstr "Pregled standardnog tekst primjera"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:623
-msgid ""
-"Holding the Shift key while pressing this button will force GDynText in "
-"changing the layer name as done in GIMP 1.0."
-msgstr ""
-
-#: plug-ins/gdyntext/gdyntext_ui.c:904
-msgid "GDynText: CharMap"
-msgstr "GDynText:Karakter mapa"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:971
-msgid "GDynText: Load text"
-msgstr "GDynText: Uèitaj tekst"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:1016
-#, c-format
-msgid ""
-"Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
-msgstr ""
-
-#: plug-ins/gdyntext/gdyntext_ui.c:1027
-#, c-format
-msgid "Error opening \"%s\"!\n"
-msgstr "Pogre¹ka kod otvaranja \"%s\"!\n"
-
-#: plug-ins/gdyntext/gdyntextcompat.c:122
-#, c-format
-msgid ""
-" WARNING: GDynText is too old! A newer version is required to handle this "
-"layer. Get it from %s"
-msgstr ""
-
-#: plug-ins/gdyntext/gdyntextcompat.c:176
-#, c-format
-msgid " Upgrading old GDynText layer to %s."
-msgstr ""
-
-#: plug-ins/gdyntext/message_window.c:121
-msgid "Dismiss"
-msgstr "Poni¹ti"
-
 #: plug-ins/gfig/gfig.c:674
 msgid "<Image>/Filters/Render/Gfig..."
 msgstr "<Image>/Filteri/Renderiranje/Gfig..."
@@ -10845,6 +8219,10 @@ msgstr "Spremi kao Kist"
 msgid "Add"
 msgstr "Dodaj"
 
+#: plug-ins/gfig/gfig.c:3147
+msgid "Subtract"
+msgstr "Oduzimanje"
+
 #: plug-ins/gfig/gfig.c:3148
 msgid "Replace"
 msgstr "Izmjesti"
@@ -10916,6 +8294,11 @@ msgstr "Izometrièno"
 #: plug-ins/gfig/gfig.c:3319
 msgid "Grid Type:"
 msgstr "Vrsta mre¾e:"
+
+#: plug-ins/gfig/gfig.c:3328 plug-ins/gflare/gflare.c:589
+#: plug-ins/gimpressionist/orientmap.c:590
+msgid "Normal"
+msgstr "Normalno"
 
 #: plug-ins/gfig/gfig.c:3332
 msgid "Darker"
@@ -11015,6 +8398,11 @@ msgstr "Gotovo"
 msgid "Paint"
 msgstr "Crtaj"
 
+#: plug-ins/gfig/gfig.c:4014 plug-ins/imagemap/imap_cmd_select.c:52
+#: plug-ins/imagemap/imap_tools.c:133
+msgid "Select"
+msgstr "Odaberi"
+
 #: plug-ins/gfig/gfig.c:4082
 #, fuzzy, c-format
 msgid ""
@@ -11113,6 +8501,14 @@ msgstr "Pogre¹ka kod otvaranja"
 #: plug-ins/gfig/gfig.c:6518
 msgid "Hey where has the object gone ?"
 msgstr "Hej, gdje se izgubio objekt ?"
+
+#: plug-ins/gflare/gflare.c:590
+msgid "Addition"
+msgstr "Dodavanje"
+
+#: plug-ins/gflare/gflare.c:591 plug-ins/gimpressionist/paper.c:152
+msgid "Overlay"
+msgstr "Prekrivanje"
 
 #. don't translate <Image>, it's a special
 #. * keyword for the gtk toolkit
@@ -11366,6 +8762,10 @@ msgstr "Poligon"
 msgid "Second Flares"
 msgstr "Druge Flares"
 
+#: plug-ins/gflare/gflare.c:4816
+msgid "none"
+msgstr "ne"
+
 #: plug-ins/gflare/gflare.c:4829
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
@@ -11597,7 +8997,7 @@ msgstr "Poèetni kut:"
 msgid "Angle span:"
 msgstr "Luk kuta:"
 
-#: plug-ins/gimpressionist/orientation.c:96 plug-ins/gimpressionist/size.c:95
+#: plug-ins/gimpressionist/orientation.c:96
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Broj smjerova (npr kistovi) za kori¹tenje"
 
@@ -11915,6 +9315,11 @@ msgstr "Min. velièina:"
 msgid "Max size:"
 msgstr "Maks. velièina:"
 
+#: plug-ins/gimpressionist/size.c:95
+#, fuzzy
+msgid "The number of sizes of brushes to use"
+msgstr "Broj smjerova (npr kistovi) za kori¹tenje"
+
 #: plug-ins/gimpressionist/size.c:104
 msgid "The smallest brush to create"
 msgstr "Najmanji kist za kreirati"
@@ -12000,81 +9405,6 @@ msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr ""
-
-#: plug-ins/helpbrowser/helpbrowser.c:95
-#, c-format
-msgid ""
-"<html><head><title>Document not found</title></head><body bgcolor=\"#ffffff"
-"\"><center><p>%s<h3>Couldn't find document</h3><tt>%s</tt></"
-"center><p><small>This either means that the help for this topic has not been "
-"written yet or that something is wrong with your installation. Please check "
-"carefully before you report this as a bug.</small></body></html>"
-msgstr ""
-
-#: plug-ins/helpbrowser/helpbrowser.c:111
-#, c-format
-msgid ""
-"<html><head><title>Directory not found</title></head><body bgcolor=\"#ffffff"
-"\"><center><p>%s<h3>Couldn't change to directory</h3><tt>%s</tt><h3>while "
-"trying to access</h3><tt>%s</tt></center><p><small>This either means that "
-"the help for this topic has not been written yet or that something is wrong "
-"with your installation. Please check carefully before you report this as a "
-"bug.</small></body></html>"
-msgstr ""
-
-#
-#: plug-ins/helpbrowser/helpbrowser.c:137
-msgid "Contents"
-msgstr "Sadr¾aj"
-
-#: plug-ins/helpbrowser/helpbrowser.c:146
-msgid "Index"
-msgstr "Indeks"
-
-#: plug-ins/helpbrowser/helpbrowser.c:419 plug-ins/imagemap/imap_main.c:512
-#: plug-ins/imagemap/imap_settings.c:154
-msgid "<Untitled>"
-msgstr "<BezNaziva>"
-
-#: plug-ins/helpbrowser/helpbrowser.c:776
-#: plug-ins/helpbrowser/helpbrowser.c:792
-#, c-format
-msgid ""
-"GIMP Help Browser Error.\n"
-"\n"
-"Couldn't find my root html directory.\n"
-"(%s)"
-msgstr ""
-"Gre¹ka u Pretra¾ivaèu Pomoæi.\n"
-"\n"
-"Ne mogu naæi svoj osnovni html direktorij.\n"
-"(%s)"
-
-#: plug-ins/helpbrowser/helpbrowser.c:808
-msgid "GIMP Help Browser"
-msgstr "GIMP Pretra¾ivaè Pomoæi"
-
-#
-#: plug-ins/helpbrowser/helpbrowser.c:823
-msgid "Back"
-msgstr "Natrag"
-
-#: plug-ins/helpbrowser/helpbrowser.c:832
-msgid "Forward"
-msgstr "Naprijed"
-
-#: plug-ins/helpbrowser/helpbrowser.c:1212
-#, fuzzy, c-format
-msgid ""
-"GIMP Help Browser Error.\n"
-"\n"
-"Couldn't find GIMP_HELP_ROOT html directory.\n"
-"(%s)"
-msgstr ""
-"Gre¹ka u Pretra¾ivaèu Pomoæi.\n"
-"\n"
-"Ne mogu naæi svoj osnovni html direktorij.\n"
-"(%s)"
 
 #
 #: plug-ins/ifscompose/ifscompose.c:362
@@ -12248,6 +9578,16 @@ msgstr ""
 msgid "Center x:"
 msgstr "Centar x:"
 
+#: plug-ins/imagemap/imap_circle.c:265 plug-ins/imagemap/imap_circle.c:271
+#: plug-ins/imagemap/imap_circle.c:277 plug-ins/imagemap/imap_grid.c:202
+#: plug-ins/imagemap/imap_grid.c:208 plug-ins/imagemap/imap_polygon.c:439
+#: plug-ins/imagemap/imap_polygon.c:446 plug-ins/imagemap/imap_rectangle.c:382
+#: plug-ins/imagemap/imap_rectangle.c:388
+#: plug-ins/imagemap/imap_rectangle.c:394
+#: plug-ins/imagemap/imap_rectangle.c:400
+msgid "pixels"
+msgstr "piksela"
+
 #: plug-ins/imagemap/imap_circle.c:267
 msgid "Center y:"
 msgstr "Centar y:"
@@ -12259,6 +9599,17 @@ msgstr "Poèisti"
 #: plug-ins/imagemap/imap_cmd_create.c:55
 msgid "Create"
 msgstr "Kreiraj"
+
+#: plug-ins/imagemap/imap_cmd_cut.c:56
+#: plug-ins/imagemap/imap_cmd_cut_object.c:54
+#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:133
+msgid "Cut"
+msgstr "Odre¾i"
+
+#: plug-ins/imagemap/imap_cmd_delete_point.c:60
+#: plug-ins/imagemap/imap_polygon.c:671
+msgid "Delete Point"
+msgstr "Izbri¹i toèku"
 
 #: plug-ins/imagemap/imap_cmd_edit_object.c:53
 msgid "Edit Object"
@@ -12335,6 +9686,11 @@ msgstr "Granica vodilja : 0,0 do 0,0 (0 podruèja)"
 #: plug-ins/imagemap/imap_cmd_guides.c:266
 msgid "Guides"
 msgstr "Vodilje"
+
+#: plug-ins/imagemap/imap_cmd_insert_point.c:60
+#: plug-ins/imagemap/imap_polygon.c:685
+msgid "Insert Point"
+msgstr "Umetni toèku"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:55
 #: plug-ins/imagemap/imap_cmd_object_down.c:54
@@ -12557,6 +9913,10 @@ msgstr "piksela od vrha"
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/Filteri/Web/ImageMap..."
 
+#: plug-ins/imagemap/imap_main.c:512 plug-ins/imagemap/imap_settings.c:154
+msgid "<Untitled>"
+msgstr "<BezNaziva>"
+
 #: plug-ins/imagemap/imap_main.c:663
 msgid "Data changed"
 msgstr "Podaci izmjenjeni"
@@ -12718,6 +10078,10 @@ msgstr "x (piksela)"
 msgid "y (pixels)"
 msgstr "y (piksela)"
 
+#: plug-ins/imagemap/imap_polygon.c:454
+msgid "Insert"
+msgstr "Umetni"
+
 #: plug-ins/imagemap/imap_polygon.c:460
 msgid "Append"
 msgstr "Dodaj"
@@ -12866,6 +10230,10 @@ msgstr "Format mape"
 #: plug-ins/imagemap/imap_source.c:61
 msgid "View Source"
 msgstr "Pogledaj Izvor"
+
+#: plug-ins/imagemap/imap_toolbar.c:114
+msgid "Open"
+msgstr "Otvori"
 
 #: plug-ins/imagemap/imap_toolbar.c:119
 msgid "Preferences"
@@ -13590,6 +10958,1487 @@ msgstr "Gre¹ka: Ne mogu proèitati XJT datoteku %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Gre¹ka XJT datoteka %s je prazna"
+
+#~ msgid "File-Browser"
+#~ msgstr "Pretra¾ivaè Datoteka"
+
+#~ msgid "Enter Values"
+#~ msgstr "Unesi Vrijednosti"
+
+#~ msgid "Value: "
+#~ msgstr "Vrijednost:"
+
+#~ msgid "Press Button"
+#~ msgstr "Stisni Dugme"
+
+#~ msgid "GAP Animated Filter apply"
+#~ msgstr "Prihvati GAP Animirani Filter"
+
+#~ msgid "Animated Filter apply (init)"
+#~ msgstr "Prihvati Animirani filter (init)"
+
+#~ msgid "Gen Code by name"
+#~ msgstr "Gen. kod po imenu"
+
+#~ msgid "Animated Filter apply (by name - please wait)"
+#~ msgstr "Prihvati animirani filter (po imenu - molim saèekajte)"
+
+#~ msgid "Animated Filter apply (by blurb - please wait)"
+#~ msgstr "Prihvati animirani filter (po opisu - molim saèekajte"
+
+#~ msgid "Animated Filter apply (please wait)"
+#~ msgstr "Prihvaæam Animirani Filter (molim prièekajte)"
+
+#~ msgid "Animated Filter apply"
+#~ msgstr "Prihvati Animirani Filter"
+
+#~ msgid "<Image>/Video/Split Video to Frames"
+#~ msgstr "<Image>/Video/Stopi Video u Okvire..."
+
+#~ msgid "<Toolbox>/Xtns/Split Video to Frames"
+#~ msgstr "<Toolbox>/Xtns/Stopi Video u Okvire..."
+
+#~ msgid "<Image>/Video/Split Video to Frames/MPEG1"
+#~ msgstr "<Image>/Video/Stopi Video u Okvire..."
+
+#~ msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
+#~ msgstr "<Toolbox>/Xtns/Stopi Video u Okvire/MPEG1"
+
+#~ msgid "Overwrite Frame"
+#~ msgstr "Prepi¹i Okvir"
+
+#~ msgid "Overwrite All"
+#~ msgstr "Prepi¹i Sve"
+
+#~ msgid "GAP Question"
+#~ msgstr "GAP pitanje"
+
+#~ msgid "File already exists"
+#~ msgstr "Datoteka postoji!"
+
+#~ msgid "Decoding MPEG Movie..."
+#~ msgstr "Dekodiram MPEG Zapis..."
+
+#~ msgid ""
+#~ "Name of the MPEG1 videofile to READ.\n"
+#~ "Frames are extracted from the videofile\n"
+#~ "and written to seperate diskfiles.\n"
+#~ "Audiotracks in the videofile are ignored."
+#~ msgstr ""
+#~ "Naziv MPEG1 videozapisa koji èitam.\n"
+#~ "Okviri su izvuèeni iz videozapisa\n"
+#~ "i zapisani u odvojene datoteke na disku.\n"
+#~ "Audiozapisi u Videozapisu su odbaèeni."
+
+#~ msgid "Framenumber of 1st frame to extract"
+#~ msgstr "Broj okvira iz prvog okvira za ekstrakciju"
+
+#~ msgid "Framenumber of last frame to extract"
+#~ msgstr "Broj okvira iz zadnjeg okvira za ekstrakciju"
+
+#~ msgid "Framenames:"
+#~ msgstr "Imena okvira:"
+
+#~ msgid ""
+#~ "Basename for the AnimFrames to write on disk\n"
+#~ "(framenumber and .xcf is added)"
+#~ msgstr ""
+#~ "Naziv Animiranih Okvira za pohranu na disk\n"
+#~ "(spremnik_okvira i .xcf je dodano)"
+
+#
+#~ msgid "Open the 1st one of the extracted frames"
+#~ msgstr "Otvori prvi ektraktirani okvir"
+
+#~ msgid ""
+#~ "\n"
+#~ "WARNING: Do not attempt to split other files than MPEG1 videos.\n"
+#~ "Before you proceed, you should save all open images."
+#~ msgstr ""
+#~ "\n"
+#~ "POZOR:Ne poku¹avajte spojiti neke druge formate osim MPEG1.\n"
+#~ "Prije nego nastavite morate spremiti sve otvorene slike."
+
+#~ msgid "Split MPEG1 Video to Frames"
+#~ msgstr "Stopi MPEG1 Videozapis u Okvire"
+
+#~ msgid "Select Frame Range"
+#~ msgstr "Odredi Podruèje Okvira"
+
+#~ msgid "Conditions to run the xanim based video split"
+#~ msgstr "Uvjeti za rad xanim baziranog video stapanja"
+
+#~ msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
+#~ msgstr "1.) xanim 2.80.0 izvozno izdanje (loki verzija)"
+
+#~ msgid "    must be installed somewhere in your PATH"
+#~ msgstr "   mora biti instalirana negdje u va¹oj STAZI"
+
+#~ msgid "    you can get xanim exporting edition at"
+#~ msgstr "   xanim izvozno izdanje mo¾ete naæi na"
+
+#~ msgid ""
+#~ "2.) if your xanim exporting edition is not in your PATH or is not named "
+#~ "xanim"
+#~ msgstr "2.) ako va¹ xanim nije u STAZI ili nije nazvan xanim"
+
+#~ msgid "    you have to set Environment variable GAP_XANIM_PROG "
+#~ msgstr "     morate podesiti ENV varijablu GAP_XANIM _PROG "
+
+#~ msgid "    to your xanim exporting program and restart gimp"
+#~ msgstr " za va¹ xanim izvozni program i restartati GIMP"
+
+#~ msgid "An ERROR occured while trying to call xanim:"
+#~ msgstr "Gre¹ka prilikom poziva programa xanim:"
+
+#~ msgid "XANIM Information"
+#~ msgstr "XANIM Informacija"
+
+#~ msgid "Video:"
+#~ msgstr "Video:"
+
+#~ msgid ""
+#~ "Name of a videofile to READ by xanim.\n"
+#~ "Frames are extracted from the videofile\n"
+#~ "and written to seprate diskfiles.\n"
+#~ "xanim exporting edition is required."
+#~ msgstr ""
+#~ "Naziv videozapisa koji æe èitati xanim.\n"
+#~ "Okviri su izvuèeni iz videozapisa\n"
+#~ "i pohranjeni u odvojene datoteke na disku.\n"
+#~ "zahtijeva xanim izvozno izdanje."
+
+#~ msgid ""
+#~ "Basename for the AnimFrames to write on disk\n"
+#~ "(framenumber and extension is added)"
+#~ msgstr ""
+#~ "Naziv Animiranih Okvira koji æu spremiti na disk.\n"
+#~ "(spremnik_okvira i ekstenzija su dodani)"
+
+#~ msgid "Format"
+#~ msgstr "Format"
+
+#~ msgid ""
+#~ "Fileformat for the extracted AnimFrames\n"
+#~ "(xcf is extracted as ppm and converted to xcf)"
+#~ msgstr ""
+#~ "Format datoteke izvuèenih Animiranih Okvira\n"
+#~ "(xcf je izvuèen kao ppm i konvertiran u xcf)"
+
+#~ msgid "Extract Frames"
+#~ msgstr "Izluèi Okvire:"
+
+#~ msgid "Enable extraction of Frames"
+#~ msgstr "Ukljuèi ekstrakciju Okvira"
+
+#~ msgid "Extract Audio"
+#~ msgstr "Audio Ekstrakcija"
+
+#~ msgid ""
+#~ "Enable extraction of audio to raw audiofile\n"
+#~ "(frame range limits are ignored for audio)"
+#~ msgstr ""
+#~ "Ukljuèi audio ekstrakciju u raw datoteku\n"
+#~ "(osobitosti okvira su ignorirane za audio)"
+
+#~ msgid "Jpeg Quality:"
+#~ msgstr "Jpeg Kvaliteta"
+
+#~ msgid ""
+#~ "Quality for resulting Jpeg frames\n"
+#~ "(is ignored when other formats are used)"
+#~ msgstr ""
+#~ "Kvaliteta rezultirajuæih Jpeg Okvira\n"
+#~ "(ignoriram kad koristite drugi format)"
+
+#~ msgid "Run asynchronously"
+#~ msgstr "Radi Asinkrono"
+
+#~ msgid ""
+#~ "Run xanim asynchronously and delete unwanted frames\n"
+#~ "(out of the specified range) while xanim is still running"
+#~ msgstr ""
+#~ "Pokreni xanim asinkrono i izbri¹i ne¾eljene okvire\n"
+#~ "(van moguænosti) dok je xanim pokrenut"
+
+#~ msgid ""
+#~ "\n"
+#~ "Warning: xanim 2.80 has only limited MPEG support.\n"
+#~ "Most of the frames (type P and B) will be skipped."
+#~ msgstr ""
+#~ "\n"
+#~ "Upozorenje: xanim 2.80 ima ogranièenu MPEG podr¹ku.\n"
+#~ "Veæina okvira (vrsta P i B) æe biti izuzeta."
+
+#~ msgid "Split any Xanim readable Video to Frames"
+#~ msgstr "Stopi bilo koji Xanim Video u Okvire"
+
+#~ msgid ""
+#~ "can't find any extracted frames,\n"
+#~ "%s\n"
+#~ "maybe xanim has failed or was cancelled"
+#~ msgstr ""
+#~ "ne mogu pronaæi ekstraktirane okvire,\n"
+#~ "%s\n"
+#~ "mo¾da je xanim pogrije¹io ili je zaustavljen"
+
+#~ msgid "frames are not extracted, because overwrite of %s was cancelled"
+#~ msgstr "okviri nisu ekstraktirani, zato ¹to je preisivanje %s zaustavljeno"
+
+#~ msgid "failed to overwrite %s (check permissions ?)"
+#~ msgstr "ne mogu prepisati %s (da provjerite dozvole ?)"
+
+#~ msgid "failed to write %s (check permissions ?)"
+#~ msgstr "ne mogu zapisati %s (da provjerite dozvole ?)"
+
+#~ msgid "could not execute %s (check if xanim is installed)"
+#~ msgstr "ne mogu pokrenuti %s (provjerite da li je xanim instaliran)"
+
+#~ msgid "%s does not look like xanim"
+#~ msgstr "%s ne izgleda kao xanim"
+
+#~ msgid ""
+#~ "The xanim program on your system \"%s\"\n"
+#~ "does not support the exporting options Ea, Ee, Eq"
+#~ msgstr ""
+#~ "xanim program na va¹em sustavu \"%s\"\n"
+#~ "ne podr¾ava izvozne moguænosti Ea, Ee, Eq"
+
+#~ msgid ""
+#~ "The xanim program on your system \"%s\"\n"
+#~ "does not support exporting of single frames"
+#~ msgstr ""
+#~ "xanim program na Va¹em sustavu \"%s\"\n"
+#~ "ne podr¾ava izvozne moguænosti samo jednog okvira"
+
+#~ msgid "videofile %s not existent or empty\n"
+#~ msgstr "videozapis %s ne postoji ili je prazan\n"
+
+#~ msgid ""
+#~ "could not create %s directory\n"
+#~ "(that is required for xanim frame export)"
+#~ msgstr ""
+#~ "ne mogu kreirati direktorij %s\n"
+#~ "(potreban xanim-u za izvoz okvira)"
+
+#
+#~ msgid "extracting frames..."
+#~ msgstr "ekstraktiram okvire .."
+
+#~ msgid ""
+#~ "could not start xanim process\n"
+#~ "(program=%s)"
+#~ msgstr ""
+#~ "ne mogu zapoèeti xanim proces\n"
+#~ "(program=%s)"
+
+#~ msgid ""
+#~ "can't find any extracted frames,\n"
+#~ "xanim has failed or was cancelled"
+#~ msgstr ""
+#~ "ne mogu pronaæi ekstraktirane okvire,\n"
+#~ "xanim je pogrije¹io ili je zaustavljen"
+
+#~ msgid "renaming frames..."
+#~ msgstr "preimenujem okvire .."
+
+#~ msgid "converting frames..."
+#~ msgstr "konvertiram okvire..."
+
+#~ msgid "backup to file"
+#~ msgstr "pohrana u datoteku"
+
+#~ msgid "Make backup of the image after each step"
+#~ msgstr "Pohrani sliku nakon svakog koraka"
+
+#~ msgid "Continue"
+#~ msgstr "Nastavi"
+
+#~ msgid ""
+#~ "2nd call of %s\n"
+#~ "(define end-settings)"
+#~ msgstr ""
+#~ "Drugi poziv %s\n"
+#~ "(namjesti osobitosti)"
+
+#~ msgid ""
+#~ "Non-Interactive call of %s\n"
+#~ "(for all layers in between)"
+#~ msgstr ""
+#~ "Ne-interaktivni poziv iz %s\n"
+#~ "(za sve meðuslojeve)"
+
+#~ msgid "Applying Filter to all Layers..."
+#~ msgstr "Prihvaæam Filter za sve Slojeve .."
+
+#~ msgid "Select Filter for Animated apply"
+#~ msgstr "Prihvati odabrani filter za Animaciju"
+
+#~ msgid "Apply Constant"
+#~ msgstr "Prihvati Konstantu"
+
+#~ msgid "Apply Varying"
+#~ msgstr "Prihvati Varijaciju"
+
+#~ msgid "<Image>/Filters/Filter all Layers..."
+#~ msgstr "<Image>/Filteri/Filtriraj sve Slojeve..."
+
+#~ msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
+#~ msgstr "<Image>/Video/Stopi Video u Okvire/Bilo koji Xanim..."
+
+#~ msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
+#~ msgstr "<Toolbox>/Xtns/Stopi Video u Okvire/Bilo koji Xanim..."
+
+#~ msgid "<Image>/Video/Encode/MPEG1..."
+#~ msgstr "<Image>/Video/Enkoder/MPEG1..."
+
+#
+#~ msgid "<Image>/Video/Encode/MPEG2..."
+#~ msgstr "<Image>/Video/Enkoder/MPEG2..."
+
+#~ msgid "GAP Message"
+#~ msgstr "GAP poruka"
+
+#~ msgid ""
+#~ "OPERATION CANCELLED.\n"
+#~ "Current frame changed while dialog was open."
+#~ msgstr ""
+#~ "OPERACIJA OBUSTAVLJENA.\n"
+#~ "Trenutni okvir mijenjan dok se otvarao dijalog."
+
+#, fuzzy
+#~ msgid ""
+#~ "OPERATION CANCELLED.\n"
+#~ "GAP plug-ins only work with filenames\n"
+#~ "that end in numbers like _0001.xcf.\n"
+#~ "==> Rename your image, then try again."
+#~ msgstr ""
+#~ "OPERACIJA OBUSTAVLJENA.\n"
+#~ "GAP-prikljuèci rade samo sa nazivima\n"
+#~ "koji zavr¹avaju sa _0001.xcf.\n"
+#~ "==>Preimenujte sliku pa poku¹ajte ponovo."
+
+#~ msgid ""
+#~ "You are using a file format != xcf\n"
+#~ "Save Operations may result\n"
+#~ "in loss of layer information."
+#~ msgstr ""
+#~ "Upotrebljavate format != xcf\n"
+#~ "Rezultat pohrane mo¾e biti\n"
+#~ "gubitak podataka o slojevima."
+
+#~ msgid "Save Flattened"
+#~ msgstr "Spremi Uravnjenost"
+
+#~ msgid "Save As Is"
+#~ msgstr "Spremi kao Takovo"
+
+#~ msgid "Error: could not rename frame %ld to %ld"
+#~ msgstr "Pogre¹ka: ne mogu preimenovati okvir %ld u %ld"
+
+#, fuzzy
+#~ msgid "Error: could not save frame %s"
+#~ msgstr "Pogre¹ka: ne mogu preimenovati okvir %ld u %ld"
+
+#~ msgid "Duplicating frames..."
+#~ msgstr "Dupliciram okvire .."
+
+#~ msgid "Renumber Framesequence..."
+#~ msgstr "Renumeriram Sekvence Okvira .."
+
+#~ msgid "Goto Frame (%ld/%ld)"
+#~ msgstr "Idi na Okvir (%ld/%ld)"
+
+#~ msgid "Destination Frame Number (%ld  - %ld)"
+#~ msgstr "Odredi¹te Okvira Broj (%ld - %ld)"
+
+#~ msgid "Number:"
+#~ msgstr "Broj:"
+
+#~ msgid "Delete Frames (%ld/%ld)"
+#~ msgstr "Izbri¹i Okvire (%ld/%ld)"
+
+#~ msgid "Delete Frames from %ld to (number)"
+#~ msgstr "Izbri¹i Okvire od %ld do (Broj)"
+
+#~ msgid "Duplicate Frames (%ld/%ld)"
+#~ msgstr "Dupliciraj Okvire (%ld/%ld)"
+
+#~ msgid "Source Range starts at this framenumber"
+#~ msgstr "Podruèje izvora poèinje na ovom broju okvira"
+
+#~ msgid "Source Range ends at this framenumber"
+#~ msgstr "Podruèje izvora zavr¹ava na ovom broju okvira"
+
+#~ msgid "N times:"
+#~ msgstr "N-puta :"
+
+#~ msgid ""
+#~ "Copy selected Range n-times  \n"
+#~ "(you may type in Values > 99)"
+#~ msgstr ""
+#~ "Kopiraj odabrano podruèje n-puta \n"
+#~ "(mo¾ete upisati vrijednosti > 99)"
+
+#~ msgid "Duplicate Frame Range"
+#~ msgstr "Dupliciraj Podruèje Okvira"
+
+#~ msgid "Exchange current Frame (%ld)"
+#~ msgstr "Promjeni trenutni Okvir (%ld)"
+
+#~ msgid "With Frame (number)"
+#~ msgstr "S Okvirom (broj)"
+
+#~ msgid "Framesequence Shift (%ld/%ld)"
+#~ msgstr "Zadr¾ana sekvenca (%ld/%ld)"
+
+#~ msgid "N-Shift:"
+#~ msgstr "N-Shift"
+
+#~ msgid "<Image>/Video/Goto/Next Frame"
+#~ msgstr "<Image>/Video/Idi/Na Sljedeæi"
+
+#~ msgid "<Image>/Video/Goto/Previous Frame"
+#~ msgstr "<Image>/Video/Idi/Na Prethodni"
+
+#~ msgid "<Image>/Video/Goto/First Frame"
+#~ msgstr "<Image>/Video/Idi/Na Prvi"
+
+#~ msgid "<Image>/Video/Goto/Last Frame"
+#~ msgstr "<Image>/Video/Idi/Na Zadnji"
+
+#~ msgid "<Image>/Video/Goto/Any Frame..."
+#~ msgstr "<Image>/Video/Idi/Na Bilo Koji..."
+
+#~ msgid "<Image>/Video/Delete Frames..."
+#~ msgstr "<Image>/Video/Izbri¹i okvire..."
+
+#~ msgid "<Image>/Video/Duplicate Frames..."
+#~ msgstr "<Image>/Video/Dupliciraj Okvire..."
+
+#~ msgid "<Image>/Video/Exchange Frame..."
+#~ msgstr "<Image>/Video/Promijeni Okvir..."
+
+#~ msgid "<Image>/Video/Move Path..."
+#~ msgstr "<Image>/Video/Pomakni Stazu..."
+
+#~ msgid "<Image>/Video/Frames to Image..."
+#~ msgstr "<Image>/Video/Okviri u Sliku..."
+
+#~ msgid "<Image>/Video/Frames Flatten..."
+#~ msgstr "<Image>/Video/Ravni Okviri..."
+
+#~ msgid "<Image>/Video/Frames LayerDel..."
+#~ msgstr "<Image>/Video/Okviri brisanje Sloja..."
+
+#
+#~ msgid "<Image>/Video/Frames Convert..."
+#~ msgstr "<Image>/Video/Konverzija Okvira..."
+
+#~ msgid "<Image>/Video/Frames Resize..."
+#~ msgstr "<Image>/Video/Promjena veliè. Okvira..."
+
+#~ msgid "<Image>/Video/Frames Crop..."
+#~ msgstr "<Image>/Video/Odsjeèak Okvira..."
+
+#~ msgid "<Image>/Video/Frames Scale..."
+#~ msgstr "<Image>/Video/Ljestvica Okvira..."
+
+#
+#~ msgid "<Image>/Video/Split Image to Frames..."
+#~ msgstr "<Image>/Video/Stopi Slike u Okvire..."
+
+#~ msgid "<Image>/Video/Framesequence Shift..."
+#~ msgstr "<Image>/Video/Zadr¾ana Sekvenca Okvira..."
+
+#~ msgid "<Image>/Video/Frames Modify..."
+#~ msgstr "<Image>/Video/Modificiraj Okvir..."
+
+#~ msgid "Pattern is equal to LayerName"
+#~ msgstr "Uzorak je jednak nazivu sloja"
+
+#~ msgid "Pattern is Start of LayerName"
+#~ msgstr "Uzorak je poèetak naziva sloja"
+
+#~ msgid "Pattern is End of Layername"
+#~ msgstr "Uzorak je zavr¹etak naziva sloja"
+
+#~ msgid "Pattern is a Part of LayerName"
+#~ msgstr "Uzorak je dio naziva sloja"
+
+#~ msgid "All Visible (ignore Pattern)"
+#~ msgstr "Sve vidljivo (ignoriraj uzorak)"
+
+#~ msgid "Select all Layers where Layername starts with Pattern"
+#~ msgstr "Odaberi sve Slojeve kojima ImeSloja poèinje Uzorkom"
+
+#~ msgid "Select all Layers where Layername ends up with Pattern"
+#~ msgstr "Odaberi sve Slojeve kojima ImeSloja zavr¹ava Uzorkom"
+
+#~ msgid "Select all visible Layers"
+#~ msgstr "Stopi vidljive slojeve"
+
+#~ msgid "Set Layer(s) visible"
+#~ msgstr "Napravi Sloj(eve) vidljivim"
+
+#~ msgid "Set Layer(s) invisible"
+#~ msgstr "Napravi Sloj(eve) nevidljivim"
+
+#~ msgid "Set Layer(s) linked"
+#~ msgstr "Napravi linkane Sloj(eva)"
+
+#~ msgid "Set Layer(s) unlinked"
+#~ msgstr "Skini Linkove Sloja(eva)"
+
+#~ msgid "Raise Layer(s)"
+#~ msgstr "Podigni Sloj(eve)"
+
+#~ msgid "Lower Layer(s)"
+#~ msgstr "Spusti Sloj(eve)"
+
+#~ msgid "Merge Layer(s) expand as necessary"
+#~ msgstr "Stopi pro¹ireni sloj(eve) kao nu¾no"
+
+#~ msgid "Merge Layer(s) clipped to image"
+#~ msgstr "Stopi odsjeèak sloja(eva) u sliku"
+
+#~ msgid "Merge Layer(s) clipped to bg-layer"
+#~ msgstr "Stopi odsjeèak sloja(eva) u pozadinski sloj"
+
+#~ msgid "Apply filter on Layer(s)"
+#~ msgstr "Prihvati filter na sloj(evima)"
+
+#~ msgid "Duplicate Layer(s)"
+#~ msgstr "Dupliciraj sloj(eve)"
+
+#~ msgid "Delete Layer(s)"
+#~ msgstr "izbri¹i sloj(eve)"
+
+#~ msgid "Rename Layer(s)"
+#~ msgstr "Preimenuj Sloj(eve)"
+
+#~ msgid "From Frame:"
+#~ msgstr "Iz Okvira:"
+
+#~ msgid "first handled frame"
+#~ msgstr "prvi obraðeni sloj"
+
+#~ msgid "To Frame:"
+#~ msgstr "U  Okvir:"
+
+#~ msgid "last handled frame"
+#~ msgstr "zadnji obraðeni sloj"
+
+#~ msgid "Select Layer(s):"
+#~ msgstr "Odaberi Sloj(eve)"
+
+#~ msgid "Select Pattern:"
+#~ msgstr "Odaberi Uzorak:"
+
+#~ msgid "Case sensitive"
+#~ msgstr "Osjetlj. na V/m slova:"
+
+#~ msgid "Lowercase and UPPERCASE letters are considered as different"
+#~ msgstr "Mala i VELIKA slova se razlièito tretiraju"
+
+#~ msgid "Invert Selection"
+#~ msgstr "Inverzni odabir"
+
+#~ msgid "Perform actions on all unselected Layers"
+#~ msgstr "Pokren obradu na svim neodabranim slojevima"
+
+#~ msgid "Function:"
+#~ msgstr "Funkcija :"
+
+#~ msgid "Function to be performed on all selected layers"
+#~ msgstr "Funkcija koja æe biti kori¹tena na svim odabranim slojevima"
+
+#~ msgid "New Layername:"
+#~ msgstr "Novi naziv sloja:"
+
+#~ msgid "Frames Modify"
+#~ msgstr "Preinake Okvira"
+
+#~ msgid "Select Filter for Animated frames-apply"
+#~ msgstr "Odredi filter za kori¹tenje u animiranim okvirima"
+
+#~ msgid "GAP Modify: No layer selected in last handled frame"
+#~ msgstr "GAP promjena:Nema odabranog sloja u zadnjem obraðivanom okviru"
+
+#~ msgid "Modifying Frames/Layer(s)..."
+#~ msgstr "Preinaèujem Okvire/Sloj(eve) .."
+
+#~ msgid "No selected Layer in start frame"
+#~ msgstr "Nema odabranog sloja u poèetnom okviru"
+
+#~ msgid "Dissolve"
+#~ msgstr "Otapanje"
+
+#~ msgid "Multiply"
+#~ msgstr "Multiplicirano"
+
+#~ msgid "Difference"
+#~ msgstr "Razlika"
+
+#~ msgid "Darken Only"
+#~ msgstr "Samo Tamnije"
+
+#~ msgid "Lighten Only"
+#~ msgstr "Samo Svjetlije"
+
+#~ msgid "Left  Top"
+#~ msgstr "Lijevo Vrh"
+
+#~ msgid "Left  Bottom"
+#~ msgstr "Lijevo Dno"
+
+#~ msgid "Right Top"
+#~ msgstr "Desno Vrh"
+
+#~ msgid "Right Bottom"
+#~ msgstr "Desno Dno"
+
+#~ msgid "Loop"
+#~ msgstr "Petlja"
+
+#~ msgid "Loop Reverse"
+#~ msgstr "Petlja Unatrag"
+
+#~ msgid "Once"
+#~ msgstr "Jednom"
+
+#~ msgid "OnceReverse"
+#~ msgstr "Jednom Unatrag"
+
+#~ msgid "PingPong"
+#~ msgstr "PingPong"
+
+#, fuzzy
+#~ msgid "Frame Loop"
+#~ msgstr "Okvir %d"
+
+#, fuzzy
+#~ msgid "Frame Loop Reverse"
+#~ msgstr "Petlja Unatrag"
+
+#, fuzzy
+#~ msgid "Frame Once"
+#~ msgstr "Okvir %d"
+
+#, fuzzy
+#~ msgid "Frame OnceReverse"
+#~ msgstr "Jednom Unatrag"
+
+#, fuzzy
+#~ msgid "Frame PingPong"
+#~ msgstr "PingPong"
+
+#, fuzzy
+#~ msgid "Frame None"
+#~ msgstr "Okvir %d"
+
+#~ msgid "Move Path"
+#~ msgstr "Makni Stazu"
+
+#~ msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
+#~ msgstr ""
+#~ "Prika¾i Pregled okvira odabranim Slojem na trenutnoj kontrolnoj toèki"
+
+#~ msgid "Anim Preview"
+#~ msgstr "Pregled Anim."
+
+#~ msgid "Generate Animated Preview as multilayer image"
+#~ msgstr "Generiraj Animirani pregled kao vi¹eslojnu sliku"
+
+#~ msgid "Start Frame:"
+#~ msgstr "Poèetni okvir:"
+
+#~ msgid "First handled frame"
+#~ msgstr "Prvi obraðeni sloj"
+
+#~ msgid "End Frame:"
+#~ msgstr "Zavr¹ni okvir:"
+
+#~ msgid "Last handled frame"
+#~ msgstr "Zadnji obraðeni sloj"
+
+#~ msgid "Preview Frame:"
+#~ msgstr "Pregled Okvira:"
+
+#~ msgid "Layerstack:"
+#~ msgstr "Hrpa Slojeva:"
+
+#~ msgid "Clip To Frame"
+#~ msgstr "Ubaci u Okvir"
+
+#~ msgid "Object on empty frames"
+#~ msgstr "Objekt na praznim okvirima"
+
+#~ msgid "Object on one frame"
+#~ msgstr "Objekt na jednom okviru"
+
+#~ msgid "Exact Object on frames"
+#~ msgstr "Ukljuèi objekt na okvirima"
+
+#~ msgid "Anim Preview Mode"
+#~ msgstr "Velièina pregleda"
+
+#~ msgid "Scale Preview"
+#~ msgstr "Pregled slike"
+
+#~ msgid "Framerate"
+#~ msgstr "Mjera Okvira:"
+
+#~ msgid "Copy to Video Buffer"
+#~ msgstr "Kopiraj u Video Spremnik"
+
+#~ msgid "Move Path Animated Preview"
+#~ msgstr "Makni pregled staze"
+
+#~ msgid "Generate Animated Preview failed\n"
+#~ msgstr "Gre¹ka kod kreiranja Animiranog Pregleda\n"
+
+#~ msgid "Load Path Points from file"
+#~ msgstr "Uèitaj stazu toèaka iz datoteke"
+
+#~ msgid "Save Path Points to file"
+#~ msgstr "Spremi stazu toèaka u datoteku"
+
+#~ msgid "Source Select"
+#~ msgstr "Odabir izvora"
+
+#~ msgid "Source Image/Layer:"
+#~ msgstr "Izvorna slika/sloj:"
+
+#~ msgid "Source Object to insert into Frame Range"
+#~ msgstr "Izvorni objekt za umetnuti u podruèje okvira"
+
+#~ msgid "Mode:"
+#~ msgstr "Naèin:"
+
+#~ msgid "Paintmode"
+#~ msgstr "Naèin slikanja"
+
+#~ msgid "Stepmode:"
+#~ msgstr "Naèin koraka:"
+
+#~ msgid "Handle:"
+#~ msgstr "Rukovanje:"
+
+#~ msgid "Move Path Preview"
+#~ msgstr "Makni pregled staze"
+
+#~ msgid "X Coordinate"
+#~ msgstr "X Koordinate"
+
+#~ msgid "Y Coordinate"
+#~ msgstr "Y Koordinate"
+
+#~ msgid "Scale Source Layer's Width in percent"
+#~ msgstr "Razmjeri ©irinu Izvornih Okvira u postotku"
+
+#~ msgid "Scale SrcLayer's Height in percent"
+#~ msgstr "Razmjeri Visinu Izvornih Okvira u postotku"
+
+#
+#~ msgid "SrcLayer's Opacity in percent"
+#~ msgstr "Dubina Prozirnosti Izvornog Sloja u postotku:"
+
+#
+#~ msgid "Rotate:"
+#~ msgstr "Rotiraj:"
+
+#~ msgid "Rotate SrcLayer (in degree)"
+#~ msgstr "Rotiraj Izvorni Sloj (u stupnjevima)"
+
+#~ msgid "Keyframe:"
+#~ msgstr "Kljuèni Okvir:"
+
+#~ msgid ""
+#~ "Fix Controlpoint to Keyframe number\n"
+#~ "(0 == No Keyframe)"
+#~ msgstr ""
+#~ "Zaustavi KOntrolnu toèku na Okviru broj\n"
+#~ "(0 == Nema Kljuènog Okvira)"
+
+#~ msgid "Add Point"
+#~ msgstr "Dodaj Toèku"
+
+#
+#~ msgid ""
+#~ "Add Controlpoint at end\n"
+#~ "(the last Point is duplicated)"
+#~ msgstr ""
+#~ "Dodaj kontrolnu toèku na kraj\n"
+#~ "(zadnja toèka je duplicirana)"
+
+#~ msgid "Show Path"
+#~ msgstr "Makni Stazu"
+
+#~ msgid ""
+#~ "Insert Controlpoint\n"
+#~ "(the current Point is duplicated)"
+#~ msgstr ""
+#~ "Dodaj Kontrolnu Toèku\n"
+#~ "(zadnja toèka je duplicirana)"
+
+#~ msgid "Delete current Controlpoint"
+#~ msgstr "Izbri¹i sada¹nju Kontrolnu Toèku"
+
+#~ msgid "Prev Point"
+#~ msgstr "Prethodna toèka"
+
+#~ msgid "Show Previous Controlpoint"
+#~ msgstr "Prika¾i prethodnu kontrolnu toèku"
+
+#~ msgid "Next Point"
+#~ msgstr "Sljedeæa toèka"
+
+#~ msgid "Show Next Controlpoint"
+#~ msgstr "Prika¾i sljedeæu kontrolnu toèku"
+
+#
+#~ msgid "First Point"
+#~ msgstr "Prva Toèka"
+
+#~ msgid "Show First Controlpoint"
+#~ msgstr "Prika¾i prvu kontrolnu toèku"
+
+#~ msgid "Last Point"
+#~ msgstr "Zadnja Toèka"
+
+#~ msgid "Show Last Controlpoint"
+#~ msgstr "Prika¾i zadnju kontrolnu toèku"
+
+#~ msgid "Clear Point"
+#~ msgstr "Izbri¹i Toèku"
+
+#~ msgid "Reset the current Controlpoint to default Values"
+#~ msgstr "Vrati Uobièajene Osobitosti Kontrolne Toèke"
+
+#~ msgid "Clear All Points"
+#~ msgstr "Izbri¹i Sve Toèke"
+
+#~ msgid "Rotate Follow"
+#~ msgstr "Slijedi Rotaciju:"
+
+#~ msgid "Delete All Points"
+#~ msgstr "Izbri¹i Sve toèke"
+
+#~ msgid "Delete all Controlpoints"
+#~ msgstr "Izbri¹i sve kontrolne toèke"
+
+#~ msgid "Load Points"
+#~ msgstr "Uèitaj Toèke"
+
+#~ msgid "Load Controlpoints from file"
+#~ msgstr "Uèitaj kontrolne toèke iz datoteke"
+
+#~ msgid "Save Points"
+#~ msgstr "Spremi Toèke"
+
+#~ msgid "Save Controlpoints to file"
+#~ msgstr "Spremi kontrolne toèke u datoteku"
+
+#~ msgid ""
+#~ "Can't operate with current Controlpoint\n"
+#~ "or Keyframe settings"
+#~ msgstr ""
+#~ "Ne mogu raditi s trenutno namje¹tenim\n"
+#~ "osobitostima Kontrolne Toèke"
+
+#~ msgid "Reset Keyframes"
+#~ msgstr "Vrati Kljuène Okvire"
+
+#~ msgid "Move Path Controlpointcheck"
+#~ msgstr "Pomakni Stazu kontrolne toèke"
+
+#~ msgid "Errors:"
+#~ msgstr "Gre¹ke:"
+
+#~ msgid "Copying Layers into Frames..."
+#~ msgstr "Kopiram Slojeve u Okvire .."
+
+#~ msgid "Generating Animated Preview..."
+#~ msgstr "Kreiram Animirani Pregled ..."
+
+#~ msgid "Conditions to run mpeg_encode 1.5:"
+#~ msgstr "Uvjeti za rad mpeg_enkodera 1.5"
+
+#~ msgid "Conditions to run mpeg2encode 1.2:"
+#~ msgstr "Uvjeti za rad mpeg2 enkodera 1.2:"
+
+#~ msgid "1.) mpeg_encode 1.5 must be installed"
+#~ msgstr "1.) mpeg_enkoder 1.5 mora biti instaliran"
+
+#~ msgid "1.) mpeg2encode 1.2 must be installed"
+#~ msgstr "1.) mpeg2 enkoder 1.2 mora biti instaliran"
+
+#~ msgid "    you can get mpeg_encode at"
+#~ msgstr "    mpeg_enkoder mo¾ete naæi na"
+
+#~ msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
+#~ msgstr "mpeg2 enkoder mo¾ete naæi na http://www.mpeg.org/MSSG"
+
+#~ msgid "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
+#~ msgstr "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
+
+#~ msgid "   or at ftp://ftp.mpeg.org/pub/mpeg/mssg "
+#~ msgstr "  ili na ftp://ftp.mpeg.org/pub/mpeg/mssg"
+
+#~ msgid "2.) You need a series of single Images on disk (AnimFrames)"
+#~ msgstr "2.) Morate imati niz slika na disku (Animirani okviri)"
+
+#~ msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
+#~ msgstr "    sve u JPEG formatu (ili YUV ili PNM ili PPM)"
+
+#~ msgid "   all with fileformat PPM (or YUV)"
+#~ msgstr "   sve u formatu PPM (ili YUV)"
+
+#~ msgid "    (use 'Frames Convert' from the Video Menu"
+#~ msgstr "    (koristite 'Konverziju okvira' iz izbornika Anim.Okviri"
+
+#~ msgid "    or 'Split Image to Frames' from the Video Menu)"
+#~ msgstr "   ili 'Spoji sliku u okvire' iz izbornika Anim.Okviri)"
+
+#~ msgid "3.) All Images must have the same size,"
+#~ msgstr "3.) Sve slike moraju imati istu velièinu,"
+
+#~ msgid "    width and height must be a multiple of 16"
+#~ msgstr "   ¹irina i visina moraju biti multiplikatori broja 16"
+
+#~ msgid "    (use Scale or Crop from the Video Menu)"
+#~ msgstr "   (koristite Odsjeèak ili Srazmjer iz Video Izbornika"
+
+#~ msgid "MPEG_ENCODE Information"
+#~ msgstr "MPEG_ENKODER Informacija"
+
+#~ msgid "generate MPEG1 (ISO/IEC 11172-2) stream"
+#~ msgstr "kreiraj MPEG1 (ISO/IEC 11172-2) zapis"
+
+#~ msgid "generate MPEG2 (ISO/IEC DIS 13818-2) stream"
+#~ msgstr "kreiraj MPEG2 (ISO/IEC DIS 13818-2) zapis"
+
+#~ msgid "To   Frame:"
+#~ msgstr "U  Okvir:"
+
+#~ msgid "Framerate :"
+#~ msgstr "Mjera:"
+
+#~ msgid "framerate in frames/second"
+#~ msgstr "Slièica po sekundi"
+
+#~ msgid "Bitrate:"
+#~ msgstr "Bitrate:"
+
+#~ msgid "Outputfile:"
+#~ msgstr "Izlazna datoteka:"
+
+#~ msgid "Name of the resulting MPEG outputfile"
+#~ msgstr "Naziv rezultirajuæe MPEG datoteke "
+
+#~ msgid "Paramfile:"
+#~ msgstr "Paramfile:"
+
+#~ msgid "Startscript:"
+#~ msgstr "Startna skripta:"
+
+#~ msgid "Pattern:"
+#~ msgstr "Uzorak:"
+
+#~ msgid "IQSCALE:"
+#~ msgstr "IQ-SKALA"
+
+#~ msgid "PQSCALE:"
+#~ msgstr "PQ-SKALA:"
+
+#~ msgid ""
+#~ "Quality scale for P-Frames                  \n"
+#~ "(1 = best quality, 31 = best comression)"
+#~ msgstr ""
+#~ "Omjer kvalitete za P-okvire                 \n"
+#~ "(1 = najbolja kvaliteta, 31 = najbolja kompresija)"
+
+#~ msgid "BQSCALE:"
+#~ msgstr "BQ-SKALA"
+
+#~ msgid "P-Search :"
+#~ msgstr "P-Tra¾enje:"
+
+#~ msgid "Search Algorithmus used for P-frames"
+#~ msgstr "Tra¾i algoritme kori¹tene za P-okvire"
+
+#~ msgid "B-Search :"
+#~ msgstr "B-tra¾enje"
+
+#~ msgid "Search Algorithmus used for B-frames"
+#~ msgstr "Tra¾i algoritme kori¹tene za B-okvire"
+
+#~ msgid "Gen MPEG_ENCODE Parameters"
+#~ msgstr "Opæe osobitosti MPEG_ENKODERA"
+
+#~ msgid "Encode Values"
+#~ msgstr "Enkodirane vrijednosti"
+
+#~ msgid "MPEG-type :"
+#~ msgstr "MPEG-vrsta:"
+
+#~ msgid "Videoformat :"
+#~ msgstr "Videoformat:"
+
+#~ msgid "Videoformat"
+#~ msgstr "Videoformat"
+
+#~ msgid "Gen MPEG2ENCODE Parameters"
+#~ msgstr "Opæe osobitosti MPEG2 enkodera"
+
+#~ msgid ""
+#~ "\n"
+#~ "WARNING: mpeg2encode does not support Fileformat "
+#~ msgstr ""
+#~ "\n"
+#~ "UPOZORENJE: mpeg2 enkoder ne podr¾ava taj format"
+
+#~ msgid ""
+#~ "Smart Update .xvpics\n"
+#~ "<Shift> forced upd"
+#~ msgstr ""
+#~ "Pametna Nadogradnja .xvpics\n"
+#~ "<Shift> Prisilna Nadogradnja"
+
+#~ msgid "Duplicate selected Frames"
+#~ msgstr "Izbri¹i odabrano podruèje"
+
+#~ msgid "Delete selected Frames"
+#~ msgstr "Izbri¹i odabrano podruèje"
+
+#~ msgid "Goto 1st Frame"
+#~ msgstr "Idi u prvi okvir:"
+
+#~ msgid "Goto last Frame"
+#~ msgstr "Idi na zadnji okvir:"
+
+#~ msgid "<Image>/Video/VCR Navigator..."
+#~ msgstr "<Image>/Video/VCR Navigator..."
+
+#~ msgid "Cant open two or more Video Navigator Windows."
+#~ msgstr "Ne mogu otvoriti dva ili vi¹e prozora Video Navigatora"
+
+#~ msgid "Paste before"
+#~ msgstr "Ubaci prije"
+
+#
+#~ msgid "Paste after"
+#~ msgstr "Ubaci poslije"
+
+#~ msgid "Paste replace"
+#~ msgstr "Ubaci i Izmjesti"
+
+#~ msgid "Clear Video Buffer"
+#~ msgstr "Isprazni Video Spremnik"
+
+#
+#~ msgid "Videoframes:"
+#~ msgstr "Video Okviri:"
+
+#~ msgid "Framerate:"
+#~ msgstr "Br. slika/sec:"
+
+#~ msgid "Timezoom:"
+#~ msgstr "Vremensko poveæanje:"
+
+#~ msgid "Video Navigator"
+#~ msgstr "Video Navigator"
+
+#~ msgid "New Width:"
+#~ msgstr "Nova ©irina:"
+
+#
+#~ msgid "New Height:"
+#~ msgstr "Nova Visina:"
+
+#
+#~ msgid "Offset X:"
+#~ msgstr "Ofset X:"
+
+#
+#~ msgid "Offset Y:"
+#~ msgstr "Ofset Y:"
+
+#~ msgid "Crop AnimFrames (all)"
+#~ msgstr "Odsijeci anim. okvire (sve)"
+
+#~ msgid "Crop (original %dx%d)"
+#~ msgstr "Odsjeèak (original %dx%d)"
+
+#~ msgid "Resize AnimFrames (all)"
+#~ msgstr "Promjeni vel. anim. okvira (sve)"
+
+#~ msgid "Resize (original %dx%d)"
+#~ msgstr "Promjena vel. (orig. %dx%d)"
+
+#~ msgid "Scale AnimFrames (all)"
+#~ msgstr "Skaliraj Anim.Okvire (sve)"
+
+#~ msgid "Scale (original %dx%d)"
+#~ msgstr "Skala (original %dx%d)"
+
+#~ msgid "Generate Optimal Palette"
+#~ msgstr "Kreiraj optimalnu paletu"
+
+#~ msgid "WEB Palette"
+#~ msgstr "WEB Paleta"
+
+#~ msgid "Use Custom Palette"
+#~ msgstr "Koristi Posebnu Paletu"
+
+#~ msgid "Use Black/White (1-Bit) Palette"
+#~ msgstr "Koristi crno/bijelu (1-bit) paletu"
+
+#~ msgid "Floyd-Steinberg Color Dithering (Normal)"
+#~ msgstr "Floyd-Steinberg boje (Normalno)"
+
+#~ msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
+#~ msgstr "Floyd-Steinberg boje (reducirano)"
+
+#~ msgid "Positioned Color Dithering"
+#~ msgstr "Positioned Color Dithering"
+
+#
+#~ msgid "No Color Dithering"
+#~ msgstr "Bez drhtanja boje"
+
+#~ msgid "Palette Type"
+#~ msgstr "Vrsta palete"
+
+#~ msgid "Custom Palette"
+#~ msgstr "Posebna paleta"
+
+#~ msgid "Remove Unused"
+#~ msgstr "Ukloni nekori¹teno"
+
+#~ msgid "Dither Options"
+#~ msgstr "Opcije Podrhtavanja"
+
+#~ msgid "Enable transparency"
+#~ msgstr "Ukljuèi prozirnost"
+
+#~ msgid "Convert Frames to Indexed"
+#~ msgstr "Konvertiraj okvire u indeksirane"
+
+#~ msgid "Palette and Dither Settings"
+#~ msgstr "Osobnosti Palete"
+
+#~ msgid "Keep Type"
+#~ msgstr "Vrsta medija:"
+
+#~ msgid "Convert to RGB"
+#~ msgstr "Konv. u RGB"
+
+#~ msgid "Convert to Gray"
+#~ msgstr "Konv. u RGB"
+
+#~ msgid "Convert to Indexed"
+#~ msgstr "Konvertiraj okvire u indeksirane"
+
+#~ msgid "Basename:"
+#~ msgstr "Bazno ime"
+
+#~ msgid "Extension:"
+#~ msgstr "Ekstenzija:"
+
+#~ msgid "Imagetype:"
+#~ msgstr "Vrsta slike:"
+
+#~ msgid "Flatten:"
+#~ msgstr "Uravnjenost:"
+
+#~ msgid "Convert Frames to other Formats"
+#~ msgstr "Konvertiraj okvire u druge formate"
+
+#~ msgid "Convert Settings"
+#~ msgstr "Osobnosti Konverzije:"
+
+#~ msgid "Expand as necessary"
+#~ msgstr "Pro¹iri kao nu¾no"
+
+#~ msgid "Clipped to image"
+#~ msgstr "Ubaèeno u sliku"
+
+#~ msgid "Clipped to bottom layer"
+#~ msgstr "Ubaèeno u najdonji sloj"
+
+#~ msgid "Flattened image"
+#~ msgstr "Uravnjena slika"
+
+#~ msgid "Resulting Layer Size is the frame size"
+#~ msgstr "Rezultirajuæa velièina sloja je velièina okvira"
+
+#~ msgid "Layer Basename:"
+#~ msgstr "Bazno ime sloja:"
+
+#
+#~ msgid "Layer Mergemode:"
+#~ msgstr "Naèin stapanja sloja:"
+
+#~ msgid "Exclude BG-Layer"
+#~ msgstr "Iskljuèi BG-Sloj"
+
+#~ msgid "Use all unselected Layers"
+#~ msgstr "Koristi sve neoznaèene Slojeve"
+
+#~ msgid "Creating Layer-Animated Image..."
+#~ msgstr "Kreiram Sloj-Animiranu sliku .."
+
+#~ msgid "Frames to Image"
+#~ msgstr "Okviri u Sliku"
+
+#~ msgid "Create Multilayer-Image from Frames"
+#~ msgstr "Kreiraj vi¹e slojnu sliku iz okvira"
+
+#~ msgid "Flattening Frames..."
+#~ msgstr "Ravnam Okvire .."
+
+#~ msgid "Converting Frames..."
+#~ msgstr "Konvertiram Okvire .."
+
+#~ msgid "Cropping all Animation Frames..."
+#~ msgstr "Odsjecam sve Animirane Okvire .."
+
+#~ msgid "Resizing all Animation Frames..."
+#~ msgstr "Mijenjam velièinu svih anim. okvira .."
+
+#~ msgid "Scaling all Animation Frames..."
+#~ msgstr "Skaliram sve animirane okvire .."
+
+#~ msgid "Flatten Frames"
+#~ msgstr "Ravni Okviri"
+
+#~ msgid "Removing Layer (pos:%ld) from Frames..."
+#~ msgstr "Uklanjam sloj (pos:%ld) iz okvira .."
+
+#~ msgid "Delete Layers in Frames"
+#~ msgstr "Izbri¹i slojeve u okvirima"
+
+#~ msgid "Select Frame Range & Position"
+#~ msgstr "Odredi Podruèje&Poziciju Okvira"
+
+#~ msgid "Splitting into Frames..."
+#~ msgstr "Stapam u Okvire .."
+
+#~ msgid "Make a frame (diskfile) from each Layer"
+#~ msgstr "Naprav okvir (datoteku) iz svakog sloja"
+
+#~ msgid "frames are named: base_nr.extension"
+#~ msgstr "Okviri su imenovani: base_nr.extensoin"
+
+#~ msgid "Inverse Order:"
+#~ msgstr "Obratni naèin:"
+
+#~ msgid "Start frame 0001 at Top Layer"
+#~ msgstr "Pokreni okvir 0001 na najgornjem sloju"
+
+#~ msgid "Split Image into Frames"
+#~ msgstr "Spoji sliku u okvire"
+
+#~ msgid "Split Settings"
+#~ msgstr "Osobnosti Stapanja:"
+
+#~ msgid "Scale"
+#~ msgstr "Ljestvica"
+
+#~ msgid "Resize"
+#~ msgstr "Promjena velièine"
+
+#~ msgid "New width:"
+#~ msgstr "Nova ¹irina:"
+
+#~ msgid "New height:"
+#~ msgstr "Nova visina:"
+
+#~ msgid "X ratio:"
+#~ msgstr "X omjer:"
+
+#~ msgid "Y ratio:"
+#~ msgstr "Y omjer"
+
+#~ msgid "Constrain Ratio"
+#~ msgstr "Proporcije"
+
+#~ msgid "Char: %c, %d, 0x%02x"
+#~ msgstr "Karakter: %c, %d, 0x%02x"
+
+#
+#~ msgid "Selected char:"
+#~ msgstr "Odaberani karakter:"
+
+#~ msgid "Insert the selected char at the cursor position"
+#~ msgstr "Umetnite odabrani karakter na poziciju kursora"
+
+#~ msgid "points"
+#~ msgstr "toèaka"
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Text/Dynamic Text..."
+#~ msgstr "<Image>/Filteri/Renderiranje/Dinamièki Tekst..."
+
+#~ msgid "GDynText Layer"
+#~ msgstr "GDyn tekst sloj"
+
+#~ msgid "GIMP Dynamic Text"
+#~ msgstr "GIMP Dinamièki Tekst"
+
+#
+#~ msgid "GDynText: Messages Window"
+#~ msgstr "GDyn tekst :Prozor s Porukama"
+
+#~ msgid "GDynText: About ..."
+#~ msgstr "GDynText: uèitaj tekst"
+
+#~ msgid "bottom-left"
+#~ msgstr "dno-lijevo"
+
+#~ msgid "bottom-center"
+#~ msgstr "dno-sredina"
+
+#~ msgid "bottom-right"
+#~ msgstr "dno-desno"
+
+#~ msgid "middle-left"
+#~ msgstr "srednje-lijevo"
+
+#~ msgid "center"
+#~ msgstr "sredina"
+
+#~ msgid "middle-right"
+#~ msgstr "srednje-desno"
+
+#~ msgid "top-left"
+#~ msgstr "vrh-lijevo"
+
+#~ msgid "top-center"
+#~ msgstr "sredi¹te"
+
+#~ msgid "top-right"
+#~ msgstr "vrh-desno"
+
+#~ msgid "GDynText"
+#~ msgstr "GDyn Tekst"
+
+#~ msgid "Toggle creation of a new layer"
+#~ msgstr "Zapoèni kreaciju novog sloja"
+
+#~ msgid "Load text from file"
+#~ msgstr "Uèitaj tekst iz datoteke"
+
+# #: libgimp/gimpfileselection.c:355
+# #: libgimp/gimpunitmenu.c:510
+# msgid "Select"
+# msgstr "Odabir"
+#~ msgid "GDynText: Select Color"
+#~ msgstr "GDyn Tekst:Odaberi boju"
+
+#~ msgid "Text color"
+#~ msgstr "Boja teksta"
+
+#~ msgid "Toggle anti-aliased text"
+#~ msgstr "Uèitaj anti-aliased tekst"
+
+#~ msgid "Left aligned text"
+#~ msgstr "Lijevo poravnani tekst"
+
+#~ msgid "Centered text"
+#~ msgstr "Centrirani tekst"
+
+#~ msgid "Right aligned text"
+#~ msgstr "Desno poravnani tekst"
+
+#~ msgid "Toggle text font preview"
+#~ msgstr "Prika¾i pregled fonta teksta"
+
+#~ msgid "Toggle CharMap window"
+#~ msgstr "Prika¾i prozor sa mapom karaktera"
+
+#~ msgid ""
+#~ "Layer\n"
+#~ "Alignment"
+#~ msgstr ""
+#~ "Poravnanje\n"
+#~ "Sloja"
+
+#~ msgid "Set layer alignment"
+#~ msgstr "Namjesti poravnanje sloja"
+
+#~ msgid ""
+#~ "Line\n"
+#~ "Spacing"
+#~ msgstr ""
+#~ "Razmak\n"
+#~ "crta"
+
+#~ msgid "Set text rotation (degrees)"
+#~ msgstr "Namjesti rotaciju teksta (stupnjevi)"
+
+#~ msgid "Editable text sample"
+#~ msgstr "Primjer teksta za ureðivanje"
+
+#~ msgid "Clear preview"
+#~ msgstr "Èisti pregled"
+
+#~ msgid "Preview default text sample"
+#~ msgstr "Pregled standardnog tekst primjera"
+
+#~ msgid "GDynText: CharMap"
+#~ msgstr "GDynText:Karakter mapa"
+
+#~ msgid "GDynText: Load text"
+#~ msgstr "GDynText: Uèitaj tekst"
+
+#~ msgid "Error opening \"%s\"!\n"
+#~ msgstr "Pogre¹ka kod otvaranja \"%s\"!\n"
+
+#~ msgid "Dismiss"
+#~ msgstr "Poni¹ti"
+
+#
+#~ msgid "Contents"
+#~ msgstr "Sadr¾aj"
+
+#~ msgid "Index"
+#~ msgstr "Indeks"
+
+#~ msgid ""
+#~ "GIMP Help Browser Error.\n"
+#~ "\n"
+#~ "Couldn't find my root html directory.\n"
+#~ "(%s)"
+#~ msgstr ""
+#~ "Gre¹ka u Pretra¾ivaèu Pomoæi.\n"
+#~ "\n"
+#~ "Ne mogu naæi svoj osnovni html direktorij.\n"
+#~ "(%s)"
+
+#~ msgid "GIMP Help Browser"
+#~ msgstr "GIMP Pretra¾ivaè Pomoæi"
+
+#
+#~ msgid "Back"
+#~ msgstr "Natrag"
+
+#~ msgid "Forward"
+#~ msgstr "Naprijed"
+
+#, fuzzy
+#~ msgid ""
+#~ "GIMP Help Browser Error.\n"
+#~ "\n"
+#~ "Couldn't find GIMP_HELP_ROOT html directory.\n"
+#~ "(%s)"
+#~ msgstr ""
+#~ "Gre¹ka u Pretra¾ivaèu Pomoæi.\n"
+#~ "\n"
+#~ "Ne mogu naæi svoj osnovni html direktorij.\n"
+#~ "(%s)"
 
 #~ msgid "OK"
 #~ msgstr "OK"

@@ -1,5 +1,9 @@
 2001-11-25  Sven Neumann  <sven@gimp.org>
 
+	* Made 1.3.1 release.
+	
+2001-11-25  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/Makefile.am
 	* data/misc/Makefile.am: made 'make dist' happy.
 
@@ -17,7 +21,7 @@
 	Disabled installation of man-pages; they need to be updated and
 	should probably be renamed.
 
-	* app/Makefile.am: generate binary called gimp-1.3 sp we don't clash
+	* app/Makefile.am: generate binary called gimp-1.3 so we don't clash
 	with older gimp installations.
 
 	* gimp-1.3.pc.in
@@ -983,7 +987,7 @@
 2001-11-13  Michael Natterer  <mitch@gimp.org>
 	    Sven Neumann  <sven@gimp.org>
 
-	* Made 1.3.0 release
+	* Made 1.3.0 release.
 
 2001-11-13  Sven Neumann  <sven@gimp.org>
 

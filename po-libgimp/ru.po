@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.3\n"
-"POT-Creation-Date: 2001-11-18 22:45+0300\n"
+"POT-Creation-Date: 2001-11-23 23:54+0100\n"
 "PO-Revision-Date: 2001-11-18 22:47+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -216,7 +216,12 @@ msgstr "/Чёрный"
 msgid "/White"
 msgstr "/Белый"
 
-#: libgimpwidgets/gimpfileselection.c:362
+#: libgimpwidgets/gimpfileselection.c:352
+#, fuzzy
+msgid "Select Directory"
+msgstr "Выбрать файл"
+
+#: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
 msgstr "Выбрать файл"
 
@@ -228,15 +233,15 @@ msgstr "Дополнительно..."
 msgid "Unit Selection"
 msgstr "Выбор единиц"
 
-#: libgimpwidgets/gimpunitmenu.c:570
+#: libgimpwidgets/gimpunitmenu.c:571
 msgid "Unit"
 msgstr "Единица"
 
-#: libgimpwidgets/gimpunitmenu.c:574
+#: libgimpwidgets/gimpunitmenu.c:575
 msgid "Factor"
 msgstr "Множитель"
 
-#: libgimpwidgets/gimpwidgets.c:724
+#: libgimpwidgets/gimpwidgets.c:769
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -245,11 +250,11 @@ msgstr ""
 "генератора случайных чисел, что позволяет вам повторить данное \"случайное\" "
 "действие "
 
-#: libgimpwidgets/gimpwidgets.c:729
+#: libgimpwidgets/gimpwidgets.c:774
 msgid "Time"
 msgstr "Время"
 
-#: libgimpwidgets/gimpwidgets.c:738
+#: libgimpwidgets/gimpwidgets.c:783
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -257,14 +262,14 @@ msgstr ""
 "Инициализировать генератор случайных чисел текущим времене - это гарантирует "
 "надежную \"случайность\""
 
-#: libgimpwidgets/gimpwidgets.c:1052
+#: libgimpwidgets/gimpwidgets.c:1097
 msgid "Bytes"
 msgstr "Байты"
 
-#: libgimpwidgets/gimpwidgets.c:1053
+#: libgimpwidgets/gimpwidgets.c:1098
 msgid "KiloBytes"
 msgstr "Килобайты"
 
-#: libgimpwidgets/gimpwidgets.c:1054
+#: libgimpwidgets/gimpwidgets.c:1099
 msgid "MegaBytes"
 msgstr "Мегабайты"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2001-11-11 22:48+0100\n"
+"POT-Creation-Date: 2001-11-23 23:54+0100\n"
 "PO-Revision-Date: 2000-09-24 01:50+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -198,15 +198,30 @@ msgstr "picas"
 msgid "percent"
 msgstr "procent:"
 
-#: libgimpwidgets/gimpcolorbutton.c:78
-msgid "/Use Foreground Color"
+#: libgimpwidgets/gimpcolorbutton.c:82
+#, fuzzy
+msgid "/Foreground Color"
 msgstr "/Använd förgrundsfärg"
 
-#: libgimpwidgets/gimpcolorbutton.c:79
-msgid "/Use Background Color"
+#: libgimpwidgets/gimpcolorbutton.c:84
+#, fuzzy
+msgid "/Background Color"
 msgstr "/Använd bakgrundsfärg"
 
-#: libgimpwidgets/gimpfileselection.c:362
+#: libgimpwidgets/gimpcolorbutton.c:87
+msgid "/Black"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorbutton.c:89
+msgid "/White"
+msgstr ""
+
+#: libgimpwidgets/gimpfileselection.c:352
+#, fuzzy
+msgid "Select Directory"
+msgstr "Välj fil"
+
+#: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
 msgstr "Välj fil"
 
@@ -218,15 +233,15 @@ msgstr "Mer..."
 msgid "Unit Selection"
 msgstr "Enhetsval"
 
-#: libgimpwidgets/gimpunitmenu.c:570
+#: libgimpwidgets/gimpunitmenu.c:571
 msgid "Unit"
 msgstr "Enhet "
 
-#: libgimpwidgets/gimpunitmenu.c:574
+#: libgimpwidgets/gimpunitmenu.c:575
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:724
+#: libgimpwidgets/gimpwidgets.c:769
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -234,11 +249,11 @@ msgstr ""
 "Om du inte trycker \"Tid\"-knappen kan du ange ett värde här för generering "
 "av ett slumptalsfrö - det låter dig upprepa en given \"slump\"-funktion"
 
-#: libgimpwidgets/gimpwidgets.c:729
+#: libgimpwidgets/gimpwidgets.c:774
 msgid "Time"
 msgstr "Tid"
 
-#: libgimpwidgets/gimpwidgets.c:738
+#: libgimpwidgets/gimpwidgets.c:783
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -246,15 +261,15 @@ msgstr ""
 "Skapa slumptalsfrö till slumptalsgeneratorn baserat på den aktuella tiden - "
 "detta garanterar en vettig slumpfunktion"
 
-#: libgimpwidgets/gimpwidgets.c:1052
+#: libgimpwidgets/gimpwidgets.c:1097
 msgid "Bytes"
 msgstr "byte"
 
-#: libgimpwidgets/gimpwidgets.c:1053
+#: libgimpwidgets/gimpwidgets.c:1098
 msgid "KiloBytes"
 msgstr "kilobyte"
 
-#: libgimpwidgets/gimpwidgets.c:1054
+#: libgimpwidgets/gimpwidgets.c:1099
 msgid "MegaBytes"
 msgstr "megabyte"
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2001-11-11 22:48+0100\n"
+"POT-Creation-Date: 2001-11-23 23:54+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Românã <ro@li.org>\n"
@@ -213,17 +213,32 @@ msgstr "picas"
 msgid "percent"
 msgstr "procent"
 
-#: libgimpwidgets/gimpcolorbutton.c:78
+#: libgimpwidgets/gimpcolorbutton.c:82
 #, fuzzy
-msgid "/Use Foreground Color"
+msgid "/Foreground Color"
 msgstr "Prim Plan "
 
-#: libgimpwidgets/gimpcolorbutton.c:79
+#: libgimpwidgets/gimpcolorbutton.c:84
 #, fuzzy
-msgid "/Use Background Color"
+msgid "/Background Color"
 msgstr "Fundal"
 
-#: libgimpwidgets/gimpfileselection.c:362
+#: libgimpwidgets/gimpcolorbutton.c:87
+#, fuzzy
+msgid "/Black"
+msgstr "Numai negru"
+
+#: libgimpwidgets/gimpcolorbutton.c:89
+#, fuzzy
+msgid "/White"
+msgstr "Alb"
+
+#: libgimpwidgets/gimpfileselection.c:352
+#, fuzzy
+msgid "Select Directory"
+msgstr "Directorul de swap:"
+
+#: libgimpwidgets/gimpfileselection.c:366
 #, fuzzy
 msgid "Select File"
 msgstr "Selecteazã"
@@ -237,43 +252,43 @@ msgstr ""
 msgid "Unit Selection"
 msgstr "Selecþie"
 
-#: libgimpwidgets/gimpunitmenu.c:570
+#: libgimpwidgets/gimpunitmenu.c:571
 #, fuzzy
 msgid "Unit"
 msgstr "Unitate de masurã:"
 
-#: libgimpwidgets/gimpunitmenu.c:574
+#: libgimpwidgets/gimpunitmenu.c:575
 #, fuzzy
 msgid "Factor"
 msgstr "Panã"
 
-#: libgimpwidgets/gimpwidgets.c:724
+#: libgimpwidgets/gimpwidgets.c:769
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:729
+#: libgimpwidgets/gimpwidgets.c:774
 #, fuzzy
 msgid "Time"
 msgstr "imagine"
 
-#: libgimpwidgets/gimpwidgets.c:738
+#: libgimpwidgets/gimpwidgets.c:783
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1052
+#: libgimpwidgets/gimpwidgets.c:1097
 #, fuzzy
 msgid "Bytes"
 msgstr "%d Octeþi"
 
-#: libgimpwidgets/gimpwidgets.c:1053
+#: libgimpwidgets/gimpwidgets.c:1098
 msgid "KiloBytes"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1054
+#: libgimpwidgets/gimpwidgets.c:1099
 msgid "MegaBytes"
 msgstr ""
 
@@ -1362,9 +1377,6 @@ msgstr ""
 
 #~ msgid "Gradient Selection"
 #~ msgstr "Selectie Gradient"
-
-#~ msgid "White"
-#~ msgstr "Alb"
 
 #~ msgid "%.2f KB"
 #~ msgstr "%.2f KOcteþi"
@@ -2588,9 +2600,6 @@ msgstr ""
 #~ msgid "Gray Only"
 #~ msgstr "Numai gri"
 
-#~ msgid "Black Only"
-#~ msgstr "Numai negru"
-
 #~ msgid "Transparency Type:"
 #~ msgstr "Tipul de tranparenþã:"
 
@@ -3563,9 +3572,6 @@ msgstr ""
 #~ "cu suficient spaþiu liber(mai multe sute de MB). Pe un sistem UNIX, poþi "
 #~ "alege sã foloseºti\n"
 #~ "directorul temporar de sistem(\"/tmp\" sau \"/var/tmp\")."
-
-#~ msgid "Swap Directory:"
-#~ msgstr "Directorul de swap:"
 
 #~ msgid ""
 #~ "GIMP can obtain this information from the windowing system.\n"
