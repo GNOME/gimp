@@ -1,3 +1,13 @@
+2004-04-13  Raphaël Quinet  <quinet@gamers.org>
+
+	* plug-ins/common/mng.c (query, run): Workaround for bug #139947:
+	do not register the plug-in for INDEXED* modes and do not declare
+	that it can handle INDEXED images in gimp_export_image().  This
+	forces a conversion to RGB instead of generating broken indexed
+	images.  The generation of correct indexed MNG files is likely to
+	require a newer release of libmng.
+	(mng_data): Set default compression level to 9 instead of 6.
+
 2004-04-13  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_cern_parse.c

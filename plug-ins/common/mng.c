@@ -147,7 +147,7 @@ struct mng_data_t mng_data =
   0.75,				/* quality */
   0.0,				/* smoothing */
 
-  6,				/* compression_level */
+  9,				/* compression_level */
 
   TRUE,				/* loop */
   100,				/* default_delay */
@@ -1458,6 +1458,9 @@ query (void)
     { GIMP_PDB_INT32,    "time", "Write tIME (creation time) chunk" }
   };
 
+  /* As a workaround for http://bugzilla.gnome.org/show_bug.cgi?id=139947 the
+   * registration for INDEXED* mode has been disabled.  It should be re-added
+   * to the list of supported modes when the indexed mode really works. */
   gimp_install_procedure ("file_mng_save",
 			  "Saves images in the MNG file format",
 			  "This plug-in saves images in the Multiple-image "
@@ -1466,7 +1469,7 @@ query (void)
 			  "S. Mukund <muks@mukund.org>",
 			  "S. Mukund <muks@mukund.org>",
                           "November 19, 2002",
-			  "<Save>/MNG", "RGB*,GRAY*,INDEXED*",
+			  "<Save>/MNG", "RGB*,GRAY*",
                           GIMP_PLUGIN,
 			  G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -1507,10 +1510,11 @@ run (const gchar      *name,
 	  gimp_procedural_db_get_data ("file_mng_save", &mng_data);
 
 	  gimp_ui_init ("mng", FALSE);
+	  /* GIMP_EXPORT_CAN_HANDLE_INDEXED commented out - see bug #139947 */
 	  export = gimp_export_image (&image_id, &drawable_id, "MNG",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED |
+				       /* GIMP_EXPORT_CAN_HANDLE_INDEXED | */
 				       GIMP_EXPORT_CAN_HANDLE_ALPHA |
 				       GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION));
 	}
