@@ -171,12 +171,9 @@ idea_window_delete_event_callback (GtkWidget *widget,
 				   GdkEvent  *event,
 				   gpointer   data)
 {
-  save_idea_manager (ideas);
-  create_idea_list ();
-  g_free (ideas);
-  ideas = 0;
+  idea_hide_callback (NULL, NULL);
 
-  return FALSE;
+  return TRUE;
 }
 
 void

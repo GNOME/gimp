@@ -1,5 +1,10 @@
 2000-05-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/docindex.c: the "delete_event" callback should always do
+	the same as the "Close" callback.
+
+2000-05-05  Michael Natterer  <mitch@gimp.org>
+
 	Made the document index a bit more like the rest of the dialogs:
 
 	* app/commands.[ch]
