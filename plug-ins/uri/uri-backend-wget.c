@@ -186,7 +186,7 @@ load_image (char *filename)
     return -1;
   else
     {
-      gimp_image_set_filename (params[1].data.d_int32, NULL);
+      gimp_image_set_filename (params[1].data.d_int32, filename);
       return params[1].data.d_int32;
     }
 }

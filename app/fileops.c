@@ -527,10 +527,10 @@ file_revert_callback (GtkWidget *w,
     g_message (_("Can't revert. No filename associated with this image"));
   else
     {
-      filename = gimage_filename (gdisplay->gimage);
-      raw_filename = g_basename (filename);
+      raw_filename = gimage_filename (gdisplay->gimage);
+      filename = g_basename (filename);
 
-      gimage = file_open_image (filename, raw_filename, RUN_INTERACTIVE);
+      gimage = file_open_image (raw_filename, raw_filename, RUN_INTERACTIVE);
 
       if (gimage != NULL)
 	{

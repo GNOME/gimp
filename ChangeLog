@@ -1,3 +1,9 @@
+Sat Sep 11 16:44:15 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/fileops.c
+	* plug-ins/common/url.c: another XachPatch (TM) to fix revert and
+	urls
+
 Sat Sep 11 22:45:12 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/nav_window.c
