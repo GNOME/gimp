@@ -41,6 +41,8 @@ struct _GimpHistogramView
 {
   GtkDrawingArea        parent_instance;
 
+  GdkGC                *range_gc;
+
   GimpHistogram        *histogram;
   GimpHistogramChannel  channel;
   gint                  start;
@@ -57,18 +59,19 @@ struct _GimpHistogramViewClass
 };
 
 
-GType               gimp_histogram_view_get_type      (void) G_GNUC_CONST;
+GType           gimp_histogram_view_get_type      (void) G_GNUC_CONST;
 
-GimpHistogramView * gimp_histogram_view_new           (gint               width,
-                                                       gint               height);
-void                gimp_histogram_view_update        (GimpHistogramView *view,
-                                                       GimpHistogram     *histogram);
-void                gimp_histogram_view_set_range     (GimpHistogramView *view,
-                                                       gint               start,
-                                                       gint               end);
-void                gimp_histogram_view_channel       (GimpHistogramView *view,
-                                                       gint               channel);
-GimpHistogram     * gimp_histogram_view_get_histogram (GimpHistogramView *view);
+GtkWidget     * gimp_histogram_view_new           (gint               width,
+                                                   gint               height,
+                                                   gboolean           range);
+void            gimp_histogram_view_set_histogram (GimpHistogramView *view,
+                                                   GimpHistogram     *histogram);
+GimpHistogram * gimp_histogram_view_get_histogram (GimpHistogramView *view);
+void            gimp_histogram_view_set_range     (GimpHistogramView *view,
+                                                   gint               start,
+                                                   gint               end);
+void            gimp_histogram_view_set_channel   (GimpHistogramView *view,
+                                                   gint               channel);
 
 
 #endif /* __GIMP_HISTOGRAM_VIEW_H__ */

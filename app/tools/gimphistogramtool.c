@@ -101,9 +101,6 @@ static gboolean histogram_set_sensitive_callback
                                                HistogramToolDialog  *htd);
 static void   histogram_tool_channel_callback (GtkWidget            *widget,
 					       gpointer              data);
-static void   histogram_tool_gradient_draw    (GtkWidget            *gradient,
-					       GimpHistogramChannel  channel);
-
 static void   histogram_tool_dialog_update    (HistogramToolDialog  *htd,
 					       gint                  start,
 					       gint                  end);
@@ -224,9 +221,9 @@ gimp_histogram_tool_initialize (GimpTool    *tool,
 		     FALSE);
   gimp_histogram_calculate (histogram_dialog->hist, &PR, NULL);
 
-  gimp_histogram_view_update (histogram_dialog->histogram_box->histogram,
-                              histogram_dialog->hist);
-  gimp_histogram_view_set_range (histogram_dialog->histogram_box->histogram,
+  gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (histogram_dialog->histogram_box->histogram),
+                                     histogram_dialog->hist);
+  gimp_histogram_view_set_range (GIMP_HISTOGRAM_VIEW (histogram_dialog->histogram_box->histogram),
                                  0, 255);
 }
 
@@ -333,7 +330,6 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   HistogramToolDialog *htd;
   GtkWidget *hbox;
   GtkWidget *vbox;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *label;
   gint       i;
@@ -367,13 +363,9 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
 
                               NULL);
 
-  hbox = gtk_hbox_new (TRUE, 0);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (htd->shell)->vbox), hbox);
-  gtk_widget_show (hbox);
-
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);;
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (htd->shell)->vbox), vbox);
   gtk_widget_show (vbox);
 
   /*  The option menu for selecting channels  */
@@ -396,26 +388,12 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   htd->histogram_box =
     GIMP_HISTOGRAM_BOX (gimp_histogram_box_new (_("Intensity Range:")));
   gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (htd->histogram_box),
-                      FALSE, FALSE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (htd->histogram_box));
 
   g_signal_connect (G_OBJECT (htd->histogram_box->histogram), "range_changed",
                     G_CALLBACK (histogram_tool_histogram_range),
                     htd);
-
-  /*  The gradient below the histogram */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  htd->gradient = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (htd->gradient), 
-		    GIMP_HISTOGRAM_VIEW_WIDTH, GRADIENT_HEIGHT);
-  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(htd->gradient));
-  gtk_widget_show (htd->gradient);
-
-  histogram_tool_gradient_draw (htd->gradient, GIMP_HISTOGRAM_VALUE);
 
   /*  The table containing histogram information  */
   table = gtk_table_new (3, 4, TRUE);
@@ -473,8 +451,7 @@ histogram_tool_channel_callback (GtkWidget *widget,
 
   gimp_menu_item_update (widget, &htd->channel);
 
-  gimp_histogram_view_channel (htd->histogram_box->histogram, htd->channel);
-  histogram_tool_gradient_draw (htd->gradient, htd->channel);
+  gimp_histogram_box_set_channel (htd->histogram_box, htd->channel);
 }
 
 static gboolean
@@ -496,43 +473,4 @@ histogram_set_sensitive_callback (gpointer             item_data,
     }
   
   return FALSE;
-}
-
-static void
-histogram_tool_gradient_draw (GtkWidget            *gradient,
-			      GimpHistogramChannel  channel)
-{
-  guchar buf[GIMP_HISTOGRAM_VIEW_WIDTH * 3];
-  guchar r, g, b;
-  gint   i;
-
-  r = g = b = 0;
-  switch (channel)
-    {
-    case GIMP_HISTOGRAM_VALUE:
-    case GIMP_HISTOGRAM_ALPHA:  r = g = b = 1;
-      break;
-    case GIMP_HISTOGRAM_RED:    r = 1;
-      break;
-    case GIMP_HISTOGRAM_GREEN:  g = 1;
-      break;
-    case GIMP_HISTOGRAM_BLUE:   b = 1;
-      break;
-    default:
-      g_warning ("unknown channel type, can't happen\n");
-      break;
-    }
-
-  for (i = 0; i < GIMP_HISTOGRAM_VIEW_WIDTH; i++)
-    {
-      buf[3 * i + 0] = i * r;
-      buf[3 * i + 1] = i * g;
-      buf[3 * i + 2] = i * b;
-    }
-
-  for (i = 0; i < GRADIENT_HEIGHT; i++)
-    gtk_preview_draw_row (GTK_PREVIEW (gradient),
-			  buf, 0, i, GIMP_HISTOGRAM_VIEW_WIDTH);
-
-  gtk_widget_queue_draw (gradient);
 }

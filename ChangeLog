@@ -1,9 +1,19 @@
+2002-10-15  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimplevelstool.[ch]
+	* app/tools/gimpthresholdtool.c
+	* app/widgets/gimphistogrambox.[ch]
+	* app/widgets/gimphistogramview.[ch]: started to clean up histogram
+	code. Moved the gradient into the GimpHistogramBox. Draw only in the
+	expose event handler.
+
 2002-10-15  Dave Neary  <bolsh@gimp.org>
+	
 	* app/tools/gimpinktool.c
-	* app/tools/gimptexttool.c: Remooved warnings by
-	including string.h, and changing from gtk_pixmap_new()
-	to gtk_image_new_from_pixmap().
-	 
+	* app/tools/gimptexttool.c: Removed warnings by including
+	string.h, and changing gtk_pixmap_new() to gtk_image_new_from_pixmap().
+
 2002-10-14  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/png.c: Corrected coding standard issues

@@ -35,9 +35,10 @@ struct _GimpHistogramBox
   GtkVBox            parent_instance;
 
   GtkWidget         *label;
+  GimpHistogramView *histogram;
+  GtkWidget         *gradient;
   GtkAdjustment     *low_adj;
   GtkAdjustment     *high_adj;
-  GimpHistogramView *histogram;
 };
 
 struct _GimpHistogramBoxClass
@@ -46,9 +47,11 @@ struct _GimpHistogramBoxClass
 };
 
 
-GType       gimp_histogram_box_get_type (void) G_GNUC_CONST;
+GType       gimp_histogram_box_get_type    (void) G_GNUC_CONST;
 
-GtkWidget * gimp_histogram_box_new      (const gchar *label);
+GtkWidget * gimp_histogram_box_new         (const gchar          *label);
+void        gimp_histogram_box_set_channel (GimpHistogramBox     *box,
+                                            GimpHistogramChannel  channel);
 
 
 #endif  /*  __GIMP_HISTOGRAM_BOX_H__  */

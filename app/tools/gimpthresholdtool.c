@@ -209,7 +209,8 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
   g_signal_handlers_block_by_func (G_OBJECT (t_tool->histogram_box->histogram),
                                    gimp_threshold_tool_histogram_range,
                                    t_tool);
-  gimp_histogram_view_update (t_tool->histogram_box->histogram, t_tool->hist);
+  gimp_histogram_view_set_histogram (t_tool->histogram_box->histogram,
+                                     t_tool->hist);
   gimp_histogram_view_set_range (t_tool->histogram_box->histogram,
                                  t_tool->threshold->low_threshold,
                                  t_tool->threshold->high_threshold);
@@ -241,25 +242,15 @@ static void
 gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpThresholdTool *t_tool;
-  GtkWidget         *hbox;
-  GtkWidget         *vbox;
-  GtkWidget         *histbox;
+  GtkWidget         *box;
 
   t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
 
-  hbox = gtk_hbox_new (TRUE, 0);
-  gtk_container_add (GTK_CONTAINER (image_map_tool->main_vbox), hbox);
-  gtk_widget_show (hbox);
+  box = gimp_histogram_box_new (_("Threshold Range:"));
+  gtk_container_add (GTK_CONTAINER (image_map_tool->main_vbox), box);
+  gtk_widget_show (box);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  histbox = gimp_histogram_box_new (_("Threshold Range:"));
-  gtk_box_pack_start (GTK_BOX (vbox), histbox, FALSE, FALSE, 0);
-  gtk_widget_show (histbox);
-
-  t_tool->histogram_box = GIMP_HISTOGRAM_BOX (histbox);
+  t_tool->histogram_box = GIMP_HISTOGRAM_BOX (box);
 
   g_signal_connect (G_OBJECT (t_tool->histogram_box->histogram), "range_changed",
                     G_CALLBACK (gimp_threshold_tool_histogram_range),

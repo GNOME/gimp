@@ -48,7 +48,7 @@ struct _GimpLevelsTool
   gint                  slider_pos[5];  /*  positions for the five sliders  */
 
   GimpHistogram        *hist;
-  GimpHistogramView    *histogram;
+  GtkWidget            *hist_view;
   GtkAdjustment        *low_input_data;
   GtkAdjustment        *gamma_data;
   GtkAdjustment        *high_input_data;

@@ -31,15 +31,7 @@
 #include "gimphistogramview.h"
 
 
-#define HISTOGRAM_MASK GDK_EXPOSURE_MASK | \
-                       GDK_BUTTON_PRESS_MASK | \
-                       GDK_BUTTON_RELEASE_MASK | \
-		       GDK_BUTTON1_MOTION_MASK
-
-#define HISTOGRAM 0x1
-#define RANGE     0x2
-#define ALL       0xF
-
+#define RANGE_MASK ()
 
 enum
 {
@@ -48,8 +40,11 @@ enum
 };
 
 
-static void   gimp_histogram_view_class_init (GimpHistogramViewClass *klass);
-static void   gimp_histogram_view_init       (GimpHistogramView      *view);
+static void  gimp_histogram_view_class_init (GimpHistogramViewClass *klass);
+static void  gimp_histogram_view_init       (GimpHistogramView      *view);
+static void  gimp_histogram_view_finalize   (GObject                *object);
+static gboolean  gimp_histogram_view_expose (GtkWidget              *widget,
+                                             GdkEventExpose         *event);
 
 
 static guint histogram_view_signals[LAST_SIGNAL] = { 0 };
@@ -88,7 +83,13 @@ gimp_histogram_view_get_type (void)
 static void
 gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
 {
+  GObjectClass   *object_class;
+  GtkWidgetClass *widget_class;
+
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class = G_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
 
   histogram_view_signals[RANGE_CHANGED] =
     g_signal_new ("range_changed",
@@ -100,6 +101,9 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
 		  G_TYPE_NONE, 2,
 		  G_TYPE_INT,
 		  G_TYPE_INT);
+
+  object_class->finalize     = gimp_histogram_view_finalize;
+  widget_class->expose_event = gimp_histogram_view_expose;
 
   klass->range_changed = NULL;
 }
@@ -113,69 +117,81 @@ gimp_histogram_view_init (GimpHistogramView *view)
   view->end       = 255;
 }
 
-static void
-gimp_histogram_view_draw (GimpHistogramView *view,
-                          gint               update)
+static void 
+gimp_histogram_view_finalize (GObject *object)
 {
-  GtkWidget *widget;
-  gdouble    max;
-  gdouble    v;
-  gint       i, x, y;
-  gint       x1, x2;
-  gint       width, height;
+  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (object);
+  
+  if (view->range_gc)
+    {
+      g_object_unref (view->range_gc);
+      view->range_gc = NULL;
+    }
+}
 
-  widget = GTK_WIDGET (view);
+static gboolean
+gimp_histogram_view_expose (GtkWidget      *widget,
+                            GdkEventExpose *event)
+{
+  GimpHistogramView *view;
+  gint               i;
+  gint               width, height;
+  gdouble            max;
 
-  width  = widget->allocation.width - 2;
+  view = GIMP_HISTOGRAM_VIEW (widget);
+
+  if (!view->histogram)
+    return TRUE;
+
+  width  = widget->allocation.width  - 2;
   height = widget->allocation.height - 2;
 
-  if (update & HISTOGRAM)
-    {
-      /*  find the maximum value  */
-      max = gimp_histogram_get_maximum (view->histogram,
-					view->channel);
+  /*  find the maximum value  */
+  max = gimp_histogram_get_maximum (view->histogram, view->channel);
 
-      if (max > 0.0)
-	max = log (max);
+  if (max > 0.0)
+    max = log (max);
+  else
+    max = 1.0;
+
+  /*  Draw the axis  */
+  gdk_draw_line (widget->window, widget->style->black_gc,
+                 1, height + 1, width, height + 1);
+  
+  /*  Draw the spikes  */
+  for (i = 0; i < 256; i++)
+    {
+      gint    y;
+      gint    x = (width * i) / 256 + 1;
+      gdouble v = gimp_histogram_get_value (view->histogram, view->channel, i);
+
+      if (v > 0.0)
+        y = (gint) ((height * log (v)) / max);
       else
-	max = 1.0;
+        y = 0;
 
-      /*  clear the histogram  */
-      gdk_window_clear (widget->window);
-
-      /*  Draw the axis  */
       gdk_draw_line (widget->window,
-		     widget->style->black_gc,
-		     1, height + 1, width, height + 1);
-
-      /*  Draw the spikes  */
-      for (i = 0; i < 256; i++)
-	{
-	  x = (width * i) / 256 + 1;
-	  v = gimp_histogram_get_value (view->histogram,
-					view->channel, i);
-	  if (v > 0.0)
-	    y = (int) ((height * log (v)) / max);
-	  else
-	    y = 0;
-	  gdk_draw_line (widget->window,
-			 widget->style->black_gc,
-			 x, height + 1,
-			 x, height + 1 - y);
-	}
+                     widget->style->black_gc,
+                     x, height + 1,
+                     x, height + 1 - y);
     }
 
-  if ((update & RANGE) && view->start >= 0)
+  if (view->start >= 0 && view->end >= 0)
     {
-      x1 = (width * MIN (view->start, view->end)) / 256 + 1;
-      x2 = (width * MAX (view->start, view->end))   / 256 + 1;
+      gint x1 = (width * MIN (view->start, view->end)) / 256 + 1;
+      gint x2 = (width * MAX (view->start, view->end)) / 256 + 1;
 
-      gdk_gc_set_function (widget->style->black_gc, GDK_INVERT);
-      gdk_draw_rectangle (widget->window,
-			  widget->style->black_gc, TRUE,
-			  x1, 1, (x2 - x1) + 1, height);
-      gdk_gc_set_function (widget->style->black_gc, GDK_COPY);
+      if (!view->range_gc)
+        {
+          view->range_gc = gdk_gc_new (widget->window);
+          gdk_gc_set_function (view->range_gc, GDK_INVERT);
+        }
+
+      gdk_draw_rectangle (widget->window, view->range_gc, TRUE,
+                          x1, 1, (x2 - x1) + 1, height);
     }
+
+  return TRUE;
 }
 
 static gint
@@ -191,10 +207,6 @@ gimp_histogram_view_events (GimpHistogramView *view,
 
   switch (event->type)
     {
-    case GDK_EXPOSE:
-      gimp_histogram_view_draw (view, ALL);
-      break;
-
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
 
@@ -207,12 +219,10 @@ gimp_histogram_view_events (GimpHistogramView *view,
 
       width = widget->allocation.width - 2;
 
-      gimp_histogram_view_draw (view, RANGE);
-
       view->start = CLAMP ((((bevent->x - 1) * 256) / width), 0, 255);
       view->end   = view->start;
 
-      gimp_histogram_view_draw (view, RANGE);
+      gtk_widget_queue_draw (widget);
       break;
 
     case GDK_BUTTON_RELEASE:
@@ -239,11 +249,9 @@ gimp_histogram_view_events (GimpHistogramView *view,
       mevent = (GdkEventMotion *) event;
       width = widget->allocation.width - 2;
 
-      gimp_histogram_view_draw (view, RANGE);
-
       view->start = CLAMP ((((mevent->x - 1) * 256) / width), 0, 255);
 
-      gimp_histogram_view_draw (view, RANGE);
+      gtk_widget_queue_draw (widget);
       break;
 
     default:
@@ -253,16 +261,24 @@ gimp_histogram_view_events (GimpHistogramView *view,
   return FALSE;
 }
 
-GimpHistogramView *
-gimp_histogram_view_new (gint width,
-                         gint height)
+GtkWidget *
+gimp_histogram_view_new (gint     width,
+                         gint     height,
+                         gboolean range)
 {
-  GimpHistogramView *view;
+  GtkWidget *view;
 
   view = g_object_new (GIMP_TYPE_HISTOGRAM_VIEW, NULL);
 
-  gtk_widget_set_size_request (GTK_WIDGET (view), width + 2, height + 2);
-  gtk_widget_set_events (GTK_WIDGET (view), HISTOGRAM_MASK);
+  gtk_widget_set_size_request (view, width + 2, height + 2);
+
+  if (range)
+    gtk_widget_add_events (view,
+                           GDK_BUTTON_PRESS_MASK   |
+                           GDK_BUTTON_RELEASE_MASK |
+                           GDK_BUTTON1_MOTION_MASK);
+  else
+    GIMP_HISTOGRAM_VIEW (view)->start = GIMP_HISTOGRAM_VIEW (view)->end = -1;
 
   g_signal_connect (G_OBJECT (view), "event",
                     G_CALLBACK (gimp_histogram_view_events),
@@ -272,24 +288,20 @@ gimp_histogram_view_new (gint width,
 }
 
 void
-gimp_histogram_view_update (GimpHistogramView *view,
-                            GimpHistogram     *histogram)
+gimp_histogram_view_set_histogram (GimpHistogramView *view,
+                                   GimpHistogram     *histogram)
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
 
-  view->histogram = histogram;
+  if (view->histogram != histogram)
+    {
+      view->histogram = histogram;
 
-  if (! histogram)
-    return;
-
-  if (view->channel >= gimp_histogram_nchannels (histogram))
-    gimp_histogram_view_channel (view, 0);
-
+      if (histogram && view->channel >= gimp_histogram_nchannels (histogram))
+        gimp_histogram_view_set_channel (view, 0);
+    }
+  
   gtk_widget_queue_draw (GTK_WIDGET (view));
-
-  g_signal_emit (G_OBJECT (view),
-                 histogram_view_signals[RANGE_CHANGED], 0,
-                 view->start, view->end);
 }
 
 void
@@ -299,12 +311,10 @@ gimp_histogram_view_set_range (GimpHistogramView *view,
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
 
-  gimp_histogram_view_draw (view, RANGE);
-
   view->start = MIN (start, end);
   view->end   = MAX (start, end);
 
-  gimp_histogram_view_draw (view, RANGE);
+  gtk_widget_queue_draw (GTK_WIDGET (view));
 
   g_signal_emit (G_OBJECT (view),
                  histogram_view_signals[RANGE_CHANGED], 0,
@@ -312,14 +322,14 @@ gimp_histogram_view_set_range (GimpHistogramView *view,
 }
 
 void
-gimp_histogram_view_channel (GimpHistogramView *view,
-                             gint               channel)
+gimp_histogram_view_set_channel (GimpHistogramView *view,
+                                 gint               channel)
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
 
   view->channel = channel;
 
-  gimp_histogram_view_draw (view, ALL);
+  gtk_widget_queue_draw (GTK_WIDGET (view));
 
   g_signal_emit (G_OBJECT (view),
                  histogram_view_signals[RANGE_CHANGED], 0,

@@ -291,8 +291,8 @@ gimp_levels_tool_initialize (GimpTool    *tool,
                           DRAW | INPUT_LEVELS | OUTPUT_LEVELS));
 
   gimp_drawable_calculate_histogram (drawable, l_tool->hist);
-  gimp_histogram_view_update (l_tool->histogram, l_tool->hist);
-  gimp_histogram_view_set_range (l_tool->histogram, -1, -1);
+  gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (l_tool->hist_view),
+                                     l_tool->hist);
 }
 
 static void
@@ -386,16 +386,11 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  l_tool->histogram = gimp_histogram_view_new (GIMP_HISTOGRAM_VIEW_WIDTH,
-                                               GIMP_HISTOGRAM_VIEW_HEIGHT);
-  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (l_tool->histogram));
-
-  /* ignore button_events,
-     since we don't want the user to be able to set the range */
-  gtk_widget_set_events (GTK_WIDGET (l_tool->histogram), 
-			 (GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK));
-
-  gtk_widget_show (GTK_WIDGET (l_tool->histogram));
+  l_tool->hist_view = gimp_histogram_view_new (GIMP_HISTOGRAM_VIEW_WIDTH,
+                                               GIMP_HISTOGRAM_VIEW_HEIGHT,
+                                               FALSE);
+  gtk_container_add (GTK_CONTAINER (frame), l_tool->hist_view);
+  gtk_widget_show (GTK_WIDGET (l_tool->hist_view));
 
   /*  The input levels drawing area  */
   hbox = gtk_hbox_new (TRUE, 2);
@@ -879,20 +874,14 @@ levels_channel_callback (GtkWidget *widget,
 
   if (l_tool->color)
     {
-      gimp_histogram_view_channel (l_tool->histogram, l_tool->channel);
+      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (l_tool->hist_view),
+                                       l_tool->channel);
     }
   else
     {
-      if (l_tool->channel > 1)
-	{
-	  gimp_histogram_view_channel (l_tool->histogram, 1);
-	  l_tool->channel = 2;
-	}
-      else
-	{
-	  gimp_histogram_view_channel (l_tool->histogram, 0);
-	  l_tool->channel = 1;
-	}
+      l_tool->channel = (l_tool->channel > 1) ? 2 : 1;
+      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (l_tool->hist_view),
+                                       l_tool->channel - 1);
     }
 
   levels_update (l_tool, ALL);
