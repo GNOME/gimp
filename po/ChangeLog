@@ -1,3 +1,8 @@
+2005-04-05  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: updated after adding new dialogs and removing the
+	info window.
+
 2005-04-04  Funda Wang  <fundawang@linux.net.cn>
 
 	* zh_CN.po: Updated Simplified Chinese translation.

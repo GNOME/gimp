@@ -140,9 +140,9 @@ app/dialogs/file-save-dialog.c
 app/dialogs/grid-dialog.c
 app/dialogs/image-merge-layers-dialog.c
 app/dialogs/image-new-dialog.c
+app/dialogs/image-property-dialog.c
 app/dialogs/image-scale-dialog.c
 app/dialogs/info-dialog.c
-app/dialogs/info-window.c
 app/dialogs/layer-add-mask-dialog.c
 app/dialogs/layer-options-dialog.c
 app/dialogs/module-dialog.c
@@ -317,6 +317,7 @@ app/widgets/gimpcontainerpopup.c
 app/widgets/gimpcontrollereditor.c
 app/widgets/gimpcontrollerkeyboard.c
 app/widgets/gimpcontrollerwheel.c
+app/widgets/gimpcursorview.c
 app/widgets/gimpdataeditor.c
 app/widgets/gimpdevices.c
 app/widgets/gimpdevicestatus.c
