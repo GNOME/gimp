@@ -1,3 +1,10 @@
+2004-02-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/gui.c (gui_libs_init): added runtime check for
+	fontconfig > 2.2.0 and abort with a dialog box telling the
+	user to upgrade fontconfig if the requirement is not met.
+	Fixes all bugs like #133818.
+
 2004-02-09  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/curve_bend.c: applied patch from Wolfgang Hofer
