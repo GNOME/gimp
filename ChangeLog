@@ -1,3 +1,10 @@
+2004-03-13  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptexttool.[ch]: keep a pointer on the active text
+	layer and let the tool follow the active layer. Fixes bug #124970.
+
+	* app/gui/layers-commands.c: changed accordingly.
+
 2004-03-12  Michael Natterer  <mitch@gimp.org>
 
 	Cleaned up the remaining libgimp API issues:

@@ -579,8 +579,7 @@ layers_text_tool (GimpLayer *layer,
     }
 
   if (GIMP_IS_TEXT_TOOL (active_tool))
-    gimp_text_tool_set_layer (GIMP_TEXT_TOOL (active_tool),
-                              GIMP_TEXT_LAYER (layer));
+    gimp_text_tool_set_layer (GIMP_TEXT_TOOL (active_tool), layer);
 }
 
 

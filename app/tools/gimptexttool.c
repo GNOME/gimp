@@ -76,9 +76,7 @@ static void   gimp_text_tool_cursor_update  (GimpTool          *tool,
 					     GimpDisplay       *gdisp);
 
 static void   gimp_text_tool_connect        (GimpTextTool      *tool,
-					     GimpText          *text,
-                                             gint               off_x,
-                                             gint               off_y);
+					     GimpText          *text);
 
 static void   gimp_text_tool_create_vectors (GimpTextTool      *text_tool);
 static void   gimp_text_tool_create_layer   (GimpTextTool      *text_tool);
@@ -86,6 +84,8 @@ static void   gimp_text_tool_create_layer   (GimpTextTool      *text_tool);
 static void   gimp_text_tool_editor         (GimpTextTool      *text_tool);
 static void   gimp_text_tool_text_changed   (GimpTextEditor    *editor,
 					     GimpTextTool      *text_tool);
+static void   gimp_text_tool_layer_changed  (GimpImage         *image,
+                                             GimpTextTool      *text_tool);
 
 
 /*  local variables  */
@@ -160,9 +160,8 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 {
   GimpTool *tool = GIMP_TOOL (text_tool);
 
-  text_tool->text     = NULL;
-  text_tool->offset_x = 0;
-  text_tool->offset_y = 0;
+  text_tool->text  = NULL;
+  text_tool->layer = NULL;
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_preserve    (tool->control, FALSE);
@@ -188,7 +187,7 @@ gimp_text_tool_control (GimpTool       *tool,
       if (text_tool->editor)
         gtk_widget_destroy (text_tool->editor);
 
-      gimp_text_tool_connect (text_tool, NULL, 0, 0);
+      gimp_text_tool_set_layer (text_tool, NULL);
       break;
 
     default:
@@ -207,10 +206,6 @@ gimp_text_tool_button_press (GimpTool        *tool,
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
   GimpDrawable *drawable;
-  GimpText     *text  = NULL;
-  gint          off_x = 0;
-  gint          off_y = 0;
-  gboolean      edit;
 
   gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
@@ -230,18 +225,20 @@ gimp_text_tool_button_press (GimpTool        *tool,
       if (coords->x > 0 && coords->x < item->width &&
           coords->y > 0 && coords->y < item->height)
         {
-          text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (drawable));
+          GimpLayer *layer = GIMP_LAYER (drawable);
+          gboolean   edit  = (text_tool->layer == layer);
 
-          gimp_item_offsets (item, &off_x, &off_y);
+          gimp_text_tool_set_layer (text_tool, layer);
+
+          if (edit)
+            gimp_text_tool_editor (text_tool);
+
+          return;
         }
     }
 
-  edit = (! text || text == text_tool->text);
-
-  gimp_text_tool_connect (text_tool, text, off_x, off_y);
-
-  if (edit)
-    gimp_text_tool_editor (text_tool);
+  gimp_text_tool_set_layer (text_tool, NULL);
+  gimp_text_tool_editor (text_tool);
 }
 
 static void
@@ -269,8 +266,13 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 
   vectors = gimp_text_vectors_new (gimage, text_tool->text);
 
-  gimp_item_translate (GIMP_ITEM (vectors),
-                       text_tool->offset_x, text_tool->offset_y, FALSE);
+  if (text_tool->layer)
+    {
+      gint x, y;
+
+      gimp_item_offsets (GIMP_ITEM (text_tool->layer), &x, &y);
+      gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
+    }
 
   gimp_image_add_vectors (gimage, vectors, -1);
 
@@ -307,7 +309,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool)
   if (! layer)
     return;
 
-  gimp_text_tool_connect (text_tool, text, text_tool->x1, text_tool->y1);
+  gimp_text_tool_connect (text_tool, text);
 
   gimp_tool_control_set_preserve (tool->control, TRUE);
 
@@ -327,13 +329,13 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool)
   gimp_tool_control_set_preserve (tool->control, FALSE);
 
   gimp_image_flush (gimage);
+
+  gimp_text_tool_set_layer (text_tool, layer);
 }
 
 static void
 gimp_text_tool_connect (GimpTextTool *text_tool,
-                        GimpText     *text,
-                        gint          off_x,
-                        gint          off_y)
+                        GimpText     *text)
 {
   GimpTool        *tool = GIMP_TOOL (text_tool);
   GimpTextOptions *options;
@@ -361,8 +363,7 @@ gimp_text_tool_connect (GimpTextTool *text_tool,
       g_object_unref (text_tool->text);
       text_tool->text = NULL;
 
-      text_tool->offset_x = 0;
-      text_tool->offset_y = 0;
+      text_tool->layer = NULL;
     }
 
   if (text)
@@ -370,9 +371,6 @@ gimp_text_tool_connect (GimpTextTool *text_tool,
       text_tool->text = g_object_ref (text);
 
       gimp_text_options_connect_text (options, text);
-
-      text_tool->offset_x = off_x;
-      text_tool->offset_y = off_y;
 
       if (button)
         {
@@ -440,19 +438,54 @@ gimp_text_tool_text_changed (GimpTextEditor *editor,
     }
 }
 
-void
-gimp_text_tool_set_layer (GimpTextTool  *text_tool,
-                          GimpTextLayer *text_layer)
+static void
+gimp_text_tool_layer_changed (GimpImage    *image,
+                              GimpTextTool *text_tool)
 {
+  gimp_text_tool_set_layer (text_tool, gimp_image_get_active_layer (image));
+}
+
+void
+gimp_text_tool_set_layer (GimpTextTool *text_tool,
+                          GimpLayer    *layer)
+{
+  GimpImage *image;
+
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
-  g_return_if_fail (text_layer == NULL || GIMP_IS_TEXT_LAYER (text_layer));
 
-  if (text_layer->text)
+  if (layer && GIMP_IS_TEXT_LAYER (layer) && GIMP_TEXT_LAYER (layer)->text)
     {
-      gint x, y;
+      gimp_text_tool_connect (text_tool, GIMP_TEXT_LAYER (layer)->text);
 
-      gimp_item_offsets (GIMP_ITEM (text_layer), &x, &y);
+      if (text_tool->layer == layer)
+        return;
 
-      gimp_text_tool_connect (text_tool, text_layer->text, x, y);
+      if (text_tool->layer)
+        {
+          image = gimp_item_get_image (GIMP_ITEM (text_tool->layer));
+          g_signal_handlers_disconnect_by_func (image,
+                                                gimp_text_tool_layer_changed,
+                                                text_tool);
+        }
+
+      text_tool->layer = layer;
+
+      image = gimp_item_get_image (GIMP_ITEM (text_tool->layer));
+      g_signal_connect_object (image, "active_layer_changed",
+                               G_CALLBACK (gimp_text_tool_layer_changed),
+                               text_tool, 0);
+    }
+  else
+    {
+      gimp_text_tool_connect (text_tool, NULL);
+
+      if (text_tool->layer)
+        {
+          image = gimp_item_get_image (GIMP_ITEM (text_tool->layer));
+          g_signal_handlers_disconnect_by_func (image,
+                                                gimp_text_tool_layer_changed,
+                                                text_tool);
+          text_tool->layer = NULL;
+        }
     }
 }

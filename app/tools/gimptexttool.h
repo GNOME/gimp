@@ -39,10 +39,8 @@ struct _GimpTextTool
   gint           x1, y1;
   gint           x2, y2;
 
-  gint           offset_x;
-  gint           offset_y;
-
   GimpText      *text;
+  GimpLayer     *layer;
 
   GtkWidget     *editor;
 };
@@ -58,8 +56,8 @@ void    gimp_text_tool_register  (GimpToolRegisterCallback  callback,
 
 GType   gimp_text_tool_get_type  (void) G_GNUC_CONST;
 
-void    gimp_text_tool_set_layer (GimpTextTool  *text_tool,
-                                  GimpTextLayer *text_layer);
+void    gimp_text_tool_set_layer (GimpTextTool *text_tool,
+                                  GimpLayer    *layer);
 
 
 #endif /* __GIMP_TEXT_TOOL_H__ */
