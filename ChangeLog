@@ -1,10 +1,18 @@
+2004-09-13  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD:
+
+	* app/widgets/gimphelp.c: simulate the behaviour of GNU gettext and
+	look at the LANGUAGE environment variable if the locale is not "C".
+
 2004-09-02  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* configure.in: Add «nb» to ALL_LINGUAS.
+	* configure.in: Add "nb" to ALL_LINGUAS.
 
 2004-09-01  Helvetix Victorinox  <helvetix@gimp.org>
  
-	* Merged from HEAD:
+	Merged from HEAD:
+
 	* app/composite/gimp-composite-*.[ch]
 	* app/composite/make-installer.py: backported changes to composite
 	  code from HEAD branch. Fixes bug #149429 and works around problems
