@@ -292,16 +292,16 @@ static MenuItem option_items[] =
 /* the ops buttons */
 
 static OpsButtonCallback raise_layers_ext_callbacks[] = 
-{ layers_dialog_raise_layer_to_top_callback, NULL, NULL };
+{ layers_dialog_raise_layer_to_top_callback, NULL, NULL, NULL };
 
 static OpsButtonCallback lower_layers_ext_callbacks[] = 
-{ layers_dialog_lower_layer_to_bottom_callback, NULL, NULL };
+{ layers_dialog_lower_layer_to_bottom_callback, NULL, NULL, NULL };
 
 static OpsButton layers_ops_buttons[] =
 {
   { new_xpm, layers_dialog_new_layer_callback, NULL, N_("New Layer"), NULL, 0 },
-  { raise_xpm, layers_dialog_raise_layer_callback, raise_layers_ext_callbacks, N_("Raise Layer"), NULL, 0 },
-  { lower_xpm, layers_dialog_lower_layer_callback, lower_layers_ext_callbacks, N_("Lower Layer"), NULL, 0 },
+  { raise_xpm, layers_dialog_raise_layer_callback, raise_layers_ext_callbacks, N_("Raise Layer    \n<Shift> To Top"), NULL, 0 },
+  { lower_xpm, layers_dialog_lower_layer_callback, lower_layers_ext_callbacks, N_("Lower Layer       \n<Shift> To Bottom"), NULL, 0 },
   { duplicate_xpm, layers_dialog_duplicate_layer_callback, NULL, N_("Duplicate Layer"), NULL, 0 },
   { delete_xpm, layers_dialog_delete_layer_callback, NULL, N_("Delete Layer"), NULL, 0 },
   { anchor_xpm, layers_dialog_anchor_layer_callback, NULL, N_("Anchor Layer"), NULL, 0 },

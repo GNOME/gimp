@@ -1,3 +1,12 @@
+Thu Jun  3 16:51:18 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* app/channels_dialog.c
+	* app/layers_dialog.c
+	* app/ops_buttons.[ch]: Channels can now be intersected with the 
+	active selection. Bound this to <Shift><Ctrl> and <Alt> when pressing
+	the 'Channel to Selection'-button in the Channels dialog. Added 
+	tooltips for all modifier functions.
+
 Thur Jun 3 9:06:00 CST 1999 Seth Burgess <sjburges@gimp.org>
 
 	* plug-ins/script-fu/scripts/drop-shadow.scm: you can't

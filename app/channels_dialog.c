@@ -126,6 +126,7 @@ static void channels_dialog_delete_channel_callback (GtkWidget *, gpointer);
 static void channels_dialog_channel_to_sel_callback (GtkWidget *, gpointer);
 static void channels_dialog_add_channel_to_sel_callback (GtkWidget *, gpointer);
 static void channels_dialog_sub_channel_from_sel_callback (GtkWidget *, gpointer);
+static void channels_dialog_intersect_channel_with_sel_callback (GtkWidget *, gpointer);
 
 /*  channel widget function prototypes  */
 static ChannelWidget *channel_widget_get_ID (Channel *);
@@ -167,9 +168,11 @@ static MenuItem channels_ops[] =
     channels_dialog_delete_channel_callback, NULL, NULL, NULL },
   { N_("Channel To Selection"), 'S', GDK_CONTROL_MASK,
     channels_dialog_channel_to_sel_callback, NULL, NULL, NULL },
-  { N_("Add Channel To Selection"), 0, 0,
+  { N_("Add To Selection"), 0, 0,
     channels_dialog_add_channel_to_sel_callback, NULL, NULL, NULL },
-  { N_("Sub Channel From Selection"), 0, 0,
+  { N_("Subtract From Selection"), 0, 0,
+    channels_dialog_sub_channel_from_sel_callback, NULL, NULL, NULL },
+  { N_("Intersect With Selection"), 0, 0,
     channels_dialog_sub_channel_from_sel_callback, NULL, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };
@@ -178,8 +181,12 @@ static MenuItem channels_ops[] =
 /* the ops buttons */
 
 static OpsButtonCallback to_selection_ext_callbacks[] = 
-{ channels_dialog_add_channel_to_sel_callback, 
-  channels_dialog_sub_channel_from_sel_callback, NULL };
+{ 
+  channels_dialog_add_channel_to_sel_callback,          /* SHIFT */
+  channels_dialog_sub_channel_from_sel_callback,        /* CTRL  */
+  channels_dialog_intersect_channel_with_sel_callback,  /* MOD1  */
+  channels_dialog_intersect_channel_with_sel_callback,  /* SHIFT + CTRL */
+};
 
 static OpsButton channels_ops_buttons[] =
 {
@@ -188,7 +195,7 @@ static OpsButton channels_ops_buttons[] =
   { lower_xpm, channels_dialog_lower_channel_callback, NULL, N_("Lower Channel"), NULL, 0 },
   { duplicate_xpm, channels_dialog_duplicate_channel_callback, NULL, N_("Duplicate Channel"), NULL, 0 },
   { delete_xpm, channels_dialog_delete_channel_callback, NULL, N_("Delete Channel"), NULL, 0 },
-  { toselection_xpm, channels_dialog_channel_to_sel_callback, to_selection_ext_callbacks, N_("Channel To Selection"), NULL, 0 },
+  { toselection_xpm, channels_dialog_channel_to_sel_callback, to_selection_ext_callbacks, N_("Channel To Selection \n<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"), NULL, 0 },
   { NULL, NULL, NULL, NULL, NULL, 0 }
 };
 
@@ -575,6 +582,8 @@ channels_dialog_set_menu_sensitivity ()
   gtk_widget_set_sensitive (channels_ops[6].widget, aux_sensitive);
   /* sub channel from selection */
   gtk_widget_set_sensitive (channels_ops[7].widget, aux_sensitive);
+  /* intersect channel with selection */
+  gtk_widget_set_sensitive (channels_ops[8].widget, aux_sensitive);
 }
 
 
@@ -966,7 +975,7 @@ channels_dialog_channel_to_sel_callback (GtkWidget *w,
 
 static void
 channels_dialog_add_channel_to_sel_callback (GtkWidget *w,
-					 gpointer   client_data)
+					     gpointer   client_data)
 {
   GImage *gimage;
   Channel *active_channel;
@@ -992,7 +1001,6 @@ channels_dialog_add_channel_to_sel_callback (GtkWidget *w,
     }
 }
 
-
 static void
 channels_dialog_sub_channel_from_sel_callback (GtkWidget *w,
 					 gpointer   client_data)
@@ -1014,6 +1022,34 @@ channels_dialog_sub_channel_from_sel_callback (GtkWidget *w,
        channel_combine_mask (new_channel,
                              active_channel,
 			     SUB, 
+			     0, 0);  /* off x/y */
+      gimage_mask_load (gimage, new_channel);
+      channel_delete (new_channel);
+      gdisplays_flush ();
+    }
+}
+
+static void
+channels_dialog_intersect_channel_with_sel_callback (GtkWidget *w,
+						     gpointer   client_data)
+{
+  GImage *gimage;
+  Channel *active_channel;
+  Channel *new_channel;
+
+  /*  if there is a currently selected gimage
+   */
+  if (!channelsD)
+    return;
+  if (! (gimage = channelsD->gimage))
+    return;
+
+  if ((active_channel = gimage_get_active_channel (gimage)))
+    {
+       new_channel = channel_copy (gimage_get_mask (gimage));
+       channel_combine_mask (new_channel,
+                             active_channel,
+			     INTERSECT, 
 			     0, 0);  /* off x/y */
       gimage_mask_load (gimage, new_channel);
       channel_delete (new_channel);

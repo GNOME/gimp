@@ -134,8 +134,13 @@ ops_button_pressed_callback (GtkWidget *widget,
   g_return_if_fail (client_data != NULL);
   ops_button = (OpsButton*)client_data;
 
-  if (bevent->state & GDK_SHIFT_MASK) 
-    ops_button->modifier = OPS_BUTTON_MODIFIER_SHIFT;
+  if (bevent->state & GDK_SHIFT_MASK)
+    {
+      if (bevent->state & GDK_CONTROL_MASK)
+	  ops_button->modifier = OPS_BUTTON_MODIFIER_SHIFT_CTRL;
+      else 
+	ops_button->modifier = OPS_BUTTON_MODIFIER_SHIFT;
+    }
   else if (bevent->state & GDK_CONTROL_MASK)
     ops_button->modifier = OPS_BUTTON_MODIFIER_CTRL;
   else if (bevent->state & GDK_MOD1_MASK)
@@ -153,14 +158,16 @@ ops_button_extended_callback (GtkWidget *widget,
   g_return_if_fail (client_data != NULL);
   ops_button = (OpsButton*)client_data;
 
-  if (ops_button->modifier < 1 || ops_button->modifier > 3)
+  if (ops_button->modifier > OPS_BUTTON_MODIFIER_NONE &&
+      ops_button->modifier < OPS_BUTTON_MODIFIER_LAST)
+    {
+      if (ops_button->ext_callbacks[ops_button->modifier - 1] != NULL)
+	(ops_button->ext_callbacks[ops_button->modifier - 1]) (widget, NULL);
+      else
+	(ops_button->callback) (widget, NULL);
+    } 
+  else 
     (ops_button->callback) (widget, NULL);
-  else {
-    if (ops_button->ext_callbacks[ops_button->modifier - 1] != NULL)
-      (ops_button->ext_callbacks[ops_button->modifier - 1]) (widget, NULL);
-    else
-      (ops_button->callback) (widget, NULL);
-  } 
 
   ops_button->modifier = OPS_BUTTON_MODIFIER_NONE;
 }
