@@ -23,14 +23,8 @@
 #include <string.h>
 #include <errno.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -50,6 +44,7 @@
 #include "core/gimpimagemap.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpcolorbar.h"
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimphelp-ids.h"
@@ -64,10 +59,9 @@
 #include "gimp-intl.h"
 
 
-#define XRANGE_TOP     (1 << 0)
-#define XRANGE_BOTTOM  (1 << 1)
-#define YRANGE         (1 << 2)
-#define ALL            (XRANGE_TOP | XRANGE_BOTTOM | YRANGE)
+#define XRANGE   (1 << 0)
+#define YRANGE   (1 << 1)
+#define ALL      (XRANGE | YRANGE)
 
 /*  NB: take care when changing these values: make sure the curve[] array in
  *  base/curves.h is large enough.
@@ -482,6 +476,8 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget       *menu;
   GtkWidget       *table;
   GtkWidget       *button;
+  GtkWidget       *vbox2;
+  GtkWidget       *bar;
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
@@ -538,8 +534,8 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 		    GTK_EXPAND, GTK_EXPAND, 0, 0);
   gtk_widget_show (frame);
 
-  c_tool->yrange = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (c_tool->yrange), YRANGE_WIDTH, YRANGE_HEIGHT);
+  c_tool->yrange = gimp_color_bar_new (GTK_ORIENTATION_VERTICAL);
+  gtk_widget_set_size_request (c_tool->yrange, YRANGE_WIDTH, YRANGE_HEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), c_tool->yrange);
   gtk_widget_show (c_tool->yrange);
 
@@ -583,10 +579,19 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 		    GTK_EXPAND, GTK_EXPAND, 0, 0);
   gtk_widget_show (frame);
 
-  c_tool->xrange = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (c_tool->xrange), XRANGE_WIDTH, XRANGE_HEIGHT);
-  gtk_container_add (GTK_CONTAINER (frame), c_tool->xrange);
+  vbox2 = gtk_vbox_new (TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+
+  c_tool->xrange = gimp_color_bar_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_widget_set_size_request (c_tool->xrange,
+                               XRANGE_WIDTH, XRANGE_HEIGHT / 2);
+  gtk_box_pack_start (GTK_BOX (vbox2), c_tool->xrange, TRUE, TRUE, 0);
   gtk_widget_show (c_tool->xrange);
+
+  bar = gimp_color_bar_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_pack_start (GTK_BOX (vbox2), bar, TRUE, TRUE, 0);
+  gtk_widget_show (bar);
 
   gtk_widget_show (table);
 
@@ -657,7 +662,7 @@ gimp_curves_tool_reset (GimpImageMapTool *image_map_tool)
        channel++)
     curves_channel_reset (c_tool->curves, channel);
 
-  curves_update (c_tool, XRANGE_TOP);
+  curves_update (c_tool, XRANGE);
   gtk_widget_queue_draw (c_tool->graph);
 }
 
@@ -667,126 +672,46 @@ static void
 curves_update (GimpCurvesTool *c_tool,
 	       gint            update)
 {
-  GimpHistogramChannel sel_channel;
-  gint                 i, j;
+  GimpHistogramChannel channel;
 
   if (c_tool->color)
     {
-      sel_channel = c_tool->channel;
+      channel = c_tool->channel;
     }
   else
     {
       if (c_tool->channel == 2)
-        sel_channel = GIMP_HISTOGRAM_ALPHA;
+        channel = GIMP_HISTOGRAM_ALPHA;
       else
-        sel_channel = GIMP_HISTOGRAM_VALUE;
+        channel = GIMP_HISTOGRAM_VALUE;
     }
 
-  if (update & XRANGE_TOP)
+  if (update & XRANGE)
     {
-      guchar buf[XRANGE_WIDTH * 3];
-
-      switch (sel_channel)
+      switch (channel)
 	{
 	case GIMP_HISTOGRAM_VALUE:
 	case GIMP_HISTOGRAM_ALPHA:
-	  for (i = 0; i < XRANGE_HEIGHT / 2; i++)
-	    {
-	      for (j = 0; j < XRANGE_WIDTH ; j++)
-		{
-		  buf[j * 3 + 0] = c_tool->curves->curve[sel_channel][j];
-		  buf[j * 3 + 1] = c_tool->curves->curve[sel_channel][j];
-		  buf[j * 3 + 2] = c_tool->curves->curve[sel_channel][j];
-		}
-	      gtk_preview_draw_row (GTK_PREVIEW (c_tool->xrange),
-				    buf, 0, i, XRANGE_WIDTH);
-	    }
+          gimp_color_bar_set_buffers (GIMP_COLOR_BAR (c_tool->xrange),
+                                      c_tool->curves->curve[channel],
+                                      c_tool->curves->curve[channel],
+                                      c_tool->curves->curve[channel]);
 	  break;
 
 	case GIMP_HISTOGRAM_RED:
 	case GIMP_HISTOGRAM_GREEN:
 	case GIMP_HISTOGRAM_BLUE:
-	  {
-	    for (i = 0; i < XRANGE_HEIGHT / 2; i++)
-	      {
-		for (j = 0; j < XRANGE_WIDTH; j++)
-		  {
-		    buf[j * 3 + 0] = c_tool->curves->curve[GIMP_HISTOGRAM_RED][j];
-		    buf[j * 3 + 1] = c_tool->curves->curve[GIMP_HISTOGRAM_GREEN][j];
-		    buf[j * 3 + 2] = c_tool->curves->curve[GIMP_HISTOGRAM_BLUE][j];
-		  }
-		gtk_preview_draw_row (GTK_PREVIEW (c_tool->xrange),
-				      buf, 0, i, XRANGE_WIDTH);
-	      }
-	    break;
-	  }
-
-	default:
-	  g_warning ("unknown channel type %d, can't happen!?!?",
-		     c_tool->channel);
+          gimp_color_bar_set_buffers (GIMP_COLOR_BAR (c_tool->xrange),
+                                      c_tool->curves->curve[GIMP_HISTOGRAM_RED],
+                                      c_tool->curves->curve[GIMP_HISTOGRAM_GREEN],
+                                      c_tool->curves->curve[GIMP_HISTOGRAM_BLUE]);
 	  break;
 	}
-
-      gtk_widget_queue_draw_area (c_tool->xrange,
-                                  0, 0,
-                                  XRANGE_WIDTH, XRANGE_HEIGHT / 2);
-    }
-
-  if (update & XRANGE_BOTTOM)
-    {
-      guchar buf[XRANGE_WIDTH * 3];
-
-      for (i = 0; i < XRANGE_WIDTH; i++)
-        {
-          buf[i * 3 + 0] = i;
-          buf[i * 3 + 1] = i;
-          buf[i * 3 + 2] = i;
-        }
-
-      for (i = XRANGE_HEIGHT / 2; i < XRANGE_HEIGHT; i++)
-	gtk_preview_draw_row (GTK_PREVIEW (c_tool->xrange),
-                              buf, 0, i, XRANGE_WIDTH);
-
-      gtk_widget_queue_draw_area (c_tool->xrange,
-                                  0, XRANGE_HEIGHT / 2,
-                                  XRANGE_WIDTH, XRANGE_HEIGHT / 2);
     }
 
   if (update & YRANGE)
     {
-      guchar buf[YRANGE_WIDTH * 3];
-      guchar pix[3];
-
-      for (i = 0; i < YRANGE_HEIGHT; i++)
-	{
-	  switch (sel_channel)
-	    {
-	    case GIMP_HISTOGRAM_VALUE:
-	    case GIMP_HISTOGRAM_ALPHA:
-	      pix[0] = pix[1] = pix[2] = (255 - i);
-	      break;
-
-	    case GIMP_HISTOGRAM_RED:
-	    case GIMP_HISTOGRAM_GREEN:
-	    case GIMP_HISTOGRAM_BLUE:
-	      pix[0] = pix[1] = pix[2] = 0;
-	      pix[sel_channel - 1] = (255 - i);
-	      break;
-
-	    default:
-	      g_warning ("unknown channel type %d, can't happen!?!?",
-			 c_tool->channel);
-	      break;
-	    }
-
-	  for (j = 0; j < YRANGE_WIDTH * 3; j++)
-	    buf[j] = pix[j%3];
-
-	  gtk_preview_draw_row (GTK_PREVIEW (c_tool->yrange),
-				buf, 0, i, YRANGE_WIDTH);
-	}
-
-      gtk_widget_queue_draw (c_tool->yrange);
+      gimp_color_bar_set_channel (GIMP_COLOR_BAR (c_tool->yrange), channel);
     }
 }
 
@@ -806,7 +731,7 @@ curves_channel_callback (GtkWidget      *widget,
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (c_tool->curve_type),
 			           c_tool->curves->curve_type[c_tool->channel]);
 
-  curves_update (c_tool, XRANGE_TOP | YRANGE);
+  curves_update (c_tool, ALL);
 }
 
 static void
@@ -817,7 +742,7 @@ curves_channel_reset_callback (GtkWidget      *widget,
 
   curves_channel_reset (c_tool->curves, c_tool->channel);
 
-  curves_update (c_tool, XRANGE_TOP);
+  curves_update (c_tool, XRANGE);
   gtk_widget_queue_draw (c_tool->graph);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (c_tool));
@@ -874,7 +799,7 @@ curves_curve_type_callback (GtkWidget      *widget,
 
       curves_calculate_curve (c_tool->curves, c_tool->channel);
 
-      curves_update (c_tool, XRANGE_TOP);
+      curves_update (c_tool, XRANGE);
       gtk_widget_queue_draw (c_tool->graph);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (c_tool));
@@ -959,7 +884,7 @@ curves_graph_events (GtkWidget      *widget,
 
       curves_calculate_curve (c_tool->curves, c_tool->channel);
 
-      curves_update (c_tool, XRANGE_TOP);
+      curves_update (c_tool, XRANGE);
       gtk_widget_queue_draw (c_tool->graph);
 
       return TRUE;
@@ -1058,7 +983,7 @@ curves_graph_events (GtkWidget      *widget,
                            GIMP_CURSOR_MODIFIER_NONE);
 	}
 
-      curves_update (c_tool, XRANGE_TOP);
+      curves_update (c_tool, XRANGE);
 
       c_tool->cursor_x = tx - RADIUS;
       c_tool->cursor_y = ty - RADIUS;

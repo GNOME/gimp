@@ -31,6 +31,8 @@ libappwidgets_a_sources = \
 	gimpcellrendererviewable.h	\
 	gimpchanneltreeview.c		\
 	gimpchanneltreeview.h		\
+	gimpcolorbar.c			\
+	gimpcolorbar.h			\
 	gimpcolordisplayeditor.c	\
 	gimpcolordisplayeditor.h	\
 	gimpcoloreditor.c		\

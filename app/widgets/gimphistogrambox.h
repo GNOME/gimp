@@ -36,8 +36,6 @@ struct _GimpHistogramBox
 
   GtkWidget         *label;
   GimpHistogramView *view;
-  GtkWidget         *gradient;
-  guchar            *gradient_buf;
 
   GtkAdjustment     *low_adj;
   GtkAdjustment     *high_adj;

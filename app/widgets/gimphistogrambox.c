@@ -28,6 +28,7 @@
 
 #include "base/gimphistogram.h"
 
+#include "gimpcolorbar.h"
 #include "gimphistogrambox.h"
 #include "gimphistogramview.h"
 #include "gimppropwidgets.h"
@@ -35,16 +36,14 @@
 #include "gimp-intl.h"
 
 
-/* #define DEBUG_VIEW */
+/*  #define DEBUG_VIEW  */
 
-#define GRADIENT_HEIGHT 10
+#define GRADIENT_HEIGHT 8
 
 
 /*  local function prototypes  */
 
-static void   gimp_histogram_box_class_init  (GimpHistogramBoxClass *klass);
-static void   gimp_histogram_box_init        (GimpHistogramBox      *histogram_box);
-static void   gimp_histogram_box_finalize    (GObject               *object);
+static void   gimp_histogram_box_init            (GimpHistogramBox  *box);
 
 static void   gimp_histogram_box_low_adj_update  (GtkAdjustment     *adj,
                                                   GimpHistogramBox  *box);
@@ -54,16 +53,12 @@ static void   gimp_histogram_box_histogram_range (GimpHistogramView *view,
                                                   gint               start,
                                                   gint               end,
                                                   GimpHistogramBox  *box);
-
-static void     gimp_histogram_box_gradient_size_allocate (GtkWidget      *widget,
-                                                           GtkAllocation  *allocation,
-                                                           gpointer        data);
-static gboolean gimp_histogram_box_gradient_expose        (GtkWidget      *widget,
-                                                           GdkEventExpose *event,
-                                                           gpointer        data);
-
-
-static GtkVBoxClass *parent_class = NULL;
+static void   gimp_histogram_box_channel_notify  (GimpHistogramView *view,
+                                                  GParamSpec        *pspec,
+                                                  GimpColorBar      *bar);
+static void   gimp_histogram_box_border_notify   (GimpHistogramView *view,
+                                                  GParamSpec        *pspec,
+                                                  GimpColorBar      *bar);
 
 
 GType
@@ -78,8 +73,8 @@ gimp_histogram_box_get_type (void)
         sizeof (GimpHistogramBoxClass),
 	(GBaseInitFunc) NULL,
 	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_histogram_box_class_init,
-	NULL,           /* class_finalize */
+	(GClassInitFunc) NULL,
+        NULL,           /* class_finalize */
 	NULL,           /* class_data     */
 	sizeof (GimpHistogramBox),
 	0,              /* n_preallocs    */
@@ -95,18 +90,6 @@ gimp_histogram_box_get_type (void)
 }
 
 static void
-gimp_histogram_box_class_init (GimpHistogramBoxClass *klass)
-{
-  GObjectClass *object_class;
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class = G_OBJECT_CLASS (klass);
-
-  object_class->finalize = gimp_histogram_box_finalize;
-}
-
-static void
 gimp_histogram_box_init (GimpHistogramBox *box)
 {
   GtkWidget *hbox;
@@ -114,6 +97,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   GtkObject *adjustment;
   GtkWidget *frame;
   GtkWidget *view;
+  GtkWidget *bar;
 
   gtk_box_set_spacing (GTK_BOX (box), 2);
 
@@ -139,25 +123,24 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_box_pack_start (GTK_BOX (box), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  box->gradient = gtk_drawing_area_new ();
-  gtk_widget_set_size_request (box->gradient, -1,
+  bar = g_object_new (GIMP_TYPE_COLOR_BAR,
+                      "channel", box->view->channel,
+                      "xpad",    box->view->border_width,
+                      "ypad",    box->view->border_width,
+                      NULL);
+
+  gtk_widget_set_size_request (bar,
+                               -1,
                                GRADIENT_HEIGHT + 2 * box->view->border_width);
-  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (box->gradient));
-  gtk_widget_show (box->gradient);
+  gtk_container_add (GTK_CONTAINER (frame), bar);
+  gtk_widget_show (bar);
 
-  g_signal_connect (box->gradient, "size_allocate",
-                    G_CALLBACK (gimp_histogram_box_gradient_size_allocate),
-                    box);
-  g_signal_connect (box->gradient, "expose_event",
-                    G_CALLBACK (gimp_histogram_box_gradient_expose),
-                    box);
-
-  g_signal_connect_swapped (view, "notify::histogram-channel",
-			    G_CALLBACK (gtk_widget_queue_draw),
-			    box->gradient);
-  g_signal_connect_swapped (view, "notify::border-width",
-			    G_CALLBACK (gtk_widget_queue_resize),
-			    box->gradient);
+  g_signal_connect (view, "notify::histogram-channel",
+                    G_CALLBACK (gimp_histogram_box_channel_notify),
+                    bar);
+  g_signal_connect (view, "notify::border-width",
+                    G_CALLBACK (gimp_histogram_box_border_notify),
+                    bar);
 
   /*  The range selection */
   hbox = gtk_hbox_new (FALSE, 4);
@@ -206,20 +189,6 @@ gimp_histogram_box_init (GimpHistogramBox *box)
 }
 
 static void
-gimp_histogram_box_finalize (GObject *object)
-{
-  GimpHistogramBox *box = GIMP_HISTOGRAM_BOX (object);
-
-  if (box->gradient_buf)
-    {
-      g_free (box->gradient_buf);
-      box->gradient_buf = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
 gimp_histogram_box_low_adj_update (GtkAdjustment    *adjustment,
                                    GimpHistogramBox *box)
 {
@@ -248,7 +217,7 @@ gimp_histogram_box_high_adj_update (GtkAdjustment    *adjustment,
 }
 
 static void
-gimp_histogram_box_histogram_range (GimpHistogramView *widget,
+gimp_histogram_box_histogram_range (GimpHistogramView *view,
                                     gint               start,
                                     gint               end,
                                     GimpHistogramBox  *box)
@@ -263,81 +232,25 @@ gimp_histogram_box_histogram_range (GimpHistogramView *widget,
 }
 
 static void
-gimp_histogram_box_gradient_size_allocate (GtkWidget     *widget,
-                                           GtkAllocation *allocation,
-                                           gpointer       data)
+gimp_histogram_box_channel_notify (GimpHistogramView *view,
+                                   GParamSpec        *pspec,
+                                   GimpColorBar      *bar)
 {
-  GimpHistogramBox *box = GIMP_HISTOGRAM_BOX (data);
-  gint              border;
-  gint              width, height;
-
-  border = box->view->border_width;
-  width  = allocation->width  - 2 * border;
-  height = allocation->height - 2 * border;
-
-  box->gradient_buf = g_realloc (box->gradient_buf, MAX (0, 3 * width * height));
+  gimp_color_bar_set_channel (bar, view->channel);
 }
 
-static gboolean
-gimp_histogram_box_gradient_expose (GtkWidget      *widget,
-                                    GdkEventExpose *event,
-                                    gpointer        data)
+static void
+gimp_histogram_box_border_notify (GimpHistogramView *view,
+                                  GParamSpec        *pspec,
+                                  GimpColorBar      *bar)
 {
-  GimpHistogramBox     *box = GIMP_HISTOGRAM_BOX (data);
-  GimpHistogramChannel  channel;
+  g_object_set (bar,
+                "xpad", view->border_width,
+                "ypad", view->border_width,
+                NULL);
 
-  gint    i;
-  gint    border;
-  gint    width, height;
-  guchar  r, g, b;
-
-  border = box->view->border_width;
-  width  = widget->allocation.width  - 2 * border;
-  height = widget->allocation.height - 2 * border;
-
-  if (width <= 0 || height <= 0)
-    return TRUE;
-
-  if (box->view)
-    channel = box->view->channel;
-  else
-    channel = GIMP_HISTOGRAM_VALUE;
-
-  switch (channel)
-    {
-    case GIMP_HISTOGRAM_VALUE:
-    case GIMP_HISTOGRAM_ALPHA:  r = g = b = 1;
-      break;
-    case GIMP_HISTOGRAM_RED:    r = 1; g = b = 0;
-      break;
-    case GIMP_HISTOGRAM_GREEN:  g = 1; r = b = 0;
-      break;
-    case GIMP_HISTOGRAM_BLUE:   b = 1; r = g = 0;
-      break;
-    default:
-      r = g = b = 0;
-      g_assert_not_reached ();
-      break;
-    }
-
-  for (i = 0; i < width; i++)
-    {
-      guchar *buffer = box->gradient_buf + 3 * i;
-      gint    x      = (i * 256) / width;
-
-      buffer[0] = x * r;
-      buffer[1] = x * g;
-      buffer[2] = x * b;
-    }
-
-  for (i = 1; i < height; i++)
-    memcpy (box->gradient_buf + 3 * i * width, box->gradient_buf, 3 * width);
-
-  gdk_draw_rgb_image (widget->window, widget->style->black_gc,
-                      border, border, width, height, GDK_RGB_DITHER_NORMAL,
-                      box->gradient_buf, 3 * width);
-
-  return TRUE;
+  gtk_widget_set_size_request (GTK_WIDGET (bar),
+                               -1, GRADIENT_HEIGHT + 2 * view->border_width);
 }
 
 GtkWidget *

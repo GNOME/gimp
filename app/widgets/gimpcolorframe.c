@@ -134,11 +134,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
 GtkWidget *
 gimp_color_frame_new (void)
 {
-  GimpColorFrame *frame;
-
-  frame = g_object_new (GIMP_TYPE_COLOR_FRAME, NULL);
-
-  return GTK_WIDGET (frame);
+  return g_object_new (GIMP_TYPE_COLOR_FRAME, NULL);
 }
 
 /**

@@ -1,3 +1,15 @@
+2004-02-19  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcolorbar.[ch]: added new widget GimpColorBar.
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/widgets/gimphistogrambox.[ch]: use GimpColorBar widgets.
+
+	* app/widgets/gimpcolorframe.[ch]: fixed typos.
+
 2004-02-19  Michael Natterer  <mitch@gimp.org>
 
 	* themes/Default/images/Makefile.am

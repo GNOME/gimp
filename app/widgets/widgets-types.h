@@ -61,6 +61,7 @@ typedef struct _GimpEditor              GimpEditor;
 typedef struct _GimpDeviceStatus        GimpDeviceStatus;
 typedef struct _GimpErrorConsole        GimpErrorConsole;
 typedef struct _GimpImageEditor         GimpImageEditor;
+typedef struct _GimpColorBar            GimpColorBar;
 typedef struct _GimpColorEditor         GimpColorEditor;
 typedef struct _GimpColormapEditor      GimpColormapEditor;
 typedef struct _GimpComponentEditor     GimpComponentEditor;

@@ -39,7 +39,7 @@ typedef struct _GimpColorFrameClass  GimpColorFrameClass;
 
 struct _GimpColorFrame
 {
-  GtkFrame            parent_class;
+  GtkFrame            parent_instance;
 
   gboolean            sample_valid;
   GimpImageType       sample_type;

@@ -1,0 +1,442 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <string.h>
+
+#include <gtk/gtk.h>
+
+#include "libgimpcolor/gimpcolor.h"
+
+#include "widgets-types.h"
+
+#include "config/gimpconfig-params.h"
+
+#include "gimpcolorbar.h"
+
+
+enum
+{
+  PROP_0,
+  PROP_ORIENTATION,
+  PROP_INPUT,
+  PROP_COLOR,
+  PROP_CHANNEL
+};
+
+
+/*  local function prototypes  */
+
+static void      gimp_color_bar_class_init    (GimpColorBarClass *klass);
+static void      gimp_color_bar_init          (GimpColorBar      *bar);
+static void      gimp_color_bar_set_property  (GObject           *object,
+                                               guint              property_id,
+                                               const GValue      *value,
+                                               GParamSpec        *pspec);
+static void      gimp_color_bar_size_allocate (GtkWidget         *widget,
+                                               GtkAllocation     *allocation);
+static void      gimp_color_bar_realize       (GtkWidget         *widget);
+static void      gimp_color_bar_unrealize     (GtkWidget         *widget);
+static void      gimp_color_bar_map           (GtkWidget         *widget);
+static void      gimp_color_bar_unmap         (GtkWidget         *widget);
+
+static gboolean  gimp_color_bar_expose        (GtkWidget         *widget,
+                                               GdkEventExpose    *event);
+
+
+static GtkMiscClass *parent_class = NULL;
+
+
+GType
+gimp_color_bar_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    {
+      static const GTypeInfo bar_info =
+      {
+        sizeof (GimpColorBarClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_color_bar_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpColorBar),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_color_bar_init,
+      };
+
+      type = g_type_register_static (GTK_TYPE_MISC,
+                                     "GimpColorBar", &bar_info, 0);
+    }
+
+  return type;
+}
+
+static void
+gimp_color_bar_class_init (GimpColorBarClass *klass)
+{
+  GObjectClass   *object_class;
+  GtkWidgetClass *widget_class;
+  GimpRGB         white = { 1.0, 1.0, 1.0, 1.0 };
+
+  object_class = G_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_color_bar_set_property;
+
+  g_object_class_install_property (object_class, PROP_ORIENTATION,
+                                   g_param_spec_enum ("orientation",
+                                                      NULL, NULL,
+                                                      GTK_TYPE_ORIENTATION,
+                                                      GTK_ORIENTATION_HORIZONTAL,
+                                                      G_PARAM_WRITABLE |
+                                                      G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_INPUT,
+                                   g_param_spec_boolean ("input",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_WRITABLE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_COLOR,
+                                   gimp_param_spec_color ("color",
+                                                          NULL, NULL,
+                                                          &white,
+                                                          G_PARAM_WRITABLE |
+                                                          G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_ORIENTATION,
+                                   g_param_spec_enum ("channel",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_HISTOGRAM_CHANNEL,
+                                                      GIMP_HISTOGRAM_VALUE,
+                                                      G_PARAM_WRITABLE));
+
+  widget_class->size_allocate = gimp_color_bar_size_allocate;
+  widget_class->realize       = gimp_color_bar_realize;
+  widget_class->unrealize     = gimp_color_bar_unrealize;
+  widget_class->map           = gimp_color_bar_map;
+  widget_class->unmap         = gimp_color_bar_unmap;
+  widget_class->expose_event  = gimp_color_bar_expose;
+}
+
+static void
+gimp_color_bar_init (GimpColorBar *bar)
+{
+  GTK_WIDGET_SET_FLAGS (bar, GTK_NO_WINDOW);
+
+  bar->orientation  = GTK_ORIENTATION_HORIZONTAL;
+  bar->input        = FALSE;
+  bar->input_window = NULL;
+}
+
+
+static void
+gimp_color_bar_set_property (GObject      *object,
+                             guint         property_id,
+                             const GValue *value,
+                             GParamSpec   *pspec)
+{
+  GimpColorBar *bar = GIMP_COLOR_BAR (object);
+
+  switch (property_id)
+    {
+    case PROP_ORIENTATION:
+      bar->orientation = g_value_get_enum (value);
+      break;
+    case PROP_INPUT:
+      bar->input = g_value_get_boolean (value);
+      break;
+    case PROP_COLOR:
+      gimp_color_bar_set_color (bar, g_value_get_boxed (value));
+      break;
+    case PROP_CHANNEL:
+      gimp_color_bar_set_channel (bar, g_value_get_enum (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_color_bar_size_allocate (GtkWidget     *widget,
+                              GtkAllocation *allocation)
+{
+  GimpColorBar *bar = GIMP_COLOR_BAR (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+
+  if (bar->input_window)
+    gdk_window_move_resize (bar->input_window,
+                            widget->allocation.x,
+                            widget->allocation.y,
+                            widget->allocation.width,
+                            widget->allocation.height);
+}
+
+static void
+gimp_color_bar_realize (GtkWidget *widget)
+{
+  GimpColorBar *bar = GIMP_COLOR_BAR (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->realize (widget);
+
+  if (bar->input && ! bar->input_window)
+    {
+      GdkWindowAttr  attributes;
+
+      attributes.x                 = widget->allocation.x;
+      attributes.y                 = widget->allocation.y;
+      attributes.width             = widget->allocation.width;
+      attributes.height            = widget->allocation.height;
+      attributes.window_type       = GDK_WINDOW_TEMP;
+      attributes.wclass            = GDK_INPUT_ONLY;
+      attributes.override_redirect = TRUE;
+      attributes.event_mask        = (GDK_BUTTON_PRESS_MASK   |
+                                      GDK_BUTTON_RELEASE_MASK |
+                                      GDK_BUTTON_MOTION_MASK  |
+                                      gtk_widget_get_events (widget));
+
+      bar->input_window = gdk_window_new (widget->window,
+                                          &attributes,
+                                          (GDK_WA_X |
+                                           GDK_WA_Y |
+                                           GDK_WA_NOREDIR));
+
+      gdk_window_set_user_data (bar->input_window, widget);
+    }
+}
+
+static void
+gimp_color_bar_unrealize (GtkWidget *widget)
+{
+  GimpColorBar *bar = GIMP_COLOR_BAR (widget);
+
+  if (bar->input_window)
+    {
+      gdk_window_set_user_data (bar->input_window, NULL);
+      gdk_window_destroy (bar->input_window);
+      bar->input_window = NULL;
+    }
+
+  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+}
+
+static void
+gimp_color_bar_map (GtkWidget *widget)
+{
+  GimpColorBar *bar = GIMP_COLOR_BAR (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->map (widget);
+
+  if (bar->input_window)
+    gdk_window_show (bar->input_window);
+}
+
+static void
+gimp_color_bar_unmap (GtkWidget *widget)
+{
+  GimpColorBar *bar = GIMP_COLOR_BAR (widget);
+
+  if (bar->input_window)
+    gdk_window_hide (bar->input_window);
+
+  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
+}
+
+static gboolean
+gimp_color_bar_expose (GtkWidget      *widget,
+                       GdkEventExpose *event)
+{
+  GimpColorBar *bar = GIMP_COLOR_BAR (widget);
+  guchar       *buf;
+  guchar       *b;
+  gint          x, y;
+  gint          width, height;
+  gint          i, j;
+
+  x = GTK_MISC (bar)->xpad;
+  y = GTK_MISC (bar)->ypad;
+
+  width  = widget->allocation.width  - 2 * x;
+  height = widget->allocation.height - 2 * y;
+
+  if (width < 1 || height < 1)
+    return TRUE;
+
+  buf = g_alloca (width * height * 3);
+
+  switch (bar->orientation)
+    {
+    case GTK_ORIENTATION_HORIZONTAL:
+      for (i = 0, b = buf; i < width; i++, b += 3)
+        {
+          guchar *src = bar->buf + 3 * ((i * 256) / width);
+
+          b[0] = src[0];
+          b[1] = src[1];
+          b[2] = src[2];
+        }
+
+      for (i = 0; i < height; i++)
+        memcpy (buf + i * width * 3, buf, width * 3);
+
+      break;
+
+    case GTK_ORIENTATION_VERTICAL:
+      for (i = 0, b = buf; i < height; i++, b += 3 * width)
+        {
+          guchar *src  = bar->buf + 3 * (255 - ((i * 256) / height));
+          guchar *dest = b;
+
+          for (j = 0; j < width; j++, dest += 3)
+            {
+              dest[0] = src[0];
+              dest[1] = src[1];
+              dest[2] = src[2];
+            }
+        }
+      break;
+    }
+
+  gdk_draw_rgb_image (widget->window, widget->style->black_gc,
+                      widget->allocation.x + x, widget->allocation.y + y,
+                      width, height,
+                      GDK_RGB_DITHER_NORMAL,
+                      buf, 3 * width);
+
+  return TRUE;
+}
+
+/**
+ * gimp_color_bar_new:
+ *
+ * Creates a new #GimpColorBar widget.
+ *
+ * Return value: The new #GimpColorBar widget.
+ **/
+GtkWidget *
+gimp_color_bar_new (GtkOrientation  orientation)
+{
+  return g_object_new (GIMP_TYPE_COLOR_BAR,
+                       "orientation", orientation,
+                       NULL);
+}
+
+/**
+ * gimp_color_bar_set_color:
+ * @bar:   a #GimpColorBar widget
+ * @color: a #GimpRGB color
+ *
+ * Makes the @bar display a gradient from black (on the left or the
+ * bottom), to the given @color (on the right or at the top).
+ **/
+void
+gimp_color_bar_set_color (GimpColorBar  *bar,
+                          const GimpRGB *color)
+{
+  guchar *buf;
+  gint    i;
+
+  g_return_if_fail (GIMP_IS_COLOR_BAR (bar));
+  g_return_if_fail (color != NULL);
+
+  for (i = 0, buf = bar->buf; i < 256; i++, buf += 3)
+    {
+      buf[0] = ROUND (color->r * (gdouble) i);
+      buf[1] = ROUND (color->g * (gdouble) i);
+      buf[2] = ROUND (color->b * (gdouble) i);
+    }
+
+  gtk_widget_queue_draw (GTK_WIDGET (bar));
+}
+
+/**
+ * gimp_color_bar_set_color:
+ * @bar:     a #GimpColorBar widget
+ * @channel: a #GimpHistogramChannel
+ *
+ * Convenience function that calls gimp_color_bar_set_color() with the
+ * color that matches the @channel.
+ **/
+void
+gimp_color_bar_set_channel (GimpColorBar         *bar,
+                            GimpHistogramChannel  channel)
+{
+  GimpRGB  color = { 1.0, 1.0, 1.0, 1.0 };
+
+  g_return_if_fail (GIMP_IS_COLOR_BAR (bar));
+
+  switch (channel)
+    {
+    case GIMP_HISTOGRAM_VALUE:
+    case GIMP_HISTOGRAM_ALPHA:
+      gimp_rgb_set (&color, 1.0, 1.0, 1.0);
+      break;
+    case GIMP_HISTOGRAM_RED:
+      gimp_rgb_set (&color, 1.0, 0.0, 0.0);
+      break;
+    case GIMP_HISTOGRAM_GREEN:
+      gimp_rgb_set (&color, 0.0, 1.0, 0.0);
+      break;
+    case GIMP_HISTOGRAM_BLUE:
+      gimp_rgb_set (&color, 0.0, 0.0, 1.0);
+      break;
+    }
+
+  gimp_color_bar_set_color (bar, &color);
+}
+
+/**
+ * gimp_color_bar_set_buffers:
+ * @bar:   a #GimpColorBar widget
+ * @red:   an array of 256 values
+ * @green: an array of 256 values
+ * @blue:  an array of 256 values
+ *
+ * This function gives full control over the colors displayed by the
+ * @bar widget. The 3 arrays can for example be taken from a #Levels
+ * or a #Curves struct.
+ **/
+void
+gimp_color_bar_set_buffers (GimpColorBar *bar,
+                            const guchar *red,
+                            const guchar *green,
+                            const guchar *blue)
+{
+  guchar *buf;
+  gint    i;
+
+  g_return_if_fail (GIMP_IS_COLOR_BAR (bar));
+  g_return_if_fail (red != NULL);
+  g_return_if_fail (green != NULL);
+  g_return_if_fail (blue != NULL);
+
+  for (i = 0, buf = bar->buf; i < 256; i++, buf += 3)
+    {
+      buf[0] = red[i];
+      buf[1] = green[i];
+      buf[2] = blue[i];
+    }
+
+  gtk_widget_queue_draw (GTK_WIDGET (bar));
+}

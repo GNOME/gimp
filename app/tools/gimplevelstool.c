@@ -23,11 +23,6 @@
 #include <string.h>
 #include <errno.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -49,6 +44,7 @@
 #include "core/gimpimagemap.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpcolorbar.h"
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogramview.h"
@@ -79,12 +75,9 @@
 #define GRADIENT_HEIGHT   12
 #define CONTROL_HEIGHT    8
 
-#define LEVELS_DRAWING_AREA_MASK  (GDK_EXPOSURE_MASK       | \
-                                   GDK_ENTER_NOTIFY_MASK   | \
-			           GDK_BUTTON_PRESS_MASK   | \
+#define LEVELS_DRAWING_AREA_MASK  (GDK_BUTTON_PRESS_MASK   | \
 			           GDK_BUTTON_RELEASE_MASK | \
-			           GDK_BUTTON1_MOTION_MASK | \
-			           GDK_POINTER_MOTION_HINT_MASK)
+			           GDK_BUTTON_MOTION_MASK)
 
 
 /*  local function prototypes  */
@@ -105,7 +98,7 @@ static void     gimp_levels_tool_dialog     (GimpImageMapTool *image_map_tool);
 static void     gimp_levels_tool_reset      (GimpImageMapTool *image_map_tool);
 
 static void     levels_update                        (GimpLevelsTool *l_tool,
-                                                      gint            update);
+                                                      guint           update);
 static void     levels_channel_callback              (GtkWidget      *widget,
                                                       GimpLevelsTool *l_tool);
 static void     levels_channel_reset_callback        (GtkWidget      *widget,
@@ -137,9 +130,7 @@ static gint     levels_input_area_event              (GtkWidget      *widget,
 static gboolean levels_input_area_expose             (GtkWidget      *widget,
                                                       GdkEventExpose *event,
                                                       GimpLevelsTool *l_tool);
-static void     levels_input_area_size_allocate      (GtkWidget      *widget,
-                                                      GtkAllocation  *allocation,
-                                                      GimpLevelsTool *l_tool);
+
 static gint     levels_output_area_event             (GtkWidget      *widget,
                                                       GdkEvent       *event,
                                                       GimpLevelsTool *l_tool);
@@ -147,9 +138,6 @@ static gboolean levels_output_area_expose            (GtkWidget      *widget,
                                                       GdkEventExpose *event,
                                                       GimpLevelsTool *l_tool);
 
-static void     levels_output_area_size_allocate     (GtkWidget      *widget,
-                                                      GtkAllocation  *allocation,
-                                                      GimpLevelsTool *l_tool);
 static void     file_dialog_create                   (GimpLevelsTool *l_tool);
 static void     file_dialog_response                 (GtkWidget      *dialog,
                                                       gint            response_id,
@@ -416,7 +404,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget       *hbbox;
   GtkWidget       *button;
   GtkWidget       *spinbutton;
+  GtkWidget       *bar;
   GtkObject       *data;
+  gint             border;
 
   vbox = image_map_tool->main_vbox;
 
@@ -471,34 +461,49 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
                                        GIMP_HISTOGRAM_VIEW (l_tool->hist_view));
 
+  g_object_get (l_tool->hist_view, "border-width", &border, NULL);
+
   /*  The input levels drawing area  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox3 = gtk_vbox_new (FALSE, 2);
+  vbox3 = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox3);
   gtk_widget_show (vbox3);
 
-  l_tool->input_area[0] = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (l_tool->input_area[0]),
-		    HISTOGRAM_WIDTH, GRADIENT_HEIGHT);
-  gtk_preview_set_expand (GTK_PREVIEW (l_tool->input_area[0]), TRUE);
-  gtk_widget_set_events (l_tool->input_area[0], LEVELS_DRAWING_AREA_MASK);
-  gtk_box_pack_start (GTK_BOX (vbox3), l_tool->input_area[0],
-                      TRUE, TRUE, 0);
+  l_tool->input_area[0] = g_object_new (GIMP_TYPE_COLOR_BAR,
+                                        "xpad",  border,
+                                        "ypad",  0,
+                                        "input", TRUE,
+                                        NULL);
+  gtk_widget_set_size_request (l_tool->input_area[0], -1, GRADIENT_HEIGHT / 2);
+  gtk_box_pack_start (GTK_BOX (vbox3), l_tool->input_area[0], TRUE, TRUE, 0);
   gtk_widget_show (l_tool->input_area[0]);
 
   g_signal_connect (l_tool->input_area[0], "event",
                     G_CALLBACK (levels_input_area_event),
                     l_tool);
 
+  bar = g_object_new (GIMP_TYPE_COLOR_BAR,
+                      "xpad",  border,
+                      "ypad",  0,
+                      "input", TRUE,
+                      NULL);
+  gtk_widget_set_size_request (bar, -1, GRADIENT_HEIGHT / 2);
+  gtk_widget_add_events (bar, LEVELS_DRAWING_AREA_MASK);
+  gtk_box_pack_start (GTK_BOX (vbox3), bar, TRUE, TRUE, 0);
+  gtk_widget_show (bar);
+
+  g_signal_connect (bar, "event",
+                    G_CALLBACK (levels_input_area_event),
+                    l_tool);
+
   l_tool->input_area[1] = gtk_drawing_area_new ();
   gtk_widget_set_size_request (l_tool->input_area[1], -1, CONTROL_HEIGHT);
-  gtk_widget_set_events (l_tool->input_area[1], LEVELS_DRAWING_AREA_MASK);
-  gtk_box_pack_start (GTK_BOX (vbox3), l_tool->input_area[1],
-                      TRUE, TRUE, 0);
+  gtk_widget_add_events (l_tool->input_area[1], LEVELS_DRAWING_AREA_MASK);
+  gtk_box_pack_start (GTK_BOX (vbox3), l_tool->input_area[1], TRUE, TRUE, 1);
   gtk_widget_show (l_tool->input_area[1]);
 
   g_signal_connect (l_tool->input_area[1], "event",
@@ -507,9 +512,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   g_signal_connect (l_tool->input_area[1], "expose_event",
                     G_CALLBACK (levels_input_area_expose),
                     l_tool);
-  g_signal_connect (l_tool->input_area[1], "size_allocate",
-		    G_CALLBACK (levels_input_area_size_allocate),
-		    l_tool);
 
   /*  Horizontal box for input levels spinbuttons  */
   hbox = gtk_hbox_new (FALSE, 4);
@@ -588,30 +590,28 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox3 = gtk_vbox_new (FALSE, 2);
+  vbox3 = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox3);
   gtk_widget_show (vbox3);
 
-  l_tool->output_area[0] = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (l_tool->output_area[0]),
-                    HISTOGRAM_WIDTH, GRADIENT_HEIGHT);
-  gtk_preview_set_expand (GTK_PREVIEW (l_tool->output_area[0]), TRUE);
-  gtk_widget_set_events (l_tool->output_area[0], LEVELS_DRAWING_AREA_MASK);
-  gtk_box_pack_start (GTK_BOX (vbox3), l_tool->output_area[0],
-                      TRUE, TRUE, 0);
+  l_tool->output_area[0] = g_object_new (GIMP_TYPE_COLOR_BAR,
+                                         "xpad",  border,
+                                         "ypad",  0,
+                                         "input", TRUE,
+                                         NULL);
+  gtk_widget_set_size_request (l_tool->output_area[0], -1, GRADIENT_HEIGHT);
+  gtk_widget_add_events (l_tool->output_area[0], LEVELS_DRAWING_AREA_MASK);
+  gtk_box_pack_start (GTK_BOX (vbox3), l_tool->output_area[0], TRUE, TRUE, 0);
   gtk_widget_show (l_tool->output_area[0]);
 
   g_signal_connect (l_tool->output_area[0], "event",
                     G_CALLBACK (levels_output_area_event),
                     l_tool);
 
-  l_tool->output_area[1] = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-  gtk_preview_size (GTK_PREVIEW (l_tool->output_area[1]),
-                    HISTOGRAM_WIDTH, CONTROL_HEIGHT);
-  gtk_preview_set_expand (GTK_PREVIEW (l_tool->output_area[1]), TRUE);
-  gtk_widget_set_events (l_tool->output_area[1], LEVELS_DRAWING_AREA_MASK);
-  gtk_box_pack_start (GTK_BOX (vbox3), l_tool->output_area[1],
-                      TRUE, TRUE, 0);
+  l_tool->output_area[1] = gtk_drawing_area_new ();
+  gtk_widget_set_size_request (l_tool->output_area[1], -1, CONTROL_HEIGHT);
+  gtk_widget_add_events (l_tool->output_area[1], LEVELS_DRAWING_AREA_MASK);
+  gtk_box_pack_start (GTK_BOX (vbox3), l_tool->output_area[1], TRUE, TRUE, 1);
   gtk_widget_show (l_tool->output_area[1]);
 
   g_signal_connect (l_tool->output_area[1], "event",
@@ -620,9 +620,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   g_signal_connect (l_tool->output_area[1], "expose_event",
                     G_CALLBACK (levels_output_area_expose),
                     l_tool);
-  g_signal_connect (l_tool->output_area[1], "size_allocate",
-		    G_CALLBACK (levels_output_area_size_allocate),
-		    l_tool);
 
   /*  Horizontal box for levels spin widgets  */
   hbox = gtk_hbox_new (FALSE, 4);
@@ -738,7 +735,7 @@ levels_draw_slider (GtkWidget *widget,
 		    gint       xpos)
 {
   GdkWindow *window = widget->window;
-  gint                y;
+  gint       y;
 
   for (y = 0; y < CONTROL_HEIGHT; y++)
     gdk_draw_line (window, fill_gc,
@@ -760,21 +757,20 @@ levels_draw_slider (GtkWidget *widget,
 
 static void
 levels_update (GimpLevelsTool *l_tool,
-	       gint            update)
+	       guint           update)
 {
-  gint i;
-  gint sel_channel;
+  GimpHistogramChannel channel;
 
   if (l_tool->color)
     {
-      sel_channel = l_tool->channel;
+      channel = l_tool->channel;
     }
   else
     {
       if (l_tool->channel == 2)
-	sel_channel = GIMP_HISTOGRAM_ALPHA;
+	channel = GIMP_HISTOGRAM_ALPHA;
       else
-	sel_channel = GIMP_HISTOGRAM_VALUE;
+	channel = GIMP_HISTOGRAM_VALUE;
     }
 
   /*  Recalculate the transfer arrays  */
@@ -809,121 +805,57 @@ levels_update (GimpLevelsTool *l_tool,
 
   if (update & INPUT_LEVELS)
     {
-      GtkWidget *widget = l_tool->input_area[0];
-      guchar    *buf;
-      gint       width;
-
-      width = widget->allocation.width;
-      buf = g_alloca (width * 3);
-
-      switch (sel_channel)
+      switch (channel)
 	{
-	default:
-	  g_warning ("unknown channel type, can't happen\n");
-	  /* fall through */
 	case GIMP_HISTOGRAM_VALUE:
 	case GIMP_HISTOGRAM_ALPHA:
-	  for (i = 0; i < width; i++)
-	    {
-              gint v = l_tool->levels->input[sel_channel][(i * 256) / width];
-
-	      buf[3 * i + 0] = v;
-	      buf[3 * i + 1] = v;
-	      buf[3 * i + 2] = v;
-	    }
+          gimp_color_bar_set_buffers (GIMP_COLOR_BAR (l_tool->input_area[0]),
+                                      l_tool->levels->input[channel],
+                                      l_tool->levels->input[channel],
+                                      l_tool->levels->input[channel]);
 	  break;
 
 	case GIMP_HISTOGRAM_RED:
 	case GIMP_HISTOGRAM_GREEN:
 	case GIMP_HISTOGRAM_BLUE:
-	  for (i = 0; i < width; i++)
-	    {
-              gint j = (i * 256) / width;
-
-	      buf[3 * i + 0] = l_tool->levels->input[GIMP_HISTOGRAM_RED][j];
-	      buf[3 * i + 1] = l_tool->levels->input[GIMP_HISTOGRAM_GREEN][j];
-	      buf[3 * i + 2] = l_tool->levels->input[GIMP_HISTOGRAM_BLUE][j];
-	    }
+          gimp_color_bar_set_buffers (GIMP_COLOR_BAR (l_tool->input_area[0]),
+                                      l_tool->levels->input[GIMP_HISTOGRAM_RED],
+                                      l_tool->levels->input[GIMP_HISTOGRAM_GREEN],
+                                      l_tool->levels->input[GIMP_HISTOGRAM_BLUE]);
 	  break;
 	}
-
-      for (i = 0; i < GRADIENT_HEIGHT / 2; i++)
-	gtk_preview_draw_row (GTK_PREVIEW (widget), buf, 0, i, width);
-
-      for (i = 0; i < width; i++)
-	{
-	  gint j = (i * 256) / width;
-
-          buf[3 * i + 0] = j;
-	  buf[3 * i + 1] = j;
-	  buf[3 * i + 2] = j;
-	}
-
-      for (i = GRADIENT_HEIGHT / 2; i < GRADIENT_HEIGHT; i++)
-	gtk_preview_draw_row (GTK_PREVIEW (widget), buf, 0, i, width);
-
-      if (update & DRAW)
-	gtk_widget_queue_draw (widget);
     }
 
   if (update & OUTPUT_LEVELS)
     {
-      GtkWidget *widget = l_tool->output_area[0];
-      guchar    *buf;
-      guchar     r, g, b;
-      gint       width;
-
-      width = widget->allocation.width;
-      buf = g_alloca (width * 3);
-
-      r = g = b = 0;
-      switch (sel_channel)
-	{
-	default:
-	  g_warning ("unknown channel type, can't happen\n");
-	  /* fall through */
-	case GIMP_HISTOGRAM_VALUE:
-	case GIMP_HISTOGRAM_ALPHA:  r = g = b = 1; break;
-	case GIMP_HISTOGRAM_RED:    r = 1;         break;
-	case GIMP_HISTOGRAM_GREEN:  g = 1;         break;
-	case GIMP_HISTOGRAM_BLUE:   b = 1;         break;
-	}
-
-      for (i = 0; i < width; i++)
-	{
-          gint j = (i * 256) / width;
-
-	  buf[3 * i + 0] = j * r;
-	  buf[3 * i + 1] = j * g;
-	  buf[3 * i + 2] = j * b;
-	}
-
-      for (i = 0; i < GRADIENT_HEIGHT; i++)
-	gtk_preview_draw_row (GTK_PREVIEW (widget), buf, 0, i, width);
-
-      if (update & DRAW)
-	gtk_widget_queue_draw (widget);
+      gimp_color_bar_set_channel (GIMP_COLOR_BAR (l_tool->output_area[0]),
+                                  channel);
     }
 
   if (update & INPUT_SLIDERS)
     {
       Levels  *levels = l_tool->levels;
-      gint     width  = l_tool->input_area[0]->allocation.width;
+      gint     width  = l_tool->input_area[1]->allocation.width;
       gdouble  delta, mid, tmp;
+      gint     border;
+
+      g_object_get (l_tool->hist_view, "border-width", &border, NULL);
+
+      width -= 2 * border;
 
       l_tool->slider_pos[0] = ROUND ((gdouble) width *
                                      levels->low_input[l_tool->channel] /
-                                     256.0);
+                                     256.0) + border;
 
       l_tool->slider_pos[2] = ROUND ((gdouble) width *
                                      levels->high_input[l_tool->channel] /
-                                     256.0);
+                                     256.0) + border;
 
       delta = (gdouble) (l_tool->slider_pos[2] - l_tool->slider_pos[0]) / 2.0;
       mid   = l_tool->slider_pos[0] + delta;
       tmp   = log10 (1.0 / levels->gamma[l_tool->channel]);
 
-      l_tool->slider_pos[1] = (gint) (mid + delta * tmp + 0.5);
+      l_tool->slider_pos[1] = ROUND (mid + delta * tmp) + border;
 
       gtk_widget_queue_draw (l_tool->input_area[1]);
     }
@@ -931,15 +863,20 @@ levels_update (GimpLevelsTool *l_tool,
   if (update & OUTPUT_SLIDERS)
     {
       Levels  *levels = l_tool->levels;
-      gint     width  = l_tool->output_area[0]->allocation.width;
+      gint     width  = l_tool->output_area[1]->allocation.width;
+      gint     border;
+
+      g_object_get (l_tool->hist_view, "border-width", &border, NULL);
+
+      width -= 2 * border;
 
       l_tool->slider_pos[3] = ROUND ((gdouble) width *
                                      levels->low_output[l_tool->channel] /
-                                     256.0);
+                                     256.0) + border;
 
       l_tool->slider_pos[4] = ROUND ((gdouble) width *
                                      levels->high_output[l_tool->channel] /
-                                     256.0);
+                                     256.0) + border;
 
       gtk_widget_queue_draw (l_tool->output_area[1]);
     }
@@ -1006,9 +943,8 @@ static void
 levels_low_input_adjustment_update (GtkAdjustment  *adjustment,
 				    GimpLevelsTool *l_tool)
 {
-  gint value;
+  gint value = ROUND (adjustment->value);
 
-  value = (gint) (adjustment->value + 0.5);
   value = CLAMP (value, 0, l_tool->levels->high_input[l_tool->channel]);
 
   /*  enforce a consistent displayed value (low_input <= high_input)  */
@@ -1040,9 +976,8 @@ static void
 levels_high_input_adjustment_update (GtkAdjustment  *adjustment,
 				     GimpLevelsTool *l_tool)
 {
-  gint value;
+  gint value = ROUND (adjustment->value);
 
-  value = (gint) (adjustment->value + 0.5);
   value = CLAMP (value, l_tool->levels->low_input[l_tool->channel], 255);
 
   /*  enforce a consistent displayed value (high_input >= low_input)  */
@@ -1061,9 +996,7 @@ static void
 levels_low_output_adjustment_update (GtkAdjustment  *adjustment,
 				     GimpLevelsTool *l_tool)
 {
-  gint value;
-
-  value = (gint) (adjustment->value + 0.5);
+  gint value = ROUND (adjustment->value);
 
   if (l_tool->levels->low_output[l_tool->channel] != value)
     {
@@ -1078,9 +1011,7 @@ static void
 levels_high_output_adjustment_update (GtkAdjustment  *adjustment,
 				      GimpLevelsTool *l_tool)
 {
-  gint value;
-
-  value = (gint) (adjustment->value + 0.5);
+  gint value = ROUND (adjustment->value);
 
   if (l_tool->levels->high_output[l_tool->channel] != value)
     {
@@ -1176,14 +1107,20 @@ levels_input_area_event (GtkWidget      *widget,
     {
       gdouble  delta, mid, tmp;
       gint     width;
+      gint     border;
 
-      width = widget->allocation.width;
+      g_object_get (l_tool->hist_view, "border-width", &border, NULL);
+
+      width = widget->allocation.width - 2 * border;
+
+      if (width < 1)
+        return FALSE;
 
       switch (l_tool->active_slider)
 	{
 	case 0:  /*  low input  */
 	  l_tool->levels->low_input[l_tool->channel] =
-            ((gdouble) x / (gdouble) width) * 255.0;
+            ((gdouble) (x - border) / (gdouble) width) * 255.0;
 
 	  l_tool->levels->low_input[l_tool->channel] =
             CLAMP (l_tool->levels->low_input[l_tool->channel],
@@ -1206,7 +1143,7 @@ levels_input_area_event (GtkWidget      *widget,
 
 	case 2:  /*  high input  */
 	  l_tool->levels->high_input[l_tool->channel] =
-            ((gdouble) x / (gdouble) width) * 255.0;
+            ((gdouble) (x - border) / (gdouble) width) * 255.0;
 
 	  l_tool->levels->high_input[l_tool->channel] =
             CLAMP (l_tool->levels->high_input[l_tool->channel],
@@ -1240,14 +1177,6 @@ levels_input_area_expose (GtkWidget      *widget,
                       l_tool->slider_pos[2]);
 
   return TRUE;
-}
-
-static void
-levels_input_area_size_allocate (GtkWidget      *widget,
-                                 GtkAllocation  *allocation,
-                                 GimpLevelsTool *l_tool)
-{
-  levels_update (l_tool, INPUT_LEVELS | INPUT_SLIDERS);
 }
 
 static gboolean
@@ -1304,13 +1233,21 @@ levels_output_area_event (GtkWidget      *widget,
 
   if (update)
     {
-      gint width = widget->allocation.width;
+      gint  width;
+      gint  border;
+
+      g_object_get (l_tool->hist_view, "border-width", &border, NULL);
+
+      width = widget->allocation.width - 2 * border;
+
+      if (width < 1)
+        return FALSE;
 
       switch (l_tool->active_slider)
 	{
 	case 3:  /*  low output  */
 	  l_tool->levels->low_output[l_tool->channel] =
-            ((gdouble) x / (gdouble) width) * 255.0;
+            ((gdouble) (x - border) / (gdouble) width) * 255.0;
 
 	  l_tool->levels->low_output[l_tool->channel] =
             CLAMP (l_tool->levels->low_output[l_tool->channel], 0, 255);
@@ -1318,7 +1255,7 @@ levels_output_area_event (GtkWidget      *widget,
 
 	case 4:  /*  high output  */
 	  l_tool->levels->high_output[l_tool->channel] =
-            ((gdouble) x / (gdouble) width) * 255.0;
+            ((gdouble) (x - border) / (gdouble) width) * 255.0;
 
 	  l_tool->levels->high_output[l_tool->channel] =
             CLAMP (l_tool->levels->high_output[l_tool->channel], 0, 255);
@@ -1346,14 +1283,6 @@ levels_output_area_expose (GtkWidget      *widget,
                       l_tool->slider_pos[4]);
 
   return TRUE;
-}
-
-static void
-levels_output_area_size_allocate (GtkWidget      *widget,
-                                  GtkAllocation  *allocation,
-                                  GimpLevelsTool *l_tool)
-{
-  levels_update (l_tool, OUTPUT_LEVELS | OUTPUT_SLIDERS);
 }
 
 static void
