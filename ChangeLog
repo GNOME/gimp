@@ -1,3 +1,8 @@
+2004-07-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_uri): make
+	sure we always set a non-null URI.
+
 2004-07-27  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimphelp-ids.h removed unused help IDs

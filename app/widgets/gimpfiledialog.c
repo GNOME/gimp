@@ -230,7 +230,8 @@ gimp_file_dialog_set_uri (GimpFileDialog  *dialog,
     {
       real_uri = g_strdup (uri);
     }
-  else
+
+  if (! real_uri)
     {
       gchar *current = g_get_current_dir ();
 
