@@ -1,3 +1,8 @@
+2003-09-25  DindinX <david@dindinx.net>
+
+	* plug-ins/print/gimp_main_window.c: small gui fixes in the
+	select printer dialog.
+
 2003-09-25  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpxmlparser.c (gimp_xml_parser_parse_io_channel):
