@@ -38,17 +38,8 @@
 
 #define PLUG_IN_VERSION "0.10"
 
-#define PREVIEW_SIZE  128
 #define SCALE_WIDTH   150
 #define ENTRY_WIDTH     4
-
-
-
-/* to show both pretty unoptimized code and ugly optimized code blocks
-   There's really no reason to define this, unless you want to see how
-   much pointer aritmetic can speed things up.  I find that it is about
-   45% faster with the optimized code. */
-/* #define READABLE_CODE */
 
 /* uncomment this line to get a rough feel of how long the
    plug-in takes to run */
@@ -56,9 +47,10 @@
 
 typedef struct
 {
-  gdouble radius;
-  gdouble amount;
-  gint    threshold;
+  gdouble  radius;
+  gdouble  amount;
+  gint     threshold;
+  gboolean update_preview;
 } UnsharpMaskParams;
 
 typedef struct
@@ -102,20 +94,16 @@ static void      unsharp_mask            (GimpDrawable  *drawable,
                                           gdouble        radius,
                                           gdouble        amount);
 
-static gboolean  unsharp_mask_dialog     (void);
-static void      preview_update          (void);
-static void      preview_move            (void);
-static void      preview_update_real     (gboolean   apply_effect);
-static void      preview_toggle_callback (GtkWidget *toggle);
-static gboolean  preview_button_release  (void);
-
+static gboolean  unsharp_mask_dialog     (GimpDrawable  *drawable);
+static void      preview_update          (GimpPreview   *preview);
 
 /* create a few globals, set default values */
 static UnsharpMaskParams unsharp_params =
   {
     5.0, /* default radius = 5 */
     0.5, /* default amount = .5 */
-    0    /* default threshold = 0 */
+    0,   /* default threshold = 0 */
+    TRUE /* default is to update the preview */
   };
 
 /* Setting PLUG_IN_INFO */
@@ -128,11 +116,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   };
 
 static  GimpRunMode   run_mode;
-static  GtkWidget    *preview        = NULL;   /* Preview widget */
-static  gboolean      show_preview   = TRUE;   /* Should we update the preview? */
-static  GimpDrawable *drawable       = NULL;   /* Current image  */
-static  gint          delta_x        = 0;      /* preview x offset */
-static  gint          delta_y        = 0;      /* preview y offset */
 
 MAIN ()
      
@@ -179,6 +162,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpDrawable      *drawable;
 #ifdef TIMER
   GTimer *timer = g_timer_new ();
 #endif
@@ -206,7 +190,7 @@ run (const gchar      *name,
       /* Reset default values show preview unmodified */
       
       /* initialize pixel regions and buffer */
-      if (! unsharp_mask_dialog ())
+      if (! unsharp_mask_dialog (drawable))
         return;
       
       break;
@@ -660,97 +644,14 @@ gen_lookup_table (gdouble *cmatrix,
   return lookup_table;
 }
 
-static GtkWidget *
-unsharp_preview_new (void)
-{
-  GtkWidget *table;
-  GtkWidget *frame;
-  GtkObject *adj;
-  GtkWidget *scrollbar;
-  GtkWidget *preview_toggle;
-
-  gint       sel_width;
-  gint       sel_height;
-  gint       x1, y1, x2, y2;
-  gint       preview_width;
-  gint       preview_height;
-
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  sel_width     = x2 - x1;
-  sel_height    = y2 - y1;
-  preview_width  = MIN (sel_width, PREVIEW_SIZE);
-  preview_height = MIN (sel_height, PREVIEW_SIZE);
-
-  table = gtk_table_new (3, 2, FALSE);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1, 0, 0, 0, 0);
-  gtk_widget_show (frame);
-
-  preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
-  gtk_widget_show (preview);
-
-  adj = gtk_adjustment_new (0, 0, sel_width - 1, 1.0,
-                            MIN (preview_width, sel_width),
-                            MIN (preview_width, sel_width));
-
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &delta_x);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (preview_move),
-                    NULL);
-  scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (adj));
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar),
-                               GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE (table), scrollbar, 0, 1, 1, 2,
-                    GTK_FILL, 0, 0, 0);
-  gtk_widget_show (scrollbar);
-  g_signal_connect (scrollbar, "button_release_event",
-                    G_CALLBACK (preview_button_release), NULL);
-
-  adj = gtk_adjustment_new (0, 0, sel_height - 1, 1.0,
-                            MIN (preview_height, sel_height),
-                            MIN (preview_height, sel_height));
-
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &delta_y);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (preview_move),
-                    NULL);
-
-  scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (adj));
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar),
-                               GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE (table), scrollbar, 1, 2, 0, 1,
-                    0, GTK_FILL, 0, 0);
-  gtk_widget_show (scrollbar);
-  g_signal_connect (scrollbar, "button_release_event",
-                    G_CALLBACK (preview_button_release), NULL);
-
-  preview_toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview_toggle),
-                                show_preview);
-  gtk_table_attach (GTK_TABLE (table), preview_toggle,
-                    0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (preview_toggle);
-  g_signal_connect (preview_toggle, "toggled",
-                    G_CALLBACK (preview_toggle_callback), NULL);
-
-  return table;
-}
-
 static gboolean
-unsharp_mask_dialog (void)
+unsharp_mask_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *table;
   GtkWidget *vbox;
   GtkWidget *hbox;
+  GtkWidget *preview;
   GtkWidget *scrollbar;
   GtkObject *adj;
   gboolean   run;
@@ -772,13 +673,17 @@ unsharp_mask_dialog (void)
                       FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  table = unsharp_preview_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  preview =
+    gimp_drawable_preview_new_with_toggle (drawable,
+                                           &unsharp_params.update_preview);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_widget_show (preview);
+  g_signal_connect (preview, "updated",
+                    G_CALLBACK (preview_update), NULL);
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -795,9 +700,9 @@ unsharp_mask_dialog (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &unsharp_params.radius);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (preview_update),
-                    NULL);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (preview_update),
+                            preview);
 
   scrollbar = GIMP_SCALE_ENTRY_SCALE (adj);
   gtk_range_set_update_policy (GTK_RANGE (scrollbar),
@@ -815,9 +720,9 @@ unsharp_mask_dialog (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &unsharp_params.amount);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (preview_update),
-                    NULL);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (preview_update),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
                               _("_Threshold:"), SCALE_WIDTH, ENTRY_WIDTH,
@@ -830,15 +735,11 @@ unsharp_mask_dialog (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &unsharp_params.threshold);
-  g_signal_connect_after (adj, "value_changed",
-                          G_CALLBACK (preview_update),
-                          NULL);
-
-
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (preview_update),
+                            preview);
 
   gtk_widget_show (dialog);
-
-  preview_update ();
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
@@ -847,31 +748,16 @@ unsharp_mask_dialog (void)
   return run;
 }
 
-/*  preview functions  */
 static void
-preview_toggle_callback (GtkWidget *toggle)
-{
-   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)))
-    {
-      show_preview = TRUE;
-      preview_update ();
-    }
-  else
-    show_preview = FALSE;
-}
-
-static void
-preview_update_real (gboolean apply_effect)
+preview_update (GimpPreview *preview)
 {
   /* drawable */
-  glong width, height;
   glong bytes;
   gint  x1, y1, x2, y2;
 
   /* preview */
+  GimpDrawablePreview *drawable_preview;
   guchar    *render_buffer = NULL; /* Buffer to hold rendered image */
-  gint       preview_width;        /* Width of preview widget */
-  gint       preview_height;       /* Height of preview widget */
   gint       preview_x1;           /* Upper-left X of preview */
   gint       preview_y1;           /* Upper-left Y of preview */
   gint       preview_x2;           /* Lower-right X of preview */
@@ -889,24 +775,21 @@ preview_update_real (gboolean apply_effect)
 
   gint       offset;               /* Preview loop control      */
 
-  if (!show_preview)
+  if (!unsharp_params.update_preview)
     return;
 
+  drawable_preview = GIMP_DRAWABLE_PREVIEW (preview);
   /* Get drawable info */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  width  = drawable->width;
-  height = drawable->height;
-  bytes  = drawable->bpp;
+  gimp_drawable_mask_bounds (drawable_preview->drawable->drawable_id,
+                             &x1, &y1, &x2, &y2);
+  bytes  = drawable_preview->drawable->bpp;
 
   /*
    * Setup for filter...
    */
-  preview_x1     = x1 + delta_x;
-  preview_y1     = y1 + delta_y;
-  preview_x2     = preview_x1 + MIN (PREVIEW_SIZE, x2 - x1);
-  preview_y2     = preview_y1 + MIN (PREVIEW_SIZE, y2 - y1);
-  preview_width  = preview_x2 - preview_x1;
-  preview_height = preview_y2 - preview_y1;
+  gimp_preview_get_position (preview, &preview_x1, &preview_y1);
+  preview_x2 = preview_x1 + preview->width;
+  preview_y2 = preview_y1 + preview->height;
 
   /* Make buffer large enough to minimize disturbence */
   preview_buf_x1     = MAX (0, preview_x1 - unsharp_params.radius);
@@ -917,36 +800,27 @@ preview_update_real (gboolean apply_effect)
   preview_buf_height = preview_buf_y2 - preview_buf_y1;
 
   /* initialize pixel regions */
-  gimp_pixel_rgn_init (&srcPR, drawable,
+  gimp_pixel_rgn_init (&srcPR, drawable_preview->drawable,
                        preview_buf_x1,preview_buf_y1,
                        preview_buf_width, preview_buf_height, FALSE, FALSE);
   render_buffer = g_new (guchar,
                          preview_buf_width * preview_buf_height * bytes);
 
-  if (apply_effect)
-    {
-      /* render image */
-      gimp_pixel_rgn_init (&destPR, drawable,
-                           preview_buf_x1,preview_buf_y1,
-                           preview_buf_width, preview_buf_height,  TRUE, TRUE);
+  /* render image */
+  gimp_pixel_rgn_init (&destPR, drawable_preview->drawable,
+                       preview_buf_x1,preview_buf_y1,
+                       preview_buf_width, preview_buf_height,  TRUE, TRUE);
 
-      unsharp_region (srcPR, destPR,
-                      preview_buf_width, preview_buf_height, bytes,
-                      unsharp_params.radius, unsharp_params.amount,
-                      preview_buf_x1, preview_buf_x2,
-                      preview_buf_y1, preview_buf_y2,
-                      FALSE);
+  unsharp_region (srcPR, destPR,
+                  preview_buf_width, preview_buf_height, bytes,
+                  unsharp_params.radius, unsharp_params.amount,
+                  preview_buf_x1, preview_buf_x2,
+                  preview_buf_y1, preview_buf_y2,
+                  FALSE);
 
-      gimp_pixel_rgn_get_rect(&destPR, render_buffer,
-                              preview_buf_x1, preview_buf_y1,
-                              preview_buf_width, preview_buf_height);
-    }
-  else
-    {
-      gimp_pixel_rgn_get_rect (&srcPR, render_buffer,
-                               preview_buf_x1, preview_buf_y1,
-                               preview_buf_width, preview_buf_height);
-    }
+  gimp_pixel_rgn_get_rect(&destPR, render_buffer,
+                          preview_buf_x1, preview_buf_y1,
+                          preview_buf_width, preview_buf_height);
 
   /*
    * Draw the preview image on the screen...
@@ -956,32 +830,12 @@ preview_update_real (gboolean apply_effect)
 
   offset = (x * bytes) + (y * preview_buf_width * bytes);
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                          0, 0, preview_width, preview_height,
-                          gimp_drawable_type (drawable->drawable_id),
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
+                          0, 0, preview->width, preview->height,
+                          gimp_drawable_type (drawable_preview->drawable->drawable_id),
                           render_buffer + offset,
                           preview_buf_width * bytes);
 
   g_free (render_buffer);
-}
-
-
-static void
-preview_update (void)
-{
-  preview_update_real (TRUE);
-}
-
-static void
-preview_move (void)
-{
-  preview_update_real (FALSE);
-}
-
-static gboolean
-preview_button_release (void)
-{
-  preview_update_real (TRUE);
-  return FALSE;
 }
 

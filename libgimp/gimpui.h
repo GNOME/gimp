@@ -29,6 +29,7 @@
 #include <libgimp/gimpexport.h>
 #include <libgimp/gimpmenu.h>
 #include <libgimp/gimpbrushmenu.h>
+#include <libgimp/gimpdrawablepreview.h>
 #include <libgimp/gimpfontmenu.h>
 #include <libgimp/gimpgradientmenu.h>
 #include <libgimp/gimppalettemenu.h>

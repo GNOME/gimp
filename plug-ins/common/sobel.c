@@ -22,6 +22,7 @@
 #include "config.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -33,9 +34,9 @@
 
 typedef struct
 {
-  gint horizontal;
-  gint vertical;
-  gint keep_sign;
+  gboolean horizontal;
+  gboolean vertical;
+  gboolean keep_sign;
 } SobelValues;
 
 
@@ -49,23 +50,25 @@ static void   run    (const gchar      *name,
                       GimpParam       **return_vals);
 
 static void   sobel  (GimpDrawable     *drawable,
-                      gint              horizontal,
-                      gint              vertical,
-                      gint              keep_sign);
+                      gboolean          horizontal,
+                      gboolean          vertical,
+                      gboolean          keep_sign,
+                      GtkWidget        *preview);
 
 /*
  * Sobel interface
  */
-static gboolean  sobel_dialog (void);
+static gboolean  sobel_dialog         (GimpDrawable *drawable);
+static void      sobel_update_preview (GtkWidget    *preview);
 
 /*
  * Sobel helper functions
  */
 static void      sobel_prepare_row (GimpPixelRgn *pixel_rgn,
-				    guchar       *data,
-				    gint          x,
-				    gint          y,
-				    gint          w);
+                                    guchar       *data,
+                                    gint          x,
+                                    gint          y,
+                                    gint          w);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -100,24 +103,24 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_sobel",
-			  "Edge Detection with Sobel Operation",
-			  "This plugin calculates the gradient with a sobel "
-			  "operator. The user can specify which direction to "
-			  "use. When both directions are used, the result is "
-			  "the RMS of the two gradients; if only one direction "
-			  "is used, the result either the absolut value of the "
-			  "gradient, or 127 + gradient (if the 'keep sign' "
-			  "switch is on). This way, information about the "
-			  "direction of the gradient is preserved. Resulting "
-			  "images are not autoscaled.",
-			  "Thorsten Schnier",
-			  "Thorsten Schnier",
-			  "1997",
-			  N_("_Sobel..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Edge Detection with Sobel Operation",
+                          "This plugin calculates the gradient with a sobel "
+                          "operator. The user can specify which direction to "
+                          "use. When both directions are used, the result is "
+                          "the RMS of the two gradients; if only one direction "
+                          "is used, the result either the absolut value of the "
+                          "gradient, or 127 + gradient (if the 'keep sign' "
+                          "switch is on). This way, information about the "
+                          "direction of the gradient is preserved. Resulting "
+                          "images are not autoscaled.",
+                          "Thorsten Schnier",
+                          "Thorsten Schnier",
+                          "1997",
+                          N_("_Sobel..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_sobel",
                              N_("<Image>/Filters/Edge-Detect"));
@@ -145,6 +148,9 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
+  /*  Get the specified drawable  */
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
+
   switch (run_mode)
    {
     case GIMP_RUN_INTERACTIVE:
@@ -152,22 +158,22 @@ run (const gchar      *name,
       gimp_get_data ("plug_in_sobel", &bvals);
 
       /*  First acquire information with a dialog  */
-      if (! sobel_dialog ())
-	return;
+      if (! sobel_dialog (drawable))
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 6)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
-	  bvals.horizontal = (param[4].data.d_int32) ? TRUE : FALSE;
-	  bvals.vertical   = (param[5].data.d_int32) ? TRUE : FALSE;
-	  bvals.keep_sign  = (param[6].data.d_int32) ? TRUE : FALSE;
-	}
+        {
+          bvals.horizontal = (param[4].data.d_int32) ? TRUE : FALSE;
+          bvals.vertical   = (param[5].data.d_int32) ? TRUE : FALSE;
+          bvals.keep_sign  = (param[6].data.d_int32) ? TRUE : FALSE;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -179,24 +185,22 @@ run (const gchar      *name,
       break;
     }
 
-
-  /*  Get the specified drawable  */
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
-
   /*  Make sure that the drawable is gray or RGB color  */
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id))
     {
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
-      sobel (drawable, bvals.horizontal, bvals.vertical, bvals.keep_sign);
+      sobel (drawable,
+             bvals.horizontal, bvals.vertical, bvals.keep_sign,
+             NULL);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
 
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_set_data ("plug_in_sobel", &bvals, sizeof (bvals));
+        gimp_set_data ("plug_in_sobel", &bvals, sizeof (bvals));
     }
   else
     {
@@ -210,18 +214,20 @@ run (const gchar      *name,
 }
 
 static gboolean
-sobel_dialog (void)
+sobel_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *toggle;
   GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *preview;
   gboolean   run;
 
   gimp_ui_init ("sobel", FALSE);
 
   dlg = gimp_dialog_new (_("Sobel Edge Detection"), "sobel",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-sobel",
+                         gimp_standard_help_func, "plug-in-sobel",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -234,6 +240,17 @@ sobel_dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
+  /*  preview  */
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  preview = gimp_drawable_preview_new (drawable);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_widget_show (preview);
+  g_signal_connect (preview, "updated",
+                    G_CALLBACK (sobel_update_preview), NULL);
+
   toggle = gtk_check_button_new_with_mnemonic (_("Sobel _Horizontally"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
@@ -242,6 +259,8 @@ sobel_dialog (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &bvals.horizontal);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (sobel_update_preview), preview);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Sobel _Vertically"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -251,6 +270,8 @@ sobel_dialog (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &bvals.vertical);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (sobel_update_preview), preview);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Keep sign of result (one direction only)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -260,6 +281,8 @@ sobel_dialog (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &bvals.keep_sign);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (sobel_update_preview), preview);
 
   gtk_widget_show (dlg);
 
@@ -271,11 +294,21 @@ sobel_dialog (void)
 }
 
 static void
+sobel_update_preview (GtkWidget *preview)
+{
+  sobel (GIMP_DRAWABLE_PREVIEW (preview)->drawable,
+         bvals.horizontal,
+         bvals.vertical,
+         bvals.keep_sign,
+         preview);
+}
+
+static void
 sobel_prepare_row (GimpPixelRgn *pixel_rgn,
-		   guchar    *data,
-		   gint       x,
-		   gint       y,
-		   gint       w)
+                   guchar    *data,
+                   gint       x,
+                   gint       y,
+                   gint       w)
 {
   gint b;
 
@@ -294,102 +327,143 @@ sobel_prepare_row (GimpPixelRgn *pixel_rgn,
 
 static void
 sobel (GimpDrawable *drawable,
-       gint       do_horizontal,
-       gint       do_vertical,
-       gint       keep_sign)
+       gboolean      do_horizontal,
+       gboolean      do_vertical,
+       gboolean      keep_sign,
+       GtkWidget    *preview)
 {
-  GimpPixelRgn srcPR, destPR;
-  gint    width, height;
-  gint    bytes;
-  gint    gradient, hor_gradient, ver_gradient;
-  guchar *dest, *d;
-  guchar *prev_row, *pr;
-  guchar *cur_row, *cr;
-  guchar *next_row, *nr;
-  guchar *tmp;
-  gint    row, col;
-  gint    x1, y1, x2, y2;
-  gint    alpha;
-  gint    counter;
+  GimpPixelRgn  srcPR, destPR;
+  gint          width, height;
+  gint          bytes;
+  gint          gradient, hor_gradient, ver_gradient;
+  guchar       *dest, *d;
+  guchar       *prev_row, *pr;
+  guchar       *cur_row, *cr;
+  guchar       *next_row, *nr;
+  guchar       *tmp;
+  gint          row, col;
+  gint          x1, y1, x2, y2;
+  gboolean      alpha;
+  gint          counter;
+  guchar       *preview_buffer = NULL;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  gimp_progress_init (_("Sobel Edge Detecting..."));
+  if (preview)
+    {
+      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+      x2 = x1 + gimp_preview_get_width  (GIMP_PREVIEW (preview));
+      y2 = y1 + gimp_preview_get_height (GIMP_PREVIEW (preview));
+    }
+  else
+    {
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      gimp_progress_init (_("Sobel Edge Detecting..."));
+    }
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
    */
-  width  = drawable->width;
-  height = drawable->height;
+  width  = x2 - x1;
+  height = y2 - y1;
   bytes  = drawable->bpp;
   alpha  = gimp_drawable_has_alpha (drawable->drawable_id);
 
   /*  allocate row buffers  */
-  prev_row = g_new (guchar, (x2 - x1 + 2) * bytes);
-  cur_row  = g_new (guchar, (x2 - x1 + 2) * bytes);
-  next_row = g_new (guchar, (x2 - x1 + 2) * bytes);
-  dest     = g_new (guchar, (x2 - x1) * bytes);
+  prev_row = g_new (guchar, (width + 2) * bytes);
+  cur_row  = g_new (guchar, (width + 2) * bytes);
+  next_row = g_new (guchar, (width + 2) * bytes);
+  dest     = g_new (guchar, width * bytes);
 
   /*  initialize the pixel regions  */
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0,
+                       drawable->width, drawable->height,
+                       FALSE, FALSE);
+
+  if (preview)
+    {
+      preview_buffer = g_new (guchar, width * height * bytes);
+    }
+  else
+    {
+      gimp_pixel_rgn_init (&destPR, drawable, 0, 0,
+                           drawable->width, drawable->height,
+                           TRUE, TRUE);
+    }
 
   pr = prev_row + bytes;
   cr = cur_row  + bytes;
   nr = next_row + bytes;
 
-  sobel_prepare_row (&srcPR, pr, x1, y1 - 1, (x2 - x1));
-  sobel_prepare_row (&srcPR, cr, x1, y1, (x2 - x1));
+  sobel_prepare_row (&srcPR, pr, x1, y1 - 1, width);
+  sobel_prepare_row (&srcPR, cr, x1, y1, width);
   counter =0;
   /*  loop through the rows, applying the sobel convolution  */
   for (row = y1; row < y2; row++)
     {
       /*  prepare the next row  */
-      sobel_prepare_row (&srcPR, nr, x1, row + 1, (x2 - x1));
+      sobel_prepare_row (&srcPR, nr, x1, row + 1, width);
 
       d = dest;
-      for (col = 0; col < (x2 - x1) * bytes; col++)
-	{
-	  hor_gradient = (do_horizontal ?
-			  ((pr[col - bytes] +  2 * pr[col] + pr[col + bytes]) -
-			   (nr[col - bytes] + 2 * nr[col] + nr[col + bytes]))
-			  : 0);
-	  ver_gradient = (do_vertical ?
-			  ((pr[col - bytes] + 2 * cr[col - bytes] + nr[col - bytes]) -
-			   (pr[col + bytes] + 2 * cr[col + bytes] + nr[col + bytes]))
-			  : 0);
-	  gradient = (do_vertical && do_horizontal) ?
-	    (ROUND (RMS (hor_gradient, ver_gradient)) / 5.66) /* always >0 */
-	    : (keep_sign ? (127 + (ROUND ((hor_gradient + ver_gradient) / 8.0)))
-	       : (ROUND (abs (hor_gradient + ver_gradient) / 4.0)));
+      for (col = 0; col < width * bytes; col++)
+        {
+          hor_gradient = (do_horizontal ?
+                          ((pr[col - bytes] +  2 * pr[col] + pr[col + bytes]) -
+                           (nr[col - bytes] + 2 * nr[col] + nr[col + bytes]))
+                          : 0);
+          ver_gradient = (do_vertical ?
+                          ((pr[col - bytes] + 2 * cr[col - bytes] + nr[col - bytes]) -
+                           (pr[col + bytes] + 2 * cr[col + bytes] + nr[col + bytes]))
+                          : 0);
+          gradient = (do_vertical && do_horizontal) ?
+            (ROUND (RMS (hor_gradient, ver_gradient)) / 5.66) /* always >0 */
+            : (keep_sign ? (127 + (ROUND ((hor_gradient + ver_gradient) / 8.0)))
+               : (ROUND (abs (hor_gradient + ver_gradient) / 4.0)));
 
-	  if (alpha && (((col + 1) % bytes) == 0))
-	    { /* the alpha channel */
-	      *d++ = (counter == 0) ? 0 : 255;
-	      counter = 0;
-	    }
-	  else
-	    {
-	      *d++ = gradient;
-	      if (gradient > 10) counter ++;
-	    }
-	}
-      /*  store the dest  */
-      gimp_pixel_rgn_set_row (&destPR, dest, x1, row, (x2 - x1));
-
+          if (alpha && (((col + 1) % bytes) == 0))
+            { /* the alpha channel */
+              *d++ = (counter == 0) ? 0 : 255;
+              counter = 0;
+            }
+          else
+            {
+              *d++ = gradient;
+              if (gradient > 10) counter ++;
+            }
+        }
       /*  shuffle the row pointers  */
       tmp = pr;
       pr = cr;
       cr = nr;
       nr = tmp;
 
-      if ((row % 5) == 0)
-	gimp_progress_update ((double) row / (double) (y2 - y1));
+      /*  store the dest  */
+      if (preview)
+        {
+          memcpy (preview_buffer + width * (row - y1) * bytes,
+                  dest,
+                  width * bytes);
+        }
+      else
+        {
+          gimp_pixel_rgn_set_row (&destPR, dest, x1, row, width);
+
+          if ((row % 5) == 0)
+            gimp_progress_update ((double) row / (double) (y2 - y1));
+        }
     }
 
-  /*  update the sobeled region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  if (preview)
+    {
+      gimp_drawable_preview_draw (GIMP_DRAWABLE_PREVIEW (preview),
+                                  preview_buffer);
+      g_free (preview_buffer);
+    }
+  else
+    {
+      /*  update the sobeled region  */
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+    }
 
   g_free (prev_row);
   g_free (cur_row);

@@ -210,6 +210,8 @@ libgimpui_2_0_la_SOURCES = \
 	gimpmenu.h		\
 	gimpbrushmenu.c		\
 	gimpbrushmenu.h		\
+	gimpdrawablepreview.c	\
+	gimpdrawablepreview.h	\
 	gimpfontmenu.c		\
 	gimpfontmenu.h		\
 	gimpgradientmenu.c 	\
@@ -255,6 +257,7 @@ gimpinclude_HEADERS = \
 	gimpuitypes.h		\
 	gimpmenu.h		\
 	gimpbrushmenu.h		\
+	gimpdrawablepreview.h   \
 	gimpfontmenu.h		\
 	gimpgradientmenu.h	\
 	gimppalettemenu.h	\

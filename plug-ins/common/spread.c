@@ -37,18 +37,19 @@ typedef struct
 
 /* Declare local functions.
  */
-static void      query         (void);
-static void      run           (const gchar      *name,
-                                gint              nparams,
-                                const GimpParam  *param,
-                                gint             *nreturn_vals,
-                                GimpParam       **return_vals);
+static void      query                   (void);
+static void      run                     (const gchar      *name,
+                                          gint              nparams,
+                                          const GimpParam  *param,
+                                          gint             *nreturn_vals,
+                                          GimpParam       **return_vals);
 
-static void      spread        (GimpDrawable     *drawable);
+static void      spread                  (GimpDrawable     *drawable);
 
-static gboolean  spread_dialog (gint32            image_ID,
-                                GimpDrawable     *drawable);
-
+static gboolean  spread_dialog           (gint32            image_ID,
+                                          GimpDrawable     *drawable);
+static void      spread_updating_preview (GimpPreview      *preview,
+                                          GtkWidget        *size);
 
 /***** Local vars *****/
 
@@ -205,12 +206,12 @@ run (const gchar      *name,
 }
 
 typedef struct {
-  GimpPixelFetcher      *pft;
-  GRand                 *gr;
-  gint                   x_amount;
-  gint                   y_amount;
-  gint                   width;
-  gint                   height;
+  GimpPixelFetcher *pft;
+  GRand            *gr;
+  gint              x_amount;
+  gint              y_amount;
+  gint              width;
+  gint              height;
 } SpreadParam_t;
 
 /* Spread the image.  This is done by going through every pixel
@@ -229,11 +230,11 @@ typedef struct {
 */
 
 static void
-spread_func (gint x, 
-             gint y, 
-             guchar *dest, 
-             gint bpp, 
-             gpointer data)
+spread_func (gint      x, 
+             gint      y, 
+             guchar   *dest, 
+             gint      bpp, 
+             gpointer  data)
 {
   SpreadParam_t *param = (SpreadParam_t*) data;
   gdouble  angle;
@@ -252,8 +253,7 @@ spread_func (gint x,
   xi = x + floor (sin (angle) * xdist);
   yi = y + floor (cos (angle) * ydist);
 
-  /* Only displace the pixel if it's within the bounds of the
-     image. */
+  /* Only displace the pixel if it's within the bounds of the image. */
   if (xi >= 0 && xi < param->width && yi >= 0 && yi < param->height)
     {
       gimp_pixel_fetcher_get_pixel (param->pft, xi, yi, dest);
@@ -283,13 +283,54 @@ spread (GimpDrawable *drawable)
   g_rand_free (param.gr);
 }
 
+static void
+spread_updating_preview (GimpPreview *preview, GtkWidget *size)
+{
+  SpreadParam_t  param;
+  gint           x, y, bpp;
+  guchar        *buffer, *dest;
+  gint           x_off, y_off;
+  gint           width, height;
+  GimpDrawablePreview *drawable_preview = GIMP_DRAWABLE_PREVIEW (preview);
+
+  param.pft      = gimp_pixel_fetcher_new (drawable_preview->drawable, FALSE);
+  param.gr       = g_rand_new ();
+  param.x_amount = 
+        (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 0) + 1) / 2;
+  param.y_amount = 
+        (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 1) + 1) / 2;
+  param.width    = drawable_preview->drawable->width;
+  param.height   = drawable_preview->drawable->height;
+
+  width    = gimp_preview_get_width (preview);
+  height   = gimp_preview_get_height (preview);
+
+  bpp = drawable_preview->drawable->bpp;
+  dest = buffer = g_new (guchar, width * height * bpp);
+  gimp_preview_get_position (preview, &x_off, &y_off);
+
+  for (y = 0 ; y < height ; y++)
+    for (x = 0 ; x < width ; x++)
+      {
+        spread_func (x + x_off, y + y_off, dest, bpp, &param);
+        dest += bpp;
+      }
+  gimp_drawable_preview_draw (drawable_preview, buffer);
+
+  g_free (buffer);
+  g_rand_free (param.gr);
+}
+
 static gboolean
 spread_dialog (gint32        image_ID,
                GimpDrawable *drawable)
 {
   GtkWidget *dlg;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *size;
+  GtkWidget *preview;
   GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
@@ -305,6 +346,20 @@ spread_dialog (gint32        image_ID,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                          NULL);
+
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+  
+  preview = gimp_drawable_preview_new (drawable);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_widget_show (preview);
 
   frame = gimp_frame_new (_("Spread Amount"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
@@ -331,8 +386,13 @@ spread_dialog (gint32        image_ID,
                                0, 0);
   gtk_container_add (GTK_CONTAINER (frame), size);
   gtk_widget_show (size);
-
+  g_signal_connect (preview, "updated",
+                    G_CALLBACK (spread_updating_preview), size);
+  g_signal_connect_swapped (size, "value_changed",
+                            G_CALLBACK (spread_updating_preview), preview);
   gtk_widget_show (dlg);
+
+  spread_updating_preview (GIMP_PREVIEW(preview), size);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
@@ -348,3 +408,4 @@ spread_dialog (gint32        image_ID,
 
   return run;
 }
+

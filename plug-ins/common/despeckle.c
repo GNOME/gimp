@@ -42,7 +42,6 @@
 #define PLUG_IN_NAME     "plug_in_despeckle"
 #define PLUG_IN_VERSION  "1.3.2 - 17 May 1998"
 #define HELP_ID          "plug-in-despeckle"
-#define PREVIEW_SIZE     128
 #define SCALE_WIDTH      100
 #define ENTRY_WIDTH        3
 #define MAX_RADIUS        20
@@ -76,8 +75,7 @@ static void      dialog_recursive_callback (GtkWidget *, gpointer);
 
 static void      preview_init              (void);
 static void      preview_exit              (void);
-static void      preview_update            (void);
-static void      preview_scroll_callback   (void);
+static void      preview_update            (GtkWidget *preview);
 
 
 /*
@@ -93,17 +91,9 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 static GtkWidget      *preview;                 /* Preview widget */
-static gint            preview_width,           /* Width of preview widget */
-                       preview_height,          /* Height of preview widget */
-                       preview_x1,              /* Upper-left X of preview */
-                       preview_y1,              /* Upper-left Y of preview */
-                       preview_x2,              /* Lower-right X of preview */
-                       preview_y2;              /* Lower-right Y of preview */
 static guchar         *preview_src = NULL,      /* Source pixel rows */
                       *preview_dst,             /* Destination pixel row */
                       *preview_sort;            /* Pixel value sort array */
-static GtkObject      *hscroll_data,            /* Horizontal scrollbar data */
-                      *vscroll_data;            /* Vertical scrollbar data */
 
 static GimpDrawable   *drawable = NULL;         /* Current image */
 static gint            sel_x1,                  /* Selection bounds */
@@ -582,9 +572,7 @@ despeckle_dialog (void)
   GtkWidget *hbox;
   GtkWidget *vbox;
   GtkWidget *table;
-  GtkWidget *ptable;
   GtkWidget *frame;
-  GtkWidget *scrollbar;
   GtkWidget *button;
   GtkObject *adj;
   gboolean   run;
@@ -609,62 +597,14 @@ despeckle_dialog (void)
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-
-  /*
-   * Preview window...
-   */
-
-  ptable = gtk_table_new (2, 2, FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), ptable, FALSE, FALSE, 0);
-  gtk_widget_show(ptable);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (ptable), frame, 0, 1, 0, 1, 0, 0, 0, 0);
-  gtk_widget_show (frame);
-
-  preview_width  = MIN (sel_width, PREVIEW_SIZE);
-  preview_height = MIN (sel_height, PREVIEW_SIZE);
-
-  preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
+  
+  preview = gimp_drawable_preview_new (drawable);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
-
-  hscroll_data = gtk_adjustment_new (0, 0, sel_width - 1, 1.0,
-                                     MIN (preview_width, sel_width),
-                                     MIN (preview_width, sel_width));
-
-  g_signal_connect (hscroll_data, "value_changed",
-                    G_CALLBACK (preview_scroll_callback),
-                    NULL);
-
-  scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (hscroll_data));
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE (ptable), scrollbar,
-                    0, 1, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_widget_show (scrollbar);
-
-  vscroll_data = gtk_adjustment_new (0, 0, sel_height - 1, 1.0,
-                                     MIN (preview_height, sel_height),
-                                     MIN (preview_height, sel_height));
-
-  g_signal_connect (vscroll_data, "value_changed",
-                    G_CALLBACK (preview_scroll_callback),
-                    NULL);
-
-  scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (vscroll_data));
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE (ptable), scrollbar, 1, 2, 0, 1, 0,
-                    GTK_FILL, 0, 0);
-  gtk_widget_show (scrollbar);
+  g_signal_connect (preview, "updated",
+                    G_CALLBACK (preview_update), NULL);
 
   preview_init ();
-
-  preview_x1 = sel_x1;
-  preview_y1 = sel_y1;
-  preview_x2 = preview_x1 + MIN (preview_width, sel_width);
-  preview_y2 = preview_y1 + MIN (preview_height, sel_height);
 
   /*
    * Filter type controls...
@@ -749,7 +689,7 @@ despeckle_dialog (void)
 
   gtk_widget_show (dialog);
 
-  preview_update ();
+  preview_update (preview);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
@@ -784,7 +724,7 @@ preview_init (void)
    */
 
   size  = despeckle_radius * 2 + 1;
-  width = preview_width * img_bpp;
+  width = GIMP_PREVIEW (preview)->width * img_bpp;
 
   if (preview_src != NULL)
     {
@@ -793,34 +733,17 @@ preview_init (void)
       g_free (preview_sort);
     }
 
-  preview_src  = g_new (guchar, width * preview_height);
+  preview_src  = g_new (guchar, width * GIMP_PREVIEW (preview)->height);
   preview_dst  = g_new (guchar, width);
   preview_sort = g_new (guchar, size * size);
 }
-
-
-/*
- * 'preview_scroll_callback()' - Update the preview when a scrollbar is moved.
- */
-
-static void
-preview_scroll_callback (void)
-{
-  preview_x1 = sel_x1 + GTK_ADJUSTMENT (hscroll_data)->value;
-  preview_y1 = sel_y1 + GTK_ADJUSTMENT (vscroll_data)->value;
-  preview_x2 = preview_x1 + MIN (preview_width, sel_width);
-  preview_y2 = preview_y1 + MIN (preview_height, sel_height);
-
-  preview_update ();
-}
-
 
 /*
  * 'preview_update()' - Update the preview window.
  */
 
 static void
-preview_update (void)
+preview_update (GtkWidget *widget)
 {
   GimpPixelRgn  src_rgn;        /* Source image region */
   guchar       *sort_ptr,       /* Current preview_sort value */
@@ -829,6 +752,7 @@ preview_update (void)
   gint          sort_count,     /* Number of soft values */
                 i, j, t, d,     /* Looping vars */
                 x, y,           /* Current location in image */
+                x1, y1,         /* Offset of the preview from the drawable */
                 size,           /* Width/height of the filter box */
                 width,          /* Byte width of the image */
                 xmin, xmax, tx, /* Looping vars */
@@ -836,14 +760,17 @@ preview_update (void)
                 hist0,          /* Histogram count for 0 values */
                 hist255;        /* Histogram count for 255 values */
   guchar       *rgba;           /* Output image */
+  GimpPreview  *preview;        /* The preview widget */
 
-  rgba = g_new (guchar, PREVIEW_SIZE * PREVIEW_SIZE * img_bpp);
- /*
-  * Setup for filter...
-  */
+  preview = GIMP_PREVIEW (widget);
+  rgba = g_new (guchar, preview->width * preview->height * img_bpp);
+  /*
+   * Setup for filter...
+   */
+  gimp_preview_get_position (preview, &x1, &y1);
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
-                       preview_x1, preview_y1, preview_width, preview_height,
+                       x1, y1, preview->width, preview->height,
                        FALSE, FALSE);
 
   /*
@@ -851,16 +778,16 @@ preview_update (void)
    */
 
   size  = despeckle_radius * 2 + 1;
-  width = preview_width * img_bpp;
+  width = preview->width * img_bpp;
 
-  gimp_pixel_rgn_get_rect (&src_rgn, preview_src, preview_x1, preview_y1,
-                           preview_width, preview_height);
+  gimp_pixel_rgn_get_rect (&src_rgn, preview_src, x1, y1,
+                           preview->width, preview->height);
 
   /*
    * Despeckle...
    */
 
-  for (y = 0; y < preview_height; y ++)
+  for (y = 0; y < preview->height; y ++)
     {
       /*
        * Now find the median pixels and save the results...
@@ -870,7 +797,7 @@ preview_update (void)
 
       memcpy (preview_dst, preview_src + y * width, width);
 
-      if (y >= radius && y < (preview_height - radius))
+      if (y >= radius && y < (preview->height - radius))
         {
           for (x = 0, dst_ptr = preview_dst; x < width; x ++, dst_ptr ++)
             {
@@ -952,9 +879,9 @@ preview_update (void)
                     }
                   else if (radius > 1)
                     radius --;
-                };
-            };
-        };
+                }
+            }
+        }
 
       /*
        * Draw this row...
@@ -967,11 +894,7 @@ preview_update (void)
    * Update the screen...
    */
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                          0, 0, preview_width, preview_height,
-                          gimp_drawable_type (drawable->drawable_id),
-                          rgba,
-                          width);
+  gimp_drawable_preview_draw (GIMP_DRAWABLE_PREVIEW (preview), rgba);
   g_free (rgba);
 }
 
@@ -992,7 +915,7 @@ dialog_iscale_update (GtkAdjustment *adjustment,
   if (value == &despeckle_radius)
     preview_init ();
 
-  preview_update ();
+  preview_update (preview);
 }
 
 static void
@@ -1004,7 +927,7 @@ dialog_adaptive_callback (GtkWidget *widget,
   else
     filter_type &= ~FILTER_ADAPTIVE;
 
-  preview_update ();
+  preview_update (preview);
 }
 
 static void
@@ -1016,5 +939,5 @@ dialog_recursive_callback (GtkWidget *widget,
   else
     filter_type &= ~FILTER_RECURSIVE;
 
-  preview_update ();
+  preview_update (preview);
 }

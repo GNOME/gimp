@@ -53,6 +53,7 @@
 #include <libgimpwidgets/gimppatheditor.h>
 #include <libgimpwidgets/gimppickbutton.h>
 #include <libgimpwidgets/gimppixmap.h>
+#include <libgimpwidgets/gimppreview.h>
 #include <libgimpwidgets/gimppreviewarea.h>
 #include <libgimpwidgets/gimpquerybox.h>
 #include <libgimpwidgets/gimpsizeentry.h>

@@ -61,8 +61,10 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static void      softglow        (GimpDrawable *drawable);
-static gint      softglow_dialog (GimpDrawable *drawable);
+static void      softglow                (GimpDrawable *drawable,
+                                          GtkWidget    *preview);
+static gboolean  softglow_dialog         (GimpDrawable *drawable);
+static void      softglow_update_preview (GtkWidget    *preview);
 
 /*
  * Gaussian blur helper functions
@@ -205,7 +207,7 @@ run (const gchar      *name,
           /*  set the tile cache size  */
           gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
-          softglow (drawable);
+          softglow (drawable, NULL);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
@@ -227,7 +229,8 @@ run (const gchar      *name,
 }
 
 static void
-softglow (GimpDrawable *drawable)
+softglow (GimpDrawable *drawable,
+          GtkWidget    *preview)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   GimpPixelRgn *pr;
@@ -252,7 +255,16 @@ softglow (GimpDrawable *drawable)
   gdouble       std_dev;
   gdouble       val;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (preview)
+    {
+      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+      x2 = x1 + gimp_preview_get_width  (GIMP_PREVIEW (preview));
+      y2 = y1 + gimp_preview_get_height (GIMP_PREVIEW (preview));
+    }
+  else
+    {
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+    }
 
   width     = (x2 - x1);
   height    = (y2 - y1);
@@ -274,8 +286,8 @@ softglow (GimpDrawable *drawable)
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
-      guchar* src_ptr  = src_rgn.data;
-      guchar* dest_ptr = dest + (src_rgn.y - y1) * width + (src_rgn.x - x1);
+      guchar *src_ptr  = src_rgn.data;
+      guchar *dest_ptr = dest + (src_rgn.y - y1) * width + (src_rgn.x - x1);
 
       for (row = 0; row < src_rgn.h; row++)
         {
@@ -300,8 +312,11 @@ softglow (GimpDrawable *drawable)
           dest_ptr += width;
         }
 
-      progress += src_rgn.w * src_rgn.h;
-      gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
+      if (!preview)
+        {
+          progress += src_rgn.w * src_rgn.h;
+          gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
+        }
     }
 
   /*  Calculate the standard deviations  */
@@ -353,9 +368,12 @@ softglow (GimpDrawable *drawable)
 
       transfer_pixels (val_p, val_m, dest + col, width, height);
 
-      progress += height;
-      if ((col % 5) == 0)
-        gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
+      if (!preview)
+        {
+          progress += height;
+          if ((col % 5) == 0)
+            gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
+        }
     }
 
   for (row = 0; row < height; row++)
@@ -402,49 +420,94 @@ softglow (GimpDrawable *drawable)
 
       transfer_pixels (val_p, val_m, dest + row * width, 1, width);
 
-      progress += width;
-      if ((row % 5) == 0)
-        gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
+      if (!preview)
+        {
+          progress += width;
+          if ((row % 5) == 0)
+            gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
+        }
     }
 
   /* Initialize the pixel regions. */
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, width, height, TRUE, TRUE);
 
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
+  if (preview)
     {
-      guchar *src_ptr  = src_rgn.data;
-      guchar *dest_ptr = dest_rgn.data;
-      guchar *blur_ptr = dest + (src_rgn.y - y1) * width + (src_rgn.x - x1);
+      guchar *preview_buffer;
 
-      for (row = 0; row < src_rgn.h; row++)
+      preview_buffer = g_new (guchar, width * height * bytes);
+
+      for (pr = gimp_pixel_rgns_register (1, &src_rgn);
+           pr != NULL;
+           pr = gimp_pixel_rgns_process (pr))
         {
-          for (col = 0; col < src_rgn.w; col++)
+          guchar *src_ptr  = src_rgn.data;
+          guchar *dest_ptr = preview_buffer + 
+                               bytes * 
+                               ((src_rgn.y - y1) * width + (src_rgn.x - x1));
+          guchar *blur_ptr = dest + (src_rgn.y - y1) * width + (src_rgn.x - x1);
+
+          for (row = 0; row < src_rgn.h; row++)
             {
-              /* screen op */
-              for (b = 0; b < (has_alpha ? (bytes - 1) : bytes); b++)
-                dest_ptr[col * bytes + b] =
-                  255 - INT_MULT((255 - src_ptr[col * bytes + b]),
-                                 (255 - blur_ptr[col]), tmp);
-              if (has_alpha)
-                dest_ptr[col * bytes + b] = src_ptr[col * bytes + b];
+              for (col = 0; col < src_rgn.w; col++)
+                {
+                  /* screen op */
+                  for (b = 0; b < (has_alpha ? (bytes - 1) : bytes); b++)
+                    dest_ptr[col * bytes + b] =
+                      255 - INT_MULT((255 - src_ptr[col * bytes + b]),
+                                     (255 - blur_ptr[col]), tmp);
+                  if (has_alpha)
+                    dest_ptr[col * bytes + b] = src_ptr[col * bytes + b];
+                }
+
+              src_ptr  += src_rgn.rowstride;
+              dest_ptr += width * bytes;
+              blur_ptr += width;
+            }
+        }
+      gimp_drawable_preview_draw (GIMP_DRAWABLE_PREVIEW (preview),
+                                  preview_buffer);
+      g_free (preview_buffer);
+    }
+  else
+    {
+      gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, width, height, TRUE, TRUE);
+
+      for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
+           pr != NULL;
+           pr = gimp_pixel_rgns_process (pr))
+        {
+          guchar *src_ptr  = src_rgn.data;
+          guchar *dest_ptr = dest_rgn.data;
+          guchar *blur_ptr = dest + (src_rgn.y - y1) * width + (src_rgn.x - x1);
+
+          for (row = 0; row < src_rgn.h; row++)
+            {
+              for (col = 0; col < src_rgn.w; col++)
+                {
+                  /* screen op */
+                  for (b = 0; b < (has_alpha ? (bytes - 1) : bytes); b++)
+                    dest_ptr[col * bytes + b] =
+                      255 - INT_MULT((255 - src_ptr[col * bytes + b]),
+                                     (255 - blur_ptr[col]), tmp);
+                  if (has_alpha)
+                    dest_ptr[col * bytes + b] = src_ptr[col * bytes + b];
+                }
+
+              src_ptr  += src_rgn.rowstride;
+              dest_ptr += dest_rgn.rowstride;
+              blur_ptr += width;
             }
 
-          src_ptr  += src_rgn.rowstride;
-          dest_ptr += dest_rgn.rowstride;
-          blur_ptr += width;
+          progress += src_rgn.w * src_rgn.h;
+          gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
         }
 
-      progress += src_rgn.w * src_rgn.h;
-      gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
+      /*  merge the shadow, update the drawable  */
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
     }
-
-  /*  merge the shadow, update the drawable  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
   /*  free up buffers  */
   g_free (val_p);
@@ -584,6 +647,9 @@ static gboolean
 softglow_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *preview;
   GtkWidget *table;
   GtkObject *scale_data;
   gboolean   run;
@@ -599,11 +665,25 @@ softglow_dialog (GimpDrawable *drawable)
 
                          NULL);
 
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start_defaults (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox);
+  gtk_widget_show (vbox);
+
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  preview = gimp_drawable_preview_new (drawable);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "updated",
+                            G_CALLBACK (softglow), drawable);
+
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), table);
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), table);
   gtk_widget_show (table);
 
   /*  Label, scale, entry for svals.amount  */
@@ -616,6 +696,8 @@ softglow_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.glow_radius);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (softglow_update_preview), preview);
 
   /*  Label, scale, entry for svals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -627,6 +709,8 @@ softglow_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.brightness);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (softglow_update_preview), preview);
 
   /*  Label, scale, entry for svals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
@@ -638,6 +722,8 @@ softglow_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.sharpness);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (softglow_update_preview), preview);
 
   gtk_widget_show (dlg);
 
@@ -646,4 +732,10 @@ softglow_dialog (GimpDrawable *drawable)
   gtk_widget_destroy (dlg);
 
   return run;
+}
+
+static void
+softglow_update_preview (GtkWidget *preview)
+{
+  softglow (GIMP_DRAWABLE_PREVIEW (preview)->drawable, preview);
 }

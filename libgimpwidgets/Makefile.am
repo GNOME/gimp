@@ -118,6 +118,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimppickbutton.h	\
 	gimppixmap.c		\
 	gimppixmap.h		\
+	gimppreview.c		\
+	gimppreview.h		\
 	gimppreviewarea.c	\
 	gimppreviewarea.h	\
 	gimpquerybox.c		\
@@ -177,6 +179,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimppatheditor.h	\
 	gimppickbutton.h	\
 	gimppixmap.h		\
+	gimppreview.h		\
 	gimppreviewarea.h	\
 	gimpquerybox.h		\
 	gimpsizeentry.h		\

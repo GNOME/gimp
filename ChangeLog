@@ -1,3 +1,29 @@
+2004-08-31  DindinX  <david@dindinx.org>
+
+	* libgimpwidgets/gimppreview.c
+	* libgimpwidgets/gimppreview.h: added a GimpPreview widget, abstract
+	base for a GimpDrawablePreview.
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h: modified accordingly.
+
+	* libgimp/gimpdrawablepreview.c
+	* libgimp/gimpdrawablepreview.h: added a GimpDrawablePreview widget 
+	to ease	the use of previews by plug-ins.
+
+	* libgimp/Makefile.am
+	* libgimp/gimpui.h: Changed accordingly.
+
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/gauss.c
+	* plug-ins/common/neon.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/softglow.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/unsharp.c: use a GimpDrawablePreview with these
+	plug-ins.
+
 2004-08-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-progress.[ch]: added boolean return values

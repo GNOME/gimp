@@ -55,10 +55,13 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static void      neon        (GimpDrawable *drawable,
-                              gdouble       radius,
-                              gdouble       amount);
-static gboolean  neon_dialog (GimpDrawable *drawable);
+static void      neon                (GimpDrawable *drawable,
+                                      gdouble       radius,
+                                      gdouble       amount,
+                                      GtkWidget    *preview);
+
+static gboolean  neon_dialog         (GimpDrawable *drawable);
+static void      neon_preview_update (GtkWidget    *preview);
 
 /*
  * Gaussian operator helper functions
@@ -205,7 +208,7 @@ run (const gchar      *name,
                                    gimp_tile_width () + 1));
 
       /*  run the neon effect  */
-      neon (drawable, evals.radius, evals.amount);
+      neon (drawable, evals.radius, evals.amount, NULL);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -232,7 +235,8 @@ run (const gchar      *name,
 static void
 neon (GimpDrawable *drawable,
       gdouble       radius,
-      gdouble       amount)
+      gdouble       amount,
+      GtkWidget    *preview)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   gint          width, height;
@@ -248,12 +252,23 @@ neon (GimpDrawable *drawable,
   gint          i, j;
   gint          row, col, b;
   gint          terms;
-  gint          progress, max_progress;
+  gint          progress = 0, max_progress = 1;
   gint          initial_p[4];
   gint          initial_m[4];
   gdouble       std_dev;
+  guchar       *preview_buffer1 = NULL;
+  guchar       *preview_buffer2 = NULL;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (preview)
+    {
+      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+      x2 = x1 + gimp_preview_get_width  (GIMP_PREVIEW (preview));
+      y2 = y1 + gimp_preview_get_height (GIMP_PREVIEW (preview));
+    }
+  else
+    {
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+    }
 
   if (radius < 1.0)
     return;
@@ -272,11 +287,20 @@ neon (GimpDrawable *drawable,
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
                        0, 0, drawable->width, drawable->height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       0, 0, drawable->width, drawable->height, TRUE, TRUE);
 
-  progress = 0;
-  max_progress = (radius < 1.0 ) ? 0 : width * height * radius * 2;
+  if (preview)
+    {
+      preview_buffer1 = g_new (guchar, width * height * bytes);
+      preview_buffer2 = g_new (guchar, width * height * bytes);
+    }
+  else
+    {
+      gimp_pixel_rgn_init (&dest_rgn, drawable,
+                           0, 0, drawable->width, drawable->height, TRUE, TRUE);
+
+      progress = 0;
+      max_progress = (radius < 1.0 ) ? 0 : width * height * radius * 2;
+    }
 
   /*  First the vertical pass  */
   radius  = fabs (radius) + 1.0;
@@ -337,11 +361,21 @@ neon (GimpDrawable *drawable,
 
       transfer_pixels (val_p, val_m, dest, bytes, height);
 
-      gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, (y2 - y1));
+      if (preview)
+        {
+          for (row = 0 ; row < height ; row++)
+            memcpy (preview_buffer1 + (row * width + col) * bytes,
+                    dest + bytes * row,
+                    bytes);
+        }
+      else
+        {
+          gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, (y2 - y1));
 
-      progress += height * radius;
-      if ((col % 5) == 0)
-        gimp_progress_update ((double) progress / (double) max_progress);
+          progress += height * radius;
+          if ((col % 5) == 0)
+            gimp_progress_update ((double) progress / (double) max_progress);
+        }
     }
 
   /*  Now the horizontal pass  */
@@ -354,7 +388,16 @@ neon (GimpDrawable *drawable,
       memset (val_m, 0, width * bytes * sizeof (gdouble));
 
       gimp_pixel_rgn_get_row (&src_rgn, src, x1, row + y1, (x2 - x1));
-      gimp_pixel_rgn_get_row (&dest_rgn, src2, x1, row + y1, (x2 - x1));
+      if (preview)
+        {
+          memcpy (src2,
+                  preview_buffer1 + row * width * bytes,
+                  width * bytes);
+        }
+      else
+        {
+          gimp_pixel_rgn_get_row (&dest_rgn, src2, x1, row + y1, (x2 - x1));
+        }
 
       sp_p = src;
       sp_m = src + (width - 1) * bytes;
@@ -403,22 +446,42 @@ neon (GimpDrawable *drawable,
 
       combine_to_gradient (dest, src2, bytes, width, amount);
 
-      gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, (x2 - x1));
+      if (preview)
+        {
+          memcpy (preview_buffer2 + row * width * bytes,
+                  dest,
+                  width * bytes);
+        }
+      else
+        {
+          gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, (x2 - x1));
 
-      progress += width * radius;
-      if ((row % 5) == 0)
-        gimp_progress_update ((double) progress / (double) max_progress);
+          progress += width * radius;
+          if ((row % 5) == 0)
+            gimp_progress_update ((double) progress / (double) max_progress);
+        }
     }
 
-  /*  now, merge horizontal and vertical into a magnitude  */
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-                       0, 0, drawable->width, drawable->height, FALSE, TRUE);
+  if (preview)
+    {
+      gimp_drawable_preview_draw (GIMP_DRAWABLE_PREVIEW (preview),
+                                  preview_buffer2);
+      g_free (preview_buffer1);
+      g_free (preview_buffer2);
+    }
+  else
+    {
+      /*  now, merge horizontal and vertical into a magnitude  */
+      gimp_pixel_rgn_init (&src_rgn, drawable,
+                           0, 0, drawable->width, drawable->height,
+                           FALSE, TRUE);
 
-  /*  merge the shadow, update the drawable  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
-
+      /*  merge the shadow, update the drawable  */
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id,
+                            x1, y1, (x2 - x1), (y2 - y1));
+    }
   /*  free up buffers  */
   g_free (val_p);
   g_free (val_m);
@@ -611,6 +674,9 @@ static gboolean
 neon_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *preview;
   GtkWidget *table;
   GtkObject *scale_data;
   gboolean   run;
@@ -626,17 +692,32 @@ neon_dialog (GimpDrawable *drawable)
 
                          NULL);
 
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start_defaults (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox);
+  gtk_widget_show (vbox);
+
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  preview = gimp_drawable_preview_new (drawable);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_widget_show (preview);
+  g_signal_connect (preview, "updated",
+                    G_CALLBACK (neon_preview_update), NULL);
+  
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), table);
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), table);
   gtk_widget_show (table);
 
   /*  Label, scale, entry for evals.radius  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                                      _("_Radius:"), 100, 8,
                                      evals.radius, 0.0,
+                                     /* [DindinX] this value seems insane */
                                      8 * MAX (drawable->width, drawable->height),
                                      1, 10, 2,
                                      TRUE, 0, 0,
@@ -665,3 +746,13 @@ neon_dialog (GimpDrawable *drawable)
 
   return run;
 }
+
+static void
+neon_preview_update (GtkWidget *preview)
+{
+  neon (GIMP_DRAWABLE_PREVIEW (preview)->drawable,
+        evals.radius,
+        evals.amount,
+        preview);
+}
+
