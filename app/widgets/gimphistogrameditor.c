@@ -355,7 +355,7 @@ gimp_histogram_editor_idle_update (GimpHistogramEditor *editor)
 
   if (editor->drawable && editor->histogram)
     {
-      PixelRegion  region;
+      PixelRegion region;
 
       pixel_region_init (&region, gimp_drawable_data (editor->drawable),
                          0, 0,
@@ -375,7 +375,7 @@ static gboolean
 gimp_histogram_editor_item_sensitive (GimpHistogramChannel  channel,
                                       GimpDrawable         *drawable)
 {
-  if (!drawable)
+  if (! drawable)
     return FALSE;
 
   switch (channel)
@@ -419,31 +419,30 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
 
   if (hist)
     {
-      gdouble  pixels;
-      gdouble  count;
-      gchar    text[12];
+      GimpHistogramChannel channel = gimp_histogram_view_get_channel (view);
+      gdouble              pixels;
+      gdouble              count;
+      gchar                text[12];
 
-      pixels = gimp_histogram_get_count (hist,
-                                         view->channel, 0, 255);
-      count  = gimp_histogram_get_count (hist,
-                                         view->channel,
-                                         view->start, view->end);
+      /* FIXME: hack */
+      if (gimp_histogram_n_channels (hist) == 2)
+        channel = (channel > 0) ? 1 : 0;
+
+      pixels = gimp_histogram_get_count (hist, channel, 0, 255);
+      count  = gimp_histogram_get_count (hist, channel, view->start, view->end);
 
       g_snprintf (text, sizeof (text), "%3.1f",
-                  gimp_histogram_get_mean (hist,
-                                           view->channel,
+                  gimp_histogram_get_mean (hist, channel,
                                            view->start, view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[0]), text);
 
       g_snprintf (text, sizeof (text), "%3.1f",
-                  gimp_histogram_get_std_dev (hist,
-                                              view->channel,
+                  gimp_histogram_get_std_dev (hist, channel,
                                               view->start, view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[1]), text);
 
       g_snprintf (text, sizeof (text), "%3.1f",
-                  (gdouble) gimp_histogram_get_median  (hist,
-                                                        view->channel,
+                  (gdouble) gimp_histogram_get_median  (hist, channel,
                                                         view->start,
                                                         view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[2]), text);

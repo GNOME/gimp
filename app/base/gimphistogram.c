@@ -214,7 +214,7 @@ gimp_histogram_get_channel (GimpHistogram        *histogram,
 }
 
 gint
-gimp_histogram_nchannels (GimpHistogram *histogram)
+gimp_histogram_n_channels (GimpHistogram *histogram)
 {
   g_return_val_if_fail (histogram != NULL, 0);
 

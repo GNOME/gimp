@@ -1,3 +1,33 @@
+2004-01-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/gimphistogram.[ch]: renamed gimp_histogram_nchannels()
+	to gimp_histogram_n_channels().
+
+	* app/core/gimpdrawable-histogram.c: removed silly double negation
+	logic. Cleanup.
+
+	* app/widgets/gimphistogrameditor.c
+	* app/widgets/gimphistogramview.c: adjust the GimpHistogramChannel
+	for GRAYA images to make sure we pick alpha from the right slot.
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c: removed the same hack here and call
+	gimp_histogram_view_set_channel() with the correct enum value.
+
+	* tools/pdbgen/pdb/color.pdb (levels, curves, histogram): fiddle
+	with enum values here too so GRAY* drawables produce the correct
+	results.
+
+	Fixed precondition checks and set "success" in a uniform way all
+	over the place.
+
+	Use gimp_drawable_calculate_histogram() instead of duplicating its
+	code here.
+
+	(started with a patch from Pedro Gimeno. Fixes bug #109078)
+
+	* app/pdb/color_cmds.c: regenerated.
+
 2004-01-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/gimphistogram.c (gimp_histogram_calculate_sub_region):

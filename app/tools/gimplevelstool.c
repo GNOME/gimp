@@ -955,17 +955,12 @@ levels_channel_callback (GtkWidget      *widget,
 {
   gimp_menu_item_update (widget, &l_tool->channel);
 
-  if (l_tool->color)
-    {
-      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (l_tool->hist_view),
-                                       l_tool->channel);
-    }
-  else
-    {
-      l_tool->channel = (l_tool->channel > 1) ? 2 : 1;
-      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (l_tool->hist_view),
-                                       l_tool->channel - 1);
-    }
+  gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (l_tool->hist_view),
+                                   l_tool->channel);
+
+  /* FIXME: hack */
+  if (! l_tool->color)
+    l_tool->channel = (l_tool->channel > 1) ? 2 : 1;
 
   levels_update (l_tool, ALL);
 }

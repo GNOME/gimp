@@ -22,8 +22,6 @@
 
 #include <glib-object.h>
 
-#include "libgimpmath/gimpmath.h"
-
 #include "core-types.h"
 
 #include "base/gimphistogram.h"
@@ -41,17 +39,16 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
   PixelRegion mask;
   gint        x1, y1, x2, y2;
   gint        off_x, off_y;
-  gboolean    no_mask;
+  gboolean    have_mask;
 
-  g_return_if_fail (drawable != NULL);
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (histogram != NULL);
 
-  no_mask = (gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
-  pixel_region_init (&region, gimp_drawable_data (drawable), x1, y1,
-		     (x2 - x1), (y2 - y1), FALSE);
+  have_mask = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  pixel_region_init (&region, gimp_drawable_data (drawable),
+                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 
-  if (! no_mask)
+  if (have_mask)
     {
       GimpChannel *sel_mask;
       GimpImage   *gimage;

@@ -53,7 +53,7 @@ gdouble         gimp_histogram_get_value   (GimpHistogram        *histogram,
 gdouble         gimp_histogram_get_channel (GimpHistogram        *histogram,
                                             GimpHistogramChannel  channel,
                                             gint                  bin);
-gint            gimp_histogram_nchannels   (GimpHistogram        *histogram);
+gint            gimp_histogram_n_channels  (GimpHistogram        *histogram);
 
 
 #endif /* __GIMP_HISTOGRAM_H__ */

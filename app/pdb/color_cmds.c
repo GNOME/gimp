@@ -109,7 +109,8 @@ brightness_contrast_invoker (Gimp     *gimp,
     {
       if (gimp_drawable_is_indexed (drawable))
 	success = FALSE;
-      else
+    
+      if (success)
 	{
 	  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
     
@@ -129,6 +130,7 @@ brightness_contrast_invoker (Gimp     *gimp,
 					  &srcPR, &destPR);
     
 	  gimp_lut_free (lut);
+    
 	  gimp_drawable_merge_shadow (drawable, TRUE, _("Brightness-Contrast"));
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
@@ -220,12 +222,17 @@ levels_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_drawable_is_indexed (drawable) ||
-	  (!gimp_drawable_has_alpha (drawable) && channel == GIMP_ALPHA_LUT) ||
-	  (gimp_drawable_is_gray (drawable) && channel != GIMP_GRAY_LUT
-					    && channel != GIMP_ALPHA_LUT))
+	  (! gimp_drawable_has_alpha (drawable) && channel == GIMP_ALPHA_LUT) ||
+	  (gimp_drawable_is_gray (drawable) &&
+	   channel != GIMP_GRAY_LUT && channel != GIMP_ALPHA_LUT))
 	success = FALSE;
-      else
+    
+      if (success)
 	{
+	  /* FIXME: hack */
+	  if (gimp_drawable_is_gray (drawable))
+	    channel = (channel > 1) ? 2 : 1;
+    
 	  lut = gimp_lut_new ();
     
 	  levels_init (&l);
@@ -254,6 +261,7 @@ levels_invoker (Gimp     *gimp,
 					  &srcPR, &destPR);
     
 	  gimp_lut_free (lut);
+    
 	  gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
@@ -343,13 +351,13 @@ levels_auto_invoker (Gimp     *gimp,
 	{
 	  /* Build the histogram */
 	  image = gimp_item_get_image (GIMP_ITEM (drawable));
-	  hist = gimp_histogram_new (GIMP_BASE_CONFIG (image->gimp->config));
+	  hist  = gimp_histogram_new (GIMP_BASE_CONFIG (image->gimp->config));
     
 	  gimp_drawable_calculate_histogram (drawable, hist);
     
 	  /* Calculate the levels */
 	  levels_init (&levels);
-	  levels_auto (&levels, hist, !gimp_drawable_is_gray (drawable));
+	  levels_auto (&levels, hist, ! gimp_drawable_is_gray (drawable));
     
 	  /* Set up the lut */
 	  lut  = gimp_lut_new ();
@@ -362,15 +370,16 @@ levels_auto_invoker (Gimp     *gimp,
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
     
 	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-		 x1, y1, (x2 - x1), (y2 - y1), FALSE);
+			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-		 x1, y1, (x2 - x1), (y2 - y1), TRUE);
+			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
     
 	  pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-			  &srcPR, &destPR);
+					  &srcPR, &destPR);
     
 	  gimp_lut_free (lut);
 	  gimp_histogram_free (hist);
+    
 	  gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
@@ -428,7 +437,8 @@ posterize_invoker (Gimp     *gimp,
     {
       if (gimp_drawable_is_indexed (drawable))
 	success = FALSE;
-      else
+    
+      if (success)
 	{
 	  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
     
@@ -446,6 +456,7 @@ posterize_invoker (Gimp     *gimp,
 					  &srcPR, &destPR);
     
 	  gimp_lut_free (lut);
+    
 	  gimp_drawable_merge_shadow (drawable, TRUE, _("Posterize"));
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
@@ -665,10 +676,17 @@ curves_spline_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_drawable_is_indexed (drawable) || (num_points & 1) ||
-	  (gimp_drawable_is_gray (drawable) && channel != GIMP_GRAY_LUT))
+	  (! gimp_drawable_has_alpha (drawable) && channel == GIMP_ALPHA_LUT) ||
+	  (gimp_drawable_is_gray (drawable) &&
+	   channel != GIMP_GRAY_LUT && channel != GIMP_ALPHA_LUT))
 	success = FALSE;
-      else
+    
+      if (success)
 	{
+	  /* FIXME: hack */
+	  if (gimp_drawable_is_gray (drawable))
+	    channel = (channel > 1) ? 2 : 1;
+    
 	  lut = gimp_lut_new ();
     
 	  curves_init (&c);
@@ -698,6 +716,7 @@ curves_spline_invoker (Gimp     *gimp,
 					  &srcPR, &destPR);
     
 	  gimp_lut_free (lut);
+    
 	  gimp_drawable_merge_shadow (drawable, TRUE, _("Curves"));
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
@@ -778,10 +797,17 @@ curves_explicit_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_drawable_is_indexed (drawable) || (num_bytes != 256) ||
-	  (gimp_drawable_is_gray (drawable) && channel != GIMP_GRAY_LUT))
+	  (! gimp_drawable_has_alpha (drawable) && channel == GIMP_ALPHA_LUT) ||
+	  (gimp_drawable_is_gray (drawable) &&
+	   channel != GIMP_GRAY_LUT && channel != GIMP_ALPHA_LUT))
 	success = FALSE;
-      else 
+    
+      if (success)
 	{
+	  /* FIXME: hack */
+	  if (gimp_drawable_is_gray (drawable))
+	    channel = (channel > 1) ? 2 : 1;
+    
 	  lut = gimp_lut_new ();
     
 	  curves_init (&c);
@@ -796,6 +822,7 @@ curves_explicit_invoker (Gimp     *gimp,
 	  
 	  /* The application should occur only within selection bounds */
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+    
 	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
 			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
@@ -805,6 +832,7 @@ curves_explicit_invoker (Gimp     *gimp,
 					  &srcPR, &destPR);
     
 	  gimp_lut_free (lut);
+    
 	  gimp_drawable_merge_shadow (drawable, TRUE, _("Curves"));
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
@@ -895,7 +923,8 @@ color_balance_invoker (Gimp     *gimp,
     {
       if (gimp_drawable_is_indexed (drawable))
 	success = FALSE;
-      else
+    
+      if (success)
 	{
 	  color_balance_init (&cb);
     
@@ -996,12 +1025,6 @@ histogram_invoker (Gimp     *gimp,
   gdouble pixels = 0;
   gdouble count = 0;
   gdouble percentile = 0;
-  PixelRegion srcPR, maskPR;
-  int x1, y1, x2, y2;
-  GimpHistogram *histogram;
-  int off_x, off_y;
-  gboolean no_mask;
-  GimpChannel *mask;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_DRAWABLE (drawable))
@@ -1022,32 +1045,21 @@ histogram_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_drawable_is_indexed (drawable) ||
-	  (gimp_drawable_is_gray (drawable) && channel != GIMP_GRAY_LUT))
+	  (! gimp_drawable_has_alpha (drawable) && channel == GIMP_ALPHA_LUT) ||
+	  (gimp_drawable_is_gray (drawable) &&
+	   channel != GIMP_GRAY_LUT && channel != GIMP_ALPHA_LUT))
 	success = FALSE;
-      else
+    
+      if (success)
 	{
-	  /* The information collection should occur only within selection bounds */
-	  no_mask = (gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
-	  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+	  GimpHistogram *histogram;
     
-	  /* Configure the src from the drawable data */
-	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+	  if (gimp_drawable_is_gray (drawable))
+	    channel = (channel > 0) ? 1 : 0;
     
-	  /*  Configure the mask from the gimage's selection mask */
-	  mask = gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)));
-	  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
-			     x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
-    
-	  /* Apply the image transformation to the pixels */
 	  histogram = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
     
-	  if (no_mask)
-	    gimp_histogram_calculate (histogram, &srcPR, NULL);
-	  else
-	    gimp_histogram_calculate (histogram, &srcPR, &maskPR);
-    
-	  /* Calculate the statistics */
+	  gimp_drawable_calculate_histogram (drawable, histogram);
     
 	  mean       = gimp_histogram_get_mean (histogram, channel,
 						 start_range, end_range);
@@ -1192,7 +1204,8 @@ hue_saturation_invoker (Gimp     *gimp,
     {
       if (gimp_drawable_is_indexed (drawable))
 	success = FALSE;
-      else
+    
+      if (success)
 	{
 	  hue_saturation_init (&hs);
     
@@ -1299,7 +1312,8 @@ threshold_invoker (Gimp     *gimp,
     {
       if (gimp_drawable_is_indexed (drawable) || (low_threshold >= high_threshold))
 	success = FALSE;
-      else
+    
+      if (success)
 	{
 	  tr.color          = gimp_drawable_is_rgb (drawable);
 	  tr.low_threshold  = low_threshold;

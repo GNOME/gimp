@@ -791,17 +791,12 @@ curves_channel_callback (GtkWidget      *widget,
 {
   gimp_menu_item_update (widget, &c_tool->channel);
 
-  if (c_tool->color)
-    {
-      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (c_tool->graph),
-                                       c_tool->channel);
-    }
-  else
-    {
-      c_tool->channel = (c_tool->channel > 1) ? 2 : 1;
-      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (c_tool->graph),
-                                       c_tool->channel - 1);
-    }
+  gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (c_tool->graph),
+                                   c_tool->channel);
+
+  /* FIXME: hack */
+  if (! c_tool->color)
+    c_tool->channel = (c_tool->channel > 1) ? 2 : 1;
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (c_tool->curve_type),
 			           c_tool->curves->curve_type[c_tool->channel]);
