@@ -1,3 +1,7 @@
+2004-06-12  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/sample_colorize.c: reindented, some minor cleanup.
+
 2004-06-12  Simon Budig  <simon@gimp.org>
 
 	* app/tools/tool_manager.[ch]: renamed
