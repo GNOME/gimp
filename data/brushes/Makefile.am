@@ -49,6 +49,8 @@ FILES = \
 	galaxy.gbr		\
 	galaxy_big.gbr		\
 	galaxy_small.gbr	\
+	pepper.gpb		\
 	pixel.gbr		\
 	thegimp.gbr		\
+	vine.gih		\
 	xcf.gbr
