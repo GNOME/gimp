@@ -865,7 +865,7 @@ gimp_layer_apply_mask (GimpLayer         *layer,
     }
   else
     {
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
     }
 
   g_signal_emit (layer, layer_signals[MASK_CHANGED], 0);

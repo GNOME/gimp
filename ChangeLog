@@ -1,3 +1,9 @@
+2003-04-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplayer.c (gimp_layer_apply_mask): call
+	gimp_viewable_invalidate_preview() on the layer, not on the image
+	(fixes bug #108960).
+
 2003-04-06  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/FractalExplorer/Dialogs.c (make_color_map): get the
