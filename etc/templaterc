@@ -2,6 +2,51 @@
 # 
 # A collection of image templates.
 
+(GimpTemplate "640x480"
+    (width 640)
+    (height 480)
+    (unit inches)
+    (xresolution 72.000000)
+    (yresolution 72.000000)
+    (resolution-unit inches)
+    (image-type rgb)
+    (fill-type background-fill))
+(GimpTemplate "800x600"
+    (width 800)
+    (height 600)
+    (unit inches)
+    (xresolution 72.000000)
+    (yresolution 72.000000)
+    (resolution-unit inches)
+    (image-type rgb)
+    (fill-type background-fill))
+(GimpTemplate "1024x768"
+    (width 1024)
+    (height 768)
+    (unit inches)
+    (xresolution 72.000000)
+    (yresolution 72.000000)
+    (resolution-unit inches)
+    (image-type rgb)
+    (fill-type background-fill))
+(GimpTemplate "1200x900"
+    (width 1200)
+    (height 900)
+    (unit inches)
+    (xresolution 72.000000)
+    (yresolution 72.000000)
+    (resolution-unit inches)
+    (image-type rgb)
+    (fill-type background-fill))
+(GimpTemplate "1600x1200"
+    (width 1600)
+    (height 1200)
+    (unit inches)
+    (xresolution 72.000000)
+    (yresolution 72.000000)
+    (resolution-unit inches)
+    (image-type rgb)
+    (fill-type background-fill))
 (GimpTemplate "A3 (300dpi)"
     (width 3508)
     (height 4960)

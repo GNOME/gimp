@@ -1,3 +1,8 @@
+2004-01-08  Dave Neary  <bolsh@gimp.org>
+
+	* etc/templaterc: Add some templates for screen sizes, as i
+	suggested in bug #130869.
+
 2004-01-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/layers-menu.c
