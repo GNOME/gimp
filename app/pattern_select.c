@@ -35,6 +35,9 @@
 #define STD_PATTERN_COLUMNS 6
 #define STD_PATTERN_ROWS    5 
 
+/* how long to wait after mouse-down before showing pattern popup */
+#define POPUP_DELAY_MS      150
+
 #define MAX_WIN_WIDTH(psp)     (MIN_CELL_SIZE * (psp)->NUM_PATTERN_COLUMNS)
 #define MAX_WIN_HEIGHT(psp)    (MIN_CELL_SIZE * (psp)->NUM_PATTERN_ROWS)
 #define MARGIN_WIDTH      1
@@ -92,6 +95,7 @@ pattern_select_new (gchar *title,
   psp->old_col = psp->old_row = 0;
   psp->callback_name = NULL;
   psp->pattern_popup = NULL;
+  psp->popup_timeout_tag = 0;
   psp->NUM_PATTERN_COLUMNS = STD_PATTERN_COLUMNS;
   psp->NUM_PATTERN_ROWS    = STD_PATTERN_COLUMNS;
 
@@ -275,6 +279,8 @@ pattern_select_free (PatternSelectP psp)
 	session_get_window_info (psp->shell, &pattern_select_session_info);
       if (psp->pattern_popup != NULL)
 	gtk_widget_destroy (psp->pattern_popup);
+      if (psp->popup_timeout_tag != 0)
+	gtk_timeout_remove (psp->popup_timeout_tag);
 
       if(psp->callback_name)
 	g_free(psp->callback_name);
@@ -289,22 +295,36 @@ pattern_select_free (PatternSelectP psp)
 /*
  *  Local functions
  */
-static void
-pattern_popup_open (PatternSelectP psp,
-		    int            x,
-		    int            y,
-		    GPatternP      pattern)
+
+typedef struct {
+  PatternSelectP psp;
+  int            x;
+  int            y;
+  GPatternP      pattern;
+} popup_timeout_args_t;
+
+
+static gboolean
+pattern_popup_timeout (gpointer data)
 {
+  popup_timeout_args_t *args = data;
+  PatternSelectP psp = args->psp;
+  GPatternP pattern = args->pattern;
+  gint x, y;
   gint x_org, y_org;
   gint scr_w, scr_h;
   gchar *src, *buf;
+
+  /* timeout has gone off so our tag is now invalid  */
+  psp->popup_timeout_tag = 0;
 
   /* make sure the popup exists and is not visible */
   if (psp->pattern_popup == NULL)
     {
       GtkWidget *frame;
       psp->pattern_popup = gtk_window_new (GTK_WINDOW_POPUP);
-      gtk_window_set_policy (GTK_WINDOW (psp->pattern_popup), FALSE, FALSE, TRUE);
+      gtk_window_set_policy (GTK_WINDOW (psp->pattern_popup),
+			     FALSE, FALSE, TRUE);
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
       gtk_container_add (GTK_CONTAINER (psp->pattern_popup), frame);
@@ -322,13 +342,14 @@ pattern_popup_open (PatternSelectP psp,
   gdk_window_get_origin (psp->preview->window, &x_org, &y_org);
   scr_w = gdk_screen_width ();
   scr_h = gdk_screen_height ();
-  x = x_org + x - pattern->mask->width * 0.5;
-  y = y_org + y - pattern->mask->height * 0.5;
+  x = x_org + args->x - pattern->mask->width * 0.5;
+  y = y_org + args->y - pattern->mask->height * 0.5;
   x = (x < 0) ? 0 : x;
   y = (y < 0) ? 0 : y;
   x = (x + pattern->mask->width > scr_w) ? scr_w - pattern->mask->width : x;
   y = (y + pattern->mask->height > scr_h) ? scr_h - pattern->mask->height : y;
-  gtk_preview_size (GTK_PREVIEW (psp->pattern_preview), pattern->mask->width, pattern->mask->height);
+  gtk_preview_size (GTK_PREVIEW (psp->pattern_preview),
+		    pattern->mask->width, pattern->mask->height);
   gtk_widget_popup (psp->pattern_popup, x, y);
 
   /*  Draw the pattern  */
@@ -353,15 +374,42 @@ pattern_popup_open (PatternSelectP psp,
       gtk_preview_draw_row (GTK_PREVIEW (psp->pattern_preview), (guchar *)buf, 0, y, pattern->mask->width);
       src += pattern->mask->width * pattern->mask->bytes;
     }
-  g_free(buf);
-  
+  g_free (buf);
+
   /*  Draw the pattern preview  */
   gtk_widget_draw (psp->pattern_preview, NULL);
+
+  return FALSE;  /* don't repeat */
+}
+
+
+static void
+pattern_popup_open (PatternSelectP psp,
+		    int            x,
+		    int            y,
+		    GPatternP      pattern)
+{
+  static popup_timeout_args_t popup_timeout_args;
+
+  /* if we've already got a timeout scheduled, then we complain */
+  g_return_if_fail (psp->popup_timeout_tag == 0);
+
+  popup_timeout_args.psp = psp;
+  popup_timeout_args.x = x;
+  popup_timeout_args.y = y;
+  popup_timeout_args.pattern = pattern;
+  psp->popup_timeout_tag = gtk_timeout_add (POPUP_DELAY_MS,
+					    pattern_popup_timeout,
+					    &popup_timeout_args);
 }
 
 static void
 pattern_popup_close (PatternSelectP psp)
 {
+  if (psp->popup_timeout_tag != 0)
+    gtk_timeout_remove (psp->popup_timeout_tag);
+  psp->popup_timeout_tag = 0;
+
   if (psp->pattern_popup != NULL)
     gtk_widget_hide (psp->pattern_popup);
 }

@@ -38,6 +38,7 @@ struct _PatternSelect {
   /*  Pattern popup  */
   GtkWidget *pattern_popup;
   GtkWidget *pattern_preview;
+  guint      popup_timeout_tag;
 
   /*  Call back function name  */
   gchar * callback_name;

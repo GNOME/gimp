@@ -1,3 +1,27 @@
+Sat May  1 22:18:55 BST 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/brush_select.c
+	* app/brush_select.h
+	* app/pattern_select.c
+	* app/pattern_select.h: delay the popup of pattern and brush
+ 	    preview window by 150 millisecs.  Allows flicker-free
+ 	    selection of brushes/patterns, and still have fast pattern
+ 	    preview like we used to.  Ideally, should really factor out
+ 	    the common code in these two files into one generic picker
+ 	    widget.
+
+	* app/free_select.c: cosmetic whitespace change.
+
+	* app/draw_core.c: use GDK_CAP_NOT_LAST, not GDK_CAP_BUTT,
+ 	    otherwise sequential line segments in XOR mode have
+ 	    single-pixel gaps between them.  Worse, if the segments are
+ 	    only one pixel long, you don't get _any_ lines.  XFree86 seems
+ 	    to ignore GDK_CAP_BUTT, which is why this bug hasn't been seen
+ 	    before.  NCD X servers comply with the spec a little more
+ 	    pedantically, so need GDK_CAP_NOT_LAST.  OS/2 and Win32 people
+ 	    should check that (eg) the lasso tool still provides proper
+ 	    visual feedback.
+
 Sat May  1 12:14:54 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* acinclude.m4

@@ -37,6 +37,9 @@
 #define STD_BRUSH_COLUMNS 5
 #define STD_BRUSH_ROWS    5
 
+/* how long to wait after mouse-down before showing pattern popup */
+#define POPUP_DELAY_MS      150
+
 #define MAX_WIN_WIDTH(bsp)     (MIN_CELL_SIZE * ((bsp)->NUM_BRUSH_COLUMNS))
 #define MAX_WIN_HEIGHT(bsp)    (MIN_CELL_SIZE * ((bsp)->NUM_BRUSH_ROWS))
 #define MARGIN_WIDTH      3
@@ -137,6 +140,7 @@ brush_select_new (gchar   *title,
   bsp->old_row = bsp->old_col = 0;
   bsp->brush = NULL; /* NULL -> main dialog window */
   bsp->brush_popup = NULL;
+  bsp->popup_timeout_tag = 0;
   bsp->NUM_BRUSH_COLUMNS = STD_BRUSH_COLUMNS;
   bsp->NUM_BRUSH_ROWS = STD_BRUSH_ROWS;
 
@@ -652,15 +656,28 @@ brush_removed_callback (GimpBrushList *list,
 /*
  *  Local functions
  */
-static void
-brush_popup_open (BrushSelectP bsp,
-		  int          x,
-		  int          y,
-		  GimpBrushP   brush)
+
+typedef struct {
+  BrushSelectP   bsp;
+  int            x;
+  int            y;
+  GimpBrushP     brush;
+} popup_timeout_args_t;
+
+
+static gboolean
+brush_popup_timeout (gpointer data)
 {
+  popup_timeout_args_t *args = data;
+  BrushSelectP bsp = args->bsp;
+  GimpBrushP brush = args->brush;
+  gint x, y;
   gint x_org, y_org;
   gint scr_w, scr_h;
   gchar *src, *buf;
+
+  /* timeout has gone off so our tag is now invalid  */
+  bsp->popup_timeout_tag = 0;
 
   /* make sure the popup exists and is not visible */
   if (bsp->brush_popup == NULL)
@@ -668,8 +685,8 @@ brush_popup_open (BrushSelectP bsp,
       GtkWidget *frame;
 
       bsp->brush_popup = gtk_window_new (GTK_WINDOW_POPUP);
-      gtk_window_set_policy (GTK_WINDOW (bsp->brush_popup), FALSE, FALSE, TRUE);
-
+      gtk_window_set_policy (GTK_WINDOW (bsp->brush_popup),
+			     FALSE, FALSE, TRUE);
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
       gtk_container_add (GTK_CONTAINER (bsp->brush_popup), frame);
@@ -687,8 +704,8 @@ brush_popup_open (BrushSelectP bsp,
   gdk_window_get_origin (bsp->preview->window, &x_org, &y_org);
   scr_w = gdk_screen_width ();
   scr_h = gdk_screen_height ();
-  x = x_org + x - brush->mask->width * 0.5;
-  y = y_org + y - brush->mask->height * 0.5;
+  x = x_org + args->x - brush->mask->width * 0.5;
+  y = y_org + args->y - brush->mask->height * 0.5;
   x = (x < 0) ? 0 : x;
   y = (y < 0) ? 0 : y;
   x = (x + brush->mask->width > scr_w) ? scr_w - brush->mask->width : x;
@@ -714,16 +731,41 @@ brush_popup_open (BrushSelectP bsp,
 			    0, y, brush->mask->width);
       src += brush->mask->width;
     }
-  g_free(buf);
+  g_free (buf);
 
   /*  Draw the brush preview  */
   gtk_widget_draw (bsp->brush_preview, NULL);
+
+  return FALSE;  /* don't repeat */
 }
 
+static void
+brush_popup_open (BrushSelectP bsp,
+		  int          x,
+		  int          y,
+		  GimpBrushP   brush)
+{
+  static popup_timeout_args_t popup_timeout_args;
+
+  /* if we've already got a timeout scheduled, then we complain */
+  g_return_if_fail (bsp->popup_timeout_tag == 0);
+
+  popup_timeout_args.bsp = bsp;
+  popup_timeout_args.x = x;
+  popup_timeout_args.y = y;
+  popup_timeout_args.brush = brush;
+  bsp->popup_timeout_tag = gtk_timeout_add (POPUP_DELAY_MS,
+					    brush_popup_timeout,
+					    &popup_timeout_args);
+}
 
 static void
 brush_popup_close (BrushSelectP bsp)
 {
+  if (bsp->popup_timeout_tag != 0)
+    gtk_timeout_remove (bsp->popup_timeout_tag);
+  bsp->popup_timeout_tag = 0;
+
   if (bsp->brush_popup != NULL)
     gtk_widget_hide (bsp->brush_popup);
 }

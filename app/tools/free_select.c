@@ -405,6 +405,7 @@ free_select_motion (Tool *tool, GdkEventMotion *mevent, gpointer gdisp_ptr)
 		     global_pts[free_sel->num_pts - 1].y,
 		     global_pts[free_sel->num_pts].x,
 		     global_pts[free_sel->num_pts].y);
+
       free_sel->num_pts ++;
     }
 }

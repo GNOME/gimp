@@ -49,6 +49,7 @@ struct _BrushSelect {
   /*  Brush preview  */
   GtkWidget *brush_popup;
   GtkWidget *brush_preview;
+  guint      popup_timeout_tag;
 
   /*  Call back function name  */
   gchar *callback_name;

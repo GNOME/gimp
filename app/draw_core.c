@@ -35,7 +35,7 @@ draw_core_new (draw_func)
   core->data         = NULL;
   core->line_width   = 1;
   core->line_style   = GDK_LINE_SOLID;
-  core->cap_style    = GDK_CAP_BUTT;
+  core->cap_style    = GDK_CAP_NOT_LAST;
   core->join_style   = GDK_JOIN_MITER;
 
   return core;
