@@ -40,9 +40,6 @@
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
 
-#define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
-                ((1-dy) * (jk + dx * (j1k - jk)) + \
-                    dy  * (jk1 + dx * (j1k1 - jk1)))
 
 /*  variables  */
 static TranInfo  old_trans_info;
@@ -1192,17 +1189,20 @@ transform_core_do (GImage          *gimage,
     {
     case RGB_GIMAGE: case RGBA_GIMAGE:
       bg_col[ALPHA_PIX] = TRANSPARENT_OPACITY;
-      alpha = 3;
+      alpha = ALPHA_PIX;
       break;
     case GRAY_GIMAGE: case GRAYA_GIMAGE:
       bg_col[ALPHA_G_PIX] = TRANSPARENT_OPACITY;
-      alpha = 1;
+      alpha = ALPHA_G_PIX;
       break;
     case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
       bg_col[ALPHA_I_PIX] = TRANSPARENT_OPACITY;
-      alpha = 1;
+      alpha = ALPHA_I_PIX;
       /*  If the gimage is indexed color, ignore smoothing value  */
-      interpolation = 0;
+      interpolation = FALSE;
+      break;
+    default:
+      g_assert_not_reached ();
       break;
     }
 
@@ -1576,7 +1576,11 @@ transform_core_cut (GImage       *gimage,
   /*  extract the selected mask if there is a selection  */
   if (! gimage_mask_is_empty (gimage))
     {
-      tiles = gimage_mask_extract (gimage, drawable, TRUE, TRUE, TRUE);
+      /* set the keep_indexed flag to FALSE here, since we use 
+	 layer_new_from_tiles() later which assumes that the tiles
+	 are either RGB or GRAY.  Eeek!!!              (Sven)
+       */
+      tiles = gimage_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
       *new_layer = TRUE;
     }
   /*  otherwise, just copy the layer  */

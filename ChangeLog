@@ -1,5 +1,18 @@
 2000-05-20  Sven Neumann  <sven@gimp.org>
 
+	* app/transform_core.c (transform_core_cut): when transforming
+	a selection in an indexed image, we used to create an indexed
+	tile_buffer. This gives strange (black) results later when we
+	use layer_new_from_tiles() since that function assumes that a
+	TileManager is always RGB or GRAY. Eeek!!
+
+	Instead of fixing it correctly by changing the TileManager 
+	struct, I've unset the keep_indexed flag when calling 
+	gimage_mask_extract(), so whatever layer_new_from_tiles()
+	assumes becomes true. Fixes bug #10762.
+
+2000-05-20  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/sample_colorize.c: reset progress to 0.0 when 
 	finished. Does this fix bug #11420 ?
 
