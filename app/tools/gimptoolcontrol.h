@@ -49,6 +49,8 @@ struct _GimpToolControl
   gint           snap_height;
   gboolean       preserve;           /*  Preserve this tool across drawable   *
                                       *  changes                              */
+  GimpDirtyMask  dirty_mask;         /*  if preserve is FALSE, cancel the     *
+                                      *  tool on these events                 */
   gboolean       handle_empty_image; /*  invoke the tool on images without    *
                                       *  active drawable                      */
   GimpMotionMode motion_mode;        /*  how to process motion events before  *
@@ -87,6 +89,10 @@ gboolean           gimp_tool_control_is_toggled                 (GimpToolControl
 void               gimp_tool_control_set_preserve               (GimpToolControl    *control,
                                                                  gboolean            preserve);
 gboolean           gimp_tool_control_preserve                   (GimpToolControl    *control);
+
+void               gimp_tool_control_set_dirty_mask             (GimpToolControl    *control,
+                                                                 GimpDirtyMask       dirty_mask);
+GimpDirtyMask      gimp_tool_control_dirty_mask                 (GimpToolControl    *control);
 
 void               gimp_tool_control_set_scroll_lock            (GimpToolControl    *control,
                                                                  gboolean            scroll_lock);

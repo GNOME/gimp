@@ -46,7 +46,6 @@ struct _GimpImageMap
 {
   GimpObject             parent_instance;
 
-  gboolean               interactive;
   GimpDrawable          *drawable;
   gchar                 *undo_desc;
 
@@ -241,8 +240,7 @@ gimp_image_map_get_color_at (GimpPickable *pickable,
 }
 
 GimpImageMap *
-gimp_image_map_new (gboolean      interactive,
-                    GimpDrawable *drawable,
+gimp_image_map_new (GimpDrawable *drawable,
                     const gchar  *undo_desc)
 {
   GimpImageMap *image_map;
@@ -256,14 +254,8 @@ gimp_image_map_new (gboolean      interactive,
 
   image_map = g_object_new (GIMP_TYPE_IMAGE_MAP, NULL);
 
-  image_map->interactive = interactive ? TRUE : FALSE;
-  image_map->drawable    = drawable;
-  image_map->undo_desc   = g_strdup (undo_desc);
-
-  /* Interactive tools based on image_map disable the undo stack
-   * to avert any unintented undo interaction through the UI
-   */
-  gimp_image_undo_freeze (gimage);
+  image_map->drawable  = drawable;
+  image_map->undo_desc = g_strdup (undo_desc);
 
   return image_map;
 }
@@ -405,9 +397,6 @@ gimp_image_map_commit (GimpImageMap *image_map)
   if (! gimage)
     return;
 
-  /* Interactive phase ends: we can commit an undo frame now */
-  gimp_image_undo_thaw (gimage);
-
   /*  Register an undo step  */
   if (image_map->undo_tiles)
     {
@@ -476,12 +465,7 @@ gimp_image_map_clear (GimpImageMap *image_map)
           g_message ("image depth change, unable to restore original image");
 
           tile_manager_unref (image_map->undo_tiles);
-          gimp_image_undo_thaw (gimage);
-
-#if 0
-          gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (image_map->gdisp->shell),
-                                                   image_map->gdisp->gimage->gimp);
-#endif
+          image_map->undo_tiles = NULL;
 
           g_object_unref (image_map);
           return;
@@ -513,8 +497,6 @@ gimp_image_map_abort (GimpImageMap *image_map)
     return;
 
   gimp_image_map_clear (image_map);
-
-  gimp_image_undo_thaw (gimage);
 
   g_object_unref (image_map);
 }
@@ -559,8 +541,7 @@ gimp_image_map_do (GimpImageMap *image_map)
   /*  display the results  */
   gimp_drawable_update (image_map->drawable, x, y, w, h);
 
-  if (image_map->interactive)
-    g_signal_emit (image_map, image_map_signals[FLUSH], 0);
+  g_signal_emit (image_map, image_map_signals[FLUSH], 0);
 
   image_map->PRI = pixel_regions_process (image_map->PRI);
 
@@ -568,8 +549,7 @@ gimp_image_map_do (GimpImageMap *image_map)
     {
       image_map->idle_id = 0;
 
-      if (image_map->interactive)
-        gimp_image_flush (gimage);
+      gimp_image_flush (gimage);
 
       return FALSE;
     }

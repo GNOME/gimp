@@ -36,12 +36,14 @@
 
 /*  local function prototypes  */
 
-static void    gimp_image_undo_pop_stack    (GimpImage     *gimage,
-                                             GimpUndoStack *undo_stack,
-                                             GimpUndoStack *redo_stack,
-                                             GimpUndoMode   undo_mode);
-static void    gimp_image_undo_free_space   (GimpImage     *gimage);
-static void    gimp_image_undo_free_redo    (GimpImage     *gimage);
+static void          gimp_image_undo_pop_stack       (GimpImage     *gimage,
+                                                      GimpUndoStack *undo_stack,
+                                                      GimpUndoStack *redo_stack,
+                                                      GimpUndoMode   undo_mode);
+static void          gimp_image_undo_free_space      (GimpImage     *gimage);
+static void          gimp_image_undo_free_redo       (GimpImage     *gimage);
+
+static GimpDirtyMask gimp_image_undo_dirty_from_type (GimpUndoType   type);
 
 
 /*  public functions  */
@@ -110,6 +112,7 @@ gimp_image_undo_group_start (GimpImage    *gimage,
                              const gchar  *name)
 {
   GimpUndoStack *undo_group;
+  GimpDirtyMask  dirty_mask;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (type >  GIMP_UNDO_GROUP_FIRST &&
@@ -118,8 +121,11 @@ gimp_image_undo_group_start (GimpImage    *gimage,
   if (! name)
     name = gimp_undo_type_to_name (type);
 
+  dirty_mask = gimp_image_undo_dirty_from_type (type);
+
   /* Notify listeners that the image will be modified */
-  gimp_image_undo_start (gimage);
+  if (gimage->group_count == 0 && dirty_mask != GIMP_DIRTY_NONE)
+    gimp_image_dirty (gimage, dirty_mask);
 
   if (gimage->undo_freeze_count > 0)
     return FALSE;
@@ -145,7 +151,8 @@ gimp_image_undo_group_start (GimpImage    *gimage,
   undo_group = gimp_undo_stack_new (gimage);
 
   gimp_object_set_name (GIMP_OBJECT (undo_group), name);
-  GIMP_UNDO (undo_group)->undo_type = type;
+  GIMP_UNDO (undo_group)->undo_type  = type;
+  GIMP_UNDO (undo_group)->dirty_mask = dirty_mask;
 
   gimp_undo_stack_push_undo (gimage->undo_stack, GIMP_UNDO (undo_group));
 
@@ -189,7 +196,7 @@ gimp_image_undo_push (GimpImage        *gimage,
                       gsize             struct_size,
                       GimpUndoType      type,
                       const gchar      *name,
-                      gboolean          dirties_image,
+                      GimpDirtyMask     dirty_mask,
                       GimpUndoPopFunc   pop_func,
                       GimpUndoFreeFunc  free_func,
                       ...)
@@ -207,8 +214,8 @@ gimp_image_undo_push (GimpImage        *gimage,
   /* Does this undo dirty the image?  If so, we always want to mark
    * image dirty, even if we can't actually push the undo.
    */
-  if (dirties_image)
-    gimp_image_dirty (gimage);
+  if (dirty_mask != GIMP_DIRTY_NONE)
+    gimp_image_dirty (gimage, dirty_mask);
 
   if (gimage->undo_freeze_count > 0)
     return NULL;
@@ -220,14 +227,14 @@ gimp_image_undo_push (GimpImage        *gimage,
     undo_struct = g_malloc0 (struct_size);
 
   params = gimp_parameters_append (undo_gtype, params, &n_params,
-                                   "name",          name,
-                                   "image",         gimage,
-                                   "undo-type",     type,
-                                   "dirties-image", dirties_image,
-                                   "data",          undo_struct,
-                                   "size",          size,
-                                   "pop-func",      pop_func,
-                                   "free-func",     free_func,
+                                   "name",       name,
+                                   "image",      gimage,
+                                   "undo-type",  type,
+                                   "dirty-mask", dirty_mask,
+                                   "data",       undo_struct,
+                                   "size",       size,
+                                   "pop-func",   pop_func,
+                                   "free-func",  free_func,
                                    NULL);
 
   va_start (args, free_func);
@@ -402,4 +409,93 @@ gimp_image_undo_free_redo (GimpImage *gimage)
 
       g_object_unref (freed);
     }
+}
+
+static GimpDirtyMask
+gimp_image_undo_dirty_from_type (GimpUndoType type)
+{
+  switch (type)
+    {
+    case GIMP_UNDO_GROUP_IMAGE_SCALE:
+    case GIMP_UNDO_GROUP_IMAGE_RESIZE:
+    case GIMP_UNDO_GROUP_IMAGE_FLIP:
+    case GIMP_UNDO_GROUP_IMAGE_ROTATE:
+    case GIMP_UNDO_GROUP_IMAGE_CROP:
+      return GIMP_DIRTY_IMAGE | GIMP_DIRTY_IMAGE_SIZE;
+
+    case GIMP_UNDO_GROUP_IMAGE_CONVERT:
+      return GIMP_DIRTY_IMAGE | GIMP_DIRTY_DRAWABLE;
+
+    case GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE:
+      return GIMP_DIRTY_IMAGE_STRUCTURE | GIMP_DIRTY_DRAWABLE;
+
+    case GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE:
+      return GIMP_DIRTY_IMAGE_STRUCTURE | GIMP_DIRTY_VECTORS;
+
+    case GIMP_UNDO_GROUP_IMAGE_QMASK: /* FIXME */
+      return GIMP_DIRTY_IMAGE_STRUCTURE | GIMP_DIRTY_SELECTION;
+
+    case GIMP_UNDO_GROUP_IMAGE_GRID:
+    case GIMP_UNDO_GROUP_IMAGE_GUIDE:
+      return GIMP_DIRTY_IMAGE_META;
+
+    case GIMP_UNDO_GROUP_DRAWABLE:
+    case GIMP_UNDO_GROUP_DRAWABLE_MOD:
+      return GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE;
+
+    case GIMP_UNDO_GROUP_MASK: /* FIXME */
+      return GIMP_DIRTY_SELECTION;
+
+    case GIMP_UNDO_GROUP_ITEM_VISIBILITY:
+    case GIMP_UNDO_GROUP_ITEM_LINKED:
+    case GIMP_UNDO_GROUP_ITEM_PROPERTIES:
+      return GIMP_DIRTY_ITEM_META;
+
+    case GIMP_UNDO_GROUP_ITEM_DISPLACE: /* FIXME */
+      return GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE | GIMP_DIRTY_VECTORS;
+
+    case GIMP_UNDO_GROUP_ITEM_SCALE: /* FIXME */
+    case GIMP_UNDO_GROUP_ITEM_RESIZE: /* FIXME */
+      return GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE | GIMP_DIRTY_VECTORS;
+
+    case GIMP_UNDO_GROUP_LAYER_ADD_MASK:
+    case GIMP_UNDO_GROUP_LAYER_APPLY_MASK:
+      return GIMP_DIRTY_IMAGE_STRUCTURE;
+
+    case GIMP_UNDO_GROUP_FS_TO_LAYER:
+    case GIMP_UNDO_GROUP_FS_FLOAT:
+    case GIMP_UNDO_GROUP_FS_ANCHOR:
+    case GIMP_UNDO_GROUP_FS_REMOVE:
+      return GIMP_DIRTY_IMAGE_STRUCTURE;
+
+    case GIMP_UNDO_GROUP_EDIT_PASTE:
+      return GIMP_DIRTY_IMAGE_STRUCTURE;
+
+    case GIMP_UNDO_GROUP_EDIT_CUT:
+      return GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE;
+
+    case GIMP_UNDO_GROUP_TEXT:
+      return GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE;
+
+    case GIMP_UNDO_GROUP_TRANSFORM: /* FIXME */
+      return GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE | GIMP_DIRTY_VECTORS;
+
+    case GIMP_UNDO_GROUP_PAINT:
+      return GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE;
+
+    case GIMP_UNDO_GROUP_PARASITE_ATTACH:
+    case GIMP_UNDO_GROUP_PARASITE_REMOVE:
+      return GIMP_DIRTY_IMAGE_META | GIMP_DIRTY_ITEM_META;
+
+    case GIMP_UNDO_GROUP_VECTORS_IMPORT:
+      return GIMP_DIRTY_IMAGE_STRUCTURE | GIMP_DIRTY_VECTORS;
+
+    case GIMP_UNDO_GROUP_MISC:
+      return GIMP_DIRTY_ALL;
+
+    default:
+      break;
+    }
+
+  return GIMP_DIRTY_ALL;
 }

@@ -43,11 +43,28 @@ gimp_displays_dirty (Gimp *gimp)
        list;
        list = g_list_next (list))
     {
-      if (((GimpDisplay *) list->data)->gimage->dirty)
+      GimpDisplay *display = list->data;
+
+      if (display->gimage->dirty)
 	return TRUE;
     }
 
   return FALSE;
+}
+
+static void
+gimp_displays_image_clean_callback (GimpImage     *image,
+                                    GimpDirtyMask  dirty_mask,
+                                    GimpContainer *container)
+{
+  if (! image->dirty)
+    {
+      g_signal_handlers_disconnect_by_func (image,
+                                            gimp_displays_image_clean_callback,
+                                            container);
+
+      gimp_container_remove (container, GIMP_OBJECT (image));
+    }
 }
 
 GimpContainer *
@@ -60,6 +77,13 @@ gimp_displays_get_dirty_images (Gimp *gimp)
       GimpContainer *container = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
       GList         *list;
 
+      gimp_container_add_handler (container, "clean",
+                                  G_CALLBACK (gimp_displays_image_clean_callback),
+                                  container);
+      gimp_container_add_handler (container, "dirty",
+                                  G_CALLBACK (gimp_displays_image_clean_callback),
+                                  container);
+
       for (list = GIMP_LIST (gimp->displays)->list;
            list;
            list = g_list_next (list))
@@ -71,10 +95,6 @@ gimp_displays_get_dirty_images (Gimp *gimp)
               ! gimp_container_have (container, GIMP_OBJECT (image)))
             {
               gimp_container_add (container, GIMP_OBJECT (image));
-
-              g_signal_connect_object (image, "clean",
-                                       G_CALLBACK (gimp_container_remove),
-                                       container, G_CONNECT_SWAPPED);
             }
         }
 

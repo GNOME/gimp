@@ -195,8 +195,10 @@ struct _GimpImageClass
   void (* selection_control)            (GimpImage            *gimage,
                                          GimpSelectionControl  control);
 
-  void (* clean)                        (GimpImage            *gimage);
-  void (* dirty)                        (GimpImage            *gimage);
+  void (* clean)                        (GimpImage            *gimage,
+                                         GimpDirtyMask         dirty_mask);
+  void (* dirty)                        (GimpImage            *gimage,
+                                         GimpDirtyMask         dirty_mask);
   void (* update)                       (GimpImage            *gimage,
 					 gint                  x,
 					 gint                  y,
@@ -206,7 +208,6 @@ struct _GimpImageClass
                                          GimpGuide            *guide);
   void (* colormap_changed)             (GimpImage            *gimage,
 					 gint                  color_index);
-  void (* undo_start)                   (GimpImage            *gimage);
   void (* undo_event)                   (GimpImage            *gimage,
 					 GimpUndoEvent         event,
                                          GimpUndo             *undo);
@@ -306,12 +307,13 @@ gboolean        gimp_image_undo_enable           (GimpImage          *gimage);
 gboolean        gimp_image_undo_disable          (GimpImage          *gimage);
 gboolean        gimp_image_undo_freeze           (GimpImage          *gimage);
 gboolean        gimp_image_undo_thaw             (GimpImage          *gimage);
-void            gimp_image_undo_start            (GimpImage          *gimage);
 void		gimp_image_undo_event            (GimpImage          *gimage,
                                                   GimpUndoEvent       event,
                                                   GimpUndo           *undo);
-gint            gimp_image_dirty                 (GimpImage          *gimage);
-gint            gimp_image_clean                 (GimpImage          *gimage);
+gint            gimp_image_dirty                 (GimpImage          *gimage,
+                                                  GimpDirtyMask       dirty_mask);
+gint            gimp_image_clean                 (GimpImage          *gimage,
+                                                  GimpDirtyMask       dirty_mask);
 void            gimp_image_clean_all             (GimpImage          *gimage);
 
 

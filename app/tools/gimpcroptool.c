@@ -224,6 +224,7 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
   GimpTool *tool = GIMP_TOOL (crop_tool);
 
   gimp_tool_control_set_preserve    (tool->control, FALSE);
+  gimp_tool_control_set_dirty_mask  (tool->control, GIMP_DIRTY_IMAGE_SIZE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_CROP);
 }
 

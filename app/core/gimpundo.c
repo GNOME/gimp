@@ -49,7 +49,7 @@ enum
   PROP_0,
   PROP_IMAGE,
   PROP_UNDO_TYPE,
-  PROP_DIRTIES_IMAGE,
+  PROP_DIRTY_MASK,
   PROP_DATA,
   PROP_SIZE,
   PROP_POP_FUNC,
@@ -185,12 +185,13 @@ gimp_undo_class_init (GimpUndoClass *klass)
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_property (object_class, PROP_DIRTIES_IMAGE,
-                                   g_param_spec_boolean ("dirties-image",
-                                                         NULL, NULL,
-                                                         FALSE,
-                                                         G_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_DIRTY_MASK,
+                                   g_param_spec_flags ("dirty-mask",
+                                                       NULL, NULL,
+                                                       GIMP_TYPE_DIRTY_MASK,
+                                                       GIMP_DIRTY_NONE,
+                                                       G_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DATA,
                                    g_param_spec_pointer ("data", NULL, NULL,
@@ -270,8 +271,8 @@ gimp_undo_set_property (GObject      *object,
     case PROP_UNDO_TYPE:
       undo->undo_type = g_value_get_enum (value);
       break;
-    case PROP_DIRTIES_IMAGE:
-      undo->dirties_image = g_value_get_boolean (value);
+    case PROP_DIRTY_MASK:
+      undo->dirty_mask = g_value_get_flags (value);
       break;
     case PROP_DATA:
       undo->data = g_value_get_pointer (value);
@@ -307,8 +308,8 @@ gimp_undo_get_property (GObject    *object,
     case PROP_UNDO_TYPE:
       g_value_set_enum (value, undo->undo_type);
       break;
-    case PROP_DIRTIES_IMAGE:
-      g_value_set_boolean (value, undo->dirties_image);
+    case PROP_DIRTY_MASK:
+      g_value_set_flags (value, undo->dirty_mask);
       break;
     case PROP_DATA:
       g_value_set_pointer (value, undo->data);
@@ -422,21 +423,21 @@ gimp_undo_pop (GimpUndo            *undo,
   g_return_if_fail (GIMP_IS_UNDO (undo));
   g_return_if_fail (accum != NULL);
 
-  g_signal_emit (undo, undo_signals[POP], 0, undo_mode, accum);
-
-  if (undo->dirties_image)
+  if (undo->dirty_mask != GIMP_DIRTY_NONE)
     {
       switch (undo_mode)
         {
         case GIMP_UNDO_MODE_UNDO:
-          gimp_image_clean (undo->gimage);
+          gimp_image_clean (undo->gimage, undo->dirty_mask);
           break;
 
         case GIMP_UNDO_MODE_REDO:
-          gimp_image_dirty (undo->gimage);
+          gimp_image_dirty (undo->gimage, undo->dirty_mask);
           break;
         }
     }
+
+  g_signal_emit (undo, undo_signals[POP], 0, undo_mode, accum);
 }
 
 void

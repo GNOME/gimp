@@ -538,8 +538,8 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_GROUP_IMAGE_RESIZE, N_("Resize image"), "group-image-resize" },
     { GIMP_UNDO_GROUP_IMAGE_FLIP, N_("Flip image"), "group-image-flip" },
     { GIMP_UNDO_GROUP_IMAGE_ROTATE, N_("Rotate image"), "group-image-rotate" },
-    { GIMP_UNDO_GROUP_IMAGE_CONVERT, N_("Convert image"), "group-image-convert" },
     { GIMP_UNDO_GROUP_IMAGE_CROP, N_("Crop image"), "group-image-crop" },
+    { GIMP_UNDO_GROUP_IMAGE_CONVERT, N_("Convert image"), "group-image-convert" },
     { GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE, N_("Merge layers"), "group-image-layers-merge" },
     { GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE, N_("Merge vectors"), "group-image-vectors-merge" },
     { GIMP_UNDO_GROUP_IMAGE_QMASK, N_("QuickMask"), "group-image-qmask" },
@@ -626,6 +626,7 @@ gimp_dirty_mask_get_type (void)
   {
     { GIMP_DIRTY_NONE, "GIMP_DIRTY_NONE", "none" },
     { GIMP_DIRTY_IMAGE, "GIMP_DIRTY_IMAGE", "image" },
+    { GIMP_DIRTY_IMAGE_SIZE, "GIMP_DIRTY_IMAGE_SIZE", "image-size" },
     { GIMP_DIRTY_IMAGE_META, "GIMP_DIRTY_IMAGE_META", "image-meta" },
     { GIMP_DIRTY_IMAGE_STRUCTURE, "GIMP_DIRTY_IMAGE_STRUCTURE", "image-structure" },
     { GIMP_DIRTY_ITEM, "GIMP_DIRTY_ITEM", "item" },

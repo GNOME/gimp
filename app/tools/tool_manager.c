@@ -46,26 +46,25 @@ typedef struct _GimpToolManager GimpToolManager;
 
 struct _GimpToolManager
 {
-  GimpTool    *active_tool;
-  GSList      *tool_stack;
+  GimpTool *active_tool;
+  GSList   *tool_stack;
 
-  GQuark       image_dirty_handler_id;
-  GQuark       image_undo_start_handler_id;
+  GQuark    image_clean_handler_id;
+  GQuark    image_dirty_handler_id;
 };
 
 
 /*  local function prototypes  */
 
-static GimpToolManager * tool_manager_get   (Gimp            *gimp);
-static void              tool_manager_set   (Gimp            *gimp,
-                                             GimpToolManager *tool_manager);
-static void   tool_manager_tool_changed     (GimpContext     *user_context,
-                                             GimpToolInfo    *tool_info,
-                                             gpointer         data);
-static void   tool_manager_image_dirty      (GimpImage       *gimage,
-                                             GimpToolManager *tool_manager);
-static void   tool_manager_image_undo_start (GimpImage       *gimage,
-                                             GimpToolManager *tool_manager);
+static GimpToolManager * tool_manager_get    (Gimp            *gimp);
+static void              tool_manager_set    (Gimp            *gimp,
+                                              GimpToolManager *tool_manager);
+static void   tool_manager_tool_changed      (GimpContext     *user_context,
+                                              GimpToolInfo    *tool_info,
+                                              gpointer         data);
+static void   tool_manager_image_clean_dirty (GimpImage       *gimage,
+                                              GimpDirtyMask    dirty_mask,
+                                              GimpToolManager *tool_manager);
 
 
 /*  public functions  */
@@ -80,21 +79,21 @@ tool_manager_init (Gimp *gimp)
 
   tool_manager = g_new0 (GimpToolManager, 1);
 
-  tool_manager->active_tool                 = NULL;
-  tool_manager->tool_stack                  = NULL;
-  tool_manager->image_dirty_handler_id      = 0;
-  tool_manager->image_undo_start_handler_id = 0;
+  tool_manager->active_tool            = NULL;
+  tool_manager->tool_stack             = NULL;
+  tool_manager->image_clean_handler_id = 0;
+  tool_manager->image_dirty_handler_id = 0;
 
   tool_manager_set (gimp, tool_manager);
 
-  tool_manager->image_dirty_handler_id =
-    gimp_container_add_handler (gimp->images, "dirty",
-				G_CALLBACK (tool_manager_image_dirty),
+  tool_manager->image_clean_handler_id =
+    gimp_container_add_handler (gimp->images, "clean",
+				G_CALLBACK (tool_manager_image_clean_dirty),
 				tool_manager);
 
-  tool_manager->image_undo_start_handler_id =
-    gimp_container_add_handler (gimp->images, "undo_start",
-				G_CALLBACK (tool_manager_image_undo_start),
+  tool_manager->image_dirty_handler_id =
+    gimp_container_add_handler (gimp->images, "dirty",
+				G_CALLBACK (tool_manager_image_clean_dirty),
 				tool_manager);
 
   user_context = gimp_get_user_context (gimp);
@@ -115,9 +114,9 @@ tool_manager_exit (Gimp *gimp)
   tool_manager_set (gimp, NULL);
 
   gimp_container_remove_handler (gimp->images,
-				 tool_manager->image_dirty_handler_id);
+				 tool_manager->image_clean_handler_id);
   gimp_container_remove_handler (gimp->images,
-				 tool_manager->image_undo_start_handler_id);
+				 tool_manager->image_dirty_handler_id);
 
   if (tool_manager->active_tool)
     g_object_unref (tool_manager->active_tool);
@@ -542,37 +541,23 @@ tool_manager_tool_changed (GimpContext  *user_context,
 }
 
 static void
-tool_manager_image_dirty (GimpImage       *gimage,
-			  GimpToolManager *tool_manager)
+tool_manager_image_clean_dirty (GimpImage       *gimage,
+                                GimpDirtyMask    dirty_mask,
+                                GimpToolManager *tool_manager)
 {
-  if (tool_manager->active_tool &&
-      ! gimp_tool_control_preserve (tool_manager->active_tool->control))
+  GimpTool *active_tool = tool_manager->active_tool;
+
+  if (active_tool &&
+      ! gimp_tool_control_preserve (active_tool->control) &&
+      (gimp_tool_control_dirty_mask (active_tool->control) & dirty_mask))
     {
-      GimpDisplay *gdisp = tool_manager->active_tool->gdisp;
+      GimpDisplay *gdisp = active_tool->gdisp;
 
       if (! gdisp || gdisp->gimage != gimage)
-        if (GIMP_IS_DRAW_TOOL (tool_manager->active_tool))
-          gdisp = GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp;
+        if (GIMP_IS_DRAW_TOOL (active_tool))
+          gdisp = GIMP_DRAW_TOOL (active_tool)->gdisp;
 
       if (gdisp && gdisp->gimage == gimage)
         gimp_context_tool_changed (gimp_get_user_context (gimage->gimp));
-    }
-}
-
-static void
-tool_manager_image_undo_start (GimpImage       *gimage,
-                               GimpToolManager *tool_manager)
-{
-  if (tool_manager->active_tool &&
-      ! gimp_tool_control_preserve (tool_manager->active_tool->control))
-    {
-      GimpDisplay *gdisp = tool_manager->active_tool->gdisp;
-
-      if (! gdisp || gdisp->gimage != gimage)
-        if (GIMP_IS_DRAW_TOOL (tool_manager->active_tool))
-          gdisp = GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp;
-
-      if (gdisp && gdisp->gimage == gimage)
-        tool_manager_control_active (gimage->gimp, HALT, gdisp);
     }
 }

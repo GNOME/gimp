@@ -221,6 +221,10 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_preserve    (tool->control, FALSE);
+  gimp_tool_control_set_dirty_mask  (tool->control,
+                                     GIMP_DIRTY_IMAGE_SIZE |
+                                     GIMP_DIRTY_DRAWABLE   |
+                                     GIMP_DIRTY_SELECTION);
 
   tr_tool->function = TRANSFORM_CREATING;
   tr_tool->original = NULL;

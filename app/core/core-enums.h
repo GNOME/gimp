@@ -400,8 +400,8 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_IMAGE_RESIZE,       /*< desc="Resize image"                >*/
   GIMP_UNDO_GROUP_IMAGE_FLIP,         /*< desc="Flip image"                  >*/
   GIMP_UNDO_GROUP_IMAGE_ROTATE,       /*< desc="Rotate image"                >*/
-  GIMP_UNDO_GROUP_IMAGE_CONVERT,      /*< desc="Convert image"               >*/
   GIMP_UNDO_GROUP_IMAGE_CROP,         /*< desc="Crop image"                  >*/
+  GIMP_UNDO_GROUP_IMAGE_CONVERT,      /*< desc="Convert image"               >*/
   GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE, /*< desc="Merge layers"                >*/
   GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE,/*< desc="Merge vectors"               >*/
   GIMP_UNDO_GROUP_IMAGE_QMASK,        /*< desc="QuickMask"                   >*/
@@ -488,15 +488,16 @@ typedef enum  /*< pdb-skip >*/
   GIMP_DIRTY_NONE            = 0,
 
   GIMP_DIRTY_IMAGE           = 1 << 0,
-  GIMP_DIRTY_IMAGE_META      = 1 << 1,
-  GIMP_DIRTY_IMAGE_STRUCTURE = 1 << 2,
-  GIMP_DIRTY_ITEM            = 1 << 3,
-  GIMP_DIRTY_ITEM_META       = 1 << 4,
-  GIMP_DIRTY_DRAWABLE        = 1 << 5,
-  GIMP_DIRTY_VECTORS         = 1 << 6,
-  GIMP_DIRTY_SELECTION       = 1 << 7,
+  GIMP_DIRTY_IMAGE_SIZE      = 1 << 1,
+  GIMP_DIRTY_IMAGE_META      = 1 << 2,
+  GIMP_DIRTY_IMAGE_STRUCTURE = 1 << 3,
+  GIMP_DIRTY_ITEM            = 1 << 4,
+  GIMP_DIRTY_ITEM_META       = 1 << 5,
+  GIMP_DIRTY_DRAWABLE        = 1 << 6,
+  GIMP_DIRTY_VECTORS         = 1 << 7,
+  GIMP_DIRTY_SELECTION       = 1 << 8,
 
-  GIMP_DIRTY_ALL             = 0xff
+  GIMP_DIRTY_ALL             = 0xffff
 } GimpDirtyMask;
 
 

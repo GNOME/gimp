@@ -349,6 +349,7 @@ gimp_iscissors_tool_init (GimpIscissorsTool *iscissors)
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_snap_to     (tool->control, FALSE);
   gimp_tool_control_set_preserve    (tool->control, FALSE);
+  gimp_tool_control_set_dirty_mask  (tool->control, GIMP_DIRTY_IMAGE_SIZE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_ISCISSORS);
 
   gimp_iscissors_tool_reset (iscissors);

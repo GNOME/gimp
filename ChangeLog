@@ -1,3 +1,67 @@
+2004-07-29  Michael Natterer  <mitch@gimp.org>
+
+	Replaced the concept of having a boolean indicating if an undo
+	step dirties the image by a bitfield indicating which parts
+	of the image are dirtied:
+
+	* app/core/core-enums.[ch]: reordered two values in enum
+	GimpUndoType, added GIMP_DIRTY_IMAGE_SIZE to enum GimpDirtyMask.
+
+	The values of GimpDirtyMask are still questionable and will
+	probably change...
+
+	* app/core/gimpimage.[ch]: removed signal "undo_start" and added
+	a GimpDirtyMask parameter to the "dirty" and "clean" signals.
+
+	* app/core/gimpimage-undo.[ch] (gimp_image_undo_push): replaced
+	"gboolean dirties_image" by "GimpDirtyMask dirty_mask" and pass
+	it to gimp_image_dirty().
+
+	(gimp_image_undo_group_start): added *ugly* code which tries to
+	figure GimpDirtyMask from the group's GimpUndoType and store it in
+	the GimpUndoGroup. Call gimp_image_dirty() instead of the removed
+	gimp_image_undo_start(). This means the undo group now dirties the
+	image just like one of its undo steps, but that's no problem since
+	undoing cleans it in the same way.
+
+	* app/core/gimpundo.[ch]: s/dirties_image/dirty_mask/g
+
+	(gimp_undo_pop): emit clean/dirty signals *before* performing the
+	actual undo step so listeners can detach from the image before it
+	is changed by undo.
+
+	* app/core/gimpimage-undo-push.c (gimp_image_undo_push_*): pass a
+	GimpDirtyMask instead of TRUE/FALSE to gimp_image_undo_push().
+
+	* app/core/gimpimagemap.[ch]: removed "gboolean interactive"
+	because it makes no sense to use GimpImageMap noninteractively.
+	Don't freeze()/thaw() undo while the image_map is active which
+	fixes many ways of trashing the image's undo state but probably
+	introduces new ways of doing evil things.
+
+	* app/display/gimpdisplay-foreach.c
+	* app/display/gimpdisplayshell-handlers.c: changed according
+	to the GimpImage::clean()/dirty() signal changes. Small fixes
+	in the quit dialog's dirty image container.
+
+	* app/tools/gimptoolcontrol.[ch]: added member and API to
+	set/get the dirty_mask.
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c: whenever setting "preserve" to
+	FALSE, also set a "dirty_mask" which specifies on which image
+	changes the tool wants to be canceled.
+
+	* app/tools/tool_manager.c: removed "undo_start" connection and
+	connect to both "dirty" *and* "clean" to check if the active_tool
+	needs to be canceled. Cancel the tool only if the dirty_mask
+	passed in the signal has common bits with the tool's dirty_mask.
+
+	Fixes bug #109561 and probably opens some new ones...
+
 2004-07-29  Michael Schumacher <schumaml@cvs.gnome.org>
 
 	* libgimp/gimp.def

@@ -82,6 +82,7 @@ gimp_tool_control_init (GimpToolControl *control)
   control->snap_height            = 0;
 
   control->preserve               = TRUE;
+  control->dirty_mask             = GIMP_DIRTY_NONE;
   control->handle_empty_image     = FALSE;
   control->motion_mode            = GIMP_MOTION_MODE_HINT;
 
@@ -209,6 +210,15 @@ gimp_tool_control_set_preserve (GimpToolControl *control,
 }
 
 void
+gimp_tool_control_set_dirty_mask (GimpToolControl *control,
+                                  GimpDirtyMask    dirty_mask)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  control->dirty_mask = dirty_mask;
+}
+
+void
 gimp_tool_control_set_cursor (GimpToolControl *control,
                               GimpCursorType   cursor)
 {
@@ -317,6 +327,14 @@ gimp_tool_control_preserve (GimpToolControl *control)
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
 
   return control->preserve;
+}
+
+GimpDirtyMask
+gimp_tool_control_dirty_mask (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), GIMP_DIRTY_NONE);
+
+  return control->dirty_mask;
 }
 
 gboolean

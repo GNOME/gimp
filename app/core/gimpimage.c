@@ -93,7 +93,6 @@ enum
   UPDATE,
   UPDATE_GUIDE,
   COLORMAP_CHANGED,
-  UNDO_START,
   UNDO_EVENT,
   FLUSH,
   LAST_SIGNAL
@@ -362,8 +361,9 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, clean),
                   NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
+                  gimp_marshal_VOID__FLAGS,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_DIRTY_MASK);
 
   gimp_image_signals[DIRTY] =
     g_signal_new ("dirty",
@@ -371,8 +371,9 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, dirty),
                   NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
+                  gimp_marshal_VOID__FLAGS,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_DIRTY_MASK);
 
   gimp_image_signals[UPDATE] =
     g_signal_new ("update",
@@ -406,15 +407,6 @@ gimp_image_class_init (GimpImageClass *klass)
                   gimp_marshal_VOID__INT,
                   G_TYPE_NONE, 1,
                   G_TYPE_INT);
-
-  gimp_image_signals[UNDO_START] =
-    g_signal_new ("undo_start",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, undo_start),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
 
   gimp_image_signals[UNDO_EVENT] =
     g_signal_new ("undo_event",
@@ -469,7 +461,6 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->update                       = NULL;
   klass->update_guide                 = NULL;
   klass->colormap_changed             = gimp_image_real_colormap_changed;
-  klass->undo_start                   = NULL;
   klass->undo_event                   = NULL;
   klass->flush                        = gimp_image_real_flush;
 
@@ -1725,14 +1716,6 @@ gimp_image_undo_thaw (GimpImage *gimage)
 }
 
 void
-gimp_image_undo_start (GimpImage *gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  g_signal_emit (gimage, gimp_image_signals[UNDO_START], 0);
-}
-
-void
 gimp_image_undo_event (GimpImage     *gimage,
                        GimpUndoEvent  event,
                        GimpUndo      *undo)
@@ -1778,13 +1761,14 @@ gimp_image_undo_event (GimpImage     *gimage,
  */
 
 gint
-gimp_image_dirty (GimpImage *gimage)
+gimp_image_dirty (GimpImage     *gimage,
+                  GimpDirtyMask  dirty_mask)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   gimage->dirty++;
 
-  g_signal_emit (gimage, gimp_image_signals[DIRTY], 0);
+  g_signal_emit (gimage, gimp_image_signals[DIRTY], 0, dirty_mask);
 
   TRC (("dirty %d -> %d\n", gimage->dirty - 1, gimage->dirty));
 
@@ -1792,13 +1776,14 @@ gimp_image_dirty (GimpImage *gimage)
 }
 
 gint
-gimp_image_clean (GimpImage *gimage)
+gimp_image_clean (GimpImage     *gimage,
+                  GimpDirtyMask  dirty_mask)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   gimage->dirty--;
 
-  g_signal_emit (gimage, gimp_image_signals[CLEAN], 0);
+  g_signal_emit (gimage, gimp_image_signals[CLEAN], 0, dirty_mask);
 
   TRC (("clean %d -> %d\n", gimage->dirty + 1, gimage->dirty));
 

@@ -50,6 +50,7 @@
 /*  local function prototypes  */
 
 static void   gimp_display_shell_clean_dirty_handler        (GimpImage        *gimage,
+                                                             GimpDirtyMask     dirty_mask,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_undo_event_handler         (GimpImage        *gimage,
                                                              GimpUndoEvent     event,
@@ -339,6 +340,7 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
 
 static void
 gimp_display_shell_clean_dirty_handler (GimpImage        *gimage,
+                                        GimpDirtyMask     dirty_mask,
                                         GimpDisplayShell *shell)
 {
   gimp_display_shell_title_update (shell);

@@ -40,11 +40,9 @@
 
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptooldialog.h"
-#include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpcoloroptions.h"
 #include "gimpimagemaptool.h"
@@ -109,18 +107,18 @@ gimp_image_map_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpImageMapToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_image_map_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpImageMapTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_image_map_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_image_map_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpImageMapTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_image_map_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_COLOR_TOOL,
-					  "GimpImageMapTool",
+                                          "GimpImageMapTool",
                                           &tool_info, 0);
     }
 
@@ -162,6 +160,11 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_preserve    (tool->control, FALSE);
+  gimp_tool_control_set_dirty_mask  (tool->control,
+                                     GIMP_DIRTY_IMAGE           |
+                                     GIMP_DIRTY_IMAGE_STRUCTURE |
+                                     GIMP_DIRTY_DRAWABLE        |
+                                     GIMP_DIRTY_SELECTION);
 
   image_map_tool->drawable  = NULL;
   image_map_tool->image_map = NULL;
@@ -193,7 +196,7 @@ gimp_image_map_tool_finalize (GObject *object)
 
 static gboolean
 gimp_image_map_tool_initialize (GimpTool    *tool,
-				GimpDisplay *gdisp)
+                                GimpDisplay *gdisp)
 {
   GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
   GimpToolInfo     *tool_info;
@@ -282,27 +285,19 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
   gtk_widget_show (image_map_tool->shell);
 
   image_map_tool->drawable  = drawable;
-  image_map_tool->image_map = gimp_image_map_new (TRUE, drawable,
-                                                  tool_info->blurb);
+  image_map_tool->image_map = gimp_image_map_new (drawable, tool_info->blurb);
 
   g_signal_connect (image_map_tool->image_map, "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),
                     image_map_tool);
-
-  {
-    GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-    gimp_ui_manager_update (shell->menubar_manager, shell);
-    gimp_ui_manager_update (shell->popup_manager,   shell);
-  }
 
   return TRUE;
 }
 
 static void
 gimp_image_map_tool_control (GimpTool       *tool,
-			     GimpToolAction  action,
-			     GimpDisplay    *gdisp)
+                             GimpToolAction  action,
+                             GimpDisplay    *gdisp)
 {
   GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
 
@@ -358,8 +353,8 @@ gimp_image_map_tool_reset (GimpImageMapTool *tool)
 }
 
 static gboolean
-gimp_image_tool_settings_load (GimpImageMapTool *tool,
-                               gpointer          file)
+gimp_image_map_tool_settings_load (GimpImageMapTool *tool,
+                                   gpointer          file)
 {
   GimpImageMapToolClass *tool_class = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
 
@@ -375,8 +370,8 @@ gimp_image_tool_settings_load (GimpImageMapTool *tool,
 }
 
 static gboolean
-gimp_image_tool_settings_save (GimpImageMapTool *tool,
-                               gpointer          file)
+gimp_image_map_tool_settings_save (GimpImageMapTool *tool,
+                                   gpointer          file)
 {
   GimpImageMapToolClass *tool_class = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
 
@@ -400,11 +395,8 @@ gimp_image_map_tool_response (GtkWidget        *widget,
                               gint              response_id,
                               GimpImageMapTool *image_map_tool)
 {
-  GimpDisplayShell    *shell;
+  GimpTool            *tool = GIMP_TOOL (image_map_tool);
   GimpImageMapOptions *options;
-  GimpTool            *tool;
-
-  tool = GIMP_TOOL (image_map_tool);
 
   switch (response_id)
     {
@@ -414,9 +406,6 @@ gimp_image_map_tool_response (GtkWidget        *widget,
       break;
 
     case GTK_RESPONSE_OK:
-      /* Fix for bug #126524 - only set shell in the case
-       * where we need it */
-      shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
       gtk_widget_hide (image_map_tool->shell);
 
       gimp_tool_control_set_preserve (tool->control, TRUE);
@@ -435,12 +424,6 @@ gimp_image_map_tool_response (GtkWidget        *widget,
         }
 
       gimp_tool_control_set_preserve (tool->control, FALSE);
-
-      gimp_ui_manager_update (shell->menubar_manager, shell);
-
-      if (shell->gdisp == gimp_context_get_display
-          (gimp_get_user_context (shell->gdisp->gimage->gimp)))
-        gimp_ui_manager_update (shell->popup_manager, shell);
 
       tool->gdisp    = NULL;
       tool->drawable = NULL;
@@ -486,15 +469,15 @@ gimp_image_map_tool_notify_preview (GObject          *config,
   else
     {
       if (image_map_tool->image_map)
-	{
-	  gimp_tool_control_set_preserve (tool->control, TRUE);
+        {
+          gimp_tool_control_set_preserve (tool->control, TRUE);
 
-	  gimp_image_map_clear (image_map_tool->image_map);
+          gimp_image_map_clear (image_map_tool->image_map);
 
-	  gimp_tool_control_set_preserve (tool->control, FALSE);
+          gimp_tool_control_set_preserve (tool->control, FALSE);
 
-	  gimp_image_flush (tool->gdisp->gimage);
-	}
+          gimp_image_flush (tool->gdisp->gimage);
+        }
     }
 }
 
@@ -544,7 +527,7 @@ settings_dialog_response (GtkWidget        *dialog,
                      _("Could not open '%s' for writing: %s") :
                      _("Could not open '%s' for reading: %s"),
                      gimp_filename_to_utf8 (filename),
-		     g_strerror (errno));
+                     g_strerror (errno));
           g_free (filename);
           return;
         }
@@ -555,12 +538,12 @@ settings_dialog_response (GtkWidget        *dialog,
 
       if (save)
         {
-          gimp_image_tool_settings_save (tool, file);
+          gimp_image_map_tool_settings_save (tool, file);
         }
-      else if (! gimp_image_tool_settings_load (tool, file))
+      else if (! gimp_image_map_tool_settings_load (tool, file))
         {
           g_message ("Error in reading file '%s'.",
-		     gimp_filename_to_utf8 (filename));
+                     gimp_filename_to_utf8 (filename));
         }
 
       fclose (file);
