@@ -35,6 +35,7 @@
 
 #include "widgets/gimpcontainerpopup.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdock.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gtkhwrapbox.h"
 
@@ -410,9 +411,16 @@ static void
 paint_options_brush_clicked (GtkWidget   *widget, 
                              GimpContext *context)
 {
+  GtkWidget *toplevel;
   GtkWidget *popup;
 
+  toplevel = gtk_widget_get_toplevel (widget);
+
   popup = gimp_container_popup_new (context->gimp->brush_factory->container,
-                                    context);
+                                    context,
+                                    GIMP_DOCK (toplevel)->dialog_factory,
+                                    "gimp-brush-grid",
+                                    GIMP_STOCK_TOOL_PAINTBRUSH,
+                                    _("Open the brush selection dialog"));
   gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
 }

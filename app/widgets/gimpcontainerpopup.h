@@ -44,7 +44,13 @@ struct _GimpContainerPopup
   GimpContext         *orig_context;
   GimpContext         *context;
 
+  GtkWidget           *frame;
   GimpContainerEditor *editor;
+
+  GimpDialogFactory   *dialog_factory;
+  gchar               *dialog_identifier;
+  gchar               *dialog_stock_id;
+  gchar               *dialog_tooltip;
 };
 
 struct _GimpContainerPopupClass
@@ -59,7 +65,11 @@ struct _GimpContainerPopupClass
 GType       gimp_container_popup_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_container_popup_new      (GimpContainer      *container,
-                                           GimpContext        *context);
+                                           GimpContext        *context,
+                                           GimpDialogFactory  *dialog_factory,
+                                           const gchar        *dialog_identifier,
+                                           const gchar        *dialog_stock_id,
+                                           const gchar        *dialog_tooltip);
 void        gimp_container_popup_show     (GimpContainerPopup *popup,
                                            GtkWidget          *widget);
 

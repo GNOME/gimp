@@ -37,6 +37,7 @@
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcontainerpopup.h"
+#include "widgets/gimpdock.h"
 #include "widgets/gimpfontselection.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptexteditor.h"
@@ -299,9 +300,15 @@ static void
 gimp_text_options_font_clicked (GtkWidget   *widget, 
                                 GimpContext *context)
 {
+  GtkWidget *toplevel;
   GtkWidget *popup;
 
-  popup = gimp_container_popup_new (context->gimp->fonts, context);
+  toplevel = gtk_widget_get_toplevel (widget);
 
+  popup = gimp_container_popup_new (context->gimp->fonts, context,
+                                    GIMP_DOCK (toplevel)->dialog_factory,
+                                    "gimp-font-list",
+                                    GTK_STOCK_SELECT_FONT,
+                                    _("Open the font selection dialog"));
   gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
 }

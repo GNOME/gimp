@@ -50,6 +50,8 @@ struct _GimpContainerView
 
   GimpItemGetNameFunc  get_name_func;
 
+  GtkWidget           *scrolled_win;
+
   /*  initialized by subclass  */
   GtkWidget           *dnd_widget;
 };
@@ -104,6 +106,9 @@ void      gimp_container_view_set_name_func    (GimpContainerView   *view,
 void      gimp_container_view_enable_dnd       (GimpContainerView   *editor,
 						GtkButton           *button,
 						GType                children_type);
+void      gimp_container_view_set_size_request (GimpContainerView   *view,
+                                                gint                 width,
+                                                gint                 height);
 
 void      gimp_container_view_select_item      (GimpContainerView   *view,
 						GimpViewable        *viewable);

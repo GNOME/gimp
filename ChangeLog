@@ -1,3 +1,27 @@
+2003-03-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainerview.[ch]: added the scrolled_win
+	to the GimpContainerView struct. Create it in init().
+	Added gimp_container_view_set_size_request() which adds the
+	scrolled_window's scrollbar and frames sizes correctly.
+
+	* app/widgets/gimpcontainergridview.[ch]
+	* app/widgets/gimpcontainertreeview.[ch]: removed scrolled windows
+	here and use the one from the parent_instance. Use the new utility
+	function.
+
+	* app/widgets/gimpcontainertreeview.c: enable searching in the
+	name column. Grab the focus in button_press.
+
+	* app/widgets/gimpcontainerpopup.[ch]: added a button_box containing
+	zoom in/out, view as list/grid and a button to show the permanently
+	open dialog. Added more parameters to gimp_container_popup_new().
+
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimptextoptions.c
+	* app/tools/paint_options.c: changed accordingly.
+
 2003-03-26  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/tool-options-dialog.c (tool_options_dialog_restore_callback):

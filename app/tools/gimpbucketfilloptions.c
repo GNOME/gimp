@@ -34,6 +34,7 @@
 #include "display/gimpdisplay.h"
 
 #include "widgets/gimpcontainerpopup.h"
+#include "widgets/gimpdock.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -69,9 +70,6 @@ static void   gimp_bucket_fill_options_reset  (GimpToolOptions       *tool_optio
 
 static void   bucket_options_pattern_clicked  (GtkWidget             *widget,
                                                GimpContext           *context);
-static void   bucket_options_fill_mode_notify (GimpBucketFillOptions *options,
-                                               GParamSpec            *pspec,
-                                               GtkWidget             *button);
 
 
 static GimpPaintOptionsClass *parent_class = NULL;
@@ -265,10 +263,6 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  g_signal_connect (config, "notify::fill-mode",
-                    G_CALLBACK (bucket_options_fill_mode_notify),
-                    button);
-
   frame = gtk_frame_new (_("Finding Similar Colors"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -311,18 +305,16 @@ static void
 bucket_options_pattern_clicked (GtkWidget   *widget,
                                 GimpContext *context)
 {
+  GtkWidget *toplevel;
   GtkWidget *popup;
 
-  popup = gimp_container_popup_new (context->gimp->pattern_factory->container,
-                                    context);
-  gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
-}
+  toplevel = gtk_widget_get_toplevel (widget);
 
-static void
-bucket_options_fill_mode_notify (GimpBucketFillOptions *options,
-                                 GParamSpec            *pspec,
-                                 GtkWidget             *button)
-{
-  gtk_widget_set_sensitive (button,
-                            options->fill_mode == GIMP_PATTERN_BUCKET_FILL);
+  popup = gimp_container_popup_new (context->gimp->pattern_factory->container,
+                                    context,
+                                    GIMP_DOCK (toplevel)->dialog_factory,
+                                    "gimp-pattern-grid",
+                                    GIMP_STOCK_TOOL_BUCKET_FILL,
+                                    _("Open the pattern selection dialog"));
+  gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
 }

@@ -190,7 +190,14 @@ gimp_container_view_init (GimpContainerView      *view,
 
   view->get_name_func = NULL;
 
-  view->dnd_widget    = NULL;
+  view->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_box_pack_start (GTK_BOX (view), view->scrolled_win, TRUE, TRUE, 0);
+  gtk_widget_show (view->scrolled_win);
+
+  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (view->scrolled_win)->vscrollbar,
+                          GTK_CAN_FOCUS);
+
+  view->dnd_widget = view->scrolled_win;
 }
 
 static void
@@ -432,6 +439,42 @@ gimp_container_view_enable_dnd (GimpContainerView *view,
 			      children_type,
 			      gimp_container_view_button_viewable_dropped,
 			      view);
+}
+
+void
+gimp_container_view_set_size_request (GimpContainerView *view,
+                                      gint               width,
+                                      gint               height)
+{
+  GtkScrolledWindowClass *sw_class;
+  GtkRequisition          req;
+  gint                    scrollbar_width;
+  gint                    border_x;
+  gint                    border_y;
+
+  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
+  g_return_if_fail (width >= view->preview_size);
+  g_return_if_fail (height >= view->preview_size);
+
+  sw_class = GTK_SCROLLED_WINDOW_GET_CLASS (view->scrolled_win);
+
+  if (sw_class->scrollbar_spacing >= 0)
+    width = sw_class->scrollbar_spacing;
+  else
+    gtk_widget_style_get (GTK_WIDGET (view->scrolled_win),
+                          "scrollbar_spacing", &scrollbar_width,
+                          NULL);
+
+  gtk_widget_size_request (GTK_SCROLLED_WINDOW (view->scrolled_win)->vscrollbar,
+                           &req);
+  scrollbar_width += req.width;
+
+  border_x = view->scrolled_win->style->xthickness * 2 + scrollbar_width;
+  border_y = view->scrolled_win->style->ythickness * 2;
+
+  gtk_widget_set_size_request (view->scrolled_win,
+                               width  + border_x,
+                               height + border_y);
 }
 
 void

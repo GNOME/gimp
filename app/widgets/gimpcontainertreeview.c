@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "widgets-types.h"
@@ -148,6 +150,10 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 static void
 gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
 {
+  GimpContainerView *view;
+
+  view = GIMP_CONTAINER_VIEW (tree_view);
+
   tree_view->n_model_columns = NUM_COLUMNS;
 
   tree_view->model_columns[COLUMN_RENDERER] = GIMP_TYPE_PREVIEW_RENDERER;
@@ -158,18 +164,10 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
 
   tree_view->preview_border_width = 1;
 
-  tree_view->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (tree_view->scrolled_win),
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (view->scrolled_win),
                                        GTK_SHADOW_IN);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (tree_view->scrolled_win), 
-                                  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_AUTOMATIC);
-  gtk_container_add (GTK_CONTAINER (tree_view), tree_view->scrolled_win);
-  gtk_widget_show (tree_view->scrolled_win);
-
-  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW
-			  (tree_view->scrolled_win)->vscrollbar,
-                          GTK_CAN_FOCUS);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (view->scrolled_win), 
+                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 }
 
 static GObject *
@@ -178,12 +176,14 @@ gimp_container_tree_view_constructor (GType                  type,
                                       GObjectConstructParam *params)
 {
   GimpContainerTreeView *tree_view;
+  GimpContainerView     *view;
   GtkListStore          *list;
   GObject               *object;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   tree_view = GIMP_CONTAINER_TREE_VIEW (object);
+  view      = GIMP_CONTAINER_VIEW (object);
 
   list = gtk_list_store_newv (tree_view->n_model_columns,
                               tree_view->model_columns);
@@ -194,7 +194,7 @@ gimp_container_tree_view_constructor (GType                  type,
   g_object_unref (list);
 
   gtk_tree_view_set_headers_visible (tree_view->view, FALSE);
-  gtk_container_add (GTK_CONTAINER (tree_view->scrolled_win),
+  gtk_container_add (GTK_CONTAINER (view->scrolled_win),
                      GTK_WIDGET (tree_view->view));
   gtk_widget_show (GTK_WIDGET (tree_view->view));
 
@@ -243,6 +243,9 @@ gimp_container_tree_view_constructor (GType                  type,
                     G_CALLBACK (gimp_container_tree_view_drag_drop),
                     tree_view);
 
+  gtk_tree_view_set_search_column (tree_view->view, COLUMN_NAME);
+  gtk_tree_view_set_enable_search (tree_view->view, TRUE);
+
   return object;
 }
 
@@ -256,10 +259,10 @@ gimp_container_tree_view_new (GimpContainer *container,
 {
   GimpContainerTreeView *tree_view;
   GimpContainerView     *view;
-  gint                   window_border;
 
-  g_return_val_if_fail (! container || GIMP_IS_CONTAINER (container), NULL);
-  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+                        NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (preview_size > 0 &&
                         preview_size <= GIMP_PREVIEW_MAX_SIZE, NULL);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
@@ -272,14 +275,9 @@ gimp_container_tree_view_new (GimpContainer *container,
   view->preview_size = preview_size;
   view->reorderable  = reorderable ? TRUE : FALSE;
 
-  window_border =
-    GTK_SCROLLED_WINDOW (tree_view->scrolled_win)->vscrollbar->requisition.width +
-    GTK_SCROLLED_WINDOW_GET_CLASS (tree_view->scrolled_win)->scrollbar_spacing +
-    tree_view->scrolled_win->style->xthickness * 4;
-
-  gtk_widget_set_size_request (GTK_WIDGET (tree_view),
-                               (preview_size + 2) * min_items_x + window_border,
-                               (preview_size + 6) * min_items_y + window_border);
+  gimp_container_view_set_size_request (view,
+                                        (preview_size + 2) * min_items_x,
+                                        (preview_size + 2) * min_items_y);
 
   if (container)
     gimp_container_view_set_container (view, container);
@@ -712,6 +710,9 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
   container_view = GIMP_CONTAINER_VIEW (tree_view);
 
   tree_view->dnd_viewable = NULL;
+
+  if (! GTK_WIDGET_HAS_FOCUS (widget))
+    gtk_widget_grab_focus (widget);
 
   if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget),
                                      bevent->x,

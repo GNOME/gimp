@@ -40,8 +40,6 @@ struct _GimpContainerTreeView
 {
   GimpContainerView  parent_instance;
 
-  GtkWidget         *scrolled_win;
-
   GtkTreeModel      *model;
   gint               n_model_columns;
   GType              model_columns[16];

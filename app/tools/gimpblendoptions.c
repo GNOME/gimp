@@ -31,6 +31,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpcontainerpopup.h"
+#include "widgets/gimpdock.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimppropwidgets.h"
 
@@ -322,10 +323,17 @@ static void
 blend_options_gradient_clicked (GtkWidget   *widget, 
                                 GimpContext *context)
 {
+  GtkWidget *toplevel;
   GtkWidget *popup;
 
+  toplevel = gtk_widget_get_toplevel (widget);
+
   popup = gimp_container_popup_new (context->gimp->gradient_factory->container,
-                                    context);
+                                    context,
+                                    GIMP_DOCK (toplevel)->dialog_factory,
+                                    "gimp-gradient-list",
+                                    GIMP_STOCK_TOOL_BLEND,
+                                    _("Open the gradient selection dialog"));
   gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
 }
 
