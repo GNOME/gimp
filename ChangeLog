@@ -1,3 +1,19 @@
+2003-08-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppreview.c (gimp_preview_button_press_event): 
+	return early if the widget is not realized to enable destroying
+	the widget from an external "button_press_event" handler which
+	returns FALSE (as done in GimpContainerGridView).
+	Fixes bug #119413.
+
+	Some paranoia fixes for similar (although unseen) problems:
+
+	* app/widgets/gimppreview.[ch]: remember if we own a grab and
+	remove it in GtkWidget::unmap().
+
+	* app/widgets/gimppreview-popup.c: destroy the popup when the
+	parent widget gets unmapped.
+
 2003-08-14  Danilo Šegan  <dsegan@gmx.net>
 
 	* ChangeLog, po/ChangeLog, po-libgimp/ChangeLog: Fixed UTF-8

@@ -49,6 +49,7 @@ struct _GimpPreview
 
   /*< private >*/
   gboolean             in_button;
+  gboolean             has_grab;
   GdkModifierType      press_state;
 };
 

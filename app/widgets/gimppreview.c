@@ -73,7 +73,7 @@ static gboolean    gimp_preview_expose_event         (GtkWidget        *widget,
                                                       GdkEventExpose   *event);
 static gboolean    gimp_preview_button_press_event   (GtkWidget        *widget,
 						      GdkEventButton   *bevent);
-static gboolean    gimp_preview_button_release_event (GtkWidget        *widget, 
+static gboolean    gimp_preview_button_release_event (GtkWidget        *widget,
 						      GdkEventButton   *bevent);
 static gboolean    gimp_preview_enter_notify_event   (GtkWidget        *widget,
 						      GdkEventCrossing *event);
@@ -132,7 +132,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  preview_signals[CLICKED] = 
+  preview_signals[CLICKED] =
     g_signal_new ("clicked",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -142,7 +142,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 		  G_TYPE_NONE, 1,
 		  GDK_TYPE_MODIFIER_TYPE);
 
-  preview_signals[DOUBLE_CLICKED] = 
+  preview_signals[DOUBLE_CLICKED] =
     g_signal_new ("double_clicked",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -151,7 +151,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  preview_signals[CONTEXT] = 
+  preview_signals[CONTEXT] =
     g_signal_new ("context",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -225,13 +225,13 @@ gimp_preview_realize (GtkWidget *widget)
   preview = GIMP_PREVIEW (widget);
 
   GTK_WIDGET_CLASS (parent_class)->realize (widget);
-  
+
   attributes.window_type = GDK_WINDOW_CHILD;
   attributes.x      = widget->allocation.x;
   attributes.y      = widget->allocation.y;
   attributes.width  = widget->allocation.width;
   attributes.height = widget->allocation.height;
-  
+
   attributes.wclass = GDK_INPUT_ONLY;
   attributes.event_mask = gtk_widget_get_events (widget);
   attributes.event_mask |= PREVIEW_EVENT_MASK;
@@ -273,6 +273,9 @@ static void
 gimp_preview_unmap (GtkWidget *widget)
 {
   GimpPreview *preview = GIMP_PREVIEW (widget);
+
+  if (preview->has_grab)
+    gtk_grab_remove (widget);
 
   if (preview->event_window)
     gdk_window_hide (preview->event_window);
@@ -444,12 +447,16 @@ gimp_preview_button_press_event (GtkWidget      *widget,
       ! preview->show_popup)
     return FALSE;
 
+  if (! GTK_WIDGET_REALIZED (widget))
+    return FALSE;
+
   if (bevent->type == GDK_BUTTON_PRESS)
     {
       if (bevent->button == 1)
 	{
 	  gtk_grab_add (widget);
 
+          preview->has_grab    = TRUE;
 	  preview->press_state = bevent->state;
 
 	  if (preview->show_popup)
@@ -469,26 +476,20 @@ gimp_preview_button_press_event (GtkWidget      *widget,
 	  preview->press_state = 0;
 
           if (bevent->button == 3)
-	    {
-	      g_signal_emit (widget, preview_signals[CONTEXT], 0);
-	    }
+            g_signal_emit (widget, preview_signals[CONTEXT], 0);
 	  else
-	    {
-	      return FALSE;
-	    }
+            return FALSE;
 	}
     }
   else if (bevent->type == GDK_2BUTTON_PRESS)
     {
       if (bevent->button == 1)
-	{
-	  g_signal_emit (widget, preview_signals[DOUBLE_CLICKED], 0);
-	}
+        g_signal_emit (widget, preview_signals[DOUBLE_CLICKED], 0);
     }
 
   return preview->eat_button_events ? TRUE : FALSE;
 }
-  
+
 static gboolean
 gimp_preview_button_release_event (GtkWidget      *widget,
 				   GdkEventButton *bevent)
@@ -504,6 +505,8 @@ gimp_preview_button_release_event (GtkWidget      *widget,
   if (bevent->button == 1)
     {
       gtk_grab_remove (widget);
+
+      preview->has_grab = FALSE;
 
       if (preview->clickable && preview->in_button)
 	{
