@@ -1,3 +1,19 @@
+Sat Jan 15 22:27:56 CET 2000  Marc Lehmann <pcg@goof.com>
+
+        * libgimp/gimpenv.c, libgimp/color_selector.h,
+        libgimp/color_display.h: Change license to LGPL (see the log
+        message for approval of the various authors). If an author was
+        left out please contact me!!
+
+Fri Jan 14 14:46:27 CET 2000  Marc Lehmann <pcg@goof.com>
+
+        * app/menus.c: Removed Perl-specific translations and moved
+        them to the perl .pot-file. Gurgl, Ratz: That localises the
+        translation, but also requires more places to be updated once i18n
+        works as I would expect it.
+        * plug-ins/script-fu/interp_slib.c: portability fixes (64-bit
+        problems).
+
 Sat Jan 15 19:11:49 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* gimprc.5.in: fixed a typo
