@@ -303,14 +303,6 @@ gimp_item_tree_view_docked_iface_init (GimpDockedInterface *docked_iface)
 }
 
 static void
-gimp_item_tree_view_context_changed (GimpContext      *context,
-                                     GimpImage        *gimage,
-                                     GimpItemTreeView *view)
-{
-  gimp_item_tree_view_set_image (view, gimage);
-}
-
-static void
 gimp_item_tree_view_set_context (GimpDocked  *docked,
                                  GimpContext *context)
 {
@@ -320,7 +312,7 @@ gimp_item_tree_view_set_context (GimpDocked  *docked,
   if (view->context)
     {
       g_signal_handlers_disconnect_by_func (view->context,
-                                            gimp_item_tree_view_context_changed,
+                                            gimp_item_tree_view_set_image,
                                             view);
     }
 
@@ -328,9 +320,9 @@ gimp_item_tree_view_set_context (GimpDocked  *docked,
 
   if (context)
     {
-      g_signal_connect (context, "image_changed",
-                        G_CALLBACK (gimp_item_tree_view_context_changed),
-                        view);
+      g_signal_connect_swapped (context, "image_changed",
+                                G_CALLBACK (gimp_item_tree_view_set_image),
+                                view);
 
       gimage = gimp_context_get_image (context);
     }

@@ -37,6 +37,7 @@
 #include "gimpcomponenteditor.h"
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
+#include "gimpdocked.h"
 #include "gimphelp-ids.h"
 #include "gimpwidgets-utils.h"
 
@@ -46,7 +47,8 @@
 static void   gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass);
 static void   gimp_channel_tree_view_init       (GimpChannelTreeView      *view);
 
-static void   gimp_channel_tree_view_view_iface_init (GimpContainerViewInterface *view_iface);
+static void   gimp_channel_tree_view_view_iface_init   (GimpContainerViewInterface *view_iface);
+static void   gimp_channel_tree_view_docked_iface_init (GimpDockedInterface *docked_iface);
 
 static GObject * gimp_channel_tree_view_constructor   (GType              type,
                                                        guint              n_params,
@@ -57,9 +59,13 @@ static GimpItem * gimp_channel_tree_view_item_new     (GimpImage         *image)
 
 static void   gimp_channel_tree_view_set_preview_size (GimpContainerView *view);
 
+static void   gimp_channel_tree_view_set_context      (GimpDocked        *docked,
+                                                       GimpContext       *context);
 
-static GimpDrawableTreeViewClass  *parent_class      = NULL;
-static GimpContainerViewInterface *parent_view_iface = NULL;
+
+static GimpDrawableTreeViewClass  *parent_class        = NULL;
+static GimpContainerViewInterface *parent_view_iface   = NULL;
+static GimpDockedInterface        *parent_docked_iface = NULL;
 
 
 GType
@@ -88,6 +94,12 @@ gimp_channel_tree_view_get_type (void)
         NULL,           /* iface_finalize */
         NULL            /* iface_data     */
       };
+      static const GInterfaceInfo docked_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_channel_tree_view_docked_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
 
       view_type = g_type_register_static (GIMP_TYPE_DRAWABLE_TREE_VIEW,
                                           "GimpChannelTreeView",
@@ -95,6 +107,8 @@ gimp_channel_tree_view_get_type (void)
 
       g_type_add_interface_static (view_type, GIMP_TYPE_CONTAINER_VIEW,
                                    &view_iface_info);
+      g_type_add_interface_static (view_type, GIMP_TYPE_DOCKED,
+                                   &docked_iface_info);
     }
 
   return view_type;
@@ -150,6 +164,14 @@ gimp_channel_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
   view_iface->set_preview_size = gimp_channel_tree_view_set_preview_size;
 }
 
+static void
+gimp_channel_tree_view_docked_iface_init (GimpDockedInterface *docked_iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (docked_iface);
+
+  docked_iface->set_context = gimp_channel_tree_view_set_context;
+}
+
 static GObject *
 gimp_channel_tree_view_constructor (GType                  type,
                                     guint                  n_params,
@@ -202,6 +224,8 @@ gimp_channel_tree_view_set_image (GimpItemTreeView *item_view,
       channel_view->component_editor =
         gimp_component_editor_new (preview_size,
                                    GIMP_EDITOR (item_view)->menu_factory);
+      gimp_docked_set_context (GIMP_DOCKED (channel_view->component_editor),
+                               item_view->context);
       gtk_box_pack_start (GTK_BOX (item_view), channel_view->component_editor,
                           FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (item_view),
@@ -259,4 +283,20 @@ gimp_channel_tree_view_set_preview_size (GimpContainerView *view)
   if (channel_view->component_editor)
     gimp_component_editor_set_preview_size (GIMP_COMPONENT_EDITOR (channel_view->component_editor),
                                             preview_size);
+}
+
+
+/*  GimpDocked methods  */
+
+static void
+gimp_channel_tree_view_set_context (GimpDocked  *docked,
+                                    GimpContext *context)
+{
+  GimpChannelTreeView *channel_view = GIMP_CHANNEL_TREE_VIEW (docked);
+
+  parent_docked_iface->set_context (docked, context);
+
+  if (channel_view->component_editor)
+    gimp_docked_set_context (GIMP_DOCKED (channel_view->component_editor),
+                             context);
 }

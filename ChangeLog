@@ -1,3 +1,18 @@
+2004-11-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpchanneltreeview.c: implement
+	GimpDockedInterface::set_context() and set the context of the
+	embedded GimpComponentEditor. Fixes NULL-context crashes in
+	action callbacks when invoked from the component editor.
+	Spotted by Jimmac.
+
+	Unrelated:
+
+	* app/widgets/gimpitemtreeview.c: get rid of the
+	gimp_item_tree_view_context_changed() callback and
+	g_signal_connect_swapped() gimp_item_tree_view_set_image()
+	directly.
+
 2004-11-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/jigsaw.c: added missing braces around initializer.
