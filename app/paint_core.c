@@ -627,9 +627,12 @@ paint_core_init (PaintCore    *paint_core,
   paint_core->cury = y;
 
   /* Set up some defaults for non-gui use */
-  paint_core->startpressure = paint_core->lastpressure = paint_core->curpressure = 0.5;
-  paint_core->startxtilt = paint_core->lastxtilt = paint_core->curxtilt = 0;
-  paint_core->startytilt = paint_core->lastytilt = paint_core->curytilt = 0;
+  if (paint_core == &non_gui_paint_core)
+    {
+      paint_core->startpressure = paint_core->lastpressure = paint_core->curpressure = 0.5;
+      paint_core->startxtilt = paint_core->lastxtilt = paint_core->curxtilt = 0;
+      paint_core->startytilt = paint_core->lastytilt = paint_core->curytilt = 0;
+    }
 
   /*  Each buffer is the same size as the maximum bounds of the active brush... */
   if (brush && brush != get_active_brush ())

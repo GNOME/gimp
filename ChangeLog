@@ -1,3 +1,9 @@
+Wed Sep  1 22:16:41 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/paint_core.c: Only set the defaults for non_gui operations
+	if the paint_core is really used in non_gui mode. This fixes a bug 
+	that showed up when drawing lines with a pressure-sensitive device.
+
 Wed Sep  1 21:12:42 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c: a small bugfix
