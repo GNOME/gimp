@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
 "POT-Creation-Date: 2000-10-16 11:48-0700\n"
-"PO-Revision-Date: 2000-10-02 23:31+02:00\n"
+"PO-Revision-Date: 2000-10-20 23:31+02:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -125,7 +125,7 @@ msgstr "Afslut"
 #: app/interface.c:1039 app/layers_dialog.c:3484 app/layers_dialog.c:3666
 #: app/layers_dialog.c:3761 app/layers_dialog.c:4021 app/levels.c:346
 #: app/palette.c:1818 app/posterize.c:207 app/preferences_dialog.c:1462
-#: app/qmask.c:278 app/resize.c:194 app/resize.c:1324
+#: app/qmask.c:278 app/resize.c:200 app/resize.c:1367
 #: app/resolution_calibrate.c:111 app/threshold.c:280 app/user_install.c:549
 #: modules/cdisplay_gamma.c:332 modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
@@ -284,7 +284,7 @@ msgstr "Lysstyrke-kontrast virker ikke på indekserede tegneobjekter."
 #: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3759
 #: app/layers_dialog.c:4019 app/levels.c:342 app/module_db.c:314
 #: app/posterize.c:203 app/preferences_dialog.c:1458 app/qmask.c:276
-#: app/resize.c:192 app/resize.c:1324 app/resolution_calibrate.c:109
+#: app/resize.c:194 app/resize.c:1367 app/resolution_calibrate.c:109
 #: app/threshold.c:276 modules/cdisplay_gamma.c:330
 #: modules/cdisplay_highcontrast.c:323
 msgid "OK"
@@ -293,8 +293,8 @@ msgstr "Ok"
 #: app/brightness_contrast.c:222 app/by_color_select.c:721
 #: app/color_balance.c:278 app/curves.c:565 app/file_new_dialog.c:355
 #: app/hue_saturation.c:377 app/levels.c:344 app/posterize.c:205
-#: app/threshold.c:278 app/tools.c:1542 app/transform_core.c:406
-#: modules/colorsel_water.c:634
+#: app/resize.c:197 app/threshold.c:278 app/tools.c:1542
+#: app/transform_core.c:406 modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Nulstil"
 
@@ -490,7 +490,7 @@ msgstr "%s kopi"
 msgid "Selection Mask"
 msgstr "Markeringsmaske"
 
-#: app/channel_ops.c:85 app/resize.c:405
+#: app/channel_ops.c:85 app/resize.c:411
 msgid "Offset"
 msgstr "Forskydning"
 
@@ -500,7 +500,7 @@ msgid "Offset X:"
 msgstr "Forskydning X:"
 
 #: app/channel_ops.c:115 app/crop.c:1077 app/file_new_dialog.c:530
-#: app/resize.c:343 app/resize.c:435 app/resize.c:572 app/rotate_tool.c:106
+#: app/resize.c:349 app/resize.c:441 app/resize.c:578 app/rotate_tool.c:106
 #: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1208
 msgid "Y:"
 msgstr "Y:"
@@ -974,7 +974,7 @@ msgid "Width:"
 msgstr "Bredde:"
 
 #: app/crop.c:1093 app/file_new_dialog.c:395 app/file_new_dialog.c:413
-#: app/layers_dialog.c:3525 app/resize.c:253 app/resize.c:278 app/resize.c:509
+#: app/layers_dialog.c:3525 app/resize.c:259 app/resize.c:284 app/resize.c:515
 #: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:364
 msgid "Height:"
 msgstr "Højde:"
@@ -1204,11 +1204,11 @@ msgid "Pixels"
 msgstr "Pixler"
 
 #. the resolution labels
-#: app/file_new_dialog.c:524 app/resize.c:566
+#: app/file_new_dialog.c:524 app/resize.c:572
 msgid "Resolution X:"
 msgstr "Opløsning X:"
 
-#: app/file_new_dialog.c:545 app/resize.c:587
+#: app/file_new_dialog.c:545 app/resize.c:593
 msgid "pixels/%a"
 msgstr "pixler/%a"
 
@@ -4881,62 +4881,62 @@ msgstr "Markering: REPLACE"
 msgid "Selection: "
 msgstr "Markering: "
 
-#: app/resize.c:155
+#: app/resize.c:157
 msgid "Scale Layer"
 msgstr "Skalér lag"
 
-#: app/resize.c:157 app/resize.c:182 app/tool_options.c:796
+#: app/resize.c:159 app/resize.c:184 app/tool_options.c:796
 msgid "Size"
 msgstr "Størrelse"
 
-#: app/resize.c:161
+#: app/resize.c:163
 msgid "Scale Image"
 msgstr "Skalér billede"
 
-#: app/resize.c:163
+#: app/resize.c:165
 msgid "Pixel Dimensions"
 msgstr "Pixeldimensioner"
 
-#: app/resize.c:173
+#: app/resize.c:175
 msgid "Set Layer Boundary Size"
 msgstr "Vælg lagkantstørrelse"
 
-#: app/resize.c:178
+#: app/resize.c:180
 msgid "Set Canvas Size"
 msgstr "Vælg kanvasstørrelse"
 
 #. the original width & height labels
-#: app/resize.c:247 app/scale_tool.c:77
+#: app/resize.c:253 app/scale_tool.c:77
 msgid "Original Width:"
 msgstr "Oprindelig bredde:"
 
 #. the new size labels
-#: app/resize.c:272 app/resize.c:503
+#: app/resize.c:278 app/resize.c:509
 msgid "New Width:"
 msgstr "Ny bredde:"
 
 #. the scale ratio labels
-#: app/resize.c:337
+#: app/resize.c:343
 msgid "Ratio X:"
 msgstr "X-rate:"
 
-#: app/resize.c:433
+#: app/resize.c:439
 msgid "X:"
 msgstr "X:"
 
-#: app/resize.c:489
+#: app/resize.c:495
 msgid "Print Size & Display Unit"
 msgstr "Udskriv størrelse og vis enhed"
 
-#: app/resize.c:1236
+#: app/resize.c:1279
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Skaleringsfejl: Både bredde og højde skal være højere end nul."
 
-#: app/resize.c:1317
+#: app/resize.c:1360
 msgid "Layer Too Small"
 msgstr "Lag er for lille"
 
-#: app/resize.c:1321
+#: app/resize.c:1364
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -6279,15 +6279,15 @@ msgid "Installation failed.  Contact system administrator."
 msgstr "Installation mislykkedes.  Kontakt din systemadministrator."
 
 #: app/user_install.c:1094
-#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
-"GIMP bruger en begrænset mængde lager for at gemme billeddata, den såkaldte\n"
-"\"Tile cachen\". Du bør justere størrelsen på denne så den passer i lagret.\n"
-"Tag den mængde lager i betragtning som bruges af andre processer."
+"GIMP bruger en begrænset mængde hukommelse til at lagre billeddata, den\n"
+"såkaldte 'brik-buffer'. Du bør tilpasse dens størrelse så den kan være i\n"
+"hukommelsen. Tag i betrakning den mængde hukommelse der bruges af andre\n"
+"kørende processer."
 
 #: app/user_install.c:1119
 msgid ""
