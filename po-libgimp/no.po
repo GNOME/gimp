@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2002-08-20 15:07+0200\n"
-"PO-Revision-Date: 2002-06-09 23:16+0200\n"
+"POT-Creation-Date: 2002-09-23 22:44+0200\n"
+"PO-Revision-Date: 2002-09-23 22:44+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -121,34 +121,34 @@ msgstr ""
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:414
+#: libgimp/gimpexport.c:416
 msgid "Export File"
 msgstr "Eksporter fil"
-
-#: libgimp/gimpexport.c:419
-msgid "Export"
-msgstr "Eksporter"
 
 #: libgimp/gimpexport.c:421
 msgid "Ignore"
 msgstr "Ignorer"
 
-#: libgimp/gimpexport.c:438
+#: libgimp/gimpexport.c:427
+msgid "Export"
+msgstr "Eksporter"
+
+#: libgimp/gimpexport.c:453
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "Du bør eksportere bildet ditt før det kan lagres av følgende gunner:"
 
 #. the footline
-#: libgimp/gimpexport.c:503
+#: libgimp/gimpexport.c:527
 msgid "The export conversion won't modify your original image."
 msgstr "Konverteringen under eksport vil ikke endre ditt originale bilde."
 
-#: libgimp/gimpexport.c:571
+#: libgimp/gimpexport.c:595
 msgid "a layer mask"
 msgstr "en lagmaske"
 
-#: libgimp/gimpexport.c:573
+#: libgimp/gimpexport.c:597
 msgid "a channel (saved selection)"
 msgstr "en kanal (lagret utvalg)"
 
@@ -217,19 +217,27 @@ msgstr "_Nullstill"
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:163
-msgid "Transform"
-msgstr "Transformer"
+#: libgimpwidgets/gimpstock.c:127
+msgid "Resize"
+msgstr "Endre størrelse"
 
-#: libgimpwidgets/gimpstock.c:166
-msgid "Rotate"
-msgstr "Roter"
-
-#: libgimpwidgets/gimpstock.c:167
+#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:171
 msgid "Scale"
 msgstr "Skaler"
 
-#: libgimpwidgets/gimpstock.c:168
+#: libgimpwidgets/gimpstock.c:149
+msgid "Crop"
+msgstr "Beskjær"
+
+#: libgimpwidgets/gimpstock.c:167
+msgid "Transform"
+msgstr "Transformer"
+
+#: libgimpwidgets/gimpstock.c:170
+msgid "Rotate"
+msgstr "Roter"
+
+#: libgimpwidgets/gimpstock.c:172
 msgid "Shear"
 msgstr "Klipp"
 
@@ -249,7 +257,7 @@ msgstr "Enhet"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:845
+#: libgimpwidgets/gimpwidgets.c:849
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -258,11 +266,11 @@ msgstr ""
 "startverdi for generering av tilfeldige tall - dette lar deg gjenta en gitt "
 "\"tilfeldig\" operasjon"
 
-#: libgimpwidgets/gimpwidgets.c:850
+#: libgimpwidgets/gimpwidgets.c:854
 msgid "_Time"
 msgstr "_Tid"
 
-#: libgimpwidgets/gimpwidgets.c:859
+#: libgimpwidgets/gimpwidgets.c:863
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -270,19 +278,19 @@ msgstr ""
 "Startverdi til generator av tilfeldige tall fra tiden nå - dette garanterer "
 "en noen lunde tilfeldig verdi"
 
-#: libgimpwidgets/gimpwidgets.c:1175
+#: libgimpwidgets/gimpwidgets.c:1189
 msgid "Bytes"
 msgstr "Bytes"
 
-#: libgimpwidgets/gimpwidgets.c:1176
+#: libgimpwidgets/gimpwidgets.c:1190
 msgid "KiloBytes"
 msgstr "KiloBytes"
 
-#: libgimpwidgets/gimpwidgets.c:1177
+#: libgimpwidgets/gimpwidgets.c:1191
 msgid "MegaBytes"
 msgstr "MegaBytes"
 
-#: libgimpwidgets/gimpwidgets.c:1178
+#: libgimpwidgets/gimpwidgets.c:1192
 msgid "GigaBytes"
 msgstr "GigaBytes"
 
