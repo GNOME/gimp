@@ -1,3 +1,20 @@
+1999-12-05 Garry R. Osgood <gosgood@idt.net>
+	Inaugural checkin: Tile accounting
+	* app/tile_cache.c
+	* app/tile.c
+	
+	cur_cache_dirty in tile_cache.c was not being fully updated. Fewer
+	dirty bytes were being added to this global than what were being 
+	placed on the dirty tile queue. Deductions, however, were correct
+	sometimes causing cur_cache_dirty to wrap around zero and become
+	large positive. This skewed the number of tiles to be swapped to disk, 
+	usually downward, but sometimes dramatically upward.
+        active_tile_count, (tile.c) currently a diagnostic counter, was 
+	not being decremented when tiles were actually destroyed.  
+
+	Full patch documentation at 
+	http://idt.net/~gosgood/gimp-patch/patch01.html#991205-0
+
 1999-12-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/main.c

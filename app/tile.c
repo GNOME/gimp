@@ -153,6 +153,7 @@ tile_release (Tile *tile, int dirty)
 
   if (tile->ref_count == 0)
     {
+      tile_active_count--;
       if (tile->share_count == 0)
 	{
 	  /* tile is dead */
@@ -165,7 +166,6 @@ tile_release (Tile *tile, int dirty)
 	     tile cache */
 	  tile_cache_insert (tile);
 	}
-      tile_active_count--;
     }
 
   TILE_MUTEX_UNLOCK (tile);

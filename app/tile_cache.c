@@ -131,7 +131,12 @@ tile_cache_insert (Tile *tile)
   else               newlist->first = tile;
   newlist->last = tile;
 
-  if (tile->dirty) 
+  /* gosgood@idt.net 1999-12-04                                  */
+  /* bytes on cur_cache_dirty miscounted in CVS 1.12:            */
+  /* Invariant: test for selecting dirty list should be the same */
+  /* as counting files dirty.                                    */
+
+  if ((tile->dirty) || ( tile->swap_offset == -1)) 
     {
       cur_cache_dirty += tile_size (tile);
       if (1)
@@ -287,7 +292,7 @@ tile_idle_thread (void *data)
 	  TILE_MUTEX_LOCK (tile);
 	  CACHE_LOCK;
 
-	  if (tile->dirty) 
+	  if (tile->dirty || tile->swap == -1) 
 	    {
 	      list = tile->listhead;
 	      
