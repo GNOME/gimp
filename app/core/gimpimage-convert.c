@@ -27,12 +27,17 @@
    */
 
 /*
+ * 98/07/05 - Sucked the warning about quantizing to too many colours into
+ *  a text widget embedded in the dialog, improved intelligence of dialog
+ *  to default 'custom palette' selection to 'Web' if available, and
+ *  in this case not bother to present the native WWW-palette radio
+ *  button.  [Adam]
+ *
  * 98/04/13 - avoid a division by zero when converting an empty gray-scale
  *  image (who would like to do such a thing anyway??)  [Sven ] 
  *
  * 98/03/23 - fixed a longstanding fencepost - hopefully the *right*
- *  way, *again*.  (anyone ELSE want a go?  okay, just kidding... :))
- *  [Adam]
+ *  way, *again*.  [Adam]
  *
  * 97/11/14 - added a proper pdb interface and support for dithering
  *  to custom palettes (based on a patch by Eric Hernes) [Yosh]
@@ -237,6 +242,7 @@ static gboolean needs_quantize;
 static GtkWidget *build_palette_menu(int *default_palette);
 static void palette_entries_callback(GtkWidget *w, gpointer client_data);
 static PaletteEntriesP theCustomPalette = NULL;
+static gboolean UserHasWebPal = FALSE;
 
 void
 convert_to_rgb (GimpImage *gimage)
@@ -259,43 +265,36 @@ static ActionAreaItem action_items[] =
   { "Cancel", indexed_cancel_callback, NULL, NULL }
 };
 
+static void
+realize_text (GtkWidget *text, gpointer data)
+{
+  gtk_text_set_word_wrap   (GTK_TEXT (text), TRUE);
+  gtk_text_freeze (GTK_TEXT (text));
+  gtk_text_insert (GTK_TEXT (text), NULL, &text->style->black, NULL,
+		   "You are attempting to convert an image with alpha/layers from RGB to INDEXED.  You should not quantize to more than 255 colors if you intend to make a transparent or animated GIF file from this image.", -1);
+  
+  gtk_text_thaw (GTK_TEXT (text));
+}
+
 void
 convert_to_indexed (GimpImage *gimage)
 {
   IndexedDialog *dialog;
   GtkWidget *vbox;
   GtkWidget *hbox;
+  GtkWidget *table;
   GtkWidget *label;
   GtkWidget *text;
   GtkWidget *frame;
   GtkWidget *toggle;
+  GtkWidget *scrollbar;
   GSList *group = NULL;
-  static gboolean shown_message_already = False;
 
   dialog = g_new(IndexedDialog, 1);
   dialog->gimage = gimage;
   dialog->num_cols = 256;
   dialog->dither = TRUE;
 
-  /* if the image isn't non-alpha/layered, set the default number of
-     colours to one less than max, to leave room for a transparent index
-     for transparent/animated GIFs */
-  if ((!gimage_is_empty (gimage))
-      &&
-      (
-       gimage->layers->next
-       ||
-       layer_has_alpha((Layer *) gimage->layers->data)
-       )
-      )
-    {
-      dialog->num_cols = 255;
-      if (!shown_message_already)
-	{
-	  g_message ("Note:  You are attempting to convert an image\nwith alpha/layers.  It is recommended that you quantize\nto no more than 255 colors if you wish to make\na transparent or animated GIF from it.\n\nYou won't get this message again\nuntil the next time you run GIMP.\nHave a nice day!");
-	  shown_message_already = True;
-	}
-    }
   dialog->makepal_flag = TRUE;
   dialog->webpal_flag = FALSE;
   dialog->custompal_flag = FALSE;
@@ -339,46 +338,41 @@ convert_to_indexed (GimpImage *gimage)
   gtk_widget_show (label);
 
   text = gtk_entry_new ();
-  if ((!gimage_is_empty (gimage))
-      &&
-      (
-       gimage->layers->next
-       ||
-       layer_has_alpha((Layer *) gimage->layers->data)
-       )
-      )
-    gtk_entry_set_text (GTK_ENTRY (text), "255");
-  else
-    gtk_entry_set_text (GTK_ENTRY (text), "256");
-  gtk_widget_set_usize (text, 50, 25);
-  gtk_box_pack_start (GTK_BOX (hbox), text, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (text), "changed",
-		      (GtkSignalFunc) indexed_num_cols_update,
-		      dialog);
+  {
+    if ((!gimage_is_empty (gimage))
+	&&
+	(
+	 gimage->layers->next
+	 ||
+	 layer_has_alpha((Layer *) gimage->layers->data)
+	 )
+	)
+      {
+	gtk_entry_set_text (GTK_ENTRY (text), "255");
+	dialog->num_cols = 255;
+      }      
+    else
+      {
+	gtk_entry_set_text (GTK_ENTRY (text), "256");
+      }
+    gtk_widget_set_usize (text, 50, 25);
+    gtk_box_pack_start (GTK_BOX (hbox), text, FALSE, FALSE, 0);
+    gtk_signal_connect (GTK_OBJECT (text), "changed",
+			(GtkSignalFunc) indexed_num_cols_update,
+			dialog);
+  }
   gtk_widget_show (text);
   gtk_widget_show (hbox);
 
   if (gimage->base_type == RGB)
     {
-		GtkWidget *menu;
-		GtkWidget *palette_option_menu;
-		int default_palette;
-      /*  'web palette'  */
-      hbox = gtk_hbox_new (FALSE, 1);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      toggle =
-	gtk_radio_button_new_with_label (group, "Use WWW-optimised palette");
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-      gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  (GtkSignalFunc) indexed_radio_update,
-			  &(dialog->webpal_flag));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), dialog->webpal_flag);
-      gtk_widget_show (toggle);
-      gtk_widget_show (hbox);
+      GtkWidget *menu;
+      GtkWidget *palette_option_menu;
+      int default_palette;
 
       menu = build_palette_menu(&default_palette);
-      if (menu) {
+      if (menu)
+	{
           /* 'custom' palette from dialog */
           hbox = gtk_hbox_new (FALSE, 1);
           gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -402,6 +396,31 @@ convert_to_indexed (GimpImage *gimage)
       }
     }
 
+  if (!UserHasWebPal)
+    {
+      /*  'web palette'
+       * Only presented as an option to the user if they do not
+       * already have the 'Web' GIMP palette installed on their
+       * system.
+       */
+      hbox = gtk_hbox_new (FALSE, 1);
+      {
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+	toggle =
+	  gtk_radio_button_new_with_label (group, "Use WWW-optimised palette");
+	{
+	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+	  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+	  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			      (GtkSignalFunc) indexed_radio_update,
+			      &(dialog->webpal_flag));
+	  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), dialog->webpal_flag);
+	}
+	gtk_widget_show (toggle);
+      }
+      gtk_widget_show (hbox);
+    }
+
   /*  'mono palette'  */
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -417,28 +436,76 @@ convert_to_indexed (GimpImage *gimage)
   gtk_widget_show (hbox);
 
   frame = gtk_frame_new ("Dither Options");
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->shell)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show(frame);
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 1);
-  /* put the vbox in the frame */
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show(vbox);
-  /*  The dither toggle  */
-  hbox = gtk_hbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  toggle = gtk_check_button_new_with_label ("Enable Floyd-Steinberg dithering");
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), dialog->dither);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+  {
+    gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+    gtk_container_border_width (GTK_CONTAINER (frame), 2);
+    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->shell)->vbox), frame, TRUE, TRUE, 0);
+    vbox = gtk_vbox_new (FALSE, 1);
+    gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+    /* put the vbox in the frame */
+    gtk_container_add (GTK_CONTAINER (frame), vbox);
+    gtk_widget_show(vbox);
+    /*  The dither toggle  */
+    hbox = gtk_hbox_new (FALSE, 1);
+    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+    
+    toggle = gtk_check_button_new_with_label ("Enable Floyd-Steinberg dithering");
+    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), dialog->dither);
+    gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
+    gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) indexed_dither_update,
 		      dialog);
-  gtk_widget_show (label);
-  gtk_widget_show (toggle);
-  gtk_widget_show (hbox);
+    gtk_widget_show (label);
+    gtk_widget_show (toggle);
+    gtk_widget_show (hbox);
+  }
+  gtk_widget_show(frame);
+
+  /* if the image isn't non-alpha/layered, set the default number of
+     colours to one less than max, to leave room for a transparent index
+     for transparent/animated GIFs */
+  if ((!gimage_is_empty (gimage))
+      &&
+      (
+       gimage->layers->next
+       ||
+       layer_has_alpha((Layer *) gimage->layers->data)
+       )
+      )
+    {
+      frame = gtk_frame_new (" [ Warning ] ");
+      {
+	gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+	gtk_container_border_width (GTK_CONTAINER (frame), 2);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->shell)->vbox), frame, TRUE, TRUE, 0);
+
+	table = gtk_table_new (2, 1, FALSE);
+	{
+	  gtk_container_border_width (GTK_CONTAINER (table), 1);
+	  gtk_container_add (GTK_CONTAINER (frame), table);
+
+	  text = gtk_text_new (NULL, NULL);
+	  {
+	    gtk_table_attach (GTK_TABLE (table), text, 0, 1, 0, 1,
+			      GTK_FILL | GTK_EXPAND,
+			      GTK_FILL | GTK_EXPAND | GTK_SHRINK, 0, 0);
+	    gtk_signal_connect (GTK_OBJECT (text), "realize",
+				GTK_SIGNAL_FUNC (realize_text), NULL);
+	  }
+	  gtk_widget_show (text);
+
+	  scrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
+	  {
+	    gtk_table_attach (GTK_TABLE (table), scrollbar, 1, 2, 0, 1,
+			      GTK_FILL, GTK_EXPAND | GTK_FILL | GTK_SHRINK,
+			      0, 0);
+	  }
+	  gtk_widget_show (scrollbar);
+	}
+	gtk_widget_show(table);
+      }
+      gtk_widget_show(frame);
+    }
 
   /*  The action area  */
   action_items[0].user_data = dialog;
@@ -458,10 +525,13 @@ build_palette_menu(int *default_palette){
   int i;
 
 
-  if(!palette_entries_list) {
-    /* fprintf(stderr, "no palette_entries_list, building...\n");*/
-     palette_init_palettes(FALSE);
-  }
+  UserHasWebPal = FALSE;
+
+
+  if(!palette_entries_list)
+    {
+      palette_init_palettes(FALSE);
+    }
 
   list = palette_entries_list;
 
@@ -475,7 +545,15 @@ build_palette_menu(int *default_palette){
       i++,list = g_slist_next (list))
     {
       entries = (PaletteEntriesP) list->data;
-      /*      fprintf(stderr, "(palette %s)\n", entries->filename);*/
+
+      /* Preferentially, the initial default is 'Web' if available */
+      if (*default_palette==-1 &&
+	  g_strcasecmp(entries->name, "Web")==0)
+	{
+	  theCustomPalette = entries;
+	  UserHasWebPal = TRUE;
+	}
+
       menu_item = gtk_menu_item_new_with_label (entries->name);
       gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
 			  (GtkSignalFunc) palette_entries_callback,
@@ -485,12 +563,12 @@ build_palette_menu(int *default_palette){
       if (theCustomPalette == entries) *default_palette = i;
     }
 
-   /* default to first one */
-   if(*default_palette==-1) {
-     theCustomPalette = (PaletteEntriesP) palette_entries_list->data;
-     /* fprintf(stderr, "setting default to `%s'\n", theCustomPalette->name);*/
-     *default_palette = 0;
-   }
+   /* default to first one (only used if 'web' palette not avail.) */
+   if(*default_palette==-1)
+     {
+       theCustomPalette = (PaletteEntriesP) palette_entries_list->data;
+       *default_palette = 0;
+     }
    return menu;
 }
 
@@ -572,6 +650,7 @@ indexed_radio_update (GtkWidget *widget,
   else
     *toggle_val = FALSE;
 }
+
 static void
 indexed_dither_update (GtkWidget *w,
 		       gpointer   data)
