@@ -1,7 +1,14 @@
+Wed Jul 28 18:28:44 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* de.po: 1093 translated messages, 
+	1 fuzzy translations, 210 untranslated messages
+
 1999-07-27  Vincent Renardias <vincent@ldsol.com>
 
-	* fr.po: before: 1258 translated messages, 35 fuzzy translations, 10 untranslated messages.
-		 after:  1294 translated messages, 2 fuzzy translations, 7 untranslated messages.
+	* fr.po: before: 1258 translated messages, 35 fuzzy translations, 
+			 10 untranslated messages.
+		 after:  1294 translated messages, 2 fuzzy translations, 
+		         7 untranslated messages.
 
 1999-07-27  Tomas Ogren  <stric@ing.umu.se>
 
@@ -26,7 +33,8 @@
 
 1999-07-21  Vincent Renardias <vincent@ldsol.com>
 
-	* fr.po: before: 1279 translated messages, 10 fuzzy translations, 9 untranslated messages.
+	* fr.po: before: 1279 translated messages, 10 fuzzy translations, 
+	                 9 untranslated messages.
 		 after:  1298 translated messages.
 
 1999-07-11  Kjartan Maraas  <kmaraas@online.no>

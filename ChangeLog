@@ -14,10 +14,6 @@ Wed Jul 28 03:42:34 1999  Jay Cox  (jay@elan)
 	* app/pixel_regionP.h: new file that shold have gone with my last
 	commit.
 
-Wed Jul 28 02:22:48 MEST 1999  Sven Neumann <sven@gimp.org>
-
-	* po/de.po: updated/corrected the german translation 
-
 Tue Jul 27 22:47:33 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: fixed a bug that was 
