@@ -3024,8 +3024,9 @@ gimp_image_merge_layers (GimpImage *gimage,
 			    (g_slist_length (gimage->layers) - position + 1));
     }
 
-  /* set the name after the original layers have been removed so we don't
-     end up with #2 appended to the name */
+  /* set the name after the original layers have been removed so we
+   * don't end up with #2 appended to the name
+   */
   gimp_object_set_name (GIMP_OBJECT (merge_layer), name);
   g_free (name);
 
@@ -3169,7 +3170,7 @@ gimp_image_remove_layer (GimpImage *gimage,
 	}
 
       /* Send out REMOVED signal from layer */
-      layer_removed (layer, gimage);
+      gimp_drawable_removed (GIMP_DRAWABLE (layer));
 
       /*  Push the layer undo--It is important it goes here since layer might
        *   be immediately destroyed if the undo push fails
@@ -3524,7 +3525,7 @@ gimp_image_remove_channel (GimpImage *gimage,
 		     drawable_height (GIMP_DRAWABLE(channel)));
 
   /* Send out REMOVED signal from channel */
-  channel_removed (channel);
+  gimp_drawable_removed (GIMP_DRAWABLE (channel));
   
   /*  Important to push the undo here in case the push fails  */
   undo_push_channel (gimage, CHANNEL_REMOVE_UNDO, cu);

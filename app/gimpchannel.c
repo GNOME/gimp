@@ -50,12 +50,6 @@
 #include "libgimp/gimpintl.h"
 
 
-enum
-{
-  REMOVED,
-  LAST_SIGNAL
-};
-
 static void      gimp_channel_class_init (GimpChannelClass *klass);
 static void      gimp_channel_init       (GimpChannel      *channel);
 static void      gimp_channel_destroy    (GtkObject        *object);
@@ -64,9 +58,9 @@ static TempBuf * channel_preview_private (Channel *channel,
 					  gint     width,
 					  gint     height);
 
-static guint channel_signals[LAST_SIGNAL] = { 0 };
 
 static GimpDrawableClass *parent_class = NULL;
+
 
 GtkType
 gimp_channel_get_type (void)
@@ -102,20 +96,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_DRAWABLE);
 
-  channel_signals[REMOVED] =
-    gtk_signal_new ("removed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpChannelClass,
-				       removed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
-
-  gtk_object_class_add_signals (object_class, channel_signals, LAST_SIGNAL);
-
   object_class->destroy = gimp_channel_destroy;
-
-  klass->removed = NULL;
 }
 
 static void
@@ -316,20 +297,6 @@ gimp_channel_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-/* The removed signal is sent out when the channel is no longer
- * associcated with an image.  It's needed because channels aren't
- * destroyed immediately, but kept around for undo purposes.  Connect
- * to the removed signal to update bits of UI that are tied to a
- * particular layer. */
-void
-channel_removed (Channel *channel)
-{
-  g_return_if_fail (channel != NULL);
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
-
-  gtk_signal_emit (GTK_OBJECT (channel), channel_signals[REMOVED]);
 }
 
 void

@@ -1,5 +1,14 @@
 2001-01-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/channel.[ch]
+	* app/gimpdrawable.[ch]
+	* app/layer.[ch]: moved the "removed" signal from GimpChannel and
+	GimpLayer to GimpDrawable.
+
+	* app/gimpimage.[ch]: changed accordingly.
+
+2001-01-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/docindex.c
 	* app/fileops.c
 	* app/gdisplay.c

@@ -49,12 +49,6 @@
 #include "libgimp/gimpintl.h"
 
 
-enum
-{
-  REMOVED,
-  LAST_SIGNAL
-};
-
 static void      gimp_layer_class_init      (GimpLayerClass     *klass);
 static void      gimp_layer_init            (GimpLayer          *layer);
 static void      gimp_layer_destroy         (GtkObject          *object);
@@ -71,12 +65,6 @@ static TempBuf * layer_mask_preview_private (Layer              *layer,
 					     gint                width,
 					     gint                height);
 
-
-static guint layer_signals[LAST_SIGNAL] = { 0 };
-
-/*
-  static guint layer_mask_signals[LAST_SIGNAL] = { 0 };
- */
 
 static GimpDrawableClass *layer_parent_class      = NULL;
 static GimpChannelClass  *layer_mask_parent_class = NULL;
@@ -118,22 +106,9 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   layer_parent_class = gtk_type_class (GIMP_TYPE_DRAWABLE);
 
-  layer_signals[REMOVED] =
-    gtk_signal_new ("removed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpLayerClass,
-                                       removed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
-
-  gtk_object_class_add_signals (object_class, layer_signals, LAST_SIGNAL);
-
   object_class->destroy = gimp_layer_destroy;
 
   drawable_class->invalidate_preview = layer_invalidate_preview;
-
-  klass->removed = NULL;
 }
 
 static void
@@ -620,21 +595,6 @@ gimp_layer_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (layer_parent_class)->destroy)
     (*GTK_OBJECT_CLASS (layer_parent_class)->destroy) (object);
-}
-
-/* The removed signal is sent out when the layer is no longer
- * associcated with an image.  It's needed because layers aren't
- * destroyed immediately, but kept around for undo purposes.  Connect
- * to the removed signal to update bits of UI that are tied to a
- * particular layer. */
-void
-layer_removed (Layer    *layer,
-	       gpointer  data)
-{
-  g_return_if_fail (layer != NULL);
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-
-  gtk_signal_emit (GTK_OBJECT (layer), layer_signals[REMOVED]);
 }
 
 void

@@ -119,7 +119,7 @@ struct _GimpImage
 
 struct _GimpImageClass
 {
-  GimpObjectClass parent_class;
+  GimpObjectClass  parent_class;
 
   void (* clean)            (GimpImage *gimage);
   void (* dirty)            (GimpImage *gimage);

@@ -59,6 +59,7 @@ struct _GimpDrawableClass
 {
   GimpObjectClass  parent_class;
 
+  void (* removed)            (GimpDrawable *drawable);
   void (* invalidate_preview) (GimpDrawable *drawable);
 };
 
@@ -83,6 +84,8 @@ gboolean        gimp_drawable_mask_bounds        (GimpDrawable       *drawable,
 
 void            gimp_drawable_invalidate_preview (GimpDrawable       *drawable, 
 						  gboolean            emit_signal);
+void            gimp_drawable_removed            (GimpDrawable      *drawable);
+
 gboolean        gimp_drawable_has_alpha          (const GimpDrawable *drawable);
 GimpImageType   gimp_drawable_type               (const GimpDrawable *drawable);
 GimpImageType   gimp_drawable_type_with_alpha    (const GimpDrawable *drawable);

@@ -71,8 +71,6 @@ struct _GimpLayer
 struct _GimpLayerClass
 {
   GimpDrawableClass  parent_class;
-
-  void (* removed) (GimpLayer *layer);
 };
 
 struct _GimpLayerMask
@@ -141,8 +139,6 @@ LayerMask     * layer_add_mask              (Layer            *layer,
 					     LayerMask        *mask);
 Layer         * layer_get_ID                (gint              ID);
 void            layer_delete                (Layer            *layer);
-void            layer_removed               (Layer            *layer, 
-					     gpointer          data);
 void            layer_apply_mask            (Layer            *layer,
 					     MaskApplyMode     mode);
 void            layer_translate             (Layer            *layer,

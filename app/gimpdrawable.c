@@ -48,6 +48,7 @@
 
 enum
 {
+  REMOVED,
   INVALIDATE_PREVIEW,
   LAST_SIGNAL
 };
@@ -98,6 +99,15 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   gimp_object_class = (GimpObjectClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
+
+  gimp_drawable_signals[REMOVED] =
+    gtk_signal_new ("removed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpDrawableClass,
+                                       removed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
 
   gimp_drawable_signals[INVALIDATE_PREVIEW] =
     gtk_signal_new ("invalidate_preview",
@@ -376,6 +386,19 @@ gimp_drawable_invalidate_preview (GimpDrawable *drawable,
     }
 }
 
+/* The removed signal is sent out when the layer is no longer
+ * associcated with an image.  It's needed because layers aren't
+ * destroyed immediately, but kept around for undo purposes.  Connect
+ * to the removed signal to update bits of UI that are tied to a
+ * particular layer. */
+void
+gimp_drawable_removed (GimpDrawable *drawable)
+{
+  g_return_if_fail (drawable != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  gtk_signal_emit (GTK_OBJECT (drawable), gimp_drawable_signals[REMOVED]);
+}
 
 GimpImage *
 gimp_drawable_gimage (const GimpDrawable *drawable)
