@@ -160,7 +160,7 @@ gimp_pixel_rgn_resize (GimpPixelRgn *pr,
  * Fill the buffer pointed by @buf with the value of the pixel at (@x, @y)
  * in the region @pr. @buf should be large enough to hold the pixel value
  * (1 #guchar for an indexed or grayscale drawable, 2 #guchar for
- * indexed with alpha or grayscale with alpha drawable, 3 #guchar for 
+ * indexed with alpha or grayscale with alpha drawable, 3 #guchar for
  * rgb drawable and 4 #guchar for rgb with alpha drawable.
  **/
 void
@@ -654,10 +654,10 @@ gimp_pixel_rgn_set_rect (GimpPixelRgn *pr,
  * registered pixel regions.  While iterating the registered pixel regions will
  * cover subsets of the original pixel regions, chosen for optimized access to
  * the image data.
- * 
+ *
  * Note that the given regions themselves are changed by this function, so
  * they are resized to the first subsets.
- * 
+ *
  * This function has to be used together with gimp_pixel_rgns_process in a loop.
  *
  * Returns: a #gpointer to a regions iterator.
@@ -712,8 +712,8 @@ gimp_pixel_rgns_register2 (gint           nrgns,
 
 /**
  * gimp_pixel_rgns_register:
- * @nrgns: the number of regions to register.
- * ...:    @nrgns pointers to #GimpPixelRgn.
+ * @nrgns:   the number of regions to register.
+ * @Varargs: @nrgns pointers to #GimpPixelRgn.
  *
  * This is the varargs version of #gimp_pixel_rgns_register2.
  *
@@ -748,8 +748,8 @@ gimp_pixel_rgns_register (gint nrgns,
 
 /**
  * gimp_pixel_rgns_process:
- * pri_ptr: a regions iterator returned by #gimp_pixel_rgns_register,
- *          #gimp_pixel_rgns_register2 or #gimp_pixel_rgns_process.
+ * @pri_ptr: a regions iterator returned by #gimp_pixel_rgns_register,
+ *           #gimp_pixel_rgns_register2 or #gimp_pixel_rgns_process.
  *
  * This function update the regions registered previously with one of the
  * #gimp_pixel_rgns_register* functions to their next tile.
