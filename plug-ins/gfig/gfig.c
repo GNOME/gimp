@@ -1631,15 +1631,14 @@ gfig_brush_preview (GtkWidget **pv)
   GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *vbox;
+  GtkWidget *ebox;
   gint       y;
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_widget_show (hbox);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 0);
   gtk_widget_show (frame);
 
   *pv = gtk_preview_new (GTK_PREVIEW_COLOR);
@@ -1674,15 +1673,20 @@ gfig_brush_preview (GtkWidget **pv)
                     G_CALLBACK (gfig_brush_combo_callback),
                     *pv);
 
-  gtk_container_add (GTK_CONTAINER (vbox), combo);
-  gimp_help_set_help_data (combo,
+  ebox = gtk_event_box_new ();
+  gtk_container_add (GTK_CONTAINER (ebox), combo);
+  gtk_widget_show (combo);
+
+  gtk_container_add (GTK_CONTAINER (vbox), ebox);
+
+  gimp_help_set_help_data (ebox,
                            _("Use the brush/pencil or the airbrush when "
                              "drawing on the image. Pattern paints with "
                              "currently selected brush with a pattern. Only "
                              "applies to circles/ellipses if the "
                              "\"Approx. Circles/Ellipses\" toggle is set."),
                            NULL);
-  gtk_widget_show (combo);
+  gtk_widget_show (ebox);
 
   gtk_container_add (GTK_CONTAINER (hbox), vbox);
   gtk_container_add (GTK_CONTAINER (hbox), frame);

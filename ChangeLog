@@ -1,3 +1,11 @@
+2004-05-28  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/common/warp.c
+	* plug-ins/gfig/gfig.c: tooltips can't be set on a GtkComboBox so
+	we need to pack it into a GtkEventBox when a tooltip is needed.
+
 2004-05-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/text/gimpfont.c (gimp_font_get_popup_size)

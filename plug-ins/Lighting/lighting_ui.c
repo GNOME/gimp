@@ -464,6 +464,7 @@ create_light_page (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *combo;
+  GtkWidget *ebox;
   GtkWidget *colorbutton;
   GtkObject *adj;
 
@@ -492,10 +493,14 @@ create_light_page (void)
                     G_CALLBACK (lightmenu_callback),
                     &mapvals.lightsource.type);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("L_ight Type:"), 0.0, 0.5, combo, 1, FALSE);
+  ebox = gtk_event_box_new ();
+  gtk_container_add (GTK_CONTAINER (ebox), combo);
+  gtk_widget_show (combo);
 
-  gimp_help_set_help_data (combo, _("Type of light source to apply"), NULL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("L_ight Type:"), 0.0, 0.5, ebox, 1, FALSE);
+
+  gimp_help_set_help_data (ebox, _("Type of light source to apply"), NULL);
 
   colorbutton = gimp_color_button_new (_("Select Lightsource Color"),
 				       64, 16,
@@ -541,7 +546,7 @@ create_light_page (void)
 		    G_CALLBACK (interactive_preview_callback),
 		    NULL);
 
-  gimp_help_set_help_data ( spin_pos_x,
+  gimp_help_set_help_data (spin_pos_x,
 			   _("Light source X position in XYZ space"), NULL);
 
   spin_pos_y = gimp_spin_button_new (&adj, mapvals.lightsource.position.y,
@@ -558,7 +563,7 @@ create_light_page (void)
 		    NULL);
 
 
-  gimp_help_set_help_data ( spin_pos_y,
+  gimp_help_set_help_data (spin_pos_y,
 			   _("Light source Y position in XYZ space"), NULL);
 
   spin_pos_z = gimp_spin_button_new (&adj, mapvals.lightsource.position.z,
@@ -946,6 +951,7 @@ create_environment_page (void)
   GtkWidget *table;
   GtkWidget *frame;
   GtkWidget *combo;
+  GtkWidget *ebox;
 
   page = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
@@ -985,10 +991,14 @@ create_environment_page (void)
                               G_CALLBACK (envmap_combo_callback),
                               NULL);
 
+  ebox = gtk_event_box_new ();
+  gtk_container_add (GTK_CONTAINER (ebox), combo);
+  gtk_widget_show (combo);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("En_vironment Image:"), 0.0, 0.5,
-			     combo, 1, FALSE);
-  gimp_help_set_help_data (combo, _("Environment image to use"), NULL);
+			     ebox, 1, FALSE);
+  gimp_help_set_help_data (ebox, _("Environment image to use"), NULL);
 
   gtk_widget_show (page);
 

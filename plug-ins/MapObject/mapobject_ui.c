@@ -492,6 +492,7 @@ create_options_page (void)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *combo;
+  GtkWidget *ebox;
   GtkWidget *toggle;
   GtkWidget *table;
   GtkWidget *spinbutton;
@@ -529,10 +530,14 @@ create_options_page (void)
                     G_CALLBACK (mapmenu_callback),
                     &mapvals.maptype);
 
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  ebox = gtk_event_box_new ();
+  gtk_container_add (GTK_CONTAINER (ebox), combo);
   gtk_widget_show (combo);
 
-  gimp_help_set_help_data (combo, _("Type of object to map to"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), ebox, TRUE, TRUE, 0);
+  gtk_widget_show (ebox);
+
+  gimp_help_set_help_data (ebox, _("Type of object to map to"), NULL);
 
   toggle = gtk_check_button_new_with_label (_("Transparent Background"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -643,6 +648,7 @@ create_light_page (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *combo;
+  GtkWidget *ebox;
   GtkWidget *colorbutton;
   GtkWidget *spinbutton;
   GtkObject *adj;
@@ -670,11 +676,15 @@ create_light_page (void)
                     G_CALLBACK (lightmenu_callback),
                     &mapvals.lightsource.type);
 
+  ebox = gtk_event_box_new ();
+  gtk_container_add (GTK_CONTAINER (ebox), combo);
+  gtk_widget_show (combo);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Lightsource Type:"), 0.0, 0.5,
-			     combo, 1, FALSE);
+			     ebox, 1, FALSE);
 
-  gimp_help_set_help_data (combo, _("Type of light source to apply"), NULL);
+  gimp_help_set_help_data (ebox, _("Type of light source to apply"), NULL);
 
   colorbutton = gimp_color_button_new (_("Select Lightsource Color"),
 				       64, 16,
