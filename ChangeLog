@@ -1,3 +1,8 @@
+2003-05-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_snap_coords):
+	don't change the passed GimpCoords if we didn't snap.
+
 2003-05-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdialogfactory.c: set GDK_HINT_USER_POS for all

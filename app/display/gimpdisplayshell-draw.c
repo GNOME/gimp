@@ -948,29 +948,35 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
       shell->snap_to_guides                      &&
       shell->gdisp->gimage->guides)
     {
-      gint tx, ty;
+      gboolean snapped;
+      gint     tx, ty;
 
       if (snap_width > 0 && snap_height > 0)
         {
-          gimp_image_snap_rectangle (shell->gdisp->gimage,
-                                     coords->x + snap_offset_x,
-                                     coords->y + snap_offset_y,
-                                     coords->x + snap_offset_x + snap_width,
-                                     coords->y + snap_offset_y + snap_height,
-                                     &tx,
-                                     &ty);
+          snapped = gimp_image_snap_rectangle (shell->gdisp->gimage,
+                                               coords->x + snap_offset_x,
+                                               coords->y + snap_offset_y,
+                                               coords->x + snap_offset_x +
+                                               snap_width,
+                                               coords->y + snap_offset_y +
+                                               snap_height,
+                                               &tx,
+                                               &ty);
         }
       else
         {
-          gimp_image_snap_point (shell->gdisp->gimage,
-                                 coords->x + snap_offset_x,
-                                 coords->y + snap_offset_y,
-                                 &tx,
-                                 &ty);
+          snapped = gimp_image_snap_point (shell->gdisp->gimage,
+                                           coords->x + snap_offset_x,
+                                           coords->y + snap_offset_y,
+                                           &tx,
+                                           &ty);
         }
 
-      snapped_coords->x = tx - snap_offset_x;
-      snapped_coords->y = ty - snap_offset_y;
+      if (snapped)
+        {
+          snapped_coords->x = tx - snap_offset_x;
+          snapped_coords->y = ty - snap_offset_y;
+        }
     }
 }
 
