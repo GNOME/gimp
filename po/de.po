@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-06 15:27+0100\n"
-"PO-Revision-Date: 2004-11-06 15:29+0100\n"
+"POT-Creation-Date: 2004-11-10 02:22+0100\n"
+"PO-Revision-Date: 2004-11-10 02:24+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -5045,7 +5045,7 @@ msgstr "Horizontale Hilfslinie hinzufügen"
 msgid "Add Vertical Guide"
 msgstr "Vertikale Hilfslinie hinzufügen"
 
-#: app/core/gimpimage-guides.c:143
+#: app/core/gimpimage-guides.c:143 app/tools/gimpmovetool.c:570
 msgid "Remove Guide"
 msgstr "Hilfslinie entfernen"
 
@@ -5341,7 +5341,7 @@ msgstr "Ebene"
 msgid "Rename Layer"
 msgstr "Ebene umbenennen"
 
-#: app/core/gimplayer.c:254 app/pdb/layer_cmds.c:657 app/pdb/layer_cmds.c:736
+#: app/core/gimplayer.c:254 app/pdb/layer_cmds.c:659 app/pdb/layer_cmds.c:738
 msgid "Move Layer"
 msgstr "Ebene bewegen"
 
@@ -6258,19 +6258,25 @@ msgstr "Tastenkürzel konfigurieren"
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
-msgstr "Die Tastenkürzel werden beim nächsten Start von GIMP auf Vorgabewerte zurückgesetzt."
+msgstr ""
+"Die Tastenkürzel werden beim nächsten Start von GIMP auf Vorgabewerte "
+"zurückgesetzt."
 
 #: app/dialogs/preferences-dialog.c:600
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
-msgstr "Die Fenstereinstellungen werden beim nächsten Start von GIMP auf Vorgabewerte zurückgesetzt."
+msgstr ""
+"Die Fenstereinstellungen werden beim nächsten Start von GIMP auf "
+"Vorgabewerte zurückgesetzt."
 
 #: app/dialogs/preferences-dialog.c:634
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
-msgstr "Die Einstellungen für Eingabegeräte werden beim nächsten Start von GIMP auf Vorgabewerte zurückgesetzt."
+msgstr ""
+"Die Einstellungen für Eingabegeräte werden beim nächsten Start von GIMP auf "
+"Vorgabewerte zurückgesetzt."
 
 #: app/dialogs/preferences-dialog.c:1044
 msgid "Show _menubar"
@@ -6768,7 +6774,7 @@ msgid "Select Temp Folder"
 msgstr "Wählen Sie den Temporären Ordner"
 
 #: app/dialogs/preferences-dialog.c:2221
-#: app/dialogs/user-install-dialog.c:1400
+#: app/dialogs/user-install-dialog.c:1401
 msgid "Swap folder:"
 msgstr "Auslagerungsordner:"
 
@@ -7351,7 +7357,7 @@ msgstr "Ordner »%s« wird angelegt..."
 msgid "Cannot create folder '%s': %s"
 msgstr "Ordner »%s« konnte nicht angelegt werden: %s"
 
-#: app/dialogs/user-install-dialog.c:1359
+#: app/dialogs/user-install-dialog.c:1360
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called "
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
@@ -7362,11 +7368,11 @@ msgstr ""
 "Arbeitsspeicher passt. Bedenken Sie dabei die Menge an Arbeitsspeicher, die "
 "bereits von anderen Programmen belegt wird."
 
-#: app/dialogs/user-install-dialog.c:1372
+#: app/dialogs/user-install-dialog.c:1373
 msgid "Tile cache size:"
 msgstr "Größe des Datenspeichers:"
 
-#: app/dialogs/user-install-dialog.c:1384
+#: app/dialogs/user-install-dialog.c:1385
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be "
 "written to a swap file.  This file should be located on a local filesystem "
@@ -7379,7 +7385,7 @@ msgstr ""
 "UNIX ist das systemweite temporäre Ordner eine gute Wahl (meist »/tmp« oder "
 "»/var/tmp«)."
 
-#: app/dialogs/user-install-dialog.c:1395
+#: app/dialogs/user-install-dialog.c:1396
 msgid "Select swap dir"
 msgstr "Wählen Sie den Auslagerungsordner"
 
@@ -7447,11 +7453,11 @@ msgstr "Dunkle Schachbrett-Farbe"
 msgid "Custom color"
 msgstr "Benutzerdefinierte Farbe"
 
-#: app/display/gimpdisplayshell.c:876
+#: app/display/gimpdisplayshell.c:939
 msgid "Zoom image when window size changes"
 msgstr "Bild zoomen, wenn die Fenstergröße sich ändert"
 
-#: app/display/gimpdisplayshell.c:896
+#: app/display/gimpdisplayshell.c:959
 msgid "Toggle Quick Mask"
 msgstr "Schnelle Maske aktivieren/deaktivieren"
 
@@ -7577,7 +7583,7 @@ msgstr "Schattentyp"
 msgid "Style of bevel around the statusbar text"
 msgstr "Randstil des Textes in der Statuszeile"
 
-#: app/display/gimpstatusbar.c:217
+#: app/display/gimpstatusbar.c:218
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -8152,7 +8158,7 @@ msgstr "Pfad transformieren"
 msgid "Design"
 msgstr "Design"
 
-#: app/tools/tools-enums.c:145 app/tools/gimpmovetool.c:110
+#: app/tools/tools-enums.c:145 app/tools/gimpmovetool.c:116
 msgid "Move"
 msgstr "Verschieben"
 
@@ -8932,13 +8938,25 @@ msgstr "Pfad auswählen"
 msgid "Move the current path"
 msgstr "Aktiven Pfad verschieben"
 
-#: app/tools/gimpmovetool.c:111
+#: app/tools/gimpmovetool.c:117
 msgid "Move layers & selections"
 msgstr "Ebenen und Auswahlen verschieben"
 
-#: app/tools/gimpmovetool.c:112
+#: app/tools/gimpmovetool.c:118
 msgid "_Move"
 msgstr "_Verschieben"
+
+#: app/tools/gimpmovetool.c:298 app/tools/gimpmovetool.c:576
+msgid "Move Guide: "
+msgstr "Hilfslinie verschieben: "
+
+#: app/tools/gimpmovetool.c:570
+msgid "Cancel Guide"
+msgstr "Hilfslinie abbrechen"
+
+#: app/tools/gimpmovetool.c:576
+msgid "Add Guide: "
+msgstr "Hilfslinie hinzufügen: "
 
 #: app/tools/gimppaintbrushtool.c:52
 msgid "Paint fuzzy brush strokes"
