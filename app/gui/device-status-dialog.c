@@ -235,6 +235,9 @@ devices_restore()
       tmp_list = tmp_list->next;
     }
 
+  if (device_info == NULL)
+    return;
+
   suppress_update = TRUE;
 
   if (device_info->is_init)

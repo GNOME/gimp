@@ -1,3 +1,8 @@
+Wed Nov 25 21:41:52 1998  Raph Levien  <raph@gimp.org>
+
+	* app/devices.c (devices_restore): Fixed a segv - now it returns
+	when there are no devices configured.
+
 Wed Nov 25 22:12:50 CET 1998 Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/script-fu/scripts/line-nova.scm,
