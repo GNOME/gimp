@@ -6,6 +6,24 @@ here. New features are being added in the HEAD branch that will be
 released as GIMP version 2.4.
 
 
+Bugs fixed in GIMP 2.2.5
+========================
+- fixed double-click behaviour of GimpButton
+- properly handle 302 redirect output from wget in URL plug-in (bug #168322)
+- fixed loading of layer masks in PSD plug-in (bug #166976)
+- fixed bugs in PSD save plug-in (bugs #167139 and #121871)
+- fixed Reset in Scale and Resize dialogs (bug #169011)
+- fixed filename encoding issues when loading Script-Fu scripts (bug #165002)
+- fixed i18n build quirks (bug #169274)
+- improve autoscrolling with tablets in Windows (bug #167960)
+- fixed setup of size entries in tool-options (bug #169066)
+- when opening images as layers, do it interactively (bug #168936)
+- fixed precondition checks in gimp_drawable_transform_scale (bug #170195)
+- fixed handling of resolution unit in Print Size dialog (bug #170200)
+- disable "gtk-alternative-button-order" setting because our code
+  doesn't honor it (bug #170543)
+
+
 Bugs fixed in GIMP 2.2.4
 ========================
 - fixed an out-of-bounds read access in the Edge plug-in (bug #164963)
