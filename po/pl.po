@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-06-14 23:20+0200\n"
+"POT-Creation-Date: 2002-06-21 21:21+0200\n"
 "PO-Revision-Date: 2002-06-14 23:25+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -572,7 +572,7 @@ msgstr ""
 "Przy analizie pliku \"%s\" napotkano błąd w wierszu %d:\n"
 "%s"
 
-#: app/core/core-enums.c:1
+#: app/core/core-enums.c:1 app/core/gimp-gradients.c:1
 msgid "FG to BG (RGB)"
 msgstr "Aktualny kolor na kolor tła (RGB)"
 
@@ -580,7 +580,7 @@ msgstr "Aktualny kolor na kolor tła (RGB)"
 msgid "FG to BG (HSV)"
 msgstr "Aktualny kolor na kolor tła (RGB)"
 
-#: app/core/core-enums.c:1
+#: app/core/core-enums.c:1 app/core/gimp-gradients.c:1
 msgid "FG to Transparent"
 msgstr "Aktualny kolor na przezroczystość"
 
@@ -815,6 +815,14 @@ msgstr "Gradienty"
 #: app/core/gimp.c:1
 msgid "Documents"
 msgstr "Dokumenty"
+
+#: app/core/gimp-gradients.c:1
+msgid "FG to BG (HSV counter-clockwise)"
+msgstr "Aktualny kolor na kolor tła (HSV przeciwnie do wskazówek zegara)"
+
+#: app/core/gimp-gradients.c:1
+msgid "FG to BG (HSV clockwise hue)"
+msgstr "Aktualny kolor na kolor tła (odcień HSV zgodnie ze wskazówkami zegara)"
 
 #: app/core/gimpbrush.c:1
 #, c-format
@@ -3652,11 +3660,11 @@ msgstr "/typ_kolorowania/RGB"
 
 #: app/gui/menus.c:1
 msgid "/coloringtype/HSV (counter-clockwise hue)"
-msgstr "/typ_kolorowania/HSV (odcień zgodnie ze wskazówkami zegara)"
+msgstr "/typ_kolorowania/HSV (odcień przeciwnie do wskazówek zegara)"
 
 #: app/gui/menus.c:1
 msgid "/coloringtype/HSV (clockwise hue)"
-msgstr "/typ_kolorowania/HSV (odcień przeciwnie do wskazówek zegara)"
+msgstr "/typ_kolorowania/HSV (odcień zgodnie ze wskazówkami zegara)"
 
 #: app/gui/menus.c:1
 msgid "/coloringtype/(Varies)"
@@ -6367,7 +6375,7 @@ msgstr "Malowanie rozmytymi pociągnięciami pędzla"
 msgid "/Tools/Paint Tools/Paintbrush"
 msgstr "/Narzędzia/Rysowanie/Pędzel"
 
-#: app/tools/gimppathtool.c:1
+#: app/tools/gimppathtool.c:1 app/tools/path_tool.c:1
 msgid "Path Tool"
 msgstr "Narzędzie ścieżki"
 
@@ -6622,6 +6630,10 @@ msgstr "Długości i kąty wektorów"
 #: app/tools/gimpvectortool.c:1
 msgid "/Tools/Vector"
 msgstr "/Narzędzia/Wektor"
+
+#: app/tools/paint_options.c:1
+msgid "Brush:"
+msgstr "Pędzel:"
 
 #: app/tools/paint_options.c:1
 msgid "Incremental"
