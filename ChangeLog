@@ -1,3 +1,8 @@
+2004-06-26  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* plug-ins/common/unsharp.c: Use GTK_PREVIEW_GRAYSCALE if source
+	is grayscale or grayscale-alpha. Partial fix for bug #144971.
+
 2004-06-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/unsharp.c: speed up preview by allocating tile

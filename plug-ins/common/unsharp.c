@@ -673,7 +673,11 @@ unsharp_preview_new (void)
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1, 0, 0, 0, 0);
   gtk_widget_show (frame);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  if (gimp_drawable_type (drawable->drawable_id) == GIMP_GRAY_IMAGE ||
+      gimp_drawable_type (drawable->drawable_id) == GIMP_GRAYA_IMAGE)
+    preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+  else
+    preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
