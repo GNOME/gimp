@@ -297,7 +297,6 @@ Thu Oct 19 05:30:11 BST 1999 Nick Lamb <njl195@zepler.org>
 
 	* app/image_new.c: Still using RGB_IMAGE instead of GIMAGE (!)
 	
->>>>>>> 1.1725
 Mon Oct 18 21:24:47 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/bezier_select.c
