@@ -1,3 +1,11 @@
+Sat Nov 20 19:47:24 CET 1999  Marc Lehmann <pcg@goof.com>
+
+        * app/gimpui.c: Try some more intelligent behaviour in
+        gimp_message_box by not opening too many dialog boxes at once.
+        This does not really solve the bugs (buggy plug-ins will just
+        try to open message boxes indefinitely, but it at least makes it
+        possible to kill the gimp without loosing the screen).
+
 Sat Nov 20 19:33:01 GMT 1999  Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/common/gifload.c: Fixed a couple of possible infinite
@@ -145,6 +153,7 @@ Fri Nov 19 18:47:30 PST 1999 Manish Singh <yosh@gimp.org>
 	* libgimp/color_display.h 
 	* modules/cdisplay_gamma.c: configure cancel callback
 
+>>>>>>> 1.1839
 Sat Nov 20 03:15:42 CET 1999  Marc Lehmann <pcg@goof.com>
 
         * plug-ins/common/gif.c: Removed rather superflous "comment block
