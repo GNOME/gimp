@@ -137,14 +137,15 @@ scale_dialog_new (GimpViewable          *viewable,
   private->user_data     = user_data;
 
   private->box = g_object_new (GIMP_TYPE_SIZE_BOX,
-                               "width",       width,
-                               "height",      height,
-                               "unit",        unit,
-                               "xresolution", xres,
-                               "yresolution", yres,
-                               "keep-aspect", TRUE,
+                               "width",           width,
+                               "height",          height,
+                               "unit",            unit,
+                               "xresolution",     xres,
+                               "yresolution",     yres,
+                               "resolution-unit", gimp_image_get_unit (image),
+                               "keep-aspect",     TRUE,
+                               "edit-resolution", GIMP_IS_IMAGE (viewable),
                                NULL);
-
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (scale_dialog_response),
@@ -192,8 +193,9 @@ scale_dialog_response (GtkWidget   *dialog,
 {
   GimpUnit  unit          = private->unit;
   gint      interpolation = private->interpolation;
-  gint      width;
-  gint      height;
+  GimpUnit  resolution_unit;
+  gint      width, height;
+  gdouble   xres, yres;
 
   switch (response_id)
     {
@@ -207,9 +209,12 @@ scale_dialog_response (GtkWidget   *dialog,
 
     case GTK_RESPONSE_OK:
       g_object_get (private->box,
-                    "width",  &width,
-                    "height", &height,
-                    "unit",   &unit,
+                    "width",           &width,
+                    "height",          &height,
+                    "unit",            &unit,
+                    "xresolution",     &xres,
+                    "yresolution",     &yres,
+                    "resolution-unit", &resolution_unit,
                     NULL);
 
       gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (private->combo),
@@ -218,6 +223,7 @@ scale_dialog_response (GtkWidget   *dialog,
       private->callback (dialog,
                          private->viewable,
                          width, height, unit, interpolation,
+                         xres, yres, resolution_unit,
                          private->user_data);
       break;
     }

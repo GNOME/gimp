@@ -123,6 +123,9 @@ static void   layers_scale_layer_callback  (GtkWidget             *dialog,
                                             gint                   height,
                                             GimpUnit               unit,
                                             GimpInterpolationType  interpolation,
+                                            gdouble                xresolution,
+                                            gdouble                yresolution,
+                                            GimpUnit               resolution_unit,
                                             gpointer               data);
 static void   layers_resize_layer_callback (GtkWidget             *widget,
                                             gpointer               data);
@@ -937,6 +940,9 @@ layers_scale_layer_callback (GtkWidget             *dialog,
                              gint                   height,
                              GimpUnit               unit,
                              GimpInterpolationType  interpolation,
+                             gdouble                xresolution,    /* unused */
+                             gdouble                yresolution,    /* unused */
+                             GimpUnit               resolution_unit,/* unused */
                              gpointer               data)
 {
   GimpDisplay *gdisp = data ? GIMP_DISPLAY (data) : NULL;

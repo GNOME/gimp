@@ -46,7 +46,9 @@ enum
   PROP_UNIT,
   PROP_XRESOLUTION,
   PROP_YRESOLUTION,
-  PROP_KEEP_ASPECT
+  PROP_RESOLUTION_UNIT,
+  PROP_KEEP_ASPECT,
+  PROP_EDIT_RESOLUTION
 };
 
 
@@ -59,7 +61,8 @@ struct _GimpSizeBoxPrivate
 {
   GimpSizeEntry   *entry;
   GimpChainButton *chain;
-  GtkWidget       *label;
+  GtkWidget       *pixel_label;
+  GtkWidget       *res_label;
   gdouble          aspect;
 };
 
@@ -70,19 +73,19 @@ static GObject * gimp_size_box_constructor   (GType                  type,
                                               guint                  n_params,
                                               GObjectConstructParam *params);
 
-static void      gimp_size_box_init          (GimpSizeBox     *box);
+static void      gimp_size_box_init           (GimpSizeBox     *box);
 
-static void      gimp_size_box_set_property  (GObject         *object,
-                                              guint            property_id,
-                                              const GValue    *value,
-                                              GParamSpec      *pspec);
-static void      gimp_size_box_get_property  (GObject         *object,
-                                              guint            property_id,
-                                              GValue          *value,
-                                              GParamSpec      *pspec);
+static void      gimp_size_box_set_property   (GObject         *object,
+                                               guint            property_id,
+                                               const GValue    *value,
+                                               GParamSpec      *pspec);
+static void      gimp_size_box_get_property   (GObject         *object,
+                                               guint            property_id,
+                                               GValue          *value,
+                                               GParamSpec      *pspec);
 
-static void      gimp_size_box_update_label  (GimpSizeBox     *box,
-                                              GtkWidget       *label);
+static void      gimp_size_box_update_size       (GimpSizeBox *box);
+static void      gimp_size_box_update_resolution (GimpSizeBox *box);
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -165,11 +168,24 @@ gimp_size_box_class_init (GimpSizeBoxClass *klass)
                                                         72.0,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_RESOLUTION_UNIT,
+                                   gimp_param_spec_unit ("resolution-unit",
+                                                         NULL, NULL,
+                                                         FALSE, FALSE,
+                                                         GIMP_UNIT_INCH,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_KEEP_ASPECT,
                                    g_param_spec_boolean ("keep-aspect",
                                                          NULL, NULL,
                                                          TRUE,
                                                          G_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_EDIT_RESOLUTION,
+                                   g_param_spec_boolean ("edit-resolution",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -191,6 +207,7 @@ gimp_size_box_constructor (GType                  type,
   GtkWidget          *width;
   GtkWidget          *height;
   GtkWidget          *chain;
+  GtkWidget          *vbox;
   GtkWidget          *label;
   GtkObject          *adjustment;
   GimpSizeBoxPrivate *priv;
@@ -271,22 +288,44 @@ gimp_size_box_constructor (GType                  type,
   gimp_help_set_help_data (GIMP_CHAIN_BUTTON (chain)->button,
                            _("Keep aspect ratio"), NULL);
 
+  vbox = gtk_vbox_new (2, FALSE);
+  gtk_table_attach_defaults (GTK_TABLE (table), vbox, 1, 3, 2, 3);
+  gtk_widget_show (vbox);
+
   label = gtk_label_new (NULL);
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                              -1);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, 2, 3);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-
-  gimp_size_box_update_label (box, label);
 
   priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
 
-  priv->entry  = GIMP_SIZE_ENTRY (entry);
-  priv->chain  = GIMP_CHAIN_BUTTON (chain);
-  priv->label  = label;
-  priv->aspect = (gdouble) box->width / (gdouble) box->height;
+  priv->entry       = GIMP_SIZE_ENTRY (entry);
+  priv->chain       = GIMP_CHAIN_BUTTON (chain);
+  priv->pixel_label = label;
+  priv->aspect      = (gdouble) box->width / (gdouble) box->height;
+
+  if (box->edit_resolution)
+    {
+      priv->res_label = NULL;
+    }
+  else
+    {
+      label = gtk_label_new (NULL);
+      gimp_label_set_attributes (GTK_LABEL (label),
+                                 PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
+                                 -1);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      priv->res_label = label;
+    }
+
+  gimp_size_box_update_size (box);
+  gimp_size_box_update_resolution (box);
 
   return object;
 }
@@ -311,7 +350,7 @@ gimp_size_box_set_property (GObject      *object,
           if (box->height != height)
             gimp_size_entry_set_refval (priv->entry, 1, height);
         }
-      gimp_size_box_update_label (box, priv->label);
+      gimp_size_box_update_size (box);
       break;
 
     case PROP_HEIGHT:
@@ -323,7 +362,7 @@ gimp_size_box_set_property (GObject      *object,
           if (box->width != width)
             gimp_size_entry_set_refval (priv->entry, 0, width);
         }
-      gimp_size_box_update_label (box, priv->label);
+      gimp_size_box_update_size (box);
       break;
 
     case PROP_UNIT:
@@ -334,18 +373,28 @@ gimp_size_box_set_property (GObject      *object,
       box->xresolution = g_value_get_double (value);
       if (priv->entry)
         gimp_size_entry_set_resolution (priv->entry, 0, box->xresolution, TRUE);
+      gimp_size_box_update_resolution (box);
       break;
 
     case PROP_YRESOLUTION:
       box->yresolution = g_value_get_double (value);
       if (priv->entry)
         gimp_size_entry_set_resolution (priv->entry, 1, box->yresolution, TRUE);
+      gimp_size_box_update_resolution (box);
+      break;
+
+    case PROP_RESOLUTION_UNIT:
+      box->resolution_unit = g_value_get_int (value);
       break;
 
     case PROP_KEEP_ASPECT:
       if (priv->chain)
         gimp_chain_button_set_active (priv->chain,
                                       g_value_get_boolean (value));
+      break;
+
+    case PROP_EDIT_RESOLUTION:
+      box->edit_resolution = g_value_get_boolean (value);
       break;
 
     default:
@@ -385,9 +434,17 @@ gimp_size_box_get_property (GObject    *object,
       g_value_set_double (value, box->yresolution);
       break;
 
+    case PROP_RESOLUTION_UNIT:
+      g_value_set_int (value, box->unit);
+      break;
+
     case PROP_KEEP_ASPECT:
       g_value_set_boolean (value,
                            gimp_chain_button_get_active (priv->chain));
+      break;
+
+    case PROP_EDIT_RESOLUTION:
+      g_value_set_boolean (value, box->edit_resolution);
       break;
 
     default:
@@ -397,15 +454,38 @@ gimp_size_box_get_property (GObject    *object,
 }
 
 static void
-gimp_size_box_update_label (GimpSizeBox *box,
-                            GtkWidget   *label)
+gimp_size_box_update_size (GimpSizeBox *box)
 {
-  if (label)
+  GimpSizeBoxPrivate *priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
+
+  if (priv->pixel_label)
     {
       gchar *text;
 
       text = g_strdup_printf (_("%d x %d pixels"), box->width, box->height);
-      gtk_label_set_text (GTK_LABEL (label), text);
+      gtk_label_set_text (GTK_LABEL (priv->pixel_label), text);
+      g_free (text);
+    }
+}
+
+static void
+gimp_size_box_update_resolution (GimpSizeBox *box)
+{
+  GimpSizeBoxPrivate *priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
+
+  if (priv->res_label)
+    {
+      gchar *text;
+
+      if ((gint) box->xresolution != (gint) box->yresolution)
+        text = g_strdup_printf (_("%d x %d dpi"),
+                                (gint) box->xresolution,
+                                (gint) box->yresolution);
+      else
+        text = g_strdup_printf (_("%d dpi"),
+                                (gint) box->yresolution);
+
+      gtk_label_set_text (GTK_LABEL (priv->res_label), text);
       g_free (text);
     }
 }

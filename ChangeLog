@@ -1,3 +1,14 @@
+2004-10-27  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpsizebox.[ch]: added a resolution label similar
+	to one in the template editor. Prepared for editable resolution,
+	work in progress...
+
+	* app/dialogs/scale-dialog.[ch]: added resolution and resolution
+	unit parameters to ScaleDialogCallback.
+
+	* app/actions/layers-commands.c: changed accordingly.
+
 2004-10-26  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptemplateeditor.c: commented out the memory size
