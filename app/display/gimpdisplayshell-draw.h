@@ -170,6 +170,12 @@ struct _GimpDisplayShell
 
   GimpDisplayShellAppearance appearance;
   GimpDisplayShellAppearance fullscreen_appearance;
+
+  gint              paused_count;
+
+  GQuark            vectors_freeze_handler;
+  GQuark            vectors_thaw_handler;
+  GQuark            vectors_visible_handler;
 };
 
 struct _GimpDisplayShellClass
@@ -222,6 +228,9 @@ void        gimp_display_shell_expose_full           (GimpDisplayShell *shell);
 
 void        gimp_display_shell_flush                 (GimpDisplayShell *shell);
 
+void        gimp_display_shell_pause                 (GimpDisplayShell *shell);
+void        gimp_display_shell_resume                (GimpDisplayShell *shell);
+
 void        gimp_display_shell_draw_area             (GimpDisplayShell *shell,
                                                       gint              x,
                                                       gint              y,
@@ -234,6 +243,10 @@ void        gimp_display_shell_draw_guide            (GimpDisplayShell *shell,
 void        gimp_display_shell_draw_guides           (GimpDisplayShell *shell);
 
 void        gimp_display_shell_draw_grid             (GimpDisplayShell *shell);
+
+void        gimp_display_shell_draw_vector           (GimpDisplayShell *shell,
+                                                      GimpVectors      *vectors);
+void        gimp_display_shell_draw_vectors          (GimpDisplayShell *shell);
 
 void        gimp_display_shell_update_icon           (GimpDisplayShell *shell);
 

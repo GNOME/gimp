@@ -27,7 +27,9 @@
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpitem.h"
 
 #include "widgets/gimpwidgets-utils.h"
 
@@ -71,6 +73,19 @@ static void   gimp_display_shell_update_guide_handler       (GimpImage        *g
                                                              GimpGuide        *guide,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_invalidate_preview_handler (GimpImage        *gimage,
+                                                             GimpDisplayShell *shell);
+
+static void   gimp_display_shell_vectors_freeze_handler     (GimpVectors      *vectors,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_vectors_thaw_handler       (GimpVectors      *vectors,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_vectors_visible_handler    (GimpVectors      *vectors,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_vectors_add_handler        (GimpContainer    *container,
+                                                             GimpVectors      *vectors,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_vectors_remove_handler     (GimpContainer    *container,
+                                                             GimpVectors      *vectors,
                                                              GimpDisplayShell *shell);
 
 static void   gimp_display_shell_check_notify_handler       (GObject          *config,
@@ -147,6 +162,26 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (gimage, "invalidate_preview",
 		    G_CALLBACK (gimp_display_shell_invalidate_preview_handler),
 		    shell);
+
+  shell->vectors_freeze_handler =
+    gimp_container_add_handler (gimage->vectors, "freeze",
+                                G_CALLBACK (gimp_display_shell_vectors_freeze_handler),
+                                shell);
+  shell->vectors_thaw_handler =
+    gimp_container_add_handler (gimage->vectors, "thaw",
+                                G_CALLBACK (gimp_display_shell_vectors_thaw_handler),
+                                shell);
+  shell->vectors_visible_handler =
+    gimp_container_add_handler (gimage->vectors, "visibility_changed",
+                                G_CALLBACK (gimp_display_shell_vectors_visible_handler),
+                                shell);
+
+  g_signal_connect (gimage->vectors, "add",
+                    G_CALLBACK (gimp_display_shell_vectors_add_handler),
+                    shell);
+  g_signal_connect (gimage->vectors, "remove",
+                    G_CALLBACK (gimp_display_shell_vectors_remove_handler),
+                    shell);
 
   g_signal_connect (gimage->gimp->config,
                     "notify::transparency-size",
@@ -240,6 +275,20 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   g_signal_handlers_disconnect_by_func (gimage->gimp->config,
                                         gimp_display_shell_check_notify_handler,
                                         shell);
+
+  g_signal_handlers_disconnect_by_func (gimage->vectors,
+                                        gimp_display_shell_vectors_remove_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (gimage->vectors,
+                                        gimp_display_shell_vectors_add_handler,
+                                        shell);
+
+  gimp_container_remove_handler (gimage->vectors,
+                                 shell->vectors_visible_handler);
+  gimp_container_remove_handler (gimage->vectors,
+                                 shell->vectors_thaw_handler);
+  gimp_container_remove_handler (gimage->vectors,
+                                 shell->vectors_freeze_handler);
 
   g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_invalidate_preview_handler,
@@ -402,6 +451,48 @@ gimp_display_shell_invalidate_preview_handler (GimpImage        *gimage,
                                             gimp_display_shell_idle_update_icon,
                                             shell,
                                             NULL);
+}
+
+static void
+gimp_display_shell_vectors_freeze_handler (GimpVectors      *vectors,
+                                           GimpDisplayShell *shell)
+{
+  if (shell->paused_count == 0 && gimp_item_get_visible (GIMP_ITEM (vectors)))
+    gimp_display_shell_draw_vector (shell, vectors);
+}
+
+static void
+gimp_display_shell_vectors_thaw_handler (GimpVectors      *vectors,
+                                         GimpDisplayShell *shell)
+{
+  if (shell->paused_count == 0 && gimp_item_get_visible (GIMP_ITEM (vectors)))
+    gimp_display_shell_draw_vector (shell, vectors);
+}
+
+static void
+gimp_display_shell_vectors_visible_handler (GimpVectors      *vectors,
+                                            GimpDisplayShell *shell)
+{
+  if (shell->paused_count == 0)
+    gimp_display_shell_draw_vector (shell, vectors);
+}
+
+static void
+gimp_display_shell_vectors_add_handler (GimpContainer    *container,
+                                        GimpVectors      *vectors,
+                                        GimpDisplayShell *shell)
+{
+  if (shell->paused_count == 0 && gimp_item_get_visible (GIMP_ITEM (vectors)))
+    gimp_display_shell_draw_vector (shell, vectors);
+}
+
+static void
+gimp_display_shell_vectors_remove_handler (GimpContainer    *container,
+                                           GimpVectors      *vectors,
+                                           GimpDisplayShell *shell)
+{
+  if (shell->paused_count == 0 && gimp_item_get_visible (GIMP_ITEM (vectors)))
+    gimp_display_shell_draw_vector (shell, vectors);
 }
 
 static void

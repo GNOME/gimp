@@ -1,3 +1,29 @@
+2003-09-12  Michael Natterer  <mitch@gimp.org>
+
+	Added support for permanently showing the visible vectors, not
+	only when the vectors tool is active:
+
+	* app/display/gimpdisplayshell.[ch]: added
+	gimp_display_shell_draw_vector() which draws a single GimpVectors
+	object and gimp_display_shell_draw_vectors() which draws all
+	visible ones. Added "gint paused_count" and new functions
+	gimp_display_shell_paunse()/resume(). Pause/resume the active tool
+	and draw/undraw the visible vectors when paused_count changes from
+	0 to 1 and from 1 to 0.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-scroll.c: call the new
+	freeze()/thaw() functions instead of calling the tool_manager
+	directly. Removes the tools/ sependency from the scale and scroll
+	files. Also draw the vectors once when the canvas is realized so
+	XOR drawing is in the correct state.
+
+	* app/display/gimpdisplayshell-handlers.c: connect to
+	image->vectors' "add" and "remove" signal and to the "freeze",
+	"thaw" and "visibility_changed" signals of all vectors in
+	image->vectors and update vectors drawing accordingly.
+
 2003-09-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable.[ch]: removed "visible" and all its API...

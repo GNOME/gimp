@@ -41,12 +41,14 @@
 #include "core/gimpimage-snap.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
+#include "core/gimplist.h"
 #include "core/gimpmarshal.h"
 #include "core/gimppattern.h"
 
 #include "file/file-utils.h"
 
 #include "vectors/gimpvectors.h"
+#include "vectors/gimpstroke.h"
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpdnd.h"
@@ -288,6 +290,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   gimp_rgba_set (&shell->fullscreen_appearance.padding_color,
                  0.0, 0.0, 0.0, 1.0);
   shell->fullscreen_appearance.padding_mode_set = FALSE;
+
+  shell->paused_count = 0;
 
   gtk_window_set_wmclass (GTK_WINDOW (shell), "image_window", "Gimp");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
@@ -1171,6 +1175,41 @@ gimp_display_shell_flush (GimpDisplayShell *shell)
 }
 
 void
+gimp_display_shell_pause (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  shell->paused_count++;
+
+  if (shell->paused_count == 1)
+    {
+      /*  pause the currently active tool  */
+      tool_manager_control_active (shell->gdisp->gimage->gimp, PAUSE,
+                                   shell->gdisp);
+
+      gimp_display_shell_draw_vectors (shell);
+    }
+}
+
+void
+gimp_display_shell_resume (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (shell->paused_count > 0);
+
+  shell->paused_count--;
+
+  if (shell->paused_count == 0)
+    {
+      gimp_display_shell_draw_vectors (shell);
+
+      /* start the currently active tool */
+      tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
+                                   shell->gdisp);
+    }
+}
+
+void
 gimp_display_shell_update_icon (GimpDisplayShell *shell)
 {
   GdkPixbuf *pixbuf;
@@ -1505,6 +1544,91 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
         }
 
       g_object_unref (gc);
+    }
+}
+
+void
+gimp_display_shell_draw_vector (GimpDisplayShell *shell,
+                                GimpVectors      *vectors)
+{
+  static GdkGC *xor_gc = NULL;
+  GimpStroke   *stroke = NULL;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_VECTORS (vectors));
+
+  if (! xor_gc)
+    {
+      GdkColor fg;
+      GdkColor bg;
+
+      xor_gc = gdk_gc_new (shell->canvas->window);
+
+      gdk_gc_set_function (xor_gc, GDK_INVERT);
+      fg.pixel = 0xFFFFFFFF;
+      bg.pixel = 0x00000000;
+      gdk_gc_set_foreground (xor_gc, &fg);
+      gdk_gc_set_background (xor_gc, &bg);
+      gdk_gc_set_line_attributes (xor_gc, 0, GDK_LINE_SOLID, GDK_CAP_NOT_LAST,
+                                  GDK_JOIN_MITER);
+    }
+
+  while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+    {
+      GArray   *coords;
+      gboolean  closed;
+
+      coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
+
+      if (coords->len)
+        {
+          GimpCoords *coord;
+          GdkPoint   *gdk_coords;
+          gint        i;
+          gdouble     sx, sy;
+
+          gdk_coords = g_new (GdkPoint, coords->len);
+
+          for (i = 0; i < coords->len; i++)
+            {
+              coord = &g_array_index (coords, GimpCoords, i);
+
+              gimp_display_shell_transform_xy_f (shell,
+                                                 coord->x, coord->y,
+                                                 &sx, &sy,
+                                                 FALSE);
+              gdk_coords[i].x = ROUND (sx);
+              gdk_coords[i].y = ROUND (sy);
+            }
+
+          gdk_draw_lines (shell->canvas->window, xor_gc,
+                          gdk_coords, coords->len);
+
+          g_free (gdk_coords);
+        }
+
+      g_array_free (coords, TRUE);
+    }
+}
+
+void
+gimp_display_shell_draw_vectors (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (TRUE /* gimp_display_shell_get_show_vectors (shell) */)
+    {
+      GList *list;
+
+      for (list = GIMP_LIST (shell->gdisp->gimage->vectors)->list;
+           list;
+           list = list->next)
+	{
+          GimpVectors *vectors = list->data;
+
+          if (gimp_item_get_visible (GIMP_ITEM (vectors)))
+            gimp_display_shell_draw_vector (shell, vectors);
+	}
     }
 }
 

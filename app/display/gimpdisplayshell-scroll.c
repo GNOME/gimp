@@ -26,10 +26,6 @@
 
 #include "core/gimpimage.h"
 
-#include "tools/tools-types.h"
-
-#include "tools/tool_manager.h"
-
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
@@ -65,8 +61,7 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       shell->offset_x = old_x;
       shell->offset_y = old_y;
 
-      tool_manager_control_active (shell->gdisp->gimage->gimp, PAUSE,
-                                   shell->gdisp);
+      gimp_display_shell_pause (shell);
 
       /*  set the offsets back to the new values  */
       shell->offset_x += x_offset;
@@ -80,8 +75,7 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       /*  Update scrollbars and rulers  */
       gimp_display_shell_scale_setup (shell);
 
-      tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
-                                   shell->gdisp);
+      gimp_display_shell_resume (shell);
 
       gimp_display_shell_scrolled (shell);
 

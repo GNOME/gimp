@@ -32,10 +32,6 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
-#include "tools/tools-types.h"
-
-#include "tools/tool_manager.h"
-
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -301,7 +297,7 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
       Gimp *gimp = shell->gdisp->gimage->gimp;
 
       /* freeze the active tool */
-      tool_manager_control_active (gimp, PAUSE, shell->gdisp);
+      gimp_display_shell_pause (shell);
 
       shell->dot_for_dot = dot_for_dot;
 
@@ -312,7 +308,7 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 				       TRUE);
 
       /* re-enable the active tool */
-      tool_manager_control_active (gimp, RESUME, shell->gdisp);
+      gimp_display_shell_resume (shell);
     }
 }
 
@@ -402,7 +398,7 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
   gimp = shell->gdisp->gimage->gimp;
 
   /* freeze the active tool */
-  tool_manager_control_active (gimp, PAUSE, shell->gdisp);
+  gimp_display_shell_pause (shell);
 
   shell->scale    = scale;
   shell->offset_x = offset_x;
@@ -411,7 +407,7 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
   gimp_display_shell_scale_resize (shell, resize_window, TRUE);
 
   /* re-enable the active tool */
-  tool_manager_control_active (gimp, RESUME, shell->gdisp);
+  gimp_display_shell_resume (shell);
 }
 
 void
@@ -434,7 +430,7 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
   gimp = shell->gdisp->gimage->gimp;
 
   /* freeze the active tool */
-  tool_manager_control_active (gimp, PAUSE, shell->gdisp);
+  gimp_display_shell_pause (shell);
 
   if (resize_window)
     gimp_display_shell_shrink_wrap (shell);
@@ -447,7 +443,7 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
     gimp_display_shell_expose_full (shell);
 
   /* re-enable the active tool */
-  tool_manager_control_active (gimp, RESUME, shell->gdisp);
+  gimp_display_shell_resume (shell);
 }
 
 void

@@ -298,6 +298,8 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 
   /*  allow shrinking  */
   gtk_widget_set_size_request (GTK_WIDGET (shell), 0, 0);
+
+  gimp_display_shell_draw_vectors (shell);
 }
 
 gboolean
@@ -328,9 +330,7 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   gint          n_rects;
   gint          i;
 
-  /*  pause the currently active tool  */
-  tool_manager_control_active (shell->gdisp->gimage->gimp, PAUSE,
-                               shell->gdisp);
+  gimp_display_shell_pause (shell);
 
   gdk_region_get_rectangles (eevent->region, &rects, &n_rects);
 
@@ -356,9 +356,7 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   /* restart (and recalculate) the selection boundaries */
   gimp_display_shell_selection_start (shell->select, TRUE);
 
-  /* start the currently active tool */
-  tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
-                               shell->gdisp);
+  gimp_display_shell_resume (shell);
 
   return TRUE;
 }
