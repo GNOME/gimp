@@ -1,3 +1,10 @@
+2004-02-08  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptoolcontrol.c (gimp_tool_control_activate)
+	(gimp_tool_control_halt): put overly picky sanity checks into
+	#ifdef GIMP_UNSTABLE ... #endif so we won't get these harmless
+	tool warnings from the stable version (bug #121074).
+
 2004-02-08  Hans Breuer  <hans@breuer.org>
 
 	* plug-ins/common/nova.c : access dest[alpha] only if (has_alpha);

@@ -53,7 +53,7 @@ gimp_tool_control_get_type (void)
       };
 
       tool_control_type = g_type_register_static (GIMP_TYPE_OBJECT,
-		 			          "GimpToolControl", 
+		 			          "GimpToolControl",
                                                   &tool_control_info, 0);
     }
 
@@ -118,20 +118,24 @@ gimp_tool_control_is_paused (GimpToolControl *control)
   return control->paused_count > 0;
 }
 
-void 
+void
 gimp_tool_control_activate (GimpToolControl *control)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+#ifdef GIMP_UNSTABLE
   g_return_if_fail (control->active == FALSE);
+#endif
 
   control->active = TRUE;
 }
 
-void 
+void
 gimp_tool_control_halt (GimpToolControl *control)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+#ifdef GIMP_UNSTABLE
   g_return_if_fail (control->active == TRUE);
+#endif
 
   control->active = FALSE;
 }
@@ -146,7 +150,7 @@ gimp_tool_control_is_active (GimpToolControl *control)
 
 void
 gimp_tool_control_set_toggle (GimpToolControl *control,
-                              gboolean         toggled) 
+                              gboolean         toggled)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
@@ -155,7 +159,7 @@ gimp_tool_control_set_toggle (GimpToolControl *control,
 
 void
 gimp_tool_control_set_handles_empty_image (GimpToolControl *control,
-                                           gboolean         handle_empty) 
+                                           gboolean         handle_empty)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
@@ -164,7 +168,7 @@ gimp_tool_control_set_handles_empty_image (GimpToolControl *control,
 
 void
 gimp_tool_control_set_snap_to (GimpToolControl *control,
-                               gboolean         snap_to) 
+                               gboolean         snap_to)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
@@ -197,7 +201,7 @@ gimp_tool_control_set_motion_mode (GimpToolControl *control,
 
 void
 gimp_tool_control_set_preserve (GimpToolControl *control,
-                                gboolean         preserve) 
+                                gboolean         preserve)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
@@ -206,7 +210,7 @@ gimp_tool_control_set_preserve (GimpToolControl *control,
 
 void
 gimp_tool_control_set_cursor (GimpToolControl *control,
-                              GdkCursorType    cursor) 
+                              GdkCursorType    cursor)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
@@ -215,25 +219,25 @@ gimp_tool_control_set_cursor (GimpToolControl *control,
 
 void
 gimp_tool_control_set_tool_cursor (GimpToolControl    *control,
-                                   GimpToolCursorType  cursor) 
+                                   GimpToolCursorType  cursor)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
-  control->tool_cursor = cursor; 
+  control->tool_cursor = cursor;
 }
 
 void
 gimp_tool_control_set_cursor_modifier (GimpToolControl    *control,
-                                       GimpCursorModifier  cmodifier) 
+                                       GimpCursorModifier  cmodifier)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
-  control->cursor_modifier = cmodifier; 
+  control->cursor_modifier = cmodifier;
 }
 
 void
 gimp_tool_control_set_toggle_cursor (GimpToolControl *control,
-                                     GdkCursorType    cursor) 
+                                     GdkCursorType    cursor)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
@@ -242,7 +246,7 @@ gimp_tool_control_set_toggle_cursor (GimpToolControl *control,
 
 void
 gimp_tool_control_set_toggle_tool_cursor (GimpToolControl    *control,
-                                          GimpToolCursorType  cursor) 
+                                          GimpToolCursorType  cursor)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
@@ -251,11 +255,11 @@ gimp_tool_control_set_toggle_tool_cursor (GimpToolControl    *control,
 
 void
 gimp_tool_control_set_toggle_cursor_modifier (GimpToolControl    *control,
-                                              GimpCursorModifier  cmodifier) 
+                                              GimpCursorModifier  cmodifier)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
-  control->toggle_cursor_modifier = cmodifier; 
+  control->toggle_cursor_modifier = cmodifier;
 }
 
 void
@@ -331,7 +335,7 @@ gimp_tool_control_is_toggled (GimpToolControl *control)
   return control->toggled;
 }
 
-GdkCursorType 
+GdkCursorType
 gimp_tool_control_get_cursor (GimpToolControl *control)
 {
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
@@ -339,7 +343,7 @@ gimp_tool_control_get_cursor (GimpToolControl *control)
   return control->cursor;
 }
 
-GdkCursorType 
+GdkCursorType
 gimp_tool_control_get_toggle_cursor (GimpToolControl *control)
 {
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
@@ -363,7 +367,7 @@ gimp_tool_control_get_toggle_tool_cursor (GimpToolControl *control)
   return control->toggle_tool_cursor;
 }
 
-GimpCursorModifier 
+GimpCursorModifier
 gimp_tool_control_get_cursor_modifier (GimpToolControl *control)
 {
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
