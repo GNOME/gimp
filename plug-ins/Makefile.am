@@ -6,147 +6,33 @@ SUBDIRS = 			\
 	gpc			\
 	dbbrowser		\
 	script-fu		\
-	$(AA)			\
-	$(JPEG)			\
-	$(MPEG)			\
 	$(GIMP_PERL)		\
-	$(PNG)			\
-	$(TIFF)			\
 	$(WEBBROWSER)		\
-	$(XD)			\
 	$(XJT)			\
-	$(XPM)			\
 	AlienMap		\
-	CEL			\
-	CML_explorer		\
 	FractalExplorer		\
 	Lighting		\
 	MapObject		\
-	align_layers		\
-	animoptimize		\
-	apply_lens		\
-	autocrop		\
-	animationplay		\
-	autostretch_hsv		\
-	blinds			\
-	blur			\
 	bmp			\
-	borderaverage		\
-	bumpmap			\
-	bz2			\
-	c_astretch		\
-	checkerboard		\
-	colorify		\
-	compose			\
-	convmatrix		\
-	cubism			\
-	decompose		\
-	deinterlace		\
-	depthmerge		\
-	despeckle		\
-	destripe		\
-	diffraction		\
-	displace		\
-	edge			\
-	emboss			\
-	engrave			\
-	exchange		\
 	faxg3			\
-	film			\
 	fits			\
 	flame			\
-	flarefx			\
 	fp			\
-	fractaltrace		\
 	gap			\
-	gauss_iir		\
-	gauss_rle		\
-	gbr			\
 	gdyntext		\
-	gee			\
 	gfig			\
 	gfli			\
-	gicon			\
-	gif			\
-	gifload			\
-	glasstile		\
-	gqbist			\
-	gradmap			\
-	grid			\
-	gtm			\
-	guillotine		\
-	gz			\
-	header			\
-	hot			\
-	hrz			\
 	ifscompose		\
-	illusion		\
-	iwarp			\
-	jigsaw			\
-	laplace			\
-	lic			\
-	mail			\
-	mapcolor		\
-	max_rgb			\
 	maze			\
-	mblur			\
 	mosaic			\
-	newsprint		\
-	nlfilt			\
-	noisify			\
-	normalize		\
-	nova			\
-	oilify			\
 	pagecurl		\
-	palette			\
-	papertile		\
-	pat			\
-	pcx			\
-	pix			\
-	pixelize		\
-	plasma			\
-	plugindetails		\
-	pnm			\
-	polar			\
 	print			\
-	ps			\
-	psd			\
-	randomize		\
 	rcm			\
-	ripple			\
-	rotate			\
-	rotators		\
-	scatter_hsv		\
-	screenshot		\
-	semiflatten		\
 	sgi			\
-	sharpen			\
-	shift			\
 	sinus			\
-	smooth_palette		\
-	snoise			\
-	sobel			\
-	sparkle			\
-	spread			\
 	struc			\
-	sunras			\
-	tga			\
-	threshold_alpha		\
-	tile			\
-	tileit			\
-	tiler			\
 	unsharp			\
-	url			\
-	video			\
-	vinvert			\
-	vpropagate		\
-	waves			\
-	whirlpinch		\
-	wind			\
-	wmf			\
-	xbm			\
-	xwd			\
-	zealouscrop
+	common
 
 scriptdata =
 

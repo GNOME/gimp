@@ -271,33 +271,6 @@ dnl Test for libmpeg
       AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG library not found) ***))
   fi
 
-dnl Test for libxdelta (optional)
-AC_ARG_WITH(xdelta, [  --with-xdelta           compile the xdelta plugin ])
-if test "x$with_xdelta" = "xyes"; then
-  if test -z "$LIBXDELTA_LIB"; then
-    AC_CHECK_LIB(xdelta, xd_checkin,
-      xdelta_ok=yes ; LIBXDELTA_LIB='-lxdelta -lglib -lgdbm',
-      AC_CHECK_LIB(xdelta, xd_checkout,
-	xdelta_ok=yes ; LIBXDELTA_LIB='-lxdelta -lglib -lgdbm -lz',
-	xdelta_ok=no
-	AC_MSG_WARN(*** XD plug-in will not be built (XDELTA library not found) ***), -lglib -lgdbm -lz), -lglib -lgdbm)
-    if test "$xdelta_ok" = yes; then
-      AC_MSG_CHECKING([for xdelta.h])
-      AC_TRY_CPP(
-[#include <glib.h>
-#include <xdelta.h>],
-	xdelta_ok=yes,
-	xdelta_ok=no)
-      AC_MSG_RESULT($xdelta_ok)
-      if test "$xdelta_ok" = yes; then
-	XD='xd'
-      else
-	AC_MSG_WARN(*** XD plug-in will not be built (XDELTA header file not found) ***)
-      fi
-    fi
-  fi
-fi
-
 dnl Test for libXpm
   if test -z "$LIBXPM_LIB"; then
     AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
@@ -581,7 +554,7 @@ fi
 GIMPDOCS=
 if test -n "$DISTMAKE"; then
   WEBBROWSER=webbrowser TIFF=tiff JPEG=jpeg PNG=png AA=aa MPEG=mpeg
-  XD=xd XJT=xjt XPM=xpm GIMPDOCS=docs
+  XJT=xjt XPM=xpm GIMPDOCS=docs
 fi
 
 AM_CONDITIONAL(STATICLIBS, test x$enable_static = xyes)
@@ -620,8 +593,6 @@ AC_SUBST(AA)
 AC_SUBST(LIBAA_LIB)
 AC_SUBST(MPEG)
 AC_SUBST(LIBMPEG_LIB)
-AC_SUBST(XD)
-AC_SUBST(LIBXDELTA_LIB)
 AC_SUBST(XPM)
 AC_SUBST(LIBXPM_LIB)
 AC_SUBST(LIBUCB_LIB)
@@ -660,152 +631,37 @@ plug-ins/gpc/Makefile
 plug-ins/dbbrowser/Makefile
 plug-ins/script-fu/Makefile
 plug-ins/script-fu/scripts/Makefile
-plug-ins/aa/Makefile
-plug-ins/jpeg/Makefile
-plug-ins/mpeg/Makefile
-plug-ins/png/Makefile
-plug-ins/tiff/Makefile
 plug-ins/webbrowser/Makefile
-plug-ins/xd/Makefile
 plug-ins/xjt/Makefile
-plug-ins/xpm/Makefile
 plug-ins/AlienMap/Makefile
-plug-ins/CEL/Makefile
-plug-ins/CML_explorer/Makefile
 plug-ins/FractalExplorer/Makefile
 plug-ins/FractalExplorer/fractalexplorer-examples/Makefile
 plug-ins/Lighting/Makefile
 plug-ins/MapObject/Makefile
-plug-ins/align_layers/Makefile
-plug-ins/animationplay/Makefile
-plug-ins/animoptimize/Makefile
-plug-ins/apply_lens/Makefile
-plug-ins/autocrop/Makefile
-plug-ins/autostretch_hsv/Makefile
-plug-ins/blinds/Makefile
-plug-ins/blur/Makefile
 plug-ins/bmp/Makefile
-plug-ins/borderaverage/Makefile
-plug-ins/bumpmap/Makefile
-plug-ins/bz2/Makefile
-plug-ins/c_astretch/Makefile
-plug-ins/checkerboard/Makefile
-plug-ins/colorify/Makefile
-plug-ins/compose/Makefile
-plug-ins/convmatrix/Makefile
-plug-ins/cubism/Makefile
-plug-ins/decompose/Makefile
-plug-ins/deinterlace/Makefile
-plug-ins/depthmerge/Makefile
-plug-ins/despeckle/Makefile
-plug-ins/destripe/Makefile
-plug-ins/diffraction/Makefile
-plug-ins/displace/Makefile
-plug-ins/edge/Makefile
-plug-ins/emboss/Makefile
-plug-ins/engrave/Makefile
-plug-ins/exchange/Makefile
 plug-ins/faxg3/Makefile
-plug-ins/film/Makefile
 plug-ins/fits/Makefile
 plug-ins/flame/Makefile
-plug-ins/flarefx/Makefile
 plug-ins/fp/Makefile
-plug-ins/fractaltrace/Makefile
 plug-ins/gap/Makefile
 plug-ins/gap/iter_ALT/Makefile
 plug-ins/gap/iter_ALT/gen/Makefile
 plug-ins/gap/iter_ALT/mod/Makefile
 plug-ins/gap/iter_ALT/old/Makefile
-plug-ins/gauss_iir/Makefile
-plug-ins/gauss_rle/Makefile
-plug-ins/gbr/Makefile
 plug-ins/gdyntext/Makefile
-plug-ins/gee/Makefile
 plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile
 plug-ins/gfli/Makefile
-plug-ins/gicon/Makefile
-plug-ins/gif/Makefile
-plug-ins/gifload/Makefile
-plug-ins/glasstile/Makefile
-plug-ins/gqbist/Makefile
-plug-ins/gradmap/Makefile
-plug-ins/grid/Makefile
-plug-ins/gtm/Makefile
-plug-ins/guillotine/Makefile
-plug-ins/gz/Makefile
-plug-ins/header/Makefile
-plug-ins/hot/Makefile
-plug-ins/hrz/Makefile
 plug-ins/ifscompose/Makefile
-plug-ins/illusion/Makefile
-plug-ins/iwarp/Makefile
-plug-ins/jigsaw/Makefile
-plug-ins/laplace/Makefile
-plug-ins/lic/Makefile
-plug-ins/mail/Makefile
-plug-ins/mapcolor/Makefile
-plug-ins/max_rgb/Makefile
 plug-ins/maze/Makefile
-plug-ins/mblur/Makefile
 plug-ins/mosaic/Makefile
-plug-ins/newsprint/Makefile
-plug-ins/nlfilt/Makefile
-plug-ins/noisify/Makefile
-plug-ins/normalize/Makefile
-plug-ins/nova/Makefile
-plug-ins/oilify/Makefile
 plug-ins/pagecurl/Makefile
-plug-ins/palette/Makefile
-plug-ins/papertile/Makefile
-plug-ins/pat/Makefile
-plug-ins/pcx/Makefile
-plug-ins/pix/Makefile
-plug-ins/pixelize/Makefile
-plug-ins/plasma/Makefile
-plug-ins/plugindetails/Makefile
-plug-ins/pnm/Makefile
-plug-ins/polar/Makefile
 plug-ins/print/Makefile
-plug-ins/ps/Makefile
-plug-ins/psd/Makefile
-plug-ins/randomize/Makefile
 plug-ins/rcm/Makefile
-plug-ins/ripple/Makefile
-plug-ins/rotate/Makefile
-plug-ins/rotators/Makefile
-plug-ins/scatter_hsv/Makefile
-plug-ins/screenshot/Makefile
-plug-ins/semiflatten/Makefile
 plug-ins/sgi/Makefile
-plug-ins/sharpen/Makefile
-plug-ins/shift/Makefile
 plug-ins/sinus/Makefile
-plug-ins/smooth_palette/Makefile
-plug-ins/snoise/Makefile
-plug-ins/sobel/Makefile
-plug-ins/sparkle/Makefile
-plug-ins/spread/Makefile
 plug-ins/struc/Makefile
-plug-ins/sunras/Makefile
-plug-ins/tga/Makefile
-plug-ins/threshold_alpha/Makefile
-plug-ins/tile/Makefile
-plug-ins/tileit/Makefile
-plug-ins/tiler/Makefile
 plug-ins/unsharp/Makefile
-plug-ins/url/Makefile
-plug-ins/video/Makefile
-plug-ins/vinvert/Makefile
-plug-ins/vpropagate/Makefile
-plug-ins/waves/Makefile
-plug-ins/whirlpinch/Makefile
-plug-ins/wind/Makefile
-plug-ins/wmf/Makefile
-plug-ins/xbm/Makefile
-plug-ins/xwd/Makefile
-plug-ins/zealouscrop/Makefile
 modules/Makefile
 app/Makefile
 docs/Makefile
