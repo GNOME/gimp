@@ -1,5 +1,10 @@
 2004-10-31  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpsizebox.c: added a size entry to edit the
+	resolution. This should close bug #151022.
+
+2004-10-31  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/resize-dialog.c: connect the offset controls.
 
 2004-10-30  DindinX  <dindinx@gimp.org>
