@@ -424,7 +424,7 @@ gimp_context_class_init (GimpContextClass *klass)
 			   GTK_TYPE_POINTER, GTK_ARG_READWRITE, ARG_BRUSH);
   gtk_object_add_arg_type (gimp_context_arg_names[PATTERN_CHANGED],
 			   GTK_TYPE_POINTER, GTK_ARG_READWRITE, ARG_PATTERN);
-  gtk_object_add_arg_type (gimp_context_arg_names[BRUSH_CHANGED],
+  gtk_object_add_arg_type (gimp_context_arg_names[GRADIENT_CHANGED],
 			   GTK_TYPE_POINTER, GTK_ARG_READWRITE, ARG_GRADIENT);
 
   parent_class = gtk_type_class (gimp_object_get_type ());

@@ -1,3 +1,11 @@
+Tue Oct 26 18:58:44 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/xcf.c: add "(GIMP)" to the menu entry for XCF, in an attempt
+	to make it clear that it is the native file format.
+
+	* app/gimpcontext.c: correct doubled arg name on arg type addition,
+	which was messing up the internal gtkarg hashtable
+
 Wed Oct 27 02:03:47 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/info_window.c

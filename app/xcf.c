@@ -207,7 +207,7 @@ static ProcArg xcf_load_return_vals[] =
 static PlugInProcDef xcf_plug_in_load_proc =
 {
   "gimp_xcf_load",
-  "<Load>/XCF",
+  "<Load>/XCF (GIMP)",
   NULL,
   "xcf",
   "",
@@ -254,7 +254,7 @@ static ProcArg xcf_save_args[] =
 static PlugInProcDef xcf_plug_in_save_proc =
 {
   "gimp_xcf_save",
-  "<Save>/XCF",
+  "<Save>/XCF (GIMP)",
   NULL,
   "xcf",
   "",
