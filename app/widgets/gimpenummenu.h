@@ -48,25 +48,51 @@ struct _GimpEnumMenu
 };
 
 
-GType       gimp_enum_menu_get_type   (void) G_GNUC_CONST;
-GtkWidget * gimp_enum_menu_new        (GType        enum_type,
-                                       GCallback    callback,
-                                       gpointer     callback_data);
+GType       gimp_enum_menu_get_type              (void) G_GNUC_CONST;
 
-GtkWidget * gimp_enum_option_menu_new (GType        enum_type,
-                                       GCallback    callback,
-                                       gpointer     callback_data);
+GtkWidget * gimp_enum_menu_new                   (GType        enum_type,
+                                                  GCallback    callback,
+                                                  gpointer     callback_data);
+GtkWidget * gimp_enum_menu_new_with_range        (GType        enum_type,
+                                                  gint         minimum,
+                                                  gint         maximum,
+                                                  GCallback    callback,
+                                                  gpointer     callback_data);
 
-GtkWidget * gimp_enum_radio_box_new   (GType        enum_type,
-                                       GCallback    callback,
-                                       gpointer     callback_data,
-                                       GtkWidget  **first_button);
-GtkWidget * gimp_enum_radio_frame_new (GType        enum_type,
-                                       GtkWidget   *label_widget,
-                                       gint         border_width,
-                                       GCallback    callback,
-                                       gpointer     callback_data,
-                                       GtkWidget  **first_button);
+GtkWidget * gimp_enum_option_menu_new            (GType        enum_type,
+                                                  GCallback    callback,
+                                                  gpointer     callback_data);
+GtkWidget * gimp_enum_option_menu_new_with_range (GType        enum_type,
+                                                  gint         minimum,
+                                                  gint         maximum,
+                                                  GCallback    callback,
+                                                  gpointer     callback_data);
+
+GtkWidget * gimp_enum_radio_box_new              (GType        enum_type,
+                                                  GCallback    callback,
+                                                  gpointer     callback_data,
+                                                  GtkWidget  **first_button);
+GtkWidget * gimp_enum_radio_box_new_with_range   (GType        enum_type,
+                                                  gint         minimum,
+                                                  gint         maximum,
+                                                  GCallback    callback,
+                                                  gpointer     callback_data,
+                                                  GtkWidget  **first_button);
+
+GtkWidget * gimp_enum_radio_frame_new            (GType        enum_type,
+                                                  GtkWidget   *label_widget,
+                                                  gint         border_width,
+                                                  GCallback    callback,
+                                                  gpointer     callback_data,
+                                                  GtkWidget  **first_button);
+GtkWidget * gimp_enum_radio_frame_new_with_range (GType        enum_type,
+                                                  gint         minimum,
+                                                  gint         maximum,
+                                                  GtkWidget   *label_widget,
+                                                  gint         border_width,
+                                                  GCallback    callback,
+                                                  gpointer     callback_data,
+                                                  GtkWidget  **first_button);
 
 
 #endif  /* __GIMP_ENUM_MENU_H__ */

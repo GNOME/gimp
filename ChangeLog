@@ -1,5 +1,14 @@
 2002-05-13  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpenummenu.[ch]: added _with_range variants for all
+	enum menu widgets that limit the range of choices.
+
+	* app/gui/file-new-dialog.c
+	* app/gui/layers-commands.c
+	* app/gui/preferences-dialog.c: use GimpEnumMenus with ranges.
+
+2002-05-13  Sven Neumann  <sven@gimp.org>
+
 	* app/core/core-enums.[ch]: uhh, skipping values used in the PDB
 	was a bad idea. Removed the skip trigraphs again. This breaks the
 	GUI; will fix it later.

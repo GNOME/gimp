@@ -680,12 +680,14 @@ layers_new_layer_query (GimpImage *gimage,
   gtk_widget_show (table);
 
   /*  The radio frame  */
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_FILL_TYPE,
-                                     gtk_label_new (_("Layer Fill Type")),
-                                     2,
-                                     G_CALLBACK (gimp_radio_button_update),
-                                     &options->fill_type,
-                                     &button);
+  frame = gimp_enum_radio_frame_new_with_range (GIMP_TYPE_FILL_TYPE,
+                                                GIMP_FOREGROUND_FILL,
+                                                GIMP_TRANSPARENT_FILL,
+                                                gtk_label_new (_("Layer Fill Type")),
+                                                2,
+                                                G_CALLBACK (gimp_radio_button_update),
+                                                &options->fill_type,
+                                                &button);
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
                                GINT_TO_POINTER (options->fill_type));  
 

@@ -1962,15 +1962,12 @@ preferences_dialog_create (Gimp *gimp)
   table = prefs_table_new (2, GTK_CONTAINER (vbox), TRUE);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (prefs_toggle_callback),
-			   &gimp->config->default_type,
-			   GINT_TO_POINTER (gimp->config->default_type),
-
-			   _("RGB"),       GINT_TO_POINTER (GIMP_RGB),  NULL,
-			   _("Grayscale"), GINT_TO_POINTER (GIMP_GRAY), NULL,
-
-			   NULL);
+    gimp_enum_option_menu_new_with_range (GIMP_TYPE_IMAGE_BASE_TYPE,
+                                          GIMP_RGB, GIMP_GRAY,
+                                          G_CALLBACK (prefs_toggle_callback),
+                                          &gimp->config->default_type);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (optionmenu),
+                                GINT_TO_POINTER (gimp->config->default_type));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Default Image Type:"), 1.0, 0.5,

@@ -359,12 +359,13 @@ file_new_dialog_create (Gimp      *gimp,
   gtk_widget_show (hbox);
 
   /*  frame for Image Type  */
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_IMAGE_BASE_TYPE,
-                                     gtk_label_new (_("Image Type")),
-                                     2,
-                                     G_CALLBACK (file_new_image_type_callback),
-                                     info,
-                                     &info->type_w);
+  frame = gimp_enum_radio_frame_new_with_range (GIMP_TYPE_IMAGE_BASE_TYPE,
+                                                GIMP_RGB, GIMP_GRAY,
+                                                gtk_label_new (_("Image Type")),
+                                                2,
+                                                G_CALLBACK (file_new_image_type_callback),
+                                                info,
+                                          &info->type_w);
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (info->type_w),
                                GINT_TO_POINTER (info->values->type));
 
@@ -372,12 +373,14 @@ file_new_dialog_create (Gimp      *gimp,
   gtk_widget_show (frame);
 
   /* frame for Fill Type */
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_FILL_TYPE,
-                                     gtk_label_new (_("Fill Type")),
-                                     2,
-                                     G_CALLBACK (file_new_fill_type_callback),
-                                     info,
-                                     &info->fill_type_w);
+  frame = gimp_enum_radio_frame_new_with_range (GIMP_TYPE_FILL_TYPE,
+                                                GIMP_FOREGROUND_FILL,
+                                                GIMP_TRANSPARENT_FILL,
+                                                gtk_label_new (_("Fill Type")),
+                                                2,
+                                                G_CALLBACK (file_new_fill_type_callback),
+                                                info,
+                                                &info->fill_type_w);
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (info->fill_type_w),
                                GINT_TO_POINTER (info->values->fill_type));
 
