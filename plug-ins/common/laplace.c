@@ -76,9 +76,9 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
   gimp_install_procedure ("plug_in_laplace",
@@ -212,7 +212,7 @@ laplace (GimpDrawable *drawable)
   gint row, col;
   gint x1, y1, x2, y2;
   gint minval, maxval;
-  float scale = 1.0;
+  gfloat scale = 1.0;
 
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only
@@ -227,15 +227,16 @@ laplace (GimpDrawable *drawable)
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
    */
-  width = drawable->width;
+  width  = drawable->width;
   height = drawable->height;
-  bytes = drawable->bpp;
-  alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  bytes  = drawable->bpp;
+  alpha  = gimp_drawable_has_alpha (drawable->drawable_id);
+
   /*  allocate row buffers  */
-  prev_row = (guchar *) malloc ((x2 - x1 + 2) * bytes);
-  cur_row = (guchar *) malloc ((x2 - x1 + 2) * bytes);
-  next_row = (guchar *) malloc ((x2 - x1 + 2) * bytes);
-  dest = (guchar *) malloc ((x2 - x1) * bytes);
+  prev_row = g_new (guchar, (x2 - x1 + 2) * bytes);
+  cur_row  = g_new (guchar, (x2 - x1 + 2) * bytes);
+  next_row = g_new (guchar, (x2 - x1 + 2) * bytes);
+  dest     = g_new (guchar, (x2 - x1) * bytes);
 
   /*  initialize the pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
@@ -257,14 +258,16 @@ laplace (GimpDrawable *drawable)
       d = dest;
       for (col = 0; col < (x2 - x1) * bytes; col++)
 	if (alpha && (((col + 1) % bytes) == 0)) /* the alpha channel */
-	  *d++ = cr[col];
+          {
+            *d++ = cr[col];
+          }
 	else
 	  {
 	    minmax (pr[col], cr[col - bytes], cr[col], cr[col + bytes],
 		    nr[col], &minval, &maxval); /* four-neighbourhood */
-	    gradient = (0.5 * MIN ((maxval - cr [col]), (cr[col]- minval)));
-	    max_gradient = MAX(abs(gradient), max_gradient);
-	    *d++ = ((pr[col - bytes] + pr[col]     + pr[col + bytes] +
+	    gradient = (0.5 * MAX ((maxval - cr [col]), (cr[col]- minval)));
+	    max_gradient = MAX (abs (gradient), max_gradient);
+	    *d++ = ((pr[col - bytes] + pr[col]       + pr[col + bytes] +
 		     cr[col - bytes] - (8 * cr[col]) + cr[col + bytes] +
 		     nr[col - bytes] + nr[col]       + nr[col + bytes]) > 0) ?
 	      gradient : (128 + gradient);
@@ -280,7 +283,7 @@ laplace (GimpDrawable *drawable)
       nr = tmp;
 
       if ((row % 5) == 0)
-	gimp_progress_update ((double) row / (double) (y2 - y1));
+	gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
     }
 
 
@@ -297,7 +300,7 @@ laplace (GimpDrawable *drawable)
   laplace_prepare_row (&srcPR, cr, x1, y1, (x2 - x1));
 
   gimp_progress_init ( _("Cleanup..."));
-  scale = (255.0 / (float) max_gradient);
+  scale = (255.0 / (gfloat) max_gradient);
   counter =0;
 
   /*  loop through the rows, applying the laplace convolution  */
@@ -307,29 +310,34 @@ laplace (GimpDrawable *drawable)
       laplace_prepare_row (&srcPR, nr, x1, row + 1, (x2 - x1));
 
       d = dest;
-      for (col = 0; col < (x2 - x1) * bytes; col++) {
-	current = cr[col];
-	current = (WHITE_REGION(current) &&
-		   (BLACK_REGION (pr[col - bytes]) ||
-		    BLACK_REGION (pr[col]) ||
-		    BLACK_REGION (pr[col + bytes]) ||
-		    BLACK_REGION (cr[col - bytes]) ||
+      for (col = 0; col < (x2 - x1) * bytes; col++)
+        {
+          current = cr[col];
+          current = (WHITE_REGION(current) &&
+                     (BLACK_REGION (pr[col - bytes]) ||
+                      BLACK_REGION (pr[col])         ||
+                      BLACK_REGION (pr[col + bytes]) ||
+                      BLACK_REGION (cr[col - bytes]) ||
+                      BLACK_REGION (cr[col + bytes]) ||
+                      BLACK_REGION (nr[col - bytes]) ||
+                      BLACK_REGION (nr[col])         ||
+                      BLACK_REGION (nr[col + bytes]))) ?
+            (gint) (scale * ((float) ((current >= 128) ?
+                                      (current-128) : current))) : 0;
 
-		    BLACK_REGION (cr[col + bytes]) ||
-		    BLACK_REGION (nr[col - bytes]) ||
-		    BLACK_REGION (nr[col]) ||
-		    BLACK_REGION (nr[col + bytes]))) ?
-	  (gint) (scale * ((float) ((current >= 128) ?
-				    (current-128) : current)))
-	  : 0;
-	if (alpha && (((col + 1) % bytes) == 0)) { /* the alpha channel */
-	  *d++ = (counter == 0) ? 0 : 255;
-	  counter = 0; }
-	else {
-	  *d++ = current;
-	  if (current > 15) counter ++;
-	}
-      }
+          if (alpha && (((col + 1) % bytes) == 0)) /* the alpha channel */
+            {
+              *d++ = (counter == 0) ? 0 : 255;
+              counter = 0;
+            }
+          else
+            {
+              *d++ = current;
+              if (current > 15)
+                counter ++;
+            }
+        }
+
       /*  store the dest  */
       gimp_pixel_rgn_set_row (&destPR, dest, x1, row, (x2 - x1));
 
@@ -340,7 +348,7 @@ laplace (GimpDrawable *drawable)
       nr = tmp;
 
       if ((row % 5) == 0)
-	gimp_progress_update ((double) row / (double) (y2 - y1));
+	gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
     }
 
   /*  update the laplaced region  */
@@ -348,8 +356,8 @@ laplace (GimpDrawable *drawable)
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
-  free (prev_row);
-  free (cur_row);
-  free (next_row);
-  free (dest);
+  g_free (prev_row);
+  g_free (cur_row);
+  g_free (next_row);
+  g_free (dest);
 }

@@ -1,5 +1,10 @@
 2003-02-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/laplace.c: changed MIN to MAX as suggested by
+	Sunil Mohan Adapa in bug #106474.
+
+2003-02-19  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: use AC_PROG_LIBTOOL and AC_PROG_RANLIB as
 	suggested in bug report #106499.
 
