@@ -275,6 +275,29 @@ plug_in_actions_add_proc (GimpActionGroup *group,
 }
 
 void
+plug_in_actions_add_path (GimpActionGroup *group,
+                          PlugInProcDef   *proc_def,
+                          const gchar     *menu_path)
+{
+  const gchar *progname;
+  const gchar *locale_domain;
+  gchar       *path_translated  = NULL;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (proc_def != NULL);
+  g_return_if_fail (menu_path != NULL);
+
+  progname = plug_in_proc_def_get_progname (proc_def);
+
+  locale_domain = plug_ins_locale_domain (group->gimp, progname, NULL);
+
+  path_translated = dgettext (locale_domain, menu_path);
+
+  if (plug_in_actions_check_translation (menu_path, path_translated))
+    plug_in_actions_build_path (group, menu_path, path_translated);
+}
+
+void
 plug_in_actions_remove_proc (GimpActionGroup *group,
                              PlugInProcDef   *proc_def)
 {

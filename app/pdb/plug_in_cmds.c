@@ -523,8 +523,11 @@ plugin_menu_register_invoker (Gimp         *gimp,
                           proc_def->menu_paths = g_list_append (proc_def->menu_paths,
                                                                 g_strdup (menu_path));
 
-                          if (proc_def->db_info.proc_type == GIMP_TEMPORARY)
-                            gimp_menus_create_entry (gimp, proc_def, menu_path);
+                          if (! gimp->no_interface &&
+                              proc_def->db_info.proc_type == GIMP_TEMPORARY)
+                            {
+                              gimp_menus_create_entry (gimp, proc_def, menu_path);
+                            }
                         }
                     }
                 }

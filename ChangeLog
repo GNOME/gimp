@@ -1,3 +1,27 @@
+2004-11-18  Michael Natterer  <mitch@gimp.org>
+
+	The following fixes have no visible effect because nobody
+	uses gimp_plugin_menu_register() on temp_procs yet:
+
+	* app/actions/plug-in-actions.[ch]: added
+	plug_in_actions_add_path() which just adds the actions needed for
+	a given menu math, but not the procedure action itself.
+
+	* app/gui/gui-vtable.c (gui_menus_create_entry): create the
+	menu_path's actions using above function so adding of submenus to
+	existing ui managers works.
+
+	* tools/pdbgen/pdb/plug_in.pdb (plugin_menu_register_invoker):
+	don't add a menu if "no_interface" is TRUE.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+	* plug-ins/script-fu/script-fu-scripts.c: pass untranslated
+	menu_paths to the core, not translated ones. Don't store the
+	scripts directly in the "script_list" tree but use a list of
+	scripts per key because there can be identical keys for different
+	scripts now. Fixed sorting of menu entries and menus.
+
 2004-11-18  Simon Budig  <simon@gimp.org>
 
 	* modules/controller_midi.c: implemented support for ALSA-midi,

@@ -375,13 +375,17 @@ gui_menus_create_entry (Gimp          *gimp,
 {
   GList *list;
 
-  if (menu_path == NULL)
+  for (list = gimp_action_groups_from_name ("plug-in");
+       list;
+       list = g_list_next (list))
     {
-      for (list = gimp_action_groups_from_name ("plug-in");
-           list;
-           list = g_list_next (list))
+      if (menu_path == NULL)
         {
           plug_in_actions_add_proc (list->data, proc_def);
+        }
+      else
+        {
+          plug_in_actions_add_path (list->data, proc_def, menu_path);
         }
     }
 

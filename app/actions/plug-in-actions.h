@@ -26,6 +26,9 @@ void   plug_in_actions_update      (GimpActionGroup *group,
 
 void   plug_in_actions_add_proc    (GimpActionGroup *group,
                                     PlugInProcDef   *proc_def);
+void   plug_in_actions_add_path    (GimpActionGroup *group,
+                                    PlugInProcDef   *proc_def,
+                                    const gchar     *menu_path);
 void   plug_in_actions_remove_proc (GimpActionGroup *group,
                                     PlugInProcDef   *proc_def);
 

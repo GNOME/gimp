@@ -72,12 +72,12 @@ extern long  nlength (LISP obj);
 static void       script_fu_load_script    (const GimpDatafileData *file_data,
                                             gpointer                user_data);
 static gboolean   script_fu_install_script (gpointer                foo,
-                                            SFScript               *script,
+                                            GList                  *scripts,
                                             gpointer                bar);
 static void       script_fu_install_menu   (SFMenu                 *menu,
                                             gpointer                foo);
 static gboolean   script_fu_remove_script  (gpointer                foo,
-                                            SFScript               *script,
+                                            GList                  *scripts,
                                             gpointer                bar);
 static void       script_fu_script_proc    (const gchar            *name,
                                             gint                    nparams,
@@ -88,13 +88,16 @@ static void       script_fu_script_proc    (const gchar            *name,
 static SFScript * script_fu_find_script    (const gchar            *script_name);
 static void       script_fu_free_script    (SFScript               *script);
 
+static gint       script_fu_menu_compare   (gconstpointer           a,
+                                            gconstpointer           b);
+
 
 /*
  *  Local variables
  */
 
-static GTree  *script_list       = NULL;
-static GSList *script_menu_list  = NULL;
+static GTree *script_list      = NULL;
+static GList *script_menu_list = NULL;
 
 
 /*
@@ -115,7 +118,7 @@ script_fu_find_scripts (void)
       g_tree_destroy (script_list);
     }
 
-  script_list = g_tree_new ((GCompareFunc) strcoll);
+  script_list = g_tree_new ((GCompareFunc) g_utf8_collate);
 
   path_str = gimp_gimprc_query ("script-fu-path");
 
@@ -128,16 +131,20 @@ script_fu_find_scripts (void)
 
   g_free (path_str);
 
-  /*  now that all scripts are read in and sorted, tell gimp about them  */
+  /*  Now that all scripts are read in and sorted, tell gimp about them  */
   g_tree_foreach (script_list,
                   (GTraverseFunc) script_fu_install_script,
                   NULL);
-  g_slist_foreach (script_menu_list,
-                   (GFunc) script_fu_install_menu,
-                   NULL);
+
+  script_menu_list = g_list_sort (script_menu_list,
+                                  (GCompareFunc) script_fu_menu_compare);
+
+  g_list_foreach (script_menu_list,
+                  (GFunc) script_fu_install_menu,
+                  NULL);
 
   /*  Now we are done with the list of menu entries  */
-  g_slist_free (script_menu_list);
+  g_list_free (script_menu_list);
   script_menu_list = NULL;
 }
 
@@ -554,7 +561,13 @@ script_fu_add_script (LISP a)
     }
 
   script->args = args;
-  g_tree_insert (script_list, gettext (script->menu_path), script);
+
+  {
+    gchar *key  = gettext (script->menu_path);
+    GList *list = g_tree_lookup (script_list, key);
+
+    g_tree_insert (script_list, key, g_list_append (list, script));
+  }
 
   return NIL;
 }
@@ -584,9 +597,9 @@ script_fu_add_menu (LISP a)
 
   /*  Find the script menu path  */
   val = get_c_string (car (a));
-  menu->menu_path = g_strdup (gettext (val));
+  menu->menu_path = g_strdup (val);
 
-  script_menu_list = g_slist_append (script_menu_list, menu);
+  script_menu_list = g_list_prepend (script_menu_list, menu);
 
   return NIL;
 }
@@ -633,30 +646,36 @@ script_fu_load_script (const GimpDatafileData *file_data,
  */
 static gboolean
 script_fu_install_script (gpointer  foo,
-			  SFScript *script,
+			  GList    *scripts,
 			  gpointer  bar)
 {
-  gchar *menu_path = NULL;
+  GList *list;
 
-  /* Allow scripts with no menus */
-  if (strncmp (script->menu_path, "<None>", 6) != 0)
-    menu_path = script->menu_path;
+  for (list = scripts; list; list = g_list_next (list))
+    {
+      SFScript *script    = list->data;
+      gchar    *menu_path = NULL;
 
-  gimp_install_temp_proc (script->pdb_name,
-                          script->help,
-                          "",
-                          script->author,
-                          script->copyright,
-                          script->date,
-                          menu_path,
-                          script->img_types,
-                          GIMP_TEMPORARY,
-                          script->num_args + 1, 0,
-                          script->args, NULL,
-                          script_fu_script_proc);
+      /* Allow scripts with no menus */
+      if (strncmp (script->menu_path, "<None>", 6) != 0)
+        menu_path = script->menu_path;
 
-  g_free (script->args);
-  script->args = NULL;
+      gimp_install_temp_proc (script->pdb_name,
+                              script->help,
+                              "",
+                              script->author,
+                              script->copyright,
+                              script->date,
+                              menu_path,
+                              script->img_types,
+                              GIMP_TEMPORARY,
+                              script->num_args + 1, 0,
+                              script->args, NULL,
+                              script_fu_script_proc);
+
+      g_free (script->args);
+      script->args = NULL;
+    }
 
   return FALSE;
 }
@@ -680,10 +699,19 @@ script_fu_install_menu (SFMenu   *menu,
  */
 static gboolean
 script_fu_remove_script (gpointer  foo,
-			 SFScript *script,
+			 GList    *scripts,
 			 gpointer  bar)
 {
-  script_fu_free_script (script);
+  GList *list;
+
+  for (list = scripts; list; list = g_list_next (list))
+    {
+      SFScript *script = list->data;
+
+      script_fu_free_script (script);
+    }
+
+  g_list_free (list);
 
   return FALSE;
 }
@@ -852,14 +880,21 @@ script_fu_script_proc (const gchar      *name,
 /* this is a GTraverseFunction */
 static gboolean
 script_fu_lookup_script (gpointer      *foo,
-			 SFScript      *script,
+			 GList         *scripts,
 			 gconstpointer *name)
 {
-  if (strcmp (script->pdb_name, *name) == 0)
+  GList *list;
+
+  for (list = scripts; list; list = g_list_next (list))
     {
-      /* store the script in the name pointer and stop the traversal */
-      *name = script;
-      return TRUE;
+      SFScript *script = list->data;
+
+      if (strcmp (script->pdb_name, *name) == 0)
+        {
+          /* store the script in the name pointer and stop the traversal */
+          *name = script;
+          return TRUE;
+        }
     }
 
   return FALSE;
@@ -969,4 +1004,11 @@ script_fu_free_script (SFScript *script)
 
       g_free (script);
     }
+}
+
+static gint
+script_fu_menu_compare (gconstpointer a,
+                        gconstpointer b)
+{
+  return g_utf8_collate (a, b);
 }
