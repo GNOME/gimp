@@ -5,119 +5,118 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.18\n"
-"POT-Creation-Date: 2000-02-27 20:03+0100\n"
-"PO-Revision-Date: 2000-03-06 11:25+01:00\n"
+"POT-Creation-Date: 2000-03-25 23:41+0100\n"
+"PO-Revision-Date: 2000-03-26 18:31+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:157
+#: plug-ins/script-fu/script-fu-console.c:158
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Pouze interaktivní spu¹tìní umo¾òuje re¾im konzole Skript-fu"
 
-#: plug-ins/script-fu/script-fu-console.c:193
+#: plug-ins/script-fu/script-fu-console.c:194
 msgid "Script-Fu Console"
 msgstr "Konzole skript-fu"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-console.c:205
-#: plug-ins/script-fu/script-fu-scripts.c:1957
+#: plug-ins/script-fu/script-fu-console.c:207
+#: plug-ins/script-fu/script-fu-scripts.c:1867
 msgid "Close"
 msgstr "Zavøít"
 
 #. The info vbox
-#: plug-ins/script-fu/script-fu-console.c:213
+#: plug-ins/script-fu/script-fu-console.c:215
 msgid "SIOD Output"
 msgstr "Výstup SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:290
+#: plug-ins/script-fu/script-fu-console.c:294
 msgid "Current Command"
 msgstr "Aktuální pøíkaz"
 
-#: plug-ins/script-fu/script-fu-console.c:311
+#: plug-ins/script-fu/script-fu-console.c:315
 msgid "Browse..."
 msgstr "Procházet..."
 
-#: plug-ins/script-fu/script-fu-console.c:574
+#: plug-ins/script-fu/script-fu-console.c:578
 msgid "Unable to open SIOD output pipe"
 msgstr "Nepodaøilo se otevøít výstupní rouru SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:578
+#: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Nepodaøilo se otevøít proud na výstupní rouru SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:625
+#: plug-ins/script-fu/script-fu-console.c:629
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Pouze neinteraktivní spu¹tìní umo¾òuje re¾im provádìní Skript-fu"
 
-#. strip the first part of the menupath if it says _("Script-Fu")
-#: plug-ins/script-fu/script-fu-scripts.c:1207
-#: plug-ins/script-fu/script-fu-scripts.c:1209
+#. strip the first part of the menupath if it contains _("/Script-Fu/")
+#: plug-ins/script-fu/script-fu-scripts.c:1113
+#: plug-ins/script-fu/script-fu-scripts.c:1115
 msgid "/Script-Fu/"
 msgstr "/Skript-fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1209
-#: plug-ins/script-fu/script-fu-scripts.c:1211
+#: plug-ins/script-fu/script-fu-scripts.c:1115
+#: plug-ins/script-fu/script-fu-scripts.c:1117
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1232
+#: plug-ins/script-fu/script-fu-scripts.c:1142
 msgid "Script Arguments"
 msgstr "Argumenty skriptu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1296
+#: plug-ins/script-fu/script-fu-scripts.c:1206
 msgid "Script-Fu Color Selection"
 msgstr "Skript-fu výbìr barvy"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1302
+#: plug-ins/script-fu/script-fu-scripts.c:1212
 msgid "Script Toggle"
 msgstr "Pøepínaè skriptu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1364
+#: plug-ins/script-fu/script-fu-scripts.c:1274
 msgid "Script-Fu File Selection"
 msgstr "Skript-fu výbìr souboru"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1396
+#: plug-ins/script-fu/script-fu-scripts.c:1306
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-fu výbìr vzorku"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1403
+#: plug-ins/script-fu/script-fu-scripts.c:1313
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-fu výbìr pøechodu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1411
+#: plug-ins/script-fu/script-fu-scripts.c:1321
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-fu výbìr stopy"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1436
+#: plug-ins/script-fu/script-fu-scripts.c:1346
 msgid "Reset to Defaults"
 msgstr "Nastavit na implicitní hodnody"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1462
+#: plug-ins/script-fu/script-fu-scripts.c:1372
 msgid "About"
 msgstr "O programu"
 
-#. Action area
-#: plug-ins/script-fu/script-fu-scripts.c:1476
-#: plug-ins/script-fu/script-fu-server.c:559
+#: plug-ins/script-fu/script-fu-scripts.c:1386
+#: plug-ins/script-fu/script-fu-server.c:552
 msgid "OK"
 msgstr "OK"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1485
-#: plug-ins/script-fu/script-fu-server.c:568
+#: plug-ins/script-fu/script-fu-scripts.c:1395
+#: plug-ins/script-fu/script-fu-server.c:554
 msgid "Cancel"
 msgstr "Zru¹it"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1590
+#: plug-ins/script-fu/script-fu-scripts.c:1500
 msgid "NOT SET"
 msgstr "NENÍ URÈENO"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1661
+#: plug-ins/script-fu/script-fu-scripts.c:1571
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -125,39 +124,37 @@ msgstr ""
 "Nejménì jedno ze zvolených písem je neplatné.\n"
 "Zkontrolujte si nastavení.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1928
+#: plug-ins/script-fu/script-fu-scripts.c:1838
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1934
+#: plug-ins/script-fu/script-fu-scripts.c:1844
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1940
+#: plug-ins/script-fu/script-fu-scripts.c:1850
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1948
+#: plug-ins/script-fu/script-fu-scripts.c:1858
 msgid "Image Types:"
 msgstr "Typy obrázku:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2097
+#: plug-ins/script-fu/script-fu-scripts.c:2007
 msgid "Script-Fu Font Selection"
 msgstr "Výbìr písma Skript-fu"
 
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:547
 msgid "Script-Fu Server Options"
 msgstr "Volby serveru Skript-fu"
 
-#. The server port
-#: plug-ins/script-fu/script-fu-server.c:582
-msgid "Server Port: "
-msgstr "Port serveru: "
+#: plug-ins/script-fu/script-fu-server.c:574
+msgid "Server Port:"
+msgstr "Port serveru:"
 
-#. The server logfile
-#: plug-ins/script-fu/script-fu-server.c:595
-msgid "Server Logfile: "
-msgstr "®urnálový soubor serveru: "
+#: plug-ins/script-fu/script-fu-server.c:580
+msgid "Server Logfile:"
+msgstr "®urnálový soubor serveru:"
 
 #: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."

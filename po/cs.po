@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-03-25 14:43+0100\n"
-"PO-Revision-Date: 2000-03-25 14:55+01:00\n"
+"POT-Creation-Date: 2000-03-26 18:20+0200\n"
+"PO-Revision-Date: 2000-03-26 18:28+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -95,11 +95,11 @@ msgstr "Palety"
 msgid "Gradients"
 msgstr "Pøechody"
 
-#: app/app_procs.c:737
+#: app/app_procs.c:739
 msgid "Really Quit?"
 msgstr "Opravdu skonèit?"
 
-#: app/app_procs.c:741
+#: app/app_procs.c:743
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -109,15 +109,15 @@ msgstr ""
 "\n"
 "Opravdu opustit GIMP?"
 
-#: app/app_procs.c:742
+#: app/app_procs.c:744
 msgid "Quit"
 msgstr "Konec"
 
-#: app/app_procs.c:742 app/brightness_contrast.c:218 app/channel_ops.c:93
+#: app/app_procs.c:744 app/brightness_contrast.c:218 app/channel_ops.c:93
 #: app/channels_dialog.c:2463 app/channels_dialog.c:2637
 #: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
 #: app/curves.c:559 app/file_new_dialog.c:207 app/file_new_dialog.c:357
-#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:339 app/gimpprogress.c:112
+#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:345 app/gimpprogress.c:112
 #: app/global_edit.c:772 app/gradient.c:1769 app/gradient.c:4841
 #: app/gradient.c:5402 app/hue_saturation.c:377 app/install.c:533
 #: app/install.c:1167 app/interface.c:984 app/layers_dialog.c:3326
@@ -240,7 +240,7 @@ msgstr "Adaptivní pøevzorkování"
 msgid "Max Depth:"
 msgstr "Nejvìt¹í hloubka:"
 
-#: app/blend.c:408 app/bucket_fill.c:127 app/fuzzy_select.c:661
+#: app/blend.c:408 app/bucket_fill.c:127 app/fuzzy_select.c:660
 msgid "Threshold:"
 msgstr "Práh:"
 
@@ -318,7 +318,7 @@ msgstr "Editor stop"
 #: app/brush_edit.c:216 app/brush_select.c:278 app/by_color_select.c:689
 #: app/color_notebook.c:122 app/color_picker.c:297 app/colormap_dialog.i.c:170
 #: app/crop.c:1054 app/devices.c:755 app/docindexif.c:105
-#: app/errorconsole.c:281 app/gdisplay_ops.c:339 app/gradient.c:801
+#: app/errorconsole.c:281 app/gdisplay_ops.c:345 app/gradient.c:801
 #: app/gradient_select.c:153 app/histogram_tool.c:276 app/info_window.c:255
 #: app/lc_dialog.c:195 app/measure.c:286 app/nav_window.c:1345
 #: app/palette.c:2072 app/palette.c:2088 app/palette.c:3118
@@ -988,7 +988,7 @@ msgid "Load/Save Curves"
 msgstr "Naèíst/Zapsat køivky"
 
 #: app/curves.c:1609 app/curves.c:1627 app/levels.c:1428 app/levels.c:1446
-#: app/paths_dialog.c:1902
+#: app/paths_dialog.c:1903
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Nepodaøilo se otevøít soubor %s"
@@ -1001,7 +1001,7 @@ msgstr "Odbarvení pracuje pouze s obrazovkami v RGB barvách."
 msgid "Device Status"
 msgstr "Stav zaøízení"
 
-#: app/disp_callbacks.c:760 app/global_edit.c:297 app/global_edit.c:303
+#: app/disp_callbacks.c:810 app/global_edit.c:297 app/global_edit.c:303
 #: app/global_edit.c:375
 msgid "Pasted Layer"
 msgstr "Vlo¾ená vrstva"
@@ -1373,7 +1373,7 @@ msgstr "Dostupné filtry"
 msgid "Active Filters"
 msgstr "Aktivní filtry"
 
-#: app/gdisplay_ops.c:331
+#: app/gdisplay_ops.c:337
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -2250,7 +2250,7 @@ msgstr ""
 "Aktivní pøechod.\n"
 "Dialog pøechodù otevøete klepnutím."
 
-#: app/info_dialog.c:181 app/preferences_dialog.c:1743
+#: app/info_dialog.c:184 app/preferences_dialog.c:1743
 #: app/preferences_dialog.c:1849
 msgid "General"
 msgstr "V¹eobecné"
@@ -3402,12 +3402,8 @@ msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr "  --debug-handlers         Povolí ladìní obsluhy signálù.\n"
 
 #: app/main.c:291
-msgid ""
-"  --display <display>      Use the designated X display.\n"
-"\n"
-msgstr ""
-"  --display <displej>      Pou¾ije zvolený X displej.\n"
-"\n"
+msgid "  --display <display>      Use the designated X display.\n"
+msgstr "  --display <displej>      Pou¾ije zvolený X displej.\n"
 
 #: app/main.c:292
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
@@ -4496,93 +4492,93 @@ msgstr "Interval:"
 msgid "Palette Selection"
 msgstr "Výbìr palety"
 
-#: app/paths_dialog.c:163
+#: app/paths_dialog.c:164
 msgid "New Path"
 msgstr "Nová cesta"
 
-#: app/paths_dialog.c:167
+#: app/paths_dialog.c:168
 msgid "Duplicate Path"
 msgstr "Duplikovat cestu"
 
-#: app/paths_dialog.c:171
+#: app/paths_dialog.c:172
 msgid "Path to Selection"
 msgstr "Cesta do výbìru"
 
-#: app/paths_dialog.c:175
+#: app/paths_dialog.c:176
 msgid "Selection to Path"
 msgstr "Výbìr do cesty"
 
-#: app/paths_dialog.c:179
+#: app/paths_dialog.c:180
 msgid "Stroke Path"
 msgstr "Vykreslit cestu"
 
-#: app/paths_dialog.c:183
+#: app/paths_dialog.c:184
 msgid "Delete Path"
 msgstr "Smazat cestu"
 
-#: app/paths_dialog.c:192
+#: app/paths_dialog.c:193
 msgid "New Point"
 msgstr "Nový bod"
 
-#: app/paths_dialog.c:196
+#: app/paths_dialog.c:197
 msgid "Add Point"
 msgstr "Pøidat bod"
 
-#: app/paths_dialog.c:200
+#: app/paths_dialog.c:201
 msgid "Delete Point"
 msgstr "Smazat bod"
 
-#: app/paths_dialog.c:204
+#: app/paths_dialog.c:205
 msgid "Edit Point"
 msgstr "Zmìny bodu"
 
-#: app/paths_dialog.c:432
+#: app/paths_dialog.c:433
 #, c-format
 msgid "Path %d"
 msgstr "Cesta %d"
 
-#: app/paths_dialog.c:985
+#: app/paths_dialog.c:986
 msgid "Edit Path Attributes"
 msgstr "Úpravy vlastností cesty"
 
-#: app/paths_dialog.c:988
+#: app/paths_dialog.c:989
 msgid "Enter a new name for the path"
 msgstr "Zadejte nové jméno cesty"
 
-#: app/paths_dialog.c:1916
+#: app/paths_dialog.c:1917
 #, c-format
 msgid "Failed to read from %s"
 msgstr "Nepodaøilo se naèíst z %s"
 
-#: app/paths_dialog.c:1931
+#: app/paths_dialog.c:1932
 #, c-format
 msgid "Failed to read path from %s"
 msgstr "Nepodaøilo se naèíst cestu z %s"
 
-#: app/paths_dialog.c:1938
+#: app/paths_dialog.c:1939
 #, c-format
 msgid "No points specified in path file %s"
 msgstr "V souboru cesty %s nebyly zadány ¾ádné body"
 
-#: app/paths_dialog.c:1949
+#: app/paths_dialog.c:1950
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr "<Nepodaøilo se naèíst body cesty z %s"
 
-#: app/paths_dialog.c:2022 app/xcf.c:437
+#: app/paths_dialog.c:2023 app/xcf.c:437
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "otevøení %s selhalo: %s\n"
 
-#: app/paths_dialog.c:2044
+#: app/paths_dialog.c:2045
 msgid "Load/Store Bezier Curves"
 msgstr "Naèíst/Zapsat Bézierovy køivky"
 
-#: app/paths_dialog.c:2084
+#: app/paths_dialog.c:2085
 msgid "Load Path"
 msgstr "Naèíst cestu"
 
-#: app/paths_dialog.c:2106
+#: app/paths_dialog.c:2107
 msgid "Store Path"
 msgstr "Uschovat cestu"
 
