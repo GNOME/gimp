@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-05-09 19:08+0200\n"
-"PO-Revision-Date: 2003-05-09 19:10+0200\n"
+"POT-Creation-Date: 2003-05-12 23:45+0200\n"
+"PO-Revision-Date: 2003-05-12 23:51+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -994,7 +994,7 @@ msgid "Guide"
 msgstr "Hjälplinje"
 
 #: app/core/core-enums.c:438 app/core/core-enums.c:466
-#: app/core/gimpchannel.c:602
+#: app/core/gimpchannel.c:689
 msgid "Selection Mask"
 msgstr "Markeringsmask"
 
@@ -1014,19 +1014,19 @@ msgstr "Länkat objekt"
 msgid "Drawable Visibility"
 msgstr "Ritytesynlighet"
 
-#: app/core/core-enums.c:443 app/core/gimplayer.c:404 app/core/gimplayer.c:406
+#: app/core/core-enums.c:443 app/core/gimplayer.c:417 app/core/gimplayer.c:419
 #: app/gui/layers-commands.c:941 app/gui/resize-dialog.c:193
 #: app/pdb/layer_cmds.c:405
 msgid "Scale Layer"
 msgstr "Skala om lager"
 
 #: app/core/core-enums.c:444 app/core/gimpimage-crop.c:118
-#: app/core/gimplayer.c:442 app/core/gimplayer.c:444
+#: app/core/gimplayer.c:455 app/core/gimplayer.c:457
 #: app/gui/layers-commands.c:1035 app/pdb/layer_cmds.c:500
 msgid "Resize Layer"
 msgstr "Ändra storlek på lager"
 
-#: app/core/core-enums.c:445 app/core/gimplayer.c:989
+#: app/core/core-enums.c:445 app/core/gimplayer.c:1136
 msgid "Apply Layer Mask"
 msgstr "Applicera lagermask"
 
@@ -1060,7 +1060,7 @@ msgid "Text"
 msgstr "Text"
 
 #: app/core/core-enums.c:453 app/core/core-enums.c:492
-#: app/core/gimpdrawable-transform.c:515
+#: app/core/gimpdrawable-transform.c:524
 msgid "Transform"
 msgstr "Transformera"
 
@@ -1069,7 +1069,7 @@ msgstr "Transformera"
 msgid "Paint"
 msgstr "Måla"
 
-#: app/core/core-enums.c:455 app/core/core-enums.c:494 app/core/gimpitem.c:761
+#: app/core/core-enums.c:455 app/core/core-enums.c:494 app/core/gimpitem.c:795
 msgid "Attach Parasite"
 msgstr "Koppla parasit"
 
@@ -1128,7 +1128,7 @@ msgstr "Ta bort lager"
 msgid "Layer Mod"
 msgstr "Lagermod"
 
-#: app/core/core-enums.c:474 app/core/gimplayer.c:753
+#: app/core/core-enums.c:474 app/core/gimplayer.c:900
 #: app/gui/layers-commands.c:859
 msgid "Add Layer Mask"
 msgstr "Lägg till lagermask"
@@ -1357,75 +1357,83 @@ msgstr ""
 "Ödesdigert tolkningsfel:\n"
 "Penselfilen \"%s\" är trasig."
 
-#: app/core/gimpchannel.c:139 app/pdb/internal_procs.c:86
+#: app/core/gimpchannel.c:153 app/pdb/internal_procs.c:86
 msgid "Channel"
 msgstr "Kanal"
 
-#: app/core/gimpchannel.c:140
+#: app/core/gimpchannel.c:154
 msgid "Rename Channel"
 msgstr "Byt namn på kanal"
 
-#: app/core/gimpchannel.c:265
+#: app/core/gimpchannel.c:279
 msgid "Move Channel"
 msgstr "Flytta kanal"
 
-#: app/core/gimpchannel.c:350
+#: app/core/gimpchannel.c:364
 msgid "Scale Channel"
 msgstr "Skala kanal"
 
-#: app/core/gimpchannel.c:373
+#: app/core/gimpchannel.c:387
 msgid "Resize Channel"
 msgstr "Ändra storlek på kanal"
 
-#: app/core/gimpchannel.c:498
+#: app/core/gimpchannel.c:417
+msgid "Flip Channel"
+msgstr "Vänd kanal"
+
+#: app/core/gimpchannel.c:451 app/core/gimpdrawable-transform.c:738
+msgid "Transform Channel"
+msgstr "Transformera kanal"
+
+#: app/core/gimpchannel.c:585
 msgid "Set Channel Color"
 msgstr "Sätt kanalfärg"
 
-#: app/core/gimpchannel.c:547
+#: app/core/gimpchannel.c:634
 msgid "Set Channel Opacity"
 msgstr "Sätt kanalopacitet"
 
-#: app/core/gimpchannel.c:1371
+#: app/core/gimpchannel.c:1458
 msgid "Feather Channel"
 msgstr "Fjädra kanal"
 
-#: app/core/gimpchannel.c:1393
+#: app/core/gimpchannel.c:1480
 msgid "Sharpen Channel"
 msgstr "Gör kanalen skarpare"
 
-#: app/core/gimpchannel.c:1419
+#: app/core/gimpchannel.c:1506
 msgid "Clear Channel"
 msgstr "Rensa kanal"
 
-#: app/core/gimpchannel.c:1457
+#: app/core/gimpchannel.c:1544
 msgid "Fill Channel"
 msgstr "Fyll kanal"
 
-#: app/core/gimpchannel.c:1482
+#: app/core/gimpchannel.c:1569
 msgid "Invert Channel"
 msgstr "Invertera kanal"
 
-#: app/core/gimpchannel.c:1548
+#: app/core/gimpchannel.c:1635
 msgid "Border Channel"
 msgstr "Kantmarkera kanal"
 
-#: app/core/gimpchannel.c:1605
+#: app/core/gimpchannel.c:1692
 msgid "Grow Channel"
 msgstr "Öka kanal"
 
-#: app/core/gimpchannel.c:1656
+#: app/core/gimpchannel.c:1743
 msgid "Shrink Channel"
 msgstr "Minska kanal"
 
-#: app/core/gimpchannel.c:1677
+#: app/core/gimpchannel.c:1764
 msgid "Channel Load"
 msgstr "Läs in kanal"
 
-#: app/core/gimpchannel.c:1706
+#: app/core/gimpchannel.c:1793
 msgid "Channel from Alpha"
 msgstr "Kanal från alfa"
 
-#: app/core/gimpchannel.c:1743
+#: app/core/gimpchannel.c:1830
 msgid "Channel from Mask"
 msgstr "Kanal från mask"
 
@@ -1502,25 +1510,21 @@ msgstr "Invertera"
 msgid "Offset Drawable"
 msgstr "Offset rityta"
 
-#: app/core/gimpdrawable-transform.c:564 app/tools/gimpfliptool.c:82
+#: app/core/gimpdrawable-transform.c:573 app/tools/gimpfliptool.c:83
 msgid "Flip"
 msgstr "Vänd"
 
-#: app/core/gimpdrawable-transform.c:654
+#: app/core/gimpdrawable-transform.c:683
 msgid "Transformation"
 msgstr "Transformation"
 
-#: app/core/gimpdrawable-transform.c:669
+#: app/core/gimpdrawable-transform.c:698
 msgid "Paste Transform"
 msgstr "Klistra in transformation"
 
-#: app/core/gimpdrawable-transform.c:706
+#: app/core/gimpdrawable-transform.c:735 app/core/gimplayer.c:554
 msgid "Transform Layer"
 msgstr "Transformera lager"
-
-#: app/core/gimpdrawable-transform.c:709
-msgid "Transform Channel"
-msgstr "Transformera kanal"
 
 #: app/core/gimpedit.c:190 app/core/gimpedit.c:268
 msgid "Pasted Layer"
@@ -1670,15 +1674,15 @@ msgstr "Fjädermarkering"
 msgid "Sharpen Selection"
 msgstr "Gör markering skarpare"
 
-#: app/core/gimpimage-mask.c:468 app/widgets/gimpselectioneditor.c:166
+#: app/core/gimpimage-mask.c:468 app/widgets/gimpselectioneditor.c:168
 msgid "Select None"
 msgstr "Markera inget"
 
-#: app/core/gimpimage-mask.c:482 app/widgets/gimpselectioneditor.c:158
+#: app/core/gimpimage-mask.c:482 app/widgets/gimpselectioneditor.c:160
 msgid "Select All"
 msgstr "Markera allt"
 
-#: app/core/gimpimage-mask.c:494 app/widgets/gimpselectioneditor.c:174
+#: app/core/gimpimage-mask.c:494 app/widgets/gimpselectioneditor.c:176
 msgid "Invert Selection"
 msgstr "Omvänd markering"
 
@@ -1731,7 +1735,7 @@ msgstr ""
 msgid "No selection to stroke."
 msgstr "Ingen markering att stryka."
 
-#: app/core/gimpimage-mask.c:702
+#: app/core/gimpimage-mask.c:702 app/widgets/gimpselectioneditor.c:192
 msgid "Stroke Selection"
 msgstr "Stryk markering"
 
@@ -1959,11 +1963,11 @@ msgstr "Misslyckades med att öppna miniatyrbildsfilen \"%s\": %s"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Misslyckades med att skapa miniatyrbildsmappen \"%s\"."
 
-#: app/core/gimpitem.c:771
+#: app/core/gimpitem.c:805
 msgid "Attach Parasite to Item"
 msgstr "Koppla parasit till objekt"
 
-#: app/core/gimpitem.c:810 app/core/gimpitem.c:817
+#: app/core/gimpitem.c:844 app/core/gimpitem.c:851
 msgid "Remove Parasite from Item"
 msgstr "Ta bort parasit från objekt"
 
@@ -1985,48 +1989,52 @@ msgstr ""
 "markeringen då den tillhör en lagermask\n"
 "eller kanal."
 
-#: app/core/gimplayer.c:196 app/pdb/internal_procs.c:131
+#: app/core/gimplayer.c:209 app/pdb/internal_procs.c:131
 msgid "Layer"
 msgstr "Lager"
 
-#: app/core/gimplayer.c:197
+#: app/core/gimplayer.c:210
 msgid "Rename Layer"
 msgstr "Byt namn på lager"
 
-#: app/core/gimplayer.c:363 app/pdb/layer_cmds.c:638 app/pdb/layer_cmds.c:809
+#: app/core/gimplayer.c:376 app/pdb/layer_cmds.c:638 app/pdb/layer_cmds.c:769
 #: app/tools/gimpeditselectiontool.c:244
 #: app/tools/gimpeditselectiontool.c:1061
 msgid "Move Layer"
 msgstr "Flytta lager"
 
-#: app/core/gimplayer.c:713
+#: app/core/gimplayer.c:489
+msgid "Flip Layer"
+msgstr "Vänd lager"
+
+#: app/core/gimplayer.c:860
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Kan inte lägga till lagermask till ett lager som inte tillhör en bild."
 
-#: app/core/gimplayer.c:720
+#: app/core/gimplayer.c:867
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Kan inte lägga till lagermask eftersom lagret redan har en."
 
-#: app/core/gimplayer.c:727
+#: app/core/gimplayer.c:874
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Kan inte lägga till lagermask till ett lager utan alfakanal."
 
-#: app/core/gimplayer.c:737
+#: app/core/gimplayer.c:884
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kan inte lägga till lagermask som har andra dimensioner än det specifierade "
 "lagret."
 
-#: app/core/gimplayer.c:780
+#: app/core/gimplayer.c:927
 #, c-format
 msgid "%s mask"
 msgstr "%s-mask"
 
-#: app/core/gimplayer.c:1086
+#: app/core/gimplayer.c:1233
 msgid "Add Alpha Channel"
 msgstr "Lägg till alfakanal"
 
-#: app/core/gimplayer.c:1114
+#: app/core/gimplayer.c:1261
 msgid "Layer to Image Size"
 msgstr "Lagerstorlek som bilden"
 
@@ -7343,11 +7351,11 @@ msgstr "Antisudda %s"
 msgid "Hard Edge"
 msgstr "Hård kant"
 
-#: app/tools/gimpfliptool.c:83
+#: app/tools/gimpfliptool.c:84
 msgid "Flip the layer or selection"
 msgstr "Vänd lagret eller markeringen"
 
-#: app/tools/gimpfliptool.c:84
+#: app/tools/gimpfliptool.c:85
 msgid "/Tools/Transform Tools/Flip"
 msgstr "/Verktyg/Transformeringsverktyg/Vänd"
 
@@ -8040,11 +8048,11 @@ msgstr ""
 msgid "Keep Width  %s"
 msgstr "Behåll bredd %s"
 
-#: app/tools/gimptransformtool.c:241
+#: app/tools/gimptransformtool.c:242
 msgid "Transforming..."
 msgstr "Transformerar..."
 
-#: app/tools/gimptransformtool.c:365
+#: app/tools/gimptransformtool.c:366
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
@@ -8124,25 +8132,33 @@ msgstr "Typ:"
 msgid "This tool has no options."
 msgstr "Det här verktyget har inga alternativ."
 
-#: app/vectors/gimpvectors.c:155
+#: app/vectors/gimpvectors.c:167
 msgid "Path"
 msgstr "Slinga"
 
-#: app/vectors/gimpvectors.c:156
+#: app/vectors/gimpvectors.c:168
 msgid "Rename Path"
 msgstr "Byt namn på slinga"
 
-#: app/vectors/gimpvectors.c:253
+#: app/vectors/gimpvectors.c:265
 msgid "Move Path"
 msgstr "Flytta slinga"
 
-#: app/vectors/gimpvectors.c:289
+#: app/vectors/gimpvectors.c:301
 msgid "Scale Path"
 msgstr "Skala slinga"
 
-#: app/vectors/gimpvectors.c:328
+#: app/vectors/gimpvectors.c:340
 msgid "Resize Path"
 msgstr "Ändra storlek på slinga"
+
+#: app/vectors/gimpvectors.c:376
+msgid "Flip Path"
+msgstr "Vänd sling"
+
+#: app/vectors/gimpvectors.c:424
+msgid "Transform Path"
+msgstr "Transformera slinga"
 
 #: app/widgets/widgets-enums.c:14
 msgid "Portrait"
@@ -8533,7 +8549,7 @@ msgstr "Kolumner:"
 msgid "This text input field is limited to %d characters."
 msgstr "Detta textinmatningsfält är begränsat till %d tecken."
 
-#: app/widgets/gimpselectioneditor.c:182
+#: app/widgets/gimpselectioneditor.c:184
 msgid "Save Selection to Channel"
 msgstr "Spara markering till kanal"
 
@@ -8892,9 +8908,6 @@ msgstr "GIMP (ostabil)"
 
 #~ msgid "Old Path List"
 #~ msgstr "Gammal slinglista"
-
-#~ msgid "Old Paths"
-#~ msgstr "Gamla slingor"
 
 #~ msgid "Other"
 #~ msgstr "Annat"
