@@ -171,7 +171,7 @@ gimp_config_iface_reset (GObject *object)
 }
 
 /**
- * gimp_config_serialize:
+ * gimp_config_serialize_to_file:
  * @object: a #GObject that implements the #GimpConfigInterface.
  * @filename: the name of the file to write the configuration to.
  * @header: optional file header (must be ASCII only)
@@ -187,12 +187,12 @@ gimp_config_iface_reset (GObject *object)
  * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
  **/
 gboolean
-gimp_config_serialize (GObject      *object,
-                       const gchar  *filename,
-                       const gchar  *header,
-                       const gchar  *footer,
-                       gpointer      data,
-                       GError      **error)
+gimp_config_serialize_to_file (GObject      *object,
+			       const gchar  *filename,
+			       const gchar  *header,
+			       const gchar  *footer,
+			       gpointer      data,
+			       GError      **error)
 {
   GimpConfigInterface *gimp_config_iface;
   GimpConfigWriter    *writer;
@@ -202,17 +202,47 @@ gimp_config_serialize (GObject      *object,
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
-
   g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
 
-  writer = gimp_config_writer_new (filename, TRUE, header, error);
-
+  writer = gimp_config_writer_new_file (filename, TRUE, header, error);
   if (!writer)
     return FALSE;
 
   gimp_config_iface->serialize (object, writer, data);
 
   return gimp_config_writer_finish (writer, footer, error);
+}
+
+/**
+ * gimp_config_serialize_to_string:
+ * @object: a #GObject that implements the #GimpConfigInterface.
+ * @data: user data passed to the serialize implementation.
+ * 
+ * Serializes the object properties of @object to a string.
+ *
+ * Return value: a newly allocated %NUL-terminated string.
+ **/
+gchar *
+gimp_config_serialize_to_string (GObject  *object,
+				 gpointer  data)
+{
+  GimpConfigInterface *gimp_config_iface;
+  GimpConfigWriter    *writer;
+  GString             *str;
+
+  g_return_val_if_fail (G_IS_OBJECT (object), NULL);
+  
+  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
+  g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
+
+  str = g_string_new (NULL);
+  writer = gimp_config_writer_new_string (str);
+
+  gimp_config_iface->serialize (object, writer, data);
+
+  gimp_config_writer_finish (writer, NULL, NULL);
+
+  return g_string_free (str, FALSE);
 }
 
 /**
@@ -230,10 +260,10 @@ gimp_config_serialize (GObject      *object,
  * Return value: %TRUE if deserialization succeeded, %FALSE otherwise. 
  **/
 gboolean
-gimp_config_deserialize (GObject      *object,
-                         const gchar  *filename,
-                         gpointer      data,
-                         GError      **error)
+gimp_config_deserialize_file (GObject      *object,
+			      const gchar  *filename,
+			      gpointer      data,
+			      GError      **error)
 {
   GimpConfigInterface *gimp_config_iface;
   GScanner            *scanner;
@@ -244,13 +274,54 @@ gimp_config_deserialize (GObject      *object,
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
   
   gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
-
   g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
 
-  scanner = gimp_scanner_new (filename, error);
-
+  scanner = gimp_scanner_new_file (filename, error);
   if (! scanner)
     return FALSE;
+
+  success = gimp_config_iface->deserialize (object, scanner, 0, data);
+
+  gimp_scanner_destroy (scanner);
+
+  if (! success)
+    g_assert (error == NULL || *error != NULL);
+
+  return success;
+}
+
+/**
+ * gimp_config_deserialize_string:
+ * @object: a #GObject that implements the #GimpConfigInterface.
+ * @text: string to deserialize (in UTF-8 encoding)
+ * @text_len: length of @text in bytes or -1
+ * @error: 
+ * 
+ * Configures @object from @text. Basically this function creates a
+ * properly configured #GScanner for you and calls the deserialize
+ * function of the @object's #GimpConfigInterface.
+ * 
+ * Return value: %TRUE if deserialization succeeded, %FALSE otherwise. 
+ **/
+gboolean
+gimp_config_deserialize_string (GObject      *object,
+                                const gchar  *text,
+                                gint          text_len,
+				gpointer      data,
+                                GError      **error)
+{
+  GimpConfigInterface *gimp_config_iface;
+  GScanner            *scanner;
+  gboolean             success;
+
+  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+  g_return_val_if_fail (text != NULL || text_len == 0, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
+  g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
+
+  scanner = gimp_scanner_new_string (text, text_len, error);
 
   success = gimp_config_iface->deserialize (object, scanner, 0, data);
 

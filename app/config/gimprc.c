@@ -287,12 +287,13 @@ gimp_rc_serialize (GObject          *object,
 {
   if (data && GIMP_IS_RC (data))
     {
-      if (!gimp_config_serialize_properties_diff (object, G_OBJECT (data), writer))
+      if (! gimp_config_serialize_properties_diff (object,
+						   G_OBJECT (data), writer))
         return FALSE;
     }
   else
     {
-      if (!gimp_config_serialize_properties (object, writer))
+      if (! gimp_config_serialize_properties (object, writer))
         return FALSE;
     }
       
@@ -340,8 +341,8 @@ gimp_rc_load (GimpRc *rc)
   if (rc->verbose)
     g_print (_("Parsing '%s'\n"), rc->system_gimprc);
 
-  if (! gimp_config_deserialize (G_OBJECT (rc),
-                                 rc->system_gimprc, NULL, &error))
+  if (! gimp_config_deserialize_file (G_OBJECT (rc),
+				      rc->system_gimprc, NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
 	g_message (error->message);
@@ -352,8 +353,8 @@ gimp_rc_load (GimpRc *rc)
   if (rc->verbose)
     g_print (_("Parsing '%s'\n"), rc->user_gimprc);
 
-  if (! gimp_config_deserialize (G_OBJECT (rc),
-                                 rc->user_gimprc, NULL, &error))
+  if (! gimp_config_deserialize_file (G_OBJECT (rc),
+				      rc->user_gimprc, NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
 	g_message (error->message);
@@ -567,16 +568,18 @@ gimp_rc_save (GimpRc *rc)
  
   global = g_object_new (GIMP_TYPE_RC, NULL);
 
-  gimp_config_deserialize (G_OBJECT (global), rc->system_gimprc, NULL, NULL);
+  gimp_config_deserialize_file (G_OBJECT (global),
+				rc->system_gimprc, NULL, NULL);
   
   header = g_strconcat (top, rc->system_gimprc, bottom, NULL);
 
   if (rc->verbose)
     g_print (_("Saving '%s'\n"), rc->user_gimprc);
 
-  if (! gimp_config_serialize (G_OBJECT (rc),
-                               rc->user_gimprc, header, footer, global,
-			       &error))
+  if (! gimp_config_serialize_to_file (G_OBJECT (rc),
+				       rc->user_gimprc,
+				       header, footer, global,
+				       &error))
     {
       g_message (error->message);
       g_error_free (error);

@@ -1259,7 +1259,7 @@ gimp_layer_boundary (GimpLayer *layer,
   new_segs[0].y2   = item->offset_y + item->height;
   new_segs[0].open = 1;
 
-  new_segs[1].x1  = item->offset_x;
+  new_segs[1].x1   = item->offset_x;
   new_segs[1].y1   = item->offset_y;
   new_segs[1].x2   = item->offset_x + item->width;
   new_segs[1].y2   = item->offset_y;

@@ -1,7 +1,31 @@
+2003-06-23  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig.[ch]
+	* app/config/gimpconfigwriter.[ch]
+	* app/config/gimpscanner.[ch]: added support for serializing to
+	and deserializing from strings. Had to do some smaller changes to
+	the GimpConfig API.
+
+	* app/config/test-config.c: added a simple test for the new
+	functions.
+
+	* app/config/gimpconfig-dump.c
+	* app/config/gimprc.c
+	* app/core/gimp-documents.c
+	* app/core/gimp-parasites.c
+	* app/core/gimp-templates.c
+	* app/core/gimpunits.c
+	* app/gui/session.c
+	* app/plug-in/plug-in-rc.c
+	* app/tools/tool_options.c
+	* app/widgets/gimpdevices.c: follow GimpConfig API changes.
+
+	* libgimpbase/gimpparasite.[ch]: declared the return value of
+	gimp_parasite_data() as gconstpointer.
+
 2003-06-23  Henrik Brix Andersen  <brix@gimp.org>
 
-	Added a per image configurable grid.
-	This fixes bug #65198
+	Added a per image configurable grid.  This fixes bug #65198.
 	
 	* app/core/Makefile.am
 	* app/core/core-types.h: 

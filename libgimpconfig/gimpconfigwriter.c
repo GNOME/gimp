@@ -47,15 +47,27 @@
 #include "gimp-intl.h"
 
 
+struct _GimpConfigWriter
+{
+  gint      fd;
+  gchar    *filename;
+  gchar    *tmpname;
+  GError   *error;
+  GString  *buffer;
+  gint      depth;
+  gint      marker;
+};
+
+
 static gboolean  gimp_config_writer_close_file (GimpConfigWriter  *writer,
 						GError           **error);
 
 
 GimpConfigWriter *
-gimp_config_writer_new (const gchar  *filename,
-			gboolean      safe,
-			const gchar  *header,
-			GError      **error)
+gimp_config_writer_new_file (const gchar  *filename,
+			     gboolean      safe,
+			     const gchar  *header,
+			     GError      **error)
 {
   GimpConfigWriter *writer;
   gchar            *tmpname = NULL;
@@ -111,7 +123,7 @@ gimp_config_writer_new (const gchar  *filename,
 }
 
 GimpConfigWriter *
-gimp_config_writer_new_from_fd (gint fd)
+gimp_config_writer_new_fd (gint fd)
 {
   GimpConfigWriter *writer;
 
@@ -121,6 +133,20 @@ gimp_config_writer_new_from_fd (gint fd)
 
   writer->fd     = fd;
   writer->buffer = g_string_new (NULL);
+
+  return writer;
+}
+
+GimpConfigWriter *
+gimp_config_writer_new_string (GString *string)
+{
+  GimpConfigWriter *writer;
+
+  g_return_val_if_fail (string != NULL, NULL);
+
+  writer = g_new0 (GimpConfigWriter, 1);
+
+  writer->buffer = string;
 
   return writer;
 }
@@ -237,13 +263,16 @@ gimp_config_writer_close (GimpConfigWriter *writer)
   if (--writer->depth == 0)
     {
       g_string_append_c (writer->buffer, '\n');
-      
-      if (write (writer->fd, writer->buffer->str, writer->buffer->len) < 0)
-	g_set_error (&writer->error,
-                     GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
-		     g_strerror (errno));
 
-      g_string_truncate (writer->buffer, 0);
+      if (writer->fd)
+        {
+          if (write (writer->fd, writer->buffer->str, writer->buffer->len) < 0)
+            g_set_error (&writer->error,
+                         GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+                         g_strerror (errno));
+
+          g_string_truncate (writer->buffer, 0);
+        }
     }
 }
 
@@ -273,12 +302,19 @@ gimp_config_writer_finish (GimpConfigWriter  *writer,
       gimp_config_writer_comment (writer, footer);
     }
 
-  success = gimp_config_writer_close_file (writer, error);
+  if (writer->fd)
+    {
+      success = gimp_config_writer_close_file (writer, error);
 
-  g_free (writer->filename);
-  g_free (writer->tmpname);
+      g_free (writer->filename);
+      g_free (writer->tmpname);
 
-  g_string_free (writer->buffer, TRUE);
+      g_string_free (writer->buffer, TRUE);
+    }
+  else
+    {
+      success = TRUE;
+    }
 
   g_free (writer);
 
@@ -335,6 +371,8 @@ static gboolean
 gimp_config_writer_close_file (GimpConfigWriter  *writer,
 			       GError           **error)
 {
+  g_return_val_if_fail (writer->fd != 0, FALSE);
+
   if (! writer->filename)
     return TRUE;
 

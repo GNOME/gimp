@@ -49,21 +49,23 @@
 
 /*  local function prototypes  */
 
-static void   gimp_scanner_message (GScanner *scanner,
-                                    gchar    *message,
-                                    gboolean  is_error);
+static GScanner * gimp_scanner_new     (GError   **error);
+static void       gimp_scanner_message (GScanner  *scanner,
+                                        gchar     *message,
+                                        gboolean   is_error);
 
 
 /*  public functions  */
 
 GScanner *
-gimp_scanner_new (const gchar  *filename,
-                  GError      **error)
+gimp_scanner_new_file (const gchar  *filename,
+		       GError      **error)
 {
   gint        fd;
   GScanner   *scanner;
 
   g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   fd = open (filename, O_RDONLY);
 
@@ -78,13 +80,43 @@ gimp_scanner_new (const gchar  *filename,
       return NULL;
     }
 
-  scanner = g_scanner_new (NULL);
+  scanner = gimp_scanner_new (error);
 
   g_scanner_input_file (scanner, fd);
+  scanner->input_name = g_strdup (filename);
+
+  return scanner;
+}
+
+GScanner *
+gimp_scanner_new_string (const gchar  *text,
+			 gint          text_len,
+			 GError      **error)
+{
+  GScanner *scanner;
+
+  g_return_val_if_fail (text != NULL || text_len == 0, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (text_len < 0)
+    text_len = strlen (text);
+
+  scanner = gimp_scanner_new (error);
+
+  g_scanner_input_text (scanner, text, text_len);
+
+  return scanner;
+}
+
+static GScanner *
+gimp_scanner_new (GError **error)
+{
+  GScanner *scanner;
+
+  scanner = g_scanner_new (NULL);
 
   scanner->user_data   = error;
   scanner->msg_handler = gimp_scanner_message;
-  scanner->input_name  = g_strdup (filename);
 
   scanner->config->cset_identifier_first = ( G_CSET_a_2_z G_CSET_A_2_Z );
   scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z G_CSET_A_2_Z
@@ -349,8 +381,13 @@ gimp_scanner_message (GScanner *scanner,
   /* we don't expect warnings */
   g_return_if_fail (is_error);
 
-  g_set_error (error,
-               GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-               _("Error while parsing '%s' in line %d:\n%s"), 
-               scanner->input_name, scanner->line, message);
+  if (scanner->input_name)
+    g_set_error (error,
+                 GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+                 _("Error while parsing '%s' in line %d:\n%s"), 
+                 scanner->input_name, scanner->line, message);
+  else
+    g_set_error (error,
+                 GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+                 "Error parsing internal buffer: %s", message);    
 }

@@ -24,7 +24,10 @@
 #define __GIMP_SCANNER_H__
 
 
-GScanner * gimp_scanner_new                      (const gchar  *filename,
+GScanner * gimp_scanner_new_file                 (const gchar  *filename,
+                                                  GError      **error);
+GScanner * gimp_scanner_new_string               (const gchar  *text,
+                                                  gint          text_len,
                                                   GError      **error);
 void       gimp_scanner_destroy                  (GScanner     *scanner);
 

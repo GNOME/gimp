@@ -184,7 +184,7 @@ gimp_parasite_name (const GimpParasite *parasite)
   return NULL;
 }
 
-gpointer
+gconstpointer
 gimp_parasite_data (const GimpParasite *parasite)
 {
   if (parasite)

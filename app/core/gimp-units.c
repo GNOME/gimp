@@ -97,7 +97,7 @@ gimp_unitrc_load (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("unitrc");
-  scanner = gimp_scanner_new (filename, &error);
+  scanner = gimp_scanner_new_file (filename, &error);
   g_free (filename);
 
   if (! scanner)
@@ -174,16 +174,17 @@ gimp_unitrc_save (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("unitrc");
 
-  writer = gimp_config_writer_new (filename,
-                                   TRUE,
-                                   "GIMP units\n\n"
-                                   "This file contains the user unit database. "
-                                   "You can edit this list with the unit "
-                                   "editor. You are not supposed to edit it "
-                                   "manually, but of course you can do.\n"
-                                   "This file will be entirely rewritten every "
-                                   "time you quit the gimp.",
-                                   NULL);
+  writer =
+    gimp_config_writer_new_file (filename,
+				 TRUE,
+				 "GIMP units\n\n"
+				 "This file contains the user unit database. "
+				 "You can edit this list with the unit "
+				 "editor. You are not supposed to edit it "
+				 "manually, but of course you can do.\n"
+				 "This file will be entirely rewritten every "
+				 "time you quit the gimp.",
+				 NULL);
 
   g_free (filename);
 

@@ -55,9 +55,11 @@ typedef enum
 
 static gint    dump_gimprc          (DumpFormat        format);
 static void    dump_gimprc_system   (GObject          *rc,
-				     GimpConfigWriter *writer);
+				     GimpConfigWriter *writer,
+                                     gint              fd);
 static void    dump_gimprc_manpage  (GObject          *rc,
-				     GimpConfigWriter *writer);
+				     GimpConfigWriter *writer,
+                                     gint              fd);
 static gchar * dump_describe_param  (GParamSpec       *param_spec);
 static void    dump_with_linebreaks (gint              fd,
 				     const gchar      *text);
@@ -110,6 +112,7 @@ dump_gimprc (DumpFormat format)
 {
   GimpConfigWriter *writer;
   GObject          *rc;
+  gint              fd = 1;
 
   if (format == DUMP_NONE)
     return EXIT_SUCCESS;
@@ -120,7 +123,7 @@ dump_gimprc (DumpFormat format)
                      "module-load-inhibit", "foo",  /* for completeness */
                      NULL);
 
-  writer = gimp_config_writer_new_from_fd (1);
+  writer = gimp_config_writer_new_fd (fd);
 
   switch (format)
     {
@@ -133,10 +136,10 @@ dump_gimprc (DumpFormat format)
       g_print ("\n");
       break;
     case DUMP_COMMENT:
-      dump_gimprc_system (rc, writer);
+      dump_gimprc_system (rc, writer, fd);
       break;
     case DUMP_MANPAGE:
-      dump_gimprc_manpage (rc, writer);
+      dump_gimprc_manpage (rc, writer, fd);
       break;
     default:
       break;
@@ -167,7 +170,8 @@ static const gchar *system_gimprc_header =
 
 static void
 dump_gimprc_system (GObject          *rc,
-		    GimpConfigWriter *writer)
+		    GimpConfigWriter *writer,
+                    gint              fd)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -194,11 +198,10 @@ dump_gimprc_system (GObject          *rc,
 	  gimp_config_writer_comment (writer, comment);
 	  g_free (comment);
 
-	  write (writer->fd, "#\n", 2);
+	  write (fd, "#\n", 2);
 	}
 
-      /* kids, don't try this at home! */
-      write (writer->fd, "# ", 2);
+      write (fd, "# ", 2);
 
       gimp_config_serialize_property (rc, prop_spec, writer);
       gimp_config_writer_linefeed (writer);
@@ -296,14 +299,15 @@ static const gchar *man_page_footer =
 
 static void
 dump_gimprc_manpage (GObject          *rc,
-		     GimpConfigWriter *writer)
+		     GimpConfigWriter *writer,
+                     gint              fd)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
   guint          n_property_specs;
   guint          i;
 
-  write (writer->fd, man_page_header, strlen (man_page_header));
+  write (fd, man_page_header, strlen (man_page_header));
 
   klass = G_OBJECT_GET_CLASS (rc);
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
@@ -316,16 +320,16 @@ dump_gimprc_manpage (GObject          *rc,
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      write (writer->fd, ".TP\n", strlen (".TP\n"));
+      write (fd, ".TP\n", strlen (".TP\n"));
 
       if (gimp_config_serialize_property (rc, prop_spec, writer))
 	{
-	  write (writer->fd, "\n", 1);
+	  write (fd, "\n", 1);
 
 	  desc = dump_describe_param (prop_spec);
 
-	  dump_with_linebreaks (writer->fd, desc);
-	  write (writer->fd, "\n", 1);
+	  dump_with_linebreaks (fd, desc);
+	  write (fd, "\n", 1);
 
 	  g_free (desc);
         }
@@ -333,8 +337,8 @@ dump_gimprc_manpage (GObject          *rc,
 
   g_free (property_specs);
 
-  write (writer->fd, man_page_path,   strlen (man_page_path));
-  write (writer->fd, man_page_footer, strlen (man_page_footer));
+  write (fd, man_page_path,   strlen (man_page_path));
+  write (fd, man_page_footer, strlen (man_page_footer));
 }
 
 

@@ -71,17 +71,23 @@ typedef void  (* GimpConfigForeachFunc) (const gchar *key,
 
 GType         gimp_config_interface_get_type    (void) G_GNUC_CONST;
 
-gboolean      gimp_config_serialize             (GObject      *object,
+gboolean      gimp_config_serialize_to_file     (GObject      *object,
                                                  const gchar  *filename,
                                                  const gchar  *header,
                                                  const gchar  *footer,
                                                  gpointer      data,
                                                  GError      **error);
-gboolean      gimp_config_deserialize           (GObject      *object,
+gchar       * gimp_config_serialize_to_string   (GObject      *object,
+						 gpointer      data);
+gboolean      gimp_config_deserialize_file      (GObject      *object,
                                                  const gchar  *filename,
                                                  gpointer      data,
                                                  GError      **error);
-
+gboolean      gimp_config_deserialize_string    (GObject      *object,
+                                                 const gchar  *text,
+                                                 gint          text_len,
+                                                 gpointer      data,
+                                                 GError      **error);
 gboolean      gimp_config_deserialize_return    (GScanner     *scanner,
                                                  GTokenType    expected_token,
                                                  gint          nest_level);

@@ -100,8 +100,8 @@ gimp_parasiterc_load (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("parasiterc");
 
-  if (! gimp_config_deserialize (G_OBJECT (gimp->parasites),
-                                 filename, NULL, &error))
+  if (! gimp_config_deserialize_file (G_OBJECT (gimp->parasites),
+				      filename, NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         g_message (error->message);
@@ -129,8 +129,10 @@ gimp_parasiterc_save (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("parasiterc");
 
-  if (! gimp_config_serialize (G_OBJECT (gimp->parasites),
-                               filename, header, footer, NULL, &error))
+  if (! gimp_config_serialize_to_file (G_OBJECT (gimp->parasites),
+				       filename,
+				       header, footer, NULL,
+				       &error))
     {
       g_message (error->message);
       g_error_free (error);

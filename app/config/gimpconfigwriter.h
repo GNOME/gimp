@@ -23,24 +23,12 @@
 #define __GIMP_CONFIG_WRITER_H__
 
 
-struct _GimpConfigWriter
-{
-  /*<  private  >*/
-  gint      fd;
-  gchar    *filename;
-  gchar    *tmpname;
-  GError   *error;
-  GString  *buffer;
-  gint      depth;
-  gint      marker;
-};
-
-
-GimpConfigWriter * gimp_config_writer_new         (const gchar       *filename,
+GimpConfigWriter * gimp_config_writer_new_file    (const gchar       *filename,
 						   gboolean           safe,
 						   const gchar       *header,
 						   GError           **error);
-GimpConfigWriter * gimp_config_writer_new_from_fd (gint               fd);
+GimpConfigWriter * gimp_config_writer_new_fd      (gint               fd);
+GimpConfigWriter * gimp_config_writer_new_string  (GString           *string);
 
 void               gimp_config_writer_open        (GimpConfigWriter  *writer,
 						   const gchar       *name);

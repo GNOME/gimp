@@ -80,7 +80,7 @@ session_init (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("sessionrc");
-  scanner = gimp_scanner_new (filename, &error);
+  scanner = gimp_scanner_new_file (filename, &error);
   g_free (filename);
 
   if (! scanner)
@@ -205,18 +205,19 @@ session_save (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("sessionrc");
 
-  writer = gimp_config_writer_new (filename,
-                                   TRUE,
-                                   "GIMP sessionrc\n\n"
-                                   "This file takes session-specific info "
-                                   "(that is info, you want to keep between "
-                                   "two gimp-sessions). You are not supposed "
-                                   "to edit it manually, but of course you "
-                                   "can do.\n"
-                                   "This file will be entirely rewritten "
-                                   "every time you quit the gimp. If this "
-                                   "file isn't found, defaults are used.",
-                                   NULL);
+  writer =
+    gimp_config_writer_new_file (filename,
+				 TRUE,
+				 "GIMP sessionrc\n\n"
+				 "This file takes session-specific info "
+				 "(that is info, you want to keep between "
+				 "two gimp-sessions). You are not supposed "
+				 "to edit it manually, but of course you "
+				 "can do.\n"
+				 "This file will be entirely rewritten "
+				 "every time you quit the gimp. If this "
+				 "file isn't found, defaults are used.",
+				 NULL);
 
   if (!writer)
     return;

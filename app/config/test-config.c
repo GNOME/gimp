@@ -33,6 +33,7 @@
 
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
+#include "gimpconfig-utils.h"
 #include "gimprc.h"
 
 
@@ -47,8 +48,8 @@ int
 main (int   argc,
       char *argv[])
 {
-  GimpRc      *gimprc;
-  GimpRc      *gimprc2;
+  GObject     *gimprc;
+  GObject     *gimprc2;
   const gchar *filename = "foorc";
   gchar       *header;
   gchar       *result;
@@ -76,17 +77,16 @@ main (int   argc,
   g_print (" done.\n\n");
   
   g_print (" Adding the unknown token (foobar \"hadjaha\") ..."); 
-  gimp_config_add_unknown_token (G_OBJECT (gimprc), "foobar", "hadjaha");
+  gimp_config_add_unknown_token (gimprc, "foobar", "hadjaha");
   g_print (" done.\n\n");
 
   g_print (" Serializing %s to '%s' ...", 
            g_type_name (G_TYPE_FROM_INSTANCE (gimprc)), filename);
 
-  if (! gimp_config_serialize (G_OBJECT (gimprc),
-                               filename,
-                               "foorc",
-                               "end of foorc",
-                               NULL, &error))
+  if (! gimp_config_serialize_to_file (gimprc,
+				       filename,
+				       "foorc", "end of foorc",
+				       NULL, &error))
     {
       g_print ("%s\n", error->message);
       return EXIT_FAILURE;
@@ -98,21 +98,20 @@ main (int   argc,
                     NULL);
 
   g_print (" Deserializing from '%s' ...\n\n", filename);
-  if (! gimp_config_deserialize (G_OBJECT (gimprc), filename, NULL, &error))
+  if (! gimp_config_deserialize_file (gimprc, filename, NULL, &error))
     {
       g_print ("%s\n", error->message);
       return EXIT_FAILURE;
     }
   header = "\n  Unknown string tokens:\n";
-  gimp_config_foreach_unknown_token (G_OBJECT (gimprc), 
-                                     output_unknown_token, &header);
+  gimp_config_foreach_unknown_token (gimprc, output_unknown_token, &header);
   g_print ("\n done.\n");
 
   g_print ("\n Changing a property ...");
   g_object_set (gimprc, "use-help", FALSE, NULL);
 
   g_print ("\n Testing gimp_config_duplicate() ...");
-  gimprc2 = GIMP_RC (gimp_config_duplicate (G_OBJECT (gimprc)));
+  gimprc2 = gimp_config_duplicate (gimprc);
   g_print (" done.\n");
 
   g_signal_connect (gimprc2, "notify",
@@ -124,7 +123,7 @@ main (int   argc,
 
   g_print ("\n Querying for \"default-comment\" ... ");
   
-  result = gimp_rc_query (gimprc2, "default-comment");
+  result = gimp_rc_query (GIMP_RC (gimprc2), "default-comment");
   if (result)
     {
       g_print ("OK, found \"%s\".\n", result);
@@ -138,7 +137,7 @@ main (int   argc,
 
   g_print (" Querying for \"foobar\" ... ");
   
-  result = gimp_rc_query (gimprc2, "foobar");
+  result = gimp_rc_query (GIMP_RC (gimprc2), "foobar");
   if (result && strcmp (result, "hadjaha") == 0)
     {
       g_print ("OK, found \"%s\".\n", result);
@@ -154,11 +153,11 @@ main (int   argc,
   g_object_unref (gimprc2);
 
   g_print ("\n Deserializing from gimpconfig.c (should fail) ...");
-  if (! gimp_config_deserialize (G_OBJECT (gimprc),
-                                 "gimpconfig.c", NULL, &error))
+  if (! gimp_config_deserialize_file (gimprc, "gimpconfig.c", NULL, &error))
     {
       g_print (" OK, failed. The error was:\n %s\n", error->message);
       g_error_free (error);
+      error = NULL;
     }
   else
     {
@@ -166,6 +165,40 @@ main (int   argc,
       return EXIT_FAILURE;
     }
 
+  g_print ("\n Serializing to a string and back ... ");
+
+  result = gimp_config_serialize_to_string (gimprc, NULL);
+
+  gimprc2 = g_object_new (GIMP_TYPE_RC, NULL);
+
+  if (! gimp_config_deserialize_string (gimprc2, result, -1, NULL, &error))
+    {
+      g_print ("failed!\nThe error was:\n %s\n", error->message);
+      g_error_free (error);
+      return EXIT_FAILURE;
+    }
+  else
+    {
+      GList *diff = gimp_config_diff (gimprc, gimprc2, 0);
+
+      if (diff)
+        {
+          GList *list;
+
+          g_print ("succeeded but properties differ:\n");
+          for (list = diff; list; list = list->next)
+            {
+              GParamSpec *pspec = list->data;
+              g_print ("   %s\n", pspec->name);
+            }
+          return EXIT_FAILURE;
+        }
+
+      g_print ("OK (%d bytes)\n", result ? strlen (result) : 0);
+    }
+
+  g_free (result);
+  g_object_unref (gimprc2);
   g_object_unref (gimprc);
   
   g_print ("\nFinished test of GimpConfig.\n\n");

@@ -50,27 +50,27 @@ struct _GimpParasite
 };
 
 
-GimpParasite * gimp_parasite_new                 (const gchar        *name, 
-						  guint32             flags,
-						  guint32             size, 
-						  const gpointer      data);
-void           gimp_parasite_free                (GimpParasite       *parasite);
+GimpParasite * gimp_parasite_new           (const gchar        *name, 
+                                            guint32             flags,
+                                            guint32             size, 
+                                            const gpointer      data);
+void           gimp_parasite_free          (GimpParasite       *parasite);
 
-GimpParasite * gimp_parasite_copy                (const GimpParasite *parasite);
+GimpParasite * gimp_parasite_copy          (const GimpParasite *parasite);
 
-gboolean       gimp_parasite_compare             (const GimpParasite *a, 
-						  const GimpParasite *b);
+gboolean       gimp_parasite_compare       (const GimpParasite *a, 
+                                            const GimpParasite *b);
 
-gboolean       gimp_parasite_is_type             (const GimpParasite *parasite,
-						  const gchar        *name);
-gboolean       gimp_parasite_is_persistent       (const GimpParasite *parasite);
-gboolean       gimp_parasite_is_undoable         (const GimpParasite *parasite);
-gboolean       gimp_parasite_has_flag            (const GimpParasite *parasite,
-						  gulong              flag);
-gulong         gimp_parasite_flags               (const GimpParasite *parasite);
-const gchar  * gimp_parasite_name                (const GimpParasite *parasite);
-gpointer       gimp_parasite_data                (const GimpParasite *parasite);
-glong          gimp_parasite_data_size           (const GimpParasite *parasite);
+gboolean       gimp_parasite_is_type       (const GimpParasite *parasite,
+                                            const gchar        *name);
+gboolean       gimp_parasite_is_persistent (const GimpParasite *parasite);
+gboolean       gimp_parasite_is_undoable   (const GimpParasite *parasite);
+gboolean       gimp_parasite_has_flag      (const GimpParasite *parasite,
+                                            gulong              flag);
+gulong         gimp_parasite_flags         (const GimpParasite *parasite);
+const gchar  * gimp_parasite_name          (const GimpParasite *parasite);
+gconstpointer  gimp_parasite_data          (const GimpParasite *parasite);
+glong          gimp_parasite_data_size     (const GimpParasite *parasite);
 
 
 G_END_DECLS
