@@ -97,7 +97,7 @@ tool_options_dialog_create (Gimp *gimp)
   options_save_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
                             GTK_STOCK_SAVE,
-                            _("Save current settings to disk"),
+                            _("Save current settings as default values"),
                             NULL,
                             G_CALLBACK (tool_options_dialog_save_callback),
                             NULL,
@@ -106,7 +106,7 @@ tool_options_dialog_create (Gimp *gimp)
   options_revert_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
                             GTK_STOCK_REVERT_TO_SAVED,
-                            _("Restore saved settings"),
+                            _("Restore saved default values"),
                             NULL,
                             G_CALLBACK (tool_options_dialog_restore_callback),
                             NULL,
@@ -115,7 +115,7 @@ tool_options_dialog_create (Gimp *gimp)
   options_reset_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
                             GIMP_STOCK_RESET,
-                            _("Reset"),
+                            _("Reset to factory defaults"),
                             NULL,
                             G_CALLBACK (tool_options_dialog_reset_callback),
                             NULL,
@@ -249,7 +249,7 @@ tool_options_dialog_save_callback (GtkWidget   *widget,
   if (! tool_info)
     return;
 
-  if (! gimp_tool_options_serialize (tool_info->tool_options, &error))
+  if (! gimp_tool_options_serialize (tool_info->tool_options, "user", &error))
     {
       g_message ("EEK: %s\n", error->message);
       g_clear_error (&error);
@@ -268,7 +268,7 @@ tool_options_dialog_restore_callback (GtkWidget   *widget,
   if (! tool_info)
     return;
 
-  if (! gimp_tool_options_deserialize (tool_info->tool_options, &error))
+  if (! gimp_tool_options_deserialize (tool_info->tool_options, "user", &error))
     {
       g_message ("EEK: %s\n", error->message);
       g_clear_error (&error);

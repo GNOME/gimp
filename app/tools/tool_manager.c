@@ -155,6 +155,29 @@ tool_manager_init (Gimp *gimp)
 }
 
 void
+tool_manager_exit (Gimp *gimp)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  tool_manager = tool_manager_get (gimp);
+  tool_manager_set (gimp, NULL);
+
+  g_object_unref (tool_manager->global_tool_context);
+
+  gimp_container_remove_handler (gimp->images,
+				 tool_manager->image_dirty_handler_id);
+  gimp_container_remove_handler (gimp->images,
+				 tool_manager->image_undo_start_handler_id);
+
+  if (tool_manager->active_tool)
+    g_object_unref (tool_manager->active_tool);
+
+  g_free (tool_manager);
+}
+
+void
 tool_manager_restore (Gimp *gimp)
 {
   GimpToolManager *tool_manager;
@@ -173,6 +196,8 @@ tool_manager_restore (Gimp *gimp)
       GtkWidget              *options_gui;
 
       tool_info = GIMP_TOOL_INFO (list->data);
+
+      gimp_tool_options_deserialize (tool_info->tool_options, NULL, NULL);
 
       options_gui_func = g_object_get_data (G_OBJECT (tool_info),
                                             "gimp-tool-options-gui-func");
@@ -198,26 +223,24 @@ tool_manager_restore (Gimp *gimp)
 }
 
 void
-tool_manager_exit (Gimp *gimp)
+tool_manager_save (Gimp *gimp)
 {
   GimpToolManager *tool_manager;
+  GimpToolInfo    *tool_info;
+  GList           *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   tool_manager = tool_manager_get (gimp);
-  tool_manager_set (gimp, NULL);
 
-  g_object_unref (tool_manager->global_tool_context);
+  for (list = GIMP_LIST (gimp->tool_info_list)->list;
+       list;
+       list = g_list_next (list))
+    {
+      tool_info = GIMP_TOOL_INFO (list->data);
 
-  gimp_container_remove_handler (gimp->images,
-				 tool_manager->image_dirty_handler_id);
-  gimp_container_remove_handler (gimp->images,
-				 tool_manager->image_undo_start_handler_id);
-
-  if (tool_manager->active_tool)
-    g_object_unref (tool_manager->active_tool);
-
-  g_free (tool_manager);
+      gimp_tool_options_serialize (tool_info->tool_options, NULL, NULL);
+    }
 }
 
 GimpTool *

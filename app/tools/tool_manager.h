@@ -21,8 +21,10 @@
 
 
 void           tool_manager_init                  (Gimp             *gimp);
-void           tool_manager_restore               (Gimp             *gimp);
 void           tool_manager_exit                  (Gimp             *gimp);
+
+void           tool_manager_restore               (Gimp             *gimp);
+void           tool_manager_save                  (Gimp             *gimp);
 
 GimpTool     * tool_manager_get_active            (Gimp             *gimp); 
 

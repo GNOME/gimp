@@ -285,7 +285,10 @@ app_exit_callback (Gimp     *gimp,
   plug_ins_exit (gimp);
 
   if (! gimp->no_interface)
-    tool_manager_exit (gimp);
+    {
+      tool_manager_save (gimp);
+      tool_manager_exit (gimp);
+    }
 
   return FALSE; /* continue exiting */
 }

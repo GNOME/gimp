@@ -1,5 +1,20 @@
 2003-02-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/tool_options.[ch]: added a "const gchar *extension"
+	parameter to gimp_tool_options_[de]serialize(). Default to
+	"default" if NULL is passed.
+
+	* app/tools/tool_manager.[ch]: load the tool_options from the
+	default files in tool_manager_restore(), added tool_manager_save()
+	which saves the default files.
+
+	* app/app_procs.c: call tool_manager_save() on app exit.
+
+	* app/gui/tool-options-dialog.c: pass "user" when loading/saving
+	the user defaults. Changed tooltips of the load & save buttons.
+
+2003-02-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpinktool.c: take the drawable offset into account
 	when painting (spotted by tigert).
 

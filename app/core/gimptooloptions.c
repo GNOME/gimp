@@ -173,8 +173,31 @@ gimp_tool_options_reset (GimpToolOptions *tool_options)
   GIMP_TOOL_OPTIONS_GET_CLASS (tool_options)->reset (tool_options);
 }
 
+static gchar *
+gimp_tool_options_build_filename (GimpToolOptions *tool_options,
+                                  const gchar     *extension)
+{
+  gchar *basename;
+  gchar *filename;
+
+  if (! extension)
+    extension = "default";
+
+  basename = g_strconcat (GIMP_OBJECT (tool_options->tool_info)->name,
+                          ".", extension, NULL);
+
+  filename = g_build_filename (gimp_directory (),
+                               "tool-options", basename,
+                               NULL);
+
+  g_free (basename);
+
+  return filename;
+}
+
 gboolean
 gimp_tool_options_serialize (GimpToolOptions  *tool_options,
+                             const gchar      *extension,
                              GError          **error)
 {
   gchar    *filename;
@@ -183,10 +206,7 @@ gimp_tool_options_serialize (GimpToolOptions  *tool_options,
   g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  filename = g_build_filename (gimp_directory (),
-                               "tool-options",
-                               GIMP_OBJECT (tool_options->tool_info)->name,
-                               NULL);
+  filename = gimp_tool_options_build_filename (tool_options, extension);
 
   retval = gimp_config_serialize (G_OBJECT (tool_options),
                                   filename,
@@ -202,6 +222,7 @@ gimp_tool_options_serialize (GimpToolOptions  *tool_options,
 
 gboolean
 gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
+                               const gchar      *extension,
                                GError          **error)
 {
   gchar    *filename;
@@ -210,10 +231,7 @@ gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
   g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  filename = g_build_filename (gimp_directory (),
-                               "tool-options",
-                               GIMP_OBJECT (tool_options->tool_info)->name,
-                               NULL);
+  filename = gimp_tool_options_build_filename (tool_options, extension);
 
   retval = gimp_config_deserialize (G_OBJECT (tool_options),
                                     filename,

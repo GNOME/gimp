@@ -53,8 +53,10 @@ GType      gimp_tool_options_get_type    (void) G_GNUC_CONST;
 void       gimp_tool_options_reset       (GimpToolOptions  *tool_options);
 
 gboolean   gimp_tool_options_serialize   (GimpToolOptions  *tool_options,
+                                          const gchar      *extension,
                                           GError          **error);
 gboolean   gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
+                                          const gchar      *extension,
                                           GError          **error);
 
 gpointer   gimp_tool_options_gui         (GimpToolOptions *tool_options);
