@@ -13,6 +13,7 @@
 	* app/pdb/Makefile.am
 	* libgimp/Makefile.am: changed accordingly.
 
+	* app/pdb/progress_cmds.c
 	* libgimp/gimpprogress_pdb.[ch]: new generated files.
 
 	* app/pdb/internal_procs.c
