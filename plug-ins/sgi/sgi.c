@@ -34,6 +34,10 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.1.1.1.2.2  1998/03/26 15:41:44  film
+ *   Added an include and a comment about minpixel and  maxpixel.
+ *   -calvin (cwilliamson@berlin.snafu.de)
+ *
  *   Revision 1.1.1.1.2.1  1998/03/20 22:30:44  film
  *   sgi can save 16bit too.
  *   -calvin (cwilliamson@berlin.snafu.de)
@@ -68,6 +72,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <signal.h>
 
 #include "sgi.h"		/* SGI image library definitions */
@@ -317,7 +322,6 @@ load_image(char *filename)	/* I - File to load */
   * Open the file for reading...
   */
   
-  /* getchar(); */
   sgip = sgiOpen(filename, SGI_READ, 0, 0, 0, 0, 0, 0, 0);
   if (sgip == NULL)
   {
@@ -408,6 +412,7 @@ load_image(char *filename)	/* I - File to load */
   */
   minpixel = sgip->minpixel;
   maxpixel = sgip->maxpixel;
+  
   for (y = 0, count = 0;
        y < sgip->ysize;
        y ++, count ++)
@@ -442,11 +447,12 @@ load_image(char *filename)	/* I - File to load */
       */
 
       for (x = 0, pptr_u16 = (guint16*)pixels[count]; x < sgip->xsize; x ++)
-	for (i = 0; i < sgip->zsize; i ++, pptr_u16 ++)
-	  /**pptr = (unsigned)(rows[i][x] + 32768) >> 8;*/
-        {
-          *pptr_u16 = (65535 * ((gint32)rows[i][x] - minpixel)) / (maxpixel - minpixel);
-        }
+      {
+	for (i = 0; i < sgip->zsize ; i ++)
+	  /* *pptr = (unsigned)(rows[i][x] + 32768) >> 8; */
+	  /* Are minpixel, maxpixel values for this image only or reference white, black? */
+          *pptr_u16++ = (65535 * ((gint32)rows[i][x] - minpixel)) / (maxpixel - minpixel);
+      }
     };
   };
 
@@ -490,7 +496,6 @@ save_image(char   *filename,	/* I - File to save to */
   int		i, j,		/* Looping var */
 		x,		/* Current X coordinate */
 		y,		/* Current Y coordinate */
-		image_type,	/* Type of image */
 		layer_type,	/* Type of drawable/layer */
 		tile_height,	/* Height of tile in GIMP */
 		count,		/* Count of rows to put in image */
@@ -648,9 +653,8 @@ save_image(char   *filename,	/* I - File to save to */
       {
 	for (x = 0; x < drawable->width; x ++)
 	  for (j = 0; j < zsize; j ++, pptr_u16 ++)
-          {
-            rows[j][x] = (*pptr_u16 * (maxpixel - minpixel))/65535 + minpixel;
-          }
+            rows[j][x] = *pptr_u16;
+          
 
 	for (j = 0; j < zsize; j ++)
 	  sgiPutRow(sgip, rows[j], drawable->height - 1 - y - i, j);
