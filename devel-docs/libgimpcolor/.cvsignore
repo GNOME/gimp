@@ -2,10 +2,12 @@ Makefile
 Makefile.in
 deprecated
 libgimpcolor.args
-libgimpcolor.hierarchy
-libgimpcolor.signals
 libgimpcolor-decl.txt
 libgimpcolor-decl-list.txt
+libgimpcolor.hierarchy
+libgimpcolor.interfaces
+libgimpcolor.prerequisites
+libgimpcolor.signals
 libgimpcolor-unused.txt
 libgimpcolor-undocumented.txt
 html

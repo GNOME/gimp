@@ -2,10 +2,12 @@ Makefile
 Makefile.in
 deprecated
 libgimpmath.args
-libgimpmath.hierarchy
-libgimpmath.signals
 libgimpmath-decl.txt
 libgimpmath-decl-list.txt
+libgimpmath.hierarchy
+libgimpmath.interfaces
+libgimpmath.prerequisites
+libgimpmath.signals
 libgimpmath-unused.txt
 libgimpmath-undocumented.txt
 html

@@ -78,6 +78,18 @@ if test x$LIBTOOLIZE != x; then
 fi
 
 
+echo -n "checking for gtkdocize ... "
+if (gtkdocize --version) < /dev/null > /dev/null 2>&1; then
+    echo "found"
+else
+    echo
+    echo "You must have gtk-doc installed to compile $PROJECT."
+    echo "Install the appropriate package for your distribution,"
+    echo "or get the source tarball at http://ftp.gnome.org/pub/GNOME/sources/gtk-doc/"
+    DIE=1
+fi
+
+
 echo -n "checking for autoconf >= $AUTOCONF_REQUIRED_VERSION ... "
 if (autoconf --version) < /dev/null > /dev/null 2>&1; then
     VER=`autoconf --version \
@@ -255,6 +267,7 @@ if test $RC -ne 0; then
 fi
 
 $LIBTOOLIZE --force || exit $?
+gtkdocize || exit $?
 
 # optionally feature autoheader
 (autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader || exit 1

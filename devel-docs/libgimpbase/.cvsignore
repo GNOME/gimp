@@ -2,10 +2,12 @@ Makefile
 Makefile.in
 deprecated
 libgimpbase.args
-libgimpbase.hierarchy
-libgimpbase.signals
 libgimpbase-decl.txt
 libgimpbase-decl-list.txt
+libgimpbase.hierarchy
+libgimpbase.interfaces
+libgimpbase.prerequisites
+libgimpbase.signals
 libgimpbase-unused.txt
 libgimpbase-undocumented.txt
 html

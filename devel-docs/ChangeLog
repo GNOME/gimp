@@ -1,3 +1,8 @@
+2004-12-13  Sven Neumann  <sven@gimp.org>
+
+	* */Makefile.am: simplified by including $(top_srcdir)/gtk-doc.make
+	as installed by gtkdocize.
+
 2004-12-13  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* parasites.txt: add info about "gfig" layer parasite.
