@@ -584,5 +584,5 @@
 (gc-verbose #f)
 
 ; The following improves compatibility with older Script-Fu scripts.
-(load (string-append gimp-data-dir DIR-SEPARATOR "scripts"
+(load (string-append gimp-data-directory DIR-SEPARATOR "scripts"
                      DIR-SEPARATOR "script-fu-compat.init"))
