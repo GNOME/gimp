@@ -1,3 +1,8 @@
+2002-11-26  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/preferences/image-title.png:
+	unique icon. Nothing too fancy though.
+
 2002-11-25  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/newsprint.c: timer funcs are now in gimpmisc.
