@@ -1,5 +1,11 @@
 2002-03-17  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-enums.[ch]: registered more enums.
+
+	* app/tools/gimpblendtool.c: use GimpEnumMenus.
+
+2002-03-17  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig.c: open the file with O_TRUNC.
 
 2002-03-17  Sven Neumann  <sven@gimp.org>

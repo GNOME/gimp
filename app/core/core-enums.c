@@ -100,6 +100,94 @@ gimp_channel_type_get_type (void)
 }
 
 
+static const GEnumValue gimp_blend_mode_enum_values[] =
+{
+  { GIMP_FG_BG_RGB_MODE, N_("FG to BG (RGB)"), "fg-bg-rgb-mode" },
+  { GIMP_FG_BG_HSV_MODE, N_("FG to BG (HSV)"), "fg-bg-hsv-mode" },
+  { GIMP_FG_TRANS_MODE, N_("FG to Transparent"), "fg-trans-mode" },
+  { GIMP_CUSTOM_MODE, N_("Custom Gradient"), "custom-mode" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_blend_mode_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpBlendMode", gimp_blend_mode_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_gradient_type_enum_values[] =
+{
+  { GIMP_LINEAR, N_("Linear"), "linear" },
+  { GIMP_BILINEAR, N_("Bi-Linear"), "bilinear" },
+  { GIMP_RADIAL, N_("Radial"), "radial" },
+  { GIMP_SQUARE, N_("Square"), "square" },
+  { GIMP_CONICAL_SYMMETRIC, N_("Conical (symmetric)"), "conical-symmetric" },
+  { GIMP_CONICAL_ASYMMETRIC, N_("Conical (asymmetric)"), "conical-asymmetric" },
+  { GIMP_SHAPEBURST_ANGULAR, N_("Shapeburst (angular)"), "shapeburst-angular" },
+  { GIMP_SHAPEBURST_SPHERICAL, N_("Shapeburst (spherical)"), "shapeburst-spherical" },
+  { GIMP_SHAPEBURST_DIMPLED, N_("Shapeburst (dimpled)"), "shapeburst-dimpled" },
+  { GIMP_SPIRAL_CLOCKWISE, N_("Spiral (clockwise)"), "spiral-clockwise" },
+  { GIMP_SPIRAL_ANTICLOCKWISE, N_("Spiral (anticlockwise)"), "spiral-anticlockwise" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_gradient_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpGradientType", gimp_gradient_type_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_repeat_mode_enum_values[] =
+{
+  { GIMP_REPEAT_NONE, N_("None"), "none" },
+  { GIMP_REPEAT_SAWTOOTH, N_("Sawtooth Wave"), "sawtooth" },
+  { GIMP_REPEAT_TRIANGULAR, N_("Triangular Wave"), "triangular" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_repeat_mode_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpRepeatMode", gimp_repeat_mode_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_transform_direction_enum_values[] =
+{
+  { GIMP_TRANSFORM_FORWARD, N_("Forward (Traditional)"), "forward" },
+  { GIMP_TRANSFORM_BACKWARD, N_("Backward (Corrective)"), "backward" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_transform_direction_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpTransformDirection", gimp_transform_direction_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_gradient_segment_type_enum_values[] =
 {
   { GIMP_GRAD_LINEAR, "GIMP_GRAD_LINEAR", "linear" },
@@ -137,46 +225,6 @@ gimp_gradient_segment_color_get_type (void)
 
   if (!enum_type)
     enum_type = g_enum_register_static ("GimpGradientSegmentColor", gimp_gradient_segment_color_enum_values);
-
-  return enum_type;
-}
-
-
-static const GEnumValue gimp_blend_mode_enum_values[] =
-{
-  { GIMP_FG_BG_RGB_MODE, "GIMP_FG_BG_RGB_MODE", "fg-bg-rgb-mode" },
-  { GIMP_FG_BG_HSV_MODE, "GIMP_FG_BG_HSV_MODE", "fg-bg-hsv-mode" },
-  { GIMP_FG_TRANS_MODE, "GIMP_FG_TRANS_MODE", "fg-trans-mode" },
-  { GIMP_CUSTOM_MODE, "GIMP_CUSTOM_MODE", "custom-mode" },
-  { 0, NULL, NULL }
-};
-
-GType
-gimp_blend_mode_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("GimpBlendMode", gimp_blend_mode_enum_values);
-
-  return enum_type;
-}
-
-
-static const GEnumValue gimp_transform_direction_enum_values[] =
-{
-  { GIMP_TRANSFORM_FORWARD, "GIMP_TRANSFORM_FORWARD", "forward" },
-  { GIMP_TRANSFORM_BACKWARD, "GIMP_TRANSFORM_BACKWARD", "backward" },
-  { 0, NULL, NULL }
-};
-
-GType
-gimp_transform_direction_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("GimpTransformDirection", gimp_transform_direction_enum_values);
 
   return enum_type;
 }

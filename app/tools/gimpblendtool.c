@@ -42,6 +42,7 @@
 #include "display/gimpprogress.h"
 
 #include "widgets/gimpdnd.h"
+#include "widgets/gimpenummenu.h"
 
 #include "gimpblendtool.h"
 #include "paint_options.h"
@@ -496,93 +497,33 @@ blend_options_new (GimpToolInfo *tool_info)
 
   /*  the blend mode menu  */
   options->blend_mode_w =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (gimp_menu_item_update),
-			   &options->blend_mode,
-			   GINT_TO_POINTER (options->blend_mode_d),
-
-			   _("FG to BG (RGB)"),
-			   GINT_TO_POINTER (GIMP_FG_BG_RGB_MODE), NULL,
-
-			   _("FG to BG (HSV)"),
-			   GINT_TO_POINTER (GIMP_FG_BG_HSV_MODE), NULL,
-
-			   _("FG to Transparent"),
-			   GINT_TO_POINTER (GIMP_FG_TRANS_MODE), NULL,
-
-			   _("Custom Gradient"),
-			   GINT_TO_POINTER (GIMP_CUSTOM_MODE), NULL,
-
-			   NULL);
-
+    gimp_enum_option_menu_new (GIMP_TYPE_BLEND_MODE,
+                               G_CALLBACK (gimp_menu_item_update),
+                               &options->blend_mode);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (options->blend_mode_w),
+                                GINT_TO_POINTER (options->blend_mode_d));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Blend:"), 1.0, 0.5,
 			     options->blend_mode_w, 2, TRUE);
 
   /*  the gradient type menu  */
   options->gradient_type_w =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (gradient_type_callback),
-			   options,
-			   GINT_TO_POINTER (options->gradient_type_d),
-
-			   _("Linear"),
-			   GINT_TO_POINTER (GIMP_LINEAR), NULL,
-
-			   _("Bi-Linear"),
-			   GINT_TO_POINTER (GIMP_BILINEAR), NULL,
-
-			   _("Radial"),
-			   GINT_TO_POINTER (GIMP_RADIAL), NULL,
-
-			   _("Square"),
-			   GINT_TO_POINTER (GIMP_SQUARE), NULL,
-
-			   _("Conical (symmetric)"),
-			   GINT_TO_POINTER (GIMP_CONICAL_SYMMETRIC), NULL,
-
-			   _("Conical (asymmetric)"),
-			   GINT_TO_POINTER (GIMP_CONICAL_ASYMMETRIC), NULL,
-
-			   _("Shapeburst (angular)"),
-			   GINT_TO_POINTER (GIMP_SHAPEBURST_ANGULAR), NULL,
-
-			   _("Shapeburst (spherical)"),
-			   GINT_TO_POINTER (GIMP_SHAPEBURST_SPHERICAL), NULL,
-
-			   _("Shapeburst (dimpled)"),
-			   GINT_TO_POINTER (GIMP_SHAPEBURST_DIMPLED), NULL,
-
-			   _("Spiral (clockwise)"),
-			   GINT_TO_POINTER (GIMP_SPIRAL_CLOCKWISE), NULL,
-
-			   _("Spiral (anticlockwise)"),
-			   GINT_TO_POINTER (GIMP_SPIRAL_ANTICLOCKWISE), NULL,
-
-			   NULL);
-
+    gimp_enum_option_menu_new (GIMP_TYPE_GRADIENT_TYPE,
+                               G_CALLBACK (gradient_type_callback),
+                               options);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w),
+                                GINT_TO_POINTER (options->gradient_type_d));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Gradient:"), 1.0, 0.5,
 			     options->gradient_type_w, 2, TRUE);
 
   /*  the repeat option  */
-  options->repeat_w =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (gimp_menu_item_update),
-			   &options->repeat,
-			   GINT_TO_POINTER (options->repeat_d),
-
-			   _("None"),
-			   GINT_TO_POINTER (GIMP_REPEAT_NONE), NULL,
-
-			   _("Sawtooth Wave"),
-			   GINT_TO_POINTER (GIMP_REPEAT_SAWTOOTH), NULL,
-
-			   _("Triangular Wave"),
-			   GINT_TO_POINTER (GIMP_REPEAT_TRIANGULAR), NULL,
-
-			   NULL);
-
+  options->repeat_w = 
+    gimp_enum_option_menu_new (GIMP_TYPE_REPEAT_MODE,
+                               G_CALLBACK (gimp_menu_item_update),
+                               &options->repeat);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (options->repeat_w),
+                                GINT_TO_POINTER (options->repeat_d));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Repeat:"), 1.0, 0.5,
 			     options->repeat_w, 2, TRUE);

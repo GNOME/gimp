@@ -342,7 +342,6 @@ histogram_tool_dialog_new (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *label;
-  GtkWidget *option_menu;
   gint i;
   gint x, y;
 
