@@ -10705,7 +10705,7 @@ msgstr ""
 
 #: plug-ins/gflare/gflare.c:3927
 msgid "Rays"
-msgstr ""
+msgstr "Промен╕"
 
 #: plug-ins/gflare/gflare.c:3978
 msgid "Size Factor Gradient:"
@@ -10797,7 +10797,7 @@ msgstr "Рель╓ф:"
 
 #: plug-ins/gimpressionist/brush.c:452
 msgid "(None)"
-msgstr ""
+msgstr "(Нема╓)"
 
 #: plug-ins/gimpressionist/brush.c:465
 msgid "Save..."
@@ -10821,7 +10821,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/color.c:96
 msgid "Center of brush"
-msgstr ""
+msgstr "Центр пензля"
 
 #: plug-ins/gimpressionist/color.c:102
 msgid "Samples the color from the pixel in the center of the brush"
@@ -10903,11 +10903,11 @@ msgstr "В╕дкинути т╕нь"
 
 #: plug-ins/gimpressionist/general.c:285
 msgid "Adds a shadow effect to each brush stroke"
-msgstr ""
+msgstr "Додати ефект т╕н╕ до кожного мазка пензля"
 
 #: plug-ins/gimpressionist/general.c:296
 msgid "How much to \"darken\" the drop shadow"
-msgstr ""
+msgstr "Наск╕льки темною ма╓ бути т╕нь"
 
 #: plug-ins/gimpressionist/general.c:302
 msgid "Shadow depth:"
