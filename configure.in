@@ -564,7 +564,7 @@ if test "x$enable_perl" != xno; then
       sinclude(plug-ins/perl/configure.frag)
 
       dnl we ignore prefix
-      if test -n "$enable_perl" && test "$enable_perl" != xyes; then
+      if test -n "$enable_perl" && test "x$enable_perl" != xyes; then
          perl_prefix="PREFIX=$enable_perl"
       fi
       cat >plug-ins/perl/config.status <<EOF

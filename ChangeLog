@@ -49,7 +49,6 @@ Fri Nov 26 12:25:42 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gap/gap_main.c: fixed a menu path.
 
->>>>>>> 1.1871
 Fri Nov 26 01:33:04 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/histogram_tool.c: purely cosmetic change
