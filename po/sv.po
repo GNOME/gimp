@@ -5840,9 +5840,9 @@ msgid ""
 "here."
 msgstr ""
 "'gimprc' används för att lagra personliga inställningar\n"
-"såsom GIMPs standarduppförande uppförande.\n"
+"såsom GIMPs standarduppförande.\n"
 "Sökvägar till penslar, färgkartor, färgskalor, mönster\n"
-"insticksprogram och moduler konfigureras även här"
+"insticksprogram och moduler konfigureras även här."
 
 #: app/user_install.c:160
 msgid ""
