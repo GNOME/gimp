@@ -1,3 +1,11 @@
+2004-02-17  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/pagecurl/pagecurl.c: Corrected the pairing of
+	gimp_drawable_get/gimp_drawable_detach and other cleanups.
+	(do_curl_effect): Fixed a bug spotted by Simon Budig: uninitialized
+	data could be exposed when applying the effect to non-rectangular
+	selections.
+
 2004-02-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpviewable.c (gimp_viewable_calc_preview_size): argh,

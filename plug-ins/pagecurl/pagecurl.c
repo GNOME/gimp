@@ -110,12 +110,11 @@ static void dialog_scale_update  (GtkAdjustment     *adjustment,
 
 static gint do_dialog            (void);
 
-static void     init_calculation (void);
-
-static void     do_curl_effect      (void);
-static void     clear_curled_region (void);
-static void     page_curl           (void);
-static guchar * get_samples         (GimpDrawable   *drawable);
+static void     init_calculation    (gint32 drawable_id);
+static void     do_curl_effect      (gint32 drawable_id);
+static void     clear_curled_region (gint32 drawable_id);
+static void     page_curl           (gint32 drawable_id);
+static guchar * get_samples         (gint32 drawable_id);
 
 
 /***** Variables *****/
@@ -134,7 +133,6 @@ static CurlParams curl;
 
 static gint32        image_id;
 static GimpDrawable *curl_layer;
-static GimpDrawable *drawable;
 
 static gchar **curl_pixmaps[] =
 {
@@ -230,6 +228,7 @@ run (const gchar      *name,
   static GimpParam  values[2];
   GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            drawable_id;
 
   run_mode = param[0].data.d_int32;
 
@@ -249,11 +248,11 @@ run (const gchar      *name,
   values[1].data.d_layer = -1;
 
   /*  Get the specified drawable  */
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  drawable_id = param[2].data.d_drawable;
   image_id = param[1].data.d_image;
 
-  if (gimp_drawable_is_rgb (drawable->drawable_id)
-       || gimp_drawable_is_gray (drawable->drawable_id))
+  if (gimp_drawable_is_rgb (drawable_id)
+       || gimp_drawable_is_gray (drawable_id))
     {
       switch (run_mode)
 	{
@@ -315,7 +314,7 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  page_curl ();
+	  page_curl (drawable_id);
 	  values[1].data.d_layer = curl_layer_ID;
 	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
@@ -655,7 +654,7 @@ do_dialog (void)
 }
 
 static void
-init_calculation (void)
+init_calculation (gint32 drawable_id)
 {
   gdouble      k;
   gdouble      alpha, beta;
@@ -665,8 +664,7 @@ init_calculation (void)
   gint32       nlayers;
   GimpRGB      color;
 
-  gimp_layer_add_alpha (drawable->drawable_id);
-  drawable = gimp_drawable_get (drawable->drawable_id);
+  gimp_layer_add_alpha (drawable_id);
 
   /* Image parameters */
 
@@ -675,11 +673,11 @@ init_calculation (void)
   image_layers = gimp_image_get_layers (image_id, &nlayers);
   drawable_position = 0;
   while (drawable_position < nlayers &&
-	 image_layers[drawable_position] != drawable->drawable_id)
+	 image_layers[drawable_position] != drawable_id)
     drawable_position++;
 
   /* Get the bounds of the active selection */
-  gimp_drawable_mask_bounds (drawable->drawable_id,
+  gimp_drawable_mask_bounds (drawable_id,
 			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   true_sel_width = sel_x2 - sel_x1;
@@ -736,7 +734,7 @@ init_calculation (void)
 }
 
 static void
-do_curl_effect (void)
+do_curl_effect (gint32 drawable_id)
 {
   gint          x, y, color_image;
   gint          x1, y1, k;
@@ -750,7 +748,7 @@ do_curl_effect (void)
   gpointer      pr;
   guchar       *grad_samples = NULL;
 
-  color_image = gimp_drawable_is_rgb (drawable->drawable_id);
+  color_image = gimp_drawable_is_rgb (drawable_id);
   curl_layer =
     gimp_drawable_get (gimp_layer_new (image_id,
 				       _("Curl Layer"),
@@ -759,9 +757,10 @@ do_curl_effect (void)
 				       color_image ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE,
 				       100, GIMP_NORMAL_MODE));
   gimp_image_add_layer (image_id, curl_layer->drawable_id, drawable_position);
+  gimp_drawable_fill (curl_layer->drawable_id, GIMP_TRANSPARENT_FILL);
   curl_layer_ID = curl_layer->drawable_id;
 
-  gimp_drawable_offsets (drawable->drawable_id, &x1, &y1);
+  gimp_drawable_offsets (drawable_id, &x1, &y1);
   gimp_layer_set_offsets (curl_layer->drawable_id, sel_x1 + x1, sel_y1 + y1);
   gimp_tile_cache_ntiles (2 * (curl_layer->width / gimp_tile_width () + 1));
 
@@ -776,7 +775,7 @@ do_curl_effect (void)
 		    -(sel_height - right_tangent.y));
   dr_mag = gimp_vector2_length (&dr);
   alpha = acos (gimp_vector2_inner_product (&dl, &dr) / (dl_mag * dr_mag));
-  beta=alpha / 2;
+  beta = alpha / 2;
 
   /* Init shade_curl */
 
@@ -789,7 +788,7 @@ do_curl_effect (void)
 
   /* Gradient Samples */
   if (curl.do_curl_gradient)
-    grad_samples = get_samples (curl_layer);
+    grad_samples = get_samples (curl_layer->drawable_id);
 
   max_progress = 2 * sel_width * sel_height;
   progress = 0;
@@ -913,17 +912,20 @@ do_curl_effect (void)
 /************************************************/
 
 static void
-clear_curled_region (void)
+clear_curled_region (gint32 drawable_id)
 {
-  GimpPixelRgn src_rgn, dest_rgn;
-  gpointer pr;
-  gint x, y;
-  guint x1, y1, i;
-  guchar *dest, *src, *pp, *sp;
-  guint alpha_pos, progress, max_progress;
+  GimpPixelRgn  src_rgn, dest_rgn;
+  gpointer      pr;
+  gint          x, y;
+  guint         x1, y1, i;
+  guchar       *dest, *src, *pp, *sp;
+  guint         alpha_pos, progress, max_progress;
+  GimpDrawable *drawable;
 
   max_progress = 2 * sel_width * sel_height;
   progress = max_progress / 2;
+
+  drawable = gimp_drawable_get (drawable_id);
 
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
   gimp_pixel_rgn_init (&src_rgn, drawable,
@@ -984,32 +986,34 @@ clear_curled_region (void)
     }
 
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id,
+  gimp_drawable_merge_shadow (drawable_id, TRUE);
+  gimp_drawable_update (drawable_id,
 			sel_x1, sel_y1, true_sel_width, true_sel_height);
   gimp_drawable_detach (drawable);
 }
 
 static void
-page_curl (void)
+page_curl (gint32 drawable_id)
 {
   gimp_image_undo_group_start (image_id);
 
   gimp_progress_init (_("Page Curl..."));
-  init_calculation ();
-  do_curl_effect ();
-  clear_curled_region ();
+
+  init_calculation (drawable_id);
+
+  do_curl_effect (drawable_id);
+  clear_curled_region (drawable_id);
 
   gimp_image_undo_group_end (image_id);
 }
 
 /*
   Returns NGRADSAMPLES samples of active gradient.
-  Each sample has (gimp_drawable_bpp (drawable->drawable_id)) bytes.
+  Each sample has (gimp_drawable_bpp (drawable_id)) bytes.
   "ripped" from gradmap.c.
  */
 static guchar *
-get_samples (GimpDrawable *drawable)
+get_samples (gint32 drawable_id)
  {
   gdouble       *f_samples, *f_samp;    /* float samples */
   guchar        *b_samples, *b_samp;    /* byte samples */
@@ -1021,9 +1025,9 @@ get_samples (GimpDrawable *drawable)
 #endif
   f_samples = gimp_gradients_sample_uniform (NGRADSAMPLES, FALSE);
 
-  bpp       = gimp_drawable_bpp (drawable->drawable_id);
-  color     = gimp_drawable_is_rgb (drawable->drawable_id);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  bpp       = gimp_drawable_bpp (drawable_id);
+  color     = gimp_drawable_is_rgb (drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable_id);
   alpha     = (has_alpha ? bpp - 1 : bpp);
 
   b_samples = g_new (guchar, NGRADSAMPLES * bpp);
