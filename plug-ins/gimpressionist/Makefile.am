@@ -40,6 +40,7 @@ gimpressionist_sources = \
 	infile.h        	\
 	orientation.h		\
 	orientation.c		\
+	orientmap.h     \
 	orientmap.c		\
 	paper.c			\
 	paper.h			\

@@ -133,8 +133,6 @@ GtkWidget *create_one_column_list (GtkWidget *parent,
 
 void brush_reload (const gchar *fn, struct ppm *p);
 
-void create_orientmap_dialog (void);
-void update_orientmap_dialog (void);
 double get_direction (double x, double y, int from);
 
 void create_sizemap_dialog (void);

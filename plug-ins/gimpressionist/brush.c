@@ -204,7 +204,7 @@ static void
 savebrush (GtkWidget *wg,
            gpointer   data)
 {
-  static GtkWidget *dialog   = NULL;
+  GtkWidget *dialog   = NULL;
   GList            *thispath = parsepath ();
   gchar            *path;
 

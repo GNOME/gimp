@@ -16,6 +16,8 @@
 
 #include "preview.h"
 
+#include "orientmap.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 #define NUMVECTYPES 4
@@ -124,18 +126,19 @@ double get_direction (double x, double y, int from)
   return 90-(gimp_rad_to_deg(atan2(dy,dx))+angoff);
 }
 
+static ppm_t update_om_preview_nbuffer = {0,0,NULL};
+
 static void update_orient_map_preview_prev (void)
 {
   int x, y;
-  static ppm_t nbuffer = {0,0,NULL};
   guchar black[3] = {0,0,0};
   guchar gray[3] = {120,120,120};
   guchar white[3] = {255,255,255};
 
-  if (!PPM_IS_INITED (&nbuffer))
-    ppm_new (&nbuffer,OMWIDTH,OMHEIGHT);
+  if (!PPM_IS_INITED (&update_om_preview_nbuffer))
+    ppm_new (&update_om_preview_nbuffer,OMWIDTH,OMHEIGHT);
 
-  fill (&nbuffer, black);
+  fill (&update_om_preview_nbuffer, black);
 
   for (y = 6; y < OMHEIGHT-4; y += 10)
     for (x = 6; x < OMWIDTH-4; x += 10) 
@@ -143,13 +146,15 @@ static void update_orient_map_preview_prev (void)
         double dir = gimp_deg_to_rad(get_direction(x/(double)OMWIDTH,y/(double)OMHEIGHT,0));
         double xo = sin(dir)*4.0;
         double yo = cos(dir)*4.0;
-        ppm_drawline (&nbuffer, x-xo, y-yo, x+xo, y+yo, gray);
-        ppm_put_rgb (&nbuffer, x-xo, y-yo, white);
+        ppm_drawline (&update_om_preview_nbuffer, x-xo, y-yo, x+xo, 
+                      y+yo, gray);
+        ppm_put_rgb (&update_om_preview_nbuffer, x-xo, y-yo, white);
       }
 
   for (y = 0; y < OMHEIGHT; y++)
     gtk_preview_draw_row (GTK_PREVIEW (orient_map_preview_prev),
-                          (guchar *) nbuffer.col + y * OMWIDTH * 3, 0, y,
+                          (guchar *) update_om_preview_nbuffer.col + 
+                          y * OMWIDTH * 3, 0, y,
                           OMWIDTH);
 
   gtk_widget_queue_draw (orient_map_preview_prev);
@@ -162,10 +167,11 @@ static void update_orient_map_preview_prev (void)
 
 static int selectedvector = 0;
 
+static ppm_t update_vector_preview_backup = {0,0,NULL};
+static ppm_t update_vector_preview_buffer = {0,0,NULL};
+
 static void update_vector_prev(void)
 {
-  static ppm_t backup = {0,0,NULL};
-  static ppm_t buffer = {0,0,NULL};
   static int ok = 0;
   int i, x, y;
   double dir, xo, yo;
@@ -181,13 +187,14 @@ static void update_vector_prev(void)
     val = 0.5;
 
   if (!ok || (val != last_val)) {
-    infile_copy_to_ppm (&backup);
-    ppm_apply_brightness (&backup, val, 1,1,1);
-    if ((backup.width != OMWIDTH) || (backup.height != OMHEIGHT))
-      resize_fast (&backup, OMWIDTH, OMHEIGHT);
+    infile_copy_to_ppm (&update_vector_preview_backup);
+    ppm_apply_brightness (&update_vector_preview_backup, val, 1,1,1);
+    if ((update_vector_preview_backup.width != OMWIDTH) || 
+        (update_vector_preview_backup.height != OMHEIGHT))
+      resize_fast (&update_vector_preview_backup, OMWIDTH, OMHEIGHT);
     ok = 1;
   }
-  ppm_copy (&backup, &buffer);
+  ppm_copy (&update_vector_preview_backup, &update_vector_preview_buffer);
 
   for(i = 0; i < num_vectors; i++) {
     double s;
@@ -198,20 +205,29 @@ static void update_vector_prev(void)
     xo = sin(dir)*(6.0+100*s);
     yo = cos(dir)*(6.0+100*s);
     if(i == selectedvector)
-      ppm_drawline (&buffer, x-xo, y-yo, x+xo, y+yo, red);
+      ppm_drawline (&update_vector_preview_buffer, x-xo, y-yo, x+xo, 
+                    y+yo, red);
     else
-      ppm_drawline (&buffer, x-xo, y-yo, x+xo, y+yo, gray);
-    ppm_put_rgb (&buffer, x-xo, y-yo, white);
+      ppm_drawline (&update_vector_preview_buffer, x-xo, y-yo, 
+                    x+xo, y+yo, gray);
+    ppm_put_rgb (&update_vector_preview_buffer, x-xo, y-yo, white);
   }
 
   for (y = 0; y < OMHEIGHT; y++)
     gtk_preview_draw_row (GTK_PREVIEW (vector_preview),
-                          (guchar *) buffer.col + y * OMWIDTH * 3,
+                          (guchar *) update_vector_preview_buffer.col +
+                          y * OMWIDTH * 3,
                           0, y, OMWIDTH);
 
   gtk_widget_queue_draw (vector_preview);
 }
 
+void orientation_map_free_resources()
+{
+  ppm_kill(&update_om_preview_nbuffer);
+  ppm_kill(&update_vector_preview_backup);
+  ppm_kill(&update_vector_preview_buffer);
+}
 static gboolean adjignore = FALSE;
 
 static void update_slides(void)

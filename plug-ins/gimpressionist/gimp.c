@@ -13,6 +13,7 @@
 #include "brush.h"
 #include "presets.h"
 #include "random.h"
+#include "orientmap.h"
 
 
 #include "libgimp/stdplugins-intl.h"
@@ -200,6 +201,7 @@ run (const gchar      *name,
   preview_free_resources();
   brush_free();
   preset_free();
+  orientation_map_free_resources();
 
   values[0].data.d_status = status;
 

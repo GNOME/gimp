@@ -18,5 +18,5 @@ enum ORIENTATION_ENUM
 void create_orientationpage (GtkNotebook *);
 void orientation_restore (void);
 int orientation_type_input (int in);
-    
+
 #endif /* #ifndef __ORIENTATION_H */

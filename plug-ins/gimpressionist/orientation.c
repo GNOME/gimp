@@ -7,6 +7,7 @@
 
 #include "gimpressionist.h"
 #include "orientation.h"
+#include "orientmap.h"
 
 #include "libgimp/stdplugins-intl.h"
 
