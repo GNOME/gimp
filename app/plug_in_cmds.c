@@ -31,6 +31,7 @@ static ProcRecord progress_init_proc;
 static ProcRecord progress_update_proc;
 static ProcRecord temp_PDB_name_proc;
 static ProcRecord plugins_query_proc;
+static ProcRecord plugin_domain_add_proc;
 
 void
 register_plug_in_procs (void)
@@ -39,6 +40,7 @@ register_plug_in_procs (void)
   procedural_db_register (&progress_update_proc);
   procedural_db_register (&temp_PDB_name_proc);
   procedural_db_register (&plugins_query_proc);
+  procedural_db_register (&plugin_domain_add_proc);
 }
 
 static int
@@ -382,4 +384,67 @@ static ProcRecord plugins_query_proc =
   12,
   plugins_query_outargs,
   { { plugins_query_invoker } }
+};
+
+static Argument *
+plugin_domain_add_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  gchar *domain_name;
+  gchar *domain_path;
+  PlugInDef *plug_in_def;
+
+  domain_name = (gchar *) args[0].value.pdb_pointer;
+  if (domain_name == NULL)
+    success = FALSE;
+
+  domain_path = (gchar *) args[1].value.pdb_pointer;
+
+  if (success)
+    {
+      if (current_plug_in && current_plug_in->query)
+	{
+	  plug_in_def = current_plug_in->user_data;
+    
+	  if (plug_in_def->locale_domain)
+	    g_free (plug_in_def->locale_domain);      
+	  plug_in_def->locale_domain = g_strdup (domain_name);
+    
+	  if (plug_in_def->locale_path);
+	    g_free (plug_in_def->locale_path);
+	  plug_in_def->locale_path = domain_path ? g_strdup (domain_path) : NULL;
+	}
+    }
+
+  return procedural_db_return_args (&plugin_domain_add_proc, success);
+}
+
+static ProcArg plugin_domain_add_inargs[] =
+{
+  {
+    PDB_STRING,
+    "domain_name",
+    "The name of the textdomain (must be unique)."
+  },
+  {
+    PDB_STRING,
+    "domain_path",
+    "The absolute path to the compiled message catalog (may be NULL)."
+  }
+};
+
+static ProcRecord plugin_domain_add_proc =
+{
+  "gimp_plugin_domain_add",
+  "Adds a textdomain for localisation.",
+  "This procedure adds a textdomain to the list of domains Gimp searches for strings when translating its menu entries. There is no need to call this function for plug-ins that have their strings included in the gimp-stdplugins domain as that is use by default. If the compiled message catalog is not in the standard location, you may specify an absolute path to another location. This procedure can only be called in the query function of a plug-in and it has to be called before a procedure is installed.",
+  "Sven Neumann",
+  "Sven Neumann",
+  "2000",
+  PDB_INTERNAL,
+  2,
+  plugin_domain_add_inargs,
+  0,
+  NULL,
+  { { plugin_domain_add_invoker } }
 };

@@ -1,3 +1,16 @@
+Wed Feb 23 19:04:08 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gimprc.c
+	* app/internal_procs.c
+	* app/plug_in.[ch]
+	* app/plug_in_cmds.c
+	* libgimp/gimp.[ch]
+	* tools/pdbgen/pdb/plug_in.pdb: new functions 
+	gimp_plugin_domain_add() and gimp_plugin_domain_add_with_path()
+	that allow a plugin to specify its textdomain in the query()
+	function. The info is saved and read in from the pluginrc, but
+	not yet used.
+
 2000-02-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/file_new_dialog.c: use a gimp_query_boolean_box().

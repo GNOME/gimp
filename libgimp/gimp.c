@@ -1413,3 +1413,35 @@ gimp_temp_proc_run (GPProcRun *proc_run)
 /* 	gimp_quit (); */
     }
 }
+
+void
+gimp_plugin_domain_add (gchar *domain_name)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_plugin_domain_add",
+				    &nreturn_vals,
+				    PARAM_STRING, domain_name,
+				    PARAM_STRING, NULL,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+void
+gimp_plugin_domain_add_with_path (gchar *domain_name,
+				  gchar *domain_path)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_plugin_domain_add",
+				    &nreturn_vals,
+				    PARAM_STRING, domain_name,
+				    PARAM_STRING, domain_path,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+

@@ -54,6 +54,7 @@
 #define ERROR  0
 #define DONE   1
 #define OK     2
+#define LOCALE_DEF 3
 
 typedef enum {
   TT_STRING,
@@ -187,6 +188,7 @@ static int parse_preview_size       (gpointer val1p, gpointer val2p);
 static int parse_nav_preview_size   (gpointer val1p, gpointer val2p);
 static int parse_units              (gpointer val1p, gpointer val2p);
 static int parse_plug_in            (gpointer val1p, gpointer val2p);
+static int parse_locale_def         (PlugInDef *plug_in_def);
 static int parse_plug_in_def        (gpointer val1p, gpointer val2p);
 static int parse_device             (gpointer val1p, gpointer val2p);
 static int parse_menu_path          (gpointer val1p, gpointer val2p);
@@ -1409,19 +1411,15 @@ parse_plug_in_def (gpointer val1p,
 {
   PlugInDef *plug_in_def;
   PlugInProcDef *proc_def;
-  GSList *tmp_list;
-  int token;
+  gint token;
+  gint success;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))
     return ERROR;
   token = get_next_token ();
 
-  plug_in_def = g_new (PlugInDef, 1);
-  plug_in_def->prog = g_strdup (token_str);
-  plug_in_def->proc_defs = NULL;
-  plug_in_def->mtime = 0;
-  plug_in_def->query = FALSE;
+  plug_in_def = plug_in_def_new (token_str);
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_NUMBER))
@@ -1430,11 +1428,18 @@ parse_plug_in_def (gpointer val1p,
 
   plug_in_def->mtime = token_int;
 
-  while (parse_proc_def (&proc_def))
+  success = OK;
+  while (success == OK)
     {
-      proc_def->mtime = plug_in_def->mtime;
-      proc_def->prog = g_strdup (plug_in_def->prog);
-      plug_in_def->proc_defs = g_slist_append (plug_in_def->proc_defs, proc_def);
+      success = parse_proc_def (&proc_def);
+      if (success == OK)
+	{
+	  proc_def->mtime = plug_in_def->mtime;
+	  proc_def->prog = g_strdup (plug_in_def->prog);
+	  plug_in_def->proc_defs = g_slist_append (plug_in_def->proc_defs, proc_def);
+	}
+      else if (success == LOCALE_DEF)
+	success = parse_locale_def (plug_in_def);
     }
 
   token = peek_next_token ();
@@ -1448,18 +1453,51 @@ parse_plug_in_def (gpointer val1p,
 
  error:
   g_message (_("error parsing pluginrc"));
-  tmp_list = plug_in_def->proc_defs;
-  while (tmp_list)
-    {
-      g_free (tmp_list->data);
-      tmp_list = tmp_list->next;
-    }
-  g_slist_free (plug_in_def->proc_defs);
-  g_free (plug_in_def->prog);
-  g_free (plug_in_def);
+  plug_in_def_free (plug_in_def, TRUE);
 
   return ERROR;
 }
+
+static int
+parse_locale_def (PlugInDef *plug_in_def)
+{
+  int token;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_STRING))
+    return ERROR;
+  token = get_next_token ();
+      
+  if (plug_in_def->locale_domain)
+    g_free (plug_in_def->locale_domain);
+  plug_in_def->locale_domain = g_strdup (token_str);
+  
+  token = peek_next_token ();
+  if (token && token == TOKEN_STRING)
+    {
+      token = get_next_token ();
+      if (plug_in_def->locale_path)
+	g_free (plug_in_def->locale_path);
+      plug_in_def->locale_path = g_strdup (token_str);
+
+      token = peek_next_token ();
+    }
+
+  if (!token || token != TOKEN_RIGHT_PAREN)
+    goto error;
+  token = get_next_token ();
+
+  return OK;
+
+ error:
+  g_free (plug_in_def->locale_domain);
+  plug_in_def->locale_domain = NULL;
+  g_free (plug_in_def->locale_path);
+  plug_in_def->locale_path = NULL;
+
+  return ERROR;
+}
+
 
 static int
 parse_proc_def (PlugInProcDef **proc_def)
@@ -1474,9 +1512,17 @@ parse_proc_def (PlugInProcDef **proc_def)
   token = get_next_token ();
 
   token = peek_next_token ();
-  if (!token || (token != TOKEN_SYMBOL) ||
-      (strcmp ("proc-def", token_sym) != 0))
+  if (!token || (token != TOKEN_SYMBOL))
     return ERROR;
+  
+  if ((strcmp ("locale-def", token_sym) == 0))
+    {
+      token = get_next_token ();
+      return LOCALE_DEF;  /* it's a locale_def, let parse_locale_def do the rest */
+    }
+  else if (strcmp ("proc-def", token_sym) != 0)
+    return ERROR;
+
   token = get_next_token ();
 
   pd = g_new0 (PlugInProcDef, 1);

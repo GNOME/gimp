@@ -282,9 +282,9 @@ plug_in_init (void)
    *  we'll fall back on sending the data over the pipe.
    */
   if (use_shm)
-  {
-      plug_in_init_shm();
-  }
+    {
+      plug_in_init_shm ();
+    }
   /* search for binaries in the plug-in directory path */
   datafiles_read_directories (plug_in_path, plug_in_init_file, MODE_EXECUTABLE);
 
@@ -301,15 +301,15 @@ plug_in_init (void)
   else
     filename = gimp_personal_rc_file ("pluginrc");
 
-  app_init_update_status(_("Resource configuration"), filename, -1);
+  app_init_update_status (_("Resource configuration"), filename, -1);
   parse_gimprc_file (filename);
 
   /* query any plug-ins that have changed since we last wrote out
    *  the pluginrc file.
    */
   tmp = plug_in_defs;
-  app_init_update_status(_("Plug-ins"), "", 0);
-  nplugins = g_slist_length(tmp);
+  app_init_update_status (_("Plug-ins"), "", 0);
+  nplugins = g_slist_length (tmp);
   nth = 0;
   while (tmp)
     {
@@ -623,6 +623,49 @@ plug_in_file_handler (char *name,
   return NULL;
 }
 
+
+PlugInDef *
+plug_in_def_new (gchar *prog)
+{
+  PlugInDef *plug_in_def;
+
+  g_return_val_if_fail (prog != NULL, NULL);
+
+  plug_in_def = g_new (PlugInDef, 1);
+
+  plug_in_def->prog = g_strdup (prog);
+  plug_in_def->proc_defs = NULL;
+  plug_in_def->locale_domain = NULL;
+  plug_in_def->locale_path = NULL;
+  plug_in_def->mtime = 0;
+  plug_in_def->query = FALSE;
+  
+  return plug_in_def;
+}
+
+
+void
+plug_in_def_free (PlugInDef *plug_in_def,
+		  gboolean   free_proc_defs)
+{
+  GSList *list;
+
+  g_free (plug_in_def->prog);
+  if (plug_in_def->locale_domain)  g_free (plug_in_def->locale_domain);
+  if (plug_in_def->locale_path)    g_free (plug_in_def->locale_path);
+
+  if (free_proc_defs && plug_in_def->proc_defs)
+    {
+      for (list = plug_in_def->proc_defs; list; list = list->next)
+	g_free (list->data);
+
+      g_slist_free (plug_in_def->proc_defs);
+    }
+
+  g_free (plug_in_def);
+}
+
+
 void
 plug_in_def_add (PlugInDef *plug_in_def)
 {
@@ -673,23 +716,22 @@ plug_in_def_add (PlugInDef *plug_in_def)
 	    {
 	      /* Use cached plug-in entry */
 	      tmp->data = plug_in_def;
-	      g_free (tplug_in_def->prog);
-	      g_free (tplug_in_def);
+	      plug_in_def_free (tplug_in_def, FALSE);
 	    }
 	  else
 	    {
-	      g_free (plug_in_def->prog);
-	      g_free (plug_in_def);
+	      plug_in_def_free (plug_in_def, FALSE);    
 	    }
+	  
 	  return;
 	}
     }
 
   write_pluginrc = TRUE;
   g_print ("\"%s\" executable not found\n", plug_in_def->prog);
-  g_free (plug_in_def->prog);
-  g_free (plug_in_def);
+  plug_in_def_free (plug_in_def, FALSE);
 }
+
 
 gchar *
 plug_in_menu_path (gchar *name)
@@ -2177,12 +2219,22 @@ plug_in_write_rc (char *filename)
 	      if (tmp2)
 		fprintf (fp, "\n");
 	    }
+	  
+	  if (plug_in_def->locale_domain)
+	    {
+	      fprintf (fp, "\n\t(locale-def \"%s\"", plug_in_def->locale_domain);
+	      if (plug_in_def->locale_path)
+		fprintf (fp, " \"%s\")", plug_in_def->locale_path);
+	      else
+		fprintf (fp, ")");
+	    }
 
 	  fprintf (fp, ")\n");
 
 	  if (tmp)
 	    fprintf (fp, "\n");
 	}
+      
     }
 
   fclose (fp);
@@ -2225,9 +2277,7 @@ plug_in_init_file (char *filename)
       plug_in_def = NULL;
     }
 
-  plug_in_def = g_new (PlugInDef, 1);
-  plug_in_def->prog = g_strdup (filename);
-  plug_in_def->proc_defs = NULL;
+  plug_in_def = plug_in_def_new (filename);
   plug_in_def->mtime = datafile_mtime ();
   plug_in_def->query = TRUE;
 

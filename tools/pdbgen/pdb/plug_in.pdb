@@ -22,6 +22,11 @@ sub andy_pdb_misc {
     $date = '1998';
 }
 
+sub neo_pdb_misc {
+    $author = $copyright = 'Sven Neumann';
+    $date = '2000';
+}
+
 # The defs
 
 sub progress_init {
@@ -240,6 +245,55 @@ CODE
     );
 }
 
+sub plugin_domain_add {
+    $blurb = 'Adds a textdomain for localisation.';
+
+    $help = <<'HELP';
+This procedure adds a textdomain to the list of domains Gimp searches 
+for strings when translating its menu entries. There is no need to 
+call this function for plug-ins that have their strings included in 
+the gimp-stdplugins domain as that is use by default. If the compiled 
+message catalog is not in the standard location, you may specify an 
+absolute path to another location. This procedure can only be called 
+in the query function of a plug-in and it has to be called before a
+procedure is installed.
+HELP
+
+    &neo_pdb_misc;
+
+    @inargs = (
+	{ name => 'domain_name', type => 'string',
+	  desc => 'The name of the textdomain (must be unique).' },
+	{ name => 'domain_path', type => 'string',
+	  desc => 'The absolute path to the compiled message catalog (may be NULL).',
+	  no_success => 1 },
+    );
+    
+	      
+    %invoke = (
+	success => 'TRUE',
+	vars => [ 'PlugInDef *plug_in_def' ],
+	code => <<'CODE',
+{
+  if (current_plug_in && current_plug_in->query)
+    {
+      plug_in_def = current_plug_in->user_data;
+
+      if (plug_in_def->locale_domain)
+	g_free (plug_in_def->locale_domain);      
+      plug_in_def->locale_domain = g_strdup (domain_name);
+
+      if (plug_in_def->locale_path);
+        g_free (plug_in_def->locale_path);
+      plug_in_def->locale_path = domain_path ? g_strdup (domain_path) : NULL;
+    }
+}
+CODE
+    );
+}
+
+
+
 @headers = qw("plug_in.h" "regex.h" "appenv.h" <string.h> <stdlib.h>);
 
 $extra{app}->{code} = <<'CODE';
@@ -251,9 +305,13 @@ match_strings (regex_t *preg,
 }
 CODE
 
-@procs = qw(progress_init progress_update temp_PDB_name plugins_query);
+@procs = qw(progress_init progress_update temp_PDB_name plugins_query
+	    plugin_domain_add);
 %exports = (app => [@procs], lib => [@procs[0..2]]);
 
 $desc = 'Plug-in';
 
 1;
+
+
+

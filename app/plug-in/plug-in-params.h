@@ -77,10 +77,12 @@ struct _PlugIn
 
 struct _PlugInDef
 {
-  char *prog;
+  gchar  *prog;
   GSList *proc_defs;
-  time_t mtime;
-  int query;
+  gchar  *locale_domain;
+  gchar  *locale_path;
+  time_t  mtime;
+  gint    query;
 };
 
 struct _PlugInProcDef
@@ -129,6 +131,12 @@ PlugInProcDef* plug_in_file_handler (char *name,
 /* Add a plug-in definition.
  */
 void plug_in_def_add (PlugInDef *plug_in_def);
+
+/* Allocate and free a plug-in definition.
+ */
+PlugInDef * plug_in_def_new  (gchar     *prog);
+void        plug_in_def_free (PlugInDef *plug_in_def, 
+			      gboolean   free_proc_defs);
 
 /* Retrieve a plug-ins menu path
  */

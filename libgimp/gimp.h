@@ -890,6 +890,14 @@ void      gimp_parasite_detach     (const char     *name);
 void      gimp_plugin_help_func    (gchar *help_data);
 void      gimp_help                (gchar *help_data);
 
+/****************************************
+ *           Localisation               *
+ ****************************************/
+
+void      gimp_plugin_domain_add           (gchar *domain_name);
+void      gimp_plugin_domain_add_with_path (gchar *domain_name, 
+					    gchar *domain_path);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
