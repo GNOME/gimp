@@ -515,9 +515,9 @@ dialogs_template_list_new (GimpDialogFactory *factory,
 
   template_view = GIMP_TEMPLATE_VIEW (view);
 
+  template_view->create_image_func  = templates_file_new_dialog;
   template_view->new_template_func  = templates_new_template_dialog;
   template_view->edit_template_func = templates_edit_template_dialog;
-  template_view->create_image_func  = templates_file_new_dialog;
 
   return dialogs_dockable_new (view,
 			       _("Templates"), _("List of Templates"),
@@ -745,8 +745,8 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
                              gimage,
                              GIMP_TYPE_LAYER,
                              "active_layer_changed",
-                             (GimpNewItemFunc)      layers_new_layer_query,
                              (GimpEditItemFunc)     layers_edit_layer_query,
+                             (GimpNewItemFunc)      layers_new_layer_query,
                              (GimpActivateItemFunc) layers_edit_layer_query,
                              factory->menu_factory, "<Layers>");
 
@@ -781,8 +781,8 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
                              gimage,
                              GIMP_TYPE_CHANNEL,
                              "active_channel_changed",
-                             (GimpNewItemFunc)      channels_new_channel_query,
                              (GimpEditItemFunc)     channels_edit_channel_query,
+                             (GimpNewItemFunc)      channels_new_channel_query,
                              (GimpActivateItemFunc) channels_edit_channel_query,
                              factory->menu_factory, "<Channels>");
 
@@ -818,8 +818,8 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
                              gimage,
                              GIMP_TYPE_VECTORS,
                              "active_vectors_changed",
-                             (GimpNewItemFunc)      vectors_new_vectors_query,
                              (GimpEditItemFunc)     vectors_edit_vectors_query,
+                             (GimpNewItemFunc)      vectors_new_vectors_query,
                              (GimpActivateItemFunc) vectors_vectors_tool,
                              factory->menu_factory, "<Vectors>");
 

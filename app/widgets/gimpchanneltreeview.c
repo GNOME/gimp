@@ -116,12 +116,12 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_channel;
   item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_channel;
 
+  item_view_class->edit_desc               = _("Edit Channel Attributes");
+  item_view_class->edit_help_id            = GIMP_HELP_CHANNEL_EDIT;
   item_view_class->new_desc                = _("New Channel");
   item_view_class->new_help_id             = GIMP_HELP_CHANNEL_NEW;
   item_view_class->duplicate_desc          = _("Duplicate Channel");
   item_view_class->duplicate_help_id       =  GIMP_HELP_CHANNEL_DUPLICATE;
-  item_view_class->edit_desc               = _("Edit Channel Attributes");
-  item_view_class->edit_help_id            = GIMP_HELP_CHANNEL_EDIT;
   item_view_class->delete_desc             = _("Delete Channel");
   item_view_class->delete_help_id          = GIMP_HELP_CHANNEL_DELETE;
   item_view_class->raise_desc              = _("Raise Channel");

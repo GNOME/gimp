@@ -44,14 +44,14 @@ struct _GimpTemplateView
 {
   GimpContainerEditor     parent_instance;
 
+  GimpTemplateActionFunc  create_image_func;
   GimpTemplateActionFunc  new_template_func;
   GimpTemplateActionFunc  edit_template_func;
-  GimpTemplateActionFunc  create_image_func;
 
+  GtkWidget              *create_button;
   GtkWidget              *new_button;
   GtkWidget              *duplicate_button;
   GtkWidget              *edit_button;
-  GtkWidget              *create_button;
   GtkWidget              *delete_button;
 };
 

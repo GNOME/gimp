@@ -1,3 +1,19 @@
+2003-09-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdatafactoryview.[ch]
+	* app/widgets/gimpitemtreeview.[ch]
+	* app/widgets/gimppaletteeditor.[ch]
+	* app/widgets/gimptemplateview.[ch]: order the button boxes in
+	these dialogs like the entries their popup menus: The default
+	(double click) action is the first menu entry / button. In an
+	attack of consistency, also reordered functions and function
+	parameters all over the place to match the new order.
+
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpvectorstreeview.c
+	* app/gui/dialogs-constructors.c: changed accordingly.
+
 2003-09-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpeditselectiontool.c

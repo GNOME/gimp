@@ -51,11 +51,11 @@
 static void   gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass);
 static void   gimp_data_factory_view_init       (GimpDataFactoryView      *view);
 
+static void   gimp_data_factory_view_edit_clicked      (GtkWidget           *widget,
+							GimpDataFactoryView *view);
 static void   gimp_data_factory_view_new_clicked       (GtkWidget           *widget,
 							GimpDataFactoryView *view);
 static void   gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
-							GimpDataFactoryView *view);
-static void   gimp_data_factory_view_edit_clicked      (GtkWidget           *widget,
 							GimpDataFactoryView *view);
 static void   gimp_data_factory_view_delete_clicked    (GtkWidget           *widget,
 							GimpDataFactoryView *view);
@@ -119,9 +119,9 @@ gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
 static void
 gimp_data_factory_view_init (GimpDataFactoryView *view)
 {
+  view->edit_button      = NULL;
   view->new_button       = NULL;
   view->duplicate_button = NULL;
-  view->edit_button      = NULL;
   view->delete_button    = NULL;
   view->refresh_button   = NULL;
 }
@@ -210,6 +210,14 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                         factory_view);
     }
 
+  factory_view->edit_button =
+    gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                            GIMP_STOCK_EDIT,
+                            _("Edit"), NULL,
+                            G_CALLBACK (gimp_data_factory_view_edit_clicked),
+                            NULL,
+                            editor);
+
   factory_view->new_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
                             GTK_STOCK_NEW,
@@ -223,14 +231,6 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                             GIMP_STOCK_DUPLICATE,
                             _("Duplicate"), NULL,
                             G_CALLBACK (gimp_data_factory_view_duplicate_clicked),
-                            NULL,
-                            editor);
-
-  factory_view->edit_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GIMP_STOCK_EDIT,
-                            _("Edit"), NULL,
-                            G_CALLBACK (gimp_data_factory_view_edit_clicked),
                             NULL,
                             editor);
 
@@ -258,16 +258,34 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 						  factory->container->children_type));
 
   gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (factory_view->duplicate_button),
+				  GTK_BUTTON (factory_view->edit_button),
 				  factory->container->children_type);
   gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (factory_view->edit_button),
+				  GTK_BUTTON (factory_view->duplicate_button),
 				  factory->container->children_type);
   gimp_container_view_enable_dnd (editor->view,
 				  GTK_BUTTON (factory_view->delete_button),
 				  factory->container->children_type);
 
   return TRUE;
+}
+
+static void
+gimp_data_factory_view_edit_clicked (GtkWidget           *widget,
+				     GimpDataFactoryView *view)
+{
+  GimpData *data;
+
+  data = (GimpData *)
+    gimp_context_get_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
+			      view->factory->container->children_type);
+
+  if (view->data_edit_func && data &&
+      gimp_container_have (view->factory->container,
+			   GIMP_OBJECT (data)))
+    {
+      view->data_edit_func (data);
+    }
 }
 
 static void
@@ -316,24 +334,6 @@ gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
 
 	  gimp_data_factory_view_edit_clicked (NULL, view);
 	}
-    }
-}
-
-static void
-gimp_data_factory_view_edit_clicked (GtkWidget           *widget,
-				     GimpDataFactoryView *view)
-{
-  GimpData *data;
-
-  data = (GimpData *)
-    gimp_context_get_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
-			      view->factory->container->children_type);
-
-  if (view->data_edit_func && data &&
-      gimp_container_have (view->factory->container,
-			   GIMP_OBJECT (data)))
-    {
-      view->data_edit_func (data);
     }
 }
 
@@ -433,10 +433,9 @@ gimp_data_factory_view_select_item (GimpContainerEditor *editor,
 				    GimpViewable        *viewable)
 {
   GimpDataFactoryView *view;
-
-  gboolean  duplicate_sensitive = FALSE;
-  gboolean  edit_sensitive      = FALSE;
-  gboolean  delete_sensitive    = FALSE;
+  gboolean             edit_sensitive      = FALSE;
+  gboolean             duplicate_sensitive = FALSE;
+  gboolean             delete_sensitive    = FALSE;
 
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
@@ -448,13 +447,13 @@ gimp_data_factory_view_select_item (GimpContainerEditor *editor,
     {
       GimpData *data = GIMP_DATA (viewable);
 
-      duplicate_sensitive = (GIMP_DATA_GET_CLASS (data)->duplicate != NULL);
       edit_sensitive      = (view->data_edit_func != NULL);
+      duplicate_sensitive = (GIMP_DATA_GET_CLASS (data)->duplicate != NULL);
       delete_sensitive    = data->writeable && !data->internal;
     }
 
-  gtk_widget_set_sensitive (view->duplicate_button, duplicate_sensitive);
   gtk_widget_set_sensitive (view->edit_button,      edit_sensitive);
+  gtk_widget_set_sensitive (view->duplicate_button, duplicate_sensitive);
   gtk_widget_set_sensitive (view->delete_button,    delete_sensitive);
 }
 

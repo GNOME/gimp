@@ -95,6 +95,9 @@ static void     gimp_item_tree_view_drop            (GimpContainerTreeView *view
                                                      GimpViewable      *dest_viewable,
                                                      GtkTreeViewDropPosition  drop_pos);
 
+static void   gimp_item_tree_view_edit_clicked      (GtkWidget         *widget,
+                                                     GimpItemTreeView  *view);
+
 static void   gimp_item_tree_view_new_clicked       (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
 static void   gimp_item_tree_view_new_dropped       (GtkWidget         *widget,
@@ -115,8 +118,6 @@ static void   gimp_item_tree_view_lower_extended_clicked
                                                      GimpItemTreeView  *view);
 
 static void   gimp_item_tree_view_duplicate_clicked (GtkWidget         *widget,
-                                                     GimpItemTreeView  *view);
-static void   gimp_item_tree_view_edit_clicked      (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
 static void   gimp_item_tree_view_delete_clicked    (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
@@ -226,12 +227,12 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->add_item                     = NULL;
   klass->remove_item                  = NULL;
 
+  klass->edit_desc                    = NULL;
+  klass->edit_help_id                 = NULL;
   klass->new_desc                     = NULL;
   klass->new_help_id                  = NULL;
   klass->duplicate_desc               = NULL;
   klass->duplicate_help_id            = NULL;
-  klass->edit_desc                    = NULL;
-  klass->edit_help_id                 = NULL;
   klass->delete_desc                  = NULL;
   klass->delete_help_id               = NULL;
   klass->raise_desc                   = NULL;
@@ -264,6 +265,14 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
   view->gimage      = NULL;
   view->item_type   = G_TYPE_NONE;
   view->signal_name = NULL;
+
+  view->edit_button =
+    gimp_editor_add_button (editor,
+                            GIMP_STOCK_EDIT, view_class->edit_desc,
+                            view_class->edit_help_id,
+                            G_CALLBACK (gimp_item_tree_view_edit_clicked),
+                            NULL,
+                            view);
 
   view->new_button =
     gimp_editor_add_button (editor,
@@ -309,14 +318,6 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
                             NULL,
                             view);
 
-  view->edit_button =
-    gimp_editor_add_button (editor,
-                            GIMP_STOCK_EDIT, view_class->edit_desc,
-                            view_class->edit_help_id,
-                            G_CALLBACK (gimp_item_tree_view_edit_clicked),
-                            NULL,
-                            view);
-
   view->delete_button =
     gimp_editor_add_button (editor,
                             GTK_STOCK_DELETE, view_class->delete_desc,
@@ -325,11 +326,11 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
                             NULL,
                             view);
 
+  gtk_widget_set_sensitive (view->edit_button,      FALSE);
   gtk_widget_set_sensitive (view->new_button,       FALSE);
   gtk_widget_set_sensitive (view->raise_button,     FALSE);
   gtk_widget_set_sensitive (view->lower_button,     FALSE);
   gtk_widget_set_sensitive (view->duplicate_button, FALSE);
-  gtk_widget_set_sensitive (view->edit_button,      FALSE);
   gtk_widget_set_sensitive (view->delete_button,    FALSE);
 
   view->visible_changed_handler_id = 0;
@@ -423,8 +424,8 @@ gimp_item_tree_view_new (gint                  preview_size,
                          GimpImage            *gimage,
                          GType                 item_type,
                          const gchar          *signal_name,
-                         GimpNewItemFunc       new_item_func,
                          GimpEditItemFunc      edit_item_func,
+                         GimpNewItemFunc       new_item_func,
                          GimpActivateItemFunc  activate_item_func,
                          GimpMenuFactory      *menu_factory,
                          const gchar          *menu_identifier)
@@ -440,8 +441,8 @@ gimp_item_tree_view_new (gint                  preview_size,
                         NULL);
   g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (signal_name != NULL, NULL);
-  g_return_val_if_fail (new_item_func != NULL, NULL);
   g_return_val_if_fail (edit_item_func != NULL, NULL);
+  g_return_val_if_fail (new_item_func != NULL, NULL);
   g_return_val_if_fail (activate_item_func != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (menu_identifier != NULL, NULL);
@@ -481,8 +482,8 @@ gimp_item_tree_view_new (gint                  preview_size,
 
   item_view->item_type          = item_type;
   item_view->signal_name        = g_strdup (signal_name);
-  item_view->new_item_func      = new_item_func;
   item_view->edit_item_func     = edit_item_func;
+  item_view->new_item_func      = new_item_func;
   item_view->activate_item_func = activate_item_func;
 
   gimp_editor_create_menu (GIMP_EDITOR (item_view),
@@ -497,10 +498,10 @@ gimp_item_tree_view_new (gint                  preview_size,
 			      view);
 
   gimp_container_view_enable_dnd (view,
-				  GTK_BUTTON (item_view->duplicate_button),
+				  GTK_BUTTON (item_view->edit_button),
 				  item_type);
   gimp_container_view_enable_dnd (view,
-				  GTK_BUTTON (item_view->edit_button),
+				  GTK_BUTTON (item_view->duplicate_button),
 				  item_type);
   gimp_container_view_enable_dnd (view,
 				  GTK_BUTTON (item_view->delete_button),
@@ -638,10 +639,10 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
                                  gpointer           insert_data)
 {
   GimpItemTreeView *tree_view;
+  gboolean          edit_sensitive      = FALSE;
   gboolean          raise_sensitive     = FALSE;
   gboolean          lower_sensitive     = FALSE;
   gboolean          duplicate_sensitive = FALSE;
-  gboolean          edit_sensitive      = FALSE;
   gboolean          delete_sensitive    = FALSE;
   gboolean          success;
 
@@ -680,15 +681,15 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
 	    lower_sensitive = TRUE;
 	}
 
-      duplicate_sensitive = TRUE;
       edit_sensitive      = TRUE;
+      duplicate_sensitive = TRUE;
       delete_sensitive    = TRUE;
     }
 
+  gtk_widget_set_sensitive (tree_view->edit_button,      edit_sensitive);
   gtk_widget_set_sensitive (tree_view->raise_button,     raise_sensitive);
   gtk_widget_set_sensitive (tree_view->lower_button,     lower_sensitive);
   gtk_widget_set_sensitive (tree_view->duplicate_button, duplicate_sensitive);
-  gtk_widget_set_sensitive (tree_view->edit_button,      edit_sensitive);
   gtk_widget_set_sensitive (tree_view->delete_button,    delete_sensitive);
 
   return success;
@@ -820,6 +821,21 @@ gimp_item_tree_view_drop (GimpContainerTreeView   *tree_view,
     }
 
   gimp_image_flush (item_view->gimage);
+}
+
+
+/*  "Edit" functions  */
+
+static void
+gimp_item_tree_view_edit_clicked (GtkWidget        *widget,
+                                  GimpItemTreeView *view)
+{
+  GimpItem *item;
+
+  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (view->gimage);
+
+  if (item)
+    view->edit_item_func (item);
 }
 
 
@@ -1005,21 +1021,6 @@ gimp_item_tree_view_lower_extended_clicked (GtkWidget        *widget,
           gimp_image_flush (view->gimage);
         }
     }
-}
-
-
-/*  "Edit" functions  */
-
-static void
-gimp_item_tree_view_edit_clicked (GtkWidget        *widget,
-                                  GimpItemTreeView *view)
-{
-  GimpItem *item;
-
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (view->gimage);
-
-  if (item)
-    view->edit_item_func (item);
 }
 
 

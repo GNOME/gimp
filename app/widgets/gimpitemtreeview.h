@@ -41,10 +41,10 @@ typedef void            (* GimpAddItemFunc)      (GimpImage       *gimage,
 typedef void            (* GimpRemoveItemFunc)   (GimpImage       *gimage,
                                                   GimpItem        *item);
 
+typedef void            (* GimpEditItemFunc)     (GimpItem        *item);
 typedef void            (* GimpNewItemFunc)      (GimpImage       *gimage,
                                                   GimpItem        *template,
                                                   gboolean         interactive);
-typedef void            (* GimpEditItemFunc)     (GimpItem        *item);
 typedef void            (* GimpActivateItemFunc) (GimpItem        *item);
 
 
@@ -67,15 +67,15 @@ struct _GimpItemTreeView
   GType                  item_type;
   gchar                 *signal_name;
 
-  GimpNewItemFunc        new_item_func;
   GimpEditItemFunc       edit_item_func;
+  GimpNewItemFunc        new_item_func;
   GimpActivateItemFunc   activate_item_func;
 
+  GtkWidget             *edit_button;
   GtkWidget             *new_button;
   GtkWidget             *raise_button;
   GtkWidget             *lower_button;
   GtkWidget             *duplicate_button;
-  GtkWidget             *edit_button;
   GtkWidget             *delete_button;
 
   gint                   model_column_visible;
@@ -105,12 +105,12 @@ struct _GimpItemTreeViewClass
   GimpRemoveItemFunc    remove_item;
 
   /*  various descriptive strings for tooltips and undo steps  */
+  const gchar          *edit_desc;
+  const gchar          *edit_help_id;
   const gchar          *new_desc;
   const gchar          *new_help_id;
   const gchar          *duplicate_desc;
   const gchar          *duplicate_help_id;
-  const gchar          *edit_desc;
-  const gchar          *edit_help_id;
   const gchar          *delete_desc;
   const gchar          *delete_help_id;
   const gchar          *raise_desc;
@@ -132,8 +132,8 @@ GtkWidget * gimp_item_tree_view_new      (gint                  preview_size,
                                           GimpImage            *gimage,
                                           GType                 item_type,
                                           const gchar          *signal_name,
-                                          GimpNewItemFunc       new_item_func,
                                           GimpEditItemFunc      edit_item_func,
+                                          GimpNewItemFunc       new_item_func,
                                           GimpActivateItemFunc  activate_item_func,
                                           GimpMenuFactory      *menu_facotry,
                                           const gchar          *menu_identifier);

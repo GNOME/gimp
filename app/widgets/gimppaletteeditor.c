@@ -215,7 +215,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
 		    G_CALLBACK (palette_editor_eventbox_button_press),
 		    editor);
 
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0); 
+  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_container_add (GTK_CONTAINER (eventbox), alignment);
   gtk_widget_show (alignment);
 
@@ -275,19 +275,19 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                     G_CALLBACK (palette_editor_columns_changed),
                     editor);
 
-  editor->new_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor),
-                            GTK_STOCK_NEW, _("New Color"),
-                            GIMP_HELP_PALETTE_EDITOR_NEW,
-                            G_CALLBACK (palette_editor_new_clicked),
-                            NULL,
-                            editor);
-
   editor->edit_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
                             GIMP_STOCK_EDIT, _("Edit Color"),
                             GIMP_HELP_PALETTE_EDITOR_EDIT,
                             G_CALLBACK (palette_editor_edit_clicked),
+                            NULL,
+                            editor);
+
+  editor->new_button =
+    gimp_editor_add_button (GIMP_EDITOR (editor),
+                            GTK_STOCK_NEW, _("New Color"),
+                            GIMP_HELP_PALETTE_EDITOR_NEW,
+                            G_CALLBACK (palette_editor_new_clicked),
                             NULL,
                             editor);
 
@@ -409,9 +409,9 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
                                      palette_editor_columns_changed,
                                      editor);
 
+  gtk_widget_set_sensitive (palette_editor->edit_button, FALSE);
   gtk_widget_set_sensitive (palette_editor->new_button,
                             editor->data_editable);
-  gtk_widget_set_sensitive (palette_editor->edit_button,   FALSE);
   gtk_widget_set_sensitive (palette_editor->delete_button, FALSE);
 
   gtk_widget_set_sensitive (palette_editor->zoom_out_button,
@@ -631,7 +631,7 @@ palette_editor_draw_color_row (guchar            *colors,
 	      *p++ = bcolor;
 	      *p++ = bcolor;
 	    }
-	  
+
 	  if (column_highlight >= 0)
 	    {
 	      guchar *ph;
@@ -646,7 +646,7 @@ palette_editor_draw_color_row (guchar            *colors,
 		}
 
  	      gtk_preview_draw_row (GTK_PREVIEW (preview), buffer, 0,
-				    y + entry_height + 1, width); 
+				    y + entry_height + 1, width);
 	    }
 
 	  gtk_preview_draw_row (GTK_PREVIEW (preview), buffer, 0, y, width);
@@ -982,32 +982,6 @@ palette_editor_columns_changed (GtkAdjustment     *adj,
 /*  palette zoom functions & callbacks  **************************************/
 
 static void
-palette_editor_new_clicked (GtkWidget         *widget,
-                            GimpPaletteEditor *editor)
-{
-  GimpDataEditor *data_editor;
-  GimpPalette    *palette;
-  GimpContext    *user_context;
-  GimpRGB         color;
-
-  data_editor = GIMP_DATA_EDITOR (editor);
-
-  if (! (data_editor->data && data_editor->data_editable))
-    return;
-
-  palette = GIMP_PALETTE (data_editor->data);
-
-  user_context = gimp_get_user_context (data_editor->gimp);
-
-  if (active_color == FOREGROUND)
-    gimp_context_get_foreground (user_context, &color);
-  else if (active_color == BACKGROUND)
-    gimp_context_get_background (user_context, &color);
-
-  editor->color = gimp_palette_add_entry (palette, NULL, &color);
-}
-
-static void
 palette_editor_edit_clicked (GtkWidget         *widget,
                              GimpPaletteEditor *editor)
 {
@@ -1047,6 +1021,32 @@ palette_editor_edit_clicked (GtkWidget         *widget,
                                 &editor->color->color);
       color_notebook_show (editor->color_notebook);
     }
+}
+
+static void
+palette_editor_new_clicked (GtkWidget         *widget,
+                            GimpPaletteEditor *editor)
+{
+  GimpDataEditor *data_editor;
+  GimpPalette    *palette;
+  GimpContext    *user_context;
+  GimpRGB         color;
+
+  data_editor = GIMP_DATA_EDITOR (editor);
+
+  if (! (data_editor->data && data_editor->data_editable))
+    return;
+
+  palette = GIMP_PALETTE (data_editor->data);
+
+  user_context = gimp_get_user_context (data_editor->gimp);
+
+  if (active_color == FOREGROUND)
+    gimp_context_get_foreground (user_context, &color);
+  else if (active_color == BACKGROUND)
+    gimp_context_get_background (user_context, &color);
+
+  editor->color = gimp_palette_add_entry (palette, NULL, &color);
 }
 
 static void
@@ -1131,7 +1131,7 @@ palette_editor_redraw_zoom (GimpPaletteEditor *editor)
         editor->columns = COLUMNS;
 
       editor->columns_valid = FALSE;
-      palette_editor_redraw (editor); 
+      palette_editor_redraw (editor);
 
       palette_editor_scroll_top_left (editor);
     }

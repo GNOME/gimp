@@ -205,12 +205,12 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_layer;
   item_view_class->remove_item     = gimp_layer_tree_view_remove_item;
 
+  item_view_class->edit_desc               = _("Edit Layer Attributes");
+  item_view_class->edit_help_id            = GIMP_HELP_LAYER_EDIT;
   item_view_class->new_desc                = _("New Layer");
   item_view_class->new_help_id             = GIMP_HELP_LAYER_NEW;
   item_view_class->duplicate_desc          = _("Duplicate Layer");
   item_view_class->duplicate_help_id       = GIMP_HELP_LAYER_DUPLICATE;
-  item_view_class->edit_desc               = _("Edit Layer Attributes");
-  item_view_class->edit_help_id            = GIMP_HELP_LAYER_EDIT;
   item_view_class->delete_desc             = _("Delete Layer");
   item_view_class->delete_help_id          = GIMP_HELP_LAYER_DELETE;
   item_view_class->raise_desc              = _("Raise Layer");
@@ -545,9 +545,9 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
 	{
 	  anchor_sensitive = TRUE;
 
+	  gtk_widget_set_sensitive (item_view->edit_button,      FALSE);
 	  gtk_widget_set_sensitive (item_view->lower_button,     FALSE);
 	  gtk_widget_set_sensitive (item_view->duplicate_button, FALSE);
-	  gtk_widget_set_sensitive (item_view->edit_button,      FALSE);
 	}
       else
 	{
