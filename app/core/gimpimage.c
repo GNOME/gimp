@@ -32,10 +32,12 @@
 #include "base/tile-manager.h"
 
 #include "config/gimpcoreconfig.h"
+#include "config/gimpconfig-utils.h"
 
 #include "gimp.h"
 #include "gimp-parasites.h"
 #include "gimpcontext.h"
+#include "gimpgrid.h"
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
 #include "gimpimage-colormap.h"
@@ -945,6 +947,10 @@ gimp_image_new (Gimp              *gimp,
   gimage->xresolution = gimp->config->default_xresolution;
   gimage->yresolution = gimp->config->default_yresolution;
   gimage->unit        = gimp->config->default_unit;
+
+  gimage->grid        = g_object_new (GIMP_TYPE_GRID, NULL);
+  gimp_config_copy_properties (G_OBJECT (gimp->config->default_grid),
+                               G_OBJECT (gimage->grid));
 
   switch (base_type)
     {

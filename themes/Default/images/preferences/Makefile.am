@@ -4,6 +4,7 @@ themedatadir = $(gimpdatadir)/themes/Default/images/preferences
 
 PREFS_IMAGES = \
 	default-comment.png		\
+	default-grid.png		\
 	display.png			\
 	environment.png			\
 	folders.png			\

@@ -21,9 +21,13 @@
 
 #include "config.h"
 
+#include <string.h> /* strcmp */
+
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimplimits.h"
+
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
@@ -47,7 +51,7 @@ enum
   PROP_OFFSET_UNIT,
   PROP_FGCOLOR,
   PROP_BGCOLOR,
-  PROP_TYPE
+  PROP_STYLE
 };
 
 static void gimp_grid_class_init   (GimpGridClass *klass);
@@ -121,11 +125,13 @@ gimp_grid_class_init (GimpGridClass *klass)
   gimp_rgba_set (&white, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_XSPACING,
-				   "xspacing", NULL,
+				   "xspacing",
+                                   N_("Horizontal spacing of grid lines"),
 				   1.0, GIMP_MAX_IMAGE_SIZE, 10.0,
 				   0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_YSPACING,
-				   "yspacing", NULL,
+				   "yspacing",
+                                   N_("Vertical spacing of grid lines"),
 				   1.0, GIMP_MAX_IMAGE_SIZE, 10.0,
 				   0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_SPACING_UNIT,
@@ -133,12 +139,16 @@ gimp_grid_class_init (GimpGridClass *klass)
 				 FALSE, FALSE, GIMP_UNIT_INCH,
 				 0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_XOFFSET,
-				   "xoffset", NULL,
+				   "xoffset",
+                                   N_("Horizontal offset of the first grid line, "
+                                      "this may be a negative number"),
 				   - GIMP_MAX_IMAGE_SIZE,
                                    GIMP_MAX_IMAGE_SIZE, 0.0,
 				   0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_YOFFSET,
-				   "yoffset", NULL,
+				   "yoffset",
+                                   N_("Vertical offset of the first grid line, "
+                                      "this may be a negative number"),
 				   - GIMP_MAX_IMAGE_SIZE,
                                    GIMP_MAX_IMAGE_SIZE, 0.0,
 				   0);
@@ -147,15 +157,19 @@ gimp_grid_class_init (GimpGridClass *klass)
 				 FALSE, FALSE, GIMP_UNIT_INCH,
 				 0);
   GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_FGCOLOR,
-				  "fgcolor", NULL,
+				  "fgcolor",
+                                  N_("The foreground color of the grid"),
 				  &black,
 				  0);
   GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_BGCOLOR,
-				  "bgcolor", NULL,
+				  "bgcolor",
+                                  N_("The background color of the grid, "
+                                     "only used in double dashed line style"),
 				  &white,
 				  0);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TYPE,
-                                 "type", NULL,
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_STYLE,
+                                 "style",
+                                 N_("Line style used for the grid"),
                                  GIMP_TYPE_GRID_STYLE,
                                  GIMP_GRID_INTERSECTIONS,
                                  0);
@@ -202,8 +216,8 @@ gimp_grid_get_property (GObject      *object,
     case PROP_BGCOLOR:
       g_value_set_boxed (value, &grid->bgcolor);
       break;
-    case PROP_TYPE:
-      g_value_set_enum (value, grid->type);
+    case PROP_STYLE:
+      g_value_set_enum (value, grid->style);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -248,11 +262,65 @@ gimp_grid_set_property (GObject      *object,
       color = g_value_get_boxed (value);
       grid->bgcolor = *color;
       break;
-    case PROP_TYPE:
-      grid->type = g_value_get_enum (value);
+    case PROP_STYLE:
+      grid->style = g_value_get_enum (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+const gchar *
+gimp_grid_parasite_name (void)
+{
+  return "gimp-image-grid";
+}
+
+GimpParasite *
+gimp_grid_to_parasite (const GimpGrid *grid)
+{
+  GimpParasite *parasite;
+  gchar        *str;
+
+  g_return_val_if_fail (GIMP_IS_GRID (grid), NULL);
+
+  str = gimp_config_serialize_to_string (G_OBJECT (grid), NULL);
+  g_return_val_if_fail (str != NULL, NULL);
+
+  parasite = gimp_parasite_new (gimp_grid_parasite_name (),
+                                GIMP_PARASITE_PERSISTENT,
+                                strlen (str) + 1, str);
+  g_free (str);
+
+  return parasite;
+}
+
+GimpGrid *
+gimp_grid_from_parasite (const GimpParasite *parasite)
+{
+  GimpGrid    *grid;
+  const gchar *str;
+  GError      *error = NULL;
+
+  g_return_val_if_fail (parasite != NULL, NULL);
+  g_return_val_if_fail (strcmp (gimp_parasite_name (parasite),
+                                gimp_grid_parasite_name ()) == 0, NULL);
+
+  str = gimp_parasite_data (parasite);
+  g_return_val_if_fail (str != NULL, NULL);
+
+  grid = g_object_new (GIMP_TYPE_GRID, NULL);
+
+  if (! gimp_config_deserialize_string (G_OBJECT (grid),
+                                        str,
+                                        gimp_parasite_data_size (parasite),
+                                        NULL,
+                                        &error))
+    {
+      g_warning ("Failed to deserialize grid parasite: %s", error->message);
+      g_error_free (error);
+    }
+
+  return grid;
 }

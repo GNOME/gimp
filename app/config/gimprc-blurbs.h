@@ -61,6 +61,9 @@ N_("When enabled, this will ensure that each pixel of an image gets " \
 "Specify a default gradient.  The gradient is searched for in the " \
 "specified gradient path."
 
+#define DEFAULT_GRID_BLURB \
+"Specify a default image grid."
+
 #define DEFAULT_IMAGE_WIDTH_BLURB \
 "Sets the default image width in the \"File/New\" dialog."
 

@@ -304,13 +304,15 @@ image_configure_grid_cmd_callback (GtkWidget *widget,
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
+  GimpImage        *gimage;
   return_if_no_display (gdisp, data);
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  shell  = GIMP_DISPLAY_SHELL (gdisp->shell);
+  gimage = GIMP_IMAGE (gdisp->gimage);
 
   if (! shell->grid_dialog)
     {
-      shell->grid_dialog = grid_dialog_new (GIMP_DISPLAY (gdisp));
+      shell->grid_dialog = grid_dialog_new (GIMP_IMAGE (gimage));
 
       gtk_window_set_transient_for (GTK_WINDOW (shell->grid_dialog),
                                     GTK_WINDOW (shell));

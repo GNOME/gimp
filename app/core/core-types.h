@@ -74,8 +74,6 @@ typedef struct _GimpDocumentList    GimpDocumentList;
 
 typedef struct _GimpTemplate        GimpTemplate;
 
-typedef struct _GimpGrid            GimpGrid;
-
 /*  drawable objects  */
 
 typedef struct _GimpDrawable        GimpDrawable;

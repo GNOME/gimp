@@ -28,9 +28,5 @@ void           gimp_image_set_grid             (GimpImage          *gimage,
                                                 GimpGrid           *grid,
                                                 gboolean            push_undo);
 
-const gchar  * gimp_grid_parasite_name          (void) G_GNUC_CONST;
-GimpParasite * gimp_grid_to_parasite            (const GimpGrid     *grid);
-GimpGrid     * gimp_grid_from_parasite          (const GimpParasite *parasite);
-
 
 #endif /* __GIMP_IMAGE_GRID_H__ */

@@ -48,7 +48,7 @@ struct _GimpGrid
   GimpUnit       offset_unit;
   GimpRGB        fgcolor;
   GimpRGB        bgcolor;
-  GimpGridStyle  type;
+  GimpGridStyle  style;
 };
 
 
@@ -58,7 +58,10 @@ struct _GimpGridClass
 };
 
 
-GType gimp_grid_get_type (void) G_GNUC_CONST;
+GType          gimp_grid_get_type               (void) G_GNUC_CONST;
+const gchar  * gimp_grid_parasite_name          (void) G_GNUC_CONST;
+GimpParasite * gimp_grid_to_parasite            (const GimpGrid     *grid);
+GimpGrid     * gimp_grid_from_parasite          (const GimpParasite *parasite);
 
 
 #endif /* __GIMP_GRID_H__ */

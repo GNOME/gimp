@@ -272,6 +272,7 @@ app/widgets/gimperrorconsole.c
 app/widgets/gimpfontselection.c
 app/widgets/gimpfontselection-dialog.c
 app/widgets/gimpgradienteditor.c
+app/widgets/gimpgrideditor.c
 app/widgets/gimphelp.c
 app/widgets/gimpimagedock.c
 app/widgets/gimpimageview.c

@@ -21,17 +21,10 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib-object.h>
-
-#include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
 
-#include "config/gimpconfig.h"
-
-#include "gimp.h"
 #include "gimpgrid.h"
 #include "gimpimage.h"
 #include "gimpimage-grid.h"
@@ -72,58 +65,4 @@ gimp_image_set_grid (GimpImage *gimage,
     }
 
   gimp_image_grid_changed (gimage);
-}
-
-const gchar *
-gimp_grid_parasite_name (void)
-{
-  return "gimp-image-grid";
-}
-
-GimpParasite *
-gimp_grid_to_parasite (const GimpGrid *grid)
-{
-  GimpParasite *parasite;
-  gchar        *str;
-
-  g_return_val_if_fail (GIMP_IS_GRID (grid), NULL);
-
-  str = gimp_config_serialize_to_string (G_OBJECT (grid), NULL);
-  g_return_val_if_fail (str != NULL, NULL);
-
-  parasite = gimp_parasite_new (gimp_grid_parasite_name (),
-                                GIMP_PARASITE_PERSISTENT,
-                                strlen (str) + 1, str);
-  g_free (str);
-
-  return parasite;
-}
-
-GimpGrid *
-gimp_grid_from_parasite (const GimpParasite *parasite)
-{
-  GimpGrid    *grid;
-  const gchar *str;
-  GError      *error = NULL;
-
-  g_return_val_if_fail (parasite != NULL, NULL);
-  g_return_val_if_fail (strcmp (gimp_parasite_name (parasite),
-                                gimp_grid_parasite_name ()) == 0, NULL);
-
-  str = gimp_parasite_data (parasite);
-  g_return_val_if_fail (str != NULL, NULL);
- 
-  grid = g_object_new (GIMP_TYPE_GRID, NULL);
-
-  if (! gimp_config_deserialize_string (G_OBJECT (grid),
-                                        str,
-                                        gimp_parasite_data_size (parasite),
-                                        NULL,
-                                        &error))
-    {
-      g_warning ("Failed to deserialize grid parasite: %s", error->message);
-      g_error_free (error);
-    }
-
-  return grid;
 }

@@ -213,7 +213,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->proximity             = FALSE;
   shell->snap_to_guides        = TRUE;
-  shell->snap_to_grid          = TRUE;
+  shell->snap_to_grid          = FALSE;
 
   shell->select                = NULL;
 
@@ -271,7 +271,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->appearance.selection    = TRUE;
   shell->appearance.active_layer = TRUE;
   shell->appearance.guides       = TRUE;
-  shell->appearance.grid         = TRUE;
+  shell->appearance.grid         = FALSE;
   shell->appearance.menubar      = TRUE;
   shell->appearance.rulers       = TRUE;
   shell->appearance.scrollbars   = TRUE;
@@ -283,7 +283,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->fullscreen_appearance.selection    = TRUE;
   shell->fullscreen_appearance.active_layer = TRUE;
   shell->fullscreen_appearance.guides       = TRUE;
-  shell->fullscreen_appearance.grid         = TRUE;
+  shell->fullscreen_appearance.grid         = FALSE;
   shell->fullscreen_appearance.menubar      = FALSE;
   shell->fullscreen_appearance.rulers       = FALSE;
   shell->fullscreen_appearance.scrollbars   = FALSE;
@@ -1436,7 +1436,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
 
   if (gimp_display_shell_get_show_grid (shell))
     {
-      switch (grid->type)
+      switch (grid->style)
         {
         case GIMP_GRID_ON_OFF_DASH:
           values.line_style = GDK_LINE_ON_OFF_DASH;
@@ -1477,7 +1477,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
       width  = shell->gdisp->gimage->width;
       height = shell->gdisp->gimage->height;
 
-      switch (grid->type)
+      switch (grid->style)
         {
         case GIMP_GRID_DOTS:
           for (x = grid->xoffset; x <= width; x += grid->xspacing)

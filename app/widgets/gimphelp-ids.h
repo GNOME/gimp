@@ -338,6 +338,7 @@
 #define GIMP_HELP_PREFS_DIALOG                    "gimp-prefs-dialog"
 #define GIMP_HELP_PREFS_NEW_IMAGE                 "gimp-prefs-new-image"
 #define GIMP_HELP_PREFS_NEW_IMAGE_COMMENT         "gimp-prefs-new-image-comment"
+#define GIMP_HELP_PREFS_NEW_IMAGE_GRID            "gimp-prefs-new-image-grid"
 #define GIMP_HELP_PREFS_INTERFACE                 "gimp-prefs-interface"
 #define GIMP_HELP_PREFS_HELP                      "gimp-prefs-help"
 #define GIMP_HELP_PREFS_TOOL_OPTIONS              "gimp-prefs-tool-options"

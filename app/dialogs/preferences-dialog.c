@@ -41,6 +41,7 @@
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpgrideditor.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -875,6 +876,7 @@ prefs_dialog_new (Gimp    *gimp,
   PangoAttrList     *attrs;
   PangoAttribute    *attr;
   GSList            *group;
+  GtkWidget         *editor;
 
   gint               i;
   gchar             *pixels_per_unit;
@@ -1137,6 +1139,29 @@ prefs_dialog_new (Gimp    *gimp,
   gtk_widget_show (text_view);
 
   g_object_unref (text_buffer);
+
+
+  /*********************************/
+  /*  New Image / Default Grid  */
+  /*********************************/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("Default Grid"),
+                                     "default-grid.png",
+				     GTK_TREE_STORE (tree),
+				     _("Default Grid"),
+				     GIMP_HELP_PREFS_NEW_IMAGE_GRID,
+				     &top_iter,
+				     &child_iter,
+				     page_index++);
+
+  /*  Grid  */
+  editor = gimp_grid_editor_new (core_config->default_grid,
+                                 core_config->default_xresolution,
+                                 core_config->default_yresolution);
+
+  gtk_container_add (GTK_CONTAINER (vbox), editor);
+  gtk_widget_show (editor);
 
 
   /***************/

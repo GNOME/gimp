@@ -1,3 +1,54 @@
+2003-10-10  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/core/gimpimage-grid.[ch]: removed the grid parasite related
+	functions from here ...
+
+	* app/core/gimpgrid.[ch]: ... and added them here. While I was at
+	it I also changed PROP_TYPE to PROP_STYLE and added blurbs to the
+	properties
+
+	* app/xcf/xcf-load.c
+	* app/display/gimpdisplayshell.c: changed accordingly
+
+	* app/widgets/Makefile.am
+	* po/POTFILES.in
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpgrideditor.[ch]: added a new GimpGridEditor
+	widget - with a work-around for the fact that
+	gimp_prop_coordinated_new() doesn't accept boundaries
+
+	* app/gui/grid-dialog.h
+	* app/gui/grid-dialog.c (grid_dialog_new): use the new
+	GimpGridEditor widget, take a GimpImage as function parameter,
+	assume GimpImages always have a GimpGrid. This simplifies the grid
+	dialog.
+
+	* app/gui/image-commands.c
+	(image_configure_grid_cmd_callback): changed accordingly
+
+	* app/core/core-types.h: moved typedef GimpGrid from here ...
+
+	* app/config/config-types.h: ... to here to be able to use it in
+	GimpCoreConfig
+
+	* app/config/gimprc-blurbs.h
+	* app/config/gimpcoreconfig.[ch]: added default_grid member
+
+	* app/widgets/gimphelp-ids.h
+	* themes/Default/images/preferences/Makefile.am
+	* themes/Default/images/default-grid.png
+	* app/gui/preferences-dialog.c: added UI for specifying default
+	image grid
+
+	* app/core/gimpimage.c (gimp_image_new): create a GimpGrid from
+	core_config->default_grid
+
+	* app/gui/image-menu.c (image_menu_update): the grid/guide entries
+	in <Image>/View/ should always be sensitive ...
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_init):
+	... but the grid entries should be disabled by default
+
 2003-10-10  Sven Neumann  <sven@gimp.org>
 
 	* app/errors.c (gimp_eek)	

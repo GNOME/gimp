@@ -95,6 +95,8 @@ libappwidgets_a_sources = \
 	gimpfontselection-dialog.h	\
 	gimpgradienteditor.c		\
 	gimpgradienteditor.h		\
+	gimpgrideditor.c		\
+	gimpgrideditor.h		\
 	gimphelp.c			\
 	gimphelp.h			\
 	gimphelp-ids.h			\
