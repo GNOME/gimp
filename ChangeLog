@@ -1,5 +1,11 @@
 2005-03-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/common/fp.c: use callbacks to handle
+	"size-allocate" for preview size changes, fixes 
+	bug #160032.
+	
+2005-03-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/core/gimpimage-convert.c:  when converting grayscale
 	to mono, treat the palette as gray rather than rgb, giving
 	more than tenfold speedup.  Fixes bug #170801.

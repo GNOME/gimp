@@ -214,6 +214,8 @@ static void         fp_frames_checkbutton_in_box (GtkWidget      *vbox,
                                                   GtkWidget      *frame,
                                                   gboolean        clicked);
 
+static void             fp_preview_size_allocate (GtkWidget      *widget,
+                                                  GtkAllocation  *allocation);
 
 #define RESPONSE_RESET 1
 
@@ -374,8 +376,7 @@ run (const gchar      *name,
         }
       else if (! fp_dialog())
         {
-          gimp_message (_("Unable to create dialog."));
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = GIMP_PDB_CANCEL;
         }
       break;
 
@@ -882,6 +883,8 @@ fp_create_preview (GtkWidget **preview,
 
   *preview = gimp_preview_area_new ();
   gtk_widget_set_size_request (*preview, preview_width, preview_height);
+  g_signal_connect (*preview, "size_allocate",
+                    G_CALLBACK (fp_preview_size_allocate), NULL);
   gtk_widget_show (*preview);
   gtk_container_add (GTK_CONTAINER (*frame), *preview);
 }
@@ -1050,6 +1053,7 @@ fp_adjust_preview_sizes (gint width,
   gtk_widget_set_size_request (minusSatPreview, width, height);
   gtk_widget_set_size_request (SatPreview,      width, height);
   gtk_widget_set_size_request (plusSatPreview,  width, height);
+
 }
 
 static void
@@ -1617,9 +1621,9 @@ fp_reset_filter_packs (void)
 
 static ReducedImage *
 fp_reduce_image (GimpDrawable  *drawable,
-                  GimpDrawable *mask,
-                  gint          longer_size,
-                  gint          selection)
+                 GimpDrawable *mask,
+                 gint          longer_size,
+                 gint          selection)
 {
   gint          RH, RW, width, height, bytes=drawable->bpp;
   ReducedImage *temp = (ReducedImage *) malloc (sizeof (ReducedImage));
@@ -1729,100 +1733,115 @@ fp_render_preview(GtkWidget *preview,
                   gint       change_which)
 {
   guchar *a;
-  gint Inten, bytes = drawable->bpp;
-  gint i, j, k, nudge, M, m, middle,JudgeBy;
+  gint    Inten;
+  gint    bytes = drawable->bpp;
+  gint    i, j, k, nudge, M, m, middle, JudgeBy;
   gdouble partial;
-  gint RW = reduced->width;
-  gint RH = reduced->height;
-  gint backupP[3], P[3], tempSat[JUDGE_BY][256];
+  gint    RW = reduced->width;
+  gint    RH = reduced->height;
+  gint    backupP[3];
+  gint    P[3];
+  gint    tempSat[JUDGE_BY][256];
 
   a = g_new (guchar, 4*RW*RH);
 
   if (change_what==SATURATION)
-    for (k=0; k<256; k++) {
-      for (JudgeBy=BY_HUE; JudgeBy<JUDGE_BY; JudgeBy++)
-        tempSat[JudgeBy][k]=0;
-        tempSat[fpvals.value_by][k] += change_which*nudgeArray[(k+fpvals.offset)%256];
-    }
+    for (k = 0; k < 256; k++)
+      {
+        for (JudgeBy = BY_HUE; JudgeBy < JUDGE_BY; JudgeBy++)
+          tempSat[JudgeBy][k] = 0;
+        tempSat[fpvals.value_by][k] += change_which * nudgeArray[(k + fpvals.offset) % 256];
+      }
 
-  for (i=0; i<RH; i++) {
-    for (j=0; j<RW; j++) {
+  for (i = 0; i < RH; i++)
+    {
+      for (j = 0; j < RW; j++)
+        {
+          backupP[0] = P[0]  = (int) reduced->rgb[i * RW * bytes + j * bytes + 0];
+          backupP[1] = P[1]  = (int) reduced->rgb[i * RW * bytes + j * bytes + 1];
+          backupP[2] = P[2]  = (int) reduced->rgb[i * RW * bytes + j * bytes + 2];
 
-      backupP[0] = P[0]  = (int) reduced->rgb[i*RW*bytes + j*bytes + 0];
-      backupP[1] = P[1]  = (int) reduced->rgb[i*RW*bytes + j*bytes + 1];
-      backupP[2] = P[2]  = (int) reduced->rgb[i*RW*bytes + j*bytes + 2];
+      m = MIN (MIN (P[0], P[1]), P[2]);
+      M = MAX (MAX (P[0], P[1]), P[2]);
 
-      m = MIN(MIN(P[0],P[1]),P[2]);
-      M = MAX(MAX(P[0],P[1]),P[2]);
-      middle=(M+m)/2;
-      for (k=0; k<3; k++)
-        if (P[k]!=m && P[k]!=M) middle=P[k];
+      middle = (M + m) / 2;
 
-      partial = reduced->mask[i*RW+j]/255.0;
+      for (k = 0; k < 3; k++)
+        if (P[k] != m && P[k] != M) middle = P[k];
 
-      for (JudgeBy=BY_HUE; JudgeBy<JUDGE_BY; JudgeBy++) {
-        if (!fpvals.touched[JudgeBy]) continue;
+      partial = reduced->mask[i * RW + j] / 255.0;
 
-        Inten   = reduced->hsv[i*RW*bytes + j*bytes + JudgeBy]*255.0;
+      for (JudgeBy = BY_HUE; JudgeBy < JUDGE_BY; JudgeBy++)
+        {
+         if (!fpvals.touched[JudgeBy]) continue;
 
-        /*DO SATURATION FIRST*/
-        if (change_what != NONEATALL) {
-          if (M!=m) {
-            for (k=0; k<3; k++)
-              if (backupP[k] == M)
-                P[k] = MAX(P[k]+partial*fpvals.sat_adjust[JudgeBy][Inten],middle);
-              else if (backupP[k] == m)
-                P[k] = MIN(P[k]-partial*fpvals.sat_adjust[JudgeBy][Inten],middle);
-          }
-          P[0]  += partial*fpvals.red_adjust[JudgeBy][Inten];
-          P[1]  += partial*fpvals.green_adjust[JudgeBy][Inten];
-          P[2]  += partial*fpvals.blue_adjust[JudgeBy][Inten];
+         Inten   = reduced->hsv[i * RW * bytes + j * bytes + JudgeBy] * 255.0;
+
+         /*DO SATURATION FIRST*/
+         if (change_what != NONEATALL)
+           {
+             if (M != m)
+               {
+                 for (k = 0; k < 3; k++)
+                   if (backupP[k] == M)
+                     P[k] = MAX (P[k] + partial * fpvals.sat_adjust[JudgeBy][Inten],
+                                 middle);
+                   else if (backupP[k] == m)
+                     P[k] = MIN (P[k] - partial * fpvals.sat_adjust[JudgeBy][Inten],
+                                 middle);
+               }
+
+             P[0]  += partial * fpvals.red_adjust[JudgeBy][Inten];
+             P[1]  += partial * fpvals.green_adjust[JudgeBy][Inten];
+             P[2]  += partial * fpvals.blue_adjust[JudgeBy][Inten];
+           }
         }
-      }
 
-      Inten   = reduced->hsv[i*RW*bytes + j*bytes + fpvals.value_by]*255.0;
-      nudge   = partial*nudgeArray[(Inten+fpvals.offset)%256];
+      Inten   = reduced->hsv[i * RW * bytes + j * bytes + fpvals.value_by] * 255.0;
+      nudge   = partial * nudgeArray[(Inten + fpvals.offset) % 256];
 
-      switch (change_what) {
-      case HUE:
-        P[0]  += colorSign[RED][change_which]   * nudge;
-        P[1]  += colorSign[GREEN][change_which] * nudge;
-        P[2]  += colorSign[BLUE][change_which]  * nudge;
-        break;
+      switch (change_what)
+        {
+        case HUE:
+          P[0]  += colorSign[RED][change_which]   * nudge;
+          P[1]  += colorSign[GREEN][change_which] * nudge;
+          P[2]  += colorSign[BLUE][change_which]  * nudge;
+          break;
 
-      case SATURATION:
-        for (JudgeBy=BY_HUE; JudgeBy<JUDGE_BY; JudgeBy++)
-          for (k=0; k<3; k++)
-            if (M!=m) {
-              if (backupP[k] == M)
-                P[k] = MAX(P[k]+
-                           partial*tempSat[JudgeBy][Inten],middle);
-              else if (backupP[k] == m)
-                P[k] = MIN(P[k]-
-                           partial*tempSat[JudgeBy][Inten],middle);
-            }
-        break;
+        case SATURATION:
+          for (JudgeBy = BY_HUE; JudgeBy < JUDGE_BY; JudgeBy++)
+            for (k = 0; k < 3; k++)
+              if (M != m)
+                {
+                  if (backupP[k] == M)
+                    P[k] = MAX (P[k] + partial * tempSat[JudgeBy][Inten],
+                                middle);
+                  else if (backupP[k] == m)
+                    P[k] = MIN (P[k]- partial * tempSat[JudgeBy][Inten],
+                                middle);
+                }
+          break;
 
-      case VALUE:
-        P[0]  += change_which * nudge;
-        P[1]  += change_which * nudge;
-        P[2]  += change_which * nudge;
-        break;
+        case VALUE:
+          P[0]  += change_which * nudge;
+          P[1]  += change_which * nudge;
+          P[2]  += change_which * nudge;
+          break;
 
-      default:
-        break;
-      }
+        default:
+          break;
+        }
 
       a[(i * RW + j) * 4 + 0] = CLAMP0255(P[0]);
       a[(i * RW + j) * 4 + 1] = CLAMP0255(P[1]);
       a[(i * RW + j) * 4 + 2] = CLAMP0255(P[2]);
 
       if (bytes == 4)
-        a[(i * RW + j) * 4 + 3] = reduced->rgb[i*RW*bytes+j*bytes+3];
+        a[(i * RW + j) * 4 + 3] = reduced->rgb[i * RW * bytes + j * bytes + 3];
       else
         a[(i * RW + j) * 4 + 3] = 255;
+        }
     }
-  }
 
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
                           0, 0, RW, RH,
@@ -2013,3 +2032,52 @@ fp_create_nudge (gint *adj_array)
         ? MAX_ROUGHNESS * fpvals.roughness : 0;
 }
 
+static void
+fp_preview_size_allocate (GtkWidget     *widget,
+                          GtkAllocation *allocation)
+{
+  gint  which   = fpvals.visible_frames;
+
+  if (widget == origPreview)
+    fp_render_preview (origPreview, NONEATALL, 0);
+  else if (widget == curPreview)
+    fp_render_preview (curPreview, CURRENT, 0);
+
+  if (which & HUE)
+    {
+      if (widget == rPreview)
+        fp_render_preview (rPreview,        HUE,        RED);
+      else if (widget == gPreview)
+        fp_render_preview (gPreview,        HUE,        GREEN);
+      else if (widget == bPreview)
+        fp_render_preview (bPreview,        HUE,        BLUE);
+      else if (widget == cPreview)
+        fp_render_preview (cPreview,        HUE,        CYAN);
+      else if (widget == yPreview)
+        fp_render_preview (yPreview,        HUE,        YELLOW);
+      else if (widget == mPreview)
+        fp_render_preview (mPreview,        HUE,        MAGENTA);
+      else if (widget == centerPreview)
+        fp_render_preview (centerPreview,   CURRENT,    0);
+    }
+
+  if (which & VALUE)
+    {
+      if (widget == lighterPreview)
+        fp_render_preview (lighterPreview,  VALUE,      UP);
+      else if (widget == middlePreview)
+        fp_render_preview (middlePreview,   CURRENT,    0);
+      else if (widget == darkerPreview)
+        fp_render_preview (darkerPreview,   VALUE,      DOWN);
+    }
+
+  if (which & SATURATION)
+    {
+      if (widget == plusSatPreview)
+        fp_render_preview (plusSatPreview,  SATURATION, UP);
+      else if (widget == SatPreview)
+        fp_render_preview (SatPreview,      CURRENT,    0);
+      else if (widget == minusSatPreview)
+        fp_render_preview (minusSatPreview, SATURATION, DOWN);
+    }
+}
