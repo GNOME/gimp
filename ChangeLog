@@ -24,6 +24,8 @@
 	and A included from B of course is skipped as we already are
 	reading A.)
 
+	* tools/pdbgen/Makefile.am: Add apptypes.h.
+
 	* tools/pdbgen/pdb/drawable.pdb
 	* tools/pdbgen/pdb/layer.pdb: Add a few casts.
 

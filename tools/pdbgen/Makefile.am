@@ -48,6 +48,7 @@ EXTRA_DIST = \
 
 enum_headers = \
 	../../app/appenv.h		\
+	../../app/apptypes.h		\
 	../../app/blend.h		\
 	../../app/bucket_fill.h		\
 	../../app/channel.h		\
