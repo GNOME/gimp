@@ -39,6 +39,7 @@ typedef enum
   CREATING,
   ADDING,
   MOVING,
+  GUIDING,
   FINISHED
 } MeasureFunction;
 
@@ -121,7 +122,8 @@ measure_tool_button_press (Tool           *tool,
 
   if (tool->state == ACTIVE && gdisp_ptr == tool->gdisp_ptr)
     {
-      /*  if the cursor is in one of the handles, the new function will be moving or adding */
+      /*  if the cursor is in one of the handles, 
+	  the new function will be moving or adding a new point or guide */
       for (i=0; i < measure_tool->num_points; i++)
 	{
 	  gdisplay_transform_coords (gdisp, measure_tool->x[i], measure_tool->y[i], 
@@ -129,6 +131,29 @@ measure_tool_button_press (Tool           *tool,
 	  if (bevent->x == BOUNDS (bevent->x, x[i] - TARGET, x[i] + TARGET) &&
 	      bevent->y == BOUNDS (bevent->y, y[i] - TARGET, y[i] + TARGET))
 	    {
+	      if (bevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK))
+		{
+		  Guide *guide;
+		  int    dummy;
+
+		  if (bevent->state & GDK_CONTROL_MASK)
+		    {
+		      guide = gimp_image_add_hguide (gdisp->gimage);
+		      gdisplay_untransform_coords (gdisp, 0, measure_tool->y[i], 
+						   &dummy, &guide->position, TRUE, TRUE);
+		      gdisplays_expose_guide (gdisp->gimage, guide);
+		    }  
+		  if (bevent->state & GDK_MOD1_MASK)
+		    {
+		      guide = gimp_image_add_vguide (gdisp->gimage);
+		      gdisplay_untransform_coords (gdisp, measure_tool->x[i], 0,  
+						   &guide->position, &dummy, TRUE, TRUE);
+		      gdisplays_expose_guide (gdisp->gimage, guide);
+		    }
+		  gdisplays_flush ();
+		  measure_tool->function = GUIDING;
+		  break;
+		}
 	      measure_tool->function = (bevent->state & GDK_SHIFT_MASK) ? ADDING : MOVING;
 	      measure_tool->point = i;
 	      break;
@@ -163,11 +188,13 @@ measure_tool_button_press (Tool           *tool,
       /*  start drawing the measure tool  */
       draw_core_start (measure_tool->core, gdisp->canvas->window, tool);
     }
+  
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
-  
   tool->state = ACTIVE;
+  /*  set the pointer to the crosshair, so one actually sees the cursor position  */
+  gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
 }
 
 static void
@@ -314,7 +341,7 @@ measure_tool_motion (Tool           *tool,
       measure_tool->angle2 = measure_get_angle (bx, by, 1.0, 1.0);
       angle = fabs (measure_tool->angle1 - measure_tool->angle2);
       if (angle > 180.0)
-	angle = 360.0 - angle;
+	angle = fabs (360.0 - angle);
 
       g_snprintf (distance_str, sizeof (distance_str), "%s %.1f %s, %s %.2f %s",
 		  _("Distance:"), distance, _("pixels"), _("Angle:"), angle, _("degrees"));
@@ -337,7 +364,7 @@ measure_tool_motion (Tool           *tool,
 						gdisp->gimage->yresolution);
       angle = fabs (measure_tool->angle1 - measure_tool->angle2);     
       if (angle > 180.0)
-	angle = 360.0 - angle;
+	angle = fabs (360.0 - angle);
  
       g_snprintf (distance_str, sizeof (distance_str), format_str,
 		  distance * gimp_unit_get_factor (gdisp->gimage->unit), angle);
@@ -377,9 +404,25 @@ measure_tool_cursor_update (Tool           *tool,
 	  
 	  if (mevent->x == BOUNDS (mevent->x, x[i] - TARGET, x[i] + TARGET) &&
 	      mevent->y == BOUNDS (mevent->y, y[i] - TARGET, y[i] + TARGET))
-	    ctype = (mevent->state & GDK_SHIFT_MASK) ? GDK_EXCHANGE : GDK_FLEUR;
-	  if (i == 0 && measure_tool->num_points == 3 && ctype == GDK_EXCHANGE)
-	    ctype = GDK_FLEUR;
+	    {
+	      if (mevent->state & GDK_CONTROL_MASK)
+		{
+		  if (mevent->state & GDK_MOD1_MASK)
+		    ctype = GDK_BOTTOM_RIGHT_CORNER;
+		  else
+		    ctype = GDK_BOTTOM_SIDE;
+		  break;
+		}
+	      if (mevent->state & GDK_MOD1_MASK)
+		{
+		  ctype = GDK_RIGHT_SIDE;
+		  break;
+		}
+	      ctype = (mevent->state & GDK_SHIFT_MASK) ? GDK_EXCHANGE : GDK_FLEUR;
+	      if (i == 0 && measure_tool->num_points == 3 && ctype == GDK_EXCHANGE)
+		ctype = GDK_FLEUR;
+	      break;
+	    }
 	}
     }
   gdisplay_install_tool_cursor (gdisp, ctype);

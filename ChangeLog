@@ -1,3 +1,8 @@
+Thu Aug 19 18:27:42 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/measure.c: use <Ctrl> and/or <Alt> to add horizontal
+	and/or vertical guides at the handle position
+
 Wed Aug 18 23:44:15 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/drawable.pdb: #include "channel.h" and "layer.h"
