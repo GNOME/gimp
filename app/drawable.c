@@ -199,6 +199,30 @@ drawable_merge_shadow (GimpDrawable *drawable, int undo)
 		      REPLACE_MODE, NULL, x1, y1);
 }
 
+void
+drawable_merge_shadow_canvas (GimpDrawable *drawable, int undo)
+{
+  GImage *gimage;
+  PixelArea shadow_area;
+  int x1, y1, x2, y2;
+
+  if (! drawable) 
+    return;
+
+  if (! (gimage = drawable_gimage (drawable)))
+    return;
+
+  /*  A useful optimization here is to limit the update to the
+   *  extents of the selection mask, as it cannot extend beyond
+   *  them.
+   */
+  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  pixelarea_init (&shadow_area, gimage->shadow_canvas, NULL, 
+		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  gimage_apply_painthit (gimage, drawable, NULL, &shadow_area, undo, 1.0,
+		      REPLACE_MODE,  x1, y1);
+}
+
 void 
 drawable_fill  (
                 GimpDrawable * drawable,
@@ -472,6 +496,20 @@ drawable_shadow (GimpDrawable *drawable)
     return NULL;
 }
 
+Canvas *
+drawable_shadow_canvas (GimpDrawable *drawable)
+{
+  GImage *gimage;
+
+  if (! (gimage = drawable_gimage (drawable)))
+    return NULL;
+
+  if (drawable) 
+    return gimage_shadow_canvas (gimage, drawable->width, drawable->height, 
+			  drawable->tag);
+  else
+    return NULL;
+}
 
 int
 drawable_bytes (GimpDrawable *drawable)

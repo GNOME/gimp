@@ -19,13 +19,169 @@
 #include <string.h>
 #include <math.h>
 #include "appenv.h"
+#include "canvas.h"
 #include "drawable.h"
 #include "interface.h"
 #include "invert.h"
 #include "gimage.h"
+#include "pixelarea.h"
+#include "pixelrow.h"
 
 static void       invert (GimpDrawable *);
 static Argument * invert_invoker (Argument *);
+
+typedef void (*InvertRowFunc)(PixelRow *, PixelRow *);
+static InvertRowFunc invert_row_func (Tag row_tag);
+static void invert_row_u8 (PixelRow *, PixelRow *);
+static void invert_row_u16 (PixelRow *, PixelRow *);
+static void invert_row_float (PixelRow *, PixelRow *);
+
+
+/*  Inverter  */
+static
+InvertRowFunc
+invert_row_func (Tag row_tag)
+{
+  switch (tag_precision (row_tag))
+  {
+  case PRECISION_U8:
+    return invert_row_u8; 
+  case PRECISION_U16:
+    return invert_row_u16; 
+  case PRECISION_FLOAT:
+    return invert_row_float; 
+  default:
+    return NULL;
+  } 
+}
+
+static void
+invert (drawable)
+     GimpDrawable *drawable;
+{
+  PixelArea src_area, dest_area;
+  PixelRow src_row, dest_row;
+  int h; 
+  void *pag;
+  int x1, y1, x2, y2;
+  InvertRowFunc invert_row;
+  invert_row = invert_row_func (drawable_tag (drawable));
+  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+  pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL,
+				x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixelarea_init (&dest_area, drawable_shadow_canvas (drawable), NULL,
+				x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+  for (pag = pixelarea_register (2, &src_area, &dest_area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      h = pixelarea_height (&src_area);
+      while (h--)
+        {
+          pixelarea_getdata (&src_area, &src_row, h);
+          pixelarea_getdata (&dest_area, &dest_row, h);
+          (*invert_row) (&src_row, &dest_row);
+        }
+    }
+  
+  drawable_merge_shadow_canvas (drawable, TRUE);
+  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+}
+
+
+void
+invert_row_u8(
+		PixelRow *src_row,
+		PixelRow *dest_row
+		)
+
+{
+  gint    alpha, b;
+  Tag     src_tag      = pixelrow_tag (src_row); 
+  gint 	  has_alpha    = tag_alpha (src_tag) == ALPHA_YES ? TRUE: FALSE;
+  guint8 *dest         = (guint8*)pixelrow_data (dest_row);
+  guint8 *src          = (guint8*)pixelrow_data (src_row);
+  gint    width        = pixelrow_width (src_row);
+  gint    num_channels = tag_num_channels (src_tag);
+  
+  alpha = has_alpha ? (num_channels - 1) : num_channels;
+  
+  while (width --)
+    {
+      for (b = 0; b < alpha; b++)
+	dest[b] = 255 - src[b];
+
+      if (has_alpha)
+	dest[alpha] = src[alpha];
+
+      dest += num_channels;
+      src += num_channels;
+    }
+}
+
+
+void
+invert_row_u16(
+		PixelRow *src_row,
+		PixelRow *dest_row
+		)
+
+{
+  gint    alpha, b;
+  Tag     src_tag      = pixelrow_tag (src_row); 
+  gint 	  has_alpha    = tag_alpha (src_tag) == ALPHA_YES ? TRUE: FALSE;
+  guint16 *dest         = (guint16*)pixelrow_data (dest_row);
+  guint16 *src          = (guint16*)pixelrow_data (src_row);
+  gint    width        = pixelrow_width (src_row);
+  gint    num_channels = tag_num_channels (src_tag);
+  
+  alpha = has_alpha ? (num_channels - 1) : num_channels;
+  
+  while (width --)
+    {
+      for (b = 0; b < alpha; b++)
+	dest[b] = 65535 - src[b];
+
+      if (has_alpha)
+	dest[alpha] = src[alpha];
+
+      dest += num_channels;
+      src += num_channels;
+    }
+}
+
+
+void
+invert_row_float(
+		PixelRow *src_row,
+		PixelRow *dest_row
+		)
+
+{
+  gint    alpha, b;
+  Tag     src_tag      = pixelrow_tag (src_row); 
+  gint 	  has_alpha    = tag_alpha (src_tag) == ALPHA_YES ? TRUE: FALSE;
+  gfloat *dest         = (gfloat*)pixelrow_data (dest_row);
+  gfloat *src          = (gfloat*)pixelrow_data (src_row);
+  gint    width        = pixelrow_width (src_row);
+  gint    num_channels = tag_num_channels (src_tag);
+  
+  alpha = has_alpha ? (num_channels - 1) : num_channels;
+  
+  while (width --)
+    {
+      for (b = 0; b < alpha; b++)
+	dest[b] = 1.0 - src[b];
+
+      if (has_alpha)
+	dest[alpha] = src[alpha];
+
+      dest += num_channels;
+      src += num_channels;
+    }
+}
 
 
 void
@@ -56,61 +212,6 @@ image_invert (gimage_ptr)
     message_box ("Invert operation failed.", NULL, NULL);
 
   procedural_db_destroy_args (return_vals, nreturn_vals);
-}
-
-
-/*  Inverter  */
-
-static void
-invert (drawable)
-     GimpDrawable *drawable;
-{
-  PixelRegion srcPR, destPR;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  int h, j, b;
-  int has_alpha;
-  int alpha, bytes;
-  void *pr;
-  int x1, y1, x2, y2;
-
-  bytes = drawable_bytes (drawable);
-  has_alpha = drawable_has_alpha (drawable);
-  alpha = has_alpha ? (bytes - 1) : bytes;
-  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      src = srcPR.data;
-      dest = destPR.data;
-      h = srcPR.h;
-
-      while (h--)
-	{
-	  s = src;
-	  d = dest;
-
-	  for (j = 0; j < srcPR.w; j++)
-	    {
-	      for (b = 0; b < alpha; b++)
-		d[b] = 255 - s[b];
-
-	      if (has_alpha)
-		d[alpha] = s[alpha];
-
-	      d += bytes;
-	      s += bytes;
-	    }
-
-	  src += srcPR.rowstride;
-	  dest += destPR.rowstride;
-	}
-    }
-
-  drawable_merge_shadow (drawable, TRUE);
-  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 

@@ -3130,21 +3130,14 @@ combine_areas  (
   gint src1_bytes = tag_bytes (src1_tag);
   gint src1_bytes_per_channel = src1_bytes / src1_num_channels;
   Precision prec = tag_precision (src1_tag); 
-
+  Tag buf_tag = src2_tag;
+  gint src2_width = pixelarea_width (src2_area);
+  gint src2_bytes = tag_bytes (src2_tag);
   
-  /*put in tags check*/
-  
-  Tag buf_tag = tag_new (prec, tag_format (src1_tag), ALPHA_YES);
-  
-  if ( tag_alpha(src1_tag) == ALPHA_YES )
-    buf_size = src1_width * src1_bytes;
-  else
-    buf_size = src1_width * (src1_bytes + src1_bytes_per_channel);
-  
-  /* allocate the buf_rows data */  
+  buf_size = src2_width * src2_bytes;
   buf_row_data = (guchar *) g_malloc (buf_size);
-  pixelrow_init (&buf_row, buf_tag , buf_row_data, src1_width); 
-  
+  pixelrow_init (&buf_row, buf_tag , buf_row_data, src2_width); 
+
   for (pag = pixelarea_register (4, src1_area, src2_area, dest_area, mask_area);
        pag != NULL;
        pag = pixelarea_process (pag))
@@ -3415,7 +3408,7 @@ draw_segments (
   {
     Tag t = tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO);
     PixelRow paint;
-    pixelrow_init (&paint, t, &opacity, 1);
+    pixelrow_init (&paint, t, (guchar*)&opacity, 1);
     color_row(&line, &paint);
   }
 
@@ -3470,6 +3463,7 @@ draw_segments (
           pixelarea_write_row (dest_area, &line, x1, y1, (y2 - y1)); 
 	}
     }
+    g_free( line_data );
 }
 
 static gdouble

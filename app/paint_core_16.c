@@ -896,9 +896,13 @@ painthit_apply (
                 )
 {
   GImage * gimage = drawable_gimage (drawable);
+  PixelArea canvas_area;
+  pixelarea_init (&canvas_area, canvas_buf, NULL,
+		   0, 0,
+                   canvas_width (canvas_buf), canvas_height(canvas_buf), FALSE);
   gimage_apply_painthit (gimage, drawable,
                          orig_tiles,
-                         canvas_buf,
+                         &canvas_area,
                          FALSE, image_opacity, paint_mode,
                          paint_core->x, paint_core->y);
 }

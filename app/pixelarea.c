@@ -64,21 +64,36 @@ pixelarea_init  (
                  )
 {
   if (pa)
+    pa->canvas = c;
+  pixelarea_resize (pa, x, y, w, h, will_dirty);
+}
+
+
+void 
+pixelarea_resize (
+                 PixelArea * pa,
+                 int x,
+                 int y,
+                 int w,
+                 int h,
+                 int will_dirty
+                 )
+{
+  if (pa)
     {
       pa->x = x;
       pa->y = y;
 
       if (w == 0)
-        pa->w = canvas_width (c);
+        pa->w = canvas_width (pa->canvas);
       else
         pa->w = w;
 
       if (h == 0)
-        pa->h = canvas_height (c);
+        pa->h = canvas_height (pa->canvas);
       else
         pa->h = h;
 
-      pa->canvas = c;
       pa->dirty = will_dirty;
       pa->startx = x;
       pa->starty = y;

@@ -21,15 +21,18 @@
 #include "appenv.h"
 #include "actionarea.h"
 #include "buildmenu.h"
+#include "canvas.h"
 #include "colormaps.h"
 #include "cursorutil.h"
+#include "curves.h"
 #include "drawable.h"
 #include "general.h"
 #include "gdisplay.h"
 #include "histogram.h"
 #include "image_map.h"
 #include "interface.h"
-#include "curves.h"
+#include "pixelarea.h"
+#include "pixelrow.h"
 
 #define ROUND(x)  ((int) ((x) + 0.5))
 
@@ -82,7 +85,7 @@ struct _CurvesDialog
   GdkPixmap *    pixmap;
 
   GimpDrawable * drawable;
-  ImageMap       image_map;
+  ImageMap16     image_map;
   int            color;
   int            channel;
   gint           preview;
@@ -92,9 +95,15 @@ struct _CurvesDialog
   int            leftmost;
   int            rightmost;
   int            curve_type;
+
+  /* points and curves for ui 0-255 based */
   int            points[5][17][2];
   unsigned char  curve[5][256];
+
 };
+
+/* curves for image data */
+static PixelRow curve[5];
 
 typedef double CRMatrix[4][4];
 
@@ -106,27 +115,67 @@ static void   curves_motion         (Tool *, GdkEventMotion *, gpointer);
 static void   curves_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void   curves_control        (Tool *, int, gpointer);
 
-static CurvesDialog *  curves_new_dialog              (void);
-static void            curves_update                  (CurvesDialog *, int);
-static void            curves_plot_curve              (CurvesDialog *, int, int, int, int);
-static void            curves_calculate_curve         (CurvesDialog *);
-static void            curves_preview                 (CurvesDialog *);
-static void            curves_value_callback          (GtkWidget *, gpointer);
-static void            curves_red_callback            (GtkWidget *, gpointer);
-static void            curves_green_callback          (GtkWidget *, gpointer);
-static void            curves_blue_callback           (GtkWidget *, gpointer);
-static void            curves_alpha_callback           (GtkWidget *, gpointer);
-static void            curves_smooth_callback         (GtkWidget *, gpointer);
-static void            curves_free_callback           (GtkWidget *, gpointer);
-static void            curves_reset_callback          (GtkWidget *, gpointer);
-static void            curves_ok_callback             (GtkWidget *, gpointer);
-static void            curves_cancel_callback         (GtkWidget *, gpointer);
-static gint            curves_delete_callback         (GtkWidget *, GdkEvent *, gpointer);
-static void            curves_preview_update          (GtkWidget *, gpointer);
-static gint            curves_xrange_events           (GtkWidget *, GdkEvent *, CurvesDialog *);
-static gint            curves_yrange_events           (GtkWidget *, GdkEvent *, CurvesDialog *);
-static gint            curves_graph_events            (GtkWidget *, GdkEvent *, CurvesDialog *);
-static void            curves_CR_compose              (CRMatrix, CRMatrix, CRMatrix);
+static CurvesDialog *  curves_new_dialog         (void);
+static void            curves_update             (CurvesDialog *, int);
+static void            curves_calculate_ui_curve (CurvesDialog *);
+static void            curves_preview            (CurvesDialog *);
+static void            curves_value_callback     (GtkWidget *, gpointer);
+static void            curves_red_callback       (GtkWidget *, gpointer);
+static void            curves_green_callback     (GtkWidget *, gpointer);
+static void            curves_blue_callback      (GtkWidget *, gpointer);
+static void            curves_alpha_callback     (GtkWidget *, gpointer);
+static void            curves_smooth_callback    (GtkWidget *, gpointer);
+static void            curves_free_callback      (GtkWidget *, gpointer);
+static void            curves_reset_callback     (GtkWidget *, gpointer);
+static void            curves_ok_callback        (GtkWidget *, gpointer);
+static void            curves_cancel_callback    (GtkWidget *, gpointer);
+static gint            curves_delete_callback    (GtkWidget *, GdkEvent *, gpointer);
+static void            curves_preview_update     (GtkWidget *, gpointer);
+static gint            curves_xrange_events      (GtkWidget *, GdkEvent *, CurvesDialog *);
+static gint            curves_yrange_events      (GtkWidget *, GdkEvent *, CurvesDialog *);
+static gint            curves_graph_events       (GtkWidget *, GdkEvent *, CurvesDialog *);
+static void            curves_calculate_curve    (PixelRow *, gdouble points[17][2]);
+static void            curves_CR_compose         (CRMatrix, CRMatrix, CRMatrix);
+static void            curves_free_curves        (void *);
+static void 	       curves_plot_boundary_pts_ui (PixelRow *, gdouble points[17][2], gint pts[17], gint);
+static void 	       curves_plot_curve_ui      (PixelRow *, gdouble *, gdouble *, gdouble *, gdouble *);
+static void            curves_calculate_image_data_curves (CurvesDialog *cd);
+
+static void curves_funcs (Tag dest_tag);
+
+typedef void (*CurvesFunc)(PixelArea *, PixelArea *, void *);
+typedef void (*CurvesAllocCurvesFunc)(void *);
+typedef void (*CurvesInitCurveFunc)(gint);
+typedef void (*CurvesPlotBoundaryPtsFunc)(PixelRow *, 
+			gdouble points[17][2], gint pts[17], gint);	
+typedef void (*CurvesPlotCurveFunc) (PixelRow *, 
+			gdouble *, gdouble *, gdouble *, gdouble *);
+typedef gdouble (*CurvesConvertUiValueFunc) (gint);
+typedef void (*CurvesCalculateFreeCurveFunc) (guchar *, PixelRow *);
+
+static CurvesFunc curves;
+static CurvesAllocCurvesFunc curves_alloc_curves;
+static CurvesInitCurveFunc curves_init_curve;
+static CurvesPlotBoundaryPtsFunc curves_plot_boundary_pts;
+static CurvesPlotCurveFunc curves_plot_curve;
+static CurvesConvertUiValueFunc curves_convert_ui_value;
+static CurvesCalculateFreeCurveFunc curves_calculate_free_curve;
+
+static void curves_u8 (PixelArea *, PixelArea *, void *);
+static void curves_alloc_curves_u8 (void *);
+static void curves_init_curve_u8 (gint);
+static void curves_plot_boundary_pts_u8 (PixelRow *, gdouble points[17][2], gint pts[17], gint);
+static void curves_plot_curve_u8 (PixelRow *, gdouble *, gdouble *, gdouble *, gdouble *);
+static gdouble curves_convert_ui_value_u8 (gint);
+static void curves_calculate_free_curve_u8(guchar *, PixelRow *);
+
+static void curves_u16 (PixelArea *, PixelArea *, void *);
+static void curves_alloc_curves_u16 (void *);
+static void curves_init_curve_u16 (gint);
+static void curves_plot_boundary_pts_u16 (PixelRow *, gdouble points[17][2], gint pts[17], gint);
+static void curves_plot_curve_u16 (PixelRow *, gdouble *, gdouble *, gdouble *, gdouble *);
+static gdouble curves_convert_ui_value_u16 (gint);
+static void curves_calculate_free_curve_u16(guchar *, PixelRow *);
 
 static void *curves_options = NULL;
 static CurvesDialog *curves_dialog = NULL;
@@ -138,66 +187,233 @@ static CRMatrix CR_basis =
   {  0.0,  1.0,  0.0,  0.0 },
 };
 
-
-static void       curves (PixelRegion *, PixelRegion *, void *);
 static Argument * curves_spline_invoker (Argument *);
 static Argument * curves_explicit_invoker (Argument *);
 
 /*  curves machinery  */
+static void
+curves_funcs (
+		 Tag dest_tag
+		)
+{
+  switch (tag_precision (dest_tag))
+  {
+  case PRECISION_U8:
+	curves = curves_u8;
+	curves_alloc_curves = curves_alloc_curves_u8;
+	curves_init_curve = curves_init_curve_u8;
+	curves_plot_boundary_pts = curves_plot_boundary_pts_u8;
+	curves_plot_curve = curves_plot_curve_u8;
+	curves_convert_ui_value = curves_convert_ui_value_u8;
+	curves_calculate_free_curve = curves_calculate_free_curve_u8;
+	break;
+  case PRECISION_U16:
+	curves = curves_u16;
+	curves_alloc_curves = curves_alloc_curves_u16;
+	curves_init_curve = curves_init_curve_u16;
+	curves_plot_boundary_pts = curves_plot_boundary_pts_u16;
+	curves_plot_curve = curves_plot_curve_u16;
+	curves_convert_ui_value = curves_convert_ui_value_u16;
+	curves_calculate_free_curve = curves_calculate_free_curve_u16;
+	break;
+  default:
+	curves = NULL;
+	curves_alloc_curves = NULL;
+	curves_init_curve = NULL;
+	curves_plot_boundary_pts = NULL;
+	curves_plot_curve = NULL;
+	curves_convert_ui_value = NULL;
+	curves_calculate_free_curve = NULL;
+	break;
+  }
+}
 
 static void
-curves (PixelRegion *srcPR,
-	PixelRegion *destPR,
+curves_free_curves (void *user_data)
+{
+  gint i;
+  for (i = 0; i < 5; i++)
+  { 
+     guchar* data =  pixelrow_data (&curve[i]);
+     g_free (data);
+     pixelrow_init (&curve[i], tag_null(), NULL, 0); 
+  }
+}
+
+static void
+curves_u8 (PixelArea *src_area,
+	PixelArea *dest_area,
 	void        *user_data)
 {
+  Tag src_tag = pixelarea_tag (src_area);
+  Tag dest_tag = pixelarea_tag (dest_area);
+  gint src_num_channels = tag_num_channels (src_tag);
+  gint dest_num_channels = tag_num_channels (dest_tag);
   CurvesDialog *cd;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  int has_alpha, alpha;
+  guchar *src, *dest;
+  guint8 *s, *d;
+  guint8 *curve_red, *curve_green, *curve_blue, *curve_value, *curve_alpha;
+  int has_alpha = tag_alpha (src_tag) == ALPHA_YES ? TRUE: FALSE;
+  int alpha = has_alpha ? src_num_channels - 1 : src_num_channels;
   int w, h;
 
   cd = (CurvesDialog *) user_data;
 
-  h = srcPR->h;
-  src = srcPR->data;
-  dest = destPR->data;
-  has_alpha = (srcPR->bytes == 2 || srcPR->bytes == 4);
-  alpha = has_alpha ? srcPR->bytes - 1 : srcPR->bytes;
+  src = pixelarea_data (src_area);
+  dest = pixelarea_data (dest_area);
 
+  curve_red = (guint8*)pixelrow_data (&curve[HISTOGRAM_RED]);
+  curve_green = (guint8*)pixelrow_data (&curve[HISTOGRAM_GREEN]);
+  curve_blue = (guint8*)pixelrow_data (&curve[HISTOGRAM_BLUE]);
+  curve_value = (guint8*)pixelrow_data (&curve[HISTOGRAM_VALUE]);
+  if (has_alpha)
+    curve_alpha = (guint8*)pixelrow_data (&curve[HISTOGRAM_ALPHA]);
+
+  h = pixelarea_height (src_area);
   while (h--)
     {
-      w = srcPR->w;
-      s = src;
-      d = dest;
+      s = (guint8*)src;
+      d = (guint8*)dest;
+      w = pixelarea_width (src_area);
       while (w--)
 	{
 	  if (cd->color)
 	    {
 	      /*  The contributions from the individual channel level settings  */
-	      d[RED_PIX] = cd->curve[HISTOGRAM_RED][s[RED_PIX]];
-	      d[GREEN_PIX] = cd->curve[HISTOGRAM_GREEN][s[GREEN_PIX]];
-	      d[BLUE_PIX] = cd->curve[HISTOGRAM_BLUE][s[BLUE_PIX]];
+	      d[RED_PIX] = curve_red[s[RED_PIX]];
+	      d[GREEN_PIX] = curve_green[s[GREEN_PIX]];
+	      d[BLUE_PIX] = curve_blue[s[BLUE_PIX]];
 
 	      /*  The overall changes  */
-	      d[RED_PIX] = cd->curve[HISTOGRAM_VALUE][d[RED_PIX]];
-	      d[GREEN_PIX] = cd->curve[HISTOGRAM_VALUE][d[GREEN_PIX]];
-	      d[BLUE_PIX] = cd->curve[HISTOGRAM_VALUE][d[BLUE_PIX]];
+	      d[RED_PIX] = curve_value[d[RED_PIX]];
+	      d[GREEN_PIX] = curve_value[d[GREEN_PIX]];
+	      d[BLUE_PIX] = curve_value[d[BLUE_PIX]];
 	    }
 	  else
-	    d[GRAY_PIX] = cd->curve[HISTOGRAM_VALUE][s[GRAY_PIX]];
+	    d[GRAY_PIX] = curve_value[s[GRAY_PIX]];
 
-	  if (has_alpha) {
-	    d[alpha] = cd->curve[HISTOGRAM_ALPHA][s[alpha]];
-	    /* d[alpha] = s[alpha]; */
-	  }
+	  if (has_alpha) 
+	    d[alpha] = curve_alpha[s[alpha]];
 
-	  s += srcPR->bytes;
-	  d += destPR->bytes;
+	  s += src_num_channels;
+	  d += dest_num_channels;
 	}
 
-      src += srcPR->rowstride;
-      dest += destPR->rowstride;
+      src += pixelarea_rowstride (src_area);
+      dest += pixelarea_rowstride (dest_area);
     }
+}
+
+static void
+curves_alloc_curves_u8 (void * user_data)
+{
+  gint i;
+  Tag tag = tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO);
+  
+  for (i = 0; i < 5; i++)
+  { 
+       guint8* data = (guint8*) g_malloc (sizeof(guint8) * 256 );
+       pixelrow_init (&curve[i], tag, (guchar*)data, 256);
+  }
+}
+
+static void
+curves_init_curve_u8 (gint channel)
+{
+  gint j;
+  guint8* data = (guint8*)pixelrow_data (&curve[channel]);
+
+  for (j= 0; j < 256; j++)
+   *data++ = j;
+}
+
+
+
+static void
+curves_u16 (PixelArea *src_area,
+	PixelArea *dest_area,
+	void        *user_data)
+{
+  Tag src_tag = pixelarea_tag (src_area);
+  Tag dest_tag = pixelarea_tag (dest_area);
+  gint src_num_channels = tag_num_channels (src_tag);
+  gint dest_num_channels = tag_num_channels (dest_tag);
+  CurvesDialog *cd;
+  guchar *src, *dest;
+  guint16 *s, *d;
+  guint16 *curve_red, *curve_green, *curve_blue, *curve_value, *curve_alpha;
+  int has_alpha = tag_alpha (src_tag) == ALPHA_YES ? TRUE: FALSE;
+  int alpha = has_alpha ? src_num_channels - 1 : src_num_channels;
+  int w, h;
+
+  cd = (CurvesDialog *) user_data;
+
+  src = pixelarea_data (src_area);
+  dest = pixelarea_data (dest_area);
+
+  curve_red = (guint16*)pixelrow_data (&curve[HISTOGRAM_RED]);
+  curve_green = (guint16*)pixelrow_data (&curve[HISTOGRAM_GREEN]);
+  curve_blue = (guint16*)pixelrow_data (&curve[HISTOGRAM_BLUE]);
+  curve_value = (guint16*)pixelrow_data (&curve[HISTOGRAM_VALUE]);
+  if (has_alpha)
+    curve_alpha = (guint16*)pixelrow_data (&curve[HISTOGRAM_ALPHA]);
+
+  h = pixelarea_height (src_area);
+  while (h--)
+    {
+      s = (guint16*)src;
+      d = (guint16*)dest;
+      w = pixelarea_width (src_area);
+      while (w--)
+	{
+	  if (cd->color)
+	    {
+	      /*  The contributions from the individual channel level settings  */
+	      d[RED_PIX] = curve_red[s[RED_PIX]];
+	      d[GREEN_PIX] = curve_green[s[GREEN_PIX]];
+	      d[BLUE_PIX] = curve_blue[s[BLUE_PIX]];
+
+	      /*  The overall changes  */
+	      d[RED_PIX] = curve_value[d[RED_PIX]];
+	      d[GREEN_PIX] = curve_value[d[GREEN_PIX]];
+	      d[BLUE_PIX] = curve_value[d[BLUE_PIX]];
+	    }
+	  else
+	    d[GRAY_PIX] = curve_value[s[GRAY_PIX]];
+
+	  if (has_alpha) 
+	    d[alpha] = curve_alpha[s[alpha]];
+
+	  s += src_num_channels;
+	  d += dest_num_channels;
+	}
+
+      src += pixelarea_rowstride (src_area);
+      dest += pixelarea_rowstride (dest_area);
+    }
+}
+
+static void
+curves_alloc_curves_u16 (void * user_data)
+{
+  gint i;
+  Tag tag = tag_new (PRECISION_U16, FORMAT_GRAY, ALPHA_NO);
+  
+  for (i = 0; i < 5; i++)
+  { 
+       guint16* data = (guint16*) g_malloc (sizeof(guint16) * 65536 );
+       pixelrow_init (&curve[i], tag, (guchar*)data, 65536);
+  }
+}
+
+static void
+curves_init_curve_u16 (gint channel)
+{
+  gint j;
+  guint16* data = (guint16*)pixelrow_data (&curve[channel]);
+
+  for (j= 0; j < 65536; j++)
+   *data++ = j;
 }
 
 /*  curves action functions  */
@@ -252,7 +468,8 @@ curves_control (Tool     *tool,
     case HALT :
       if (curves_dialog)
 	{
-	  image_map_abort (curves_dialog->image_map);
+	  image_map_abort_16 (curves_dialog->image_map);
+	  curves_free_curves(curves_dialog);
 	  curves_dialog->image_map = NULL;
 	  curves_cancel_callback (NULL, (gpointer) curves_dialog);
 	}
@@ -346,8 +563,18 @@ curves_initialize (void *gdisp_ptr)
     curves_dialog = curves_new_dialog ();
   else if (!GTK_WIDGET_VISIBLE (curves_dialog->shell))
     gtk_widget_show (curves_dialog->shell);
+  
+  /* Set up the function pointers for this tag */
+  curves_funcs( drawable_tag (gimage_active_drawable (gdisp->gimage)));
+  
+  /* allocate all curves data */
+  (*curves_alloc_curves) (curves_dialog);
+  
+  /* Initialize all the curves for image data */ 
+  for (i = 0; i < 5; i++)
+    (*curves_init_curve) (i);
 
-  /*  Initialize the values  */
+  /* Initialize all the curves for the ui  */
   curves_dialog->channel = HISTOGRAM_VALUE;
   for (i = 0; i < 5; i++)
     for (j = 0; j < 256; j++)
@@ -369,7 +596,7 @@ curves_initialize (void *gdisp_ptr)
 
   curves_dialog->drawable = gimage_active_drawable (gdisp->gimage);
   curves_dialog->color = drawable_color ( (curves_dialog->drawable));
-  curves_dialog->image_map = image_map_create (gdisp_ptr, curves_dialog->drawable);
+  curves_dialog->image_map = image_map_create_16 (gdisp_ptr, curves_dialog->drawable);
 
   /* check for alpha channel */
   if (drawable_has_alpha ( (curves_dialog->drawable)))
@@ -400,7 +627,8 @@ curves_free ()
     {
       if (curves_dialog->image_map)
 	{
-	  image_map_abort (curves_dialog->image_map);
+	  image_map_abort_16 (curves_dialog->image_map);
+	  curves_free_curves(curves_dialog);
 	  curves_dialog->image_map = NULL;
 	}
       if (curves_dialog->pixmap)
@@ -642,7 +870,7 @@ curves_update (CurvesDialog *cd,
 			 i * (GRAPH_WIDTH / 4) + RADIUS, GRAPH_HEIGHT + RADIUS);
 	}
 
-      /*  Draw the curve  */
+      /*  Draw the curve the 8 bit ui curve  */
       for (i = 0; i < 256; i++)
 	{
 	  points[i].x = i + RADIUS;
@@ -666,12 +894,164 @@ curves_update (CurvesDialog *cd,
     }
 }
 
+
 static void
-curves_plot_curve (CurvesDialog *cd,
-		   int           p1,
-		   int           p2,
-		   int           p3,
-		   int           p4)
+curves_calculate_image_data_curves (CurvesDialog *cd)
+{
+  /* copy the ui points to points */
+  gdouble points[17][2];
+  gint i,j,k;
+  
+  /* reset all the function pointers to this tag type */
+  curves_funcs (drawable_tag (cd->drawable));
+
+  for (k = 0; k < 5; k++)  
+  {
+    if (cd->curve_type == GFREE) 
+      (*curves_calculate_free_curve)(cd->curve[k], &curve[k]); 
+    else if (cd->curve_type == SMOOTH)
+    {
+      for (i = 0; i < 17; i++)
+	for(j= 0; j < 2; j++)
+	{
+	  if (cd->points[k][i][j] != -1)
+	    points[i][j] = (*curves_convert_ui_value) (cd->points[k][i][j]);
+	  else
+	    points[i][j] = -1.0;
+	}
+	curves_calculate_curve (&curve[k], points); 
+    }
+  }
+}
+
+static gdouble 
+curves_convert_ui_value_u8( gint ui_value )
+{
+  return (gdouble)ui_value;
+}
+
+static gdouble 
+curves_convert_ui_value_u16( gint ui_value )
+{
+  return ((gdouble)ui_value/255.0)*65535.0;
+}
+
+static void
+curves_calculate_curve (
+			PixelRow *curve,
+			gdouble points[17][2]
+			)
+{
+  int i;
+  int pts[17];
+  int num_pts;
+  int p1, p2, p3, p4;
+
+  /*  cycle through the curves  */
+  num_pts = 0;
+  for (i = 0; i < 17; i++)
+    if (points[i][0] != -1)
+      pts[num_pts++] = i;
+
+  /*  Initialize boundary points */
+  if (num_pts != 0)
+      (*curves_plot_boundary_pts) (curve, points, pts, num_pts);   
+
+  for (i = 0; i < num_pts - 1; i++)
+    {
+      p1 = (i == 0) ? pts[i] : pts[(i - 1)];
+      p2 = pts[i];
+      p3 = pts[(i + 1)];
+      p4 = (i == (num_pts - 2)) ? pts[(num_pts - 1)] : pts[(i + 2)];
+   
+      /* plot this section of the curve */
+      (*curves_plot_curve) (curve, points[p1], points[p2], points[p3], points[p4]);
+    }
+}
+
+static void 
+curves_calculate_free_curve_u8 (guchar *ui_curve, PixelRow *curve)
+{
+  gint i;
+  guint8 *curve_data = (guint8*)pixelrow_data (curve);
+  for (i = 0; i < 256; i++)
+    curve_data[i] = ui_curve[i];
+}
+
+static void 
+curves_calculate_free_curve_u16(guchar *ui_curve, PixelRow *curve)
+{
+  gint i, index, frac, y1, y2;
+  gfloat m;
+  guint16 *curve_data = (guint16*)pixelrow_data (curve);
+  for ( i = 0; i < 65536; i++)
+  {
+    frac = i % 257;
+    index = i / 257;
+    y1 = ui_curve[index] * 257;
+    if (index + 1 < 256)
+    {
+      y2 = ui_curve[index+1] * 257;
+      m = ui_curve[index+1] - ui_curve[index];
+      curve_data[i] = (guint16)(y1 + m*(frac)); 
+    }
+    else
+      curve_data[i] = (guint16)y1;
+  }
+}
+
+static void
+curves_plot_boundary_pts_u8(
+			        PixelRow *curve,
+				gdouble points[17][2],
+				gint pts[17],
+				gint num_pts
+				)	
+{
+  /* can just call the corresponding ui code since it is 0-255 based*/ 
+  curves_plot_boundary_pts_ui (curve, points, pts, num_pts);
+}					
+
+
+static void
+curves_plot_curve_u8(
+		   PixelRow      *curve,
+		   gdouble       *pt1,             
+		   gdouble       *pt2,
+		   gdouble       *pt3, 
+		   gdouble       *pt4
+			)
+{
+  /* can just call the corresponding ui code since it is 0-255 based*/ 
+  curves_plot_curve_ui (curve, pt1, pt2, pt3, pt4);
+}
+
+static void
+curves_plot_boundary_pts_u16(
+			        PixelRow *curve,
+				gdouble points[17][2],
+				gint pts[17],
+				gint num_pts
+				)	
+{
+  gint i;
+  guint16 *curve_data = (guint16*)pixelrow_data (curve);
+	
+  for (i = 0; i < points[pts[0]][0]; i++)
+    curve_data[i] = (guint16)points[pts[0]][1];
+  for (i = points[pts[num_pts - 1]][0]; i < 65536; i++)
+    curve_data[i] = (guint16)points[pts[num_pts - 1]][1];
+}					
+
+
+static void
+curves_plot_curve_u16(
+		   PixelRow      *curve,
+		   gdouble       *pt1,             
+		   gdouble       *pt2,
+		   gdouble       *pt3, 
+		   gdouble       *pt4
+			)
 {
   CRMatrix geometry;
   CRMatrix tmp1, tmp2;
@@ -682,7 +1062,9 @@ curves_plot_curve (CurvesDialog *cd,
   int lastx, lasty;
   int newx, newy;
   int i;
+  guint16* curve_data = (guint16*) pixelrow_data (curve);
 
+  
   /* construct the geometry matrix from the segment */
   for (i = 0; i < 4; i++)
     {
@@ -692,10 +1074,124 @@ curves_plot_curve (CurvesDialog *cd,
 
   for (i = 0; i < 2; i++)
     {
-      geometry[0][i] = cd->points[cd->channel][p1][i];
-      geometry[1][i] = cd->points[cd->channel][p2][i];
-      geometry[2][i] = cd->points[cd->channel][p3][i];
-      geometry[3][i] = cd->points[cd->channel][p4][i];
+      geometry[0][i] = pt1[i];
+      geometry[1][i] = pt2[i];
+      geometry[2][i] = pt3[i];
+      geometry[3][i] = pt4[i];
+    }
+
+  /* subdivide the curve 70000 times */
+  /* n can be adjusted to give a finer or coarser curve */
+  d = 1.0 / 70000;
+  d2 = d * d;
+  d3 = d * d * d;
+
+  /* construct a temporary matrix for determining the forward differencing deltas */
+  tmp2[0][0] = 0;     tmp2[0][1] = 0;     tmp2[0][2] = 0;    tmp2[0][3] = 1;
+  tmp2[1][0] = d3;    tmp2[1][1] = d2;    tmp2[1][2] = d;    tmp2[1][3] = 0;
+  tmp2[2][0] = 6*d3;  tmp2[2][1] = 2*d2;  tmp2[2][2] = 0;    tmp2[2][3] = 0;
+  tmp2[3][0] = 6*d3;  tmp2[3][1] = 0;     tmp2[3][2] = 0;    tmp2[3][3] = 0;
+
+  /* compose the basis and geometry matrices */
+  curves_CR_compose (CR_basis, geometry, tmp1);
+
+  /* compose the above results to get the deltas matrix */
+  curves_CR_compose (tmp2, tmp1, deltas);
+
+  /* extract the x deltas */
+  x = deltas[0][0];
+  dx = deltas[1][0];
+  dx2 = deltas[2][0];
+  dx3 = deltas[3][0];
+
+  /* extract the y deltas */
+  y = deltas[0][1];
+  dy = deltas[1][1];
+  dy2 = deltas[2][1];
+  dy3 = deltas[3][1];
+
+  lastx = BOUNDS (x, 0, 65535);
+  lasty = BOUNDS (y, 0, 65535);
+
+  curve_data[lastx] = lasty;
+
+  /* loop over the curve */
+  for (i = 0; i < 70000; i++)
+    {
+      /* increment the x values */
+      x += dx;
+      dx += dx2;
+      dx2 += dx3;
+
+      /* increment the y values */
+      y += dy;
+      dy += dy2;
+      dy2 += dy3;
+
+      newx = BOUNDS ((ROUND (x)), 0, 65535);
+      newy = BOUNDS ((ROUND (y)), 0, 65535);
+
+      /* if this point is different than the last one...then draw it */
+      if ((lastx != newx) || (lasty != newy))
+	curve_data[newx] = newy;
+
+      lastx = newx;
+      lasty = newy;
+    }
+}
+
+static void
+curves_plot_boundary_pts_ui(
+			        PixelRow *curve,
+				gdouble points[17][2],
+				gint pts[17],
+				gint num_pts
+				)	
+{
+  gint i;
+  guint8 *curve_data = (guint8*)pixelrow_data (curve);
+	
+  for (i = 0; i < points[pts[0]][0]; i++)
+    curve_data[i] = (guint8)points[pts[0]][1];
+  for (i = points[pts[num_pts - 1]][0]; i < 256; i++)
+    curve_data[i] = (guint8)points[pts[num_pts - 1]][1];
+}					
+
+
+static void
+curves_plot_curve_ui(
+		   PixelRow      *curve,
+		   gdouble       *pt1,             
+		   gdouble       *pt2,
+		   gdouble       *pt3, 
+		   gdouble       *pt4
+			)
+{
+  CRMatrix geometry;
+  CRMatrix tmp1, tmp2;
+  CRMatrix deltas;
+  double x, dx, dx2, dx3;
+  double y, dy, dy2, dy3;
+  double d, d2, d3;
+  int lastx, lasty;
+  int newx, newy;
+  int i;
+  guint8* curve_data = (guint8*) pixelrow_data (curve);
+
+  
+  /* construct the geometry matrix from the segment */
+  for (i = 0; i < 4; i++)
+    {
+      geometry[i][2] = 0;
+      geometry[i][3] = 0;
+    }
+
+  for (i = 0; i < 2; i++)
+    {
+      geometry[0][i] = pt1[i];
+      geometry[1][i] = pt2[i];
+      geometry[2][i] = pt3[i];
+      geometry[3][i] = pt4[i];
     }
 
   /* subdivide the curve 1000 times */
@@ -731,7 +1227,7 @@ curves_plot_curve (CurvesDialog *cd,
   lastx = BOUNDS (x, 0, 255);
   lasty = BOUNDS (y, 0, 255);
 
-  cd->curve[cd->channel][lastx] = lasty;
+  curve_data[lastx] = lasty;
 
   /* loop over the curve */
   for (i = 0; i < 1000; i++)
@@ -751,60 +1247,22 @@ curves_plot_curve (CurvesDialog *cd,
 
       /* if this point is different than the last one...then draw it */
       if ((lastx != newx) || (lasty != newy))
-	cd->curve[cd->channel][newx] = newy;
+	curve_data[newx] = newy;
 
       lastx = newx;
       lasty = newy;
     }
 }
-
-static void
-curves_calculate_curve (CurvesDialog *cd)
-{
-  int i;
-  int points[17];
-  int num_pts;
-  int p1, p2, p3, p4;
-
-  switch (cd->curve_type)
-    {
-    case GFREE:
-      break;
-    case SMOOTH:
-      /*  cycle through the curves  */
-      num_pts = 0;
-      for (i = 0; i < 17; i++)
-	if (cd->points[cd->channel][i][0] != -1)
-	  points[num_pts++] = i;
-
-      /*  Initialize boundary curve points */
-      if (num_pts != 0)
-	{
-	  for (i = 0; i < cd->points[cd->channel][points[0]][0]; i++)
-	    cd->curve[cd->channel][i] = cd->points[cd->channel][points[0]][1];
-	  for (i = cd->points[cd->channel][points[num_pts - 1]][0]; i < 256; i++)
-	    cd->curve[cd->channel][i] = cd->points[cd->channel][points[num_pts - 1]][1];
-	}
-
-      for (i = 0; i < num_pts - 1; i++)
-	{
-	  p1 = (i == 0) ? points[i] : points[(i - 1)];
-	  p2 = points[i];
-	  p3 = points[(i + 1)];
-	  p4 = (i == (num_pts - 2)) ? points[(num_pts - 1)] : points[(i + 2)];
-
-	  curves_plot_curve (cd, p1, p2, p3, p4);
-	}
-      break;
-    }
-}
+					
 
 static void
 curves_preview (CurvesDialog *cd)
 {
   if (!cd->image_map)
     g_warning ("No image map");
-  image_map_apply (cd->image_map, curves, (void *) cd);
+
+  curves_calculate_image_data_curves(cd); 
+  image_map_apply_16 (cd->image_map, curves, (void *) cd);
 }
 
 static void
@@ -902,14 +1360,45 @@ curves_smooth_callback (GtkWidget *w,
 	  cd->points[cd->channel][i * 2][0] = index;
 	  cd->points[cd->channel][i * 2][1] = cd->curve[cd->channel][index];
 	}
-
-      curves_calculate_curve (cd);
+	
+      /* compute the ui curve from curve dialog */
+      curves_calculate_ui_curve (cd);
+      
       curves_update (cd, GRAPH | DRAW);
 
       if (cd->preview)
 	curves_preview (cd);
     }
 }
+
+static void
+curves_calculate_ui_curve (CurvesDialog *cd)
+{
+  gdouble points_ui[17][2];
+  PixelRow curve;
+  Tag tag = tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO);
+  gint i,j;
+  
+  if (cd->curve_type == GFREE)
+    return;
+
+  /* get double versions of the ui points */
+  for (i = 0; i < 17; i++)
+    for(j= 0; j < 2; j++)
+	  points_ui[i][j] = cd->points[cd->channel][i][j];
+  
+  /* make the curve data point to the ui curve from the dialog  */
+  pixelrow_init (&curve, tag, (guchar*)(cd->curve[cd->channel]), 256);	
+ 
+  /* set the function pointers for ui routines since we are 
+	computing a 0-255 based ui curve*/ 
+  
+  curves_plot_boundary_pts = curves_plot_boundary_pts_ui;
+  curves_plot_curve = curves_plot_curve_ui;
+
+  curves_calculate_curve (&curve, points_ui); 
+}
+
 
 static void
 curves_free_callback (GtkWidget *w,
@@ -935,7 +1424,10 @@ curves_reset_callback (GtkWidget *widget,
 
   cd = (CurvesDialog *) client_data;
 
-  /*  Initialize the values  */
+  /* Initialize the curve for this channel  */
+  (*curves_init_curve)(cd->channel);
+  
+  /* Initialize the ui curve for this channel  */
   for (i = 0; i < 256; i++)
     cd->curve[cd->channel][i] = i;
 
@@ -967,10 +1459,16 @@ curves_ok_callback (GtkWidget *widget,
     gtk_widget_hide (cd->shell);
 
   if (!cd->preview)
-    image_map_apply (cd->image_map, curves, (void *) cd);
+  {
+    curves_calculate_image_data_curves (cd);
+    image_map_apply_16 (cd->image_map, curves, (void *) cd);
+  }
 
   if (cd->image_map)
-    image_map_commit (cd->image_map);
+  {
+    image_map_commit_16 (cd->image_map);
+    curves_free_curves(cd);
+  }
 
   cd->image_map = NULL;
 }
@@ -987,7 +1485,8 @@ curves_cancel_callback (GtkWidget *widget,
 
   if (cd->image_map)
     {
-      image_map_abort (cd->image_map);
+      image_map_abort_16 (cd->image_map);
+      curves_free_curves(cd);
       gdisplays_flush ();
     }
 
@@ -1094,8 +1593,9 @@ curves_graph_events (GtkWidget    *widget,
 	  cd->grab_point = closest_point;
 	  cd->points[cd->channel][cd->grab_point][0] = x;
 	  cd->points[cd->channel][cd->grab_point][1] = 255 - y;
-
-	  curves_calculate_curve (cd);
+	  
+          /* calculate a ui curve */
+	  curves_calculate_ui_curve (cd);
 	  break;
 
 	case GFREE:
@@ -1151,8 +1651,8 @@ curves_graph_events (GtkWidget    *widget,
 		  cd->points[cd->channel][cd->grab_point][0] = x;
 		  cd->points[cd->channel][cd->grab_point][1] = 255 - y;
 		}
-
-	      curves_calculate_curve (cd);
+	      /* calculate a ui curve */
+	      curves_calculate_ui_curve (cd);
 	      curves_update (cd, GRAPH | XRANGE_TOP | DRAW);
 	    }
 	  break;
@@ -1322,7 +1822,7 @@ ProcRecord curves_spline_proc =
 static Argument *
 curves_spline_invoker (Argument *args)
 {
-  PixelRegion srcPR, destPR;
+  PixelArea src_area, dest_area;
   int success = TRUE;
   int int_value;
   CurvesDialog cd;
@@ -1407,18 +1907,35 @@ curves_spline_invoker (Argument *args)
 	  cd.points[cd.channel][j][0] = control_pts[j * 2];
 	  cd.points[cd.channel][j][1] = control_pts[j * 2 + 1];
 	}
-      curves_calculate_curve (&cd);
+
+      /* Set up the function pointers for this tag */
+      curves_funcs (drawable_tag (drawable));
+      
+      /* allocate all curves data */
+      (*curves_alloc_curves) (&cd);
+      
+      /* Initialize all the curves for image data */ 
+      for (i = 0; i < 5; i++)
+	(*curves_init_curve) (i);
+
+      /* calculate curves for the image data */
+      curves_calculate_image_data_curves (&cd);
 
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+      pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL,
+			x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixelarea_init (&dest_area, drawable_shadow_canvas (drawable), NULL, 
+			x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-	curves (&srcPR, &destPR, (void *) &cd);
+      for (pr = pixelarea_register (2, &src_area, &dest_area); 
+		pr != NULL; 
+		pr = pixelarea_process (pr))
+	(*curves) (&src_area, &dest_area, (void *) &cd);
 
-      drawable_merge_shadow (drawable, TRUE);
+      curves_free_curves (&cd);
+      drawable_merge_shadow_canvas (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 
@@ -1476,7 +1993,7 @@ ProcRecord curves_explicit_proc =
 static Argument *
 curves_explicit_invoker (Argument *args)
 {
-  PixelRegion srcPR, destPR;
+  PixelArea src_area, dest_area;
   int success = TRUE;
   int int_value;
   CurvesDialog cd;
@@ -1549,17 +2066,35 @@ curves_explicit_invoker (Argument *args)
 
       for (j = 0; j < 256; j++)
 	cd.curve[cd.channel][j] = curve[j];
+      
+      /* Set up the function pointers for this tag */
+      curves_funcs (drawable_tag (drawable));
+      
+      /* allocate all curves data */
+      (*curves_alloc_curves) (&cd);
+      
+      /* Initialize all the curves for image data */ 
+      for (i = 0; i < 5; i++)
+	(*curves_init_curve) (i);
+
+      /* calculate curves for the image data */
+      curves_calculate_image_data_curves (&cd);
 
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+      pixelarea_init (&src_area, drawable_data_canvas (drawable),NULL, 
+		x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixelarea_init (&dest_area, drawable_shadow_canvas (drawable),NULL, 
+		x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-	curves (&srcPR, &destPR, (void *) &cd);
-
-      drawable_merge_shadow (drawable, TRUE);
+      for (pr = pixelarea_register (2, &src_area, &dest_area); 
+		pr != NULL; 
+		pr = pixelarea_process (pr))
+	(*curves) (&src_area, &dest_area, (void *) &cd);
+      
+      curves_free_curves (&cd);
+      drawable_merge_shadow_canvas (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 

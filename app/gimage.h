@@ -112,6 +112,7 @@ struct _GImage
   int ref_count;                      /*  number of references         */
 
   TileManager *shadow;                /*  shadow buffer tiles          */
+  struct _Canvas *shadow_canvas;
 
   int ID;                             /*  Unique gimage identifier     */
 
@@ -167,7 +168,9 @@ void            gimage_scale                  (GImage *, int, int);
 GImage *        gimage_get_named              (char *);
 GImage *        gimage_get_ID                 (int);
 TileManager *   gimage_shadow                 (GImage *, int, int, int);
+struct _Canvas *gimage_shadow_canvas          (GImage *, int, int, Tag);
 void            gimage_free_shadow            (GImage *);
+void            gimage_free_shadow_canvas     (GImage *);
 void            gimage_delete                 (GImage *);
 
 void            gimage_apply_image            (GImage *, GimpDrawable *,
@@ -175,7 +178,7 @@ void            gimage_apply_image            (GImage *, GimpDrawable *,
 					       TileManager *, int, int);
 void            gimage_apply_painthit         (GImage *, GimpDrawable *,
                                                struct _Canvas *,
-                                               struct _Canvas *,
+                                               struct _PixelArea *,
                                                int undo,
                                                gfloat, int mode,
                                                int x, int y);

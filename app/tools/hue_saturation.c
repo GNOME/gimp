@@ -20,6 +20,7 @@
 #include <math.h>
 #include "appenv.h"
 #include "actionarea.h"
+#include "canvas.h"
 #include "colormaps.h"
 #include "drawable.h"
 #include "general.h"
@@ -28,6 +29,12 @@
 #include "hue_saturation.h"
 #include "image_map.h"
 #include "interface.h"
+#include "pixelarea.h"
+#include "pixelrow.h"
+
+/* two temp routines */
+static void calc_rgb_to_hls(gdouble *r, gdouble *g, gdouble *b);
+static void calc_hls_to_rgb(gdouble *r, gdouble *g, gdouble *b);
 
 #define HUE_PARTITION_MASK  GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK
 
@@ -70,7 +77,7 @@ struct _HueSaturationDialog
   GtkAdjustment  *saturation_data;
 
   GimpDrawable *drawable;
-  ImageMap     image_map;
+  ImageMap16   image_map;
 
   double       hue[7];
   double       lightness[7];
@@ -113,137 +120,487 @@ static gint   hue_saturation_hue_partition_events    (GtkWidget *, GdkEvent *, H
 static void *hue_saturation_options = NULL;
 static HueSaturationDialog *hue_saturation_dialog = NULL;
 
-static void       hue_saturation          (PixelRegion *, PixelRegion *, void *);
 static Argument * hue_saturation_invoker  (Argument *);
 
+static void hue_saturation_funcs (Tag);
+
+typedef void (*HueSaturationFunc)(PixelArea *, PixelArea *, void *);
+static HueSaturationFunc hue_saturation;
+typedef void (*HueSaturationCalculateTransfersFunc)(gint, gint, gint);
+static HueSaturationCalculateTransfersFunc hue_saturation_calculate_transfers;
+typedef void (*HueSaturationAllocTransfersFunc)(void);
+static HueSaturationAllocTransfersFunc hue_saturation_alloc_transfers;
+
+static void hue_saturation_u8       (PixelArea *, PixelArea *, void *);
+static void hue_saturation_calculate_transfers_u8 (gint, gint, gint);
+static void hue_saturation_alloc_transfers_u8 (void);
+
+static void hue_saturation_u16       (PixelArea *, PixelArea *, void *);
+static void hue_saturation_calculate_transfers_u16 (gint, gint, gint);
+static void hue_saturation_alloc_transfers_u16 (void);
+
+static void hue_saturation_float       (PixelArea *, PixelArea *, void *);
+static void hue_saturation_calculate_transfers_float (gint, gint, gint);
+static void hue_saturation_alloc_transfers_float (void);
+
+static void hue_saturation_init_transfers (void *);
+static void hue_saturation_free_transfers (void);
+
+/* formulas for calculating the transfers */
+static gdouble hue_value (gdouble, gdouble, gdouble);
+static gdouble saturation_value (gdouble, gdouble, gdouble);
+static gdouble lightness_value (gdouble, gdouble, gdouble);
+
 /*  Local variables  */
-static int hue_transfer[6][256];
-static int lightness_transfer[6][256];
-static int saturation_transfer[6][256];
-static int default_colors[6][3] =
+static PixelRow hue_trans[6];
+static PixelRow lightness_trans[6];
+static PixelRow saturation_trans[6];
+
+static double hue[7]; 
+static double lightness[7];
+static double saturation[7];
+
+static gdouble default_colors_double[6][3] =
 {
-  { 255, 0, 0 },
-  { 255, 255, 0 },
-  { 0, 255, 0 },
-  { 0, 255, 255 },
-  { 0, 0, 255 },
-  { 255, 0, 255 }
+  { 1.0, 0, 0 },
+  { 1.0, 1.0, 0 },
+  { 0, 1.0, 0 },
+  { 0, 1.0, 1.0 },
+  { 0, 0, 1.0 },
+  { 1.0, 0, 1.0 }
 };
 
 /*  hue saturation machinery  */
 
 static void
-hue_saturation_calculate_transfers (HueSaturationDialog *hsd)
+hue_saturation_funcs (Tag drawable_tag)
 {
-  int value;
-  int hue;
-  int i;
+  switch (tag_precision (drawable_tag))
+  {
+  case PRECISION_U8:
+    hue_saturation_alloc_transfers = hue_saturation_alloc_transfers_u8;
+    hue_saturation_calculate_transfers = hue_saturation_calculate_transfers_u8;
+    hue_saturation = hue_saturation_u8;
+    break;
+  case PRECISION_U16:
+    hue_saturation_alloc_transfers = hue_saturation_alloc_transfers_u16;
+    hue_saturation_calculate_transfers = hue_saturation_calculate_transfers_u16;
+    hue_saturation = hue_saturation_u16;
+    break;
+  case PRECISION_FLOAT:
+    hue_saturation_alloc_transfers = hue_saturation_alloc_transfers_float;
+    hue_saturation_calculate_transfers = hue_saturation_calculate_transfers_float;
+    hue_saturation = hue_saturation_float;
+    break;
+  default:
+    hue_saturation_alloc_transfers = NULL;
+    hue_saturation_calculate_transfers = NULL;
+    hue_saturation = NULL;
+    break; 
+  }
+}
 
-  /*  Calculate transfers  */
-  for (hue = 0; hue < 6; hue++)
-    for (i = 0; i < 256; i++)
-      {
-	value = (hsd->hue[0] + hsd->hue[hue + 1]) * 255.0 / 360.0;
-	if ((i + value) < 0)
-	  hue_transfer[hue][i] = 255 + (i + value);
-	else if ((i + value) > 255)
-	  hue_transfer[hue][i] = i + value - 255;
-	else
-	  hue_transfer[hue][i] = i + value;
 
-	/*  Lightness  */
-	value = (hsd->lightness[0] + hsd->lightness[hue + 1]) * 127.0 / 100.0;
-	value = BOUNDS (value, -255, 255);
-	if (value < 0)
-	  lightness_transfer[hue][i] = (unsigned char) ((i * (255 + value)) / 255);
-	else
-	  lightness_transfer[hue][i] = (unsigned char) (i + ((255 - i) * value) / 255);
-
-	/*  Saturation  */
-	value = (hsd->saturation[0] + hsd->saturation[hue + 1]) * 255.0 / 100.0;
-	value = BOUNDS (value, -255, 255);
-#if 0
-        saturation_transfer[hue][i] = (unsigned char) (BOUNDS ((i * (255 + value)) / 255, 0, 255));
-#else
-	if (value < 0)
-	  saturation_transfer[hue][i] = (unsigned char) ((i * (255 + value)) / 255);
-	else
-	  saturation_transfer[hue][i] = (unsigned char) (i + ((255 - i) * value) / 255);
-#endif
-      }
+static void
+hue_saturation_alloc_transfers_u8 (void)
+{
+  gint i;
+  Tag tag = tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO);
+  
+  for (i = 0; i < 6; i++)
+  { 
+       guint8* hue_data = (guint8*) g_malloc (sizeof(guint8) * 256 );
+       guint8* lightness_data = (guint8*) g_malloc (sizeof(guint8) * 256 );
+       guint8* saturation_data = (guint8*) g_malloc (sizeof(guint8) * 256 );
+       pixelrow_init (&hue_trans[i], tag, (guchar*)hue_data, 256);
+       pixelrow_init (&lightness_trans[i], tag, (guchar*)lightness_data, 256);
+       pixelrow_init (&saturation_trans[i], tag, (guchar*)saturation_data, 256);
+  }
+  
+  /* the values for the transfer arrays */ 
+  for (i = 0; i < 7; i++)
+  {
+    hue[i] = 0.0;
+    lightness[i] = 0.0;
+    saturation[i] = 0.0;
+  }
+  hue_saturation_calculate_transfers_u8 ( TRUE, TRUE, TRUE);
 }
 
 static void
-hue_saturation (PixelRegion *srcPR,
-		PixelRegion *destPR,
-		void        *user_data)
+hue_saturation_alloc_transfers_u16 (void)
 {
-  HueSaturationDialog *hsd;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  int alpha;
-  int w, h;
-  int r, g, b;
-  int hue;
+  gint i;
+  Tag tag = tag_new (PRECISION_U16, FORMAT_GRAY, ALPHA_NO);
+  
+  for (i = 0; i < 6; i++)
+  { 
+       guint16* hue_data = (guint16*) g_malloc (sizeof(guint16) * 65536 );
+       guint16* lightness_data = (guint16*) g_malloc (sizeof(guint16) * 65536 );
+       guint16* saturation_data = (guint16*) g_malloc (sizeof(guint16) * 65536 );
+       pixelrow_init (&hue_trans[i], tag, (guchar*)hue_data, 65536);
+       pixelrow_init (&lightness_trans[i], tag, (guchar*)lightness_data, 65536);
+       pixelrow_init (&saturation_trans[i], tag, (guchar*)saturation_data, 65536);
+  }
+  
+  /* the values for the transfer arrays */ 
+  for (i = 0; i < 7; i++)
+  {
+    hue[i] = 0.0;
+    lightness[i] = 0.0;
+    saturation[i] = 0.0;
+  }
+  hue_saturation_calculate_transfers_u16 ( TRUE, TRUE, TRUE);
+}
 
-  hsd = (HueSaturationDialog *) user_data;
+static void
+hue_saturation_alloc_transfers_float (void)
+{
+  g_warning("hue_saturation_alloc_transfers_float not implemented yet\n");
+}
 
-  /*  Set the transfer arrays  (for speed)  */
-  h = srcPR->h;
-  src = srcPR->data;
-  dest = destPR->data;
-  alpha = (srcPR->bytes == 4) ? TRUE : FALSE;
+static void
+hue_saturation_free_transfers (void)
+{
+  gint i;
+  for (i = 0; i < 6; i++)
+  { 
+     guchar* hue_data =  pixelrow_data (&hue_trans[i]);
+     guchar* lightness_data = pixelrow_data (&lightness_trans[i]);
+     guchar* saturation_data = pixelrow_data (&saturation_trans[i]);
+     g_free (hue_data);
+     g_free (lightness_data);
+     g_free (saturation_data);
+     pixelrow_init (&hue_trans[i], tag_null(), NULL, 0); 
+     pixelrow_init (&lightness_trans[i], tag_null(), NULL, 0); 
+     pixelrow_init (&saturation_trans[i], tag_null(), NULL, 0); 
+  }
+}
 
-  while (h--)
+static void 
+hue_saturation_init_transfers( void * user_data )
+{
+  HueSaturationDialog *hsd = (HueSaturationDialog *) user_data;
+  gint do_hue, do_lightness, do_saturation;
+  gint i;
+
+  do_hue = do_lightness = do_saturation = FALSE;
+  for(i = 0; i < 7; i++)
+  {
+    if (hue[i] != hsd->hue[i])
     {
-      w = srcPR->w;
-      s = src;
-      d = dest;
-      while (w--)
+	do_hue = TRUE;
+        hue[i] = hsd->hue[i];
+    }
+    if (lightness[i] != hsd->lightness[i])
+    {
+	do_lightness = TRUE;
+        lightness[i] = hsd->lightness[i];
+    }
+    if (saturation[i] != hsd->saturation[i])
+    {
+	do_saturation = TRUE;
+        saturation[i] = hsd->saturation[i];
+    }
+  }
+  (*hue_saturation_calculate_transfers) (do_hue, do_lightness, do_saturation);
+}
+
+static gdouble 
+hue_value (gdouble x, gdouble hue0, gdouble hue)
+{
+   gdouble value;
+   value = (hue0 + hue)/ 360.0;
+   if ((x + value) < 0)
+     return 1.0 + (value + x);
+   else if ((x + value) > 1.0)
+     return (x + value) - 1.0;
+   else 
+     return x + value;
+}
+
+static gdouble
+lightness_value (gdouble x, gdouble light0, gdouble light)
+{
+  gdouble value;
+  value = (light0 + light) * .5 / 100.0;
+  value = BOUNDS (value, -1.0, 1.0);
+  if (value < 0)
+    return x * ( 1.0 + value );
+  else
+    return x + ( (1.0 - x) * value );
+}
+
+static gdouble 
+saturation_value (gdouble x, gdouble sat0, gdouble sat)
+{
+  gdouble value;
+  value = (sat0 + sat) / 100.0;
+  value = BOUNDS (value, -1.0, 1.0);
+  if (value < 0)
+    return x * ( 1.0 + value );
+  else
+    return x + ( (1.0 - x) * value );
+}
+
+static void
+hue_saturation_calculate_transfers_u8 (
+					gint do_hue,
+					gint do_lightness,
+					gint do_saturation
+					)
+{
+  int i, j;
+  
+  /* hue transfer */
+  if (do_hue)
+    for (j = 0; j < 6; j++)
+    {
+      guint8* hue_trans_data = (guint8*)pixelrow_data (&hue_trans[j]);
+      for (i = 0; i < 256; i++)
 	{
-	  r = s[RED_PIX];
-	  g = s[GREEN_PIX];
-	  b = s[BLUE_PIX];
-
-	  rgb_to_hls (&r, &g, &b);
-
-	  if (r < 43)
-	    hue = 0;
-	  else if (r < 85)
-	    hue = 1;
-	  else if (r < 128)
-	    hue = 2;
-	  else if (r < 171)
-	    hue = 3;
-	  else if (r < 213)
-	    hue = 4;
-	  else
-	    hue = 5;
-
-	  r = hue_transfer[hue][r];
-	  g = lightness_transfer[hue][g];
-	  b = saturation_transfer[hue][b];
-
-	  hls_to_rgb (&r, &g, &b);
-
-	  d[RED_PIX] = r;
-	  d[GREEN_PIX] = g;
-	  d[BLUE_PIX] = b;
-
-	  if (alpha)
-	    d[ALPHA_PIX] = s[ALPHA_PIX];
-
-	  s += srcPR->bytes;
-	  d += destPR->bytes;
+            hue_trans_data[i] = (guint8)(255.0 * hue_value ((gdouble)i/255.0, 
+					hue[0], hue[j + 1]) + .5);
 	}
+    }
+ 
+  /* lightness transfer */ 
+  if (do_lightness)
+    for (j = 0; j < 6; j++)
+    {
+      guint8* lightness_trans_data = (guint8*)pixelrow_data (&lightness_trans[j]);
+      for (i = 0; i < 256; i++)
+	{
+           lightness_trans_data[i] = (guint8)( 255.0 * lightness_value ((gdouble)i/255.0, 
+					lightness[0], lightness[j + 1]) + .5);
+	}
+    }
+  
+  /*  saturation  transfer */
+  if (do_saturation)
+    for (j = 0; j < 6; j++)
+    {
+      guint8* saturation_trans_data = (guint8*)pixelrow_data (&saturation_trans[j]);
+      for (i = 0; i < 256; i++)
+	{
+          saturation_trans_data[i] = (guint8)( 255.0 * saturation_value ((gdouble)i/255.0, 
+						saturation[0], saturation[j + 1]) + .5);
+	}
+    }
+}
 
-      src += srcPR->rowstride;
-      dest += destPR->rowstride;
+static void
+hue_saturation_calculate_transfers_u16 (
+					gint do_hue,
+					gint do_lightness,
+					gint do_saturation
+					)
+{
+  int i, j;
+  
+  /* hue transfer */
+  if (do_hue)
+    for (j = 0; j < 6; j++)
+    {
+      guint16* hue_trans_data = (guint16*)pixelrow_data (&hue_trans[j]);
+      for (i = 0; i < 65536; i++)
+	{
+            hue_trans_data[i] = (guint16)(65535.0 * hue_value ((gdouble)i/65535.0, 
+					hue[0], hue[j + 1]) + .5);
+	}
+    }
+ 
+  /* lightness transfer */ 
+  if (do_lightness)
+    for (j = 0; j < 6; j++)
+    {
+      guint16* lightness_trans_data = (guint16*)pixelrow_data (&lightness_trans[j]);
+      for (i = 0; i < 65536; i++)
+	{
+           lightness_trans_data[i] = (guint16)( 65535.0 * lightness_value ((gdouble)i/65535.0, 
+					lightness[0], lightness[j + 1]) + .5);
+	}
+    }
+  
+  /*  saturation  transfer */
+  if (do_saturation)
+    for (j = 0; j < 6; j++)
+    {
+      guint16* saturation_trans_data = (guint16*)pixelrow_data (&saturation_trans[j]);
+      for (i = 0; i < 65536; i++)
+	{
+          saturation_trans_data[i] = (guint16)( 65535.0 * saturation_value ((gdouble)i/65535.0, 
+						saturation[0], saturation[j + 1]) + .5);
+	}
     }
 }
 
 
-/*  by_color select action functions  */
+static void
+hue_saturation_calculate_transfers_float (
+					gint do_hue,
+					gint do_lightness,
+					gint do_saturation
+					)
+{
+}
+
+
+static void
+hue_saturation_u8 (PixelArea *src_area,
+		PixelArea *dest_area,
+		void        *user_data)
+{
+  Tag src_tag = pixelarea_tag (src_area);
+  Tag dest_tag = pixelarea_tag (dest_area);
+  gint src_num_channels = tag_num_channels (src_tag);
+  gint dest_num_channels = tag_num_channels (dest_tag);
+  HueSaturationDialog *hsd;
+  guchar *src, *dest;
+  guint8 *s, *d;
+  int has_alpha;
+  int w, h;
+  gdouble r, g, b;
+  int i;
+  guint8* hue_trans_data[6];
+  guint8* lightness_trans_data[6];
+  guint8* saturation_trans_data[6];
+
+  hsd = (HueSaturationDialog *) user_data;
+
+  /* get pointers to the transfer tables for speed */ 
+  for (i = 0 ; i < 6; i++)
+  { 
+    hue_trans_data[i] = (guint8*)pixelrow_data (&hue_trans[i]);
+    lightness_trans_data[i] = (guint8*)pixelrow_data (&lightness_trans[i]);
+    saturation_trans_data[i] = (guint8*)pixelrow_data (&saturation_trans[i]);
+  } 
+  
+  src = (guchar *)pixelarea_data (src_area);
+  dest = (guchar *)pixelarea_data (dest_area);
+  has_alpha = tag_alpha (src_tag) == ALPHA_YES ? TRUE : FALSE;
+  h = pixelarea_height (src_area);
+  while (h--)
+    {
+      s = (guint8*)src;
+      d = (guint8*)dest;
+      w = pixelarea_width (src_area);
+      while (w--)
+	{
+	  r = s[RED_PIX]/255.0;
+	  g = s[GREEN_PIX]/255.0;
+	  b = s[BLUE_PIX]/255.0;
+
+	  calc_rgb_to_hls (&r, &g, &b);
+
+          r /= 360.0;
+          i = (int)(r * 6.0);
+	  i = BOUNDS (i, 0 , 5);
+
+	  r = hue_trans_data[i][(guint8)(r * 255.0)] / 255.0;
+	  g = lightness_trans_data[i][(guint8)(g * 255.0)] / 255.0;
+	  b = saturation_trans_data[i][(guint8)(b * 255.0)] / 255.0;
+           
+          r *= 360;
+	  calc_hls_to_rgb (&r, &g, &b);
+
+	  d[RED_PIX] = r * 255.0;
+	  d[GREEN_PIX] = g * 255.0;
+	  d[BLUE_PIX] = b * 255.0;
+
+	  if (has_alpha)
+	    d[ALPHA_PIX] = s[ALPHA_PIX];
+
+	  s += src_num_channels;
+	  d += dest_num_channels;
+	}
+
+      src += pixelarea_rowstride (src_area);
+      dest += pixelarea_rowstride (dest_area);
+    }
+}
+
+static void
+hue_saturation_u16 (PixelArea *src_area,
+		PixelArea *dest_area,
+		void        *user_data)
+{
+  Tag src_tag = pixelarea_tag (src_area);
+  Tag dest_tag = pixelarea_tag (dest_area);
+  gint src_num_channels = tag_num_channels (src_tag);
+  gint dest_num_channels = tag_num_channels (dest_tag);
+  HueSaturationDialog *hsd;
+  guchar *src, *dest;
+  guint16 *s, *d;
+  int has_alpha;
+  int w, h;
+  gdouble r, g, b;
+  gint i;
+  guint16* hue_trans_data[6];
+  guint16* lightness_trans_data[6];
+  guint16* saturation_trans_data[6];
+  hsd = (HueSaturationDialog *) user_data;
+
+  /* get pointers to the transfer tables for speed */ 
+  for (i = 0 ; i < 6; i++)
+  { 
+    hue_trans_data[i] = (guint16*)pixelrow_data (&hue_trans[i]);
+    lightness_trans_data[i] = (guint16*)pixelrow_data (&lightness_trans[i]);
+    saturation_trans_data[i] = (guint16*)pixelrow_data (&saturation_trans[i]);
+  } 
+  
+  src = (guchar *)pixelarea_data (src_area);
+  dest = (guchar *)pixelarea_data (dest_area);
+  has_alpha = tag_alpha (src_tag) == ALPHA_YES ? TRUE : FALSE;
+  h = pixelarea_height (src_area);
+  while (h--)
+    {
+      s = (guint16*)src;
+      d = (guint16*)dest;
+      w = pixelarea_width (src_area);
+      while (w--)
+	{
+	  r = s[RED_PIX]/65535.0;
+	  g = s[GREEN_PIX]/65535.0;
+	  b = s[BLUE_PIX]/65535.0;
+
+	  calc_rgb_to_hls (&r, &g, &b);
+
+          r /= 360.0;
+          i = (int)(r * 6.0);
+	  i = BOUNDS (i, 0 , 5);
+
+	  r = hue_trans_data[i][(guint16)(r * 65535.0)] / 65535.0;
+	  g = lightness_trans_data[i][(guint16)(g * 65535.0)] / 65535.0;
+	  b = saturation_trans_data[i][(guint16)(b * 65535.0)] / 65535.0;
+           
+          r *= 360;
+	  calc_hls_to_rgb (&r, &g, &b);
+
+	  d[RED_PIX] = r * 65535.0;
+	  d[GREEN_PIX] = g * 65535.0;
+	  d[BLUE_PIX] = b * 65535.0;
+
+	  if (has_alpha)
+	    d[ALPHA_PIX] = s[ALPHA_PIX];
+
+	  s += src_num_channels;
+	  d += dest_num_channels;
+	}
+
+      src += pixelarea_rowstride (src_area);
+      dest += pixelarea_rowstride (dest_area);
+    }
+}
+
+static void
+hue_saturation_float (PixelArea *src_area,
+		PixelArea *dest_area,
+		void        *user_data)
+{
+  g_warning("hue_saturation_float not implemented yet\n");
+}
+
 
 static void
 hue_saturation_button_press (Tool           *tool,
@@ -295,7 +652,8 @@ hue_saturation_control (Tool     *tool,
     case HALT :
       if (hue_saturation_dialog)
 	{
-	  image_map_abort (hue_saturation_dialog->image_map);
+	  image_map_abort_16 (hue_saturation_dialog->image_map);
+          hue_saturation_free_transfers();
 	  hue_saturation_dialog->image_map = NULL;
 	  hue_saturation_cancel_callback (NULL, (gpointer) hue_saturation_dialog);
 	}
@@ -349,6 +707,7 @@ void
 hue_saturation_initialize (void *gdisp_ptr)
 {
   GDisplay *gdisp;
+  GimpDrawable *drawable;
   int i;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -372,9 +731,15 @@ hue_saturation_initialize (void *gdisp_ptr)
       hue_saturation_dialog->lightness[i] = 0.0;
       hue_saturation_dialog->saturation[i] = 0.0;
     }
+  
+  drawable = gimage_active_drawable (gdisp->gimage);
+  
+  /* assign the function pointers for our tag type */
+  hue_saturation_funcs (drawable_tag (drawable));
+  (*hue_saturation_alloc_transfers)();
 
-  hue_saturation_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  hue_saturation_dialog->image_map = image_map_create (gdisp_ptr, hue_saturation_dialog->drawable);
+  hue_saturation_dialog->drawable = drawable;
+  hue_saturation_dialog->image_map = image_map_create_16 (gdisp_ptr, hue_saturation_dialog->drawable);
   hue_saturation_update (hue_saturation_dialog, ALL);
 }
 
@@ -385,16 +750,13 @@ hue_saturation_free ()
     {
       if (hue_saturation_dialog->image_map)
 	{
-	  image_map_abort (hue_saturation_dialog->image_map);
+	  image_map_abort_16 (hue_saturation_dialog->image_map);
 	  hue_saturation_dialog->image_map = NULL;
 	}
       gtk_widget_destroy (hue_saturation_dialog->shell);
     }
 }
 
-/****************************/
-/*  Select by Color dialog  */
-/****************************/
 
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
@@ -655,11 +1017,10 @@ static void
 hue_saturation_update (HueSaturationDialog *hsd,
 		       int                  update)
 {
-  int i, j, b;
-  int rgb[3];
+  int i, j;
   unsigned char buf[DA_WIDTH * 3];
   char text[12];
-
+  
   if (update & HUE_SLIDER)
     {
       hsd->hue_data->value = hsd->hue[hsd->hue_partition];
@@ -690,27 +1051,33 @@ hue_saturation_update (HueSaturationDialog *hsd,
       sprintf (text, "%0.0f", hsd->saturation[hsd->hue_partition]);
       gtk_entry_set_text (GTK_ENTRY (hsd->saturation_text), text);
     }
-
-  hue_saturation_calculate_transfers (hsd);
+  
+  hue_saturation_init_transfers ((void *)hsd);
 
   for (i = 0; i < 6; i++)
     {
-      rgb[RED_PIX] = default_colors[i][RED_PIX];
-      rgb[GREEN_PIX] = default_colors[i][GREEN_PIX];
-      rgb[BLUE_PIX] = default_colors[i][BLUE_PIX];
+      gdouble red, blue, green;
 
-      rgb_to_hls (rgb, rgb + 1, rgb + 2);
+      red = default_colors_double[i][RED_PIX];
+      green = default_colors_double[i][GREEN_PIX];
+      blue = default_colors_double[i][BLUE_PIX];
+      
+      calc_rgb_to_hls (&red, &green, &blue);
 
-      rgb[RED_PIX] = hue_transfer[i][rgb[RED_PIX]];
-      rgb[GREEN_PIX] = lightness_transfer[i][rgb[GREEN_PIX]];
-      rgb[BLUE_PIX] = saturation_transfer[i][rgb[BLUE_PIX]];
+      red = hue_value (red, hue[0], hue[i+1]);
+      green = lightness_value (green, lightness[0], lightness[i+1]);   
+      blue = saturation_value (blue, saturation[0], saturation[i+1]);
 
-      hls_to_rgb (rgb, rgb + 1, rgb + 2);
 
+      calc_hls_to_rgb (&red, &green, &blue);
+     
       for (j = 0; j < DA_WIDTH; j++)
-	for (b = 0; b < 3; b++)
-	  buf[j * 3 + b] = (unsigned char) rgb[b];
-
+      {
+          buf[j * 3 + 0] = red * 255.0;
+          buf[j * 3 + 1] = green * 255.0;
+	  buf[j * 3 + 2] = blue * 255.0; 
+       }
+       
       for (j = 0; j < DA_HEIGHT; j++)
 	gtk_preview_draw_row (GTK_PREVIEW (hsd->hue_partition_da[i]), buf, 0, j, DA_WIDTH);
 
@@ -724,7 +1091,8 @@ hue_saturation_preview (HueSaturationDialog *hsd)
 {
   if (!hsd->image_map)
     g_warning ("No image map");
-  image_map_apply (hsd->image_map, hue_saturation, (void *) hsd);
+  image_map_apply_16 (hsd->image_map, hue_saturation, (void *) hsd);
+  hue_saturation_init_transfers ((void *)hsd);
 }
 
 static void
@@ -739,10 +1107,15 @@ hue_saturation_ok_callback (GtkWidget *widget,
     gtk_widget_hide (hsd->shell);
 
   if (!hsd->preview)
-    image_map_apply (hsd->image_map, hue_saturation, (void *) hsd);
-
+  {
+    image_map_apply_16 (hsd->image_map, hue_saturation, (void *) hsd);
+    hue_saturation_init_transfers ((void *)hsd);
+  }
   if (hsd->image_map)
-    image_map_commit (hsd->image_map);
+  {
+    image_map_commit_16 (hsd->image_map);
+    hue_saturation_free_transfers();
+  }
 
   hsd->image_map = NULL;
 }
@@ -769,7 +1142,8 @@ hue_saturation_cancel_callback (GtkWidget *widget,
 
   if (hsd->image_map)
     {
-      image_map_abort (hsd->image_map);
+      image_map_abort_16 (hsd->image_map);
+      hue_saturation_free_transfers();
       gdisplays_flush ();
     }
 
@@ -1063,7 +1437,7 @@ ProcRecord hue_saturation_proc =
 static Argument *
 hue_saturation_invoker (Argument *args)
 {
-  PixelRegion srcPR, destPR;
+  PixelArea src_area, dest_area;
   int success = TRUE;
   HueSaturationDialog hsd;
   GImage *gimage;
@@ -1155,20 +1529,177 @@ hue_saturation_invoker (Argument *args)
       hsd.saturation[hue_range] = saturation;
 
       /*  calculate the transfer arrays  */
-      hue_saturation_calculate_transfers (&hsd);
+      (*hue_saturation_alloc_transfers) ();
+      hue_saturation_init_transfers (&hsd);
 
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+      pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL, 
+		x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixelarea_init (&dest_area, drawable_shadow_canvas (drawable), NULL, 
+		x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-	hue_saturation (&srcPR, &destPR, (void *) &hsd);
+      for (pr = pixelarea_register (2, &src_area, &dest_area); 
+		pr != NULL; 
+		pr = pixelarea_process (pr))
+	(*hue_saturation) (&src_area, &dest_area, (void *) &hsd);
 
-      drawable_merge_shadow (drawable, TRUE);
+      hue_saturation_free_transfers ();
+      drawable_merge_shadow_canvas (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 
   return procedural_db_return_args (&hue_saturation_proc, success);
+}
+
+
+static void
+calc_rgb_to_hls (gdouble *r,
+	    gdouble *g,
+	    gdouble *b)
+{
+  gdouble min;
+  gdouble max;
+  gdouble red;
+  gdouble green;
+  gdouble blue;
+  gdouble h, l, s;
+  gdouble delta;
+
+  red = *r;
+  green = *g;
+  blue = *b;
+
+  if (red > green)
+    {
+      if (red > blue)
+	max = red;
+      else
+	max = blue;
+
+      if (green < blue)
+	min = green;
+      else
+	min = blue;
+    }
+  else
+    {
+      if (green > blue)
+	max = green;
+      else
+	max = blue;
+
+      if (red < blue)
+	min = red;
+      else
+	min = blue;
+    }
+
+  l = (max + min) / 2;
+  s = 0;
+  h = 0;
+
+  if (max != min)
+    {
+      if (l <= 0.5)
+	s = (max - min) / (max + min);
+      else
+	s = (max - min) / (2 - max - min);
+
+      delta = max -min;
+      if (red == max)
+	h = (green - blue) / delta;
+      else if (green == max)
+	h = 2 + (blue - red) / delta;
+      else if (blue == max)
+	h = 4 + (red - green) / delta;
+
+      h *= 60;
+      if (h < 0.0)
+	h += 360;
+    }
+
+  *r = h;
+  *g = l;
+  *b = s;
+}
+
+static void
+calc_hls_to_rgb (gdouble *h,
+	    gdouble *l,
+	    gdouble *s)
+{
+  gdouble hue;
+  gdouble lightness;
+  gdouble saturation;
+  gdouble m1, m2;
+  gdouble r, g, b;
+
+  lightness = *l;
+  saturation = *s;
+
+  if (lightness <= 0.5)
+    m2 = lightness * (1 + saturation);
+  else
+    m2 = lightness + saturation - lightness * saturation;
+  m1 = 2 * lightness - m2;
+
+  if (saturation == 0)
+    {
+      *h = lightness;
+      *l = lightness;
+      *s = lightness;
+    }
+  else
+    {
+      hue = *h + 120;
+      while (hue > 360)
+	hue -= 360;
+      while (hue < 0)
+	hue += 360;
+
+      if (hue < 60)
+	r = m1 + (m2 - m1) * hue / 60;
+      else if (hue < 180)
+	r = m2;
+      else if (hue < 240)
+	r = m1 + (m2 - m1) * (240 - hue) / 60;
+      else
+	r = m1;
+
+      hue = *h;
+      while (hue > 360)
+	hue -= 360;
+      while (hue < 0)
+	hue += 360;
+
+      if (hue < 60)
+	g = m1 + (m2 - m1) * hue / 60;
+      else if (hue < 180)
+	g = m2;
+      else if (hue < 240)
+	g = m1 + (m2 - m1) * (240 - hue) / 60;
+      else
+	g = m1;
+
+      hue = *h - 120;
+      while (hue > 360)
+	hue -= 360;
+      while (hue < 0)
+	hue += 360;
+
+      if (hue < 60)
+	b = m1 + (m2 - m1) * hue / 60;
+      else if (hue < 180)
+	b = m2;
+      else if (hue < 240)
+	b = m1 + (m2 - m1) * (240 - hue) / 60;
+      else
+	b = m1;
+
+      *h = r;
+      *l = g;
+      *s = b;
+    }
 }

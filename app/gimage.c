@@ -49,6 +49,7 @@
 /*  Local function declarations  */
 static void     gimage_free_projection       (GImage *);
 static void     gimage_allocate_shadow       (GImage *, int, int, int);
+static void     gimage_allocate_shadow_canvas(GImage *, int, int, Tag);
 static GImage * gimage_create                (void);
 static void     gimage_allocate_projection   (GImage *);
 static void     gimage_free_layers           (GImage *);
@@ -108,6 +109,7 @@ gimage_create (void)
   gimage->ref_count = 0;
   gimage->instance_count = 0;
   gimage->shadow = NULL;
+  gimage->shadow_canvas = NULL;
   gimage->dirty = 1;
   gimage->undo_on = TRUE;
   gimage->flat = TRUE;
@@ -185,6 +187,12 @@ gimage_allocate_shadow (GImage *gimage, int width, int height, int bpp)
 {
   /*  allocate the new projection  */
   gimage->shadow = tile_manager_new (width, height, bpp);
+}
+
+static void
+gimage_allocate_shadow_canvas (GImage *gimage, int width, int height, Tag tag)
+{
+  gimage->shadow_canvas = canvas_new (tag, width, height, STORAGE_TILED);
 }
 
 /* function definitions */
@@ -493,6 +501,25 @@ gimage_shadow (GImage *gimage, int width, int height, int bpp)
 }
 
 
+Canvas *
+gimage_shadow_canvas (GImage *gimage, int width, int height, Tag tag)
+{
+  if (
+	gimage->shadow_canvas &&
+        ((width != canvas_width (gimage->shadow_canvas)) ||
+        (height != canvas_height (gimage->shadow_canvas)) ||
+        (!tag_equal (tag ,canvas_tag (gimage->shadow_canvas))))
+      )
+    gimage_free_shadow_canvas (gimage);
+  else if (gimage->shadow_canvas)
+    return gimage->shadow_canvas;
+
+  gimage_allocate_shadow_canvas (gimage, width, height, tag);
+
+  return gimage->shadow_canvas;
+}
+
+
 void
 gimage_free_shadow (GImage *gimage)
 {
@@ -501,6 +528,17 @@ gimage_free_shadow (GImage *gimage)
     tile_manager_destroy (gimage->shadow);
 
   gimage->shadow = NULL;
+}
+
+
+void
+gimage_free_shadow_canvas (GImage *gimage)
+{
+  /*  Free the shadow buffer from the specified gimage if it exists  */
+  if (gimage->shadow_canvas)
+    canvas_delete (gimage->shadow_canvas);
+
+  gimage->shadow_canvas = NULL;
 }
 
 
@@ -624,13 +662,12 @@ gimage_apply_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2PR,
 		     opacity, mode, active, operation);
 }
 
-
 void 
 gimage_apply_painthit  (
                         GImage * gimage,
                         GimpDrawable * drawable,
                         Canvas * src1,
-                        Canvas * src2,
+                        PixelArea * src2_area,
                         int undo,
                         gfloat opacity,
                         int mode,
@@ -643,7 +680,7 @@ gimage_apply_painthit  (
   /* make sure we're doing something legal */
   operation = valid_combinations
     [drawable_type (drawable)]
-    [tag_num_channels (canvas_tag (src2))];
+    [tag_num_channels (pixelarea_tag (src2_area))];
 
   if (operation == -1)
     {
@@ -652,7 +689,7 @@ gimage_apply_painthit  (
     }
   
   {
-    PixelArea src1PR, src2PR, destPR, maskPR;
+    PixelArea src1PR, destPR, maskPR;
     Channel * mask;
 
     /* get the mask (if any) */
@@ -674,8 +711,8 @@ gimage_apply_painthit  (
           gimage and mask bounds */
       x1 = CLAMP (x, 0, drawable_width (drawable));
       y1 = CLAMP (y, 0, drawable_height (drawable));
-      x2 = CLAMP (x + canvas_width (src2), 0, drawable_width (drawable));
-      y2 = CLAMP (y + canvas_height (src2), 0, drawable_height (drawable));
+      x2 = CLAMP (x + pixelarea_width (src2_area), 0, drawable_width (drawable));
+      y2 = CLAMP (y + pixelarea_height (src2_area), 0, drawable_height (drawable));
       
       if (mask)
         {
@@ -697,9 +734,11 @@ gimage_apply_painthit  (
                       FALSE);
       
       /* the painthit */
-      pixelarea_init (&src2PR, src2, NULL,
-                      x1-x, y1-y,
-                      (x2 - (x1-x)), (y2 - (y1-y)),
+
+      pixelarea_resize (src2_area,
+                      pixelarea_x (src2_area) + (x1-x),
+                      pixelarea_y (src2_area) + (y1-y),
+                      x2 - x1, y2 - y1,
                       FALSE);
       
       pixelarea_init (&destPR, drawable_data_canvas (drawable), NULL,
@@ -722,12 +761,14 @@ gimage_apply_painthit  (
       
       gimage_get_active_channels (gimage, drawable, active);
 
-      if (mask)
-        combine_areas (&src1PR, &src2PR, &destPR, &maskPR, NULL,
-                       opacity, mode, active, operation);
-      else
-        combine_areas (&src1PR, &src2PR, &destPR, NULL, NULL,
-                       opacity, mode, active, operation);
+      {
+        if (mask)
+          combine_areas (&src1PR, src2_area, &destPR, &maskPR, NULL,
+                         opacity, mode, active, operation);
+        else
+          combine_areas (&src1PR, src2_area, &destPR, NULL, NULL,
+                         opacity, mode, active, operation);
+      }
     }
   }
 }
@@ -739,6 +780,7 @@ gimage_apply_painthit  (
    Takes an additional mask pixel region as well.
 
 */
+
 void
 gimage_replace_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2PR,
 		      int undo, int opacity,

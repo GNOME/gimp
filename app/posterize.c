@@ -24,7 +24,9 @@
 #include "gdisplay.h"
 #include "image_map.h"
 #include "interface.h"
+#include "pixelarea.h"
 #include "posterize.h"
+#include "tag.h"
 
 #define TEXT_WIDTH 55
 
@@ -43,13 +45,14 @@ struct _PosterizeDialog
   GtkWidget   *levels_text;
 
   GimpDrawable *drawable;
-  ImageMap     image_map;
+  ImageMap16   image_map;
   int          levels;
 
   gint         preview;
 };
 
 /*  posterize action functions  */
+
 
 static void   posterize_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   posterize_button_release (Tool *, GdkEventButton *, gpointer);
@@ -67,24 +70,51 @@ static gint               posterize_delete_callback     (GtkWidget *, GdkEvent *
 
 static void *posterize_options = NULL;
 static PosterizeDialog *posterize_dialog = NULL;
-
-static void       posterize (PixelRegion *, PixelRegion *, void *);
 static Argument * posterize_invoker (Argument *);
 
+/* Posterize functions for different tags */
+typedef void (*PosterizeFunc) (PixelArea *, PixelArea *, void *);
+static PosterizeFunc posterize_func (Tag dest_tag);
+static void posterize_u8 (PixelArea *, PixelArea *, void *);
+static void posterize_u16 (PixelArea *, PixelArea *, void *);
+static void posterize_float (PixelArea *, PixelArea *, void *);
+
+
 /*  posterize machinery  */
+static
+PosterizeFunc
+posterize_func (Tag dest_tag)
+{
+  switch (tag_precision (dest_tag))
+  {
+  case PRECISION_U8:
+    return posterize_u8; 
+  case PRECISION_U16:
+    return posterize_u16; 
+  case PRECISION_FLOAT:
+    return posterize_float; 
+  default:
+    return NULL;
+  } 
+}
 
 static void
-posterize (PixelRegion *srcPR,
-	   PixelRegion *destPR,
+posterize_u8 (PixelArea *src_area,
+	   PixelArea *dest_area,
 	   void        *user_data)
 {
   PosterizeDialog *pd;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  int has_alpha, alpha;
+  Tag src_tag = pixelarea_tag (src_area);
+  Tag dest_tag = pixelarea_tag (dest_area);
+  guchar *src, *dest;
+  guint8 *s, *d;
+  gint alpha = tag_alpha (src_tag);
+  gint has_alpha;
+  gint s_num_channels = tag_num_channels (src_tag);
+  gint d_num_channels = tag_num_channels (dest_tag);
   int w, h, b, i;
   double interval, half_interval;
-  unsigned char transfer[256];
+  guint8 transfer[256];
 
   pd = (PosterizeDialog *) user_data;
 
@@ -93,19 +123,20 @@ posterize (PixelRegion *srcPR,
   half_interval = interval / 2.0;
 
   for (i = 0; i < 256; i++)
-    transfer[i] = (unsigned char) ((int) (((double) i + half_interval) / interval) * interval);
+    transfer[i] = (guint8) ((int) (((double) i + half_interval) / interval) * interval);
 
-  h = srcPR->h;
-  src = srcPR->data;
-  dest = destPR->data;
-  has_alpha = (srcPR->bytes == 2 || srcPR->bytes == 4);
-  alpha = has_alpha ? srcPR->bytes - 1 : srcPR->bytes;
+  h = pixelarea_height (src_area);
+  src = (guchar*)pixelarea_data (src_area);
+  dest = (guchar*)pixelarea_data (dest_area);
+
+  has_alpha = (alpha == ALPHA_YES) ? TRUE: FALSE;
+  alpha = has_alpha ? s_num_channels - 1 : s_num_channels;
 
   while (h--)
     {
-      w = srcPR->w;
-      s = src;
-      d = dest;
+      w = pixelarea_width (src_area);
+      s = (guint8*)src;
+      d = (guint8*)dest;
       while (w--)
 	{
 	  for (b = 0; b < alpha; b++)
@@ -113,18 +144,82 @@ posterize (PixelRegion *srcPR,
 
 	  if (has_alpha)
 	    d[alpha] = s[alpha];
-
-	  s += srcPR->bytes;
-	  d += destPR->bytes;
+	   
+	  s+= s_num_channels;
+	  d+= d_num_channels;
 	}
 
-      src += srcPR->rowstride;
-      dest += destPR->rowstride;
+      src += pixelarea_rowstride (src_area);
+      dest += pixelarea_rowstride (dest_area); 
     }
 }
 
+static void
+posterize_u16 (PixelArea *src_area,
+	   PixelArea *dest_area,
+	   void        *user_data)
+{
+  PosterizeDialog *pd;
+  Tag src_tag = pixelarea_tag (src_area);
+  Tag dest_tag = pixelarea_tag (dest_area);
+  guchar *src, *dest;
+  guint16 *s, *d;
+  gint alpha = tag_alpha (src_tag);
+  gint has_alpha;
+  gint s_num_channels = tag_num_channels (src_tag);
+  gint d_num_channels = tag_num_channels (dest_tag);
+  int w, h, b, i;
+  double interval, half_interval;
+  guint16 transfer[65536];
 
-/*  by_color select action functions  */
+  pd = (PosterizeDialog *) user_data;
+
+  /*  Set the transfer array  */
+  interval = 65535.0 / (double) (pd->levels - 1);
+  half_interval = interval / 2.0;
+
+  for (i = 0; i < 65536; i++)
+    transfer[i] = (guint16) ((int) (((double) i + half_interval) / interval) * interval);
+
+  h = pixelarea_height (src_area);
+  src = (guchar*)pixelarea_data (src_area);
+  dest = (guchar*)pixelarea_data (dest_area);
+
+  has_alpha = (alpha == ALPHA_YES) ? TRUE: FALSE;
+  alpha = has_alpha ? s_num_channels - 1 : s_num_channels;
+  
+ 
+  while (h--)
+    {
+      w = pixelarea_width (src_area);
+      s = (guint16*)src;
+      d = (guint16*)dest;
+      while (w--)
+	{
+	  for (b = 0; b < alpha; b++)
+	    d[b] = transfer[s[b]];
+
+	  if (has_alpha)
+	    d[alpha] = s[alpha];
+	   
+	  s+= s_num_channels;
+	  d+= d_num_channels;
+	}
+
+      src += pixelarea_rowstride (src_area);
+      dest += pixelarea_rowstride (dest_area); 
+    }
+}
+
+static void
+posterize_float (PixelArea *src_area,
+	   PixelArea *dest_area,
+	   void        *user_data)
+{
+  g_warning ("posterize_float not implemented yet");
+}
+
+/*  posterize select action functions  */
 
 static void
 posterize_button_press (Tool           *tool,
@@ -176,7 +271,7 @@ posterize_control (Tool     *tool,
     case HALT :
       if (posterize_dialog)
 	{
-	  image_map_abort (posterize_dialog->image_map);
+	  image_map_abort_16 (posterize_dialog->image_map);
 	  posterize_dialog->image_map = NULL;
 	  posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
 	}
@@ -253,7 +348,7 @@ posterize_initialize (void *gdisp_ptr)
     if (!GTK_WIDGET_VISIBLE (posterize_dialog->shell))
       gtk_widget_show (posterize_dialog->shell);
   posterize_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  posterize_dialog->image_map = image_map_create (gdisp_ptr, posterize_dialog->drawable);
+  posterize_dialog->image_map = image_map_create_16 (gdisp_ptr, posterize_dialog->drawable);
   if (posterize_dialog->preview)
     posterize_preview (posterize_dialog);
 }
@@ -346,9 +441,17 @@ posterize_new_dialog ()
 static void
 posterize_preview (PosterizeDialog *pd)
 {
+
   if (!pd->image_map)
+  {
     g_warning ("No image map");
-  image_map_apply (pd->image_map, posterize, (void *) pd);
+  }
+  else
+  {
+    PosterizeFunc posterize;
+    posterize = posterize_func (drawable_tag (pd->drawable));
+    image_map_apply_16 (pd->image_map, posterize, (void *) pd);
+  }
 }
 
 static void
@@ -363,10 +466,14 @@ posterize_ok_callback (GtkWidget *widget,
     gtk_widget_hide (pd->shell);
 
   if (!pd->preview)
-    image_map_apply (pd->image_map, posterize, (void *) pd);
+  {
+    PosterizeFunc posterize;
+    posterize = posterize_func (drawable_tag (pd->drawable));
+    image_map_apply_16 (pd->image_map, posterize, (void *) pd);
+  }
 
   if (pd->image_map)
-    image_map_commit (pd->image_map);
+    image_map_commit_16 (pd->image_map);
 
   pd->image_map = NULL;
 }
@@ -375,7 +482,6 @@ static gint
 posterize_delete_callback (GtkWidget *w, GdkEvent *e, gpointer data)
 {
   posterize_cancel_callback (w, data);
-
   return FALSE;
 }
 
@@ -391,7 +497,7 @@ posterize_cancel_callback (GtkWidget *widget,
 
   if (pd->image_map)
     {
-      image_map_abort (pd->image_map);
+      image_map_abort_16 (pd->image_map);
       gdisplays_flush ();
     }
 
@@ -479,7 +585,7 @@ ProcRecord posterize_proc =
 static Argument *
 posterize_invoker (Argument *args)
 {
-  PixelRegion srcPR, destPR;
+  PixelArea src_area, dest_area;
   int success = TRUE;
   PosterizeDialog pd;
   GImage *gimage;
@@ -524,16 +630,21 @@ posterize_invoker (Argument *args)
   /*  arrange to modify the levels  */
   if (success)
     {
+      PosterizeFunc posterize;
       pd.levels = levels;
 
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+      pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL, 
+			x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixelarea_init (&dest_area, drawable_shadow_canvas (drawable), NULL, 
+			x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-	posterize (&srcPR, &destPR, (void *) &pd);
+      posterize = posterize_func (pixelarea_tag (&dest_area));
+      for (pr = pixelarea_register (2, &src_area, &dest_area); 
+		pr != NULL; 
+		pr = pixelarea_process (pr))
+	(*posterize) (&src_area, &dest_area, (void *) &pd);
 
       drawable_merge_shadow (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));

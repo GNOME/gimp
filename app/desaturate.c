@@ -19,15 +19,42 @@
 #include <string.h>
 #include <math.h>
 #include "appenv.h"
+#include "canvas.h"
 #include "drawable.h"
 #include "desaturate.h"
 #include "interface.h"
 #include "paint_funcs.h"
 #include "gimage.h"
+#include "pixelarea.h"
+#include "pixelrow.h"
 
 static void       desaturate (GimpDrawable *);
 static Argument * desaturate_invoker (Argument *);
 
+typedef void (*DesaturateRowFunc)(PixelRow *, PixelRow *);
+static DesaturateRowFunc desaturate_row_func (Tag row_tag);
+static void desaturate_row_u8 (PixelRow *, PixelRow *);
+static void desaturate_row_u16 (PixelRow *, PixelRow *);
+static void desaturate_row_float (PixelRow *, PixelRow *);
+
+
+/*  Inverter  */
+static
+DesaturateRowFunc
+desaturate_row_func (Tag row_tag)
+{
+  switch (tag_precision (row_tag))
+  {
+  case PRECISION_U8:
+    return desaturate_row_u8; 
+  case PRECISION_U16:
+    return desaturate_row_u16; 
+  case PRECISION_FLOAT:
+    return desaturate_row_float; 
+  default:
+    return NULL;
+  } 
+}
 
 void
 image_desaturate (gimage_ptr)
@@ -47,67 +74,159 @@ image_desaturate (gimage_ptr)
   desaturate (drawable);
 }
 
-
 /*  Desaturateer  */
+
 
 static void
 desaturate (GimpDrawable *drawable)
 {
-  PixelRegion srcPR, destPR;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  int h, j;
-  int lightness, min, max;
-  int has_alpha;
+  PixelArea src_area, dest_area;
+  PixelRow src_row, dest_row;
+  gint h;
   void *pr;
   int x1, y1, x2, y2;
+  DesaturateRowFunc desaturate_row = desaturate_row_func(drawable_tag (drawable));
 
   if (!drawable) 
     return;
 
-  has_alpha = drawable_has_alpha (drawable);
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL, 
+		x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixelarea_init (&dest_area, drawable_shadow_canvas (drawable), NULL, 
+		x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixelarea_register (2, &src_area, &dest_area); 
+	pr != NULL; 
+	pr = pixelarea_process (pr))
     {
-      src = srcPR.data;
-      dest = destPR.data;
-      h = srcPR.h;
-
+      h = pixelarea_height (&src_area);
       while (h--)
 	{
-	  s = src;
-	  d = dest;
-
-	  for (j = 0; j < srcPR.w; j++)
-	    {
-	      max = MAXIMUM (s[RED_PIX], s[GREEN_PIX]);
-	      max = MAXIMUM (max, s[BLUE_PIX]);
-	      min = MINIMUM (s[RED_PIX], s[GREEN_PIX]);
-	      min = MINIMUM (min, s[BLUE_PIX]);
-
-	      lightness = (max + min) / 2;
-
-	      d[RED_PIX] = lightness;
-	      d[GREEN_PIX] = lightness;
-	      d[BLUE_PIX] = lightness;
-
-	      if (has_alpha)
-		d[ALPHA_PIX] = s[ALPHA_PIX];
-
-	      d += destPR.bytes;
-	      s += srcPR.bytes;
-	    }
-
-	  src += srcPR.rowstride;
-	  dest += destPR.rowstride;
+          pixelarea_getdata (&src_area, &src_row, h);
+          pixelarea_getdata (&dest_area, &dest_row, h);
+          (*desaturate_row)(&src_row, &dest_row);
 	}
     }
 
-  drawable_merge_shadow (drawable, TRUE);
+  drawable_merge_shadow_canvas (drawable, TRUE);
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+}
+
+
+static void 
+desaturate_row_u8( 
+		   PixelRow *src_row,
+		   PixelRow *dest_row
+		) 
+{
+  Tag src_tag = pixelrow_tag (src_row);
+  Tag dest_tag = pixelrow_tag (dest_row);
+  gint src_num_channels = tag_num_channels (src_tag);
+  gint dest_num_channels = tag_num_channels (dest_tag);
+  gint has_alpha = (tag_alpha (src_tag) == ALPHA_YES)? TRUE: FALSE; 
+  guint8 *s = (guint8*)pixelrow_data (src_row);
+  guint8 *d = (guint8*)pixelrow_data (dest_row);
+  int w;
+  int lightness, min, max;
+  
+  w = pixelrow_width (src_row);
+  while (w--)
+    {
+      max = MAXIMUM (s[RED_PIX], s[GREEN_PIX]);
+      max = MAXIMUM (max, s[BLUE_PIX]);
+      min = MINIMUM (s[RED_PIX], s[GREEN_PIX]);
+      min = MINIMUM (min, s[BLUE_PIX]);
+
+      lightness = (max + min) / 2;
+
+      d[RED_PIX] = lightness;
+      d[GREEN_PIX] = lightness;
+      d[BLUE_PIX] = lightness;
+
+      if (has_alpha)
+	d[ALPHA_PIX] = s[ALPHA_PIX];
+
+      d += dest_num_channels;
+      s += src_num_channels;
+    }
+}
+
+static void
+desaturate_row_u16( 
+		   PixelRow *src_row,
+		   PixelRow *dest_row
+		) 
+{
+  Tag src_tag = pixelrow_tag (src_row);
+  Tag dest_tag = pixelrow_tag (dest_row);
+  gint src_num_channels = tag_num_channels (src_tag);
+  gint dest_num_channels = tag_num_channels (dest_tag);
+  gint has_alpha = (tag_alpha (src_tag) == ALPHA_YES)? TRUE: FALSE; 
+  guint16 *s = (guint16*)pixelrow_data (src_row);
+  guint16 *d = (guint16*)pixelrow_data (dest_row);
+  int w;
+  int lightness, min, max;
+  
+  w = pixelrow_width (src_row);
+  while (w--)
+    {
+      max = MAXIMUM (s[RED_PIX], s[GREEN_PIX]);
+      max = MAXIMUM (max, s[BLUE_PIX]);
+      min = MINIMUM (s[RED_PIX], s[GREEN_PIX]);
+      min = MINIMUM (min, s[BLUE_PIX]);
+
+      lightness = (max + min) / 2;
+
+      d[RED_PIX] = lightness;
+      d[GREEN_PIX] = lightness;
+      d[BLUE_PIX] = lightness;
+
+      if (has_alpha)
+	d[ALPHA_PIX] = s[ALPHA_PIX];
+
+      d += dest_num_channels;
+      s += src_num_channels;
+    }
+}
+
+
+static void 
+desaturate_row_float( 
+		   PixelRow *src_row,
+		   PixelRow *dest_row
+		) 
+{
+  Tag src_tag = pixelrow_tag (src_row);
+  Tag dest_tag = pixelrow_tag (dest_row);
+  gint src_num_channels = tag_num_channels (src_tag);
+  gint dest_num_channels = tag_num_channels (dest_tag);
+  gint has_alpha = (tag_alpha (src_tag) == ALPHA_YES)? TRUE: FALSE; 
+  gfloat *s = (gfloat*)pixelrow_data (src_row);
+  gfloat *d = (gfloat*)pixelrow_data (dest_row);
+  int w;
+  int lightness, min, max;
+  
+  w = pixelrow_width (src_row);
+  while (w--)
+    {
+      max = MAXIMUM (s[RED_PIX], s[GREEN_PIX]);
+      max = MAXIMUM (max, s[BLUE_PIX]);
+      min = MINIMUM (s[RED_PIX], s[GREEN_PIX]);
+      min = MINIMUM (min, s[BLUE_PIX]);
+
+      lightness = (max + min) / 2;
+
+      d[RED_PIX] = lightness;
+      d[GREEN_PIX] = lightness;
+      d[BLUE_PIX] = lightness;
+
+      if (has_alpha)
+	d[ALPHA_PIX] = s[ALPHA_PIX];
+
+      d += dest_num_channels;
+      s += src_num_channels;
+    }
 }
 
 
@@ -123,6 +242,7 @@ ProcArg desaturate_args[] =
     "the drawable"
   }
 };
+
 
 ProcRecord desaturate_proc =
 {

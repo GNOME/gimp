@@ -47,6 +47,7 @@ void             drawable_apply_image_16     (GimpDrawable *,
 					      int, int, int, int, 
 					      struct _Canvas *);
 void             drawable_merge_shadow       (GimpDrawable *, int);
+void             drawable_merge_shadow_canvas(GimpDrawable *, int);
 void             drawable_fill               (GimpDrawable *, int);
 void             drawable_update             (GimpDrawable *, 
 					      int, int, int, int);
@@ -64,6 +65,7 @@ int              drawable_indexed            (GimpDrawable *);
 TileManager *    drawable_data               (GimpDrawable *);
 struct _Canvas * drawable_data_canvas        (GimpDrawable *);
 TileManager *    drawable_shadow             (GimpDrawable *);
+struct _Canvas * drawable_shadow_canvas      (GimpDrawable *);
 int              drawable_bytes              (GimpDrawable *);
 int              drawable_width              (GimpDrawable *);
 int              drawable_height             (GimpDrawable *);

@@ -20,6 +20,7 @@
 #include <math.h>
 #include "appenv.h"
 #include "actionarea.h"
+#include "canvas.h"
 #include "color_balance.h"
 #include "color_transfer.h"
 #include "drawable.h"
@@ -28,8 +29,11 @@
 #include "gdisplay.h"
 #include "image_map.h"
 #include "interface.h"
+#include "pixelarea.h"
+#include "pixelrow.h"
 
 #define TEXT_WIDTH 55
+#define  SQR(x) ((x) * (x))
 
 #define SHADOWS    0
 #define MIDTONES   1
@@ -42,6 +46,16 @@
 #define MG_TEXT   0x10
 #define YB_TEXT   0x20
 #define ALL       0xFF
+
+/*  for lightening */
+gdouble * highlights_add_ptr;
+gdouble * midtones_add_ptr;
+gdouble * shadows_add_ptr;
+
+/*  for darkening  */
+gdouble * highlights_sub_ptr;
+gdouble * midtones_sub_ptr;
+gdouble * shadows_sub_ptr;
 
 typedef struct _ColorBalance ColorBalance;
 
@@ -63,7 +77,7 @@ struct _ColorBalanceDialog
   GtkAdjustment  *yellow_blue_data;
 
   GimpDrawable *drawable;
-  ImageMap     image_map;
+  ImageMap16   image_map;
 
   double       cyan_red[3];
   double       magenta_green[3];
@@ -103,103 +117,338 @@ static void                  color_balance_yb_text_update      (GtkWidget *, gpo
 static void *color_balance_options = NULL;
 static ColorBalanceDialog *color_balance_dialog = NULL;
 
-static void       color_balance (PixelRegion *, PixelRegion *, void *);
+static void       color_balance (PixelArea *, PixelArea *, void *);
 static Argument * color_balance_invoker (Argument *);
 
+static gdouble f1_u8 (gdouble);
+static gdouble f2_u8 (gdouble);
+
+static void color_balance_allocate_transfer_arrays (gint);
+static void color_balance_free_transfer_arrays (void);
+
+typedef void (*ColorBalanceInitTransfersFunc)(void);
+ColorBalanceInitTransfersFunc color_balance_init_transfers;
+typedef void (*ColorBalanceRowFunc)(PixelRow *, PixelRow *, double *, double *, double *, gint);
+ColorBalanceRowFunc color_balance_row;
+
+static void color_balance_funcs (Tag drawable_tag);
+
+static void color_balance_init_transfers_u8 (void); 
+static void color_balance_row_u8 (PixelRow *, PixelRow *, double *, double *, double *, gint);
+
+static void color_balance_init_transfers_u16 (void); 
+static void color_balance_row_u16 (PixelRow *, PixelRow *, double *, double *, double *, gint);
+
+static void color_balance_init_transfers_float (void); 
+static void color_balance_row_float (PixelRow *, PixelRow *, double *, double *, double *, gint);
+
 /*  color balance machinery  */
+static void
+color_balance_funcs (Tag drawable_tag)
+{
+  switch (tag_precision (drawable_tag))
+  {
+  case PRECISION_U8:
+    color_balance_row = color_balance_row_u8;
+    color_balance_init_transfers = color_balance_init_transfers_u8;
+    break;
+  case PRECISION_U16:
+    color_balance_row = color_balance_row_u16;
+    color_balance_init_transfers = color_balance_init_transfers_u16;
+    break;
+  case PRECISION_FLOAT:
+    color_balance_row = color_balance_row_float;
+    color_balance_init_transfers = color_balance_init_transfers_float;
+    break;
+  default:
+    color_balance_row = NULL;
+    color_balance_init_transfers = NULL;
+    break; 
+  }
+}
 
 static void
-color_balance (PixelRegion *srcPR,
-	       PixelRegion *destPR,
+color_balance (PixelArea *src_area,
+	       PixelArea *dest_area,
 	       void        *user_data)
 {
-  ColorBalanceDialog *cbd;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  int alpha;
-  int r, g, b;
-  int r_n, g_n, b_n;
-  int w, h;
-  double *cyan_red_transfer[3];
-  double *magenta_green_transfer[3];
-  double *yellow_blue_transfer[3];
-
-  cbd = (ColorBalanceDialog *) user_data;
-
-  /*  Set the transfer arrays  (for speed)  */
-  cyan_red_transfer[SHADOWS] = (cbd->cyan_red[SHADOWS] > 0) ? shadows_add : shadows_sub;
-  cyan_red_transfer[MIDTONES] = (cbd->cyan_red[MIDTONES] > 0) ? midtones_add : midtones_sub;
-  cyan_red_transfer[HIGHLIGHTS] = (cbd->cyan_red[HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
-  magenta_green_transfer[SHADOWS] = (cbd->magenta_green[SHADOWS] > 0) ? shadows_add : shadows_sub;
-  magenta_green_transfer[MIDTONES] = (cbd->magenta_green[MIDTONES] > 0) ? midtones_add : midtones_sub;
-  magenta_green_transfer[HIGHLIGHTS] = (cbd->magenta_green[HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
-  yellow_blue_transfer[SHADOWS] = (cbd->yellow_blue[SHADOWS] > 0) ? shadows_add : shadows_sub;
-  yellow_blue_transfer[MIDTONES] = (cbd->yellow_blue[MIDTONES] > 0) ? midtones_add : midtones_sub;
-  yellow_blue_transfer[HIGHLIGHTS] = (cbd->yellow_blue[HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
-
-  h = srcPR->h;
-  src = srcPR->data;
-  dest = destPR->data;
-  alpha = (srcPR->bytes == 4) ? TRUE : FALSE;
+  PixelRow src_row, dest_row;
+  ColorBalanceDialog *cbd = (ColorBalanceDialog *) user_data;
+  int h= pixelarea_height (src_area);
 
   while (h--)
     {
-      w = srcPR->w;
-      s = src;
-      d = dest;
-      while (w--)
-	{
-	  r = r_n = s[RED_PIX];
-	  g = g_n = s[GREEN_PIX];
-	  b = b_n = s[BLUE_PIX];
-
-	  r_n += cbd->cyan_red[SHADOWS] * cyan_red_transfer[SHADOWS][r_n];
-	  r_n = BOUNDS (r_n, 0, 255);
-	  r_n += cbd->cyan_red[MIDTONES] * cyan_red_transfer[MIDTONES][r_n];
-	  r_n = BOUNDS (r_n, 0, 255);
-	  r_n += cbd->cyan_red[HIGHLIGHTS] * cyan_red_transfer[HIGHLIGHTS][r_n];
-	  r_n = BOUNDS (r_n, 0, 255);
-
-	  g_n += cbd->magenta_green[SHADOWS] * magenta_green_transfer[SHADOWS][g_n];
-	  g_n = BOUNDS (g_n, 0, 255);
-	  g_n += cbd->magenta_green[MIDTONES] * magenta_green_transfer[MIDTONES][g_n];
-	  g_n = BOUNDS (g_n, 0, 255);
-	  g_n += cbd->magenta_green[HIGHLIGHTS] * magenta_green_transfer[HIGHLIGHTS][g_n];
-	  g_n = BOUNDS (g_n, 0, 255);
-
-	  b_n += cbd->yellow_blue[SHADOWS] * yellow_blue_transfer[SHADOWS][b_n];
-	  b_n = BOUNDS (b_n, 0, 255);
-	  b_n += cbd->yellow_blue[MIDTONES] * yellow_blue_transfer[MIDTONES][b_n];
-	  b_n = BOUNDS (b_n, 0, 255);
-	  b_n += cbd->yellow_blue[HIGHLIGHTS] * yellow_blue_transfer[HIGHLIGHTS][b_n];
-	  b_n = BOUNDS (b_n, 0, 255);
-
-	  if (cbd->preserve_luminosity)
-	    {
-	      rgb_to_hls (&r, &g, &b);
-	      rgb_to_hls (&r_n, &g_n, &b_n);
-	      g_n = g;
-	      hls_to_rgb (&r_n, &g_n, &b_n);
-	    }
-
-	  d[RED_PIX] = r_n;
-	  d[GREEN_PIX] = g_n;
- 	  d[BLUE_PIX] = b_n;
-
-	  if (alpha)
-	    d[ALPHA_PIX] = s[ALPHA_PIX];
-
-	  s += srcPR->bytes;
-	  d += destPR->bytes;
-	}
-
-      src += srcPR->rowstride;
-      dest += destPR->rowstride;
+      pixelarea_getdata (src_area, &src_row, h);
+      pixelarea_getdata (dest_area, &dest_row, h);
+      (*color_balance_row) (&src_row, &dest_row, 
+			cbd->cyan_red, 
+			cbd->magenta_green, 
+			cbd->yellow_blue,
+			cbd->preserve_luminosity); 
     }
 }
 
 
-/*  by_color select action functions  */
+static void
+color_balance_row_u8 (
+			PixelRow *src_row,
+			PixelRow *dest_row,
+			double * cr,
+			double * mg,
+			double * yb,
+			gint preserve_luminosity
+		  )
+{
+
+  Tag src_tag = pixelrow_tag (src_row);
+  Tag dest_tag = pixelrow_tag (dest_row);
+  gint src_num_channels = tag_num_channels (src_tag);
+  gint dest_num_channels = tag_num_channels (dest_tag);
+  guint8 *s, *d;
+  int has_alpha;
+  int r, g, b;
+  int r_n, g_n, b_n;
+  double *cyan_red_transfer[3];
+  double *magenta_green_transfer[3];
+  double *yellow_blue_transfer[3];
+  gint w = pixelrow_width (src_row);
+
+  /*  Set the transfer arrays  (for speed)  */
+  cyan_red_transfer[SHADOWS] = (cr[SHADOWS] > 0) ? shadows_add_ptr : shadows_sub_ptr;
+  cyan_red_transfer[MIDTONES] = (cr[MIDTONES] > 0) ? midtones_add_ptr : midtones_sub_ptr;
+  cyan_red_transfer[HIGHLIGHTS] = (cr[HIGHLIGHTS] > 0) ? highlights_add_ptr : highlights_sub_ptr;
+  magenta_green_transfer[SHADOWS] = (mg[SHADOWS] > 0) ? shadows_add_ptr : shadows_sub_ptr;
+  magenta_green_transfer[MIDTONES] = (mg[MIDTONES] > 0) ? midtones_add_ptr : midtones_sub_ptr;
+  magenta_green_transfer[HIGHLIGHTS] = (mg[HIGHLIGHTS] > 0) ? highlights_add_ptr : highlights_sub_ptr;
+  yellow_blue_transfer[SHADOWS] = (yb[SHADOWS] > 0) ? shadows_add_ptr : shadows_sub_ptr;
+  yellow_blue_transfer[MIDTONES] = (yb[MIDTONES] > 0) ? midtones_add_ptr : midtones_sub_ptr;
+  yellow_blue_transfer[HIGHLIGHTS] = (yb[HIGHLIGHTS] > 0) ? highlights_add_ptr : highlights_sub_ptr;
+  
+  s = (guint8 *)pixelrow_data (src_row);
+  d = (guint8 *)pixelrow_data (dest_row);
+  has_alpha = tag_alpha (src_tag) == ALPHA_YES? TRUE: FALSE;
+  while (w--)
+    {
+      r = r_n = s[RED_PIX];
+      g = g_n = s[GREEN_PIX];
+      b = b_n = s[BLUE_PIX];
+
+      r_n += cr[SHADOWS] * cyan_red_transfer[SHADOWS][r_n];
+      r_n = BOUNDS (r_n, 0, 255);
+      r_n += cr[MIDTONES] * cyan_red_transfer[MIDTONES][r_n];
+      r_n = BOUNDS (r_n, 0, 255);
+      r_n += cr[HIGHLIGHTS] * cyan_red_transfer[HIGHLIGHTS][r_n];
+      r_n = BOUNDS (r_n, 0, 255);
+
+      g_n += mg[SHADOWS] * magenta_green_transfer[SHADOWS][g_n];
+      g_n = BOUNDS (g_n, 0, 255);
+      g_n += mg[MIDTONES] * magenta_green_transfer[MIDTONES][g_n];
+      g_n = BOUNDS (g_n, 0, 255);
+      g_n += mg[HIGHLIGHTS] * magenta_green_transfer[HIGHLIGHTS][g_n];
+      g_n = BOUNDS (g_n, 0, 255);
+
+      b_n += yb[SHADOWS] * yellow_blue_transfer[SHADOWS][b_n];
+      b_n = BOUNDS (b_n, 0, 255);
+      b_n += yb[MIDTONES] * yellow_blue_transfer[MIDTONES][b_n];
+      b_n = BOUNDS (b_n, 0, 255);
+      b_n += yb[HIGHLIGHTS] * yellow_blue_transfer[HIGHLIGHTS][b_n];
+      b_n = BOUNDS (b_n, 0, 255);
+
+      if (preserve_luminosity)
+	{
+	  rgb_to_hls (&r, &g, &b);
+	  rgb_to_hls (&r_n, &g_n, &b_n);
+	  g_n = g;
+	  hls_to_rgb (&r_n, &g_n, &b_n);
+	}
+
+      d[RED_PIX] = r_n;
+      d[GREEN_PIX] = g_n;
+      d[BLUE_PIX] = b_n;
+
+      if (has_alpha)
+	d[ALPHA_PIX] = s[ALPHA_PIX];
+
+      s += src_num_channels;
+      d += dest_num_channels;
+    }
+}
+
+
+static void
+color_balance_row_u16 (
+			PixelRow *src_row,
+			PixelRow *dest_row,
+			double * cr,
+			double * mg,
+			double * yb,
+			gint preserve_luminosity
+		  )
+{
+  Tag src_tag = pixelrow_tag (src_row);
+  Tag dest_tag = pixelrow_tag (dest_row);
+  gint src_num_channels = tag_num_channels (src_tag);
+  gint dest_num_channels = tag_num_channels (dest_tag);
+  guint16 *s, *d;
+  int has_alpha;
+  int r, g, b;
+  int r_n, g_n, b_n;
+  double *cyan_red_transfer[3];
+  double *magenta_green_transfer[3];
+  double *yellow_blue_transfer[3];
+  gint w = pixelrow_width (src_row);
+
+  /*  Set the transfer arrays  (for speed)  */
+  cyan_red_transfer[SHADOWS] = (cr[SHADOWS] > 0) ? shadows_add_ptr : shadows_sub_ptr;
+  cyan_red_transfer[MIDTONES] = (cr[MIDTONES] > 0) ? midtones_add_ptr : midtones_sub_ptr;
+  cyan_red_transfer[HIGHLIGHTS] = (cr[HIGHLIGHTS] > 0) ? highlights_add_ptr : highlights_sub_ptr;
+  magenta_green_transfer[SHADOWS] = (mg[SHADOWS] > 0) ? shadows_add_ptr : shadows_sub_ptr;
+  magenta_green_transfer[MIDTONES] = (mg[MIDTONES] > 0) ? midtones_add_ptr : midtones_sub_ptr;
+  magenta_green_transfer[HIGHLIGHTS] = (mg[HIGHLIGHTS] > 0) ? highlights_add_ptr : highlights_sub_ptr;
+  yellow_blue_transfer[SHADOWS] = (yb[SHADOWS] > 0) ? shadows_add_ptr : shadows_sub_ptr;
+  yellow_blue_transfer[MIDTONES] = (yb[MIDTONES] > 0) ? midtones_add_ptr : midtones_sub_ptr;
+  yellow_blue_transfer[HIGHLIGHTS] = (yb[HIGHLIGHTS] > 0) ? highlights_add_ptr : highlights_sub_ptr;
+  
+  s = (guint16 *)pixelrow_data (src_row);
+  d = (guint16 *)pixelrow_data (dest_row);
+  has_alpha = tag_alpha (src_tag) == ALPHA_YES? TRUE: FALSE;
+  while (w--)
+    {
+      r = r_n = s[RED_PIX];
+      g = g_n = s[GREEN_PIX];
+      b = b_n = s[BLUE_PIX];
+
+      r_n += cr[SHADOWS] * cyan_red_transfer[SHADOWS][r_n];
+      r_n = BOUNDS (r_n, 0, 65535);
+      r_n += cr[MIDTONES] * cyan_red_transfer[MIDTONES][r_n];
+      r_n = BOUNDS (r_n, 0, 65535);
+      r_n += cr[HIGHLIGHTS] * cyan_red_transfer[HIGHLIGHTS][r_n];
+      r_n = BOUNDS (r_n, 0, 65535);
+
+      g_n += mg[SHADOWS] * magenta_green_transfer[SHADOWS][g_n];
+      g_n = BOUNDS (g_n, 0, 65535);
+      g_n += mg[MIDTONES] * magenta_green_transfer[MIDTONES][g_n];
+      g_n = BOUNDS (g_n, 0, 65535);
+      g_n += mg[HIGHLIGHTS] * magenta_green_transfer[HIGHLIGHTS][g_n];
+      g_n = BOUNDS (g_n, 0, 65535);
+
+      b_n += yb[SHADOWS] * yellow_blue_transfer[SHADOWS][b_n];
+      b_n = BOUNDS (b_n, 0, 65535);
+      b_n += yb[MIDTONES] * yellow_blue_transfer[MIDTONES][b_n];
+      b_n = BOUNDS (b_n, 0, 65535);
+      b_n += yb[HIGHLIGHTS] * yellow_blue_transfer[HIGHLIGHTS][b_n];
+      b_n = BOUNDS (b_n, 0, 65535);
+
+      if (preserve_luminosity)
+	{
+	  rgb_to_hls (&r, &g, &b);
+	  rgb_to_hls (&r_n, &g_n, &b_n);
+	  g_n = g;
+	  hls_to_rgb (&r_n, &g_n, &b_n);
+	}
+
+      d[RED_PIX] = r_n;
+      d[GREEN_PIX] = g_n;
+      d[BLUE_PIX] = b_n;
+
+      if (has_alpha)
+	d[ALPHA_PIX] = s[ALPHA_PIX];
+
+      s += src_num_channels;
+      d += dest_num_channels;
+    }
+}
+
+static void
+color_balance_row_float (
+			PixelRow *src_row,
+			PixelRow *dest_row,
+			double * cr,
+			double * mg,
+			double * yb,
+			gint preserve_luminosity
+		  )
+{
+  g_warning ("color_balance_row_float not implemented yet\n");
+}
+
+static void 
+color_balance_allocate_transfer_arrays (gint size)
+{
+  highlights_add_ptr = (gdouble *)g_malloc ( sizeof (gdouble) * size );
+  midtones_add_ptr = (gdouble *)g_malloc ( sizeof (gdouble) * size );
+  shadows_add_ptr = (gdouble *)g_malloc ( sizeof (gdouble) * size );
+
+  highlights_sub_ptr = (gdouble *)g_malloc ( sizeof (gdouble) * size );
+  midtones_sub_ptr = (gdouble *)g_malloc ( sizeof (gdouble) * size );
+  shadows_sub_ptr = (gdouble *)g_malloc ( sizeof (gdouble) * size );
+}
+
+static void 
+color_balance_free_transfer_arrays (void)
+{
+  g_free (highlights_add_ptr);
+  g_free (midtones_add_ptr);
+  g_free (shadows_add_ptr);
+  g_free (highlights_sub_ptr);
+  g_free (midtones_sub_ptr);
+  g_free (shadows_sub_ptr);
+}
+
+static void
+color_balance_init_transfers_u8 (void) 
+{
+  gint i;
+  color_balance_allocate_transfer_arrays (256);
+  for (i = 0; i < 256; i++)
+    {
+      highlights_add_ptr[i] = shadows_sub_ptr[255 - i] = f1_u8 ((double)i);
+      midtones_add_ptr[i] = midtones_sub_ptr[i] = f2_u8 ((double)i);
+      shadows_add_ptr[i] = highlights_sub_ptr[i] = f2_u8 ((double)i);
+    }
+}
+
+static void
+color_balance_init_transfers_u16 (void) 
+{
+  gdouble x_8;
+  gint i;
+  color_balance_allocate_transfer_arrays (65536);
+  for (i = 0; i < 65536; i++)
+    {
+      /* scale the input to [0-255] space and then scale the output back to [0-65535] space */
+      x_8 = ((double)i/65535.0) * 255.0;   
+      highlights_add_ptr[i] = shadows_sub_ptr[65535 - i] =  65535.0 * (f1_u8 (x_8)/255.0);
+      midtones_add_ptr[i] = midtones_sub_ptr[i] = 65535.0 * (f2_u8 (x_8)/255.0);
+      shadows_add_ptr[i] = highlights_sub_ptr[i] = 65535.0 * (f2_u8 (x_8)/255.0);
+    }
+}
+
+static void
+color_balance_init_transfers_float (void) 
+{
+}
+
+/* Formula for highlights_add and shadows_sub arrays [0-255] based*/
+static 
+gdouble f1_u8(
+		gdouble x
+		)
+{
+  return 1.075 - 1/(x/16.0 + 1);
+}
+
+
+/* Formula for midtones_add, midtones_sub, 
+   shadows_add and highlights_sub arrays  [0-255] based*/
+static 
+gdouble f2_u8(
+		gdouble x
+		)
+{
+  return 0.667 * (1 - SQR ((x - 127.0) / 127.0));
+}
+
 
 static void
 color_balance_button_press (Tool           *tool,
@@ -207,6 +456,7 @@ color_balance_button_press (Tool           *tool,
 			    gpointer        gdisp_ptr)
 {
 }
+
 
 static void
 color_balance_button_release (Tool           *tool,
@@ -251,7 +501,8 @@ color_balance_control (Tool     *tool,
     case HALT :
       if (color_balance_dialog)
 	{
-	  image_map_abort (color_balance_dialog->image_map);
+	  image_map_abort_16 (color_balance_dialog->image_map);
+	  color_balance_free_transfer_arrays();
 	  color_balance_dialog->image_map = NULL;
 	  color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
 	}
@@ -296,7 +547,9 @@ tools_free_color_balance (Tool *tool)
 
   /*  Close the color select dialog  */
   if (color_balance_dialog)
+  {
     color_balance_ok_callback (NULL, (gpointer) color_balance_dialog);
+  }
 
   g_free (color_bal);
 }
@@ -305,6 +558,7 @@ void
 color_balance_initialize (void *gdisp_ptr)
 {
   GDisplay *gdisp;
+  GimpDrawable *drawable;
   int i;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -330,14 +584,21 @@ color_balance_initialize (void *gdisp_ptr)
       color_balance_dialog->magenta_green[i] = 0.0;
       color_balance_dialog->yellow_blue[i] = 0.0;
     }
-  color_balance_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  color_balance_dialog->image_map = image_map_create (gdisp_ptr, color_balance_dialog->drawable);
+  
+  drawable = gimage_active_drawable (gdisp->gimage);
+  
+  /* Set up the function pointers for our data type */ 
+  color_balance_funcs (drawable_tag (drawable)); 
+  
+  /* Init the transfer arrays */
+  (*color_balance_init_transfers) ();
+  color_balance_dialog->drawable = drawable;
+  color_balance_dialog->image_map = image_map_create_16 (gdisp_ptr, color_balance_dialog->drawable);
   color_balance_update (color_balance_dialog, ALL);
 }
 
-
 /****************************/
-/*  Select by Color dialog  */
+/*  Color Balance dialog  */
 /****************************/
 
 /*  the action area structure  */
@@ -613,7 +874,7 @@ color_balance_preview (ColorBalanceDialog *cbd)
 {
   if (!cbd->image_map)
     g_warning ("No image map");
-  image_map_apply (cbd->image_map, color_balance, (void *) cbd);
+  image_map_apply_16 (cbd->image_map, color_balance, (void *) cbd);
 }
 
 static void
@@ -628,11 +889,14 @@ color_balance_ok_callback (GtkWidget *widget,
     gtk_widget_hide (cbd->shell);
 
   if (!cbd->preview)
-    image_map_apply (cbd->image_map, color_balance, (void *) cbd);
+    image_map_apply_16 (cbd->image_map, color_balance, (void *) cbd);
 
   if (cbd->image_map)
-    image_map_commit (cbd->image_map);
-
+  {
+    image_map_commit_16 (cbd->image_map);
+    color_balance_free_transfer_arrays();
+  }
+  
   cbd->image_map = NULL;
 }
 
@@ -642,7 +906,6 @@ color_balance_delete_callback (GtkWidget *w,
 			       gpointer client_data)
 {
   color_balance_cancel_callback (w, client_data);
-
   return FALSE;
 }
 
@@ -658,10 +921,10 @@ color_balance_cancel_callback (GtkWidget *widget,
 
   if (cbd->image_map)
     {
-      image_map_abort (cbd->image_map);
+      image_map_abort_16 (cbd->image_map);
+      color_balance_free_transfer_arrays();
       gdisplays_flush ();
     }
-
   cbd->image_map = NULL;
 }
 
@@ -917,7 +1180,7 @@ ProcRecord color_balance_proc =
 static Argument *
 color_balance_invoker (Argument *args)
 {
-  PixelRegion srcPR, destPR;
+  PixelArea src_area, dest_area;
   int success = TRUE;
   int int_value;
   ColorBalanceDialog cbd;
@@ -1022,13 +1285,17 @@ color_balance_invoker (Argument *args)
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+      pixelarea_init (&src_area, drawable_data_canvas (drawable),NULL, 
+			x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixelarea_init (&dest_area, drawable_shadow_canvas (drawable),NULL, 
+			x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-	color_balance (&srcPR, &destPR, (void *) &cbd);
+      for (pr = pixelarea_register (2, &src_area, &dest_area); 
+		pr != NULL; 
+		pr = pixelarea_process (pr))
+	color_balance (&src_area, &dest_area, (void *) &cbd);
 
-      drawable_merge_shadow (drawable, TRUE);
+      drawable_merge_shadow_canvas (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 
