@@ -1676,19 +1676,25 @@ out:
 static void
 ps_close (FILE *ifp, gint ChildPid)
 {
-  guchar buf[8192];
 
 #ifndef USE_REAL_OUTPUTFILE
   int status;
   pid_t RetVal;
 
-  /* Even if we dont want all images, we have to read the pipe until EOF. */
-  /* Otherwise the subprocess may not finish. */
+  /* Enabling the code below causes us to read the pipe until EOF even
+   * if we dont want all images. Should be enabled if people report that
+   * the gs subprocess does not finish. For now it is disabled since it
+   * causes a significant slowdown.
+   */
+#ifdef EMPTY_PIPE
+  guchar buf[8192];
+
 #ifdef PS_DEBUG
   g_print ("Reading rest from pipe\n");
 #endif
 
-  while (fread (buf, sizeof (buf), 1, ifp) == 8192);
+  while (fread (buf, sizeof (buf), 1, ifp));
+#endif  /*  EMPTY_PIPE  */
 
   /* Finish reading from pipe. */
   fclose (ifp);
@@ -1710,7 +1716,7 @@ ps_close (FILE *ifp, gint ChildPid)
 #endif
     }
 
-#else
+#else  /*  USE_REAL_OUTPUTFILE  */
  /* If a real outputfile was used, close the file and remove it. */
   fclose (ifp);
   unlink (pnmfile);
@@ -1849,7 +1855,7 @@ skip_ps (FILE *ifp)
   len = bpl * height;
   while (len)
     {
-      gsize  bytes = fread (buf, MIN (len, sizeof (buf)), 1, ifp);
+      gsize  bytes = fread (buf, 1, MIN (len, sizeof (buf)), ifp);
 
       if (bytes < MIN (len, sizeof (buf)))
         return FALSE;

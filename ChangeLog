@@ -1,5 +1,13 @@
 2004-11-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/postscript.c (skip_ps) (ps_close): fixed use of
+	fread(). Unfortunately this slowed down the plug-in again.
+	Disabled the code that reads the pipe to the end. This brings it
+	back to speed. Seems to work fine for me, let's see if this causes
+	problems for anyone...
+
+2004-11-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/selection-round.scm: moved into the
 	<Image>/Select/Modify now that we can safely use placeholders from
 	Script-Fu.
