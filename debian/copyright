@@ -6,14 +6,15 @@ gimp
 ---------
 
 The GIMP may be redistributed under the terms of the GNU GPL, Version
-2 or later, found on Debian systems in the file /usr/doc/copyright/GPL
+2 or later, found on Debian systems in the file 
+/usr/share/common-licenses/GPL
 
 libgimp
 ---------
 
 The GIMP libraries may be redistributed under the terms of the GNU
 LGPL, Version 2 or later, found on Debian systems in the file
-/usr/doc/copyright/LGPL
+/usr/share/common-licenses/LGPL
 
 gimp-nonfree
 ---------

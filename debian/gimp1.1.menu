@@ -1,0 +1,2 @@
+?package(gimp1.1):command="/usr/bin/gimp" icon="/usr/share/pixmaps/wilber.xpm" needs="X11" \
+	       section="Apps/Graphics" title="The GIMP"

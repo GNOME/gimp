@@ -1,9 +1,394 @@
+gimp1.1 (1.1.27-1) unstable; urgency=low
+
+  * New upstream version. Closes: #72193, #74115
+  * Fixed improper use of "it's" in app/user_install.c. Forwarded
+    patch  upstream. Closes: #71521
+  * Fixed upstream: installation crash (Closes: #71519)
+  * Looked at a lot of the nice changes in the helix gimp1.1 packages
+    and applied 'em.
+  * IMPORTANT MOVE: I realized that the libgimp1.1.27-style packages
+    had to die a flaming horrible death. Moved to libgimp1.1 and
+    libgimp1.1-dev package naming style. This has the consequence
+    that I've had to make the shlibs file make things compiled against
+    libgimp1.1 depend on libgimp1.1 (>= 1.1.27.0), libgimp1.1 (<< 1.1.28).
+  * Because of the above, to clean out everyone's systems, I've made
+    libgimp1.1 Conflict: with all the old libgimp1.1.xs, and libgimp1.1-dev
+    Conflict: with all old libgimp1.1.x-devs. Closes: #62532
+  * Move the tiff plug-in to the main gimp package; only the gif
+    one uses patented crud any more.
+  * Bugs fixed long long ago: lprng moved lpc to /usr/sbin. Closes: #48655
+  * script-fu breakage due to not having fonts installed documented
+    in README.Debian and dependancies. Closes: #48840, #49003
+  * gimp1.1-perl split out long ago. Closes: #53873
+  * some Perl bug, fixed upstream long ago: Closes: #54502, #54666, #54668, #54687 
+  * Can't reproduce big swapfile loading two pngs in a row. Probably
+    fixed upstream. Closes: #56240
+  * Can't reproduce crash on 'gimp --no-data -n -b "(gimp-quit 1)"' call,
+    there is no -n flag! Closes: #60941
+  * No problems loading EPS files whatsoever. Closes: #61536 
+  * Old libgimp1.1.x lying around problem cured with new naming
+    scheme. Closes: #62532
+  * Selection -> By Color does not segfault any more. Closes: #62659
+  * Transparency dithering when converting to Indexed has been
+    implemented. Closes: #63719
+  * xcftopnm is included in gimp1.1-perl now. Closes: #63748, #63502
+  * Printing to postscript does not make an 'all black image'.
+    Closes: #65378
+  * Freshened up README.Debian and lightened dire font warnings.
+    Closes: #65664
+  * The BMP mentioned in bug #67415 does not crash GIMP. Closes: #67415
+  * Faulty order in package build (built gimp1.1 before gimp1.1-perl)
+    led some Perl plugins to be included in the gimp1.1 package.
+    Fixed. Closes: #67523, #70811
+  * User installation crash fixed upstream. Closes: #71519
+  * Patched it's typo in installation. Sent patch upstream. Closes: #71521
+  * Patched to move all config files to /etc/gimp-1.1/ instead of
+    /usr/share/gimp/1.1/ . Sent patch upstream. Closes: #72161
+  * GIMP seems to have no problems parsing lpc's output when using
+    lprng for me. Closes: #72448
+  * gimp-python is maintained separately. Closes: #58548 
+  * Moved gimp binary to /usr/bin. This is to follow policy, and
+    also fixes a problem with the GIMP Perl module. Closes: #66469
+  * Um. Control+mouse button 1 doesn't select; it deselects. This
+    is documented. Closes: #65326
+  * Yes, gimp1.1 is in the archives for woody. Closes: #61641
+
+ -- Ben Gertzfield <che@debian.org>  Thu, 12 Oct 2000 21:39:45 -0700
+
+gimp1.1 (1.1.24-1) unstable; urgency=low
+
+  * New upstream version. (Sorry for slacking off there.) Closes: #64294
+  * Add Build-Depends line. Closes: #62896
+  * (Hopefully) add Help support in by installing the new libgtkxmhtml-dev
+    package. Yes, this indirectly requires GNOME libraries -- but only
+    to build. libgtkxmhtml1 does not require GNOME libraries at run-time,
+    so I'm satisfied. Closes: #52634
+
+ -- Ben Gertzfield <che@debian.org>  Thu, 10 Aug 2000 11:15:10 -0700
+  
+gimp1.1 (1.1.19-1) unstable; urgency=low
+
+  * New upstream version. Please don't let there be any i18n breakage
+    this time...
+  * To separate the perl plugins, instead of a static list we now
+    run 'file' on usr/lib/gimp/1.1/plug-ins/* and any that say
+    'perl script' we include in gimp1.1-perl.
+
+ -- Ben Gertzfield <che@debian.org>  Wed,  5 Apr 2000 22:56:19 -0700
+
+gimp1.1 (1.1.18-1) unstable; urgency=low
+
+  * New upstream version. Use CVS po files for i18n to avoid crashes,
+    and patch da_DK po file by hand because it's still broken.
+
+ -- Ben Gertzfield <che@debian.org>  Sat,  4 Mar 2000 09:02:08 -0800
+
+gimp1.1 (1.1.17-2) frozen unstable; urgency=low
+
+  * Move gimp-tool into libgimp1.1.17-dev, and make libgimp1.1.17-dev 
+    Depend: on libgtk1.2-dev and libglib1.2-dev. Closes: #59057
+  * Fixes locale brokenness for it_IT, ru_RU, de_DE. (Updated the po
+    files from CVS gimp current as of 27 Feb 2000.) Closes: #58796, #56503,
+    #57498, #57403, 
+
+ -- Ben Gertzfield <che@debian.org>  Sun, 27 Feb 2000 10:39:36 -0800
+
+gimp1.1 (1.1.17-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Ben Gertzfield <che@debian.org>  Fri, 11 Feb 2000 12:29:22 -0800
+
+gimp1.1 (1.1.15-3) frozen unstable; urgency=MEDIUM
+
+  * Fix GIMP crashes by moving Perl-Server plugin out of main
+    gimp1.1 package into gimp1.1-perl. Closes: #56237
+    (Yes, this must make it into frozen, otherwise gimp1.1 doesn't
+     work.)
+  * As a consequence of the above, gimp1.1-perl Replaces: gimp1.1 
+    (<< 1.1.15-3).
+  * Make sure libgimp1.1.15 doesn't include any Perl directories.
+
+ -- Ben Gertzfield <che@debian.org>  Wed, 26 Jan 2000 16:37:41 -0800
+
+gimp1.1 (1.1.15-2) frozen unstable; urgency=MEDIUM
+
+  * Argh. I had messed up the build process and no files actually
+    got into gimp1.1-perl. This rebuild must make it into frozen,
+  * Make gimp1.1-perl Depend: on gimp1.1 (>= ${Source-Version}) so
+    people don't try to install it with a mismatching gimp package.
+  * Add Suggests: from gimp1.1 to gimp1.1-perl.
+  * To make slink -> potato upgrade easier (read: possible), sprinkle 
+    Replaces: liberally around.
+
+ -- Ben Gertzfield <che@debian.org>  Sat, 22 Jan 2000 14:14:56 -0800
+
+gimp1.1 (1.1.15-1) unstable; urgency=low
+
+  * New upstream version.
+  * Bump Standards to 3.1.1.1.
+  * Move Perl plugins and support into gimp1.1-perl. Closes: #54562
+  * Duplicates of bugs closed below. Closes: #53707, #53708, #53873,
+    #50678
+
+ -- Ben Gertzfield <che@debian.org>  Sat, 15 Jan 2000 11:16:59 -0800
+
+gimp1.1 (1.1.14-4) unstable; urgency=low
+
+  * Add Conflict: with libgimp-perl (it should be removed from the
+    archives sooner or later, though.) Closes: #54212
+
+ -- Ben Gertzfield <che@debian.org>  Thu,  6 Jan 2000 11:26:57 -0800
+
+gimp1.1 (1.1.14-3) unstable; urgency=low
+
+  * Add dependancies on libgtk-perl and pdl. Closes: #53971, #53826
+  * Build with perl Image::Magick support. Add dependancy on perlmagick.
+  * If anyone thinks any of the above new dependancies (libgtk-perl, pdl,
+    perlmagick) should be made into Suggests, let me know. I couldn't
+    decide, so went with a Depends to be on the safe side. But, this
+    requires about 6 more megs of packages to be installed, so some
+    people may not be happy.
+  * Patch the stupid Makefile.PL in plug-ins/perl/Makefile.PL to not
+    force UNINST=1 on the 'make install'. GRRR!
+
+ -- Ben Gertzfield <che@debian.org>  Wed,  5 Jan 2000 18:08:02 -0800
+
+gimp1.1 (1.1.14-2) unstable; urgency=low
+
+  * Do not include 'perllocal.pod' in install.
+
+ -- Ben Gertzfield <che@debian.org>  Thu, 30 Dec 1999 12:18:17 -0800
+
+gimp1.1 (1.1.14-1) unstable; urgency=low
+
+  * New upstream version.
+  * Now includes gimp-perl and the related Perl plugins in the main 
+    gimp package. Closes: #34392
+  * Still no gimp help browser, as libgtkxmhtml-dev depends on a whole
+    slew of GNOME libraries which I am not willing to foist on
+    unsuspecting GIMP users.
+  * Fixed in earlier releases: Closes: #42096, #42699
+   
+ -- Ben Gertzfield <che@debian.org>  Fri, 17 Dec 1999 15:03:36 -0800
+
+gimp1.1 (1.1.13-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Ben Gertzfield <che@debian.org>  Fri, 26 Nov 1999 11:13:19 -0800
+
+gimp1.1 (1.1.12-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Ben Gertzfield <che@debian.org>  Thu, 25 Nov 1999 13:16:37 -0800
+
+gimp1.1 (1.1.10-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Ben Gertzfield <che@debian.org>  Wed,  6 Oct 1999 19:17:57 -0700
+
+gimp1.1 (1.1.9-1) unstable; urgency=low
+
+  * New upstream version.
+  * Change auto-generation of shlibs file to make things compiled against
+    libgimp to depend on (e.g.) >= 1.1.8 instead of >= 1.1.8-1. This
+    makes building slink packages with versions like 1.1.8-0slink1
+    work.
+
+ -- Ben Gertzfield <che@debian.org>  Fri, 10 Sep 1999 21:27:29 -0700
+
+gimp1.1 (1.1.8-1) unstable; urgency=low
+
+  * New upstream version.
+  * Change Recommends: of xfnts-100dpi to a Suggests, as it seems GIMP will
+    work without it nowadays.
+  * Upstream has restructured /usr/share/gimp and I missed it; that's
+    why the help files and tips of the day were missing. 
+    (Fixes: #42699, #42096)
+  * libgimp1.1.8-dev Depends: on Source-Version of libgimp1.1.8 now.
+
+ -- Ben Gertzfield <che@debian.org>  Tue, 24 Aug 1999 13:46:24 -0700
+
+gimp1.1 (1.1.7-1) unstable; urgency=low
+
+  * New upstream version.
+  * Remove dependancy on perl, since it was outdated and I don't
+    even include the perl stuff (yet) (Fixes: #41402, #41484)
+
+ -- Ben Gertzfield <che@debian.org>  Sun, 18 Jul 1999 18:09:52 -0700
+
+gimp1.1 (1.1.6-2) unstable; urgency=low
+
+  * Patch for compiling on non-x86 architectures. (Fixes: #39863, #40080)
+  * libgimp1.1.6-dev no longer conflicts with libgimp1. (Fixes: #40267)
+
+ -- Ben Gertzfield <che@debian.org>  Thu,  1 Jul 1999 21:13:37 -0700
+
+gimp1.1 (1.1.6-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Ben Gertzfield <che@debian.org>  Mon, 14 Jun 1999 22:00:10 -0700
+
+gimp1.1 (1.1.5-1) unstable; urgency=low
+
+  * New upstream version.
+  * Make it easier for myself to make new releases by automatically
+    generating the shlibs.local file, and other changes to debian/rules
+
+ -- Ben Gertzfield <che@debian.org>  Thu, 13 May 1999 14:16:19 -0700
+
+gimp1.1 (1.1.4-1) unstable; urgency=low
+
+  * New upstream version.
+  * The Perl extension won't work until the Debian libgtk-perl package
+    is updated. So I'm releasing this without the Perl extension until
+    libgtk-perl is recompiled against GTK+ 1.2 and updated from the
+    upstream source.
+
+ -- Ben Gertzfield <che@debian.org>  Sun, 11 Apr 1999 14:23:15 -0700
+
+gimp1.1 (1.1.3-2) unstable; urgency=low
+
+  * shlibs.local needed to be bumped to 1.1.3
+  * disable perl extension for the time being
+
+ -- Ben Gertzfield <che@debian.org>  Sun, 28 Mar 1999 14:04:30 -0800
+
+gimp1.1 (1.1.3-1) unstable; urgency=low
+
+  * New upstream version.
+  * Build with GTK+ 1.2.
+
+ -- Ben Gertzfield <che@debian.org>  Mon, 15 Mar 1999 10:14:32 -0800
+
+gimp1.1 (1.1.2-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Ben Gertzfield <che@debian.org>  Thu, 18 Feb 1999 19:19:43 -0800
+
+gimp1.1 (1.1.1-1) unstable; urgency=low
+
+  * New upstream version.
+  * Fix menu entry to be package gimp1.1, not gimp. (Fixes: #31796)
+
+ -- Ben Gertzfield <che@debian.org>  Thu, 21 Jan 1999 12:46:10 -0800
+
+gimp1.1 (1.1.0-1) unstable; urgency=low
+
+  * New upstream version; new package name (gimp1.1) to reflect unstable
+    release.
+
+ -- Ben Gertzfield <che@debian.org>  Thu, 24 Dec 1998 10:04:44 -0800
+
+gimp (1.0.2-3) frozen unstable; urgency=low
+
+  * Recompile for ncurses 4.2 and related aalib
+
+ -- Ben Gertzfield <che@debian.org>  Mon,  9 Nov 1998 20:29:13 -0800
+
+gimp (1.0.2-2) frozen unstable; urgency=low
+
+  * The gimp package no longer depends explicitly on xfnt{75,100}. I
+    downgraded the relationship to a Recommends: and added big fat
+    warnings in the README and in the package description.
+    Fixes bugs #14600 and #21055. This has been changed because it's
+    possible to run GIMP using a remote font server to serve the 75/100dpi
+    fonts. However, it's really no big deal to ask for them to be installed
+    locally, so the relationship should be Recommends:.
+  * The above Recommends: has been changed to xfonts-{75,100}dpi, although
+    it's pretty silly that their names were changed without adding a
+    Provides:. *grumble*
+  * Bumped the version number in the dependancy of gimp on gimp-data-extras
+    to (>= 1:1.0.0).
+  * libgimp-dev now conflicts with libglib-dev, so people don't try
+    compiling plugins when they only have GTK+ 1.1 installed.
+
+ -- Ben Gertzfield <che@debian.org>  Sun, 25 Oct 1998 10:46:23 -0800
+
+gimp (1.0.2-1) unstable; urgency=low
+
+  * New upstream version. This better make it in before the freeze :)
+
+ -- Ben Gertzfield <che@debian.org>  Wed, 14 Oct 1998 22:47:25 -0700
+
+gimp (1.0.1-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Ben Gertzfield <che@debian.org>  Sun, 27 Sep 1998 21:37:45 -0700
+
+gimp (1.0.0-1) frozen unstable; urgency=low
+
+  * We made it! All the way to 1.0.0! Huzzah!
+
+ -- Ben Gertzfield <che@debian.org>  Tue,  2 Jun 1998 01:12:27 -0700
+
+gimp (0.99.31-1) frozen unstable; urgency=low
+
+  * New stable upstream version.
+  * Now includes man-page for gimptool.
+
+ -- Ben Gertzfield <che@debian.org>  Mon, 18 May 1998 13:18:01 -0700
+
+gimp (0.99.29-2) frozen unstable; urgency=low
+
+  * Added gimptool into package, was accidentally left out previously.
+
+ -- Ben Gertzfield <che@debian.org>  Mon, 11 May 1998 18:13:23 -0700
+
+gimp (0.99.29-1) frozen unstable; urgency=low
+
+  * Yikes! They're still pumping out those upstream versions.
+  * For some reason, the xdelta-dev package has disappeared. The
+    xdelta plugin has thus been removed.
+
+ -- Ben Gertzfield <che@debian.org>  Tue,  5 May 1998 19:43:35 -0700
+
+gimp (0.99.28-1) frozen unstable; urgency=low
+
+  * Yet another new upstream version.
+
+ -- Ben Gertzfield <che@debian.org>  Tue, 28 Apr 1998 12:54:34 -0700
+
+gimp (0.99.27-1) frozen unstable; urgency=low
+
+  * Gosh, 0.99.26 *wasn't* the last version. :/ Hope they're almost
+    done. New upstream version, bug fixes only of course.
+
+ -- Ben Gertzfield <che@debian.org>  Sat, 18 Apr 1998 14:56:21 -0700
+
+gimp (0.99.26-1) frozen unstable; urgency=low
+
+  * Another new upstream version. The GIMP developers are swearing
+    up and down that this is the last one before 1.0.. hmm :)
+  * This version is supposed to fix the problems with the save/load
+    dialog box.
+
+ -- Ben Gertzfield <che@debian.org>  Sun, 12 Apr 1998 01:19:33 -0700
+
+gimp (0.99.24-1) frozen unstable; urgency=low
+
+  * New upstream version.
+  * Made sure ChangeLog was installed as changelog.gz; fixes
+    lintian errors.
+  * Corrected major error in libgimp1's shlibs file.
+
+ -- Ben Gertzfield <che@debian.org>  Wed,  8 Apr 1998 12:58:38 -0700
+
 gimp (0.99.23-1) frozen unstable; urgency=low
 
-  * New upstream version; fixes lots of bugs with iscissors.
-  * .diff.gz has been integrated with CVS upstream.
+  * New upstream version.
+  * /usr/lib/libgck.{a,so} were not in the -dev package, moved
+    them to the right place.
+  * Fixed postinst to test if package is being configured for
+    ldconfiggage (Hi again James!)
 
- -- Ben Gertzfield <che@debian.org>  Sat, 28 Mar 1998 11:01:35 -0800
+ -- Ben Gertzfield <che@debian.org>  Sun, 29 Mar 1998 16:12:15 -0800
 
 gimp (0.99.22-2) frozen unstable; urgency=low
 

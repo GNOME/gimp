@@ -1,26 +1,60 @@
 #!/usr/bin/make -f
-# Sample debian/rules that uses debhelper. GNU copyright 1997 by Joey Hess.
+# GIMP1.1's debian/rules file. Uses debhelper by Joey Hess.
+# Based on sample debhelper debian/rules file.
+# Written 2 Jun 1998 by Ben Gertzfield <che@debian.org>
+# Hacked 29 May 2000 by Ian McKellar <yakk@gimp.org>
 
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
+## Read major and minor version numbers from the changelog :-)
+version=$(shell dpkg-parsechangelog | grep '^Version: ' | sed -e 's/^Version: //' | sed -e 's/-.*//')
+
+ifeq ($(DEBCVS),1)
+	major=1.1
+	minor=$(shell echo ${version} | sed -e 's/^[0-9]*\.//')
+else
+	major=$(shell echo ${version} | sed -e 's/\.[0-9]*$$//')
+	minor=$(shell echo ${version} | sed -e 's/^[0-9]*\.[0-9]*\.//')
+endif
+
+next_version=${major}.$(shell expr ${minor} + 1)
 
 build: build-stamp
 build-stamp:
 	dh_testdir
+
+	# We may need these in the future because of the /etc patch
+	#aclocal
+	#automake
+	#autoconf
+
 	# Add here commands to compile the pacckage.
-	./configure --prefix=/usr
+	./configure --sysconfdir=/etc --prefix=/usr --enable-perl
+
+	# Patch the generated libtool to avoid passing -rpath when linking,
+	# and to explicitly link libraries against the libraries they
+	# depend on.
+	sed < libtool > libtool-2 \
+	-e 's/^hardcode_libdir_flag_spec.*$$/hardcode_libdir_flag_spec=" -D__LIBTOOL_IS_A_FOOL__ "/' \
+	-e '/^archive_cmds="/s/"$$/ \\$$deplibs"/'
+	mv libtool-2 libtool
+	chmod 755 libtool
+
 	$(MAKE)
+
+# 	Commented out because you have to be in X to build the docs, yuck
+#	cd docs && $(MAKE)
+#	cd ..
 	touch build-stamp
 
 clean:
 	dh_testdir
 	dh_testroot
-	-rm -f build-stamp install-stamp
+	rm -f build-stamp install-stamp debian/shlibs.local
 	# Add here commands to clean up after the build process.
+	-$(MAKE) clean
 	-$(MAKE) distclean
-	rm -rf debian/{gimp,gimp-nonfree,libgimp1,libgimp-dev}
 	find . -name '*.o' -o -name '_libs' -o -name '*.lo' -o -name '*.a' -o -name '*.P' -o -name 'Makefile' | xargs rm -rf
-	-rm app/gimp
+	rm -f app/gimp
+	rm -f plug-ins/perl/po/*.gmo
 	dh_clean
 
 # Build architecture-independent files here.
@@ -28,121 +62,137 @@ binary-indep: build
 # We have nothing to do by default.
 
 # Build architecture-dependent files here.
-binary-arch: build install gimp-nonfree gimp libgimp-dev libgimp1
+binary-arch: build install gimp$(major)-nonfree gimp$(major)-perl gimp$(major) libgimp$(major)-dev libgimp$(major)
 
 install: install-stamp
 install-stamp: build
 	dh_testdir
 	dh_testroot
 	dh_clean
-	dh_installdirs usr/X11R6/bin
-	$(MAKE) prefix=`pwd`/debian/tmp/usr install
-	mv debian/tmp/usr/bin/gimp debian/tmp/usr/X11R6/bin
+	dh_installdirs usr/share/pixmaps
+	##$(MAKE) prefix=$(shell pwd)/debian/tmp/usr PREFIX=$(shell pwd)/debian/tmp/usr INSTALLDIRS=perl INSTALLMAN1DIR=$(shell pwd)/debian/tmp/usr/share/man/man1 INSTALLMAN3DIR=$(shell pwd)/debian/tmp/usr/share/man/man3 DESTDIR=$(shell pwd)/debian/tmp/ install
+	$(MAKE) prefix=$(shell pwd)/debian/tmp/usr PREFIX=$(shell pwd)/debian/tmp/usr gimpsysconfdir=$(shell pwd)/debian/tmp/etc/gimp-$(major) INSTALLDIRS=perl INSTALLMAN1DIR=$(shell pwd)/debian/tmp/usr/share/man/man1 INSTALLMAN3DIR=$(shell pwd)/debian/tmp/usr/share/man/man3 INSTALLMAN5DIR=$(shell pwd)/debian/tmp/usr/share/man/man5 install
+	-find debian/tmp/usr -name perllocal.pod -exec rm -f {} \;
+	find debian/tmp -type f -name .packlist | xargs rm -f
+	-find debian/tmp/usr/lib/perl5 -type d -empty | xargs rmdir -p
+	mv debian/tmp/usr/man/man1/* debian/tmp/usr/share/man/man1/
+	mv debian/tmp/usr/man/man5/* debian/tmp/usr/share/man/man5/
+	rm -f debian/shlibs.local
+
+	# These are the safe way, but the wrong way, to make shlib deps
+	#echo "libgimp-$(major) $(minor) libgimp$(major) (>= $(version))" > debian/shlibs.local
+	#echo "libgck-$(major) $(minor) libgimp$(major) (>= $(version))" >> debian/shlibs.local
+	#echo "libgimpui-$(major) $(minor) libgimp$(major) (>= $(version))" >> debian/shlibs.local
+
+	# This way is correct, but only seems to work on woody
+	echo "libgimp-$(major) $(minor) libgimp$(major) (>= $(version)), libgimp$(major) (<< $(next_version))" > debian/shlibs.local
+	echo "libgck-$(major) $(minor) libgimp$(major) (>= $(version)), libgimp$(major) (<< $(next_version))" >> debian/shlibs.local
+	echo "libgimpui-$(major) $(minor) libgimp$(major) (>= $(version)), libgimp$(major) (<< $(next_version))" >> debian/shlibs.local
+
+# you are very naughty, helix peoples, this is already in the shlibs for aalib
+# I can guess you're just hacking in slink support, so I forgive you
+#	echo "libaa 1 aalib1 (>= 1.2)" >> debian/shlibs.local
+	cp pixmaps/wilber.xpm debian/tmp/usr/share/pixmaps
+
 	touch install-stamp
 
-libgimp1: build install
-	dh_testdir -plibgimp1 
-	dh_testroot -plibgimp1
-#	dh_clean -k -plibgimp1 
-	dh_installdirs -plibgimp1
-	rm -rf debian/tmp/usr/bin debian/tmp/usr/X11R6 debian/tmp/usr/include \
-	  debian/tmp/usr/share
-#	$(MAKE) prefix=`pwd`/debian/tmp/usr install
-#	dh_movefiles -plibgimp1
-#	rm debian/tmp/usr/lib/*.{so,la,a}
-#	rm -rf debian/tmp/usr/{include,info,share}
-#	rm -rf debian/tmp/usr/lib/gimp
-#	rm -rf debian/tmp/usr/bin
-	dh_installdocs -plibgimp1
-	dh_installchangelogs -plibgimp1
-	dh_strip -plibgimp1
-	dh_compress -plibgimp1
-	dh_fixperms -plibgimp1
-	dh_installdeb -plibgimp1
-	dh_shlibdeps -plibgimp1
-	dh_gencontrol -plibgimp1
-	dh_makeshlibs -plibgimp1
-	dh_md5sums -plibgimp1
-	dh_builddeb -plibgimp1
+libgimp$(major): build install
+	dh_testdir -plibgimp$(major) 
+	dh_testroot -plibgimp$(major)
+	dh_installdirs -plibgimp$(major)
+	rm -rf debian/tmp/usr/bin debian/tmp/usr/include \
+	  debian/tmp/usr/share debian/tmp/usr/lib/*.la debian/tmp/usr/man debian/tmp/usr/lib/gimp debian/tmp/usr/lib/perl5 debian/tmp/etc
+	dh_installdocs -plibgimp$(major)
+	dh_installchangelogs -plibgimp$(major)
+	dh_strip -plibgimp$(major)
+	dh_compress -plibgimp$(major)
+	dh_fixperms -plibgimp$(major)
+	dh_installdeb -plibgimp$(major)
+	dh_shlibdeps -plibgimp$(major)
+	dh_gencontrol -plibgimp$(major)
+	dh_md5sums -plibgimp$(major)
+	dh_builddeb -plibgimp$(major)
 
-gimp: build install
-	dh_testdir -pgimp 
-	dh_testroot -pgimp
-	dh_clean -k -pgimp 
-	dh_installdirs -pgimp usr/X11R6/man/man1
-	# Add here commands to install the files into debian/tmp
-	dh_movefiles -pgimp
+gimp$(major): build install
+	dh_testdir -pgimp$(major) 
+	dh_testroot -pgimp$(major)
+	dh_clean -k -pgimp$(major) 
+	dh_installdirs -pgimp$(major)
+	-dh_movefiles -pgimp$(major)
 	-rm -f install-stamp
-	cp docs/gimp.1 debian/gimp/usr/X11R6/man/man1
-#	$(MAKE) prefix=`pwd`/debian/gimp/usr install
-#	install -d debian/gimp/usr/X11R6/bin
-#	mv debian/gimp/usr/bin/gimp debian/gimp/usr/X11R6/bin/gimp
-#	install -d debian/gimp-nonfree/usr/lib/gimp/0.99/plug-ins
-#	rm -rf debian/gimp/usr/{include,info}
-#	find debian/gimp/usr/lib -maxdepth 1 \( -type f -or -type l \) \
-#	  | xargs rm
-#	mv debian/gimp/usr/lib/gimp/0.99/plug-ins/{gif,tiff} \
-#	  debian/gimp-nonfree/usr/lib/gimp/0.99/plug-ins
-	dh_installdocs -pgimp debian/README.debian docs/*.txt ChangeLog \
-	  README NOTES
-	dh_installchangelogs -pgimp
-	dh_strip -pgimp
-	dh_compress -pgimp
-	dh_fixperms -pgimp
-	dh_installmenu -pgimp
-	dh_installdeb -pgimp
-	LD_LIBRARY_PATH=$(shell pwd)/debian/tmp/usr/lib dh_shlibdeps -pgimp
-	dh_gencontrol -pgimp
-	dh_makeshlibs -pgimp
-	dh_md5sums -pgimp
-	dh_builddeb -pgimp
+	dh_installdocs -pgimp$(major) debian/README.debian docs/*.txt \
+	  README docs/Wilber.xcf.gz
+	dh_installchangelogs -pgimp$(major) ChangeLog
+	dh_strip -pgimp$(major)
+	dh_compress -pgimp$(major)
+	dh_fixperms -pgimp$(major)
+	dh_installmenu -pgimp$(major)
+	dh_installdeb -pgimp$(major)
+	LD_LIBRARY_PATH=$(shell pwd)/debian/tmp/usr/lib dh_shlibdeps -pgimp$(major)
+	dh_gencontrol -pgimp$(major)
+	dh_md5sums -pgimp$(major)
+	dh_builddeb -pgimp$(major)
 
+gimp$(major)-perl: build install
+	dh_testdir -pgimp$(major)-perl
+	dh_testroot -pgimp$(major)-perl
+	dh_clean -pgimp$(major)-perl -k
+	dh_installdirs -pgimp$(major)-perl usr/lib/perl5 /usr/lib/gimp/$(major)/plug-ins
+	dh_movefiles -pgimp$(major)-perl
+	for i in `file debian/tmp/usr/lib/gimp/$(major)/plug-ins/* | grep perl | cut -d : -f 1`; \
+	do \
+		mv $$i debian/gimp$(major)-perl/usr/lib/gimp/$(major)/plug-ins ; \
+	done
 
-gimp-nonfree: build install
-	dh_testdir -pgimp-nonfree
-	dh_testroot -pgimp-nonfree
-	dh_clean -k -pgimp-nonfree
-	dh_movefiles -pgimp-nonfree
 	-rm -f install-stamp
-#	-rm debian/gimp-nonfree.substvars
-#	-find debian/gimp-nonfree -not -type d -and -not \( -name 'gif' -or \
-#	  -name 'tiff' \) | xargs rm
-	dh_installdirs -pgimp-nonfree
-	dh_installdocs -pgimp-nonfree
-	dh_installchangelogs -pgimp-nonfree
-	dh_strip -pgimp-nonfree
-	dh_compress -pgimp-nonfree
-	dh_fixperms -pgimp-nonfree
-	dh_installdeb -pgimp-nonfree
-	LD_LIBRARY_PATH=$(shell pwd)/debian/tmp/usr/lib dh_shlibdeps -pgimp-nonfree
-	dh_gencontrol -pgimp-nonfree
-	dh_makeshlibs -pgimp-nonfree
-	dh_md5sums -pgimp-nonfree
-	dh_builddeb -pgimp-nonfree
+	dh_link usr/share/man/man1/gimptool.1 usr/share/man/man1/gimp-config.1
+	dh_installdocs -pgimp$(major)-perl  
+	dh_undocumented -pgimp$(major)-perl
+	dh_installchangelogs -pgimp$(major)-perl
+	dh_strip -pgimp$(major)-perl
+	dh_compress -pgimp$(major)-perl
+	dh_fixperms -pgimp$(major)-perl
+	dh_installdeb -pgimp$(major)-perl
+	dh_shlibdeps -pgimp$(major)-perl
+	dh_gencontrol -pgimp$(major)-perl
+	dh_md5sums -pgimp$(major)-perl
+	dh_builddeb -pgimp$(major)-perl
 
-libgimp-dev: build install
-	dh_testdir -plibgimp-dev
-	dh_testroot -plibgimp-dev
-	dh_clean -plibgimp-dev -k
-	dh_installdirs -plibgimp-dev
-	dh_movefiles -plibgimp-dev
+gimp$(major)-nonfree: build install
+	dh_testdir -pgimp$(major)-nonfree
+	dh_testroot -pgimp$(major)-nonfree
+	dh_clean -k -pgimp$(major)-nonfree
+	dh_movefiles -pgimp$(major)-nonfree
 	-rm -f install-stamp
-	# Add here commands to install the files into debian/tmp
-#	$(MAKE) prefix=`pwd`/debian/libgimp-dev/usr install
-#	rm -rf debian/libgimp-dev/usr/lib/gimp
-#	find debian/libgimp-dev/usr/lib \( -type f -or -type l \) -and ! \( -name \*.so -or -name \*.a \) | xargs rm
-#	rm -rf debian/libgimp-dev/usr/{bin,share}
-	dh_installdocs -plibgimp-dev
-	dh_installchangelogs -plibgimp-dev
-	dh_strip -plibgimp-dev
-	dh_compress -plibgimp-dev
-	dh_fixperms -plibgimp-dev
-	dh_installdeb -plibgimp-dev
-	dh_shlibdeps -plibgimp-dev
-	dh_gencontrol -plibgimp-dev
-	dh_makeshlibs -plibgimp-dev
-	dh_md5sums -plibgimp-dev
-	dh_builddeb -plibgimp-dev
+	dh_installdirs -pgimp$(major)-nonfree
+	dh_installdocs -pgimp$(major)-nonfree
+	dh_installchangelogs -pgimp$(major)-nonfree
+	dh_strip -pgimp$(major)-nonfree
+	dh_compress -pgimp$(major)-nonfree
+	dh_fixperms -pgimp$(major)-nonfree
+	dh_installdeb -pgimp$(major)-nonfree
+	LD_LIBRARY_PATH=$(shell pwd)/debian/tmp/usr/lib dh_shlibdeps -pgimp$(major)-nonfree
+	dh_gencontrol -pgimp$(major)-nonfree
+	dh_md5sums -pgimp$(major)-nonfree
+	dh_builddeb -pgimp$(major)-nonfree
+
+libgimp$(major)-dev: build install
+	dh_testdir -plibgimp$(major)-dev
+	dh_testroot -plibgimp$(major)-dev
+	dh_clean -plibgimp$(major)-dev -k
+	dh_installdirs -plibgimp$(major)-dev
+	dh_movefiles -plibgimp$(major)-dev
+	-rm -f install-stamp
+	dh_installdocs -plibgimp$(major)-dev  
+	dh_installchangelogs -plibgimp$(major)-dev
+	dh_strip -plibgimp$(major)-dev
+	dh_compress -plibgimp$(major)-dev
+	dh_fixperms -plibgimp$(major)-dev
+	dh_installdeb -plibgimp$(major)-dev
+	dh_shlibdeps -plibgimp$(major)-dev
+	dh_gencontrol -plibgimp$(major)-dev
+	dh_md5sums -plibgimp$(major)-dev
+	dh_builddeb -plibgimp$(major)-dev
 
 source diff:                                                                  
 	@echo >&2 'source and diff are obsolete - use dpkg-source -b'; false

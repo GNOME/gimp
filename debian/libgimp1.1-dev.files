@@ -1,0 +1,8 @@
+usr/lib/*.a
+usr/lib/*.so
+usr/share/man/man1/gimptool.1
+usr/share/gimp/1.1/devel-docs/
+usr/share/aclocal/gimp.m4
+usr/include/
+usr/bin/gimptool
+usr/bin/gimp-config

@@ -1,5 +1,5 @@
-gimp for DEBIAN
-----------------------
+gimp1.1 for Debian GNU/Linux
+----------------------------
 
 The GNU Image Manipulation Program lets you draw, edit images, and
 manipulate them any way you want!
@@ -7,35 +7,42 @@ manipulate them any way you want!
 This is the developers' release of Gimp. It's a full featured, freely
 available, non-Motif version of The Gimp.
 
-Version 0.99 (soon to be 1) has full layers support, tile-based memory
-allocation, and a whole bunch of other nifty features.
+***WARNING***
+
+You MUST have the xfonts-75dpi package available, either via the .deb
+packages, or a remote font server like xfs, before running The
+GIMP. The gimp package Recommends: this package along with
+xfonts-100dpi, but it is not required to have them installed locally
+if you have a remote font server set up. However, if you don't have
+either, GIMP *will* crash with a really esoteric error message.
+
+The lesson is: INSTALL THE xfonts-75dpi AND xfonts-100dpi PACKAGES!
+
+Version 1.1 has full layers support, tile-based memory allocation, and
+a whole bunch of other nifty features.
 
                  *************** NOTE ****************
-   If you've ever used an older version of The GIMP on your system,
-   you may have to delete the ~/.gimp directory, as different versions
-   are not always compatible.
+   If you've ever used an older version of The GIMP version 1.1 on
+   your system, you may have to delete the ~/.gimp-1.1 directory, as
+   different versions are not always compatible.
                  *************************************
 
-WARNING:
+If you want full documentation, either see the gimp-doc package
+or the wonderful online docs:
 
-GIMP is not finished yet. Most of the functionality that will be in
-the final program is there, but please be aware that this is still a
-developers' release.
+http://manual.gimp.org/
 
-In other words, don't run it as root and then scream when it blows up
-your computer.
 
 COMPILING PLUGINS:
 -----------------
 
-If you wish to compile your own plug-ins, the easiest way is to:
+If you wish to compile your own plug-ins, the easiest way is to use
+'gimptool', a simple tool that comes with gimp. This works only if you
+have a plug-in whose source is a single .c file, however:
 
-gcc -o plug-in plug-in.c -L/usr/X11R6/lib -lgimp -lgimpui -lgtk -lgdk \
--lglib -lm
+gimptool --install plug-in.c
 
-Some plug-ins may require more -l flags, but this should be pretty
-standard for most of them. Once you've compiled it, copy your new
-plug-in to ~/.gimp/plug-ins, and restart GIMP! 
+Now wasn't that easy?
 
 Ben Gertzfield <che@debian.org>, Tue, 22 Jul 1997 20:53:20 -0500
 

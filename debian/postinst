@@ -1,4 +1,8 @@
 #!/bin/sh
 
-ldconfig
+if [ "x$1" = xconfigure ]; then
+  ldconfig
+fi
+
+#DEBHELPER#
 

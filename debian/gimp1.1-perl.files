@@ -1,0 +1,9 @@
+usr/lib/perl5/
+usr/share/man/man1/*.1p
+usr/share/man/man3/
+usr/share/locale/*/LC_MESSAGES/gimp-perl.mo
+usr/bin/scm2scm
+usr/bin/scm2perl
+usr/bin/embedxpm
+usr/bin/gimpdoc
+usr/bin/xcftopnm

@@ -1,0 +1,61 @@
+#!/usr/bin/perl -w
+
+# Use this script to build a .deb from CVS. Creates .debs with
+# version numbers like: 0.YYYYMMDD-cvsXX where XX is the build
+# number of the day.
+
+use POSIX qw(strftime);
+
+$ENV{'DEBCVS'} = 1;
+
+unless (-d 'debian') {
+    chdir ".." or die "Couldn't chdir ..: $!\n";
+    unless (-d 'debian') {
+        die "$0: Must be run from either the parent of the debian/ dir or within debian/.\n";
+    }
+} 
+
+my $date = strftime("%Y%m%d", localtime);
+my $posixtime = strftime("%a, %d %b %Y %H:%M:%S %z", localtime);
+
+my $email = $ENV{'EMAIL'} || 'Ben Gertzfield <che@debian.org>';
+
+my @changelog;
+
+open CHANGELOG, "debian/changelog" or die "Couldn't open changelog: $!\n";
+
+my $first_line = <CHANGELOG>;
+push @changelog, $first_line;
+
+my ($old_version) = ($first_line =~ /\S+\s+\((.*?)\)\s+/);
+my $new_version;
+
+print "old ver: $old_version, date: $date\n";
+
+if ($old_version =~ /0\.$date-cvs(\d*)/) {
+    if ($1) {
+        $new_version = sprintf("0.%s-cvs%d", $date, $1 + 1);
+    } else {
+        $new_version = "0.$date-cvs1";
+    }
+} else {
+    $new_version = "0.$date-cvs1";
+}
+
+push @changelog, <CHANGELOG>;
+
+close CHANGELOG;
+
+open NEWCHANGE, ">debian/changelog" or die "Couldn't open changelog for writing: $!\n";
+
+print NEWCHANGE "gimp1.1 ($new_version) unstable; urgency=low
+
+  * CVS build.
+
+ -- $email  $posixtime\n\n";
+
+print NEWCHANGE @changelog;
+
+close NEWCHANGE;
+
+system("dpkg-buildpackage -rfakeroot") and die "dpkg-buildpackage -rfakeroot failed: $@\n";

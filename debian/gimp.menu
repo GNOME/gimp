@@ -1,2 +1,0 @@
-?package(gimp):command="/usr/X11R6/bin/gimp" icon="none" needs="X11" \
-	       section="Apps/Graphics" title="The GIMP"

@@ -1,46 +1,60 @@
-Source: gimp
+Source: gimp1.1
 Priority: optional
 Section: graphics
 Maintainer: Ben Gertzfield <che@debian.org>
-Standards-Version: 2.4.0.0
+Standards-Version: 3.1.1.1
+Build-Depends: aalib1-dev, libglib1.2-dev, libgtk1.2-dev, libgtkxmhtml-dev, libjpeg62-dev, libmpeg-dev, libpng2-dev, xpm4g-dev, zlib1g-dev, slang1-dev, xlib6g-dev, debhelper, libparse-recdescent-perl, libgtk-perl, pdl
 
-Package: libgimp1
+Package: libgimp1.1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
-Description: Libraries necessary to run the GIMP
- This package includes the libgimp and libgimpui libraries, necessary
- to run The GIMP.
+Description: Developers' release of libraries necessary to run the GIMP
+ This package includes the developers' release of the libgimp and
+ libgimpui libraries, necessary to run The GIMP, unstable branch.
+ .
+ This is the unstable 1.1 branch of GIMP. It is not intended for use
+ with stable projects!
  .
  It has been split off from the main gimp package in order to 
  facilitate easy development for packages that use libgimp and libgimpui,
  like SANE, the Scanner Access package for GIMP.
 
-Package: gimp
+Package: gimp1.1
 Architecture: any
 Section: graphics
-Conflicts: gimp-smotif, gimp-dmotif, gimp099, gimp-data-min
-Replaces: gimp-smotif, gimp-dmotif, gimp099, gimp-data-min
-Provides: gimp-data-min
-Depends: ${shlibs:Depends}, xfnt75, xfnt100
-Suggests: freefont, sharefont, gimp-nonfree, gimp-data-extras (>= 1:0.99)
-Description: The layers-based, non-Motif GNU Image Manipulation Program
+Conflicts: gimp-smotif, gimp-dmotif, gimp099, gimp-data-min, gimp, libgimp-perl
+Replaces: gimp-smotif, gimp-dmotif, gimp099, gimp-data-min, gimp
+Provides: gimp-data-min, gimp
+Depends: ${shlibs:Depends}, perl-5.005
+Suggests: freefont, sharefont, gimp1.1-nonfree, gimp-data-extras (>= 1:1.0.0), xfonts-100dpi, gimp1.1-perl
+Recommends: xfonts-75dpi
+Description: Developers' release of the GNU Image Manipulation Program
  The GIMP lets you draw, paint, edit images, and much more! GIMP
  includes the functionality and plug-ins of other famous image
  editing and processing programs.
  .
- This version is beta software. Most of the functionality of the GIMP
- 1.0 is here, but please be aware there that this is still a 
- developers' release.
- . 
- Version 0.99 of The GIMP is a total re-write of the old 0.54 code.
- It's fully layers-based, making it easy to use and more powerful.
+ This is the unstable 1.1 branch of GIMP. It is not intended for use
+ with stable projects!
  .
- This version is not based on Motif code, so it is entirely free!
- However, GIF and TIFF support have been moved to a separate package
- (gimp-nonfree) because of the UNISYS patent. 
+ You ***MUST*** <--- (really!) have the xfonts-75dpi and xfonts-100dpi
+ packages available on the X server, whether via files or via a font 
+ server like xfs. The gimp package only Recommends: these packages because
+ it's possible to have them served remotely, but you really should
+ install them. :)
 
-Package: gimp-nonfree
+Package: gimp1.1-perl
+Architecture: any
+Section: graphics
+Depends: perl5, libgtk-perl, pdl, gimp1.1 (>= ${Source-Version})
+Conflicts: libgimp-perl
+Replaces: libgimp1.1.15 (<< 1.1.15-2), gimp1.1 (<< 1.1.27), libgimp-perl
+Description: Perl support and plugins for The GIMP
+ This package includes the Perl modules necessary to write Perl-based
+ plugins for The GIMP. It includes several plugins with various
+ useful features.
+
+Package: gimp1.1-nonfree
 Architecture: any
 Section: non-free/graphics
 Depends: ${shlibs:Depends}
@@ -49,18 +63,23 @@ Description: GIF and TIFF support for the GNU Image Manipulation Program
  Manipulation Program. These files are not freely available; their
  use is disallowed by the UNISYS patent on LZW compression.
  .
+ This is the unstable 1.1 branch of GIMP. It is not intended for use
+ with stable projects!
+ .
  Use at your own legal risk.
 
-Package: libgimp-dev
+Package: libgimp1.1-dev
 Architecture: any
 Section: devel
-Depends: ${shlibs:Depends}
-Conflicts: gimp-dev
-Replaces: gimp-dev
-Description: Header files for compiling plugins for The GIMP
+Depends: libgimp1.1 (= ${Source-Version}), libgtk1.2-dev, libglib1.2-dev
+Conflicts: libgimp-dev, libgimp1.1.1-dev, libgimp1.1.2-dev, libgimp1.1.3-dev, libgimp1.1.4-dev, libgimp1.1.5-dev, libgimp1.1.6-dev, libgimp1.1.7-dev, libgimp1.1.8-dev, libgimp1.1.9-dev, libgimp1.1.10-dev, libgimp1.1.12-dev, libgimp1.1.13-dev, libgimp1.1.14-dev, libgimp1.1.15-dev, libgimp1.1.16-dev, libgimp1.1.17-dev, libgimp1.1.18-dev, libgimp1.1.19-dev, libgimp1.1.22-dev, libgimp1.1.24-dev, libgimp1.1-dev (<< ${Source-Version})
+Replaces: libgimp-dev, libgimp1.1.1-dev, libgimp1.1.2-dev, libgimp1.1.3-dev, libgimp1.1.4-dev, libgimp1.1.5-dev, libgimp1.1.6-dev, libgimp1.1.7-dev, libgimp1.1.8-dev, libgimp1.1.9-dev, libgimp1.1.10-dev, libgimp1.1.12-dev, libgimp1.1.13-dev, libgimp1.1.14-dev, libgimp1.1.15-dev, libgimp1.1.16-dev, libgimp1.1.17-dev, libgimp1.1.18-dev, libgimp1.1.19-dev, libgimp1.1.22-dev, libgimp1.1.24-dev, libgimp1.1-dev (<< ${Source-Version})
+Description: Developers' release of files for compiling plugins for The GIMP
  This package contains the header files for the GNU Image Manipulation
  Program, along with the static versions of libgimp and libgimpui.
  .
  Install this package if you wish to compile your own plugins,
  or if you wish to develop packages that use libgimp or libgimpui. 
-
+ .
+ This is the unstable 1.1 branch of GIMP. It is not intended for use
+ with stable projects!
