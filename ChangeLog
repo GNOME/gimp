@@ -1,3 +1,9 @@
+2004-09-17  Simon Budig  <simon@gimp.org>
+
+	* app/widgets/gimpbrusheditor.[ch]: Added a slider for the
+	brush spacing to the brush editor. Should make it more obvious
+	how to change it.
+
 2004-09-17  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-edit.c (gimp_edit_paste): based on a patch from

@@ -105,6 +105,7 @@ static void
 gimp_brush_editor_init (GimpBrushEditor *editor)
 {
   GtkWidget *frame, *box;
+  gint       row = 0;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -139,7 +140,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                                  editor,
                                  &editor->shape_group);
   gimp_table_attach_aligned (GTK_TABLE (editor->options_table),
-                             0, 0,
+                             0, row++,
                              _("Shape:"), 0.0, 0.5,
                              box, 2, TRUE);
   gtk_widget_show (box);
@@ -147,7 +148,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   /*  brush radius scale  */
   editor->radius_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
-                                          0, 1,
+                                          0, row++,
                                           _("Radius:"), -1, 5,
                                           0.0, 1.0, 1000.0, 0.1, 1.0, 1,
                                           TRUE, 0.0, 0.0,
@@ -162,7 +163,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   /*  number of spikes  */
   editor->spikes_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
-                                          0, 2,
+                                          0, row++,
                                           _("Spikes:"), -1, 5,
                                           2.0, 2.0, 20.0, 1.0, 1.0, 0,
                                           TRUE, 0.0, 0.0,
@@ -175,7 +176,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   /*  brush hardness scale  */
   editor->hardness_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
-                                          0, 3,
+                                          0, row++,
                                           _("Hardness:"), -1, 5,
                                           0.0, 0.0, 1.0, 0.01, 0.1, 2,
                                           TRUE, 0.0, 0.0,
@@ -188,7 +189,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   /*  brush aspect ratio scale  */
   editor->aspect_ratio_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
-                                          0, 4,
+                                          0, row++,
                                           _("Aspect ratio:"), -1, 5,
                                           0.0, 1.0, 20.0, 0.1, 1.0, 1,
                                           TRUE, 0.0, 0.0,
@@ -201,13 +202,27 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   /*  brush angle scale  */
   editor->angle_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
-                                          0, 5,
+                                          0, row++,
                                           _("Angle:"), -1, 5,
                                           0.0, 0.0, 180.0, 0.1, 1.0, 1,
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
   g_signal_connect (editor->angle_data, "value_changed",
+                    G_CALLBACK (gimp_brush_editor_update_brush),
+                    editor);
+
+  /*  brush spacing  */
+  editor->spacing_data =
+    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
+                                          0, row++,
+                                          _("Spacing:"), -1, 5,
+                                          0.0, 1.0, 200.0, 1.0, 10.0, 1,
+                                          FALSE, 1.0, 5000.0,
+                                          _("Percentage of width of brush"),
+                                          NULL));
+
+  g_signal_connect (editor->spacing_data, "value_changed",
                     G_CALLBACK (gimp_brush_editor_update_brush),
                     editor);
 }
@@ -223,6 +238,7 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
   gdouble                  hardness = 0.0;
   gdouble                  ratio    = 0.0;
   gdouble                  angle    = 0.0;
+  gdouble                  spacing  = 0.0;
 
   brush_editor = GIMP_BRUSH_EDITOR (editor);
 
@@ -251,6 +267,7 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
       hardness = gimp_brush_generated_get_hardness     (brush);
       ratio    = gimp_brush_generated_get_aspect_ratio (brush);
       angle    = gimp_brush_generated_get_angle        (brush);
+      spacing  = gimp_brush_get_spacing                (GIMP_BRUSH (brush));
     }
 
   gtk_widget_set_sensitive (brush_editor->options_table,
@@ -263,6 +280,7 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
   gtk_adjustment_set_value (brush_editor->hardness_data,     hardness);
   gtk_adjustment_set_value (brush_editor->aspect_ratio_data, ratio);
   gtk_adjustment_set_value (brush_editor->angle_data,        angle);
+  gtk_adjustment_set_value (brush_editor->spacing_data,      spacing);
 }
 
 
@@ -299,6 +317,7 @@ gimp_brush_editor_update_brush (GtkAdjustment   *adjustment,
   gdouble             hardness;
   gdouble             ratio;
   gdouble             angle;
+  gdouble             spacing;
 
   if (! GIMP_IS_BRUSH_GENERATED (GIMP_DATA_EDITOR (editor)->data))
     return;
@@ -310,12 +329,14 @@ gimp_brush_editor_update_brush (GtkAdjustment   *adjustment,
   hardness = editor->hardness_data->value;
   ratio    = editor->aspect_ratio_data->value;
   angle    = editor->angle_data->value;
+  spacing  = editor->spacing_data->value;
 
-  if (angle    != gimp_brush_generated_get_radius       (brush) ||
+  if (radius   != gimp_brush_generated_get_radius       (brush) ||
       spikes   != gimp_brush_generated_get_spikes       (brush) ||
       hardness != gimp_brush_generated_get_hardness     (brush) ||
       ratio    != gimp_brush_generated_get_aspect_ratio (brush) ||
-      angle    != gimp_brush_generated_get_angle        (brush))
+      angle    != gimp_brush_generated_get_angle        (brush) ||
+      spacing  != gimp_brush_get_spacing                (GIMP_BRUSH (brush)))
     {
       g_signal_handlers_block_by_func (brush,
                                        gimp_brush_editor_notify_brush,
@@ -329,6 +350,7 @@ gimp_brush_editor_update_brush (GtkAdjustment   *adjustment,
       gimp_brush_generated_set_hardness     (brush, hardness);
       gimp_brush_generated_set_aspect_ratio (brush, ratio);
       gimp_brush_generated_set_angle        (brush, angle);
+      gimp_brush_set_spacing                (GIMP_BRUSH (brush), spacing);
 
       g_object_thaw_notify (G_OBJECT (brush));
       gimp_data_thaw (GIMP_DATA (brush));

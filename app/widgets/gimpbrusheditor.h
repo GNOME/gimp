@@ -49,6 +49,7 @@ struct _GimpBrushEditor
   GtkAdjustment  *hardness_data;
   GtkAdjustment  *angle_data;
   GtkAdjustment  *aspect_ratio_data;
+  GtkAdjustment  *spacing_data;
 };
 
 struct _GimpBrushEditorClass
