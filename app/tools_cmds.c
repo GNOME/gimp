@@ -62,7 +62,7 @@ static ProcRecord paintbrush_proc;
 static ProcRecord pencil_proc;
 static ProcRecord perspective_proc;
 static ProcRecord rect_select_proc;
-static ProcRecord rotate_invoker_proc;
+static ProcRecord rotate_proc;
 static ProcRecord scale_proc;
 static ProcRecord shear_proc;
 
@@ -86,7 +86,7 @@ register_tools_procs (void)
   procedural_db_register (&pencil_proc);
   procedural_db_register (&perspective_proc);
   procedural_db_register (&rect_select_proc);
-  procedural_db_register (&rotate_invoker_proc);
+  procedural_db_register (&rotate_proc);
   procedural_db_register (&scale_proc);
   procedural_db_register (&shear_proc);
 }
@@ -1897,7 +1897,7 @@ static ProcRecord rect_select_proc =
 };
 
 static Argument *
-rotate_invoker_invoker (Argument *args)
+rotate_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1957,7 +1957,7 @@ rotate_invoker_invoker (Argument *args)
       undo_push_group_end (gimage);
     }
 
-  return_args = procedural_db_return_args (&rotate_invoker_proc, success);
+  return_args = procedural_db_return_args (&rotate_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (drawable));
@@ -1965,7 +1965,7 @@ rotate_invoker_invoker (Argument *args)
   return return_args;
 }
 
-static ProcArg rotate_invoker_inargs[] =
+static ProcArg rotate_inargs[] =
 {
   {
     PDB_DRAWABLE,
@@ -1984,7 +1984,7 @@ static ProcArg rotate_invoker_inargs[] =
   }
 };
 
-static ProcArg rotate_invoker_outargs[] =
+static ProcArg rotate_outargs[] =
 {
   {
     PDB_DRAWABLE,
@@ -1993,9 +1993,9 @@ static ProcArg rotate_invoker_outargs[] =
   }
 };
 
-static ProcRecord rotate_invoker_proc =
+static ProcRecord rotate_proc =
 {
-  "gimp_rotate_invoker",
+  "gimp_rotate",
   "Rotate the specified drawable about its center through the specified angle.",
   "This tool rotates the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting rotated drawable. The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and rotated drawable.",
   "Spencer Kimball & Peter Mattis",
@@ -2003,10 +2003,10 @@ static ProcRecord rotate_invoker_proc =
   "1995-1996",
   PDB_INTERNAL,
   3,
-  rotate_invoker_inargs,
+  rotate_inargs,
   1,
-  rotate_invoker_outargs,
-  { { rotate_invoker_invoker } }
+  rotate_outargs,
+  { { rotate_invoker } }
 };
 
 static Argument *

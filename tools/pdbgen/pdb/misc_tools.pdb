@@ -895,7 +895,7 @@ CODE
     );
 }
 
-sub rotate_invoker {
+sub rotate {
     $blurb = <<'BLURB';
 Rotate the specified drawable about its center through the specified angle.
 BLURB
@@ -1148,8 +1148,7 @@ CODE
 
 @procs = qw(airbrush blend bucket_fill by_color_select clone color_picker
 	    convolve crop ellipse_select eraser flip free_select fuzzy_select
-	    paintbrush pencil perspective rect_select rotate_invoker scale
-	    shear);
+	    paintbrush pencil perspective rect_select rotate scale shear);
 %exports = (app => [@procs]);
 
 $desc = 'Tool procedures';

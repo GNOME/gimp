@@ -1,3 +1,7 @@
+Tue Apr 20 10:05:07 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/tools_cmds.c: doh, I'm dumb. s/rotate_invoker/rotate/g
+
 Tue Apr 20 13:09:03 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* modules/colorsel_triangle.c
