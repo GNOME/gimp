@@ -1,18 +1,17 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# The Gimp (script-fu)
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# David Monniaux <monniaux@arbouse.ens.fr>, 2000.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Gimp 1.1.18 (script-fu)\n"
 "POT-Creation-Date: 2000-02-28 17:47-0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2000-03-06 17:39+0100\n"
+"Last-Translator: David Monniaux <monniaux@arbouse.ens.fr>\n"
+"Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:158
 msgid "Script-Fu console mode allows only interactive invocation"
@@ -36,7 +35,7 @@ msgstr "Sortie SIOD"
 #. The current command
 #: plug-ins/script-fu/script-fu-console.c:291
 msgid "Current Command"
-msgstr "Commande courrante"
+msgstr "Commande courante"
 
 #: plug-ins/script-fu/script-fu-console.c:312
 msgid "Browse..."
@@ -58,15 +57,14 @@ msgstr ""
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1207
 #: plug-ins/script-fu/script-fu-scripts.c:1209
-#, fuzzy
 msgid "/Script-Fu/"
-msgstr "Console pour Script-Fu"
+msgstr "/Script-Fu/"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1209
 #: plug-ins/script-fu/script-fu-scripts.c:1211
-#, fuzzy, c-format
+#, c-format
 msgid "Script-Fu: %s"
-msgstr "Console pour Script-Fu"
+msgstr "Script-Fu : %s"
 
 #. the script arguments frame
 #: plug-ins/script-fu/script-fu-scripts.c:1236
@@ -79,28 +77,27 @@ msgstr "Sélection de la Couleur pour le Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1306
 msgid "Script Toggle"
-msgstr ""
+msgstr "Case à cocher (Script-Fu)"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1368
 msgid "Script-Fu File Selection"
-msgstr "Sélection du fichier pour le Script-Fu"
+msgstr "Sélection du fichier (Script-Fu)"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1400
 msgid "Script-fu Pattern Selection"
-msgstr "Sélection des Motif pour le Script-Fu"
+msgstr "Sélection des motifs (Script-Fu)"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1407
 msgid "Script-Fu Gradient Selection"
-msgstr "Sélection des Dégradés pour le Script-Fu"
+msgstr "Sélection des dégradés (Script-Fu)"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1415
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection des brosses pour le Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1440
-#, fuzzy
 msgid "Reset to Defaults"
-msgstr " Remettre aux Valeurs par Défaut "
+msgstr "Remettre aux valeurs par défaut"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1466
 msgid "About"
@@ -173,7 +170,7 @@ msgstr "<Boîte à Outils>/Extensions/Script-Fu/Serveur..."
 
 #: plug-ins/script-fu/script-fu.c:1007 plug-ins/script-fu/script-fu.c:1008
 msgid "Re-read all available scripts"
-msgstr ""
+msgstr "Relire la liste des scripts disponibles"
 
 #: plug-ins/script-fu/script-fu.c:1012
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
