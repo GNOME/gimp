@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-12-15 18:48+0100\n"
-"PO-Revision-Date: 2002-12-15 18:48+0100\n"
+"POT-Creation-Date: 2002-12-27 16:49+0100\n"
+"PO-Revision-Date: 2002-12-27 16:49+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -218,6 +218,10 @@ msgstr "/Sort"
 msgid "/White"
 msgstr "/Hvid"
 
+#: libgimpwidgets/gimpcolorscales.c:141
+msgid "Scales"
+msgstr "Skalaer"
+
 #: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
 msgstr "_T"
@@ -409,6 +413,30 @@ msgstr "Megabyte"
 #: libgimpwidgets/gimpwidgets.c:1292
 msgid "GigaBytes"
 msgstr "Gigabyte"
+
+#: modules/cdisplay_colorblind.c:100
+msgid "Colorblind display filter"
+msgstr "Farveblindt visningsfilter"
+
+#: modules/cdisplay_colorblind.c:166
+msgid "Color Deficient Vision"
+msgstr "Farveblindt syn"
+
+#: modules/cdisplay_colorblind.c:326
+msgid "Color Deficiency Type:"
+msgstr "Farveblindhedstype:"
+
+#: modules/cdisplay_colorblind.c:336
+msgid "Protonopia (insensitivity to red)"
+msgstr "Protonopia (kan ikke se rød)"
+
+#: modules/cdisplay_colorblind.c:340
+msgid "Deuteranopia (insensitivity to green)"
+msgstr "Protonopia (kan ikke se grøn)"
+
+#: modules/cdisplay_colorblind.c:344
+msgid "Tritanopia (insensitivity to blue)"
+msgstr "Protonopia (kan ikke se blå)"
 
 #: modules/cdisplay_gamma.c:89
 msgid "Gamma color display filter"
