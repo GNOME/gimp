@@ -1462,7 +1462,7 @@ done
 
 
 
-INTLLIBS=-lintl
+INTLLIBS=
 MSGFMT=msgfmt
 
 

@@ -11,7 +11,7 @@ register
     'View grayscale drawable in 3D',
     'This script uses PDL::Graphics:TriD to view a grayscale drawable in 3D. You can choose a Cartesian (default) or Polar projection, toggle the drawing of lines, and toggle normal smoothing.',
     'Tom Rathborne', 'GPLv2', '1999-03-11',
-    __'<Image>/View/3D Surface',
+    __"<Image>/View/3D Surface",
     'RGB*,GRAY*', [
         [ PF_BOOL, 'polar', 'Radial view', 0],
         [ PF_BOOL, 'lines', 'Draw grid lines', 0],

@@ -1,7 +1,8 @@
 Revision history for Gimp-Perl extension.
 
 1.17
-        - re-fitted i18n trabslation for most plug-ins.
+        - re-fitted i18n translation for most plug-ins.
+        - intllibs linking bugfix.
 
 1.16  Sun Nov 21 02:37:16 CET 1999
 	- removed sethspin.pl & billboard, they are no longer maintained :(

@@ -6,8 +6,6 @@ use Gimp::Fu;
 use Gimp::UI;
 use Fcntl;
 
-# Gimp::set_trace(TRACE_ALL);
-
 my %replace = (
    "&" => "&amp;",
    "<" => "&lt;",
@@ -27,7 +25,7 @@ register "file_colorhtml_save",
          "=pod",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
-         "1999-11-21",
+         "1999-11-22",
          "<Save>/COLORHTML",
          "*",
          [
@@ -76,7 +74,7 @@ register "file_colorhtml_save",
 
    init Progress __"Saving '$filename' as COLORHTML...";
 
-   $closetag = $closetag ? "<font>" : "";
+   $closetag = $closetag ? "</font>" : "";
 
    print FILE "<html><body bgcolor=black>\n<font size=\"$size\"><pre>\n";
    for (my $y = 0; $y < $h; $y++) {
@@ -84,7 +82,7 @@ register "file_colorhtml_save",
       push @chars,@data while @chars < $w;
       if ($html40) {
          $pel =~ s{(...)}{
-            "<font color=\"#".unpack("H*",$1)."\">".shift(@chars).$clostag;
+            "<font color=\"#".unpack("H*",$1)."\">".shift(@chars).$closetag;
          }ges;
       } else {
          $pel =~ s{(...)}{
@@ -119,7 +117,7 @@ This creates some kind of mosaic effect with characters.
 
 The pictures should be limited to about 120x120 pixels, since most
 browsers do not view larger images. The aspect ratio depends on the
-fixed-width font the browser is using, and is usually around 10:6 (so you
+fixed-width font the browser is using, and is usually around 2:1 (so you
 should squash your image accordingly).
 
 The FONT tags can be saved either HTML-4.0 compliant (C<font color="#rrggbb">)

@@ -52,7 +52,7 @@ CONFIG_H="config.h"
 
 sinclude(configure.frag)
 
-INTLLIBS=-lintl
+INTLLIBS=
 MSGFMT=msgfmt
 AC_SUBST(INTLLIBS)
 AC_SUBST(MSGFMT)

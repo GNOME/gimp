@@ -113,7 +113,7 @@ sub _missing {
    my ($msg,$function)=@_;
    require Gimp;
    Gimp::logger(message => "$_[0] is required but not found", function => $function);
-   Gimp::initialized() ? &Gimp::quiet_die() : exit Gimp::quiet_main();
+   Gimp::initialized() ? Gimp::quiet_die() : Gimp::xs_exit(Gimp::quiet_main());
 }
 
 sub missing {

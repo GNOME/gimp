@@ -58,7 +58,7 @@ _exit()
 #elif defined(SIGKILL)
 	raise(SIGKILL);
 #else
-	raise(9);
+	raise(9)
 #endif
 	abort();
 

@@ -119,8 +119,164 @@ generally do not care for the url length.
 
 Browser compatibility list (send more results to pcg@goof.com ;)
 
-  Netscape 4.x	works in any setting
+  Netscape 3.x	displays broken image icons
+  Netscape 4.x	works on some configurations, not on others
   Lynx 		displays the base64 code as text :(
   MSIE 4	thousands of error messages in dialog boxes ;->
   MSIE 5	shows broken image icon
 
+=for nobody
+
+<schmorp> yosh: cvs.gimp.org
+<yosh> I mean which "removed debugging crap" one
+<schmorp> yosh: or did you mean the debugging code in the Perl-Server?
+<yosh> yah
+<yosh> debian's perl whines about using -D since it's not compiled with -DDEBUGGING
+<schmorp> yosh: ah.. I it was ebing queried..
+<schmorp> yosh: yeah, but you did not see the <STDIN> that required people to press enter in colorhtml ;)
+<schmorp> anybody here with netscape 3.0? or msie 5.0? or any other graphical browser?
+<yosh> schmorp: it was in innerbevel, you must've fixed colorhtml before I had a chance to update
+<maswan> schmorp: ns3.0 here
+<schmorp> maswan: could you try something out? -> http://www.goof.com/pcg/marc/dataurl.html
+<schmorp> maswan: what do you see, especially below "dataurl filter"
+<schmorp> yosh: at least ;->
+*** Joins: Nether [lealanko@myntti.helsinki.fi] has joined #gimp
+*** Mode change for #gimp by XachBot: +o Nether
+<maswan> schmorp: slooow....
+<Stric> schmorp, evil thingie.. I'm loading it in win98/ie on a p60 8)
+*** Nether [lealanko@myntti.helsinki.fi] is now known as Neth_ZzZ
+<schmorp> that html page contains no external links, i.e. all images are embedded
+<schmorp> and yes, the colour-changing is bogging down most browsers
+<schmorp> i want to find out how many browsers support the data: url
+<Stric> I get a gazillion of [x] broken image thingies at the bottom half
+<maswan> schmorp: embedded? I got _lots_ of broken external images on the bottom half
+<schmorp> stric: which browser?
+<maswan> http://www.goof.com/pcg/marc/data:image/gif;base64,
+   R0lGODlhIgAiAOMAAA8UFDo/OGt9eJecj722oFxfVIl/a+vSrn5oTtiyg7qfe6SGZUlgX+LCliElIdCldCwAAAAAIgAiAAAE/vAd9dajKlV6FddY9TTd9ZzmSWkPi2quYiUsiJ4uXd+6i/e3Vk/XQpGMRVxj9
+   1omnE/n8nhqUGmv2lMnXY6EWBc0rNxah8IRjQQbeouw0dhKT5+562Cevu1BpWtcPy1WYHdmT2psXn1DjYF8fmdnhJCIB4VTmlyRdE5ggZhTnIFrXX6SDaKPZpN4XAd+sXV8f1GagFmmd7ZWmKaNo5ZDs1GoTh
+   k0sW5dkcGtJIeeuJ6kt7Nny7vTzXyiq2zGo7VS4NSqrdiIU8voJKLV04hypa5mB/DOw+K3qt147JQBfPLLU0Fh5IxhqdTHXh
+<Stric> schmorp, win98/ie (4? 5?)
+<schmorp> maswan: ok, so ns3.0 does not support it
+<schmorp> stric: i don't know how to find out ;9
+<Stric> schmorp, 5 appearantly...
+<schmorp> ok... ns3.0 and msie5 show broken image icons.
+<schmorp> msie displays one dialog box per link (evil)
+<schmorp> lynx errornously displays the base64 data
+<yosh> haha
+<schmorp> so only netscape 4 displays it correctly
+<yosh> that is too evil
+<yosh> tried mozilla?
+*** Quits: _vicious_:#gimp [~jirka@dt062nd1.san.rr.com] (GEGL!)
+<schmorp> yosh: mozilla does not run, did not run and will probably never run
+<schmorp> yosh: everytime I come here and somebody talks about mozilla he says "well, it is quite cool"
+<schmorp> yosh: everytime _I_ try it ends in an endless loop after 5 seconds or so
+<yosh> heh
+<Stric> you must be broken then
+<schmorp> yosh: but I guess mozilla will do it as well
+<yosh> schmorp: I get broken images with NS 4.7
+<schmorp> yosh: really? thats cool... it works with ns 4.06 (here) and ns 4.6 (my friend)
+<schmorp> yosh: on linux?
+<yosh> yes
+<schmorp> yosh: i wonder why they removed support for it..
+<sjburges> I get broken stuff with 4.51
+*** TomR^AwaY [~tomr@judas.aceldama.com] is now known as Tommer
+<yosh> hey Tommer
+<Tommer> Works for me on NS 4.71 on LinuxPPC
+<Tommer> Hullo yosh
+<schmorp> tommer: really?
+<Tommer> dataurl is very cute, schmorp
+<Tommer> Yup
+* yosh tries mozilla
+<schmorp> something must be broken... 4.06 yes, 4.51 no, 4.6 yes, 4.7 no, 4.71 yes...
+<schmorp> I see a pattern...
+<Tommer> Oh, you mean the ($ver*100)%2 == (dataurl works) relation?
+<Tommer> Oh wait, 4.6 doesn't match that.
+* maswan tries ns4.61 on aix
+<schmorp> oh, that 4.6 is probably measurement error
+<Tommer> schmorp, for the next trick, do <frameset> <frame src=dataurl:> <frame src=dataurl:> </frameset> :)
+<yosh> haha
+<schmorp> hmm... it works with 4.51 here....
+<maswan> eeek.
+<Tommer> how about <body background="dataurl:...">
+*** Quits: tigert:#gimp [tigert@fun112.koivukyla.hoas.fi] (Ping timeout: 660 seconds)
+<schmorp> tommer: hmm... now that would be cool... it would not even need base64 encoding, and would probably work even with lynx
+<maswan> this one is sloow for some reason.
+<tc> hmm
+*** Topic change by sjburges on #gimp: its abuse html night
+<Tommer> schmorp: yes, as long as you used &quot; everywhere you'd be fine :)
+<schmorp> maswan: "aix"....
+<tc> could it be that clinton only knows of the internet from al gore?
+<Stric> schmorp, low mhz combined with netscape on 24bpp
+<maswan> hmm.. or ssh. oops. :)
+<tc> "reduce the gap between rich and poor by giving everyone internet access"
+<Tommer> Does anyone have red+blue 3D glasses handy?
+<tc> yay clinton. you da man
+<maswan> schmorp: works on this one
+<schmorp> stric: but since netscaope can't display colour icons in 24bpp it should be much faster ;->
+<schmorp> maswan: thanks ;)
+<Stric> schmorp, I haven't had that problem on non-linux
+<maswan> hmm.. it is estimating speed at 2k/s
+<schmorp> tommer: the problem is that urls are max. 1k in size
+<Stric> schmorp, I correct that to aix/irix/solaris
+<schmorp> tommer: but on the browsers that support it, dataurls can be much longer
+<maswan> which means much time for that file
+<Tommer> schmorp: can't you specify encoding=base64 _and_ encoding=gzip?
+<yosh> hum, mozilla sucks ;)
+<schmorp> tommer: i can't specify an encoding per se. if, then it must be a netscape extension
+<schmorp> tommer: maybe image/gzip-jpg or something....
+<Tommer> schmorp: oh, so you can only specify a content type, not an encoding? I was guessing about the encoding thing.
+* maswan tries irix netscape 4.something
+<maswan> 4.61 here too
+<schmorp> tommer: the base64 is specified as ";base64", so it is somethign special
+<schmorp> tommer: but since I can specify charset=xxx, maybe I can also add encoding=gzip...
+<maswan> works that too
+<schmorp> tommer: BUT... if I can use gzip, then I cna use long urls. Then I can use png, and then i don't need gzip
+<Tommer> schmorp: just think, you could put a whole site in one page with framesets and dataurl :)
+<schmorp> yosh: mozilla sucks, yes, but does it display it?
+<Tommer> How are gzip and long urls related, schmorp?
+<yosh> schmorp: it segfaults
+<yosh> ;)
+<schmorp> tommer: hmm... I'm thinking images only...
+<schmorp> tommer: if you think text then encoding=gzip makes sense
+<schmorp> tommer: I also haven'T tried wether these urls work in frameset and normal anchor elements
+<schmorp> but actually, the colorhtml filter is much more portable
+<yosh> yeah, it just takes aching long to render and scroll
+<Tommer> schmorp: how about <img lowsrc="data:image/gif;base64, ... " src="/images/foo.gif"> ?
+<schmorp> yes... maybe when this type of encapsulation becomes more often used... at least
+<schmorp> we can claim that msie is not rfc2397 compatible
+<ole_zzz> xachbot, seen dv
+-XachBot:#gimp- I last saw dv (veillard@home5.inrialpes.fr) 7d 13h 17m ago [quit: (xchat exiting..)]
+<Stric> schmorp, and who will care? 8)
+<schmorp> tommer: that might even be a useful usage!!
+*** Joins: JohnP [me2@d027.pnj.early.com] has joined #gimp
+*** Mode change for #gimp by XachBot: +o JohnP
+<JohnP> Hey!
+<Tommer> schmorp: but lowsrc is an evil Netscape invention :)
+*** Joins: tigert [~tigert@fun112.koivukyla.hoas.fi] has joined #gimp
+*** Mode change for #gimp by Wilber: +o tigert
+<Stric> tigpoo
+<JohnP> tigert!
+<Tommer> schmorp: <img lowsrc="data:image/xbm;base64, ... " src="/images/foo.gif">
+<schmorp> tommer: does the lowsrc image have to have the same size/resolution?
+<Tommer> Hmm, does <img src="internal-gopher-menu"> and such work?
+<maswan> hmm.. sleep. now.
+<Tommer> schmorp: lowsrc _should_ have the same size/resolution. if you specify width and height then the lowsrc will be resized of course.
+<schmorp> tommer: .... and since it's netscaoe only we do not need to care
+<Tommer> schmorp: yes, if you're abusing HTML you may as well go whole hog.
+<schmorp> tommer: hey, it's a "proposed standard" ;)
+<yosh> heh
+<Tommer> A nice thing about NS on the Mac is that if you shrink a mono image then it renders it antialiased :)
+Tommer> Pull out your red+blue 3D glasses and go to: http://www.aceldama.com/~tomr/wx/tomrcam-3d-2.jpg
+<schmorp> yosh: rfc2397 "data: url scheme"
+*** Joins: jlb [~jlbec@slip-32-101-161-237.nc.us.prserv.net] has joined #gimp
+*** Mode change for #gimp by XachBot: +o jlb
+<schmorp> tommer: looks flashy (no 3d cam here ;)
+<schmorp> ok, bye all!
+<Tommer> ttyl schmorp
+<schmorp> sjburges: have a nice time with your new g/f!
+<yosh> interesting
+<Tommer> schmorp: you need 3D glasses
+<yosh> ok, food
+*** yosh [manish@graft.XCF.Berkeley.EDU] is now known as yosh_food
+<schmorp> tommer: if you do some weird things with urls, drop me a note ;->
+<schmorp> tommer: ah, yes, _glasses_ i meant
