@@ -1,3 +1,18 @@
+2003-08-15  Sven Neumann  <sven@gimp.org>
+
+	* app/text/Makefile.am
+	* app/text/gimptextlayer-transform.[ch]: new files that hold yet
+	unused GimpItem transform methods.
+
+	* app/text/gimptextlayer.[ch]: export gimp_text_layer_render().
+
+	* app/text/gimptext-bitmap.[ch]
+	* app/text/gimptext-private.h
+	* app/text/gimptext-vectors.c
+	* app/text/gimptextlayout-render.c: use the transformation matrix.
+	This doesn't change anything since it's still always the identity
+	matrix.
+
 2003-08-15  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-vis.c
@@ -22,7 +37,7 @@
 	"Tab Style" menu and grey them out if the dockable has no
 	get_preview_func.
 
-2003-08-15  Sven Neumann  <neo@bender>
+2003-08-15  Sven Neumann  <sven@gimp.org>
 
 	* LICENSE: cosmetics.
 	
@@ -35,7 +50,7 @@
 	* app/composite/make-installer.py: generate smaller tables and
 	less code.  Now takes real command line options:
 	options:
-	  --version                        show program's version number and exit
+	  --version                        show program's version number
 	  -h, --help                       show this help message and exit
 	  -f FILE, --file=FILE             the input object file
 	  -t, --test                       generate regression testing code
@@ -336,7 +351,7 @@
 	than 2.2.2.  The next stable release will probably require 2.2.2
 	or later but for the moment we only issue a warning.
 
-2003-08-09  Sven Neumann  <neo@bender>
+2003-08-09  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: added devel-docs/app.
 

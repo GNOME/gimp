@@ -60,7 +60,8 @@ static void  gimp_text_layout_render_glyphs  (GimpTextLayout     *layout,
 					      gint                x,
 					      gint                y,
 					      gpointer            render_data);
-static gint  gimp_text_layout_render_flags   (GimpTextLayout     *layout);
+static FT_Int32   gimp_text_layout_render_flags (GimpTextLayout  *layout);
+static FT_Matrix  gimp_text_layout_render_trafo (GimpTextLayout  *layout);
 
 
 
@@ -77,6 +78,9 @@ gimp_text_layout_render (GimpTextLayout     *layout,
 
   gimp_text_layout_get_offsets (layout, &x, &y);
 
+  x *= PANGO_SCALE;
+  y *= PANGO_SCALE;
+
   iter = pango_layout_get_iter (layout->layout);
 
   do
@@ -92,8 +96,8 @@ gimp_text_layout_render (GimpTextLayout     *layout,
 
       gimp_text_layout_render_line (layout, line,
 				    render_func,
-				    x + PANGO_PIXELS (rect.x),
-				    y + PANGO_PIXELS (baseline),
+				    x + rect.x,
+				    y + baseline,
 				    render_data);
     }
   while (pango_layout_iter_next_line (iter));
@@ -120,7 +124,7 @@ gimp_text_layout_render_line (GimpTextLayout     *layout,
       gimp_text_layout_render_glyphs (layout,
 				      run->item->analysis.font, run->glyphs,
 				      render_func,
-				      x + PANGO_PIXELS (x_off), y,
+				      x + x_off, y,
 				      render_data);
 
       x_off += rect.width;
@@ -137,19 +141,26 @@ gimp_text_layout_render_glyphs (GimpTextLayout     *layout,
 				gpointer            render_data)
 {
   PangoGlyphInfo *gi;
-  gint            flags;
+  FT_Int32        flags;
+  FT_Matrix       trafo;
+  FT_Vector       pos;
   gint            i;
   gint            x_position = 0;
 
   flags = gimp_text_layout_render_flags (layout);
+  trafo = gimp_text_layout_render_trafo (layout);
 
   for (i = 0, gi = glyphs->glyphs; i < glyphs->num_glyphs; i++, gi++)
     {
       if (gi->glyph)
 	{
-	  render_func (font, gi->glyph, flags,
-		       x + PANGO_PIXELS (x_position + gi->geometry.x_offset),
-		       y + PANGO_PIXELS (gi->geometry.y_offset),
+	  pos.x = x + x_position + gi->geometry.x_offset;
+	  pos.y = y + gi->geometry.y_offset;
+
+	  FT_Vector_Transform (&pos, &trafo);
+
+	  render_func (font, gi->glyph, flags, &trafo,
+		       pos.x, pos.y,
 		       render_data);
 	}
 
@@ -157,7 +168,7 @@ gimp_text_layout_render_glyphs (GimpTextLayout     *layout,
     }
 }
 
-static gint
+static FT_Int32
 gimp_text_layout_render_flags (GimpTextLayout *layout)
 {
   GimpText *text  = layout->text;
@@ -175,4 +186,18 @@ gimp_text_layout_render_flags (GimpTextLayout *layout)
     flags |= FT_LOAD_FORCE_AUTOHINT;
 
   return flags;
+}
+
+static FT_Matrix
+gimp_text_layout_render_trafo (GimpTextLayout *layout)
+{
+  GimpText  *text = layout->text;
+  FT_Matrix  trafo;
+
+  trafo.xx = text->transformation.coeff[0][0] * 65536.0;
+  trafo.xy = text->transformation.coeff[0][1] * 65536.0;
+  trafo.yx = text->transformation.coeff[1][0] * 65536.0;
+  trafo.yy = text->transformation.coeff[1][1] * 65536.0;
+
+  return trafo;
 }

@@ -25,7 +25,8 @@
 
 void  gimp_text_render_bitmap (PangoFont  *font,
 			       PangoGlyph  glyph,
-			       gint        flags,
+			       FT_Int32    flags,
+			       FT_Matrix  *trafo,
 			       gint        x,
 			       gint        y,
 			       FT_Bitmap  *bitmap);

@@ -38,12 +38,14 @@
 void
 gimp_text_render_bitmap (PangoFont  *font,
 			 PangoGlyph  glyph,
-			 gint        flags,
+			 FT_Int32    flags,
+			 FT_Matrix  *trafo,
 			 gint        x,
 			 gint        y,
 			 FT_Bitmap  *bitmap)
 {
   FT_Face       face;
+  FT_Vector     pos;
   gint          y_start, y_limit, x_start, x_limit;
   gint          ix, iy;
   const guchar *src;
@@ -51,10 +53,20 @@ gimp_text_render_bitmap (PangoFont  *font,
 
   face = pango_ft2_font_get_face (font);
 
+  FT_Set_Transform (face, trafo, NULL);
+
   FT_Load_Glyph (face, (FT_UInt) glyph, flags);
   FT_Render_Glyph (face->glyph,
 		   (flags & FT_LOAD_TARGET_MONO ?
 		    ft_render_mode_mono : ft_render_mode_normal));
+
+  pos.x = x;
+  pos.y = y;
+
+  FT_Vector_Transform (&pos, trafo);
+
+  x = PANGO_PIXELS (pos.x);
+  y = PANGO_PIXELS (pos.y);
 
   x_start = MAX (0, - (x + face->glyph->bitmap_left));
   x_limit = MIN (face->glyph->bitmap.width,

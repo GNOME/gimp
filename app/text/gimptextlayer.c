@@ -42,6 +42,7 @@
 #include "gimptext-bitmap.h"
 #include "gimptext-private.h"
 #include "gimptextlayer.h"
+#include "gimptextlayer-transform.h"
 #include "gimptextlayout.h"
 #include "gimptextlayout-render.h"
 
@@ -62,11 +63,12 @@ static GimpItem * gimp_text_layer_duplicate     (GimpItem       *item,
 static void       gimp_text_layer_rename        (GimpItem       *item,
                                                  const gchar    *new_name,
                                                  const gchar    *undo_desc);
+
 static void       gimp_text_layer_set_text      (GimpTextLayer  *layer,
                                                  GimpText       *text);
 static void       gimp_text_layer_notify_text   (GimpTextLayer  *layer);
 static gboolean   gimp_text_layer_idle_render   (GimpTextLayer  *layer);
-static gboolean   gimp_text_layer_render        (GimpTextLayer  *layer);
+static gboolean   gimp_text_layer_render_now    (GimpTextLayer  *layer);
 static void       gimp_text_layer_render_layout (GimpTextLayer  *layer,
                                                  GimpTextLayout *layout);
 
@@ -124,9 +126,16 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   viewable_class->default_stock_id = "gimp-text-layer";
   viewable_class->get_preview      = gimp_text_layer_get_preview;
 
+  item_class->default_name         = _("Text Layer");
   item_class->duplicate            = gimp_text_layer_duplicate;
   item_class->rename               = gimp_text_layer_rename;
-  item_class->default_name         = _("Text Layer");
+
+#if 0
+  item_class->scale                = gimp_text_layer_scale;
+  item_class->flip                 = gimp_text_layer_flip;
+  item_class->rotate               = gimp_text_layer_rotate;
+  item_class->transform            = gimp_text_layer_transform;
+#endif
 }
 
 static void
@@ -226,37 +235,46 @@ gimp_text_layer_rename (GimpItem    *item,
   GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc);
 }
 
+/**
+ * gimp_text_layer_new:
+ * @image: the #GimpImage the layer should belong to
+ * @text: a #GimpText object
+ *
+ * Creates a new text layer.
+ *
+ * Return value: a new #GimpTextLayer or %NULL in case of a problem
+ **/
 GimpLayer *
 gimp_text_layer_new (GimpImage *image,
-		     GimpText  *text)
+                     GimpText  *text)
 {
   GimpTextLayer *layer;
-
+ 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
-
+ 
   if (!text->text)
     return NULL;
-
+ 
   layer = g_object_new (GIMP_TYPE_TEXT_LAYER, NULL);
-
+ 
   gimp_drawable_configure (GIMP_DRAWABLE (layer),
                            image,
                            0, 0, 0, 0,
                            gimp_image_base_type_with_alpha (image),
                            NULL);
-
+ 
   gimp_text_layer_set_text (layer, text);
-
-  if (! gimp_text_layer_render (layer))
+ 
+  if (! gimp_text_layer_render_now (layer))
     {
       g_object_unref (layer);
       return NULL;
     }
-
+ 
   return GIMP_LAYER (layer);
 }
-
+ 
 /**
  * gimp_text_layer_from_layer:
  * @layer: a #GimpLayer object
@@ -353,6 +371,20 @@ gimp_text_layer_get_text (GimpTextLayer *layer)
   return layer->text;
 }
 
+void
+gimp_text_layer_render (GimpTextLayer *layer)
+{
+  g_return_if_fail (GIMP_IS_TEXT_LAYER (layer));
+
+  if (layer->idle_render_id)
+    {
+      g_source_remove (layer->idle_render_id);
+      layer->idle_render_id = 0;
+    }
+
+  gimp_text_layer_render_now (layer);
+}
+
 static void
 gimp_text_layer_notify_text (GimpTextLayer *layer)
 {
@@ -370,13 +402,13 @@ gimp_text_layer_idle_render (GimpTextLayer *layer)
 {
   layer->idle_render_id = 0;
 
-  gimp_text_layer_render (layer);
+  gimp_text_layer_render_now (layer);
 
   return FALSE;
 }
 
 static gboolean
-gimp_text_layer_render (GimpTextLayer *layer)
+gimp_text_layer_render_now (GimpTextLayer *layer)
 {
   GimpDrawable   *drawable;
   GimpItem       *item;

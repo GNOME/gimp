@@ -44,7 +44,8 @@ struct _GimpTextLayoutClass
 
 typedef  void (* GimpTextRenderFunc) (PangoFont  *font,
 				      PangoGlyph  glyph,
-				      gint        flags,
+				      FT_Int32    load_flags,
+				      FT_Matrix  *tranform,
 				      gint        x,
 				      gint        y,
 				      gpointer    render_data);

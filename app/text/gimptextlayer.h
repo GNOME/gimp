@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText
+ * GimpTextLayer
  * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -60,6 +60,7 @@ GimpLayer * gimp_text_layer_new        (GimpImage     *image,
 GimpLayer * gimp_text_layer_from_layer (GimpLayer     *layer,
                                         GimpText      *text);
 GimpText  * gimp_text_layer_get_text   (GimpTextLayer *layer);
+void        gimp_text_layer_render     (GimpTextLayer *layer);
 
 
 #endif /* __GIMP_TEXT_LAYER_H__ */

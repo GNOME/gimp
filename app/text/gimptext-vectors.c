@@ -53,14 +53,15 @@ struct _RenderContext
   GimpVectors  *vectors;
   GimpStroke   *stroke;
   GimpAnchor   *anchor;
-  gint          offset_x;
-  gint          offset_y;
+  gdouble       offset_x;
+  gdouble       offset_y;
 };
 
 
 static void  gimp_text_render_vectors (PangoFont     *font,
 				       PangoGlyph    *glyph,
-				       gint           flags,
+				       FT_Int32       flags,
+				       FT_Matrix     *matrix,
 				       gint           x,
 				       gint           y,
 				       RenderContext *context);
@@ -244,7 +245,8 @@ cubicto (FT_Vector *control1,
 static void
 gimp_text_render_vectors (PangoFont     *font,
 			  PangoGlyph    *pango_glyph,
-			  gint           flags,
+			  FT_Int32       flags,
+			  FT_Matrix     *trafo,
 			  gint           x,
 			  gint           y,
 			  RenderContext *context)
@@ -272,8 +274,8 @@ gimp_text_render_vectors (PangoFont     *font,
     {
       FT_OutlineGlyph outline_glyph = (FT_OutlineGlyph) glyph;
 
-      context->offset_x = x;
-      context->offset_y = y;
+      context->offset_x = (gdouble) x / PANGO_SCALE;
+      context->offset_y = (gdouble) y / PANGO_SCALE;
 
       FT_Outline_Decompose (&outline_glyph->outline, &outline_funcs, context);
     }
