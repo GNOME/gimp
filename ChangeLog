@@ -1,3 +1,12 @@
+2004-05-17  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage.c (gimp_image_init): initialize the image
+	unit to GIMP_UNIT_PIXEL.
+
+	* app/pdb/image_cmds.c
+	* tools/pdbgen/pdb/image.pdb: allow GIMP_UNIT_PIXEL to be used
+	in the gimp_image_set_unit() PDB call.
+
 2004-05-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/old-photo.scm: fixed wrong use of

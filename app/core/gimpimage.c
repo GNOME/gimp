@@ -468,7 +468,7 @@ gimp_image_init (GimpImage *gimage)
   gimage->height                = 0;
   gimage->xresolution           = 1.0;
   gimage->yresolution           = 1.0;
-  gimage->unit                  = GIMP_UNIT_INCH;
+  gimage->unit                  = GIMP_UNIT_PIXEL;
   gimage->base_type             = GIMP_RGB;
 
   gimage->cmap                  = NULL;
@@ -1275,7 +1275,7 @@ gimp_image_set_unit (GimpImage *gimage,
 GimpUnit
 gimp_image_get_unit (const GimpImage *gimage)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_UNIT_INCH);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_UNIT_PIXEL);
 
   return gimage->unit;
 }
