@@ -193,8 +193,6 @@ static void dialog_ok_callback(GtkWidget *widget, gpointer data)
   storevals();
   pcvals.run = 1;
   gtk_widget_destroy(dlg);
-  if (omwindow)
-    gtk_widget_destroy(GTK_WIDGET(omwindow));
 }
 
 static void dialog_cancel_callback(GtkWidget *widget, gpointer data)
@@ -203,58 +201,56 @@ static void dialog_cancel_callback(GtkWidget *widget, gpointer data)
   gtk_widget_destroy(dlg);
 }
 
-void unselectall(GtkWidget *list)
+void reselect(GtkWidget *view, char *fname)
 {
-  GList *h;
-  GtkWidget *tmpw;
-  for(;;) {
-    h = GTK_LIST(list)->selection;
-    if(!h) break;
-    tmpw = h->data;
-    if(!tmpw) break;
-    gtk_list_unselect_child(GTK_LIST(list), tmpw);
-  }
-}
-
-void reselect(GtkWidget *list, char *fname)
-{
-  GList *h;
-  GtkWidget *tmpw;
-  char *tmps, *tmpfile;
+  GtkTreeModel *model;
+  GtkTreeSelection *selection;
+  GtkTreeIter iter;
+  char *tmpfile;
 
   tmpfile = strrchr(fname, '/');
-  if(tmpfile)
+  if (tmpfile)
     fname = ++tmpfile;  
 
-  unselectall(list);
+  model = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
-  h = GTK_LIST(list)->children;
-  while(h) {
-    tmpw = h->data;
-    gtk_label_get(GTK_LABEL(GTK_BIN(tmpw)->child), &tmps);
-    if(!strcmp(tmps, fname)) {
-      gtk_list_select_child(GTK_LIST(list), tmpw);
-      break;
-    }
-    h = g_list_next(h);
+  if (gtk_tree_model_get_iter_first (model, &iter)) {
+    do {
+      gchar *name;
+
+      gtk_tree_model_get (model, &iter, 0, &name, -1);
+      if (!strcmp(name, fname)) {
+	gtk_tree_selection_select_iter (selection, &iter);
+	g_free (name);
+	break;
+      }
+      g_free (name);
+
+    } while (gtk_tree_model_iter_next (model, &iter));
   }
 }
 
-void readdirintolist_real(char *subdir, GtkWidget *list, char *selected)
+static void readdirintolist_real(char *subdir, GtkWidget *view, 
+				 char *selected)
 {
   gchar *fpath;
   const gchar *de;
-  GtkWidget *selectedw = NULL, *tmpw;
   GDir *dir;
   GList *flist = NULL;
- 
-  if(selected) {
-    if(!selected[0])
+  GtkTreeIter iter;
+  GtkListStore *store;
+  GtkTreeSelection *selection;
+
+  store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
+
+  if (selected) {
+    if (!selected[0])
       selected = NULL;
     else {
       char *nsel;
       nsel = strrchr(selected, '/');
-      if(nsel) selected = ++nsel;
+      if (nsel) selected = ++nsel;
     }
   }
 
@@ -278,38 +274,91 @@ void readdirintolist_real(char *subdir, GtkWidget *list, char *selected)
       if (!file_exists)
         continue;
       
-      flist = g_list_insert_sorted(flist, g_strdup(de), (GCompareFunc)g_ascii_strcasecmp);
+      flist = g_list_insert_sorted(flist, g_strdup(de), 
+				   (GCompareFunc)g_ascii_strcasecmp);
     }
   g_dir_close(dir);
+	      
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
-  while(flist) {
-    tmpw = gtk_list_item_new_with_label(flist->data);
-    if(selected)
-      if(!strcmp(flist->data, selected))
-	selectedw = tmpw;
-    gtk_container_add(GTK_CONTAINER(list), tmpw);
-    gtk_widget_show(tmpw);
-    g_free(flist->data);
-    flist = g_list_remove(flist,flist->data);
-  }
-  if(selectedw)
-    gtk_list_select_child(GTK_LIST(list), selectedw);
-  else
-    gtk_list_select_item(GTK_LIST(list), 0);
+  while (flist) 
+    {
+      gtk_list_store_append (store, &iter);
+      gtk_list_store_set (store, &iter, 0, flist->data, -1);
+
+      if (selected)
+	{
+	  if (!strcmp(flist->data, selected))
+	    {
+	      gtk_tree_selection_select_iter (selection, &iter);
+	    }
+	} 
+      g_free (flist->data);
+      flist = g_list_remove (flist, flist->data);
+    }
+
+  if (!selected)
+    {
+      if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (store), &iter))
+	gtk_tree_selection_select_iter (selection, &iter);
+    }
 }
 
-void readdirintolist(char *subdir, GtkWidget *list, char *selected)
+void readdirintolist(char *subdir, GtkWidget *view, char *selected)
 {
   char *tmpdir;
   GList *thispath = parsepath();
 
-  while(thispath) 
+  while (thispath) 
     {
       tmpdir = g_build_filename ((gchar *) thispath->data, subdir, NULL);
-      readdirintolist_real (tmpdir, list, selected);
+      readdirintolist_real (tmpdir, view, selected);
       g_free (tmpdir);
       thispath = thispath->next;
     }
+}
+
+GtkWidget *createonecolumnlist(GtkWidget *parent, 
+			       void (*changed_cb)
+			       (GtkTreeSelection *selection, gpointer data))
+{
+  GtkListStore *store;
+  GtkTreeSelection *selection;
+  GtkCellRenderer *renderer;
+  GtkTreeViewColumn *column;
+  GtkWidget *swin, *view;
+
+  swin = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin),
+				  GTK_POLICY_AUTOMATIC, 
+				  GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(swin),
+				       GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (parent), swin, FALSE, FALSE, 0);
+  gtk_widget_show (swin);
+  gtk_widget_set_size_request(swin, 150,-1);
+
+  store = gtk_list_store_new (1, G_TYPE_STRING);
+  view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
+
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
+  g_object_unref (G_OBJECT (store));
+  gtk_widget_show (view);
+
+  renderer = gtk_cell_renderer_text_new ();
+  column = gtk_tree_view_column_new_with_attributes ("Preset", renderer,
+						     "text", 0,
+						     NULL);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
+
+  gtk_container_add (GTK_CONTAINER (swin), view);
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+  gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
+  g_signal_connect (G_OBJECT (selection), "changed", G_CALLBACK (changed_cb), 
+		    NULL);
+
+  return view;
 }
 
 static void showabout(void)
@@ -376,7 +425,7 @@ static void showabout(void)
   tmphbox = gtk_hbox_new(FALSE, 5);
   gtk_box_pack_start(GTK_BOX(tmpvbox), tmphbox, TRUE, TRUE, 0);
 
-  tmpw = gtk_label_new("\xa9 1999 Vidar Madsen\n"
+  tmpw = gtk_label_new("(C) 1999 Vidar Madsen\n"
 		       "vidar@prosalg.no\n"
 		       "http://www.prosalg.no/~vidar/gimpressionist/\n"
 		       PLUG_IN_VERSION
@@ -447,7 +496,6 @@ static int create_dialog(void)
 
   notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (box1), notebook, TRUE, TRUE, 5);
-  /*  gtk_notebook_popup_enable (GTK_NOTEBOOK (notebook)); */
   gtk_widget_show(notebook);
 
   create_presetpage(GTK_NOTEBOOK (notebook));

@@ -8,11 +8,6 @@
 #include <unistd.h>
 #endif
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -23,27 +18,28 @@
 
 GtkWidget *presetnameentry = NULL;
 GtkWidget *presetsavebutton = NULL;
-GtkWidget *presetlist = NULL;
+static GtkWidget *presetlist = NULL;
 GtkWidget *presetdesctext = NULL;
 GtkWidget *presetdesclabel = NULL;
+static GtkListStore *store;
 
 static char presetdesc[4096] = "";
 
 static char *factory_defaults = "<Factory defaults>";
 
+static void addfactorydefaults(GtkListStore *store)
+{
+  GtkTreeIter iter;
+
+  gtk_list_store_append (store, &iter);
+  gtk_list_store_set (store, &iter, 0, factory_defaults, -1);
+}
+
 static void presetsrefresh(void)
 {
-  GtkWidget *list = presetlist;
-  GtkWidget *tmpw;
-  int n = g_list_length(GTK_LIST(list)->children);
-
-  gtk_list_clear_items(GTK_LIST(list), 0, n);
-
-  tmpw = gtk_list_item_new_with_label(factory_defaults);
-  gtk_container_add(GTK_CONTAINER(list), tmpw);
-  gtk_widget_show(tmpw);
-  
-  readdirintolist("Presets", list, NULL);
+  gtk_list_store_clear (store);
+  addfactorydefaults (store);
+  readdirintolist ("Presets", presetlist, NULL);  
 }
 
 #define PRESETMAGIC "Preset"
@@ -119,7 +115,6 @@ static void setorientvector(char *str)
 
 static void setsizevector(char *str)
 {
-  /* num,x,y,siz,str,type */
   char *tmps = str;
   int n;
 
@@ -281,46 +276,50 @@ static int loadpreset(char *fn)
   return 0;
 }
 
-static void applypreset(void)
+static void applypreset(GtkWidget *w, GtkTreeSelection *selection)
 {
-  GList *h = GTK_LIST(presetlist)->selection;
-  GtkWidget *tmpw = h->data;
-  char *l;
-  static char fname[200];
+  GtkTreeIter iter;
+  GtkTreeModel *model;
 
-  gtk_label_get(GTK_LABEL(GTK_BIN(tmpw)->child), &l);
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      char fname[200];
+      gchar *preset;
 
-  /* Restore defaults, in case of old/short Preset file */
-  pcvals = defaultpcvals;
-  presetdesc[0] = '\0';
+      gtk_tree_model_get (model, &iter, 0, &preset, -1);
+      
+      if (strcmp(preset, factory_defaults)) 
+	{
+	  sprintf(fname, "Presets/%s", preset);
+	  strcpy(fname, findfile(fname));
+	  loadpreset(fname);
+	}
+      restorevals();
 
-  if(!strcmp(l, factory_defaults)) {
-    restorevals();
-    return;
-  }
-
-  sprintf(fname, "Presets/%s", l);
-  strcpy(fname, findfile(fname));
-
-  loadpreset(fname);
-
-  restorevals();
+      g_free (preset);
+    }
 }
 
-static void deletepreset(void)
+static void deletepreset(GtkWidget *w, GtkTreeSelection *selection)
 {
-  GList *h = GTK_LIST(presetlist)->selection;
-  GtkWidget *tmpw = h->data;
-  char *l;
-  static char fname[200];
+  GtkTreeIter iter;
+  GtkTreeModel *model;
 
-  gtk_label_get(GTK_LABEL(GTK_BIN(tmpw)->child), &l);
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      char fname[200];
+      gchar *preset;
 
-  sprintf(fname, "Presets/%s", l);
-  strcpy(fname, findfile(fname));
+      gtk_tree_model_get (model, &iter, 0, &preset, -1);
 
-  unlink(fname);
-  presetsrefresh();
+      sprintf(fname, "Presets/%s", preset);
+      strcpy(fname, findfile(fname));
+      
+      unlink(fname);
+      presetsrefresh();
+
+      g_free (preset);
+    }
 }
 
 static void savepreset(void);
@@ -331,7 +330,7 @@ static void presetdesccallback(GtkTextBuffer *buffer, gpointer data)
   GtkTextIter start, end;
 
   gtk_text_buffer_get_bounds (buffer, &start, &end);
-  str = gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
+  str = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
   dest = g_strescape (str, NULL);
   strcpy (presetdesc, dest);
   g_free (dest);
@@ -379,6 +378,8 @@ static void create_savepreset(void)
   gtk_widget_show (label);
 
   swin = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(swin),
+				       GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(box), swin);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(swin),
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -529,9 +530,8 @@ static void readdesc(char *fn)
   
   sprintf(fname, "Presets/%s", fn);
   tmp = findfile(fname);
-  if(!tmp) {
-    if(presetdesclabel)
-      gtk_label_set_text(GTK_LABEL(presetdesclabel), "");
+  if (!tmp) {
+    gtk_label_set_text(GTK_LABEL(presetdesclabel), "");
     return; 
   }
   strcpy(fname, tmp);
@@ -552,36 +552,34 @@ static void readdesc(char *fn)
     fclose(f);
   }
   gtk_label_set_text(GTK_LABEL(presetdesclabel), "");
-  return; 
 }
 
-static void selectpreset(GtkWidget *wg, GtkWidget *p)
+static void selectpreset(GtkTreeSelection *selection, gpointer data)
 {
-  GList *h = GTK_LIST(p)->selection;
-  GtkWidget *tmpw;
-  char *l;
+  GtkTreeIter iter;
+  GtkTreeModel *model;
 
-  if(!h) return;
-  tmpw = h->data;
-  if(!tmpw) return;
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      gchar *preset;
 
-  gtk_label_get(GTK_LABEL(GTK_BIN(tmpw)->child), &l);
-  if(strcmp(l, factory_defaults))
-    gtk_entry_set_text(GTK_ENTRY(presetnameentry), l);
-
-  readdesc(l);
+      gtk_tree_model_get (model, &iter, 0, &preset, -1);
+      if(strcmp(preset, factory_defaults))
+	gtk_entry_set_text (GTK_ENTRY(presetnameentry), preset);
+      readdesc (preset);
+      g_free (preset);
+    }
 }
 
 void create_presetpage(GtkNotebook *notebook)
 {
   GtkWidget *box1, *box2, *hbox, *vbox, *thispage;
-  GtkWidget *scrolled_win, *list;
+  GtkWidget *view;
   GtkWidget *tmpw;
   GtkWidget *label;
+  GtkTreeSelection *selection;
 
   label = gtk_label_new_with_mnemonic (_("_Presets"));
-
-  presetlist = list = gtk_list_new ();
 
   thispage = gtk_vbox_new(FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
@@ -596,8 +594,8 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_widget_set_size_request(tmpw, 150, -1);
   gtk_widget_show(tmpw);
 
-  presetsavebutton = tmpw = gtk_button_new_with_label( _("Save current"));
-  gtk_box_pack_start(GTK_BOX(box1), tmpw,FALSE,FALSE,5);
+  presetsavebutton = tmpw = gtk_button_new_with_label( _("Save current..."));
+  gtk_box_pack_start(GTK_BOX(box1), tmpw, FALSE, FALSE, 5);
   gtk_widget_show (tmpw);
   g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(create_savepreset),
 		    NULL);
@@ -609,28 +607,10 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(thispage), box1, TRUE, TRUE, 0);
   gtk_widget_show (box1);
 
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-				  GTK_POLICY_AUTOMATIC, 
-				  GTK_POLICY_AUTOMATIC);
-  gtk_box_pack_start (GTK_BOX (box1), scrolled_win, FALSE, FALSE, 0);
-  gtk_widget_show (scrolled_win);
-  gtk_widget_set_size_request(scrolled_win, 150, -1);
-
-  gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_BROWSE);
-
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
-                                         list);
-  gtk_widget_show (list);
-
-  gtk_signal_connect (GTK_OBJECT(list), "selection_changed",
-                      GTK_SIGNAL_FUNC(selectpreset), list);
-
-  tmpw = gtk_list_item_new_with_label(factory_defaults);
-  gtk_container_add(GTK_CONTAINER(list), tmpw);
-  gtk_widget_show(tmpw);
-
-  readdirintolist("Presets", list, NULL);
+  presetlist = view = createonecolumnlist (box1, selectpreset);
+  store = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+  addfactorydefaults (store);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start(GTK_BOX(box1), vbox, FALSE, FALSE, 0);
@@ -647,14 +627,16 @@ void create_presetpage(GtkNotebook *notebook)
   tmpw = gtk_button_new_from_stock (GTK_STOCK_APPLY);
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(applypreset), NULL);
+  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(applypreset),
+		    selection);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Reads the selected Preset into memory"), NULL);
 
   tmpw = gtk_button_new_from_stock (GTK_STOCK_DELETE);
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
-  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(deletepreset), NULL);
+  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(deletepreset), 
+		    selection);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw,
 		       _("Deletes the selected Preset"), NULL);
 
@@ -671,7 +653,6 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_widget_show (hbox);
 
   presetdesclabel = tmpw = gtk_label_new( _("(Desc)"));
-  /* gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0); */
   gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
 
@@ -681,6 +662,8 @@ feel free to send them to me <vidar@prosalg.no>\n\
 for inclusion into the next release!\n"));
   gtk_box_pack_start(GTK_BOX(thispage), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
+
+  readdirintolist("Presets", view, NULL);
 
   gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
 }

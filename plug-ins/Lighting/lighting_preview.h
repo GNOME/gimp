@@ -37,20 +37,23 @@ extern guint left_button_pressed;
 extern GtkWidget * spin_pos_x;
 extern GtkWidget * spin_pos_y;
 extern GtkWidget * spin_pos_z;
+extern GtkWidget * spin_dir_x;
+extern GtkWidget * spin_dir_y;
+extern GtkWidget * spin_dir_z;
 
 /* Externally visible functions */
 
-void draw_preview_image (gint recompute);
-void update_preview_image(void);
-gint preview_events (GtkWidget *area,
-				     GdkEvent  *event);
+void draw_preview_image  (gint recompute);
+
+void interactive_preview_callback (GtkWidget *widget);
+
+gint preview_events      (GtkWidget *area,
+			  GdkEvent  *event);
 
 
-gint check_marker_hit    (gint xpos,
-			 gint ypos);
-void update_light       (gint xpos,
-			 gint ypos);
-
-void preview_callback          (GtkWidget *widget);
+gint check_marker_hit (gint xpos,
+		       gint ypos);
+void update_light     (gint xpos,
+		       gint ypos);
 
 #endif  /* __LIGHTING_PREVIEW_H__ */

@@ -20,8 +20,7 @@
 
 #define MAPFILE "data.out"
 
-GtkWidget *smwindow = NULL;
-
+static GtkWidget *smwindow;
 static GtkWidget *smvectorprev;
 static GtkWidget *smpreviewprev;
 static GtkWidget *prev_button;
@@ -375,12 +374,12 @@ void create_sizemap_dialog(void)
 		     gimp_standard_help_func, "filters/gimpressionst.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
-		     
-		     GTK_STOCK_CANCEL, gtk_widget_hide,
-		     NULL, 1, NULL, FALSE, FALSE,
 
 		     GTK_STOCK_APPLY, smapplyclick,
 		     NULL, NULL, NULL, FALSE, FALSE,
+		     
+		     GTK_STOCK_CANCEL, gtk_widget_hide,
+		     NULL, 1, NULL, FALSE, FALSE,
 
 		     GTK_STOCK_OK, smokclick,
 		     NULL, 1, NULL, TRUE, FALSE,

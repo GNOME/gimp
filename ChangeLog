@@ -1,3 +1,25 @@
+2002-12-17  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/gimpressionist/Presets/*: changed all \010 in strings by
+	\012 so that the g_strcompress/g_strescape pair now works correctly.
+	
+	* plug-ins/gimpressionist/sizemap.c
+	* plug-ins/gimpressionist/orientmap.c: reordered Apply/Cancel/Ok
+	buttons in dialogs.
+
+	* plug-ins/gimpressionist/presets.c 
+	* plug-ins/gimpressionist/paper.c 
+	* plug-ins/gimpressionist/brush.c
+	* plug-ins/gimpressionist/gimpressionist.[ch]: replace deprecated
+	GtkList by GtkTreeView widgets.
+
+2002-12-17  Maurits Rijk  <lpeek.mrijk@consunet.nl
+
+	* plug-ins/Lighting/lighting_ui.[ch] 
+	* plug-ins/Lighting/lighting_preview.c: applied patch from Jeroen
+	Lamain. Dragging of lightsource is more smoothly now plus you can 
+	now also drag directional lights.
+
 2002-12-17  Nathan Summers  <rock@gimp.org>
 
         * libgimp/gimpbrushmenu.c

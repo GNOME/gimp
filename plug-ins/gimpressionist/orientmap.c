@@ -19,7 +19,7 @@
 
 #define NUMVECTYPES 4
 
-GtkWidget *omwindow = NULL;
+static GtkWidget *omwindow;
 
 static GtkWidget *vectorprev;
 static GtkWidget *ompreviewprev;
@@ -437,11 +437,11 @@ void create_orientmap_dialog(void)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_CANCEL, gtk_widget_hide,
-		     NULL, 1, NULL, FALSE, FALSE,
-
 		     GTK_STOCK_APPLY, omapplyclick,
 		     NULL, NULL, NULL, FALSE, FALSE,
+
+		     GTK_STOCK_CANCEL, gtk_widget_hide,
+		     NULL, 1, NULL, FALSE, FALSE,
 
 		     GTK_STOCK_OK, omokclick,
 		     NULL, 1, NULL, TRUE, FALSE,

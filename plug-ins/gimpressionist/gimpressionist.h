@@ -97,7 +97,6 @@ extern char *path;
 extern struct ppm infile;
 extern struct ppm inalpha;
 extern GtkWidget *window;
-extern GtkWidget *omwindow;
 
 extern int brushfile;
 extern struct ppm brushppm;
@@ -174,12 +173,16 @@ gchar *findfile(const gchar *);
 
 void unselectall(GtkWidget *list);
 void reselect(GtkWidget *list, char *fname);
-void readdirintolist(char *subdir, GtkWidget *list, char *selected);
+void readdirintolist(char *subdir, GtkWidget *view, char *selected);
 void orientchange(GtkWidget *wg, void *d, int num);
 void sizechange(GtkWidget *wg, void *d, int num);
 void placechange(int num);
 void colorchange(int num);
 void generalbgchange(GtkWidget *wg, void *d, int num);
+
+GtkWidget *createonecolumnlist(GtkWidget *parent, 
+			       void (*changed_cb)
+			       (GtkTreeSelection *selection, gpointer data));
 
 void reloadbrush(char *fn, struct ppm *p);
 

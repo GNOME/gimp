@@ -87,9 +87,6 @@ static void toggleenvironment_update  (GtkWidget *widget,
 static void lightmenu_callback        (GtkWidget *widget,
 				       gpointer   data);
 
-static void interactive_preview_timer_callback( void );
-
-
 static void apply_callback            (GtkWidget *widget);
 
 static gint bumpmap_constrain         (gint32   image_id,
@@ -160,7 +157,7 @@ togglebump_update (GtkWidget *widget,
 				gtk_label_new (_("Bumpmap")));
     }
   else
-    {
+  {
       gtk_notebook_remove_page (options_note_book, bump_page_pos);
       if (bump_page_pos < env_page_pos)
         env_page_pos--;
@@ -225,7 +222,7 @@ lightmenu_callback (GtkWidget *widget,
       gtk_widget_hide (dirlightwid);
     }
 
-  update_preview_image();
+  interactive_preview_callback(NULL);
 
 }
 
@@ -295,9 +292,9 @@ bumpmap_constrain (gint32   image_id,
     return TRUE;
 
   return  ((gimp_drawable_width (drawable_id) ==
-	   gimp_drawable_width (mapvals.drawable_id)) &&
-          (gimp_drawable_height (drawable_id) ==
-	   gimp_drawable_height (mapvals.drawable_id)));
+	    gimp_drawable_width (mapvals.drawable_id)) &&
+	   (gimp_drawable_height (drawable_id) ==
+	    gimp_drawable_height (mapvals.drawable_id)));
 }
 
 static void
@@ -497,7 +494,6 @@ create_light_page (void)
   GtkWidget *table;
   GtkWidget *optionmenu;
   GtkWidget *colorbutton;
-  GtkWidget *spinbutton;
   GtkObject *adj;
 
   page = gtk_vbox_new (FALSE, 4);
@@ -543,7 +539,7 @@ create_light_page (void)
                     G_CALLBACK (gimp_color_button_get_color), 
                     &mapvals.lightsource.color);
   g_signal_connect(G_OBJECT(colorbutton), "color_changed",
-		   G_CALLBACK (update_preview_image),
+		   G_CALLBACK (interactive_preview_callback),
 		   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Lig_ht Color:"), 1.0, 0.5,
@@ -577,7 +573,7 @@ create_light_page (void)
                     &mapvals.lightsource.position.x);
 
   g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (update_preview_image),
+		   G_CALLBACK (interactive_preview_callback),
 		   NULL);
 
   gimp_help_set_help_data ( spin_pos_x,
@@ -593,7 +589,7 @@ create_light_page (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.position.y);
   g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (update_preview_image),
+		   G_CALLBACK (interactive_preview_callback),
 		   NULL);
 
 
@@ -610,7 +606,7 @@ create_light_page (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.position.z);
   g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (update_preview_image),
+		   G_CALLBACK (interactive_preview_callback),
 		   NULL);
 
   gimp_help_set_help_data (  spin_pos_z,
@@ -630,50 +626,50 @@ create_light_page (void)
   gtk_container_add (GTK_CONTAINER (dirlightwid), table);
   gtk_widget_show (table);
 
-  spinbutton = gimp_spin_button_new (&adj, mapvals.lightsource.direction.x,
+  spin_dir_x = gimp_spin_button_new (&adj, mapvals.lightsource.direction.x,
 				     -1.0, 1.0, 0.01, 0.1, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("X:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+			     spin_dir_x, 1, TRUE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.direction.x);
   g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (update_preview_image),
+		   G_CALLBACK (interactive_preview_callback),
 		   NULL);
 
 
-  gimp_help_set_help_data (spinbutton,
+  gimp_help_set_help_data (spin_dir_x,
 			   _("Light source X direction in XYZ space"), NULL);
 
-  spinbutton = gimp_spin_button_new (&adj, mapvals.lightsource.direction.y,
+  spin_dir_y = gimp_spin_button_new (&adj, mapvals.lightsource.direction.y,
 				     -1.0, 1.0, 0.01, 0.1, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Y:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+			     spin_dir_y, 1, TRUE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.direction.y);
   g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (update_preview_image),
+		   G_CALLBACK (interactive_preview_callback),
 		   NULL);
 
-  gimp_help_set_help_data (spinbutton,
+  gimp_help_set_help_data (spin_dir_y,
 			   _("Light source Y direction in XYZ space"), NULL);
 
-  spinbutton = gimp_spin_button_new (&adj, mapvals.lightsource.direction.z,
+  spin_dir_z = gimp_spin_button_new (&adj, mapvals.lightsource.direction.z,
 				     -1.0, 1.0, 0.01, 0.1, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Z:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+			     spin_dir_z, 1, TRUE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.direction.z);
   g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (update_preview_image),
+		   G_CALLBACK (interactive_preview_callback),
 		   NULL);
 
-  gimp_help_set_help_data (spinbutton,
+  gimp_help_set_help_data (spin_dir_z,
 			   _("Light source Z direction in XYZ space"), NULL);
 
   gtk_widget_show (page);
@@ -729,7 +725,7 @@ create_material_page (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.ambient_int);
   g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (update_preview_image),
+		   G_CALLBACK (interactive_preview_callback),
 		   NULL);
 
   gtk_widget_show (spinbutton);
@@ -759,7 +755,7 @@ create_material_page (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.diffuse_int);
   g_signal_connect(G_OBJECT(adj), "value_changed",
-		   G_CALLBACK (update_preview_image),
+		   G_CALLBACK (interactive_preview_callback),
 		   NULL);
 
   gtk_widget_show (spinbutton);
@@ -802,6 +798,11 @@ create_material_page (void)
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.diffuse_ref);
+  g_signal_connect(G_OBJECT(adj), "value_changed",
+		   G_CALLBACK (interactive_preview_callback),
+		   NULL);
+
+
   gtk_widget_show (spinbutton);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
@@ -828,6 +829,11 @@ create_material_page (void)
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.specular_ref);
+  g_signal_connect(G_OBJECT(adj), "value_changed",
+		   G_CALLBACK (interactive_preview_callback),
+		   NULL);
+
+
   gtk_widget_show (spinbutton);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
@@ -854,6 +860,10 @@ create_material_page (void)
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.highlight);
+  g_signal_connect(G_OBJECT(adj), "value_changed",
+		   G_CALLBACK(interactive_preview_callback),
+		   NULL);
+
   gtk_widget_show (spinbutton);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
@@ -924,18 +934,15 @@ create_bump_page (void)
 			     _("Bumpm_ap Image:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
-  optionmenu =
-    gimp_option_menu_new2 (FALSE, 
-                           G_CALLBACK (mapmenu2_callback),
-			   &mapvals.bumpmaptype,
-			   (gpointer) mapvals.bumpmaptype,
-
-			   _("Linear"),      (gpointer) LINEAR_MAP, NULL,
-			   _("Logarithmic"), (gpointer) LOGARITHMIC_MAP, NULL,
-			   _("Sinusoidal"),  (gpointer) SINUSOIDAL_MAP, NULL,
-			   _("Spherical"),   (gpointer) SPHERICAL_MAP, NULL,
-
-			   NULL);
+  optionmenu = gimp_option_menu_new2 (FALSE, 
+				      G_CALLBACK (mapmenu2_callback),
+				      &mapvals.bumpmaptype,
+				      (gpointer) mapvals.bumpmaptype,
+				      _("Linear"),      (gpointer) LINEAR_MAP, NULL,
+				      _("Logarithmic"), (gpointer) LOGARITHMIC_MAP, NULL,
+				      _("Sinusoidal"),  (gpointer) SINUSOIDAL_MAP, NULL,
+				      _("Spherical"),   (gpointer) SPHERICAL_MAP, NULL,
+				      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Cu_rve:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
@@ -1196,7 +1203,7 @@ main_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.interactive_preview);
   g_signal_connect(G_OBJECT(toggle), "toggled",
-		   G_CALLBACK (update_preview_image),
+		   G_CALLBACK (interactive_preview_callback),
 		   NULL);
 
 
@@ -1217,7 +1224,6 @@ main_dialog (GimpDrawable *drawable)
   create_main_notebook (main_hbox);
 
   gtk_widget_show (appwin);
-
   {
     GdkCursor *newcursor;
 

@@ -28,65 +28,63 @@ GtkObject *paperreliefadjust = NULL;
 GtkObject *paperscaleadjust = NULL;
 GtkWidget *paperinvert = NULL;
 GtkWidget *paperoverlay = NULL;
+static GtkListStore *paperstore;
 
-void updatepaperprev(char *fn)
+static void updatepaperprev(char *fn)
 {
   int i, j;
   char buf[100];
+  double sc;
+  ppm_t p = {0,0,NULL};
 
-  if(!fn) {
+  loadppm(fn, &p);
+  sc = p.width > p.height ? p.width : p.height;
+  sc = 100.0 / sc;
+  resize(&p, p.width*sc,p.height*sc);
+  for (i = 0; i < 100; i++) {
+    int k = i * p.width * 3;
     memset(buf, 0, 100);
-    for(i = 0; i < 100; i++) {
-      gtk_preview_draw_row (GTK_PREVIEW (paperprev), buf, 0, i, 100);
+    if(i < p.height) {
+      for(j = 0; j < p.width; j++)
+	buf[j] = p.col[k + j * 3];
+      if (GTK_TOGGLE_BUTTON(paperinvert)->active)
+	for (j = 0; j < p.width; j++)
+	  buf[j] = 255 - buf[j];
     }
-
-  } else {
-    double sc;
-    ppm_t p = {0,0,NULL};
-    loadppm(fn, &p);
-    sc = p.width > p.height ? p.width : p.height;
-    sc = 100.0 / sc;
-    resize(&p, p.width*sc,p.height*sc);
-    for(i = 0; i < 100; i++) {
-      int k = i * p.width * 3;
-      memset(buf,0,100);
-      if(i < p.height) {
-	for(j = 0; j < p.width; j++)
-	  buf[j] = p.col[k + j * 3];
-	if(GTK_TOGGLE_BUTTON(paperinvert)->active)
-	  for(j = 0; j < p.width; j++)
-	    buf[j] = 255 - buf[j];
-      }
-      gtk_preview_draw_row (GTK_PREVIEW (paperprev), buf, 0, i, 100);
-    }
-    killppm(&p);
+    gtk_preview_draw_row (GTK_PREVIEW (paperprev), buf, 0, i, 100);
   }
+  killppm(&p);
+
   gtk_widget_draw (paperprev, NULL);
 }
 
-static void selectpaper(GtkWidget *wg, GtkWidget *p)
+static void selectpaper(GtkTreeSelection *selection, gpointer data)
 {
-  GList *h = GTK_LIST(p)->selection;
-  GtkWidget *tmpw;
-  char *l;
-  static char fname[200];
+  GtkTreeIter iter;
+  GtkTreeModel *model;
+  char fname[200];
 
-  if(!h) return;
-  tmpw = h->data;
-  if(!tmpw) return;
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      gchar *paper;
 
-  gtk_label_get(GTK_LABEL(GTK_BIN(tmpw)->child), &l);
+      gtk_tree_model_get (model, &iter, 0, &paper, -1);
 
-  sprintf(fname, "Paper/%s", l);
-  strcpy(pcvals.selectedpaper, fname);
-  updatepaperprev(fname);
+      sprintf(fname, "Paper/%s", paper);
+      strcpy(pcvals.selectedpaper, fname);
+      updatepaperprev(fname);
+
+      g_free (paper);
+    }
 }
 
 void create_paperpage(GtkNotebook *notebook)
 {
   GtkWidget *box1, *thispage, *box2;
   GtkWidget *label, *tmpw, *table;
-  GtkWidget *scrolled_win, *list;
+  GtkWidget *view;
+  GtkTreeSelection *selection;
+  GtkTreeIter iter;
 
   label = gtk_label_new_with_mnemonic (_("P_aper"));
 
@@ -98,23 +96,9 @@ void create_paperpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(thispage), box1, TRUE, TRUE, 0);
   gtk_widget_show (box1);
 
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-				  GTK_POLICY_AUTOMATIC, 
-				  GTK_POLICY_AUTOMATIC);
-  gtk_box_pack_start (GTK_BOX (box1), scrolled_win, FALSE, FALSE, 0);
-  gtk_widget_show (scrolled_win);
-  gtk_widget_set_size_request(scrolled_win, 150,-1);
-
-  paperlist = list = gtk_list_new ();
-  gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_BROWSE);
-
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW(scrolled_win),
-                                         list);
-
-  gtk_widget_show (list);
-
-  readdirintolist("Paper", list, pcvals.selectedpaper);
+  paperlist = view = createonecolumnlist (box1, selectpaper);
+  paperstore = GTK_LIST_STORE(gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
   box2 = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start(GTK_BOX(box1), box2, FALSE, FALSE, 0);
@@ -134,7 +118,9 @@ void create_paperpage(GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
-  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(selectpaper), list);
+  g_signal_connect_swapped (G_OBJECT(tmpw), "clicked", 
+			    G_CALLBACK(selectpaper), selection);
+
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Inverts the Papers texture"), NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.paperinvert);
@@ -181,11 +167,11 @@ void create_paperpage(GtkNotebook *notebook)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.paperrelief);
 
-  g_signal_connect (G_OBJECT(list), "selection_changed", 
-		    G_CALLBACK(selectpaper), list);
-  if (!GTK_LIST(list)->selection)
-    gtk_list_select_item(GTK_LIST(list), 0);
-  selectpaper(NULL,list);
 
+  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL(paperstore), &iter))
+    gtk_tree_selection_select_iter (selection, &iter);
+
+  selectpaper(selection, NULL);
+  readdirintolist("Paper", view, pcvals.selectedpaper);
   gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
 }
