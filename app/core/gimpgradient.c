@@ -725,9 +725,6 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 
   /* Calculate color components */
 
-  rgb.a = 
-    seg->left_color.a + (seg->right_color.a - seg->left_color.a) * factor;
-
   if (seg->color == GIMP_GRAD_RGB)
     {
       rgb.r = 
@@ -788,6 +785,11 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 
       gimp_hsv_to_rgb (&left_hsv, &rgb);
     }
+
+  /* Calculate alpha */
+
+  rgb.a =
+    seg->left_color.a + (seg->right_color.a - seg->left_color.a) * factor;
 
   *color = rgb;
 }
