@@ -780,7 +780,6 @@ gimp_image_set_component_active
 gimp_image_get_component_active
 gimp_image_set_component_visible
 gimp_image_get_component_visible
-gimp_image_grid_changed
 gimp_image_mode_changed
 gimp_image_alpha_changed
 gimp_image_update
@@ -1206,7 +1205,6 @@ GIMP_SELECTION_GET_CLASS
 <TITLE>GimpTemplate</TITLE>
 GimpTemplate
 gimp_template_new
-gimp_template_set_from_config
 gimp_template_set_from_image
 gimp_template_create_image
 <SUBSECTION Standard>
@@ -2991,13 +2989,14 @@ gimp_tool_button_press
 gimp_tool_button_release
 gimp_tool_motion
 gimp_tool_arrow_key
-gimp_tool_modifier_key
 gimp_tool_oper_update
 gimp_tool_cursor_update
 gimp_tool_push_status
 gimp_tool_push_status_coords
 gimp_tool_pop_status
 gimp_tool_set_cursor
+gimp_tool_set_focus_display
+gimp_tool_set_modifier_state
 <SUBSECTION Standard>
 GIMP_TOOL
 GIMP_IS_TOOL
@@ -4369,8 +4368,6 @@ GIMP_STROKE_EDITOR_GET_CLASS
 <TITLE>GimpTemplateEditor</TITLE>
 GimpTemplateEditor
 gimp_template_editor_new
-gimp_template_editor_set_template
-gimp_template_editor_get_template
 <SUBSECTION Standard>
 GimpTemplateEditorClass
 GIMP_TEMPLATE_EDITOR
@@ -5047,6 +5044,12 @@ gimp_config_deserialize_properties
 </SECTION>
 
 <SECTION>
+<FILE>gimpconfig-dump</FILE>
+GimpConfigDumpFormat
+gimp_config_dump
+</SECTION>
+
+<SECTION>
 <FILE>gimpconfig-error</FILE>
 GimpConfigError
 GIMP_CONFIG_ERROR
@@ -5090,10 +5093,10 @@ gimp_unit_get_type
 
 <SECTION>
 <FILE>gimpconfig-utils</FILE>
-gimp_config_diff
 gimp_config_connect
 gimp_config_disconnect
-gimp_config_copy_properties
+gimp_config_diff
+gimp_config_sync
 gimp_config_reset_properties
 gimp_config_string_append_escaped
 gimp_config_build_data_path
@@ -6821,7 +6824,8 @@ tool_manager_button_press_active
 tool_manager_button_release_active
 tool_manager_motion_active
 tool_manager_arrow_key_active
-tool_manager_modifier_key_active
+tool_manager_modifier_state_active
+tool_manager_focus_display_active
 tool_manager_oper_update_active
 tool_manager_cursor_update_active
 </SECTION>

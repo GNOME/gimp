@@ -95,6 +95,7 @@
       <xi:include href="xml/gimpconfig.xml"/>
       <xi:include href="xml/gimpconfig-serialize.xml"/>
       <xi:include href="xml/gimpconfig-deserialize.xml"/>
+      <xi:include href="xml/gimpconfig-dump.xml"/>
       <xi:include href="xml/gimpconfig-error.xml"/>
       <xi:include href="xml/gimpconfig-path.xml"/>
       <xi:include href="xml/gimpconfig-params.xml"/>
