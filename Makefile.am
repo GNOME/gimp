@@ -5,6 +5,7 @@ SUBDIRS = \
 	intl			\
 	regexrepl		\
 	pixmaps			\
+	themes			\
 	libgimpbase		\
 	libgimpcolor		\
 	libgimpmath		\

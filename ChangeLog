@@ -1,5 +1,52 @@
 2001-08-05  Michael Natterer  <mitch@gimp.org>
 
+	* Makefile.am
+	* configure.in
+	* themes/.cvsignore
+	* themes/Makefile.am
+	* themes/Default/.cvsignore
+	* themes/Default/Makefile.am
+	* themes/Default/images/.cvsignore
+	* themes/Default/images/*.png
+	* themes/Default/images/tools/.cvsignore
+	* themes/Default/images/tools/*.png: new place for all images
+	which are registered with the stock system. The default images are
+	all inlined but we will install the default theme later along with
+	an appropriate gtkrc as a template for custom themes.
+
+	Added PNGs of all tools icons. Thanks to syngin :)
+
+	* pixmaps/.cvsignore
+	* pixmaps/Makefile.am: reverted everything to the old state. This
+	directory will go away soon.
+
+	* libgimpwidgets/gimpstock.[ch]: changed accordingly. Register
+	stock icons in GTK_ICON_SIZE_BUTTON for all tools.
+
+	* app/core/gimptoolinfo.[ch]
+	* app/tools/tool_manager.[ch]: GimpToolInfo wants a stock_id and a
+	pre-rendered GdkPixbuf instead of ugly icon_data now. Added some
+	workarounds until GimpPreview is a GtkImage and uses GdkPixbuf
+	instead of TempBuf.
+
+	* app/tools/Makefile.am
+	* app/tools/icons.h: die, uglyness, die.
+
+	* app/tools/[all tools].c: register with a stock_id, not a
+	icon_data pointer.
+
+	* app/gui/dialogs-constructors.c: Oops, GIMP badly crashed on
+	changing the image for the past few days :)
+
+	* app/gui/menus.c: create the tools' menu entries with stock
+	icons.
+
+	* app/gui/toolbox.c: use GtkImages instead of GimpPreviews for
+	the toolbox buttons. Will need to change this back as soon
+	as GimpPreview actually _is_ a GtkImage.
+
+2001-08-05  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpstock.[ch]: register the button icons with
 	GTK_ICON_SIZE_BUTTON, but set them as scalable fallbacks for
 	themselves so they get scaled for menus.

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-STOCK_IMAGES = @STRIP_BEGIN@ \
+EXTRA_DIST = @STRIP_BEGIN@ \
 	anchor.xpm		\
 	delete.xpm		\
 	duplicate.xpm		\
@@ -19,30 +19,7 @@ STOCK_IMAGES = @STRIP_BEGIN@ \
 	toselection.xpm		\
 	zoom_in.xpm		\
 	zoom_out.xpm		\
-@STRIP_END@
-
-STOCK_VARIABLES = @STRIP_BEGIN@ \
-	stock_anchor_button		$(srcdir)/anchor.xpm		\
-	stock_delete_button		$(srcdir)/delete.xpm		\
-	stock_duplicate_button		$(srcdir)/duplicate.xpm		\
-	stock_edit_button		$(srcdir)/edit.xpm		\
-	stock_eye_button		$(srcdir)/eye.xpm		\
-	stock_linked_button		$(srcdir)/linked.xpm		\
-	stock_lower_button		$(srcdir)/lower.xpm		\
-	stock_new_button		$(srcdir)/new.xpm		\
-	stock_paste_button		$(srcdir)/paste.xpm		\
-	stock_paste_as_new_button	$(srcdir)/paste-as-new.xpm	\
-	stock_paste_into_button		$(srcdir)/paste-into.xpm	\
-	stock_raise_button		$(srcdir)/raise.xpm		\
-	stock_refresh_button		$(srcdir)/refresh.xpm		\
-	stock_stroke_button		$(srcdir)/penstroke.xpm		\
-	stock_to_path_button		$(srcdir)/topath.xpm		\
-	stock_to_selection_button	$(srcdir)/toselection.xpm	\
-	stock_zoom_in_button		$(srcdir)/zoom_in.xpm		\
-	stock_zoom_out_button		$(srcdir)/zoom_out.xpm		\
-@STRIP_END@
-
-EXTRA_IMAGES = @STRIP_BEGIN@ \
+	\
 	chain.xpm		\
 	default.xpm		\
 	eek.xpm			\
@@ -70,14 +47,6 @@ EXTRA_IMAGES = @STRIP_BEGIN@ \
 	wilber3.xpm		\
 	yes.xpm			\
 @STRIP_END@
-
-EXTRA_DIST = $(STOCK_IMAGES) $(EXTRA_IMAGES)
-
-noinst_DATA = gimp-stock-pixbufs.h
-CLEANFILES += $(noinst_DATA)
-
-gimp-stock-pixbufs.h: $(STOCK_IMAGES)
-	gdk-pixbuf-csource --raw --build-list $(STOCK_VARIABLES) >$(srcdir)/gimp-stock-pixbufs.h
 
 .PHONY: files
 

@@ -2,3 +2,4 @@ Makefile
 Makefile.in
 .xvpics
 .thumbnails
+gimp-stock-pixbufs.h

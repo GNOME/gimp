@@ -50,7 +50,8 @@ struct _GimpToolInfo
 
   gchar            *pdb_string;
 
-  const gchar     **icon_data;
+  const gchar      *stock_id;
+  GdkPixbuf        *stock_pixbuf;
 
   GimpContext      *context;
 
@@ -76,7 +77,8 @@ GimpToolInfo * gimp_tool_info_new          (GimpContext  *context,
 					    const gchar  *help_domain,
 					    const gchar  *help_data,
 					    const gchar  *pdb_string,
-					    const gchar **icon_data);
+					    const gchar  *stock_id,
+					    GdkPixbuf    *stock_pixbuf);
 
 GimpToolInfo * gimp_tool_info_get_standard (void);
 

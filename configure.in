@@ -910,6 +910,8 @@ devel-docs/libgimpmath/Makefile
 devel-docs/libgimpwidgets/Makefile
 docs/Makefile
 pixmaps/Makefile
+themes/Makefile
+themes/Default/Makefile
 data/Makefile
 data/brushes/Makefile
 data/gradients/Makefile

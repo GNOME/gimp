@@ -27,7 +27,7 @@
 
 #include "gimpstock.h"
 
-#include "pixmaps/gimp-stock-pixbufs.h"
+#include "themes/Default/gimp-stock-pixbufs.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -101,9 +101,72 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_STROKE,       N_("_Stroke"),           0, 0, "gimp-libgimp" },
   { GIMP_STOCK_TO_PATH,      N_("Selection To Path"), 0, 0, "gimp-libgimp" },
   { GIMP_STOCK_TO_SELECTION, N_("To Sleection"),      0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_VISIBLE,      N_("Visible"),           0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_ZOOM_IN,      N_("Zoom In"),           0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_ZOOM_OUT,     N_("Zoom Out"),          0, 0, "gimp-libgimp" }
+  { GIMP_STOCK_VISIBLE,      N_("Visible"),           0, 0, "gimp-libgimp" }
+};
+
+static struct
+{
+  const gchar   *stock_id;
+  gconstpointer  inline_data;
+}
+gimp_stock_pixbufs[] =
+{
+  { GIMP_STOCK_ANCHOR,                   stock_button_anchor                   },
+  { GIMP_STOCK_DELETE,                   stock_button_delete                   },
+  { GIMP_STOCK_DUPLICATE,                stock_button_duplicate                },
+  { GIMP_STOCK_EDIT,                     stock_button_edit                     },
+  { GIMP_STOCK_LINKED,                   stock_button_linked                   },
+  { GIMP_STOCK_LOWER,                    stock_button_lower                    },
+  { GIMP_STOCK_NEW,                      stock_button_new                      },
+  { GIMP_STOCK_PASTE,                    stock_button_paste                    },
+  { GIMP_STOCK_PASTE_AS_NEW,             stock_button_paste_as_new             },
+  { GIMP_STOCK_PASTE_INTO,               stock_button_paste_into               },
+  { GIMP_STOCK_RAISE,                    stock_button_raise                    },
+  { GIMP_STOCK_REFRESH,                  stock_button_refresh                  },
+  { GIMP_STOCK_RESET,                    stock_button_refresh                  },
+  { GIMP_STOCK_STROKE,                   stock_button_stroke                   },
+  { GIMP_STOCK_TO_PATH,                  stock_button_to_path                  },
+  { GIMP_STOCK_TO_SELECTION,             stock_button_to_selection             },
+  { GIMP_STOCK_VISIBLE,                  stock_button_eye                      },
+
+  { GIMP_STOCK_TOOL_AIRBRUSH,            stock_tool_button_airbrush            },
+  { GIMP_STOCK_TOOL_BEZIER_SELECT,       stock_tool_button_bezier_select       },
+  { GIMP_STOCK_TOOL_BLEND,               stock_tool_button_blend               },
+  { GIMP_STOCK_TOOL_BLUR,                stock_tool_button_blur                },
+  { GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST, stock_tool_button_brightness_contrast },
+  { GIMP_STOCK_TOOL_BUCKET_FILL,         stock_tool_button_bucket_fill         },
+  { GIMP_STOCK_TOOL_BY_COLOR_SELECT,     stock_tool_button_by_color_select     },
+  { GIMP_STOCK_TOOL_CLONE,               stock_tool_button_clone               },
+  { GIMP_STOCK_TOOL_COLOR_BALANCE,       stock_tool_button_color_balance       },
+  { GIMP_STOCK_TOOL_COLOR_PICKER,        stock_tool_button_color_picker        },
+  { GIMP_STOCK_TOOL_CROP,                stock_tool_button_crop                },
+  { GIMP_STOCK_TOOL_CURVES,              stock_tool_button_curves              },
+  { GIMP_STOCK_TOOL_DODGE,               stock_tool_button_dodge               },
+  { GIMP_STOCK_TOOL_ELLIPSE_SELECT,      stock_tool_button_ellipse_select      },
+  { GIMP_STOCK_TOOL_ERASER,              stock_tool_button_eraser              },
+  { GIMP_STOCK_TOOL_FLIP,                stock_tool_button_flip                },
+  { GIMP_STOCK_TOOL_FREE_SELECT,         stock_tool_button_free_select         },
+  { GIMP_STOCK_TOOL_FUZZY_SELECT,        stock_tool_button_fuzzy_select        },
+  { GIMP_STOCK_TOOL_HISTOGRAM,           stock_tool_button_histogram           },
+  { GIMP_STOCK_TOOL_HUE_SATURATION,      stock_tool_button_hue_saturation      },
+  { GIMP_STOCK_TOOL_INK,                 stock_tool_button_ink                 },
+  { GIMP_STOCK_TOOL_ISCISSORS,           stock_tool_button_iscissors           },
+  { GIMP_STOCK_TOOL_LEVELS,              stock_tool_button_levels              },
+  { GIMP_STOCK_TOOL_MEASURE,             stock_tool_button_measure             },
+  { GIMP_STOCK_TOOL_MOVE,                stock_tool_button_move                },
+  { GIMP_STOCK_TOOL_PAINTBRUSH,          stock_tool_button_paintbrush          },
+  { GIMP_STOCK_TOOL_PATH,                stock_tool_button_path                },
+  { GIMP_STOCK_TOOL_PENCIL,              stock_tool_button_pencil              },
+  { GIMP_STOCK_TOOL_PERSPECTIVE,         stock_tool_button_perspective         },
+  { GIMP_STOCK_TOOL_POSTERIZE,           stock_tool_button_posterize           },
+  { GIMP_STOCK_TOOL_RECT_SELECT,         stock_tool_button_rect_select         },
+  { GIMP_STOCK_TOOL_ROTATE,              stock_tool_button_rotate              },
+  { GIMP_STOCK_TOOL_SCALE,               stock_tool_button_scale               },
+  { GIMP_STOCK_TOOL_SHEAR,               stock_tool_button_shear               },
+  { GIMP_STOCK_TOOL_SMUDGE,              stock_tool_button_smudge              },
+  { GIMP_STOCK_TOOL_TEXT,                stock_tool_button_text                },
+  { GIMP_STOCK_TOOL_THRESHOLD,           stock_tool_button_threshold           },
+  { GIMP_STOCK_TOOL_ZOOM,                stock_tool_button_zoom                }
 };
 
 void
@@ -111,49 +174,20 @@ gimp_stock_init (void)
 {
   static gboolean initialized = FALSE;
 
+  gint i;
+
   if (initialized)
     return;
 
   gimp_stock_factory = gtk_icon_factory_new ();
 
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_anchor_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_ANCHOR);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_delete_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_DELETE);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_duplicate_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_DUPLICATE);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_edit_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_EDIT);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_linked_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_LINKED);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_lower_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_LOWER);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_new_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_NEW);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_paste_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_PASTE);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_paste_as_new_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_PASTE_AS_NEW);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_paste_into_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_PASTE_INTO);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_raise_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_RAISE);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_refresh_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_REFRESH);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_refresh_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_RESET);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_stroke_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_STROKE);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_to_path_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_TO_PATH);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_to_selection_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_TO_SELECTION);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_eye_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_VISIBLE);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_zoom_in_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_ZOOM_IN);
-  add_sized_with_same_fallback (gimp_stock_factory,   stock_zoom_out_button,
-				GTK_ICON_SIZE_BUTTON, GIMP_STOCK_ZOOM_OUT);
+  for (i = 0; i < G_N_ELEMENTS (gimp_stock_pixbufs); i++)
+    {
+      add_sized_with_same_fallback (gimp_stock_factory,
+				    gimp_stock_pixbufs[i].inline_data,
+				    GTK_ICON_SIZE_BUTTON,
+				    gimp_stock_pixbufs[i].stock_id);
+    }
 
   gtk_icon_factory_add_default (gimp_stock_factory);
 
