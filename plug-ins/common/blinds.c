@@ -41,8 +41,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "gimpoldpreview.h"
-
 /***** Magic numbers *****/
 
 #define SCALE_WIDTH  150
@@ -61,17 +59,10 @@ typedef struct data
   gint bg_trans;
 } BlindVals;
 
-static GimpOldPreview *preview;
-
-typedef struct
-{
-  gint img_bpp;
-} BlindsInterface;
-
-static BlindsInterface bint =
-{
-  4  /* bpp of drawable */
-};
+#define PREVIEW_SIZE 128
+static GtkWidget *preview;
+static gint       preview_width, preview_height, preview_bpp;
+static guchar    *preview_cache;
 
 /* Array to hold each size of fans. And no there are not each the
  * same size (rounding errors...)
@@ -97,7 +88,6 @@ static void      blinds_radio_update   (GtkWidget     *widget,
 static void      blinds_button_update  (GtkWidget     *widget,
                                         gpointer       data);
 static void      dialog_update_preview (void);
-static void      cache_preview         (void);
 static void      apply_blinds          (void);
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -116,9 +106,6 @@ static BlindVals bvals =
   HORIZONTAL,
   FALSE
 };
-
-/* Stuff for the preview bit */
-static gint  has_alpha;
 
 MAIN ()
 
@@ -250,8 +237,6 @@ blinds_dialog (void)
 
   gimp_ui_init ("blinds", TRUE);
 
-  cache_preview (); /* Get the preview image and store it also set has_alpha */
-
   dlg = gimp_dialog_new (_("Blinds"), "blinds",
                          NULL, 0,
                          gimp_standard_help_func, "plug-in-blinds",
@@ -274,10 +259,16 @@ blinds_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
   gtk_widget_show (align);
 
-  preview = gimp_old_preview_new (NULL);
-  gimp_old_preview_fill_scaled (preview, blindsdrawable);
-  gtk_container_add (GTK_CONTAINER (align), preview->frame);
-  gtk_widget_show (preview->frame);
+  preview = gimp_preview_area_new ();
+  preview_width = preview_height = PREVIEW_SIZE;
+  preview_cache =
+    gimp_drawable_get_thumbnail_data (blindsdrawable->drawable_id,
+                                      &preview_width,
+                                      &preview_height,
+                                      &preview_bpp);
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
+  gtk_container_add (GTK_CONTAINER (align), preview);
+  gtk_widget_show (preview);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
@@ -309,7 +300,7 @@ blinds_dialog (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.bg_trans);
 
-  if (!has_alpha)
+  if (!gimp_drawable_has_alpha (blindsdrawable->drawable_id))
     {
       gtk_widget_set_sensitive (toggle, FALSE);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
@@ -376,24 +367,6 @@ blinds_scale_update (GtkAdjustment *adjustment,
   gimp_int_adjustment_update (adjustment, value);
 
   dialog_update_preview ();
-}
-
-/* Cache the preview image - updates are a lot faster. */
-/* The preview_cache will contain the small image */
-
-static void
-cache_preview (void)
-{
-  gboolean has_alpha;
-
-  bint.img_bpp = gimp_drawable_bpp (blindsdrawable->drawable_id);
-
-  has_alpha = gimp_drawable_has_alpha (blindsdrawable->drawable_id);
-
-  if (bint.img_bpp < 3)
-    {
-      bint.img_bpp = 3 + has_alpha;
-    }
 }
 
 static void
@@ -509,7 +482,7 @@ dialog_update_preview (void)
   GimpRGB  background;
   guchar   bg[4];
 
-  p = preview->cache;
+  p = preview_cache;
 
   gimp_palette_get_background (&background);
 
@@ -518,15 +491,17 @@ dialog_update_preview (void)
 
   gimp_drawable_get_color_uchar (blindsdrawable->drawable_id, &background, bg);
 
-  buffer = (guchar*) g_malloc (preview->rowstride);
+  buffer = g_new (guchar, preview_width * preview_height * preview_bpp);
 
   if (bvals.orientation)
     {
-      for (y = 0; y < preview->height; y++)
+      for (y = 0; y < preview_height; y++)
         {
-          blindsapply (p, buffer, preview->width, bint.img_bpp, bg);
-          gimp_old_preview_do_row (preview, y, preview->width, buffer);
-          p += preview->width * bint.img_bpp;
+          blindsapply (p,
+                       buffer + y * preview_width * preview_bpp,
+                       preview_width,
+                       preview_bpp, bg);
+          p += preview_width * preview_bpp;
         }
     }
   else
@@ -537,15 +512,15 @@ dialog_update_preview (void)
        * rows. Make row 0 invalid so we can find it again!
        */
       gint i;
-      guchar *sr = g_new (guchar, preview->height * 4);
-      guchar *dr = g_new0 (guchar, preview->height * 4);
+      guchar *sr = g_new (guchar, preview_height * 4);
+      guchar *dr = g_new0 (guchar, preview_height * 4);
       guchar dummybg[4] = {0, 0, 0, 0};
 
       /* Fill in with background color ? */
-      for (i = 0 ; i < preview->width ; i++)
+      for (i = 0 ; i < preview_width ; i++)
         {
           gint j;
-          gint bd = bint.img_bpp;
+          gint bd = preview_bpp;
           guchar *dst;
           dst = &buffer[i * bd];
 
@@ -555,7 +530,7 @@ dialog_update_preview (void)
             }
         }
 
-      for ( y = 0 ; y < preview->height; y++)
+      for ( y = 0 ; y < preview_height; y++)
         {
           sr[y] = y+1;
         }
@@ -564,9 +539,9 @@ dialog_update_preview (void)
        * row not a set of bytes. - preview can't be > 255
        * or must make dr sr int rows.
        */
-      blindsapply (sr, dr, preview->height, 1, dummybg);
+      blindsapply (sr, dr, preview_height, 1, dummybg);
 
-      for (y = 0; y < preview->height; y++)
+      for (y = 0; y < preview_height; y++)
         {
           if (dr[y] == 0)
             {
@@ -576,20 +551,24 @@ dialog_update_preview (void)
           else
             {
               /* Draw line from src */
-              p = preview->cache +
-                (preview->width * bint.img_bpp * (dr[y] - 1));
+              p = preview_cache +
+                (preview_width * preview_bpp * (dr[y] - 1));
             }
-
-          gimp_old_preview_do_row (preview, y, preview->width, p);
+          memcpy (buffer + y * preview_width * preview_bpp,
+                  p,
+                  preview_width * preview_bpp);
         }
       g_free (sr);
       g_free (dr);
     }
 
-  g_free (buffer);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, preview_width, preview_height,
+                          gimp_drawable_type (blindsdrawable->drawable_id),
+                          buffer,
+                          preview_width * preview_bpp);
 
-  gtk_widget_queue_draw (preview->widget);
-  gdk_flush ();
+  g_free (buffer);
 }
 
 /* STEP tells us how many rows/columns to gulp down in one go... */
