@@ -84,7 +84,14 @@ static void glass_ok_callback          (GtkWidget     *widget,
 
 static void fill_preview_with_thumb    (GtkWidget     *preview_widget, 
 					gint32         drawable_ID);
-static GtkWidget *preview_widget       (GimpDrawable  *drawable);
+
+static void preview_do_row             (gint           row,
+                                        gint           width,
+                                        guchar        *even,
+                                        guchar        *odd,
+                                        guchar        *src);
+
+static GtkWidget * preview_widget      (GimpDrawable  *drawable);
 
 static void glasstile                  (GimpDrawable  *drawable, 
 					gboolean       preview_mode);
@@ -108,7 +115,6 @@ static GlassInterface gt_int =
 };
 
 /* preview */
-static guchar    *preview_bits;
 static GtkWidget *preview;
 static gdouble    preview_scale_x;
 static gdouble    preview_scale_y;
@@ -135,7 +141,8 @@ query (void)
 
   gimp_install_procedure ("plug_in_glasstile",
 			  "Divide the image into square glassblocks",
-			  "Divide the image into square glassblocks in which the image is refracted.",
+			  "Divide the image into square glassblocks in "
+                          "which the image is refracted.",
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "May 2000",
@@ -217,9 +224,10 @@ run (gchar      *name,
 	  gimp_drawable_is_gray (drawable->drawable_id))
 	{
 	  gimp_progress_init ( _("Glass Tile..."));
-	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
+	  gimp_tile_cache_ntiles (2 * 
+                                  (drawable->width / gimp_tile_width () + 1));
 	  
-	  glasstile (drawable, 0);
+	  glasstile (drawable, FALSE);
 	  
 	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush (); 
@@ -228,13 +236,11 @@ run (gchar      *name,
 	    {
 	      gimp_set_data ("plug_in_glasstile", &gtvals, 
 			     sizeof (GlassValues));
-	      g_free (preview_bits);
 	      g_free (preview_cache);
 	  }
 	}
       else
 	{
-	  /* gimp_message ("glasstile: cannot operate on indexed color images"); */
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
@@ -274,7 +280,8 @@ glass_dialog (GimpDrawable *drawable)
 
   main_vbox = gtk_vbox_new (FALSE, 3);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), 
+                      main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   frame = gtk_frame_new (_("Preview"));
@@ -289,7 +296,7 @@ glass_dialog (GimpDrawable *drawable)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
-  preview = preview_widget (drawable); /* we are here */
+  preview = preview_widget (drawable);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   glasstile (drawable, TRUE); /* filter routine, initial pass */
   gtk_widget_show (preview);
@@ -359,14 +366,11 @@ glass_ok_callback (GtkWidget *widget,
 static GtkWidget *
 preview_widget (GimpDrawable *drawable)
 {
-  gint       size;
   GtkWidget *preview;
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+
   fill_preview_with_thumb (preview, drawable->drawable_id);
-  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
-  preview_bits = g_malloc (size);
-  memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
 
   return preview;
 }
@@ -375,94 +379,37 @@ static void
 fill_preview_with_thumb (GtkWidget *widget, 
 			 gint32     drawable_ID)
 {
-  guchar  *drawable_data;
-  gint     bpp;
-  gint     x,y;
-  gint     width  = PREVIEW_SIZE;
-  gint     height = PREVIEW_SIZE;
-  guchar  *src;
-  gdouble  r, g, b, a;
-  gdouble  c0, c1;
-  guchar  *p0, *p1;
-  guchar  *even, *odd;
+  gint    bpp;
+  gint    y;
+  gint    width  = PREVIEW_SIZE;
+  gint    height = PREVIEW_SIZE;
+  guchar *src;
+  guchar *even;
+  guchar *odd;
 
-  bpp = 0; /* Only returned */
-  
-  drawable_data = 
+  preview_cache = 
     gimp_drawable_get_thumbnail_data (drawable_ID, &width, &height, &bpp);
 
   if (width < 1 || height < 1)
     return;
 
-  preview_cache = drawable_data;
+  preview = widget;
   preview_cache_rowstride = width * bpp;
-  preview_cache_bpp = bpp;
+  preview_cache_bpp       = bpp;
 
   gtk_preview_size (GTK_PREVIEW (widget), width, height);
-  preview_scale_x = (gdouble)width  / (gdouble)gimp_drawable_width  (drawable_ID);
-  preview_scale_y = (gdouble)height / (gdouble)gimp_drawable_height (drawable_ID);
+  preview_scale_x = 
+    (gdouble) width / (gdouble) gimp_drawable_width (drawable_ID);
+  preview_scale_y = 
+    (gdouble) height / (gdouble) gimp_drawable_height (drawable_ID);
 
+  src  = preview_cache;
   even = g_malloc (width * 3);
   odd  = g_malloc (width * 3);
-  src = drawable_data;
 
   for (y = 0; y < height; y++)
     {
-      p0 = even;
-      p1 = odd;
-      
-      for (x = 0; x < width; x++) 
-	{
-	  if(bpp == 4)
-	    {
-	      r =  ((gdouble)src[x*4+0])/255.0;
-	      g = ((gdouble)src[x*4+1])/255.0;
-	      b = ((gdouble)src[x*4+2])/255.0;
-	      a = ((gdouble)src[x*4+3])/255.0;
-	    }
-	  else if(bpp == 3)
-	    {
-	      r =  ((gdouble)src[x*3+0])/255.0;
-	      g = ((gdouble)src[x*3+1])/255.0;
-	      b = ((gdouble)src[x*3+2])/255.0;
-	      a = 1.0;
-	    }
-	  else
-	    {
-	      r = ((gdouble)src[x*bpp+0])/255.0;
-	      g = b = r;
-	      if(bpp == 2)
-		a = ((gdouble)src[x*bpp+1])/255.0;
-	      else
-		a = 1.0;
-	    }
-	  
-	  if ((x / GIMP_CHECK_SIZE_SM) & 1) 
-	    {
-	      c0 = GIMP_CHECK_LIGHT;
-	      c1 = GIMP_CHECK_DARK;
-	    } 
-	  else 
-	    {
-	      c0 = GIMP_CHECK_DARK;
-	      c1 = GIMP_CHECK_LIGHT;
-	    }
-	  
-	*p0++ = (c0 + (r - c0) * a) * 255.0;
-	*p0++ = (c0 + (g - c0) * a) * 255.0;
-	*p0++ = (c0 + (b - c0) * a) * 255.0;
-	
-	*p1++ = (c1 + (r - c1) * a) * 255.0;
-	*p1++ = (c1 + (g - c1) * a) * 255.0;
-	*p1++ = (c1 + (b - c1) * a) * 255.0;
-	
-      } /* for */
-      
-      if ((y / GIMP_CHECK_SIZE_SM) & 1)
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)odd,  0, y, width);
-      else
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)even, 0, y, width);
-
+      preview_do_row (y, width, even, odd, src);
       src += width * bpp;
     }
 
@@ -471,44 +418,52 @@ fill_preview_with_thumb (GtkWidget *widget,
 }
 
 static void
-preview_do_row(gint    row,
-	       gint    width,
-	       guchar *even,
-	       guchar *odd,
-	       guchar *src)
+preview_do_row (gint    row,
+                gint    width,
+                guchar *even,
+                guchar *odd,
+                guchar *src)
 {
   gint    x;
-  
   guchar *p0 = even;
   guchar *p1 = odd;
-  
-  gdouble    r, g, b, a;
-  gdouble    c0, c1;
+  gdouble r, g, b, a;
+  gdouble c0, c1;
   
   for (x = 0; x < width; x++) 
     {
-      if (preview_cache_bpp == 4)
-	{
-	  r = ((gdouble)src[x*4+0]) / 255.0;
-	  g = ((gdouble)src[x*4+1]) / 255.0;
-	  b = ((gdouble)src[x*4+2]) / 255.0;
-	  a = ((gdouble)src[x*4+3]) / 255.0;
-	}
-      else if (preview_cache_bpp == 3)
-	{
-	  r = ((gdouble)src[x*3+0]) / 255.0;
-	  g = ((gdouble)src[x*3+1]) / 255.0;
-	  b = ((gdouble)src[x*3+2]) / 255.0;
+      switch (preview_cache_bpp)
+        {
+        case 4:
+	  r = ((gdouble) src[x*4])     / 255.0;
+	  g = ((gdouble) src[x*4 + 1]) / 255.0;
+	  b = ((gdouble) src[x*4 + 2]) / 255.0;
+	  a = ((gdouble) src[x*4 + 3]) / 255.0;
+          break;
+
+        case 3:
+	  r = ((gdouble) src[x*3])     / 255.0;
+	  g = ((gdouble) src[x*3 + 1]) / 255.0;
+	  b = ((gdouble) src[x*3 + 2]) / 255.0;
 	  a = 1.0;
-	}
-      else
-	{
-	  r = ((gdouble)src[x*preview_cache_bpp+0]) / 255.0;
+          break;
+
+        case 2:
+	  r = ((gdouble)src[x*2]) / 255.0;
 	  g = b = r;
-	  if (preview_cache_bpp == 2)
-		    a = ((gdouble)src[x*preview_cache_bpp+1]) / 255.0;
-	  else
-	    a = 1.0;
+          a = ((gdouble)src[x*2 + 1]) / 255.0;
+          break;
+
+        case 1:
+	  r = ((gdouble)src[x*2]) / 255.0;
+	  g = b = r;
+          a = 1.0;
+          break;
+
+        default:
+          r = g = b = a = 1.0;  /* just to please the compiler */
+          g_assert_not_reached ();
+          break;
 	}
       
       if ((x / GIMP_CHECK_SIZE) & 1) 
@@ -528,32 +483,33 @@ preview_do_row(gint    row,
       
       *p1++ = (c1 + (r - c1) * a) * 255.0;
       *p1++ = (c1 + (g - c1) * a) * 255.0;
-      *p1++ = (c1 + (b - c1) * a) * 255.0;
-      
-    } /* for */
-  
+      *p1++ = (c1 + (b - c1) * a) * 255.0; 
+    }
+
   if ((row / GIMP_CHECK_SIZE) & 1)
     {
-      gtk_preview_draw_row (GTK_PREVIEW (preview), (guchar *)odd,  0, row, width); 
+      gtk_preview_draw_row (GTK_PREVIEW (preview), 
+                            (guchar *) odd,  0, row, width); 
     }
   else
     {
-      gtk_preview_draw_row (GTK_PREVIEW (preview), (guchar *)even, 0, row, width); 
+      gtk_preview_draw_row (GTK_PREVIEW (preview),
+                            (guchar *) even, 0, row, width); 
     }
 }
 
 /*  -  Filter function  -  I wish all filter functions had a pmode :) */
 static void
 glasstile (GimpDrawable *drawable, 
-	   gboolean   preview_mode)
+	   gboolean      preview_mode)
 {
   GimpPixelRgn srcPR, destPR;
-  gint width, height;
-  gint bytes;
+  gint    width, height;
+  gint    bytes;
   guchar *dest, *d;
   guchar *cur_row;
-  gint row, col, i, iwidth;
-  gint x1, y1, x2, y2;
+  gint    row, col, i, iwidth;
+  gint    x1, y1, x2, y2;
 
   guchar *odd = NULL;
   guchar *even = NULL;
@@ -607,7 +563,7 @@ glasstile (GimpDrawable *drawable,
   yhalv = ruthojd  / 2;
   cbytes = bytes;
 
-  if (cbytes % 2 == 0) 
+  if (! (cbytes & 1)) 
     cbytes--; 
 
   iwidth = width - x1;
@@ -623,7 +579,7 @@ glasstile (GimpDrawable *drawable,
       d = dest;
       ypixel2 = ymitt + yoffs * 2;
 
-      if(ypixel2 < 0)
+      if (ypixel2 < 0)
 	ypixel2 = 0;
 
       if (preview_mode)
@@ -650,8 +606,7 @@ glasstile (GimpDrawable *drawable,
       if (yoffs == yhalv) 
 	{
 	  ymitt += ruthojd;
-	  yoffs =- yhalv;
-	  yoffs -= yplus;
+	  yoffs = - (yhalv + yplus);
 	}
       
       xmitt = 0;
@@ -672,7 +627,7 @@ glasstile (GimpDrawable *drawable,
 	  else 
 	    {
 	      for (i = 0; i < bytes; i++)
-		d[xpixel1 + i]=cur_row[xpixel1 + i];
+		d[xpixel1 + i] = cur_row[xpixel1 + i];
 	    }
 
 	  xoffs++;
@@ -680,28 +635,26 @@ glasstile (GimpDrawable *drawable,
 	  if (xoffs == xhalv) 
 	    {
 	      xmitt += rutbredd;
-	      xoffs =- xhalv;
-	      xoffs -= xplus;
+	      xoffs = - (xhalv + xplus);
 	    }
 	}
 
       /*  Store the dest  */
       if (preview_mode)
-	preview_do_row(row,width,even,odd,dest);
+        {
+          preview_do_row (row, width, even, odd, dest);
+        }
       else
-	gimp_pixel_rgn_set_row (&destPR, dest, x1, row, iwidth);
-      
-      if ((row % 5) == 0 && !preview_mode)
-        gimp_progress_update ((double) row / (double) (y2 - y1));
+        {
+          gimp_pixel_rgn_set_row (&destPR, dest, x1, row, iwidth);
+          
+          if ((row % 5) == 0)
+            gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
+        }
     }
 
-
-  if(even)
-    g_free(even);
-
-  if(odd)
-    g_free(odd);
-
+  g_free (even);
+  g_free (odd);
 
   /*  Update region  */
   if (preview_mode) 
@@ -712,7 +665,8 @@ glasstile (GimpDrawable *drawable,
     {
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+      gimp_drawable_update (drawable->drawable_id, 
+                            x1, y1, (x2 - x1), (y2 - y1));
     }
 
   g_free (cur_row);

@@ -1,3 +1,8 @@
+2002-02-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/glasstile.c: code cleanup based on a patch from
+	Maurits Rijk <lpeek.mrijk@consunet.nl> (#72051).
+
 2002-02-21  Michael Natterer  <mitch@gimp.org>
 
 	Implemented #66921 (needs gimp-*-refresh in PDB)
