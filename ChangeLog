@@ -1,3 +1,10 @@
+Wed Jul  8 10:47:51 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/preferences_dialog.c: replaced old invalidate calls
+	with an iteration over gimages.
+
+	* app/layer.c: added an assert to check for gimage != NULL.
+
 1998-07-08  Chris Lahey  <clahey@umich.edu>
 
 	* app/menus.c (toolbox_entries): Made it so that you won't get two

@@ -1139,6 +1139,8 @@ layer_invalidate_previews (GimpImage* gimage)
   GSList * tmp;
   Layer * layer;
 
+  g_return_if_fail (gimage != NULL);
+
   tmp = gimage->layers;
 
   while (tmp)
