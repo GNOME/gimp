@@ -1,3 +1,7 @@
+Wed Mar  3 15:39:01 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpchainbutton.[ch]: that looks much better now
+
 Wed Mar  3 13:24:00 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* gimprc.5.in

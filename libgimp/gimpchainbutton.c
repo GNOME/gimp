@@ -30,8 +30,11 @@ static char **gimp_chain_broken_xpm[] = {
   chain_broken_ver_xpm 
 };
 
-void gimp_chain_button_realize (GtkWidget *widget, GimpChainButton *gcb);
-void gimp_chain_button_callback (GtkWidget *widget, GimpChainButton *gcb);
+static void gimp_chain_button_realize (GtkWidget *widget, GimpChainButton *gcb);
+static void gimp_chain_button_callback (GtkWidget *widget, GimpChainButton *gcb);
+static void gimp_chain_button_draw_lines (GtkWidget *widget,
+					  GdkEvent* event,
+					  GimpChainButton *gcb);
 
 static void
 gimp_chain_button_class_init (GimpChainButtonClass *class)
@@ -49,6 +52,9 @@ gimp_chain_button_init (GimpChainButton *gcb)
   gcb->position    = GIMP_CHAIN_TOP;
   gcb->tooltips    = NULL;
   gcb->tip         = NULL;
+  gcb->button      = gtk_button_new ();
+  gcb->line1       = gtk_drawing_area_new ();
+  gcb->line2       = gtk_drawing_area_new ();
   gcb->pixmap      = NULL;
   gcb->broken      = NULL;
   gcb->broken_mask = NULL;
@@ -56,14 +62,17 @@ gimp_chain_button_init (GimpChainButton *gcb)
   gcb->chain_mask  = NULL;
   gcb->active      = FALSE;
 
-  gtk_signal_connect (GTK_OBJECT(gcb), "clicked",
+  gtk_signal_connect (GTK_OBJECT(gcb->button), "clicked",
 		      GTK_SIGNAL_FUNC(gimp_chain_button_callback), gcb);
   /* That's all we do here, since setting the pixmaps won't work before 
      the parent window is realized.
      We connect to the realized-signal instead and do the rest there. */
   gtk_signal_connect (GTK_OBJECT(gcb), "realize",
 		      GTK_SIGNAL_FUNC(gimp_chain_button_realize), gcb);
-  
+  gtk_signal_connect (GTK_OBJECT(gcb->line1), "expose_event",
+		      GTK_SIGNAL_FUNC(gimp_chain_button_draw_lines), gcb);
+  gtk_signal_connect (GTK_OBJECT(gcb->line2), "expose_event",
+		      GTK_SIGNAL_FUNC(gimp_chain_button_draw_lines), gcb);
 }
 
 guint
@@ -85,7 +94,7 @@ gimp_chain_button_get_type ()
         (GtkClassInitFunc) NULL
       };
 
-      gcb_type = gtk_type_unique (gtk_button_get_type (), &gcb_info);
+      gcb_type = gtk_type_unique (gtk_table_get_type (), &gcb_info);
     }
   
   return gcb_type;
@@ -99,17 +108,36 @@ gimp_chain_button_new (GimpChainPosition  position)
   
   gcb = gtk_type_new (gimp_chain_button_get_type ());
   gcb->position = position;
-  gtk_button_set_relief (GTK_BUTTON(gcb), GTK_RELIEF_NONE);
+  
+  if (position & GIMP_CHAIN_LEFT) /* are we a vertical chainbutton? */
+    {
+      gtk_table_resize (GTK_TABLE (gcb), 3, 1);
+      gtk_table_attach (GTK_TABLE (gcb), gcb->button, 0, 1, 1, 2,
+			GTK_SHRINK, GTK_SHRINK, 0, 0);
+      gtk_table_attach_defaults (GTK_TABLE (gcb), gcb->line1, 0, 1, 0, 1);
+      gtk_table_attach_defaults (GTK_TABLE (gcb), gcb->line2, 0, 1, 2, 3);
+    }
+  else
+    {
+      gtk_table_resize (GTK_TABLE (gcb), 1, 3);
+      gtk_table_attach (GTK_TABLE (gcb), gcb->button, 1, 2, 0, 1,
+			GTK_SHRINK, GTK_SHRINK, 0, 0);
+      gtk_table_attach_defaults (GTK_TABLE (gcb), gcb->line1, 0, 1, 0, 1);
+      gtk_table_attach_defaults (GTK_TABLE (gcb), gcb->line2, 2, 3, 0, 1);
+    }
 
+  gtk_widget_show (gcb->line1);
+  gtk_widget_show (gcb->line2);
+  gtk_button_set_relief (GTK_BUTTON (gcb->button), GTK_RELIEF_NONE);
   return (GTK_WIDGET(gcb));
 }
 
-void
-gimp_chain_button_realize (GtkWidget *widget, GimpChainButton *gcb)
+static void
+gimp_chain_button_realize (GtkWidget *widget,
+			   GimpChainButton *gcb)
 {
   GtkStyle  *style;
   GtkWidget *parent;
-  GtkWidget *box;
 
   parent = GTK_WIDGET(gcb)->parent;
   if (!GTK_WIDGET_REALIZED (parent))
@@ -130,16 +158,14 @@ gimp_chain_button_realize (GtkWidget *widget, GimpChainButton *gcb)
   else
     gcb->pixmap = gtk_pixmap_new (gcb->broken, gcb->broken_mask);
 
-  box = gtk_hbox_new (FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (box), 0);
-  gtk_container_add (GTK_CONTAINER (gcb), box);
-  gtk_box_pack_start (GTK_BOX (box), gcb->pixmap, TRUE, TRUE, 2);
+  gtk_container_add (GTK_CONTAINER (gcb->button), gcb->pixmap);
   gtk_widget_show (gcb->pixmap);
-  gtk_widget_show (box);
+  gtk_widget_show (gcb->button);
 }
 
-void
-gimp_chain_button_callback (GtkWidget *widget, GimpChainButton *gcb)
+static void
+gimp_chain_button_callback (GtkWidget *widget,
+			    GimpChainButton *gcb)
 {
   g_return_if_fail (gcb != NULL);
   g_return_if_fail (GIMP_IS_CHAIN_BUTTON (gcb));
@@ -153,6 +179,90 @@ gimp_chain_button_callback (GtkWidget *widget, GimpChainButton *gcb)
     gtk_pixmap_set (GTK_PIXMAP(gcb->pixmap), gcb->chain, gcb->chain_mask);
   else
     gtk_pixmap_set (GTK_PIXMAP(gcb->pixmap), gcb->broken, gcb->broken_mask);
+}
+
+static void
+gimp_chain_button_draw_lines (GtkWidget       *widget,
+			      GdkEvent        *event,
+			      GimpChainButton *gcb)
+{
+  GdkPoint      points[3];
+  GdkPoint      buf;
+  GtkShadowType	shadow;
+  gint          which_line;
+
+#define SHORT_LINE 4
+  /* don't set this too high, there's no check against drawing outside 
+     the widgets bounds yet (and probably never will be) */
+
+  g_return_if_fail (gcb != NULL);
+  g_return_if_fail (GIMP_IS_CHAIN_BUTTON (gcb));
+
+  if (event); /* avoid unused variable compiler warning */
+
+  gdk_window_clear_area (widget->window,
+			 0, 0,
+			 widget->allocation.width,
+			 widget->allocation.height);
+  
+  points[0].x = widget->allocation.width / 2;
+  points[0].y = widget->allocation.height / 2;
+
+  which_line = (widget == gcb->line1) ? 1 : -1;
+
+  switch (gcb->position)
+    {
+    case GIMP_CHAIN_LEFT:
+      points[0].x += SHORT_LINE;
+      points[1].x = points[0].x - SHORT_LINE;
+      points[1].y = points[0].y;
+      points[2].x = points[1].x;
+      points[2].y = (which_line == 1) ? widget->allocation.height - 1 : 0;
+      shadow = GTK_SHADOW_ETCHED_IN;
+      break;
+    case GIMP_CHAIN_RIGHT:
+      points[0].x -= SHORT_LINE;
+      points[1].x = points[0].x + SHORT_LINE;
+      points[1].y = points[0].y;
+      points[2].x = points[1].x;
+      points[2].y = (which_line == 1) ? widget->allocation.height - 1 : 0;
+      shadow = GTK_SHADOW_ETCHED_OUT;
+      break;
+    case GIMP_CHAIN_TOP:
+      points[0].y += SHORT_LINE;
+      points[1].x = points[0].x;
+      points[1].y = points[0].y - SHORT_LINE;
+      points[2].x = (which_line == 1) ? widget->allocation.width - 1 : 0;
+      points[2].y = points[1].y;
+      shadow = GTK_SHADOW_ETCHED_OUT;
+      break;
+    case GIMP_CHAIN_BOTTOM:
+      points[0].y -= SHORT_LINE;
+      points[1].x = points[0].x;
+      points[1].y = points[0].y + SHORT_LINE;
+      points[2].x = (which_line == 1) ? widget->allocation.width - 1 : 0;
+      points[2].y = points[1].y;
+      shadow = GTK_SHADOW_ETCHED_IN;
+      break;
+    default:
+      return;
+    }
+
+  if ( ((shadow == GTK_SHADOW_ETCHED_OUT) && (which_line == -1)) ||
+       ((shadow == GTK_SHADOW_ETCHED_IN) && (which_line == 1)) )
+    {
+      buf = points[0];
+      points[0] = points[2];
+      points[2] = buf;
+    }
+
+  gtk_draw_polygon (widget->style,
+		    widget->window,
+		    GTK_STATE_NORMAL,
+		    shadow,
+		    points,
+		    3,
+		    FALSE);
 }
 
 void       
@@ -186,7 +296,3 @@ gimp_chain_button_get_active (GimpChainButton *gcb)
 
   return (gcb->active) ? TRUE : FALSE;
 }
-
-
-
-

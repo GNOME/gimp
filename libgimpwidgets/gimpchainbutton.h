@@ -51,11 +51,14 @@ typedef enum {
 
 struct _GimpChainButton
 {
-  GtkHBox hbox;
+  GtkTable table;
 
   GimpChainPosition  position;
   GtkTooltips       *tooltips;
   gchar             *tip;
+  GtkWidget         *button;
+  GtkWidget         *line1;
+  GtkWidget         *line2;
   GtkWidget         *pixmap;
   GdkPixmap         *broken;
   GdkBitmap         *broken_mask;
