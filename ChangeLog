@@ -1,5 +1,10 @@
 2004-09-11  DindinX  <david@dindinx.org>
 
+	* plug-ins/common/edge.c: ported to GimpPreviewArea. 100 less lines of
+	code and much more features!
+
+2004-09-11  DindinX  <david@dindinx.org>
+
 	* plug-ins/common/oilify.c: some code cleanup and small optimisations.
 
 2004-09-10  Sven Neumann  <sven@gimp.org>
