@@ -1,3 +1,9 @@
+2000-12-19  Sven Neumann  <sven@gimp.org>
+
+	* app/curves.c: applied a patch from David Hodson that reverts
+	the curves tool back to its old behaviour (start with the identical
+	transform), but keeps the fix for bug #33403.
+
 2000-12-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/patterns.c: uniquefy pattern names before inserting them

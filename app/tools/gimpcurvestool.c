@@ -453,17 +453,17 @@ curves_initialize (GDisplay *gdisp)
   if (!curves_dialog)
     {
       curves_dialog = curves_dialog_new ();
-
-      /*  Initialize the values  */
-      curves_dialog->channel = GIMP_HISTOGRAM_VALUE;
-      for (i = 0; i < 5; i++)
-        for (j = 0; j < 256; j++)
-          curves_dialog->curve[i][j] = j;
-
-      for (i = 0; i < 5; i++)
-        {
-	    curves_channel_reset (i);
-        }
+    }
+     
+  /*  Initialize the values  */
+  curves_dialog->channel = GIMP_HISTOGRAM_VALUE;
+  for (i = 0; i < 5; i++)
+    for (j = 0; j < 256; j++)
+      curves_dialog->curve[i][j] = j;
+  
+  for (i = 0; i < 5; i++)
+    {
+      curves_channel_reset (i);
     }
 
   curves_dialog->drawable  = gimage_active_drawable (gdisp->gimage);
@@ -497,9 +497,6 @@ curves_initialize (GDisplay *gdisp)
     gtk_widget_show (curves_dialog->shell);
 
   curves_update (curves_dialog, GRAPH | DRAW);
-
-  if (curves_dialog->preview)
-    curves_preview (curves_dialog);
 }
 
 void
