@@ -847,6 +847,7 @@ app/makefile.mingw
 app/base/Makefile
 app/core/Makefile
 app/display/Makefile
+app/file/Makefile
 app/gui/Makefile
 app/paint-funcs/Makefile
 app/pdb/Makefile
