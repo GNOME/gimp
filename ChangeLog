@@ -1,3 +1,9 @@
+2003-01-26  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpbrushpipe.c
+	* app/gui/about-dialog.c: plugged some obvious memleaks related to
+	the use of GRand.
+
 2003-01-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-ins.c

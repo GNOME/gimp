@@ -213,13 +213,13 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
   gdouble        angle;
   GRand         *gr;
 
-  /* Initialise random number generator */
-  gr = g_rand_new();
-
   pipe = GIMP_BRUSH_PIPE (brush);
 
   if (pipe->nbrushes == 1)
     return GIMP_BRUSH (pipe->current);
+
+  /* Initialise random number generator */
+  gr = g_rand_new ();
 
   brushix = 0;
   for (i = 0; i < pipe->dimension; i++)
@@ -259,6 +259,7 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
 	  ix = pipe->index[i];
 	  break;
 	}
+
       pipe->index[i] = CLAMP (ix, 0, pipe->rank[i]-1);
       brushix += pipe->stride[i] * pipe->index[i];
     }

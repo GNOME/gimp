@@ -122,16 +122,14 @@ about_dialog_create (void)
   gint       height;
   gint       i;
   gchar     *label_text;
-  GRand     *gr;
-
-  gr = g_rand_new();
 
   if (! about_dialog)
     {
       about_dialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
       gtk_window_set_type_hint (GTK_WINDOW (about_dialog),
 				GDK_WINDOW_TYPE_HINT_DIALOG);
-      gtk_window_set_wmclass (GTK_WINDOW (about_dialog), "about_dialog", "Gimp");
+      gtk_window_set_wmclass (GTK_WINDOW (about_dialog),
+			      "about_dialog", "Gimp");
       gtk_window_set_title (GTK_WINDOW (about_dialog), _("About The GIMP"));
       gtk_window_set_position (GTK_WINDOW (about_dialog), GTK_WIN_POS_CENTER);
       gtk_window_set_resizable (GTK_WINDOW (about_dialog), FALSE);
@@ -247,7 +245,8 @@ about_dialog_create (void)
       gtk_container_add (GTK_CONTAINER (aboutframe), scroll_area);
       gtk_widget_show (scroll_area);
 
-      label = gtk_label_new (_("Visit http://www.gimp.org/ for more information"));
+      label =
+	gtk_label_new (_("Visit http://www.gimp.org/ for more information"));
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 
@@ -267,6 +266,8 @@ about_dialog_create (void)
 
       if (! double_speed && hadja_state != 7)
 	{
+	  GRand *gr = g_rand_new ();
+
 	  for (i = 0; i < nscroll_texts; i++) 
 	    {
 	      shuffle_array[i] = i;
@@ -286,16 +287,16 @@ about_dialog_create (void)
 		  shuffle_array[i] = t;
 		}
 	    }
-	  cur_scroll_text = g_rand_int_range(gr, 0, nscroll_texts);          
+
+	  cur_scroll_text = g_rand_int_range (gr, 0, nscroll_texts);          
           pango_layout_set_text (scroll_layout, 
                                  scroll_text[cur_scroll_text], -1);
 
+	  g_rand_free (gr);
 	}
     }
 
   gtk_window_present (GTK_WINDOW (about_dialog));
-
-  g_rand_free (gr);
 
   return about_dialog;
 }
@@ -308,8 +309,6 @@ about_dialog_load_logo (GtkWidget *window)
   GdkGC     *gc;
   gint       i, j, k;
   GRand     *gr;
-
-  gr = g_rand_new();
 
   if (logo_pixmap)
     return TRUE;
@@ -357,6 +356,8 @@ about_dialog_load_logo (GtkWidget *window)
     (logo_height % ANIMATION_SIZE == 0 ? 0 : 1);
 
   dissolve_map = g_new (guchar, dissolve_width * dissolve_height);
+
+  gr = g_rand_new ();
 
   for (i = 0, k = 0; i < dissolve_height; i++)
     for (j = 0; j < dissolve_width; j++, k++)
