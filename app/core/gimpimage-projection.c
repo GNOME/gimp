@@ -3605,6 +3605,7 @@ gimp_image_add_layer (GimpImage *gimage,
     }
 
   gimp_container_insert (gimage->layers, GIMP_OBJECT (layer), position);
+  g_object_unref (G_OBJECT (layer));
 
   /*  notify the layers dialog of the currently active layer  */
   gimp_image_set_active_layer (gimage, layer);
@@ -3801,6 +3802,7 @@ gimp_image_add_channel (GimpImage   *gimage,
 
   /*  add the channel to the list  */
   gimp_container_add (gimage->channels, GIMP_OBJECT (channel));
+  g_object_unref (G_OBJECT (channel));
 
   /*  notify this gimage of the currently active channel  */
   gimp_image_set_active_channel (gimage, channel);

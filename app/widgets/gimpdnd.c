@@ -959,7 +959,6 @@ gimp_gtk_drag_source_set_by_type (GtkWidget       *widget,
 {
   GimpDndDataType dnd_type;
 
-  g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   dnd_type = gimp_dnd_data_type_get_by_gtk_type (type);
@@ -981,7 +980,6 @@ gimp_gtk_drag_dest_set_by_type (GtkWidget       *widget,
 {
   GimpDndDataType dnd_type;
 
-  g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   dnd_type = gimp_dnd_data_type_get_by_gtk_type (type);
@@ -1003,7 +1001,6 @@ gimp_dnd_viewable_source_set (GtkWidget               *widget,
 {
   GimpDndDataType dnd_type;
 
-  g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (get_viewable_func != NULL);
 
@@ -1023,7 +1020,6 @@ gimp_dnd_viewable_source_unset (GtkWidget *widget,
 {
   GimpDndDataType dnd_type;
 
-  g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   dnd_type = gimp_dnd_data_type_get_by_gtk_type (type);
@@ -1042,7 +1038,6 @@ gimp_dnd_viewable_dest_set (GtkWidget               *widget,
 {
   GimpDndDataType dnd_type;
 
-  g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (set_viewable_func != NULL);
 
@@ -1062,7 +1057,6 @@ gimp_dnd_viewable_dest_unset (GtkWidget *widget,
 {
   GimpDndDataType dnd_type;
 
-  g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   dnd_type = gimp_dnd_data_type_get_by_gtk_type (type);
@@ -1080,7 +1074,6 @@ gimp_dnd_get_drag_data (GtkWidget *widget)
   GimpDndDragViewableFunc  get_data_func;
   gpointer                 get_data_data;
 
-  g_return_val_if_fail (widget != NULL, NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (widget), NULL);
 
   data_type =

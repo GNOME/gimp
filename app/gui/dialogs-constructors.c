@@ -704,9 +704,7 @@ dialogs_path_list_view_new (GimpDialogFactory *factory,
 
   view = paths_dialog_create ();
 
-  g_object_weak_ref (G_OBJECT (view),
-		     (GDestroyNotify) gtk_widget_destroyed,
-		     &view);
+  g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
 
   dockable = dialogs_dockable_new (view,
 				   "Path List", "Paths",
@@ -777,9 +775,7 @@ dialogs_error_console_get (GimpDialogFactory *factory,
 
   view = error_console_create ();
 
-  g_object_weak_ref (G_OBJECT (view),
-		     (GDestroyNotify) gtk_widget_destroyed,
-		     &view);
+  g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
 
   dockable = dialogs_dockable_new (view,
 				   "Error Console", "Errors",

@@ -2844,9 +2844,6 @@ parse_document (gpointer val1p,
   GIMP_LIST (the_gimp->documents)->list =
     g_list_append (GIMP_LIST (the_gimp->documents)->list, imagefile);
 
-  gtk_object_ref (GTK_OBJECT (imagefile));
-  gtk_object_sink (GTK_OBJECT (imagefile));
-
   the_gimp->documents->num_children++;
 
   return OK;

@@ -377,9 +377,8 @@ gimp_preview_set_viewable (GimpPreview  *preview,
 					  G_TYPE_FROM_INSTANCE (preview->viewable));
 	}
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (preview->viewable),
-                                            G_CALLBACK (gtk_widget_destroyed),
-                                            &preview->viewable);
+      g_object_remove_weak_pointer (G_OBJECT (preview->viewable),
+				    (gpointer *) &preview->viewable);
 
       g_signal_handlers_disconnect_by_func (G_OBJECT (preview->viewable),
                                             G_CALLBACK (gimp_preview_paint),
@@ -407,9 +406,8 @@ gimp_preview_set_viewable (GimpPreview  *preview,
 					NULL);
 	}
 
-      g_object_weak_ref (G_OBJECT (preview->viewable),
-			 (GWeakNotify) gtk_widget_destroyed,
-			 &preview->viewable);
+      g_object_add_weak_pointer (G_OBJECT (preview->viewable),
+				 (gpointer *) &preview->viewable);
 
       g_signal_connect_swapped (G_OBJECT (preview->viewable),
                                 "invalidate_preview",

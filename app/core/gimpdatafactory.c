@@ -133,9 +133,6 @@ gimp_data_factory_new (GType                              data_type,
 
   factory->container = gimp_data_list_new (data_type);
 
-  gtk_object_ref (GTK_OBJECT (factory->container));
-  gtk_object_sink (GTK_OBJECT (factory->container));
-
   factory->data_path              = data_path;
 
   factory->loader_entries         = loader_entries;
@@ -241,6 +238,7 @@ gimp_data_factory_data_new (GimpDataFactory *factory,
       data = factory->data_new_func (name);
 
       gimp_container_add (factory->container, GIMP_OBJECT (data));
+      g_object_unref (G_OBJECT (data));
 
       return data;
     }
@@ -296,8 +294,13 @@ gimp_data_factory_data_load_callback (const gchar *filename,
     data = (GimpData *) (* factory->loader_entries[i].load_func) (filename);
 
     if (! data)
-      g_message (_("Warning: Failed to load data from\n\"%s\""), filename);
+      {
+	g_message (_("Warning: Failed to load data from\n\"%s\""), filename);
+      }
     else
-      gimp_container_add (factory->container, GIMP_OBJECT (data));
+      {
+	gimp_container_add (factory->container, GIMP_OBJECT (data));
+	g_object_unref (G_OBJECT (data));
+      }
   }
 }

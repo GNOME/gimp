@@ -1,3 +1,42 @@
+2001-08-12  Michael Natterer  <mitch@gimp.org>
+
+	Switched to GObject reference counting:
+
+	* app/core/gimpcontainer.c: only ref(), not ref()/sink() children
+	of strong containers. Reordered gimp_container_remove() so we
+	don't need to ref the object while removing it.
+
+	* app/core/gimpcontext.c: misc fixes. Needs to be badly tortured...
+
+	* app/app_procs.c
+	* app/gdisplay.c
+	* app/gimprc.c
+	* app/core/gimp.c
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpdocuments.c
+	* app/core/gimpgradient.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer.c
+	* app/core/gimplist.c
+	* app/core/gimpobject.c
+	* app/core/gimpparasite.c
+	* app/core/gimppattern.c
+	* app/core/gimpundostack.c
+	* app/gui/dialogs.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpfuzzyselecttool.c: changed accordingly: don't
+	ref()/sink() any more, unref all (??) objects after adding them to
+	strong containers, misc. minor fixes.
+
+	* app/gui/dialogs-constructors.c
+	* app/widgets/gimpwidgets.c: use g_object_add_weak_pointer()
+	instead of simply crashing because g_object_weak_ref() was used
+	with gtk_widget_destroyed, brrr.
+
+	* app/widgets/gimpdnd.c: removed unneeded g_return_if_fail()'s.
+
 2001-08-12  Sven Neumann  <sven@gimp.org>
 
 	* TODO.xml: fixed an error, updated some numbers and added new items.

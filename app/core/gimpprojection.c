@@ -266,8 +266,7 @@ gdisplay_new (GimpImage *gimage,
   gimage->instance_count++;   /* this is obsolete */
   gimage->disp_count++;
 
-  gtk_object_ref (GTK_OBJECT (gimage));
-  gtk_object_sink (GTK_OBJECT (gimage));
+  g_object_ref (G_OBJECT (gimage));
 
   /* We're interested in clean and dirty signals so we can update the
    * title if need be.
@@ -490,7 +489,7 @@ gdisplay_delete (GDisplay *gdisp)
   gdk_drawable_unref (gdisp->icon);
   gdk_drawable_unref (gdisp->iconmask);
 
-  gtk_widget_unref (gdisp->shell);
+  gtk_widget_destroy (gdisp->shell);
 
   g_free (gdisp);
 }

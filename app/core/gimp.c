@@ -127,9 +127,6 @@ gimp_init (Gimp *gimp)
 
   gimp->images              = gimp_list_new (GIMP_TYPE_IMAGE,
 					     GIMP_CONTAINER_POLICY_WEAK);
-  gtk_object_ref (GTK_OBJECT (gimp->images));
-  gtk_object_sink (GTK_OBJECT (gimp->images));
-
   gimp->next_image_ID       = 1;
   gimp->next_guide_ID       = 1;
   gimp->image_table         = g_hash_table_new (g_direct_hash, NULL);
@@ -140,9 +137,6 @@ gimp_init (Gimp *gimp)
   gimp->global_buffer       = NULL;
   gimp->named_buffers       = gimp_list_new (GIMP_TYPE_BUFFER,
 					     GIMP_CONTAINER_POLICY_STRONG);
-  gtk_object_ref (GTK_OBJECT (gimp->named_buffers));
-  gtk_object_sink (GTK_OBJECT (gimp->named_buffers));
-
   gimp->brush_factory       = NULL;
   gimp->pattern_factory     = NULL;
   gimp->gradient_factory    = NULL;
@@ -152,8 +146,6 @@ gimp_init (Gimp *gimp)
 
   gimp->tool_info_list      = gimp_list_new (GIMP_TYPE_TOOL_INFO,
 					     GIMP_CONTAINER_POLICY_STRONG);
-  gtk_object_ref (GTK_OBJECT (gimp->tool_info_list));
-  gtk_object_sink (GTK_OBJECT (gimp->tool_info_list));
 
   gimp_documents_init (gimp);
 
@@ -344,7 +336,6 @@ gimp_initialize (Gimp *gimp)
   static gint n_palette_loader_entries = (sizeof (palette_loader_entries) /
 					  sizeof (palette_loader_entries[0]));
 
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp->brush_factory =
@@ -354,8 +345,6 @@ gimp_initialize (Gimp *gimp)
 			   n_brush_loader_entries,
 			   gimp_brush_new,
 			   gimp_brush_get_standard);
-  gtk_object_ref (GTK_OBJECT (gimp->brush_factory));
-  gtk_object_sink (GTK_OBJECT (gimp->brush_factory));
 
   gimp->pattern_factory =
     gimp_data_factory_new (GIMP_TYPE_PATTERN,
@@ -364,8 +353,6 @@ gimp_initialize (Gimp *gimp)
 			   n_pattern_loader_entries,
 			   gimp_pattern_new,
 			   gimp_pattern_get_standard);
-  gtk_object_ref (GTK_OBJECT (gimp->pattern_factory));
-  gtk_object_sink (GTK_OBJECT (gimp->pattern_factory));
 
   gimp->gradient_factory =
     gimp_data_factory_new (GIMP_TYPE_GRADIENT,
@@ -374,8 +361,6 @@ gimp_initialize (Gimp *gimp)
 			   n_gradient_loader_entries,
 			   gimp_gradient_new,
 			   gimp_gradient_get_standard);
-  gtk_object_ref (GTK_OBJECT (gimp->gradient_factory));
-  gtk_object_sink (GTK_OBJECT (gimp->gradient_factory));
 
   gimp->palette_factory =
     gimp_data_factory_new (GIMP_TYPE_PALETTE,
@@ -384,30 +369,32 @@ gimp_initialize (Gimp *gimp)
 			   n_palette_loader_entries,
 			   gimp_palette_new,
 			   gimp_palette_get_standard);
-  gtk_object_ref (GTK_OBJECT (gimp->palette_factory));
-  gtk_object_sink (GTK_OBJECT (gimp->palette_factory));
 
   gimp_image_new_init (gimp);
 
   gimp->standard_context = gimp_create_context (gimp, "Standard", NULL);
-  gtk_object_ref (GTK_OBJECT (gimp->standard_context));
-  gtk_object_sink (GTK_OBJECT (gimp->standard_context));
 
-  /*  TODO: load from disk  */
+  /*  the default context contains the user's saved preferences
+   *
+   *  TODO: load from disk
+   */
   context = gimp_create_context (gimp, "Default", NULL);
   gimp_set_default_context (gimp, context);
+  g_object_unref (G_OBJECT (context));
 
+  /*  the initial user_context is a straight copy of the default context
+   */
   context = gimp_create_context (gimp, "User", context);
   gimp_set_user_context (gimp, context);
 
   gimp_set_current_context (gimp, context);
+  g_object_unref (G_OBJECT (context));
 }
 
 void
 gimp_restore (Gimp     *gimp,
 	      gboolean  no_data)
 {
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   /*  initialize  the global parasite table  */
@@ -440,7 +427,6 @@ gimp_restore (Gimp     *gimp,
 void
 gimp_shutdown (Gimp *gimp)
 {
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp_data_factory_data_save (gimp->brush_factory);
@@ -455,7 +441,6 @@ gimp_shutdown (Gimp *gimp)
 void
 gimp_set_busy (Gimp *gimp)
 {
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   /* FIXME: gimp_busy HACK */
@@ -482,7 +467,6 @@ gimp_idle_unset_busy (gpointer data)
 void
 gimp_set_busy_until_idle (Gimp *gimp)
 {
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (! gimp->busy_idle_id)
@@ -498,7 +482,6 @@ gimp_set_busy_until_idle (Gimp *gimp)
 void
 gimp_unset_busy (Gimp *gimp)
 {
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (gimp->gui_unset_busy_func)
@@ -517,7 +500,6 @@ gimp_create_image (Gimp              *gimp,
 {
   GimpImage *gimage;
 
-  g_return_val_if_fail (gimp != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   gimage = gimp_image_new (gimp, width, height, type);
@@ -543,7 +525,6 @@ void
 gimp_create_display (Gimp      *gimp,
 		     GimpImage *gimage)
 {
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (gimp->create_display_func)
@@ -559,7 +540,6 @@ gimp_open_file (Gimp        *gimp,
   GimpImage *gimage;
   gint       status;
 
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (filename != NULL);
 
@@ -601,7 +581,6 @@ gimp_create_context (Gimp        *gimp,
 {
   GimpContext *context;
 
-  g_return_val_if_fail (gimp != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (!template || GIMP_IS_CONTEXT (template), NULL);
 
@@ -631,7 +610,6 @@ gimp_context_disconnect_callback (GimpContext *context,
 GimpContext *
 gimp_get_standard_context (Gimp *gimp)
 {
-  g_return_val_if_fail (gimp != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   return gimp->standard_context;
@@ -641,7 +619,6 @@ void
 gimp_set_default_context (Gimp        *gimp,
 			  GimpContext *context)
 {
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
 
@@ -654,15 +631,13 @@ gimp_set_default_context (Gimp        *gimp,
 
   if (gimp->default_context)
     {
-      gtk_object_ref (GTK_OBJECT (gimp->default_context));
-      gtk_object_sink (GTK_OBJECT (gimp->default_context));
+      g_object_ref (G_OBJECT (gimp->default_context));
     }
 }
 
 GimpContext *
 gimp_get_default_context (Gimp *gimp)
 {
-  g_return_val_if_fail (gimp != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   return gimp->default_context;
@@ -672,7 +647,6 @@ void
 gimp_set_user_context (Gimp        *gimp,
 		       GimpContext *context)
 {
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
 
@@ -685,15 +659,13 @@ gimp_set_user_context (Gimp        *gimp,
 
   if (gimp->user_context)
     {
-      gtk_object_ref (GTK_OBJECT (gimp->user_context));
-      gtk_object_sink (GTK_OBJECT (gimp->user_context));
+      g_object_ref (G_OBJECT (gimp->user_context));
     }
 }
 
 GimpContext *
 gimp_get_user_context (Gimp *gimp)
 {
-  g_return_val_if_fail (gimp != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   return gimp->user_context;
@@ -703,7 +675,6 @@ void
 gimp_set_current_context (Gimp        *gimp,
 			  GimpContext *context)
 {
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
 
@@ -723,7 +694,6 @@ gimp_set_current_context (Gimp        *gimp,
 GimpContext *
 gimp_get_current_context (Gimp *gimp)
 {
-  g_return_val_if_fail (gimp != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   return gimp->current_context;

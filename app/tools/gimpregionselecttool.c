@@ -647,9 +647,6 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
 
   fuzzy_mask = new;
 
-  gtk_object_ref (GTK_OBJECT (fuzzy_mask));
-  gtk_object_sink (GTK_OBJECT (fuzzy_mask));
-
   /*  calculate and allocate a new XSegment array which represents the boundary
    *  of the color-contiguous region
    */

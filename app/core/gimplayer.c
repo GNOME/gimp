@@ -415,9 +415,6 @@ gimp_layer_copy (GimpLayer *layer,
     {
       new_layer->mask = gimp_layer_mask_copy (layer->mask);
 
-      gtk_object_ref (GTK_OBJECT (new_layer->mask));
-      gtk_object_sink (GTK_OBJECT (new_layer->mask));
-
       gimp_layer_mask_set_layer (new_layer->mask, new_layer);
     }
 
@@ -551,9 +548,6 @@ gimp_layer_add_mask (GimpLayer     *layer,
     }
 
   layer->mask = mask;
-
-  gtk_object_ref (GTK_OBJECT (layer->mask));
-  gtk_object_sink (GTK_OBJECT (layer->mask));
 
   gimp_layer_mask_set_layer (mask, layer);
 

@@ -52,11 +52,13 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_container_init                   (GimpContainer      *container);
-static void   gimp_container_class_init             (GimpContainerClass *klass);
-static void   gimp_container_dispose                (GObject            *object);
-static void   gimp_container_disconnect_callback    (GimpObject         *object,
-						     gpointer            data);
+static void   gimp_container_class_init          (GimpContainerClass *klass);
+static void   gimp_container_init                (GimpContainer      *container);
+
+static void   gimp_container_dispose             (GObject            *object);
+
+static void   gimp_container_disconnect_callback (GimpObject         *object,
+						  gpointer            data);
 
 
 static guint   container_signals[LAST_SIGNAL] = { 0 };
@@ -93,18 +95,7 @@ gimp_container_get_type (void)
 }
 
 static void
-gimp_container_init (GimpContainer *container)
-{
-  container->children_type = GIMP_TYPE_OBJECT;
-  container->policy        = GIMP_CONTAINER_POLICY_STRONG;
-  container->num_children  = 0;
-
-  container->handlers      = NULL;
-  container->freeze_count  = 0;
-}
-
-static void
-gimp_container_class_init (GimpContainerClass* klass)
+gimp_container_class_init (GimpContainerClass *klass)
 {
   GObjectClass *object_class;
 
@@ -166,13 +157,25 @@ gimp_container_class_init (GimpContainerClass* klass)
   klass->add                = NULL;
   klass->remove             = NULL;
   klass->reorder            = NULL;
+  klass->freeze             = NULL;
+  klass->thaw               = NULL;
+
   klass->have               = NULL;
   klass->foreach            = NULL;
   klass->get_child_by_name  = NULL;
   klass->get_child_by_index = NULL;
   klass->get_child_index    = NULL;
-  klass->freeze             = NULL;
-  klass->thaw               = NULL;
+}
+
+static void
+gimp_container_init (GimpContainer *container)
+{
+  container->children_type = GIMP_TYPE_OBJECT;
+  container->policy        = GIMP_CONTAINER_POLICY_STRONG;
+  container->num_children  = 0;
+
+  container->handlers      = NULL;
+  container->freeze_count  = 0;
 }
 
 static void
@@ -263,8 +266,7 @@ gimp_container_add (GimpContainer *container,
   switch (container->policy)
     {
     case GIMP_CONTAINER_POLICY_STRONG:
-      gtk_object_ref (GTK_OBJECT (object));
-      gtk_object_sink (GTK_OBJECT (object));
+      g_object_ref (G_OBJECT (object));
       break;
 
     case GIMP_CONTAINER_POLICY_WEAK:
@@ -316,7 +318,10 @@ gimp_container_remove (GimpContainer *container,
 	}
     }
 
-  g_object_ref (G_OBJECT (object));
+  container->num_children--;
+
+  g_signal_emit (G_OBJECT (container), container_signals[REMOVE], 0,
+		 object);
 
   switch (container->policy)
     {
@@ -331,13 +336,6 @@ gimp_container_remove (GimpContainer *container,
 	 container);
       break;
     }
-
-  container->num_children--;
-
-  g_signal_emit (G_OBJECT (container), container_signals[REMOVE], 0,
-		 object);
-
-  g_object_unref (G_OBJECT (object));
 
   return TRUE;
 }

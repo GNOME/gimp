@@ -282,8 +282,7 @@ gimp_gradient_get_standard (void)
     {
       standard_gradient = GIMP_GRADIENT (gimp_gradient_new ("Standard"));
 
-      gtk_object_ref (GTK_OBJECT (standard_gradient));
-      gtk_object_sink (GTK_OBJECT (standard_gradient));
+      g_object_ref (G_OBJECT (standard_gradient));
     }
 
   return GIMP_DATA (standard_gradient);

@@ -43,9 +43,6 @@ gimp_parasites_init (Gimp *gimp)
   g_return_if_fail (gimp->parasites == NULL);
 
   gimp->parasites = gimp_parasite_list_new ();
-
-  gtk_object_ref (GTK_OBJECT (gimp->parasites));
-  gtk_object_sink (GTK_OBJECT (gimp->parasites));
 }
 
 void 

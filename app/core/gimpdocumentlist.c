@@ -45,8 +45,6 @@ gimp_documents_init (Gimp *gimp)
 
   gimp->documents = gimp_list_new (GIMP_TYPE_IMAGEFILE,
 				   GIMP_CONTAINER_POLICY_STRONG);
-  gtk_object_ref (GTK_OBJECT (gimp->documents));
-  gtk_object_sink (GTK_OBJECT (gimp->documents));
 }
 
 void 
@@ -151,8 +149,6 @@ gimp_documents_add (Gimp        *gimp,
       imagefile = gimp_imagefile_new (filename);
 
       gimp_container_add (gimp->documents, GIMP_OBJECT (imagefile));
-
-      gtk_object_ref (GTK_OBJECT (imagefile));
-      gtk_object_sink (GTK_OBJECT (imagefile));
+      g_object_unref (G_OBJECT (imagefile));
     }
 }

@@ -122,6 +122,7 @@ gimp_object_class_init (GimpObjectClass *klass)
   object_class->set_property = gimp_object_set_property;
   object_class->get_property = gimp_object_get_property;
 
+  klass->disconnect          = NULL;
   klass->name_changed        = NULL;
 
   g_object_class_install_property (object_class,
@@ -141,7 +142,18 @@ gimp_object_init (GimpObject *object)
 static void
 gimp_object_dispose (GObject *object)
 {
-  g_signal_emit (G_OBJECT (object), object_signals[DISCONNECT], 0);
+  gboolean disconnected;
+
+  disconnected = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (object),
+						     "disconnected"));
+
+  if (! disconnected)
+    {
+      g_signal_emit (G_OBJECT (object), object_signals[DISCONNECT], 0);
+
+      g_object_set_data (G_OBJECT (object), "disconnected",
+			 GINT_TO_POINTER (TRUE));
+    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

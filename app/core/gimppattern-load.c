@@ -250,9 +250,7 @@ gimp_pattern_get_standard (void)
 	  }
 
       /*  set ref_count to 2 --> never swap the standard pattern  */
-      gtk_object_ref (GTK_OBJECT (standard_pattern));
-      gtk_object_ref (GTK_OBJECT (standard_pattern));
-      gtk_object_sink (GTK_OBJECT (standard_pattern));
+      g_object_ref (G_OBJECT (standard_pattern));
     }
 
   return GIMP_DATA (standard_pattern);

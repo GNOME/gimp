@@ -1075,7 +1075,10 @@ bezier_select_reset  (GimpBezierSelectTool *bezier_sel)
     }
 
   if (bezier_sel->mask)
-    g_object_unref (G_OBJECT (bezier_sel->mask));
+    {
+      g_object_unref (G_OBJECT (bezier_sel->mask));
+      bezier_sel->mask = NULL;
+    }
 
   bezier_sel->state       = BEZIER_START;     /* we are starting the curve */
   bezier_sel->draw_mode   = BEZIER_DRAW_ALL;  /* draw everything by default */
@@ -2897,9 +2900,6 @@ bezier_convert (GimpBezierSelectTool *bezier_sel,
   bezier_sel->mask = gimp_channel_new_mask (gdisp->gimage, 
 					    gdisp->gimage->width,
 					    gdisp->gimage->height);
-
-  gtk_object_ref (GTK_OBJECT (bezier_sel->mask));
-  gtk_object_sink (GTK_OBJECT (bezier_sel->mask));
 
   /* allocate room for the scanlines */
   bezier_sel->scanlines = g_malloc (sizeof (GSList *) * height);

@@ -32,7 +32,9 @@
 
 static void         gimp_list_class_init         (GimpListClass       *klass);
 static void         gimp_list_init               (GimpList            *list);
+
 static void         gimp_list_dispose            (GObject             *object);
+
 static void         gimp_list_add                (GimpContainer       *container,
 						  GimpObject          *object);
 static void         gimp_list_remove             (GimpContainer       *container,

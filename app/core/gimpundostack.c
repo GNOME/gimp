@@ -92,9 +92,7 @@ gimp_undo_stack_init (GimpUndoStack *stack)
   undos = gimp_list_new (GIMP_TYPE_UNDO,
                          GIMP_CONTAINER_POLICY_STRONG);
 
-  stack->undos  = undos;
-  gtk_object_ref (GTK_OBJECT (undos));
-  gtk_object_sink (GTK_OBJECT (undos));  
+  stack->undos = undos;
 
   g_signal_connect (G_OBJECT (undos), "add",
 		    G_CALLBACK (gimp_undo_stack_add_callback), 
@@ -146,6 +144,7 @@ gimp_undo_stack_push (GimpUndoStack *stack,
 
   gimp_undo_push (undo, stack->gimage);
   gimp_container_add (GIMP_CONTAINER (stack->undos), GIMP_OBJECT (undo));
+  g_object_unref (G_OBJECT (undo));
 }
 
 GimpUndo * 

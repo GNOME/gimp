@@ -357,7 +357,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_OBJECT);
+		  GIMP_TYPE_IMAGE);
 
   gimp_context_signals[DISPLAY_CHANGED] =
     g_signal_new (gimp_context_signal_names[DISPLAY_CHANGED],
@@ -377,7 +377,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_OBJECT);
+		  GIMP_TYPE_TOOL_INFO);
 
   gimp_context_signals[FOREGROUND_CHANGED] =
     g_signal_new (gimp_context_signal_names[FOREGROUND_CHANGED],
@@ -427,7 +427,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_OBJECT);
+		  GIMP_TYPE_BRUSH);
 
   gimp_context_signals[PATTERN_CHANGED] =
     g_signal_new (gimp_context_signal_names[PATTERN_CHANGED],
@@ -437,7 +437,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_OBJECT);
+		  GIMP_TYPE_PATTERN);
 
   gimp_context_signals[GRADIENT_CHANGED] =
     g_signal_new (gimp_context_signal_names[GRADIENT_CHANGED],
@@ -447,7 +447,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_OBJECT);
+		  GIMP_TYPE_GRADIENT);
 
   gimp_context_signals[PALETTE_CHANGED] =
     g_signal_new (gimp_context_signal_names[PALETTE_CHANGED],
@@ -457,7 +457,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_OBJECT);
+		  GIMP_TYPE_PALETTE);
 
   gimp_context_signals[BUFFER_CHANGED] =
     g_signal_new (gimp_context_signal_names[BUFFER_CHANGED],
@@ -467,7 +467,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_OBJECT);
+		  GIMP_TYPE_BUFFER);
 
   object_class->set_property = gimp_context_set_property;
   object_class->get_property = gimp_context_get_property;
@@ -927,6 +927,7 @@ gimp_context_set_parent (GimpContext *context,
 
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (! parent || GIMP_IS_CONTEXT (parent));
+  g_return_if_fail (context != parent);
 
   if (context == parent || context->parent == parent)
     return;
@@ -949,14 +950,12 @@ void
 gimp_context_unset_parent (GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (GIMP_IS_CONTEXT (context->parent));
 
-  if (context->parent)
-    {
-      if (context->defined_props != GIMP_CONTEXT_ALL_PROPS_MASK)
-	gtk_signal_disconnect_by_data (GTK_OBJECT (context->parent), context);
+  if (context->defined_props != GIMP_CONTEXT_ALL_PROPS_MASK)
+    gtk_signal_disconnect_by_data (GTK_OBJECT (context->parent), context);
 
-      context->parent = NULL;
-    }
+  context->parent = NULL;
 }
 
 /*  define / undefinine context properties  */
@@ -1097,11 +1096,12 @@ gimp_context_get_by_type (GimpContext *context,
   GimpObject          *object = NULL;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail ((prop = gimp_context_type_to_property (type)) != -1, NULL);
+  g_return_val_if_fail ((prop = gimp_context_type_to_property (type)) != -1,
+			NULL);
 
-  gtk_object_get (GTK_OBJECT (context),
-		  gimp_context_prop_names[prop], &object,
-		  NULL);
+  g_object_get (GTK_OBJECT (context),
+		gimp_context_prop_names[prop], &object,
+		NULL);
 
   return object;
 }
@@ -1116,9 +1116,9 @@ gimp_context_set_by_type (GimpContext *context,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail ((prop = gimp_context_type_to_property (type)) != -1);
 
-  gtk_object_set (GTK_OBJECT (context),
-		  gimp_context_prop_names[prop], object,
-		  NULL);
+  g_object_set (GTK_OBJECT (context),
+		gimp_context_prop_names[prop], object,
+		NULL);
 }
 
 void
@@ -1288,10 +1288,8 @@ void
 gimp_context_set_tool (GimpContext  *context,
 		       GimpToolInfo *tool_info)
 {
-  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
-  g_return_if_fail (! tool_info || GIMP_IS_TOOL_INFO (tool_info));
-
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (! tool_info || GIMP_IS_TOOL_INFO (tool_info));
   context_find_defined (context, GIMP_CONTEXT_TOOL_MASK);
 
   gimp_context_real_set_tool (context, tool_info);
@@ -1300,8 +1298,6 @@ gimp_context_set_tool (GimpContext  *context,
 void
 gimp_context_tool_changed (GimpContext *context)
 {
-  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
-
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (G_OBJECT (context),
@@ -1328,7 +1324,7 @@ gimp_context_tool_list_thaw (GimpContainer *container,
   GimpToolInfo *tool_info;
 
   if (! context->tool_name)
-    context->tool_name = g_strdup ("Color Picker");
+    context->tool_name = g_strdup ("gimp:rect-select-tool");
 
   if ((tool_info = (GimpToolInfo *)
        gimp_container_get_child_by_name (container,
@@ -1419,7 +1415,7 @@ gimp_context_copy_tool (GimpContext *src,
 {
   gimp_context_real_set_tool (dest, src->tool_info);
 
-  if ((!src->tool_info || src->tool_info == standard_tool_info) &&
+  if ((! src->tool_info || src->tool_info == standard_tool_info) &&
       src->tool_name)
     {
       g_free (dest->tool_name);
@@ -1436,7 +1432,6 @@ gimp_context_get_foreground (GimpContext *context,
 			     GimpRGB     *color)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-
   g_return_if_fail (color != NULL);
 
   *color = context->foreground;
@@ -1447,9 +1442,8 @@ gimp_context_set_foreground (GimpContext   *context,
 			     const GimpRGB *color)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  context_find_defined (context, GIMP_CONTEXT_FOREGROUND_MASK);
-
   g_return_if_fail (color != NULL);
+  context_find_defined (context, GIMP_CONTEXT_FOREGROUND_MASK);
 
   gimp_context_real_set_foreground (context, color);
 }
@@ -1502,9 +1496,8 @@ gimp_context_set_background (GimpContext   *context,
 			     const GimpRGB *color)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  context_find_defined (context, GIMP_CONTEXT_BACKGROUND_MASK);
-
   g_return_if_fail (color != NULL);
+  context_find_defined (context, GIMP_CONTEXT_BACKGROUND_MASK);
 
   gimp_context_real_set_background (context, color);
 }
@@ -1696,10 +1689,8 @@ void
 gimp_context_set_brush (GimpContext *context,
 			GimpBrush   *brush)
 {
-  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
-  g_return_if_fail (! brush || GIMP_IS_BRUSH (brush));
-
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (! brush || GIMP_IS_BRUSH (brush));
   context_find_defined (context, GIMP_CONTEXT_BRUSH_MASK);
 
   gimp_context_real_set_brush (context, brush);
@@ -1708,8 +1699,6 @@ gimp_context_set_brush (GimpContext *context,
 void
 gimp_context_brush_changed (GimpContext *context)
 {
-  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
-
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (G_OBJECT (context),
@@ -1790,20 +1779,21 @@ gimp_context_real_set_brush (GimpContext *context,
       context->brush_name = NULL;
     }
 
-  /*  make sure the active brush is swapped before we get a new one...  */
-  if (base_config->stingy_memory_use         &&
-      context->brush && context->brush->mask &&
-      G_OBJECT (context->brush)->ref_count == 2)
-    {
-      temp_buf_swap (brush->mask);
-    }
-
   /*  disconnect from the old brush's signals  */
   if (context->brush)
     {
+      /*  make sure the active brush is swapped before we get a new one...  */
+      if (base_config->stingy_memory_use &&
+	  context->brush->mask           &&
+	  G_OBJECT (context->brush)->ref_count == 2)
+	{
+	  temp_buf_swap (context->brush->mask);
+	}
+
       g_signal_handlers_disconnect_by_func (G_OBJECT (context->brush),
 					    gimp_context_brush_dirty,
 					    context);
+
       g_object_unref (G_OBJECT (context->brush));
     }
 
@@ -1843,7 +1833,7 @@ gimp_context_copy_brush (GimpContext *src,
 {
   gimp_context_real_set_brush (dest, src->brush);
 
-  if ((!src->brush || src->brush == standard_brush) && src->brush_name)
+  if ((! src->brush || src->brush == standard_brush) && src->brush_name)
     {
       g_free (dest->brush_name);
       dest->brush_name = g_strdup (src->brush_name);

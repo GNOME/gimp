@@ -103,15 +103,11 @@ dialogs_init (Gimp *gimp)
 						   gimp_get_user_context (gimp),
 						   NULL,
 						   NULL);
-  gtk_object_ref (GTK_OBJECT (global_dialog_factory));
-  gtk_object_sink (GTK_OBJECT (global_dialog_factory));
 
   global_dock_factory = gimp_dialog_factory_new ("dock",
 						 gimp_get_user_context (gimp),
 						 menus_get_dialogs_factory (),
 						 dialogs_dock_new);
-  gtk_object_ref (GTK_OBJECT (global_dock_factory));
-  gtk_object_sink (GTK_OBJECT (global_dock_factory));
 
   for (i = 0; i < n_toplevel_entries; i++)
     gimp_dialog_factory_register_entry (global_dialog_factory,

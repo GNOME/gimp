@@ -321,7 +321,7 @@ gimp_brush_pipe_load (const gchar *filename)
       g_message (_("Brush pipes should have at least one brush:\n\"%s\""), 
 		 filename);
       close (fd);
-      gtk_object_sink (GTK_OBJECT (pipe));
+      g_object_unref (G_OBJECT (pipe));
       g_string_free (buffer, TRUE);
       return NULL;
     }
@@ -401,9 +401,6 @@ gimp_brush_pipe_load (const gchar *filename)
 
       if (pipe->brushes[pipe->nbrushes])
 	{
-	  gtk_object_ref (GTK_OBJECT (pipe->brushes[pipe->nbrushes]));
-	  gtk_object_sink (GTK_OBJECT (pipe->brushes[pipe->nbrushes]));
-
 	  gimp_object_set_name (GIMP_OBJECT (pipe->brushes[pipe->nbrushes]),
 				NULL);
 	}
@@ -412,7 +409,7 @@ gimp_brush_pipe_load (const gchar *filename)
 	  g_message (_("Failed to load one of the brushes in the brush pipe\n\"%s\""), 
 		       filename);
 	  close (fd);
-	  gtk_object_sink (GTK_OBJECT (pipe));
+	  g_object_unref (G_OBJECT (pipe));
 	  return NULL;
 	}
   

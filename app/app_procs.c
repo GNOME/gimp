@@ -101,9 +101,6 @@ app_init (gint    gimp_argc,
    */
   the_gimp = gimp_new ();
 
-  gtk_object_ref (GTK_OBJECT (the_gimp));
-  gtk_object_sink (GTK_OBJECT (the_gimp));
-
   /*  Check if the user's gimp_directory exists
    */
   gimp_dir = gimp_directory ();
