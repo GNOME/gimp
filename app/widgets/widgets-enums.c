@@ -69,9 +69,13 @@ gimp_histogram_scale_get_type (void)
 static const GEnumValue gimp_tab_style_enum_values[] =
 {
   { GIMP_TAB_STYLE_ICON, N_("Icon"), "icon" },
+  { GIMP_TAB_STYLE_PREVIEW, N_("Current Status"), "preview" },
   { GIMP_TAB_STYLE_NAME, N_("Text"), "name" },
+  { GIMP_TAB_STYLE_BLURB, N_("Description"), "blurb" },
   { GIMP_TAB_STYLE_ICON_NAME, N_("Icon & Text"), "icon-name" },
   { GIMP_TAB_STYLE_ICON_BLURB, N_("Icon & Desc"), "icon-blurb" },
+  { GIMP_TAB_STYLE_PREVIEW_NAME, N_("Status & Text"), "preview-name" },
+  { GIMP_TAB_STYLE_PREVIEW_BLURB, N_("Status & Desc"), "preview-blurb" },
   { 0, NULL, NULL }
 };
 

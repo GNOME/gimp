@@ -64,10 +64,14 @@ GType gimp_tab_style_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TAB_STYLE_ICON,       /*< desc="Icon"        >*/
-  GIMP_TAB_STYLE_NAME,       /*< desc="Text"        >*/
-  GIMP_TAB_STYLE_ICON_NAME,  /*< desc="Icon & Text" >*/
-  GIMP_TAB_STYLE_ICON_BLURB  /*< desc="Icon & Desc" >*/
+  GIMP_TAB_STYLE_ICON,          /*< desc="Icon"           >*/
+  GIMP_TAB_STYLE_PREVIEW,       /*< desc="Current Status" >*/
+  GIMP_TAB_STYLE_NAME,          /*< desc="Text"           >*/
+  GIMP_TAB_STYLE_BLURB,         /*< desc="Description"    >*/
+  GIMP_TAB_STYLE_ICON_NAME,     /*< desc="Icon & Text"    >*/
+  GIMP_TAB_STYLE_ICON_BLURB,    /*< desc="Icon & Desc"    >*/
+  GIMP_TAB_STYLE_PREVIEW_NAME,  /*< desc="Status & Text"  >*/
+  GIMP_TAB_STYLE_PREVIEW_BLURB  /*< desc="Status & Desc"  >*/
 } GimpTabStyle;
 
 

@@ -1,3 +1,19 @@
+2003-08-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/widgets-enums.[ch]: extended GimpTabStyle enum so we
+	are able to distinguish icon and preview tabs.
+
+	* app/widgets/gimpdockable.[ch]: renamed GimpDockableGetIconFunc
+	to GimpDockableGetPreviewFunc. Always create stock icons for
+	"icon" tab styles and use the get_preview_func only for "preview"
+	tab styles.
+
+	* app/gui/dialogs-constructors.c: changed accordingly.
+
+	* app/gui/dialogs-menu.c: Added "Current Status" options to the
+	"Tab Style" menu and grey them out if the dockable has no
+	get_preview_func.
+
 2003-08-15  Sven Neumann  <neo@bender>
 
 	* LICENSE: cosmetics.

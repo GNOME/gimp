@@ -26,10 +26,10 @@
 #include <gtk/gtkbin.h>
 
 
-typedef GtkWidget * (* GimpDockableGetIconFunc)    (GimpDockable *dockable,
+typedef GtkWidget * (* GimpDockableGetPreviewFunc) (GimpDockable *dockable,
                                                     GimpContext  *context,
 						    GtkIconSize   size,
-                                                    gpointer      get_icon_data);
+                                                    gpointer      get_preview_data);
 typedef void        (* GimpDockableSetContextFunc) (GimpDockable *dockable,
 						    GimpContext  *context);
 
@@ -57,8 +57,8 @@ struct _GimpDockable
 
   GimpContext  *context;
 
-  GimpDockableGetIconFunc     get_icon_func;
-  gpointer                    get_icon_data;
+  GimpDockableGetPreviewFunc  get_preview_func;
+  gpointer                    get_preview_data;
   GimpDockableSetContextFunc  set_context_func;
 };
 
@@ -80,8 +80,8 @@ GType       gimp_dockable_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_dockable_new      (const gchar                *name,
 				    const gchar                *blurb,
                                     const gchar                *stock_id,
-				    GimpDockableGetIconFunc     get_icon_func,
-                                    gpointer                    get_icon_data,
+				    GimpDockableGetPreviewFunc  get_preview_func,
+                                    gpointer                    get_preview_data,
 				    GimpDockableSetContextFunc  set_context_func);
 
 GtkWidget * gimp_dockable_get_tab_widget (GimpDockable           *dockable,

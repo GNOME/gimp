@@ -119,8 +119,8 @@ gimp_dockable_init (GimpDockable *dockable)
   dockable->tab_style        = GIMP_TAB_STYLE_ICON;
   dockable->dockbook         = NULL;
   dockable->context          = NULL;
-  dockable->get_icon_func    = NULL;
-  dockable->get_icon_data    = NULL;
+  dockable->get_preview_func = NULL;
+  dockable->get_preview_data = NULL;
   dockable->set_context_func = NULL;
 }
 
@@ -220,8 +220,8 @@ GtkWidget *
 gimp_dockable_new (const gchar                *name,
 		   const gchar                *blurb,
                    const gchar                *stock_id,
-		   GimpDockableGetIconFunc     get_icon_func,
-                   gpointer                    get_icon_data,
+		   GimpDockableGetPreviewFunc  get_preview_func,
+                   gpointer                    get_preview_data,
 		   GimpDockableSetContextFunc  set_context_func)
 {
   GimpDockable *dockable;
@@ -236,8 +236,8 @@ gimp_dockable_new (const gchar                *name,
   dockable->blurb    = g_strdup (blurb);
   dockable->stock_id = g_strdup (stock_id);
 
-  dockable->get_icon_func     = get_icon_func;
-  dockable->get_icon_data     = get_icon_data;
+  dockable->get_preview_func = get_preview_func;
+  dockable->get_preview_data = get_preview_data;
   dockable->set_context_func = set_context_func;
 
   return GTK_WIDGET (dockable);
@@ -277,39 +277,62 @@ gimp_dockable_real_get_tab_widget (GimpDockable *dockable,
   GtkWidget *label      = NULL;
   GtkWidget *icon       = NULL;
 
-  if (tab_style == GIMP_TAB_STYLE_NAME ||
-      tab_style == GIMP_TAB_STYLE_ICON_NAME)
+  switch (tab_style)
     {
+    case GIMP_TAB_STYLE_NAME:
+    case GIMP_TAB_STYLE_ICON_NAME:
+    case GIMP_TAB_STYLE_PREVIEW_NAME:
       label = gtk_label_new (dockable->name);
-    }
-  else if (tab_style == GIMP_TAB_STYLE_ICON_BLURB)
-    {
-      label = gtk_label_new (dockable->blurb);
-    }
+      break;
 
-  if (tab_style == GIMP_TAB_STYLE_ICON      ||
-      tab_style == GIMP_TAB_STYLE_ICON_NAME ||
-      tab_style == GIMP_TAB_STYLE_ICON_BLURB)
-    {
-      if (dockable->get_icon_func)
-        icon = dockable->get_icon_func (dockable, context, size,
-                                        dockable->get_icon_data);
-      else
-        icon = gtk_image_new_from_stock (dockable->stock_id, size);
+    case GIMP_TAB_STYLE_BLURB:
+    case GIMP_TAB_STYLE_ICON_BLURB:
+    case GIMP_TAB_STYLE_PREVIEW_BLURB:
+      label = gtk_label_new (dockable->blurb);
+      break;
+
+    default:
+      break;
     }
 
   switch (tab_style)
     {
     case GIMP_TAB_STYLE_ICON:
+    case GIMP_TAB_STYLE_ICON_NAME:
+    case GIMP_TAB_STYLE_ICON_BLURB:
+      icon = gtk_image_new_from_stock (dockable->stock_id, size);
+      break;
+
+    case GIMP_TAB_STYLE_PREVIEW:
+    case GIMP_TAB_STYLE_PREVIEW_NAME:
+    case GIMP_TAB_STYLE_PREVIEW_BLURB:
+      if (dockable->get_preview_func)
+        icon = dockable->get_preview_func (dockable, context, size,
+                                           dockable->get_preview_data);
+      else
+        icon = gtk_image_new_from_stock (dockable->stock_id, size);
+      break;
+
+    default:
+      break;
+    }
+
+  switch (tab_style)
+    {
+    case GIMP_TAB_STYLE_ICON:
+    case GIMP_TAB_STYLE_PREVIEW:
       tab_widget = icon;
       break;
 
     case GIMP_TAB_STYLE_NAME:
+    case GIMP_TAB_STYLE_BLURB:
       tab_widget = label;
       break;
 
     case GIMP_TAB_STYLE_ICON_NAME:
     case GIMP_TAB_STYLE_ICON_BLURB:
+    case GIMP_TAB_STYLE_PREVIEW_NAME:
+    case GIMP_TAB_STYLE_PREVIEW_BLURB:
       tab_widget = gtk_hbox_new (FALSE, 4);
 
       gtk_box_pack_start (GTK_BOX (tab_widget), icon, FALSE, FALSE, 0);

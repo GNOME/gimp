@@ -143,8 +143,10 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
       GIMP_TAB_STYLE_ICON, "<RadioItem>" },
     NULL, NULL, NULL },
 
-  TAB_STYLE (N_("/Tab Style/_Text"),        GIMP_TAB_STYLE_NAME),
-  TAB_STYLE (N_("/Tab Style/I_con & Text"), GIMP_TAB_STYLE_ICON_NAME),
+  TAB_STYLE (N_("/Tab Style/Current _Status"), GIMP_TAB_STYLE_PREVIEW),
+  TAB_STYLE (N_("/Tab Style/_Text"),           GIMP_TAB_STYLE_NAME),
+  TAB_STYLE (N_("/Tab Style/I_con & Text"),    GIMP_TAB_STYLE_ICON_NAME),
+  TAB_STYLE (N_("/Tab Style/St_atus & Text"),  GIMP_TAB_STYLE_PREVIEW_NAME),
 
   { { N_("/View as _List"), NULL,
       dialogs_toggle_view_cmd_callback, GIMP_VIEW_TYPE_LIST, "<RadioItem>" },
@@ -284,10 +286,17 @@ dialogs_menu_update (GtkItemFactory *factory,
 
       if (tab_style == GIMP_TAB_STYLE_ICON)
         SET_ACTIVE ("/Tab Style/Icon", TRUE); 
+      else if (tab_style == GIMP_TAB_STYLE_PREVIEW)
+        SET_ACTIVE ("/Tab Style/Current Status", TRUE); 
       else if (tab_style == GIMP_TAB_STYLE_NAME)
         SET_ACTIVE ("/Tab Style/Text", TRUE); 
       else if (tab_style == GIMP_TAB_STYLE_ICON_NAME)
         SET_ACTIVE ("/Tab Style/Icon & Text", TRUE); 
+      else if (tab_style == GIMP_TAB_STYLE_PREVIEW_NAME)
+        SET_ACTIVE ("/Tab Style/Status & Text", TRUE); 
+
+      SET_SENSITIVE ("/Tab Style/Current Status", dockable->get_preview_func);
+      SET_SENSITIVE ("/Tab Style/Status & Text",  dockable->get_preview_func);
 
       SET_VISIBLE ("/View as Grid", view_type != -1);
       SET_VISIBLE ("/View as List", view_type != -1);
