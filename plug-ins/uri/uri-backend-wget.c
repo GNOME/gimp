@@ -110,11 +110,12 @@ uri_backend_load_image (const gchar  *uri,
       gboolean  connected    = FALSE;
       gboolean  redirect     = FALSE;
       gboolean  file_found   = FALSE;
-      gchar     sizestr[32];
-      gint      size         = 0;
+      gchar     sizestr[37];
+      gchar    *endptr;
+      guint64   size         = 0;
       gint      i, j;
       gchar     dot;
-      gint      kilobytes    = 0;
+      guint64   kilobytes    = 0;
       gboolean  finished     = FALSE;
       gboolean  debug        = FALSE;
       gchar    *memsize;
@@ -243,7 +244,7 @@ uri_backend_load_image (const gchar  *uri,
 
       DEBUG (buf);
 
-      if (sscanf (buf, "Length: %31s", sizestr) != 1)
+      if (sscanf (buf, "Length: %37s", sizestr) != 1)
         {
           g_set_error (error, 0, 0,
                        "Could not parse wget's file length message");
@@ -262,7 +263,13 @@ uri_backend_load_image (const gchar  *uri,
             break;
         }
 
-      size = atoi (sizestr);
+      if (*sizestr != '\0')
+        {
+          size = g_ascii_strtoull (sizestr, &endptr, 10);
+
+          if (*endptr != '\0' || size == G_MAXUINT64)
+            size = 0;
+        }
 
       /*  Start the actual download...  */
       if (size > 0)
@@ -302,10 +309,22 @@ uri_backend_load_image (const gchar  *uri,
               kilobytes++;
 
               if (size > 0)
-                gimp_progress_update ((gdouble) (kilobytes * 1024) /
-                                      (gdouble) size);
+                {
+                  gimp_progress_update ((gdouble) (kilobytes * 1024) /
+                                        (gdouble) size);
+                }
               else
-                gimp_progress_pulse ();
+                {
+                  memsize = gimp_memsize_to_string (kilobytes * 1024);
+                  message = g_strdup_printf (_("Downloaded %s of image data"),
+                                             memsize);
+                  g_free (memsize);
+
+                  gimp_progress_set_text (message);
+                  gimp_progress_pulse ();
+
+                  g_free (message);
+                }
             }
           else if (dot == ':')  /* the time string contains a ':' */
             {

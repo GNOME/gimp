@@ -1,3 +1,8 @@
+2005-02-24  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/uri/uri-backend-wget.c: Handle large file sizes, and
+	update the downloaded size for unknown file sizes.
+
 2005-02-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/uri/uri-backend-wget.c (uri_backend_load_image): pulse
