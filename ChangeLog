@@ -1,3 +1,16 @@
+2000-08-02  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimp.def: Add handful of missing functions, that
+	gdyntext now uses.
+
+	* plug-ins/makefile.cygwin: Move gdyntext from unofficial set to
+	official.
+
+	* plug-ins/gdyntext/font_selection.c: Remove unneeded inclusion of
+	Xlib.h and gdkx.h.
+
+	* plug-ins/gdyntext/gdyntext.c: Use G_PI.
+
 2000-08-01  Sven Neumann  <sven@gimp.org>
 
 	* app/TODO: removed

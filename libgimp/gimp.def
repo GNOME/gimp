@@ -23,10 +23,15 @@ EXPORTS
 	_gimp_unit_get_symbol
 	_gimp_unit_new
 	_gimp_unit_set_deletion_flag
+	gimp_airbrush
+	gimp_airbrush_default
 	gimp_attach_new_parasite
+	gimp_blend
 	gimp_brushes_close_popup
 	gimp_brushes_get_brush_data
 	gimp_brushes_set_popup
+	gimp_bucket_fill
+	gimp_by_color_select
 	gimp_channel_copy
 	gimp_channel_delete
 	gimp_channel_get_color
@@ -42,10 +47,16 @@ EXPORTS
 	gimp_channel_set_opacity
 	gimp_channel_set_show_masked
 	gimp_channel_set_visible
+	gimp_clone
+	gimp_clone_default
 	gimp_color_cube
+	gimp_color_picker
 	gimp_convert_grayscale
 	gimp_convert_indexed
 	gimp_convert_rgb
+	gimp_convolve
+	gimp_convolve_default
+	gimp_crop
 	gimp_data_directory
 	gimp_default_display
 	gimp_destroy_paramdefs
@@ -54,6 +65,8 @@ EXPORTS
 	gimp_display_delete
 	gimp_display_new
 	gimp_displays_flush
+	gimp_dodgeburn
+	gimp_dodgeburn_default
 	gimp_drawable_attach_new_parasite
 	gimp_drawable_bytes
 	gimp_drawable_delete
@@ -86,8 +99,26 @@ EXPORTS
 	gimp_drawable_update
 	gimp_drawable_visible
 	gimp_drawable_width
+	gimp_edit_clear
+	gimp_edit_copy
+	gimp_edit_cut
+	gimp_edit_fill
+	gimp_edit_paste
+	gimp_edit_stroke
+	gimp_ellipse_select
+	gimp_eraser
+	gimp_eraser_default
 	gimp_extension_ack
 	gimp_extension_process
+	gimp_flip
+	gimp_floating_sel_anchor
+	gimp_floating_sel_attach
+	gimp_floating_sel_relax
+	gimp_floating_sel_remove
+	gimp_floating_sel_rigor
+	gimp_floating_sel_to_layer
+	gimp_free_select
+	gimp_fuzzy_select
 	gimp_gamma
 	gimp_get_monitor_resolution
 	gimp_get_path_by_tattoo
@@ -218,6 +249,8 @@ EXPORTS
 	gimp_micro_version
 	gimp_min_colors
 	gimp_minor_version
+	gimp_paintbrush
+	gimp_paintbrush_default
 	gimp_palette_get_background
 	gimp_palette_get_foreground
 	gimp_palette_set_background
@@ -256,7 +289,9 @@ EXPORTS
 	gimp_patterns_close_popup
 	gimp_patterns_get_pattern_data
 	gimp_patterns_set_popup
+	gimp_pencil
 	gimp_personal_rc_file
+	gimp_perspective
 	gimp_pixel_rgn_get_col
 	gimp_pixel_rgn_get_pixel
 	gimp_pixel_rgn_get_rect
@@ -283,6 +318,7 @@ EXPORTS
 	gimp_progress_init
 	gimp_progress_update
 	gimp_quit
+	gimp_rect_select
 	gimp_register_load_handler
 	gimp_register_magic_load_handler
 	gimp_register_save_handler
@@ -291,14 +327,23 @@ EXPORTS
 	gimp_rgb_to_hsv4
 	gimp_rgb_to_hsv_double
 	gimp_rgb_to_l
+	gimp_rotate
 	gimp_run_procedure
 	gimp_run_procedure2
 	gimp_run_temp
+	gimp_scale
 	gimp_selection_bounds
 	gimp_selection_float
 	gimp_selection_is_empty
 	gimp_selection_none
+	gimp_shear
+	gimp_smudge
+	gimp_smudge_default
 	gimp_standard_help_func
+	gimp_text
+	gimp_text_fontname
+	gimp_text_get_extents
+	gimp_text_get_extents_fontname
 	gimp_tile_cache_ntiles
 	gimp_tile_cache_size
 	gimp_tile_flush
@@ -307,6 +352,7 @@ EXPORTS
 	gimp_tile_ref_zero
 	gimp_tile_unref
 	gimp_tile_width
+	gimp_transform_2d
 	gimp_undo_push_group_end
 	gimp_undo_push_group_start
 	gimp_uninstall_temp_proc

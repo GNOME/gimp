@@ -25,7 +25,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include <ctype.h>
 #include <gtk/gtk.h>
 
@@ -489,7 +488,7 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 	if (data->rotation != 0 && abs(data->rotation) != 360) {
 		gimp_rotate (data->drawable_id, 
 			     TRUE,
-			     (gdouble)data->rotation * M_PI / 180.0);
+			     (gdouble)data->rotation * G_PI / 180.0);
 		gimp_layer_set_offsets(data->layer_id, layer_ox, layer_oy);
 	}
 
