@@ -40,6 +40,8 @@
  * @tool_info: a #GimpToolInfo
  * @desc: a string to use in the dialog header or %NULL to use the help
  *        field from #GimpToolInfo
+ * @...: a %NULL-terminated valist of button parameters as described in
+ *       gimp_dialog_create_action_areav().
  *
  * This function conveniently creates a #GimpViewableDialog using the
  * information stored in @tool_info. It also registers the tool with
