@@ -122,7 +122,7 @@ EOF
 
 for(@shebang) {
    print "updating bangpath in $_\n";
-   system ($PERL,"-pi","-e","\$. == 1 and \$_ = '#!$PERL\n'",$_);
+   system ($Config{perlpath},"-pi","-e","\$. == 1 and \$_ = '#!$Config{perlpath}\n'",$_);
 }
 
 sub MY::postamble {

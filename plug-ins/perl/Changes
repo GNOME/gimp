@@ -1,5 +1,6 @@
 Revision history for Gimp-Perl extension.
 
+1.053 Mon Feb 15 01:35:04 CET 1999
 	- more errornous argument types are detected now, without
           just calling abort().
         - fixed a MAJOR namespace-leak: for example, if one used
@@ -9,6 +10,7 @@ Revision history for Gimp-Perl extension.
         - Gimp::Net now works correctly with parasites.
         - added examples/parasite_editor
         - added gimp_ prefix to Parasite-class
+        - use $Config{perlpath} for bangpath, not $PERL
 
 1.052 Tue Feb  9 18:16:15 CET 1999
 	- moved the xlfd_size function from Gimp::Fu into Gimp
