@@ -79,6 +79,10 @@ static void    menus_last_opened_add        (GimpItemFactory *item_factory,
 static void    menus_last_opened_update     (GimpContainer   *container,
                                              GimpImagefile   *unused,
                                              GimpItemFactory *item_factory);
+static void    menus_last_opened_reorder    (GimpContainer   *container,
+                                             GimpImagefile   *unused1,
+                                             gint             unused2,
+                                             GimpItemFactory *item_factory);
 static void    menus_color_changed          (GimpContext     *context,
                                              const GimpRGB   *unused,
                                              Gimp            *gimp);
@@ -2167,10 +2171,16 @@ menus_exit (Gimp *gimp)
   g_signal_handlers_disconnect_by_func (G_OBJECT (gimp->documents),
                                         menus_last_opened_update,
                                         item_factory);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimp->documents),
+                                        menus_last_opened_reorder,
+                                        item_factory);
 
   item_factory = gimp_item_factory_from_path ("<Image>");
   g_signal_handlers_disconnect_by_func (G_OBJECT (gimp->documents),
                                         menus_last_opened_update,
+                                        item_factory);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimp->documents),
+                                        menus_last_opened_reorder,
                                         item_factory);
 
   filename = gimp_personal_rc_file ("menurc");
@@ -2442,7 +2452,7 @@ menus_last_opened_add (GimpItemFactory *item_factory,
                     G_CALLBACK (menus_last_opened_update),
                     item_factory);
   g_signal_connect (G_OBJECT (gimp->documents), "reorder",
-                    G_CALLBACK (menus_last_opened_update),
+                    G_CALLBACK (menus_last_opened_reorder),
                     item_factory);
 
   menus_last_opened_update (gimp->documents, NULL, item_factory);
@@ -2507,6 +2517,15 @@ menus_last_opened_update (GimpContainer   *container,
           gtk_widget_hide (widget);
         }
     }
+}
+
+static void
+menus_last_opened_reorder (GimpContainer   *container,
+                           GimpImagefile   *unused1,
+                           gint             unused2,
+                           GimpItemFactory *item_factory)
+{
+  menus_last_opened_update (container, unused1, item_factory);
 }
 
 static void
