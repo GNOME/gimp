@@ -1,5 +1,11 @@
 1999-10-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/lc_dialog.c: removed the GimpImage "destroy" callback
+	because we already get notified of this event by connecting to the
+	image context's "remove" signal.
+
+1999-10-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/ops_buttons.[ch]: added a private tooltip to the
 	ops_buttons structure. Removed ops_buttons_set_insensitive().
 

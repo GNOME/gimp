@@ -42,22 +42,22 @@ static void  lc_dialog_update              (GimpImage *);
 static void  lc_dialog_image_menu_callback (GtkWidget *, gpointer);
 static void  lc_dialog_auto_callback       (GtkWidget *, gpointer);
 static gint  lc_dialog_close_callback      (GtkWidget *, gpointer);
-static void  lc_dialog_add_cb              (GimpSet *, GimpImage *, gpointer);
-static void  lc_dialog_remove_cb           (GimpSet *, GimpImage *, gpointer);
-static void  lc_dialog_destroy_cb          (GimpImage *, gpointer);
+static void  lc_dialog_add_callback        (GimpSet *, GimpImage *, gpointer);
+static void  lc_dialog_remove_callback     (GimpSet *, GimpImage *, gpointer);
 static void  lc_dialog_change_image        (GimpContext *, GimpImage *,
 					    gpointer);
 static void  lc_dialog_help_func           (gpointer);
 
-static void  lc_dialog_image_menu_preview_update_cb (GtkWidget *, gpointer);
-static void  lc_dialog_fill_preview_with_thumb      (GtkWidget *, GimpImage *,
-						     gint, gint);
+static void  lc_dialog_image_menu_preview_update_callback (GtkWidget *,
+							   gpointer);
+static void  lc_dialog_fill_preview_with_thumb (GtkWidget *, GimpImage *,
+						gint, gint);
 
 
 /*  FIXME: move these to a better place  */
-static GtkWidget * lc_dialog_create_image_menu    (GimpImage **, int *,
-						   MenuItemCallback);
-static void        lc_dialog_create_image_menu_cb (gpointer, gpointer);
+static GtkWidget * lc_dialog_create_image_menu          (GimpImage **, gint *,
+							 MenuItemCallback);
+static void        lc_dialog_create_image_menu_callback (gpointer, gpointer);
 
 /*  the main dialog structure  */
 LCDialog * lc_dialog = NULL;
@@ -203,9 +203,9 @@ lc_dialog_create (GimpImage* gimage)
   gtk_notebook_set_page (GTK_NOTEBOOK (lc_dialog->notebook), 0);
 
   gtk_signal_connect (GTK_OBJECT (image_context), "add",
-		      GTK_SIGNAL_FUNC (lc_dialog_add_cb), NULL);
+		      GTK_SIGNAL_FUNC (lc_dialog_add_callback), NULL);
   gtk_signal_connect (GTK_OBJECT (image_context), "remove",
-		      GTK_SIGNAL_FUNC (lc_dialog_remove_cb), NULL);
+		      GTK_SIGNAL_FUNC (lc_dialog_remove_callback), NULL);
   gtk_signal_connect (GTK_OBJECT (gimp_context_get_user ()), "image_changed",
 		      GTK_SIGNAL_FUNC (lc_dialog_change_image), NULL);
 
@@ -277,7 +277,7 @@ image_menu_preview_update_do (GimpImage *gimage)
   if (lc_dialog)
     {
       gtk_container_foreach (GTK_CONTAINER (lc_dialog->image_menu),
-			     lc_dialog_image_menu_preview_update_cb,
+			     lc_dialog_image_menu_preview_update_callback,
 			     (gpointer) gimage);
     }
   return FALSE;
@@ -305,8 +305,8 @@ lc_dialog_preview_update (GimpImage *gimage)
 }
 
 static void
-lc_dialog_image_menu_preview_update_cb (GtkWidget *widget,
-					gpointer   data)
+lc_dialog_image_menu_preview_update_callback (GtkWidget *widget,
+					      gpointer   data)
 {
   GtkWidget *menu_preview;
   GimpImage *gimage;
@@ -390,12 +390,6 @@ lc_dialog_update (GimpImage* gimage)
   layers_dialog_update (gimage);
   channels_dialog_update (gimage);
   paths_dialog_update (gimage);
-
-  if (gimage)
-    {
-      gtk_signal_connect (GTK_OBJECT (gimage), "destroy",
-			  GTK_SIGNAL_FUNC (lc_dialog_destroy_cb), NULL);
-    }
 }
 
 typedef struct
@@ -512,8 +506,8 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
 }
 
 static void
-lc_dialog_create_image_menu_cb (gpointer im,
-				gpointer d)
+lc_dialog_create_image_menu_callback (gpointer im,
+				      gpointer d)
 {
   GimpImage *gimage = GIMP_IMAGE (im);
   IMCBData  *data   = (IMCBData *) d;
@@ -613,7 +607,7 @@ lc_dialog_create_image_menu (GimpImage        **def,
 
   *default_index = -1;
 
-  gimage_foreach (lc_dialog_create_image_menu_cb, &data);
+  gimage_foreach (lc_dialog_create_image_menu_callback, &data);
 
   if (! data.num_items)
     {
@@ -674,9 +668,9 @@ lc_dialog_close_callback (GtkWidget *widget,
 }
 
 static void
-lc_dialog_add_cb (GimpSet   *set,
-		  GimpImage *gimage,
-		  gpointer   data)
+lc_dialog_add_callback (GimpSet   *set,
+			GimpImage *gimage,
+			gpointer   data)
 {
   if (! lc_dialog)
     return;
@@ -685,19 +679,9 @@ lc_dialog_add_cb (GimpSet   *set,
 }
 
 static void
-lc_dialog_remove_cb (GimpSet   *set,
-		     GimpImage *gimage,
-		     gpointer   data)
-{
-  if (! lc_dialog)
-    return;
-
-  lc_dialog_update_image_list ();
-}
-
-static void
-lc_dialog_destroy_cb (GimpImage *gimage,
-		      gpointer   data)
+lc_dialog_remove_callback (GimpSet   *set,
+			   GimpImage *gimage,
+			   gpointer   data)
 {
   if (! lc_dialog)
     return;
@@ -716,9 +700,8 @@ lc_dialog_change_image (GimpContext *context,
   if (gimage && gimp_set_have (image_context, gimage))
     {
       lc_dialog_update (gimage);
+      lc_dialog_update_image_list ();
     }
-
-  lc_dialog_update_image_list ();
 }
 
 static void
