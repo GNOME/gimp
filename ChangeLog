@@ -1,3 +1,13 @@
+2001-04-11  Simon Budig  <simon@gimp.org>
+
+	* app/path_curves.[ch]
+	* app/tools/gimpdrawtool.c
+	* app/tools/gimppathtool.[ch]
+	* app/tools/path_tool.[ch]
+	* app/tools/path_toolP.h
+
+	At least now it looks as if it could do something sometimes...
+
 2001-04-11  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in

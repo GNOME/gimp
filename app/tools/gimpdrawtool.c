@@ -256,7 +256,7 @@ gimp_draw_tool_draw_handle (GimpDrawTool *draw_tool,
     gdk_draw_arc       (tool->gdisp->canvas->window,
 			draw_tool->gc, filled,
 			hx - size/2, hy - size/2,
-			size, size, 0, 360); 
+			size, size, 0, 360*64); 
 
 }
 

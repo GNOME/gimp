@@ -41,6 +41,7 @@
 #include "apptypes.h"
 #include "path_curves.h"
 #include "path_tool.h"
+#include "gimppathtool.h"
 
 /*
  * Every new curve-type has to have a parameter between 0 and 1, and
@@ -99,18 +100,18 @@ gdouble path_tool_on_curve           (NPath *path,
 /* Tools to manipulate paths, curves, segments */
 
 PathCurve   * path_add_curve       (NPath *,
-				    gint,
-				    gint);
+				    gdouble,
+				    gdouble);
 PathSegment * path_append_segment  (NPath *,
 				    PathCurve *,
 				    SegmentType,
-				    gint,
-				    gint);
+				    gdouble,
+				    gdouble);
 PathSegment * path_prepend_segment (NPath *,
 				    PathCurve *,
 				    SegmentType,
-				    gint,
-				    gint);
+				    gdouble,
+				    gdouble);
 PathSegment * path_split_segment   (PathSegment *,
 				    gdouble);
 void          path_join_curves     (PathSegment *,
@@ -271,8 +272,8 @@ path_traverse_segment (NPath *path,
 
 PathCurve *
 path_add_curve (NPath * cur_path,
-		gint x,
-		gint y)
+		gdouble x,
+		gdouble y)
 {
    PathCurve * tmp = cur_path->curves;
    PathCurve * new_curve = NULL;
@@ -309,8 +310,8 @@ PathSegment *
 path_append_segment  (NPath * cur_path,
 		      PathCurve * cur_curve,
 		      SegmentType type,
-		      gint x,
-		      gint y)
+		      gdouble x,
+		      gdouble y)
 {
    PathSegment * tmp = cur_curve->segments;
    PathSegment * new_segment = NULL;
@@ -363,8 +364,8 @@ PathSegment *
 path_prepend_segment  (NPath * cur_path,
 		       PathCurve * cur_curve,
 		       SegmentType type,
-		       gint x,
-		       gint y)
+		       gdouble x,
+		       gdouble y)
 {
    PathSegment * tmp = cur_curve->segments;
    PathSegment * new_segment = NULL;
@@ -728,8 +729,8 @@ path_delete_segment (PathSegment *segment)
 
 gint
 path_tool_cursor_position (NPath *path,
-			   gint x,
-			   gint y,
+			   gdouble x,
+			   gdouble y,
 			   gint halfwidth,
 			   NPath **pathP,
 			   PathCurve **curveP,
@@ -1571,8 +1572,8 @@ typedef struct {
    NPath *path;
    PathCurve *curve;
    PathSegment *segment;
-   gint testx;
-   gint testy;
+   gdouble testx;
+   gdouble testy;
    gint distance;
    gboolean found;
 } Path_on_anchors_type;
@@ -1605,8 +1606,8 @@ path_tool_on_anchors_helper (NPath *path,
 
 gboolean
 path_tool_on_anchors (NPath *path,
-		      gint x,
-		      gint y,
+		      gdouble x,
+		      gdouble y,
 		      gint halfwidth,
 		      NPath **ret_pathP,
 		      PathCurve **ret_curveP,
@@ -1645,8 +1646,8 @@ typedef struct {
    NPath *path;
    PathCurve *curve;
    PathSegment *segment;
-   gint testx;
-   gint testy;
+   gdouble testx;
+   gdouble testy;
    gint halfwidth;
    gint handle_id;
    gboolean found;
@@ -1679,8 +1680,8 @@ path_tool_on_handles_helper (NPath *path,
 
 gint
 path_tool_on_handles (NPath *path,
-		      gint x,
-		      gint y,
+		      gdouble x,
+		      gdouble y,
 		      gint halfwidth,
 		      NPath **ret_pathP,
 		      PathCurve **ret_curveP,
@@ -1787,7 +1788,6 @@ path_set_flags_helper (NPath *path,
        * is active, path_tool->single_active_segment points to it.
        */
 
-#if 0
       /* If SEGMENT_ACTIVE state has changed change the PathTool data
        * accordingly.
        */
@@ -1803,7 +1803,6 @@ path_set_flags_helper (NPath *path,
          tmp_uint ^= GPOINTER_TO_UINT(segment);
 	 tmp->path_tool->single_active_segment = GUINT_TO_POINTER(tmp_uint);
       }
-#endif
    }
 }
 

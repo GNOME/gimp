@@ -20,7 +20,7 @@
 #ifndef __PATH_CURVES_H__
 #define __PATH_CURVES_H__
 
-#undef PATH_TOOL_DEBUG
+#define PATH_TOOL_DEBUG
 #ifdef PATH_TOOL_DEBUG
 #include <stdio.h>
 #endif

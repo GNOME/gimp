@@ -93,7 +93,7 @@ path_curve_get_points (PathSegment *segment,
    }
 #ifdef PATH_TOOL_DEBUG
    else
-      fprintf (stderr, "path_curve_get_point called without valid curve");
+      fprintf (stderr, "path_curve_get_points called without valid curve");
 #endif
    return 0;
 }
@@ -109,7 +109,7 @@ path_curve_get_point (PathSegment *segment,
       if (CurveTypes[segment->type].get_point)
 	 (* CurveTypes[segment->type].get_point) (segment, position, x, y);
       else {
-#if 0
+#if 1
 	 *x = segment->x + (segment->next->x - segment->x) * position;
          *y = segment->y + (segment->next->y - segment->y) * position;
 #else

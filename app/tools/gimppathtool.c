@@ -191,13 +191,13 @@ gimp_path_tool_destroy (GtkObject *object)
   GimpPathTool *path_tool = GIMP_PATH_TOOL (object);
 
 #ifdef PATH_TOOL_DEBUG
-  fprintf (stderr, "tools_free_path_tool start\n");
+  fprintf (stderr, "gimp_path_tool_free start\n");
 #endif PATH_TOOL_DEBUG
-
-  path_free_path (path_tool->cur_path);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
+
+  path_free_path (path_tool->cur_path);
 }
 
 static void
@@ -240,16 +240,17 @@ gimp_path_tool_button_press (GimpTool       *tool,
 {
   GimpPathTool *path_tool = GIMP_PATH_TOOL (tool);
   gint grab_pointer=0;
-  gint x, y, halfwidth, dummy;
+  gdouble x, y;
+  gint halfwidth, dummy;
 
 #ifdef PATH_TOOL_DEBUG
   fprintf (stderr, "path_tool_button_press\n");
 #endif PATH_TOOL_DEBUG
 
   /* Transform window-coordinates to canvas-coordinates */
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
+  gdisplay_untransform_coords_f (gdisp, bevent->x, bevent->y, &x, &y, TRUE);
 #ifdef PATH_TOOL_DEBUG
-  fprintf(stderr, "Clickcoordinates %d, %d\n",x,y);
+  fprintf(stderr, "Clickcoordinates %.2f, %.2f\n",x,y);
 #endif PATH_TOOL_DEBUG
   path_tool->click_x = x;
   path_tool->click_y = y;
@@ -259,6 +260,9 @@ gimp_path_tool_button_press (GimpTool       *tool,
   halfwidth -= x;
   path_tool->click_halfwidth = halfwidth;
   
+  tool->gdisp = gdisp;
+  tool->state = ACTIVE;
+
   if (!path_tool->cur_path->curves)
     gimp_draw_tool_start (GIMP_DRAW_TOOL(path_tool), gdisp->canvas->window);
 
@@ -303,7 +307,6 @@ gimp_path_tool_button_press (GimpTool       *tool,
 		       GDK_BUTTON_RELEASE_MASK,
 		       NULL, NULL, bevent->time);
 
-  tool->state = ACTIVE;
 
 }
 
@@ -621,9 +624,9 @@ gimp_path_tool_motion_anchor (GimpPathTool  *path_tool,
 			      GDisplay       *gdisp)
 {
    gdouble dx, dy, d;
-   gint x,y;
-   static gint dxsum = 0;
-   static gint dysum = 0;
+   gdouble x,y;
+   static gdouble dxsum = 0;
+   static gdouble dysum = 0;
    
    /*
     * Dont do anything, if the user clicked with pressed CONTROL-Key,
@@ -639,7 +642,7 @@ gimp_path_tool_motion_anchor (GimpPathTool  *path_tool,
       dysum = 0;
    }
 
-   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
+   gdisplay_untransform_coords_f (gdisp, mevent->x, mevent->y, &x, &y, TRUE);
    
    dx = x - path_tool->click_x - dxsum;
    dy = y - path_tool->click_y - dysum;
@@ -687,9 +690,9 @@ gimp_path_tool_motion_handle (GimpPathTool   *path_tool,
 			      GDisplay       *gdisp)
 {
    gdouble dx, dy;
-   gint x,y;
-   static gint dxsum = 0;
-   static gint dysum = 0;
+   gdouble x,y;
+   static gdouble dxsum = 0;
+   static gdouble dysum = 0;
    
    /*
     * Dont do anything, if the user clicked with pressed CONTROL-Key,
@@ -706,7 +709,7 @@ gimp_path_tool_motion_handle (GimpPathTool   *path_tool,
       dysum = 0;
    }
 
-   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
+   gdisplay_untransform_coords_f (gdisp, mevent->x, mevent->y, &x, &y, TRUE);
    
    dx = x - path_tool->click_x - dxsum;
    dy = y - path_tool->click_y - dysum;
@@ -733,9 +736,9 @@ gimp_path_tool_motion_curve (GimpPathTool   *path_tool,
 			     GDisplay       *gdisp)
 {
    gdouble dx, dy;
-   gint x,y;
-   static gint dxsum = 0;
-   static gint dysum = 0;
+   gdouble x,y;
+   static gdouble dxsum = 0;
+   static gdouble dysum = 0;
    
    if (!(path_tool->state & PATH_TOOL_DRAG))
    {
@@ -744,7 +747,7 @@ gimp_path_tool_motion_curve (GimpPathTool   *path_tool,
       dysum = 0;
    }
 
-   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
+   gdisplay_untransform_coords_f (gdisp, mevent->x, mevent->y, &x, &y, TRUE);
    
    dx = x - path_tool->click_x - dxsum;
    dy = y - path_tool->click_y - dysum;
@@ -774,39 +777,37 @@ gimp_path_tool_cursor_update (GimpTool       *tool,
 {
   GimpPathTool *path_tool = GIMP_PATH_TOOL (tool);
 #if 0
-   gint     x, y, halfwidth, dummy, cursor_location;
+  gint     x, y, halfwidth, dummy, cursor_location;
   
-#ifdef PATH_TOOL_DEBUG
-   /* fprintf (stderr, "path_tool_cursor_update\n");
-    */
-#endif PATH_TOOL_DEBUG
+#idef PATH_TOOL_DEBUG
+  /* fprintf (stderr, "path_tool_cursor_update\n");
+   */
+#edif PATH_TOOL_DEBUG
 
-   path_tool = (PathTool *) tool->private;
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
+  /* get halfwidth in image coord */
+  gdisplay_untransform_coords (gdisp, mevent->x + PATH_TOOL_HALFWIDTH, 0, &halfwidth, &dummy, TRUE, 0);
+  halfwidth -= x;
 
-   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
-   /* get halfwidth in image coord */
-   gdisplay_untransform_coords (gdisp, mevent->x + PATH_TOOL_HALFWIDTH, 0, &halfwidth, &dummy, TRUE, 0);
-   halfwidth -= x;
+  cursor_location = path_tool_cursor_position (tool, x, y, halfwidth, NULL, NULL, NULL, NULL, NULL);
 
-   cursor_location = path_tool_cursor_position (tool, x, y, halfwidth, NULL, NULL, NULL, NULL, NULL);
-
-   switch (cursor_location) {
-   case ON_CANVAS:
-      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1AP_CURSOR);
-      break;
-   case ON_ANCHOR:
-      gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
-      break;
-   case ON_HANDLE:
-      gdisplay_install_tool_cursor (gdisp, GDK_CROSSHAIR);
-      break;
-   case ON_CURVE:
-      gdisplay_install_tool_cursor (gdisp, GDK_CROSSHAIR);
-      break;
-   default:
-      gdisplay_install_tool_cursor (gdisp, GDK_QUESTION_ARROW);
-      break;
-   }
+  switch (cursor_location) {
+  case ON_CANVAS:
+     gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1AP_CURSOR);
+     break;
+  case ON_ANCHOR:
+     gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
+     break;
+  case ON_HANDLE:
+     gdisplay_install_tool_cursor (gdisp, GDK_CROSSHAIR);
+     break;
+  case ON_CURVE:
+     gdisplay_install_tool_cursor (gdisp, GDK_CROSSHAIR);
+     break;
+  default:
+     gdisplay_install_tool_cursor (gdisp, GDK_QUESTION_ARROW);
+     break;
+  }
 
 /* New Syntax */
   gdisplay_install_tool_cursor (gdisp,
@@ -817,14 +818,41 @@ gimp_path_tool_cursor_update (GimpTool       *tool,
 }
 
 
+/* This is a CurveTraverseFunc */
+static void
+gimp_path_tool_draw_helper (NPath *path,
+    			    PathCurve *curve,
+			    PathSegment *segment,
+			    gpointer tool)
+{
+  GimpPathTool *path_tool;
+  GimpDrawTool *draw_tool;
+  gboolean draw = TRUE;
+
+  path_tool = GIMP_PATH_TOOL (tool);
+  draw_tool = GIMP_DRAW_TOOL (tool);
+  
+  if (path_tool->draw & PATH_TOOL_REDRAW_ACTIVE)
+    draw = (segment->flags & SEGMENT_ACTIVE ||
+	    (segment->next && segment->next->flags & SEGMENT_ACTIVE));
+
+  if (segment->flags & SEGMENT_ACTIVE)
+    gimp_draw_tool_draw_handle (draw_tool, segment->x, segment->y, PATH_TOOL_WIDTH, 2);
+  else
+    gimp_draw_tool_draw_handle (draw_tool, segment->x, segment->y, PATH_TOOL_WIDTH, 3);
+
+  if (segment->next)
+    path_curve_draw_segment (draw_tool, segment);
+}
+  
+
 static void
 gimp_path_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpPathTool *path_tool;
-  GimpTool        *tool;
 
   path_tool = GIMP_PATH_TOOL (draw_tool);
-  tool         = GIMP_TOOL (draw_tool);
 
+  path_traverse_path (path_tool->click_path, NULL, gimp_path_tool_draw_helper, NULL, draw_tool);
 }
 

@@ -67,7 +67,7 @@ struct _path_curve
 {
    PathSegment *segments;    /* The segments of the curve */
    PathSegment *cur_segment; /* the current segment */
-   NPath        *parent;      /* the parent Path */
+   NPath       *parent;      /* the parent Path */
    PathCurve   *next;        /* Next Curve or NULL */
    PathCurve   *prev;        /* Previous Curve or NULL */
 };

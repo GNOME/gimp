@@ -38,8 +38,8 @@ struct _GimpPathTool
   GimpDrawTool     parent_instance;
 
   gint         click_type;      /* where did the user click?         */
-  gint         click_x;         /* X-coordinate of the click         */
-  gint         click_y;         /* Y-coordinate of the click         */
+  gdouble      click_x;         /* X-coordinate of the click         */
+  gdouble      click_y;         /* Y-coordinate of the click         */
   gint         click_halfwidth;
   guint        click_modifier;  /* what modifiers were pressed?      */
   NPath       *click_path;      /* On which Path/Curve/Segment       */

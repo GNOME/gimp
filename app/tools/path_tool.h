@@ -66,18 +66,18 @@ gdouble path_locate_point            (NPath *,
 /* Tools to manipulate paths, curves, segments */
 
 PathCurve   * path_add_curve       (NPath *,
-				    gint,
-				    gint);
+				    gdouble,
+				    gdouble);
 PathSegment * path_append_segment  (NPath *,
 				    PathCurve *,
 				    SegmentType,
-				    gint,
-				    gint);
+				    gdouble,
+				    gdouble);
 PathSegment * path_prepend_segment (NPath *,
 				    PathCurve *,
 				    SegmentType,
-				    gint,
-				    gint);
+				    gdouble,
+				    gdouble);
 PathSegment * path_split_segment   (PathSegment *,
 				    gdouble);
 void          path_join_curves     (PathSegment *,
