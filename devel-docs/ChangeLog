@@ -1,3 +1,11 @@
+2003-11-15  Henrik Brix Andersen  <brix@gimp.org>
+
+	* devel-docs/libgimpmath/tmpl/gimpmatrix.sgml
+	* devel-docs/libgimpmath/tmpl/gimpvector.sgml
+	* devel-docs/libgimpmath/tmpl/gimpmath.sgml: added descriptions
+
+	* devel-docs/libgimpmath/libgimpmath-sections.txt: reordered functions
+
 2003-11-15  Sven Neumann  <sven@gimp.org>
 
 	* */tmpl/*.sgml: removed unused parameters.

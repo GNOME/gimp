@@ -1,16 +1,10 @@
 2003-11-15  Henrik Brix Andersen  <brix@gimp.org>
 
 	* libgimpmath/gimpmatrix.c (gimp_matrix4_to_deg): added an inline
-	gtk-doc stub to be filled in. Someone please fill this in...
+	gtk-doc stub. Someone please fill this in...
 
-	* devel-docs/libgimpmath/tmpl/gimpmatrix.sgml
-	* devel-docs/libgimpmath/tmpl/gimpvector.sgml
-	* devel-docs/libgimpmath/tmpl/gimpmath.sgml: added descriptions
-
-	* devel-docs/libgimpmath/libgimpmath-sections.txt: reordered functions
-
-	* libgimpmath/gimpvector.[ch]: reordered functions here as well to
-	be consistent, touched up the inline gtk-docs
+	* libgimpmath/gimpvector.[ch]: reordered the functions in a more
+	logical way, touched up the inline gtk-docs
 
 2003-11-15  Sven Neumann  <sven@gimp.org>
 
@@ -538,9 +532,9 @@
 
 2003-11-12  Henrik Brix Andersen  <brix@gimp.org>
 
-	* gimp/app/widgets/gimphelp.c
-	* gimp/app/config/gimpguiconfig.c
-	* gimp/app/widgets/widgets-enums.[ch] changed
+	* app/widgets/gimphelp.c
+	* app/config/gimpguiconfig.c
+	* app/widgets/widgets-enums.[ch] changed
 	GIMP_HELP_BROWSER_WEBBROWSER to GIMP_HELP_BROWSER_WEB_BROWSER and
 	changed all occurrences of webbrowser to web_browser for
 	consistency.
