@@ -477,12 +477,12 @@ gimp_scale_tool_recalc (GimpTransformTool *tr_tool,
 {
   gimp_transform_matrix_scale (tr_tool->x1,
                                tr_tool->y1,
-                               tr_tool->x2,
-                               tr_tool->y2,
+                               tr_tool->x2 - tr_tool->x1,
+                               tr_tool->y2 - tr_tool->y1,
                                tr_tool->trans_info[X0],
                                tr_tool->trans_info[Y0],
-                               tr_tool->trans_info[X1],
-                               tr_tool->trans_info[Y1],
+                               tr_tool->trans_info[X1] - tr_tool->trans_info[X0],
+                               tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0],
                                &tr_tool->transform);
 }
 

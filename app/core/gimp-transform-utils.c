@@ -32,6 +32,8 @@ gimp_transform_matrix_flip (GimpOrientationType  flip_type,
                             gdouble              axis,
                             GimpMatrix3         *result)
 {
+  g_return_if_fail (result != NULL);
+
   gimp_matrix3_identity (result);
 
   switch (flip_type)
@@ -54,127 +56,159 @@ gimp_transform_matrix_flip (GimpOrientationType  flip_type,
 }
 
 void
-gimp_transform_matrix_rotate (gint         x1,
-                              gint         y1,
-                              gint         x2,
-                              gint         y2,
+gimp_transform_matrix_flip_free (gint         x,
+                                 gint         y,
+                                 gint         width,
+                                 gint         height,
+                                 gdouble      x1,
+                                 gdouble      y1,
+                                 gdouble      x2,
+                                 gdouble      y2,
+                                 GimpMatrix3 *result)
+{
+  gdouble angle;
+  gdouble dx, dy;
+
+  g_return_if_fail (result != NULL);
+
+  angle = atan2  (y2 - y1, x2 - x1);
+  dx    = x - x1;
+  dy    = (x1 + ((y2 - y1) / (x2 - x1) ) * x) - y1;
+
+  gimp_matrix3_identity  (result);
+  gimp_matrix3_translate (result, dx, dy);
+  gimp_matrix3_rotate    (result, -angle);
+  gimp_matrix3_scale     (result, 1.0, -1.0);
+  gimp_matrix3_rotate    (result, angle);
+  gimp_matrix3_translate (result, -dx, -dy);
+}
+
+void
+gimp_transform_matrix_rotate (gint         x,
+                              gint         y,
+                              gint         width,
+                              gint         height,
                               gdouble      angle,
                               GimpMatrix3 *result)
 {
-  gdouble cx;
-  gdouble cy;
+  gdouble center_x;
+  gdouble center_y;
 
-  cx = (gdouble) (x1 + x2) / 2.0;
-  cy = (gdouble) (y1 + y2) / 2.0;
+  g_return_if_fail (result != NULL);
+
+  center_x = (gdouble) x + (gdouble) width  / 2.0;
+  center_y = (gdouble) y + (gdouble) height / 2.0;
 
   gimp_matrix3_identity  (result);
-  gimp_matrix3_translate (result, -cx, -cy);
+  gimp_matrix3_translate (result, -center_x, -center_y);
   gimp_matrix3_rotate    (result, angle);
-  gimp_matrix3_translate (result, +cx, +cy);
+  gimp_matrix3_translate (result, +center_x, +center_y);
 }
 
 void
-gimp_transform_matrix_rotate_center (gdouble      cx,
-                                     gdouble      cy,
+gimp_transform_matrix_rotate_center (gdouble      center_x,
+                                     gdouble      center_y,
                                      gdouble      angle,
                                      GimpMatrix3 *result)
 {
+  g_return_if_fail (result != NULL);
+
   gimp_matrix3_identity  (result);
-  gimp_matrix3_translate (result, -cx, -cy);
+  gimp_matrix3_translate (result, -center_x, -center_y);
   gimp_matrix3_rotate    (result, angle);
-  gimp_matrix3_translate (result, +cx, +cy);
+  gimp_matrix3_translate (result, +center_x, +center_y);
 }
 
 void
-gimp_transform_matrix_scale (gint         x1,
-                             gint         y1,
-                             gint         x2,
-                             gint         y2,
-                             gdouble      tx1,
-                             gdouble      ty1,
-                             gdouble      tx2,
-                             gdouble      ty2,
+gimp_transform_matrix_scale (gint         x,
+                             gint         y,
+                             gint         width,
+                             gint         height,
+                             gdouble      t_x,
+                             gdouble      t_y,
+                             gdouble      t_width,
+                             gdouble      t_height,
                              GimpMatrix3 *result)
 {
-  gdouble scalex;
-  gdouble scaley;
+  gdouble scale_x = 1.0;
+  gdouble scale_y = 1.0;
 
-  scalex = scaley = 1.0;
+  g_return_if_fail (result != NULL);
 
-  if ((x2 - x1) > 0)
-    scalex = (tx2 - tx1) / (gdouble) (x2 - x1);
+  if (width > 0)
+    scale_x = t_width / (gdouble) width;
 
-  if ((y2 - y1) > 0)
-    scaley = (ty2 - ty1) / (gdouble) (y2 - y1);
+  if (height > 0)
+    scale_y = t_height / (gdouble) height;
 
   gimp_matrix3_identity  (result);
-  gimp_matrix3_translate (result, -x1, -y1);
-  gimp_matrix3_scale     (result, scalex, scaley);
-  gimp_matrix3_translate (result, tx1, ty1);
+  gimp_matrix3_translate (result, -x, -y);
+  gimp_matrix3_scale     (result, scale_x, scale_y);
+  gimp_matrix3_translate (result, t_x, t_y);
 }
 
 void
-gimp_transform_matrix_shear (gint                 x1,
-                             gint                 y1,
-                             gint                 x2,
-                             gint                 y2,
+gimp_transform_matrix_shear (gint                 x,
+                             gint                 y,
+                             gint                 width,
+                             gint                 height,
                              GimpOrientationType  orientation,
                              gdouble              amount,
                              GimpMatrix3         *result)
 {
-  gint    width;
-  gint    height;
-  gdouble cx;
-  gdouble cy;
+  gdouble center_x;
+  gdouble center_y;
 
-  width  = x2 - x1;
-  height = y2 - y1;
+  g_return_if_fail (result != NULL);
 
   if (width == 0)
     width = 1;
+
   if (height == 0)
     height = 1;
 
-  cx = (gdouble) (x1 + x2) / 2.0;
-  cy = (gdouble) (y1 + y2) / 2.0;
+  center_x = (gdouble) x + (gdouble) width  / 2.0;
+  center_y = (gdouble) y + (gdouble) height / 2.0;
 
   gimp_matrix3_identity  (result);
-  gimp_matrix3_translate (result, -cx, -cy);
+  gimp_matrix3_translate (result, -center_x, -center_y);
 
   if (orientation == GIMP_ORIENTATION_HORIZONTAL)
     gimp_matrix3_xshear (result, amount / height);
   else
     gimp_matrix3_yshear (result, amount / width);
 
-  gimp_matrix3_translate (result, +cx, +cy);
+  gimp_matrix3_translate (result, +center_x, +center_y);
 }
 
 void
-gimp_transform_matrix_perspective (gint         x1,
-                                   gint         y1,
-                                   gint         x2,
-                                   gint         y2,
-                                   gdouble      tx1,
-                                   gdouble      ty1,
-                                   gdouble      tx2,
-                                   gdouble      ty2,
-                                   gdouble      tx3,
-                                   gdouble      ty3,
-                                   gdouble      tx4,
-                                   gdouble      ty4,
+gimp_transform_matrix_perspective (gint         x,
+                                   gint         y,
+                                   gint         width,
+                                   gint         height,
+                                   gdouble      t_x1,
+                                   gdouble      t_y1,
+                                   gdouble      t_x2,
+                                   gdouble      t_y2,
+                                   gdouble      t_x3,
+                                   gdouble      t_y3,
+                                   gdouble      t_x4,
+                                   gdouble      t_y4,
                                    GimpMatrix3 *result)
 {
   GimpMatrix3 matrix;
   gdouble     scalex;
   gdouble     scaley;
 
+  g_return_if_fail (result != NULL);
+
   scalex = scaley = 1.0;
 
-  if ((x2 - x1) > 0)
-    scalex = 1.0 / (gdouble) (x2 - x1);
+  if (width > 0)
+    scalex = 1.0 / (gdouble) width;
 
-  if ((y2 - y1) > 0)
-    scaley = 1.0 / (gdouble) (y2 - y1);
+  if (height > 0)
+    scaley = 1.0 / (gdouble) height;
 
   /* Determine the perspective transform that maps from
    * the unit cube to the transformed coordinates
@@ -182,23 +216,23 @@ gimp_transform_matrix_perspective (gint         x1,
   {
     gdouble dx1, dx2, dx3, dy1, dy2, dy3;
 
-    dx1 = tx2 - tx4;
-    dx2 = tx3 - tx4;
-    dx3 = tx1 - tx2 + tx4 - tx3;
+    dx1 = t_x2 - t_x4;
+    dx2 = t_x3 - t_x4;
+    dx3 = t_x1 - t_x2 + t_x4 - t_x3;
 
-    dy1 = ty2 - ty4;
-    dy2 = ty3 - ty4;
-    dy3 = ty1 - ty2 + ty4 - ty3;
+    dy1 = t_y2 - t_y4;
+    dy2 = t_y3 - t_y4;
+    dy3 = t_y1 - t_y2 + t_y4 - t_y3;
 
     /*  Is the mapping affine?  */
     if ((dx3 == 0.0) && (dy3 == 0.0))
       {
-        matrix.coeff[0][0] = tx2 - tx1;
-        matrix.coeff[0][1] = tx4 - tx2;
-        matrix.coeff[0][2] = tx1;
-        matrix.coeff[1][0] = ty2 - ty1;
-        matrix.coeff[1][1] = ty4 - ty2;
-        matrix.coeff[1][2] = ty1;
+        matrix.coeff[0][0] = t_x2 - t_x1;
+        matrix.coeff[0][1] = t_x4 - t_x2;
+        matrix.coeff[0][2] = t_x1;
+        matrix.coeff[1][0] = t_y2 - t_y1;
+        matrix.coeff[1][1] = t_y4 - t_y2;
+        matrix.coeff[1][2] = t_y1;
         matrix.coeff[2][0] = 0.0;
         matrix.coeff[2][1] = 0.0;
       }
@@ -221,20 +255,20 @@ gimp_transform_matrix_perspective (gint         x1,
         else
           matrix.coeff[2][1] = det1 / det2;
 
-        matrix.coeff[0][0] = tx2 - tx1 + matrix.coeff[2][0] * tx2;
-        matrix.coeff[0][1] = tx3 - tx1 + matrix.coeff[2][1] * tx3;
-        matrix.coeff[0][2] = tx1;
+        matrix.coeff[0][0] = t_x2 - t_x1 + matrix.coeff[2][0] * t_x2;
+        matrix.coeff[0][1] = t_x3 - t_x1 + matrix.coeff[2][1] * t_x3;
+        matrix.coeff[0][2] = t_x1;
 
-        matrix.coeff[1][0] = ty2 - ty1 + matrix.coeff[2][0] * ty2;
-        matrix.coeff[1][1] = ty3 - ty1 + matrix.coeff[2][1] * ty3;
-        matrix.coeff[1][2] = ty1;
+        matrix.coeff[1][0] = t_y2 - t_y1 + matrix.coeff[2][0] * t_y2;
+        matrix.coeff[1][1] = t_y3 - t_y1 + matrix.coeff[2][1] * t_y3;
+        matrix.coeff[1][2] = t_y1;
       }
 
     matrix.coeff[2][2] = 1.0;
   }
 
   gimp_matrix3_identity  (result);
-  gimp_matrix3_translate (result, -x1, -y1);
+  gimp_matrix3_translate (result, -x, -y);
   gimp_matrix3_scale     (result, scalex, scaley);
   gimp_matrix3_mult      (&matrix, result);
 }

@@ -294,8 +294,8 @@ gimp_shear_tool_recalc (GimpTransformTool *tr_tool,
 
   gimp_transform_matrix_shear (tr_tool->x1,
                                tr_tool->y1,
-                               tr_tool->x2,
-                               tr_tool->y2,
+                               tr_tool->x2 - tr_tool->x1,
+                               tr_tool->y2 - tr_tool->y1,
                                tr_tool->trans_info[HORZ_OR_VERT],
                                amount,
                                &tr_tool->transform);

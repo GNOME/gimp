@@ -1,3 +1,30 @@
+2004-10-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-transform-utils.[ch]. switch from x1,y1,x2,y2
+	bounding boxes to x,y,width,height ones. Added
+	gimp_transform_matrix_flip_free(). Renamed some parameters to be
+	consistent with others. Some internal cleanup.
+
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* tools/pdbgen/pdb/drawable_transform.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: changed accordingly.
+
+	* tools/pdbgen/pdb/drawable_transform.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: guard all transform
+	wrappers with if(gimp_drawable_mask_intersect(...)), also the
+	ones which don't need the returned bounding box.
+
+	* tools/pdbgen/pdb/drawable_transform.pdb: renamed some parameters
+	and added gimp_drawable_transform_matrix() which takes the 9
+	coefficients of a 3x3 matrix for ultimate flexibility ;)
+
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/transform_tools_cmds.c
+	* libgimp/gimpdrawabletransform_pdb.[ch]: regenerated.
+
 2004-10-27  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/dockable-actions.c (dockable_toggle_actions): changed

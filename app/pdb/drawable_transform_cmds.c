@@ -44,6 +44,7 @@ static ProcRecord drawable_transform_rotate_proc;
 static ProcRecord drawable_transform_scale_proc;
 static ProcRecord drawable_transform_shear_proc;
 static ProcRecord drawable_transform_2d_proc;
+static ProcRecord drawable_transform_matrix_proc;
 
 void
 register_drawable_transform_procs (Gimp *gimp)
@@ -55,6 +56,7 @@ register_drawable_transform_procs (Gimp *gimp)
   procedural_db_register (gimp, &drawable_transform_scale_proc);
   procedural_db_register (gimp, &drawable_transform_shear_proc);
   procedural_db_register (gimp, &drawable_transform_2d_proc);
+  procedural_db_register (gimp, &drawable_transform_matrix_proc);
 }
 
 static Argument *
@@ -105,14 +107,19 @@ drawable_transform_flip_invoker (Gimp         *gimp,
 
   if (success)
     {
+      gint x, y, width, height;
+
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
-      if (success)
-        success = gimp_drawable_transform_flip (drawable,
-                                                context,
-                                                transform_direction,
-                                                center, axis,
-                                                clip_result);
+      if (success &&
+          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+        {
+          success = gimp_drawable_transform_flip (drawable,
+                                                  context,
+                                                  transform_direction,
+                                                  center, axis,
+                                                  clip_result);
+        }
     }
 
   return_args = procedural_db_return_args (&drawable_transform_flip_proc, success);
@@ -185,7 +192,7 @@ static ProcRecord drawable_transform_flip_proc =
 {
   "gimp_drawable_transform_flip",
   "Flip the specified drawable either vertically or horizontally.",
-  "This tool flips the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. If center is set to true, the flip is around the image center. Otherwise, the coordinate of the axis needs to be specified. The return value is the ID of the flipped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and flipped drawable.",
+  "This procedure flips the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. If center is set to true, the flip is around the image center. Otherwise, the coordinate of the axis needs to be specified. The return value is the ID of the flipped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and flipped drawable.",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
@@ -207,10 +214,10 @@ drawable_transform_flip_free_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
+  gdouble x0;
+  gdouble y0;
   gdouble x1;
   gdouble y1;
-  gdouble x2;
-  gdouble y2;
   gint32 transform_direction;
   gint32 interpolation;
   gboolean supersample;
@@ -221,13 +228,13 @@ drawable_transform_flip_free_invoker (Gimp         *gimp,
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
-  x1 = args[1].value.pdb_float;
+  x0 = args[1].value.pdb_float;
 
-  y1 = args[2].value.pdb_float;
+  y0 = args[2].value.pdb_float;
 
-  x2 = args[3].value.pdb_float;
+  x1 = args[3].value.pdb_float;
 
-  y2 = args[4].value.pdb_float;
+  y1 = args[4].value.pdb_float;
 
   transform_direction = args[5].value.pdb_int;
   if (transform_direction < GIMP_TRANSFORM_FORWARD || transform_direction > GIMP_TRANSFORM_BACKWARD)
@@ -247,44 +254,34 @@ drawable_transform_flip_free_invoker (Gimp         *gimp,
 
   if (success)
     {
+      gint x, y, width, height;
+
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
-      if (success)
+      if (success &&
+          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
-          gint x, y, width, height;
+          GimpMatrix3 matrix;
 
-          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-            {
-              gdouble      angle;
-              gdouble      dx, dy;
-              GimpMatrix3  matrix;
+          /* Assemble the transformation matrix */
+          gimp_transform_matrix_flip_free (x, y, width, height,
+                                           x0, y0, x1, y1,
+                                           &matrix);
 
-              angle = atan2  ((y2 - y1),  (x2 - x1));
-              dx = x  - x1;
-              dy = (x1 + ( (gdouble) (y2 - y1) / (x2 - x1) ) * x ) - y1;
+          if (progress)
+            gimp_progress_start (progress, _("Flip..."), FALSE);
 
-              gimp_matrix3_identity  (&matrix);
-              gimp_matrix3_translate (&matrix, dx, dy);
-              gimp_matrix3_rotate    (&matrix, -angle);
-              gimp_matrix3_scale     (&matrix, 1.0, -1.0);
-              gimp_matrix3_rotate    (&matrix, angle);
-              gimp_matrix3_translate (&matrix, -dx, -dy);
-
-              if (progress)
-                gimp_progress_start (progress, _("Flip..."), FALSE);
-
-              /* Transform the selection */
-              success = gimp_drawable_transform_affine (drawable, context,
-                                                        &matrix,
-                                                        transform_direction,
-                                                        interpolation,
-                                                        supersample,
-                                                        recursion_level,
-                                                        clip_result,
-                                                        progress);
-              if (progress)
-                gimp_progress_end (progress);
-            }
+          /* Transform the selection */
+          success = gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix,
+                                                    transform_direction,
+                                                    interpolation,
+                                                    supersample,
+                                                    recursion_level,
+                                                    clip_result,
+                                                    progress);
+          if (progress)
+            gimp_progress_end (progress);
         }
     }
 
@@ -305,22 +302,22 @@ static ProcArg drawable_transform_flip_free_inargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "x1",
+    "x0",
     "horz. coord. of one end of axis"
   },
   {
     GIMP_PDB_FLOAT,
-    "y1",
+    "y0",
     "vert. coord. of one end of axis"
   },
   {
     GIMP_PDB_FLOAT,
-    "x2",
+    "x1",
     "horz. coord. of other end of axis"
   },
   {
     GIMP_PDB_FLOAT,
-    "y2",
+    "y1",
     "vert. coord. of other end of axis"
   },
   {
@@ -363,7 +360,7 @@ static ProcRecord drawable_transform_flip_free_proc =
 {
   "gimp_drawable_transform_flip_free",
   "Flip the specified drawable around a given line.",
-  "This tool flips the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. The axis to flip around is specified by specifying two points from that line. The return value is the ID of the flipped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and flipped drawable. The clip results parameter specifies wheter current selection will affect the transform.",
+  "This procedure flips the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. The axis to flip around is specified by specifying two points from that line. The return value is the ID of the flipped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and flipped drawable. The clip results parameter specifies wheter current selection will affect the transform.",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
@@ -430,39 +427,37 @@ drawable_transform_perspective_invoker (Gimp         *gimp,
 
   if (success)
     {
+      gint x, y, width, height;
+
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
-      if (success)
+      if (success &&
+          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
-          gint x, y, width, height;
+          GimpMatrix3 matrix;
 
-          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-            {
-              GimpMatrix3  matrix;
+          /* Assemble the transformation matrix */
+          gimp_transform_matrix_perspective (x, y, width, height,
+                                             trans_info[X0], trans_info[Y0],
+                                             trans_info[X1], trans_info[Y1],
+                                             trans_info[X2], trans_info[Y2],
+                                             trans_info[X3], trans_info[Y3],
+                                             &matrix);
 
-              /* Assemble the transformation matrix */
-              gimp_transform_matrix_perspective (x, y, x + width, y + height,
-                                                 trans_info[X0], trans_info[Y0],
-                                                 trans_info[X1], trans_info[Y1],
-                                                 trans_info[X2], trans_info[Y2],
-                                                 trans_info[X3], trans_info[Y3],
-                                                 &matrix);
+          if (progress)
+            gimp_progress_start (progress, _("Perspective..."), FALSE);
 
-              if (progress)
-                gimp_progress_start (progress, _("Perspective..."), FALSE);
+          /* Perspective the selection */
+          success = gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix,
+                                                    transform_direction,
+                                                    interpolation, supersample,
+                                                    recursion_level,
+                                                    clip_result,
+                                                    progress);
 
-              /* Perspective the selection */
-              success = gimp_drawable_transform_affine (drawable, context,
-                                                        &matrix,
-                                                        transform_direction,
-                                                        interpolation, supersample,
-                                                        recursion_level,
-                                                        clip_result,
-                                                        progress);
-
-              if (progress)
-                gimp_progress_end (progress);
-            }
+          if (progress)
+            gimp_progress_end (progress);
         }
     }
 
@@ -561,7 +556,7 @@ static ProcRecord drawable_transform_perspective_proc =
 {
   "gimp_drawable_transform_perspective",
   "Perform a possibly non-affine transformation on the specified drawable, with extra parameters.",
-  "This tool performs a possibly non-affine transformation on the specified drawable by allowing the corners of the original bounding box to be arbitrarily remapped to any values. The specified drawable is remapped if no selection exists. However, if a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then remapped as specified. The return value is the ID of the remapped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and remapped drawable. The 4 coordinates specify the new locations of each corner of the original bounding box. By specifying these values, any affine transformation (rotation, scaling, translation) can be affected. Additionally, these values can be specified such that the resulting transformed drawable will appear to have been projected via a perspective transform.",
+  "This procedure performs a possibly non-affine transformation on the specified drawable by allowing the corners of the original bounding box to be arbitrarily remapped to any values. The specified drawable is remapped if no selection exists. However, if a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then remapped as specified. The return value is the ID of the remapped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and remapped drawable. The 4 coordinates specify the new locations of each corner of the original bounding box. By specifying these values, any affine transformation (rotation, scaling, translation) can be affected. Additionally, these values can be specified such that the resulting transformed drawable will appear to have been projected via a perspective transform.",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
@@ -584,8 +579,8 @@ drawable_transform_rotate_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpDrawable *drawable;
   gdouble angle;
-  gint32 cx;
-  gint32 cy;
+  gint32 center_x;
+  gint32 center_y;
   gint32 transform_direction;
   gint32 interpolation;
   gboolean supersample;
@@ -598,9 +593,9 @@ drawable_transform_rotate_invoker (Gimp         *gimp,
 
   angle = args[1].value.pdb_float;
 
-  cx = args[2].value.pdb_int;
+  center_x = args[2].value.pdb_int;
 
-  cy = args[3].value.pdb_int;
+  center_y = args[3].value.pdb_int;
 
   transform_direction = args[4].value.pdb_int;
   if (transform_direction < GIMP_TRANSFORM_FORWARD || transform_direction > GIMP_TRANSFORM_BACKWARD)
@@ -620,14 +615,18 @@ drawable_transform_rotate_invoker (Gimp         *gimp,
 
   if (success)
     {
+      gint x, y, width, height;
+
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
-      if (success)
+      if (success &&
+          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
-          GimpMatrix3  matrix;
+          GimpMatrix3 matrix;
 
           /* Assemble the transformation matrix */
-          gimp_transform_matrix_rotate_center (cx, cy, angle, &matrix);
+          gimp_transform_matrix_rotate_center (center_x, center_y, angle,
+                                               &matrix);
 
           if (progress)
             gimp_progress_start (progress, _("Rotating..."), FALSE);
@@ -666,12 +665,12 @@ static ProcArg drawable_transform_rotate_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "cx",
+    "center_x",
     "The hor. coordinate of the center of rotation"
   },
   {
     GIMP_PDB_INT32,
-    "cy",
+    "center_y",
     "The vert. coordinate of the center of rotation"
   },
   {
@@ -714,7 +713,7 @@ static ProcRecord drawable_transform_rotate_proc =
 {
   "gimp_drawable_transform_rotate",
   "Rotate the specified drawable about given coordinates through the specified angle.",
-  "This tool rotates the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and rotated drawable.",
+  "This function rotates the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and rotated drawable.",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
@@ -773,38 +772,38 @@ drawable_transform_scale_invoker (Gimp         *gimp,
 
   if (success)
     {
+      gint x, y, width, height;
+
       success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
                  trans_info[X0] < trans_info[X1] &&
                  trans_info[Y0] < trans_info[X1]);
 
-      if (success)
+      if (success &&
+          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
-          gint x, y, width, height;
+          GimpMatrix3 matrix;
 
-          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-            {
-              GimpMatrix3  matrix;
+          /* Assemble the transformation matrix */
+          gimp_transform_matrix_scale (x, y, width, height,
+                                       trans_info[X0],
+                                       trans_info[Y0],
+                                       trans_info[X1] - trans_info[X0],
+                                       trans_info[Y1] - trans_info[Y0],
+                                       &matrix);
 
-              /* Assemble the transformation matrix */
-              gimp_transform_matrix_scale (x, y, x + width, y + height,
-                                           trans_info[X0], trans_info[Y0],
-                                           trans_info[X1], trans_info[Y1],
-                                           &matrix);
+          if (progress)
+            gimp_progress_start (progress, _("Scaling..."), FALSE);
 
-              if (progress)
-                gimp_progress_start (progress, _("Scaling..."), FALSE);
+          /* Scale the selection */
+          success = gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix,
+                                                    transform_direction,
+                                                    interpolation, supersample,
+                                                    recursion_level,
+                                                     clip_result, progress);
 
-              /* Scale the selection */
-              success = gimp_drawable_transform_affine (drawable, context,
-                                                        &matrix,
-                                                        transform_direction,
-                                                        interpolation, supersample,
-                                                        recursion_level,
-                                                        clip_result, progress);
-
-              if (progress)
-                gimp_progress_end (progress);
-            }
+          if (progress)
+            gimp_progress_end (progress);
         }
     }
 
@@ -883,7 +882,7 @@ static ProcRecord drawable_transform_scale_proc =
 {
   "gimp_drawable_transform_scale",
   "Scale the specified drawable with extra parameters",
-  "This tool scales the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then scaled by the specified amount. The return value is the ID of the scaled drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and scaled drawable.",
+  "This procedure scales the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then scaled by the specified amount. The return value is the ID of the scaled drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and scaled drawable.",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
@@ -941,35 +940,33 @@ drawable_transform_shear_invoker (Gimp         *gimp,
 
   if (success)
     {
+      gint x, y, width, height;
+
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
-      if (success)
+      if (success &&
+          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
-          gint x, y, width, height;
+          GimpMatrix3 matrix;
 
-          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-            {
-              GimpMatrix3  matrix;
+          /* Assemble the transformation matrix */
+          gimp_transform_matrix_shear (x, y, width, height,
+                                       shear_type, magnitude,
+                                       &matrix);
 
-              /* Assemble the transformation matrix */
-              gimp_transform_matrix_shear (x, y, x + width, y + height,
-                                           shear_type, magnitude,
-                                           &matrix);
+          if (progress)
+            gimp_progress_start (progress, _("Shearing..."), FALSE);
 
-              if (progress)
-                gimp_progress_start (progress, _("Shearing..."), FALSE);
+          /* Shear the selection */
+          success = gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix,
+                                                    transform_direction,
+                                                    interpolation, supersample,
+                                                    recursion_level,
+                                                    clip_result, progress);
 
-              /* Shear the selection */
-              success = gimp_drawable_transform_affine (drawable, context,
-                                                        &matrix,
-                                                        transform_direction,
-                                                        interpolation, supersample,
-                                                        recursion_level,
-                                                        clip_result, progress);
-
-              if (progress)
-                gimp_progress_end (progress);
-            }
+          if (progress)
+            gimp_progress_end (progress);
         }
     }
 
@@ -1038,7 +1035,7 @@ static ProcRecord drawable_transform_shear_proc =
 {
   "gimp_drawable_transform_shear",
   "Shear the specified drawable about its center by the specified magnitude, with extra parameters.",
-  "This tool shears the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then sheard by the specified amount. The return value is the ID of the sheard drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and sheard drawable. The shear type parameter indicates whether the shear will be applied horizontally or vertically. The magnitude can be either positive or negative and indicates the extent (in pixels) to shear by.",
+  "This procedure shears the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then sheard by the specified amount. The return value is the ID of the sheard drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and sheard drawable. The shear type parameter indicates whether the shear will be applied horizontally or vertically. The magnitude can be either positive or negative and indicates the extent (in pixels) to shear by.",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
@@ -1109,11 +1106,14 @@ drawable_transform_2d_invoker (Gimp         *gimp,
 
   if (success)
     {
+      gint x, y, width, height;
+
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
-      if (success)
+      if (success &&
+          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
-          GimpMatrix3  matrix;
+          GimpMatrix3 matrix;
 
           /* Assemble the transformation matrix */
           gimp_matrix3_identity  (&matrix);
@@ -1227,7 +1227,7 @@ static ProcRecord drawable_transform_2d_proc =
 {
   "gimp_drawable_transform_2d",
   "Transform the specified drawable in 2d, with extra parameters.",
-  "This tool transforms the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed. The transformation is done by scaling the image by the x and y scale factors about the point (source_x, source_y), then rotating around the same point, then translating that point to the new position (dest_x, dest_y). The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and transformed drawable.",
+  "This procedure transforms the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed. The transformation is done by scaling the image by the x and y scale factors about the point (source_x, source_y), then rotating around the same point, then translating that point to the new position (dest_x, dest_y). The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and transformed drawable.",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
@@ -1238,4 +1238,216 @@ static ProcRecord drawable_transform_2d_proc =
   1,
   drawable_transform_2d_outargs,
   { { drawable_transform_2d_invoker } }
+};
+
+static Argument *
+drawable_transform_matrix_invoker (Gimp         *gimp,
+                                   GimpContext  *context,
+                                   GimpProgress *progress,
+                                   Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+  gdouble coeff_0_0;
+  gdouble coeff_0_1;
+  gdouble coeff_0_2;
+  gdouble coeff_1_0;
+  gdouble coeff_1_1;
+  gdouble coeff_1_2;
+  gdouble coeff_2_0;
+  gdouble coeff_2_1;
+  gdouble coeff_2_2;
+  gint32 transform_direction;
+  gint32 interpolation;
+  gboolean supersample;
+  gint32 recursion_level;
+  gboolean clip_result;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
+    success = FALSE;
+
+  coeff_0_0 = args[1].value.pdb_float;
+
+  coeff_0_1 = args[2].value.pdb_float;
+
+  coeff_0_2 = args[3].value.pdb_float;
+
+  coeff_1_0 = args[4].value.pdb_float;
+
+  coeff_1_1 = args[5].value.pdb_float;
+
+  coeff_1_2 = args[6].value.pdb_float;
+
+  coeff_2_0 = args[7].value.pdb_float;
+
+  coeff_2_1 = args[8].value.pdb_float;
+
+  coeff_2_2 = args[9].value.pdb_float;
+
+  transform_direction = args[10].value.pdb_int;
+  if (transform_direction < GIMP_TRANSFORM_FORWARD || transform_direction > GIMP_TRANSFORM_BACKWARD)
+    success = FALSE;
+
+  interpolation = args[11].value.pdb_int;
+  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_CUBIC)
+    success = FALSE;
+
+  supersample = args[12].value.pdb_int ? TRUE : FALSE;
+
+  recursion_level = args[13].value.pdb_int;
+  if (recursion_level <= 0)
+    success = FALSE;
+
+  clip_result = args[14].value.pdb_int ? TRUE : FALSE;
+
+  if (success)
+    {
+      gint x, y, width, height;
+
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+      if (success &&
+          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+        {
+          GimpMatrix3 matrix;
+
+          /* Assemble the transformation matrix */
+          matrix.coeff[0][0] = coeff_0_0;
+          matrix.coeff[0][1] = coeff_0_1;
+          matrix.coeff[0][2] = coeff_0_2;
+          matrix.coeff[1][0] = coeff_1_0;
+          matrix.coeff[1][1] = coeff_1_1;
+          matrix.coeff[1][2] = coeff_1_2;
+          matrix.coeff[2][0] = coeff_2_0;
+          matrix.coeff[2][1] = coeff_2_1;
+          matrix.coeff[2][2] = coeff_2_2;
+
+          if (progress)
+            gimp_progress_start (progress, _("2D Transform..."), FALSE);
+
+          /* Transform the selection */
+          success = gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, transform_direction,
+                                                    interpolation, supersample,
+                                                    recursion_level,
+                                                    clip_result, progress);
+
+          if (progress)
+            gimp_progress_end (progress);
+        }
+    }
+
+  return_args = procedural_db_return_args (&drawable_transform_matrix_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
+
+  return return_args;
+}
+
+static ProcArg drawable_transform_matrix_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The affected drawable"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "coeff_0_0",
+    "coefficient (0,0) of the transformation matrix"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "coeff_0_1",
+    "coefficient (0,1) of the transformation matrix"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "coeff_0_2",
+    "coefficient (0,2) of the transformation matrix"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "coeff_1_0",
+    "coefficient (1,0) of the transformation matrix"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "coeff_1_1",
+    "coefficient (1,1) of the transformation matrix"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "coeff_1_2",
+    "coefficient (1,2) of the transformation matrix"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "coeff_2_0",
+    "coefficient (2,0) of the transformation matrix"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "coeff_2_1",
+    "coefficient (2,1) of the transformation matrix"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "coeff_2_2",
+    "coefficient (2,2) of the transformation matrix"
+  },
+  {
+    GIMP_PDB_INT32,
+    "transform_direction",
+    "Direction of Transformation: { GIMP_TRANSFORM_FORWARD (0), GIMP_TRANSFORM_BACKWARD (1) }"
+  },
+  {
+    GIMP_PDB_INT32,
+    "interpolation",
+    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2) }"
+  },
+  {
+    GIMP_PDB_INT32,
+    "supersample",
+    "Whether to perform supersample"
+  },
+  {
+    GIMP_PDB_INT32,
+    "recursion_level",
+    "Level of recursion (3 is a nice default)"
+  },
+  {
+    GIMP_PDB_INT32,
+    "clip_result",
+    "Whether to clip results"
+  }
+};
+
+static ProcArg drawable_transform_matrix_outargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The transformed drawable"
+  }
+};
+
+static ProcRecord drawable_transform_matrix_proc =
+{
+  "gimp_drawable_transform_matrix",
+  "Transform the specified drawable in 2d, with extra parameters.",
+  "This procedure transforms the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed. The transformation is done by assembling a 3x3 matrix from the coefficients passed. The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and transformed drawable.",
+  "João S. O. Bueno Calligaris",
+  "João S. O. Bueno Calligaris",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  15,
+  drawable_transform_matrix_inargs,
+  1,
+  drawable_transform_matrix_outargs,
+  { { drawable_transform_matrix_invoker } }
 };

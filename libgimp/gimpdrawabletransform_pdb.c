@@ -39,9 +39,9 @@
  *
  * Flip the specified drawable either vertically or horizontally.
  *
- * This tool flips the specified drawable if no selection exists. If a
- * selection exists, the portion of the drawable which lies under the
- * selection is cut from the drawable and made into a floating
+ * This procedure flips the specified drawable if no selection exists.
+ * If a selection exists, the portion of the drawable which lies under
+ * the selection is cut from the drawable and made into a floating
  * selection which is then flipped. If center is set to true, the flip
  * is around the image center. Otherwise, the coordinate of the axis
  * needs to be specified. The return value is the ID of the flipped
@@ -92,10 +92,10 @@ gimp_drawable_transform_flip (gint32                 drawable_ID,
 /**
  * gimp_drawable_transform_flip_free:
  * @drawable_ID: The affected drawable.
- * @x1: horz. coord. of one end of axis.
- * @y1: vert. coord. of one end of axis.
- * @x2: horz. coord. of other end of axis.
- * @y2: vert. coord. of other end of axis.
+ * @x0: horz. coord. of one end of axis.
+ * @y0: vert. coord. of one end of axis.
+ * @x1: horz. coord. of other end of axis.
+ * @y1: vert. coord. of other end of axis.
  * @transform_direction: Direction of Transformation.
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
@@ -104,9 +104,9 @@ gimp_drawable_transform_flip (gint32                 drawable_ID,
  *
  * Flip the specified drawable around a given line.
  *
- * This tool flips the specified drawable if no selection exists. If a
- * selection exists, the portion of the drawable which lies under the
- * selection is cut from the drawable and made into a floating
+ * This procedure flips the specified drawable if no selection exists.
+ * If a selection exists, the portion of the drawable which lies under
+ * the selection is cut from the drawable and made into a floating
  * selection which is then flipped. The axis to flip around is
  * specified by specifying two points from that line. The return value
  * is the ID of the flipped drawable. If there was no selection, this
@@ -121,10 +121,10 @@ gimp_drawable_transform_flip (gint32                 drawable_ID,
  */
 gint32
 gimp_drawable_transform_flip_free (gint32                 drawable_ID,
+				   gdouble                x0,
+				   gdouble                y0,
 				   gdouble                x1,
 				   gdouble                y1,
-				   gdouble                x2,
-				   gdouble                y2,
 				   GimpTransformDirection transform_direction,
 				   GimpInterpolationType  interpolation,
 				   gboolean               supersample,
@@ -138,10 +138,10 @@ gimp_drawable_transform_flip_free (gint32                 drawable_ID,
   return_vals = gimp_run_procedure ("gimp_drawable_transform_flip_free",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_FLOAT, x0,
+				    GIMP_PDB_FLOAT, y0,
 				    GIMP_PDB_FLOAT, x1,
 				    GIMP_PDB_FLOAT, y1,
-				    GIMP_PDB_FLOAT, x2,
-				    GIMP_PDB_FLOAT, y2,
 				    GIMP_PDB_INT32, transform_direction,
 				    GIMP_PDB_INT32, interpolation,
 				    GIMP_PDB_INT32, supersample,
@@ -177,7 +177,7 @@ gimp_drawable_transform_flip_free (gint32                 drawable_ID,
  * Perform a possibly non-affine transformation on the specified
  * drawable, with extra parameters.
  *
- * This tool performs a possibly non-affine transformation on the
+ * This procedure performs a possibly non-affine transformation on the
  * specified drawable by allowing the corners of the original bounding
  * box to be arbitrarily remapped to any values. The specified drawable
  * is remapped if no selection exists. However, if a selection exists,
@@ -247,8 +247,8 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
  * gimp_drawable_transform_rotate:
  * @drawable_ID: The affected drawable.
  * @angle: The angle of rotation (radians).
- * @cx: The hor. coordinate of the center of rotation.
- * @cy: The vert. coordinate of the center of rotation.
+ * @center_x: The hor. coordinate of the center of rotation.
+ * @center_y: The vert. coordinate of the center of rotation.
  * @transform_direction: Direction of Transformation.
  * @interpolation: Type of interpolation.
  * @supersample: Whether to perform supersample.
@@ -258,9 +258,9 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
  * Rotate the specified drawable about given coordinates through the
  * specified angle.
  *
- * This tool rotates the specified drawable if no selection exists. If
- * a selection exists, the portion of the drawable which lies under the
- * selection is cut from the drawable and made into a floating
+ * This function rotates the specified drawable if no selection exists.
+ * If a selection exists, the portion of the drawable which lies under
+ * the selection is cut from the drawable and made into a floating
  * selection which is then rotated by the specified amount. The return
  * value is the ID of the rotated drawable. If there was no selection,
  * this will be equal to the drawable ID supplied as input. Otherwise,
@@ -273,8 +273,8 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
 gint32
 gimp_drawable_transform_rotate (gint32                 drawable_ID,
 				gdouble                angle,
-				gint                   cx,
-				gint                   cy,
+				gint                   center_x,
+				gint                   center_y,
 				GimpTransformDirection transform_direction,
 				GimpInterpolationType  interpolation,
 				gboolean               supersample,
@@ -289,8 +289,8 @@ gimp_drawable_transform_rotate (gint32                 drawable_ID,
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, angle,
-				    GIMP_PDB_INT32, cx,
-				    GIMP_PDB_INT32, cy,
+				    GIMP_PDB_INT32, center_x,
+				    GIMP_PDB_INT32, center_y,
 				    GIMP_PDB_INT32, transform_direction,
 				    GIMP_PDB_INT32, interpolation,
 				    GIMP_PDB_INT32, supersample,
@@ -321,9 +321,9 @@ gimp_drawable_transform_rotate (gint32                 drawable_ID,
  *
  * Scale the specified drawable with extra parameters
  *
- * This tool scales the specified drawable if no selection exists. If a
- * selection exists, the portion of the drawable which lies under the
- * selection is cut from the drawable and made into a floating
+ * This procedure scales the specified drawable if no selection exists.
+ * If a selection exists, the portion of the drawable which lies under
+ * the selection is cut from the drawable and made into a floating
  * selection which is then scaled by the specified amount. The return
  * value is the ID of the scaled drawable. If there was no selection,
  * this will be equal to the drawable ID supplied as input. Otherwise,
@@ -385,9 +385,9 @@ gimp_drawable_transform_scale (gint32                 drawable_ID,
  * Shear the specified drawable about its center by the specified
  * magnitude, with extra parameters.
  *
- * This tool shears the specified drawable if no selection exists. If a
- * selection exists, the portion of the drawable which lies under the
- * selection is cut from the drawable and made into a floating
+ * This procedure shears the specified drawable if no selection exists.
+ * If a selection exists, the portion of the drawable which lies under
+ * the selection is cut from the drawable and made into a floating
  * selection which is then sheard by the specified amount. The return
  * value is the ID of the sheard drawable. If there was no selection,
  * this will be equal to the drawable ID supplied as input. Otherwise,
@@ -452,14 +452,14 @@ gimp_drawable_transform_shear (gint32                 drawable_ID,
  *
  * Transform the specified drawable in 2d, with extra parameters.
  *
- * This tool transforms the specified drawable if no selection exists.
- * If a selection exists, the portion of the drawable which lies under
- * the selection is cut from the drawable and made into a floating
- * selection which is then transformed. The transformation is done by
- * scaling the image by the x and y scale factors about the point
- * (source_x, source_y), then rotating around the same point, then
- * translating that point to the new position (dest_x, dest_y). The
- * return value is the ID of the rotated drawable. If there was no
+ * This procedure transforms the specified drawable if no selection
+ * exists. If a selection exists, the portion of the drawable which
+ * lies under the selection is cut from the drawable and made into a
+ * floating selection which is then transformed. The transformation is
+ * done by scaling the image by the x and y scale factors about the
+ * point (source_x, source_y), then rotating around the same point,
+ * then translating that point to the new position (dest_x, dest_y).
+ * The return value is the ID of the rotated drawable. If there was no
  * selection, this will be equal to the drawable ID supplied as input.
  * Otherwise, this will be the newly created and transformed drawable.
  *
@@ -496,6 +496,87 @@ gimp_drawable_transform_2d (gint32                 drawable_ID,
 				    GIMP_PDB_FLOAT, angle,
 				    GIMP_PDB_FLOAT, dest_x,
 				    GIMP_PDB_FLOAT, dest_y,
+				    GIMP_PDB_INT32, transform_direction,
+				    GIMP_PDB_INT32, interpolation,
+				    GIMP_PDB_INT32, supersample,
+				    GIMP_PDB_INT32, recursion_level,
+				    GIMP_PDB_INT32, clip_result,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    ret_drawable_ID = return_vals[1].data.d_drawable;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return ret_drawable_ID;
+}
+
+/**
+ * gimp_drawable_transform_matrix:
+ * @drawable_ID: The affected drawable.
+ * @coeff_0_0: coefficient (0,0) of the transformation matrix.
+ * @coeff_0_1: coefficient (0,1) of the transformation matrix.
+ * @coeff_0_2: coefficient (0,2) of the transformation matrix.
+ * @coeff_1_0: coefficient (1,0) of the transformation matrix.
+ * @coeff_1_1: coefficient (1,1) of the transformation matrix.
+ * @coeff_1_2: coefficient (1,2) of the transformation matrix.
+ * @coeff_2_0: coefficient (2,0) of the transformation matrix.
+ * @coeff_2_1: coefficient (2,1) of the transformation matrix.
+ * @coeff_2_2: coefficient (2,2) of the transformation matrix.
+ * @transform_direction: Direction of Transformation.
+ * @interpolation: Type of interpolation.
+ * @supersample: Whether to perform supersample.
+ * @recursion_level: Level of recursion (3 is a nice default).
+ * @clip_result: Whether to clip results.
+ *
+ * Transform the specified drawable in 2d, with extra parameters.
+ *
+ * This procedure transforms the specified drawable if no selection
+ * exists. If a selection exists, the portion of the drawable which
+ * lies under the selection is cut from the drawable and made into a
+ * floating selection which is then transformed. The transformation is
+ * done by assembling a 3x3 matrix from the coefficients passed. The
+ * return value is the ID of the rotated drawable. If there was no
+ * selection, this will be equal to the drawable ID supplied as input.
+ * Otherwise, this will be the newly created and transformed drawable.
+ *
+ * Returns: The transformed drawable.
+ *
+ * Since: GIMP 2.2
+ */
+gint32
+gimp_drawable_transform_matrix (gint32                 drawable_ID,
+				gdouble                coeff_0_0,
+				gdouble                coeff_0_1,
+				gdouble                coeff_0_2,
+				gdouble                coeff_1_0,
+				gdouble                coeff_1_1,
+				gdouble                coeff_1_2,
+				gdouble                coeff_2_0,
+				gdouble                coeff_2_1,
+				gdouble                coeff_2_2,
+				GimpTransformDirection transform_direction,
+				GimpInterpolationType  interpolation,
+				gboolean               supersample,
+				gint                   recursion_level,
+				gboolean               clip_result)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 ret_drawable_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_transform_matrix",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_FLOAT, coeff_0_0,
+				    GIMP_PDB_FLOAT, coeff_0_1,
+				    GIMP_PDB_FLOAT, coeff_0_2,
+				    GIMP_PDB_FLOAT, coeff_1_0,
+				    GIMP_PDB_FLOAT, coeff_1_1,
+				    GIMP_PDB_FLOAT, coeff_1_2,
+				    GIMP_PDB_FLOAT, coeff_2_0,
+				    GIMP_PDB_FLOAT, coeff_2_1,
+				    GIMP_PDB_FLOAT, coeff_2_2,
 				    GIMP_PDB_INT32, transform_direction,
 				    GIMP_PDB_INT32, interpolation,
 				    GIMP_PDB_INT32, supersample,
