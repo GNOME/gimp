@@ -7,10 +7,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.9\n"
-"POT-Creation-Date: 2002-09-07 18:51+0200\n"
-"PO-Revision-Date: 2002-09-07 18:50+0100\n"
-"Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
-"Language-Team: German <de@li.org>\n"
+"POT-Creation-Date: 2002-09-08 12:33+0200\n"
+"PO-Revision-Date: 2002-09-08 12:31+0100\n"
+"Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
+"Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -207,7 +207,7 @@ msgstr "Kann %s nicht rückgängig machen"
 msgid "<<invalid>>"
 msgstr "<<ungültig>>"
 
-#: app/undo.c:3599 app/gui/resize-dialog.c:192
+#: app/undo.c:3599 app/gui/resize-dialog.c:194
 msgid "Scale Image"
 msgstr "Bild skalieren"
 
@@ -223,7 +223,7 @@ msgstr "Bild konvertieren"
 msgid "Crop Image"
 msgstr "Bild zuschneiden"
 
-#: app/undo.c:3603 app/gui/image-commands.c:292
+#: app/undo.c:3603 app/gui/image-commands.c:294
 msgid "Merge Layers"
 msgstr "Ebenen vereinen"
 
@@ -239,7 +239,7 @@ msgstr "Hilfslinie"
 msgid "Layer Properties"
 msgstr "Ebeneneigenschaften"
 
-#: app/undo.c:3607 app/gui/resize-dialog.c:184
+#: app/undo.c:3607 app/gui/resize-dialog.c:186
 msgid "Scale Layer"
 msgstr "Ebene skalieren"
 
@@ -308,12 +308,12 @@ msgstr "Bild"
 msgid "Image Mod"
 msgstr "Bildänderung"
 
-#: app/undo.c:3625 app/gui/file-new-dialog.c:365
+#: app/undo.c:3625 app/gui/file-new-dialog.c:374
 msgid "Image Type"
 msgstr "Bildart"
 
 #. Image size frame
-#: app/undo.c:3626 app/gui/file-new-dialog.c:141
+#: app/undo.c:3626 app/gui/file-new-dialog.c:144
 msgid "Image Size"
 msgstr "Bildgröße"
 
@@ -329,7 +329,7 @@ msgstr "Auswahlmaske"
 msgid "Rename Item"
 msgstr "Ding umbenennen"
 
-#: app/undo.c:3632 app/gui/layers-commands.c:601 app/gui/layers-commands.c:642
+#: app/undo.c:3632 app/gui/layers-commands.c:601 app/gui/layers-commands.c:633
 msgid "New Layer"
 msgstr "Ebene anlegen"
 
@@ -341,7 +341,7 @@ msgstr "Ebene löschen"
 msgid "Layer Mod"
 msgstr "Ebenenänderung"
 
-#: app/undo.c:3635 app/gui/layers-commands.c:900
+#: app/undo.c:3635 app/gui/layers-commands.c:893
 msgid "Add Layer Mask"
 msgstr "Ebenenmaske hinzufügen"
 
@@ -432,17 +432,17 @@ msgid "Cubic (Best)"
 msgstr "Kubisch (am besten)"
 
 #: app/base/base-enums.c:70 app/core/core-enums.c:194
-#: app/gui/preferences-dialog.c:2065
+#: app/gui/preferences-dialog.c:2067
 msgid "Small"
 msgstr "Klein"
 
 #: app/base/base-enums.c:71 app/core/core-enums.c:195
-#: app/gui/preferences-dialog.c:2068
+#: app/gui/preferences-dialog.c:2070
 msgid "Medium"
 msgstr "Mittel"
 
 #: app/base/base-enums.c:72 app/core/core-enums.c:196
-#: app/gui/preferences-dialog.c:2071
+#: app/gui/preferences-dialog.c:2073
 msgid "Large"
 msgstr "Gross"
 
@@ -470,31 +470,31 @@ msgstr "Nur Grau"
 msgid "Black Only"
 msgstr "Nur Schwarz"
 
-#: app/base/base-enums.c:113 app/gui/color-notebook.c:296
+#: app/base/base-enums.c:113 app/gui/color-notebook.c:306
 #: app/widgets/gimpwidgets-constructors.c:68
 #: app/widgets/gimpwidgets-constructors.c:98
 msgid "Value"
 msgstr "Wert"
 
-#: app/base/base-enums.c:114 app/gui/color-notebook.c:297
+#: app/base/base-enums.c:114 app/gui/color-notebook.c:307
 #: app/tools/gimpcolorbalancetool.c:312
 #: app/widgets/gimpcomponentlistitem.c:481
 msgid "Red"
 msgstr "Rot"
 
-#: app/base/base-enums.c:115 app/gui/color-notebook.c:298
+#: app/base/base-enums.c:115 app/gui/color-notebook.c:308
 #: app/tools/gimpcolorbalancetool.c:319
 #: app/widgets/gimpcomponentlistitem.c:482
 msgid "Green"
 msgstr "Grün"
 
-#: app/base/base-enums.c:116 app/gui/color-notebook.c:299
+#: app/base/base-enums.c:116 app/gui/color-notebook.c:309
 #: app/tools/gimpcolorbalancetool.c:326
 #: app/widgets/gimpcomponentlistitem.c:483
 msgid "Blue"
 msgstr "Blau"
 
-#: app/base/base-enums.c:117 app/gui/color-notebook.c:300
+#: app/base/base-enums.c:117 app/gui/color-notebook.c:310
 #: app/widgets/gimpcomponentlistitem.c:486
 msgid "Alpha"
 msgstr "Alpha"
@@ -564,7 +564,7 @@ msgstr "Schwerwiegender Fehler beim Interpretieren"
 #: app/config/gimpscanner.c:74 app/core/gimpbrushpipe.c:308
 #: app/gui/paths-dialog.c:1886 app/gui/paths-dialog.c:2011
 #: app/tools/gimpcurvestool.c:1404 app/tools/gimpcurvestool.c:1420
-#: app/tools/gimplevelstool.c:1317 app/tools/gimplevelstool.c:1333
+#: app/tools/gimplevelstool.c:1315 app/tools/gimplevelstool.c:1331
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Kann Datei '%s' nicht öffnen: %s"
@@ -631,7 +631,6 @@ msgid "Foreground"
 msgstr "Vordergrund"
 
 #: app/core/core-enums.c:99 app/core/gimpimage-new.c:177
-#: app/gui/offset-dialog.c:200
 msgid "Background"
 msgstr "Hintergrund"
 
@@ -639,7 +638,7 @@ msgstr "Hintergrund"
 msgid "White"
 msgstr "Weiß"
 
-#: app/core/core-enums.c:101 app/gui/offset-dialog.c:203
+#: app/core/core-enums.c:101
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -783,28 +782,28 @@ msgstr "Parasiten"
 
 #. initialize the list of gimp brushes
 #: app/core/gimp.c:536 app/gui/dialogs-constructors.c:370
-#: app/gui/dialogs-constructors.c:518 app/gui/preferences-dialog.c:2756
+#: app/gui/dialogs-constructors.c:518 app/gui/preferences-dialog.c:2758
 #: app/pdb/internal_procs.c:82
 msgid "Brushes"
 msgstr "Pinsel"
 
 #. initialize the list of gimp patterns
 #: app/core/gimp.c:540 app/gui/dialogs-constructors.c:391
-#: app/gui/dialogs-constructors.c:539 app/gui/preferences-dialog.c:2760
+#: app/gui/dialogs-constructors.c:539 app/gui/preferences-dialog.c:2762
 #: app/pdb/internal_procs.c:160
 msgid "Patterns"
 msgstr "Muster"
 
 #. initialize the list of gimp palettes
 #: app/core/gimp.c:544 app/gui/dialogs-constructors.c:433
-#: app/gui/dialogs-constructors.c:581 app/gui/preferences-dialog.c:2764
+#: app/gui/dialogs-constructors.c:581 app/gui/preferences-dialog.c:2766
 #: app/pdb/internal_procs.c:148
 msgid "Palettes"
 msgstr "Farbpaletten"
 
 #. initialize the list of gimp gradients
 #: app/core/gimp.c:548 app/gui/dialogs-constructors.c:412
-#: app/gui/dialogs-constructors.c:560 app/gui/preferences-dialog.c:2768
+#: app/gui/dialogs-constructors.c:560 app/gui/preferences-dialog.c:2770
 #: app/pdb/internal_procs.c:115
 msgid "Gradients"
 msgstr "Farbverläufe"
@@ -935,7 +934,7 @@ msgstr ""
 msgid "Cannot float selection: No selection made."
 msgstr "Schwebende Auswahl: Keine Auswahl vorhanden."
 
-#: app/core/gimpimage-mask.c:390 app/gui/layers-commands.c:833
+#: app/core/gimpimage-mask.c:390 app/gui/layers-commands.c:826
 msgid "Floating Selection"
 msgstr "Schwebende Auswahl"
 
@@ -1010,31 +1009,31 @@ msgstr "%.1f MB"
 
 #: app/core/gimpimage.c:1040 app/core/gimppalette-import.c:206
 #: app/core/gimppalette.c:534 app/gui/palette-import-dialog.c:306
-#: app/pdb/image_cmds.c:3633 app/widgets/gimpdatafactoryview.c:260
+#: app/pdb/image_cmds.c:3632 app/widgets/gimpdatafactoryview.c:260
 msgid "Untitled"
 msgstr "Unbenannt"
 
-#: app/core/gimpimage.c:2812
+#: app/core/gimpimage.c:2814
 msgid "Layer cannot be raised higher."
 msgstr "Ebene kann nicht weiter angehoben werden."
 
-#: app/core/gimpimage.c:2836
+#: app/core/gimpimage.c:2838
 msgid "Layer cannot be lowered more."
 msgstr "Ebene kann nicht weiter abgesenkt werden."
 
-#: app/core/gimpimage.c:2857
+#: app/core/gimpimage.c:2859
 msgid "Layer is already on top."
 msgstr "Ebene ist schon ganz oben."
 
-#: app/core/gimpimage.c:2863
+#: app/core/gimpimage.c:2865
 msgid "Cannot raise a layer without alpha."
 msgstr "Kann Ebene ohne Alphakanal nicht anheben."
 
-#: app/core/gimpimage.c:2887
+#: app/core/gimpimage.c:2889
 msgid "Layer is already on the bottom."
 msgstr "Ebene ist schon ganz unten."
 
-#: app/core/gimpimage.c:2934
+#: app/core/gimpimage.c:2936
 #, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
@@ -1043,19 +1042,19 @@ msgstr ""
 "Ebene \"%s\" hat keinen Alphakanal.\n"
 "Ebene ist darüber plaziert worden."
 
-#: app/core/gimpimage.c:3077
+#: app/core/gimpimage.c:3079
 msgid "Channel cannot be raised higher."
 msgstr "Kanal kann nicht weiter angehoben werden."
 
-#: app/core/gimpimage.c:3097
+#: app/core/gimpimage.c:3099
 msgid "Channel cannot be lowered more."
 msgstr "Kanal kann nicht weiter abgesenkt werden."
 
-#: app/core/gimpimage.c:3258
+#: app/core/gimpimage.c:3260
 msgid "Path cannot be raised higher."
 msgstr "Ebene kann nicht weiter angehoben werden."
 
-#: app/core/gimpimage.c:3278
+#: app/core/gimpimage.c:3280
 msgid "Path cannot be lowered more."
 msgstr "Ebene kann nicht weiter abgesenkt werden."
 
@@ -1209,7 +1208,7 @@ msgstr "lade Modul: '%s'\n"
 #: app/core/gimpmodules.c:284
 #, c-format
 msgid "skipping module: '%s'\n"
-msgstr "überspringe Modul: '%s'\n"
+msgstr "Modul »%s« wird übersprungen\n"
 
 #: app/core/gimppalette.c:291
 #, c-format
@@ -1652,70 +1651,69 @@ msgid "Edit Channel Attributes"
 msgstr "Kanaleigenschaften ändern"
 
 #. Hue
-#: app/gui/color-notebook.c:278
+#: app/gui/color-notebook.c:288
 msgid "H"
 msgstr "H"
 
 #. Saturation
-#: app/gui/color-notebook.c:280
+#: app/gui/color-notebook.c:290
 msgid "S"
 msgstr "S"
 
 #. Value
-#: app/gui/color-notebook.c:282
+#: app/gui/color-notebook.c:292
 msgid "V"
 msgstr "V"
 
 #. Red
-#: app/gui/color-notebook.c:284
+#: app/gui/color-notebook.c:294
 msgid "R"
 msgstr "R"
 
 #. Green
-#: app/gui/color-notebook.c:286
+#: app/gui/color-notebook.c:296
 msgid "G"
 msgstr "G"
 
 #. Blue
-#: app/gui/color-notebook.c:288
+#: app/gui/color-notebook.c:298
 msgid "B"
 msgstr "B"
 
 #. Alpha
-#: app/gui/color-notebook.c:290
+#: app/gui/color-notebook.c:300
 msgid "A"
 msgstr "A"
 
-#: app/gui/color-notebook.c:294 app/widgets/gimpwidgets-constructors.c:65
+#: app/gui/color-notebook.c:304 app/widgets/gimpwidgets-constructors.c:65
 #: app/widgets/gimpwidgets-constructors.c:95
 msgid "Hue"
 msgstr "Farbton"
 
-#: app/gui/color-notebook.c:295 app/widgets/gimpwidgets-constructors.c:66
+#: app/gui/color-notebook.c:305 app/widgets/gimpwidgets-constructors.c:66
 #: app/widgets/gimpwidgets-constructors.c:96
 msgid "Saturation"
 msgstr "Sättigung"
 
-#: app/gui/color-notebook.c:469
+#: app/gui/color-notebook.c:479
 msgid "Current:"
 msgstr "Aktuell:"
 
-#: app/gui/color-notebook.c:490
+#: app/gui/color-notebook.c:500
 msgid "Old:"
 msgstr "Alt:"
 
-#: app/gui/color-notebook.c:512
+#: app/gui/color-notebook.c:522
 msgid "Revert to old color"
 msgstr "Zurück zur alten Farbe"
 
-#: app/gui/color-notebook.c:616
+#: app/gui/color-notebook.c:626
 msgid "Add the current color to the color history"
 msgstr "Die aktuelle Farbe der Farbliste hinzufügen"
 
-#: app/gui/color-notebook.c:675 app/tools/gimpcolorpickertool.c:293
-#: app/tools/gimpcolorpickertool.c:302 app/widgets/gimpcolormapeditor.c:300
-msgid "Hex Triplet:"
-msgstr "Hex Triplet:"
+#: app/gui/color-notebook.c:686
+msgid "He_x Triplet:"
+msgstr "He_x Triplet:"
 
 #: app/gui/colormap-editor-commands.c:108
 msgid "Edit Indexed Color"
@@ -1804,8 +1802,8 @@ msgstr "Vordergrund: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Hintergrund: %d, %d, %d"
 
-#: app/gui/dialogs-constructors.c:304 app/gui/preferences-dialog.c:2165
-#: app/gui/preferences-dialog.c:2168
+#: app/gui/dialogs-constructors.c:304 app/gui/preferences-dialog.c:2167
+#: app/gui/preferences-dialog.c:2170
 msgid "Tool Options"
 msgstr "Werkzeugeinstellungen"
 
@@ -1929,7 +1927,7 @@ msgstr "Farbtafel"
 msgid "Selection Editor"
 msgstr "Auswahleditor"
 
-#: app/gui/dialogs-constructors.c:834 app/gui/layers-commands.c:934
+#: app/gui/dialogs-constructors.c:834 app/gui/layers-commands.c:927
 msgid "Selection"
 msgstr "Auswahl"
 
@@ -2068,58 +2066,58 @@ msgstr ""
 msgid "Determine File Type:"
 msgstr "Dateityp bestimmen:"
 
-#: app/gui/file-new-dialog.c:114 app/gui/preferences-dialog.c:1846
-#: app/gui/preferences-dialog.c:1849
+#: app/gui/file-new-dialog.c:117 app/gui/preferences-dialog.c:1848
+#: app/gui/preferences-dialog.c:1851
 msgid "New Image"
 msgstr "Neues Bild"
 
-#: app/gui/file-new-dialog.c:116
+#: app/gui/file-new-dialog.c:119
 msgid "Create a New Image"
 msgstr "Ein neues Bild erstellen"
 
 #. the pixel size labels
-#: app/gui/file-new-dialog.c:160 app/gui/file-new-dialog.c:178
+#: app/gui/file-new-dialog.c:163 app/gui/file-new-dialog.c:181
 #: app/tools/gimpcroptool.c:1014 app/tools/selection_options.c:400
 msgid "Width:"
 msgstr "Breite:"
 
-#: app/gui/file-new-dialog.c:166 app/gui/file-new-dialog.c:184
-#: app/gui/layers-commands.c:652 app/gui/resize-dialog.c:293
-#: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:560
+#: app/gui/file-new-dialog.c:169 app/gui/file-new-dialog.c:187
+#: app/gui/layers-commands.c:645 app/gui/resize-dialog.c:287
+#: app/gui/resize-dialog.c:312 app/gui/resize-dialog.c:561
 #: app/tools/gimpcroptool.c:1017 app/tools/gimpscaletool.c:192
 #: app/tools/gimpscaletool.c:201 app/tools/selection_options.c:413
 msgid "Height:"
 msgstr "Höhe:"
 
-#: app/gui/file-new-dialog.c:220 app/gui/preferences-dialog.c:1877
-#: app/gui/preferences-dialog.c:1916 app/gui/user-install-dialog.c:1237
+#: app/gui/file-new-dialog.c:226 app/gui/preferences-dialog.c:1879
+#: app/gui/preferences-dialog.c:1918 app/gui/user-install-dialog.c:1237
 msgid "Pixels"
 msgstr "Pixel"
 
 #. the resolution labels
-#: app/gui/file-new-dialog.c:293 app/gui/resize-dialog.c:615
+#: app/gui/file-new-dialog.c:300 app/gui/resize-dialog.c:621
 msgid "Resolution X:"
 msgstr "Auflösung X:"
 
-#: app/gui/file-new-dialog.c:299 app/gui/info-window.c:165
-#: app/gui/offset-dialog.c:134 app/gui/resize-dialog.c:381
-#: app/gui/resize-dialog.c:476 app/gui/resize-dialog.c:621
+#: app/gui/file-new-dialog.c:306 app/gui/info-window.c:165
+#: app/gui/offset-dialog.c:149 app/gui/resize-dialog.c:379
+#: app/gui/resize-dialog.c:478 app/gui/resize-dialog.c:627
 #: app/gui/user-install-dialog.c:1250 app/tools/gimpcroptool.c:1000
 #: app/tools/gimprotatetool.c:213 app/tools/gimpscaletool.c:219
 #: app/tools/gimpsheartool.c:190
 msgid "Y:"
 msgstr "Y:"
 
-#: app/gui/file-new-dialog.c:313 app/gui/resize-dialog.c:635
+#: app/gui/file-new-dialog.c:324 app/gui/resize-dialog.c:641
 #, c-format
 msgid "pixels/%a"
 msgstr "Pixel/%a"
 
-#: app/gui/file-new-dialog.c:380 app/gui/offset-dialog.c:195
+#: app/gui/file-new-dialog.c:389 app/gui/offset-dialog.c:198
 msgid "Fill Type"
 msgstr "Füllart"
 
-#: app/gui/file-new-dialog.c:541
+#: app/gui/file-new-dialog.c:550
 #, no-c-format
 msgid ""
 "You are trying to create an image with\n"
@@ -2145,7 +2143,7 @@ msgstr ""
 "angezeigt wird, erhöhen Sie den Wert \"Maximale Bildgröße\"\n"
 "(zur Zeit %s) in den Einstellungen."
 
-#: app/gui/file-new-dialog.c:553
+#: app/gui/file-new-dialog.c:562
 msgid "Confirm Image Size"
 msgstr "Bildgröße bestätigen"
 
@@ -2391,47 +2389,47 @@ msgstr ""
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Thema »%s« (%s) wird hinzugefügt\n"
 
-#: app/gui/image-commands.c:199 app/gui/layers-commands.c:289
+#: app/gui/image-commands.c:201 app/gui/layers-commands.c:289
 msgid "Cannot crop because the current selection is empty."
 msgstr ""
 "Kann nicht ausschneiden oder kopieren,\n"
 "da der ausgewählte Bereich leer ist."
 
-#: app/gui/image-commands.c:294
+#: app/gui/image-commands.c:296
 msgid "Layers Merge Options"
 msgstr "Eigenschaften Ebenen vereinen"
 
-#: app/gui/image-commands.c:319
+#: app/gui/image-commands.c:321
 msgid "Final, Merged Layer should be:"
 msgstr "Die fertige, vereinte Ebene soll sein:"
 
-#: app/gui/image-commands.c:320
+#: app/gui/image-commands.c:322
 msgid "Final, Anchored Layer should be:"
 msgstr "Die fertige, verankerte Ebene soll sein:"
 
-#: app/gui/image-commands.c:325
+#: app/gui/image-commands.c:327
 msgid "Expanded as necessary"
 msgstr "Nach Bedarf erweitern"
 
-#: app/gui/image-commands.c:328
+#: app/gui/image-commands.c:330
 msgid "Clipped to image"
 msgstr "Auf Bild beschnitten"
 
-#: app/gui/image-commands.c:331
+#: app/gui/image-commands.c:333
 msgid "Clipped to bottom layer"
 msgstr "Auf oberste Ebene beschnitten"
 
-#: app/gui/image-commands.c:371
+#: app/gui/image-commands.c:373
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 "Fehler beim Verändern der Bildgröße:\n"
 "Breite und Höhe müssen größer als Null sein."
 
-#: app/gui/image-commands.c:404
+#: app/gui/image-commands.c:406
 msgid "Layer Too Small"
 msgstr "Ebene zu klein"
 
-#: app/gui/image-commands.c:408
+#: app/gui/image-commands.c:410
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -2441,18 +2439,18 @@ msgstr ""
 "so klein, daß sie vollständig verschwinden.\n"
 "Sollen wir trotzdem fortfahren?"
 
-#: app/gui/image-commands.c:491 app/tools/gimpscaletool.c:293
+#: app/gui/image-commands.c:493 app/tools/gimpscaletool.c:293
 msgid "Scaling..."
 msgstr "Skalierung"
 
-#: app/gui/image-commands.c:506
+#: app/gui/image-commands.c:508
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
 "Fehler beim Skalieren des Bildes:\n"
 "Breite und Höhe müssen größer als Null sein."
 
-#: app/gui/info-dialog.c:204 app/gui/preferences-dialog.c:2045
-#: app/gui/preferences-dialog.c:2139
+#: app/gui/info-dialog.c:356 app/gui/preferences-dialog.c:2047
+#: app/gui/preferences-dialog.c:2141
 msgid "General"
 msgstr "Allgemein"
 
@@ -2476,7 +2474,7 @@ msgstr "Echtfarben"
 msgid "Direct Color"
 msgstr "Direktfarben"
 
-#: app/gui/info-window.c:159 app/gui/resize-dialog.c:474
+#: app/gui/info-window.c:159 app/gui/resize-dialog.c:476
 msgid "X:"
 msgstr "X:"
 
@@ -2590,65 +2588,64 @@ msgstr "Leere Ebene Kopie"
 msgid "Create a New Layer"
 msgstr "Eine neue Ebene anlegen"
 
-#. The name label and entry
-#: app/gui/layers-commands.c:631
-msgid "Layer Name:"
-msgstr "Ebenenname:"
+#: app/gui/layers-commands.c:635
+msgid "Layer _Name:"
+msgstr "Ebenen_name:"
 
 #. The size labels
-#: app/gui/layers-commands.c:646
+#: app/gui/layers-commands.c:639
 msgid "Layer Width:"
 msgstr "Ebenenbreite:"
 
-#: app/gui/layers-commands.c:707
+#: app/gui/layers-commands.c:704
 msgid "Layer Fill Type"
 msgstr "Ebenenfüllart"
 
-#: app/gui/layers-commands.c:791
+#: app/gui/layers-commands.c:787
 msgid "Layer Attributes"
 msgstr "Ebeneneigenschaften"
 
-#: app/gui/layers-commands.c:794
+#: app/gui/layers-commands.c:790
 msgid "Edit Layer Attributes"
 msgstr "Ebeneneigenschaften ändern"
 
-#: app/gui/layers-commands.c:825
-msgid "Layer name:"
-msgstr "Ebenenname:"
+#: app/gui/layers-commands.c:829
+msgid "Layer _Name"
+msgstr "Ebenen_name"
 
-#: app/gui/layers-commands.c:902
+#: app/gui/layers-commands.c:895
 msgid "Add a Mask to the Layer"
 msgstr "Eine Maske zur Ebene hinzufügen"
 
-#: app/gui/layers-commands.c:929 app/gui/layers-commands.c:956
+#: app/gui/layers-commands.c:922 app/gui/layers-commands.c:949
 msgid "Initialize Layer Mask to:"
 msgstr "Initialisierung Ebenenmaske nach:"
 
-#: app/gui/layers-commands.c:936
+#: app/gui/layers-commands.c:929
 msgid "Inverse Selection"
 msgstr "Auswahl invertieren"
 
-#: app/gui/layers-commands.c:939 app/gui/layers-commands.c:961
+#: app/gui/layers-commands.c:932 app/gui/layers-commands.c:954
 msgid "Grayscale Copy of Layer"
 msgstr "Graustufen Kopie der Ebene"
 
-#: app/gui/layers-commands.c:941 app/gui/layers-commands.c:963
+#: app/gui/layers-commands.c:934 app/gui/layers-commands.c:956
 msgid "Inverse Grayscale Copy of Layer"
 msgstr "Inverse Graustufen Kopie der Ebene"
 
-#: app/gui/layers-commands.c:944 app/gui/layers-commands.c:966
+#: app/gui/layers-commands.c:937 app/gui/layers-commands.c:959
 msgid "White (Full Opacity)"
 msgstr "Weiß (volle Deckkraft)"
 
-#: app/gui/layers-commands.c:946 app/gui/layers-commands.c:968
+#: app/gui/layers-commands.c:939 app/gui/layers-commands.c:961
 msgid "Black (Full Transparency)"
 msgstr "Schwarz (volle Transparenz)"
 
-#: app/gui/layers-commands.c:948 app/gui/layers-commands.c:970
+#: app/gui/layers-commands.c:941 app/gui/layers-commands.c:963
 msgid "Layer's Alpha Channel"
 msgstr "Alphakanal der Ebene"
 
-#: app/gui/layers-commands.c:1040 app/gui/layers-commands.c:1132
+#: app/gui/layers-commands.c:1033 app/gui/layers-commands.c:1125
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -3990,36 +3987,43 @@ msgstr "Status:"
 msgid "Autoload during start-up"
 msgstr "Automatisch beim Start laden"
 
-#: app/gui/offset-dialog.c:93
+#: app/gui/offset-dialog.c:92
 msgid "Offset Layer"
 msgstr "Ebene verschieben"
 
-#: app/gui/offset-dialog.c:95
+#: app/gui/offset-dialog.c:94
 msgid "Offset Layer Mask"
 msgstr "Ebenenmaske verschieben"
 
-#: app/gui/offset-dialog.c:97
+#: app/gui/offset-dialog.c:96
 msgid "Offset Channel"
 msgstr "Kanal verschieben"
 
-#: app/gui/offset-dialog.c:103 app/gui/resize-dialog.c:448
+#: app/gui/offset-dialog.c:102 app/gui/resize-dialog.c:444
 msgid "Offset"
 msgstr "Versatz"
 
-#. The offset labels
-#: app/gui/offset-dialog.c:128
+#: app/gui/offset-dialog.c:147
 msgid "Offset X:"
 msgstr "Versatz X:"
 
 #. The by half height and half width option
-#: app/gui/offset-dialog.c:183
-msgid "Offset by (x/2),(y/2)"
-msgstr "Versatz um (x/2),(y/2)"
+#: app/gui/offset-dialog.c:177
+msgid "Offset by (x/_2),(y/2)"
+msgstr "Versatz um (x/_2),(y/2)"
 
 #. The wrap around option
-#: app/gui/offset-dialog.c:189
-msgid "Wrap"
-msgstr "Falten"
+#: app/gui/offset-dialog.c:187
+msgid "_Wrap"
+msgstr "_Falten"
+
+#: app/gui/offset-dialog.c:203
+msgid "_Background"
+msgstr "_Hintergrund"
+
+#: app/gui/offset-dialog.c:206
+msgid "_Transparent"
+msgstr "_Transparent"
 
 #: app/gui/palette-editor-commands.c:104
 msgid "Edit Palette Color"
@@ -4207,11 +4211,11 @@ msgstr "Wiederhole letzten Vorgang"
 msgid "Re-Show Last"
 msgstr "Zeige letzten Vorgang nochmal"
 
-#: app/gui/preferences-dialog.c:408
+#: app/gui/preferences-dialog.c:410
 msgid "Save Preferences ?"
 msgstr "Einstellungen speichern?"
 
-#: app/gui/preferences-dialog.c:431
+#: app/gui/preferences-dialog.c:433
 msgid ""
 "At least one of the changes you made will only\n"
 "take effect after you restart the GIMP.\n"
@@ -4229,455 +4233,455 @@ msgstr ""
 "werden kann, oder Sie wählen »Schließen« und die\n"
 "fraglichen Änderungen werden nicht angewendet."
 
-#: app/gui/preferences-dialog.c:530
+#: app/gui/preferences-dialog.c:532
 msgid "You will need to restart GIMP for these changes to take effect."
 msgstr "Sie müssen GIMP neu starten, damit die Änderungen aktiv werden."
 
-#: app/gui/preferences-dialog.c:1128
+#: app/gui/preferences-dialog.c:1130
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Der Standard-Kommentar ist auf %d Zeichen beschränkt."
 
 #. Create the dialog
-#: app/gui/preferences-dialog.c:1731
+#: app/gui/preferences-dialog.c:1733
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: app/gui/preferences-dialog.c:1858
+#: app/gui/preferences-dialog.c:1860
 msgid "Default Image Size and Unit"
 msgstr "Standard Bildgröße und Längeneinheit"
 
-#: app/gui/preferences-dialog.c:1873
+#: app/gui/preferences-dialog.c:1875
 msgid "Width"
 msgstr "Breite"
 
-#: app/gui/preferences-dialog.c:1875
+#: app/gui/preferences-dialog.c:1877
 msgid "Height"
 msgstr "Höhe"
 
-#: app/gui/preferences-dialog.c:1907
+#: app/gui/preferences-dialog.c:1909
 msgid "Default Image Resolution and Resolution Unit"
 msgstr "Standard Auflösung und Auflösungseinheit"
 
-#: app/gui/preferences-dialog.c:1931 app/gui/preferences-dialog.c:2516
+#: app/gui/preferences-dialog.c:1933 app/gui/preferences-dialog.c:2518
 #: app/tools/gimpfliptool.c:307
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: app/gui/preferences-dialog.c:1933 app/gui/preferences-dialog.c:2518
+#: app/gui/preferences-dialog.c:1935 app/gui/preferences-dialog.c:2520
 #: app/tools/gimpfliptool.c:311
 msgid "Vertical"
 msgstr "Vertikal"
 
-#: app/gui/preferences-dialog.c:1935 app/gui/preferences-dialog.c:2520
+#: app/gui/preferences-dialog.c:1937 app/gui/preferences-dialog.c:2522
 msgid "dpi"
 msgstr "dpi"
 
-#: app/gui/preferences-dialog.c:1973
+#: app/gui/preferences-dialog.c:1975
 msgid "Default Image Type:"
 msgstr "Standard Bildtyp:"
 
-#: app/gui/preferences-dialog.c:1982
+#: app/gui/preferences-dialog.c:1984
 msgid "Maximum Image Size:"
 msgstr "Maximale Bildgröße:"
 
-#: app/gui/preferences-dialog.c:1995 app/gui/preferences-dialog.c:1998
+#: app/gui/preferences-dialog.c:1997 app/gui/preferences-dialog.c:2000
 msgid "Default Comment"
 msgstr "Standard Kommentar"
 
-#: app/gui/preferences-dialog.c:2004
+#: app/gui/preferences-dialog.c:2006
 msgid "Comment Used for New Images"
 msgstr "Kommentar für neue Bilder"
 
-#: app/gui/preferences-dialog.c:2036 app/gui/preferences-dialog.c:2039
+#: app/gui/preferences-dialog.c:2038 app/gui/preferences-dialog.c:2041
 #: app/pdb/internal_procs.c:130
 msgid "Interface"
 msgstr "Oberfläche"
 
-#: app/gui/preferences-dialog.c:2056
+#: app/gui/preferences-dialog.c:2058
 msgid "Preview Size:"
 msgstr "Vorschaugröße:"
 
-#: app/gui/preferences-dialog.c:2077
+#: app/gui/preferences-dialog.c:2079
 msgid "Nav Preview Size:"
 msgstr "Größe der Navigationsvorschau:"
 
-#: app/gui/preferences-dialog.c:2083
+#: app/gui/preferences-dialog.c:2085
 msgid "Recent Documents List Size:"
 msgstr "Größe der Dokumentenliste:"
 
 #. Dialog Bahaviour
-#: app/gui/preferences-dialog.c:2091
+#: app/gui/preferences-dialog.c:2093
 msgid "Dialog Behavior"
 msgstr "Verhalten von Dialogen"
 
-#: app/gui/preferences-dialog.c:2093
+#: app/gui/preferences-dialog.c:2095
 msgid "Info Window Follows Mouse"
 msgstr "Info-Fenster folgt der Maus"
 
 #. Menus
-#: app/gui/preferences-dialog.c:2097
+#: app/gui/preferences-dialog.c:2099
 msgid "Menus"
 msgstr "Menüs"
 
-#: app/gui/preferences-dialog.c:2099
+#: app/gui/preferences-dialog.c:2101
 msgid "Disable Tearoff Menus"
 msgstr "Abrisse an Menüs reaktivieren"
 
 #. Window Positions
-#: app/gui/preferences-dialog.c:2103
+#: app/gui/preferences-dialog.c:2105
 msgid "Window Positions"
 msgstr "Fensterpositionen"
 
-#: app/gui/preferences-dialog.c:2105
+#: app/gui/preferences-dialog.c:2107
 msgid "Save Window Positions on Exit"
 msgstr "Fensterpositionen beim Beenden speichern"
 
-#: app/gui/preferences-dialog.c:2107
+#: app/gui/preferences-dialog.c:2109
 msgid "Restore Saved Window Positions on Start-up"
 msgstr "Fensterpositionen beim Start wiederherstellen"
 
-#: app/gui/preferences-dialog.c:2115
+#: app/gui/preferences-dialog.c:2117
 msgid "Clear Saved Window Positions Now"
 msgstr "Gespeicherte Fensterpositionen jetzt löschen"
 
-#: app/gui/preferences-dialog.c:2130 app/gui/preferences-dialog.c:2133
+#: app/gui/preferences-dialog.c:2132 app/gui/preferences-dialog.c:2135
 msgid "Help System"
 msgstr "Hilfesystem"
 
-#: app/gui/preferences-dialog.c:2141
+#: app/gui/preferences-dialog.c:2143
 msgid "Show Tool Tips"
 msgstr "Minihilfen zeigen"
 
-#: app/gui/preferences-dialog.c:2143
+#: app/gui/preferences-dialog.c:2145
 msgid "Context Sensitive Help with \"F1\""
 msgstr "»F1« zeigt kontextabhängige Hilfe"
 
-#: app/gui/preferences-dialog.c:2146
+#: app/gui/preferences-dialog.c:2148
 msgid "Help Browser"
 msgstr "Hilfe-Browser"
 
-#: app/gui/preferences-dialog.c:2156
+#: app/gui/preferences-dialog.c:2158
 msgid "Help Browser to Use:"
 msgstr "Programm zum Lesen der Hilfe:"
 
-#: app/gui/preferences-dialog.c:2174
+#: app/gui/preferences-dialog.c:2176
 msgid "Finding Contiguous Regions"
 msgstr "Zusammenhängende Bereiche finden"
 
-#: app/gui/preferences-dialog.c:2182
+#: app/gui/preferences-dialog.c:2184
 msgid "Default Threshold:"
 msgstr "Standard Schwellwert:"
 
-#: app/gui/preferences-dialog.c:2190
+#: app/gui/preferences-dialog.c:2192
 msgid "Scaling"
 msgstr "Skalierung"
 
-#: app/gui/preferences-dialog.c:2203
+#: app/gui/preferences-dialog.c:2205
 msgid "Default Interpolation:"
 msgstr "Vorgabe-Interpolationsart:"
 
-#: app/gui/preferences-dialog.c:2212 app/gui/preferences-dialog.c:2215
+#: app/gui/preferences-dialog.c:2214 app/gui/preferences-dialog.c:2217
 msgid "Input Devices"
 msgstr "Eingabegeräte"
 
-#: app/gui/preferences-dialog.c:2221
+#: app/gui/preferences-dialog.c:2223
 msgid "Input Device Settings"
 msgstr "Einstellungen Eingabegeräte"
 
-#: app/gui/preferences-dialog.c:2256
+#: app/gui/preferences-dialog.c:2258
 msgid "Save Input Device Settings on Exit"
 msgstr "Gerätestatus beim Beenden speichern"
 
-#: app/gui/preferences-dialog.c:2264
+#: app/gui/preferences-dialog.c:2266
 msgid "Save Input Device Settings Now"
 msgstr "Gerätestatus jetzt speichern"
 
-#: app/gui/preferences-dialog.c:2279 app/gui/preferences-dialog.c:2282
+#: app/gui/preferences-dialog.c:2281 app/gui/preferences-dialog.c:2284
 msgid "Image Windows"
 msgstr "Bildfenster"
 
-#: app/gui/preferences-dialog.c:2288
+#: app/gui/preferences-dialog.c:2290
 msgid "Appearance"
 msgstr "Aussehen"
 
-#: app/gui/preferences-dialog.c:2290
+#: app/gui/preferences-dialog.c:2292
 msgid "Use \"Dot for Dot\" by default"
 msgstr "»Punkt für Punkt« als Vorgabe verwenden"
 
-#: app/gui/preferences-dialog.c:2292
+#: app/gui/preferences-dialog.c:2294
 msgid "Resize Window on Zoom"
 msgstr "Fenstergröße beim Zoomen anpassen"
 
-#: app/gui/preferences-dialog.c:2294
+#: app/gui/preferences-dialog.c:2296
 msgid "Resize Window on Image Size Change"
 msgstr "Fenstergröße anpassen wenn sich Bildgrösse ändert"
 
-#: app/gui/preferences-dialog.c:2296
+#: app/gui/preferences-dialog.c:2298
 msgid "Show Rulers"
 msgstr "Zeige Lineale"
 
-#: app/gui/preferences-dialog.c:2298
+#: app/gui/preferences-dialog.c:2300
 msgid "Show Statusbar"
 msgstr "Zeige Statusleiste"
 
-#: app/gui/preferences-dialog.c:2306
+#: app/gui/preferences-dialog.c:2308
 msgid "Marching Ants Speed:"
 msgstr "Geschwindigkeit der laufenden Ameisen:"
 
-#: app/gui/preferences-dialog.c:2330
+#: app/gui/preferences-dialog.c:2332
 msgid "Custom"
 msgstr "Eigene"
 
-#: app/gui/preferences-dialog.c:2331
+#: app/gui/preferences-dialog.c:2333
 msgid "Standard"
 msgstr "Standard"
 
-#: app/gui/preferences-dialog.c:2332
+#: app/gui/preferences-dialog.c:2334
 msgid "Show zoom percentage"
 msgstr "Vergrößerung prozentual"
 
-#: app/gui/preferences-dialog.c:2333
+#: app/gui/preferences-dialog.c:2335
 msgid "Show zoom ratio"
 msgstr "Vergrößerung als Verhältnis"
 
-#: app/gui/preferences-dialog.c:2334
+#: app/gui/preferences-dialog.c:2336
 msgid "Show reversed zoom ratio"
 msgstr "Vergrößerung als umgekehrtes Verhältnis"
 
-#: app/gui/preferences-dialog.c:2335
+#: app/gui/preferences-dialog.c:2337
 msgid "Show memory usage"
 msgstr "Speicherverbrauch anzeigen"
 
-#: app/gui/preferences-dialog.c:2356
+#: app/gui/preferences-dialog.c:2358
 msgid "Image Title Format:"
 msgstr "Format des Bildtitels:"
 
-#: app/gui/preferences-dialog.c:2379
+#: app/gui/preferences-dialog.c:2381
 msgid "Image Status Format:"
 msgstr "Format der Statuszeile:"
 
-#: app/gui/preferences-dialog.c:2387
+#: app/gui/preferences-dialog.c:2389
 msgid "Pointer Movement Feedback"
 msgstr "Zeigerbewegung"
 
-#: app/gui/preferences-dialog.c:2389
+#: app/gui/preferences-dialog.c:2391
 msgid "Perfect-but-Slow Pointer Tracking"
 msgstr "Genaue aber langsame Mauszeigernachführung"
 
-#: app/gui/preferences-dialog.c:2391
+#: app/gui/preferences-dialog.c:2393
 msgid "Disable Cursor Updating"
 msgstr "Mauszeigeränderungen deaktivieren"
 
-#: app/gui/preferences-dialog.c:2402
+#: app/gui/preferences-dialog.c:2404
 msgid "Cursor Mode:"
 msgstr "Cursor-Modus:"
 
-#: app/gui/preferences-dialog.c:2411 app/gui/preferences-dialog.c:2414
+#: app/gui/preferences-dialog.c:2413 app/gui/preferences-dialog.c:2416
 msgid "Display"
 msgstr "Anzeige"
 
-#: app/gui/preferences-dialog.c:2420
+#: app/gui/preferences-dialog.c:2422
 msgid "Transparency"
 msgstr "Transparenz"
 
-#: app/gui/preferences-dialog.c:2432
+#: app/gui/preferences-dialog.c:2434
 msgid "Transparency Type:"
 msgstr "Transparenz Typ:"
 
-#: app/gui/preferences-dialog.c:2441
+#: app/gui/preferences-dialog.c:2443
 msgid "Check Size:"
 msgstr "Schachbrett Größe:"
 
-#: app/gui/preferences-dialog.c:2444
+#: app/gui/preferences-dialog.c:2446
 msgid "8-Bit Displays"
 msgstr "8-Bit Anzeigen"
 
-#: app/gui/preferences-dialog.c:2457
+#: app/gui/preferences-dialog.c:2459
 msgid "Minimum Number of Colors:"
 msgstr "Minimale Anzahl Farben:"
 
-#: app/gui/preferences-dialog.c:2464
+#: app/gui/preferences-dialog.c:2466
 msgid "Install Colormap"
 msgstr "Farbtabelle installieren"
 
-#: app/gui/preferences-dialog.c:2466
+#: app/gui/preferences-dialog.c:2468
 msgid "Colormap Cycling"
 msgstr "Farbtabelle rotieren"
 
-#: app/gui/preferences-dialog.c:2475 app/gui/preferences-dialog.c:2478
+#: app/gui/preferences-dialog.c:2477 app/gui/preferences-dialog.c:2480
 msgid "Monitor"
 msgstr "Bildschirm"
 
-#: app/gui/preferences-dialog.c:2484
+#: app/gui/preferences-dialog.c:2486
 msgid "Get Monitor Resolution"
 msgstr "Quelle für Bildschirmauflösung"
 
-#: app/gui/preferences-dialog.c:2492
+#: app/gui/preferences-dialog.c:2494
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "(Zur Zeit %d x %d dpi)"
 
-#: app/gui/preferences-dialog.c:2548 app/gui/user-install-dialog.c:1288
+#: app/gui/preferences-dialog.c:2550 app/gui/user-install-dialog.c:1288
 msgid "Calibrate"
 msgstr "Kalibrieren"
 
-#: app/gui/preferences-dialog.c:2559
+#: app/gui/preferences-dialog.c:2561
 msgid "From Windowing System"
 msgstr "Vom Fenstersystem"
 
-#: app/gui/preferences-dialog.c:2581
+#: app/gui/preferences-dialog.c:2583
 msgid "Manually:"
 msgstr "Manuell:"
 
-#: app/gui/preferences-dialog.c:2601 app/gui/preferences-dialog.c:2604
+#: app/gui/preferences-dialog.c:2603 app/gui/preferences-dialog.c:2606
 msgid "Environment"
 msgstr "Umgebung"
 
-#: app/gui/preferences-dialog.c:2610
+#: app/gui/preferences-dialog.c:2612
 msgid "Resource Consumption"
 msgstr "Ressourcenverbrauch"
 
-#: app/gui/preferences-dialog.c:2612
+#: app/gui/preferences-dialog.c:2614
 msgid "Conservative Memory Usage"
 msgstr "Zurückhaltende Speicherausnutzung"
 
-#: app/gui/preferences-dialog.c:2626
+#: app/gui/preferences-dialog.c:2628
 msgid "Levels of Undo:"
 msgstr "Stufen der Rückgängigmachung:"
 
-#: app/gui/preferences-dialog.c:2639 app/gui/user-install-dialog.c:1136
+#: app/gui/preferences-dialog.c:2641 app/gui/user-install-dialog.c:1136
 msgid "Tile Cache Size:"
 msgstr "Größe des Datenspeichers:"
 
-#: app/gui/preferences-dialog.c:2651
+#: app/gui/preferences-dialog.c:2653
 msgid "Number of Processors to Use:"
 msgstr "Zahl der zu benutzenden Prozessoren:"
 
-#: app/gui/preferences-dialog.c:2659
+#: app/gui/preferences-dialog.c:2661
 msgid "File Saving"
 msgstr "Dateien speichern"
 
 #. Don't show the Auto-save button until we really
 #. *  have auto-saving in the gimp.
 #.
-#: app/gui/preferences-dialog.c:2667
+#: app/gui/preferences-dialog.c:2669
 msgid "Auto Save"
 msgstr "Automatisch speichern"
 
-#: app/gui/preferences-dialog.c:2678
+#: app/gui/preferences-dialog.c:2680
 msgid "Only when Modified"
 msgstr "Nur wenn geändert"
 
-#: app/gui/preferences-dialog.c:2679
+#: app/gui/preferences-dialog.c:2681
 msgid "Always"
 msgstr "Immer"
 
-#: app/gui/preferences-dialog.c:2684
+#: app/gui/preferences-dialog.c:2686
 msgid "\"File -> Save\" Saves the Image:"
 msgstr "»Datei -> Speichern« speichert das Bild:"
 
-#: app/gui/preferences-dialog.c:2694
+#: app/gui/preferences-dialog.c:2696
 msgid "Size of Thumbnails Files:"
 msgstr "Größe der Vorschau-Dateien:"
 
-#: app/gui/preferences-dialog.c:2703 app/gui/preferences-dialog.c:2706
+#: app/gui/preferences-dialog.c:2705 app/gui/preferences-dialog.c:2708
 msgid "Folders"
 msgstr "Verzeichnisse"
 
-#: app/gui/preferences-dialog.c:2721
+#: app/gui/preferences-dialog.c:2723
 msgid "Temp Dir:"
 msgstr "Temporäres Verzeichnis:"
 
-#: app/gui/preferences-dialog.c:2721
+#: app/gui/preferences-dialog.c:2723
 msgid "Select Temp Dir"
 msgstr "Temporäres Verzeichnis wählen"
 
-#: app/gui/preferences-dialog.c:2722
+#: app/gui/preferences-dialog.c:2724
 msgid "Swap Dir:"
 msgstr "Auslagerungsverzeichnis:"
 
-#: app/gui/preferences-dialog.c:2722 app/gui/user-install-dialog.c:1156
+#: app/gui/preferences-dialog.c:2724 app/gui/user-install-dialog.c:1156
 msgid "Select Swap Dir"
 msgstr "Auslagerverzeichnis wählen"
 
-#: app/gui/preferences-dialog.c:2756
+#: app/gui/preferences-dialog.c:2758
 msgid "Brush Folders"
 msgstr "Pinselverzeichnisse"
 
-#: app/gui/preferences-dialog.c:2758
+#: app/gui/preferences-dialog.c:2760
 msgid "Select Brush Folders"
 msgstr "Pinselverzeichnisse wählen"
 
-#: app/gui/preferences-dialog.c:2760
+#: app/gui/preferences-dialog.c:2762
 msgid "Pattern Folders"
 msgstr "Musterverzeichnisse"
 
-#: app/gui/preferences-dialog.c:2762
+#: app/gui/preferences-dialog.c:2764
 msgid "Select Pattern Folders"
 msgstr "Musterverzeichnisse wählen"
 
-#: app/gui/preferences-dialog.c:2764
+#: app/gui/preferences-dialog.c:2766
 msgid "Palette Folders"
 msgstr "Palettenverzeichnisse"
 
-#: app/gui/preferences-dialog.c:2766
+#: app/gui/preferences-dialog.c:2768
 msgid "Select Palette Folders"
 msgstr "Palettenverzeichnisse wählen"
 
-#: app/gui/preferences-dialog.c:2768
+#: app/gui/preferences-dialog.c:2770
 msgid "Gradient Folders"
 msgstr "Verlaufsverzeichnisse"
 
-#: app/gui/preferences-dialog.c:2770
+#: app/gui/preferences-dialog.c:2772
 msgid "Select Gradient Folders"
 msgstr "Farbverlaufverzeichnisse wählen"
 
-#: app/gui/preferences-dialog.c:2772
+#: app/gui/preferences-dialog.c:2774
 msgid "Plug-Ins"
 msgstr "Plugins"
 
-#: app/gui/preferences-dialog.c:2772
+#: app/gui/preferences-dialog.c:2774
 msgid "Plug-In Folders"
 msgstr "Plugin-Verzeichnisse"
 
-#: app/gui/preferences-dialog.c:2774
+#: app/gui/preferences-dialog.c:2776
 msgid "Select Plug-In Folders"
 msgstr "Plugin-Verzeichnisse wählen"
 
-#: app/gui/preferences-dialog.c:2776
+#: app/gui/preferences-dialog.c:2778
 msgid "Tool Plug-Ins"
 msgstr "Plugins"
 
-#: app/gui/preferences-dialog.c:2776
+#: app/gui/preferences-dialog.c:2778
 msgid "Tool Plug-In Folders"
 msgstr "Plugin-Verzeichnisse"
 
-#: app/gui/preferences-dialog.c:2778
+#: app/gui/preferences-dialog.c:2780
 msgid "Select Tool Plug-In Folders"
 msgstr "Plugin-Verzeichnisse wählen"
 
-#: app/gui/preferences-dialog.c:2780
+#: app/gui/preferences-dialog.c:2782
 msgid "Modules"
 msgstr "Module"
 
-#: app/gui/preferences-dialog.c:2780
+#: app/gui/preferences-dialog.c:2782
 msgid "Module Folders"
 msgstr "Modulverzeichnisse"
 
-#: app/gui/preferences-dialog.c:2782
+#: app/gui/preferences-dialog.c:2784
 msgid "Select Module Folders"
 msgstr "Modulverzeichnisse wählen"
 
-#: app/gui/preferences-dialog.c:2784
+#: app/gui/preferences-dialog.c:2786
 msgid "Themes"
 msgstr "Themen"
 
-#: app/gui/preferences-dialog.c:2784
+#: app/gui/preferences-dialog.c:2786
 msgid "Theme Folders"
 msgstr "Themenverzeichnisse"
 
-#: app/gui/preferences-dialog.c:2786
+#: app/gui/preferences-dialog.c:2788
 msgid "Select Theme Folders"
 msgstr "Themenverzeichnisse wählen"
 
@@ -4697,59 +4701,59 @@ msgstr "QuickMask Attribute ändern"
 msgid "Mask Opacity:"
 msgstr "Maskendeckkraft:"
 
-#: app/gui/resize-dialog.c:185
+#: app/gui/resize-dialog.c:187
 msgid "Scale Layer Options"
 msgstr "Ebene skalieren Optionen"
 
-#: app/gui/resize-dialog.c:187 app/gui/resize-dialog.c:219
+#: app/gui/resize-dialog.c:189 app/gui/resize-dialog.c:221
 #: app/tools/paint_options.c:377
 msgid "Size"
 msgstr "Größe"
 
-#: app/gui/resize-dialog.c:193
+#: app/gui/resize-dialog.c:195
 msgid "Scale Image Options"
 msgstr "Bild skalieren Optionen"
 
-#: app/gui/resize-dialog.c:195
+#: app/gui/resize-dialog.c:197
 msgid "Pixel Dimensions"
 msgstr "Pixel Abmessungen"
 
-#: app/gui/resize-dialog.c:207
+#: app/gui/resize-dialog.c:209
 msgid "Layer Boundary Size"
 msgstr "Ebenengröße"
 
-#: app/gui/resize-dialog.c:208
+#: app/gui/resize-dialog.c:210
 msgid "Set Layer Boundary Size"
 msgstr "Ebenengröße festlegen"
 
-#: app/gui/resize-dialog.c:214
+#: app/gui/resize-dialog.c:216
 msgid "Canvas Size"
 msgstr "Leinwandgröße"
 
-#: app/gui/resize-dialog.c:215
+#: app/gui/resize-dialog.c:217
 msgid "Set Image Canvas Size"
 msgstr "Leinwandgröße festlegen"
 
 #. the original width & height labels
-#: app/gui/resize-dialog.c:287 app/tools/gimpscaletool.c:189
+#: app/gui/resize-dialog.c:281 app/tools/gimpscaletool.c:189
 msgid "Original Width:"
 msgstr "Original Breite:"
 
 #. the new size labels
-#: app/gui/resize-dialog.c:312 app/gui/resize-dialog.c:554
+#: app/gui/resize-dialog.c:306 app/gui/resize-dialog.c:555
 msgid "New Width:"
 msgstr "Neue Breite:"
 
 #. the scale ratio labels
-#: app/gui/resize-dialog.c:375
+#: app/gui/resize-dialog.c:373
 msgid "Ratio X:"
 msgstr "Faktor X:"
 
-#: app/gui/resize-dialog.c:437
+#: app/gui/resize-dialog.c:433
 msgid "Constrain aspect ratio"
 msgstr "Ansichtsverhältnis beschränken"
 
-#: app/gui/resize-dialog.c:502
+#: app/gui/resize-dialog.c:503
 msgid "Center"
 msgstr "Zentrieren"
 
@@ -4757,7 +4761,7 @@ msgstr "Zentrieren"
 msgid "Print Size & Display Unit"
 msgstr "Druckgröße und Anzeigeeinheit"
 
-#: app/gui/resize-dialog.c:688 app/tools/transform_options.c:114
+#: app/gui/resize-dialog.c:697 app/tools/transform_options.c:114
 msgid "Interpolation:"
 msgstr "Interpolation:"
 
@@ -5440,7 +5444,7 @@ msgstr "Schärfen"
 msgid "No brushes available for use with this tool."
 msgstr "Keine Pinsel für dieses Werkzeug vorhanden."
 
-#: app/pdb/image_cmds.c:3783
+#: app/pdb/image_cmds.c:3782
 msgid ""
 "Image resolution is out of bounds,\n"
 "using the default resolution instead."
@@ -5959,7 +5963,12 @@ msgstr "Blau:"
 msgid "Alpha:"
 msgstr "Alpha:"
 
-#: app/tools/gimpcolorpickertool.c:298 app/tools/gimphistogramtool.c:353
+#: app/tools/gimpcolorpickertool.c:293 app/tools/gimpcolorpickertool.c:302
+#: app/widgets/gimpcolormapeditor.c:300
+msgid "Hex Triplet:"
+msgstr "Hex Triplet:"
+
+#: app/tools/gimpcolorpickertool.c:298
 msgid "Intensity:"
 msgstr "Intensität:"
 
@@ -6072,7 +6081,7 @@ msgstr "Farbkurven anpassen"
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Kurven können bei indizierten Bildern nicht angepaßt werden."
 
-#: app/tools/gimpcurvestool.c:593 app/tools/gimplevelstool.c:369
+#: app/tools/gimpcurvestool.c:593 app/tools/gimplevelstool.c:367
 msgid "R_eset Channel"
 msgstr "Kanal _zurücksetzen"
 
@@ -6093,7 +6102,7 @@ msgid "Curve Type:"
 msgstr "Kurventyp:"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:674 app/tools/gimplevelstool.c:571
+#: app/tools/gimpcurvestool.c:674 app/tools/gimplevelstool.c:569
 msgid "All Channels"
 msgstr "Alle Kanäle"
 
@@ -6215,53 +6224,57 @@ msgstr "Zusammenhängenden Bereich wählen"
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/Werkzeuge/Auswahlwerkzeuge/Unscharfe Auswahl"
 
-#: app/tools/gimphistogramtool.c:131
+#: app/tools/gimphistogramtool.c:132
 msgid "Histogram"
 msgstr "Histogramm"
 
-#: app/tools/gimphistogramtool.c:132
+#: app/tools/gimphistogramtool.c:133
 msgid "View image histogram"
 msgstr "Histogramm anzeigen"
 
-#: app/tools/gimphistogramtool.c:133
+#: app/tools/gimphistogramtool.c:134
 msgid "/Layer/Colors/Histogram..."
 msgstr "/Ebene/Farben/Histogramm..."
 
-#: app/tools/gimphistogramtool.c:194
+#: app/tools/gimphistogramtool.c:202
 msgid "Histogram does not operate on indexed drawables."
 msgstr "Histogramm funktioniert nicht mit indizierten Bildern."
 
-#: app/tools/gimphistogramtool.c:349
+#: app/tools/gimphistogramtool.c:351
 msgid "Mean:"
 msgstr "Durchschnitt:"
 
-#: app/tools/gimphistogramtool.c:350
+#: app/tools/gimphistogramtool.c:352
 msgid "Std Dev:"
 msgstr "Std.-Abweichung:"
 
-#: app/tools/gimphistogramtool.c:351
+#: app/tools/gimphistogramtool.c:353
 msgid "Median:"
 msgstr "Median:"
 
-#: app/tools/gimphistogramtool.c:352
+#: app/tools/gimphistogramtool.c:354
 msgid "Pixels:"
 msgstr "Pixel:"
 
-#: app/tools/gimphistogramtool.c:354
+#: app/tools/gimphistogramtool.c:355
 msgid "Count:"
 msgstr "Anzahl:"
 
-#: app/tools/gimphistogramtool.c:355
+#: app/tools/gimphistogramtool.c:356
 msgid "Percentile:"
 msgstr "Prozentsatz:"
 
-#: app/tools/gimphistogramtool.c:368
+#: app/tools/gimphistogramtool.c:369
 msgid "View Image Histogram"
 msgstr "Histogramm anzeigen"
 
-#: app/tools/gimphistogramtool.c:390
+#: app/tools/gimphistogramtool.c:391
 msgid "Information on Channel:"
 msgstr "Informationen über Kanal:"
+
+#: app/tools/gimphistogramtool.c:404
+msgid "Intensity Range:"
+msgstr "Intensitätsbereich:"
 
 #: app/tools/gimphuesaturationtool.c:108
 msgid "Hue-Saturation"
@@ -6401,66 +6414,66 @@ msgstr "Umrisse aus Bild wählen"
 msgid "/Tools/Selection Tools/Intelligent Scissors"
 msgstr "/Werkzeuge/Auswahlwerkzeuge/Intelligente Schere"
 
-#: app/tools/gimplevelstool.c:153
+#: app/tools/gimplevelstool.c:151
 msgid "Levels"
 msgstr "Werte"
 
-#: app/tools/gimplevelstool.c:154
+#: app/tools/gimplevelstool.c:152
 msgid "Adjust color levels"
 msgstr "Farbwerte einstellen"
 
-#: app/tools/gimplevelstool.c:155
+#: app/tools/gimplevelstool.c:153
 msgid "/Layer/Colors/Levels..."
 msgstr "/Ebene/Farben/Werte..."
 
-#: app/tools/gimplevelstool.c:221
+#: app/tools/gimplevelstool.c:219
 msgid "Adjust Color Levels"
 msgstr "Farbwerte anpassen"
 
-#: app/tools/gimplevelstool.c:276
+#: app/tools/gimplevelstool.c:274
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "Werte für indizierte Bilder können nicht geändert werden. "
 
-#: app/tools/gimplevelstool.c:357
+#: app/tools/gimplevelstool.c:355
 msgid "Modify Levels for Channel:"
 msgstr "Verändere Werte für Kanal:"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:379
+#: app/tools/gimplevelstool.c:377
 msgid "Input Levels"
 msgstr "Quellwerte"
 
-#: app/tools/gimplevelstool.c:470 modules/cdisplay_gamma.c:35
+#: app/tools/gimplevelstool.c:468 modules/cdisplay_gamma.c:35
 #: modules/cdisplay_gamma.c:331
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:492
+#: app/tools/gimplevelstool.c:490
 msgid "Output Levels"
 msgstr "Zielwerte"
 
-#: app/tools/gimplevelstool.c:582
+#: app/tools/gimplevelstool.c:580
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/tools/gimplevelstool.c:585
+#: app/tools/gimplevelstool.c:583
 msgid "Adjust levels automatically"
 msgstr "Werte automatisch anpassen"
 
-#: app/tools/gimplevelstool.c:595
+#: app/tools/gimplevelstool.c:593
 msgid "Read levels settings from file"
 msgstr "Einstellungen aus Datei lesen"
 
-#: app/tools/gimplevelstool.c:605
+#: app/tools/gimplevelstool.c:603
 msgid "Save levels settings to file"
 msgstr "Aktuelle Einstellungen in Datei speichern"
 
-#: app/tools/gimplevelstool.c:1241
+#: app/tools/gimplevelstool.c:1239
 msgid "Load Levels"
 msgstr "Werte öffnen"
 
-#: app/tools/gimplevelstool.c:1260
+#: app/tools/gimplevelstool.c:1258
 msgid "Save Levels"
 msgstr "Werte speichern"
 
@@ -6786,27 +6799,27 @@ msgstr "Rand:"
 msgid "Unit:"
 msgstr "Einheit:"
 
-#: app/tools/gimpthresholdtool.c:93
+#: app/tools/gimpthresholdtool.c:85
 msgid "Threshold"
 msgstr "Schwellwert"
 
-#: app/tools/gimpthresholdtool.c:94
+#: app/tools/gimpthresholdtool.c:86
 msgid "Reduce image to two colors using a threshold"
 msgstr "Bild mittels Schwellwert auf zwei Farben reduzieren"
 
-#: app/tools/gimpthresholdtool.c:95
+#: app/tools/gimpthresholdtool.c:87
 msgid "/Layer/Colors/Threshold..."
 msgstr "/Ebene/Farben/Schwellwert..."
 
-#: app/tools/gimpthresholdtool.c:161
+#: app/tools/gimpthresholdtool.c:153
 msgid "Apply Threshold"
 msgstr "Schwellwert anwenden"
 
-#: app/tools/gimpthresholdtool.c:209
+#: app/tools/gimpthresholdtool.c:201
 msgid "Threshold does not operate on indexed drawables."
 msgstr "Schwellwert funktioniert nicht mit indizierten Bildern"
 
-#: app/tools/gimpthresholdtool.c:278
+#: app/tools/gimpthresholdtool.c:264
 msgid "Threshold Range:"
 msgstr "Schwellwert Bereich:"
 
@@ -7297,9 +7310,13 @@ msgstr "Nichts markieren"
 msgid "Save Selection to Channel"
 msgstr "Auswahl in Kanal speichern"
 
-#: app/widgets/gimptoolbox-color-area.c:393
-msgid "Color Selection"
-msgstr "Farbauswahl"
+#: app/widgets/gimptoolbox-color-area.c:391
+msgid "Change Foreground Color"
+msgstr "Vordergrundfarbe ändern"
+
+#: app/widgets/gimptoolbox-color-area.c:392
+msgid "Change Background Color"
+msgstr "Hintergrundfarbe ändern"
 
 #: app/widgets/gimptoolbox-indicator-area.c:141
 msgid ""
