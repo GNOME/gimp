@@ -151,14 +151,14 @@
 		    "Adrian Likins"
 		    "July 1997"
 		    ""
-		    SF-VALUE "Text" "\"Hello world!\""
+		    SF-STRING "Text" "Hello world!"
 		    SF-VALUE "Size" "22"
-		    SF-VALUE "Foundry" "\"*\""
-		    SF-VALUE "Family" "\"futura_poster\""
-		    SF-VALUE "Weight" "\"*\""
-		    SF-VALUE "Slant" "\"*\""
-		    SF-VALUE "Set width" "\"*\""
-		    SF-VALUE "Spacing" "\"*\""
+		    SF-STRING "Foundry" "*"
+		    SF-STRING "Family" "futura_poster"
+		    SF-STRING "Weight" "*"
+		    SF-STRING "Slant" "*"
+		    SF-STRING "Set width" "*"
+		    SF-STRING "Spacing" "*"
 		    SF-COLOR "Text color" '(0 0 0)
 		    SF-COLOR "Glow Color" '(63 252 0)
 		    SF-COLOR "Background Color" '(0 0 0)

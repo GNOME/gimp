@@ -77,8 +77,8 @@
 		    "Brian McFee"
 		    "April 1998"
 		    ""
-		    SF-VALUE "Text String" "\"Moo\""
+		    SF-STRING "Text String" "Moo"
 		    SF-VALUE "Font Size (in pixels)" "90"
-		    SF-VALUE "Font" "\"futura_poster\""
+		    SF-STRING "Font" "futura_poster"
 		    SF-VALUE "Bevel Height (sharpness)" "40"
 		    SF-VALUE "Bevel Width" "2.5")

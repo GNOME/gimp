@@ -82,11 +82,11 @@
 		    "Spencer Kimball"
 		    "1996"
 		    ""
-		    SF-VALUE "Text Pattern" "\"Fibers\""
+		    SF-STRING "Text Pattern" "Fibers"
 		    SF-VALUE "Mosaic Tile Type" "0"
-		    SF-VALUE "Text String" "\"The GIMP\""
+		    SF-STRING "Text String" "The GIMP"
 		    SF-VALUE "Font Size (in pixels)" "200"
-		    SF-VALUE "Font" "\"CuneiFontLight\""
+		    SF-STRING "Font" "CuneiFontLight"
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-COLOR "Starting Blend" '(32 106 0)
 		    SF-COLOR "Ending Blend" '(0 0 106))

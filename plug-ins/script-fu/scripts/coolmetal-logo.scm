@@ -106,8 +106,8 @@
 		    "Spencer Kimball & Rob Malda"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"Cool Metal\""
+		    SF-STRING "Text String" "Cool Metal"
 		    SF-VALUE "Font Size (in pixels)" "100"
-		    SF-VALUE "Font" "\"Crillee\""
+		    SF-STRING "Font" "Crillee"
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-TOGGLE "Seascape" FALSE)

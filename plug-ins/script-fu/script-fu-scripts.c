@@ -32,6 +32,8 @@
 #define COLOR_SAMPLE_WIDTH 100
 #define COLOR_SAMPLE_HEIGHT 15
 
+#define MAX_STRING_LENGTH 4096
+
 typedef struct
 {
   GtkWidget *preview;
@@ -574,7 +576,7 @@ script_fu_script_proc (char     *name,
 	      gint err_msg;
 	      char *text = NULL;
 	      char *command, *c;
-	      char buffer[32];
+	      char buffer[MAX_STRING_LENGTH];
 	      int length;
 	      int i;
 
@@ -637,7 +639,7 @@ script_fu_script_proc (char     *name,
 		      text = params[i + 1].data.d_string;
 		      break;
 		    case SF_STRING:
-		      sprintf (buffer, "\"%s\"", params[i + 1].data.d_string);
+		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
 		      text = buffer;
 		      break;
 		    default:
@@ -1037,7 +1039,7 @@ script_fu_ok_callback (GtkWidget *widget,
   gint err_msg;
   char *text = NULL;
   char *command, *c;
-  char buffer[32];
+  char buffer[MAX_STRING_LENGTH];
   int length;
   int i;
 
@@ -1102,7 +1104,7 @@ script_fu_ok_callback (GtkWidget *widget,
 	  break;
 	case SF_STRING:
 	  text = gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]));
-	  sprintf (buffer, "\"%s\"", text);
+	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", text);
 	  text = buffer;
 	  break;
 	default:

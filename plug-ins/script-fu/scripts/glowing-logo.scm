@@ -64,7 +64,7 @@
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"GLOWING\""
+		    SF-STRING "Text String" "GLOWING"
 		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-VALUE "Font" "\"Slogan\""
+		    SF-STRING "Font" "Slogan"
 		    SF-COLOR "Background Color" '(7 0 20))

@@ -100,9 +100,9 @@
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-;		    SF-VALUE "Home directory" "\"/home/aklikins/\""
-		    SF-VALUE "Description" "\"Brush\""
-		    SF-VALUE "Filename" "\"SlothBrush\""
+;		    SF-STRING "Home directory" "/home/aklikins/"
+		    SF-STRING "Description" "Brush"
+		    SF-STRING "Filename" "SlothBrush"
 		    SF-VALUE "Spacing" "25")
 
 

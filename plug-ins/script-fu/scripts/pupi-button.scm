@@ -214,14 +214,14 @@
 		    "Arturo Espinosa & Federico Mena Quintero"
 		    "June 1998"
 		    ""
-		    SF-VALUE "Text" "\"\""
+		    SF-STRING "Text" ""
 		    SF-VALUE "Size" "16"
-		    SF-VALUE "Foundry" "\"adobe\""
-		    SF-VALUE "Family" "\"helvetica\""
-		    SF-VALUE "Weight" "\"bold\""
-		    SF-VALUE "Slant" "\"r\""
-		    SF-VALUE "Set width" "\"normal\""
-		    SF-VALUE "Spacing" "\"p\""
+		    SF-STRING "Foundry" "adobe"
+		    SF-STRING "Family" "helvetica"
+		    SF-STRING "Weight" "bold"
+		    SF-STRING "Slant" "r"
+		    SF-STRING "Set width" "normal"
+		    SF-STRING "Spacing" "p"
 		    SF-COLOR "Upper color" '(192 192 0)
 		    SF-COLOR "Lower color" '(128 108 0)
 		    SF-COLOR "Text color" '(0 0 0)

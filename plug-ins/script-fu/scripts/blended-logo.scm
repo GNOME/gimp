@@ -81,9 +81,9 @@
 		    "1996"
 		    ""
 		    SF-VALUE "Blend Mode" "FG-BG-RGB"
-		    SF-VALUE "Text String" "\"The GIMP\""
+		    SF-STRING "Text String" "The GIMP"
 		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-VALUE "Font" "\"Crillee\""
+		    SF-STRING "Font" "Crillee"
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-COLOR "Text Color" '(124 174 255)
 		    SF-COLOR "Starting Blend" '(22 9 129)

@@ -158,9 +158,9 @@
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"NEON\""
+		    SF-STRING "Text String" "NEON"
 		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-VALUE "Font" "\"Blippo\""
+		    SF-STRING "Font" "Blippo"
 		    SF-COLOR "Background Color" '(0 0 0)
 		    SF-COLOR "Glow Color" '(38 211 255)
 		    SF-TOGGLE "Create Shadow" FALSE)

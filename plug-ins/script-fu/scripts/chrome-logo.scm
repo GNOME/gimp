@@ -73,7 +73,7 @@
 		    "Spencer Kimball & Peter Mattis"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"The GIMP\""
+		    SF-STRING "Text String" "The GIMP"
 		    SF-VALUE "Font Size (in pixels)" "100"
-		    SF-VALUE "Font" "\"Bodoni\""
+		    SF-STRING "Font" "Bodoni"
 		    SF-COLOR "Background Color" '(191 191 191))

@@ -223,9 +223,9 @@
 		    "RGB GRAY"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE "Text" "\"The GIMP\""
-		    SF-VALUE "Number" "\"32\""
-		    SF-VALUE "Font" "\"Utopia\""
+		    SF-STRING "Text" "The GIMP"
+		    SF-STRING "Number" "32"
+		    SF-STRING "Font" "Utopia"
 		    SF-COLOR "Font Color" '(255 180 0)
 		    SF-TOGGLE "Work on copy" TRUE) 
 

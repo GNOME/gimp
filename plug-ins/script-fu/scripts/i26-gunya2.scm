@@ -86,10 +86,10 @@
 		    "Shuji Narazaki"
 		    "1997"
 		    ""
-		    SF-VALUE "Text" "\"The GIMP\""
+		    SF-STRING "Text" "The GIMP"
 		    SF-COLOR "Text Color" '(255 0 0)
 		    SF-COLOR "Frame Color" '(0 34 255)
-		    SF-VALUE "Font" "\"Becker\""
+		    SF-STRING "Font" "Becker"
 		    SF-VALUE "Font Size" "100"
 		    SF-VALUE "Frame Size" "2")
 

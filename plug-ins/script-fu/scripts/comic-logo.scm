@@ -85,8 +85,8 @@
 		    "Brian McFee"
 		    "April 1998"
 		    ""
-		    SF-VALUE "Text String" "\"Moo\""
+		    SF-STRING "Text String" "Moo"
 		    SF-VALUE "Font Size (in pixels)" "85"
-		    SF-VALUE "Font" "\"tribeca\""
-		    SF-VALUE "Gradient" "\"Incandescent\""
+		    SF-STRING "Font" "tribeca"
+		    SF-STRING "Gradient" "Incandescent"
 		    SF-VALUE "Outline width" "5")

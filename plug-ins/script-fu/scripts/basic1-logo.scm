@@ -41,8 +41,8 @@
 		    "Spencer Kimball"
 		    "1996"
 		    ""
-		    SF-VALUE "Text String" "\"The Gimp\""
+		    SF-STRING "Text String" "The Gimp"
 		    SF-VALUE "Font Size (in pixels)" "100"
-		    SF-VALUE "Font" "\"Dragonwick\""
+		    SF-STRING "Font" "Dragonwick"
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-COLOR "Text Color" '(6 6 206))

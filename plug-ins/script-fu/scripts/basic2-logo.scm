@@ -57,8 +57,8 @@
 		    "Spencer Kimball"
 		    "1996"
 		    ""
-		    SF-VALUE "Text String" "\"SCRIPT-FU\""
+		    SF-STRING "Text String" "SCRIPT-FU"
 		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-VALUE "Font" "\"futura_poster\""
+		    SF-STRING "Font" "futura_poster"
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-COLOR "Text Color" '(206 6 50))

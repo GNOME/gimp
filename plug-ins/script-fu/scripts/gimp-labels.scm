@@ -105,7 +105,7 @@
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"?\""
+		    SF-STRING "Text String" "?"
 		    SF-TOGGLE "Remove Background" TRUE
 		    SF-TOGGLE "Index Image" TRUE)
 
@@ -116,7 +116,7 @@
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"?\""
+		    SF-STRING "Text String" "?"
 		    SF-TOGGLE "Remove Background" TRUE
 		    SF-TOGGLE "Index Image" TRUE)
 
@@ -127,7 +127,7 @@
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"?\""
+		    SF-STRING "Text String" "?"
 		    SF-TOGGLE "Remove Background" TRUE
 		    SF-TOGGLE "Index Image" TRUE)
 
@@ -139,12 +139,12 @@
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"Gimp.Org\""
-		    SF-VALUE "Font" "\"helvetica\""
+		    SF-STRING "Text String" "Gimp.Org"
+		    SF-STRING "Font" "helvetica"
 		    SF-VALUE "Font Size" "18"
-		    SF-VALUE "Weight" "\"medium\""
-		    SF-VALUE "Slant" "\"r\""
-		    SF-VALUE "Width" "\"normal\""
+		    SF-STRING "Weight" "medium"
+		    SF-STRING "Slant" "r"
+		    SF-STRING "Width" "normal"
  		    SF-COLOR "Text Color" '(130 165 235)
 	 	    SF-COLOR "Shadow Color" '(0 0 0)
 		    SF-COLOR "Background Color" '(255 255 255)

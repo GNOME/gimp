@@ -44,7 +44,7 @@
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"ALIEN\""
+		    SF-STRING "Text String" "ALIEN"
 		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-VALUE "Font" "\"futura_poster\""
+		    SF-STRING "Font" "futura_poster"
 		    SF-COLOR "Glow Color" '(63 252 0))

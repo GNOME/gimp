@@ -75,6 +75,6 @@
 		    "Brian McFee"
 		    "April 1998"
 		    ""
-		    SF-VALUE "Text String" "\"Fear the Cow\""
+		    SF-STRING "Text String" "Fear the Cow"
 		    SF-VALUE "Font Size (in pixels)" "80"
-		    SF-VALUE "Font" "\"roostheavy\"")
+		    SF-STRING "Font" "roostheavy")

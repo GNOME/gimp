@@ -242,8 +242,8 @@
  "8th April 1998"
  "Chris Gutteridge / ECS @ University of Southampton, England"
  "bar"
- SF-VALUE "File Name:"       "\"afile\""
- SF-VALUE "Font:"       "\"Charter\""
+ SF-STRING "File Name:"       "afile"
+ SF-STRING "Font:"       "Charter"
  SF-VALUE "Font size:"  "45"
  SF-COLOR "Text Color:"      '(0 0 0)
  SF-TOGGLE "Transparent BG?" FALSE
@@ -262,8 +262,8 @@
  "bar"
  SF-IMAGE "Image" 0
  SF-DRAWABLE "Layer" 0
- SF-VALUE "File Name:"       "\"afile\""
- SF-VALUE "Font:"       "\"Charter\""
+ SF-STRING "File Name:"       "afile"
+ SF-STRING "Font:"       "Charter"
  SF-VALUE "Font size:"  "45"
  SF-COLOR "Text Color:"      '(0 0 0)
  SF-TOGGLE "Flatten Image?" TRUE

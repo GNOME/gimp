@@ -112,7 +112,7 @@
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"Nova\""
+		    SF-STRING "Text String" "Nova"
 		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-VALUE "Font" "\"engraver\""
+		    SF-STRING "Font" "engraver"
 		    SF-COLOR "Glow Color" '(28 65 188))

@@ -72,8 +72,8 @@
 		    "Spencer Kimball & Xach Beane"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"GIMP\""
+		    SF-STRING "Text String" "GIMP"
 		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-VALUE "Font" "\"Blippo\""
+		    SF-STRING "Font" "Blippo"
 		    SF-COLOR "Burst Color" '(60 196 33)
 		    SF-COLOR "BG Color" '(255 255 255))

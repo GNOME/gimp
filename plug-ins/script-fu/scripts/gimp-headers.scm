@@ -134,8 +134,8 @@
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"gimp.org\""
-		    SF-VALUE "Font" "\"times\""
+		    SF-STRING "Text String" "gimp.org"
+		    SF-STRING "Font" "times"
 		    SF-VALUE "Font size" "50"
 		    SF-COLOR "Text Color" '(82 108 159)
 		    SF-COLOR "Higlight Color" '(190 220 250)
@@ -153,8 +153,8 @@
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"gimp.org\""
-		    SF-VALUE "Font" "\"helvetica\""
+		    SF-STRING "Text String" "gimp.org"
+		    SF-STRING "Font" "helvetica"
 		    SF-VALUE "Font size" "24"
 		    SF-COLOR "Text Color" '(135 220 220)
 		    SF-COLOR "Higlight Color" '(210 240 245)

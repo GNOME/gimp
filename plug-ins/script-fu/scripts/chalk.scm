@@ -73,8 +73,8 @@
                     "Manish Singh"
                     "October 1997"
                     ""
-                    SF-VALUE "Text String" "\"CHALK\""
+                    SF-STRING "Text String" "CHALK"
                     SF-VALUE "Font Size (in pixels)" "150"
-                    SF-VALUE "Font" "\"Cooper\""
+                    SF-STRING "Font" "Cooper"
                     SF-COLOR "Background Color" '(0 0 0)
                     SF-COLOR "Chalk Color" '(255 255 255))

@@ -68,7 +68,7 @@
  ""
  SF-VALUE "Image Size:" "256"
  SF-VALUE "Granularity (0 - 15):" "4"
- SF-VALUE "Gradient:" "\"Land_and_Sea\""
+ SF-STRING "Gradient:" "Land_and_Sea"
  SF-TOGGLE "TRUE = Detail in middle, FALSE = tile" FALSE
 )
 

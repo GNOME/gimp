@@ -169,14 +169,14 @@
 		    "Federico Mena Quintero"
 		    "June 1997"
 		    ""
-		    SF-VALUE "Text" "\"Hello world!\""
+		    SF-STRING "Text" "Hello world!"
 		    SF-VALUE "Size" "16"
-		    SF-VALUE "Foundry" "\"adobe\""
-		    SF-VALUE "Family" "\"helvetica\""
-		    SF-VALUE "Weight" "\"bold\""
-		    SF-VALUE "Slant" "\"r\""
-		    SF-VALUE "Set width" "\"normal\""
-		    SF-VALUE "Spacing" "\"p\""
+		    SF-STRING "Foundry" "adobe"
+		    SF-STRING "Family" "helvetica"
+		    SF-STRING "Weight" "bold"
+		    SF-STRING "Slant" "r"
+		    SF-STRING "Set width" "normal"
+		    SF-STRING "Spacing" "p"
 		    SF-COLOR "Upper-left color" '(0 255 127)
 		    SF-COLOR "Lower-right color" '(0 127 255)
 		    SF-COLOR "Text color" '(0 0 0)

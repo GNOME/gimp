@@ -119,8 +119,8 @@
 		    "Adrian Likins <adrian@gimp.org>"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"Sloth\""
-		    SF-VALUE "Font" "\"roostheavy\""
+		    SF-STRING "Text String" "Sloth"
+		    SF-STRING "Font" "roostheavy"
 		    SF-VALUE "Font size" "200"
 		    SF-VALUE "Chip Amount" "30"
 		    SF-VALUE "Blur Amount" "3"
@@ -129,6 +129,6 @@
 		    SF-TOGGLE "Keep Bump layer?" FALSE
 		    SF-TOGGLE "Fill bg with pattern?" TRUE
 		    SF-TOGGLE "Keep Background?" TRUE
-		    SF-VALUE "Pattern" "\"Burlwood\"")
+		    SF-STRING "Pattern" "Burlwood")
 
 

@@ -194,8 +194,8 @@
 		    "1997"
 		    ""
 		    SF-VALUE "Chrome Factor" "1.0"
-		    SF-VALUE "Text String" "\"Crystal\""
+		    SF-STRING "Text String" "Crystal"
 		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-VALUE "Font" "\"Engraver\""
-		    SF-VALUE "Background Img" (string-append "\"" gimp-data-dir "/scripts/texture1.jpg\"")
-		    SF-VALUE "Environment Map" (string-append "\"" gimp-data-dir "/scripts/beavis.jpg\""))
+		    SF-STRING "Font" "Engraver"
+		    SF-STRING "Background Img" (string-append "" gimp-data-dir "/scripts/texture1.jpg")
+		    SF-STRING "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg"))

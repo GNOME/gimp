@@ -193,7 +193,7 @@
 		    SF-VALUE "Chrome Saturation" "-80"
 		    SF-VALUE "Chrome Lightness" "-47"
 		    SF-VALUE "Chrome Factor" "0.75"
-		    SF-VALUE "Environment Map" (string-append "\"" gimp-data-dir "/scripts/beavis.jpg\"")
+		    SF-STRING "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
 		    SF-COLOR "Highlight Balance" '(211 95 0)
 		    SF-COLOR "Chrome Balance" '(0 0 0)
 		    SF-TOGGLE "Chrome White Areas" TRUE)

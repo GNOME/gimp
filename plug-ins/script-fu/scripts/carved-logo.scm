@@ -157,8 +157,8 @@
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"Marble\""
+		    SF-STRING "Text String" "Marble"
 		    SF-VALUE "Font Size (in pixels)" "100"
-		    SF-VALUE "Font" "\"Engraver\""
-		    SF-VALUE "Background Img" (string-append "\"" gimp-data-dir "/scripts/texture3.jpg\"")
+		    SF-STRING "Font" "Engraver"
+		    SF-STRING "Background Img" (string-append "" gimp-data-dir "/scripts/texture3.jpg")
 		    SF-TOGGLE "Carve Raised Text" FALSE)

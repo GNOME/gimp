@@ -82,7 +82,7 @@
 		    "Spencer Kimball & Ed Mackey"
 		    "1997"
 		    ""
-		    SF-VALUE "Text String" "\"The GIMP\""
+		    SF-STRING "Text String" "The GIMP"
 		    SF-VALUE "Font Size (in pixels)" "100"
-		    SF-VALUE "Font" "\"Becker\""
+		    SF-STRING "Font" "Becker"
 		    SF-COLOR "Background Color" '(255 255 255))
