@@ -1,3 +1,8 @@
+2002-12-06  Hans Breuer  <hans@breuer.org>
+
+	* plug-ins/common/winclipboard.c : need to adjust the data 
+	pointer for BI_BITFIELDS bitmaps, fixes #99246
+
 2002-11-12  Sven Neumann  <sven@gimp.org>
 
 	* app/paint_core.c: merged fix for #91067 from HEAD branch.
