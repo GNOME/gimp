@@ -7,8 +7,14 @@ GIMP 1.3 is the development branch of The GIMP. Here's where the
 development takes place on the road to the next stable release
 GIMP version 2.0.
 
-Overview of Changes in GIMP 1.3.24
+Overview of Changes in GIMP 2.0 pre1
 ==================================
+- Replaced old "About" dialog [Nomis]
+- Allow removal of text attributes from text layer [Sven]
+- Add optimisation option to png (clear transparent pixels) [Joao]
+- Add POSIX shared memory implementation, and use it on MacOS X [Yosh]
+- Dashed selection and path stroking [Nomis]
+- Grey picker in Levels dialog conserves lightness [Bolsh]
 - Created a library for handling thumbnails [Sven]
 - Support for multipage TIFFs [Andrey Kiselev]
 - Added a channel mixer plug-in [Martin Guldahl, Yosh]
@@ -17,10 +23,9 @@ Overview of Changes in GIMP 1.3.24
 - Lots of bug fixes
 
 Other contributors:
-  Adam Moss, David Neary, Jakub Steiner, Helvetix Victorinox, Pedro Gimeno,
-  Adrian Bunk, Abel Cheung, Maurits Rijk, Ville Pätsi, Marco
-  Munari, Shlomi Fish, Jakub Steiner, Simon Budig, Raphaël
-  Quinet
+  Adam Moss, Jakub Steiner, Helvetix Victorinox, Pedro Gimeno, Adrian 
+  Bunk, Abel Cheung, Maurits Rijk, Ville Pätsi, Marco Munari, Shlomi 
+  Fish, Jakub Steiner, Raphaël Quinet, David Gowers, Michael Schumacher
 
 
 Overview of Changes in GIMP 1.3.23
