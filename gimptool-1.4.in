@@ -218,7 +218,7 @@ while test $# -gt 0; do
           fi
         fi
       done
-      echo -L@libdir@ -lgimp -lgimpcolor -lgimpmath $my_glib_libs
+      echo -L@libdir@ -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ $my_glib_libs
       ;;
     --install-bin | --install-admin-bin \
     | --install-bin-strip | --install-admin-bin-strip \
