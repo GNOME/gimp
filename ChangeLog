@@ -1,3 +1,8 @@
+Sun Jan 31 16:51:18 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/paint_funcs.c: Fix segfault when combining very
+	tiny inten_a_inten_a regions (ie. when painting).
+
 Sat Jan 30 23:51:04 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
 
 	Changed:-

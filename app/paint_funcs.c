@@ -1994,53 +1994,18 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 
       if (opacity == OPAQUE_OPACITY) /* HAS MASK, FULL OPACITY */
 	{
-	  int* mask_ip;
+	  const int* mask_ip;
 	  int i,j;
 
-	  /* HEAD */
-	  i =  (((int)m) & (sizeof(int)-1));
-	  if (i != 0)
+	  if (length >= sizeof(int))
 	    {
-	      i = sizeof(int) - i;
-	      length -= i;
-	      while (i--)
+	      /* HEAD */
+	      i =  (((int)m) & (sizeof(int)-1));
+	      if (i != 0)
 		{
-		  /* GUTS */
-		  src2_alpha = INT_MULT(src2[alpha], *m, tmp);
-		  new_alpha = src1[alpha] +
-		    INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
-		  
-		  alphify (src2_alpha, new_alpha);
-		  
-		  if (mode_affect)
-		    {
-		      dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
-		    }
-		  else
-		    {
-		      dest[alpha] = (src1[alpha]) ? src1[alpha] :
-			(affect[alpha] ? new_alpha : src1[alpha]);      
-		    }
-		  
-		  m++;
-		  src1 += bytes;
-		  src2 += bytes;
-		  dest += bytes;	
-		  /* GUTS END */
-		}
-	    }
-
-	  /* BODY */
-	  mask_ip = (int*)m;
-	  i = length / sizeof(int);
-	  length %= sizeof(int);
-	  while (i--)
-	    {
-	      if (*mask_ip)
-		{
-		  m = (const unsigned char*)mask_ip;
-		  j = sizeof(int);
-		  while (j--)
+		  i = sizeof(int) - i;
+		  length -= i;
+		  while (i--)
 		    {
 		      /* GUTS */
 		      src2_alpha = INT_MULT(src2[alpha], *m, tmp);
@@ -2066,20 +2031,58 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 		      /* GUTS END */
 		    }
 		}
-	      else
+
+	      /* BODY */
+	      mask_ip = (int*)m;
+	      i = length / sizeof(int);
+	      length %= sizeof(int);
+	      while (i--)
 		{
-		  j = bytes * sizeof(int);
-		  src2 += j;
-		  while (j--)
+		  if (*mask_ip)
 		    {
-		      *(dest++) = *(src1++);
+		      m = (const unsigned char*)mask_ip;
+		      j = sizeof(int);
+		      while (j--)
+			{
+			  /* GUTS */
+			  src2_alpha = INT_MULT(src2[alpha], *m, tmp);
+			  new_alpha = src1[alpha] +
+			    INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+		  
+			  alphify (src2_alpha, new_alpha);
+		  
+			  if (mode_affect)
+			    {
+			      dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+			    }
+			  else
+			    {
+			      dest[alpha] = (src1[alpha]) ? src1[alpha] :
+				(affect[alpha] ? new_alpha : src1[alpha]);      
+			    }
+		  
+			  m++;
+			  src1 += bytes;
+			  src2 += bytes;
+			  dest += bytes;	
+			  /* GUTS END */
+			}
 		    }
+		  else
+		    {
+		      j = bytes * sizeof(int);
+		      src2 += j;
+		      while (j--)
+			{
+			  *(dest++) = *(src1++);
+			}
+		    }
+		  mask_ip++;
 		}
-	      mask_ip++;
+
+	      m = (const unsigned char*)mask_ip;
 	    }
 
-	  m = (const unsigned char*)mask_ip;
-	
 	  /* TAIL */
 	  while (length--)
 	    {
@@ -2109,61 +2112,26 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 	}
       else /* HAS MASK, SEMI-OPACITY */
 	{
-	  int* mask_ip;
+	  const int* mask_ip;
 	  int i,j;
 
-	  /* HEAD */
-	  i = (((int)m) & (sizeof(int)-1));
-	  if (i != 0)
+	  if (length >= sizeof(int))
 	    {
-	      i = sizeof(int) - i;
-	      length -= i;
-	      while (i--)
+	      /* HEAD */
+	      i = (((int)m) & (sizeof(int)-1));
+	      if (i != 0)
 		{
-		  /* GUTS */
-		  src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
-		  new_alpha = src1[alpha] +
-		    INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
-		  
-		  alphify (src2_alpha, new_alpha);
-		  
-		  if (mode_affect)
-		    {
-		      dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
-		    }
-		  else
-		    {
-		      dest[alpha] = (src1[alpha]) ? src1[alpha] :
-			(affect[alpha] ? new_alpha : src1[alpha]);
-		    }
-		  
-		  m++;
-		  src1 += bytes;
-		  src2 += bytes;
-		  dest += bytes;
-		  /* GUTS END */
-		}
-	    }
-	  
-	  /* BODY */
-	  mask_ip = (int*)m;
-	  i = length / sizeof(int);
-	  length %= sizeof(int);
-	  while (i--)
-	    {
-	      if (*mask_ip)
-		{
-		  m = (const unsigned char*)mask_ip;
-		  j = sizeof(int);
-		  while (j--)
+		  i = sizeof(int) - i;
+		  length -= i;
+		  while (i--)
 		    {
 		      /* GUTS */
 		      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
 		      new_alpha = src1[alpha] +
 			INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
-		      
+		  
 		      alphify (src2_alpha, new_alpha);
-		      
+		  
 		      if (mode_affect)
 			{
 			  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
@@ -2173,7 +2141,7 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 			  dest[alpha] = (src1[alpha]) ? src1[alpha] :
 			    (affect[alpha] ? new_alpha : src1[alpha]);
 			}
-
+		  
 		      m++;
 		      src1 += bytes;
 		      src2 += bytes;
@@ -2181,19 +2149,57 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 		      /* GUTS END */
 		    }
 		}
-	      else
+	  
+	      /* BODY */
+	      mask_ip = (int*)m;
+	      i = length / sizeof(int);
+	      length %= sizeof(int);
+	      while (i--)
 		{
-		  j = bytes * sizeof(int);
-		  src2 += j;
-		  while (j--)
+		  if (*mask_ip)
 		    {
-		      *(dest++) = *(src1++);
-		    }
-		}
-	      mask_ip++;
-	    }
+		      m = (const unsigned char*)mask_ip;
+		      j = sizeof(int);
+		      while (j--)
+			{
+			  /* GUTS */
+			  src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+			  new_alpha = src1[alpha] +
+			    INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+		      
+			  alphify (src2_alpha, new_alpha);
+		      
+			  if (mode_affect)
+			    {
+			      dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+			    }
+			  else
+			    {
+			      dest[alpha] = (src1[alpha]) ? src1[alpha] :
+				(affect[alpha] ? new_alpha : src1[alpha]);
+			    }
 
-	  m = (const unsigned char*)mask_ip;
+			  m++;
+			  src1 += bytes;
+			  src2 += bytes;
+			  dest += bytes;
+			  /* GUTS END */
+			}
+		    }
+		  else
+		    {
+		      j = bytes * sizeof(int);
+		      src2 += j;
+		      while (j--)
+			{
+			  *(dest++) = *(src1++);
+			}
+		    }
+		  mask_ip++;
+		}
+
+	      m = (const unsigned char*)mask_ip;
+	    }
 	
 	  /* TAIL */
 	  while (length--)
@@ -4826,7 +4832,7 @@ combine_sub_region(struct combine_regions_struct *st,
   m = (mask) ? mask->data : NULL;
 
   if (src1->w > 128)
-    fprintf(stderr, "combine_sub_region::src1->w = %d\n", src1->w);
+    g_error("combine_sub_region::src1->w = %d\n", src1->w);
   for (h = 0; h < src1->h; h++)
   {
     s = buf;
@@ -4857,6 +4863,7 @@ combine_sub_region(struct combine_regions_struct *st,
        break;
 
      default:
+       g_warning ("combine_sub_region: unhandled combine-type.");
        break;
     }
 
