@@ -133,6 +133,8 @@ void        gimp_size_entry_set_pixel_digits      (GimpSizeEntry *gse,
                                                    gint           digits);
 
 void        gimp_size_entry_grab_focus            (GimpSizeEntry *gse);
+GtkWidget * gimp_size_entry_get_help_widget       (GimpSizeEntry *gse,
+                                                   gint           field);
 
 
 G_END_DECLS

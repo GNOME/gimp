@@ -686,7 +686,7 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
 /**
  * gimp_size_entry_get_value;
  * @gse:   The sizeentry you want to know a value of.
- * @field: The index of the filed you want to know the value of.
+ * @field: The index of the field you want to know the value of.
  *
  * Returns the value of field # @field of the #GimpSizeEntry.
  *
@@ -1220,4 +1220,32 @@ gimp_size_entry_grab_focus (GimpSizeEntry *gse)
 
   gtk_widget_grab_focus (gse->show_refval ?
 			 gsef->refval_spinbutton : gsef->value_spinbutton);
+}
+
+/**
+ * gimp_size_entry_get_help_widget:
+ * @gse: a #GimpSizeEntry
+ * @field: the index of the widget you want to get a pointer to
+ *
+ * You shouldn't fiddle with the internals of a #GimpSizeEntry but
+ * if you want to set tooltips using gimp_help_set_help_data() you
+ * can use this function to get a pointer to the spinbuttons.
+ *
+ * Return value: a #GtkWidget pointer that you can attach a tooltip to.
+ **/
+GtkWidget *
+gimp_size_entry_get_help_widget (GimpSizeEntry *gse,
+                                 gint           field)
+{
+  GimpSizeEntryField *gsef;
+
+  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), NULL);
+  g_return_val_if_fail ((field >= 0) && (field < gse->number_of_fields), NULL);
+
+  gsef = g_slist_nth_data (gse->fields, field);
+  if (!gsef)
+    return NULL;
+
+  return (gsef->refval_spinbutton ?
+          gsef->refval_spinbutton : gsef->value_spinbutton);
 }
