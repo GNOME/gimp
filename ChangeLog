@@ -1,3 +1,8 @@
+2003-12-12  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcurvestool.c: use GimpHistogramOptions instead of
+	GimpColorOptions and connect the options to the histogram view.
+
 2003-12-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimphistogramview.[ch]: added a hack that allows to

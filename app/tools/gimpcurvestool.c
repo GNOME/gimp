@@ -57,8 +57,8 @@
 
 #include "display/gimpdisplay.h"
 
-#include "gimpcoloroptions.h"
 #include "gimpcurvestool.h"
+#include "gimphistogramoptions.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
@@ -160,8 +160,8 @@ gimp_curves_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)
 {
   (* callback) (GIMP_TYPE_CURVES_TOOL,
-                GIMP_TYPE_COLOR_OPTIONS,
-                gimp_color_options_gui,
+                GIMP_TYPE_HISTOGRAM_OPTIONS,
+                gimp_histogram_options_gui,
                 0,
                 "gimp-curves-tool",
                 _("Curves"),
@@ -467,14 +467,15 @@ gimp_curves_tool_map (GimpImageMapTool *image_map_tool)
 static void
 gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpCurvesTool *c_tool = GIMP_CURVES_TOOL (image_map_tool);
-  GtkWidget      *hbox;
-  GtkWidget      *vbox;
-  GtkWidget      *hbbox;
-  GtkWidget      *frame;
-  GtkWidget      *menu;
-  GtkWidget      *table;
-  GtkWidget      *button;
+  GimpCurvesTool  *c_tool = GIMP_CURVES_TOOL (image_map_tool);
+  GimpToolOptions *tool_options;
+  GtkWidget       *hbox;
+  GtkWidget       *vbox;
+  GtkWidget       *hbbox;
+  GtkWidget       *frame;
+  GtkWidget       *menu;
+  GtkWidget       *table;
+  GtkWidget       *button;
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
@@ -564,6 +565,11 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   g_signal_connect_after (c_tool->graph, "expose_event",
                           G_CALLBACK (curves_graph_expose),
                           c_tool);
+
+
+  tool_options = GIMP_TOOL (c_tool)->tool_info->tool_options;
+  gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
+                                       GIMP_HISTOGRAM_VIEW (c_tool->graph));
 
   /*  The range drawing area  */
   frame = gtk_frame_new (NULL);
