@@ -1,3 +1,7 @@
+Sat Jun 12 23:45:01 CEST 1999 Marc Lehmann <pcg@goof.com>
+
+	* docs/parasites.txt: nicks comments...
+
 Thu Jun 10 12:11:24 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* almost all the plug-in Makefiles: add $(INTLLIBS)

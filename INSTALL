@@ -54,9 +54,16 @@ recognizes. These are:
      the gimp uses to search for its configuration files from ~/.gimp (the
      directory .gimp in the users home directory) to DIR.
   
-  5. --enable-perl and --disable-perl. The perl extension does not build on
-     all systems. If you experience problems use --disable-perl and gimp
-     will not even try to built it.
+  5. --enable-perl and --disable-perl. The perl extension does not build
+     on all systems. If you experience problems use --disable-perl
+     and gimp will not even try to built it. The perl extension does
+     not usually respect the normal configure prefix but uses perl's
+     instead. You can force it to use a different prefix by giving it as
+     an argument to the --enable-perl option (--enable-perl=/my/prefix),
+     however, you will usually have to set PERL5LIB or equivalent
+     environment variables, otherwise gimp-perl will not run or you will
+     get many errors on startup. See README.perl for even finer grained
+     control about installation paths (and distribution making).
 
 The `make' command builds several things:
  - The libraries `libgimp/libgimp.la', `libgimp/libgimpi.la' and
