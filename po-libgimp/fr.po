@@ -10,10 +10,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 2.0pre4\n"
+"Project-Id-Version: gimp-libgimp 2.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2004-03-06 14:55+0100\n"
+"POT-Creation-Date: 2004-04-24 20:16+0200\n"
+"PO-Revision-Date: 2004-04-24 19:50+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -158,7 +158,6 @@ msgstr "_Ignorer"
 msgid "_Export"
 msgstr "_Exporter"
 
-#. the headline
 #: libgimp/gimpexport.c:485
 #, c-format
 msgid ""
@@ -199,9 +198,9 @@ msgstr "Sélecteur de polices"
 msgid "Gradient Selection"
 msgstr "Sélecteur de dégradés"
 
-#: libgimp/gimpmenu.c:407
-msgid "None"
-msgstr "Aucun"
+#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+msgid "(Empty)"
+msgstr ""
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -356,7 +355,7 @@ msgid "Hue"
 msgstr "Teinte"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:323
+#: modules/cdisplay_proof.c:318
 msgid "Saturation"
 msgstr "Saturation"
 
@@ -396,35 +395,33 @@ msgstr "Courant :"
 msgid "Old:"
 msgstr "Ancien :"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
 msgstr "Sélectionnez un dossier"
 
-#: libgimpwidgets/gimpfileentry.c:364
+#: libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "Sélectionnez un fichier"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:232
 msgid "KiloBytes"
 msgstr "Kilo-octets"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:233
 msgid "MegaBytes"
 msgstr "Méga-octets"
 
-#: libgimpwidgets/gimpmemsizeentry.c:236
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "GigaBytes"
 msgstr "Giga-octets"
 
 #: libgimpwidgets/gimppatheditor.c:243
-#, fuzzy
 msgid "Writable"
-msgstr "Triangle"
+msgstr "Modifiable"
 
 #: libgimpwidgets/gimppatheditor.c:252
-#, fuzzy
 msgid "Folder"
-msgstr "Sélectionnez un dossier"
+msgstr "Dossier"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
@@ -514,7 +511,7 @@ msgstr "Unité"
 msgid "Factor"
 msgstr "Facteur"
 
-#: libgimpwidgets/gimpwidgets.c:1291
+#: libgimpwidgets/gimpwidgets.c:808
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -522,15 +519,15 @@ msgstr ""
 "Utiliser cette valeur comme graine du générateur de nombres aléatoires - "
 "cela vous permet de répéter une opération « aléatoire » donnée."
 
-#: libgimpwidgets/gimpwidgets.c:1295
+#: libgimpwidgets/gimpwidgets.c:812
 msgid "_New Seed"
 msgstr "_Nouvelle graine"
 
-#: libgimpwidgets/gimpwidgets.c:1308
+#: libgimpwidgets/gimpwidgets.c:825
 msgid "Seed random number generator with a generated random number"
 msgstr "Initialise le générateur de nombre aléatoire avec un nombre aléatoire"
 
-#: libgimpwidgets/gimpwidgets.c:1312
+#: libgimpwidgets/gimpwidgets.c:829
 msgid "_Randomize"
 msgstr "_Aléatoire"
 
@@ -547,15 +544,15 @@ msgstr "Vision des couleurs déficiente"
 msgid "Color _Deficiency Type:"
 msgstr "Type de _déficience de couleur :"
 
-#: modules/cdisplay_colorblind.c:473
+#: modules/cdisplay_colorblind.c:469
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (insensible au rouge)"
 
-#: modules/cdisplay_colorblind.c:476
+#: modules/cdisplay_colorblind.c:471
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (insensible au vert)"
 
-#: modules/cdisplay_colorblind.c:479
+#: modules/cdisplay_colorblind.c:473
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (insensible au bleu)"
 
@@ -591,15 +588,15 @@ msgstr "Filtre d'épreuve des couleurs utilisant le profil colorimétrique ICC"
 msgid "Color Proof"
 msgstr "Épreuve des couleurs"
 
-#: modules/cdisplay_proof.c:319
+#: modules/cdisplay_proof.c:314
 msgid "Perceptual"
 msgstr "Perceptual"
 
-#: modules/cdisplay_proof.c:321
+#: modules/cdisplay_proof.c:316
 msgid "Relative Colorimetric"
 msgstr "Relative Colorimetric"
 
-#: modules/cdisplay_proof.c:325
+#: modules/cdisplay_proof.c:320
 msgid "Absolute Colorimetric"
 msgstr "Absolute Colorimetric"
 
@@ -682,3 +679,6 @@ msgstr "Aquarelle"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pression"
+
+#~ msgid "None"
+#~ msgstr "Aucun"

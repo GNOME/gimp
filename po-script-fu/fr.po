@@ -3,16 +3,16 @@
 # This file is distributed under the same license as the gimp package.
 #
 # David Monniaux <monniaux@arbouse.ens.fr>, 2000.
-# maintainer: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2003.
+# maintainer: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2004.
 # Raymond Ostertag <r.ostertag@caramail.com>, 2002-2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 2.0pre4\n"
+"Project-Id-Version: gimp-script-fu 2.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
-"PO-Revision-Date: 2004-02-16 00:35+0100\n"
-"Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
+"POT-Creation-Date: 2004-04-24 20:17+0200\n"
+"PO-Revision-Date: 2004-04-24 19:58+0200\n"
+"Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -54,80 +54,80 @@ msgstr ""
 "Le mode d'évaluation du Script-Fu autorise uniquement un appel noninteractif"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1115
-#: plug-ins/script-fu/script-fu-scripts.c:1117
+#: plug-ins/script-fu/script-fu-scripts.c:1111
+#: plug-ins/script-fu/script-fu-scripts.c:1113
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1129
+#: plug-ins/script-fu/script-fu-scripts.c:1125
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu : %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1164
+#: plug-ins/script-fu/script-fu-scripts.c:1160
 msgid "About"
 msgstr "À propos"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1174
+#: plug-ins/script-fu/script-fu-scripts.c:1170
 msgid "Script Arguments"
 msgstr "Paramètres du script"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1202
+#: plug-ins/script-fu/script-fu-scripts.c:1199
 #, c-format
 msgid "%s:"
 msgstr "%s :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1246
+#: plug-ins/script-fu/script-fu-scripts.c:1242
 msgid "Script-Fu Color Selection"
 msgstr "Sélection de la Couleur pour le Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1319
+#: plug-ins/script-fu/script-fu-scripts.c:1315
 msgid "Script-Fu File Selection"
 msgstr "Sélection du fichier (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1323
+#: plug-ins/script-fu/script-fu-scripts.c:1319
 msgid "Script-Fu Folder Selection"
 msgstr "Sélection du répertoire Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1337
+#: plug-ins/script-fu/script-fu-scripts.c:1333
 msgid "Script-Fu Font Selection"
 msgstr "Sélection de la police du Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1344
+#: plug-ins/script-fu/script-fu-scripts.c:1340
 msgid "Script-fu Pattern Selection"
 msgstr "Sélection des motifs (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1350
+#: plug-ins/script-fu/script-fu-scripts.c:1346
 msgid "Script-Fu Gradient Selection"
 msgstr "Sélection des dégradés (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1357
+#: plug-ins/script-fu/script-fu-scripts.c:1353
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection des brosses pour le Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1942
+#: plug-ins/script-fu/script-fu-scripts.c:1931
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Auteur :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1948
+#: plug-ins/script-fu/script-fu-scripts.c:1937
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Copyright :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1954
+#: plug-ins/script-fu/script-fu-scripts.c:1943
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Date :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1962
+#: plug-ins/script-fu/script-fu-scripts.c:1951
 msgid "Image Types:"
 msgstr "Types d'images :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1991
+#: plug-ins/script-fu/script-fu-scripts.c:1973
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -501,7 +501,7 @@ msgstr "Différence de couleur"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Alien Glow/_Flèche..."
+msgstr "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Alien Glow/_Flèche..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -557,7 +557,7 @@ msgstr "Haut"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Alien Glow/_Barre..."
+msgstr "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Alien Glow/_Barre..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -569,7 +569,7 @@ msgstr "Longueur de la barre"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Alien Glow/_Puce..."
+msgstr "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Alien Glow/_Puce..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -588,7 +588,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Alien Glow/_Bouton..."
+msgstr "<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Alien Glow/B_outon..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -729,12 +729,14 @@ msgstr "Couleur du haut à gauche"
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
 msgstr ""
-"<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/_Flèche..."
+"<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Motif à bordures biseautées/"
+"_Flèche..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
 msgstr ""
-"<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/_Puce..."
+"<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Motif à bordures biseautées/"
+"_Puce..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -743,17 +745,20 @@ msgstr "Diamètre"
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
 msgstr ""
-"<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/_Bouton..."
+"<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Motif à bordures biseautées/"
+"B_outon..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
 msgstr ""
-"<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/_Titre..."
+"<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Motif à bordures biseautées/"
+"_Titre..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
 msgstr ""
-"<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/_Barre..."
+"<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Motif à bordures biseautées/"
+"_Barre..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -1397,12 +1402,17 @@ msgid "Shadow Weight (%)"
 msgstr "Épaisseur de l'ombre (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/_Gros titre..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Gimp.Org classique/_Gros titre..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/_Petit titre..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Gimp.Org classique/_Petit "
+"titre..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1444,28 +1454,35 @@ msgstr "Couleur de l'ombre"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
-"<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Titre de _sous-bouton 'tube'..."
+"<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Gimp.Org classique/Titre de "
+"_sous-bouton « tube »..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
-"<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Titre de s_ous-sous-bouton "
-"'tube'..."
+"<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Gimp.Org classique/Titre de "
+"s_ous-sous-bouton « tube »..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr ""
-"<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Éti_quettes 'tube' générales..."
+"<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Gimp.Org classique/_Titre "
+"général « tube »..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr ""
-"<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Titre de _bouton 'tube'..."
+"<Toolbox>/Exts/Script-Fu/Thèmes de page Web/Gimp.Org classique/Titre de "
+"_bouton « tube »..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
