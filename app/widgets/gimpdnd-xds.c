@@ -1,6 +1,15 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
+ * gimpdnd-xds.c
+ * Copyright (C) 2005  Sven Neumann <sven@gimp.org>
+ *
+ * Saving Files via Drag-and-Drop:
+ * The Direct Save Protocol for the X Window System
+ *
+ *   http://www.newplanetsoftware.com/xds/
+ *   http://rox.sourceforge.net/xds.html
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -33,14 +42,6 @@
 #include "gimpdnd-xds.h"
 
 #include "gimp-intl.h"
-
-
-/* Saving Files Via Drag-and-Drop:
- * The Direct Save Protocol for the X Window System
- *
- *   http://www.newplanetsoftware.com/xds/
- *   http://rox.sourceforge.net/xds.html
- */
 
 
 #ifdef DEBUG_DND
