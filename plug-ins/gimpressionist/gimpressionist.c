@@ -331,9 +331,12 @@ static void
 showabout (void)
 {
   static GtkWidget *window = NULL;
-  GtkWidget *tmpw, *tmphbox;
-  GtkWidget *logobox, *tmpframe;
+
+  GtkWidget *vbox;
+  GtkWidget *frame;
+  GtkWidget *logobox;
   GtkWidget *logo;
+  GtkWidget *label;
   GdkPixbuf *pixbuf;
 
   if (window)
@@ -351,8 +354,6 @@ showabout (void)
 
 		     NULL);
 
-  gtk_container_set_border_width (GTK_CONTAINER (window), 6);
-
   g_signal_connect (window, "response",
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
@@ -360,40 +361,36 @@ showabout (void)
                     G_CALLBACK (gtk_widget_destroyed),
                     &window);
 
-  tmphbox = gtk_hbox_new(TRUE, 5);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), tmphbox,
-		     TRUE, TRUE, 0);
-  gtk_widget_show(tmphbox);
+  vbox = gtk_vbox_new (TRUE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start(GTK_BOX (GTK_DIALOG (window)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
-  logobox = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (tmphbox), logobox, FALSE, FALSE, 0);
-  gtk_widget_show(logobox);
+  logobox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), logobox, FALSE, FALSE, 0);
+  gtk_widget_show (logobox);
 
-  tmpframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (tmpframe), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (logobox), tmpframe, TRUE, TRUE, 0);
-  gtk_widget_show(tmpframe);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (logobox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   pixbuf = gdk_pixbuf_new_from_inline (-1, logo_data, FALSE, NULL);
   logo = gtk_image_new_from_pixbuf (pixbuf);
   g_object_unref (pixbuf);
 
-  gtk_container_add (GTK_CONTAINER (tmpframe), logo);
+  gtk_container_add (GTK_CONTAINER (frame), logo);
   gtk_widget_show (logo);
 
-  tmphbox = gtk_hbox_new(FALSE, 5);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), tmphbox,
-		     TRUE, TRUE, 0);
+  label = gtk_label_new ("(C) 1999 Vidar Madsen\n"
+                         "vidar@prosalg.no\n"
+                         "http://www.prosalg.no/~vidar/gimpressionist/\n"
+                         PLUG_IN_VERSION);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
+  gtk_widget_show (label);
 
-  tmpw = gtk_label_new("(C) 1999 Vidar Madsen\n"
-		       "vidar@prosalg.no\n"
-		       "http://www.prosalg.no/~vidar/gimpressionist/\n"
-		       PLUG_IN_VERSION);
-  gtk_box_pack_start(GTK_BOX(tmphbox), tmpw, TRUE, FALSE, 0);
-  gtk_widget_show(tmpw);
-
-  gtk_widget_show(tmphbox);
-  gtk_widget_show(window);
+  gtk_widget_show (window);
 }
 
 static void
@@ -423,7 +420,8 @@ static GtkWidget *
 create_dialog (void)
 {
   GtkWidget *notebook;
-  GtkWidget *box1, *box2, *preview_box;
+  GtkWidget *hbox;
+  GtkWidget *preview_box;
 
   gimp_ui_init ("gimpressionist", TRUE);
 
@@ -444,16 +442,17 @@ create_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  box1 = gtk_hbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), box1);
-  gtk_widget_show (box1);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), hbox);
+  gtk_widget_show (hbox);
 
-  box2 = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (box1), box2, FALSE, FALSE, 0);
-  gtk_widget_show (box2);
+  preview_box = create_preview ();
+  gtk_box_pack_start (GTK_BOX (hbox), preview_box, FALSE, FALSE, 0);
+  gtk_widget_show (preview_box);
 
   notebook = gtk_notebook_new ();
-  gtk_box_pack_start (GTK_BOX (box1), notebook, TRUE, TRUE, 5);
+  gtk_box_pack_start (GTK_BOX (hbox), notebook, TRUE, TRUE, 5);
   gtk_widget_show(notebook);
 
   create_presetpage (GTK_NOTEBOOK (notebook));
@@ -465,9 +464,7 @@ create_dialog (void)
   create_colorpage (GTK_NOTEBOOK (notebook));
   create_generalpage (GTK_NOTEBOOK (notebook));
 
-  preview_box = create_preview ();
-  gtk_box_pack_start (GTK_BOX (box2), preview_box, FALSE, FALSE, 0);
-  gtk_widget_show (preview_box);
+  updatepreview (NULL, 0);
 
   gtk_widget_show (dlg);
 

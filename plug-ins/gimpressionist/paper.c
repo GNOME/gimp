@@ -90,16 +90,17 @@ void create_paperpage(GtkNotebook *notebook)
   GtkWidget *box1, *thispage, *box2;
   GtkWidget *label, *tmpw, *table;
   GtkWidget *view;
+  GtkWidget *frame;
   GtkTreeSelection *selection;
   GtkTreeIter iter;
 
   label = gtk_label_new_with_mnemonic (_("P_aper"));
 
-  thispage = gtk_vbox_new(FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
+  thispage = gtk_vbox_new(FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
   gtk_widget_show(thispage);
 
-  box1 = gtk_hbox_new (FALSE, 0);
+  box1 = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start(GTK_BOX(thispage), box1, TRUE, TRUE, 0);
   gtk_widget_show (box1);
 
@@ -107,25 +108,25 @@ void create_paperpage(GtkNotebook *notebook)
   paperstore = GTK_LIST_STORE(gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
-  box2 = gtk_vbox_new (FALSE, 0);
+  box2 = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start(GTK_BOX(box1), box2, FALSE, FALSE, 0);
   gtk_widget_show (box2);
-  gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
 
-  tmpw = gtk_label_new( _("Paper Preview:"));
-  gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
-  gtk_widget_show (tmpw);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start(GTK_BOX (box2), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   paperprev = tmpw = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
   gtk_preview_size(GTK_PREVIEW (tmpw), 100, 100);
-  gtk_box_pack_start(GTK_BOX (box2), tmpw, FALSE, FALSE, 5);
+  gtk_container_add (GTK_CONTAINER (frame), tmpw);
   gtk_widget_show(tmpw);
 
   paperinvert = tmpw = gtk_check_button_new_with_mnemonic( _("_Invert"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
-  g_signal_connect_swapped (tmpw, "clicked", 
+  g_signal_connect_swapped (tmpw, "clicked",
 			    G_CALLBACK(selectpaper), selection);
   gimp_help_set_help_data (tmpw, _("Inverts the Papers texture"), NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.paperinvert);
@@ -134,24 +135,21 @@ void create_paperpage(GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
-  gimp_help_set_help_data 
+  gimp_help_set_help_data
     (tmpw, _("Applies the paper as it is (without embossing it)"), NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.paperoverlay);
 
-  box1 = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(thispage), box1,FALSE,FALSE,5);
-  gtk_widget_show (box1);
-
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE(table), 4);
-  gtk_box_pack_start(GTK_BOX(box1), table, FALSE, FALSE, 0);
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start(GTK_BOX(thispage), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  paperscaleadjust = 
-    gimp_scale_entry_new (GTK_TABLE(table), 0, 0, 
+  paperscaleadjust =
+    gimp_scale_entry_new (GTK_TABLE(table), 0, 0,
 			  _("Scale:"),
-			  150, -1, pcvals.paperscale, 
-			  3.0, 150.0, 1.0, 10.0, 1, 
+			  150, -1, pcvals.paperscale,
+			  3.0, 150.0, 1.0, 10.0, 1,
 			  TRUE, 0, 0,
 			  _("Specifies the scale of the texture (in percent of original file)"),
 			  NULL);
@@ -159,11 +157,11 @@ void create_paperpage(GtkNotebook *notebook)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.paperscale);
 
-  paperreliefadjust = 
-    gimp_scale_entry_new (GTK_TABLE(table), 0, 1, 
+  paperreliefadjust =
+    gimp_scale_entry_new (GTK_TABLE(table), 0, 1,
 			  _("Relief:"),
-			  150, -1, pcvals.paperrelief, 
-			  0.0, 100.0, 1.0, 10.0, 1, 
+			  150, -1, pcvals.paperrelief,
+			  0.0, 100.0, 1.0, 10.0, 1,
 			  TRUE, 0, 0,
 			  _("Specifies the amount of embossing to apply to the image (in percent)"),
 			  NULL);

@@ -21,8 +21,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-GtkWidget *previewprev = NULL;
-GtkWidget *previewbutton = NULL;
+static GtkWidget *preview       = NULL;
+GtkWidget        *previewbutton = NULL;
+
 
 static void drawalpha(ppm_t *p, ppm_t *a)
 {
@@ -48,7 +49,8 @@ static void drawalpha(ppm_t *p, ppm_t *a)
   }
 }
 
-void updatepreviewprev(GtkWidget *wg, gpointer d)
+void
+updatepreview (GtkWidget *wg, gpointer d)
 {
   gint   i;
   guchar buf[PREVIEWSIZE*3];
@@ -62,7 +64,7 @@ void updatepreviewprev(GtkWidget *wg, gpointer d)
   if(!infile.col && !d) {
     memset(buf, 0, PREVIEWSIZE*3);
     for(i = 0; i < PREVIEWSIZE; i++) {
-      gtk_preview_draw_row (GTK_PREVIEW(previewprev), buf, 0, i, PREVIEWSIZE);
+      gtk_preview_draw_row (GTK_PREVIEW(preview), buf, 0, i, PREVIEWSIZE);
     }
   } else {
     if(!backup.col) {
@@ -90,55 +92,57 @@ void updatepreviewprev(GtkWidget *wg, gpointer d)
       drawalpha(&p, &a);
 
     for(i = 0; i < PREVIEWSIZE; i++) {
-      gtk_preview_draw_row(GTK_PREVIEW(previewprev), 
-			   (guchar*) &p.col[i * PREVIEWSIZE * 3], 0, i, 
+      gtk_preview_draw_row(GTK_PREVIEW(preview),
+			   (guchar*) &p.col[i * PREVIEWSIZE * 3], 0, i,
 			   PREVIEWSIZE);
     }
     killppm(&p);
     if(img_has_alpha)
       killppm(&a);
   }
-  gtk_widget_draw (previewprev, NULL);
+
+  gtk_widget_queue_draw (preview);
 }
 
-GtkWidget* create_preview()
+GtkWidget *
+create_preview (void)
 {
-  GtkWidget *box1, *box2, *tmpw;
+  GtkWidget *hbox;
+  GtkWidget *vbox;
+  GtkWidget *frame;
+  GtkWidget *button;
 
-  box1 = gtk_vbox_new(FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (box1), 5);
+  vbox = gtk_vbox_new (FALSE, 6);
 
-  tmpw = gtk_label_new( _("Preview"));
-  gtk_box_pack_start(GTK_BOX(box1), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start(GTK_BOX (vbox), frame, FALSE, FALSE, 5);
+  gtk_widget_show (frame);
 
-  previewprev = tmpw = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW (tmpw), PREVIEWSIZE, PREVIEWSIZE);
-  gtk_box_pack_start(GTK_BOX (box1), tmpw, FALSE, FALSE, 5);
-  gtk_widget_show(tmpw);
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), PREVIEWSIZE, PREVIEWSIZE);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  gtk_widget_show (preview);
 
-  box2 = gtk_hbox_new(TRUE, 0);
+  hbox = gtk_hbox_new (TRUE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  previewbutton = tmpw = gtk_button_new_with_mnemonic( _("_Update"));
-  g_signal_connect (tmpw, "clicked",
-		    G_CALLBACK (updatepreviewprev), (gpointer) 1);
-  gtk_box_pack_start (GTK_BOX (box2), tmpw, TRUE, TRUE, 0);
-  gtk_widget_show(tmpw);
-  gimp_help_set_help_data (tmpw, 
+  previewbutton = button = gtk_button_new_with_mnemonic( _("_Update"));
+  g_signal_connect (button, "clicked",
+		    G_CALLBACK (updatepreview), (gpointer) 1);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+  gimp_help_set_help_data (button,
 			   _("Refresh the Preview window"), NULL);
 
-  tmpw = gtk_button_new_from_stock (GIMP_STOCK_RESET);
-  g_signal_connect(tmpw, "clicked",
-		   G_CALLBACK (updatepreviewprev), (gpointer) 2);
-  gtk_box_pack_start (GTK_BOX (box2), tmpw, TRUE, TRUE, 0);
-  gtk_widget_show(tmpw);
-  gimp_help_set_help_data (tmpw, 
+  button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (updatepreview), (gpointer) 2);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+  gimp_help_set_help_data (button,
 			   _("Revert to the original image"), NULL);
 
-  gtk_box_pack_start (GTK_BOX (box1), box2, FALSE, FALSE, 0);
-  gtk_widget_show(box2);
-
-  updatepreviewprev(NULL, 0);
-
-  return box1;
+  return vbox;
 }

@@ -397,12 +397,14 @@ create_savepreset (void)
 		    G_CALLBACK (gtk_widget_destroyed),
                     &window);
 
-  box = gtk_vbox_new(FALSE, 5);
+  box = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (box), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (window)->vbox), box);
   gtk_widget_show (box);
 
   label = gtk_label_new( _("Description:"));
-  gtk_box_pack_start(GTK_BOX(box), label, FALSE, FALSE, 0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_box_pack_start(GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   swin = gtk_scrolled_window_new (NULL, NULL);
@@ -615,7 +617,7 @@ static void selectpreset(GtkTreeSelection *selection, gpointer data)
 
 void create_presetpage(GtkNotebook *notebook)
 {
-  GtkWidget *box1, *box2, *hbox, *vbox, *thispage;
+  GtkWidget *vbox, *hbox, *box1, *box2, *thispage;
   GtkWidget *view;
   GtkWidget *tmpw;
   GtkWidget *label;
@@ -623,28 +625,28 @@ void create_presetpage(GtkNotebook *notebook)
 
   label = gtk_label_new_with_mnemonic (_("_Presets"));
 
-  thispage = gtk_vbox_new(FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
-  gtk_widget_show(thispage);
+  thispage = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
+  gtk_widget_show (thispage);
 
-  box1 = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(thispage), box1, FALSE, FALSE, 0);
+  box1 = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start(GTK_BOX (thispage), box1, FALSE, FALSE, 0);
   gtk_widget_show (box1);
 
-  presetnameentry = tmpw = gtk_entry_new();
+  presetnameentry = tmpw = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (box1), tmpw, FALSE, FALSE, 0);
   gtk_widget_set_size_request(tmpw, 150, -1);
   gtk_widget_show(tmpw);
 
   presetsavebutton = tmpw = gtk_button_new_with_label( _("Save current..."));
-  gtk_box_pack_start(GTK_BOX(box1), tmpw, FALSE, FALSE, 5);
+  gtk_box_pack_start(GTK_BOX(box1), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK(create_savepreset), NULL);
   gimp_help_set_help_data
     (tmpw, _("Save the current settings to the specified file"), NULL);
 
-  box1 = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(thispage), box1, TRUE, TRUE, 0);
+  box1 = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start(GTK_BOX (thispage), box1, TRUE, TRUE, 0);
   gtk_widget_show (box1);
 
   presetlist = view = createonecolumnlist (box1, selectpreset);
@@ -652,16 +654,16 @@ void create_presetpage(GtkNotebook *notebook)
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   addfactorydefaults (store);
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(box1), vbox, FALSE, FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (box1), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE,0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  box2 = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(hbox), box2, FALSE, FALSE, 5);
+  box2 = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start(GTK_BOX (hbox), box2, FALSE, FALSE, 0);
   gtk_widget_show (box2);
 
   tmpw = gtk_button_new_from_stock (GTK_STOCK_APPLY);
@@ -683,19 +685,9 @@ void create_presetpage(GtkNotebook *notebook)
   g_signal_connect (tmpw, "clicked", G_CALLBACK(presetsrefresh), NULL);
   gimp_help_set_help_data (tmpw, _("Reread the folder of Presets"), NULL);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE,0);
-  gtk_widget_show (hbox);
-
-  presetdesclabel = tmpw = gtk_label_new( _("(Desc)"));
-  gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
-
-  tmpw = gtk_label_new( _("\nIf you come up with some nice Presets,\n\
-(or Brushes and Papers for that matter)\n\
-feel free to send them to me <vidar@prosalg.no>\n\
-for inclusion into the next release!\n"));
-  gtk_box_pack_start(GTK_BOX(thispage), tmpw, FALSE, FALSE, 0);
+  presetdesclabel = tmpw = gtk_label_new (NULL);
+  gtk_misc_set_alignment (GTK_MISC (tmpw), 0.0, 0.0);
+  gtk_box_pack_start(GTK_BOX (vbox), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);
 
   readdirintolist("Presets", view, NULL);

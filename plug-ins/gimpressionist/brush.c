@@ -383,17 +383,19 @@ create_brushpage(GtkNotebook *notebook)
   GtkWidget *box1, *box2, *box3, *thispage;
   GtkWidget *view;
   GtkWidget *tmpw, *table;
+  GtkWidget *frame;
   GtkWidget *combo;
   GtkWidget *label;
+  GtkSizeGroup     *group;
   GtkTreeSelection *selection;
 
   label = gtk_label_new_with_mnemonic (_("_Brush"));
 
-  thispage = gtk_vbox_new(FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
+  thispage = gtk_vbox_new(FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
   gtk_widget_show(thispage);
 
-  box1 = gtk_hbox_new (FALSE, 0);
+  box1 = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start(GTK_BOX(thispage), box1, TRUE,TRUE,0);
   gtk_widget_show (box1);
 
@@ -402,22 +404,27 @@ create_brushpage(GtkNotebook *notebook)
   brushstore = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
-  box2 = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,0);
+  box2 = gtk_vbox_new (FALSE, 12);
+  gtk_box_pack_start(GTK_BOX(box1), box2, FALSE, FALSE, 0);
   gtk_widget_show (box2);
-  gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
 
-  tmpw = gtk_label_new( _("Brush Preview:"));
-  gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
-  gtk_widget_show (tmpw);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start(GTK_BOX (box2), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   brushprev = tmpw = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-  gtk_preview_size(GTK_PREVIEW (tmpw), 100, 100);
-  gtk_box_pack_start(GTK_BOX (box2), tmpw, FALSE, FALSE, 5);
-  gtk_widget_show(tmpw);
+  gtk_preview_size (GTK_PREVIEW (tmpw), 100, 100);
+  gtk_container_add (GTK_CONTAINER (frame), tmpw);
+  gtk_widget_show (tmpw);
+
+  box3 = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_end (GTK_BOX (box2), box3, FALSE, FALSE,0);
+  gtk_widget_show (box3);
 
   tmpw = gtk_label_new( _("Gamma:"));
-  gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
+  gtk_misc_set_alignment (GTK_MISC (tmpw), 0.0, 0.5);
+  gtk_box_pack_start(GTK_BOX (box3), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
 
   brushgammaadjust = gtk_adjustment_new(pcvals.brushgamma, 0.5, 3.0, 0.1,
@@ -426,7 +433,7 @@ create_brushpage(GtkNotebook *notebook)
   gtk_widget_set_size_request (GTK_WIDGET(tmpw), 100, 30);
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), FALSE);
   gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
-  gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   g_signal_connect_swapped (brushgammaadjust, "value_changed",
 			    G_CALLBACK(updatebrushprev), pcvals.selectedbrush);
@@ -434,28 +441,26 @@ create_brushpage(GtkNotebook *notebook)
   gimp_help_set_help_data
     (tmpw, _("Changes the gamma (brightness) of the selected brush"), NULL);
 
-  box1 = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(thispage), box1,FALSE,FALSE,5);
-  gtk_widget_show (box1);
+  box3 = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start(GTK_BOX (thispage), box3, FALSE, FALSE,0);
+  gtk_widget_show (box3);
 
-  box2 = gtk_vbox_new (TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,0);
-  gtk_widget_show (box2);
+  group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
-  box3 = gtk_hbox_new(FALSE,0);
-  gtk_box_pack_start(GTK_BOX(box2),box3, FALSE, FALSE, 0);
-  gtk_widget_show(box3);
-
-  tmpw = gtk_label_new( _("Select:"));
-  gtk_box_pack_start(GTK_BOX(box3), tmpw,FALSE,FALSE,0);
+  tmpw = gtk_label_new (_("Select:"));
+  gtk_misc_set_alignment (GTK_MISC (tmpw), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
+
+  gtk_size_group_add_widget (group, tmpw);
+  g_object_unref (group);
 
   combo = gimp_drawable_combo_box_new (validdrawable, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), -1,
                               G_CALLBACK (brushdmenuselect),
                               NULL);
 
-  gtk_box_pack_start(GTK_BOX (box3), combo, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (box3), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
   tmpw = gtk_button_new_from_stock (GTK_STOCK_SAVE_AS);
@@ -464,8 +469,9 @@ create_brushpage(GtkNotebook *notebook)
   gtk_widget_show(tmpw);
 
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE(table), 4);
-  gtk_box_pack_start(GTK_BOX(box2), table, FALSE, FALSE, 0);
+  gtk_table_set_col_spacings (GTK_TABLE(table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE(table), 6);
+  gtk_box_pack_start(GTK_BOX (thispage), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   brushaspectadjust =
@@ -476,6 +482,8 @@ create_brushpage(GtkNotebook *notebook)
 			  TRUE, 0, 0,
 			  _("Specifies the aspect ratio of the brush"),
 			  NULL);
+  gtk_size_group_add_widget (group,
+                             GIMP_SCALE_ENTRY_LABEL (brushaspectadjust));
   g_signal_connect (brushaspectadjust, "value_changed",
                     G_CALLBACK (brushaspectadjust_cb), &pcvals.brushaspect);
 
@@ -487,6 +495,8 @@ create_brushpage(GtkNotebook *notebook)
 			  TRUE, 0, 0,
 			  _("Specifies the amount of embossing to apply to the image (in percent)"),
 			  NULL);
+  gtk_size_group_add_widget (group,
+                             GIMP_SCALE_ENTRY_LABEL (brushreliefadjust));
   g_signal_connect (brushreliefadjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.brushrelief);

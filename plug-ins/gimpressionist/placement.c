@@ -30,22 +30,14 @@ void placechange(int num)
 
 void create_placementpage(GtkNotebook *notebook)
 {
-  GtkWidget *vbox, *hbox, *thispage;
+  GtkWidget *vbox;
   GtkWidget *label, *tmpw, *table, *frame;
 
   label = gtk_label_new_with_mnemonic (_("Pl_acement"));
 
-  thispage = gtk_vbox_new(FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
-  gtk_widget_show(thispage);
-
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(thispage), vbox,FALSE,FALSE,0);
-  gtk_widget_show (vbox);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  vbox = gtk_vbox_new(FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_widget_show(vbox);
 
   frame = gimp_int_radio_group_new (TRUE, _("Placement"),
 				    G_CALLBACK (gimp_radio_button_update),
@@ -56,31 +48,27 @@ void create_placementpage(GtkNotebook *notebook)
 
 				    NULL);
 
-  gimp_help_set_help_data 
+  gimp_help_set_help_data
     (placeradio[0], _("Place strokes randomly around the image"), NULL);
-  gimp_help_set_help_data 
+  gimp_help_set_help_data
     (placeradio[1], _("The strokes are evenly distributed across the image"),
      NULL);
-  gtk_box_pack_start(GTK_BOX(hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show(frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  gtk_toggle_button_set_active 
+  gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (placeradio[pcvals.placetype]), TRUE);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
   table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE(table), 4);
-  gtk_box_pack_start(GTK_BOX(hbox), table, FALSE, FALSE, 0);
+  gtk_table_set_col_spacings (GTK_TABLE(table), 6);
+  gtk_box_pack_start(GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  brushdensityadjust = 
-    gimp_scale_entry_new (GTK_TABLE(table), 0, 0, 
+  brushdensityadjust =
+    gimp_scale_entry_new (GTK_TABLE(table), 0, 0,
 			  _("Stroke _density:"),
-			  100, -1, pcvals.brushdensity, 
-			  1.0, 50.0, 1.0, 5.0, 0, 
+			  100, -1, pcvals.brushdensity,
+			  1.0, 50.0, 1.0, 5.0, 0,
 			  TRUE, 0, 0,
 			  _("The relative density of the brush strokes"),
 			  NULL);
@@ -89,11 +77,11 @@ void create_placementpage(GtkNotebook *notebook)
                     &pcvals.brushdensity);
 
   placecenter = tmpw = gtk_check_button_new_with_mnemonic( _("Centerize"));
-  gtk_box_pack_start(GTK_BOX(vbox), tmpw, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX (vbox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  gimp_help_set_help_data 
+  gimp_help_set_help_data
     (tmpw, _("Focus the brush strokes around the center of the image"), NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.placecenter);
-    
-  gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
+
+  gtk_notebook_append_page_menu (notebook, vbox, label, NULL);
 }

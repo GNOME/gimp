@@ -204,7 +204,7 @@ static void updatevectorprev(void)
 
   if(!ok || (val != lastval)) {
     if(!infile.col)
-      updatepreviewprev(NULL, (void *)2); /* Force grabarea() */
+      updatepreview (NULL, (void *)2); /* Force grabarea() */
     copyppm(&infile, &backup);
     ppmbrightness(&backup, val, 1,1,1);
     if((backup.width != OMWIDTH) || (backup.height != OMHEIGHT))

@@ -152,8 +152,8 @@ void create_presetpage(GtkNotebook *);
 void create_placementpage(GtkNotebook *);
 void create_colorpage(GtkNotebook *);
 
-GtkWidget* create_preview();
-void updatepreviewprev(GtkWidget *wg, gpointer d);
+GtkWidget* create_preview (void);
+void       updatepreview  (GtkWidget *wg, gpointer d);
 
 void grabarea(void);
 void storevals(void);

@@ -56,27 +56,24 @@ void create_generalpage(GtkNotebook *notebook)
 
   label = gtk_label_new_with_mnemonic (_("_General"));
 
-  thispage = gtk_vbox_new(FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
+  thispage = gtk_vbox_new(FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
   gtk_widget_show(thispage);
 
-  frame = gtk_frame_new (_("Background:"));
-  gtk_box_pack_start(GTK_BOX(thispage), frame, FALSE, FALSE, 10);
+  frame = gimp_frame_new (_("Background"));
+  gtk_box_pack_start(GTK_BOX(thispage), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  box2 = gtk_hbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER(frame), box2);
-  gtk_widget_show(box2);
+  box3 = gtk_vbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER(frame), box3);
+  gtk_widget_show (box3);
 
-  box3 = gtk_vbox_new(FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(box2), box3, FALSE, FALSE, 10);
-  gtk_widget_show(box3);
-
-  generalbgradio[1] = tmpw = gtk_radio_button_new_with_label(NULL, _("Keep original"));
+  generalbgradio[1] = tmpw = gtk_radio_button_new_with_label(NULL,
+                                                             _("Keep original"));
   gtk_widget_show(tmpw);
-  gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX (box3), tmpw, FALSE, FALSE, 0);
   g_signal_connect(tmpw, "clicked",
-		   G_CALLBACK (generalbgchange), (gpointer) 1);
+		   G_CALLBACK (generalbgchange), GINT_TO_POINTER (1));
   gimp_help_set_help_data
     (tmpw, _("Preserve the original image as a background"), NULL);
 
@@ -84,15 +81,11 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   g_signal_connect(tmpw, "clicked",
-		   G_CALLBACK (generalbgchange), (gpointer) 2);
+		   G_CALLBACK (generalbgchange), GINT_TO_POINTER (2));
   gimp_help_set_help_data
     (tmpw, _("Copy the texture of the selected paper as a background"), NULL);
 
-  box3 = gtk_vbox_new(FALSE,0);
-  gtk_box_pack_start(GTK_BOX(box2), box3,FALSE,FALSE, 10);
-  gtk_widget_show(box3);
-
-  box4 = gtk_hbox_new(FALSE, 0);
+  box4 = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start(GTK_BOX(box3), box4, FALSE, FALSE, 0);
   gtk_widget_show(box4);
 
@@ -100,7 +93,7 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box4), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   g_signal_connect(tmpw, "clicked",
-		   G_CALLBACK (generalbgchange), (gpointer) 0);
+		   G_CALLBACK (generalbgchange), GINT_TO_POINTER (0));
   gimp_help_set_help_data
     (tmpw, _("Solid colored background"), NULL);
 
@@ -114,14 +107,14 @@ void create_generalpage(GtkNotebook *notebook)
   g_signal_connect (generalcolbutton, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &pcvals.color);
-  gtk_box_pack_start(GTK_BOX(box4), generalcolbutton, FALSE, FALSE, 10);
+  gtk_box_pack_start(GTK_BOX(box4), generalcolbutton, FALSE, FALSE, 0);
   gtk_widget_show (generalcolbutton);
 
   generalbgradio[3] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(generalbgradio[0])), _("Transparent"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   g_signal_connect(tmpw, "clicked",
-		   G_CALLBACK (generalbgchange), (gpointer) 3);
+		   G_CALLBACK (generalbgchange), GINT_TO_POINTER (3));
   gimp_help_set_help_data
     (tmpw, _("Use a transparent background; Only the strokes painted will be visible"), NULL);
   if(!img_has_alpha)
@@ -130,11 +123,11 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (generalbgradio[pcvals.generalbgtype]), TRUE);
 
-  box1 = gtk_hbox_new (FALSE, 16);
+  box1 = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start(GTK_BOX(thispage), box1, FALSE, FALSE, 0);
   gtk_widget_show (box1);
 
-  box2 = gtk_vbox_new (FALSE, 0);
+  box2 = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start(GTK_BOX(box1), box2, FALSE, FALSE, 0);
   gtk_widget_show (box2);
 
@@ -164,8 +157,9 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw),
 			       pcvals.generaldropshadow);
 
-  table = gtk_table_new(3, 5, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE(table), 4);
+  table = gtk_table_new (5, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE(table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE(table), 6);
   gtk_box_pack_start(GTK_BOX(box1), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
