@@ -1,3 +1,9 @@
+2004-02-06  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorselect.c: let the color selector widget
+	expand. Removes the ugly empty spaces and improves the color
+	selection experience ;)
+	
 2004-02-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_mask_bounds):

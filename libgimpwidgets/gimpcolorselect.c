@@ -46,11 +46,6 @@
 #include "libgimp/libgimp-intl.h"
 
 
-#define XY_DEF_WIDTH     GIMP_COLOR_SELECTOR_SIZE
-#define XY_DEF_HEIGHT    GIMP_COLOR_SELECTOR_SIZE
-#define Z_DEF_WIDTH      GIMP_COLOR_SELECTOR_BAR_SIZE
-#define Z_DEF_HEIGHT     GIMP_COLOR_SELECTOR_SIZE
-
 #define COLOR_AREA_EVENT_MASK (GDK_EXPOSURE_MASK       | \
                                GDK_BUTTON_PRESS_MASK   | \
                                GDK_BUTTON_RELEASE_MASK | \
@@ -160,11 +155,17 @@ static void   gimp_color_select_drop_color      (GtkWidget          *widget,
                                                  gpointer            data);
 #endif
 
+static void  gimp_color_select_xy_size_allocate (GtkWidget          *widget,
+                                                 GtkAllocation      *allocation,
+                                                 GimpColorSelect    *select);
 static gboolean   gimp_color_select_xy_expose   (GtkWidget          *widget,
                                                  GdkEventExpose     *eevent,
                                                  GimpColorSelect    *select);
 static gboolean   gimp_color_select_xy_events   (GtkWidget          *widget,
                                                  GdkEvent           *event,
+                                                 GimpColorSelect    *select);
+static void   gimp_color_select_z_size_allocate (GtkWidget          *widget,
+                                                 GtkAllocation      *allocation,
                                                  GimpColorSelect    *select);
 static gboolean   gimp_color_select_z_expose    (GtkWidget          *widget,
                                                  GdkEventExpose     *eevent,
@@ -258,7 +259,7 @@ gimp_color_select_class_init (GimpColorSelectClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize      = gimp_color_select_finalize;
+  object_class->finalize = gimp_color_select_finalize;
 
   selector_class->name                  = "GIMP";
   selector_class->help_id               = "gimp-colorselector-gimp";
@@ -272,38 +273,35 @@ gimp_color_select_class_init (GimpColorSelectClass *klass)
 static void
 gimp_color_select_init (GimpColorSelect *select)
 {
-  GtkWidget *main_hbox;
   GtkWidget *hbox;
-  GtkWidget *hbox2;
-  GtkWidget *xy_frame;
-  GtkWidget *z_frame;
+  GtkWidget *frame;
 
   select->z_color_fill  = COLOR_SELECT_HUE;
   select->xy_color_fill = COLOR_SELECT_SATURATION_VALUE;
   select->gc            = NULL;
 
-  main_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (select), main_hbox, TRUE, FALSE, 0);
-  gtk_widget_show (main_hbox);
-
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (main_hbox), hbox, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (select), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
   /*  The x/y component preview  */
-  xy_frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (xy_frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), xy_frame, FALSE, FALSE, 0);
-  gtk_widget_show (xy_frame);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   select->xy_color = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_set_dither (GTK_PREVIEW (select->xy_color), GDK_RGB_DITHER_MAX);
   gtk_preview_size (GTK_PREVIEW (select->xy_color),
-                    XY_DEF_WIDTH, XY_DEF_HEIGHT);
+                    GIMP_COLOR_SELECTOR_SIZE, GIMP_COLOR_SELECTOR_SIZE);
+  gtk_preview_set_expand (GTK_PREVIEW (select->xy_color), TRUE);
   gtk_widget_set_events (select->xy_color, COLOR_AREA_EVENT_MASK);
-  gtk_container_add (GTK_CONTAINER (xy_frame), select->xy_color);
+  gtk_container_add (GTK_CONTAINER (frame), select->xy_color);
   gtk_widget_show (select->xy_color);
 
+  g_signal_connect (select->xy_color, "size_allocate",
+		    G_CALLBACK (gimp_color_select_xy_size_allocate),
+		    select);
   g_signal_connect_after (select->xy_color, "expose_event",
 			  G_CALLBACK (gimp_color_select_xy_expose),
 			  select);
@@ -316,23 +314,24 @@ gimp_color_select_init (GimpColorSelect *select)
                            select);
 #endif
 
-  hbox2 = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (hbox), hbox2, TRUE, FALSE, 0);
-  gtk_widget_show (hbox2);
-
   /*  The z component preview  */
-  z_frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (z_frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox2), z_frame, FALSE, FALSE, 0);
-  gtk_widget_show (z_frame);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   select->z_color = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_set_dither (GTK_PREVIEW (select->z_color), GDK_RGB_DITHER_MAX);
-  gtk_preview_size (GTK_PREVIEW (select->z_color), Z_DEF_WIDTH, Z_DEF_HEIGHT);
+  gtk_preview_size (GTK_PREVIEW (select->z_color),
+                    GIMP_COLOR_SELECTOR_BAR_SIZE, GIMP_COLOR_SELECTOR_SIZE);
+  gtk_preview_set_expand (GTK_PREVIEW (select->z_color), TRUE);
   gtk_widget_set_events (select->z_color, COLOR_AREA_EVENT_MASK);
-  gtk_container_add (GTK_CONTAINER (z_frame), select->z_color);
+  gtk_container_add (GTK_CONTAINER (frame), select->z_color);
   gtk_widget_show (select->z_color);
 
+  g_signal_connect (select->z_color, "size_allocate",
+		    G_CALLBACK (gimp_color_select_z_size_allocate),
+		    select);
   g_signal_connect_after (select->z_color, "expose_event",
 			  G_CALLBACK (gimp_color_select_z_expose),
 			  select);
@@ -341,7 +340,7 @@ gimp_color_select_init (GimpColorSelect *select)
 		    select);
 
   select->toggle_box = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (hbox2), select->toggle_box, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), select->toggle_box, FALSE, FALSE, 0);
   gtk_widget_show (select->toggle_box);
 
   /*  channel toggles  */
@@ -520,9 +519,7 @@ static void
 gimp_color_select_update (GimpColorSelect       *select,
                           ColorSelectUpdateType  update)
 {
-  GimpColorSelector *selector;
-
-  selector = GIMP_COLOR_SELECTOR (select);
+  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (select);
 
   if (update & UPDATE_POS)
     gimp_color_select_update_pos (select);
@@ -551,9 +548,7 @@ gimp_color_select_update (GimpColorSelect       *select,
 static void
 gimp_color_select_update_values (GimpColorSelect *select)
 {
-  GimpColorSelector *selector;
-
-  selector = GIMP_COLOR_SELECTOR (select);
+  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (select);
 
   switch (select->z_color_fill)
     {
@@ -615,9 +610,7 @@ gimp_color_select_update_values (GimpColorSelect *select)
 static void
 gimp_color_select_update_pos (GimpColorSelect *select)
 {
-  GimpColorSelector *selector;
-
-  selector = GIMP_COLOR_SELECTOR (select);
+  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (select);
 
   switch (select->z_color_fill)
     {
@@ -664,9 +657,7 @@ gimp_color_select_drop_color (GtkWidget     *widget,
                               const GimpRGB *color,
                               gpointer       data)
 {
-  GimpColorSelect *select;
-
-  select = GIMP_COLOR_SELECT (data);
+  GimpColorSelect *select = GIMP_COLOR_SELECT (data);
 
   select->rgb = *color;
 
@@ -677,6 +668,14 @@ gimp_color_select_drop_color (GtkWidget     *widget,
                             UPDATE_CALLER);
 }
 #endif
+
+static void
+gimp_color_select_xy_size_allocate (GtkWidget       *widget,
+                                    GtkAllocation   *allocation,
+                                    GimpColorSelect *select)
+{
+  gimp_color_select_update (select, UPDATE_XY_COLOR);
+}
 
 static gboolean
 gimp_color_select_xy_expose (GtkWidget       *widget,
@@ -698,6 +697,7 @@ gimp_color_select_xy_events (GtkWidget       *widget,
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
+  gint            width, height;
   gint            x, y;
 
   switch (event->type)
@@ -736,14 +736,24 @@ gimp_color_select_xy_events (GtkWidget       *widget,
         }
       break;
 
+    case GDK_CONFIGURE:
+      gimp_color_select_update (select, UPDATE_XY_COLOR);
+      break;
+
     default:
       return FALSE;
     }
 
   gimp_color_select_draw_xy_marker (select, NULL);
 
-  select->pos[0] = (x * 255) / (XY_DEF_WIDTH - 1);
-  select->pos[1] = 255 - (y * 255) / (XY_DEF_HEIGHT - 1);
+  width  = select->xy_color->allocation.width;
+  height = select->xy_color->allocation.height;
+
+  if (width > 1 && height > 1)
+    {
+      select->pos[0] = (x * 255) / (width - 1);
+      select->pos[1] = 255 - (y * 255) / (height - 1);
+    }
 
   select->pos[0] = CLAMP (select->pos[0], 0, 255);
   select->pos[1] = CLAMP (select->pos[1], 0, 255);
@@ -752,6 +762,14 @@ gimp_color_select_xy_events (GtkWidget       *widget,
   gimp_color_select_update (select, UPDATE_VALUES | UPDATE_CALLER);
 
   return TRUE;
+}
+
+static void
+gimp_color_select_z_size_allocate (GtkWidget       *widget,
+                                   GtkAllocation   *allocation,
+                                   GimpColorSelect *select)
+{
+  gimp_color_select_update (select, UPDATE_Z_COLOR);
 }
 
 static gboolean
@@ -774,6 +792,7 @@ gimp_color_select_z_events (GtkWidget       *widget,
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
+  gint            height;
   gint            z;
 
   switch (event->type)
@@ -815,7 +834,11 @@ gimp_color_select_z_events (GtkWidget       *widget,
 
   gimp_color_select_draw_z_marker (select, NULL);
 
-  select->pos[2] = 255 - (z * 255) / (Z_DEF_HEIGHT - 1);
+  height = select->z_color->allocation.height;
+
+  if (height > 1)
+    select->pos[2] = 255 - (z * 255) / (height - 1);
+
   select->pos[2] = CLAMP (select->pos[2], 0, 255);
 
   gimp_color_select_draw_z_marker (select, NULL);
@@ -834,13 +857,13 @@ gimp_color_select_image_fill (GtkWidget           *preview,
   ColorSelectFill csf;
   gint            height;
 
-  csf.buffer = g_malloc (preview->requisition.width * 3);
+  csf.buffer = g_malloc (preview->allocation.width * 3);
 
   csf.update = update_procs[fill_type];
 
   csf.y      = -1;
-  csf.width  = preview->requisition.width;
-  csf.height = preview->requisition.height;
+  csf.width  = preview->allocation.width;
+  csf.height = preview->allocation.height;
   csf.hsv    = *hsv;
   csf.rgb    = *rgb;
 
@@ -871,13 +894,16 @@ gimp_color_select_draw_z_marker (GimpColorSelect *select,
   if (! select->gc)
     return;
 
-  y = (Z_DEF_HEIGHT - 1) - ((Z_DEF_HEIGHT - 1) * select->pos[2]) / 255;
-  width  = select->z_color->requisition.width;
-  height = select->z_color->requisition.height;
+  width  = select->z_color->allocation.width;
+  height = select->z_color->allocation.height;
+
+  if (width < 1 || height < 1)
+    return;
+
+  y = (height - 1) - ((height - 1) * select->pos[2]) / 255;
+
   minx = 0;
   miny = 0;
-  if (width <= 0)
-    return;
 
   if (clip)
     {
@@ -908,14 +934,17 @@ gimp_color_select_draw_xy_marker (GimpColorSelect *select,
   if (! select->gc)
     return;
 
-  x = ((XY_DEF_WIDTH - 1) * select->pos[0]) / 255;
-  y = (XY_DEF_HEIGHT - 1) - ((XY_DEF_HEIGHT - 1) * select->pos[1]) / 255;
-  width = select->xy_color->requisition.width;
-  height = select->xy_color->requisition.height;
+  width  = select->xy_color->allocation.width;
+  height = select->xy_color->allocation.height;
+
+  if (width < 1 || height < 1)
+    return;
+
+  x = ((width - 1) * select->pos[0]) / 255;
+  y = (height - 1) - ((height - 1) * select->pos[1]) / 255;
+
   minx = 0;
   miny = 0;
-  if ((width <= 0) || (height <= 0))
-    return;
 
   gdk_gc_set_function (select->gc, GDK_INVERT);
 
