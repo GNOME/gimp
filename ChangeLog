@@ -1,3 +1,10 @@
+2003-11-19  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpwidgetstypes.h: renamed "data" parameter
+	of GimpHelpFunc to "help_data".
+
+	* libgimpwidgets/gimphelpui.c: cleanup. API doc fixes.
+
 2003-11-19  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcontext.c (gimp_context_finalize): don't disconnect

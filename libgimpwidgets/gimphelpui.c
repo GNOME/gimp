@@ -109,9 +109,17 @@ gimp_help_disable_tooltips (void)
   gtk_tooltips_disable (tool_tips);
 }
 
+/**
+ * gimp_standard_help_func:
+ * @help_id:   A unique help identifier.
+ * @help_data: The @help_data passed to gimp_help_connect().
+ *
+ * This is the standard GIMP help function which does nothing but calling
+ * gimp_help(). It is the right function to use in almost all cases.
+ **/
 void
 gimp_standard_help_func (const gchar *help_id,
-                         gpointer     data)
+                         gpointer     help_data)
 {
   if (! _gimp_standard_help_func)
     {
@@ -120,7 +128,7 @@ gimp_standard_help_func (const gchar *help_id,
       return;
     }
 
-  (* _gimp_standard_help_func) (help_id, data);
+  (* _gimp_standard_help_func) (help_id, help_data);
 }
 
 /**
@@ -128,8 +136,8 @@ gimp_standard_help_func (const gchar *help_id,
  * @widget: The widget you want to connect the help accelerator for. Will
  *          be a #GtkWindow in most cases.
  * @help_func: The function which will be called if the user presses "F1".
- * @help_id:   The help_id which will be passed to @help_func.
- * @help_data: The help_data pointer which will be passed to @help_func.
+ * @help_id:   The @help_id which will be passed to @help_func.
+ * @help_data: The @help_data pointer which will be passed to @help_func.
  *
  * Note that this function is automatically called by all libgimp dialog
  * constructors. You only have to call it for windows/dialogs you created
@@ -180,7 +188,7 @@ gimp_help_connect (GtkWidget    *widget,
 
 /**
  * gimp_help_set_help_data:
- * @widget:  The #GtkWidget you want to set a @tooltip and/or @help_data for.
+ * @widget:  The #GtkWidget you want to set a @tooltip and/or @help_id for.
  * @tooltip: The text for this widget's tooltip (or %NULL).
  * @help_id: The @help_id for the #GtkTipsQuery tooltips inspector.
  *
@@ -188,7 +196,7 @@ gimp_help_connect (GtkWidget    *widget,
  * impossible to set a @private_tip (aka @help_id) without a visible
  * @tooltip.
  *
- * This function can be called with %NULL for @tooltip. Use this feature
+ * This function can be called with #NULL for @tooltip. Use this feature
  * if you want to set a help link for a widget which shouldn't have
  * a visible tooltip.
  **/
@@ -242,15 +250,12 @@ gimp_help_get_help_data (GtkWidget  *widget,
 
   for (; widget; widget = widget->parent)
     {
-      if ((tooltips_data = gtk_tooltips_data_get (widget)) &&
-	  tooltips_data->tip_private)
-	{
-	  help_id = tooltips_data->tip_private;
-	}
+      tooltips_data = gtk_tooltips_data_get (widget);
+
+      if (tooltips_data && tooltips_data->tip_private)
+        help_id = tooltips_data->tip_private;
       else
-	{
-	  help_id = g_object_get_data (G_OBJECT (widget), "gimp-help-id");
-	}
+        help_id = g_object_get_data (G_OBJECT (widget), "gimp-help-id");
 
       help_data = g_object_get_data (G_OBJECT (widget), "gimp-help-data");
 
@@ -265,6 +270,12 @@ gimp_help_get_help_data (GtkWidget  *widget,
           return (const gchar *) help_id;
         }
     }
+
+  if (help_widget)
+    *help_widget = NULL;
+
+  if (ret_data)
+    *ret_data = NULL;
 
   return NULL;
 }
@@ -283,15 +294,12 @@ gimp_help_callback (GtkWidget          *widget,
           gchar           *help_id   = NULL;
           gpointer         help_data = NULL;
 
-          if ((tooltips_data = gtk_tooltips_data_get (widget)) &&
-              tooltips_data->tip_private)
-            {
-              help_id = tooltips_data->tip_private;
-            }
+          tooltips_data = gtk_tooltips_data_get (widget);
+
+          if (tooltips_data && tooltips_data->tip_private)
+            help_id = tooltips_data->tip_private;
           else
-            {
-              help_id = g_object_get_data (G_OBJECT (widget), "gimp-help-id");
-            }
+            help_id = g_object_get_data (G_OBJECT (widget), "gimp-help-id");
 
           help_data = g_object_get_data (G_OBJECT (widget), "gimp-help-data");
 

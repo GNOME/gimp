@@ -78,7 +78,7 @@ typedef struct _GimpUnitMenu       GimpUnitMenu;
 
 
 typedef void (* GimpHelpFunc) (const gchar *help_id,
-                               gpointer     data);
+                               gpointer     help_data);
 
 
 G_END_DECLS
