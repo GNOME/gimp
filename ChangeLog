@@ -1,5 +1,12 @@
 2004-11-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_script_proc):
+	don't look at the menu path to determine if the script is
+	image-based. Instead look at the number of parameters we are being
+	called with.
+
+2004-11-27  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpinkoptions-gui.c: made the Size scale logarithmic
 	as suggested in bug #159632.
 

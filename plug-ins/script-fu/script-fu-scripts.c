@@ -745,15 +745,19 @@ script_fu_script_proc (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  /*  Determine whether the script is image based (runs on an image) */
-	  if (strncmp (script->menu_path, "<Image>", 7) == 0)
+	  /*  Determine whether the script is image based (runs on an image).
+           *  When being called from an image, nparams is 3, otherwise it's 1.
+           */
+	  if (nparams == 3 && script->num_args >= 2)
 	    {
 	      script->arg_values[0].sfa_image    = params[1].data.d_image;
 	      script->arg_values[1].sfa_drawable = params[2].data.d_drawable;
 	      script->image_based = TRUE;
 	    }
 	  else
-	    script->image_based = FALSE;
+            {
+              script->image_based = FALSE;
+            }
 
 	  /*  First acquire information with a dialog  */
 	  /*  Skip this part if the script takes no parameters */
@@ -780,76 +784,70 @@ script_fu_script_proc (const gchar      *name,
               s = g_string_new ("(");
               g_string_append (s, script->script_name);
 
-	      if (script->num_args)
+              for (i = 0; i < script->num_args; i++)
                 {
-                  for (i = 0; i < script->num_args; i++)
+                  const GimpParam *param = &params[i + 1];
+
+                  g_string_append_c (s, ' ');
+
+                  switch (script->arg_types[i])
                     {
-                      const GimpParam *param = &params[i + 1];
+                    case SF_IMAGE:
+                    case SF_DRAWABLE:
+                    case SF_LAYER:
+                    case SF_CHANNEL:
+                      g_string_append_printf (s, "%d", param->data.d_int32);
+                      break;
 
-                      g_string_append_c (s, ' ');
+                    case SF_COLOR:
+                      {
+                        guchar r, g, b;
 
-                      switch (script->arg_types[i])
-                        {
-                        case SF_IMAGE:
-                        case SF_DRAWABLE:
-                        case SF_LAYER:
-                        case SF_CHANNEL:
-                          g_string_append_printf (s, "%d", param->data.d_image);
+                        gimp_rgb_get_uchar (&param->data.d_color, &r, &g, &b);
+                        g_string_append_printf (s, "'(%d %d %d)",
+                                                (gint) r, (gint) g, (gint) b);
+                      }
+                      break;
+
+                    case SF_TOGGLE:
+                      g_string_append_printf (s, (param->data.d_int32 ?
+                                                  "TRUE" : "FALSE"));
+                      break;
+
+                    case SF_VALUE:
+                      g_string_append (s, param->data.d_string);
+                      break;
+
+                    case SF_STRING:
+                    case SF_TEXT:
+                    case SF_FILENAME:
+                    case SF_DIRNAME:
+                      escaped = g_strescape (param->data.d_string, NULL);
+                      g_string_append_printf (s, "\"%s\"", escaped);
+                      g_free (escaped);
+                      break;
+
+                    case SF_ADJUSTMENT:
+                      g_ascii_dtostr (buffer, sizeof (buffer),
+                                      param->data.d_float);
+                      g_string_append (s, buffer);
+                      break;
+
+                    case SF_FONT:
+                    case SF_PALETTE:
+                    case SF_PATTERN:
+                    case SF_GRADIENT:
+                    case SF_BRUSH:
+                      g_string_append_printf (s, "\"%s\"",
+                                              param->data.d_string);
+                      break;
+
+                    case SF_OPTION:
+                      g_string_append_printf (s, "%d", param->data.d_int32);
                           break;
 
-                        case SF_COLOR:
-                          {
-                            guchar r, g, b;
-
-                            gimp_rgb_get_uchar (&param->data.d_color,
-                                                &r, &g, &b);
-                            g_string_append_printf (s, "'(%d %d %d)",
-                                                    (gint) r, (gint) g,
-                                                    (gint) b);
-                          }
-                          break;
-
-                        case SF_TOGGLE:
-                          g_string_append_printf (s, (param->data.d_int32 ?
-                                                      "TRUE" : "FALSE"));
-                          break;
-
-                        case SF_VALUE:
-                          g_string_append (s, param->data.d_string);
-                          break;
-
-                        case SF_STRING:
-                        case SF_TEXT:
-                        case SF_FILENAME:
-                        case SF_DIRNAME:
-                          escaped = g_strescape (param->data.d_string, NULL);
-                          g_string_append_printf (s, "\"%s\"", escaped);
-                          g_free (escaped);
-                          break;
-
-                        case SF_ADJUSTMENT:
-                          g_ascii_dtostr (buffer, sizeof (buffer),
-                                          param->data.d_float);
-                          g_string_append (s, buffer);
-                          break;
-
-                        case SF_FONT:
-                        case SF_PALETTE:
-                        case SF_PATTERN:
-                        case SF_GRADIENT:
-                        case SF_BRUSH:
-                          g_string_append_printf (s, "\"%s\"",
-                                                  param->data.d_string);
-                          break;
-
-                        case SF_OPTION:
-                          g_string_append_printf (s, "%d",
-                                                  param->data.d_int32);
-                          break;
-
-                        default:
-                          break;
-                        }
+                    default:
+                      break;
                     }
                 }
 
