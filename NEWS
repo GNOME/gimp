@@ -27,6 +27,8 @@ Overview of Changes in GIMP 2.1.5
 
 - Ported the Bumpmap plug-in preview to GimpDrawablePreview.
 
+- Removed -u linker hacks from all Makefiles.
+
 
 Contributors:
 
