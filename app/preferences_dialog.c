@@ -1020,7 +1020,7 @@ file_prefs_notebook_append_page (GtkNotebook   *notebook,
   *new_node = gtk_ctree_insert_node (ctree, parent, NULL,
 				     titles, 0,
 				     NULL, NULL, NULL, NULL,
-				     FALSE, FALSE);
+				     FALSE, TRUE);
   gtk_ctree_node_set_row_data (ctree,
 			       *new_node, (gpointer) page_index);
   gtk_notebook_append_page (notebook, out_vbox, NULL);
@@ -1187,9 +1187,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   ctree = gtk_ctree_new_with_titles (1, 0, titles);
   gtk_ctree_set_indent (GTK_CTREE (ctree), 15);
   gtk_clist_column_titles_passive (GTK_CLIST (ctree));
-  gtk_widget_set_usize (ctree, 140, 0);
   gtk_box_pack_start (GTK_BOX (hbox), ctree, FALSE, FALSE, 0);
-  gtk_widget_show (ctree);
 
   /* The main preferences notebook */
   frame = gtk_frame_new (NULL);
@@ -2170,6 +2168,10 @@ file_pref_cmd_callback (GtkWidget *widget,
       }
   }
 
+  /* Recalculate the width of the Category tree now */
+  gtk_clist_set_column_width(GTK_CLIST (ctree), 0, 
+     gtk_clist_optimal_column_width(GTK_CLIST (ctree), 0));
+  gtk_widget_show (ctree);
   gtk_widget_show (notebook);
   gtk_widget_show (prefs_dlg);
 }

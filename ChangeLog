@@ -1,3 +1,9 @@
+Thu Oct 14 04:59:11 BST 1999 Nick Lamb <njl195@zepler.org>
+
+	* app/preferences_dialog.c: Recalculate size of ctree in the
+	preferences dialog after adding all the categories.
+	This is the real fix for #2508.
+
 Thu Oct 14 04:08:31 *EST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/Makefile.am
