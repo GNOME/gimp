@@ -35,14 +35,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 /* Replace them with the right ones */
-#define	PLUG_IN_NAME	"plug_in_max_rgb"
-#define SHORT_NAME	"max_rgb"
-#define	MAIN_FUNCTION	max_rgb
-/* you need not change the following names */
-#define INTERFACE	max_rgb_interface
-#define	DIALOG		max_rgb_dialog
-#define VALS		max_rgb_vals
-#define OK_CALLBACK	_max_rgbok_callback
+#define	PLUG_IN_NAME	     "plug_in_max_rgb"
+#define SHORT_NAME	     "max_rgb"
+#define PROGRESS_UPDATE_NUM  100
 
 static void	query	(void);
 static void	run	(gchar  *name,
@@ -50,30 +45,26 @@ static void	run	(gchar  *name,
 			 GParam *param,
 			 gint   *nreturn_vals,
 			 GParam **return_vals);
-static GStatusType MAIN_FUNCTION (gint32 drawable_id);
-static gint	   DIALOG ();
 
-static void        OK_CALLBACK (GtkWidget *widget, gpointer   data);
+static GStatusType main_function (gint32 drawable_id);
 
-/* gtkWrapper functions */ 
-#define PROGRESS_UPDATE_NUM	100
-#define ENTRY_WIDTH	100
-#define SCALE_WIDTH	100
-static void
-gtkW_toggle_update (GtkWidget *widget, gpointer   data);
-static GSList *
-gtkW_vbox_add_radio_button (GtkWidget *vbox,
-			    gchar	*name,
-			    GSList	*group,
-			    GtkSignalFunc	update,
-			    gint	*value);
+static gint	   dialog      (void);
+static void        ok_callback (GtkWidget *widget,
+				gpointer   data);
+
 
 GPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
-  NULL,  /* quit_proc */
+  NULL,  /* quit_proc  */
   query, /* query_proc */
-  run,   /* run_proc */
+  run,   /* run_proc   */
+};
+
+enum
+{
+  MIN_CHANNELS = 0,
+  MAX_CHANNELS = 1
 };
 
 typedef struct
@@ -81,20 +72,21 @@ typedef struct
   gint max_p;  /* gint, gdouble, and so on */
 } ValueType;
 
-static ValueType VALS = 
-{
-  1
-};
-
 typedef struct 
 {
   gint run;
 } Interface;
 
-static Interface INTERFACE = { FALSE };
+static ValueType pvals = 
+{
+  MAX_CHANNELS
+};
 
-gint  hold_max;
-gint  hold_min;
+static Interface interface =
+{
+  FALSE
+};
+
 
 MAIN ()
 
@@ -152,52 +144,50 @@ run (char	*name,
     {
     case RUN_INTERACTIVE:
       INIT_I18N_UI();
-      gimp_get_data (PLUG_IN_NAME, &VALS);
-      hold_max = VALS.max_p;
-      hold_min = VALS.max_p ? 0 : 1;
+      gimp_get_data (PLUG_IN_NAME, &pvals);
       /* Since a channel might be selected, we must check wheter RGB or not. */
       if (!gimp_drawable_is_rgb(drawable_id))
 	{
 	  gimp_message (_("RGB drawable is not selected."));
 	  return;
 	}
-      if (! DIALOG ())
+      if (! dialog ())
 	return;
       break;
     case RUN_NONINTERACTIVE:
       INIT_I18N();
-      /* You must copy the values of parameters to VALS or dialog variables. */
+      /* You must copy the values of parameters to pvals or dialog variables. */
       break;
     case RUN_WITH_LAST_VALS:
       INIT_I18N();
-      gimp_get_data (PLUG_IN_NAME, &VALS);
+      gimp_get_data (PLUG_IN_NAME, &pvals);
       break;
     }
   
-  status = MAIN_FUNCTION (drawable_id);
+  status = main_function (drawable_id);
 
   if (run_mode != RUN_NONINTERACTIVE)
     gimp_displays_flush();
   if (run_mode == RUN_INTERACTIVE && status == STATUS_SUCCESS )
-    gimp_set_data (PLUG_IN_NAME, &VALS, sizeof (ValueType));
+    gimp_set_data (PLUG_IN_NAME, &pvals, sizeof (ValueType));
 
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
 }
 
 static GStatusType
-MAIN_FUNCTION (gint32 drawable_id)
+main_function (gint32 drawable_id)
 {
-  GDrawable	*drawable;
-  GPixelRgn	src_rgn, dest_rgn;
-  guchar	*src, *dest;
-  gpointer	pr;
-  gint		x, y, x1, x2, y1, y2;
-  gint		gap, total, processed = 0;
-  gint		init_value, flag;
+  GDrawable *drawable;
+  GPixelRgn  src_rgn, dest_rgn;
+  guchar    *src, *dest;
+  gpointer   pr;
+  gint       x, y, x1, x2, y1, y2;
+  gint       gap, total, processed = 0;
+  gint       init_value, flag;
 
-  init_value = (VALS.max_p > 0) ? 0 : 255;
-  flag = (0 < VALS.max_p) ? 1 : -1;
+  init_value = (pvals.max_p > 0) ? 0 : 255;
+  flag = (0 < pvals.max_p) ? 1 : -1;
 
   drawable = gimp_drawable_get (drawable_id);
   gap = (gimp_drawable_has_alpha (drawable_id)) ? 1 : 0;
@@ -251,15 +241,13 @@ MAIN_FUNCTION (gint32 drawable_id)
 }
 
 /* dialog stuff */
-static int
-DIALOG ()
+static gint
+dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *vbox;
   GtkWidget *frame;
-  GSList  *group = NULL;
-  gchar	 **argv;
-  gint	   argc;
+  gchar	**argv;
+  gint	  argc;
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -273,7 +261,7 @@ DIALOG ()
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("OK"), OK_CALLBACK,
+			 _("OK"), ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 			 _("Cancel"), gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
@@ -284,74 +272,33 @@ DIALOG ()
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
+  frame = gimp_radio_group_new2 (TRUE, _("Parameter Settings"),
+				 gimp_radio_button_update,
+				 &pvals.max_p, (gpointer) pvals.max_p,
+
+				 _("Hold the Maximal Channels"),
+				 (gpointer) MAX_CHANNELS, NULL,
+				 _("Hold the Minimal Channels"),
+				 (gpointer) MIN_CHANNELS, NULL,
+
+				 NULL);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), frame);
   gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  group =
-    gtkW_vbox_add_radio_button (vbox, _("Hold the Maximal Channels"), group,
-				(GtkSignalFunc) gtkW_toggle_update,
-				&hold_max);
-  group =
-    gtkW_vbox_add_radio_button (vbox, _("Hold the Minimal Channels"), group,
-				(GtkSignalFunc) gtkW_toggle_update,
-				&hold_min);
 
   gtk_widget_show (dlg);
 
   gtk_main ();
   gdk_flush ();
 
-  return INTERFACE.run;
+  return interface.run;
 }
 
-
 static void
-OK_CALLBACK (GtkWidget *widget,
-	      gpointer   data)
+ok_callback (GtkWidget *widget,
+	     gpointer   data)
 {
-  VALS.max_p = hold_max;
-  INTERFACE.run = TRUE;
+  interface.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-/* VFtext interface functions  */
-
-static void
-gtkW_toggle_update (GtkWidget *widget,
-		    gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static GSList *
-gtkW_vbox_add_radio_button (GtkWidget *vbox,
-			    gchar	*name,
-			    GSList	*group,
-			    GtkSignalFunc	update,
-			    gint	*value)
-{
-  GtkWidget *toggle;
-  
-  toggle = gtk_radio_button_new_with_label(group, name);
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) update, value);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
-  gtk_widget_show (toggle);
-  return group;
 }

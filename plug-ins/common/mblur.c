@@ -62,17 +62,17 @@
 #define PLUG_IN_NAME 	"plug_in_mblur"
 #define PLUG_IN_VERSION	"Sep 1997, 1.2"
 
-#define     MBLUR_LINEAR	0
-#define     MBLUR_RADIAL	1
-#define     MBLUR_ZOOM		2
+#define     MBLUR_LINEAR 0
+#define     MBLUR_RADIAL 1
+#define     MBLUR_ZOOM	 2
 
-#define	    MBLUR_MAX		MBLUR_ZOOM
+#define	    MBLUR_MAX    MBLUR_ZOOM
 
 typedef struct
 {
-  gint32	mblur_type;
-  gint32	length;
-  gint32	angle;
+  gint32  mblur_type;
+  gint32  length;
+  gint32  angle;
 } mblur_vals_t;
 
 typedef struct
@@ -108,8 +108,6 @@ static void 	        mblur_radial (void);
 static void 	        mblur_zoom   (void);
 
 static void       dialog_ok_callback   (GtkWidget *, gpointer);
-static void       dialog_scale_update  (GtkAdjustment *, gint32 *);
-static void       dialog_toggle_update (GtkWidget *, gint32);
 
 static gboolean   mblur_dialog         (void);
 
@@ -117,10 +115,10 @@ static gboolean   mblur_dialog         (void);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,   /* init_proc */
-  NULL,   /* quit_proc */
-  query,  /* query_proc */
-  run     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run    /* run_proc   */
 };
 
 static mblur_vals_t mbvals =
@@ -763,12 +761,7 @@ mblur_dialog (void)
   GtkWidget *oframe;
   GtkWidget *iframe;
   GtkWidget *ovbox;
-  GtkWidget *ivbox;
   GtkWidget *table;
-  GtkWidget *button;
-  GtkWidget *label;
-
-  GtkWidget *scale;
   GtkObject *adjustment;
 
   gint 	  argc;
@@ -808,82 +801,39 @@ mblur_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (ovbox), 4);
   gtk_container_add (GTK_CONTAINER (oframe), ovbox);
 
-  iframe = gtk_frame_new (_("Blur Type"));
-  gtk_frame_set_shadow_type (GTK_FRAME (iframe), GTK_SHADOW_ETCHED_IN);
+  iframe =
+    gimp_radio_group_new2 (TRUE, _("Blur Type"),
+			   gimp_radio_button_update,
+			   &mbvals.mblur_type, (gpointer) mbvals.mblur_type,
+
+			   _("Linear"), (gpointer) MBLUR_LINEAR, NULL,
+			   _("Radial"), (gpointer) MBLUR_RADIAL, NULL,
+			   _("Zoom"),   (gpointer) MBLUR_ZOOM, NULL,
+
+			   NULL);
   gtk_box_pack_start (GTK_BOX (ovbox), iframe, FALSE, FALSE, 0);
-
-  ivbox= gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (ivbox), 2);
-  gtk_container_add (GTK_CONTAINER (iframe), ivbox);
-
-  {
-    int    i;
-    gchar *name[3]= { N_("Linear"), N_("Radial"), N_("Zoom")};
-
-    button = NULL;
-    for (i = 0; i < 3; i++)
-      {
-	button= gtk_radio_button_new_with_label
-	  ((button == NULL) ? NULL :
-	   gtk_radio_button_group (GTK_RADIO_BUTTON (button)), 
-	   gettext (name[i]));
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
-				      (mbvals.mblur_type == i));
-
-	gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			    GTK_SIGNAL_FUNC (dialog_toggle_update),
-			    (gpointer) i);
-
-	gtk_box_pack_start (GTK_BOX (ivbox), button, FALSE, FALSE,0);
-	gtk_widget_show (button);
-      }
-  }
-
-  gtk_widget_show (ivbox);
   gtk_widget_show (iframe);
 
-  table = gtk_table_new (2, 2, FALSE);
+  table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (ovbox), table, FALSE, FALSE, 0);
 
-  label = gtk_label_new( _("Length:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
-  gtk_widget_show (label);
-  
-  adjustment = gtk_adjustment_new (mbvals.length, 0.0, 256.0,
-				   1.0, 1.0, 1.0);
+  adjustment = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+				     _("Length:"), 150, 0,
+				     mbvals.length, 0.0, 256.0, 1.0, 8.0, 0,
+				     NULL, NULL);
   gtk_signal_connect (adjustment, "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &(mbvals.length));
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &mbvals.length);
 
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (GTK_WIDGET (scale), 150, -1);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 0, 1);
-  gtk_widget_show (scale);
-
-  label = gtk_label_new (_("Angle:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
-  gtk_widget_show (label);
-
-  adjustment = gtk_adjustment_new (mbvals.angle, 0.0, 360.0,
-				   1.0, 1.0, 1.0);
+  adjustment = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+				     _("Angle:"), 150, 0,
+				     mbvals.angle, 0.0, 360.0, 1.0, 15.0, 0,
+				     NULL, NULL);
   gtk_signal_connect (adjustment, "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &(mbvals.angle));
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (GTK_WIDGET (scale), 150, -1);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 1, 2);
-  gtk_widget_show (scale);
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &mbvals.angle);
 
   gtk_widget_show (table);
 
@@ -905,19 +855,4 @@ dialog_ok_callback (GtkWidget *widget,
   mb_run= TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-dialog_scale_update (GtkAdjustment *adjustment,
-		     gint32        *value)
-{
-  *value= adjustment->value;
-}
-
-static void
-dialog_toggle_update (GtkWidget *widget,
-		      gint32     value)
-{
-   if (GTK_TOGGLE_BUTTON (widget)->active)
-     mbvals.mblur_type= value;
 }

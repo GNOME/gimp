@@ -481,7 +481,7 @@ oilify_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   toggle = gtk_check_button_new_with_label (_("Use Intensity Algorithm"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                       GTK_SIGNAL_FUNC (gimp_toggle_button_update),
                       &ovals.mode);

@@ -341,6 +341,7 @@ sparkle_dialog (void)
   GtkWidget *dlg;
   GtkWidget *main_vbox;
   GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *toggle;
@@ -485,8 +486,12 @@ sparkle_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), sep, FALSE, FALSE, 0);
   gtk_widget_show (sep);
 
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   toggle = gtk_check_button_new_with_label (_("Preserve Luminosity"));
@@ -520,9 +525,13 @@ sparkle_dialog (void)
 			   _("Draw a Border of Spikes around the Image"),
 			   NULL);
 
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 0);
+  sep = gtk_vseparator_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), sep, FALSE, FALSE, 0);
   gtk_widget_show (sep);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   /*  colortype  */
   toggle = gtk_radio_button_new_with_label (group, _("Natural Color"));

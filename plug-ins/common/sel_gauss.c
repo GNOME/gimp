@@ -48,12 +48,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define ENTRY_WIDTH 100
-
 typedef struct
 {
   gdouble radius;
-  gint maxdelta;
+  gint    maxdelta;
 } BlurValues;
 
 typedef struct
@@ -64,46 +62,38 @@ typedef struct
 
 /* Declare local functions.
  */
-static void      query  (void);
-static void      run    (gchar     *name,
-			 gint       nparams,
-			 GParam     *param,
-			 gint      *nreturn_vals,
-			 GParam   **return_vals);
+static void   query  (void);
+static void   run    (gchar     *name,
+		      gint       nparams,
+		      GParam     *param,
+		      gint      *nreturn_vals,
+		      GParam   **return_vals);
 
-static void      sel_gauss        (GDrawable *drawable,
-				   gdouble    radius,
-				   gint       maxdelta);
+static void   sel_gauss (GDrawable *drawable,
+			 gdouble    radius,
+			 gint       maxdelta);
 
-/*
- * Gaussian blur interface
- */
-static gint      sel_gauss_dialog (void);
-
-/*
- * Gaussian blur helper functions
- */
-static void sel_gauss_ok_callback     (GtkWidget *widget, gpointer data);
-static void sel_gauss_entry_callback  (GtkWidget *widget, gpointer data);
-static void sel_gauss_delta_callback  (GtkWidget *widget, gpointer data);
+static gint   sel_gauss_dialog      (void);
+static void   sel_gauss_ok_callback (GtkWidget *widget,
+				     gpointer   data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-	NULL,	/* init_proc */
-	NULL,	/* quit_proc */
-	query,	/* query_proc */
-	run,	/* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static BlurValues bvals =
 {
-	5.0,	/*  radius  */
-	50	/* maxdelta */
+  5.0, /* radius   */
+  50   /* maxdelta */
 };
 
 static BlurInterface bint =
 {
-	FALSE	/* run */
+  FALSE  /* run */
 };
 
 MAIN ()
@@ -178,10 +168,8 @@ run (gchar   *name,
 	status = STATUS_CALLING_ERROR;
       if (status == STATUS_SUCCESS)
 	{
-	  bvals.radius = param[3].data.d_float;
-	  bvals.maxdelta = (param[4].data.d_int32);
-	  if (bvals.maxdelta < 0) bvals.maxdelta = 0;
-	  else if (bvals.maxdelta > 255) bvals.maxdelta = 255;
+	  bvals.radius   = param[3].data.d_float;
+	  bvals.maxdelta = CLAMP (param[4].data.d_int32, 0, 255);
 	}
       if (status == STATUS_SUCCESS && (bvals.radius < 1.0))
 	status = STATUS_CALLING_ERROR;
@@ -238,11 +226,10 @@ static gint
 sel_gauss_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *label;
-  GtkWidget *entry;
   GtkWidget *frame;
   GtkWidget *table;
-  gchar   buffer[12];
+  GtkWidget *spinbutton;
+  GtkObject *adj;
   gchar **argv;
   gint    argc;
 
@@ -282,35 +269,23 @@ sel_gauss_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new (_("Blur Radius:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
-  gtk_widget_show (label);
+  spinbutton = gimp_spin_button_new (&adj,
+				     bvals.radius, 1.0, G_MAXINT, 1.0, 5.0,
+				     0, 1, 2);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Blur Radius:"), 1.0, 0.5,
+			     spinbutton, TRUE);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &bvals.radius);
 
-  entry = gtk_entry_new ();
-  gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 0, 1);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%f", bvals.radius);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) sel_gauss_entry_callback,
-		      NULL);
-  gtk_widget_show (entry);
-
-  label = gtk_label_new (_("Max. Delta:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
-  gtk_widget_show (label);
-
-  entry = gtk_entry_new ();
-  gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 1, 2);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%d", bvals.maxdelta);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) sel_gauss_delta_callback,
-		      NULL);
-  gtk_widget_show (entry);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Max. Delta:"), 128, 0,
+			      bvals.maxdelta, 0, 255, 1, 8, 0,
+			      FALSE, FALSE);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &bvals.maxdelta);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -407,7 +382,7 @@ matrixmult (guchar   *src,
 		dest[dix+b] = sum/fact;
 	    }
 	}
-      if (!(y%5))
+      if (!(y % 5))
 	gimp_progress_update((double)y / (double)height);
     }
 }
@@ -430,12 +405,12 @@ sel_gauss (GDrawable *drawable,
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
-  width = (x2 - x1);
+  width  = (x2 - x1);
   height = (y2 - y1);
-  bytes = drawable->bpp;
+  bytes  = drawable->bpp;
   has_alpha = gimp_drawable_has_alpha(drawable->id);
 
-  if ((width<1)||(height<1)||(bytes<1))
+  if ((width < 1) || (height < 1) || (bytes < 1))
     return;
 
   numrad = (gint)(radius + 1.0);
@@ -452,8 +427,8 @@ sel_gauss (GDrawable *drawable,
 
   gimp_pixel_rgn_get_rect (&src_rgn, src, x1, y1, width, height);
 
-  matrixmult(src, dest, width, height, mat, numrad,
-	     bytes, has_alpha, maxdelta);
+  matrixmult (src, dest, width, height, mat, numrad,
+	      bytes, has_alpha, maxdelta);
 
   gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, width, height,
 		       TRUE, TRUE);
@@ -481,24 +456,4 @@ sel_gauss_ok_callback (GtkWidget *widget,
   bint.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-sel_gauss_entry_callback (GtkWidget *widget,
-			  gpointer   data)
-{
-  bvals.radius = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
-  if (bvals.radius < 1.0)
-    bvals.radius = 1.0;
-}
-
-static void
-sel_gauss_delta_callback (GtkWidget *widget,
-			  gpointer   data)
-{
-  bvals.maxdelta = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-  if (bvals.maxdelta < 0)
-    bvals.maxdelta = 0;
-  if (bvals.maxdelta > 255)
-    bvals.maxdelta = 255;
 }

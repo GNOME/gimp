@@ -90,7 +90,8 @@
 #define BLACK  2
 #define COLOR  3
 
-typedef struct {
+typedef struct
+{
   gdouble amount;
   gint    warp_map;
   gint    iter;
@@ -107,7 +108,8 @@ typedef struct {
   gdouble vector_angle;
 } WarpVals;
 
-typedef struct {
+typedef struct
+{
   GtkWidget *amount;
   GtkWidget *angle;
   GtkWidget *iter;
@@ -140,7 +142,7 @@ static void      blur16           (GDrawable *drawable);
 
 static void      diff             (GDrawable *drawable, 
 				   gint32 *xl_id, 
-				   gint32 *yl_id    );
+				   gint32 *yl_id);
 
 static void      diff_prepare_row (GPixelRgn  *pixel_rgn,
 				   guchar     *data,
@@ -154,26 +156,27 @@ static void      warp_one         (GDrawable *draw,
 				   GDrawable *map_y,
 				   GDrawable *mag_draw,
 				   gint first_time,
-				   gint step            );
+				   gint step);
 
-static void      warp        (GDrawable *drawable,
-				  GDrawable **map_x_p,
-				  GDrawable **map_y_p );
+static void      warp        (GDrawable  *drawable,
+			      GDrawable **map_x_p,
+			      GDrawable **map_y_p);
  
 static gint      warp_dialog (GDrawable *drawable);
 static GTile *   warp_pixel  (GDrawable * drawable,
-				  GTile *     tile,
-				  gint        width,
-				  gint        height,
-				  gint        x1,
-				  gint        y1,
-				  gint        x2,
-				  gint        y2,
-				  gint        x,
-				  gint        y,
-				  gint *      row,
-				  gint *      col,
-				  guchar *    pixel);
+			      GTile *     tile,
+			      gint        width,
+			      gint        height,
+			      gint        x1,
+			      gint        y1,
+			      gint        x2,
+			      gint        y2,
+			      gint        x,
+			      gint        y,
+			      gint *      row,
+			      gint *      col,
+			      guchar *    pixel);
+
 static guchar    bilinear        (gdouble    x,
 				  gdouble    y,
 				  guchar *   v);
@@ -183,31 +186,31 @@ static gint      bilinear16      (gdouble    x,
 				  gint *   v);
 
 static gint      warp_map_constrain    (gint32     image_id,
-					    gint32     drawable_id,
-					    gpointer   data);
+					gint32     drawable_id,
+					gpointer   data);
 static void      warp_map_callback     (gint32     id,
-					    gpointer   data);
+					gpointer   data);
 static void      warp_map_mag_callback (gint32     id,
-					    gpointer   data);
+					gpointer   data);
 static void      warp_map_grad_callback (gint32     id,
-					    gpointer   data);
+					 gpointer   data);
 static void      warp_map_vector_callback (gint32     id,
-					    gpointer   data);
+					   gpointer   data);
 static void      warp_ok_callback      (GtkWidget *widget,
-					    gpointer   data);
+					gpointer   data);
 static void      warp_toggle_update    (GtkWidget *widget,
-					    gpointer   data);
+					gpointer   data);
 static void      warp_entry_callback   (GtkWidget *widget,
-					    gpointer   data);
+					gpointer   data);
 static void      warp_entry_int_callback   (GtkWidget *widget,
 					    gpointer   data);
 static gdouble   warp_map_mag_give_value (guchar *pt, 
 					  gint alpha, 
 					  gint bytes);
 
-/* -------------------------------------------------------------------------------- */
-/*   Variables global over entire plug-in scope                                     */
-/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*   Variables global over entire plug-in scope                               */
+/* -------------------------------------------------------------------------- */
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -253,7 +256,7 @@ static WarpInterface dint =
   FALSE,  /*  run  */
 };
 
-/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
 
 gint         display_diff_map = TRUE;         /* show 16-bit diff. vectormap */
 gint         progress = 0;                     /* progress indicator bar */
@@ -262,7 +265,7 @@ GRunModeType run_mode;                         /* interactive, non-, etc. */
 guchar       color_pixel[4] = {0, 0, 0, 255};  /* current selected foreground color */
 
 
-/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
 
 
 /***** Functions *****/
@@ -270,7 +273,7 @@ guchar       color_pixel[4] = {0, 0, 0, 255};  /* current selected foreground co
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -322,10 +325,10 @@ run (gchar  *name,
   GDrawable *drawable;
   GDrawable *map_x = NULL;   /* satisfy compiler complaints */
   GDrawable *map_y = NULL;
-  gint32 image_ID;              /* image id of drawable */
+  gint32 image_ID;           /* image id of drawable */
 
   GStatusType status = STATUS_SUCCESS;
-  gint pcnt;                            /* parameter counter for scanning input params. */
+  gint pcnt;                 /* parameter counter for scanning input params. */
 
   run_mode = param[0].data.d_int32;
 
@@ -333,9 +336,9 @@ run (gchar  *name,
   tile_height = gimp_tile_height();
 
   /* get currently selected foreground pixel color */
-  gimp_palette_get_foreground (&color_pixel[0], &color_pixel[1], &color_pixel[2]);
-
-
+  gimp_palette_get_foreground (&color_pixel[0],
+			       &color_pixel[1],
+			       &color_pixel[2]);
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -360,24 +363,26 @@ run (gchar  *name,
 
     case RUN_NONINTERACTIVE:
       INIT_I18N();
-      /*  Make sure minimum args (mode, image, draw, amount, warp_map, iter) are there  */
+      /*  Make sure minimum args
+       *  (mode, image, draw, amount, warp_map, iter) are there 
+       */
       if (nparams < MIN_ARGS)
 	status = STATUS_CALLING_ERROR;
       if (status == STATUS_SUCCESS)
 	{
 	  pcnt = MIN_ARGS;                          /* parameter counter */
-	  dvals.amount = param[3].data.d_float;
+	  dvals.amount   = param[3].data.d_float;
 	  dvals.warp_map = param[4].data.d_int32;
-	  dvals.iter = param[5].data.d_int32;
-	  if (nparams > pcnt++) dvals.dither = param[6].data.d_float;
-	  if (nparams > pcnt++) dvals.angle = param[7].data.d_float;
-	  if (nparams > pcnt++) dvals.wrap_type = param[8].data.d_int32;
-	  if (nparams > pcnt++) dvals.mag_map = param[9].data.d_int32;
-	  if (nparams > pcnt++) dvals.mag_use = param[10].data.d_int32;
-	  if (nparams > pcnt++) dvals.substeps = param[11].data.d_int32;
-	  if (nparams > pcnt++) dvals.grad_map = param[12].data.d_int32;
-	  if (nparams > pcnt++) dvals.grad_scale = param[13].data.d_float;
-	  if (nparams > pcnt++) dvals.vector_map = param[14].data.d_int32;
+	  dvals.iter     = param[5].data.d_int32;
+	  if (nparams > pcnt++) dvals.dither       = param[6].data.d_float;
+	  if (nparams > pcnt++) dvals.angle        = param[7].data.d_float;
+	  if (nparams > pcnt++) dvals.wrap_type    = param[8].data.d_int32;
+	  if (nparams > pcnt++) dvals.mag_map      = param[9].data.d_int32;
+	  if (nparams > pcnt++) dvals.mag_use      = param[10].data.d_int32;
+	  if (nparams > pcnt++) dvals.substeps     = param[11].data.d_int32;
+	  if (nparams > pcnt++) dvals.grad_map     = param[12].data.d_int32;
+	  if (nparams > pcnt++) dvals.grad_scale   = param[13].data.d_float;
+	  if (nparams > pcnt++) dvals.vector_map   = param[14].data.d_int32;
 	  if (nparams > pcnt++) dvals.vector_scale = param[15].data.d_float;
 	  if (nparams > pcnt++) dvals.vector_angle = param[16].data.d_float;
 	}
@@ -397,8 +402,8 @@ run (gchar  *name,
       /*  set the tile cache size  */
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
-         /*  run the warp effect  */
-         warp (drawable, &map_x, &map_y);
+      /*  run the warp effect  */
+      warp (drawable, &map_x, &map_y);
 
       /*  Store data  */
       if (run_mode == RUN_INTERACTIVE)
@@ -426,7 +431,7 @@ run (gchar  *name,
   gimp_drawable_detach (map_y);
 
   if (run_mode != RUN_NONINTERACTIVE)
-      gimp_displays_flush ();
+    gimp_displays_flush ();
 }
 
 static int
@@ -614,7 +619,7 @@ warp_dialog (GDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);

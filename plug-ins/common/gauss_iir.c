@@ -23,8 +23,8 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -33,8 +33,8 @@
 typedef struct
 {
   gdouble radius;
-  gint horizontal;
-  gint vertical;
+  gint    horizontal;
+  gint    vertical;
 } BlurValues;
 
 typedef struct
@@ -80,23 +80,21 @@ static void      transfer_pixels  (gdouble * src1,
 
 static void      gauss_ok_callback     (GtkWidget *widget,
 					gpointer   data);
-static void      gauss_toggle_update   (GtkWidget *widget,
-					gpointer   data);
 static void      gauss_entry_callback  (GtkWidget *widget,
 					gpointer   data);
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static BlurValues bvals =
 {
-  5.0,  /*  radius  */
+  5.0,  /*  radius           */
   TRUE, /*  horizontal blur  */
-  TRUE  /*  vertical blur  */
+  TRUE  /*  vertical blur    */
 };
 
 static BlurInterface bint =
@@ -177,9 +175,9 @@ run (gchar   *name,
 	status = STATUS_CALLING_ERROR;
       if (status == STATUS_SUCCESS)
 	{
-	  bvals.radius = param[3].data.d_float;
+	  bvals.radius     = param[3].data.d_float;
 	  bvals.horizontal = (param[4].data.d_int32) ? TRUE : FALSE;
-	  bvals.vertical = (param[5].data.d_int32) ? TRUE : FALSE;
+	  bvals.vertical   = (param[5].data.d_int32) ? TRUE : FALSE;
 	}
       if (status == STATUS_SUCCESS && (bvals.radius < 1.0))
 	status = STATUS_CALLING_ERROR;
@@ -247,12 +245,12 @@ gauss_iir_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *label;
-  GtkWidget *entry;
+  GtkWidget *spinbutton;
+  GtkWidget *adj;
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  gchar   buffer[12];
   gchar **argv;
   gint    argc;
 
@@ -292,7 +290,7 @@ gauss_iir_dialog (void)
   toggle = gtk_check_button_new_with_label (_("Blur Horizontally"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) gauss_toggle_update,
+		      (GtkSignalFunc) gimp_toggle_button_update,
 		      &bvals.horizontal);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
   gtk_widget_show (toggle);
@@ -300,7 +298,7 @@ gauss_iir_dialog (void)
   toggle = gtk_check_button_new_with_label (_("Blur Vertically"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) gauss_toggle_update,
+		      (GtkSignalFunc) gimp_toggle_button_update,
 		      &bvals.vertical);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
   gtk_widget_show (toggle);
@@ -312,15 +310,14 @@ gauss_iir_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  entry = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%f", bvals.radius);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) gauss_entry_callback,
-		      NULL);
-  gtk_widget_show (entry);
+  spinbutton = gimp_spin_button_new (&adj,
+				     bvals.radius, 1.0, G_MAXDOUBLE, 1.0, 5.0,
+				     0, 1, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, TRUE, 0);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &bvals.radius);
+  gtk_widget_show (spinbutton);
 
   gtk_widget_show (hbox);
   gtk_widget_show (vbox);
@@ -427,7 +424,6 @@ gauss_iir (GDrawable *drawable,
       /*  First the vertical pass  */
       for (col = 0; col < width; col++)
 	{
-      
 	  memset(val_p, 0, height * bytes * sizeof (gdouble));
 	  memset(val_m, 0, height * bytes * sizeof (gdouble));
 
@@ -716,21 +712,8 @@ gauss_ok_callback (GtkWidget *widget,
 		   gpointer   data)
 {
   bint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-gauss_toggle_update (GtkWidget *widget,
-		     gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
 }
 
 static void

@@ -54,24 +54,21 @@ static void      run    (gchar    *name,
 			 GParam   *param,
 			 gint     *nreturn_vals,
 			 GParam  **return_vals);
-static void      check  (GDrawable * drawable);
 
-static gint      inblock (int pos, int size);
+static void      check   (GDrawable *drawable);
+static gint      inblock (gint       pos,
+			  gint       size);
 
-static gint      check_dialog        (void);
-static void      check_ok_callback   (GtkWidget     *widget,
-				      gpointer       data);
-static void      check_toggle_update (GtkWidget     *widget,
-				      gpointer       data);
-static void      check_slider_update (GtkAdjustment *adjustment,
-				      gint          *size_val);
+static gint      check_dialog      (void);
+static void      check_ok_callback (GtkWidget *widget,
+				    gpointer   data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static CheckVals cvals =
@@ -165,7 +162,8 @@ run    (gchar    *name,
       break;
     }
 
-  if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->id) ||
+      gimp_drawable_is_gray (drawable->id))
     {
       gimp_progress_init (_("Adding Checkerboard..."));
 
@@ -340,10 +338,8 @@ check_dialog (void)
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *label;
   GtkWidget *toggle;
-  GtkWidget *slider;
+  GtkWidget *table;
   GtkObject *size_data;
   gchar **argv;
   gint    argc;
@@ -377,39 +373,30 @@ check_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   toggle = gtk_check_button_new_with_label (_("Psychobilly"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) check_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &cvals.mode);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cvals.mode);
   gtk_widget_show (toggle);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
-  label = gtk_label_new (_("Check Size:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  size_data = gtk_adjustment_new (cvals.size, 1, 400, 1, 1, 0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (size_data));
-  gtk_widget_set_usize (slider, 300, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), slider, TRUE, TRUE, 0);
-  gtk_scale_set_digits (GTK_SCALE (slider), 0);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
+  size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+				    _("Check Size:"), 200, 0,
+				    cvals.size, 1, 400, 1, 10, 0,
+				    NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (size_data), "value_changed",
-		      (GtkSignalFunc) check_slider_update,
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &cvals.size);
-  gtk_widget_show (slider);
-
-  gtk_widget_show (hbox);
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
@@ -419,27 +406,6 @@ check_dialog (void)
   gdk_flush ();
 
   return cint.run;
-}
-
-static void
-check_slider_update (GtkAdjustment *adjustment,
-		     gint          *size_val)
-{
-  *size_val = adjustment->value;
-}
-
-static void
-check_toggle_update (GtkWidget *widget,
-		     gpointer   data)
-{
-  gint *toggle_val;
-
-  toggle_val = (gint *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
 }
 
 static void

@@ -494,6 +494,9 @@ gimp_color_button_use_fg (gpointer   callback_data,
   gimp_palette_get_foreground (gcb->color, gcb->color+1, gcb->color+2);
 
   gimp_color_button_update (gcb);
+
+  gtk_signal_emit (GTK_OBJECT (gcb),
+		   gimp_color_button_signals[COLOR_CHANGED]);
 }
 
 
@@ -510,6 +513,9 @@ gimp_color_button_use_bg (gpointer   callback_data,
   gimp_palette_get_background (gcb->color, gcb->color+1, gcb->color+2);
 
   gimp_color_button_update (gcb);
+
+  gtk_signal_emit (GTK_OBJECT (gcb),
+		   gimp_color_button_signals[COLOR_CHANGED]);
 }
 
 static gchar* 

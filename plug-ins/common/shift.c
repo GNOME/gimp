@@ -361,8 +361,8 @@ shift_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
-  GtkWidget *vbox;
   GtkWidget *radio_vbox;
+  GtkWidget *sep;
   GtkWidget *table;
   GtkObject *amount_data;
   gchar **argv;
@@ -392,17 +392,8 @@ shift_dialog (void)
 		      NULL);
 
   /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-
-  radio_vbox =
-    gimp_radio_group_new2 (FALSE, NULL,
+  frame = 
+    gimp_radio_group_new2 (TRUE, _("Parameter Settings"),
 			   gimp_radio_button_update,
 			   &shvals.orientation, (gpointer) shvals.orientation,
 
@@ -410,13 +401,19 @@ shift_dialog (void)
 			   _("Shift Vertically"),   (gpointer) VERTICAL, NULL,
 
 			   NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (radio_vbox), 0);
-  gtk_box_pack_start (GTK_BOX (vbox), radio_vbox, FALSE, FALSE, 0);
-  gtk_widget_show (radio_vbox);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+
+  radio_vbox = GTK_BIN (frame)->child;
+  gtk_container_set_border_width (GTK_CONTAINER (radio_vbox), 4);
+
+  sep = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (radio_vbox), sep, FALSE, FALSE, 3);
+  gtk_widget_show (sep);
 
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (radio_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   amount_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -427,7 +424,6 @@ shift_dialog (void)
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &shvals.shift_amount);
 
-  gtk_widget_show (vbox);
   gtk_widget_show (frame);
 
   gtk_widget_show (dlg);

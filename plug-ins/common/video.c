@@ -28,15 +28,17 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #define MAX_PATTERNS 9
 
 #define MAX_PATTERN_SIZE 108
 
-const gint pattern_width[MAX_PATTERNS] = {2,4,1,1,2,3,6,6,5};
-const gint pattern_height[MAX_PATTERNS] = {6,12,3,6,12,3,6,18,15};
-const char *pattern_name[MAX_PATTERNS] = {
+const gint   pattern_width[MAX_PATTERNS] = { 2, 4, 1, 1, 2, 3, 6, 6, 5 };
+const gint   pattern_height[MAX_PATTERNS] = { 6, 12, 3, 6, 12, 3, 6, 18, 15 };
+const gchar *pattern_name[MAX_PATTERNS] =
+{
   N_("Staggered"),
   N_("Large staggered"),
   N_("Striped"),
@@ -51,26 +53,26 @@ const char *pattern_name[MAX_PATTERNS] = {
 const gint pattern[MAX_PATTERNS][MAX_PATTERN_SIZE] =
 {
   {
-    0,1,
-    0,2,
-    1,2,
-    1,0,
-    2,0,
-    2,1,
+    0, 1,
+    0, 2,
+    1, 2,
+    1, 0,
+    2, 0,
+    2, 1,
   },
   {
-    0,0,1,1,
-    0,0,1,1,
-    0,0,2,2,
-    0,0,2,2,
-    1,1,2,2,
-    1,1,2,2,
-    1,1,0,0,
-    1,1,0,0,
-    2,2,0,0,
-    2,2,0,0,
-    2,2,1,1,
-    2,2,1,1,
+    0, 0, 1, 1,
+    0, 0, 1, 1,
+    0, 0, 2, 2,
+    0, 0, 2, 2,
+    1, 1, 2, 2,
+    1, 1, 2, 2,
+    1, 1, 0, 0,
+    1, 1, 0, 0,
+    2, 2, 0, 0,
+    2, 2, 0, 0,
+    2, 2, 1, 1,
+    2, 2, 1, 1,
   },
   {
     0,
@@ -86,74 +88,75 @@ const gint pattern[MAX_PATTERNS][MAX_PATTERN_SIZE] =
     2,
   },
   {
-    0,1,
-    0,1,
-    0,2,
-    0,2,
-    1,2,
-    1,2,
-    1,0,
-    1,0,
-    2,0,
-    2,0,
-    2,1,
-    2,1,
+    0, 1,
+    0, 1,
+    0, 2,
+    0, 2,
+    1, 2,
+    1, 2,
+    1, 0,
+    1, 0,
+    2, 0,
+    2, 0,
+    2, 1,
+    2, 1,
   },
   {
-    0,1,2,
-    2,0,1,
-    1,2,0,
+    0, 1, 2,
+    2, 0, 1,
+    1, 2, 0,
   },
   {
-    0,0,1,1,2,2,
-    0,0,1,1,2,2,
-    2,2,0,0,1,1,
-    2,2,0,0,1,1,
-    1,1,2,2,0,0,
-    1,1,2,2,0,0,
+    0, 0, 1, 1, 2, 2,
+    0, 0, 1, 1, 2, 2,
+    2, 2, 0, 0, 1, 1,
+    2, 2, 0, 0, 1, 1,
+    1, 1, 2, 2, 0, 0,
+    1, 1, 2, 2, 0, 0,
   },
   {
-    2,2,0,0,0,0,
-    2,2,2,0,0,2,
-    2,2,2,2,2,2,
-    2,2,2,1,1,2,
-    2,2,1,1,1,1,
-    1,1,1,1,1,1,
-    0,0,1,1,1,1,
-    0,0,0,1,1,0,
-    0,0,0,0,0,0,
-    0,0,0,2,2,0,
-    0,0,2,2,2,2,
-    2,2,2,2,2,2,
-    1,1,2,2,2,2,
-    1,1,1,2,2,1,
-    1,1,1,1,1,1,
-    1,1,1,0,0,1,
-    1,1,0,0,0,0,
-    0,0,0,0,0,0,
+    2, 2, 0, 0, 0, 0,
+    2, 2, 2, 0, 0, 2,
+    2, 2, 2, 2, 2, 2,
+    2, 2, 2, 1, 1, 2,
+    2, 2, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1,
+    0, 0, 1, 1, 1, 1,
+    0, 0, 0, 1, 1, 0,
+    0, 0, 0, 0, 0, 0,
+    0, 0, 0, 2, 2, 0,
+    0, 0, 2, 2, 2, 2,
+    2, 2, 2, 2, 2, 2,
+    1, 1, 2, 2, 2, 2,
+    1, 1, 1, 2, 2, 1,
+    1, 1, 1, 1, 1, 1,
+    1, 1, 1, 0, 0, 1,
+    1, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0,
   },
   {
-    0,1,2,0,0,
-    1,1,1,2,0,
-    0,1,2,2,2,
-    0,0,1,2,0,
-    0,1,1,1,2,
-    2,0,1,2,2,
-    0,0,0,1,2,
-    2,0,1,1,1,
-    2,2,0,1,2,
-    2,0,0,0,1,
-    1,2,0,1,1,
-    2,2,2,0,1,
-    1,2,0,0,0,
-    1,1,2,0,1,
-    1,2,2,2,0,
+    0, 1, 2, 0, 0,
+    1, 1, 1, 2, 0,
+    0, 1, 2, 2, 2,
+    0, 0, 1, 2, 0,
+    0, 1, 1, 1, 2,
+    2, 0, 1, 2, 2,
+    0, 0, 0, 1, 2,
+    2, 0, 1, 1, 1,
+    2, 2, 0, 1, 2,
+    2, 0, 0, 0, 1,
+    1, 2, 0, 1, 1,
+    2, 2, 2, 0, 1,
+    1, 2, 0, 0, 0,
+    1, 1, 2, 0, 1,
+    1, 2, 2, 2, 0,
   }
 };
 
 
-#define PREVIEW_WIDTH 100
+#define PREVIEW_WIDTH  100
 #define PREVIEW_HEIGHT 100
+
 /* The raw preview image */
 const guchar preview_raw[3 * PREVIEW_WIDTH * PREVIEW_HEIGHT] =
 {
@@ -1738,23 +1741,21 @@ const guchar preview_raw[3 * PREVIEW_WIDTH * PREVIEW_HEIGHT] =
 219,229,238,222,229,238,221,228,237,221,228,237,220,227,236,217,224,233
 };
 
-
-
-typedef struct {
+typedef struct
+{
   gint pattern_number;
   gint additive;
   gint rotated;
 } VideoValues;
 
-typedef struct {
+typedef struct
+{
   gint run;
 } VideoInterface;
 
 
 static GtkWidget *preview = NULL;
-static gint radio_pressed[MAX_PATTERNS];
-static gint in_main_loop = FALSE;
-
+static gint       in_main_loop = FALSE;
 
 static VideoValues vvals =
 {
@@ -1769,52 +1770,49 @@ static VideoInterface vint =
 };
 
 
-
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (char      *name,
-			 int        nparams,
-			 GParam    *param,
-			 int       *nreturn_vals,
-			 GParam   **return_vals);
+static void      run    (gchar   *name,
+			 gint     nparams,
+			 GParam  *param,
+			 gint    *nreturn_vals,
+			 GParam **return_vals);
 
-static void      video            (GDrawable  *drawable);
+static void      video  (GDrawable  *drawable);
 
 
-static gint      video_dialog (void);
-
+static gint      video_dialog          (void);
 static void      video_ok_callback     (GtkWidget *widget,
 					gpointer   data);
-
 static void      video_toggle_update   (GtkWidget *widget,
+					gpointer   data);
+static void      video_radio_update    (GtkWidget *widget,
 					gpointer   data);
 
 static void      video_render_preview  (gint raw);
 
 static void      video_render_row      (const guchar *src_row,
-					guchar *dest_row,
-					gint row,
-					gint rotated,
-					gint additive,
-					gint pattern_number,
-					gint row_width,
-					gint bytes);
-
+					guchar       *dest_row,
+					gint          row,
+					gint          rotated,
+					gint          additive,
+					gint          pattern_number,
+					gint          row_width,
+					gint          bytes);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
-
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -1845,10 +1843,10 @@ query ()
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -1931,18 +1929,15 @@ run (char    *name,
   gimp_drawable_detach (drawable);
 }
 
-
-
-
 static void
 video_render_row (const guchar *src_row,
-		  guchar *dest_row,
-		  gint row,
-		  gint rotated,
-		  gint additive,
-		  gint pattern_number,
-		  gint row_width,
-		  gint bytes)
+		  guchar       *dest_row,
+		  gint          row,
+		  gint          rotated,
+		  gint          additive,
+		  gint          pattern_number,
+		  gint          row_width,
+		  gint          bytes)
 {
   gint col, bytenum;
 
@@ -2022,10 +2017,6 @@ video_render_row (const guchar *src_row,
     }
 }
 
-
-
-
-
 static void
 video (GDrawable *drawable)
 {
@@ -2093,32 +2084,17 @@ video (GDrawable *drawable)
   free (dest_row);
 }
 
-
-
-
 static void
 video_render_preview (gint raw)
 {
   gint x,y;
   guchar preview_row[PREVIEW_WIDTH*3];
 
-
-  /* determine pattern number from radio buttons */
-  vvals.pattern_number=-1;
-  for (y=0;y<MAX_PATTERNS;y++)
-    {
-      if (radio_pressed[y]==TRUE)
-	{
-	  vvals.pattern_number = y;
-	  break;
-	}
-    }
   if (vvals.pattern_number==-1)
     {
       vvals.pattern_number=0;
       return;
     }
-
 
   if (raw)
     {
@@ -2158,10 +2134,8 @@ video_render_preview (gint raw)
   gdk_flush ();
 }
 
-
-
 static gint
-video_dialog ()
+video_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
@@ -2179,11 +2153,6 @@ video_dialog ()
   argc    = 1;
   argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("video");
-
-  for (y = 0; y < MAX_PATTERNS; y++)
-    {
-      radio_pressed[y] = (vvals.pattern_number == y);
-    }
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
@@ -2215,7 +2184,7 @@ video_dialog ()
 		      NULL);
 
   /*  main parameter frame  */
-  frame = gtk_frame_new ( _("Parameter Settings"));
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -2236,7 +2205,7 @@ video_dialog ()
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), PREVIEW_WIDTH, PREVIEW_HEIGHT);
 
-  toggle = gtk_check_button_new_with_label ( _("Additive"));
+  toggle = gtk_check_button_new_with_label (_("Additive"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) video_toggle_update,
@@ -2277,11 +2246,12 @@ video_dialog ()
                                                 gettext(pattern_name[y]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+      gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) y);
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  (GtkSignalFunc) video_toggle_update,
-			  &radio_pressed[y]);
+			  (GtkSignalFunc) video_radio_update,
+			  &vvals.pattern_number);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				    radio_pressed[y]);
+				    vvals.pattern_number == y);
       gtk_widget_show (toggle);
     }
 
@@ -2297,27 +2267,15 @@ video_dialog ()
   in_main_loop = FALSE;
   gdk_flush ();
 
-  vvals.pattern_number = 0;
-  for (y = 0; y < MAX_PATTERNS; y++)
-    {
-      if (radio_pressed[y]==TRUE)
-	{
-	  vvals.pattern_number = y;
-	  break;
-	}
-    }
-
   return vint.run;
 }
-
-
-/*  Video interface functions  */
 
 static void
 video_ok_callback (GtkWidget *widget,
 		   gpointer   data)
 {
   vint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
@@ -2325,14 +2283,18 @@ static void
 video_toggle_update (GtkWidget *widget,
 		     gpointer   data)
 {
-  gint *toggle_val;
+  gimp_toggle_button_update (widget, data);
 
-  toggle_val = (int *) data;
+  if (in_main_loop)
+    video_render_preview (FALSE);
+}
 
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
+static void
+video_radio_update (GtkWidget *widget,
+		    gpointer   data)
+{
+  gimp_radio_button_update (widget, data);
 
-  if (in_main_loop) video_render_preview(FALSE);
+  if (in_main_loop)
+    video_render_preview (FALSE);
 }

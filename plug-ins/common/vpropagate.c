@@ -27,16 +27,18 @@
    In other word, pixel itself is not a neighbor of it.
 */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "config.h"
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 #include <libgimp/gimpmath.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #define	PLUG_IN_NAME	"plug_in_vpropagate"
@@ -69,13 +71,7 @@ static void	    prepare_row                (GPixelRgn     *pixel_rgn,
 						int            y,
 						int            w);
 
-static void         gtkW_gint_update           (GtkWidget     *widget,
-						gpointer       data);
-static void         gtkW_scale_update          (GtkAdjustment *adjustment,
-						double        *data);
 static void         vpropagate_ok_callback     (GtkWidget     *widget,
-						gpointer       data);
-static void         gtkW_toggle_update         (GtkWidget     *widget,
 						gpointer       data);
 static GtkWidget *  gtkW_table_add_toggle      (GtkWidget     *table,
 						gchar	      *name,
@@ -84,31 +80,6 @@ static GtkWidget *  gtkW_table_add_toggle      (GtkWidget     *table,
 						gint	       y,
 						GtkSignalFunc  update,
 						gint	      *value);
-static GSList *     gtkW_vbox_add_radio_button (GtkWidget     *vbox,
-						gchar	      *name,
-						GSList	      *group,
-						GtkSignalFunc  update,
-						gint	      *value);
-static void         gtkW_table_add_gint        (GtkWidget     *table,
-						gchar	      *name,
-						gint	       x,
-						gint	       y, 
-						GtkSignalFunc  update,
-						gint          *value,
-						gchar	      *buffer);
-static void         gtkW_table_add_scale       (GtkWidget     *table,
-						gchar	      *name,
-						gint	       x1,
-						gint	       y,
-						GtkSignalFunc  update,
-						gdouble       *value,
-						gdouble        min,
-						gdouble        max,
-						gdouble        step);
-static GtkWidget *  gtkW_frame_new             (gchar         *name, 
-						GtkWidget     *parent);
-static GtkWidget *  gtkW_hbox_new              (GtkWidget     *parent);
-static GtkWidget *  gtkW_vbox_new              (GtkWidget     *parent);
 
 static int	    value_difference_check  (CH *, CH *, int);
 static void         set_value               (GImageType, int, CH *, CH *, CH *, void *);
@@ -128,17 +99,17 @@ static void	    propagate_transparent   (GImageType, int, CH *, CH *, CH *, void
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,				/* init_proc  */
-  NULL,				/* quit_proc */
-  query,			/* query_proc */
-  run,				/* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
-#define ENTRY_WIDTH	100
-#define UPDATE_STEP	20
-#define SCALE_WIDTH	100
-#define PROPAGATING_VALUE	1<<0
-#define PROPAGATING_ALPHA	1<<1
+#define ENTRY_WIDTH	   100
+#define UPDATE_STEP	    20
+#define SCALE_WIDTH	   100
+#define PROPAGATING_VALUE  1<<0
+#define PROPAGATING_ALPHA  1<<1
 
 /* parameters */
 typedef struct
@@ -168,7 +139,7 @@ static VPValueType vpvals =
 gint	propagate_alpha;
 gint	propagate_value;
 gint	direction_mask_vec[4];
-gint	channel_mask [] = {1, 1, 1};
+gint	channel_mask[] = { 1, 1, 1 };
 gint	peak_max = 1;
 gint	peak_min = 1;
 gint	peak_includes_equals = 1;
@@ -176,33 +147,40 @@ guchar	fore[3];
 
 typedef struct
 {
-  int applicable_image_type;
-  char *name;
-  void (*initializer)();
-  void (*updater)();
-  void (*finalizer)();
-  gint	selected;
+  gint    applicable_image_type;
+  gchar  *name;
+  void  (*initializer) ();
+  void  (*updater) ();
+  void  (*finalizer) ();
 } ModeParam;
 
 #define num_mode 8
 static ModeParam modes[num_mode] = 
 {
-  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, N_("more white (larger value)"),
-    initialize_white,      propagate_white,       set_value,              FALSE},
-  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, N_("more black (smaller value)"),
-    initialize_black,      propagate_black,       set_value,              FALSE},
-  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, N_("middle value to peaks"),
-    initialize_middle,     propagate_middle,      set_middle_to_peak,     FALSE},
-  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, N_("foreground to peaks"),
-    initialize_middle,     propagate_middle,      set_foreground_to_peak, FALSE},
-  { VP_RGB | VP_WITH_ALPHA | VP_WO_ALPHA,           N_("only foreground"),
-    initialize_foreground, propagate_a_color,     set_value,              FALSE},
-  { VP_RGB | VP_WITH_ALPHA | VP_WO_ALPHA,           N_("only background"),
-    initialize_background, propagate_a_color,     set_value,              FALSE},
-  { VP_RGB | VP_GRAY | VP_WITH_ALPHA,               N_("more opaque"),
-    NULL,                  propagate_opaque,      set_value,              FALSE},
-  { VP_RGB | VP_GRAY | VP_WITH_ALPHA,               N_("more transparent"),
-    NULL,                  propagate_transparent, set_value,              FALSE}
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA,
+    N_("More White (Larger Value)"),
+    initialize_white,      propagate_white,       set_value },
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA,
+    N_("More Black (Smaller Value)"),
+    initialize_black,      propagate_black,       set_value },
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA,
+    N_("Middle Value to Peaks"),
+    initialize_middle,     propagate_middle,      set_middle_to_peak },
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA,
+    N_("Foreground to Peaks"),
+    initialize_middle,     propagate_middle,      set_foreground_to_peak },
+  { VP_RGB | VP_WITH_ALPHA | VP_WO_ALPHA,
+    N_("Only Foreground"),
+    initialize_foreground, propagate_a_color,     set_value },
+  { VP_RGB | VP_WITH_ALPHA | VP_WO_ALPHA,
+    N_("Only Background"),
+    initialize_background, propagate_a_color,     set_value },
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA,
+    N_("More Opaque"),
+    NULL,                  propagate_opaque,      set_value },
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA,
+    N_("More Transparent"),
+    NULL,                  propagate_transparent, set_value },
 };
 
 typedef struct 
@@ -211,12 +189,12 @@ typedef struct
 } VPInterface;
 
 static VPInterface vpropagate_interface = { FALSE };
-gint	drawable_id;
+gint	           drawable_id;
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args [] =
   {
@@ -250,11 +228,11 @@ query ()
 }
 
 static void
-run (char       *name,
-     int	 nparams,
-     GParam	*param,
-     int	*nreturn_vals,
-     GParam    **return_vals)
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam	 values[1];
   GStatusType	status = STATUS_SUCCESS;
@@ -275,11 +253,10 @@ run (char       *name,
       INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &vpvals);
       /* building the values of dialog variables from vpvals. */
-      modes[vpvals.propagate_mode].selected = TRUE;
-      propagate_alpha = (vpvals.propagating_channel & PROPAGATING_ALPHA) ?
-	TRUE : FALSE;
-      propagate_value = (vpvals.propagating_channel & PROPAGATING_VALUE) ?
-	TRUE : FALSE;
+      propagate_alpha =
+	(vpvals.propagating_channel & PROPAGATING_ALPHA) ? TRUE : FALSE;
+      propagate_value =
+	(vpvals.propagating_channel & PROPAGATING_VALUE) ? TRUE : FALSE;
       {
 	int	i;
 	for (i = 0; i < 4; i++)
@@ -317,7 +294,7 @@ run (char       *name,
 
 /* registered function entry */
 static GStatusType
-value_propagate (gint	drawable_id)
+value_propagate (gint drawable_id)
 {
   /* check the validness of parameters */
   if (!(vpvals.propagating_channel & (PROPAGATING_VALUE | PROPAGATING_ALPHA)))
@@ -342,7 +319,7 @@ value_propagate (gint	drawable_id)
 }
 
 static void
-value_propagate_body (gint	drawable_id)
+value_propagate_body (gint drawable_id)
 {
   GDrawable	*drawable;
   GImageType	dtype;
@@ -947,11 +924,14 @@ vpropagate_dialog (GImageType image_type)
   GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *table;
+  GtkWidget *toggle_vbox;
+  GtkWidget *button;
   GtkWidget *sep;
+  GtkObject *adj;
+  GSList *group = NULL;
   gchar	**argv;
   gint	  argc;
-
-  static gchar buffer[3][10];
+  gint	  index = 0;
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -974,82 +954,109 @@ vpropagate_dialog (GImageType image_type)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  hbox = gtkW_hbox_new((GTK_DIALOG (dlg)->vbox));
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   /* Propagate Mode */
-  {
-    GtkWidget *frame;
-    GtkWidget *toggle_vbox;
-    GSList *group = NULL;
-    gint	index = 0;
+  frame = gtk_frame_new (_("Propagate Mode"));
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
 
-    frame = gtkW_frame_new ( _("Propagate Mode"), hbox);
-    toggle_vbox = gtkW_vbox_new (frame);
+  toggle_vbox = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
     
-    for (index = 0; index < num_mode ; index++ )
-      group = gtkW_vbox_add_radio_button (toggle_vbox, gettext(modes[index].name), group,
-					  (GtkSignalFunc) gtkW_toggle_update,
-					  &modes[index].selected);
-    gtk_widget_show (toggle_vbox);
-    gtk_widget_show (frame);
-  }
+  for (index = 0; index < num_mode; index++)
+    {
+      button = gtk_radio_button_new_with_label (group,
+						gettext (modes[index].name));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      gtk_box_pack_start (GTK_BOX (toggle_vbox), button, FALSE, FALSE, 0);
+      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) index);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			  GTK_SIGNAL_FUNC (gimp_radio_button_update),
+			  &vpvals.propagate_mode);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				    index == vpvals.propagate_mode);
+      gtk_widget_show (button);
+    }
+
+  gtk_widget_show (toggle_vbox);
+  gtk_widget_show (frame);
 
   /* Parameter settings */
-  frame = gtkW_frame_new ( _("Parameter Settings"), hbox);
-  table = gtk_table_new (9,2, FALSE); /* 4 raw, 2 columns(name and value) */
-  
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+
+  table = gtk_table_new (10, 3, FALSE); /* 4 raw, 2 columns(name and value) */
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  gtkW_table_add_gint (table, _("Lower threshold"), 0, 0,
-		       (GtkSignalFunc) gtkW_gint_update,
-		       &vpvals.lower_limit, buffer[0]);
-  gtkW_table_add_gint (table, _("Upper threshold"), 0, 1,
-		       (GtkSignalFunc) gtkW_gint_update,
-		       &vpvals.upper_limit, buffer[1]);
-  gtkW_table_add_scale (table, _("Propagating Rate"), 0, 2, 
-			(GtkSignalFunc) gtkW_scale_update,
-			&vpvals.propagating_rate, 0.0, 1.0, 0.01);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Lower Threshold:"), SCALE_WIDTH, 0,
+			      vpvals.lower_limit, 0, 255, 1, 8, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &vpvals.lower_limit);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Upper Threshold:"), SCALE_WIDTH, 0,
+			      vpvals.upper_limit, 0, 255, 1, 8, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &vpvals.upper_limit);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			      _("Propagating Rate:"), SCALE_WIDTH, 0,
+			      vpvals.propagating_rate, 0, 1, 0.01, 0.1, 2,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &vpvals.propagating_rate);
 
   sep = gtk_hseparator_new ();
-  gtk_table_attach (GTK_TABLE (table), sep, 0, 2, 3, 4, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), sep, 0, 3, 3, 4, GTK_FILL, 0, 0, 0);
   gtk_widget_show (sep);
 
-  gtkW_table_add_toggle (table, _("to Left"), 0, 1, 4,
-			 (GtkSignalFunc) gtkW_toggle_update,
+  gtkW_table_add_toggle (table, _("To Left"), 0, 1, 5,
+			 (GtkSignalFunc) gimp_toggle_button_update,
 			 &direction_mask_vec[Right2Left]);
-  gtkW_table_add_toggle (table, _("to Right"), 1, 2, 4,
-			 (GtkSignalFunc) gtkW_toggle_update,
+  gtkW_table_add_toggle (table, _("To Right"), 2, 3, 5,
+			 (GtkSignalFunc) gimp_toggle_button_update,
 			 &direction_mask_vec[Left2Right]);
-  gtkW_table_add_toggle (table, _("to Top"), 0, 1, 5,
-			 (GtkSignalFunc) gtkW_toggle_update,
+  gtkW_table_add_toggle (table, _("To Top"), 1, 2, 4,
+			 (GtkSignalFunc) gimp_toggle_button_update,
 			 &direction_mask_vec[Bottom2Top]);
-  gtkW_table_add_toggle (table, _("to Bottom"), 1, 2, 5,
-			 (GtkSignalFunc) gtkW_toggle_update,
+  gtkW_table_add_toggle (table, _("To Bottom"), 1, 2, 6,
+			 (GtkSignalFunc) gimp_toggle_button_update,
 			 &direction_mask_vec[Top2Bottom]);
   if ((image_type == RGBA_IMAGE) | (image_type == GRAYA_IMAGE))
     {
-      GtkWidget *sep;
-
       sep = gtk_hseparator_new ();
-      gtk_table_attach (GTK_TABLE (table), sep, 0, 2, 6, 7, GTK_FILL, 0, 0, 0);
+      gtk_table_attach (GTK_TABLE (table), sep, 0, 3, 7, 8, GTK_FILL, 0, 0, 0);
       gtk_widget_show (sep);
 
       {
 	GtkWidget *toggle;
 	
-	toggle = gtkW_table_add_toggle (table, _("Propagating Alpha Channel"),
-					0, 2, 7,
-					(GtkSignalFunc) gtkW_toggle_update,
-					&propagate_alpha);
+	toggle =
+	  gtkW_table_add_toggle (table, _("Propagating Alpha Channel"),
+				 0, 3, 8,
+				 (GtkSignalFunc) gimp_toggle_button_update,
+				 &propagate_alpha);
 	if (gimp_layer_get_preserve_transparency (drawable_id))
 	  {
 	    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), 0);
 	    gtk_widget_set_sensitive (toggle, FALSE);
 	  }
       }
-      gtkW_table_add_toggle (table, _("Propagating Value Channel"), 0, 2, 8,
-			     (GtkSignalFunc) gtkW_toggle_update,
+      gtkW_table_add_toggle (table, _("Propagating Value Channel"), 0, 3, 9,
+			     (GtkSignalFunc) gimp_toggle_button_update,
 			     &propagate_value);
     }
   gtk_widget_show (table);
@@ -1063,94 +1070,22 @@ vpropagate_dialog (GImageType image_type)
   return vpropagate_interface.run;
 }
 
-/* VFtext interface functions  */
-static void
-gtkW_gint_update (GtkWidget *widget,
-		  gpointer   data)
-{
-  *(gint *)data = (gint)atof (gtk_entry_get_text (GTK_ENTRY (widget)));
-}
-
-static void
-gtkW_scale_update (GtkAdjustment *adjustment,
-		   gdouble	 *scale_val)
-{
-  *scale_val = (gdouble) adjustment->value;
-}
-
 static void
 vpropagate_ok_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  gint index;
+  gint i, result;
 
-  for (index = 0; index < num_mode; index++ )
-    if (modes[index].selected)
-      {
-	vpvals.propagate_mode = index;
-	break;
-      }
-  {
-    gint	i, result;
-    for (i = result = 0; i < 4; i++)
-      result |= (direction_mask_vec[i] ? 1 : 0) << i;
-    vpvals.direction_mask = result;
-  }
-  vpvals.propagating_channel = (propagate_alpha ? PROPAGATING_ALPHA : 0) |
-    (propagate_value ? PROPAGATING_VALUE : 0);
+  for (i = result = 0; i < 4; i++)
+    result |= (direction_mask_vec[i] ? 1 : 0) << i;
+  vpvals.direction_mask = result;
+
+  vpvals.propagating_channel = ((propagate_alpha ? PROPAGATING_ALPHA : 0) |
+				(propagate_value ? PROPAGATING_VALUE : 0));
+
   vpropagate_interface.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-gtkW_toggle_update (GtkWidget *widget,
-		    gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-GtkWidget *
-gtkW_hbox_new (GtkWidget *parent)
-{
-  GtkWidget	*hbox;
-  
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 5);
-  gtk_box_pack_start (GTK_BOX (parent), hbox, FALSE, TRUE, 0);
-  return hbox;
-}
-
-GtkWidget *
-gtkW_vbox_new (GtkWidget *parent)
-{
-  GtkWidget *vbox;
-  
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 10);
-  /* gtk_box_pack_start (GTK_BOX (parent), vbox, TRUE, TRUE, 0); */
-  gtk_container_add (GTK_CONTAINER (parent), vbox);
-  return vbox;
-}
-
-GtkWidget *
-gtkW_frame_new (gchar     *name,
-		GtkWidget *parent)
-{
-  GtkWidget *frame;
-  
-  frame = gtk_frame_new (name);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
-  gtk_box_pack_start (GTK_BOX(parent), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-  return frame;
 }
 
 static GtkWidget *
@@ -1174,92 +1109,3 @@ gtkW_table_add_toggle (GtkWidget     *table,
   gtk_widget_show (toggle);
   return toggle;
 }
-
-static GSList *
-gtkW_vbox_add_radio_button (GtkWidget     *vbox,
-			    gchar         *name,
-			    GSList	  *group,
-			    GtkSignalFunc  update,
-			    gint          *value)
-{
-  GtkWidget *toggle;
-  
-  toggle = gtk_radio_button_new_with_label(group, name);
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) update, value);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
-  gtk_widget_show (toggle);
-  return group;
-}
-
-static void
-gtkW_table_add_gint (GtkWidget	   *table,
-		     gchar         *name,
-		     gint	    x,
-		     gint	    y, 
-		     GtkSignalFunc  update,
-		     gint	   *value,
-		     gchar	   *buffer)
-{
-  GtkWidget *label, *entry;
-  
-  label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE(table), label, x, x+1, y, y+1,
-		    GTK_FILL|GTK_EXPAND, GTK_FILL, 5, 0);
-  gtk_widget_show(label);
-
-  entry = gtk_entry_new();
-  gtk_table_attach (GTK_TABLE(table), entry, x+1, x+2, y, y+1,
-		    GTK_FILL|GTK_EXPAND, GTK_FILL, 10, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%d", *(gint *)value);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) update, value);
-  gtk_widget_show(entry);
-}
-
-static void
-gtkW_table_add_scale (GtkWidget	    *table,
-		      gchar         *name,
-		      gint	     x,
-		      gint	     y,
-		      GtkSignalFunc  update,
-		      gdouble       *value,
-		      gdouble        min,
-		      gdouble        max,
-		      gdouble        step)
-{
-  GtkObject *scale_data;
-  GtkWidget *label, *scale;
-  
-  label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE(table), label, x, x+1, y, y+1,
-		    GTK_FILL|GTK_EXPAND, GTK_FILL, 5, 0);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (*value, min, max, step, step, 0.0);
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, x+1, x+2, y, y+1, 
-		    GTK_FILL|GTK_EXPAND, GTK_FILL, 10, 5);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) update, value);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-}
-
-/* end of vpropagate.c */
-
-
-
-
-

@@ -378,6 +378,7 @@ lens_dialog (GDrawable *drawable)
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *vbox;
+  GtkWidget *sep;
   GtkWidget *hbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
@@ -460,6 +461,10 @@ lens_dialog (GDrawable *drawable)
 				    lvals.set_transparent);
       gtk_widget_show (toggle);
   }
+
+  sep = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 2);
+  gtk_widget_show (sep);
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);

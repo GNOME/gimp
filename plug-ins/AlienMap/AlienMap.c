@@ -99,42 +99,32 @@ static void      build_preview_source_image( void);
 
 static gint      alienmap_dialog        (void);
 static void      dialog_update_preview  (void);
-static void      dialog_create_value    (char *title, GtkTable *table, int row,
-					 gdouble *value,
-					 int left, int right, const char *desc);
 static void      dialog_scale_update    (GtkAdjustment *adjustment,
 					 gdouble       *value);
-static void      dialog_entry_update    (GtkWidget *widget, gdouble *value);
 static void      dialog_ok_callback     (GtkWidget *widget, gpointer data);
 static void      alienmap_toggle_update (GtkWidget *widget,
 					 gpointer   data);
 static void      alienmap_logo_dialog   (void);
 
-
-
-					    
-					    
 /***** Variables *****/
 
-GtkWidget *maindlg;
-GtkWidget *logodlg;
-GtkTooltips *tips;
-GdkColor tips_fg,tips_bg;	
+GtkWidget   *maindlg;
+GtkWidget   *logodlg;
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static alienmap_interface_t wint =
 {
   NULL,  /* preview */
-  NULL,  /* image */
-  NULL,  /* wimage */
-  FALSE  /* run */
+  NULL,  /* image   */
+  NULL,  /* wimage  */
+  FALSE  /* run     */
 };
 
 static alienmap_vals_t wvals =
@@ -148,28 +138,16 @@ static alienmap_vals_t wvals =
 };
 
 static GDrawable *drawable;
-static gint   tile_width, tile_height;
-static gint   img_width, img_height, img_bpp;
-static gint   sel_x1, sel_y1, sel_x2, sel_y2;
-static gint   sel_width, sel_height;
-static gint   preview_width, preview_height;
-static GTile *the_tile = NULL;
-static double cen_x, cen_y;
-static double scale_x, scale_y;
+static gint       tile_width, tile_height;
+static gint       img_width, img_height, img_bpp;
+static gint       sel_x1, sel_y1, sel_x2, sel_y2;
+static gint       sel_width, sel_height;
+static gint       preview_width, preview_height;
+static GTile     *the_tile = NULL;
+static gdouble    cen_x, cen_y;
+static gdouble    scale_x, scale_y;
 
-gint do_redsinus;
-gint do_redcosinus;
-gint do_rednone;
-
-gint do_greensinus;
-gint do_greencosinus;
-gint do_greennone;
-
-gint do_bluesinus;
-gint do_bluecosinus;
-gint do_bluenone;
 /***** Functions *****/
-
 
 MAIN ()
 
@@ -342,17 +320,17 @@ run (char    *name,
   /* Calculate preview size */
   if (sel_width > sel_height)
     {
-      pwidth  = MIN(sel_width, PREVIEW_SIZE);
+      pwidth  = MIN (sel_width, PREVIEW_SIZE);
       pheight = sel_height * pwidth / sel_width;
     }
   else
     {
-      pheight = MIN(sel_height, PREVIEW_SIZE);
+      pheight = MIN (sel_height, PREVIEW_SIZE);
       pwidth  = sel_width * pheight / sel_height;
     }
 
-  preview_width  = MAX(pwidth, 2);  /* Min size is 2 */
-  preview_height = MAX(pheight, 2);
+  preview_width  = MAX (pwidth, 2);  /* Min size is 2 */
+  preview_height = MAX (pheight, 2);
 
   /* See how we will run */
   switch (run_mode)
@@ -374,19 +352,19 @@ run (char    *name,
 
       if (status == STATUS_SUCCESS)
 	{
-	  wvals.redstretch = param[3].data.d_int8;
+	  wvals.redstretch   = param[3].data.d_int8;
 	  wvals.greenstretch = param[4].data.d_int8;
-	  wvals.bluestretch = param[5].data.d_int8;
-	  wvals.redmode = param[6].data.d_int8;
-	  wvals.greenmode = param[7].data.d_int8;
-	  wvals.bluemode = param[8].data.d_int8;
+	  wvals.bluestretch  = param[5].data.d_int8;
+	  wvals.redmode      = param[6].data.d_int8;
+	  wvals.greenmode    = param[7].data.d_int8;
+	  wvals.bluemode     = param[8].data.d_int8;
 	}
 
       break;
 
     case RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
-      gimp_get_data("plug_in_alienmap", &wvals);
+      gimp_get_data ("plug_in_alienmap", &wvals);
       break;
 
     default:
@@ -619,25 +597,14 @@ alienmap_dialog (void)
   GtkWidget *dialog;
   GtkWidget *top_table;
   GtkWidget *frame;
-  GtkWidget *toggle;
-  GtkWidget *toggle_vbox;
+  GtkWidget *toggle1;
+  GtkWidget *toggle2;
+  GtkWidget *toggle3;
   GtkWidget *table;
+  GtkObject *adj;
   gint     argc;
   gchar  **argv;
   guchar  *color_cube;
-  GSList  *redmode_group = NULL;
-  GSList  *greenmode_group = NULL;
-  GSList  *bluemode_group = NULL;
-
-  do_redsinus     = (wvals.redmode == SINUS);
-  do_redcosinus   = (wvals.redmode == COSINUS);
-  do_rednone      = (wvals.redmode == NONE);
-  do_greensinus   = (wvals.greenmode == SINUS);
-  do_greencosinus = (wvals.greenmode == COSINUS);
-  do_greennone    = (wvals.greenmode == NONE);
-  do_bluesinus    = (wvals.bluemode == SINUS);
-  do_bluecosinus  = (wvals.bluemode == COSINUS);
-  do_bluenone     = (wvals.bluemode == NONE);
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -705,155 +672,98 @@ alienmap_dialog (void)
 		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
   gtk_widget_show (table);
 
-  dialog_create_value("R", GTK_TABLE (table), 0, &wvals.redstretch,
-		      0, 128.0,
-		      _("Change intensity of the red channel"));
-  dialog_create_value ("G", GTK_TABLE (table), 1, &wvals.greenstretch,
-		       0, 128.0,
-		       _("Change intensity of the green channel"));
-  dialog_create_value ("B", GTK_TABLE (table), 2, &wvals.bluestretch,
-		       0, 128.0,
-		       _("Change intensity of the blue channel"));
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Red:"), SCALE_WIDTH, 0,
+			      wvals.redstretch, 0, 128, 1, 8, 2,
+			      _("Change intensity of the red channel"), NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &wvals.redstretch);
+			      
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Green:"), SCALE_WIDTH, 0,
+			      wvals.greenstretch, 0, 128, 1, 8, 2,
+			      _("Change intensity of the green channel"), NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &wvals.greenstretch);
+			      
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			      _("Blue:"), SCALE_WIDTH, 0,
+			      wvals.bluestretch, 0, 128, 1, 8, 2,
+			      _("Change intensity of the blue channel"), NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &wvals.bluestretch);
 
   /*  Redmode toggle box  */
-  frame = gtk_frame_new (_("Red"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
-  toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
+  frame = gimp_radio_group_new2 (TRUE, _("Red"),
+				 alienmap_toggle_update,
+				 &wvals.redmode, (gpointer) wvals.redmode,
 
-  toggle = gtk_radio_button_new_with_label (redmode_group, _("Sine"));
-  redmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (alienmap_toggle_update),
-		      &do_redsinus);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_redsinus);
-  gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle,
-			   _("Use sine-function for red component"), NULL);
+				 _("Sine"),   (gpointer) SINUS, &toggle1,
+				 _("Cosine"), (gpointer) COSINUS, &toggle2,
+				 _("None"),   (gpointer) NONE, &toggle3,
 
-  toggle = gtk_radio_button_new_with_label (redmode_group, _("Cosine"));
-  redmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (alienmap_toggle_update),
-		      &do_redcosinus);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_redcosinus);
-  gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle,
-			   _("Use cosine-function for red component"), NULL);
+				 NULL);
 
-  toggle = gtk_radio_button_new_with_label (redmode_group, _("None"));
-  redmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (alienmap_toggle_update),
-		      &do_rednone);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_rednone);
-  gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle,
+  gimp_help_set_help_data (toggle1,
+			   _("Use sine-function for red component."), NULL);
+  gimp_help_set_help_data (toggle2,
+			   _("Use cosine-function for red component."), NULL);
+  gimp_help_set_help_data (toggle3,
 			   _("Red channel: use linear mapping instead "
 			     "of any trigonometrical function"), NULL);
 
-  gtk_widget_show (toggle_vbox);
+  gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1,
+		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
   gtk_widget_show (frame);
 
   /*  Greenmode toggle box  */
-  frame = gtk_frame_new (_("Green"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  frame = gimp_radio_group_new2 (TRUE, _("Green"),
+				 alienmap_toggle_update,
+				 &wvals.greenmode, (gpointer) wvals.greenmode,
+
+				 _("Sine"),   (gpointer) SINUS, &toggle1,
+				 _("Cosine"), (gpointer) COSINUS, &toggle2,
+				 _("None"),   (gpointer) NONE, &toggle3,
+
+				 NULL);
+
+  gimp_help_set_help_data (toggle1,
+			   _("Use sine-function for green component."), NULL);
+  gimp_help_set_help_data (toggle2,
+			   _("Use cosine-function for green component."), NULL);
+  gimp_help_set_help_data (toggle3,
+			   _("Green channel: use linear mapping instead "
+			     "of any trigonometrical function"), NULL);
+
   gtk_table_attach (GTK_TABLE (top_table), frame, 2, 3, 0, 1,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
-  toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-
-  toggle = gtk_radio_button_new_with_label (greenmode_group, _("Sine"));
-  greenmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (alienmap_toggle_update),
-		      &do_greensinus);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_greensinus);
-  gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle,
-			   _("Use sine-function for green component"), NULL);
-
-  toggle = gtk_radio_button_new_with_label (greenmode_group, _("Cosine"));
-  greenmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (alienmap_toggle_update),
-		      &do_greencosinus);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_greencosinus);
-  gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle,
-			   _("Use cosine-function for green component"), NULL);
-
-  toggle = gtk_radio_button_new_with_label (greenmode_group, _("None"));
-  greenmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (alienmap_toggle_update),
-		      &do_greennone);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_greennone);
-  gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle,
-			   _("Green channel: use linear mapping instead of "
-			     "any trigonometrical function"), NULL);
-
-  gtk_widget_show (toggle_vbox);
   gtk_widget_show (frame);
 
   /*  Bluemode toggle box  */
-  frame = gtk_frame_new (_("Blue:"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  frame = gimp_radio_group_new2 (TRUE, _("Blue"),
+				 alienmap_toggle_update,
+				 &wvals.bluemode, (gpointer) wvals.bluemode,
+
+				 _("Sine"),   (gpointer) SINUS, &toggle1,
+				 _("Cosine"), (gpointer) COSINUS, &toggle2,
+				 _("None"),   (gpointer) NONE, &toggle3,
+
+				 NULL);
+
+  gimp_help_set_help_data (toggle1,
+			   _("Use sine-function for blue component."), NULL);
+  gimp_help_set_help_data (toggle2,
+			   _("Use cosine-function for blue component."), NULL);
+  gimp_help_set_help_data (toggle3,
+			   _("Blue channel: use linear mapping instead "
+			     "of any trigonometrical function"), NULL);
+
   gtk_table_attach (GTK_TABLE (top_table), frame, 3, 4, 0, 1,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
-  toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-
-  toggle = gtk_radio_button_new_with_label (bluemode_group, _("Sine"));
-  bluemode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (alienmap_toggle_update),
-		      &do_bluesinus);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_bluesinus);
-  gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle,
-			   _("Use sine-function for blue component"), NULL);
-
-  toggle = gtk_radio_button_new_with_label (bluemode_group, _("Cosine"));
-  bluemode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (alienmap_toggle_update),
-		      &do_bluecosinus);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_bluecosinus);
-  gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle,
-			   _("Use cosine-function for blue component"), NULL);
-
-  toggle = gtk_radio_button_new_with_label (bluemode_group, _("None"));
-  bluemode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (alienmap_toggle_update),
-		      &do_bluenone);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_bluenone);
-  gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle,
-			   _("Blue channel: use linear mapping instead of "
-			     "any trigonometrical function"), NULL);
-
-  gtk_widget_show (toggle_vbox);
   gtk_widget_show (frame);
-
-        /* Done */
 
   gtk_widget_show (dialog);
   dialog_update_preview ();
@@ -936,106 +846,12 @@ dialog_update_preview (void)
 }
 
 static void
-dialog_create_value (gchar       *title,
-		     GtkTable    *table,
-		     gint         row,
-		     gdouble     *value,
-		     gint         left,
-		     gint         right,
-		     const gchar *desc)
-{
-  GtkWidget *label;
-  GtkWidget *scale;
-  GtkWidget *entry;
-  GtkObject *scale_data;
-  gchar      buf[256];
-
-  label = gtk_label_new (title);
-  gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach (table, label, 0, 1, row, row + 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show(label);
-
-  scale_data = gtk_adjustment_new(*value, left, right,
-				  (right - left) / 128,
-				  (right - left) / 128,
-				  0);
-
-  gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-		     (GtkSignalFunc) dialog_scale_update,
-		     value);
-
-  scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-  gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-  gtk_table_attach (table, scale, 1, 2, row, row + 1,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
-  gtk_scale_set_digits(GTK_SCALE(scale), 3);
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show(scale);
-  gimp_help_set_help_data (scale, desc, NULL);
-
-  entry = gtk_entry_new();
-  gtk_object_set_user_data(GTK_OBJECT(entry), scale_data);
-  gtk_object_set_user_data(scale_data, entry);
-  gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-  g_snprintf (buf, sizeof (buf), "%0.2f", *value);
-  gtk_entry_set_text(GTK_ENTRY(entry), buf);
-  gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		     (GtkSignalFunc) dialog_entry_update,
-		     value);
-  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, row, row + 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show(entry);
-  gimp_help_set_help_data (entry, desc, NULL);
-}
-
-static void
 dialog_scale_update (GtkAdjustment *adjustment,
 		     gdouble       *value)
 {
-  GtkWidget *entry;
-  char       buf[256];
+  gimp_double_adjustment_update (adjustment, value);
 
-  if (*value != adjustment->value)
-    {
-      *value = adjustment->value;
-
-      entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-      g_snprintf (buf, sizeof  (buf), "%0.2f", *value);
-
-      gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
-      gtk_entry_set_text(GTK_ENTRY(entry), buf);
-      gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
-
-      dialog_update_preview();
-    }
-}
-
-static void
-dialog_entry_update (GtkWidget *widget,
-		     gdouble   *value)
-{
-  GtkAdjustment *adjustment;
-  gdouble        new_value;
-
-  new_value = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
-
-  if (*value != new_value)
-    {
-      adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-      if ((new_value >= adjustment->lower) &&
-	  (new_value <= adjustment->upper))
-	{
-	  *value  	  = new_value;
-	  adjustment->value = new_value;
-
-	  gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
-
-	  dialog_update_preview();
-	}
-    }
+  dialog_update_preview ();
 }
 
 static void
@@ -1043,6 +859,7 @@ dialog_ok_callback (GtkWidget *widget,
 		    gpointer   data)
 {
   wint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
@@ -1050,35 +867,8 @@ static void
 alienmap_toggle_update (GtkWidget *widget,
         		gpointer   data)
 {
-  int *toggle_val;
+  gimp_radio_button_update (widget, data);
 
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-
-  if (do_redsinus)
-    wvals.redmode = SINUS;
-  else if (do_redcosinus)
-    wvals.redmode = COSINUS;
-  else if (do_rednone)
-    wvals.redmode = NONE;
-
-  if (do_greensinus)
-    wvals.greenmode = SINUS;
-  else if (do_greencosinus)
-    wvals.greenmode = COSINUS;
-  else if (do_greennone)
-    wvals.greenmode = NONE;
-
-  if (do_bluesinus)
-    wvals.bluemode = SINUS;
-  else if (do_bluecosinus)
-    wvals.bluemode = COSINUS;
-  else if (do_bluenone)
-    wvals.bluemode = NONE;
   dialog_update_preview ();
 }
 

@@ -32,6 +32,38 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.18  2000/01/17 17:02:26  mitch
+ *   2000-01-17  Michael Natterer  <mitch@gimp.org>
+ *
+ *   	* libgimp/gimpcolorbutton.c: emit the "color_changed" signal
+ *   	whenever the user selects "Use FG/BG Color" from the popup menu.
+ *
+ *   	* libgimp/gimpwidgets.c: gimp_table_attach_aligned(): allow the
+ *   	function to be called with label == NULL.
+ *
+ *   	* plug-ins/AlienMap/AlienMap.c
+ *   	* plug-ins/AlienMap2/AlienMap2.c
+ *   	* plug-ins/common/CEL.c
+ *   	* plug-ins/common/CML_explorer.c
+ *   	* plug-ins/common/apply_lens.c
+ *   	* plug-ins/common/checkerboard.c
+ *   	* plug-ins/common/engrave.c
+ *   	* plug-ins/common/exchange.c
+ *   	* plug-ins/common/gauss_iir.c
+ *   	* plug-ins/common/gauss_rle.c
+ *   	* plug-ins/common/illusion.c
+ *   	* plug-ins/common/max_rgb.c
+ *   	* plug-ins/common/mblur.c
+ *   	* plug-ins/common/oilify.c
+ *   	* plug-ins/common/sel_gauss.c
+ *   	* plug-ins/common/shift.c
+ *   	* plug-ins/common/smooth_palette.c
+ *   	* plug-ins/common/sparkle.c
+ *   	* plug-ins/common/video.c
+ *   	* plug-ins/common/vpropagate.c
+ *   	* plug-ins/common/warp.c
+ *   	* plug-ins/sgi/sgi.c: more ui updates.
+ *
  *   Revision 1.17  2000/01/13 15:39:25  mitch
  *   2000-01-13  Michael Natterer  <mitch@gimp.org>
  *
@@ -278,8 +310,8 @@ static gint	save_image  (gchar   *filename,
 			     gint32   image_ID,
 			     gint32   drawable_ID);
 
-static void     init_gtk         (void);
-static gint	save_dialog      (void);
+static void     init_gtk    (void);
+static gint	save_dialog (void);
 
 /*
  * Globals...
@@ -293,8 +325,8 @@ GPlugInInfo	PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-gint  compression = SGI_COMP_RLE;
-gint  runme       = FALSE;
+static gint  compression = SGI_COMP_RLE;
+static gint  runme       = FALSE;
 
 
 MAIN ()
@@ -302,19 +334,20 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef	load_args[] =
+  static GParamDef load_args[] =
   {
     { PARAM_INT32,      "run_mode",     "Interactive, non-interactive" },
     { PARAM_STRING,     "filename",     "The name of the file to load" },
     { PARAM_STRING,     "raw_filename", "The name of the file to load" },
   };
-  static GParamDef	load_return_vals[] =
+  static GParamDef load_return_vals[] =
   {
     { PARAM_IMAGE,      "image",        "Output image" },
   };
-  static int		nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int		nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
-  static GParamDef	save_args[] =
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
+  static GParamDef save_args[] =
   {
     { PARAM_INT32,	"run_mode",	"Interactive, non-interactive" },
     { PARAM_IMAGE,	"image",	"Input image" },
@@ -323,7 +356,7 @@ query (void)
     { PARAM_STRING,	"raw_filename",	"The name of the file to save the image in" },
     { PARAM_INT32,	"compression",	"Compression level (0 = none, 1 = RLE, 2 = ARLE)" }
   };
-  static int		nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+  static gint 	nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   INIT_I18N();
 
@@ -357,6 +390,7 @@ query (void)
 
   gimp_register_magic_load_handler ("file_sgi_load", "rgb,bw,sgi,icon",
 				    "", "0,short,474");
+
   gimp_register_save_handler ("file_sgi_save", "rgb,bw,sgi,icon", "");
 }
 
@@ -427,6 +461,7 @@ run (gchar   *name,
 	      return;
 	    }
 	  break;
+
 	default:
 	  break;
 	}

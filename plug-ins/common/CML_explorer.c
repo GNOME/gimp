@@ -81,9 +81,10 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
-#include "libgimp/gimpcolorspace.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpcolorspace.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #ifndef RAND_MAX
@@ -132,7 +133,6 @@ gint	gtkW_align_x = GTK_FILL|GTK_EXPAND;
 gint	gtkW_align_y = GTK_FILL;
 
 /* gtkW callback */
-static void	gtkW_close_callback (GtkWidget *widget, gpointer data);
 static void	gtkW_toggle_update (GtkWidget *widget, gpointer data);
 static void	gtkW_iscale_update (GtkAdjustment *adjustment, gpointer data);
 static void	gtkW_ientry_update (GtkWidget *widget, gpointer data);
@@ -423,10 +423,10 @@ static gdouble	parse_line_to_gdouble (FILE *file, gint *flag);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,				/* init_proc  */
-  NULL,				/* quit_proc */
-  query,			/* query_proc */
-  run,				/* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 typedef struct
@@ -434,7 +434,10 @@ typedef struct
   gint run;
 } Interface;
 
-static Interface INTERFACE = { FALSE };
+static Interface INTERFACE =
+{
+  FALSE
+};
 
 GtkWidget	*preview;
 gtkW_widget_table	widget_pointers[4][CML_PARAM_NUM];
@@ -464,7 +467,7 @@ gint		mem_chank2_size = 0;
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args [] =
   {
@@ -474,8 +477,8 @@ query ()
     { PARAM_STRING, "parameter_file_name", "The name of parameter file. CML_explorer makes an image with its settings." },
   };
   static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
+  static gint nreturn_vals = 0;
 
   INIT_I18N();
 
@@ -1183,7 +1186,7 @@ DIALOG ()
   
   dlg = gtkW_dialog_new (_("Coupled-Map-Lattice Explorer"),
 			 (GtkSignalFunc) OK_CALLBACK,
-			 (GtkSignalFunc) gtkW_close_callback);
+			 (GtkSignalFunc) gtk_main_quit);
 
   memset(&widget_pointers, (int)0, sizeof(widget_pointers));
 
@@ -1678,7 +1681,7 @@ function_graph_new (GtkWidget *widget, gpointer data)
 			 NULL);
 
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtkW_close_callback),
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
   frame = gtkW_frame_new (GTK_DIALOG (dlg)->vbox, _("The Graph"));
@@ -2017,7 +2020,7 @@ force_overwrite (char *filename)
 
   dlg = gtkW_dialog_new (_("CML file operation warning"),
 			 (GtkSignalFunc) CML_overwrite_ok_callback,
-			 (GtkSignalFunc) gtkW_close_callback);
+			 (GtkSignalFunc) gtk_main_quit);
 
   table = gtkW_table_new (NULL, 1, 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
@@ -2327,13 +2330,6 @@ parse_line_to_gdouble (FILE *file, gint *flag)
 
 /* gtkW functions */
 /* gtkW callback */
-static void
-gtkW_close_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  gtk_main_quit ();
-}
-
 static void
 gtkW_toggle_update (GtkWidget *widget,
 		    gpointer   data)

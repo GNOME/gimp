@@ -28,9 +28,9 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
-#include "libgimp/gimpmath.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -41,26 +41,34 @@
 /******************************************************************************/
 
 static void query  (void);
-static void run    (char *, int, GParam *, int *, GParam **);
+static void run    (gchar   *name,
+		    gint     nparam,
+		    GParam  *param,
+		    gint    *nreturn_vals,
+		    GParam **return_vals);
+
 static void filter (GDrawable *drawable);
 static int  dialog (void);
 
 /******************************************************************************/
 
-typedef struct {
+typedef struct
+{
   gint32 division;
 } parameter_t;
 
 /******************************************************************************/
 
-GPlugInInfo PLUG_IN_INFO = {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+GPlugInInfo PLUG_IN_INFO =
+{
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
-static parameter_t parameters = {
+static parameter_t parameters =
+{
   8
 };
 
@@ -79,11 +87,12 @@ static gdouble center_y;
 
 /******************************************************************************/
 
-MAIN()
+MAIN ()
 
 /******************************************************************************/
 
-static void query (void)
+static void
+query (void)
 {
   static int nargs = 4;
   static GParamDef args[] =
@@ -116,11 +125,11 @@ static void query (void)
 /******************************************************************************/
 
 static void
-run (char    *name,
-     int      paramc,
+run (gchar   *name,
+     gint     nparams,
      GParam  *params,
-     int     *returnc,
-     GParam **returns)
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   GDrawable     *drawable;
   GRunModeType   run_mode;
@@ -129,8 +138,8 @@ run (char    *name,
 
   run_mode = params[0].data.d_int32;
   drawable = gimp_drawable_get (params[2].data.d_drawable);
-  *returnc = 1;
-  *returns = returnv;
+  *nreturn_vals = 1;
+  *return_vals  = returnv;
 
   /* get the drawable info */
   image_width     = gimp_drawable_width (drawable->id);
@@ -150,12 +159,13 @@ run (char    *name,
     case RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &parameters);
-      if (! dialog()) return;
+      if (! dialog())
+	return;
       gimp_set_data (PLUG_IN_NAME, &parameters, sizeof (parameter_t));
       break;
 
     case RUN_NONINTERACTIVE:
-      if (paramc != 4)
+      if (nparams != 4)
 	{
 	  status = STATUS_CALLING_ERROR;
 	}
@@ -272,16 +282,11 @@ filter (GDrawable *drawable)
 
 static int dialog_status = FALSE;
 
-static GtkWidget *entry_division;
-
 static void
 dialog_ok_handler (GtkWidget *widget,
 		   gpointer   data)
 {
   dialog_status = TRUE;
-
-  parameters.division =
-    (gint32) atof (gtk_entry_get_text (GTK_ENTRY (entry_division)));
 
   gtk_widget_destroy (GTK_WIDGET (data));
 }
@@ -292,16 +297,17 @@ static int
 dialog (void)
 {
   GtkWidget *window;
-  
-  {
-    gint    argc = 1;
-    gchar **argv = g_new (gchar *, 1);
+  GtkWidget *table;
+  GtkWidget *spinbutton;
+  GtkObject *adj;
 
-    argv[0] = g_strdup ("illusion");
+  gint    argc = 1;
+  gchar **argv = g_new (gchar *, 1);
 
-    gtk_init (&argc, &argv);
-    gtk_rc_parse (gimp_gtkrc ());
-  }
+  argv[0] = g_strdup ("illusion");
+
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 
   /* dialog window */
   window = gimp_dialog_new (_("Illusion"), "illusion",
@@ -320,31 +326,23 @@ dialog (void)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  {
-    /* text boxes */
-    GtkWidget *table;
-    GtkWidget *label;
-    gchar      buffer[32];
+  /* table */
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), table,
+		      TRUE, TRUE, 0 );
+  gtk_widget_show (table);
 
-    /* table */
-    table = gtk_table_new (1, 2, FALSE);
-    gtk_container_set_border_width (GTK_CONTAINER (table), 5);
-    gtk_table_set_row_spacings (GTK_TABLE (table), 5);
-    gtk_table_set_col_spacings (GTK_TABLE (table), 5);
-    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), table,
-			TRUE, TRUE, 0 );
-    gtk_widget_show (table);
-
-    /* tile width */
-    label = gtk_label_new (_("Division:"));
-    entry_division = gtk_entry_new ();
-    g_snprintf (buffer, sizeof (buffer), "%d", parameters.division);
-    gtk_entry_set_text (GTK_ENTRY (entry_division), buffer);
-    gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
-    gtk_table_attach_defaults (GTK_TABLE (table), entry_division, 1, 2, 0, 1);
-    gtk_widget_show (label);
-    gtk_widget_show (entry_division);
-  }
+  spinbutton = gimp_spin_button_new (&adj, parameters.division,
+				     G_MININT, G_MAXINT, 1, 10, 0, 1, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Division:"), 1.0, 0.5,
+			     spinbutton, TRUE);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &parameters.division);
 
   gtk_widget_show (window);
 
@@ -353,5 +351,3 @@ dialog (void)
 
   return dialog_status;
 }
-
-/******************************************************************************/

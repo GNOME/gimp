@@ -48,10 +48,6 @@
 #define SCALE_WIDTH  200
 #define ENTRY_WIDTH   45
 
-#ifndef M_PI
-#define M_PI  3.14159265358979323846
-#endif /* M_PI */
-
 /***** Color model *****/
 
 #define RGB_MODEL 0
@@ -66,7 +62,7 @@ typedef struct
   gdouble greenangle;
   gdouble bluefrequency;
   gdouble blueangle;
-  gint	colormodel;
+  gint	  colormodel;
   gint    redmode;
   gint    greenmode;
   gint    bluemode;
@@ -105,14 +101,12 @@ static void      build_preview_source_image (void);
 
 static gint      alienmap2_dialog        (void);
 static void      dialog_update_preview   (void);
-static void      dialog_create_value     (char *title, GtkTable *table,
-					  int row, gdouble *value,
-					  int left, int right, const char *desc);
 static void      dialog_scale_update     (GtkAdjustment *adjustment,
 					  gdouble *value);
-static void      dialog_entry_update     (GtkWidget *widget, gdouble *value);
 static void      dialog_ok_callback      (GtkWidget *widget, gpointer data);
 static void      alienmap2_toggle_update (GtkWidget *widget,
+					  gpointer   data);
+static void      alienmap2_radio_update  (GtkWidget *widget,
 					  gpointer   data);
 static void      alienmap2_logo_dialog   (void);
 
@@ -133,23 +127,21 @@ static void      hsl_to_rgb (gdouble    h,
 
 GtkWidget *maindlg;
 GtkWidget *logodlg;
-GtkTooltips *tips;
-GdkColor tips_fg,tips_bg;	
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static alienmap2_interface_t wint =
 {
   NULL,  /* preview */
-  NULL,  /* image */
-  NULL,  /* wimage */
-  FALSE  /* run */
+  NULL,  /* image   */
+  NULL,  /* wimage  */
+  FALSE  /* run     */
 };
 
 static alienmap2_vals_t wvals =
@@ -167,17 +159,14 @@ static alienmap2_vals_t wvals =
 };
 
 static GDrawable *drawable;
-static gint   tile_width, tile_height;
-static gint   img_width, img_height, img_bpp;
-static gint   sel_x1, sel_y1, sel_x2, sel_y2;
-static gint   sel_width, sel_height;
-static gint   preview_width, preview_height;
-static GTile *the_tile = NULL;
-static double cen_x, cen_y;
-static double scale_x, scale_y;
-
-gint use_rgb;
-gint use_hsl;
+static gint       tile_width, tile_height;
+static gint       img_width, img_height, img_bpp;
+static gint       sel_x1, sel_y1, sel_x2, sel_y2;
+static gint       sel_width, sel_height;
+static gint       preview_width, preview_height;
+static GTile     *the_tile = NULL;
+static gdouble    cen_x, cen_y;
+static gdouble    scale_x, scale_y;
 
 /***** Functions *****/
 
@@ -239,11 +228,11 @@ transform (short int *r,
       b1 = (gdouble) blue / 255.0;
       rgb_to_hsl (r1, g1, b1, &h, &s, &l);
       if (wvals.redmode)
-	h = 0.5*(1.0+sin(((2*h-1.0)*wvals.redfrequency+wvals.redangle/180.0)*M_PI));
+	h = 0.5*(1.0+sin(((2*h-1.0)*wvals.redfrequency+wvals.redangle/180.0)*G_PI));
       if (wvals.greenmode)
-	s = 0.5*(1.0+sin(((2*s-1.0)*wvals.greenfrequency+wvals.greenangle/180.0)*M_PI));
+	s = 0.5*(1.0+sin(((2*s-1.0)*wvals.greenfrequency+wvals.greenangle/180.0)*G_PI));
       if (wvals.bluemode)
-	l = 0.5*(1.0+sin(((2*l-1.0)*wvals.bluefrequency+wvals.blueangle/180.0)*M_PI));
+	l = 0.5*(1.0+sin(((2*l-1.0)*wvals.bluefrequency+wvals.blueangle/180.0)*G_PI));
       hsl_to_rgb (h, s, l, &r1, &g1, &b1);
       red = (gint) (255.0 * r1 + 0.5);
       green = (gint) (255.0 * g1 + 0.5);
@@ -252,11 +241,11 @@ transform (short int *r,
   else if (wvals.colormodel == RGB_MODEL)
     {
       if (wvals.redmode)
-	red = (int) (127.5*(1.0+sin(((red/127.5-1.0)*wvals.redfrequency+wvals.redangle/180.0)*M_PI))+0.5);
+	red = (int) (127.5*(1.0+sin(((red/127.5-1.0)*wvals.redfrequency+wvals.redangle/180.0)*G_PI))+0.5);
       if (wvals.greenmode)
-	green = (int) (127.5*(1.0+sin(((green/127.5-1.0)*wvals.greenfrequency+wvals.greenangle/180.0)*M_PI))+0.5);
+	green = (int) (127.5*(1.0+sin(((green/127.5-1.0)*wvals.greenfrequency+wvals.greenangle/180.0)*G_PI))+0.5);
       if (wvals.bluemode)
-	blue = (int) (127.5*(1.0+sin(((blue/127.5-1.0)*wvals.bluefrequency+wvals.blueangle/180.0)*M_PI))+0.5);
+	blue = (int) (127.5*(1.0+sin(((blue/127.5-1.0)*wvals.bluefrequency+wvals.blueangle/180.0)*G_PI))+0.5);
     }
    
   *r = red;
@@ -361,16 +350,16 @@ run (char    *name,
 
       if (status == STATUS_SUCCESS)
 	{
-	  wvals.redfrequency = param[3].data.d_float;
-	  wvals.redangle = param[4].data.d_float;
+	  wvals.redfrequency   = param[3].data.d_float;
+	  wvals.redangle       = param[4].data.d_float;
 	  wvals.greenfrequency = param[5].data.d_float;
-	  wvals.greenangle = param[6].data.d_float;
-	  wvals.bluefrequency = param[7].data.d_float;
-	  wvals.blueangle = param[8].data.d_float;
-	  wvals.colormodel = param[9].data.d_int8;
-	  wvals.redmode = param[10].data.d_int8 ? TRUE : FALSE;
-	  wvals.greenmode = param[11].data.d_int8 ? TRUE : FALSE;
-	  wvals.bluemode = param[12].data.d_int8 ? TRUE : FALSE;
+	  wvals.greenangle     = param[6].data.d_float;
+	  wvals.bluefrequency  = param[7].data.d_float;
+	  wvals.blueangle      = param[8].data.d_float;
+	  wvals.colormodel     = param[9].data.d_int8;
+	  wvals.redmode        = param[10].data.d_int8 ? TRUE : FALSE;
+	  wvals.greenmode      = param[11].data.d_int8 ? TRUE : FALSE;
+	  wvals.bluemode       = param[12].data.d_int8 ? TRUE : FALSE;
 	}
 
       break;
@@ -597,19 +586,17 @@ build_preview_source_image (void)
 static gint
 alienmap2_dialog (void)
 {
-  GtkWidget  *dialog;
-  GtkWidget  *top_table;
-  GtkWidget  *frame;
-  GtkWidget  *toggle;
-  GtkWidget  *toggle_vbox;
-  GtkWidget  *table;
-  GSList  *mode_group = NULL;
+  GtkWidget *dialog;
+  GtkWidget *top_table;
+  GtkWidget *frame;
+  GtkWidget *toggle;
+  GtkWidget *toggle_vbox;
+  GtkWidget *sep;
+  GtkWidget *table;
+  GtkObject *adj;
   gint     argc;
   gchar  **argv;
   guchar  *color_cube;
-
-  use_rgb = (wvals.colormodel == RGB_MODEL);
-  use_hsl = (wvals.colormodel == HSL_MODEL);
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -676,64 +663,80 @@ alienmap2_dialog (void)
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_attach (GTK_TABLE (top_table), table, 0, 2, 1, 2,
 		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
-  gtk_widget_show(table);
+  gtk_widget_show (table);
 
-  dialog_create_value (_("R/H-Frequency:"), GTK_TABLE (table), 0,
-		       &wvals.redfrequency, 0, 5.0,
-		       _("Change frequency of the red/hue channel"));
-  if (wvals.redfrequency!=1.0)
-    exit;
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("R/H-Frequency:"), SCALE_WIDTH, 0,
+			      wvals.redfrequency, 0, 5.0, 0.1, 1, 2,
+			      _("Change frequency of the red/hue channel"),
+			      NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &wvals.redfrequency);
 
-  dialog_create_value (_("R/H-Phaseshift:"), GTK_TABLE (table), 1,
-		       &wvals.redangle, 0, 360.0,
-		       _("Change angle of the red/hue channel"));
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("R/H-Phaseshift:"), SCALE_WIDTH, 0,
+			      wvals.redangle, 0, 360.0, 1, 15, 2,
+			      _("Change angle of the red/hue channel"),
+			      NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &wvals.redangle);
 
-  dialog_create_value (_("G/S-Frequency:"), GTK_TABLE (table), 2,
-		       &wvals.greenfrequency, 0, 5.0,
-		       _("Change frequeny of the green/saturation channel"));
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			      _("G/S-Frequency:"), SCALE_WIDTH, 0,
+			      wvals.greenfrequency, 0, 5.0, 0.1, 1, 2,
+			      _("Change frequency of the green/saturation "
+				"channel"), NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &wvals.greenfrequency);
 
-  dialog_create_value (_("G/S-Phaseshift:"), GTK_TABLE (table), 3,
-		       &wvals.greenangle, 0, 360.0,
-		       _("Change angle of the green/saturation channel"));
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+			      _("G/S-Phaseshift:"), SCALE_WIDTH, 0,
+			      wvals.redangle, 0, 360.0, 1, 15, 2,
+			      _("Change angle of the green/saturation channel"),
+			      NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &wvals.greenangle);
 
-  dialog_create_value (_("B/L-Frequency:"), GTK_TABLE (table), 4,
-		       &wvals.bluefrequency, 0, 5.0,
-		       _("Change frequency of the blue/luminance channel"));
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+			      _("B/L-Frequency:"), SCALE_WIDTH, 0,
+			      wvals.bluefrequency, 0, 5.0, 0.1, 1, 2,
+			      _("Change frequency of the blue/luminance "
+				"channel"), NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &wvals.bluefrequency);
 
-  dialog_create_value (_("B/L-Phaseshift:"), GTK_TABLE (table), 5,
-		       &wvals.blueangle, 0, 360.0,
-		       _("Change angle of the blue/luminance channel"));
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
+			      _("B/L-Phaseshift:"), SCALE_WIDTH, 0,
+			      wvals.blueangle, 0, 360.0, 1, 15, 2,
+			      _("Change angle of the blue/luminance channel"),
+			      NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &wvals.blueangle);
 
   /*  Mode toggle box  */
-  frame = gtk_frame_new (_("Mode"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Mode"),
+			   alienmap2_radio_update,
+			   &wvals.colormodel, (gpointer) wvals.colormodel,
+
+			   _("RGB Color Model"), (gpointer) RGB_MODEL, NULL,
+			   _("HSL Color Model"), (gpointer) HSL_MODEL, NULL,
+
+			   NULL);
   gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
-  toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
-  toggle = gtk_radio_button_new_with_label (mode_group,
-					    _("RGB_MODEL Color Model"));
-  mode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (alienmap2_toggle_update),
-		      &use_rgb);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_rgb);
-  gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle, _("Use RGB_MODEL color model"), NULL);
+  toggle_vbox = GTK_BIN (frame)->child;
 
-  toggle = gtk_radio_button_new_with_label (mode_group,
-					    _("HSL_MODEL Color Model"));
-  mode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (alienmap2_toggle_update),
-		      &use_hsl);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_hsl);
-  gtk_widget_show (toggle);
-  gimp_help_set_help_data (toggle, _("Use HSL_MODEL color model"), NULL);
+  sep = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (toggle_vbox), sep, FALSE, FALSE, 0);
+  gtk_widget_show (sep);
 
   toggle = gtk_check_button_new_with_label (_("Modify Red/Hue Channel"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
@@ -767,7 +770,6 @@ alienmap2_dialog (void)
 			   _("Use function for blue/luminance component"),
 			   NULL);
 
-  gtk_widget_show (toggle_vbox);
   gtk_widget_show (frame);
 
   gtk_widget_show (dialog);
@@ -846,105 +848,12 @@ dialog_update_preview (void)
 }
 
 static void
-dialog_create_value (char       *title,
-		     GtkTable   *table,
-		     int         row,
-		     gdouble    *value,
-		     int         left,
-		     int         right,
-		     const char *desc)
-{
-  GtkWidget *label;
-  GtkWidget *scale;
-  GtkWidget *entry;
-  GtkObject *scale_data;
-  gchar      buf[256];
-
-  label = gtk_label_new(title);
-  gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show(label);
-
-  scale_data = gtk_adjustment_new(*value, left, right,
-				  (right - left) / 128,
-				  (right - left) / 128,
-				  0);
-
-  gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-		     (GtkSignalFunc) dialog_scale_update,
-		     value);
-
-  scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-  gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-  gtk_table_attach(table, scale, 1, 2, row, row + 1,
-		   GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
-  gtk_scale_set_digits(GTK_SCALE(scale), 3);
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show(scale);
-  gimp_help_set_help_data (scale, desc, NULL);
-
-  entry = gtk_entry_new();
-  gtk_object_set_user_data(GTK_OBJECT(entry), scale_data);
-  gtk_object_set_user_data(scale_data, entry);
-  gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-  g_snprintf (buf, sizeof (buf), "%0.2f", *value);
-  gtk_entry_set_text(GTK_ENTRY(entry), buf);
-  gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		     (GtkSignalFunc) dialog_entry_update,
-		     value);
-  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, row, row + 1,
-		   GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show(entry);
-  gimp_help_set_help_data (entry, desc, NULL);
-}
-
-static void
 dialog_scale_update (GtkAdjustment *adjustment,
 		     gdouble       *value)
 {
-  GtkWidget *entry;
-  gchar      buf[256];
+  gimp_double_adjustment_update (adjustment, value);
 
-  if (*value != adjustment->value)
-    {
-      *value = adjustment->value;
-
-      entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-      g_snprintf(buf, sizeof (buf), "%0.2f", *value);
-
-      gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
-      gtk_entry_set_text(GTK_ENTRY(entry), buf);
-      gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
-
-      dialog_update_preview();
-    }
-}
-
-static void
-dialog_entry_update (GtkWidget *widget,
-		     gdouble   *value)
-{
-  GtkAdjustment *adjustment;
-  gdouble        new_value;
-
-  new_value = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
-
-  if (*value != new_value)
-    {
-      adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-      if ((new_value >= adjustment->lower) &&
-	  (new_value <= adjustment->upper))
-	{
-	  *value  	    = new_value;
-	  adjustment->value = new_value;
-
-	  gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
-
-	  dialog_update_preview();
-	}
-    }
+  dialog_update_preview();
 }
 
 static void
@@ -960,20 +869,16 @@ static void
 alienmap2_toggle_update (GtkWidget *widget,
 			 gpointer   data)
 {
-  int *toggle_val;
+  gimp_toggle_button_update (widget, data);
 
-  toggle_val = (int *) data;
+  dialog_update_preview ();
+}
 
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-
-  /*  determine colormodel  */
-  if (use_rgb)
-    wvals.colormodel = RGB_MODEL;
-  else if (use_hsl)
-    wvals.colormodel = HSL_MODEL;
+static void
+alienmap2_radio_update (GtkWidget *widget,
+			gpointer   data)
+{
+  gimp_radio_button_update (widget, data);
 
   dialog_update_preview ();
 }

@@ -468,14 +468,17 @@ gimp_table_attach_aligned (GtkTable  *table,
 			   GtkWidget *widget,
 			   gboolean   left_adjust)
 {
-  GtkWidget *label;
+  if (text)
+    {
+      GtkWidget *label;
 
-  label = gtk_label_new (text);
-  gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
-  gtk_table_attach (table, GTK_WIDGET (label), 0, 1, row, row + 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+      label = gtk_label_new (text);
+      gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
+      gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
+      gtk_table_attach (table, GTK_WIDGET (label), 0, 1, row, row + 1,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+    }
 
   if (left_adjust)
     {

@@ -75,24 +75,20 @@ static void      run_length_encode (guchar *   src,
 
 static void      gauss_ok_callback     (GtkWidget *widget,
 					gpointer   data);
-static void      gauss_toggle_update   (GtkWidget *widget,
-					gpointer   data);
-static void      gauss_entry_callback  (GtkWidget *widget,
-					gpointer   data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static BlurValues bvals =
 {
-  5.0,  /*  radius  */
+  5.0,  /*  radius           */
   TRUE, /*  horizontal blur  */
-  TRUE  /*  vertical blur  */
+  TRUE  /*  vertical blur    */
 };
 
 static BlurInterface bint =
@@ -244,12 +240,12 @@ gauss_rle_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *label;
-  GtkWidget *entry;
+  GtkWidget *spinbutton;
+  GtkObject *adj;
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  gchar   buffer[12];
   gchar **argv;
   gint    argc;
 
@@ -289,7 +285,7 @@ gauss_rle_dialog (void)
   toggle = gtk_check_button_new_with_label (_("Blur Horizontally"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gauss_toggle_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &bvals.horizontal);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
   gtk_widget_show (toggle);
@@ -297,7 +293,7 @@ gauss_rle_dialog (void)
   toggle = gtk_check_button_new_with_label (_("Blur Vertically"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gauss_toggle_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &bvals.vertical);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
   gtk_widget_show (toggle);
@@ -309,15 +305,14 @@ gauss_rle_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  entry = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%f", bvals.radius);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (gauss_entry_callback),
-		      NULL);
-  gtk_widget_show (entry);
+  spinbutton = gimp_spin_button_new (&adj,
+				     bvals.radius, 1.0, G_MAXDOUBLE, 1.0, 5.0,
+				     0, 1, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, TRUE, 0);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &bvals.radius);
+  gtk_widget_show (spinbutton);
 
   gtk_widget_show (hbox);
   gtk_widget_show (vbox);
@@ -646,28 +641,6 @@ gauss_ok_callback (GtkWidget *widget,
 		   gpointer   data)
 {
   bint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-gauss_toggle_update (GtkWidget *widget,
-		     gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-gauss_entry_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  bvals.radius = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
-  if (bvals.radius < 1.0)
-    bvals.radius = 1.0;
 }
