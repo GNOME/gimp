@@ -35,6 +35,8 @@
 
 #ifdef HAVE_EXIF
 #include <libexif/exif-data.h>
+
+#define MARKER_CODE_EXIF 0xE1
 #endif /* HAVE_EXIF */
 
 #include <libgimp/gimp.h>
@@ -208,16 +210,6 @@ save_image (const gchar *filename,
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
                        0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
-#ifdef HAVE_EXIF
-
-  /* Create the thumbnail JPEG in a buffer */
-
-  if (jsvals.save_thumbnail)
-    thumbnail_buffer_length = create_thumbnail (image_ID, drawable_ID,
-                                                &thumbnail_buffer);
-
-#endif /* HAVE_EXIF */
-
   if (!preview)
     {
       name = g_strdup_printf (_("Saving '%s'..."),
@@ -319,8 +311,7 @@ save_image (const gchar *filename,
    */
   jpeg_set_defaults (&cinfo);
 
-  jpeg_set_quality (&cinfo, (gint) (jsvals.quality + 0.5),
-                    jsvals.baseline);
+  jpeg_set_quality (&cinfo, (gint) (jsvals.quality + 0.5), jsvals.baseline);
   cinfo.smoothing_factor = (gint) (jsvals.smoothing * 100);
   cinfo.optimize_coding = jsvals.optimize;
 
@@ -419,20 +410,70 @@ save_image (const gchar *filename,
   jpeg_start_compress (&cinfo, TRUE);
 
 #ifdef HAVE_EXIF
+
+  /* Create the thumbnail JPEG in a buffer */
   if (jsvals.save_exif || jsvals.save_thumbnail)
     {
-      guchar *exif_buf;
+      guchar *exif_buf = NULL;
       guint   exif_buf_len;
+      gdouble quality  = MIN (75.0, jsvals.quality);
 
       if ( (! jsvals.save_exif) || (! exif_data))
         exif_data = exif_data_new ();
 
-      exif_data->data = thumbnail_buffer;
-      exif_data->size = thumbnail_buffer_length;
+      /* avoid saving markers longer than 65533, gradually decrease
+       * quality in steps of 5 until exif_buf_len is lower than that.
+       */
+      for (exif_buf_len = 65535;
+           exif_buf_len > 65533 && quality > 0.0;
+           quality -= 5.0)
+        {
+          if (jsvals.save_thumbnail)
+            thumbnail_buffer_length = create_thumbnail (image_ID, drawable_ID,
+                                                        quality,
+                                                        &thumbnail_buffer);
 
-      exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
-      jpeg_write_marker (&cinfo, 0xe1, exif_buf, exif_buf_len);
-      free (exif_buf);
+          exif_data->data = thumbnail_buffer;
+          exif_data->size = thumbnail_buffer_length;
+
+          if (exif_buf)
+            free (exif_buf);
+
+          exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
+        }
+
+      if (exif_buf_len > 65533)
+        {
+          /* last attempt with quality 0.0 */
+          if (jsvals.save_thumbnail)
+            thumbnail_buffer_length = create_thumbnail (image_ID, drawable_ID,
+                                                        0.0,
+                                                        &thumbnail_buffer);
+          exif_data->data = thumbnail_buffer;
+          exif_data->size = thumbnail_buffer_length;
+
+          if (exif_buf)
+            free (exif_buf);
+
+          exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
+        }
+
+      if (exif_buf_len > 65533)
+        {
+          /* still no go? save without thumbnail */
+          exif_data->data = NULL;
+          exif_data->size = 0;
+
+          if (exif_buf)
+            free (exif_buf);
+
+          exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
+        }
+
+      jpeg_write_marker (&cinfo, MARKER_CODE_EXIF, exif_buf, exif_buf_len);
+
+      if (exif_buf)
+        free (exif_buf);
     }
 #endif /* HAVE_EXIF */
 
@@ -963,10 +1004,10 @@ save_restart_update (GtkAdjustment *adjustment,
 
 #ifdef HAVE_EXIF
 
-gchar *tbuffer = NULL;
-gchar *tbuffer2 = NULL;
+static gchar *tbuffer = NULL;
+static gchar *tbuffer2 = NULL;
 
-gint tbuffer_count = 0;
+static gint tbuffer_count = 0;
 
 typedef struct
 {
@@ -1009,9 +1050,10 @@ term_destination (j_compress_ptr cinfo)
 }
 
 gint
-create_thumbnail (gint32   image_ID,
-                  gint32   drawable_ID,
-                  gchar  **thumbnail_buffer)
+create_thumbnail (gint32    image_ID,
+                  gint32    drawable_ID,
+                  gdouble   quality,
+                  gchar   **thumbnail_buffer)
 {
   GimpDrawable  *drawable;
   gint           req_width, req_height, bpp, rbpp;
@@ -1029,7 +1071,7 @@ create_thumbnail (gint32   image_ID,
   req_width  = 196;
   req_height = 196;
 
-  if (MIN(drawable->width, drawable->height) < 196)
+  if (MIN (drawable->width, drawable->height) < 196)
     req_width = req_height = MIN(drawable->width, drawable->height);
 
   thumbnail_data = gimp_drawable_get_thumbnail_data (drawable_ID,
@@ -1047,18 +1089,8 @@ create_thumbnail (gint32   image_ID,
       rbpp = bpp - 1;
     }
 
-  buf = (gchar *) g_malloc (req_width * bpp);
-
-  if (!buf)
-    return 0;
-
-  tbuffer2 = (gchar *) g_malloc(16384);
-
-  if (!tbuffer2)
-    {
-      g_free (buf);
-      return 0;
-    }
+  buf = g_new (guchar, req_width * bpp);
+  tbuffer2 = g_new (gchar, 16384);
 
   tbuffer_count = 0;
 
@@ -1129,8 +1161,7 @@ create_thumbnail (gint32   image_ID,
    */
   jpeg_set_defaults (&cinfo);
 
-  jpeg_set_quality (&cinfo, (gint) (jsvals.quality + 0.5),
-                    jsvals.baseline);
+  jpeg_set_quality (&cinfo, (gint) (quality + 0.5), jsvals.baseline);
 
   /* Step 4: Start compressor */
 

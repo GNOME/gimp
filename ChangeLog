@@ -1,3 +1,10 @@
+2005-01-18  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/jpeg/jpeg-save.[ch]: Adapted the code from the stable
+	branch (based on a patch from Nils Philippsen) that makes sure that
+	the EXIF thumbnail doesn't cause the EXIF data block to grow beyond
+	its maximum size. Fixes bug #164087.
+
 2005-01-19  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpscalecombobox.c (gimp_scale_combo_box_set_scale):

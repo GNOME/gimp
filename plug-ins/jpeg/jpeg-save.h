@@ -24,7 +24,7 @@
 /* #define HAVE_PROGRESSIVE_JPEG  if your library knows how to handle it */
 
 /* See bugs #63610 and #61088 for a discussion about the quality settings */
-#define DEFAULT_QUALITY     85
+#define DEFAULT_QUALITY     85.0
 #define DEFAULT_SMOOTHING   0.0
 #define DEFAULT_OPTIMIZE    TRUE
 #define DEFAULT_PROGRESSIVE FALSE
@@ -68,6 +68,7 @@ gboolean  save_dialog         (void);
 
 gint      create_thumbnail    (gint32            image_ID,
                                gint32            drawable_ID,
+                               gdouble           quality,
                                gchar           **thumbnail_buffer);
 
 #endif /* HAVE_EXIF */
