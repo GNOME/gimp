@@ -91,7 +91,6 @@
 
 	* eu.po: Added Basque translation.
 
->>>>>>> 1.159
 2004-03-28  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am (tips_POFILES): added en_GB.po (British English).

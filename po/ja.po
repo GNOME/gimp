@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 00:01+0200\n"
+"POT-Creation-Date: 2004-11-02 21:00+0100\n"
 "PO-Revision-Date: 2004-07-30 22:40+0900\n"
 "Last-Translator: SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -2666,7 +2666,7 @@ msgid "Opacity:"
 msgstr "不透明度:"
 
 #: app/gui/brush-select.c:203 app/tools/gimppaintoptions-gui.c:122
-#: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:298
+#: app/tools/gimpselectionoptions.c:389 app/widgets/gimplayertreeview.c:298
 msgid "Mode:"
 msgstr "モード:"
 
@@ -3311,7 +3311,7 @@ msgstr "画像の復帰"
 msgid "(Unnamed Template)"
 msgstr "(名前の無いテンプレート)"
 
-#: app/gui/file-commands.c:462
+#: app/gui/file-commands.c:443
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -4883,7 +4883,7 @@ msgstr "レイヤー幅:"
 #: app/gui/layers-commands.c:785 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
 #: app/tools/gimpcroptool.c:1002 app/tools/gimpscaletool.c:174
-#: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
+#: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:567
 #: app/widgets/gimptemplateeditor.c:241 app/widgets/gimptemplateeditor.c:259
 msgid "Height:"
 msgstr "高さ:"
@@ -6151,7 +6151,7 @@ msgstr "解像度 X:"
 msgid "pixels/%a"
 msgstr "ピクセル/%a"
 
-#: app/gui/resize-dialog.c:707 app/tools/gimptransformoptions.c:343
+#: app/gui/resize-dialog.c:707 app/tools/gimptransformoptions.c:337
 msgid "Interpolation:"
 msgstr "補間の種類:"
 
@@ -7488,7 +7488,7 @@ msgstr "グリッドの線数"
 msgid "Grid Line Spacing"
 msgstr "グリッドの間隔"
 
-#: app/tools/gimp-tools.c:216
+#: app/tools/gimp-tools.c:219
 msgid "This tool has no options."
 msgstr "このツールにはオプションはありません."
 
@@ -7533,8 +7533,8 @@ msgstr "適応型スーパーサンプリング"
 msgid "Max Depth:"
 msgstr "最大深度:"
 
-#: app/tools/gimpblendoptions.c:318 app/tools/gimpbucketfilloptions.c:310
-#: app/tools/gimpmagnifyoptions.c:247 app/tools/gimpselectionoptions.c:503
+#: app/tools/gimpblendoptions.c:318 app/tools/gimpbucketfilloptions.c:303
+#: app/tools/gimpmagnifyoptions.c:240 app/tools/gimpselectionoptions.c:497
 msgid "Threshold:"
 msgstr "しきい値:"
 
@@ -7583,49 +7583,49 @@ msgstr "明るさ(_B):"
 msgid "Con_trast:"
 msgstr "コントラスト(_T):"
 
-#: app/tools/gimpbucketfilloptions.c:133
+#: app/tools/gimpbucketfilloptions.c:132
 msgid "Allow completely transparent regions to be filled"
 msgstr "完全に透明な領域の塗りつぶしも許可する"
 
-#: app/tools/gimpbucketfilloptions.c:139
+#: app/tools/gimpbucketfilloptions.c:138
 msgid "Base filled area on all visible layers"
 msgstr "全ての可視レイヤーによって塗りつぶす領域を決める"
 
-#: app/tools/gimpbucketfilloptions.c:145 app/tools/gimpselectionoptions.c:164
+#: app/tools/gimpbucketfilloptions.c:144 app/tools/gimpselectionoptions.c:164
 msgid "Maximum color difference"
 msgstr "最大の色の差"
 
 #. fill type
-#: app/tools/gimpbucketfilloptions.c:258
+#: app/tools/gimpbucketfilloptions.c:251
 #, c-format
 msgid "Fill Type  %s"
 msgstr "塗りつぶし方法  %s"
 
 #. fill selection
-#: app/tools/gimpbucketfilloptions.c:266
+#: app/tools/gimpbucketfilloptions.c:259
 #, c-format
 msgid "Affected Area  %s"
 msgstr "影響領域  %s"
 
-#: app/tools/gimpbucketfilloptions.c:269
+#: app/tools/gimpbucketfilloptions.c:262
 msgid "Fill Whole Selection"
 msgstr "選択領域すべてを塗りつぶす"
 
-#: app/tools/gimpbucketfilloptions.c:270
+#: app/tools/gimpbucketfilloptions.c:263
 msgid "Fill Similar Colors"
 msgstr "類似色で塗りつぶす"
 
-#: app/tools/gimpbucketfilloptions.c:276 app/tools/gimpselectionoptions.c:474
+#: app/tools/gimpbucketfilloptions.c:269 app/tools/gimpselectionoptions.c:468
 msgid "Finding Similar Colors"
 msgstr "類似色を見つける"
 
-#: app/tools/gimpbucketfilloptions.c:292
+#: app/tools/gimpbucketfilloptions.c:285
 msgid "Fill Transparent Areas"
 msgstr "透明領域を塗りつぶす"
 
-#: app/tools/gimpbucketfilloptions.c:298
-#: app/tools/gimpcolorpickeroptions.c:170 app/tools/gimpselectionoptions.c:491
-#: app/tools/gimpselectionoptions.c:537
+#: app/tools/gimpbucketfilloptions.c:291
+#: app/tools/gimpcolorpickeroptions.c:170 app/tools/gimpselectionoptions.c:485
+#: app/tools/gimpselectionoptions.c:531
 msgid "Sample Merged"
 msgstr "レイヤー結合色"
 
@@ -7749,7 +7749,7 @@ msgstr "明度(_L):"
 msgid "Sample Average"
 msgstr "色の平均を取る"
 
-#: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:436
+#: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:430
 #: app/widgets/gimpbrusheditor.c:130
 msgid "Radius:"
 msgstr "半径:"
@@ -7792,7 +7792,7 @@ msgid "Convolve Type  %s"
 msgstr "色混ぜの種類  %s"
 
 #. tool toggle
-#: app/tools/gimpcropoptions.c:187 app/tools/gimpmagnifyoptions.c:230
+#: app/tools/gimpcropoptions.c:187 app/tools/gimpmagnifyoptions.c:223
 #: app/tools/gimpmoveoptions.c:228
 #, c-format
 msgid "Tool Toggle  %s"
@@ -7836,7 +7836,7 @@ msgstr "開始点 の X:"
 
 #. the pixel size labels
 #. the unit size labels
-#: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
+#: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:559
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
 msgstr "幅:"
@@ -7965,7 +7965,7 @@ msgid "Anti Erase  %s"
 msgstr "逆消ゴム  %s"
 
 #: app/tools/gimpflipoptions.c:175 app/tools/gimpmoveoptions.c:222
-#: app/tools/gimptransformoptions.c:328
+#: app/tools/gimptransformoptions.c:322
 msgid "Affect:"
 msgstr "対象:"
 
@@ -8193,7 +8193,7 @@ msgstr "自動(_A)"
 msgid "Adjust levels automatically"
 msgstr "レベルの自動調整"
 
-#: app/tools/gimpmagnifyoptions.c:225
+#: app/tools/gimpmagnifyoptions.c:218
 msgid "Allow Window Resizing"
 msgstr "ウィンドウサイズの自動変更"
 
@@ -8466,23 +8466,23 @@ msgstr "全可視レイヤーに基いて選択"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "選択領域を縮小する際に全可視レイヤーを利用"
 
-#: app/tools/gimpselectionoptions.c:403 app/tools/gimptextoptions.c:460
+#: app/tools/gimpselectionoptions.c:397 app/tools/gimptextoptions.c:460
 msgid "Antialiasing"
 msgstr "アンチエイリアシング"
 
-#: app/tools/gimpselectionoptions.c:426
+#: app/tools/gimpselectionoptions.c:420
 msgid "Feather Edges"
 msgstr "境界をぼかす"
 
-#: app/tools/gimpselectionoptions.c:461
+#: app/tools/gimpselectionoptions.c:455
 msgid "Show Interactive Boundary"
 msgstr "インタラクティブに境界を表示"
 
-#: app/tools/gimpselectionoptions.c:485
+#: app/tools/gimpselectionoptions.c:479
 msgid "Select Transparent Areas"
 msgstr "透明領域の選択"
 
-#: app/tools/gimpselectionoptions.c:529
+#: app/tools/gimpselectionoptions.c:523
 msgid "Auto Shrink Selection"
 msgstr "選択領域の自動縮小"
 
@@ -8637,39 +8637,39 @@ msgstr "インデックス・レイヤーにはしきい値操作はできませ
 msgid "Threshold Range:"
 msgstr "しきい値範囲:"
 
-#: app/tools/gimptransformoptions.c:334
+#: app/tools/gimptransformoptions.c:328
 msgid "Transform Direction"
 msgstr "変換方向"
 
-#: app/tools/gimptransformoptions.c:353
+#: app/tools/gimptransformoptions.c:347
 msgid "Supersampling"
 msgstr "スーパーサンプリング"
 
 #. the clip resulting image toggle button
-#: app/tools/gimptransformoptions.c:358
+#: app/tools/gimptransformoptions.c:352
 msgid "Clip Result"
 msgstr "結果をクリップ"
 
-#: app/tools/gimptransformoptions.c:385
+#: app/tools/gimptransformoptions.c:379
 msgid "Density:"
 msgstr "密度:"
 
 #. the constraints frame
-#: app/tools/gimptransformoptions.c:396
+#: app/tools/gimptransformoptions.c:390
 msgid "Constraints"
 msgstr "制約"
 
-#: app/tools/gimptransformoptions.c:407
+#: app/tools/gimptransformoptions.c:401
 #, c-format
 msgid "15 Degrees  %s"
 msgstr "15度  %s"
 
-#: app/tools/gimptransformoptions.c:418
+#: app/tools/gimptransformoptions.c:412
 #, c-format
 msgid "Keep Height  %s"
 msgstr "縦幅を固定  %s"
 
-#: app/tools/gimptransformoptions.c:428 app/tools/gimptransformoptions.c:442
+#: app/tools/gimptransformoptions.c:422 app/tools/gimptransformoptions.c:436
 msgid ""
 "Activate both the \"Keep Height\" and\n"
 "\"Keep Width\" toggles to constrain\n"
@@ -8679,7 +8679,7 @@ msgstr ""
 "同時に有効にするとアスペクト比を\n"
 "保存します"
 
-#: app/tools/gimptransformoptions.c:432
+#: app/tools/gimptransformoptions.c:426
 #, c-format
 msgid "Keep Width  %s"
 msgstr "横幅を固定  %s"

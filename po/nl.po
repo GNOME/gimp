@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-13 11:11+0200\n"
+"POT-Creation-Date: 2004-11-02 21:00+0100\n"
 "PO-Revision-Date: 2004-10-13 15:03+0200\n"
 "Last-Translator: Vincent van Adrighem <adrighem@gnome.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -143,7 +143,8 @@ msgstr "  -s, --no-splash          Opstartvenster niet weergeven.\n"
 
 #: app/main.c:525
 msgid "  --session <name>         Use an alternate sessionrc file.\n"
-msgstr "  --session <name>         Gebruik een alternatief sessionrc-bestand.\n"
+msgstr ""
+"  --session <name>         Gebruik een alternatief sessionrc-bestand.\n"
 
 #: app/main.c:526
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
@@ -151,10 +152,12 @@ msgstr "  -g, --gimprc <gimprc>    Gebruik een alternatief gimprc-bestand.\n"
 
 #: app/main.c:527
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr "  --system-gimprc <gimprc> Gebruik een alternatief systeem-gimprc-bestand.\n"
+msgstr ""
+"  --system-gimprc <gimprc> Gebruik een alternatief systeem-gimprc-bestand.\n"
 
 #: app/main.c:528
-msgid "  --dump-gimprc            Output a gimprc file with default settings.\n"
+msgid ""
+"  --dump-gimprc            Output a gimprc file with default settings.\n"
 msgstr ""
 "  --dump-gimprc            Produceer een gimprc-bestand met standaard "
 "instellingen.\n"
@@ -168,8 +171,10 @@ msgstr ""
 "dialoogvenster.\n"
 
 #: app/main.c:530
-msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
-msgstr "  --debug-handlers         Niet-fatale debugsignaalhandlers inschakelen.\n"
+msgid ""
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgstr ""
+"  --debug-handlers         Niet-fatale debugsignaalhandlers inschakelen.\n"
 
 #: app/main.c:531
 msgid ""
@@ -484,7 +489,8 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
-msgstr "Dit is de afstand in pixels waar magnetische hulplijnen en raster beginnen."
+msgstr ""
+"Dit is de afstand in pixels waar magnetische hulplijnen en raster beginnen."
 
 #: app/config/gimprc-blurbs.h:74
 msgid ""
@@ -540,7 +546,8 @@ msgstr "De tekst die verschijnt in de titelbalk van afbeeldingsvensters."
 
 #: app/config/gimprc-blurbs.h:157
 msgid "When enabled, the GIMP will use a different info window per image view."
-msgstr "Als dit aanstaat gebruikt de GIMP een infovenster per afbeeldingsweergave."
+msgstr ""
+"Als dit aanstaat gebruikt de GIMP een infovenster per afbeeldingsweergave."
 
 #: app/config/gimprc-blurbs.h:160
 msgid ""
@@ -553,11 +560,14 @@ msgstr ""
 # Visual is an X11-term; but what's the translation?
 #: app/config/gimprc-blurbs.h:164
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
-msgstr "Installeer een eigen kleurkaart; kan nuttig zijn voor pseudo-kleur-visuals."
+msgstr ""
+"Installeer een eigen kleurkaart; kan nuttig zijn voor pseudo-kleur-visuals."
 
 #: app/config/gimprc-blurbs.h:167
-msgid "Sets the level of interpolation used for scaling and other transformations."
-msgstr "Het niveau van interpolatie gebruikt voor schalen en andere transformaties."
+msgid ""
+"Sets the level of interpolation used for scaling and other transformations."
+msgstr ""
+"Het niveau van interpolatie gebruikt voor schalen en andere transformaties."
 
 #: app/config/gimprc-blurbs.h:171
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -677,7 +687,8 @@ msgstr ""
 "programma start."
 
 #: app/config/gimprc-blurbs.h:253
-msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid ""
+"Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Onthou het huidige gereedschap, patroon, de kleur en penseel voor een "
 "volgende sessie."
@@ -1643,7 +1654,8 @@ msgstr "Fatale parseerfout in penseelbestand '%s': onbekende versie %d."
 #: app/core/gimpbrush.c:598 app/core/gimpbrush.c:718
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
-msgstr "Fatale parseerfout in penseelbestand '%s': bestand lijkt te zijn ingekort."
+msgstr ""
+"Fatale parseerfout in penseelbestand '%s': bestand lijkt te zijn ingekort."
 
 #: app/core/gimpbrush.c:606 app/core/gimpbrushpipe.c:365
 #, c-format
@@ -1669,12 +1681,14 @@ msgstr ""
 #: app/core/gimpbrushgenerated.c:390
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr "Fatale parseerfout in penseelbestand '%s': is geen GIMP-penseelbestand."
+msgstr ""
+"Fatale parseerfout in penseelbestand '%s': is geen GIMP-penseelbestand."
 
 #: app/core/gimpbrushgenerated.c:401
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
-msgstr "Fatale parseerfout in penseelbestand '%s': onbekende versie GIMP-penseel."
+msgstr ""
+"Fatale parseerfout in penseelbestand '%s': onbekende versie GIMP-penseel."
 
 #: app/core/gimpbrushpipe.c:380 app/core/gimpbrushpipe.c:400
 #: app/core/gimpbrushpipe.c:490
@@ -1812,7 +1826,8 @@ msgstr "%s kopiëren"
 #: app/core/gimpdatafactory.c:560
 #, c-format
 msgid "Trying legacy loader on file '%s' with unknown extension."
-msgstr "Bezig met oude lader te proberen voor bestand '%s' met onbekende extensie."
+msgstr ""
+"Bezig met oude lader te proberen voor bestand '%s' met onbekende extensie."
 
 #: app/core/gimpdatafactory.c:584
 #, c-format
@@ -1914,7 +1929,8 @@ msgid "The foreground color of the grid."
 msgstr "De voorgrondkleur van het raster."
 
 #: app/core/gimpgrid.c:139
-msgid "The background color of the grid; only used in double dashed line style."
+msgid ""
+"The background color of the grid; only used in double dashed line style."
 msgstr ""
 "De achtergrondkleur van het raster; wordt alleen gebruikt in "
 "dubbelgestreepte lijnstijl."
@@ -1928,7 +1944,8 @@ msgid "Vertical spacing of grid lines."
 msgstr "Verticale tussenruimte van rasterlijnen."
 
 #: app/core/gimpgrid.c:159
-msgid "Horizontal offset of the first grid line; this may be a negative number."
+msgid ""
+"Horizontal offset of the first grid line; this may be a negative number."
 msgstr ""
 "Horizontale verspringing van de eerste rasterlijn; dit mag een negatief "
 "getal zijn."
@@ -2291,7 +2308,8 @@ msgstr ""
 #: app/core/gimppalette.c:390
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr "Fatale parseerfout in paletbestand '%s': ontbrekende bestandstypeaanduiding."
+msgstr ""
+"Fatale parseerfout in paletbestand '%s': ontbrekende bestandstypeaanduiding."
 
 #: app/core/gimppalette.c:404 app/core/gimppalette.c:429
 #: app/core/gimppalette.c:459 app/core/gimppalette.c:538
@@ -2346,8 +2364,10 @@ msgstr "Fatale parseerfout in patroonbestand '%s': kon niet %d bytes lezen: %s"
 
 #: app/core/gimppattern.c:357
 #, c-format
-msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
-msgstr "Fatale parseerfout in patroonbestand '%s': onbekende patroonformaatversie %d."
+msgid ""
+"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgstr ""
+"Fatale parseerfout in patroonbestand '%s': onbekende patroonformaatversie %d."
 
 #: app/core/gimppattern.c:367
 #, c-format
@@ -2418,11 +2438,13 @@ msgstr "Kanaal naar selectie"
 
 #: app/core/gimpselection.c:671
 msgid "Unable to cut or copy because the selected region is empty."
-msgstr "Niet in staat te knippen of kopiëren, omdat geselecteerd gebied leeg is."
+msgstr ""
+"Niet in staat te knippen of kopiëren, omdat geselecteerd gebied leeg is."
 
 #: app/core/gimpselection.c:817
 msgid "Cannot float selection because the selected region is empty."
-msgstr "Kan selectie niet laten drijven, omdat het geselecteerde gebied leeg is."
+msgstr ""
+"Kan selectie niet laten drijven, omdat het geselecteerde gebied leeg is."
 
 #: app/core/gimpselection.c:840 app/gui/layers-commands.c:989
 msgid "Floating Selection"
@@ -2430,7 +2452,8 @@ msgstr "Drijvende Selectie"
 
 #: app/core/gimptemplate.c:143
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
-msgstr "De eenheid voor coördinatenweergaven in een andere dan stip-voor-stip-stand."
+msgstr ""
+"De eenheid voor coördinatenweergaven in een andere dan stip-voor-stip-stand."
 
 #: app/core/gimptemplate.c:150
 msgid "The horizontal image resolution."
@@ -2741,7 +2764,8 @@ msgid "Mode:"
 msgstr "Modus:"
 
 #: app/gui/brush-select.c:322
-msgid "Unable to run brush callback. The corresponding plug-in may have crashed."
+msgid ""
+"Unable to run brush callback. The corresponding plug-in may have crashed."
 msgstr ""
 "Niet in staat tot penseelcallback. De bijbehorende plug-in is wellicht "
 "gecrasht."
@@ -3357,7 +3381,8 @@ msgstr "Geef een naam voor deze sjabloon"
 
 #: app/gui/file-commands.c:301
 msgid "Revert failed. No file name associated with this image."
-msgstr "Terughalen lukte niet. Geen bestandsnaam aan deze afbeelding verbonden."
+msgstr ""
+"Terughalen lukte niet. Geen bestandsnaam aan deze afbeelding verbonden."
 
 #: app/gui/file-commands.c:314
 #, c-format
@@ -3463,8 +3488,10 @@ msgid "/By Extension"
 msgstr "/Volgens extensie"
 
 #: app/gui/font-select.c:234
-msgid "Unable to run font callback. The corresponding plug-in may have crashed."
-msgstr "Niet in staat tot fontcallback. De bijbehorende plug-in is wellicht gecrasht."
+msgid ""
+"Unable to run font callback. The corresponding plug-in may have crashed."
+msgstr ""
+"Niet in staat tot fontcallback. De bijbehorende plug-in is wellicht gecrasht."
 
 #: app/gui/fonts-menu.c:44
 msgid "/_Rescan Font List"
@@ -3735,7 +3762,8 @@ msgid "Re-distribute _Handles in Selection"
 msgstr "Handvatten in selectie herverdelen"
 
 #: app/gui/gradient-select.c:272
-msgid "Unable to run gradient callback. The corresponding plug-in may have crashed."
+msgid ""
+"Unable to run gradient callback. The corresponding plug-in may have crashed."
 msgstr ""
 "Niet in staat tot verloopcallback. Wellicht is de bijbehorende plug-in "
 "gecrasht."
@@ -3880,7 +3908,8 @@ msgstr "Schalen..."
 
 #: app/gui/image-commands.c:646
 msgid "Scale Error: Both width and height must be greater than zero."
-msgstr "Fout bij instellen van schaal: breedte en hoogte moeten groter zijn dan nul."
+msgstr ""
+"Fout bij instellen van schaal: breedte en hoogte moeten groter zijn dan nul."
 
 #. <Image>/File
 #. <Toolbox>/File
@@ -5391,7 +5420,8 @@ msgid "Preview"
 msgstr "Vooruitblik"
 
 #: app/gui/palette-select.c:250
-msgid "Unable to run palette callback. The corresponding plug-in may have crashed."
+msgid ""
+"Unable to run palette callback. The corresponding plug-in may have crashed."
 msgstr ""
 "Niet in staat tot paletcallback. De bijbehorende plug-in is wellicht "
 "gecrasht."
@@ -5433,7 +5463,8 @@ msgid "/_Refresh Palettes"
 msgstr "/Paletten vernieuwen"
 
 #: app/gui/pattern-select.c:252
-msgid "Unable to run pattern callback. The corresponding plug-in may have crashed."
+msgid ""
+"Unable to run pattern callback. The corresponding plug-in may have crashed."
 msgstr ""
 "Niet in staat tot patrooncallback. De bijbehorende plug-in is wellicht "
 "gecrasht."
@@ -6364,7 +6395,8 @@ msgstr "<b>Uw GIMP-tipsbestand lijkt te ontbreken!</b>"
 #: app/gui/tips-dialog.c:90
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
-msgstr "Er hoort een bestand genaamd '%s' te zijn. Controleer a.u.b. uw installatie."
+msgstr ""
+"Er hoort een bestand genaamd '%s' te zijn. Controleer a.u.b. uw installatie."
 
 #: app/gui/tips-dialog.c:96
 msgid "<b>The GIMP tips file could not be parsed!</b>"
@@ -6937,7 +6969,8 @@ msgid "Click \"Continue\" to accept the settings above."
 msgstr "Klik \"Doorgaan\" om bovenstaande instellingen te aanvaarden."
 
 #: app/gui/user-install-dialog.c:958
-msgid "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
+msgid ""
+"<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Voor optimale GIMP-prestaties moet u mogelijk enkele instellingen "
 "aanpassen.</b>"
@@ -7237,7 +7270,8 @@ msgid "Threshold"
 msgstr "Drempelwaarde"
 
 #: app/pdb/image_cmds.c:3660
-msgid "Image resolution is out of bounds, using the default resolution instead."
+msgid ""
+"Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "Afbeeldingsresolutie is buiten het bereik, in plaats daarvan wordt de "
 "standaardresolutie gebruikt."
@@ -8628,7 +8662,8 @@ msgid "/Tools/Paint Tools/_Smudge"
 msgstr "/Gereedschap/Schildergereedschap/Smeren"
 
 #: app/tools/gimptextoptions.c:146
-msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid ""
+"Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Hinten verandert de tekenvorm om bij alle groottes een gestoken bitmap te "
 "maken"
@@ -9253,7 +9288,8 @@ msgstr "Vernieuwen"
 #: app/widgets/gimpdatafactoryview.c:408
 #, c-format
 msgid "Are you sure you want to delete '%s' from the list and from disk?"
-msgstr "Bent u zeker dat u '%s' uit de lijst en van de schijf wilt verwijderen?"
+msgstr ""
+"Bent u zeker dat u '%s' uit de lijst en van de schijf wilt verwijderen?"
 
 #: app/widgets/gimpdatafactoryview.c:412
 msgid "Delete Data Object"
@@ -9498,8 +9534,8 @@ msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
 msgstr ""
-"Kon de GIMP hulpbrowser-procedure niet vinden. Waarschijnlijk was deze "
-"niet gecompileerd, omdat u GtkHtml2 niet geïnstalleerd hebt."
+"Kon de GIMP hulpbrowser-procedure niet vinden. Waarschijnlijk was deze niet "
+"gecompileerd, omdat u GtkHtml2 niet geïnstalleerd hebt."
 
 #: app/widgets/gimphelp.c:202 app/widgets/gimphelp.c:235
 msgid "Use web browser instead"
@@ -9546,7 +9582,8 @@ msgid "Auto"
 msgstr "Automatisch"
 
 #: app/widgets/gimpimagedock.c:222
-msgid "When enabled the dialog automatically follows the image you are working on."
+msgid ""
+"When enabled the dialog automatically follows the image you are working on."
 msgstr ""
 "Wanneer ingeschakeld volgt het dialoogvenster automatisch de afbeelding die "
 "waar u mee bezig bent."
@@ -9736,8 +9773,10 @@ msgstr "Geselecteerde sjabloon verwijderen"
 
 #: app/widgets/gimptemplateview.c:388
 #, c-format
-msgid "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr "Bent u zeker dat u sjabloon '%s' van de lijst en van schijf wilt verwijderen?"
+msgid ""
+"Are you sure you want to delete template '%s' from the list and from disk?"
+msgstr ""
+"Bent u zeker dat u sjabloon '%s' van de lijst en van schijf wilt verwijderen?"
 
 #: app/widgets/gimptemplateview.c:392
 msgid "Delete Template"
@@ -10131,4 +10170,3 @@ msgstr "XFC-fout: niet ondersteunde XCF-bestandsversie %d tegengekomen"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Afbeeldingen of foto's aanmaken en bewerken"
-

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 00:01+0200\n"
+"POT-Creation-Date: 2004-11-02 21:00+0100\n"
 "PO-Revision-Date: 2004-05-05 20:42+0100\n"
 "Last-Translator: Xavier Beà <xbea@pie.xtec.es>\n"
 "Language-Team: Softcatala <xbea@pie.xtec.es>\n"
@@ -2747,7 +2747,7 @@ msgid "Opacity:"
 msgstr "Opacitat:"
 
 #: app/gui/brush-select.c:203 app/tools/gimppaintoptions-gui.c:122
-#: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:298
+#: app/tools/gimpselectionoptions.c:389 app/widgets/gimplayertreeview.c:298
 msgid "Mode:"
 msgstr "Mode:"
 
@@ -3396,7 +3396,7 @@ msgstr "Deixa imatge com abans"
 msgid "(Unnamed Template)"
 msgstr "(Plantilla sense nom)"
 
-#: app/gui/file-commands.c:462
+#: app/gui/file-commands.c:443
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -4986,7 +4986,7 @@ msgstr "Amplada de la capa:"
 #: app/gui/layers-commands.c:785 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
 #: app/tools/gimpcroptool.c:1002 app/tools/gimpscaletool.c:174
-#: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
+#: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:567
 #: app/widgets/gimptemplateeditor.c:241 app/widgets/gimptemplateeditor.c:259
 msgid "Height:"
 msgstr "Alçada:"
@@ -6262,7 +6262,7 @@ msgstr "Resolució X:"
 msgid "pixels/%a"
 msgstr "píxels/%a"
 
-#: app/gui/resize-dialog.c:707 app/tools/gimptransformoptions.c:343
+#: app/gui/resize-dialog.c:707 app/tools/gimptransformoptions.c:337
 msgid "Interpolation:"
 msgstr "Interpolació:"
 
@@ -7642,7 +7642,7 @@ msgstr "Nombre de línies de graella"
 msgid "Grid Line Spacing"
 msgstr "Espaiat de la línia de graella"
 
-#: app/tools/gimp-tools.c:216
+#: app/tools/gimp-tools.c:219
 msgid "This tool has no options."
 msgstr "Aquesta eina no té opcions."
 
@@ -7687,8 +7687,8 @@ msgstr "Supermostratge adaptable"
 msgid "Max Depth:"
 msgstr "Profunditat màxima:"
 
-#: app/tools/gimpblendoptions.c:318 app/tools/gimpbucketfilloptions.c:310
-#: app/tools/gimpmagnifyoptions.c:247 app/tools/gimpselectionoptions.c:503
+#: app/tools/gimpblendoptions.c:318 app/tools/gimpbucketfilloptions.c:303
+#: app/tools/gimpmagnifyoptions.c:240 app/tools/gimpselectionoptions.c:497
 msgid "Threshold:"
 msgstr "Llindar:"
 
@@ -7737,51 +7737,51 @@ msgstr "_Brillantor:"
 msgid "Con_trast:"
 msgstr "Con_trast:"
 
-#: app/tools/gimpbucketfilloptions.c:133
+#: app/tools/gimpbucketfilloptions.c:132
 msgid "Allow completely transparent regions to be filled"
 msgstr "Deixa regions completament transparents per omplir"
 
-#: app/tools/gimpbucketfilloptions.c:139
+#: app/tools/gimpbucketfilloptions.c:138
 msgid "Base filled area on all visible layers"
 msgstr "Àrea base plena en totes les capes visibles"
 
-#: app/tools/gimpbucketfilloptions.c:145 app/tools/gimpselectionoptions.c:164
+#: app/tools/gimpbucketfilloptions.c:144 app/tools/gimpselectionoptions.c:164
 msgid "Maximum color difference"
 msgstr "Màxima diferència de color"
 
 #. fill type
-#: app/tools/gimpbucketfilloptions.c:258
+#: app/tools/gimpbucketfilloptions.c:251
 #, c-format
 msgid "Fill Type  %s"
 msgstr "Manera d'omplir  %s"
 
 #. fill selection
-#: app/tools/gimpbucketfilloptions.c:266
+#: app/tools/gimpbucketfilloptions.c:259
 #, c-format
 msgid "Affected Area  %s"
 msgstr ""
 
-#: app/tools/gimpbucketfilloptions.c:269
+#: app/tools/gimpbucketfilloptions.c:262
 #, fuzzy
 msgid "Fill Whole Selection"
 msgstr "Flota selecció"
 
-#: app/tools/gimpbucketfilloptions.c:270
+#: app/tools/gimpbucketfilloptions.c:263
 #, fuzzy
 msgid "Fill Similar Colors"
 msgstr "S'està cercant colors similars"
 
-#: app/tools/gimpbucketfilloptions.c:276 app/tools/gimpselectionoptions.c:474
+#: app/tools/gimpbucketfilloptions.c:269 app/tools/gimpselectionoptions.c:468
 msgid "Finding Similar Colors"
 msgstr "S'està cercant colors similars"
 
-#: app/tools/gimpbucketfilloptions.c:292
+#: app/tools/gimpbucketfilloptions.c:285
 msgid "Fill Transparent Areas"
 msgstr "Omple àrees transparents"
 
-#: app/tools/gimpbucketfilloptions.c:298
-#: app/tools/gimpcolorpickeroptions.c:170 app/tools/gimpselectionoptions.c:491
-#: app/tools/gimpselectionoptions.c:537
+#: app/tools/gimpbucketfilloptions.c:291
+#: app/tools/gimpcolorpickeroptions.c:170 app/tools/gimpselectionoptions.c:485
+#: app/tools/gimpselectionoptions.c:531
 msgid "Sample Merged"
 msgstr "Mostra fusionada"
 
@@ -7905,7 +7905,7 @@ msgstr "_Lluminositat:"
 msgid "Sample Average"
 msgstr "Mostra mitjana"
 
-#: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:436
+#: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:430
 #: app/widgets/gimpbrusheditor.c:130
 msgid "Radius:"
 msgstr "Radi:"
@@ -7949,7 +7949,7 @@ msgid "Convolve Type  %s"
 msgstr "Tipus d'envolta %s"
 
 #. tool toggle
-#: app/tools/gimpcropoptions.c:187 app/tools/gimpmagnifyoptions.c:230
+#: app/tools/gimpcropoptions.c:187 app/tools/gimpmagnifyoptions.c:223
 #: app/tools/gimpmoveoptions.c:228
 #, c-format
 msgid "Tool Toggle  %s"
@@ -7993,7 +7993,7 @@ msgstr "Origen X:"
 
 #. the pixel size labels
 #. the unit size labels
-#: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
+#: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:559
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
 msgstr "Amplada:"
@@ -8122,7 +8122,7 @@ msgid "Anti Erase  %s"
 msgstr "No es pot esborrar %s"
 
 #: app/tools/gimpflipoptions.c:175 app/tools/gimpmoveoptions.c:222
-#: app/tools/gimptransformoptions.c:328
+#: app/tools/gimptransformoptions.c:322
 msgid "Affect:"
 msgstr "Compensació:"
 
@@ -8351,7 +8351,7 @@ msgstr "_Automàtic"
 msgid "Adjust levels automatically"
 msgstr "Ajust automàtic dels nivells"
 
-#: app/tools/gimpmagnifyoptions.c:225
+#: app/tools/gimpmagnifyoptions.c:218
 msgid "Allow Window Resizing"
 msgstr "Permet el redimensionament de les finestres"
 
@@ -8624,23 +8624,23 @@ msgstr "Selecció base en totes les capes visibles"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Utiliza totes les capes visibles en encongir la selecció"
 
-#: app/tools/gimpselectionoptions.c:403 app/tools/gimptextoptions.c:460
+#: app/tools/gimpselectionoptions.c:397 app/tools/gimptextoptions.c:460
 msgid "Antialiasing"
 msgstr "Suavitzat"
 
-#: app/tools/gimpselectionoptions.c:426
+#: app/tools/gimpselectionoptions.c:420
 msgid "Feather Edges"
 msgstr "Suavitza les vores"
 
-#: app/tools/gimpselectionoptions.c:461
+#: app/tools/gimpselectionoptions.c:455
 msgid "Show Interactive Boundary"
 msgstr "Mostra el marc interactiu"
 
-#: app/tools/gimpselectionoptions.c:485
+#: app/tools/gimpselectionoptions.c:479
 msgid "Select Transparent Areas"
 msgstr "Selecciona àrees transparents"
 
-#: app/tools/gimpselectionoptions.c:529
+#: app/tools/gimpselectionoptions.c:523
 msgid "Auto Shrink Selection"
 msgstr "Encongeix automàticament la selecció"
 
@@ -8792,41 +8792,41 @@ msgstr "El llindar no funciona en capes indexades."
 msgid "Threshold Range:"
 msgstr "Abast del llindar:"
 
-#: app/tools/gimptransformoptions.c:334
+#: app/tools/gimptransformoptions.c:328
 msgid "Transform Direction"
 msgstr "Direcció de la trasformació"
 
-#: app/tools/gimptransformoptions.c:353
+#: app/tools/gimptransformoptions.c:347
 #, fuzzy
 msgid "Supersampling"
 msgstr "Supermostratge adaptable"
 
 #. the clip resulting image toggle button
-#: app/tools/gimptransformoptions.c:358
+#: app/tools/gimptransformoptions.c:352
 msgid "Clip Result"
 msgstr "Resultat de tallar"
 
-#: app/tools/gimptransformoptions.c:385
+#: app/tools/gimptransformoptions.c:379
 msgid "Density:"
 msgstr "Densitat:"
 
 #  the constraints frame
 #. the constraints frame
-#: app/tools/gimptransformoptions.c:396
+#: app/tools/gimptransformoptions.c:390
 msgid "Constraints"
 msgstr "Tancament"
 
-#: app/tools/gimptransformoptions.c:407
+#: app/tools/gimptransformoptions.c:401
 #, c-format
 msgid "15 Degrees  %s"
 msgstr "15 graus %s"
 
-#: app/tools/gimptransformoptions.c:418
+#: app/tools/gimptransformoptions.c:412
 #, c-format
 msgid "Keep Height  %s"
 msgstr "Manté alçada %s"
 
-#: app/tools/gimptransformoptions.c:428 app/tools/gimptransformoptions.c:442
+#: app/tools/gimptransformoptions.c:422 app/tools/gimptransformoptions.c:436
 msgid ""
 "Activate both the \"Keep Height\" and\n"
 "\"Keep Width\" toggles to constrain\n"
@@ -8836,7 +8836,7 @@ msgstr ""
 "\"Manté amplada\" per a forçar\n"
 " la proporció"
 
-#: app/tools/gimptransformoptions.c:432
+#: app/tools/gimptransformoptions.c:426
 #, c-format
 msgid "Keep Width  %s"
 msgstr "Manté amplada %s"

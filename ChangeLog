@@ -1,5 +1,9 @@
 2004-11-02  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.0.6 release.
+
+2004-11-02  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayout.c: applied patch by Robert Ögren that
 	fixes the workaround for bug #143542 for Pango 1.2. Fixes bug #154144.
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-26 11:37+0200\n"
+"POT-Creation-Date: 2004-11-02 21:01+0100\n"
 "PO-Revision-Date: 2004-09-26 18:41+0200\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -515,7 +515,9 @@ msgstr "Factor"
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr "Use este valor como semilla para el generador de números aleatorios; permite que repita cualquier operación «aleatoria»"
+msgstr ""
+"Use este valor como semilla para el generador de números aleatorios; permite "
+"que repita cualquier operación «aleatoria»"
 
 #: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
@@ -523,7 +525,8 @@ msgstr "_Nueva semilla"
 
 #: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
-msgstr "Sembrar el generador de números aleatorios con un número aleatorio generado"
+msgstr ""
+"Sembrar el generador de números aleatorios con un número aleatorio generado"
 
 #: libgimpwidgets/gimpwidgets.c:1312
 msgid "_Randomize"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-29 18:25+0800\n"
+"POT-Creation-Date: 2004-11-02 21:00+0100\n"
 "PO-Revision-Date: 2004-09-29 18:33+0800\n"
 "Last-Translator: Abel Cheung <maddog@linuxhall.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -2613,7 +2613,7 @@ msgid "Opacity:"
 msgstr "透明度："
 
 #: app/gui/brush-select.c:203 app/tools/gimppaintoptions-gui.c:122
-#: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:298
+#: app/tools/gimpselectionoptions.c:389 app/widgets/gimplayertreeview.c:298
 msgid "Mode:"
 msgstr "模式："
 
@@ -3254,7 +3254,7 @@ msgstr "還原影像"
 msgid "(Unnamed Template)"
 msgstr "(未命名範本)"
 
-#: app/gui/file-commands.c:462
+#: app/gui/file-commands.c:443
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -4815,7 +4815,7 @@ msgstr "圖層寬度："
 #: app/gui/layers-commands.c:785 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
 #: app/tools/gimpcroptool.c:1002 app/tools/gimpscaletool.c:174
-#: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
+#: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:567
 #: app/widgets/gimptemplateeditor.c:241 app/widgets/gimptemplateeditor.c:259
 msgid "Height:"
 msgstr "高度："
@@ -6082,7 +6082,7 @@ msgstr "解析度 X："
 msgid "pixels/%a"
 msgstr "像素/%a"
 
-#: app/gui/resize-dialog.c:707 app/tools/gimptransformoptions.c:343
+#: app/gui/resize-dialog.c:707 app/tools/gimptransformoptions.c:337
 msgid "Interpolation:"
 msgstr "內插法："
 
@@ -7382,7 +7382,7 @@ msgstr "格線數目"
 msgid "Grid Line Spacing"
 msgstr "格線距離"
 
-#: app/tools/gimp-tools.c:216
+#: app/tools/gimp-tools.c:219
 msgid "This tool has no options."
 msgstr "本工具並沒有選項。"
 
@@ -7427,8 +7427,8 @@ msgstr "最適性超倍率取樣 (Adaptive Supersampling)"
 msgid "Max Depth:"
 msgstr "最大深度："
 
-#: app/tools/gimpblendoptions.c:318 app/tools/gimpbucketfilloptions.c:310
-#: app/tools/gimpmagnifyoptions.c:247 app/tools/gimpselectionoptions.c:503
+#: app/tools/gimpblendoptions.c:318 app/tools/gimpbucketfilloptions.c:303
+#: app/tools/gimpmagnifyoptions.c:240 app/tools/gimpselectionoptions.c:497
 msgid "Threshold:"
 msgstr "界限值："
 
@@ -7477,49 +7477,49 @@ msgstr "亮度(_B)："
 msgid "Con_trast:"
 msgstr "對比(_T)："
 
-#: app/tools/gimpbucketfilloptions.c:133
+#: app/tools/gimpbucketfilloptions.c:132
 msgid "Allow completely transparent regions to be filled"
 msgstr "允許將完全透明的區域填色"
 
-#: app/tools/gimpbucketfilloptions.c:139
+#: app/tools/gimpbucketfilloptions.c:138
 msgid "Base filled area on all visible layers"
 msgstr ""
 
-#: app/tools/gimpbucketfilloptions.c:145 app/tools/gimpselectionoptions.c:164
+#: app/tools/gimpbucketfilloptions.c:144 app/tools/gimpselectionoptions.c:164
 msgid "Maximum color difference"
 msgstr ""
 
 #. fill type
-#: app/tools/gimpbucketfilloptions.c:258
+#: app/tools/gimpbucketfilloptions.c:251
 #, c-format
 msgid "Fill Type  %s"
 msgstr "填色方式  %s"
 
 #. fill selection
-#: app/tools/gimpbucketfilloptions.c:266
+#: app/tools/gimpbucketfilloptions.c:259
 #, c-format
 msgid "Affected Area  %s"
 msgstr "受影響區域  %s"
 
-#: app/tools/gimpbucketfilloptions.c:269
+#: app/tools/gimpbucketfilloptions.c:262
 msgid "Fill Whole Selection"
 msgstr "填滿整個選擇區域"
 
-#: app/tools/gimpbucketfilloptions.c:270
+#: app/tools/gimpbucketfilloptions.c:263
 msgid "Fill Similar Colors"
 msgstr "只將近似的顏色填色"
 
-#: app/tools/gimpbucketfilloptions.c:276 app/tools/gimpselectionoptions.c:474
+#: app/tools/gimpbucketfilloptions.c:269 app/tools/gimpselectionoptions.c:468
 msgid "Finding Similar Colors"
 msgstr "尋找相近的顏色"
 
-#: app/tools/gimpbucketfilloptions.c:292
+#: app/tools/gimpbucketfilloptions.c:285
 msgid "Fill Transparent Areas"
 msgstr "將透明區域填色"
 
-#: app/tools/gimpbucketfilloptions.c:298
-#: app/tools/gimpcolorpickeroptions.c:170 app/tools/gimpselectionoptions.c:491
-#: app/tools/gimpselectionoptions.c:537
+#: app/tools/gimpbucketfilloptions.c:291
+#: app/tools/gimpcolorpickeroptions.c:170 app/tools/gimpselectionoptions.c:485
+#: app/tools/gimpselectionoptions.c:531
 msgid "Sample Merged"
 msgstr "先合併樣本"
 
@@ -7643,7 +7643,7 @@ msgstr "亮度(_L)："
 msgid "Sample Average"
 msgstr "平均取樣"
 
-#: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:436
+#: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:430
 #: app/widgets/gimpbrusheditor.c:130
 msgid "Radius:"
 msgstr "半徑："
@@ -7686,7 +7686,7 @@ msgid "Convolve Type  %s"
 msgstr "Convolve 方式  %s"
 
 #. tool toggle
-#: app/tools/gimpcropoptions.c:187 app/tools/gimpmagnifyoptions.c:230
+#: app/tools/gimpcropoptions.c:187 app/tools/gimpmagnifyoptions.c:223
 #: app/tools/gimpmoveoptions.c:228
 #, c-format
 msgid "Tool Toggle  %s"
@@ -7730,7 +7730,7 @@ msgstr "原點 X："
 
 #. the pixel size labels
 #. the unit size labels
-#: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
+#: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:559
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
 msgstr "寬度："
@@ -7859,7 +7859,7 @@ msgid "Anti Erase  %s"
 msgstr "反擦拭  %s"
 
 #: app/tools/gimpflipoptions.c:175 app/tools/gimpmoveoptions.c:222
-#: app/tools/gimptransformoptions.c:328
+#: app/tools/gimptransformoptions.c:322
 msgid "Affect:"
 msgstr "會影響："
 
@@ -8087,7 +8087,7 @@ msgstr "自動(_A)"
 msgid "Adjust levels automatically"
 msgstr "自動調整色階"
 
-#: app/tools/gimpmagnifyoptions.c:225
+#: app/tools/gimpmagnifyoptions.c:218
 msgid "Allow Window Resizing"
 msgstr "可調整視窗尺寸"
 
@@ -8361,23 +8361,23 @@ msgstr ""
 msgid "Use all visible layers when shrinking the selection"
 msgstr ""
 
-#: app/tools/gimpselectionoptions.c:403 app/tools/gimptextoptions.c:460
+#: app/tools/gimpselectionoptions.c:397 app/tools/gimptextoptions.c:460
 msgid "Antialiasing"
 msgstr "平滑化"
 
-#: app/tools/gimpselectionoptions.c:426
+#: app/tools/gimpselectionoptions.c:420
 msgid "Feather Edges"
 msgstr "羽化邊緣"
 
-#: app/tools/gimpselectionoptions.c:461
+#: app/tools/gimpselectionoptions.c:455
 msgid "Show Interactive Boundary"
 msgstr "即時顯示邊界"
 
-#: app/tools/gimpselectionoptions.c:485
+#: app/tools/gimpselectionoptions.c:479
 msgid "Select Transparent Areas"
 msgstr "選取透明區域"
 
-#: app/tools/gimpselectionoptions.c:529
+#: app/tools/gimpselectionoptions.c:523
 msgid "Auto Shrink Selection"
 msgstr "自動收縮選擇範圍"
 
@@ -8523,40 +8523,40 @@ msgstr "界限值不適用於索引色影像。"
 msgid "Threshold Range:"
 msgstr "界限值範圍："
 
-#: app/tools/gimptransformoptions.c:334
+#: app/tools/gimptransformoptions.c:328
 msgid "Transform Direction"
 msgstr ""
 
-#: app/tools/gimptransformoptions.c:353
+#: app/tools/gimptransformoptions.c:347
 #, fuzzy
 msgid "Supersampling"
 msgstr "最適性超倍率取樣 (Adaptive Supersampling)"
 
 #. the clip resulting image toggle button
-#: app/tools/gimptransformoptions.c:358
+#: app/tools/gimptransformoptions.c:352
 msgid "Clip Result"
 msgstr "裁剪結果"
 
-#: app/tools/gimptransformoptions.c:385
+#: app/tools/gimptransformoptions.c:379
 msgid "Density:"
 msgstr "密度："
 
 #. the constraints frame
-#: app/tools/gimptransformoptions.c:396
+#: app/tools/gimptransformoptions.c:390
 msgid "Constraints"
 msgstr "限制"
 
-#: app/tools/gimptransformoptions.c:407
+#: app/tools/gimptransformoptions.c:401
 #, c-format
 msgid "15 Degrees  %s"
 msgstr "15 度  %s"
 
-#: app/tools/gimptransformoptions.c:418
+#: app/tools/gimptransformoptions.c:412
 #, c-format
 msgid "Keep Height  %s"
 msgstr "保持高度  %s"
 
-#: app/tools/gimptransformoptions.c:428 app/tools/gimptransformoptions.c:442
+#: app/tools/gimptransformoptions.c:422 app/tools/gimptransformoptions.c:436
 msgid ""
 "Activate both the \"Keep Height\" and\n"
 "\"Keep Width\" toggles to constrain\n"
@@ -8566,7 +8566,7 @@ msgstr ""
 "及「保持寬度」會在\n"
 "縮放時保持長寬比"
 
-#: app/tools/gimptransformoptions.c:432
+#: app/tools/gimptransformoptions.c:426
 #, c-format
 msgid "Keep Width  %s"
 msgstr "保持寬度  %s"

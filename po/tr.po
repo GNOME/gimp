@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 00:01+0200\n"
+"POT-Creation-Date: 2004-11-02 21:00+0100\n"
 "PO-Revision-Date: 2003-12-31 16:56+0000\n"
 "Last-Translator: Görkem Çetin <gorkem@kde.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -2642,7 +2642,7 @@ msgid "Opacity:"
 msgstr "Saydamsızlık:"
 
 #: app/gui/brush-select.c:203 app/tools/gimppaintoptions-gui.c:122
-#: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:298
+#: app/tools/gimpselectionoptions.c:389 app/widgets/gimplayertreeview.c:298
 msgid "Mode:"
 msgstr "Kip:"
 
@@ -3312,7 +3312,7 @@ msgstr "Resmi Geri Al"
 msgid "(Unnamed Template)"
 msgstr "(İsimsiz Şablon)"
 
-#: app/gui/file-commands.c:462
+#: app/gui/file-commands.c:443
 #, fuzzy, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -4977,7 +4977,7 @@ msgstr "Katman Genişliği:"
 #: app/gui/layers-commands.c:785 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
 #: app/tools/gimpcroptool.c:1002 app/tools/gimpscaletool.c:174
-#: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
+#: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:567
 #: app/widgets/gimptemplateeditor.c:241 app/widgets/gimptemplateeditor.c:259
 msgid "Height:"
 msgstr "Yükseklik:"
@@ -6299,7 +6299,7 @@ msgstr "X Çözünürlüğü:"
 msgid "pixels/%a"
 msgstr "piksel/%a"
 
-#: app/gui/resize-dialog.c:707 app/tools/gimptransformoptions.c:343
+#: app/gui/resize-dialog.c:707 app/tools/gimptransformoptions.c:337
 msgid "Interpolation:"
 msgstr "Aradeğerleme:"
 
@@ -7726,7 +7726,7 @@ msgstr "Kılavuz Çizgilerinin Sayısı"
 msgid "Grid Line Spacing"
 msgstr "Kılavu Çizgileri Arasındaki Boşluk"
 
-#: app/tools/gimp-tools.c:216
+#: app/tools/gimp-tools.c:219
 msgid "This tool has no options."
 msgstr "Bu aletin seçeneği yok."
 
@@ -7771,8 +7771,8 @@ msgstr ""
 msgid "Max Depth:"
 msgstr "Azami Derinlik:"
 
-#: app/tools/gimpblendoptions.c:318 app/tools/gimpbucketfilloptions.c:310
-#: app/tools/gimpmagnifyoptions.c:247 app/tools/gimpselectionoptions.c:503
+#: app/tools/gimpblendoptions.c:318 app/tools/gimpbucketfilloptions.c:303
+#: app/tools/gimpmagnifyoptions.c:240 app/tools/gimpselectionoptions.c:497
 msgid "Threshold:"
 msgstr "Alt sınır:"
 
@@ -7823,52 +7823,52 @@ msgstr "_Parlaklık:"
 msgid "Con_trast:"
 msgstr "_Kontrast:"
 
-#: app/tools/gimpbucketfilloptions.c:133
+#: app/tools/gimpbucketfilloptions.c:132
 msgid "Allow completely transparent regions to be filled"
 msgstr ""
 
-#: app/tools/gimpbucketfilloptions.c:139
+#: app/tools/gimpbucketfilloptions.c:138
 msgid "Base filled area on all visible layers"
 msgstr ""
 
-#: app/tools/gimpbucketfilloptions.c:145 app/tools/gimpselectionoptions.c:164
+#: app/tools/gimpbucketfilloptions.c:144 app/tools/gimpselectionoptions.c:164
 msgid "Maximum color difference"
 msgstr ""
 
 #. fill type
-#: app/tools/gimpbucketfilloptions.c:258
+#: app/tools/gimpbucketfilloptions.c:251
 #, c-format
 msgid "Fill Type  %s"
 msgstr "Doldurma Türü:  %s"
 
 #. fill selection
-#: app/tools/gimpbucketfilloptions.c:266
+#: app/tools/gimpbucketfilloptions.c:259
 #, c-format
 msgid "Affected Area  %s"
 msgstr ""
 
-#: app/tools/gimpbucketfilloptions.c:269
+#: app/tools/gimpbucketfilloptions.c:262
 #, fuzzy
 msgid "Fill Whole Selection"
 msgstr "Seçimi Yüzdür"
 
-#: app/tools/gimpbucketfilloptions.c:270
+#: app/tools/gimpbucketfilloptions.c:263
 #, fuzzy
 msgid "Fill Similar Colors"
 msgstr "ÖP rengiyle doldur"
 
-#: app/tools/gimpbucketfilloptions.c:276 app/tools/gimpselectionoptions.c:474
+#: app/tools/gimpbucketfilloptions.c:269 app/tools/gimpselectionoptions.c:468
 msgid "Finding Similar Colors"
 msgstr ""
 
-#: app/tools/gimpbucketfilloptions.c:292
+#: app/tools/gimpbucketfilloptions.c:285
 #, fuzzy
 msgid "Fill Transparent Areas"
 msgstr "Önplandan Şeffafa"
 
-#: app/tools/gimpbucketfilloptions.c:298
-#: app/tools/gimpcolorpickeroptions.c:170 app/tools/gimpselectionoptions.c:491
-#: app/tools/gimpselectionoptions.c:537
+#: app/tools/gimpbucketfilloptions.c:291
+#: app/tools/gimpcolorpickeroptions.c:170 app/tools/gimpselectionoptions.c:485
+#: app/tools/gimpselectionoptions.c:531
 msgid "Sample Merged"
 msgstr "Birleşimi Örnekle"
 
@@ -8010,7 +8010,7 @@ msgstr "Aydınlanma:"
 msgid "Sample Average"
 msgstr "Ortalama Örnekle"
 
-#: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:436
+#: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:430
 #: app/widgets/gimpbrusheditor.c:130
 msgid "Radius:"
 msgstr "Yarıçap:"
@@ -8057,7 +8057,7 @@ msgid "Convolve Type  %s"
 msgstr "Evriştime Tipi"
 
 #. tool toggle
-#: app/tools/gimpcropoptions.c:187 app/tools/gimpmagnifyoptions.c:230
+#: app/tools/gimpcropoptions.c:187 app/tools/gimpmagnifyoptions.c:223
 #: app/tools/gimpmoveoptions.c:228
 #, fuzzy, c-format
 msgid "Tool Toggle  %s"
@@ -8104,7 +8104,7 @@ msgstr "Orjin X:"
 
 #. the pixel size labels
 #. the unit size labels
-#: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
+#: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:559
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
 msgstr "Genişlik:"
@@ -8248,7 +8248,7 @@ msgid "Anti Erase  %s"
 msgstr "Silme Tersi"
 
 #: app/tools/gimpflipoptions.c:175 app/tools/gimpmoveoptions.c:222
-#: app/tools/gimptransformoptions.c:328
+#: app/tools/gimptransformoptions.c:322
 #, fuzzy
 msgid "Affect:"
 msgstr "Ofset:"
@@ -8500,7 +8500,7 @@ msgstr "_Otomatik"
 msgid "Adjust levels automatically"
 msgstr ""
 
-#: app/tools/gimpmagnifyoptions.c:225
+#: app/tools/gimpmagnifyoptions.c:218
 msgid "Allow Window Resizing"
 msgstr "Pencere Boyutlandırılmasına İzin Ver"
 
@@ -8812,25 +8812,25 @@ msgstr ""
 msgid "Use all visible layers when shrinking the selection"
 msgstr ""
 
-#: app/tools/gimpselectionoptions.c:403 app/tools/gimptextoptions.c:460
+#: app/tools/gimpselectionoptions.c:397 app/tools/gimptextoptions.c:460
 msgid "Antialiasing"
 msgstr "Örtüşme-önleme"
 
-#: app/tools/gimpselectionoptions.c:426
+#: app/tools/gimpselectionoptions.c:420
 #, fuzzy
 msgid "Feather Edges"
 msgstr "Yumuşaklık"
 
-#: app/tools/gimpselectionoptions.c:461
+#: app/tools/gimpselectionoptions.c:455
 msgid "Show Interactive Boundary"
 msgstr ""
 
-#: app/tools/gimpselectionoptions.c:485
+#: app/tools/gimpselectionoptions.c:479
 #, fuzzy
 msgid "Select Transparent Areas"
 msgstr "Dörtgen seçimler yap"
 
-#: app/tools/gimpselectionoptions.c:529
+#: app/tools/gimpselectionoptions.c:523
 #, fuzzy
 msgid "Auto Shrink Selection"
 msgstr "Seçimi Küçült"
@@ -8990,48 +8990,48 @@ msgstr "Alt Sınır dizinli renkli resimlerde çalışamaz."
 msgid "Threshold Range:"
 msgstr "Alt Sınır Alanı:"
 
-#: app/tools/gimptransformoptions.c:334
+#: app/tools/gimptransformoptions.c:328
 #, fuzzy
 msgid "Transform Direction"
 msgstr "Dönüştürme"
 
-#: app/tools/gimptransformoptions.c:353
+#: app/tools/gimptransformoptions.c:347
 #, fuzzy
 msgid "Supersampling"
 msgstr "Boşluk"
 
 #. the clip resulting image toggle button
-#: app/tools/gimptransformoptions.c:358
+#: app/tools/gimptransformoptions.c:352
 msgid "Clip Result"
 msgstr "Sonucu Kes"
 
-#: app/tools/gimptransformoptions.c:385
+#: app/tools/gimptransformoptions.c:379
 msgid "Density:"
 msgstr "Yoğunluk:"
 
 #. the constraints frame
-#: app/tools/gimptransformoptions.c:396
+#: app/tools/gimptransformoptions.c:390
 msgid "Constraints"
 msgstr "Kısıtlar"
 
-#: app/tools/gimptransformoptions.c:407
+#: app/tools/gimptransformoptions.c:401
 #, c-format
 msgid "15 Degrees  %s"
 msgstr ""
 
-#: app/tools/gimptransformoptions.c:418
+#: app/tools/gimptransformoptions.c:412
 #, c-format
 msgid "Keep Height  %s"
 msgstr ""
 
-#: app/tools/gimptransformoptions.c:428 app/tools/gimptransformoptions.c:442
+#: app/tools/gimptransformoptions.c:422 app/tools/gimptransformoptions.c:436
 msgid ""
 "Activate both the \"Keep Height\" and\n"
 "\"Keep Width\" toggles to constrain\n"
 "the aspect ratio"
 msgstr ""
 
-#: app/tools/gimptransformoptions.c:432
+#: app/tools/gimptransformoptions.c:426
 #, c-format
 msgid "Keep Width  %s"
 msgstr ""

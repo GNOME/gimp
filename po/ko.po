@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 00:01+0200\n"
+"POT-Creation-Date: 2004-11-02 21:00+0100\n"
 "PO-Revision-Date: 2004-01-20 19:30+0900\n"
 "Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -2640,7 +2640,7 @@ msgid "Opacity:"
 msgstr "불투명:"
 
 #: app/gui/brush-select.c:203 app/tools/gimppaintoptions-gui.c:122
-#: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:298
+#: app/tools/gimpselectionoptions.c:389 app/widgets/gimplayertreeview.c:298
 msgid "Mode:"
 msgstr "모드:"
 
@@ -3281,7 +3281,7 @@ msgstr "이미지 원상 복구"
 msgid "(Unnamed Template)"
 msgstr "(이름없는 템플릿)"
 
-#: app/gui/file-commands.c:462
+#: app/gui/file-commands.c:443
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -4851,7 +4851,7 @@ msgstr "레이어 너비:"
 #: app/gui/layers-commands.c:785 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
 #: app/tools/gimpcroptool.c:1002 app/tools/gimpscaletool.c:174
-#: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
+#: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:567
 #: app/widgets/gimptemplateeditor.c:241 app/widgets/gimptemplateeditor.c:259
 msgid "Height:"
 msgstr "높이:"
@@ -6117,7 +6117,7 @@ msgstr "해상도 X:"
 msgid "pixels/%a"
 msgstr "픽셀/%a"
 
-#: app/gui/resize-dialog.c:707 app/tools/gimptransformoptions.c:343
+#: app/gui/resize-dialog.c:707 app/tools/gimptransformoptions.c:337
 msgid "Interpolation:"
 msgstr "보간:"
 
@@ -7427,7 +7427,7 @@ msgstr "모눈 줄 수"
 msgid "Grid Line Spacing"
 msgstr "모눈 줄 간격"
 
-#: app/tools/gimp-tools.c:216
+#: app/tools/gimp-tools.c:219
 msgid "This tool has no options."
 msgstr "이 도구는 선택사항이 없습니다."
 
@@ -7472,8 +7472,8 @@ msgstr "적응형 슈퍼샘플링"
 msgid "Max Depth:"
 msgstr "최대 깊이:"
 
-#: app/tools/gimpblendoptions.c:318 app/tools/gimpbucketfilloptions.c:310
-#: app/tools/gimpmagnifyoptions.c:247 app/tools/gimpselectionoptions.c:503
+#: app/tools/gimpblendoptions.c:318 app/tools/gimpbucketfilloptions.c:303
+#: app/tools/gimpmagnifyoptions.c:240 app/tools/gimpselectionoptions.c:497
 msgid "Threshold:"
 msgstr "임계값:"
 
@@ -7522,49 +7522,49 @@ msgstr "명도(_B):"
 msgid "Con_trast:"
 msgstr "대비(_T):"
 
-#: app/tools/gimpbucketfilloptions.c:133
+#: app/tools/gimpbucketfilloptions.c:132
 msgid "Allow completely transparent regions to be filled"
 msgstr "완전 투명 영역 채우기 허용"
 
-#: app/tools/gimpbucketfilloptions.c:139
+#: app/tools/gimpbucketfilloptions.c:138
 msgid "Base filled area on all visible layers"
 msgstr "모든 보이는 레이어에서 기본 채움 영역"
 
-#: app/tools/gimpbucketfilloptions.c:145 app/tools/gimpselectionoptions.c:164
+#: app/tools/gimpbucketfilloptions.c:144 app/tools/gimpselectionoptions.c:164
 msgid "Maximum color difference"
 msgstr "최대 색상 차이"
 
 #. fill type
-#: app/tools/gimpbucketfilloptions.c:258
+#: app/tools/gimpbucketfilloptions.c:251
 #, c-format
 msgid "Fill Type  %s"
 msgstr "채우기 유형 %s"
 
 #. fill selection
-#: app/tools/gimpbucketfilloptions.c:266
+#: app/tools/gimpbucketfilloptions.c:259
 #, c-format
 msgid "Affected Area  %s"
 msgstr "영향을 받는 영역  %s"
 
-#: app/tools/gimpbucketfilloptions.c:269
+#: app/tools/gimpbucketfilloptions.c:262
 msgid "Fill Whole Selection"
 msgstr "전체 선택 채우기"
 
-#: app/tools/gimpbucketfilloptions.c:270
+#: app/tools/gimpbucketfilloptions.c:263
 msgid "Fill Similar Colors"
 msgstr "비슷한 색상 채우기"
 
-#: app/tools/gimpbucketfilloptions.c:276 app/tools/gimpselectionoptions.c:474
+#: app/tools/gimpbucketfilloptions.c:269 app/tools/gimpselectionoptions.c:468
 msgid "Finding Similar Colors"
 msgstr "비슷한 색상 찾기"
 
-#: app/tools/gimpbucketfilloptions.c:292
+#: app/tools/gimpbucketfilloptions.c:285
 msgid "Fill Transparent Areas"
 msgstr "투명한 영역 채우기"
 
-#: app/tools/gimpbucketfilloptions.c:298
-#: app/tools/gimpcolorpickeroptions.c:170 app/tools/gimpselectionoptions.c:491
-#: app/tools/gimpselectionoptions.c:537
+#: app/tools/gimpbucketfilloptions.c:291
+#: app/tools/gimpcolorpickeroptions.c:170 app/tools/gimpselectionoptions.c:485
+#: app/tools/gimpselectionoptions.c:531
 msgid "Sample Merged"
 msgstr "샘플 머지"
 
@@ -7688,7 +7688,7 @@ msgstr "명도(_L):"
 msgid "Sample Average"
 msgstr "샘플 평균"
 
-#: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:436
+#: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:430
 #: app/widgets/gimpbrusheditor.c:130
 msgid "Radius:"
 msgstr "반경:"
@@ -7731,7 +7731,7 @@ msgid "Convolve Type  %s"
 msgstr "컨벌브 유형 %s"
 
 #. tool toggle
-#: app/tools/gimpcropoptions.c:187 app/tools/gimpmagnifyoptions.c:230
+#: app/tools/gimpcropoptions.c:187 app/tools/gimpmagnifyoptions.c:223
 #: app/tools/gimpmoveoptions.c:228
 #, c-format
 msgid "Tool Toggle  %s"
@@ -7775,7 +7775,7 @@ msgstr "시작 X:"
 
 #. the pixel size labels
 #. the unit size labels
-#: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
+#: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:559
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
 msgstr "너비:"
@@ -7904,7 +7904,7 @@ msgid "Anti Erase  %s"
 msgstr "지우기 복구 %s"
 
 #: app/tools/gimpflipoptions.c:175 app/tools/gimpmoveoptions.c:222
-#: app/tools/gimptransformoptions.c:328
+#: app/tools/gimptransformoptions.c:322
 msgid "Affect:"
 msgstr "영향:"
 
@@ -8133,7 +8133,7 @@ msgstr "자동(_A)"
 msgid "Adjust levels automatically"
 msgstr "레벨 자동 조절"
 
-#: app/tools/gimpmagnifyoptions.c:225
+#: app/tools/gimpmagnifyoptions.c:218
 msgid "Allow Window Resizing"
 msgstr "창 크기 조정을 허용"
 
@@ -8406,23 +8406,23 @@ msgstr "모든 보이는 레이어에서 기본 선택"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "선택을 줄일 때 모든 보이는 레이어를 사용"
 
-#: app/tools/gimpselectionoptions.c:403 app/tools/gimptextoptions.c:460
+#: app/tools/gimpselectionoptions.c:397 app/tools/gimptextoptions.c:460
 msgid "Antialiasing"
 msgstr "부드럽게 하기"
 
-#: app/tools/gimpselectionoptions.c:426
+#: app/tools/gimpselectionoptions.c:420
 msgid "Feather Edges"
 msgstr "가장자리 페더"
 
-#: app/tools/gimpselectionoptions.c:461
+#: app/tools/gimpselectionoptions.c:455
 msgid "Show Interactive Boundary"
 msgstr "즉시 경계 보기"
 
-#: app/tools/gimpselectionoptions.c:485
+#: app/tools/gimpselectionoptions.c:479
 msgid "Select Transparent Areas"
 msgstr "투명한 영역 선택"
 
-#: app/tools/gimpselectionoptions.c:529
+#: app/tools/gimpselectionoptions.c:523
 msgid "Auto Shrink Selection"
 msgstr "선택 자동 줄임"
 
@@ -8573,39 +8573,39 @@ msgstr "고대비는 인덱스된 레이어에서 동작하지 않습니다."
 msgid "Threshold Range:"
 msgstr "임계값 범위:"
 
-#: app/tools/gimptransformoptions.c:334
+#: app/tools/gimptransformoptions.c:328
 msgid "Transform Direction"
 msgstr "변형 방향"
 
-#: app/tools/gimptransformoptions.c:353
+#: app/tools/gimptransformoptions.c:347
 msgid "Supersampling"
 msgstr "슈퍼샘플링"
 
 #. the clip resulting image toggle button
-#: app/tools/gimptransformoptions.c:358
+#: app/tools/gimptransformoptions.c:352
 msgid "Clip Result"
 msgstr "결과 절단"
 
-#: app/tools/gimptransformoptions.c:385
+#: app/tools/gimptransformoptions.c:379
 msgid "Density:"
 msgstr "밀도:"
 
 #. the constraints frame
-#: app/tools/gimptransformoptions.c:396
+#: app/tools/gimptransformoptions.c:390
 msgid "Constraints"
 msgstr "제약 조건"
 
-#: app/tools/gimptransformoptions.c:407
+#: app/tools/gimptransformoptions.c:401
 #, c-format
 msgid "15 Degrees  %s"
 msgstr "15도  %s"
 
-#: app/tools/gimptransformoptions.c:418
+#: app/tools/gimptransformoptions.c:412
 #, c-format
 msgid "Keep Height  %s"
 msgstr "높이 유지  %s"
 
-#: app/tools/gimptransformoptions.c:428 app/tools/gimptransformoptions.c:442
+#: app/tools/gimptransformoptions.c:422 app/tools/gimptransformoptions.c:436
 msgid ""
 "Activate both the \"Keep Height\" and\n"
 "\"Keep Width\" toggles to constrain\n"
@@ -8615,7 +8615,7 @@ msgstr ""
 "\"높이 유지\"와 \"너비 유지\"를\n"
 "모두 선택하십시오."
 
-#: app/tools/gimptransformoptions.c:432
+#: app/tools/gimptransformoptions.c:426
 #, c-format
 msgid "Keep Width  %s"
 msgstr "너비 유지  %s"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 00:01+0200\n"
+"POT-Creation-Date: 2004-11-02 21:00+0100\n"
 "PO-Revision-Date: 2004-09-03 18:13+0200\n"
 "Last-Translator: Laurent Dhima <laurenti@alblinux.net>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
@@ -2855,7 +2855,7 @@ msgid "Opacity:"
 msgstr ""
 
 #: app/gui/brush-select.c:203 app/tools/gimppaintoptions-gui.c:122
-#: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:298
+#: app/tools/gimpselectionoptions.c:389 app/widgets/gimplayertreeview.c:298
 msgid "Mode:"
 msgstr "Modaliteti:"
 
@@ -3612,7 +3612,7 @@ msgstr "Rikthe"
 msgid "(Unnamed Template)"
 msgstr "Pa emër Shabllon"
 
-#: app/gui/file-commands.c:462
+#: app/gui/file-commands.c:443
 #, fuzzy, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -5438,7 +5438,7 @@ msgstr "Gjerësia:"
 #: app/gui/layers-commands.c:785 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
 #: app/tools/gimpcroptool.c:1002 app/tools/gimpscaletool.c:174
-#: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
+#: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:567
 #: app/widgets/gimptemplateeditor.c:241 app/widgets/gimptemplateeditor.c:259
 msgid "Height:"
 msgstr "Lartësia:"
@@ -6952,7 +6952,7 @@ msgstr "Thellësia e ngjyrave X:"
 msgid "pixels/%a"
 msgstr "pixels a"
 
-#: app/gui/resize-dialog.c:707 app/tools/gimptransformoptions.c:343
+#: app/gui/resize-dialog.c:707 app/tools/gimptransformoptions.c:337
 msgid "Interpolation:"
 msgstr ""
 
@@ -8387,7 +8387,7 @@ msgstr "Numri nga Rreshta"
 msgid "Grid Line Spacing"
 msgstr "Linja Hapësira e ndërmjetme"
 
-#: app/tools/gimp-tools.c:216
+#: app/tools/gimp-tools.c:219
 #, fuzzy
 msgid "This tool has no options."
 msgstr "jo."
@@ -8438,8 +8438,8 @@ msgstr ""
 msgid "Max Depth:"
 msgstr "Thellësia:"
 
-#: app/tools/gimpblendoptions.c:318 app/tools/gimpbucketfilloptions.c:310
-#: app/tools/gimpmagnifyoptions.c:247 app/tools/gimpselectionoptions.c:503
+#: app/tools/gimpblendoptions.c:318 app/tools/gimpbucketfilloptions.c:303
+#: app/tools/gimpmagnifyoptions.c:240 app/tools/gimpselectionoptions.c:497
 msgid "Threshold:"
 msgstr "Kufiri:"
 
@@ -8495,55 +8495,55 @@ msgstr "_Ndriçimi:"
 msgid "Con_trast:"
 msgstr "Kon_trasti:"
 
-#: app/tools/gimpbucketfilloptions.c:133
+#: app/tools/gimpbucketfilloptions.c:132
 #, fuzzy
 msgid "Allow completely transparent regions to be filled"
 msgstr "Lejo"
 
-#: app/tools/gimpbucketfilloptions.c:139
+#: app/tools/gimpbucketfilloptions.c:138
 #, fuzzy
 msgid "Base filled area on all visible layers"
 msgstr "Bazë në i dukshëm"
 
-#: app/tools/gimpbucketfilloptions.c:145 app/tools/gimpselectionoptions.c:164
+#: app/tools/gimpbucketfilloptions.c:144 app/tools/gimpselectionoptions.c:164
 msgid "Maximum color difference"
 msgstr ""
 
 #. fill type
-#: app/tools/gimpbucketfilloptions.c:258
+#: app/tools/gimpbucketfilloptions.c:251
 #, fuzzy, c-format
 msgid "Fill Type  %s"
 msgstr "Mbush (përshtat) Lloji"
 
 #. fill selection
-#: app/tools/gimpbucketfilloptions.c:266
+#: app/tools/gimpbucketfilloptions.c:259
 #, c-format
 msgid "Affected Area  %s"
 msgstr ""
 
-#: app/tools/gimpbucketfilloptions.c:269
+#: app/tools/gimpbucketfilloptions.c:262
 #, fuzzy
 msgid "Fill Whole Selection"
 msgstr "Mbush (përshtat) Zgjedhja"
 
-#: app/tools/gimpbucketfilloptions.c:270
+#: app/tools/gimpbucketfilloptions.c:263
 #, fuzzy
 msgid "Fill Similar Colors"
 msgstr "Mbush (përshtat) Ngjyrat"
 
-#: app/tools/gimpbucketfilloptions.c:276 app/tools/gimpselectionoptions.c:474
+#: app/tools/gimpbucketfilloptions.c:269 app/tools/gimpselectionoptions.c:468
 #, fuzzy
 msgid "Finding Similar Colors"
 msgstr "Ngjyrat"
 
-#: app/tools/gimpbucketfilloptions.c:292
+#: app/tools/gimpbucketfilloptions.c:285
 #, fuzzy
 msgid "Fill Transparent Areas"
 msgstr "Mbush (përshtat) E tejdukshme"
 
-#: app/tools/gimpbucketfilloptions.c:298
-#: app/tools/gimpcolorpickeroptions.c:170 app/tools/gimpselectionoptions.c:491
-#: app/tools/gimpselectionoptions.c:537
+#: app/tools/gimpbucketfilloptions.c:291
+#: app/tools/gimpcolorpickeroptions.c:170 app/tools/gimpselectionoptions.c:485
+#: app/tools/gimpselectionoptions.c:531
 #, fuzzy
 msgid "Sample Merged"
 msgstr "Shembull"
@@ -8687,7 +8687,7 @@ msgstr ""
 msgid "Sample Average"
 msgstr "Shembull Mesatarja"
 
-#: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:436
+#: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:430
 #: app/widgets/gimpbrusheditor.c:130
 msgid "Radius:"
 msgstr ""
@@ -8735,7 +8735,7 @@ msgid "Convolve Type  %s"
 msgstr "Lloji"
 
 #. tool toggle
-#: app/tools/gimpcropoptions.c:187 app/tools/gimpmagnifyoptions.c:230
+#: app/tools/gimpcropoptions.c:187 app/tools/gimpmagnifyoptions.c:223
 #: app/tools/gimpmoveoptions.c:228
 #, fuzzy, c-format
 msgid "Tool Toggle  %s"
@@ -8786,7 +8786,7 @@ msgstr "Origjina X:"
 
 #. the pixel size labels
 #. the unit size labels
-#: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
+#: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:559
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
 msgstr "Gjerësia:"
@@ -8936,7 +8936,7 @@ msgid "Anti Erase  %s"
 msgstr "Fshi"
 
 #: app/tools/gimpflipoptions.c:175 app/tools/gimpmoveoptions.c:222
-#: app/tools/gimptransformoptions.c:328
+#: app/tools/gimptransformoptions.c:322
 msgid "Affect:"
 msgstr ""
 
@@ -9204,7 +9204,7 @@ msgstr "_Auto"
 msgid "Adjust levels automatically"
 msgstr "Përshtat"
 
-#: app/tools/gimpmagnifyoptions.c:225
+#: app/tools/gimpmagnifyoptions.c:218
 #, fuzzy
 msgid "Allow Window Resizing"
 msgstr "Lejo Dritarja Ridimenzionimi"
@@ -9531,25 +9531,25 @@ msgstr "Bazë në i dukshëm"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "i dukshëm"
 
-#: app/tools/gimpselectionoptions.c:403 app/tools/gimptextoptions.c:460
+#: app/tools/gimpselectionoptions.c:397 app/tools/gimptextoptions.c:460
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
-#: app/tools/gimpselectionoptions.c:426
+#: app/tools/gimpselectionoptions.c:420
 msgid "Feather Edges"
 msgstr ""
 
-#: app/tools/gimpselectionoptions.c:461
+#: app/tools/gimpselectionoptions.c:455
 #, fuzzy
 msgid "Show Interactive Boundary"
 msgstr "Shfaq"
 
-#: app/tools/gimpselectionoptions.c:485
+#: app/tools/gimpselectionoptions.c:479
 #, fuzzy
 msgid "Select Transparent Areas"
 msgstr "Zgjidh E tejdukshme"
 
-#: app/tools/gimpselectionoptions.c:529
+#: app/tools/gimpselectionoptions.c:523
 #, fuzzy
 msgid "Auto Shrink Selection"
 msgstr "Automatike Tkurr Zgjedhja"
@@ -9723,41 +9723,41 @@ msgstr "nuk në."
 msgid "Threshold Range:"
 msgstr ""
 
-#: app/tools/gimptransformoptions.c:334
+#: app/tools/gimptransformoptions.c:328
 #, fuzzy
 msgid "Transform Direction"
 msgstr "Drejtimi"
 
-#: app/tools/gimptransformoptions.c:353
+#: app/tools/gimptransformoptions.c:347
 msgid "Supersampling"
 msgstr ""
 
 #. the clip resulting image toggle button
-#: app/tools/gimptransformoptions.c:358
+#: app/tools/gimptransformoptions.c:352
 #, fuzzy
 msgid "Clip Result"
 msgstr "Pjesë (clip) Rezultati"
 
-#: app/tools/gimptransformoptions.c:385
+#: app/tools/gimptransformoptions.c:379
 msgid "Density:"
 msgstr ""
 
 #. the constraints frame
-#: app/tools/gimptransformoptions.c:396
+#: app/tools/gimptransformoptions.c:390
 msgid "Constraints"
 msgstr ""
 
-#: app/tools/gimptransformoptions.c:407
+#: app/tools/gimptransformoptions.c:401
 #, c-format
 msgid "15 Degrees  %s"
 msgstr ""
 
-#: app/tools/gimptransformoptions.c:418
+#: app/tools/gimptransformoptions.c:412
 #, fuzzy, c-format
 msgid "Keep Height  %s"
 msgstr "Lartësia"
 
-#: app/tools/gimptransformoptions.c:428 app/tools/gimptransformoptions.c:442
+#: app/tools/gimptransformoptions.c:422 app/tools/gimptransformoptions.c:436
 #, fuzzy
 msgid ""
 "Activate both the \"Keep Height\" and\n"
@@ -9765,7 +9765,7 @@ msgid ""
 "the aspect ratio"
 msgstr "Aktivo dhe j Gjerësia"
 
-#: app/tools/gimptransformoptions.c:432
+#: app/tools/gimptransformoptions.c:426
 #, fuzzy, c-format
 msgid "Keep Width  %s"
 msgstr "Gjerësia"
