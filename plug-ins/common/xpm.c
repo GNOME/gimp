@@ -79,12 +79,12 @@ typedef struct
 /*  whether the image is color or not.  global so I only have to pass
  *  one user value to the GHFunc
  */
-gboolean   color;
+static gboolean   color;
 
 /*  bytes per pixel.  global so I only have to pass one user value
  *  to the GHFunc
  */
-gint       cpp;
+static gint       cpp;
 
 /* Declare local functions */
 static void     query               (void);
@@ -95,8 +95,7 @@ static void     run                 (gchar         *name,
 				     GimpParam    **return_vals);
 
 static gint32   load_image          (gchar         *filename);
-static void     parse_colors        (XpmImage      *xpm_image,
-				     guchar       **cmap);
+static guchar  *parse_colors        (XpmImage      *xpm_image);
 static void     parse_image         (gint32         image_ID,
 				     XpmImage      *xpm_image,
 				     guchar        *cmap);
@@ -319,7 +318,6 @@ run (gchar      *name,
   values[0].data.d_status = status;
 }
 
-
 static gint32
 load_image (gchar *filename)
 {
@@ -337,9 +335,7 @@ load_image (gchar *filename)
   XpmReadFileToXpmImage (filename, &xpm_image, NULL);
 
   /* parse out the colors into a cmap */
-  parse_colors (&xpm_image, &cmap);
-  if (cmap == NULL)
-    gimp_quit();
+  cmap = parse_colors (&xpm_image);
 
   /* create the new image */
   image_ID = gimp_image_new (xpm_image.width,
@@ -358,63 +354,59 @@ load_image (gchar *filename)
   return image_ID;
 }
 
-static void
-parse_colors (XpmImage  *xpm_image, 
-	      guchar   **cmap)
+static guchar*
+parse_colors (XpmImage  *xpm_image)
 {
   Display  *display;
   Colormap  colormap;
   gint      i, j;
+  guchar   *cmap;
 
   /* open the display and get the default color map */
   display  = XOpenDisplay (NULL);
   colormap = DefaultColormap (display, DefaultScreen (display));
     
   /* alloc a buffer to hold the parsed colors */
-  *cmap = g_new (guchar, 4 * xpm_image->ncolors);
+  cmap = g_new0 (guchar, 4 * xpm_image->ncolors);
 
-  if ((*cmap) != NULL)
+  /* parse each color in the file */
+  for (i = 0, j = 0; i < xpm_image->ncolors; i++)
     {
-      /* default to black transparent */
-      memset((void*)(*cmap), 0, sizeof (guchar) * 4 * xpm_image->ncolors);
-      
-      /* parse each color in the file */
-      for (i = 0, j = 0; i < xpm_image->ncolors; i++)
-        {
-          gchar     *colorspec = "None";
-          XpmColor *xpm_color;
-          XColor    xcolor;
+      gchar     *colorspec = "None";
+      XpmColor *xpm_color;
+      XColor    xcolor;
         
-          xpm_color = &(xpm_image->colorTable[i]);
+      xpm_color = &(xpm_image->colorTable[i]);
         
-          /* pick the best spec available */
-          if (xpm_color->c_color)
-            colorspec = xpm_color->c_color;
-          else if (xpm_color->g_color)
-            colorspec = xpm_color->g_color;
-          else if (xpm_color->g4_color)
-            colorspec = xpm_color->g4_color;
-          else if (xpm_color->m_color)
-            colorspec = xpm_color->m_color;
+      /* pick the best spec available */
+      if (xpm_color->c_color)
+	colorspec = xpm_color->c_color;
+      else if (xpm_color->g_color)
+	colorspec = xpm_color->g_color;
+      else if (xpm_color->g4_color)
+	colorspec = xpm_color->g4_color;
+      else if (xpm_color->m_color)
+	colorspec = xpm_color->m_color;
         
-          /* parse if it's not transparent.  the assumption is that
-             g_new will memset the buffer to zeros */
-          if (strcmp (colorspec, "None") != 0)
-	    {
-	      XParseColor (display, colormap, colorspec, &xcolor);
-	      (*cmap)[j++] = xcolor.red >> 8;
-	      (*cmap)[j++] = xcolor.green >> 8;
-	      (*cmap)[j++] = xcolor.blue >> 8;
-	      (*cmap)[j++] = ~0;
-	    }
-	  else
-	    {
-	      j += 4;
-	    }
-        }
+      /* parse if it's not transparent.  the assumption is that
+	 g_new will memset the buffer to zeros */
+      if (strcmp (colorspec, "None") != 0)
+	{
+	  XParseColor (display, colormap, colorspec, &xcolor);
+	  cmap[j++] = xcolor.red >> 8;
+	  cmap[j++] = xcolor.green >> 8;
+	  cmap[j++] = xcolor.blue >> 8;
+	  cmap[j++] = ~0;
+	}
+      else
+	{
+	  j += 4;
+	}
     }
     
   XCloseDisplay (display);
+
+  return cmap;
 }
 
 static void
@@ -454,54 +446,51 @@ parse_image (gint32    image_ID,
     
   buf  = g_new (guchar, tile_height * xpm_image->width * 4);
 
-  if (buf != NULL)
+  src  = xpm_image->data;
+  for (i = 0; i < xpm_image->height; i+=tile_height)
     {
-      src  = xpm_image->data;
-      for (i = 0; i < xpm_image->height; i+=tile_height)
-        {
-          dest = buf;
-          scanlines = MIN(tile_height, xpm_image->height - i);
-          j = scanlines * xpm_image->width;
-          while (j--) {
-            {
-              val = *(src++) * 4;
-              *(dest)   = cmap[val];
-              *(dest+1) = cmap[val+1];
-              *(dest+2) = cmap[val+2];
-              *(dest+3) = cmap[val+3];
-              dest += 4;
-            }
-          
-            if ((j % 100) == 0)
-              gimp_progress_update ((double) i / (double) xpm_image->height);
-          }
-        
-          gimp_pixel_rgn_set_rect (&pixel_rgn, buf,
-                                   0, i,
-                                   drawable->width, scanlines);
-        
+      dest = buf;
+      scanlines = MIN(tile_height, xpm_image->height - i);
+      j = scanlines * xpm_image->width;
+      while (j--) {
+	{
+	  val = *(src++) * 4;
+	  *(dest)   = cmap[val];
+	  *(dest+1) = cmap[val+1];
+	  *(dest+2) = cmap[val+2];
+	  *(dest+3) = cmap[val+3];
+	  dest += 4;
         }
-  
-      g_free(buf);
+          
+	if ((j % 100) == 0)
+	  gimp_progress_update ((double) i / (double) xpm_image->height);
+      }
+        
+      gimp_pixel_rgn_set_rect (&pixel_rgn, buf,
+			       0, i,
+			       drawable->width, scanlines);
+      
     }
+  
+  g_free(buf);
 
   gimp_drawable_detach (drawable);
 }
 
-guint
+static guint
 rgbhash (rgbkey *c)
 {
   return ((guint)c->r) ^ ((guint)c->g) ^ ((guint)c->b);
 }
 
-guint
+static guint
 compare (rgbkey *c1, 
 	 rgbkey *c2)
 {
   return (c1->r == c2->r) && (c1->g == c2->g) && (c1->b == c2->b);
 }
-	
-void
+
+static void
 set_XpmImage (XpmColor *array, 
 	      guint     index, 
 	      gchar    *colorstring)
@@ -537,7 +526,7 @@ set_XpmImage (XpmColor *array,
     }
 }
 
-void
+static void
 create_colormap_from_hash (gpointer gkey, 
 			   gpointer value, 
 			   gpointer user_data)
@@ -580,54 +569,10 @@ save_image (gchar  *filename,
   gboolean   rc = FALSE;
 
   /* get some basic stats about the image */
-  switch (gimp_drawable_type (drawable_ID)) 
-    {
-    case GIMP_RGBA_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
-    case GIMP_GRAYA_IMAGE:
-      alpha = TRUE;
-      break;
-    case GIMP_RGB_IMAGE:
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_GRAY_IMAGE:
-      alpha = FALSE;
-      break;
-    default:
-      return FALSE;
-    }
+  alpha = gimp_drawable_has_alpha (drawable_ID);
+  color = !gimp_drawable_is_gray (drawable_ID);
+  indexed = gimp_drawable_is_indexed (drawable_ID);
 
-  switch (gimp_drawable_type (drawable_ID)) 
-    {
-    case GIMP_GRAYA_IMAGE:
-    case GIMP_GRAY_IMAGE:
-      color = FALSE;
-      break;
-    case GIMP_RGBA_IMAGE:
-    case GIMP_RGB_IMAGE:
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:	  	  
-    color = TRUE;
-    break;
-    default:
-      return FALSE;
-    }
-  
-  switch (gimp_drawable_type (drawable_ID)) 
-    {
-    case GIMP_GRAYA_IMAGE:
-    case GIMP_GRAY_IMAGE:
-    case GIMP_RGBA_IMAGE:
-    case GIMP_RGB_IMAGE:
-      indexed = FALSE;
-      break;
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:	  	  
-      indexed = TRUE;
-      break;
-    default:
-      return FALSE;
-    }
-  
   drawable = gimp_drawable_get (drawable_ID);
   width    = drawable->width;
   height   = drawable->height;
@@ -653,11 +598,8 @@ save_image (gchar  *filename,
     g_free (name);
   }
 
-  
   /* allocate a pixel region to work with */
-  if ((buffer = g_new (guchar, 
-		       gimp_tile_height()*width*drawable->bpp)) == NULL)
-    return 0;
+  buffer = g_new (guchar, gimp_tile_height() * width * drawable->bpp);
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
                        0, 0,
@@ -668,7 +610,7 @@ save_image (gchar  *filename,
   for (i = 0; i < height; i+=gimp_tile_height())
     {
       gint scanlines;
-  
+
       /* read the next row of tiles */
       scanlines = MIN (gimp_tile_height(), height - i);
       gimp_pixel_rgn_get_rect (&pixel_rgn, buffer, 0, i, width, scanlines);
@@ -757,7 +699,7 @@ save_image (gchar  *filename,
     }
 
   image = g_new (XpmImage, 1);
-  
+ 
   image->width=width;
   image->height=height;
   image->ncolors=ncolors;
@@ -773,8 +715,7 @@ save_image (gchar  *filename,
   /* clean up resources */  
   gimp_drawable_detach (drawable);
   
-  if (ibuff) 
-    g_free (ibuff);
+  g_free (ibuff);
   /*if (mbuff) g_free(mbuff);*/
   if (hash)  
     g_hash_table_destroy (hash);
@@ -820,7 +761,7 @@ save_dialog (void)
   gtk_widget_show (table);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("Alpha Threshold:"), SCALE_WIDTH, 0,
+				     _("_Alpha Threshold:"), SCALE_WIDTH, 0,
 				     xpmvals.threshold, 0, 255, 1, 8, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);

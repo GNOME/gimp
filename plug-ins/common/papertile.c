@@ -282,7 +282,7 @@ open_dialog (void)
   button = gimp_spin_button_new (&w.division_x_adj, p.params.division_x,
 				 1.0, p.drawable->width, 1.0, 5.0, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("X:"), 1.0, 0.5,
+			     _("_X:"), 1.0, 0.5,
 			     button, 1, TRUE);
   g_signal_connect (G_OBJECT (w.division_x_adj), "value_changed",
                     G_CALLBACK (division_x_adj_changed),
@@ -291,7 +291,7 @@ open_dialog (void)
   button = gimp_spin_button_new (&w.division_y_adj, p.params.division_y,
 				 1.0, p.drawable->width, 1.0, 5.0, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Y:"), 1.0, 0.5,
+			     _("_Y:"), 1.0, 0.5,
 			     button, 1, TRUE);
   g_signal_connect (G_OBJECT (w.division_y_adj), "value_changed",
                     G_CALLBACK (division_y_adj_changed),
@@ -302,7 +302,7 @@ open_dialog (void)
 					   p.drawable->height),
 				 1.0, 5.0, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Size:"), 1.0, 0.5,
+			     _("_Size:"), 1.0, 0.5,
 			     button, 1, TRUE);
   g_signal_connect (G_OBJECT (w.tile_size_adj), "value_changed",
                     G_CALLBACK (tile_size_adj_changed),
@@ -313,11 +313,11 @@ open_dialog (void)
 				 &p.params.fractional_type,
 				 (gpointer) p.params.fractional_type,
 
-				 _("Background"),
+				 _("_Background"),
 				 (gpointer) FRACTIONAL_TYPE_BACKGROUND, NULL,
-				 _("Ignore"),
+				 _("_Ignore"),
 				 (gpointer) FRACTIONAL_TYPE_IGNORE, NULL,
-				 _("Force"),
+				 _("_Force"),
 				 (gpointer) FRACTIONAL_TYPE_FORCE, NULL,
 
 				 NULL);
@@ -330,7 +330,7 @@ open_dialog (void)
   gtk_box_pack_start (GTK_BOX (box), sep, FALSE, FALSE, 1);
   gtk_widget_show (sep);
 
-  button = gtk_check_button_new_with_label(_("Centering"));
+  button = gtk_check_button_new_with_mnemonic(_("C_entering"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), p.params.centering);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -358,13 +358,13 @@ open_dialog (void)
   button = gimp_spin_button_new (&adjustment, p.params.move_max_rate,
 				 0.0, 100.0, 1.0, 10.0, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Max (%):"), 1.0, 0.5,
+			     _("_Max (%):"), 1.0, 0.5,
 			     button, 1, TRUE);
   g_signal_connect (G_OBJECT (adjustment), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &p.params.move_max_rate);
 
-  button = gtk_check_button_new_with_label (_("Wrap Around"));
+  button = gtk_check_button_new_with_mnemonic (_("_Wrap Around"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				p.params.wrap_around);
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 2, 1, 2);
@@ -379,15 +379,15 @@ open_dialog (void)
 				 &p.params.background_type,
 				 (gpointer) p.params.background_type,
 
-				 _("Transparent"),
+				 _("_Transparent"),
 				 (gpointer) BACKGROUND_TYPE_TRANSPARENT, NULL,
-				 _("Inverted Image"),
+				 _("I_nverted Image"),
 				 (gpointer) BACKGROUND_TYPE_INVERTED, NULL,
-				 _("Image"),
+				 _("Im_age"),
 				 (gpointer) BACKGROUND_TYPE_IMAGE, NULL,
-				 _("Foreground Color"),
+				 _("Fo_reground Color"),
 				 (gpointer) BACKGROUND_TYPE_FOREGROUND, NULL,
-				 _("Background Color"),
+				 _("Bac_kground Color"),
 				 (gpointer) BACKGROUND_TYPE_BACKGROUND, NULL,
 				 (gpointer) 1, /* button without label */
 				 (gpointer) BACKGROUND_TYPE_COLOR, &button,
@@ -421,9 +421,7 @@ open_dialog (void)
 /*============================================================================*/
 /* PLUGIN CORE                                                                */
 /*============================================================================*/
-
-typedef struct _Tile Tile;
-struct _Tile
+typedef struct _Tile
 {
   guint x;
   guint y;
@@ -432,7 +430,7 @@ struct _Tile
   guint height;
   gint  move_x;
   gint  move_y;
-};
+} Tile;
 
 static gint
 tile_compare (const void *x,
@@ -440,8 +438,6 @@ tile_compare (const void *x,
 {
   return ((Tile *) x)->z - ((Tile *) y)->z;
 }
-
-/*----------------------------------------------------------------------------*/
 
 static inline gdouble
 drand (void)
@@ -460,8 +456,6 @@ random_move (gint *x,
   *x = (gint) (radius * cos (angle));
   *y = (gint) (radius * sin (angle));
 }
-
-/*----------------------------------------------------------------------------*/
 
 static void
 overlap_RGB (guchar       *base,
@@ -507,8 +501,6 @@ overlap_RGBA (guchar       *base,
     }
 }
 
-/*----------------------------------------------------------------------------*/
-
 static inline void
 filter (void)
 {
@@ -528,7 +520,6 @@ filter (void)
   gint       x;
   gint       y;
   gint       move_max_pixels;
-  guchar    *row_buffer;
   gint       clear_x0;
   gint       clear_y0;
   gint       clear_x1;
@@ -546,7 +537,6 @@ filter (void)
 		       p.drawable->width, p.drawable->height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dst, p.drawable, 0, 0,
 		       p.drawable->width, p.drawable->height, TRUE, TRUE);
-  row_buffer = g_new (guchar, p.drawable->bpp * p.drawable->width);
   pixels = g_new (guchar,
 		  p.drawable->bpp * p.drawable->width * p.drawable->height);
   buffer = g_new (guchar,
@@ -653,13 +643,9 @@ filter (void)
     }
   qsort (tiles, numof_tiles, sizeof *tiles, tile_compare);
 
-  /* CLEAR PIXELS */
-  for (y = 0; y < p.drawable->height; y++)
-    {
-      gimp_pixel_rgn_get_row (&src,
-			      &pixels[p.drawable->bpp*p.drawable->width*y],
-			      0, y, p.drawable->width);
-    }
+  gimp_pixel_rgn_get_rect (&src, pixels, 0, 0, p.drawable->width,
+			   p.drawable->height);
+
   if (p.params.fractional_type == FRACTIONAL_TYPE_IGNORE)
     {
       clear_x0     = offset_x;
@@ -791,28 +777,20 @@ filter (void)
 	    }
 	}
 
-      gimp_progress_update ((gdouble) i / (gdouble) numof_tiles / 2.0);
+      gimp_progress_update ((gdouble) i / (gdouble) numof_tiles);
     }
 
-  /* SEND IT */
-  for (y = 0; y < p.drawable->height; y++)
-    {
-      gimp_pixel_rgn_set_row (&dst, &pixels[p.drawable->bpp*p.drawable->width*y],
-			      0, y, p.drawable->width);
-      gimp_progress_update ((gdouble) y /
-			    (gdouble) p.drawable->height / 2.0 + 0.5);
-    }
+  gimp_pixel_rgn_set_rect (&dst, pixels, 0, 0, p.drawable->width,
+			   p.drawable->height);
 
   gimp_drawable_flush (p.drawable);
   gimp_drawable_merge_shadow (p.drawable->drawable_id, TRUE);
   gimp_drawable_update (p.drawable->drawable_id, p.selection.x0, p.selection.y0,
 			p.selection.width, p.selection.height);
 
-  /* FREE */
   g_free (buffer);
   g_free (pixels);
   g_free (tiles);
-  g_free (row_buffer);
 }
 
 /*============================================================================*/

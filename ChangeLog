@@ -1,3 +1,12 @@
+2002-06-29  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/papertile.c (open_dialog): Added mnemonics (#80804)
+	(filter): replaced gimp_pixel_rgn_get/set_row's to get/set complete 
+	image in/from buffer with one gimp_pixel_rgn_get/set_rect.
+
+	* plug-ins/common/xpm.c (save_dialog): Added mnemonics (#80804) plus
+	some minor code cleanup.
+
 2002-06-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/tiler.c: converted Make Seamless plug-in so it now 
