@@ -1205,6 +1205,7 @@ path_import_invoker (Gimp     *gimp,
   GimpImage *gimage;
   gchar *filename;
   gboolean merge;
+  gboolean scale;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -1216,8 +1217,10 @@ path_import_invoker (Gimp     *gimp,
 
   merge = args[2].value.pdb_int ? TRUE : FALSE;
 
+  scale = args[3].value.pdb_int ? TRUE : FALSE;
+
   if (success)
-    success = gimp_vectors_import (gimage, filename, merge, NULL);
+    success = gimp_vectors_import (gimage, filename, merge, scale, NULL);
 
   return procedural_db_return_args (&path_import_proc, success);
 }
@@ -1238,6 +1241,11 @@ static ProcArg path_import_inargs[] =
     GIMP_PDB_INT32,
     "merge",
     "Merge paths into a single vectors object"
+  },
+  {
+    GIMP_PDB_INT32,
+    "scale",
+    "Scale the SVG to image dimensions"
   }
 };
 
@@ -1250,7 +1258,7 @@ static ProcRecord path_import_proc =
   "Sven Neumann",
   "2003",
   GIMP_INTERNAL,
-  3,
+  4,
   path_import_inargs,
   0,
   NULL,

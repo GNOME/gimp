@@ -613,7 +613,7 @@ vectors_import_ok_callback (GtkWidget *widget)
 
       filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (widget));
 
-      if (gimp_vectors_import (gimage, filename, FALSE, &error))
+      if (gimp_vectors_import (gimage, filename, FALSE, FALSE, &error))
         {
           gimp_image_flush (gimage);
         }
@@ -654,6 +654,9 @@ vectors_import_query (GimpImage *gimage)
   g_signal_connect_swapped (filesel->cancel_button, "clicked",
                             G_CALLBACK (gtk_widget_destroy),
                             filesel);
+
+  /*  FIXME: add a proper file selector
+      and controls for merge and scale options  */
 
   gtk_widget_show (GTK_WIDGET (filesel));
 }

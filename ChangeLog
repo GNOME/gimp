@@ -1,3 +1,19 @@
+2003-09-25  Sven Neumann  <sven@gimp.org>
+
+	* app/vectors/gimpvectors-import.[ch]: optionally scale the
+	imported SVG to fit the image.
+
+	* app/gui/vectors-commands.c: changed accordingly.
+
+	* tools/pdbgen/pdb/paths.pdb: export the new scale parameter to
+	the PDB.
+
+	* app/pdb/paths_cmds.c
+	* libgimp/gimppaths_pdb.[ch]: regenerated.
+
+	* plug-ins/common/svg.c: scale the imported vectors to image size.
+	This makes them always fit :)
+
 2003-09-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/illusion.c: applied rest of patch from 

@@ -207,7 +207,8 @@ run (const gchar      *name,
 	    {
               if (load_vals.import)
                 gimp_path_import (image_ID,
-                                  param[1].data.d_string, load_vals.merge);
+                                  param[1].data.d_string,
+                                  load_vals.merge, TRUE);
 
 	      *nreturn_vals = 2;
 	      values[1].type         = GIMP_PDB_IMAGE;
@@ -781,18 +782,6 @@ load_dialog (const gchar *filename)
                     NULL);
 
   /*  Scale ratio  */
-  label = gtk_label_new (_("Ratio X:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (_("Y:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 2, 4,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -818,6 +807,13 @@ load_dialog (const gchar *filename)
 		    G_CALLBACK (load_dialog_ratio_callback),
 		    NULL);
 
+  label = gtk_label_new_with_mnemonic (_("Ratio _X:"));
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
   spinbutton =
     gimp_spin_button_new (&yadj,
                           ratio_y,
@@ -832,6 +828,13 @@ load_dialog (const gchar *filename)
   g_signal_connect (yadj, "value_changed",
 		    G_CALLBACK (load_dialog_ratio_callback),
 		    NULL);
+
+  label = gtk_label_new_with_mnemonic (_("_Y:"));
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
   /*  the constrain ratio chainbutton  */
   constrain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
@@ -872,14 +875,13 @@ load_dialog (const gchar *filename)
 
   /*  Path Import  */
   toggle = gtk_check_button_new_with_mnemonic (_("Import _Paths"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 5, 6,
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 5, 6,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
-                           _("Import path elements of the SVG so they can be "
-                             "used with the GIMP path tool. This may not work "
-                             "properly with import ratios other than 1.0."),
+                           _("Import path elements of the SVG so they "
+                             "can be used with the GIMP path tool"),
                            NULL);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), load_vals.import);
@@ -892,7 +894,7 @@ load_dialog (const gchar *filename)
                     NULL);
 
   toggle2 = gtk_check_button_new_with_mnemonic (_("Merge Imported Paths"));
-  gtk_table_attach (GTK_TABLE (table), toggle2, 1, 2, 6, 7,
+  gtk_table_attach (GTK_TABLE (table), toggle2, 0, 2, 6, 7,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_set_sensitive (toggle2, load_vals.import);
   gtk_widget_show (toggle2);

@@ -57,6 +57,7 @@ typedef struct
 {
   GQueue    *stack;
   GimpImage *image;
+  gboolean   scale;
 } SvgParser;
 
 typedef struct _SvgHandler SvgHandler;
@@ -143,8 +144,8 @@ static GList    * parse_path_data     (const gchar  *data);
  * gimp_vectors_import:
  * @image: the #GimpImage to add the paths to
  * @filename: name of a SVG file
- * @merge: if multiple paths should be merged into a single #GimpVectors
- *         object
+ * @merge: should multiple paths be merged into a single #GimpVectors object
+ * @scale: should the SVG be scaled to fit the image dimensions
  * @error: location to store possible errors
  *
  * Imports one or more paths from a SVG file.
@@ -155,6 +156,7 @@ gboolean
 gimp_vectors_import (GimpImage    *image,
                      const gchar  *filename,
                      gboolean      merge,
+                     gboolean      scale,
                      GError      **error)
 {
   GimpXmlParser *xml_parser;
@@ -169,6 +171,7 @@ gimp_vectors_import (GimpImage    *image,
 
   parser.stack = g_queue_new ();
   parser.image = image;
+  parser.scale = scale;
 
   /*  the base of the stack, defines the size of the view-port  */
   base = g_new0 (SvgHandler, 1);
@@ -258,12 +261,12 @@ gimp_vectors_import (GimpImage    *image,
 }
 
 static void
-svg_parser_start_element (GMarkupParseContext *context,
-                          const gchar         *element_name,
-                          const gchar        **attribute_names,
-                          const gchar        **attribute_values,
-                          gpointer             user_data,
-                          GError             **error)
+svg_parser_start_element (GMarkupParseContext  *context,
+                          const gchar          *element_name,
+                          const gchar         **attribute_names,
+                          const gchar         **attribute_values,
+                          gpointer              user_data,
+                          GError              **error)
 {
   SvgParser  *parser = user_data;
   SvgHandler *handler;
@@ -295,10 +298,10 @@ svg_parser_start_element (GMarkupParseContext *context,
 }
 
 static void
-svg_parser_end_element (GMarkupParseContext *context,
-                        const gchar         *element_name,
-                        gpointer             user_data,
-                        GError             **error)
+svg_parser_end_element (GMarkupParseContext  *context,
+                        const gchar          *element_name,
+                        gpointer              user_data,
+                        GError              **error)
 {
   SvgParser  *parser = user_data;
   SvgHandler *handler;
@@ -341,6 +344,7 @@ svg_handler_svg (SvgHandler   *handler,
                  const gchar **values,
                  SvgParser    *parser)
 {
+  SvgHandler  *base;
   GimpMatrix3 *matrix;
   GimpMatrix3  box;
   const gchar *viewbox = NULL;
@@ -389,12 +393,17 @@ svg_handler_svg (SvgHandler   *handler,
       values++;
     }
 
+#ifdef DEBUG_VECTORS_IMPORT
+  g_printerr ("%s; %g x %g (scale %g %g)\n", handler->id,
+              w, h, xscale, yscale);
+#endif
+
   gimp_matrix3_scale (matrix, xscale, yscale);
+
+  base = g_queue_peek_head (parser->stack);
 
   if (x || y)
     {
-      SvgHandler *base = g_queue_peek_head (parser->stack);
-
       /* according to the spec offsets are meaningless on the outermost svg */
       if (strcmp (base->name, "image"))
         gimp_matrix3_translate (matrix, x, y);
@@ -403,6 +412,15 @@ svg_handler_svg (SvgHandler   *handler,
   if (viewbox && parse_svg_viewbox (viewbox, &w, &h, &box))
     {
       gimp_matrix3_mult (&box, matrix);
+    }
+
+  /*  optionally scale the outermost svg to image size  */
+  if (parser->scale && strcmp (base->name, "image") == 0)
+    {
+      if (w > 0.0 && h > 0.0)
+        gimp_matrix3_scale (matrix, base->width / w, base->height / h);
+
+      parser->scale = FALSE;
     }
 
   handler->width  = w;
@@ -424,7 +442,22 @@ svg_handler_group (SvgHandler   *handler,
           GimpMatrix3  matrix;
 
           if (parse_svg_transform (*values, &matrix))
-            handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+            {
+              handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+
+#ifdef DEBUG_VECTORS_IMPORT
+              g_printerr ("%s: %g %g %g  %g %g %g %g %g %g\n", handler->id,
+                          handler->transform->coeff[0][0],
+                          handler->transform->coeff[0][1],
+                          handler->transform->coeff[0][2],
+                          handler->transform->coeff[1][0],
+                          handler->transform->coeff[1][1],
+                          handler->transform->coeff[1][2],
+                          handler->transform->coeff[2][0],
+                          handler->transform->coeff[2][1],
+                          handler->transform->coeff[2][2]);
+#endif
+            }
         }
 
       names++;
@@ -550,8 +583,7 @@ parse_svg_length (const gchar *value,
       break;
 
     default:
-      len = len / gimp_unit_get_factor (unit) * resolution;
-      *scale  = len / reference;
+      *scale  = resolution / gimp_unit_get_factor (unit);
       *length = len;
     }
 
@@ -608,6 +640,10 @@ parse_svg_viewbox (const gchar *value,
         {
           *width = *height = 0.0;
         }
+    }
+  else
+    {
+      g_printerr ("SVG import: cannot parse viewBox attribute\n");
     }
 
   return success;

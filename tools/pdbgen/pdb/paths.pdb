@@ -636,12 +636,14 @@ HELP
 	{ name => 'filename', type => 'string', no_validate => 1,
 	  desc => 'The name of the SVG file to import.' },
 	{ name => 'merge', type => 'boolean',
-	  desc => 'Merge paths into a single vectors object' }
+	  desc => 'Merge paths into a single vectors object' },
+	{ name => 'scale', type => 'boolean',
+	  desc => 'Scale the SVG to image dimensions' }
     );
 
     %invoke = (
         headers => [ qw("vectors/gimpvectors-import.h") ],
-	code    => 'success = gimp_vectors_import (gimage, filename, merge, NULL);'
+	code    => 'success = gimp_vectors_import (gimage, filename, merge, scale, NULL);'
     );
 }
 

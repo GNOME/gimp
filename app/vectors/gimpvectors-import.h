@@ -26,6 +26,7 @@
 gboolean  gimp_vectors_import (GimpImage    *image,
                                const gchar  *filename,
                                gboolean      merge,
+                               gboolean      scale,
                                GError      **error);
 
 

@@ -561,6 +561,7 @@ gimp_path_to_selection (gint32          image_ID,
  * @image_ID: The image.
  * @filename: The name of the SVG file to import.
  * @merge: Merge paths into a single vectors object.
+ * @scale: Scale the SVG to image dimensions.
  *
  * Import paths from an SVG file.
  *
@@ -573,7 +574,8 @@ gimp_path_to_selection (gint32          image_ID,
 gboolean
 gimp_path_import (gint32       image_ID,
 		  const gchar *filename,
-		  gboolean     merge)
+		  gboolean     merge,
+		  gboolean     scale)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -584,6 +586,7 @@ gimp_path_import (gint32       image_ID,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, filename,
 				    GIMP_PDB_INT32, merge,
+				    GIMP_PDB_INT32, scale,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
