@@ -998,9 +998,9 @@ save_ok_callback (GtkWidget *widget,
    tRNS chunk when saving GIF-like transparent images with colormaps */
 
 static void respin_cmap (png_structp pp, png_infop info, gint32 image_ID) {
+  static const guchar trans[] = { 0 };
   static guchar after[3 * 256];
   gint colors;
-  guchar trans[] = { 0 };
   guchar *before;
 
   before= gimp_image_get_cmap(image_ID, &colors);
