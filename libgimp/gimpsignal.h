@@ -29,7 +29,10 @@
 
 #include <signal.h>
 #include <glib.h>
-
+#ifdef __EMX__
+/* hope this is right for OS/2 */
+#define SA_RESTART SA_SYSV
+#endif
 /* GimpRetSigType is a reference 
  * to a (signal handler) function 
  * that takes a signal ID and 
