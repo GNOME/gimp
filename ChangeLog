@@ -1,3 +1,10 @@
+2005-01-03  Sven Neumann  <neumann@jpk.com>
+
+	Merged from HEAD branch:
+
+	* plug-ins/ifscompose/ifscompose.c: use g_free() to release memory
+	allocated using g_malloc().
+
 2005-01-03  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:

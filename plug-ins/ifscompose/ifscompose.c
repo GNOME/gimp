@@ -2420,11 +2420,11 @@ ifsfile_replace_ifsvals (IfsComposeVals  *new_ifsvals,
 {
   gdouble width  = ifsDesign->area->allocation.width;
   gdouble height = ifsDesign->area->allocation.height;
-  guint i;
+  guint   i;
 
   for (i = 0; i < ifsvals.num_elements; i++)
     aff_element_free (elements[i]);
-  free(elements);
+  g_free (elements);
 
   ifsvals = *new_ifsvals;
   elements = new_elements;
