@@ -14,6 +14,7 @@
 	* themes/Default/images/stock-button-reset.png: added a reset button
 	(which looks just like refresh at the moment).
 	
+	* configure.in
 	* themes/Default/images/tools/Makefile.am: removed.
 
 	* libgimpwidgets/gimpstock.c

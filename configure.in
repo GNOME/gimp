@@ -962,7 +962,6 @@ themes/Makefile
 themes/Default/Makefile
 themes/Default/images/Makefile
 themes/Default/images/preferences/Makefile
-themes/Default/images/tools/Makefile
 data/Makefile
 data/misc/Makefile
 data/misc/gimp.desktop.in
