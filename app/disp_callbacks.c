@@ -475,6 +475,11 @@ gdisplay_origin_button_press (GtkWidget      *widget,
       popup_shell = gdisp->shell;
       gdisplay_set_menu_sensitivity (gdisp);
       gtk_menu_popup (GTK_MENU (gdisp->popup), NULL, NULL, NULL, NULL, 1, event->time);
+
+      /* Stop the signal emission so the button doesn't grab the
+       * pointer away from us
+       */
+      gtk_signal_emit_stop_by_name (widget, "button_press_event");
     }
 
   return FALSE;

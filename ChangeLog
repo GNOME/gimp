@@ -1,3 +1,9 @@
+Wed Jun 10 14:17:44 1998  Owen Taylor  <otaylor@gtk.org>
+
+	* app/disp_callbacks.c (gdisplay_origin_button_press): 
+	Stop signal emission so that button doesn't grab the
+	pointer away from the menu.
+
 Tue Jun  9 19:47:19 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* app/brushes.c app/drawable.c app/patterns.c
