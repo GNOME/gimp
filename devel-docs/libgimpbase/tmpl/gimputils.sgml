@@ -54,6 +54,15 @@ Utilities of general interest
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_escape_uline ##### -->
+<para>
+
+</para>
+
+@str: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_strip_uline ##### -->
 <para>
 

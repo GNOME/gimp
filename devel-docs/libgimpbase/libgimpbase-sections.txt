@@ -127,6 +127,7 @@ gimp_any_to_utf8
 gimp_filename_to_utf8
 gimp_utf8_strtrim
 gimp_memsize_to_string
+gimp_escape_uline
 gimp_strip_uline
 </SECTION>
 
