@@ -92,7 +92,7 @@ void create_sizepage(GtkNotebook *notebook)
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), TRUE);
   gtk_scale_set_digits(GTK_SCALE (tmpw), 0);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The number of directions (i.e. brushes) to use"), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The number of sizes of brushes to use"), NULL);
   gtk_widget_show (tmpw);
 
   sizefirstadjust = gtk_adjustment_new(pcvals.sizefirst, 0.0, 361.0, 1.0, 1.0, 1.0);

@@ -1870,9 +1870,8 @@ save_ok_callback (GtkWidget *widget,
   text_buffer = gtk_object_get_data (GTK_OBJECT (data), "text_buffer");
 
   gtk_text_buffer_get_bounds (text_buffer, &start_iter, &end_iter);
-  gtk_text_iter_backward_char (&end_iter);
-
-  image_comment = gtk_text_buffer_get_text (text_buffer, &start_iter, &end_iter, FALSE);
+  image_comment = gtk_text_buffer_get_text (text_buffer, 
+                                            &start_iter, &end_iter, FALSE);
         
   gtk_widget_destroy (GTK_WIDGET (data));
 }

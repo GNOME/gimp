@@ -726,11 +726,11 @@ mesg_body_callback (GtkTextBuffer *buffer,
   GtkTextIter start_iter;
   GtkTextIter end_iter;
 
-  gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
-  gtk_text_iter_backward_char (&end_iter);
 
   if (mesg_body)
     g_free (mesg_body);
+
+  gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
   mesg_body = gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
 } 
 

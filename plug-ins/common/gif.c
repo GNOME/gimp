@@ -2448,8 +2448,6 @@ comment_entry_callback (GtkTextBuffer *buffer)
   gchar        *text;
 
   gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
-  gtk_text_iter_backward_char (&end_iter);
-
   text = gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
 
   if (strlen (text) > 240)

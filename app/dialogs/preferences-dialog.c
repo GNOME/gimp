@@ -1115,8 +1115,6 @@ prefs_text_callback (GtkTextBuffer *buffer,
   val = (gchar **) data;
 
   gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
-  gtk_text_iter_backward_char (&end_iter);
-
   text = gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
 
   if (strlen (text) > MAX_COMMENT_LENGTH)
