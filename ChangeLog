@@ -1,3 +1,8 @@
+1999-08-27  Tomas Ogren  <stric@ing.umu.se>
+
+	* app/convert.c app/paint_funcs.c app/paths_dialog.c:
+	i18n fixes and added a missing \n...
+	
 Thu Aug 26 15:19:19 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in

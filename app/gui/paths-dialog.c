@@ -414,7 +414,7 @@ path_dialog_new(GimpImage *gimage,gint name_seed, gpointer udata)
   GString *s = g_string_new (NULL);
   gchar   *suniq;
 
-  g_string_sprintf (s, "Path %d",name_seed);
+  g_string_sprintf (s, _("Path %d"), name_seed);
   suniq = unique_name(gimage,s->str);
   if(suniq)
     {

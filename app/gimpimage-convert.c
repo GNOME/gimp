@@ -521,8 +521,11 @@ convert_to_indexed (GimpImage *gimage)
 	gtk_container_set_border_width (GTK_CONTAINER (frame), 2);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->shell)->vbox), frame, TRUE, TRUE, 0);
 
-	label = gtk_label_new ("You are attempting to convert an image with alpha/layers from RGB/GRAY to INDEXED.\n"
-			       "\tYou should not generate a palette of more than 255 colors if you intend to create a transparent or animated GIF file from this image.");
+	label = gtk_label_new (
+		_("You are attempting to convert an image with alpha/layers "
+                    "from RGB/GRAY to INDEXED.\nYou should not generate a "
+                    "palette of more than 255 colors if you intend to create "
+                    "a transparent or animated GIF file from this image."));
 	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_FILL);
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 	gtk_container_add (GTK_CONTAINER (frame), label);

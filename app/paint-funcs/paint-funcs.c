@@ -5176,7 +5176,7 @@ initial_sub_region(struct initial_regions_struct *st,
   type = st->type;
 
   if (src->w * (src->bytes + 1) > 512)
-    fprintf(stderr, "initial_sub_region:: error :: src->w * (src->bytes + 1) > 512");
+    fprintf(stderr, "initial_sub_region:: error :: src->w * (src->bytes + 1) > 512\n");
 
   s = src->data;
   d = dest->data;
