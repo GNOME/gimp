@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-11-24 17:41+0100\n"
-"PO-Revision-Date: 2002-11-24 17:42+0100\n"
+"POT-Creation-Date: 2002-11-24 20:25+0100\n"
+"PO-Revision-Date: 2002-11-24 20:25+0100\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -528,7 +528,7 @@ msgstr "Ta bort den just nu markerade fraktalen"
 #. the dialog
 #: plug-ins/FractalExplorer/FractalExplorer.c:1461
 msgid "Rescan for Fractals"
-msgstr "Genomsök igenefter fraktaler"
+msgstr "Genomsök igen efter fraktaler"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1480
 msgid "Add FractalExplorer Path"
@@ -3727,7 +3727,8 @@ msgid ""
 "GIF: Couldn't simply reduce colors further.\n"
 "Saving as opaque.\n"
 msgstr ""
-"GIF: Kunde ej enkelt minska antalet färger mer.  Sparar som ogenomskinlig.\n"
+"GIF: Kunde ej enkelt minska antalet färger mer.\n"
+"Sparar som ogenomskinlig.\n"
 
 #: plug-ins/common/gif.c:939
 msgid ""
@@ -5229,6 +5230,8 @@ msgstr ""
 #: plug-ins/common/png.c:1174
 msgid "Couldn't losslessly save transparency, saving opacity instead.\n"
 msgstr ""
+"Kunde inte spara transparens utan informationsförlust; spararopacitet "
+"istället.\n"
 
 #: plug-ins/common/png.c:1197
 msgid "Save as PNG"
@@ -6396,7 +6399,7 @@ msgstr "Packa bitar"
 
 #: plug-ins/common/tiff.c:1608
 msgid "Deflate"
-msgstr ""
+msgstr "Packa ihop"
 
 #: plug-ins/common/tiff.c:1611
 msgid "JPEG"
@@ -8072,7 +8075,7 @@ msgstr "Sektor"
 
 #: plug-ins/gfig/gfig.c:3227
 msgid "Arc as:"
-msgstr ""
+msgstr "Cirkelbåge som:"
 
 #. Put buttons in
 #: plug-ins/gfig/gfig.c:3281
@@ -8228,7 +8231,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:4425
 msgid "Enter Gfig Entry Name"
-msgstr ""
+msgstr "Ange Gfig postnamn"
 
 #: plug-ins/gfig/gfig.c:4450
 msgid "Gfig Object Name:"
@@ -8237,11 +8240,11 @@ msgstr "Gfig objektnamn:"
 #. the dialog
 #: plug-ins/gfig/gfig.c:4509
 msgid "Rescan for Gfig Objects"
-msgstr ""
+msgstr "Genomsök efter Gfig-objekt igen"
 
 #: plug-ins/gfig/gfig.c:4528
 msgid "Add Gfig Path"
-msgstr ""
+msgstr "Lägg till Gfig sökväg"
 
 #. Load a single object
 #: plug-ins/gfig/gfig.c:4602
@@ -8250,7 +8253,7 @@ msgstr "Läs in Gfig obj"
 
 #: plug-ins/gfig/gfig.c:4627
 msgid "Error in copy layer for onlayers"
-msgstr ""
+msgstr "Fel i kopiera lager för onlayers"
 
 #. RGBA or GRAYA type
 #. opacity
@@ -8298,7 +8301,7 @@ msgstr "<INGEN>"
 
 #: plug-ins/gfig/gfig.c:5124
 msgid "Editing read-only object - you will not be able to save it"
-msgstr ""
+msgstr "Redigerar ej skrivbart objekt - du kommer inte kunna spara det"
 
 #. Create new entry with name + copy at end & copy object into it
 #: plug-ins/gfig/gfig.c:5227
@@ -8335,15 +8338,15 @@ msgstr "Överlagring"
 #. * keyword for the gtk toolkit
 #: plug-ins/gflare/gflare.c:870
 msgid "<Image>/Filters/Light Effects/GFlare..."
-msgstr ""
+msgstr "<Image>/Filter/Ljuseffekter/GFlare..."
 
 #: plug-ins/gflare/gflare.c:986
 msgid "Gradient Flare..."
-msgstr ""
+msgstr "Gradientöverstrålning..."
 
 #: plug-ins/gflare/gflare.c:998
 msgid "GFlare: cannot operate on indexed color images"
-msgstr ""
+msgstr "GFlare: kan inte arbeta med indexfärgbilder"
 
 #: plug-ins/gflare/gflare.c:1036
 #, c-format
@@ -8353,6 +8356,10 @@ msgid ""
 "(gflare-path \"%s\")\n"
 "to your %s file."
 msgstr ""
+"Ingen GFlare-sökväg i gimprc:\n"
+"du behöver lägga till en rad som\n"
+"(gflare-path \"%s\")\n"
+"till din %s fil."
 
 #: plug-ins/gflare/gflare.c:1054
 msgid "gflare-path misconfigured - the following folders were not found:"
@@ -8382,6 +8389,11 @@ msgid ""
 "and make a folder %s,\n"
 "then you can save your own GFlare's into that folder."
 msgstr ""
+"GFlare `%s' är inte sparad.\n"
+"Om du lägger till en ny rad i %s, som:\n"
+"(gflare-path \"%s\")\n"
+"och skapar en katalog %s,\n"
+"så kan du spara dina egna GFlare i den katalogen."
 
 #: plug-ins/gflare/gflare.c:1628
 #, c-format
@@ -8482,7 +8494,7 @@ msgstr "Ta bort GFlare"
 #: plug-ins/gflare/gflare.c:3505
 #, c-format
 msgid "not found %s in gflares_list"
-msgstr ""
+msgstr "%s hittades inte i gflares_list"
 
 #: plug-ins/gflare/gflare.c:3546
 msgid "GFlare Editor"
@@ -8490,7 +8502,7 @@ msgstr "GFlare Editor"
 
 #: plug-ins/gflare/gflare.c:3551
 msgid "Rescan Gradients"
-msgstr ""
+msgstr "Genomsök gradienter igen"
 
 #. Glow
 #: plug-ins/gflare/gflare.c:3672
@@ -8510,7 +8522,7 @@ msgstr "Strålritningsinställningar"
 #. Rays
 #: plug-ins/gflare/gflare.c:3732
 msgid "Second Flares Paint Options"
-msgstr ""
+msgstr "Andra överstrålarna ritinställningar"
 
 #: plug-ins/gflare/gflare.c:3764
 msgid "General"
@@ -8531,11 +8543,11 @@ msgstr "Radiell färgskala:"
 
 #: plug-ins/gflare/gflare.c:3806 plug-ins/gflare/gflare.c:3916
 msgid "Angular Gradient:"
-msgstr ""
+msgstr "Vinkelgradient:"
 
 #: plug-ins/gflare/gflare.c:3810 plug-ins/gflare/gflare.c:3920
 msgid "Angular Size Gradient:"
-msgstr ""
+msgstr "Vinkelstorleksgradient:"
 
 #: plug-ins/gflare/gflare.c:3831 plug-ins/gflare/gflare.c:3941
 #: plug-ins/gflare/gflare.c:4083
@@ -8570,18 +8582,18 @@ msgstr "Strålar"
 
 #: plug-ins/gflare/gflare.c:4058
 msgid "Size Factor Gradient:"
-msgstr ""
+msgstr "Storleksfaktorgradient:"
 
 #: plug-ins/gflare/gflare.c:4062
 msgid "Probability Gradient:"
-msgstr ""
+msgstr "Sannolikhetsgradient:"
 
 #.
 #. *	Shape Radio Button Frame
 #.
 #: plug-ins/gflare/gflare.c:4125
 msgid "Shape of Second Flares"
-msgstr ""
+msgstr "Formen på andra överstrålarna"
 
 #: plug-ins/gflare/gflare.c:4134 plug-ins/imagemap/imap_menu.c:374
 #: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:158
@@ -8599,7 +8611,7 @@ msgstr "Slumpfrö:"
 
 #: plug-ins/gflare/gflare.c:4211
 msgid "Second Flares"
-msgstr ""
+msgstr "Andra överstålar"
 
 #: plug-ins/gflare/gflare.c:4824
 msgid "none"
@@ -8641,9 +8653,8 @@ msgid "Save brush"
 msgstr "Spara pensel"
 
 #: plug-ins/gimpressionist/brush.c:363
-#, fuzzy
 msgid "_Brush"
-msgstr "Pensel"
+msgstr "_Pensel"
 
 #: plug-ins/gimpressionist/brush.c:395
 msgid "Brush Preview:"
@@ -8682,9 +8693,8 @@ msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "Specifierar mängden ciselering att applicera på bilden (i procent)"
 
 #: plug-ins/gimpressionist/color.c:36
-#, fuzzy
 msgid "Co_lor"
-msgstr "F_ärg:"
+msgstr "F_ärg"
 
 #: plug-ins/gimpressionist/color.c:58
 msgid "Average under brush"
@@ -8717,7 +8727,7 @@ msgstr "_Allmänt"
 
 #: plug-ins/gimpressionist/general.c:71
 msgid "Edge darken:"
-msgstr ""
+msgstr "Mörka kanten:"
 
 #: plug-ins/gimpressionist/general.c:86
 msgid "How much to \"darken\" the edges of each brush stroke"
@@ -8761,16 +8771,16 @@ msgstr "Måla kanter"
 
 #: plug-ins/gimpressionist/general.c:167
 msgid "Selects if to place strokes all the way out to the edges of the image"
-msgstr ""
+msgstr "Bestämmer om penseldrag skall placeras hela vägen ut till bildkanten"
 
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:171 plug-ins/maze/maze_face.c:284
 msgid "Tileable"
-msgstr ""
+msgstr "Plattläggningsbar"
 
 #: plug-ins/gimpressionist/general.c:174
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr ""
+msgstr "Bestämmer om bilden skall kunna plattläggas utan synliga kanter"
 
 #: plug-ins/gimpressionist/general.c:182
 msgid "Drop Shadow"
@@ -8782,7 +8792,7 @@ msgstr "Lägger till en skuggeffekt till varje penseldrag"
 
 #: plug-ins/gimpressionist/general.c:196
 msgid "How much to \"darken\" the drop shadow"
-msgstr ""
+msgstr "Hur mörk den kastade skuggan skall vara"
 
 #: plug-ins/gimpressionist/general.c:202
 msgid "Shadow depth:"
@@ -8825,25 +8835,25 @@ msgid ""
 " (gimpressionist-path \"%s\")\n"
 "(or similar) to your gimprc file."
 msgstr ""
+"Det rekommenderas att lägga till\n"
+" (gimpressionist-path \"%s\")\n"
+"(eller liknande) till din gimprc-fil."
 
 #: plug-ins/gimpressionist/gimpressionist.c:329
 msgid "The GIMPressionist!"
 msgstr "GIMPressionist!"
 
 #: plug-ins/gimpressionist/gimpressionist.c:418
-#, fuzzy
 msgid "Gimpressionist"
-msgstr "Komprimering"
+msgstr "gimpressionist"
 
 #: plug-ins/gimpressionist/gimpressionist.c:424
-#, fuzzy
 msgid "_About..."
-msgstr "Om..."
+msgstr "_Om..."
 
 #: plug-ins/gimpressionist/orientation.c:46
-#, fuzzy
 msgid "Or_ientation"
-msgstr "Orientering"
+msgstr "Or_ientering"
 
 #: plug-ins/gimpressionist/orientation.c:63
 msgid "Directions:"
@@ -9046,9 +9056,8 @@ msgstr ""
 "någon påverkan"
 
 #: plug-ins/gimpressionist/paper.c:91
-#, fuzzy
 msgid "P_aper"
-msgstr "Papper"
+msgstr "P_apper"
 
 #: plug-ins/gimpressionist/paper.c:124
 msgid "Paper Preview:"
@@ -9077,9 +9086,8 @@ msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Specifierar texturens skala (i procent av ofginalfilen)"
 
 #: plug-ins/gimpressionist/placement.c:39
-#, fuzzy
 msgid "Pl_acement"
-msgstr "Placering"
+msgstr "Pl_acering"
 
 #: plug-ins/gimpressionist/placement.c:53
 msgid "Placement:"
@@ -9102,9 +9110,8 @@ msgid "The strokes are evenly distributed across the image"
 msgstr "Penseldragen är jämnt fördelade över bilden"
 
 #: plug-ins/gimpressionist/placement.c:85
-#, fuzzy
 msgid "Stroke _density:"
-msgstr "Penseldragstäthet"
+msgstr "Penseldrags_täthet:"
 
 #: plug-ins/gimpressionist/placement.c:89
 msgid "The relative density of the brush strokes"
@@ -9130,9 +9137,8 @@ msgstr ""
 "%s"
 
 #: plug-ins/gimpressionist/presets.c:607
-#, fuzzy
 msgid "_Presets"
-msgstr "Förhandsinställningar"
+msgstr "_Förhandsinställningar"
 
 #: plug-ins/gimpressionist/presets.c:624
 msgid "Save current"
@@ -9196,9 +9202,8 @@ msgid "Update"
 msgstr "Uppdatera"
 
 #: plug-ins/gimpressionist/size.c:42
-#, fuzzy
 msgid "_Size"
-msgstr "_Storlek:"
+msgstr "_Storlek"
 
 #: plug-ins/gimpressionist/size.c:59
 msgid "Sizes:"
@@ -9209,18 +9214,16 @@ msgid "The number of sizes of brushes to use"
 msgstr "Antal penselstorlekar att använda"
 
 #: plug-ins/gimpressionist/size.c:71
-#, fuzzy
 msgid "Minimum size:"
-msgstr "Min storlek:"
+msgstr "Minimistorlek:"
 
 #: plug-ins/gimpressionist/size.c:75
 msgid "The smallest brush to create"
 msgstr "Minsta penseln att skapa"
 
 #: plug-ins/gimpressionist/size.c:83
-#, fuzzy
 msgid "Maximum size:"
-msgstr "Max storlek:"
+msgstr "Maximumstorlek:"
 
 #: plug-ins/gimpressionist/size.c:87
 msgid "The largest brush to create"
@@ -9348,6 +9351,10 @@ msgid ""
 "Couldn't find GIMP_HELP_ROOT html directory.\n"
 "(%s)"
 msgstr ""
+"Fel i GIMP hjälpläsare.\n"
+"\n"
+"Kunde inte hitta GIMP_HELP_ROOT html-katalog.\n"
+"(%s)"
 
 #: plug-ins/ifscompose/ifscompose.c:366
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
@@ -9728,7 +9735,7 @@ msgstr "Relati_v link"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:251
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
-msgstr ""
+msgstr "_Målram namn/ID: (frivillig - används endast för RAMAR)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:254
 msgid "ALT te_xt: (optional)"
@@ -10273,7 +10280,7 @@ msgstr "Hittar kanter..."
 #. Progress bar for rendering tiles
 #: plug-ins/mosaic/mosaic.c:521
 msgid "Rendering Tiles..."
-msgstr ""
+msgstr "Renderar plattor..."
 
 #: plug-ins/mosaic/mosaic.c:550
 msgid "Mosaic"
@@ -10298,7 +10305,7 @@ msgstr "_FG/BG ljussättning"
 #. tiling primitive
 #: plug-ins/mosaic/mosaic.c:664
 msgid "Tiling Primitives"
-msgstr ""
+msgstr "Plattläggningsprimitiver"
 
 #: plug-ins/mosaic/mosaic.c:668
 msgid "_Squares"
@@ -10433,6 +10440,8 @@ msgid ""
 "Adjust the saturation (color balance) of the print\n"
 "Use zero saturation to produce grayscale output using color and black inks"
 msgstr ""
+"Justera mättnaden (färgbalansen) för utskriften\n"
+"Använd nollmättnad för att skapa gråskaleutskrift med färgat och svart bläck"
 
 #: plug-ins/print/gimp_color_window.c:349
 msgid "Density:"
@@ -10444,6 +10453,9 @@ msgid ""
 "ink bleeds through the paper or smears; increase the density if black "
 "regions are not solid."
 msgstr ""
+"Justera fyllnadsgraden (mängden bläck) på utskriften. Minska fyllnadsgraden "
+"om bläcket går igenom papperet eller smetar ut. Öka fyllnadsgraden om svarta "
+"områden inte är helt ifyllda."
 
 #: plug-ins/print/gimp_color_window.c:379
 msgid ""
@@ -10451,6 +10463,9 @@ msgid ""
 "brighter print, while smaller values will produce a generally darker print. "
 "Black and white will remain the same, unlike with the brightness adjustment."
 msgstr ""
+"Justera gamma på utskriften. Högre värden producerar en allmänt ljusare "
+"utskrift, medan lägre värden producerar en allmänt mörkare utskrift. Svart "
+"och vitt kvarstår, till skillnad från när man justerar ljusstyrkan."
 
 #: plug-ins/print/gimp_color_window.c:395
 msgid "Dither Algorithm:"
@@ -10503,6 +10518,16 @@ msgid ""
 "If you click another button while dragging the mouse, the image will return "
 "to its original position."
 msgstr ""
+"Placera bilden på sidan.\n"
+"Klicka och drag med första knappen för att placera bilden.\n"
+"klicka och drag med andra knappen för att flytta bilden med bättre "
+"precision; varje enhet du drar flyttar bilden en punkt (1/72\")\n"
+"Klicka och drag med tredje (mitten) knappen för att flytta bilden i enheter "
+"av bildstorleken.\n"
+"Hålls shift-knappen ner under flytten begränsas bilden till att endast "
+"flytta horisontellt eller vertikalt.\n"
+"Om du klickar på en annan knapp under flytten, återgår bilden till sin "
+"ursprungliga plats."
 
 #: plug-ins/print/gimp_main_window.c:480
 msgid "Portrait"
@@ -10611,7 +10636,7 @@ msgstr "PPD-fil:"
 
 #: plug-ins/print/gimp_main_window.c:741
 msgid "Enter the correct PPD filename for your printer"
-msgstr ""
+msgstr "Ange det korrekta PPD-filnamnet för din skrivare"
 
 #: plug-ins/print/gimp_main_window.c:744
 msgid "Browse"
@@ -10619,7 +10644,7 @@ msgstr "Bläddra"
 
 #: plug-ins/print/gimp_main_window.c:750
 msgid "Choose the correct PPD filename for your printer"
-msgstr ""
+msgstr "Välj det korrekta PPD-filnamnet för din skrivare"
 
 #.
 #. * Print command.
@@ -10634,6 +10659,9 @@ msgid ""
 "remove the `-l' or `-oraw' from the command string, or printing will "
 "probably fail!"
 msgstr ""
+"Ange det rätta kommandot för att skriva ut till din skrivare. Notera: tag "
+"inte bort `-l' eller `-oraw' från kommandosträngen, annars kommer utskriften "
+"inte att fungera!"
 
 #.
 #. * Output file selection dialog.
@@ -10720,6 +10748,8 @@ msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
 msgstr ""
+"Välj namnet på skrivaren (inte typ eller modell av skrivare) du vill skriva "
+"ut på"
 
 #.
 #. * Setup printer button
@@ -10733,6 +10763,8 @@ msgid ""
 "Choose the printer model, PPD file, and command that is used to print to "
 "this printer"
 msgstr ""
+"Välj skrivarmodell, PPD-fil och kommando som används för att skriva ut på "
+"den här skrivaren"
 
 #.
 #. * New printer button
@@ -10746,6 +10778,8 @@ msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
 msgstr ""
+"Skapa en ny logisk skrivare. Detta kan användas för att namge en uppsättning "
+"inställningar du vill spara för framtida användning."
 
 #: plug-ins/print/gimp_main_window.c:985
 msgid "Size of paper that you wish to print to"
@@ -10777,7 +10811,7 @@ msgstr "Mediatyp:"
 
 #: plug-ins/print/gimp_main_window.c:1060
 msgid "Source (input slot) of media you're printing to"
-msgstr ""
+msgstr "Källa (pappersfack) för media du skriver på"
 
 #: plug-ins/print/gimp_main_window.c:1063
 msgid "Media Source:"
@@ -10817,7 +10851,7 @@ msgstr "Procent"
 
 #: plug-ins/print/gimp_main_window.c:1182
 msgid "Scale the print to the size of the page"
-msgstr ""
+msgstr "Skala utskriften till papperets storlek"
 
 #: plug-ins/print/gimp_main_window.c:1188
 msgid "PPI"
@@ -10825,7 +10859,7 @@ msgstr "PPI"
 
 #: plug-ins/print/gimp_main_window.c:1194
 msgid "Scale the print to the number of dots per inch"
-msgstr ""
+msgstr "Skala utskriften till antal punkter per tum"
 
 #: plug-ins/print/gimp_main_window.c:1220
 msgid "Set the width of the print"
@@ -10944,7 +10978,7 @@ msgstr "Justera utskrift..."
 #: plug-ins/print/gimp_main_window.c:1462
 msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
-msgstr ""
+msgstr "Justera färgbalans, ljusstyrka, kontrast, mättnad och ditheralgoritm"
 
 #: plug-ins/print/print.c:166
 msgid "<Image>/File/Print..."
@@ -10996,16 +11030,16 @@ msgstr "Till"
 #. Gray: Operation-Mode: two radio buttons
 #: plug-ins/rcm/rcm_dialog.c:510
 msgid "Treat as this"
-msgstr ""
+msgstr "Behandla som detta"
 
 #: plug-ins/rcm/rcm_dialog.c:522
 msgid "Change to this"
-msgstr ""
+msgstr "Ändra till detta"
 
 #. * Gray: What is gray? *
 #: plug-ins/rcm/rcm_dialog.c:535
 msgid "What is Gray?"
-msgstr ""
+msgstr "Vad är Grå?"
 
 #. * Misc: Used unit selection *
 #: plug-ins/rcm/rcm_dialog.c:624
@@ -11164,12 +11198,12 @@ msgstr "Varning: slingväg %d, som inte stöds, sparad till XJT"
 #: plug-ins/xjt/xjt.c:743
 #, c-format
 msgid "XJT file contains unknown unittype %d"
-msgstr ""
+msgstr "XJT-fil innehåller okänd enhetstyp %d"
 
 #: plug-ins/xjt/xjt.c:764
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
-msgstr ""
+msgstr "Varning: ej stödd enhetstyp %d sparad till XJT"
 
 #: plug-ins/xjt/xjt.c:785
 msgid "Save as XJT"
