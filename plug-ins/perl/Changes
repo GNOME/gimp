@@ -32,6 +32,8 @@ Revision history for Gimp-Perl extension.
         - applied Kevon Cozens patch to scm2scm. That's a great start, I
           should really add the rest of the function names.
         - use XSLoader instead of DynaLoader where available.
+        - use perl_require_pv instead of perl_eval_pv.
+        - updated COPYING.GNU to version 2.
 
 1.17  Wed Nov 24 21:25:19 CET 1999
         - re-fitted i18n translation for most plug-ins.

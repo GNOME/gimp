@@ -85,7 +85,7 @@ static void need_pdl (void)
   if (!PDL)
     {
       /* the perl-server can't be bothered to do this itself! */
-      perl_eval_pv ("require PDL::Core", TRUE);
+      perl_require_pv ("PDL::Core");
 
       /* Get pointer to structure of core shared C routines */
       CoreSV = perl_get_sv("PDL::SHARE", FALSE);
