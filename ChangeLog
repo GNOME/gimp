@@ -1,3 +1,8 @@
+2004-07-13  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptexttool.c (gimp_text_tool_create_layer): plugged
+	a tiny memory leak.
+
 2004-07-12  Sven Neumann  <sven@gimp.org>
 
 	Backported the missing gimp-path-get-point-at-dist PDB function
@@ -5,7 +10,7 @@
 
 	* app/vectors/gimpstroke.[ch]: added gimp_stroke_get_point_at_dist().
 
-	* tools/pdbgen/pdb/paths.pdb: use the API to implement
+	* tools/pdbgen/pdb/paths.pdb: use the new API to implement
 	gimp-path-get-point-at-dist.
 
 	* app/pdb/paths_cmds.c: regenerated.
