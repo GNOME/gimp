@@ -56,29 +56,29 @@
 
 /*  local function prototypes  */
 
-static PlugInProcDef * file_proc_find_by_prefix    (GSList      *procs,
-                                                    const gchar *uri,
-                                                    gboolean     skip_magic);
-static PlugInProcDef * file_proc_find_by_extension (GSList      *procs,
-                                                    const gchar *uri,
-                                                    gboolean     skip_magic);
-static PlugInProcDef * file_proc_find_by_name      (GSList      *procs,
-                                                    const gchar *uri,
-                                                    gboolean     skip_magic);
-static void            file_convert_string         (gchar       *instr,
-                                                    gchar       *outmem,
-                                                    gint         maxmem,
-                                                    gint        *nmem);
-static gint            file_check_single_magic     (gchar       *offset,
-                                                    gchar       *type,
-                                                    gchar       *value,
-                                                    gint         headsize,
-                                                    guchar      *file_head,
-                                                    FILE        *ifp);
-static gint            file_check_magic_list       (GSList      *magics_list,
-                                                    gint         headsize,
-                                                    guchar      *head,
-                                                    FILE        *ifp);
+static PlugInProcDef * file_proc_find_by_prefix    (GSList       *procs,
+                                                    const gchar  *uri,
+                                                    gboolean      skip_magic);
+static PlugInProcDef * file_proc_find_by_extension (GSList       *procs,
+                                                    const gchar  *uri,
+                                                    gboolean      skip_magic);
+static PlugInProcDef * file_proc_find_by_name      (GSList       *procs,
+                                                    const gchar  *uri,
+                                                    gboolean      skip_magic);
+static void            file_convert_string         (const gchar  *instr,
+                                                    gchar        *outmem,
+                                                    gint          maxmem,
+                                                    gint         *nmem);
+static gint            file_check_single_magic     (const gchar  *offset,
+                                                    const gchar  *type,
+                                                    const gchar  *value,
+                                                    const guchar *file_head,
+                                                    gint          headsize,
+                                                    FILE         *ifp);
+static gint            file_check_magic_list       (GSList       *magics_list,
+                                                    const guchar *head,
+                                                    gint          headsize,
+                                                    FILE         *ifp);
 
 
 /*  public functions  */
@@ -171,10 +171,13 @@ file_utils_find_proc (GSList       *procs,
                   if ((ifp = fopen (filename, "rb")) != NULL)
                     head_size = fread ((gchar *) head, 1, sizeof (head), ifp);
                 }
+
               if (head_size >= 4)
                 {
                   match_val = file_check_magic_list (file_proc->magics_list,
-                                                     head_size, head, ifp);
+                                                     head, head_size,
+                                                     ifp);
+
                   if (match_val == 2)  /* size match ? */
                     { /* Use it only if no other magic matches */
                       size_match_count++;
@@ -245,9 +248,7 @@ file_utils_uri_to_utf8_filename (const gchar *uri)
 
   if (! strncmp (uri, "file:", strlen ("file:")))
     {
-      gchar *filename;
-
-      filename = g_filename_from_uri (uri, NULL, NULL);
+      gchar *filename = g_filename_from_uri (uri, NULL, NULL);
 
       if (filename)
         {
@@ -297,8 +298,8 @@ file_proc_find_by_extension (GSList      *procs,
                              const gchar *uri,
                              gboolean     skip_magic)
 {
-  GSList *p;
-  gchar  *ext;
+  GSList      *p;
+  const gchar *ext;
 
   ext = strrchr (uri, '.');
 
@@ -314,8 +315,8 @@ file_proc_find_by_extension (GSList      *procs,
 	   ext && extensions;
 	   extensions = g_slist_next (extensions))
 	{
-	  gchar *p1 = ext;
-	  gchar *p2 = (gchar *) extensions->data;
+	  const gchar *p1 = ext;
+	  const gchar *p2 = extensions->data;
 
           if (skip_magic && proc->magics_list)
 	    continue;
@@ -353,16 +354,16 @@ file_proc_find_by_name (GSList      *procs,
 }
 
 static void
-file_convert_string (gchar *instr,
-		     gchar *outmem,
-		     gint   maxmem,
-		     gint  *nmem)
+file_convert_string (const gchar *instr,
+		     gchar       *outmem,
+		     gint         maxmem,
+		     gint        *nmem)
 {
   /* Convert a string in C-notation to array of char */
-  guchar *uin  = (guchar *) instr;
-  guchar *uout = (guchar *) outmem;
-  guchar  tmp[5], *tmpptr;
-  guint   k;
+  const guchar *uin  = (const guchar *) instr;
+  guchar       *uout = (guchar *) outmem;
+  guchar        tmp[5], *tmpptr;
+  guint         k;
 
   while ((*uin != '\0') && ((((gchar *) uout) - outmem) < maxmem))
     {
@@ -371,21 +372,24 @@ file_convert_string (gchar *instr,
           *(uout++) = *(uin++);
           continue;
         }
+
       if (*(++uin) == '\0')
         {
           *(uout++) = '\\';
           break;
         }
+
       switch (*uin)
         {
           case '0':  case '1':  case '2':  case '3': /* octal */
-            for (tmpptr = tmp; (tmpptr-tmp) <= 3;)
+            for (tmpptr = tmp; (tmpptr - tmp) <= 3;)
               {
                 *(tmpptr++) = *(uin++);
                 if (   (*uin == '\0') || (!g_ascii_isdigit (*uin))
                     || (*uin == '8') || (*uin == '9'))
                   break;
               }
+
             *tmpptr = '\0';
             sscanf ((gchar *) tmp, "%o", &k);
             *(uout++) = k;
@@ -402,25 +406,30 @@ file_convert_string (gchar *instr,
           default : *(uout++) = *(uin++); break;
         }
     }
+
   *nmem = ((gchar *) uout) - outmem;
 }
 
 static gint
-file_check_single_magic (gchar  *offset,
-                         gchar  *type,
-                         gchar  *value,
-                         gint    headsize,
-                         guchar *file_head,
-                         FILE   *ifp)
+file_check_single_magic (const gchar  *offset,
+                         const gchar  *type,
+                         const gchar  *value,
+                         const guchar *file_head,
+                         gint          headsize,
+                         FILE         *ifp)
 
 {
   /* Return values are 0: no match, 1: magic match, 2: size match */
-  glong   offs;
-  gulong  num_testval, num_operatorval;
-  gulong  fileval;
-  gint    numbytes, k, c = 0, found = 0;
-  gchar  *num_operator_ptr, num_operator, num_test;
-  guchar  mem_testval[256];
+  glong         offs;
+  gulong        num_testval, num_operatorval;
+  gulong        fileval;
+  gint          numbytes, k;
+  gint          c     = 0;
+  gint          found = 0;
+  const gchar  *num_operator_ptr;
+  gchar         num_operator;
+  gchar         num_test;
+  guchar        mem_testval[256];
 
   /* Check offset */
   if (sscanf (offset, "%ld", &offs) != 1) return (0);
@@ -428,22 +437,23 @@ file_check_single_magic (gchar  *offset,
 
   /* Check type of test */
   num_operator_ptr = NULL;
-  num_operator = '\0';
-  num_test = '=';
+  num_operator     = '\0';
+  num_test         = '=';
+
   if (strncmp (type, "byte", 4) == 0)
     {
       numbytes = 1;
-      num_operator_ptr = type+4;
+      num_operator_ptr = type + 4;
     }
   else if (strncmp (type, "short", 5) == 0)
     {
       numbytes = 2;
-      num_operator_ptr = type+5;
+      num_operator_ptr = type + 5;
     }
   else if (strncmp (type, "long", 4) == 0)
     {
       numbytes = 4;
-      num_operator_ptr = type+4;
+      num_operator_ptr = type + 4;
     }
   else if (strncmp (type, "size", 4) == 0)
     {
@@ -480,7 +490,7 @@ file_check_single_magic (gchar  *offset,
       }
       if (!g_ascii_isdigit (value[0])) return (0);
 
-      /* 
+      /*
        * to anybody reading this: is strtol's parsing behaviour
        * (e.g. "0x" prefix) broken on some systems or why do we
        * do the base detection ourselves?
@@ -496,7 +506,7 @@ file_check_single_magic (gchar  *offset,
       if (numbytes == 5)    /* Check for file size ? */
         {
 	  struct stat buf;
-	  
+
           if (fstat (fileno (ifp), &buf) < 0) return (0);
           fileval = buf.st_size;
         }
@@ -526,8 +536,10 @@ file_check_single_magic (gchar  *offset,
     }
   else if (numbytes == 0) /* String test */
     {
-      file_convert_string ((char *)value, (char *)mem_testval,
-                           sizeof (mem_testval), &numbytes);
+      file_convert_string (value,
+                           mem_testval, sizeof (mem_testval),
+                           &numbytes);
+
       if (numbytes <= 0) return (0);
 
       if (offs + numbytes <= headsize)  /* We have it in memory ? */
@@ -553,31 +565,32 @@ file_check_single_magic (gchar  *offset,
  *  Return values are 0: no match, 1: magic match, 2: size match
  */
 static gint
-file_check_magic_list (GSList *magics_list,
-		       gint    headsize,
-		       guchar *head,
-		       FILE   *ifp)
+file_check_magic_list (GSList       *magics_list,
+		       const guchar *head,
+		       gint          headsize,
+		       FILE         *ifp)
 
 {
-  gchar *offset;
-  gchar *type;
-  gchar *value;
-  gint   and   = 0;
-  gint   found = 0;
-  gint   match_val;
+  const gchar *offset;
+  const gchar *type;
+  const gchar *value;
+  gint         and   = 0;
+  gint         found = 0;
+  gint         match_val;
 
   while (magics_list)
     {
-      if ((offset = (gchar *)magics_list->data) == NULL) break;
+      if ((offset      = magics_list->data) == NULL) break;
       if ((magics_list = magics_list->next) == NULL) break;
-      if ((type = (gchar *)magics_list->data) == NULL) break;
+      if ((type        = magics_list->data) == NULL) break;
       if ((magics_list = magics_list->next) == NULL) break;
-      if ((value = (gchar *)magics_list->data) == NULL) break;
+      if ((value       = magics_list->data) == NULL) break;
 
       magics_list = magics_list->next;
 
       match_val = file_check_single_magic (offset, type, value,
-                                           headsize, head, ifp);
+                                           head, headsize,
+                                           ifp);
       if (and)
 	found = found && match_val;
       else
