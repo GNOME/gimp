@@ -794,11 +794,13 @@ marshall_proc_db_call (LISP a)
 	  lprin1s (a_saved, error_str + strlen(error_str));
       return my_err (error_str, NIL);
       break;
+
     case GIMP_PDB_CALLING_ERROR:
 	  strcpy (error_str, "Procedural database execution failed on invalid input arguments:\n    ");
 	  lprin1s (a_saved, error_str + strlen(error_str));
       return my_err (error_str, NIL);
       break;
+
     case GIMP_PDB_SUCCESS:
       return_val = NIL;
 
@@ -948,6 +950,10 @@ marshall_proc_db_call (LISP a)
 	      return my_err ("Unknown return type", NIL);
 	    }
 	}
+      break;
+
+    case GIMP_PDB_PASS_THROUGH:
+    case GIMP_PDB_CANCEL:   /*  should we do something here?  */
       break;
     }
 
