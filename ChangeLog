@@ -1,3 +1,12 @@
+1999-06-21  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* app/layers_dialog.c: Changed the order of the layer ops buttons
+	so that the delete button is on the right. Theoretically this should
+	not break anything. :)
+
+	I will do the same to the channels and paths too, just when I get
+	time, which is probably later today.
+
 1999-06-21  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimpfeatures.h.win32: Update version.

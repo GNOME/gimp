@@ -250,10 +250,10 @@ static OpsButton layers_ops_buttons[] =
        "<Shift> To Bottom"), NULL, 0 },
   { duplicate_xpm, layers_dialog_duplicate_layer_callback, NULL,
     N_("Duplicate Layer"), NULL, 0 },
-  { delete_xpm, layers_dialog_delete_layer_callback, NULL,
-    N_("Delete Layer"), NULL, 0 },
   { anchor_xpm, layers_dialog_anchor_layer_callback, NULL,
     N_("Anchor Layer"), NULL, 0 },
+  { delete_xpm, layers_dialog_delete_layer_callback, NULL,
+    N_("Delete Layer"), NULL, 0 },
   { NULL, NULL, NULL, NULL, NULL, 0 }
 };
 
@@ -953,12 +953,12 @@ layers_dialog_set_menu_sensitivity ()
   gtk_widget_set_sensitive (layers_ops_buttons[3].widget,
 			    fs && ac && gimage && lp);
 
-  menus_set_sensitive_locale ("<Layers>", N_("/Delete Layer"), ac && gimage && lp);
-  gtk_widget_set_sensitive (layers_ops_buttons[4].widget, ac && gimage && lp);
-
   menus_set_sensitive_locale ("<Layers>", N_("/Anchor Layer"), !fs && ac && gimage && lp);
-  gtk_widget_set_sensitive (layers_ops_buttons[5].widget,
+  gtk_widget_set_sensitive (layers_ops_buttons[4].widget,
 			    !fs && ac && gimage && lp);
+
+  menus_set_sensitive_locale ("<Layers>", N_("/Delete Layer"), ac && gimage && lp);
+  gtk_widget_set_sensitive (layers_ops_buttons[5].widget, ac && gimage && lp);
 
   menus_set_sensitive_locale ("<Layers>", N_("/Scale Layer"), ac && gimage && lp);
   menus_set_sensitive_locale ("<Layers>", N_("/Resize Layer"), ac && gimage && lp);
