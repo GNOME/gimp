@@ -1,3 +1,7 @@
+2003-10-20  Dave Neary  <bolsh@gimp.org>
+
+	* NEWS: Updated the NEWS file.
+
 2003-10-20  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpmeasuretool.[ch]: don't use InfoDialog; always

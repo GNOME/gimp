@@ -13,10 +13,18 @@ Overview of Changes in GIMP 1.3.22
 - Allow to configure the default grid in your gimprc [Brix]
 - Store the position of dock panes in your sessionrc [Mitch]
 - Auto-scrolling for DND in list views [Mitch]
+- Refresh rendering of paint strokes more often [Mitch]
+- Refactored handling of modifier keys for tools [Mitch]
+- Allow editing of image templates [Sven]
+- Changed the redo shortcut to Ctrl-Y [Sven]
+- Display real-world units and pixels in the measure tool info
+  window [Sven] 
 - Lots of bug fixes
 
 Other contributors:
-  Manish Singh, Ville Pätsi, Simon Budig, Tor Lillqvist
+  Manish Singh, Ville Pätsi, Simon Budig, Tor Lillqvist, Dave
+  Neary, Helvetix Victorinox, Pedro Gimeno, Seth Burgess, Jakub
+  Steiner, Maurits Rijk
 
 
 Overview of Changes in GIMP 1.3.21
