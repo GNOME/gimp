@@ -18,6 +18,7 @@
 	* libgimp/gimpmatrix.c
 	* libgimp/gimpproceduraldb.c
 	* libgimp/gimpwidgets.c
+	* modules/colorsel_triangle.c
 	* plug-ins/flame/libifs.c
 	* plug-ins/gap/gap_dbbrowser_utils.c
 	* plug-ins/gap/gap_filter_foreach.c: 
