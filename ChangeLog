@@ -11,7 +11,8 @@
 2002-12-15  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/user-install-dialog.c: set text and base colors as well
-	to the user installation dialog work on dark themes. Fixes #86187.
+	to make the user installation dialog work on dark themes. Fixes
+	bug #86187.
 
 2002-12-14  Sven Neumann  <sven@gimp.org>
 
