@@ -32,13 +32,6 @@ Global data follows no strict rules.
 ------------------------------------------------------------------
 *** KNOWN PARASITES:
 
-"gfig" (LAYER, PERSISTENT)
-        As of GIMP 2.2, the gfig plug-in creates its own layers, and
-        stores a representation of the figure as a layer parasite.
-        The parasite contains a GFig save file, in an ascii format.
-        If gfig is started while the active layer contains a "gfig"
-        parasite, the contents of the parasite are loaded at startup.
-
 "gimp-comment" (IMAGE, PERSISTENT)
         Standard GIF-style image comments.  This parasite should be
         human-readable text in UTF-8 encoding.  A trailing \0 might
@@ -170,6 +163,13 @@ Global data follows no strict rules.
 	oftentimes contain embedded profiles. An experimental color
 	manager exists to use this parasite, and it will be used
 	for interchange between TIFF and PNG (identical profiles)
+
+"gfig" (LAYER, PERSISTENT)
+        As of GIMP 2.2, the gfig plug-in creates its own layers, and
+        stores a representation of the figure as a layer parasite.
+        The parasite contains a GFig save file, in an ascii format.
+        If gfig is started while the active layer contains a "gfig"
+        parasite, the contents of the parasite are loaded at startup.
 
 
 ------------------------------------------------------------------

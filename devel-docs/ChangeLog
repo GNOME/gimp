@@ -1,3 +1,7 @@
+2004-12-13  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* parasites.txt: add info about "gfig" layer parasite.
+	
 2004-12-12  Sven Neumann  <sven@gimp.org>
 
 	* app/app-sections.txt
