@@ -4691,6 +4691,10 @@ thin_region(PixelRegion *src, gint16 xradius, gint16 yradius, int edge_lock)
     buf[i] = (guchar *)g_malloc (src->w * sizeof(guchar));
   }
   buffer = g_malloc ((src->w+2*xradius + 1)*(yradius+1));
+  if (edge_lock)
+    memset(buffer, 255, (src->w+2*xradius + 1)*(yradius+1));
+  else
+    memset(buffer, 0, (src->w+2*xradius + 1)*(yradius+1));
   for (i = 0; i < src->w+2*xradius; i++)
   {
     if (i < xradius)
@@ -4705,8 +4709,6 @@ thin_region(PixelRegion *src, gint16 xradius, gint16 yradius, int edge_lock)
 	max[i] = &buffer[(yradius+1)*(src->w + xradius - 1)];
       else
 	max[i] = &buffer[(yradius+1)*(src->w + xradius)];
-    for (j = 0 ; j < xradius+1; j++)
-      max[i][j] = 255;
   }
   if (!edge_lock)
     for (j = 0 ; j < xradius+1; j++)
@@ -4723,7 +4725,7 @@ thin_region(PixelRegion *src, gint16 xradius, gint16 yradius, int edge_lock)
   if (edge_lock)
     memcpy (buf[0], buf[1], src->w);
   else
-    memset(buf[0], 0, src->w);
+    memset (buf[0], 0, src->w);
   for (x = 0; x < src->w; x++) /* set up max for top of image */
   {
     max[x][0] = buf[0][x];

@@ -113,6 +113,8 @@ change_scale (GDisplay *gdisp,
       else
 	if (scaledest < 0x10)
 	  scaledest++;
+	else
+	  return;
       break;
 
     case ZOOMOUT :
@@ -121,6 +123,8 @@ change_scale (GDisplay *gdisp,
       else
 	if (scalesrc < 0x10)
 	  scalesrc++;
+	else
+	  return;
       break;
 
     default :
