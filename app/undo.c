@@ -1225,6 +1225,7 @@ undo_pop_layer_mod (GImage *gimage,
   GIMP_DRAWABLE(layer)->height = tiles->levels[0].height;
   GIMP_DRAWABLE(layer)->bytes = tiles->levels[0].bpp;
   GIMP_DRAWABLE(layer)->type = layer_type;
+  GIMP_DRAWABLE(layer)->has_alpha = TYPE_HAS_ALPHA (layer_type);
 
   if (layer->mask) 
     {

@@ -1,3 +1,8 @@
+Thu Mar 12 21:25:51 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/undo.c (undo_pop_layer_mod): Fixed a desynch bug when
+	undoing "add alpha layer".
+
 Thu Mar 12 22:52:47 1998  Tim Janik  <timj@gimp.org>
 
 	* about_dialog.c:
