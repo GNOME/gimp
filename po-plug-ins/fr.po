@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 2.0pre4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
+"POT-Creation-Date: 2004-03-06 15:40+0100\n"
 "PO-Revision-Date: 2004-02-28 15:44+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -76,8 +76,10 @@ msgstr "À propos"
 #: plug-ins/flame/flame.c:920 plug-ins/gflare/gflare.c:2325
 #: plug-ins/gflare/gflare.c:3243 plug-ins/gimpressionist/orientmap.c:504
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:458
-#: plug-ins/ifscompose/ifscompose.c:927 plug-ins/print/gimp_main_window.c:413
-#: plug-ins/rcm/rcm_dialog.c:117 plug-ins/rcm/rcm_dialog.c:661
+#: plug-ins/ifscompose/ifscompose.c:927
+#: plug-ins/libgimpoldpreview/gimpoldpreview.c:51
+#: plug-ins/print/gimp_main_window.c:413 plug-ins/rcm/rcm_dialog.c:117
+#: plug-ins/rcm/rcm_dialog.c:661
 msgid "Preview"
 msgstr "Aperçu"
 
@@ -443,12 +445,12 @@ msgstr "_Fractales"
 #: plug-ins/xjt/xjt.c:1272 plug-ins/xjt/xjt.c:1711
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Impossible d'ouvrir le fichier « %s » en écriture : %s"
+msgstr "Impossible d'ouvrir « %s » en écriture : %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1841
 #, c-format
 msgid "Could not write '%s': %s"
-msgstr "Impossible d'écrire le fichier « %s » : %s"
+msgstr "Impossible d'écrire « %s » : %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1861
 msgid "Save: No filename given"
@@ -490,7 +492,7 @@ msgstr "Enregistrer les paramètres de la fractale"
 #: plug-ins/xjt/xjt.c:2543
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Impossible d'ouvrir le fichier « %s » en écriture : %s"
+msgstr "Impossible d'ouvrir « %s » en lecture : %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2136
 #, c-format
@@ -920,7 +922,7 @@ msgstr "Effets d'éclairage"
 #: plug-ins/Lighting/lighting_ui.c:1162 plug-ins/gimpressionist/preview.c:122
 #: plug-ins/imagemap/imap_polygon.c:516
 msgid "_Update"
-msgstr "Mettre à jo_ur"
+msgstr "_Mettre à jour"
 
 #: plug-ins/Lighting/lighting_ui.c:1169 plug-ins/MapObject/mapobject_ui.c:1438
 msgid "Recompute preview image"
@@ -978,7 +980,7 @@ msgstr "Type de l'objet sur lequel plaquer l'image"
 
 #: plug-ins/MapObject/mapobject_ui.c:565
 msgid "Transparent Background"
-msgstr "Fond transparent"
+msgstr "Arrière-plan transparent"
 
 #: plug-ins/MapObject/mapobject_ui.c:576
 msgid "Make image transparent outside object"
@@ -996,7 +998,7 @@ msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:592
 msgid "Create New Image"
-msgstr "Créer nouvelle image"
+msgstr "Créer une nouvelle image"
 
 #: plug-ins/MapObject/mapobject_ui.c:611
 msgid "Enable _Antialiasing"
@@ -1327,7 +1329,7 @@ msgstr "Change l'intensité du canal rouge"
 #: plug-ins/common/diffraction.c:590 plug-ins/common/exchange.c:453
 #: plug-ins/common/noisify.c:367 plug-ins/common/noisify.c:374
 msgid "_Green:"
-msgstr "V_ert :"
+msgstr "_Vert :"
 
 #: plug-ins/common/AlienMap.c:1203
 msgid "Change intensity of the green channel"
@@ -1740,15 +1742,15 @@ msgstr "Explorateur de Coupled-Map Lattice"
 
 #: plug-ins/common/CML_explorer.c:1235
 msgid "Random Seed"
-msgstr "Graine aléatoire :"
+msgstr "Graine aléatoire"
 
 #: plug-ins/common/CML_explorer.c:1246
 msgid "Fix Seed"
-msgstr "Fixer la Graine"
+msgstr "Fixer la graine"
 
 #: plug-ins/common/CML_explorer.c:1257
 msgid "New Seed"
-msgstr "Nouvelle Graine"
+msgstr "Nouvelle graine"
 
 #: plug-ins/common/CML_explorer.c:1279 plug-ins/common/lic.c:654
 #: plug-ins/fp/fp_gtk.c:290
@@ -1940,7 +1942,7 @@ msgid ""
 "Overwrite it?"
 msgstr ""
 "Le fichier « %s » existe.\n"
-"Écraser ?"
+"Voulez-vous l'écraser ?"
 
 #: plug-ins/common/CML_explorer.c:2267
 msgid "Load Parameters from"
@@ -2184,11 +2186,11 @@ msgstr "Désoptimisation de l'animation..."
 
 #: plug-ins/common/animoptimize.c:476
 msgid "Removing Animation Background..."
-msgstr "Retirer le fond de l'animation..."
+msgstr "Retirer l'arrière-plan de l'animation..."
 
 #: plug-ins/common/animoptimize.c:479
 msgid "Finding Animation Background..."
-msgstr "Trouver le fond de l'animation..."
+msgstr "Trouver l'arrière-plan de l'animation..."
 
 #: plug-ins/common/animoptimize.c:483
 msgid "Optimizing Animation..."
@@ -2268,7 +2270,7 @@ msgstr "_Horizontal"
 #: plug-ins/common/blinds.c:306 plug-ins/common/ripple.c:478
 #: plug-ins/common/tileit.c:441
 msgid "_Vertical"
-msgstr "V_ertical"
+msgstr "_Vertical"
 
 #: plug-ins/common/blinds.c:321 plug-ins/common/fractaltrace.c:786
 #: plug-ins/common/papertile.c:368
@@ -2669,7 +2671,7 @@ msgstr "Jaune :"
 
 #: plug-ins/common/compose.c:164 plug-ins/common/decompose.c:149
 msgid "CMYK"
-msgstr "Quadrichromie"
+msgstr "CMJN"
 
 #: plug-ins/common/compose.c:168
 msgid "Black:"
@@ -2784,7 +2786,7 @@ msgstr "_Rouge"
 
 #: plug-ins/common/convmatrix.c:89 plug-ins/common/newsprint.c:367
 msgid "_Green"
-msgstr "V_ert"
+msgstr "_Vert"
 
 #: plug-ins/common/convmatrix.c:90 plug-ins/common/newsprint.c:375
 msgid "_Blue"
@@ -2863,7 +2865,7 @@ msgstr "Nom _Prefixé :"
 
 #: plug-ins/common/csource.c:668
 msgid "Co_mment:"
-msgstr "Co_mmentaire :"
+msgstr "_Commentaire :"
 
 #. Use Comment
 #.
@@ -3001,7 +3003,7 @@ msgstr "In_férieure"
 
 #: plug-ins/common/curve_bend.c:1428
 msgid "Curve Type"
-msgstr "Type de Courbe"
+msgstr "Type de courbe"
 
 #: plug-ins/common/curve_bend.c:1432
 msgid "Smoot_h"
@@ -3009,7 +3011,7 @@ msgstr "A_doucie"
 
 #: plug-ins/common/curve_bend.c:1433
 msgid "_Free"
-msgstr "Li_bre"
+msgstr "_Libre"
 
 #. The Copy button
 #: plug-ins/common/curve_bend.c:1448
@@ -3810,11 +3812,11 @@ msgstr "Impossible d'opérer sur des images en couleur indexées."
 
 #: plug-ins/common/gauss_iir.c:363 plug-ins/common/gauss_rle.c:357
 msgid "Blur Horizontally"
-msgstr "Horizontalement"
+msgstr "Rendre flou horizontalement"
 
 #: plug-ins/common/gauss_iir.c:372 plug-ins/common/gauss_rle.c:366
 msgid "Blur Vertically"
-msgstr "Verticalement"
+msgstr "Rendre flou verticalement"
 
 #: plug-ins/common/gauss_iir.c:384 plug-ins/common/gauss_rle.c:378
 msgid "Blur Radius:"
@@ -3833,7 +3835,7 @@ msgstr "_Horizontal :"
 #: plug-ins/common/gauss_iir.c:451 plug-ins/common/gauss_rle.c:445
 #: plug-ins/common/jigsaw.c:2591 plug-ins/common/spread.c:360
 msgid "_Vertical:"
-msgstr "V_ertical :"
+msgstr "_Vertical :"
 
 #: plug-ins/common/gauss_rle.c:158
 msgid "<Image>/Filters/Blur/Gaussian Blur (_RLE)..."
@@ -3862,7 +3864,7 @@ msgstr ""
 #: plug-ins/common/gbr.c:401 plug-ins/common/gih.c:478
 #: plug-ins/common/gih.c:1118 plug-ins/gflare/gflare.c:2986
 msgid "Unnamed"
-msgstr "SansNom"
+msgstr "Sans nom"
 
 #: plug-ins/common/gbr.c:573
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
@@ -4541,7 +4543,7 @@ msgstr "_Seuil :"
 #: plug-ins/common/iwarp.c:1181 plug-ins/common/sinus.c:769
 #: plug-ins/gflare/gflare.c:2796
 msgid "_Settings"
-msgstr "Ré_glages"
+msgstr "_Réglages"
 
 #: plug-ins/common/iwarp.c:1198
 msgid "IWarp"
@@ -4806,7 +4808,7 @@ msgstr "_Commentaire :"
 
 #: plug-ins/common/mail.c:503
 msgid "_Filename:"
-msgstr "Nom du _fichier :"
+msgstr "_Nom du fichier :"
 
 #. Encapsulation label
 #: plug-ins/common/mail.c:537
@@ -5035,7 +5037,7 @@ msgstr "Temps par défaut d'affichage d'une image :"
 
 #: plug-ins/common/mng.c:1407
 msgid "milliseconds"
-msgstr "Millisecondes"
+msgstr "millisecondes"
 
 #: plug-ins/common/mosaic.c:310
 msgid "<Image>/Filters/Distorts/_Mosaic..."
@@ -5205,7 +5207,7 @@ msgstr "Séparer en :"
 
 #: plug-ins/common/newsprint.c:1310
 msgid "_RGB"
-msgstr "R_VB"
+msgstr "_RVB"
 
 #: plug-ins/common/newsprint.c:1323
 msgid "C_MYK"
@@ -5624,8 +5626,6 @@ msgstr ""
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Erreur en écriture de « %s ». Impossible d'enregistrer l'image."
 
-#. Inform the user that we couldn't losslessly save the
-#. * transparency & just use the full palette
 #: plug-ins/common/png.c:1527
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
@@ -6275,7 +6275,7 @@ msgstr "Déplacer _Horizontalement"
 
 #: plug-ins/common/shift.c:333
 msgid "Shift _Vertically"
-msgstr "Déplacer V_erticalement"
+msgstr "Déplacer _Verticalement"
 
 #: plug-ins/common/shift.c:364
 msgid "Shift _Amount:"
@@ -6465,7 +6465,7 @@ msgstr "Sobel _horizontal"
 
 #: plug-ins/common/sobel.c:261
 msgid "Sobel _Vertically"
-msgstr "Sobel v_ertical"
+msgstr "Sobel _vertical"
 
 #: plug-ins/common/sobel.c:270
 msgid "_Keep Sign of Result (one Direction only)"
@@ -6974,11 +6974,11 @@ msgstr "Seuil alpha : coloration de la transparence..."
 
 #: plug-ins/common/threshold_alpha.c:223
 msgid "Threshold Alpha"
-msgstr "Seuil slpha"
+msgstr "Seuil alpha"
 
 #: plug-ins/common/threshold_alpha.c:244
 msgid "Threshold:"
-msgstr "Seuil:"
+msgstr "Seuil :"
 
 #: plug-ins/common/tiff.c:831
 #, c-format
@@ -7583,7 +7583,8 @@ msgid ""
 "Please specify a web browser using the Preferences Dialog."
 msgstr ""
 "Navigateur Web non spécifié.\n"
-"Veuillez spécifier un navigateur Web dans le dialogue des Préférences."
+"Veuillez spécifier un navigateur Web dans la boîte de dialogue des "
+"Préférences."
 
 #: plug-ins/common/webbrowser.c:161
 #, c-format
@@ -7844,7 +7845,6 @@ msgstr ""
 "« %s » :\n"
 "Type d'image non spécifiée"
 
-#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:959
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -8027,7 +8027,7 @@ msgstr "Recherche par description - veuillez patienter"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:613
 msgid "Searching - please wait"
-msgstr "Recherche - patientez s'il vous plait"
+msgstr "Recherche - veuillez patienter"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:650
 msgid "No matches"
@@ -9321,11 +9321,12 @@ msgstr "Copie la texture du papier sélectionné comme arrière-plan"
 
 #: plug-ins/gimpressionist/general.c:105
 msgid "Solid colored background"
-msgstr "Fond de couleur uniforme"
+msgstr "Arrière-plan de couleur uniforme"
 
 #: plug-ins/gimpressionist/general.c:126
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr "Utilise un fond transparent ; seuls les tracés peints seront visibles"
+msgstr ""
+"Utilise un arrière-plan transparent ; seuls les tracés peints seront visibles"
 
 #: plug-ins/gimpressionist/general.c:141
 msgid "Paint edges"
@@ -9406,7 +9407,6 @@ msgstr "<Image>/Filtres/Artistique/_GIMPressionnist..."
 msgid "Painting..."
 msgstr "Peinture..."
 
-#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
 #, c-format
 msgid ""
@@ -9428,7 +9428,7 @@ msgstr "GIMPressionist"
 
 #: plug-ins/gimpressionist/gimpressionist.c:434
 msgid "A_bout"
-msgstr "_À propos"
+msgstr "À _propos"
 
 #: plug-ins/gimpressionist/orientation.c:45
 msgid "Or_ientation"
@@ -10087,7 +10087,7 @@ msgstr "Transformation %s"
 
 #: plug-ins/ifscompose/ifscompose.c:2675 plug-ins/ifscompose/ifscompose.c:2687
 msgid "Open failed"
-msgstr "Échec d'ouverture"
+msgstr "L'ouverture a échoué"
 
 #: plug-ins/ifscompose/ifscompose.c:2682
 #, c-format
@@ -10351,19 +10351,19 @@ msgstr "_Autre"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:228
 msgid "F_ile"
-msgstr "F_ichier"
+msgstr "_Fichier"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:234
 msgid "WAI_S"
-msgstr "WAI_S"
+msgstr "_WAIS"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:240
 msgid "Tel_net"
-msgstr "Tel_net"
+msgstr "_Telnet"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:246
 msgid "e-_mail"
-msgstr "e_mail"
+msgstr "_Messagerie"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:252
 msgid "_URL to activate when this area is clicked: (required)"
@@ -10371,7 +10371,7 @@ msgstr "_URL à activer lorsque cette zone est cliquée : (nécessaire)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:254
 msgid "Select HTML file"
-msgstr "Choisir le fichier HTML"
+msgstr "Choisissez un fichier HTML"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:263
 msgid "Relati_ve link"
@@ -10380,12 +10380,12 @@ msgstr "Lien _relatif"
 #: plug-ins/imagemap/imap_edit_area_info.c:269
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr ""
-"Nom/ID de l' « i_mage » de destination (optionnel - uniquement utilisé pour "
-"les « images »)"
+"Nom/ID du cadre de destination : (optionnel - uniquement utilisé pour les "
+"cadres)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:272
 msgid "ALT te_xt: (optional)"
-msgstr "ALT te_xte : (optionnel)"
+msgstr "Te_xte alternatif : (optionnel)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:275
 msgid "_Link"
@@ -10442,7 +10442,7 @@ msgstr "Paramètre de la grille"
 
 #: plug-ins/imagemap/imap_grid.c:205
 msgid "_Snap-To Grid Enabled"
-msgstr "_Colle à la Grille activée"
+msgstr "_Grille collante activée"
 
 #: plug-ins/imagemap/imap_grid.c:211
 msgid "Grid Visibility and Type"
@@ -10450,7 +10450,7 @@ msgstr "Visibilité de la grille et type"
 
 #: plug-ins/imagemap/imap_grid.c:218
 msgid "_Hidden"
-msgstr "Cac_hé"
+msgstr "C_aché"
 
 #: plug-ins/imagemap/imap_grid.c:226
 msgid "_Lines"
@@ -10466,7 +10466,7 @@ msgstr "Granularité de la grille"
 
 #: plug-ins/imagemap/imap_grid.c:251
 msgid "_Width"
-msgstr "Lar_geur"
+msgstr "_Largeur"
 
 #: plug-ins/imagemap/imap_grid.c:257
 msgid "_Height"
@@ -10478,11 +10478,11 @@ msgstr "Décalage de la grille"
 
 #: plug-ins/imagemap/imap_grid.c:279
 msgid "pixels from l_eft"
-msgstr "pixels à g_auche"
+msgstr "pixels à _gauche"
 
 #: plug-ins/imagemap/imap_grid.c:284
 msgid "pixels from _top"
-msgstr "pixels en ha_ut"
+msgstr "pixels en _haut"
 
 #: plug-ins/imagemap/imap_main.c:128
 msgid "<Image>/Filters/Web/_ImageMap..."
@@ -10528,12 +10528,12 @@ msgstr "_Fichier"
 
 #: plug-ins/imagemap/imap_menu.c:186
 msgid "Open Recent"
-msgstr "Ouvrir Récent"
+msgstr "Ouvrir récent"
 
 #: plug-ins/imagemap/imap_menu.c:208
 #, c-format
 msgid "_Undo %s"
-msgstr "_Défaire %s"
+msgstr "A_nnuler %s"
 
 #: plug-ins/imagemap/imap_menu.c:224
 #, c-format
@@ -10630,7 +10630,7 @@ msgstr "A_ppliquer"
 
 #: plug-ins/imagemap/imap_polygon.c:534
 msgid "_Remove"
-msgstr "Ôte_r"
+msgstr "_Enlever"
 
 #: plug-ins/imagemap/imap_popup.c:133
 msgid "Tools"
@@ -10650,7 +10650,7 @@ msgstr "Impossible d'enregistrer le fichier de ressources :"
 
 #: plug-ins/imagemap/imap_preferences.c:357
 msgid "Select Color"
-msgstr "Régler la couleur"
+msgstr "Sélectionnez une couleur"
 
 #: plug-ins/imagemap/imap_preferences.c:446
 msgid "Default Map Type"
@@ -10686,7 +10686,7 @@ msgstr "_Menu"
 
 #: plug-ins/imagemap/imap_preferences.c:487
 msgid "Number of _Undo levels (1 - 99):"
-msgstr "Nombre de niveaux d'ann_ulation (1-99) :"
+msgstr "Nombre de niveaux d'a_nnulation (1-99) :"
 
 #: plug-ins/imagemap/imap_preferences.c:492
 msgid "Number of M_RU entries (1 - 16):"
@@ -10794,7 +10794,7 @@ msgstr "Préférences"
 
 #: plug-ins/imagemap/imap_toolbar.c:113
 msgid "Undo"
-msgstr "Défaire"
+msgstr "Annuler"
 
 #: plug-ins/imagemap/imap_toolbar.c:117
 msgid "Redo"
@@ -10802,11 +10802,11 @@ msgstr "Refaire"
 
 #: plug-ins/imagemap/imap_toolbar.c:138
 msgid "Zoom in"
-msgstr "Zoom +"
+msgstr "Zoom avant"
 
 #: plug-ins/imagemap/imap_toolbar.c:143
 msgid "Zoom out"
-msgstr "Zoom -"
+msgstr "Zoom arrière"
 
 #: plug-ins/imagemap/imap_toolbar.c:148
 msgid "Edit Map Info"
@@ -10990,7 +10990,7 @@ msgstr "Ajustez les couleurs d'impression"
 
 #: plug-ins/print/gimp_color_window.c:263
 msgid "Brightness:"
-msgstr "Luminosité:"
+msgstr "Luminosité :"
 
 #: plug-ins/print/gimp_color_window.c:271
 msgid ""
@@ -11256,8 +11256,8 @@ msgid ""
 "remove the `-l' or `-oraw' from the command string, or printing will "
 "probably fail!"
 msgstr ""
-"Entrez la commande correcte d'impression pour votre imprimante. Nota : s'il "
-"vous plait n'enlevez pas les « -l » ou « -oraw » de la commande en ligne,ou "
+"Saisissez la commande correcte d'impression pour votre imprimante. Nota : "
+"veuillez ne pas enlever les « -l » ou « -oraw » de la commande en ligne,ou "
 "l'impression échouera probablement !"
 
 #.
@@ -11322,24 +11322,22 @@ msgstr ""
 "Copyright (C) 1997-2001 Michael Sweet, Robert Krawitz,\n"
 "et le reste de l'équipe de développement de Gimp-Print.\n"
 "\n"
-"S'il vous plait, visitez notre site wet à http://gimp-print.sourceforge."
-"net.\n"
+"Veuillez visiter notre site Web à http://gimp-print.sourceforge.net.\n"
 "\n"
-"Ce programme est un logiciel libre, vous pouvez le redistribuer et/ou le "
-"modifier\n"
-"sous les termes de la GNUGeneral Public Licence telle que publiée par\n"
-"la Free Software Foundation; soit la version 2 de la licence, ou\n"
-"(à votre choix) toute version postérieure.\n"
+"Ce programme est un logiciel libre, vous pouvez le redistribuer et/ou\n"
+"le modifier sous les termes de la GNU General Public Licence telle que\n"
+"publiée par la Free Software Foundation ; soit la version 2 de la\n"
+"licence, ou (à votre convenance) toute version postérieure.\n"
 "\n"
-"Ce programme est distribué dans l'espoir qu'il sera utile,\n"
-"mais SANS GARANTIE; même sans la garantie impliquée par\n"
-"la COMMERCIALISATION ou l'ACCORD POUR UN USAGE PARTICULIER. Voyezla GNU "
-"General Public Licence pour plus de détails.\n"
+"Ce programme est distribué dans l'espoir qu'il sera utile, mais SANS\n"
+"AUCUNE GARANTIE ; même sans garantie implicite de COMMERCIALISATION\n"
+"ou d'ADÉQUATION À UN USAGE PARTICULIER. Voyez la GNU General Public\n"
+"Licence pour plus de détails.\n"
 "\n"
 "Vous devriez avoir reçu une copie de la GNU General Public Licence\n"
-"accompagnant ce programme, si ce n'est pas le cas écrivez à la Free "
-"Software\n"
-"Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
+"accompagnant ce programme, si ce n'est pas le cas écrivez à la Free\n"
+"Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,\n"
+"MA  02111-1307  USA\n"
 
 #: plug-ins/print/gimp_main_window.c:920
 msgid "Printer Settings"
