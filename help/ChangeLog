@@ -1,5 +1,11 @@
 2000-12-17  Michael Natterer  <mitch@gimp.org>
 
+	* images/*: flattened all PNGs against a white background (because
+	transparent PNG viewing is broken in GtkXmHTML) and crop all GIFs
+	(because they were too large).
+
+2000-12-17  Michael Natterer  <mitch@gimp.org>
+
 	* images/Makefile.am
 	* images/anchor_layer_icon.png
 	* images/lower_layer_icon.png
