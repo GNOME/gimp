@@ -50,6 +50,7 @@ Functions giving access to common toolbox tools.
 @opacity: 
 @offset: 
 @repeat: 
+@reverse: 
 @supersample: 
 @max_depth: 
 @threshold: 

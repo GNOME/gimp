@@ -180,16 +180,6 @@ Enums and definitions.
 @GIMP_OFFSET_BACKGROUND: 
 @GIMP_OFFSET_TRANSPARENT: 
 
-<!-- ##### ENUM GimpGradientPaintMode ##### -->
-<para>
-
-</para>
-
-@GIMP_GRADIENT_ONCE_FORWARD: 
-@GIMP_GRADIENT_ONCE_BACKWARD: 
-@GIMP_GRADIENT_LOOP_SAWTOOTH: 
-@GIMP_GRADIENT_LOOP_TRIANGLE: 
-
 <!-- ##### ENUM GimpGradientType ##### -->
 <para>
 
