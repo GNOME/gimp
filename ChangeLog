@@ -1,3 +1,8 @@
+Sun Jun  6 15:41:22 BST 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/fileops.c: Extra quality thumbnails when the user manually
+	asks for one to be created.  Can now also generate one-shot
+	previews for images on read-only media.
 
 Sun Jun  6 14:19:08 BST 1999 Andy Thomas <alt@gimp.org>
 

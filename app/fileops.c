@@ -671,44 +671,10 @@ file_open (char *filename, char *raw_filename)
 }
 
 
-static gboolean
-file_save_thumbnail (GimpImage* gimage,
-		     const char *full_source_filename)
-{
-  TempBuf* tempbuf;
-  gint i,j;
-  unsigned char* tbd;
-  gchar* pathname;
-  gchar* filename;
-  gchar* xvpathname;
-  gchar* thumbnailname;
+static TempBuf*
+make_thumb_tempbuf (GimpImage* gimage)
+{  
   gint w,h;
-  GimpImageBaseType basetype;
-  FILE* fp;
-  struct stat statbuf;
-
-  if (stat(full_source_filename, &statbuf) != 0)
-    {
-      return FALSE;
-    }
-
-  if (gimp_image_preview_valid (gimage, GRAY_CHANNEL))
-    {
-      /* just for debugging */
-      printf("(incidentally, gimage already has a valid preview - %dx%d)\n",
-	     gimage->comp_preview->width,
-	     gimage->comp_preview->height);
-    }
-
-  pathname = g_dirname(full_source_filename);
-  filename = g_basename(full_source_filename); /* Don't free! */
-
-  xvpathname = g_strconcat(pathname, G_DIR_SEPARATOR_S, ".xvpics",
-			   NULL);
-
-  thumbnailname = g_strconcat (xvpathname, G_DIR_SEPARATOR_S,
-			       filename,
-			       NULL);
 
   if (gimage->width<=80 && gimage->height<=60)
     {
@@ -736,7 +702,119 @@ file_save_thumbnail (GimpImage* gimage,
 
   /*printf("tn: %d x %d -> ", w, h);fflush(stdout);*/
 
-  tempbuf = gimp_image_composite_preview (gimage, GRAY_CHANNEL, w, h);
+  return (gimp_image_composite_preview (gimage, GRAY_CHANNEL, w, h));
+}
+
+
+static guchar*
+make_RGBbuf_from_tempbuf (TempBuf* tempbuf, gint* width_rtn, gint* height_rtn)
+{  
+  int i,j,w,h;
+  guchar* tbd;
+  guchar* ptr;
+  guchar* rtn = NULL;
+  guchar alpha,r,g,b;
+
+  w = (*width_rtn) = tempbuf->width;
+  h = (*height_rtn) = tempbuf->height;
+  tbd = temp_buf_data (tempbuf);
+
+  switch (tempbuf->bytes)
+    {
+    case 4:
+      rtn = ptr = g_malloc (3 * w * h);
+      for (i=0; i<h; i++)
+	{
+	  for (j=0; j<w; j++)
+	    {
+	      r = *(tbd++);
+	      g = *(tbd++);
+	      b = *(tbd++);
+	      alpha = *(tbd++);
+
+	      if (alpha & 128)
+		{
+		  *(ptr++) = r;
+		  *(ptr++) = g;
+		  *(ptr++) = b;
+		}
+	      else
+		{
+		  r = (( (i^j) & 4 ) << 5) | 64;
+		  *(ptr++) = r;
+		  *(ptr++) = r;
+		  *(ptr++) = r;
+		}
+	    }
+	}
+      break;
+
+    case 2:
+      rtn = ptr = g_malloc (3 * w * h);
+      for (i=0; i<h; i++)
+	{
+	  for (j=0; j<w; j++)
+	    {
+	      r = *(tbd++);
+	      alpha = *(tbd++);
+
+	      if (!(alpha & 128))
+		r = (( (i^j) & 4 ) << 5) | 64;
+
+	      *(ptr++) = r;
+	      *(ptr++) = r;
+	      *(ptr++) = r;
+	    }
+	}
+      break;
+
+    default:
+      g_warning("UNKNOWN TempBuf width in make_RGBbuf_from_tempbuf()");
+    }
+
+  return(rtn);
+}
+
+
+static gboolean
+file_save_thumbnail (GimpImage* gimage,
+		     const char *full_source_filename,
+		     TempBuf* tempbuf)
+{
+  gint i,j;
+  gint w,h;
+  unsigned char* tbd;
+  gchar* pathname;
+  gchar* filename;
+  gchar* xvpathname;
+  gchar* thumbnailname;
+  GimpImageBaseType basetype;
+  FILE* fp;
+  struct stat statbuf;
+
+  if (stat(full_source_filename, &statbuf) != 0)
+    {
+      return FALSE;
+    }
+
+  if (gimp_image_preview_valid (gimage, GRAY_CHANNEL))
+    {
+      /* just for debugging */
+      printf("(incidentally, gimage already has a valid preview - %dx%d)\n",
+	     gimage->comp_preview->width,
+	     gimage->comp_preview->height);
+    }
+
+  pathname = g_dirname(full_source_filename);
+  filename = g_basename(full_source_filename); /* Don't free! */
+
+  xvpathname = g_strconcat(pathname, G_DIR_SEPARATOR_S, ".xvpics",
+			   NULL);
+
+  thumbnailname = g_strconcat (xvpathname, G_DIR_SEPARATOR_S,
+			       filename,
+			       NULL);
+
   tbd = temp_buf_data(tempbuf);
 
   w = tempbuf->width;
@@ -893,6 +971,8 @@ file_save (GimpImage* gimage,
 
   if (return_val)
     {
+      TempBuf* tempbuf;
+
       /*  set this image to clean  */
       gimage_clean_all (gimage);
 
@@ -905,7 +985,8 @@ file_save (GimpImage* gimage,
 	 attention --Adam */
       /* gimage_set_save_proc(gimage, file_proc); */
 
-      file_save_thumbnail (gimage, filename);
+      tempbuf = make_thumb_tempbuf (gimage);
+      file_save_thumbnail (gimage, filename, tempbuf);
       
       /*  set the image title  */
       gimp_image_set_filename (gimage, filename);
@@ -1009,11 +1090,11 @@ readXVThumb(const gchar *fnam,
 
 /* don't call with preview_fullname as parameter!  will be clobbered! */
 static void
-set_preview (const gchar* fullfname)
+set_preview (const gchar* fullfname, guchar* RGB_source, gint RGB_w, gint RGB_h)
 {
   guchar *thumb_rgb;
   guchar *raw_thumb;
-  gint    tnw,tnh;
+  gint    tnw,tnh, i;
   gchar  *pname;
   gchar  *fname;
   gchar  *tname;
@@ -1056,44 +1137,70 @@ set_preview (const gchar* fullfname)
     }
   preview_fullname = g_strdup (fullfname);
 
-  if (raw_thumb)
+
+  if (RGB_source)
     {
-      int i;
-      thumb_rgb = g_malloc (3 * tnw * tnh);
-
-      for (i=0; i<tnw*tnh; i++)
-	{
-	  thumb_rgb[i*3  ] = ((raw_thumb[i]>>5)*255)/7;
-	  thumb_rgb[i*3+1] = (((raw_thumb[i]>>2)&7)*255)/7;
-	  thumb_rgb[i*3+2] = (((raw_thumb[i])&3)*255)/3;
-	}
+      gtk_preview_size (open_options_preview, RGB_w, RGB_h);
       
-      gtk_preview_size (open_options_preview, tnw, tnh);
-
-      for (i=0; i<tnh; i++)
+      for (i=0; i<RGB_h; i++)
 	{
-	  gtk_preview_draw_row(open_options_preview, &thumb_rgb[3*i*tnw],
+	  gtk_preview_draw_row(open_options_preview, &RGB_source[3*i*RGB_w],
 			       0, i,
-			       tnw);
+			       RGB_w);
 	}
+    }
+  else
+    {
+      if (raw_thumb)
+	{
+	  thumb_rgb = g_malloc (3 * tnw * tnh);
+	  
+	  for (i=0; i<tnw*tnh; i++)
+	    {
+	      thumb_rgb[i*3  ] = ((raw_thumb[i]>>5)*255)/7;
+	      thumb_rgb[i*3+1] = (((raw_thumb[i]>>2)&7)*255)/7;
+	      thumb_rgb[i*3+2] = (((raw_thumb[i])&3)*255)/3;
+	    }
+	  
+	  gtk_preview_size (open_options_preview, tnw, tnh);
+	      
+	  for (i=0; i<tnh; i++)
+	    {
+	      gtk_preview_draw_row(open_options_preview, &thumb_rgb[3*i*tnw],
+				   0, i,
+				   tnw);
+	    }
+      
+	  g_free (thumb_rgb);
+	}
+    }
 
-      gtk_label_set_text (GTK_LABEL(open_options_label),
-			  thumb_may_be_outdated ?
-			  "(this thumbnail may be out of date)" :
-			  (imginfo ? imginfo : "(no information)"));
+  if (raw_thumb || RGB_source)  /* We can show *some* kind of preview. */
+    {
+      if (raw_thumb) /* Managed to commit thumbnail file to disk */
+	{
+	  gtk_label_set_text (GTK_LABEL(open_options_label),
+			      thumb_may_be_outdated ?
+			      "(this thumbnail may be out of date)" :
+			      (imginfo ? imginfo : "(no information)"));
+	}
+      else
+	{
+	  gtk_label_set_text (GTK_LABEL(open_options_label),
+			      "(could not write thumbnail file)");
+	}
       gtk_widget_show (GTK_WIDGET(open_options_preview));
       gtk_widget_queue_draw (GTK_WIDGET(open_options_preview));
-
+      
       show_generate_label = FALSE;
       
-      g_free (thumb_rgb);
       g_free (raw_thumb);
     }
   else
     {
       if (imginfo)
 	g_free(imginfo);
-
+      
       gtk_widget_hide (GTK_WIDGET(open_options_preview));
       gtk_label_set_text (GTK_LABEL(open_options_label),
 			  "no preview available");
@@ -1121,7 +1228,7 @@ file_open_clistrow_callback (GtkWidget *w,
   fullfname = gtk_file_selection_get_filename(GTK_FILE_SELECTION(fileload));
 
   gtk_widget_set_sensitive (GTK_WIDGET(open_options_frame), TRUE);
-  set_preview (fullfname);
+  set_preview (fullfname, NULL, 0, 0);
 }
 
 
@@ -1146,9 +1253,19 @@ genbutton_callback (GtkWidget *w,
  					       g_basename(filename),
 					       RUN_NONINTERACTIVE)))
     {
-      file_save_thumbnail (gimage_to_be_thumbed, filename);
-      set_preview(filename);
+      guchar* RGBbuf;
+      gint RGBbuf_w, RGBbuf_h;
+      TempBuf* tempbuf;
+
+      tempbuf = make_thumb_tempbuf (gimage_to_be_thumbed);
+      RGBbuf = make_RGBbuf_from_tempbuf (tempbuf, &RGBbuf_w, &RGBbuf_h);
+      file_save_thumbnail (gimage_to_be_thumbed, filename, tempbuf);
+      set_preview (filename, RGBbuf, RGBbuf_w, RGBbuf_h);
+
       gimage_delete (gimage_to_be_thumbed);
+
+      if (RGBbuf)
+	g_free (RGBbuf);
     }
   else
     {
@@ -1157,7 +1274,7 @@ genbutton_callback (GtkWidget *w,
     }
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
-  gimp_remove_busy_cursors(NULL);
+  gimp_remove_busy_cursors (NULL);
 
   g_free (filename);
 }
