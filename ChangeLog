@@ -1,3 +1,7 @@
+2003-01-06  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/gfig/gfig.c: even more undeprecated, some cleanup.
+
 2003-01-06  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gfig/gfig.c: made it a lot less deprecated. Removed
