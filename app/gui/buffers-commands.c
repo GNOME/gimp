@@ -18,11 +18,6 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -37,7 +32,6 @@
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimplistitem.h"
-#include "widgets/gimppreview.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "buffers-commands.h"

@@ -1,5 +1,24 @@
 2002-01-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimppreview.[ch]: derive from GtkDrawingArea
+	instead of deprecated GtkPreview.
+
+	* app/gui/buffers-commands.c
+	* app/gui/device-status-dialog.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/indicator-area.c
+	* app/gui/info-window.c
+	* app/gui/palette-import-dialog.c
+	* app/gui/palettes-commands.c
+	* app/gui/test-commands.c
+	* app/gui/tool-options-dialog.c
+	* app/gui/toolbox.c
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimpimagedock.c
+	* app/widgets/gimpmenuitem.c: removed #undef GTK_DISABLE_DEPRECATED.
+
+2002-01-30  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpcolorarea.c: pass a GdkGC to
 	gdk_draw_rgb_image(), fixed dither offsets.
 

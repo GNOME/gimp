@@ -23,20 +23,7 @@
 #define __GIMP_PREVIEW_H__
 
 
-#if defined(GTK_DISABLE_DEPRECATED) && !defined(__GIMP_COLOR_AREA_H__)
-/* eeek... really bad hack for the time being */
-typedef enum
-{
-  GTK_PREVIEW_COLOR,
-  GTK_PREVIEW_GRAYSCALE
-} GtkPreviewType;
-#endif
-
-#undef GTK_DISABLE_DEPRECATED
-
-#include <gtk/gtkpreview.h>
-
-#define GTK_DISABLE_DEPRECATED
+#include <gtk/gtkdrawingarea.h>
 
 
 #define GIMP_TYPE_PREVIEW            (gimp_preview_get_type ())
@@ -51,34 +38,37 @@ typedef struct _GimpPreviewClass  GimpPreviewClass;
 
 struct _GimpPreview
 {
-  GtkPreview    parent_instance;
+  GtkDrawingArea  parent_instance;
 
-  GimpViewable *viewable;
+  GimpViewable   *viewable;
 
-  gint          width;
-  gint          height;
-  gint          border_width;
-  gboolean      dot_for_dot;
+  gint            width;
+  gint            height;
+  gint            border_width;
+  gboolean        dot_for_dot;
 
-  GimpRGB       border_color;
+  GimpRGB         border_color;
 
-  gboolean      is_popup;
-  gboolean      clickable;
-  gboolean      show_popup;
+  gboolean        is_popup;
+  gboolean        clickable;
+  gboolean        show_popup;
 
   /*< private >*/
-  gint          size;
-  gboolean      in_button;
-  guint         press_state;
-  guint         idle_id;
-  guint         popup_id;
-  gint          popup_x;
-  gint          popup_y;
+  guchar         *buffer;
+  gint            rowstride;
+
+  gint            size;
+  gboolean        in_button;
+  guint           press_state;
+  guint           idle_id;
+  guint           popup_id;
+  gint            popup_x;
+  gint            popup_y;
 };
 
 struct _GimpPreviewClass
 {
-  GtkPreviewClass  parent_class;
+  GtkDrawingAreaClass  parent_class;
 
   /*  signals  */
   void        (* clicked)          (GimpPreview *preview);
