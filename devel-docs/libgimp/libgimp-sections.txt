@@ -334,6 +334,7 @@ gimp_drawable_transform_rotate
 gimp_drawable_transform_scale
 gimp_drawable_transform_shear
 gimp_drawable_transform_2d
+gimp_drawable_transform_matrix
 </SECTION>
 
 <SECTION>

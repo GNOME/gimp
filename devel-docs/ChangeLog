@@ -1,3 +1,8 @@
+2004-10-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt: updated.
+	* libgimp/tmpl/gimpdrawabletransform.sgml: regenerated.
+
 2004-10-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/tmpl/gimpdrawabletransform.sgml: new file.

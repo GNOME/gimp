@@ -37,16 +37,19 @@ gimpdrawabletransform
 </para>
 
 @drawable_ID: 
+@x0: 
+@y0: 
 @x1: 
 @y1: 
-@x2: 
-@y2: 
 @transform_direction: 
 @interpolation: 
 @supersample: 
 @recursion_level: 
 @clip_result: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@x2: 
+@y2: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_perspective ##### -->
@@ -78,14 +81,17 @@ gimpdrawabletransform
 
 @drawable_ID: 
 @angle: 
-@cx: 
-@cy: 
+@center_x: 
+@center_y: 
 @transform_direction: 
 @interpolation: 
 @supersample: 
 @recursion_level: 
 @clip_result: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@cx: 
+@cy: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_scale ##### -->
@@ -135,6 +141,29 @@ gimpdrawabletransform
 @angle: 
 @dest_x: 
 @dest_y: 
+@transform_direction: 
+@interpolation: 
+@supersample: 
+@recursion_level: 
+@clip_result: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_transform_matrix ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@coeff_0_0: 
+@coeff_0_1: 
+@coeff_0_2: 
+@coeff_1_0: 
+@coeff_1_1: 
+@coeff_1_2: 
+@coeff_2_0: 
+@coeff_2_1: 
+@coeff_2_2: 
 @transform_direction: 
 @interpolation: 
 @supersample: 
