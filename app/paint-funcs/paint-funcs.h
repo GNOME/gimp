@@ -351,19 +351,26 @@ void  copy_component                      (PixelRegion *src,
                                            guint        pixel);
 
 void  initial_region                      (PixelRegion *, PixelRegion *,
-					   PixelRegion *, guchar *,
-					   int, GimpLayerModeEffects, int *,
-					   CombinationMode);
+					   PixelRegion *,
+                                           guchar *,
+					   gint,
+                                           GimpLayerModeEffects,
+                                           gboolean *,
+                                           CombinationMode);
 
 void  combine_regions                     (PixelRegion *, PixelRegion *,
 					   PixelRegion *, PixelRegion *,
-					   guchar *, guint,
+					   guchar *,
+                                           guint,
 					   GimpLayerModeEffects,
-					   int *, CombinationMode);
+					   gboolean *,
+                                           CombinationMode);
 
 void  combine_regions_replace             (PixelRegion *, PixelRegion *,
 					   PixelRegion *, PixelRegion *,
 					   guchar *,
-					   guint, int *, CombinationMode);
+					   guint,
+                                           gboolean *,
+                                           CombinationMode);
 
 #endif  /*  __PAINT_FUNCS_H__  */

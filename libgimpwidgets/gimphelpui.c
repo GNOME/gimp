@@ -40,18 +40,18 @@ typedef enum
 
 /*  local function prototypes  */
 
-static const gchar * gimp_help_get_help_data       (GtkWidget        *widget,
-                                                    GtkWidget       **help_widget,
-                                                    gpointer         *ret_data);
-static gboolean   gimp_help_callback               (GtkWidget        *widget,
-                                                    GtkWidgetHelpType help_type,
-                                                    GimpHelpFunc      help_func);
+static const gchar * gimp_help_get_help_data       (GtkWidget      *widget,
+                                                    GtkWidget     **help_widget,
+                                                    gpointer       *ret_data);
+static gboolean   gimp_help_callback               (GtkWidget      *widget,
+                                                    GimpWidgetHelpType help_type,
+                                                    GimpHelpFunc    help_func);
 
-static gboolean   gimp_context_help_idle_start     (gpointer          widget);
-static gboolean   gimp_context_help_button_press   (GtkWidget        *widget,
-                                                    GdkEventButton   *bevent,
-                                                    gpointer          data);
-static gboolean   gimp_context_help_idle_show_help (gpointer          data);
+static gboolean   gimp_context_help_idle_start     (gpointer        widget);
+static gboolean   gimp_context_help_button_press   (GtkWidget      *widget,
+                                                    GdkEventButton *bevent,
+                                                    gpointer        data);
+static gboolean   gimp_context_help_idle_show_help (gpointer        data);
 
 
 /*  local variables  */

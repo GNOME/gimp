@@ -1,5 +1,13 @@
 2004-03-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint-funcs/paint-funcs.h
+	* libgimpwidgets/gimphelpui.c: fixed prototypes to match function
+	definitions. Fixes bug #136343.
+
+	* app/base/temp-buf.c (temp_buf_new): remove unused variable.
+
+2004-03-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpdrawtool.c
 	* app/tools/gimpselectiontool.c
 	* app/tools/gimptool.c

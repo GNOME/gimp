@@ -171,7 +171,6 @@ temp_buf_new (gint    width,
 	      guchar *col)
 {
   glong    i;
-  gint     j;
   guchar  *data;
   TempBuf *temp;
 
