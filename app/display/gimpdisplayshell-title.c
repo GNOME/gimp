@@ -273,6 +273,18 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      format++;
 	      break;
 
+	    case 'B': /* dirty flag (long) */
+	      if (image->dirty)
+                i += print (title, title_len, i, "%s",
+                            _("(modified)"));
+	      break;
+
+	    case 'A': /* clean flag (long) */
+	      if (! image->dirty)
+                i += print (title, title_len, i, "%s",
+                            _("(clean)"));
+	      break;
+
             case 'm': /* memory used by image */
               {
                 GimpObject *object = GIMP_OBJECT (image);

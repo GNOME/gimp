@@ -1,3 +1,12 @@
+2004-07-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig-dump.c
+	* app/display/gimpdisplayshell-title.c
+	(gimp_display_shell_format_title): applied patch from Dave Neary
+	which adds %B which expands to (modified) if the image is
+	dirty. Also added %A which expands to (clean) because we also have
+	a short indicator for the clean image. Fixes bug #130943.
+
 2004-07-13  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am: removed hack for gimp-console compilation.
@@ -40,7 +49,7 @@
 
 	* app/core/gimpimage-undo.[ch] (gimp_image_undo_push): added
 	"GType undo_gtype" parameter and allow to pass name-value pairs as
-	"...". Une the new GParameter utility functions to construct the
+	"...". Use the new GParameter utility functions to construct the
 	appropriate undo step with g_object_newv().
 
 	(gimp_image_undo_push_item): removed.
