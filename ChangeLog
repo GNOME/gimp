@@ -1,3 +1,8 @@
+2004-10-24  DindinX  <dindinx@gimp.org>
+
+	* app/core/gimpdrawable-desaturate.c: only return early if there's
+	nothing to desaturate.
+
 2004-10-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/vectors-commands.c: don't leak the filenames of the

@@ -48,7 +48,7 @@ gimp_drawable_desaturate (GimpDrawable *drawable)
 
   has_alpha = gimp_drawable_has_alpha (drawable);
 
-  if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+  if (!gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     return;
 
   pixel_region_init (&srcPR, gimp_drawable_data (drawable),
