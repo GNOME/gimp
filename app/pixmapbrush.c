@@ -37,17 +37,17 @@
 #include "libgimp/gimpintl.h"
 
 /*  forward function declarations  */
-static void         pixmapbrush_motion      (PaintCore *, GimpDrawable *, double, double, gboolean);
+static void         pixmapbrush_motion      (PaintCore *, GimpDrawable *);
 /* static Argument *   pixmapbrush_invoker     (Argument *); */
 /* static Argument *   pixmapbrush_extended_invoker     (Argument *); */
 /* static Argument *   pixmapbrush_extended_gradient_invoker     (Argument *); */
-static double non_gui_fade_out,non_gui_gradient_length, non_gui_incremental;
 
 static void   paint_line_pixmap_mask (GImage        *dest,
 				      GimpDrawable  *drawable,
 				      GimpBrushPixmap  *brush,
 				      unsigned char *d,
 				      int            x,
+				      int            offset_x,
 				      int            y,
 				      int            y2,
 				      int            bytes,
@@ -72,35 +72,6 @@ struct _PixmapPaintOptions
 static PixmapPaintOptions *pixmap_paint_options = NULL;
 
 
-static void
-pixmapbrush_toggle_update (GtkWidget *w,
-			  gpointer   data)
-{
-  gboolean *toggle_val;
-
-  toggle_val = (gboolean *) data;
-
-  if (GTK_TOGGLE_BUTTON (w)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-pixmapbrush_scale_update (GtkAdjustment *adjustment,
-			 PixmapPaintOptions   *options)
-{
- options->gradient_length = adjustment->value;
- if(options->gradient_length > 0.0)
-   options->incremental = INCREMENTAL;
-}
-
-static void
-pixmapbrush_fade_update (GtkAdjustment *adjustment,
-			 PixmapPaintOptions   *options)
-{
- options->fade_out = adjustment->value;
-}
 
 static void
 pixmapbrush_options_reset (void)
@@ -118,12 +89,6 @@ pixmapbrush_options_new (void)
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *label;
-  GtkWidget *fade_out_scale;
-  GtkObject *fade_out_scale_data;
-  GtkWidget *gradient_length_scale;
-  GtkObject *gradient_length_scale_data;
-  GtkWidget *incremental_toggle;
-
 
   /*  the new options structure  */
   options = (PixmapPaintOptions *) g_malloc (sizeof (PixmapPaintOptions));
@@ -186,10 +151,7 @@ pixmap_paint_func (PaintCore *paint_core,
       break;
 
     case MOTION_PAINT :
-      pixmapbrush_motion (paint_core, drawable, 
-			 pixmap_paint_options->fade_out, 
-			 pixmap_paint_options->gradient_length,
-			 pixmap_paint_options->incremental);
+      pixmapbrush_motion (paint_core, drawable);
       break;
 
     case FINISH_PAINT :
@@ -242,10 +204,7 @@ tools_free_pixmapbrush (Tool *tool)
 
 static void
 pixmapbrush_motion (PaintCore *paint_core,
-		   GimpDrawable *drawable,
-		   double     fade_out,
-		   double     gradient_length,
-		   gboolean   incremental)
+		   GimpDrawable *drawable)
 {
   GImage *gimage;
   GimpBrushPixmap *brush = 0;
@@ -254,14 +213,26 @@ pixmapbrush_motion (PaintCore *paint_core,
   double position;
   unsigned char *d;
   int y;
-  unsigned char col[MAX_CHANNELS];
+  /*  unsigned char col[MAX_CHANNELS]; */
   void * pr;
   PixelRegion destPR;
+  int opacity;
+  int offset_x = 0;
+  int offset_y = 0;
+
   pr = NULL;
 
   /* FIXME: this code doesnt work quite right at the far top and
      and left sides. need to handle those cases better */
 
+  /* if we dont get a pixmap brush, aieeee!  */
+  /* FIXME */
+  
+
+    if(! (GIMP_IS_BRUSH_PIXMAP(paint_core->brush)))
+     return;
+  
+	 
   brush = GIMP_BRUSH_PIXMAP(paint_core->brush);
   pixmap_data = gimp_brush_pixmap_get_pixmap(brush);
   position = 0.0;
@@ -291,29 +262,35 @@ pixmapbrush_motion (PaintCore *paint_core,
   /* register this pixel region */
   pr = pixel_regions_register (1, &destPR);
 
+
+  
   for (; pr != NULL; pr = pixel_regions_process (pr))
     {
       d = destPR.data;
       for(y = 0; y < destPR.h; y++)
 	{
-	  /*  printf("y: %i destPR.h: %i\n", y, destPR.h); */
+/* 	  printf(" brush->width: %i offset_x: %i", brush->pixmap_mask->width, offset_x); */
+/* 	  printf(" area->y: %i destPR.h: %i area->x: %i destPR.w: %i ",area->y, destPR.h, area->x, destPR.w);  */
 	  paint_line_pixmap_mask(gimage, drawable, brush,
-				 d, area->x, area->y, y,
+				 d, area->x,offset_x, area->y, y,
 				 destPR.bytes, destPR.w);
 	
 	  d += destPR.rowstride;
 	}
     }
 
-      /* this will eventually get replaced with the code to merge 
-	 the brush mask and the pixmap data into one temp_buf */
-     /*  color the pixels  */
 
-     /*          printf("temp_blend: %u grad_len: %f distance: %f \n",temp_blend, gradient_length, distance); */ 
+  /*          printf("temp_blend: %u grad_len: %f distance: %f \n",temp_blend, gradient_length, distance); */ 
   /* remove these once things are stable */
   /* printf("opacity: %i ", (int) (gimp_context_get_opacity (NULL) * 255)); */
   /*    printf("r: %i g: %i b: %i a: %i\n", col[0], col[1], col[2], col[3]); */ 
-      paint_core_paste_canvas (paint_core, drawable, 255,
+
+  /* steal the pressure sensiteive code from clone.c */
+  opacity = 255 * gimp_context_get_opacity (NULL) * (paint_core->curpressure / 0.5);
+  if (opacity > 255)
+    opacity = 255;    
+
+      paint_core_paste_canvas (paint_core, drawable, opacity,
 			       (int) (gimp_context_get_opacity (NULL) * 255),
 			       gimp_context_get_paint_mode (NULL), SOFT, 
 			       INCREMENTAL);
@@ -326,7 +303,7 @@ pixmapbrush_non_gui_paint_func (PaintCore *paint_core,
 			       GimpDrawable *drawable,
 			       int        state)
 {	
-  pixmapbrush_motion (paint_core, drawable, non_gui_fade_out,non_gui_gradient_length,  non_gui_incremental);
+  pixmapbrush_motion (paint_core, drawable);
 
   return NULL;
 }
@@ -338,16 +315,21 @@ paint_line_pixmap_mask (GImage        *dest,
 			GimpBrushPixmap  *brush,
 			unsigned char *d,
 			int            x,
+			int            offset_x,
 			int            y,
 			int            y2,
 			int            bytes,
 			int            width)
 {
   unsigned char *pat, *p;
-  unsigned char *dp;
   int color, alpha;
   int i;
-  unsigned char rgb[3];
+
+ /*  Make sure x, y are positive  */
+  while (x < 0)
+    x += brush->pixmap_mask->width;
+  while (y < 0)
+    y += brush->pixmap_mask->height;
 
   /* point to the approriate scanline */
   /* use "pat" here because i'm c&p from pattern clone */
@@ -359,16 +341,15 @@ paint_line_pixmap_mask (GImage        *dest,
 
   alpha = bytes -1;
 
-  
-  
+  /*  printf("x: %i y: %i y2: %i   \n",x,y,y2); */
   for (i = 0; i < width; i++)
     {
-      p = pat + (i % brush->pixmap_mask->width) * brush->pixmap_mask->bytes;
-      /* printf("x: %i y: %i y2: %i i: %i  \n",x,y,y2,i); */
+      p = pat + ((i+offset_x) % brush->pixmap_mask->width) * brush->pixmap_mask->bytes;
+     
       /* printf("d->r: %i d->g: %i d->b: %i d->a: %i\n",(int)d[0], (int)d[1], (int)d[2], (int)d[3]); */
       gimage_transform_color (dest, drawable, p, d, color);
 
-      d[3] = 255;
+      d[alpha] = 255;
       d += bytes;
       
     }

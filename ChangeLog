@@ -1,3 +1,8 @@
+Mon Aug  9 22:46:34 1999 Adrian Likins <alikins@redhat.com>
+	
+	* app/pixmapbrush.c: couple of warning clean ups and
+	some minor fleshing out
+
 Mon Aug  9 01:20:24 1999 Adrian Likins <alikins@redhat.com>
 
 	* app/pixmapbrush.c 
