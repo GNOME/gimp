@@ -60,7 +60,7 @@ main (gint   argc,
   const gchar *help_base    = g_getenv (GIMP_HELP_ENV_URI);
   const gchar *help_locales = GIMP_HELP_DEFAULT_LOCALE;
   const gchar *help_id      = GIMP_HELP_DEFAULT_ID;
-  const gchar *help_root    = NULL;
+  const gchar *help_root    = DATADIR G_DIR_SEPARATOR_S GIMP_HELP_PREFIX;
   gchar       *uri;
   gint         i;
 
@@ -124,8 +124,7 @@ main (gint   argc,
   if (help_base)
     uri = g_strdup (help_base);
   else
-    uri = g_filename_to_uri (DATADIR G_DIR_SEPARATOR_S GIMP_HELP_PREFIX,
-                             NULL, NULL);
+    uri = g_filename_to_uri (help_root, NULL, NULL);
 
   domain_register (GIMP_HELP_DEFAULT_DOMAIN, uri, help_root);
   g_free (uri);
