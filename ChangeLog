@@ -1,5 +1,10 @@
 2004-05-10  Sven Neumann  <sven@gimp.org>
 
+	* app/xcf/xcf-save.c (xcf_save_prop): fixed size of colormap
+	property. Fixes bug #142149; merged from HEAD branch.
+
+2004-05-10  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptexteditor.c (gimp_text_editor_set_direction):
 	don't call gtk_widget_set_direction() on a non-existant widget.
 	Fix for bug #141792, merged from HEAD branch.

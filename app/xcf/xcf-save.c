@@ -628,12 +628,12 @@ xcf_save_prop (XcfInfo   *info,
 
     case PROP_COLORMAP:
       {
-	guint32 ncolors;
-	guchar *colors;
+	guint32  ncolors;
+	guchar  *colors;
 
 	ncolors = va_arg (args, guint32);
 	colors = va_arg (args, guchar*);
-	size = 4 + ncolors;
+	size = 4 + ncolors * 3;
 
         xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
