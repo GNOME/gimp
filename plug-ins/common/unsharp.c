@@ -885,9 +885,9 @@ preview_update_real (gboolean apply_effect)
   gint       preview_buf_y2;       /* Lower-right Y of preview */
 
   GimpPixelRgn srcPR, destPR;      /* Pixel regions */
-  gint         x, y;               /* Current location in image */
+  gint       x, y;                 /* Current location in image */
 
-  gint row,buf_y, offset;          /* Preview loop control      */
+  gint       offset;               /* Preview loop control      */
 
   if (!show_preview)
     return;
@@ -953,8 +953,6 @@ preview_update_real (gboolean apply_effect)
    */
   y     = preview_y1 - preview_buf_y1;
   x     = preview_x1 - preview_buf_x1;
-  row   = 0;
-  buf_y = y + preview_height;
 
   offset = (x * bytes) + (y * preview_buf_width * bytes);
 

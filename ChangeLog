@@ -1,3 +1,9 @@
+2004-08-12  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/sel_gauss.c: added a preview.
+
+	* plug-ins/common/unsharp.c: removed unused variables.
+
 2004-08-12  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/context-actions.c: changed the icons to indicate

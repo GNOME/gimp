@@ -20,12 +20,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  * To do:
- *	- support for horizontal or vertical only blur
- *	- use memory more efficiently, smaller regions at a time
- *	- integrating with other convolution matrix based filters ?
- *	- create more selective and adaptive filters
- *	- threading
- *	- optimization
+ *      - support for horizontal or vertical only blur
+ *      - use memory more efficiently, smaller regions at a time
+ *      - integrating with other convolution matrix based filters ?
+ *      - create more selective and adaptive filters
+ *      - threading
+ *      - optimization
  *
  */
 #include "config.h"
@@ -47,18 +47,23 @@ typedef struct
 
 /* Declare local functions.
  */
-static void      query            (void);
-static void      run              (const gchar      *name,
-                                   gint              nparams,
-                                   const GimpParam  *param,
-                                   gint             *nreturn_vals,
-                                   GimpParam       **return_vals);
+static void      query                   (void);
+static void      run                     (const gchar      *name,
+                                          gint              nparams,
+                                          const GimpParam  *param,
+                                          gint             *nreturn_vals,
+                                          GimpParam       **return_vals);
 
-static void      sel_gauss        (GimpDrawable     *drawable,
-                                   gdouble           radius,
-                                   gint              maxdelta);
-static gboolean  sel_gauss_dialog (void);
-
+static void      sel_gauss               (GimpDrawable     *drawable,
+                                          gdouble           radius,
+                                          gint              maxdelta);
+static gboolean  sel_gauss_dialog        (GimpDrawable     *drawable);
+static void      preview_update_real     (GimpDrawable *drawable,
+                                          gboolean      apply_effect);
+static void      preview_move            (GimpDrawable     *drawable);
+static gboolean  preview_button_release  (GimpDrawable     *drawable);
+static void      preview_toggle_callback (GtkWidget    *toggle,
+                                          GimpDrawable *drawable);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -74,6 +79,12 @@ static BlurValues bvals =
   50   /* maxdelta */
 };
 
+/* Preview stuff */
+#define PREVIEW_SIZE 128
+static GtkWidget *preview;
+static gint       delta_x      = 0;
+static gint       delta_y      = 0;
+static gboolean   show_preview = TRUE;
 
 MAIN ()
 
@@ -90,23 +101,23 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_sel_gauss",
-			  "Applies a selective gaussian blur to the "
+                          "Applies a selective gaussian blur to the "
                           "specified drawable.",
-			  "This filter functions similar to the regular "
-			  "gaussian blur filter except that neighbouring "
-			  "pixels that differ more than the given maxdelta "
-			  "parameter will not be blended with. This way with "
-			  "the correct parameters, an image can be smoothed "
-			  "out without losing details. However, this filter "
-			  "can be rather slow.",
-			  "Thom van Os",
-			  "Thom van Os",
-			  "1999",
-			  N_("_Selective Gaussian Blur..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "This filter functions similar to the regular "
+                          "gaussian blur filter except that neighbouring "
+                          "pixels that differ more than the given maxdelta "
+                          "parameter will not be blended with. This way with "
+                          "the correct parameters, an image can be smoothed "
+                          "out without losing details. However, this filter "
+                          "can be rather slow.",
+                          "Thom van Os",
+                          "Thom van Os",
+                          "1999",
+                          N_("_Selective Gaussian Blur..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_sel_gauss",
                              N_("<Image>/Filters/Blur"));
@@ -122,8 +133,8 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpDrawable	    *drawable;
-  gdouble	     radius;
+  GimpDrawable      *drawable;
+  gdouble            radius;
 
   run_mode = param[0].data.d_int32;
 
@@ -135,6 +146,9 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
+  /* Get the specified drawable */
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
@@ -142,22 +156,22 @@ run (const gchar      *name,
       gimp_get_data ("plug_in_sel_gauss", &bvals);
 
       /* First acquire information with a dialog */
-      if (! sel_gauss_dialog ())
-	return;
+      if (! sel_gauss_dialog (drawable))
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /* Make sure all the arguments are there! */
       if (nparams != 5)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  bvals.radius   = param[3].data.d_float;
-	  bvals.maxdelta = CLAMP (param[4].data.d_int32, 0, 255);
+        {
+          bvals.radius   = param[3].data.d_float;
+          bvals.maxdelta = CLAMP (param[4].data.d_int32, 0, 255);
 
           if (bvals.radius <= 0.0)
             status = GIMP_PDB_CALLING_ERROR;
-	}
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -175,9 +189,6 @@ run (const gchar      *name,
       return;
     }
 
-  /* Get the specified drawable */
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
-
   /* Make sure that the drawable is gray or RGB color */
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id))
@@ -191,11 +202,11 @@ run (const gchar      *name,
 
       /* Store data */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_set_data ("plug_in_sel_gauss",
-		       &bvals, sizeof (BlurValues));
+        gimp_set_data ("plug_in_sel_gauss",
+                       &bvals, sizeof (BlurValues));
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
     }
   else
     {
@@ -208,24 +219,113 @@ run (const gchar      *name,
 }
 
 static gboolean
-sel_gauss_dialog (void)
+sel_gauss_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
+  GtkWidget *alignment;
   GtkWidget *table;
+  GtkWidget *frame;
+  GtkWidget *scrollbar;
+  GtkWidget *preview_toggle;
   GtkWidget *spinbutton;
   GtkObject *adj;
   gboolean   run;
+
+  gint       sel_width;
+  gint       sel_height;
+  gint       x1, y1, x2, y2;
+  gint       preview_width;
+  gint       preview_height;
 
   gimp_ui_init ("sel_gauss", FALSE);
 
   dlg = gimp_dialog_new (_("Selective Gaussian Blur"), "sel_gauss",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-sel-gauss",
+                         gimp_standard_help_func, "plug-in-sel-gauss",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                          NULL);
+
+  /* preview stuff */
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  sel_width     = x2 - x1;
+  sel_height    = y2 - y1;
+  preview_width  = MIN (sel_width, PREVIEW_SIZE);
+  preview_height = MIN (sel_height, PREVIEW_SIZE);
+
+  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), alignment,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (alignment);
+
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_container_add (GTK_CONTAINER (alignment), table);
+  gtk_widget_show (table);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1, 0, 0, 0, 0);
+  gtk_widget_show (frame);
+
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  gtk_widget_show (preview);
+
+  adj = gtk_adjustment_new (0, 0, sel_width - 1, 1.0,
+                            MIN (preview_width, sel_width),
+                            MIN (preview_width, sel_width));
+
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &delta_x);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (preview_move),
+                            drawable);
+  scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (adj));
+  gtk_range_set_update_policy (GTK_RANGE (scrollbar),
+                               GTK_UPDATE_CONTINUOUS);
+  gtk_table_attach (GTK_TABLE (table), scrollbar, 0, 1, 1, 2,
+                    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (scrollbar);
+  g_signal_connect_swapped (scrollbar, "button_release_event",
+                            G_CALLBACK (preview_button_release),
+                            drawable);
+
+  adj = gtk_adjustment_new (0, 0, sel_height - 1, 1.0,
+                            MIN (preview_height, sel_height),
+                            MIN (preview_height, sel_height));
+
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &delta_y);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (preview_move),
+                            drawable);
+
+  scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (adj));
+  gtk_range_set_update_policy (GTK_RANGE (scrollbar),
+                               GTK_UPDATE_CONTINUOUS);
+  gtk_table_attach (GTK_TABLE (table), scrollbar, 1, 2, 0, 1,
+                    0, GTK_FILL, 0, 0);
+  gtk_widget_show (scrollbar);
+  g_signal_connect_swapped (scrollbar, "button_release_event",
+                            G_CALLBACK (preview_button_release),
+                            drawable);
+
+  preview_toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview_toggle),
+                                show_preview);
+  gtk_table_attach (GTK_TABLE (table), preview_toggle,
+                    0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (preview_toggle);
+  g_signal_connect (preview_toggle, "toggled",
+                    G_CALLBACK (preview_toggle_callback),
+                    drawable);
+
+  /* End of preview stuff */
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -235,26 +335,36 @@ sel_gauss_dialog (void)
                      TRUE, TRUE, 0);
 
   spinbutton = gimp_spin_button_new (&adj,
-				     bvals.radius, 0.0, G_MAXINT, 1.0, 5.0,
-				     0, 1, 2);
+                                     bvals.radius, 0.0, G_MAXINT, 1.0, 5.0,
+                                     0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Blur radius:"), 0.0, 0.5,
-			     spinbutton, 1, TRUE);
+                             _("_Blur radius:"), 0.0, 0.5,
+                             spinbutton, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &bvals.radius);
+  g_signal_connect_swapped (spinbutton, "button_release_event",
+                            G_CALLBACK (preview_button_release),
+                            drawable);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Max. delta:"), 128, 0,
-			      bvals.maxdelta, 0, 255, 1, 8, 0,
-			      TRUE, 0, 0,
-			      FALSE, FALSE);
+                              _("_Max. delta:"), 128, 0,
+                              bvals.maxdelta, 0, 255, 1, 8, 0,
+                              TRUE, 0, 0,
+                              FALSE, FALSE);
+  scrollbar = GIMP_SCALE_ENTRY_SCALE(adj);
+  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_DISCONTINUOUS);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bvals.maxdelta);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (preview_button_release),
+                            drawable);
 
   gtk_widget_show (table);
   gtk_widget_show (dlg);
+
+  preview_update_real (drawable, TRUE);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
@@ -265,8 +375,8 @@ sel_gauss_dialog (void)
 
 static void
 init_matrix (gdouble   radius,
-	     gdouble **mat,
-	     gint      num)
+             gdouble **mat,
+             gint      num)
 {
   gint    dx, dy;
   gdouble sd, c1, c2;
@@ -279,31 +389,32 @@ init_matrix (gdouble   radius,
   for (dy = 0; dy < num; dy++)
     {
       for (dx = dy; dx < num; dx++)
-	{
-	  mat[dx][dy] = c1 * exp ((dx * dx + dy * dy)/ c2);
-	  mat[dy][dx] = mat[dx][dy];
-	}
+        {
+          mat[dx][dy] = c1 * exp ((dx * dx + dy * dy)/ c2);
+          mat[dy][dx] = mat[dx][dy];
+        }
     }
 }
 
 static void
 matrixmult (guchar   *src,
-	    guchar   *dest,
-	    gint      width,
-	    gint      height,
-	    gdouble **mat,
-	    gint      numrad,
-	    gint      bytes,
-	    gint      has_alpha,
-	    gint      maxdelta)
+            guchar   *dest,
+            gint      width,
+            gint      height,
+            gdouble **mat,
+            gint      numrad,
+            gint      bytes,
+            gboolean  has_alpha,
+            gint      maxdelta,
+            gboolean  preview_mode)
 {
-  gint    i, j, b, nb, x, y;
-  gint    six, dix, tmp;
-  gint    rowstride;
-  gdouble sum, fact, d, alpha = 1.0;
-  guchar *src_b, *src_db;
+  gint     i, j, b, nb, x, y;
+  gint     six, dix, tmp;
+  gint     rowstride;
+  gdouble  sum, fact, d, alpha = 1.0;
+  guchar  *src_b, *src_db;
   gdouble *m;
-  gint    offset;
+  gint     offset;
 
   nb = bytes - (has_alpha ? 1 : 0);
   rowstride = width * bytes;
@@ -311,70 +422,70 @@ matrixmult (guchar   *src,
   for (y = 0; y < height; y++)
     {
       for (x = 0; x < width; x++)
-	{
-	  dix = bytes * (width * y + x);
-	  if (has_alpha)
-	    dest[dix + nb] = src[dix + nb];
+        {
+          dix = bytes * (width * y + x);
+          if (has_alpha)
+            dest[dix + nb] = src[dix + nb];
 
-	  for (b = 0; b < nb; b++)
-	    {
-	      sum = 0.0;
-	      fact = 0.0;
-	      src_db = src + dix + b;
+          for (b = 0; b < nb; b++)
+            {
+              sum = 0.0;
+              fact = 0.0;
+              src_db = src + dix + b;
 
-	      offset = rowstride * (y - numrad) + bytes * (x - numrad);
+              offset = rowstride * (y - numrad) + bytes * (x - numrad);
 
-	      for (i = 1 - numrad; i < numrad; i++)
-		{
-		  offset += bytes;
-		  if (x + i < 0 || x + i >= width)
-		    continue;
+              for (i = 1 - numrad; i < numrad; i++)
+                {
+                  offset += bytes;
+                  if (x + i < 0 || x + i >= width)
+                    continue;
 
-		  six = offset;
-		  m = mat[ABS(i)];
+                  six = offset;
+                  m = mat[ABS(i)];
 
-		  src_b = src + six + b;
+                  src_b = src + six + b;
 
-		  for (j = 1 - numrad; j < numrad; j++)
-		    {
-		      src_b += rowstride;
-		      six += rowstride;
+                  for (j = 1 - numrad; j < numrad; j++)
+                    {
+                      src_b += rowstride;
+                      six += rowstride;
 
-		      if (y + j < 0 || y + j >= height)
-			continue;
+                      if (y + j < 0 || y + j >= height)
+                        continue;
 
-		      tmp = *src_db - *src_b;
-		      if (tmp > maxdelta || tmp < -maxdelta)
-			continue;
+                      tmp = *src_db - *src_b;
+                      if (tmp > maxdelta || tmp < -maxdelta)
+                        continue;
 
-		      d = m[ABS(j)];
-		      if (has_alpha)
-			{
-			  if (!src[six + nb])
-			    continue;
-			  alpha = (double) src[six + nb] / 255.0;
-			  d *= alpha;
-			}
-		      sum += d * *src_b;
-		      fact += d;
-		    }
-		}
-	      if (fact == 0.0)
-		dest[dix + b] = *src_db;
-	      else
-		dest[dix + b] = sum / fact;
-	    }
-	}
+                      d = m[ABS(j)];
+                      if (has_alpha)
+                        {
+                          if (!src[six + nb])
+                            continue;
+                          alpha = (double) src[six + nb] / 255.0;
+                          d *= alpha;
+                        }
+                      sum += d * *src_b;
+                      fact += d;
+                    }
+                }
+              if (fact == 0.0)
+                dest[dix + b] = *src_db;
+              else
+                dest[dix + b] = sum / fact;
+            }
+        }
 
-      if (!(y % 5))
-	gimp_progress_update ((double)y / (double)height);
+      if (!(y % 10) && !preview_mode)
+        gimp_progress_update ((double)y / (double)height);
     }
 }
 
 static void
 sel_gauss (GimpDrawable *drawable,
-	   gdouble    radius,
-	   gint       maxdelta)
+           gdouble    radius,
+           gint       maxdelta)
 {
   GimpPixelRgn src_rgn, dest_rgn;
   gint      width, height;
@@ -408,7 +519,7 @@ sel_gauss (GimpDrawable *drawable,
   gimp_pixel_rgn_get_rect (&src_rgn, src, x1, y1, width, height);
 
   matrixmult (src, dest, width, height, mat, numrad,
-	      bytes, has_alpha, maxdelta);
+              bytes, has_alpha, maxdelta, FALSE);
 
   gimp_pixel_rgn_init (&dest_rgn,
                        drawable, x1, y1, width, height, TRUE, TRUE);
@@ -426,3 +537,122 @@ sel_gauss (GimpDrawable *drawable,
     g_free (mat[i]);
   g_free (mat);
 }
+
+/* Preview stuff */
+static void
+preview_toggle_callback (GtkWidget    *toggle,
+                         GimpDrawable *drawable)
+{
+   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)))
+    {
+      show_preview = TRUE;
+      preview_update_real (drawable, TRUE);
+    }
+  else
+    show_preview = FALSE;
+}
+
+static void preview_update_real (GimpDrawable *drawable,
+                                 gboolean      apply_effect)
+{
+ /* drawable */
+  glong width, height;
+  glong bytes;
+  gint  x1, y1, x2, y2;
+
+  /* preview */
+  guchar *render_buffer;        /* Buffer to hold rendered image */
+  gint    preview_width;        /* Width of preview widget */
+  gint    preview_height;       /* Height of preview widget */
+  gint    preview_x1;           /* Upper-left X of preview */
+  gint    preview_y1;           /* Upper-left Y of preview */
+  gint    preview_x2;           /* Lower-right X of preview */
+  gint    preview_y2;           /* Lower-right Y of preview */
+
+  GimpPixelRgn srcPR;           /* Pixel region */
+
+  if (!show_preview)
+    return;
+
+  /* Get drawable info */
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  width  = drawable->width;
+  height = drawable->height;
+  bytes  = drawable->bpp;
+
+  /*
+   * Setup for filter...
+   */
+  preview_x1     = x1 + delta_x;
+  preview_y1     = y1 + delta_y;
+  preview_x2     = preview_x1 + MIN (PREVIEW_SIZE, x2 - x1);
+  preview_y2     = preview_y1 + MIN (PREVIEW_SIZE, y2 - y1);
+  preview_width  = preview_x2 - preview_x1;
+  preview_height = preview_y2 - preview_y1;
+
+  /* initialize pixel regions */
+  gimp_pixel_rgn_init (&srcPR, drawable,
+                       preview_x1,preview_y1,
+                       preview_width, preview_height, FALSE, FALSE);
+  render_buffer = g_new (guchar,
+                         preview_width * preview_height * bytes);
+
+  if (apply_effect)
+    {
+      guchar    *src;
+      gboolean   has_alpha;
+      gint       numrad, i;
+      gdouble  **mat;
+      gdouble    radius;
+
+      src = g_new (guchar, preview_width * preview_height * bytes);
+      /* render image */
+      gimp_pixel_rgn_get_rect (&srcPR, src,
+                               preview_x1, preview_y1,
+                               preview_width, preview_height);
+      has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
+
+      radius = fabs (bvals.radius) + 1.0;
+      numrad = (gint) (radius + 1.0);
+      mat = g_new (gdouble *, numrad);
+      for (i = 0; i < numrad; i++)
+        mat[i] = g_new (gdouble, numrad);
+      init_matrix(radius, mat, numrad);
+
+      matrixmult (src, render_buffer,
+                  preview_width, preview_height,
+                  mat, numrad,
+                  bytes, has_alpha, bvals.maxdelta, TRUE);
+    }
+  else
+    {
+      gimp_pixel_rgn_get_rect (&srcPR, render_buffer,
+                               preview_x1, preview_y1,
+                               preview_width, preview_height);
+    }
+
+  /*
+   * Draw the preview image on the screen...
+   */
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, preview_width, preview_height,
+                          gimp_drawable_type (drawable->drawable_id),
+                          render_buffer,
+                          preview_width * bytes);
+
+  g_free (render_buffer);
+}
+
+static void
+preview_move (GimpDrawable *drawable)
+{
+  preview_update_real (drawable, FALSE);
+}
+
+static gboolean
+preview_button_release (GimpDrawable *drawable)
+{
+  preview_update_real (drawable, TRUE);
+  return FALSE;
+}
+
