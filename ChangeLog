@@ -1,3 +1,7 @@
+2004-10-13  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-close.c: changed rounding.
+
 2004-10-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/image-new-dialog.c (image_new_response): don't

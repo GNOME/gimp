@@ -271,5 +271,5 @@ gimp_time_since (guint  then)
   if (diff < 60)
     return g_strdup_printf (_("%d seconds"), diff);
 
-  return g_strdup_printf (_("%d minutes"), 1 + diff / 60);
+  return g_strdup_printf (_("%d minutes"), diff / 60);
 }
