@@ -178,11 +178,8 @@ libgimpui_1_3_la_SOURCES = \
 	gimpmenu.c		\
 	gimpmenu.h		\
 	gimpbrushmenu.c		\
-	gimpbrushmenu.h		\
 	gimpgradientmenu.c 	\
-	gimpgradientmenu.h 	\
 	gimppatternmenu.c	\
-	gimppatternmenu.h	\
 	\
 	gimpexport.c		\
 	gimpexport.h

@@ -2186,10 +2186,6 @@ msgstr "/Fiºier/Ferestre de dialog/Pensule..."
 msgid "/File/Dialogs/Patterns..."
 msgstr "/Fiºier/Ferestre de dialog/Modele..."
 
-#: app/menus.c:135
-msgid "/File/Dialogs/Patterns..."
-msgstr "/Fiºier/Ferestre de dialog/Modele..."
-
 #: app/menus.c:137
 msgid "/File/Dialogs/Palette..."
 msgstr "/Fiºier/Ferestre de dialog/Paletã de culori..."

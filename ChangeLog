@@ -1,5 +1,11 @@
 2001-05-14  Sven Neumann  <sven@gimp.org>
 
+	* app/Makefile.am
+	* libgimp/Makefile.am: don't reference header files which don't exist
+	any longer
+
+2001-05-14  Sven Neumann  <sven@gimp.org>
+
 	* app/ops_buttons.[ch]: use GimpButton and connect to extended_clicked.
 	
 	* app/docindex.c

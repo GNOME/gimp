@@ -43,7 +43,6 @@ gimp_SOURCES = \
 	nav_window.h		\
 	ops_buttons.c		\
 	ops_buttons.h		\
-	paths_dialogP.h		\
 	qmask.c			\
 	qmask.h			\
 	resize.c		\
