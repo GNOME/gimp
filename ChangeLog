@@ -1,4 +1,4 @@
-Tue Jul 27 01:21:02 1999  Jay Cox  (jay@elan)
+Tue Jul 27 01:21:02 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* app/clone.c: more cursor support.
 	* app/cursorutil.[ch], cursors/{bad,badmsk}: new cursor
