@@ -1,6 +1,6 @@
 /*  
- *  Rotate plug-in v0.8 by Sven Neumann <sven@gimp.org>  
- *  1999/10/09
+ *  Rotate plug-in v0.9 by Sven Neumann <sven@gimp.org>  
+ *  1999/11/13
  *
  *  Any suggestions, bug-reports or patches are very welcome.
  * 
@@ -42,6 +42,7 @@
  *                     systems               
  *  (05/28/98)  v0.7   use the new gimp_message function for error output
  *  (10/09/99)  v0.8   rotate guides too
+ *  (11/13/99)  v0.9   code cleanup
  */
 
 /* TODO List
@@ -129,9 +130,6 @@ static void  rotate_ok_callback     (GtkWidget *widget,
 static void  rotate_toggle_update   (GtkWidget *widget,
 				     gpointer   data);
 
-static gint32 my_gimp_selection_float      (gint32     image_ID, 
-					    gint32     drawable_ID);
-static gint32 my_gimp_selection_is_empty   (gint32     image_ID);
 
 /* Global Variables */
 GPlugInInfo PLUG_IN_INFO =
@@ -177,13 +175,12 @@ gimp_install_procedure (PLUG_IN_NAME,
 }
 
 static void 
-run (gchar *name,		/* name of plugin */
-     gint nparams,		/* number of in-paramters */
-     GParam * param,		/* in-parameters */
-     gint *nreturn_vals,		/* number of out-parameters */
-     GParam ** return_vals)	/* out-parameters */
+run (gchar    *name,
+     gint      nparams,
+     GParam   *param,
+     gint     *nreturn_vals,
+     GParam **return_vals)
 {
-
   /* Get the runmode from the in-parameters */
   GRunModeType run_mode = param[0].data.d_int32;	
   
@@ -200,11 +197,10 @@ run (gchar *name,		/* name of plugin */
   *nreturn_vals = 1;
   *return_vals = values;
 
-  if (run_mode != RUN_INTERACTIVE) {
-    INIT_I18N();
-  } else {
+  if (run_mode != RUN_INTERACTIVE) 
+    INIT_I18N(); 
+  else
     INIT_I18N_UI();
-  }
 
   /* get image and drawable */
   image_ID = param[1].data.d_int32;
@@ -212,15 +208,15 @@ run (gchar *name,		/* name of plugin */
   
   /*how are we running today? */
   switch (run_mode)
-  {
+    {
     case RUN_INTERACTIVE:
       /* Possibly retrieve data from a previous run */
       gimp_get_data (PLUG_IN_NAME, &rotvals);
       rotvals.angle = rotvals.angle % NUM_ANGLES;
 
       /* Get information from the dialog */
-      if (!rotate_dialog())
-		return;
+      if ( !rotate_dialog() )
+	return;
       break;
 
     case RUN_NONINTERACTIVE:
@@ -243,78 +239,26 @@ run (gchar *name,		/* name of plugin */
     
     default:
       break;
-  } /* switch */
+    } /* switch */
 
   if (status == STATUS_SUCCESS)
-  {
-    /* Set the number of tiles you want to cache */
-    /* gimp_tile_cache_ntiles ( ); */
-
-    /* Run the main function */
-    rotate();
-    
-    /* If run mode is interactive, flush displays, else (script) don't 
-       do it, as the screen updates would make the scripts slow */
-    if (run_mode != RUN_NONINTERACTIVE)
-      gimp_displays_flush ();
-    
-    /* Store variable states for next run */
-    if (run_mode == RUN_INTERACTIVE)
-      gimp_set_data (PLUG_IN_NAME, &rotvals, sizeof (RotateValues));
-  }
+    {
+      /* Set the number of tiles you want to cache */
+      /* gimp_tile_cache_ntiles ( ); */
+      
+      /* Run the main function */
+      rotate ();
+      
+      /* If run mode is interactive, flush displays, else (script) don't 
+	 do it, as the screen updates would make the scripts slow */
+      if (run_mode != RUN_NONINTERACTIVE)
+	gimp_displays_flush ();
+      
+      /* Store variable states for next run */
+      if (run_mode == RUN_INTERACTIVE)
+	gimp_set_data (PLUG_IN_NAME, &rotvals, sizeof (RotateValues));
+    }
   values[0].data.d_status = status; 
-}
-
-
-/* Some helper functions */
-
-static gint32
-my_gimp_selection_is_empty (gint32 image_ID)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-  gint32 is_empty;
-
-  /* initialize */
-
-  is_empty = 0;
-  
-  return_vals = gimp_run_procedure ("gimp_selection_is_empty",
-				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_END);
-
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    is_empty = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return is_empty;
-}
-
-static gint32
-my_gimp_selection_float (gint32 image_ID, 
-			 gint32 drawable_ID)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-  gint32 layer_ID;
-
-  return_vals = gimp_run_procedure ("gimp_selection_float",
-				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_DRAWABLE, drawable_ID, 
-				    PARAM_INT32, 0, 
-				    PARAM_INT32, 0,
-				    PARAM_END);
-
-  layer_ID= 0;
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    layer_ID = return_vals[1].data.d_layer;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return layer_ID;
 }
 
 static void
@@ -377,18 +321,15 @@ rotate_drawable (GDrawable *drawable)
   height = drawable->height;
   bytes = drawable->bpp;
 
-  if (gimp_layer_get_preserve_transparency(drawable->id))
+  if (gimp_layer_get_preserve_transparency (drawable->id))
     {
 	was_preserve_transparency = TRUE;
-	gimp_layer_set_preserve_transparency ( drawable->id,FALSE );
+	gimp_layer_set_preserve_transparency (drawable->id, FALSE);
     }
 
   if (rotvals.angle == 2)  /* we're rotating by 180° */
-    { 
-      if ( !gimp_drawable_is_layer(drawable->id) ) exit;
-      /* not a layer, probably a channel, abort operation */
-
-      gimp_tile_cache_ntiles ( 2*((width/gimp_tile_width())+1) );
+    {
+      gimp_tile_cache_ntiles (2 * (width / gimp_tile_width()) + 1);
 
       gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, 
 			   FALSE, FALSE);
@@ -428,15 +369,9 @@ rotate_drawable (GDrawable *drawable)
     {  
       (width > height) ? (longside = width) : (longside = height);
 
-      if ( gimp_drawable_is_layer(drawable->id) )
-	{
-	  gimp_layer_resize(drawable->id, longside, longside, 0, 0);
-	  gimp_drawable_flush (drawable);
-	  drawable = gimp_drawable_get(drawable->id);
-	}
-      else
-	/* not a layer... probably a channel... abort operation */
-	exit;
+      gimp_layer_resize (drawable->id, longside, longside, 0, 0);
+      drawable = gimp_drawable_get (drawable->id);
+      gimp_drawable_flush (drawable);
       
       gimp_tile_cache_ntiles ( ((longside/gimp_tile_width())+1) + 
 			       ((longside/gimp_tile_height())+1) );
@@ -481,17 +416,16 @@ rotate_drawable (GDrawable *drawable)
       gimp_drawable_merge_shadow (drawable->id, TRUE);
       gimp_drawable_update (drawable->id, 0, 0, height, width); 
 
-      gimp_layer_resize(drawable->id, height, width, 0, 0);
-      drawable = gimp_drawable_get(drawable->id);
-
+      gimp_layer_resize (drawable->id, height, width, 0, 0);
+      drawable = gimp_drawable_get (drawable->id);
       gimp_drawable_flush (drawable);
       gimp_drawable_update (drawable->id, 0, 0, height, width);
     }
 
   gimp_drawable_offsets (drawable->id, &offsetx, &offsety);
   rotate_compute_offsets (&offsetx, &offsety, 
-			  gimp_image_width(image_ID),
-			  gimp_image_height(image_ID), 
+			  gimp_image_width (image_ID),
+			  gimp_image_height (image_ID), 
 			  width, height); 
   gimp_layer_set_offsets (drawable->id, offsetx, offsety);
 
@@ -506,7 +440,6 @@ rotate_drawable (GDrawable *drawable)
 static void 
 rotate (void)
 {
-  gint nreturn_vals;  
   GDrawable *drawable;
   gint32 *layers;
   gint i;
@@ -519,27 +452,36 @@ rotate (void)
   if (rotvals.angle == 0) return;  
 
   /* if there's a selection and we try to rotate the whole image */
-  /* create an error message and exit */     
+  /* create an error message and exit                            */     
   if ( rotvals.everything )
     {
-      if ( !my_gimp_selection_is_empty (image_ID) ) 
+      if ( !gimp_selection_is_empty (image_ID) ) 
 	{
-	  gimp_message(_("You can not rotate the whole image if there's a selection."));
+	  gimp_message (_("You can not rotate the whole image if there's a selection."));
 	  gimp_drawable_detach (active_drawable);
 	  return;
 	}
       if ( gimp_layer_is_floating_selection (active_drawable->id) ) 
 	{
-	  gimp_message(_("You can not rotate the whole image if there's a floating selection."));
+	  gimp_message (_("You can not rotate the whole image if there's a floating selection."));
 	  gimp_drawable_detach (active_drawable);
 	  return;
 	}
     }
+  else
+    /* if we are trying to rotate a chennel or a mask, create an error message and exit */
+    {
+      if ( !gimp_drawable_is_layer (active_drawable->id) )
+	{
+	  gimp_message (_("Sorry, channels and masks can not be rotated."));
+	  gimp_drawable_detach (active_drawable);
+	  return;
+	}
+    } 
   
   gimp_progress_init (_("Rotating..."));
 
-  gimp_run_procedure ("gimp_undo_push_group_start", &nreturn_vals,
-		      PARAM_IMAGE, image_ID, PARAM_END);
+  gimp_undo_push_group_start (image_ID);
 
   if (rotvals.everything)  /* rotate the whole image */ 
     {
@@ -626,18 +568,19 @@ rotate (void)
     {
 
       /* check for active selection and float it */
-      if ( !my_gimp_selection_is_empty (image_ID) &&
+      if ( !gimp_selection_is_empty (image_ID) &&
 	   !gimp_layer_is_floating_selection (active_drawable->id) )
 	active_drawable = 
-	  gimp_drawable_get (my_gimp_selection_float (image_ID, 
-						      active_drawable->id) );
+	  gimp_drawable_get (gimp_selection_float (image_ID, 
+						   active_drawable->id,  
+						   0, 0));
 			    
       rotate_drawable (active_drawable);
       gimp_drawable_detach (active_drawable);
     }
 
-  gimp_run_procedure ("gimp_undo_push_group_end", &nreturn_vals,
-		      PARAM_IMAGE, image_ID, PARAM_END);
+  gimp_undo_push_group_end (image_ID);
+
   return;
 }
 

@@ -261,7 +261,7 @@ static ProcArg selection_is_empty_outargs[] =
 static ProcRecord selection_is_empty_proc =
 {
   "gimp_selection_is_empty",
-  "Determine whether the selection in empty.",
+  "Determine whether the selection is empty.",
   "This procedure returns non-zero if the selection for the specified image is not empty.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",

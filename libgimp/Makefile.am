@@ -80,6 +80,7 @@ libgimp_la_SOURCES = \
 	gimppixelrgn.c		\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
+	gimpselection.c		\
 	gimptile.c		\
 	gimpunit.c		\
 	gimpunit.h		\

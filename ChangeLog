@@ -1,3 +1,15 @@
+Sat Nov 13 20:14:49 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/gimp.h
+	* libgimp/gimpselection.c: new file. Implements PDB wrappers for a 
+	few selection functions.
+	
+	* app/gimage_mask_cmds.c
+	* tools/pdbgen/pdb/gimage_mask.pdb: corrected a typo
+
+	* plug-ins/common/rotate.c: code cleanup
+	
 Sat Nov 13 19:43:11 1999  ape@spacetec.no  (Asbjorn Pettersen)
 
 	* modules/modregister.h: 
