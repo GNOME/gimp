@@ -1,3 +1,18 @@
+2001-01-03  Daniel Egger  <egger@suse.de>
+
+	* configure.in: Extended the glibc regexp check and enabled
+	substitution for Makefiles.
+	
+	* app/Makefile.am: Compile regexp only if not in glibc.
+	
+	* app/plug_in_cmds.c: 
+	* app/procedural_db_cmds.c:
+	* app/regexrepl.c: Include the correct local headerfile 
+	if no new glibc with regexp is available.
+	
+	* app/regex.c:
+	* app/regex.h: Moved into regexprepl.[ch] to avoid nameclashes. 
+
 2001-01-02  Daniel Egger  <egger@suse.de>
 
 	* acconfig.h:

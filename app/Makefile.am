@@ -2,6 +2,12 @@
 
 scriptdata =
 
+if HAVE_GLIBC_REGEX
+regex_sources =
+else
+regex_sources = regexrepl.c regexrepl.h
+endif
+
 bin_PROGRAMS = gimp
 noinst_LIBRARIES = libgimpim.a
 
@@ -334,8 +340,6 @@ gimp_SOURCES = \
 	rect_select.c		\
 	rect_select.h		\
 	rect_selectP.h		\
-	regex.h			\
-	regex.c			\
 	resolution_calibrate.c	\
 	resolution_calibrate.h	\
 	resize.c		\
@@ -399,7 +403,8 @@ gimp_SOURCES = \
 	user_install.h		\
 	wilber.h		\
 	xcf.c			\
-	xcf.h
+	xcf.h			\
+	$(regex_sources)
 
 EXTRA_DIST = \
 	colormap_dialog.i.c	\

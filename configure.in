@@ -344,9 +344,11 @@ int main()
   return (1);
 #endif
 }], AC_DEFINE(HAVE_GLIBC_REGEX)
+    have_glibc_regex=yes
     AC_MSG_RESULT(yes),
     AC_MSG_RESULT(no),
     AC_MSG_RESULT(assuming no))
+AM_CONDITIONAL(HAVE_GLIBC_REGEX, test x$have_glibc_regex = xyes)
 
 AC_HEADER_DIRENT
 AC_HEADER_STDC
