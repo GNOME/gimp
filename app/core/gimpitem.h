@@ -112,8 +112,7 @@ struct _GimpItemClass
                               gpointer                progress_data);
   gboolean   (* stroke)      (GimpItem               *item,
                               GimpDrawable           *drawable,
-                              GimpObject             *stroke_desc,
-                              gboolean                use_default_values);
+                              GimpObject             *stroke_desc);
 
   const gchar *default_name;
   const gchar *rename_desc;

@@ -1,4 +1,29 @@
-2004-08-26  Sven Neumann  <sven@gimp.org>
+2004-08-26  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD:
+
+	* app/core/gimpitem.c (gimp_item_stroke): implement the whole
+	paint_options fiddling here instead of in each subclass and pass
+	either GimpStrokeOptions or GimpPaintOptions (instead of
+	GimpStrokeOptions or GimpPaintInfo) to GimpItem::stroke().
+
+	Also copied code from the tool_manager which makes sure we really
+	use the global brush, pattern etc. if these options are checked in
+	prefs. Fixes bug #150716.
+
+	* app/core/gimpchannel.c (gimp_channel_stroke)
+	* app/vectors/gimpvectors.c (gimp_vectors_stroke): removed the
+	duplicated code mentioned above and simply use the paint_options
+	passed.
+
+	* app/core/gimpitem.[ch]: removed "gboolean use_default_values"
+	from GimpItem::stroke().
+
+	* app/core/gimpchannel.c
+	* app/core/gimpselection.c
+	* app/vectors/gimpvectors.c: changed accordingly.
+
+22004-08-26  Sven Neumann  <sven@gimp.org>
 
 	* app/sanity.c (sanity_check_filename_encoding): try to convert
 	the result of gimp_directory() to UTF-8 and bail out with a

@@ -27,6 +27,11 @@
 
 #include "core-types.h"
 
+#include "config/gimpconfig.h"
+#include "config/gimpcoreconfig.h"
+
+#include "paint/gimppaintoptions.h"
+
 #include "gimp.h"
 #include "gimp-parasites.h"
 #include "gimpchannel.h"
@@ -892,6 +897,7 @@ gimp_item_stroke (GimpItem      *item,
                   gboolean       use_default_values)
 {
   GimpItemClass *item_class;
+  gboolean       retval = FALSE;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -900,8 +906,64 @@ gimp_item_stroke (GimpItem      *item,
 
   item_class = GIMP_ITEM_GET_CLASS (item);
 
-  if (item_class->stroke)
-    return item_class->stroke (item, drawable, stroke_desc, use_default_values);
+  if (! item_class->stroke)
+    return FALSE;
+
+  if (GIMP_IS_STROKE_OPTIONS (stroke_desc))
+    {
+      g_object_ref (stroke_desc);
+    }
+  else if (GIMP_IS_PAINT_INFO (stroke_desc))
+    {
+      GimpImage        *gimage     = gimp_item_get_image (item);
+      GimpPaintInfo    *paint_info = GIMP_PAINT_INFO (stroke_desc);
+      GimpPaintOptions *paint_options;
+
+      if (use_default_values)
+        {
+          paint_options =
+            gimp_paint_options_new (gimage->gimp,
+                                    paint_info->paint_options_type);
+
+          /*  undefine the paint-relevant context properties and get them
+           *  from the passed context
+           */
+          gimp_context_define_properties (GIMP_CONTEXT (paint_options),
+                                          GIMP_CONTEXT_PAINT_PROPS_MASK,
+                                          FALSE);
+          gimp_context_set_parent (GIMP_CONTEXT (paint_options),
+                                   gimp_get_current_context (gimage->gimp));
+        }
+      else
+        {
+          GimpCoreConfig      *config       = gimage->gimp->config;
+          GimpContextPropMask  global_props = 0;
+
+          paint_options =
+            gimp_config_duplicate (GIMP_CONFIG (paint_info->paint_options));
+
+          if (config->global_brush)
+            global_props |= GIMP_CONTEXT_BRUSH_MASK;
+          if (config->global_pattern)
+            global_props |= GIMP_CONTEXT_PATTERN_MASK;
+          if (config->global_palette)
+            global_props |= GIMP_CONTEXT_PALETTE_MASK;
+          if (config->global_gradient)
+            global_props |= GIMP_CONTEXT_GRADIENT_MASK;
+          if (config->global_font)
+            global_props |= GIMP_CONTEXT_FONT_MASK;
+
+          gimp_context_copy_properties (gimp_get_current_context (gimage->gimp),
+                                        GIMP_CONTEXT (paint_options),
+                                        global_props);
+        }
+
+      stroke_desc = GIMP_OBJECT (paint_options);
+    }
+
+  retval = item_class->stroke (item, drawable, stroke_desc);
+
+  g_object_unref (stroke_desc);
 
   return FALSE;
 }
