@@ -163,6 +163,7 @@ static void plug_in_handle_proc_uninstall (GPProcUninstall   *proc_uninstall);
 static void plug_in_init_file             (const gchar       *filename,
 					   gpointer           loader_data);
 static void plug_in_query                 (PlugInDef         *plug_in_def);
+static void plug_in_call_init             (PlugInDef         *plug_in_def);
 static void plug_in_add_to_db             (void);
 static void plug_in_make_menu             (void);
 static gint plug_in_make_menu_entry       (gpointer           foo,
@@ -357,7 +358,7 @@ plug_in_init (Gimp               *gimp,
    *  the pluginrc file.
    */
   tmp = plug_in_defs;
-  (* status_callback) (_("Plug-ins"), "", 0);
+  (* status_callback) (_("New Plug-ins"), "", 0);
   nplugins = g_slist_length (tmp);
   nth = 0;
   while (tmp)
@@ -370,7 +371,7 @@ plug_in_init (Gimp               *gimp,
 	  write_pluginrc = TRUE;
 
 	  if (gimp->be_verbose)
-	    g_print (_("query plug-in: \"%s\"\n"), plug_in_def->prog);
+	    g_print (_("querying plug-in: \"%s\"\n"), plug_in_def->prog);
 
 	  plug_in_query (plug_in_def);
 	}
@@ -426,6 +427,32 @@ plug_in_init (Gimp               *gimp,
       plug_in_make_menu ();
     }
 
+  /* initial the plug-ins */
+  (* status_callback) (_("Plug-ins"), "", 0);
+
+  tmp = plug_in_defs;
+  nth=0;
+  
+  while (tmp)
+    {
+      plug_in_def = tmp->data;
+      tmp = tmp->next;
+
+      /* FIXME: only initialize when needed */
+      /* if (plug_in_def->init) */
+	{
+	  if (gimp->be_verbose)
+	    g_print (_("initializing plug-in: \"%s\"\n"), plug_in_def->prog);
+
+	  plug_in_call_init (plug_in_def);
+	}
+
+      basename = g_path_get_basename (plug_in_def->prog);
+      (* status_callback) (NULL, basename, nth / nplugins);
+      nth++;
+      g_free (basename);
+    }
+    
   /* run the available extensions */
   if (gimp->be_verbose)
     g_print (_("Starting extensions: "));
@@ -835,6 +862,7 @@ plug_in_new (gchar *name)
 
   plug_in->open               = FALSE;
   plug_in->query              = FALSE;
+  plug_in->init               = FALSE;
   plug_in->synchronous        = FALSE;
   plug_in->recurse            = FALSE;
   plug_in->busy               = FALSE;
@@ -996,12 +1024,17 @@ plug_in_open (PlugIn *plug_in)
 	g_strdup_printf ("%d", g_io_channel_unix_get_fd (plug_in->his_write));
 
       /* Set the rest of the command line arguments.
+       * FIXME: this is ugly.  Pass in the mode as a separate argument?
        */
       if (plug_in->query)
 	{
 	  plug_in->args[4] = g_strdup ("-query");
 	}
-      else
+      else if (plug_in->init)
+	{
+	  plug_in->args[4] = g_strdup ("-init");
+	}
+      else  
 	{
 	  plug_in->args[4] = g_strdup ("-run");
 	}
@@ -2351,6 +2384,40 @@ plug_in_query (PlugInDef *plug_in_def)
   if (plug_in)
     {
       plug_in->query       = TRUE;
+      plug_in->synchronous = TRUE;
+      plug_in->user_data   = plug_in_def;
+
+      if (plug_in_open (plug_in))
+	{
+	  plug_in_push (plug_in);
+
+	  while (plug_in->open)
+	    {
+	      if (!wire_read_msg (current_readchannel, &msg))
+		plug_in_close (current_plug_in, TRUE);
+	      else 
+		{
+		  plug_in_handle_message (&msg);
+		  wire_destroy (&msg);
+		}
+	    }
+
+	  plug_in_pop ();
+	  plug_in_destroy (plug_in);
+	}
+    }
+}
+
+static void
+plug_in_call_init (PlugInDef *plug_in_def)
+{
+  PlugIn      *plug_in;
+  WireMessage  msg;
+
+  plug_in = plug_in_new (plug_in_def->prog);
+  if (plug_in)
+    {
+      plug_in->init        = TRUE;
       plug_in->synchronous = TRUE;
       plug_in->user_data   = plug_in_def;
 

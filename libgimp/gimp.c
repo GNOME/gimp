@@ -268,6 +268,9 @@ gimp_main (int   argc,
   wire_set_writer (gimp_write);
   wire_set_flusher (gimp_flush);
 
+  /* set handler both for the "LibGimp" and ""
+     domains */
+
   g_log_set_handler ("LibGimp",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_func,
@@ -281,6 +284,14 @@ gimp_main (int   argc,
     {
       if (PLUG_IN_INFO.query_proc)
 	(* PLUG_IN_INFO.query_proc) ();
+      gimp_close ();
+      return 0;
+    }
+
+  if (strcmp (argv[4], "-init") == 0)
+    {
+      if (PLUG_IN_INFO.init_proc)
+	(* PLUG_IN_INFO.init_proc) ();
       gimp_close ();
       return 0;
     }
