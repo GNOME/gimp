@@ -23,6 +23,14 @@
 #include "tool_options.h"
 
 
+typedef enum
+{
+  TRANSFORM_GRID_TYPE_NONE,
+  TRANSFORM_GRID_TYPE_N_LINES,
+  TRANSFORM_GRID_TYPE_SPACING
+} TransformGridType;
+
+
 typedef struct _TransformOptions TransformOptions;
 
 struct _TransformOptions
@@ -41,9 +49,9 @@ struct _TransformOptions
   gboolean                clip_d;
   GtkWidget              *clip_w;
 
-  gboolean                show_grid;
-  gboolean                show_grid_d;
-  GtkWidget              *show_grid_w;
+  TransformGridType       grid_type;
+  TransformGridType       grid_type_d;
+  GtkWidget              *grid_type_w;
 
   gint	                  grid_size;
   gint                    grid_size_d;

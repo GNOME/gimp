@@ -1,3 +1,14 @@
+2002-12-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptransformtool.c
+	* app/tools/transform_options.[ch]: replaced the totally unclear
+	(to the user) way we used to calculate the number of grid lines
+	from the value entered in the "Density" spinbutton by a system
+	where the user has the choice between the number of grid lines to
+	display and the spacing between the displayed grid lines. Replaced
+	the "Show Grid" toggle by an option menu to choose the grid type
+	from. (idea from drc on #gimp).
+
 2002-12-16  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/CML_explorer.c

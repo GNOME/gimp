@@ -1010,51 +1010,75 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
       tr_tool->tgrid_coords = NULL;
     }
 
-  if (options->show_grid)
+  switch (options->grid_type)
     {
-      GimpTool *tool;
-      gint      i, gci;
-      gdouble  *coords;
+    case TRANSFORM_GRID_TYPE_N_LINES:
+    case TRANSFORM_GRID_TYPE_SPACING:
+      {
+        GimpTool *tool;
+        gint      i, gci;
+        gdouble  *coords;
+        gint      width, height;
 
-      tool = GIMP_TOOL (tr_tool);
+        width  = MAX (1, tr_tool->x2 - tr_tool->x1);
+        height = MAX (1, tr_tool->y2 - tr_tool->y1);
 
-      tr_tool->ngx = (tr_tool->x2 - tr_tool->x1) / options->grid_size;
-      if (tr_tool->ngx > 0)
-        tr_tool->ngx--;
+        tool = GIMP_TOOL (tr_tool);
 
-      tr_tool->ngy = (tr_tool->y2 - tr_tool->y1) / options->grid_size;
-      if (tr_tool->ngy > 0)
-        tr_tool->ngy--;
+        if (options->grid_type == TRANSFORM_GRID_TYPE_N_LINES)
+          {
+            if (width <= height)
+              {
+                tr_tool->ngx = options->grid_size;
+                tr_tool->ngy = tr_tool->ngx * MAX (1, height / width);
+              }
+            else
+              {
+                tr_tool->ngy = options->grid_size;
+                tr_tool->ngx = tr_tool->ngy * MAX (1, width / height);
+              }
+          }
+        else /* TRANSFORM_GRID_TYPE_SPACING */
+          {
+            gint grid_size = MAX (2, options->grid_size);
 
-      tr_tool->grid_coords = coords =
-        g_new (gdouble, (tr_tool->ngx + tr_tool->ngy) * 4);
+            tr_tool->ngx = width  / grid_size;
+            tr_tool->ngy = height / grid_size;
+          }
 
-      tr_tool->tgrid_coords =
-        g_new (gdouble, (tr_tool->ngx + tr_tool->ngy) * 4);
+        tr_tool->grid_coords = coords =
+          g_new (gdouble, (tr_tool->ngx + tr_tool->ngy) * 4);
 
-      gci = 0;
+        tr_tool->tgrid_coords =
+          g_new (gdouble, (tr_tool->ngx + tr_tool->ngy) * 4);
 
-      for (i = 1; i <= tr_tool->ngx; i++)
-        {
-          coords[gci]     = tr_tool->x1 + (((gdouble) i) / (tr_tool->ngx + 1) *
-                                           (tr_tool->x2 - tr_tool->x1));
-          coords[gci + 1] = tr_tool->y1;
-          coords[gci + 2] = coords[gci];
-          coords[gci + 3] = tr_tool->y2;
+        gci = 0;
 
-          gci += 4;
-        }
+        for (i = 1; i <= tr_tool->ngx; i++)
+          {
+            coords[gci]     = tr_tool->x1 + (((gdouble) i) / (tr_tool->ngx + 1) *
+                                             (tr_tool->x2 - tr_tool->x1));
+            coords[gci + 1] = tr_tool->y1;
+            coords[gci + 2] = coords[gci];
+            coords[gci + 3] = tr_tool->y2;
 
-      for (i = 1; i <= tr_tool->ngy; i++)
-        {
-          coords[gci]     = tr_tool->x1;
-          coords[gci + 1] = tr_tool->y1 + (((gdouble) i) / (tr_tool->ngy + 1) *
-                                           (tr_tool->y2 - tr_tool->y1));
-          coords[gci + 2] = tr_tool->x2;
-          coords[gci + 3] = coords[gci + 1];
+            gci += 4;
+          }
 
-          gci += 4;
-        }
+        for (i = 1; i <= tr_tool->ngy; i++)
+          {
+            coords[gci]     = tr_tool->x1;
+            coords[gci + 1] = tr_tool->y1 + (((gdouble) i) / (tr_tool->ngy + 1) *
+                                             (tr_tool->y2 - tr_tool->y1));
+            coords[gci + 2] = tr_tool->x2;
+            coords[gci + 3] = coords[gci + 1];
+
+            gci += 4;
+          }
+      }
+
+    default:
+      break;
     }
 }
 
