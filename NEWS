@@ -56,6 +56,8 @@ Overview of Changes in GIMP 2.1.4
 
 - Image comment, if any, is now shown within the info window.
 
+- New function "Fit Canvas to Layers" (gimp_image_resize_to_layers)
+
 
 Contributors:
 
