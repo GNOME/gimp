@@ -643,12 +643,6 @@ gimp_preview_renderer_default_render_buffer (GimpPreviewRenderer *renderer,
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (temp_buf != NULL);
 
-  if (renderer->no_preview_pixbuf)
-    {
-      g_object_unref (renderer->no_preview_pixbuf);
-      renderer->no_preview_pixbuf = NULL;
-    }
-
   if (temp_buf->width < renderer->width)
     temp_buf->x = (renderer->width - temp_buf->width)  / 2;
 
@@ -716,12 +710,7 @@ gimp_preview_renderer_default_render_stock (GimpPreviewRenderer *renderer,
 
   g_free (sizes);
 
-  pixbuf = gtk_icon_set_render_icon (icon_set,
-                                     widget->style,
-                                     gtk_widget_get_direction (widget),
-                                     widget->state,
-                                     icon_size,
-                                     widget, NULL);
+  pixbuf = gtk_widget_render_icon (widget, stock_id, icon_size, NULL);
 
   if (pixbuf)
     {
@@ -766,6 +755,12 @@ gimp_preview_renderer_render_buffer (GimpPreviewRenderer *renderer,
 {
   if (! renderer->buffer)
     renderer->buffer = g_new0 (guchar, renderer->height * renderer->rowstride);
+
+  if (renderer->no_preview_pixbuf)
+    {
+      g_object_unref (renderer->no_preview_pixbuf);
+      renderer->no_preview_pixbuf = NULL;
+    }
 
   gimp_preview_render_to_buffer (temp_buf,
                                  channel,

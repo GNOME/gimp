@@ -671,6 +671,12 @@ gimp_image_invalidate_preview (GimpViewable *viewable)
   gimage = GIMP_IMAGE (viewable);
 
   gimage->comp_preview_valid = FALSE;
+
+  if (gimage->comp_preview)
+    {
+      temp_buf_free (gimage->comp_preview);
+      gimage->comp_preview = NULL;
+    }
 }
 
 static void
@@ -765,6 +771,9 @@ gimp_image_get_preview (GimpViewable *viewable,
 
   gimage = GIMP_IMAGE (viewable);
 
+  if (! gimage->gimp->config->layer_previews)
+    return NULL;
+
   if (gimage->comp_preview_valid            &&
       gimage->comp_preview->width  == width &&
       gimage->comp_preview->height == height)
@@ -815,6 +824,9 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   gint         off_x, off_y;
 
   gimage = GIMP_IMAGE (viewable);
+
+  if (! gimage->gimp->config->layer_previews)
+    return NULL;
 
   ratio = (gdouble) width / (gdouble) gimage->width;
 
@@ -1058,6 +1070,12 @@ gimp_image_new (Gimp              *gimp,
                            gimage, G_CONNECT_SWAPPED);
   g_signal_connect_object (gimp->config, "notify::transparency-size",
                            G_CALLBACK (gimp_image_invalidate_layer_previews),
+                           gimage, G_CONNECT_SWAPPED);
+  g_signal_connect_object (gimp->config, "notify::layer-previews",
+                           G_CALLBACK (gimp_image_invalidate_layer_previews),
+                           gimage, G_CONNECT_SWAPPED);
+  g_signal_connect_object (gimp->config, "notify::layer-previews",
+                           G_CALLBACK (gimp_image_invalidate_channel_previews),
                            gimage, G_CONNECT_SWAPPED);
 
   return gimage;

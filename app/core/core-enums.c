@@ -278,7 +278,6 @@ gimp_orientation_type_get_type (void)
 
 static const GEnumValue gimp_preview_size_enum_values[] =
 {
-  { GIMP_PREVIEW_SIZE_NONE, N_("None"), "none" },
   { GIMP_PREVIEW_SIZE_TINY, N_("Tiny"), "tiny" },
   { GIMP_PREVIEW_SIZE_EXTRA_SMALL, N_("Very Small"), "extra-small" },
   { GIMP_PREVIEW_SIZE_SMALL, N_("Small"), "small" },

@@ -222,7 +222,6 @@ GType gimp_preview_size_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_PREVIEW_SIZE_NONE        = 0,    /*< desc="None"        >*/
   GIMP_PREVIEW_SIZE_TINY        = 16,   /*< desc="Tiny"        >*/
   GIMP_PREVIEW_SIZE_EXTRA_SMALL = 24,   /*< desc="Very Small"  >*/
   GIMP_PREVIEW_SIZE_SMALL       = 32,   /*< desc="Small"       >*/

@@ -36,6 +36,8 @@
 
 #include "vectors/gimpvectors.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "widgets/gimpbrusheditor.h"
 #include "widgets/gimpbrushfactoryview.h"
 #include "widgets/gimpbufferview.h"
@@ -749,6 +751,9 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
 
   gimage = gimp_context_get_image (context);
 
+  if (preview_size < 1)
+    preview_size = context->gimp->config->layer_preview_size;
+
   view =
     gimp_item_list_view_new (preview_size,
                              gimage,
@@ -779,6 +784,9 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
   GtkWidget *dockable;
 
   gimage = gimp_context_get_image (context);
+
+  if (preview_size < 1)
+    preview_size = context->gimp->config->layer_preview_size;
 
   view =
     gimp_item_list_view_new (preview_size,
@@ -811,6 +819,9 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
   GtkWidget           *dockable;
 
   gimage = gimp_context_get_image (context);
+
+  if (preview_size < 1)
+    preview_size = context->gimp->config->layer_preview_size;
 
   view =
     gimp_item_list_view_new (preview_size,

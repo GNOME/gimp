@@ -389,7 +389,7 @@ gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
 
       dialog = gimp_query_boolean_box (_("Delete Data Object"),
 				       gimp_standard_help_func, NULL,
-				       GTK_STOCK_DIALOG_QUESTION,
+				       GIMP_STOCK_QUESTION,
 				       str,
 				       GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
 				       G_OBJECT (data),

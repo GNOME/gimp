@@ -401,18 +401,11 @@ gimp_display_shell_nav_size_notify_handler (GObject          *config,
                                             GParamSpec       *param_spec,
                                             GimpDisplayShell *shell)
 {
-  gboolean sensitive;
-
   if (shell->nav_popup)
     {
       gtk_widget_destroy (shell->nav_popup);
       shell->nav_popup = NULL;
     }
-
-  sensitive =
-    GIMP_DISPLAY_CONFIG (config)->nav_preview_size != GIMP_PREVIEW_SIZE_NONE;
-
-  gtk_widget_set_sensitive (shell->nav_ebox, sensitive);
 }
 
 static void

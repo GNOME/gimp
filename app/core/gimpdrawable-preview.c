@@ -33,6 +33,9 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpdrawable.h"
@@ -153,6 +156,9 @@ gimp_drawable_get_preview (GimpViewable *viewable,
   drawable = GIMP_DRAWABLE (viewable);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  if (! gimage || ! gimage->gimp->config->layer_previews)
+    return NULL;
 
   /* Ok prime the cache with a large preview if the cache is invalid */
   if (! drawable->preview_valid                  &&

@@ -187,14 +187,17 @@ package Gimp::CodeGen::enums;
 		       GIMP_BLUE_HUES => '5',
 		       GIMP_MAGENTA_HUES => '6' }
 	},
-    GimpOrientationType =>
+    GimpAddMaskType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_ORIENTATION_HORIZONTAL
-			  GIMP_ORIENTATION_VERTICAL GIMP_ORIENTATION_UNKNOWN) ],
-	  mapping => { GIMP_ORIENTATION_HORIZONTAL => '0',
-		       GIMP_ORIENTATION_VERTICAL => '1',
-		       GIMP_ORIENTATION_UNKNOWN => '2' }
+	  symbols => [ qw(GIMP_ADD_WHITE_MASK GIMP_ADD_BLACK_MASK
+			  GIMP_ADD_ALPHA_MASK GIMP_ADD_SELECTION_MASK
+			  GIMP_ADD_COPY_MASK) ],
+	  mapping => { GIMP_ADD_WHITE_MASK => '0',
+		       GIMP_ADD_BLACK_MASK => '1',
+		       GIMP_ADD_ALPHA_MASK => '2',
+		       GIMP_ADD_SELECTION_MASK => '3',
+		       GIMP_ADD_COPY_MASK => '4' }
 	},
     GimpBlendMode =>
 	{ contig => 1,
@@ -300,6 +303,15 @@ package Gimp::CodeGen::enums;
 		       GIMP_INDEXED_IMAGE => '4',
 		       GIMP_INDEXEDA_IMAGE => '5' }
 	},
+    GimpOrientationType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_ORIENTATION_HORIZONTAL
+			  GIMP_ORIENTATION_VERTICAL GIMP_ORIENTATION_UNKNOWN) ],
+	  mapping => { GIMP_ORIENTATION_HORIZONTAL => '0',
+		       GIMP_ORIENTATION_VERTICAL => '1',
+		       GIMP_ORIENTATION_UNKNOWN => '2' }
+	},
     GimpRepeatMode =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -320,18 +332,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_WEB_PALETTE => '2',
 		       GIMP_MONO_PALETTE => '3',
 		       GIMP_CUSTOM_PALETTE => '4' }
-	},
-    GimpAddMaskType =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_ADD_WHITE_MASK GIMP_ADD_BLACK_MASK
-			  GIMP_ADD_ALPHA_MASK GIMP_ADD_SELECTION_MASK
-			  GIMP_ADD_COPY_MASK) ],
-	  mapping => { GIMP_ADD_WHITE_MASK => '0',
-		       GIMP_ADD_BLACK_MASK => '1',
-		       GIMP_ADD_ALPHA_MASK => '2',
-		       GIMP_ADD_SELECTION_MASK => '3',
-		       GIMP_ADD_COPY_MASK => '4' }
 	},
     GimpMaskApplyMode =>
 	{ contig => 1,

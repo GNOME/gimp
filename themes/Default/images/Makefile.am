@@ -5,24 +5,6 @@ SUBDIRS = preferences
 themedatadir = $(gimpdatadir)/themes/Default/images
 
 
-## Icons that override GTK+ default stock icons
-
-DIALOG_IMAGES = \
-	stock-error-64.png	\
-	stock-info-64.png	\
-	stock-question-64.png	\
-	stock-warning-64.png
-
-## these override icons aren't used with the current default theme
-GTK_STOCK_IMAGES = \
-	stock-delete-16.png	\
-	stock-lower-16.png	\
-	stock-new-16.png	\
-	stock-paste-16.png	\
-	stock-raise-16.png	\
-	stock-refresh-16.png
-
-
 ## Wilber icons for the window managaer, compiled in
 
 WILBER_IMAGES = \
@@ -113,7 +95,9 @@ STOCK_MENU_IMAGES = \
 	stock-wilber-16.png
 
 STOCK_DIALOG_IMAGES = \
+	stock-error-64.png			\
 	stock-info-64.png			\
+	stock-question-64.png			\
 	stock-warning-64.png			\
 	stock-wilber-64.png			\
 	stock-wilber-eek-64.png
@@ -164,7 +148,7 @@ STOCK_IMAGES = \
 	$(STOCK_DIALOG_IMAGES)	\
 	$(STOCK_TOOL_IMAGES)
 
-themedata_DATA = $(DIALOG_IMAGES) $(STOCK_IMAGES) $(GTK_STOCK_IMAGES)
+themedata_DATA = $(STOCK_IMAGES)
 
 EXTRA_DIST = \
 	$(themedata_DATA)	\

@@ -1151,12 +1151,14 @@ gimp_display_shell_update_icon (GimpDisplayShell *shell)
       width  = MAX (shell->icon_size, 1);
     }
 
-  pixbuf = gimp_viewable_get_new_preview_pixbuf (GIMP_VIEWABLE (shell->gdisp->gimage),
-                                                 width, height);
+  pixbuf =
+    gimp_viewable_get_new_preview_pixbuf (GIMP_VIEWABLE (shell->gdisp->gimage),
+                                          width, height);
 
   gtk_window_set_icon (GTK_WINDOW (shell), pixbuf);
 
-  g_object_unref (pixbuf);
+  if (pixbuf)
+    g_object_unref (pixbuf);
 }
 
 void
@@ -1653,7 +1655,7 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
     gimp_query_boolean_box (title,
 			    gimp_standard_help_func,
 			    "dialogs/really_close.html",
-			    GTK_STOCK_DIALOG_QUESTION,
+			    GIMP_STOCK_QUESTION,
 			    warning,
 			    GTK_STOCK_CLOSE, GTK_STOCK_CANCEL,
 			    NULL, NULL,

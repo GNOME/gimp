@@ -1,3 +1,78 @@
+2003-03-06  Michael Natterer  <mitch@gimp.org>
+
+	* themes/Default/images/stock-delete-16.png
+	* themes/Default/images/stock-lower-16.png
+	* themes/Default/images/stock-new-16.png
+	* themes/Default/images/stock-paste-16.png
+	* themes/Default/images/stock-raise-16.png
+	* themes/Default/images/stock-refresh-16.png: removed these files
+	since we use the icons provided by GTK+ now.
+
+	* themes/Default/gtkrc
+	* themes/Default/images/Makefile.am: removed them here hoo.
+
+	* libgimpwidgets/gimpstock.[ch]: reordered stuff to be consistent
+	in the header and the .c file. Added GIMP_STOCK_ERROR and
+	GIMP_STOCK_QUESTION which are available in all sizes (unlike
+	GTK_STOCK_DIALOG_ERROR and GTK_STOCK_DIALOG_QUESTION).
+
+	* app/core/gimpviewable.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/file-commands.c
+	* app/gui/file-new-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/widgets/gimpwidgets-utils.c
+	* app/widgets/gimpdatafactoryview.c: use the new stock IDs.
+
+	* app/config/gimpcoreconfig.[ch]: renamed "preview_size" to
+	"layer_preview_size" and added "gboolean layer_previews" which
+	switches layer previews on/off independent of their size.
+
+	* app/config/gimprc-blurbs.h: added/changed their blurbs.
+
+	* app/core/core-enums.[ch]: removed GIMP_PREVIEW_SIZE_NONE.
+
+	* app/core/gimpdrawable-preview.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage.c: return NULL previews if
+	core_config->layer_previews is FALSE. Invalidate all layer/channel
+	previews whenever "layer_previews" changes.
+
+	* app/widgets/gimppreviewrendererdrawable.c
+	* app/widgets/gimppreviewrendererimage.c: render the stock_id
+	if the drawable/image returns a NULL preview. Fixes bug #107242.
+
+	* app/display/gimpdisplayshell-handlers.c: don't set the
+	sensitivity of the navigation button because it can no longer be
+	disabled.
+
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/dialogs.c
+	* app/gui/paths-dialog.c: changed accordingly.
+
+	* app/gui/preferences-dialog.c: added a toggle button for the new
+	"layer_previews" boolean.
+
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainerlistview.c: chain up unconditionally
+	in GimpContainerView::clear_items().
+
+	* app/widgets/gimpcontainertreeview.c: ditto. Made the reorder()
+	implementation lengthy and eeky (but working) again... Stop signal
+	emission on double clicks so GtkTreeView doesn't re-select the
+	item we are about change.
+
+	* app/widgets/gimpcontainerview.c
+	(gimp_container_view_real_clear_items): need to use
+	g_hash_table_new_full() here too or everything will b0rk.
+
+	* app/widgets/gimppreviewrenderer.c
+	(gimp_preview_renderer_default_render_stock): use
+	gtk_widget_render_icon() instead of gtk_icon_set_render_icon().
+
+	* tools/pdbgen/enums.pl: this file wanted to be regenerated...
+
 2003-03-06  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpparasitelist.c: fixed parasite serialization that

@@ -101,7 +101,7 @@ gimp_preview_renderer_drawable_render (GimpPreviewRenderer *renderer,
   gint          preview_width;
   gint          preview_height;
   gboolean      scaling_up;
-  TempBuf      *render_buf;
+  TempBuf      *render_buf = NULL;
 
   drawable = GIMP_DRAWABLE (renderer->viewable);
   gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -150,9 +150,13 @@ gimp_preview_renderer_drawable_render (GimpPreviewRenderer *renderer,
       temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
 						drawable->width, 
 						drawable->height);
-      render_buf = temp_buf_scale (temp_buf, preview_width, preview_height);
 
-      temp_buf_free (temp_buf);
+      if (temp_buf)
+        {
+          render_buf = temp_buf_scale (temp_buf, preview_width, preview_height);
+
+          temp_buf_free (temp_buf);
+        }
     }
   else
     {
@@ -161,30 +165,41 @@ gimp_preview_renderer_drawable_render (GimpPreviewRenderer *renderer,
 						  preview_height);
     }
 
-  if (gimage && ! renderer->is_popup)
+  if (render_buf)
     {
-      if (drawable->offset_x != 0)
-	render_buf->x =
-	  ROUND ((((gdouble) renderer->width / (gdouble) gimage->width) *
-		  (gdouble) drawable->offset_x));
+      if (gimage && ! renderer->is_popup)
+        {
+          if (drawable->offset_x != 0)
+            render_buf->x =
+              ROUND ((((gdouble) renderer->width / (gdouble) gimage->width) *
+                      (gdouble) drawable->offset_x));
 
-      if (drawable->offset_y != 0)
-	render_buf->y =
-	  ROUND ((((gdouble) renderer->height / (gdouble) gimage->height) *
-		  (gdouble) drawable->offset_y));
+          if (drawable->offset_y != 0)
+            render_buf->y =
+              ROUND ((((gdouble) renderer->height / (gdouble) gimage->height) *
+                      (gdouble) drawable->offset_y));
+        }
+      else
+        {
+          if (preview_width < width)
+            render_buf->x = (width - preview_width) / 2;
+
+          if (preview_height < height)
+            render_buf->y = (height - preview_height) / 2;
+        }
+
+      gimp_preview_renderer_render_buffer (renderer, render_buf, -1,
+                                           GIMP_PREVIEW_BG_CHECKS,
+                                           GIMP_PREVIEW_BG_CHECKS);
+
+      temp_buf_free (render_buf);
     }
   else
     {
-      if (preview_width < width)
-	render_buf->x = (width - preview_width) / 2;
+      const gchar *stock_id;
 
-      if (preview_height < height)
-	render_buf->y = (height - preview_height) / 2;
+      stock_id = gimp_viewable_get_stock_id (renderer->viewable);
+
+      gimp_preview_renderer_default_render_stock (renderer, widget, stock_id);
     }
-
-  gimp_preview_renderer_render_buffer (renderer, render_buf, -1,
-                                       GIMP_PREVIEW_BG_CHECKS,
-                                       GIMP_PREVIEW_BG_CHECKS);
-
-  temp_buf_free (render_buf);
 }

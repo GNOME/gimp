@@ -40,12 +40,12 @@ GimpDialogFactory *global_toolbox_factory = NULL;
 
 static const GimpDialogFactoryEntry toplevel_entries[] =
 {
-  { "gimp-device-status-dialog",   dialogs_device_status_get,   32, TRUE,  TRUE,  FALSE, TRUE  },
-  { "gimp-preferences-dialog",     dialogs_preferences_get,     32, TRUE,  FALSE, FALSE, TRUE  },
-  { "gimp-module-browser-dialog",  dialogs_module_browser_get,  32, TRUE,  FALSE, FALSE, TRUE  },
-  { "gimp-display-filters-dialog", dialogs_display_filters_get, 32, FALSE, FALSE, FALSE, TRUE  },
-  { "gimp-tips-dialog",            dialogs_tips_get,            32, TRUE,  FALSE, FALSE, TRUE  },
-  { "gimp-about-dialog",           dialogs_about_get,           32, TRUE,  FALSE, FALSE, TRUE  }
+  { "gimp-device-status-dialog",   dialogs_device_status_get,   0, TRUE,  TRUE,  FALSE, TRUE  },
+  { "gimp-preferences-dialog",     dialogs_preferences_get,     0, TRUE,  FALSE, FALSE, TRUE  },
+  { "gimp-module-browser-dialog",  dialogs_module_browser_get,  0, TRUE,  FALSE, FALSE, TRUE  },
+  { "gimp-display-filters-dialog", dialogs_display_filters_get, 0, FALSE, FALSE, FALSE, TRUE  },
+  { "gimp-tips-dialog",            dialogs_tips_get,            0, TRUE,  FALSE, FALSE, TRUE  },
+  { "gimp-about-dialog",           dialogs_about_get,           0, TRUE,  FALSE, FALSE, TRUE  }
 };
 
 static const GimpDialogFactoryEntry dock_entries[] =
@@ -77,11 +77,11 @@ static const GimpDialogFactoryEntry dock_entries[] =
   { "gimp-tool-tree",        dialogs_tool_tree_view_new,     24, FALSE, FALSE, FALSE, TRUE },
   { "gimp-buffer-tree",      dialogs_buffer_tree_view_new,   32, FALSE, FALSE, FALSE, TRUE },
 
-  { "gimp-layer-list",       dialogs_layer_list_view_new,    32, FALSE, FALSE, FALSE, TRUE },
-  { "gimp-channel-list",     dialogs_channel_list_view_new,  32, FALSE, FALSE, FALSE, TRUE },
-  { "gimp-vectors-list",     dialogs_vectors_list_view_new,  32, FALSE, FALSE, FALSE, TRUE },
-  { "gimp-path-list",        dialogs_path_list_view_new,     32, TRUE,  FALSE, FALSE, TRUE },
-  { "gimp-indexed-palette",  dialogs_indexed_palette_new,    32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-layer-list",       dialogs_layer_list_view_new,     0, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-channel-list",     dialogs_channel_list_view_new,   0, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-vectors-list",     dialogs_vectors_list_view_new,   0, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-path-list",        dialogs_path_list_view_new,      0, TRUE,  FALSE, FALSE, TRUE },
+  { "gimp-indexed-palette",  dialogs_indexed_palette_new,     0, FALSE, FALSE, FALSE, TRUE },
   { "gimp-selection-editor", dialogs_selection_editor_new,    0, FALSE, FALSE, FALSE, TRUE },
   { "gimp-undo-history",     dialogs_undo_history_new,        0, FALSE, FALSE, FALSE, TRUE },
 

@@ -111,11 +111,6 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_VCHAIN,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VCHAIN_BROKEN,            NULL,        0, 0, LIBGIMP_DOMAIN },
 
-  { GIMP_STOCK_SELECTION_ALL,            NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_SELECTION_NONE,           NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_SELECTION_GROW,           NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_SELECTION_SHRINK,         NULL,        0, 0, LIBGIMP_DOMAIN },
-
   { GIMP_STOCK_SELECTION_REPLACE,        NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SELECTION_ADD,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SELECTION_SUBTRACT,       NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -125,6 +120,15 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_SELECTION_TO_PATH,        NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_PATH_STROKE,              NULL,        0, 0, LIBGIMP_DOMAIN },
+
+  { GIMP_STOCK_COLOR_PICKER_BLACK,       NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_COLOR_PICKER_GRAY,        NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_COLOR_PICKER_WHITE,       NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_COLOR_TRIANGLE,           NULL,        0, 0, LIBGIMP_DOMAIN },
+
+  { GIMP_STOCK_CHAR_PICKER,              NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_LETTER_SPACING, N_("L_etter Spacing"), 0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_LINE_SPACING,   N_("L_ine Spacing"),   0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_CONVERT_RGB,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CONVERT_GRAYSCALE,        NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -140,29 +144,28 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_RESIZE,         N_("_Resize"),         0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SCALE,          N_("_Scale"),          0, 0, LIBGIMP_DOMAIN },
 
-  { GIMP_STOCK_COLOR_PICKER_BLACK,       NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_COLOR_PICKER_GRAY,        NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_COLOR_PICKER_WHITE,       NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_COLOR_TRIANGLE,           NULL,        0, 0, LIBGIMP_DOMAIN },
-
-  { GIMP_STOCK_CHAR_PICKER,              NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_LETTER_SPACING, N_("L_etter Spacing"), 0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_LINE_SPACING,   N_("L_ine Spacing"),   0, 0, LIBGIMP_DOMAIN },
-
+  { GIMP_STOCK_TOOL_OPTIONS,             NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_DEVICE_STATUS,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_IMAGES,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LAYERS,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CHANNELS,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_PATHS,                    NULL,        0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_STOCK_SELECTION_ALL,            NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_SELECTION_NONE,           NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_SELECTION_GROW,           NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_SELECTION_SHRINK,         NULL,        0, 0, LIBGIMP_DOMAIN },
+
   { GIMP_STOCK_NAVIGATION,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QMASK_OFF,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QMASK_ON,                 NULL,        0, 0, LIBGIMP_DOMAIN },
 
-  { GIMP_STOCK_TOOL_OPTIONS,             NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_ERROR,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_INFO,                     NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_DEVICE_STATUS,            NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_QUESTION,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_WARNING,                  NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_WILBER,                   NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_WILBER_EEK,               NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_BEZIER_SELECT,       NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -220,11 +223,6 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_RESET,                    stock_reset_16                    },
   { GIMP_STOCK_VISIBLE,                  stock_eye_20                      },
 
-  { GIMP_STOCK_HCHAIN,                   stock_hchain_24                   },
-  { GIMP_STOCK_HCHAIN_BROKEN,            stock_hchain_broken_24            },
-  { GIMP_STOCK_VCHAIN,                   stock_vchain_24                   },
-  { GIMP_STOCK_VCHAIN_BROKEN,            stock_vchain_broken_24            },
-
   { GIMP_STOCK_GRAVITY_EAST,             stock_gravity_east_24             },
   { GIMP_STOCK_GRAVITY_NORTH,            stock_gravity_north_24            },
   { GIMP_STOCK_GRAVITY_NORTH_EAST,       stock_gravity_north_east_24       },
@@ -233,14 +231,10 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_GRAVITY_SOUTH_EAST,       stock_gravity_south_east_24       },
   { GIMP_STOCK_GRAVITY_SOUTH_WEST,       stock_gravity_south_west_24       },
 
-  { GIMP_STOCK_COLOR_PICKER_BLACK,       stock_color_picker_black_18       },
-  { GIMP_STOCK_COLOR_PICKER_GRAY,        stock_color_picker_gray_18        },
-  { GIMP_STOCK_COLOR_PICKER_WHITE,       stock_color_picker_white_18       },
-  { GIMP_STOCK_COLOR_TRIANGLE,           stock_color_triangle_16           },
-
-  { GIMP_STOCK_CHAR_PICKER,              stock_char_picker_22              },
-  { GIMP_STOCK_LETTER_SPACING,           stock_letter_spacing_22           },
-  { GIMP_STOCK_LINE_SPACING,             stock_line_spacing_22             },
+  { GIMP_STOCK_HCHAIN,                   stock_hchain_24                   },
+  { GIMP_STOCK_HCHAIN_BROKEN,            stock_hchain_broken_24            },
+  { GIMP_STOCK_VCHAIN,                   stock_vchain_24                   },
+  { GIMP_STOCK_VCHAIN_BROKEN,            stock_vchain_broken_24            },
 
   { GIMP_STOCK_SELECTION_REPLACE,        stock_selection_replace_16        },
   { GIMP_STOCK_SELECTION_ADD,            stock_selection_add_16            },
@@ -251,6 +245,15 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_SELECTION_TO_PATH,        stock_selection_to_path_16        },
 
   { GIMP_STOCK_PATH_STROKE,              stock_path_stroke_16              },
+
+  { GIMP_STOCK_COLOR_PICKER_BLACK,       stock_color_picker_black_18       },
+  { GIMP_STOCK_COLOR_PICKER_GRAY,        stock_color_picker_gray_18        },
+  { GIMP_STOCK_COLOR_PICKER_WHITE,       stock_color_picker_white_18       },
+  { GIMP_STOCK_COLOR_TRIANGLE,           stock_color_triangle_16           },
+
+  { GIMP_STOCK_CHAR_PICKER,              stock_char_picker_22              },
+  { GIMP_STOCK_LETTER_SPACING,           stock_letter_spacing_22           },
+  { GIMP_STOCK_LINE_SPACING,             stock_line_spacing_22             },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            stock_tool_airbrush_22            },
   { GIMP_STOCK_TOOL_BEZIER_SELECT,       stock_tool_bezier_select_22       },
@@ -316,6 +319,8 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_RESIZE,               stock_resize_16               },
   { GIMP_STOCK_SCALE,                stock_scale_16                },
 
+  { GIMP_STOCK_TOOL_OPTIONS,         stock_tool_options_16         },
+  { GIMP_STOCK_DEVICE_STATUS,        stock_device_status_16        },
   { GIMP_STOCK_IMAGES,               stock_images_16               },
   { GIMP_STOCK_LAYERS,               stock_layers_16               },
   { GIMP_STOCK_CHANNELS,             stock_channels_16             },
@@ -333,9 +338,6 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_DEFAULT_COLORS,       stock_default_colors_12       },
   { GIMP_STOCK_SWAP_COLORS,          stock_swap_colors_12          },
 
-  { GIMP_STOCK_TOOL_OPTIONS,         stock_tool_options_16         },
-  { GIMP_STOCK_DEVICE_STATUS,        stock_device_status_16        },
-
   { GIMP_STOCK_INFO,                 stock_info_16                 },
   { GIMP_STOCK_WARNING,              stock_warning_16              },
   { GIMP_STOCK_WILBER,               stock_wilber_16               }
@@ -348,7 +350,9 @@ static struct
 }
 gimp_stock_dialog_pixbufs[] =
 {
+  { GIMP_STOCK_ERROR,                stock_error_64                },
   { GIMP_STOCK_INFO,                 stock_info_64                 },
+  { GIMP_STOCK_QUESTION,             stock_question_64             },
   { GIMP_STOCK_WARNING,              stock_warning_64              },
   { GIMP_STOCK_WILBER,               stock_wilber_64               },
   { GIMP_STOCK_WILBER_EEK,           stock_wilber_eek_64           }

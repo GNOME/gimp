@@ -315,8 +315,7 @@ gimp_container_grid_view_clear_items (GimpContainerView *view)
     gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box),
 			  GTK_WRAP_BOX (grid_view->wrap_box)->children->widget);
 
-  if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->clear_items)
-    GIMP_CONTAINER_VIEW_CLASS (parent_class)->clear_items (view);
+  GIMP_CONTAINER_VIEW_CLASS (parent_class)->clear_items (view);
 }
 
 static void

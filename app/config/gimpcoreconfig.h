@@ -65,7 +65,8 @@ struct _GimpCoreConfig
   gulong                 undo_size;
   gchar                 *plug_in_rc_path;
   gchar                 *module_load_inhibit;
-  GimpPreviewSize        preview_size;
+  gboolean               layer_previews;
+  GimpPreviewSize        layer_preview_size;
   GimpThumbnailSize      thumbnail_size;
   gdouble                gamma_val;
   gboolean               install_cmap;

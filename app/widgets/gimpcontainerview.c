@@ -535,9 +535,15 @@ gimp_container_view_clear_items (GimpContainerView *view)
 static void
 gimp_container_view_real_clear_items (GimpContainerView *view)
 {
+  GimpContainerViewClass *view_class;
+
+  view_class = GIMP_CONTAINER_VIEW_GET_CLASS (view);
+
   g_hash_table_destroy (view->hash_table);
 
-  view->hash_table = g_hash_table_new (g_direct_hash, g_direct_equal);
+  view->hash_table = g_hash_table_new_full (g_direct_hash, g_direct_equal,
+                                            NULL,
+                                            view_class->insert_data_free);
 }
 
 static void

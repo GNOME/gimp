@@ -73,7 +73,7 @@ gimp_message_box (const gchar *message,
   GtkWidget   *image;
   GtkWidget   *label;
   GList       *list;
-  const gchar *stock_id = GTK_STOCK_DIALOG_WARNING;
+  const gchar *stock_id = GIMP_STOCK_WARNING;
 
   if (!message)
     return;
@@ -121,7 +121,7 @@ gimp_message_box (const gchar *message,
       message = _("WARNING:\n"
 		  "Too many open message dialogs.\n"
 		  "Messages are redirected to stderr.");
-      stock_id = GTK_STOCK_DIALOG_WARNING;
+      stock_id = GIMP_STOCK_WARNING;
     }
   
   msg_box = g_new0 (MessageBox, 1);

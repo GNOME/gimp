@@ -463,7 +463,7 @@ paths_dialog_realized (GtkWidget *widget)
   gboolean     success;
 
   /* Help out small displays */
-  if (the_gimp->config->preview_size < 64)
+  if (the_gimp->config->layer_preview_size < 64)
     dash_list[1] = 1;
 
   paths_dialog->gc = gdk_gc_new (widget->window);
@@ -653,7 +653,7 @@ paths_add_path (Path *bzp,
 
   paths_dialog_preview_extents ();
 
-  if (the_gimp->config->preview_size)
+  if (the_gimp->config->layer_preview_size)
     {
       /* Need to add this to the list */
       pwidget->paths_pixmap =  gdk_pixmap_new (paths_dialog->vbox->window,
@@ -755,12 +755,12 @@ paths_dialog_preview_extents (void)
   /*  Get the image width and height variables, based on the gimage  */
   if (gimage->width > gimage->height)
     paths_dialog->ratio =
-      (double) the_gimp->config->preview_size / (double) gimage->width;
+      (double) the_gimp->config->layer_preview_size / (double) gimage->width;
   else
     paths_dialog->ratio =
-      (double) the_gimp->config->preview_size / (double) gimage->height;
+      (double) the_gimp->config->layer_preview_size / (double) gimage->height;
 
-  if (the_gimp->config->preview_size)
+  if (the_gimp->config->layer_preview_size)
     {
       paths_dialog->image_width = (int) (paths_dialog->ratio * gimage->width);
       paths_dialog->image_height = (int) (paths_dialog->ratio * gimage->height);
@@ -1756,7 +1756,7 @@ paths_update_preview (GimpBezierSelectTool *bezier_sel)
   if(paths_dialog &&
      paths_dialog->current_path_list &&
      (row = paths_dialog->current_path_list->last_selected_row) >= 0 &&
-     the_gimp->config->preview_size)
+     the_gimp->config->layer_preview_size)
     {
       PathWidget *pwidget;
 

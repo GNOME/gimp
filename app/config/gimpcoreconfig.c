@@ -83,7 +83,8 @@ enum
   PROP_UNDO_SIZE,
   PROP_PLUGINRC_PATH,
   PROP_MODULE_LOAD_INHIBIT,
-  PROP_PREVIEW_SIZE,
+  PROP_LAYER_PREVIEWS,
+  PROP_LAYER_PREVIEW_SIZE,
   PROP_THUMBNAIL_SIZE,
   PROP_GAMMA_CORRECTION,
   PROP_INSTALL_COLORMAP,
@@ -255,8 +256,12 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    MODULE_LOAD_INHIBIT_BLURB,
                                    NULL,
                                    0);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PREVIEW_SIZE,
-                                 "preview-size", PREVIEW_SIZE_BLURB,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_LAYER_PREVIEWS,
+                                    "layer-previews", LAYER_PREVIEWS_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_LAYER_PREVIEW_SIZE,
+                                 "layer-preview-size", LAYER_PREVIEW_SIZE_BLURB,
                                  GIMP_TYPE_PREVIEW_SIZE,
                                  GIMP_PREVIEW_SIZE_SMALL,
                                  0);
@@ -408,8 +413,11 @@ gimp_core_config_set_property (GObject      *object,
       g_free (core_config->module_load_inhibit);
       core_config->module_load_inhibit = g_value_dup_string (value);
       break;
-    case PROP_PREVIEW_SIZE:
-      core_config->preview_size = g_value_get_enum (value);
+    case PROP_LAYER_PREVIEWS:
+      core_config->layer_previews = g_value_get_boolean (value);
+      break;
+    case PROP_LAYER_PREVIEW_SIZE:
+      core_config->layer_preview_size = g_value_get_enum (value);
       break;
     case PROP_THUMBNAIL_SIZE:
       core_config->thumbnail_size = g_value_get_enum (value);
@@ -517,8 +525,11 @@ gimp_core_config_get_property (GObject    *object,
     case PROP_MODULE_LOAD_INHIBIT:
       g_value_set_string (value, core_config->module_load_inhibit);
       break;
-    case PROP_PREVIEW_SIZE:
-      g_value_set_enum (value, core_config->preview_size);
+    case PROP_LAYER_PREVIEWS:
+      g_value_set_boolean (value, core_config->layer_previews);
+      break;
+    case PROP_LAYER_PREVIEW_SIZE:
+      g_value_set_enum (value, core_config->layer_preview_size);
       break;
     case PROP_THUMBNAIL_SIZE:
       g_value_set_enum (value, core_config->thumbnail_size);

@@ -366,8 +366,7 @@ gimp_container_list_view_clear_items (GimpContainerView *view)
 
   gtk_list_clear_items (GTK_LIST (list_view->gtk_list), 0, -1);
 
-  if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->clear_items)
-    GIMP_CONTAINER_VIEW_CLASS (parent_class)->clear_items (view);
+  GIMP_CONTAINER_VIEW_CLASS (parent_class)->clear_items (view);
 }
 
 static void

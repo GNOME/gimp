@@ -1093,10 +1093,15 @@ prefs_dialog_new (Gimp    *gimp,
 
   /*  General  */
   vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add (config, "layer-previews",
+                          _("_Enable Layer & Channel Previews"),
+                          GTK_BOX (vbox2));
+
   table = prefs_table_new (4, GTK_CONTAINER (vbox2), FALSE);
 
-  prefs_enum_option_menu_add (config, "preview-size", 0, 0,
-                              _("_Preview Size:"),
+  prefs_enum_option_menu_add (config, "layer-preview-size", 0, 0,
+                              _("_Layer & Channel Preview Size:"),
                               GTK_TABLE (table), 0);
   prefs_enum_option_menu_add (config, "navigation-preview-size", 0, 0,
                               _("_Navigation Preview Size:"),

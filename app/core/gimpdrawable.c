@@ -216,6 +216,9 @@ gimp_drawable_invalidate_preview (GimpViewable *viewable)
 
   drawable->preview_valid = FALSE;
 
+  if (drawable->preview_cache)
+    gimp_preview_cache_invalidate (&drawable->preview_cache);
+
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (gimage)

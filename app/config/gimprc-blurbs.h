@@ -205,8 +205,11 @@ N_("When enabled, the X server is queried for the mouse's current position " \
 #define PLUGINRC_PATH_BLURB \
 "Sets the pluginrc search path."
 
-#define PREVIEW_SIZE_BLURB \
-N_("Sets the default preview size.")
+#define LAYER_PREVIEWS_BLURB \
+N_("Sets whether GIMP should create previews of layers and channels.")
+
+#define LAYER_PREVIEW_SIZE_BLURB \
+N_("Sets the default preview size for layers and channels.")
 
 #define RESIZE_WINDOWS_ON_RESIZE_BLURB \
 N_("When enabled, the image window will automatically resize itself, " \
