@@ -1,3 +1,8 @@
+1999-04-11  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* pixmaps/delete.xpm: I put the delete icon from gnome here,
+	IMHO it looks nice.
+
 Sat Apr 10 14:43:24 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/text_tool_cmds.c: doh, XLFD stuff is in decipoints
