@@ -1,3 +1,15 @@
+2001-02-10  David Monniaux  <monniaux@genievre.ens.fr>
+
+	MMX code for paint_funcs. Very partial so far.
+	* acconfig.h
+	* configure.in: detection of MMX-able assembler and compiler
+	* app/Makefile.am
+	* app/main.c: detects MMX and acts accordingly
+	* app/paint_funcs.c
+	* app/paint_funcs_simd.S: #include's appropriate file
+	* app/arch/i386/mmx/paint_funcs_mmx.S
+	* app/arch/i386/mmx/paint_funcs_mmx.S.m4
+
 2001-02-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
