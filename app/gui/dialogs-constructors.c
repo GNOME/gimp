@@ -904,10 +904,11 @@ dialogs_brush_editor_get (GimpDialogFactory *factory,
 }
 
 void
-dialogs_edit_brush_func (GimpData *data)
+dialogs_edit_brush_func (GimpData  *data,
+                         GtkWidget *parent)
 {
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                    gdk_screen_get_default (),
+                                    gtk_widget_get_screen (parent),
                                     "gimp-brush-editor",
                                     -1);
 
@@ -934,10 +935,11 @@ dialogs_gradient_editor_get (GimpDialogFactory *factory,
 }
 
 void
-dialogs_edit_gradient_func (GimpData *data)
+dialogs_edit_gradient_func (GimpData  *data,
+                            GtkWidget *parent)
 {
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                    gdk_screen_get_default (),
+                                    gtk_widget_get_screen (parent),
 				    "gimp-gradient-editor",
                                     -1);
 
@@ -964,10 +966,11 @@ dialogs_palette_editor_get (GimpDialogFactory *factory,
 }
 
 void
-dialogs_edit_palette_func (GimpData *data)
+dialogs_edit_palette_func (GimpData  *data,
+                           GtkWidget *parent)
 {
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                    gdk_screen_get_default (),
+                                    gtk_widget_get_screen (parent),
 				    "gimp-palette-editor",
                                     -1);
 

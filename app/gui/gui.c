@@ -313,14 +313,11 @@ gui_restore_callback (Gimp               *gimp,
                       GimpInitStatusFunc  status_callback,
                       gboolean            restore_session)
 {
-  GimpDisplayConfig *display_config;
-  GimpGuiConfig     *gui_config;
+  GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (gimp->config);
+  GimpGuiConfig     *gui_config     = GIMP_GUI_CONFIG (gimp->config);
 
   if (gimp->be_verbose)
     g_print ("INIT: gui_restore_callback\n");
-
-  display_config = GIMP_DISPLAY_CONFIG (gimp->config);
-  gui_config     = GIMP_GUI_CONFIG (gimp->config);
 
   gui_vtable_init (gimp);
 
@@ -373,12 +370,10 @@ gui_restore_after_callback (Gimp               *gimp,
                             GimpInitStatusFunc  status_callback,
                             gboolean            restore_session)
 {
-  GimpGuiConfig *gui_config;
+  GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (gimp->config);
 
   if (gimp->be_verbose)
     g_print ("INIT: gui_restore_after_callback\n");
-
-  gui_config = GIMP_GUI_CONFIG (gimp->config);
 
   gimp->message_handler = GIMP_MESSAGE_BOX;
 
@@ -412,7 +407,7 @@ static gboolean
 gui_exit_callback (Gimp     *gimp,
                    gboolean  kill_it)
 {
-  GimpGuiConfig  *gui_config;
+  GimpGuiConfig  *gui_config = GIMP_GUI_CONFIG (gimp->config);
 
   if (gimp->be_verbose)
     g_print ("EXIT: gui_exit_callback\n");
@@ -442,8 +437,6 @@ gui_exit_callback (Gimp     *gimp,
     }
 
   gimp->message_handler = GIMP_CONSOLE;
-
-  gui_config = GIMP_GUI_CONFIG (gimp->config);
 
   if (gui_config->save_session_info)
     session_save (gimp);
@@ -500,9 +493,7 @@ gui_really_quit_callback (GtkWidget *button,
 			  gboolean   quit,
 			  gpointer   data)
 {
-  Gimp *gimp;
-
-  gimp = GIMP (data);
+  Gimp *gimp = GIMP (data);
 
   if (quit)
     {

@@ -242,7 +242,7 @@ gimp_tool_options_editor_get_preview (GimpDocked   *docked,
   gint       width;
   gint       height;
 
-  screen = gdk_screen_get_default ();
+  screen = gtk_widget_get_screen (GTK_WIDGET (docked));
   gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
                                      size, &width, &height);
 

@@ -284,7 +284,7 @@ gimp_data_factory_view_edit_clicked (GtkWidget           *widget,
       gimp_container_have (view->factory->container,
 			   GIMP_OBJECT (data)))
     {
-      view->data_edit_func (data);
+      view->data_edit_func (data, GTK_WIDGET (view));
     }
 }
 

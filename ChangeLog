@@ -1,5 +1,21 @@
 2003-11-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptooloptionseditor.c
+	(gimp_tool_options_editor_get_preview): use
+	gtk_widget_get_screen() instead of gdk_screen_get_default().
+
+	* app/widgets/gimpdatafactoryview.[ch]: added "GtkWidget *parent"
+	to GimpDataEditFunc.
+
+	* app/gui/dialogs-constructors.[ch]
+	(dialogs_edit_brush,gradient,palette_func): use the passed parent
+	widget for finding the right screen instead of
+	gdk_screen_get_deafault().
+
+	* app/gui/gui.c: minor cleanup.
+
+2003-11-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpitemfactory.[ch]: remember the "create_tearoff"
 	passed to gimp_item_factory_new() in the GimpItemFactory struct
 	and removed "create_tearoff" from the create_item functions

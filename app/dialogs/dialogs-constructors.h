@@ -159,17 +159,20 @@ GtkWidget * dialogs_color_editor_new       (GimpDialogFactory *factory,
 GtkWidget * dialogs_brush_editor_get       (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
-void        dialogs_edit_brush_func        (GimpData          *data);
+void        dialogs_edit_brush_func        (GimpData          *data,
+                                            GtkWidget         *parent);
 
 GtkWidget * dialogs_gradient_editor_get    (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
-void        dialogs_edit_gradient_func     (GimpData          *data);
+void        dialogs_edit_gradient_func     (GimpData          *data,
+                                            GtkWidget         *parent);
 
 GtkWidget * dialogs_palette_editor_get     (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
-void        dialogs_edit_palette_func      (GimpData          *data);
+void        dialogs_edit_palette_func      (GimpData          *data,
+                                            GtkWidget         *parent);
 
 
 #endif /* __DIALOGS_CONSTRUCTORS_H__ */
