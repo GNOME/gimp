@@ -1,1 +1,7 @@
 config.pl
+Makefile
+config.status
+blib
+pm_to_blib
+Gimp.c
+Gimp.bs
