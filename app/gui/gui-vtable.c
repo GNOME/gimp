@@ -69,7 +69,8 @@ static void           gui_unset_busy           (Gimp          *gimp);
 static void           gui_message              (Gimp          *gimp,
                                                 const gchar   *domain,
                                                 const gchar   *message);
-static GimpObject   * gui_display_new          (GimpImage     *gimage,
+static GimpObject   * gui_create_display       (GimpImage     *gimage,
+                                                GimpUnit       unit,
                                                 gdouble        scale);
 static void           gui_menus_init           (Gimp          *gimp,
                                                 GSList        *plug_in_defs,
@@ -113,7 +114,7 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui_set_busy_func          = gui_set_busy;
   gimp->gui_unset_busy_func        = gui_unset_busy;
   gimp->gui_message_func           = gui_message;
-  gimp->gui_create_display_func    = gui_display_new;
+  gimp->gui_create_display_func    = gui_create_display;
   gimp->gui_menus_init_func        = gui_menus_init;
   gimp->gui_menus_create_func      = gui_menus_create_entry;
   gimp->gui_menus_delete_func      = gui_menus_delete_entry;
@@ -191,8 +192,9 @@ gui_message (Gimp        *gimp,
 }
 
 static GimpObject *
-gui_display_new (GimpImage *gimage,
-                 gdouble    scale)
+gui_create_display (GimpImage *gimage,
+                    GimpUnit   unit,
+                    gdouble    scale)
 {
   GimpDisplayShell *shell;
   GimpDisplay      *gdisp;
@@ -200,7 +202,7 @@ gui_display_new (GimpImage *gimage,
 
   image_managers = gimp_ui_managers_from_name ("<Image>");
 
-  gdisp = gimp_display_new (gimage, scale,
+  gdisp = gimp_display_new (gimage, unit, scale,
                             global_menu_factory,
 
                             image_managers->data);

@@ -26,6 +26,7 @@
 typedef void           (* GimpThreadEnterFunc)     (Gimp          *gimp);
 typedef void           (* GimpThreadLeaveFunc)     (Gimp          *gimp);
 typedef GimpObject   * (* GimpCreateDisplayFunc)   (GimpImage     *gimage,
+                                                    GimpUnit       unit,
                                                     gdouble        scale);
 typedef void           (* GimpSetBusyFunc)         (Gimp          *gimp);
 typedef void           (* GimpUnsetBusyFunc)       (Gimp          *gimp);
@@ -276,6 +277,7 @@ GimpImage   * gimp_create_image         (Gimp               *gimp,
 
 GimpObject  * gimp_create_display       (Gimp               *gimp,
                                          GimpImage          *gimage,
+                                         GimpUnit            unit,
                                          gdouble             scale);
 
 void          gimp_set_default_context  (Gimp               *gimp,

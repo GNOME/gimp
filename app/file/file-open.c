@@ -223,12 +223,11 @@ file_open_with_proc_and_display (Gimp               *gimp,
 
   if (gimage)
     {
-      GimpDocumentList *documents;
+      GimpDocumentList *documents = GIMP_DOCUMENT_LIST (gimp->documents);
       GimpImagefile    *imagefile;
 
-      gimp_create_display (gimage->gimp, gimage, 1.0);
+      gimp_create_display (gimage->gimp, gimage, GIMP_UNIT_PIXEL, 1.0);
 
-      documents = GIMP_DOCUMENT_LIST (gimp->documents);
       imagefile = gimp_document_list_add_uri (documents, uri, mime_type);
 
       /*  can only create a thumbnail if the passed uri and the

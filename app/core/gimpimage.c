@@ -468,7 +468,7 @@ gimp_image_init (GimpImage *gimage)
   gimage->height                = 0;
   gimage->xresolution           = 1.0;
   gimage->yresolution           = 1.0;
-  gimage->unit                  = GIMP_UNIT_PIXEL;
+  gimage->unit                  = GIMP_UNIT_INCH;
   gimage->base_type             = GIMP_RGB;
 
   gimage->cmap                  = NULL;
@@ -1034,7 +1034,7 @@ gimp_image_new (Gimp              *gimp,
 
   gimage->xresolution = gimp->config->default_image->xresolution;
   gimage->yresolution = gimp->config->default_image->yresolution;
-  gimage->unit        = gimp->config->default_image->unit;
+  gimage->unit        = gimp->config->default_image->resolution_unit;
 
   gimage->grid        = gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_grid));
 
@@ -1257,6 +1257,7 @@ gimp_image_set_unit (GimpImage *gimage,
 		     GimpUnit   unit)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (unit > GIMP_UNIT_PIXEL);
 
   if (gimage->unit != unit)
     {
@@ -1264,7 +1265,6 @@ gimp_image_set_unit (GimpImage *gimage,
                                              _("Change Image Unit"));
 
       gimage->unit = unit;
-
       gimp_image_unit_changed (gimage);
     }
 }
@@ -1272,7 +1272,7 @@ gimp_image_set_unit (GimpImage *gimage,
 GimpUnit
 gimp_image_get_unit (const GimpImage *gimage)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_UNIT_PIXEL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_UNIT_INCH);
 
   return gimage->unit;
 }

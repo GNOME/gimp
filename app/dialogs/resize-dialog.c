@@ -128,7 +128,6 @@ resize_dialog_new (GimpViewable *viewable,
 		   gdouble       resolution_x,
 		   gdouble       resolution_y,
 		   GimpUnit      unit,
-		   gboolean      dot_for_dot,
 		   GCallback     ok_cb,
 		   gpointer      user_data)
 {
@@ -348,10 +347,6 @@ resize_dialog_new (GimpViewable *viewable,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (private->size_se);
 
-  if (dot_for_dot)
-    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->size_se),
-			      GIMP_UNIT_PIXEL);
-
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 0,
 				  resolution_x, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 1,
@@ -488,10 +483,6 @@ resize_dialog_new (GimpViewable *viewable,
 				    _("_Y:"), 1, 0, 0.0);
       gtk_box_pack_start (GTK_BOX (vbox), private->offset_se, FALSE, FALSE, 0);
       gtk_widget_show (private->offset_se);
-
-      if (dot_for_dot)
-	gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset_se),
-				  GIMP_UNIT_PIXEL);
 
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->offset_se), 0,
 				      resolution_x, FALSE);

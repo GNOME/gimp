@@ -171,6 +171,7 @@ gimp_vectors_export_image_size (const GimpImage *image,
   w = (gdouble) image->width  / image->xresolution;
   h = (gdouble) image->height / image->yresolution;
 
+  /*  FIXME: should probably use the display unit here  */
   unit = image->unit;
   switch (unit)
     {

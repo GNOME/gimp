@@ -34,8 +34,8 @@
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
-#include "core/gimpimage-unit.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimpunit.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimptooldialog.h"
@@ -706,7 +706,8 @@ static void
 gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
                                  GimpDisplay     *gdisp)
 {
-  GimpDisplayShell *shell;
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpImage        *image = gdisp->gimage;
   gint              ax, ay;
   gint              bx, by;
   gdouble           theta1, theta2;
@@ -716,8 +717,6 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
   gdouble           unit_angle;
   gchar             format[128];
   gchar             buf[128];
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  calculate distance and angle  */
   ax = mtool->x[1] - mtool->x[0];
@@ -735,10 +734,9 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
     }
 
   pixel_distance = sqrt (SQR (ax - bx) + SQR (ay - by));
-  unit_distance  =
-    gimp_image_unit_get_factor (gdisp->gimage) *
-    sqrt (SQR ((gdouble)(ax - bx) / gdisp->gimage->xresolution) +
-          SQR ((gdouble)(ay - by) / gdisp->gimage->yresolution));
+  unit_distance  = (_gimp_unit_get_factor (image->gimp, shell->unit) *
+                    sqrt (SQR ((gdouble)(ax - bx) / image->xresolution) +
+                          SQR ((gdouble)(ay - by) / image->yresolution)));
 
   if (mtool->num_points != 3)
     bx = ax > 0 ? 1 : -1;
@@ -746,35 +744,23 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
   theta1 = measure_tool_get_angle (ax, ay, 1.0, 1.0);
   theta2 = measure_tool_get_angle (bx, by, 1.0, 1.0);
 
-  if (shell->dot_for_dot)
-    {
-      mtool->angle1 = theta1;
-      mtool->angle2 = theta2;
-    }
-
   pixel_angle = fabs (theta1 - theta2);
   if (pixel_angle > 180.0)
     pixel_angle = fabs (360.0 - pixel_angle);
 
   theta1 = measure_tool_get_angle (ax, ay,
-                                   gdisp->gimage->xresolution,
-                                   gdisp->gimage->yresolution);
+                                   image->xresolution, image->yresolution);
   theta2 = measure_tool_get_angle (bx, by,
-                                   gdisp->gimage->xresolution,
-                                   gdisp->gimage->yresolution);
+                                   image->xresolution, image->yresolution);
 
-  if (! shell->dot_for_dot)
-    {
-      mtool->angle1 = theta1;
-      mtool->angle2 = theta2;
-    }
+  mtool->angle1 = theta1;
+  mtool->angle2 = theta2;
 
   unit_angle = fabs (theta1 - theta2);
   if (unit_angle > 180.0)
     unit_angle = fabs (360.0 - unit_angle);
 
-
-  if (shell->dot_for_dot)
+  if (shell->unit == GIMP_UNIT_PIXEL)
     {
       g_snprintf (buf, sizeof (buf), "%.1f %s, %.2f \302\260",
                   pixel_distance, _("pixels"), pixel_angle);
@@ -782,8 +768,8 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
   else
     {
       g_snprintf (format, sizeof (format), "%%.%df %s, %%.2f \302\260",
-                  gimp_image_unit_get_digits (gdisp->gimage),
-                  gimp_image_unit_get_plural (gdisp->gimage));
+                  _gimp_unit_get_digits (image->gimp, shell->unit),
+                  _gimp_unit_get_plural (image->gimp, shell->unit));
 
       g_snprintf (buf, sizeof (buf), format, unit_distance, unit_angle);
     }
@@ -800,12 +786,12 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
       gtk_label_set_text (GTK_LABEL (mtool->angle_label[0]), buf);
 
       g_snprintf (format, sizeof (format),
-                  "%%.%df", gimp_image_unit_get_digits (gdisp->gimage));
+                  "%%.%df", _gimp_unit_get_digits (image->gimp, shell->unit));
       g_snprintf (buf, sizeof (buf), format, unit_distance);
       gtk_label_set_text (GTK_LABEL (mtool->distance_label[1]), buf);
 
       gtk_label_set_text (GTK_LABEL (mtool->unit_label[0]),
-                          gimp_image_unit_get_plural (gdisp->gimage));
+                          _gimp_unit_get_plural (image->gimp, shell->unit));
 
       if (fabs (unit_angle - pixel_angle) > 0.01)
         {

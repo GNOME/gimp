@@ -34,9 +34,9 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-unit.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimpunit.h"
 
 #include "paint/gimpbrushcore.h"
 #include "paint/gimppaintcore.h"
@@ -680,14 +680,15 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
           core->cur_coords.x -= off_x;
           core->cur_coords.y -= off_y;
 
-          hard = (gimp_paint_options_get_brush_mode (paint_options) == GIMP_BRUSH_HARD);
+          hard = (gimp_paint_options_get_brush_mode (paint_options) ==
+                  GIMP_BRUSH_HARD);
           gimp_paint_tool_round_line (core, hard, state);
 
           dx = core->cur_coords.x - core->last_coords.x;
           dy = core->cur_coords.y - core->last_coords.y;
 
           /*  show distance in statusbar  */
-          if (shell->dot_for_dot)
+          if (shell->unit == GIMP_UNIT_PIXEL)
             {
               dist = sqrt (SQR (dx) + SQR (dy));
 
@@ -696,18 +697,18 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
             }
           else
             {
-              gchar format_str[64];
+              GimpImage *image = gdisp->gimage;
+              gchar      format_str[64];
 
               g_snprintf (format_str, sizeof (format_str), "%%.%df %s",
-                          gimp_image_unit_get_digits (gdisp->gimage),
-                          gimp_image_unit_get_symbol (gdisp->gimage));
+                          _gimp_unit_get_digits (image->gimp, shell->unit),
+                          _gimp_unit_get_symbol (image->gimp, shell->unit));
 
-              dist = (gimp_image_unit_get_factor (gdisp->gimage) *
-                      sqrt (SQR (dx / gdisp->gimage->xresolution) +
-                            SQR (dy / gdisp->gimage->yresolution)));
+              dist = (_gimp_unit_get_factor (image->gimp, shell->unit) *
+                      sqrt (SQR (dx / image->xresolution) +
+                            SQR (dy / image->yresolution)));
 
-              g_snprintf (status_str, sizeof (status_str), format_str,
-                          dist);
+              g_snprintf (status_str, sizeof (status_str), format_str, dist);
             }
 
           gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),

@@ -25,7 +25,7 @@
 #include "display-types.h"
 
 #include "core/gimpimage.h"
-#include "core/gimpimage-unit.h"
+#include "core/gimpunit.h"
 
 #include "widgets/gimpunitstore.h"
 #include "widgets/gimpunitcombobox.h"
@@ -261,16 +261,16 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
                             const gchar   *separator,
                             gdouble        y)
 {
-  GimpImage *gimage;
-  gchar      buf[CURSOR_LEN];
+  GimpDisplayShell *shell;
+  gchar             buf[CURSOR_LEN];
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (title != NULL);
   g_return_if_fail (separator != NULL);
 
-  gimage = statusbar->shell->gdisp->gimage;
+  shell = statusbar->shell;
 
-  if (gimage->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == GIMP_UNIT_PIXEL)
     {
       g_snprintf (buf, sizeof (buf), statusbar->cursor_format_str,
 		  title,
@@ -280,13 +280,15 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
     }
   else /* show real world units */
     {
-      gdouble unit_factor = gimp_image_unit_get_factor (gimage);
+      GimpImage *image       = shell->gdisp->gimage;
+      gdouble    unit_factor = _gimp_unit_get_factor (image->gimp,
+                                                      shell->unit);
 
       g_snprintf (buf, sizeof (buf), statusbar->cursor_format_str,
 		  title,
-		  x * unit_factor / gimage->xresolution,
+		  x * unit_factor / image->xresolution,
 		  separator,
-		  y * unit_factor / gimage->yresolution);
+		  y * unit_factor / image->yresolution);
     }
 
   gimp_statusbar_push (statusbar, context_id, buf);
@@ -297,30 +299,32 @@ gimp_statusbar_set_cursor (GimpStatusbar *statusbar,
                            gdouble        x,
                            gdouble        y)
 {
-  GimpImage     *image;
-  GtkTreeModel  *model;
-  GimpUnitStore *store;
-  gchar          buffer[CURSOR_LEN];
+  GimpDisplayShell *shell;
+  GtkTreeModel     *model;
+  GimpUnitStore    *store;
+  gchar             buffer[CURSOR_LEN];
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
 
-  image = statusbar->shell->gdisp->gimage;
+  shell = statusbar->shell;
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->unit_combo));
   store = GIMP_UNIT_STORE (model);
 
   gimp_unit_store_set_pixel_values (store, x, y);
 
-  if (image->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == GIMP_UNIT_PIXEL)
     {
-      g_snprintf (buffer, sizeof (buffer), statusbar->cursor_format_str,
+      g_snprintf (buffer, sizeof (buffer),
+                  statusbar->cursor_format_str,
 		  "", ROUND (x), ", ", ROUND (y));
     }
   else /* show real world units */
     {
-      gimp_unit_store_get_values (store, image->unit, &x, &y);
+      gimp_unit_store_get_values (store, shell->unit, &x, &y);
 
-      g_snprintf (buffer, sizeof (buffer), statusbar->cursor_format_str,
+      g_snprintf (buffer, sizeof (buffer),
+                  statusbar->cursor_format_str,
 		  "", x, ", ", y);
     }
 
@@ -339,7 +343,7 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
 {
   static PangoLayout *layout = NULL;
 
-  GimpImage    *image;
+  GimpImage    *image = shell->gdisp->gimage;
   GtkTreeModel *model;
   const gchar  *text;
   gint          width;
@@ -352,8 +356,6 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
   g_signal_handlers_unblock_by_func (statusbar->scale_combo,
                                      gimp_statusbar_scale_changed, statusbar);
 
-  image = statusbar->shell->gdisp->gimage;
-
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->unit_combo));
   gimp_unit_store_set_resolutions (GIMP_UNIT_STORE (model),
                                    image->xresolution, image->yresolution);
@@ -361,11 +363,11 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
   g_signal_handlers_block_by_func (statusbar->unit_combo,
                                    gimp_statusbar_unit_changed, statusbar);
   gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (statusbar->unit_combo),
-                                  image->unit);
+                                  shell->unit);
   g_signal_handlers_unblock_by_func (statusbar->unit_combo,
                                      gimp_statusbar_unit_changed, statusbar);
 
-  if (image->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == GIMP_UNIT_PIXEL)
     {
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
@@ -376,8 +378,8 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
 		  "%%s%%.%df%%s%%.%df",
-                  gimp_image_unit_get_digits (image),
-                  gimp_image_unit_get_digits (image));
+                  _gimp_unit_get_digits (image->gimp, shell->unit),
+                  _gimp_unit_get_digits (image->gimp, shell->unit));
     }
 
   gimp_statusbar_set_cursor (statusbar, - image->width, - image->height);
@@ -411,8 +413,8 @@ static void
 gimp_statusbar_unit_changed (GimpUnitComboBox *combo,
                              GimpStatusbar    *statusbar)
 {
-  gimp_image_set_unit (statusbar->shell->gdisp->gimage,
-                       gimp_unit_combo_box_get_active (combo));
+  gimp_display_shell_set_unit (statusbar->shell,
+                               gimp_unit_combo_box_get_active (combo));
 }
 
 static void

@@ -66,11 +66,15 @@ void
 view_new_view_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
   return_if_no_display (gdisp, data);
 
-  gimp_create_display (gdisp->gimage->gimp, gdisp->gimage,
-                       GIMP_DISPLAY_SHELL (gdisp->shell)->scale);
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_create_display (gdisp->gimage->gimp,
+                       gdisp->gimage,
+                       shell->unit, shell->scale);
 }
 
 void

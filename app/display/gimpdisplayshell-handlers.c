@@ -67,8 +67,6 @@ static void   gimp_display_shell_size_changed_handler       (GimpImage        *g
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_resolution_changed_handler (GimpImage        *gimage,
                                                              GimpDisplayShell *shell);
-static void   gimp_display_shell_unit_changed_handler       (GimpImage        *gimage,
-                                                             GimpDisplayShell *shell);
 static void   gimp_display_shell_qmask_changed_handler      (GimpImage        *gimage,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_update_guide_handler       (GimpImage        *gimage,
@@ -151,9 +149,6 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     shell);
   g_signal_connect (gimage, "resolution_changed",
                     G_CALLBACK (gimp_display_shell_resolution_changed_handler),
-                    shell);
-  g_signal_connect (gimage, "unit_changed",
-                    G_CALLBACK (gimp_display_shell_unit_changed_handler),
                     shell);
   g_signal_connect (gimage, "qmask_changed",
                     G_CALLBACK (gimp_display_shell_qmask_changed_handler),
@@ -317,9 +312,6 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         gimp_display_shell_qmask_changed_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (gimage,
-                                        gimp_display_shell_unit_changed_handler,
-                                        shell);
-  g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_resolution_changed_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (gimage,
@@ -405,14 +397,6 @@ gimp_display_shell_size_changed_handler (GimpImage        *gimage,
 static void
 gimp_display_shell_resolution_changed_handler (GimpImage        *gimage,
                                                GimpDisplayShell *shell)
-{
-  gimp_display_shell_scale_setup (shell);
-  gimp_display_shell_scaled (shell);
-}
-
-static void
-gimp_display_shell_unit_changed_handler (GimpImage        *gimage,
-                                         GimpDisplayShell *shell)
 {
   gimp_display_shell_scale_setup (shell);
   gimp_display_shell_scaled (shell);

@@ -32,6 +32,7 @@
 #include "gui/gui-types.h"
 
 #include "config/gimpconfig.h"
+#include "config/gimpconfig-params.h"
 #include "config/gimpconfig-utils.h"
 #include "config/gimpdisplayconfig.h"
 #include "config/gimpguiconfig.h"
@@ -88,6 +89,13 @@
 
 enum
 {
+  PROP_0,
+  PROP_SCALE,
+  PROP_UNIT
+};
+
+enum
+{
   SCALED,
   SCROLLED,
   RECONNECT,
@@ -102,6 +110,14 @@ static void      gimp_display_shell_init          (GimpDisplayShell      *shell)
 
 static void      gimp_display_shell_finalize           (GObject          *object);
 static void      gimp_display_shell_destroy            (GtkObject        *object);
+static void      gimp_display_shell_set_property       (GObject          *object,
+                                                        guint             property_id,
+                                                        const GValue     *value,
+                                                        GParamSpec       *pspec);
+static void      gimp_display_shell_get_property       (GObject          *object,
+                                                        guint             property_id,
+                                                        GValue           *value,
+                                                        GParamSpec       *pspec);
 static void      gimp_display_shell_screen_changed     (GtkWidget        *widget,
                                                         GdkScreen        *previous);
 static gboolean  gimp_display_shell_delete_event       (GtkWidget        *widget,
@@ -190,6 +206,8 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                   G_TYPE_NONE, 0);
 
   gobject_class->finalize      = gimp_display_shell_finalize;
+  gobject_class->set_property  = gimp_display_shell_set_property;
+  gobject_class->get_property  = gimp_display_shell_get_property;
 
   object_class->destroy        = gimp_display_shell_destroy;
 
@@ -200,6 +218,16 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   klass->scaled                = gimp_display_shell_real_scaled;
   klass->scrolled              = NULL;
   klass->reconnect             = NULL;
+
+  g_object_class_install_property (gobject_class, PROP_SCALE,
+                                   g_param_spec_double ("scale", NULL, NULL,
+                                                        1.0 / 256, 256, 1.0,
+                                                        G_PARAM_READWRITE));
+  g_object_class_install_property (gobject_class, PROP_UNIT,
+                                   gimp_param_spec_unit ("unit", NULL, NULL,
+                                                         TRUE, FALSE,
+                                                         GIMP_UNIT_PIXEL,
+                                                         G_PARAM_READWRITE));
 }
 
 static void
@@ -209,6 +237,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->menubar_manager       = NULL;
   shell->popup_manager         = NULL;
+
+  shell->unit                  = GIMP_UNIT_PIXEL;
 
   shell->scale                 = 1.0;
   shell->other_scale           = 0.0;
@@ -427,16 +457,60 @@ gimp_display_shell_destroy (GtkObject *object)
 }
 
 static void
+gimp_display_shell_set_property (GObject      *object,
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
+
+  switch (property_id)
+    {
+    case PROP_SCALE:
+      gimp_display_shell_scale (shell,
+                                GIMP_ZOOM_TO, g_value_get_double (value));
+      break;
+    case PROP_UNIT:
+      gimp_display_shell_set_unit (shell, g_value_get_int (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_display_shell_get_property (GObject    *object,
+                                 guint       property_id,
+                                 GValue     *value,
+                                 GParamSpec *pspec)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
+
+  switch (property_id)
+    {
+    case PROP_SCALE:
+      g_value_set_double (value, shell->scale);
+      break;
+    case PROP_UNIT:
+      g_value_set_int (value, shell->unit);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
 gimp_display_shell_screen_changed (GtkWidget *widget,
                                    GdkScreen *previous)
 {
-  GimpDisplayShell  *shell;
+  GimpDisplayShell  *shell = GIMP_DISPLAY_SHELL (widget);
   GimpDisplayConfig *config;
 
   if (GTK_WIDGET_CLASS (parent_class)->screen_changed)
     GTK_WIDGET_CLASS (parent_class)->screen_changed (widget, previous);
 
-  shell = GIMP_DISPLAY_SHELL (widget);
   config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
 
   if (GIMP_DISPLAY_CONFIG (config)->monitor_res_from_gdk)
@@ -468,6 +542,9 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 {
   GimpContext *user_context;
 
+  if (! shell->gdisp)
+    return;
+
   gimp_display_shell_update_title (shell);
 
   /* update the <Image>/View/Zoom menu */
@@ -481,6 +558,7 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 
 GtkWidget *
 gimp_display_shell_new (GimpDisplay     *gdisp,
+                        GimpUnit         unit,
                         gdouble          scale,
                         GimpMenuFactory *menu_factory,
                         GimpUIManager   *popup_manager)
@@ -506,10 +584,12 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (popup_manager), NULL);
 
   /*  the toplevel shell */
-  shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL, NULL);
+  shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL,
+                        "unit",  unit,
+                        "scale", scale,
+                        NULL);
 
   shell->gdisp = gdisp;
-  shell->scale = scale;
 
   image_width  = gdisp->gimage->width;
   image_height = gdisp->gimage->height;
@@ -937,9 +1017,7 @@ void
 gimp_display_shell_close (GimpDisplayShell *shell,
                           gboolean          kill_it)
 {
-  GimpImage *gimage;
-
-  gimage = shell->gdisp->gimage;
+  GimpImage *gimage = shell->gdisp->gimage;
 
   /*  FIXME: gimp_busy HACK not really appropriate here because we only
    *  want to prevent the busy image and display to be closed.  --Mitch
@@ -994,6 +1072,23 @@ gimp_display_shell_scrolled (GimpDisplayShell *shell)
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   g_signal_emit (shell, display_shell_signals[SCROLLED], 0);
+}
+
+void
+gimp_display_shell_set_unit (GimpDisplayShell *shell,
+                             GimpUnit          unit)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->unit != unit)
+    {
+      shell->unit = unit;
+
+      gimp_display_shell_scale_setup (shell);
+      gimp_display_shell_scaled (shell);
+
+      g_object_notify (G_OBJECT (shell), "unit");
+    }
 }
 
 gboolean

@@ -145,8 +145,6 @@ libappcore_a_sources = \
 	gimpimage-undo.h		\
 	gimpimage-undo-push.c		\
 	gimpimage-undo-push.h		\
-	gimpimage-unit.c		\
-	gimpimage-unit.h		\
 	gimpimagefile.c			\
 	gimpimagefile.h			\
 	gimpimagemap.c			\

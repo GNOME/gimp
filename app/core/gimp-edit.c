@@ -204,8 +204,8 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 			GimpImage  *invoke,
 			GimpBuffer *paste)
 {
-  GimpImage    *gimage;
-  GimpLayer    *layer;
+  GimpImage *gimage;
+  GimpLayer *layer;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (invoke == NULL || GIMP_IS_IMAGE (invoke), NULL);
@@ -242,7 +242,7 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 
   gimp_image_undo_enable (gimage);
 
-  gimp_create_display (gimp, gimage, 1.0);
+  gimp_create_display (gimp, gimage, 1.0, GIMP_UNIT_PIXEL);
   g_object_unref (gimage);
 
   return gimage;

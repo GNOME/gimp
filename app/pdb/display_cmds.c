@@ -65,7 +65,8 @@ display_new_invoker (Gimp        *gimp,
 
   if (success)
     {
-      display = (GimpDisplay *) gimp_create_display (gimp, gimage, 1.0);
+      display = (GimpDisplay *) gimp_create_display (gimp,
+                                                     gimage, GIMP_UNIT_PIXEL, 1.0);
 
       success = (display != NULL);
 

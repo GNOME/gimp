@@ -32,7 +32,6 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-crop.h"
-#include "core/gimpimage-unit.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
@@ -615,35 +614,36 @@ static void
 gimp_rect_select_tool_update_options (GimpRectSelectTool *rect_sel,
                                       GimpDisplay        *gdisp)
 {
-  GimpUnit unit;
-  gdouble  width;
-  gdouble  height;
+  GimpDisplayShell *shell;
+  gdouble           width;
+  gdouble           height;
 
   if (rect_sel->fixed_mode != GIMP_RECT_SELECT_MODE_FREE)
     return;
 
-  if (GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot)
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  if (shell->unit == GIMP_UNIT_PIXEL)
     {
       width  = fabs (rect_sel->w);
       height = fabs (rect_sel->h);
-      unit   = GIMP_UNIT_PIXEL;
     }
   else
     {
-      GimpImage *gimage = gdisp->gimage;
-
-      unit   = gimage->unit;
+      GimpImage *image = gdisp->gimage;
 
       width  = (fabs (rect_sel->w) *
-                gimp_image_unit_get_factor (gimage) / gimage->xresolution);
+                _gimp_unit_get_factor (image->gimp,
+                                       shell->unit) / image->xresolution);
       height = (fabs (rect_sel->h) *
-                gimp_image_unit_get_factor (gimage) / gimage->yresolution);
+                _gimp_unit_get_factor (image->gimp,
+                                       shell->unit) / image->yresolution);
     }
 
   g_object_set (GIMP_TOOL (rect_sel)->tool_info->tool_options,
                 "fixed-width",  width,
                 "fixed-height", height,
-                "fixed-unit",   unit,
+                "fixed-unit",   shell->unit,
                 NULL);
 }
 
@@ -662,6 +662,7 @@ gimp_rect_select_tool_coords_to_integer (GimpDisplay *gdisp,
   y = MIN (y, y + h);
   w = ABS (w);
   h = ABS (h);
+
   *ix = RINT (x);
   *iy = RINT (y);
   *iw = RINT (w + (x - *ix));

@@ -198,13 +198,9 @@ gimp_crop_tool_get_type (void)
 static void
 gimp_crop_tool_class_init (GimpCropToolClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpToolClass     *tool_class;
-  GimpDrawToolClass *draw_tool_class;
-
-  object_class    = G_OBJECT_CLASS (klass);
-  tool_class      = GIMP_TOOL_CLASS (klass);
-  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
+  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -279,11 +275,8 @@ gimp_crop_tool_button_press (GimpTool        *tool,
 			     GdkModifierType  state,
 			     GimpDisplay     *gdisp)
 {
-  GimpCropTool *crop;
-  GimpDrawTool *draw_tool;
-
-  crop      = GIMP_CROP_TOOL (tool);
-  draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpCropTool *crop      = GIMP_CROP_TOOL (tool);
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
   if (gdisp != tool->gdisp)
     {
@@ -314,11 +307,8 @@ gimp_crop_tool_button_release (GimpTool        *tool,
 			       GdkModifierType  state,
 			       GimpDisplay     *gdisp)
 {
-  GimpCropTool    *crop;
-  GimpCropOptions *options;
-
-  crop    = GIMP_CROP_TOOL (tool);
-  options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
+  GimpCropTool    *crop    = GIMP_CROP_TOOL (tool);
+  GimpCropOptions *options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   gimp_tool_control_halt (tool->control);
   gimp_tool_pop_status (tool);
@@ -351,16 +341,13 @@ gimp_crop_tool_motion (GimpTool        *tool,
 		       GdkModifierType  state,
 		       GimpDisplay     *gdisp)
 {
-  GimpCropTool    *crop;
-  GimpCropOptions *options;
+  GimpCropTool    *crop    = GIMP_CROP_TOOL (tool);
+  GimpCropOptions *options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
   GimpLayer       *layer;
   gint             x1, y1, x2, y2;
   gint             curx, cury;
   gint             inc_x, inc_y;
   gint             min_x, min_y, max_x, max_y;
-
-  crop    = GIMP_CROP_TOOL (tool);
-  options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   /*  This is the only case when the motion events should be ignored--
       we're just waiting for the button release event to crop the image  */
@@ -532,15 +519,12 @@ gimp_crop_tool_arrow_key (GimpTool    *tool,
 			  GdkEventKey *kevent,
 			  GimpDisplay *gdisp)
 {
-  GimpCropTool    *crop;
-  GimpCropOptions *options;
+  GimpCropTool    *crop    = GIMP_CROP_TOOL (tool);
+  GimpCropOptions *options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
   GimpLayer       *layer;
   gint             inc_x, inc_y;
   gint             min_x, min_y;
   gint             max_x, max_y;
-
-  crop    = GIMP_CROP_TOOL (tool);
-  options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   if (gdisp != tool->gdisp)
     return;
@@ -617,9 +601,7 @@ gimp_crop_tool_modifier_key (GimpTool        *tool,
 			     GdkModifierType  state,
 			     GimpDisplay     *gdisp)
 {
-  GimpCropOptions *options;
-
-  options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
+  GimpCropOptions *options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   if (state & GDK_MOD1_MASK)
     {
@@ -667,11 +649,8 @@ gimp_crop_tool_oper_update (GimpTool        *tool,
                             GdkModifierType  state,
                             GimpDisplay     *gdisp)
 {
-  GimpCropTool *crop;
-  GimpDrawTool *draw_tool;
-
-  crop      = GIMP_CROP_TOOL (tool);
-  draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpCropTool *crop      = GIMP_CROP_TOOL (tool);
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
   if (tool->gdisp != gdisp)
     return;
@@ -761,12 +740,11 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
-  GimpCropTool       *crop;
+  GimpCropTool       *crop      = GIMP_CROP_TOOL (tool);
   GimpCropOptions    *options;
   GdkCursorType       ctype     = GIMP_CROSSHAIR_SMALL_CURSOR;
   GimpCursorModifier  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
-  crop    = GIMP_CROP_TOOL (tool);
   options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   if (tool->gdisp == gdisp)
@@ -801,16 +779,10 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_crop_tool_draw (GimpDrawTool *draw)
 {
-  GimpCropTool     *crop;
-  GimpTool         *tool;
-  GimpDisplayShell *shell;
-  GimpCanvas       *canvas;
-
-  crop = GIMP_CROP_TOOL (draw);
-  tool = GIMP_TOOL (draw);
-
-  shell  = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
-  canvas = GIMP_CANVAS (shell->canvas);
+  GimpCropTool     *crop   = GIMP_CROP_TOOL (draw);
+  GimpTool         *tool   = GIMP_TOOL (draw);
+  GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+  GimpCanvas       *canvas = GIMP_CANVAS (shell->canvas);
 
   gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
                          crop->dx1, crop->dy1,
@@ -905,7 +877,8 @@ crop_recalc (GimpCropTool *crop)
 static void
 crop_start (GimpCropTool *crop)
 {
-  GimpTool *tool = GIMP_TOOL (crop);
+  GimpTool         *tool  = GIMP_TOOL (crop);
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
   crop_recalc (crop);
 
@@ -943,17 +916,9 @@ crop_start (GimpCropTool *crop)
 			    0, tool->gdisp->gimage->height);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (crop->origin_sizeentry),
-                            tool->gdisp->gimage->unit) ;
+                            shell->unit);
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (crop->size_sizeentry),
-                            tool->gdisp->gimage->unit);
-
-  if (GIMP_DISPLAY_SHELL (tool->gdisp->shell)->dot_for_dot)
-    {
-      gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (crop->origin_sizeentry),
-                                GIMP_UNIT_PIXEL);
-      gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (crop->size_sizeentry),
-                                GIMP_UNIT_PIXEL);
-    }
+                            shell->unit);
 
   g_signal_handlers_unblock_by_func (crop->origin_sizeentry,
                                      crop_origin_changed,
@@ -976,19 +941,14 @@ crop_start (GimpCropTool *crop)
 static void
 crop_info_create (GimpCropTool *crop)
 {
-  GimpTool         *tool;
-  GimpDisplay      *gdisp;
-  GimpDisplayShell *shell;
+  GimpTool         *tool  = GIMP_TOOL (crop);
+  GimpDisplay      *gdisp = tool->gdisp;
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
   GtkWidget        *spinbutton;
   GtkWidget        *bbox;
   GtkWidget        *button;
   GtkWidget        *widget;
   const gchar      *stock_id;
-
-  tool = GIMP_TOOL (crop);
-
-  gdisp = tool->gdisp;
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
 
@@ -1020,8 +980,7 @@ crop_info_create (GimpCropTool *crop)
   crop->origin_sizeentry =
     info_dialog_add_sizeentry (crop->crop_info,
                                _("Origin Y:"), crop->orig_vals, 1,
-			       shell->dot_for_dot ?
-			       GIMP_UNIT_PIXEL : gdisp->gimage->unit, "%a",
+			       shell->unit, "%a",
 			       TRUE, TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
 			       G_CALLBACK (crop_origin_changed),
 			       crop);
@@ -1038,8 +997,7 @@ crop_info_create (GimpCropTool *crop)
   crop->size_sizeentry =
     info_dialog_add_sizeentry (crop->crop_info,
                                _("Height:"), crop->size_vals, 1,
-			       shell->dot_for_dot ?
-			       GIMP_UNIT_PIXEL : gdisp->gimage->unit, "%a",
+			       shell->unit, "%a",
 			       TRUE, TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
 			       G_CALLBACK (crop_size_changed),
 			       crop);

@@ -28,7 +28,7 @@
 
 
 /* Apply to a float the same rounding mode used in the renderer */
-#define PROJ_ROUND(coord) ((gint) ceil (coord))
+#define  PROJ_ROUND(coord) ((gint) ceil (coord))
 
 /* finding the effective screen resolution (double) */
 #define  SCREEN_XRES(s)   (s->dot_for_dot ? \
@@ -75,6 +75,8 @@ struct _GimpDisplayShell
 
   gdouble           monitor_xres;
   gdouble           monitor_yres;
+
+  GimpUnit          unit;
 
   gdouble           scale;             /*  scale factor from original raw image    */
   gdouble           other_scale;       /*  scale factor entered in Zoom->Other     */
@@ -174,6 +176,7 @@ struct _GimpDisplayShellClass
 GType       gimp_display_shell_get_type              (void) G_GNUC_CONST;
 
 GtkWidget * gimp_display_shell_new                   (GimpDisplay      *gdisp,
+                                                      GimpUnit          unit,
                                                       gdouble           scale,
                                                       GimpMenuFactory  *menu_factory,
                                                       GimpUIManager    *popup_manager);
@@ -185,6 +188,9 @@ void        gimp_display_shell_reconnect             (GimpDisplayShell *shell);
 
 void        gimp_display_shell_scaled                (GimpDisplayShell *shell);
 void        gimp_display_shell_scrolled              (GimpDisplayShell *shell);
+
+void        gimp_display_shell_set_unit              (GimpDisplayShell *shell,
+                                                      GimpUnit          unit);
 
 gboolean    gimp_display_shell_snap_coords           (GimpDisplayShell *shell,
                                                       GimpCoords       *coords,

@@ -416,7 +416,7 @@ gimp_template_create_image (Gimp         *gimp,
   gimp_image_set_resolution (gimage,
                              template->xresolution, template->yresolution);
 
-  gimp_image_set_unit (gimage, template->unit);
+  gimp_image_set_unit (gimage, template->resolution_unit);
 
   width  = gimp_image_get_width (gimage);
   height = gimp_image_get_height (gimage);
@@ -445,7 +445,7 @@ gimp_template_create_image (Gimp         *gimp,
   gimp_image_undo_enable (gimage);
   gimp_image_clean_all (gimage);
 
-  gimp_create_display (gimp, gimage, 1.0);
+  gimp_create_display (gimp, gimage, template->unit, 1.0);
 
   g_object_unref (gimage);
 

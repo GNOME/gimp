@@ -53,6 +53,7 @@
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 #include "display/gimpprogress.h"
 
 #include "tools/gimptexttool.h"
@@ -74,7 +75,8 @@ static void   layers_scale_layer_query  (GimpDisplay *gdisp,
                                          GimpImage   *gimage,
                                          GimpLayer   *layer,
                                          GtkWidget   *parent);
-static void   layers_resize_layer_query (GimpImage   *gimage,
+static void   layers_resize_layer_query (GimpDisplay *gdisp,
+                                         GimpImage   *gimage,
                                          GimpLayer   *layer,
                                          GimpContext *context,
                                          GtkWidget   *parent);
@@ -343,7 +345,8 @@ layers_resize_cmd_callback (GtkAction *action,
   return_if_no_layer (gimage, layer, data);
   return_if_no_widget (widget, data);
 
-  layers_resize_layer_query (gimage, layer, action_data_get_context (data),
+  layers_resize_layer_query (GIMP_IS_DISPLAY (data) ? data : NULL,
+                             gimage, layer, action_data_get_context (data),
                              widget);
 }
 
@@ -767,7 +770,7 @@ layers_new_layer_query (GimpImage   *gimage,
                                      1, 2);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
 
-  options->size_se = gimp_size_entry_new (1, gimage->unit, "%a",
+  options->size_se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
 					  TRUE, TRUE, FALSE, 10,
 					  GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gtk_table_set_col_spacing (GTK_TABLE (options->size_se), 1, 4);
@@ -1176,8 +1179,9 @@ layers_scale_layer_query (GimpDisplay *gdisp,
 		       gimp_item_height (GIMP_ITEM (layer)),
 		       gimage->xresolution,
 		       gimage->yresolution,
-		       gimage->unit,
-		       TRUE,
+		       (gdisp ?
+                        GIMP_DISPLAY_SHELL (gdisp->shell)->unit :
+                        GIMP_UNIT_PIXEL),
 		       G_CALLBACK (scale_layer_query_ok_callback),
                        options);
 
@@ -1234,7 +1238,8 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 }
 
 static void
-layers_resize_layer_query (GimpImage   *gimage,
+layers_resize_layer_query (GimpDisplay *gdisp,
+                           GimpImage   *gimage,
                            GimpLayer   *layer,
                            GimpContext *context,
                            GtkWidget   *parent)
@@ -1253,8 +1258,9 @@ layers_resize_layer_query (GimpImage   *gimage,
 		       gimp_item_height (GIMP_ITEM (layer)),
 		       gimage->xresolution,
 		       gimage->yresolution,
-		       gimage->unit,
-		       TRUE,
+		       (gdisp ?
+                        GIMP_DISPLAY_SHELL (gdisp->shell)->unit :
+                        GIMP_UNIT_PIXEL),
 		       G_CALLBACK (resize_layer_query_ok_callback),
                        options);
 

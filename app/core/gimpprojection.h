@@ -74,6 +74,7 @@ struct _GimpDisplayClass
 GType         gimp_display_get_type             (void) G_GNUC_CONST;
 
 GimpDisplay * gimp_display_new                  (GimpImage       *gimage,
+                                                 GimpUnit         unit,
                                                  gdouble          scale,
                                                  GimpMenuFactory *menu_factory,
                                                  GimpUIManager   *popup_manager);

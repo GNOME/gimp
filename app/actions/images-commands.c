@@ -73,7 +73,7 @@ images_new_view_cmd_callback (GtkAction *action,
 
   if (image && gimp_container_have (container, GIMP_OBJECT (image)))
     {
-      gimp_create_display (image->gimp, image, 1.0);
+      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
     }
 }
 

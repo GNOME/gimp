@@ -36,8 +36,8 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-unit.h"
 #include "core/gimpitem.h"
+#include "core/gimpunit.h"
 
 #include "file/file-utils.h"
 
@@ -148,13 +148,15 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                                  gint              title_len,
                                  const gchar      *format)
 {
-  GimpImage *gimage;
+  Gimp      *gimp;
+  GimpImage *image;
   gint       num, denom;
   gint       i = 0;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimage = shell->gdisp->gimage;
+  image = shell->gdisp->gimage;
+  gimp  = image->gimp;
 
   gimp_display_shell_scale_get_fraction (shell->scale, &num, &denom);
 
@@ -176,7 +178,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
 	    case 'f': /* pruned filename */
 	      {
-                const gchar *uri = gimp_image_get_uri (gimage);
+                const gchar *uri = gimp_image_get_uri (image);
 		gchar       *basename;
 
 		basename = file_utils_uri_to_utf8_basename (uri);
@@ -190,7 +192,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	    case 'F': /* full filename */
 	      {
 		gchar *filename;
-                const gchar *uri = gimp_image_get_uri (gimage);
+                const gchar *uri = gimp_image_get_uri (image);
 
 		filename = file_utils_uri_to_utf8_filename (uri);
 
@@ -201,7 +203,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      break;
 
 	    case 'p': /* PDB id */
-	      i += print (title, title_len, i, "%d", gimp_image_get_ID (gimage));
+	      i += print (title, title_len, i, "%d", gimp_image_get_ID (image));
 	      break;
 
 	    case 'i': /* instance */
@@ -211,9 +213,9 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	    case 't': /* type */
               {
                 const gchar *image_type_str = NULL;
-                gboolean     empty          = gimp_image_is_empty (gimage);
+                gboolean     empty          = gimp_image_is_empty (image);
 
-                switch (gimp_image_base_type (gimage))
+                switch (gimp_image_base_type (image))
                   {
                   case GIMP_RGB:
                     image_type_str = empty ? _("RGB-empty") : _("RGB");
@@ -254,7 +256,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                              "%%D-sequence");
 		  break;
 		}
-	      if (gimage->dirty)
+	      if (image->dirty)
 		title[i++] = format[1];
 	      format++;
 	      break;
@@ -266,14 +268,14 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                              "%%C-sequence");
 		  break;
 		}
-	      if (! gimage->dirty)
+	      if (! image->dirty)
 		title[i++] = format[1];
 	      format++;
 	      break;
 
             case 'm': /* memory used by image */
               {
-                GimpObject *object = GIMP_OBJECT (gimage);
+                GimpObject *object = GIMP_OBJECT (image);
                 gchar      *str;
 
                 str = gimp_memsize_to_string (gimp_object_get_memsize (object,
@@ -287,12 +289,12 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
             case 'l': /* number of layers */
               i += print (title, title_len, i, "%d",
-                          gimp_container_num_children (gimage->layers));
+                          gimp_container_num_children (image->layers));
               break;
 
             case 'L': /* number of layers (long) */
               {
-                gint num = gimp_container_num_children (gimage->layers);
+                gint num = gimp_container_num_children (image->layers);
 
                 i += print (title, title_len, i,
                             num == 1 ? _("1 layer") : _("%d layers"), num);
@@ -301,7 +303,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
             case 'n': /* active drawable name */
               {
-                GimpDrawable *drawable = gimp_image_active_drawable (gimage);
+                GimpDrawable *drawable = gimp_image_active_drawable (image);
 
                 if (drawable)
                   i += print (title, title_len, i, "%s",
@@ -313,7 +315,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
             case 'P': /* active drawable PDB id */
               {
-                GimpDrawable *drawable = gimp_image_active_drawable (gimage);
+                GimpDrawable *drawable = gimp_image_active_drawable (image);
 
                 if (drawable)
                   i += print (title, title_len, i, "%d",
@@ -324,49 +326,49 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
 	    case 'W': /* width in real-world units */
-              if (gimage->unit != GIMP_UNIT_PIXEL)
+              if (shell->unit != GIMP_UNIT_PIXEL)
                 {
                   gchar unit_format[8];
 
                   g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                              gimp_image_unit_get_digits (gimage) + 1);
+                              _gimp_unit_get_digits (gimp, shell->unit) + 1);
                   i += print (title, title_len, i, unit_format,
-                              (gimage->width *
-                               gimp_image_unit_get_factor (gimage) /
-                               gimage->xresolution));
+                              (image->width *
+                               _gimp_unit_get_factor (gimp, shell->unit) /
+                               image->xresolution));
                   break;
                 }
               /* else fallthru */
 	    case 'w': /* width in pixels */
-	      i += print (title, title_len, i, "%d", gimage->width);
+	      i += print (title, title_len, i, "%d", image->width);
 	      break;
 
 	    case 'H': /* height in real-world units */
-              if (gimage->unit != GIMP_UNIT_PIXEL)
+              if (shell->unit != GIMP_UNIT_PIXEL)
                 {
                   gchar unit_format[8];
 
                   g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                              gimp_image_unit_get_digits (gimage) + 1);
+                              _gimp_unit_get_digits (gimp, shell->unit) + 1);
                   i += print (title, title_len, i, unit_format,
-                              (gimage->height *
-                               gimp_image_unit_get_factor (gimage) /
-                               gimage->yresolution));
+                              (image->height *
+                               _gimp_unit_get_factor (gimp, shell->unit) /
+                               image->yresolution));
                   break;
                 }
               /* else fallthru */
 	    case 'h': /* height in pixels */
-	      i += print (title, title_len, i, "%d", gimage->height);
+	      i += print (title, title_len, i, "%d", image->height);
 	      break;
 
 	    case 'u': /* unit symbol */
 	      i += print (title, title_len, i, "%s",
-			  gimp_image_unit_get_symbol (gimage));
+			  _gimp_unit_get_symbol (gimp, shell->unit));
 	      break;
 
 	    case 'U': /* unit abbreviation */
 	      i += print (title, title_len, i, "%s",
-			  gimp_image_unit_get_abbreviation (gimage));
+			  _gimp_unit_get_abbreviation (gimp, shell->unit));
 	      break;
 
 	      /* Other cool things to be added:

@@ -1229,6 +1229,7 @@ gimp_create_image (Gimp              *gimp,
 GimpObject *
 gimp_create_display (Gimp      *gimp,
                      GimpImage *gimage,
+                     GimpUnit   unit,
                      gdouble    scale)
 {
   GimpObject *display = NULL;
@@ -1238,7 +1239,7 @@ gimp_create_display (Gimp      *gimp,
 
   if (gimp->gui_create_display_func)
     {
-      display = gimp->gui_create_display_func (gimage, scale);
+      display = gimp->gui_create_display_func (gimage, unit, scale);
 
       gimp_container_add (gimp->displays, display);
     }

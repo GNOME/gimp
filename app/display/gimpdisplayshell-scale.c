@@ -30,7 +30,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-unit.h"
+#include "core/gimpunit.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
@@ -224,6 +224,9 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
+  if (! shell->gdisp)
+    return;
+
   image_width  = shell->gdisp->gimage->width;
   image_height = shell->gdisp->gimage->height;
 
@@ -359,10 +362,13 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
+  scale = shell->scale;
+
+  if (! shell->gdisp)
+    return;
+
   offset_x = shell->offset_x + (shell->disp_width  / 2.0);
   offset_y = shell->offset_y + (shell->disp_height / 2.0);
-
-  scale = shell->scale;
 
   offset_x /= scale;
   offset_y /= scale;
@@ -675,7 +681,7 @@ img2real (GimpDisplayShell *shell,
   GimpImage *image = shell->gdisp->gimage;
   gdouble    res;
 
-  if (image->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == GIMP_UNIT_PIXEL)
     return len;
 
   if (xdir)
@@ -683,5 +689,5 @@ img2real (GimpDisplayShell *shell,
   else
     res = image->yresolution;
 
-  return len * gimp_image_unit_get_factor (image) / res;
+  return len * _gimp_unit_get_factor (image->gimp, shell->unit) / res;
 }

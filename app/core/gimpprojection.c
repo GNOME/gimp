@@ -58,7 +58,6 @@ enum
 static void       gimp_display_class_init            (GimpDisplayClass *klass);
 static void       gimp_display_init                  (GimpDisplay      *gdisp);
 
-static void       gimp_display_finalize              (GObject          *object);
 static void       gimp_display_set_property          (GObject          *object,
                                                       guint             property_id,
                                                       const GValue     *value,
@@ -114,13 +113,10 @@ gimp_display_get_type (void)
 static void
 gimp_display_class_init (GimpDisplayClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize     = gimp_display_finalize;
   object_class->set_property = gimp_display_set_property;
   object_class->get_property = gimp_display_get_property;
 
@@ -148,25 +144,11 @@ gimp_display_init (GimpDisplay *gdisp)
 }
 
 static void
-gimp_display_finalize (GObject *object)
-{
-  GimpDisplay *gdisp;
-
-  gdisp = GIMP_DISPLAY (object);
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
 gimp_display_set_property (GObject      *object,
                            guint         property_id,
                            const GValue *value,
                            GParamSpec   *pspec)
 {
-  GimpDisplay *gdisp;
-
-  gdisp = GIMP_DISPLAY (object);
-
   switch (property_id)
     {
     case PROP_IMAGE:
@@ -184,9 +166,7 @@ gimp_display_get_property (GObject    *object,
                            GValue     *value,
                            GParamSpec *pspec)
 {
-  GimpDisplay *gdisp;
-
-  gdisp = GIMP_DISPLAY (object);
+  GimpDisplay *gdisp = GIMP_DISPLAY (object);
 
   switch (property_id)
     {
@@ -201,6 +181,7 @@ gimp_display_get_property (GObject    *object,
 
 GimpDisplay *
 gimp_display_new (GimpImage       *gimage,
+                  GimpUnit         unit,
                   gdouble          scale,
                   GimpMenuFactory *menu_factory,
                   GimpUIManager   *popup_manager)
@@ -221,7 +202,7 @@ gimp_display_new (GimpImage       *gimage,
   gimp_display_connect (gdisp, gimage);
 
   /*  create the shell for the image  */
-  gdisp->shell = gimp_display_shell_new (gdisp, scale,
+  gdisp->shell = gimp_display_shell_new (gdisp, unit, scale,
                                          menu_factory, popup_manager);
 
   gtk_widget_show (gdisp->shell);
@@ -446,9 +427,7 @@ static void
 gimp_display_flush_whenever (GimpDisplay *gdisp,
                              gboolean     now)
 {
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  Flush the items in the displays and updates lists -
    *  but only if gdisplay has been mapped and exposed
@@ -522,8 +501,8 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
 static void
 gimp_display_idlerender_init (GimpDisplay *gdisp)
 {
-  GSList    *list;
-  GimpArea  *area, *new_area;
+  GSList   *list;
+  GimpArea *area;
 
   /* We need to merge the IdleRender's and the GimpDisplay's update_areas list
    * to keep track of which of the updates have been flushed and hence need
@@ -531,13 +510,10 @@ gimp_display_idlerender_init (GimpDisplay *gdisp)
    */
   for (list = gdisp->update_areas; list; list = g_slist_next (list))
     {
-      area = (GimpArea *) list->data;
-
-      new_area = g_memdup (area, sizeof (GimpArea));
+      area = g_memdup (list->data, sizeof (GimpArea));
 
       gdisp->idle_render.update_areas =
-	gimp_display_area_list_process (gdisp->idle_render.update_areas,
-                                        new_area);
+	gimp_display_area_list_process (gdisp->idle_render.update_areas, area);
     }
 
   /* If an idlerender was already running, merge the remainder of its
@@ -546,7 +522,7 @@ gimp_display_idlerender_init (GimpDisplay *gdisp)
    */
   if (gdisp->idle_render.idle_id)
     {
-      new_area =
+      area =
         gimp_area_new (gdisp->idle_render.basex,
                        gdisp->idle_render.y,
                        gdisp->idle_render.basex + gdisp->idle_render.width,
@@ -555,8 +531,7 @@ gimp_display_idlerender_init (GimpDisplay *gdisp)
                                                 gdisp->idle_render.basey)));
 
       gdisp->idle_render.update_areas =
-	gimp_display_area_list_process (gdisp->idle_render.update_areas,
-                                        new_area);
+	gimp_display_area_list_process (gdisp->idle_render.update_areas, area);
 
       gimp_display_idle_render_next_area (gdisp);
     }
@@ -665,11 +640,9 @@ gimp_display_paint_area (GimpDisplay *gdisp,
                          gint         w,
                          gint         h)
 {
-  GimpDisplayShell *shell;
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
   gint              x1, y1, x2, y2;
   gdouble           x1_f, y1_f, x2_f, y2_f;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  Bounds check  */
   x1 = CLAMP (x,     0, gdisp->gimage->width);

@@ -203,8 +203,7 @@ image_resize_cmd_callback (GtkAction *action,
                        gimage->height,
                        gimage->xresolution,
                        gimage->yresolution,
-                       gimage->unit,
-                       GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
+                       GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
                        G_CALLBACK (image_resize_callback),
                        options);
 
@@ -244,8 +243,7 @@ image_scale_cmd_callback (GtkAction *action,
                        gimage->height,
                        gimage->xresolution,
                        gimage->yresolution,
-                       gimage->unit,
-                       GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
+                       GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
                        G_CALLBACK (image_scale_callback),
                        options);
 
@@ -325,12 +323,21 @@ void
 image_duplicate_cmd_callback (GtkAction *action,
 			      gpointer   data)
 {
-  GimpImage *gimage;
-  GimpImage *new_gimage;
-  return_if_no_image (gimage, data);
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  GimpImage        *gimage;
+  GimpImage        *new_gimage;
+  return_if_no_display (gdisp, data);
+
+  shell  = GIMP_DISPLAY_SHELL (gdisp->shell);
+  gimage = gdisp->gimage;
 
   new_gimage = gimp_image_duplicate (gimage);
-  gimp_create_display (new_gimage->gimp, new_gimage, 1.0);
+
+  gimp_create_display (new_gimage->gimp,
+                       new_gimage,
+                       shell->unit, shell->scale);
+
   g_object_unref (new_gimage);
 }
 

@@ -1323,7 +1323,7 @@ my $unit_misc = <<'CODE';
     $date = '1998';
 CODE
 
-&image_accessors('unit', 'unit', 'unit', 1,
+&image_accessors('unit', 'unit (min GIMP_UNIT_INCH)', 'unit', 1,
 		 [ <<CODE1, <<CODE2 ]);
     \$help .= '$unit_help';
     $unit_misc

@@ -79,7 +79,6 @@ ResizeDialog * resize_dialog_new (GimpViewable *viewable,
                                   gdouble       resolution_x,
                                   gdouble       resolution_y,
                                   GimpUnit      unit,
-                                  gboolean      dot_for_dot,
                                   GCallback     ok_cb,
                                   gpointer      user_data);
 

@@ -33,7 +33,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-projection.h"
-#include "core/gimpimage-unit.h"
 #include "core/gimptemplate.h"
 #include "core/gimpunit.h"
 
@@ -374,15 +373,14 @@ info_window_update_extended (GimpDisplay *gdisp,
     }
   else
     {
-      gdouble      unit_factor;
-      gint         unit_digits;
-      const gchar *unit_str;
+      GimpImage   *image       = gdisp->gimage;
+      GimpUnit     unit        = GIMP_DISPLAY_SHELL (gdisp->shell)->unit;
+      gdouble      unit_factor = _gimp_unit_get_factor (image->gimp, unit);
+      gint         unit_digits = _gimp_unit_get_digits (image->gimp, unit);
+      const gchar *unit_str    = _gimp_unit_get_abbreviation (image->gimp,
+                                                              unit);
       gchar        format_buf[32];
       gchar        buf[32];
-
-      unit_factor = gimp_image_unit_get_factor (gdisp->gimage);
-      unit_digits = gimp_image_unit_get_digits (gdisp->gimage);
-      unit_str    = gimp_image_unit_get_abbreviation (gdisp->gimage);
 
       g_snprintf (buf, sizeof (buf), "%d", (gint) tx);
       gtk_label_set_text (GTK_LABEL (iwd->pixel_labels[0]), buf);
@@ -394,11 +392,11 @@ info_window_update_extended (GimpDisplay *gdisp,
 		  "%%.%df %s", unit_digits, unit_str);
 
       g_snprintf (buf, sizeof (buf), format_buf,
-		  tx * unit_factor / gdisp->gimage->xresolution);
+		  tx * unit_factor / image->xresolution);
       gtk_label_set_text (GTK_LABEL (iwd->unit_labels[0]), buf);
 
       g_snprintf (buf, sizeof (buf), format_buf,
-		  ty * unit_factor / gdisp->gimage->yresolution);
+		  ty * unit_factor / image->yresolution);
       gtk_label_set_text (GTK_LABEL (iwd->unit_labels[1]), buf);
 
     }
@@ -457,9 +455,10 @@ void
 info_window_update (GimpDisplay *gdisp)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-  GimpImage        *gimage;
+  GimpImage        *image;
   InfoWinData      *iwd;
   gint              type;
+  GimpUnit          unit;
   gdouble           unit_factor;
   gint              unit_digits;
   GimpUnit          res_unit;
@@ -486,30 +485,31 @@ info_window_update (GimpDisplay *gdisp)
   if (info_window_auto && iwd->gdisp != gdisp)
     return;
 
-  gimage = gdisp->gimage;
+  image = gdisp->gimage;
+  unit  = GIMP_DISPLAY_SHELL (gdisp->shell)->unit;
+
+  unit_factor = _gimp_unit_get_factor (image->gimp, unit);
+  unit_digits = _gimp_unit_get_digits (image->gimp, unit);
 
   /*  width and height  */
-  unit_factor = gimp_image_unit_get_factor (gimage);
-  unit_digits = gimp_image_unit_get_digits (gimage);
-
   g_snprintf (iwd->dimensions_str, MAX_BUF, _("%d x %d pixels"),
-	      gimage->width, gimage->height);
+	      image->width, image->height);
   g_snprintf (format_buf, sizeof (format_buf), "%%.%df x %%.%df %s",
 	      unit_digits + 1, unit_digits + 1,
-              gimp_image_unit_get_plural (gimage));
+              _gimp_unit_get_plural (image->gimp, unit));
   g_snprintf (iwd->real_dimensions_str, MAX_BUF, format_buf,
-	      gimage->width  * unit_factor / gimage->xresolution,
-	      gimage->height * unit_factor / gimage->yresolution);
+	      image->width  * unit_factor / image->xresolution,
+	      image->height * unit_factor / image->yresolution);
 
   /*  image resolution  */
-  res_unit = gimage->gimp->config->default_image->resolution_unit;
-  res_unit_factor = _gimp_unit_get_factor (gimage->gimp, res_unit);
+  res_unit = image->gimp->config->default_image->resolution_unit;
+  res_unit_factor = _gimp_unit_get_factor (image->gimp, res_unit);
 
   g_snprintf (format_buf, sizeof (format_buf), _("pixels/%s"),
-              _gimp_unit_get_abbreviation (gimage->gimp, res_unit));
+              _gimp_unit_get_abbreviation (image->gimp, res_unit));
   g_snprintf (iwd->resolution_str, MAX_BUF, _("%g x %g %s"),
-	      gimage->xresolution / res_unit_factor,
-	      gimage->yresolution / res_unit_factor,
+	      image->xresolution / res_unit_factor,
+	      image->yresolution / res_unit_factor,
               res_unit == GIMP_UNIT_INCH ? _("dpi") : format_buf);
 
   /*  user zoom ratio  */
@@ -517,11 +517,11 @@ info_window_update (GimpDisplay *gdisp)
 
   /*  number of layers  */
   g_snprintf (iwd->num_layers_str, MAX_BUF, "%d",
-              gimp_container_num_children (gimage->layers));
+              gimp_container_num_children (image->layers));
 
   /*  size in memory  */
   {
-    GimpObject *object = GIMP_OBJECT (gimage);
+    GimpObject *object = GIMP_OBJECT (image);
     gchar      *str;
 
     str = gimp_memsize_to_string (gimp_object_get_memsize (object, NULL));
@@ -531,7 +531,7 @@ info_window_update (GimpDisplay *gdisp)
     g_free (str);
   }
 
-  type = gimp_image_base_type (gimage);
+  type = gimp_image_base_type (image);
 
   /*  color type  */
   switch (type)
@@ -544,16 +544,13 @@ info_window_update (GimpDisplay *gdisp)
       break;
     case GIMP_INDEXED:
       g_snprintf (iwd->color_type_str, MAX_BUF, "%s (%d %s)",
-                  _("Indexed Color"), gimage->num_cols, _("colors"));
+                  _("Indexed Color"), image->num_cols, _("colors"));
       break;
     }
 
   {
-    GdkScreen *screen;
-    GdkVisual *visual;
-
-    screen = gtk_widget_get_screen (GTK_WIDGET (shell));
-    visual = gdk_screen_get_rgb_visual (screen);
+    GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (shell));
+    GdkVisual *visual = gdk_screen_get_rgb_visual (screen);
 
     /*  visual class  */
     g_snprintf (iwd->visual_class_str, MAX_BUF, "%s",

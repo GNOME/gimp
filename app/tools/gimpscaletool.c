@@ -221,10 +221,7 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
                                    tr_tool);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
-                            gdisp->gimage->unit);
-
-  if (GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot)
-    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), GIMP_UNIT_PIXEL);
+                            GIMP_DISPLAY_SHELL (gdisp->shell)->unit);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
                                   gdisp->gimage->xresolution, FALSE);

@@ -1,3 +1,51 @@
+2004-06-01  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb
+	* app/pdb/image_cmds.c
+	* app/core/gimpimage.[ch]: reverted changes I did to the image
+	unit earlier. As in 2.0, it will continue to not accept pixels.
+	This makes the PDB API and the XCF format compatible again and
+	fixes bug #142961 (and to some extent bug #137704).
+ 
+	* app/core/Makefile.am
+	* app/core/gimpimage-unit.[ch]: removed these files. The
+	convenience accessors defined here aren't commonly used any
+	longer.
+
+	* app/display/gimpdisplay.[ch]
+	* app/display/gimpdisplayshell.[ch]: added a unit parameter to
+	gimp_display_new(). Made "unit" and "scale" properties of
+	GimpDisplayShell.
+
+	* app/actions/image-commands.c
+	* app/actions/images-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/select-commands.c
+	* app/actions/view-commands.c
+	* app/core/gimp-edit.c
+	* app/core/gimp.[ch]
+	* app/core/gimptemplate.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-title.c
+	* app/display/gimpstatusbar.c
+	* app/file/file-open.c
+	* app/gui/gui-vtable.c
+	* app/gui/info-window.c
+	* app/gui/offset-dialog.c
+	* app/gui/resize-dialog.[ch]
+	* app/pdb/display_cmds.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/vectors/gimpvectors-export.c
+	* app/widgets/gimptoolbox-dnd.c
+	* tools/pdbgen/pdb/display.pdb: changed accordingly. Use the
+	display unit where the image unit was used before.
+
 2004-06-01  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/gradient_edit.pdb: use enums instead of

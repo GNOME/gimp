@@ -3831,7 +3831,7 @@ image_set_unit_invoker (Gimp        *gimp,
     success = FALSE;
 
   unit = args[1].value.pdb_int;
-  if (unit < GIMP_UNIT_PIXEL || unit >= _gimp_unit_get_number_of_units (gimp))
+  if (unit < GIMP_UNIT_INCH || unit >= _gimp_unit_get_number_of_units (gimp))
     success = FALSE;
 
   if (success)

@@ -147,7 +147,7 @@ offset_dialog_new (GimpDrawable *drawable,
                                      1, 2);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
 
-  off_d->off_se = gimp_size_entry_new (1, off_d->gimage->unit, "%a",
+  off_d->off_se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
 				       TRUE, TRUE, FALSE, 10,
 				       GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
