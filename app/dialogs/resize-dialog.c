@@ -485,9 +485,9 @@ resize_widget_new (GimpViewable *viewable,
       gtk_widget_show (spinbutton);
 
       gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (private->offset_se),
-				    _("X:"), 0, 0, 1.0);
+				    _("_X:"), 0, 0, 1.0);
       gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (private->offset_se),
-				    _("Y:"), 1, 0, 1.0);
+				    _("_Y:"), 1, 0, 1.0);
       gtk_box_pack_start (GTK_BOX (vbox), private->offset_se, FALSE, FALSE, 0);
       gtk_widget_show (private->offset_se);
 
@@ -512,7 +512,7 @@ resize_widget_new (GimpViewable *viewable,
 			G_CALLBACK (offset_update),
 			resize);
 
-      button = gtk_button_new_with_label (_("Center"));
+      button = gtk_button_new_with_mnemonic (_("C_enter"));
       gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 4, 0);
       gtk_table_attach_defaults (GTK_TABLE (private->offset_se), button,
                                  4, 5, 1, 2);
