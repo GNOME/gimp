@@ -28,17 +28,16 @@
 \part{Introduction}
 
 The {\bf G}NU\footnote{Please see \url http://www.gnu.org \endurl for
-information 
-on the \gnu\ Project.} {\bf I}mage {\bf M}anipulation {\bf P}rogram
-(\gimp) is a powerful tool for the preparation and manipulation of
-digital images.  The \gimp\ provides the user with a wide variety of
-image manipulation, painting, processing, and rendering tools.  The
-key to the \gimp's power lies in its flexible core and easily
-extensible design.  The \gimp's open design and extensible
-architecture make for a very powerful end product which can continue
-to be extended to meet the needs of the photo compositor, image
-retoucher, web graphics designer, or digital illustrator for a very
-long time.
+information on the \gnu\ Project.} {\bf I}mage {\bf M}anipulation {\bf
+P}rogram (\gimp) is a powerful tool for the preparation and
+manipulation of digital images.  The \gimp\ provides the user with a
+wide variety of image manipulation, painting, processing, and
+rendering tools.  The key to the \gimp's power lies in its flexible
+core and easily extensible design.  The \gimp's open design and
+extensible architecture make for a very powerful end product which can
+continue to be extended to meet the needs of the photo compositor,
+image retoucher, web graphics designer, or digital illustrator for a
+very long time.
 
 The \gimp's extensible plug-in architecture allows for image
 manipulation procedures and other functionality to be easily added
@@ -78,11 +77,10 @@ time.
 Finally, the most impressive feature of the \gimp\ is that it is
 available under the terms of the GNU General Public License
 (\gpl).\footnote{Please see \url http://www.gnu.org/copyleft/gpl.html
-\endurl for the full text of
-the \gpl.}  The entire source code is freely available and
-distributed.  This openness has fostered a very active development
-community and large user base, out of which a superior product has
-arisen.
+\endurl for the full text of the \gpl.}  The entire source code is
+freely available and distributed.  This openness has fostered a very
+active development community and large user base, out of which a
+superior product has arisen.
 
 \part{Core architecture}
 
@@ -116,10 +114,10 @@ image must be compatible with the image type.
 
 A {\it drawable} is a planar array of pixel data; however, the
 contents of a drawable need not necessarily be used solely for
-rendering as pixel data.  Each drawable contains from one to four
-data channels (not to be confused with the channels spoken of
-elsewhere in this document), depending on the type of the drawable.
-Each data channel is one byte deep.
+rendering as pixel data.  Each drawable contains from one to four data
+channels (not to be confused with the channels spoken of elsewhere in
+this document), depending on the type of the drawable.  Each data
+channel is one byte deep.
 
 There are six types of drawables (see table \ref{tab:drawables}).
 
@@ -158,14 +156,14 @@ three cases, a channel consists of a rectangular array of byte values;
 the interpretation of these values varies depending on the type of
 channel.
 
-In addition to these channel types, each image also has either
-one or three ``virtual'' channels (three for RGB images, one for
-grayscale and indexed).  This/these are merely the pixel array
-resulting from the layer composition process, and is made available to
-support the ``sample merged'' functionality in some of the tools.
-Also, with RGB images, it is possible to deselect one or more of the
-red, green or blue channels; doing so will cause that portion of the
-colorspace to be excluded from the composition process.
+In addition to these channel types, each image also has either one or
+three ``virtual'' channels (three for RGB images, one for grayscale
+and indexed).  This/these are merely the pixel array resulting from
+the layer composition process, and is made available to support the
+``sample merged'' functionality in some of the tools.  Also, with RGB
+images, it is possible to deselect one or more of the red, green or
+blue channels; doing so will cause that portion of the colorspace to
+be excluded from the composition process.
 
 \section{Tiles}
 
@@ -244,6 +242,7 @@ artifacting.
 The \gimp\ core consists of 215\footnote{In version 0.99.16.  This
 number tends to go up with time.} procedures which operate on images
 in a great variety of ways.
+
 \FIXME{General overview}
 
 
