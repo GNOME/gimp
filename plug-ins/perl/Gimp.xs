@@ -281,3 +281,26 @@ convert_15_24_inplace (datasv)
 	OUTPUT:
         datasv
 
+void
+convert_bgr_rgb_inplace (datasv)
+	SV *	datasv
+        CODE:
+        char *data, *end;
+
+        data = SvPV_nolen (datasv);
+        end = SvEND (datasv);
+
+        while (data < end)
+          {
+            char x = data[0];
+
+            data[0] = data[2];
+            data[2] = x;
+
+            data += 3;
+          }
+
+	OUTPUT:
+        datasv
+
+

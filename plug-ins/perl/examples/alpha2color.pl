@@ -1,63 +1,114 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<HTML>
+#!/usr/bin/perl
 
-<!--
+use Gimp qw( :auto );
+use Gimp::Fu;
 
-Available WWWOFFLE Variables (all with a '$' prefix).
+# alpha2color.pl
+# by Seth Burgess <sjburges@gimp.org>
+# Version 0.02
+# Oct 16th, 1998
+#
+# This script simply changes the current alpha channel to a given color
+# instead.  I'm writing it primarily for use with the displace plugin, 
+# but I imagine it'll have other uses.
 
-localhost = The hostname of the server running wwwoffled (='localhost:8080').
-url       = The URL that was asked for (='http://www.gimp.org/%7Esjburges/alpha2color.pl').
-already   = A flag to indicate that the page is already cached (='').
-password  = A one-time password to allow cancellation of the page (='0U3T7nn1gRTCe8Y3QkMQOg').
+# TODO: Selection is currently ignored.  It'd be better if it remembered
+#       what the previous selection was.
+#       Also, it needs to find a happier home than in the Filters/Misc menu.
 
--->
+# Gimp::set_trace(TRACE_ALL);
 
-<HEAD>
-<TITLE>WWWOFFLE - Will Get http://www.gimp.org/%7Esjburges/alpha2color.pl</TITLE>
-</HEAD>
+# Revision History
+# v0.02 - fixed up @color (should be $color) and undef; (should be return();)
 
-<BODY>
+sub save_layers_state ($)  {
+	$img = shift;
+	my @layers = $img->get_layers;
+	$i = 0;
+	foreach $lay (@layers) {
+		if ($lay->get_visible){
+			$arr[$i] = 1;
+			}
+		else {
+			$arr[$i] = 0;
+			}
+		$i++;
+		}
+	return @arr;
+	}
 
-<!-- Standard WWWOFFLE Message Page Top Banner -->
+sub restore_layers_state($@) {
+	$img = shift;
+	@arr = @_;
+	my @layers = $img->get_layers;
+	$i = 0;
+	foreach $lay (@layers) {
+		$lay->set_visible($arr[$i]);
+		$i++;
+		}
+	}
+	
+				
 
-<p align=center>
-<b>WWWOFFLE</b> - <b>W</b>orld <b>W</b>ide <b>W</b>eb <b>Offl</b>ine <b>E</b>xplorer
-</p>
+sub alpha2col {
+	my ($img, $drawable, $color) = @_;
 
-<hr>
+	my $oldcolor = gimp_palette_get_background();
 
-<!-- Standard WWWOFFLE Message Page Top Banner -->
+	my @layers = gimp_image_get_layers($img);
 
-<H1 align=center>WWWOFFLE Request Recorded</H1>
+# if there's not enough layers, abort.	
+	if ($#layers < 0) {
+		gimp_message("You need at least 1 layer to perform alpha2color!");
+		print "Only ", scalar(@layers), " layers found!(", $layers[0],")\n";
+		return 0;
+		}
 
-<p align=center>
-Your request for URL
-<br>
-<b><tt>http://www.gimp.org/%7Esjburges/alpha2color.pl</tt></b>
-<br>
-has been recorded for download.
-</p>
+# Hide the bottom layer, so it doesn't get into the merge visible later.
 
-<!--
+	@layer_visibilities = save_layers_state ($img);
+	# foreach $visible (@layer_visibilities) {
+		# print $visible, "\n";
+	#	}
+	$target_layer = gimp_image_get_active_layer($img);
+	@offsets=$target_layer->offsets;
+	# print $target_layer, "\n";
+	foreach $eachlay (@layers) {
+		$eachlay->set_visible(0);
+		}		
+	$target_layer->set_visible(1);
+	gimp_palette_set_background($color);
+	$newlay = $target_layer->copy(1);
+	$img->add_layer($newlay, 0);	
+	$newlay->set_offsets(@offsets);
+	$target_layer->set_active_layer;
 
-Useful WWWOFFLE Buttons
+	$img->selection_all;
+	$target_layer->edit_fill;
+	$img->selection_none;
 
--->
+	$foreground = gimp_image_merge_visible_layers($img,0);
+	
+	restore_layers_state($img, @layer_visibilities);	
+	
+	gimp_palette_set_background($oldcolor);
+	gimp_displays_flush();
+	return();
+	}
 
-<p align=center>
-[<a href="http://localhost:8080/control/delete-req/password=0U3T7nn1gRTCe8Y3QkMQOg?http://www.gimp.org/%7Esjburges/alpha2color.pl">Cancel</a>|Refresh:<a href="http://localhost:8080/refresh-options/?http://www.gimp.org/%7Esjburges/alpha2color.pl">Options</a>|<a href="http://localhost:8080/monitor-options/?http://www.gimp.org/%7Esjburges/alpha2color.pl">Monitor</a>|<a href="http://localhost:8080/index/url/?http://www.gimp.org/%7Esjburges/alpha2color.pl">Index</a>]
-</p>
+register
+	"plug_in_alpha2color",
+	"Alpha 2 Color",
+	"Change the current alpha to a selected color.",
+	"Seth Burgess",
+	"Seth Burgess<sjburges\@gimp.org>",
+	"2-15-98",
+	"<Image>/Image/Colors/Alpha2Color",
+	"RGBA",
+	[
+	 [PF_COLOR, "color", "Color for current alpha", [127,127,127]]
+	],
+	\&alpha2col;
 
-<!-- Standard WWWOFFLE Message Page Bottom Buttons -->
+exit main;	
 
-<hr>
-
-<p align=center>
-WWWOFFLE - [<a href="http://localhost:8080/Welcome.html">Welcome Page</a>|<a href="http://localhost:8080/FAQ.html">FAQ</a>] - WWWOFFLE
-</p>
-
-<!-- Standard WWWOFFLE Message Page Bottom Buttons -->
-
-</BODY>
-
-</HTML>

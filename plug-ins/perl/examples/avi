@@ -29,7 +29,7 @@ register "file_avi_save",
          "Saves images in the 24 bit uncompressed AVI format used by windows software",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
-         "1999-10-26",
+         "1999-11-08",
          "<Save>/AVI",
          "RGB",
          [
@@ -122,6 +122,7 @@ register "file_avi_save",
             my $d = $r->get_rect2(0,0,$width,$height);
             Gimp::RAW::convert_32_24_inplace $d if $r->bpp == 4;
             Gimp::RAW::reverse_v_inplace $d, $width*3;
+            Gimp::RAW::convert_bgr_rgb_inplace $d if $depth == 24;
             Gimp::RAW::convert_24_15_inplace $d if $depth == 16;
 
             $idx1 .= "00db" . pack "V*", 16, tell FILE, $framesize if $index;
@@ -177,10 +178,10 @@ sub skip_hunk {
 
 register "file_avi_load",
          "load uncompressed avi movie",
-         "Loads images that were saved in 24 bit uncompressed RGB AVI format used mainly by windows",
+         "Loads images that were saved in 15/24 bit uncompressed RGB AVI format used mainly by windows",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
-         "1999-09-14",
+         "1999-11-08",
          "<Load>/AVI",
          undef,
          [],
@@ -248,6 +249,7 @@ register "file_avi_load",
                                        100,NORMAL_MODE);
 
          Gimp::RAW::convert_15_24_inplace $comment if $depth == 16;
+         Gimp::RAW::convert_bgr_rgb_inplace $comment if $depth == 24;
          Gimp::RAW::reverse_v_inplace $comment,$width*3;
          (new PixelRgn $layer,0,0,$width,$height,1,0)->set_rect2($comment,0,0);
          $layer->add_layer(0);
@@ -257,8 +259,12 @@ register "file_avi_load",
       "00dc" => sub { die "compressed data not handled\n" },
       "01wb" => \&skip_hunk,  # audio data
       "idx1" => \&skip_hunk,  # hunk index
+      "ISFT" => \&skip_hunk,  # i? software?
+      "ICOP" => \&skip_hunk,  # i? copyright?
+      "IDIT" => \&skip_hunk,  # i? time stamp??
       sub {
          warn "skipping hunk (@_), please report!\n";
+         skip_hunk $_[1];
       }
    );
 

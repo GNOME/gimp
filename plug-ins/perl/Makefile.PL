@@ -5,7 +5,7 @@ use Config;
 $|=1;
 
 @examples =
-   qw(windy.pl prep4gif.pl webify.pl PDB tex-to-float ditherize.pl
+   qw(windify.pl prep4gif.pl webify.pl PDB tex-to-float ditherize.pl
       border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl parasite-editor
       scratches.pl blowinout.pl terral_text xachvision.pl perlcc gouge
       sethspin.pl animate_cells image_tile yinyang stamps font_table

@@ -102,7 +102,6 @@ examples/goldenmean
 examples/triangle
 examples/billboard
 examples/mirrorsplit
-examples/oneliners
 examples/randomart1
 examples/colourtoalpha
 examples/pixelmap
