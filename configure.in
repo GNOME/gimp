@@ -562,10 +562,7 @@ if test "x$enable_perl" != xno; then
       dnl we ignore prefix
       cat >plug-ins/perl/config.status <<EOF
       echo invoking perl for configuration...
-      for i in ". embed"; do
-         cd $i
-         $PERL Makefile.PL --writemakefile
-      done
+      $PERL Makefile.PL --writemakefile
 EOF
       GIMP_PERL=perl
    else

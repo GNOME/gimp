@@ -1,3 +1,8 @@
+Mon May 10 18:28:11 CEST 1999 Marc Lehmann <pcg@goof.com>
+
+        * configure.in: undo the part of patch "Tue May 4 15:51:16 PDT
+        1999" which broke gimp-perl configuration completely.
+
 Mon May 10 18:59:58 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* modules/colorsel_water.c: finally fixed my prob all by myself :)
