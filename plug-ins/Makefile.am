@@ -58,7 +58,8 @@ SUBDIRS = 			\
 	$(WEBBROWSER)		\
 	$(XJT)			\
 	plugin-helper		\
-	common
+	common			\
+	tools
 
 ##	gap			\
 ##	gdyntext		\

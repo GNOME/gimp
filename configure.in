@@ -885,6 +885,8 @@ plug-ins/rcm/Makefile
 plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile
 plug-ins/plugin-helper/Makefile
+plug-ins/tools/Makefile
+plug-ins/tools/common/Makefile
 modules/Makefile
 modules/makefile.mingw
 devel-docs/Makefile
