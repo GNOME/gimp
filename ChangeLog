@@ -1,5 +1,10 @@
 2004-07-23  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimppixbuf.c (gimp_pixbuf_from_data): added missing code
+	for grayscale previews.
+
+2004-07-23  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpgradient-load.c (svg_parser_end_element): fixed
 	handling of the last gradient segment and did some code cleanup.
 
