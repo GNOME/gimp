@@ -53,14 +53,14 @@ typedef struct
 typedef struct
 {
   LightType  type;
-  GckVector3 position;
-  GckVector3 direction;
+  GimpVector3 position;
+  GimpVector3 direction;
   GckRGB     color;
   gdouble    intensity;
 } LightSettings;
 
 typedef struct {
-  GckVector3    viewpoint,firstaxis,secondaxis,normal,position,scale;
+  GimpVector3    viewpoint,firstaxis,secondaxis,normal,position,scale;
   LightSettings lightsource;
 
   MaterialSettings material;

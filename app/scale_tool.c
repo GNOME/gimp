@@ -189,7 +189,7 @@ tools_new_scale_tool (void)
   private->trans_info[Y1] = 0.0;
 
   /*  assemble the transformation matrix  */
-  gimp_matrix_identity (private->transform);
+  gimp_matrix3_identity (private->transform);
 
   return tool;
 }
@@ -475,10 +475,11 @@ scale_tool_recalc (Tool *tool,
     }
 
   /*  assemble the transformation matrix  */
-  gimp_matrix_identity  (transform_core->transform);
-  gimp_matrix_translate (transform_core->transform, (double) -cx + diffx, (double) -cy + diffy);
-  gimp_matrix_scale     (transform_core->transform, scalex, scaley);
-  gimp_matrix_translate (transform_core->transform, (double) cx, (double) cy);
+  gimp_matrix3_identity  (transform_core->transform);
+  gimp_matrix3_translate (transform_core->transform,
+			  (double) -cx + diffx, (double) -cy + diffy);
+  gimp_matrix3_scale     (transform_core->transform, scalex, scaley);
+  gimp_matrix3_translate (transform_core->transform, (double) cx, (double) cy);
 
   /*  transform the bounding box  */
   transform_core_transform_bounding_box (tool);
@@ -494,7 +495,7 @@ scale_tool_scale (GImage       *gimage,
 		  gdouble      *trans_info,
 		  TileManager  *float_tiles,
 		  gboolean      interpolation,
-		  GimpMatrix    matrix)
+		  GimpMatrix3   matrix)
 {
   gimp_progress *progress;
   TileManager   *ret;

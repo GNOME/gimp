@@ -17,16 +17,14 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include <glib.h>
-#include <math.h>
-#include <string.h>
+#include "gimpmath.h"
 #include "gimpmatrix.h"
 
 #define EPSILON 1e-6
 
 
 /**
- * gimp_matrix_transform_point:
+ * gimp_matrix3_transform_point:
  * @matrix: The transformation matrix.
  * @x: The source X coordinate.
  * @y: The source Y coordinate.
@@ -36,11 +34,11 @@
  * Transforms a point in 2D as specified by the transformation matrix.
  */
 void
-gimp_matrix_transform_point (GimpMatrix  matrix, 
-			     gdouble     x, 
-			     gdouble     y,
-			     gdouble    *newx, 
-			     gdouble    *newy)
+gimp_matrix3_transform_point (GimpMatrix3  matrix, 
+			      gdouble      x, 
+			      gdouble      y,
+			      gdouble     *newx, 
+			      gdouble     *newy)
 {
   gdouble w;
 
@@ -56,18 +54,18 @@ gimp_matrix_transform_point (GimpMatrix  matrix,
 }
 
 /**
- * gimp_matrix_mult:
+ * gimp_matrix3_mult:
  * @matrix1: The first input matrix.
  * @matrix2: The second input matrix which will be oeverwritten ba the result.
  * 
  * Multiplies two matrices and puts the result into the second one.
  */
 void
-gimp_matrix_mult (GimpMatrix matrix1, 
-		  GimpMatrix matrix2)
+gimp_matrix3_mult (GimpMatrix3 matrix1, 
+		   GimpMatrix3 matrix2)
 {
   gint i, j;
-  GimpMatrix tmp;
+  GimpMatrix3 tmp;
   gdouble t1, t2, t3;
 
   for (i = 0; i < 3; i++)
@@ -84,27 +82,27 @@ gimp_matrix_mult (GimpMatrix matrix1,
     }
 
   /*  put the results in matrix2 */
-  memcpy (&matrix2[0][0], &tmp[0][0], sizeof(GimpMatrix));
+  memcpy (&matrix2[0][0], &tmp[0][0], sizeof (GimpMatrix3));
 }
 
 /**
- * gimp_matrix_identity:
+ * gimp_matrix3_identity:
  * @matrix: A matrix.
  * 
  * Sets the matrix to the identity matrix.
  */
 void
-gimp_matrix_identity (GimpMatrix matrix)
+gimp_matrix3_identity (GimpMatrix3 matrix)
 {
-  static GimpMatrix identity = { {1.0, 0.0, 0.0},
-				 {0.0, 1.0, 0.0},
-				 {0.0, 0.0, 1.0} };
+  static GimpMatrix3 identity = { { 1.0, 0.0, 0.0 },
+				  { 0.0, 1.0, 0.0 },
+				  { 0.0, 0.0, 1.0 } };
 
-  memcpy (&matrix[0][0], &identity[0][0], sizeof(GimpMatrix));
+  memcpy (&matrix[0][0], &identity[0][0], sizeof (GimpMatrix3));
 }
 
 /**
- * gimp_matrix_translate:
+ * gimp_matrix3_translate:
  * @matrix: The matrix that is to be translated.
  * @x: Translation in X direction.
  * @y: Translation in Y direction.
@@ -112,9 +110,9 @@ gimp_matrix_identity (GimpMatrix matrix)
  * Translates the matrix by x and y.
  */
 void
-gimp_matrix_translate (GimpMatrix matrix, 
-		       gdouble    x, 
-		       gdouble    y)
+gimp_matrix3_translate (GimpMatrix3 matrix, 
+			gdouble     x, 
+			gdouble     y)
 {
   gdouble g, h, i;
 
@@ -122,16 +120,16 @@ gimp_matrix_translate (GimpMatrix matrix,
   h = matrix[2][1];
   i = matrix[2][2];
 
-  matrix[0][0] += x*g;
-  matrix[0][1] += x*h;
-  matrix[0][2] += x*i;
-  matrix[1][0] += y*g;
-  matrix[1][1] += y*h;
-  matrix[1][2] += y*i;
+  matrix[0][0] += x * g;
+  matrix[0][1] += x * h;
+  matrix[0][2] += x * i;
+  matrix[1][0] += y * g;
+  matrix[1][1] += y * h;
+  matrix[1][2] += y * i;
 }
 
 /**
- * gimp_matrix_scale:
+ * gimp_matrix3_scale:
  * @matrix: The matrix that is to be scaled.
  * @x: X scale factor.
  * @y: Y scale factor.
@@ -139,9 +137,9 @@ gimp_matrix_translate (GimpMatrix matrix,
  * Scales the matrix by x and y 
  */
 void
-gimp_matrix_scale (GimpMatrix matrix, 
-		   gdouble    x, 
-		   gdouble    y)
+gimp_matrix3_scale (GimpMatrix3 matrix, 
+		    gdouble     x, 
+		    gdouble     y)
 {
   matrix[0][0] *= x;
   matrix[0][1] *= x;
@@ -153,30 +151,30 @@ gimp_matrix_scale (GimpMatrix matrix,
 }
 
 /**
- * gimp_matrix_rotate:
+ * gimp_matrix3_rotate:
  * @matrix: The matrix that is to be rotated.
  * @theta: The angle of rotation (in radians).
  * 
  * Rotates the matrix by theta degrees.
  */
 void
-gimp_matrix_rotate (GimpMatrix matrix, 
-		    gdouble theta)
+gimp_matrix3_rotate (GimpMatrix3 matrix, 
+		     gdouble     theta)
 {
   gdouble t1, t2;
   gdouble cost, sint;
 
-  cost = cos(theta);
-  sint = sin(theta);
+  cost = cos (theta);
+  sint = sin (theta);
   
   t1 = matrix[0][0];
   t2 = matrix[1][0];
-  matrix[0][0] = cost*t1 - sint*t2;
-  matrix[1][0] = sint*t1 + cost*t2;
+  matrix[0][0] = cost * t1 - sint * t2;
+  matrix[1][0] = sint * t1 + cost * t2;
 
   t1 = matrix[0][1];
   t2 = matrix[1][1];
-  matrix[0][1] = cost*t1 - sint*t2;
+  matrix[0][1] = cost * t1 - sint * t2;
   matrix[1][1] = sint*t1 + cost*t2;
 
   t1 = matrix[0][2];
@@ -186,15 +184,15 @@ gimp_matrix_rotate (GimpMatrix matrix,
 }
 
 /**
- * gimp_matrix_xshear:
+ * gimp_matrix3_xshear:
  * @matrix: The matrix that is to be sheared.
  * @amount: X shear amount.
  * 
  * Shears the matrix in the X direction.
  */
 void
-gimp_matrix_xshear (GimpMatrix matrix, 
-		    gdouble    amount)
+gimp_matrix3_xshear (GimpMatrix3 matrix, 
+		     gdouble     amount)
 {
   matrix[0][0] += amount * matrix[1][0];
   matrix[0][1] += amount * matrix[1][1];
@@ -202,15 +200,15 @@ gimp_matrix_xshear (GimpMatrix matrix,
 }
 
 /**
- * gimp_matrix_yshear:
+ * gimp_matrix3_yshear:
  * @matrix: The matrix that is to be sheared.
  * @amount: Y shear amount.
  * 
  * Shears the matrix in the Y direction.
  */
 void
-gimp_matrix_yshear (GimpMatrix matrix, 
-		    gdouble    amount)
+gimp_matrix3_yshear (GimpMatrix3 matrix, 
+		     gdouble     amount)
 {
   matrix[1][0] += amount * matrix[0][0];
   matrix[1][1] += amount * matrix[0][1];
@@ -218,7 +216,7 @@ gimp_matrix_yshear (GimpMatrix matrix,
 }
 
 /**
- * gimp_matrix_determinant:
+ * gimp_matrix3_determinant:
  * @matrix: The input matrix. 
  * 
  * Calculates the determinant of the given matrix.
@@ -226,7 +224,7 @@ gimp_matrix_yshear (GimpMatrix matrix,
  * Returns: The determinant.
  */
 gdouble
-gimp_matrix_determinant (GimpMatrix matrix)
+gimp_matrix3_determinant (GimpMatrix3 matrix)
 {
   gdouble determinant;
 
@@ -241,19 +239,19 @@ gimp_matrix_determinant (GimpMatrix matrix)
 }
 
 /**
- * gimp_matrix_invert:
+ * gimp_matrix3_invert:
  * @matrix: The matrix that is to be inverted.
  * @matrix_inv: A matrix the inverted matrix should be written into. 
  * 
  * Inverts the given matrix.
  */
 void
-gimp_matrix_invert (GimpMatrix matrix, 
-		    GimpMatrix matrix_inv)
+gimp_matrix3_invert (GimpMatrix3 matrix, 
+		     GimpMatrix3 matrix_inv)
 {
   gdouble det_1;
 
-  det_1 = gimp_matrix_determinant (matrix);
+  det_1 = gimp_matrix3_determinant (matrix);
 
   if (det_1 == 0.0)
     return;
@@ -290,17 +288,17 @@ gimp_matrix_invert (GimpMatrix matrix,
 
 
 /**
- * gimp_matrix_duplicate:
+ * gimp_matrix3_duplicate:
  * @src: The source matrix.
  * @target: The destination matrix. 
  * 
  * Copies the source matrix to the destination matrix.
  */
 void
-gimp_matrix_duplicate (GimpMatrix src, 
-		       GimpMatrix target)
+gimp_matrix3_duplicate (GimpMatrix3 src, 
+			GimpMatrix3 target)
 {
-  memcpy (&target[0][0], &src[0][0], sizeof(GimpMatrix));
+  memcpy (&target[0][0], &src[0][0], sizeof (GimpMatrix3));
 }
 
 
@@ -308,7 +306,7 @@ gimp_matrix_duplicate (GimpMatrix src,
 
 
 /**
- * gimp_matrix_is_diagonal:
+ * gimp_matrix3_is_diagonal:
  * @matrix: The matrix that is to be tested.
  * 
  * Checks if the given matrix is diagonal.
@@ -316,7 +314,7 @@ gimp_matrix_duplicate (GimpMatrix src,
  * Returns: TRUE if the matrix is diagonal.
  */
 gboolean
-gimp_matrix_is_diagonal (GimpMatrix matrix)
+gimp_matrix3_is_diagonal (GimpMatrix3 matrix)
 {
   gint i, j;
 
@@ -333,7 +331,7 @@ gimp_matrix_is_diagonal (GimpMatrix matrix)
 }
 
 /**
- * gimp_matrix_is_identity:
+ * gimp_matrix3_is_identity:
  * @matrix: The matrix that is to be tested.
  * 
  * Checks if the given matrix is the identity matrix.
@@ -341,7 +339,7 @@ gimp_matrix_is_diagonal (GimpMatrix matrix)
  * Returns: TRUE if the matrix is the identity matrix.
  */
 gboolean
-gimp_matrix_is_identity (GimpMatrix matrix)
+gimp_matrix3_is_identity (GimpMatrix3 matrix)
 {
   gint i,j;
 
@@ -372,7 +370,7 @@ gimp_matrix_is_identity (GimpMatrix matrix)
 
 
 /**
- * gimp_matrix_is_simple:
+ * gimp_matrix3_is_simple:
  * @matrix: The matrix that is to be tested.
  * 
  * Checks if we'll need to interpolate when applying this matrix as
@@ -382,7 +380,7 @@ gimp_matrix_is_identity (GimpMatrix matrix)
  * 0 or 1
  */
 gboolean
-gimp_matrix_is_simple (GimpMatrix matrix)
+gimp_matrix3_is_simple (GimpMatrix3 matrix)
 {
   gdouble absm;
   gint i, j;
@@ -398,4 +396,15 @@ gimp_matrix_is_simple (GimpMatrix matrix)
     }
 
   return TRUE;
+}
+
+void
+gimp_matrix4_to_deg (GimpMatrix4  matrix,
+		     gdouble     *a,
+		     gdouble     *b,
+		     gdouble     *c)
+{
+  *a = 180 * (asin (matrix[1][0]) / G_PI_2);
+  *b = 180 * (asin (matrix[2][0]) / G_PI_2);
+  *c = 180 * (asin (matrix[2][1]) / G_PI_2);
 }

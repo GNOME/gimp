@@ -2112,7 +2112,7 @@ perspective_invoker (Argument *args)
   double cx, cy;
   double scalex, scaley;
   double trans_info[8];
-  GimpMatrix m, matrix;
+  GimpMatrix3 m, matrix;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
   if (drawable == NULL)
@@ -2161,10 +2161,10 @@ perspective_invoker (Argument *args)
 	scaley = 1.0 / float_tiles->height;
     
       /* Assemble the transformation matrix */
-      gimp_matrix_identity  (matrix);
-      gimp_matrix_translate (matrix, -cx, -cy);
-      gimp_matrix_scale     (matrix, scalex, scaley);
-      gimp_matrix_mult      (m, matrix);
+      gimp_matrix3_identity  (matrix);
+      gimp_matrix3_translate (matrix, -cx, -cy);
+      gimp_matrix3_scale     (matrix, scalex, scaley);
+      gimp_matrix3_mult      (m, matrix);
     
       /* Perspective the buffer */
       new_tiles = perspective_tool_perspective (gimage, drawable, NULL,
@@ -2391,7 +2391,7 @@ rotate_invoker (Argument *args)
   Layer *layer;
   gboolean new_layer;
   double cx, cy;
-  GimpMatrix matrix;
+  GimpMatrix3 matrix;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
   if (drawable == NULL)
@@ -2415,10 +2415,10 @@ rotate_invoker (Argument *args)
       cy = float_tiles->y + float_tiles->height / 2.0;
     
       /* Assemble the transformation matrix */
-      gimp_matrix_identity  (matrix);
-      gimp_matrix_translate (matrix, -cx, -cy);
-      gimp_matrix_rotate    (matrix, angle);
-      gimp_matrix_translate (matrix, +cx, +cy);
+      gimp_matrix3_identity  (matrix);
+      gimp_matrix3_translate (matrix, -cx, -cy);
+      gimp_matrix3_rotate    (matrix, angle);
+      gimp_matrix3_translate (matrix, +cx, +cy);
     
       /* Rotate the buffer */
       new_tiles = rotate_tool_rotate (gimage, drawable, NULL, angle,
@@ -2504,7 +2504,7 @@ scale_invoker (Argument *args)
   gboolean new_layer;
   double scalex, scaley;
   double trans_info[4];
-  GimpMatrix matrix;
+  GimpMatrix3 matrix;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
   if (drawable == NULL)
@@ -2542,10 +2542,10 @@ scale_invoker (Argument *args)
 		     (double) float_tiles->height;
     
 	  /* Assemble the transformation matrix */
-	  gimp_matrix_identity  (matrix);
-	  gimp_matrix_translate (matrix, float_tiles->x, float_tiles->y);
-	  gimp_matrix_scale     (matrix, scalex, scaley);
-	  gimp_matrix_translate (matrix, trans_info[X0], trans_info[Y0]);
+	  gimp_matrix3_identity  (matrix);
+	  gimp_matrix3_translate (matrix, float_tiles->x, float_tiles->y);
+	  gimp_matrix3_scale     (matrix, scalex, scaley);
+	  gimp_matrix3_translate (matrix, trans_info[X0], trans_info[Y0]);
     
 	  /* Scale the buffer */
 	  new_tiles = scale_tool_scale (gimage, drawable, NULL, trans_info,
@@ -2650,7 +2650,7 @@ shear_invoker (Argument *args)
   Layer *layer;
   gboolean new_layer;
   double cx, cy;
-  GimpMatrix matrix;
+  GimpMatrix3 matrix;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
   if (drawable == NULL)
@@ -2677,18 +2677,18 @@ shear_invoker (Argument *args)
       cx = float_tiles->x + float_tiles->width  / 2.0;
       cy = float_tiles->y + float_tiles->height / 2.0;
     
-      gimp_matrix_identity  (matrix);
-      gimp_matrix_translate (matrix, -cx, -cy);
+      gimp_matrix3_identity  (matrix);
+      gimp_matrix3_translate (matrix, -cx, -cy);
       /* Shear matrix */
       shear_type = shear_type == HORIZONTAL ? ORIENTATION_HORIZONTAL :
 		   shear_type == VERTICAL   ? ORIENTATION_VERTICAL   :
 		   ORIENTATION_UNKNOWN;
     
       if (shear_type == ORIENTATION_HORIZONTAL)
-	gimp_matrix_xshear (matrix, magnitude / float_tiles->height);
+	gimp_matrix3_xshear (matrix, magnitude / float_tiles->height);
       else if (shear_type == ORIENTATION_VERTICAL)
-	gimp_matrix_yshear (matrix, magnitude / float_tiles->width);
-      gimp_matrix_translate (matrix, +cx, +cy);
+	gimp_matrix3_yshear (matrix, magnitude / float_tiles->width);
+      gimp_matrix3_translate (matrix, +cx, +cy);
     
       /* Shear the buffer */
       new_tiles = shear_tool_shear (gimage, drawable, NULL, float_tiles,

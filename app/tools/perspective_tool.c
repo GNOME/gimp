@@ -125,7 +125,7 @@ tools_new_perspective_tool (void)
   private->trans_info[Y3] = 0;
 
   /*  assemble the transformation matrix  */
-  gimp_matrix_identity (private->transform);
+  gimp_matrix3_identity (private->transform);
 
   return tool;
 }
@@ -205,7 +205,7 @@ perspective_tool_recalc (Tool *tool,
 {
   TransformCore *transform_core;
   GDisplay      *gdisp;
-  GimpMatrix     m;
+  GimpMatrix3    m;
   gdouble        cx, cy;
   gdouble        scalex, scaley;
 
@@ -228,10 +228,10 @@ perspective_tool_recalc (Tool *tool,
     scaley = 1.0 / (transform_core->y2 - transform_core->y1);
 
   /*  assemble the transformation matrix  */
-  gimp_matrix_identity  (transform_core->transform);
-  gimp_matrix_translate (transform_core->transform, -cx, -cy);
-  gimp_matrix_scale     (transform_core->transform, scalex, scaley);
-  gimp_matrix_mult      (m, transform_core->transform);
+  gimp_matrix3_identity  (transform_core->transform);
+  gimp_matrix3_translate (transform_core->transform, -cx, -cy);
+  gimp_matrix3_scale     (transform_core->transform, scalex, scaley);
+  gimp_matrix3_mult      (m, transform_core->transform);
 
   /*  transform the bounding box  */
   transform_core_transform_bounding_box (tool);
@@ -241,8 +241,8 @@ perspective_tool_recalc (Tool *tool,
 }
 
 void
-perspective_find_transform (gdouble    *coords,
-			    GimpMatrix  matrix)
+perspective_find_transform (gdouble     *coords,
+			    GimpMatrix3  matrix)
 {
   gdouble dx1, dx2, dx3, dy1, dy2, dy3;
   gdouble det1, det2;
@@ -294,7 +294,7 @@ perspective_tool_perspective (GImage       *gimage,
 			      GDisplay     *gdisp,
 			      TileManager  *float_tiles,
 			      gboolean      interpolation,
-			      GimpMatrix    matrix)
+			      GimpMatrix3   matrix)
 {
   gimp_progress *progress;
   TileManager   *ret;

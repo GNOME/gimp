@@ -49,6 +49,8 @@ libgimpi_a_SOURCES = \
 	gimpsizeentry.h		\
 	gimpunitmenu.c		\
 	gimpunitmenu.h		\
+	gimpvector.c		\
+	gimpvector.h		\
 	gimpwidgets.c		\
 	gimpwidgets.h		\
 	gimpwire.c		\
@@ -95,6 +97,8 @@ libgimp_la_SOURCES = \
 	gimptile.c		\
 	gimpunit.c		\
 	gimpunit.h		\
+	gimpvector.c		\
+	gimpvector.h		\
 	gimpwire.c		\
 	gimpwire.h		\
 	gserialize.c		\
@@ -151,6 +155,7 @@ gimpinclude_HEADERS = \
 	gimpui.h		\
 	gimpunit.h              \
 	gimpunitmenu.h          \
+	gimpvector.h		\
 	gimpwidgets.h		\
 	gimpintl.h		\
 	gserialize.h		\

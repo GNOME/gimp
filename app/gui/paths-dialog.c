@@ -2672,9 +2672,9 @@ paths_transform_xy (GimpImage *gimage,
 }
 
 void
-paths_transform_current_path (GimpImage  *gimage,
-			      GimpMatrix  transform,
-			      gboolean    forpreview)
+paths_transform_current_path (GimpImage   *gimage,
+			      GimpMatrix3  transform,
+			      gboolean     forpreview)
 {
   PATHIMAGELISTP plp;
   PATHP          p;
@@ -2715,10 +2715,10 @@ paths_transform_current_path (GimpImage  *gimage,
 	      
 	      /*       printf("[x,y] = [%g,%g]\n",ppoint->x, ppoint->y); */
 	      
-	      gimp_matrix_transform_point (transform,
-					   ppoint->x,
-					   ppoint->y,
-					   &newx,&newy);
+	      gimp_matrix3_transform_point (transform,
+					    ppoint->x,
+					    ppoint->y,
+					    &newx,&newy);
 	      
 	      /*       printf("->[x,y] = [%g,%g]\n", newx, newy); */
 	      
@@ -2754,9 +2754,9 @@ paths_transform_current_path (GimpImage  *gimage,
 }
 
 void
-paths_draw_current (GDisplay   *gdisp, 
-		    DrawCore   *core,
-		    GimpMatrix  transform)
+paths_draw_current (GDisplay    *gdisp, 
+		    DrawCore    *core,
+		    GimpMatrix3  transform)
 {
   PATHIMAGELISTP plp;
   PATHP          bzp;
@@ -2790,10 +2790,10 @@ paths_draw_current (GDisplay   *gdisp,
 	  
 	  /*       printf("[x,y] = [%g,%g]\n",ppoint->x, ppoint->y); */
 	  
-	  gimp_matrix_transform_point (transform,
-				       ppoint->x,
-				       ppoint->y,
-				       &newx,&newy);
+	  gimp_matrix3_transform_point (transform,
+					ppoint->x,
+					ppoint->y,
+					&newx,&newy);
 	  
 	  /*       printf("->[x,y] = [%g,%g]\n", newx, newy); */
 	  

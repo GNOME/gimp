@@ -10,12 +10,12 @@
 #include "lighting_main.h"
 #include "lighting_image.h"
 
-typedef GckRGB (*get_ray_func) (GckVector3 *);
+typedef GckRGB (*get_ray_func) (GimpVector3 *);
 
-extern GckRGB get_ray_color                 (GckVector3 *position);
-extern GckRGB get_ray_color_no_bilinear     (GckVector3 *position);
-extern GckRGB get_ray_color_ref             (GckVector3 *position);
-extern GckRGB get_ray_color_no_bilinear_ref (GckVector3 *position);
+extern GckRGB get_ray_color                 (GimpVector3 *position);
+extern GckRGB get_ray_color_no_bilinear     (GimpVector3 *position);
+extern GckRGB get_ray_color_ref             (GimpVector3 *position);
+extern GckRGB get_ray_color_no_bilinear_ref (GimpVector3 *position);
 
 extern void precompute_init    (gint w,gint h);
 extern void precompute_normals (gint x1,gint x2,gint y);

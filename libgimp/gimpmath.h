@@ -70,6 +70,9 @@ extern "C" {
 /* broken! -> #define CLAMP0255(a)  ((a & 0xFFFFFF00)? (~(a>>31)) : a) */
 #define CLAMP0255(a)  CLAMP(a,0,255)
 
+#define gimp_deg_to_rad(angle) ((angle) * (2.0 * G_PI) / 360.0)
+#define gimp_rad_to_deg(angle) ((angle) * 360.0 / (2.0 * G_PI))
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

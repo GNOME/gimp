@@ -22,27 +22,13 @@
 #ifndef __GCK_H__
 #define __GCK_H__
 
-#include <glib.h>
-#include <gdk/gdk.h>
 #include <gtk/gtk.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define g_function_enter(fname)
 #define g_function_leave(fname)
 
-#include <gck/gckcommon.h>
 #include <gck/gcktypes.h>
 #include <gck/gckcolor.h>
-#include <gck/gckmath.h>
-#include <gck/gckvector.h>
 #include <gck/gckui.h>
-#include <gck/gcklistbox.h>
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif
+#endif  /* __GCK_H__ */

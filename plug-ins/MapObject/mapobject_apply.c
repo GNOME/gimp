@@ -22,13 +22,13 @@ void init_compute(void)
         /* Rotate the equator/northpole axis */
         /* ================================= */
     
-        gck_vector3_set(&mapvals.firstaxis,0.0,0.0,-1.0);
-        gck_vector3_set(&mapvals.secondaxis,0.0,1.0,0.0);
+        gimp_vector3_set(&mapvals.firstaxis,0.0,0.0,-1.0);
+        gimp_vector3_set(&mapvals.secondaxis,0.0,1.0,0.0);
     
-        gck_vector3_rotate(&mapvals.firstaxis,gck_deg_to_rad(mapvals.alpha),
-                           gck_deg_to_rad(mapvals.beta),gck_deg_to_rad(mapvals.gamma));
-        gck_vector3_rotate(&mapvals.secondaxis,gck_deg_to_rad(mapvals.alpha),
-                           gck_deg_to_rad(mapvals.beta),gck_deg_to_rad(mapvals.gamma));
+        gimp_vector3_rotate(&mapvals.firstaxis,gimp_deg_to_rad(mapvals.alpha),
+                           gimp_deg_to_rad(mapvals.beta),gimp_deg_to_rad(mapvals.gamma));
+        gimp_vector3_rotate(&mapvals.secondaxis,gimp_deg_to_rad(mapvals.alpha),
+                           gimp_deg_to_rad(mapvals.beta),gimp_deg_to_rad(mapvals.gamma));
     
         /* Compute the 2D bounding box of the sphere spanned by the axis */
         /* ============================================================= */
@@ -44,19 +44,19 @@ void init_compute(void)
         /* Rotate the plane axis */
         /* ===================== */
     
-        gck_vector3_set(&mapvals.firstaxis, 1.0,0.0,0.0);
-        gck_vector3_set(&mapvals.secondaxis,0.0,1.0,0.0);
-        gck_vector3_set(&mapvals.normal,0.0,0.0,1.0);
+        gimp_vector3_set(&mapvals.firstaxis, 1.0,0.0,0.0);
+        gimp_vector3_set(&mapvals.secondaxis,0.0,1.0,0.0);
+        gimp_vector3_set(&mapvals.normal,0.0,0.0,1.0);
     
-        gck_vector3_rotate(&mapvals.firstaxis,gck_deg_to_rad(mapvals.alpha),
-                           gck_deg_to_rad(mapvals.beta),gck_deg_to_rad(mapvals.gamma));
-        gck_vector3_rotate(&mapvals.secondaxis,gck_deg_to_rad(mapvals.alpha),
-                           gck_deg_to_rad(mapvals.beta),gck_deg_to_rad(mapvals.gamma));
+        gimp_vector3_rotate(&mapvals.firstaxis,gimp_deg_to_rad(mapvals.alpha),
+                           gimp_deg_to_rad(mapvals.beta),gimp_deg_to_rad(mapvals.gamma));
+        gimp_vector3_rotate(&mapvals.secondaxis,gimp_deg_to_rad(mapvals.alpha),
+                           gimp_deg_to_rad(mapvals.beta),gimp_deg_to_rad(mapvals.gamma));
     
-        mapvals.normal=gck_vector3_cross_product(&mapvals.firstaxis,&mapvals.secondaxis);
+        mapvals.normal=gimp_vector3_cross_product(&mapvals.firstaxis,&mapvals.secondaxis);
     
         if (mapvals.normal.z<0.0)
-          gck_vector3_mul(&mapvals.normal,-1.0);
+          gimp_vector3_mul(&mapvals.normal,-1.0);
     
         /* Initialize intersection matrix */
         /* ============================== */
@@ -77,9 +77,9 @@ void init_compute(void)
 
         break;
       case MAP_BOX:
-        gck_vector3_set(&mapvals.firstaxis, 1.0,0.0,0.0);
-        gck_vector3_set(&mapvals.secondaxis,0.0,1.0,0.0);
-        gck_vector3_set(&mapvals.normal,0.0,0.0,1.0);
+        gimp_vector3_set(&mapvals.firstaxis, 1.0,0.0,0.0);
+        gimp_vector3_set(&mapvals.secondaxis,0.0,1.0,0.0);
+        gimp_vector3_set(&mapvals.normal,0.0,0.0,1.0);
 
         get_ray_color=get_ray_color_box;
         
@@ -117,9 +117,9 @@ void init_compute(void)
       case MAP_CYLINDER:
         get_ray_color=get_ray_color_cylinder;
 
-        gck_vector3_set(&mapvals.firstaxis, 1.0,0.0,0.0);
-        gck_vector3_set(&mapvals.secondaxis,0.0,1.0,0.0);
-        gck_vector3_set(&mapvals.normal,0.0,0.0,1.0);
+        gimp_vector3_set(&mapvals.firstaxis, 1.0,0.0,0.0);
+        gimp_vector3_set(&mapvals.secondaxis,0.0,1.0,0.0);
+        gimp_vector3_set(&mapvals.normal,0.0,0.0,1.0);
 
         ident_mat(rotmat);
         
@@ -159,7 +159,7 @@ void init_compute(void)
 
 void render(gdouble x,gdouble y,GckRGB *col)
 {
-  GckVector3 pos;
+  GimpVector3 pos;
   
   pos.x=x/(gdouble)width;
   pos.y=y/(gdouble)height;
@@ -183,7 +183,7 @@ void compute_image(void)
   gint xcount,ycount;
   GckRGB color;
   glong progress_counter=0;
-  GckVector3 p;
+  GimpVector3 p;
   gint32 new_image_id=-1,new_layer_id=-1;
 
   init_compute();

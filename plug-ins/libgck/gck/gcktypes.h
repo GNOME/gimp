@@ -194,21 +194,6 @@ typedef struct {
   GdkImage *buffer;
 } _GckBackBuffer;
 
-typedef struct
-{
-  double x,y;
-} GckVector2;
-
-typedef struct
-{
-  double x,y,z;
-} GckVector3;
-
-typedef struct
-{
-  double x,y,z,w;
-} GckVector4;
-
 #ifdef __cplusplus
 }
 #endif

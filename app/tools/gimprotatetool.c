@@ -202,7 +202,7 @@ tools_new_rotate_tool (void)
   private->trans_info[CENTER_Y]   = 0.0;
 
   /*  assemble the transformation matrix  */
-  gimp_matrix_identity (private->transform);
+  gimp_matrix3_identity (private->transform);
 
   return tool;
 }
@@ -364,11 +364,11 @@ rotate_tool_recalc (Tool *tool,
   cy = transform_core->cy;
 
   /*  assemble the transformation matrix  */
-  gimp_matrix_identity  (transform_core->transform);
-  gimp_matrix_translate (transform_core->transform, -cx, -cy);
-  gimp_matrix_rotate    (transform_core->transform,
-			 transform_core->trans_info[ANGLE]);
-  gimp_matrix_translate (transform_core->transform, +cx, +cy);
+  gimp_matrix3_identity  (transform_core->transform);
+  gimp_matrix3_translate (transform_core->transform, -cx, -cy);
+  gimp_matrix3_rotate    (transform_core->transform,
+			  transform_core->trans_info[ANGLE]);
+  gimp_matrix3_translate (transform_core->transform, +cx, +cy);
 
   /*  transform the bounding box  */
   transform_core_transform_bounding_box (tool);
@@ -384,7 +384,7 @@ rotate_tool_rotate (GImage       *gimage,
 		    gdouble       angle,
 		    TileManager  *float_tiles,
 		    gboolean      interpolation,
-		    GimpMatrix    matrix)
+		    GimpMatrix3   matrix)
 {
   gimp_progress *progress;
   TileManager   *ret;

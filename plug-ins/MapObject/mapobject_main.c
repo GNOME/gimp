@@ -44,14 +44,14 @@ void set_default_settings(void)
 {
   gint i;
 
-  gck_vector3_set(&mapvals.viewpoint,  0.5,0.5,2.0);
-  gck_vector3_set(&mapvals.firstaxis,  1.0,0.0,0.0);
-  gck_vector3_set(&mapvals.secondaxis, 0.0,1.0,0.0);
-  gck_vector3_set(&mapvals.normal,     0.0,0.0,1.0);
-  gck_vector3_set(&mapvals.position,   0.5,0.5,0.0);
-  gck_vector3_set(&mapvals.lightsource.position, -0.5,-0.5,2.0);
-  gck_vector3_set(&mapvals.lightsource.direction, -1.0,-1.0,1.0);
-  gck_vector3_set(&mapvals.scale, 0.5,0.5,0.5);
+  gimp_vector3_set(&mapvals.viewpoint,  0.5,0.5,2.0);
+  gimp_vector3_set(&mapvals.firstaxis,  1.0,0.0,0.0);
+  gimp_vector3_set(&mapvals.secondaxis, 0.0,1.0,0.0);
+  gimp_vector3_set(&mapvals.normal,     0.0,0.0,1.0);
+  gimp_vector3_set(&mapvals.position,   0.5,0.5,0.0);
+  gimp_vector3_set(&mapvals.lightsource.position, -0.5,-0.5,2.0);
+  gimp_vector3_set(&mapvals.lightsource.direction, -1.0,-1.0,1.0);
+  gimp_vector3_set(&mapvals.scale, 0.5,0.5,0.5);
 
   mapvals.maptype=MAP_PLANE;
 

@@ -114,9 +114,9 @@ gint check_bounds(gint x,gint y)
     return(TRUE);
 }
 
-GckVector3 int_to_pos(gint x,gint y)
+GimpVector3 int_to_pos(gint x,gint y)
 {
-  GckVector3 pos;
+  GimpVector3 pos;
 
   if (width>=height)
     {
@@ -137,9 +137,9 @@ GckVector3 int_to_pos(gint x,gint y)
   return(pos);
 }
 
-GckVector3 int_to_posf(gdouble x,gdouble y)
+GimpVector3 int_to_posf(gdouble x,gdouble y)
 {
-  GckVector3 pos;
+  GimpVector3 pos;
 
   if (width>=height)
     {

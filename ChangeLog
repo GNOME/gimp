@@ -1,5 +1,44 @@
 2000-02-14  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/libgck/gck/Makefile.am
+	* plug-ins/libgck/gck/gckcommon.h
+	* plug-ins/libgck/gck/gcklistbox.[ch]
+	* plug-ins/libgck/gck/gckmath.[ch]
+	* plug-ins/libgck/gck/gckvector.[ch]: removed.
+
+	* plug-ins/libgck/gck/gck.h
+	* plug-ins/libgck/gck/gcktypes.h: modified accordingly.
+
+	* libgimp/Makefile.am
+	* libgimp/gimpvector.[ch]: new files. Modified the vector
+	functions from GCK. Changed the licence to LGPL, if there are any
+	objections, please let me know.
+
+	* libgimp/gimp.h: #include "gimpvector.h"
+
+	* libgimp/gimpmath.h: added deg <-> rad conversion macros.
+
+	* libgimp/gimpmatrix.[ch]: added a 4x4 vector to rotation angle
+	function from GCK,
+	s/GimpMatrix,gimp_matrix/GimpMatrix3,gimp_matrix3/ 
+
+	* plug-ins/Lighting/*
+	* plug-ins/MapObject/*:
+	s/GckVector,gck_vector/GimpVector,gimp_vector/
+
+	* app/pathsP.h
+	* app/paths_dialog.c
+	* app/perspective_tool.[ch]
+	* app/rotate_tool.[ch]
+	* app/scale_tool.[ch]
+	* app/shear_tool.[ch]
+	* app/tools_cmds.c
+	* app/transform_core.[ch]
+	* tools/pdbgen/pdb/tools.pdb:
+	s/GimpMatrix,gimp_matrix/GimpMatrix3,gimp_matrix3/
+
+2000-02-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/preferences_dialog.c: purely cosmetic.
 
 	* libgimp/gimpdialog.c: purely fanatic.

@@ -129,7 +129,7 @@ tools_new_shear_tool (void)
   private->trans_func = shear_tool_transform;
 
   /*  assemble the transformation matrix  */
-  gimp_matrix_identity (private->transform);
+  gimp_matrix3_identity (private->transform);
 
   return tool;
 }
@@ -310,18 +310,18 @@ shear_tool_recalc (Tool *tool,
     height = 1;
 
   /*  assemble the transformation matrix  */
-  gimp_matrix_identity  (transform_core->transform);
-  gimp_matrix_translate (transform_core->transform, -cx, -cy);
+  gimp_matrix3_identity  (transform_core->transform);
+  gimp_matrix3_translate (transform_core->transform, -cx, -cy);
 
   /*  shear matrix  */
   if (transform_core->trans_info[HORZ_OR_VERT] == ORIENTATION_HORIZONTAL)
-    gimp_matrix_xshear (transform_core->transform,
-			(float) transform_core->trans_info [XSHEAR] / height);
+    gimp_matrix3_xshear (transform_core->transform,
+			 (float) transform_core->trans_info [XSHEAR] / height);
   else
-    gimp_matrix_yshear (transform_core->transform,
-			(float) transform_core->trans_info [YSHEAR] / width);
+    gimp_matrix3_yshear (transform_core->transform,
+			 (float) transform_core->trans_info [YSHEAR] / width);
 
-  gimp_matrix_translate (transform_core->transform, +cx, +cy);
+  gimp_matrix3_translate (transform_core->transform, +cx, +cy);
 
   /*  transform the bounding box  */
   transform_core_transform_bounding_box (tool);
@@ -336,7 +336,7 @@ shear_tool_shear (GimpImage    *gimage,
 		  GDisplay     *gdisp,
 		  TileManager  *float_tiles,
 		  gboolean      interpolation,
-		  GimpMatrix    matrix)
+		  GimpMatrix3   matrix)
 {
   gimp_progress *progress;
   TileManager   *ret;

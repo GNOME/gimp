@@ -17,47 +17,56 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMPMATRIX_H__
-#define __GIMPMATRIX_H__
+#ifndef __GIMP_MATRIX_H__
+#define __GIMP_MATRIX_H__
+
+#include <glib.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-typedef gdouble GimpMatrix[3][3];
+typedef gdouble GimpMatrix3[3][3];
+typedef gdouble GimpMatrix4[4][4];
 
-void          gimp_matrix_transform_point (GimpMatrix  matrix, 
-					   gdouble     x, 
-					   gdouble     y,
-					   gdouble    *newx, 
-					   gdouble    *newy);
-void          gimp_matrix_mult            (GimpMatrix  matrix1, 
-					   GimpMatrix  matrix2);
-void          gimp_matrix_identity        (GimpMatrix  matrix);
-void          gimp_matrix_translate       (GimpMatrix  matrix, 
-					   gdouble     x, 
-					   gdouble     y);
-void          gimp_matrix_scale           (GimpMatrix  matrix, 
-					   gdouble     x, 
-					   gdouble     y);
-void          gimp_matrix_rotate          (GimpMatrix  matrix, 
-					   gdouble     theta);
-void          gimp_matrix_xshear          (GimpMatrix  matrix, 
-					   gdouble     amount);
-void          gimp_matrix_yshear          (GimpMatrix  matrix, 
-					   gdouble     amount);
-gdouble       gimp_matrix_determinant     (GimpMatrix  matrix);
-void          gimp_matrix_invert          (GimpMatrix  matrix, 
-					   GimpMatrix  matrix_inv);
-void          gimp_matrix_duplicate       (GimpMatrix  src, 
-					   GimpMatrix  target);
+void          gimp_matrix3_transform_point (GimpMatrix3  matrix, 
+					    gdouble      x, 
+					    gdouble      y,
+					    gdouble     *newx, 
+					    gdouble     *newy);
+void          gimp_matrix3_mult            (GimpMatrix3  matrix1, 
+					    GimpMatrix3  matrix2);
+void          gimp_matrix3_identity        (GimpMatrix3  matrix);
+void          gimp_matrix3_translate       (GimpMatrix3  matrix, 
+					    gdouble      x, 
+					    gdouble      y);
+void          gimp_matrix3_scale           (GimpMatrix3  matrix, 
+					    gdouble      x, 
+					    gdouble      y);
+void          gimp_matrix3_rotate          (GimpMatrix3  matrix, 
+					    gdouble      theta);
+void          gimp_matrix3_xshear          (GimpMatrix3  matrix, 
+					    gdouble      amount);
+void          gimp_matrix3_yshear          (GimpMatrix3  matrix, 
+					    gdouble      amount);
+gdouble       gimp_matrix3_determinant     (GimpMatrix3  matrix);
+void          gimp_matrix3_invert          (GimpMatrix3  matrix, 
+					    GimpMatrix3  matrix_inv);
+void          gimp_matrix3_duplicate       (GimpMatrix3  src, 
+					    GimpMatrix3  target);
 
-gboolean      gimp_matrix_is_diagonal     (GimpMatrix  matrix);
-gboolean      gimp_matrix_is_identity     (GimpMatrix  matrix);
-gboolean      gimp_matrix_is_simple       (GimpMatrix  matrix);
+gboolean      gimp_matrix3_is_diagonal     (GimpMatrix3  matrix);
+gboolean      gimp_matrix3_is_identity     (GimpMatrix3  matrix);
+gboolean      gimp_matrix3_is_simple       (GimpMatrix3  matrix);
+
+
+void          gimp_matrix4_to_deg          (GimpMatrix4  matrix,
+					    gdouble     *a,
+					    gdouble     *b,
+					    gdouble     *c);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif  /*  __GIMPMATRIX_H__  */
+#endif  /*  __GIMP_MATRIX_H__  */

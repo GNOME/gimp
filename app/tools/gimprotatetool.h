@@ -30,7 +30,7 @@ TileManager * rotate_tool_rotate    (GimpImage      *gimage,
 				     gdouble         angle,
 				     TileManager    *float_tiles,
 				     gboolean        interpolation,
-				     GimpMatrix      matrix);
+				     GimpMatrix3     matrix);
 
 Tool * tools_new_rotate_tool  (void);
 void   tools_free_rotate_tool (Tool *tool);

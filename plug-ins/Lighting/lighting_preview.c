@@ -27,7 +27,7 @@ void compute_preview (gint startx,gint starty,gint w,gint h)
   gdouble imagex,imagey;
   gint32 index=0;
   GckRGB color,darkcheck,lightcheck,temp;
-  GckVector3 pos;
+  GimpVector3 pos;
   get_ray_func ray_func;
 
   if (xpostab_size != w)

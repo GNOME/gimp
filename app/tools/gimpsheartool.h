@@ -29,7 +29,7 @@ TileManager * shear_tool_shear     (GimpImage      *gimage,
 				    GDisplay       *gdisp,
 				    TileManager    *float_tiles,
 				    gboolean        interpolation,
-				    GimpMatrix      matrix);
+				    GimpMatrix3     matrix);
 
 Tool * tools_new_shear_tool  (void);
 void   tools_free_shear_tool (Tool *matrix);

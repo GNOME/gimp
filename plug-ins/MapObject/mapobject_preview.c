@@ -19,7 +19,7 @@ void clear_light_marker (void);
 
 gint draw_line (gint n, gint startx,gint starty,gint pw,gint ph,
                 gdouble cx1, gdouble cy1, gdouble cx2, gdouble cy2,
-                GckVector3 a,GckVector3 b);
+                GimpVector3 a,GimpVector3 b);
 
 void draw_wireframe_plane    (gint startx,gint starty,gint pw,gint ph);
 void draw_wireframe_sphere   (gint startx,gint starty,gint pw,gint ph);
@@ -27,6 +27,91 @@ void draw_wireframe_box      (gint startx,gint starty,gint pw,gint ph);
 void draw_wireframe_cylinder (gint startx,gint starty,gint pw,gint ph);
 
 void clear_wireframe (void);
+
+/*************************************************/
+/* Quick and dirty (and slow) line clip routine. */
+/* The function returns FALSE if the line isn't  */
+/* visible according to the limits given.        */
+/*************************************************/
+
+static gboolean
+clip_line (gdouble *x1,
+	   gdouble *y1,
+	   gdouble *x2,
+	   gdouble *y2,
+	   gdouble  minx,
+	   gdouble  miny,
+	   gdouble  maxx,
+	   gdouble  maxy)
+{
+  gdouble tmp;
+
+  g_assert (x1!=NULL);
+  g_assert (y1!=NULL);
+  g_assert (x2!=NULL);
+  g_assert (y2!=NULL);
+
+  /* First, check if line is visible at all */
+  /* ====================================== */
+
+  if (*x1<minx && *x2<minx) return(FALSE);
+  if (*x1>maxx && *x2>maxx) return(FALSE);
+  if (*y1<miny && *y2<miny) return(FALSE);
+  if (*y1>maxy && *y2>maxy) return(FALSE);
+
+  /* Check for intersection with the four edges. Sort on x first. */
+  /* ============================================================ */
+
+  if (*x2<*x1)
+    {
+      tmp=*x1;
+      *x1=*x2;
+      *x2=tmp;
+      tmp=*y1;
+      *y1=*y2;
+      *y2=tmp;
+    }
+
+  if (*x1<minx)
+    {
+      if (*y1<*y2) *y1=*y1+(minx-*x1)*((*y2-*y1)/(*x2-*x1));
+      else         *y1=*y1-(minx-*x1)*((*y1-*y2)/(*x2-*x1));
+      *x1=minx; 
+    }
+
+  if (*x2>maxx)
+    {
+      if (*y1<*y2) *y2=*y2-(*x2-maxx)*((*y2-*y1)/(*x2-*x1));
+      else         *y2=*y2+(*x2-maxx)*((*y1-*y2)/(*x2-*x1));
+      *x2=maxx;
+    }
+
+  if (*y1<miny)
+    {
+      *x1=*x1+(miny-*y1)*((*x2-*x1)/(*y2-*y1));
+      *y1=miny;
+    }
+  
+  if (*y2<miny)
+    {
+      *x2=*x2-(miny-*y2)*((*x2-*x1)/(*y1-*y2));
+      *y2=miny;
+    }
+
+  if (*y1>maxy)
+    {
+      *x1=*x1+(*y1-maxy)*((*x2-*x1)/(*y1-*y2));
+      *y1=maxy;
+    }
+    
+  if (*y2>maxy)
+    {
+      *x2=*x2-(*y2-maxy)*((*x2-*x1)/(*y2-*y1));
+      *y2=maxy;
+    }
+
+  return TRUE;
+}
 
 /**************************************************************/
 /* Computes a preview of the rectangle starting at (x,y) with */
@@ -36,7 +121,7 @@ void clear_wireframe (void);
 void compute_preview(gint x,gint y,gint w,gint h,gint pw,gint ph)
 {
   gdouble xpostab[PREVIEW_WIDTH],ypostab[PREVIEW_HEIGHT],realw,realh;
-  GckVector3 p1,p2;
+  GimpVector3 p1,p2;
   GckRGB color,lightcheck,darkcheck,temp;
   guchar r,g,b;
   gint xcnt,ycnt,f1,f2;
@@ -75,7 +160,7 @@ void compute_preview(gint x,gint y,gint w,gint h,gint pw,gint ph)
 
   gck_rgb_set(&lightcheck,0.75,0.75,0.75);
   gck_rgb_set(&darkcheck, 0.50,0.50,0.50);
-  gck_vector3_set(&p2,-1.0,-1.0,0.0);
+  gimp_vector3_set(&p2,-1.0,-1.0,0.0);
 
   for (ycnt=0;ycnt<ph;ycnt++)
     {
@@ -221,7 +306,7 @@ void draw_lights(gint startx,gint starty,gint pw,gint ph)
 
   clear_light_marker();
  
-  gck_3d_to_2d(startx,starty,pw,ph,&dxpos,&dypos,&mapvals.viewpoint,
+  gimp_vector_3d_to_2d(startx,starty,pw,ph,&dxpos,&dypos,&mapvals.viewpoint,
     &mapvals.lightsource.position);
   xpos=(gint)(dxpos+0.5);
   ypos=(gint)(dypos+0.5);
@@ -243,7 +328,7 @@ void update_light(gint xpos,gint ypos)
   startx=(PREVIEW_WIDTH-pw)>>1;
   starty=(PREVIEW_HEIGHT-ph)>>1;
   
-  gck_2d_to_3d(startx,starty,pw,ph,xpos,ypos,&mapvals.viewpoint,&mapvals.lightsource.position);
+  gimp_vector_2d_to_3d(startx,starty,pw,ph,xpos,ypos,&mapvals.viewpoint,&mapvals.lightsource.position);
   draw_lights(startx,starty,pw,ph);
 }
 
@@ -328,34 +413,34 @@ void draw_wireframe(gint startx,gint starty,gint pw,gint ph)
 
 void draw_wireframe_plane(gint startx,gint starty,gint pw,gint ph)
 {
-  GckVector3 v1,v2,a,b,c,d,dir1,dir2;
+  GimpVector3 v1,v2,a,b,c,d,dir1,dir2;
   gint cnt,n=0;
   gdouble x1,y1,x2,y2,cx1,cy1,cx2,cy2,fac;
   
   /* Find rotated box corners */
   /* ======================== */
 
-  gck_vector3_set(&v1,0.5,0.0,0.0);
-  gck_vector3_set(&v2,0.0,0.5,0.0);
+  gimp_vector3_set(&v1,0.5,0.0,0.0);
+  gimp_vector3_set(&v2,0.0,0.5,0.0);
 
-  gck_vector3_rotate(&v1,gck_deg_to_rad(mapvals.alpha),
-    gck_deg_to_rad(mapvals.beta),gck_deg_to_rad(mapvals.gamma));
-  gck_vector3_rotate(&v2,gck_deg_to_rad(mapvals.alpha),
-    gck_deg_to_rad(mapvals.beta),gck_deg_to_rad(mapvals.gamma));
+  gimp_vector3_rotate(&v1,gimp_deg_to_rad(mapvals.alpha),
+    gimp_deg_to_rad(mapvals.beta),gimp_deg_to_rad(mapvals.gamma));
+  gimp_vector3_rotate(&v2,gimp_deg_to_rad(mapvals.alpha),
+    gimp_deg_to_rad(mapvals.beta),gimp_deg_to_rad(mapvals.gamma));
 
-  dir1=v1; gck_vector3_normalize(&dir1);
-  dir2=v2; gck_vector3_normalize(&dir2);
+  dir1=v1; gimp_vector3_normalize(&dir1);
+  dir2=v2; gimp_vector3_normalize(&dir2);
 
   fac=1.0/(gdouble)WIRESIZE;
   
-  gck_vector3_mul(&dir1,fac);
-  gck_vector3_mul(&dir2,fac);
+  gimp_vector3_mul(&dir1,fac);
+  gimp_vector3_mul(&dir2,fac);
   
-  gck_vector3_add(&a,&mapvals.position,&v1);
-  gck_vector3_sub(&b,&a,&v2);
-  gck_vector3_add(&a,&a,&v2);
-  gck_vector3_sub(&d,&mapvals.position,&v1);
-  gck_vector3_sub(&d,&d,&v2);
+  gimp_vector3_add(&a,&mapvals.position,&v1);
+  gimp_vector3_sub(&b,&a,&v2);
+  gimp_vector3_add(&a,&a,&v2);
+  gimp_vector3_sub(&d,&mapvals.position,&v1);
+  gimp_vector3_sub(&d,&d,&v2);
 
   c=b;
 
@@ -366,10 +451,10 @@ void draw_wireframe_plane(gint startx,gint starty,gint pw,gint ph)
 
   for (cnt=0;cnt<=WIRESIZE;cnt++)
     {
-      gck_3d_to_2d(startx,starty,pw,ph,&x1,&y1,&mapvals.viewpoint,&a);
-      gck_3d_to_2d(startx,starty,pw,ph,&x2,&y2,&mapvals.viewpoint,&b);
+      gimp_vector_3d_to_2d(startx,starty,pw,ph,&x1,&y1,&mapvals.viewpoint,&a);
+      gimp_vector_3d_to_2d(startx,starty,pw,ph,&x2,&y2,&mapvals.viewpoint,&b);
 
-      if (gck_clip_line(&x1,&y1,&x2,&y2,cx1,cy1,cx2,cy2)==TRUE)
+      if (clip_line(&x1,&y1,&x2,&y2,cx1,cy1,cx2,cy2)==TRUE)
         {
           linetab[n].x1=(gint)(x1+0.5);
           linetab[n].y1=(gint)(y1+0.5);
@@ -382,10 +467,10 @@ void draw_wireframe_plane(gint startx,gint starty,gint pw,gint ph)
           n++;
         }
 
-      gck_3d_to_2d(startx,starty,pw,ph,&x1,&y1,&mapvals.viewpoint,&c);
-      gck_3d_to_2d(startx,starty,pw,ph,&x2,&y2,&mapvals.viewpoint,&d);
+      gimp_vector_3d_to_2d(startx,starty,pw,ph,&x1,&y1,&mapvals.viewpoint,&c);
+      gimp_vector_3d_to_2d(startx,starty,pw,ph,&x2,&y2,&mapvals.viewpoint,&d);
 
-      if (gck_clip_line(&x1,&y1,&x2,&y2,cx1,cy1,cx2,cy2)==TRUE)
+      if (clip_line(&x1,&y1,&x2,&y2,cx1,cy1,cx2,cy2)==TRUE)
         {
           linetab[n].x1=(gint)(x1+0.5);
           linetab[n].y1=(gint)(y1+0.5);
@@ -398,10 +483,10 @@ void draw_wireframe_plane(gint startx,gint starty,gint pw,gint ph)
           n++;
         }
         
-      gck_vector3_sub(&a,&a,&dir1);
-      gck_vector3_sub(&b,&b,&dir1);
-      gck_vector3_add(&c,&c,&dir2);
-      gck_vector3_add(&d,&d,&dir2);
+      gimp_vector3_sub(&a,&a,&dir1);
+      gimp_vector3_sub(&b,&b,&dir1);
+      gimp_vector3_add(&c,&c,&dir2);
+      gimp_vector3_add(&d,&d,&dir2);
     }
 
   /* Mark end of lines */
@@ -412,7 +497,7 @@ void draw_wireframe_plane(gint startx,gint starty,gint pw,gint ph)
 
 void draw_wireframe_sphere(gint startx,gint starty,gint pw,gint ph)
 {
-  GckVector3 p[2*(WIRESIZE+5)];
+  GimpVector3 p[2*(WIRESIZE+5)];
   gint cnt,cnt2,n=0;
   gdouble x1,y1,x2,y2,twopifac,cx1,cy1,cx2,cy2;
   
@@ -426,9 +511,9 @@ void draw_wireframe_sphere(gint startx,gint starty,gint pw,gint ph)
       p[cnt].x=mapvals.radius*cos((gdouble)cnt*twopifac);
       p[cnt].y=0.0;
       p[cnt].z=mapvals.radius*sin((gdouble)cnt*twopifac);
-      gck_vector3_rotate(&p[cnt],gck_deg_to_rad(mapvals.alpha),
-        gck_deg_to_rad(mapvals.beta),gck_deg_to_rad(mapvals.gamma));
-      gck_vector3_add(&p[cnt],&p[cnt],&mapvals.position);
+      gimp_vector3_rotate(&p[cnt],gimp_deg_to_rad(mapvals.alpha),
+        gimp_deg_to_rad(mapvals.beta),gimp_deg_to_rad(mapvals.gamma));
+      gimp_vector3_add(&p[cnt],&p[cnt],&mapvals.position);
     }
   p[cnt]=p[0];
   for (cnt=WIRESIZE+1;cnt<2*WIRESIZE+1;cnt++)
@@ -436,9 +521,9 @@ void draw_wireframe_sphere(gint startx,gint starty,gint pw,gint ph)
       p[cnt].x=mapvals.radius*cos((gdouble)(cnt-(WIRESIZE+1))*twopifac);
       p[cnt].y=mapvals.radius*sin((gdouble)(cnt-(WIRESIZE+1))*twopifac);
       p[cnt].z=0.0;
-      gck_vector3_rotate(&p[cnt],gck_deg_to_rad(mapvals.alpha),
-        gck_deg_to_rad(mapvals.beta),gck_deg_to_rad(mapvals.gamma));
-      gck_vector3_add(&p[cnt],&p[cnt],&mapvals.position);
+      gimp_vector3_rotate(&p[cnt],gimp_deg_to_rad(mapvals.alpha),
+        gimp_deg_to_rad(mapvals.beta),gimp_deg_to_rad(mapvals.gamma));
+      gimp_vector3_add(&p[cnt],&p[cnt],&mapvals.position);
     }
   p[cnt]=p[WIRESIZE+1];
   cnt++;
@@ -447,23 +532,23 @@ void draw_wireframe_sphere(gint startx,gint starty,gint pw,gint ph)
   /* Find rotated axis */
   /* ================= */
 
-  gck_vector3_set(&p[cnt],0.0,-0.35,0.0);
-  gck_vector3_rotate(&p[cnt],gck_deg_to_rad(mapvals.alpha),
-    gck_deg_to_rad(mapvals.beta),gck_deg_to_rad(mapvals.gamma));
+  gimp_vector3_set(&p[cnt],0.0,-0.35,0.0);
+  gimp_vector3_rotate(&p[cnt],gimp_deg_to_rad(mapvals.alpha),
+    gimp_deg_to_rad(mapvals.beta),gimp_deg_to_rad(mapvals.gamma));
   p[cnt+1]=mapvals.position;
 
-  gck_vector3_set(&p[cnt+2],0.0,0.0,-0.35);
-  gck_vector3_rotate(&p[cnt+2],gck_deg_to_rad(mapvals.alpha),
-    gck_deg_to_rad(mapvals.beta),gck_deg_to_rad(mapvals.gamma));
+  gimp_vector3_set(&p[cnt+2],0.0,0.0,-0.35);
+  gimp_vector3_rotate(&p[cnt+2],gimp_deg_to_rad(mapvals.alpha),
+    gimp_deg_to_rad(mapvals.beta),gimp_deg_to_rad(mapvals.gamma));
   p[cnt+3]=mapvals.position;
 
   p[cnt+4]=p[cnt];
-  gck_vector3_mul(&p[cnt+4],-1.0);
+  gimp_vector3_mul(&p[cnt+4],-1.0);
   p[cnt+5]=p[cnt+1];
 
-  gck_vector3_add(&p[cnt],&p[cnt],&mapvals.position);
-  gck_vector3_add(&p[cnt+2],&p[cnt+2],&mapvals.position);
-  gck_vector3_add(&p[cnt+4],&p[cnt+4],&mapvals.position);
+  gimp_vector3_add(&p[cnt],&p[cnt],&mapvals.position);
+  gimp_vector3_add(&p[cnt+2],&p[cnt+2],&mapvals.position);
+  gimp_vector3_add(&p[cnt+4],&p[cnt+4],&mapvals.position);
 
   /* Draw the circles (equator and zero meridian) */
   /* ============================================ */
@@ -477,10 +562,10 @@ void draw_wireframe_sphere(gint startx,gint starty,gint pw,gint ph)
     {
       if (p[cnt].z>mapvals.position.z && p[cnt+1].z>mapvals.position.z)
         {
-          gck_3d_to_2d(startx,starty,pw,ph,&x1,&y1,&mapvals.viewpoint,&p[cnt]);
-          gck_3d_to_2d(startx,starty,pw,ph,&x2,&y2,&mapvals.viewpoint,&p[cnt+1]);
+          gimp_vector_3d_to_2d(startx,starty,pw,ph,&x1,&y1,&mapvals.viewpoint,&p[cnt]);
+          gimp_vector_3d_to_2d(startx,starty,pw,ph,&x2,&y2,&mapvals.viewpoint,&p[cnt+1]);
  
-          if (gck_clip_line(&x1,&y1,&x2,&y2,cx1,cy1,cx2,cy2)==TRUE)
+          if (clip_line(&x1,&y1,&x2,&y2,cx1,cy1,cx2,cy2)==TRUE)
             {
               linetab[n].x1=(gint)(x1+0.5);
               linetab[n].y1=(gint)(y1+0.5);
@@ -500,10 +585,10 @@ void draw_wireframe_sphere(gint startx,gint starty,gint pw,gint ph)
 
   for (cnt=0;cnt<3;cnt++)
     {
-      gck_3d_to_2d(startx,starty,pw,ph,&x1,&y1,&mapvals.viewpoint,&p[cnt2]);
-      gck_3d_to_2d(startx,starty,pw,ph,&x2,&y2,&mapvals.viewpoint,&p[cnt2+1]);
+      gimp_vector_3d_to_2d(startx,starty,pw,ph,&x1,&y1,&mapvals.viewpoint,&p[cnt2]);
+      gimp_vector_3d_to_2d(startx,starty,pw,ph,&x2,&y2,&mapvals.viewpoint,&p[cnt2+1]);
 
-      if (gck_clip_line(&x1,&y1,&x2,&y2,cx1,cy1,cx2,cy2)==TRUE)
+      if (clip_line(&x1,&y1,&x2,&y2,cx1,cy1,cx2,cy2)==TRUE)
         {
           linetab[n].x1=(gint)(x1+0.5);
           linetab[n].y1=(gint)(y1+0.5);
@@ -535,15 +620,15 @@ void draw_wireframe_sphere(gint startx,gint starty,gint pw,gint ph)
 
 gint draw_line(gint n, gint startx,gint starty,gint pw,gint ph,
                gdouble cx1, gdouble cy1, gdouble cx2, gdouble cy2,
-               GckVector3 a,GckVector3 b)
+               GimpVector3 a,GimpVector3 b)
 {
   gdouble x1,y1,x2,y2;
   gint i = n;
   
-  gck_3d_to_2d(startx,starty,pw,ph,&x1,&y1,&mapvals.viewpoint,&a);
-  gck_3d_to_2d(startx,starty,pw,ph,&x2,&y2,&mapvals.viewpoint,&b);
+  gimp_vector_3d_to_2d(startx,starty,pw,ph,&x1,&y1,&mapvals.viewpoint,&a);
+  gimp_vector_3d_to_2d(startx,starty,pw,ph,&x2,&y2,&mapvals.viewpoint,&b);
  
-  if (gck_clip_line(&x1,&y1,&x2,&y2,cx1,cy1,cx2,cy2)==TRUE)
+  if (clip_line(&x1,&y1,&x2,&y2,cx1,cy1,cx2,cy2)==TRUE)
     {
       linetab[i].x1=(gint)(x1+0.5);
       linetab[i].y1=(gint)(y1+0.5);
@@ -563,7 +648,7 @@ gint draw_line(gint n, gint startx,gint starty,gint pw,gint ph,
 
 void draw_wireframe_box(gint startx,gint starty,gint pw,gint ph)
 {
-  GckVector3 p[8], tmp, scale;
+  GimpVector3 p[8], tmp, scale;
   gint n=0,i;
   gdouble cx1,cy1,cx2,cy2;
   
@@ -573,17 +658,17 @@ void draw_wireframe_box(gint startx,gint starty,gint pw,gint ph)
   init_compute();
 
   scale = mapvals.scale;
-  gck_vector3_mul(&scale,0.5);
+  gimp_vector3_mul(&scale,0.5);
 
-  gck_vector3_set(&p[0], -scale.x, -scale.y, scale.z);
-  gck_vector3_set(&p[1],  scale.x, -scale.y, scale.z);
-  gck_vector3_set(&p[2],  scale.x,  scale.y, scale.z);
-  gck_vector3_set(&p[3], -scale.x,  scale.y, scale.z);
+  gimp_vector3_set(&p[0], -scale.x, -scale.y, scale.z);
+  gimp_vector3_set(&p[1],  scale.x, -scale.y, scale.z);
+  gimp_vector3_set(&p[2],  scale.x,  scale.y, scale.z);
+  gimp_vector3_set(&p[3], -scale.x,  scale.y, scale.z);
 
-  gck_vector3_set(&p[4], -scale.x, -scale.y, -scale.z);
-  gck_vector3_set(&p[5],  scale.x, -scale.y, -scale.z);
-  gck_vector3_set(&p[6],  scale.x,  scale.y, -scale.z);
-  gck_vector3_set(&p[7], -scale.x,  scale.y, -scale.z);
+  gimp_vector3_set(&p[4], -scale.x, -scale.y, -scale.z);
+  gimp_vector3_set(&p[5],  scale.x, -scale.y, -scale.z);
+  gimp_vector3_set(&p[6],  scale.x,  scale.y, -scale.z);
+  gimp_vector3_set(&p[7], -scale.x,  scale.y, -scale.z);
 
   /* Rotate and translate points */
   /* =========================== */
@@ -591,7 +676,7 @@ void draw_wireframe_box(gint startx,gint starty,gint pw,gint ph)
   for (i=0;i<8;i++)
     {
       vecmulmat(&tmp,&p[i],rotmat);
-      gck_vector3_add(&p[i],&tmp,&mapvals.position);
+      gimp_vector3_add(&p[i],&tmp,&mapvals.position);
     }
 
   /* Draw the box */
@@ -625,7 +710,7 @@ void draw_wireframe_box(gint startx,gint starty,gint pw,gint ph)
 
 void draw_wireframe_cylinder(gint startx,gint starty,gint pw,gint ph)
 {
-  GckVector3 p[2*8], a, axis, scale;
+  GimpVector3 p[2*8], a, axis, scale;
   gint n=0,i;
   gdouble cx1,cy1,cx2,cy2;
   gfloat m[16], l, angle;
@@ -636,18 +721,18 @@ void draw_wireframe_cylinder(gint startx,gint starty,gint pw,gint ph)
   init_compute();
 
   scale = mapvals.scale;
-  gck_vector3_mul(&scale,0.5);
+  gimp_vector3_mul(&scale,0.5);
 
   l = mapvals.cylinder_length/2.0;
   angle = 0;
   
-  gck_vector3_set(&axis, 0.0,1.0,0.0);
+  gimp_vector3_set(&axis, 0.0,1.0,0.0);
   
   for (i=0;i<8;i++)
     {
       rotatemat(angle, &axis, m);     
 
-      gck_vector3_set(&a, mapvals.cylinder_radius,0.0,0.0);
+      gimp_vector3_set(&a, mapvals.cylinder_radius,0.0,0.0);
       
       vecmulmat(&p[i], &a, m);
       
@@ -665,7 +750,7 @@ void draw_wireframe_cylinder(gint startx,gint starty,gint pw,gint ph)
   for (i=0;i<16;i++)
     {
       vecmulmat(&a,&p[i],rotmat);
-      gck_vector3_add(&p[i],&a,&mapvals.position);
+      gimp_vector3_add(&p[i],&a,&mapvals.position);
     }
 
   /* Draw the box */

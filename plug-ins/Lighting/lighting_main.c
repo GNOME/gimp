@@ -42,11 +42,11 @@ void lighting_noninteractive (GDrawable *drawable);
 
 void set_default_settings(void)
 {
-  gck_vector3_set(&mapvals.viewpoint,   0.5, 0.5, 0.25);
-  gck_vector3_set(&mapvals.planenormal, 0.0, 0.0, 1.0);
+  gimp_vector3_set(&mapvals.viewpoint,   0.5, 0.5, 0.25);
+  gimp_vector3_set(&mapvals.planenormal, 0.0, 0.0, 1.0);
   
-  gck_vector3_set(&mapvals.lightsource.position,  1.0, 0.0, 1.0);
-  gck_vector3_set(&mapvals.lightsource.direction, -1.0, -1.0, 1.0);
+  gimp_vector3_set(&mapvals.lightsource.position,  1.0, 0.0, 1.0);
+  gimp_vector3_set(&mapvals.lightsource.direction, -1.0, -1.0, 1.0);
 
   gck_rgb_set(&mapvals.lightsource.color, 1.0, 1.0, 1.0);
   mapvals.lightsource.intensity = 1.0;

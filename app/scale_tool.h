@@ -30,7 +30,7 @@ TileManager * scale_tool_scale     (GimpImage      *gimage,
 				    gdouble        *trans_info,
 				    TileManager    *float_tiles,
 				    gboolean        interpolation,
-				    GimpMatrix      matrix);
+				    GimpMatrix3     matrix);
 
 Tool * tools_new_scale_tool  (void);
 void   tools_free_scale_tool (Tool *tool);

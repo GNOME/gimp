@@ -16,7 +16,7 @@ void init_compute(void)
 
 void render(gdouble x,gdouble y,GckRGB *col)
 {
-  GckVector3 pos;
+  GimpVector3 pos;
 
   pos=int_to_pos(x,y);
 
@@ -33,7 +33,7 @@ void compute_image(void)
   gint xcount,ycount;
   GckRGB color;
   glong progress_counter=0;
-  GckVector3 p;
+  GimpVector3 p;
   gint32 new_image_id=-1,new_layer_id=-1,index;
   guchar *row = NULL, obpp;
 

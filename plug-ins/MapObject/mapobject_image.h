@@ -47,7 +47,7 @@ extern glong      out_xy_to_index (gint x,gint y);
 extern gint       checkbounds     (gint x,gint y);
 extern GckRGB     peek            (gint x,gint y);
 extern void       poke            (gint x,gint y,GckRGB *color);
-extern GckVector3 int_to_pos      (gint x,gint y);
+extern GimpVector3 int_to_pos      (gint x,gint y);
 extern void       pos_to_int      (gdouble x,gdouble y,gint *scr_x,gint *scr_y);
 
 extern GckRGB     get_image_color          (gdouble u,gdouble v,gint *inside);

@@ -61,7 +61,7 @@ static void      transform_core_setup_grid  (Tool *);
 static void      transform_core_grid_recalc (TransformCore *);
 
 /* Hmmm... Should be in a headerfile but which? */
-void             paths_draw_current         (GDisplay *, DrawCore *, GimpMatrix);
+void             paths_draw_current         (GDisplay *, DrawCore *, GimpMatrix3);
 
 #define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
                 ((1-dy) * (jk + dx * (j1k - jk)) + \
@@ -817,15 +817,15 @@ transform_core_draw (Tool *tool)
 
   if (transform_tool_showpath ())
     {
-      GimpMatrix tmp_matrix;
+      GimpMatrix3 tmp_matrix;
 
       if (transform_tool_direction () == TRANSFORM_CORRECTIVE)
 	{
-	  gimp_matrix_invert (transform_core->transform, tmp_matrix);
+	  gimp_matrix3_invert (transform_core->transform, tmp_matrix);
 	}
       else
 	{
-	  gimp_matrix_duplicate (transform_core->transform, tmp_matrix);
+	  gimp_matrix3_duplicate (transform_core->transform, tmp_matrix);
 	}
 
       paths_draw_current (gdisp, transform_core->core, tmp_matrix);
@@ -919,23 +919,23 @@ transform_core_transform_bounding_box (Tool *tool)
 
   transform_core = (TransformCore *) tool->private;
 
-  gimp_matrix_transform_point (transform_core->transform,
-			       transform_core->x1, transform_core->y1,
-			       &transform_core->tx1, &transform_core->ty1);
-  gimp_matrix_transform_point (transform_core->transform,
-			       transform_core->x2, transform_core->y1,
-			       &transform_core->tx2, &transform_core->ty2);
-  gimp_matrix_transform_point (transform_core->transform,
-			       transform_core->x1, transform_core->y2,
-			       &transform_core->tx3, &transform_core->ty3);
-  gimp_matrix_transform_point (transform_core->transform,
-			       transform_core->x2, transform_core->y2,
-			       &transform_core->tx4, &transform_core->ty4);
+  gimp_matrix3_transform_point (transform_core->transform,
+				transform_core->x1, transform_core->y1,
+				&transform_core->tx1, &transform_core->ty1);
+  gimp_matrix3_transform_point (transform_core->transform,
+				transform_core->x2, transform_core->y1,
+				&transform_core->tx2, &transform_core->ty2);
+  gimp_matrix3_transform_point (transform_core->transform,
+				transform_core->x1, transform_core->y2,
+				&transform_core->tx3, &transform_core->ty3);
+  gimp_matrix3_transform_point (transform_core->transform,
+				transform_core->x2, transform_core->y2,
+				&transform_core->tx4, &transform_core->ty4);
 
   if (tool->type == ROTATE)
-    gimp_matrix_transform_point (transform_core->transform,
-				 transform_core->cx, transform_core->cy,
-				 &transform_core->tcx, &transform_core->tcy);
+    gimp_matrix3_transform_point (transform_core->transform,
+				  transform_core->cx, transform_core->cy,
+				  &transform_core->tcx, &transform_core->tcy);
 
   if (transform_core->grid_coords != NULL &&
       transform_core->tgrid_coords != NULL)
@@ -944,11 +944,11 @@ transform_core_transform_bounding_box (Tool *tool)
       k  = (transform_core->ngx + transform_core->ngy) * 2;
       for (i = 0; i < k; i++)
 	{
-	  gimp_matrix_transform_point (transform_core->transform,
-				       transform_core->grid_coords[gci],
-				       transform_core->grid_coords[gci+1],
-				       &(transform_core->tgrid_coords[gci]),
-				       &(transform_core->tgrid_coords[gci+1]));
+	  gimp_matrix3_transform_point (transform_core->transform,
+					transform_core->grid_coords[gci],
+					transform_core->grid_coords[gci+1],
+					&(transform_core->tgrid_coords[gci]),
+					&(transform_core->tgrid_coords[gci+1]));
 	  gci += 2;
 	}
     }
@@ -1139,14 +1139,14 @@ transform_core_do (GImage          *gimage,
                    GimpDrawable    *drawable,
                    TileManager     *float_tiles,
                    gboolean         interpolation,
-                   GimpMatrix       matrix,
+                   GimpMatrix3      matrix,
                    progress_func_t  progress_callback,
                    gpointer         progress_data)
 {
   PixelRegion  destPR;
   TileManager *tiles;
-  GimpMatrix   m;
-  GimpMatrix   im;
+  GimpMatrix3  m;
+  GimpMatrix3  im;
   gint         itx, ity;
   gint         tx1, ty1, tx2, ty2;
   gint         width, height;
@@ -1172,7 +1172,7 @@ transform_core_do (GImage          *gimage,
   alpha = 0;
 
   /*  turn interpolation off for simple transformations (e.g. rot90)  */
-  if (gimp_matrix_is_simple (matrix)
+  if (gimp_matrix3_is_simple (matrix)
       || interpolation_type == NEAREST_NEIGHBOR_INTERPOLATION)
     interpolation = FALSE;
 
@@ -1201,14 +1201,14 @@ transform_core_do (GImage          *gimage,
     {
       /*  keep the original matrix here, so we dont need to recalculate 
 	  the inverse later  */   
-      gimp_matrix_duplicate (matrix, m);
-      gimp_matrix_invert (matrix, im);
+      gimp_matrix3_duplicate (matrix, m);
+      gimp_matrix3_invert (matrix, im);
       matrix = im;
     }
   else
     {
       /*  Find the inverse of the transformation matrix  */
-      gimp_matrix_invert (matrix, m);
+      gimp_matrix3_invert (matrix, m);
     }
 
   paths_transform_current_path (gimage, matrix, FALSE);
@@ -1230,10 +1230,10 @@ transform_core_do (GImage          *gimage,
     {
       gdouble dx1, dy1, dx2, dy2, dx3, dy3, dx4, dy4;
 
-      gimp_matrix_transform_point (matrix, x1, y1, &dx1, &dy1);
-      gimp_matrix_transform_point (matrix, x2, y1, &dx2, &dy2);
-      gimp_matrix_transform_point (matrix, x1, y2, &dx3, &dy3);
-      gimp_matrix_transform_point (matrix, x2, y2, &dx4, &dy4);
+      gimp_matrix3_transform_point (matrix, x1, y1, &dx1, &dy1);
+      gimp_matrix3_transform_point (matrix, x2, y1, &dx2, &dy2);
+      gimp_matrix3_transform_point (matrix, x1, y2, &dx3, &dy3);
+      gimp_matrix3_transform_point (matrix, x2, y2, &dx4, &dy4);
 
       tx1 = MIN (dx1, dx2);
       tx1 = MIN (tx1, dx3);

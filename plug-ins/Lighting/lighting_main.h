@@ -51,8 +51,8 @@ typedef struct
 typedef struct
 {
   LightType  type;
-  GckVector3 position;
-  GckVector3 direction;
+  GimpVector3 position;
+  GimpVector3 direction;
   GckRGB     color;
   gdouble    intensity;
 } LightSettings;
@@ -66,8 +66,8 @@ typedef struct {
   /* Render variables */
   /* ================ */
 
-  GckVector3       viewpoint;
-  GckVector3       planenormal;
+  GimpVector3       viewpoint;
+  GimpVector3       planenormal;
   LightSettings    lightsource;
   MaterialSettings material;
   MaterialSettings ref_material;

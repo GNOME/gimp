@@ -148,9 +148,9 @@ gint checkbounds_cylinder_image(gint image, gint x,gint y)
     return(TRUE);
 }
 
-GckVector3 int_to_pos(gint x,gint y)
+GimpVector3 int_to_pos(gint x,gint y)
 {
-  GckVector3 pos;
+  GimpVector3 pos;
 
   pos.x=(gdouble)x/(gdouble)width;
   pos.y=(gdouble)y/(gdouble)height;

@@ -29,9 +29,9 @@ TileManager * perspective_tool_perspective (GimpImage      *gimage,
 					    GDisplay       *gdisp,
 					    TileManager    *float_tiles,
 					    gboolean        interpolation,
-					    GimpMatrix      matrix);
+					    GimpMatrix3     matrix);
 void          perspective_find_transform   (gdouble        *coords,
-					    GimpMatrix      matrix);
+					    GimpMatrix3     matrix);
 
 Tool * tools_new_perspective_tool  (void);
 void   tools_free_perspective_tool (Tool *tool);

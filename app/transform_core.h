@@ -92,7 +92,7 @@ struct _TransformCore
   gint            sx4, sy4;     /*                              */
   gint            scx, scy;     /*  and center for rotation     */
 
-  GimpMatrix      transform;    /*  transformation matrix       */
+  GimpMatrix3     transform;    /*  transformation matrix       */
   TranInfo        trans_info;   /*  transformation info         */
 
   TileManager    *original;     /*  pointer to original tiles   */
@@ -157,7 +157,7 @@ TileManager * transform_core_do    (GImage          *gimage,
 				    GimpDrawable    *drawable,
 				    TileManager     *float_tiles,
 				    gboolean         interpolation,
-				    GimpMatrix       matrix,
+				    GimpMatrix3      matrix,
 				    progress_func_t  progress_callback,
 				    gpointer         progress_data);
 TileManager * transform_core_cut   (GImage          *gimage,
