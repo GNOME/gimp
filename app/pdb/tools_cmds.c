@@ -1148,7 +1148,7 @@ eraser_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);
+    success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE, FALSE);
 
   return procedural_db_return_args (&eraser_proc, success);
 }

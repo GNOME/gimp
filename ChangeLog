@@ -1,3 +1,16 @@
+2001-10-30  Simon Budig   <simon@gimp.org>
+
+	* app/pdb/tools_cmds.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimperasertool.h
+	* tools/pdbgen/pdb/tools.pdb
+
+	Added a "color erase" feature to the eraser. This is ported from
+	the colortoalpha plugin and is utterly cool.
+
+	The "Color Erase" Option should be disabled when the drawable
+	has no alpha channel, however, I have no idea how to do this.
+
 2001-10-29  Sven Neumann  <sven@gimp.org>
 
 	* app/base/temp-buf.c (temp_buf_to_gray): rewrote so gcc-3.0 doesn't 
