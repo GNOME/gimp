@@ -14,6 +14,43 @@ gimpgradientedit
 
 </para>
 
+<!-- ##### FUNCTION gimp_gradient_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradient_duplicate ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradient_rename ##### -->
+<para>
+
+</para>
+
+@name: 
+@new_name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradient_delete ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_gradient_segment_get_left_color ##### -->
 <para>
 

@@ -2,11 +2,10 @@
 gimppalette
 
 <!-- ##### SECTION Short_Description ##### -->
-Functions for setting colors in the palette.
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-Functions for setting colors in the palette.
 
 </para>
 
@@ -14,6 +13,119 @@ Functions for setting colors in the palette.
 <para>
 
 </para>
+
+<!-- ##### FUNCTION gimp_palette_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palette_duplicate ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palette_rename ##### -->
+<para>
+
+</para>
+
+@name: 
+@new_name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palette_delete ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palette_get_info ##### -->
+<para>
+
+</para>
+
+@name: 
+@num_colors: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palette_add_entry ##### -->
+<para>
+
+</para>
+
+@name: 
+@entry_name: 
+@color: 
+@entry_num: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palette_delete_entry ##### -->
+<para>
+
+</para>
+
+@name: 
+@entry_num: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palette_entry_get_color ##### -->
+<para>
+
+</para>
+
+@name: 
+@entry_num: 
+@color: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palette_entry_set_color ##### -->
+<para>
+
+</para>
+
+@name: 
+@entry_num: 
+@color: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palette_entry_get_name ##### -->
+<para>
+
+</para>
+
+@name: 
+@entry_num: 
+@entry_name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palette_entry_set_name ##### -->
+<para>
+
+</para>
+
+@name: 
+@entry_num: 
+@entry_name: 
+@Returns: 
+
 
 <!-- ##### FUNCTION gimp_palette_get_foreground ##### -->
 <para>

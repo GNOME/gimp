@@ -99,6 +99,17 @@ gimp_export_image
 </SECTION>
 
 <SECTION>
+<FILE>gimpbrush</FILE>
+gimp_brush_new
+gimp_brush_duplicate
+gimp_brush_rename
+gimp_brush_delete
+gimp_brush_get_info
+gimp_brush_get_spacing
+gimp_brush_set_spacing
+</SECTION>
+
+<SECTION>
 <FILE>gimpbrushes</FILE>
 gimp_brushes_refresh
 gimp_brushes_get_list
@@ -111,7 +122,6 @@ gimp_brushes_set_paint_mode
 gimp_brushes_get_spacing
 gimp_brushes_set_spacing
 gimp_brushes_get_brush_data
-gimp_brushes_get_brush_info
 </SECTION>
 
 <SECTION>
@@ -303,22 +313,11 @@ gimp_get_theme_dir
 </SECTION>
 
 <SECTION>
-<FILE>gimpgradients</FILE>
-gimp_gradients_new
-gimp_gradients_delete
-gimp_gradients_duplicate
-gimp_gradients_rename
-gimp_gradients_refresh
-gimp_gradients_get_list
-gimp_gradients_get_gradient
-gimp_gradients_set_gradient
-gimp_gradients_sample_uniform
-gimp_gradients_sample_custom
-gimp_gradients_get_gradient_data
-</SECTION>
-
-<SECTION>
-<FILE>gimpgradientedit</FILE>
+<FILE>gimpgradient</FILE>
+gimp_gradient_new
+gimp_gradient_duplicate
+gimp_gradient_rename
+gimp_gradient_delete
 gimp_gradient_segment_get_left_color
 gimp_gradient_segment_set_left_color
 gimp_gradient_segment_get_right_color
@@ -342,6 +341,17 @@ gimp_gradient_segment_range_redistribute_handles
 gimp_gradient_segment_range_blend_colors
 gimp_gradient_segment_range_blend_opacity
 gimp_gradient_segment_range_move
+</SECTION>
+
+<SECTION>
+<FILE>gimpgradients</FILE>
+gimp_gradients_refresh
+gimp_gradients_get_list
+gimp_gradients_get_gradient
+gimp_gradients_set_gradient
+gimp_gradients_sample_uniform
+gimp_gradients_sample_custom
+gimp_gradients_get_gradient_data
 </SECTION>
 
 <SECTION>
@@ -477,6 +487,17 @@ gimp_message_set_handler
 
 <SECTION>
 <FILE>gimppalette</FILE>
+gimp_palette_new
+gimp_palette_duplicate
+gimp_palette_rename
+gimp_palette_delete
+gimp_palette_get_info
+gimp_palette_add_entry
+gimp_palette_delete_entry
+gimp_palette_entry_get_color
+gimp_palette_entry_set_color
+gimp_palette_entry_get_name
+gimp_palette_entry_set_name
 gimp_palette_get_foreground
 gimp_palette_get_background
 gimp_palette_set_foreground
@@ -492,7 +513,6 @@ gimp_palettes_get_list
 gimp_palettes_get_palette
 gimp_palettes_set_palette
 gimp_palettes_get_palette_entry
-gimp_palettes_get_palette_info
 gimp_palettes_popup
 gimp_palettes_close_popup
 gimp_palettes_set_popup
@@ -525,13 +545,17 @@ gimp_path_import
 </SECTION>
 
 <SECTION>
+<FILE>gimppattern</FILE>
+gimp_pattern_get_info
+</SECTION>
+
+<SECTION>
 <FILE>gimppatterns</FILE>
 gimp_patterns_refresh
 gimp_patterns_get_list
 gimp_patterns_get_pattern
 gimp_patterns_set_pattern
 gimp_patterns_get_pattern_data
-gimp_patterns_get_pattern_info
 </SECTION>
 
 <SECTION>
@@ -712,6 +736,23 @@ gimp_image_undo_thaw
 GimpPixbufTransparency
 gimp_image_get_thumbnail
 gimp_drawable_get_thumbnail
+</SECTION>
+
+<SECTION>
+<FILE>gimpaspectpreview</FILE>
+<TITLE>GimpAspectPreview</TITLE>
+GimpAspectPreview
+gimp_aspect_preview_new
+gimp_aspect_preview_draw_buffer
+<SUBSECTION Standard>
+GimpAspectPreviewClass
+GIMP_ASPECT_PREVIEW
+GIMP_IS_ASPECT_PREVIEW
+GIMP_TYPE_ASPECT_PREVIEW
+gimp_aspect_preview_get_type
+GIMP_ASPECT_PREVIEW_CLASS
+GIMP_IS_ASPECT_PREVIEW_CLASS
+GIMP_ASPECT_PREVIEW_GET_CLASS
 </SECTION>
 
 <SECTION>

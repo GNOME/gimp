@@ -62,16 +62,6 @@ gimppalettes
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_palettes_get_palette_info ##### -->
-<para>
-
-</para>
-
-@name: 
-@num_colors: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_palettes_popup ##### -->
 <para>
 

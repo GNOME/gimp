@@ -1,3 +1,24 @@
+2004-09-29  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/libgimp.types: updated after brush, pattern etc. cleanup.
+
+	* libgimp/tmpl/gimpgradientedit.sgml: removed.
+
+	* libgimp/tmpl/gimpaspectpreview.sgml
+	* libgimp/tmpl/gimpbrush.sgml
+	* libgimp/tmpl/gimpgradient.sgml
+	* libgimp/tmpl/gimppattern.sgml; new files.
+
+	* libgimp/tmpl/gimpbrushes.sgml
+	* libgimp/tmpl/gimpcontext.sgml
+	* libgimp/tmpl/gimpgradients.sgml
+	* libgimp/tmpl/gimppalette.sgml
+	* libgimp/tmpl/gimppalettes.sgml
+	* libgimp/tmpl/gimppatterns.sgml
+	* libgimp/tmpl/gimpregioniterator.sgml: updated.
+
 2004-09-24  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml

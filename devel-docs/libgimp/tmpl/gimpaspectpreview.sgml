@@ -1,0 +1,42 @@
+<!-- ##### SECTION Title ##### -->
+GimpAspectPreview
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpAspectPreview ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_aspect_preview_new ##### -->
+<para>
+
+</para>
+
+@drawable: 
+@toggle: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_aspect_preview_draw_buffer ##### -->
+<para>
+
+</para>
+
+@preview: 
+@buffer: 
+@rowstride: 
+
+

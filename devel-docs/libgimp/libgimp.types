@@ -2,5 +2,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+gimp_aspect_preview_get_type
 gimp_drawable_preview_get_type
 gimp_progress_bar_get_type

@@ -88,8 +88,10 @@ gimpregioniterator
 </para>
 
 @drawable: 
-@run_mode: 
+@unused: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@run_mode: 
 
 
 <!-- ##### FUNCTION gimp_rgn_iterator_free ##### -->
@@ -136,9 +138,11 @@ gimpregioniterator
 </para>
 
 @drawable: 
-@run_mode: 
+@unused: 
 @func: 
 @data: 
+<!-- # Unused Parameters # -->
+@run_mode: 
 
 
 <!-- ##### FUNCTION gimp_rgn_iterate2 ##### -->
@@ -147,8 +151,10 @@ gimpregioniterator
 </para>
 
 @drawable: 
-@run_mode: 
+@unused: 
 @func: 
 @data: 
+<!-- # Unused Parameters # -->
+@run_mode: 
 
 

@@ -1,0 +1,84 @@
+<!-- ##### SECTION Title ##### -->
+gimpbrush
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_brush_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_duplicate ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_rename ##### -->
+<para>
+
+</para>
+
+@name: 
+@new_name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_delete ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_get_info ##### -->
+<para>
+
+</para>
+
+@name: 
+@width: 
+@height: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_get_spacing ##### -->
+<para>
+
+</para>
+
+@name: 
+@spacing: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_set_spacing ##### -->
+<para>
+
+</para>
+
+@name: 
+@spacing: 
+@Returns: 
+
+
