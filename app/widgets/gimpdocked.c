@@ -26,11 +26,22 @@
 #include "widgets-types.h"
 
 #include "core/gimpcontext.h"
+#include "core/gimpmarshal.h"
 
 #include "gimpdocked.h"
 
 
+enum
+{
+  TITLE_CHANGED,
+  LAST_SIGNAL
+};
+
+
 static void  gimp_docked_iface_base_init (GimpDockedInterface *docked_iface);
+
+
+static guint docked_signals[LAST_SIGNAL] = { 0 };
 
 
 GType
@@ -61,6 +72,29 @@ gimp_docked_interface_get_type (void)
 static void
 gimp_docked_iface_base_init (GimpDockedInterface *docked_iface)
 {
+  static gboolean initialized = FALSE;
+
+  if (! initialized)
+    {
+      docked_signals[TITLE_CHANGED] =
+        g_signal_new ("title_changed",
+                      GIMP_TYPE_DOCKED,
+                      G_SIGNAL_RUN_FIRST,
+                      G_STRUCT_OFFSET (GimpDockedInterface, title_changed),
+                      NULL, NULL,
+                      gimp_marshal_VOID__VOID,
+                      G_TYPE_NONE, 0);
+
+      initialized = TRUE;
+    }
+}
+
+void
+gimp_docked_title_changed (GimpDocked *docked)
+{
+  g_return_if_fail (GIMP_IS_DOCKED (docked));
+
+  g_signal_emit (docked, docked_signals[TITLE_CHANGED], 0);
 }
 
 void
@@ -109,23 +143,6 @@ gimp_docked_get_preview (GimpDocked  *docked,
   return NULL;
 }
 
-void
-gimp_docked_set_context (GimpDocked  *docked,
-                         GimpContext *context,
-                         GimpContext *prev_context)
-{
-  GimpDockedInterface *docked_iface;
-
-  g_return_if_fail (GIMP_IS_DOCKED (docked));
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
-  g_return_if_fail (prev_context == NULL || GIMP_IS_CONTEXT (prev_context));
-
-  docked_iface = GIMP_DOCKED_GET_INTERFACE (docked);
-
-  if (docked_iface->set_context)
-    docked_iface->set_context (docked, context, prev_context);
-}
-
 GimpItemFactory *
 gimp_docked_get_menu (GimpDocked *docked,
                       gpointer   *item_factory_data)
@@ -156,4 +173,36 @@ gimp_docked_get_menu (GimpDocked *docked,
     return docked_iface->get_menu (docked, item_factory_data);
 
   return NULL;
+}
+
+gchar *
+gimp_docked_get_title (GimpDocked *docked)
+{
+  GimpDockedInterface *docked_iface;
+
+  g_return_val_if_fail (GIMP_IS_DOCKED (docked), NULL);
+
+  docked_iface = GIMP_DOCKED_GET_INTERFACE (docked);
+
+  if (docked_iface->get_title)
+    return docked_iface->get_title (docked);
+
+  return NULL;
+}
+
+void
+gimp_docked_set_context (GimpDocked  *docked,
+                         GimpContext *context,
+                         GimpContext *prev_context)
+{
+  GimpDockedInterface *docked_iface;
+
+  g_return_if_fail (GIMP_IS_DOCKED (docked));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (prev_context == NULL || GIMP_IS_CONTEXT (prev_context));
+
+  docked_iface = GIMP_DOCKED_GET_INTERFACE (docked);
+
+  if (docked_iface->set_context)
+    docked_iface->set_context (docked, context, prev_context);
 }

@@ -65,6 +65,10 @@ static gboolean   gimp_dockable_expose_event      (GtkWidget      *widget,
                                                    GdkEventExpose *event);
 static gboolean   gimp_dockable_popup_menu        (GtkWidget      *widget);
 
+static void       gimp_dockable_add               (GtkContainer   *container,
+                                                   GtkWidget      *widget);
+static void       gimp_dockable_remove            (GtkContainer   *container,
+                                                   GtkWidget      *widget);
 static GType      gimp_dockable_child_type        (GtkContainer   *container);
 static void       gimp_dockable_forall            (GtkContainer   *container,
                                                    gboolean       include_internals,
@@ -80,6 +84,9 @@ static gboolean   gimp_dockable_menu_button_press (GtkWidget      *button,
 static void       gimp_dockable_close_clicked     (GtkWidget      *button,
                                                    GimpDockable   *dockable);
 static gboolean   gimp_dockable_show_menu         (GimpDockable   *dockable);
+
+static void       gimp_dockable_title_changed     (GimpDocked     *docked,
+                                                   GimpDockable   *dockable);
 
 
 static GtkBinClass *parent_class = NULL;
@@ -144,6 +151,8 @@ gimp_dockable_class_init (GimpDockableClass *klass)
   widget_class->expose_event  = gimp_dockable_expose_event;
   widget_class->popup_menu    = gimp_dockable_popup_menu;
 
+  container_class->add        = gimp_dockable_add;
+  container_class->remove     = gimp_dockable_remove;
   container_class->child_type = gimp_dockable_child_type;
   container_class->forall     = gimp_dockable_forall;
 
@@ -515,10 +524,21 @@ gimp_dockable_expose_event (GtkWidget      *widget,
           gint text_x;
           gint text_y;
 
-          if (!dockable->title_layout)
+          if (! dockable->title_layout)
             {
-              dockable->title_layout =
-                gtk_widget_create_pango_layout (widget, dockable->blurb);
+              GtkBin *bin   = GTK_BIN (dockable);
+              gchar  *title = NULL;
+
+              if (bin->child)
+                title = gimp_docked_get_title (GIMP_DOCKED (bin->child));
+
+              if (! title)
+                title = g_strdup (dockable->blurb);
+
+              dockable->title_layout = gtk_widget_create_pango_layout (widget,
+                                                                       title);
+
+              g_free (title);
             }
 
           pango_layout_get_pixel_size (dockable->title_layout,
@@ -549,6 +569,32 @@ static gboolean
 gimp_dockable_popup_menu (GtkWidget *widget)
 {
   return gimp_dockable_show_menu (GIMP_DOCKABLE (widget));
+}
+
+static void
+gimp_dockable_add (GtkContainer *container,
+                   GtkWidget    *widget)
+{
+  g_return_if_fail (GTK_BIN (container)->child == NULL);
+
+  GTK_CONTAINER_CLASS (parent_class)->add (container, widget);
+
+  g_signal_connect (widget, "title_changed",
+                    G_CALLBACK (gimp_dockable_title_changed),
+                    container);
+}
+
+static void
+gimp_dockable_remove (GtkContainer *container,
+                      GtkWidget    *widget)
+{
+  g_return_if_fail (GTK_BIN (container)->child == widget);
+
+  g_signal_handlers_disconnect_by_func (widget,
+                                        gimp_dockable_title_changed,
+                                        container);
+
+  GTK_CONTAINER_CLASS (parent_class)->remove (container, widget);
 }
 
 static GType
@@ -907,4 +953,25 @@ gimp_dockable_show_menu (GimpDockable *dockable)
                                      (GtkDestroyNotify) gimp_dockable_menu_end);
 
   return TRUE;
+}
+
+static void
+gimp_dockable_title_changed (GimpDocked   *docked,
+                             GimpDockable *dockable)
+{
+  if (dockable->title_layout)
+    {
+      g_object_unref (dockable->title_layout);
+      dockable->title_layout = NULL;
+    }
+
+  if (GTK_WIDGET (dockable)->window)
+    {
+      GdkRectangle title_area;
+
+      gimp_dockable_get_title_area (dockable, &title_area);
+
+      gdk_window_invalidate_rect (GTK_WIDGET (dockable)->window,
+                                  &title_area, FALSE);
+    }
 }

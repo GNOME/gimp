@@ -38,6 +38,9 @@
 #include "gimphelp-ids.h"
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
+#include "gimppreview.h"
+#include "gimppreviewrenderer.h"
+#include "gimppropwidgets.h"
 #include "gimptooloptionseditor.h"
 #include "gimpwidgets-utils.h"
 
@@ -53,7 +56,7 @@ static void   gimp_tool_options_editor_destroy         (GtkObject             *o
 static GtkWidget *gimp_tool_options_editor_get_preview (GimpDocked            *docked,
                                                         GimpContext           *context,
                                                         GtkIconSize            size);
-
+static gchar *gimp_tool_options_editor_get_title       (GimpDocked            *docked);
 
 static void   gimp_tool_options_editor_save_clicked    (GtkWidget             *widget,
                                                         GimpToolOptionsEditor *editor);
@@ -199,6 +202,7 @@ static void
 gimp_tool_options_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->get_preview = gimp_tool_options_editor_get_preview;
+  docked_iface->get_title   = gimp_tool_options_editor_get_title;
 }
 
 static void
@@ -228,64 +232,37 @@ gimp_tool_options_editor_destroy (GtkObject *object)
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
-static void
-gimp_tool_options_preview_tool_changed (GimpContext  *context,
-                                        GimpToolInfo *tool_info,
-                                        GtkLabel     *label)
-{
-  GtkImage *image;
-
-  if ((image = g_object_get_data (G_OBJECT (label), "tool-icon")))
-    {
-      const gchar *stock_id;
-
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
-      gtk_image_set_from_stock (image, stock_id, image->icon_size);
-    }
-
-  gtk_label_set_text (label, tool_info->blurb);
-
-  gimp_help_set_help_data (GTK_WIDGET (label)->parent->parent,
-                           tool_info->help, tool_info->help_id);
-}
-
 static GtkWidget *
 gimp_tool_options_editor_get_preview (GimpDocked   *docked,
                                       GimpContext  *context,
                                       GtkIconSize   size)
 {
-  GimpToolInfo *tool_info;
-  GtkWidget    *hbox;
-  GtkWidget    *image;
-  GtkWidget    *label;
-  gint          width;
-  gint          height;
-  const gchar  *stock_id;
+  GtkWidget *preview;
+  gint       width;
+  gint       height;
 
   gtk_icon_size_lookup (size, &width, &height);
 
+  preview = gimp_prop_preview_new (G_OBJECT (context), "tool", height);
+  GIMP_PREVIEW (preview)->renderer->size = -1;
+  gimp_preview_renderer_set_size_full (GIMP_PREVIEW (preview)->renderer,
+                                       width, height, 0);
+
+  return preview;
+}
+
+static gchar *
+gimp_tool_options_editor_get_title (GimpDocked *docked)
+{
+  GimpToolOptionsEditor *editor = GIMP_TOOL_OPTIONS_EDITOR (docked);
+  GimpContext           *context;
+  GimpToolInfo          *tool_info;
+
+  context = gimp_get_user_context (editor->gimp);
+
   tool_info = gimp_context_get_tool (context);
 
-  hbox = gtk_hbox_new (FALSE, 2);
-
-  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
-  image = gtk_image_new_from_stock (stock_id, size);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
-
-  label = gtk_label_new (tool_info->blurb);
-
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  g_object_set_data (G_OBJECT (label), "tool-icon", image);
-
-  g_signal_connect_object (context, "tool_changed",
-			   G_CALLBACK (gimp_tool_options_preview_tool_changed),
-			   label,
-			   0);
-
-  return hbox;
+  return g_strdup_printf (_("%s Options"), tool_info->blurb);
 }
 
 GtkWidget *
@@ -524,6 +501,8 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
     }
 
   gimp_tool_options_editor_presets_changed (presets, NULL, editor);
+
+  gimp_docked_title_changed (GIMP_DOCKED (editor));
 }
 
 static void

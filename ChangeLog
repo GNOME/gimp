@@ -1,3 +1,19 @@
+2003-10-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdocked.[ch]: added new virtual function
+	GimpDocked::get_title() which returns a custom title. Added signal
+	"title_changed". Added public wrappers around the new stuff.
+
+	* app/widgets/gimpdockable.c: implement GtkContainer::add() and
+	::remove() and connect to the child's "title_changed" signal. Use
+	the GimpDocked's title if it provides one.
+
+	* app/widgets/gimptooloptionseditor.c: implement
+	GimpDocked::get_title() and return e.g. "Paintbrush Options". Emit
+	"title_changed" when the active tool changes. Simplified
+	GimpDocked::get_preview()'s implementation a lot since it does not
+	include a label any more.
+
 2003-10-21  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcoloroptions.c: changed the default value for

@@ -33,22 +33,30 @@ struct _GimpDockedInterface
 {
   GTypeInterface base_iface;
 
-  void              (* set_aux_info) (GimpDocked   *docked,
-                                      GList        *aux_info);
-  GList           * (* get_aux_info) (GimpDocked   *docked);
+  /*  signals  */
+  void              (* title_changed) (GimpDocked   *docked);
 
-  GtkWidget       * (* get_preview)  (GimpDocked   *docked,
-                                      GimpContext  *context,
-                                      GtkIconSize   size);
-  void              (* set_context)  (GimpDocked   *docked,
-                                      GimpContext  *context,
-                                      GimpContext  *prev_context);
-  GimpItemFactory * (* get_menu)     (GimpDocked   *docked,
-                                      gpointer     *item_factory_data);
+  /*  virtual functions  */
+  void              (* set_aux_info)  (GimpDocked   *docked,
+                                       GList        *aux_info);
+  GList           * (* get_aux_info)  (GimpDocked   *docked);
+
+  GtkWidget       * (* get_preview)   (GimpDocked   *docked,
+                                       GimpContext  *context,
+                                       GtkIconSize   size);
+  GimpItemFactory * (* get_menu)      (GimpDocked   *docked,
+                                       gpointer     *item_factory_data);
+  gchar           * (* get_title)     (GimpDocked   *docked);
+
+  void              (* set_context)   (GimpDocked   *docked,
+                                       GimpContext  *context,
+                                       GimpContext  *prev_context);
 };
 
 
 GType             gimp_docked_interface_get_type (void) G_GNUC_CONST;
+
+void              gimp_docked_title_changed      (GimpDocked   *docked);
 
 void              gimp_docked_set_aux_info       (GimpDocked   *docked,
                                                   GList        *aux_info);
@@ -57,11 +65,13 @@ GList           * gimp_docked_get_aux_info       (GimpDocked   *docked);
 GtkWidget       * gimp_docked_get_preview        (GimpDocked   *docked,
                                                   GimpContext  *context,
                                                   GtkIconSize   size);
+GimpItemFactory * gimp_docked_get_menu           (GimpDocked   *docked,
+                                                  gpointer     *item_factory_data);
+gchar           * gimp_docked_get_title          (GimpDocked   *docked);
+
 void              gimp_docked_set_context        (GimpDocked   *docked,
                                                   GimpContext  *context,
                                                   GimpContext  *prev_context);
-GimpItemFactory * gimp_docked_get_menu           (GimpDocked   *docked,
-                                                  gpointer     *item_factory_data);
 
 
 #endif  /* __GIMP_DOCKED_H__ */
