@@ -1,7 +1,9 @@
 # GIMP sessionrc
-#
-# This is a sample sessionrc that will be used on first startup after
-# user installation.
+# 
+# This file takes session-specific info (that is info, you want to keep
+# between two GIMP sessions). You are not supposed to edit it manually, but
+# of course you can do. The sessionrc will be entirely rewritten every time
+# you quit The GIMP. If this file isn't found, defaults are used.
 
 (session-info "toolbox" "dock"
     (position 48 48)
@@ -9,20 +11,22 @@
     (open-on-exit)
     (dock
         (book
-             "gimp-tool-options@icon"
-             "gimp-brush-grid@icon"
-             "gimp-gradient-list@icon"
-             "gimp-pattern-grid@icon")))
+             "gimp-tool-options@preview")))
 (session-info "dock" "dock"
-    (position 328 48)
-    (size 250 440)
+    (position 300 48)
+    (size 240 660)
     (open-on-exit)
     (aux-info "menu-shown" "follow-active-image")
     (dock
         (book
-             "gimp-layer-list@name"
-             "gimp-channel-list@name"
-             "gimp-vectors-list@name"
-             "gimp-undo-history@name")))
+             "gimp-layer-list@icon"
+             "gimp-channel-list@icon"
+             "gimp-vectors-list@icon"
+             "gimp-undo-history@icon")
+        (book
+             "gimp-brush-grid@preview"
+             "gimp-pattern-grid@preview"
+             "gimp-gradient-list@preview"
+             "gimp-font-list@preview")))
 
 # end of sessionrc

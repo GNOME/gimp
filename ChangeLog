@@ -1,5 +1,12 @@
 2003-10-05  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdock.c (gimp_dock_separator_drag_drop): handle
+	dockable drops where the drag source is a GimpDockable itself.
+
+	* etc/sessionrc: try a new default dialog setup.
+
+2003-10-05  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/tool-options-menu.c (tool_options_menu_update): removed
 	unused variables.
 

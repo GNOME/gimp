@@ -535,18 +535,21 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 
   if (source)
     {
-      GimpDockable *src_dockable;
+      GimpDockable *dockable;
 
-      src_dockable = (GimpDockable *) g_object_get_data (G_OBJECT (source),
-                                                         "gimp-dockable");
+      if (GIMP_IS_DOCKABLE (source))
+        dockable = GIMP_DOCKABLE (source);
+      else
+        dockable = (GimpDockable *) g_object_get_data (G_OBJECT (source),
+                                                       "gimp-dockable");
 
-      if (src_dockable)
+      if (dockable)
 	{
 	  GtkWidget *dockbook;
 	  GList     *children;
 	  gint       index;
 
-	  g_object_set_data (G_OBJECT (src_dockable),
+	  g_object_set_data (G_OBJECT (dockable),
                              "gimp-dock-drag-widget", NULL);
 
 	  children = gtk_container_get_children (GTK_CONTAINER (widget->parent));
@@ -561,7 +564,7 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
           /*  if dropping to the same dock, take care that we don't try
            *  to reorder the *only* dockable in the dock
            */
-          if (src_dockable->dockbook->dock == dock)
+          if (dockable->dockbook->dock == dock)
             {
               gint n_books;
               gint n_dockables;
@@ -569,7 +572,7 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
               n_books = g_list_length (dock->dockbooks);
 
               children =
-                gtk_container_get_children (GTK_CONTAINER (src_dockable->dockbook));
+                gtk_container_get_children (GTK_CONTAINER (dockable->dockbook));
               n_dockables = g_list_length (children);
               g_list_free (children);
 
@@ -577,16 +580,16 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
                 return TRUE; /* successfully do nothing */
             }
 
-	  g_object_ref (src_dockable);
+	  g_object_ref (dockable);
 
-	  gimp_dockbook_remove (src_dockable->dockbook, src_dockable);
+	  gimp_dockbook_remove (dockable->dockbook, dockable);
 
 	  dockbook = gimp_dockbook_new (dock->dialog_factory->menu_factory);
 	  gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index);
 
-	  gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), src_dockable, -1);
+	  gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);
 
-	  g_object_unref (src_dockable);
+	  g_object_unref (dockable);
 
 	  return TRUE;
 	}
@@ -672,7 +675,7 @@ gimp_dock_tab_drag_end (GtkWidget      *widget,
   dockable = GIMP_DOCKABLE (data);
 
   drag_widget = g_object_get_data (G_OBJECT (dockable),
-				     "gimp-dock-drag-widget");
+                                   "gimp-dock-drag-widget");
 
   if (drag_widget)
     {
