@@ -39,7 +39,7 @@
 
 #define SVG_VERSION             "2.5.0"
 #define SVG_DEFAULT_RESOLUTION  72.0
-#define SVG_BUFFER_SIZE         (8 * 1024)
+#define SVG_PREVIEW_SIZE        128
 
 
 typedef struct
@@ -80,6 +80,9 @@ static void  run   (const gchar      *name,
 
 static gint32      load_image         (const gchar  *filename);
 static GdkPixbuf * load_rsvg_pixbuf   (const gchar  *filename,
+                                       SvgLoadVals  *vals,
+                                       GError      **error);
+static gboolean    load_rsvg_size     (const gchar  *filename,
                                        SvgLoadVals  *vals,
                                        GError      **error);
 static gboolean    load_dialog        (const gchar  *filename);
@@ -191,7 +194,9 @@ run (const gchar      *name,
 
       if (load_vals.resolution < GIMP_MIN_RESOLUTION ||
           load_vals.resolution > GIMP_MAX_RESOLUTION)
-        load_vals.resolution = SVG_DEFAULT_RESOLUTION;
+        {
+          load_vals.resolution = SVG_DEFAULT_RESOLUTION;
+        }
 
       if (status == GIMP_PDB_SUCCESS)
 	{
@@ -303,18 +308,13 @@ load_image (const gchar *filename)
 }
 
 static void
-load_size_callback (gint     *width,
-                    gint     *height,
-                    gpointer  data)
+load_set_size_callback (gint     *width,
+                        gint     *height,
+                        gpointer  data)
 {
   SvgLoadVals *vals = data;
-  gint         owidth;
-  gint         oheight;
 
   g_return_if_fail (*width > 0 && *height > 0);
-
-  owidth  = *width;
-  oheight = *height;
 
   if (!vals->width || !vals->height)
     return;
@@ -348,9 +348,6 @@ load_size_callback (gint     *width,
       vals->width  = *width;
       vals->height = *height;
     }
-
-  load_vals.width  = owidth;
-  load_vals.height = oheight;
 }
 
 static GdkPixbuf *
@@ -373,11 +370,11 @@ load_rsvg_pixbuf (const gchar  *filename,
   handle = rsvg_handle_new ();
 
   rsvg_handle_set_dpi (handle, vals->resolution);
-  rsvg_handle_set_size_callback (handle, load_size_callback, vals, NULL);
+  rsvg_handle_set_size_callback (handle, load_set_size_callback, vals, NULL);
 
   while (success && status != G_IO_STATUS_EOF)
     {
-      guchar buf[SVG_BUFFER_SIZE];
+      guchar buf[8192];
       gsize  len;
 
       status = g_io_channel_read_chars (io, buf, sizeof (buf), &len, error);
@@ -408,6 +405,69 @@ load_rsvg_pixbuf (const gchar  *filename,
   return pixbuf;
 }
 
+static void
+load_get_size_callback (gint     *width,
+                        gint     *height,
+                        gpointer  data)
+{
+  SvgLoadVals *vals = data;
+
+  vals->width  = *width;
+  vals->height = *height;
+
+  /*  this cancels loading  */
+  vals->resolution = 0.0;
+}
+
+static gboolean
+load_rsvg_size (const gchar  *filename,
+                SvgLoadVals  *vals,
+                GError      **error)
+{
+  RsvgHandle *handle;
+  GIOChannel *io;
+  GIOStatus   status  = G_IO_STATUS_NORMAL;
+  gboolean    success = TRUE;
+
+  io = g_io_channel_new_file (filename, "r", error);
+  if (!io)
+    return FALSE;
+
+  g_io_channel_set_encoding (io, NULL, NULL);
+
+  handle = rsvg_handle_new ();
+
+  rsvg_handle_set_dpi (handle, vals->resolution);
+  rsvg_handle_set_size_callback (handle, load_get_size_callback, vals, NULL);
+
+  while (success && status != G_IO_STATUS_EOF && vals->resolution > 0.0)
+    {
+      guchar buf[1024];
+      gsize  len;
+
+      status = g_io_channel_read_chars (io, buf, sizeof (buf), &len, error);
+
+      switch (status)
+        {
+        case G_IO_STATUS_ERROR:
+          success = FALSE;
+          break;
+        case G_IO_STATUS_EOF:
+          success = rsvg_handle_close (handle, error);
+          break;
+        case G_IO_STATUS_NORMAL:
+          success = rsvg_handle_write (handle, buf, len, error);
+          break;
+        case G_IO_STATUS_AGAIN:
+          break;
+        }
+    }
+
+  g_io_channel_unref (io);
+  rsvg_handle_free (handle);
+
+  return success;
+}
 
 static void
 load_ok_callback (GtkWidget *widget,
@@ -424,24 +484,24 @@ load_ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
+
+static gboolean  resolution_dependant = FALSE;
+
 static void
 load_resolution_callback (GimpSizeEntry *res,
                           GimpSizeEntry *size)
 {
-  gdouble width, height, factor;
-
-  width  = gimp_size_entry_get_refval (size, 0);
-  height = gimp_size_entry_get_refval (size, 1);
-
-  if (load_vals.resolution > 0.0)
+  if (resolution_dependant && load_vals.resolution > 0.0)
     {
-      factor = gimp_size_entry_get_refval (res, 0) / load_vals.resolution;
+      gdouble f = gimp_size_entry_get_refval (res, 0) / load_vals.resolution;
 
-      gimp_size_entry_set_refval (size, 0, factor * width);
-      gimp_size_entry_set_refval (size, 1, factor * height);
-
-      load_vals.resolution = gimp_size_entry_get_refval (res, 0);
+      gimp_size_entry_set_refval (size, 0,
+                                  f * gimp_size_entry_get_refval (size, 0));
+      gimp_size_entry_set_refval (size, 1,
+                                  f * gimp_size_entry_get_refval (size, 1));
     }
+
+  load_vals.resolution = gimp_size_entry_get_refval (res, 0);
 }
 
 static gboolean
@@ -463,11 +523,11 @@ load_dialog (const gchar *filename)
   GtkObject *adj;
   GError    *error = NULL;
 
-  SvgLoadVals  preview_vals = { 72.0, -128, -128 };
+  SvgLoadVals  vals2;
+  SvgLoadVals  vals = { SVG_DEFAULT_RESOLUTION,
+                        - SVG_PREVIEW_SIZE, - SVG_PREVIEW_SIZE };
 
-  preview_vals.resolution = load_vals.resolution;
-
-  preview = load_rsvg_pixbuf (filename, &preview_vals, &error);
+  preview = load_rsvg_pixbuf (filename, &vals, &error);
 
   if (!preview)
     {
@@ -477,6 +537,14 @@ load_dialog (const gchar *filename)
                  filename, error ? error->message : "unknown reason");
       return FALSE;
     }
+
+  vals2.resolution = 2 * load_vals.resolution;
+  load_rsvg_size (filename, &vals2, NULL);
+
+  vals.resolution = load_vals.resolution;
+  load_rsvg_size (filename, &vals, NULL);
+
+  resolution_dependant = (vals.width != vals2.width);
 
   gimp_ui_init ("svg", FALSE);
 
@@ -580,8 +648,8 @@ load_dialog (const gchar *filename)
                                          GIMP_MIN_IMAGE_SIZE,
                                          GIMP_MAX_IMAGE_SIZE);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 0, load_vals.width);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 1, load_vals.height);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 0, vals.width);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 1, vals.height);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size), 0,
 				  load_vals.resolution, FALSE);
