@@ -1,3 +1,8 @@
+2003-12-05  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/gif.c: always compare using unsigned chars for 7bit
+	ASCII check.
+
 2003-12-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/pdb-types.h: added enum GimpPDBCompatMode which can
