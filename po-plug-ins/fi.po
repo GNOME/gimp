@@ -1,6 +1,6 @@
 # Finnish translation of GIMP 1.1
 # Copyright (C) 1999 Free Software Foundation, Inc.
-# Ville Hautamäki <villeh@cs.joensuu.fi>, 1998.
+# Ville Hautamäki <villeh@cs.joensuu.fi>, 1998, 2000.
 # Tor Lillqvist <tml@íki.fi>, 1999, 2000.
 #
 msgid ""
@@ -783,11 +783,11 @@ msgstr "Fraktaaleja"
 #: plug-ins/FractalExplorer/Dialogs.c:1566 plug-ins/gfig/gfig.c:1492
 #, c-format
 msgid "Error opening: %s"
-msgstr ""
+msgstr "Ei voi avata: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1568 plug-ins/gfig/gfig.c:1494
 msgid "Could not save."
-msgstr ""
+msgstr "Ei voi tallettaa."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1584
 msgid "Failed to write file\n"
@@ -855,6 +855,8 @@ msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
 msgstr ""
+"Oletko varma, että haluat tuhota\n"
+"\"%s\" listasta ja levyltä?"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:739
 msgid "Delete Fractal"
@@ -949,7 +951,7 @@ msgstr "Käytä kuhmukuvausta"
 
 #: plug-ins/Lighting/lighting_ui.c:412
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr ""
+msgstr "Päälle pois bump-mapping"
 
 #: plug-ins/Lighting/lighting_ui.c:415
 msgid "Use Environment Mapping"
@@ -957,7 +959,7 @@ msgstr "Käytä ympäristökuvausta"
 
 #: plug-ins/Lighting/lighting_ui.c:425
 msgid "Enable/disable environment mapping (reflection)"
-msgstr ""
+msgstr "Päälle/pois ympäristönkuvaus (heijastus)"
 
 #: plug-ins/Lighting/lighting_ui.c:428 plug-ins/MapObject/mapobject_ui.c:565
 msgid "Transparent Background"
@@ -965,16 +967,16 @@ msgstr "Läpinäkyvä tausta"
 
 #: plug-ins/Lighting/lighting_ui.c:438
 msgid "Make destination image transparent where bump height is zero"
-msgstr ""
+msgstr "Tee tuloskuvasta läpinäkyvä kohdissa missä bumpin korkeus on nolla"
 
 #: plug-ins/Lighting/lighting_ui.c:441 plug-ins/MapObject/mapobject_ui.c:590
 #: plug-ins/common/tile.c:436
 msgid "Create New Image"
-msgstr ""
+msgstr "Luo uusi kuva"
 
 #: plug-ins/Lighting/lighting_ui.c:451 plug-ins/MapObject/mapobject_ui.c:600
 msgid "Create a new image when applying filter"
-msgstr ""
+msgstr "Luo uusi kuva käyttäessäsi filtteriä"
 
 #: plug-ins/Lighting/lighting_ui.c:453
 msgid "High Preview Quality"
@@ -982,7 +984,7 @@ msgstr "Korkealuokkainen esikatselukuva"
 
 #: plug-ins/Lighting/lighting_ui.c:463
 msgid "Enable/disable high quality previews"
-msgstr ""
+msgstr "Päälle/pois tarkka esikatselu"
 
 #: plug-ins/Lighting/lighting_ui.c:465 plug-ins/MapObject/mapobject_ui.c:602
 msgid "Enable Tooltips"
@@ -990,12 +992,12 @@ msgstr "Näytä vihjeitä"
 
 #: plug-ins/Lighting/lighting_ui.c:475 plug-ins/MapObject/mapobject_ui.c:611
 msgid "Enable/disable tooltip messages"
-msgstr ""
+msgstr "Päälle/pois vihje viestit"
 
 #. Antialiasing options
 #: plug-ins/Lighting/lighting_ui.c:479 plug-ins/MapObject/mapobject_ui.c:615
 msgid "Antialiasing Options"
-msgstr ""
+msgstr "Antialiasointi vaihtoehdot"
 
 #: plug-ins/Lighting/lighting_ui.c:488 plug-ins/MapObject/mapobject_ui.c:624
 msgid "Enable Antialiasing"
@@ -1003,29 +1005,29 @@ msgstr "Käytä antialiasointia"
 
 #: plug-ins/Lighting/lighting_ui.c:498 plug-ins/MapObject/mapobject_ui.c:634
 msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr ""
+msgstr "Päälle/pois sahalaitaiset reunojen poisto (antialiasointi)"
 
 #: plug-ins/Lighting/lighting_ui.c:511 plug-ins/MapObject/mapobject_ui.c:647
 #: plug-ins/common/bumpmap.c:1041 plug-ins/common/emboss.c:592
 #: plug-ins/struc/struc.c:298
 msgid "Depth:"
-msgstr ""
+msgstr "Syvyys:"
 
 #: plug-ins/Lighting/lighting_ui.c:514 plug-ins/MapObject/mapobject_ui.c:650
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr ""
+msgstr "Antialiasoinnin laatu. Korkeampi on parempi, mutta hitaampi"
 
 #: plug-ins/Lighting/lighting_ui.c:526 plug-ins/MapObject/mapobject_ui.c:662
 msgid "Treshold:"
-msgstr ""
+msgstr "Kynnysarvo:"
 
 #: plug-ins/Lighting/lighting_ui.c:530 plug-ins/MapObject/mapobject_ui.c:666
 msgid "Stop when pixel differences are smaller than this value"
-msgstr ""
+msgstr "Lopeta kun pikselien erotus on pienempi kuin tämä arvo"
 
 #: plug-ins/Lighting/lighting_ui.c:556 plug-ins/MapObject/mapobject_ui.c:692
 msgid "Light Settings"
-msgstr ""
+msgstr "Valo asetukset"
 
 #: plug-ins/Lighting/lighting_ui.c:571 plug-ins/MapObject/mapobject_ui.c:706
 msgid "Point Light"
@@ -1045,28 +1047,28 @@ msgstr "ei valoa"
 
 #: plug-ins/Lighting/lighting_ui.c:582 plug-ins/MapObject/mapobject_ui.c:715
 msgid "Lightsource Type:"
-msgstr ""
+msgstr "Valonlähteen tyyppi:"
 
 #: plug-ins/Lighting/lighting_ui.c:585 plug-ins/MapObject/mapobject_ui.c:718
 msgid "Type of light source to apply"
-msgstr ""
+msgstr "Käytettävän valolähteen tyyppi"
 
 #: plug-ins/Lighting/lighting_ui.c:587 plug-ins/MapObject/mapobject_ui.c:720
 msgid "Select Lightsource Color"
-msgstr ""
+msgstr "Valitse valolähteen väri"
 
 #: plug-ins/Lighting/lighting_ui.c:591 plug-ins/MapObject/mapobject_ui.c:724
 msgid "Lightsource Color:"
-msgstr ""
+msgstr "Valolahteen väri:"
 
 #: plug-ins/Lighting/lighting_ui.c:595 plug-ins/MapObject/mapobject_ui.c:728
 msgid "Set light source color"
-msgstr ""
+msgstr "Valitse valolähteen väri"
 
 #: plug-ins/Lighting/lighting_ui.c:597 plug-ins/MapObject/mapobject_ui.c:730
 #: plug-ins/MapObject/mapobject_ui.c:1028
 msgid "Position"
-msgstr ""
+msgstr "Paikka"
 
 #. X
 #. table col, row
@@ -1079,11 +1081,11 @@ msgstr ""
 #: plug-ins/gap/gap_mov_dialog.c:1855 plug-ins/gflare/gflare.c:2874
 #: plug-ins/ifscompose/ifscompose.c:513
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
 #: plug-ins/Lighting/lighting_ui.c:621 plug-ins/MapObject/mapobject_ui.c:754
 msgid "Light source X position in XYZ space"
-msgstr ""
+msgstr "Valolähteen X paikka XYZ avaruudessa"
 
 #. Y
 #. table col, row
@@ -1096,11 +1098,11 @@ msgstr ""
 #: plug-ins/common/xbm.c:1221 plug-ins/gap/gap_mov_dialog.c:1873
 #: plug-ins/gflare/gflare.c:2878 plug-ins/ifscompose/ifscompose.c:527
 msgid "Y:"
-msgstr ""
+msgstr "Y:"
 
 #: plug-ins/Lighting/lighting_ui.c:634 plug-ins/MapObject/mapobject_ui.c:767
 msgid "Light source Y position in XYZ space"
-msgstr ""
+msgstr "Valolahteen Y paikka XYZ avaruudessa"
 
 #: plug-ins/Lighting/lighting_ui.c:640 plug-ins/Lighting/lighting_ui.c:690
 #: plug-ins/MapObject/mapobject_ui.c:773 plug-ins/MapObject/mapobject_ui.c:823
@@ -1108,11 +1110,11 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1102
 #: plug-ins/MapObject/mapobject_ui.c:1200
 msgid "Z:"
-msgstr ""
+msgstr "Z"
 
 #: plug-ins/Lighting/lighting_ui.c:647 plug-ins/MapObject/mapobject_ui.c:780
 msgid "Light source Z position in XYZ space"
-msgstr ""
+msgstr "Valolähteen Z paikka XYZ avaruudessa"
 
 #: plug-ins/Lighting/lighting_ui.c:650 plug-ins/MapObject/mapobject_ui.c:783
 msgid "Direction Vector"
@@ -1120,45 +1122,45 @@ msgstr "suuntavektori"
 
 #: plug-ins/Lighting/lighting_ui.c:673 plug-ins/MapObject/mapobject_ui.c:806
 msgid "Light source X direction in XYZ space"
-msgstr ""
+msgstr "Valolähteen X suunta XYZ avaruudessa"
 
 #: plug-ins/Lighting/lighting_ui.c:685 plug-ins/MapObject/mapobject_ui.c:818
 msgid "Light source Y direction in XYZ space"
-msgstr ""
+msgstr "Valolähteen Y suunta XYZ avaruudessa"
 
 #: plug-ins/Lighting/lighting_ui.c:697 plug-ins/MapObject/mapobject_ui.c:830
 msgid "Light source Z direction in XYZ space"
-msgstr ""
+msgstr "Valolähteen Z suunta XYZ avaruudessa"
 
 #: plug-ins/Lighting/lighting_ui.c:722 plug-ins/MapObject/mapobject_ui.c:855
 msgid "Intensity Levels"
-msgstr ""
+msgstr "Intensiteetti tasot"
 
 #: plug-ins/Lighting/lighting_ui.c:740 plug-ins/MapObject/mapobject_ui.c:873
 #: plug-ins/common/bumpmap.c:1081
 msgid "Ambient:"
-msgstr ""
+msgstr "Ympäristö:"
 
 #: plug-ins/Lighting/lighting_ui.c:753 plug-ins/MapObject/mapobject_ui.c:886
 msgid "Amount of original color to show where no direct light falls"
-msgstr ""
+msgstr "Näytettävän alkuperäisen värin määrä, kun suora valo epäonnistuu"
 
 #: plug-ins/Lighting/lighting_ui.c:765 plug-ins/Lighting/lighting_ui.c:804
 #: plug-ins/MapObject/mapobject_ui.c:898 plug-ins/MapObject/mapobject_ui.c:937
 msgid "Diffuse:"
-msgstr ""
+msgstr "Diffuusio:"
 
 #: plug-ins/Lighting/lighting_ui.c:778 plug-ins/MapObject/mapobject_ui.c:911
 msgid "Intensity of original color when lit by a light source"
-msgstr ""
+msgstr "Alkuperäisen värin intensiteteetti, kun käynnistetty valolähteestä"
 
 #: plug-ins/Lighting/lighting_ui.c:786 plug-ins/MapObject/mapobject_ui.c:919
 msgid "Reflectivity"
-msgstr ""
+msgstr "Heijastavuus"
 
 #: plug-ins/Lighting/lighting_ui.c:817 plug-ins/MapObject/mapobject_ui.c:950
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr ""
+msgstr "Suuremmilla arvoilla objekti heijastaa enemmän valoa (valoisampi)"
 
 #: plug-ins/Lighting/lighting_ui.c:829 plug-ins/MapObject/mapobject_ui.c:962
 msgid "Specular:"
@@ -1208,11 +1210,11 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:932
 msgid "Minimum Height:"
-msgstr ""
+msgstr "Minimi korkeus:"
 
 #: plug-ins/Lighting/lighting_ui.c:941
 msgid "Maximum Height:"
-msgstr ""
+msgstr "Maksimi korkeus:"
 
 #: plug-ins/Lighting/lighting_ui.c:947
 msgid "Autostretch to Fit Value Range"
