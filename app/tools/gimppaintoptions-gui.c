@@ -105,7 +105,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   menu = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                                      _("Mode:"), 0.0, 0.5,
-                                     menu, 2, TRUE);
+                                     menu, 2, FALSE);
 
   if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
@@ -404,7 +404,7 @@ gradient_options_gui (GimpGradientOptions *gradient,
       combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                                  _("Repeat:"), 0.0, 0.5,
-                                 combo, 2, TRUE);
+                                 combo, 2, FALSE);
 
       gtk_widget_show (table);
     }

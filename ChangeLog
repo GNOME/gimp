@@ -1,5 +1,19 @@
 2004-10-15  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptransformoptions.c: removed the "Density" label.
+	It wasn't helpful and caused the transform options to be wider than
+	necessary.
+
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimptransformoptions.c: let combo boxes expand
+	horizontally like we do in other (all?) dialogs.
+
+	* app/widgets/gimptemplateeditor.c
+	(gimp_template_editor_aspect_callback): update the pixel size label.
+
+2004-10-15  Sven Neumann  <sven@gimp.org>
+
 	* data/images/gimp-splash.png: new splash by Jimmac.
 
 2004-10-15  DindinX  <dindinx@gimp.org>

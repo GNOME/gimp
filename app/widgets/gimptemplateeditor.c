@@ -597,17 +597,14 @@ gimp_template_editor_aspect_callback (GtkWidget          *widget,
 {
   if (! editor->block_aspect && GTK_TOGGLE_BUTTON (widget)->active)
     {
-      gint    width;
-      gint    height;
-      gdouble xresolution;
-      gdouble yresolution;
+      GimpTemplate *template    = editor->template;
+      gint          width       = template->width;
+      gint          height      = template->height;
+      gdouble       xresolution = template->xresolution;
+      gdouble       yresolution = template->yresolution;
+      gchar        *text;
 
-      width       = editor->template->width;
-      height      = editor->template->height;
-      xresolution = editor->template->xresolution;
-      yresolution = editor->template->yresolution;
-
-      if (editor->template->width == editor->template->height)
+      if (template->width == template->height)
         {
           editor->block_aspect = TRUE;
           gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (editor->aspect_button),
@@ -616,7 +613,7 @@ gimp_template_editor_aspect_callback (GtkWidget          *widget,
           return;
        }
 
-      g_signal_handlers_block_by_func (editor->template,
+      g_signal_handlers_block_by_func (template,
                                        gimp_template_editor_template_notify,
                                        editor);
 
@@ -625,16 +622,21 @@ gimp_template_editor_aspect_callback (GtkWidget          *widget,
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (editor->size_se), 1,
                                       xresolution, FALSE);
 
-      g_object_set (editor->template,
+      g_object_set (template,
                     "width",       height,
                     "height",      width,
                     "xresolution", yresolution,
                     "yresolution", xresolution,
                     NULL);
 
-      g_signal_handlers_unblock_by_func (editor->template,
+      g_signal_handlers_unblock_by_func (template,
                                          gimp_template_editor_template_notify,
                                          editor);
+
+      text = g_strdup_printf (_("%d x %d pixels"),
+                              template->width, template->height);
+      gtk_label_set_text (GTK_LABEL (editor->pixel_label), text);
+      g_free (text);
     }
 }
 

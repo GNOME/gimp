@@ -340,7 +340,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (label);
 
   combo = gimp_prop_enum_combo_box_new (config, "interpolation", 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
   /*  the supersample toggle button  */
@@ -369,7 +369,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (label);
 
   combo = gimp_prop_enum_combo_box_new (config, "preview-type", 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
   /*  the grid type menu  */
@@ -383,8 +383,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
 
   /*  the grid density scale  */
   table = gtk_table_new (1, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 2);
   gtk_box_pack_start (GTK_BOX (button), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -400,7 +399,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
 
   gimp_prop_scale_entry_new (config, "grid-size",
                              GTK_TABLE (table), 0, 0,
-                             _("Density:"),
+                             NULL,
                              1.0, 8.0, 0,
                              FALSE, 0.0, 0.0);
 
