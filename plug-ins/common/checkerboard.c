@@ -21,9 +21,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -41,7 +38,7 @@ typedef struct data
 
 typedef struct
 {
-  gint run;
+  gboolean run;
 } CheckInterface;
 
 static CheckInterface cint =
@@ -60,7 +57,7 @@ static void      check   (GimpDrawable  *drawable);
 static gint      inblock (gint           pos,
 			  gint           size);
 
-static gint      check_dialog      (void);
+static gboolean  check_dialog      (void);
 static void      check_ok_callback (GtkWidget *widget,
 				    gpointer   data);
 
@@ -88,7 +85,7 @@ query (void)
     { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "check_mode", "Regular or Physcobilly" },
+    { GIMP_PDB_INT32, "check_mode", "Regular or Psychobilly" },
     { GIMP_PDB_INT32, "check_size", "Size of the checks" }
   };
 
@@ -340,7 +337,7 @@ inblock (gint pos,
   return in[ pos % (len-1) ];
 }
 
-static gint
+static gboolean
 check_dialog (void)
 {
   GtkWidget *dlg;
@@ -378,7 +375,7 @@ check_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Psychobilly"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Psychobilly"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cvals.mode);
   gtk_widget_show (toggle);
@@ -393,7 +390,7 @@ check_dialog (void)
   gtk_widget_show (table);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				    _("Check Size:"), 200, 0,
+				    _("Check _Size:"), 200, 0,
 				    cvals.size, 1, 400, 1, 10, 0,
 				    TRUE, 0, 0,
 				    NULL, NULL);
