@@ -80,8 +80,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2002-10-10 23:12+0200\n"
-"PO-Revision-Date: 2002-09-29 18:33+0200\n"
+"POT-Creation-Date: 2002-10-15 15:25+0200\n"
+"PO-Revision-Date: 2002-10-15 15:25+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -279,7 +279,7 @@ msgstr "<<ugyldig>>"
 
 # denne og følgende er i forbindelse med fortrydelse så det er
 # nødvendigt med navneord 
-#: app/gui/resize-dialog.c:200 app/undo.c:3599
+#: app/undo.c:3599 app/gui/resize-dialog.c:200
 msgid "Scale Image"
 msgstr "Skalering af billede"
 
@@ -295,7 +295,7 @@ msgstr "Konvertering af billede"
 msgid "Crop Image"
 msgstr "Tilskæring af lag"
 
-#: app/gui/image-commands.c:298 app/undo.c:3603
+#: app/undo.c:3603 app/gui/image-commands.c:298
 msgid "Merge Layers"
 msgstr "Forenelse af lag"
 
@@ -311,7 +311,7 @@ msgstr "Hjælpelinje"
 msgid "Layer Properties"
 msgstr "Lagegenskaber"
 
-#: app/gui/resize-dialog.c:192 app/undo.c:3607
+#: app/undo.c:3607 app/gui/resize-dialog.c:192
 msgid "Scale Layer"
 msgstr "Skalering af lag"
 
@@ -371,7 +371,7 @@ msgstr "Parasitfjernelse"
 msgid "Plug-In"
 msgstr "Udvidelsesmodul"
 
-#: app/pdb/internal_procs.c:124 app/undo.c:3623
+#: app/undo.c:3623 app/pdb/internal_procs.c:124
 msgid "Image"
 msgstr "Billede"
 
@@ -379,12 +379,12 @@ msgstr "Billede"
 msgid "Image Mod"
 msgstr "Billedændring"
 
-#: app/gui/file-new-dialog.c:374 app/undo.c:3625
+#: app/undo.c:3625 app/gui/file-new-dialog.c:374
 msgid "Image Type"
 msgstr "Billedtype"
 
 #. Image size frame
-#: app/gui/file-new-dialog.c:144 app/undo.c:3626
+#: app/undo.c:3626 app/gui/file-new-dialog.c:144
 msgid "Image Size"
 msgstr "Billedstørrelse"
 
@@ -392,7 +392,7 @@ msgstr "Billedstørrelse"
 msgid "Resolution Change"
 msgstr "Opløsningsændring"
 
-#: app/core/gimpchannel.c:505 app/undo.c:3630
+#: app/undo.c:3630 app/core/gimpchannel.c:505
 msgid "Selection Mask"
 msgstr "Markeringsmaske"
 
@@ -400,7 +400,7 @@ msgstr "Markeringsmaske"
 msgid "Rename Item"
 msgstr "Omdøbelse af element"
 
-#: app/gui/layers-commands.c:601 app/gui/layers-commands.c:633 app/undo.c:3632
+#: app/undo.c:3632 app/gui/layers-commands.c:601 app/gui/layers-commands.c:633
 msgid "New Layer"
 msgstr "Nyt lag"
 
@@ -412,7 +412,7 @@ msgstr "Sletning af lag"
 msgid "Layer Mod"
 msgstr "Ændring af lag"
 
-#: app/gui/layers-commands.c:888 app/undo.c:3635
+#: app/undo.c:3635 app/gui/layers-commands.c:888
 msgid "Add Layer Mask"
 msgstr "Tilføjelse af lagmaske"
 
@@ -429,8 +429,8 @@ msgstr "Repositionering af lag"
 msgid "Layer Move"
 msgstr "Flytning af lag"
 
-#: app/gui/channels-commands.c:314 app/gui/channels-commands.c:351
-#: app/undo.c:3639
+#: app/undo.c:3639 app/gui/channels-commands.c:314
+#: app/gui/channels-commands.c:351
 msgid "New Channel"
 msgstr "Ny kanal"
 
@@ -638,8 +638,8 @@ msgstr "fatal fortolkningsfejl"
 
 #: app/config/gimpscanner.c:74 app/core/gimpbrushpipe.c:308
 #: app/gui/paths-dialog.c:1886 app/gui/paths-dialog.c:2011
-#: app/tools/gimpcurvestool.c:1398 app/tools/gimpcurvestool.c:1414
-#: app/tools/gimplevelstool.c:1309 app/tools/gimplevelstool.c:1325
+#: app/tools/gimpcurvestool.c:1444 app/tools/gimpcurvestool.c:1460
+#: app/tools/gimplevelstool.c:1328 app/tools/gimplevelstool.c:1344
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Kunne ikke åbne filen '%s': %s"
@@ -2187,6 +2187,7 @@ msgid "Y:"
 msgstr "y:"
 
 #: app/gui/file-new-dialog.c:324 app/gui/resize-dialog.c:638
+#, c-format
 msgid "pixels/%a"
 msgstr "punkter/%a"
 
@@ -4142,61 +4143,50 @@ msgid "Import Palette"
 msgstr "Importér palet"
 
 #: app/gui/palette-import-dialog.c:175
-#, fuzzy
 msgid "Import a New Palette"
-msgstr "Importér palet"
+msgstr "Importér en ny palet"
 
 #: app/gui/palette-import-dialog.c:182
-#, fuzzy
 msgid "_Import"
-msgstr "Importér"
+msgstr "_Importér"
 
 #. The "Source" frame
 #: app/gui/palette-import-dialog.c:208
-#, fuzzy
 msgid "Select Source"
-msgstr "Markér intet"
+msgstr "Vælg kilde"
 
 #: app/gui/palette-import-dialog.c:220
-#, fuzzy
 msgid "_Gradient"
-msgstr "Farveovergang"
+msgstr "_Farveovergang"
 
 #: app/gui/palette-import-dialog.c:232
-#, fuzzy
 msgid "I_mage"
-msgstr "Billede"
+msgstr "_Billede"
 
 #. The "Import" frame
 #: app/gui/palette-import-dialog.c:290
-#, fuzzy
 msgid "Import Options"
-msgstr "Værktøjsindstillinger"
+msgstr "Importeringsindstillinger"
 
 #: app/gui/palette-import-dialog.c:304
-#, fuzzy
 msgid "New Import"
-msgstr "Importér"
+msgstr "Ny import"
 
 #: app/gui/palette-import-dialog.c:306
-#, fuzzy
 msgid "Palette _Name:"
-msgstr "_Navn på lag:"
+msgstr "_Navn på palet:"
 
 #: app/gui/palette-import-dialog.c:312
-#, fuzzy
 msgid "N_umber of Colors:"
-msgstr "Maks. antal farver:"
+msgstr "A_ntal farver:"
 
 #: app/gui/palette-import-dialog.c:325
-#, fuzzy
 msgid "C_olumns:"
-msgstr "Kolonner:"
+msgstr "K_olonner:"
 
 #: app/gui/palette-import-dialog.c:337
-#, fuzzy
 msgid "I_nterval:"
-msgstr "Interval:"
+msgstr "I_nterval:"
 
 #. The "Preview" frame
 #: app/gui/palette-import-dialog.c:349
@@ -6208,64 +6198,64 @@ msgstr "Kun aktuelt lag"
 msgid "Allow Enlarging (<Alt>)"
 msgstr "Tillad forstørring (<Alt>)"
 
-#: app/tools/gimpcurvestool.c:171
+#: app/tools/gimpcurvestool.c:173
 msgid "Curves"
 msgstr "Kurver"
 
-#: app/tools/gimpcurvestool.c:172
+#: app/tools/gimpcurvestool.c:174
 msgid "Adjust color curves"
 msgstr "Justér farvekurver"
 
-#: app/tools/gimpcurvestool.c:173
+#: app/tools/gimpcurvestool.c:175
 msgid "/Layer/Colors/Curves..."
 msgstr "/Lag/Farver/Kurver..."
 
-#: app/tools/gimpcurvestool.c:243
+#: app/tools/gimpcurvestool.c:246
 msgid "Adjust Color Curves"
 msgstr "Justér farvekurver"
 
-#: app/tools/gimpcurvestool.c:309
+#: app/tools/gimpcurvestool.c:314
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Kurver for indekserede tegneobjekter kan ikke justeres."
 
-#: app/tools/gimpcurvestool.c:587 app/tools/gimplevelstool.c:361
+#: app/tools/gimpcurvestool.c:624 app/tools/gimplevelstool.c:361
 msgid "R_eset Channel"
 msgstr "N_ulstil kanal"
 
-#: app/tools/gimpcurvestool.c:596
+#: app/tools/gimpcurvestool.c:633
 msgid "Modify Curves for Channel:"
 msgstr "Tilret kurver for kanal:"
 
-#: app/tools/gimpcurvestool.c:603
+#: app/tools/gimpcurvestool.c:640
 msgid "Smooth"
 msgstr "Udtvær"
 
-#: app/tools/gimpcurvestool.c:606
+#: app/tools/gimpcurvestool.c:643
 msgid "Free"
 msgstr "Fri"
 
-#: app/tools/gimpcurvestool.c:612
+#: app/tools/gimpcurvestool.c:649
 msgid "Curve Type:"
 msgstr "Kurvetype:"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:668 app/tools/gimplevelstool.c:563
+#: app/tools/gimpcurvestool.c:709 app/tools/gimplevelstool.c:589
 msgid "All Channels"
 msgstr "Alle kanaler"
 
-#: app/tools/gimpcurvestool.c:682
+#: app/tools/gimpcurvestool.c:723
 msgid "Read curves settings from file"
 msgstr "Læs kurveindstillinger fra fil"
 
-#: app/tools/gimpcurvestool.c:692
+#: app/tools/gimpcurvestool.c:733
 msgid "Save curves settings to file"
 msgstr "Gem kurveindstillinger i fil"
 
-#: app/tools/gimpcurvestool.c:1322
+#: app/tools/gimpcurvestool.c:1369
 msgid "Load Curves"
 msgstr "Indlæs kurver"
 
-#: app/tools/gimpcurvestool.c:1341
+#: app/tools/gimpcurvestool.c:1388
 msgid "Save Curves"
 msgstr "Gem kurver"
 
@@ -6373,59 +6363,59 @@ msgstr "Markér sammenhængende områder"
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/Værktøjer/Markering/Udflydende markering"
 
-#: app/tools/gimphistogramtool.c:132
+#: app/tools/gimphistogramtool.c:120
 msgid "Histogram"
 msgstr "Histogram"
 
 # det er et værktøjstip til ovenstående tekst - mere beskrivende end den
 # intetsigende original
-#: app/tools/gimphistogramtool.c:133
+#: app/tools/gimphistogramtool.c:121
 msgid "View image histogram"
 msgstr "Vis oplysninger om billedets farvefordeling"
 
-#: app/tools/gimphistogramtool.c:134
+#: app/tools/gimphistogramtool.c:122
 msgid "/Layer/Colors/Histogram..."
 msgstr "/Lag/Farver/Histogram..."
 
-#: app/tools/gimphistogramtool.c:195
+#: app/tools/gimphistogramtool.c:183
 msgid "Histogram does not operate on indexed drawables."
 msgstr "Histogram virker ikke på indekserede tegneobjekter."
 
-#: app/tools/gimphistogramtool.c:344
+#: app/tools/gimphistogramtool.c:331
 msgid "Mean:"
 msgstr "Middelværdi:"
 
-#: app/tools/gimphistogramtool.c:345
+#: app/tools/gimphistogramtool.c:332
 msgid "Std Dev:"
 msgstr "Std.afvig:"
 
-#: app/tools/gimphistogramtool.c:346
+#: app/tools/gimphistogramtool.c:333
 msgid "Median:"
 msgstr "Median:"
 
-#: app/tools/gimphistogramtool.c:347
+#: app/tools/gimphistogramtool.c:334
 msgid "Pixels:"
 msgstr "Punkter:"
 
-#: app/tools/gimphistogramtool.c:348
+#: app/tools/gimphistogramtool.c:335
 msgid "Count:"
 msgstr "Antal:"
 
-#: app/tools/gimphistogramtool.c:349
+#: app/tools/gimphistogramtool.c:336
 msgid "Percentile:"
 msgstr "Procentdel:"
 
 # det er et værktøjstip til ovenstående tekst - mere beskrivende end den
 # intetsigende original
-#: app/tools/gimphistogramtool.c:362
+#: app/tools/gimphistogramtool.c:349
 msgid "View Image Histogram"
 msgstr "Vis billedfarvefordeling"
 
-#: app/tools/gimphistogramtool.c:384
+#: app/tools/gimphistogramtool.c:367
 msgid "Information on Channel:"
 msgstr "Information om kanal:"
 
-#: app/tools/gimphistogramtool.c:397
+#: app/tools/gimphistogramtool.c:380
 msgid "Intensity Range:"
 msgstr "Intensitetsinterval:"
 
@@ -6505,52 +6495,52 @@ msgstr "_Mætning:"
 msgid "R_eset Color"
 msgstr "N_ulstil farve"
 
-#: app/tools/gimpinktool.c:257
+#: app/tools/gimpinktool.c:256
 msgid "Ink Tool"
 msgstr "Blækpen"
 
-#: app/tools/gimpinktool.c:258
+#: app/tools/gimpinktool.c:257
 msgid "Draw in ink"
 msgstr "Tegn med blæk"
 
-#: app/tools/gimpinktool.c:259
+#: app/tools/gimpinktool.c:258
 msgid "/Tools/Paint Tools/Ink"
 msgstr "/Værktøjer/Tegning/Blækpen"
 
 #. adjust sliders
-#: app/tools/gimpinktool.c:1444
+#: app/tools/gimpinktool.c:1413
 msgid "Adjustment"
 msgstr "Justering"
 
-#: app/tools/gimpinktool.c:1457 app/tools/gimpinktool.c:1493
+#: app/tools/gimpinktool.c:1426 app/tools/gimpinktool.c:1462
 msgid "Size:"
 msgstr "Størrelse:"
 
-#: app/tools/gimpinktool.c:1469 app/tools/gimpmeasuretool.c:400
+#: app/tools/gimpinktool.c:1438 app/tools/gimpmeasuretool.c:400
 #: app/tools/gimprotatetool.c:192 app/widgets/gimpbrusheditor.c:188
 msgid "Angle:"
 msgstr "Vinkel:"
 
 #. sens sliders
-#: app/tools/gimpinktool.c:1480
+#: app/tools/gimpinktool.c:1449
 msgid "Sensitivity"
 msgstr "Følsomhed:"
 
-#: app/tools/gimpinktool.c:1505
+#: app/tools/gimpinktool.c:1474
 msgid "Tilt:"
 msgstr "Vinkling:"
 
-#: app/tools/gimpinktool.c:1517
+#: app/tools/gimpinktool.c:1486
 msgid "Speed:"
 msgstr "Hastighed:"
 
 #. Brush type radiobuttons
-#: app/tools/gimpinktool.c:1533
+#: app/tools/gimpinktool.c:1502
 msgid "Type"
 msgstr "Type"
 
 #. Brush shape widget
-#: app/tools/gimpinktool.c:1605
+#: app/tools/gimpinktool.c:1564
 msgid "Shape"
 msgstr "Form"
 
@@ -6566,23 +6556,23 @@ msgstr "Markér former i billedet"
 msgid "/Tools/Selection Tools/Intelligent Scissors"
 msgstr "/Værktøjer/Markering/Intelligent saks"
 
-#: app/tools/gimplevelstool.c:151
+#: app/tools/gimplevelstool.c:150
 msgid "Levels"
 msgstr "Niveauer"
 
-#: app/tools/gimplevelstool.c:152
+#: app/tools/gimplevelstool.c:151
 msgid "Adjust color levels"
 msgstr "Justér farveniveauer"
 
-#: app/tools/gimplevelstool.c:153
+#: app/tools/gimplevelstool.c:152
 msgid "/Layer/Colors/Levels..."
 msgstr "/Lag/Farver/Niveauer..."
 
-#: app/tools/gimplevelstool.c:219
+#: app/tools/gimplevelstool.c:218
 msgid "Adjust Color Levels"
 msgstr "Justér farveniveauer"
 
-#: app/tools/gimplevelstool.c:268
+#: app/tools/gimplevelstool.c:267
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "Niveauer for indekserede tegneobjekter kan ikke justeres."
 
@@ -6595,37 +6585,49 @@ msgstr "Ændr niveauer for kanal:"
 msgid "Input Levels"
 msgstr "Inddataniveauer"
 
-#: app/tools/gimplevelstool.c:462 modules/cdisplay_gamma.c:35
+#: app/tools/gimplevelstool.c:445
+msgid "Pick Black Point"
+msgstr "Vælg sort punkt"
+
+#: app/tools/gimplevelstool.c:468
+msgid "Pick Gray Point"
+msgstr "Vælg gråt punkt"
+
+#: app/tools/gimplevelstool.c:478 modules/cdisplay_gamma.c:35
 #: modules/cdisplay_gamma.c:331
 msgid "Gamma"
 msgstr "Gamma"
 
+#: app/tools/gimplevelstool.c:492
+msgid "Pick White Point"
+msgstr "Vælg hvidt punkt"
+
 #. Output levels frame
-#: app/tools/gimplevelstool.c:484
+#: app/tools/gimplevelstool.c:510
 msgid "Output Levels"
 msgstr "Uddataniveauer"
 
-#: app/tools/gimplevelstool.c:574
+#: app/tools/gimplevelstool.c:600
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/tools/gimplevelstool.c:577
+#: app/tools/gimplevelstool.c:603
 msgid "Adjust levels automatically"
 msgstr "Justér niveau automatisk"
 
-#: app/tools/gimplevelstool.c:587
+#: app/tools/gimplevelstool.c:613
 msgid "Read levels settings from file"
 msgstr "Læs niveauindstillinger fra fil"
 
-#: app/tools/gimplevelstool.c:597
+#: app/tools/gimplevelstool.c:623
 msgid "Save levels settings to file"
 msgstr "Gem niveauindstillinger i fil"
 
-#: app/tools/gimplevelstool.c:1233
+#: app/tools/gimplevelstool.c:1253
 msgid "Load Levels"
 msgstr "Hent niveauer"
 
-#: app/tools/gimplevelstool.c:1252
+#: app/tools/gimplevelstool.c:1272
 msgid "Save Levels"
 msgstr "Gem niveauer"
 
@@ -6930,44 +6932,63 @@ msgstr "Udtvær billede"
 msgid "/Tools/Paint Tools/Smudge"
 msgstr "/Værktøjer/Tegning/Udtvær"
 
-#: app/tools/gimptexttool.c:139
+#: app/tools/gimptexttool.c:148
 msgid "Text Tool"
 msgstr "Tekstværktøj"
 
-#: app/tools/gimptexttool.c:140
+#: app/tools/gimptexttool.c:149
 msgid "Add text to the image"
 msgstr "Tilføj tekst til billedet"
 
-#: app/tools/gimptexttool.c:141
+#: app/tools/gimptexttool.c:150
 msgid "/Tools/Text"
 msgstr "/Værktøjer/Tekst"
 
-#: app/tools/gimptexttool.c:341
+#: app/tools/gimptexttool.c:348
 msgid "No font chosen or font invalid."
 msgstr "Ingen skrifttype valgt eller skrifttypen er ugyldig."
 
-#: app/tools/gimptexttool.c:436
+#: app/tools/gimptexttool.c:443
 msgid "Font:"
 msgstr "Skrifttype:"
 
-#: app/tools/gimptexttool.c:440
-#, fuzzy
+#: app/tools/gimptexttool.c:447
 msgid "_Size:"
-msgstr "Størrelse:"
+msgstr "_Størrelse:"
 
-#: app/tools/gimptexttool.c:453
-#, fuzzy
+#: app/tools/gimptexttool.c:460
 msgid "_Border:"
-msgstr "Kant:"
+msgstr "_Kant:"
 
-#: app/tools/gimptexttool.c:469 app/tools/selection_options.c:428
+#: app/tools/gimptexttool.c:476 app/tools/selection_options.c:428
 msgid "Unit:"
 msgstr "Enhed:"
 
-#: app/tools/gimptexttool.c:554
-#, fuzzy
+#: app/tools/gimptexttool.c:565
 msgid "GIMP Text Editor"
-msgstr "Paletredigering"
+msgstr "Tekstredigering"
+
+#: app/tools/gimptexttool.c:590
+msgid "Load Text from File"
+msgstr "Indlæs tekst fra fil"
+
+#: app/tools/gimptexttool.c:594
+msgid "Clear all Text"
+msgstr "Ryd alt tekst"
+
+#: app/tools/gimptexttool.c:637
+msgid "Open Text File (UTF-8)"
+msgstr "Åbn tekstfil (UTF-8)"
+
+#: app/tools/gimptexttool.c:687
+#, c-format
+msgid "Error opening file '%s': %s"
+msgstr "Fejl under åbning af filen '%s': %s"
+
+#: app/tools/gimptexttool.c:716
+#, c-format
+msgid "Invalid UTF-8 data in file '%s'."
+msgstr "Ugyldige UTF-8-data i filen '%s'."
 
 #: app/tools/gimpthresholdtool.c:85
 msgid "Threshold"
@@ -6989,7 +7010,7 @@ msgstr "Anvend tærskel"
 msgid "Threshold does not operate on indexed drawables."
 msgstr "Tærskel opererer ikke på indekserede tegneobjekter."
 
-#: app/tools/gimpthresholdtool.c:258
+#: app/tools/gimpthresholdtool.c:249
 msgid "Threshold Range:"
 msgstr "Tærskelinterval:"
 
