@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2003-01-15 12:08+0100\n"
-"PO-Revision-Date: 2003-01-15 12:08+0100\n"
+"POT-Creation-Date: 2003-01-25 18:58+0100\n"
+"PO-Revision-Date: 2003-01-25 18:58+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -422,27 +422,31 @@ msgstr "_Tilfældiggør"
 msgid "Seed random number generator with a generated random number"
 msgstr "Start generatoren af tilfældige tal med et genereret tilfældigt tal"
 
-#: modules/cdisplay_colorblind.c:101
-msgid "Colorblind display filter"
-msgstr "Farveblindt visningsfilter"
+#: modules/cdisplay_colorblind.c:122
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr "Farveblindhedsfilter (Brettel-Vienot-Mollon-algoritmen)"
 
-#: modules/cdisplay_colorblind.c:167
+#: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
 msgstr "Farveblindt syn"
 
-#: modules/cdisplay_colorblind.c:327
+#: modules/cdisplay_colorblind.c:473
 msgid "Color Deficiency Type:"
 msgstr "Farveblindhedstype:"
 
-#: modules/cdisplay_colorblind.c:337
-msgid "Protonopia (insensitivity to red)"
-msgstr "Protonopia (kan ikke se rød)"
+#: modules/cdisplay_colorblind.c:483
+msgid "None (normal vision)"
+msgstr "Ingen (normalt syn)"
 
-#: modules/cdisplay_colorblind.c:341
+#: modules/cdisplay_colorblind.c:487
+msgid "Protanopia (insensitivity to red)"
+msgstr "Protanopia (kan ikke se rød)"
+
+#: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Protonopia (kan ikke se grøn)"
 
-#: modules/cdisplay_colorblind.c:345
+#: modules/cdisplay_colorblind.c:495
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Protonopia (kan ikke se blå)"
 
@@ -489,6 +493,9 @@ msgstr "_Vandfarve"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Tryk"
+
+#~ msgid "Colorblind display filter"
+#~ msgstr "Farveblindt visningsfilter"
 
 #~ msgid "a layer mask"
 #~ msgstr "en lagmaske"
