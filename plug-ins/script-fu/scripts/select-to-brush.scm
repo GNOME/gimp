@@ -35,9 +35,9 @@
 	 (old-bg (car (gimp-palette-get-background))))
   
     (set! selection-bounds (gimp-selection-bounds image))
-    (set! select-offset-x (cadr selection-bounds))
-    (set! select-offset-y (caddr selection-bounds))
-    (set! selection-width (- (cadr (cddr selection-bounds)) select-offset-x))
+    (set! select-offset-x  (cadr selection-bounds))
+    (set! select-offset-y  (caddr selection-bounds))
+    (set! selection-width  (- (cadr (cddr selection-bounds))  select-offset-x))
     (set! selection-height (- (caddr (cddr selection-bounds)) select-offset-y))
 
     (gimp-image-undo-disable image)
@@ -45,7 +45,6 @@
     (if (= (car (gimp-selection-is-empty image)) TRUE)
 	(begin
 	  (gimp-selection-layer-alpha drawable)
-	  (set! active-selection (car (gimp-selection-save image)))
 	  (set! from-selection FALSE))
 	(begin
 	  (set! from-selection TRUE)
@@ -83,12 +82,12 @@
     (if (= type GRAYA_IMAGE)
         (begin 
           (gimp-palette-set-background '(255 255 255))
-          (gimp-drawable-fill brush-draw BG-IMAGE-FILL)))
+          (gimp-drawable-fill brush-draw BACKGROUND-FILL))
+        (gimp-drawable-fill brush-draw TRANSPARENT-FILL))
 
     (let ((floating-sel (car (gimp-edit-paste brush-draw FALSE))))
       (gimp-floating-sel-anchor floating-sel))
 
-    
     (set! data-dir (car (gimp-gimprc-query "gimp_dir")))
     (set! filename2 (string-append data-dir
 				   "/brushes/"
@@ -99,6 +98,11 @@
     (file-gbr-save 1 brush-image brush-draw filename2 "" spacing desc)
     (gimp-brushes-refresh)
     (gimp-brushes-set-brush desc)
+
+    (if (= from-selection TRUE)
+	(begin
+	  (gimp-selection-load active-selection)
+	  (gimp-image-remove-channel image active-selection)))
 
     (gimp-palette-set-background old-bg)
 

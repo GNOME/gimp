@@ -1,6 +1,9 @@
 2003-06-17  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/script-fu/scripts/select-to-brush.scm: fixed description.
+	* plug-ins/script-fu/scripts/select-to-brush.scm: added a missing
+	call to gimp-drawable-fill for the RGB case. Fixed description,
+	restore selection and delete the temporary channel. Fixes bug
+	#115350.
 
 2003-06-17  Sven Neumann  <sven@gimp.org>
 
