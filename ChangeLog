@@ -1,5 +1,14 @@
 2003-12-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.c: added a default implementation of
+	GimpImage::mode_changed() which reallocates the projection.
+
+	* app/core/gimpimage-convert.c (gimp_image_convert)
+	* app/core/gimpimage-undo-push.c (undo_pop_image_type): removed
+	explicit calls to gimp_image_projection_allocate().
+
+2003-12-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-flip.c (gimp_image_flip): no need to
 	reallocate the image's projection (the image size doesn't change
 	when flipping).

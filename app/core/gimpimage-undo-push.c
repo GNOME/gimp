@@ -361,7 +361,6 @@ undo_pop_image_type (GimpUndo            *undo,
   itu->base_type = undo->gimage->base_type;
   undo->gimage->base_type = tmp;
 
-  gimp_image_projection_allocate (undo->gimage);
   gimp_image_colormap_changed (undo->gimage, -1);
 
   if (itu->base_type != undo->gimage->base_type)

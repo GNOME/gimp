@@ -1038,9 +1038,6 @@ gimp_image_convert (GimpImage              *gimage,
   if (quantobj)
     quantobj->delete_func (quantobj);
 
-  /*  Make sure the projection is up to date  */
-  gimp_image_projection_allocate (gimage);
-
   /*  Rigor the floating selection  */
   if (floating_layer)
     floating_sel_rigor (floating_layer, TRUE);

@@ -115,6 +115,7 @@ static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
 static void     gimp_image_size_changed          (GimpViewable   *viewable);
 static gchar  * gimp_image_get_description       (GimpViewable   *viewable,
                                                   gchar         **tooltip);
+static void     gimp_image_real_mode_changed     (GimpImage      *gimage);
 static void     gimp_image_real_colormap_changed (GimpImage      *gimage,
 						  gint            ncol);
 static void     gimp_image_real_flush            (GimpImage      *gimage);
@@ -421,7 +422,7 @@ gimp_image_class_init (GimpImageClass *klass)
   viewable_class->get_new_preview     = gimp_image_get_new_preview;
   viewable_class->get_description     = gimp_image_get_description;
 
-  klass->mode_changed                 = NULL;
+  klass->mode_changed                 = gimp_image_real_mode_changed;
   klass->alpha_changed                = NULL;
   klass->floating_selection_changed   = NULL;
   klass->active_layer_changed         = NULL;
@@ -742,12 +743,10 @@ gimp_image_get_memsize (GimpObject *object,
 static void
 gimp_image_invalidate_preview (GimpViewable *viewable)
 {
-  GimpImage *gimage;
+  GimpImage *gimage = GIMP_IMAGE (viewable);
 
   if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
     GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
-
-  gimage = GIMP_IMAGE (viewable);
 
   gimage->comp_preview_valid = FALSE;
 
@@ -761,13 +760,11 @@ gimp_image_invalidate_preview (GimpViewable *viewable)
 static void
 gimp_image_size_changed (GimpViewable *viewable)
 {
-  GimpImage *gimage;
+  GimpImage *gimage = GIMP_IMAGE (viewable);
   GList     *list;
 
   if (GIMP_VIEWABLE_CLASS (parent_class)->size_changed)
     GIMP_VIEWABLE_CLASS (parent_class)->size_changed (viewable);
-
-  gimage = GIMP_IMAGE (viewable);
 
   gimp_container_foreach (gimage->layers,
 			  (GFunc) gimp_viewable_size_changed,
@@ -794,12 +791,10 @@ static gchar *
 gimp_image_get_description (GimpViewable  *viewable,
                             gchar        **tooltip)
 {
-  GimpImage   *gimage;
+  GimpImage   *gimage = GIMP_IMAGE (viewable);
   const gchar *uri;
   gchar       *basename;
   gchar       *retval;
-
-  gimage = GIMP_IMAGE (viewable);
 
   uri = gimp_image_get_uri (GIMP_IMAGE (gimage));
 
@@ -813,6 +808,12 @@ gimp_image_get_description (GimpViewable  *viewable,
   g_free (basename);
 
   return retval;
+}
+
+static void
+gimp_image_real_mode_changed (GimpImage *gimage)
+{
+  gimp_image_projection_allocate (gimage);
 }
 
 static void
