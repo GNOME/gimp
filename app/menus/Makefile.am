@@ -25,7 +25,7 @@ libappmenus_a_SOURCES = \
 	toolbox-menu.h
 
 
-EXTRA_DIST = makefile.msc
+EXTRA_DIST =
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Menus\"	\

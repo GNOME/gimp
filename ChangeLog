@@ -1,5 +1,11 @@
 2004-06-02  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/Makefile.am (EXTRA_DIST)
+	* app/menus/Makefile.am (EXTRA_DIST): removed makefile.msc until
+	they have been added.
+
+2004-06-02  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontainerview.c: create the hash table when
 	inserting items; removes redundant create/destroy cycles and plugs
 	a memory leak.
