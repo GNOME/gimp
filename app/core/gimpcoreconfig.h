@@ -20,8 +20,6 @@
 #define __GIMP_CORE_CONFIG_H__
 
 
-typedef struct _GimpCoreConfig GimpCoreConfig;
-
 struct _GimpCoreConfig
 {
   gchar             *plug_in_path;
@@ -53,7 +51,7 @@ struct _GimpCoreConfig
 };
 
 
-extern GimpCoreConfig *core_config;
+void   gimp_core_config_init (Gimp *gimp);
 
 
 #endif  /*  __GIMP_CORE_CONFIG_H__  */

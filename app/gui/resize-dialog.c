@@ -26,11 +26,14 @@
 
 #include "core/core-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
 #include "resize-dialog.h"
+
+#include "app_procs.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -592,7 +595,7 @@ resize_widget_new (ResizeType    type,
       gtk_widget_set_usize (spinbutton, 75, 0);
 
       private->resolution_se =
-	gimp_size_entry_new (1, core_config->default_resolution_units, 
+	gimp_size_entry_new (1, the_gimp->config->default_resolution_units, 
 			     _("pixels/%a"),
 			     FALSE, FALSE, FALSE, 75,
 			     GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);

@@ -271,10 +271,10 @@ static PrefsState
 prefs_check_settings (void)
 {
   /*  First, check for invalid values...  */
-  if (core_config->levels_of_undo < 0) 
+  if (the_gimp->config->levels_of_undo < 0) 
     {
       g_message (_("Error: Levels of undo must be zero or greater."));
-      core_config->levels_of_undo = old_levels_of_undo;
+      the_gimp->config->levels_of_undo = old_levels_of_undo;
       return PREFS_CORRUPT;
     }
   if (gimprc.marching_speed < 50)
@@ -283,38 +283,38 @@ prefs_check_settings (void)
       gimprc.marching_speed = old_marching_speed;
       return PREFS_CORRUPT;
     }
-  if (core_config->default_width < 1)
+  if (the_gimp->config->default_width < 1)
     {
       g_message (_("Error: Default width must be one or greater."));
-      core_config->default_width = old_default_width;
+      the_gimp->config->default_width = old_default_width;
       return PREFS_CORRUPT;
     }
-  if (core_config->default_height < 1)
+  if (the_gimp->config->default_height < 1)
     {
       g_message (_("Error: Default height must be one or greater."));
-      core_config->default_height = old_default_height;
+      the_gimp->config->default_height = old_default_height;
       return PREFS_CORRUPT;
     }
-  if (core_config->default_units < GIMP_UNIT_INCH ||
-      core_config->default_units >= gimp_unit_get_number_of_units ())
+  if (the_gimp->config->default_units < GIMP_UNIT_INCH ||
+      the_gimp->config->default_units >= gimp_unit_get_number_of_units ())
     {
       g_message (_("Error: Default unit must be within unit range."));
-      core_config->default_units = old_default_units;
+      the_gimp->config->default_units = old_default_units;
       return PREFS_CORRUPT;
     }
-  if (core_config->default_xresolution < GIMP_MIN_RESOLUTION ||
-      core_config->default_yresolution < GIMP_MIN_RESOLUTION)
+  if (the_gimp->config->default_xresolution < GIMP_MIN_RESOLUTION ||
+      the_gimp->config->default_yresolution < GIMP_MIN_RESOLUTION)
     {
       g_message (_("Error: Default resolution must not be zero."));
-      core_config->default_xresolution = old_default_xresolution;
-      core_config->default_yresolution = old_default_yresolution;
+      the_gimp->config->default_xresolution = old_default_xresolution;
+      the_gimp->config->default_yresolution = old_default_yresolution;
       return PREFS_CORRUPT;
     }
-  if (core_config->default_resolution_units < GIMP_UNIT_INCH ||
-      core_config->default_resolution_units >= gimp_unit_get_number_of_units ())
+  if (the_gimp->config->default_resolution_units < GIMP_UNIT_INCH ||
+      the_gimp->config->default_resolution_units >= gimp_unit_get_number_of_units ())
     {
       g_message (_("Error: Default resolution unit must be within unit range."));
-      core_config->default_resolution_units = old_default_resolution_units;
+      the_gimp->config->default_resolution_units = old_default_resolution_units;
       return PREFS_CORRUPT;
     }
   if (gimprc.monitor_xres < GIMP_MIN_RESOLUTION ||
@@ -531,14 +531,14 @@ prefs_save_callback (GtkWidget *widget,
   save_temp_path      = base_config->temp_path;
   save_swap_path      = base_config->swap_path;
 
-  save_plug_in_path   = core_config->plug_in_path;
-  save_module_path    = core_config->module_path;
-  save_brush_path     = core_config->brush_path;
-  save_pattern_path   = core_config->pattern_path;
-  save_palette_path   = core_config->palette_path;
-  save_gradient_path  = core_config->gradient_path;
+  save_plug_in_path   = the_gimp->config->plug_in_path;
+  save_module_path    = the_gimp->config->module_path;
+  save_brush_path     = the_gimp->config->brush_path;
+  save_pattern_path   = the_gimp->config->pattern_path;
+  save_palette_path   = the_gimp->config->palette_path;
+  save_gradient_path  = the_gimp->config->gradient_path;
 
-  if (core_config->levels_of_undo != old_levels_of_undo)
+  if (the_gimp->config->levels_of_undo != old_levels_of_undo)
     {
       update = g_list_append (update, "undo-levels");
     }
@@ -599,32 +599,32 @@ prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "always-restore-session");
     }
-  if (core_config->default_width != old_default_width ||
-      core_config->default_height != old_default_height)
+  if (the_gimp->config->default_width != old_default_width ||
+      the_gimp->config->default_height != old_default_height)
     {
       update = g_list_append (update, "default-image-size");
     }
-  if (core_config->default_units != old_default_units)
+  if (the_gimp->config->default_units != old_default_units)
     {
       update = g_list_append (update, "default-units");
     }
-  if (ABS (core_config->default_xresolution - old_default_xresolution) > GIMP_MIN_RESOLUTION)
+  if (ABS (the_gimp->config->default_xresolution - old_default_xresolution) > GIMP_MIN_RESOLUTION)
     {
       update = g_list_append (update, "default-xresolution");
     }
-  if (ABS (core_config->default_yresolution - old_default_yresolution) > GIMP_MIN_RESOLUTION)
+  if (ABS (the_gimp->config->default_yresolution - old_default_yresolution) > GIMP_MIN_RESOLUTION)
     {
       update = g_list_append (update, "default-yresolution");
     }
-  if (core_config->default_resolution_units != old_default_resolution_units)
+  if (the_gimp->config->default_resolution_units != old_default_resolution_units)
     {
       update = g_list_append (update, "default-resolution-units");
     }
-  if (core_config->default_type != old_default_type)
+  if (the_gimp->config->default_type != old_default_type)
     {
       update = g_list_append (update, "default-image-type");
     }
-  if (prefs_strcmp (core_config->default_comment, old_default_comment))
+  if (prefs_strcmp (the_gimp->config->default_comment, old_default_comment))
     {
       update = g_list_append (update, "default-comment");
     }
@@ -683,7 +683,7 @@ prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "max-new-image-size");
     }
-  if (core_config->thumbnail_mode != old_thumbnail_mode)
+  if (the_gimp->config->thumbnail_mode != old_thumbnail_mode)
     {
       update = g_list_append (update, "thumbnail-mode");
     }
@@ -776,32 +776,32 @@ prefs_save_callback (GtkWidget *widget,
     }
   if (prefs_strcmp (old_plug_in_path, edit_plug_in_path))
     {
-      core_config->plug_in_path = edit_plug_in_path;
+      the_gimp->config->plug_in_path = edit_plug_in_path;
       update = g_list_append (update, "plug-in-path");
     }
   if (prefs_strcmp (old_module_path, edit_module_path))
     {
-      core_config->module_path = edit_module_path;
+      the_gimp->config->module_path = edit_module_path;
       update = g_list_append (update, "module-path");
     }
   if (prefs_strcmp (old_brush_path, edit_brush_path))
     {
-      core_config->brush_path = edit_brush_path;
+      the_gimp->config->brush_path = edit_brush_path;
       update = g_list_append (update, "brush-path");
     }
   if (prefs_strcmp (old_pattern_path, edit_pattern_path))
     {
-      core_config->pattern_path = edit_pattern_path;
+      the_gimp->config->pattern_path = edit_pattern_path;
       update = g_list_append (update, "pattern-path");
     }
   if (prefs_strcmp (old_palette_path, edit_palette_path))
     {
-      core_config->palette_path = edit_palette_path;
+      the_gimp->config->palette_path = edit_palette_path;
       update = g_list_append (update, "palette-path");
     }
   if (prefs_strcmp (old_gradient_path, edit_gradient_path))
     {
-      core_config->gradient_path = edit_gradient_path;
+      the_gimp->config->gradient_path = edit_gradient_path;
       update = g_list_append (update, "gradient-path");
     }
 
@@ -833,12 +833,12 @@ prefs_save_callback (GtkWidget *widget,
   base_config->temp_path     = save_temp_path;
   base_config->swap_path     = save_swap_path;
 
-  core_config->plug_in_path  = save_plug_in_path;
-  core_config->module_path   = save_module_path;
-  core_config->brush_path    = save_brush_path;
-  core_config->pattern_path  = save_pattern_path;
-  core_config->palette_path  = save_palette_path;
-  core_config->gradient_path = save_gradient_path;
+  the_gimp->config->plug_in_path  = save_plug_in_path;
+  the_gimp->config->module_path   = save_module_path;
+  the_gimp->config->brush_path    = save_brush_path;
+  the_gimp->config->pattern_path  = save_pattern_path;
+  the_gimp->config->palette_path  = save_palette_path;
+  the_gimp->config->gradient_path = save_gradient_path;
 
   /*  no need to restore values which are only changed on "OK" and "Save"  */
 
@@ -857,15 +857,15 @@ prefs_cancel_callback (GtkWidget *widget,
   base_config->interpolation_type       = old_interpolation_type;
   base_config->num_processors           = old_num_processors;
 
-  core_config->default_type             = old_default_type;
-  core_config->default_width            = old_default_width;
-  core_config->default_height           = old_default_height;
-  core_config->default_units            = old_default_units;
-  core_config->default_xresolution      = old_default_xresolution;
-  core_config->default_yresolution      = old_default_yresolution;
-  core_config->default_resolution_units = old_default_resolution_units;
-  core_config->levels_of_undo           = old_levels_of_undo;
-  core_config->thumbnail_mode           = old_thumbnail_mode;
+  the_gimp->config->default_type             = old_default_type;
+  the_gimp->config->default_width            = old_default_width;
+  the_gimp->config->default_height           = old_default_height;
+  the_gimp->config->default_units            = old_default_units;
+  the_gimp->config->default_xresolution      = old_default_xresolution;
+  the_gimp->config->default_yresolution      = old_default_yresolution;
+  the_gimp->config->default_resolution_units = old_default_resolution_units;
+  the_gimp->config->levels_of_undo           = old_levels_of_undo;
+  the_gimp->config->thumbnail_mode           = old_thumbnail_mode;
 
   gimprc.marching_speed                 = old_marching_speed;
   gimprc.allow_resize_windows           = old_allow_resize_windows;
@@ -917,7 +917,7 @@ prefs_cancel_callback (GtkWidget *widget,
     }
 
   prefs_strset (&gimprc.image_title_format,    old_image_title_format);
-  prefs_strset (&core_config->default_comment, old_default_comment);
+  prefs_strset (&the_gimp->config->default_comment, old_default_comment);
 
   tool_manager_set_global_paint_options (the_gimp, old_global_paint_options);
 
@@ -981,8 +981,8 @@ prefs_toggle_callback (GtkWidget *widget,
 
   /*  radio buttons  */
   else if (data == &base_config->interpolation_type ||
-	   data == &core_config->default_type       ||
-	   data == &core_config->thumbnail_mode     ||
+	   data == &the_gimp->config->default_type       ||
+	   data == &the_gimp->config->thumbnail_mode     ||
            data == &gimprc.trust_dirty_flag         ||
 	   data == &gimprc.help_browser             ||
 	   data == &gimprc.cursor_mode)
@@ -1110,11 +1110,11 @@ static void
 prefs_default_size_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  core_config->default_width =
+  the_gimp->config->default_width =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
-  core_config->default_height =
+  the_gimp->config->default_height =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
-  core_config->default_units = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
+  the_gimp->config->default_units = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 }
 
 static void
@@ -1159,15 +1159,15 @@ prefs_default_resolution_callback (GtkWidget *widget,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_sizeentry),
 				  1, yres, FALSE);
 
-  core_config->default_width =
+  the_gimp->config->default_width =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size_sizeentry), 0));
-  core_config->default_height =
+  the_gimp->config->default_height =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size_sizeentry), 1));
 
-  core_config->default_xresolution = xres;
-  core_config->default_yresolution = yres;
+  the_gimp->config->default_xresolution = xres;
+  the_gimp->config->default_yresolution = yres;
 
-  core_config->default_resolution_units = 
+  the_gimp->config->default_resolution_units = 
     gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 }
 
@@ -1411,12 +1411,12 @@ preferences_dialog_create (void)
       edit_temp_path      = prefs_strdup (base_config->temp_path);	
       edit_swap_path      = prefs_strdup (base_config->swap_path);
 
-      edit_plug_in_path   = prefs_strdup (core_config->plug_in_path);
-      edit_module_path    = prefs_strdup (core_config->module_path);
-      edit_brush_path     = prefs_strdup (core_config->brush_path);
-      edit_pattern_path   = prefs_strdup (core_config->pattern_path);
-      edit_palette_path   = prefs_strdup (core_config->palette_path);
-      edit_gradient_path  = prefs_strdup (core_config->gradient_path);
+      edit_plug_in_path   = prefs_strdup (the_gimp->config->plug_in_path);
+      edit_module_path    = prefs_strdup (the_gimp->config->module_path);
+      edit_brush_path     = prefs_strdup (the_gimp->config->brush_path);
+      edit_pattern_path   = prefs_strdup (the_gimp->config->pattern_path);
+      edit_palette_path   = prefs_strdup (the_gimp->config->palette_path);
+      edit_gradient_path  = prefs_strdup (the_gimp->config->gradient_path);
     }
 
   /*  assign edit variables for values which get changed on "OK" and "Save"
@@ -1428,15 +1428,15 @@ preferences_dialog_create (void)
   old_interpolation_type       = base_config->interpolation_type;
   old_num_processors           = base_config->num_processors;
 
-  old_default_type             = core_config->default_type;
-  old_default_width            = core_config->default_width;
-  old_default_height           = core_config->default_height;
-  old_default_units            = core_config->default_units;
-  old_default_xresolution      = core_config->default_xresolution;
-  old_default_yresolution      = core_config->default_yresolution;
-  old_default_resolution_units = core_config->default_resolution_units;
-  old_levels_of_undo           = core_config->levels_of_undo;
-  old_thumbnail_mode           = core_config->thumbnail_mode;
+  old_default_type             = the_gimp->config->default_type;
+  old_default_width            = the_gimp->config->default_width;
+  old_default_height           = the_gimp->config->default_height;
+  old_default_units            = the_gimp->config->default_units;
+  old_default_xresolution      = the_gimp->config->default_xresolution;
+  old_default_yresolution      = the_gimp->config->default_yresolution;
+  old_default_resolution_units = the_gimp->config->default_resolution_units;
+  old_levels_of_undo           = the_gimp->config->levels_of_undo;
+  old_thumbnail_mode           = the_gimp->config->thumbnail_mode;
 
   old_perfectmouse             = gimprc.perfectmouse;
   old_transparency_type        = gimprc.transparency_type;
@@ -1467,7 +1467,7 @@ preferences_dialog_create (void)
   old_default_threshold        = gimprc.default_threshold;
 
   prefs_strset (&old_image_title_format, gimprc.image_title_format);	
-  prefs_strset (&old_default_comment,    core_config->default_comment);	
+  prefs_strset (&old_default_comment,    the_gimp->config->default_comment);	
 
   /*  values which will need a restart  */
   old_stingy_memory_use         = edit_stingy_memory_use;
@@ -1567,7 +1567,7 @@ preferences_dialog_create (void)
   gtk_widget_show (hbox);
 
   sizeentry =
-    gimp_size_entry_new (2, core_config->default_units, "%p",
+    gimp_size_entry_new (2, the_gimp->config->default_units, "%p",
 			 FALSE, FALSE, TRUE, 75,
 			 GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
@@ -1579,9 +1579,9 @@ preferences_dialog_create (void)
 				_("Pixels"), 1, 4, 0.0);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
-				  core_config->default_xresolution, FALSE);
+				  the_gimp->config->default_xresolution, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
-				  core_config->default_yresolution, FALSE);
+				  the_gimp->config->default_yresolution, FALSE);
 
   gimp_size_entry_set_refval_boundaries
     (GIMP_SIZE_ENTRY (sizeentry), 0, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
@@ -1589,9 +1589,9 @@ preferences_dialog_create (void)
     (GIMP_SIZE_ENTRY (sizeentry), 1, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
-			      core_config->default_width);
+			      the_gimp->config->default_width);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
-			      core_config->default_height);
+			      the_gimp->config->default_height);
 
   gtk_signal_connect (GTK_OBJECT (sizeentry), "unit_changed",
 		      GTK_SIGNAL_FUNC (prefs_default_size_callback),
@@ -1617,14 +1617,14 @@ preferences_dialog_create (void)
 
   pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
 
-  sizeentry2 = gimp_size_entry_new (2, core_config->default_resolution_units,
+  sizeentry2 = gimp_size_entry_new (2, the_gimp->config->default_resolution_units,
 				    pixels_per_unit,
 				    FALSE, FALSE, TRUE, 75,
 				    GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
 
   button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-  if (ABS (core_config->default_xresolution -
-	   core_config->default_yresolution) < GIMP_MIN_RESOLUTION)
+  if (ABS (the_gimp->config->default_xresolution -
+	   the_gimp->config->default_yresolution) < GIMP_MIN_RESOLUTION)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (button), TRUE);
   gtk_table_attach_defaults (GTK_TABLE (sizeentry2), button, 1, 3, 3, 4);
   gtk_widget_show (button);
@@ -1644,9 +1644,9 @@ preferences_dialog_create (void)
     (GIMP_SIZE_ENTRY (sizeentry2), 1, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
   
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry2), 0,
-			      core_config->default_xresolution);
+			      the_gimp->config->default_xresolution);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry2), 1,
-			      core_config->default_yresolution);
+			      the_gimp->config->default_yresolution);
 
   gtk_signal_connect (GTK_OBJECT (sizeentry2), "unit_changed",
 		      (GtkSignalFunc) prefs_default_resolution_callback,
@@ -1674,8 +1674,8 @@ preferences_dialog_create (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &core_config->default_type,
-			   (gpointer) core_config->default_type,
+			   &the_gimp->config->default_type,
+			   (gpointer) the_gimp->config->default_type,
 
 			   _("RGB"),       (gpointer) RGB, NULL,
 			   _("Grayscale"), (gpointer) GRAY, NULL,
@@ -1721,10 +1721,10 @@ preferences_dialog_create (void)
   text = gtk_text_new (NULL, NULL);
   gtk_text_set_editable (GTK_TEXT (text), TRUE);
   gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL,
-		   core_config->default_comment, -1);
+		   the_gimp->config->default_comment, -1);
   gtk_signal_connect (GTK_OBJECT (text), "changed",
 		      GTK_SIGNAL_FUNC (prefs_text_callback),
-		      &core_config->default_comment);
+		      &the_gimp->config->default_comment);
   gtk_container_add (GTK_CONTAINER (hbox), text);
   gtk_widget_show (text);
 
@@ -2238,11 +2238,11 @@ preferences_dialog_create (void)
   gtk_widget_show (table);
 
   /*  Levels of Undo  */
-  spinbutton = gimp_spin_button_new (&adjustment, core_config->levels_of_undo,
+  spinbutton = gimp_spin_button_new (&adjustment, the_gimp->config->levels_of_undo,
 				     0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &core_config->levels_of_undo);
+		      &the_gimp->config->levels_of_undo);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Levels of Undo:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
@@ -2317,8 +2317,8 @@ preferences_dialog_create (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &core_config->thumbnail_mode,
-			   (gpointer) core_config->thumbnail_mode,
+			   &the_gimp->config->thumbnail_mode,
+			   (gpointer) the_gimp->config->thumbnail_mode,
 
 			   _("Always"), (gpointer) 1, NULL,
 			   _("Never"),  (gpointer) 0, NULL,

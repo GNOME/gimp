@@ -53,7 +53,7 @@ display_new_invoker (Gimp     *gimp,
   GDisplay *gdisp = NULL;
   guint scale = 0x101;
 
-  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -114,7 +114,7 @@ display_delete_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GDisplay *gdisp;
 
-  gdisp = gdisplay_get_by_ID (args[0].value.pdb_int);
+  gdisp = gdisplay_get_by_ID (gimp, args[0].value.pdb_int);
   if (gdisp == NULL)
     success = FALSE;
 

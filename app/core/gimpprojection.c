@@ -2242,7 +2242,8 @@ gdisplay_active (void)
 }
 
 GDisplay *
-gdisplay_get_by_ID (gint ID)
+gdisplay_get_by_ID (Gimp *gimp,
+		    gint  ID)
 {
   GDisplay *gdisp;
   GSList   *list;

@@ -26,6 +26,7 @@
 
 #include "base/pixel-region.h"
 
+#include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
@@ -34,7 +35,6 @@
 #include "gimplayer.h"
 #include "gimplist.h"
 
-#include "app_procs.h"
 #include "floating_sel.h"
 #include "undo.h"
 
@@ -110,7 +110,7 @@ gimp_image_crop (GimpImage *gimage,
   /*  Make sure new width and height are non-zero  */
   if (width && height)
     {
-      gimp_set_busy ();
+      gimp_set_busy (gimage->gimp);
 
       if (active_layer_only)
 	{
@@ -224,7 +224,7 @@ gimp_image_crop (GimpImage *gimage,
 
       gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 
-      gimp_unset_busy ();
+      gimp_unset_busy (gimage->gimp);
     }
 }
 
@@ -260,7 +260,7 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
   g_return_val_if_fail (shrunk_x2 != NULL, FALSE);
   g_return_val_if_fail (shrunk_y2 != NULL, FALSE);
 
-  gimp_set_busy ();
+  gimp_set_busy (gimage->gimp);
  
   /* You should always keep in mind that crop->tx2 and crop->ty2 are the NOT the
      coordinates of the bottomright corner of the area to be cropped. They point 
@@ -372,7 +372,7 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
 
  FINISH:
   g_free (buffer);
-  gimp_unset_busy ();
+  gimp_unset_busy (gimage->gimp);
 
   return retval;
 }

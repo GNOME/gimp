@@ -44,9 +44,9 @@
 #include "gimppattern.h"
 #include "gimpparasite.h"
 #include "gimptoolinfo.h"
+#include "gimpunit.h"
 
 #include "app_procs.h"
-#include "unitrc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -103,6 +103,8 @@ gimp_class_init (GimpClass *klass)
 static void
 gimp_init (Gimp *gimp)
 {
+  gimp_core_config_init (gimp);
+
   gimp->create_display_func = NULL;
   gimp->gui_set_busy_func   = NULL;
   gimp->gui_unset_busy_func = NULL;
@@ -110,31 +112,37 @@ gimp_init (Gimp *gimp)
   gimp->busy                = FALSE;
   gimp->busy_idle_id        = 0;
 
-  gimp->user_units          = NULL;
-  gimp->n_user_units        = 0;
+  gimp_units_init (gimp);
 
-  gimp->images = gimp_list_new (GIMP_TYPE_IMAGE,
-				GIMP_CONTAINER_POLICY_WEAK);
+  gimp_parasites_init (gimp);
+
+  gimp->images              = gimp_list_new (GIMP_TYPE_IMAGE,
+					     GIMP_CONTAINER_POLICY_WEAK);
   gtk_object_ref (GTK_OBJECT (gimp->images));
   gtk_object_sink (GTK_OBJECT (gimp->images));
 
-  gimp->global_buffer = NULL;
-  gimp->named_buffers = gimp_list_new (GIMP_TYPE_BUFFER,
-				       GIMP_CONTAINER_POLICY_STRONG);
+  gimp->next_image_ID       = 1;
+  gimp->next_guide_ID       = 1;
+  gimp->image_table         = g_hash_table_new (g_direct_hash, NULL);
+
+  gimp->next_drawable_ID    = 1;
+  gimp->drawable_table      = g_hash_table_new (g_direct_hash, NULL);
+
+  gimp->global_buffer       = NULL;
+  gimp->named_buffers       = gimp_list_new (GIMP_TYPE_BUFFER,
+					     GIMP_CONTAINER_POLICY_STRONG);
   gtk_object_ref (GTK_OBJECT (gimp->named_buffers));
   gtk_object_sink (GTK_OBJECT (gimp->named_buffers));
 
-  gimp->parasites = NULL;
-
-  gimp->brush_factory    = NULL;
-  gimp->pattern_factory  = NULL;
-  gimp->gradient_factory = NULL;
-  gimp->palette_factory  = NULL;
+  gimp->brush_factory       = NULL;
+  gimp->pattern_factory     = NULL;
+  gimp->gradient_factory    = NULL;
+  gimp->palette_factory     = NULL;
 
   procedural_db_init (gimp);
 
-  gimp->tool_info_list = gimp_list_new (GIMP_TYPE_TOOL_INFO,
-					GIMP_CONTAINER_POLICY_STRONG);
+  gimp->tool_info_list      = gimp_list_new (GIMP_TYPE_TOOL_INFO,
+					     GIMP_CONTAINER_POLICY_STRONG);
   gtk_object_ref (GTK_OBJECT (gimp->tool_info_list));
   gtk_object_sink (GTK_OBJECT (gimp->tool_info_list));
 
@@ -205,8 +213,6 @@ gimp_destroy (GtkObject *object)
       gimp->palette_factory = NULL;
     }
 
-  gimp_parasites_exit (gimp);
-
   if (gimp->named_buffers)
     {
       gtk_object_unref (GTK_OBJECT (gimp->named_buffers));
@@ -219,20 +225,27 @@ gimp_destroy (GtkObject *object)
       gimp->global_buffer = NULL;
     }
 
+  if (gimp->drawable_table)
+    {
+      g_hash_table_destroy (gimp->drawable_table);
+      gimp->drawable_table = NULL;
+    }
+
+  if (gimp->image_table)
+    {
+      g_hash_table_destroy (gimp->image_table);
+      gimp->image_table = NULL;
+    }
+
   if (gimp->images)
     {
       gtk_object_unref (GTK_OBJECT (gimp->images));
       gimp->images = NULL;
     }
 
-  if (gimp->user_units)
-    {
-      g_list_foreach (gimp->user_units, (GFunc) g_free, NULL);
-      g_list_free (gimp->user_units);
+  gimp_parasites_exit (gimp);
 
-      gimp->user_units   = NULL;
-      gimp->n_user_units = 0;
-    }
+  gimp_units_exit (gimp);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -289,11 +302,9 @@ gimp_initialize (Gimp *gimp)
   g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp_parasites_init (gimp);
-
   gimp->brush_factory =
     gimp_data_factory_new (GIMP_TYPE_BRUSH,
-			   (const gchar **) &core_config->brush_path,
+			   (const gchar **) &gimp->config->brush_path,
 			   brush_loader_entries,
 			   n_brush_loader_entries,
 			   gimp_brush_new,
@@ -303,7 +314,7 @@ gimp_initialize (Gimp *gimp)
 
   gimp->pattern_factory =
     gimp_data_factory_new (GIMP_TYPE_PATTERN,
-			   (const gchar **) &core_config->pattern_path,
+			   (const gchar **) &gimp->config->pattern_path,
 			   pattern_loader_entries,
 			   n_pattern_loader_entries,
 			   gimp_pattern_new,
@@ -313,7 +324,7 @@ gimp_initialize (Gimp *gimp)
 
   gimp->gradient_factory =
     gimp_data_factory_new (GIMP_TYPE_GRADIENT,
-			   (const gchar **) &core_config->gradient_path,
+			   (const gchar **) &gimp->config->gradient_path,
 			   gradient_loader_entries,
 			   n_gradient_loader_entries,
 			   gimp_gradient_new,
@@ -323,7 +334,7 @@ gimp_initialize (Gimp *gimp)
 
   gimp->palette_factory =
     gimp_data_factory_new (GIMP_TYPE_PALETTE,
-			   (const gchar **) &core_config->palette_path,
+			   (const gchar **) &gimp->config->palette_path,
 			   palette_loader_entries,
 			   n_palette_loader_entries,
 			   gimp_palette_new,
@@ -463,14 +474,14 @@ gimp_create_image (Gimp              *gimp,
 
   gimp_container_add (gimp->images, GIMP_OBJECT (gimage));
 
-  if (attach_comment && core_config->default_comment)
+  if (attach_comment && gimp->config->default_comment)
     {
       GimpParasite *parasite;
 
       parasite = gimp_parasite_new ("gimp-comment",
 				    GIMP_PARASITE_PERSISTENT,
-				    strlen (core_config->default_comment) + 1,
-				    core_config->default_comment);
+				    strlen (gimp->config->default_comment) + 1,
+				    gimp->config->default_comment);
       gimp_image_parasite_attach (gimage, parasite);
       gimp_parasite_free (parasite);
     }

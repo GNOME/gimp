@@ -107,6 +107,11 @@ static void     gimp_image_initialize_projection (GimpImage      *gimage,
 static void     gimp_image_get_active_channels   (GimpImage      *gimage,
 						  GimpDrawable   *drawable,
 						  gint           *active);
+static void     gimp_image_construct             (GimpImage      *gimage,
+						  gint            x,
+						  gint            y,
+						  gint            w,
+						  gint            h);
 
 /*  projection functions  */
 static void     project_intensity                (GimpImage      *gimage,
@@ -136,7 +141,7 @@ static void     project_channel                  (GimpImage      *gimage,
 /*
  *  Global variables
  */
-gint valid_combinations[][MAX_CHANNELS + 1] =
+static gint valid_combinations[][MAX_CHANNELS + 1] =
 {
   /* RGB GIMAGE */
   { -1, -1, -1, COMBINE_INTEN_INTEN, COMBINE_INTEN_INTEN_A },
@@ -176,14 +181,10 @@ enum
   LAST_SIGNAL
 };
 
+
 static guint gimp_image_signals[LAST_SIGNAL] = { 0 };
 
 static GimpViewableClass *parent_class = NULL;
-
-static gint        global_image_ID  = 1;
-static GHashTable *gimp_image_table = NULL;
-
-static guint32     next_guide_id    = 1;
 
 
 GtkType 
@@ -386,15 +387,15 @@ gimp_image_class_init (GimpImageClass *klass)
 static void 
 gimp_image_init (GimpImage *gimage)
 {
-  gimage->ID                    = global_image_ID++;
+  gimage->ID                    = 0;
 
   gimage->save_proc             = NULL;
 
   gimage->width                 = 0;
   gimage->height                = 0;
-  gimage->xresolution           = core_config->default_xresolution;
-  gimage->yresolution           = core_config->default_yresolution;
-  gimage->unit                  = core_config->default_units;
+  gimage->xresolution           = 1.0;
+  gimage->yresolution           = 1.0;
+  gimage->unit                  = GIMP_UNIT_INCH;
   gimage->base_type             = RGB;
 
   gimage->cmap                  = NULL;
@@ -450,13 +451,6 @@ gimp_image_init (GimpImage *gimage)
 
   gimage->comp_preview          = NULL;
   gimage->comp_preview_valid    = FALSE;
-
-  if (gimp_image_table == NULL)
-    gimp_image_table = g_hash_table_new (g_direct_hash, NULL);
-
-  g_hash_table_insert (gimp_image_table,
-		       GINT_TO_POINTER (gimage->ID),
-		       (gpointer) gimage);
 }
 
 static void
@@ -466,7 +460,8 @@ gimp_image_destroy (GtkObject *object)
 
   gimage = GIMP_IMAGE (object);
 
-  g_hash_table_remove (gimp_image_table, GINT_TO_POINTER (gimage->ID));
+  g_hash_table_remove (gimage->gimp->image_table,
+		       GINT_TO_POINTER (gimage->ID));
 
   gimp_image_free_projection (gimage);
   gimp_image_free_shadow (gimage);
@@ -617,10 +612,20 @@ gimp_image_new (Gimp              *gimp,
 
   gimage = GIMP_IMAGE (gtk_type_new (GIMP_TYPE_IMAGE));
 
-  gimage->gimp      = gimp;
-  gimage->width     = width;
-  gimage->height    = height;
-  gimage->base_type = base_type;
+  gimage->gimp        = gimp;
+  gimage->ID          = gimp->next_image_ID++;
+
+  g_hash_table_insert (gimp->image_table,
+		       GINT_TO_POINTER (gimage->ID),
+		       (gpointer) gimage);
+
+  gimage->width       = width;
+  gimage->height      = height;
+  gimage->base_type   = base_type;
+
+  gimage->xresolution = gimp->config->default_xresolution;
+  gimage->yresolution = gimp->config->default_yresolution;
+  gimage->unit        = gimp->config->default_units;
 
   switch (base_type)
     {
@@ -662,12 +667,16 @@ gimp_image_get_ID (GimpImage *gimage)
 }
 
 GimpImage *
-gimp_image_get_by_ID (gint image_id)
+gimp_image_get_by_ID (Gimp *gimp,
+		      gint  image_id)
 {
-  if (gimp_image_table == NULL)
+  g_return_val_if_fail (gimp != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (gimp->image_table == NULL)
     return NULL;
 
-  return (GimpImage *) g_hash_table_lookup (gimp_image_table, 
+  return (GimpImage *) g_hash_table_lookup (gimp->image_table, 
 					    GINT_TO_POINTER (image_id));
 }
 
@@ -1446,7 +1455,7 @@ gimp_image_add_hguide (GimpImage *gimage)
 
   guide->ref_count   = 0;
   guide->position    = -1;
-  guide->guide_ID    = next_guide_id++;
+  guide->guide_ID    = gimage->gimp->next_guide_ID++;
   guide->orientation = ORIENTATION_HORIZONTAL;
 
   gimage->guides = g_list_prepend (gimage->guides, guide);
@@ -1465,7 +1474,7 @@ gimp_image_add_vguide (GimpImage *gimage)
 
   guide->ref_count   = 0;
   guide->position    = -1;
-  guide->guide_ID    = next_guide_id++;
+  guide->guide_ID    = gimage->gimp->next_guide_ID++;
   guide->orientation = ORIENTATION_VERTICAL;
 
   gimage->guides = g_list_prepend (gimage->guides, guide);
@@ -1493,7 +1502,7 @@ gimp_image_remove_guide (GimpImage *gimage,
 
 void
 gimp_image_delete_guide (GimpImage *gimage,
-			 GimpGuide *guide) 
+			 GimpGuide *guide)
 {
   guide->position = -1;
 
@@ -2125,7 +2134,7 @@ gimp_image_get_active_channels (GimpImage    *gimage,
     }
 }
 
-void
+static void
 gimp_image_construct (GimpImage *gimage, 
 		      gint       x,
 		      gint       y,

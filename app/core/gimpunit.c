@@ -28,12 +28,12 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "core/core-types.h"
+#include "core-types.h"
 
-#include "core/gimp.h"
+#include "gimp.h"
+#include "gimpunit.h"
 
 #include "gimprc.h"
-#include "unitrc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -276,9 +276,38 @@ _gimp_unit_get_plural (Gimp     *gimp,
 /*  unitrc functions  **********/
 
 void
+gimp_units_init (Gimp *gimp)
+{
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  gimp->user_units   = NULL;
+  gimp->n_user_units = 0;
+}
+
+void
+gimp_units_exit (Gimp *gimp)
+{
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->user_units)
+    {
+      g_list_foreach (gimp->user_units, (GFunc) g_free, NULL);
+      g_list_free (gimp->user_units);
+
+      gimp->user_units   = NULL;
+      gimp->n_user_units = 0;
+    }
+}
+
+void
 gimp_unitrc_load (Gimp *gimp)
 {
   gchar *filename;
+
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("unitrc");
   gimprc_parse_file (filename);
@@ -291,6 +320,9 @@ gimp_unitrc_save (Gimp *gimp)
   gint   i;
   gchar *filename;
   FILE  *fp;
+
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("unitrc");
 

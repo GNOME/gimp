@@ -22,38 +22,42 @@
 
 #include "core-types.h"
 
+#include "gimp.h"
 #include "gimpcoreconfig.h"
 
 
-static GimpCoreConfig  static_core_config =
+void
+gimp_core_config_init (Gimp *gimp)
 {
-  /* plug_in_path             */ NULL,
-  /* module_path              */ NULL,
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  /* brush_path               */ NULL,
-  /* pattern_path             */ NULL,
-  /* palette_path             */ NULL,
-  /* gradient_path            */ NULL,
+  gimp->config = g_new0 (GimpCoreConfig, 1);
 
-  /* default_brush            */ NULL,
-  /* default_pattern          */ NULL,
-  /* default_palette          */ NULL,
-  /* default_gradient         */ NULL,
+  gimp->config->plug_in_path             = NULL;
+  gimp->config->module_path              = NULL;
 
-  /* default_comment          */ NULL,
-  /* default_type             */ RGB,
-  /* default_width            */ 256,
-  /* default_height           */ 256,
-  /* default_units            */ GIMP_UNIT_INCH,
-  /* default_xresolution      */ 72.0,
-  /* default_yresolution      */ 72.0,
-  /* default_resolution_units */ GIMP_UNIT_INCH,
+  gimp->config->brush_path               = NULL;
+  gimp->config->pattern_path             = NULL;
+  gimp->config->palette_path             = NULL;
+  gimp->config->gradient_path            = NULL;
 
-  /* levels_of_undo           */ 5,
-  /* pluginrc_path            */ NULL,
-  /* module_db_load_inhibit   */ NULL,
-  /* thumbnail_mode           */ 1
-};
+  gimp->config->default_brush            = NULL;
+  gimp->config->default_pattern          = NULL;
+  gimp->config->default_palette          = NULL;
+  gimp->config->default_gradient         = NULL;
 
+  gimp->config->default_comment          = NULL;
+  gimp->config->default_type             = RGB;
+  gimp->config->default_width            = 256;
+  gimp->config->default_height           = 256;
+  gimp->config->default_units            = GIMP_UNIT_INCH;
+  gimp->config->default_xresolution      = 72.0;
+  gimp->config->default_yresolution      = 72.0;
+  gimp->config->default_resolution_units = GIMP_UNIT_INCH;
 
-GimpCoreConfig *core_config = &static_core_config;
+  gimp->config->levels_of_undo           = 5;
+  gimp->config->pluginrc_path            = NULL;
+  gimp->config->module_db_load_inhibit   = NULL;
+  gimp->config->thumbnail_mode           = 1;
+}

@@ -1716,7 +1716,7 @@ gimp_context_brush_list_thaw (GimpContainer *container,
   GimpBrush *brush;
 
   if (! context->brush_name)
-    context->brush_name = g_strdup (core_config->default_brush);
+    context->brush_name = g_strdup (context->gimp->config->default_brush);
 
   if ((brush = (GimpBrush *)
        gimp_container_get_child_by_name (container,
@@ -1880,7 +1880,7 @@ gimp_context_pattern_list_thaw (GimpContainer *container,
   GimpPattern *pattern;
 
   if (! context->pattern_name)
-    context->pattern_name = g_strdup (core_config->default_pattern);
+    context->pattern_name = g_strdup (context->gimp->config->default_pattern);
 
   if ((pattern = (GimpPattern *)
        gimp_container_get_child_by_name (container,
@@ -2042,7 +2042,7 @@ gimp_context_gradient_list_thaw (GimpContainer *container,
   GimpGradient *gradient;
 
   if (! context->gradient_name)
-    context->gradient_name = g_strdup (core_config->default_gradient);
+    context->gradient_name = g_strdup (context->gimp->config->default_gradient);
 
   if ((gradient = (GimpGradient *)
        gimp_container_get_child_by_name (container,
@@ -2189,7 +2189,7 @@ gimp_context_palette_list_thaw (GimpContainer *container,
   GimpPalette *palette;
 
   if (! context->palette_name)
-    context->palette_name = g_strdup (core_config->default_palette);
+    context->palette_name = g_strdup (context->gimp->config->default_palette);
 
   if ((palette = (GimpPalette *)
        gimp_container_get_child_by_name (container,
@@ -2340,7 +2340,7 @@ gimp_context_buffer_list_thaw (GimpContainer *container,
   GimpBuffer *buffer;
 
   if (! context->buffer_name)
-    context->buffer_name = g_strdup (core_config->default_buffer);
+    context->buffer_name = g_strdup (context->gimp->config->default_buffer);
 
   if ((buffer = (GimpBuffer *)
        gimp_container_get_child_by_name (container,

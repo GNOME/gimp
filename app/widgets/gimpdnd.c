@@ -1141,7 +1141,7 @@ gimp_dnd_set_image_data (GtkWidget     *widget,
   if (! ID)
     return;
 
-  gimage = gimp_image_get_by_ID (ID);
+  gimage = gimp_image_get_by_ID (the_gimp, ID);
 
   if (gimage)
     (* (GimpDndDropViewableFunc) set_image_func) (widget,
@@ -1203,7 +1203,7 @@ gimp_dnd_set_drawable_data (GtkWidget     *widget,
   if (! ID)
     return;
 
-  drawable = gimp_drawable_get_by_ID (ID);
+  drawable = gimp_drawable_get_by_ID (the_gimp, ID);
 
   if (drawable)
     (* (GimpDndDropViewableFunc) set_drawable_func) (widget,

@@ -123,7 +123,7 @@ layer_new_invoker (Gimp     *gimp,
   GimpLayer *layer = NULL;
   int opacity;
 
-  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -240,7 +240,7 @@ layer_copy_invoker (Gimp     *gimp,
   gboolean add_alpha;
   GimpLayer *copy = NULL;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -306,7 +306,7 @@ layer_create_mask_invoker (Gimp     *gimp,
   gint32 mask_type;
   GimpLayerMask *mask = NULL;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -376,7 +376,7 @@ layer_scale_invoker (Gimp     *gimp,
   GimpImage *gimage;
   GimpLayer *floating_layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -468,7 +468,7 @@ layer_resize_invoker (Gimp     *gimp,
   GimpImage *gimage;
   GimpLayer *floating_layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -561,7 +561,7 @@ layer_delete_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -609,7 +609,7 @@ layer_translate_invoker (Gimp     *gimp,
   GimpLayer *tmp_layer;
   GList *layer_list;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -692,7 +692,7 @@ layer_add_alpha_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -740,7 +740,7 @@ layer_set_offsets_invoker (Gimp     *gimp,
   GimpLayer *tmp_layer;
   GList *layer_list;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -826,7 +826,7 @@ layer_mask_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -880,7 +880,7 @@ layer_is_floating_sel_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -934,7 +934,7 @@ layer_get_name_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -988,7 +988,7 @@ layer_set_name_invoker (Gimp     *gimp,
   GimpLayer *layer;
   gchar *name;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1040,7 +1040,7 @@ layer_get_visible_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1094,7 +1094,7 @@ layer_set_visible_invoker (Gimp     *gimp,
   GimpLayer *layer;
   gboolean visible;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1144,7 +1144,7 @@ layer_get_preserve_trans_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1198,7 +1198,7 @@ layer_set_preserve_trans_invoker (Gimp     *gimp,
   GimpLayer *layer;
   gboolean preserve_trans;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1248,7 +1248,7 @@ layer_get_apply_mask_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1302,7 +1302,7 @@ layer_set_apply_mask_invoker (Gimp     *gimp,
   GimpLayer *layer;
   gboolean apply_mask;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1352,7 +1352,7 @@ layer_get_show_mask_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1406,7 +1406,7 @@ layer_set_show_mask_invoker (Gimp     *gimp,
   GimpLayer *layer;
   gboolean show_mask;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1456,7 +1456,7 @@ layer_get_edit_mask_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1510,7 +1510,7 @@ layer_set_edit_mask_invoker (Gimp     *gimp,
   GimpLayer *layer;
   gboolean edit_mask;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1560,7 +1560,7 @@ layer_get_opacity_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1614,7 +1614,7 @@ layer_set_opacity_invoker (Gimp     *gimp,
   GimpLayer *layer;
   gdouble opacity;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1666,7 +1666,7 @@ layer_get_mode_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1720,7 +1720,7 @@ layer_set_mode_invoker (Gimp     *gimp,
   GimpLayer *layer;
   gint32 mode;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1772,7 +1772,7 @@ layer_get_linked_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1826,7 +1826,7 @@ layer_set_linked_invoker (Gimp     *gimp,
   GimpLayer *layer;
   gboolean linked;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1876,7 +1876,7 @@ layer_get_tattoo_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1930,7 +1930,7 @@ layer_set_tattoo_invoker (Gimp     *gimp,
   GimpLayer *layer;
   gint32 tattoo;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 

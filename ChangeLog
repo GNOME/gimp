@@ -1,3 +1,73 @@
+2001-07-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/gimpunit.c
+	* app/unitrc.h: removed...
+
+	* app/core/Makefile.am
+	* app/core/gimpunit.[ch]: ...re-added here.
+
+	* app/core/gimp.[ch]: added the image and drawable hash tables,
+	next_image_ID, next_guide_ID and next_drawable_ID, added a
+	GimpCoreConfig pointer which is now initalized dynamically.
+
+	* app/core/gimpcoreconfig.[ch]: don't provide a global core_config
+	variable any more (need to access gimp->config now).
+
+	* app/gdisplay.[ch]
+	* app/core/gimpdrawable.[ch]
+	* app/core/gimpimage.[ch]: removed all global variables from
+	gimpimage.c and gimpdrawable.c, pass a Gimp* to all *_get_by_ID()
+	functions.
+
+	* tools/pdbgen/app.pl: pass Gimp* to all _get_by_ID() functions.
+
+	* app/app_procs.c
+	* app/file-open.c
+	* app/file-save.c
+	* app/gimprc.c
+	* app/libgimp_glue.c
+	* app/module_db.c
+	* app/plug_in.c
+	* app/undo.c
+	* app/user_install.c
+	* app/core/core-types.h
+	* app/core/gimpcontext.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-new.c
+	* app/core/gimpparasite.c
+	* app/gui/file-new-dialog.c
+	* app/gui/file-open-dialog.c
+	* app/gui/info-window.c
+	* app/gui/preferences-dialog.c
+	* app/gui/resize-dialog.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* app/xcf/xcf.c
+	* app/widgets/gimpdnd.c
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/color_cmds.c
+	* app/pdb/convert_cmds.c
+	* app/pdb/display_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/edit_cmds.c
+	* app/pdb/fileops_cmds.c
+	* app/pdb/floating_sel_cmds.c
+	* app/pdb/guides_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/parasite_cmds.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/text_tool_cmds.c
+	* app/pdb/tools_cmds.c
+	* app/pdb/undo_cmds.c
+	* app/pdb/unit_cmds.c
+
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/unit.pdb: changed accordingly.
+
 2001-07-10  Sven Neumann  <sven@gimp.org>
 
 	Bugfixes from the stable branch:

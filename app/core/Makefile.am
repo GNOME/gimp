@@ -93,6 +93,8 @@ libappcore_a_SOURCES = @STRIP_BEGIN@ \
 	gimpscanconvert.h		\
 	gimptoolinfo.c			\
 	gimptoolinfo.h			\
+	gimpunit.c			\
+	gimpunit.h			\
 	gimpundo.c			\
 	gimpundo.h			\
 	gimpundostack.c			\

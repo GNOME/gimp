@@ -166,7 +166,7 @@ file_open_image (Gimp          *gimp,
 
   if (*status == GIMP_PDB_SUCCESS && gimage_id != -1)
     {
-      return gimp_image_get_by_ID (gimage_id);
+      return gimp_image_get_by_ID (gimp, gimage_id);
     }
 
   return NULL;

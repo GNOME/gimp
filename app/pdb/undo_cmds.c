@@ -48,7 +48,7 @@ undo_push_group_start_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GimpImage *gimage;
 
-  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -90,7 +90,7 @@ undo_push_group_end_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GimpImage *gimage;
 
-  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 

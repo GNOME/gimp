@@ -282,7 +282,7 @@ xcf_save_invoker (Gimp     *gimp,
 
   success = FALSE;
 
-  gimage   = gimp_image_get_by_ID (args[1].value.pdb_int);
+  gimage   = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
   filename = args[3].value.pdb_pointer;
 
   info.fp = fopen (filename, "wb");

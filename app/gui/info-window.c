@@ -31,6 +31,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpunit.h"
 
 #include "widgets/gimppreview.h"
 
@@ -45,7 +46,6 @@
 #include "app_procs.h"
 #include "colormaps.h"
 #include "gdisplay.h"
-#include "unitrc.h"
 
 #include "libgimp/gimpintl.h"
 

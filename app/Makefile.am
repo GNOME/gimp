@@ -81,8 +81,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 ##
 	floating_sel.c		\
 	floating_sel.h		\
-	gimpunit.c		\
-	unitrc.h		\
 ##
 ## config stuff
 ##

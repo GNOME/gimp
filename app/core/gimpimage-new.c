@@ -88,13 +88,13 @@ gimp_image_new_init (Gimp *gimp)
 
   /* Set the last values used to default values. */
 
-  gimp->image_new_last_values.width       = core_config->default_width;
-  gimp->image_new_last_values.height      = core_config->default_height;
-  gimp->image_new_last_values.unit        = core_config->default_units;
-  gimp->image_new_last_values.xresolution = core_config->default_xresolution;
-  gimp->image_new_last_values.yresolution = core_config->default_yresolution;
-  gimp->image_new_last_values.res_unit    = core_config->default_resolution_units;
-  gimp->image_new_last_values.type        = core_config->default_type;
+  gimp->image_new_last_values.width       = gimp->config->default_width;
+  gimp->image_new_last_values.height      = gimp->config->default_height;
+  gimp->image_new_last_values.unit        = gimp->config->default_units;
+  gimp->image_new_last_values.xresolution = gimp->config->default_xresolution;
+  gimp->image_new_last_values.yresolution = gimp->config->default_yresolution;
+  gimp->image_new_last_values.res_unit    = gimp->config->default_resolution_units;
+  gimp->image_new_last_values.type        = gimp->config->default_type;
   gimp->image_new_last_values.fill_type   = BACKGROUND_FILL;
 
   gimp->have_current_cut_buffer = FALSE;

@@ -57,7 +57,7 @@ floating_sel_remove_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GimpLayer *floating_sel;
 
-  floating_sel = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  floating_sel = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (floating_sel == NULL)
     success = FALSE;
 
@@ -104,7 +104,7 @@ floating_sel_anchor_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GimpLayer *floating_sel;
 
-  floating_sel = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  floating_sel = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (floating_sel == NULL)
     success = FALSE;
 
@@ -151,7 +151,7 @@ floating_sel_to_layer_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GimpLayer *floating_sel;
 
-  floating_sel = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  floating_sel = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (floating_sel == NULL)
     success = FALSE;
 
@@ -199,11 +199,11 @@ floating_sel_attach_invoker (Gimp     *gimp,
   GimpLayer *layer;
   GimpDrawable *drawable;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
-  drawable = gimp_drawable_get_by_ID (args[1].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -251,7 +251,7 @@ floating_sel_rigor_invoker (Gimp     *gimp,
   GimpLayer *floating_sel;
   gboolean undo;
 
-  floating_sel = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  floating_sel = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (floating_sel == NULL)
     success = FALSE;
 
@@ -306,7 +306,7 @@ floating_sel_relax_invoker (Gimp     *gimp,
   GimpLayer *floating_sel;
   gboolean undo;
 
-  floating_sel = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  floating_sel = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (floating_sel == NULL)
     success = FALSE;
 

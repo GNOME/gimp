@@ -198,11 +198,11 @@ text_fontname_invoker (Gimp     *gimp,
   GimpLayer *text_layer = NULL;
   gchar *real_fontname;
 
-  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
-  drawable = gimp_drawable_get_by_ID (args[1].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
 
   x = args[2].value.pdb_float;
 

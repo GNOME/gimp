@@ -38,12 +38,13 @@
 
 #include "base/base-config.h"
 
+#include "core/gimpunit.h"
+
 #include "gui/resolution-calibrate-dialog.h"
 
 #include "appenv.h"
 #include "gdisplay_ops.h"
 #include "gimprc.h"
-#include "unitrc.h"
 #include "user_install.h"
 
 #include "libgimp/gimpintl.h"

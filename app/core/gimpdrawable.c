@@ -36,6 +36,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
@@ -61,6 +62,8 @@ enum
 };
 
 
+/*  local function prototypes  */
+
 static void   gimp_drawable_class_init         (GimpDrawableClass *klass);
 static void   gimp_drawable_init               (GimpDrawable      *drawable);
 static void   gimp_drawable_destroy            (GtkObject         *object);
@@ -73,9 +76,6 @@ static void   gimp_drawable_invalidate_preview (GimpViewable      *viewable);
 static guint gimp_drawable_signals[LAST_SIGNAL] = { 0 };
 
 static GimpViewableClass *parent_class = NULL;
-
-static gint        global_drawable_ID  = 1;
-static GHashTable *gimp_drawable_table = NULL;
 
 
 GtkType
@@ -158,7 +158,7 @@ gimp_drawable_init (GimpDrawable *drawable)
   drawable->offset_x      = 0;
   drawable->offset_y      = 0;
   drawable->bytes         = 0;
-  drawable->ID            = global_drawable_ID++;
+  drawable->ID            = 0;
   drawable->tattoo        = 0;
   drawable->gimage        = NULL;
   drawable->type          = -1;
@@ -168,13 +168,6 @@ gimp_drawable_init (GimpDrawable *drawable)
   drawable->parasites     = gimp_parasite_list_new ();
   drawable->preview_cache = NULL;
   drawable->preview_valid = FALSE;
-
-  if (gimp_drawable_table == NULL)
-    gimp_drawable_table = g_hash_table_new (g_direct_hash, NULL);
-
-  g_hash_table_insert (gimp_drawable_table,
-		       GINT_TO_POINTER (drawable->ID),
-		       (gpointer) drawable);
 }
 
 static void
@@ -186,7 +179,8 @@ gimp_drawable_destroy (GtkObject *object)
 
   drawable = GIMP_DRAWABLE (object);
 
-  g_hash_table_remove (gimp_drawable_table, GINT_TO_POINTER (drawable->ID));
+  g_hash_table_remove (drawable->gimage->gimp->drawable_table,
+		       GINT_TO_POINTER (drawable->ID));
 
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
@@ -329,6 +323,13 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   gboolean alpha;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  drawable->ID = gimage->gimp->next_drawable_ID++;
+
+  g_hash_table_insert (gimage->gimp->drawable_table,
+		       GINT_TO_POINTER (drawable->ID),
+		       (gpointer) drawable);
 
   if (!name)
     name = _("unnamed");
@@ -367,8 +368,7 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 
   drawable->visible = TRUE;
 
-  if (gimage)
-    gimp_drawable_set_gimage (drawable, gimage);
+  gimp_drawable_set_gimage (drawable, gimage);
 
   gimp_object_set_name (GIMP_OBJECT (drawable), name);
 
@@ -387,12 +387,16 @@ gimp_drawable_get_ID (GimpDrawable *drawable)
 }
 
 GimpDrawable *
-gimp_drawable_get_by_ID (gint drawable_id)
+gimp_drawable_get_by_ID (Gimp *gimp,
+			 gint  drawable_id)
 {
-  if (gimp_drawable_table == NULL)
+  g_return_val_if_fail (gimp != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (gimp->drawable_table == NULL)
     return NULL;
 
-  return (GimpDrawable *) g_hash_table_lookup (gimp_drawable_table, 
+  return (GimpDrawable *) g_hash_table_lookup (gimp->drawable_table, 
 					       GINT_TO_POINTER (drawable_id));
 }
 

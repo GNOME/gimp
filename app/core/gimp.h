@@ -42,6 +42,8 @@ struct _Gimp
 {
   GimpObject             parent_instance;
 
+  GimpCoreConfig        *config;
+
   GimpCreateDisplayFunc  create_display_func;
   GimpSetBusyFunc        gui_set_busy_func;
   GimpUnsetBusyFunc      gui_unset_busy_func;
@@ -52,12 +54,18 @@ struct _Gimp
   GList                 *user_units;
   gint                   n_user_units;
 
+  GimpParasiteList      *parasites;
+
   GimpContainer         *images;
+  gint                   next_image_ID;
+  guint32                next_guide_ID;
+  GHashTable            *image_table;
+
+  gint                   next_drawable_ID;
+  GHashTable            *drawable_table;
 
   TileManager           *global_buffer;
   GimpContainer         *named_buffers;
-
-  GimpParasiteList      *parasites;
 
   GimpDataFactory       *brush_factory;
   GimpDataFactory       *pattern_factory;

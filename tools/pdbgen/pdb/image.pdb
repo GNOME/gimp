@@ -139,8 +139,6 @@ sub image_get_prop_proc {
 	$outargs[0]->{init} = 1;
 	delete @{$outargs[0]}{qw(alias no_declare)};
 
-	$invoke{headers} = [ qw("gimpimage.h") ];
-
 	$invoke{code} = "{\n  color = g_new (guchar, 3);\n";
 	foreach (map { "${_}_PIX" } qw(RED GREEN BLUE)) {
 	    $invoke{code} .= "  $prop\[$_] = image->col[$_];\n";
@@ -1498,7 +1496,7 @@ CODE
 
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimpcontainer.h"
-	      "core/gimplist.h" "base/temp-buf.h" 
+	      "core/gimplist.h" "core/gimpunit.h" "base/temp-buf.h" 
 	      "libgimpmath/gimpmath.h" "libgimpbase/gimpbase.h"
               "libgimp/gimpintl.h");
 

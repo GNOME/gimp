@@ -26,9 +26,9 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpunit.h"
 
 #include "app_procs.h"
-#include "unitrc.h"
 #include "libgimp_glue.h"
 
 

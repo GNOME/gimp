@@ -20,6 +20,9 @@
 #define __APP_GIMP_UNIT_H__
 
 
+void       gimp_units_init                         (Gimp     *gimp);
+void       gimp_units_exit                         (Gimp     *gimp);
+
 void       gimp_unitrc_load                        (Gimp     *gimp);
 void       gimp_unitrc_save                        (Gimp     *gimp);
 

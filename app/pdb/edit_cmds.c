@@ -61,7 +61,7 @@ edit_cut_invoker (Gimp     *gimp,
   GimpDrawable *drawable;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -107,7 +107,7 @@ edit_copy_invoker (Gimp     *gimp,
   GimpDrawable *drawable;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -156,7 +156,7 @@ edit_paste_invoker (Gimp     *gimp,
   GimpLayer *layer = NULL;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -224,7 +224,7 @@ edit_clear_invoker (Gimp     *gimp,
   GimpDrawable *drawable;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -271,7 +271,7 @@ edit_fill_invoker (Gimp     *gimp,
   gint32 fill_type;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -326,7 +326,7 @@ edit_stroke_invoker (Gimp     *gimp,
   GimpDrawable *drawable;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 

@@ -76,7 +76,8 @@ void            gimp_drawable_configure          (GimpDrawable       *drawable,
 						  const gchar        *name);
 
 gint            gimp_drawable_get_ID             (GimpDrawable       *drawable);
-GimpDrawable  * gimp_drawable_get_by_ID          (gint                id);
+GimpDrawable  * gimp_drawable_get_by_ID          (Gimp               *gimp,
+						  gint                id);
 
 GimpImage     * gimp_drawable_gimage             (const GimpDrawable *drawable);
 void            gimp_drawable_set_gimage         (GimpDrawable       *drawable,

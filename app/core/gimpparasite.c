@@ -35,9 +35,11 @@
 #include "gimprc.h"
 
 
-void 
+void
 gimp_parasites_init (Gimp *gimp)
 {
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (gimp->parasites == NULL);
 
   gimp->parasites = gimp_parasite_list_new ();
@@ -49,6 +51,9 @@ gimp_parasites_init (Gimp *gimp)
 void 
 gimp_parasites_exit (Gimp *gimp)
 {
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   if (gimp->parasites)
     {
       gtk_object_unref (GTK_OBJECT (gimp->parasites));

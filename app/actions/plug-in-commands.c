@@ -89,6 +89,7 @@
 #include "base/tile.h"
 #include "base/tile-manager.h"
 
+#include "core/gimp.h"
 #include "core/gimpcoreconfig.h"
 #include "core/gimpdatafiles.h"
 #include "core/gimpdrawable.h"
@@ -323,19 +324,19 @@ plug_in_init (void)
     plug_in_init_shm ();
 
   /* search for binaries in the plug-in directory path */
-  gimp_datafiles_read_directories (core_config->plug_in_path, MODE_EXECUTABLE,
+  gimp_datafiles_read_directories (the_gimp->config->plug_in_path, MODE_EXECUTABLE,
 				   plug_in_init_file, NULL);
 
   /* read the pluginrc file for cached data */
   filename = NULL;
-  if (core_config->pluginrc_path)
+  if (the_gimp->config->pluginrc_path)
     {
-      if (g_path_is_absolute (core_config->pluginrc_path))
-        filename = g_strdup (core_config->pluginrc_path);
+      if (g_path_is_absolute (the_gimp->config->pluginrc_path))
+        filename = g_strdup (the_gimp->config->pluginrc_path);
       else
         filename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
 				    gimp_directory (),
-				    core_config->pluginrc_path);
+				    the_gimp->config->pluginrc_path);
     }
   else
     filename = gimp_personal_rc_file ("pluginrc");
@@ -855,7 +856,7 @@ plug_in_new (gchar *name)
 
   if (! g_path_is_absolute (name))
     {
-      path = plug_in_search_in_path (core_config->plug_in_path, name);
+      path = plug_in_search_in_path (the_gimp->config->plug_in_path, name);
 
       if (! path)
 	{
@@ -1605,9 +1606,9 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile_info = msg.data;
 
       if (tile_info->shadow)
-	tm = gimp_drawable_shadow (gimp_drawable_get_by_ID (tile_info->drawable_ID));
+	tm = gimp_drawable_shadow (gimp_drawable_get_by_ID (the_gimp, tile_info->drawable_ID));
       else
-	tm = gimp_drawable_data (gimp_drawable_get_by_ID (tile_info->drawable_ID));
+	tm = gimp_drawable_data (gimp_drawable_get_by_ID (the_gimp, tile_info->drawable_ID));
 
       if (!tm)
 	{
@@ -1642,9 +1643,9 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
   else
     {
       if (tile_req->shadow)
-	tm = gimp_drawable_shadow (gimp_drawable_get_by_ID (tile_req->drawable_ID));
+	tm = gimp_drawable_shadow (gimp_drawable_get_by_ID (the_gimp, tile_req->drawable_ID));
       else
-	tm = gimp_drawable_data (gimp_drawable_get_by_ID (tile_req->drawable_ID));
+	tm = gimp_drawable_data (gimp_drawable_get_by_ID (the_gimp, tile_req->drawable_ID));
 
       if (!tm)
 	{
@@ -3517,7 +3518,7 @@ plug_in_progress_init (PlugIn *plug_in,
     message = plug_in->args[0];
 
   if (gdisp_ID > 0)
-    gdisp = gdisplay_get_by_ID (gdisp_ID);
+    gdisp = gdisplay_get_by_ID (the_gimp, gdisp_ID);
 
   if (plug_in->progress)
     plug_in->progress = progress_restart (plug_in->progress, message,

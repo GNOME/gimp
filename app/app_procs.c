@@ -40,6 +40,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimpunit.h"
 
 #include "pdb/internal_procs.h"
 
@@ -62,7 +63,6 @@
 #include "module_db.h"
 #include "plug_in.h"
 #include "undo.h"
-#include "unitrc.h"
 #include "user_install.h"
 
 #ifdef DISPLAY_FILTERS
@@ -108,7 +108,7 @@ app_init (gint    gimp_argc,
    */
   gimp_dir = gimp_directory ();
 
-  if (stat (gimp_dir,  &stat_buf) != 0)
+  if (stat (gimp_dir, &stat_buf) != 0)
     {
       /*  not properly installed  */
 

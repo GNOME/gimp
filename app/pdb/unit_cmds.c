@@ -28,9 +28,9 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
-#include "unitrc.h"
+#include "core/gimpunit.h"
 
-#include "libgimpbase/gimpunit.h"
+#include "libgimpbase/gimpbase.h"
 
 static ProcRecord unit_get_number_of_units_proc;
 static ProcRecord unit_get_number_of_built_in_units_proc;

@@ -43,6 +43,7 @@
 
 #include "base/base-config.c"
 
+#include "core/gimp.h"
 #include "core/gimpcoreconfig.h"
 #include "core/gimpparasite.h"
 #include "core/gimptoolinfo.h"
@@ -439,28 +440,28 @@ gimprc_init (Gimp *gimp)
       base_funcs[4].val1p  = &base_config->interpolation_type;
       base_funcs[4].val1p  = &base_config->num_processors;
 
-      core_funcs[0].val1p  = &core_config->plug_in_path;
-      core_funcs[1].val1p  = &core_config->module_path;
-      core_funcs[2].val1p  = &core_config->brush_path;
-      core_funcs[3].val1p  = &core_config->pattern_path;
-      core_funcs[4].val1p  = &core_config->palette_path;
-      core_funcs[5].val1p  = &core_config->gradient_path;
-      core_funcs[6].val1p  = &core_config->default_brush;
-      core_funcs[7].val1p  = &core_config->default_pattern;
-      core_funcs[8].val1p  = &core_config->default_palette;
-      core_funcs[9].val1p  = &core_config->default_gradient;
-      core_funcs[10].val1p = &core_config->default_comment;
-      core_funcs[11].val1p = &core_config->default_type;
-      core_funcs[12].val1p = &core_config->default_width;
-      core_funcs[12].val2p = &core_config->default_height;
-      core_funcs[13].val1p = &core_config->default_units;
-      core_funcs[14].val1p = &core_config->default_xresolution;
-      core_funcs[15].val1p = &core_config->default_xresolution;
-      core_funcs[16].val1p = &core_config->default_resolution_units;
-      core_funcs[17].val1p = &core_config->levels_of_undo;
-      core_funcs[18].val1p = &core_config->pluginrc_path;
-      core_funcs[19].val1p = &core_config->module_db_load_inhibit;
-      core_funcs[20].val1p = &core_config->thumbnail_mode;
+      core_funcs[0].val1p  = &gimp->config->plug_in_path;
+      core_funcs[1].val1p  = &gimp->config->module_path;
+      core_funcs[2].val1p  = &gimp->config->brush_path;
+      core_funcs[3].val1p  = &gimp->config->pattern_path;
+      core_funcs[4].val1p  = &gimp->config->palette_path;
+      core_funcs[5].val1p  = &gimp->config->gradient_path;
+      core_funcs[6].val1p  = &gimp->config->default_brush;
+      core_funcs[7].val1p  = &gimp->config->default_pattern;
+      core_funcs[8].val1p  = &gimp->config->default_palette;
+      core_funcs[9].val1p  = &gimp->config->default_gradient;
+      core_funcs[10].val1p = &gimp->config->default_comment;
+      core_funcs[11].val1p = &gimp->config->default_type;
+      core_funcs[12].val1p = &gimp->config->default_width;
+      core_funcs[12].val2p = &gimp->config->default_height;
+      core_funcs[13].val1p = &gimp->config->default_units;
+      core_funcs[14].val1p = &gimp->config->default_xresolution;
+      core_funcs[15].val1p = &gimp->config->default_xresolution;
+      core_funcs[16].val1p = &gimp->config->default_resolution_units;
+      core_funcs[17].val1p = &gimp->config->levels_of_undo;
+      core_funcs[18].val1p = &gimp->config->pluginrc_path;
+      core_funcs[19].val1p = &gimp->config->module_db_load_inhibit;
+      core_funcs[20].val1p = &gimp->config->thumbnail_mode;
 
       parse_func_hash = g_hash_table_new (g_str_hash, g_str_equal);
 
@@ -535,8 +536,8 @@ gimprc_parse (Gimp *gimp)
  
   if (! gimprc.image_title_format)
     gimprc.image_title_format = g_strdup (DEFAULT_IMAGE_TITLE_FORMAT);
-  if (! core_config->default_comment)
-    core_config->default_comment = g_strdup (DEFAULT_COMMENT);
+  if (! gimp->config->default_comment)
+    gimp->config->default_comment = g_strdup (DEFAULT_COMMENT);
 }
 
 gboolean

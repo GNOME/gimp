@@ -59,6 +59,7 @@
 
 #include "core/core-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcoreconfig.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -181,7 +182,7 @@ file_save (GimpImage   *gimage,
       /* gimage_set_save_proc(gimage, file_proc); */
 
       /* Write a thumbnail for the saved image, where appropriate */
-      switch (core_config->thumbnail_mode)
+      switch (gimage->gimp->config->thumbnail_mode)
 	{
 	case 0:
 	  break;

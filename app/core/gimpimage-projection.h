@@ -175,7 +175,8 @@ GimpImage     * gimp_image_new               (Gimp               *gimp,
 					      GimpImageBaseType   base_type);
 
 gint            gimp_image_get_ID            (GimpImage          *gimage);
-GimpImage     * gimp_image_get_by_ID         (gint                id);
+GimpImage     * gimp_image_get_by_ID         (Gimp               *gimp,
+					      gint                id);
 
 void            gimp_image_set_filename      (GimpImage          *gimage,
 					      const gchar        *filename);
@@ -372,11 +373,6 @@ gboolean        gimp_image_add_channel           (GimpImage         *gimage,
 						  gint               position);
 void            gimp_image_remove_channel        (GimpImage         *gimage,
 						  GimpChannel       *channel);
-void            gimp_image_construct             (GimpImage         *gimage,
-						  gint               x,
-						  gint               y,
-						  gint               w,
-						  gint               h);
 
 
 void        gimp_image_invalidate_without_render (GimpImage       *gimage,

@@ -282,7 +282,8 @@ void       gdisplay_update_title             (GDisplay           *gdisp);
 void       gdisplay_flush_displays_only      (GDisplay           *gdisp); /* no rerender! */
 
 GDisplay * gdisplay_active                   (void);
-GDisplay * gdisplay_get_by_ID                (gint                ID);
+GDisplay * gdisplay_get_by_ID                (Gimp               *gimp,
+					      gint                ID);
 
 
 /*  function declarations  */

@@ -248,7 +248,7 @@ sub marshal_inargs {
 	    my $id_func = $arg->{id_func};
 	    $id_func = $_->{id_func} if exists $_->{id_func};
 
-	    $result .= "  $var = $id_func ($value);\n";
+	    $result .= "  $var = $id_func (gimp, $value);\n";
 	    $result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
 				      "$var == NULL");
 	}

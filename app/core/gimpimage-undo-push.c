@@ -34,6 +34,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcoreconfig.h"
@@ -313,13 +314,13 @@ static gboolean
 undo_free_up_space (GimpImage *gimage)
 {
   /* If there are 0 levels of undo return FALSE.  */
-  if (core_config->levels_of_undo == 0)
+  if (gimage->gimp->config->levels_of_undo == 0)
     return FALSE;
 
   /*  Delete the item on the bottom of the stack if we have the maximum
    *  levels of undo already
    */
-  while (gimage->undo_levels >= core_config->levels_of_undo)
+  while (gimage->undo_levels >= gimage->gimp->config->levels_of_undo)
     gimage->undo_stack = remove_stack_bottom (gimage);
 
   return TRUE;
@@ -1180,7 +1181,7 @@ undo_pop_layer_displace (GimpImage *gimage,
   LayerDisplaceUndo *ldu;
 
   ldu = (LayerDisplaceUndo *) info_ptr;
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (ldu->info[0]);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimage->gimp, ldu->info[0]);
   if (layer)
     {
       old_offsets[0] = GIMP_DRAWABLE (layer)->offset_x;
@@ -2103,7 +2104,7 @@ undo_pop_fs_rigor (GimpImage *gimage,
 
   layer_ID = *((gint32 *) layer_ptr);
 
-  if ((floating_layer = (GimpLayer *) gimp_drawable_get_by_ID (layer_ID)) == NULL)
+  if ((floating_layer = (GimpLayer *) gimp_drawable_get_by_ID (gimage->gimp, layer_ID)) == NULL)
     return FALSE;
 
   if (! gimp_layer_is_floating_sel (floating_layer))
@@ -2184,7 +2185,7 @@ undo_pop_fs_relax (GimpImage *gimage,
 
   layer_ID = *((gint32 *) layer_ptr);
 
-  if ((floating_layer = (GimpLayer *) gimp_drawable_get_by_ID (layer_ID)) == NULL)
+  if ((floating_layer = (GimpLayer *) gimp_drawable_get_by_ID (gimage->gimp, layer_ID)) == NULL)
     return FALSE;
 
   if (! gimp_layer_is_floating_sel (floating_layer))
