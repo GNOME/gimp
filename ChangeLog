@@ -1,5 +1,9 @@
 2004-06-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimpcurvestool.c: try again to revert.
+	
+2004-06-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimpcurvestool.c: reverted.
 	
 2004-06-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
