@@ -1293,11 +1293,11 @@ shape_of_boundary (Tool *tool)
       kinks[j].y = segs[i].y1;
       
       /*  transform from screen to image coordinates  */
-      gdisplay_untransform_coords (gdisp, kinks[j].x, kinks[j].y,
-				   &x, &y, FALSE, TRUE);
+      /*gdisplay_untransform_coords (gdisp, kinks[j].x, kinks[j].y,
+				   &x, &y, FALSE, TRUE);*/
 
-      kinks[j].x = BOUNDS (x, 0, (gdisp->gimage->width - 1));
-      kinks[j].y = BOUNDS (y, 0, (gdisp->gimage->height - 1));
+      kinks[j].x = BOUNDS (kinks[j].x, 0, (gdisp->gimage->width - 1));
+      kinks[j].y = BOUNDS (kinks[j].y, 0, (gdisp->gimage->height - 1));
 	if(j) {
 	   if((kinks[i].x != kinks[j-1].x) || (kinks[j].y != kinks[j-1].y))
 		++j;
@@ -1379,10 +1379,10 @@ process_kinks (Tool *tool)
 
   for (i = 0; i < iscissors->num_kinks; i++)
     {
-      /*  transform from screen to image coordinates  */
-/*      gdisplay_untransform_coords (gdisp, kinks[i].x, kinks[i].y,
-				   &x, &y, FALSE, TRUE);
-*/
+       /* transform from screen to image coordinates  */
+      /*gdisplay_untransform_coords (gdisp, kinks[i].x, kinks[i].y,
+				   &x, &y, FALSE, TRUE); */
+
       kinks[i].x = BOUNDS (kinks[i].x, 0, (gdisp->gimage->width - 1));
       kinks[i].y = BOUNDS (kinks[i].y, 0, (gdisp->gimage->height - 1));
 
@@ -1976,7 +1976,7 @@ construct_edge_map (Tool    *tool,
   long dboffset;
    
   PixelRegion srcPR, destPR;
-  FILE *dump;
+  /* FILE *dump; */
 
   /*  init some variables  */
   srcPR.bytes = edge_buf->bytes;
@@ -2035,7 +2035,7 @@ construct_edge_map (Tool    *tool,
 	    /*  Calculate offset into destination buffer */
 	    dboffset = ((edge_buf->y > srcPR.y)?(0):(srcPR.y - edge_buf->y));
 	    dboffset *= destPR.rowstride;
-	    dboffset += ((edge_buf->x < srcPR.x)?(0):((edge_buf->x - srcPR.x)*destPR.bytes));
+	    dboffset += ((edge_buf->x < srcPR.x)?((srcPR.x - edge_buf->x)*destPR.bytes):((edge_buf->x - srcPR.x)*destPR.bytes));
 
 	    destPR.data = temp_buf_data (edge_buf) + dboffset;
 
@@ -2065,10 +2065,10 @@ construct_edge_map (Tool    *tool,
 
   /*  dump the edge buffer for debugging*/
 
-   dump=fopen("dump", "w"); 
+   /*dump=fopen("dump", "w"); 
    fprintf(dump, "P5\n%d %d\n255\n", edge_buf->width, edge_buf->height); 
    fwrite(edge_buf->data, edge_buf->width * edge_buf->height, sizeof (guchar), dump); 
-   fclose (dump);
+   fclose (dump);*/
 
 }
 
@@ -2166,7 +2166,6 @@ free_edge_map_blocks ()
     return;
 
   num_blocks = vert_blocks * horz_blocks;
-  printf("\n");
   
   for (i = 0; i < num_blocks; i++)
     if (edge_map_blocks [i]) {
@@ -2488,9 +2487,9 @@ CR_convert (Iscissors *iscissors,
 	    int        antialias)
 {
   int indices[4];
-  GSList * list;
+  GSList *list;
   int draw_type;
-  int * vals, val;
+  int *vals, val;
   int x, w;
   int i, j;
   PixelRegion maskPR;
