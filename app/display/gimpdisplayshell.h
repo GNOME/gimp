@@ -162,20 +162,24 @@ struct _GimpDisplayShell
   GList            *filters;           /* color display conversion stuff      */
   GtkWidget        *filters_dialog;    /* color display filter dialog         */
 
-  /*  the state of gimp_display_shell_tool_events()  */
-  gboolean          space_pressed;
-  gboolean          space_release_pending;
-
   GdkWindowState    window_state;      /* for fullscreen display              */
-
-  GimpDisplayShellAppearance appearance;
-  GimpDisplayShellAppearance fullscreen_appearance;
 
   gint              paused_count;
 
   GQuark            vectors_freeze_handler;
   GQuark            vectors_thaw_handler;
   GQuark            vectors_visible_handler;
+
+  GimpDisplayShellAppearance appearance;
+  GimpDisplayShellAppearance fullscreen_appearance;
+
+  /*  the state of gimp_display_shell_tool_events()  */
+  gboolean          space_pressed;
+  gboolean          space_release_pending;
+  gboolean          scrolling;
+  gint              scroll_start_x;
+  gint              scroll_start_y;
+  gboolean          button_press_before_focus;
 };
 
 struct _GimpDisplayShellClass

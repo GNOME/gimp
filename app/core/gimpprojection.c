@@ -245,11 +245,17 @@ gimp_display_delete (GimpDisplay *gdisp)
 
   active_tool = tool_manager_get_active (gdisp->gimage->gimp);
 
-  /*  clear out the pointer to this gdisp from the active tool  */
-  if (active_tool && active_tool->gdisp == gdisp)
+  if (active_tool)
     {
-      active_tool->drawable = NULL;
-      active_tool->gdisp    = NULL;
+      if (active_tool->focus_display == gdisp)
+        tool_manager_focus_display_active (gdisp->gimage->gimp, NULL);
+
+      /*  clear out the pointer to this gdisp from the active tool  */
+      if (active_tool->gdisp == gdisp)
+        {
+          active_tool->drawable = NULL;
+          active_tool->gdisp    = NULL;
+        }
     }
 
   /* If this gdisplay was idlerendering at the time when it was deleted,

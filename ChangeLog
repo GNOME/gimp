@@ -1,3 +1,45 @@
+2003-10-14  Michael Natterer  <mitch@gimp.org>
+
+	Refactored modifier handling of displays and tools. Hopefully
+	finally fixes bug #124135.
+
+	* app/tools/gimptool.[ch] (struct GimpTool): added private members
+	"focus_display" and "modifier_state" so tools are aware of their
+	modifier state.
+
+	* app/tools/gimptool.[ch]
+	* app/tools/tool_manager.[ch]: removed all public modifier_key()
+	API and added set_focus_display() and set_modifier_state()
+	instead.
+
+	* app/tools/tool_manager.c (tool_manager_select_tool)
+	* app/display/gimpdisplay.c (gimp_display_delete): set the
+	active_tool's focus_display to NULL.
+
+	* app/display/gimpdisplayshell.[ch] (struct GimpDisplayShell):
+	added almost the whole stuff that used to be static variables of
+	gimp_display_shell_tool_events(). Cleaned up the struct a bit.
+
+	* app/display/gimpdisplayshell-callbacks.c: removed utility
+	function gimp_display_shell_update_tool_modifiers().
+
+	(gimp_display_shell_tool_events):
+
+	- Replaced all calls to gimp_display_shell_update_tool_modifiers()
+	  and tool_manager_modifier_key_active() by
+	  tool_manager_modifier_state_active().
+
+	- Call tool_manager_focus_display_active() before setting the
+	  tool's modifier_state. Set the tool's focus_display to NULL when
+	  we get a focus_out event.
+
+	- Don't grab/ungrab the keyboard twice when <space>-selecting the
+	  move tool.
+
+	- Removed most static variables and use the new members of
+	  GimpDisplayShell. Don't remember any old modifier states since
+	  GimpTool does that by itself now.
+
 2003-10-13  Manish Singh  <yosh@gimp.org>
 
 	* libgimp/Makefile.am: add $(libgimp) to libgimpui_1_3_la_DEPENDENCIES

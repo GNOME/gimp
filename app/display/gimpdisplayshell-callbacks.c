@@ -93,10 +93,6 @@ static void     gimp_display_shell_get_device_state  (GimpDisplayShell *shell,
 static GdkModifierType
                 gimp_display_shell_key_to_state      (gint              key);
 
-static void gimp_display_shell_update_tool_modifiers (GimpDisplayShell *shell,
-                                                      GdkModifierType   old_state,
-                                                      GdkModifierType   current_state);
-
 static void  gimp_display_shell_origin_menu_position (GtkMenu          *menu,
                                                       gint             *x,
                                                       gint             *y,
@@ -420,16 +416,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   gboolean         return_val    = FALSE;
   gboolean         update_cursor = FALSE;
 
-  static GdkModifierType  button_press_state = 0;
-  static GdkModifierType  space_press_state  = 0;
-
-  static GimpToolInfo    *space_shaded_tool  = NULL;
-
-  static gboolean         scrolling          = FALSE;
-  static gint             scroll_start_x     = 0;
-  static gint             scroll_start_y     = 0;
-
-  static gboolean         button_press_before_focus = FALSE;
+  static GimpToolInfo *space_shaded_tool  = NULL;
 
   if (! canvas->window)
     {
@@ -516,9 +503,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
              *  in "click to focus" mode, we did this on BUTTON_PRESS, so
              *  do it here only if button_press_before_focus is FALSE
              */
-            if (state && ! button_press_before_focus)
+            if (! shell->button_press_before_focus)
               {
-                gimp_display_shell_update_tool_modifiers (shell, 0, state);
+                tool_manager_focus_display_active (gimp, gdisp);
+                tool_manager_modifier_state_active (gimp, state, gdisp);
 
                 tool_manager_oper_update_active (gimp,
                                                  &image_coords, state,
@@ -532,17 +520,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             /*  reset it here to be prepared for the next
              *  FOCUS_IN / BUTTON_PRESS confusion
              */
-            button_press_before_focus = FALSE;
+            shell->button_press_before_focus = FALSE;
 
             /*  release modifier keys when the canvas loses the focus  */
-            if (state)
-              {
-                gimp_display_shell_update_tool_modifiers (shell, state, 0);
+            tool_manager_focus_display_active (gimp, NULL);
 
-                tool_manager_oper_update_active (gimp,
-                                                 &image_coords, 0,
-                                                 gdisp);
-              }
+            tool_manager_oper_update_active (gimp,
+                                             &image_coords, 0,
+                                             gdisp);
           }
 
         /*  stop the signal because otherwise gtk+ exposes the whole
@@ -564,16 +549,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             /*  in "click to focus" mode, the BUTTON_PRESS arrives before
              *  FOCUS_IN, so we have to update the tool's modifier state here
              */
-            if (state)
-              {
-                gimp_display_shell_update_tool_modifiers (shell, 0, state);
+            tool_manager_focus_display_active (gimp, gdisp);
+            tool_manager_modifier_state_active (gimp, state, gdisp);
 
-                tool_manager_oper_update_active (gimp,
-                                                 &image_coords, state,
-                                                 gdisp);
-              }
+            tool_manager_oper_update_active (gimp,
+                                             &image_coords, state,
+                                             gdisp);
 
-            button_press_before_focus = TRUE;
+            shell->button_press_before_focus = TRUE;
 
             /*  we expect a FOCUS_IN event to follow, but can't rely
              *  on it, so force one
@@ -617,12 +600,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                   NULL, NULL, time);
               }
 
-            gdk_keyboard_grab (canvas->window, FALSE, time);
-
-            /*  save the current modifier state because tools don't get
-             *  key events while BUTTON1 is down
-             */
-            button_press_state = state;
+            if (! shell->space_pressed && ! shell->space_release_pending)
+              gdk_keyboard_grab (canvas->window, FALSE, time);
 
             if (active_tool &&
                 (! gimp_image_is_empty (gimage) ||
@@ -669,10 +648,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case 2:
             state |= GDK_BUTTON2_MASK;
 
-            scrolling = TRUE;
-
-            scroll_start_x = bevent->x + shell->offset_x;
-            scroll_start_y = bevent->y + shell->offset_y;
+            shell->scrolling      = TRUE;
+            shell->scroll_start_x = bevent->x + shell->offset_x;
+            shell->scroll_start_y = bevent->y + shell->offset_y;
 
             gtk_grab_add (canvas);
 
@@ -738,49 +716,48 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   }
               }
 
-            gdk_keyboard_ungrab (time);
-            gdk_pointer_ungrab (time);
-
-            /*  restore the tool's modifier state because it didn't get
+            /*  update the tool's modifier state because it didn't get
              *  key events while BUTTON1 was down
              */
-            gimp_display_shell_update_tool_modifiers (shell,
-                                                      button_press_state,
-                                                      state);
+            tool_manager_focus_display_active (gimp, gdisp);
+            tool_manager_modifier_state_active (gimp, state, gdisp);
 
             tool_manager_oper_update_active (gimp,
                                              &image_coords, state,
                                              gdisp);
 
+            if (! shell->space_pressed && ! shell->space_release_pending)
+              gdk_keyboard_ungrab (time);
+
+            gdk_pointer_ungrab (time);
+
             if (shell->space_release_pending)
               {
-                gdk_keyboard_ungrab (time);
-
-                gimp_display_shell_update_tool_modifiers (shell, state, 0);
+                g_print ("%s: popping move tool\n", G_GNUC_FUNCTION);
 
                 gimp_context_set_tool (gimp_get_user_context (gimp),
                                        space_shaded_tool);
                 space_shaded_tool = NULL;
 
-                gimp_display_shell_update_tool_modifiers (shell,
-                                                          space_press_state,
-                                                          state);
+                tool_manager_focus_display_active (gimp, gdisp);
+                tool_manager_modifier_state_active (gimp, state, gdisp);
 
                 tool_manager_oper_update_active (gimp,
                                                  &image_coords, state,
                                                  gdisp);
 
                 shell->space_release_pending = FALSE;
+
+                gdk_keyboard_ungrab (time);
               }
             break;
 
           case 2:
             state &= ~GDK_BUTTON2_MASK;
 
-            scrolling = FALSE;
-
-            scroll_start_x = 0;
-            scroll_start_y = 0;
+            shell->scrolling      = FALSE;
+            shell->scroll_start_x = 0;
+            shell->scroll_start_y = 0;
 
             gtk_grab_remove (canvas);
 
@@ -970,12 +947,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
         else if (state & GDK_BUTTON2_MASK)
           {
-            if (scrolling)
+            if (shell->scrolling)
               {
                 gimp_display_shell_scroll (shell,
-                                           (scroll_start_x - mevent->x -
+                                           (shell->scroll_start_x - mevent->x -
                                             shell->offset_x),
-                                           (scroll_start_y - mevent->y -
+                                           (shell->scroll_start_y - mevent->y -
                                             shell->offset_y));
               }
           }
@@ -995,6 +972,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkEventKey *kevent;
 
         kevent = (GdkEventKey *) event;
+
+        tool_manager_focus_display_active (gimp, gdisp);
 
         switch (kevent->keyval)
           {
@@ -1020,9 +999,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 {
                   GimpToolInfo *move_tool_info;
 
-                  space_shaded_tool = active_tool->tool_info;
-                  space_press_state = state;
-
                   move_tool_info = (GimpToolInfo *)
                     gimp_container_get_child_by_name (gimp->tool_info_list,
                                                       "gimp-move-tool");
@@ -1031,12 +1007,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                     {
                       g_print ("%s: pushing move tool\n", G_GNUC_FUNCTION);
 
+                      space_shaded_tool = active_tool->tool_info;
+
                       gdk_keyboard_grab (canvas->window, FALSE, time);
 
                       gimp_context_set_tool (gimp_get_user_context (gimp),
                                              move_tool_info);
 
-                      gimp_display_shell_update_tool_modifiers (shell, 0, state);
+                      tool_manager_focus_display_active (gimp, gdisp);
+                      tool_manager_modifier_state_active (gimp, state, gdisp);
 
                       shell->space_pressed = TRUE;
                     }
@@ -1083,16 +1062,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               key = gimp_display_shell_key_to_state (kevent->keyval);
               state |= key;
 
-              /*  For all modifier keys: call the tools modifier_key *and*
+              /*  For all modifier keys: call the tools modifier_state *and*
                *  oper_update method so tools can choose if they are interested
                *  in the release itself or only in the resulting state
                */
               if (! gimp_image_is_empty (gimage))
-                {
-                  tool_manager_modifier_key_active (gimp,
-                                                    key, TRUE, state,
-                                                    gdisp);
-                }
+                tool_manager_modifier_state_active (gimp, state, gdisp);
             }
 
             break;
@@ -1110,6 +1085,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         kevent = (GdkEventKey *) event;
 
+        tool_manager_focus_display_active (gimp, gdisp);
+
         switch (kevent->keyval)
           {
           case GDK_space:
@@ -1117,20 +1094,17 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               {
                 g_print ("%s: popping move tool\n", G_GNUC_FUNCTION);
 
-                gdk_keyboard_ungrab (time);
-
-                gimp_display_shell_update_tool_modifiers (shell, state, 0);
-
                 gimp_context_set_tool (gimp_get_user_context (gimp),
                                        space_shaded_tool);
                 space_shaded_tool = NULL;
 
-                gimp_display_shell_update_tool_modifiers (shell,
-                                                          space_press_state,
-                                                          state);
+                tool_manager_focus_display_active (gimp, gdisp);
+                tool_manager_modifier_state_active (gimp, state, gdisp);
 
                 shell->space_pressed = FALSE;
-              }
+
+                gdk_keyboard_ungrab (time);
+             }
 
             return_val = TRUE;
             break;
@@ -1145,16 +1119,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               key = gimp_display_shell_key_to_state (kevent->keyval);
               state &= ~key;
 
-              /*  For all modifier keys: call the tools modifier_key *and*
+              /*  For all modifier keys: call the tools modifier_state *and*
                *  oper_update method so tools can choose if they are interested
                *  in the press itself or only in the resulting state
                */
               if (! gimp_image_is_empty (gimage))
-                {
-                  tool_manager_modifier_key_active (gimp,
-                                                    key, FALSE, state,
-                                                    gdisp);
-                }
+                tool_manager_modifier_state_active (gimp, state, gdisp);
             }
 
             break;
@@ -1611,46 +1581,6 @@ gimp_display_shell_key_to_state (gint key)
       return GDK_CONTROL_MASK;
     default:
       return 0;
-    }
-}
-
-static void
-gimp_display_shell_update_tool_modifiers (GimpDisplayShell *shell,
-                                          GdkModifierType   old_state,
-                                          GdkModifierType   current_state)
-{
-  Gimp *gimp;
-
-  gimp = shell->gdisp->gimage->gimp;
-
-  if ((old_state & GDK_SHIFT_MASK) != (current_state & GDK_SHIFT_MASK))
-    {
-      tool_manager_modifier_key_active (gimp,
-                                        GDK_SHIFT_MASK,
-                                        (current_state & GDK_SHIFT_MASK) ?
-                                        TRUE : FALSE,
-                                        current_state,
-                                        shell->gdisp);
-    }
-
-  if ((old_state & GDK_CONTROL_MASK) != (current_state & GDK_CONTROL_MASK))
-    {
-      tool_manager_modifier_key_active (gimp,
-                                        GDK_CONTROL_MASK,
-                                        (current_state & GDK_CONTROL_MASK) ?
-                                        TRUE : FALSE,
-                                        current_state,
-                                        shell->gdisp);
-    }
-
-  if ((old_state & GDK_MOD1_MASK) != (current_state & GDK_MOD1_MASK))
-    {
-      tool_manager_modifier_key_active (gimp,
-                                        GDK_MOD1_MASK,
-                                        (current_state & GDK_MOD1_MASK) ?
-                                        TRUE : FALSE,
-                                        current_state,
-                                        shell->gdisp);
     }
 }
 

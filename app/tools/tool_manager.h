@@ -56,11 +56,13 @@ void       tool_manager_motion_active         (Gimp             *gimp,
 void       tool_manager_arrow_key_active      (Gimp             *gimp,
                                                GdkEventKey      *kevent,
                                                GimpDisplay      *gdisp);
-void       tool_manager_modifier_key_active   (Gimp             *gimp,
-                                               GdkModifierType   key,
-                                               gboolean          press,
+
+void       tool_manager_focus_display_active  (Gimp             *gimp,
+                                               GimpDisplay      *gdisp);
+void       tool_manager_modifier_state_active (Gimp             *gimp,
                                                GdkModifierType   state,
                                                GimpDisplay      *gdisp);
+
 void       tool_manager_oper_update_active    (Gimp             *gimp,
                                                GimpCoords       *coords,
                                                GdkModifierType   state,

@@ -263,10 +263,9 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->filters               = NULL;
   shell->filters_dialog        = NULL;
 
-  shell->space_pressed         = FALSE;
-  shell->space_release_pending = FALSE;
-
   shell->window_state          = 0;
+
+  shell->paused_count          = 0;
 
   shell->appearance.selection    = TRUE;
   shell->appearance.active_layer = TRUE;
@@ -277,7 +276,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->appearance.scrollbars   = TRUE;
   shell->appearance.statusbar    = TRUE;
   shell->appearance.padding_mode = GIMP_DISPLAY_PADDING_MODE_DEFAULT;
-  gimp_rgba_set (&shell->appearance.padding_color, 1.0, 1.0, 1.0, 1.0);
+  gimp_rgba_set (&shell->appearance.padding_color,
+                 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
   shell->appearance.padding_mode_set = FALSE;
 
   shell->fullscreen_appearance.selection    = TRUE;
@@ -290,10 +290,15 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->fullscreen_appearance.statusbar    = FALSE;
   shell->fullscreen_appearance.padding_mode = GIMP_DISPLAY_PADDING_MODE_CUSTOM;
   gimp_rgba_set (&shell->fullscreen_appearance.padding_color,
-                 0.0, 0.0, 0.0, 1.0);
+                 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   shell->fullscreen_appearance.padding_mode_set = FALSE;
 
-  shell->paused_count = 0;
+  shell->space_pressed             = FALSE;
+  shell->space_release_pending     = FALSE;
+  shell->scrolling                 = FALSE;
+  shell->scroll_start_x            = 0;
+  shell->scroll_start_y            = 0;
+  shell->button_press_before_focus = FALSE;
 
   gtk_window_set_wmclass (GTK_WINDOW (shell), "image_window", "Gimp");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);

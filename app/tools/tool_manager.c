@@ -158,6 +158,8 @@ tool_manager_select_tool (Gimp     *gimp,
       if (gdisp)
         tool_manager_control_active (gimp, HALT, gdisp);
 
+      tool_manager_focus_display_active (gimp, NULL);
+
       g_object_unref (tool_manager->active_tool);
     }
 
@@ -339,11 +341,8 @@ tool_manager_arrow_key_active (Gimp        *gimp,
 }
 
 void
-tool_manager_modifier_key_active (Gimp            *gimp,
-                                  GdkModifierType  key,
-                                  gboolean         press,
-                                  GdkModifierType  state,
-                                  GimpDisplay     *gdisp)
+tool_manager_focus_display_active (Gimp        *gimp,
+                                   GimpDisplay *gdisp)
 {
   GimpToolManager *tool_manager;
 
@@ -353,9 +352,27 @@ tool_manager_modifier_key_active (Gimp            *gimp,
 
   if (tool_manager->active_tool)
     {
-      gimp_tool_modifier_key (tool_manager->active_tool,
-                              key, press, state,
-                              gdisp);
+      gimp_tool_set_focus_display (tool_manager->active_tool,
+                                   gdisp);
+    }
+}
+
+void
+tool_manager_modifier_state_active (Gimp            *gimp,
+                                    GdkModifierType  state,
+                                    GimpDisplay     *gdisp)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      gimp_tool_set_modifier_state (tool_manager->active_tool,
+                                    state,
+                                    gdisp);
     }
 }
 
@@ -403,7 +420,6 @@ tool_manager_cursor_update_active (Gimp            *gimp,
 /*  private functions  */
 
 static GQuark tool_manager_quark = 0;
-
 
 static GimpToolManager *
 tool_manager_get (Gimp *gimp)

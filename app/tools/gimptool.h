@@ -45,6 +45,13 @@ struct _GimpTool
 
   GimpDisplay     *gdisp;        /*  pointer to currently active gdisp      */
   GimpDrawable    *drawable;     /*  pointer to the tool's current drawable */
+
+  /*  focus_display and modifier_state are *private* state of
+   *  gimp_tool_set_focus_display() and gimp_tool_set_modifier_state().
+   *  ignore them in tool implementations, they don't exist!
+   */
+  GimpDisplay     *focus_display;
+  GdkModifierType  modifier_state;
 };
 
 struct _GimpToolClass
@@ -122,9 +129,10 @@ void          gimp_tool_motion             (GimpTool           *tool,
 void          gimp_tool_arrow_key          (GimpTool           *tool,
                                             GdkEventKey        *kevent,
                                             GimpDisplay        *gdisp);
-void          gimp_tool_modifier_key       (GimpTool           *tool,
-                                            GdkModifierType     key,
-                                            gboolean            press,
+
+void          gimp_tool_set_focus_display  (GimpTool           *tool,
+                                            GimpDisplay        *gdisp);
+void          gimp_tool_set_modifier_state (GimpTool           *tool,
                                             GdkModifierType     state,
                                             GimpDisplay        *gdisp);
 
