@@ -81,9 +81,13 @@ void   layers_merge_layers_cmd_callback       (GtkWidget *widget,
 void   layers_flatten_image_cmd_callback      (GtkWidget *widget,
                                                gpointer   data);
 
+void   layers_text_tool_cmd_callback          (GtkWidget *widet,
+                                               gpointer   data);
 void   layers_edit_attributes_cmd_callback    (GtkWidget *widet,
                                                gpointer   data);
 
+void   layers_text_tool                       (GimpLayer *layer,
+                                               GtkWidget *parent);
 void   layers_new_layer_query                 (GimpImage *gimage,
                                                GimpLayer *template,
                                                gboolean   interactive,

@@ -277,7 +277,6 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 {
 }
 
-
 static void
 gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 {
@@ -441,4 +440,12 @@ gimp_text_tool_buffer_changed (GtkTextBuffer *buffer,
 {
   if (! text_tool->text)
     gimp_text_tool_create_layer (text_tool);
+}
+
+void
+gimp_text_tool_set_layer (GimpTextTool  *text_tool,
+                          GimpTextLayer *text_layer)
+{
+  g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
+  g_return_if_fail (text_layer == NULL || GIMP_IS_TEXT_LAYER (text_layer));
 }

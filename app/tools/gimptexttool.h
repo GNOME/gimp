@@ -54,10 +54,13 @@ struct _GimpTextToolClass
 };
 
 
-void    gimp_text_tool_register (GimpToolRegisterCallback  callback,
-                                 gpointer                  data);
+void    gimp_text_tool_register  (GimpToolRegisterCallback  callback,
+                                  gpointer                  data);
 
-GType   gimp_text_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_text_tool_get_type  (void) G_GNUC_CONST;
+
+void    gimp_text_tool_set_layer (GimpTextTool  *text_tool,
+                                  GimpTextLayer *text_layer);
 
 
 #endif /* __GIMP_TEXT_TOOL_H__ */

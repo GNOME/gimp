@@ -38,6 +38,7 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
+#include "core/gimptoolinfo.h"
 
 #include "text/gimptextlayer.h"
 
@@ -49,6 +50,9 @@
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
+
+#include "tools/gimptexttool.h"
+#include "tools/tool_manager.h"
 
 #include "layers-commands.h"
 #include "image-commands.h"
@@ -508,6 +512,17 @@ layers_flatten_image_cmd_callback (GtkWidget *widget,
 }
 
 void
+layers_text_tool_cmd_callback (GtkWidget *widget,
+                               gpointer   data)
+{
+  GimpImage *gimage;
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer, data);
+
+  layers_text_tool (active_layer, widget);
+}
+
+void
 layers_edit_attributes_cmd_callback (GtkWidget *widget,
 				     gpointer   data)
 {
@@ -516,6 +531,50 @@ layers_edit_attributes_cmd_callback (GtkWidget *widget,
   return_if_no_layer (gimage, active_layer, data);
 
   layers_edit_layer_query (active_layer, widget);
+}
+
+void
+layers_text_tool (GimpLayer *layer,
+                  GtkWidget *parent)
+{
+  GimpImage *gimage;
+  GimpTool  *active_tool;
+
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  if (! GIMP_IS_TEXT_LAYER (layer))
+    {
+      layers_edit_layer_query (layer, parent);
+      return;
+    }
+
+  gimage = gimp_item_get_image (GIMP_ITEM (layer));
+
+  active_tool = tool_manager_get_active (gimage->gimp);
+
+  if (! GIMP_IS_TEXT_TOOL (active_tool))
+    {
+      GimpContainer *tool_info_list;
+      GimpToolInfo  *tool_info;
+
+      tool_info_list = gimage->gimp->tool_info_list;
+
+      tool_info = (GimpToolInfo *)
+        gimp_container_get_child_by_name (tool_info_list,
+                                          "gimp-text-tool");
+
+      if (GIMP_IS_TOOL_INFO (tool_info))
+        {
+          gimp_context_set_tool (gimp_get_current_context (gimage->gimp),
+                                 tool_info);
+
+          active_tool = tool_manager_get_active (gimage->gimp);
+        }
+    }
+
+  if (GIMP_IS_TEXT_TOOL (active_tool))
+    gimp_text_tool_set_layer (GIMP_TEXT_TOOL (active_tool),
+                              GIMP_TEXT_LAYER (layer));
 }
 
 

@@ -1,5 +1,25 @@
 2004-01-13  Michael Natterer  <mitch@gimp.org>
 
+	Allow invoking the text tool by double clicking a text layer in
+	the layers dialog, just like the path tool is invoked when double
+	clicking a path.
+
+	* app/tools/gimptexttool.[ch]: added empty
+	gimp_text_tool_set_layer() stub. Sven, your turn...
+
+	* app/gui/layers-commands.[ch]: added layers_text_tool() which
+	invokes the text tool on text layers and falls back to
+	layers_edit_layer_query() otherwise.
+	Added layers_text_tool_cmd_callback() for the layers menu.
+
+	* app/gui/layers-menu.c: added "Text Tool" menu item and hide
+	it for layers which are no text layers.
+
+	* app/gui/dialogs-constructors.c (dialogs_layer_list_view_new):
+	use layers_text_tool() as "activate" function.
+
+2004-01-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/composite/Makefile.am (AM_CPPFLAGS): G_LOG_DOMAIN should be
 	"Gimp-Composite", not "Gimp-Composition".
 

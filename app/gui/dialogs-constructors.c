@@ -644,7 +644,7 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
                              "active_layer_changed",
                              (GimpEditItemFunc)     layers_edit_layer_query,
                              (GimpNewItemFunc)      layers_new_layer_query,
-                             (GimpActivateItemFunc) layers_edit_layer_query,
+                             (GimpActivateItemFunc) layers_text_tool,
                              factory->menu_factory, "<Layers>");
 
   dockable = dialogs_dockable_new (view,

@@ -43,6 +43,11 @@
 
 GimpItemFactoryEntry layers_menu_entries[] =
 {
+  { { N_("/Te_xt Tool"), NULL,
+      layers_text_tool_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_TEXT },
+    NULL,
+    GIMP_HELP_TOOL_TEXT, NULL },
   { { N_("/_Edit Layer Attributes..."), NULL,
       layers_edit_attributes_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
@@ -234,6 +239,7 @@ layers_menu_update (GtkItemFactory *factory,
 #define SET_VISIBLE(menu,condition) \
         gimp_item_factory_set_visible (factory, menu, (condition) != 0)
 
+  SET_VISIBLE   ("/Text Tool",                text_layer && !ac);
   SET_SENSITIVE ("/Edit Layer Attributes...", layer && !fs && !ac);
 
   SET_SENSITIVE ("/New Layer...",    gimage);
