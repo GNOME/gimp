@@ -3,4 +3,4 @@ Makefile.in
 .deps
 .libs
 kernelgen
-gimp-remote-1.3
+gimp-remote-2.0
