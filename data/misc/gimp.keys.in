@@ -18,7 +18,6 @@ image/jpeg
 	short_list_application_ids_for_novice_user_level=gimp-@GIMP_APP_VERSION@
 	short_list_application_ids_for_intermediate_user_level=gimp-@GIMP_APP_VERSION@
 	short_list_application_ids_for_advanced_user_level=gimp-@GIMP_APP_VERSION@
-	category=Images
 
 # also image/x-png
 image/png
