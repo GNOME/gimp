@@ -1,5 +1,11 @@
 2004-02-16  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpxmlparser.c (gimp_xml_parser_parse_io_channel):
+	set the GIOChannel encoding to NULL here instead of doing it in
+	gimp_xml_parser_parse_file().
+
+2004-02-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gfig/gfig.c (gfig_response): set the Undo button
 	insensitive, not the whole dialog (bug #134419). Also start the
 	dialog with the Undo button set insensitive.
@@ -18,7 +24,7 @@
 2004-02-16  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpxmlparser.c (gimp_xml_parser_parse_io_channel):
-	unset the GIOChannel's encoding before trying to find and parse
+	unset the GIOChannel's encoding before trying to locate and parse
 	the XML header.
 
 2004-02-15  Michael Natterer  <mitch@gimp.org>

@@ -94,8 +94,6 @@ gimp_xml_parser_parse_file (GimpXmlParser  *parser,
   if (!io)
     return FALSE;
 
-  g_io_channel_set_encoding (io, NULL, NULL);
-
   success = gimp_xml_parser_parse_io_channel (parser, io, error);
 
   g_io_channel_unref (io);
@@ -139,7 +137,7 @@ gimp_xml_parser_parse_io_channel (GimpXmlParser  *parser,
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   io_encoding = g_io_channel_get_encoding (io);
-  if (io_encoding)
+  if (io_encoding && strcmp (io_encoding, "UTF-8"))
     {
       g_warning ("gimp_xml_parser_parse_io_channel():\n"
                  "The encoding has already been set on this GIOChannel!");
@@ -147,6 +145,9 @@ gimp_xml_parser_parse_io_channel (GimpXmlParser  *parser,
     }
 
   /* try to determine the encoding */
+
+  g_io_channel_set_encoding (io, NULL, NULL);
+
   while (len < sizeof (buffer))
     {
       status = g_io_channel_read_chars (io, buffer + len, 1, &bytes, error);
