@@ -197,5 +197,11 @@
 		    SF-STRING _"Text" "Crystal"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
 		    SF-FONT   _"Font" "Engraver"
-		    SF-FILENAME _"Background Image" (string-append "" gimp-data-dir "/scripts/texture1.jpg")
-		    SF-FILENAME _"Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg"))
+		    SF-FILENAME _"Background Image"
+		                (string-append ""
+					       gimp-data-dir
+					       "/scripts/images/texture1.jpg")
+		    SF-FILENAME _"Environment Map"
+		                (string-append ""
+					       gimp-data-dir
+					       "/scripts/images/beavis.jpg"))

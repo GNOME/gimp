@@ -226,8 +226,12 @@
 		    SF-TOGGLE     "Gradient Reverse"   FALSE
 		    SF-FONT       "Font"               "Agate"
 		    SF-ADJUSTMENT "Font Size (pixels)" '(50 1 1000 1 10 0 1)
-		    SF-FILENAME   "Environment Map"    (string-append "" gimp-data-dir "/scripts/beavis.jpg")
-		    SF-OPTION     "Orientation"        '("Horizontal" "Vertical")
+		    SF-FILENAME   "Environment Map"
+		                  (string-append ""
+						 gimp-data-dir
+						 "/scripts/images/beavis.jpg")
+		    SF-OPTION     "Orientation"        '("Horizontal"
+							 "Vertical")
 		    SF-DIRNAME    "Output Directory"   "/var/tmp/"
 		    SF-IMAGE      "Image"              -1
 		    SF-LAYER      "Layer"              -1

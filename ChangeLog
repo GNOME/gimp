@@ -1,3 +1,23 @@
+2003-10-07  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version number to 1.3.22.
+
+	Moved images used from scripts as suggested by Carol:
+
+	* plug-ins/script-fu/scripts/Makefile.am
+	* plug-ins/script-fu/scripts/*.jpg: removed images from scripts
+	directory...
+
+	* configure.in
+	* plug-ins/script-fu/scripts/images/Makefile.am
+	* plug-ins/script-fu/scripts/images/*.jpg: ... and added them here.
+
+	* plug-ins/script-fu/scripts/carved-logo.scm
+	* plug-ins/script-fu/scripts/chrome-it.scm
+	* plug-ins/script-fu/scripts/crystal-logo.scm
+	* plug-ins/script-fu/scripts/sota-chrome-logo.scm
+	* plug-ins/script-fu/scripts/test-sphere.scm: changed accordingly.
+
 2003-10-06  Manish Singh  <yosh@gimp.org>
 
 	* app/gui/image-menu.c

@@ -42,7 +42,7 @@ AC_SUBST(GTKHTML2_REQUIRED_VERSION)
 #
 GIMP_MAJOR_VERSION=1
 GIMP_MINOR_VERSION=3
-GIMP_MICRO_VERSION=21
+GIMP_MICRO_VERSION=22
 GIMP_INTERFACE_AGE=0
 GIMP_BINARY_AGE=0
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
@@ -1318,6 +1318,7 @@ plug-ins/libgck/gck/Makefile
 plug-ins/dbbrowser/Makefile
 plug-ins/script-fu/Makefile
 plug-ins/script-fu/scripts/Makefile
+plug-ins/script-fu/scripts/images/Makefile
 plug-ins/xjt/Makefile
 plug-ins/FractalExplorer/Makefile
 plug-ins/FractalExplorer/fractalexplorer-examples/Makefile

@@ -194,6 +194,9 @@
 		    SF-STRING     _"Text" "The GIMP"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
 		    SF-FONT       _"Font" "RoostHeavy"
-		    SF-FILENAME   _"Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
+		    SF-FILENAME   _"Environment Map"
+		                  (string-append ""
+						 gimp-data-dir
+						 "/scripts/images/beavis.jpg")
 		    SF-COLOR      _"Highlight Balance" '(211 95 0)
 		    SF-COLOR      _"Chrome Balance" '(0 0 0))
