@@ -1,3 +1,9 @@
+2004-06-18  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/tools/gimptransformtool.c (gimp_transform_tool_bounds):
+	If transforming a path, use the path bounds rather than the mask
+	bounds. Fixes bug #144570.
+
 2004-06-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp-utils.[ch]: added gimp_boolean_handled_accum().
