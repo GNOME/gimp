@@ -172,11 +172,6 @@ gimp_image_map_tool_finalize (GObject *object)
       gtk_widget_destroy (image_map_tool->shell);
       image_map_tool->shell     = NULL;
       image_map_tool->main_vbox = NULL;
-      g_signal_handlers_disconnect_by_func ( 
-					    gimp_item_get_image (GIMP_ITEM (image_map_tool->drawable)),
-					    gimp_image_map_tool_cancel_clicked,
-					    image_map_tool
-					   );
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -259,10 +254,6 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
 
   g_signal_connect (G_OBJECT (image_map_tool->image_map), "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),
-                    image_map_tool);
-
-  g_signal_connect (G_OBJECT (gdisp->gimage), "layer_merge",
-                    G_CALLBACK (gimp_image_map_tool_cancel_clicked),
                     image_map_tool);
 
   gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (gdisp->shell),

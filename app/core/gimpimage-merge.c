@@ -296,10 +296,6 @@ gimp_image_merge_layers (GimpImage     *gimage,
   if ((x2 - x1) == 0 || (y2 - y1) == 0)
     return NULL;
 
-  /* Tell any listeners about impending layer merges */
-
-  gimp_image_layer_merge (gimage);
-
   /*  Start a merge undo group. */
 
   undo_push_group_start (gimage, IMAGE_LAYERS_MERGE_UNDO_GROUP);

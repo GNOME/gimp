@@ -31,9 +31,6 @@
 #include "core/gimplist.h"
 #include "core/gimppalette.h"
 
-#include "libgimptool/gimptool.h"
-#include "tools/tool_manager.h"
-
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -441,18 +438,9 @@ indexed_ok_callback (GtkWidget *widget,
 		     gpointer   data)
 {
   IndexedDialog  *dialog;
-  GimpTool       *active_tool;
 
   dialog = (IndexedDialog *) data;
 
-  /* Close the dialogs when open because they're useless for indexed
-   *  images and could crash the GIMP when used nevertheless
-   */
-  active_tool = tool_manager_get_active (dialog->gimage->gimp);
-
-  if (active_tool)
-    tool_manager_control_active (dialog->gimage->gimp, HALT, active_tool->gdisp);
-  
   /*  Convert the image to indexed color  */
   gimp_image_convert (dialog->gimage, 
                       GIMP_INDEXED, 

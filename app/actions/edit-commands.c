@@ -37,8 +37,6 @@
 
 #include "display/gimpdisplay.h"
 
-#include "tools/tool_manager.h"
-
 #include "widgets/gimpdialogfactory.h"
 
 #include "dialogs.h"
@@ -111,9 +109,6 @@ edit_cut_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  /*  stop any active tool  */
-  tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
-
   if (gimp_edit_cut (gdisp->gimage,
 		     gimp_image_active_drawable (gdisp->gimage)))
     {
@@ -143,9 +138,6 @@ edit_paste_cmd_callback (GtkWidget *widget,
 
   if (gdisp->gimage->gimp->global_buffer)
     {
-      /*  stop any active tool  */
-      tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
-
       if (gimp_edit_paste (gdisp->gimage,
 			   gimp_image_active_drawable (gdisp->gimage), 
 			   gdisp->gimage->gimp->global_buffer,
@@ -165,9 +157,6 @@ edit_paste_into_cmd_callback (GtkWidget *widget,
 
   if (gdisp->gimage->gimp->global_buffer)
     {
-      /*  stop any active tool  */
-      tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
-
       if (gimp_edit_paste (gdisp->gimage,
 			   gimp_image_active_drawable (gdisp->gimage), 
 			   gdisp->gimage->gimp->global_buffer,
@@ -187,9 +176,6 @@ edit_paste_as_new_cmd_callback (GtkWidget *widget,
 
   if (gdisp->gimage->gimp->global_buffer)
     {
-      /*  stop any active tool  */
-      tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
-
       gimp_edit_paste_as_new (gdisp->gimage->gimp,
 			      gdisp->gimage,
 			      gdisp->gimage->gimp->global_buffer);
@@ -203,9 +189,6 @@ edit_named_cut_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   GtkWidget   *qbox;
   return_if_no_display (gdisp, data);
-
-  /*  stop any active tool  */
-  tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
 
   qbox = gimp_query_string_box (_("Cut Named"),
 				gimp_standard_help_func,

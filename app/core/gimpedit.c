@@ -114,6 +114,9 @@ gimp_edit_copy (GimpImage    *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
+  /*  Start a group undo  */
+  undo_push_group_start (gimage, EDIT_COPY_UNDO_GROUP);
+
   /*  See if the gimage mask is empty  */
   empty = gimp_image_mask_is_empty (gimage);
 
@@ -138,6 +141,9 @@ gimp_edit_copy (GimpImage    *gimage,
     cropped_copy = copy;
   else
     cropped_copy = NULL;
+
+  /*  end the group undo  */
+  undo_push_group_end (gimage);
 
   if (cropped_copy)
     {

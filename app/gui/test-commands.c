@@ -49,8 +49,6 @@
 #include "widgets/gimpdrawablelistview.h"
 #include "widgets/gimppreview.h"
 
-#include "tools/tool_manager.h"
-
 #include "dialogs.h"
 
 #include "libgimp/gimpintl.h"

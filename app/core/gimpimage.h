@@ -172,6 +172,7 @@ struct _GimpImageClass
 {
   GimpViewableClass  parent_class;
 
+  /*  signals  */
   void (* mode_changed)                 (GimpImage            *gimage);
   void (* alpha_changed)                (GimpImage            *gimage);
   void (* floating_selection_changed)   (GimpImage            *gimage);
@@ -200,14 +201,15 @@ struct _GimpImageClass
                                          GimpGuide            *guide);
   void (* colormap_changed)             (GimpImage            *gimage,
 					 gint                  color_index);
+  void (* undo_start)                   (GimpImage            *gimage);
   void (* undo_event)                   (GimpImage            *gimage,
 					 gint                  event);
 
+  void (* flush)                        (GimpImage            *gimage);
+
+  /*  virtual functions  */
   void (* undo)                         (GimpImage            *gimage);
   void (* redo)                         (GimpImage            *gimage);
-
-  void (* flush)                        (GimpImage            *gimage);
-  void (* layer_merge)                  (GimpImage            *gimage);
 };
 
 
@@ -304,6 +306,7 @@ gboolean        gimp_image_undo_enable           (GimpImage          *gimage);
 gboolean        gimp_image_undo_disable          (GimpImage          *gimage);
 gboolean        gimp_image_undo_freeze           (GimpImage          *gimage);
 gboolean        gimp_image_undo_thaw             (GimpImage          *gimage);
+void            gimp_image_undo_start            (GimpImage          *gimage);
 void		gimp_image_undo_event            (GimpImage          *gimage,
                                                   gint                event);
 gint            gimp_image_dirty                 (GimpImage          *gimage);
@@ -314,10 +317,6 @@ void            gimp_image_clean_all             (GimpImage          *gimage);
 /*  flush this image's displays  */
 
 void            gimp_image_flush                 (GimpImage          *gimage);
-
-/* Post notification of layer mergers */
-
-void            gimp_image_layer_merge           (GimpImage *gimage);
 
 
 /*  color transforms / utilities  */

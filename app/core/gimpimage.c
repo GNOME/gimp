@@ -89,9 +89,9 @@ enum
   UPDATE,
   UPDATE_GUIDE,
   COLORMAP_CHANGED,
+  UNDO_START,
   UNDO_EVENT,
   FLUSH,
-  LAYER_MERGE,
   LAST_SIGNAL
 };
 
@@ -356,6 +356,15 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_TYPE_NONE, 1,
 		  G_TYPE_INT);
 
+  gimp_image_signals[UNDO_START] =
+    g_signal_new ("undo_start",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, undo_start),
+		  NULL, NULL,
+		  gimp_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
   gimp_image_signals[UNDO_EVENT] = 
     g_signal_new ("undo_event",
 		  G_TYPE_FROM_CLASS (klass),
@@ -371,15 +380,6 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, flush),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
-
-  gimp_image_signals[LAYER_MERGE] =
-    g_signal_new ("layer_merge",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, layer_merge),
 		  NULL, NULL,
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
@@ -410,11 +410,12 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->update                       = NULL;
   klass->update_guide                 = NULL;
   klass->colormap_changed             = gimp_image_real_colormap_changed;
+  klass->undo_start                   = NULL;
   klass->undo_event                   = NULL;
+  klass->flush                        = NULL;
+
   klass->undo                         = gimp_image_undo;
   klass->redo                         = gimp_image_redo;
-  klass->flush                        = NULL;
-  klass->layer_merge                  = NULL;
 
   gimp_image_color_hash_init ();
 }
@@ -1570,6 +1571,14 @@ gimp_image_undo_thaw (GimpImage *gimage)
 }
 
 void
+gimp_image_undo_start (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[UNDO_START], 0);
+}
+
+void
 gimp_image_undo_event (GimpImage *gimage, 
 		       gint       event)
 {
@@ -1655,16 +1664,6 @@ gimp_image_flush (GimpImage *gimage)
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   g_signal_emit (G_OBJECT (gimage), gimp_image_signals[FLUSH], 0);
-}
-
-/*  Post notification of a layer merge   */
-
-void
-gimp_image_layer_merge (GimpImage *gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[LAYER_MERGE], 0);
 }
 
 

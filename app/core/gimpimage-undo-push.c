@@ -640,6 +640,9 @@ undo_push_group_start (GimpImage *gimage,
   g_return_val_if_fail (type >  FIRST_UNDO_GROUP &&
                         type <= LAST_UNDO_GROUP, FALSE);
 
+  /* Notify listeners that the image will be modified */
+  gimp_image_undo_start (gimage);
+
   if (! gimage->undo_on)
     return FALSE;
 
@@ -3617,6 +3620,7 @@ undo_name[] =
   { FS_ANCHOR_UNDO_GROUP,          N_("Anchor Floating Selection") },
   { EDIT_PASTE_UNDO_GROUP,         N_("Paste")                     },
   { EDIT_CUT_UNDO_GROUP,           N_("Cut")                       },
+  { EDIT_COPY_UNDO_GROUP,          N_("Copy")                      },
   { TEXT_UNDO_GROUP,               N_("Text")                      },
   { TRANSFORM_UNDO_GROUP,          N_("Transform")                 },
   { PAINT_UNDO_GROUP,              N_("Paint")                     },

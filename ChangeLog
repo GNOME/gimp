@@ -1,5 +1,32 @@
 2003-01-02  Michael Natterer  <mitch@gimp.org>
 
+	Replaced Garry's fix for bug #98843 by a more general solution
+	which stops the active tool when an undo group start is pushed:
+
+	* app/core/gimpimage.[ch]: removed the "layer_merge" signal
+	and added "undo_start" instead.
+
+	* app/undo.c: emit "undo_start" in undo_push_group_start()
+	_before_ checking if gimage->undo_on is TRUE.
+
+	* app/tools/tool_manager.c: connect to "undo_start" and HALT the
+	active tool if neccessary.
+
+	* app/core/core-types.h: added EDIT_COPY_UNDO_GROUP.
+
+	* app/core/gimpedit.c: push an undo group around the copy
+	operation. Will probably have to add more undo group types to wrap
+	other critical image modifications with.
+
+	* app/core/gimpimage-merge.c
+	* app/gui/convert-dialog.c
+	* app/gui/edit-commands.c
+	* app/gui/test-commands.c
+	* app/tools/gimpimagemaptool.c: removed all special code to
+	stop the active tool.
+
+2003-01-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/user-install-dialog.c: replaced the 0755 by properly
 	or'ed symbolic values (undid this change from Sven accidentially).
 
