@@ -1,9 +1,13 @@
 2004-10-20  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/raw.c: ported to GimpPreviewArea.
+
+2004-10-20  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/raw.c: new plug-in from Tim Copperfield, made
 	work with the GIMP 2.1 API by Philipp Gühring, then heavily
 	cleaned up and undeprecated by myself. Fixes bug #144943.
-
+	
 	(still uses GtkPreview, but i wanted a sane state in cvs to diff
 	 against before replacing it)
 

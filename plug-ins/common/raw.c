@@ -106,14 +106,14 @@ static GimpPDBStatusType save_image        (gchar            *filename,
                                             gint32            drawable_id);
 
 /* gui functions */
-static void              preview_update    (GtkWidget         *preview);
-static void              palette_update    (GtkWidget         *preview);
+static void              preview_update    (GimpPreviewArea   *preview);
+static void              palette_update    (GimpPreviewArea   *preview);
 static gboolean          load_dialog       (gchar             *name);
 static gboolean          save_dialog       (gchar             *filename,
                                             gint32             image_id,
                                             gint32             drawable_id);
 static void              palette_callback  (GimpFileEntry     *file_entry,
-                                            GtkWidget         *preview);
+                                            GimpPreviewArea   *preview);
 
 
 static RawConfig *runtime             = NULL;
@@ -716,221 +716,180 @@ load_image (gchar *filename)
 /* misc GUI stuff */
 
 static void
-preview_update (GtkWidget *preview)
+preview_update (GimpPreviewArea *preview)
 {
-  gint psize;
-  gint width;
-  gint height;
-  gint32 pos, len;
-  gint x, y;
+  gint     width;
+  gint     height;
+  gint32   pos, len;
+  gint     x, y;
 
-  /* buffers for various images */
-  guchar *even;
-  guchar *odd;
-  guchar *r_row, *g_row, *b_row;
-  /* for alpha and indexed images */
-  guchar *alpha;
-  guchar *index;
-  /* for doing RGBA loading, mainly */
-  guchar *p0, *p1;
-  gdouble c0;
-  gdouble c1;
-  gdouble pixel[4];
+  width  = MIN (runtime->image_width,  preview->width);
+  height = MIN (runtime->image_height, preview->height);
 
-  psize = (GTK_PREVIEW (preview)->buffer_width) *
-          (GTK_PREVIEW (preview)->buffer_height) *
-          (GTK_PREVIEW (preview)->bpp);
-
-  width = (runtime->image_width > PREVIEW_SIZE) ? PREVIEW_SIZE : runtime->image_width;
-  height = (runtime->image_height > PREVIEW_SIZE) ? PREVIEW_SIZE : runtime->image_height;
-  memset (GTK_PREVIEW (preview)->buffer, 0xFF, psize);    /* white BG */
-
-  even = g_malloc (PREVIEW_SIZE * 3);
-  odd  = g_malloc (PREVIEW_SIZE * 3);
+  gimp_preview_area_fill (preview, 0, 0, preview->width, preview->height,
+                          255, 255, 255);
 
   switch (runtime->image_type)
     {
     case RAW_RGB:
       /* standard RGB image */
-      len = width * 3;
-      for (y = 0; y < height; y++)
-        {
-          pos = runtime->file_offset + runtime->image_width * y * 3;
-          mmap_read (preview_fd, even, len, pos, width * 3);
-          gtk_preview_draw_row (GTK_PREVIEW (preview), even, 0, y, width);
-        }
-      gtk_widget_queue_draw (preview);
+      {
+        guchar *row = g_malloc0 (width * 3);
+
+        len = width * 3;
+
+        for (y = 0; y < height; y++)
+          {
+            pos = runtime->file_offset + runtime->image_width * y * 3;
+            mmap_read (preview_fd, row, len, pos, width * 3);
+
+            gimp_preview_area_draw (preview, 0, y, width, 1,
+                                    GIMP_RGB_IMAGE, row, width * 3);
+          }
+
+        g_free (row);
+      }
       break;
 
     case RAW_PLANAR:
-      r_row = g_malloc (PREVIEW_SIZE);
-      g_row = g_malloc (PREVIEW_SIZE);
-      b_row = g_malloc (PREVIEW_SIZE);
+      {
+        guchar *r_row = g_malloc0 (width);
+        guchar *g_row = g_malloc0 (width);
+        guchar *b_row = g_malloc0 (width);
+        guchar *row   = g_malloc0 (width * 3);
 
-      for (y = 0; y < height; y++)
-        {
-          gint j, k;
+        for (y = 0; y < height; y++)
+          {
+            gint j, k;
 
-          memset (r_row, 0, PREVIEW_SIZE);
-          memset (even, 0, PREVIEW_SIZE * 3);
-          pos = runtime->file_offset + (y * runtime->image_width);
-          mmap_read (preview_fd, r_row, width, pos, PREVIEW_SIZE);
+            pos = (runtime->file_offset +
+                   (y * runtime->image_width));
+            mmap_read (preview_fd, r_row, width, pos, width);
 
-          pos = runtime->file_offset +
-            (runtime->image_width * (runtime->image_height + y));
-          mmap_read (preview_fd, g_row, width, pos, PREVIEW_SIZE);
+            pos = (runtime->file_offset +
+                   (runtime->image_width * (runtime->image_height + y)));
+            mmap_read (preview_fd, g_row, width, pos, width);
 
-          pos = runtime->file_offset +
-            (runtime->image_width * (runtime->image_height * 2 + y));
-          mmap_read (preview_fd, b_row, width, pos, PREVIEW_SIZE);
+            pos = (runtime->file_offset +
+                   (runtime->image_width * (runtime->image_height * 2 + y)));
+            mmap_read (preview_fd, b_row, width, pos, width);
 
-          for (j = 0, k = 0; j < width; j++)
-            {
-              even[k++] = r_row[j];
-              even[k++] = g_row[j];
-              even[k++] = b_row[j];
-            }
-          gtk_preview_draw_row (GTK_PREVIEW (preview), even, 0, y, width);
-        }
-      gtk_widget_queue_draw (preview);
-      g_free (b_row);
-      g_free (g_row);
-      g_free (r_row);
+            for (j = 0, k = 0; j < width; j++)
+              {
+                row[k++] = r_row[j];
+                row[k++] = g_row[j];
+                row[k++] = b_row[j];
+              }
+
+            gimp_preview_area_draw (preview, 0, y, width, 1,
+                                    GIMP_RGB_IMAGE, row, width * 3);
+          }
+
+        g_free (b_row);
+        g_free (g_row);
+        g_free (r_row);
+        g_free (row);
+      }
       break;
 
     case RAW_RGBA:
       /* RGB + alpha image */
-      len = width * 4;
-      alpha = g_malloc (PREVIEW_SIZE * 4);
-      for (y = 0; y < height; y++)
-        {
-          gint draw = (y / GIMP_CHECK_SIZE) & 1;
+      {
+        guchar *row = g_malloc0 (width * 4);
 
-          p0 = even;
-          p1 = odd;
-          pos = runtime->file_offset + runtime->image_width * y * 4;
-          mmap_read (preview_fd, alpha, len, pos, width * 4);
+        len = width * 4;
 
-          for (x = 0; x < width; x++)
-            {
-              pixel[0] = ((gdouble) alpha[x * 4]) / 255.0;
-              pixel[1] = ((gdouble) alpha[x * 4 + 1]) / 255.0;
-              pixel[2] = ((gdouble) alpha[x * 4 + 2]) / 255.0;
-              pixel[3] = ((gdouble) alpha[x * 4 + 3]) / 255.0;
+        for (y = 0; y < height; y++)
+          {
+            pos = runtime->file_offset + runtime->image_width * y * 4;
+            mmap_read (preview_fd, row, len, pos, width * 4);
 
-              if ((x / GIMP_CHECK_SIZE) & 1)
-                {
-                  c0 = GIMP_CHECK_LIGHT;
-                  c1 = GIMP_CHECK_DARK;
-                }
-              else
-                {
-                  c0 = GIMP_CHECK_DARK;
-                  c1 = GIMP_CHECK_LIGHT;
-                }
+            gimp_preview_area_draw (preview, 0, y, width, 1,
+                                    GIMP_RGBA_IMAGE, row, width * 4);
+          }
 
-              /* we draw either even or odd.  So we only calculate
-               * the ones we need and skip the others forward
-               */
-              if (draw)
-                {
-                  *p1++ = (c1 + (pixel[0] - c1) * pixel[3]) * 255.0;
-                  *p1++ = (c1 + (pixel[1] - c1) * pixel[3]) * 255.0;
-                  *p1++ = (c1 + (pixel[2] - c1) * pixel[3]) * 255.0;
-                  p0 += 3;
-                }
-              else
-                {
-                  *p0++ = (c0 + (pixel[0] - c0) * pixel[3]) * 255.0;
-                  *p0++ = (c0 + (pixel[1] - c0) * pixel[3]) * 255.0;
-                  *p0++ = (c0 + (pixel[2] - c0) * pixel[3]) * 255.0;
-                  p1 += 3;
-                }
-            }
-
-          if (draw)
-            gtk_preview_draw_row (GTK_PREVIEW (preview), odd, 0, y, width);
-          else
-            gtk_preview_draw_row (GTK_PREVIEW (preview), even, 0, y, width);
-        }
-      gtk_widget_queue_draw (preview);
-      g_free (alpha);
+        g_free (row);
+      }
       break;
 
     case RAW_INDEXED:
       /* indexed image */
-      len   = width;
-      index = g_malloc (PREVIEW_SIZE);
+      {
+        guchar *index = g_malloc0 (width);
+        guchar *row   = g_malloc0 (width * 3);
 
-      if (preview_cmap_update)
-        {
-          if (palfile)
-            {
-              gint fd;
+        len = width;
 
-              fd = open (palfile, O_RDONLY);
-              lseek (fd, runtime->palette_offset, SEEK_SET);
-              read (fd, preview_cmap,
-                    (runtime->palette_type == RAW_PALETTE_RGB) ? 768 : 1024);
-              close (fd);
-            }
-          else
-            {
-              /* make fake palette, maybe overwrite it later */
-              for (y = 0, x = 0; y < 256; y++)
-                {
-                  preview_cmap[x++] = y;
-                  preview_cmap[x++] = y;
-                  if (runtime->palette_type == RAW_PALETTE_RGB)
-                    {
-                      preview_cmap[x++] = y;
-                    }
-                  else
-                    {
-                      preview_cmap[x++] = y;
-                      preview_cmap[x++] = 0;
-                    }
-                }
-            }
+        if (preview_cmap_update)
+          {
+            if (palfile)
+              {
+                gint fd;
 
-          preview_cmap_update = FALSE;
-        }
+                fd = open (palfile, O_RDONLY);
+                lseek (fd, runtime->palette_offset, SEEK_SET);
+                read (fd, preview_cmap,
+                      (runtime->palette_type == RAW_PALETTE_RGB) ? 768 : 1024);
+                close (fd);
+              }
+            else
+              {
+                /* make fake palette, maybe overwrite it later */
+                for (y = 0, x = 0; y < 256; y++)
+                  {
+                    preview_cmap[x++] = y;
+                    preview_cmap[x++] = y;
+                    if (runtime->palette_type == RAW_PALETTE_RGB)
+                      {
+                        preview_cmap[x++] = y;
+                      }
+                    else
+                      {
+                        preview_cmap[x++] = y;
+                        preview_cmap[x++] = 0;
+                      }
+                  }
+              }
 
-      for (y = 0; y < height; y++)
-        {
-          p0 = even;
-          pos = runtime->file_offset + runtime->image_width * y;
-          mmap_read (preview_fd, index, len, pos, width);
-          for (x = 0; x < width; x++)
-            {
-              switch (runtime->palette_type)
-                {
-                case RAW_PALETTE_RGB:
-                  *p0++ = preview_cmap[index[x] * 3];
-                  *p0++ = preview_cmap[index[x] * 3 + 1];
-                  *p0++ = preview_cmap[index[x] * 3 + 2];
-                  break;
-                case RAW_PALETTE_BGR:
-                  *p0++ = preview_cmap[index[x] * 4 + 2];
-                  *p0++ = preview_cmap[index[x] * 4 + 1];
-                  *p0++ = preview_cmap[index[x] * 4];
-                  break;
-                }
-            }
-          gtk_preview_draw_row (GTK_PREVIEW (preview), even, 0, y, width);
-        }
+            preview_cmap_update = FALSE;
+          }
 
-      gtk_widget_queue_draw (preview);
-      g_free (index);
+        for (y = 0; y < height; y++)
+          {
+            guchar *p = row;
+
+            pos = runtime->file_offset + runtime->image_width * y;
+            mmap_read (preview_fd, index, len, pos, width);
+
+            for (x = 0; x < width; x++)
+              {
+                switch (runtime->palette_type)
+                  {
+                  case RAW_PALETTE_RGB:
+                    *p++ = preview_cmap[index[x] * 3];
+                    *p++ = preview_cmap[index[x] * 3 + 1];
+                    *p++ = preview_cmap[index[x] * 3 + 2];
+                    break;
+                  case RAW_PALETTE_BGR:
+                    *p++ = preview_cmap[index[x] * 4 + 2];
+                    *p++ = preview_cmap[index[x] * 4 + 1];
+                    *p++ = preview_cmap[index[x] * 4];
+                    break;
+                  }
+              }
+
+            gimp_preview_area_draw (preview, 0, y, width, 1,
+                                    GIMP_RGB_IMAGE, row, width * 3);
+          }
+
+        g_free (index);
+      }
       break;
     }
-
-  g_free (even);
-  g_free (odd);
 }
 
 static void
-palette_update (GtkWidget *preview)
+palette_update (GimpPreviewArea *preview)
 {
   preview_cmap_update = TRUE;
 
@@ -945,7 +904,6 @@ load_dialog (gchar *filename)
   GtkWidget *preview;
   GtkWidget *table;
   GtkWidget *frame;
-  GtkWidget *abox;
   GtkWidget *combo;
   GtkObject *adj;
   GtkWidget *entry;
@@ -967,35 +925,22 @@ load_dialog (gchar *filename)
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
-                      FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (main_vbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), PREVIEW_SIZE, PREVIEW_SIZE);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, PREVIEW_SIZE, PREVIEW_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
-  {
-    /* fill the preview with crap. Seems to be needed */
-    gint   row;
-    guchar gay[PREVIEW_SIZE * 3];
-
-    memset (gay, 0xFF, PREVIEW_SIZE * 3);
-    for (row = 0; row < PREVIEW_SIZE; row++)
-      gtk_preview_draw_row (GTK_PREVIEW (preview), gay, 0, row, PREVIEW_SIZE);
-  }
-
-  palette_update (preview);
+  g_signal_connect_after (preview, "size_allocate",
+                          G_CALLBACK (preview_update),
+                          NULL);
 
   frame = gimp_frame_new (_("Image"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -1181,8 +1126,8 @@ save_dialog (gchar * filename,
 }
 
 static void
-palette_callback (GimpFileEntry *file_entry,
-                  GtkWidget     *preview)
+palette_callback (GimpFileEntry   *file_entry,
+                  GimpPreviewArea *preview)
 {
   if (palfile)
     g_free (palfile);
