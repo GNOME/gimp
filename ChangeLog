@@ -1,5 +1,10 @@
 2005-02-14  Sven Neumann  <sven@gimp.org>
 
+	* app/base/gimphistogram.c: simplified the code and avoid
+	excessive memory allocations for the threaded case.
+
+2005-02-14  Sven Neumann  <sven@gimp.org>
+
 	* app/base/gimphistogram.[ch]: allocate temporary histogram slots
 	on demand and provide an array with enough slots for the maximum
 	number of threads. gimp_histogram_new() doesn't need a
