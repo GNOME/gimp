@@ -40,8 +40,6 @@ typedef void            (* GimpAddItemFunc)      (GimpImage       *gimage,
                                                   gint             index);
 typedef void            (* GimpRemoveItemFunc)   (GimpImage       *gimage,
                                                   GimpItem        *item);
-typedef GimpItem      * (* GimpConvertItemFunc)  (GimpItem        *item,
-                                                  GimpImage       *dest_gimage);
 
 typedef void            (* GimpNewItemFunc)      (GimpImage       *gimage,
                                                   GimpItem        *template,
@@ -102,7 +100,6 @@ struct _GimpItemTreeViewClass
   GimpReorderItemFunc   reorder_item;
   GimpAddItemFunc       add_item;
   GimpRemoveItemFunc    remove_item;
-  GimpConvertItemFunc   convert_item;
 
   /*  various descriptive strings for tooltips and undo steps  */
   const gchar          *new_desc;

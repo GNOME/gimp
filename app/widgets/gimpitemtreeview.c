@@ -217,7 +217,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->reorder_item                 = NULL;
   klass->add_item                     = NULL;
   klass->remove_item                  = NULL;
-  klass->convert_item                 = NULL;
 
   klass->new_desc                     = NULL;
   klass->new_help_id                  = NULL;
@@ -706,15 +705,10 @@ gimp_item_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
   if (gimp_item_get_image (GIMP_ITEM (src_viewable)) !=
       gimp_item_get_image (GIMP_ITEM (dest_viewable)))
     {
-      if (GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view)->convert_item)
-        {
-          if (drag_action)
-            *drag_action = GDK_ACTION_COPY;
+      if (drag_action)
+        *drag_action = GDK_ACTION_COPY;
 
-          return TRUE;
-        }
-
-      return FALSE;
+      return TRUE;
     }
 
   return GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_possible (tree_view,
@@ -758,8 +752,10 @@ gimp_item_tree_view_drop (GimpContainerTreeView   *tree_view,
       if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
         dest_index++;
 
-      new_item = item_view_class->convert_item (GIMP_ITEM (src_viewable),
-                                                item_view->gimage);
+      new_item = gimp_item_convert (GIMP_ITEM (src_viewable),
+                                    item_view->gimage,
+                                    G_TYPE_FROM_INSTANCE (src_viewable),
+                                    TRUE);
 
       item_view_class->add_item (item_view->gimage,
                                  new_item,

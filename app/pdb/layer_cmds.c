@@ -243,7 +243,7 @@ layer_copy_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpLayer *layer;
   gboolean add_alpha;
-  GimpLayer *copy = NULL;
+  GimpLayer *layer_copy = NULL;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_LAYER (layer))
@@ -252,12 +252,12 @@ layer_copy_invoker (Gimp     *gimp,
   add_alpha = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    success = (copy = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer), G_TYPE_FROM_INSTANCE (layer), add_alpha))) != NULL;
+    success = (layer_copy = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer), G_TYPE_FROM_INSTANCE (layer), add_alpha))) != NULL;
 
   return_args = procedural_db_return_args (&layer_copy_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (copy));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer_copy));
 
   return return_args;
 }
@@ -944,25 +944,42 @@ layer_new_from_drawable_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
-  GimpImage *gimage;
-  GimpLayer *copy = NULL;
+  GimpImage *dest_image;
+  GimpLayer *layer_copy = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
-  gimage = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  dest_image = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_IMAGE (dest_image))
     success = FALSE;
 
   if (success)
-    success = (copy = gimp_layer_new_from_drawable (drawable,
-								     gimage)) != NULL;
+    {
+      GType     new_type;
+      GimpItem *new_item;
+    
+      if (GIMP_IS_LAYER (drawable))
+	new_type = G_TYPE_FROM_INSTANCE (drawable);
+      else
+	new_type = GIMP_TYPE_LAYER;
+    
+      if (dest_image == gimp_item_get_image (GIMP_ITEM (drawable)))
+	new_item = gimp_item_duplicate (GIMP_ITEM (drawable), new_type, TRUE);
+      else
+	new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type, TRUE);
+    
+      if (new_item)
+	layer_copy = GIMP_LAYER (new_item);
+      else
+	success = FALSE;
+    }
 
   return_args = procedural_db_return_args (&layer_new_from_drawable_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (copy));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer_copy));
 
   return return_args;
 }

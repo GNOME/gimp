@@ -62,6 +62,10 @@ struct _GimpItemClass
   GimpItem * (* duplicate) (GimpItem               *item,
                             GType                   new_type,
                             gboolean                add_alpha);
+  GimpItem * (* convert)   (GimpItem               *item,
+                            GimpImage              *dest_image,
+                            GType                   new_type,
+                            gboolean                add_alpha);
   void       (* rename)    (GimpItem               *item,
                             const gchar            *new_name,
                             const gchar            *undo_desc);
@@ -114,6 +118,10 @@ void            gimp_item_configure        (GimpItem       *item,
                                             gint            height,
                                             const gchar    *name);
 GimpItem      * gimp_item_duplicate        (GimpItem       *item,
+                                            GType           new_type,
+                                            gboolean        add_alpha);
+GimpItem      * gimp_item_convert          (GimpItem       *item,
+                                            GimpImage      *dest_image,
                                             GType           new_type,
                                             gboolean        add_alpha);
 

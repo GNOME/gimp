@@ -193,7 +193,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_position_layer;
   item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_layer;
   item_view_class->remove_item     = gimp_layer_tree_view_remove_item;
-  item_view_class->convert_item    = (GimpConvertItemFunc) gimp_layer_new_from_drawable;
 
   item_view_class->new_desc                = _("New Layer");
   item_view_class->new_help_id             = GIMP_HELP_LAYER_NEW;

@@ -49,35 +49,49 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
                                   GimpViewable *viewable,
                                   gpointer      data)
 {
-  GimpDrawable *drawable;
   GimpDisplay  *gdisp;
-  GimpLayer    *new_layer;
-  gint          off_x, off_y;
+  GType         new_type;
+  GimpItem     *new_item;
 
   gdisp = GIMP_DISPLAY_SHELL (data)->gdisp;
 
   if (gdisp->gimage->gimp->busy)
     return;
 
-  drawable = GIMP_DRAWABLE (viewable);
+  if (GIMP_IS_LAYER (viewable))
+    new_type = G_TYPE_FROM_INSTANCE (viewable);
+  else
+    new_type = GIMP_TYPE_LAYER;
 
-  gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
-                               _("Drop New Layer"));
+  new_item = gimp_item_convert (GIMP_ITEM (viewable), gdisp->gimage,
+                                new_type, TRUE);
 
-  new_layer = gimp_layer_new_from_drawable (drawable, gdisp->gimage);
+  if (new_item)
+    {
+      GimpLayer *new_layer;
+      gint       off_x, off_y;
 
-  off_x = (gdisp->gimage->width  - gimp_item_width  (GIMP_ITEM (drawable))) / 2;
-  off_y = (gdisp->gimage->height - gimp_item_height (GIMP_ITEM (drawable))) / 2;
+      new_layer = GIMP_LAYER (new_item);
 
-  gimp_item_translate (GIMP_ITEM (new_layer), off_x, off_y, FALSE);
+      gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+                                   _("Drop New Layer"));
 
-  gimp_image_add_layer (gdisp->gimage, new_layer, -1);
+      gimp_item_offsets (new_item, &off_x, &off_y);
 
-  gimp_image_undo_group_end (gdisp->gimage);
+      off_x = (gdisp->gimage->width  - gimp_item_width  (new_item)) / 2 - off_x;
+      off_y = (gdisp->gimage->height - gimp_item_height (new_item)) / 2 - off_y;
 
-  gimp_image_flush (gdisp->gimage);
+      gimp_item_translate (new_item, off_x, off_y, FALSE);
 
-  gimp_context_set_display (gimp_get_user_context (gdisp->gimage->gimp), gdisp);
+      gimp_image_add_layer (gdisp->gimage, new_layer, -1);
+
+      gimp_image_undo_group_end (gdisp->gimage);
+
+      gimp_image_flush (gdisp->gimage);
+
+      gimp_context_set_display (gimp_get_user_context (gdisp->gimage->gimp),
+                                gdisp);
+    }
 }
 
 void
@@ -85,29 +99,35 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
                                  GimpViewable *viewable,
                                  gpointer      data)
 {
-  GimpVectors *vectors;
   GimpDisplay *gdisp;
-  GimpVectors *new_vectors;
+  GimpItem    *new_item;
 
   gdisp = GIMP_DISPLAY_SHELL (data)->gdisp;
 
   if (gdisp->gimage->gimp->busy)
     return;
 
-  vectors = GIMP_VECTORS (viewable);
+  new_item = gimp_item_convert (GIMP_ITEM (viewable), gdisp->gimage,
+                                G_TYPE_FROM_INSTANCE (viewable), TRUE);
 
-  gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
-                               _("Drop New Path"));
+  if (new_item)
+    {
+      GimpVectors *new_vectors;
 
-  new_vectors = gimp_vectors_convert (vectors, gdisp->gimage);
+      new_vectors = GIMP_VECTORS (new_item);
 
-  gimp_image_add_vectors (gdisp->gimage, new_vectors, -1);
+      gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+                                   _("Drop New Path"));
 
-  gimp_image_undo_group_end (gdisp->gimage);
+      gimp_image_add_vectors (gdisp->gimage, new_vectors, -1);
 
-  gimp_image_flush (gdisp->gimage);
+      gimp_image_undo_group_end (gdisp->gimage);
 
-  gimp_context_set_display (gimp_get_user_context (gdisp->gimage->gimp), gdisp);
+      gimp_image_flush (gdisp->gimage);
+
+      gimp_context_set_display (gimp_get_user_context (gdisp->gimage->gimp),
+                                gdisp);
+    }
 }
 
 static void
@@ -134,13 +154,9 @@ gimp_display_shell_bucket_fill (GimpImage          *gimage,
                                       "gimp-bucket-fill-tool");
 
   if (tool_info && tool_info->tool_options)
-    {
-      context = GIMP_CONTEXT (tool_info->tool_options);
-    }
+    context = GIMP_CONTEXT (tool_info->tool_options);
   else
-    {
-      context = gimp_get_user_context (gimage->gimp);
-    }
+    context = gimp_get_user_context (gimage->gimp);
 
   gimp_drawable_bucket_fill_full (drawable,
                                   fill_mode,

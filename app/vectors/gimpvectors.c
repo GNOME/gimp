@@ -57,6 +57,10 @@ static gsize      gimp_vectors_get_memsize  (GimpObject       *object,
 static GimpItem * gimp_vectors_duplicate    (GimpItem         *item,
                                              GType             new_type,
                                              gboolean          add_alpha);
+static GimpItem * gimp_vectors_convert      (GimpItem         *item,
+                                             GimpImage        *dest_image,
+                                             GType             new_type,
+                                             gboolean          add_alpha);
 static void       gimp_vectors_translate    (GimpItem         *item,
                                              gint              offset_x,
                                              gint              offset_y,
@@ -192,6 +196,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   viewable_class->get_new_preview = gimp_vectors_get_new_preview;
 
   item_class->duplicate           = gimp_vectors_duplicate;
+  item_class->convert             = gimp_vectors_convert;
   item_class->translate           = gimp_vectors_translate;
   item_class->scale               = gimp_vectors_scale;
   item_class->resize              = gimp_vectors_resize;
@@ -281,6 +286,31 @@ gimp_vectors_duplicate (GimpItem *item,
   new_vectors = GIMP_VECTORS (new_item);
 
   gimp_vectors_copy_strokes (vectors, new_vectors);
+
+  return new_item;
+}
+
+static GimpItem *
+gimp_vectors_convert (GimpItem  *item,
+                      GimpImage *dest_image,
+                      GType      new_type,
+                      gboolean   add_alpha)
+{
+  GimpItem *new_item;
+
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_VECTORS), NULL);
+
+  new_item = GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image,
+                                                      new_type, add_alpha);
+
+  if (! GIMP_IS_VECTORS (new_item))
+    return new_item;
+
+  if (dest_image != item->gimage)
+    {
+      new_item->width  = dest_image->width;
+      new_item->height = dest_image->height;
+    }
 
   return new_item;
 }
@@ -514,30 +544,6 @@ gimp_vectors_new (GimpImage   *gimage,
                        name);
 
   return vectors;
-}
-
-GimpVectors *
-gimp_vectors_convert (GimpVectors *vectors,
-                      GimpImage   *dest_image)
-{
-  GimpItem    *new_item;
-  GimpVectors *new_vectors;
-
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
-
-  new_item = gimp_item_duplicate (GIMP_ITEM (vectors),
-                                  GIMP_TYPE_VECTORS,
-                                  FALSE);
-
-  new_vectors = GIMP_VECTORS (new_item);
-
-  new_item->width  = dest_image->width;
-  new_item->height = dest_image->height;
-
-  gimp_item_set_image (new_item, dest_image);
-
-  return new_vectors;
 }
 
 void

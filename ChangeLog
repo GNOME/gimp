@@ -1,3 +1,28 @@
+2003-08-27  Michael Natterer  <mitch@gimp.org>
+
+	Enabled type-preserving DND of all kinds of items between
+	different images. Fixes bug #119983.
+
+	* app/core/gimpitem.[ch]: added new virtual function
+	GimpItem::convert() which duplicates an item for another image.
+
+	* app/core/gimplayer.[ch]: removed gimp_layer_new_from_drawable()
+	and made it a GimpItem::convert() implementation.
+
+	* app/vectors/gimpvectors.[ch]: removed gimp_vectors_convert() and
+	made it a GimpItem::convert() implementation.
+
+	* app/widgets/gimpitemtreeview.[ch]: removed GimpConvertItemFunc
+	typedef and function pointer in GimpItemTreeViewClass since
+	we can simply call gimp_item_convert() now.
+
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpvectorstreeview.c
+	* app/display/gimpdisplayshell-dnd.c
+	* tools/pdbgen/pdb/layer.pdb: changed accordingly.
+
+	* app/pdb/layer_cmds.c: regenerated.
+
 2003-08-27  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpitemfactory.c (gimp_item_factory_translate_func):
