@@ -195,7 +195,7 @@
 	   (set! hole (+ hole 1)))
 
     (gimp-palette-set-foreground '(0 0 0))
-    (gimp-edit-fill film-mask)
+    (gimp-edit-fill film-mask BG-IMAGE-FILL)
     (gimp-selection-none image)
     (plug-in-gauss-rle 1 image film-mask hole-radius TRUE TRUE)
     (gimp-threshold film-mask 127 255)

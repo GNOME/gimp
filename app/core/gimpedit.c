@@ -432,7 +432,8 @@ edit_clear (GImage       *gimage,
 
 gboolean
 edit_fill (GImage       *gimage,
-	   GimpDrawable *drawable)
+	   GimpDrawable *drawable,
+	   GimpFillType  fill_type)
 {
   TileManager *buf_tiles;
   PixelRegion  bufPR;
@@ -442,9 +443,41 @@ edit_fill (GImage       *gimage,
   if (!gimage || drawable == NULL)
     return FALSE;
 
-  gimage_get_background (gimage, drawable, col);
   if (drawable_has_alpha (drawable))
     col [drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
+
+  switch (fill_type)
+    {
+    case FOREGROUND_FILL:
+      gimage_get_foreground (gimage, drawable, col);
+      break;
+
+    case BACKGROUND_FILL:
+      gimage_get_background (gimage, drawable, col);
+      break;
+
+    case WHITE_FILL:
+      col[RED_PIX] = 255;
+      col[GREEN_PIX] = 255;
+      col[BLUE_PIX] = 255;
+      break;
+
+    case TRANSPARENT_FILL:
+      col[RED_PIX] = 0;
+      col[GREEN_PIX] = 0;
+      col[BLUE_PIX] = 0;
+      if (drawable_has_alpha (drawable))
+	col [drawable_bytes (drawable) - 1] = TRANSPARENT_OPACITY;
+      break;
+
+    case NO_FILL:
+      return TRUE;  /*  nothing to do, but the fill succeded  */
+
+    default:
+      g_warning ("unknown fill type");
+      gimage_get_background (gimage, drawable, col);
+      break;
+    }
 
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 

@@ -49,7 +49,7 @@
 	(gimp-image-add-layer theImage theLayer 0)
         (if (= TRUE (car (gimp-selection-is-empty theImage)))
             ()
-	    (gimp-edit-fill theLayer)
+	    (gimp-edit-fill theLayer BG-IMAGE-FILL)
         )
 	(gimp-selection-invert theImage)
         (if (= TRUE (car (gimp-selection-is-empty theImage)))

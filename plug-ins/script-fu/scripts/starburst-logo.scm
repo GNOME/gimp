@@ -30,7 +30,7 @@
     (gimp-layer-set-preserve-trans text-layer TRUE)
 
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     (gimp-edit-clear shadow-layer)
     (gimp-edit-clear burst-layer)
 
@@ -42,7 +42,7 @@
     (gimp-selection-layer-alpha text-layer)
 
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill layer-mask)
+    (gimp-edit-fill layer-mask BG-IMAGE-FILL)
     (gimp-selection-none img)
     (plug-in-nova 1 img burst-layer (car burst-coords) (cdr burst-coords)
 		  burst-color burstradius 100 0)
@@ -52,7 +52,7 @@
     (gimp-selection-feather img feather)
     (gimp-selection-translate img -1 -1)
     (while (< count off)
-	   (gimp-edit-fill shadow-layer)
+	   (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
 	   (gimp-selection-translate img 1 1)
 	   (set! count (+ count 1)))
     (gimp-selection-none img)

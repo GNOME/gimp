@@ -1,3 +1,8 @@
+Fri Mar 24 15:25:55 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* update.sh: call script-fu-xgettext. Should probably read the
+	scripts from a central file instead of duplicating the list here...
+
 2000-03-21  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* Makefile.in.in: added missing plug-ins/gap/sel-to-anim-img.scm

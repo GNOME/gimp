@@ -56,13 +56,13 @@
     (gimp-layer-set-preserve-trans shadow-layer TRUE)
     
     (gimp-palette-set-background text-color)
-    (gimp-edit-fill text-layer)
+    (gimp-edit-fill text-layer BG-IMAGE-FILL)
 
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
 
     (gimp-palette-set-background shadow-color)
-    (gimp-edit-fill shadow-layer)
+    (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
     (gimp-layer-translate shadow-layer 1 1)
 
     (set! text-layer (car (gimp-image-flatten img)))

@@ -10,11 +10,12 @@
 		(height (car (gimp-drawable-height tdrawable)))
 		(img (car (gimp-image-new width height RGB)))
 ;		(layer-two (car (gimp-layer-new img width height RGB "Y Dots" 100 MULTIPLY)))
-		(layer-one (car (gimp-layer-new img width height RGB "X Dots" 100 NORMAL))))
+		(layer-one (car (gimp-layer-new img width height RGB "X Dots" 100 NORMAL)))
+		(old-bg (car (gimp-palette-get-background))))
 
 	(gimp-image-undo-disable img)
-	(gimp-edit-fill layer-one)
-;	(gimp-edit-fill img layer-two)
+	(gimp-palette-set-background '(255 255 255))
+	(gimp-edit-fill layer-one BG-IMAGE-FILL)
 	(gimp-image-add-layer img layer-one 0)
 
 	(plug-in-noisify 1 img layer-one FALSE 0.7 0.7 0.7 0.7)
@@ -33,6 +34,7 @@
 
 	(plug-in-bump-map 1 img tdrawable bump-layer azimuth elevation depth 0 0 0 0 FALSE FALSE 0)
 	(gimp-image-delete img)
+	(gimp-palette-set-background old-bg)
 	(gimp-displays-flush)
 ))
 

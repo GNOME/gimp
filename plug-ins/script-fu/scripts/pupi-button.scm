@@ -119,12 +119,12 @@
     (gimp-image-add-layer img bumpmap -1)
     (gimp-selection-none img)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill bumpmap)
+    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
 
     (round-select img (/ bevel 2) (/ bevel 2)
 		  (- width bevel) (- height bevel) ratio)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill bumpmap)
+    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
 
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img bumpmap bevel 1 1)

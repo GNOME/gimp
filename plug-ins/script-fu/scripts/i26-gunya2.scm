@@ -44,16 +44,16 @@
     ;; get the text shape
     (gimp-selection-layer-alpha text-layer)
     ;; fill it with the specified color
-    (gimp-palette-set-background text-color)
-    (gimp-edit-fill dist-text-layer)
+    (gimp-palette-set-foreground text-color)
+    (gimp-edit-fill dist-text-layer FG-IMAGE-FILL)
     ;; get the border shape
     (gimp-selection-border img frame-size)
     (gimp-palette-set-background frame-color)
-    (gimp-edit-fill dist-frame-layer)
+    (gimp-edit-fill dist-frame-layer BG-IMAGE-FILL)
     (gimp-selection-none img)
     ;; now make the distortion data
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill distortion-layer)
+    (gimp-edit-fill distortion-layer BG-IMAGE-FILL)
     (plug-in-noisify 1 distortion-img distortion-layer FALSE prob prob prob 0.0)
     (plug-in-gauss-rle 1 distortion-img distortion-layer radius 1 1)
     (plug-in-c-astretch 1 distortion-img distortion-layer)
@@ -62,7 +62,7 @@
     (plug-in-displace 1 img dist-text-layer radius radius 1 1
 		      distortion-layer distortion-layer 0)
     ;; make the distortion data once again fro the frame
-    (gimp-edit-fill distortion-layer)
+    (gimp-edit-fill distortion-layer BG-IMAGE-FILL)
     (plug-in-noisify 1 distortion-img distortion-layer FALSE prob prob prob 0.0)
     (plug-in-gauss-rle 1 distortion-img distortion-layer radius 1 1)
     (plug-in-c-astretch 1 distortion-img distortion-layer)
@@ -73,7 +73,7 @@
     ;; Finally, clear the bottom layer (text-layer)
     (gimp-selection-all img)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill text-layer)
+    (gimp-edit-fill text-layer BG-IMAGE-FILL)
     ;; post processing
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)

@@ -46,7 +46,7 @@
 
     (gimp-selection-all img)
     (gimp-palette-set-background backcolor)
-    (gimp-edit-fill drawable1)
+    (gimp-edit-fill drawable1 BG-IMAGE-FILL)
 
     (let* (
 	   (tempSize (* size 3))
@@ -56,7 +56,7 @@
       (gimp-image-undo-disable temp-img)
       (gimp-image-add-layer temp-img temp-draw 0)
       (gimp-palette-set-background backcolor)
-      (gimp-edit-fill temp-draw)
+      (gimp-edit-fill temp-draw BG-IMAGE-FILL)
       
       
       (center-ellipse temp-img size size outer-radius outer-radius REPLACE TRUE FALSE 0)
@@ -65,7 +65,7 @@
       (center-ellipse temp-img (* size 2) (*  size 2)  outer-radius outer-radius ADD TRUE FALSE 0)
       (center-ellipse temp-img (* size 2) (*  size 2)  inner-radius inner-radius SUB TRUE FALSE 0)
       (gimp-palette-set-background forecolor)
-      (gimp-edit-fill temp-draw)
+      (gimp-edit-fill temp-draw BG-IMAGE-FILL)
       
       (gimp-selection-none temp-img)
 
@@ -117,7 +117,7 @@
     ;just to look a little better
     (gimp-selection-all img)
     (gimp-palette-set-background backcolor)
-    (gimp-edit-fill layer-one)
+    (gimp-edit-fill layer-one BG-IMAGE-FILL)
     (gimp-selection-none img)
 
     (create-tiles tile tiledraw1 tiledraw2 size thickness backcolor forecolor)

@@ -34,8 +34,12 @@
     (gimp-image-resize img width height 0 0)
     (gimp-image-add-layer img pattern 1)
     (gimp-image-add-layer img bg-layer 2)
-    (gimp-edit-fill bg-layer)
+    (gimp-palette-set-background '(255 255 255))
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     (gimp-edit-clear pattern)
+    (gimp-layer-set-preserve-trans text-layer TRUE)
+    (gimp-palette-set-foreground '(0 0 0))
+    (gimp-edit-fill text-layer FG-IMAGE-FILL)
     (gimp-layer-set-preserve-trans text-layer FALSE)
     (plug-in-gauss-iir 1 img text-layer outline-blur-radius TRUE TRUE)
 
@@ -67,7 +71,7 @@
 
     (gimp-layer-set-visible layer2 FALSE)
     (gimp-layer-set-visible pattern TRUE)
-    (set! final (car (gimp-image-flatten img)))
+    ;;(set! final (car (gimp-image-flatten img)))
     
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)

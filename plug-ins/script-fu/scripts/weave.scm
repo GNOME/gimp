@@ -41,7 +41,7 @@
     (gimp-image-add-layer img drawable 0)
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill drawable)
+    (gimp-edit-fill drawable BG-IMAGE-FILL)
 
     ; Create main horizontal ribbon
 
@@ -165,14 +165,14 @@
     (gimp-image-add-layer img drawable 0)
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill drawable)
+    (gimp-edit-fill drawable BG-IMAGE-FILL)
 
     (gimp-rect-select img r1-x1 r1-y1 r1-width r1-height REPLACE FALSE 0)
     (gimp-rect-select img r2-x1 r2-y1 r2-width r2-height ADD FALSE 0)
     (gimp-rect-select img r3-x1 r3-y1 r3-width r3-height ADD FALSE 0)
 
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill drawable)
+    (gimp-edit-fill drawable BG-IMAGE-FILL)
     (gimp-selection-none img)
 
     (gimp-image-undo-enable img)
@@ -243,7 +243,7 @@
 	 (dense (/ density 100.0)))
     (gimp-image-add-layer img drawable -1)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill drawable)
+    (gimp-edit-fill drawable BG-IMAGE-FILL)
     (plug-in-noisify 1 img drawable FALSE dense dense dense dense)
     (plug-in-c-astretch 1 img drawable)
     (cond ((eq? orientation 'horizontal)

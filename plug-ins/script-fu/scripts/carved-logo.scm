@@ -23,13 +23,13 @@
     (cond ((< mean 127) (+ 1.0 (* 0.5 (/ (- 127 mean) 127.0))))
 	  ((>= mean 127) (- 1.0 (* 0.5 (/ (- mean 127) 127.0)))))))
 
-(define (script-fu-carved-logo text size font bg-img carve-raised)
+(define (script-fu-carved-logo text size font bg-img carve-raised padding)
   (let* ((img (car (gimp-file-load 1 bg-img bg-img)))
 	 (offx (carve-scale size 0.33))
 	 (offy (carve-scale size 0.25))
 	 (feather (carve-scale size 0.3))
 	 (brush-size (carve-scale size 0.3))
-	 (b-size (carve-scale size 1.5))
+	 (b-size (+ (carve-scale size 0.5) padding))
 	 (layer1 (car (gimp-image-active-drawable img)))
 	 (mask-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width mask-layer)))
@@ -54,9 +54,9 @@
 
     (gimp-layer-set-preserve-trans mask-layer TRUE)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill mask-layer)
+    (gimp-edit-fill mask-layer BG-IMAGE-FILL)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill mask)
+    (gimp-edit-fill mask BG-IMAGE-FILL)
 
     (plug-in-tile 1 img layer1 width height FALSE)
 
@@ -85,9 +85,9 @@
     (gimp-palette-set-background '(180 180 180))
     (gimp-selection-load mask-fat)
     (gimp-selection-invert img)
-    (gimp-edit-fill mask-emboss)
+    (gimp-edit-fill mask-emboss BG-IMAGE-FILL)
     (gimp-selection-load mask)
-    (gimp-edit-fill mask-emboss)
+    (gimp-edit-fill mask-emboss BG-IMAGE-FILL)
     (gimp-selection-none img)
 
     (set! mask-highlight (car (gimp-channel-copy mask-emboss)))
@@ -119,7 +119,7 @@
     (gimp-image-add-layer-mask img cast-shadow-layer csl-mask)
     (gimp-selection-load mask)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill csl-mask)
+    (gimp-edit-fill csl-mask BG-IMAGE-FILL)
 
     (set! inset-layer (car (gimp-layer-copy layer1 TRUE)))
     (gimp-image-add-layer img inset-layer 1)
@@ -128,7 +128,7 @@
     (gimp-image-add-layer-mask img inset-layer il-mask)
     (gimp-selection-load mask)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill il-mask)
+    (gimp-edit-fill il-mask BG-IMAGE-FILL)
     (gimp-selection-none img)
 
     (gimp-levels inset-layer 0 0 255 inset-gamma 0 255)
@@ -162,4 +162,5 @@
 		    SF-FONT "Font" "-*-Engraver-*-r-*-*-24-*-*-*-p-*-*-*"
 ;		    SF-STRING "Background Img" (string-append "" gimp-data-dir "/scripts/texture3.jpg")
 		    SF-FILENAME "Background Img" (string-append "" gimp-data-dir "/scripts/texture3.jpg")
-		    SF-TOGGLE "Carve Raised Text" FALSE)
+		    SF-TOGGLE "Carve Raised Text" FALSE
+		    SF-ADJUSTMENT "Padding Around Text" '(10 0 1000 1 10 0 1))

@@ -130,14 +130,23 @@ sub edit_fill {
     $blurb = 'Fill selected area of drawable.';
 
     $help = <<'HELP';
-This procedure fills the specified drawable with the background color. This
-procedure only affects regions within a selection if there is a selection
-active.
+This procedure fills the specified drawable with the fill mode. If the fill
+mode is foreground, the current foreground color is used. If the fill mode is
+background, the current background color is used. Other fill modes should not
+be used. This procedure only affects regions within a selection if there is a
+selection active.
 HELP
 
     &std_pdb_misc;
-    &inargs('fill to');
-    &invoke('edit_fill (gimage, drawable)');
+    $author .= ' & Raphael Quinet';
+    $date = '1995-2000';
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => "The drawable to fill to" },
+	{ name => 'fill_type', type => 'enum GimpFillType',
+	  desc => 'The type of fill: %%desc%%' }
+    );
+    &invoke('edit_fill (gimage, drawable, (GimpFillType) fill_type)');
 }
 
 sub edit_stroke {

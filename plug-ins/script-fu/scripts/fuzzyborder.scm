@@ -84,7 +84,7 @@
 	(gimp-selection-invert theImage)
 	(gimp-edit-clear theLayer)
 	(gimp-palette-set-background inColor)
-	(gimp-edit-fill theLayer)
+	(gimp-edit-fill theLayer BG-IMAGE-FILL)
         (gimp-selection-none inImage)
 	(chris-color-edge theImage theLayer inColor 1)
         
@@ -140,7 +140,7 @@
           (gimp-selection-shrink inImage inSize)
           (gimp-selection-invert inImage)
 	  (gimp-palette-set-background inColor)
-	(gimp-edit-fill theLayer)
+	(gimp-edit-fill theLayer BG-IMAGE-FILL)
           (gimp-selection-none inImage)
 )
 

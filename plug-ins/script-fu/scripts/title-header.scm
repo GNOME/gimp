@@ -105,17 +105,17 @@ verted to use the *-fontname form.
     ; Create bumpmap layer
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill bumpmap-layer)
+    (gimp-edit-fill bumpmap-layer BG-IMAGE-FILL)
     (gimp-selection-layer-alpha text-layer)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill bumpmap-layer)
+    (gimp-edit-fill bumpmap-layer BG-IMAGE-FILL)
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img bumpmap-layer 4.0 TRUE TRUE)
 
     ; Fore layer, bumpmap
 
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill fore-layer)
+    (gimp-edit-fill fore-layer BG-IMAGE-FILL)
     (plug-in-bump-map 1 img fore-layer bumpmap-layer 135.0 45.0 4 0 0 0 0 FALSE FALSE 0)
 
     ; Text layer
@@ -131,11 +131,11 @@ verted to use the *-fontname form.
     ; Semicircle at the left
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill bg-layer)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     
     (gimp-ellipse-select img 0 0 text-height text-height REPLACE TRUE FALSE 0)
     (gimp-palette-set-background (car (gimp-color-picker text-layer text-layers-offset 0 TRUE FALSE)))
-    (gimp-edit-fill bg-layer)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
 
     ; Fade-out gradient at the right
 

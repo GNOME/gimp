@@ -40,7 +40,9 @@ void edit_named_cut_cmd_callback    (GtkWidget *, gpointer);
 void edit_named_copy_cmd_callback   (GtkWidget *, gpointer);
 void edit_named_paste_cmd_callback  (GtkWidget *, gpointer);
 void edit_clear_cmd_callback        (GtkWidget *, gpointer);
-void edit_fill_cmd_callback         (GtkWidget *, gpointer);
+void edit_fill_cmd_callback         (GtkWidget *widget,
+				     gpointer   callback_data,
+				     guint      callback_action);
 void edit_stroke_cmd_callback       (GtkWidget *, gpointer);
 
 void select_invert_cmd_callback   (GtkWidget *, gpointer);

@@ -58,7 +58,7 @@
 	 (index 0))
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img BG-layer 0)
-    (gimp-edit-fill BG-layer)
+    (gimp-edit-fill BG-layer BG-IMAGE-FILL)
     ;; change units
     (set! start-angle-rad (* (/ (modulo start-angle 360) 360) 2 *pi*))
     (set! fill-angle-rad (* (/ fill-angle 360) 2 *pi*))

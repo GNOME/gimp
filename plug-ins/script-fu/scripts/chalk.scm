@@ -36,7 +36,7 @@
 
     (gimp-image-add-layer img bg-layer 1)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     (gimp-edit-clear text-layer)
 
     ; is there any other way to do this?

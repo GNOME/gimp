@@ -16,7 +16,7 @@
 	 (old-bg (car (gimp-palette-get-background))))
     (gimp-image-undo-disable img)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill layer-one)
+    (gimp-edit-fill layer-one BG-IMAGE-FILL)
     (gimp-image-add-layer img layer-one 0)
     (plug-in-noisify 1 img layer-one FALSE noise-level noise-level noise-level 1.0)
 

@@ -28,7 +28,7 @@
     (gimp-image-undo-disable ripple-image)
     (gimp-palette-set-background '(127 127 127) )
     (gimp-image-add-layer ripple-image ripple-layer 0)
-    (gimp-edit-fill ripple-layer)
+    (gimp-edit-fill ripple-layer BG-IMAGE-FILL)
     (plug-in-noisify 1 ripple-image ripple-layer FALSE 1.0 1.0 1.0 0.0)
     ; tile noise
     (set! rippletiled-ret (plug-in-tile 1 ripple-image ripple-layer (* width 3) (* height 3) TRUE))

@@ -19,7 +19,7 @@
 ;  by Brian McFee <keebler@wco.com>
 ;  Creates Cow-spotted logs.. what else?
 
-(define (script-fu-bovinated-logo text size font)
+(define (script-fu-bovinated-logo text size font bg-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
          (border (/ size 4))
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
@@ -35,19 +35,20 @@
     (gimp-image-add-layer img blur-layer 1)
 
     (gimp-selection-all img)
-    (gimp-edit-fill bg-layer)
+    (gimp-palette-set-background bg-color)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     (gimp-selection-none img)
 
     (gimp-layer-set-preserve-trans blur-layer TRUE)
     (gimp-palette-set-background '(255 255 255))
     (gimp-selection-all img)
-    (gimp-edit-fill blur-layer)
+    (gimp-edit-fill blur-layer BG-IMAGE-FILL)
     (gimp-edit-clear blur-layer)
     (gimp-palette-set-background '(191 191 191))
     (gimp-selection-none img)
     (gimp-layer-set-preserve-trans blur-layer FALSE)
     (gimp-selection-layer-alpha text-layer)
-    (gimp-edit-fill blur-layer)
+    (gimp-edit-fill blur-layer BG-IMAGE-FILL)
     (plug-in-gauss-rle 1 img blur-layer 5.0 1 1)
     (gimp-selection-none img)
     (gimp-layer-set-preserve-trans text-layer TRUE)
@@ -77,4 +78,5 @@
 		    ""
 		    SF-STRING "Text String" "Fear the Cow"
 		    SF-ADJUSTMENT "Font Size (pixels)" '(80 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-roostheavy-*-r-*-*-24-*-*-*-p-*-*-*")
+		    SF-FONT "Font" "-*-roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR "Background Color" '(255 255 255))

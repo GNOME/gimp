@@ -57,7 +57,7 @@
     (gimp-palette-set-background '(255 255 255))
     (gimp-rect-select img 0 0 width height REPLACE FALSE 0)
     
-    (gimp-edit-fill    drawable)
+    (gimp-edit-fill    drawable BG-IMAGE-FILL)
     (file-gbr-save 1 img drawable filename "" spacing desc)
     
     (gimp-brushes-refresh)
@@ -135,7 +135,7 @@
           ((>= 0 feathering)
            (gimp-rect-select img 0 0 width height REPLACE FALSE 0))
           )
-    (gimp-edit-fill    drawable)
+    (gimp-edit-fill    drawable BG-IMAGE-FILL)
     (file-gbr-save 1 img drawable filename "" 25 desc)
     
     (gimp-brushes-refresh)
@@ -206,7 +206,7 @@
     (gimp-palette-set-background '(255 255 255))
     (gimp-ellipse-select img 0 0 width height REPLACE TRUE FALSE 0)
     
-    (gimp-edit-fill    drawable)
+    (gimp-edit-fill    drawable BG-IMAGE-FILL)
     (file-gbr-save 1 img drawable filename "" spacing desc)
     
     (gimp-brushes-refresh)
@@ -286,7 +286,7 @@
           ((<= feathering 0)
         (gimp-ellipse-select img 0 0 width height REPLACE TRUE FALSE 0))
 	)
-    (gimp-edit-fill    drawable)
+    (gimp-edit-fill    drawable BG-IMAGE-FILL)
     (file-gbr-save 1 img drawable filename "" spacing desc)
     
     (gimp-brushes-refresh)

@@ -43,7 +43,7 @@
      
    ; (gimp-layer-set-preserve-trans ruler-layer TRUE)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     (gimp-edit-clear glow-layer)
     (gimp-edit-clear bullet-layer)
 
@@ -54,10 +54,10 @@
     (gimp-palette-set-background '(0 0 0))
     (gimp-blend bullet-layer FG-BG-RGB NORMAL RADIAL 100 0 REPEAT-NONE FALSE 0 0 blend-start blend-start (+ half-radius radius)(+ half-radius radius ))
 
-    (gimp-palette-set-background glow-color)
+    (gimp-palette-set-foreground glow-color)
     (gimp-selection-grow img border)
     (gimp-selection-feather img  border)
-    (gimp-edit-fill glow-layer)
+    (gimp-edit-fill glow-layer FG-IMAGE-FILL)
     (gimp-selection-none img)
     (if (>= radius 16)
 	(plug-in-gauss-rle 1 img glow-layer 25 TRUE TRUE)

@@ -20,6 +20,7 @@
 
 #include "procedural_db.h"
 
+#include "apptypes.h"
 #include "drawable.h"
 #include "gimage_mask.h"
 #include "global_edit.h"
@@ -255,16 +256,21 @@ edit_fill_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
+  gint32 fill_type;
   GimpImage *gimage;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
+  fill_type = args[1].value.pdb_int;
+  if (fill_type < FOREGROUND_FILL || fill_type > NO_FILL)
+    success = FALSE;
+
   if (success)
     {
       gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
-      success = edit_fill (gimage, drawable);
+      success = edit_fill (gimage, drawable, (GimpFillType) fill_type);
     }
 
   return procedural_db_return_args (&edit_fill_proc, success);
@@ -276,6 +282,11 @@ static ProcArg edit_fill_inargs[] =
     PDB_DRAWABLE,
     "drawable",
     "The drawable to fill to"
+  },
+  {
+    PDB_INT32,
+    "fill_type",
+    "The type of fill: FG_IMAGE_FILL (0), BG_IMAGE_FILL (1), WHITE_IMAGE_FILL (2), TRANS_IMAGE_FILL (3), NO_IMAGE_FILL (4)"
   }
 };
 
@@ -283,12 +294,12 @@ static ProcRecord edit_fill_proc =
 {
   "gimp_edit_fill",
   "Fill selected area of drawable.",
-  "This procedure fills the specified drawable with the background color. This procedure only affects regions within a selection if there is a selection active.",
+  "This procedure fills the specified drawable with the fill mode. If the fill mode is foreground, the current foreground color is used. If the fill mode is background, the current background color is used. Other fill modes should not be used. This procedure only affects regions within a selection if there is a selection active.",
+  "Spencer Kimball & Peter Mattis & Raphael Quinet",
   "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
+  "1995-2000",
   PDB_INTERNAL,
-  1,
+  2,
   edit_fill_inargs,
   0,
   NULL,

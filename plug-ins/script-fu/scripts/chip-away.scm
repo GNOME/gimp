@@ -58,13 +58,13 @@
 
     (if (= bg-fill TRUE)
 	(gimp-bucket-fill bg-layer 2 NORMAL 100 255 FALSE 1 1)
-	(gimp-edit-fill bg-layer))
+	(gimp-edit-fill bg-layer BG-IMAGE-FILL))
 
     (gimp-selection-all img)
     (gimp-edit-clear bump-layer)
     (gimp-selection-none img)
     (gimp-selection-layer-alpha text-layer)
-    (gimp-edit-fill bump-layer)
+    (gimp-edit-fill bump-layer BG-IMAGE-FILL)
     (gimp-bucket-fill text-layer 2 NORMAL 100 255 FALSE 1 1)
     (gimp-selection-none img)
     
@@ -89,7 +89,7 @@
 	    (gimp-selection-none img)
 	    (gimp-selection-layer-alpha text-layer)
 	    (gimp-palette-set-background '(0 0 0))
-	    (gimp-edit-fill shadow-layer)
+	    (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
 	    (gimp-selection-none img)
 	    (plug-in-gauss-rle 1 img shadow-layer 5 TRUE TRUE)
 	    (gimp-image-add-layer img shadow-layer 1)

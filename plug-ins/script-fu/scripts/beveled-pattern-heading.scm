@@ -49,23 +49,23 @@
     ; Create pattern layer
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill background)
+    (gimp-edit-fill background BG-IMAGE-FILL)
     (gimp-patterns-set-pattern pattern)
     (gimp-bucket-fill background PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
 
     ; Create bumpmap layer
 
-    (gimp-edit-fill bumpmap)
+    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
 
     (gimp-palette-set-background '(127 127 127))
     (gimp-selection-layer-alpha textl)
     (gimp-selection-shrink img 1)
-    (gimp-edit-fill bumpmap)
+    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
 
     (gimp-palette-set-background '(255 255 255))
     (gimp-selection-layer-alpha textl)
     (gimp-selection-shrink img 2)
-    (gimp-edit-fill bumpmap)
+    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
 
     (gimp-selection-none img)
 

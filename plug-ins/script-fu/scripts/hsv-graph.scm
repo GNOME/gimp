@@ -259,7 +259,7 @@
     (gimp-image-add-layer gimg bglayer -1)
     (gimp-selection-all gimg)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill bglayer)
+    (gimp-edit-fill bglayer BG-IMAGE-FILL)
     (gimp-image-add-layer gimg hsv-layer -1)
     (gimp-edit-clear hsv-layer)
     (gimp-image-add-layer gimg rgb-layer -1)

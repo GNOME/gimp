@@ -66,7 +66,7 @@
     (gimp-layer-set-preserve-trans text-layer TRUE)
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill bg-layer)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     (gimp-edit-clear shadow-layer)
     (gimp-edit-clear glow-layer)
 
@@ -75,13 +75,13 @@
     (gimp-selection-feather img feather)
     (gimp-palette-set-background glow-color)
     (gimp-selection-feather img feather)
-    (gimp-edit-fill glow-layer)
+    (gimp-edit-fill glow-layer BG-IMAGE-FILL)
 
     (gimp-selection-layer-alpha text-layer)
     (gimp-selection-feather img shadow-feather)
     (gimp-palette-set-background '(0 0 0))
     (gimp-selection-translate img offx offy)
-    (gimp-edit-fill shadow-layer)
+    (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
 
     (gimp-selection-none img)
     (gimp-palette-set-background '(31 31 31))

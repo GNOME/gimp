@@ -4,7 +4,7 @@
 ;  an interesting dropshadow
 ;  This script was inspired by Rob Malda's 'coolmetal.gif' graphic
 
-(define (script-fu-cool-metal-logo text size font bg-color seascape)
+(define (script-fu-cool-metal-logo text size font bg-color gradient)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (feather (/ size 5))
 	 (smear 7.5)
@@ -34,14 +34,12 @@
     (gimp-layer-set-preserve-trans text-layer TRUE)
 
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     (gimp-edit-clear reflect-layer)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill shadow-layer)
+    (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
 
-    (if (= seascape 1)
-	(gimp-gradients-set-active "Horizon_2")
-	(gimp-gradients-set-active "Horizon_1"))
+    (gimp-gradients-set-active gradient)
     (gimp-blend text-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 0 (+ height 5))
     (gimp-rect-select img 0 (- (/ height 2) feather) img-width (* 2 feather) REPLACE 0 0)
     (plug-in-gauss-iir 1 img text-layer smear TRUE TRUE)
@@ -58,7 +56,7 @@
     (gimp-selection-layer-alpha text-layer)
     (gimp-selection-invert img)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill channel)
+    (gimp-edit-fill channel BG-IMAGE-FILL)
     (gimp-selection-none img)
 
     (plug-in-bump-map 1 img text-layer channel 135 45 depth 0 0 0 0 FALSE FALSE 0)
@@ -110,4 +108,4 @@
 		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
 		    SF-FONT "Font" "-*-Crillee-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Background Color" '(255 255 255)
-		    SF-TOGGLE "Seascape" FALSE)
+		    SF-GRADIENT "Gradient" "Horizon_1")

@@ -86,18 +86,18 @@
     (gimp-selection-none img)
 
     (gimp-edit-clear glow-layer)
-    (gimp-edit-fill tube-layer)
+    (gimp-edit-fill tube-layer BG-IMAGE-FILL)
 
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
 
     (gimp-selection-load selection)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill tube-layer)
+    (gimp-edit-fill tube-layer BG-IMAGE-FILL)
     (gimp-selection-shrink img shrink)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill selection)
-    (gimp-edit-fill tube-layer)
+    (gimp-edit-fill selection BG-IMAGE-FILL)
+    (gimp-edit-fill tube-layer BG-IMAGE-FILL)
 
     (gimp-selection-none img)
     (if (not (= feather1 0)) (plug-in-gauss-rle 1 img tube-layer feather1 TRUE TRUE))
@@ -131,7 +131,7 @@
 
     (gimp-selection-feather img feather)
     (gimp-palette-set-background glow-color)
-    (gimp-edit-fill glow-layer)
+    (gimp-edit-fill glow-layer BG-IMAGE-FILL)
 
     (if (not (= shadow 0))
 	(begin
@@ -140,7 +140,7 @@
 	  (gimp-selection-feather img shadow-feather)
 	  (gimp-selection-translate img shadow-offx shadow-offy)
 	  (gimp-palette-set-background '(0 0 0))
-	  (gimp-edit-fill shadow-layer)))
+	  (gimp-edit-fill shadow-layer BG-IMAGE-FILL)))
     (gimp-selection-none img)
 
     (gimp-layer-set-name tube-layer "Neon Tubes")

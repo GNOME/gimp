@@ -122,7 +122,7 @@
 		      0
 		      0
 		      0.0)
-    (gimp-edit-fill layer)
+    (gimp-edit-fill layer BG-IMAGE-FILL)
     (gimp-palette-set-background (adjcolour colour (/ dvalue 2)))
     (gimp-free-select img
 		      10
@@ -131,7 +131,7 @@
 		      0
 		      0
 		      0.0)
-    (gimp-edit-fill layer)
+    (gimp-edit-fill layer BG-IMAGE-FILL)
     (gimp-palette-set-background (adjcolour colour (- 0 (/ dvalue 2))))
     (gimp-free-select img
 		      10
@@ -141,7 +141,7 @@
 		      0
 		      0.0)
 
-    (gimp-edit-fill layer)
+    (gimp-edit-fill layer BG-IMAGE-FILL)
     (gimp-palette-set-background (adjcolour colour (- 0 dvalue)))
     (gimp-free-select img
 		      10
@@ -151,7 +151,7 @@
 		      0
 		      0.0)
 
-    (gimp-edit-fill layer)
+    (gimp-edit-fill layer BG-IMAGE-FILL)
     (gimp-selection-none img)
     (gimp-image-add-layer img layer 0)
     (gimp-image-undo-enable img)

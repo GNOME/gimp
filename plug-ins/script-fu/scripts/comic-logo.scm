@@ -19,7 +19,7 @@
 ;  by Brian McFee
 ;  Creates snazzy-looking text, inspired by watching a Maxx marathon :)
 
-(define (script-fu-comic-logo text size font gradient ol-width)
+(define (script-fu-comic-logo text size font gradient ol-width ol-color bg-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
          (border (/ size 4))
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
@@ -40,13 +40,14 @@
     (gimp-layer-set-name black-layer "Black")
   
     (gimp-selection-all img)
-    (gimp-edit-fill bg-layer)
+    (gimp-palette-set-background bg-color)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     (gimp-selection-none img)
 
     (gimp-layer-set-preserve-trans white-layer TRUE)
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-palette-set-background ol-color)
     (gimp-selection-all img)
-    (gimp-edit-fill white-layer)
+    (gimp-edit-fill white-layer BG-IMAGE-FILL)
     (gimp-layer-set-preserve-trans white-layer FALSE)
     (plug-in-spread 1 img white-layer (* 3 ol-width) (* 3 ol-width))
     (plug-in-gauss-rle 1 img white-layer (* 2 ol-width) 1 1)
@@ -56,7 +57,7 @@
     (gimp-palette-set-background '(0 0 0))
     (gimp-layer-set-preserve-trans black-layer TRUE)
     (gimp-selection-all img)
-    (gimp-edit-fill black-layer)
+    (gimp-edit-fill black-layer BG-IMAGE-FILL)
     (gimp-selection-none img)
     (gimp-layer-set-preserve-trans black-layer FALSE)
     (plug-in-gauss-rle 1 img black-layer ol-width 1 1)
@@ -91,4 +92,6 @@
 		    SF-ADJUSTMENT "Font Size (pixels)" '(85 2 1000 1 10 0 1)
 		    SF-FONT "Font" "-*-tribeca-*-i-*-*-24-*-*-*-p-*-*-*"
 		    SF-GRADIENT "Gradient" "Incandescent"
-		    SF-VALUE "Outline width" "5")
+		    SF-VALUE "Outline width" "5"
+		    SF-COLOR "Outline color" '(255 255 255)
+		    SF-COLOR "Background color" '(255 255 255))

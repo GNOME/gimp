@@ -107,7 +107,7 @@
     (gimp-layer-set-offsets shadow-layer select-offset-x select-offset-y)
     (gimp-drawable-fill shadow-layer TRANS-IMAGE-FILL)
     (gimp-palette-set-background shadow-color)
-    (gimp-edit-fill shadow-layer)
+    (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
     (gimp-selection-none image)
 
     (if (= allow-resize TRUE)

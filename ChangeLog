@@ -1,3 +1,79 @@
+Fri Mar 24 15:48:40 CET 2000  Sven Neumann <sven@gimp.org>
+
+	applied gimp-quinet-000310-0 by Raphael Quinet <quinet@gamers.org>
+
+	* plug-ins/script-fu/scripts/coolmetal-logo.scm: replaced the
+	seascape toggle with a direct selection of the gradient.
+
+	* plug-ins/script-fu/scripts/carved-logo.scm: added new parameter
+	to allow some padding around the text (useful for tiling backgr.)
+
+	* plug-ins/script-fu/scripts/news-text.scm, speed-text.scm: added
+	new parameter to specify the text color and the background color,
+	instead of using the active colors.
+
+	* plug-ins/script-fu/scripts/bovinated-logo.scm, comic-logo.scm,
+	gradient-bevel-logo.scm: added new parameter to specify the
+	background color, instead of using the active one.
+
+	* plug-ins/script-fu/scripts/asc2img.scm: save and restore
+	foreground and background colors; do not flatten the final image.
+
+	* plug-ins/script-fu/scripts/3d-outline.scm: set foreground and
+	background colors before using them; do not flatten the final
+	image.
+
+	* plug-ins/script-fu/scripts/clothify.scm: set the background
+	color before using it.
+
+	* plug-ins/script-fu/scripts/3d-outline.scm, 3dTruchet.scm,
+	addborder.scm, alien-glow-arrow.scm, alien-glow-bar.scm,
+	alien-glow-bullet.scm, alien-glow-button.scm, alien-glow-logo.scm,
+	alien-neon-logo.scm, asc2img.scm, basic1-logo.scm,
+	basic2-logo.scm, beveled-button.scm, beveled-pattern-arrow.scm,
+	beveled-pattern-bullet.scm, beveled-pattern-button.scm,
+	beveled-pattern-heading.scm, beveled-pattern-hrule.scm,
+	blended-logo.scm, bovinated-logo.scm, camo.scm, carve-it.scm,
+	carved-logo.scm, chalk.scm, chip-away.scm, chrome-it.scm,
+	chrome-logo.scm, clothify.scm, comic-logo.scm, coolmetal-logo.scm,
+	crystal-logo.scm, distress_selection.scm, drop-shadow.scm,
+	erase-rows.scm, fade-outline.scm, font-map.scm, frosty-logo.scm,
+	fuzzyborder.scm, gimp-headers.scm, gimp-labels.scm,
+	glowing-logo.scm, gradient-bevel-logo.scm, hsv-graph.scm,
+	i26-gunya2.scm, image-structure.scm, mkbrush.scm, neon-logo.scm,
+	news-text.scm, perspective-shadow.scm, pupi-button.scm,
+	ripply-anim.scm, slide.scm, sota-chrome-logo.scm, speed-text.scm,
+	sphere.scm, starburst-logo.scm, starscape-logo.scm, swirltile.scm,
+	t-o-p-logo.scm, test-sphere.scm, text-circle.scm,
+	textured-logo.scm, title-header.scm, trochoid.scm, truchet.scm,
+	weave.scm, xach-effect.scm: adapted the scripts to the new
+	interface for gimp-edit-fill.
+
+	* plug-ins/script-fu/scripts/Makefile.am
+	* plug-ins/script-fu/scripts/alien-neon-logo.scm: added file.
+
+Fri Mar 24 15:31:33 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/commands.[ch]
+	* app/edit_cmds.c * app/gdisplay.c
+	* app/global_edit.[ch]
+	* app/menus.c
+	* tools/pdbgen/pdb/edit.pdb: applied sligthly modified versions 
+	of gimp-quinet-000308-0 and gimp-quinet-000322-0.
+
+	From the README, Raphael Quinet provided with the patches:
+
+	    This patch fixes the problems with Edit/Fill by allowing 
+ 	    the user to choose the fill mode.  The "Fill with background 
+	    color" is prefered by some users who have been using the Gimp 
+	    for a long time, but the "Fill with foreground color" is 
+	    prefered by those who are familiar with most other paint 
+	    programs.
+
+	This change breaks a lot of the Perl scripts. Marc knows about this,
+	so you do not need to write bugreports. Please report broken 
+	Script-Fus however, since they are supposed to work. 
+
 Fri Mar 24 01:53:07 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* configure.in: more sanity checking for the gtkxmhtml test. Also

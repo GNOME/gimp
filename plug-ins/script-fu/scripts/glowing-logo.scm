@@ -22,29 +22,29 @@
 
     (gimp-selection-none img)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
 
     (gimp-layer-set-preserve-trans text-layer TRUE)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill text-layer)
+    (gimp-edit-fill text-layer BG-IMAGE-FILL)
 
     (gimp-selection-layer-alpha text-layer)
     (gimp-selection-feather img feather1)
     (gimp-palette-set-background '(221 0 0))
-    (gimp-edit-fill glow-layer)
-    (gimp-edit-fill glow-layer)
-    (gimp-edit-fill glow-layer)
+    (gimp-edit-fill glow-layer BG-IMAGE-FILL)
+    (gimp-edit-fill glow-layer BG-IMAGE-FILL)
+    (gimp-edit-fill glow-layer BG-IMAGE-FILL)
 
     (gimp-selection-layer-alpha text-layer)
     (gimp-selection-feather img feather2)
     (gimp-palette-set-background '(232 217 18))
-    (gimp-edit-fill glow-layer)
-    (gimp-edit-fill glow-layer)
+    (gimp-edit-fill glow-layer BG-IMAGE-FILL)
+    (gimp-edit-fill glow-layer BG-IMAGE-FILL)
 
     (gimp-selection-layer-alpha text-layer)
     (gimp-selection-feather img feather3)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill glow-layer)
+    (gimp-edit-fill glow-layer BG-IMAGE-FILL)
     (gimp-selection-none img)
 
     (gimp-layer-set-name text-layer text)

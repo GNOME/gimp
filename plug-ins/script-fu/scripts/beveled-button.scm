@@ -94,7 +94,7 @@
     (gimp-image-add-layer img bumpmap -1)
     (gimp-palette-set-foreground '(0 0 0))
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill bumpmap)
+    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
 
     (gimp-rect-select img 0 0 bevel-width img-height REPLACE FALSE 0)
     (blend-bumpmap img bumpmap 0 0 (- bevel-width 1) 0)

@@ -251,12 +251,15 @@ edit_clear_cmd_callback (GtkWidget *widget,
 
 void
 edit_fill_cmd_callback (GtkWidget *widget,
-			gpointer   client_data)
+			gpointer   callback_data,
+			guint      callback_action)
 {
+  GimpFillType fill_type;
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  edit_fill (gdisp->gimage, gimage_active_drawable (gdisp->gimage));
+  fill_type = (GimpFillType) callback_action;
+  edit_fill (gdisp->gimage, gimage_active_drawable (gdisp->gimage), fill_type);
   gdisplays_flush ();
 }
 

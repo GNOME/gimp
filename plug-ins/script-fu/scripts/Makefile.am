@@ -12,6 +12,7 @@ scriptdata_DATA = \
 	alien-glow-bullet.scm			\
 	alien-glow-button.scm			\
 	alien-glow-logo.scm			\
+	alien-neon-logo.scm			\
 	asc2img.scm				\
 	basic1-logo.scm				\
 	basic2-logo.scm				\

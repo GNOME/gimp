@@ -26,7 +26,7 @@
     (gimp-image-add-layer img drawable 0)
     (gimp-palette-set-foreground sphere-color)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill drawable)
+    (gimp-edit-fill drawable BG-IMAGE-FILL)
     (gimp-palette-set-background '(20 20 20))
     (if (and
 	 (or (and (>= light 45) (<= light 75)) (and (<= light 135) (>= light 105)))

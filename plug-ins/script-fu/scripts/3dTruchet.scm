@@ -46,7 +46,7 @@
 
     (gimp-selection-all img)
     (gimp-palette-set-background backcolor)
-    (gimp-edit-fill drawable1)
+    (gimp-edit-fill drawable1 BG-IMAGE-FILL)
 
     (let* (
 	   (tempSize (* size 3))
@@ -58,8 +58,8 @@
       (gimp-image-add-layer temp-img temp-draw 0)
       (gimp-image-add-layer temp-img temp-draw2 0)
       (gimp-palette-set-background backcolor)
-      (gimp-edit-fill temp-draw)
-      (gimp-edit-fill temp-draw2)
+      (gimp-edit-fill temp-draw BG-IMAGE-FILL)
+      (gimp-edit-fill temp-draw2 BG-IMAGE-FILL)
 
       ;weird aint it
       (gimp-palette-set-background begincolor)
@@ -77,7 +77,7 @@
 
       (center-ellipse temp-img (* size 2) size  outer-radius outer-radius ADD TRUE FALSE 0)
       (center-ellipse temp-img (* size 2) size  inner-radius inner-radius SUB TRUE FALSE 0)
-      ;(gimp-edit-fill temp-img temp-draw2)
+      ;(gimp-edit-fill temp-img temp-draw2 BG-IMAGE-FILL)
       (gimp-blend temp-draw2 FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 FALSE supersample 3 .2 size size (* size 2) (* size 2) )
       
       (gimp-selection-none temp-img)
@@ -130,7 +130,7 @@
     ;just to look a little better
     (gimp-selection-all img)
     (gimp-palette-set-background backcolor)
-    (gimp-edit-fill layer-one)
+    (gimp-edit-fill layer-one BG-IMAGE-FILL)
     (gimp-selection-none img)
 
     (create-tile tile tiledraw1 tiledraw2 size thickness backcolor begincolor endcolor supersample)

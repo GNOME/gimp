@@ -354,7 +354,7 @@
     (gimp-brushes-set-brush (car brush-details))
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img BG-layer 0)
-    (gimp-edit-fill BG-layer)
+    (gimp-edit-fill BG-layer BG-IMAGE-FILL)
     (if (<= 0 erase-before-draw)	; HDDN FTR (2SLW)
 	(begin
 	  (set! the-layer (car (gimp-layer-new img drawable-size drawable-size
@@ -363,7 +363,7 @@
 	  (gimp-image-add-layer img the-layer 0)
 	  (if (= NORMAL old-paint-mode)
 	      (gimp-edit-clear the-layer)
-	      (gimp-edit-fill the-layer)))
+	      (gimp-edit-fill the-layer BG-IMAGE-FILL)))
 	(begin
 	  (set! layer-paint-mode (- 1 erase-before-draw))
 	  (gimp-image-set-active-layer img BG-layer)))

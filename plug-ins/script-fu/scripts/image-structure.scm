@@ -102,7 +102,7 @@
 					    "New Background" 100 NORMAL)))
 	  (gimp-image-add-layer img new-bg num-of-layers)
 	  (gimp-palette-set-background background-color)
-	  (gimp-edit-fill new-bg)))
+	  (gimp-edit-fill new-bg BG-IMAGE-FILL)))
     (gimp-image-set-active-layer img (aref layers 0))
     (if (= TRUE with-layer-name?)
 	(let ((text-layer #f))

@@ -1665,7 +1665,8 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       SET_SENSITIVE ("Edit/Buffer/Cut Named...", lp);
       SET_SENSITIVE ("Edit/Buffer/Copy Named...", lp);
       SET_SENSITIVE ("Edit/Clear", lp);
-      SET_SENSITIVE ("Edit/Fill", lp);
+      SET_SENSITIVE ("Edit/Fill with FG Color", lp);
+      SET_SENSITIVE ("Edit/Fill with BG Color", lp);
       SET_SENSITIVE ("Edit/Stroke", lp);
     }
 

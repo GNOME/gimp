@@ -101,8 +101,8 @@
     (gimp-blend ruler-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 0 0 size size)
     
     (gimp-selection-grow img grow-amount)
-    (gimp-palette-set-background glow-color)
-    (gimp-edit-fill glow-layer)
+    (gimp-palette-set-foreground glow-color)
+    (gimp-edit-fill glow-layer FG-IMAGE-FILL)
 
     (gimp-selection-none img)
 
@@ -110,7 +110,7 @@
     (plug-in-gauss-rle 1 img glow-layer blur-radius TRUE TRUE)
 
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)

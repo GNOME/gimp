@@ -36,7 +36,8 @@ gboolean      edit_paste_as_new        (GImage       *gimage,
 gboolean      edit_clear               (GImage       *gimage,
 					GimpDrawable *drawable);
 gboolean      edit_fill                (GImage       *gimage,
-					GimpDrawable *drawable);
+					GimpDrawable *drawable,
+					GimpFillType  fill_type);
 
 gboolean      global_edit_cut          (GDisplay    *gdisp);
 gboolean      global_edit_copy         (GDisplay    *gdisp);

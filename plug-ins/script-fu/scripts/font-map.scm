@@ -47,7 +47,7 @@
 					"Font List" 100 NORMAL))))
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
-    (gimp-edit-fill drawable)
+    (gimp-edit-fill drawable BG-IMAGE-FILL)
 
     (while font-list
 	   (set! font (car font-list))

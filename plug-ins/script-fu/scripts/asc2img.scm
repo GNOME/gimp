@@ -30,14 +30,12 @@
 			     inTextColor
                              inTrans
                              inBackColor
-			     inBufferAmount
-                             inFlatten)
+			     inBufferAmount)
 	
+  (set! old-bg (car (gimp-palette-get-background)))
+
   (set! theImage (car (gimp-image-new 10 10 RGB) ) )
   
-	
-
-
   (set! theLayer (car (gimp-layer-new theImage
 				      10
 				      10
@@ -50,65 +48,55 @@
   (gimp-layer-set-name theLayer "Background")
   (gimp-image-add-layer theImage theLayer 0)
 
-(script-fu-asc-2-img-layer theImage theLayer inFile inFont inFontSize
-			     inTextColor inBufferAmount inFlatten)
-
-	(set! theBuffer (* inFontSize (/ inBufferAmount 100) ) )
-	(set! theImageWidth (+ theImageWidth theBuffer theBuffer ))
-	(set! theImageHeight (+ theImageHeight theBuffer theBuffer ))
-
-        (gimp-image-resize theImage
-			   theImageWidth
-			   theImageHeight
-			   theBuffer
-			   theBuffer)
-        (gimp-layer-resize theLayer
-			   theImageWidth
-			   theImageHeight
-			   theBuffer
-			   theBuffer)
-  	(gimp-selection-all theImage)
-        (if (= inTrans TRUE)
-  	    (gimp-edit-clear theLayer)
-  	    (gimp-edit-fill theLayer)
-        )
-  	(gimp-selection-none theImage)
-
-        (if (= inFlatten TRUE)
-	    (gimp-image-merge-visible-layers theImage 0)
-            ()
-        )
-
-
-	(gimp-display-new theImage)
-	
-	(gimp-image-clean-all theImage)
-	
-	(gimp-displays-flush)
-	(cons theImage  ()   )
+  (script-fu-asc-2-img-layer theImage theLayer inFile inFont inFontSize
+			     inTextColor inBufferAmount)
+  
+  (set! theBuffer (* inFontSize (/ inBufferAmount 100) ) )
+  (set! theImageWidth (+ theImageWidth theBuffer theBuffer ))
+  (set! theImageHeight (+ theImageHeight theBuffer theBuffer ))
+  
+  (gimp-image-resize theImage
+		     theImageWidth
+		     theImageHeight
+		     theBuffer
+		     theBuffer)
+  (gimp-layer-resize theLayer
+		     theImageWidth
+		     theImageHeight
+		     theBuffer
+		     theBuffer)
+  (gimp-selection-all theImage)
+  (if (= inTrans TRUE)
+      (gimp-edit-clear theLayer)
+      (gimp-edit-fill theLayer BG-IMAGE-FILL)
+      )
+  (gimp-selection-none theImage)
+  
+  (gimp-palette-set-background old-bg)
+  (gimp-display-new theImage)
+  
+  (gimp-image-clean-all theImage)
+  
+  (gimp-displays-flush)
+  (cons theImage  ()   )
 )
 
 (define (script-fu-asc-2-img-layer inImage
 				   inLayer
-				inFile
+				   inFile
 			           inFont
 			           inFontSize
-			     inTextColor
-                             inFlatten)
-	
+				   inTextColor)
+  
+  (set! old-fg (car (gimp-palette-get-foreground)))
   (set! theImage inImage)
   (set! theLayer inLayer)
   (set! theFile (fopen inFile))
-
+  
   (set! otherLayers (cadr (gimp-image-get-layers theImage)))
   (set! nLayers (car (gimp-image-get-layers theImage)))
   (set! n nLayers)
-  (if (= inFlatten TRUE)
-      (while (> n 0) (set! n (- n 1)) (gimp-layer-set-visible (aref otherLayers n) FALSE) )
-      ()
-  )
-
-
+  
   (gimp-palette-set-foreground inTextColor)
   (gimp-selection-none theImage)
   (set! theData ())
@@ -128,61 +116,54 @@
 					(if (= allspaces TRUE)
 					    (set! theIndent (+ theIndent 8))
 					    ())
-				)
+					)
 				(	(equal? theChar " ")
 					(if (= allspaces TRUE)
 					    (set! theIndent (+ theIndent 1))
 					    ())
-				)
+					)
 				(TRUE (set! allspaces FALSE))
-			)
-			(set! theLine (string-append theLine theChar))
-		)
-		(if 	(= allspaces TRUE)
-			(set! theLine "")
-			()
-		)
-		(if 	(and 	(equal? () theChar)
-				(equal? "" theLine)
-			)
-			()
-			(begin 	(set! theData (cons theLine theData))
-				(set! theIndentList
-				      (cons theIndent theIndentList))
 				)
+			(set! theLine (string-append theLine theChar))
+			)
+	 (if 	(= allspaces TRUE)
+		(set! theLine "")
+		()
+		)
+	 (if 	(and 	(equal? () theChar)
+			(equal? "" theLine)
+			)
+		()
+		(begin 	(set! theData (cons theLine theData))
+			(set! theIndentList
+			      (cons theIndent theIndentList))
 			)
 		)
-
+	 )
+  
   (set! theText (car (gimp-text-fontname theImage
-				-1
-				0
-				0
-				"X"
-				0
-				TRUE
-				inFontSize
-				PIXELS
-				inFont)))
- 	(set! theCharWidth (car (gimp-drawable-width  theText) ))
-	(gimp-edit-cut theText)
-
-	(set! theImageHeight 0)
-	(set! theImageWidth 0)
-	(cjg-add-text (reverse theData)
-		      (reverse theIndentList)
-		      inFont
-		      inFontSize)
-  	(if (= inFlatten TRUE)
-		(gimp-image-merge-visible-layers theImage 0)
-      		()
-  	)
-  	(set! n nLayers)
-  	(if (= inFlatten TRUE)
-      		(while (> n 0) (set! n (- n 1)) (gimp-layer-set-visible (aref otherLayers n) TRUE) )
-      		()
-  	)
-	(gimp-displays-flush)
-)
+					 -1
+					 0
+					 0
+					 "X"
+					 0
+					 TRUE
+					 inFontSize
+					 PIXELS
+					 inFont)))
+  (set! theCharWidth (car (gimp-drawable-width  theText) ))
+  (gimp-edit-cut theText)
+  
+  (set! theImageHeight 0)
+  (set! theImageWidth 0)
+  (cjg-add-text (reverse theData)
+		(reverse theIndentList)
+		inFont
+		inFontSize)
+  (set! n nLayers)
+  (gimp-palette-set-foreground old-fg)
+  (gimp-displays-flush)
+  )
 
 (define (cjg-add-text inData inIndentList inFont inFontSize)
   (if 	(equal? () inData)
@@ -192,15 +173,16 @@
 		()
 		(begin
 		  (set! theText (car (gimp-text-fontname theImage
-						-1
-						0
-						0
-						(string-append " " theLine)
-						0
-						TRUE
-						inFontSize
-						PIXELS
-						inFont)))
+							 -1
+							 0
+							 0
+							 (string-append
+							  " " theLine)
+							 0
+							 TRUE
+							 inFontSize
+							 PIXELS
+							 inFont)))
 		  (set! theLineHeight (car (gimp-drawable-height  theText) ) )
 		  (gimp-layer-set-offsets theText
 					  (* theCharWidth theIndent)
@@ -213,21 +195,21 @@
 		  (if (= (car (gimp-layer-is-floating-sel theText)) TRUE)
                       (gimp-floating-sel-anchor theText)
 		      ()
-                  )
+		      )
                   (gimp-layer-set-name theText theLine)
 		  )
 		)
 	  (set! theImageHeight
 		(+ theImageHeight inFontSize))
 	  (cjg-add-text (cdr inData) (cdr inIndentList) inFont inFontSize)))
-)
+  )
 
 ; Register the function with the GIMP:
 
 (script-fu-register
  "script-fu-asc-2-img"
  "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
- "foo"
+ "Create a new image containing text from a simple text file"
  "Chris Gutteridge: cjg@ecs.soton.ac.uk"
  "8th April 1998"
  "Chris Gutteridge / ECS @ University of Southampton, England"
@@ -239,7 +221,6 @@
  SF-TOGGLE "Transparent BG?" FALSE
  SF-COLOR "Background Color"      '(255 255 255)
  SF-ADJUSTMENT "Buffer amount (% height of text)" '(35 0 100 1 10 0 0)
- SF-TOGGLE "Flatten Image?" TRUE
 )
 
 (script-fu-register
@@ -256,5 +237,4 @@
  SF-FONT "Font"       "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
  SF-ADJUSTMENT "Font Size (pixels)" '(45 2 1000 1 10 0 1)
  SF-COLOR "Text Color"      '(0 0 0)
- SF-TOGGLE "Flatten Image?" TRUE
 )

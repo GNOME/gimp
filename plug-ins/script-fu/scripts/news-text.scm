@@ -19,7 +19,7 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
-(define (script-fu-newsprint-text string font font-size cell-size density)
+(define (script-fu-newsprint-text string font font-size cell-size density text-color bg-color)
   (let* ((text-ext (gimp-text-get-extents-fontname string font-size PIXELS font))
 	 (wid (+ (car text-ext) 20))
 	 (hi  (+ (nth 1 text-ext) 20))
@@ -28,15 +28,18 @@
 	 (text-layer (car (gimp-layer-new img wid hi  RGBA_IMAGE "Text layer" 100 NORMAL)))
 	 (text-mask 0)
 	 (grey (/ (* density 255) 100))
+	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img text-layer -1)
 
+    (gimp-palette-set-background bg-color)
     (gimp-edit-clear bg-layer)
     (gimp-edit-clear text-layer)
 
+    (gimp-palette-set-foreground text-color)
     (gimp-floating-sel-anchor (car (gimp-text-fontname img text-layer 10 10 string 0 TRUE font-size PIXELS font)))
 
     (set! text-mask (car (gimp-layer-create-mask text-layer ALPHA-MASK)))
@@ -44,13 +47,14 @@
 
     (gimp-selection-layer-alpha text-layer)
     (gimp-palette-set-background (list grey grey grey))
-    (gimp-edit-fill text-mask)
+    (gimp-edit-fill text-mask BG-IMAGE-FILL)
 
     (plug-in-newsprint 1 img text-mask cell-size 0 0 45.0 3 45.0 0 45.0 0 45.0 0 3)
 
     (gimp-image-remove-layer-mask img text-layer APPLY)
 ;    (gimp-selection-clear img)
 
+    (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)
 
     (gimp-image-undo-enable img)
@@ -67,4 +71,6 @@
 		    SF-FONT "Font" "-*-Helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
 		    SF-VALUE "Cell size (in pixels)" "7"
-		    SF-ADJUSTMENT "Density (%)" '(60 0 100 1 10 0 0))
+		    SF-ADJUSTMENT "Density (%)" '(60 0 100 1 10 0 0)
+                    SF-COLOR "Text Color" '(0 0 0)
+		    SF-COLOR "Background Color" '(255 255 255))

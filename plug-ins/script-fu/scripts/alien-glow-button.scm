@@ -93,7 +93,7 @@
     (gimp-image-add-layer img bg-layer -1)
     (gimp-palette-set-foreground '(0 0 0))
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     (gimp-image-add-layer img glow-layer -1)
 
     ; Create text layer
@@ -107,8 +107,8 @@
     (gimp-blend button-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 0 0 img-height img-width)
     (gimp-edit-clear glow-layer)
     (gimp-rect-select img (/ glow-radius 4) (/ glow-radius 4) (- img-width (/ glow-radius 2)) (- img-height (/ glow-radius 2)) REPLACE FALSE 0 )
-    (gimp-palette-set-background glow-color)
-    (gimp-edit-fill glow-layer)
+    (gimp-palette-set-foreground glow-color)
+    (gimp-edit-fill glow-layer FG-IMAGE-FILL)
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img glow-layer glow-radius TRUE TRUE)
     (gimp-palette-set-foreground text-color)

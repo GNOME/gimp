@@ -19,7 +19,7 @@
 ;  by Brian McFee <keebler@wco.com>
 ;  Create cool glossy bevelly text
 
-(define (script-fu-gradient-bevel-logo text size font bevel-height bevel-width)
+(define (script-fu-gradient-bevel-logo text size font bevel-height bevel-width bg-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
          (border (/ size 4))
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
@@ -37,18 +37,19 @@
     (gimp-image-add-layer img blur-layer 1)
 
     (gimp-selection-all img)
-    (gimp-edit-fill bg-layer)
+    (gimp-palette-set-background bg-color)
+    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     (gimp-selection-none img)
 
     (gimp-layer-set-preserve-trans blur-layer TRUE)
     (gimp-palette-set-background '(255 255 255))
     (gimp-selection-all img)
-    (gimp-edit-fill blur-layer)
+    (gimp-edit-fill blur-layer BG-IMAGE-FILL)
     (gimp-edit-clear blur-layer)
     (gimp-selection-none img)
     (gimp-layer-set-preserve-trans blur-layer FALSE)
     (gimp-selection-layer-alpha text-layer)
-    (gimp-edit-fill blur-layer)
+    (gimp-edit-fill blur-layer BG-IMAGE-FILL)
     (plug-in-gauss-rle 1 img blur-layer bevel-width 1 1)
     (gimp-selection-none img)
     (gimp-palette-set-background '(127 127 127))
@@ -81,4 +82,5 @@
 		    SF-ADJUSTMENT "Font Size (pixels)" '(90 2 1000 1 10 0 1)
 		    SF-FONT "Font" "-*-futura_poster-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-VALUE "Bevel Height (sharpness)" "40"
-		    SF-VALUE "Bevel Width" "2.5")
+		    SF-VALUE "Bevel Width" "2.5"
+		    SF-COLOR "Background Color" '(255 255 255))

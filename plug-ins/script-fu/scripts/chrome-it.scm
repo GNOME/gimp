@@ -106,8 +106,8 @@
 
     (gimp-palette-set-background '(255 255 255))
     (gimp-selection-none img)
-    (gimp-edit-fill layer2)
-    (gimp-edit-fill layer3)
+    (gimp-edit-fill layer2 BG-IMAGE-FILL)
+    (gimp-edit-fill layer3 BG-IMAGE-FILL)
     (gimp-edit-clear shadow)
 
     (gimp-layer-set-visible bg-layer FALSE)
@@ -117,9 +117,9 @@
     (gimp-palette-set-background '(0 0 0))
     (gimp-selection-translate img offx1 offy1)
     (gimp-selection-feather img feather)
-    (gimp-edit-fill layer2)
+    (gimp-edit-fill layer2 BG-IMAGE-FILL)
     (gimp-selection-translate img (* 2 offx2) (* 2 offy2))
-    (gimp-edit-fill layer3)
+    (gimp-edit-fill layer3 BG-IMAGE-FILL)
     (gimp-selection-none img)
     (set! layer2 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (gimp-invert layer2)
@@ -137,7 +137,7 @@
     (gimp-image-add-layer-mask img layer1 layer-mask)
     (gimp-selection-load mask)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill layer-mask)
+    (gimp-edit-fill layer-mask BG-IMAGE-FILL)
 
     (set! layer2 (car (gimp-layer-copy layer1 TRUE)))
     (gimp-image-add-layer img layer2 0)
@@ -148,7 +148,7 @@
     (gimp-palette-set-background '(0 0 0))
     (gimp-selection-feather img (* feather 1.5))
     (gimp-selection-translate img (* 2.5 offx1) (* 2.5 offy1))
-    (gimp-edit-fill shadow)
+    (gimp-edit-fill shadow BG-IMAGE-FILL)
 
     (gimp-selection-all img)
     (gimp-patterns-set-pattern "Marble #1")
