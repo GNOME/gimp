@@ -1,3 +1,8 @@
+2003-05-18  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/common/psd_save.c: Translated Spanish comments to
+	English and globally cleaned-up to ease further manipulation.
+
 2003-05-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/vectors/gimpbezierstroke.[ch]
