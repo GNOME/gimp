@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-27 12:08+0200\n"
-"PO-Revision-Date: 2003-08-07 02:52+0200\n"
+"POT-Creation-Date: 2003-08-29 20:03+0200\n"
+"PO-Revision-Date: 2003-08-30 16:31+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1174,7 +1174,7 @@ msgstr "Špatná barevná mapa"
 #: plug-ins/common/tiff.c:447 plug-ins/common/xbm.c:734
 #: plug-ins/common/xpm.c:342 plug-ins/common/xwd.c:432
 #: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:464 plug-ins/sgi/sgi.c:322
-#: plug-ins/xjt/xjt.c:3355
+#: plug-ins/xjt/xjt.c:3339
 #, c-format
 msgid "Opening '%s'..."
 msgstr "Otvírám '%s'..."
@@ -1208,13 +1208,14 @@ msgstr ""
 #: plug-ins/common/pcx.c:329 plug-ins/common/pcx.c:335
 #: plug-ins/common/pix.c:373 plug-ins/common/png.c:617
 #: plug-ins/common/pnm.c:490 plug-ins/common/psd.c:2005
-#: plug-ins/common/smooth_palette.c:253 plug-ins/common/sunras.c:931
-#: plug-ins/common/tga.c:925 plug-ins/common/tiff.c:675
-#: plug-ins/common/tile.c:278 plug-ins/common/winclipboard.c:556
-#: plug-ins/common/wmf.c:2141 plug-ins/common/xbm.c:873
-#: plug-ins/faxg3/faxg3.c:462 plug-ins/fits/fits.c:517
-#: plug-ins/gfig/gfig.c:2664 plug-ins/gfig/gfig.c:3032 plug-ins/sgi/sgi.c:367
-#: plug-ins/twain/twain.c:744 plug-ins/winsnap/winsnap.c:1238
+#: plug-ins/common/screenshot.c:346 plug-ins/common/smooth_palette.c:253
+#: plug-ins/common/sunras.c:931 plug-ins/common/tga.c:925
+#: plug-ins/common/tiff.c:675 plug-ins/common/tile.c:278
+#: plug-ins/common/winclipboard.c:556 plug-ins/common/wmf.c:2141
+#: plug-ins/common/xbm.c:873 plug-ins/faxg3/faxg3.c:462
+#: plug-ins/fits/fits.c:517 plug-ins/gfig/gfig.c:2664
+#: plug-ins/gfig/gfig.c:3032 plug-ins/sgi/sgi.c:367 plug-ins/twain/twain.c:744
+#: plug-ins/winsnap/winsnap.c:1238
 msgid "Background"
 msgstr "Pozadí"
 
@@ -1233,7 +1234,7 @@ msgstr "Nemohu pracovat s neznámými typy obrázku nebo s alfa obrázky"
 #: plug-ins/common/sunras.c:525 plug-ins/common/tga.c:1031
 #: plug-ins/common/tiff.c:1524 plug-ins/common/xbm.c:1007
 #: plug-ins/common/xpm.c:615 plug-ins/common/xwd.c:534
-#: plug-ins/gfli/gfli.c:680 plug-ins/sgi/sgi.c:535 plug-ins/xjt/xjt.c:1725
+#: plug-ins/gfli/gfli.c:680 plug-ins/sgi/sgi.c:535 plug-ins/xjt/xjt.c:1717
 #, c-format
 msgid "Saving '%s'..."
 msgstr "Ukládám '%s' ..."
@@ -1992,7 +1993,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/waves.c:359 plug-ins/common/whirlpinch.c:695
 #: plug-ins/common/wind.c:912 plug-ins/common/xpm.c:784
 #: plug-ins/maze/maze_face.c:205 plug-ins/mosaic/mosaic.c:672
-#: plug-ins/xjt/xjt.c:878
+#: plug-ins/xjt/xjt.c:874
 msgid "Parameter Settings"
 msgstr "Nastavení parametrů"
 
@@ -2071,9 +2072,8 @@ msgid "_Grid Size:"
 msgstr "Velikost _mříže:"
 
 #: plug-ins/common/animationplay.c:241
-#, fuzzy
 msgid "<Image>/Filters/Animation/_Playback..."
-msgstr "<Image>/Filtry/Animace/_Přehrát animaci..."
+msgstr "<Image>/Filtry/Animace/_Přehrát..."
 
 #: plug-ins/common/animationplay.c:544
 msgid "Animation Playback: "
@@ -2102,24 +2102,20 @@ msgid "Frame %d of %d"
 msgstr "Políčko %d z %d"
 
 #: plug-ins/common/animoptimize.c:176
-#, fuzzy
 msgid "<Image>/Filters/Animation/_Optimize"
-msgstr "<Image>/Filtry/Animace/_Optimalizovat animaci"
+msgstr "<Image>/Filtry/Animace/_Optimalizovat"
 
 #: plug-ins/common/animoptimize.c:193
-#, fuzzy
 msgid "<Image>/Filters/Animation/_UnOptimize"
-msgstr "<Image>/Filtry/Animace/_Deoptimalizovat animaci"
+msgstr "<Image>/Filtry/Animace/_Deoptimalizovat"
 
 #: plug-ins/common/animoptimize.c:208
-#, fuzzy
 msgid "<Image>/Filters/Animation/_Remove Backdrop"
-msgstr "<Image>/Filtry/Animace/Animace: Od_stranit pozadí"
+msgstr "<Image>/Filtry/Animace/_Odstranit pozadí"
 
 #: plug-ins/common/animoptimize.c:224
-#, fuzzy
 msgid "<Image>/Filters/Animation/_Find Backdrop"
-msgstr "<Image>/Filtry/Animace/Animace: _Hledat pozadí"
+msgstr "<Image>/Filtry/Animace/_Hledat pozadí"
 
 #: plug-ins/common/animoptimize.c:423
 msgid "UnOptimizing Animation..."
@@ -2239,12 +2235,11 @@ msgstr "<Image>/Filtry/Rozostření/_Rozostření..."
 #.
 #: plug-ins/common/blur.c:315 plug-ins/common/unsharp.c:259
 msgid "Blurring..."
-msgstr "Rozostřuje se..."
+msgstr "Rozostřuji..."
 
 #: plug-ins/common/blur.c:590
-#, fuzzy
 msgid "Blur"
-msgstr "Popis:"
+msgstr "Rozostřit"
 
 #: plug-ins/common/blur.c:627 plug-ins/common/randomize.c:737
 #: plug-ins/common/snoise.c:539
@@ -2383,62 +2378,61 @@ msgid "Auto-Stretching Contrast..."
 msgstr "Automatické roztahování kontrastu..."
 
 #: plug-ins/common/ccanalyze.c:189
-#, fuzzy
 msgid "<Image>/Filters/Colors/Colorcube A_nalysis..."
-msgstr "<Image>/Filtry/Barvy/_Kolorovat..."
+msgstr "<Image>/Filtry/Barvy/_Analýza barevné krychle..."
 
 #: plug-ins/common/ccanalyze.c:269
 msgid "Colorcube Analysis..."
-msgstr ""
+msgstr "Analýza barevné krychle..."
 
 #. set up the dialog
 #: plug-ins/common/ccanalyze.c:509
 msgid "Colorcube Analysis"
-msgstr ""
+msgstr "Analýza barevné krychle"
 
 #. set up frame
 #: plug-ins/common/ccanalyze.c:524
 msgid "Results"
-msgstr ""
+msgstr "Výsledky"
 
 #. output results
 #: plug-ins/common/ccanalyze.c:548
-#, fuzzy, c-format
+#, c-format
 msgid "Image dimensions: %dx%d"
-msgstr "Rozměry obrázku: %d × %d"
+msgstr "Rozměry obrázku: %d×%d"
 
 #: plug-ins/common/ccanalyze.c:549
 #, c-format
 msgid "Uncompressed size in bytes: %d"
-msgstr ""
+msgstr "Nekomprimovaná velikost v bajtech: %d"
 
 #: plug-ins/common/ccanalyze.c:552
 msgid "No colors (?)"
-msgstr ""
+msgstr "Žádné barvy (?)"
 
 #: plug-ins/common/ccanalyze.c:554
 msgid "Only one unique color"
-msgstr ""
+msgstr "Jen jedna jedinečná barva"
 
 #: plug-ins/common/ccanalyze.c:556
-#, fuzzy, c-format
+#, c-format
 msgid "Number of unique colors: %d"
-msgstr "Počet barev:"
+msgstr "Počet jedinečných barev: %d"
 
 #: plug-ins/common/ccanalyze.c:560
-#, fuzzy, c-format
+#, c-format
 msgid "Filename: %s"
-msgstr "Jméno souboru:"
+msgstr "Název souboru: %s"
 
 #: plug-ins/common/ccanalyze.c:564
 #, c-format
 msgid "Compressed size in bytes: %u"
-msgstr ""
+msgstr "Komprimovaná velikost v bajtech: %u"
 
 #: plug-ins/common/ccanalyze.c:565
 #, c-format
 msgid "Compression ratio (approx.): %d to 1"
-msgstr ""
+msgstr "Poměr komprese (přibližně): %d k 1"
 
 #: plug-ins/common/checkerboard.c:104
 msgid "<Image>/Filters/Render/Pattern/_Checkerboard..."
@@ -2826,7 +2820,6 @@ msgid "Cubistic Transformation"
 msgstr "Kubistická transformace"
 
 #: plug-ins/common/curve_bend.c:562
-#, fuzzy
 msgid "<Image>/Filters/Distorts/_Curve Bend..."
 msgstr "<Image>/Filtry/Zkreslení/_Zkřivit..."
 
@@ -2836,20 +2829,22 @@ msgstr ""
 "Zkřivení pracuje pouze s vrstvami (ale bylo voláno na kanál nebo masku)"
 
 #: plug-ins/common/curve_bend.c:812
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to write file '%s':\n"
 "%s"
 msgstr ""
-"Selhal zápis '%s':\n"
+"Nemohu zapsat soubor '%s':\n"
 "%s"
 
 #: plug-ins/common/curve_bend.c:864
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to open file '%s':\n"
 "%s"
-msgstr "Selhalo otevření souboru P-záře '%s': %s"
+msgstr ""
+"Nemohu otevřít soubor '%s':\n"
+"%s"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
@@ -2875,15 +2870,13 @@ msgstr "Volby"
 
 #. Rotate spinbutton
 #: plug-ins/common/curve_bend.c:1287
-#, fuzzy
 msgid "Rotat_e:"
-msgstr "R_otace:"
+msgstr "R_otovat:"
 
 #. The smoothing toggle
 #: plug-ins/common/curve_bend.c:1305
-#, fuzzy
 msgid "Smoo_thing"
-msgstr "Pl_ynulost"
+msgstr "_Vyhlazování"
 
 #. The antialiasing toggle
 #: plug-ins/common/curve_bend.c:1315 plug-ins/common/gqbist.c:860
@@ -2902,34 +2895,28 @@ msgid "Modify Curves"
 msgstr "Upravit křivky"
 
 #: plug-ins/common/curve_bend.c:1364
-#, fuzzy
 msgid "Curve for Border"
-msgstr "Křivka hrani_c: "
+msgstr "Křivka hranic"
 
 #: plug-ins/common/curve_bend.c:1369
-#, fuzzy
 msgid "_Upper"
-msgstr "Horní"
+msgstr "_Horní"
 
 #: plug-ins/common/curve_bend.c:1372
-#, fuzzy
 msgid "_Lower"
-msgstr "Dolní"
+msgstr "_Dolní"
 
 #: plug-ins/common/curve_bend.c:1383
-#, fuzzy
 msgid "Curve Type"
-msgstr "_Typ křivky: "
+msgstr "Typ křivky"
 
 #: plug-ins/common/curve_bend.c:1388
-#, fuzzy
 msgid "Smoot_h"
-msgstr "Plynulá"
+msgstr "_Plynulá"
 
 #: plug-ins/common/curve_bend.c:1391
-#, fuzzy
 msgid "_Free"
-msgstr "Volná"
+msgstr "_Volná"
 
 #. The Copy button
 #: plug-ins/common/curve_bend.c:1407
@@ -4541,11 +4528,11 @@ msgstr "Náhled obrázku"
 msgid "Preview (in image window, will modify image's undo history!)"
 msgstr "Náhled (v okně obrázku, změní historii zpětných úprav obrázku!)"
 
-#: plug-ins/common/jpeg.c:1734 plug-ins/xjt/xjt.c:911
+#: plug-ins/common/jpeg.c:1734 plug-ins/xjt/xjt.c:907
 msgid "Quality:"
 msgstr "Kvalita:"
 
-#: plug-ins/common/jpeg.c:1757 plug-ins/xjt/xjt.c:920
+#: plug-ins/common/jpeg.c:1757 plug-ins/xjt/xjt.c:916
 msgid "Smoothing:"
 msgstr "Vyhlazování:"
 
@@ -4557,7 +4544,7 @@ msgstr "Restartovací značky"
 msgid "Restart frequency (rows):"
 msgstr "Četnost restartovacích značek (řádky):"
 
-#: plug-ins/common/jpeg.c:1823 plug-ins/xjt/xjt.c:889
+#: plug-ins/common/jpeg.c:1823 plug-ins/xjt/xjt.c:885
 msgid "Optimize"
 msgstr "Optimalizovat"
 
@@ -5945,37 +5932,49 @@ msgstr "_Sytost:"
 msgid "_Value:"
 msgstr "_Jas:"
 
-#: plug-ins/common/screenshot.c:135
+#: plug-ins/common/screenshot.c:139
 msgid "<Toolbox>/File/Acquire/_Screen Shot..."
-msgstr "<Toolbox>/Soubor/Získat/_Snímek pracovní plochy..."
+msgstr "<Toolbox>/Soubor/Získat/_Snímek obrazovky..."
+
+#: plug-ins/common/screenshot.c:270
+msgid "Screen Shot: Error grabbing the pointer"
+msgstr "Snímek obrazovky: Chyba při zachytávání ukazatele"
+
+#: plug-ins/common/screenshot.c:361
+msgid "Loading Screen Shot..."
+msgstr "Načítám snímek obrazovky..."
+
+#: plug-ins/common/screenshot.c:436
+msgid "Screen Shot: Specified window not found"
+msgstr "Snímek obrazovky: Určené okno nenalezeno"
+
+#: plug-ins/common/screenshot.c:468
+msgid "Screen Shot: Error obtaining screenshot"
+msgstr "Snímek obrazovky: Chyba při získávání snímku obrazovky"
 
 #. main dialog
-#: plug-ins/common/screenshot.c:383
+#: plug-ins/common/screenshot.c:510
 msgid "Screen Shot"
 msgstr "Pracovní plocha"
 
 #. single window
-#: plug-ins/common/screenshot.c:406 plug-ins/winsnap/winsnap.c:906
+#: plug-ins/common/screenshot.c:533 plug-ins/winsnap/winsnap.c:906
 msgid "Grab"
 msgstr "Nabrat"
 
-#: plug-ins/common/screenshot.c:415
+#: plug-ins/common/screenshot.c:542
 msgid "_Single Window"
 msgstr "_Jedno okno"
 
-#: plug-ins/common/screenshot.c:432
-msgid "With _Decorations"
-msgstr "S _dekorací"
-
-#: plug-ins/common/screenshot.c:452
+#: plug-ins/common/screenshot.c:557
 msgid "_Whole Screen"
 msgstr "_Celou obrazovku"
 
-#: plug-ins/common/screenshot.c:471
+#: plug-ins/common/screenshot.c:576
 msgid "_after"
 msgstr "_po uplynutí"
 
-#: plug-ins/common/screenshot.c:484 plug-ins/winsnap/winsnap.c:1023
+#: plug-ins/common/screenshot.c:589 plug-ins/winsnap/winsnap.c:1023
 msgid "Seconds Delay"
 msgstr "prodlevy v sekundách"
 
@@ -6020,12 +6019,11 @@ msgstr "<Image>/Filtry/Vylepšení/_Doostřit..."
 #.
 #: plug-ins/common/sharpen.c:331
 msgid "Sharpening..."
-msgstr "Doostřuje se..."
+msgstr "Doostřuji..."
 
 #: plug-ins/common/sharpen.c:501
-#, fuzzy
 msgid "Sharpen"
-msgstr "Doostření - %s"
+msgstr "Doostřit"
 
 #: plug-ins/common/sharpen.c:602
 msgid "_Sharpness:"
@@ -9543,49 +9541,6 @@ msgid ""
 "influence"
 msgstr "Režim Voronoi bere v úvahu pouze vliv bodu nejbližšího vektor mv"
 
-#: plug-ins/helpbrowser/helpbrowser.c:329 plug-ins/imagemap/imap_main.c:585
-#: plug-ins/imagemap/imap_settings.c:167
-msgid "<Untitled>"
-msgstr "<Beze jména>"
-
-#: plug-ins/helpbrowser/helpbrowser.c:500
-msgid "Document Not Found"
-msgstr "Dokument nenalezen"
-
-#: plug-ins/helpbrowser/helpbrowser.c:502
-#, fuzzy
-msgid "Could not locate help document"
-msgstr "Nelze nalézt dokumentaci nápovědy"
-
-#: plug-ins/helpbrowser/helpbrowser.c:504
-msgid ""
-"The requested document could not be found in your GIMP help path as shown "
-"above. This means that the topic has not yet been written or your "
-"installation is not complete. Ensure that your installation is complete "
-"before reporting this error as a bug."
-msgstr ""
-"Požadovaný dokument nelze nalézt na cestě s nápovědou pro GIMP uvedené výše. "
-"To znamená, že toto téma nebylo ještě sepsáno, nebo vaše instalace není "
-"kompletní. Před nahlášením této chyby se ujistěte, že je vaše instalace "
-"kompletní."
-
-#: plug-ins/helpbrowser/helpbrowser.c:634
-msgid "GIMP Help Browser"
-msgstr "Prohlížeč GIMP nápovědy"
-
-#: plug-ins/helpbrowser/helpbrowser.c:893
-#, c-format
-msgid ""
-"GIMP Help Browser Error.\n"
-"\n"
-"Couldn't find GIMP_HELP_ROOT html directory.\n"
-"(%s)"
-msgstr ""
-"Chyba prohlížeče GIMP nápovědy.\n"
-"\n"
-"Nelze nalézt html adresář GIMP_HELP_ROOT.\n"
-"(%s)"
-
 #: plug-ins/ifscompose/ifscompose.c:369
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
 msgstr "<Image>/Filtry/Vyobrazení/Příroda/Ifs _kompozice..."
@@ -10138,6 +10093,10 @@ msgstr "_Náhled"
 #: plug-ins/imagemap/imap_main.c:128
 msgid "<Image>/Filters/Web/_ImageMap..."
 msgstr "<Image>/Filtry/Web/_Obrázková mapa..."
+
+#: plug-ins/imagemap/imap_main.c:585 plug-ins/imagemap/imap_settings.c:167
+msgid "<Untitled>"
+msgstr "<Beze jména>"
 
 #: plug-ins/imagemap/imap_main.c:737
 msgid "Some data has been changed!"
@@ -11499,82 +11458,113 @@ msgstr "<Toolbox>/Soubor/Získat/Snímek pracovní plochy..."
 msgid "No data captured"
 msgstr "Žádná data nebyla získána"
 
-#: plug-ins/xjt/xjt.c:730
+#: plug-ins/xjt/xjt.c:727
 #, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr "XJT soubor obsahuje neznámý režim vrstvy %d"
 
-#: plug-ins/xjt/xjt.c:767
+#: plug-ins/xjt/xjt.c:764
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr "Varování: nepodporovaný režim vrstvy %d uložen do XJT"
 
-#: plug-ins/xjt/xjt.c:783
+#: plug-ins/xjt/xjt.c:780
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr "XJT soubor obsahuje neznámý typ cesty %d"
 
-#: plug-ins/xjt/xjt.c:799
+#: plug-ins/xjt/xjt.c:796
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr "Varování: nepodporovaný typ cesty %d uložen do XJT"
 
-#: plug-ins/xjt/xjt.c:819
+#: plug-ins/xjt/xjt.c:815
 #, c-format
 msgid "XJT file contains unknown unittype %d"
 msgstr "XJT soubor obsahuje neznámý druh jednotek %d"
 
-#: plug-ins/xjt/xjt.c:840
+#: plug-ins/xjt/xjt.c:836
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr "Varování: nepodporovaný druh jednotek %d uložen do XJT"
 
-#: plug-ins/xjt/xjt.c:861
+#: plug-ins/xjt/xjt.c:857
 msgid "Save as XJT"
 msgstr "Zapsat jako XJT"
 
-#: plug-ins/xjt/xjt.c:899
+#: plug-ins/xjt/xjt.c:895
 msgid "Clear Transparent"
 msgstr "Vymazat průhledné"
 
-#: plug-ins/xjt/xjt.c:1304
+#: plug-ins/xjt/xjt.c:1299
 #, c-format
 msgid "Can't open (write): %s"
 msgstr "Nelze otevřít (zápis): %s"
 
-#: plug-ins/xjt/xjt.c:1716
+#: plug-ins/xjt/xjt.c:1708
 msgid "xjt: cannot operate on indexed color images"
 msgstr "xjt: neumí pracovat s indexovanými barevnými obrázky"
 
-#: plug-ins/xjt/xjt.c:1720
+#: plug-ins/xjt/xjt.c:1712
 msgid "xjt: cannot operate on unknown image types"
 msgstr "xjt: neumí pracovat s neznámými typy obrázku"
 
-#: plug-ins/xjt/xjt.c:1735 plug-ins/xjt/xjt.c:3365
+#: plug-ins/xjt/xjt.c:1727 plug-ins/xjt/xjt.c:3349
 #, c-format
 msgid "Can't create working dir: %s"
 msgstr "Nelze vytvořit pracovní adresář: %s"
 
-#: plug-ins/xjt/xjt.c:1744
+#: plug-ins/xjt/xjt.c:1736
 #, c-format
 msgid "Can't open: %s"
 msgstr "Nelze otevřít: %s"
 
 #. stat error (file does not exist)
-#: plug-ins/xjt/xjt.c:2569 plug-ins/xjt/xjt.c:2576
+#: plug-ins/xjt/xjt.c:2557 plug-ins/xjt/xjt.c:2564
 #, c-format
 msgid "Can't open (read): %s"
 msgstr "Nelze otevřít (čtení): %s"
 
-#: plug-ins/xjt/xjt.c:3228
+#: plug-ins/xjt/xjt.c:3218
 #, c-format
 msgid "Error: Can't read XJT propertyfile %s"
 msgstr "Chyba: Nelze načíst soubor %s XJT vlastností"
 
-#: plug-ins/xjt/xjt.c:3233
+#: plug-ins/xjt/xjt.c:3223
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Chyba: Soubor XJT vlastností %s je prázdný"
+
+#~ msgid "With _Decorations"
+#~ msgstr "S _dekorací"
+
+#~ msgid "Document Not Found"
+#~ msgstr "Dokument nenalezen"
+
+#~ msgid ""
+#~ "The requested document could not be found in your GIMP help path as shown "
+#~ "above. This means that the topic has not yet been written or your "
+#~ "installation is not complete. Ensure that your installation is complete "
+#~ "before reporting this error as a bug."
+#~ msgstr ""
+#~ "Požadovaný dokument nelze nalézt na cestě s nápovědou pro GIMP uvedené "
+#~ "výše. To znamená, že toto téma nebylo ještě sepsáno, nebo vaše instalace "
+#~ "není kompletní. Před nahlášením této chyby se ujistěte, že je vaše "
+#~ "instalace kompletní."
+
+#~ msgid "GIMP Help Browser"
+#~ msgstr "Prohlížeč GIMP nápovědy"
+
+#~ msgid ""
+#~ "GIMP Help Browser Error.\n"
+#~ "\n"
+#~ "Couldn't find GIMP_HELP_ROOT html directory.\n"
+#~ "(%s)"
+#~ msgstr ""
+#~ "Chyba prohlížeče GIMP nápovědy.\n"
+#~ "\n"
+#~ "Nelze nalézt html adresář GIMP_HELP_ROOT.\n"
+#~ "(%s)"
 
 #~ msgid "<Image>/Select/To Path"
 #~ msgstr "<Image>/Výběr/Do cesty"

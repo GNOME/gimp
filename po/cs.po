@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-27 12:08+0200\n"
-"PO-Revision-Date: 2003-08-08 20:42+0200\n"
+"POT-Creation-Date: 2003-08-29 20:00+0200\n"
+"PO-Revision-Date: 2003-08-30 16:23+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -573,7 +573,7 @@ msgstr "Uložit pozice a velikosti hlavních dialogů při ukončení GIMP."
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
-msgstr ""
+msgstr "Je-li povoleno, budou všechny nástroje kreslení zobrazovat náhled obrysu aktuální stopy."
 
 #: app/config/gimprc-blurbs.h:254
 msgid ""
@@ -1108,19 +1108,19 @@ msgstr "Svázaná položka"
 msgid "Drawable Visibility"
 msgstr "Viditelnost drawable"
 
-#: app/core/core-enums.c:507 app/core/gimplayer.c:428 app/core/gimplayer.c:430
+#: app/core/core-enums.c:507 app/core/gimplayer.c:528 app/core/gimplayer.c:530
 #: app/gui/layers-commands.c:1008 app/gui/resize-dialog.c:194
 #: app/pdb/layer_cmds.c:405
 msgid "Scale Layer"
 msgstr "Velikost vrstvy"
 
 #: app/core/core-enums.c:508 app/core/gimpimage-crop.c:118
-#: app/core/gimplayer.c:466 app/core/gimplayer.c:468
+#: app/core/gimplayer.c:566 app/core/gimplayer.c:568
 #: app/gui/layers-commands.c:1102 app/pdb/layer_cmds.c:500
 msgid "Resize Layer"
 msgstr "Změnit velikost vrstvy"
 
-#: app/core/core-enums.c:509 app/core/gimplayer.c:1079
+#: app/core/core-enums.c:509 app/core/gimplayer.c:1088
 msgid "Apply Layer Mask"
 msgstr "Použít masku vrstvy"
 
@@ -1164,7 +1164,7 @@ msgstr "Transformace"
 msgid "Paint"
 msgstr "Kreslení"
 
-#: app/core/core-enums.c:519 app/core/core-enums.c:559 app/core/gimpitem.c:791
+#: app/core/core-enums.c:519 app/core/core-enums.c:559 app/core/gimpitem.c:832
 msgid "Attach Parasite"
 msgstr "Připojení parazita"
 
@@ -1211,11 +1211,11 @@ msgstr "Nastavit spojení položky"
 
 #: app/core/core-enums.c:536 app/gui/layers-commands.c:612
 #: app/gui/layers-commands.c:644 app/gui/layers-commands.c:676
-#: app/widgets/gimpdrawabletreeview.c:333 app/widgets/gimplayertreeview.c:198
+#: app/widgets/gimpdrawabletreeview.c:333 app/widgets/gimplayertreeview.c:197
 msgid "New Layer"
 msgstr "Nová vrstva"
 
-#: app/core/core-enums.c:537 app/widgets/gimplayertreeview.c:204
+#: app/core/core-enums.c:537 app/widgets/gimplayertreeview.c:203
 msgid "Delete Layer"
 msgstr "Smazat vrstvu"
 
@@ -1223,7 +1223,7 @@ msgstr "Smazat vrstvu"
 msgid "Layer Mod"
 msgstr "Změna vrstvy"
 
-#: app/core/core-enums.c:539 app/core/gimplayer.c:876
+#: app/core/core-enums.c:539 app/core/gimplayer.c:885
 #: app/gui/layers-commands.c:926
 msgid "Add Layer Mask"
 msgstr "Přidat masku vrstvy"
@@ -1409,7 +1409,7 @@ msgstr "Neplatný řetězec v kódování UTF-8 v souboru se stopou '%s'."
 
 #: app/core/gimpbrush.c:609 app/core/gimpbrushpipe.c:376
 #: app/core/gimpcontext.c:1305 app/core/gimpgradient.c:386
-#: app/core/gimpitem.c:385 app/core/gimppalette.c:441
+#: app/core/gimpitem.c:411 app/core/gimppalette.c:441
 #: app/core/gimppattern.c:413 app/gui/templates-commands.c:127
 #: app/tools/gimpvectortool.c:367
 msgid "Unnamed"
@@ -1543,11 +1543,11 @@ msgstr ""
 "'%s'"
 
 #: app/core/gimpdatafactory.c:385 app/core/gimpdatafactory.c:388
-#: app/core/gimpitem.c:268 app/core/gimpitem.c:271
+#: app/core/gimpitem.c:273 app/core/gimpitem.c:276
 msgid "copy"
 msgstr "kopie"
 
-#: app/core/gimpdatafactory.c:397 app/core/gimpitem.c:280
+#: app/core/gimpdatafactory.c:397 app/core/gimpitem.c:285
 #, c-format
 msgid "%s copy"
 msgstr "%s kopie"
@@ -1619,7 +1619,7 @@ msgstr "Transformace"
 msgid "Paste Transform"
 msgstr "Vložit transformaci"
 
-#: app/core/gimpdrawable-transform.c:1102 app/core/gimplayer.c:560
+#: app/core/gimpdrawable-transform.c:1102 app/core/gimplayer.c:660
 msgid "Transform Layer"
 msgstr "Transformovat vrstvu"
 
@@ -1732,21 +1732,20 @@ msgid "Ellipse Select"
 msgstr "Výběr elipsy"
 
 #. no undo
-#: app/core/gimpimage-mask-select.c:339
-#, fuzzy
+#: app/core/gimpimage-mask-select.c:342
 msgid "Alpha to Selection"
-msgstr "/Alfa do výběru"
+msgstr "Alfa do výběru"
 
-#: app/core/gimpimage-mask-select.c:376
-#, fuzzy, c-format
+#: app/core/gimpimage-mask-select.c:379
+#, c-format
 msgid "%s Channel to Selection"
-msgstr "Kanál do výběru"
+msgstr "Kanál %s do výběru"
 
-#: app/core/gimpimage-mask-select.c:426 app/tools/gimpfuzzyselecttool.c:100
+#: app/core/gimpimage-mask-select.c:429 app/tools/gimpfuzzyselecttool.c:100
 msgid "Fuzzy Select"
 msgstr "Přibližný výběr"
 
-#: app/core/gimpimage-mask-select.c:477
+#: app/core/gimpimage-mask-select.c:480
 msgid "Select by Color"
 msgstr "Výběr dle barvy"
 
@@ -1894,7 +1893,7 @@ msgstr "Odstranit vrstvu"
 msgid "Layer cannot be raised higher."
 msgstr "Vrstva nemůže být ještě výš."
 
-#: app/core/gimpimage.c:2682 app/widgets/gimplayertreeview.c:206
+#: app/core/gimpimage.c:2682 app/widgets/gimplayertreeview.c:205
 msgid "Raise Layer"
 msgstr "Vrstvu výš"
 
@@ -1902,7 +1901,7 @@ msgstr "Vrstvu výš"
 msgid "Layer cannot be lowered more."
 msgstr "Vrstva nemůže být ještě níž."
 
-#: app/core/gimpimage.c:2707 app/widgets/gimplayertreeview.c:210
+#: app/core/gimpimage.c:2707 app/widgets/gimplayertreeview.c:209
 msgid "Lower Layer"
 msgstr "Vrstvu níž"
 
@@ -1914,7 +1913,7 @@ msgstr "Vrstva je již nahoře."
 msgid "Cannot raise a layer without alpha."
 msgstr "Nelze posunout výš vrstvu bez alfy."
 
-#: app/core/gimpimage.c:2735 app/widgets/gimplayertreeview.c:208
+#: app/core/gimpimage.c:2735 app/widgets/gimplayertreeview.c:207
 msgid "Raise Layer to Top"
 msgstr "Vrstvu nahoru"
 
@@ -1922,7 +1921,7 @@ msgstr "Vrstvu nahoru"
 msgid "Layer is already on the bottom."
 msgstr "Vrstva je již vespod."
 
-#: app/core/gimpimage.c:2760 app/widgets/gimplayertreeview.c:212
+#: app/core/gimpimage.c:2760 app/widgets/gimplayertreeview.c:211
 msgid "Lower Layer to Bottom"
 msgstr "Vrstvu dospod"
 
@@ -1971,7 +1970,7 @@ msgstr "Odstranit cestu"
 msgid "Path cannot be raised higher."
 msgstr "Cesta nemůže být ještě výš."
 
-#: app/core/gimpimage.c:3140 app/widgets/gimpvectorstreeview.c:132
+#: app/core/gimpimage.c:3140 app/widgets/gimpvectorstreeview.c:131
 msgid "Raise Path"
 msgstr "Zvýšit cestu"
 
@@ -1979,7 +1978,7 @@ msgstr "Zvýšit cestu"
 msgid "Path cannot be lowered more."
 msgstr "Cesta nemůže být ještě níž."
 
-#: app/core/gimpimage.c:3161 app/widgets/gimpvectorstreeview.c:136
+#: app/core/gimpimage.c:3161 app/widgets/gimpvectorstreeview.c:135
 msgid "Lower Path"
 msgstr "Snížit cestu"
 
@@ -2041,11 +2040,11 @@ msgstr "Nepodařilo se otevřít soubor s miniaturou '%s': %s"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Nelze vytvořit adresář s miniaturami '%s'."
 
-#: app/core/gimpitem.c:801
+#: app/core/gimpitem.c:842
 msgid "Attach Parasite to Item"
 msgstr "Připojení parazita k položce"
 
-#: app/core/gimpitem.c:840 app/core/gimpitem.c:847
+#: app/core/gimpitem.c:881 app/core/gimpitem.c:888
 msgid "Remove Parasite from Item"
 msgstr "Odstranění parazita z položky"
 
@@ -2066,53 +2065,54 @@ msgstr ""
 "Nelze vytvořit novou vrstvu z plovoucího výběru\n"
 "protože patří do masky výběru nebo kanálu."
 
-#: app/core/gimplayer.c:218 app/pdb/internal_procs.c:131
+#: app/core/gimplayer.c:222 app/pdb/internal_procs.c:131
 msgid "Layer"
 msgstr "Vrstva"
 
-#: app/core/gimplayer.c:219
+#: app/core/gimplayer.c:223
 msgid "Rename Layer"
 msgstr "Přejmenovat vrstvu"
 
-#: app/core/gimplayer.c:387 app/pdb/layer_cmds.c:638 app/pdb/layer_cmds.c:769
+#: app/core/gimplayer.c:487 app/pdb/layer_cmds.c:638 app/pdb/layer_cmds.c:769
 #: app/tools/gimpeditselectiontool.c:244 app/tools/gimpeditselectiontool.c:996
 msgid "Move Layer"
 msgstr "Přemístit vrstvu"
 
-#: app/core/gimplayer.c:498 app/gui/drawable-commands.c:157
+#: app/core/gimplayer.c:598 app/gui/drawable-commands.c:157
 msgid "Flip Layer"
 msgstr "Překlopit vrstvu"
 
-#: app/core/gimplayer.c:527 app/gui/drawable-commands.c:191
+#: app/core/gimplayer.c:627 app/gui/drawable-commands.c:191
 msgid "Rotate Layer"
 msgstr "Rotovat vrstvu"
 
-#: app/core/gimplayer.c:836
+#: app/core/gimplayer.c:845
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Nelze přidat masku vrstvy do vrstvy, která není součástí obrázku."
 
-#: app/core/gimplayer.c:843
+#: app/core/gimplayer.c:852
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nelze přidat masku vrstvy, protože vrstva již masku má."
 
-#: app/core/gimplayer.c:850
+#: app/core/gimplayer.c:859
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Nelze přidat masku do vrstvy bez alfa kanálu."
 
-#: app/core/gimplayer.c:860
+#: app/core/gimplayer.c:869
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nelze přidat masku vrstvy jiných rozměrů, než má daná vrstva."
 
-#: app/core/gimplayer.c:903
+#: app/core/gimplayer.c:912
 #, c-format
 msgid "%s mask"
 msgstr "%s maska"
 
-#: app/core/gimplayer.c:1176
+#. Push the layer on the undo stack
+#: app/core/gimplayer.c:1188
 msgid "Add Alpha Channel"
 msgstr "Přidat alfa kanál"
 
-#: app/core/gimplayer.c:1208
+#: app/core/gimplayer.c:1218
 msgid "Layer to Image Size"
 msgstr "Velikost vrstvy dle obrázku"
 
@@ -2355,11 +2355,11 @@ msgstr ""
 "V %s byly provedeny změny.\n"
 "Přesto zavřít?"
 
-#: app/display/gimpdisplayshell-dnd.c:65
+#: app/display/gimpdisplayshell-dnd.c:77
 msgid "Drop New Layer"
 msgstr "Pustit novou vrstvu"
 
-#: app/display/gimpdisplayshell-dnd.c:100
+#: app/display/gimpdisplayshell-dnd.c:120
 msgid "Drop New Path"
 msgstr "Pustit novou cestu"
 
@@ -2518,12 +2518,12 @@ msgid "Visit http://www.gimp.org/ for more information"
 msgstr "Více se dozvíte, navštívíte-li http://www.gimp.org/"
 
 #: app/gui/brush-select.c:183 app/tools/gimppaintoptions-gui.c:117
-#: app/widgets/gimplayertreeview.c:286
+#: app/widgets/gimplayertreeview.c:285
 msgid "Opacity:"
 msgstr "Krytí:"
 
 #: app/gui/brush-select.c:200 app/tools/gimppaintoptions-gui.c:122
-#: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:279
+#: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:278
 msgid "Mode:"
 msgstr "Režim:"
 
@@ -2536,49 +2536,40 @@ msgstr ""
 "Příslušný zásuvný modul mohl havarovat."
 
 #: app/gui/brushes-menu.c:45
-#, fuzzy
 msgid "/_New Brush"
-msgstr "/Nová stopa"
+msgstr "/_Nová stopa"
 
 #: app/gui/brushes-menu.c:50
-#, fuzzy
 msgid "/D_uplicate Brush"
-msgstr "/Duplikovat stopu"
+msgstr "/_Duplikovat stopu"
 
 #: app/gui/brushes-menu.c:55
-#, fuzzy
 msgid "/_Edit Brush..."
-msgstr "/Úpravy stopy..."
+msgstr "/_Upravit stopu..."
 
 #: app/gui/brushes-menu.c:60
-#, fuzzy
 msgid "/_Delete Brush..."
-msgstr "/Smazat stopu..."
+msgstr "/_Odstranit stopu..."
 
 #: app/gui/brushes-menu.c:68
-#, fuzzy
 msgid "/_Refresh Brushes"
-msgstr "/Aktualizovat stopy"
+msgstr "/_Aktualizovat stopy"
 
 #: app/gui/buffers-menu.c:42
-#, fuzzy
 msgid "/_Paste Buffer"
-msgstr "/Vložit buffer"
+msgstr "/_Vložit buffer"
 
 #: app/gui/buffers-menu.c:47
-#, fuzzy
 msgid "/Paste Buffer _Into"
-msgstr "/Vložit buffer do"
+msgstr "/Vložit buffer _do"
 
 #: app/gui/buffers-menu.c:52
-#, fuzzy
 msgid "/Paste Buffer as _New"
-msgstr "/Vložit buffer jako nový"
+msgstr "/Vložit buffer jako _nový"
 
 #: app/gui/buffers-menu.c:57
-#, fuzzy
 msgid "/_Delete Buffer"
-msgstr "/Smazat buffer"
+msgstr "/_Odstranit buffer"
 
 #: app/gui/channels-commands.c:141
 #, c-format
@@ -2622,54 +2613,44 @@ msgid "Edit Channel Attributes"
 msgstr "Úpravy vlastností kanálu"
 
 #: app/gui/channels-menu.c:44
-#, fuzzy
 msgid "/_New Channel..."
-msgstr "/Nový kanál..."
+msgstr "/_Nový kanál..."
 
 #: app/gui/channels-menu.c:49
-#, fuzzy
 msgid "/_Raise Channel"
-msgstr "/Kanál výš"
+msgstr "/Kanál _výš"
 
 #: app/gui/channels-menu.c:54
-#, fuzzy
 msgid "/_Lower Channel"
-msgstr "/Kanál níž"
+msgstr "/Kanál _níž"
 
 #: app/gui/channels-menu.c:59
-#, fuzzy
 msgid "/D_uplicate Channel"
-msgstr "/Duplikovat kanál"
+msgstr "/_Duplikovat kanál"
 
 #: app/gui/channels-menu.c:64
-#, fuzzy
 msgid "/_Delete Channel"
-msgstr "/Smazat kanál"
+msgstr "/_Odstranit kanál"
 
 #: app/gui/channels-menu.c:72
-#, fuzzy
 msgid "/Channel to Sele_ction"
-msgstr "/Kanál do výběru"
+msgstr "/Kanál do _výběru"
 
 #: app/gui/channels-menu.c:77 app/gui/vectors-menu.c:77
-#, fuzzy
 msgid "/_Add to Selection"
-msgstr "/Přidat do výběru"
+msgstr "/_Přidat do výběru"
 
 #: app/gui/channels-menu.c:82 app/gui/vectors-menu.c:82
-#, fuzzy
 msgid "/_Subtract from Selection"
-msgstr "/Ubrat z výběru"
+msgstr "/_Ubrat z výběru"
 
 #: app/gui/channels-menu.c:87 app/gui/vectors-menu.c:87
-#, fuzzy
 msgid "/_Intersect with Selection"
-msgstr "/Průnik s výběrem"
+msgstr "/_Průnik s výběrem"
 
 #: app/gui/channels-menu.c:95
-#, fuzzy
 msgid "/_Edit Channel Attributes..."
-msgstr "/Úpravy vlastností kanálu..."
+msgstr "/_Upravit vlastnosti kanálu..."
 
 #: app/gui/color-notebook.c:410
 msgid "Current:"
@@ -2696,14 +2677,12 @@ msgid "Edit Indexed Image Palette Color"
 msgstr "Úpravy barvy palety indexovaného obrázku"
 
 #: app/gui/colormap-editor-menu.c:40
-#, fuzzy
 msgid "/_Add Color"
-msgstr "/Přidat barvu"
+msgstr "/_Přidat barvu"
 
 #: app/gui/colormap-editor-menu.c:45 app/gui/palette-editor-menu.c:44
-#, fuzzy
 msgid "/_Edit Color..."
-msgstr "/Úprava barvy..."
+msgstr "/_Upravit barvu..."
 
 #: app/gui/convert-dialog.c:129
 msgid "Indexed Color Conversion"
@@ -2961,243 +2940,196 @@ msgid "Palette Editor"
 msgstr "Editor palety"
 
 #: app/gui/dialogs-menu.c:61
-#, fuzzy
 msgid "/_Select Tab"
-msgstr "/Výběr odrážky"
+msgstr "/_Vybrat odrážku"
 
 #: app/gui/dialogs-menu.c:66
-#, fuzzy
 msgid "/Add Tab/Tool _Options..."
-msgstr "/Přidat odrážku/Volby nástrojů..."
+msgstr "/Přidat odrážku/_Volby nástrojů..."
 
 #: app/gui/dialogs-menu.c:68
-#, fuzzy
 msgid "/Add Tab/_Device Status..."
-msgstr "/Přidat odrážku/Stav zařízení..."
+msgstr "/Přidat odrážku/Stav _zařízení..."
 
 #: app/gui/dialogs-menu.c:73
-#, fuzzy
 msgid "/Add Tab/_Layers..."
-msgstr "/Přidat odrážku/Vrstvy..."
+msgstr "/Přidat odrážku/_Vrstvy..."
 
 #: app/gui/dialogs-menu.c:75
-#, fuzzy
 msgid "/Add Tab/_Channels..."
-msgstr "/Přidat odrážku/Kanály..."
+msgstr "/Přidat odrážku/_Kanály..."
 
 #: app/gui/dialogs-menu.c:77
-#, fuzzy
 msgid "/Add Tab/_Paths..."
-msgstr "/Přidat odrážku/Cesty..."
+msgstr "/Přidat odrážku/_Cesty..."
 
 #: app/gui/dialogs-menu.c:79
-#, fuzzy
 msgid "/Add Tab/_Indexed Palette..."
-msgstr "/Přidat odrážku/Indexovaná paleta..."
+msgstr "/Přidat odrážku/_Indexovaná paleta..."
 
 #: app/gui/dialogs-menu.c:81
-#, fuzzy
 msgid "/Add Tab/_Selection Editor..."
-msgstr "/Přidat odrážku/Editor výběru..."
+msgstr "/Přidat odrážku/Editor _výběru..."
 
 #: app/gui/dialogs-menu.c:83
-#, fuzzy
 msgid "/Add Tab/Na_vigation..."
-msgstr "/Přidat odrážku/Navigace..."
+msgstr "/Přidat odrážku/_Navigace..."
 
 #: app/gui/dialogs-menu.c:85
-#, fuzzy
 msgid "/Add Tab/_Undo History..."
-msgstr "/Přidat odrážku/Historie vracení..."
+msgstr "/Přidat odrážku/_Historie vracení..."
 
 #: app/gui/dialogs-menu.c:90
-#, fuzzy
 msgid "/Add Tab/Colo_rs..."
-msgstr "/Přidat odrážku/Barvy..."
+msgstr "/Přidat odrážku/_Barvy..."
 
 #: app/gui/dialogs-menu.c:92
-#, fuzzy
 msgid "/Add Tab/Brus_hes..."
-msgstr "/Přidat odrážku/Stopy..."
+msgstr "/Přidat odrážku/_Stopy..."
 
 #: app/gui/dialogs-menu.c:94
-#, fuzzy
 msgid "/Add Tab/P_atterns..."
-msgstr "/Přidat odrážku/Vzorky..."
+msgstr "/Přidat odrážku/Vz_orky..."
 
 #: app/gui/dialogs-menu.c:96
-#, fuzzy
 msgid "/Add Tab/_Gradients..."
-msgstr "/Přidat odrážku/Přechody..."
+msgstr "/Přidat odrážku/_Přechody..."
 
 #: app/gui/dialogs-menu.c:98
-#, fuzzy
 msgid "/Add Tab/Pal_ettes..."
-msgstr "/Přidat odrážku/Palety..."
+msgstr "/Přidat odrážku/Pa_lety..."
 
 #: app/gui/dialogs-menu.c:100
-#, fuzzy
 msgid "/Add Tab/_Fonts..."
-msgstr "/Přidat odrážku/Písma..."
+msgstr "/Přidat odrážku/_Písma..."
 
 #: app/gui/dialogs-menu.c:102
-#, fuzzy
 msgid "/Add Tab/_Buffers..."
-msgstr "/Přidat odrážku/Buffery..."
+msgstr "/Přidat odrážku/_Buffery..."
 
 #: app/gui/dialogs-menu.c:107
-#, fuzzy
 msgid "/Add Tab/I_mages..."
-msgstr "/Přidat odrážku/Obrázky..."
+msgstr "/Přidat odrážku/_Obrázky..."
 
 #: app/gui/dialogs-menu.c:109
-#, fuzzy
 msgid "/Add Tab/Document Histor_y..."
-msgstr "/Přidat odrážku/Historie dokumentu..."
+msgstr "/Přidat odrážku/H_istorie dokumentu..."
 
 #: app/gui/dialogs-menu.c:111
-#, fuzzy
 msgid "/Add Tab/_Templates..."
-msgstr "/Přidat odrážku/Šablony..."
+msgstr "/Přidat odrážku/_Šablony..."
 
 #: app/gui/dialogs-menu.c:113
-#, fuzzy
 msgid "/Add Tab/Error Co_nsole..."
-msgstr "/Přidat odrážku/Chybová konzola..."
+msgstr "/Přidat odrážku/Chybová _konzola..."
 
 #: app/gui/dialogs-menu.c:118
 msgid "/Add Tab/Tools..."
 msgstr "/Přidat odrážku/Nástroje..."
 
 #: app/gui/dialogs-menu.c:121
-#, fuzzy
 msgid "/_Remove Tab"
-msgstr "/Odstranit odrážku"
+msgstr "/_Odstranit odrážku"
 
 #: app/gui/dialogs-menu.c:131
-#, fuzzy
 msgid "/Preview Size/_Tiny"
-msgstr "/Velikost náhledu/Drobná"
+msgstr "/Velikost náhledu/_Drobná"
 
 #: app/gui/dialogs-menu.c:137
-#, fuzzy
 msgid "/Preview Size/E_xtra Small"
-msgstr "/Velikost náhledu/Velmi malá"
+msgstr "/Velikost náhledu/Velmi m_alá"
 
 #: app/gui/dialogs-menu.c:138
-#, fuzzy
 msgid "/Preview Size/_Small"
-msgstr "/Velikost náhledu/Malá"
+msgstr "/Velikost náhledu/_Malá"
 
 #: app/gui/dialogs-menu.c:139
-#, fuzzy
 msgid "/Preview Size/_Medium"
-msgstr "/Velikost náhledu/Střední"
+msgstr "/Velikost náhledu/_Střední"
 
 #: app/gui/dialogs-menu.c:140
-#, fuzzy
 msgid "/Preview Size/_Large"
-msgstr "/Velikost náhledu/Velká"
+msgstr "/Velikost náhledu/_Velká"
 
 #: app/gui/dialogs-menu.c:141
-#, fuzzy
 msgid "/Preview Size/Ex_tra Large"
-msgstr "/Velikost náhledu/Velmi velká"
+msgstr "/Velikost náhledu/Velmi v_elká"
 
 #: app/gui/dialogs-menu.c:142
-#, fuzzy
 msgid "/Preview Size/_Huge"
-msgstr "/Velikost náhledu/Obrovská"
+msgstr "/Velikost náhledu/_Obrovská"
 
 #: app/gui/dialogs-menu.c:143
-#, fuzzy
 msgid "/Preview Size/_Enormous"
-msgstr "/Velikost náhledu/Enormní"
+msgstr "/Velikost náhledu/_Enormní"
 
 #: app/gui/dialogs-menu.c:144
-#, fuzzy
 msgid "/Preview Size/_Gigantic"
-msgstr "/Velikost náhledu/Gigantická"
+msgstr "/Velikost náhledu/_Gigantická"
 
 #: app/gui/dialogs-menu.c:148
-#, fuzzy
 msgid "/Tab Style/_Icon"
-msgstr "/Styl odrážky/Ikona"
+msgstr "/Styl odrážky/_Ikona"
 
 #: app/gui/dialogs-menu.c:154
-#, fuzzy
 msgid "/Tab Style/Current _Status"
-msgstr "/Styl odrážky/Text"
+msgstr "/Styl odrážky/Aktuální _stav"
 
 #: app/gui/dialogs-menu.c:155
-#, fuzzy
 msgid "/Tab Style/_Text"
-msgstr "/Styl odrážky/Text"
+msgstr "/Styl odrážky/_Text"
 
 #: app/gui/dialogs-menu.c:156
-#, fuzzy
 msgid "/Tab Style/I_con & Text"
-msgstr "/Styl odrážky/Ikona a text"
+msgstr "/Styl odrážky/I_kona a text"
 
 #: app/gui/dialogs-menu.c:157
-#, fuzzy
 msgid "/Tab Style/St_atus & Text"
-msgstr "/Styl odrážky/Ikona a text"
+msgstr "/Styl odrážky/St_av a text"
 
 #: app/gui/dialogs-menu.c:159
-#, fuzzy
 msgid "/View as _List"
-msgstr "/Zobrazit jako seznam"
+msgstr "/Zobrazit jako _seznam"
 
 #: app/gui/dialogs-menu.c:163
-#, fuzzy
 msgid "/View as _Grid"
-msgstr "/Zobrazit jako mřížku"
+msgstr "/Zobrazit jako _mřížku"
 
 #: app/gui/dialogs-menu.c:170
-#, fuzzy
 msgid "/Show Image _Menu"
-msgstr "/Ukázat menu obrázku"
+msgstr "/Zobrazit _menu obrázku"
 
 #: app/gui/dialogs-menu.c:174
-#, fuzzy
 msgid "/Auto Follow Active _Image"
-msgstr "/Automaticky následovat aktivní obrázek"
+msgstr "/Automaticky následovat aktivní _obrázek"
 
 #: app/gui/documents-menu.c:43
-#, fuzzy
 msgid "/_Open Image"
-msgstr "/Otevřít obrázek"
+msgstr "/_Otevřít obrázek"
 
 #: app/gui/documents-menu.c:48
-#, fuzzy
 msgid "/_Raise or Open Image"
-msgstr "/Vyvýšit nebo otevřít obrázek"
+msgstr "/Z_výšit nebo otevřít obrázek"
 
 #: app/gui/documents-menu.c:53
-#, fuzzy
 msgid "/File Open _Dialog..."
-msgstr "/Dialog pro otevření souboru..."
+msgstr "/_Dialog pro otevření souboru..."
 
 #: app/gui/documents-menu.c:58
-#, fuzzy
 msgid "/Remove _Entry"
-msgstr "/Odstranit položku"
+msgstr "/Odstranit _položku"
 
 #: app/gui/documents-menu.c:66
-#, fuzzy
 msgid "/Recreate _Preview"
-msgstr "/Znovu vytvořit náhled"
+msgstr "/Znovu vytvořit _náhled"
 
 #: app/gui/documents-menu.c:71
-#, fuzzy
 msgid "/Reload _all Previews"
-msgstr "/Znovu načíst všechny náhledy"
+msgstr "/Znovu načíst _všechny náhledy"
 
 #: app/gui/documents-menu.c:76
-#, fuzzy
 msgid "/Remove Dangling E_ntries"
-msgstr "/Odstranit visející položky"
+msgstr "/Odstranit visící p_oložky"
 
 #: app/gui/drawable-commands.c:81
 msgid "Desaturate operates only on RGB color drawables."
@@ -3228,19 +3160,16 @@ msgid "(Unnamed Buffer)"
 msgstr "(Nepojmenovaný buffer)"
 
 #: app/gui/error-console-menu.c:39
-#, fuzzy
 msgid "/_Clear Errors"
-msgstr "/Vymazat chyby"
+msgstr "/_Vymazat chyby"
 
 #: app/gui/error-console-menu.c:47
-#, fuzzy
 msgid "/Save _All Errors to File..."
-msgstr "/Zapsat všechny chyby do souboru..."
+msgstr "/Uložit vš_echny chyby do souboru..."
 
 #: app/gui/error-console-menu.c:52
-#, fuzzy
 msgid "/Save _Selection to File..."
-msgstr "/Zapsat výběr do souboru..."
+msgstr "/Uložit vý_běr do souboru..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:704
 #: app/widgets/gimpdocumentview.c:454 app/widgets/gimpdnd.c:1005
@@ -3314,9 +3243,8 @@ msgstr ""
 "%s"
 
 #: app/gui/file-dialog-utils.c:122
-#, fuzzy
 msgid "Determine File _Type:"
-msgstr "Určení typu souboru:"
+msgstr "Určení _typu souboru:"
 
 #: app/gui/file-new-dialog.c:97 app/gui/preferences-dialog.c:1013
 #: app/gui/preferences-dialog.c:1016
@@ -3514,222 +3442,180 @@ msgstr ""
 "chcete rozdělit segmenty ve výběru."
 
 #: app/gui/gradient-editor-menu.c:63
-#, fuzzy
 msgid "/L_eft Endpoint's Color..."
-msgstr "/Barva levého koncového bodu..."
+msgstr "/Barva _levého koncového bodu..."
 
 #: app/gui/gradient-editor-menu.c:68
-#, fuzzy
 msgid "/_Load Left Color From"
-msgstr "/Načíst levou barvu z/Barvy popředí"
+msgstr "/_Načíst levou barvu z"
 
 #: app/gui/gradient-editor-menu.c:70
-#, fuzzy
 msgid "/Load Left Color From/_Left Neighbor's Right Endpoint"
-msgstr "/Načíst levou barvu z/Pravého koncového bodu levého souseda"
+msgstr "/Načíst levou barvu z/Pravého koncového bodu _levého souseda"
 
 #: app/gui/gradient-editor-menu.c:74
-#, fuzzy
 msgid "/Load Left Color From/_Right Endpoint"
-msgstr "/Načíst levou barvu z/Pravého koncového bodu"
+msgstr "/Načíst levou barvu z/_Pravého koncového bodu"
 
 #: app/gui/gradient-editor-menu.c:78
-#, fuzzy
 msgid "/Load Left Color From/_FG Color"
-msgstr "/Načíst levou barvu z/Barvy popředí"
+msgstr "/Načíst levou barvu z/Barvy p_opředí"
 
 #: app/gui/gradient-editor-menu.c:82
-#, fuzzy
 msgid "/Load Left Color From/_BG Color"
-msgstr "/Načíst levou barvu z/Barvy pozadí"
+msgstr "/Načíst levou barvu z/Barvy po_zadí"
 
 #: app/gui/gradient-editor-menu.c:100
-#, fuzzy
 msgid "/_Save Left Color To"
-msgstr "/Uložit levou barvu do"
+msgstr "/_Uložit levou barvu do"
 
 #: app/gui/gradient-editor-menu.c:115
-#, fuzzy
 msgid "/R_ight Endpoint's Color..."
-msgstr "/Barvy pravého koncového bodu..."
+msgstr "/Barvy _pravého koncového bodu..."
 
 #: app/gui/gradient-editor-menu.c:120
-#, fuzzy
 msgid "/Load Right Color Fr_om"
-msgstr "/Načíst pravou barvu z/Barvy pozadí"
+msgstr "/Načíst pravou barvu _z"
 
 #: app/gui/gradient-editor-menu.c:122
-#, fuzzy
 msgid "/Load Right Color From/_Right Neighbor's Left Endpoint"
-msgstr "/Načíst pravou barvu z/Levého koncového bodu pravého souseda"
+msgstr "/Načíst pravou barvu z/Levého koncového bodu _pravého souseda"
 
 #: app/gui/gradient-editor-menu.c:126
-#, fuzzy
 msgid "/Load Right Color From/_Left Endpoint"
-msgstr "/Načíst pravou barvu z/Levého koncového bodu"
+msgstr "/Načíst pravou barvu z/_Levého koncového bodu"
 
 #: app/gui/gradient-editor-menu.c:130
-#, fuzzy
 msgid "/Load Right Color From/_FG Color"
-msgstr "/Načíst pravou barvu z/Barvy popředí"
+msgstr "/Načíst pravou barvu z/Barvy p_opředí"
 
 #: app/gui/gradient-editor-menu.c:134
-#, fuzzy
 msgid "/Load Right Color From/_BG Color"
-msgstr "/Načíst pravou barvu z/Barvy pozadí"
+msgstr "/Načíst pravou barvu z/Barvy po_zadí"
 
 #: app/gui/gradient-editor-menu.c:152
-#, fuzzy
 msgid "/Sa_ve Right Color To"
-msgstr "/Uložit pravou barvu do"
+msgstr "/Ul_ožit pravou barvu do"
 
 #: app/gui/gradient-editor-menu.c:167
-#, fuzzy
 msgid "/blendingfunction/_Linear"
-msgstr "/funkcemísení/Lineární"
+msgstr "/funkcemísení/_Lineární"
 
 #: app/gui/gradient-editor-menu.c:172
-#, fuzzy
 msgid "/blendingfunction/_Curved"
-msgstr "/funkcemísení/Zakřivená"
+msgstr "/funkcemísení/_Zakřivená"
 
 #: app/gui/gradient-editor-menu.c:177
-#, fuzzy
 msgid "/blendingfunction/_Sinusodial"
-msgstr "/funkcemísení/Sinusoidní"
+msgstr "/funkcemísení/_Sinusoidní"
 
 #: app/gui/gradient-editor-menu.c:182
-#, fuzzy
 msgid "/blendingfunction/Spherical (i_ncreasing)"
-msgstr "/funkcemísení/Sférická (vzestupná)"
+msgstr "/funkcemísení/Sférická (_vzestupná)"
 
 #: app/gui/gradient-editor-menu.c:187
-#, fuzzy
 msgid "/blendingfunction/Spherical (_decreasing)"
-msgstr "/funkcemísení/Sférická (sestupná)"
+msgstr "/funkcemísení/Sférická (_sestupná)"
 
 #: app/gui/gradient-editor-menu.c:192
 msgid "/blendingfunction/(Varies)"
 msgstr "/funkcemísení/(Různá)"
 
 #: app/gui/gradient-editor-menu.c:197
-#, fuzzy
 msgid "/coloringtype/_RGB"
-msgstr "/typvybarvení/RGB"
+msgstr "/typvybarvení/_RGB"
 
 #: app/gui/gradient-editor-menu.c:202
-#, fuzzy
 msgid "/coloringtype/HSV (_counter-clockwise hue)"
-msgstr "/typvybarvení/HSV (odstín proti směru hodinových ručiček)"
+msgstr "/typvybarvení/HSV (odstín _proti směru hodinových ručiček)"
 
 #: app/gui/gradient-editor-menu.c:207
-#, fuzzy
 msgid "/coloringtype/HSV (clockwise _hue)"
-msgstr "/typvybarvení/HSV (odstín ve směru hodinových ručiček)"
+msgstr "/typvybarvení/HSV (odstín _ve směru hodinových ručiček)"
 
 #: app/gui/gradient-editor-menu.c:212
 msgid "/coloringtype/(Varies)"
 msgstr "/typvybarvení/(Různý)"
 
 #: app/gui/gradient-editor-menu.c:250
-#, fuzzy
 msgid "/Ble_nd Endpoints' Colors"
-msgstr "/Mísení barev koncových bodů"
+msgstr "/Mísení _barev koncových bodů"
 
 #: app/gui/gradient-editor-menu.c:254
-#, fuzzy
 msgid "/Blend Endpoints' Opacit_y"
-msgstr "/Mísení krytí koncových bodů"
+msgstr "/Mísení _krytí koncových bodů"
 
 #: app/gui/gradient-editor-menu.c:399
-#, fuzzy
 msgid "_Blending Function for Segment"
-msgstr "Funkce mísení pro segment"
+msgstr "Funkce _mísení pro segment"
 
 #: app/gui/gradient-editor-menu.c:400
-#, fuzzy
 msgid "Coloring _Type for Segment"
-msgstr "Typ vybarvení pro segment"
+msgstr "_Typ vybarvení pro segment"
 
 #: app/gui/gradient-editor-menu.c:402
-#, fuzzy
 msgid "_Flip Segment"
-msgstr "Překlopit segment"
+msgstr "_Překlopit segment"
 
 #: app/gui/gradient-editor-menu.c:403
-#, fuzzy
 msgid "_Replicate Segment..."
-msgstr "Replikovat segment..."
+msgstr "_Replikovat segment..."
 
 #: app/gui/gradient-editor-menu.c:404
-#, fuzzy
 msgid "Split Segment at _Midpoint"
-msgstr "Rozdělit segment ve středním bodě"
+msgstr "Rozdělit segment ve _středním bodě"
 
 #: app/gui/gradient-editor-menu.c:405
-#, fuzzy
 msgid "Split Segment _Uniformly..."
-msgstr "Rozdělit segment stejnoměrně..."
+msgstr "Rozdělit segment _stejnoměrně..."
 
 #: app/gui/gradient-editor-menu.c:406
-#, fuzzy
 msgid "_Delete Segment"
-msgstr "Smazat segment"
+msgstr "_Odstranit segment"
 
 #: app/gui/gradient-editor-menu.c:407
-#, fuzzy
 msgid "Re-_center Segment's Midpoint"
-msgstr "Přecentrovat středový bod segmentu"
+msgstr "Pře_centrovat středový bod segmentu"
 
 #: app/gui/gradient-editor-menu.c:408
-#, fuzzy
 msgid "Re-distribute _Handles in Segment"
-msgstr "Přerozdělit řídící body v segmentu"
+msgstr "Přerozdělit _řídicí body v segmentu"
 
 #: app/gui/gradient-editor-menu.c:412
-#, fuzzy
 msgid "_Blending Function for Selection"
-msgstr "Funkce mísení pro výběr"
+msgstr "Funkce _mísení pro výběr"
 
 #: app/gui/gradient-editor-menu.c:413
-#, fuzzy
 msgid "Coloring _Type for Selection"
-msgstr "Typ vybarvení pro výběr"
+msgstr "_Typ vybarvení pro výběr"
 
 #: app/gui/gradient-editor-menu.c:415
-#, fuzzy
 msgid "_Flip Selection"
-msgstr "Překlopit výběr"
+msgstr "_Překlopit výběr"
 
 #: app/gui/gradient-editor-menu.c:416
-#, fuzzy
 msgid "_Replicate Selection..."
-msgstr "Replikovat výběr..."
+msgstr "_Replikovat výběr..."
 
 #: app/gui/gradient-editor-menu.c:417
-#, fuzzy
 msgid "Split Segments at _Midpoints"
-msgstr "Rozdělit segmenty ve středních bodech"
+msgstr "Rozdělit segmenty ve _středních bodech"
 
 #: app/gui/gradient-editor-menu.c:418
-#, fuzzy
 msgid "Split Segments _Uniformly..."
-msgstr "Rozdělit segmenty stejnoměrně..."
+msgstr "Rozdělit segmenty _stejnoměrně..."
 
 #: app/gui/gradient-editor-menu.c:419
-#, fuzzy
 msgid "_Delete Selection"
-msgstr "Smazat výběr"
+msgstr "_Odstranit výběr"
 
 #: app/gui/gradient-editor-menu.c:420
-#, fuzzy
 msgid "Re-_center Midpoints in Selection"
-msgstr "Přecentrovat středové body ve výběru"
+msgstr "Pře_centrovat středové body ve výběru"
 
 #: app/gui/gradient-editor-menu.c:421
-#, fuzzy
 msgid "Re-distribute _Handles in Selection"
-msgstr "Přerozdělit řídící body ve výběru"
+msgstr "Přerozdělit _řídicí body ve výběru"
 
 #: app/gui/gradient-select.c:269
 msgid ""
@@ -3745,34 +3631,28 @@ msgid "Save \"%s\" as POV-Ray"
 msgstr "Zapsat \"%s\" jako POV-Ray"
 
 #: app/gui/gradients-menu.c:46
-#, fuzzy
 msgid "/_New Gradient"
-msgstr "/Nový přechod"
+msgstr "/_Nový přechod"
 
 #: app/gui/gradients-menu.c:51
-#, fuzzy
 msgid "/D_uplicate Gradient"
-msgstr "/Duplikovat přechod"
+msgstr "/_Duplikovat přechod"
 
 #: app/gui/gradients-menu.c:56
-#, fuzzy
 msgid "/_Edit Gradient..."
-msgstr "/Úprava přechodu..."
+msgstr "/_Upravit přechod..."
 
 #: app/gui/gradients-menu.c:61
-#, fuzzy
 msgid "/_Delete Gradient..."
-msgstr "/Smazat přechod..."
+msgstr "/_Odstranit přechod..."
 
 #: app/gui/gradients-menu.c:69
-#, fuzzy
 msgid "/_Refresh Gradients"
-msgstr "/Aktualizovat přechody"
+msgstr "/_Aktualizovat přechody"
 
 #: app/gui/gradients-menu.c:77
-#, fuzzy
 msgid "/Save as _POV-Ray..."
-msgstr "/Uložit jako POV-Ray..."
+msgstr "/Uložit jako _POV-Ray..."
 
 #: app/gui/grid-dialog.c:116
 msgid "Configure Grid"
@@ -3835,9 +3715,8 @@ msgid "Offset"
 msgstr "Posun"
 
 #: app/gui/grid-dialog.c:383
-#, fuzzy
 msgid "Remove Grid"
-msgstr "Odstranit vodítko"
+msgstr "Odstranit mřížku"
 
 #: app/gui/gui.c:485
 #, c-format
@@ -3992,9 +3871,8 @@ msgid "/Edit/_Redo"
 msgstr "/Úpravy/Z_rušit vrácení"
 
 #: app/gui/image-menu.c:168
-#, fuzzy
 msgid "/Edit/Undo _History..."
-msgstr "/Přidat odrážku/Historie vracení..."
+msgstr "/Úpravy/_Historie vracení..."
 
 #: app/gui/image-menu.c:176
 msgid "/Edit/Cu_t"
@@ -4111,9 +3989,8 @@ msgid "/Select/Save to _Channel"
 msgstr "/Výběr/Uložit do _kanálu"
 
 #: app/gui/image-menu.c:323
-#, fuzzy
 msgid "/Select/To _Path"
-msgstr "/Výběr do cesty"
+msgstr "/Výběr/Do _cesty"
 
 #. <Image>/View
 #: app/gui/image-menu.c:331
@@ -4459,19 +4336,16 @@ msgid "/Layer/Mask/_Mask to Selection"
 msgstr "/Vrstva/Maska/_Maska do výběru"
 
 #: app/gui/image-menu.c:762
-#, fuzzy
 msgid "/Layer/Mask/_Add to Selection"
-msgstr "/Vrstva/Maska/_Maska do výběru"
+msgstr "/Vrstva/Maska/_Přidat do výběru"
 
 #: app/gui/image-menu.c:767
-#, fuzzy
 msgid "/Layer/Mask/_Subtract from Selection"
-msgstr "/Ubrat z výběru"
+msgstr "/Vrstva/Maska/_Ubrat z výběru"
 
 #: app/gui/image-menu.c:772
-#, fuzzy
 msgid "/Layer/Mask/_Intersect with Selection"
-msgstr "/Průnik s výběrem"
+msgstr "/Vrstva/Maska/_Průnik s výběrem"
 
 #. <Image>/Layer/Transparency
 #: app/gui/image-menu.c:780
@@ -4487,17 +4361,14 @@ msgid "/Layer/Transparency/Al_pha to Selection"
 msgstr "/Vrstva/Průhlednost/_Alfa do výběru"
 
 #: app/gui/image-menu.c:794
-#, fuzzy
 msgid "/Layer/Transparency/A_dd to Selection"
-msgstr "/Vrstva/Průhlednost/_Alfa do výběru"
+msgstr "/Vrstva/Průhlednost/_Přidat do výběru"
 
 #: app/gui/image-menu.c:799
-#, fuzzy
 msgid "/Layer/Transparency/_Subtract from Selection"
-msgstr "/Vrstva/Průhlednost/_Alfa do výběru"
+msgstr "/Vrstva/Průhlednost/_Ubrat z výběru"
 
 #: app/gui/image-menu.c:804
-#, fuzzy
 msgid "/Layer/Transparency/_Intersect with Selection"
 msgstr "/Vrstva/Průhlednost/_Alfa do výběru"
 
@@ -4805,19 +4676,16 @@ msgid "_Zoom (%d:%d)"
 msgstr "_Zvětšení (%d:%d)"
 
 #: app/gui/images-menu.c:42
-#, fuzzy
 msgid "/_Raise Displays"
-msgstr "/Zvýšit zobrazení"
+msgstr "/_Zvýšit zobrazení"
 
 #: app/gui/images-menu.c:46
-#, fuzzy
 msgid "/_New Display"
-msgstr "/Nové zobrazení"
+msgstr "/_Nové zobrazení"
 
 #: app/gui/images-menu.c:50
-#, fuzzy
 msgid "/_Delete Image"
-msgstr "/Smazat obrázek"
+msgstr "/_Odstranit obrázek"
 
 #. General
 #: app/gui/info-dialog.c:351 app/gui/preferences-dialog.c:1277
@@ -4977,9 +4845,8 @@ msgid "Crop Layer"
 msgstr "Ořezat vrstvu"
 
 #: app/gui/layers-commands.c:432
-#, fuzzy
 msgid "Layer Mask to Selection"
-msgstr "/Vrstva/Maska/_Maska do výběru"
+msgstr "Maska vrstvy do výběru"
 
 #: app/gui/layers-commands.c:618
 msgid "Empty Layer Copy"
@@ -5014,7 +4881,7 @@ msgstr "Typ vyplňování vrstvy"
 msgid "Layer Attributes"
 msgstr "Vlastností vrstvy"
 
-#: app/gui/layers-commands.c:820 app/widgets/gimplayertreeview.c:202
+#: app/gui/layers-commands.c:820 app/widgets/gimplayertreeview.c:201
 msgid "Edit Layer Attributes"
 msgstr "Úpravy vlastností vrstvy"
 
@@ -5043,99 +4910,80 @@ msgstr ""
 "Obě musí být kladné."
 
 #: app/gui/layers-menu.c:44
-#, fuzzy
 msgid "/_New Layer..."
-msgstr "/Nová vrstva..."
+msgstr "/_Nová vrstva..."
 
 #: app/gui/layers-menu.c:50
-#, fuzzy
 msgid "/_Raise Layer"
-msgstr "/Vrstvu výš"
+msgstr "/Vrstvu _výš"
 
 #: app/gui/layers-menu.c:55
-#, fuzzy
 msgid "/Layer to _Top"
-msgstr "/Vrstvu nahoru"
+msgstr "/Vrstvu na_horu"
 
 #: app/gui/layers-menu.c:60
-#, fuzzy
 msgid "/_Lower Layer"
-msgstr "/Vrstvu níž"
+msgstr "/Vrstvu _níž"
 
 #: app/gui/layers-menu.c:65
-#, fuzzy
 msgid "/Layer to _Bottom"
-msgstr "/Vrstvu dospod"
+msgstr "/Vrstvu _dospod"
 
 #: app/gui/layers-menu.c:71
-#, fuzzy
 msgid "/D_uplicate Layer"
-msgstr "/Duplikovat vrstvu"
+msgstr "/_Duplikovat vrstvu"
 
 #: app/gui/layers-menu.c:76
-#, fuzzy
 msgid "/_Anchor Layer"
-msgstr "/Pohltit vrstvu"
+msgstr "/_Ukotvit vrstvu"
 
 #: app/gui/layers-menu.c:81
-#, fuzzy
 msgid "/Merge Do_wn"
-msgstr "/Sloučit dolů"
+msgstr "/Sloučit _dolů"
 
 #: app/gui/layers-menu.c:86
-#, fuzzy
 msgid "/_Delete Layer"
-msgstr "/Smazat vrstvu"
+msgstr "/_Odstranit vrstvu"
 
 #: app/gui/layers-menu.c:94
-#, fuzzy
 msgid "/Layer B_oundary Size..."
-msgstr "/Rozměry hranic vrstvy..."
+msgstr "/Rozměry _hranic vrstvy..."
 
 #: app/gui/layers-menu.c:99
-#, fuzzy
 msgid "/Layer to _Imagesize"
-msgstr "/Vrstvy/Velikost vrstvy dle obrázku"
+msgstr "/Vrstva do _velikosti obrázku"
 
 #: app/gui/layers-menu.c:104
-#, fuzzy
 msgid "/_Scale Layer..."
-msgstr "/Velikost vrstvy..."
+msgstr "/Změnit _velikost vrstvy..."
 
 #: app/gui/layers-menu.c:112
-#, fuzzy
 msgid "/Add La_yer Mask..."
-msgstr "/Přidat masku vrstvy..."
+msgstr "/Přidat ma_sku vrstvy..."
 
 #: app/gui/layers-menu.c:116
-#, fuzzy
 msgid "/Apply Layer _Mask"
-msgstr "/Použít masku vrstvy"
+msgstr "/Použít _masku vrstvy"
 
 #: app/gui/layers-menu.c:120
-#, fuzzy
 msgid "/Delete Layer Mas_k"
-msgstr "/Smazat masku vrstvy"
+msgstr "/Odstranit mas_ku vrstvy"
 
 #: app/gui/layers-menu.c:125
-#, fuzzy
 msgid "/Mask to Sele_ction"
-msgstr "/Maska do výběru"
+msgstr "/Maska do _výběru"
 
 #: app/gui/layers-menu.c:133
-#, fuzzy
 msgid "/Add Alpha C_hannel"
-msgstr "/Přidat alfa kanál"
+msgstr "/Přidat alfa _kanál"
 
 #: app/gui/layers-menu.c:137
-#, fuzzy
 msgid "/Al_pha to Selection"
-msgstr "/Alfa do výběru"
+msgstr "/_Alfa do výběru"
 
 #: app/gui/layers-menu.c:145
-#, fuzzy
 msgid "/_Edit Layer Attributes..."
-msgstr "/Úpravy vlastností vrstvy..."
+msgstr "/_Upravit atributy vrstvy..."
 
 #: app/gui/module-browser.c:122
 msgid "Module Manager"
@@ -5260,29 +5108,24 @@ msgid "_Transparent"
 msgstr "Prů_hledný"
 
 #: app/gui/palette-editor-menu.c:39
-#, fuzzy
 msgid "/_New Color"
-msgstr "/Nová barva"
+msgstr "/_Nová barva"
 
 #: app/gui/palette-editor-menu.c:49
-#, fuzzy
 msgid "/_Delete Color"
-msgstr "/Smazat barvu"
+msgstr "/_Odstranit barvu"
 
 #: app/gui/palette-editor-menu.c:57
-#, fuzzy
 msgid "/Zoom _Out"
-msgstr "/Vzdálit"
+msgstr "/Vz_dálit"
 
 #: app/gui/palette-editor-menu.c:62
-#, fuzzy
 msgid "/Zoom _In"
-msgstr "/Přiblížit"
+msgstr "/_Přiblížit"
 
 #: app/gui/palette-editor-menu.c:67
-#, fuzzy
 msgid "/Zoom _All"
-msgstr "/Zvětšit vše"
+msgstr "/Zvětšit _vše"
 
 #: app/gui/palette-import-dialog.c:167
 msgid "Import Palette"
@@ -5356,39 +5199,32 @@ msgid "Enter a name for merged palette"
 msgstr "Zadejte jméno sloučené palety"
 
 #: app/gui/palettes-menu.c:46
-#, fuzzy
 msgid "/_New Palette"
-msgstr "/Nová paleta"
+msgstr "/_Nová paleta"
 
 #: app/gui/palettes-menu.c:51
-#, fuzzy
 msgid "/D_uplicate Palette"
-msgstr "/Duplikovat paletu"
+msgstr "/_Duplikovat paletu"
 
 #: app/gui/palettes-menu.c:56
-#, fuzzy
 msgid "/_Edit Palette..."
-msgstr "/Úprava palety..."
+msgstr "/_Upravit paletu..."
 
 #: app/gui/palettes-menu.c:61
-#, fuzzy
 msgid "/_Delete Palette..."
-msgstr "/Smazat paletu..."
+msgstr "/_Odstranit paletu..."
 
 #: app/gui/palettes-menu.c:69
-#, fuzzy
 msgid "/_Refresh Palettes"
-msgstr "/Aktualizovat palety"
+msgstr "/_Aktualizovat palety"
 
 #: app/gui/palettes-menu.c:77
-#, fuzzy
 msgid "/_Import Palette..."
-msgstr "/Import palety..."
+msgstr "/_Importovat paletu..."
 
 #: app/gui/palettes-menu.c:82
-#, fuzzy
 msgid "/_Merge Palettes..."
-msgstr "/Sloučit palety..."
+msgstr "/_Sloučit palety..."
 
 #: app/gui/pattern-select.c:249
 msgid ""
@@ -5668,7 +5504,7 @@ msgstr "Zpětná vazba pohybu ukazovátka"
 
 #: app/gui/preferences-dialog.c:1429
 msgid "Show _Brush Outline"
-msgstr ""
+msgstr "Zobrazovat obrys _stopy"
 
 #: app/gui/preferences-dialog.c:1432
 msgid "Perfect-but-Slow _Pointer Tracking"
@@ -5999,24 +5835,20 @@ msgid "Mask Opacity:"
 msgstr "Krytí masky:"
 
 #: app/gui/qmask-menu.c:44
-#, fuzzy
 msgid "/_QMask Active"
-msgstr "/Rychlá maska aktivní"
+msgstr "/_Rychlá maska aktivní"
 
 #: app/gui/qmask-menu.c:51
-#, fuzzy
 msgid "/Mask _Selected Areas"
-msgstr "/Maskovat vybrané oblasti"
+msgstr "/Maskovat _vybrané oblasti"
 
 #: app/gui/qmask-menu.c:55
-#, fuzzy
 msgid "/Mask _Unselected Areas"
-msgstr "/Maskovat nevybrané oblasti"
+msgstr "/Maskovat _nevybrané oblasti"
 
 #: app/gui/qmask-menu.c:62
-#, fuzzy
 msgid "/_Configure Color and Opacity..."
-msgstr "/Nastavit barvu a krytí..."
+msgstr "/_Nastavit barvu a krytí..."
 
 #: app/gui/resize-dialog.c:195
 msgid "Scale Layer Options"
@@ -6149,29 +5981,24 @@ msgid "Edit Template"
 msgstr "Upravit šablonu"
 
 #: app/gui/templates-menu.c:43
-#, fuzzy
 msgid "/_New Template..."
-msgstr "/Nová šablona..."
+msgstr "/_Nová šablona..."
 
 #: app/gui/templates-menu.c:48
-#, fuzzy
 msgid "/D_uplicate Template..."
-msgstr "/Duplikovat šablonu..."
+msgstr "/_Duplikovat šablonu..."
 
 #: app/gui/templates-menu.c:53
-#, fuzzy
 msgid "/_Edit Template..."
-msgstr "/Upravit šablonu..."
+msgstr "/_Upravit šablonu..."
 
 #: app/gui/templates-menu.c:58
-#, fuzzy
 msgid "/_Create Image from Template..."
-msgstr "/Vytvořit obrázek ze šablony..."
+msgstr "/_Vytvořit obrázek ze šablony..."
 
 #: app/gui/templates-menu.c:63
-#, fuzzy
 msgid "/_Delete Template..."
-msgstr "/Odstranit šablonu..."
+msgstr "/_Odstranit šablonu..."
 
 #: app/gui/tips-dialog.c:91
 msgid "<b>The GIMP tips file could not be parsed correctly!</b>"
@@ -6865,7 +6692,7 @@ msgid "Empty Vectors Copy"
 msgstr "Kopie prázdných vektorů"
 
 #: app/gui/vectors-commands.c:457 app/gui/vectors-commands.c:503
-#: app/widgets/gimpvectorstreeview.c:124
+#: app/widgets/gimpvectorstreeview.c:123
 msgid "New Path"
 msgstr "Nová cesta"
 
@@ -6882,79 +6709,65 @@ msgstr "Název cesty:"
 msgid "Path Attributes"
 msgstr "Vlastností cesty"
 
-#: app/gui/vectors-commands.c:574 app/widgets/gimpvectorstreeview.c:128
+#: app/gui/vectors-commands.c:574 app/widgets/gimpvectorstreeview.c:127
 msgid "Edit Path Attributes"
 msgstr "Úpravy vlastností cesty"
 
 #: app/gui/vectors-menu.c:44
-#, fuzzy
 msgid "/_New Path..."
-msgstr "/Nová cesta..."
+msgstr "/_Nová cesta..."
 
 #: app/gui/vectors-menu.c:49
-#, fuzzy
 msgid "/_Raise Path"
-msgstr "/Zvýšit cestu"
+msgstr "/_Zvýšit cestu"
 
 #: app/gui/vectors-menu.c:54
-#, fuzzy
 msgid "/_Lower Path"
-msgstr "/Snížit cestu"
+msgstr "/_Snížit cestu"
 
 #: app/gui/vectors-menu.c:59
-#, fuzzy
 msgid "/D_uplicate Path"
-msgstr "/Duplikovat cestu"
+msgstr "/_Duplikovat cestu"
 
 #: app/gui/vectors-menu.c:64
-#, fuzzy
 msgid "/_Delete Path"
-msgstr "/Smazat cestu"
+msgstr "/_Odstranit cestu"
 
 #: app/gui/vectors-menu.c:72
-#, fuzzy
 msgid "/Path to Sele_ction"
-msgstr "/Cesta do výběru"
+msgstr "/Cesta do _výběru"
 
 #: app/gui/vectors-menu.c:93
-#, fuzzy
 msgid "/Selecti_on to Path"
-msgstr "/Výběr do cesty"
+msgstr "/Vý_běr do cesty"
 
 #: app/gui/vectors-menu.c:98
-#, fuzzy
 msgid "/Stro_ke Path"
-msgstr "/Vykreslit cestu"
+msgstr "/Vyk_reslit cestu"
 
 #: app/gui/vectors-menu.c:106
-#, fuzzy
 msgid "/Co_py Path"
-msgstr "/Kopírovat cestu"
+msgstr "/_Kopírovat cestu"
 
 #: app/gui/vectors-menu.c:112
-#, fuzzy
 msgid "/Paste Pat_h"
-msgstr "/Vložit cestu"
+msgstr "/Vložit _cestu"
 
 #: app/gui/vectors-menu.c:117
-#, fuzzy
 msgid "/I_mport Path..."
-msgstr "/Import cesty..."
+msgstr "/_Importovat cestu..."
 
 #: app/gui/vectors-menu.c:122
-#, fuzzy
 msgid "/E_xport Path..."
-msgstr "/Export cesty..."
+msgstr "/_Exportovat cestu..."
 
 #: app/gui/vectors-menu.c:130
-#, fuzzy
 msgid "/Path _Tool"
-msgstr "/Nástroj pro cestu"
+msgstr "/_Nástroj pro cestu"
 
 #: app/gui/vectors-menu.c:135
-#, fuzzy
 msgid "/_Edit Path Attributes..."
-msgstr "/Úpravy vlastností cesty..."
+msgstr "/_Upravit vlastnosti cesty..."
 
 #: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:62
 msgid "Airbrush"
@@ -7249,42 +7062,42 @@ msgstr ""
 "programu GIMP. K opětovnému dosažení bezpečného stavu\n"
 "je vhodné zapsat obrázky a restartovat GIMP."
 
-#: app/plug-in/plug-ins.c:139
+#: app/plug-in/plug-ins.c:140
 msgid "Resource configuration"
 msgstr "Konfigurace zdrojů"
 
 #. Query any plug-ins that have changed since we last wrote out
 #. *  the pluginrc file.
 #.
-#: app/plug-in/plug-ins.c:145
+#: app/plug-in/plug-ins.c:146
 msgid "Querying new Plug-ins"
 msgstr "Dotaz na nové zásuvné moduly"
 
-#: app/plug-in/plug-ins.c:163
+#: app/plug-in/plug-ins.c:164
 #, c-format
 msgid "querying plug-in: \"%s\"\n"
 msgstr "dotaz na zásuvný modul: \"%s\"\n"
 
-#: app/plug-in/plug-ins.c:218
+#: app/plug-in/plug-ins.c:219
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "zapisuje se \"%s\"\n"
 
 #. initial the plug-ins
-#: app/plug-in/plug-ins.c:275
+#: app/plug-in/plug-ins.c:283
 msgid "Initializing Plug-ins"
 msgstr "Inicializace zásuvného modulu"
 
-#: app/plug-in/plug-ins.c:290
+#: app/plug-in/plug-ins.c:298
 #, c-format
 msgid "Initializing plug-in: \"%s\"\n"
 msgstr "Inicializace zásuvného modulu: \"%s\"\n"
 
-#: app/plug-in/plug-ins.c:319
+#: app/plug-in/plug-ins.c:327
 msgid "Starting Extensions"
 msgstr "Spouští se rozšíření"
 
-#: app/plug-in/plug-ins.c:328
+#: app/plug-in/plug-ins.c:336
 #, c-format
 msgid "Starting extension: \"%s\"\n"
 msgstr "Spouští se rozšíření: \"%s\"\n"
@@ -7391,21 +7204,25 @@ msgstr "Transformovat aktivní cestu"
 
 #: app/tools/tools-enums.c:73
 msgid "Extend Stroke/Move Nodes"
-msgstr ""
+msgstr "Rozšířit vykreslení/přesunout uzly"
 
 #: app/tools/tools-enums.c:74
 msgid "Insert/Delete Nodes"
-msgstr ""
+msgstr "Vložit/odstranit uzly"
 
-#: app/tools/tools-enums.c:92
+#: app/tools/tools-enums.c:75
+msgid "Move Stroke/Path"
+msgstr "Přesunout vykreslení/cestu"
+
+#: app/tools/tools-enums.c:93
 msgid "Don't Show Grid"
 msgstr "Nezobrazovat mříž"
 
-#: app/tools/tools-enums.c:93
+#: app/tools/tools-enums.c:94
 msgid "Number of Grid Lines"
 msgstr "Počet řádků mříže"
 
-#: app/tools/tools-enums.c:94
+#: app/tools/tools-enums.c:95
 msgid "Grid Line Spacing"
 msgstr "Prostor mezi řádky mřížky"
 
@@ -8502,12 +8319,12 @@ msgid "Open the font selection dialog"
 msgstr "Otevřít dialog výběru písma"
 
 #: app/tools/gimptextoptions.c:271
-msgid "Font:"
-msgstr "Písmo:"
-
-#: app/tools/gimptextoptions.c:276
 msgid "_Font:"
 msgstr "_Písmo:"
+
+#: app/tools/gimptextoptions.c:276
+msgid "Font:"
+msgstr "Písmo:"
 
 #: app/tools/gimptextoptions.c:283
 msgid "_Size:"
@@ -8637,48 +8454,46 @@ msgstr ""
 "které obsahují masky."
 
 #: app/tools/gimpvectortool.c:128
-#, fuzzy
 msgid "Create and edit paths"
-msgstr "Vytváření a úpravy obrázků a fotografií"
+msgstr "Vytvořit a upravit cesty"
 
 #: app/tools/gimpvectortool.c:129
-#, fuzzy
 msgid "/Tools/_Paths"
-msgstr "/Nástroje/Nástroje _kreslení"
+msgstr "/Nástroje/_Cesty"
 
 #: app/tools/tool_manager.c:189
 msgid "This tool has no options."
 msgstr "Tento nástroj nemá volby."
 
-#: app/vectors/gimpvectors.c:201
+#: app/vectors/gimpvectors.c:206
 msgid "Path"
 msgstr "Cesta"
 
-#: app/vectors/gimpvectors.c:202
+#: app/vectors/gimpvectors.c:207
 msgid "Rename Path"
 msgstr "Přejmenování cesty"
 
-#: app/vectors/gimpvectors.c:303
+#: app/vectors/gimpvectors.c:333
 msgid "Move Path"
 msgstr "Přesunout cestu"
 
-#: app/vectors/gimpvectors.c:332
+#: app/vectors/gimpvectors.c:362
 msgid "Scale Path"
 msgstr "Škálovat cestu"
 
-#: app/vectors/gimpvectors.c:367
+#: app/vectors/gimpvectors.c:397
 msgid "Resize Path"
 msgstr "Změnit velikost cesty"
 
-#: app/vectors/gimpvectors.c:397
+#: app/vectors/gimpvectors.c:427
 msgid "Flip Path"
 msgstr "Překlopit cestu"
 
-#: app/vectors/gimpvectors.c:443
+#: app/vectors/gimpvectors.c:473
 msgid "Rotate Path"
 msgstr "Rotovat cestu"
 
-#: app/vectors/gimpvectors.c:474
+#: app/vectors/gimpvectors.c:504
 msgid "Transform Path"
 msgstr "Transformovat cestu"
 
@@ -8707,14 +8522,12 @@ msgid "Icon"
 msgstr "Ikona"
 
 #: app/widgets/widgets-enums.c:72
-#, fuzzy
 msgid "Current Status"
-msgstr "Aktuální šířka:"
+msgstr "Aktuální stav"
 
 #: app/widgets/widgets-enums.c:74
-#, fuzzy
 msgid "Description"
-msgstr "Volby rozptylu"
+msgstr "Popis"
 
 #: app/widgets/widgets-enums.c:75
 msgid "Icon & Text"
@@ -8726,11 +8539,11 @@ msgstr "Ikona a popis"
 
 #: app/widgets/widgets-enums.c:77
 msgid "Status & Text"
-msgstr ""
+msgstr "Stav a text"
 
 #: app/widgets/widgets-enums.c:78
 msgid "Status & Desc"
-msgstr ""
+msgstr "Stav a popis"
 
 #: app/widgets/widgets-enums.c:96
 msgid "View as List"
@@ -9065,18 +8878,18 @@ msgstr "Klepnutí: vybrat    Táhnutí: posun"
 #: app/widgets/gimpgradienteditor.c:1355 app/widgets/gimpgradienteditor.c:1364
 #, c-format
 msgid "Handle position: %0.6f"
-msgstr "Poloha řídícího bodu: %0.6f"
+msgstr "Poloha řídicího bodu: %0.6f"
 
 #: app/widgets/gimpgradienteditor.c:1383
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Vzdálenost: %0.6f"
 
-#: app/widgets/gimphelp.c:205
+#: app/widgets/gimphelp.c:209
 msgid "Could not find GIMP Help Browser"
 msgstr "Nepodařilo se nalézt prohlížeč GIMP nápovědy"
 
-#: app/widgets/gimphelp.c:207
+#: app/widgets/gimphelp.c:211
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -9086,9 +8899,17 @@ msgstr ""
 "Pravděpodobně nebyla zkompilovaná, protože\n"
 "GtkXmHTML není nainstalován."
 
-#: app/widgets/gimphelp.c:210
+#: app/widgets/gimphelp.c:214 app/widgets/gimphelp.c:256
 msgid "Use Netscape instead"
 msgstr "Nahradit programem Netscape"
+
+#: app/widgets/gimphelp.c:253
+msgid "Could not start GIMP Help Browser"
+msgstr "Nemohu spustit prohlížeč nápovědy GIMPu"
+
+#: app/widgets/gimphelp.c:255
+msgid "Could not start the GIMP Help Browser."
+msgstr "Nemohu spustit prohlížeč nápovědy GIMPu."
 
 #: app/widgets/gimpimagedock.c:176
 msgid "Auto"
@@ -9111,7 +8932,7 @@ msgstr "Smazat tento obrázek"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpitemtreeview.c:266
+#: app/widgets/gimpitemtreeview.c:265
 #, c-format
 msgid ""
 "%s\n"
@@ -9120,7 +8941,7 @@ msgstr ""
 "%s\n"
 "%s  Nahoru"
 
-#: app/widgets/gimpitemtreeview.c:280
+#: app/widgets/gimpitemtreeview.c:279
 #, c-format
 msgid ""
 "%s\n"
@@ -9129,23 +8950,23 @@ msgstr ""
 "%s\n"
 "%s  Dolů"
 
-#: app/widgets/gimplayertreeview.c:200
+#: app/widgets/gimplayertreeview.c:199
 msgid "Duplicate Layer"
 msgstr "Duplikovat vrstvu"
 
-#: app/widgets/gimplayertreeview.c:214
+#: app/widgets/gimplayertreeview.c:213
 msgid "Reorder Layer"
 msgstr "Přerovnat vrstvu"
 
-#: app/widgets/gimplayertreeview.c:267
+#: app/widgets/gimplayertreeview.c:266
 msgid "Keep Trans."
 msgstr "Zachovat průhlednost"
 
-#: app/widgets/gimplayertreeview.c:276
+#: app/widgets/gimplayertreeview.c:275
 msgid "Keep Transparency"
 msgstr "Zachovat průhlednost"
 
-#: app/widgets/gimplayertreeview.c:299
+#: app/widgets/gimplayertreeview.c:298
 msgid "Anchor Floating Layer"
 msgstr "Ukotvit plovoucí vrstvu"
 
@@ -9186,7 +9007,7 @@ msgstr "Toto textové vstupní pole je omezeno na %d znaků."
 msgid "Save Selection to Channel"
 msgstr "Uložit výběr do kanálu"
 
-#: app/widgets/gimpselectioneditor.c:200 app/widgets/gimpvectorstreeview.c:171
+#: app/widgets/gimpselectioneditor.c:200 app/widgets/gimpvectorstreeview.c:170
 #, c-format
 msgid ""
 "Selection to Path\n"
@@ -9310,27 +9131,27 @@ msgstr "Zrušit vrácení"
 msgid "[ Base Image ]"
 msgstr "[ Základní obrázek ]"
 
-#: app/widgets/gimpvectorstreeview.c:126
+#: app/widgets/gimpvectorstreeview.c:125
 msgid "Duplicate Path"
 msgstr "Duplikovat cestu"
 
-#: app/widgets/gimpvectorstreeview.c:130
+#: app/widgets/gimpvectorstreeview.c:129
 msgid "Delete Path"
 msgstr "Smazat cestu"
 
-#: app/widgets/gimpvectorstreeview.c:134
+#: app/widgets/gimpvectorstreeview.c:133
 msgid "Raise Path to Top"
 msgstr "Zvýšit cestu nahoru"
 
-#: app/widgets/gimpvectorstreeview.c:138
+#: app/widgets/gimpvectorstreeview.c:137
 msgid "Lower Path to Bottom"
 msgstr "Snížit cestu dolů"
 
-#: app/widgets/gimpvectorstreeview.c:140
+#: app/widgets/gimpvectorstreeview.c:139
 msgid "Reorder Path"
 msgstr "Přerovnat cestu"
 
-#: app/widgets/gimpvectorstreeview.c:151
+#: app/widgets/gimpvectorstreeview.c:150
 #, c-format
 msgid ""
 "Path to Selection\n"
@@ -9343,7 +9164,7 @@ msgstr ""
 "%s  Rozdíl\n"
 "%s%s%s  Průnik"
 
-#: app/widgets/gimpvectorstreeview.c:187
+#: app/widgets/gimpvectorstreeview.c:186
 msgid "Stroke Path"
 msgstr "Vykreslit cestu"
 
