@@ -177,6 +177,7 @@ gimp_SOURCES = \
 	levels.c		\
 	levels.h		\
 	linked.h		\
+	linked.c		\
 	magnify.c		\
 	magnify.h		\
 	main.c			\
