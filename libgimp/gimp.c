@@ -174,6 +174,7 @@ gimp_main (int   argc,
   int i, j, k;
 #endif
 
+  setlocale (LC_ALL, "");
   setlocale (LC_NUMERIC, "C");
 
 #ifdef G_OS_WIN32

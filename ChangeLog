@@ -1,3 +1,10 @@
+2001-04-03  Matt Wilson  <msw@redhat.com>
+
+	* libgimp/gimp.c (gimp_main): _always_ set up the other locale
+	categories, otherwise many C libraries will blow away characters
+	outside of the POSIX charset.  Still use the C locale for
+	LC_NUMERIC, though. r: yosh@gimp.org
+
 2001-03-22  Stanislav Brabec  <utx@penguin.cz>
 
         * app/bucket_fill.c: Bucket fill threshold=0 must be allowed.
