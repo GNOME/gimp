@@ -1,7 +1,7 @@
 The GIMP: the GNU Image Manipulation Program
 --------------------------------------------
 
-The main difference between v1.0.2 and much earlier versions is the
+The main difference between v1.0.3 and much earlier versions is the
 use of a tile based memory management for images. This allows the GIMP
 to work with images much larger than physical memory in a usable
 fashion. Before such memory management, the GIMP was nearly unusable
@@ -93,9 +93,10 @@ And finally, for the real junkies, there is an IRC channel devoted to
 the GIMP :-) On Byxnet (a private mostly-GIMP network) there is #gimp.
 Many of the developers hang out there.  Some of the Byxnet servers are:
 
-	irc.mint.net:6666
-	irc.canweb.net:6667
-	rudolf.canberra.edu.au:6666
+	irc.gimp.org:6667
+	irc.olg.com:6667
+	irc.coherent.net:6667
+	irc.mint.net:6667
 
 You can customize the look of the interface quite a bit my editing the
 ~/.gimp/gtkrc file. A sample file, gtkrc.forest2, is included (Thanks to
