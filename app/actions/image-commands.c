@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimputils.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"

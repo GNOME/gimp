@@ -1,5 +1,10 @@
 2004-07-27  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/image-commands.c: include "libgimpbase/gimpbase.h",
+	not an individual header out of libgimpbase.
+
+2004-07-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/Makefile.am
 	* libgimpbase/gimpbase.h
 	* libgimpbase/gimpbase.def
