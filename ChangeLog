@@ -1,3 +1,8 @@
+2000-03-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/flip_tool.c: yesterday's "cleanups" made the file
+	un-compileable. Probably too much beer involved.
+
 2000-03-21  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* gimp1_1_splash.ppm: Trumpets and Circus Entertainment to

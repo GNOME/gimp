@@ -15,6 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+
 #include <stdlib.h>
 
 #include <gdk/gdkkeysyms.h>
@@ -26,16 +28,11 @@
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpui.h"
-#include "temp_buf.h"
 #include "path_transform.h"
 
-#include "undo.h"
-#include "gimage.h"
+#include "tile_manager_pvt.h"            /* ick. */
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
-
-#include "tile_manager_pvt.h"		/* ick. */
 
 #define FLIP_INFO 0
 
@@ -173,12 +170,12 @@ flip_cursor_update (Tool           *tool,
 		    gpointer        gdisp_ptr)
 {
   GDisplay      *gdisp;
-  Drawable      *drawable;
+  GimpDrawable  *drawable;
   GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
 
   gdisp = (GDisplay *) gdisp_ptr;
   
-  if ((drawable = gimage_get_active_drawable (gdisp->gimage)))
+  if ((drawable = gimage_active_drawable (gdisp->gimage)))
     {
       gint x, y;
       gint off_x, off_y;
@@ -209,8 +206,8 @@ flip_cursor_update (Tool           *tool,
 Tool *
 tools_new_flip (void)
 {
-  Tool          * tool;
-  TransformCore * private;
+  Tool          *tool;
+  TransformCore *private;
 
   /*  The tool options  */
   if (! flip_options)
