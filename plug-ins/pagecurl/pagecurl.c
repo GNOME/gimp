@@ -1028,7 +1028,10 @@ get_samples (GimpDrawable *drawable)
   gint          bpp, color, has_alpha, alpha;
   gint          i, j;
 
-  f_samples = gimp_gradients_sample_uniform (NGRADSAMPLES);
+#ifdef __GNUC__
+#warning FIXME: "reverse" hardcoded to FALSE.
+#endif
+  f_samples = gimp_gradients_sample_uniform (NGRADSAMPLES, FALSE);
 
   bpp       = gimp_drawable_bpp (drawable->drawable_id);
   color     = gimp_drawable_is_rgb (drawable->drawable_id);

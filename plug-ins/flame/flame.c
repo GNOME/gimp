@@ -122,13 +122,13 @@ static frame_spec f = { 0.0, &config.cp, 1, 0.0 };
 MAIN ()
 
 
-static void 
+static void
 query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
 
@@ -145,38 +145,40 @@ query (void)
 			  args, NULL);
 }
 
-static void 
-maybe_init_cp (void) 
+static void
+maybe_init_cp (void)
 {
   if (0 == config.cp.spatial_oversample)
     {
-      config.randomize = 0;
-      config.variation = VARIATION_SAME;
+      config.randomize     = 0;
+      config.variation     = VARIATION_SAME;
       config.cmap_drawable = GRADIENT_DRAWABLE;
-      random_control_point(&config.cp, variation_random);
-      config.cp.center[0] = 0.0;
-      config.cp.center[1] = 0.0;
-      config.cp.pixels_per_unit = 100;
-      config.cp.spatial_oversample = 2;
-      config.cp.gamma = 2.0;
-      config.cp.contrast = 1.0;
-      config.cp.brightness = 1.0;
+
+      random_control_point (&config.cp, variation_random);
+
+      config.cp.center[0]             = 0.0;
+      config.cp.center[1]             = 0.0;
+      config.cp.pixels_per_unit       = 100;
+      config.cp.spatial_oversample    = 2;
+      config.cp.gamma                 = 2.0;
+      config.cp.contrast              = 1.0;
+      config.cp.brightness            = 1.0;
       config.cp.spatial_filter_radius = 0.75;
-      config.cp.sample_density = 5.0;
-      config.cp.zoom = 0.0;
-      config.cp.nbatches = 1;
-      config.cp.white_level = 200;
-      config.cp.cmap_index = 72;
+      config.cp.sample_density        = 5.0;
+      config.cp.zoom                  = 0.0;
+      config.cp.nbatches              = 1;
+      config.cp.white_level           = 200;
+      config.cp.cmap_index            = 72;
       /* cheating */
-      config.cp.width = 256;
-      config.cp.height = 256;
+      config.cp.width                 = 256;
+      config.cp.height                = 256;
     }
 }
 
-static void 
-run (const gchar      *name, 
-     gint              n_params, 
-     const GimpParam  *param, 
+static void
+run (const gchar      *name,
+     gint              n_params,
+     const GimpParam  *param,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
@@ -189,7 +191,7 @@ run (const gchar      *name,
   *return_vals = values;
 
   run_mode = param[0].data.d_int32;
-  
+
   INIT_I18N ();
 
   if (run_mode == GIMP_RUN_NONINTERACTIVE)
@@ -245,7 +247,7 @@ run (const gchar      *name,
 }
 
 static void
-drawable_to_cmap (control_point *cp) 
+drawable_to_cmap (control_point *cp)
 {
   gint          i, j;
   GimpPixelRgn  pr;
@@ -265,7 +267,10 @@ drawable_to_cmap (control_point *cp)
     }
   else if (GRADIENT_DRAWABLE == config.cmap_drawable)
     {
-      gdouble *g = gimp_gradients_sample_uniform (256);
+#ifdef __GNUC__
+#warning FIXME: "reverse" hardcoded to FALSE.
+#endif
+      gdouble *g = gimp_gradients_sample_uniform (256, FALSE);
       for (i = 0; i < 256; i++)
 	for (j = 0; j < 3; j++)
 	  cp->cmap[i][j] = g[i*4 + j];
@@ -289,7 +294,7 @@ drawable_to_cmap (control_point *cp)
     }
 }
 
-static void 
+static void
 doit (GimpDrawable *drawable)
 {
   gint    width, height;
@@ -369,8 +374,8 @@ doit (GimpDrawable *drawable)
 }
 
 
-static void 
-ok_callback (GtkWidget *widget, 
+static void
+ok_callback (GtkWidget *widget,
 	     gpointer   data)
 {
   run_flag = TRUE;
@@ -395,9 +400,9 @@ file_cancel_callback (GtkWidget *widget,
   return TRUE;
 }
 
-static void 
-file_ok_callback (GtkWidget *widget, 
-		  gpointer   data) 
+static void
+file_ok_callback (GtkWidget *widget,
+		  gpointer   data)
 {
   GtkFileSelection *fs;
   const gchar      *filename;
@@ -463,7 +468,7 @@ file_ok_callback (GtkWidget *widget,
 }
 
 static void
-make_file_dlg (void) 
+make_file_dlg (void)
 {
   file_dlg = gtk_file_selection_new (NULL);
   gtk_quit_add_destroy (1, GTK_OBJECT (file_dlg));
@@ -485,8 +490,8 @@ make_file_dlg (void)
   gimp_help_connect (file_dlg, gimp_standard_help_func, "filters/flame.html");
 }
 
-static void 
-randomize_callback (GtkWidget *widget, 
+static void
+randomize_callback (GtkWidget *widget,
 		    gpointer   data)
 {
   random_control_point (&edit_cp, config.variation);
@@ -494,16 +499,16 @@ randomize_callback (GtkWidget *widget,
   set_edit_preview ();
 }
 
-static void 
-edit_ok_callback (GtkWidget *widget, 
+static void
+edit_ok_callback (GtkWidget *widget,
 		  gpointer   data)
 {
   gtk_widget_hide (edit_dlg);
   config.cp = edit_cp;
-  set_flame_preview ();  
+  set_flame_preview ();
 }
 
-static void 
+static void
 init_mutants (void)
 {
   gint i;
@@ -517,8 +522,8 @@ init_mutants (void)
     }
 }
 
-static void 
-set_edit_preview (void) 
+static void
+set_edit_preview (void)
 {
   gint           y, i, j;
   guchar        *b;
@@ -574,9 +579,9 @@ set_edit_preview (void)
   g_free (b);
 }
 
-static void 
-preview_clicked (GtkWidget *widget, 
-		 gpointer   data) 
+static void
+preview_clicked (GtkWidget *widget,
+		 gpointer   data)
 {
   gint mut = GPOINTER_TO_INT (data);
 
@@ -599,8 +604,8 @@ preview_clicked (GtkWidget *widget,
 }
 
 static void
-edit_callback (GtkWidget *widget, 
-	       gpointer   data) 
+edit_callback (GtkWidget *widget,
+	       gpointer   data)
 {
   edit_cp = config.cp;
 
@@ -743,9 +748,9 @@ edit_callback (GtkWidget *widget,
   gtk_window_present (GTK_WINDOW (edit_dlg));
 }
 
-static void 
-load_callback (GtkWidget *widget, 
-	       gpointer   data) 
+static void
+load_callback (GtkWidget *widget,
+	       gpointer   data)
 {
   if (! file_dlg)
     {
@@ -765,9 +770,9 @@ load_callback (GtkWidget *widget,
   gtk_widget_show (file_dlg);
 }
 
-static void 
-save_callback (GtkWidget *widget, 
-	       gpointer   data) 
+static void
+save_callback (GtkWidget *widget,
+	       gpointer   data)
 {
   if (!file_dlg)
     {
@@ -787,9 +792,9 @@ save_callback (GtkWidget *widget,
   gtk_widget_show (file_dlg);
 }
 
-static void 
-menu_cb (GtkWidget *widget, 
-	 gpointer   data) 
+static void
+menu_cb (GtkWidget *widget,
+	 gpointer   data)
 {
   gimp_menu_item_update (widget, data);
 
@@ -799,8 +804,8 @@ menu_cb (GtkWidget *widget,
   set_edit_preview ();
 }
 
-static void 
-set_flame_preview (void) 
+static void
+set_flame_preview (void)
 {
   gint    y;
   guchar *b;
@@ -835,8 +840,8 @@ set_flame_preview (void)
   gtk_widget_queue_draw (flame_preview);
 }
 
-static void 
-set_cmap_preview (void) 
+static void
+set_cmap_preview (void)
 {
   gint i, x, y;
   guchar b[96];
@@ -865,9 +870,9 @@ set_cmap_preview (void)
   gtk_widget_queue_draw (cmap_preview);
 }
 
-static void 
-gradient_cb (GtkWidget *widget, 
-	     gpointer   data) 
+static void
+gradient_cb (GtkWidget *widget,
+	     gpointer   data)
 {
   config.cmap_drawable = GPOINTER_TO_INT (data);
   set_cmap_preview();
@@ -875,9 +880,9 @@ gradient_cb (GtkWidget *widget,
   /* set_edit_preview(); */
 }
 
-static void 
-cmap_callback (gint32   id, 
-	       gpointer data) 
+static void
+cmap_callback (gint32   id,
+	       gpointer data)
 {
   config.cmap_drawable = id;
   set_cmap_preview();
@@ -886,16 +891,16 @@ cmap_callback (gint32   id,
 }
 
 static gint
-cmap_constrain (gint32   image_id, 
-		gint32   drawable_id, 
-		gpointer data) 
-{  
+cmap_constrain (gint32   image_id,
+		gint32   drawable_id,
+		gpointer data)
+{
   return ! gimp_drawable_is_indexed (drawable_id);
 }
 
 
-static gint 
-dialog (void) 
+static gint
+dialog (void)
 {
   GtkWidget *main_vbox;
   GtkWidget *notebook;
@@ -968,7 +973,7 @@ dialog (void)
     gtk_box_set_spacing (GTK_BOX (vbbox), 4);
     gtk_box_pack_start (GTK_BOX (box), vbbox, FALSE, FALSE, 0);
     gtk_widget_show (vbbox);
-  
+
     button = gtk_button_new_from_stock (GIMP_STOCK_EDIT);
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
@@ -1122,7 +1127,7 @@ dialog (void)
     gtk_menu_prepend (GTK_MENU (menu), menuitem);
     if (BLACK_DRAWABLE == save_drawable)
       gtk_menu_set_active (GTK_MENU (menu), 0);
-    gtk_widget_show (menuitem); 
+    gtk_widget_show (menuitem);
 #endif
     {
       static gchar *names[] =

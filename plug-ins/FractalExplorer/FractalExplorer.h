@@ -3,7 +3,7 @@
 
 
 /**********************************************************************
- Magic numbers  
+ Magic numbers
  *********************************************************************/
 
 #define PREVIEW_SIZE 128
@@ -40,7 +40,7 @@ enum
 };
 
 /**********************************************************************
- Types  
+ Types
  *********************************************************************/
 
 typedef struct
@@ -60,12 +60,13 @@ typedef struct
   gint     redmode;
   gint     greenmode;
   gint     bluemode;
-  gint     redinvert;
-  gint 	   greeninvert;
-  gint 	   blueinvert;
-  gint     alwayspreview;
+  gboolean redinvert;
+  gboolean greeninvert;
+  gboolean blueinvert;
+  gboolean alwayspreview;
   gint     ncolors;
-  gint     useloglog;
+  gboolean gradinvert;
+  gboolean useloglog;
 } explorer_vals_t;
 
 typedef struct
@@ -128,7 +129,7 @@ typedef struct DFigObj
   GtkWidget       *label_widget;
   GtkWidget       *pixmap_widget;
   gint             obj_status;
-} fractalexplorerOBJ;  
+} fractalexplorerOBJ;
 
 
 typedef struct GigObj
@@ -141,7 +142,7 @@ typedef struct GigObj
   GtkWidget *label_widget;
   GtkWidget *pixmap_widget;
   gint       obj_status;
-} gradientOBJ;  
+} gradientOBJ;
 
 typedef struct _fractalexplorerListOptions
 {
@@ -166,7 +167,7 @@ extern GtkWidget          *delete_dialog;
 GtkWidget * add_objects_list (void);
 
 /**********************************************************************
-  Global variables  
+  Global variables
  *********************************************************************/
 
 extern gdouble      xmin;
@@ -213,7 +214,7 @@ extern GtkWidget   *save_menu_item;
 extern GtkWidget   *fractalexplorer_op_menu;
 extern GdkCursor   *MyCursor;
 extern int          ready_now;
-extern explorer_vals_t     
+extern explorer_vals_t
                     zooms[100];
 extern DialogElements
                    *elements;
@@ -227,7 +228,7 @@ extern gchar       *fractalexplorer_path;
 extern GList	   *fractalexplorer_list;
 extern GList	   *gradient_list;
 extern gchar 	   *tpath;
-extern fractalexplorerOBJ 
+extern fractalexplorerOBJ
                    *fractalexplorer_obj_for_menu;
 extern GList       *rescan_list;
 extern int 	    lng;

@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpgradientmenu.c
- * Copyright (C) 1998 Andy Thomas                
+ * Copyright (C) 1998 Andy Thomas
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -51,9 +51,10 @@ struct _GradientSelect
 
   gchar                   *gradient_name;      /* Local copy */
   gint                     sample_size;
+  gboolean                 reverse;
 
   const gchar             *temp_gradient_callback;
-}; 
+};
 
 
 /*  local function prototypes  */
@@ -75,7 +76,7 @@ static void gimp_gradient_select_preview_update  (GtkWidget      *preview,
 /**
  * gimp_gradient_select_widget_new:
  * @title:         Title of the dialog to use or %NULL to use the default title.
- * @gradient_name: Initial gradient name or %NULL to use current selection. 
+ * @gradient_name: Initial gradient name or %NULL to use current selection.
  * @callback:      A function to call when the selected gradient changes.
  * @data:          A pointer to arbitary data to be used in the call to
  *                 @callback.
@@ -86,9 +87,9 @@ static void gimp_gradient_select_preview_update  (GtkWidget      *preview,
  *
  * Returns: A #GtkWidget that you can use in your UI.
  */
-GtkWidget * 
+GtkWidget *
 gimp_gradient_select_widget_new (const gchar             *title,
-                                 const gchar             *gradient_name, 
+                                 const gchar             *gradient_name,
                                  GimpRunGradientCallback  callback,
                                  gpointer                 data)
 {
@@ -108,6 +109,7 @@ gimp_gradient_select_widget_new (const gchar             *title,
   gradient_sel->data     = data;
 
   gradient_sel->sample_size = CELL_WIDTH;
+  gradient_sel->reverse     = FALSE;
 
   gradient_sel->button = gtk_button_new ();
 
@@ -120,15 +122,16 @@ gimp_gradient_select_widget_new (const gchar             *title,
 
   gradient_sel->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (gradient_sel->preview),
-		    CELL_WIDTH, CELL_HEIGHT); 
+		    CELL_WIDTH, CELL_HEIGHT);
   gtk_container_add (GTK_CONTAINER (gradient_sel->button),
-                     gradient_sel->preview); 
+                     gradient_sel->preview);
   gtk_widget_show (gradient_sel->preview);
 
   /* Do initial gradient setup */
   gradient_sel->gradient_name =
-    gimp_gradients_get_gradient_data (gradient_name, 
+    gimp_gradients_get_gradient_data (gradient_name,
                                       gradient_sel->sample_size,
+                                      gradient_sel->reverse,
                                       &width,
                                       &grad_data);
 
@@ -201,8 +204,9 @@ gimp_gradient_select_widget_set (GtkWidget   *widget,
       gint     width;
       gdouble *grad_data;
 
-      name = gimp_gradients_get_gradient_data (gradient_name, 
+      name = gimp_gradients_get_gradient_data (gradient_name,
 					       gradient_sel->sample_size,
+                                               gradient_sel->reverse,
                                                &width,
 					       &grad_data);
 
@@ -301,19 +305,19 @@ gimp_gradient_select_preview_update (GtkWidget     *preview,
   p0  = even = g_malloc (width * 3);
   p1  = odd  = g_malloc (width * 3);
 
-  for (x = 0; x < width; x++) 
+  for (x = 0; x < width; x++)
     {
       r = src[x * 4 + 0];
       g = src[x * 4 + 1];
       b = src[x * 4 + 2];
       a = src[x * 4 + 3];
 
-      if ((x / GIMP_CHECK_SIZE_SM) & 1) 
+      if ((x / GIMP_CHECK_SIZE_SM) & 1)
 	{
 	  c0 = GIMP_CHECK_LIGHT;
 	  c1 = GIMP_CHECK_DARK;
-	} 
-      else 
+	}
+      else
 	{
 	  c0 = GIMP_CHECK_DARK;
 	  c1 = GIMP_CHECK_LIGHT;
@@ -327,14 +331,14 @@ gimp_gradient_select_preview_update (GtkWidget     *preview,
       *p1++ = (c1 + (g - c1) * a) * 255.0;
       *p1++ = (c1 + (b - c1) * a) * 255.0;
     }
-  
+
   for (y = 0; y < CELL_HEIGHT; y++)
     {
       if ((y / GIMP_CHECK_SIZE_SM) & 1)
-	gtk_preview_draw_row (GTK_PREVIEW (preview), 
+	gtk_preview_draw_row (GTK_PREVIEW (preview),
 			      odd, 0, y, width);
       else
-	gtk_preview_draw_row (GTK_PREVIEW (preview), 
+	gtk_preview_draw_row (GTK_PREVIEW (preview),
 			      even, 0, y, width);
     }
 

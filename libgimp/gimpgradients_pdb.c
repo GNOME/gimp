@@ -160,6 +160,7 @@ gimp_gradients_set_gradient (const gchar *name)
 /**
  * gimp_gradients_sample_uniform:
  * @num_samples: The number of samples to take.
+ * @reverse: Use the reverse gradient.
  *
  * Sample the active gradient in uniform parts.
  *
@@ -174,7 +175,8 @@ gimp_gradients_set_gradient (const gchar *name)
  * Returns: Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
  */
 gdouble *
-gimp_gradients_sample_uniform (gint num_samples)
+gimp_gradients_sample_uniform (gint     num_samples,
+			       gboolean reverse)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -184,6 +186,7 @@ gimp_gradients_sample_uniform (gint num_samples)
   return_vals = gimp_run_procedure ("gimp_gradients_sample_uniform",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, num_samples,
+				    GIMP_PDB_INT32, reverse,
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
@@ -203,6 +206,7 @@ gimp_gradients_sample_uniform (gint num_samples)
  * gimp_gradients_sample_custom:
  * @num_samples: The number of samples to take.
  * @positions: The list of positions to sample along the gradient.
+ * @reverse: Use the reverse gradient.
  *
  * Sample the active gradient in custom positions.
  *
@@ -217,7 +221,8 @@ gimp_gradients_sample_uniform (gint num_samples)
  */
 gdouble *
 gimp_gradients_sample_custom (gint           num_samples,
-			      const gdouble *positions)
+			      const gdouble *positions,
+			      gboolean       reverse)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -228,6 +233,7 @@ gimp_gradients_sample_custom (gint           num_samples,
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, num_samples,
 				    GIMP_PDB_FLOATARRAY, positions,
+				    GIMP_PDB_INT32, reverse,
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
@@ -247,6 +253,7 @@ gimp_gradients_sample_custom (gint           num_samples,
  * gimp_gradients_get_gradient_data:
  * @name: The gradient name (\"\" means current active gradient).
  * @sample_size: Size of the sample to return when the gradient is changed.
+ * @reverse: Use the reverse gradient.
  * @width: The gradient sample width (r,g,b,a).
  * @grad_data: The gradient sample data.
  *
@@ -260,6 +267,7 @@ gimp_gradients_sample_custom (gint           num_samples,
 gchar *
 gimp_gradients_get_gradient_data (const gchar  *name,
 				  gint          sample_size,
+				  gboolean      reverse,
 				  gint         *width,
 				  gdouble     **grad_data)
 {
@@ -271,6 +279,7 @@ gimp_gradients_get_gradient_data (const gchar  *name,
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_INT32, sample_size,
+				    GIMP_PDB_INT32, reverse,
 				    GIMP_PDB_END);
 
   *width = 0;

@@ -247,6 +247,7 @@ gradients_sample_uniform_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gint32 i;
+  gboolean reverse;
   gint32 array_length = 0;
   gdouble *color_samples = NULL;
   GimpGradient *gradient;
@@ -257,6 +258,8 @@ gradients_sample_uniform_invoker (Gimp     *gimp,
   i = args[0].value.pdb_int;
   if (i < 2)
     success = FALSE;
+
+  reverse = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
     {
@@ -271,7 +274,7 @@ gradients_sample_uniform_invoker (Gimp     *gimp,
     
       while (i--)
 	{
-	  gimp_gradient_get_color_at (gradient, pos, FALSE, &color);
+	  gimp_gradient_get_color_at (gradient, pos, reverse, &color);
     
 	  *pv++ = color.r;
 	  *pv++ = color.g;
@@ -299,6 +302,11 @@ static ProcArg gradients_sample_uniform_inargs[] =
     GIMP_PDB_INT32,
     "num_samples",
     "The number of samples to take"
+  },
+  {
+    GIMP_PDB_INT32,
+    "reverse",
+    "Use the reverse gradient (TRUE or FALSE)"
   }
 };
 
@@ -325,7 +333,7 @@ static ProcRecord gradients_sample_uniform_proc =
   "Federico Mena Quintero",
   "1997",
   GIMP_INTERNAL,
-  1,
+  2,
   gradients_sample_uniform_inargs,
   2,
   gradients_sample_uniform_outargs,
@@ -340,6 +348,7 @@ gradients_sample_custom_invoker (Gimp     *gimp,
   Argument *return_args;
   gint32 i;
   gdouble *pos;
+  gboolean reverse;
   gint32 array_length = 0;
   gdouble *color_samples = NULL;
   GimpGradient *gradient;
@@ -352,6 +361,8 @@ gradients_sample_custom_invoker (Gimp     *gimp,
 
   pos = (gdouble *) args[1].value.pdb_pointer;
 
+  reverse = args[2].value.pdb_int ? TRUE : FALSE;
+
   if (success)
     {
       array_length = i * 4;
@@ -362,7 +373,7 @@ gradients_sample_custom_invoker (Gimp     *gimp,
     
       while (i--)
 	{
-	  gimp_gradient_get_color_at (gradient, *pos, FALSE, &color);
+	  gimp_gradient_get_color_at (gradient, *pos, reverse, &color);
     
 	  *pv++ = color.r;
 	  *pv++ = color.g;
@@ -395,6 +406,11 @@ static ProcArg gradients_sample_custom_inargs[] =
     GIMP_PDB_FLOATARRAY,
     "positions",
     "The list of positions to sample along the gradient"
+  },
+  {
+    GIMP_PDB_INT32,
+    "reverse",
+    "Use the reverse gradient (TRUE or FALSE)"
   }
 };
 
@@ -421,7 +437,7 @@ static ProcRecord gradients_sample_custom_proc =
   "Federico Mena Quintero",
   "1997",
   GIMP_INTERNAL,
-  2,
+  3,
   gradients_sample_custom_inargs,
   2,
   gradients_sample_custom_outargs,
@@ -436,6 +452,7 @@ gradients_get_gradient_data_invoker (Gimp     *gimp,
   Argument *return_args;
   gchar *name;
   gint32 sample_size;
+  gboolean reverse;
   gdouble *values = NULL;
   GimpGradient *gradient = NULL;
 
@@ -446,6 +463,8 @@ gradients_get_gradient_data_invoker (Gimp     *gimp,
   sample_size = args[1].value.pdb_int;
   if (sample_size <= 0 || sample_size > 10000)
     sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;
+
+  reverse = args[2].value.pdb_int ? TRUE : FALSE;
 
   if (success)
     {
@@ -480,7 +499,7 @@ gradients_get_gradient_data_invoker (Gimp     *gimp,
     
 	  while (i--)
 	    {
-	      gimp_gradient_get_color_at (gradient, pos, FALSE, &color);
+	      gimp_gradient_get_color_at (gradient, pos, reverse, &color);
     
 	      *pv++ = color.r;
 	      *pv++ = color.g;
@@ -515,6 +534,11 @@ static ProcArg gradients_get_gradient_data_inargs[] =
     GIMP_PDB_INT32,
     "sample_size",
     "Size of the sample to return when the gradient is changed (0 < sample_size <= 10000)"
+  },
+  {
+    GIMP_PDB_INT32,
+    "reverse",
+    "Use the reverse gradient (TRUE or FALSE)"
   }
 };
 
@@ -546,7 +570,7 @@ static ProcRecord gradients_get_gradient_data_proc =
   "Federico Mena Quintero",
   "1997",
   GIMP_INTERNAL,
-  2,
+  3,
   gradients_get_gradient_data_inargs,
   3,
   gradients_get_gradient_data_outargs,

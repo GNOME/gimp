@@ -146,6 +146,11 @@ sub sample_num_arg {
       desc => 'The number of samples to take', alias => 'i' }
 }
 
+sub reverse_arg {
+    { name => 'reverse', type => 'boolean',
+      desc => 'Use the reverse gradient (%%desc%%)' }
+}
+
 sub sample_outargs {
     @outargs = (
         { name => 'color_samples', type => 'floatarray', init => 1,
@@ -170,7 +175,10 @@ HELP
 
     &pdb_misc;
 
-    @inargs = ( &sample_num_arg('2 <= ') );
+    @inargs = (
+	 &sample_num_arg('2 <= '),
+	 &reverse_arg
+    );
     &sample_outargs;
 
     %invoke = (
@@ -188,7 +196,7 @@ HELP
 
   while (i--)
     {
-      gimp_gradient_get_color_at (gradient, pos, FALSE, &color);
+      gimp_gradient_get_color_at (gradient, pos, reverse, &color);
 
       *pv++ = color.r;
       *pv++ = color.g;
@@ -217,13 +225,12 @@ HELP
     &pdb_misc;
 
     @inargs = (
-	{
-	    name  => 'positions',
-	    type  => 'floatarray',
-	    desc  => 'The list of positions to sample along the gradient',
-	    alias => 'pos',
-	    array => &sample_num_arg("")
-	}
+	{ name  => 'positions',
+	  type  => 'floatarray',
+	  desc  => 'The list of positions to sample along the gradient',
+	  alias => 'pos',
+	  array => &sample_num_arg("") },
+	&reverse_arg
     );
 
     &sample_outargs;
@@ -240,7 +247,7 @@ HELP
 
   while (i--)
     {
-      gimp_gradient_get_color_at (gradient, *pos, FALSE, &color);
+      gimp_gradient_get_color_at (gradient, *pos, reverse, &color);
 
       *pv++ = color.r;
       *pv++ = color.g;
@@ -254,14 +261,14 @@ CODE
     );
 }
 
-sub sample_size_arg {{
-    name => 'sample_size',
-    type => '0 < int32 <= 10000',
-    desc => 'Size of the sample to return when the gradient is changed
-	    (%%desc%%)',
-    on_fail => 'sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;',
-    no_success => 1
-}}
+sub sample_size_arg {
+    { name => 'sample_size',
+      type => '0 < int32 <= 10000',
+      desc => 'Size of the sample to return when the gradient is changed
+	      (%%desc%%)',
+      on_fail => 'sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;',
+      no_success => 1 }
+}
 
 sub gradients_get_gradient_data {
     $blurb = <<'BLURB';
@@ -278,7 +285,8 @@ HELP
     @inargs = (
 	{ name => 'name', type => 'string',
 	  desc => 'The gradient name ("" means current active gradient)' },
-	&sample_size_arg
+	&sample_size_arg,
+	&reverse_arg
     );
 
     @outargs = (
@@ -327,7 +335,7 @@ HELP
 
       while (i--)
 	{
-	  gimp_gradient_get_color_at (gradient, pos, FALSE, &color);
+	  gimp_gradient_get_color_at (gradient, pos, reverse, &color);
 
 	  *pv++ = color.r;
 	  *pv++ = color.g;

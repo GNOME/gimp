@@ -98,7 +98,7 @@
 typedef struct {
   gint32  dst_id;
   gint32  sample_id;
- 
+
   gint32 hold_inten;       /* TRUE or FALSE */
   gint32 orig_inten;       /* TRUE or FALSE */
   gint32 rnd_subcolors;    /* TRUE or FALSE */
@@ -109,12 +109,12 @@ typedef struct {
   gint32 lvl_out_min;       /* 0 upto 254 */
   gint32 lvl_out_max;       /* 1 upto 255 */
 
-  float  tol_col_err;      /* 0.0% upto 100.0% 
+  float  tol_col_err;      /* 0.0% upto 100.0%
                             * this is uesd to findout colors of the same
 			    * colortone, while analyzing sample colors,
 			    * It does not make much sense for the user to adjust this
 			    * value. (I used a param file to findout a suitable value)
-                            */  
+                            */
 } t_values;
 
 typedef struct {
@@ -135,7 +135,7 @@ typedef struct {
   GtkWidget *orig_inten_button;
   gint           active_slider;
   gint           slider_pos[5];  /*  positions for the five sliders  */
- 
+
   gint32     enable_preview_update;
   gint32     sample_show_selection;
   gint32     dst_show_selection;
@@ -179,11 +179,11 @@ typedef struct {
    gint       shadow;
    gint32     seldeltax;
    gint32     seldeltay;
-   gint32     tile_swapcount;   
+   gint32     tile_swapcount;
 } t_GDRW;
 
 /*
- * Some globals 
+ * Some globals
  */
 
 static GimpRunMode       run_mode;
@@ -333,7 +333,7 @@ run (const gchar      *name,
 
   if(g_Sdebug) printf("sample colorize run\n");
   g_show_progress = FALSE;
-  
+
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
@@ -359,13 +359,13 @@ run (const gchar      *name,
   dst_drawable = gimp_drawable_get (g_values.dst_id );
 
   p_clear_tables();
-  
+
   /*  Make sure that the dst_drawable is gray or RGB color	*/
   if (gimp_drawable_is_rgb (dst_drawable->drawable_id) ||
       gimp_drawable_is_gray (dst_drawable->drawable_id))
   {
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
-      
+
       if (run_mode == GIMP_RUN_INTERACTIVE)
       {
          p_smp_dialog();
@@ -430,7 +430,7 @@ p_smp_apply_callback (GtkWidget *widget,
     g_show_progress = FALSE;
     return;
   }
-  gtk_widget_set_sensitive(g_di.apply_button,FALSE);	      
+  gtk_widget_set_sensitive(g_di.apply_button,FALSE);
 
   /* p_smp_close_callback(NULL, data); */
 }
@@ -487,7 +487,7 @@ p_smp_toggle_callback (GtkWidget *widget,
   {
      if(g_di.orig_inten_button)
      {
-       gtk_widget_set_sensitive(g_di.orig_inten_button,g_values.hold_inten);	      
+       gtk_widget_set_sensitive(g_di.orig_inten_button,g_values.hold_inten);
      }
      p_refresh_dst_preview(g_di.dst_preview,  &g_dst_preview_buffer[0]);
   }
@@ -509,13 +509,13 @@ p_gradient_callback(GtkWidget *w, gint32 id)
    if((id == SMP_GRADIENT) || (id == SMP_INV_GRADIENT))
    {
       g_values.sample_id = id;
-      p_get_gradient(id); 
+      p_get_gradient(id);
       p_smp_get_colors_callback(NULL, NULL);
       if(g_di.sample_preview) p_clear_preview(g_di.sample_preview);
       if(g_di.apply_button != NULL)
         gtk_widget_set_sensitive(g_di.apply_button,TRUE);
-      if(g_di.get_smp_colors_button != NULL)	      
-        gtk_widget_set_sensitive(g_di.get_smp_colors_button,FALSE);	      
+      if(g_di.get_smp_colors_button != NULL)
+        gtk_widget_set_sensitive(g_di.get_smp_colors_button,FALSE);
    }
 } /* end p_gradient_callback */
 
@@ -524,25 +524,25 @@ p_smp_menu_callback(gint32 id, gpointer data)
 {
    gint32 *id_ptr;
 
-   if(g_Sdebug)  printf("MENU_CB: data %p,  dst: %x, samp %x\n", data, (int)&g_values.sample_id,  (int)&g_values.dst_id);
+   if(TRUE)  printf("MENU_CB: id: %d,  data %p,  dst: %x, samp %x\n", id, data, (int)&g_values.sample_id,  (int)&g_values.dst_id);
 
    if((id_ptr = (gint32 *)data) != NULL)
    {
       *id_ptr = id;
       p_update_preview(id_ptr);
       if(g_di.get_smp_colors_button != NULL)
-        gtk_widget_set_sensitive(g_di.get_smp_colors_button,TRUE);	      
+        gtk_widget_set_sensitive(g_di.get_smp_colors_button,TRUE);
    }
 } /* end p_smp_menu_callback */
 
 static gint
 p_smp_constrain(gint32 image_id, gint32 drawable_id, gpointer data)
-{ 
+{
   if(image_id < 0)                         { return (FALSE); }
-  
+
   /* dont accept layers from indexed images */
-  if (gimp_drawable_is_indexed(drawable_id))     { return (FALSE); } 
-  
+  if (gimp_drawable_is_indexed(drawable_id))     { return (FALSE); }
+
   return (TRUE);
 } /* end p_smp_constrain */
 
@@ -616,7 +616,7 @@ p_smp_adj_lvl_out_max_upd_callback(GtkAdjustment *adjustment,
   value = CLAMP ((adjustment->value), 1, 255);
 
   if (value != g_values.lvl_out_max)
-  {    
+  {
     g_values.lvl_out_max = value;
     upd_flags = OUTPUT_SLIDERS | OUTPUT_LEVELS | DRAW | REFRESH_DST;
     if(g_values.lvl_out_max < g_values.lvl_out_min)
@@ -720,14 +720,14 @@ p_clear_preview(GtkWidget *preview)
   guchar *l_ptr;
 
   l_ptr = &l_rowbuf[0];
-  for(l_x = 0; l_x < PREVIEW_SIZE_X; l_x++) 
+  for(l_x = 0; l_x < PREVIEW_SIZE_X; l_x++)
   {
     l_ptr[0] = 170;
     l_ptr[1] = 170;
     l_ptr[2] = 170;
     l_ptr += PREVIEW_BPP;
   }
-  
+
   for(l_y = 0; l_y < PREVIEW_SIZE_Y; l_y++)
   {
     gtk_preview_draw_row(GTK_PREVIEW(preview), &l_rowbuf[0], 0, l_y, PREVIEW_SIZE_X);
@@ -737,10 +737,10 @@ p_clear_preview(GtkWidget *preview)
 
 
 void
-p_update_pv (GtkWidget *preview, 
-	     gint32     show_selection, 
-	     t_GDRW    *gdrw, 
-	     guchar    *dst_buffer, 
+p_update_pv (GtkWidget *preview,
+	     gint32     show_selection,
+	     t_GDRW    *gdrw,
+	     guchar    *dst_buffer,
 	     gint       is_color)
 {
   guchar  l_rowbuf[4 * PREVIEW_SIZE_X];
@@ -757,10 +757,10 @@ p_update_pv (GtkWidget *preview,
   gint    l_dstep;
   guchar  l_check;
   guchar  l_alpha;
- 
+
 
   if(preview == NULL) return;
-  
+
   /* init gray pixel (if we are called without a sourceimage (gdwr == NULL) */
   l_pixel[0] = l_pixel[1] =l_pixel[2] = l_pixel[3] = 127;
 
@@ -783,7 +783,7 @@ p_update_pv (GtkWidget *preview,
       l_ofx = gdrw->x1;
       l_ofy = gdrw->y1 + ((l_sel_height - (PREVIEW_SIZE_Y * l_scale_y)) / 2);
     }
-    
+
   }
   else
   {
@@ -803,7 +803,7 @@ p_update_pv (GtkWidget *preview,
     }
   }
 
-  /* check if output goes to previw widget or to dst_buffer */  
+  /* check if output goes to previw widget or to dst_buffer */
   if(dst_buffer) { l_buf_ptr = dst_buffer; l_dstep = PREVIEW_BPP +1; }
   else           { l_buf_ptr = &l_dummy[0]; l_dstep = 0; }
 
@@ -829,9 +829,9 @@ p_update_pv (GtkWidget *preview,
 	  {
 	    l_maskbytes[0] = 255;
 	  }
-	  
+
 	}
-	
+
 	l_alpha = l_pixel[gdrw->index_alpha];
 	if((gdrw->index_alpha == 0)             /* has no alpha channel */
 	|| (l_alpha == 255))                    /* or is full opaque */
@@ -847,9 +847,9 @@ p_update_pv (GtkWidget *preview,
             if(gdrw->bpp > 2)  *l_ptr = LUMINOSITY_1(l_pixel);
             else               *l_ptr = l_pixel[0];
 
-            *l_buf_ptr    = *l_ptr;    /* copy to buffer (or to dummy byte) */      
-             l_buf_ptr[1] = l_ptr[1] = *l_ptr;	/* copy to buffer (or to dummy byte) */      
-             l_buf_ptr[2] = l_ptr[2] = *l_ptr;	/* copy to buffer (or to dummy byte) */      
+            *l_buf_ptr    = *l_ptr;    /* copy to buffer (or to dummy byte) */
+             l_buf_ptr[1] = l_ptr[1] = *l_ptr;	/* copy to buffer (or to dummy byte) */
+             l_buf_ptr[2] = l_ptr[2] = *l_ptr;	/* copy to buffer (or to dummy byte) */
           }
 	  l_buf_ptr[3] = l_maskbytes[0];
 	}
@@ -864,7 +864,7 @@ p_update_pv (GtkWidget *preview,
 	  {
 	     l_check = GIMP_CHECK_DARK * 255;
 	  }
-	  
+
 	  if(l_alpha == 0)
 	  {
 	     /* full transparent */
@@ -885,25 +885,25 @@ p_update_pv (GtkWidget *preview,
 	     {
                if(gdrw->bpp > 2)  *l_ptr =  MIX_CHANNEL(LUMINOSITY_1(l_pixel), l_check, l_alpha);
                else               *l_ptr =  MIX_CHANNEL(l_pixel[0], l_check, l_alpha);
-	       
-               *l_buf_ptr    = *l_ptr;    /* copy to buffer (or to dummy byte) */      
-        	l_buf_ptr[1] = l_ptr[1] = *l_ptr;	/* copy to buffer (or to dummy byte) */      
-        	l_buf_ptr[2] = l_ptr[2] = *l_ptr;	/* copy to buffer (or to dummy byte) */      
+
+               *l_buf_ptr    = *l_ptr;    /* copy to buffer (or to dummy byte) */
+        	l_buf_ptr[1] = l_ptr[1] = *l_ptr;	/* copy to buffer (or to dummy byte) */
+        	l_buf_ptr[2] = l_ptr[2] = *l_ptr;	/* copy to buffer (or to dummy byte) */
              }
 	  }
 	  l_buf_ptr[3] = MIN(l_maskbytes[0], l_alpha);
 	}
-        
+
  	l_buf_ptr += l_dstep;   /* advance (or stay at dummy byte) */
         l_ptr += PREVIEW_BPP;
      }
-  
+
      if(dst_buffer == NULL)
      {
        gtk_preview_draw_row(GTK_PREVIEW(preview), &l_rowbuf[0], 0, l_y, PREVIEW_SIZE_X);
      }
   }
-  
+
   if(dst_buffer == NULL)
   {
     gtk_widget_queue_draw(preview);
@@ -998,7 +998,7 @@ p_smp_get_colors_callback (GdkWindow *window,
      if (p_main_colorize(MC_GET_SAMPLE_COLORS) >= 0)  /* do not colorize, just analyze sample colors */
      {
        if(g_di.apply_button != NULL)
-         gtk_widget_set_sensitive(g_di.apply_button,TRUE);	      
+         gtk_widget_set_sensitive(g_di.apply_button,TRUE);
      }
   }
   for (i = 0; i < GRADIENT_HEIGHT; i++)
@@ -1018,7 +1018,7 @@ p_levels_update (gint update)
   gint i;
 
   if(g_Sdebug)  printf("p_levels_update: update reques %x\n", update);
-  
+
   /*  Recalculate the transfer array  */
   p_calculate_level_transfers();
   if (update & REFRESH_DST)
@@ -1132,7 +1132,7 @@ p_level_in_events (GtkWidget    *widget,
   {
     case GDK_EXPOSE:
       if(g_Sdebug) printf("EVENT: GDK_EXPOSE\n");
-      if (widget == g_di.in_lvl_drawarea) 
+      if (widget == g_di.in_lvl_drawarea)
       { p_levels_update (INPUT_SLIDERS);
       }
       break;
@@ -1240,7 +1240,7 @@ p_level_out_events (GtkWidget    *widget,
   {
     case GDK_EXPOSE:
       if(g_Sdebug) printf("OUT_EVENT: GDK_EXPOSE\n");
-      if (widget == g_di.sample_drawarea) 
+      if (widget == g_di.sample_drawarea)
       { p_levels_update (OUTPUT_SLIDERS);
       }
       break;
@@ -1330,7 +1330,7 @@ p_smp_dialog (void)
   GtkWidget *pframe;
   GtkWidget *table;
   GtkWidget *check_button;
-  GtkWidget *label; 
+  GtkWidget *label;
   GtkWidget *option_menu;
   GtkWidget *menu;
   GtkWidget *menu_item;
@@ -1341,13 +1341,13 @@ p_smp_dialog (void)
 
   /* set flags for check buttons from mode value bits */
   if (g_Sdebug) g_print ("p_smp_dialog START\n");
- 
+
   /* init some dialog variables */
   g_di.enable_preview_update = FALSE;
   g_di.sample_show_selection = TRUE;
   g_di.dst_show_selection    = TRUE;
   g_di.dst_show_color        = TRUE;
-  g_di.sample_show_color     = TRUE;  
+  g_di.sample_show_color     = TRUE;
   g_di.orig_inten_button     = NULL;
 
   /* Init GTK  */
@@ -1509,7 +1509,7 @@ p_smp_dialog (void)
                     &g_di.sample_show_color);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
 				g_di.sample_show_color);
-  
+
   l_ty++;
 
   /* Preview (Dst) */
@@ -1547,11 +1547,11 @@ p_smp_dialog (void)
   vbox2 = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (pframe), vbox2);
   gtk_table_attach (GTK_TABLE (table), pframe, 0, 2, l_ty, l_ty+1, 0, 0, 0, 0);
-  
+
   g_di.in_lvl_gray_preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
   gtk_preview_size (GTK_PREVIEW (g_di.in_lvl_gray_preview),
 		    DA_WIDTH, GRADIENT_HEIGHT);
-  gtk_widget_set_events (g_di.in_lvl_gray_preview, LEVELS_DA_MASK);  
+  gtk_widget_set_events (g_di.in_lvl_gray_preview, LEVELS_DA_MASK);
   gtk_box_pack_start (GTK_BOX (vbox2), g_di.in_lvl_gray_preview, FALSE, TRUE, 0);
   gtk_widget_show (g_di.in_lvl_gray_preview);
 
@@ -1631,7 +1631,7 @@ p_smp_dialog (void)
   /* input gamma spinbutton */
   data = gtk_adjustment_new ((gfloat)g_values.lvl_in_gamma, 0.1, 10.0, 0.02, 0.2, 0.2);
   g_di.adj_lvl_in_gamma = GTK_ADJUSTMENT (data);
-  
+
   spinbutton = gtk_spin_button_new (g_di.adj_lvl_in_gamma, 0.5, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
@@ -1694,7 +1694,7 @@ p_smp_dialog (void)
   gtk_widget_show (hbox);
 
   l_ty++;
-  
+
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_table_attach (GTK_TABLE (table), hbox, 0, 2, l_ty, l_ty+1,
 		    GTK_FILL, 0, 0, 0);
@@ -1723,7 +1723,7 @@ p_smp_dialog (void)
                     &g_values.orig_inten);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
 				g_values.orig_inten);
-  
+
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_table_attach (GTK_TABLE (table), hbox, 3, 5, l_ty, l_ty+1,
 		    GTK_FILL, 0, 0, 0);
@@ -1739,7 +1739,7 @@ p_smp_dialog (void)
                     &g_values.rnd_subcolors);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
 				g_values.rnd_subcolors);
-  
+
   /* check button */
   check_button = gtk_check_button_new_with_label (_("Smooth Samplecolors"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
@@ -1792,7 +1792,7 @@ p_print_ppm(gchar *ppm_name)
     for(l_idx = 0; l_idx < 256; l_idx++)
     {
       col_ptr = g_lum_tab[l_idx].col_ptr;
-       
+
       for(l_cnt = 0; l_cnt < 256; l_cnt++)
       {
          l_r = l_g = l_b = 0;
@@ -1808,7 +1808,7 @@ p_print_ppm(gchar *ppm_name)
            if(l_cnt > 20) col_ptr = col_ptr->next;
          }
          fprintf(fp, "%d %d %d\n", l_r, l_g, l_b);
-         
+
 
       }
     }
@@ -1820,7 +1820,7 @@ static void
 p_print_color_list(FILE *fp, t_samp_color_elem *col_ptr)
 {
   if(fp == NULL) return;
-  
+
   while(col_ptr)
   {
      fprintf(fp, "  RGBA: %03d %03d %03d %03d  sum: [%d]\n",
@@ -1832,7 +1832,7 @@ p_print_color_list(FILE *fp, t_samp_color_elem *col_ptr)
            );
 
      col_ptr = col_ptr->next;
-  }  
+  }
 }
 
 static void
@@ -1840,12 +1840,12 @@ p_print_table(FILE *fp)
 {
   gint l_idx;
 
-  if(fp == NULL) return;  
- 
+  if(fp == NULL) return;
+
   fprintf(fp, "---------------------------\n");
   fprintf(fp, "p_print_table\n");
   fprintf(fp, "---------------------------\n");
-  
+
   for(l_idx = 0; l_idx < 256; l_idx++)
   {
     fprintf(fp, "LUM [%03d]  pixcount:%d\n", l_idx, (int)g_lum_tab[l_idx].all_samples);
@@ -1857,13 +1857,13 @@ static void
 p_print_transtable(FILE *fp)
 {
   gint l_idx;
- 
+
   if(fp == NULL) return;
-  
+
   fprintf(fp, "---------------------------\n");
   fprintf(fp, "p_print_transtable\n");
   fprintf(fp, "---------------------------\n");
-  
+
   for(l_idx = 0; l_idx < 256; l_idx++)
   {
     fprintf(fp, "LVL_TRANS [%03d]  in_lvl: %3d  out_lvl: %3d\n",
@@ -1875,19 +1875,19 @@ static void
 p_print_values(FILE *fp)
 {
   if(fp == NULL) return;
-  
-  fprintf(fp, "sample_colorize: params\n");
-  fprintf(fp, "g_values.hold_inten     :%d\n", (int)g_values.hold_inten);   
-  fprintf(fp, "g_values.orig_inten     :%d\n", (int)g_values.orig_inten);   
-  fprintf(fp, "g_values.rnd_subcolors  :%d\n", (int)g_values.rnd_subcolors);   
-  fprintf(fp, "g_values.guess_missing  :%d\n", (int)g_values.guess_missing);   
-  fprintf(fp, "g_values.lvl_in_min     :%d\n", (int)g_values.lvl_in_min);   
-  fprintf(fp, "g_values.lvl_in_max     :%d\n", (int)g_values.lvl_in_max);   
-  fprintf(fp, "g_values.lvl_in_gamma   :%f\n", g_values.lvl_in_gamma);   
-  fprintf(fp, "g_values.lvl_out_min    :%d\n", (int)g_values.lvl_out_min);   
-  fprintf(fp, "g_values.lvl_out_max    :%d\n", (int)g_values.lvl_out_max);   
 
-  fprintf(fp, "g_values.tol_col_err    :%f\n", g_values.tol_col_err);   
+  fprintf(fp, "sample_colorize: params\n");
+  fprintf(fp, "g_values.hold_inten     :%d\n", (int)g_values.hold_inten);
+  fprintf(fp, "g_values.orig_inten     :%d\n", (int)g_values.orig_inten);
+  fprintf(fp, "g_values.rnd_subcolors  :%d\n", (int)g_values.rnd_subcolors);
+  fprintf(fp, "g_values.guess_missing  :%d\n", (int)g_values.guess_missing);
+  fprintf(fp, "g_values.lvl_in_min     :%d\n", (int)g_values.lvl_in_min);
+  fprintf(fp, "g_values.lvl_in_max     :%d\n", (int)g_values.lvl_in_max);
+  fprintf(fp, "g_values.lvl_in_gamma   :%f\n", g_values.lvl_in_gamma);
+  fprintf(fp, "g_values.lvl_out_min    :%d\n", (int)g_values.lvl_out_min);
+  fprintf(fp, "g_values.lvl_out_max    :%d\n", (int)g_values.lvl_out_max);
+
+  fprintf(fp, "g_values.tol_col_err    :%f\n", g_values.tol_col_err);
 }
 
 /* -----------------------------
@@ -1908,21 +1908,21 @@ p_get_filevalues()
   g_values.lvl_in_min = 0;
   g_values.lvl_in_max = 255;
   g_values.lvl_in_gamma = 1.0;
-*/  
+*/
   g_values.tol_col_err = 5.5;
-  
+
   l_fp = fopen("sample_colorize.values", "r");
   if(l_fp != NULL)
-  {  
+  {
      fgets(&l_buf[0], 999, l_fp);
-     sscanf(&l_buf[0], "%f", 
+     sscanf(&l_buf[0], "%f",
 		       &g_values.tol_col_err
 		       );
-     
-  
+
+
      fclose(l_fp);
   }
-  
+
   printf("g_values.tol_col_err    :%f\n", g_values.tol_col_err);
 }	/* end p_get_filevalues */
 
@@ -1932,25 +1932,25 @@ gint32 p_color_error(guchar ref_red, guchar ref_green,  guchar ref_blue,
   long   l_ff;
   long   l_fs;
   long   cmp_h, ref_h;
-  
+
   /* 1. Brightness differences */
-  cmp_h = (3 * cmp_red + 6 * cmp_green + cmp_blue) / 10; 
-  ref_h = (3 * ref_red + 6 * ref_green + ref_blue) / 10; 
+  cmp_h = (3 * cmp_red + 6 * cmp_green + cmp_blue) / 10;
+  ref_h = (3 * ref_red + 6 * ref_green + ref_blue) / 10;
 
   l_fs = abs(ref_h - cmp_h);
-  l_ff = l_fs * l_fs; 
+  l_ff = l_fs * l_fs;
 
   /* 2. add Red Color differences */
   l_fs = abs(ref_red - cmp_red);
-  l_ff += (l_fs * l_fs); 
+  l_ff += (l_fs * l_fs);
 
   /* 3. add  Green Color differences */
   l_fs = abs(ref_green - cmp_green);
-  l_ff += (l_fs * l_fs); 
+  l_ff += (l_fs * l_fs);
 
   /* 4. add  Blue Color differences */
   l_fs = abs(ref_blue - cmp_blue);
-  l_ff += (l_fs * l_fs); 
+  l_ff += (l_fs * l_fs);
 
   return((gint32)(l_ff));
 }	/* end p_color_error */
@@ -1960,10 +1960,10 @@ p_provide_tile(t_GDRW *gdrw, gint col, gint row, gint shadow )
 {
     guchar  *ptr;
     gint i;
-    
+
     if ( col != gdrw->tile_col || row != gdrw->tile_row || !gdrw->tile )
     {
-       if( gdrw->tile ) 
+       if( gdrw->tile )
        {
 	 gimp_tile_unref( gdrw->tile, gdrw->tile_dirty );
        }
@@ -1976,7 +1976,7 @@ p_provide_tile(t_GDRW *gdrw, gint col, gint row, gint shadow )
        gdrw->tile_swapcount++;
 
        return;
-       
+
        /* debug start */
 
        printf("\np_provide_tile: row: %d col: %d data:", (int)row, (int)col);
@@ -1988,7 +1988,7 @@ p_provide_tile(t_GDRW *gdrw, gint col, gint row, gint shadow )
          ptr++;
        }
        printf("\n\n");
-       
+
        /* debug stop */
     }
 }	/* end p_provide_tile */
@@ -2034,7 +2034,7 @@ static void
 p_clear_tables()
 {
   gint l_idx;
-  
+
   for(l_idx = 0; l_idx < 256; l_idx++)
   {
     g_lum_tab[l_idx].col_ptr = NULL;
@@ -2052,12 +2052,12 @@ void
 p_free_colors()
 {
   gint l_lum;
-  t_samp_color_elem *l_col_ptr; 
-  t_samp_color_elem *l_next_ptr; 
+  t_samp_color_elem *l_col_ptr;
+  t_samp_color_elem *l_next_ptr;
 
   for(l_lum = 0; l_lum < 256; l_lum++)
   {
-    for(l_col_ptr = g_lum_tab[l_lum].col_ptr; 
+    for(l_col_ptr = g_lum_tab[l_lum].col_ptr;
         l_col_ptr != NULL;
         l_col_ptr = l_next_ptr)
     {
@@ -2067,11 +2067,11 @@ p_free_colors()
     g_lum_tab[l_lum].col_ptr = NULL;
     g_lum_tab[l_lum].all_samples = 0;
   }
-  
+
 }	/* end p_free_colors */
 
 /* setup lum transformer table according to input_levels, gamma and output levels
- * (uses sam algorithm as GIMP Level Tool) 
+ * (uses sam algorithm as GIMP Level Tool)
  */
 static void
 p_calculate_level_transfers ()
@@ -2084,22 +2084,22 @@ p_calculate_level_transfers ()
   if(g_values.lvl_in_max >= g_values.lvl_in_min)
   {
     l_in_max = g_values.lvl_in_max;
-    l_in_min = g_values.lvl_in_min; 
+    l_in_min = g_values.lvl_in_min;
   }
   else
   {
     l_in_max = g_values.lvl_in_min;
-    l_in_min = g_values.lvl_in_max; 
+    l_in_min = g_values.lvl_in_max;
   }
   if(g_values.lvl_out_max >= g_values.lvl_out_min)
   {
     l_out_max = g_values.lvl_out_max;
-    l_out_min = g_values.lvl_out_min; 
+    l_out_min = g_values.lvl_out_min;
   }
   else
   {
     l_out_max = g_values.lvl_out_min;
-    l_out_min = g_values.lvl_out_max; 
+    l_out_min = g_values.lvl_out_max;
   }
 
   /*  Recalculate the levels arrays  */
@@ -2132,7 +2132,7 @@ t_samp_color_elem *
 p_new_samp_color(guchar *color)
 {
   t_samp_color_elem *l_col_ptr;
-  
+
   l_col_ptr = calloc(1, sizeof(t_samp_color_elem));
   if(l_col_ptr == NULL)
   {
@@ -2153,19 +2153,19 @@ void
 p_add_color(guchar *color)
 {
   gint32             l_lum;
-  t_samp_color_elem *l_col_ptr; 
-   
+  t_samp_color_elem *l_col_ptr;
+
   l_lum = LUMINOSITY_1(color);
 
   g_lum_tab[l_lum].all_samples++;
   g_lum_tab[l_lum].from_sample = TRUE;
-  
+
   /* check if exactly the same color is already in the list */
-  for(l_col_ptr = g_lum_tab[l_lum].col_ptr; 
+  for(l_col_ptr = g_lum_tab[l_lum].col_ptr;
       l_col_ptr != NULL;
       l_col_ptr = (t_samp_color_elem *)l_col_ptr->next)
   {
-     if((color[0] == l_col_ptr->color[0]) 
+     if((color[0] == l_col_ptr->color[0])
      && (color[1] == l_col_ptr->color[1])
      && (color[2] == l_col_ptr->color[2]))
      {
@@ -2174,9 +2174,9 @@ p_add_color(guchar *color)
      }
   }
 
-  /* alloc and init element for the new color  */  
+  /* alloc and init element for the new color  */
   l_col_ptr = p_new_samp_color(color);
-  
+
   if(l_col_ptr != NULL)
   {
      /* add new color element as 1.st of the list */
@@ -2196,7 +2196,7 @@ p_sort_color(gint32  lum)
   t_samp_color_elem *l_sorted_col_ptr;
   gint32             l_min;
   gint32             l_min_next;
-  
+
   l_sorted_col_ptr = NULL;
   l_min_next	   = 0;
 
@@ -2247,7 +2247,7 @@ void
 p_cnt_same_sample_colortones(t_samp_color_elem *ref_ptr, guchar *prev_color, guchar *color_tone, gint *csum)
 {
   gint32             l_col_error, l_ref_error;
-  t_samp_color_elem *l_col_ptr; 
+  t_samp_color_elem *l_col_ptr;
 
   l_ref_error = 0;
   if(prev_color != NULL)
@@ -2255,9 +2255,9 @@ p_cnt_same_sample_colortones(t_samp_color_elem *ref_ptr, guchar *prev_color, guc
     l_ref_error = p_color_error(ref_ptr->color[0],   ref_ptr->color[1],   ref_ptr->color[2],
                                 prev_color[0],       prev_color[1],       prev_color[2]);
   }
-  
+
   /* collect colors that are (nearly) the same */
-  for(l_col_ptr = ref_ptr->next; 
+  for(l_col_ptr = ref_ptr->next;
       l_col_ptr != NULL;
       l_col_ptr = (t_samp_color_elem *)l_col_ptr->next)
   {
@@ -2285,7 +2285,7 @@ p_cnt_same_sample_colortones(t_samp_color_elem *ref_ptr, guchar *prev_color, guc
 	     memcpy(color_tone, &l_col_ptr->color[0], 3);
 	     l_ref_error = l_col_error;
 	  }
-	}	
+	}
 
      }
   }
@@ -2299,13 +2299,13 @@ void
 p_ideal_samples()
 {
   gint32             l_lum;
-  t_samp_color_elem *l_col_ptr; 
+  t_samp_color_elem *l_col_ptr;
   guchar            *l_color;
-  
+
   guchar             l_color_tone[4];
   guchar             l_color_ideal[4];
   gint                l_csum, l_maxsum;
-  
+
   l_color = NULL;
   for(l_lum = 0; l_lum < 256; l_lum++)
   {
@@ -2314,11 +2314,11 @@ p_ideal_samples()
     p_sort_color(l_lum);
     l_col_ptr = g_lum_tab[l_lum].col_ptr;
     memcpy(&l_color_ideal[0], &l_col_ptr->color[0], 3);
-   
+
     l_maxsum = 0;
-            
+
     /* collect colors that are (nearly) the same */
-    for(; 
+    for(;
 	l_col_ptr != NULL;
 	l_col_ptr = (t_samp_color_elem *)l_col_ptr->next)
     {
@@ -2352,11 +2352,11 @@ p_guess_missing_colors()
   gint32             l_lum;
   gint32             l_idx;
   float              l_div;
- 
+
   guchar             l_lo_color[4];
   guchar             l_hi_color[4];
   guchar             l_new_color[4];
-  
+
   l_lo_color[0] = 0;
   l_lo_color[1] = 0;
   l_lo_color[2] = 0;
@@ -2369,7 +2369,7 @@ p_guess_missing_colors()
   l_new_color[1] = 0;
   l_new_color[2] = 0;
   l_new_color[3] = 255;
-  
+
   for(l_lum = 0; l_lum < 256; l_lum++)
   {
     if((g_lum_tab[l_lum].col_ptr == NULL) || (g_lum_tab[l_lum].from_sample == FALSE))
@@ -2396,14 +2396,14 @@ p_guess_missing_colors()
 	 l_new_color[0] = l_lo_color[0] + ((float)(l_hi_color[0] - l_lo_color[0]) / l_div);
 	 l_new_color[1] = l_lo_color[1] + ((float)(l_hi_color[1] - l_lo_color[1]) / l_div);
 	 l_new_color[2] = l_lo_color[2] + ((float)(l_hi_color[2] - l_lo_color[2]) / l_div);
-	 
+
 /*
  * 	 printf("LO: %03d %03d %03d HI: %03d %03d %03d   NEW: %03d %03d %03d\n",
  * 	       (int)l_lo_color[0],  (int)l_lo_color[1],  (int)l_lo_color[2],
  * 	       (int)l_hi_color[0],  (int)l_hi_color[1],  (int)l_hi_color[2],
  * 	       (int)l_new_color[0], (int)l_new_color[1], (int)l_new_color[2]);
  */
-	       
+
        }
        g_lum_tab[l_lum].col_ptr = p_new_samp_color(&l_new_color[0]);
        g_lum_tab[l_lum].from_sample = FALSE;
@@ -2411,9 +2411,9 @@ p_guess_missing_colors()
     }
 
     memcpy(&l_lo_color[0], &g_sample_color_tab[l_lum + l_lum + l_lum], 3);
-    
+
   }
-  
+
 }	/* end p_guess_missing_colors */
 
 void
@@ -2422,11 +2422,11 @@ p_fill_missing_colors()
   gint32             l_lum;
   gint32             l_idx;
   gint32             l_lo_idx;
- 
+
   guchar             l_lo_color[4];
   guchar             l_hi_color[4];
   guchar             l_new_color[4];
-  
+
   l_lo_color[0] = 0;
   l_lo_color[1] = 0;
   l_lo_color[2] = 0;
@@ -2479,7 +2479,7 @@ p_fill_missing_colors()
 	   l_new_color[1] = l_lo_color[1];
 	   l_new_color[2] = l_lo_color[2];
 	 }
-	 
+
        }
        g_lum_tab[l_lum].col_ptr = p_new_samp_color(&l_new_color[0]);
        g_lum_tab[l_lum].from_sample = FALSE;
@@ -2491,7 +2491,7 @@ p_fill_missing_colors()
       memcpy(&l_lo_color[0], &g_sample_color_tab[l_lum + l_lum + l_lum], 3);
     }
   }
-  
+
 }	/* end p_fill_missing_colors */
 
 /* get 256 samples of active gradient (optional in invers order) */
@@ -2502,12 +2502,12 @@ p_get_gradient (gint mode)
   gint		l_lum;
 
   p_free_colors();
-  f_samples = gimp_gradients_sample_uniform (256 /* n_samples */);
+  f_samples = gimp_gradients_sample_uniform (256 /* n_samples */,
+                                             mode == SMP_INV_GRADIENT);
 
   for (l_lum = 0; l_lum < 256; l_lum++)
   {
-      if(mode == SMP_GRADIENT) { f_samp = &f_samples[l_lum * 4]; }
-      else                     { f_samp = &f_samples[(255 - l_lum) * 4]; }
+      f_samp = &f_samples[l_lum * 4];
 
       g_sample_color_tab[l_lum + l_lum + l_lum   ] = f_samp[0] * 255;
       g_sample_color_tab[l_lum + l_lum + l_lum +1] = f_samp[1] * 255;
@@ -2525,57 +2525,21 @@ static gint32
 p_is_layer_alive(gint32 drawable_id)
 {
   /* return -1 if layer has become invalid */
-  gint32 *layers;
-  gint32 *images;
-  gint    nlayers;
-  gint    nimages;
-  gint    l_idi, l_idl;
-  gint    l_found;
 
   if (drawable_id < 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
- /* gimp_layer_get_image_id:  crash in gimp 1.1.2 if called with invalid drawable_id
-  *                           gimp 1.0.2 works fine !!
-  */
-/*
- *   if(gimp_layer_get_image_id(drawable_id) < 0)
- *   {
- *      printf("sample colorize: invalid image_id (maybe Image was closed)\n");
- *      return (-1);
- *   }
- */
+  if (gimp_layer_get_image_id (drawable_id) < 0)
+    {
+      printf ("sample colorize: unknown layer_id %d (Image closed?)\n",
+              (int)drawable_id);
+      return -1;
+    }
 
-  images = gimp_image_list (&nimages);
-  l_idi = nimages -1;
-  l_found = FALSE;
-  while ((l_idi >= 0) && images)
-  {
-     layers = gimp_image_get_layers (images[l_idi], &nlayers);
-     l_idl = nlayers - 1;
-     while ((l_idl >= 0) && layers)
-     {
-       if (drawable_id == layers[l_idl])
-       {
-          l_found = TRUE;
-          break;
-       }
-       l_idl--;
-     }
-     g_free (layers);
-     l_idi--;
-  }
-  g_free(images);
-  if (!l_found)
-  {
-     printf("sample colorize: unknown layer_id %d (Image closed?)\n", 
-	    (int)drawable_id);
-     return -1;
-  }
   return drawable_id;
-}	/* end p_is_layer_alive */
+}
 
 static void
 p_end_gdrw(t_GDRW *gdrw)
@@ -2623,7 +2587,7 @@ p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow)
   gdrw->seldeltax = 0;
   gdrw->seldeltay = 0;
   gimp_drawable_offsets (drawable->drawable_id, &l_offsetx, &l_offsety);  /* get offsets within the image */
-  
+
   gimp_drawable_mask_bounds (drawable->drawable_id, &gdrw->x1, &gdrw->y1, &gdrw->x2, &gdrw->y2);
 
   gdrw->bpp = drawable->bpp;
@@ -2636,13 +2600,13 @@ p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow)
   {
      gdrw->index_alpha = 0;      /* there is no alpha channel */
   }
-    
+
   l_image_id = gimp_layer_get_image_id(drawable->drawable_id);
 
   /* check and see if we have a selection mask */
-  l_sel_channel_id  = gimp_image_get_selection(l_image_id);     
+  l_sel_channel_id  = gimp_image_get_selection(l_image_id);
 
-  if(g_Sdebug)  
+  if(g_Sdebug)
   {
      printf("p_init_gdrw: image_id %d sel_channel_id: %d\n", (int)l_image_id, (int)l_sel_channel_id);
      printf("p_init_gdrw: BOUNDS     x1: %d y1: %d x2:%d y2: %d\n",
@@ -2655,7 +2619,7 @@ p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow)
   {
       /* selection is TRUE */
       l_sel_gdrw = (t_GDRW *) calloc(1, sizeof(t_GDRW));
-      l_sel_gdrw->drawable = gimp_drawable_get (l_sel_channel_id);  
+      l_sel_gdrw->drawable = gimp_drawable_get (l_sel_channel_id);
 
       l_sel_gdrw->tile = NULL;
       l_sel_gdrw->tile_dirty = FALSE;
@@ -2673,7 +2637,7 @@ p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow)
       l_sel_gdrw->index_alpha = 0;   /* there is no alpha channel */
       l_sel_gdrw->sel_gdrw = NULL;
 
-      /* offset delta between drawable and selection 
+      /* offset delta between drawable and selection
        * (selection always has image size and should always have offsets of 0 )
        */
       gimp_drawable_offsets (l_sel_channel_id, &l_sel_offsetx, &l_sel_offsety);
@@ -2694,7 +2658,7 @@ p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow)
   else
   {
      gdrw->sel_gdrw = NULL;     /* selection is FALSE */
-  } 
+  }
 }	/* end p_init_gdrw */
 
 /* analyze the colors in the sample_drawable */
@@ -2748,7 +2712,7 @@ p_sample_analyze(t_GDRW *sample_gdrw)
        else                        l_x = l_col * sample_gdrw->tile_width;
        if(l_col == l_last_col)     l_x2 = sample_gdrw->x2;
        else                        l_x2 = (l_col +1) * sample_gdrw->tile_width;
-       
+
        for( ; l_x < l_x2; l_x++)
        {
          if(l_row == l_first_row)    l_y = sample_gdrw->y1;
@@ -2757,13 +2721,13 @@ p_sample_analyze(t_GDRW *sample_gdrw)
          else                        l_y2 = (l_row +1) * sample_gdrw->tile_height ;
 
          /* printf("X: %4d Y:%4d Y2:%4d\n", (int)l_x, (int)l_y, (int)l_y2); */
-       
+
          for( ; l_y < l_y2; l_y++)
          {
             /* check if the pixel is in the selection */
             if(sample_gdrw->sel_gdrw)
             {
-	       p_get_pixel(sample_gdrw->sel_gdrw, 
+	       p_get_pixel(sample_gdrw->sel_gdrw,
 	                  (l_x + sample_gdrw->seldeltax),
 		          (l_y + sample_gdrw->seldeltay),
 		           &color[0]);
@@ -2784,7 +2748,7 @@ p_sample_analyze(t_GDRW *sample_gdrw)
                l_sample_pixels++;
 	    }
          }
-         if(g_show_progress) gimp_progress_update (l_progress += l_progress_step);    
+         if(g_show_progress) gimp_progress_update (l_progress += l_progress_step);
        }
      }
    }
@@ -2799,7 +2763,7 @@ p_sample_analyze(t_GDRW *sample_gdrw)
     * and set g_sample_color_tab to the ideal colors.
     */
    p_ideal_samples();
-   p_calculate_level_transfers ();  
+   p_calculate_level_transfers ();
    if(g_values.guess_missing) { p_guess_missing_colors(); }
    else                       { p_fill_missing_colors(); }
 
@@ -2807,7 +2771,7 @@ p_sample_analyze(t_GDRW *sample_gdrw)
    if(g_Sdebug) p_print_ppm("sample_color_2.ppm");
    p_print_transtable(prot_fp);
    if(prot_fp) fclose(prot_fp);
-   
+
    /* check if there was at least one visible pixel */
    if (l_sample_pixels == 0)
    {
@@ -2831,7 +2795,7 @@ p_rnd_remap(gint32 lum, guchar *mapped_color)
     l_ct  = 0;
     l_idx = 0;
 
-    for(l_col_ptr = g_lum_tab[lum].col_ptr; 
+    for(l_col_ptr = g_lum_tab[lum].col_ptr;
         l_col_ptr != NULL;
         l_col_ptr = (t_samp_color_elem *)l_col_ptr->next)
     {
@@ -2840,7 +2804,7 @@ p_rnd_remap(gint32 lum, guchar *mapped_color)
        {
          /* printf("RND_remap: rnd: %d all:%d  ct:%d idx:%d\n",
           * l_rnd, (int)g_lum_tab[lum].all_samples, l_ct, l_idx);
-          */     
+          */
           memcpy(mapped_color, &l_col_ptr->color[0], 3);
           return;
        }
@@ -2865,25 +2829,25 @@ p_remap_pixel (guchar       *pixel,
   double      l_dlum;
 
   /* get brightness from (uncolorized) original */
-  l_lum = g_out_trans_tab[g_lvl_trans_tab[LUMINOSITY_1(original)]];     
+  l_lum = g_out_trans_tab[g_lvl_trans_tab[LUMINOSITY_1(original)]];
   if (g_values.rnd_subcolors)
   {
-    p_rnd_remap (l_lum, mapped_color); 
+    p_rnd_remap (l_lum, mapped_color);
   }
   else
   {
-    memcpy (mapped_color, &g_sample_color_tab[l_lum + l_lum + l_lum], 3); 
+    memcpy (mapped_color, &g_sample_color_tab[l_lum + l_lum + l_lum], 3);
   }
 
   if (g_values.hold_inten)
   {
-     if (g_values.orig_inten)  
-       { 
-	 l_orig_lum = LUMINOSITY_0(original); 
+     if (g_values.orig_inten)
+       {
+	 l_orig_lum = LUMINOSITY_0(original);
        }
-     else                     
-       { 
-	 l_orig_lum = 100.0 * g_lvl_trans_tab[LUMINOSITY_1(original)]; 
+     else
+       {
+	 l_orig_lum = 100.0 * g_lvl_trans_tab[LUMINOSITY_1(original)];
        }
      l_mapped_lum = LUMINOSITY_0(mapped_color);
 
@@ -2900,7 +2864,7 @@ p_remap_pixel (guchar       *pixel,
 	l_mr = mapped_color[0];
 	l_mg = mapped_color[1];
 	l_mb = mapped_color[2];
-	
+
 	if(l_mr > 0.0)
 	{
 	  l_red = l_orig_lum / (30 + (59 * l_mg / l_mr) + (11 * l_mb / l_mr));
@@ -2924,7 +2888,7 @@ p_remap_pixel (guchar       *pixel,
 	 * (this may change the hue and saturation,
 	 * more and more into white)
 	 */
-	
+
         if(l_red > 255)
 	{
 	   if((l_blu < 255) && (l_grn < 255))
@@ -2947,11 +2911,11 @@ p_remap_pixel (guchar       *pixel,
 		l_dg = l_dlum / (59.0 + 11.0);
 	     }
 	     l_grn += l_dg;
-	     l_blu += l_db;	     
+	     l_blu += l_db;
 	   }
-	   
+
            l_red = 255.0;
-	   
+
 	   if(l_grn > 255)
 	   {
              l_grn = 255.0;
@@ -2985,11 +2949,11 @@ p_remap_pixel (guchar       *pixel,
 		l_dr = l_dlum / (30.0 + 11.0);
 	     }
 	     l_red += l_dr;
-	     l_blu += l_db;	     
+	     l_blu += l_db;
 	   }
-	   
+
            l_grn = 255.0;
-	   
+
 	   if(l_red > 255)
 	   {
              l_red = 255.0;
@@ -3023,11 +2987,11 @@ p_remap_pixel (guchar       *pixel,
 		l_dg = l_dlum / (59.0 + 30.0);
 	     }
 	     l_grn += l_dg;
-	     l_red += l_dr;	     
+	     l_red += l_dr;
 	   }
-	   
+
            l_blu = 255.0;
-	   
+
 	   if(l_grn > 255)
 	   {
              l_grn = 255.0;
@@ -3043,7 +3007,7 @@ p_remap_pixel (guchar       *pixel,
         mapped_color[0] = CLAMP0255(l_red + 0.5);
         mapped_color[1] = CLAMP0255(l_grn + 0.5);
         mapped_color[2] = CLAMP0255(l_blu + 0.5);
-    
+
      }
   }
 
@@ -3076,13 +3040,13 @@ p_colorize_drawable (gint32 drawable_id)
    drawable = gimp_drawable_get (drawable_id);
    has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
 
-   if (g_show_progress) 
+   if (g_show_progress)
      gimp_progress_init (_("Remap Colorized..."));
 
-   gimp_rgn_iterate2 (drawable, run_mode, colorize_func, 
+   gimp_rgn_iterate2 (drawable, run_mode, colorize_func,
 		      GINT_TO_POINTER (has_alpha));
 
-   if (g_show_progress) 
+   if (g_show_progress)
      gimp_progress_update (0.0);
 }
 
@@ -3096,18 +3060,18 @@ p_main_colorize (gint mc_flags)
    gint32  l_max;
    gint32  l_id;
    gint    l_rc;
-  
+
    if(g_Sdebug)  p_get_filevalues();  /* for debugging: read values from file */
    sample_drawable = NULL;
    dst_drawable = NULL;
-   
+
    /* calculate value of tolerable color error */
    l_max = p_color_error(0,0,0,255,255,255); /* 260100 */
    g_tol_col_err = (((float)l_max  * (g_values.tol_col_err * g_values.tol_col_err)) / (100.0 *100.0));
    g_max_col_err = l_max;
-   
+
    l_rc = 0;
-   
+
    if (mc_flags & MC_GET_SAMPLE_COLORS)
    {
      l_id = g_values.sample_id;
@@ -3117,9 +3081,9 @@ p_main_colorize (gint mc_flags)
      }
      else
      {
-         if (p_is_layer_alive(l_id) < 0) 
-	   { 
-	     return -1; 
+         if (p_is_layer_alive(l_id) < 0)
+	   {
+	     return -1;
 	   }
          sample_drawable = gimp_drawable_get (l_id);
          p_init_gdrw (&l_sample_gdrw, sample_drawable, FALSE, FALSE);
@@ -3130,9 +3094,9 @@ p_main_colorize (gint mc_flags)
 
    if ((mc_flags & MC_DST_REMAP) && (l_rc == 0))
    {
-      if (p_is_layer_alive(g_values.dst_id) < 0) 
-	{ 
-	  return -1; 
+      if (p_is_layer_alive(g_values.dst_id) < 0)
+	{
+	  return -1;
 	}
       dst_drawable = gimp_drawable_get (g_values.dst_id);
       if (gimp_drawable_is_gray (g_values.dst_id))

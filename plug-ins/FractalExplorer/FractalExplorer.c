@@ -10,17 +10,17 @@
 /**********************************************************************
    The GIMP -- an image manipulation program
    Copyright (C) 1995 Spencer Kimball and Peter Mattis
-  
+
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation; either version 2 of the License, or
    (at your option) any later version.
-  
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-  
+
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -46,7 +46,7 @@
  */
 
 /**********************************************************************
- Include necessary files  
+ Include necessary files
  *********************************************************************/
 
 #include "config.h"
@@ -156,13 +156,13 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 /**********************************************************************
- MAIN()  
+ MAIN()
  *********************************************************************/
 
 MAIN()
 
 /**********************************************************************
- FUNCTION: query  
+ FUNCTION: query
  *********************************************************************/
 
 static void
@@ -510,7 +510,7 @@ explorer_render_row (const guchar *src_row,
 	    {
 	      /* Julia */
 	      xx = x * x - y * y + cx;
-	      y = 2.0 * x * y + cy; 
+	      y = 2.0 * x * y + cy;
 	    }
 	  else if (wvals.fractaltype == 2)
 	    {
@@ -648,10 +648,10 @@ delete_dialog_callback (GtkWidget *widget,
       /* Get the list and which item is selected */
       /* Only allow single selections */
 
-      sellist = GTK_LIST(list)->selection; 
-      
+      sellist = GTK_LIST(list)->selection;
+
       /* g_print ("list: %i\n", g_list_length (sellist)); */
-      
+
       sel_obj = (fractalexplorerOBJ *)
 	g_object_get_data (G_OBJECT (sellist->data), "fractalexplorer");
 
@@ -667,14 +667,14 @@ delete_dialog_callback (GtkWidget *widget,
 	{
 	clear_undo();
 	}
-      */  
+      */
       /* Free current obj */
       fractalexplorer_free_everything (sel_obj);
 
       /* Select previous one */
       if (pos > 0)
 	pos--;
-      
+
       if ((pos == 0) && (g_list_length (fractalexplorer_list) == 0))
 	{
 	  /*gtk_widget_sed_sensitive ();*/
@@ -713,20 +713,20 @@ delete_fractal_callback (GtkWidget *widget,
   if (delete_dialog)
     return FALSE;
 
-  sellist = GTK_LIST(list)->selection; 
+  sellist = GTK_LIST(list)->selection;
 
   sel_obj = (fractalexplorerOBJ *)
     g_object_get_data (G_OBJECT (sellist->data), "fractalexplorer");
 
   str = g_strdup_printf (_("Are you sure you want to delete\n"
-			   "\"%s\" from the list and from disk?"), 
+			   "\"%s\" from the list and from disk?"),
 			 sel_obj->draw_name);
-  
+
   delete_dialog = gimp_query_boolean_box (_("Delete Fractal"),
-					  gimp_standard_help_func, 
-					  "filters/fractalexplorer.html", 
+					  gimp_standard_help_func,
+					  "filters/fractalexplorer.html",
 					  GTK_STOCK_DIALOG_QUESTION,
-					  str, 
+					  str,
 					  GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
 					  G_OBJECT (widget), "destroy",
 					  delete_dialog_callback,
@@ -737,7 +737,7 @@ delete_fractal_callback (GtkWidget *widget,
   gtk_widget_show (delete_dialog);
 
   return FALSE;
-} 
+}
 
 static void
 fractalexplorer_list_ok_callback (GtkWidget *widget,
@@ -825,7 +825,7 @@ fractalexplorer_dialog_edit_list (GtkWidget          *lwidget,
   options->name_entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), options->name_entry, TRUE, TRUE, 0);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),obj->draw_name);
-		      
+
   gtk_widget_show (options->name_entry);
   gtk_widget_show (hbox);
 
@@ -866,7 +866,7 @@ new_fractalexplorer_obj (gchar *name)
 
   /* Leave options as before */
   pic_obj = current_obj = fractalexplorer;
-  
+
   new_list_item = fractalexplorer_list_add(fractalexplorer);
 
   /*  obj_creating = tmp_line = NULL; */
@@ -883,7 +883,7 @@ new_button_press (GtkWidget      *widget,
 		  gpointer        data)
 {
   GtkWidget * new_list_item;
-  
+
   new_list_item = new_fractalexplorer_obj((gchar*)data);
   fractalexplorer_dialog_edit_list(new_list_item,current_obj,TRUE);
 
@@ -891,7 +891,7 @@ new_button_press (GtkWidget      *widget,
 }
 
 /*
- * Load all fractalexplorer, which are founded in fractalexplorer-path-list, 
+ * Load all fractalexplorer, which are founded in fractalexplorer-path-list,
  * into fractalexplorer_list.
  */
 
@@ -904,10 +904,10 @@ fractalexplorer_list_pos (fractalexplorerOBJ *fractalexplorer)
 
   n = 0;
 
-  for (tmp = fractalexplorer_list; tmp; tmp = g_list_next (tmp)) 
+  for (tmp = fractalexplorer_list; tmp; tmp = g_list_next (tmp))
     {
       g = tmp->data;
-      
+
       if (strcmp (fractalexplorer->draw_name, g->draw_name) <= 0)
 	break;
 
@@ -983,7 +983,7 @@ fractalexplorer_new_pixmap (GtkWidget  *list,
 						  pixdata);
 
   pixmap_widget = gtk_pixmap_new (pixmap, mask);
-  gtk_widget_show (pixmap_widget); 
+  gtk_widget_show (pixmap_widget);
 
   return pixmap_widget;
 }
@@ -1000,7 +1000,7 @@ fractalexplorer_list_add (fractalexplorerOBJ *obj)
   list_item =
     fractalexplorer_list_item_new_with_label_and_pixmap (obj,
 							 obj->draw_name,
-							 list_pix);      
+							 list_pix);
 
   g_object_set_data (G_OBJECT (list_item), "fractalexplorer",
                      obj);
@@ -1010,7 +1010,7 @@ fractalexplorer_list_add (fractalexplorerOBJ *obj)
   list = g_list_append (NULL, list_item);
   gtk_list_insert_items (GTK_LIST (fractalexplorer_gtk_list), list, pos);
   gtk_widget_show (list_item);
-  gtk_list_select_item (GTK_LIST (fractalexplorer_gtk_list), pos);  
+  gtk_list_select_item (GTK_LIST (fractalexplorer_gtk_list), pos);
 
   g_signal_connect (list_item, "button_press_event",
                     G_CALLBACK (list_button_press),
@@ -1051,7 +1051,7 @@ build_list_items (GtkWidget *list)
 
       list_item =
 	fractalexplorer_list_item_new_with_label_and_pixmap
-	(g, g->draw_name,list_pix);      
+	(g, g->draw_name,list_pix);
       g_object_set_data (G_OBJECT (list_item), "factralexplorer",
                          g);
       gtk_list_append_items (GTK_LIST (list), g_list_append(NULL,list_item));
@@ -1072,7 +1072,7 @@ list_button_press (GtkWidget      *widget,
 {
 
   fractalexplorerOBJ * sel_obj;
-  
+
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
@@ -1279,7 +1279,7 @@ add_objects_list (void)
   gtk_widget_show (button);
 
   gimp_help_set_help_data (button,
-			   _("Select folder and rescan collection"), NULL); 
+			   _("Select folder and rescan collection"), NULL);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (fractalexplorer_rescan_list),
@@ -1291,7 +1291,7 @@ add_objects_list (void)
   gtk_widget_show (button);
 
   gimp_help_set_help_data (button,
-                           _("Delete currently selected fractal"), NULL); 
+                           _("Delete currently selected fractal"), NULL);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (delete_fractal_callback),

@@ -33,11 +33,14 @@ gboolean gimp_gradients_refresh           (void);
 gchar**  gimp_gradients_get_list          (gint           *num_gradients);
 gchar*   gimp_gradients_get_gradient      (void);
 gboolean gimp_gradients_set_gradient      (const gchar    *name);
-gdouble* gimp_gradients_sample_uniform    (gint            num_samples);
+gdouble* gimp_gradients_sample_uniform    (gint            num_samples,
+					   gboolean        reverse);
 gdouble* gimp_gradients_sample_custom     (gint            num_samples,
-					   const gdouble  *positions);
+					   const gdouble  *positions,
+					   gboolean        reverse);
 gchar*   gimp_gradients_get_gradient_data (const gchar    *name,
 					   gint            sample_size,
+					   gboolean        reverse,
 					   gint           *width,
 					   gdouble       **grad_data);
 

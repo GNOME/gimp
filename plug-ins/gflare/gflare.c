@@ -780,10 +780,13 @@ static void gradient_get_default            (gchar *name, guchar *values,
 					     gint nvalues);
 static void gradient_get_values_external    (gchar *gradient_name,
 					     guchar *values, gint nvalues);
-static void gradient_get_values_real_external   (gchar *gradient_name,
-						 guchar *values, gint nvalues);
-static GradientCacheItem *gradient_cache_lookup (gchar *name, gint *found);
-static void gradient_cache_zorch            (void);
+static void gradient_get_values_real_external   (gchar    *gradient_name,
+						 guchar   *values,
+                                                 gint      nvalues,
+                                                 gboolean  reverse);
+static GradientCacheItem *gradient_cache_lookup (gchar    *name,
+                                                 gint     *found);
+static void gradient_cache_zorch                (void);
 
 /* *** INSERT-FILE-END *** */
 
@@ -4870,7 +4873,11 @@ gradient_get_values_external (gchar  *gradient_name,
   ci = gradient_cache_lookup (gradient_name, &found);
   if (!found)
     {
-      gradient_get_values_real_external (gradient_name, ci->values, GRADIENT_RESOLUTION);
+#ifdef __GNUC__
+#warning FIXME: "reverse" hardcoded to FALSE.
+#endif
+      gradient_get_values_real_external (gradient_name, ci->values,
+                                         GRADIENT_RESOLUTION, FALSE);
     }
   if (nvalues == GRADIENT_RESOLUTION)
     {
@@ -4906,9 +4913,10 @@ gradient_get_values_external (gchar  *gradient_name,
 }
 
 static void
-gradient_get_values_real_external (gchar  *gradient_name,
-				   guchar *values,
-				   gint    nvalues)
+gradient_get_values_real_external (gchar    *gradient_name,
+				   guchar   *values,
+				   gint      nvalues,
+                                   gboolean  reverse)
 {
   gchar   *old_name;
   gdouble *tmp_values;
@@ -4919,7 +4927,7 @@ gradient_get_values_real_external (gchar  *gradient_name,
 
   gimp_gradients_set_gradient (gradient_name);
 
-  tmp_values = gimp_gradients_sample_uniform (nvalues);
+  tmp_values = gimp_gradients_sample_uniform (nvalues, reverse);
   for (i = 0; i < nvalues; i++)
     for (j = 0; j < 4; j++)
       values[4*i+j] = (guchar) (tmp_values[4*i+j] * 255);

@@ -212,6 +212,7 @@ explorer_number_of_colors_callback (GtkAdjustment *adjustment,
 
   gimp_gradients_get_gradient_data (gradient_name,
                                     wvals.ncolors,
+                                    wvals.gradinvert,
                                     &dummy,
                                     &gradient_samples);
 
@@ -235,13 +236,14 @@ explorer_gradient_select_callback (const gchar   *name,
 
   gimp_gradients_get_gradient_data (gradient_name,
                                     wvals.ncolors,
+                                    wvals.gradinvert,
                                     &dummy,
 				    &gradient_samples);
 
   if (wvals.colormode == 1)
     {
       set_cmap_preview ();
-      dialog_update_preview (); 
+      dialog_update_preview ();
     }
 }
 
@@ -559,7 +561,7 @@ explorer_dialog (void)
                     dialog);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Save active fractal to file"), NULL);
-    
+
   /*  Fractal type toggle box  */
   frame = gtk_frame_new (_("Fractal Type"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -904,7 +906,8 @@ explorer_dialog (void)
 			     "the gradient editor"), NULL);
 
   gradient_name = gimp_gradients_get_gradient ();
-  gradient_samples = gimp_gradients_sample_uniform (wvals.ncolors);
+  gradient_samples = gimp_gradients_sample_uniform (wvals.ncolors,
+                                                    wvals.gradinvert);
   gradient = gimp_gradient_select_widget_new (_("FractalExplorer Gradient"),
                                               gradient_name,
                                               explorer_gradient_select_callback,
@@ -936,7 +939,7 @@ explorer_dialog (void)
   gtk_widget_show (cmap_preview);
 
   frame = add_objects_list ();
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame, 
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
 			    gtk_label_new (_("Fractals")));
   gtk_widget_show (frame);
 
@@ -1009,7 +1012,7 @@ dialog_update_preview (void)
   gint     zaehler;
   gint     color;
   gint     useloglog;
-	
+
   if (NULL == wint.preview)
     return;
 
@@ -1073,7 +1076,7 @@ dialog_update_preview (void)
 
 		    case TYPE_JULIA:
 		      xx = x * x - y * y + cx;
-		      y = 2.0 * x * y + cy; 
+		      y = 2.0 * x * y + cy;
 		      break;
 
 		    case TYPE_BARNSLEY_1:
@@ -1231,7 +1234,7 @@ set_cmap_preview (void)
 
   gtk_preview_size (GTK_PREVIEW (cmap_preview), xsize, ysize * 4);
   gtk_widget_set_size_request (GTK_WIDGET (cmap_preview), xsize, ysize * 4);
-    
+
   for (y = 0; y < ysize*4; y += 4)
     {
       for (x = 0; x < xsize; x++)
@@ -1239,7 +1242,7 @@ set_cmap_preview (void)
 	  i = x + (y / 4) * xsize;
 	  if (i > wvals.ncolors)
 	    {
-	      for (j = 0; j < 3; j++) 
+	      for (j = 0; j < 3; j++)
 		b[x * 3 + j] = 0;
 	    }
 	  else
@@ -1287,7 +1290,8 @@ make_color_map (void)
    *  mode for noninteractive use (bug #103470).
    */
   if (gradient_samples == NULL)
-    gradient_samples = gimp_gradients_sample_uniform (wvals.ncolors);
+    gradient_samples = gimp_gradients_sample_uniform (wvals.ncolors,
+                                                      wvals.gradinvert);
 
   redstretch   = wvals.redstretch * 127.5;
   greenstretch = wvals.greenstretch * 127.5;
@@ -1552,7 +1556,7 @@ void
 save_options (FILE * fp)
 {
   /* Save options */
-  
+
   fprintf (fp, "fractaltype: %i\n", wvals.fractaltype);
   fprintf (fp, "xmin: %0.15f\n", wvals.xmin);
   fprintf (fp, "xmax: %0.15f\n", wvals.xmax);
@@ -1590,7 +1594,7 @@ save_callback (void)
 
   fp = fopen (savename, "wt+");
 
-  if (!fp) 
+  if (!fp)
     {
       g_message (_("Can't open '%s' for writing:\n%s"),
                  savename, g_strerror (errno));
@@ -1654,7 +1658,7 @@ load_file_selection_ok (GtkWidget        *w,
 			GtkFileSelection *fs,
 			gpointer          data)
 {
-  filename = 
+  filename =
     g_strdup (gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs)));
 
   if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
@@ -1842,6 +1846,7 @@ load_options (fractalexplorerOBJ *xxx,
   xxx->opts.blueinvert    =   0;
   xxx->opts.alwayspreview =   1;
   xxx->opts.ncolors       = 256;  /*  not saved  */
+  xxx->opts.gradinvert    = FALSE;
 
   get_line (load_buf, MAX_LOAD_LINE, fp, 0);
 
@@ -1995,7 +2000,7 @@ explorer_load (void)
   FILE  *fp;
   gchar  load_buf[MAX_LOAD_LINE];
 
-  g_assert (filename != NULL); 
+  g_assert (filename != NULL);
   fp = fopen (filename, "rt");
 
   if (!fp)
@@ -2012,7 +2017,7 @@ explorer_load (void)
     }
   if (load_options (current_obj,fp))
     {
-      g_message (_("'%s' is corrupt.\nLine %d Option section incorrect"), 
+      g_message (_("'%s' is corrupt.\nLine %d Option section incorrect"),
 		 filename, line_no);
       return;
     }

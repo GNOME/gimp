@@ -1,3 +1,34 @@
+2003-08-18  Michael Natterer  <mitch@gimp.org>
+
+	Finished the addition of "gboolean reverse" to the gradient API:
+
+	* tools/pdbgen/pdb/gradients.pdb: added "reverse" params to
+	gimp_gradients_sample_uniform(), sample_custom() and
+	get_gradient_data().
+
+	* app/pdb/gradients_cmds.c
+	* libgimp/gimpgradients_pdb.[ch]: regenerated.
+
+	* libgimp/gimpgradientmenu.c: changed accordingly.
+
+	Made everything compile with the new API:
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.[ch]: got lost in
+	"reverse" adding, whitespace removal and general code cleanup.
+	I better commit this now before continuing, even though "reverse"
+	adding is not finished.
+
+	* plug-ins/common/sample_colorize.c: removed own gradient
+	reversing code, use "reverse" instead.
+
+	* plug-ins/common/gradmap.c
+	* plug-ins/flame/flame.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/pagecurl/pagecurl.c: simply pass reverse == FALSE and
+	added #warnings that more work needs to be done. Some whitespace
+	removal and minor cleanup.
+
 2003-08-18  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/Makefile.am: cleaned up whitespace.
