@@ -680,10 +680,12 @@ create_display_shell (int   gdisp_id,
   static GtkAccelGroup *image_accel_group = NULL;
   GDisplay *gdisp;
   GtkWidget *table;
+  GtkWidget *hbox;
   GtkWidget *arrow;
   int n_width, n_height;
   int s_width, s_height;
   int scalesrc, scaledest;
+  int contextid;
 
   /*  Get the gdisplay  */
   if (! (gdisp = gdisplay_get_ID (gdisp_id)))
@@ -737,13 +739,17 @@ create_display_shell (int   gdisp_id,
 		      gdisp);
 
   /*  the table containing all widgets  */
-  table = gtk_table_new (3, 3, FALSE);
+  table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 1);
   gtk_table_set_col_spacing (GTK_TABLE (table), 1, 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 1);
   gtk_table_set_row_spacing (GTK_TABLE (table), 1, 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 2);
   gtk_container_border_width (GTK_CONTAINER (table), 2);
   gtk_container_add (GTK_CONTAINER (gdisp->shell), table);
+
+  /* hbox for statusbar area */
+  hbox = gtk_hbox_new(0,2);
 
   /*  scrollbars, rulers, canvas, menu popup button  */
   gdisp->origin = gtk_button_new ();
@@ -809,10 +815,25 @@ create_display_shell (int   gdisp_id,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
   gtk_table_attach (GTK_TABLE (table), gdisp->vsb, 2, 3, 0, 2,
 		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), hbox, 0, 3, 3, 4,
+		    GTK_FILL, 0, 0, 0);
 
   if (! image_popup_menu)
     menus_get_image_menu (&image_popup_menu, &image_accel_group);
 
+  /* statusbar, progressbar  */
+  gdisp->statusbar = gtk_statusbar_new();
+  gtk_box_pack_start (GTK_BOX (hbox), gdisp->statusbar, TRUE, TRUE, 0);
+  contextid = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar),
+					    "title");
+  gtk_statusbar_push(GTK_STATUSBAR (gdisp->statusbar),
+		     contextid,
+		     title);
+  
+  gdisp->progressbar = gtk_progress_bar_new();
+  gtk_widget_set_usize(gdisp->progressbar, 100, -1);
+  gtk_box_pack_start (GTK_BOX (hbox), gdisp->progressbar, FALSE, TRUE, 0);
+  
   /*  the popup menu  */
   gdisp->popup = image_popup_menu;
 
@@ -826,6 +847,9 @@ create_display_shell (int   gdisp_id,
   gtk_widget_show (gdisp->hrule);
   gtk_widget_show (gdisp->vrule);
   gtk_widget_show (gdisp->canvas);
+  gtk_widget_show (gdisp->statusbar);
+  gtk_widget_show (gdisp->progressbar);
+  gtk_widget_show (hbox);
   gtk_widget_show (table);
   gtk_widget_show (gdisp->shell);
 

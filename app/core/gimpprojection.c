@@ -126,6 +126,8 @@ gdisplay_new (GImage       *gimage,
   gdisp->proximity = FALSE;
   gdisp->have_cursor = FALSE;
 
+  gdisp->progressid = FALSE;
+
   /*  add the new display to the list so that it isn't lost  */
   display_list = g_slist_append (display_list, (void *) gdisp);
 

@@ -58,6 +58,9 @@ struct _GDisplay
   GtkWidget *hrule, *vrule;       /*  widgets for rulers                      */
   GtkWidget *origin;              /*  widgets for rulers                      */
   GtkWidget *popup;               /*  widget for popup menu                   */
+  GtkWidget *statusbar;           /*  widget for statusbar                    */
+  GtkWidget *progressbar;         /*  widget for progressbar                  */
+  guint progressid;               /*  id of statusbar message for progress    */
 
   InfoDialog *window_info_dialog; /*  dialog box for image information        */
 

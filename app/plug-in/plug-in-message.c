@@ -143,7 +143,10 @@ static ProcArg progress_init_args[] =
 {
   { PDB_STRING,
     "message",
-    "Message to use in the progress dialog." }
+    "Message to use in the progress dialog." },
+  { PDB_INT8,
+    "gdisplay",
+    "GDisplay to update progressbar in, or -1 for a seperate window" }
 };
 
 static ProcRecord progress_init_proc =
@@ -155,7 +158,7 @@ static ProcRecord progress_init_proc =
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   PDB_INTERNAL,
-  1,
+  2,
   progress_init_args,
   0,
   NULL,
@@ -724,6 +727,9 @@ plug_in_new (char *name)
 void
 plug_in_destroy (PlugIn *plug_in)
 {
+  GDisplay *gdisp;
+  guint c_id;
+
   if (plug_in)
     {
       plug_in_close (plug_in, TRUE);
@@ -740,6 +746,16 @@ plug_in_destroy (PlugIn *plug_in)
 	g_free (plug_in->args[4]);
       if (plug_in->args[5])
 	g_free (plug_in->args[5]);
+
+      if (plug_in->progress_gdisp_ID > 0) 
+	{
+	  gdisp = gdisplay_get_ID(plug_in->progress_gdisp_ID);
+	  c_id = gtk_statusbar_get_context_id(GTK_STATUSBAR(gdisp->statusbar),
+						    "progress");
+	  gtk_statusbar_pop(GTK_STATUSBAR(gdisp->statusbar), c_id);
+	  gtk_progress_bar_update(GTK_PROGRESS_BAR(gdisp->progressbar), 0.0);
+	  gdisp->progressid = 0;
+	}
 
       if (plug_in == current_plug_in)
 	plug_in_pop ();
@@ -2906,16 +2922,31 @@ plug_in_progress_cancel (GtkWidget *widget,
 
 static void
 plug_in_progress_init (PlugIn *plug_in,
-		       char   *message)
+		       char   *message,
+		       gint   gdisp_ID)
 {
   GtkWidget *vbox;
   GtkWidget *button;
+  GDisplay *gdisp;
+  guint context_id;
 
   if (!message)
     message = plug_in->args[0];
 
+  if (gdisp_ID > 0) 
+      gdisp = gdisplay_get_ID(gdisp_ID);
+
+  if (gdisp_ID > 0 && gdisp->progressid == 0)
+    {
+      context_id = gtk_statusbar_get_context_id(GTK_STATUSBAR(gdisp->statusbar),
+						"progress");
+  
+      gdisp->progressid = gtk_statusbar_push(GTK_STATUSBAR(gdisp->statusbar), 
+					     context_id, message);
+      plug_in->progress_gdisp_ID = gdisp_ID;
+    } 
 #ifdef SEPARATE_PROGRESS_BAR
-  if (!plug_in->progress)
+  else if (!plug_in->progress)
     {
       plug_in->progress = gtk_dialog_new ();
       gtk_window_set_wmclass (GTK_WINDOW (plug_in->progress), "plug_in_progress", "Gimp");
@@ -2957,7 +2988,7 @@ plug_in_progress_init (PlugIn *plug_in,
       gtk_label_set (GTK_LABEL (plug_in->progress_label), message);
     }
 #else
-  if (!plug_in->progress)
+  else if (!plug_in->progress)
     {
       plug_in->progress = 0x1;
       progress_update (0.0);
@@ -2970,14 +3001,24 @@ static void
 plug_in_progress_update (PlugIn *plug_in,
 			 double  percentage)
 {
-#ifdef SEPARATE_PROGRESS_BAR
-  if (!plug_in->progress)
-    plug_in_progress_init (plug_in, NULL);
+  GDisplay *gdisp;
 
-  gtk_progress_bar_update (GTK_PROGRESS_BAR (plug_in->progress_bar), percentage);
+  if (plug_in->progress_gdisp_ID > 0)
+    {
+      gdisp = gdisplay_get_ID(plug_in->progress_gdisp_ID);
+      gtk_progress_bar_update( GTK_PROGRESS_BAR (gdisp->progressbar), percentage);
+    }
+  else
+    {
+#ifdef SEPARATE_PROGRESS_BAR
+      if (!plug_in->progress)
+	plug_in_progress_init (plug_in, NULL, -1);
+      
+      gtk_progress_bar_update (GTK_PROGRESS_BAR (plug_in->progress_bar), percentage);
 #else
-  progress_update (percentage);
+      progress_update (percentage);
 #endif
+    }
 }
 
 static Argument*
@@ -2989,7 +3030,8 @@ progress_init_invoker (Argument *args)
     {
       success = TRUE;
       if (no_interface == FALSE)
-	plug_in_progress_init (current_plug_in, args[0].value.pdb_pointer);
+	plug_in_progress_init (current_plug_in, args[0].value.pdb_pointer,
+			       args[1].value.pdb_int);
     }
 
   return procedural_db_return_args (&progress_init_proc, success);

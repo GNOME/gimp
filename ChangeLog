@@ -1,3 +1,15 @@
+Sun Jun 14 21:16:42 CDT 1998 Shawn T. Amundson <amundson@gimp.org>
+
+	* app/gdisplay.c
+	* app/gdisplay.h
+	* app/interface.c
+	* app/plug_in.c
+	* app/plug_in.h
+	* libgimp/gimp.c: added statusbar and progressbar, which
+	the plugins now use if they have a gdisp.  Unfortunately 
+	this introduces a resize bug I wasn't able to fix 
+	immediately. ;-(
+
 Sun Jun 14 18:37:06 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* app/blob.[ch] (blob_bounds): Added new files for

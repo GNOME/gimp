@@ -176,18 +176,16 @@ gimp_get_data (gchar *  id,
 }
 
 
-/* Snorfle - check for valid _gdisp_ID (!= -1) here and use it */
 void
 gimp_progress_init (char *message)
 {
   GParam *return_vals;
   int nreturn_vals;
 
-  /* g_print ("%d\n", _gdisp_ID); */
-
   return_vals = gimp_run_procedure ("gimp_progress_init",
 				    &nreturn_vals,
 				    PARAM_STRING, message,
+				    PARAM_INT8, _gdisp_ID,
 				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);

@@ -62,6 +62,8 @@ struct _PlugIn
   GtkWidget *progress_label;
   GtkWidget *progress_bar;
 
+  gint8 progress_gdisp_ID;               /* gdisp_ID of progress */ 
+
   gpointer user_data;                    /* Handle for hanging data onto */
 };
 
