@@ -54,9 +54,10 @@ struct _GimpCurvesTool
   GtkWidget            *xrange;
   GtkWidget            *yrange;
   GtkWidget            *graph;
-  GdkPixmap            *pixmap;
   GtkWidget            *curve_type_menu;
-
+  
+  gint                  cursor_x;
+  gint                  cursor_y;  
   PangoLayout          *xpos_layout;
   PangoLayout          *cursor_layout;
   PangoRectangle        cursor_rect;

@@ -1,3 +1,9 @@
+2003-03-14  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcurvestool.[ch]: some cleanup to event handling
+	and drawing code. Doesn't draw outside the expose_event handler
+	any longer but could still be improved.
+
 2003-03-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcomponenteditor.c: disable expensive column
