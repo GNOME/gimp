@@ -480,7 +480,7 @@ ReadImage (FILE     *fd,
       break;
 
     default:
-      g_message (_("Unrecognized or invalid BMP compression format."));
+      g_message (_("Unsupported or invalid bitdepth."));
       return -1;
     }
 
