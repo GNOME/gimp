@@ -1,3 +1,17 @@
+2002-10-09  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-text.[ch]: new files that implement the text
+	rendering that used to live in gimptexttool.[ch].
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/tools/gimptexttool.[ch]
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/pdb/text_tool.pdb: changed accordingly.
+
+	* tools/pdbgen/enums.pl
+	* app/pdb/text_tool_cmds.c: regenerated.
+
 2002-10-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/menus.c: some shortcut changes: Ctrl+Shift+S is now

@@ -19,16 +19,7 @@
 #ifndef __GIMP_TEXT_TOOL_H__
 #define __GIMP_TEXT_TOOL_H__
 
-
 #include "libgimptool/gimptool.h"
-
-#define SUPERSAMPLE 3
-
-typedef enum 
-{
-  PIXELS,
-  POINTS
-} SizeType;
 
 
 #define GIMP_TYPE_TEXT_TOOL            (gimp_text_tool_get_type ())
@@ -61,22 +52,6 @@ void    gimp_text_tool_register (GimpToolRegisterCallback  callback,
                                  gpointer                  data);
 
 GType   gimp_text_tool_get_type (void) G_GNUC_CONST;
-
-
-gboolean    text_get_extents (const gchar  *fontname,
-                              const gchar  *text,
-                              gint         *width,
-                              gint         *height,
-                              gint         *ascent,
-                              gint         *descent);
-GimpLayer * text_render      (GimpImage    *gimage,
-			      GimpDrawable *drawable,
-			      gint          text_x,
-			      gint          text_y,
-			      const gchar  *fontname,
-			      const gchar  *text,
-			      gint          border,
-			      gint          antialias);
 
 
 #endif /* __GIMP_TEXT_TOOL_H__ */

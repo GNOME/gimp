@@ -245,8 +245,8 @@ HELP
     );
 }
 
-@headers = qw("tools/tools-types.h" "tools/gimptexttool.h"
-              "libgimpbase/gimpbase.h" <stdio.h> <string.h>);
+@headers = qw("libgimpbase/gimpbase.h"
+              "core/gimpimage-text.h" <stdio.h> <string.h>);
 
 $extra{app}->{code} = <<'CODE';
 

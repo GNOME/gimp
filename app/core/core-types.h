@@ -51,6 +51,11 @@ typedef enum /*< pdb-skip >*/
   ORIENTATION_VERTICAL
 } InternalOrientationType;
 
+typedef enum
+{
+  PIXELS,
+  POINTS
+} SizeType;
 
 typedef enum /*< pdb-skip >*/ /*< skip >*/
 {

@@ -23,18 +23,18 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbasetypes.h"
 
 #include "pdb-types.h"
-#include "tools/tools-types.h"
 #include "procedural_db.h"
 
+#include "core/core-types.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage-text.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
-#include "tools/gimptexttool.h"
 
 #include "libgimpbase/gimpbase.h"
 

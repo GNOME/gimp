@@ -355,6 +355,13 @@ package Gimp::CodeGen::enums;
 		       VERTICAL => '1',
 		       UNKNOWN => '2' }
 	},
+    SizeType =>
+	{ contig => 1,
+	  header => 'core/core-types.h',
+	  symbols => [ qw(PIXELS POINTS) ],
+	  mapping => { PIXELS => '0',
+		       POINTS => '1' }
+	},
     GimpCloneType =>
 	{ contig => 1,
 	  header => 'paint/paint-enums.h',
@@ -410,13 +417,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_RUN_INTERACTIVE => '0',
 		       GIMP_RUN_NONINTERACTIVE => '1',
 		       GIMP_RUN_WITH_LAST_VALS => '2' }
-	},
-    SizeType =>
-	{ contig => 1,
-	  header => 'tools/gimptexttool.h',
-	  symbols => [ qw(PIXELS POINTS) ],
-	  mapping => { PIXELS => '0',
-		       POINTS => '1' }
 	}
 );
 

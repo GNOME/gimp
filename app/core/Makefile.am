@@ -115,6 +115,8 @@ libappcore_a_sources = \
 	gimpimage-resize.h		\
 	gimpimage-scale.c		\
 	gimpimage-scale.h		\
+	gimpimage-text.c		\
+	gimpimage-text.h		\
 	gimpimage-undo.c		\
 	gimpimage-undo.h		\
 	gimpimagefile.c			\

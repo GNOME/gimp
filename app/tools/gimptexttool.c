@@ -29,16 +29,9 @@
 
 #include "tools-types.h"
 
-#include "base/pixel-region.h"
-#include "base/tile-manager.h"
-
-#include "paint-funcs/paint-funcs.h"
-
-#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
+#include "core/gimpimage-text.h"
 #include "core/gimplayer.h"
-#include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpfontselection.h"
@@ -50,7 +43,6 @@
 #include "tool_options.h"
 
 #include "gimprc.h"
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -366,205 +358,6 @@ text_tool_render (GimpTextTool *text_tool)
 
   gimp_image_flush (gdisp->gimage);
 }
-
-GimpLayer *
-text_render (GimpImage    *gimage,
-	     GimpDrawable *drawable,
-	     gint          text_x,
-	     gint          text_y,
-	     const gchar  *fontname,
-	     const gchar  *text,
-	     gint          border,
-	     gint          antialias)
-{
-  PangoFontDescription *font_desc;
-  PangoContext         *context;
-  PangoLayout          *layout;
-  PangoRectangle        ink;
-  PangoRectangle        logical;
-  GimpImageType         layer_type;
-  GimpLayer            *layer = NULL;
-  gdouble               xres;
-  gdouble               yres;
-
-  g_return_val_if_fail (fontname != NULL, FALSE);
-  g_return_val_if_fail (text != NULL, FALSE);
-
-  if (border < 0)
-    border = 0;
-
-  /*  determine the layer type  */
-  if (drawable)
-    layer_type = gimp_drawable_type_with_alpha (drawable);
-  else
-    layer_type = gimp_image_base_type_with_alpha (gimage);
-
-  font_desc = pango_font_description_from_string (fontname);
-  g_return_val_if_fail (font_desc != NULL, NULL);
-  if (!font_desc)
-    return NULL;
-  
-  gimp_image_get_resolution (gimage, &xres, &yres);
-  context = pango_ft2_get_context (xres, yres);
-
-  layout = pango_layout_new (context);
-  pango_layout_set_font_description (layout, font_desc);
-  pango_font_description_free (font_desc);
-  pango_layout_set_text (layout, text, -1);
-
-  pango_layout_get_pixel_extents (layout, &ink, &logical);
-
-  g_print ("ink rect: %d x %d @ %d, %d\n", 
-           ink.width, ink.height, ink.x, ink.y);
-  g_print ("logical rect: %d x %d @ %d, %d\n", 
-           logical.width, logical.height, logical.x, logical.y);
-  
-  if (ink.width > 0 && ink.height > 0)
-    {
-      TileManager *mask;
-      PixelRegion  textPR;
-      PixelRegion  maskPR;
-      FT_Bitmap    bitmap;
-      guchar      *black = NULL;
-      guchar       color[MAX_CHANNELS];
-      gint         width;
-      gint         height;
-      gint         y;
-
-      bitmap.width  = ink.width;
-      bitmap.rows   = ink.height;
-      bitmap.pitch  = ink.width;
-      if (bitmap.pitch & 3)
-        bitmap.pitch += 4 - (bitmap.pitch & 3);
-
-      bitmap.buffer = g_malloc0 (bitmap.rows * bitmap.pitch);
-      
-      pango_ft2_render_layout (&bitmap, layout, - ink.x, - ink.y);
-     
-      width  = ink.width  + 2 * border;
-      height = ink.height + 2 * border;
-
-      mask = tile_manager_new (width, height, 1);
-      pixel_region_init (&maskPR, mask, 0, 0, width, height, TRUE);
-
-      if (border)
-        black = g_malloc0 (width);
-
-      for (y = 0; y < border; y++)
-        pixel_region_set_row (&maskPR, 0, y, width, black);
-      for (; y < height - border; y++)
-        {
-          if (border)
-            {
-              pixel_region_set_row (&maskPR, 0, y, border, black);
-              pixel_region_set_row (&maskPR, width - border, y, border, black);
-            }
-          pixel_region_set_row (&maskPR, border, y, bitmap.width,
-                                bitmap.buffer + (y - border) * bitmap.pitch);
-        }
-      for (; y < height; y++)
-        pixel_region_set_row (&maskPR, 0, y, width, black);
-
-      g_free (black);
-      g_free (bitmap.buffer);
-
-      layer = gimp_layer_new (gimage, width, height, layer_type,
-                              _("Text Layer"),
-                              GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
-
-      /*  color the layer buffer  */
-      gimp_image_get_foreground (gimage, drawable, color);
-      color[GIMP_DRAWABLE (layer)->bytes - 1] = OPAQUE_OPACITY;
-      pixel_region_init (&textPR, GIMP_DRAWABLE (layer)->tiles,
-			 0, 0, width, height, TRUE);
-      color_region (&textPR, color);
-
-      /*  apply the text mask  */
-      pixel_region_init (&textPR, GIMP_DRAWABLE (layer)->tiles,
-                         0, 0, width, height, TRUE);
-      pixel_region_init (&maskPR, mask,
-			 0, 0, width, height, FALSE);
-      apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
-
-      /*  Start a group undo  */
-      undo_push_group_start (gimage, TEXT_UNDO_GROUP);
-
-      /*  Set the layer offsets  */
-      GIMP_DRAWABLE (layer)->offset_x = text_x;
-      GIMP_DRAWABLE (layer)->offset_y = text_y;
-
-      /*  If there is a selection mask clear it--
-       *  this might not always be desired, but in general,
-       *  it seems like the correct behavior.
-       */
-      if (! gimp_image_mask_is_empty (gimage))
-	gimp_image_mask_clear (gimage);
-
-      /*  If the drawable is NULL, create a new layer  */
-      if (drawable == NULL)
-	gimp_image_add_layer (gimage, layer, -1);
-      /*  Otherwise, instantiate the text as the new floating selection */
-      else
-	floating_sel_attach (layer, drawable);
-
-      /*  end the group undo  */
-      undo_push_group_end (gimage);
-
-      tile_manager_destroy (mask);
-    }
-
-  g_object_unref (layout);
-  g_object_unref (context);  
-
-  return layer;
-}
-
-gboolean
-text_get_extents (const gchar *fontname,
-		  const gchar *text,
-		  gint        *width,
-		  gint        *height,
-		  gint        *ascent,
-		  gint        *descent)
-{
-  PangoFontDescription *font_desc;
-  PangoContext         *context;
-  PangoLayout          *layout;
-  PangoRectangle        rect;
-
-  g_return_val_if_fail (fontname != NULL, FALSE);
-  g_return_val_if_fail (text != NULL, FALSE);
-
-  font_desc = pango_font_description_from_string (fontname);
-  if (!font_desc)
-    return FALSE;
-
-  /* FIXME: resolution */
-  context = pango_ft2_get_context (72.0, 72.0);
-
-  layout = pango_layout_new (context);
-  pango_layout_set_font_description (layout, font_desc);
-  pango_font_description_free (font_desc);
-
-  pango_layout_set_text (layout, text, -1);
-
-  pango_layout_get_pixel_extents (layout, &rect, NULL);
-
-  if (width)
-    *width = rect.width;
-  if (height)
-    *height = rect.height;
-  if (ascent)
-    *ascent = -rect.y;
-  if (descent)
-    *descent = rect.height + rect.y;
-
-  g_object_unref (layout);
-  g_object_unref (context);  
-
-  return TRUE;
-}
-
 
 /*  tool options stuff  */
 
