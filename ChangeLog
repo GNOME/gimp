@@ -1,5 +1,11 @@
 2004-12-12  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimp.def: added gimp_edit_copy_visible.
+
+	* plug-ins/script-fu/scripts/copy-visible.scm: decprecated.
+
+2004-12-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/winclipboard.c: applied patch from Brion Vibber
 	that adds an alpha channel to the pasted layer. Fixes bug #148601.
 

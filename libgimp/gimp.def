@@ -155,6 +155,7 @@ EXPORTS
 	gimp_edit_bucket_fill
 	gimp_edit_clear
 	gimp_edit_copy
+	gimp_edit_copy_visible
 	gimp_edit_cut
 	gimp_edit_fill
 	gimp_edit_paste

@@ -154,6 +154,7 @@
       </placeholder>
       <placeholder name="Copy">
 	<menuitem action="edit-copy" />
+	<menuitem action="edit-copy-visible" />
       </placeholder>
       <placeholder name="Paste">
 	<menuitem action="edit-paste" />

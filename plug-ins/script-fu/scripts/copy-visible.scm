@@ -18,17 +18,6 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
-; 2004-04-14 This script was almost rewritten from scratch
-;     by Raphaël Quinet <raphael@gimp.org>
-;     see also http://bugzilla.gnome.org/show_bug.cgi?id=139989
-;
-; The code is new but the API is the same as in the previous version:
-; "Copy Visible"  version 0.11 01/24/98
-;     by Adrian Likins <adrian@gimp.org>
-;   _heavily_ based on:
-;        cyn-merge.scm   version 0.02   10/10/97
-;        Copyright (C) 1997 Sven Neumann (neumanns@uni-duesseldorf.de)
-;
 ; Removed all code and made it a backward-compat wrapper around
 ;     (gimp-edit-copy-visible)
 ;     2004-12-12 Michael Natterer <mitch@gimp.org>
@@ -40,10 +29,10 @@
 
 (script-fu-register "script-fu-copy-visible"
 		    "Copy Visible"
-		    "Copy the visible selection"
-		    "Sven Neumann <sven@gimp.org>, Adrian Likins <adrian@gimp.org>, Raphael Quinet <raphael@gimp.org>"
-		    "Sven Neumann, Adrian Likins, Raphael Quinet"
-		    "01/24/1998"
+		    "This procedure is deprecated! use \'gimp_edit_copy_visible\' instead."
+		    ""
+		    ""
+		    ""
 		    "RGB* INDEXED* GRAY*"
 		    SF-IMAGE    "Image"    0
 		    SF-DRAWABLE "Drawable" 0)
