@@ -1,5 +1,9 @@
 2000-04-11  Sven Neumann  <sven@gimp.org>
 
+	* PLUGIN_MAINTAINERS: run it through my update-script
+
+2000-04-11  Sven Neumann  <sven@gimp.org>
+
         * app/measure.c: the arc displaying the angle was drawn incorrect
 	in the case of 90 degrees
 
