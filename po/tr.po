@@ -334,9 +334,8 @@ msgid "QuickMask"
 msgstr "HızlıMaske"
 
 #: app/actions/actions.c:168
-#, fuzzy
 msgid "Select"
-msgstr "/_Seç"
+msgstr "Seç"
 
 #. initialize the template list
 #: app/actions/actions.c:171 app/core/gimp.c:880 app/dialogs/dialogs.c:154
@@ -344,9 +343,8 @@ msgid "Templates"
 msgstr "Şablonlar"
 
 #: app/actions/actions.c:174
-#, fuzzy
 msgid "Text Editor"
-msgstr "GIMP Metin Düzenleyici"
+msgstr "Metin Düzenleyici"
 
 #: app/actions/actions.c:177 app/dialogs/dialogs.c:123
 #: app/dialogs/preferences-dialog.c:1556 app/dialogs/preferences-dialog.c:1559
@@ -364,77 +362,64 @@ msgid "Paths"
 msgstr "Yollar"
 
 #: app/actions/actions.c:186
-#, fuzzy
 msgid "View"
-msgstr "/_Görünüm"
+msgstr "Görünüm"
 
 #: app/actions/brushes-actions.c:43
 msgid "Brushes Menu"
 msgstr "Fırçalar Menüsü"
 
 #: app/actions/brushes-actions.c:47
-#, fuzzy
 msgid "_New Brush"
-msgstr "/Y_eni Fırça"
+msgstr "Y_eni Fırça"
 
 #: app/actions/brushes-actions.c:48
-#, fuzzy
 msgid "New brush"
-msgstr "/Y_eni Fırça"
+msgstr "Yeni Fırça"
 
 #: app/actions/brushes-actions.c:53
-#, fuzzy
 msgid "D_uplicate Brush"
-msgstr "/Fırçayı Ç_oğalt"
+msgstr "Fırçayı Ç_oğalt"
 
 #: app/actions/brushes-actions.c:54
-#, fuzzy
 msgid "Duplicate brush"
-msgstr "/Fırçayı Ç_oğalt"
+msgstr "Fırçayı Ç_oğalt"
 
 #: app/actions/brushes-actions.c:59
-#, fuzzy
 msgid "_Delete Brush"
-msgstr "/Fı_rçayı Sil"
+msgstr "Fı_rçayı Sil"
 
 #: app/actions/brushes-actions.c:60
-#, fuzzy
 msgid "Delete brush"
-msgstr "/Fı_rçayı Sil"
+msgstr "Fırçayı sil"
 
 #: app/actions/brushes-actions.c:65
-#, fuzzy
 msgid "_Refresh Brushes"
-msgstr "/_Fırçaları Tazele"
+msgstr "_Fırçaları Tazele"
 
 #: app/actions/brushes-actions.c:66
-#, fuzzy
 msgid "Refresh brushes"
-msgstr "/_Fırçaları Tazele"
+msgstr "Fırçaları tazele"
 
 #: app/actions/brushes-actions.c:74
-#, fuzzy
 msgid "_Edit Brush..."
-msgstr "/Fırçayı _Düzenle..."
+msgstr "Fırçayı _Düzenle..."
 
 #: app/actions/brushes-actions.c:75
-#, fuzzy
 msgid "Edit brush"
-msgstr "/Fırçayı _Düzenle..."
+msgstr "/Fırçayı düzenle"
 
 #: app/actions/buffers-actions.c:42
 msgid "Buffers Menu"
 msgstr "Tamponlar Menüsü"
 
 #: app/actions/buffers-actions.c:46
-#, fuzzy
 msgid "_Paste Buffer"
-msgstr "/_Tamponu Yapıştır"
+msgstr "_Tamponu Yapıştır"
 
 #: app/actions/buffers-actions.c:47
-#, fuzzy
 msgid "Paste the selected buffer"
-msgstr "Seçili girişi dizinden çıkar"
+msgstr "Seçili tamponu yapıştır"
 
 #: app/actions/buffers-actions.c:52
 #, fuzzy
@@ -471,109 +456,89 @@ msgid "Channels Menu"
 msgstr "Kanallar Menüsü"
 
 #: app/actions/channels-actions.c:48
-#, fuzzy
 msgid "_Edit Channel Attributes..."
-msgstr "/Kanal Öznitel_iklerini Düzenle..."
+msgstr "Kanal Öznitel_iklerini Düzenle..."
 
 #: app/actions/channels-actions.c:49
-#, fuzzy
 msgid "Edit channel attributes"
-msgstr "Kanal Özniteliklerini Düzenle"
+msgstr "Kanal özniteliklerini düzenle"
 
 #: app/actions/channels-actions.c:54
-#, fuzzy
 msgid "_New Channel..."
-msgstr "/Yeni Ka_nal..."
+msgstr "Yeni Ka_nal..."
 
 #: app/actions/channels-actions.c:55
-#, fuzzy
 msgid "New channel..."
-msgstr "/Yeni Ka_nal..."
+msgstr "Yeni kanal..."
 
 #: app/actions/channels-actions.c:60
-#, fuzzy
 msgid "_New Channel"
-msgstr "Yeni Kanal"
+msgstr "_Yeni Kanal"
 
 #: app/actions/channels-actions.c:61
 msgid "New channel with last values"
 msgstr ""
 
 #: app/actions/channels-actions.c:66
-#, fuzzy
 msgid "D_uplicate Channel"
-msgstr "/_Kanalı Çoğalt"
+msgstr "_Kanalı Çoğalt"
 
 #: app/actions/channels-actions.c:67
-#, fuzzy
 msgid "Duplicate channel"
-msgstr "Kanalı Çoğalt"
+msgstr "Kanalı çoğalt"
 
 #: app/actions/channels-actions.c:72
-#, fuzzy
 msgid "_Delete Channel"
-msgstr "/Kanalı _Sil"
+msgstr "Kanalı _Sil"
 
 #: app/actions/channels-actions.c:73 app/core/core-enums.c:1088
-#, fuzzy
 msgid "Delete channel"
-msgstr "Kanalı Sil"
+msgstr "Kanalı sil"
 
 #: app/actions/channels-actions.c:78
-#, fuzzy
 msgid "_Raise Channel"
-msgstr "/Ka_nalı Yükselt"
+msgstr "Ka_nalı Yükselt"
 
 #: app/actions/channels-actions.c:79
-#, fuzzy
 msgid "Raise channel"
 msgstr "Kanalı Yükselt"
 
 #: app/actions/channels-actions.c:84
-#, fuzzy
 msgid "Raise Channel to _Top"
-msgstr "Kanalı En Tepeye Yükselt"
+msgstr "K_analı En Tepeye Yükselt"
 
 #: app/actions/channels-actions.c:85
-#, fuzzy
 msgid "Raise channel to top"
 msgstr "Kanalı En Tepeye Yükselt"
 
 #: app/actions/channels-actions.c:90
-#, fuzzy
 msgid "_Lower Channel"
-msgstr "/Kan_alı Alçalt"
+msgstr "Kan_alı Alçalt"
 
 #: app/actions/channels-actions.c:91
-#, fuzzy
 msgid "Lower channel"
-msgstr "Kanalı Alçalt"
+msgstr "Kanalı alçalt"
 
 #: app/actions/channels-actions.c:96
-#, fuzzy
 msgid "Lower Channel to _Bottom"
-msgstr "Kanalı En Alta İndir"
+msgstr "Kanalı _En Alta İndir"
 
 #: app/actions/channels-actions.c:97
-#, fuzzy
 msgid "Lower channel to bottom"
 msgstr "Kanalı En Alta İndir"
 
 #: app/actions/channels-actions.c:105
-#, fuzzy
 msgid "Channel to Sele_ction"
-msgstr "/Kanaldan Seçi_me"
+msgstr "Kanaldan Seçi_me"
 
 #: app/actions/channels-actions.c:106
-#, fuzzy
 msgid "Channel to selection"
-msgstr "Kanaldan Seçime"
+msgstr "Kanaldan seçime"
 
 #: app/actions/channels-actions.c:111 app/actions/layers-actions.c:226
 #: app/actions/vectors-actions.c:173
-#, fuzzy
 msgid "_Add to Selection"
-msgstr "/Seçime _Ekle"
+msgstr "Seçime _Ekle"
 
 #: app/actions/channels-actions.c:112 app/actions/vectors-actions.c:174
 msgid "Add"
@@ -581,9 +546,8 @@ msgstr ""
 
 #: app/actions/channels-actions.c:117 app/actions/layers-actions.c:231
 #: app/actions/layers-actions.c:254 app/actions/vectors-actions.c:179
-#, fuzzy
 msgid "_Subtract from Selection"
-msgstr "/Seçimden Çık_ar"
+msgstr "Seçimden Çık_ar"
 
 #: app/actions/channels-actions.c:118 app/actions/vectors-actions.c:180
 #: app/widgets/gimpwidgets-constructors.c:69
@@ -593,14 +557,12 @@ msgstr "Çıkar"
 
 #: app/actions/channels-actions.c:123 app/actions/layers-actions.c:236
 #: app/actions/layers-actions.c:259 app/actions/vectors-actions.c:185
-#, fuzzy
 msgid "_Intersect with Selection"
-msgstr "/Seçimle Ke_siştir"
+msgstr "Seçimle Ke_siştir"
 
 #: app/actions/channels-actions.c:124 app/actions/vectors-actions.c:186
-#, fuzzy
 msgid "Intersect"
-msgstr "Arayüz"
+msgstr "Kesiştir"
 
 #: app/actions/channels-commands.c:86 app/actions/channels-commands.c:383
 msgid "Channel Attributes"
@@ -643,36 +605,30 @@ msgid "Channel to Selection"
 msgstr "Kanaldan Seçime"
 
 #: app/actions/colormap-editor-actions.c:43
-#, fuzzy
 msgid "Colormap Menu"
-msgstr "Renk haritası"
+msgstr "Renk Haritası Menüsü"
 
 #: app/actions/colormap-editor-actions.c:47
 #: app/actions/palette-editor-actions.c:47
-#, fuzzy
 msgid "_Edit Color..."
-msgstr "/_Renk Düzenle..."
+msgstr "_Renk Düzenle..."
 
 #: app/actions/colormap-editor-actions.c:48
 #: app/actions/palette-editor-actions.c:48
-#, fuzzy
 msgid "Edit color"
-msgstr "Rengi Düzenle"
+msgstr "Rengi düzenle"
 
 #: app/actions/colormap-editor-actions.c:56
-#, fuzzy
 msgid "_Add Color from FG"
-msgstr "/_Arkaplandan Renk Ekle"
+msgstr "_Önplandan Renk Ekle"
 
 #: app/actions/colormap-editor-actions.c:57
-#, fuzzy
 msgid "Add color from FG"
-msgstr "/_Arkaplandan Renk Ekle"
+msgstr "Önplandan Renk Ekle"
 
 #: app/actions/colormap-editor-actions.c:62
-#, fuzzy
 msgid "_Add Color from BG"
-msgstr "/Ö_nplandan Renk Ekle"
+msgstr "_Arkaplandan Renk Ekle"
 
 #: app/actions/colormap-editor-actions.c:63
 #, fuzzy
@@ -690,20 +646,17 @@ msgid "Edit Colormap Entry"
 msgstr "Palet Girdi Rengini Düzenle"
 
 #: app/actions/context-actions.c:46
-#, fuzzy
 msgid "_Context"
-msgstr "Dönüştür"
+msgstr "İçeri_k"
 
 #: app/actions/context-actions.c:47 app/actions/layers-actions.c:53
 #: app/actions/plug-in-actions.c:64
-#, fuzzy
 msgid "_Colors"
-msgstr "Renk"
+msgstr "_Renkler"
 
 #: app/actions/context-actions.c:48 app/actions/layers-actions.c:59
-#, fuzzy
 msgid "_Opacity"
-msgstr "Saydamsızlık"
+msgstr "_Saydamsızlık"
 
 #: app/actions/context-actions.c:49
 #, fuzzy
@@ -711,9 +664,8 @@ msgid "Paint _Mode"
 msgstr "Düzenleme Kipi"
 
 #: app/actions/context-actions.c:50
-#, fuzzy
 msgid "_Tool"
-msgstr "/_Araçlar"
+msgstr "_Araç"
 
 #: app/actions/context-actions.c:51 app/dialogs/preferences-dialog.c:1598
 msgid "_Brush"
@@ -725,9 +677,8 @@ msgid "_Pattern"
 msgstr "_Desen"
 
 #: app/actions/context-actions.c:53
-#, fuzzy
 msgid "_Palette"
-msgstr "Palet"
+msgstr "_Palet"
 
 #: app/actions/context-actions.c:54 app/dialogs/palette-import-dialog.c:219
 #: app/dialogs/preferences-dialog.c:1604
@@ -735,19 +686,16 @@ msgid "_Gradient"
 msgstr "_Gradyan"
 
 #: app/actions/context-actions.c:55
-#, fuzzy
 msgid "_Font"
-msgstr "_Yazıtipi:"
+msgstr "_Yazıtipi"
 
 #: app/actions/context-actions.c:57
-#, fuzzy
 msgid "_Shape"
-msgstr "Şekil"
+msgstr "Ş_ekil"
 
 #: app/actions/context-actions.c:58
-#, fuzzy
 msgid "_Radius"
-msgstr "Yarıçap:"
+msgstr "_Yarıçap"
 
 #: app/actions/context-actions.c:59
 #, fuzzy
@@ -755,29 +703,24 @@ msgid "S_pikes"
 msgstr "piksel"
 
 #: app/actions/context-actions.c:60
-#, fuzzy
 msgid "_Hardness"
-msgstr "Sertlik"
+msgstr "_Sertlik"
 
 #: app/actions/context-actions.c:61
-#, fuzzy
 msgid "_Aspect"
-msgstr "Görüntü Oranı:"
+msgstr "_Görüntü Oranı"
 
 #: app/actions/context-actions.c:62
-#, fuzzy
 msgid "A_ngle"
-msgstr "Açı:"
+msgstr "Açı"
 
 #: app/actions/context-actions.c:65
-#, fuzzy
 msgid "_Default Colors"
-msgstr "/Araçlar/Öntanımlı _Renkler"
+msgstr "Öntanımlı _Renkler"
 
 #: app/actions/context-actions.c:70
-#, fuzzy
 msgid "S_wap Colors"
-msgstr "/Araçlar/Renkleri _Değiştir"
+msgstr "Renkleri _Değiştir"
 
 #: app/actions/data-commands.c:79 app/core/gimpimage.c:1283
 #: app/core/gimppalette-import.c:219 app/core/gimppalette.c:523
@@ -787,9 +730,8 @@ msgid "Untitled"
 msgstr "İsimsiz"
 
 #: app/actions/data-commands.c:149
-#, fuzzy
 msgid "Delete Object"
-msgstr "Veri Nesnesini Sil"
+msgstr "Nesneyi Sil"
 
 #: app/actions/data-commands.c:167
 #, c-format
@@ -798,9 +740,8 @@ msgstr ""
 "\"%s\"yi hem listeden, hem de diskten silmek istediğinize emin misiniz?"
 
 #: app/actions/dialogs-actions.c:38
-#, fuzzy
 msgid "_Dialogs"
-msgstr "/_Pencereler"
+msgstr "_Pencereler"
 
 #: app/actions/dialogs-actions.c:39
 #, fuzzy
@@ -808,192 +749,156 @@ msgid "Create New Doc_k"
 msgstr "/Dosya/Pencereler/Yeni _Rıhtım Oluştur"
 
 #: app/actions/dialogs-actions.c:42
-#, fuzzy
 msgid "_Layers, Channels & Paths"
-msgstr "/Pencereler/Katmanlar, Kanallar & Yollar..."
+msgstr "_Katmanlar, Kanallar ve Yollar"
 
 #: app/actions/dialogs-actions.c:47
-#, fuzzy
 msgid "_Brushes, Patterns & Gradients"
-msgstr "/Pencereler/Desenler..."
+msgstr ""
 
 #: app/actions/dialogs-actions.c:52
 msgid "_Misc. Stuff"
 msgstr ""
 
 #: app/actions/dialogs-actions.c:57
-#, fuzzy
 msgid "Tool_box"
-msgstr "/Araçlar/Araç _kutusu"
+msgstr "Araç _kutusu"
 
 #: app/actions/dialogs-actions.c:65
-#, fuzzy
 msgid "Tool _Options"
-msgstr "Alet Seçenekleri"
+msgstr "Araç _Seçenekleri"
 
 #: app/actions/dialogs-actions.c:70
-#, fuzzy
 msgid "_Device Status"
-msgstr "Aygıt Durumu"
+msgstr "_Aygıt Durumu"
 
 #: app/actions/dialogs-actions.c:75
-#, fuzzy
 msgid "_Layers"
-msgstr "Katmanlar"
+msgstr "_Katmanlar"
 
 #: app/actions/dialogs-actions.c:80
-#, fuzzy
 msgid "_Channels"
-msgstr "Kanallar"
+msgstr "_Kanallar"
 
 #: app/actions/dialogs-actions.c:85 app/tools/gimpvectortool.c:162
-#, fuzzy
 msgid "_Paths"
-msgstr "Yollar"
+msgstr "_Yollar"
 
 #: app/actions/dialogs-actions.c:90
-#, fuzzy
 msgid "Color_map"
-msgstr "Renk haritası"
+msgstr "_Renk haritası"
 
 #: app/actions/dialogs-actions.c:95
-#, fuzzy
 msgid "Histogra_m"
-msgstr "Historgram"
+msgstr "_Historgram"
 
 #: app/actions/dialogs-actions.c:100
-#, fuzzy
 msgid "_Selection Editor"
-msgstr "Seçim Düzenleyici"
+msgstr "_Seçim Düzenleyici"
 
 #: app/actions/dialogs-actions.c:105
-#, fuzzy
 msgid "Na_vigation"
-msgstr "Gezgin"
+msgstr "_Gezgin"
 
 #: app/actions/dialogs-actions.c:110
-#, fuzzy
 msgid "Undo _History"
-msgstr "Geri Alma Geçmişi"
+msgstr "_Geri Alma Geçmişi"
 
 #: app/actions/dialogs-actions.c:115
-#, fuzzy
 msgid "Colo_rs"
-msgstr "Renk"
+msgstr "Renk_ler"
 
 #: app/actions/dialogs-actions.c:120
-#, fuzzy
 msgid "_Brushes"
-msgstr "Fırçalar"
+msgstr "_Fırçalar"
 
 #: app/actions/dialogs-actions.c:125
-#, fuzzy
 msgid "P_atterns"
-msgstr "Desenler"
+msgstr "_Desenler"
 
 #: app/actions/dialogs-actions.c:130
-#, fuzzy
 msgid "_Gradients"
-msgstr "_Gradyan"
+msgstr "_Gradyanlar"
 
 #: app/actions/dialogs-actions.c:135
-#, fuzzy
 msgid "Pal_ettes"
-msgstr "Paletler"
+msgstr "_Paletler"
 
 #: app/actions/dialogs-actions.c:140
-#, fuzzy
 msgid "_Fonts"
-msgstr "Yazıtipleri"
+msgstr "_Yazıtipleri"
 
 #: app/actions/dialogs-actions.c:145
-#, fuzzy
 msgid "B_uffers"
-msgstr "Tamponlar"
+msgstr "_Tamponlar"
 
 #: app/actions/dialogs-actions.c:150
-#, fuzzy
 msgid "_Images"
-msgstr "Resimler"
+msgstr "_Resimler"
 
 #: app/actions/dialogs-actions.c:155
-#, fuzzy
 msgid "Document Histor_y"
-msgstr "Belge Geçmişi"
+msgstr "_Belge Geçmişi"
 
 #: app/actions/dialogs-actions.c:160
-#, fuzzy
 msgid "_Templates"
-msgstr "Şablonlar"
+msgstr "Ş_ablonlar"
 
 #: app/actions/dialogs-actions.c:165
-#, fuzzy
 msgid "T_ools"
-msgstr "Araçlar"
+msgstr "_Araçlar"
 
 #: app/actions/dialogs-actions.c:170
-#, fuzzy
 msgid "Error Co_nsole"
-msgstr "Ölçüm Aleti"
+msgstr "Hata _Konsolu"
 
 #: app/actions/dialogs-actions.c:180
-#, fuzzy
 msgid "_Preferences"
-msgstr "Tercihler"
+msgstr "_Tercihler"
 
 #: app/actions/dialogs-actions.c:185
-#, fuzzy
 msgid "_Module Manager"
-msgstr "Modül Düzenleyici"
+msgstr "Modül _Düzenleyici"
 
 #: app/actions/dialogs-actions.c:190
-#, fuzzy
 msgid "_Tip of the Day"
-msgstr "/Yardım/_Günün İpucu"
+msgstr "_Günün İpucu"
 
 #: app/actions/dialogs-actions.c:195
-#, fuzzy
 msgid "_About"
-msgstr "_Otomatik"
+msgstr "_Hakkında"
 
 #: app/actions/dockable-actions.c:49
 msgid "Dialogs Menu"
 msgstr "Pencereler Menüsü"
 
 #: app/actions/dockable-actions.c:53
-#, fuzzy
 msgid "_Add Tab"
-msgstr "/_Sekme Ekle"
+msgstr "_Sekme Ekle"
 
 #: app/actions/dockable-actions.c:54
-#, fuzzy
 msgid "_Preview Size"
-msgstr "/Önizleme _Boyutu"
+msgstr "Önceki _Boyut"
 
 #: app/actions/dockable-actions.c:55
-#, fuzzy
 msgid "_Tab Style"
-msgstr "/Sekme _Biçemi"
+msgstr "Sekme _Stili"
 
 #: app/actions/dockable-actions.c:58
-#, fuzzy
 msgid "_Close Tab"
-msgstr "/_Sekmeyi Kapat"
+msgstr "_Sekmeyi Kapat"
 
 #: app/actions/dockable-actions.c:63
-#, fuzzy
 msgid "_Detach Tab"
-msgstr "/_Sekmeyi Ayır"
+msgstr "_Sekmeyi Ayır"
 
 #: app/actions/dockable-actions.c:68
-#, fuzzy
 msgid "M_ove to Screen..."
-msgstr "/Ekrana Taşı..."
+msgstr "_Ekrana Taşı..."
 
 #: app/actions/dockable-actions.c:76
-#, fuzzy
 msgid "_Show Image Selection"
-msgstr "Seçimi Büyüt"
+msgstr ""
 
 #: app/actions/dockable-actions.c:82
 #, fuzzy
@@ -1001,96 +906,80 @@ msgid "Auto _Follow Active Image"
 msgstr "Resmi Kaydet"
 
 #: app/actions/dockable-actions.c:101
-#, fuzzy
 msgid "_Tiny"
-msgstr "Küçük"
+msgstr "_Minik"
 
 #: app/actions/dockable-actions.c:102
-#, fuzzy
 msgid "E_xtra Small"
-msgstr "Çok Küçük"
+msgstr "Ç_ok Küçük"
 
 #: app/actions/dockable-actions.c:103
-#, fuzzy
 msgid "_Small"
-msgstr "Ufak"
+msgstr "Küçük"
 
 #: app/actions/dockable-actions.c:104
-#, fuzzy
 msgid "_Medium"
-msgstr "Orta"
+msgstr "_Orta"
 
 #: app/actions/dockable-actions.c:105
-#, fuzzy
 msgid "_Large"
-msgstr "Büyük"
+msgstr "_Büyük"
 
 #: app/actions/dockable-actions.c:106
-#, fuzzy
 msgid "Ex_tra Large"
-msgstr "Büyük"
+msgstr "Ço_k Büyük"
 
 #: app/actions/dockable-actions.c:107
-#, fuzzy
 msgid "_Huge"
-msgstr "Büyük"
+msgstr "_Kocaman"
 
 #: app/actions/dockable-actions.c:108
 msgid "_Enormous"
-msgstr ""
+msgstr "İ_nanılmaz"
 
 #: app/actions/dockable-actions.c:109
 msgid "_Gigantic"
-msgstr ""
+msgstr "_Dev gibi"
 
 #: app/actions/dockable-actions.c:114
-#, fuzzy
 msgid "_Icon"
-msgstr "_Simge:"
+msgstr "_Simge"
 
 #: app/actions/dockable-actions.c:115
-#, fuzzy
 msgid "Current _Status"
-msgstr "Geçerli Durum"
+msgstr "Geçerli _Durum"
 
 #: app/actions/dockable-actions.c:116
-#, fuzzy
 msgid "_Text"
-msgstr "Metin"
+msgstr "_Metin"
 
 #: app/actions/dockable-actions.c:117
-#, fuzzy
 msgid "I_con & Text"
-msgstr "/Sekme Biçemi/Simg_e ve Metin"
+msgstr "Simg_e ve Metin"
 
 #: app/actions/dockable-actions.c:118
-#, fuzzy
 msgid "St_atus & Text"
-msgstr "/Sekme Biçemi/_Durum ve Metin"
+msgstr "_Durum ve Metin"
 
 #: app/actions/dockable-actions.c:127
-#, fuzzy
 msgid "View as _List"
-msgstr "/_Liste Olarak Göster"
+msgstr "_Liste Olarak Göster"
 
 #: app/actions/dockable-actions.c:132
-#, fuzzy
 msgid "View as _Grid"
-msgstr "/Kılavuz _Olarak Görüntüle"
+msgstr "Kılavuz _Olarak Görüntüle"
 
 #: app/actions/documents-actions.c:42
 msgid "Documents Menu"
 msgstr "Belgeler Menüsü"
 
 #: app/actions/documents-actions.c:46
-#, fuzzy
 msgid "_Open Image"
-msgstr "/Resim _Aç"
+msgstr "Resim _Aç"
 
 #: app/actions/documents-actions.c:47
-#, fuzzy
 msgid "Open the selected entry"
-msgstr "Seçili girdiyi sil"
+msgstr "Seçili girdiyi aç"
 
 #: app/actions/documents-actions.c:52
 #, fuzzy
@@ -1102,22 +991,18 @@ msgid "Raise window if already open"
 msgstr ""
 
 #: app/actions/documents-actions.c:58
-#, fuzzy
 msgid "File Open _Dialog"
-msgstr "/Dosya Açma _Penceresi"
+msgstr ""
 
 #: app/actions/documents-actions.c:59
-#, fuzzy
 msgid "Open image dialog"
-msgstr "Resim Aç"
+msgstr ""
 
 #: app/actions/documents-actions.c:64
-#, fuzzy
 msgid "Remove _Entry"
-msgstr "/_Girdiyi Sil"
+msgstr "_Girdiyi Sil"
 
 #: app/actions/documents-actions.c:65
-#, fuzzy
 msgid "Remove the selected entry"
 msgstr "Seçili girdiyi sil"
 
@@ -1166,37 +1051,32 @@ msgstr ""
 "%s"
 
 #: app/actions/drawable-actions.c:45
-#, fuzzy
 msgid "_Desaturate"
-msgstr "Doygunluk"
+msgstr "_Doygunluğu azalt"
 
 #: app/actions/drawable-actions.c:50
 msgid "_Equalize"
-msgstr ""
+msgstr "_Eşitlendir"
 
 #: app/actions/drawable-actions.c:55
-#, fuzzy
 msgid "In_vert"
-msgstr "Tersine Çevir"
+msgstr "_Tersine Çevir"
 
 #: app/actions/drawable-actions.c:60
 msgid "_White Balance"
-msgstr ""
+msgstr "_Beyaz Dengesi"
 
 #: app/actions/drawable-actions.c:65
-#, fuzzy
 msgid "_Offset..."
-msgstr "Ofset"
+msgstr "_Ofset..."
 
 #: app/actions/drawable-actions.c:73 app/actions/vectors-actions.c:153
-#, fuzzy
 msgid "_Linked"
-msgstr "Doğrusal"
+msgstr "_Bağlı"
 
 #: app/actions/drawable-actions.c:79 app/actions/vectors-actions.c:147
-#, fuzzy
 msgid "_Visible"
-msgstr "/_Dosya"
+msgstr "_Görünür"
 
 #: app/actions/drawable-actions.c:88 app/actions/image-actions.c:141
 #, fuzzy
@@ -1270,49 +1150,40 @@ msgid "Redo"
 msgstr "İleri al"
 
 #: app/actions/edit-actions.c:77
-#, fuzzy
 msgid "_Clear Undo History"
-msgstr "Geri Alma Geçmişi"
+msgstr "_Geri Alma Geçmişini Temizle"
 
 #: app/actions/edit-actions.c:78
-#, fuzzy
 msgid "Clear undo history..."
-msgstr "Geri Alma Geçmişi"
+msgstr "Geri Alma Geçmişini Temizle.."
 
 #: app/actions/edit-actions.c:83
-#, fuzzy
 msgid "Cu_t"
-msgstr "Kes"
+msgstr "_Kes"
 
 #: app/actions/edit-actions.c:88
-#, fuzzy
 msgid "_Copy"
-msgstr "Kırp"
+msgstr "_Kopyala"
 
 #: app/actions/edit-actions.c:93
-#, fuzzy
 msgid "_Paste"
-msgstr "Yapıştır"
+msgstr "_Yapıştır"
 
 #: app/actions/edit-actions.c:98
-#, fuzzy
 msgid "Paste _Into"
-msgstr "/Düzenle/İçine Yapıştır"
+msgstr "İçi_ne Yapıştır"
 
 #: app/actions/edit-actions.c:103
-#, fuzzy
 msgid "Paste as _New"
-msgstr "Yeni Olarak Yapıştır"
+msgstr "_Yeni Olarak Yapıştır"
 
 #: app/actions/edit-actions.c:108
-#, fuzzy
 msgid "Cu_t Named..."
-msgstr "İsimle Kes"
+msgstr "İsimle _Kes..."
 
 #: app/actions/edit-actions.c:113
-#, fuzzy
 msgid "_Copy Named..."
-msgstr "İsimle Kopyala"
+msgstr "İ_simle Kopyala..."
 
 #: app/actions/edit-actions.c:118
 #, fuzzy
@@ -1320,24 +1191,20 @@ msgid "_Paste Named..."
 msgstr "/Düzenle/Tampon/İsimle Ya_pıştır..."
 
 #: app/actions/edit-actions.c:123
-#, fuzzy
 msgid "Cl_ear"
-msgstr "Temizle"
+msgstr "_Temizle"
 
 #: app/actions/edit-actions.c:131
-#, fuzzy
 msgid "Fill with _FG Color"
-msgstr "ÖP rengiyle doldur"
+msgstr "_ÖP rengiyle doldur"
 
 #: app/actions/edit-actions.c:136
-#, fuzzy
 msgid "Fill with B_G Color"
-msgstr "AP rengiyle doldur"
+msgstr "_AP rengiyle doldur"
 
 #: app/actions/edit-actions.c:141
-#, fuzzy
 msgid "Fill with P_attern"
-msgstr "/Düzenle/_Desen ile Doldur"
+msgstr "_Desen ile Doldur"
 
 #: app/actions/edit-actions.c:209
 #, c-format
@@ -1350,9 +1217,8 @@ msgid "_Redo %s"
 msgstr "_Yinele: %s"
 
 #: app/actions/edit-commands.c:104
-#, fuzzy
 msgid "Clear Undo History"
-msgstr "Geri Alma Geçmişi"
+msgstr "Geri Alma Geçmişini Sil"
 
 #: app/actions/edit-commands.c:122
 msgid "Really clear image's undo history?"
@@ -1378,9 +1244,8 @@ msgstr ""
 "alfa kanalı yok."
 
 #: app/actions/edit-commands.c:338 app/actions/edit-commands.c:375
-#, fuzzy
 msgid "(Unnamed Buffer)"
-msgstr "Isimli Tampondan Yapıştır"
+msgstr "(Isimli Tampon)"
 
 #: app/actions/edit-commands.c:363
 #, fuzzy
@@ -1394,14 +1259,12 @@ msgid "Error Console Menu"
 msgstr "Hata Konsolu Menüsü"
 
 #: app/actions/error-console-actions.c:44
-#, fuzzy
 msgid "_Clear Errors"
-msgstr "/Hataları _Temizle"
+msgstr "Hataları _Temizle"
 
 #: app/actions/error-console-actions.c:45
-#, fuzzy
 msgid "Clear errors"
-msgstr "Hataları Temizle"
+msgstr "Hataları temizle"
 
 #: app/actions/error-console-actions.c:53
 #, fuzzy
@@ -1409,9 +1272,8 @@ msgid "Save _All Errors to File..."
 msgstr "/Bütün _Hataları Dosyaya Kaydet..."
 
 #: app/actions/error-console-actions.c:54
-#, fuzzy
 msgid "Save all errors"
-msgstr "Hataları Temizle"
+msgstr "Tüm hataları temizle"
 
 #: app/actions/error-console-actions.c:59
 #, fuzzy
@@ -1419,9 +1281,8 @@ msgid "Save _Selection to File..."
 msgstr "/Seçimi _Dosyaya Kaydet..."
 
 #: app/actions/error-console-actions.c:60
-#, fuzzy
 msgid "Save selection"
-msgstr "Seçimi Taşı"
+msgstr "Seçimi kaydet"
 
 #: app/actions/error-console-commands.c:69
 msgid "Cannot save. Nothing is selected."
@@ -1442,64 +1303,52 @@ msgstr ""
 "%s"
 
 #: app/actions/file-actions.c:61
-#, fuzzy
 msgid "_File"
-msgstr "/_Dosya"
+msgstr "_Dosya"
 
 #: app/actions/file-actions.c:62
-#, fuzzy
 msgid "Open _Recent"
-msgstr "/Dosya/Son _Kullanılanı Aç"
+msgstr "Son _Kullanılanı Aç"
 
 #: app/actions/file-actions.c:63
-#, fuzzy
 msgid "_Acquire"
-msgstr "/Dosya/_Al"
+msgstr "_Al"
 
 #: app/actions/file-actions.c:66 app/actions/file-actions.c:71
-#, fuzzy
 msgid "_Open..."
-msgstr "/Dosya/_Aç..."
+msgstr "_Aç..."
 
 #: app/actions/file-actions.c:76
-#, fuzzy
 msgid "Op_en as Layer..."
-msgstr "/Y_eni Katman..."
+msgstr "Katman _Olarak aç..."
 
 #: app/actions/file-actions.c:81
-#, fuzzy
 msgid "Open _Location..."
-msgstr "Adres:"
+msgstr "Konum _Aç..."
 
 #: app/actions/file-actions.c:86
-#, fuzzy
 msgid "_Save"
-msgstr "Kaydet"
+msgstr "_Kaydet"
 
 #: app/actions/file-actions.c:91
-#, fuzzy
 msgid "Save _as..."
-msgstr "/Dosya/_Farklı kaydet..."
+msgstr "_Farklı kaydet..."
 
 #: app/actions/file-actions.c:96
-#, fuzzy
 msgid "Save a Cop_y..."
-msgstr "/Dosya/K_opyasını Kaydet..."
+msgstr "Bir K_opyasını Kaydet..."
 
 #: app/actions/file-actions.c:101
-#, fuzzy
 msgid "Save as _Template..."
-msgstr "/Dosya/Ş_ablon Olarak Kaydet..."
+msgstr "Ş_ablon Olarak Kaydet..."
 
 #: app/actions/file-actions.c:106
-#, fuzzy
 msgid "Re_vert..."
-msgstr "Geri al"
+msgstr "_Geri al..."
 
 #: app/actions/file-actions.c:111
-#, fuzzy
 msgid "_Quit"
-msgstr "/Dosya/Çı_k"
+msgstr "Çı_k"
 
 #: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:249
 #, c-format
@@ -1525,9 +1374,8 @@ msgid "Create New Template"
 msgstr "Yeni Şablon Oluştur"
 
 #: app/actions/file-commands.c:262
-#, fuzzy
 msgid "Enter a name for this template"
-msgstr "Bu bellek için bir isim yazın"
+msgstr "Bu şablon için bir isim yazın"
 
 #: app/actions/file-commands.c:284
 #, fuzzy
@@ -1557,9 +1405,8 @@ msgstr ""
 "kaybedeceksiniz)"
 
 #: app/actions/file-commands.c:372
-#, fuzzy
 msgid "Open Image as Layer"
-msgstr "Resim Aç"
+msgstr "Resmi Katman Olarak Aç"
 
 #: app/actions/file-commands.c:377 app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
@@ -1620,12 +1467,11 @@ msgstr "/Seçim/Renkle Seçim..."
 #: app/actions/gradient-editor-actions.c:63
 #, fuzzy
 msgid "L_eft Endpoint's Color..."
-msgstr "Sol bitimnoktasının rengi"
+msgstr "_Sol Bitim Noktasının Rengi..."
 
 #: app/actions/gradient-editor-actions.c:68
-#, fuzzy
 msgid "R_ight Endpoint's Color..."
-msgstr "Sağ bitimnoktasının rengi"
+msgstr "S_ağ Bitim Noktasının Rengi..."
 
 #: app/actions/gradient-editor-actions.c:108
 #, fuzzy
@@ -1643,55 +1489,46 @@ msgid "_Left Neighbor's Right Endpoint"
 msgstr "Sol komşunun sağ bitimnoktası"
 
 #: app/actions/gradient-editor-actions.c:148
-#, fuzzy
 msgid "_Right Endpoint"
-msgstr "Sağ bitimnoktasının rengi"
+msgstr "S_ağ Bitim Noktası"
 
 #: app/actions/gradient-editor-actions.c:153
 #: app/actions/gradient-editor-actions.c:201
-#, fuzzy
 msgid "_FG Color"
-msgstr "Önplan/Arkaplan Rengi"
+msgstr "ÖP _Rengi"
 
 #: app/actions/gradient-editor-actions.c:158
 #: app/actions/gradient-editor-actions.c:206
-#, fuzzy
 msgid "_BG Color"
-msgstr "Önplan/Arkaplan Rengi"
+msgstr "_AP Rengi"
 
 #: app/actions/gradient-editor-actions.c:191
-#, fuzzy
 msgid "_Right Neighbor's Left Endpoint"
-msgstr "Sağ komşunun sol bitimnoktası"
+msgstr "Sağ Komşunun Sol Bitim Noktası"
 
 #: app/actions/gradient-editor-actions.c:196
-#, fuzzy
 msgid "_Left Endpoint"
-msgstr "Sol bitimnoktasının rengi"
+msgstr "_Sol Bitim Noktası"
 
 #: app/actions/gradient-editor-actions.c:245
-#, fuzzy
 msgid "_Linear"
-msgstr "Doğrusal"
+msgstr "_Doğrusal"
 
 #: app/actions/gradient-editor-actions.c:250
-#, fuzzy
 msgid "_Curved"
-msgstr "Eğriler"
+msgstr "Eğ_risel"
 
 #: app/actions/gradient-editor-actions.c:255
 msgid "_Sinusoidal"
-msgstr ""
+msgstr "_Sinüzoidal"
 
 #: app/actions/gradient-editor-actions.c:260
-#, fuzzy
 msgid "Spherical (i_ncreasing)"
-msgstr "Küresel (artarak)"
+msgstr "Küresel (a_rtarak)"
 
 #: app/actions/gradient-editor-actions.c:265
-#, fuzzy
 msgid "Spherical (_decreasing)"
-msgstr "Küresel (azalarak)"
+msgstr "Küresel (_azalarak)"
 
 #: app/actions/gradient-editor-actions.c:270
 #: app/actions/gradient-editor-actions.c:293
@@ -1699,9 +1536,8 @@ msgid "(Varies)"
 msgstr ""
 
 #: app/actions/gradient-editor-actions.c:278 app/actions/image-actions.c:123
-#, fuzzy
 msgid "_RGB"
-msgstr "RGB"
+msgstr "_RGB"
 
 #: app/actions/gradient-editor-actions.c:283
 #, fuzzy
@@ -1739,9 +1575,8 @@ msgstr "Hepsine Yakınlaş"
 
 #: app/actions/gradient-editor-actions.c:314
 #: app/actions/palette-editor-actions.c:90
-#, fuzzy
 msgid "Zoom all"
-msgstr "Hepsine Yakınlaş"
+msgstr "Hepsine yakınlaş"
 
 #: app/actions/gradient-editor-actions.c:582
 #, fuzzy
@@ -1819,9 +1654,8 @@ msgid "Split Segments _Uniformly..."
 msgstr "Parçaları eşler olarak böl"
 
 #: app/actions/gradient-editor-actions.c:617
-#, fuzzy
 msgid "_Delete Selection"
-msgstr "Seçimi sil"
+msgstr "_Seçimi sil"
 
 #: app/actions/gradient-editor-actions.c:619
 #, fuzzy
@@ -1844,9 +1678,8 @@ msgid "Gradient Segment's Left Endpoint Color"
 msgstr "Sol bitimnoktasının rengi"
 
 #: app/actions/gradient-editor-commands.c:186
-#, fuzzy
 msgid "Right Endpoint Color"
-msgstr "Sağ bitimnoktasının rengi"
+msgstr "Sağ Bitim Noktasının Rengi"
 
 #: app/actions/gradient-editor-commands.c:188
 #, fuzzy
@@ -1934,64 +1767,52 @@ msgid "Gradients Menu"
 msgstr "Gradyanlar Menüsü"
 
 #: app/actions/gradients-actions.c:48
-#, fuzzy
 msgid "_New Gradient"
-msgstr "Yeni Gradyan"
+msgstr "_Yeni Gradyan"
 
 #: app/actions/gradients-actions.c:49
-#, fuzzy
 msgid "New gradient"
-msgstr "Yeni Gradyan"
+msgstr "Yeni gradyan"
 
 #: app/actions/gradients-actions.c:54
-#, fuzzy
 msgid "D_uplicate Gradient"
-msgstr "/Yolu Çoğalt"
+msgstr "_Gradyanı Çoğalt"
 
 #: app/actions/gradients-actions.c:55
-#, fuzzy
 msgid "Duplicate gradient"
-msgstr "/Yolu Çoğalt"
+msgstr "Gradyanı Çoğalt"
 
 #: app/actions/gradients-actions.c:60
-#, fuzzy
 msgid "Save as _POV-Ray..."
-msgstr "POV-Ray olarak kaydet"
+msgstr "_POV-Ray olarak kaydet..."
 
 #: app/actions/gradients-actions.c:61
-#, fuzzy
 msgid "Save gradient as POV-Ray"
-msgstr "POV-Ray olarak kaydet"
+msgstr "Gradyanı POV-Ray olarak kaydet"
 
 #: app/actions/gradients-actions.c:66
-#, fuzzy
 msgid "_Delete Gradient..."
-msgstr "Gradyanı Sil"
+msgstr "Gradyanı _Sil..."
 
 #: app/actions/gradients-actions.c:67
-#, fuzzy
 msgid "Delete gradient"
-msgstr "Gradyanı Sil"
+msgstr "Gradyanı sil"
 
 #: app/actions/gradients-actions.c:72
-#, fuzzy
 msgid "_Refresh Gradients"
-msgstr "Gradyanı Adlandır"
+msgstr "_Gradyanları Tazele"
 
 #: app/actions/gradients-actions.c:73
-#, fuzzy
 msgid "Refresh gradients"
-msgstr "Gradyanı Adlandır"
+msgstr "Gradyanları tazele"
 
 #: app/actions/gradients-actions.c:81
-#, fuzzy
 msgid "_Edit Gradient..."
-msgstr "/Pencereler/Gradyanlar..."
+msgstr "Gradyanı _Düzenle..."
 
 #: app/actions/gradients-actions.c:82
-#, fuzzy
 msgid "Edit gradient"
-msgstr "/Pencereler/Gradyanlar..."
+msgstr "Gradyanı düzenle"
 
 #: app/actions/gradients-commands.c:65
 #, fuzzy, c-format
@@ -1999,9 +1820,8 @@ msgid "Save '%s' as POV-Ray"
 msgstr "POV-Ray olarak kaydet"
 
 #: app/actions/help-actions.c:38 app/actions/help-actions.c:41
-#, fuzzy
 msgid "_Help"
-msgstr "/_Yardım"
+msgstr "_Yardım"
 
 #: app/actions/help-actions.c:46
 #, fuzzy
@@ -2010,95 +1830,79 @@ msgstr "/Yardım/İç_erik Yardımı"
 
 #: app/actions/image-actions.c:47
 msgid "Toolbox Menu"
-msgstr ""
+msgstr "Araç Kutusu Menüsü"
 
 #: app/actions/image-actions.c:51 app/actions/image-actions.c:55
 msgid "Image Menu"
-msgstr "/Resim Menüsü"
+msgstr "Resim Menüsü"
 
 #: app/actions/image-actions.c:58
-#, fuzzy
 msgid "_Xtns"
-msgstr "/_Diğer"
+msgstr "/_Xtns"
 
 #: app/actions/image-actions.c:59
-#, fuzzy
 msgid "_Image"
-msgstr "/_Resim"
+msgstr "_Resim"
 
 #: app/actions/image-actions.c:60
-#, fuzzy
 msgid "_Mode"
-msgstr "Kip"
+msgstr "_Kip"
 
 #: app/actions/image-actions.c:61 app/actions/layers-actions.c:57
-#, fuzzy
 msgid "_Transform"
-msgstr "Dönüştür"
+msgstr "_Dönüştür"
 
 #: app/actions/image-actions.c:62
-#, fuzzy
 msgid "_Guides"
-msgstr "Kılavuz"
+msgstr "_Kılavuzlar"
 
 #: app/actions/image-actions.c:65 app/actions/image-actions.c:70
-#, fuzzy
 msgid "_New..."
-msgstr "/_Yeni Yol..."
+msgstr "_Yeni..."
 
 #: app/actions/image-actions.c:75
-#, fuzzy
 msgid "Can_vas Size..."
-msgstr "Tuval Boyutu"
+msgstr "Tuval _Boyutu..."
 
 #: app/actions/image-actions.c:80
 msgid "F_it Canvas to Layers"
 msgstr ""
 
 #: app/actions/image-actions.c:85
-#, fuzzy
 msgid "_Print Size..."
-msgstr "Yazdırma Boyutu:"
+msgstr "_Yazdırma Boyutu:"
 
 #: app/actions/image-actions.c:90
-#, fuzzy
 msgid "_Scale Image..."
-msgstr "Resmi Ölçekle"
+msgstr "_Resmi Ölçekle..."
 
 #: app/actions/image-actions.c:95
-#, fuzzy
 msgid "_Crop Image"
-msgstr "Resmi Kırp"
+msgstr "R_esmi Kırp"
 
 #: app/actions/image-actions.c:100
-#, fuzzy
 msgid "_Duplicate"
-msgstr "Çoğalt"
+msgstr "Çoğal_t"
 
 #: app/actions/image-actions.c:105
-#, fuzzy
 msgid "Merge Visible _Layers..."
-msgstr "/_Görünen Katmanları Birleştir..."
+msgstr "_Görünen Katmanları Birleştir..."
 
 #: app/actions/image-actions.c:110 app/actions/layers-actions.c:138
-#, fuzzy
 msgid "_Flatten Image"
-msgstr "/Resmi Düzleştir"
+msgstr "_Resmi Düzleştir"
 
 #: app/actions/image-actions.c:115
-#, fuzzy
 msgid "Configure G_rid..."
-msgstr "Kılavuzları Yapılandır"
+msgstr "Kılavuzları _Yapılandır..."
 
 #: app/actions/image-actions.c:128
-#, fuzzy
 msgid "_Grayscale"
-msgstr "Griölçekli"
+msgstr "_Gri Ölçekli"
 
 #: app/actions/image-actions.c:133
-#, fuzzy
 msgid "_Indexed..."
-msgstr "İndisli"
+msgstr "İ_ndisli..."
 
 #: app/actions/image-commands.c:192
 msgid "Set Image Canvas Size"
@@ -2150,27 +1954,24 @@ msgid "Images Menu"
 msgstr "Resimler Menüsü"
 
 #: app/actions/images-actions.c:47
-#, fuzzy
 msgid "_Raise Views"
-msgstr "/Küme/Katmanı Yükselt"
+msgstr "_Görünümleri Yükselt"
 
 #: app/actions/images-actions.c:48
 msgid "Raise this image's displays"
 msgstr ""
 
 #: app/actions/images-actions.c:53 app/actions/view-actions.c:68
-#, fuzzy
 msgid "_New View"
-msgstr "/Yeni _Görünüm"
+msgstr "Yeni _Görünüm"
 
 #: app/actions/images-actions.c:54
 msgid "Create a new display for this image"
-msgstr ""
+msgstr "Bu resim için yeni bir görünüm oluştur"
 
 #: app/actions/images-actions.c:59
-#, fuzzy
 msgid "_Delete Image"
-msgstr "/_Resmi Sil"
+msgstr "_Resmi Sil"
 
 #: app/actions/images-actions.c:60
 msgid "Delete this image"
@@ -2181,14 +1982,12 @@ msgid "Layers Menu"
 msgstr "Katmanlar Menüsü"
 
 #: app/actions/layers-actions.c:51
-#, fuzzy
 msgid "_Layer"
-msgstr "/_Katman"
+msgstr "_Katman"
 
 #: app/actions/layers-actions.c:52
-#, fuzzy
 msgid "Stac_k"
-msgstr "/Katman/Kü_me"
+msgstr "Kü_me"
 
 #: app/actions/layers-actions.c:54 app/tools/gimplevelstool.c:665
 msgid "_Auto"
@@ -2196,146 +1995,119 @@ msgstr "_Otomatik"
 
 #: app/actions/layers-actions.c:55
 msgid "_Mask"
-msgstr ""
+msgstr "_Maske"
 
 #: app/actions/layers-actions.c:56
-#, fuzzy
 msgid "Tr_ansparency"
-msgstr "Şeffaflık"
+msgstr "Ş_effaflık"
 
 #: app/actions/layers-actions.c:58
-#, fuzzy
 msgid "_Properties"
-msgstr "Perspektif"
+msgstr "Ö_zellikler"
 
 #: app/actions/layers-actions.c:60
-#, fuzzy
 msgid "Layer _Mode"
-msgstr "Katmanlar Menüsü"
+msgstr "Katman Ki_pi"
 
 #: app/actions/layers-actions.c:63
-#, fuzzy
 msgid "Te_xt Tool"
-msgstr "Metin Aleti"
+msgstr "Metin _Aracı"
 
 #: app/actions/layers-actions.c:68
-#, fuzzy
 msgid "_Edit Layer Attributes..."
-msgstr "/Katma_n Özniteliklerini Düzenle"
+msgstr "Katma_n Özniteliklerini Düzenle..."
 
 #: app/actions/layers-actions.c:69
-#, fuzzy
 msgid "Edit layer attributes"
 msgstr "Katman Özniteliklerini Düzenle"
 
 #: app/actions/layers-actions.c:74
-#, fuzzy
 msgid "_New Layer..."
-msgstr "/Y_eni Katman..."
+msgstr "Y_eni Katman..."
 
 #: app/actions/layers-actions.c:75
-#, fuzzy
 msgid "New layer..."
-msgstr "/Y_eni Katman..."
+msgstr "Yeni katman..."
 
 #: app/actions/layers-actions.c:80
-#, fuzzy
 msgid "_New Layer"
-msgstr "Yeni Katman"
+msgstr "_Yeni Katman"
 
 #: app/actions/layers-actions.c:81
 msgid "New layer with last values"
-msgstr ""
+msgstr "Son değerlerle yeni katman"
 
 #: app/actions/layers-actions.c:86
-#, fuzzy
 msgid "D_uplicate Layer"
-msgstr "/Katmanı Ç_oğalt"
+msgstr "Katmanı Ç_oğalt"
 
 #: app/actions/layers-actions.c:87
-#, fuzzy
 msgid "Duplicate layer"
 msgstr "Katmanı Çoğalt"
 
 #: app/actions/layers-actions.c:92
-#, fuzzy
 msgid "_Delete Layer"
-msgstr "/Katma_nı Sil"
+msgstr "Katma_nı Sil"
 
 #: app/actions/layers-actions.c:93 app/core/core-enums.c:1078
-#, fuzzy
 msgid "Delete layer"
-msgstr "Katmanı Sil"
+msgstr "Katmanı sil"
 
 #: app/actions/layers-actions.c:98
-#, fuzzy
 msgid "_Raise Layer"
-msgstr "/K_atmanı Yükselt"
+msgstr "K_atmanı Yükselt"
 
 #: app/actions/layers-actions.c:99
-#, fuzzy
 msgid "Raise layer"
-msgstr "Katmanı Yükselt"
+msgstr "Katmanı yükselt"
 
 #: app/actions/layers-actions.c:104
-#, fuzzy
 msgid "Layer to _Top"
-msgstr "/_Katmanı En Üste Çıkart"
+msgstr "_Katmanı En Üste Çıkart"
 
 #: app/actions/layers-actions.c:105
-#, fuzzy
 msgid "Raise layer to top"
 msgstr "Katmanı En Üste Çıkart"
 
 #: app/actions/layers-actions.c:110
-#, fuzzy
 msgid "_Lower Layer"
-msgstr "/K_atmanı Alçalt"
+msgstr "K_atmanı Alçalt"
 
 #: app/actions/layers-actions.c:111
-#, fuzzy
 msgid "Lower layer"
 msgstr "Katmanı Alçalt"
 
 #: app/actions/layers-actions.c:116
-#, fuzzy
 msgid "Layer to _Bottom"
-msgstr "/Katmanı _En Alta İndir"
+msgstr "Katmanı _En Alta İndir"
 
 #: app/actions/layers-actions.c:117
-#, fuzzy
 msgid "Lower layer to bottom"
 msgstr "Katmanı En Alta İndir"
 
 #: app/actions/layers-actions.c:122
-#, fuzzy
 msgid "_Anchor Layer"
-msgstr "/Kat_manı Çıpala"
+msgstr "Kat_manı Çıpala"
 
 #: app/actions/layers-actions.c:123
-#, fuzzy
 msgid "Anchor floating layer"
-msgstr "Yüzen Katmanı Çıpala"
+msgstr "Yüzen katmanı çıpala"
 
 #: app/actions/layers-actions.c:128
-#, fuzzy
 msgid "Merge Do_wn"
-msgstr "/Aşağı _Birleştir"
+msgstr "Aşağı _Birleştir"
 
 #: app/actions/layers-actions.c:133
-#, fuzzy
 msgid "Merge _Visible Layers..."
-msgstr "/_Görünen Katmanları Birleştir..."
+msgstr "_Görünen Katmanları Birleştir..."
 
 #: app/actions/layers-actions.c:143
-#, fuzzy
 msgid "_Discard Text Information"
-msgstr "Resim Bilgisi"
+msgstr "_Metin Bilgisini Sil"
 
 #: app/actions/layers-actions.c:148
-#, fuzzy
 msgid "Layer B_oundary Size..."
-msgstr "/Katman Sınır _Boyutları"
+msgstr "Katman Sınır _Boyutları"
 
 #: app/actions/layers-actions.c:153
 #, fuzzy
@@ -2343,94 +2115,76 @@ msgid "Layer to _Image Size"
 msgstr "/Resim Boyutu"
 
 #: app/actions/layers-actions.c:158
-#, fuzzy
 msgid "_Scale Layer..."
-msgstr "/Katmanı Ölçe_klendir..."
+msgstr "Katmanı Ölçe_klendir..."
 
 #: app/actions/layers-actions.c:163
-#, fuzzy
 msgid "Cr_op Layer"
-msgstr "Katmanı Kırp"
+msgstr "_Katmanı Kırp"
 
 #: app/actions/layers-actions.c:168
-#, fuzzy
 msgid "Add La_yer Mask..."
-msgstr "/Katman Maske_si Ekle..."
+msgstr "Katman Maske_si Ekle..."
 
 #: app/actions/layers-actions.c:173
-#, fuzzy
 msgid "Add Alpha C_hannel"
-msgstr "/Alfa Kan_alı Ekle"
+msgstr "Alfa Kan_alı Ekle"
 
 #: app/actions/layers-actions.c:181
-#, fuzzy
 msgid "Keep Transparency"
 msgstr "Şeffaflığı Koru"
 
 #: app/actions/layers-actions.c:187
-#, fuzzy
 msgid "Edit Layer Mask"
-msgstr "Katman Maskesi Ekle"
+msgstr "Katman Maskesini Düzenle"
 
 #: app/actions/layers-actions.c:193
-#, fuzzy
 msgid "Show Layer Mask"
-msgstr "Katman Maskesini Taşı"
+msgstr "Katman Maskesini Göster"
 
 #: app/actions/layers-actions.c:199
-#, fuzzy
 msgid "Disable Layer Mask"
-msgstr "Katman Maskesini Sil"
+msgstr "Katman Maskesini Etkisiz Yap"
 
 #: app/actions/layers-actions.c:208
-#, fuzzy
 msgid "Apply Layer _Mask"
-msgstr "/Katm_an Maskesini Uygula"
+msgstr "Katm_an Maskesini Uygula"
 
 #: app/actions/layers-actions.c:213
-#, fuzzy
 msgid "Delete Layer Mas_k"
-msgstr "/K_atman Maskesini Sil"
+msgstr "K_atman Maskesini Sil"
 
 #: app/actions/layers-actions.c:221
-#, fuzzy
 msgid "_Mask to Selection"
-msgstr "/Maskeden _Seçime"
+msgstr "Maskeden _Seçime"
 
 #: app/actions/layers-actions.c:244
-#, fuzzy
 msgid "Al_pha to Selection"
-msgstr "/Alfa_dan Seçime"
+msgstr "Alfa_dan Seçime"
 
 #: app/actions/layers-actions.c:249
-#, fuzzy
 msgid "A_dd to Selection"
-msgstr "/Seçime _Ekle"
+msgstr "Seçime _Ekle"
 
 #: app/actions/layers-actions.c:267
-#, fuzzy
 msgid "Select _Top Layer"
-msgstr "/Katman/Küme/En Üs_tteki Katmanı Seç"
+msgstr "En Üs_tteki Katmanı Seç"
 
 #: app/actions/layers-actions.c:272
-#, fuzzy
 msgid "Select _Bottom Layer"
-msgstr "/Katman/Küme/_En Alttaki Katmanı Seç"
+msgstr "_En Alttaki Katmanı Seç"
 
 #: app/actions/layers-actions.c:277
-#, fuzzy
 msgid "Select _Previous Layer"
-msgstr "/Katman/Küme/Önceki Katmanı _Seç"
+msgstr "Önceki Katmanı _Seç"
 
 #: app/actions/layers-actions.c:282
-#, fuzzy
 msgid "Select _Next Layer"
-msgstr "/Katman/Küme/Sonraki _Katmanı Seç"
+msgstr "Sonraki _Katmanı Seç"
 
 #: app/actions/layers-actions.c:290
-#, fuzzy
 msgid "Set Opacity"
-msgstr "Katman Opaklığını Tanımla"
+msgstr "Opaklığı Tanımla"
 
 #: app/actions/layers-commands.c:196
 msgid "Layer Attributes"
@@ -2463,9 +2217,8 @@ msgid "Crop Layer"
 msgstr "Katmanı Kırp"
 
 #: app/actions/layers-commands.c:683
-#, fuzzy
 msgid "Layer Mask to Selection"
-msgstr "/Katmanlar/Maskeden Seçime"
+msgstr ""
 
 #: app/actions/layers-commands.c:904 app/core/gimplayer.c:1085
 #: app/dialogs/layer-add-mask-dialog.c:62
@@ -2484,19 +2237,16 @@ msgid "Palette Editor Menu"
 msgstr "Palet Düzenleyici Menüsü"
 
 #: app/actions/palette-editor-actions.c:53
-#, fuzzy
 msgid "_Delete Color"
-msgstr "/_Silme Rengi"
+msgstr "_Rengi Sil"
 
 #: app/actions/palette-editor-actions.c:54
-#, fuzzy
 msgid "Delete color"
 msgstr "Rengi Sil"
 
 #: app/actions/palette-editor-actions.c:62
-#, fuzzy
 msgid "New Color from _FG"
-msgstr "Gerçek Renkli"
+msgstr ""
 
 #: app/actions/palette-editor-actions.c:63
 #, fuzzy
@@ -2514,19 +2264,16 @@ msgid "New color from BG"
 msgstr "Gerçek Renkli"
 
 #: app/actions/palette-editor-actions.c:77 app/actions/view-actions.c:215
-#, fuzzy
 msgid "Zoom _In"
-msgstr "/_Yakınlaş"
+msgstr "_Yakınlaş"
 
 #: app/actions/palette-editor-actions.c:83 app/actions/view-actions.c:209
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "/_Uzaklaş"
+msgstr "_Uzaklaş"
 
 #: app/actions/palette-editor-actions.c:89
-#, fuzzy
 msgid "Zoom _All"
-msgstr "/_Tamamını Göster"
+msgstr "_Tamamını Göster"
 
 #: app/actions/palette-editor-commands.c:68
 msgid "Edit Palette Color"
@@ -2541,54 +2288,44 @@ msgid "Palettes Menu"
 msgstr "Paletler Menüsü"
 
 #: app/actions/palettes-actions.c:48
-#, fuzzy
 msgid "_New Palette"
-msgstr "Yeni Palet"
+msgstr "_Yeni Palet"
 
 #: app/actions/palettes-actions.c:49
-#, fuzzy
 msgid "New palette"
-msgstr "Yeni Palet"
+msgstr "Yeni palet"
 
 #: app/actions/palettes-actions.c:54
-#, fuzzy
 msgid "_Import Palette..."
-msgstr "İçe Palet Aktar"
+msgstr "Palet Al..."
 
 #: app/actions/palettes-actions.c:55
-#, fuzzy
 msgid "Import palette"
-msgstr "İçe Palet Aktar"
+msgstr "Palet Al"
 
 #: app/actions/palettes-actions.c:60
-#, fuzzy
 msgid "D_uplicate Palette"
-msgstr "/Yolu Çoğalt"
+msgstr "_Paleti Çoğalt"
 
 #: app/actions/palettes-actions.c:61
-#, fuzzy
 msgid "Duplicate palette"
-msgstr "/Yolu Çoğalt"
+msgstr "Paleti çoğalt"
 
 #: app/actions/palettes-actions.c:66
-#, fuzzy
 msgid "_Merge Palettes..."
-msgstr "/_Paletleri Birleştir..."
+msgstr "_Paletleri Birleştir..."
 
 #: app/actions/palettes-actions.c:67
-#, fuzzy
 msgid "Merge palettes"
-msgstr "Paletleri Birleştir"
+msgstr "Paletleri birleştir"
 
 #: app/actions/palettes-actions.c:72
-#, fuzzy
 msgid "_Delete Palette"
-msgstr "Paleti Sil"
+msgstr "P_aleti Sil"
 
 #: app/actions/palettes-actions.c:73
-#, fuzzy
 msgid "Delete palette"
-msgstr "Paleti Sil"
+msgstr "Paleti sil"
 
 #: app/actions/palettes-actions.c:78
 #, fuzzy
@@ -2624,24 +2361,20 @@ msgid "Patterns Menu"
 msgstr "Desenler Menüsü"
 
 #: app/actions/patterns-actions.c:47
-#, fuzzy
 msgid "_New Pattern"
-msgstr "/Yeni Desen"
+msgstr "_Yeni Desen"
 
 #: app/actions/patterns-actions.c:48
-#, fuzzy
 msgid "New pattern"
-msgstr "/Yeni Desen"
+msgstr "Yeni Desen"
 
 #: app/actions/patterns-actions.c:53
-#, fuzzy
 msgid "D_uplicate Pattern"
-msgstr "/Yolu Çoğalt"
+msgstr "_Deseni Çoğalt"
 
 #: app/actions/patterns-actions.c:54
-#, fuzzy
 msgid "Duplicate pattern"
-msgstr "/Yolu Çoğalt"
+msgstr "Deseni çoğalt"
 
 #: app/actions/patterns-actions.c:59
 #, fuzzy
@@ -2649,48 +2382,40 @@ msgid "_Delete Pattern..."
 msgstr "Paleti Sil"
 
 #: app/actions/patterns-actions.c:60
-#, fuzzy
 msgid "Delete pattern"
-msgstr "Paleti Sil"
+msgstr "Deseni sil"
 
 #: app/actions/patterns-actions.c:65
-#, fuzzy
 msgid "_Refresh Patterns"
-msgstr "Desenler"
+msgstr "_Desenleri Tazele"
 
 #: app/actions/patterns-actions.c:66
-#, fuzzy
 msgid "Refresh patterns"
-msgstr "Desenler"
+msgstr "Desenleri tazele"
 
 #: app/actions/patterns-actions.c:74
-#, fuzzy
 msgid "_Edit Pattern..."
-msgstr "/Yol Özniteliklerini Düzenle..."
+msgstr "_Deseni Düzenle..."
 
 #: app/actions/patterns-actions.c:75
-#, fuzzy
 msgid "Edit pattern"
-msgstr "/Yol Özniteliklerini Düzenle..."
+msgstr "Deseni düzenle"
 
 #: app/actions/plug-in-actions.c:62
-#, fuzzy
 msgid "Filte_rs"
-msgstr "/_Filtreler"
+msgstr "_Filtreler"
 
 #: app/actions/plug-in-actions.c:63
-#, fuzzy
 msgid "_Blur"
-msgstr "Bulanıklaştır"
+msgstr "B_ulanıklaştır"
 
 #: app/actions/plug-in-actions.c:65
 msgid "Ma_p"
 msgstr ""
 
 #: app/actions/plug-in-actions.c:66
-#, fuzzy
 msgid "_Noise"
-msgstr "Yok"
+msgstr "_Gürültü"
 
 #: app/actions/plug-in-actions.c:67
 #, fuzzy
@@ -2708,72 +2433,60 @@ msgid "_Generic"
 msgstr "M_erkez"
 
 #: app/actions/plug-in-actions.c:70
-#, fuzzy
 msgid "Gla_ss Effects"
-msgstr "/Filtreler/_Cam Etkileri"
+msgstr "_Cam Etkileri"
 
 #: app/actions/plug-in-actions.c:71
-#, fuzzy
 msgid "_Light Effects"
-msgstr "/Filtreler/_Işık Etkileri"
+msgstr "_Işık Etkileri"
 
 #: app/actions/plug-in-actions.c:72
-#, fuzzy
 msgid "_Distorts"
-msgstr "/Filtreler/_Bozulma"
+msgstr "_Bozulma"
 
 #: app/actions/plug-in-actions.c:73
-#, fuzzy
 msgid "_Artistic"
-msgstr "/Filtreler/A_rtistik"
+msgstr "_Sanatsal"
 
 #: app/actions/plug-in-actions.c:74
-#, fuzzy
 msgid "_Map"
-msgstr "_M"
+msgstr "_Harita"
 
 #: app/actions/plug-in-actions.c:75
-#, fuzzy
 msgid "_Render"
-msgstr "M_erkez"
+msgstr "_Tarama"
 
 #: app/actions/plug-in-actions.c:76
 msgid "_Clouds"
-msgstr ""
+msgstr "_Bulutlar"
 
 #: app/actions/plug-in-actions.c:77
-#, fuzzy
 msgid "_Nature"
-msgstr "İsi_m:"
+msgstr "_Doğa"
 
 #: app/actions/plug-in-actions.c:79
 msgid "_Web"
-msgstr ""
+msgstr "_Web"
 
 #: app/actions/plug-in-actions.c:80
-#, fuzzy
 msgid "An_imation"
-msgstr "/Filtreler/_Canlandırma"
+msgstr "_Canlandırma"
 
 #: app/actions/plug-in-actions.c:81
-#, fuzzy
 msgid "C_ombine"
-msgstr "/Filtreler/B_irleştir"
+msgstr "B_irleştir"
 
 #: app/actions/plug-in-actions.c:82
-#, fuzzy
 msgid "To_ys"
-msgstr "Araçlar"
+msgstr "_Araçlar"
 
 #: app/actions/plug-in-actions.c:85
-#, fuzzy
 msgid "Reset all Filters..."
-msgstr "/Sekme Ekle/_Araç Seçenekleri..."
+msgstr "Tüm Filtreleri Sıfırla..."
 
 #: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:358
-#, fuzzy
 msgid "Repeat Last"
-msgstr "/Filtreler/Sonuncuyu Tekrarla"
+msgstr "Sonuncuyu Tekrarla"
 
 #: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:360
 #, fuzzy
@@ -2781,9 +2494,8 @@ msgid "Re-Show Last"
 msgstr "/Filtreler/Sonuncuyu Göster"
 
 #: app/actions/plug-in-actions.c:344
-#, fuzzy, c-format
 msgid "Re_peat \"%s\""
-msgstr "Tekrarlama:"
+msgstr ""
 
 #: app/actions/plug-in-actions.c:345
 #, fuzzy, c-format
