@@ -92,6 +92,8 @@ libappwidgets_a_sources = \
 	gimpcontrollerwheel.h		\
 	gimpcursor.c			\
 	gimpcursor.h			\
+	gimpcursorview.c		\
+	gimpcursorview.h		\
 	gimpdasheditor.c		\
 	gimpdasheditor.h		\
 	gimpdataeditor.c		\
@@ -193,6 +195,8 @@ libappwidgets_a_sources = \
 	gimpprogressdialog.h		\
 	gimppropwidgets.c		\
 	gimppropwidgets.h		\
+	gimpsamplepointeditor.c		\
+	gimpsamplepointeditor.h		\
 	gimpselectiondata.c		\
 	gimpselectiondata.h		\
 	gimpselectioneditor.c		\

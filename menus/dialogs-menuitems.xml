@@ -12,6 +12,8 @@
   <menuitem action="dialogs-selection-editor" />
   <menuitem action="dialogs-navigation" />
   <menuitem action="dialogs-undo-history" />
+  <menuitem action="dialogs-cursor" />
+  <menuitem action="dialogs-sample-points" />
   <separator />
   <menuitem action="dialogs-colors" />
   <menuitem action="dialogs-brushes" />

@@ -49,6 +49,7 @@ typedef struct _GimpDocked                   GimpDocked; /* dummy typedef */
 
 typedef struct _GimpEditor                   GimpEditor;
 typedef struct _GimpColorEditor              GimpColorEditor;
+typedef struct _GimpCursorView               GimpCursorView;
 typedef struct _GimpDeviceStatus             GimpDeviceStatus;
 typedef struct _GimpErrorConsole             GimpErrorConsole;
 typedef struct _GimpToolOptionsEditor        GimpToolOptionsEditor;
@@ -68,6 +69,7 @@ typedef struct _GimpImageEditor              GimpImageEditor;
 typedef struct _GimpColormapEditor           GimpColormapEditor;
 typedef struct _GimpComponentEditor          GimpComponentEditor;
 typedef struct _GimpHistogramEditor          GimpHistogramEditor;
+typedef struct _GimpSamplePointEditor        GimpSamplePointEditor;
 typedef struct _GimpSelectionEditor          GimpSelectionEditor;
 typedef struct _GimpUndoEditor               GimpUndoEditor;
 

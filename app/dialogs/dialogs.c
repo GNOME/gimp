@@ -122,15 +122,19 @@ static const GimpDialogFactoryEntry dock_entries[] =
   DOCKABLE ("gimp-tool-options",
             N_("Tool Options"), NULL, GIMP_STOCK_TOOL_OPTIONS,
             GIMP_HELP_TOOL_OPTIONS_DIALOG,
-            dialogs_tool_options_get, 0, TRUE),
+            dialogs_tool_options_new, 0, TRUE),
   DOCKABLE ("gimp-device-status",
             N_("Devices"), N_("Device Status"), GIMP_STOCK_DEVICE_STATUS,
             GIMP_HELP_DEVICE_STATUS_DIALOG,
-            dialogs_device_status_get, 0, TRUE),
+            dialogs_device_status_new, 0, TRUE),
   DOCKABLE ("gimp-error-console",
             N_("Errors"), N_("Error Console"), GIMP_STOCK_WARNING,
             GIMP_HELP_ERRORS_DIALOG,
-            dialogs_error_console_get, 0, TRUE),
+            dialogs_error_console_new, 0, TRUE),
+  DOCKABLE ("gimp-cursor-view",
+            N_("Cursor"), N_("Cursor Info"), GIMP_STOCK_CURSOR,
+            GIMP_HELP_CURSOR_DIALOG,
+            dialogs_cursor_view_new, 0, TRUE),
 
   /*  list & grid views  */
   LISTGRID (image, N_("Images"), NULL, GIMP_STOCK_IMAGES,
@@ -183,6 +187,10 @@ static const GimpDialogFactoryEntry dock_entries[] =
             N_("Undo"), N_("Undo History"), GIMP_STOCK_UNDO_HISTORY,
             GIMP_HELP_UNDO_DIALOG,
             dialogs_undo_editor_new, 0, FALSE),
+  DOCKABLE ("gimp-sample-point-editor",
+            N_("Sample Points"), N_("Sample Points"), GIMP_STOCK_SAMPLE_POINT,
+            GIMP_HELP_SAMPLE_POINT_DIALOG,
+            dialogs_sample_point_editor_new, 0, FALSE),
 
   /*  display related  */
   DOCKABLE ("gimp-navigation-view",

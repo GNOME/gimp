@@ -369,6 +369,12 @@ undo_pop_image_guide (GimpUndo            *undo,
   old_position    = gu->guide->position;
   old_orientation = gu->guide->orientation;
 
+  /*  add and move guides manually (nor using the gimp_image_guide
+   *  API), because we might be in the middle of an image resizing
+   *  undo group and the guide's position might be temporarily out of
+   *  image.
+   */
+
   if (gu->guide->position == -1)
     {
       undo->gimage->guides = g_list_prepend (undo->gimage->guides, gu->guide);
@@ -521,11 +527,11 @@ gimp_image_undo_push_image_sample_point (GimpImage       *gimage,
                                    undo_free_image_sample_point,
                                    NULL)))
     {
-      SamplePointUndo *gu = new->data;
+      SamplePointUndo *spu = new->data;
 
-      gu->sample_point = gimp_image_sample_point_ref (sample_point);
-      gu->x            = sample_point->x;
-      gu->y            = sample_point->y;
+      spu->sample_point = gimp_image_sample_point_ref (sample_point);
+      spu->x            = sample_point->x;
+      spu->y            = sample_point->y;
 
       return TRUE;
     }
@@ -538,36 +544,45 @@ undo_pop_image_sample_point (GimpUndo            *undo,
                              GimpUndoMode         undo_mode,
                              GimpUndoAccumulator *accum)
 {
-  SamplePointUndo *gu = undo->data;
+  SamplePointUndo *spu = undo->data;
   gint             old_x;
   gint             old_y;
 
-  old_x = gu->sample_point->x;
-  old_y = gu->sample_point->y;
+  old_x = spu->sample_point->x;
+  old_y = spu->sample_point->y;
 
-  if (gu->sample_point->x == -1)
+  /*  add and move sample points manually (nor using the
+   *  gimp_image_sample_point API), because we might be in the middle
+   *  of an image resizing undo group and the sample point's position
+   *  might be temporarily out of image.
+   */
+
+  if (spu->sample_point->x == -1)
     {
       undo->gimage->sample_points = g_list_append (undo->gimage->sample_points,
-                                                   gu->sample_point);
-      gu->sample_point->x = gu->x;
-      gu->sample_point->y = gu->y;
-      gimp_image_sample_point_ref (gu->sample_point);
-      gimp_image_update_sample_point (undo->gimage, gu->sample_point);
+                                                   spu->sample_point);
+
+      spu->sample_point->x = spu->x;
+      spu->sample_point->y = spu->y;
+      gimp_image_sample_point_ref (spu->sample_point);
+
+      gimp_image_sample_point_added (undo->gimage, spu->sample_point);
+      gimp_image_update_sample_point (undo->gimage, spu->sample_point);
     }
-  else if (gu->x == -1)
+  else if (spu->x == -1)
     {
-      gimp_image_remove_sample_point (undo->gimage, gu->sample_point, FALSE);
+      gimp_image_remove_sample_point (undo->gimage, spu->sample_point, FALSE);
     }
   else
     {
-      gimp_image_update_sample_point (undo->gimage, gu->sample_point);
-      gu->sample_point->x = gu->x;
-      gu->sample_point->y = gu->y;
-      gimp_image_update_sample_point (undo->gimage, gu->sample_point);
+      gimp_image_update_sample_point (undo->gimage, spu->sample_point);
+      spu->sample_point->x = spu->x;
+      spu->sample_point->y = spu->y;
+      gimp_image_update_sample_point (undo->gimage, spu->sample_point);
     }
 
-  gu->x = old_x;
-  gu->y = old_y;
+  spu->x = old_x;
+  spu->y = old_y;
 
   return TRUE;
 }

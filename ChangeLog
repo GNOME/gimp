@@ -1,3 +1,45 @@
+2005-04-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.[ch]: added new signals "sample-point-added"
+	and "sample-point-removed" and public functions to emit them.
+
+	* app/core/gimpimage-sample-points.c (gimp_image_add_sample_point)
+	(gimp_image_remove_sample_point): emit them accordingly.
+
+	* app/core/gimpimage-undo-push.c (undo_pop_image_sample_point):
+	ditto.
+
+	(undo_pop_image_guide)
+	(undo_pop_image_sample_point): added comments why we add/remove
+	stuff manually instead of using the GimpImage APIs.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcursorview.[ch]
+	* app/widgets/gimpsamplepointeditor.[ch]: new widgets.
+	GimpCursorView is a replacement for the info window's "Cursor"
+	page, GimpSamplePointEditor is a view on an image's sample points.
+	The sample point editor does nothing yet except keeping a 2x2 grid
+	of GimpColorFrames. Addresses bug #137776.
+
+	* app/dialogs/dialogs.c
+	* app/dialogs/dialogs-constructors.[ch]: register the new widgets
+	as dockable dialogs.
+
+	* app/actions/dialogs-actions.c (dialogs_dockable_actions)
+	* menus/dialogs-menuitems.xml: added actions and menu items for
+	the new dialogs.
+
+	* app/display/gimpdisplayshell-cursor.c
+	(gimp_display_shell_update_cursor)
+	(gimp_display_shell_clear_cursor): update the new cursor view.
+
+	* app/widgets/gimphelp-ids.h: help IDs for the new dialogs.
+
+	* app/widgets/widgets-enums.[ch] (enum GimpColorFrameMode):
+	changed description "Pixel values" to "Pixel" because the former
+	was too long.
+
 2005-04-02  Michael Natterer  <mitch@gimp.org>
 
 	* themes/Default/images/Makefile.am

@@ -40,6 +40,7 @@
 #include "widgets/gimpcontainergridview.h"
 #include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimpcontainerview-utils.h"
+#include "widgets/gimpcursorview.h"
 #include "widgets/gimpdataeditor.h"
 #include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdialogfactory.h"
@@ -56,6 +57,7 @@
 #include "widgets/gimplayertreeview.h"
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimppatternfactoryview.h"
+#include "widgets/gimpsamplepointeditor.h"
 #include "widgets/gimpselectioneditor.h"
 #include "widgets/gimptemplateview.h"
 #include "widgets/gimptoolbox.h"
@@ -232,7 +234,7 @@ dialogs_dockable_constructor (GimpDialogFactory      *factory,
 /*****  singleton dialogs  *****/
 
 GtkWidget *
-dialogs_tool_options_get (GimpDialogFactory *factory,
+dialogs_tool_options_new (GimpDialogFactory *factory,
 			  GimpContext       *context,
                           gint               preview_size)
 {
@@ -241,7 +243,7 @@ dialogs_tool_options_get (GimpDialogFactory *factory,
 }
 
 GtkWidget *
-dialogs_device_status_get (GimpDialogFactory *factory,
+dialogs_device_status_new (GimpDialogFactory *factory,
                            GimpContext       *context,
                            gint               preview_size)
 {
@@ -249,12 +251,20 @@ dialogs_device_status_get (GimpDialogFactory *factory,
 }
 
 GtkWidget *
-dialogs_error_console_get (GimpDialogFactory *factory,
+dialogs_error_console_new (GimpDialogFactory *factory,
 			   GimpContext       *context,
                            gint               preview_size)
 {
   return gimp_error_console_new (context->gimp,
                                  factory->menu_factory);
+}
+
+GtkWidget *
+dialogs_cursor_view_new (GimpDialogFactory *factory,
+                         GimpContext       *context,
+                         gint               preview_size)
+{
+  return gimp_cursor_view_new (context);
 }
 
 
@@ -600,6 +610,14 @@ dialogs_undo_editor_new (GimpDialogFactory *factory,
 {
   return gimp_undo_editor_new (context->gimp->config,
                                factory->menu_factory);
+}
+
+GtkWidget *
+dialogs_sample_point_editor_new (GimpDialogFactory *factory,
+                                 GimpContext       *context,
+                                 gint               preview_size)
+{
+  return gimp_sample_point_editor_new (factory->menu_factory);
 }
 
 

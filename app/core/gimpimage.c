@@ -94,6 +94,8 @@ enum
   UPDATE,
   UPDATE_GUIDE,
   UPDATE_SAMPLE_POINT,
+  SAMPLE_POINT_ADDED,
+  SAMPLE_POINT_REMOVED,
   COLORMAP_CHANGED,
   UNDO_EVENT,
   FLUSH,
@@ -410,6 +412,26 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
+  gimp_image_signals[SAMPLE_POINT_ADDED] =
+    g_signal_new ("sample_point_added",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, sample_point_added),
+                  NULL, NULL,
+                  gimp_marshal_VOID__POINTER,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_POINTER);
+
+  gimp_image_signals[SAMPLE_POINT_REMOVED] =
+    g_signal_new ("sample_point_removed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, sample_point_removed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__POINTER,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_POINTER);
+
   gimp_image_signals[COLORMAP_CHANGED] =
     g_signal_new ("colormap_changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -473,6 +495,8 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->update                       = NULL;
   klass->update_guide                 = NULL;
   klass->update_sample_point          = NULL;
+  klass->sample_point_added           = NULL;
+  klass->sample_point_removed         = NULL;
   klass->colormap_changed             = gimp_image_real_colormap_changed;
   klass->undo_event                   = NULL;
   klass->flush                        = gimp_image_real_flush;
@@ -1662,6 +1686,28 @@ gimp_image_update_sample_point (GimpImage       *gimage,
   g_return_if_fail (sample_point != NULL);
 
   g_signal_emit (gimage, gimp_image_signals[UPDATE_SAMPLE_POINT], 0,
+                 sample_point);
+}
+
+void
+gimp_image_sample_point_added (GimpImage       *gimage,
+                               GimpSamplePoint *sample_point)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (sample_point != NULL);
+
+  g_signal_emit (gimage, gimp_image_signals[SAMPLE_POINT_ADDED], 0,
+                 sample_point);
+}
+
+void
+gimp_image_sample_point_removed (GimpImage       *gimage,
+                                 GimpSamplePoint *sample_point)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (sample_point != NULL);
+
+  g_signal_emit (gimage, gimp_image_signals[SAMPLE_POINT_REMOVED], 0,
                  sample_point);
 }
 

@@ -110,7 +110,7 @@ gimp_color_frame_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_COLOR_FRAME_MODE_PIXEL, N_("Pixel values"), NULL },
+    { GIMP_COLOR_FRAME_MODE_PIXEL, N_("Pixel"), NULL },
     { GIMP_COLOR_FRAME_MODE_RGB, N_("RGB"), NULL },
     { GIMP_COLOR_FRAME_MODE_HSV, N_("HSV"), NULL },
     { GIMP_COLOR_FRAME_MODE_CMYK, N_("CMYK"), NULL },

@@ -111,6 +111,16 @@ GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-undo-history",
     GIMP_HELP_UNDO_DIALOG },
 
+  { "dialogs-cursor", GIMP_STOCK_CURSOR,
+    N_("_Cursor"), NULL, NULL,
+    "gimp-cursor-view",
+    GIMP_HELP_CURSOR_DIALOG },
+
+  { "dialogs-sample-points", GIMP_STOCK_SAMPLE_POINT,
+    N_("_Sample Points"), NULL, NULL,
+    "gimp-sample-point-editor",
+    GIMP_HELP_SAMPLE_POINT_DIALOG },
+
   { "dialogs-colors", GIMP_STOCK_DEFAULT_COLORS,
     N_("Colo_rs"), NULL, NULL,
     "gimp-color-editor",

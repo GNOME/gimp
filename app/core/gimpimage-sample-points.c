@@ -101,6 +101,7 @@ gimp_image_add_sample_point (GimpImage       *gimage,
   sample_point->y = y;
   gimp_image_sample_point_ref (sample_point);
 
+  gimp_image_sample_point_added (gimage, sample_point);
   gimp_image_update_sample_point (gimage, sample_point);
 }
 
@@ -125,6 +126,8 @@ gimp_image_remove_sample_point (GimpImage       *gimage,
     list = g_list_next (list);
 
   gimage->sample_points = g_list_remove (gimage->sample_points, sample_point);
+
+  gimp_image_sample_point_removed (gimage, sample_point);
 
   sample_point->x = -1;
   sample_point->y = -1;

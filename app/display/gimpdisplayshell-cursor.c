@@ -34,6 +34,9 @@
 #include "dialogs/info-window.h"
 
 #include "widgets/gimpcursor.h"
+#include "widgets/gimpcursorview.h"
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpsessioninfo.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -117,6 +120,10 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
   gint       t_x = -1;
   gint       t_y = -1;
 
+  GimpDialogFactory *factory;
+  GimpSessionInfo   *session_info;
+  GtkWidget         *cursor_view = NULL;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   gimage = shell->gdisp->gimage;
@@ -155,6 +162,12 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
     gimp_display_shell_untransform_xy (shell, display_x, display_y,
                                        &t_x, &t_y, FALSE, FALSE);
 
+  factory = gimp_dialog_factory_from_name ("dock");
+  session_info = gimp_dialog_factory_find_session_info (factory,
+                                                        "gimp-cursor-view");
+  if (session_info && session_info->widget)
+    cursor_view = gtk_bin_get_child (GTK_BIN (session_info->widget));
+
   if (t_x < 0              ||
       t_y < 0              ||
       t_x >= gimage->width ||
@@ -166,16 +179,35 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
     {
       info_window_update_cursor (shell->gdisp, t_x, t_y);
     }
+
+  if (cursor_view)
+    gimp_cursor_view_update_cursor (GIMP_CURSOR_VIEW (cursor_view),
+                                    shell->gdisp->gimage, shell->unit,
+                                    t_x, t_y);
 }
 
 void
 gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
 {
+  GimpDialogFactory *factory;
+  GimpSessionInfo   *session_info;
+  GtkWidget         *cursor_view = NULL;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   gimp_statusbar_clear_cursor (GIMP_STATUSBAR (shell->statusbar));
 
   info_window_update_cursor (shell->gdisp, -1, -1);
+
+  factory = gimp_dialog_factory_from_name ("dock");
+  session_info = gimp_dialog_factory_find_session_info (factory,
+                                                        "gimp-cursor-view");
+  if (session_info && session_info->widget)
+    cursor_view = gtk_bin_get_child (GTK_BIN (session_info->widget));
+
+  if (cursor_view)
+    gimp_cursor_view_update_cursor (GIMP_CURSOR_VIEW (cursor_view),
+                                    NULL, GIMP_UNIT_PIXEL, 0, 0);
 }
 
 static void

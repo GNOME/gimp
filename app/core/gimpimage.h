@@ -210,6 +210,10 @@ struct _GimpImageClass
                                          GimpGuide            *guide);
   void (* update_sample_point)          (GimpImage            *gimage,
                                          GimpSamplePoint      *sample_point);
+  void (* sample_point_added)           (GimpImage            *gimage,
+                                         GimpSamplePoint      *sample_point);
+  void (* sample_point_removed)         (GimpImage            *gimage,
+                                         GimpSamplePoint      *sample_point);
   void (* colormap_changed)             (GimpImage            *gimage,
 					 gint                  color_index);
   void (* undo_event)                   (GimpImage            *gimage,
@@ -299,6 +303,10 @@ void            gimp_image_update_guide          (GimpImage          *gimage,
                                                   GimpGuide          *guide);
 void            gimp_image_update_sample_point   (GimpImage          *gimage,
                                                   GimpSamplePoint    *sample_point);
+void            gimp_image_sample_point_added    (GimpImage          *gimage,
+                                                  GimpSamplePoint    *sample_point);
+void            gimp_image_sample_point_removed  (GimpImage          *gimage,
+                                                  GimpSamplePoint    *sample_point);
 void		gimp_image_colormap_changed      (GimpImage          *gimage,
                                                   gint                col);
 void            gimp_image_selection_control     (GimpImage          *gimage,
@@ -386,7 +394,7 @@ gboolean        gimp_image_set_tattoo_state      (GimpImage          *gimage,
 GimpTattoo      gimp_image_get_tattoo_state      (GimpImage          *gimage);
 
 
-/*  layers / channels / vectors / old paths  */
+/*  layers / channels / vectors  */
 
 GimpContainer * gimp_image_get_layers            (const GimpImage    *gimage);
 GimpContainer * gimp_image_get_channels          (const GimpImage    *gimage);
