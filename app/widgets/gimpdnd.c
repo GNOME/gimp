@@ -980,7 +980,7 @@ gimp_dnd_open_files (GtkWidget *widget,
               /*  try if we got a "file:" uri in the local filename encoding  */
               gchar *unescaped_filename;
 
-              if (strstr (filename, "%"))
+              if (strstr (dnd_crap, "%"))
                 {
                   unescaped_filename = gimp_unescape_uri_string (start, -1,
                                                                  "/", FALSE);
@@ -1015,7 +1015,7 @@ gimp_dnd_open_files (GtkWidget *widget,
 
         if (! gimage && status != GIMP_PDB_CANCEL)
           {
-            gchar *filename = file_utils_uri_to_utf8_filename (uri);
+            filename = file_utils_uri_to_utf8_filename (uri);
 
             g_message (_("Opening '%s' failed:\n\n%s"),
                        filename, error->message);

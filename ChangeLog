@@ -1,3 +1,9 @@
+2003-11-19  Manish Singh  <yosh@gimp.org>
+
+	* app/widgets/gimpdnd.c (gimp_dnd_open_files): strstr on dnd_crap,
+	not filename, since filename will be NULL in that case. Also remove
+	doubled declaration of filename.
+
 2003-11-19  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_shrink_wrap):
