@@ -117,7 +117,7 @@ indicator_area_create ()
   
   brush_preview = gimp_context_preview_new (GCP_BRUSH, 
 					    CELL_SIZE, CELL_SIZE, 
-					    FALSE);
+					    TRUE, FALSE, FALSE);
   gtk_tooltips_set_tip (tool_tips, brush_preview, 
 			_("The active brush.\nClick to open the Brushes Dialog."), 
 			NULL);
@@ -128,7 +128,7 @@ indicator_area_create ()
                             
   pattern_preview = gimp_context_preview_new (GCP_PATTERN, 
 					      CELL_SIZE, CELL_SIZE, 
-					      FALSE);
+					      TRUE, FALSE, FALSE);
   gtk_tooltips_set_tip (tool_tips, pattern_preview, 
 			_("The active pattern.\nClick to open the Patterns Dialog."), 
 			NULL);
@@ -139,7 +139,7 @@ indicator_area_create ()
 
   gradient_preview = gimp_context_preview_new (GCP_GRADIENT, 
 					       GRAD_CELL_WIDTH, GRAD_CELL_HEIGHT, 
-					       FALSE);
+					       TRUE, FALSE, FALSE);
   gtk_tooltips_set_tip (tool_tips, gradient_preview, 
 			_("The active gradient.\nClick to open the Gradients Dialog."), 
 			NULL);

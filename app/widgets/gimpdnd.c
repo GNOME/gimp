@@ -242,7 +242,7 @@ gimp_dnd_color_drag_begin (GtkWidget      *widget,
 
   window = gtk_window_new (GTK_WINDOW_POPUP);
   gtk_widget_set_app_paintable (GTK_WIDGET (window), TRUE);
-  gtk_widget_set_usize (window, 48, 32);
+  gtk_widget_set_usize (window, 32, 32);
   gtk_widget_realize (window);
   gtk_object_set_data_full (GTK_OBJECT (widget),
                             "gimp-color-drag-window",

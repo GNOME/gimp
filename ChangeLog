@@ -1,3 +1,11 @@
+Sat Sep  4 16:58:36 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/devices.c
+	* app/gimpcontextpreview.[ch]
+	* app/gimpdnd.[ch]
+	* app/inidicatorarea.c: dnd for brushes and patterns. Does not work
+	yet...
+
 Sat Sep  4 16:31:50 CEST 1999 Olof S Kylander <olof@frozenriver.com>
 	
 	* patch_xinput_airbrush (newfile)

@@ -125,6 +125,18 @@ static GtkTargetEntry color_area_target_table[] =
 };
 static guint n_color_area_targets = (sizeof (color_area_target_table) /
 				     sizeof (color_area_target_table[0]));
+static GtkTargetEntry brush_area_target_table[] =
+{
+  GIMP_TARGET_BRUSH
+};
+static guint n_brush_area_targets = (sizeof (brush_area_target_table) /
+				     sizeof (brush_area_target_table[0]));
+static GtkTargetEntry pattern_area_target_table[] =
+{
+  GIMP_TARGET_PATTERN
+};
+static guint n_pattern_area_targets = (sizeof (pattern_area_target_table) /
+				       sizeof (pattern_area_target_table[0]));
 
 
 void 
@@ -769,7 +781,7 @@ create_device_status (void)
 	  gtk_drag_source_set (deviceD->colors[i],
 			       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
 			       color_area_target_table, n_color_area_targets,
-			       GDK_ACTION_COPY | GDK_ACTION_MOVE);
+			       GDK_ACTION_COPY);
 	  gimp_dnd_color_source_set (deviceD->colors[i], device_status_drag_color, 
 				     GUINT_TO_POINTER (device_info->device));
  	  gtk_drag_dest_set (deviceD->colors[i],
@@ -786,15 +798,26 @@ create_device_status (void)
 
 	  deviceD->brushes[i] = gimp_context_preview_new (GCP_BRUSH, 
 							  CELL_SIZE, CELL_SIZE,
-							  TRUE);
+							  FALSE, TRUE, TRUE);
+ 	  gtk_drag_dest_set (deviceD->brushes[i],
+ 			     GTK_DEST_DEFAULT_HIGHLIGHT |
+ 			     GTK_DEST_DEFAULT_MOTION |
+ 			     GTK_DEST_DEFAULT_DROP,
+ 			     brush_area_target_table, n_brush_area_targets,
+ 			     GDK_ACTION_COPY); 
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->brushes[i],
 			    3, 4, i, i+1,
 			    0, 0, 2, 2);
 
-
 	  deviceD->patterns[i] = gimp_context_preview_new (GCP_PATTERN,
 							   CELL_SIZE, CELL_SIZE, 
-							   TRUE);
+							   FALSE, TRUE, TRUE);
+ 	  gtk_drag_dest_set (deviceD->patterns[i],
+ 			     GTK_DEST_DEFAULT_HIGHLIGHT |
+ 			     GTK_DEST_DEFAULT_MOTION |
+ 			     GTK_DEST_DEFAULT_DROP,
+ 			     pattern_area_target_table, n_pattern_area_targets,
+ 			     GDK_ACTION_COPY); 
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->patterns[i],
 			    4, 5, i, i+1,
 			    0, 0, 2, 2);
