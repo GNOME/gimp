@@ -85,6 +85,7 @@
 extern      int gap_debug; /* ==0  ... dont print debug infos */
 
 static char *global_xanim_input_dir    = "input";
+
 char global_xanim_prog[500];
 char global_errlist[500];
 
@@ -160,7 +161,7 @@ p_xanim_info(char *errlist)
 
   l_idx++;
   p_init_arr_arg(&argv[l_idx], WGT_LABEL);
-  argv[l_idx].label_txt = _("--------------------------------------------");  
+  argv[l_idx].label_txt = "--------------------------------------------";  
 
 
   l_idx++;
@@ -284,7 +285,8 @@ p_xanim_dialog   (gint32 *first_frame,
                         "(out of the specified range) while xanim is still running");
   argv[10].int_ret   = 1;
    
-  if(TRUE == p_array_dialog("Split any Xanim readable Video to Frames", "Select Framerange", XADIALOG_NUM_ARGS, argv))
+  if(TRUE == p_array_dialog(_("Split any Xanim readable Video to Frames"), 
+			    _("Select Framerange"), XADIALOG_NUM_ARGS, argv))
   {
      if(argv[1].int_ret < argv[2].int_ret )
      {
