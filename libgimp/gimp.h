@@ -75,16 +75,16 @@ typedef void   (* GRunProc) (gchar   *name,
 struct _GPlugInInfo
 {
   /* called when the gimp application initially starts up */
-  void (*init_proc) (void);
+  void (* init_proc) (void);
 
   /* called when the gimp application exits */
-  void (*quit_proc) (void);
+  void (* quit_proc) (void);
 
   /* called by the gimp so that the plug-in can inform the
    *  gimp of what it does. (ie. installing a procedure database
    *  procedure).
    */
-  void (*query_proc) (void);
+  void (* query_proc) (void);
 
   /* called to run a procedure the plug-in installed in the
    *  procedure database.
@@ -243,627 +243,627 @@ struct _GParam
 /* The main procedure that should be called with the
  *  'argc' and 'argv' that are passed to "main".
  */
-int gimp_main (int   argc,
-	       char *argv[]);
+gint       gimp_main              (gint   argc,
+				   gchar *argv[]);
 
 /* Forcefully causes the gimp library to exit and
  *  close down its connection to main gimp application.
  */
-void G_GNUC_NORETURN gimp_quit (void);
+void G_GNUC_NORETURN gimp_quit    (void);
 
 /* Specify a range of data to be associated with 'id'.
  *  The data will exist for as long as the main gimp
  *  application is running.
  */
-void gimp_set_data (gchar *  id,
-		    gpointer data,
-		    guint32  length);
+void       gimp_set_data          (gchar    *id,
+				   gpointer  data,
+				   guint32   length);
 
 /* Retrieve the piece of data stored within the main
  *  gimp application specified by 'id'. The data is
  *  stored in the supplied buffer.  Make sure enough
  *  space is allocated.
  */
-void gimp_get_data (gchar *  id,
-		    gpointer data);
+void       gimp_get_data          (gchar    *id,
+				   gpointer  data);
 
 /* Get the size in bytes of the data stored by a gimp_get_data
  * id. As size of zero may indicate that there is no such
  * identifier in the database.
  */
-guint32 gimp_get_data_size (gchar * id);
+guint32    gimp_get_data_size     (gchar *id);
 
 /* Initialize the progress bar with "message". If "message"
  *  is NULL, the message displayed in the progress window will
  *  be the name of the plug-in.
  */
-void gimp_progress_init (char *message);
+void       gimp_progress_init     (gchar *message);
 
 /* Update the progress bar. If the progress bar has not been
  *  initialized then it will be automatically initialized as if
  *  "gimp_progress_init (NULL)" were called. "percentage" is a
  *  value between 0 and 1.
  */
-void gimp_progress_update (gdouble percentage);
+void       gimp_progress_update   (gdouble percentage);
 
 /* Returns the default gdisplay (given at plug-in config time).
  */
-gint32 gimp_default_display (void);
+gint32     gimp_default_display   (void);
 
 
 /* Pops up a dialog box with "message". Useful for status and
  * error reports. If "message" is NULL, do nothing.
  */
-void gimp_message (const gchar *message);
+void       gimp_message           (const gchar *message);
 
 
 /* Query the gimp application's procedural database.
  *  The arguments are regular expressions which select
  *  which procedure names will be returned in 'proc_names'.
  */
-void gimp_query_database (gchar   *name_regexp,
-			  gchar   *blurb_regexp,
-			  gchar   *help_regexp,
-			  gchar   *author_regexp,
-			  gchar   *copyright_regexp,
-			  gchar   *date_regexp,
-			  gchar   *proc_type_regexp,
-			  gint    *nprocs,
-			  gchar ***proc_names);
+void       gimp_query_database    (gchar   *name_regexp,
+				   gchar   *blurb_regexp,
+				   gchar   *help_regexp,
+				   gchar   *author_regexp,
+				   gchar   *copyright_regexp,
+				   gchar   *date_regexp,
+				   gchar   *proc_type_regexp,
+				   gint    *nprocs,
+				   gchar ***proc_names);
 
 /* Query the gimp application's procedural database
  *  regarding a particular procedure.
  */
-gboolean gimp_query_procedure  (gchar       *proc_name,
-				gchar      **proc_blurb,
-				gchar      **proc_help,
-				gchar      **proc_author,
-				gchar      **proc_copyright,
-				gchar      **proc_date,
-				gint        *proc_type,
-				gint        *nparams,
-				gint        *nreturn_vals,
-				GParamDef  **params,
-				GParamDef  **return_vals);
+gboolean   gimp_query_procedure   (gchar       *proc_name,
+				   gchar      **proc_blurb,
+				   gchar      **proc_help,
+				   gchar      **proc_author,
+				   gchar      **proc_copyright,
+				   gchar      **proc_date,
+				   gint        *proc_type,
+				   gint        *nparams,
+				   gint        *nreturn_vals,
+				   GParamDef  **params,
+				   GParamDef  **return_vals);
 
 /* Query the gimp application regarding all open images.
  *  The list of open image id's is returned in 'image_ids'.
  */
-gint32* gimp_query_images (gint *nimages);
+gint32   * gimp_query_images      (gint *nimages);
 
 
 /* Install a procedure in the procedure database.
  */
-void gimp_install_procedure (gchar     *name,
-			     gchar     *blurb,
-			     gchar     *help,
-			     gchar     *author,
-			     gchar     *copyright,
-			     gchar     *date,
-			     gchar     *menu_path,
-			     gchar     *image_types,
-			     gint       type,
-			     gint       nparams,
-			     gint       nreturn_vals,
-			     GParamDef *params,
-			     GParamDef *return_vals);
+void       gimp_install_procedure (gchar     *name,
+				   gchar     *blurb,
+				   gchar     *help,
+				   gchar     *author,
+				   gchar     *copyright,
+				   gchar     *date,
+				   gchar     *menu_path,
+				   gchar     *image_types,
+				   gint       type,
+				   gint       nparams,
+				   gint       nreturn_vals,
+				   GParamDef *params,
+				   GParamDef *return_vals);
 
 /* Install a temporary procedure in the procedure database.
  */
-void gimp_install_temp_proc (gchar     *name,
-			     gchar     *blurb,
-			     gchar     *help,
-			     gchar     *author,
-			     gchar     *copyright,
-			     gchar     *date,
-			     gchar     *menu_path,
-			     gchar     *image_types,
-			     gint       type,
-			     gint       nparams,
-			     gint       nreturn_vals,
-			     GParamDef *params,
-			     GParamDef *return_vals,
-			     GRunProc   run_proc);
+void       gimp_install_temp_proc (gchar     *name,
+				   gchar     *blurb,
+				   gchar     *help,
+				   gchar     *author,
+				   gchar     *copyright,
+				   gchar     *date,
+				   gchar     *menu_path,
+				   gchar     *image_types,
+				   gint       type,
+				   gint       nparams,
+				   gint       nreturn_vals,
+				   GParamDef *params,
+				   GParamDef *return_vals,
+				   GRunProc   run_proc);
 
 /* Uninstall a temporary procedure
  */
-void gimp_uninstall_temp_proc (gchar *name);
+void       gimp_uninstall_temp_proc         (gchar *name);
 
 /* Install a load file format handler in the procedure database.
  */
-void gimp_register_magic_load_handler (gchar *name,
-				       gchar *extensions,
-				       gchar *prefixes,
-				       gchar *magics);
+void       gimp_register_magic_load_handler (gchar *name,
+					     gchar *extensions,
+					     gchar *prefixes,
+					     gchar *magics);
 
 /* Install a load file format handler in the procedure database.
  */
-void gimp_register_load_handler (gchar *name,
-				 gchar *extensions,
-				 gchar *prefixes);
+void       gimp_register_load_handler       (gchar *name,
+					     gchar *extensions,
+					     gchar *prefixes);
 
 /* Install a save file format handler in the procedure database.
  */
-void gimp_register_save_handler (gchar *name,
-				 gchar *extensions,
-				 gchar *prefixes);
+void       gimp_register_save_handler       (gchar *name,
+					     gchar *extensions,
+					     gchar *prefixes);
 
 /* Run a procedure in the procedure database. The parameters are
  *  specified via the variable length argument list. The return
  *  values are returned in the 'GParam*' array.
  */
-GParam* gimp_run_procedure (gchar *name,
-			    gint  *nreturn_vals,
-			    ...);
+GParam   * gimp_run_procedure     (gchar *name,
+				   gint  *nreturn_vals,
+				   ...);
 
 /* Run a procedure in the procedure database. The parameters are
  *  specified as an array of GParam.  The return
  *  values are returned in the 'GParam*' array.
  */
-GParam* gimp_run_procedure2 (gchar  *name,
-			     gint   *nreturn_vals,
-			     gint    nparams,
-			     GParam *params);
+GParam   * gimp_run_procedure2    (gchar  *name,
+				   gint   *nreturn_vals,
+				   gint    nparams,
+				   GParam *params);
 
 /* Destroy the an array of parameters. This is useful for
  *  destroying the return values returned by a call to
  *  'gimp_run_procedure'.
  */
-void gimp_destroy_params (GParam *params,
-			  gint    nparams);
+void       gimp_destroy_params    (GParam *params,
+				   gint    nparams);
 
 /* Destroy the an array of GParamDef's. This is useful for
  *  destroying the return values returned by a call to
  *  'gimp_query_procedure'.
  */
-void gimp_destroy_paramdefs (GParamDef *paramdefs,
-			     gint       nparams);
+void       gimp_destroy_paramdefs (GParamDef *paramdefs,
+				   gint       nparams);
 
-gdouble    gimp_gamma           (void);
-gboolean   gimp_install_cmap    (void);
-gboolean   gimp_use_xshm        (void);
-guchar   * gimp_color_cube      (void);
-gint       gimp_min_colors      (void);
-void       gimp_request_wakeups (void);
+gdouble    gimp_gamma             (void);
+gboolean   gimp_install_cmap      (void);
+gboolean   gimp_use_xshm          (void);
+guchar   * gimp_color_cube        (void);
+gint       gimp_min_colors        (void);
+void       gimp_request_wakeups   (void);
 
-gchar    * gimp_get_progname    (void);
+gchar    * gimp_get_progname      (void);
 
 /****************************************
  *              Images                  *
  ****************************************/
 
-gint32     gimp_image_new                   (guint      width,
-					     guint      height,
-					     GImageType type);
-gint32     gimp_image_duplicate             (gint32     image_ID);
-void       gimp_image_delete                (gint32     image_ID);
-guint      gimp_image_width                 (gint32     image_ID);
-guint      gimp_image_height                (gint32     image_ID);
-GImageType gimp_image_base_type             (gint32     image_ID);
-gint32     gimp_image_floating_selection    (gint32     image_ID);
-void       gimp_image_add_channel           (gint32     image_ID,
-					     gint32     channel_ID,
-					     gint       position);
-void       gimp_image_add_layer             (gint32     image_ID,
-					     gint32     layer_ID,
-					     gint       position);
-void       gimp_image_add_layer_mask        (gint32     image_ID,
-					     gint32     layer_ID,
-					     gint32     mask_ID);
-void       gimp_image_clean_all             (gint32     image_ID);
-void       gimp_image_undo_disable          (gint32     image_ID);
-void       gimp_image_undo_enable           (gint32     image_ID);
-void       gimp_image_undo_freeze           (gint32     image_ID);
-void       gimp_image_undo_thaw             (gint32     image_ID);
-void       gimp_undo_push_group_start       (gint32     image_ID);
-void       gimp_undo_push_group_end         (gint32     image_ID);
-void       gimp_image_clean_all             (gint32     image_ID);
-gint32     gimp_image_flatten               (gint32     image_ID);
-void       gimp_image_lower_channel         (gint32     image_ID,
-					     gint32     channel_ID);
-void       gimp_image_lower_layer           (gint32     image_ID,
-					     gint32     layer_ID);
-gint32     gimp_image_merge_visible_layers  (gint32     image_ID,
-					     GimpMergeType merge_type);
-gint32     gimp_image_pick_correlate_layer  (gint32     image_ID,
-					     gint       x,
-					     gint       y);
-void       gimp_image_raise_channel         (gint32     image_ID,
-					     gint32     channel_ID);
-void       gimp_image_raise_layer           (gint32     image_ID,
-					     gint32     layer_ID);
-void       gimp_image_remove_channel        (gint32     image_ID,
-					     gint32     channel_ID);
-void       gimp_image_remove_layer          (gint32     image_ID,
-					     gint32     layer_ID);
-void       gimp_image_remove_layer_mask     (gint32     image_ID,
-					     gint32     layer_ID,
-					     gint       mode);
-void       gimp_image_resize                (gint32     image_ID,
-					     guint      new_width,
-					     guint      new_height,
-					     gint       offset_x,
-					     gint       offset_y);
-gint32     gimp_image_get_active_channel    (gint32     image_ID);
-gint32     gimp_image_get_active_layer      (gint32     image_ID);
-gint32*    gimp_image_get_channels          (gint32     image_ID,
-					     gint      *nchannels);
-guchar*    gimp_image_get_cmap              (gint32     image_ID,
-					     gint      *ncolors);
-gboolean   gimp_image_get_component_active  (gint32     image_ID,
-					     gint       component);
-gboolean   gimp_image_get_component_visible (gint32     image_ID,
-					     gint       component);
-gchar*     gimp_image_get_filename          (gint32     image_ID);
-gint32*    gimp_image_get_layers            (gint32     image_ID,
-					     gint      *nlayers);
-gint32     gimp_image_get_selection         (gint32     image_ID);
-void       gimp_image_set_active_channel    (gint32     image_ID,
-					     gint32     channel_ID);
-void       gimp_image_set_active_layer      (gint32     image_ID,
-					     gint32     layer_ID);
-void       gimp_image_set_cmap              (gint32     image_ID,
-					     guchar    *cmap,
-					     gint       ncolors);
-void       gimp_image_set_component_active  (gint32     image_ID,
-					     gint       component,
-					     gboolean   active);
-void       gimp_image_set_component_visible (gint32     image_ID,
-					     gint       component,
-					     gboolean   visible);
-void       gimp_image_set_filename          (gint32     image_ID,
-					     gchar     *name);
-GimpParasite * gimp_image_parasite_find     (gint32          image_ID,
-					     const gchar    *name);
-void       gimp_image_parasite_attach       (gint32              image_ID,
-					     const GimpParasite *parasite);
-void       gimp_image_attach_new_parasite   (gint32          image_ID,
-					     const gchar    *name, 
-					     gint            flags,
-					     gint            size, 
-					     const gpointer  data);
-void       gimp_image_parasite_detach       (gint32          image_ID,
-					     const gchar    *name);
-void       gimp_image_set_resolution        (gint32     image_ID,
-					     double     xresolution,
-					     double     yresolution);
-void       gimp_image_get_resolution        (gint32     image_ID,
-					     double     *xresolution,
-					     double     *yresolution);
-void       gimp_image_set_unit              (gint32     image_ID,
-					     GimpUnit   unit);
-GimpUnit   gimp_image_get_unit              (gint32     image_ID);
-gint32     gimp_image_get_layer_by_tattoo   (gint32     image_ID,
-					     gint32     tattoo);
-gint32     gimp_image_get_channel_by_tattoo (gint32     image_ID,
-					     gint32     tattoo);
+gint32         gimp_image_new                   (guint          width,
+						 guint          height,
+						 GImageType     type);
+gint32         gimp_image_duplicate             (gint32         image_ID);
+void           gimp_image_delete                (gint32         image_ID);
+guint          gimp_image_width                 (gint32         image_ID);
+guint          gimp_image_height                (gint32         image_ID);
+GImageType     gimp_image_base_type             (gint32         image_ID);
+gint32         gimp_image_floating_selection    (gint32         image_ID);
+void           gimp_image_add_channel           (gint32         image_ID,
+						 gint32         channel_ID,
+						 gint           position);
+void           gimp_image_add_layer             (gint32         image_ID,
+						 gint32         layer_ID,
+						 gint           position);
+void           gimp_image_add_layer_mask        (gint32         image_ID,
+						 gint32         layer_ID,
+						 gint32         mask_ID);
+void           gimp_image_clean_all             (gint32         image_ID);
+void           gimp_image_undo_disable          (gint32         image_ID);
+void           gimp_image_undo_enable           (gint32         image_ID);
+void           gimp_image_undo_freeze           (gint32         image_ID);
+void           gimp_image_undo_thaw             (gint32         image_ID);
+void           gimp_undo_push_group_start       (gint32         image_ID);
+void           gimp_undo_push_group_end         (gint32         image_ID);
+void           gimp_image_clean_all             (gint32         image_ID);
+gint32         gimp_image_flatten               (gint32         image_ID);
+void           gimp_image_lower_channel         (gint32         image_ID,
+						 gint32         channel_ID);
+void           gimp_image_lower_layer           (gint32         image_ID,
+						 gint32         layer_ID);
+gint32         gimp_image_merge_visible_layers  (gint32         image_ID,
+						 GimpMergeType  merge_type);
+gint32         gimp_image_pick_correlate_layer  (gint32         image_ID,
+						 gint           x,
+						 gint           y);
+void           gimp_image_raise_channel         (gint32         image_ID,
+						 gint32         channel_ID);
+void           gimp_image_raise_layer           (gint32         image_ID,
+						 gint32         layer_ID);
+void           gimp_image_remove_channel        (gint32         image_ID,
+						 gint32         channel_ID);
+void           gimp_image_remove_layer          (gint32         image_ID,
+						 gint32         layer_ID);
+void           gimp_image_remove_layer_mask     (gint32         image_ID,
+						 gint32         layer_ID,
+						 gint           mode);
+void           gimp_image_resize                (gint32         image_ID,
+						 guint          new_width,
+						 guint          new_height,
+						 gint           offset_x,
+						 gint           offset_y);
+gint32         gimp_image_get_active_channel    (gint32         image_ID);
+gint32         gimp_image_get_active_layer      (gint32         image_ID);
+gint32       * gimp_image_get_channels          (gint32         image_ID,
+						 gint          *nchannels);
+guchar       * gimp_image_get_cmap              (gint32         image_ID,
+						 gint          *ncolors);
+gboolean       gimp_image_get_component_active  (gint32         image_ID,
+						 gint           component);
+gboolean       gimp_image_get_component_visible (gint32         image_ID,
+						 gint           component);
+gchar        * gimp_image_get_filename          (gint32         image_ID);
+gint32       * gimp_image_get_layers            (gint32         image_ID,
+						 gint          *nlayers);
+gint32         gimp_image_get_selection         (gint32         image_ID);
+void           gimp_image_set_active_channel    (gint32         image_ID,
+						 gint32         channel_ID);
+void           gimp_image_set_active_layer      (gint32         image_ID,
+						 gint32         layer_ID);
+void           gimp_image_set_cmap              (gint32         image_ID,
+						 guchar        *cmap,
+						 gint           ncolors);
+void           gimp_image_set_component_active  (gint32         image_ID,
+						 gint           component,
+						 gboolean       active);
+void           gimp_image_set_component_visible (gint32         image_ID,
+						 gint           component,
+						 gboolean       visible);
+void           gimp_image_set_filename          (gint32         image_ID,
+						 gchar         *name);
+GimpParasite * gimp_image_parasite_find         (gint32         image_ID,
+						 const gchar   *name);
+void           gimp_image_parasite_attach       (gint32         image_ID,
+						 const GimpParasite *parasite);
+void           gimp_image_attach_new_parasite   (gint32         image_ID,
+						 const gchar   *name, 
+						 gint           flags,
+						 gint           size, 
+						 const gpointer data);
+void           gimp_image_parasite_detach       (gint32         image_ID,
+						 const gchar   *name);
+void           gimp_image_set_resolution        (gint32         image_ID,
+						 gdouble        xresolution,
+						 gdouble        yresolution);
+void           gimp_image_get_resolution        (gint32         image_ID,
+						 gdouble       *xresolution,
+						 gdouble       *yresolution);
+void           gimp_image_set_unit              (gint32         image_ID,
+						 GimpUnit       unit);
+GimpUnit       gimp_image_get_unit              (gint32         image_ID);
+gint32         gimp_image_get_layer_by_tattoo   (gint32         image_ID,
+						 gint32         tattoo);
+gint32         gimp_image_get_channel_by_tattoo (gint32         image_ID,
+						 gint32         tattoo);
 
-guchar *   gimp_image_get_thumbnail_data    (gint32     image_ID,
-					     gint      *width,
-					     gint      *height,
-					     gint      *bytes);
-void       gimp_image_convert_rgb           (gint32     image_ID);
-void       gimp_image_convert_grayscale     (gint32     image_ID);
-void       gimp_image_convert_indexed       (gint32     image_ID,
-					     GimpConvertDitherType  dither_type,
-					     GimpConvertPaletteType palette_type,
-					     gint       num_colors,
-					     gint       alpha_dither,
-					     gint       remove_unused,
-					     gchar     *palette);
+guchar       * gimp_image_get_thumbnail_data    (gint32         image_ID,
+						 gint          *width,
+						 gint          *height,
+						 gint          *bytes);
+void           gimp_image_convert_rgb           (gint32         image_ID);
+void           gimp_image_convert_grayscale     (gint32         image_ID);
+void           gimp_image_convert_indexed       (gint32         image_ID,
+						 GimpConvertDitherType  dither_type,
+						 GimpConvertPaletteType palette_type,
+						 gint           num_colors,
+						 gint           alpha_dither,
+						 gint           remove_unused,
+						 gchar         *palette);
 
 /****************************************
  *              Guides                  *
  ****************************************/
 
-gint32       gimp_image_add_hguide              (gint32     image_ID,
-						 gint32     yposition);
-gint32       gimp_image_add_vguide              (gint32     image_ID,
-						 gint32     xposition);
-void         gimp_image_delete_guide            (gint32     image_ID,
-						 gint32     guide_ID);
-gint32       gimp_image_find_next_guide         (gint32     image_ID,
-						 gint32     guide_ID);
-GOrientation gimp_image_get_guide_orientation   (gint32     image_ID,
-					         gint32     guide_ID);
-gint32       gimp_image_get_guide_position      (gint32     image_ID,
-						 gint32     guide_ID);
+gint32        gimp_image_add_hguide            (gint32     image_ID,
+						gint32     yposition);
+gint32        gimp_image_add_vguide            (gint32     image_ID,
+						gint32     xposition);
+void          gimp_image_delete_guide          (gint32     image_ID,
+						gint32     guide_ID);
+gint32        gimp_image_find_next_guide       (gint32     image_ID,
+						gint32     guide_ID);
+GOrientation  gimp_image_get_guide_orientation (gint32     image_ID,
+						gint32     guide_ID);
+gint32        gimp_image_get_guide_position    (gint32     image_ID,
+						gint32     guide_ID);
 
 
 /****************************************
  *             Displays                 *
  ****************************************/
 
-gint32 gimp_display_new    (gint32 image_ID);
-void   gimp_display_delete (gint32 display_ID);
-void   gimp_displays_flush (void);
+gint32  gimp_display_new    (gint32 image_ID);
+void    gimp_display_delete (gint32 display_ID);
+void    gimp_displays_flush (void);
 
 
 /****************************************
  *              Layers                  *
  ****************************************/
 
-gint32        gimp_layer_new                       (gint32        image_ID,
-						    char         *name,
-						    guint         width,
-						    guint         height,
-						    GDrawableType  type,
-						    gdouble       opacity,
-						    GLayerMode    mode);
-gint32        gimp_layer_copy                      (gint32        layer_ID);
-void          gimp_layer_delete                    (gint32        layer_ID);
-guint         gimp_layer_width                     (gint32        layer_ID);
-guint         gimp_layer_height                    (gint32        layer_ID);
-guint         gimp_layer_bpp                       (gint32        layer_ID);
-GDrawableType gimp_layer_type                      (gint32        layer_ID);
-void          gimp_layer_add_alpha                 (gint32        layer_ID);
-gint32        gimp_layer_create_mask               (gint32        layer_ID,
-						    GimpAddMaskType mask_type);
-void          gimp_layer_resize                    (gint32        layer_ID,
-						    guint         new_width,
-						    guint         new_height,
-						    gint          offset_x,
-						    gint          offset_y);
-void          gimp_layer_scale                     (gint32        layer_ID,
-						    guint         new_width,
-						    guint         new_height,
-						    gint          local_origin);
-void          gimp_layer_translate                 (gint32        layer_ID,
-						    gint          offset_x,
-						    gint          offset_y);
-gint          gimp_layer_is_floating_selection     (gint32        layer_ID);
-gint32        gimp_layer_get_image_id              (gint32        layer_ID);
-gint32        gimp_layer_get_mask_id               (gint32        layer_ID);
-gint          gimp_layer_get_apply_mask            (gint32        layer_ID);
-gint          gimp_layer_get_edit_mask             (gint32        layer_ID);
-GLayerMode    gimp_layer_get_mode                  (gint32        layer_ID);
-char*         gimp_layer_get_name                  (gint32        layer_ID);
-gdouble       gimp_layer_get_opacity               (gint32        layer_ID);
-gint          gimp_layer_get_preserve_transparency (gint32        layer_ID);
-gint          gimp_layer_get_show_mask             (gint32        layer_ID);
-gint          gimp_layer_get_visible               (gint32        layer_ID);
-void          gimp_layer_set_apply_mask            (gint32        layer_ID,
-						    gint          apply_mask);
-void          gimp_layer_set_edit_mask             (gint32        layer_ID,
-						    gint          edit_mask);
-void          gimp_layer_set_mode                  (gint32        layer_ID,
-						    GLayerMode    mode);
-void          gimp_layer_set_name                  (gint32        layer_ID,
-						    char         *name);
-void          gimp_layer_set_offsets               (gint32        layer_ID,
-						    gint          offset_x,
-						    gint          offset_y);
-void          gimp_layer_set_opacity               (gint32        layer_ID,
-						    gdouble       opacity);
-void          gimp_layer_set_preserve_transparency (gint32        layer_ID,
-						    gint          preserve_transparency);
-void          gimp_layer_set_show_mask             (gint32        layer_ID,
-						    gint          show_mask);
-void          gimp_layer_set_visible               (gint32        layer_ID,
-						    gint          visible);
-gint32        gimp_layer_get_tattoo                (gint32        layer_ID);
+gint32          gimp_layer_new                       (gint32        image_ID,
+						      char         *name,
+						      guint         width,
+						      guint         height,
+						      GDrawableType type,
+						      gdouble       opacity,
+						      GLayerMode    mode);
+gint32          gimp_layer_copy                      (gint32        layer_ID);
+void            gimp_layer_delete                    (gint32        layer_ID);
+guint           gimp_layer_width                     (gint32        layer_ID);
+guint           gimp_layer_height                    (gint32        layer_ID);
+guint           gimp_layer_bpp                       (gint32        layer_ID);
+GDrawableType   gimp_layer_type                      (gint32        layer_ID);
+void            gimp_layer_add_alpha                 (gint32        layer_ID);
+gint32          gimp_layer_create_mask               (gint32        layer_ID,
+						      GimpAddMaskType mask_type);
+void            gimp_layer_resize                    (gint32        layer_ID,
+						      guint         new_width,
+						      guint         new_height,
+						      gint          offset_x,
+						      gint          offset_y);
+void            gimp_layer_scale                     (gint32        layer_ID,
+						      guint         new_width,
+						      guint         new_height,
+						      gint          local_origin);
+void            gimp_layer_translate                 (gint32        layer_ID,
+						      gint          offset_x,
+						      gint          offset_y);
+gboolean        gimp_layer_is_floating_selection     (gint32        layer_ID);
+gint32          gimp_layer_get_image_id              (gint32        layer_ID);
+gint32          gimp_layer_get_mask_id               (gint32        layer_ID);
+gboolean        gimp_layer_get_apply_mask            (gint32        layer_ID);
+gboolean        gimp_layer_get_edit_mask             (gint32        layer_ID);
+GLayerMode      gimp_layer_get_mode                  (gint32        layer_ID);
+gchar         * gimp_layer_get_name                  (gint32        layer_ID);
+gdouble         gimp_layer_get_opacity               (gint32        layer_ID);
+gboolean        gimp_layer_get_preserve_transparency (gint32        layer_ID);
+gint            gimp_layer_get_show_mask             (gint32        layer_ID);
+gint            gimp_layer_get_visible               (gint32        layer_ID);
+void            gimp_layer_set_apply_mask            (gint32        layer_ID,
+						      gboolean      apply_mask);
+void            gimp_layer_set_edit_mask             (gint32        layer_ID,
+						      gboolean      edit_mask);
+void            gimp_layer_set_mode                  (gint32        layer_ID,
+						      GLayerMode    mode);
+void            gimp_layer_set_name                  (gint32        layer_ID,
+						      gchar        *name);
+void            gimp_layer_set_offsets               (gint32        layer_ID,
+						      gint          offset_x,
+						      gint          offset_y);
+void            gimp_layer_set_opacity               (gint32        layer_ID,
+						      gdouble       opacity);
+void            gimp_layer_set_preserve_transparency (gint32        layer_ID,
+						      gboolean      preserve_transparency);
+void            gimp_layer_set_show_mask             (gint32        layer_ID,
+						      gboolean      show_mask);
+void            gimp_layer_set_visible               (gint32        layer_ID,
+						      gboolean      visible);
+gint32          gimp_layer_get_tattoo                (gint32        layer_ID);
 
 
 /****************************************
  *             Channels                 *
  ****************************************/
 
-gint32   gimp_channel_new             (gint32   image_ID,
-				       gchar   *name,
-				       guint    width,
-				       guint    height,
-				       gdouble  opacity,
-				       guchar  *color);
-gint32   gimp_channel_copy            (gint32   channel_ID);
-void     gimp_channel_delete          (gint32   channel_ID);
-guint    gimp_channel_width           (gint32   channel_ID);
-guint    gimp_channel_height          (gint32   channel_ID);
-gint32   gimp_channel_get_image_id    (gint32   channel_ID);
-gint32   gimp_channel_get_layer_id    (gint32   channel_ID);
-void     gimp_channel_get_color       (gint32   channel_ID,
-				       guchar  *red,
-				       guchar  *green,
-				       guchar  *blue);
-gchar*   gimp_channel_get_name        (gint32   channel_ID);
-gdouble  gimp_channel_get_opacity     (gint32   channel_ID);
-gint     gimp_channel_get_show_masked (gint32   channel_ID);
-gboolean gimp_channel_get_visible     (gint32   channel_ID);
-void     gimp_channel_set_color       (gint32   channel_ID,
-				       guchar   red,
-				       guchar   green,
-				       guchar   blue);
-void     gimp_channel_set_name        (gint32   channel_ID,
-				       gchar   *name);
-void     gimp_channel_set_opacity     (gint32   channel_ID,
-				       gdouble  opacity);
-void     gimp_channel_set_show_masked (gint32   channel_ID,
-				       gint     show_masked);
-void     gimp_channel_set_visible     (gint32   channel_ID,
-				       gboolean visible);
-gint32   gimp_channel_get_tattoo      (gint32   channel_ID);
+gint32     gimp_channel_new             (gint32    image_ID,
+					 gchar    *name,
+					 guint     width,
+					 guint     height,
+					 gdouble   opacity,
+					 guchar   *color);
+gint32     gimp_channel_copy            (gint32    channel_ID);
+void       gimp_channel_delete          (gint32    channel_ID);
+guint      gimp_channel_width           (gint32    channel_ID);
+guint      gimp_channel_height          (gint32    channel_ID);
+gint32     gimp_channel_get_image_id    (gint32    channel_ID);
+gint32     gimp_channel_get_layer_id    (gint32    channel_ID);
+void       gimp_channel_get_color       (gint32    channel_ID,
+					 guchar   *red,
+					 guchar   *green,
+					 guchar   *blue);
+gchar    * gimp_channel_get_name        (gint32    channel_ID);
+gdouble    gimp_channel_get_opacity     (gint32    channel_ID);
+gint       gimp_channel_get_show_masked (gint32    channel_ID);
+gboolean   gimp_channel_get_visible     (gint32    channel_ID);
+void       gimp_channel_set_color       (gint32    channel_ID,
+					 guchar    red,
+					 guchar    green,
+					 guchar    blue);
+void       gimp_channel_set_name        (gint32    channel_ID,
+					 gchar    *name);
+void       gimp_channel_set_opacity     (gint32    channel_ID,
+					 gdouble   opacity);
+void       gimp_channel_set_show_masked (gint32    channel_ID,
+					 gint      show_masked);
+void       gimp_channel_set_visible     (gint32    channel_ID,
+					 gboolean  visible);
+gint32     gimp_channel_get_tattoo      (gint32    channel_ID);
 
 
 /****************************************
  *             GDrawables                *
  ****************************************/
 
-GDrawable*    gimp_drawable_get          (gint32     drawable_ID);
-void          gimp_drawable_detach       (GDrawable *drawable);
-void          gimp_drawable_flush        (GDrawable *drawable);
-void          gimp_drawable_delete       (GDrawable *drawable);
-void          gimp_drawable_update       (gint32     drawable_ID,
-					  gint       x,
-					  gint       y,
-					  guint      width,
-					  guint      height);
-void          gimp_drawable_merge_shadow (gint32     drawable_ID,
-					  gint       undoable);
-gint32        gimp_drawable_image_id     (gint32     drawable_ID);
-gchar*        gimp_drawable_name         (gint32     drawable_ID);
-guint         gimp_drawable_width        (gint32     drawable_ID);
-guint         gimp_drawable_height       (gint32     drawable_ID);
-guint         gimp_drawable_bpp          (gint32     drawable_ID);
-GDrawableType gimp_drawable_type         (gint32     drawable_ID);
-gboolean      gimp_drawable_visible      (gint32     drawable_ID);
-gboolean      gimp_drawable_is_channel   (gint32     drawable_ID);
-gboolean      gimp_drawable_is_rgb       (gint32     drawable_ID);
-gboolean      gimp_drawable_is_gray      (gint32     drawable_ID);
-gboolean      gimp_drawable_has_alpha    (gint32     drawable_ID);
-gboolean      gimp_drawable_is_indexed   (gint32     drawable_ID);
-gboolean      gimp_drawable_is_layer     (gint32     drawable_ID);
-gboolean      gimp_drawable_is_layer_mask(gint32     drawable_ID);
-gboolean      gimp_drawable_mask_bounds  (gint32     drawable_ID,
-					  gint      *x1,
-					  gint      *y1,
-					  gint      *x2,
-					  gint      *y2);
-void          gimp_drawable_offsets      (gint32     drawable_ID,
-					  gint      *offset_x,
-					  gint      *offset_y);
-void          gimp_drawable_fill         (gint32     drawable_ID,
-					  GimpFillType fill_type);
-void          gimp_drawable_set_name     (gint32     drawable_ID,
-					  char      *name);
-void          gimp_drawable_set_visible  (gint32     drawable_ID,
-					  gint       visible);
-GTile*        gimp_drawable_get_tile     (GDrawable *drawable,
-					  gint       shadow,
-					  gint       row,
-					  gint       col);
-GTile*        gimp_drawable_get_tile2    (GDrawable *drawable,
-					  gint       shadow,
-					  gint       x,
-					  gint       y);
-GimpParasite * gimp_drawable_parasite_find      (gint32              drawable,
-						 const gchar        *name);
-void           gimp_drawable_parasite_attach    (gint32              drawable,
-						 const GimpParasite *parasite);
-void          gimp_drawable_attach_new_parasite (gint32              drawable,
-						 const gchar        *name, 
-						 gint                flags,
-						 gint                size, 
-						 const gpointer      data);
-void          gimp_drawable_parasite_detach     (gint32              drawable,
-						 const char         *name);
-guchar      * gimp_drawable_get_thumbnail_data  (gint32              drawable_ID,
-						 gint               *width,
-						 gint               *height,
-						 gint               *bytes);
+GDrawable     * gimp_drawable_get                 (gint32        drawable_ID);
+void            gimp_drawable_detach              (GDrawable    *drawable);
+void            gimp_drawable_flush               (GDrawable    *drawable);
+void            gimp_drawable_delete              (GDrawable    *drawable);
+void            gimp_drawable_update              (gint32        drawable_ID,
+						   gint          x,
+						   gint          y,
+						   guint         width,
+						   guint         height);
+void            gimp_drawable_merge_shadow        (gint32        drawable_ID,
+						   gboolean      undoable);
+gint32          gimp_drawable_image_id            (gint32        drawable_ID);
+gchar         * gimp_drawable_name                (gint32        drawable_ID);
+guint           gimp_drawable_width               (gint32        drawable_ID);
+guint           gimp_drawable_height              (gint32        drawable_ID);
+guint           gimp_drawable_bpp                 (gint32        drawable_ID);
+GDrawableType   gimp_drawable_type                (gint32        drawable_ID);
+gboolean        gimp_drawable_visible             (gint32        drawable_ID);
+gboolean        gimp_drawable_is_channel          (gint32        drawable_ID);
+gboolean        gimp_drawable_is_rgb              (gint32        drawable_ID);
+gboolean        gimp_drawable_is_gray             (gint32        drawable_ID);
+gboolean        gimp_drawable_has_alpha           (gint32        drawable_ID);
+gboolean        gimp_drawable_is_indexed          (gint32        drawable_ID);
+gboolean        gimp_drawable_is_layer            (gint32        drawable_ID);
+gboolean        gimp_drawable_is_layer_mask       (gint32        drawable_ID);
+gboolean        gimp_drawable_mask_bounds         (gint32        drawable_ID,
+						   gint         *x1,
+						   gint         *y1,
+						   gint         *x2,
+						   gint         *y2);
+void            gimp_drawable_offsets             (gint32        drawable_ID,
+						   gint         *offset_x,
+						   gint         *offset_y);
+void            gimp_drawable_fill                (gint32        drawable_ID,
+						   GimpFillType  fill_type);
+void            gimp_drawable_set_name            (gint32        drawable_ID,
+						   gchar        *name);
+void            gimp_drawable_set_visible         (gint32        drawable_ID,
+						   gint          visible);
+GTile         * gimp_drawable_get_tile            (GDrawable    *drawable,
+						   gint          shadow,
+						   gint          row,
+						   gint          col);
+GTile         * gimp_drawable_get_tile2           (GDrawable    *drawable,
+						   gint          shadow,
+						   gint          x,
+						   gint          y);
+GimpParasite  * gimp_drawable_parasite_find       (gint32        drawable,
+						   const gchar  *name);
+void            gimp_drawable_parasite_attach     (gint32        drawable,
+						   const GimpParasite *parasite);
+void            gimp_drawable_attach_new_parasite (gint32        drawable,
+						   const gchar  *name, 
+						   gint          flags,
+						   gint          size, 
+						   const gpointer data);
+void            gimp_drawable_parasite_detach     (gint32        drawable,
+						   const gchar  *name);
+guchar        * gimp_drawable_get_thumbnail_data  (gint32        drawable_ID,
+						   gint         *width,
+						   gint         *height,
+						   gint         *bytes);
 
 
 /****************************************
  *              Selections              *
  ****************************************/
 
-gint32        gimp_selection_bounds      (gint32     image_ID,
-					  gint32    *non_empty,
-					  gint32    *x1,
-					  gint32    *y1,
-					  gint32    *x2,
-					  gint32    *y2);
-gint32        gimp_selection_float       (gint32     image_ID, 
-					  gint32     drawable_ID,
-					  gint32     x_offset,
-					  gint32     y_offset);
-gint32        gimp_selection_is_empty    (gint32     image_ID);
-void          gimp_selection_none        (gint32     image_ID);
+gint32   gimp_selection_bounds   (gint32  image_ID,
+				  gint32 *non_empty,
+				  gint32 *x1,
+				  gint32 *y1,
+				  gint32 *x2,
+				  gint32 *y2);
+gint32   gimp_selection_float    (gint32  image_ID, 
+				  gint32  drawable_ID,
+				  gint32  x_offset,
+				  gint32  y_offset);
+gint32   gimp_selection_is_empty (gint32  image_ID);
+void     gimp_selection_none     (gint32  image_ID);
 
 
 /****************************************
  *               GTiles                  *
  ****************************************/
 
-void  gimp_tile_ref          (GTile   *tile);
-void  gimp_tile_ref_zero     (GTile   *tile);
-void  gimp_tile_unref        (GTile   *tile,
-			      gint     dirty);
-void  gimp_tile_flush        (GTile   *tile);
-void  gimp_tile_cache_size   (gulong  kilobytes);
-void  gimp_tile_cache_ntiles (gulong  ntiles);
-guint gimp_tile_width        (void);
-guint gimp_tile_height       (void);
+void    gimp_tile_ref          (GTile  *tile);
+void    gimp_tile_ref_zero     (GTile  *tile);
+void    gimp_tile_unref        (GTile  *tile,
+				gint    dirty);
+void    gimp_tile_flush        (GTile  *tile);
+void    gimp_tile_cache_size   (gulong  kilobytes);
+void    gimp_tile_cache_ntiles (gulong  ntiles);
+guint   gimp_tile_width        (void);
+guint   gimp_tile_height       (void);
 
 
 /****************************************
  *           Pixel Regions              *
  ****************************************/
 
-void     gimp_pixel_rgn_init      (GPixelRgn *pr,
-				   GDrawable *drawable,
-				   int        x,
-				   int        y,
-				   int        width,
-				   int        height,
-				   int        dirty,
-				   int        shadow);
-void     gimp_pixel_rgn_resize    (GPixelRgn *pr,
-				   int        x,
-				   int        y,
-				   int        width,
-				   int        height);
-void     gimp_pixel_rgn_get_pixel (GPixelRgn *pr,
-				   guchar    *buf,
-				   int        x,
-				   int        y);
-void     gimp_pixel_rgn_get_row   (GPixelRgn *pr,
-				   guchar    *buf,
-				   int        x,
-				   int        y,
-				   int        width);
-void     gimp_pixel_rgn_get_col   (GPixelRgn *pr,
-				   guchar    *buf,
-				   int        x,
-				   int        y,
-				   int        height);
-void     gimp_pixel_rgn_get_rect  (GPixelRgn *pr,
-				   guchar    *buf,
-				   int        x,
-				   int        y,
-				   int        width,
-				   int        height);
-void     gimp_pixel_rgn_set_pixel (GPixelRgn *pr,
-				   guchar    *buf,
-				   int        x,
-				   int        y);
-void     gimp_pixel_rgn_set_row   (GPixelRgn *pr,
-				   guchar    *buf,
-				   int        x,
-				   int        y,
-				   int        width);
-void     gimp_pixel_rgn_set_col   (GPixelRgn *pr,
-				   guchar    *buf,
-				   int        x,
-				   int        y,
-				   int        height);
-void     gimp_pixel_rgn_set_rect  (GPixelRgn *pr,
-				   guchar    *buf,
-				   int        x,
-				   int        y,
-				   int        width,
-				   int        height);
-gpointer gimp_pixel_rgns_register (int        nrgns,
-				   ...);
-gpointer gimp_pixel_rgns_register2(int        nrgns,
-                                   GPixelRgn **prs);
-gpointer gimp_pixel_rgns_process  (gpointer   pri_ptr);
+void      gimp_pixel_rgn_init       (GPixelRgn  *pr,
+				     GDrawable  *drawable,
+				     gint        x,
+				     gint        y,
+				     gint        width,
+				     gint        height,
+				     gint        dirty,
+				     gint        shadow);
+void      gimp_pixel_rgn_resize     (GPixelRgn  *pr,
+				     gint        x,
+				     gint        y,
+				     gint        width,
+				     gint        height);
+void      gimp_pixel_rgn_get_pixel  (GPixelRgn  *pr,
+				     guchar     *buf,
+				     gint        x,
+				     gint        y);
+void      gimp_pixel_rgn_get_row    (GPixelRgn  *pr,
+				     guchar     *buf,
+				     gint        x,
+				     gint        y,
+				     gint        width);
+void      gimp_pixel_rgn_get_col    (GPixelRgn  *pr,
+				     guchar     *buf,
+				     gint        x,
+				     gint        y,
+				     gint        height);
+void      gimp_pixel_rgn_get_rect   (GPixelRgn  *pr,
+				     guchar     *buf,
+				     gint        x,
+				     gint        y,
+				     gint        width,
+				     gint        height);
+void      gimp_pixel_rgn_set_pixel  (GPixelRgn  *pr,
+				     guchar     *buf,
+				     gint        x,
+				     gint        y);
+void      gimp_pixel_rgn_set_row    (GPixelRgn  *pr,
+				     guchar     *buf,
+				     gint        x,
+				     gint        y,
+				     gint        width);
+void      gimp_pixel_rgn_set_col    (GPixelRgn  *pr,
+				     guchar     *buf,
+				     gint        x,
+				     gint        y,
+				     gint        height);
+void      gimp_pixel_rgn_set_rect   (GPixelRgn  *pr,
+				     guchar     *buf,
+				     gint        x,
+				     gint        y,
+				     gint        width,
+				     gint        height);
+gpointer  gimp_pixel_rgns_register  (gint        nrgns,
+				     ...);
+gpointer  gimp_pixel_rgns_register2 (gint        nrgns,
+				     GPixelRgn **prs);
+gpointer  gimp_pixel_rgns_process   (gpointer    pri_ptr);
 
 
 /****************************************
  *            The Palette               *
  ****************************************/
 
-void gimp_palette_get_background (guchar *red,
-				  guchar *green,
-				  guchar *blue);
-void gimp_palette_get_foreground (guchar *red,
-				  guchar *green,
-				  guchar *blue);
-void gimp_palette_set_background (guchar  red,
-				  guchar  green,
-				  guchar  blue);
-void gimp_palette_set_foreground (guchar  red,
-				  guchar  green,
-				  guchar  blue);
+void   gimp_palette_get_background (guchar *red,
+				    guchar *green,
+				    guchar *blue);
+void   gimp_palette_get_foreground (guchar *red,
+				    guchar *green,
+				    guchar *blue);
+void   gimp_palette_set_background (guchar  red,
+				    guchar  green,
+				    guchar  blue);
+void   gimp_palette_set_foreground (guchar  red,
+				    guchar  green,
+				    guchar  blue);
 
 /****************************************
  *            Gradients                 *
@@ -871,7 +871,7 @@ void gimp_palette_set_foreground (guchar  red,
 
 gchar   ** gimp_gradients_get_list       (gint    *num_gradients);
 gchar    * gimp_gradients_get_active     (void);
-void       gimp_gradients_set_active     (char    *name);
+void       gimp_gradients_set_active     (gchar   *name);
 gdouble  * gimp_gradients_sample_uniform (gint     num_samples);
 gdouble  * gimp_gradients_sample_custom  (gint     num_samples,
 					  gdouble *positions);
@@ -894,7 +894,6 @@ void           gimp_parasite_detach     (const gchar        *name);
 
 void      gimp_help                 (gchar *prog_name,
 				     gchar *help_data);
-
 void      gimp_plugin_help_register (gchar *help_path);
 
 /****************************************

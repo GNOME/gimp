@@ -66,6 +66,7 @@
 
   <chapter id="libgimpui">
     <title>GIMP User Interface Library</title>
+    &libgimp-gimpui;
     &GimpChainButton;
     &GimpColorButton; 
     &GimpFileSelection;
@@ -78,7 +79,6 @@
     &libgimp-gimphelpui;
     &libgimp-gimpmenu;
     &libgimp-gimpquerybox;
-    &libgimp-gimpui;
     &libgimp-gimpwidgets;
   </chapter>
 

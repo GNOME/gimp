@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library 
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpmatrix.h

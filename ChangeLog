@@ -1,3 +1,17 @@
+2000-05-28  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimp.h
+	* libgimp/gimpcolordisplay.h
+	* libgimp/gimpcolorselector.h
+	* libgimp/gimpmatrix.h
+	* libgimp/gimpmodule.h
+	* libgimp/gimpunit_pdb.c: purely cosmetic stuff and added some
+	typedefs to make the html documentation nicer. Moved the module
+	documentation from the headers to the sgml files.
+
+	* app/module_db.[ch]: The type of the "init" and "unload" functions
+	has changed. Code cleanup.
+
 2000-05-27  Sven Neumann  <sven@gimp.org>
 
 	* app/color_select.c: use spinbuttons in the GIMP

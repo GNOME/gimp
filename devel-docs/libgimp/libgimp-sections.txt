@@ -227,7 +227,6 @@ gimp_parasite_find
 gimp_parasite_attach
 gimp_attach_new_parasite
 gimp_parasite_detach
-gimp_plugin_help_func
 gimp_help
 gimp_plugin_help_register
 gimp_plugin_domain_add_with_path
@@ -528,6 +527,7 @@ GimpColorSelector_SetColorFunc
 GimpColorSelectorMethods
 GimpColorSelectorID
 gimp_color_selector_register
+GimpColorSelectorFinishedCB
 gimp_color_selector_unregister
 </SECTION>
 
@@ -535,6 +535,9 @@ gimp_color_selector_unregister
 <FILE>gimpmodule</FILE>
 GimpModuleStatus
 GimpModuleInfo
+GimpModuleInitFunc
+GimpModuleCompletedCB
+GimpModuleUnloadFunc
 </SECTION>
 
 <SECTION>
@@ -631,6 +634,7 @@ gimp_image_disable_undo
 gimp_image_enable_undo
 gimp_image_freeze_undo
 gimp_image_thaw_undo
+gimp_plugin_help_func
 Parasite
 PARASITE_PERSISTENT
 PARASITE_UNDOABLE

@@ -13,7 +13,7 @@ provide it here.
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-
+g_strescape()
 </para>
 
 <!-- ##### FUNCTION gimp_strescape ##### -->

@@ -2,10 +2,11 @@
 gimplimits
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Boundaries of some GIMP data types and some global constants.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Boundaries of some GIMP data types and some global constants.
 
 </para>
 

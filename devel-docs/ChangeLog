@@ -1,3 +1,32 @@
+2000-05-28  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-decl.txt
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimp.sgml
+	* libgimp/tmpl/gimpcolorbutton.sgml
+	* libgimp/tmpl/gimpcolordisplay.sgml
+	* libgimp/tmpl/gimpcolorselector.sgml
+	* libgimp/tmpl/gimpcolorspace.sgml
+	* libgimp/tmpl/gimpcompat.sgml
+	* libgimp/tmpl/gimpenums.sgml
+	* libgimp/tmpl/gimpfeatures.sgml
+	* libgimp/tmpl/gimplimits.sgml
+	* libgimp/tmpl/gimpmath.sgml
+	* libgimp/tmpl/gimpmodule.sgml
+	* libgimp/tmpl/gimpparasite.sgml
+	* libgimp/tmpl/gimpparasiteio.sgml
+	* libgimp/tmpl/gimppixmap.sgml
+	* libgimp/tmpl/gimpprotocol.sgml
+	* libgimp/tmpl/gimpsignal.sgml
+	* libgimp/tmpl/gimpui.sgml
+	* libgimp/tmpl/gimpunit.sgml
+	* libgimp/tmpl/gimputils.sgml
+	* libgimp/tmpl/gimpvector.sgml
+	* libgimp/tmpl/gimpwire.sgml
+	* libgimp/tmpl/libgimp-unused.sgml: Moved the module documentation
+	from the libgimp headers here, updates, cleanups.
+
 2000-05-27  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/*: lotsa files removed/added/changed to reflect the

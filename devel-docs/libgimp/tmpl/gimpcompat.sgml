@@ -6,6 +6,7 @@ Compatibility definitions for older plug-ins.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Compatibility definitions for older plug-ins.
 
 </para>
 
@@ -145,6 +146,15 @@ Compatibility definitions for older plug-ins.
 
 </para>
 
+
+
+<!-- ##### MACRO gimp_plugin_help_func ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@help_data: 
 
 
 <!-- ##### MACRO Parasite ##### -->

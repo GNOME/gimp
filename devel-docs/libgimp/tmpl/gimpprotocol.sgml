@@ -2,16 +2,17 @@
 gimpprotocol
 
 <!-- ##### SECTION Short_Description ##### -->
-
+The communication protocol between GIMP and it's plug-ins.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+The communication protocol between GIMP and it's plug-ins.
 
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-
+#libgimp-gimpwire
 </para>
 
 <!-- ##### MACRO GP_VERSION ##### -->

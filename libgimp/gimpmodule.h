@@ -19,74 +19,62 @@
  */
 
 #ifndef __GIMPMODULE_H__
-#define  __GIMPMODULE_H__
+#define __GIMPMODULE_H__
 
 #include <gmodule.h>
 
+/* For information look at the html documentation */
 
-typedef enum {
+typedef enum
+{
   GIMP_MODULE_OK,
   GIMP_MODULE_UNLOAD
 } GimpModuleStatus;
 
 
+typedef struct _GimpModuleInfo GimpModuleInfo;
 
-typedef struct {
-  void *shutdown_data;
-  const char *purpose;
-  const char *author;
-  const char *version;
-  const char *copyright;
-  const char *date;
-} GimpModuleInfo;
+struct _GimpModuleInfo
+{
+  gpointer     shutdown_data;
+
+  const gchar *purpose;
+  const gchar *author;
+  const gchar *version;
+  const gchar *copyright;
+  const gchar *date;
+};
 
 
+/*  Module initialization  */
 
-/* GIMP modules should G_MODULE_EXPORT a function named "module_init"
- * of the following type: */
-typedef GimpModuleStatus (GimpModuleInitFunc) (GimpModuleInfo **);
+typedef GimpModuleStatus (* GimpModuleInitFunc) (GimpModuleInfo **module_info);
 
-#ifndef MODULE_COMPILATION	/* On Win32 this declaration clashes with
-				 * the definition (which uses G_MODULE_EXPORT)
-				 * and thus should be bypassed when compiling
-				 * the module itself.
-				 */
-GimpModuleInitFunc module_init;
-#endif
+#ifndef MODULE_COMPILATION
 
-/* This function is called by the GIMP at startup, and should return
- * either GIMP_MODULE_OK if it sucessfully initialised or
- * GIMP_MODULE_UNLOAD if the module failed to hook whatever functions
- * it wanted.  GIMP_MODULE_UNLOAD causes the module to be closed, so
- * the module must not have registered any internal functions or given
- * out pointers to its data to anyone.
- *
- * If the module returns GIMP_MODULE_OK, it should also return a
- * GimpModuleInfo structure describing itself.
+/*  On Win32 this declaration clashes with the definition
+ *  (which uses G_MODULE_EXPORT) and thus should be bypassed
+ *  when compiling the module itself.
  */
+GimpModuleInitFunc module_init;
+
+#endif /* ! MODULE_COMPILATION */
 
 
-/* If GIMP modules want to allow themselves to be unloaded, they
- * should G_MODULE_EXPORT a function named "module_unload" with the
- * following type: */
-typedef void (GimpModuleUnloadFunc) (void *shutdown_data,
-				      void (*completed_cb)(void *),
-				      void *completed_data);
+/*  Module unload  */
 
-#ifndef MODULE_COMPILATION	/* The same as for module_init */
+typedef void (* GimpModuleCompletedCB) (gpointer               completed_data);
 
+typedef void (* GimpModuleUnloadFunc)  (gpointer               shutdown_data,
+					GimpModuleCompletedCB  completed_cb,
+					gpointer               completed_data);
+
+#ifndef MODULE_COMPILATION
+
+/*  The same as for module_init.
+ */
 GimpModuleUnloadFunc module_unload;
-#endif
 
-/* GIMP calls this unload request function to ask a module to
- * prepare itself to be unloaded.  It is called with the value of
- * shutdown_data supplied in the GimpModuleInfo struct.  The module
- * should ensure that none of its code or data are being used, and
- * then call the supplied "completed_cb" callback function with the
- * data provided.  Typically the shutdown request function will queue
- * de-registration activities then return.  Only when the
- * de-registration has finished should the completed_cb be invoked. */
-
-
+#endif /* ! MODULE_COMPILATION */
 
 #endif /* __GIMPMODULE_H__ */

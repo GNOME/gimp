@@ -2,10 +2,13 @@
 gimp
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Main functions needed for building a GIMP plug-in. This header includes
+all other GIMP Library headers.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Main functions needed for building a GIMP plug-in. This header includes
+all other GIMP Library headers.
 
 </para>
 
@@ -2175,15 +2178,6 @@ gimp
 </para>
 
 @name: 
-
-
-<!-- ##### MACRO gimp_plugin_help_func ##### -->
-<para>
-
-</para>
-
-<!-- # Unused Parameters # -->
-@help_data: 
 
 
 <!-- ##### FUNCTION gimp_help ##### -->

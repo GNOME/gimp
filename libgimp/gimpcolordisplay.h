@@ -62,14 +62,15 @@ struct _GimpColorDisplayMethods
   GimpColorDisplayConfigureCancel cancel;
 };
 
-/* 
- * The following two functions are implemted and exported by gimp/app
- * but need to be marked for it here too ...
+
+/*  The following two functions are implemted and exported by gimp/app
+ *  but need to be marked for it here too ...
  */
+
 G_MODULE_EXPORT
-gboolean gimp_color_display_register   (const char              *name,
-    				        GimpColorDisplayMethods *methods);
+gboolean   gimp_color_display_register   (const gchar             *name,
+					  GimpColorDisplayMethods *methods);
 G_MODULE_EXPORT
-gboolean gimp_color_display_unregister (const char              *name);
+gboolean   gimp_color_display_unregister (const gchar             *name);
 
 #endif /* __GIMP_COLOR_DISPLAY_H__ */

@@ -17,14 +17,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #ifndef __MODULE_DB_H__
 
+
 /* Load any modules we find on the module-path set in the gimprc */
-void module_db_init (void);
+void       module_db_init        (void);
 
 /* Unload all modules, in case a module needs some cleanups */
-void module_db_free (void);
+void       module_db_free        (void);
 
 GtkWidget *module_db_browser_new (void);
 

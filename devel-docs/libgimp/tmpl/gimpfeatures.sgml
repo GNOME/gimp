@@ -2,10 +2,13 @@
 gimpfeatures
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Macros and constants useful for determining GIMP's version number and
+capabilities.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Macros and constants useful for determining GIMP's version number and
+capabilities.
 
 </para>
 

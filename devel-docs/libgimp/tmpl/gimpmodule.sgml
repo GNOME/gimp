@@ -2,16 +2,17 @@
 gimpmodule
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Common definitions for creating a pluggable GIMP module.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Common definitions for creating a pluggable GIMP module.
 
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-
+#GModule
 </para>
 
 <!-- ##### ENUM GimpModuleStatus ##### -->
@@ -24,5 +25,61 @@ gimpmodule
 <para>
 
 </para>
+
+
+<!-- ##### USER_FUNCTION GimpModuleInitFunc ##### -->
+<para>
+GIMP modules should #G_MODULE_EXPORT a function named "module_init"
+of this type.
+</para>
+<para>
+The "module_init" function is called by the GIMP at startup,
+and should return either #GIMP_MODULE_OK if it sucessfully initialised or
+#GIMP_MODULE_UNLOAD if the module failed to hook whatever functions
+it wanted.  #GIMP_MODULE_UNLOAD causes the module to be closed, so
+the module must not have registered any internal functions or given
+out pointers to its data to anyone.
+</para>
+<para>
+If the module returns #GIMP_MODULE_OK, it should also return a
+#GimpModuleInfo structure describing itself.
+</para>
+
+@module_info: Returns the #GimpModuleInfo desribing the module.
+@Returns: A #GimpModuleStatus value indicating success.
+
+
+<!-- ##### USER_FUNCTION GimpModuleCompletedCB ##### -->
+<para>
+The type of the @completed_cb passed to the "module_unload" function
+(see below).
+</para>
+
+@completed_data: <para>
+Must be the @completed_data pointer provided by the "module_unload"
+function.
+</para>
+
+
+<!-- ##### USER_FUNCTION GimpModuleUnloadFunc ##### -->
+<para>
+If GIMP modules want to allow themselves to be unloaded, they
+should #G_MODULE_EXPORT a function named "module_unload" of
+this type.
+</para>
+<para>
+GIMP calls the "module_unload" unload request function to ask
+a module to prepare itself to be unloaded.  It is called with the
+value of @shutdown_data supplied in the #GimpModuleInfo struct.
+The module should ensure that none of its code or data are being
+used, and then call the supplied @completed_cb callback function with
+the @completed_data provided.  Typically the shutdown request function
+will queue de-registration activities then return.  Only when the
+de-registration has finished should the @completed_cb be invoked.
+</para>
+
+@shutdown_data: The @shutdown_data supplied in the #GimpModuleInfo struct.
+@completed_cb: The function to call after successful unload.
+@completed_data: Has to be passed to the @completed_cb.
 
 

@@ -2,10 +2,13 @@
 gimpui
 
 <!-- ##### SECTION Short_Description ##### -->
-Common user interface functions.
+Common user interface functions. This header includes all other GIMP User
+Interface Library headers.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Common user interface functions. This header includes all other GIMP User
+Interface Library headers.
 
 </para>
 

@@ -96,8 +96,8 @@ gimp_unit_get_number_of_units (void)
  * gimp_unit_get_number_of_built_in_units:
  *
  * Returns the number of #GimpUnit's which are hardcoded in the unit system
- * (UNIT_INCH, UNIT_MM, UNIT_POINT, UNIT_PICA and the two "pseudo units"
- *  UNIT_PIXEL and UNIT_PERCENT).
+ * (UNIT_INCH, UNIT_MM, UNIT_POINT, UNIT_PICA and the two "pseudo unit"
+ *  UNIT_PIXEL).
  *
  * Returns: The number of built-in units.
  *

@@ -2,61 +2,91 @@
 gimpcolorselector
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions and definitiions for creating a pluggable GIMP
+color selector module.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Functions and definitiions for creating a pluggable GIMP
+color selector module.
 
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-
+#GModule
+</para>
+<para>
+#libgimp-gimpmodule
 </para>
 
 <!-- ##### USER_FUNCTION GimpColorSelector_Callback ##### -->
 <para>
-
+A function of this type should be called by the color selector each
+time the user modifies the selected color.
 </para>
 
-@data: 
-@r: 
-@g: 
-@b: 
+@data: The @data passed to the #GimpColorSelector_NewFunc function.
+@r: The new color's red component.
+@g: The new color's green component.
+@b: The new color's blue component.
 
 
 <!-- ##### USER_FUNCTION GimpColorSelector_NewFunc ##### -->
 <para>
-
+A function of this type is called to create a new instance of the
+color selector.  The new selector should set its current color to
+the RGB triple given (each component is in the range 0 - 255
+inclusive, with white at 255,255,255 and black at 0,0,0).
+</para>
+<para>
+The selector should call @cb with argument @data each time the
+user modifies the selected color.
+</para>
+<para>
+The selector must return a #GtkWidget which implements the color
+selection UI.  The selector can optionally return @selector_data,
+an opaque pointer which will be passed in to subsequent invokations
+on the selector.
 </para>
 
-@r: 
-@g: 
-@b: 
-@cb: 
-@data: 
-@selector_data: 
-@Returns: 
+@r: The red component of intitial color.
+@g: The green component of intitial color.
+@b: The blue component of intitial color.
+@cb: The function to call each time the user modifies the selected color.
+@data: The @data to pass to @cb.
+@selector_data: An optional data pointer which will be passed in to subsequent invokations on the selector.
+@Returns: A #GtkWidget which implements the color selection UI.
 
 
 <!-- ##### USER_FUNCTION GimpColorSelector_FreeFunc ##### -->
 <para>
-
+A function of this type is called when the color selector is no
+longer required.  This function should *not* free widgets that are
+containted within the UI widget returned by new(), since they are
+destroyed on behalf of the selector by the caller of this
+function.
 </para>
 
-@selector_data: 
+@selector_data: The @selector_data pointer returned by the #GimpColorSelector_NewFunc function.
 
 
 <!-- ##### USER_FUNCTION GimpColorSelector_SetColorFunc ##### -->
 <para>
-
+A function of this type is called to change the selector's current
+color.  The required color is specified as in the new() function.
+If the @set_current parameter is #FALSE, then only the old color
+should be set - if @set_current is #TRUE, both the old color and
+the current color should be set to the RGB triple given.  This
+function merely gives a hint to the color selector; the selector
+can choose to ignore this information.
 </para>
 
-@selector_data: 
-@r: 
-@g: 
-@b: 
-@set_current: 
+@selector_data: The @selector_data pointer returned by the #GimpColorSelector_NewFunc function.
+@r: The new color's red component.
+@g: The new color's green component.
+@b: The new color's blue component.
+@set_current: Set the current color.
 
 
 <!-- ##### STRUCT GimpColorSelectorMethods ##### -->
@@ -73,23 +103,40 @@ gimpcolorselector
 
 <!-- ##### FUNCTION gimp_color_selector_register ##### -->
 <para>
-
+Register a color selector.  Returns an identifier for the color
+selector on success, or #NULL if the name is already in use.  Both
+the @name and @methods table are internalised, so may be g_free()'d after
+this call.
 </para>
 
-@name: 
-@help_page: 
-@methods: 
-@Returns: 
+@name: The color selector's name.
+@help_page: The help page.
+@methods: The color selector's methods.
+@Returns: The #GimpColorSelectorID of the new color selector.
+
+
+<!-- ##### USER_FUNCTION GimpColorSelectorFinishedCB ##### -->
+<para>
+A function of this type will be called once all instances of a color
+selector have finished after the selector module called
+gimp_color_selector_unregister().
+</para>
+
+@finished_data: The @finished_data as specified in gimp_color_selector_register().
 
 
 <!-- ##### FUNCTION gimp_color_selector_unregister ##### -->
 <para>
-
+Remove the selector @id from active service.  New instances of the
+selector will not be created, but existing ones are allowed to
+continue.  If @finished_cb is non-#NULL, it will be called once all
+instances have finished.  The callback could be used to unload
+dynamiclly loaded code, for example.
 </para>
 
-@id: 
-@callback: 
-@data: 
-@Returns: 
+@id: The @id as returned by gimp_color_selector_register().
+@finished_cb: Optional callback which will be called once all instances have finished.
+@finished_data: The @finished_data which will be passed to @finished_cb.
+@Returns: #TRUE on success, #FALSE if @id was not found.
 
 

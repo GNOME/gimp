@@ -2,16 +2,19 @@
 gimpwire
 
 <!-- ##### SECTION Short_Description ##### -->
-
+The lowlevel I/O protocol used for communication between GIMP and
+it's plug-ins.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+The lowlevel I/O protocol used for communication between GIMP and
+it's plug-ins.
 
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-
+#libgimp-gimpprotocol
 </para>
 
 <!-- ##### STRUCT WireMessage ##### -->
