@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.19\n"
 "POT-Creation-Date: 2000-06-18 19:40-0700\n"
-"PO-Revision-Date: 2000-04-04 23:30+0100\n"
+"PO-Revision-Date: 2000-06-26 01:05+02:00\n"
 "Last-Translator: Gert Dewit <Gert.Dewit@sos.be>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2902,7 +2902,7 @@ msgstr "graden"
 #. the underscore installs an accelerator using the character that follows
 #: app/menus.c:90
 msgid "/_File"
-msgstr "_Bestand"
+msgstr "/_Bestand"
 
 #. <Image>/File
 #: app/menus.c:92 app/menus.c:198
@@ -3451,7 +3451,7 @@ msgstr "/Filters/Render"
 
 #: app/menus.c:549
 msgid "/Filters/Web"
-msgstr "Filters/Web"
+msgstr "/Filters/Web"
 
 #: app/menus.c:554
 msgid "/Filters/Animation"
@@ -3475,7 +3475,7 @@ msgstr "/Volgens extensie"
 
 #: app/menus.c:600
 msgid "/New Layer..."
-msgstr "Nieuwe laag..."
+msgstr "/Nieuwe laag..."
 
 #. <Layers>/Stack
 #: app/menus.c:605
@@ -3496,7 +3496,7 @@ msgstr "/Lagen/Laag onderaan"
 
 #: app/menus.c:614
 msgid "/Duplicate Layer"
-msgstr "Dupliceer Laag"
+msgstr "/Dupliceer Laag"
 
 #: app/menus.c:616
 msgid "/Anchor Layer"
@@ -3560,7 +3560,7 @@ msgstr "/Bewerk laagattributen..."
 
 #: app/menus.c:670
 msgid "/New Channel..."
-msgstr "Nieuw kanaal"
+msgstr "/Nieuw kanaal..."
 
 #: app/menus.c:672
 msgid "/Raise Channel"
