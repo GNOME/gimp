@@ -1,3 +1,7 @@
+2000-03-28  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
+
+	* plug-ins/common/warp.c (warp_dialog): integers are not doubles!
+
 Tue Mar 28 16:04:14 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* plug-ins/gflare/gflare.c: Typo fix.
@@ -193,6 +197,7 @@ Sat Mar 25 20:57:24 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 	busy. This is not really what we want but at least it prevents
 	crashes.
 
+>>>>>>> 1.2476
 2000-03-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-console.c: only call gtk_main_quit()

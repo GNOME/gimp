@@ -485,7 +485,7 @@ warp_dialog (GDrawable *drawable)
 			     _("Iterations:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &dvals.iter);
 
   /*  Displacement map menu  */
