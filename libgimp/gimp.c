@@ -1687,6 +1687,8 @@ gimp_config (GPConfig *config)
               g_error ("mmap() failed: %s\n" ERRMSG_SHM_FAILED,
                        g_strerror (errno));
             }
+
+          close (shm_fd);
         }
       else
         {

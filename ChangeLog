@@ -1,3 +1,12 @@
+2004-03-25  Manish Singh  <yosh@gimp.org>
+
+	* libgimp/gimp.c
+	* app/plug-in/plug-in-shm.c: close the shm_open fd in the POSIX
+	shm case. We were leaking an fd here.
+
+	* app/tools/gimptexttool.c (gimp_text_tool_connect): remove
+	unnecessary G_OBJECT() cast in g_object_set() call.
+
 2004-03-23  Michael Natterer  <mitch@gimp.org>
 
 	* autogen.sh: be verbose about AUTOGEN_CONFIGURE_ARGS in the

@@ -205,7 +205,9 @@ plug_in_shm_init (Gimp *gimp)
 
           /* Verify that we mapped our view */
           if (gimp->plug_in_shm->shm_addr != MAP_FAILED)
-            gimp->plug_in_shm->shm_ID = pid;
+	    {
+	      gimp->plug_in_shm->shm_ID = pid;
+	    }
           else
             {
               g_warning ("mmap() failed: %s\n" ERRMSG_SHM_DISABLE,
@@ -221,6 +223,8 @@ plug_in_shm_init (Gimp *gimp)
 
           shm_unlink (shm_handle);
         }
+
+      close (shm_fd);
     }
   else
     {

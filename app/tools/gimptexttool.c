@@ -381,7 +381,7 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
           g_object_unref (text_tool->text);
           text_tool->text = NULL;
 
-          g_object_set (G_OBJECT (text_tool->proxy), "text", NULL, NULL);
+          g_object_set (text_tool->proxy, "text", NULL, NULL);
         }
 
       gimp_context_define_property (GIMP_CONTEXT (options),
