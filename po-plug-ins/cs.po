@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.19\n"
-"POT-Creation-Date: 2000-04-21 11:39-0700\n"
-"PO-Revision-Date: 2000-04-17 00:58+02:00\n"
+"POT-Creation-Date: 2000-04-21 14:20+0200\n"
+"PO-Revision-Date: 2000-04-21 14:27+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -73,7 +73,7 @@ msgstr "O programu"
 #: plug-ins/common/noisify.c:333 plug-ins/common/nova.c:364
 #: plug-ins/common/oilify.c:462 plug-ins/common/papertile.c:248
 #: plug-ins/common/pat.c:428 plug-ins/common/pixelize.c:289
-#: plug-ins/common/plasma.c:295 plug-ins/common/png.c:1034
+#: plug-ins/common/plasma.c:295 plug-ins/common/png.c:1030
 #: plug-ins/common/pnm.c:950 plug-ins/common/polar.c:943
 #: plug-ins/common/ps.c:2550 plug-ins/common/ps.c:2731
 #: plug-ins/common/psp.c:443 plug-ins/common/randomize.c:710
@@ -155,7 +155,7 @@ msgstr "OK"
 #: plug-ins/common/nova.c:366 plug-ins/common/oilify.c:464
 #: plug-ins/common/papertile.c:250 plug-ins/common/pat.c:430
 #: plug-ins/common/pixelize.c:291 plug-ins/common/plasma.c:297
-#: plug-ins/common/png.c:1036 plug-ins/common/pnm.c:952
+#: plug-ins/common/png.c:1032 plug-ins/common/pnm.c:952
 #: plug-ins/common/polar.c:945 plug-ins/common/ps.c:2552
 #: plug-ins/common/ps.c:2733 plug-ins/common/psp.c:445
 #: plug-ins/common/randomize.c:712 plug-ins/common/ripple.c:598
@@ -1451,8 +1451,8 @@ msgstr "Ukázat/skrýt náhledový drátový model"
 #: plug-ins/common/gbr.c:284 plug-ins/common/gifload.c:308
 #: plug-ins/common/hrz.c:340 plug-ins/common/jpeg.c:748
 #: plug-ins/common/pat.c:263 plug-ins/common/pcx.c:318
-#: plug-ins/common/pix.c:329 plug-ins/common/png.c:423
-#: plug-ins/common/png.c:425 plug-ins/common/pnm.c:416
+#: plug-ins/common/pix.c:329 plug-ins/common/png.c:419
+#: plug-ins/common/png.c:421 plug-ins/common/pnm.c:416
 #: plug-ins/common/psd.c:1708 plug-ins/common/sunras.c:443
 #: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:445
 #: plug-ins/common/xbm.c:675 plug-ins/common/xpm.c:335
@@ -1499,7 +1499,7 @@ msgstr "%s: ¹patná barevná mapa\n"
 #: plug-ins/common/lic.c:903 plug-ins/common/papertile.c:314
 #: plug-ins/common/pat.c:306 plug-ins/common/pcx.c:349
 #: plug-ins/common/pcx.c:355 plug-ins/common/pix.c:373
-#: plug-ins/common/png.c:571 plug-ins/common/pnm.c:504
+#: plug-ins/common/png.c:567 plug-ins/common/pnm.c:504
 #: plug-ins/common/psd.c:2089 plug-ins/common/smooth_palette.c:237
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
 #: plug-ins/common/tiff.c:655 plug-ins/common/tile.c:264
@@ -1527,7 +1527,7 @@ msgstr "nelze otevøít %s\n"
 #: plug-ins/common/gtm.c:248 plug-ins/common/hrz.c:478
 #: plug-ins/common/jpeg.c:1196 plug-ins/common/pat.c:345
 #: plug-ins/common/pcx.c:564 plug-ins/common/pix.c:535
-#: plug-ins/common/png.c:748 plug-ins/common/png.c:750
+#: plug-ins/common/png.c:744 plug-ins/common/png.c:746
 #: plug-ins/common/pnm.c:788 plug-ins/common/ps.c:1002
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
 #: plug-ins/common/tiff.c:1230 plug-ins/common/xbm.c:959
@@ -2131,7 +2131,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/max_rgb.c:277 plug-ins/common/nlfilt.c:400
 #: plug-ins/common/noisify.c:345 plug-ins/common/nova.c:376
 #: plug-ins/common/oilify.c:474 plug-ins/common/pixelize.c:301
-#: plug-ins/common/plasma.c:309 plug-ins/common/png.c:1045
+#: plug-ins/common/plasma.c:309 plug-ins/common/png.c:1041
 #: plug-ins/common/polar.c:984 plug-ins/common/randomize.c:728
 #: plug-ins/common/ripple.c:692 plug-ins/common/scatter_hsv.c:445
 #: plug-ins/common/sel_gauss.c:258 plug-ins/common/sharpen.c:627
@@ -4422,14 +4422,12 @@ msgid "Send to Mail"
 msgstr "Poslat do po¹ty"
 
 #: plug-ins/common/mail.c:530
-#, fuzzy
 msgid "Recipient:"
-msgstr "Opakování:"
+msgstr "Pøíjemce:"
 
 #: plug-ins/common/mail.c:542
-#, fuzzy
 msgid "Sender:"
-msgstr "Hnízdo:"
+msgstr "Odesílatel:"
 
 #: plug-ins/common/mail.c:554
 msgid "Subject:"
@@ -4994,7 +4992,7 @@ msgstr ""
 "Chyba PNG. Soubor po¹kozen?"
 
 #. Aie! Unknown type
-#: plug-ins/common/png.c:517
+#: plug-ins/common/png.c:513
 #, c-format
 msgid ""
 "%s\n"
@@ -5003,19 +5001,19 @@ msgstr ""
 "%s\n"
 "neznámý barevný model PNG"
 
-#: plug-ins/common/png.c:1029
+#: plug-ins/common/png.c:1025
 msgid "Save as PNG"
 msgstr "Zapsat jako PNG"
 
-#: plug-ins/common/png.c:1058
+#: plug-ins/common/png.c:1054
 msgid "Interlacing (Adam7)"
 msgstr "Prokládání (Adam7)"
 
-#: plug-ins/common/png.c:1067
+#: plug-ins/common/png.c:1063
 msgid "Skip Ancillary Chunks"
 msgstr "Pøeskoèit podru¾né èásti"
 
-#: plug-ins/common/png.c:1084
+#: plug-ins/common/png.c:1080
 msgid "Compression Level:"
 msgstr "Úroveò komprese:"
 
@@ -6070,13 +6068,12 @@ msgid "Pack Bits"
 msgstr "Pakování bitù"
 
 #: plug-ins/common/tiff.c:1493
-#, fuzzy
 msgid "Deflate"
-msgstr "Smazat"
+msgstr "Deflaèní"
 
 #: plug-ins/common/tiff.c:1494
 msgid "JPEG"
-msgstr ""
+msgstr "JPEG"
 
 #: plug-ins/common/tile.c:121
 msgid "<Image>/Filters/Map/Tile..."
@@ -9620,28 +9617,24 @@ msgid "GIMP Dynamic Text"
 msgstr "GIMP dynamický text"
 
 #: plug-ins/gdyntext/gdyntext.c:535
-#, fuzzy
 msgid "GDynText Layer"
-msgstr "Vrstva GDynText "
+msgstr "Vrstva GDynText"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:126
-#, fuzzy
 msgid "GDynText Message Window"
-msgstr "Vrstva GDynText "
+msgstr "GDynText: Okno zpráv"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:156
-#, fuzzy
 msgid "About GDynText"
-msgstr "GDynText "
+msgstr "O programu GDynText"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:184
 msgid "GIMP Dynamic Text "
 msgstr "GIMP dynamický text "
 
 #: plug-ins/gdyntext/gdyntext_ui.c:218
-#, fuzzy
 msgid "GDynText: Select Color"
-msgstr "Výbìr barvy"
+msgstr "GDynText: Výbìr barvy"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:318
 msgid "Toggle creation of a new layer"
@@ -9688,7 +9681,6 @@ msgid "Set line spacing"
 msgstr "Nastavení prokladu øádkù"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:511
-#, fuzzy
 msgid "Line Spacing"
 msgstr "Proklad øádkù"
 
@@ -9713,26 +9705,24 @@ msgstr ""
 "zmìnì jména vrstvy jako u programu GIMP 1.0."
 
 #: plug-ins/gdyntext/gdyntext_ui.c:1035
-#, fuzzy
 msgid "GDynText: CharMap"
-msgstr "GDynText "
+msgstr "GDynText: Mapa znakù"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:1108
-#, fuzzy
 msgid "GDynText: Load Text"
-msgstr "Vrstva GDynText "
+msgstr "GDynText: Ètení textu"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:1154
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning file \"%s\" is larger than the maximum allowed text length (%d)."
 msgstr ""
-"Soubor varování \"%s\" je vìt¹í ne¾ maximální povolená délka textu (%d).\n"
+"Soubor varování \"%s\" je vìt¹í ne¾ maximální povolená délka textu (%d)."
 
 #: plug-ins/gdyntext/gdyntext_ui.c:1166
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening \"%s\"!"
-msgstr "Chyba pøi otvírání  \"%s\"!\n"
+msgstr "Chyba pøi otvírání  \"%s\"!"
 
 #: plug-ins/gdyntext/message_window.c:113
 msgid "Dismiss"
@@ -12881,6 +12871,3 @@ msgstr "Chyba: Nelze naèíst soubor %s XJT vlastností"
 #, c-format
 msgid "Error, XJT propertyfile %s is empty"
 msgstr "Chyba: Soubor %s XJT vlastností je prázdný"
-
-#~ msgid "Error opening '%.100s' could not save"
-#~ msgstr "Chyba pøi otvírání '%.100s' nelze zapsat"

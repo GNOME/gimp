@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.19\n"
-"POT-Creation-Date: 2000-04-22 11:49-0700\n"
-"PO-Revision-Date: 2000-04-17 00:56+02:00\n"
+"POT-Creation-Date: 2000-04-21 14:20+0200\n"
+"PO-Revision-Date: 2000-04-21 15:26+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -73,7 +73,7 @@ msgstr "Hledají se datové soubory"
 
 #: app/app_procs.c:554
 msgid "Parasites"
-msgstr "Cizopasníci"
+msgstr "Parazity"
 
 #. initialize  the global parasite table
 #: app/app_procs.c:556 app/internal_procs.c:71 app/preferences_dialog.c:2425
@@ -137,11 +137,11 @@ msgstr "Bézierova køivka je ji¾ uzavøená."
 msgid "Corrupt curve"
 msgstr "Poru¹ená køivka"
 
-#: app/bezier_select.c:2939
+#: app/bezier_select.c:2941
 msgid "Curve not closed!"
 msgstr "Køivka není uzavøená!"
 
-#: app/bezier_select.c:3226 app/gimage_mask.c:618
+#: app/bezier_select.c:3228 app/gimage_mask.c:618
 msgid "Paintbrush operation failed."
 msgstr "©tìtec selhal."
 
@@ -462,18 +462,16 @@ msgid "Fuzziness Threshold"
 msgstr "Práh citlivosti"
 
 #: app/by_color_select.c:792
-#, fuzzy
 msgid "Selection"
-msgstr "Výbìr: "
+msgstr "Výbìr"
 
 #: app/by_color_select.c:803
-#, fuzzy
 msgid "Invert"
-msgstr "Pøevod"
+msgstr "Invertovat"
 
 #: app/by_color_select.c:810
 msgid "All"
-msgstr ""
+msgstr "V¹e"
 
 #: app/channel.c:187 app/channel.c:189 app/layer.c:310 app/layer.c:312
 msgid "copy"
@@ -2497,7 +2495,7 @@ msgstr "Paleta"
 
 #: app/internal_procs.c:134
 msgid "Parasite procedures"
-msgstr "Procedury cizopasníkù"
+msgstr "Procedury parazitù"
 
 #: app/internal_procs.c:137 app/lc_dialog.c:179
 msgid "Paths"
@@ -2781,62 +2779,62 @@ msgstr "Pøiblí¾it"
 msgid "Zoom out"
 msgstr "Vzdálit"
 
-#: app/main.c:274
+#: app/main.c:271
 msgid "GIMP version"
 msgstr "GIMP verze"
 
-#: app/main.c:278
+#: app/main.c:275
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "U¾ití: %s [volba ...] [soubory ...]\n"
 
-#: app/main.c:279
+#: app/main.c:276
 msgid "Valid options are:\n"
 msgstr "Platné pøepínaèe jsou:\n"
 
-#: app/main.c:280
+#: app/main.c:277
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                Vypí¹e tuto nápovìdu.\n"
 
-#: app/main.c:281
+#: app/main.c:278
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             Vypí¹e informace o verzi.\n"
 
-#: app/main.c:282
+#: app/main.c:279
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <pøíkazy>     Spustí se v dávkovém re¾imu.\n"
 
-#: app/main.c:283
+#: app/main.c:280
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     Pou¾ije alternativní gimprc soubor.\n"
 
-#: app/main.c:284
+#: app/main.c:281
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface        Spustí se bez u¾ivatelského rozhraní.\n"
 
-#: app/main.c:285
+#: app/main.c:282
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr "  -r --restore-session     Pokusí se obnovit zapsané sezení.\n"
 
-#: app/main.c:286
+#: app/main.c:283
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
 msgstr "  --no-data                Neète vzorky, pøechody, palety, stopy.\n"
 
-#: app/main.c:287
+#: app/main.c:284
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Zobrazí zprávy o spou¹tìní.\n"
 
-#: app/main.c:288
+#: app/main.c:285
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              Neuká¾e okno spou¹tìní.\n"
 
-#: app/main.c:289
+#: app/main.c:286
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr "  --no-splash-image        Neuká¾e obrázek v oknì spou¹tìní.\n"
 
-#: app/main.c:290
+#: app/main.c:287
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
@@ -2844,11 +2842,11 @@ msgstr ""
 "  --no-shm                 Nepou¾ije sdílenou pamì» mezi programem GIMP a "
 "zásuvnými moduly.\n"
 
-#: app/main.c:291
+#: app/main.c:288
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                Nepou¾ije X roz¹íøení sdílené pamìti.\n"
 
-#: app/main.c:292
+#: app/main.c:289
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
@@ -2856,20 +2854,20 @@ msgstr ""
 "  --console-messages       Zobrazí varování na konzoli namísto dialogového "
 "okna.\n"
 
-#: app/main.c:293
+#: app/main.c:290
 msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr "  --debug-handlers         Povolí ladìní obsluhy signálù.\n"
 
-#: app/main.c:294
+#: app/main.c:291
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <displej>      Pou¾ije zvolený X displej.\n"
 
-#: app/main.c:295
+#: app/main.c:292
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 "  --system-gimprc <gimprc> Pou¾ije alternativní systémový gimprc soubor.\n"
 
-#: app/main.c:312
+#: app/main.c:309
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Toto konzolové okno se zavøe bìhem deseti sekund)\n"
 
@@ -4455,14 +4453,12 @@ msgid "Use Global Paint Options"
 msgstr "Spoleèné nastavení stopy"
 
 #: app/preferences_dialog.c:2051
-#, fuzzy
 msgid "Finding Contiguous Regions"
-msgstr "Výbìr spojitých oblastí"
+msgstr "Hledají se spojité oblasti"
 
 #: app/preferences_dialog.c:2070
-#, fuzzy
 msgid "Default Threshold:"
-msgstr "Práh:"
+msgstr "Implicitní práh:"
 
 #: app/preferences_dialog.c:2079 app/preferences_dialog.c:2081
 msgid "Environment"
@@ -5947,6 +5943,8 @@ msgid ""
 "Please wait while your personal\n"
 "GIMP directory is being created..."
 msgstr ""
+"Poèkejte ne¾ se vytvoøí\n"
+"u¾ivatelský GIMP adresáø..."
 
 #: app/user_install.c:541
 msgid "GIMP User Installation"
