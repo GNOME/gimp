@@ -804,12 +804,14 @@ gimp_item_factory_create_branches (GimpItemFactory      *factory,
 	{
 	  GimpItemFactoryEntry branch_entry =
 	  {
-	    { tearoff_path->str, NULL, NULL, 0, "<Branch>" },
+	    { NULL, NULL, NULL, 0, "<Branch>" },
 	    NULL,
 	    NULL
 	  };
 
-	  g_object_set_data (G_OBJECT (factory), "complete", entry->entry.path);
+          branch_entry.entry.path = tearoff_path->str;
+	  
+          g_object_set_data (G_OBJECT (factory), "complete", entry->entry.path);
 
 	  gimp_item_factory_create_item (factory,
                                          &branch_entry,
@@ -826,13 +828,15 @@ gimp_item_factory_create_branches (GimpItemFactory      *factory,
 	{
 	  GimpItemFactoryEntry tearoff_entry =
 	  {
-	    { tearoff_path->str, NULL,
+	    { NULL, NULL,
               gimp_item_factory_tearoff_callback, 0, "<Tearoff>" },
 	    NULL,
 	    NULL, NULL
 	  };
 
-	  gimp_item_factory_create_item (factory,
+	  tearoff_entry.entry.path = tearoff_path->str;
+
+          gimp_item_factory_create_item (factory,
                                          &tearoff_entry,
                                          textdomain,
                                          NULL, 2, TRUE, FALSE);

@@ -130,8 +130,13 @@ gimp_text_layer_rotate (GimpItem         *item,
     }
 
   {
-    GimpText    *text  = GIMP_TEXT_LAYER (item)->text;
-    GimpMatrix2  trafo = { { { cos, - sin }, { sin, cos } } };
+    GimpText    *text = GIMP_TEXT_LAYER (item)->text;
+    GimpMatrix2  trafo;
+
+    trafo.coeff[0][0] = cos;
+    trafo.coeff[0][1] = -sin;
+    trafo.coeff[1][0] = sin;
+    trafo.coeff[1][1] = cos;
 
     gimp_matrix2_mult (&trafo, &text->transformation);
     g_object_notify (G_OBJECT (text), "transformation");

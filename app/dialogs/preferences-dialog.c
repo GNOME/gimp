@@ -1559,21 +1559,16 @@ prefs_dialog_new (Gimp    *gimp,
     }
     formats[] =
     {
-      {
-        display_config->image_title_format,
-        N_("Image Title Format"),
-        "image-title-format"
-      },
-      {
-        display_config->image_status_format,
-        N_("Image Statusbar Format"),
-        "image-status-format"
-      }
+      { NULL, N_("Image Title Format"),     "image-title-format"  },
+      { NULL, N_("Image Statusbar Format"), "image-status-format" }
     };
 
     gint format;
 
     g_assert (G_N_ELEMENTS (format_strings) == G_N_ELEMENTS (format_names));
+
+    formats[0].current_setting = display_config->image_title_format;
+    formats[1].current_setting = display_config->image_status_format;
 
     for (format = 0; format < G_N_ELEMENTS (formats); format++)
       {
