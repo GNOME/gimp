@@ -171,9 +171,35 @@ gimp_gradient_load (const gchar  *filename,
         {
 	  g_message (_("Corrupt segment %d in gradient file '%s'."),
 		     i, gimp_filename_to_utf8 (filename));
+          g_object_unref (gradient);
+          fclose (file);
+          return NULL;
 	}
 
+      if ( (prev && (prev->right < seg->left))
+           || (!prev && (0. < seg->left) ))
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Gradient file '%s' is corrupt: "
+                         "Segments do not span the range 0-1."),
+                       gimp_filename_to_utf8 (filename));
+          g_object_unref (gradient);
+          fclose (file);
+          return NULL;
+        }
+
       prev = seg;
+    }
+
+  if (prev->right < 1.0)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Gradient file '%s' is corrupt: "
+                     "Segments do not span the range 0-1."),
+                   gimp_filename_to_utf8 (filename));
+      g_object_unref (gradient);
+      fclose (file);
+      return NULL;
     }
 
   fclose (file);

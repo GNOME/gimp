@@ -1,3 +1,9 @@
+2004-12-16  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpgradient-load.c: reject .ggr files whose 
+	segments don't properly span the range 0-1.
+	Fixes bug #161430.
+	
 2004-12-16  Manish Singh  <yosh@gimp.org>
 
 	* app/widgets/gimppdbdialog.c (gimp_pdb_dialog_set_property): Cast
