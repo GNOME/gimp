@@ -74,9 +74,13 @@ struct _BrushWidget
 
 /*  undo blocks variables  */
 static TileManager *  undo_tiles = NULL;
+
+/* Tiles used to render the stroke at 1 byte/pp */
 static TileManager *  canvas_tiles = NULL;
 
-/*  paint buffer */
+/* Flat buffer that is used to used to render the dirty region
+ * for composition onto the destination drawable
+ */
 static TempBuf *  canvas_buf = NULL;
 
 /*  local variables  */
@@ -794,7 +798,7 @@ fill_run (guchar *dest,
     {
       while (w--)
 	{
-	  *dest += ((256 - *dest) * alpha) >> 8;
+	  *dest = MAX(*dest, alpha);
 	  dest++;
 	}
     }
@@ -893,9 +897,7 @@ render_blob_line (Blob *blob, guchar *dest,
 	  i++;
 	}
 
-      /* Fill in the pixel */
-      dest[cur_x] += 
-	((256 - dest[cur_x]) * pixel * 255) / (256 * SUBSAMPLE * SUBSAMPLE);
+      dest[cur_x] = MAX(dest[cur_x], (pixel * 255) / (SUBSAMPLE * SUBSAMPLE));
 
       last_x = cur_x + 1;
     }
@@ -999,6 +1001,10 @@ ink_paste (InkTool      *ink_tool,
 			 canvas_buf->width, canvas_buf->height);
 }
 
+/* This routine a) updates the representation of the stroke
+ * in the canvas tiles, then renders the dirty bit of it
+ * into canvas_buf.
+ */
 static void
 ink_to_canvas_tiles (InkTool *ink_tool,
 		     Blob    *blob,
