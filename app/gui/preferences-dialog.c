@@ -1297,19 +1297,18 @@ prefs_resolution_calibrate_callback (GtkWidget *widget,
 static GtkWidget *
 prefs_notebook_append_page (GtkNotebook   *notebook,
 			    gchar         *notebook_label,
-			    GtkCTree      *ctree,
+			    GtkTreeStore  *tree,
 			    gchar         *tree_label,
 			    gchar         *help_data,
-			    GtkCTreeNode  *parent,
-			    GtkCTreeNode **new_node,
+			    GtkTreeIter   *parent,
+			    GtkTreeIter   *iter,
 			    gint           page_index)
 {
-  GtkWidget *event_box;
-  GtkWidget *out_vbox;
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *label;
-  gchar     *titles[1];
+  GtkWidget   *event_box;
+  GtkWidget   *out_vbox;
+  GtkWidget   *vbox;
+  GtkWidget   *frame;
+  GtkWidget   *label;
 
   event_box = gtk_event_box_new ();
   gtk_widget_show (event_box);
@@ -1336,12 +1335,9 @@ prefs_notebook_append_page (GtkNotebook   *notebook,
   gtk_container_add (GTK_CONTAINER (out_vbox), vbox);
   gtk_widget_show (vbox);
 
-  titles[0] = tree_label;
-  *new_node = gtk_ctree_insert_node (ctree, parent, NULL,
-				     titles, 0,
-				     NULL, NULL, NULL, NULL,
-				     FALSE, TRUE);
-  gtk_ctree_node_set_row_data (ctree, *new_node, (gpointer) page_index);
+  gtk_tree_store_append (tree, iter, parent);
+  gtk_tree_store_set (tree, iter, 0, tree_label, 1, page_index, -1);
+
   gtk_notebook_append_page (notebook, event_box, NULL);
 
   return vbox;
@@ -1349,19 +1345,20 @@ prefs_notebook_append_page (GtkNotebook   *notebook,
 
 /*  select a notebook page  */
 static void
-prefs_tree_select_callback (GtkWidget    *widget,
-			    GtkCTreeNode *node)
+prefs_tree_select_callback (GtkTreeSelection *sel,
+			    GtkNotebook      *notebook)
 {
-  GtkNotebook *notebook;
-  gint         page;
+  GtkTreeModel *model;
+  GtkTreeIter   iter;
+  GValue        val = { 0, };
 
-  if (! GTK_CLIST (widget)->selection)
+  if (! gtk_tree_selection_get_selected (sel, &model, &iter))
     return;
 
-  notebook = g_object_get_data (G_OBJECT (widget), "notebook");
-  page = (gint) gtk_ctree_node_get_row_data (GTK_CTREE (widget), node);
+  gtk_tree_model_get_value (model, &iter, 1, &val);
 
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), page);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook),
+				 g_value_get_int (&val));
 }
 
 /*  create a frame with title and a vbox  */
@@ -1405,36 +1402,37 @@ prefs_help_func (const gchar *help_data)
 GtkWidget *
 preferences_dialog_create (void)
 {
-  GtkWidget    *ctree;
-  gchar        *titles[1];
-  GtkCTreeNode *top_insert;
-  GtkCTreeNode *child_insert;
-  gint          page_index;
+  GtkWidget        *tv;
+  GtkTreeStore     *tree;
+  GtkTreeSelection *sel;
+  GtkTreeIter       top_iter;
+  GtkTreeIter       child_iter;
+  gint              page_index;
 
-  GtkWidget     *frame;
-  GtkWidget     *notebook;
-  GtkWidget     *vbox;
-  GtkWidget     *vbox2;
-  GtkWidget     *hbox;
-  GtkWidget     *abox;
-  GtkWidget     *button;
-  GtkWidget     *fileselection;
-  GtkWidget     *patheditor;
-  GtkWidget     *spinbutton;
-  GtkWidget     *combo;
-  GtkWidget     *comboitem;
-  GtkWidget     *optionmenu;
-  GtkWidget     *table;
-  GtkWidget     *label;
-  GtkObject     *adjustment;
-  GtkWidget     *sizeentry;
-  GtkWidget     *sizeentry2;
-  GtkWidget     *separator;
-  GtkWidget     *calibrate_button;
-  GtkWidget     *scrolled_window;
-  GtkWidget     *text_view;
-  GtkTextBuffer *text_buffer;
-  GSList        *group;
+  GtkWidget        *frame;
+  GtkWidget        *notebook;
+  GtkWidget        *vbox;
+  GtkWidget        *vbox2;
+  GtkWidget        *hbox;
+  GtkWidget        *abox;
+  GtkWidget        *button;
+  GtkWidget        *fileselection;
+  GtkWidget        *patheditor;
+  GtkWidget        *spinbutton;
+  GtkWidget        *combo;
+  GtkWidget        *comboitem;
+  GtkWidget        *optionmenu;
+  GtkWidget        *table;
+  GtkWidget        *label;
+  GtkObject        *adjustment;
+  GtkWidget        *sizeentry;
+  GtkWidget        *sizeentry2;
+  GtkWidget        *separator;
+  GtkWidget        *calibrate_button;
+  GtkWidget        *scrolled_window;
+  GtkWidget        *text_view;
+  GtkTextBuffer    *text_buffer;
+  GSList           *group;
 
   gint   i;
   gchar *pixels_per_unit;
@@ -1568,11 +1566,16 @@ preferences_dialog_create (void)
   gtk_widget_show (hbox);
 
   /* The categories tree */
-  titles[0] = _("Categories");
-  ctree = gtk_ctree_new_with_titles (1, 0, titles);
-  gtk_ctree_set_indent (GTK_CTREE (ctree), 15);
-  gtk_clist_column_titles_passive (GTK_CLIST (ctree));
-  gtk_box_pack_start (GTK_BOX (hbox), ctree, FALSE, FALSE, 0);
+  tree = gtk_tree_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+  tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (tree));
+  g_object_unref (G_OBJECT (tree));
+
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
+					       -1, _("Categories"),
+					       gtk_cell_renderer_text_new (),
+					       "text", 0, NULL);
+
+  gtk_box_pack_start (GTK_BOX (hbox), tv, FALSE, FALSE, 0);
 
   /* The main preferences notebook */
   frame = gtk_frame_new (NULL);
@@ -1586,28 +1589,28 @@ preferences_dialog_create (void)
   gtk_container_add (GTK_CONTAINER (frame), notebook);
 
   g_object_set_data (G_OBJECT (prefs_dlg), "notebook", notebook);
-  g_object_set_data (G_OBJECT (ctree), "notebook", notebook);
 
-  g_signal_connect (G_OBJECT (ctree), "tree_select_row",
+  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
+  g_signal_connect (G_OBJECT (sel), "changed",
 		    G_CALLBACK (prefs_tree_select_callback),
-		    NULL);
+		    notebook);
 
   page_index = 0;
 
   /* New File page */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("New File"),
-					  GTK_CTREE (ctree),
-					  _("New File"),
-					  "dialogs/preferences/new_file.html",
-				          NULL,
-					  &top_insert,
-					  page_index);
+				     _("New File"),
+				     GTK_TREE_STORE (tree),
+				     _("New File"),
+				     "dialogs/preferences/new_file.html",
+				     NULL,
+				     &top_iter,
+				     page_index);
   gtk_widget_show (vbox);
   page_index++;
 
   /* select this page in the tree */
-  gtk_ctree_select (GTK_CTREE (ctree), top_insert);
+  gtk_tree_selection_select_iter (sel, &top_iter);
 
   frame = gtk_frame_new (_("Default Image Size and Unit")); 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -1755,11 +1758,11 @@ preferences_dialog_create (void)
   /* Default Comment page */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 				     _("Default Comment"),
-				     GTK_CTREE (ctree),
+				     GTK_TREE_STORE (tree),
 				     _("Default Comment"),
 				     "dialogs/preferences/new_file.html#default_comment",
-				     top_insert,
-				     &child_insert,
+				     &top_iter,
+				     &child_iter,
 				     page_index);
   gtk_widget_show (vbox);
   page_index++;
@@ -1793,11 +1796,11 @@ preferences_dialog_create (void)
   /* Display page */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 				     _("Display"),
-				     GTK_CTREE (ctree),
+				     GTK_TREE_STORE (tree),
 				     _("Display"),
 				     "dialogs/preferences/display.html",
 				     NULL,
-				     &top_insert,
+				     &top_iter,
 				     page_index);
   gtk_widget_show (vbox);
   page_index++;
@@ -1901,11 +1904,11 @@ preferences_dialog_create (void)
   /* Interface */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 				     _("Interface"),
-				     GTK_CTREE (ctree),
+				     GTK_TREE_STORE (tree),
 				     _("Interface"),
 				     "dialogs/preferences/interface.html",
 				     NULL,
-				     &top_insert,
+				     &top_iter,
 				     page_index);
   gtk_widget_show (vbox);
   page_index++;
@@ -2029,11 +2032,11 @@ preferences_dialog_create (void)
   /* Interface / Help System */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 				     _("Help System"),
-				     GTK_CTREE (ctree),
+				     GTK_TREE_STORE (tree),
 				     _("Help System"),
 				     "dialogs/preferences/interface.html#help_system",
-				     top_insert,
-				     &child_insert,
+				     &top_iter,
+				     &child_iter,
 				     page_index);
   gtk_widget_show (vbox);
   page_index++;
@@ -2087,11 +2090,11 @@ preferences_dialog_create (void)
   /* Interface / Image Windows */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 				     _("Image Windows"),
-				     GTK_CTREE (ctree),
+				     GTK_TREE_STORE (tree),
 				     _("Image Windows"),
 				     "dialogs/preferences/interface.html#image_windows",
-				     top_insert,
-				     &child_insert,
+				     &top_iter,
+				     &child_iter,
 				     page_index);
   gtk_widget_show (vbox);
   page_index++;
@@ -2248,11 +2251,11 @@ preferences_dialog_create (void)
   /* Interface / Tool Options */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 				     _("Tool Options"),
-				     GTK_CTREE (ctree),
+				     GTK_TREE_STORE (tree),
 				     _("Tool Options"),
 				     "dialogs/preferences/interface.html#tool_options",
-				     top_insert,
-				     &child_insert,
+				     &top_iter,
+				     &child_iter,
 				     page_index);
   gtk_widget_show (vbox);
   page_index++;
@@ -2290,18 +2293,15 @@ preferences_dialog_create (void)
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &gimprc.default_threshold);
 
-  /* Expand the "Interface" branch */
-  gtk_ctree_expand (GTK_CTREE (ctree), top_insert);
-
 
   /* Environment */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 				     _("Environment"),
-				     GTK_CTREE (ctree),
+				     GTK_TREE_STORE (tree),
 				     _("Environment"),
 				     "dialogs/preferences/environment.html",
 				     NULL,
-				     &top_insert,
+				     &top_iter,
 				     page_index);
   gtk_widget_show (vbox);
   page_index++;
@@ -2447,11 +2447,11 @@ preferences_dialog_create (void)
   /* Session Management */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 				     _("Session Management"),
-				     GTK_CTREE (ctree),
+				     GTK_TREE_STORE (tree),
 				     _("Session"),
 				     "dialogs/preferences/session.html",
 				     NULL,
-				     &top_insert,
+				     &top_iter,
 				     page_index);
   gtk_widget_show (vbox);
   page_index++;
@@ -2507,11 +2507,11 @@ preferences_dialog_create (void)
   /* Monitor */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 				     _("Monitor"),
-				     GTK_CTREE (ctree),
+				     GTK_TREE_STORE (tree),
 				     _("Monitor"),
 				     "dialogs/preferences/monitor.html",
 				     NULL,
-				     &top_insert,
+				     &top_iter,
 				     page_index);
   gtk_widget_show (vbox);
   page_index++;
@@ -2630,11 +2630,11 @@ preferences_dialog_create (void)
   /* Directories */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 				     _("Directories"),
-				     GTK_CTREE (ctree),
+				     GTK_TREE_STORE (tree),
 				     _("Directories"),
 				     "dialogs/preferences/directories.html",
 				     NULL,
-				     &top_insert,
+				     &top_iter,
 				     page_index);
   gtk_widget_show (vbox);
   page_index++;
@@ -2721,11 +2721,11 @@ preferences_dialog_create (void)
       {
 	vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					   gettext (paths[i].label),
-					   GTK_CTREE (ctree),
+				           GTK_TREE_STORE (tree),
 					   gettext (paths[i].tree_label),
 					   paths[i].help_data,
-					   top_insert,
-					   &child_insert,
+					   &top_iter,
+					   &child_iter,
 					   page_index);
 	gtk_widget_show (vbox);
 	page_index++;
@@ -2741,13 +2741,10 @@ preferences_dialog_create (void)
       }
   }
 
-  /* Recalculate the width of the Category tree now */
-  gtk_clist_set_column_width
-    (GTK_CLIST (ctree), 0, 
-     gtk_clist_optimal_column_width (GTK_CLIST (ctree), 0));
-
-  gtk_widget_show (ctree);
+  gtk_widget_show (tv);
   gtk_widget_show (notebook);
+
+  gtk_tree_view_expand_all (GTK_TREE_VIEW (tv));
 
   return prefs_dlg;
 }
