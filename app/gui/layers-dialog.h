@@ -20,6 +20,13 @@
 #define __LAYERS_DIALOG_H__
 
 
+GtkWidget * layers_dialog_create (void);
+void        layers_dialog_free   (void);
+void        layers_dialog_update (GimpImage *gimage);
+void        layers_dialog_flush  (void);
+void        layers_dialog_clear  (void);
+
+
 void   render_fs_preview                 (GtkWidget *widget,
 					  GdkPixmap *pixmap);
 void   render_preview                    (TempBuf   *preview_buf,

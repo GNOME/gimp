@@ -19,6 +19,12 @@
 #ifndef  __PATHS_DIALOG_H__
 #define  __PATHS_DIALOG_H__
 
+GtkWidget * paths_dialog_create     (void);
+void        paths_dialog_free       (void);
+void        paths_dialog_update     (GimpImage *gimage);
+void        paths_dialog_flush      (void);
+
+
 void   paths_dialog_new_path_callback             (GtkWidget *widget,
 						   gpointer   data);
 void   paths_dialog_delete_path_callback          (GtkWidget *widget,
@@ -43,6 +49,16 @@ void   paths_dialog_edit_path_attributes_callback (GtkWidget *widget,
 						   gpointer   data);
 void   paths_dialog_destroy_cb                    (GtkObject *widget,
 						   gpointer   data);
+
+
+/* EEEK */
+
+void   paths_newpoint_current       (GimpBezierSelectTool *, GDisplay *);
+void   paths_first_button_press     (GimpBezierSelectTool *, GDisplay *);
+void   paths_new_bezier_select_tool (void);
+Path * paths_get_bzpaths            (void); 
+void   paths_set_bzpaths            (GimpImage *, Path *);
+void   paths_dialog_set_default_op  (void);
 
 
 #endif  /*  __PATHS_DIALOG_H__  */

@@ -43,5 +43,7 @@ void  gimp_window_add_accel_group    (GtkWindow               *window,
 void  gimp_window_remove_accel_group (GtkWindow               *window,
 				      GtkItemFactory          *item_factory);
 
+gpointer gimp_widget_get_callback_context (GtkWidget *widget);
+
 
 #endif /* __GIMP_UI_H__ */

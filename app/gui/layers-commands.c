@@ -31,6 +31,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gdisplay.h"
+#include "gimpui.h"
 #include "layers-commands.h"
 #include "resize.h"
 
@@ -52,26 +53,6 @@ static void   layers_scale_layer_query  (GimpImage *gimage,
 static void   layers_resize_layer_query (GimpImage *gimage,
 					 GimpLayer *layer);
 
-static GimpImage *
-layers_get_callback_context (GtkWidget *widget)
-{
-  GtkItemFactory *ifactory;
-  GimpImage      *popup_gimage;
-  GimpImage      *accel_gimage = NULL;
-
-  ifactory = gtk_item_factory_from_widget (widget);
-
-  popup_gimage = (GimpImage *) gtk_item_factory_popup_data_from_widget (widget);
-
-  if (ifactory)
-    accel_gimage = (GimpImage *) gtk_object_get_data (GTK_OBJECT (ifactory),
-						      "gimp-accel-context");
-
-  if (popup_gimage)
-    return popup_gimage;
-
-  return accel_gimage;
-}
 
 void
 layers_previous_cmd_callback (GtkWidget *widget,
@@ -81,7 +62,7 @@ layers_previous_cmd_callback (GtkWidget *widget,
   GimpLayer *new_layer;
   gint       current_layer;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -110,7 +91,7 @@ layers_next_cmd_callback (GtkWidget *widget,
   GimpLayer *new_layer;
   gint       current_layer;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -135,7 +116,7 @@ layers_raise_cmd_callback (GtkWidget *widget,
 {
   GimpImage *gimage;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -150,7 +131,7 @@ layers_lower_cmd_callback (GtkWidget *widget,
 {
   GimpImage *gimage;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -165,7 +146,7 @@ layers_raise_to_top_cmd_callback (GtkWidget *widget,
 {
   GimpImage *gimage;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -180,7 +161,7 @@ layers_lower_to_bottom_cmd_callback (GtkWidget *widget,
 {
   GimpImage *gimage;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -197,7 +178,7 @@ layers_new_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   GimpLayer *layer;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -225,7 +206,7 @@ layers_duplicate_cmd_callback (GtkWidget *widget,
   GimpLayer *active_layer;
   GimpLayer *new_layer;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -244,7 +225,7 @@ layers_delete_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   GimpLayer *layer;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -268,7 +249,7 @@ layers_scale_cmd_callback (GtkWidget *widget,
 {
   GimpImage *gimage;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -282,7 +263,7 @@ layers_resize_cmd_callback (GtkWidget *widget,
 {
   GimpImage *gimage;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -296,7 +277,7 @@ layers_resize_to_image_cmd_callback (GtkWidget *widget,
 {
   GimpImage *gimage;
   
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -312,7 +293,7 @@ layers_add_layer_mask_cmd_callback (GtkWidget *widget,
 {
   GimpImage *gimage;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -327,7 +308,7 @@ layers_apply_layer_mask_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   GimpLayer *layer;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -353,7 +334,7 @@ layers_delete_layer_mask_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   GimpLayer *layer;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -378,7 +359,7 @@ layers_anchor_cmd_callback (GtkWidget *widget,
 {
   GimpImage *gimage;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -393,7 +374,7 @@ layers_merge_layers_cmd_callback (GtkWidget *widget,
 {
   GimpImage *gimage;
 
-  gimage = (GimpImage *) gtk_item_factory_popup_data_from_widget (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -407,7 +388,7 @@ layers_merge_down_cmd_callback (GtkWidget *widget,
 {
   GimpImage *gimage;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -423,7 +404,7 @@ layers_flatten_image_cmd_callback (GtkWidget *widget,
 {
   GimpImage *gimage;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -438,7 +419,7 @@ layers_alpha_select_cmd_callback (GtkWidget *widget,
 {
   GimpImage *gimage;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -453,7 +434,7 @@ layers_mask_select_cmd_callback (GtkWidget *widget,
 {
   GimpImage *gimage;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -469,7 +450,7 @@ layers_add_alpha_channel_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   GimpLayer *layer;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
@@ -490,7 +471,7 @@ layers_edit_attributes_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   GimpLayer *layer;
 
-  gimage = layers_get_callback_context (widget);
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;

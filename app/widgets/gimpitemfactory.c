@@ -32,7 +32,7 @@
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
-#include "channels-dialog.h"
+#include "channels-commands.h"
 #include "commands.h"
 #include "dialog_handler.h"
 #include "dialogs-commands.h"
@@ -768,34 +768,44 @@ static GtkItemFactory *layers_factory = NULL;
 
 static GimpItemFactoryEntry channels_entries[] =
 {
-  { { N_("/New Channel..."), "<control>N", channels_dialog_new_channel_callback, 0 },
+  { { N_("/New Channel..."), "<control>N",
+      channels_new_channel_cmd_callback, 0 },
     "dialogs/new_channel.html", NULL },
-  { { N_("/Raise Channel"), "<control>F", channels_dialog_raise_channel_callback, 0 },
+  { { N_("/Raise Channel"), "<control>F",
+      channels_raise_channel_cmd_callback, 0 },
     "raise_channel.html", NULL },
-  { { N_("/Lower Channel"), "<control>B", channels_dialog_lower_channel_callback, 0 },
+  { { N_("/Lower Channel"), "<control>B",
+      channels_lower_channel_cmd_callback, 0 },
     "lower_channel.html", NULL },
-  { { N_("/Duplicate Channel"), "<control>C", channels_dialog_duplicate_channel_callback, 0 },
+  { { N_("/Duplicate Channel"), "<control>C",
+      channels_duplicate_channel_cmd_callback, 0 },
     "duplicate_channel.html", NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/Channel to Selection"), "<control>S", channels_dialog_channel_to_sel_callback, 0 },
+  { { N_("/Channel to Selection"), "<control>S",
+      channels_channel_to_sel_cmd_callback, 0 },
     "channel_to_selection.html", NULL },
-  { { N_("/Add to Selection"), NULL, channels_dialog_add_channel_to_sel_callback, 0 },
+  { { N_("/Add to Selection"), NULL,
+      channels_add_channel_to_sel_cmd_callback, 0 },
     "channel_to_selection.html#add", NULL },
-  { { N_("/Subtract from Selection"), NULL, channels_dialog_sub_channel_from_sel_callback, 0 },
+  { { N_("/Subtract from Selection"), NULL,
+      channels_sub_channel_from_sel_cmd_callback, 0 },
     "channel_to_selection.html#subtract", NULL },
-  { { N_("/Intersect with Selection"), NULL, channels_dialog_intersect_channel_with_sel_callback, 0 },
+  { { N_("/Intersect with Selection"), NULL,
+      channels_intersect_channel_with_sel_cmd_callback, 0 },
     "channel_to_selection.html#intersect", NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/Delete Channel"), "<control>X", channels_dialog_delete_channel_callback, 0 },
+  { { N_("/Delete Channel"), "<control>X",
+      channels_delete_channel_cmd_callback, 0 },
     "delete_channel.html", NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/Edit Channel Attributes..."), NULL, channels_dialog_edit_channel_attributes_callback, 0 },
+  { { N_("/Edit Channel Attributes..."), NULL,
+      channels_edit_channel_attributes_cmd_callback, 0 },
     "dialogs/edit_channel_attributes.html", NULL }
 };
 static guint n_channels_entries = (sizeof (channels_entries) /

@@ -45,7 +45,6 @@ gimp_SOURCES = \
 	gimpui.h		\
 	lc_dialog.c		\
 	lc_dialog.h		\
-	lc_dialogP.h		\
 	nav_window.c		\
 	nav_window.h		\
 	ops_buttons.c		\

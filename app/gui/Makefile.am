@@ -9,6 +9,8 @@ libappgui_la_SOURCES = \
 	brush-editor.h		\
 	brush-select.c		\
 	brush-select.h		\
+	channels-commands.c	\
+	channels-commands.h	\
 	channels-dialog.c	\
 	channels-dialog.h	\
 	color-area.c		\

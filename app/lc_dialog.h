@@ -20,6 +20,41 @@
 #define  __LC_DIALOG_H__
 
 
+#define PREVIEW_EVENT_MASK (GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | \
+                            GDK_ENTER_NOTIFY_MASK)
+#define BUTTON_EVENT_MASK  (GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK | \
+                            GDK_LEAVE_NOTIFY_MASK | GDK_BUTTON_PRESS_MASK | \
+                            GDK_BUTTON_RELEASE_MASK)
+
+#define LIST_WIDTH  200
+#define LIST_HEIGHT 150
+
+#define NORMAL      0
+#define SELECTED    1
+#define INSENSITIVE 2
+
+
+typedef struct _LCDialog LCDialog;
+
+struct _LCDialog
+{
+  GtkWidget *shell;
+  GtkWidget *subshell;
+
+  GtkWidget *image_menu;
+  GtkWidget *image_option_menu;
+
+  GimpImage *gimage;
+  gboolean   auto_follow_active;
+
+  GtkWidget *notebook;
+};
+
+
+/*  Main dialog structure  */
+extern LCDialog *lc_dialog;
+
+
 GtkWidget * lc_dialog_create            (GimpImage *gimage);
 void        lc_dialog_free              (void);
 
@@ -31,6 +66,9 @@ void        lc_dialog_flush             (void);
 
 void        lc_dialog_update_image_list (void);
 void        lc_dialog_preview_update    (GimpImage *gimage);
+
+
+void        lc_dialog_menu_preview_dirty (GtkObject *,gpointer);
 
 
 #endif  /*  __LC_DIALOG_H__  */

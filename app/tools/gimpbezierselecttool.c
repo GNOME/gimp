@@ -38,6 +38,8 @@
 
 #include "pdb/procedural_db.h"
 
+#include "gui/paths-dialog.h"
+
 #include "gimpchannel.h"
 #include "gimpmarshal.h"
 #include "floating_sel.h"
@@ -50,7 +52,6 @@
 #include "selection_options.h"
 #include "tool_options.h"
 #include "tool_manager.h"
-#include "paths_dialogP.h"
 
 #include "libgimp/gimpintl.h"
 

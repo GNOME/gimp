@@ -20,26 +20,11 @@
 #define __CHANNELS_DIALOG_H__
 
 
-void   channels_dialog_new_channel_callback               (GtkWidget *widget,
-							   gpointer   data);
-void   channels_dialog_raise_channel_callback             (GtkWidget *widget,
-							   gpointer   data);
-void   channels_dialog_lower_channel_callback             (GtkWidget *widget,
-							   gpointer   data);
-void   channels_dialog_duplicate_channel_callback         (GtkWidget *widget,
-							   gpointer   data);
-void   channels_dialog_delete_channel_callback            (GtkWidget *widget,
-							   gpointer   data);
-void   channels_dialog_channel_to_sel_callback            (GtkWidget *widget,
-							   gpointer   data);
-void   channels_dialog_add_channel_to_sel_callback        (GtkWidget *widget,
-							   gpointer   data);
-void   channels_dialog_sub_channel_from_sel_callback      (GtkWidget *widget,
-							   gpointer   data);
-void   channels_dialog_intersect_channel_with_sel_callback(GtkWidget *widget,
-							   gpointer   data);
-void   channels_dialog_edit_channel_attributes_callback   (GtkWidget *widget,
-							   gpointer   data);
+GtkWidget * channels_dialog_create  (void);
+void        channels_dialog_free    (void);
+void        channels_dialog_update  (GimpImage *gimage);
+void        channels_dialog_flush   (void);
+void        channels_dialog_clear   (void);
 
 
 #endif /* __CHANNELS_DIALOG_H__ */

@@ -28,7 +28,9 @@
 #include "widgets/gimpdialogfactory.h"
 
 #include "gui/dialogs.h"
+#include "gui/channels-dialog.h"
 #include "gui/layers-dialog.h"
+#include "gui/paths-dialog.h"
 
 #include "context_manager.h"
 #include "dialog_handler.h"
@@ -39,7 +41,6 @@
 #include "gimprc.h"
 #include "image_render.h"
 #include "lc_dialog.h"
-#include "lc_dialogP.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimplimits.h"

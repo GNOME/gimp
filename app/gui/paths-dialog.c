@@ -46,11 +46,10 @@
 #include "gimage_mask.h"
 #include "gimprc.h"
 #include "image_render.h"
-#include "lc_dialogP.h"
+#include "lc_dialog.h"
 #include "path.h"
 #include "pathP.h"
 #include "path_transform.h"
-#include "paths_dialogP.h"
 #include "plug_in.h"
 #include "undo.h"
 

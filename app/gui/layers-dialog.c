@@ -52,7 +52,7 @@
 #include "gimprc.h"
 #include "gimpui.h"
 #include "image_render.h"
-#include "lc_dialogP.h"
+#include "lc_dialog.h"
 #include "ops_buttons.h"
 #include "resize.h"
 #include "temp_buf.h"

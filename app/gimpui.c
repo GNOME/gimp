@@ -312,3 +312,24 @@ gimp_window_remove_accel_group (GtkWindow      *window,
 
   gtk_window_remove_accel_group (window, item_factory->accel_group);
 }
+
+gpointer
+gimp_widget_get_callback_context (GtkWidget *widget)
+{
+  GtkItemFactory *ifactory;
+  gpointer        popup_context;
+  gpointer        accel_context = NULL;
+
+  ifactory = gtk_item_factory_from_widget (widget);
+
+  popup_context = gtk_item_factory_popup_data_from_widget (widget);
+
+  if (ifactory)
+    accel_context = gtk_object_get_data (GTK_OBJECT (ifactory),
+					 "gimp-accel-context");
+
+  if (popup_context)
+    return popup_context;
+
+  return accel_context;
+}

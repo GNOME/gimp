@@ -1,3 +1,27 @@
+2001-04-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/lc_dialogP.h
+	* app/paths_dialogP.h: removed stuff that will go away anyway (put
+	the declarations to the public headers).
+
+	* app/gimpui.[ch]: new function gimp_widget_get_callback_context()
+	which may only be called from a *_cmd_callback() and returns the
+	data we attached with weird methods.
+
+	* app/gui/Makefile.am
+	* app/gui/channels-commands.[ch]: callbacks independent from the
+	channels dialog and the "new" and "edit channel" dialogs.
+
+	* app/gui/channels-dialog.[ch]
+	* app/gui/layers-commands.c
+	* app/gui/layers-dialog.[ch]
+	* app/lc_dialog.[ch]
+	* app/gui/menus.c
+	* app/gui/paths-dialog.[ch]
+	* app/tools/gimpbezierselecttool.c
+	* po/POTFILES.in: changed accordingly.
+
 2001-04-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpui.[ch]: new functions gimp_window_add_accel_group() and
