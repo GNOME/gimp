@@ -192,7 +192,7 @@ msgstr "<Image>/Bewerken/Zichtbare kopiëren"
 # What is the correct translation of the verb 'tile'?
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "<Image>/Filters/Blur/Tileable Blur..."
-msgstr "<Image>/Filters/Vervagen/Tegelbaar vervagen..."
+msgstr "<Image>/Filters/Vervagen/Naadloos vervagen..."
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Clothify..."
@@ -589,7 +589,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Patronen/Gedraaide tegel..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Patronen/Kronkel (tegelbaar)..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Patronen/Kronkel (naadloos)..."
 
 # Is Trochoid a name or a term? If it is a term, what does it mean?
 #: plug-ins/script-fu/scripts/trochoid.scm:0

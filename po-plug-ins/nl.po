@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.2\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
+"POT-Creation-Date: 2001-11-30 02:43+0100\n"
 "PO-Revision-Date: 2001-09-17 00:00+0100\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:282
 #: plug-ins/FractalExplorer/Dialogs.c:1372 plug-ins/common/AlienMap.c:1396
 #: plug-ins/common/AlienMap2.c:1388 plug-ins/gdyntext/gdyntext_ui.c:560
-#: plug-ins/gfig/gfig.c:3374 plug-ins/imagemap/imap_about.c:33
+#: plug-ins/gfig/gfig.c:3374 plug-ins/imagemap/imap_about.c:36
 #: plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
 msgstr "Info"
@@ -23,8 +23,8 @@ msgstr "Info"
 #. the 3 Action Buttons
 #: plug-ins/FractalExplorer/Dialogs.c:284
 #: plug-ins/FractalExplorer/Dialogs.c:1377
-#: plug-ins/FractalExplorer/FractalExplorer.c:846
-#: plug-ins/FractalExplorer/FractalExplorer.c:1465
+#: plug-ins/FractalExplorer/FractalExplorer.c:847
+#: plug-ins/FractalExplorer/FractalExplorer.c:1466
 #: plug-ins/Lighting/lighting_ui.c:1133 plug-ins/MapObject/mapobject_ui.c:1368
 #: plug-ins/bmp/bmpwrite.c:564 plug-ins/common/AlienMap.c:1398
 #: plug-ins/common/AlienMap.c:1662 plug-ins/common/AlienMap2.c:1390
@@ -50,8 +50,8 @@ msgstr "Info"
 #: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1147
 #: plug-ins/common/gif.c:1218 plug-ins/common/gih.c:854
 #: plug-ins/common/glasstile.c:260 plug-ins/common/gqbist.c:640
-#: plug-ins/common/grid.c:659 plug-ins/common/gtm.c:375
-#: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:561
+#: plug-ins/common/grid.c:661 plug-ins/common/gtm.c:375
+#: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:570
 #: plug-ins/common/iwarp.c:1142 plug-ins/common/jigsaw.c:2486
 #: plug-ins/common/jpeg.c:1595 plug-ins/common/lic.c:1021
 #: plug-ins/common/mail.c:467 plug-ins/common/mapcolor.c:558
@@ -60,7 +60,7 @@ msgstr "Info"
 #: plug-ins/common/noisify.c:489 plug-ins/common/nova.c:466
 #: plug-ins/common/oilify.c:458 plug-ins/common/papertile.c:250
 #: plug-ins/common/pat.c:455 plug-ins/common/pixelize.c:280
-#: plug-ins/common/plasma.c:307 plug-ins/common/png.c:1045
+#: plug-ins/common/plasma.c:308 plug-ins/common/png.c:1049
 #: plug-ins/common/pnm.c:930 plug-ins/common/polar.c:914
 #: plug-ins/common/ps.c:2615 plug-ins/common/ps.c:2797
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
@@ -71,18 +71,18 @@ msgstr "Info"
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spread.c:382
 #: plug-ins/common/struc.c:1281 plug-ins/common/sunras.c:1590
-#: plug-ins/common/tga.c:1173 plug-ins/common/threshold_alpha.c:271
+#: plug-ins/common/tga.c:1175 plug-ins/common/threshold_alpha.c:271
 #: plug-ins/common/tiff.c:1585 plug-ins/common/tile.c:405
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:173
 #: plug-ins/common/unsharp.c:787 plug-ins/common/video.c:2155
 #: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:426
 #: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
 #: plug-ins/common/wind.c:1012 plug-ins/common/wmf.c:931
-#: plug-ins/common/xbm.c:1150 plug-ins/common/xpm.c:800
+#: plug-ins/common/xbm.c:1150 plug-ins/common/xpm.c:822
 #: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:634
 #: plug-ins/flame/flame.c:923 plug-ins/fp/fp_gtk.c:904
 #: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1010
-#: plug-ins/gap/gap_decode_xanim.c:178 plug-ins/gap/gap_lib.c:231
+#: plug-ins/gap/gap_decode_xanim.c:178 plug-ins/gap/gap_lib.c:235
 #: plug-ins/gap/gap_mod_layer.c:147 plug-ins/gap/gap_mov_dialog.c:498
 #: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
 #: plug-ins/gdyntext/gdyntext_ui.c:199 plug-ins/gdyntext/gdyntext_ui.c:573
@@ -105,9 +105,9 @@ msgstr "OK"
 
 #. the  Action Button
 #: plug-ins/FractalExplorer/Dialogs.c:286
-#: plug-ins/FractalExplorer/FractalExplorer.c:740
-#: plug-ins/FractalExplorer/FractalExplorer.c:855
-#: plug-ins/FractalExplorer/FractalExplorer.c:1467
+#: plug-ins/FractalExplorer/FractalExplorer.c:741
+#: plug-ins/FractalExplorer/FractalExplorer.c:856
+#: plug-ins/FractalExplorer/FractalExplorer.c:1468
 #: plug-ins/Lighting/lighting_ui.c:1135 plug-ins/MapObject/mapobject_ui.c:1370
 #: plug-ins/bmp/bmpwrite.c:566 plug-ins/common/AlienMap.c:1400
 #: plug-ins/common/AlienMap2.c:1392 plug-ins/common/CML_explorer.c:1178
@@ -131,9 +131,9 @@ msgstr "OK"
 #: plug-ins/common/gbr.c:570 plug-ins/common/gicon.c:443
 #: plug-ins/common/gif.c:1149 plug-ins/common/gif.c:1220
 #: plug-ins/common/gih.c:856 plug-ins/common/glasstile.c:262
-#: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:661
+#: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:663
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
-#: plug-ins/common/illusion.c:563 plug-ins/common/iwarp.c:1146
+#: plug-ins/common/illusion.c:572 plug-ins/common/iwarp.c:1146
 #: plug-ins/common/jigsaw.c:2488 plug-ins/common/jpeg.c:1597
 #: plug-ins/common/lic.c:1023 plug-ins/common/mail.c:469
 #: plug-ins/common/mapcolor.c:560 plug-ins/common/max_rgb.c:350
@@ -141,8 +141,8 @@ msgstr "OK"
 #: plug-ins/common/nlfilt.c:370 plug-ins/common/noisify.c:491
 #: plug-ins/common/nova.c:468 plug-ins/common/oilify.c:460
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:457
-#: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:309
-#: plug-ins/common/png.c:1047 plug-ins/common/pnm.c:932
+#: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:310
+#: plug-ins/common/png.c:1051 plug-ins/common/pnm.c:932
 #: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2617
 #: plug-ins/common/ps.c:2799 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
@@ -152,7 +152,7 @@ msgstr "OK"
 #: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
 #: plug-ins/common/spread.c:384 plug-ins/common/struc.c:1283
-#: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1175
+#: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1177
 #: plug-ins/common/threshold_alpha.c:273 plug-ins/common/tiff.c:1587
 #: plug-ins/common/tile.c:407 plug-ins/common/tileit.c:388
 #: plug-ins/common/uniteditor.c:175 plug-ins/common/unsharp.c:789
@@ -160,13 +160,13 @@ msgstr "OK"
 #: plug-ins/common/warp.c:428 plug-ins/common/waves.c:351
 #: plug-ins/common/whirlpinch.c:810 plug-ins/common/wind.c:1014
 #: plug-ins/common/wmf.c:933 plug-ins/common/xbm.c:1152
-#: plug-ins/common/xpm.c:802 plug-ins/fits/fits.c:989
+#: plug-ins/common/xpm.c:824 plug-ins/fits/fits.c:989
 #: plug-ins/flame/flame.c:636 plug-ins/flame/flame.c:925
 #: plug-ins/fp/fp_gtk.c:908 plug-ins/gap/gap_arr_dialog.c:1012
-#: plug-ins/gap/gap_dbbrowser_utils.c:210
+#: plug-ins/gap/gap_dbbrowser_utils.c:215
 #: plug-ins/gap/gap_decode_mpeg_main.c:337 plug-ins/gap/gap_decode_xanim.c:176
 #: plug-ins/gap/gap_decode_xanim.c:341 plug-ins/gap/gap_filter_foreach.c:134
-#: plug-ins/gap/gap_lib.c:1027 plug-ins/gap/gap_mod_layer.c:149
+#: plug-ins/gap/gap_lib.c:1034 plug-ins/gap/gap_mod_layer.c:149
 #: plug-ins/gap/gap_mod_layer.c:264 plug-ins/gap/gap_mov_dialog.c:529
 #: plug-ins/gap/gap_mov_dialog.c:2680 plug-ins/gap/gap_mpege.c:189
 #: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_range_ops.c:1244
@@ -194,11 +194,11 @@ msgstr "Annuleren"
 #: plug-ins/common/blinds.c:343 plug-ins/common/curve_bend.c:1503
 #: plug-ins/common/destripe.c:575 plug-ins/common/emboss.c:739
 #: plug-ins/common/fractaltrace.c:746 plug-ins/common/glasstile.c:276
-#: plug-ins/common/grid.c:680 plug-ins/common/illusion.c:580
+#: plug-ins/common/grid.c:682 plug-ins/common/illusion.c:589
 #: plug-ins/common/iwarp.c:1160 plug-ins/common/jigsaw.c:2511
 #: plug-ins/common/mapcolor.c:576 plug-ins/common/max_rgb.c:364
 #: plug-ins/common/nlfilt.c:587 plug-ins/common/noisify.c:506
-#: plug-ins/common/plasma.c:326 plug-ins/common/polar.c:935
+#: plug-ins/common/plasma.c:327 plug-ins/common/polar.c:935
 #: plug-ins/common/ps.c:2938 plug-ins/common/sharpen.c:552
 #: plug-ins/common/sinus.c:2123 plug-ins/common/tileit.c:407
 #: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
@@ -208,7 +208,7 @@ msgstr "Annuleren"
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:918
 #: plug-ins/imagemap/imap_edit_area_info.c:287
-#: plug-ins/imagemap/imap_grid.c:232 plug-ins/print/gimp_main_window.c:295
+#: plug-ins/imagemap/imap_grid.c:236 plug-ins/print/gimp_main_window.c:295
 #: plug-ins/rcm/rcm_dialog.c:119 plug-ins/rcm/rcm_dialog.c:631
 msgid "Preview"
 msgstr "Vooruitblik"
@@ -365,8 +365,8 @@ msgstr "Stel paramaters opnieuw op standaardwaarden in"
 
 #: plug-ins/FractalExplorer/Dialogs.c:537 plug-ins/common/CML_explorer.c:1222
 #: plug-ins/common/gqbist.c:694 plug-ins/gfig/gfig.c:3927
-#: plug-ins/gfig/gfig.c:5256 plug-ins/imagemap/imap_menu.c:218
-#: plug-ins/imagemap/imap_toolbar.c:112
+#: plug-ins/gfig/gfig.c:5256 plug-ins/imagemap/imap_menu.c:219
+#: plug-ins/imagemap/imap_toolbar.c:114
 msgid "Save"
 msgstr "Opslaan"
 
@@ -417,7 +417,7 @@ msgstr "Sierpinski"
 
 #: plug-ins/FractalExplorer/Dialogs.c:621 plug-ins/common/sinus.c:1859
 #: plug-ins/common/sinus.c:1877 plug-ins/common/sinus.c:1963
-#: plug-ins/imagemap/imap_preferences.c:542
+#: plug-ins/imagemap/imap_preferences.c:543
 msgid "Colors"
 msgstr "Kleuren"
 
@@ -664,14 +664,14 @@ msgid "Click here to cancel save procedure"
 msgstr "Klik hier om de opslagprocedure te annuleren"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1982
-#: plug-ins/FractalExplorer/FractalExplorer.c:1253
+#: plug-ins/FractalExplorer/FractalExplorer.c:1254
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Bestand '%s' is niet een FractalExplorer-bestand"
 
 # What is the Dutch translation of 'corrupt' here?
 #: plug-ins/FractalExplorer/Dialogs.c:1987
-#: plug-ins/FractalExplorer/FractalExplorer.c:1261
+#: plug-ins/FractalExplorer/FractalExplorer.c:1262
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -680,15 +680,15 @@ msgstr ""
 "Bestand '%s' is aangetast.\n"
 "Regel %d optiesectie incorrect"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:212
+#: plug-ins/FractalExplorer/FractalExplorer.c:213
 msgid "<Image>/Filters/Render/Pattern/Fractal Explorer..."
 msgstr "<Image>/Filters/Renderen/Patroon/Fractal Explorer..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:351
+#: plug-ins/FractalExplorer/FractalExplorer.c:352
 msgid "Rendering Fractal..."
 msgstr "Fractal wordt gerenderd..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:731 plug-ins/gfig/gfig.c:5012
+#: plug-ins/FractalExplorer/FractalExplorer.c:732 plug-ins/gfig/gfig.c:5012
 #: plug-ins/gflare/gflare.c:3369
 #, c-format
 msgid ""
@@ -698,32 +698,32 @@ msgstr ""
 "Weet u zeker dat u \"%s\" uit de\n"
 "lijst en van de schijf wilt verwijderen?"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:735
+#: plug-ins/FractalExplorer/FractalExplorer.c:736
 msgid "Delete Fractal"
 msgstr "Wis fractal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:740
-#: plug-ins/FractalExplorer/FractalExplorer.c:1400 plug-ins/gfig/gfig.c:3568
+#: plug-ins/FractalExplorer/FractalExplorer.c:741
+#: plug-ins/FractalExplorer/FractalExplorer.c:1401 plug-ins/gfig/gfig.c:3568
 #: plug-ins/gfig/gfig.c:5021 plug-ins/gflare/gflare.c:3102
 #: plug-ins/gflare/gflare.c:3378 plug-ins/gimpressionist/presets.c:648
-#: plug-ins/ifscompose/ifscompose.c:807 plug-ins/imagemap/imap_cmd_delete.c:53
-#: plug-ins/imagemap/imap_selection.c:175
+#: plug-ins/ifscompose/ifscompose.c:807 plug-ins/imagemap/imap_cmd_delete.c:56
+#: plug-ins/imagemap/imap_selection.c:177 plug-ins/imagemap/imap_tools.c:155
 msgid "Delete"
 msgstr "Wissen"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:825
+#: plug-ins/FractalExplorer/FractalExplorer.c:826
 msgid "Edit fractal name"
 msgstr "Bewerk fractalnaam"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:836
+#: plug-ins/FractalExplorer/FractalExplorer.c:837
 msgid "Fractal name:"
 msgstr "Fractalnaam:"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:877
+#: plug-ins/FractalExplorer/FractalExplorer.c:878
 msgid "New Fractal"
 msgstr "Nieuwe fractal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1149
+#: plug-ins/FractalExplorer/FractalExplorer.c:1150
 #, c-format
 msgid ""
 "No fractalexplorer-path in gimprc:\n"
@@ -736,40 +736,40 @@ msgstr ""
 "(fractalexplorer-path \"%s\")\n"
 "toevoegen aan uw %s-bestand"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1166
+#: plug-ins/FractalExplorer/FractalExplorer.c:1167
 msgid ""
 "fractalexplorer-path misconfigured - the following directories were not found"
 msgstr ""
 "fractalexplorerpad fout geconfigureerd - de volgende directory's werden niet "
 "gevonden"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1342
+#: plug-ins/FractalExplorer/FractalExplorer.c:1343
 msgid "My first fractal"
 msgstr "Mijn eerste fractal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1359
+#: plug-ins/FractalExplorer/FractalExplorer.c:1360
 msgid "Choose Fractal by double-clicking on it"
 msgstr "Kies een fractal door erop te dubbelklikken"
 
 #. Put buttons in
-#: plug-ins/FractalExplorer/FractalExplorer.c:1390 plug-ins/gfig/gfig.c:3537
+#: plug-ins/FractalExplorer/FractalExplorer.c:1391 plug-ins/gfig/gfig.c:3537
 msgid "Rescan"
 msgstr "Herscannen"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1397
+#: plug-ins/FractalExplorer/FractalExplorer.c:1398
 msgid "Select directory and rescan collection"
 msgstr "Kies een directory en herscan de verzameling"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1408
+#: plug-ins/FractalExplorer/FractalExplorer.c:1409
 msgid "Delete currently selected fractal"
 msgstr "Wis de geselecteerde fractal"
 
 #. the dialog
-#: plug-ins/FractalExplorer/FractalExplorer.c:1460
+#: plug-ins/FractalExplorer/FractalExplorer.c:1461
 msgid "Rescan for Fractals"
 msgstr "Herscan op zoek naar fractals"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1478
+#: plug-ins/FractalExplorer/FractalExplorer.c:1479
 msgid "Add FractalExplorer Path"
 msgstr "Voeg FractalExplorer-pad toe"
 
@@ -977,10 +977,11 @@ msgstr "Z-richting van lichtbron in XYZ-ruimte"
 msgid "Intensity Levels"
 msgstr "Intensiteitsniveaus"
 
+# What is the correct Dutch translation of this phrase?
 #: plug-ins/Lighting/lighting_ui.c:741 plug-ins/MapObject/mapobject_ui.c:873
 #: plug-ins/common/bumpmap.c:1089
 msgid "Ambient:"
-msgstr ""
+msgstr "Ambient:"
 
 #: plug-ins/Lighting/lighting_ui.c:754 plug-ins/MapObject/mapobject_ui.c:886
 msgid "Amount of original color to show where no direct light falls"
@@ -1131,7 +1132,7 @@ msgstr "Omgevingsprojectie"
 msgid "Lighting Effects"
 msgstr "Lichteffecten"
 
-#: plug-ins/Lighting/lighting_ui.c:1187 plug-ins/common/grid.c:709
+#: plug-ins/Lighting/lighting_ui.c:1187 plug-ins/common/grid.c:711
 #: plug-ins/gap/gap_mov_dialog.c:507
 msgid "Update Preview"
 msgstr "Vooruitblik vernieuwen"
@@ -1304,7 +1305,7 @@ msgstr "Grootte"
 #: plug-ins/common/nlfilt.c:430 plug-ins/common/nova.c:504
 #: plug-ins/common/unsharp.c:812 plug-ins/common/whirlpinch.c:877
 #: plug-ins/gfig/gfig.c:3175 plug-ins/gflare/gflare.c:2911
-#: plug-ins/imagemap/imap_circle.c:273
+#: plug-ins/imagemap/imap_circle.c:275
 msgid "Radius:"
 msgstr "Radius:"
 
@@ -1361,7 +1362,7 @@ msgstr "Draadmodel van object in vooruitblik in- of uitschakelen"
 #: plug-ins/common/pnm.c:411 plug-ins/common/psd.c:1731
 #: plug-ins/common/sunras.c:442 plug-ins/common/tga.c:429
 #: plug-ins/common/tiff.c:454 plug-ins/common/xbm.c:734
-#: plug-ins/common/xpm.c:334 plug-ins/common/xwd.c:439
+#: plug-ins/common/xpm.c:342 plug-ins/common/xwd.c:439
 #: plug-ins/faxg3/faxg3.c:196 plug-ins/gfli/gfli.c:459 plug-ins/sgi/sgi.c:330
 #: plug-ins/sgi/sgi.c:332 plug-ins/xjt/xjt.c:3246
 #, c-format
@@ -1406,7 +1407,7 @@ msgstr "%s: slechte kleurenkaart"
 #: plug-ins/common/pix.c:370 plug-ins/common/png.c:547
 #: plug-ins/common/pnm.c:499 plug-ins/common/psd.c:2114
 #: plug-ins/common/smooth_palette.c:241 plug-ins/common/sunras.c:932
-#: plug-ins/common/tga.c:913 plug-ins/common/tiff.c:680
+#: plug-ins/common/tga.c:915 plug-ins/common/tiff.c:680
 #: plug-ins/common/tile.c:280 plug-ins/common/winclipboard.c:557
 #: plug-ins/common/wmf.c:2350 plug-ins/common/xbm.c:872
 #: plug-ins/faxg3/faxg3.c:448 plug-ins/fits/fits.c:521
@@ -1418,6 +1419,7 @@ msgstr "Achtergrond"
 #: plug-ins/bmp/bmpwrite.c:104
 msgid "BMP: cannot operate on unknown image types or alpha images"
 msgstr ""
+"BMP: kan niet op onbekende afbeeldingstypen of alpha-afbeeldingen werken"
 
 #: plug-ins/bmp/bmpwrite.c:167
 #, c-format
@@ -1430,11 +1432,11 @@ msgstr "Kan %s niet openen"
 #: plug-ins/common/gih.c:1218 plug-ins/common/gtm.c:247
 #: plug-ins/common/hrz.c:471 plug-ins/common/jpeg.c:1197
 #: plug-ins/common/pat.c:384 plug-ins/common/pcx.c:547
-#: plug-ins/common/pix.c:532 plug-ins/common/png.c:775
-#: plug-ins/common/png.c:777 plug-ins/common/pnm.c:783
+#: plug-ins/common/pix.c:532 plug-ins/common/png.c:777
+#: plug-ins/common/png.c:779 plug-ins/common/pnm.c:783
 #: plug-ins/common/ps.c:1003 plug-ins/common/sunras.c:525
-#: plug-ins/common/tga.c:1012 plug-ins/common/tiff.c:1337
-#: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:653
+#: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1337
+#: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:675
 #: plug-ins/common/xwd.c:543 plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679
 #: plug-ins/sgi/sgi.c:548 plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
 #, c-format
@@ -1858,14 +1860,13 @@ msgstr "Willekeurig, kanaalonafhankelijk"
 msgid "Random shared"
 msgstr "Willekeurig gedeeld"
 
-# What is 'seed' in Dutch?
 #: plug-ins/common/CML_explorer.c:230
 msgid "Randoms from seed"
-msgstr "Willekeurig met 'seed'"
+msgstr "Willekeurig met beginwaarde"
 
 #: plug-ins/common/CML_explorer.c:231
 msgid "Randoms from seed (shared)"
-msgstr "Willekeurig met 'seed' (gedeeld)"
+msgstr "Willekeurig met beginwaarde (gedeeld)"
 
 # What is the Dutch translation of the term 'Hue'?
 #: plug-ins/common/CML_explorer.c:299 plug-ins/common/CML_explorer.c:1282
@@ -1906,20 +1907,17 @@ msgstr "CML_verkenner: bezig met ontwikkelen..."
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "Coupled-Map-Lattice-verkenner"
 
-# What is the translation of 'seed'?
 #: plug-ins/common/CML_explorer.c:1240
 msgid "Random Seed"
-msgstr "Willekeurige 'seed'"
+msgstr "Willekeurige beginwaarde"
 
-# What is the translation of 'seed'?
 #: plug-ins/common/CML_explorer.c:1250
 msgid "Fix Seed"
-msgstr "Vaste 'seed'"
+msgstr "Vaste beginwaarde"
 
-# What is the translation of 'seed'?
 #: plug-ins/common/CML_explorer.c:1260
 msgid "New Seed"
-msgstr "Nieuwe 'seed'"
+msgstr "Nieuwe beginwaarde"
 
 # What is the translation of 'Hue'?
 #: plug-ins/common/CML_explorer.c:1279
@@ -1967,15 +1965,15 @@ msgstr "Begin verspringing:"
 
 #: plug-ins/common/CML_explorer.c:1386
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr "'Seed' van willekeurige (alleen voor \"met 'seed'\"-modi"
+msgstr "Beginwaarde van willekeurige (alleen voor \"met beginwaarde\"-modi"
 
 #: plug-ins/common/CML_explorer.c:1398 plug-ins/maze/maze_face.c:297
 msgid "Seed:"
-msgstr "'Seed':"
+msgstr "Beginwaarde:"
 
 #: plug-ins/common/CML_explorer.c:1410
 msgid "Switch to \"From Seed\" with the last Seed"
-msgstr "Schakel naar \"met 'seed'\" met de laatste 'seed'"
+msgstr "Schakel naar \"met beginwaarde\" met de laatste beginwaarde"
 
 #: plug-ins/common/CML_explorer.c:1421
 msgid ""
@@ -1984,10 +1982,11 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
-"\"Vaste 'seed'\"-knop is een alias van mij.\n"
-"De zelfde 'seed' resulteert in dezelfde afbeelding als (1) de breedten van "
-"afbeeldingen hetzelfde zijn (dit is de reden dat de vooruitblik verschilt "
-"van de uiteindelijke afbeelding) en (2) alle mutatieratios nul zijn."
+"\"Vaste beginwaarde\"-knop is een alias van mij.\n"
+"De zelfde beginwaarde resulteert in dezelfde afbeelding als (1) de breedten "
+"van afbeeldingen hetzelfde zijn (dit is de reden dat de vooruitblik "
+"verschilt van de uiteindelijke afbeelding) en (2) alle mutatieratios nul "
+"zijn."
 
 #: plug-ins/common/CML_explorer.c:1429
 msgid "Others"
@@ -2197,13 +2196,13 @@ msgstr "Zichtbare lagen uitlijnen"
 #: plug-ins/common/destripe.c:636 plug-ins/common/edge.c:662
 #: plug-ins/common/emboss.c:559 plug-ins/common/engrave.c:236
 #: plug-ins/common/gauss_iir.c:378 plug-ins/common/gauss_rle.c:373
-#: plug-ins/common/glasstile.c:294 plug-ins/common/grid.c:720
-#: plug-ins/common/illusion.c:597 plug-ins/common/jpeg.c:1643
+#: plug-ins/common/glasstile.c:294 plug-ins/common/grid.c:722
+#: plug-ins/common/illusion.c:606 plug-ins/common/jpeg.c:1643
 #: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:381
 #: plug-ins/common/nlfilt.c:409 plug-ins/common/noisify.c:524
 #: plug-ins/common/nova.c:478 plug-ins/common/oilify.c:470
-#: plug-ins/common/pixelize.c:292 plug-ins/common/plasma.c:344
-#: plug-ins/common/png.c:1056 plug-ins/common/polar.c:955
+#: plug-ins/common/pixelize.c:292 plug-ins/common/plasma.c:345
+#: plug-ins/common/png.c:1060 plug-ins/common/polar.c:955
 #: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:676
 #: plug-ins/common/scatter_hsv.c:428 plug-ins/common/sel_gauss.c:254
 #: plug-ins/common/sharpen.c:612 plug-ins/common/shift.c:389
@@ -2213,7 +2212,7 @@ msgstr "Zichtbare lagen uitlijnen"
 #: plug-ins/common/unsharp.c:798 plug-ins/common/video.c:2167
 #: plug-ins/common/vpropagate.c:977 plug-ins/common/waves.c:399
 #: plug-ins/common/whirlpinch.c:847 plug-ins/common/wind.c:1048
-#: plug-ins/common/xpm.c:812 plug-ins/maze/maze_face.c:204
+#: plug-ins/common/xpm.c:834 plug-ins/maze/maze_face.c:204
 #: plug-ins/mosaic/mosaic.c:643 plug-ins/xjt/xjt.c:805
 msgid "Parameter Settings"
 msgstr "Parameterinstellingen"
@@ -2292,16 +2291,16 @@ msgstr "Gebruik de (onzichtbare) onderste laag als de basis"
 msgid "Grid Size:"
 msgstr "Rastergrootte:"
 
-#: plug-ins/common/animationplay.c:264
+#: plug-ins/common/animationplay.c:272
 msgid "<Image>/Filters/Animation/Animation Playback..."
 msgstr "<Image>/Filters/Animatie/Animatie afspelen..."
 
-#: plug-ins/common/animationplay.c:660
+#: plug-ins/common/animationplay.c:668
 msgid "Animation Playback: "
 msgstr "Animatie afspelen:"
 
 #. if no buttons are specified use one CLOSE button per default
-#: plug-ins/common/animationplay.c:667 plug-ins/common/plugindetails.c:1009
+#: plug-ins/common/animationplay.c:675 plug-ins/common/plugindetails.c:1013
 #: plug-ins/common/sample_colorize.c:1374 plug-ins/common/uniteditor.c:526
 #: plug-ins/dbbrowser/dbbrowser_utils.c:159
 #: plug-ins/dbbrowser/dbbrowser_utils.c:176 plug-ins/gap/gap_arr_dialog.c:783
@@ -2309,29 +2308,29 @@ msgstr "Animatie afspelen:"
 #: plug-ins/gdyntext/charmap_window.c:139 plug-ins/gdyntext/gdyntext_ui.c:593
 #: plug-ins/gfig/gfig.c:1952 plug-ins/gfig/gfig.c:2012
 #: plug-ins/helpbrowser/helpbrowser.c:833
-#: plug-ins/ifscompose/ifscompose.c:1255 plug-ins/imagemap/imap_menu.c:227
+#: plug-ins/ifscompose/ifscompose.c:1255 plug-ins/imagemap/imap_menu.c:228
 #: plug-ins/print/gimp_color_window.c:142
 msgid "Close"
 msgstr "Sluiten"
 
 #. The 'playback' half of the dialog
-#: plug-ins/common/animationplay.c:681 plug-ins/common/animationplay.c:684
+#: plug-ins/common/animationplay.c:689 plug-ins/common/animationplay.c:692
 msgid "Playback: "
 msgstr "Afspelen:"
 
-#: plug-ins/common/animationplay.c:714
+#: plug-ins/common/animationplay.c:722
 msgid "Play/Stop"
 msgstr "Spelen/Stoppen"
 
-#: plug-ins/common/animationplay.c:720
+#: plug-ins/common/animationplay.c:728
 msgid "Rewind"
 msgstr "Terug"
 
-#: plug-ins/common/animationplay.c:726
+#: plug-ins/common/animationplay.c:734
 msgid "Step"
 msgstr "Stap"
 
-#: plug-ins/common/animationplay.c:784
+#: plug-ins/common/animationplay.c:792
 msgid "Frame %v of %u"
 msgstr "Frame %v uit %u"
 
@@ -2420,13 +2419,13 @@ msgid "Blinds"
 msgstr "Rolgordijnen"
 
 #. attach labels
-#: plug-ins/common/blinds.c:373 plug-ins/common/grid.c:770
+#: plug-ins/common/blinds.c:373 plug-ins/common/grid.c:772
 #: plug-ins/common/ripple.c:638 plug-ins/common/tileit.c:451
 #: plug-ins/pagecurl/pagecurl.c:647
 msgid "Horizontal"
 msgstr "Horizontaal"
 
-#: plug-ins/common/blinds.c:374 plug-ins/common/grid.c:771
+#: plug-ins/common/blinds.c:374 plug-ins/common/grid.c:773
 #: plug-ins/common/ripple.c:639 plug-ins/common/tileit.c:459
 #: plug-ins/pagecurl/pagecurl.c:648
 msgid "Vertical"
@@ -2450,12 +2449,11 @@ msgstr "# Segmenten:"
 msgid "<Image>/Filters/Blur/Blur..."
 msgstr "<Image>/Filters/Vervagen/Vervagen..."
 
-# What is the Dutch translation of 'seed' in this case?
-#: plug-ins/common/blur.c:648 plug-ins/common/plasma.c:359
+#: plug-ins/common/blur.c:648 plug-ins/common/plasma.c:360
 #: plug-ins/common/randomize.c:737 plug-ins/common/sinus.c:1811
 #: plug-ins/common/snoise.c:542 plug-ins/gflare/gflare.c:4102
 msgid "Random Seed:"
-msgstr "Willekeurige seed:"
+msgstr "Willekeurige beginwaarde:"
 
 #: plug-ins/common/blur.c:655
 msgid "Randomization %:"
@@ -2505,68 +2503,73 @@ msgstr "1 (onzin?)"
 msgid "256 (nonsense?)"
 msgstr "256 (onzin?)"
 
+# How to translate 'bumpmap'?
 #: plug-ins/common/bumpmap.c:367
 msgid "<Image>/Filters/Map/Bump Map..."
-msgstr ""
+msgstr "<Image>/Filters/Projecteren/Bumpmappen..."
 
+# How to translate 'bumpmap'?
 #: plug-ins/common/bumpmap.c:518
 msgid "Bump-mapping..."
-msgstr ""
+msgstr "Bezig met bumpmappen"
 
 #: plug-ins/common/bumpmap.c:942
 msgid "Map Type"
-msgstr ""
+msgstr "Projectietype"
 
 #: plug-ins/common/bumpmap.c:946
 msgid "Linear Map"
-msgstr ""
+msgstr "Lineaire projectie"
 
 #: plug-ins/common/bumpmap.c:947
 msgid "Spherical Map"
-msgstr ""
+msgstr "Bolvormige projectie"
 
 #: plug-ins/common/bumpmap.c:948
 msgid "Sinuosidal Map"
-msgstr ""
+msgstr "Kronkelprojectie"
 
 #. Compensate darkening
 #: plug-ins/common/bumpmap.c:961
 msgid "Compensate for Darkening"
-msgstr ""
+msgstr "Compenseer voor verdonkering"
 
+# How to translate 'bumpmap'?
 #. Invert bumpmap
 #: plug-ins/common/bumpmap.c:971
 msgid "Invert Bumpmap"
-msgstr ""
+msgstr "Keer bumpmap om"
 
+# How to translate 'bumpmap'?
 #. Tile bumpmap
 #: plug-ins/common/bumpmap.c:981
 msgid "Tile Bumpmap"
-msgstr ""
+msgstr "Tegelbumpmap"
 
+# How to translate 'bumpmap'?
 #: plug-ins/common/bumpmap.c:1012
 msgid "Bump Map:"
-msgstr ""
+msgstr "Bumpmap:"
 
 #: plug-ins/common/bumpmap.c:1031 plug-ins/common/emboss.c:571
 msgid "Azimuth:"
-msgstr ""
+msgstr "Azimut:"
 
 #: plug-ins/common/bumpmap.c:1040 plug-ins/common/emboss.c:580
 msgid "Elevation:"
-msgstr ""
+msgstr "Verhoging:"
 
 #: plug-ins/common/bumpmap.c:1060 plug-ins/gap/resize.c:197
 msgid "X Offset:"
-msgstr ""
+msgstr "X-verspringing:"
 
 #: plug-ins/common/bumpmap.c:1070 plug-ins/gap/resize.c:214
 msgid "Y Offset:"
-msgstr ""
+msgstr "Y-verspringing:"
 
 #: plug-ins/common/bumpmap.c:1080
 msgid "Waterlevel:"
-msgstr ""
+msgstr "Waterniveau:"
 
 #: plug-ins/common/bz2.c:268 plug-ins/common/bz2.c:355
 msgid "bz2: can't open bzip2ed file without a sensible extension\n"
@@ -2622,9 +2625,9 @@ msgid "Colorify"
 msgstr "Verkleuren"
 
 #: plug-ins/common/colorify.c:338 plug-ins/common/colortoalpha.c:418
-#: plug-ins/common/ps.c:2707 plug-ins/common/xpm.c:439
+#: plug-ins/common/ps.c:2707 plug-ins/common/xpm.c:461
 #: plug-ins/gap/gap_mov_dialog.c:274 plug-ins/gimpressionist/color.c:51
-#: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
+#: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:328
 #: plug-ins/print/gimp_main_window.c:758
 msgid "Color"
 msgstr "Kleur"
@@ -2651,7 +2654,7 @@ msgstr "Kleur naar alpha"
 
 #: plug-ins/common/colortoalpha.c:429 plug-ins/common/mapcolor.c:652
 #: plug-ins/gap/gap_decode_mpeg_main.c:653 plug-ins/gap/gap_decode_xanim.c:224
-#: plug-ins/gap/gap_lib.c:2112 plug-ins/gap/gap_lib.c:2291
+#: plug-ins/gap/gap_lib.c:2126 plug-ins/gap/gap_lib.c:2321
 #: plug-ins/gap/gap_range_ops.c:253 plug-ins/gap/gap_range_ops.c:602
 #: plug-ins/gfli/gfli.c:847 plug-ins/gfli/gfli.c:916
 msgid "From:"
@@ -3000,9 +3003,9 @@ msgstr "Naar Kromme"
 #. menu_item copy
 #: plug-ins/common/curve_bend.c:1363 plug-ins/gap/gap_navigator_dialog.c:2922
 #: plug-ins/gfig/gfig.c:2835 plug-ins/gfig/gfig.c:5283
-#: plug-ins/gflare/gflare.c:3101 plug-ins/imagemap/imap_cmd_copy.c:49
-#: plug-ins/imagemap/imap_cmd_copy_object.c:50
-#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:132
+#: plug-ins/gflare/gflare.c:3101 plug-ins/imagemap/imap_cmd_copy.c:52
+#: plug-ins/imagemap/imap_cmd_copy_object.c:53
+#: plug-ins/imagemap/imap_menu.c:290 plug-ins/imagemap/imap_toolbar.c:134
 msgid "Copy"
 msgstr "Kopiëren"
 
@@ -3317,7 +3320,7 @@ msgstr "Histogram maken"
 #: plug-ins/common/destripe.c:670 plug-ins/common/gtm.c:551
 #: plug-ins/common/ps.c:2664 plug-ins/common/ps.c:2840
 #: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:428
-#: plug-ins/gap/gap_mov_dialog.c:1873 plug-ins/imagemap/imap_rectangle.c:387
+#: plug-ins/gap/gap_mov_dialog.c:1873 plug-ins/imagemap/imap_rectangle.c:391
 #: plug-ins/print/gimp_main_window.c:638
 msgid "Width:"
 msgstr "Breedte:"
@@ -3366,42 +3369,42 @@ msgstr "Andere opties"
 
 #: plug-ins/common/displace.c:183
 msgid "<Image>/Filters/Map/Displace..."
-msgstr ""
+msgstr "<Image>/Filters/Projecteren/Verplaatsen..."
 
 #: plug-ins/common/displace.c:254
 msgid "Displacing..."
-msgstr ""
+msgstr "Bezig te verplaatsen..."
 
 #: plug-ins/common/displace.c:293
 msgid "Displace"
-msgstr ""
+msgstr "Verplaatsen"
 
 #. The main table
 #: plug-ins/common/displace.c:310
 msgid "Displace Options"
-msgstr ""
+msgstr "Verplaatsingsopties"
 
 #. X options
 #: plug-ins/common/displace.c:322
 msgid "X Displacement:"
-msgstr ""
+msgstr "X-verplaatsing:"
 
 #. Y Options
 #: plug-ins/common/displace.c:357
 msgid "Y Displacement:"
-msgstr ""
+msgstr "Y-verplaatsing:"
 
 #. =======================================================================
 #. Displacement Type
 #: plug-ins/common/displace.c:400 plug-ins/common/warp.c:491
 msgid "On Edges:"
-msgstr ""
+msgstr "Op randen:"
 
 #: plug-ins/common/displace.c:415 plug-ins/common/edge.c:699
 #: plug-ins/common/ripple.c:652 plug-ins/common/warp.c:512
 #: plug-ins/common/waves.c:378
 msgid "Smear"
-msgstr ""
+msgstr "Smeren"
 
 #: plug-ins/common/displace.c:426 plug-ins/common/edge.c:708
 #: plug-ins/common/fractaltrace.c:774 plug-ins/common/newsprint.c:449
@@ -3429,41 +3432,42 @@ msgstr "Hoeveelheid:"
 
 #: plug-ins/common/emboss.c:167
 msgid "<Image>/Filters/Distorts/Emboss..."
-msgstr ""
+msgstr "<Image>/Filters/Vervormingen/Reliëf..."
 
 #: plug-ins/common/emboss.c:414 plug-ins/common/emboss.c:517
 #: plug-ins/common/emboss.c:552
 msgid "Emboss"
-msgstr ""
+msgstr "Reliëf"
 
 #: plug-ins/common/emboss.c:547
 msgid "Function"
-msgstr ""
+msgstr "Functie"
 
+# What is the Dutch translation for bumpmap?
 #: plug-ins/common/emboss.c:551
 msgid "Bumpmap"
-msgstr ""
+msgstr "Bumpmap"
 
 #: plug-ins/common/emboss.c:759 plug-ins/common/nlfilt.c:607
 #: plug-ins/common/sinus.c:2143 plug-ins/common/waves.c:596
 msgid "Do Preview"
-msgstr ""
+msgstr "Vooruitblik uitvoeren"
 
 #: plug-ins/common/engrave.c:119
 msgid "<Image>/Filters/Distorts/Engrave..."
-msgstr ""
+msgstr "<Image>/Filters/Vervormingen/Graveren..."
 
 #: plug-ins/common/engrave.c:191
 msgid "Engraving..."
-msgstr ""
+msgstr "Bezig met graveren..."
 
 #: plug-ins/common/engrave.c:219
 msgid "Engrave"
-msgstr ""
+msgstr "Graveren"
 
 #: plug-ins/common/engrave.c:247
 msgid "Limit Line Width"
-msgstr ""
+msgstr "Beperk lijnbreedte"
 
 #. Height Scale
 #. table col, row
@@ -3471,144 +3475,144 @@ msgstr ""
 #: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2673
 #: plug-ins/common/ps.c:2849 plug-ins/common/smooth_palette.c:439
 #: plug-ins/common/tile.c:432 plug-ins/gap/gap_mov_dialog.c:1890
-#: plug-ins/imagemap/imap_rectangle.c:393
+#: plug-ins/imagemap/imap_rectangle.c:397
 #: plug-ins/print/gimp_main_window.c:652
 msgid "Height:"
-msgstr ""
+msgstr "Hoogte:"
 
 #: plug-ins/common/exchange.c:134
 msgid "<Image>/Filters/Colors/Map/Color Exchange..."
-msgstr ""
+msgstr "<Image>/Filters/Kleuren/Projecteren/Kleurverwisseling..."
 
 #: plug-ins/common/exchange.c:236
 msgid "Color Exchange..."
-msgstr ""
+msgstr "Bezig met kleurverwisseling..."
 
 #. set up the dialog
 #: plug-ins/common/exchange.c:347
 msgid "Color Exchange"
-msgstr ""
+msgstr "Kleurverwisseling"
 
 #: plug-ins/common/exchange.c:369
 msgid "Preview: Click Inside to Pick \"From Color\""
-msgstr ""
+msgstr "Vooruitblik: klik in vernster om bronkleur te kiezen"
 
 #: plug-ins/common/exchange.c:400
 msgid "To Color"
-msgstr ""
+msgstr "Doelkleur"
 
 #: plug-ins/common/exchange.c:400
 msgid "From Color"
-msgstr ""
+msgstr "Bronkleur"
 
 #: plug-ins/common/exchange.c:413
 msgid "Color Exchange: To Color"
-msgstr ""
+msgstr "Kleurverwisseling: doelkleur"
 
 #: plug-ins/common/exchange.c:414
 msgid "Color Exchange: From Color"
-msgstr ""
+msgstr "Kleurverwisseling: bronkleur"
 
 #: plug-ins/common/exchange.c:454
 msgid "Red Threshold:"
-msgstr ""
+msgstr "Rode drempel:"
 
 #: plug-ins/common/exchange.c:493
 msgid "Green Threshold:"
-msgstr ""
+msgstr "Groene drempel:"
 
 #: plug-ins/common/exchange.c:534
 msgid "Blue Threshold:"
-msgstr ""
+msgstr "Blauwe drempel:"
 
 #: plug-ins/common/exchange.c:558
 msgid "Lock Thresholds"
-msgstr ""
+msgstr "Gekoppelde drempels"
 
 #: plug-ins/common/film.c:253
 msgid "<Image>/Filters/Combine/Film..."
-msgstr ""
+msgstr "<Image>/Filters/Combineren/Film..."
 
 #: plug-ins/common/film.c:342
 msgid "Composing Images..."
-msgstr ""
+msgstr "Bezig afbeeldingen samen te stellen..."
 
 #: plug-ins/common/film.c:455
 msgid "Untitled"
-msgstr ""
+msgstr "Naamloos"
 
 #. ** Get a RGB copy of the source region **
 #: plug-ins/common/film.c:736
 msgid "Temporary"
-msgstr ""
+msgstr "Tijdelijk"
 
 #: plug-ins/common/film.c:1114
 msgid "Available Images:"
-msgstr ""
+msgstr "Beschikbare afbeeldingen:"
 
 #: plug-ins/common/film.c:1115
 msgid "On Film:"
-msgstr ""
+msgstr "Op film:"
 
 #: plug-ins/common/film.c:1142
 msgid "Add >>"
-msgstr ""
+msgstr "Toevoegen >>"
 
 #: plug-ins/common/film.c:1142 plug-ins/common/iwarp.c:1037
-#: plug-ins/imagemap/imap_polygon.c:464
+#: plug-ins/imagemap/imap_polygon.c:466
 msgid "Remove"
-msgstr ""
+msgstr "Verwijderen"
 
 #. Film height/colour
 #: plug-ins/common/film.c:1177 plug-ins/common/film.c:1210
 msgid "Film"
-msgstr ""
+msgstr "Film"
 
 #. Keep maximum image height
 #: plug-ins/common/film.c:1219
 msgid "Fit Height to Images"
-msgstr ""
+msgstr "Pas hoogte aan afbeeldingen aan"
 
 #. Film color
 #: plug-ins/common/film.c:1251
 msgid "Select Film Color"
-msgstr ""
+msgstr "Selecteer filmkleur"
 
 #: plug-ins/common/film.c:1255 plug-ins/common/film.c:1299
 #: plug-ins/common/nova.c:500 plug-ins/gimpressionist/color.c:76
 msgid "Color:"
-msgstr ""
+msgstr "Kleur:"
 
 #. Film numbering: Startindex/Font/colour
 #: plug-ins/common/film.c:1262
 msgid "Numbering"
-msgstr ""
+msgstr "Nummering"
 
 #: plug-ins/common/film.c:1283
 msgid "Start Index:"
-msgstr ""
+msgstr "Begin index:"
 
 #: plug-ins/common/film.c:1291
 msgid "Font:"
-msgstr ""
+msgstr "Font:"
 
 #. Numbering color
 #: plug-ins/common/film.c:1295
 msgid "Select Number Color"
-msgstr ""
+msgstr "Selecteer nummerkleur"
 
 #: plug-ins/common/film.c:1305
 msgid "At Bottom"
-msgstr ""
+msgstr "Onderaan"
 
 #: plug-ins/common/film.c:1305
 msgid "At Top"
-msgstr ""
+msgstr "Bovenaan"
 
 #. ** The right frame keeps the image selection **
 #: plug-ins/common/film.c:1320
 msgid "Image Selection"
-msgstr ""
+msgstr "Afbeeldingskeuze"
 
 #: plug-ins/common/film.c:1337
 msgid "Advanced Settings (All Values are Fractions of the Film Height)"
@@ -3617,74 +3621,78 @@ msgstr ""
 
 #: plug-ins/common/film.c:1353
 msgid "Image Height:"
-msgstr ""
+msgstr "Afbeeldingshoogte:"
 
 #: plug-ins/common/film.c:1367
 msgid "Image Spacing:"
-msgstr ""
+msgstr "Tussenruimte:"
 
 #: plug-ins/common/film.c:1388
 msgid "Hole Offset:"
-msgstr ""
+msgstr "Verspringing gat:"
 
 #: plug-ins/common/film.c:1402
 msgid "Hole Width:"
-msgstr ""
+msgstr "Breedte gat:"
 
 #: plug-ins/common/film.c:1416
 msgid "Hole Height:"
-msgstr ""
+msgstr "Hoogte gat:"
 
 #: plug-ins/common/film.c:1430
 msgid "Hole Spacing:"
-msgstr ""
+msgstr "Tussenruimte gat:"
 
 #: plug-ins/common/film.c:1451
 msgid "Number Height:"
-msgstr ""
+msgstr "Nummerhoogte:"
 
 #: plug-ins/common/film.c:1476
 msgid "Reset to Defaults"
-msgstr ""
+msgstr "Standaardinstellingen"
 
+# What is the Dutch translation of 'lens flare'?
 #: plug-ins/common/flarefx.c:218
 msgid "<Image>/Filters/Light Effects/FlareFX..."
-msgstr ""
+msgstr "<Image>/Filters/Lichteffecten/FlareFX..."
 
+# What is the Dutch translation of 'lens flare'?
 #: plug-ins/common/flarefx.c:291
 msgid "Render Flare..."
-msgstr ""
+msgstr "Bezig flare te renderen..."
 
+# What is the Dutch translation of 'lens flare'?
 #: plug-ins/common/flarefx.c:327
 msgid "FlareFX"
-msgstr ""
+msgstr "FlareFX"
 
+# What is the Dutch translation of 'lens flare'?
 #. to avoid side effects while initialization
 #: plug-ins/common/flarefx.c:772
 msgid "Center of FlareFX"
-msgstr ""
+msgstr "Middelpunt van FlareFX"
 
 #. show / hide cursor
 #: plug-ins/common/flarefx.c:846 plug-ins/common/nova.c:669
 msgid "Show Cursor"
-msgstr ""
+msgstr "Toon cursor"
 
 #: plug-ins/common/fractaltrace.c:126
 msgid "<Image>/Filters/Map/Fractal Trace..."
-msgstr ""
+msgstr "<Image>/Filters/Projecteren/Fractaltekenen..."
 
 #: plug-ins/common/fractaltrace.c:451 plug-ins/common/fractaltrace.c:720
 msgid "Fractal Trace"
-msgstr ""
+msgstr "Fractaltekenen"
 
 #. Settings
 #: plug-ins/common/fractaltrace.c:765
 msgid "Outside Type"
-msgstr ""
+msgstr "Buitenkant"
 
 #: plug-ins/common/fractaltrace.c:770 plug-ins/common/warp.c:421
 msgid "Warp"
-msgstr ""
+msgstr "Vervormen"
 
 #: plug-ins/common/fractaltrace.c:776 plug-ins/fits/fits.c:1009
 #: plug-ins/gfig/gfig.c:2834 plug-ins/gfig/gfig.c:3321
@@ -3693,7 +3701,7 @@ msgstr "Wit"
 
 #: plug-ins/common/fractaltrace.c:783
 msgid "Mandelbrot Parameters"
-msgstr ""
+msgstr "Mandelbrotparameters"
 
 #: plug-ins/common/fractaltrace.c:795
 msgid "X1:"
@@ -3713,131 +3721,135 @@ msgstr "Y2:"
 
 #: plug-ins/common/gauss_iir.c:184
 msgid "<Image>/Filters/Blur/Gaussian Blur (IIR)..."
-msgstr ""
+msgstr "<Image>/Filters/Vervagen/Gaussiaans vervagen (IIR)..."
 
 #: plug-ins/common/gauss_iir.c:257
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
-msgstr ""
+msgstr "gauss_iir: u moet horizontaal, verticaal of beide aangeven"
 
 #: plug-ins/common/gauss_iir.c:307 plug-ins/common/gauss_iir.c:361
 #: plug-ins/common/gauss_iir.c:444
 msgid "IIR Gaussian Blur"
-msgstr ""
+msgstr "IIR Gaussiaans vervagen"
 
 #: plug-ins/common/gauss_iir.c:387 plug-ins/common/gauss_rle.c:382
 msgid "Blur Horizontally"
-msgstr ""
+msgstr "Horizontaal vervagen"
 
 #: plug-ins/common/gauss_iir.c:395 plug-ins/common/gauss_rle.c:390
 msgid "Blur Vertically"
-msgstr ""
+msgstr "Verticaal vervagen"
 
 #: plug-ins/common/gauss_iir.c:406 plug-ins/common/gauss_rle.c:401
 #: plug-ins/common/sel_gauss.c:270
 msgid "Blur Radius:"
-msgstr ""
+msgstr "Vervagingsradius:"
 
 #. parameter settings
 #: plug-ins/common/gauss_iir.c:461 plug-ins/common/gauss_rle.c:456
 msgid "Blur Radius"
-msgstr ""
+msgstr "Vervagingsradius"
 
 #: plug-ins/common/gauss_iir.c:476 plug-ins/common/gauss_rle.c:471
 #: plug-ins/common/jigsaw.c:2545 plug-ins/common/spread.c:410
 msgid "Horizontal:"
-msgstr ""
+msgstr "Horizontaal:"
 
 #: plug-ins/common/gauss_iir.c:480 plug-ins/common/gauss_rle.c:475
 #: plug-ins/common/jigsaw.c:2558 plug-ins/common/spread.c:414
 msgid "Vertical:"
-msgstr ""
+msgstr "Verticaal:"
 
 #: plug-ins/common/gauss_rle.c:179
 msgid "<Image>/Filters/Blur/Gaussian Blur (RLE)..."
-msgstr ""
+msgstr "<Image>/Filters/Vervagen/Gaussiaans vervagen (RLE)..."
 
 #: plug-ins/common/gauss_rle.c:251
 msgid "gauss_rle: you must specify either horizontal or vertical (or both)"
-msgstr ""
+msgstr "gauss_rle: u moet horizontaal, verticaal of beide aangeven"
 
 #: plug-ins/common/gauss_rle.c:302 plug-ins/common/gauss_rle.c:356
 #: plug-ins/common/gauss_rle.c:439
 msgid "RLE Gaussian Blur"
-msgstr ""
+msgstr "RLE Gaussiaans vervagen"
 
 #: plug-ins/common/gbr.c:347
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr ""
+msgstr "Fout in GIMP-penseelbestand \"%s\"."
 
 #: plug-ins/common/gbr.c:355 plug-ins/common/gih.c:488
 #: plug-ins/common/gih.c:1122
 msgid "Unnamed"
-msgstr ""
+msgstr "Naamloos"
 
 #: plug-ins/common/gbr.c:485
 msgid "GIMP brushes are either GRAYSCALE or RGBA\n"
-msgstr ""
+msgstr "GIMP-penselen worden als GRAYSCALE of RGBA opgeslagen\n"
 
 #: plug-ins/common/gbr.c:502 plug-ins/common/gih.c:1226
 #, c-format
 msgid "Unable to open %s"
-msgstr ""
+msgstr "Niet in staat %s te openen"
 
 #: plug-ins/common/gbr.c:563
 msgid "Save as Brush"
-msgstr ""
+msgstr "Opslaan als penseel"
 
 #: plug-ins/common/gbr.c:590
 msgid "Spacing:"
-msgstr ""
+msgstr "Tussenruimte:"
 
 #: plug-ins/common/gbr.c:599 plug-ins/common/gih.c:892
 #: plug-ins/common/pat.c:478 plug-ins/gimpressionist/presets.c:373
-#: plug-ins/imagemap/imap_settings.c:93
+#: plug-ins/imagemap/imap_settings.c:94
 msgid "Description:"
 msgstr "Beschrijving:"
 
 #: plug-ins/common/gee.c:112
 msgid "<Image>/Filters/Toys/Gee-Slime"
-msgstr ""
+msgstr "<Image>/Filters/Speeltjes/Gee-Slijm"
 
 #: plug-ins/common/gee.c:186
 msgid "GEE-SLIME"
-msgstr ""
+msgstr "GEE-SLIME"
 
 #. Action area - 'close' button only.
 #: plug-ins/common/gee.c:197 plug-ins/common/gee_zoom.c:214
 msgid "** Thank you for choosing GIMP **"
-msgstr ""
+msgstr "** Bedankt dat u voor GIMP kiest **"
 
 #: plug-ins/common/gee.c:209
 msgid ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
+"Een niet zo waardeloze creatie van Adam D. Moss / adam@gimp.org / "
+"adam@foxbox.org / 1998-2000"
 
 #: plug-ins/common/gee_zoom.c:139
 msgid "<Image>/Filters/Toys/Gee-Zoom"
-msgstr ""
+msgstr "<Image>/Filters/Speeltjes/Gee-Zoom"
 
 #: plug-ins/common/gee_zoom.c:203
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
-msgstr ""
+msgstr "GEE-ZOOM: De Plug-In Formerly Known As \"The GIMP E'er Egg\""
 
 #: plug-ins/common/gee_zoom.c:226
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
+"Een waardeloze creatie van Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
+"1998-2000"
 
 #: plug-ins/common/gicon.c:436
 msgid "Save as GIcon"
-msgstr ""
+msgstr "Opslaan als GIcon"
 
 #: plug-ins/common/gicon.c:464
 msgid "Icon Name:"
-msgstr ""
+msgstr "Iconnaam:"
 
 #: plug-ins/common/gif.c:680
 msgid ""
@@ -3951,79 +3963,81 @@ msgstr "Fout in GIMP-penseelpijpbestand."
 
 #: plug-ins/common/gih.c:547
 msgid "GIMP brush file appears to be corrupted."
-msgstr ""
+msgstr "GIMP-penseelbestand lijkt beschadigd te zijn."
 
 #: plug-ins/common/gih.c:689
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr ""
+msgstr "Kon niet één penseel in de pijp laden, ik geef op."
 
 #: plug-ins/common/gih.c:849
 msgid "Save as Brush Pipe"
-msgstr ""
+msgstr "Opslaan als penseelpijp"
 
 #: plug-ins/common/gih.c:879
 msgid "Spacing (Percent):"
-msgstr ""
+msgstr "Tussenruimte (procent):"
 
 #: plug-ins/common/gih.c:941
 msgid "Pixels"
-msgstr ""
+msgstr "pixels"
 
 #: plug-ins/common/gih.c:946 plug-ins/common/newsprint.c:1274
 msgid "Cell Size:"
-msgstr ""
+msgstr "Celgrootte:"
 
 #: plug-ins/common/gih.c:958
 msgid "Number of Cells:"
-msgstr ""
+msgstr "Aantal cellen:"
 
 #: plug-ins/common/gih.c:982
 msgid " Rows of "
-msgstr ""
+msgstr " rijen van "
 
 #: plug-ins/common/gih.c:994
 msgid " Columns on each Layer"
-msgstr ""
+msgstr " kolommen op elke laag"
 
 #: plug-ins/common/gih.c:998
 msgid " (Width Mismatch!) "
-msgstr ""
+msgstr " (Breedte past niet!) "
 
 #: plug-ins/common/gih.c:1002
 msgid " (Height Mismatch!) "
-msgstr ""
+msgstr " (Hoogte past niet!) "
 
 #: plug-ins/common/gih.c:1007
 msgid "Display as:"
-msgstr ""
+msgstr "Tonen als:"
 
 #: plug-ins/common/gih.c:1016
 msgid "Dimension:"
-msgstr ""
+msgstr "Dimensie:"
 
 #: plug-ins/common/gih.c:1051
 msgid "Ranks:"
-msgstr ""
+msgstr "Rangen:"
 
 #: plug-ins/common/gih.c:1084
 msgid "Selection:"
-msgstr ""
+msgstr "Selectie:"
 
 #: plug-ins/common/gifload.c:851
 #, c-format
 msgid "Background (%dms)"
-msgstr ""
+msgstr "Achtergrond (%dms)"
 
+# What is the Dutch translation for this phrase?
 #: plug-ins/common/gifload.c:899 plug-ins/common/iwarp.c:741
-#: plug-ins/common/iwarp.c:765 plug-ins/common/mpeg.c:302
+#: plug-ins/common/iwarp.c:765 plug-ins/common/mpeg.c:303
 #, c-format
 msgid "Frame %d"
-msgstr ""
+msgstr "Frame %d"
 
-#: plug-ins/common/gifload.c:901 plug-ins/common/mpeg.c:299
+# What is the Dutch translation for this phrase?
+#: plug-ins/common/gifload.c:901 plug-ins/common/mpeg.c:300
 #, c-format
 msgid "Frame %d (%dms)"
-msgstr ""
+msgstr "Frame %d (%dms)"
 
 #: plug-ins/common/glasstile.c:138
 msgid "<Image>/Filters/Glass Effects/Glass Tile..."
@@ -4047,84 +4061,84 @@ msgstr "Tegelhoogte:"
 
 #: plug-ins/common/gqbist.c:338
 msgid "<Image>/Filters/Render/Pattern/Qbist..."
-msgstr ""
+msgstr "<Image>/Filters/Renderen/Patroon/Qbist..."
 
 #: plug-ins/common/gqbist.c:435
 msgid "Qbist..."
-msgstr ""
+msgstr "Qbist..."
 
 #: plug-ins/common/gqbist.c:580
 msgid "Load QBE file..."
-msgstr ""
+msgstr "Laad QBE-bestand..."
 
 #: plug-ins/common/gqbist.c:604
 msgid "Save (middle transform) as QBE file..."
-msgstr ""
+msgstr "Sla (middelste transformatie) op als QBE-bestand..."
 
 #: plug-ins/common/gqbist.c:635
 msgid "G-Qbist 1.10"
-msgstr ""
+msgstr "G-Qbist 1.10"
 
 #: plug-ins/common/gradmap.c:118
 msgid "<Image>/Filters/Colors/Map/Gradient Map"
-msgstr ""
+msgstr "<Image>/Filters/Kleuren/Projecteren/Verloopprojectie"
 
 #: plug-ins/common/gradmap.c:154
 msgid "Gradient Map..."
-msgstr ""
+msgstr "Verloopprojectie..."
 
-#: plug-ins/common/grid.c:158
+#: plug-ins/common/grid.c:160
 msgid "<Image>/Filters/Render/Pattern/Grid..."
 msgstr "<Image>/Filters/Renderen/Patroon/Raster..."
 
-#: plug-ins/common/grid.c:242
+#: plug-ins/common/grid.c:244
 msgid "Drawing Grid..."
 msgstr "Bezig raster te tekenen..."
 
-#: plug-ins/common/grid.c:654 plug-ins/gfig/gfig.c:3396
-#: plug-ins/imagemap/imap_menu.c:400 plug-ins/imagemap/imap_popup.c:148
-#: plug-ins/imagemap/imap_toolbar.c:163
+#: plug-ins/common/grid.c:656 plug-ins/gfig/gfig.c:3396
+#: plug-ins/imagemap/imap_menu.c:403 plug-ins/imagemap/imap_popup.c:148
+#: plug-ins/imagemap/imap_toolbar.c:165
 msgid "Grid"
 msgstr "Raster"
 
-#: plug-ins/common/grid.c:772
+#: plug-ins/common/grid.c:774
 msgid "Intersection"
 msgstr "Snijpunt"
 
-#: plug-ins/common/grid.c:773
+#: plug-ins/common/grid.c:775
 msgid "Width: "
 msgstr "Breedte: "
 
 #. attach labels
-#: plug-ins/common/grid.c:830
+#: plug-ins/common/grid.c:832
 msgid "Spacing: "
 msgstr "Tussenruimte: "
 
 #. attach labels
-#: plug-ins/common/grid.c:890
+#: plug-ins/common/grid.c:892
 msgid "Offset: "
 msgstr "Verspringing: "
 
 #. attach color selectors
-#: plug-ins/common/grid.c:920
+#: plug-ins/common/grid.c:922
 msgid "Horizontal Color"
 msgstr "Horizontale kleur"
 
-#: plug-ins/common/grid.c:930
+#: plug-ins/common/grid.c:932
 msgid "Vertical Color"
 msgstr "Verticale kleur"
 
-#: plug-ins/common/grid.c:940
+#: plug-ins/common/grid.c:942
 msgid "Intersection Color"
 msgstr "Snijpuntskleur"
 
 #: plug-ins/common/gtm.c:370
 msgid "GIMP Table Magic"
-msgstr ""
+msgstr "GIMP Tabelmagie"
 
 #: plug-ins/common/gtm.c:400 plug-ins/gfig/gfig.c:4075
 msgid "Warning"
-msgstr ""
+msgstr "Waarschuwing"
 
 #: plug-ins/common/gtm.c:411
 msgid ""
@@ -4134,40 +4148,50 @@ msgid ""
 "HTML file which will most likely\n"
 "crash your browser."
 msgstr ""
+"Pas op!\n"
+"\n"
+"U staat op het punt een gigantisch HTML-\n"
+"bestand aan te maken waarmee u hoogst-\n"
+"waarschijnlijk uw browser laat crashen."
 
 #. HTML Page Options
 #: plug-ins/common/gtm.c:421
 msgid "HTML Page Options"
-msgstr ""
+msgstr "HTML-paginaopties"
 
 #: plug-ins/common/gtm.c:430
 msgid "Generate Full HTML Document"
-msgstr ""
+msgstr "Genereer compleet HTML-document"
 
 #: plug-ins/common/gtm.c:438
 msgid ""
 "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
 msgstr ""
+"Indien geselecteerd zal GTM een compleet HTML-document produceren met tags "
+"als <HTML>, <BODY> enzovoort in plaats van slechts de HTML-code voor de "
+"tabel."
 
 #. HTML Table Creation Options
 #: plug-ins/common/gtm.c:447
 msgid "Table Creation Options"
-msgstr ""
+msgstr "Tabelcreatie-opties"
 
 #: plug-ins/common/gtm.c:457
 msgid "Use Cellspan"
-msgstr ""
+msgstr "Gebruik cellspan"
 
 #: plug-ins/common/gtm.c:465
 msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
+"Indien gelesecteerd zal GTM rechthoekige delen van identiek gekleurde "
+"blokken vervangen door een grote cel met ROWSPAN- en/of COLSPAN-waarden."
 
 #: plug-ins/common/gtm.c:470
 msgid "Compress TD tags"
-msgstr ""
+msgstr "Verklein TD-tags"
 
 #: plug-ins/common/gtm.c:478
 msgid ""
@@ -4175,63 +4199,68 @@ msgid ""
 "and the cellcontent.  This is only necessary for pixel level positioning "
 "control."
 msgstr ""
+"Indien geselecteerd zal GTM geen witruimte plaatsen tussen TD-tags en de "
+"celinhoud. Dit is alleen nodig als u tot op de pixel controle wilt."
 
 #: plug-ins/common/gtm.c:484
 msgid "Caption"
-msgstr ""
+msgstr "Tabeltitel"
 
 #: plug-ins/common/gtm.c:492
 msgid "Check if you would like to have the table captioned."
 msgstr ""
+"Indien geselecteerd zal GTM uw tabel van een titel (<CAPTION>) voorzien."
 
 #: plug-ins/common/gtm.c:505
 msgid "The text for the table caption."
-msgstr ""
+msgstr "De tekst voor de tabeltitel."
 
 #: plug-ins/common/gtm.c:513
 msgid "Cell Content:"
-msgstr ""
+msgstr "Celinhoud:"
 
 #: plug-ins/common/gtm.c:520
 msgid "The text to go into each cell."
-msgstr ""
+msgstr "De tekst die in elke cel wordt geplaatst."
 
 #. HTML Table Options
 #: plug-ins/common/gtm.c:526
 msgid "Table Options"
-msgstr ""
+msgstr "Tabelopties"
 
 #: plug-ins/common/gtm.c:539
 msgid "Border:"
-msgstr ""
+msgstr "Rand:"
 
 #: plug-ins/common/gtm.c:545
 msgid "The number of pixels in the table border."
-msgstr ""
+msgstr "Het aantal pixels dat de tabelrand (border) breed is."
 
 #: plug-ins/common/gtm.c:558
 msgid "The width for each table cell.  Can be a number or a percent."
 msgstr ""
+"De breedte voor elke tabelcel. Kan een aantal pixels of een percentage zijn."
 
 #: plug-ins/common/gtm.c:572
 msgid "The height for each table cell.  Can be a number or a percent."
 msgstr ""
+"De hoogte voor elke tabelcel. Kan een aantal pixels of een percentage zijn."
 
 #: plug-ins/common/gtm.c:579
 msgid "Cell-Padding:"
-msgstr ""
+msgstr "Celopvulling:"
 
 #: plug-ins/common/gtm.c:585
 msgid "The amount of cellpadding."
-msgstr ""
+msgstr "De hoeveel opvulling voor een cel (padding)."
 
 #: plug-ins/common/gtm.c:590
 msgid "Cell-Spacing:"
-msgstr ""
+msgstr "Celtussenruimte:"
 
 #: plug-ins/common/gtm.c:596
 msgid "The amount of cellspacing."
-msgstr ""
+msgstr "De hoeveelheid ruimte (spacing) tussen cellen."
 
 #: plug-ins/common/guillotine.c:78
 msgid "<Image>/Image/Transforms/Guillotine"
@@ -4243,138 +4272,140 @@ msgstr "Guillotine..."
 
 #: plug-ins/common/gz.c:321
 msgid "gz: no sensible extension, saving as gzip'd xcf\n"
-msgstr ""
+msgstr "gz: geen zinvolle extensie, ik sla op als gzip-te xcf\n"
 
 #: plug-ins/common/gz.c:446
 msgid "gz: no sensible extension, attempting to load with file magic\n"
-msgstr ""
+msgstr "gz: geen zinvolle extensie, probeer te laden met bestandsmagie\n"
 
+# Is there a Dutch translation for 'hot scanning'?
 #: plug-ins/common/hot.c:234
 msgid "<Image>/Filters/Colors/Hot..."
-msgstr ""
+msgstr "<Image>/Filters/Kleuren/Hot..."
 
+# Is there a Dutch translation for 'hot scanning'?
 #: plug-ins/common/hot.c:384 plug-ins/common/hot.c:584
 msgid "Hot"
-msgstr ""
+msgstr "Hot"
 
 #: plug-ins/common/hot.c:609
 msgid "Create New Layer"
-msgstr ""
+msgstr "Maak nieuwe laag aan"
 
 #: plug-ins/common/hot.c:630
 msgid "Action"
-msgstr ""
+msgstr "Actie"
 
 #: plug-ins/common/hot.c:634
 msgid "Reduce Luminance"
-msgstr ""
+msgstr "Verminder helderheid"
 
 #: plug-ins/common/hot.c:635
 msgid "Reduce Saturation"
-msgstr ""
+msgstr "Verminder verzadiging"
 
 #: plug-ins/common/hot.c:636 plug-ins/common/waves.c:379
 msgid "Blacken"
-msgstr ""
+msgstr "Zwart"
 
-#: plug-ins/common/illusion.c:117
+#: plug-ins/common/illusion.c:118
 msgid "<Image>/Filters/Map/Illusion..."
-msgstr ""
+msgstr "<Image>/Filters/Projecteren/Illusie..."
 
-#: plug-ins/common/illusion.c:181
+#: plug-ins/common/illusion.c:190
 msgid "Illusion..."
-msgstr ""
+msgstr "Illusie..."
 
-#: plug-ins/common/illusion.c:556
+#: plug-ins/common/illusion.c:565
 msgid "Illusion"
-msgstr ""
-
-#: plug-ins/common/illusion.c:612
-msgid "Division:"
-msgstr ""
+msgstr "Illusie"
 
 #: plug-ins/common/illusion.c:621
+msgid "Division:"
+msgstr "Verdeling:"
+
+#: plug-ins/common/illusion.c:630
 msgid "Mode 1"
 msgstr "Modus 1"
 
-#: plug-ins/common/illusion.c:633
+#: plug-ins/common/illusion.c:642
 msgid "Mode 2"
 msgstr "Modus 2"
 
 #: plug-ins/common/iwarp.c:255
 msgid "<Image>/Filters/Distorts/IWarp..."
-msgstr ""
+msgstr "<Image>/Filters/Vervormingen/IWarp..."
 
 #: plug-ins/common/iwarp.c:651
 msgid "Warping..."
-msgstr ""
+msgstr "Verwringen..."
 
 #: plug-ins/common/iwarp.c:746 plug-ins/common/iwarp.c:757
 #, c-format
 msgid "Warping Frame Nr %d ..."
-msgstr ""
+msgstr "Frame nr. %d verwringen..."
 
 #: plug-ins/common/iwarp.c:758 plug-ins/common/iwarp.c:961
 msgid "Ping Pong"
-msgstr ""
+msgstr "Ping-pong"
 
 #: plug-ins/common/iwarp.c:921 plug-ins/common/iwarp.c:973
 msgid "Animate"
-msgstr ""
+msgstr "Animeren"
 
 #: plug-ins/common/iwarp.c:944
 msgid "Number of Frames:"
-msgstr ""
+msgstr "Aantal frames:"
 
 #: plug-ins/common/iwarp.c:953
 msgid "Reverse"
-msgstr ""
+msgstr "Omgekeerd"
 
 #: plug-ins/common/iwarp.c:1001
 msgid "Deform Radius:"
-msgstr ""
+msgstr "Vervormingsradius:"
 
 #: plug-ins/common/iwarp.c:1011
 msgid "Deform Amount:"
-msgstr ""
+msgstr "Vervormingsmate:"
 
 #: plug-ins/common/iwarp.c:1020
 msgid "Deform Mode"
-msgstr ""
+msgstr "Vervormingsmodus"
 
 #: plug-ins/common/iwarp.c:1034 plug-ins/ifscompose/ifscompose.c:873
-#: plug-ins/ifscompose/ifscompose.c:1140 plug-ins/imagemap/imap_cmd_move.c:80
-#: plug-ins/imagemap/imap_cmd_object_move.c:53
+#: plug-ins/ifscompose/ifscompose.c:1140 plug-ins/imagemap/imap_cmd_move.c:83
+#: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
-msgstr ""
+msgstr "Verplaatsen"
 
 #: plug-ins/common/iwarp.c:1035
 msgid "Grow"
-msgstr ""
+msgstr "Uitdijen"
 
 #: plug-ins/common/iwarp.c:1036
 msgid "Swirl CCW"
-msgstr ""
+msgstr "Draaien klok-mee"
 
 #: plug-ins/common/iwarp.c:1038
 msgid "Shrink"
-msgstr ""
+msgstr "Krimpen"
 
 #: plug-ins/common/iwarp.c:1039
 msgid "Swirl CW"
-msgstr ""
+msgstr "Draaien klok-tegen"
 
 #: plug-ins/common/iwarp.c:1060 plug-ins/common/sinus.c:1989
 msgid "Bilinear"
-msgstr ""
+msgstr "Bilineair"
 
 #: plug-ins/common/iwarp.c:1078
 msgid "Adaptive Supersample"
-msgstr ""
+msgstr "Adaptieve supersample"
 
 #: plug-ins/common/iwarp.c:1097 plug-ins/gflare/gflare.c:3012
 msgid "Max Depth:"
-msgstr ""
+msgstr "Max. diepte:"
 
 #. parameter settings
 #: plug-ins/common/iwarp.c:1120 plug-ins/common/sample_colorize.c:1384
@@ -4385,75 +4416,77 @@ msgstr "Instellingen"
 
 #: plug-ins/common/iwarp.c:1137
 msgid "IWarp"
-msgstr ""
+msgstr "IWarp"
 
 #: plug-ins/common/jigsaw.c:394
 msgid "<Image>/Filters/Render/Pattern/Jigsaw..."
-msgstr ""
+msgstr "<Image>/Filters/Renderen/Patroon/Legpuzzel..."
 
 #: plug-ins/common/jigsaw.c:450
 msgid "Assembling Jigsaw"
-msgstr ""
+msgstr "Legpuzzel samenstellen"
 
 #: plug-ins/common/jigsaw.c:2481
 msgid "Jigsaw"
-msgstr ""
+msgstr "Legpuzzel"
 
 #: plug-ins/common/jigsaw.c:2533
 msgid "Number of Tiles"
-msgstr ""
+msgstr "Aantal stukjes"
 
 #: plug-ins/common/jigsaw.c:2548
 msgid "Number of pieces going across"
-msgstr ""
+msgstr "Horizontaal"
 
 #: plug-ins/common/jigsaw.c:2561
 msgid "Number of pieces going down"
-msgstr ""
+msgstr "Verticaal"
 
 #: plug-ins/common/jigsaw.c:2572
 msgid "Bevel Edges"
-msgstr ""
+msgstr "Schuine randen"
 
 #: plug-ins/common/jigsaw.c:2584
 msgid "Bevel Width:"
-msgstr ""
+msgstr "Breedte:"
 
 #: plug-ins/common/jigsaw.c:2588
 msgid "Degree of slope of each piece's edge"
-msgstr ""
+msgstr "De helling (in graden) van de schuine randen van elk stukje"
 
 #: plug-ins/common/jigsaw.c:2602
 msgid "The amount of highlighting on the edges of each piece"
-msgstr ""
+msgstr "The hoeveelheid hoge lichten op de schuine randen van elk stukje"
 
 #: plug-ins/common/jigsaw.c:2619
 msgid "Jigsaw Style"
-msgstr ""
+msgstr "Legpuzzelstijl"
 
 #: plug-ins/common/jigsaw.c:2623
 msgid "Square"
-msgstr ""
+msgstr "Recht"
 
 #: plug-ins/common/jigsaw.c:2624
 msgid "Curved"
-msgstr ""
+msgstr "Gekromd"
 
 #: plug-ins/common/jigsaw.c:2628
 msgid "Each piece has straight sides"
-msgstr ""
+msgstr "Elk stukje heeft rechte randen"
 
 #: plug-ins/common/jigsaw.c:2629
 msgid "Each piece has curved sides"
-msgstr ""
+msgstr "Elke stukje heeft gekromde randen"
 
+# What is the Dutch translation of 'tooltip'?
 #: plug-ins/common/jigsaw.c:2637
 msgid "Disable Tooltips"
-msgstr ""
+msgstr "Schakel tooltips uit"
 
+# What is the Dutch translation of 'tooltip'?
 #: plug-ins/common/jigsaw.c:2645
 msgid "Toggle Tooltips on/off"
-msgstr ""
+msgstr "Schakel tooltips aan of uit"
 
 #: plug-ins/common/jpeg.c:413
 msgid "Export Preview"
@@ -4540,115 +4573,118 @@ msgstr "Afbeeldingscommentaar"
 
 #: plug-ins/common/laplace.c:91
 msgid "<Image>/Filters/Edge-Detect/Laplace"
-msgstr ""
+msgstr "<Image>/Filters/Randen/Laplace"
 
 #: plug-ins/common/laplace.c:221
 msgid "Laplace..."
-msgstr ""
+msgstr "Laplace..."
 
 #: plug-ins/common/laplace.c:295
 msgid "Cleanup..."
-msgstr ""
+msgstr "Schoonmaken..."
 
 #: plug-ins/common/lic.c:914 plug-ins/common/lic.c:1016
 msgid "Van Gogh (LIC)"
-msgstr ""
+msgstr "Van Gogh (LIC)"
 
 #: plug-ins/common/lic.c:1046
 msgid ""
 "Create\n"
 "New Image"
 msgstr ""
+"Maak nieuwe\n"
+"afbeelding"
 
 #: plug-ins/common/lic.c:1053
 msgid "Effect Channel"
-msgstr ""
+msgstr "Effectkanaal"
 
 #: plug-ins/common/lic.c:1060
 msgid "Brightness"
-msgstr ""
+msgstr "Helderheid"
 
 #: plug-ins/common/lic.c:1066
 msgid "Effect Operator"
-msgstr ""
+msgstr "Effectoperator"
 
 #: plug-ins/common/lic.c:1071
 msgid "Derivative"
-msgstr ""
+msgstr "Afgeleide"
 
 #: plug-ins/common/lic.c:1072 plug-ins/common/sinus.c:1984
 msgid "Gradient"
-msgstr ""
+msgstr "Verloop"
 
+# What is the Dutch translation of this term?
 #: plug-ins/common/lic.c:1078
 msgid "Convolve"
-msgstr ""
+msgstr "Convolve"
 
 #: plug-ins/common/lic.c:1083
 msgid "With White Noise"
-msgstr ""
+msgstr "Met witte ruis"
 
 #: plug-ins/common/lic.c:1084
 msgid "With Source Image"
-msgstr ""
+msgstr "Met bronafbeelding"
 
 #: plug-ins/common/lic.c:1112
 msgid "Effect Image:"
-msgstr ""
+msgstr "Effectafbeelding:"
 
 #: plug-ins/common/lic.c:1128
 msgid "Filter Length:"
-msgstr ""
+msgstr "Filterlengte:"
 
 #: plug-ins/common/lic.c:1137
 msgid "Noise Magnitude:"
-msgstr ""
+msgstr "Ruisomvang:"
 
 #: plug-ins/common/lic.c:1146
 msgid "Integration Steps:"
-msgstr ""
+msgstr "Integratiestappen:"
 
 #: plug-ins/common/lic.c:1155
 msgid "Minimum Value:"
-msgstr ""
+msgstr "Minimumwaarde:"
 
 #: plug-ins/common/lic.c:1164
 msgid "Maximum Value:"
-msgstr ""
+msgstr "Maximumwaarde:"
 
 #: plug-ins/common/lic.c:1220
 msgid "<Image>/Filters/Map/Van Gogh (LIC)..."
-msgstr ""
+msgstr "<Image>/Filters/Projecteren/Van Gogh (LIC)..."
 
 #: plug-ins/common/mail.c:220
 msgid "<Image>/File/Mail Image..."
-msgstr ""
+msgstr "<Image>/File/Mail afbeelding..."
 
 #: plug-ins/common/mail.c:462
 msgid "Send to Mail"
-msgstr ""
+msgstr "Stuur naar mail"
 
 #: plug-ins/common/mail.c:493
 msgid "Recipient:"
-msgstr ""
+msgstr "Ontvanger:"
 
 #: plug-ins/common/mail.c:505
 msgid "Sender:"
-msgstr ""
+msgstr "Afzender:"
 
 #: plug-ins/common/mail.c:517
 msgid "Subject:"
-msgstr ""
+msgstr "Onderwerp:"
 
 #: plug-ins/common/mail.c:541 plug-ins/gfig/gfig.c:3749
-#: plug-ins/imagemap/imap_settings.c:79
+#: plug-ins/imagemap/imap_settings.c:80
 msgid "Filename:"
 msgstr "Bestandsnaam:"
 
 #. Encapsulation label
 #: plug-ins/common/mail.c:578
 msgid "Encapsulation:"
-msgstr ""
+msgstr "Inbinding:"
 
 #: plug-ins/common/mail.c:590
 msgid "Uuencode"
@@ -4660,169 +4696,171 @@ msgstr "MIME"
 
 #: plug-ins/common/mail.c:692
 msgid "mail: some sort of error with the file extension or lack thereof \n"
-msgstr ""
+msgstr "mail: een soort fout met de bestandsextensie of gebrek daaraan \n"
 
 #: plug-ins/common/mapcolor.c:139
 msgid "First Source Color"
-msgstr ""
+msgstr "Eerste bronkleur"
 
 #: plug-ins/common/mapcolor.c:140
 msgid "Second Source Color"
-msgstr ""
+msgstr "Tweede bronkleur"
 
 #: plug-ins/common/mapcolor.c:141
 msgid "First Destination Color"
-msgstr ""
+msgstr "Eerste doelkleur"
 
 #: plug-ins/common/mapcolor.c:142
 msgid "Second Destination Color"
-msgstr ""
+msgstr "Tweede doelkleur"
 
 #: plug-ins/common/mapcolor.c:346
 msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
-msgstr ""
+msgstr "<Image>Filters/Kleuren/Projecteren/VG-AG aanpassen"
 
 #: plug-ins/common/mapcolor.c:361
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
-msgstr ""
+msgstr "<Image>Filters/Kleuren/Projecteren/Kleurbereik projecteren..."
 
 #: plug-ins/common/mapcolor.c:406 plug-ins/common/mapcolor.c:746
 msgid ""
 "Color Mapping / Adjust FG/BG:\n"
 "Cannot operate on gray/indexed images"
 msgstr ""
+"Kleur projecteren / VG/AG aanpassen:\n"
+"ik kan niet op grijswaarden-/geïndexeerde afbeeldingen werken"
 
 #: plug-ins/common/mapcolor.c:434
 msgid "Adjusting Foreground/Background"
-msgstr ""
+msgstr "VG/AG aanpassen"
 
 #: plug-ins/common/mapcolor.c:482
 msgid "Mapping colors"
-msgstr ""
+msgstr "Kleuren projecteren"
 
 #: plug-ins/common/mapcolor.c:553
 msgid "Map Color Range"
-msgstr ""
+msgstr "Kleurbereik projecteren"
 
 #: plug-ins/common/mapcolor.c:604
 msgid "Source color range"
-msgstr ""
+msgstr "Bronkleurbereik"
 
 #: plug-ins/common/mapcolor.c:605
 msgid "Destination color range"
-msgstr ""
+msgstr "Doelkleurbereik"
 
 #: plug-ins/common/mapcolor.c:652 plug-ins/gap/gap_decode_mpeg_main.c:663
-#: plug-ins/gap/gap_decode_xanim.c:234 plug-ins/gap/gap_lib.c:2120
-#: plug-ins/gap/gap_lib.c:2299 plug-ins/gap/gap_range_ops.c:260
+#: plug-ins/gap/gap_decode_xanim.c:234 plug-ins/gap/gap_lib.c:2134
+#: plug-ins/gap/gap_lib.c:2329 plug-ins/gap/gap_range_ops.c:260
 #: plug-ins/gap/gap_range_ops.c:610 plug-ins/gfli/gfli.c:856
 #: plug-ins/gfli/gfli.c:925
 msgid "To:"
-msgstr ""
+msgstr "Naar:"
 
 #: plug-ins/common/max_rgb.c:129
 msgid "<Image>/Filters/Colors/Max RGB..."
-msgstr ""
+msgstr "<Image>/Filters/Kleuren/Max. RGB..."
 
 #: plug-ins/common/max_rgb.c:165
 msgid "Max RGB: Can only operate on RGB drawables."
-msgstr ""
+msgstr "Max. RGB: kan alleen op RGB-tekengebieden werken."
 
 #: plug-ins/common/max_rgb.c:226
 msgid "Max RGB: Scanning..."
-msgstr ""
+msgstr "Max. RGB: bezig met inlezen..."
 
 #: plug-ins/common/max_rgb.c:343
 msgid "Max RGB"
-msgstr ""
+msgstr "Max. RGB"
 
 #: plug-ins/common/max_rgb.c:385
 msgid "Hold the Maximal Channels"
-msgstr ""
+msgstr "Behoud het maximumaantal kanalen"
 
 #: plug-ins/common/max_rgb.c:387
 msgid "Hold the Minimal Channels"
-msgstr ""
+msgstr "Behoud het minimumaantal kanalen"
 
 #: plug-ins/common/mblur.c:167
 msgid "<Image>/Filters/Blur/Motion Blur..."
-msgstr ""
+msgstr "<Image>/Filters/Vervagen/Beweging..."
 
 #: plug-ins/common/mblur.c:622 plug-ins/common/unsharp.c:290
 msgid "Blurring..."
-msgstr ""
+msgstr "Vervagen..."
 
 #: plug-ins/common/mblur.c:758
 msgid "Motion Blur"
-msgstr ""
+msgstr "Bewegingsvervaging"
 
 #: plug-ins/common/mblur.c:780
 msgid "Blur Type"
-msgstr ""
+msgstr "Vervagingstype"
 
 #: plug-ins/common/mblur.c:785 plug-ins/gimpressionist/orientation.c:161
 #: plug-ins/gimpressionist/size.c:160
 msgid "Radial"
-msgstr ""
+msgstr "Radiaal"
 
 #: plug-ins/common/mblur.c:786 plug-ins/imagemap/imap_popup.c:141
 msgid "Zoom"
-msgstr ""
+msgstr "Zoom"
 
 #: plug-ins/common/mblur.c:792
 msgid "Blur Parameters"
-msgstr ""
+msgstr "Vervagingsparameters"
 
 #. Angle
 #: plug-ins/common/mblur.c:813 plug-ins/common/newsprint.c:1028
 #: plug-ins/common/warp.c:676 plug-ins/gimpressionist/orientmap.c:551
 #: plug-ins/ifscompose/ifscompose.c:577
 msgid "Angle:"
-msgstr ""
+msgstr "Hoek:"
 
-#: plug-ins/common/mpeg.c:232
+#: plug-ins/common/mpeg.c:233
 msgid "Loading MPEG movie..."
-msgstr ""
+msgstr "MPEG-film inladen..."
 
 #: plug-ins/common/newsprint.c:167
 msgid "Round"
-msgstr ""
+msgstr "Rond"
 
 #: plug-ins/common/newsprint.c:176
 msgid "Line"
-msgstr ""
+msgstr "Lijn"
 
 #: plug-ins/common/newsprint.c:185
 msgid "Diamond"
-msgstr ""
+msgstr "Diamant"
 
 #: plug-ins/common/newsprint.c:193
 msgid "PS Square (Euclidean Dot)"
-msgstr ""
+msgstr "PS-vierkant (Euclidische stip)"
 
 #: plug-ins/common/newsprint.c:202
 msgid "PS Diamond"
-msgstr ""
+msgstr "PS-diamant"
 
 #: plug-ins/common/newsprint.c:462 plug-ins/common/newsprint.c:1359
 msgid "Intensity"
-msgstr ""
+msgstr "Intensiteit"
 
 #: plug-ins/common/newsprint.c:566
 msgid "<Image>/Filters/Distorts/Newsprint..."
-msgstr ""
+msgstr "<Image>/Filters/Vervormingen/Krantendruk..."
 
 #: plug-ins/common/newsprint.c:666
 msgid "Newsprintifing..."
-msgstr ""
+msgstr "Drukken krant..."
 
 #: plug-ins/common/newsprint.c:1051
 msgid "Spot Function:"
-msgstr ""
+msgstr "Stipfunctie:"
 
 #: plug-ins/common/newsprint.c:1206
 msgid "Newsprint"
-msgstr ""
+msgstr "Krantendruk"
 
 #. resolution settings
 #: plug-ins/common/newsprint.c:1229
@@ -4831,11 +4869,11 @@ msgstr "Resolutie"
 
 #: plug-ins/common/newsprint.c:1253
 msgid "Input SPI:"
-msgstr ""
+msgstr "Invoer-SPI:"
 
 #: plug-ins/common/newsprint.c:1264
 msgid "Output LPI:"
-msgstr ""
+msgstr "Uitvoer-LPI:"
 
 #. screen settings
 #: plug-ins/common/newsprint.c:1287 plug-ins/gap/gap_mov_dialog.c:265
@@ -4843,74 +4881,76 @@ msgstr ""
 msgid "Screen"
 msgstr "Scherm"
 
+# What does this mean?
 #: plug-ins/common/newsprint.c:1310
 msgid "Black Pullout (%):"
-msgstr ""
+msgstr "Zwart uittrekken (%):"
 
 #: plug-ins/common/newsprint.c:1333
 msgid "Separate to:"
-msgstr ""
+msgstr "Scheiden naar:"
 
 #: plug-ins/common/newsprint.c:1378
 msgid "Lock Channels"
-msgstr ""
+msgstr "Zet kanalen vast"
 
 #: plug-ins/common/newsprint.c:1388
 msgid "Factory Defaults"
-msgstr ""
+msgstr "Fabrieksstandaarden"
 
+# What is the Dutch translation of this phrase?
 #: plug-ins/common/newsprint.c:1420
 msgid "Oversample:"
-msgstr ""
+msgstr "Oversample:"
 
 #: plug-ins/common/nlfilt.c:159
 msgid "<Image>/Filters/Enhance/NL Filter..."
-msgstr ""
+msgstr "<Image>/Filters/Versterken/NL-filter..."
 
 #: plug-ins/common/nlfilt.c:277 plug-ins/common/nlfilt.c:363
 msgid "NL Filter"
-msgstr ""
+msgstr "NL-filter..."
 
 #: plug-ins/common/nlfilt.c:393
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #: plug-ins/common/nlfilt.c:397
 msgid "Alpha Trimmed Mean"
-msgstr ""
+msgstr "Alphagesnoeid gemiddelde"
 
 #: plug-ins/common/nlfilt.c:399
 msgid "Optimal Estimation"
-msgstr ""
+msgstr "Optimale schatting"
 
 #: plug-ins/common/nlfilt.c:401
 msgid "Edge Enhancement"
-msgstr ""
+msgstr "Randversterking"
 
 #: plug-ins/common/noisify.c:141
 msgid "<Image>/Filters/Noise/Noisify..."
-msgstr ""
+msgstr "<Image>/Filters/Ruis/Verruizen..."
 
 #: plug-ins/common/noisify.c:217
 msgid "Adding Noise..."
-msgstr ""
+msgstr "Ruis toevoegen..."
 
 #: plug-ins/common/noisify.c:484
 msgid "Noisify"
-msgstr ""
+msgstr "Verruizen"
 
 #: plug-ins/common/noisify.c:536
 msgid "Independent"
-msgstr ""
+msgstr "Onafhankelijk"
 
 #: plug-ins/common/noisify.c:549 plug-ins/common/noisify.c:563
 msgid "Gray:"
-msgstr ""
+msgstr "Grijs:"
 
 #: plug-ins/common/noisify.c:671
 #, c-format
 msgid "Channel #%d:"
-msgstr ""
+msgstr "Kanaal #%d:"
 
 #: plug-ins/common/normalize.c:89
 msgid "<Image>/Image/Colors/Auto/Normalize"
@@ -4972,65 +5012,65 @@ msgstr "Maskergrootte:"
 
 #: plug-ins/common/papertile.c:245
 msgid "Paper Tile"
-msgstr ""
+msgstr "Papieren tegel"
 
 #: plug-ins/common/papertile.c:271
 msgid "Division"
-msgstr ""
+msgstr "Deling"
 
 #: plug-ins/common/papertile.c:305 plug-ins/gimpressionist/size.c:120
 #: plug-ins/gimpressionist/sizemap.c:451
 msgid "Size:"
-msgstr ""
+msgstr "Grootte:"
 
 #: plug-ins/common/papertile.c:311
 msgid "Fractional Pixels"
-msgstr ""
+msgstr "Gedeelde pixels"
 
 #: plug-ins/common/papertile.c:318
 msgid "Ignore"
-msgstr ""
+msgstr "Negeer"
 
 #: plug-ins/common/papertile.c:320
 msgid "Force"
-msgstr ""
+msgstr "Dwing"
 
 #: plug-ins/common/papertile.c:333
 msgid "Centering"
-msgstr ""
+msgstr "Centrering"
 
 #: plug-ins/common/papertile.c:346
 msgid "Movement"
-msgstr ""
+msgstr "Beweging"
 
 #: plug-ins/common/papertile.c:360
 msgid "Max (%):"
-msgstr ""
+msgstr "Max (%):"
 
 #: plug-ins/common/papertile.c:366
 msgid "Wrap Around"
-msgstr ""
+msgstr "Omloop"
 
 #: plug-ins/common/papertile.c:375
 msgid "Background Type"
-msgstr ""
+msgstr "Achtergrondtype"
 
 #: plug-ins/common/papertile.c:382
 msgid "Inverted Image"
-msgstr ""
+msgstr "Omgekeerde afbeelding"
 
 #: plug-ins/common/papertile.c:384
 msgid "Image"
-msgstr ""
+msgstr "Afbeelding"
 
 #: plug-ins/common/papertile.c:386 plug-ins/common/sparkle.c:527
 msgid "Foreground Color"
-msgstr ""
+msgstr "Voorgrondkleur"
 
 #: plug-ins/common/papertile.c:388 plug-ins/common/papertile.c:397
 #: plug-ins/common/sparkle.c:528
 msgid "Background Color"
-msgstr ""
+msgstr "Achtergrondkleur"
 
 #: plug-ins/common/papertile.c:548
 msgid "Paper Tile..."
@@ -5038,11 +5078,11 @@ msgstr "Bezig met papieren tegel..."
 
 #: plug-ins/common/papertile.c:838
 msgid "September 31, 1999"
-msgstr ""
+msgstr "31 September 1999"
 
 #: plug-ins/common/papertile.c:839
 msgid "<Image>/Filters/Map/Paper Tile..."
-msgstr ""
+msgstr "<Image>/Filters/Projecteren/Papieren tegel..."
 
 #: plug-ins/common/pat.c:450
 msgid "Save as Pattern"
@@ -5064,19 +5104,19 @@ msgstr "Pixeliseren"
 msgid "Pixel Width:"
 msgstr "Pixelbreedte:"
 
-#: plug-ins/common/plasma.c:187
+#: plug-ins/common/plasma.c:188
 msgid "<Image>/Filters/Render/Clouds/Plasma..."
 msgstr "<Image>/Filters/Renderen/Wolken/Plasma..."
 
-#: plug-ins/common/plasma.c:265
+#: plug-ins/common/plasma.c:266
 msgid "Plasma..."
 msgstr "Bezig met toepassen plasma..."
 
-#: plug-ins/common/plasma.c:302
+#: plug-ins/common/plasma.c:303
 msgid "Plasma"
 msgstr "Plasma"
 
-#: plug-ins/common/plasma.c:371
+#: plug-ins/common/plasma.c:372
 msgid "Turbulence:"
 msgstr "Turbulentie:"
 
@@ -5101,95 +5141,95 @@ msgstr "Tijdelijke procedure"
 msgid "<Toolbox>/Xtns/Plugin Details..."
 msgstr "<Toolbox>/Xtns/Plug-indetails..."
 
-#: plug-ins/common/plugindetails.c:219
+#: plug-ins/common/plugindetails.c:221
 msgid "Details <<"
 msgstr "Details <<"
 
-#: plug-ins/common/plugindetails.c:230 plug-ins/common/plugindetails.c:1120
+#: plug-ins/common/plugindetails.c:234 plug-ins/common/plugindetails.c:1125
 msgid "Details >>"
 msgstr "Details >>"
 
 #. Number of plugins
-#: plug-ins/common/plugindetails.c:316
+#: plug-ins/common/plugindetails.c:320
 #, c-format
 msgid "Number of Plugin Interfaces: %d"
 msgstr "Aantal plug-in-interfaces: %d"
 
 #. menu path
-#: plug-ins/common/plugindetails.c:334
+#: plug-ins/common/plugindetails.c:338
 msgid "Menu Path:"
 msgstr "Menupad:"
 
 #. show the name
-#: plug-ins/common/plugindetails.c:355
+#: plug-ins/common/plugindetails.c:359
 #: plug-ins/dbbrowser/dbbrowser_utils.c:344
-#: plug-ins/gap/gap_dbbrowser_utils.c:324
+#: plug-ins/gap/gap_dbbrowser_utils.c:329
 msgid "Name:"
 msgstr "Naam:"
 
 #. show the description
-#: plug-ins/common/plugindetails.c:377
+#: plug-ins/common/plugindetails.c:381
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
-#: plug-ins/gap/gap_dbbrowser_utils.c:341
+#: plug-ins/gap/gap_dbbrowser_utils.c:346
 msgid "Blurb:"
 msgstr "Omschrijving:"
 
-#: plug-ins/common/plugindetails.c:399
+#: plug-ins/common/plugindetails.c:403
 #: plug-ins/dbbrowser/dbbrowser_utils.c:479
-#: plug-ins/gap/gap_dbbrowser_utils.c:458
+#: plug-ins/gap/gap_dbbrowser_utils.c:463
 msgid "Help:"
 msgstr "Help:"
 
 #. show the type
-#: plug-ins/common/plugindetails.c:443 plug-ins/gimpressionist/orientmap.c:580
+#: plug-ins/common/plugindetails.c:447 plug-ins/gimpressionist/orientmap.c:580
 msgid "Type:"
 msgstr "Type:"
 
-#: plug-ins/common/plugindetails.c:1002
+#: plug-ins/common/plugindetails.c:1006
 msgid "Plugin Descriptions"
 msgstr "Plug-inbeschrijvingen"
 
-#: plug-ins/common/plugindetails.c:1007
+#: plug-ins/common/plugindetails.c:1011
 #: plug-ins/dbbrowser/dbbrowser_utils.c:153
 #: plug-ins/dbbrowser/dbbrowser_utils.c:172
-#: plug-ins/gap/gap_dbbrowser_utils.c:174
+#: plug-ins/gap/gap_dbbrowser_utils.c:179
 msgid "Search by Name"
 msgstr "Zoeken op naam"
 
 #. list : list in a scrolled_win
-#: plug-ins/common/plugindetails.c:1044
+#: plug-ins/common/plugindetails.c:1049
 msgid "Name"
 msgstr "Naam"
 
 # What does 'Ins' mean?
-#: plug-ins/common/plugindetails.c:1045 plug-ins/common/plugindetails.c:1073
+#: plug-ins/common/plugindetails.c:1050 plug-ins/common/plugindetails.c:1078
 msgid "Ins Date"
 msgstr "Datum"
 
-#: plug-ins/common/plugindetails.c:1046
+#: plug-ins/common/plugindetails.c:1051
 msgid "Menu Path"
 msgstr "Menupad"
 
-#: plug-ins/common/plugindetails.c:1047 plug-ins/common/plugindetails.c:1074
+#: plug-ins/common/plugindetails.c:1052 plug-ins/common/plugindetails.c:1079
 msgid "Image Types"
 msgstr "Afbeeldingstypen"
 
-#: plug-ins/common/plugindetails.c:1065
+#: plug-ins/common/plugindetails.c:1070
 msgid "List View"
 msgstr "Lijstweergave"
 
 #. notebook->ctree
-#: plug-ins/common/plugindetails.c:1072
+#: plug-ins/common/plugindetails.c:1077
 msgid "Menu Path/Name"
 msgstr "Menupad/naam"
 
-#: plug-ins/common/plugindetails.c:1089
+#: plug-ins/common/plugindetails.c:1094
 msgid "Tree View"
 msgstr "Boomweergave"
 
-#: plug-ins/common/plugindetails.c:1109
+#: plug-ins/common/plugindetails.c:1114
 #: plug-ins/dbbrowser/dbbrowser_utils.c:226
-#: plug-ins/gap/gap_dbbrowser_utils.c:137
+#: plug-ins/gap/gap_dbbrowser_utils.c:142
 msgid "Search:"
 msgstr "Zoeken:"
 
@@ -5212,7 +5252,7 @@ msgstr ""
 "%s\n"
 "Onbekend kleurmodel PNG"
 
-#: plug-ins/common/png.c:758
+#: plug-ins/common/png.c:760
 #, c-format
 msgid ""
 "%s\n"
@@ -5221,7 +5261,7 @@ msgstr ""
 "%s\n"
 "PNG-fout. Kon bestand niet opslaan"
 
-#: plug-ins/common/png.c:768
+#: plug-ins/common/png.c:770
 #, c-format
 msgid ""
 "%s\n"
@@ -5230,92 +5270,92 @@ msgstr ""
 "%s\n"
 "Kon geen bestand aanmaken"
 
-#: plug-ins/common/png.c:1040
+#: plug-ins/common/png.c:1044
 msgid "Save as PNG"
 msgstr "Opslaan als PNG"
 
-#: plug-ins/common/png.c:1069
+#: plug-ins/common/png.c:1073
 msgid "Interlacing (Adam7)"
 msgstr "Interlacing (Adam7)"
 
-#: plug-ins/common/png.c:1078
+#: plug-ins/common/png.c:1082
 msgid "Save background color"
 msgstr "Achtergrondkleur opslaan"
 
-#: plug-ins/common/png.c:1087
+#: plug-ins/common/png.c:1091
 msgid "Save gamma"
 msgstr "Gamma opslaan"
 
-#: plug-ins/common/png.c:1096
+#: plug-ins/common/png.c:1100
 msgid "Save layer offset"
 msgstr "Laagverspringing opslaan"
 
-#: plug-ins/common/png.c:1105
+#: plug-ins/common/png.c:1109
 msgid "Save resolution"
 msgstr "Resolutie opslaan"
 
-#: plug-ins/common/png.c:1114
+#: plug-ins/common/png.c:1118
 msgid "Save creation time"
 msgstr "Creatiedatum opslaan"
 
-#: plug-ins/common/png.c:1131
+#: plug-ins/common/png.c:1135
 msgid "Compression Level:"
 msgstr "Compressieniveau:"
 
 #: plug-ins/common/pnm.c:420
 #, c-format
 msgid "PNM: Can't open file %s."
-msgstr ""
+msgstr "PNM: kan bestand %s niet openen."
 
 #: plug-ins/common/pnm.c:447 plug-ins/common/pnm.c:468
 #: plug-ins/common/pnm.c:475 plug-ins/common/pnm.c:484
 #: plug-ins/common/pnm.c:559 plug-ins/common/pnm.c:615
 msgid "PNM: Premature end of file."
-msgstr ""
+msgstr "PNM: vroegtijdig einde van bestand."
 
 #: plug-ins/common/pnm.c:449
 msgid "PNM: Invalid file."
-msgstr ""
+msgstr "PNM: ongeldig bestand."
 
 #: plug-ins/common/pnm.c:462
 msgid "PNM: File not in a supported format."
-msgstr ""
+msgstr "PNM: bestand niet in ondersteund formaat."
 
 #: plug-ins/common/pnm.c:471
 msgid "PNM: Invalid X resolution."
-msgstr ""
+msgstr "PNM: ongeldige X-resolutie."
 
 #: plug-ins/common/pnm.c:478
 msgid "PNM: Invalid Y resolution."
-msgstr ""
+msgstr "PNM: ongeldige Y-resolutie."
 
 #: plug-ins/common/pnm.c:490
 msgid "PNM: Invalid maximum value."
-msgstr ""
+msgstr "PNM: ongeldige maximumwaarde."
 
 #: plug-ins/common/pnm.c:663
 msgid "PNM: Error reading file."
-msgstr ""
+msgstr "PNM: fout bij lezen bestand."
 
 #: plug-ins/common/pnm.c:779
 msgid "PNM save cannot handle images with alpha channels."
-msgstr ""
+msgstr "PNM kan afbeeldingen met alphakanalen niet opslaan."
 
 #: plug-ins/common/pnm.c:925
 msgid "Save as PNM"
-msgstr ""
+msgstr "Opslaan als PNM"
 
 #: plug-ins/common/pnm.c:946
 msgid "Raw"
-msgstr ""
+msgstr "Onveranderd (raw)"
 
 #: plug-ins/common/pnm.c:947
 msgid "Ascii"
-msgstr ""
+msgstr "ASCII"
 
 #: plug-ins/common/polar.c:215
 msgid "<Image>/Filters/Distorts/Polar Coords..."
-msgstr ""
+msgstr "<Image>/Filters/Vervormingen/Polaire coördinaten..."
 
 #: plug-ins/common/polar.c:405
 msgid "Polarizing..."
@@ -5327,31 +5367,33 @@ msgstr "Polariseren"
 
 #: plug-ins/common/polar.c:971
 msgid "Circle Depth in Percent:"
-msgstr ""
+msgstr "Cirkeldiepte in procenten:"
 
 #: plug-ins/common/polar.c:980
 msgid "Offset Angle:"
-msgstr ""
+msgstr "Verspringingshoek:"
 
 #: plug-ins/common/polar.c:992
 msgid "Map Backwards"
-msgstr ""
+msgstr "Projecteer achterwaarts"
 
 #: plug-ins/common/polar.c:1000
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
-msgstr ""
+msgstr "Indien geselecteerd zal het projecteren rechts beginnen."
 
 #: plug-ins/common/polar.c:1004
 msgid "Map from Top"
-msgstr ""
+msgstr "Projecteren vanaf bovenkant"
 
 #: plug-ins/common/polar.c:1012
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
 msgstr ""
+"Indien geselecteerd zal het projecteeren de bovenste rij in het midden "
+"plaatsen en de onderste rij aan de buitenkant."
 
 #: plug-ins/common/polar.c:1017
 msgid "To Polar"
@@ -5362,66 +5404,68 @@ msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
 msgstr ""
+"Indien geselecteerd zal de afbeelding naar een cirkel worden geprojecteerd."
 
 #: plug-ins/common/ps.c:875
 msgid "PS: can't open file for reading"
-msgstr ""
+msgstr "PS: kan bestand niet openen om te lezen"
 
 #: plug-ins/common/ps.c:882
 #, c-format
 msgid "Interpreting and Loading %s:"
-msgstr ""
+msgstr "Interpreteren en laden van %s:"
 
 #: plug-ins/common/ps.c:890
 msgid "PS: can't interprete file"
-msgstr ""
+msgstr "PS: kan bestand niet interpreteren"
 
 #: plug-ins/common/ps.c:977
 msgid "PostScript save cannot handle images with alpha channels"
-msgstr ""
+msgstr "PostScript-opslaan kan niet met afbeeldingen met alphakanalen werken"
 
 #: plug-ins/common/ps.c:988
 msgid "PS: cannot operate on unknown image types"
-msgstr ""
+msgstr "PS: kan niet werken met onbekende afbeeldingstypen"
 
 #: plug-ins/common/ps.c:997
 msgid "PS: can't open file for writing"
-msgstr ""
+msgstr "PS: kan bestand niet openen om te schrijven"
 
 #: plug-ins/common/ps.c:2193 plug-ins/common/ps.c:2319
 #: plug-ins/common/ps.c:2463 plug-ins/common/ps.c:2585
 msgid "write error occured"
-msgstr ""
+msgstr "schrijffout vond plaats"
 
 #: plug-ins/common/ps.c:2610
 msgid "Load PostScript"
-msgstr ""
+msgstr "Laad PostScript"
 
 #. Rendering
 #: plug-ins/common/ps.c:2637 plug-ins/flame/flame.c:997
 msgid "Rendering"
-msgstr ""
+msgstr "Renderen"
 
 #: plug-ins/common/ps.c:2655 plug-ins/print/gimp_main_window.c:534
 msgid "Resolution:"
-msgstr ""
+msgstr "Resolutie:"
 
 #: plug-ins/common/ps.c:2683
 msgid "Pages:"
-msgstr ""
+msgstr "Pagina's:"
 
+# Kept the PS terminology intact
 #: plug-ins/common/ps.c:2689
 msgid "Try Bounding Box"
-msgstr ""
+msgstr "Probeer 'Bounding Box'"
 
 #. Colouring
 #: plug-ins/common/ps.c:2701
 msgid "Coloring"
-msgstr ""
+msgstr "Inkleuren"
 
 #: plug-ins/common/ps.c:2705
 msgid "B/W"
-msgstr ""
+msgstr "Z/W"
 
 #. * Gray *
 #: plug-ins/common/ps.c:2706 plug-ins/rcm/rcm_dialog.c:398
@@ -5430,163 +5474,167 @@ msgstr "Grijs"
 
 #: plug-ins/common/ps.c:2718
 msgid "Text Antialiasing"
-msgstr ""
+msgstr "Anti-aliasen tekst"
 
 #: plug-ins/common/ps.c:2723 plug-ins/common/ps.c:2736
 msgid "Weak"
-msgstr ""
+msgstr "Zwak"
 
 #: plug-ins/common/ps.c:2724 plug-ins/common/ps.c:2737
 msgid "Strong"
-msgstr ""
+msgstr "Sterk"
 
 #: plug-ins/common/ps.c:2730
 msgid "Graphic Antialiasing"
-msgstr ""
+msgstr "Anti-aliasen afbeelding"
 
 #: plug-ins/common/ps.c:2792
 msgid "Save as PostScript"
-msgstr ""
+msgstr "Opslaan als PostScript"
 
 #. Image Size
 #: plug-ins/common/ps.c:2822
 msgid "Image Size"
-msgstr ""
+msgstr "Afbeeldingsgrootte"
 
 #: plug-ins/common/ps.c:2858
 msgid "X-Offset:"
-msgstr ""
+msgstr "X-verspringing:"
 
 #: plug-ins/common/ps.c:2867
 msgid "Y-Offset:"
-msgstr ""
+msgstr "Y-verspringing:"
 
+# What is the Dutch translation of 'aspect ratio'?
 #: plug-ins/common/ps.c:2873
 msgid "Keep Aspect Ratio"
-msgstr ""
+msgstr "Behoud aspectratio"
 
+# What is the Dutch translation of 'aspect ratio'?
 #: plug-ins/common/ps.c:2874
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
+"Indien geselecteerd zal de resulterende afbeelding geschaald worden om in de "
+"opgegeven grootte te passen zonder de aspectratio te veranderen."
 
 #. Unit
 #: plug-ins/common/ps.c:2885
 msgid "Unit"
-msgstr ""
+msgstr "Eenheid"
 
 #: plug-ins/common/ps.c:2889 plug-ins/print/gimp_main_window.c:360
 msgid "Inch"
-msgstr ""
+msgstr "Duim"
 
 #: plug-ins/common/ps.c:2890
 msgid "Millimeter"
-msgstr ""
+msgstr "Millimeter"
 
 #. Format
 #: plug-ins/common/ps.c:2914
 msgid "Output"
-msgstr ""
+msgstr "Uitvoer"
 
 #: plug-ins/common/ps.c:2922
 msgid "PostScript Level 2"
-msgstr ""
+msgstr "PostScript Niveau 2"
 
 #: plug-ins/common/ps.c:2930
 msgid "Encapsulated PostScript"
-msgstr ""
+msgstr "Encapsulated PostScript"
 
 #: plug-ins/common/ps.c:2958
 msgid "Preview Size:"
-msgstr ""
+msgstr "Vooruitblikgrootte:"
 
 #: plug-ins/common/psd.c:1604
 msgid "Unnamed channel"
-msgstr ""
+msgstr "Naamloos kanaal"
 
 #: plug-ins/common/psp.c:423
 msgid "Save as PSP"
-msgstr ""
+msgstr "Opslaan als PSP"
 
 #. file save type
 #: plug-ins/common/psp.c:440
 msgid "Data Compression"
-msgstr ""
+msgstr "Gegevenscompressie"
 
 #: plug-ins/common/psp.c:446
 msgid "RLE"
-msgstr ""
+msgstr "RLE"
 
 #: plug-ins/common/psp.c:447
 msgid "LZ77"
-msgstr ""
+msgstr "LZ77"
 
 #: plug-ins/common/randomize.c:107
 msgid "Random Hurl 1.7"
-msgstr ""
+msgstr "Willekeurig smijten 1.7"
 
 #: plug-ins/common/randomize.c:108
 msgid "Random Pick 1.7"
-msgstr ""
+msgstr "Willekeurig kiezen 1.7"
 
 #: plug-ins/common/randomize.c:109
 msgid "Random Slur 1.7"
-msgstr ""
+msgstr "Willekeurig krabbelen 1.7"
 
 #: plug-ins/common/randomize.c:240
 msgid "<Image>/Filters/Noise/Hurl..."
-msgstr ""
+msgstr "<Image>/Filters/Ruis/Smijten..."
 
 #: plug-ins/common/randomize.c:252
 msgid "<Image>/Filters/Noise/Pick..."
-msgstr ""
+msgstr "<Image>/Filters/Ruis/Kiezen..."
 
 #: plug-ins/common/randomize.c:264
 msgid "<Image>/Filters/Noise/Slur..."
-msgstr ""
+msgstr "<Image>/Filters/Ruis/Krabbelen..."
 
 #: plug-ins/common/randomize.c:744
 msgid "Randomization (%):"
-msgstr ""
+msgstr "Willekeur (%):"
 
 #: plug-ins/common/ripple.c:156
 msgid "<Image>/Filters/Distorts/Ripple..."
-msgstr ""
+msgstr "<Image>/Filters/Vervormingen/Rimpelen..."
 
 #: plug-ins/common/ripple.c:236
 msgid "Rippling..."
-msgstr ""
+msgstr "Rimpelen..."
 
 #: plug-ins/common/ripple.c:575
 msgid "Ripple"
-msgstr ""
+msgstr "Rimpelen"
 
 #: plug-ins/common/ripple.c:621
 msgid "Retain Tilability"
-msgstr ""
+msgstr "Behoud tegelbaarheid"
 
 #. Edges toggle box
 #: plug-ins/common/ripple.c:647
 msgid "Edges"
-msgstr ""
+msgstr "Randen"
 
 #. Wave toggle box
 #: plug-ins/common/ripple.c:661
 msgid "Wave Type"
-msgstr ""
+msgstr "Golftype"
 
 #: plug-ins/common/ripple.c:665
 msgid "Sawtooth"
-msgstr ""
+msgstr "Zaagtand"
 
 #: plug-ins/common/ripple.c:688
 msgid "Period:"
-msgstr ""
+msgstr "Periode:"
 
 #: plug-ins/common/ripple.c:698 plug-ins/common/waves.c:411
 msgid "Amplitude:"
-msgstr ""
+msgstr "Amplitude:"
 
 #: plug-ins/common/rotate.c:161
 msgid "<Image>/Layers/Rotate/90 degrees"
@@ -5629,13 +5677,15 @@ msgstr "Sorry, kanalen en maskers kunnen niet worden gedraaid."
 msgid "Rotating..."
 msgstr "Draaien..."
 
+# What does 'sample' stand for in this context?
 #: plug-ins/common/sample_colorize.c:306
 msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
-msgstr ""
+msgstr "<Image>/Filters/Kleuren/Projecteren/Monsterkleuren..."
 
+# What does 'sample' stand for in this context?
 #: plug-ins/common/sample_colorize.c:1363
 msgid "Sample Colorize"
-msgstr ""
+msgstr "Monsterkleuren"
 
 #. gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
 #: plug-ins/common/sample_colorize.c:1368 plug-ins/common/tileit.c:564
@@ -5648,92 +5698,93 @@ msgstr "Toepassen"
 
 #: plug-ins/common/sample_colorize.c:1370
 msgid "Get Sample Colors"
-msgstr ""
+msgstr "Haal kleurmonsters"
 
 #. layer optionmenu (Dst)
 #: plug-ins/common/sample_colorize.c:1404
 msgid "Destination:"
-msgstr ""
+msgstr "Doel:"
 
 #. layer optionmenu (Sample)
 #: plug-ins/common/sample_colorize.c:1423
 msgid "Sample:"
-msgstr ""
+msgstr "Monster:"
 
 #. Add extra menu items for Gradient
 #: plug-ins/common/sample_colorize.c:1442
 msgid "** From GRADIENT **"
-msgstr ""
+msgstr "** Uit VERLOOP **"
 
 #. Add extra menu items for Inverted Gradient
 #: plug-ins/common/sample_colorize.c:1450
 msgid "** From INVERSE GRADIENT **"
-msgstr ""
+msgstr "** Uit OMGEKEERD VERLOOP **"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1465
 #: plug-ins/common/sample_colorize.c:1490
 msgid "Show Selection"
-msgstr ""
+msgstr "Toon selectie"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1475
 #: plug-ins/common/sample_colorize.c:1500
 msgid "Show Color"
-msgstr ""
+msgstr "Toon kleur"
 
 #: plug-ins/common/sample_colorize.c:1606
 msgid "In Level:"
-msgstr ""
+msgstr "In-niveau:"
 
 #: plug-ins/common/sample_colorize.c:1659
 msgid "Out Level:"
-msgstr ""
+msgstr "Uit-niveau:"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1700
 msgid "Hold Intensity"
-msgstr ""
+msgstr "Behoud intensiteit"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1710
 msgid "Original Intensity"
-msgstr ""
+msgstr "Oorspronkelijke intensiteit"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1727
 msgid "Use Subcolors"
-msgstr ""
+msgstr "Gebruik subkleuren"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1737
 msgid "Smooth Samplecolors"
-msgstr ""
+msgstr "Monsterkleuren gladmaken"
 
 #: plug-ins/common/sample_colorize.c:2736
 msgid "Sample Analyze..."
-msgstr ""
+msgstr "Monsteranalyse..."
 
 #: plug-ins/common/sample_colorize.c:3101
 msgid "Remap Colorized..."
-msgstr ""
+msgstr "Verkleuring herprojecteren..."
 
 #: plug-ins/common/scatter_hsv.c:143
 msgid "<Image>/Filters/Noise/Scatter HSV..."
-msgstr ""
+msgstr "<Image>/Filters/Ruis/HSV verspreiden..."
 
 #: plug-ins/common/scatter_hsv.c:230
 msgid "Scatter HSV: Scattering..."
-msgstr ""
+msgstr "HSV verspreiden: bezig..."
 
 #: plug-ins/common/scatter_hsv.c:370
 msgid "Scatter HSV"
-msgstr ""
+msgstr "HSV verspreiden"
 
 #: plug-ins/common/scatter_hsv.c:390
 msgid "Preview (1:4) - Right Click to Jump"
-msgstr ""
+msgstr "Vooruitblik (1:4) - klik RMB om te springen"
 
+# What does this mean?
 #: plug-ins/common/scatter_hsv.c:441
 msgid "Holdness:"
 msgstr ""
@@ -5776,85 +5827,85 @@ msgstr "seconden vertraging"
 
 #: plug-ins/common/sel_gauss.c:125
 msgid "<Image>/Filters/Blur/Selective Gaussian Blur..."
-msgstr ""
+msgstr "<Image>/Filters/Vervagen/Selectief Gaussiaans..."
 
 #: plug-ins/common/sel_gauss.c:201 plug-ins/common/sel_gauss.c:237
 msgid "Selective Gaussian Blur"
-msgstr ""
+msgstr "Selectieve Gaussiaanse vervaging"
 
 #: plug-ins/common/sel_gauss.c:218
 msgid "sel_gauss: Cannot operate on indexed color images"
-msgstr ""
+msgstr "sel_gauss: kan niet op geïndexeerde afbeeldingen werken"
 
 #: plug-ins/common/sel_gauss.c:277
 msgid "Max. Delta:"
-msgstr ""
+msgstr "Max. delta:"
 
 #: plug-ins/common/semiflatten.c:89
 msgid "<Image>/Filters/Colors/Semi-Flatten"
-msgstr ""
+msgstr "<Image>/Filters/Kleuren/Semi-pletten"
 
 #: plug-ins/common/semiflatten.c:126
 msgid "Semi-Flatten..."
-msgstr ""
+msgstr "Semi-pletten..."
 
 #: plug-ins/common/sharpen.c:167
 msgid "<Image>/Filters/Enhance/Sharpen..."
-msgstr ""
+msgstr "<Image>/Filters/Versterken/Verscherpen..."
 
 #.
 #. * Let the user know what we're doing...
 #.
 #: plug-ins/common/sharpen.c:348
 msgid "Sharpening..."
-msgstr ""
+msgstr "Verscherpen..."
 
 #: plug-ins/common/sharpen.c:518
 #, c-format
 msgid "Sharpen - %s"
-msgstr ""
+msgstr "Verscherpen - %s"
 
 #: plug-ins/common/sharpen.c:623
 msgid "Sharpness:"
-msgstr ""
+msgstr "Scherpte:"
 
 #: plug-ins/common/shift.c:131
 msgid "<Image>/Filters/Distorts/Shift..."
-msgstr ""
+msgstr "<Image>/Filters/Vervormingen/Verschuiven..."
 
 #: plug-ins/common/shift.c:206
 msgid "Shifting..."
-msgstr ""
+msgstr "Verschuiven..."
 
 #: plug-ins/common/shift.c:371
 msgid "Shift"
-msgstr ""
+msgstr "Verschuiven"
 
 #: plug-ins/common/shift.c:393
 msgid "Shift Horizontally"
-msgstr ""
+msgstr "Verschuif horizontaal"
 
 #: plug-ins/common/shift.c:394
 msgid "Shift Vertically"
-msgstr ""
+msgstr "Verschuif verticaal"
 
 #: plug-ins/common/shift.c:413
 msgid "Shift Amount:"
-msgstr ""
+msgstr "Verschuif met:"
 
 #: plug-ins/common/sinus.c:1157
 msgid "<Image>/Filters/Render/Sinus..."
-msgstr ""
+msgstr "<Image>/Filters/Renderen/Sinus..."
 
 #: plug-ins/common/sinus.c:1249
 msgid "Sinus: rendering..."
-msgstr ""
+msgstr "Sinus: renderen..."
 
 #. Create Main window with a vbox
 #. ==============================
 #: plug-ins/common/sinus.c:1699
 msgid "Sinus"
-msgstr ""
+msgstr "Sinus"
 
 #: plug-ins/common/sinus.c:1757
 msgid "Drawing Settings"
@@ -5862,15 +5913,15 @@ msgstr "Tekeningsinstellingen"
 
 #: plug-ins/common/sinus.c:1769
 msgid "X Scale:"
-msgstr ""
+msgstr "X-schaal:"
 
 #: plug-ins/common/sinus.c:1778
 msgid "Y Scale:"
-msgstr ""
+msgstr "Y-schaal:"
 
 #: plug-ins/common/sinus.c:1787
 msgid "Complexity:"
-msgstr ""
+msgstr "Complexiteit:"
 
 #: plug-ins/common/sinus.c:1797
 msgid "Calculation Settings"
@@ -5878,347 +5929,355 @@ msgstr "Calculatieinstellingen"
 
 #: plug-ins/common/sinus.c:1825
 msgid "Force Tiling?"
-msgstr ""
+msgstr "Dwing tegelen af?"
 
 #: plug-ins/common/sinus.c:1838
 msgid "Ideal"
-msgstr ""
+msgstr "Ideaal"
 
 #: plug-ins/common/sinus.c:1839
 msgid "Distorted"
-msgstr ""
+msgstr "Vervormd"
 
 #. if in grey scale, the colors are necessarily black and white
 #: plug-ins/common/sinus.c:1870
 msgid "The colors are white and black."
-msgstr ""
+msgstr "De kleuren zijn wit en zwart."
 
 #: plug-ins/common/sinus.c:1881
 msgid "Black & White"
-msgstr ""
+msgstr "Zwart & Wit"
 
 #: plug-ins/common/sinus.c:1883
 msgid "Foreground & Background"
-msgstr ""
+msgstr "Voorgrond & Achtergrond"
 
 #: plug-ins/common/sinus.c:1885
 msgid "Choose here:"
-msgstr ""
+msgstr "Kies hier:"
 
 #: plug-ins/common/sinus.c:1899
 msgid "First Color"
-msgstr ""
+msgstr "Eerste kleur"
 
 #: plug-ins/common/sinus.c:1904
 msgid "Second Color"
-msgstr ""
+msgstr "Tweede kleur"
 
 #: plug-ins/common/sinus.c:1912
 msgid "Alpha Channels"
-msgstr ""
+msgstr "Alphakanalen"
 
 #: plug-ins/common/sinus.c:1924
 msgid "First Color:"
-msgstr ""
+msgstr "Eerste kleur:"
 
 #: plug-ins/common/sinus.c:1943
 msgid "Second Color:"
-msgstr ""
+msgstr "Tweede kleur:"
 
 #: plug-ins/common/sinus.c:1973
 msgid "Blend Settings"
-msgstr ""
+msgstr "Overgangsinstellingen"
 
 #: plug-ins/common/sinus.c:1990
 msgid "Sinusodial"
-msgstr ""
+msgstr "Sinusodiaal"
 
 #: plug-ins/common/sinus.c:2002
 msgid "Exponent:"
-msgstr ""
+msgstr "Exponent:"
 
 #: plug-ins/common/sinus.c:2012
 msgid "Blend"
-msgstr ""
+msgstr "Overgang"
 
 #: plug-ins/common/smooth_palette.c:84
 msgid "<Image>/Filters/Colors/Smooth Palette..."
-msgstr ""
+msgstr "<Image>/Filters/Kleuren/Glad palet..."
 
 #: plug-ins/common/smooth_palette.c:173
 msgid "Deriving smooth palette..."
-msgstr ""
+msgstr "Afleiden van glad palet..."
 
 #: plug-ins/common/smooth_palette.c:398
 msgid "Smooth Palette"
-msgstr ""
+msgstr "Glad palet"
 
 #: plug-ins/common/smooth_palette.c:448
 msgid "Search Time:"
-msgstr ""
+msgstr "Zoektijd:"
 
+# What is the correct translation of 'solid' in this context?
 #: plug-ins/common/snoise.c:187
 msgid "<Image>/Filters/Render/Clouds/Solid Noise..."
-msgstr ""
+msgstr "<Image>/Filters/Renderen/Wolken/Vaste ruis..."
 
+# What is the correct translation of 'solid' in this context?
+# What is the correct translation of 'solid' in this context?
 #: plug-ins/common/snoise.c:312
 msgid "Solid Noise..."
-msgstr ""
+msgstr "Vaste ruis..."
 
+# What is the correct translation of 'solid' in this context?
 #. Dialog initialization
 #: plug-ins/common/snoise.c:507
 msgid "Solid Noise"
-msgstr ""
+msgstr "Vaste ruis"
 
 #: plug-ins/common/snoise.c:549
 msgid "Detail:"
-msgstr ""
+msgstr "Detail:"
 
 #. Turbulent
 #: plug-ins/common/snoise.c:556
 msgid "Turbulent"
-msgstr ""
+msgstr "Turbulent"
 
 #. Tilable
 #: plug-ins/common/snoise.c:566
 msgid "Tilable"
-msgstr ""
+msgstr "Tegelbaar"
 
 #: plug-ins/common/snoise.c:577
 msgid "X Size:"
-msgstr ""
+msgstr "X-grootte:"
 
 #: plug-ins/common/snoise.c:587
 msgid "Y Size:"
-msgstr ""
+msgstr "Y-grootte:"
 
 #: plug-ins/common/sobel.c:142
 msgid "<Image>/Filters/Edge-Detect/Sobel..."
-msgstr ""
+msgstr "<Image>/Filters/Randen/Sobel..."
 
 #: plug-ins/common/sobel.c:246
 msgid "Sobel Edge Detection"
-msgstr ""
+msgstr "Sobel-randdetectie"
 
 #: plug-ins/common/sobel.c:272
 msgid "Sobel Horizontally"
-msgstr ""
+msgstr "Sobel horizontaal"
 
 #: plug-ins/common/sobel.c:280
 msgid "Sobel Vertically"
-msgstr ""
+msgstr "Sobel verticaal"
 
 #: plug-ins/common/sobel.c:288
 msgid "Keep Sign of Result (one Direction only)"
-msgstr ""
+msgstr "Behoud het teken van het resultaat (enkel één richting)"
 
 #: plug-ins/common/sobel.c:361
 msgid "Sobel Edge Detecting..."
-msgstr ""
+msgstr "Sobel-randdetectie..."
 
 #: plug-ins/common/sparkle.c:191
 msgid "<Image>/Filters/Light Effects/Sparkle..."
-msgstr ""
+msgstr "<Image>/Filters/Lichteffecten/Fonkelen..."
 
 #: plug-ins/common/sparkle.c:295
 msgid "Sparkling..."
-msgstr ""
+msgstr "Fonkelen..."
 
 #: plug-ins/common/sparkle.c:344
 msgid "Sparkle"
-msgstr ""
+msgstr "Fonkelen..."
 
 #: plug-ins/common/sparkle.c:382
 msgid "Luminosity Threshold:"
-msgstr ""
+msgstr "Helderheidsdrempel:"
 
 #: plug-ins/common/sparkle.c:385
 msgid "Adjust the Luminosity Threshold"
-msgstr ""
+msgstr "Pas de helderheidsdrempel aan"
 
 #: plug-ins/common/sparkle.c:392
 msgid "Flare Intensity:"
-msgstr ""
+msgstr "Vlamintensiteit:"
 
 #: plug-ins/common/sparkle.c:395
 msgid "Adjust the Flare Intensity"
-msgstr ""
+msgstr "Pas de intensiteit van het opvlammen aan"
 
 #: plug-ins/common/sparkle.c:402
 msgid "Spike Length:"
-msgstr ""
+msgstr "Pieklengte:"
 
 #: plug-ins/common/sparkle.c:405
 msgid "Adjust the Spike Length"
-msgstr ""
+msgstr "Pas de lengte van de pieken van de fonkelster aan"
 
 #: plug-ins/common/sparkle.c:412
 msgid "Spike Points:"
-msgstr ""
+msgstr "Piekpunten:"
 
 #: plug-ins/common/sparkle.c:415
 msgid "Adjust the Number of Spikes"
-msgstr ""
+msgstr "Het aantal pieken in een fonkelster"
 
 #: plug-ins/common/sparkle.c:422
 msgid "Spike Angle (-1: Random):"
-msgstr ""
+msgstr "Piekhoek (-1: willekeurig):"
 
 #: plug-ins/common/sparkle.c:425
 msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
-msgstr ""
+msgstr "Pas de piekhoek aan (-1 betekent dat u een willekeurige hoek kiest)"
 
 #: plug-ins/common/sparkle.c:433
 msgid "Spike Density:"
-msgstr ""
+msgstr "Piekdichtheid:"
 
 #: plug-ins/common/sparkle.c:436
 msgid "Adjust the Spike Density"
-msgstr ""
+msgstr "Pas de piekdichtheid aan"
 
 #: plug-ins/common/sparkle.c:446
 msgid "Adjust the Opacity of the Spikes"
-msgstr ""
+msgstr "Pas de piekondoorzichtigheid aan"
 
+# Is there a Dutch word for the phrase 'hue'?
 #: plug-ins/common/sparkle.c:456
 msgid "Adjust the Value how much the Hue should be changed randomly"
 msgstr ""
+"Pas de waarde aan voor hoeveel de hue willekeurig moet worden veranderd"
 
 #: plug-ins/common/sparkle.c:464
 msgid "Random Saturation:"
-msgstr ""
+msgstr "Willekeurige verzadiging:"
 
 #: plug-ins/common/sparkle.c:467
 msgid "Adjust the Value how much the Saturation should be changed randomly"
 msgstr ""
+"Pas de waarde aan voor hoeveel de verzadiging willekeurig moet worden "
+"veranderd"
 
 #: plug-ins/common/sparkle.c:485
 msgid "Preserve Luminosity"
-msgstr ""
+msgstr "Behoud helderheid"
 
 #: plug-ins/common/sparkle.c:493
 msgid "Should the Luminosity be preserved?"
-msgstr ""
+msgstr "Moet de helderheid behouden blijven?"
 
 #: plug-ins/common/sparkle.c:496
 msgid "Inverse"
-msgstr ""
+msgstr "Omgekeerd"
 
 #: plug-ins/common/sparkle.c:503
 msgid "Should an Inverse Effect be done?"
-msgstr ""
+msgstr "Moet er een omkeereffect worden uitgevoerd?"
 
 #: plug-ins/common/sparkle.c:505
 msgid "Add Border"
-msgstr ""
+msgstr "Voeg rand toe"
 
 #: plug-ins/common/sparkle.c:513
 msgid "Draw a Border of Spikes around the Image"
-msgstr ""
+msgstr "Moet er een rand van pieken rond de afbeelding worden getekend?"
 
 #: plug-ins/common/sparkle.c:526
 msgid "Natural Color"
-msgstr ""
+msgstr "Natuurlijke kleur"
 
 #: plug-ins/common/sparkle.c:535
 msgid "Use the Color of the Image"
-msgstr ""
+msgstr "Gebruik de kleur van de afbeelding"
 
 #: plug-ins/common/sparkle.c:536
 msgid "Use the Foreground Color"
-msgstr ""
+msgstr "Gebruik de voorgrondkleur"
 
 #: plug-ins/common/sparkle.c:537
 msgid "Use the Background Color"
-msgstr ""
+msgstr "Gebruik de achtergrondkleur"
 
 #: plug-ins/common/spread.c:133
 msgid "<Image>/Filters/Noise/Spread..."
-msgstr ""
+msgstr "<Image>/Filters/Ruis/Verspreiden..."
 
 #: plug-ins/common/spread.c:212
 msgid "Spreading..."
-msgstr ""
+msgstr "Verspreiden..."
 
 #: plug-ins/common/spread.c:377
 msgid "Spread"
-msgstr ""
+msgstr "Verspreiden"
 
 #. parameter settings
 #: plug-ins/common/spread.c:394
 msgid "Spread Amount"
-msgstr ""
+msgstr "Afstand"
 
 #: plug-ins/common/struc.c:1156
 msgid "<Image>/Filters/Artistic/Apply Canvas..."
-msgstr ""
+msgstr "<Image>/Filters/Artistiek/Canvas toepassen..."
 
 #: plug-ins/common/struc.c:1242
 msgid "Applying Canvas..."
-msgstr ""
+msgstr "Canvas toepassen..."
 
 #: plug-ins/common/struc.c:1276
 msgid "Apply Canvas"
-msgstr ""
+msgstr "Canvas toepassen"
 
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
 #: plug-ins/common/struc.c:1304 plug-ins/common/wind.c:1089
 msgid "Direction"
-msgstr ""
+msgstr "Richting"
 
 #: plug-ins/common/struc.c:1308
 msgid "Top-Right"
-msgstr ""
+msgstr "Rechtsboven"
 
 #: plug-ins/common/struc.c:1309
 msgid "Top-Left"
-msgstr ""
+msgstr "Linksboven"
 
 #: plug-ins/common/struc.c:1310
 msgid "Bottom-Left"
-msgstr ""
+msgstr "Linksonder"
 
 #: plug-ins/common/struc.c:1311
 msgid "Bottom-Right"
-msgstr ""
+msgstr "Rechtsonder"
 
 #: plug-ins/common/sunras.c:389 plug-ins/fits/fits.c:354
 msgid "Can't open file for reading"
-msgstr ""
+msgstr "Kan bestand niet openen om te lezen"
 
 #: plug-ins/common/sunras.c:398
 msgid "Can't open file as SUN-raster-file"
-msgstr ""
+msgstr "Kan bestand niet als SUN-rasterbestand openen"
 
 #: plug-ins/common/sunras.c:405
 msgid "The type of this SUN-rasterfile is not supported"
-msgstr ""
+msgstr "Dit type SUN-rasterbestand wordt niet ondersteund"
 
 #: plug-ins/common/sunras.c:428
 msgid "Can't read color entries"
-msgstr ""
+msgstr "Kan kleuringangen niet lezen"
 
 #: plug-ins/common/sunras.c:435
 msgid "Type of colormap not supported"
-msgstr ""
+msgstr "Type kleurenkaart niet ondersteund"
 
 #: plug-ins/common/sunras.c:476
 msgid "This image depth is not supported"
-msgstr ""
+msgstr "Deze afbeeldingsdiepte is niet ondersteund"
 
 #: plug-ins/common/sunras.c:499
 msgid "SUNRAS save cannot handle images with alpha channels"
-msgstr ""
+msgstr "SUNRAS-opslaan kan niet omgaan met afbeeldingen met alphakanalen"
 
 #: plug-ins/common/sunras.c:510
 msgid "Can't operate on unknown image types"
-msgstr ""
+msgstr "Kan niet werken op onbekende afbeeldingstypen"
 
 #: plug-ins/common/sunras.c:519 plug-ins/fits/fits.c:466
 msgid "Can't open file for writing"
-msgstr ""
+msgstr "Kan bestand niet openen om te schrijven"
 
 #: plug-ins/common/sunras.c:1039 plug-ins/common/sunras.c:1130
 #: plug-ins/common/sunras.c:1211 plug-ins/common/sunras.c:1306
@@ -6226,49 +6285,50 @@ msgstr ""
 #: plug-ins/common/xwd.c:1699 plug-ins/common/xwd.c:1950
 #: plug-ins/fits/fits.c:688
 msgid "EOF encountered on reading"
-msgstr ""
+msgstr "Bestandseinde (EOF) tegenkomen bij lezen"
 
 #: plug-ins/common/sunras.c:1461 plug-ins/common/sunras.c:1569
 #: plug-ins/fits/fits.c:840 plug-ins/fits/fits.c:964
 msgid "Write error occured"
-msgstr ""
+msgstr "Schrijffout trad op"
 
 #: plug-ins/common/sunras.c:1585
 msgid "Save as SUNRAS"
-msgstr ""
+msgstr "Opslaan als SUNRAS"
 
 #: plug-ins/common/sunras.c:1606
 msgid "RunLength Encoded"
-msgstr ""
+msgstr "RunLength-gecodeerd (RLE)"
 
 #: plug-ins/common/tga.c:425
 #, c-format
 msgid "TGA: can't open \"%s\"\n"
-msgstr ""
+msgstr "TGA: kan \"%s\" niet openen\n"
 
+# What is a TGA footer?
 #: plug-ins/common/tga.c:435
 #, c-format
 msgid "TGA: Cannot read footer from \"%s\"\n"
-msgstr ""
+msgstr "TGA: kan einde van \"%s\" niet lezen\n"
 
-#: plug-ins/common/tga.c:446
+#: plug-ins/common/tga.c:447
 #, c-format
 msgid "TGA: Cannot read extension from \"%s\"\n"
-msgstr ""
+msgstr "TGA: kan extensie van \"%s\" niet lezen\n"
 
-#: plug-ins/common/tga.c:1168
+#: plug-ins/common/tga.c:1170
 msgid "Save as TGA"
-msgstr ""
+msgstr "Opslaan als TGA"
 
 #. regular tga parameter settings
-#: plug-ins/common/tga.c:1185
+#: plug-ins/common/tga.c:1187
 msgid "Targa Options"
-msgstr ""
+msgstr "Targa-opties"
 
 #. rle
-#: plug-ins/common/tga.c:1195
+#: plug-ins/common/tga.c:1197
 msgid "RLE compression"
-msgstr ""
+msgstr "RLE-compressie"
 
 #: plug-ins/common/threshold_alpha.c:104
 msgid "<Image>/Image/Alpha/Threshold Alpha..."
@@ -6308,11 +6368,11 @@ msgstr "LZW"
 
 #: plug-ins/common/tiff.c:1608
 msgid "Pack Bits"
-msgstr ""
+msgstr "Pack Bits"
 
 #: plug-ins/common/tiff.c:1609
 msgid "Deflate"
-msgstr ""
+msgstr "Deflate"
 
 #: plug-ins/common/tiff.c:1610
 msgid "JPEG"
@@ -6320,116 +6380,116 @@ msgstr "JPEG"
 
 #: plug-ins/common/tile.c:129
 msgid "<Image>/Filters/Map/Tile..."
-msgstr ""
+msgstr "<Image>/Filters/Projecteren/Tegel..."
 
 #: plug-ins/common/tile.c:207 plug-ins/common/tileit.c:333
 msgid "Tiling..."
-msgstr ""
+msgstr "Betegelen..."
 
 #: plug-ins/common/tile.c:400
 msgid "Tile"
-msgstr ""
+msgstr "Tegel"
 
 #. parameter settings
 #: plug-ins/common/tile.c:417
 msgid "Tile to New Size"
-msgstr ""
+msgstr "Betegel naar nieuwe grootte"
 
 #: plug-ins/common/tileit.c:235
 msgid "<Image>/Filters/Map/Small Tiles..."
-msgstr ""
+msgstr "<Image>/Filters/Projecteren/Kleine tegels..."
 
 #. Get the preview image and store it also set has_alpha
 #. Start buildng the dialog up
 #: plug-ins/common/tileit.c:381
 msgid "TileIt"
-msgstr ""
+msgstr "TegelHet"
 
 #. Area for buttons etc
 #: plug-ins/common/tileit.c:437
 msgid "Flipping"
-msgstr ""
+msgstr "Spiegelen"
 
 #: plug-ins/common/tileit.c:474
 msgid "Applied to Tile"
-msgstr ""
+msgstr "Toegepast op tegel"
 
 #: plug-ins/common/tileit.c:487
 msgid "All Tiles"
-msgstr ""
+msgstr "Alle tegels"
 
 #: plug-ins/common/tileit.c:498
 msgid "Alternate Tiles"
-msgstr ""
+msgstr "Afwisselende tegels"
 
 #: plug-ins/common/tileit.c:509
 msgid "Explicit Tile"
-msgstr ""
+msgstr "Expliciete tegel"
 
 #: plug-ins/common/tileit.c:515
 msgid "Row:"
-msgstr ""
+msgstr "Rij:"
 
 #: plug-ins/common/tileit.c:537
 msgid "Column:"
-msgstr ""
+msgstr "Kolom:"
 
 #. Lower frame saying howmany segments
 #: plug-ins/common/tileit.c:598
 msgid "Segment Setting"
-msgstr ""
+msgstr "Segmentinstelling"
 
 #: plug-ins/common/tiler.c:73
 msgid "<Image>/Filters/Map/Make Seamless"
-msgstr ""
+msgstr "<Image>/Filters/Projecteren/Maak tegelbaar"
 
 #: plug-ins/common/tiler.c:185
 msgid "Tiler..."
-msgstr ""
+msgstr "Tegelbaar maken..."
 
 #: plug-ins/common/uniteditor.c:73
 msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Eenhedeneditor..."
 
 #: plug-ins/common/uniteditor.c:168 plug-ins/common/uniteditor.c:624
 msgid "New Unit"
-msgstr ""
+msgstr "Nieuwe eenheid"
 
 #: plug-ins/common/uniteditor.c:196
 msgid "ID:"
-msgstr ""
+msgstr "ID:"
 
 #: plug-ins/common/uniteditor.c:208
 msgid "Factor:"
-msgstr ""
+msgstr "Factor:"
 
 #: plug-ins/common/uniteditor.c:219
 msgid "Digits:"
-msgstr ""
+msgstr "Cijfers:"
 
 #: plug-ins/common/uniteditor.c:232
 msgid "Symbol:"
-msgstr ""
+msgstr "Symbool:"
 
 #: plug-ins/common/uniteditor.c:245
 msgid "Abbreviation:"
-msgstr ""
+msgstr "Afkorting:"
 
 #: plug-ins/common/uniteditor.c:258
 msgid "Singular:"
-msgstr ""
+msgstr "Enkelvoud:"
 
 #: plug-ins/common/uniteditor.c:271
 msgid "Plural:"
-msgstr ""
+msgstr "Meervoud:"
 
 #: plug-ins/common/uniteditor.c:308
 msgid "Unit factor must not be 0."
-msgstr ""
+msgstr "Eenheidsfactor mag niet 0 zijn."
 
 #: plug-ins/common/uniteditor.c:318
 msgid "All text fields must contain a value."
-msgstr ""
+msgstr "Alle tekstvelden moeten zijn ingevuld."
 
 #: plug-ins/common/uniteditor.c:519
 msgid "Unit Editor"
@@ -6444,15 +6504,19 @@ msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
 msgstr ""
+"De definitie van een eenheid zal alleen worden opgeslagen voor GIMP afsluit "
+"als deze kolom is aangevinkt."
 
 #: plug-ins/common/uniteditor.c:539
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
+"Deze string wordt gebruikt om een eenheid te identificeren in de "
+"configuratiebestanden van GIMP."
 
 #: plug-ins/common/uniteditor.c:541
 msgid "How many units make up an inch."
-msgstr ""
+msgstr "Het aantal malen dat deze eenheid in een inch voorkomt."
 
 #: plug-ins/common/uniteditor.c:542
 msgid ""
@@ -6460,153 +6524,162 @@ msgid ""
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
+"Dit veld is een hint voor numerieke invoervelden. Hij geeft aan hoe veel "
+"decimale cijfers een invoerveld groot moet zijn om ongeveer dezelfde "
+"nauwkeurigheid te krijgen als een invoerveld voor duimen met twee decimale "
+"cijfers."
 
 #: plug-ins/common/uniteditor.c:548
 msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). Use the unit's "
 "abbreviation if it doesn't have a symbol."
 msgstr ""
+"Het symbool voor de eenheid als dat bestaat (bijvoorbeeld \"'\" voor "
+"duimen). Gebruik de afkorting van de eenheid als er geen symbool voor "
+"bestaat."
 
 #: plug-ins/common/uniteditor.c:551
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr ""
+msgstr "De afkorting van de eenheid (bijvoorbeeld \"cm\" voor centimeters)."
 
 #: plug-ins/common/uniteditor.c:553
 msgid "The unit's singular form."
-msgstr ""
+msgstr "De enkelvoudige vorm van de eenheid."
 
 #: plug-ins/common/uniteditor.c:554
 msgid "The unit's plural form."
-msgstr ""
+msgstr "De meervoudige vorm van de eenheid."
 
 #: plug-ins/common/uniteditor.c:570
 msgid "Saved"
-msgstr ""
+msgstr "Opgeslagen"
 
 #: plug-ins/common/uniteditor.c:571
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: plug-ins/common/uniteditor.c:572
 msgid "Factor"
-msgstr ""
+msgstr "Factor"
 
 #: plug-ins/common/uniteditor.c:573
 msgid "Digits"
-msgstr ""
+msgstr "Cijfers"
 
 #: plug-ins/common/uniteditor.c:574
 msgid "Symbol"
-msgstr ""
+msgstr "Symbool"
 
 #: plug-ins/common/uniteditor.c:575
 msgid "Abbr."
-msgstr ""
+msgstr "Afk."
 
 #: plug-ins/common/uniteditor.c:576
 msgid "Singular"
-msgstr ""
+msgstr "Enkelvoud"
 
 #: plug-ins/common/uniteditor.c:577
 msgid "Plural"
-msgstr ""
+msgstr "Meervoud"
 
 #: plug-ins/common/uniteditor.c:631
 msgid "Create a new unit from scratch."
-msgstr ""
+msgstr "Begin met een nieuwe eenheid."
 
 #: plug-ins/common/uniteditor.c:633
 msgid "Duplicate Unit"
-msgstr ""
+msgstr "Dupliceer eenheid"
 
 #: plug-ins/common/uniteditor.c:640
 msgid "Create a new unit with the currently seleted unit as template."
 msgstr ""
+"Maak een nieuwe eenheid waarbij de huidige geselecteerde eenheid als "
+"voorbeeld dient."
 
 #: plug-ins/common/uniteditor.c:643
 msgid "Don't Save Unit"
-msgstr ""
+msgstr "Sla eenheid niet op"
 
 #: plug-ins/common/uniteditor.c:650
 msgid "Don't save the currently selected unit before GIMP exits."
-msgstr ""
+msgstr "Sla de huidige geselecteerde eenheid niet op als GIMP afsluit."
 
 #: plug-ins/common/uniteditor.c:655
 msgid "Save Unit"
-msgstr ""
+msgstr "Sla eenheid op"
 
 #: plug-ins/common/uniteditor.c:662
 msgid "Save the currently selected unit before GIMP exits."
-msgstr ""
+msgstr "Sla de huidige geselecteerde eenheid op voordat GIMP afsluit."
 
 #: plug-ins/common/unsharp.c:186
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
-msgstr ""
+msgstr "<Image>/Filters/Versterken/Onscherp masker..."
 
 #: plug-ins/common/unsharp.c:396
 msgid "Merging..."
-msgstr ""
+msgstr "Samenvoegen..."
 
 #: plug-ins/common/unsharp.c:782
 msgid "Unsharp Mask"
-msgstr ""
+msgstr "Onscherp masker"
 
 #: plug-ins/common/video.c:44
 msgid "Staggered"
-msgstr ""
+msgstr "Zigzag"
 
 #: plug-ins/common/video.c:45
 msgid "Large staggered"
-msgstr ""
+msgstr "Groot zigzag"
 
 #: plug-ins/common/video.c:46
 msgid "Striped"
-msgstr ""
+msgstr "Gestreept"
 
 #: plug-ins/common/video.c:47
 msgid "Wide-striped"
-msgstr ""
+msgstr "Breed-gestreept"
 
 #: plug-ins/common/video.c:48
 msgid "Long-staggered"
-msgstr ""
+msgstr "Lang-zigzag"
 
 #: plug-ins/common/video.c:49
 msgid "3x3"
-msgstr ""
+msgstr "3x3"
 
 #: plug-ins/common/video.c:50
 msgid "Large 3x3"
-msgstr ""
+msgstr "Groot 3x3"
 
 #: plug-ins/common/video.c:51
 msgid "Hex"
-msgstr ""
+msgstr "Hex"
 
 #: plug-ins/common/video.c:52
 msgid "Dots"
-msgstr ""
+msgstr "Stippen"
 
 #: plug-ins/common/video.c:1836
 msgid "<Image>/Filters/Distorts/Video..."
-msgstr ""
+msgstr "<Image>/Filters/Vervormingen/Video..."
 
 #: plug-ins/common/video.c:1907
 msgid "Video/RGB..."
-msgstr ""
+msgstr "Video/RGB..."
 
 #: plug-ins/common/video.c:2150 plug-ins/gap/gap_decode_mpeg_main.c:643
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #. frame for the radio buttons
 #: plug-ins/common/video.c:2177
 msgid "RGB Pattern Type"
-msgstr ""
+msgstr "RGB-patroontype"
 
 #: plug-ins/common/video.c:2188
 msgid "Additive"
-msgstr ""
+msgstr "Toegevoegd"
 
 #: plug-ins/common/video.c:2196 plug-ins/rcm/rcm_dialog.c:122
 msgid "Rotated"
@@ -6614,170 +6687,171 @@ msgstr "Gedraaid"
 
 #: plug-ins/common/vinvert.c:91
 msgid "<Image>/Filters/Colors/Value Invert"
-msgstr ""
+msgstr "<Image>/Filters/Kleuren/Waardeomkering"
 
 #: plug-ins/common/vinvert.c:131
 msgid "Value Invert..."
-msgstr ""
+msgstr "Waarde omkeren..."
 
 #: plug-ins/common/vpropagate.c:160
 msgid "More White (Larger Value)"
-msgstr ""
+msgstr "Meer wit (hogere waarde)"
 
 #: plug-ins/common/vpropagate.c:163
 msgid "More Black (Smaller Value)"
-msgstr ""
+msgstr "Meer zwart (lagere waarde)"
 
 #: plug-ins/common/vpropagate.c:166
 msgid "Middle Value to Peaks"
-msgstr ""
+msgstr "Middenwaarde naar pieken"
 
 #: plug-ins/common/vpropagate.c:169
 msgid "Foreground to Peaks"
-msgstr ""
+msgstr "Voorgrond naar pieken"
 
 #: plug-ins/common/vpropagate.c:172
 msgid "Only Foreground"
-msgstr ""
+msgstr "Alleen voorgrond"
 
 #: plug-ins/common/vpropagate.c:175
 msgid "Only Background"
-msgstr ""
+msgstr "Alleen achtergrond"
 
 #: plug-ins/common/vpropagate.c:178
 msgid "More Opaque"
-msgstr ""
+msgstr "Meer ondoorzichtig"
 
 #: plug-ins/common/vpropagate.c:181
 msgid "More Transparent"
-msgstr ""
+msgstr "Meer transparant"
 
 #: plug-ins/common/vpropagate.c:218
 msgid "<Image>/Filters/Distorts/Value Propagate..."
-msgstr ""
+msgstr "<Image>/Filters/Vervormingen/Waarde doorgeven..."
 
 #: plug-ins/common/vpropagate.c:365
 msgid "Value propagating..."
-msgstr ""
+msgstr "Waarde doorgeven..."
 
 #: plug-ins/common/vpropagate.c:931
 msgid "Value Propagate"
-msgstr ""
+msgstr "Waarde doorgeven"
 
 #. Propagate Mode
 #: plug-ins/common/vpropagate.c:951
 msgid "Propagate Mode"
-msgstr ""
+msgstr "Doorgeefmodus"
 
 #: plug-ins/common/vpropagate.c:987
 msgid "Lower Threshold:"
-msgstr ""
+msgstr "Onderste drempel:"
 
 #: plug-ins/common/vpropagate.c:996
 msgid "Upper Threshold:"
-msgstr ""
+msgstr "Bovenste drempel:"
 
 #: plug-ins/common/vpropagate.c:1005
 msgid "Propagating Rate:"
-msgstr ""
+msgstr "Voortplantingssnelheid:"
 
 #: plug-ins/common/vpropagate.c:1017
 msgid "To Left"
-msgstr ""
+msgstr "Naar links"
 
 #: plug-ins/common/vpropagate.c:1020
 msgid "To Right"
-msgstr ""
+msgstr "Naar rechts"
 
 #: plug-ins/common/vpropagate.c:1023
 msgid "To Top"
-msgstr ""
+msgstr "Naar boven"
 
 #: plug-ins/common/vpropagate.c:1026
 msgid "To Bottom"
-msgstr ""
+msgstr "Naar onder"
 
 #: plug-ins/common/vpropagate.c:1039
 msgid "Propagating Alpha Channel"
-msgstr ""
+msgstr "Alphakanaal doorgeven"
 
 #: plug-ins/common/vpropagate.c:1049
 msgid "Propagating Value Channel"
-msgstr ""
+msgstr "Doorgeven waardekanaal"
 
 #: plug-ins/common/warp.c:278
 msgid "<Image>/Filters/Map/Warp..."
-msgstr ""
+msgstr "<Image>/Filters/Projecteren/Scheeftrekken..."
 
 #: plug-ins/common/warp.c:444
 msgid "Main Options"
-msgstr ""
+msgstr "Hoofdopties"
 
 #: plug-ins/common/warp.c:459
 msgid "Step Size:"
-msgstr ""
+msgstr "Stapgrootte:"
 
 #: plug-ins/common/warp.c:468 plug-ins/ifscompose/ifscompose.c:1283
 msgid "Iterations:"
-msgstr ""
+msgstr "Herhalingen:"
 
 #. Displacement map menu
 #: plug-ins/common/warp.c:475
 msgid "Displacement Map:"
-msgstr ""
+msgstr "Verplaatsingskaart:"
 
 #: plug-ins/common/warp.c:534
 msgid "FG Color"
-msgstr ""
+msgstr "VG-kleur"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
 #: plug-ins/common/warp.c:553
 msgid "Secondary Options"
-msgstr ""
+msgstr "Subopties"
 
+# What is the Dutch translation of 'dither'?
 #: plug-ins/common/warp.c:566
 msgid "Dither Size:"
-msgstr ""
+msgstr "Dithergrootte:"
 
 #: plug-ins/common/warp.c:575
 msgid "Rotation Angle:"
-msgstr ""
+msgstr "Draaiingshoek:"
 
 #: plug-ins/common/warp.c:584
 msgid "Substeps:"
-msgstr ""
+msgstr "Substappen:"
 
 #. Magnitude map menu
 #: plug-ins/common/warp.c:591
 msgid "Magnitude Map:"
-msgstr ""
+msgstr "Groottekaart:"
 
 #: plug-ins/common/warp.c:610
 msgid "Use Mag Map"
-msgstr ""
+msgstr "Gebruik groottekaart"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" table         --------------------------
 #: plug-ins/common/warp.c:626
 msgid "Other Options"
-msgstr ""
+msgstr "Overige opties"
 
 #: plug-ins/common/warp.c:640
 msgid "Gradient Scale:"
-msgstr ""
+msgstr "Verloopschaal:"
 
 #: plug-ins/common/warp.c:655
 msgid "Gradient map selection menu"
-msgstr ""
+msgstr "Selectiemenu voor verloopkaart"
 
 #: plug-ins/common/warp.c:665
 msgid "Vector Mag:"
-msgstr ""
+msgstr "Vectorhoogte:"
 
 #: plug-ins/common/warp.c:691
 msgid "Fixed-direction-vector map selection menu"
-msgstr ""
+msgstr "Selectie menu voor kaart van vasterichtingsvector"
 
 #.
 #. if (display_diff_map) {
@@ -6787,65 +6861,66 @@ msgstr ""
 #. make sure layer is visible
 #: plug-ins/common/warp.c:1152
 msgid "Smoothing X gradient..."
-msgstr ""
+msgstr "X-verloop gladmaken..."
 
 #: plug-ins/common/warp.c:1154
 msgid "Smoothing Y gradient..."
-msgstr ""
+msgstr "Y-verloop gladmaken..."
 
 #. calculate new X,Y Displacement image maps
 #: plug-ins/common/warp.c:1209
 msgid "Finding XY gradient..."
-msgstr ""
+msgstr "XY-verloop zoeken..."
 
+# How to translate 'flow' in this instance?
 #: plug-ins/common/warp.c:1233
 #, c-format
 msgid "Flow Step %d..."
-msgstr ""
+msgstr "Stap %d..."
 
 #: plug-ins/common/waves.c:158
 msgid "<Image>/Filters/Distorts/Waves..."
-msgstr ""
+msgstr "<Image>/Filters/Vervormingen/Golven..."
 
 #: plug-ins/common/waves.c:344
 msgid "Waves"
-msgstr ""
+msgstr "Golven"
 
 #: plug-ins/common/waves.c:391
 msgid "Reflective"
-msgstr ""
+msgstr "Reflecterend"
 
 #: plug-ins/common/waves.c:420
 msgid "Phase:"
-msgstr ""
+msgstr "Fase:"
 
 #: plug-ins/common/waves.c:429
 msgid "Wavelength:"
-msgstr ""
+msgstr "Golflengte:"
 
 #: plug-ins/common/waves.c:649
 msgid "Waving..."
-msgstr ""
+msgstr "Golven..."
 
 #: plug-ins/common/whirlpinch.c:206
 msgid "<Image>/Filters/Distorts/Whirl and Pinch..."
-msgstr ""
+msgstr "<Image>/Filters/Vervormingen/Draaien en knijpen..."
 
 #: plug-ins/common/whirlpinch.c:404
 msgid "Whirling and pinching..."
-msgstr ""
+msgstr "Draaien en knijpen..."
 
 #: plug-ins/common/whirlpinch.c:803
 msgid "Whirl and Pinch"
-msgstr ""
+msgstr "Draaien en knijpen"
 
 #: plug-ins/common/whirlpinch.c:859
 msgid "Whirl Angle:"
-msgstr ""
+msgstr "Draaiingshoek:"
 
 #: plug-ins/common/whirlpinch.c:868
 msgid "Pinch Amount:"
-msgstr ""
+msgstr "Knijphoeveelheid:"
 
 #: plug-ins/common/winclipboard.c:110
 msgid "<Image>/Edit/Copy to Clipboard"
@@ -6865,11 +6940,11 @@ msgstr "Kopiëren ..."
 
 #: plug-ins/common/winclipboard.c:472
 msgid "Unsupported format or Clipboard empty!"
-msgstr ""
+msgstr "Niet ondersteund formaat of klembord leeg!"
 
 #: plug-ins/common/winclipboard.c:483
 msgid "Can't get Clipboard data."
-msgstr ""
+msgstr "Kan klembordgegevens niet verkrijgen"
 
 #. ??? gimp_convert_rgb (image_ID);
 #.
@@ -6883,74 +6958,75 @@ msgstr "Plakken..."
 
 #: plug-ins/common/wind.c:205
 msgid "<Image>/Filters/Distorts/Wind..."
-msgstr ""
+msgstr "<Image>/Filters/Vervormingen/Wind..."
 
 #: plug-ins/common/wind.c:417
 msgid "Rendering Blast..."
-msgstr ""
+msgstr "Vlaag renderen..."
 
 #: plug-ins/common/wind.c:548
 msgid "Rendering Wind..."
-msgstr ""
+msgstr "Wind renderen..."
 
 #: plug-ins/common/wind.c:962
 msgid "Wind Strength must be greater than 0."
-msgstr ""
+msgstr "Windsterkte moet meer dan 0 zijn."
 
 #: plug-ins/common/wind.c:1007 plug-ins/common/wind.c:1074
 msgid "Wind"
-msgstr ""
+msgstr "Wind"
 
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
 #: plug-ins/common/wind.c:1071 plug-ins/maze/maze_face.c:302
 msgid "Style"
-msgstr ""
+msgstr "Stijl"
 
 #: plug-ins/common/wind.c:1075
 msgid "Blast"
-msgstr ""
+msgstr "Vlaag"
 
 #: plug-ins/common/wind.c:1092
 msgid "Left"
-msgstr ""
+msgstr "Links"
 
 #: plug-ins/common/wind.c:1093
 msgid "Right"
-msgstr ""
+msgstr "Rechts"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
 #: plug-ins/common/wind.c:1106
 msgid "Edge Affected"
-msgstr ""
+msgstr "Beïnvloedde rand"
 
 #: plug-ins/common/wind.c:1110
 msgid "Leading"
-msgstr ""
+msgstr "Voorste"
 
 #: plug-ins/common/wind.c:1111
 msgid "Trailing"
-msgstr ""
+msgstr "Achterste"
 
 #: plug-ins/common/wind.c:1112
 msgid "Both"
-msgstr ""
+msgstr "Beide"
 
 #: plug-ins/common/wind.c:1142
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
+"Hogere waarden beperken het effect tot minder gebieden in de afbeelding"
 
 #: plug-ins/common/wind.c:1155 plug-ins/gimpressionist/orientmap.c:565
 #: plug-ins/gimpressionist/sizemap.c:465
 msgid "Strength:"
-msgstr ""
+msgstr "Sterkte:"
 
 #: plug-ins/common/wind.c:1159
 msgid "Higher values increase the magnitude of the effect"
-msgstr ""
+msgstr "Hogere waarden verhogen de sterkte van het effect"
 
 #: plug-ins/common/winprint.c:189
 msgid "<Image>/File/Print"
@@ -7005,52 +7081,53 @@ msgstr "PageSetupDlg mislukte: %d"
 
 #: plug-ins/common/wmf.c:926
 msgid "Load Windows Metafile"
-msgstr ""
+msgstr "Windows Metabestand laden"
 
 #. Rendering
 #: plug-ins/common/wmf.c:943
 #, c-format
 msgid "Rendering %s"
-msgstr ""
+msgstr "Renderen %s"
 
 #: plug-ins/common/wmf.c:960
 msgid "Scale (log 2):"
-msgstr ""
+msgstr "Schaal (log 2):"
 
 #: plug-ins/common/wmf.c:1334
 #, c-format
 msgid "Interpreting %s:"
-msgstr ""
+msgstr "Interpreteren %s:"
 
 #: plug-ins/common/wmf.c:2346
 msgid "Transferring image"
-msgstr ""
+msgstr "Afbeelding overdragen"
 
 #: plug-ins/common/xbm.c:246
 msgid "Created with The GIMP"
-msgstr ""
+msgstr "Gemaakt met de GIMP"
 
 #: plug-ins/common/xbm.c:730
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
-msgstr ""
+msgstr "XBM: kan \"%s\" niet openen\n"
 
+# Is there an accepted Dutch phrase for 'header'?
 #: plug-ins/common/xbm.c:813
 #, c-format
 msgid "XBM: cannot read header (ftell == %ld)\n"
-msgstr ""
+msgstr "XBM: kan header niet lezen (ftell == %ld)\n"
 
 #: plug-ins/common/xbm.c:819
 msgid "XBM: no image width specified\n"
-msgstr ""
+msgstr "XBM: geen afbeeldingsbreedte opgegeven\n"
 
 #: plug-ins/common/xbm.c:825
 msgid "XBM: no image height specified\n"
-msgstr ""
+msgstr "XBM: geen afbeeldingshoogte opgegeven\n"
 
 #: plug-ins/common/xbm.c:831
 msgid "XBM: no image data type specified\n"
-msgstr ""
+msgstr "XBM: geen afbeeldingsgegevenstype opgegeven\n"
 
 #. The image is not black-and-white.
 #: plug-ins/common/xbm.c:964
@@ -7061,81 +7138,90 @@ msgid ""
 "Please convert it to a black and white\n"
 "(1-bit) indexed image and try again."
 msgstr ""
+"De afbeelding die u tracht op te slaan als\n"
+"een XBM bevat meer dan twee kleuren.\n"
+"\n"
+"Converteer de afbeelding naar zwart en wit\n"
+"(1 bit) geïndexeerd en probeer nog eens."
 
 #: plug-ins/common/xbm.c:975
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
 msgstr ""
+"U kunt een cursormasker niet opslaan voor\n"
+"een afbeelding zonder alphakanaal."
 
 #: plug-ins/common/xbm.c:1004
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
-msgstr ""
+msgstr "XBM: kan \"%s\" niet maken\n"
 
 #: plug-ins/common/xbm.c:1145
 msgid "Save as XBM"
-msgstr ""
+msgstr "Opslaan als XBM"
 
 #. parameter settings
 #: plug-ins/common/xbm.c:1162
 msgid "XBM Options"
-msgstr ""
+msgstr "XBM-opties"
 
 #. X10 format
 #: plug-ins/common/xbm.c:1173
 msgid "X10 Format Bitmap"
-msgstr ""
+msgstr "X10-formaat bitmap"
 
 #: plug-ins/common/xbm.c:1191
 msgid "Identifier Prefix:"
-msgstr ""
+msgstr "Identificatievoorvoegsel:"
 
+# What does 'Hot Spot' mean here?
 #. hotspot toggle
 #: plug-ins/common/xbm.c:1209
 msgid "Write Hot Spot Values"
-msgstr ""
+msgstr "Schrijf waarden voor 'hot spots'"
 
+# What does 'Hot Spot' mean here?
 #: plug-ins/common/xbm.c:1233
 msgid "Hot Spot X:"
-msgstr ""
+msgstr "Hot spot X:"
 
 #. mask file
 #: plug-ins/common/xbm.c:1247
 msgid "Mask File"
-msgstr ""
+msgstr "Maskerbestand"
 
 #: plug-ins/common/xbm.c:1258
 msgid "Write Extra Mask File"
-msgstr ""
+msgstr "Schrijf extra maskerbestand"
 
 #: plug-ins/common/xbm.c:1269
 msgid "Mask File Extension:"
-msgstr ""
+msgstr "Extensie van maskerbestand:"
 
-#: plug-ins/common/xpm.c:795
+#: plug-ins/common/xpm.c:817
 msgid "Save as XPM"
-msgstr ""
+msgstr "Opslaan als XPM"
 
-#: plug-ins/common/xpm.c:825
+#: plug-ins/common/xpm.c:847
 msgid "Alpha Threshold:"
-msgstr ""
+msgstr "Alphadrempel:"
 
 #: plug-ins/common/xwd.c:382
 msgid "can't open file for reading"
-msgstr ""
+msgstr "kan bestand niet openen om te lezen"
 
 #: plug-ins/common/xwd.c:389
 msgid "can't open file as XWD file"
-msgstr ""
+msgstr "kan bestand niet als XWD-bestand openen"
 
 #: plug-ins/common/xwd.c:411
 msgid "can't get memory for colormap"
-msgstr ""
+msgstr "kan geen geheugen voor kleurenkaart verkrijgen"
 
 #: plug-ins/common/xwd.c:430
 msgid "can't read color entries"
-msgstr ""
+msgstr "kan kleuringangen niet lezen"
 
 #: plug-ins/common/xwd.c:490
 #, c-format
@@ -7144,34 +7230,37 @@ msgid ""
 "and bits per pixel %d.\n"
 "Currently this is not supported.\n"
 msgstr ""
+"afbeelding laden (xwd): XWD-bestand %s\n"
+"heeft formaat %d, diepte %d en bits per pixel %d.\n"
+"Op het moment wordt dit niet ondersteund.\n"
 
 #: plug-ins/common/xwd.c:517
 msgid "XWD save cannot handle images with alpha channels"
-msgstr ""
+msgstr "XWD-opslaan kan niet met afbeeldingen met alphakanalen omgaan"
 
 #: plug-ins/common/xwd.c:528
 msgid "cannot operate on unknown image types"
-msgstr ""
+msgstr "kan niet werken met onbekende afbeeldingstypen"
 
 #: plug-ins/common/xwd.c:537
 msgid "can't open file for writing"
-msgstr ""
+msgstr "kan bestand niet openen om te schrijven"
 
 #: plug-ins/common/xwd.c:1242
 msgid "EOF encountered on "
-msgstr ""
+msgstr "EOF ontdekt op "
 
 #: plug-ins/common/xwd.c:1388
 msgid "No memory for mapping colors"
-msgstr ""
+msgstr "Geen geheugen om kleuren in te delen"
 
 #: plug-ins/common/xwd.c:2074
 msgid "Error during writing indexed/grey image"
-msgstr ""
+msgstr "Fout tijdens het schrijven van geïndexeerde/grijze afbeelding"
 
 #: plug-ins/common/xwd.c:2163
 msgid "Error during writing rgb image"
-msgstr ""
+msgstr "Fout tijdens het schrijven van RGB-afbeelding"
 
 #: plug-ins/common/zealouscrop.c:72
 msgid "<Image>/Image/Transforms/Zealous Crop"
@@ -7192,33 +7281,33 @@ msgstr "DB-browser (init. ...)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:155
 #: plug-ins/dbbrowser/dbbrowser_utils.c:174
-#: plug-ins/gap/gap_dbbrowser_utils.c:182
+#: plug-ins/gap/gap_dbbrowser_utils.c:187
 msgid "Search by Blurb"
 msgstr "Zoeken op omschrijving"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:382
-#: plug-ins/gap/gap_dbbrowser_utils.c:363
+#: plug-ins/gap/gap_dbbrowser_utils.c:368
 msgid "In:"
 msgstr "In:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:429
-#: plug-ins/gap/gap_dbbrowser_utils.c:409
+#: plug-ins/gap/gap_dbbrowser_utils.c:414
 msgid "Out:"
 msgstr "Uit:"
 
 #. show the author & the copyright
 #: plug-ins/dbbrowser/dbbrowser_utils.c:518
-#: plug-ins/gap/gap_dbbrowser_utils.c:496 plug-ins/imagemap/imap_settings.c:89
+#: plug-ins/gap/gap_dbbrowser_utils.c:501 plug-ins/imagemap/imap_settings.c:90
 msgid "Author:"
 msgstr "Auteur:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:533
-#: plug-ins/gap/gap_dbbrowser_utils.c:511
+#: plug-ins/gap/gap_dbbrowser_utils.c:516
 msgid "Date:"
 msgstr "Datum:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:548
-#: plug-ins/gap/gap_dbbrowser_utils.c:526
+#: plug-ins/gap/gap_dbbrowser_utils.c:531
 msgid "Copyright:"
 msgstr "Copyright:"
 
@@ -7240,80 +7329,80 @@ msgstr "DB-browser"
 
 #: plug-ins/fits/fits.c:362
 msgid "Error during open of FITS file"
-msgstr ""
+msgstr "Fout bij openen FITS-bestand"
 
 #: plug-ins/fits/fits.c:367
 msgid "FITS file keeps no displayable images"
-msgstr ""
+msgstr "FITS-bestand behoudt geen weergeefbare afbeeldingen"
 
 #: plug-ins/fits/fits.c:446
 msgid "FITS save cannot handle images with alpha channels"
-msgstr ""
+msgstr "FITS-opslaan kan niet omgaan met afbeeldingen met alphakanalen"
 
 #: plug-ins/fits/fits.c:457
 msgid "Cannot operate on unknown image types"
-msgstr ""
+msgstr "Kan niet werken met onbekende afbeeldingstypen"
 
 #: plug-ins/fits/fits.c:982
 msgid "Load FITS File"
-msgstr ""
+msgstr "Laad FITS-bestand"
 
 #: plug-ins/fits/fits.c:1004
 msgid "BLANK/NaN Pixel Replacement"
-msgstr ""
+msgstr "BLANK/NaN-pixelvervanging"
 
 #: plug-ins/fits/fits.c:1016
 msgid "Pixel Value Scaling"
-msgstr ""
+msgstr "Pixelwaardeschaling"
 
 #: plug-ins/fits/fits.c:1021
 msgid "By DATAMIN/DATAMAX"
-msgstr ""
+msgstr "Door DATAMIN/DATAMAX"
 
 #: plug-ins/fits/fits.c:1028
 msgid "Image Composing"
-msgstr ""
+msgstr "Afbeelding samenstellen"
 
 #: plug-ins/flame/flame.c:144
 msgid "<Image>/Filters/Render/Nature/Flame..."
-msgstr ""
+msgstr "<Image>/Filters/Renderen/Natuur/Vlam..."
 
 #: plug-ins/flame/flame.c:230
 msgid "Drawing Flame..."
-msgstr ""
+msgstr "Vlam tekenen..."
 
 #: plug-ins/flame/flame.c:309
 msgid "Flame works only on RGB drawables."
-msgstr ""
+msgstr "Vlam werkt alleen op RGB-tekengebieden."
 
 #: plug-ins/flame/flame.c:425
 #, c-format
 msgid "%s: Is not a regular file"
-msgstr ""
+msgstr "%s: Is niet een standaard bestand"
 
 #: plug-ins/flame/flame.c:629 plug-ins/flame/flame.c:975
 msgid "Edit Flame"
-msgstr ""
+msgstr "Bewerk vlam"
 
 #: plug-ins/flame/flame.c:648
 msgid "Directions"
-msgstr ""
+msgstr "Richtingen"
 
 #: plug-ins/flame/flame.c:678
 msgid "Controls"
-msgstr ""
+msgstr "Besturingen"
 
 #: plug-ins/flame/flame.c:693
 msgid "Speed:"
-msgstr ""
+msgstr "Snelheid:"
 
 #: plug-ins/flame/flame.c:709
 msgid "Randomize"
-msgstr ""
+msgstr "Willekeurig maken"
 
 #: plug-ins/flame/flame.c:722
 msgid "Same"
-msgstr ""
+msgstr "Hetzelfde"
 
 #: plug-ins/flame/flame.c:723 plug-ins/gimpressionist/orientation.c:151
 #: plug-ins/gimpressionist/size.c:150
@@ -7350,44 +7439,45 @@ msgstr "Vlam opslaan"
 
 #: plug-ins/flame/flame.c:918 plug-ins/flame/flame.c:957
 msgid "Flame"
-msgstr ""
+msgstr "Vlam"
 
 #: plug-ins/flame/flame.c:1027 plug-ins/print/gimp_color_window.c:193
 msgid "Contrast:"
-msgstr ""
+msgstr "Contrast:"
 
 #: plug-ins/flame/flame.c:1040 plug-ins/gimpressionist/brush.c:403
 #: plug-ins/print/gimp_color_window.c:285
 msgid "Gamma:"
-msgstr ""
+msgstr "Gamma:"
 
 #: plug-ins/flame/flame.c:1053
 msgid "Sample Density:"
-msgstr ""
+msgstr "Monsterdichtheid:"
 
+# What is 'oversample' in Dutch?
 #: plug-ins/flame/flame.c:1063
 msgid "Spatial Oversample:"
-msgstr ""
+msgstr "Ruimtelijke oversample:"
 
 #: plug-ins/flame/flame.c:1073
 msgid "Spatial Filter Radius:"
-msgstr ""
+msgstr "Radius ruimtelijk filter:"
 
 #: plug-ins/flame/flame.c:1099
 msgid "Colormap:"
-msgstr ""
+msgstr "Kleurenkaart:"
 
 #: plug-ins/flame/flame.c:1147
 msgid "Custom Gradient"
-msgstr ""
+msgstr "Aangepast verloop"
 
 #: plug-ins/flame/flame.c:1167
 msgid "Camera"
-msgstr ""
+msgstr "Camera"
 
 #: plug-ins/flame/flame.c:1179
 msgid "Zoom:"
-msgstr ""
+msgstr "Zoom:"
 
 #: plug-ins/fp/fp.c:93
 msgid "<Image>/Image/Colors/Filter Pack..."
@@ -7540,93 +7630,93 @@ msgstr "Vooruitblikgrootte"
 #. Button  to invoke filebrowser
 #: plug-ins/gap/gap_arr_dialog.c:291
 msgid "File-Browser"
-msgstr ""
+msgstr "Bestandsverkenner"
 
 #. parameter settings
 #: plug-ins/gap/gap_arr_dialog.c:794
 msgid "Enter Values"
-msgstr ""
+msgstr "Geef waarden in"
 
 #: plug-ins/gap/gap_arr_dialog.c:879
 msgid "Value: "
-msgstr ""
+msgstr "Waarde:"
 
 #: plug-ins/gap/gap_arr_dialog.c:1041
 msgid "Press Button"
-msgstr ""
+msgstr "Klik op knop"
 
 #: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:4005
-#: plug-ins/imagemap/imap_cmd_select.c:49
+#: plug-ins/imagemap/imap_cmd_select.c:52 plug-ins/imagemap/imap_tools.c:130
 msgid "Select"
-msgstr ""
+msgstr "Selecteer"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:65
+#: plug-ins/gap/gap_dbbrowser_utils.c:70
 msgid "GAP Animated Filter apply"
-msgstr ""
+msgstr "GAP geanimeerd filter toepassen"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:86
+#: plug-ins/gap/gap_dbbrowser_utils.c:91
 msgid "Animated Filter apply (init)"
-msgstr ""
+msgstr "Geanimeerd filter toepassen (initialisatie)"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:165
+#: plug-ins/gap/gap_dbbrowser_utils.c:170
 msgid "Gen Code by name"
-msgstr ""
+msgstr "Gencode op naam"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:665
+#: plug-ins/gap/gap_dbbrowser_utils.c:670
 msgid "Animated Filter apply (by name - please wait)"
-msgstr ""
+msgstr "Geanimeerd filter toepassen (op naam - wacht a.u.b.)"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:689
+#: plug-ins/gap/gap_dbbrowser_utils.c:694
 msgid "Animated Filter apply (by blurb - please wait)"
-msgstr ""
+msgstr "Geanimeerd filter toepassen (op tekst - wacht a.u.b.)"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:697
+#: plug-ins/gap/gap_dbbrowser_utils.c:702
 msgid "Animated Filter apply (please wait)"
-msgstr ""
+msgstr "Geanimeerd filter toepassen (wacht a.u.b.)"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:744
+#: plug-ins/gap/gap_dbbrowser_utils.c:749
 #: plug-ins/gap/gap_filter_foreach.c:163 plug-ins/gap/gap_mod_layer.c:287
 msgid "Animated Filter apply"
 msgstr "Geanimeerd filter toepassen"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:102
 msgid "<Image>/Video/Split Video to Frames"
-msgstr ""
+msgstr "<Image>/Video/Video in frames opdelen"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:103
 msgid "<Toolbox>/Xtns/Split Video to Frames"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Video in frames opdelen"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:179
 msgid "<Image>/Video/Split Video to Frames/MPEG1"
-msgstr ""
+msgstr "<Image>/Video/Video in frames opdelen/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:191
 msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Video in frames opdelen/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:333 plug-ins/gap/gap_decode_xanim.c:337
 #: plug-ins/gap/gap_range_ops.c:1240
 msgid "Overwrite Frame"
-msgstr ""
+msgstr "Frame overschrijven"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:335 plug-ins/gap/gap_decode_xanim.c:339
 #: plug-ins/gap/gap_range_ops.c:1242
 msgid "Overwrite All"
-msgstr ""
+msgstr "Alles overschrijven"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:347
-#: plug-ins/gap/gap_lib.c:1035 plug-ins/gap/gap_range_ops.c:1247
+#: plug-ins/gap/gap_lib.c:1042 plug-ins/gap/gap_range_ops.c:1247
 msgid "GAP Question"
-msgstr ""
+msgstr "GAP-vraag"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:344 plug-ins/gap/gap_decode_xanim.c:348
 msgid "File already exists"
-msgstr ""
+msgstr "Bestand bestaat al"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:438
 msgid "Decoding MPEG Movie..."
-msgstr ""
+msgstr "MPEG-film decoderen..."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:644
 msgid ""
@@ -7635,33 +7725,39 @@ msgid ""
 "and written to seperate diskfiles.\n"
 "Audiotracks in the videofile are ignored."
 msgstr ""
+"Naam van het te lezen MPEG1-videobestand.\n"
+"Frames worden uit het videobestand gehaald\n"
+"en geschreven naar aparte schijfbestanden.\n"
+"Audiotracks in het videobestanden worden genegeerd."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:654 plug-ins/gap/gap_decode_xanim.c:225
 msgid "Framenumber of 1st frame to extract"
-msgstr ""
+msgstr "Framenummer van het 1e te lezen frame"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:664 plug-ins/gap/gap_decode_xanim.c:235
 msgid "Framenumber of last frame to extract"
-msgstr ""
+msgstr "Framenummer van het laatste te lezen frame"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:673 plug-ins/gap/gap_decode_xanim.c:244
 msgid "Framenames:"
-msgstr ""
+msgstr "Framenamen:"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:674
 msgid ""
 "Basename for the AnimFrames to write on disk\n"
 "(framenumber and .xcf is added)"
 msgstr ""
+"Basisnaam voor de naar schijf te schrijven frames\n"
+"(framenummer en .xcf worden toegevoegd)"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
-#: plug-ins/imagemap/imap_toolbar.c:110
+#: plug-ins/imagemap/imap_toolbar.c:112
 msgid "Open"
 msgstr "Openen"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:682 plug-ins/gap/gap_decode_xanim.c:284
 msgid "Open the 1st one of the extracted frames"
-msgstr ""
+msgstr "Open het 1e van de ingelezen frames"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:686
 msgid ""
@@ -7669,71 +7765,85 @@ msgid ""
 "WARNING: Do not attempt to split other files than MPEG1 videos.\n"
 "Before you proceed, you should save all open images."
 msgstr ""
+"\n"
+"Waarschuwing: probeer niet andere bestanden dan MPEG1-videos\n"
+"op te delen. Voor u verdergaat, moet u eerst alle geopende\n"
+"afbeeldingen opslaan."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:689
 msgid "Split MPEG1 Video to Frames"
-msgstr ""
+msgstr "MPEG1-video in frames opdelen"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:690 plug-ins/gap/gap_decode_xanim.c:298
 #: plug-ins/gap/gap_range_ops.c:1462
 msgid "Select Frame Range"
-msgstr ""
+msgstr "Selecteer framebereik"
 
 #: plug-ins/gap/gap_decode_xanim.c:114
 msgid "Conditions to run the xanim based video split"
-msgstr ""
+msgstr "Voorwaarden om een op xanim gebaseerde video-opdeling uit te voeren"
 
+# What meaning of 'export' is used here?
 #: plug-ins/gap/gap_decode_xanim.c:122
 msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
-msgstr ""
+msgstr "1.) xanim 2.80.0, uitvoeruitvoering, (de loki-versie)"
 
 #: plug-ins/gap/gap_decode_xanim.c:126
 msgid "    must be installed somewhere in your PATH"
-msgstr ""
+msgstr "    moet ergens in uw PATH staan"
 
 #: plug-ins/gap/gap_decode_xanim.c:130
 msgid "    you can get xanim exporting edition at"
-msgstr ""
+msgstr "    u kunt deze uitvoering van xanim verkrijgen bij"
 
+# What meaning of 'export' is used here?
 #: plug-ins/gap/gap_decode_xanim.c:146
 msgid ""
 "2.) if your xanim exporting edition is not in your PATH or is not named xanim"
 msgstr ""
+"2.) als uw xanimuitvoer-uitvoering niet in uw PATH staat of niet xanim heet"
 
 #: plug-ins/gap/gap_decode_xanim.c:150
 msgid "    you have to set Environment variable GAP_XANIM_PROG "
-msgstr ""
+msgstr "    moet u uw omgevingsvariable GAP_XANIM_PROG instellen "
 
 #: plug-ins/gap/gap_decode_xanim.c:154
 msgid "    to your xanim exporting program and restart gimp"
-msgstr ""
+msgstr "    naar uw xanim-uitvoerend programma en GIMP opnieuw starten"
 
 #: plug-ins/gap/gap_decode_xanim.c:162
 msgid "An ERROR occured while trying to call xanim:"
-msgstr ""
+msgstr "Een fout deed zich voor bij het proberen aanroepen van xanim:"
 
 #: plug-ins/gap/gap_decode_xanim.c:181
 msgid "XANIM Information"
-msgstr ""
+msgstr "XANIM-informatie"
 
 #: plug-ins/gap/gap_decode_xanim.c:214
 msgid "Video:"
-msgstr ""
+msgstr "Video:"
 
 #: plug-ins/gap/gap_decode_xanim.c:215
 msgid ""
 "Name of a videofile to READ by xanim.\n"
 "Frames are extracted from the videofile\n"
-"and written to seprate diskfiles.\n"
+"and written to seperate diskfiles.\n"
 "xanim exporting edition is required."
 msgstr ""
+"Naam van een door xanim te lezen videobestand.\n"
+"Frames worden uit het videobestand gehaald\n"
+"en geschreven naar aparte schijfbestanden.\n"
+"xanimuitvoer-uitvoering is nodig."
 
 #: plug-ins/gap/gap_decode_xanim.c:245
 msgid ""
 "Basename for the AnimFrames to write on disk\n"
 "(framenumber and extension is added)"
 msgstr ""
+"Basisnaam voor de naar schijf te schrijven frames\n"
+"(framenummer en extensie worden toegevoegd)"
 
+# Verb or noun? I cannot check this function
 #: plug-ins/gap/gap_decode_xanim.c:252
 msgid "Format"
 msgstr ""
@@ -7743,38 +7853,45 @@ msgid ""
 "Fileformat for the extracted AnimFrames\n"
 "(xcf is extracted as ppm and converted to xcf)"
 msgstr ""
+"Bestandsformaat voor de opgehaalde frames\n"
+"(xcf wordt opgehaald als ppm en naar xcf geconverteerd)"
 
 #: plug-ins/gap/gap_decode_xanim.c:260
 msgid "Extract Frames"
-msgstr ""
+msgstr "Haal frames op"
 
 #: plug-ins/gap/gap_decode_xanim.c:261
 msgid "Enable extraction of Frames"
-msgstr ""
+msgstr "Schakel ophalen van frames in"
 
 #: plug-ins/gap/gap_decode_xanim.c:265
 msgid "Extract Audio"
-msgstr ""
+msgstr "Haal geluid op"
 
 #: plug-ins/gap/gap_decode_xanim.c:266
 msgid ""
 "Enable extraction of audio to raw audiofile\n"
 "(frame range limits are ignored for audio)"
 msgstr ""
+"Schakel het kopiëren van geluid naar een onbewerkt geluidsbestand\n"
+"in (framebereiklimieten worden genegeerd voor geluid)"
 
 #: plug-ins/gap/gap_decode_xanim.c:271
 msgid "Jpeg Quality:"
-msgstr ""
+msgstr "JPEG-kwaliteit:"
 
 #: plug-ins/gap/gap_decode_xanim.c:272
 msgid ""
 "Quality for resulting Jpeg frames\n"
 "(is ignored when other formats are used)"
 msgstr ""
+"Kwaliteit voor resulterende JPEG-frames\n"
+"(genegeerd als een andere formaat wordt gebruikt\n"
+")"
 
 #: plug-ins/gap/gap_decode_xanim.c:288
 msgid "Run asynchronously"
-msgstr ""
+msgstr "Asynchroon"
 
 #: plug-ins/gap/gap_decode_xanim.c:289
 msgid ""
@@ -7914,19 +8031,19 @@ msgstr ""
 "Niet-interactieve aanroep van %s\n"
 "(voor alle tussenliggende lagen)"
 
-#: plug-ins/gap/gap_filter_foreach.c:278
+#: plug-ins/gap/gap_filter_foreach.c:279
 msgid "Applying Filter to all Layers..."
 msgstr "Filter op alle lagen toepassen..."
 
-#: plug-ins/gap/gap_filter_foreach.c:552
+#: plug-ins/gap/gap_filter_foreach.c:553
 msgid "Select Filter for Animated apply"
 msgstr "Selecteer filter voor geanimeerd toepassen"
 
-#: plug-ins/gap/gap_filter_foreach.c:553 plug-ins/gap/gap_mod_layer.c:664
+#: plug-ins/gap/gap_filter_foreach.c:554 plug-ins/gap/gap_mod_layer.c:664
 msgid "Apply Constant"
 msgstr "Constante toepassen"
 
-#: plug-ins/gap/gap_filter_foreach.c:554 plug-ins/gap/gap_mod_layer.c:665
+#: plug-ins/gap/gap_filter_foreach.c:555 plug-ins/gap/gap_mod_layer.c:665
 msgid "Apply Varying"
 msgstr "Gevarieerd toepassen"
 
@@ -7950,11 +8067,11 @@ msgstr "<Image>/Video/Coderen/MPEG1..."
 msgid "<Image>/Video/Encode/MPEG2..."
 msgstr "<Image>/Video/Coderen/MPEG2..."
 
-#: plug-ins/gap/gap_lib.c:242
+#: plug-ins/gap/gap_lib.c:246
 msgid "GAP Message"
 msgstr "GAP-boodschap"
 
-#: plug-ins/gap/gap_lib.c:904
+#: plug-ins/gap/gap_lib.c:911
 msgid ""
 "OPERATION CANCELLED.\n"
 "Current frame changed while dialog was open."
@@ -7962,20 +8079,20 @@ msgstr ""
 "OPERATIE GEANNULEERD.\n"
 "Huidig frame is veranderd terwijl dialoogvenster open was."
 
-#: plug-ins/gap/gap_lib.c:926
+#: plug-ins/gap/gap_lib.c:933 plug-ins/gap/gap_lib.c:2198
 msgid ""
 "OPERATION CANCELLED.\n"
-"GAP-plugins works only with filenames\n"
-"that end with _0001.xcf.\n"
+"GAP plug-ins only work with filenames\n"
+"that end in numbers like _0001.xcf.\n"
 "==> Rename your image, then try again."
 msgstr ""
 "OPERATIE GEANNULEERD.\n"
-"GAP-plugins werkt alleen met bestands-\n"
+"GAP-plugins werken alleen met bestands-\n"
 "namen die op _0001.xcf eindigen.\n"
 "==> Hernoem uw afbeelding en probeer het\n"
 "    dan nog eens."
 
-#: plug-ins/gap/gap_lib.c:1013
+#: plug-ins/gap/gap_lib.c:1020
 msgid ""
 "You are using a file format != xcf\n"
 "Save Operations may result\n"
@@ -7985,73 +8102,78 @@ msgstr ""
 "Opslaan kan resulteren in het verlies\n"
 "van laaginformatie."
 
-#: plug-ins/gap/gap_lib.c:1029
+#: plug-ins/gap/gap_lib.c:1036
 msgid "Save Flattened"
 msgstr "Opslaan geplet"
 
-#: plug-ins/gap/gap_lib.c:1031
+#: plug-ins/gap/gap_lib.c:1038
 msgid "Save As Is"
 msgstr "Opslaan als Is"
 
-#: plug-ins/gap/gap_lib.c:1506 plug-ins/gap/gap_lib.c:1623
-#: plug-ins/gap/gap_lib.c:1702 plug-ins/gap/gap_lib.c:1709
-#: plug-ins/gap/gap_lib.c:1716 plug-ins/gap/gap_lib.c:1799
-#: plug-ins/gap/gap_lib.c:1821 plug-ins/gap/gap_lib.c:2710
+#: plug-ins/gap/gap_lib.c:1513 plug-ins/gap/gap_lib.c:1637
+#: plug-ins/gap/gap_lib.c:1716 plug-ins/gap/gap_lib.c:1723
+#: plug-ins/gap/gap_lib.c:1730 plug-ins/gap/gap_lib.c:1813
+#: plug-ins/gap/gap_lib.c:1835 plug-ins/gap/gap_lib.c:2740
 #, c-format
 msgid "Error: could not rename frame %ld to %ld"
 msgstr "Fout: kon frame niet hernoemen van %ld naar %ld"
 
-#: plug-ins/gap/gap_lib.c:1611
+#: plug-ins/gap/gap_lib.c:1576
+#, c-format
+msgid "Error: could not save frame %s"
+msgstr "Fout: kon frame %s niet opslaan"
+
+#: plug-ins/gap/gap_lib.c:1625
 msgid "Duplicating frames..."
 msgstr "Frames dupliceren..."
 
-#: plug-ins/gap/gap_lib.c:1787
+#: plug-ins/gap/gap_lib.c:1801
 msgid "Renumber Framesequence..."
 msgstr "Framereeks hernummeren..."
 
-#: plug-ins/gap/gap_lib.c:1973
+#: plug-ins/gap/gap_lib.c:1987
 #, c-format
 msgid "Goto Frame (%ld/%ld)"
 msgstr "Ga naar frame (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:1976
+#: plug-ins/gap/gap_lib.c:1990
 #, c-format
 msgid "Destination Frame Number (%ld  - %ld)"
 msgstr "Nummer van bestemmingsframe (%ld - %ld)"
 
-#: plug-ins/gap/gap_lib.c:1980 plug-ins/gap/gap_lib.c:2057
-#: plug-ins/gap/gap_lib.c:2245
+#: plug-ins/gap/gap_lib.c:1994 plug-ins/gap/gap_lib.c:2071
+#: plug-ins/gap/gap_lib.c:2275
 msgid "Number:"
 msgstr "Nummer:"
 
-#: plug-ins/gap/gap_lib.c:2041
+#: plug-ins/gap/gap_lib.c:2055
 #, c-format
 msgid "Delete Frames (%ld/%ld)"
 msgstr "Frames verwijderen (%ld/%ld"
 
-#: plug-ins/gap/gap_lib.c:2044
+#: plug-ins/gap/gap_lib.c:2058
 #, c-format
 msgid "Delete Frames from %ld to (number)"
 msgstr "Frames verwijderen van %ld tot (nummer)"
 
-#: plug-ins/gap/gap_lib.c:2107
+#: plug-ins/gap/gap_lib.c:2121
 #, c-format
 msgid "Duplicate Frames (%ld/%ld)"
 msgstr "Frames dupliceren (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2117
+#: plug-ins/gap/gap_lib.c:2131
 msgid "Source Range starts at this framenumber"
 msgstr "Bronbereik begint bij dit framenummer"
 
-#: plug-ins/gap/gap_lib.c:2125
+#: plug-ins/gap/gap_lib.c:2139
 msgid "Source Range ends at this framenumber"
 msgstr "Bronbereik eindigt bij dit framenummer"
 
-#: plug-ins/gap/gap_lib.c:2128
+#: plug-ins/gap/gap_lib.c:2142
 msgid "N times:"
 msgstr "N maal:"
 
-#: plug-ins/gap/gap_lib.c:2135
+#: plug-ins/gap/gap_lib.c:2149
 msgid ""
 "Copy selected Range n-times  \n"
 "(you may type in Values > 99)"
@@ -8059,37 +8181,37 @@ msgstr ""
 "Kopieer geselecteerd bereik n maal  \n"
 "(u kunt waarden opgeven > 99)"
 
-#: plug-ins/gap/gap_lib.c:2137
+#: plug-ins/gap/gap_lib.c:2152
 msgid "Duplicate Frame Range"
 msgstr "Framebereik dupliceren"
 
-#: plug-ins/gap/gap_lib.c:2240
+#: plug-ins/gap/gap_lib.c:2270
 #, c-format
 msgid "Exchange current Frame (%ld)"
 msgstr "Huidige frame verwisselen (%ld)"
 
-#: plug-ins/gap/gap_lib.c:2244
+#: plug-ins/gap/gap_lib.c:2274
 msgid "With Frame (number)"
 msgstr "Met frame (nummer)"
 
-#: plug-ins/gap/gap_lib.c:2286
+#: plug-ins/gap/gap_lib.c:2316
 #, c-format
 msgid "Framesequence Shift (%ld/%ld)"
 msgstr "Framereeks verschuiven (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2296
+#: plug-ins/gap/gap_lib.c:2326
 msgid "Affected Range starts at this framenumber"
 msgstr "Beïnvloed bereik begint op dit framenummer"
 
-#: plug-ins/gap/gap_lib.c:2304
+#: plug-ins/gap/gap_lib.c:2334
 msgid "Affected Range ends at this framenumber"
 msgstr "Beïnvloed bereik eindigt op dit framenummer"
 
-#: plug-ins/gap/gap_lib.c:2307
+#: plug-ins/gap/gap_lib.c:2337
 msgid "N-Shift:"
 msgstr "N-verschuiving:"
 
-#: plug-ins/gap/gap_lib.c:2312
+#: plug-ins/gap/gap_lib.c:2342
 msgid ""
 "Renumber the affected framesequence     \n"
 "(numbers are shifted in circle by N)"
@@ -8097,11 +8219,11 @@ msgstr ""
 "Hernummer de beïnvloedde framereeks        \n"
 "(nummers worden in cirkel verschoven met N)"
 
-#: plug-ins/gap/gap_lib.c:2314
+#: plug-ins/gap/gap_lib.c:2344
 msgid "Framesequence shift"
 msgstr "Framereeksverschuiving"
 
-#: plug-ins/gap/gap_lib.c:2922
+#: plug-ins/gap/gap_lib.c:2952
 #, c-format
 msgid ""
 "Can't execute more than 1 Video Function\n"
@@ -8845,10 +8967,10 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2055
-#: plug-ins/imagemap/imap_cmd_insert_point.c:57
-#: plug-ins/imagemap/imap_polygon.c:683
+#: plug-ins/imagemap/imap_cmd_insert_point.c:60
+#: plug-ins/imagemap/imap_polygon.c:685
 msgid "Insert Point"
-msgstr ""
+msgstr "Punt invoegen"
 
 #: plug-ins/gap/gap_mov_dialog.c:2063
 msgid ""
@@ -8857,10 +8979,10 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2067
-#: plug-ins/imagemap/imap_cmd_delete_point.c:57
-#: plug-ins/imagemap/imap_polygon.c:669
+#: plug-ins/imagemap/imap_cmd_delete_point.c:60
+#: plug-ins/imagemap/imap_polygon.c:671
 msgid "Delete Point"
-msgstr ""
+msgstr "Punt wissen"
 
 #: plug-ins/gap/gap_mov_dialog.c:2075
 msgid "Delete current Controlpoint"
@@ -9336,9 +9458,9 @@ msgstr ""
 
 #. menu_item cut
 #: plug-ins/gap/gap_navigator_dialog.c:2932
-#: plug-ins/imagemap/imap_cmd_cut.c:53
-#: plug-ins/imagemap/imap_cmd_cut_object.c:51
-#: plug-ins/imagemap/imap_menu.c:284 plug-ins/imagemap/imap_toolbar.c:129
+#: plug-ins/imagemap/imap_cmd_cut.c:56
+#: plug-ins/imagemap/imap_cmd_cut_object.c:54
+#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:131
 msgid "Cut"
 msgstr "Knippen"
 
@@ -9830,7 +9952,7 @@ msgstr "Teken: %c, %d, 0x%02x"
 msgid "Selected char:"
 msgstr "Geselecteerd teken:"
 
-#: plug-ins/gdyntext/charmap_window.c:133 plug-ins/imagemap/imap_polygon.c:452
+#: plug-ins/gdyntext/charmap_window.c:133 plug-ins/imagemap/imap_polygon.c:454
 msgid "Insert"
 msgstr "Invoegen"
 
@@ -9839,14 +9961,14 @@ msgid "Insert the selected char at the cursor position"
 msgstr "Voeg het geselecteerde teken op de cursorpositie in"
 
 #: plug-ins/gdyntext/font_selection.c:166
-#: plug-ins/gdyntext/font_selection.c:309 plug-ins/imagemap/imap_circle.c:265
-#: plug-ins/imagemap/imap_circle.c:271 plug-ins/imagemap/imap_circle.c:277
-#: plug-ins/imagemap/imap_grid.c:202 plug-ins/imagemap/imap_grid.c:208
-#: plug-ins/imagemap/imap_polygon.c:437 plug-ins/imagemap/imap_polygon.c:444
-#: plug-ins/imagemap/imap_rectangle.c:379
-#: plug-ins/imagemap/imap_rectangle.c:385
-#: plug-ins/imagemap/imap_rectangle.c:391
-#: plug-ins/imagemap/imap_rectangle.c:397
+#: plug-ins/gdyntext/font_selection.c:309 plug-ins/imagemap/imap_circle.c:267
+#: plug-ins/imagemap/imap_circle.c:273 plug-ins/imagemap/imap_circle.c:279
+#: plug-ins/imagemap/imap_grid.c:206 plug-ins/imagemap/imap_grid.c:212
+#: plug-ins/imagemap/imap_polygon.c:439 plug-ins/imagemap/imap_polygon.c:446
+#: plug-ins/imagemap/imap_rectangle.c:383
+#: plug-ins/imagemap/imap_rectangle.c:389
+#: plug-ins/imagemap/imap_rectangle.c:395
+#: plug-ins/imagemap/imap_rectangle.c:401
 msgid "pixels"
 msgstr "pixels"
 
@@ -10085,8 +10207,8 @@ msgstr "Vorige"
 
 #. More Buttons
 #: plug-ins/gfig/gfig.c:1914 plug-ins/gfig/gfig.c:5296
-#: plug-ins/gflare/gflare.c:3100 plug-ins/imagemap/imap_menu.c:277
-#: plug-ins/imagemap/imap_selection.c:171
+#: plug-ins/gflare/gflare.c:3100 plug-ins/imagemap/imap_menu.c:280
+#: plug-ins/imagemap/imap_selection.c:173 plug-ins/imagemap/imap_tools.c:150
 msgid "Edit"
 msgstr "Bewerken"
 
@@ -10256,7 +10378,7 @@ msgid "Draw on:"
 msgstr "Teken op:"
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:358
+#: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:360
 #: plug-ins/rcm/rcm_dialog.c:668
 msgid "Selection"
 msgstr "Selectie"
@@ -10407,8 +10529,9 @@ msgstr "Afbeelding tonen"
 msgid "Reload Image"
 msgstr "Afbeelding opnieuw laden"
 
-#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:384
-#: plug-ins/imagemap/imap_popup.c:132 plug-ins/imagemap/imap_rectangle.c:60
+#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:387
+#: plug-ins/imagemap/imap_popup.c:132 plug-ins/imagemap/imap_rectangle.c:64
+#: plug-ins/imagemap/imap_tools.c:135
 msgid "Rectangle"
 msgstr "Rechthoek"
 
@@ -10519,13 +10642,13 @@ msgstr "Klaar"
 msgid "Paint"
 msgstr "Tekenen"
 
-#: plug-ins/gfig/gfig.c:3929 plug-ins/imagemap/imap_cmd_clear.c:50
-#: plug-ins/imagemap/imap_menu.c:298
+#: plug-ins/gfig/gfig.c:3929 plug-ins/imagemap/imap_cmd_clear.c:53
+#: plug-ins/imagemap/imap_menu.c:301
 msgid "Clear"
 msgstr "Wissen"
 
 #: plug-ins/gfig/gfig.c:3931 plug-ins/ifscompose/ifscompose.c:1205
-#: plug-ins/imagemap/imap_toolbar.c:120
+#: plug-ins/imagemap/imap_toolbar.c:122
 msgid "Undo"
 msgstr "Ongedaan maken"
 
@@ -10801,9 +10924,9 @@ msgstr ""
 
 #: plug-ins/gflare/gflare.c:3684 plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
-#: plug-ins/imagemap/imap_preferences.c:467
+#: plug-ins/imagemap/imap_preferences.c:468
 msgid "General"
-msgstr ""
+msgstr "Algemeen"
 
 #.
 #. *  Gradient Menus
@@ -10862,13 +10985,15 @@ msgstr ""
 msgid "Shape of Second Flares"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:4054 plug-ins/imagemap/imap_circle.c:60
-#: plug-ins/imagemap/imap_menu.c:387 plug-ins/imagemap/imap_popup.c:135
+#: plug-ins/gflare/gflare.c:4054 plug-ins/imagemap/imap_circle.c:62
+#: plug-ins/imagemap/imap_menu.c:390 plug-ins/imagemap/imap_popup.c:135
+#: plug-ins/imagemap/imap_tools.c:140
 msgid "Circle"
 msgstr "Cirkel"
 
-#: plug-ins/gflare/gflare.c:4070 plug-ins/imagemap/imap_menu.c:389
-#: plug-ins/imagemap/imap_polygon.c:69 plug-ins/imagemap/imap_popup.c:138
+#: plug-ins/gflare/gflare.c:4070 plug-ins/imagemap/imap_menu.c:392
+#: plug-ins/imagemap/imap_polygon.c:71 plug-ins/imagemap/imap_popup.c:138
+#: plug-ins/imagemap/imap_tools.c:145
 msgid "Polygon"
 msgstr "Veelhoek"
 
@@ -10888,84 +11013,87 @@ msgstr ""
 #: plug-ins/gfli/gfli.c:427 plug-ins/gfli/gfli.c:466 plug-ins/gfli/gfli.c:711
 #, c-format
 msgid "FLI: Can't open \"%s\""
-msgstr ""
+msgstr "FLI: kan \"%s\" niet openen"
 
 #: plug-ins/gfli/gfli.c:526
 #, c-format
 msgid "Frame (%i)"
-msgstr ""
+msgstr "Frame (%i)"
 
 #: plug-ins/gfli/gfli.c:675
 msgid "FLI: Sorry, I can save only INDEXED and GRAY images."
-msgstr ""
+msgstr "FLI: sorry, ik kan alleen geïndexeerde of grijswaardenafbeeldingen opslaan"
 
 #: plug-ins/gfli/gfli.c:816
 msgid "GFLI 1.3 - Load framestack"
-msgstr ""
+msgstr "GFLI 1.3 - framestapel laden"
 
 #: plug-ins/gfli/gfli.c:885
 msgid "GFLI 1.3 - Save framestack"
-msgstr ""
+msgstr "GFLI 1.3 - framestapel opslaan"
 
 #: plug-ins/gimpressionist/brush.c:184
 msgid "GIMPressionist: Can only save drawables!\n"
-msgstr ""
+msgstr "GIMPressionist: kan alleen tekengebieden opslaan!\n"
 
 #: plug-ins/gimpressionist/brush.c:190
 msgid "Save brush"
-msgstr ""
+msgstr "Penseel opslaan"
 
 #: plug-ins/gimpressionist/brush.c:394
 msgid "Brush Preview:"
-msgstr ""
+msgstr "Penseelvooruitblik:"
 
 #: plug-ins/gimpressionist/brush.c:416
 msgid "Changes the gamma (brightness) of the selected brush"
-msgstr ""
+msgstr "Verandert de gamma (helderheid) van het geselecteerde penseel"
 
 #: plug-ins/gimpressionist/brush.c:428
 msgid "Select:"
 msgstr "Selecteer:"
 
+# What is the Dutch phrase for 'aspect ratio'?
 #: plug-ins/gimpressionist/brush.c:433
 msgid "Aspect ratio:"
-msgstr ""
+msgstr "Aspectratio:"
 
 #: plug-ins/gimpressionist/brush.c:437 plug-ins/gimpressionist/paper.c:173
 msgid "Relief:"
-msgstr ""
+msgstr "Reliëf:"
 
 #: plug-ins/gimpressionist/brush.c:452
 msgid "(None)"
-msgstr ""
+msgstr "(Geen)"
 
 #: plug-ins/gimpressionist/brush.c:465
 msgid "Save..."
-msgstr ""
+msgstr "Opslaan..."
 
+# What is the Dutch phrase for 'aspect ratio'?
 #: plug-ins/gimpressionist/brush.c:479
 msgid "Specifies the aspect ratio of the brush"
-msgstr ""
+msgstr "Geeft de aspectratio van het penseel aan"
 
 #: plug-ins/gimpressionist/brush.c:490
 msgid "Specifies the amount of embossing to apply to each brush stroke"
-msgstr ""
+msgstr "Geeft de hoeveelheid reliëf aan die op elke penseelstreek moet worden toegepast"
 
 #: plug-ins/gimpressionist/color.c:86
 msgid "Average under brush"
-msgstr ""
+msgstr "Gemiddelde onder penseel"
 
 #: plug-ins/gimpressionist/color.c:92
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr ""
+"Kleur wordt berekend uit het gemiddelde van alle pixels onder het penseel"
 
 #: plug-ins/gimpressionist/color.c:96
 msgid "Center of brush"
-msgstr ""
+msgstr "Midden van penseel"
 
 #: plug-ins/gimpressionist/color.c:102
 msgid "Samples the color from the pixel in the center of the brush"
-msgstr ""
+msgstr "Monstert de kleur uit de pixel in het midden van de penseel"
 
 #: plug-ins/gimpressionist/color.c:111
 msgid "Color noise:"
@@ -10973,7 +11101,7 @@ msgstr "Kleurruis:"
 
 #: plug-ins/gimpressionist/color.c:122
 msgid "Adds random noise to the color"
-msgstr ""
+msgstr "Voegt willekeurige ruis toe aan de kleur"
 
 #: plug-ins/gimpressionist/general.c:99
 msgid "Color Selection Dialog"
@@ -10981,105 +11109,111 @@ msgstr "Kleurkeuzedialoogvenster"
 
 #: plug-ins/gimpressionist/general.c:156
 msgid "Edge darken:"
-msgstr ""
+msgstr "Rand donkerder:"
 
 #: plug-ins/gimpressionist/general.c:173
 msgid "How much to \"darken\" the edges of each brush stroke"
-msgstr ""
+msgstr "Hoeveel \"donkerder\" moet de rand van een penseelstreek worden?"
 
 #: plug-ins/gimpressionist/general.c:180
 msgid "Background:"
-msgstr ""
+msgstr "Achtergrond:"
 
 #: plug-ins/gimpressionist/general.c:188
 msgid "Keep original"
-msgstr ""
+msgstr "Behoud origineel"
 
 #: plug-ins/gimpressionist/general.c:194
 msgid "Preserve the original image as a background"
-msgstr ""
+msgstr "Bewaar de originele afbeelding als een achtergrond"
 
 #: plug-ins/gimpressionist/general.c:198
 msgid "From paper"
-msgstr ""
+msgstr "Van papier"
 
 #: plug-ins/gimpressionist/general.c:204
 msgid "Copy the texture of the selected paper as a background"
-msgstr ""
+msgstr "Kopieer de tekstuur van het geselecteerde papier als een achtergrond"
 
 #: plug-ins/gimpressionist/general.c:217
 msgid "Solid"
-msgstr ""
+msgstr "Egaal"
 
 #: plug-ins/gimpressionist/general.c:223
 msgid "Solid colored background"
-msgstr ""
+msgstr "Uniform gekleurde achtergrond"
 
 #: plug-ins/gimpressionist/general.c:246
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr ""
+"Gebruik een transparante achtergrond. Alleen de geschilderde streken zullen "
+"zichtbaar zijn"
 
 #: plug-ins/gimpressionist/general.c:261
 msgid "Paint edges"
-msgstr ""
+msgstr "Schilder randen"
 
 #: plug-ins/gimpressionist/general.c:265
 msgid "Selects if to place strokes all the way out to the edges of the image"
-msgstr ""
+msgstr "Penseelstreken helemaal tot aan de rand van de afbeelding aanbrengen"
 
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:269 plug-ins/maze/maze_face.c:282
 msgid "Tileable"
-msgstr ""
+msgstr "Naadloos"
 
 #: plug-ins/gimpressionist/general.c:273
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr ""
+msgstr "Geeft aan of de resulterende afbeelding naadloos moet zijn"
 
+# What is the Dutch translation of "Drop shadow"
 #: plug-ins/gimpressionist/general.c:281
 msgid "Drop Shadow"
-msgstr ""
+msgstr "Dropshadow"
 
 #: plug-ins/gimpressionist/general.c:285
 msgid "Adds a shadow effect to each brush stroke"
-msgstr ""
+msgstr "Voegt een schaduw toe aan elke penseelstreek"
 
+# What is the Dutch translation of "Drop shadow"
 #: plug-ins/gimpressionist/general.c:296
 msgid "How much to \"darken\" the drop shadow"
-msgstr ""
+msgstr "Hoeveel de dropshadow \"donkerder\" moet worden gemaakt"
 
 #: plug-ins/gimpressionist/general.c:302
 msgid "Shadow depth:"
-msgstr ""
+msgstr "Schaduwdiepte:"
 
 #: plug-ins/gimpressionist/general.c:313
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
+"De diepte van de dropshadow: hoe ver deze van het object verwijderd moet zijn"
 
 #: plug-ins/gimpressionist/general.c:319
 msgid "Shadow blur:"
-msgstr ""
+msgstr "Schaduwvervaging:"
 
+# What is the Dutch translation of "Drop shadow"
 #: plug-ins/gimpressionist/general.c:330
 msgid "How much to blur the drop shadow"
-msgstr ""
+msgstr "Hoeveel moet de dropshadow worden vervaagd"
 
 #: plug-ins/gimpressionist/general.c:336
 msgid "Deviation threshold:"
-msgstr ""
+msgstr "Afwijkingsdrempel:"
 
 #: plug-ins/gimpressionist/general.c:347
 msgid "A bailout-value for adaptive selections"
-msgstr ""
+msgstr "Een reddingswaarde voor adaptieve selecties"
 
 #: plug-ins/gimpressionist/gimp.c:105
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
-msgstr ""
+msgstr "<Image>/Filters/Artistiek/GIMPressionist..."
 
 #: plug-ins/gimpressionist/gimp.c:294
 msgid "Painting..."
-msgstr ""
+msgstr "Schilderen..."
 
 #: plug-ins/gimpressionist/gimpressionist.c:96
 #, c-format
@@ -11089,11 +11223,16 @@ msgid ""
 "  (gimpressionist-path \"%s\")\n"
 "(or similar) to your gimprc file.\n"
 msgstr ""
+"*** Waarschuwing ***\n"
+"Het is ten zeerste aan te raden om een\n"
+"(gimpressionist-path \"%s\")\n"
+"(of iets dergelijks) toe te voegen\n"
+"aan uw gimprc-bestand.\n"
 
 #: plug-ins/gimpressionist/gimpressionist.c:346
 #: plug-ins/gimpressionist/gimpressionist.c:442
 msgid "The GIMPressionist!"
-msgstr ""
+msgstr "De GIMPressionist!"
 
 #: plug-ins/gimpressionist/gimpressionist.c:484
 msgid "Run with the selected settings"
@@ -11101,91 +11240,100 @@ msgstr "Werk met de geselecteerde instellingen"
 
 #: plug-ins/gimpressionist/gimpressionist.c:491
 msgid "Quit the program"
-msgstr ""
+msgstr "Het programma afsluiten"
 
 #: plug-ins/gimpressionist/gimpressionist.c:493
 msgid "About..."
-msgstr ""
+msgstr "Info..."
 
 #: plug-ins/gimpressionist/gimpressionist.c:498
 msgid "Show some information about program"
-msgstr ""
+msgstr "Toon informatie over het programma"
 
 #: plug-ins/gimpressionist/orientation.c:73
 msgid "Directions:"
-msgstr ""
+msgstr "Richtingen:"
 
 #: plug-ins/gimpressionist/orientation.c:77
 msgid "Start angle:"
-msgstr ""
+msgstr "Beginhoek:"
 
 #: plug-ins/gimpressionist/orientation.c:81
 msgid "Angle span:"
-msgstr ""
+msgstr "Reikwijdte:"
 
-#: plug-ins/gimpressionist/orientation.c:96 plug-ins/gimpressionist/size.c:95
+#: plug-ins/gimpressionist/orientation.c:96
 msgid "The number of directions (i.e. brushes) to use"
-msgstr ""
+msgstr "Het aantal richtingen (penselen) dat wordt gebruikt"
 
 #: plug-ins/gimpressionist/orientation.c:105
 msgid "The angle of the first brush to create"
-msgstr ""
+msgstr "De hoek van het eerste penseel dat wordt aangemaakt"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid "How large an angle-span to use (360 = full circle)"
-msgstr ""
+msgstr "Hoe veel van de cirkel moet worden gebruikt (360 = helemaal)"
 
 #: plug-ins/gimpressionist/orientation.c:137
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr ""
+"Laat de waarde (helderheid) van het gebied de richting van de penseelstreek "
+"bepalen"
 
 #: plug-ins/gimpressionist/orientation.c:141
 #: plug-ins/gimpressionist/size.c:140
 msgid "Radius"
-msgstr ""
+msgstr "Radius"
 
 #: plug-ins/gimpressionist/orientation.c:147
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr ""
+"De afstand tot het midden van de afbeelding bepaalt de richting van de "
+"penseelstreek"
 
 #: plug-ins/gimpressionist/orientation.c:157
 msgid "Selects a random direction of each stroke"
-msgstr "Selecteert een willekeurige richting van elke streek"
+msgstr "Selecteert een willekeurige richting voor elke penseelstreek"
 
 #: plug-ins/gimpressionist/orientation.c:167
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr ""
+"Laat de richting naar het midden bepalen wat de richting van de "
+"penseelstreek wordt"
 
 #: plug-ins/gimpressionist/orientation.c:176
 #: plug-ins/gimpressionist/size.c:175
 msgid "Flowing"
-msgstr ""
+msgstr "Vloeiend"
 
 #: plug-ins/gimpressionist/orientation.c:182
 #: plug-ins/gimpressionist/size.c:181
 msgid "The strokes follow a \"flowing\" pattern"
-msgstr ""
+msgstr "De penseelstreken volgen een \"vloeiend\" patroon"
 
+# What is the Dutch phrase for hue?
 #: plug-ins/gimpressionist/orientation.c:194
 msgid "The hue of the region determines the direction of the stroke"
-msgstr ""
+msgstr "De hue van het gebied bepaalt de richting van de penseelstreek"
 
 #: plug-ins/gimpressionist/orientation.c:204
 msgid "The direction that matches the original image the closest is selected"
 msgstr ""
+"De richting die het best past bij de oorspronkelijke afbeelding wordt "
+"geselecteerd"
 
 #: plug-ins/gimpressionist/orientation.c:213
 #: plug-ins/gimpressionist/size.c:210
 msgid "Manual"
-msgstr ""
+msgstr "Handmatig"
 
 #: plug-ins/gimpressionist/orientation.c:219
 msgid "Manually specify the stroke orientation"
-msgstr ""
+msgstr "Bepaal de richting van de penseelstreek handmatig"
 
 #: plug-ins/gimpressionist/orientation.c:223
 #: plug-ins/gimpressionist/size.c:220
@@ -11194,11 +11342,11 @@ msgstr "Bewerken..."
 
 #: plug-ins/gimpressionist/orientation.c:228
 msgid "Opens up the Orientation Map Editor"
-msgstr ""
+msgstr "Opent de richtingskaarteditor"
 
 #: plug-ins/gimpressionist/orientmap.c:461
 msgid "Orientation Map Editor"
-msgstr ""
+msgstr "Richtingskaarteditor"
 
 #: plug-ins/gimpressionist/orientmap.c:469
 msgid "Vectors"
@@ -11209,11 +11357,14 @@ msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
+"Het vectorveld. Klik LMB om de geselecteerde vector te bewegen, klik RMB om "
+"hem naar de muisaanwijzer te laten wijzen, klik MMB om een nieuwe vector toe "
+"te voegen."
 
 #: plug-ins/gimpressionist/orientmap.c:500
 #: plug-ins/gimpressionist/sizemap.c:400
 msgid "Adjust the preview's brightness"
-msgstr ""
+msgstr "Pas de helderheid van de vooruitblik aan"
 
 #: plug-ins/gimpressionist/orientmap.c:522
 msgid "Select previous vector"
@@ -11230,158 +11381,165 @@ msgstr "Voeg nieuwe vector toe"
 #: plug-ins/gimpressionist/orientmap.c:538
 #: plug-ins/gimpressionist/sizemap.c:438
 msgid "Kill"
-msgstr ""
+msgstr "Verwijder"
 
 #: plug-ins/gimpressionist/orientmap.c:543
 msgid "Delete selected vector"
-msgstr ""
+msgstr "Wis de geselecteerde vector"
 
 #: plug-ins/gimpressionist/orientmap.c:563
 msgid "Change the angle of the selected vector"
-msgstr ""
+msgstr "Verander de hoek van de geselecteerde vector"
 
 #: plug-ins/gimpressionist/orientmap.c:577
 msgid "Change the strength of the selected vector"
-msgstr ""
+msgstr "Verander de kracht van de geselecteerde vector"
 
+# What is meant with 'Vortex' here?
 #: plug-ins/gimpressionist/orientmap.c:596
 msgid "Vortex"
-msgstr ""
+msgstr "Maalstroom"
 
+# What is meant with 'Vortex' here?
 #: plug-ins/gimpressionist/orientmap.c:608
 msgid "Vortex2"
-msgstr ""
+msgstr "Maalstroom2"
 
+# What is meant with 'Vortex' here?
 #: plug-ins/gimpressionist/orientmap.c:614
 msgid "Vortex3"
-msgstr ""
+msgstr "Maalstroom3"
 
 #: plug-ins/gimpressionist/orientmap.c:631
 #: plug-ins/gimpressionist/sizemap.c:490
 msgid "Apply and exit the editor"
-msgstr ""
+msgstr "Pas toe en verlaat de editor"
 
 #: plug-ins/gimpressionist/orientmap.c:638
 #: plug-ins/gimpressionist/sizemap.c:497
 msgid "Apply, but stay inside the editor"
-msgstr ""
+msgstr "Pas toe, maar blijf in de editor"
 
 #: plug-ins/gimpressionist/orientmap.c:645
 #: plug-ins/gimpressionist/sizemap.c:504
 msgid "Cancel all changes and exit"
-msgstr ""
+msgstr "Annuleer alle veranderingen en sluit af"
 
 #: plug-ins/gimpressionist/orientmap.c:653
 #: plug-ins/gimpressionist/sizemap.c:512
 msgid "Strength exp.:"
-msgstr ""
+msgstr "Krachtexponent:"
 
 #: plug-ins/gimpressionist/orientmap.c:665
 #: plug-ins/gimpressionist/sizemap.c:524
 msgid "Change the exponent of the strength"
-msgstr ""
+msgstr "Verander de exponent van de kracht"
 
 #: plug-ins/gimpressionist/orientmap.c:667
 msgid "Angle offset:"
-msgstr ""
+msgstr "Hoekverspringing:"
 
 #: plug-ins/gimpressionist/orientmap.c:679
 msgid "Offset all vectors with a given angle"
-msgstr ""
+msgstr "Verspring alle vectors met een bepaalde hoek"
 
 #: plug-ins/gimpressionist/orientmap.c:681
 #: plug-ins/gimpressionist/sizemap.c:527
 msgid "Voronoi"
-msgstr ""
+msgstr "Voronoi"
 
 #: plug-ins/gimpressionist/orientmap.c:689
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr ""
+"Voronoi-modus zorgt ervoor dat alleen de vector die het dichtst bij een "
+"bepaald punt is invloed heeft"
 
 #: plug-ins/gimpressionist/paper.c:89 plug-ins/gimpressionist/paper.c:94
 msgid "Paper"
-msgstr ""
+msgstr "Papier"
 
 #: plug-ins/gimpressionist/paper.c:130
 msgid "Paper Preview:"
-msgstr ""
+msgstr "Papiervooruitblik:"
 
 #. updatepaperprev(NULL);
 #: plug-ins/gimpressionist/paper.c:141
 msgid "Invert"
-msgstr ""
+msgstr "Inverse"
 
 #: plug-ins/gimpressionist/paper.c:148
 msgid "Inverts the Papers texture"
-msgstr ""
+msgstr "De inverse van de papiertekstuur"
 
 #: plug-ins/gimpressionist/paper.c:156
 msgid "Applies the paper as it is (without embossing it)"
-msgstr ""
+msgstr "Past het papier zo toe (zonder een reliëf toe te passen)"
 
 #. Scale
 #: plug-ins/gimpressionist/paper.c:169 plug-ins/ifscompose/ifscompose.c:563
 msgid "Scale:"
-msgstr ""
+msgstr "Schaal:"
 
 #: plug-ins/gimpressionist/paper.c:188
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr ""
+"Geeft de schaal van de tekstuur aan (als een percentage van het "
+"oorspronkelijke bestand)"
 
 #: plug-ins/gimpressionist/paper.c:197
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr ""
+msgstr "Bepaalt de hoeveelheid reliëf die op de afbeelding moet worden toegepast (in procenten)"
 
 #: plug-ins/gimpressionist/placement.c:52
 #: plug-ins/gimpressionist/placement.c:57
 msgid "Placement"
-msgstr ""
+msgstr "Plaatsing"
 
 #: plug-ins/gimpressionist/placement.c:77
 msgid "Placement:"
-msgstr ""
+msgstr "Plaatsing:"
 
 #: plug-ins/gimpressionist/placement.c:87
 msgid "Randomly"
-msgstr ""
+msgstr "Willekeurig"
 
 #: plug-ins/gimpressionist/placement.c:93
 msgid "Place strokes randomly around the image"
-msgstr ""
+msgstr "Plaats penseelstreken willekeurig rond de afbeelding"
 
 #: plug-ins/gimpressionist/placement.c:97
 msgid "Evenly distributed"
-msgstr ""
+msgstr "Gelijkmatig"
 
 #: plug-ins/gimpressionist/placement.c:103
 msgid "The strokes are evenly distributed across the image"
-msgstr ""
+msgstr "De penseelstreken worden gelijkmatig over de afbeelding verdeeld"
 
 #: plug-ins/gimpressionist/placement.c:112
 msgid "Stroke density:"
-msgstr ""
+msgstr "Streekdichtheid:"
 
 #: plug-ins/gimpressionist/placement.c:123
 msgid "The relative density of the brush strokes"
-msgstr ""
+msgstr "De relatieve dichtheid van de penseelstreken"
 
 #: plug-ins/gimpressionist/placement.c:125
 msgid "Centerize"
-msgstr ""
+msgstr "Centreer"
 
 #: plug-ins/gimpressionist/placement.c:129
 msgid "Focus the brush strokes around the center of the image"
-msgstr ""
+msgstr "Focus de penseelstreken rond het midden van de afbeelding"
 
 #: plug-ins/gimpressionist/presets.c:572 plug-ins/gimpressionist/presets.c:577
 msgid "Presets"
-msgstr ""
+msgstr "Instellingen"
 
 #: plug-ins/gimpressionist/presets.c:596
 msgid "Save current"
-msgstr ""
+msgstr "Sla huidige op"
 
 #: plug-ins/gimpressionist/presets.c:602
 msgid "Save the current settings to the specified file"
@@ -11389,19 +11547,19 @@ msgstr "Sla de huidige instellingen op in het aangegeven bestand"
 
 #: plug-ins/gimpressionist/presets.c:646
 msgid "Reads the selected Preset into memory"
-msgstr ""
+msgstr "Leest de geselecteerde instellingen in het geheugen"
 
 #: plug-ins/gimpressionist/presets.c:654
 msgid "Deletes the selected Preset"
-msgstr ""
+msgstr "Wis de geselecteerde instelling"
 
 #: plug-ins/gimpressionist/presets.c:662
 msgid "Reread the directory of Presets"
-msgstr ""
+msgstr "Lees de map met instellingen opnieuw in"
 
 #: plug-ins/gimpressionist/presets.c:664
 msgid "(Desc)"
-msgstr ""
+msgstr "(Beschrijving)"
 
 #: plug-ins/gimpressionist/presets.c:669
 msgid ""
@@ -11411,117 +11569,139 @@ msgid ""
 "feel free to send them to me <vidar@prosalg.no>\n"
 "for inclusion into the next release!\n"
 msgstr ""
+"\n"
+"Als u mooie instellingen ontdekt (of \n"
+"penselen en papieren), stuur ze dan \n"
+"gerust naar mij <vidar@prosalg.no> om \n"
+"in een volgende versie te worden opgenomen!\n"
 
 #: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:877
-#: plug-ins/gimpressionist/repaint.c:879 plug-ins/imagemap/imap_polygon.c:446
+#: plug-ins/gimpressionist/repaint.c:879 plug-ins/imagemap/imap_polygon.c:448
 msgid "Update"
-msgstr ""
+msgstr "Vernieuw"
 
 #: plug-ins/gimpressionist/preview.c:122
 msgid "Refresh the Preview window"
-msgstr ""
+msgstr "Vernieuw de vooruitblik"
 
 #: plug-ins/gimpressionist/preview.c:129
 msgid "Revert to the original image"
-msgstr ""
+msgstr "Haal oorspronkelijke afbeelding terug"
 
 #: plug-ins/gimpressionist/size.c:72
 msgid "Sizes:"
-msgstr ""
+msgstr "Grootten:"
 
 #: plug-ins/gimpressionist/size.c:76
 msgid "Min size:"
-msgstr ""
+msgstr "Min. grootte:"
 
 #: plug-ins/gimpressionist/size.c:80
 msgid "Max size:"
-msgstr ""
+msgstr "Max. grootte:"
+
+#: plug-ins/gimpressionist/size.c:95
+msgid "The number of sizes of brushes to use"
+msgstr "Het aantal grootten van penselen dat wordt gebruikt"
 
 #: plug-ins/gimpressionist/size.c:104
 msgid "The smallest brush to create"
-msgstr ""
+msgstr "Het kleinste aan te maken penseel"
 
 #: plug-ins/gimpressionist/size.c:113
 msgid "The largest brush to create"
-msgstr ""
+msgstr "Het grootste aan te maken penseel"
 
 #: plug-ins/gimpressionist/size.c:136
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr ""
+"Laat de waarde (helderheid) van het gebied bepalen wat de grootte van de "
+"penseelstreek wordt"
 
 #: plug-ins/gimpressionist/size.c:146
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr ""
+"De afstand tot het midden van de afbeelding bepaalt de grootte van de "
+"penseelstreek"
 
 #: plug-ins/gimpressionist/size.c:156
 msgid "Selects a random size for each stroke"
-msgstr ""
+msgstr "Kies een willekeurige grootte voor elke penseelstreek"
 
 #: plug-ins/gimpressionist/size.c:166
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr ""
+"Laat de richting naar het midden de grootte van de penseelstreek bepalen"
 
+# What is the Dutch translation of the word 'hue'?
 #: plug-ins/gimpressionist/size.c:192
 msgid "The hue of the region determines the size of the stroke"
-msgstr ""
+msgstr "De hue van de het gebied bepaalt de grootte van de penseelstreek"
 
 #: plug-ins/gimpressionist/size.c:202
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr ""
+"De penseelgrootte die het best past bij de oorspronkelijke afbeelding wordt "
+"gebruikt"
 
 #: plug-ins/gimpressionist/size.c:216
 msgid "Manually specify the stroke size"
-msgstr ""
+msgstr "Bepaal de grootte van de penseelstreek handmatig"
 
 #: plug-ins/gimpressionist/size.c:225
 msgid "Opens up the Size Map Editor"
-msgstr ""
+msgstr "Opent de Groottekaarteditor"
 
 #: plug-ins/gimpressionist/sizemap.c:361
 msgid "Size Map Editor"
-msgstr ""
+msgstr "Groottekaarteditor"
 
 #: plug-ins/gimpressionist/sizemap.c:369
 msgid "Smvectors"
-msgstr ""
+msgstr "Smvectors"
 
 #: plug-ins/gimpressionist/sizemap.c:379
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
+"Het smvectorveld. Klik LMB om de geselecteerde smvector te verplaatsen, klik "
+"RMB om hem naar de muisaanwijzer te laten wijzen of klik MMB om een nieuwe "
+"smvector toe te voegen."
 
 #: plug-ins/gimpressionist/sizemap.c:422
 msgid "Select previous smvector"
-msgstr ""
+msgstr "Selecteer de vorige smvector"
 
 #: plug-ins/gimpressionist/sizemap.c:429
 msgid "Select next smvector"
-msgstr ""
+msgstr "Selecteer de volgende smvector"
 
 #: plug-ins/gimpressionist/sizemap.c:436
 msgid "Add new smvector"
-msgstr ""
+msgstr "Voeg een nieuwe smvector toe"
 
 #: plug-ins/gimpressionist/sizemap.c:443
 msgid "Delete selected smvector"
-msgstr ""
+msgstr "Wis de geselecteerde smvector"
 
 #: plug-ins/gimpressionist/sizemap.c:463
 msgid "Change the angle of the selected smvector"
-msgstr ""
+msgstr "Verander de hoek van de geselecteerde smvector"
 
 #: plug-ins/gimpressionist/sizemap.c:477
 msgid "Change the strength of the selected smvector"
-msgstr ""
+msgstr "Verander de kracht van de geselecteerde smvector"
 
 #: plug-ins/gimpressionist/sizemap.c:535
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr ""
+"Voronoi-modus zorgt dat alleen de smvector die het dichtste bij het gegeven "
+"punt ligt invloed heeft"
 
 #: plug-ins/helpbrowser/helpbrowser.c:95
 #, c-format
@@ -11532,6 +11712,11 @@ msgid ""
 "written yet or that something is wrong with your installation. Please check "
 "carefully before you report this as a bug.</small></body></html>"
 msgstr ""
+"<html><head><title>Document niet gevonden</title></head><body><center><p>%"
+"s<h3>Kon document niet vinden</h3><tt>%s</tt></center><p><small>Dit betekent "
+"dat de hulppagina voor dit onderwerp nog niet is geschreven of dat er iets "
+"mis is met uw installatie. Controlleer dit a.u.b. zorgvuldig voordat u dit "
+"als een programmeerfout meldt.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:111
 #, c-format
@@ -11543,17 +11728,22 @@ msgid ""
 "with your installation. Please check carefully before you report this as a "
 "bug.</small></body></html>"
 msgstr ""
+"<html><head><title>Map niet gevonden</title></head><body><center><p>%"
+"s<h3>Kon niet naar map schakelen</h3><tt>%s</tt></center><p><small>Dit "
+"betekent dat de hulppagina voor dit onderwerp nog niet is geschreven of dat "
+"er iets mis is met uw installatie. Controlleer dit a.u.b. zorgvuldig voordat "
+"u dit als een programmeerfout meldt.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:137
 msgid "Contents"
-msgstr ""
+msgstr "Inhoud"
 
 #: plug-ins/helpbrowser/helpbrowser.c:146
 msgid "Index"
-msgstr ""
+msgstr "Index"
 
-#: plug-ins/helpbrowser/helpbrowser.c:419 plug-ins/imagemap/imap_main.c:511
-#: plug-ins/imagemap/imap_settings.c:149
+#: plug-ins/helpbrowser/helpbrowser.c:419 plug-ins/imagemap/imap_main.c:512
+#: plug-ins/imagemap/imap_settings.c:150
 msgid "<Untitled>"
 msgstr "<Naamloos>"
 
@@ -11605,7 +11795,7 @@ msgstr ""
 #. Flip
 #: plug-ins/ifscompose/ifscompose.c:619
 msgid "Flip"
-msgstr ""
+msgstr "Spiegelen"
 
 #. Simple color control section
 #: plug-ins/ifscompose/ifscompose.c:650
@@ -11678,8 +11868,8 @@ msgid "Relative Probability:"
 msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:1181
-#: plug-ins/imagemap/imap_cmd_select_all.c:50
-#: plug-ins/imagemap/imap_menu.c:294
+#: plug-ins/imagemap/imap_cmd_select_all.c:53
+#: plug-ins/imagemap/imap_menu.c:297
 msgid "Select All"
 msgstr "Alles selecteren"
 
@@ -11687,7 +11877,7 @@ msgstr "Alles selecteren"
 msgid "Recompute Center"
 msgstr "Herbereken middelpunt"
 
-#: plug-ins/ifscompose/ifscompose.c:1217 plug-ins/imagemap/imap_toolbar.c:123
+#: plug-ins/ifscompose/ifscompose.c:1217 plug-ins/imagemap/imap_toolbar.c:125
 msgid "Redo"
 msgstr "Opnieuw uitvoeren"
 
@@ -11718,7 +11908,7 @@ msgstr ""
 msgid "Copying IFS to image (%d/%d)..."
 msgstr ""
 
-#: plug-ins/imagemap/imap_about.c:39
+#: plug-ins/imagemap/imap_about.c:42
 msgid ""
 "Imagemap plug-in 1.3\n"
 "\n"
@@ -11734,33 +11924,33 @@ msgstr ""
 "\n"
 "  Gepubliceerd onder de GNU General Public License  "
 
-#: plug-ins/imagemap/imap_circle.c:261
+#: plug-ins/imagemap/imap_circle.c:263
 msgid "Center x:"
 msgstr "Midden x:"
 
-#: plug-ins/imagemap/imap_circle.c:267
+#: plug-ins/imagemap/imap_circle.c:269
 msgid "Center y:"
 msgstr "Midden y:"
 
-#: plug-ins/imagemap/imap_cmd_create.c:52
+#: plug-ins/imagemap/imap_cmd_create.c:55
 msgid "Create"
 msgstr "Maken"
 
-#: plug-ins/imagemap/imap_cmd_edit_object.c:50
+#: plug-ins/imagemap/imap_cmd_edit_object.c:53
 msgid "Edit Object"
 msgstr "Object bewerken"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:71
-#: plug-ins/imagemap/imap_cmd_guides.c:132
+#: plug-ins/imagemap/imap_cmd_guides.c:73
+#: plug-ins/imagemap/imap_cmd_guides.c:134
 msgid "Create Guides"
-msgstr "Gidsen maken"
+msgstr "Hulplijnen maken"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:111
+#: plug-ins/imagemap/imap_cmd_guides.c:113
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
-msgstr "Resulterende gidsgrenzen: %d,%d naar %d,%d (%d gebieden)"
+msgstr "Resulterende hulplijngrenzen: %d,%d naar %d,%d (%d gebieden)"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:136
+#: plug-ins/imagemap/imap_cmd_guides.c:138
 msgid ""
 "Guides are pre-defined rectangles covering the image. You define\n"
 "them by their width, height, and spacing from each other. This\n"
@@ -11772,95 +11962,104 @@ msgstr ""
 "laat u snel de meest gebruikte imagemaps maken: een verzameling van\n"
 "\"Thumbnails\", geschikt voor navigatiebalken."
 
-#: plug-ins/imagemap/imap_cmd_guides.c:164 plug-ins/imagemap/imap_grid.c:198
+#: plug-ins/imagemap/imap_cmd_guides.c:166 plug-ins/imagemap/imap_grid.c:202
 msgid "Width"
 msgstr "Breedte"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:169
+#: plug-ins/imagemap/imap_cmd_guides.c:171
 msgid "Left Start at"
 msgstr "Links begint op"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:174 plug-ins/imagemap/imap_grid.c:204
+#: plug-ins/imagemap/imap_cmd_guides.c:176 plug-ins/imagemap/imap_grid.c:208
 msgid "Height"
 msgstr "Hoogte"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:179
+#: plug-ins/imagemap/imap_cmd_guides.c:181
 msgid "Top Start at"
 msgstr "Bovenkant begint op"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:184
+#: plug-ins/imagemap/imap_cmd_guides.c:186
 msgid "Horz. Spacing"
 msgstr "Hor. tussenruimte"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:189
+#: plug-ins/imagemap/imap_cmd_guides.c:191
 msgid "No. Across"
 msgstr "Aantal hor."
 
-#: plug-ins/imagemap/imap_cmd_guides.c:194
+#: plug-ins/imagemap/imap_cmd_guides.c:196
 msgid "Vert. Spacing"
 msgstr "Vert. tussenruimte"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:199
+#: plug-ins/imagemap/imap_cmd_guides.c:201
 msgid "No. Down"
 msgstr "Aantal vert."
 
-#: plug-ins/imagemap/imap_cmd_guides.c:207
+#: plug-ins/imagemap/imap_cmd_guides.c:209
 msgid "Base URL:"
 msgstr "Basis-URL:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:224
+#: plug-ins/imagemap/imap_cmd_guides.c:226
 #, c-format
 msgid "Image dimensions: %d x %d"
 msgstr "Afbeeldingsmaten: %d x %d"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:229
+#: plug-ins/imagemap/imap_cmd_guides.c:231
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
-msgstr "Resulterende gidsgrenzen: 0,0 naar 0,0 (0 gebieden)"
+msgstr "Resulterende hulplijngrenzen: 0,0 naar 0,0 (0 gebieden)"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:264
+#: plug-ins/imagemap/imap_cmd_guides.c:266
 msgid "Guides"
-msgstr "Gidsen"
+msgstr "Hulplijnen"
 
-#: plug-ins/imagemap/imap_cmd_move_down.c:52
-#: plug-ins/imagemap/imap_cmd_object_down.c:51
-#: plug-ins/imagemap/imap_selection.c:166
+#: plug-ins/imagemap/imap_cmd_move_down.c:55
+#: plug-ins/imagemap/imap_cmd_object_down.c:54
+#: plug-ins/imagemap/imap_selection.c:168
 msgid "Move Down"
 msgstr "Naar beneden"
 
 # No idea what this does. Ask Maurits.
-#: plug-ins/imagemap/imap_cmd_move_sash.c:64
+#: plug-ins/imagemap/imap_cmd_move_sash.c:67
 msgid "Move Sash"
-msgstr ""
+msgstr "Verplaats raam"
 
-#: plug-ins/imagemap/imap_cmd_move_selected.c:52
+#: plug-ins/imagemap/imap_cmd_move_selected.c:55
 msgid "Move Selected Objects"
 msgstr "Geselecteerde objecten verplaatsen"
 
-#: plug-ins/imagemap/imap_cmd_move_up.c:52
-#: plug-ins/imagemap/imap_cmd_object_up.c:51
-#: plug-ins/imagemap/imap_selection.c:163
+#: plug-ins/imagemap/imap_cmd_move_to_front.c:54
+#: plug-ins/imagemap/imap_toolbar.c:156
+msgid "Move To Front"
+msgstr "Naar voren halen"
+
+#: plug-ins/imagemap/imap_cmd_move_up.c:55
+#: plug-ins/imagemap/imap_cmd_object_up.c:54
+#: plug-ins/imagemap/imap_selection.c:165
 msgid "Move Up"
 msgstr "Naar boven"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:48 plug-ins/imagemap/imap_menu.c:290
-#: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:135
+#: plug-ins/imagemap/imap_cmd_paste.c:51 plug-ins/imagemap/imap_menu.c:293
+#: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:137
 msgid "Paste"
 msgstr "Plakken"
 
-#: plug-ins/imagemap/imap_cmd_select_next.c:51
+#: plug-ins/imagemap/imap_cmd_select_next.c:55
 msgid "Select Next"
 msgstr "Volgende selecteren"
 
-#: plug-ins/imagemap/imap_cmd_select_region.c:63
+#: plug-ins/imagemap/imap_cmd_select_prev.c:54
+msgid "Select Previous"
+msgstr "Selecteer vorige"
+
+#: plug-ins/imagemap/imap_cmd_select_region.c:66
 msgid "Select Region"
 msgstr "Regio selecteren"
 
-#: plug-ins/imagemap/imap_cmd_send_to_back.c:51
-#: plug-ins/imagemap/imap_toolbar.c:158
+#: plug-ins/imagemap/imap_cmd_send_to_back.c:54
+#: plug-ins/imagemap/imap_toolbar.c:160
 msgid "Send To Back"
 msgstr "Naar achteren sturen"
 
-#: plug-ins/imagemap/imap_cmd_unselect.c:49
+#: plug-ins/imagemap/imap_cmd_unselect.c:52
 msgid "Unselect"
 msgstr "Deselecteren"
 
@@ -11898,7 +12097,7 @@ msgstr "Overige"
 #. * always first in the list, else call psearch.
 #.
 #: plug-ins/imagemap/imap_edit_area_info.c:201
-#: plug-ins/imagemap/imap_menu.c:211 plug-ins/print/print.c:973
+#: plug-ins/imagemap/imap_menu.c:212 plug-ins/print/print.c:973
 #: plug-ins/print/print.c:974 plug-ins/print/print.c:1055
 #: plug-ins/print/print.c:1056 plug-ins/print/print.c:1155
 #: plug-ins/print/print.c:1156 plug-ins/print/print.c:1392
@@ -11958,7 +12157,7 @@ msgstr "Gebiedsinstellingen"
 msgid "Area #%d Settings"
 msgstr "Instellingen gebied #%d"
 
-#: plug-ins/imagemap/imap_file.c:50 plug-ins/imagemap/imap_menu.c:66
+#: plug-ins/imagemap/imap_file.c:50 plug-ins/imagemap/imap_menu.c:67
 msgid "Error opening file"
 msgstr "Fout bij het openen van het bestand"
 
@@ -11986,76 +12185,76 @@ msgstr "Imagemap opslaan"
 msgid "Error"
 msgstr "Fout"
 
-#: plug-ins/imagemap/imap_grid.c:143
+#: plug-ins/imagemap/imap_grid.c:147
 msgid "Grid Settings"
 msgstr "Rasterinstellingen"
 
-#: plug-ins/imagemap/imap_grid.c:154
+#: plug-ins/imagemap/imap_grid.c:158
 msgid "Snap-To Grid Enabled"
 msgstr "Magnetisch raster aan"
 
-#: plug-ins/imagemap/imap_grid.c:160
+#: plug-ins/imagemap/imap_grid.c:164
 msgid "Grid Visibility and Type"
 msgstr "Rasterweergave"
 
-#: plug-ins/imagemap/imap_grid.c:167
+#: plug-ins/imagemap/imap_grid.c:171
 msgid "Hidden"
 msgstr "Verborgen"
 
-#: plug-ins/imagemap/imap_grid.c:174
+#: plug-ins/imagemap/imap_grid.c:178
 msgid "Lines"
 msgstr "Lijnen"
 
-#: plug-ins/imagemap/imap_grid.c:183
+#: plug-ins/imagemap/imap_grid.c:187
 msgid "Crosses"
 msgstr "Kruizen"
 
-#: plug-ins/imagemap/imap_grid.c:190
+#: plug-ins/imagemap/imap_grid.c:194
 msgid "Grid Granularity"
 msgstr "Rasterdichtheid"
 
-#: plug-ins/imagemap/imap_grid.c:213
+#: plug-ins/imagemap/imap_grid.c:217
 msgid "Grid Offset"
 msgstr "Rasterverspringing"
 
-#: plug-ins/imagemap/imap_grid.c:224
+#: plug-ins/imagemap/imap_grid.c:228
 msgid "pixels from left"
 msgstr "pixels van links"
 
-#: plug-ins/imagemap/imap_grid.c:229
+#: plug-ins/imagemap/imap_grid.c:233
 msgid "pixels from top"
 msgstr "pixels van boven"
 
-#: plug-ins/imagemap/imap_main.c:145
+#: plug-ins/imagemap/imap_main.c:146
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/Filters/Web/ImageMap..."
 
-#: plug-ins/imagemap/imap_main.c:660
+#: plug-ins/imagemap/imap_main.c:661
 msgid "Data changed"
 msgstr "Gegevens veranderd"
 
-#: plug-ins/imagemap/imap_main.c:664
+#: plug-ins/imagemap/imap_main.c:665
 msgid ""
 "Some data has been changed.\n"
-"Do you really want to continue?"
+"Do you really want to discard your changes?"
 msgstr ""
 "Sommige gegevens zijn veranderd.\n"
-"Wilt u werkelijk verder gaan?"
+"Wilt u uw veranderingen werkelijk wegdoen?"
 
-#: plug-ins/imagemap/imap_main.c:873
+#: plug-ins/imagemap/imap_main.c:874
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Bestand \"%s\" opgeslagen."
 
-#: plug-ins/imagemap/imap_main.c:877
+#: plug-ins/imagemap/imap_main.c:878
 msgid "Couldn't save file:"
 msgstr "Kon bestand niet opslaan:"
 
-#: plug-ins/imagemap/imap_main.c:902
+#: plug-ins/imagemap/imap_main.c:903
 msgid "Image size changed"
 msgstr "Afbeeldingsgrootte veranderd"
 
-#: plug-ins/imagemap/imap_main.c:906
+#: plug-ins/imagemap/imap_main.c:907
 msgid ""
 "Image size has changed.\n"
 "Resize Area's?"
@@ -12063,114 +12262,114 @@ msgstr ""
 "De grootte van de afbeelding is gewijzigd.\n"
 "Gebieden schalen?"
 
-#: plug-ins/imagemap/imap_main.c:937
+#: plug-ins/imagemap/imap_main.c:938
 msgid "Couldn't read file:"
 msgstr "Kon bestand niet lezen:"
 
-#: plug-ins/imagemap/imap_main.c:983
+#: plug-ins/imagemap/imap_main.c:984
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: plug-ins/imagemap/imap_menu.c:215
+#: plug-ins/imagemap/imap_menu.c:216
 msgid "Open..."
 msgstr "Openen..."
 
-#: plug-ins/imagemap/imap_menu.c:221
+#: plug-ins/imagemap/imap_menu.c:222
 msgid "Save As..."
 msgstr "Opslaan als..."
 
-#: plug-ins/imagemap/imap_menu.c:224
+#: plug-ins/imagemap/imap_menu.c:225
 msgid "Preferences..."
 msgstr "Voorkeuren..."
 
-#: plug-ins/imagemap/imap_menu.c:230
+#: plug-ins/imagemap/imap_menu.c:231
 msgid "Quit"
 msgstr "Afsluiten"
 
-#: plug-ins/imagemap/imap_menu.c:243
+#: plug-ins/imagemap/imap_menu.c:244
 #, c-format
 msgid "Undo %s"
 msgstr "%s ongedaan maken"
 
-#: plug-ins/imagemap/imap_menu.c:254
+#: plug-ins/imagemap/imap_menu.c:256
 #, c-format
 msgid "Redo %s"
 msgstr "%s opnieuw uitvoeren"
 
-#: plug-ins/imagemap/imap_menu.c:301
+#: plug-ins/imagemap/imap_menu.c:304
 msgid "Edit Area Info..."
 msgstr "Gebiedsinformatie bewerken..."
 
-#: plug-ins/imagemap/imap_menu.c:313
+#: plug-ins/imagemap/imap_menu.c:316
 msgid "View"
 msgstr "Beeld"
 
-#: plug-ins/imagemap/imap_menu.c:317
+#: plug-ins/imagemap/imap_menu.c:320
 msgid "Area List"
 msgstr "Gebiedenlijst"
 
-#: plug-ins/imagemap/imap_menu.c:321
+#: plug-ins/imagemap/imap_menu.c:324
 msgid "Source..."
 msgstr "Broncode..."
 
-#: plug-ins/imagemap/imap_menu.c:329
+#: plug-ins/imagemap/imap_menu.c:332
 msgid "Grayscale"
 msgstr "Grijswaarden"
 
-#: plug-ins/imagemap/imap_menu.c:341
+#: plug-ins/imagemap/imap_menu.c:344
 msgid "Zoom In"
 msgstr "Inzoomen"
 
-#: plug-ins/imagemap/imap_menu.c:344
+#: plug-ins/imagemap/imap_menu.c:347
 msgid "Zoom Out"
 msgstr "Uitzoomen"
 
-#: plug-ins/imagemap/imap_menu.c:349
+#: plug-ins/imagemap/imap_menu.c:352
 msgid "Zoom To"
 msgstr "Zoomen naar"
 
-#: plug-ins/imagemap/imap_menu.c:379
+#: plug-ins/imagemap/imap_menu.c:382
 msgid "Mapping"
 msgstr "Projectie"
 
-#: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:129
+#: plug-ins/imagemap/imap_menu.c:385 plug-ins/imagemap/imap_popup.c:129
 msgid "Arrow"
 msgstr "Pijl"
 
-#: plug-ins/imagemap/imap_menu.c:392
+#: plug-ins/imagemap/imap_menu.c:395
 msgid "Edit Map Info..."
 msgstr "Mapinfo bewerken..."
 
-#: plug-ins/imagemap/imap_menu.c:399
+#: plug-ins/imagemap/imap_menu.c:402
 msgid "Goodies"
 msgstr "Lekkers"
 
-#: plug-ins/imagemap/imap_menu.c:401 plug-ins/imagemap/imap_popup.c:149
+#: plug-ins/imagemap/imap_menu.c:404 plug-ins/imagemap/imap_popup.c:149
 msgid "Grid Settings..."
 msgstr "Rasterinstellingen..."
 
-#: plug-ins/imagemap/imap_menu.c:403
+#: plug-ins/imagemap/imap_menu.c:406
 msgid "Create Guides..."
-msgstr "Gidsen maken..."
+msgstr "Hulplijnen maken..."
 
-#: plug-ins/imagemap/imap_menu.c:410 plug-ins/maze/maze_face.c:193
+#: plug-ins/imagemap/imap_menu.c:413 plug-ins/maze/maze_face.c:193
 msgid "Help"
 msgstr "Help"
 
-#: plug-ins/imagemap/imap_menu.c:413
+#: plug-ins/imagemap/imap_menu.c:416
 msgid "About ImageMap..."
 msgstr "Over ImageMap..."
 
-#: plug-ins/imagemap/imap_polygon.c:391
+#: plug-ins/imagemap/imap_polygon.c:393
 msgid "x (pixels)"
 msgstr "x (pixels)"
 
-#: plug-ins/imagemap/imap_polygon.c:391
+#: plug-ins/imagemap/imap_polygon.c:393
 msgid "y (pixels)"
 msgstr "y (pixels)"
 
-#: plug-ins/imagemap/imap_polygon.c:458
+#: plug-ins/imagemap/imap_polygon.c:460
 msgid "Append"
 msgstr "Toevoegen"
 
@@ -12192,157 +12391,153 @@ msgstr "Uit"
 
 #: plug-ins/imagemap/imap_popup.c:151
 msgid "Guides..."
-msgstr "Gidsen..."
+msgstr "Hulplijnen..."
 
-#: plug-ins/imagemap/imap_preferences.c:204
+#: plug-ins/imagemap/imap_preferences.c:205
 msgid "Couldn't save resource file:"
 msgstr "Kon hulpbronbestand niet opslaan:"
 
-#: plug-ins/imagemap/imap_preferences.c:356
+#: plug-ins/imagemap/imap_preferences.c:357
 msgid "Select Color"
 msgstr "Kies kleur"
 
-#: plug-ins/imagemap/imap_preferences.c:434
+#: plug-ins/imagemap/imap_preferences.c:435
 msgid "Default Map Type"
 msgstr "Standaard maptype"
 
-#: plug-ins/imagemap/imap_preferences.c:453
+#: plug-ins/imagemap/imap_preferences.c:454
 msgid "Prompt for area info"
 msgstr "Vraag naar gebiedsinfo"
 
-#: plug-ins/imagemap/imap_preferences.c:455
+#: plug-ins/imagemap/imap_preferences.c:456
 msgid "Require default URL"
 msgstr "Verplicht standaard-URL"
 
-#: plug-ins/imagemap/imap_preferences.c:457
+#: plug-ins/imagemap/imap_preferences.c:458
 msgid "Show area handles"
 msgstr "Toon gebiedshandvatten"
 
-#: plug-ins/imagemap/imap_preferences.c:459
+#: plug-ins/imagemap/imap_preferences.c:460
 msgid "Keep NCSA circles true"
 msgstr "Houd NCSA-cirkels echt"
 
-#: plug-ins/imagemap/imap_preferences.c:461
+#: plug-ins/imagemap/imap_preferences.c:462
 msgid "Show area URL tip"
 msgstr "Toon gebieds-URL-tip"
 
-#: plug-ins/imagemap/imap_preferences.c:464
+#: plug-ins/imagemap/imap_preferences.c:465
 msgid "Use double-sized grab handles"
 msgstr "Gebruik handvatten van dubbele grootte"
 
-#: plug-ins/imagemap/imap_preferences.c:488
+#: plug-ins/imagemap/imap_preferences.c:489
 msgid "Number of Undo levels (1 - 99):"
 msgstr "Aantal niveaus \"Ongedaan maken\" (1-99):"
 
-#: plug-ins/imagemap/imap_preferences.c:491
+#: plug-ins/imagemap/imap_preferences.c:492
 msgid "Number of MRU entries (1 - 16):"
 msgstr "Aantal MRU-ingangen (1 - 16):"
 
-#: plug-ins/imagemap/imap_preferences.c:494
+#: plug-ins/imagemap/imap_preferences.c:495
 msgid "Menu"
 msgstr "Menu"
 
-#: plug-ins/imagemap/imap_preferences.c:530
+#: plug-ins/imagemap/imap_preferences.c:531
 msgid "Normal:"
 msgstr "Normaal:"
 
-#: plug-ins/imagemap/imap_preferences.c:536
+#: plug-ins/imagemap/imap_preferences.c:537
 msgid "Selected:"
 msgstr "Geselecteerd:"
 
-#: plug-ins/imagemap/imap_preferences.c:564
+#: plug-ins/imagemap/imap_preferences.c:565
 msgid "General Preferences"
 msgstr "Algemene voorkeuren"
 
-#: plug-ins/imagemap/imap_rectangle.c:375
+#: plug-ins/imagemap/imap_rectangle.c:379
 msgid "Upper left x:"
 msgstr "X linksboven:"
 
-#: plug-ins/imagemap/imap_rectangle.c:381
+#: plug-ins/imagemap/imap_rectangle.c:385
 msgid "Upper left y:"
 msgstr "Y linksboven:"
 
-#: plug-ins/imagemap/imap_selection.c:336
+#: plug-ins/imagemap/imap_selection.c:338
 msgid "URL"
 msgstr "URL"
 
-#: plug-ins/imagemap/imap_selection.c:336
+#: plug-ins/imagemap/imap_selection.c:338
 msgid "Target"
 msgstr "Doel"
 
-#: plug-ins/imagemap/imap_selection.c:336
+#: plug-ins/imagemap/imap_selection.c:338
 msgid "Comment"
 msgstr "ALT"
 
-#: plug-ins/imagemap/imap_settings.c:68
+#: plug-ins/imagemap/imap_settings.c:69
 msgid "Settings for this Mapfile"
 msgstr "Instelling voor dit mapbestand"
 
-#: plug-ins/imagemap/imap_settings.c:82
+#: plug-ins/imagemap/imap_settings.c:83
 msgid "Image name:"
 msgstr "Afbeeldingsnaam:"
 
-#: plug-ins/imagemap/imap_settings.c:83
+#: plug-ins/imagemap/imap_settings.c:84
 msgid "Select Image File"
 msgstr "Selecteer afbeeldingsbestand"
 
-#: plug-ins/imagemap/imap_settings.c:87
+#: plug-ins/imagemap/imap_settings.c:88
 msgid "Title:"
 msgstr "Titel:"
 
-#: plug-ins/imagemap/imap_settings.c:91
+#: plug-ins/imagemap/imap_settings.c:92
 msgid "Default URL:"
 msgstr "Standaard URL:"
 
-#: plug-ins/imagemap/imap_settings.c:108
+#: plug-ins/imagemap/imap_settings.c:109
 msgid "Map file format"
 msgstr "Mapbestandsformaat"
 
-#: plug-ins/imagemap/imap_source.c:54
+#: plug-ins/imagemap/imap_source.c:57
 msgid "View Source"
 msgstr "Broncode bekijken"
 
-#: plug-ins/imagemap/imap_toolbar.c:115
+#: plug-ins/imagemap/imap_toolbar.c:117
 msgid "Preferences"
 msgstr "Voorkeuren"
 
-#: plug-ins/imagemap/imap_toolbar.c:142
+#: plug-ins/imagemap/imap_toolbar.c:144
 msgid "Zoom in"
 msgstr "Inzoomen"
 
-#: plug-ins/imagemap/imap_toolbar.c:145
+#: plug-ins/imagemap/imap_toolbar.c:147
 msgid "Zoom out"
 msgstr "Uitzoomen"
 
-#: plug-ins/imagemap/imap_toolbar.c:150
+#: plug-ins/imagemap/imap_toolbar.c:152
 msgid "Edit Map Info"
 msgstr "Mapinfo bewerken"
 
-#: plug-ins/imagemap/imap_toolbar.c:154
-msgid "Move To Front"
-msgstr "Naar voren halen"
-
-#: plug-ins/imagemap/imap_tools.c:128
+#: plug-ins/imagemap/imap_tools.c:131
 msgid "Select existing area"
 msgstr "Selecteer een bestaand gebied"
 
-#: plug-ins/imagemap/imap_tools.c:132
+#: plug-ins/imagemap/imap_tools.c:136
 msgid "Define Rectangle area"
 msgstr "Definieer een rechthoekig gebied"
 
-#: plug-ins/imagemap/imap_tools.c:136
+#: plug-ins/imagemap/imap_tools.c:141
 msgid "Define Circle/Oval area"
 msgstr "Definieer een rond/oveel gebied"
 
-#: plug-ins/imagemap/imap_tools.c:140
+#: plug-ins/imagemap/imap_tools.c:146
 msgid "Define Polygon area"
 msgstr "Definieer een veelhoekig gebied"
 
-#: plug-ins/imagemap/imap_tools.c:144
+#: plug-ins/imagemap/imap_tools.c:151
 msgid "Edit selected area info"
 msgstr "Bewerk info van geselecteerd gebied"
 
-#: plug-ins/imagemap/imap_tools.c:148
+#: plug-ins/imagemap/imap_tools.c:156
 msgid "Delete selected area"
 msgstr "Wis geselecteerd gebied"
 
@@ -12383,9 +12578,10 @@ msgstr ""
 msgid "Offset (1):"
 msgstr ""
 
+# Is there a Dutch phrase for this?
 #: plug-ins/maze/maze_face.c:304
 msgid "Depth First"
-msgstr ""
+msgstr "Depth-first"
 
 #: plug-ins/maze/maze_face.c:311
 msgid "Prim's Algorithm"
@@ -13028,6 +13224,3 @@ msgstr "Fout: kan XJT-eigenschapsbestand %s niet lezen"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fout: XJT-eigenschapsbestand %s is leeg"
-
-#~ msgid "Force baseline JPEG (Readable by all decoders)"
-#~ msgstr "Dwing baseline-JPEG af (leesbaar voor alle decodeerders)"
