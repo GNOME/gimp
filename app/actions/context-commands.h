@@ -90,5 +90,9 @@ void   context_brush_angle_cmd_callback     (GtkAction *action,
                                              gint       value,
                                              gpointer   data);
 
+void   context_color_tool_average_radius_cmd_callback (GtkAction *action,
+                                                       gint       value,
+                                                       gpointer   data);
+
 
 #endif /* __CONTEXT_COMMANDS_H__ */

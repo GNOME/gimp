@@ -612,6 +612,40 @@ static GimpEnumActionEntry context_brush_angle_actions[] =
     NULL },
 };
 
+static GimpEnumActionEntry context_color_tool_average_radius_actions[] =
+{
+  { "context-color-tool-average-radius-set", GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Set Color Picker Radius", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "context-color-tool-average-radius-minimum", GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Minumum Color Picker Radius", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "context-color-tool-average-radius-maximum", GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Maximum Color Picker Radius", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "context-color-tool-average-radius-decrease", GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Decrease Color Picker Radius", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "context-color-tool-average-radius-increase", GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Increase Color Picker Radius", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "context-color-tool-average-radius-decrease-skip",
+    GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Decrease Color Picker Radius More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "context-color-tool-average-radius-increase-skip",
+    GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Increase Color Picker Radius More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL },
+};
+
 
 void
 context_actions_setup (GimpActionGroup *group)
@@ -704,6 +738,10 @@ context_actions_setup (GimpActionGroup *group)
                                       context_brush_angle_actions,
                                       G_N_ELEMENTS (context_brush_angle_actions),
                                       G_CALLBACK (context_brush_angle_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_color_tool_average_radius_actions,
+                                      G_N_ELEMENTS (context_color_tool_average_radius_actions),
+                                      G_CALLBACK (context_color_tool_average_radius_cmd_callback));
 }
 
 void

@@ -148,7 +148,7 @@ tool_options_actions_update (GimpActionGroup *group,
 }
 
 
-/*  privat function  */
+/*  private function  */
 
 static void
 tool_options_actions_update_presets (GimpActionGroup *group,
