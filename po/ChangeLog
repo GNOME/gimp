@@ -1,5 +1,9 @@
 2001-10-23  Michael Natterer  <mitch@gimp.org>
 
+	* POTFILES.in: updated.
+
+2001-10-23  Michael Natterer  <mitch@gimp.org>
+
 	* POTFILES.in: docindex.c -> widgets/gimpdocumentview.c
 
 2001-10-23  Wang Jian  <lark@linux.net.cn>
