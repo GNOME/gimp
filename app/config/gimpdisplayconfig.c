@@ -50,8 +50,8 @@ static void  gimp_display_config_get_property (GObject      *object,
                                                GParamSpec   *pspec);
 
 
-#define DEFAULT_IMAGE_TITLE_FORMAT  "%f-%p.%i (%t)"
-#define DEFAULT_IMAGE_STATUS_FORMAT DEFAULT_IMAGE_TITLE_FORMAT
+#define DEFAULT_IMAGE_TITLE_FORMAT  "%f-%p.%i (%t) %z%%"
+#define DEFAULT_IMAGE_STATUS_FORMAT "%L (%l layers, %m)"
 
 enum
 {
@@ -167,7 +167,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PERFECT_MOUSE,
                                     "perfect-mouse", PERFECT_MOUSE_BLURB,
-                                    FALSE,
+                                    TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CURSOR_MODE,
                                  "cursor-mode", CURSOR_MODE_BLURB,

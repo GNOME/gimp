@@ -1,3 +1,8 @@
+2003-10-14  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpdisplayconfig.c: made "perfect-mouse" the default
+	and changed defaults for image title and image statusbar.
+
 2003-10-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcontext.c: add the new context to gimp->context_list
