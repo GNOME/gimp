@@ -46,22 +46,25 @@
 #define DEFAULT_MINIMAL_WIDTH 250
 
 
-static void   gimp_image_dock_class_init            (GimpImageDockClass *klass);
-static void   gimp_image_dock_init                  (GimpImageDock      *dock);
+static void   gimp_image_dock_class_init       (GimpImageDockClass *klass);
+static void   gimp_image_dock_init             (GimpImageDock      *dock);
 
-static void   gimp_image_dock_destroy               (GtkObject          *object);
+static void   gimp_image_dock_destroy                 (GtkObject   *object);
 
-static void   gimp_image_dock_style_set             (GtkWidget          *widget,
-                                                     GtkStyle           *prev_style);
+static void   gimp_image_dock_style_set               (GtkWidget   *widget,
+                                                       GtkStyle    *prev_style);
 
-static void   gimp_image_dock_factory_image_changed (GimpContext        *context,
-						     GimpImage          *gimage,
-						     GimpDock           *dock);
-static void   gimp_image_dock_image_changed         (GimpContext        *context,
-						     GimpImage          *gimage,
-						     GimpDock           *dock);
-static void   gimp_image_dock_auto_clicked          (GtkWidget          *widget,
-						     GimpDock           *dock);
+static void   gimp_image_dock_factory_display_changed (GimpContext *context,
+                                                       GimpObject  *gdisp,
+                                                       GimpDock    *dock);
+static void   gimp_image_dock_factory_image_changed   (GimpContext *context,
+                                                       GimpImage   *gimage,
+                                                       GimpDock    *dock);
+static void   gimp_image_dock_image_changed           (GimpContext *context,
+                                                       GimpImage   *gimage,
+                                                       GimpDock    *dock);
+static void   gimp_image_dock_auto_clicked            (GtkWidget   *widget,
+                                                       GimpDock    *dock);
 
 
 static GimpDockClass *parent_class = NULL;
@@ -230,6 +233,10 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
     gimp_context_copy_property (dialog_factory->context, context,
 				GIMP_CONTEXT_PROP_IMAGE);
 
+  g_signal_connect_object (G_OBJECT (dialog_factory->context), "display_changed",
+			   G_CALLBACK (gimp_image_dock_factory_display_changed),
+			   G_OBJECT (image_dock),
+			   0);
   g_signal_connect_object (G_OBJECT (dialog_factory->context), "image_changed",
 			   G_CALLBACK (gimp_image_dock_factory_image_changed),
 			   G_OBJECT (image_dock),
@@ -279,6 +286,21 @@ gimp_image_dock_set_show_image_menu (GimpImageDock *image_dock,
 }
 
 static void
+gimp_image_dock_factory_display_changed (GimpContext *context,
+                                         GimpObject  *gdisp,
+                                         GimpDock    *dock)
+{
+  GimpImageDock *image_dock;
+
+  image_dock = GIMP_IMAGE_DOCK (dock);
+
+  if (gdisp && image_dock->auto_follow_active)
+    {
+      gimp_context_set_display (dock->context, gdisp);
+    }
+}
+
+static void
 gimp_image_dock_factory_image_changed (GimpContext *context,
 				       GimpImage   *gimage,
 				       GimpDock    *dock)
@@ -289,6 +311,8 @@ gimp_image_dock_factory_image_changed (GimpContext *context,
 
   if (gimage && image_dock->auto_follow_active)
     {
+      /*  won't do anything if we already set the display above
+       */
       gimp_context_set_image (dock->context, gimage);
     }
 }
@@ -333,11 +357,22 @@ gimp_image_dock_auto_clicked (GtkWidget *widget,
 
   if (image_dock->auto_follow_active)
     {
-      GimpImage *gimage;
+      GimpObject *gdisp;
 
-      gimage = gimp_context_get_image (dock->dialog_factory->context);
+      gdisp = gimp_context_get_display (dock->dialog_factory->context);
 
-      if (gimage)
-	gimp_context_set_image (dock->context, gimage);
+      if (gdisp)
+        {
+          gimp_context_set_display (dock->context, gdisp);
+        }
+      else
+        {
+          GimpImage *gimage;
+
+          gimage = gimp_context_get_image (dock->dialog_factory->context);
+
+          if (gimage)
+            gimp_context_set_image (dock->context, gimage);
+        }
     }
 }

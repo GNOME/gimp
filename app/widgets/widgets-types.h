@@ -24,8 +24,6 @@
 
 #include "core/core-types.h"
 
-#include "display/display-types.h"
-
 #include "widgets/widgets-enums.h"
 
 

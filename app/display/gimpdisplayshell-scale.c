@@ -40,7 +40,6 @@
 #include "gimpstatusbar.h"
 
 #include "gimprc.h"
-#include "nav_window.h"
 
 
 /*  local function prototypes  */
@@ -150,10 +149,7 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   gtk_widget_queue_draw (GTK_WIDGET (hruler));
   gtk_widget_queue_draw (GTK_WIDGET (vruler));
 
-  nav_dialog_update (shell->nav_dialog);
-
-  if (shell->nav_popup)
-    nav_dialog_update (shell->nav_popup);
+  gimp_display_shell_scaled (shell);
 
 #if 0
   g_print ("offset_x:     %d\n"

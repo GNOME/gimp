@@ -172,7 +172,6 @@ static guint              old_max_new_image_size;
 static GimpThumbnailSize  old_thumbnail_size;
 static gboolean	          old_trust_dirty_flag;
 static gboolean           old_use_help;
-static gboolean           old_nav_window_per_display;
 static gboolean           old_info_window_follows_mouse;
 static gint               old_help_browser;
 static gint               old_cursor_mode;
@@ -185,7 +184,6 @@ static gint               edit_min_colors;
 static gboolean           edit_install_cmap;
 static gboolean           edit_cycled_marching_ants;
 static gint               edit_last_opened_size;
-static gboolean           edit_nav_window_per_display;
 static gboolean           edit_info_window_follows_mouse;
 static gboolean           edit_disable_tearoff_menus;
 static gchar            * edit_temp_path          = NULL;
@@ -368,7 +366,6 @@ prefs_check_settings (Gimp *gimp)
       edit_install_cmap              != old_install_cmap              ||
       edit_cycled_marching_ants      != old_cycled_marching_ants      ||
       edit_last_opened_size          != old_last_opened_size          ||
-      edit_nav_window_per_display    != old_nav_window_per_display    ||
       edit_info_window_follows_mouse != old_info_window_follows_mouse ||
       edit_disable_tearoff_menus     != old_disable_tearoff_menus     ||
 
@@ -506,7 +503,6 @@ prefs_save_callback (GtkWidget *widget,
   gboolean    save_install_cmap;
   gboolean    save_cycled_marching_ants;
   gint        save_last_opened_size;
-  gboolean    save_nav_window_per_display;
   gboolean    save_info_window_follows_mouse;
   gchar      *save_temp_path;
   gchar      *save_swap_path;
@@ -557,7 +553,6 @@ prefs_save_callback (GtkWidget *widget,
   save_install_cmap              = gimprc.install_cmap;
   save_cycled_marching_ants      = gimprc.cycled_marching_ants;
   save_last_opened_size          = gimprc.last_opened_size;
-  save_nav_window_per_display    = gimprc.nav_window_per_display;
   save_info_window_follows_mouse = gimprc.info_window_follows_mouse;
 
   save_temp_path          = base_config->temp_path;
@@ -779,12 +774,6 @@ prefs_save_callback (GtkWidget *widget,
       gimprc.last_opened_size = edit_last_opened_size;
       update = g_list_append (update, "last-opened-size");
     }
-  if (edit_nav_window_per_display != old_nav_window_per_display)
-    {
-      gimprc.nav_window_per_display = edit_nav_window_per_display;
-      update = g_list_append (update, "nav-window-per-display");
-      remove = g_list_append (remove, "nav-window-follows-auto");
-    }
   if (edit_info_window_follows_mouse != old_info_window_follows_mouse)
     {
       gimprc.info_window_follows_mouse = edit_info_window_follows_mouse;
@@ -869,7 +858,6 @@ prefs_save_callback (GtkWidget *widget,
   gimprc.install_cmap                   = save_install_cmap;
   gimprc.cycled_marching_ants           = save_cycled_marching_ants;
   gimprc.last_opened_size               = save_last_opened_size;
-  gimprc.nav_window_per_display         = save_nav_window_per_display;
   gimprc.info_window_follows_mouse      = save_info_window_follows_mouse;
 
   base_config->temp_path     = save_temp_path;
@@ -952,7 +940,9 @@ prefs_cancel_callback (GtkWidget *widget,
   if (gimprc.nav_preview_size != old_nav_preview_size)
     {
       gimprc.nav_preview_size = old_nav_preview_size;
+#if 0
       gdisplays_nav_preview_resized ();
+#endif
     }
   if ((gimprc.transparency_type != old_transparency_type) ||
       (gimprc.transparency_size != old_transparency_size))
@@ -980,7 +970,6 @@ prefs_cancel_callback (GtkWidget *widget,
   edit_install_cmap              = old_install_cmap;
   edit_cycled_marching_ants      = old_cycled_marching_ants;
   edit_last_opened_size          = old_last_opened_size;
-  edit_nav_window_per_display    = old_nav_window_per_display;
   edit_info_window_follows_mouse = old_info_window_follows_mouse;
   edit_disable_tearoff_menus     = old_disable_tearoff_menus;
 
@@ -1041,7 +1030,6 @@ prefs_toggle_callback (GtkWidget *widget,
       data == &edit_stingy_memory_use          ||
       data == &edit_install_cmap               ||
       data == &edit_cycled_marching_ants       ||
-      data == &edit_nav_window_per_display     ||
       data == &edit_info_window_follows_mouse  ||
       data == &edit_disable_tearoff_menus)
     {
@@ -1105,7 +1093,9 @@ prefs_nav_preview_size_callback (GtkWidget *widget,
 {
   gimp_menu_item_update (widget, data);
 
+#if 0
   gdisplays_nav_preview_resized ();
+#endif
 }
 
 static void
@@ -1643,7 +1633,6 @@ preferences_dialog_create (Gimp *gimp)
       edit_install_cmap              = gimprc.install_cmap;
       edit_cycled_marching_ants      = gimprc.cycled_marching_ants;
       edit_last_opened_size          = gimprc.last_opened_size;
-      edit_nav_window_per_display    = gimprc.nav_window_per_display;
       edit_info_window_follows_mouse = gimprc.info_window_follows_mouse;
       edit_disable_tearoff_menus     = gimprc.disable_tearoff_menus;
 
@@ -1718,7 +1707,6 @@ preferences_dialog_create (Gimp *gimp)
   old_install_cmap              = edit_install_cmap;
   old_cycled_marching_ants      = edit_cycled_marching_ants;
   old_last_opened_size          = edit_last_opened_size;
-  old_nav_window_per_display    = edit_nav_window_per_display;
   old_info_window_follows_mouse = edit_info_window_follows_mouse;
   old_disable_tearoff_menus     = edit_disable_tearoff_menus;
 
@@ -2102,8 +2090,6 @@ preferences_dialog_create (Gimp *gimp)
   /* Dialog Bahaviour */
   vbox2 = prefs_frame_new (_("Dialog Behavior"), GTK_CONTAINER (vbox));
 
-  prefs_check_button_new (_("Navigation Window per Display"),
-                          &edit_nav_window_per_display, GTK_BOX (vbox2));
   prefs_check_button_new (_("Info Window Follows Mouse"),
                           &edit_info_window_follows_mouse, GTK_BOX (vbox2));
 

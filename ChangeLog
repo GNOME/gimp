@@ -1,3 +1,65 @@
+2002-05-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/nav_window.[ch]: removed.
+
+	* app/display/Makefile.am
+	* app/display/display-types.h
+	* app/display/gimpnavigationview.[ch]: new widget partially based
+	on the removed nav_window.
+
+	* libgimpproxy/gimpproxytypes.h: regnenerated.
+
+	* app/display/gimpdisplay-foreach.[ch]: removed
+	gdisplays_nav_preview_resized(). The new config system will allow
+	us to get notified of changes.
+
+	* app/display/gimpdisplayshell.[ch]: added "scaled" and "scrolled"
+	signals.
+
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-scroll.c: emit "scaled" and
+	"scrolled" appropriately. Removed nav_window stuff.
+
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell-callbacks.c: changed accordingly.
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c
+	* app/gui/menus.c: made the navigation dialog dockable.
+
+	* app/gui/view-commands.c: changed the nav_dialog callback accordingly.
+
+	* app/gui/preferences-dialog.c
+	* app/gimprc.[ch]
+	* app/config/gimpguiconfig.[ch]: removed "nav_window_per_display"
+	as it's now a dockable and it's state is saved in sessionrc.
+
+	* app/widgets/gimpnavigationpreview.[ch]: added context sensitive
+	mouse cursors.
+
+	* app/widgets/gimpimagedock.c: made it capable of holding
+	display-related dialogs (like GimpNavigationView) by connecting
+	to the context's "display_changed" signal.
+
+	* app/widgets/widgets-types.h: removed inclusion of
+	"display/display-types.h".
+
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpcomponentlistitem.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimpdrawablelistitem.c
+	* app/widgets/gimpdrawablelistview.c
+	* app/widgets/gimpitemlistitem.c
+	* app/widgets/gimpitemlistview.c
+	* app/widgets/gimplayerlistitem.c
+	* app/widgets/gimplayerlistview.c
+	* app/widgets/gimppreview.c
+	* app/widgets/gimpvectorslistview.c: warn about inclusion of
+	"display/display-types.h".
+
 2002-05-07  Sven Neumann  <sven@gimp.org>
 
 	Moved slovenian translation to the stable branch where they should

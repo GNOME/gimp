@@ -2,7 +2,10 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpNavigationPreview Widget
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2002 Michael Natterer <mitch@gimp.org>
+ *
+ * partly based on app/nav_window
+ * Copyright (C) 1999 Andy Thomas <alt@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -165,6 +168,9 @@ gimp_navigation_preview_init (GimpNavigationPreview *preview)
 {
   GTK_WIDGET_SET_FLAGS (preview, GTK_CAN_FOCUS);
 
+  gtk_widget_add_events (GTK_WIDGET (preview), (GDK_POINTER_MOTION_MASK |
+                                                GDK_KEY_PRESS_MASK));
+
   preview->x               = 0;
   preview->y               = 0;
   preview->width           = 0;
@@ -245,6 +251,9 @@ gimp_navigation_preview_move_to (GimpNavigationPreview *nav_preview,
 
   preview = GIMP_PREVIEW (nav_preview);
 
+  if (! preview->viewable)
+    return;
+
   tx = CLAMP (tx, 0, preview->width);
   ty = CLAMP (ty, 0, preview->height);
   
@@ -286,7 +295,7 @@ gimp_navigation_preview_grab_pointer (GimpNavigationPreview *nav_preview)
 
   gtk_grab_add (widget);
 
-  cursor = gdk_cursor_new (GDK_CROSSHAIR);
+  cursor = gdk_cursor_new (GDK_FLEUR);
 
   gdk_pointer_grab (widget->window, TRUE,
 		    GDK_BUTTON_RELEASE_MASK |
@@ -318,6 +327,8 @@ gimp_navigation_preview_button_press (GtkWidget      *widget,
 	     ty >  nav_preview->p_y &&
 	     ty < (nav_preview->p_y + nav_preview->p_height)))
 	{
+          GdkCursor *cursor;
+
 	  nav_preview->motion_offset_x = nav_preview->p_width  / 2;
 	  nav_preview->motion_offset_y = nav_preview->p_height / 2;
 
@@ -325,6 +336,10 @@ gimp_navigation_preview_button_press (GtkWidget      *widget,
 	  ty -= nav_preview->motion_offset_y;
 
 	  gimp_navigation_preview_move_to (nav_preview, tx, ty);
+
+          cursor = gdk_cursor_new (GDK_FLEUR);
+          gdk_window_set_cursor (widget->window, cursor);
+          gdk_cursor_unref (cursor);
 	}
       else
 	{
@@ -423,7 +438,34 @@ gimp_navigation_preview_motion_notify (GtkWidget      *widget,
   nav_preview = GIMP_NAVIGATION_PREVIEW (widget);
 
   if (! nav_preview->has_grab)
-    return FALSE;
+    {
+      GdkCursor *cursor;
+
+      if (nav_preview->p_x == 0 &&
+          nav_preview->p_y == 0 &&
+          nav_preview->p_width  == GIMP_PREVIEW (widget)->width &&
+          nav_preview->p_height == GIMP_PREVIEW (widget)->height)
+        {
+          gdk_window_set_cursor (widget->window, NULL);
+          return FALSE;
+        }
+      else if (mevent->x >= nav_preview->p_x &&
+          mevent->y >= nav_preview->p_y &&
+          mevent->x <  nav_preview->p_x + nav_preview->p_width &&
+          mevent->y <  nav_preview->p_y + nav_preview->p_height)
+        {
+          cursor = gdk_cursor_new (GDK_FLEUR);
+        }
+      else
+        {
+          cursor = gdk_cursor_new (GDK_HAND2);
+        }
+
+      gdk_window_set_cursor (widget->window, cursor);
+      gdk_cursor_unref (cursor);
+
+      return FALSE;
+    }
 
   gdk_window_get_pointer (widget->window, &tx, &ty, &mask);
 
@@ -532,16 +574,22 @@ gimp_navigation_preview_new (GimpImage *gimage,
 {
   GimpPreview *preview;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (! gimage || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (size > 0 && size <= 256, NULL);
 
   preview = g_object_new (GIMP_TYPE_NAVIGATION_PREVIEW, NULL);
 
   preview->is_popup = TRUE;
 
-  gimp_preview_set_viewable (preview, GIMP_VIEWABLE (gimage));
-
-  gimp_preview_set_size (preview, size, 0);
+  if (gimage)
+    {
+      gimp_preview_set_viewable (preview, GIMP_VIEWABLE (gimage));
+      gimp_preview_set_size (preview, size, 0);
+    }
+  else
+    {
+      preview->size = size;
+    }
 
   return GTK_WIDGET (preview);
 }

@@ -59,7 +59,6 @@ struct _GimpRc
   guint              max_new_image_size;
   gboolean           trust_dirty_flag;
   gboolean           use_help;
-  gboolean           nav_window_per_display;
   gboolean           info_window_follows_mouse;
   gint               help_browser;
   gint               cursor_mode;

@@ -31,7 +31,6 @@ gboolean      gdisplays_dirty                   (void);
 void          gdisplays_delete                  (void);
 void          gdisplays_flush                   (void);
 void          gdisplays_finish_draw             (void);
-void          gdisplays_nav_preview_resized     (void);
 void          gdisplays_set_busy                (void);
 void          gdisplays_unset_busy              (void);
 

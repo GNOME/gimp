@@ -28,8 +28,6 @@
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 
-#include "nav_window.h"
-
 
 void
 gdisplays_foreach (GFunc    func, 
@@ -49,27 +47,6 @@ gdisplays_expose_full (void)
       gdisp = (GimpDisplay *) list->data;
 
       gimp_display_shell_expose_full (GIMP_DISPLAY_SHELL (gdisp->shell));
-    }
-}
-
-void
-gdisplays_nav_preview_resized (void)
-{
-  GimpDisplayShell *shell;
-  GSList           *list;
-
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
-
-      if (shell->nav_dialog)
-	nav_dialog_preview_resized (shell->nav_dialog);
-      
-      if (shell->nav_popup)
-	{
-	  nav_dialog_free (NULL, shell->nav_popup);
-	  shell->nav_popup = NULL;
-	}
     }
 }
 

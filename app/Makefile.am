@@ -24,8 +24,6 @@ bin_PROGRAMS = gimp-1.3
 ## gui stuff for gui/, display/ or widgets/
 ##
 gui_sources = \
-	nav_window.c		\
-	nav_window.h		\
 	undo_history.c		\
 	undo_history.h
 

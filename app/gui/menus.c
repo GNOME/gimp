@@ -481,6 +481,10 @@ static GimpItemFactoryEntry image_entries[] =
       "<StockItem>", GTK_STOCK_ZOOM_FIT },
     NULL,
     "view/zoom.html", NULL },
+  { { N_("/View/Shrink Wrap"), "<control>E",
+      view_shrink_wrap_cmd_callback, 0 },
+    NULL,
+    "view/shrink_wrap.html", NULL },
 
   /*  <Image>/View/Zoom  */
 
@@ -589,10 +593,6 @@ static GimpItemFactoryEntry image_entries[] =
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
     "view/new_view.html", NULL },
-  { { N_("/View/Shrink Wrap"), "<control>E",
-      view_shrink_wrap_cmd_callback, 0 },
-    NULL,
-    "view/shrink_wrap.html", NULL },
 
   /*  <Image>/Image/Mode  */
 
@@ -1364,6 +1364,7 @@ static GimpItemFactoryEntry dialogs_entries[] =
            "<StockItem>",                     GTK_STOCK_SELECT_COLOR),
   ADD_TAB (N_("/Add Tab/Buffers..."),         "gimp-buffer-list", NULL, NULL),
   ADD_TAB (N_("/Add Tab/Images..."),          "gimp-image-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Navigation..."),      "gimp-navigation-view", NULL, NULL),
 
   SEPARATOR ("/Add Tab/---"),
 

@@ -27,6 +27,9 @@
 
 #include "widgets-types.h"
 
+#warning FIXME #include "display/display-types.h"
+#include "display/display-types.h"
+
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"

@@ -41,6 +41,7 @@
 #include "core/gimpimage-new.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
+#include "core/gimpmarshal.h"
 #include "core/gimppattern.h"
 
 #include "file/file-utils.h"
@@ -70,13 +71,19 @@
 #include "gimpstatusbar.h"
 
 #include "gimprc.h"
-#include "nav_window.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
 
 #define MAX_TITLE_BUF 256
+
+enum
+{
+  SCALED,
+  SCROLLED,
+  LAST_SIGNAL
+};
 
 
 /*  local function prototypes  */
@@ -113,6 +120,8 @@ static void  gimp_display_shell_close_warning_callback (GtkWidget        *widget
                                                         gboolean          close,
                                                         gpointer          data);
 
+
+static guint  display_shell_signals[LAST_SIGNAL] = { 0 };
 
 static GtkWindowClass *parent_class = NULL;
 
@@ -166,6 +175,24 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  display_shell_signals[SCALED] =
+    g_signal_new ("scaled",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDisplayShellClass, scaled),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  display_shell_signals[SCROLLED] =
+    g_signal_new ("scrolled",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDisplayShellClass, scrolled),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->destroy      = gimp_display_shell_destroy;
 
@@ -234,7 +261,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->warning_dialog        = NULL;
   shell->info_dialog           = NULL;
-  shell->nav_dialog            = NULL;
   shell->nav_popup             = NULL;
 
   shell->filters               = NULL;
@@ -336,15 +362,9 @@ gimp_display_shell_destroy (GtkObject *object)
       shell->info_dialog = NULL;
     }
 
-  /*  free the nav_dialog unconditionally because nav_dialog_free(shell,NULL)
-   *  acts as notification for the global nav dialog
-   */
-  nav_dialog_free (shell, shell->nav_dialog);
-  shell->nav_dialog = NULL;
-
   if (shell->nav_popup)
     {
-      nav_dialog_free (shell, shell->nav_popup);
+      gtk_widget_destroy (shell->nav_popup);
       shell->nav_popup = NULL;
     }
 
@@ -782,6 +802,22 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
 
   gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
   gimp_display_shell_shrink_wrap (shell);
+}
+
+void
+gimp_display_shell_scaled (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  g_signal_emit (G_OBJECT (shell), display_shell_signals[SCALED], 0);
+}
+
+void
+gimp_display_shell_scrolled (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  g_signal_emit (G_OBJECT (shell), display_shell_signals[SCROLLED], 0);
 }
 
 void

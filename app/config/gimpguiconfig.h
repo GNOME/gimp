@@ -47,7 +47,6 @@ struct _GimpGuiConfig
   gboolean             perfect_mouse;
   gint                 default_threshold;
   GimpPreviewSize      nav_preview_size;
-  gboolean             nav_window_per_display;
   gboolean             info_window_per_display;
   gboolean             trust_dirty_flag;
   gboolean             save_device_status;

@@ -32,6 +32,9 @@
 
 #include "widgets-types.h"
 
+#warning FIXME #include "display/display-types.h"
+#include "display/display-types.h"
+
 #include "core/gimpitem.h"
 
 #include "display/gimpdisplay-foreach.h"

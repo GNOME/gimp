@@ -41,7 +41,6 @@
 #include "gimpdisplayshell-handlers.h"
 
 #include "gimprc.h"
-#include "nav_window.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -32,6 +32,9 @@
 
 #include "widgets-types.h"
 
+#warning FIXME #include "display/display-types.h"
+#include "display/display-types.h"
+
 #include "base/temp-buf.h"
 
 #include "core/gimpmarshal.h"

@@ -212,7 +212,6 @@ GimpRc gimprc =
   /* max_new_image_size        */  33554432,  /* 32 MB */
   /* trust_dirty_flag          */  FALSE,
   /* use_help                  */  TRUE,
-  /* nav_window_per_display    */  FALSE,
   /* info_window_follows_mouse */  TRUE,
   /* help_browser              */  GIMP_HELP_BROWSER_GIMP,
   /* cursor_mode               */  GIMP_CURSOR_MODE_TOOL_ICON,
@@ -272,8 +271,6 @@ static ParseFunc funcs[] =
   { "dont-trust-dirty-flag",         TT_BOOLEAN,       NULL, &gimprc.trust_dirty_flag          },
   { "use-help",                      TT_BOOLEAN,       &gimprc.use_help, NULL                  },
   { "dont-use-help",                 TT_BOOLEAN,       NULL, &gimprc.use_help                  },
-  { "nav-window-per-display",        TT_BOOLEAN,       &gimprc.nav_window_per_display, NULL    },
-  { "nav-window-follows-auto",       TT_BOOLEAN,       NULL, &gimprc.nav_window_per_display    },
   { "info-window-follows-mouse",     TT_BOOLEAN,       &gimprc.info_window_follows_mouse, NULL },
   { "info-window-per-display",       TT_BOOLEAN,       NULL, &gimprc.info_window_follows_mouse },
   { "help-browser",                  TT_XHELPBROWSER,  &gimprc.help_browser, NULL              },

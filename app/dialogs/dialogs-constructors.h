@@ -143,5 +143,9 @@ GtkWidget * dialogs_palette_editor_get     (GimpDialogFactory *factory,
                                             gint               preview_size);
 void        dialogs_edit_palette_func      (GimpData          *data);
 
+GtkWidget * dialogs_navigation_view_new    (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+
 
 #endif /* __DIALOGS_CONSTRUCTORS_H__ */

@@ -57,10 +57,10 @@
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
+#include "gimpnavigationview.h"
 #include "gimpstatusbar.h"
 
 #include "gimprc.h"
-#include "nav_window.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -1241,7 +1241,7 @@ gimp_display_shell_nav_button_press (GtkWidget        *widget,
 {
   if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 1))
     {
-      nav_dialog_create_popup (shell, widget, bevent->x, bevent->y);
+      gimp_navigation_view_popup (shell, widget, bevent->x, bevent->y);
     }
 
   return TRUE;

@@ -161,8 +161,8 @@ typedef enum  /*< skip >*/
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
  
-typedef struct _GimpDisplay       GimpDisplay; /*< proxy-resume >*/
-typedef struct _GimpDisplayShell  GimpDisplayShell;
+typedef struct _GimpDisplay        GimpDisplay; /*< proxy-resume >*/
+typedef struct _GimpDisplayShell   GimpDisplayShell;
 
 
 #endif /* __GIMP_PROXY_TYPES_H__ */

@@ -99,8 +99,7 @@ struct _GimpDisplayShell
 
   GtkWidget        *warning_dialog;    /*  close warning dialog               */
   InfoDialog       *info_dialog;       /*  image information dialog           */
-  NavigationDialog *nav_dialog;        /*  image navigation dialog            */
-  NavigationDialog *nav_popup;         /*  navigation popup                   */
+  GtkWidget        *nav_popup;         /*  navigation popup                   */
 
   GList            *filters;           /* color display conversion stuff      */
   GtkWidget        *filters_dialog;    /* color display filter dialog         */
@@ -109,6 +108,9 @@ struct _GimpDisplayShell
 struct _GimpDisplayShellClass
 {
   GtkWindowClass  parent_class;
+
+  void (* scaled)   (GimpDisplayShell *shell);
+  void (* scrolled) (GimpDisplayShell *shell);
 };
 
 
@@ -120,6 +122,9 @@ void        gimp_display_shell_close                 (GimpDisplayShell *shell,
                                                       gboolean          kill_it);
 
 void        gimp_display_shell_reconnect             (GimpDisplayShell *shell);
+
+void        gimp_display_shell_scaled                (GimpDisplayShell *shell);
+void        gimp_display_shell_scrolled              (GimpDisplayShell *shell);
 
 void        gimp_display_shell_transform_coords      (GimpDisplayShell *shell,
                                                       GimpCoords       *image_coords,

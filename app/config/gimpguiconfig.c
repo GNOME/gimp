@@ -52,7 +52,6 @@ enum
   PROP_PERFECT_MOUSE,
   PROP_DEFAULT_THRESHOLD,
   PROP_NAV_PREVIEW_SIZE,
-  PROP_NAV_WINDOW_PER_DISPLAY,
   PROP_INFO_WINDOW_PER_DISPLAY,
   PROP_TRUST_DIRTY_FLAG,
   PROP_SAVE_DEVICE_STATUS,
@@ -130,9 +129,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_NAV_PREVIEW_SIZE,
                                  "navigation-preview-size",
                                  GIMP_TYPE_PREVIEW_SIZE, GIMP_PREVIEW_SIZE_HUGE);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_NAV_WINDOW_PER_DISPLAY,
-                                    "navigation-window-per-display",
-                                    FALSE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
                                     "info-window-per-display",
                                     FALSE);
@@ -218,9 +214,6 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_NAV_PREVIEW_SIZE:
       gui_config->nav_preview_size = g_value_get_enum (value);
       break;
-    case PROP_NAV_WINDOW_PER_DISPLAY:
-      gui_config->nav_window_per_display = g_value_get_boolean (value);
-      break;      
     case PROP_INFO_WINDOW_PER_DISPLAY:
       gui_config->info_window_per_display = g_value_get_boolean (value);
       break;      
@@ -298,9 +291,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_NAV_PREVIEW_SIZE:
       g_value_set_enum (value, gui_config->nav_preview_size);
-      break;
-    case PROP_NAV_WINDOW_PER_DISPLAY:
-      g_value_set_boolean (value, gui_config->nav_window_per_display);
       break;
     case PROP_INFO_WINDOW_PER_DISPLAY:
       g_value_set_boolean (value, gui_config->info_window_per_display);

@@ -26,13 +26,14 @@
 #include "display/display-enums.h"
 
 
-typedef struct _GimpDisplay       GimpDisplay; /*< proxy-resume >*/
-typedef struct _GimpDisplayShell  GimpDisplayShell;
+typedef struct _GimpDisplay        GimpDisplay; /*< proxy-resume >*/
+typedef struct _GimpDisplayShell   GimpDisplayShell;
 
-typedef struct _GimpStatusbar     GimpStatusbar; /*< proxy-skip >*/
+typedef struct _GimpNavigationView GimpNavigationView; /*< proxy-skip >*/
+typedef struct _GimpStatusbar      GimpStatusbar;
 
-typedef struct _NavigationDialog  NavigationDialog;
-typedef struct _Selection         Selection;
+typedef struct _NavigationDialog   NavigationDialog;
+typedef struct _Selection          Selection;
 
 
 #endif /* __DISPLAY_TYPES_H__ */

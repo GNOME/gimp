@@ -42,7 +42,6 @@
 #include "view-commands.h"
 
 #include "gimprc.h"
-#include "nav_window.h"
 
 
 #define return_if_no_display(gdisp, data) \
@@ -136,17 +135,8 @@ view_navigation_window_cmd_callback (GtkWidget *widget,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (gimprc.nav_window_per_display)
-    {
-      if (! shell->nav_dialog)
-	shell->nav_dialog = nav_dialog_create (shell);
-
-      nav_dialog_show (shell->nav_dialog);
-    }
-  else
-    {
-      nav_dialog_show_auto (gdisp->gimage->gimp);
-    }
+  gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                    "gimp-navigation-view", -1);
 }
 
 void

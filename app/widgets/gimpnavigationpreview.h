@@ -2,7 +2,10 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpNavigationPreview Widget
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2002 Michael Natterer <mitch@gimp.org>
+ *
+ * partly based on app/nav_window
+ * Copyright (C) 1999 Andy Thomas <alt@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

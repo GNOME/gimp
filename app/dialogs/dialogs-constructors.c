@@ -64,6 +64,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-filter-dialog.h"
+#include "display/gimpnavigationview.h"
 
 #include "about-dialog.h"
 #include "brushes-commands.h"
@@ -126,6 +127,8 @@ static void   dialogs_set_path_context_func       (GimpDockable       *dockable,
                                                    GimpContext        *context);
 static void   dialogs_set_indexed_palette_context_func (GimpDockable *dockable,
 							GimpContext  *context);
+static void   dialogs_set_navigation_context_func (GimpDockable       *dockable,
+                                                   GimpContext        *context);
 
 static GtkWidget * dialogs_dockable_new (GtkWidget                  *widget,
 					 const gchar                *name,
@@ -142,6 +145,9 @@ static void dialogs_path_view_image_changed       (GimpContext        *context,
 static void dialogs_indexed_palette_image_changed (GimpContext        *context,
 						   GimpImage          *gimage,
 						   GimpColormapEditor *editor);
+static void dialogs_navigation_display_changed    (GimpContext        *context,
+                                                   GimpDisplay        *gdisp,
+                                                   GimpNavigationView *view);
 
 
 /**********************/
@@ -900,6 +906,31 @@ dialogs_edit_palette_func (GimpData *data)
 }
 
 
+/*  display views  */
+
+GtkWidget *
+dialogs_navigation_view_new (GimpDialogFactory *factory,
+                             GimpContext       *context,
+                             gint               preview_size)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell = NULL;
+  GtkWidget        *view;
+
+  gdisp = gimp_context_get_display (context);
+
+  if (gdisp)
+    shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  view = gimp_navigation_view_new (shell);
+
+  return dialogs_dockable_new (view,
+                               _("Display Navigation"), _("Navigation"),
+                               NULL,
+                               dialogs_set_navigation_context_func);
+}
+
+
 /*  private functions  */
 
 static void
@@ -1243,6 +1274,41 @@ dialogs_set_indexed_palette_context_func (GimpDockable *dockable,
     }
 }
 
+static void
+dialogs_set_navigation_context_func (GimpDockable *dockable,
+                                     GimpContext  *context)
+{
+  GimpNavigationView *view;
+
+  view = (GimpNavigationView *) g_object_get_data (G_OBJECT (dockable),
+						   "gimp-dialogs-view");
+
+  if (view)
+    {
+      if (dockable->context)
+	{
+	  g_signal_handlers_disconnect_by_func (G_OBJECT (dockable->context),
+						dialogs_navigation_display_changed,
+						view);
+	}
+
+      if (context)
+	{
+	  g_signal_connect (G_OBJECT (context), "display_changed",
+			    G_CALLBACK (dialogs_navigation_display_changed),
+			    view);
+
+	  dialogs_navigation_display_changed (context,
+                                              gimp_context_get_display (context),
+                                              view);
+	}
+      else
+	{
+	  dialogs_navigation_display_changed (NULL, NULL, view);
+	}
+    }
+}
+
 static GtkWidget *
 dialogs_dockable_new (GtkWidget                  *widget,
 		      const gchar                *name,
@@ -1286,4 +1352,17 @@ dialogs_indexed_palette_image_changed (GimpContext        *context,
 				       GimpColormapEditor *editor)
 {
   gimp_colormap_editor_set_image (editor, gimage);
+}
+
+static void
+dialogs_navigation_display_changed (GimpContext        *context,
+                                    GimpDisplay        *gdisp,
+                                    GimpNavigationView *view)
+{
+  GimpDisplayShell *shell = NULL;
+
+  if (gdisp)
+    shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_navigation_view_set_shell (view, shell);
 }

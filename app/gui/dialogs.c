@@ -79,7 +79,9 @@ static const GimpDialogFactoryEntry dock_entries[] =
 
   { "gimp-brush-editor",     dialogs_brush_editor_get,        0, TRUE,  FALSE, FALSE, TRUE },
   { "gimp-gradient-editor",  dialogs_gradient_editor_get,     0, TRUE,  FALSE, FALSE, TRUE },
-  { "gimp-palette-editor",   dialogs_palette_editor_get,      0, TRUE,  FALSE, FALSE, TRUE }
+  { "gimp-palette-editor",   dialogs_palette_editor_get,      0, TRUE,  FALSE, FALSE, TRUE },
+
+  { "gimp-navigation-view",  dialogs_navigation_view_new,     0, FALSE, FALSE, FALSE, TRUE }
 };
 
 
