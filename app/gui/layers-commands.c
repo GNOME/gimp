@@ -46,7 +46,7 @@
 #include "pdb/procedural_db.h"
 
 #include "widgets/gimpdock.h"
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemtreeview.h"
 #include "widgets/gimppropwidgets.h"

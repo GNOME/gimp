@@ -210,9 +210,9 @@ gimp_grid_editor_constructor (GType                  type,
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  style = gimp_prop_enum_option_menu_new (G_OBJECT (editor->grid), "style",
-                                          GIMP_GRID_DOTS,
-                                          GIMP_GRID_SOLID);
+  style = gimp_prop_enum_combo_box_new (G_OBJECT (editor->grid), "style",
+                                        GIMP_GRID_DOTS,
+                                        GIMP_GRID_SOLID);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Line _Style:"), 1.0, 0.5,
                              style, 1, TRUE);

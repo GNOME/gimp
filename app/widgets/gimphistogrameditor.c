@@ -33,7 +33,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "gimpenummenu.h"
+#include "gimpenumcombobox.h"
 #include "gimphelp-ids.h"
 #include "gimphistogrambox.h"
 #include "gimphistogrameditor.h"
@@ -149,11 +149,11 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  editor->menu = menu = gimp_prop_enum_option_menu_new (G_OBJECT (view),
-                                                        "histogram-channel",
-                                                        0, 0);
-  gimp_enum_option_menu_set_stock_prefix (GTK_OPTION_MENU (menu),
-                                          "gimp-channel");
+  editor->menu = menu = gimp_prop_enum_combo_box_new (G_OBJECT (view),
+                                                      "histogram-channel",
+                                                      0, 0);
+  gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (menu),
+                                        "gimp-channel");
   gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
@@ -406,9 +406,12 @@ gimp_histogram_editor_menu_update (GimpHistogramEditor *editor)
       gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
     }
 
+  /*  FIXME: regression!  */
+#if 0
   gimp_int_option_menu_set_sensitive (GTK_OPTION_MENU (editor->menu),
                                       (GimpIntOptionMenuSensitivityCallback) gimp_histogram_editor_item_sensitive,
                                       editor->drawable);
+#endif
 }
 
 static void

@@ -33,7 +33,7 @@
 #include "core/gimplayer.h"
 #include "core/gimptemplate.h"
 
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimpenumcombobox.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -698,7 +698,7 @@ resize_widget_new (GimpViewable *viewable,
   if (type == ScaleWidget)
     {
       GtkWidget *hbox;
-      GtkWidget *option_menu;
+      GtkWidget *combo;
 
       hbox = gtk_hbox_new (FALSE, 4);
       gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
@@ -708,15 +708,19 @@ resize_widget_new (GimpViewable *viewable,
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      private->interpolation_menu = option_menu =
-        gimp_enum_option_menu_new (GIMP_TYPE_INTERPOLATION_TYPE,
-                                   G_CALLBACK (gimp_menu_item_update),
-                                   &resize->interpolation);
-      gimp_int_option_menu_set_history (GTK_OPTION_MENU (option_menu),
-                                        resize->interpolation);
-      gtk_box_pack_start (GTK_BOX (hbox), option_menu,
-                          FALSE, FALSE, 0);
-      gtk_widget_show (option_menu);
+      combo = gimp_enum_combo_box_new (GIMP_TYPE_INTERPOLATION_TYPE);
+      gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (combo),
+                                      resize->interpolation);
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gimp_enum_combo_box_get_active),
+                        &resize->interpolation);
+
+      gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (combo),
+                                      resize->interpolation);
+      gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+      gtk_widget_show (combo);
+
+      private->interpolation_menu = combo;
 
       if (gimp_image_base_type (resize->gimage) == GIMP_INDEXED)
         {
@@ -892,8 +896,8 @@ response_callback (GtkWidget *widget,
           resize->interpolation =
             resize->gimage->gimp->config->interpolation_type;
 
-          gimp_int_option_menu_set_history (GTK_OPTION_MENU (private->interpolation_menu),
-                                            resize->interpolation);
+          gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (private->interpolation_menu),
+                                          resize->interpolation);
         }
       break;
 

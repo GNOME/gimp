@@ -31,7 +31,7 @@
 #include "core/gimplist.h"
 #include "core/gimppalette.h"
 
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 

@@ -62,7 +62,8 @@ typedef struct _GimpContainerMenu       GimpContainerMenu;
 typedef struct _GimpContainerMenuImpl   GimpContainerMenuImpl;
 
 typedef struct _GimpMenuItem            GimpMenuItem;
-typedef struct _GimpEnumMenu            GimpEnumMenu;
+
+typedef struct _GimpEnumComboBox        GimpEnumComboBox;
 
 typedef struct _GimpEditor              GimpEditor;
 typedef struct _GimpDeviceStatus        GimpDeviceStatus;

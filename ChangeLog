@@ -2,6 +2,46 @@
 
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
+	* app/widgets/gimpenummenu.[ch]: removed GimpEnumMenu.
+
+	* app/widgets/gimpenumwidgets.[ch]: moved widget constructors that
+	don't use GimpEnumMenu from gimpenummenu.[ch] to these new files.
+
+	* app/widgets/gimpenumcombobox.[ch]: added a GtkComboBox widget
+	using GimpEnumStore; replaces GimpEnumMenu.
+
+	* app/widgets/gimpenumstore.[ch]: added new function
+	gimp_enum_store_lookup_by_value().
+
+	* app/widgets/gimppropwidgets.[ch]: replaced
+	gimp_prop_enum_option_menu_new() with gimp_prop_enum_combo_box_new().
+
+	* app/gui/brush-select.[ch]
+	* app/gui/convert-dialog.c
+	* app/gui/layers-commands.c
+	* app/gui/preferences-dialog.c
+	* app/gui/resize-dialog.c
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimpselectionoptions.c
+	* app/tools/gimptransformoptions.c
+	* app/widgets/gimpcolorframe.c
+	* app/widgets/gimpeditor.c
+	* app/widgets/gimpgrideditor.c
+	* app/widgets/gimphistogrameditor.c
+	* app/widgets/gimpstrokeeditor.c
+	* app/widgets/gimptemplateeditor.c
+	* app/widgets/gimptexteditor.c: ported to GimpEnumComboBox.
+
+2004-04-18  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
 	* app/widgets/gimpenumstore.[ch]: added (yet unused) GimpEnumStore,
 	a GtkListStore for enum values.
 

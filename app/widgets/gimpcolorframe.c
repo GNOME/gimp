@@ -28,7 +28,7 @@
 #include "core/gimpimage.h"
 
 #include "gimpcolorframe.h"
-#include "gimpenummenu.h"
+#include "gimpenumcombobox.h"
 
 #include "gimp-intl.h"
 
@@ -91,10 +91,10 @@ gimp_color_frame_init (GimpColorFrame *frame)
 
   gimp_rgba_set (&frame->color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 
-  frame->menu =
-    gimp_enum_option_menu_new (GIMP_TYPE_COLOR_FRAME_MODE,
-                               G_CALLBACK (gimp_color_frame_menu_callback),
-                               frame);
+  frame->menu = gimp_enum_combo_box_new (GIMP_TYPE_COLOR_FRAME_MODE);
+  g_signal_connect (frame->menu, "changed",
+                    G_CALLBACK (gimp_color_frame_menu_callback),
+                    frame);
   gtk_frame_set_label_widget (GTK_FRAME (frame), frame->menu);
   gtk_widget_show (frame->menu);
 
@@ -151,7 +151,7 @@ gimp_color_frame_set_mode (GimpColorFrame     *frame,
 {
   g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
 
-  gimp_int_option_menu_set_history (GTK_OPTION_MENU (frame->menu), mode);
+  gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (frame->menu), mode);
   frame->frame_mode = mode;
 
   gimp_color_frame_update (frame);
@@ -210,12 +210,12 @@ gimp_color_frame_set_invalid (GimpColorFrame *frame)
 /*  private functions  */
 
 static void
-gimp_color_frame_menu_callback (GtkWidget           *widget,
-                                GimpColorFrame      *frame)
+gimp_color_frame_menu_callback (GtkWidget      *widget,
+                                GimpColorFrame *frame)
 {
-  gimp_menu_item_update (widget, &frame->frame_mode);
-
-  gimp_color_frame_update (frame);
+  if (gimp_enum_combo_box_get_active (GIMP_ENUM_COMBO_BOX (widget),
+                                      (gint *) &frame->frame_mode))
+    gimp_color_frame_update (frame);
 }
 
 static void

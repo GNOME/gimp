@@ -58,7 +58,7 @@ struct _GimpEnumStore
 };
 
 
-GType          gimp_enum_store_get_type (void) G_GNUC_CONST;
+GType          gimp_enum_store_get_type               (void) G_GNUC_CONST;
 
 GtkListStore * gimp_enum_store_new                    (GType    enum_type);;
 GtkListStore * gimp_enum_store_new_with_range         (GType    enum_type,
@@ -71,9 +71,14 @@ GtkListStore * gimp_enum_store_new_with_values_valist (GType    enum_type,
                                                        gint     n_values,
                                                        va_list  args);
 
+gboolean       gimp_enum_store_lookup_by_value  (GimpEnumStore *store,
+                                                 gint           value,
+                                                 GtkTreeIter   *iter);
+
 void           gimp_enum_store_set_icons        (GimpEnumStore *store,
                                                  GtkWidget     *widget,
                                                  const gchar   *stock_prefix,
                                                  GtkIconSize    size);
+
 
 #endif  /* __GIMP_ENUM_STORE_H__ */

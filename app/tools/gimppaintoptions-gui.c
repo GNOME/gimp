@@ -429,7 +429,7 @@ gradient_options_gui (GimpGradientOptions *gradient,
   GtkWidget *spinbutton;
   GtkWidget *button;
   GtkWidget *unitmenu;
-  GtkWidget *enummenu;
+  GtkWidget *combo;
 
   config = G_OBJECT (paint_options);
 
@@ -472,11 +472,10 @@ gradient_options_gui (GimpGradientOptions *gradient,
       g_object_set_data (G_OBJECT (unitmenu), "set_digits", spinbutton);
 
       /*  the repeat type  */
-      enummenu = gimp_prop_enum_option_menu_new (config, "gradient-repeat",
-                                                 0, 0);
+      combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                  _("Repeat:"), 1.0, 0.5,
-                                 enummenu, 2, TRUE);
+                                 combo, 2, TRUE);
 
       gtk_widget_show (table);
     }

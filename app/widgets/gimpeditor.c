@@ -30,7 +30,7 @@
 #include "gimpdocked.h"
 #include "gimpeditor.h"
 #include "gimpdnd.h"
-#include "gimpenummenu.h"
+#include "gimpenumwidgets.h"
 #include "gimpmenufactory.h"
 
 

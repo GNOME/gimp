@@ -213,6 +213,35 @@ gimp_enum_store_new_with_values_valist (GType     enum_type,
   return store;
 }
 
+gboolean
+gimp_enum_store_lookup_by_value (GimpEnumStore *store,
+                                 gint           value,
+                                 GtkTreeIter   *iter)
+{
+  GtkTreeModel *model;
+  gboolean      iter_valid;
+
+  g_return_val_if_fail (GIMP_IS_ENUM_STORE (store), FALSE);
+  g_return_val_if_fail (iter != NULL, FALSE);
+
+  model = GTK_TREE_MODEL (store);
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, iter))
+    {
+      gint  this;
+
+      gtk_tree_model_get (model, iter,
+                          GIMP_ENUM_STORE_VALUE, &this,
+                          -1);
+      if (this == value)
+        break;
+    }
+
+  return iter_valid;
+}
+
 void
 gimp_enum_store_set_icons (GimpEnumStore *store,
                            GtkWidget     *widget,
@@ -259,6 +288,9 @@ gimp_enum_store_set_icons (GimpEnumStore *store,
       gtk_list_store_set (GTK_LIST_STORE (store), &iter,
                           GIMP_ENUM_STORE_ICON, pixbuf,
                           -1);
+
+      if (pixbuf)
+        g_object_unref (pixbuf);
     }
 }
 

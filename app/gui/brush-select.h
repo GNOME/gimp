@@ -31,7 +31,7 @@ struct _BrushSelect
   GtkWidget     *shell;
   GtkWidget     *view;
   GtkAdjustment *opacity_data;
-  GtkWidget     *option_menu;
+  GtkWidget     *paint_mode_menu;
 };
 
 

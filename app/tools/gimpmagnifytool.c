@@ -37,7 +37,6 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-scale.h"
 
-#include "widgets/gimpenummenu.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 

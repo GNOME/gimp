@@ -44,7 +44,8 @@
 
 #include "widgets/gimpcolorbar.h"
 #include "widgets/gimpcursor.h"
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimpenumcombobox.h"
+#include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogramview.h"
 #include "widgets/gimppropwidgets.h"
@@ -301,14 +302,17 @@ gimp_curves_tool_initialize (GimpTool    *tool,
   gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
                           GIMP_COLOR_OPTIONS (tool->tool_info->tool_options));
 
+  /*  FIXME: regression!  */
+#if 0
   /* set the sensitivity of the channel menu based on the drawable type */
   gimp_int_option_menu_set_sensitive (GTK_OPTION_MENU (c_tool->channel_menu),
                                       (GimpIntOptionMenuSensitivityCallback) curves_set_sensitive_callback,
                                       c_tool);
+#endif
 
   /* set the current selection */
-  gimp_int_option_menu_set_history (GTK_OPTION_MENU (c_tool->channel_menu),
-                                    c_tool->channel);
+  gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (c_tool->channel_menu),
+                                  c_tool->channel);
 
   if (! c_tool->color && c_tool->alpha)
     c_tool->channel = 1;
@@ -477,11 +481,12 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  menu = gimp_enum_option_menu_new (GIMP_TYPE_HISTOGRAM_CHANNEL,
-                                    G_CALLBACK (curves_channel_callback),
-                                    tool);
-  gimp_enum_option_menu_set_stock_prefix (GTK_OPTION_MENU (menu),
-                                          "gimp-channel");
+  menu = gimp_enum_combo_box_new (GIMP_TYPE_HISTOGRAM_CHANNEL);
+  g_signal_connect (menu, "changed",
+                    G_CALLBACK (curves_channel_callback),
+                    tool);
+  gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (menu),
+                                        "gimp-channel");
   gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
@@ -796,17 +801,19 @@ static void
 curves_channel_callback (GtkWidget      *widget,
 			 GimpCurvesTool *tool)
 {
-  gimp_menu_item_update (widget, &tool->channel);
+  if (gimp_enum_combo_box_get_active (GIMP_ENUM_COMBO_BOX (widget),
+                                      (gint *) &tool->channel))
+    {
+      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->graph),
+                                       tool->channel);
 
-  gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                   tool->channel);
-
-  /* FIXME: hack */
-  if (! tool->color && tool->alpha)
-    tool->channel = (tool->channel > 1) ? 2 : 1;
+      /* FIXME: hack */
+      if (! tool->color && tool->alpha)
+        tool->channel = (tool->channel > 1) ? 2 : 1;
+    }
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
-			           tool->curves->curve_type[tool->channel]);
+                                   tool->curves->curve_type[tool->channel]);
 
   curves_update (tool, ALL);
 }

@@ -33,7 +33,7 @@
 #include "core/gimpimagemap.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimpenumwidgets.h"
 
 #include "display/gimpdisplay.h"
 

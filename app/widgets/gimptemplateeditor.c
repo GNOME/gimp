@@ -37,7 +37,7 @@
 #include "core/gimptemplate.h"
 
 #include "gimptemplateeditor.h"
-#include "gimpenummenu.h"
+#include "gimpenumwidgets.h"
 #include "gimppropwidgets.h"
 #include "gimpviewablebutton.h"
 

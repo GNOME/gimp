@@ -30,7 +30,7 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimpenumcombobox.h"
 #include "widgets/gimppropwidgets.h"
 
 #include "gimpblendoptions.h"
@@ -66,7 +66,7 @@ static void   gimp_blend_options_get_property    (GObject          *object,
 
 static void   blend_options_gradient_type_notify (GimpBlendOptions *options,
                                                   GParamSpec       *pspec,
-                                                  GtkWidget        *repeat_menu);
+                                                  GtkWidget        *repeat_combo);
 
 
 static GimpPaintOptionsClass *parent_class = NULL;
@@ -244,7 +244,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *frame;
-  GtkWidget *menu;
+  GtkWidget *combo;
   GtkWidget *button;
 
   config = G_OBJECT (tool_options);
@@ -261,22 +261,22 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
                              FALSE, 0.0, 0.0);
 
   /*  the gradient type menu  */
-  menu = gimp_prop_enum_option_menu_new (config, "gradient-type", 0, 0);
-  gimp_enum_option_menu_set_stock_prefix (GTK_OPTION_MENU (menu),
-                                          "gimp-gradient");
+  combo = gimp_prop_enum_combo_box_new (config, "gradient-type", 0, 0);
+  gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (combo),
+                                        "gimp-gradient");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
 			     _("Shape:"), 1.0, 0.5,
-			     menu, 2, TRUE);
+			     combo, 2, TRUE);
 
   /*  the repeat option  */
-  menu = gimp_prop_enum_option_menu_new (config, "gradient-repeat", 0, 0);
+  combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
 			     _("Repeat:"), 1.0, 0.5,
-			     menu, 2, TRUE);
+			     combo, 2, TRUE);
 
   g_signal_connect (config, "notify::gradient-type",
                     G_CALLBACK (blend_options_gradient_type_notify),
-                    menu);
+                    combo);
 
   button = gimp_prop_check_button_new (config, "dither",
                                        _("Dithering"));
@@ -325,7 +325,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 static void
 blend_options_gradient_type_notify (GimpBlendOptions *options,
                                     GParamSpec       *pspec,
-                                    GtkWidget        *repeat_menu)
+                                    GtkWidget        *repeat_combo)
 {
-  gtk_widget_set_sensitive (repeat_menu, options->gradient_type < 6);
+  gtk_widget_set_sensitive (repeat_combo, options->gradient_type < 6);
 }

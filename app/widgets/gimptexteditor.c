@@ -35,7 +35,7 @@
 
 #include "core/gimpmarshal.h"
 
-#include "gimpenummenu.h"
+#include "gimpenumwidgets.h"
 #include "gimphelp-ids.h"
 #include "gimptexteditor.h"
 

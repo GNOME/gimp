@@ -41,10 +41,11 @@ GtkWidget     * gimp_prop_boolean_radio_frame_new (GObject     *config,
 
 /*  GParamEnum  */
 
-GtkWidget     * gimp_prop_enum_option_menu_new    (GObject     *config,
+GtkWidget     * gimp_prop_enum_combo_box_new      (GObject     *config,
                                                    const gchar *property_name,
                                                    gint         minimum,
                                                    gint         maximum);
+
 GtkWidget     * gimp_prop_paint_mode_menu_new     (GObject     *config,
                                                    const gchar *property_name,
                                                    gboolean     with_behind_mode);

@@ -196,14 +196,14 @@ brush_select_new (Gimp                 *gimp,
                     bsp);
 
   /*  Create the paint mode option menu  */
-  bsp->option_menu =
+  bsp->paint_mode_menu =
     gimp_paint_mode_menu_new (G_CALLBACK (paint_mode_menu_callback),
 			      bsp,
 			      TRUE,
 			      gimp_context_get_paint_mode (bsp->context));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Mode:"), 1.0, 0.5,
-			     bsp->option_menu, 2, TRUE);
+			     bsp->paint_mode_menu, 2, TRUE);
 
   spacing_adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;
 
@@ -365,7 +365,7 @@ brush_select_paint_mode_changed (GimpContext          *context,
 				 GimpLayerModeEffects  paint_mode,
 				 BrushSelect          *bsp)
 {
-  gimp_int_option_menu_set_history (GTK_OPTION_MENU (bsp->option_menu),
+  gimp_int_option_menu_set_history (GTK_OPTION_MENU (bsp->paint_mode_menu),
 				    paint_mode);
 
   brush_select_change_callbacks (bsp, FALSE);

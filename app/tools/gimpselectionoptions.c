@@ -512,6 +512,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       GtkWidget *frame;
       GtkWidget *vbox2;
       GtkWidget *table;
+      GtkWidget *combo;
       GtkWidget *menu;
       GtkWidget *width_spinbutton;
       GtkWidget *height_spinbutton;
@@ -542,9 +543,9 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      menu = gimp_prop_enum_option_menu_new (config, "fixed-mode", 0, 0);
-      gtk_frame_set_label_widget (GTK_FRAME (frame), menu);
-      gtk_widget_show (menu);
+      combo = gimp_prop_enum_combo_box_new (config, "fixed-mode", 0, 0);
+      gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
+      gtk_widget_show (combo);
 
       table = gtk_table_new (2, 3, FALSE);
       gtk_container_set_border_width (GTK_CONTAINER (table), 2);

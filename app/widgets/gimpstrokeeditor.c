@@ -27,9 +27,9 @@
 
 #include "core/gimpstrokeoptions.h"
 
-#include "gimppropwidgets.h"
 #include "gimpdasheditor.h"
-#include "gimpenummenu.h"
+#include "gimpenumcombobox.h"
+#include "gimppropwidgets.h"
 #include "gimpstrokeeditor.h"
 
 #include "gimp-intl.h"
@@ -57,10 +57,10 @@ static void      gimp_stroke_editor_get_property (GObject         *object,
 static void      gimp_stroke_editor_finalize     (GObject         *object);
 static gboolean  gimp_stroke_editor_paint_button (GtkWidget       *widget,
                                                   GdkEventExpose  *event,
-                                                  gpointer         user_data);
+                                                  gpointer         data);
 static void      gimp_stroke_editor_dash_preset  (GtkWidget       *widget,
-                                                  gpointer         user_data);
-                                                  
+                                                  gpointer         data);
+
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -260,11 +260,12 @@ gimp_stroke_editor_constructor (GType                   type,
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Dash Pattern:"), 1.0, 0.5, frame, 2, FALSE);
 
-  box = gimp_enum_option_menu_new (GIMP_TYPE_DASH_PRESET,
-                                   G_CALLBACK (gimp_stroke_editor_dash_preset),
-                                   editor->options);
+  box = gimp_enum_combo_box_new (GIMP_TYPE_DASH_PRESET);
+  g_signal_connect (box, "changed",
+                    G_CALLBACK (gimp_stroke_editor_dash_preset),
+                    editor->options);
   g_signal_connect_object (editor->options, "dash_info_changed",
-                           G_CALLBACK (gtk_option_menu_set_history),
+                           G_CALLBACK (gimp_enum_combo_box_set_active),
                            box, G_CONNECT_SWAPPED);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
@@ -318,19 +319,15 @@ gimp_stroke_editor_new (GimpStrokeOptions *options,
 static gboolean
 gimp_stroke_editor_paint_button (GtkWidget       *widget,
                                  GdkEventExpose  *event,
-                                 gpointer         user_data)
+                                 gpointer         data)
 {
-  GtkAllocation *alloc;
-  gint           w;
-
-  alloc = &widget->allocation;
-
-  w = MIN (alloc->width, alloc->height) * 2 / 3;
+  GtkAllocation *alloc = &widget->allocation;
+  gint           w     = MIN (alloc->width, alloc->height) * 2 / 3;
 
   gtk_paint_arrow (widget->style, widget->window,
                    widget->state, GTK_SHADOW_IN,
                    &event->area, widget, NULL,
-                   user_data ? GTK_ARROW_LEFT : GTK_ARROW_RIGHT, TRUE,
+                   data ? GTK_ARROW_LEFT : GTK_ARROW_RIGHT, TRUE,
                    alloc->x + (alloc->width - w) / 2,
                    alloc->y + (alloc->height - w) / 2,
                    w, w);
@@ -339,12 +336,10 @@ gimp_stroke_editor_paint_button (GtkWidget       *widget,
 
 static void
 gimp_stroke_editor_dash_preset (GtkWidget *widget,
-                                gpointer   user_data)
+                                gpointer   data)
 {
   gint value;
 
-  value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                              "gimp-item-data"));
-
-  gimp_stroke_options_set_dash_preset (GIMP_STROKE_OPTIONS (user_data), value);
+  if (gimp_enum_combo_box_get_active (GIMP_ENUM_COMBO_BOX (widget), &value))
+    gimp_stroke_options_set_dash_preset (GIMP_STROKE_OPTIONS (data), value);
 }

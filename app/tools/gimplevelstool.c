@@ -44,7 +44,8 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpcolorbar.h"
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimpenumcombobox.h"
+#include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogramview.h"
 #include "widgets/gimppropwidgets.h"
@@ -299,14 +300,17 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
 
+  /*  FIXME: regression!  */
+#if 0
   /* set the sensitivity of the channel menu based on the drawable type */
   gimp_int_option_menu_set_sensitive (GTK_OPTION_MENU (l_tool->channel_menu),
                                       (GimpIntOptionMenuSensitivityCallback) levels_set_sensitive_callback,
                                       l_tool);
+#endif
 
   /* set the current selection */
-  gtk_option_menu_set_history (GTK_OPTION_MENU (l_tool->channel_menu),
-                               l_tool->channel);
+  gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (l_tool->channel_menu),
+                                  l_tool->channel);
 
   if (! l_tool->color && l_tool->alpha)
     l_tool->channel = 1;
@@ -412,11 +416,12 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  menu = gimp_enum_option_menu_new (GIMP_TYPE_HISTOGRAM_CHANNEL,
-                                    G_CALLBACK (levels_channel_callback),
-                                    tool);
-  gimp_enum_option_menu_set_stock_prefix (GTK_OPTION_MENU (menu),
-                                          "gimp-channel");
+  menu = gimp_enum_combo_box_new (GIMP_TYPE_HISTOGRAM_CHANNEL);
+  g_signal_connect (menu, "changed",
+                    G_CALLBACK (levels_channel_callback),
+                    tool);
+  gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (menu),
+                                        "gimp-channel");
   gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
@@ -904,14 +909,16 @@ static void
 levels_channel_callback (GtkWidget      *widget,
 			 GimpLevelsTool *tool)
 {
-  gimp_menu_item_update (widget, &tool->channel);
+  if (gimp_enum_combo_box_get_active (GIMP_ENUM_COMBO_BOX (widget),
+                                      (gint *) &tool->channel))
+    {
+      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->hist_view),
+                                       tool->channel);
 
-  gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->hist_view),
-                                   tool->channel);
-
-  /* FIXME: hack */
-  if (! tool->color && tool->alpha)
-    tool->channel = (tool->channel > 1) ? 2 : 1;
+      /* FIXME: hack */
+      if (! tool->color && tool->alpha)
+        tool->channel = (tool->channel > 1) ? 2 : 1;
+    }
 
   levels_update (tool, ALL);
 }

@@ -783,25 +783,25 @@ prefs_color_button_add (GObject     *config,
 }
 
 static GtkWidget *
-prefs_enum_option_menu_add (GObject     *config,
-                            const gchar *property_name,
-                            gint         minimum,
-                            gint         maximum,
-                            const gchar *label,
-                            GtkTable    *table,
-                            gint         table_row)
+prefs_enum_combo_box_add (GObject     *config,
+                          const gchar *property_name,
+                          gint         minimum,
+                          gint         maximum,
+                          const gchar *label,
+                          GtkTable    *table,
+                          gint         table_row)
 {
-  GtkWidget *menu;
+  GtkWidget *combo_box;
 
-  menu = gimp_prop_enum_option_menu_new (config, property_name,
-                                         minimum, maximum);
+  combo_box = gimp_prop_enum_combo_box_new (config, property_name,
+                                            minimum, maximum);
 
-  if (menu)
+  if (combo_box)
     gimp_table_attach_aligned (table, 0, table_row,
                                label, 1.0, 0.5,
-                               menu, 1, TRUE);
+                               combo_box, 1, TRUE);
 
-  return menu;
+  return combo_box;
 }
 
 static GtkWidget *
@@ -923,8 +923,8 @@ prefs_display_options_frame_add (Gimp         *gimp,
 
   table = prefs_table_new (2, GTK_CONTAINER (vbox), FALSE);
 
-  prefs_enum_option_menu_add (object, "padding-mode", 0, 0,
-                              _("Canvas Padding Mode:"), GTK_TABLE (table), 0);
+  prefs_enum_combo_box_add (object, "padding-mode", 0, 0,
+                            _("Canvas Padding Mode:"), GTK_TABLE (table), 0);
 
   button = prefs_color_button_add (object, "padding-color",
                                    _("Custom Padding Color:"),
@@ -1208,15 +1208,15 @@ prefs_dialog_new (Gimp       *gimp,
 
   table = prefs_table_new (3, GTK_CONTAINER (vbox2), FALSE);
 
-  prefs_enum_option_menu_add (object, "layer-preview-size", 0, 0,
-                              _("Default _Layer & Channel Preview Size:"),
-                              GTK_TABLE (table), 0);
-  prefs_enum_option_menu_add (object, "navigation-preview-size", 0, 0,
-                              _("_Navigation Preview Size:"),
-                              GTK_TABLE (table), 1);
-  prefs_enum_option_menu_add (object, "undo-preview-size", 0, 0,
-                              _("_Undo History Preview Size:"),
-                              GTK_TABLE (table), 2);
+  prefs_enum_combo_box_add (object, "layer-preview-size", 0, 0,
+                            _("Default _Layer & Channel Preview Size:"),
+                            GTK_TABLE (table), 0);
+  prefs_enum_combo_box_add (object, "navigation-preview-size", 0, 0,
+                            _("_Navigation Preview Size:"),
+                            GTK_TABLE (table), 1);
+  prefs_enum_combo_box_add (object, "undo-preview-size", 0, 0,
+                            _("_Undo History Preview Size:"),
+                            GTK_TABLE (table), 2);
 
   /* Dialog Bahavior */
   vbox2 = prefs_frame_new (_("Dialog Behavior"), GTK_CONTAINER (vbox), FALSE);
@@ -1360,9 +1360,9 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
-  prefs_enum_option_menu_add (object, "help-browser", 0, 0,
-                              _("Help _Browser to Use:"),
-                              GTK_TABLE (table), 0);
+  prefs_enum_combo_box_add (object, "help-browser", 0, 0,
+                            _("Help _Browser to Use:"),
+                            GTK_TABLE (table), 0);
 
   /*  Web Browser  (unused on win32)  */
 #ifndef G_OS_WIN32
@@ -1414,9 +1414,9 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Scaling"), GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (1, GTK_CONTAINER (vbox2), TRUE);
 
-  prefs_enum_option_menu_add (object, "interpolation-type", 0, 0,
-                              _("Default _Interpolation:"),
-                              GTK_TABLE (table), 0);
+  prefs_enum_combo_box_add (object, "interpolation-type", 0, 0,
+                            _("Default _Interpolation:"),
+                            GTK_TABLE (table), 0);
 
   /*  Global Brush, Pattern, ...  */
   vbox2 = prefs_frame_new (_("Paint Options Shared Between Tools"),
@@ -1528,9 +1528,9 @@ prefs_dialog_new (Gimp       *gimp,
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
-  prefs_enum_option_menu_add (object, "cursor-mode", 0, 0,
-                              _("Cursor M_ode:"),
-                              GTK_TABLE (table), 0);
+  prefs_enum_combo_box_add (object, "cursor-mode", 0, 0,
+                            _("Cursor M_ode:"),
+                            GTK_TABLE (table), 0);
 
 
   /********************************************/
@@ -1700,12 +1700,12 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Transparency"), GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (2, GTK_CONTAINER (vbox2), TRUE);
 
-  prefs_enum_option_menu_add (object, "transparency-type", 0, 0,
-                              _("Transparency _Type:"),
-                              GTK_TABLE (table), 0);
-  prefs_enum_option_menu_add (object, "transparency-size", 0, 0,
-                              _("Check _Size:"),
-                              GTK_TABLE (table), 1);
+  prefs_enum_combo_box_add (object, "transparency-type", 0, 0,
+                            _("Transparency _Type:"),
+                            GTK_TABLE (table), 0);
+  prefs_enum_combo_box_add (object, "transparency-size", 0, 0,
+                            _("Check _Size:"),
+                            GTK_TABLE (table), 1);
 
   /*  8-Bit Displays  */
   vbox2 = prefs_frame_new (_("8-Bit Displays"), GTK_CONTAINER (vbox), FALSE);
@@ -1862,13 +1862,13 @@ prefs_dialog_new (Gimp       *gimp,
 
   table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
 
-  prefs_enum_option_menu_add (object, "toolbox-window-hint", 0, 0,
-                              _("Window Type Hint for the _Toolbox:"),
-                              GTK_TABLE (table), 0);
+  prefs_enum_combo_box_add (object, "toolbox-window-hint", 0, 0,
+                            _("Window Type Hint for the _Toolbox:"),
+                            GTK_TABLE (table), 0);
 
-  prefs_enum_option_menu_add (object, "dock-window-hint", 0, 0,
-                              _("Window Type Hint for the _Docks:"),
-                              GTK_TABLE (table), 1);
+  prefs_enum_combo_box_add (object, "dock-window-hint", 0, 0,
+                            _("Window Type Hint for the _Docks:"),
+                            GTK_TABLE (table), 1);
 
   vbox2 = prefs_frame_new (_("Focus"),
                            GTK_CONTAINER (vbox), FALSE);
@@ -1936,9 +1936,9 @@ prefs_dialog_new (Gimp       *gimp,
                                  _("Always"),
                                  _("\"File -> Save\" Saves the Image:"),
                                  GTK_TABLE (table), 0);
-  prefs_enum_option_menu_add (object, "thumbnail-size", 0, 0,
-                              _("Size of Thumbnail Files:"),
-                              GTK_TABLE (table), 1);
+  prefs_enum_combo_box_add (object, "thumbnail-size", 0, 0,
+                            _("Size of Thumbnail Files:"),
+                            GTK_TABLE (table), 1);
 
 
   /************************/

@@ -2,7 +2,8 @@
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * gimppropwidgets.c
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2002-2004  Michael Natterer <mitch@gimp.org>
+ *                          Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +39,9 @@
 
 #include "gimpcolorpanel.h"
 #include "gimpdnd.h"
-#include "gimpenummenu.h"
+#include "gimpenumcombobox.h"
+#include "gimpenumstore.h"
+#include "gimpenumwidgets.h"
 #include "gimppreview.h"
 #include "gimppropwidgets.h"
 #include "gimpwidgets-constructors.h"
@@ -283,6 +286,100 @@ gimp_prop_enum_check_button_notify (GObject    *config,
 }
 
 
+/*********************/
+/*  enum combo box   */
+/*********************/
+
+static void   gimp_prop_enum_combo_box_callback (GtkWidget   *widget,
+                                                 GObject     *config);
+static void   gimp_prop_enum_combo_box_notify   (GObject     *config,
+                                                 GParamSpec  *param_spec,
+                                                 GtkWidget   *widget);
+
+GtkWidget *
+gimp_prop_enum_combo_box_new (GObject     *config,
+                              const gchar *property_name,
+                              gint         minimum,
+                              gint         maximum)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *combo_box;
+  gint        value;
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_ENUM, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  if (minimum != maximum)
+    {
+      GtkListStore *store;
+
+      store = gimp_enum_store_new_with_range (param_spec->value_type,
+                                              minimum, maximum);
+
+      combo_box = gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
+
+      g_object_unref (store);
+    }
+  else
+    {
+      combo_box = gimp_enum_combo_box_new (param_spec->value_type);
+    }
+
+  gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (combo_box), value);
+
+  g_signal_connect (combo_box, "changed",
+                    G_CALLBACK (gimp_prop_enum_combo_box_callback),
+                    config);
+
+  set_param_spec (G_OBJECT (combo_box), combo_box, param_spec);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_enum_combo_box_notify),
+                  combo_box);
+
+  return combo_box;
+}
+
+static void
+gimp_prop_enum_combo_box_callback (GtkWidget *widget,
+                                   GObject   *config)
+{
+  GParamSpec  *param_spec;
+  gint         value;
+
+  param_spec = get_param_spec (G_OBJECT (widget));
+  if (! param_spec)
+    return;
+
+  if (gimp_enum_combo_box_get_active (GIMP_ENUM_COMBO_BOX (widget), &value))
+    {
+      g_object_set (config,
+                    param_spec->name, value,
+                    NULL);
+    }
+}
+
+static void
+gimp_prop_enum_combo_box_notify (GObject    *config,
+                                 GParamSpec *param_spec,
+                                 GtkWidget  *combo_box)
+{
+  gint value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (combo_box), value);
+}
+
+
 /******************/
 /*  option menus  */
 /******************/
@@ -292,6 +389,39 @@ static void   gimp_prop_option_menu_callback (GtkWidget   *widget,
 static void   gimp_prop_option_menu_notify   (GObject     *config,
                                               GParamSpec  *param_spec,
                                               GtkWidget   *menu);
+
+GtkWidget *
+gimp_prop_paint_mode_menu_new (GObject     *config,
+                               const gchar *property_name,
+                               gboolean     with_behind_mode)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *menu;
+  gint        value;
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_ENUM, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  menu = gimp_paint_mode_menu_new (G_CALLBACK (gimp_prop_option_menu_callback),
+                                   config,
+                                   with_behind_mode,
+                                   value);
+
+  set_param_spec (G_OBJECT (menu), menu, param_spec);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_option_menu_notify),
+                  menu);
+
+  return menu;
+}
+
 
 GtkWidget *
 gimp_prop_boolean_option_menu_new (GObject     *config,
@@ -321,82 +451,6 @@ gimp_prop_boolean_option_menu_new (GObject     *config,
                               false_text, FALSE, NULL,
 
                               NULL);
-
-  set_param_spec (G_OBJECT (menu), menu, param_spec);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_option_menu_notify),
-                  menu);
-
-  return menu;
-}
-
-GtkWidget *
-gimp_prop_enum_option_menu_new (GObject     *config,
-                                const gchar *property_name,
-                                gint         minimum,
-                                gint         maximum)
-{
-  GParamSpec *param_spec;
-  GtkWidget  *menu;
-  gint        value;
-
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRLOC);
-  if (! param_spec)
-    return NULL;
-
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-
-  if (minimum != maximum)
-    {
-      menu = gimp_enum_option_menu_new_with_range (param_spec->value_type,
-                                                   minimum, maximum,
-                                                   G_CALLBACK (gimp_prop_option_menu_callback),
-                                                   config);
-    }
-  else
-    {
-      menu = gimp_enum_option_menu_new (param_spec->value_type,
-                                        G_CALLBACK (gimp_prop_option_menu_callback),
-                                        config);
-    }
-
-  gimp_int_option_menu_set_history (GTK_OPTION_MENU (menu), value);
-
-  set_param_spec (G_OBJECT (menu), menu, param_spec);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_option_menu_notify),
-                  menu);
-
-  return menu;
-}
-
-GtkWidget *
-gimp_prop_paint_mode_menu_new (GObject     *config,
-                               const gchar *property_name,
-                               gboolean     with_behind_mode)
-{
-  GParamSpec *param_spec;
-  GtkWidget  *menu;
-  gint        value;
-
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRLOC);
-  if (! param_spec)
-    return NULL;
-
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-
-  menu = gimp_paint_mode_menu_new (G_CALLBACK (gimp_prop_option_menu_callback),
-                                   config,
-                                   with_behind_mode,
-                                   value);
 
   set_param_spec (G_OBJECT (menu), menu, param_spec);
 
