@@ -113,6 +113,7 @@ static void   curves_channel_callback (GtkWidget *, gpointer);
 static void   curves_smooth_callback      (GtkWidget *, gpointer);
 static void   curves_free_callback        (GtkWidget *, gpointer);
 
+static void   curves_channel_reset        (int);
 static void   curves_reset_callback       (GtkWidget *, gpointer);
 static void   curves_ok_callback          (GtkWidget *, gpointer);
 static void   curves_cancel_callback      (GtkWidget *, gpointer);
@@ -442,29 +443,19 @@ curves_initialize (GDisplay *gdisp)
 
   /*  The curves dialog  */
   if (!curves_dialog)
-    curves_dialog = curves_dialog_new ();
-  else
-    if (!GTK_WIDGET_VISIBLE (curves_dialog->shell))
-      gtk_widget_show (curves_dialog->shell);
-
-  /*  Initialize the values  */
-  curves_dialog->channel = HISTOGRAM_VALUE;
-  for (i = 0; i < 5; i++)
-    for (j = 0; j < 256; j++)
-      curves_dialog->curve[i][j] = j;
-
-  curves_dialog->grab_point = -1;
-  for (i = 0; i < 5; i++)
     {
-      for (j = 0; j < 17; j++)
-	{
-	  curves_dialog->points[i][j][0] = -1;
-	  curves_dialog->points[i][j][1] = -1;
-	}
-      curves_dialog->points[i][0][0] = 0;
-      curves_dialog->points[i][0][1] = 0;
-      curves_dialog->points[i][16][0] = 255;
-      curves_dialog->points[i][16][1] = 255;
+      curves_dialog = curves_dialog_new ();
+
+      /*  Initialize the values  */
+      curves_dialog->channel = HISTOGRAM_VALUE;
+      for (i = 0; i < 5; i++)
+        for (j = 0; j < 256; j++)
+          curves_dialog->curve[i][j] = j;
+
+      for (i = 0; i < 5; i++)
+        {
+	    curves_channel_reset (i);
+        }
     }
 
   curves_dialog->drawable = gimage_active_drawable (gdisp->gimage);
@@ -488,6 +479,9 @@ curves_initialize (GDisplay *gdisp)
   /* set the current selection */
   gtk_option_menu_set_history (GTK_OPTION_MENU (curves_dialog->channel_menu),
 			       curves_dialog->channel);
+
+  gimp_lut_setup (curves_dialog->lut, (GimpLutFunc) curves_lut_func,
+                  (void *) curves_dialog, gimp_drawable_bytes (curves_dialog->drawable));
 
   if (!GTK_WIDGET_VISIBLE (curves_dialog->shell))
     gtk_widget_show (curves_dialog->shell);
@@ -1183,6 +1177,25 @@ curves_free_callback (GtkWidget *widget,
 }
 
 static void
+curves_channel_reset (int i)
+{
+  int j;
+
+  curves_dialog->grab_point = -1;
+
+  for (j = 0; j < 17; j++)
+  {
+    curves_dialog->points[i][j][0] = -1;
+    curves_dialog->points[i][j][1] = -1;
+  }
+  curves_dialog->points[i][0][0] = 0;
+  curves_dialog->points[i][0][1] = 0;
+  curves_dialog->points[i][16][0] = 255;
+  curves_dialog->points[i][16][1] = 255;
+}
+
+
+static void
 curves_reset_callback (GtkWidget *widget,
 		       gpointer   data)
 {
@@ -1195,16 +1208,7 @@ curves_reset_callback (GtkWidget *widget,
   for (i = 0; i < 256; i++)
     cd->curve[cd->channel][i] = i;
 
-  cd->grab_point = -1;
-  for (i = 0; i < 17; i++)
-    {
-      cd->points[cd->channel][i][0] = -1;
-      cd->points[cd->channel][i][1] = -1;
-    }
-  cd->points[cd->channel][0][0] = 0;
-  cd->points[cd->channel][0][1] = 0;
-  cd->points[cd->channel][16][0] = 255;
-  cd->points[cd->channel][16][1] = 255;
+  curves_channel_reset (cd->channel);
 
   curves_calculate_curve (cd);
   curves_update (cd, GRAPH | XRANGE_TOP | DRAW);

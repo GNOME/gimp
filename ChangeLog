@@ -1,3 +1,19 @@
+2000-11-29  Austin Donnelly  <austin@gimp.org>
+
+	* app/curves.c: Applied patch from David Hodson
+	    <hodsond@ozemail.com.au> to fix Bug#33399: GIMP crashes when
+	    applying curve to Grayscaled image when preview is off.
+	    Previously the curves tool attempted a reset when changing
+	    image, but didn't correctly do this.  Now it has the
+	    (more useful) behaviour of doing a partial reset, where the
+	    curve remains the same across multiple invocations, allowing
+	    you to apply the same tweak to multiple images.  The internal
+	    state relevant to image type/depth is correctly reset,
+	    stopping the segfault behaviour seen before.
+
+	    Still no fix for Bug#33403: Curves/Levels Tool does not work
+	    on GRAYA-Images.
+
 2000-11-27  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpwidgets.c (gimp_int_adjustment_update): use rint(). 
