@@ -1,3 +1,14 @@
+2002-02-25  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/tips-parser.[ch]: strip newlines, tabs and adjacent spaces
+	from string values. Added a naive locale match algorithm. We'll see
+	how well it works in real life...
+
+	* app/gui/tips-dialog.c: call gimp_tips_from_file() with current
+	locale. Let GTK+ do the line breaks, assorted cosmetic changes.
+	
+	* tips/de.po: stripped newlines from translation.
+
 2002-02-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/vectors/Makefile.am

@@ -49,11 +49,13 @@ static void  tips_toggle_update  (GtkWidget   *widget,
 
 
 
-static GtkWidget    *tips_dialog   = NULL;
-static GtkWidget    *tips_label    = NULL;
-static GList        *tips          = NULL;
-static gint          tips_count    = 0;
-static gint          old_show_tips = 0;
+static GtkWidget *tips_dialog   = NULL;
+static GtkWidget *welcome_label = NULL;
+static GtkWidget *thetip_label  = NULL;
+static GList     *tips          = NULL;
+static GList     *current_tip   = NULL;
+static gint       tips_count    = 0;
+static gint       old_show_tips = 0;
 
 
 GtkWidget *
@@ -75,12 +77,15 @@ tips_dialog_create (void)
 
       filename = g_build_filename (gimp_data_directory (), "tips", 
                                    "gimp-tips.xml", NULL);
-      tips = gimp_tips_from_file (filename, NULL, &error);
+
+      tips = gimp_tips_from_file (filename, 
+                                  setlocale (LC_MESSAGES, NULL), 
+                                  &error);
       g_free (filename);
 
       if (error)
         {
-          tips = g_list_prepend (NULL, gimp_tip_new (NULL, error->message));
+          tips = g_list_prepend (tips, gimp_tip_new (NULL, error->message));
           g_error_free (error);
         }
     }
@@ -89,6 +94,8 @@ tips_dialog_create (void)
 
   if (gimprc.last_tip >= tips_count || gimprc.last_tip < 0)
     gimprc.last_tip = 0;
+
+  current_tip = g_list_nth (tips, gimprc.last_tip);
 
   if (tips_dialog)
     return tips_dialog;
@@ -116,24 +123,37 @@ tips_dialog_create (void)
   gtk_container_add (GTK_CONTAINER (tips_dialog), vbox);      
   gtk_widget_show (vbox);
 
-  hbox = gtk_hbox_new (FALSE, 5);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
-  tip = g_list_nth_data (tips, gimprc.last_tip);
-  tips_label = gtk_label_new (tip->thetip);
+  vbox2 = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
+  gtk_widget_show (vbox2);
 
-  gtk_label_set_justify (GTK_LABEL (tips_label), GTK_JUSTIFY_LEFT);
-  gtk_misc_set_alignment (GTK_MISC (tips_label), 0.5, 0.5);
-  gtk_box_pack_start (GTK_BOX (hbox), tips_label, TRUE, TRUE, 3);
-  gtk_widget_show (tips_label);
+  tip = (GimpTip *) current_tip->data;
+
+  welcome_label = gtk_label_new (tip->welcome);
+  gtk_label_set_justify (GTK_LABEL (welcome_label), GTK_JUSTIFY_LEFT);
+  gtk_label_set_line_wrap (GTK_LABEL (welcome_label), TRUE);
+  gtk_misc_set_alignment (GTK_MISC (welcome_label), 0.5, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox2), welcome_label, FALSE, FALSE, 0);
+  if (tip->welcome)
+    gtk_widget_show (welcome_label);
+
+  thetip_label = gtk_label_new (tip->thetip);
+  gtk_label_set_justify (GTK_LABEL (thetip_label), GTK_JUSTIFY_LEFT);
+  gtk_label_set_line_wrap (GTK_LABEL (thetip_label), TRUE);
+  gtk_misc_set_alignment (GTK_MISC (thetip_label), 0.5, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox2), thetip_label, TRUE, TRUE, 0);
+  gtk_widget_show (thetip_label);
 
   vbox2 = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_end (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
   gtk_widget_show (vbox2);
 
-  filename = g_build_filename (gimp_data_directory(), 
+  filename = g_build_filename (gimp_data_directory (), 
                                "images", "wilber-tips.png", NULL);
   wilber = gdk_pixbuf_new_from_file (filename, NULL);
   g_free (filename);
@@ -154,7 +174,8 @@ tips_dialog_create (void)
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gtk_check_button_new_with_label (_("Show tip next time GIMP starts"));
+  button = 
+    gtk_check_button_new_with_mnemonic (_("Show tip next time GIMP starts"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), gimprc.show_tips);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -185,7 +206,7 @@ tips_dialog_create (void)
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_with_label (_("Previous Tip"));
+  button = gtk_button_new_with_mnemonic (_("_Previous Tip"));
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_widget_set_sensitive (button, (tips_count > 1));
   gtk_container_add (GTK_CONTAINER (bbox), button);
@@ -195,7 +216,7 @@ tips_dialog_create (void)
 		    G_CALLBACK (tips_show_previous),
 		    NULL);
 
-  button = gtk_button_new_with_label (_("Next Tip"));
+  button = gtk_button_new_with_mnemonic (_("_Next Tip"));
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_widget_set_sensitive (button, (tips_count > 1));
   gtk_container_add (GTK_CONTAINER (bbox), button);
@@ -222,10 +243,12 @@ tips_dialog_destroy (GtkWidget *widget,
 
   tips_dialog = NULL;
 
+  current_tip = NULL;
   gimp_tips_free (tips);
   tips = NULL;
 
   /* the last-shown-tip is now saved in sessionrc */
+  gimprc.last_tip = g_list_position (tips, current_tip);
 
   if (gimprc.show_tips != old_show_tips)
     {
@@ -239,35 +262,35 @@ tips_dialog_destroy (GtkWidget *widget,
 }
 
 static void
+tips_set_labels (GimpTip *tip)
+{
+  g_return_if_fail (tip != NULL);
+
+  if (tip->welcome)
+    gtk_widget_show (welcome_label);
+  else
+    gtk_widget_hide (welcome_label);
+    
+  gtk_label_set_text (GTK_LABEL (welcome_label), tip->welcome);
+  gtk_label_set_text (GTK_LABEL (thetip_label), tip->thetip);
+}
+
+static void
 tips_show_previous (GtkWidget *widget,
 		    gpointer  data)
 {
-  GimpTip *tip;
+  current_tip = current_tip->prev ? current_tip->prev : g_list_last (tips);
 
-  gimprc.last_tip--;
-
-  if (gimprc.last_tip < 0)
-    gimprc.last_tip = tips_count - 1;
-
-  tip = g_list_nth_data (tips, gimprc.last_tip);
-
-  gtk_label_set_text (GTK_LABEL (tips_label), tip->thetip);
+  tips_set_labels (current_tip->data);
 }
 
 static void
 tips_show_next (GtkWidget *widget,
 		gpointer   data)
 {
-  GimpTip *tip;
+  current_tip = current_tip->next ? current_tip->next : tips;
 
-  gimprc.last_tip++;
-
-  if (gimprc.last_tip >= tips_count)
-    gimprc.last_tip = 0;
-
-  tip = g_list_nth_data (tips, gimprc.last_tip);
-
-  gtk_label_set_text (GTK_LABEL (tips_label), tip->thetip);
+  tips_set_labels (current_tip->data);
 }
 
 static void
