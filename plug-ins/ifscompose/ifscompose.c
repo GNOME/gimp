@@ -389,7 +389,7 @@ run (char    *name,
       /*  Possibly retrieve data; first look for a parasite -
        *  if not found, fall back to global values
        */
-      parasite = gimp_drawable_find_parasite (active_drawable->id,
+      parasite = gimp_drawable_parasite_find (active_drawable->id,
 					      IFSCOMPOSE_PARASITE);
       found_parasite = FALSE;
       if (parasite)

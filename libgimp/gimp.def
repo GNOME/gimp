@@ -37,7 +37,7 @@ EXPORTS
 	gimp_drawable_delete
 	gimp_drawable_detach
 	gimp_drawable_fill
-	gimp_drawable_find_parasite
+	gimp_drawable_parasite_find
 	gimp_drawable_flush
 	gimp_drawable_get
 	gimp_drawable_get_thumbnail_data

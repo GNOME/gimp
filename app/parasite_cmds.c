@@ -28,15 +28,15 @@
 #include "libgimp/parasite.h"
 
 static ProcRecord parasite_new_proc;
-static ProcRecord find_parasite_proc;
+static ProcRecord parasite_find_proc;
 static ProcRecord parasite_attach_proc;
 static ProcRecord parasite_detach_proc;
 static ProcRecord parasite_list_proc;
-static ProcRecord drawable_find_parasite_proc;
+static ProcRecord drawable_parasite_find_proc;
 static ProcRecord drawable_parasite_attach_proc;
 static ProcRecord drawable_parasite_detach_proc;
 static ProcRecord drawable_parasite_list_proc;
-static ProcRecord image_find_parasite_proc;
+static ProcRecord image_parasite_find_proc;
 static ProcRecord image_parasite_attach_proc;
 static ProcRecord image_parasite_detach_proc;
 static ProcRecord image_parasite_list_proc;
@@ -45,15 +45,15 @@ void
 register_parasite_procs (void)
 {
   procedural_db_register (&parasite_new_proc);
-  procedural_db_register (&find_parasite_proc);
+  procedural_db_register (&parasite_find_proc);
   procedural_db_register (&parasite_attach_proc);
   procedural_db_register (&parasite_detach_proc);
   procedural_db_register (&parasite_list_proc);
-  procedural_db_register (&drawable_find_parasite_proc);
+  procedural_db_register (&drawable_parasite_find_proc);
   procedural_db_register (&drawable_parasite_attach_proc);
   procedural_db_register (&drawable_parasite_detach_proc);
   procedural_db_register (&drawable_parasite_list_proc);
-  procedural_db_register (&image_find_parasite_proc);
+  procedural_db_register (&image_parasite_find_proc);
   procedural_db_register (&image_parasite_attach_proc);
   procedural_db_register (&image_parasite_detach_proc);
   procedural_db_register (&image_parasite_list_proc);
@@ -146,7 +146,7 @@ static ProcRecord parasite_new_proc =
 };
 
 static Argument *
-find_parasite_invoker (Argument *args)
+parasite_find_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -158,7 +158,7 @@ find_parasite_invoker (Argument *args)
   parasite = parasite_copy (gimp_parasite_find (name));
   success = parasite != NULL;
 
-  return_args = procedural_db_return_args (&find_parasite_proc, success);
+  return_args = procedural_db_return_args (&parasite_find_proc, success);
 
   if (success)
     return_args[1].value.pdb_pointer = parasite;
@@ -166,7 +166,7 @@ find_parasite_invoker (Argument *args)
   return return_args;
 }
 
-static ProcArg find_parasite_inargs[] =
+static ProcArg parasite_find_inargs[] =
 {
   {
     PDB_STRING,
@@ -175,7 +175,7 @@ static ProcArg find_parasite_inargs[] =
   }
 };
 
-static ProcArg find_parasite_outargs[] =
+static ProcArg parasite_find_outargs[] =
 {
   {
     PDB_PARASITE,
@@ -184,9 +184,9 @@ static ProcArg find_parasite_outargs[] =
   }
 };
 
-static ProcRecord find_parasite_proc =
+static ProcRecord parasite_find_proc =
 {
-  "gimp_find_parasite",
+  "gimp_parasite_find",
   "Finds the named parasite.",
   "Finds and returns the named parasite that was previously attached to the gimp.",
   "Jay Cox",
@@ -194,10 +194,10 @@ static ProcRecord find_parasite_proc =
   "1998",
   PDB_INTERNAL,
   1,
-  find_parasite_inargs,
+  parasite_find_inargs,
   1,
-  find_parasite_outargs,
-  { { find_parasite_invoker } }
+  parasite_find_outargs,
+  { { parasite_find_invoker } }
 };
 
 static Argument *
@@ -330,7 +330,7 @@ static ProcRecord parasite_list_proc =
 };
 
 static Argument *
-drawable_find_parasite_invoker (Argument *args)
+drawable_parasite_find_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -350,7 +350,7 @@ drawable_find_parasite_invoker (Argument *args)
       success = parasite != NULL;
     }
 
-  return_args = procedural_db_return_args (&drawable_find_parasite_proc, success);
+  return_args = procedural_db_return_args (&drawable_parasite_find_proc, success);
 
   if (success)
     return_args[1].value.pdb_pointer = parasite;
@@ -358,7 +358,7 @@ drawable_find_parasite_invoker (Argument *args)
   return return_args;
 }
 
-static ProcArg drawable_find_parasite_inargs[] =
+static ProcArg drawable_parasite_find_inargs[] =
 {
   {
     PDB_DRAWABLE,
@@ -372,7 +372,7 @@ static ProcArg drawable_find_parasite_inargs[] =
   }
 };
 
-static ProcArg drawable_find_parasite_outargs[] =
+static ProcArg drawable_parasite_find_outargs[] =
 {
   {
     PDB_PARASITE,
@@ -381,9 +381,9 @@ static ProcArg drawable_find_parasite_outargs[] =
   }
 };
 
-static ProcRecord drawable_find_parasite_proc =
+static ProcRecord drawable_parasite_find_proc =
 {
-  "gimp_drawable_find_parasite",
+  "gimp_drawable_parasite_find",
   "Finds the named parasite in a drawable",
   "Finds and returns the named parasite that was previously attached to a drawable.",
   "Jay Cox",
@@ -391,10 +391,10 @@ static ProcRecord drawable_find_parasite_proc =
   "1998",
   PDB_INTERNAL,
   2,
-  drawable_find_parasite_inargs,
+  drawable_parasite_find_inargs,
   1,
-  drawable_find_parasite_outargs,
-  { { drawable_find_parasite_invoker } }
+  drawable_parasite_find_outargs,
+  { { drawable_parasite_find_invoker } }
 };
 
 static Argument *
@@ -566,7 +566,7 @@ static ProcRecord drawable_parasite_list_proc =
 };
 
 static Argument *
-image_find_parasite_invoker (Argument *args)
+image_parasite_find_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -586,7 +586,7 @@ image_find_parasite_invoker (Argument *args)
       success = parasite != NULL;
     }
 
-  return_args = procedural_db_return_args (&image_find_parasite_proc, success);
+  return_args = procedural_db_return_args (&image_parasite_find_proc, success);
 
   if (success)
     return_args[1].value.pdb_pointer = parasite;
@@ -594,7 +594,7 @@ image_find_parasite_invoker (Argument *args)
   return return_args;
 }
 
-static ProcArg image_find_parasite_inargs[] =
+static ProcArg image_parasite_find_inargs[] =
 {
   {
     PDB_IMAGE,
@@ -608,7 +608,7 @@ static ProcArg image_find_parasite_inargs[] =
   }
 };
 
-static ProcArg image_find_parasite_outargs[] =
+static ProcArg image_parasite_find_outargs[] =
 {
   {
     PDB_PARASITE,
@@ -617,9 +617,9 @@ static ProcArg image_find_parasite_outargs[] =
   }
 };
 
-static ProcRecord image_find_parasite_proc =
+static ProcRecord image_parasite_find_proc =
 {
-  "gimp_image_find_parasite",
+  "gimp_image_parasite_find",
   "Finds the named parasite in an image",
   "Finds and returns the named parasite that was previously attached to an image.",
   "Jay Cox",
@@ -627,10 +627,10 @@ static ProcRecord image_find_parasite_proc =
   "1998",
   PDB_INTERNAL,
   2,
-  image_find_parasite_inargs,
+  image_parasite_find_inargs,
   1,
-  image_find_parasite_outargs,
-  { { image_find_parasite_invoker } }
+  image_parasite_find_outargs,
+  { { image_parasite_find_invoker } }
 };
 
 static Argument *

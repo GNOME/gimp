@@ -978,7 +978,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
       drawable objects.  They are:</Para>
       <VariableList>
 	<varlistentry>
-	  <term><function>find_parasite</function>(<parameter>name</parameter>)</term>
+	  <term><function>parasite_find</function>(<parameter>name</parameter>)</term>
 	  <listitem>
 	    <Para>find a parasite by its name.</Para>
 	  </listitem>

@@ -87,7 +87,7 @@ CODE
     );
 }
 
-sub find_parasite {
+sub parasite_find {
     $blurb = 'Finds the named parasite.';
 
     $help = <<'HELP';
@@ -180,7 +180,7 @@ gimp_attach_new_parasite (const char *name, int flags, int size,
 }
 CODE
 
-@procs = qw(parasite_new find_parasite parasite_attach parasite_detach
+@procs = qw(parasite_new parasite_find parasite_attach parasite_detach
 	    parasite_list);
 
 @types = (

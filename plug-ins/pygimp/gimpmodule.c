@@ -1450,12 +1450,12 @@ img_set_component_visible(self, args)
 
 #ifdef GIMP_HAVE_PARASITES
 static PyObject *
-img_find_parasite(self, args)
+img_parasite_find(self, args)
      imgobject *self;
      PyObject *args;
 {
     char *name;
-    if (!PyArg_ParseTuple(args, "s:find_parasite", &name))
+    if (!PyArg_ParseTuple(args, "s:parasite_find", &name))
 	return NULL;
     return (PyObject *)newparaobject(gimp_image_parasite_find(self->ID, name));
 }
@@ -1630,7 +1630,7 @@ static struct PyMethodDef img_methods[] = {
     {"set_component_active",	(PyCFunction)img_set_component_active,	METH_VARARGS},
     {"set_component_visible",	(PyCFunction)img_set_component_visible,	METH_VARARGS},
 #ifdef GIMP_HAVE_PARASITES
-    {"find_parasite",       (PyCFunction)img_find_parasite,      METH_VARARGS},
+    {"parasite_find",       (PyCFunction)img_parasite_find,      METH_VARARGS},
     {"attach_parasite",     (PyCFunction)img_attach_parasite,    METH_VARARGS},
     {"attach_new_parasite", (PyCFunction)img_attach_new_parasite,METH_VARARGS},
     {"detach_parasite",     (PyCFunction)img_detach_parasite,    METH_VARARGS},
@@ -2079,14 +2079,14 @@ drw_get_pixel_rgn(self, args)
 
 #ifdef GIMP_HAVE_PARASITES
 static PyObject *
-drw_find_parasite(self, args)
+drw_parasite_find(self, args)
      drwobject *self;
      PyObject *args;
 {
     char *name;
-    if (!PyArg_ParseTuple(args, "s:find_parasite", &name))
+    if (!PyArg_ParseTuple(args, "s:parasite_find", &name))
 	return NULL;
-    return (PyObject *)newparaobject(gimp_drawable_find_parasite(self->ID,
+    return (PyObject *)newparaobject(gimp_drawable_parasite_find(self->ID,
 								 name));
 }
 
@@ -2142,7 +2142,7 @@ drw_detach_parasite(self, args)
     {"get_tile",	(PyCFunction)drw_get_tile,	METH_VARARGS}, \
     {"get_tile2",	(PyCFunction)drw_get_tile2,	METH_VARARGS}, \
     {"get_pixel_rgn", (PyCFunction)drw_get_pixel_rgn, METH_VARARGS}, \
-    {"find_parasite",       (PyCFunction)img_find_parasite, METH_VARARGS}, \
+    {"parasite_find",       (PyCFunction)img_parasite_find, METH_VARARGS}, \
     {"attach_parasite",     (PyCFunction)img_attach_parasite, METH_VARARGS},\
     {"attach_new_parasite",(PyCFunction)img_attach_new_parasite,METH_VARARGS},\
     {"detach_parasite",     (PyCFunction)img_detach_parasite, METH_VARARGS}
@@ -4401,7 +4401,7 @@ gimp_Find_parasite(self, args)
      PyObject *self, *args;
 {
     char *name;
-    if (!PyArg_ParseTuple(args, "s:find_parasite", &name))
+    if (!PyArg_ParseTuple(args, "s:parasite_find", &name))
 	return NULL;
     return (PyObject *)newparaobject(gimp_parasite_find(name));
 }
@@ -4540,7 +4540,7 @@ static struct PyMethodDef gimp_methods[] = {
     {"extension_process", (PyCFunction)gimp_Extension_process, METH_VARARGS},
 #ifdef GIMP_HAVE_PARASITES
     {"parasite",           (PyCFunction)new_parasite,            METH_VARARGS},
-    {"find_parasite",      (PyCFunction)gimp_Find_parasite,      METH_VARARGS},
+    {"parasite_find",      (PyCFunction)gimp_Find_parasite,      METH_VARARGS},
     {"attach_parasite",    (PyCFunction)gimp_Attach_parasite,    METH_VARARGS},
     {"attach_new_parasite",(PyCFunction)gimp_Attach_new_parasite,METH_VARARGS},
     {"detach_parasite",    (PyCFunction)gimp_Detach_parasite,    METH_VARARGS},

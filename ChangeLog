@@ -1,3 +1,8 @@
+Wed Oct 27 13:37:54 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+        * gimp_parasite_find users where not updated to the new syntax
+        everywhere.
+
 Wed Oct 27 20:51:10 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/lc_dialog.c

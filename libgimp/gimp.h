@@ -723,7 +723,7 @@ GTile*        gimp_drawable_get_tile2    (GDrawable *drawable,
 					  gint       shadow,
 					  gint       x,
 					  gint       y);
-Parasite  *gimp_drawable_find_parasite   (gint32      drawable,
+Parasite  *gimp_drawable_parasite_find   (gint32      drawable,
 					  const char *name);
 void       gimp_drawable_parasite_attach (gint32      drawable,
 					  const Parasite *p);

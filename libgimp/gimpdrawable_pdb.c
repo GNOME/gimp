@@ -579,14 +579,14 @@ gimp_drawable_get_tile2 (GDrawable *drawable,
 }
 
 Parasite *
-gimp_drawable_find_parasite (gint32 drawable_ID,
+gimp_drawable_parasite_find (gint32 drawable_ID,
 			     const char *name)
 
 {
   GParam *return_vals;
   int nreturn_vals;
   Parasite *parasite;
-  return_vals = gimp_run_procedure ("gimp_drawable_find_parasite",
+  return_vals = gimp_run_procedure ("gimp_drawable_parasite_find",
 				    &nreturn_vals,
 				    PARAM_DRAWABLE, drawable_ID,
 				    PARAM_STRING, name,
