@@ -1,3 +1,8 @@
+2003-10-17  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/gfig/gfig.c: commented out code for Lock Grid (which wasn't 
+	implemented). Fixes #124157.
+
 2003-10-17  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdnd.c (gimp_dnd_file_dest_add): according to an

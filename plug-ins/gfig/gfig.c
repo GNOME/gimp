@@ -1187,9 +1187,12 @@ update_options (GFigObj *old_obj)
     }
   if (selvals.opts.lockongrid != current_obj->opts.lockongrid)
     {
+#if 0
+      /* Maurits: code not implemented */
       gtk_toggle_button_set_active
 	(GTK_TOGGLE_BUTTON (gfig_opt_widget.lockongrid),
 	 current_obj->opts.lockongrid);
+#endif
     }
   if (selvals.opts.showcontrol != current_obj->opts.showcontrol)
     {
@@ -2682,7 +2685,7 @@ paint_page (void)
 			     _("With BG of:"), 1.0, 0.5,
 			     page_menu_bg, 1, TRUE);
 
-  toggle = gtk_check_button_new_with_label (_("Reverse Line"));
+  toggle = gtk_check_button_new_with_label (_("Reverse line"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 4, 5,
 		    GTK_FILL, GTK_FILL, 0, 0);
   g_signal_connect (toggle, "toggled",
@@ -2697,7 +2700,7 @@ paint_page (void)
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (vbox2);
 
-  toggle = gtk_check_button_new_with_label (_("Scale to Image"));
+  toggle = gtk_check_button_new_with_label (_("Scale to image"));
   gtk_box_pack_end (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				selvals.scaletoimage);
@@ -2727,7 +2730,7 @@ paint_page (void)
   g_object_set_data (G_OBJECT (toggle), "inverse_sensitive", scale_scale);
   g_object_set_data (G_OBJECT (toggle), "user_data", scale_scale_data);
 
-  toggle = gtk_check_button_new_with_label (_("Approx. Circles/Ellipses"));
+  toggle = gtk_check_button_new_with_label (_("Approx. circles/ellipses"));
   gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 4, 5,
 		    GTK_FILL, GTK_FILL, 0, 0);
   g_signal_connect (toggle, "toggled",
@@ -3136,7 +3139,7 @@ options_page (void)
   gtk_widget_show (table);
 
   /* Put buttons in */
-  toggle = gtk_check_button_new_with_label (_("Show Image"));
+  toggle = gtk_check_button_new_with_label (_("Show image"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   g_signal_connect (toggle, "toggled",
@@ -3165,7 +3168,7 @@ options_page (void)
 
 				NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Grid Type:"), 1.0, 0.5,
+			     _("Grid type:"), 1.0, 0.5,
 			     menu, 1, TRUE);
 
   gfig_opt_widget.gridtypemenu = menu;
@@ -3184,11 +3187,11 @@ options_page (void)
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Grid Color:"), 1.0, 0.5,
+			     _("Grid color:"), 1.0, 0.5,
 			     menu, 1, TRUE);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-				    _("Max Undo:"), 0, 50,
+				    _("Max undo:"), 0, 50,
 				    selvals.maxundo, MIN_UNDO, MAX_UNDO, 1, 2, 0,
 				    TRUE, 0, 0,
 				    NULL, NULL);
@@ -3196,7 +3199,7 @@ options_page (void)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &selvals.maxundo);
 
-  toggle = gtk_check_button_new_with_label (_("Show Position"));
+  toggle = gtk_check_button_new_with_label (_("Show position"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 4, 5,
 		    GTK_FILL, GTK_FILL, 0, 0);
   g_signal_connect (toggle, "toggled",
@@ -3207,7 +3210,7 @@ options_page (void)
                           NULL);
   gtk_widget_show (toggle); 
 
-  toggle = gtk_check_button_new_with_label (_("Hide Control Points"));
+  toggle = gtk_check_button_new_with_label (_("Hide control points"));
   gtk_table_attach (GTK_TABLE (table), toggle, 1, 3, 4, 5,
 		    GTK_FILL, GTK_FILL, 0, 0);
   g_signal_connect (toggle, "toggled",
@@ -3252,15 +3255,7 @@ grid_frame (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0); 
   gtk_widget_show (hbox);
 
-  toggle = gtk_check_button_new_with_label (_("Snap to Grid"));
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0); 
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &selvals.opts.snap2grid);
-  gtk_widget_show (toggle);
-  gfig_opt_widget.snap2grid = toggle;
-
-  toggle = gtk_check_button_new_with_label (_("Display Grid"));
+  toggle = gtk_check_button_new_with_label (_("Show grid"));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0); 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -3268,8 +3263,22 @@ grid_frame (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (draw_grid_clear),
                     NULL);
+  gimp_help_set_help_data (toggle, _("Show grid"), NULL); 
   gtk_widget_show (toggle);
   gfig_opt_widget.drawgrid = toggle;
+
+  toggle = gtk_check_button_new_with_label (_("Snap to grid"));
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0); 
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &selvals.opts.snap2grid);
+  gimp_help_set_help_data (toggle, _("Snap to grid"), NULL); 
+  gtk_widget_show (toggle);
+  gfig_opt_widget.snap2grid = toggle;
+
+#if 0
+  /* 17/10/2003 (Maurits): this option is not implemented. Therefore removing
+     it from the user interface */
 
   toggle = gtk_check_button_new_with_label (_("Lock on Grid"));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0); 
@@ -3278,7 +3287,7 @@ grid_frame (void)
                     &selvals.opts.lockongrid);
   gtk_widget_show (toggle);
   gfig_opt_widget.lockongrid = toggle;
-
+#endif
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
@@ -3286,7 +3295,7 @@ grid_frame (void)
   gtk_widget_show (table);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				    _("Grid Spacing:"), 0, 50,
+				    _("Grid spacing:"), 0, 50,
 				    selvals.opts.gridspacing,
 				    MIN_GRID, MAX_GRID, 1, 10, 0,
 				    TRUE, 0, 0,
