@@ -38,6 +38,7 @@
     <title>Paint Functions</title>
     <xi:include href="xml/paint-funcs-types.xml" />
     <xi:include href="xml/paint-funcs.xml" />
+    <xi:include href="xml/scale-funcs.xml" />
   </part>
 
   <part id="app-composite-part">
@@ -275,6 +276,7 @@
       <xi:include href="xml/gimp-transform-utils.xml" />
       <xi:include href="xml/gimparea.xml" />
       <xi:include href="xml/gimpcoords.xml" />
+      <xi:include href="xml/gimpinterpreterdb.xml" />
       <xi:include href="xml/gimpmarshal.xml" />
       <xi:include href="xml/gimppreviewcache.xml" />
       <xi:include href="xml/gimpscanconvert.xml" />
@@ -416,6 +418,7 @@
       <title>Initialization &amp; Font Management</title>
       <xi:include href="xml/gimp-fonts.xml" />
       <xi:include href="xml/gimpfont.xml" />
+      <xi:include href="xml/gimpfont-utils.xml" />
       <xi:include href="xml/gimpfontlist.xml" />
     </chapter>
 
@@ -831,38 +834,38 @@
 
     <chapter id="app-image-actions">
       <title>Actions &amp; Callbacks Mainly Used in the Image Menu</title>
-      <xi:include href="xml/file-actions.xml" />
-      <xi:include href="xml/file-commands.xml" />
+      <xi:include href="xml/channels-actions.xml" />
+      <xi:include href="xml/channels-commands.xml" />
       <xi:include href="xml/context-actions.xml" />
       <xi:include href="xml/context-commands.xml" />
-      <xi:include href="xml/edit-actions.xml" />
-      <xi:include href="xml/edit-commands.xml" />
-      <xi:include href="xml/select-actions.xml" />
-      <xi:include href="xml/select-commands.xml" />
-      <xi:include href="xml/image-actions.xml" />
-      <xi:include href="xml/image-commands.xml" />
-      <xi:include href="xml/drawable-actions.xml" />
-      <xi:include href="xml/drawable-commands.xml" />
-      <xi:include href="xml/tools-actions.xml" />
-      <xi:include href="xml/tools-commands.xml" />
-      <xi:include href="xml/view-actions.xml" />
-      <xi:include href="xml/view-commands.xml" />
-      <xi:include href="xml/help-actions.xml" />
-      <xi:include href="xml/help-commands.xml" />
       <xi:include href="xml/debug-actions.xml" />
       <xi:include href="xml/debug-commands.xml" />
       <xi:include href="xml/dialogs-actions.xml" />
       <xi:include href="xml/dialogs-commands.xml" />
-      <xi:include href="xml/plug-in-actions.xml" />
-      <xi:include href="xml/plug-in-commands.xml" />
-      <xi:include href="xml/channels-actions.xml" />
-      <xi:include href="xml/channels-commands.xml" />
+      <xi:include href="xml/drawable-actions.xml" />
+      <xi:include href="xml/drawable-commands.xml" />
+      <xi:include href="xml/edit-actions.xml" />
+      <xi:include href="xml/edit-commands.xml" />
+      <xi:include href="xml/file-actions.xml" />
+      <xi:include href="xml/file-commands.xml" />
+      <xi:include href="xml/help-actions.xml" />
+      <xi:include href="xml/help-commands.xml" />
+      <xi:include href="xml/image-actions.xml" />
+      <xi:include href="xml/image-commands.xml" />
       <xi:include href="xml/layers-actions.xml" />
       <xi:include href="xml/layers-commands.xml" />
-      <xi:include href="xml/vectors-actions.xml" />
-      <xi:include href="xml/vectors-commands.xml" />
+      <xi:include href="xml/plug-in-actions.xml" />
+      <xi:include href="xml/plug-in-commands.xml" />
       <xi:include href="xml/qmask-actions.xml" />
       <xi:include href="xml/qmask-commands.xml" />
+      <xi:include href="xml/select-actions.xml" />
+      <xi:include href="xml/select-commands.xml" />
+      <xi:include href="xml/tools-actions.xml" />
+      <xi:include href="xml/tools-commands.xml" />
+      <xi:include href="xml/vectors-actions.xml" />
+      <xi:include href="xml/vectors-commands.xml" />
+      <xi:include href="xml/view-actions.xml" />
+      <xi:include href="xml/view-commands.xml" />
     </chapter>
 
     <chapter id="app-actions-data-factory-actions">
@@ -902,6 +905,8 @@
 
     <chapter id="app-actions-misc-actions">
       <title>Other Actions &amp; Callbacks</title>
+      <xi:include href="xml/dock-actions.xml" />
+      <xi:include href="xml/dock-commands.xml" />
       <xi:include href="xml/dockable-actions.xml" />
       <xi:include href="xml/dockable-commands.xml" />
       <xi:include href="xml/error-console-actions.xml" />
@@ -910,6 +915,7 @@
       <xi:include href="xml/text-editor-commands.xml" />
       <xi:include href="xml/tool-options-actions.xml" />
       <xi:include href="xml/tool-options-commands.xml" />
+      <xi:include href="xml/window-actions.xml" />
     </chapter>
   </part>
 
@@ -928,6 +934,8 @@
       <xi:include href="xml/plug-in-menus.xml" />
       <xi:include href="xml/toolbox-menu.xml" />
       <xi:include href="xml/tool-options-menu.xml" />
+      <xi:include href="xml/dockable-menu.xml" />
+      <xi:include href="xml/window-menu.xml" />
     </chapter>
   </part>
 
