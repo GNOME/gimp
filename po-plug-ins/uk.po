@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-06-18 19:40-0700\n"
+"POT-Creation-Date: 2000-06-26 18:34+0300\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -1022,15 +1022,15 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:556 plug-ins/MapObject/mapobject_ui.c:692
 msgid "Light Settings"
-msgstr ""
+msgstr "Налаштування св╕тла"
 
 #: plug-ins/Lighting/lighting_ui.c:571 plug-ins/MapObject/mapobject_ui.c:706
 msgid "Point Light"
-msgstr ""
+msgstr "Джерело св╕тла"
 
 #: plug-ins/Lighting/lighting_ui.c:573 plug-ins/MapObject/mapobject_ui.c:708
 msgid "Directional Light"
-msgstr ""
+msgstr "Напрямлене св╕тло"
 
 #: plug-ins/Lighting/lighting_ui.c:575
 msgid "Spot Light"
@@ -1038,15 +1038,15 @@ msgstr "Св╕тлова пляма"
 
 #: plug-ins/Lighting/lighting_ui.c:577 plug-ins/MapObject/mapobject_ui.c:710
 msgid "No Light"
-msgstr ""
+msgstr "Нема╓ осв╕тлення"
 
 #: plug-ins/Lighting/lighting_ui.c:582 plug-ins/MapObject/mapobject_ui.c:715
 msgid "Lightsource Type:"
-msgstr ""
+msgstr "Тип джерела св╕тла:"
 
 #: plug-ins/Lighting/lighting_ui.c:585 plug-ins/MapObject/mapobject_ui.c:718
 msgid "Type of light source to apply"
-msgstr ""
+msgstr "Тип джерела св╕тла"
 
 #: plug-ins/Lighting/lighting_ui.c:587 plug-ins/MapObject/mapobject_ui.c:720
 msgid "Select Lightsource Color"
@@ -1176,7 +1176,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:895
 msgid "Bumpmap Settings"
-msgstr "Параметри рель╓фного перетворення"
+msgstr "Налаштування рель╓фного перетворення"
 
 #: plug-ins/Lighting/lighting_ui.c:911
 msgid "Bumpmap Image:"
@@ -1217,7 +1217,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:974
 msgid "Environment Settings"
-msgstr "Установки середовища"
+msgstr "Налаштування середовища"
 
 #: plug-ins/Lighting/lighting_ui.c:983
 msgid "Environment Image:"
@@ -1718,15 +1718,15 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:222
 msgid "All black"
-msgstr ""
+msgstr "Все чорне"
 
 #: plug-ins/common/CML_explorer.c:223
 msgid "All gray"
-msgstr ""
+msgstr "Все с╕ре"
 
 #: plug-ins/common/CML_explorer.c:224
 msgid "All white"
-msgstr ""
+msgstr "Все б╕ле"
 
 #: plug-ins/common/CML_explorer.c:225
 msgid "The first row of the image"
@@ -1793,23 +1793,23 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1238
 msgid "Random Seed"
-msgstr ""
+msgstr "Випадкова база"
 
 #: plug-ins/common/CML_explorer.c:1248
 msgid "Fix Seed"
-msgstr ""
+msgstr "Ф╕ксована база"
 
 #: plug-ins/common/CML_explorer.c:1258
 msgid "New Seed"
-msgstr ""
+msgstr "Нова база"
 
 #: plug-ins/common/CML_explorer.c:1277
 msgid "Hue Settings"
-msgstr "Настройки в╕дт╕нка"
+msgstr "Налаштування в╕дт╕нка"
 
 #: plug-ins/common/CML_explorer.c:1282
 msgid "Saturation Settings"
-msgstr "Настройки насиченост╕"
+msgstr "Налаштування насиченост╕"
 
 #: plug-ins/common/CML_explorer.c:1287
 msgid "Value (Gray Image) Settings"
@@ -1817,15 +1817,15 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1292
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Додатков╕ налаштування"
 
 #: plug-ins/common/CML_explorer.c:1294 plug-ins/fp/fp_gtk.c:293
 msgid "Advanced"
-msgstr ""
+msgstr "Додатково"
 
 #: plug-ins/common/CML_explorer.c:1304
 msgid "Other Parameter Settings"
-msgstr ""
+msgstr "Налаштування ╕нших параметр╕в"
 
 #: plug-ins/common/CML_explorer.c:1313
 msgid "Channel Independed Parameters"
@@ -1849,7 +1849,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1396 plug-ins/maze/maze_face.c:297
 msgid "Seed:"
-msgstr ""
+msgstr "База:"
 
 #: plug-ins/common/CML_explorer.c:1408
 msgid "Switch to \"From Seed\" with the last Seed"
@@ -1865,7 +1865,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1427
 msgid "Others"
-msgstr ""
+msgstr "╤нш╕"
 
 #: plug-ins/common/CML_explorer.c:1436
 msgid "Misc Operations"
@@ -2086,7 +2086,7 @@ msgstr "Вир╕внювання видимих шар╕в"
 #: plug-ins/maze/maze_face.c:204 plug-ins/mosaic/mosaic.c:643
 #: plug-ins/struc/struc.c:267 plug-ins/xjt/xjt.c:805
 msgid "Parameter Settings"
-msgstr "Установки параметр╕в"
+msgstr "Налаштування параметр╕в"
 
 #: plug-ins/common/align_layers.c:454 plug-ins/common/align_layers.c:487
 msgid "Collect"
@@ -3245,7 +3245,7 @@ msgstr ""
 #: plug-ins/common/edge.c:675 plug-ins/common/spheredesigner.c:2633
 #: plug-ins/common/unsharp.c:820
 msgid "Amount:"
-msgstr ""
+msgstr "Величина:"
 
 #: plug-ins/common/emboss.c:167
 msgid "<Image>/Filters/Distorts/Emboss..."
@@ -3533,12 +3533,12 @@ msgstr ""
 #: plug-ins/common/gauss_iir.c:405 plug-ins/common/gauss_rle.c:400
 #: plug-ins/common/sel_gauss.c:270
 msgid "Blur Radius:"
-msgstr ""
+msgstr "Рад╕ус розмивання"
 
 #. parameter settings
 #: plug-ins/common/gauss_iir.c:460 plug-ins/common/gauss_rle.c:455
 msgid "Blur Radius"
-msgstr ""
+msgstr "Рад╕ус розмивання"
 
 #: plug-ins/common/gauss_iir.c:475 plug-ins/common/gauss_rle.c:470
 #: plug-ins/common/jigsaw.c:2544 plug-ins/common/spread.c:410
@@ -4128,7 +4128,7 @@ msgstr ""
 #: plug-ins/gap/gap_mod_layer.c:219 plug-ins/gfig/gfig.c:3975
 #: plug-ins/gflare/gflare.c:3039 plug-ins/sinus/sinus.c:891
 msgid "Settings"
-msgstr ""
+msgstr "Налаштування"
 
 #: plug-ins/common/iwarp.c:1136
 msgid "IWarp"
@@ -4180,11 +4180,11 @@ msgstr ""
 
 #: plug-ins/common/jigsaw.c:2622
 msgid "Square"
-msgstr ""
+msgstr "Квадратн╕"
 
 #: plug-ins/common/jigsaw.c:2623
 msgid "Curved"
-msgstr ""
+msgstr "Викривлен╕"
 
 #: plug-ins/common/jigsaw.c:2627
 msgid "Each piece has straight sides"
@@ -4213,16 +4213,16 @@ msgstr "неможливо в╕дкрити \"%s\"\n"
 
 #: plug-ins/common/jpeg.c:894
 msgid "JPEG preview"
-msgstr ""
+msgstr "Перегляд JPEG"
 
 #: plug-ins/common/jpeg.c:1115
 #, c-format
 msgid "Size: %lu bytes (%02.01f kB)"
-msgstr ""
+msgstr "Розм╕р: %lu Б (%02.01f КБ)"
 
 #: plug-ins/common/jpeg.c:1513 plug-ins/common/jpeg.c:1633
 msgid "Size: unknown"
-msgstr ""
+msgstr "Розм╕р: нев╕домо"
 
 #: plug-ins/common/jpeg.c:1590
 msgid "Save as Jpeg"
@@ -4231,7 +4231,7 @@ msgstr "Зберегти як JPEG"
 #. sg - preview
 #: plug-ins/common/jpeg.c:1613
 msgid "Image Preview"
-msgstr ""
+msgstr "Перегляд зображення"
 
 #: plug-ins/common/jpeg.c:1622
 msgid "Preview (in Image Window)"
@@ -4239,11 +4239,11 @@ msgstr ""
 
 #: plug-ins/common/jpeg.c:1653 plug-ins/xjt/xjt.c:836
 msgid "Quality:"
-msgstr ""
+msgstr "Як╕сть:"
 
 #: plug-ins/common/jpeg.c:1675 plug-ins/xjt/xjt.c:845
 msgid "Smoothing:"
-msgstr ""
+msgstr "Згладжування:"
 
 #: plug-ins/common/jpeg.c:1702
 msgid "Restart Markers"
@@ -4255,39 +4255,39 @@ msgstr ""
 
 #: plug-ins/common/jpeg.c:1739 plug-ins/xjt/xjt.c:816
 msgid "Optimize"
-msgstr ""
+msgstr "Оптим╕зувати"
 
 #: plug-ins/common/jpeg.c:1751
 msgid "Progressive"
-msgstr ""
+msgstr "Прогресивна"
 
 #: plug-ins/common/jpeg.c:1768
 msgid "Force Baseline JPEG (Readable by all Decoders)"
-msgstr ""
+msgstr "Робити типовий JPEG (зчиту╓ться вс╕ма декодерами)"
 
 #: plug-ins/common/jpeg.c:1790
 msgid "Subsampling:"
-msgstr ""
+msgstr "П╕двиб╕рка:"
 
 #: plug-ins/common/jpeg.c:1803
 msgid "Fast integer"
-msgstr ""
+msgstr "Швидке ц╕ле"
 
 #: plug-ins/common/jpeg.c:1804
 msgid "Integer"
-msgstr ""
+msgstr "Ц╕ле"
 
 #: plug-ins/common/jpeg.c:1805
 msgid "Floating-point"
-msgstr ""
+msgstr "З плаваючою крапкою"
 
 #: plug-ins/common/jpeg.c:1809
 msgid "DCT Method (Speed/Quality Tradeoff):"
-msgstr ""
+msgstr "Метод DCT (компром╕с швидк╕сть/як╕сть):"
 
 #: plug-ins/common/jpeg.c:1826
 msgid "Image Comments"
-msgstr ""
+msgstr "Коментар до зображення"
 
 #: plug-ins/common/laplace.c:91
 msgid "<Image>/Filters/Edge-Detect/Laplace"
@@ -5002,28 +5002,28 @@ msgstr "PNM: Неможливо в╕дкрити файл %s."
 #: plug-ins/common/pnm.c:478 plug-ins/common/pnm.c:487
 #: plug-ins/common/pnm.c:562 plug-ins/common/pnm.c:618
 msgid "PNM: Premature end of file."
-msgstr ""
+msgstr "PNM: Передчасне зак╕нчення файлу."
 
 #: plug-ins/common/pnm.c:452
 #, c-format
 msgid "PNM: %s is not a valid file."
-msgstr ""
+msgstr "PNM: %s - нев╕рнай файл."
 
 #: plug-ins/common/pnm.c:465
 msgid "PNM: File not in a supported format."
-msgstr ""
+msgstr "PNM: Файл неп╕дтримуваного формату."
 
 #: plug-ins/common/pnm.c:474
 msgid "PNM: Invalid X resolution."
-msgstr ""
+msgstr "PNM: Нев╕рна розд╕льна здатн╕сть по X"
 
 #: plug-ins/common/pnm.c:481
 msgid "PNM: Invalid Y resolution."
-msgstr ""
+msgstr "PNM: Нев╕рна розд╕льна здатн╕сть по Y"
 
 #: plug-ins/common/pnm.c:493
 msgid "PNM: Invalid maximum value."
-msgstr ""
+msgstr "PNM: Нев╕рне максимальне значення."
 
 #: plug-ins/common/pnm.c:666
 msgid "PNM: Error reading file."
@@ -5031,7 +5031,7 @@ msgstr "PNM: Помилка зчитування файлу."
 
 #: plug-ins/common/pnm.c:782
 msgid "PNM save cannot handle images with alpha channels."
-msgstr ""
+msgstr "PNM-збереження не може опрацювати зображення с альфа-каналами."
 
 #: plug-ins/common/pnm.c:928
 msgid "Save as PNM"
@@ -5039,7 +5039,7 @@ msgstr "Зберегти як PNM"
 
 #: plug-ins/common/pnm.c:949
 msgid "Raw"
-msgstr ""
+msgstr "Необроблений"
 
 #: plug-ins/common/pnm.c:950
 msgid "Ascii"
@@ -5051,11 +5051,11 @@ msgstr "<Image>/Ф╕льтри/Спотворення/Полярн╕ координати..."
 
 #: plug-ins/common/polar.c:405
 msgid "Polarizing..."
-msgstr ""
+msgstr "Поляризац╕я..."
 
 #: plug-ins/common/polar.c:909
 msgid "Polarize"
-msgstr ""
+msgstr "Поляризувати"
 
 #: plug-ins/common/polar.c:971
 msgid "Circle Depth in Percent:"
@@ -5097,16 +5097,16 @@ msgstr ""
 
 #: plug-ins/common/ps.c:870
 msgid "PS: can't open file for reading"
-msgstr ""
+msgstr "PS: не вдалося в╕дкрити файл на зчитування"
 
 #: plug-ins/common/ps.c:877
 #, c-format
 msgid "Interpreting and Loading %s:"
-msgstr ""
+msgstr "╤нтерпретац╕я та завантаження %s:"
 
 #: plug-ins/common/ps.c:885
 msgid "PS: can't interprete file"
-msgstr ""
+msgstr "PS: неможливо ╕нтерпретувати файл"
 
 #: plug-ins/common/ps.c:973
 msgid "PostScript save cannot handle images with alpha channels"
@@ -5118,12 +5118,12 @@ msgstr ""
 
 #: plug-ins/common/ps.c:993
 msgid "PS: can't open file for writing"
-msgstr ""
+msgstr "PS: не вдалося в╕дкрити файл на запис"
 
 #: plug-ins/common/ps.c:2111 plug-ins/common/ps.c:2237
 #: plug-ins/common/ps.c:2381 plug-ins/common/ps.c:2503
 msgid "write error occured"
-msgstr ""
+msgstr "сталася помилка запису"
 
 #: plug-ins/common/ps.c:2528
 msgid "Load PostScript"
@@ -5200,20 +5200,20 @@ msgstr ""
 #. Unit
 #: plug-ins/common/ps.c:2799
 msgid "Unit"
-msgstr ""
+msgstr "Одиниця"
 
 #: plug-ins/common/ps.c:2803
 msgid "Inch"
-msgstr ""
+msgstr "Дюйм"
 
 #: plug-ins/common/ps.c:2804
 msgid "Millimeter"
-msgstr ""
+msgstr "М╕л╕метр"
 
 #. Format
 #: plug-ins/common/ps.c:2828
 msgid "Output"
-msgstr ""
+msgstr "Вив╕д"
 
 #: plug-ins/common/ps.c:2836 plug-ins/print/print-printers.c:18
 msgid "PostScript Level 2"
@@ -5221,15 +5221,15 @@ msgstr "PostScript Level 2"
 
 #: plug-ins/common/ps.c:2844
 msgid "Encapsulated PostScript"
-msgstr ""
+msgstr "Encapsulated PostScript"
 
 #: plug-ins/common/ps.c:2872
 msgid "Preview Size:"
-msgstr ""
+msgstr "Розм╕р перегляду:"
 
 #: plug-ins/common/psd.c:1586
 msgid "Unnamed channel"
-msgstr ""
+msgstr "Ненайменований канал"
 
 #: plug-ins/common/psp.c:423
 msgid "Save as PSP"
@@ -5308,11 +5308,11 @@ msgstr ""
 
 #: plug-ins/common/ripple.c:688
 msgid "Period:"
-msgstr ""
+msgstr "Пер╕од:"
 
 #: plug-ins/common/ripple.c:698 plug-ins/common/waves.c:411
 msgid "Amplitude:"
-msgstr ""
+msgstr "Ампл╕туда:"
 
 #: plug-ins/common/rotate.c:160
 msgid "<Image>/Layers/Rotate/90 degrees"
@@ -5503,15 +5503,15 @@ msgstr "<Image>/Ф╕льтри/Розмивання/Виб╕ркове Гаусеве розмивання..."
 
 #: plug-ins/common/sel_gauss.c:201 plug-ins/common/sel_gauss.c:237
 msgid "Selective Gaussian Blur"
-msgstr ""
+msgstr "Виб╕ркове Гаусеве розмивання"
 
 #: plug-ins/common/sel_gauss.c:218
 msgid "sel_gauss: Cannot operate on indexed color images"
-msgstr ""
+msgstr "sel_gauss: Неможливо використовувати на ╕ндексованих зображеннях"
 
 #: plug-ins/common/sel_gauss.c:277
 msgid "Max. Delta:"
-msgstr ""
+msgstr "Макс. Дельта:"
 
 #: plug-ins/common/semiflatten.c:89
 msgid "<Image>/Filters/Colors/Semi-Flatten"
@@ -5530,12 +5530,12 @@ msgstr "<Image>/Ф╕льтри/Покращення/П╕двищення р╕зкост╕..."
 #.
 #: plug-ins/common/sharpen.c:348
 msgid "Sharpening..."
-msgstr ""
+msgstr "П╕двищення р╕зкост╕..."
 
 #: plug-ins/common/sharpen.c:516
 #, c-format
 msgid "Sharpen - %s"
-msgstr ""
+msgstr "П╕двищення р╕зкост╕ - %s"
 
 #: plug-ins/common/sharpen.c:621
 msgid "Sharpness:"
@@ -5547,23 +5547,23 @@ msgstr "<Image>/Ф╕льтри/Спотворення/Зсув..."
 
 #: plug-ins/common/shift.c:206
 msgid "Shifting..."
-msgstr ""
+msgstr "Зсування..."
 
 #: plug-ins/common/shift.c:371
 msgid "Shift"
-msgstr ""
+msgstr "Зсув"
 
 #: plug-ins/common/shift.c:393
 msgid "Shift Horizontally"
-msgstr ""
+msgstr "Горизонтальний"
 
 #: plug-ins/common/shift.c:394
 msgid "Shift Vertically"
-msgstr ""
+msgstr "Вертикальний"
 
 #: plug-ins/common/shift.c:413
 msgid "Shift Amount:"
-msgstr ""
+msgstr "Величина:"
 
 #: plug-ins/common/smooth_palette.c:83
 msgid "<Image>/Filters/Colors/Smooth Palette..."
@@ -5610,11 +5610,11 @@ msgstr ""
 
 #: plug-ins/common/snoise.c:577
 msgid "X Size:"
-msgstr ""
+msgstr "Розм╕р по X:"
 
 #: plug-ins/common/snoise.c:587
 msgid "Y Size:"
-msgstr ""
+msgstr "Розм╕р по Y:"
 
 #: plug-ins/common/sobel.c:142
 msgid "<Image>/Filters/Edge-Detect/Sobel..."
@@ -5843,11 +5843,11 @@ msgstr ""
 
 #: plug-ins/common/spheredesigner.c:2343
 msgid "Texture Properties"
-msgstr ""
+msgstr "Властивост╕ текстури"
 
 #: plug-ins/common/spheredesigner.c:2364
 msgid "Texture:"
-msgstr ""
+msgstr "Текстура:"
 
 #: plug-ins/common/spheredesigner.c:2371
 msgid "Colors:"
@@ -5900,10 +5900,12 @@ msgid ""
 "by Vidar Madsen\n"
 "September 1999"
 msgstr ""
+"Vidar Madsen\n"
+"Вересень 1999"
 
 #: plug-ins/common/spheredesigner.c:2787
 msgid "Rendering..."
-msgstr ""
+msgstr "В╕зуал╕зац╕я..."
 
 #: plug-ins/common/spheredesigner.c:2837
 msgid "<Image>/Filters/Render/Sphere Designer..."
@@ -11543,7 +11545,7 @@ msgstr "Помилка"
 
 #: plug-ins/imagemap/imap_grid.c:143
 msgid "Grid Settings"
-msgstr "Установки с╕тки"
+msgstr "Налаштування с╕тки"
 
 #: plug-ins/imagemap/imap_grid.c:154
 msgid "Snap-To Grid Enabled"
@@ -11699,7 +11701,7 @@ msgstr "Цукерки"
 
 #: plug-ins/imagemap/imap_menu.c:401 plug-ins/imagemap/imap_popup.c:149
 msgid "Grid Settings..."
-msgstr "Установки с╕тки..."
+msgstr "Налаштування с╕тки..."
 
 #: plug-ins/imagemap/imap_menu.c:403
 msgid "Create Guides..."
@@ -12111,7 +12113,7 @@ msgid ""
 "Save Settings"
 msgstr ""
 "Друкувати та\n"
-"зберегти установки"
+"зберегти налаштування"
 
 #: plug-ins/print/gimp_main_window.c:208
 msgid ""
@@ -12119,7 +12121,7 @@ msgid ""
 "Settings"
 msgstr ""
 "Зберегти\n"
-"установки"
+"налаштування"
 
 #: plug-ins/print/gimp_main_window.c:210
 msgid "Print"
@@ -12134,7 +12136,7 @@ msgstr ""
 #.
 #: plug-ins/print/gimp_main_window.c:336
 msgid "Printer Settings"
-msgstr "Установки принтера"
+msgstr "Налаштування принтера"
 
 #: plug-ins/print/gimp_main_window.c:358
 msgid "Media Size:"
@@ -12158,7 +12160,7 @@ msgstr "Ландшафт"
 
 #: plug-ins/print/gimp_main_window.c:412
 msgid "Output Type:"
-msgstr ""
+msgstr "Тип виводу:"
 
 #: plug-ins/print/gimp_main_window.c:415
 msgid "B&W"
@@ -12166,7 +12168,7 @@ msgstr "Ч/Б"
 
 #: plug-ins/print/gimp_main_window.c:437
 msgid "Output Level:"
-msgstr ""
+msgstr "Р╕вень виводу:"
 
 #: plug-ins/print/gimp_main_window.c:441
 msgid "Normal Scale"
@@ -12597,7 +12599,7 @@ msgstr "Другий кол╕р:"
 
 #: plug-ins/sinus/sinus.c:1017
 msgid "Blend Settings"
-msgstr "Установки зм╕шувача"
+msgstr "Налаштування зм╕шувача"
 
 #: plug-ins/sinus/sinus.c:1034
 msgid "Sinusodial"
