@@ -1,5 +1,10 @@
 2003-07-09  Dave Neary  <bolsh@gimp.org> 
 
+	* devel-docs/pat.txt: Documented the pat version 1 file
+	format while I was at it.
+
+2003-07-09  Dave Neary  <bolsh@gimp.org> 
+
 	* devel-docs/gbr.txt: Documented the gbr version 2 file
 	format, after some confusion with Cinepaint's version.
 
