@@ -1,3 +1,18 @@
+Thu Aug 26 22:10:11 MEST 1999  Sven Neumann <svengimp.org>
+
+	* app/gimpbrushpreview.[ch]
+	* app/gimppatternpreview.[ch]: new files
+	Widgets that handle the complete preview machinery with scaling and
+	popups for brushes and patterns.
+
+	* app/Makefile.am
+	* app/inidicator_area.c: Use the new widgets.
+
+	The device-status dialog and the brush and pattern selectors should
+	use the new widgets too. Hopefully the GtkLayout widget can handle
+	this easily. As I am away till next week, I won't object if someone 
+	else gives it a try...
+
 Wed Aug 25 02:40:39 CDT 1999 Shawn T. Amundson <amundson@gimp.org>
 
 	* app/image_new.[ch]: Added new files, the UI independant part of

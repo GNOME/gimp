@@ -185,12 +185,14 @@ gimp_SOURCES = \
 	gimpbrush.h		\
 	gimpbrushgenerated.c	\
 	gimpbrushgenerated.h	\
-	gimpbrushpipe.c		\
-	gimpbrushpipe.h		\
 	gimpbrushlist.c		\
 	gimpbrushlist.h		\
 	gimpbrushlistF.h	\
 	gimpbrushlistP.h	\
+	gimpbrushpipe.c		\
+	gimpbrushpipe.h		\
+	gimpbrushpreview.c	\
+	gimpbrushpreview.h	\
 	gimpcontext.c		\
 	gimpcontext.h		\
 	gimpdnd.c		\
@@ -209,6 +211,8 @@ gimp_SOURCES = \
 	gimplutP.h		\
 	gimpparasite.c		\
 	gimpparasite.h		\
+	gimppatternpreview.c	\
+	gimppatternpreview.h	\
 	gimpprogress.c		\
 	gimpprogress.h		\
 	gimprc.c		\
