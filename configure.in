@@ -610,7 +610,7 @@ if test "x$enable_perl" != xno; then
       fi
       
       dnl these are gross hacks
-      GIMP_CFLAGS_NOUI="-I\$topdir/../.. $GLIB_CFLAGS $GTK_CFLAGS $CFLAGS"
+      GIMP_CFLAGS_NOUI="-I\$topdir/../.. $GLIB_CFLAGS $GTK_CFLAGS"
       GIMP_CFLAGS="$GIMP_CFLAGS_NOUI"
       GIMP_LIBS_NOUI="-L\$topdir/../../libgimp/.libs -L\$topdir/../../libgimp -lgimp $GLIB_LIBS $LIBS"
       GIMP_LIBS="$GIMP_LIBS_NOUI -lgimpui"

@@ -1,3 +1,12 @@
+Wed May  3 02:40:12 CEST 2000  Marc Lehmann <pcg@goof.com>
+
+        * configure.in: Remove $CFLAGS from perl's compiler flags.  This
+        should fix the problems when perl's $CC and gimp's $CC are
+        different (and is not useful anyway).
+
+        There shouldn't be any major perl build glitches left at this
+        moment.
+
 2000-05-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/main.c
