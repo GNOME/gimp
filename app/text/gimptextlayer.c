@@ -394,6 +394,7 @@ gimp_text_layer_position_layout (GimpTextLayer  *layer,
     case GIMP_GRAVITY_WEST:
       break;
       
+    case GIMP_GRAVITY_NONE:
     case GIMP_GRAVITY_CENTER:
     case GIMP_GRAVITY_NORTH:
     case GIMP_GRAVITY_SOUTH:
@@ -414,6 +415,7 @@ gimp_text_layer_position_layout (GimpTextLayer  *layer,
     case GIMP_GRAVITY_NORTH_EAST:
       break;
 
+    case GIMP_GRAVITY_NONE:
     case GIMP_GRAVITY_CENTER:
     case GIMP_GRAVITY_WEST:
     case GIMP_GRAVITY_EAST:

@@ -1,3 +1,8 @@
+2003-02-01  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptextlayer.c (gimp_text_layer_position_layout):
+	handle GIMP_GRAVITY_NONE.
+
 2003-02-01  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpmodule/gimpmodule.c: fixed a comment.
