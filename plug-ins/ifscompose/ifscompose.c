@@ -227,6 +227,7 @@ static void color_map_set_preview_color(GtkWidget *preview,
 static ColorMap *color_map_create(gchar *name,IfsColor *orig_color,
 				  IfsColor *data, gint fixed_point);
 static void color_map_clicked_callback(GtkWidget *widget,ColorMap *colormap);
+static void color_map_destroy_callback(GtkWidget *widget,ColorMap *colormap);
 static void color_map_color_changed_cb(GtkWidget *widget,
 				       ColorMap *color_map);
 static void color_map_update(ColorMap *color_map);
@@ -236,10 +237,12 @@ static void simple_color_toggled(GtkWidget *widget,gpointer data);
 static void simple_color_set_sensitive();
 static void val_changed_update ();
 static ValuePair *value_pair_create (gpointer data, gdouble lower, gdouble upper,
-	      gint create_scale, ValuePairType type);
+	      gboolean create_scale, ValuePairType type);
 static void value_pair_update(ValuePair *value_pair);
 static void value_pair_entry_callback (GtkWidget   *w,
 				       ValuePair   *value_pair);
+static void value_pair_destroy_callback (GtkWidget   *widget,
+					 ValuePair   *value_pair);
 static void value_pair_button_release (GtkWidget *widget,
 				       GdkEventButton *event,
 				       gpointer data);
@@ -264,9 +267,9 @@ static void ifs_compose_preview_callback (GtkWidget *widget,
 					  GtkWidget *preview);
 
 static void ifs_compose_close_callback (GtkWidget *widget,
-					gpointer   data);
+					GtkWidget **destroyed_widget);
 static void ifs_compose_ok_callback (GtkWidget *widget,
-				     gpointer   data);
+				     GtkWidget *window);
 
 
 /*
@@ -486,7 +489,7 @@ ifs_compose_trans_page ()
 		   4, 0);
   gtk_widget_show(label);
 
-  ifsD->x_pair = value_pair_create(&ifsD->current_vals.x,0.0,1.0,0,
+  ifsD->x_pair = value_pair_create(&ifsD->current_vals.x, 0.0, 1.0, FALSE,
 				   VALUE_PAIR_DOUBLE);
   gtk_table_attach(GTK_TABLE(table), ifsD->x_pair->entry,1,2,0,1,
 		   GTK_FILL,GTK_FILL,4,0);
@@ -500,7 +503,7 @@ ifs_compose_trans_page ()
 		   GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show(label);
 
-  ifsD->y_pair = value_pair_create(&ifsD->current_vals.y,0.0,1.0,0,
+  ifsD->y_pair = value_pair_create(&ifsD->current_vals.y, 0.0, 1.0, FALSE,
 				   VALUE_PAIR_DOUBLE);
   gtk_table_attach(GTK_TABLE(table), ifsD->y_pair->entry,1,2,1,2,
 		   GTK_FILL,GTK_FILL,4,0);
@@ -514,8 +517,8 @@ ifs_compose_trans_page ()
 		   GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show(label);
 
-  ifsD->scale_pair = value_pair_create(&ifsD->current_vals.scale,0.0,1.0,0,
-				   VALUE_PAIR_DOUBLE);
+  ifsD->scale_pair = value_pair_create(&ifsD->current_vals.scale, 0.0,1.0, 
+				       FALSE, VALUE_PAIR_DOUBLE);
   gtk_table_attach(GTK_TABLE(table), ifsD->scale_pair->entry,3,4,0,1,
 		   GTK_FILL,GTK_FILL,4,0);
   gtk_widget_show (ifsD->scale_pair->entry);
@@ -528,8 +531,8 @@ ifs_compose_trans_page ()
 		   GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show(label);
 
-  ifsD->angle_pair = value_pair_create(&ifsD->current_vals.theta,-180,180,0,
-				   VALUE_PAIR_DOUBLE);
+  ifsD->angle_pair = value_pair_create(&ifsD->current_vals.theta,-180,180,
+				       FALSE, VALUE_PAIR_DOUBLE);
   gtk_table_attach(GTK_TABLE(table), ifsD->angle_pair->entry,3,4,1,2,
 		   GTK_FILL,GTK_FILL,4,0);
   gtk_widget_show (ifsD->angle_pair->entry);
@@ -542,8 +545,8 @@ ifs_compose_trans_page ()
 		   GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show(label);
 
-  ifsD->asym_pair = value_pair_create(&ifsD->current_vals.asym,0.10,10.0,0,
-				   VALUE_PAIR_DOUBLE);
+  ifsD->asym_pair = value_pair_create(&ifsD->current_vals.asym,0.10,10.0,
+				      FALSE, VALUE_PAIR_DOUBLE);
   gtk_table_attach(GTK_TABLE(table), ifsD->asym_pair->entry,5,6,0,1,
 		   GTK_FILL,GTK_FILL,4,0);
   gtk_widget_show (ifsD->asym_pair->entry);
@@ -556,8 +559,8 @@ ifs_compose_trans_page ()
 		   GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show(label);
 
-  ifsD->shear_pair = value_pair_create(&ifsD->current_vals.shear,-10.0,10.0,0,
-				       VALUE_PAIR_DOUBLE);
+  ifsD->shear_pair = value_pair_create(&ifsD->current_vals.shear,-10.0,10.0,
+				       FALSE, VALUE_PAIR_DOUBLE);
   gtk_table_attach(GTK_TABLE(table), ifsD->shear_pair->entry,5,6,1,2,
 		   GTK_FILL,GTK_FILL,4,0);
   gtk_widget_show (ifsD->shear_pair->entry);
@@ -618,7 +621,7 @@ ifs_compose_color_page ()
   gtk_widget_show(label);
 
   ifsD->hue_scale_pair = value_pair_create(&ifsD->current_vals.hue_scale,
-				       0.0,1.0,1, VALUE_PAIR_DOUBLE);
+				       0.0,1.0, TRUE, VALUE_PAIR_DOUBLE);
   gtk_table_attach(GTK_TABLE(table), ifsD->hue_scale_pair->scale, 3, 4, 0, 1,
 		   GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show (ifsD->hue_scale_pair->scale);
@@ -633,7 +636,7 @@ ifs_compose_color_page ()
   gtk_widget_show(label);
 
   ifsD->value_scale_pair = value_pair_create(&ifsD->current_vals.value_scale,
-				       0.0,1.0,1, VALUE_PAIR_DOUBLE);
+				       0.0,1.0, TRUE, VALUE_PAIR_DOUBLE);
   gtk_table_attach(GTK_TABLE(table), ifsD->value_scale_pair->scale,
 		   3, 4, 1, 2, GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show (ifsD->value_scale_pair->scale);
@@ -762,7 +765,7 @@ ifs_compose_dialog (GDrawable *drawable)
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) ifs_compose_close_callback,
-		      NULL);
+		      &dlg);
 
   /*  Action area  */
 
@@ -785,7 +788,7 @@ ifs_compose_dialog (GDrawable *drawable)
   button = gtk_button_new_with_label ("Defaults");
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) ifs_compose_defaults_callback,
+                      GTK_SIGNAL_FUNC (ifs_compose_defaults_callback),
                       NULL);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
@@ -793,7 +796,7 @@ ifs_compose_dialog (GDrawable *drawable)
   button = gtk_button_new_with_label ("OK");
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) ifs_compose_ok_callback,
+                      GTK_SIGNAL_FUNC (ifs_compose_ok_callback),
                       dlg);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_grab_default (button);
@@ -955,7 +958,7 @@ ifs_compose_dialog (GDrawable *drawable)
   gtk_box_pack_start(GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  ifsD->prob_pair = value_pair_create(&ifsD->current_vals.prob,0.0,5.0,1,
+  ifsD->prob_pair = value_pair_create(&ifsD->current_vals.prob,0.0,5.0, TRUE,
 				      VALUE_PAIR_DOUBLE);
   gtk_box_pack_start (GTK_BOX (hbox), ifsD->prob_pair->scale, TRUE, TRUE, 0);
   gtk_widget_show (ifsD->prob_pair->scale);
@@ -1044,8 +1047,13 @@ ifs_compose_dialog (GDrawable *drawable)
   gtk_widget_show (dlg);
   gtk_main ();
 
+  gtk_object_unref (GTK_OBJECT (ifsDesign->op_menu));
+  
+  if (dlg)
+    gtk_widget_destroy (dlg);
+
   if (ifsOptD)
-    gtk_widget_destroy(ifsOptD->dialog);
+    gtk_widget_destroy (ifsOptD->dialog);
 
   gdk_flush ();
 
@@ -1095,6 +1103,8 @@ design_op_menu_create(GtkWidget *window)
   GtkAcceleratorTable *accelerator_table;
 
   ifsDesign->op_menu = gtk_menu_new();
+  gtk_object_ref (ifsDesign->op_menu);
+  gtk_object_sink (GTK_OBJECT (ifsDesign->op_menu));
 
   accelerator_table = gtk_accelerator_table_new();
   gtk_menu_set_accelerator_table(GTK_MENU(ifsDesign->op_menu),
@@ -2017,7 +2027,11 @@ color_map_create(gchar *name, IfsColor *orig_color, IfsColor *data,
   color_map_set_preview_color(color_map->preview,data);
 
   gtk_signal_connect(GTK_OBJECT(button),"clicked",
-		     (GtkSignalFunc)color_map_clicked_callback,
+		     GTK_SIGNAL_FUNC (color_map_clicked_callback),
+		     color_map);
+
+  gtk_signal_connect(GTK_OBJECT(frame),"destroy",
+		     GTK_SIGNAL_FUNC (color_map_destroy_callback),
 		     color_map);
 
   return color_map;
@@ -2048,6 +2062,12 @@ color_map_clicked_callback(GtkWidget *widget,
 			   "color_changed",
 			   (GtkSignalFunc)color_map_color_changed_cb,
 			   color_map );
+
+      gtk_signal_connect ( GTK_OBJECT(csd->colorsel),
+			   "destroy",
+			   GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+			   &color_map->dialog );
+
       /* call here so the old color is set */
       gtk_color_selection_set_color( GTK_COLOR_SELECTION(csd->colorsel),
 				     color_map->color->vals);
@@ -2063,6 +2083,14 @@ color_map_clicked_callback(GtkWidget *widget,
 
   gtk_window_position(GTK_WINDOW(color_map->dialog), GTK_WIN_POS_MOUSE);
   gtk_widget_show(color_map->dialog);
+}
+
+static void
+color_map_destroy_callback(GtkWidget *widget,
+			   ColorMap *color_map)
+{
+  if (color_map->dialog)
+    gtk_widget_destroy (color_map->dialog);
 }
 
 static void
@@ -2140,7 +2168,7 @@ simple_color_toggled(GtkWidget *widget,gpointer data)
 
 static ValuePair *
 value_pair_create (gpointer data, gdouble lower, gdouble upper,
-		   gint create_scale, ValuePairType type)
+		   gboolean create_scale, ValuePairType type)
 {
 
   ValuePair *value_pair = g_new(ValuePair,1);
@@ -2150,6 +2178,11 @@ value_pair_create (gpointer data, gdouble lower, gdouble upper,
   value_pair->adjustment = gtk_adjustment_new (1.0, lower, upper,
 					  (upper-lower)/100, (upper-lower)/10,
 					  0.0);
+  /* We need to sink the adjustment, since we may not create a scale for
+   * it, so nobody will assume the initial refcount
+   */
+  gtk_object_ref (value_pair->adjustment);
+  gtk_object_sink (value_pair->adjustment);
   gtk_signal_connect (GTK_OBJECT (value_pair->adjustment), "value_changed",
 		      (GtkSignalFunc) value_pair_scale_callback,
 		      value_pair);
@@ -2157,6 +2190,8 @@ value_pair_create (gpointer data, gdouble lower, gdouble upper,
   if (create_scale)
     {
       value_pair->scale = gtk_hscale_new(GTK_ADJUSTMENT (value_pair->adjustment));
+      gtk_widget_ref (value_pair->scale);
+
       if (type == VALUE_PAIR_INT)
 	  gtk_scale_set_digits (GTK_SCALE (value_pair->scale), 0);
       else
@@ -2174,11 +2209,17 @@ value_pair_create (gpointer data, gdouble lower, gdouble upper,
   else
     value_pair->scale = NULL;
 
+  /* We destroy the value pair when the entry is destroyed, so
+   * we don't need to hold a refcount on the entry
+   */
+
   value_pair->entry = gtk_entry_new ();
   gtk_widget_set_usize (value_pair->entry, ENTRY_WIDTH, 0);
   value_pair->entry_handler_id =
     gtk_signal_connect (GTK_OBJECT (value_pair->entry), "changed",
 			(GtkSignalFunc) value_pair_entry_callback, value_pair);
+  gtk_signal_connect (GTK_OBJECT (value_pair->entry), "destroy",
+		      (GtkSignalFunc) value_pair_destroy_callback, value_pair);
 
   return value_pair;
 }
@@ -2286,6 +2327,15 @@ value_pair_entry_callback (GtkWidget   *widget,
     }
 }
 
+static void
+value_pair_destroy_callback (GtkWidget   *widget,
+			     ValuePair   *value_pair)
+{
+  if (value_pair->scale)
+    gtk_object_unref (GTK_OBJECT (value_pair->scale));
+  gtk_object_unref (value_pair->adjustment);
+}
+ 
 static void
 design_op_callback (GtkWidget *widget, gpointer data)
 {
@@ -2606,8 +2656,9 @@ ifs_compose_delete_callback (GtkWidget *widget,
 
 static void
 ifs_compose_close_callback (GtkWidget *widget,
-		       gpointer   data)
+			    GtkWidget **destroyed_widget)
 {
+  *destroyed_widget = NULL;
   gtk_main_quit ();
 }
 
@@ -2680,8 +2731,9 @@ ifs_compose_preview_callback (GtkWidget *widget,
 
 static void
 ifs_compose_ok_callback (GtkWidget *widget,
-		    gpointer   data)
+			 GtkWidget *window)
 {
   ifscint.run = TRUE;
-  gtk_widget_destroy (GTK_WIDGET (data));
+
+  gtk_widget_destroy (window);
 }

@@ -1,3 +1,8 @@
+Wed Feb 18 16:46:37 1998  Owen Taylor  <owt1@cornell.edu>
+
+	* plug-ins/ifscompose/ifscompose.c: refcounting fixups
+	  plug-ins/ifscompose/REAMDE.ifscompose: changed web address
+
 Wed Feb 18 17:56:40 MET 1998 Sven Neumann <sven@gimp.org>
 	* app/app_procs.c: fixed refcounting for the splash-image
 
