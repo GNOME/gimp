@@ -1,4 +1,4 @@
-
+2
             The GNU Image Manipulation Program Version 1.3
                           A Colorspace Odyssey
 
@@ -10,6 +10,8 @@ GIMP version 2.0.
 
 Overview of Changes in GIMP 1.3.21
 ==================================
+- Allow to save tool options as named presets [Mitch].
+- Stroke paths using libart [Simon, Bolsh, Mitch, Sven, Ville]
 - Better looking and more accessible dockables [Mitch]
 - Fixes for right-to-left rendering [Sven, Mitch]
 - Rewritten webbroswer plug-in [Brix]
@@ -19,18 +21,19 @@ Overview of Changes in GIMP 1.3.21
 - Added SVG file plug-in from librsvg and improved it [Sven]
 - Store new vectors in XCF [Simon, Mitch]
 - Allow to toggle visibility of paths in path list [Mitch]
-- Stroke paths using libart (work in progress...) [Simon, Bolsh]
 - Move tool now also moves paths [Mitch]
 - Some progress towards gimp-console, a gtk-less GIMP for batch mode [Mitch]
 - Improved Decompose/Compose plug-ins [Alexey Dyachenko, Sven]
 - More SIMD compositing code [Helvetix]
 - Right mouse buttons now also cancels paint operations [Mitch]
 - More internal code cleanup and documentation [Mitch, Sven]
+- Documented libgimpmath [DindinX]
 - Lots of bug fixes
 
 Other contributors: 
   Adam D. Moss, Dom Lachowicz, Manish Singh, Jakub Steiner,
-  Christian Neumair, Seth Burgess, Maurits Rijk
+  Christian Neumair, Seth Burgess, Maurits Rijk, David Necas,
+  Tor Lillqvist, Ville Pätsi
 
 
 Overview of Changes in GIMP 1.3.20

@@ -1,5 +1,9 @@
 2003-09-30  Sven Neumann  <sven@gimp.org>
 
+	* NEWS: updated.
+
+2003-09-30  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-stroke.c
 	* app/core/gimpstrokeoptions.[ch]
 	* app/gui/stroke-dialog.c: removed the resolution property again.
@@ -125,7 +129,6 @@
 	by "GimpCropMode crop_mode". Makes its callers simpler and more
 	readable.
 
->>>>>>> 1.6581
 2003-09-29  Simon Budig  <simon@gimp.org>
 
 	* app/widgets/gimppreviewrenderervectors.c: Fixed a bad crash
