@@ -130,7 +130,10 @@ gdisplay_new (GimpImage    *gimage,
   /*  create the shell for the image  */
   create_display_shell (gdisp, gimage->width, gimage->height,
 			title, gimage_base_type (gimage));
-  
+
+  /* update the title to correct the initially displayed scale */
+  gdisplay_update_title (gdisp);
+
   /*  set the gdisplay colormap type and install the appropriate colormap  */
   gdisp->color_type = (gimage_base_type (gimage) == GRAY) ? GRAY : RGB;
 

@@ -1,3 +1,8 @@
+Sat Mar  6 03:04:31 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* app/gdisplay.c: correctly initialize the zoom indicator
+	in the title and the statusbar
+
 Fri Mar  5 21:45:39 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
 
 	This is a bit of a biggy. Added paths to layers & channels 
