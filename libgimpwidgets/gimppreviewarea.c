@@ -354,8 +354,7 @@ gimp_preview_area_new (void)
  * @buf:       a #guchar buffer that contains the preview pixel data.
  * @rowstride: rowstride of @buf
  *
- * Draws @buf on @area and queues a redraw on the rectangle that
- * changed.
+ * Draws @buf on @area and queues a redraw on the given rectangle.
  *
  * Since GIMP 2.2
  **/
@@ -369,13 +368,13 @@ gimp_preview_area_draw (GimpPreviewArea *area,
                         const guchar    *buf,
                         gint             rowstride)
 {
-  const guchar    *src;
-  guchar          *dest;
-  guint            size;
-  guchar           light;
-  guchar           dark;
-  gint             row;
-  gint             col;
+  const guchar *src;
+  guchar       *dest;
+  guint         size;
+  guchar        light;
+  guchar        dark;
+  gint          row;
+  gint          col;
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
   g_return_if_fail (width > 0 && height > 0);
@@ -600,15 +599,15 @@ gimp_preview_area_draw (GimpPreviewArea *area,
  * @height:     buffer height
  * @type:       the #GimpImageType of @buf1 and @buf2
  * @buf1:       a #guchar buffer that contains the pixel data for
- *              the first (on bottom) layer
+ *              the lower layer
  * @rowstride1: rowstride of @buf1
  * @buf2:       a #guchar buffer that contains the pixel data for
- *              the second (on top) layer
+ *              the upper layer
  * @rowstride2: rowstride of @buf2
  * @opacity:    The opacity of the first layer.
  *
- * Blend @buf1 on top of @buf2 with the given @opacity on the @area
- * and queues a redraw on the rectangle that changed.
+ * Composites @buf1 on @buf2 with the given @opacity, draws the result
+ * to @area and queues a redraw on the given rectangle.
  *
  * Since GIMP 2.2
  **/
@@ -625,15 +624,15 @@ gimp_preview_area_blend (GimpPreviewArea *area,
                          gint             rowstride2,
                          guchar           opacity)
 {
-  const guchar    *src1;
-  const guchar    *src2;
-  guchar          *dest;
-  guint            size;
-  guchar           light;
-  guchar           dark;
-  gint             row;
-  gint             col;
-  gint             i;
+  const guchar *src1;
+  const guchar *src2;
+  guchar       *dest;
+  guint         size;
+  guchar        light;
+  guchar        dark;
+  gint          row;
+  gint          col;
+  gint          i;
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
   g_return_if_fail (width > 0 && height > 0);
@@ -977,17 +976,17 @@ gimp_preview_area_blend (GimpPreviewArea *area,
  * @height:         buffer height
  * @type:           the #GimpImageType of @buf1 and @buf2
  * @buf1:           a #guchar buffer that contains the pixel data for
- *                  the first (on bottom) layer
+ *                  the lower layer
  * @rowstride1:     rowstride of @buf1
  * @buf2:           a #guchar buffer that contains the pixel data for
- *                  the second (on top) layer
+ *                  the upper layer
  * @rowstride2:     rowstride of @buf2
  * @mask:           a #guchar buffer representing the mask of the second
  *                  layer.
  * @rowstride_mask: rowstride for the mask.
  *
- * Blend @buf1 on top of @buf2 with the given @mask on the @area
- * and queues a redraw on the rectangle that changed.
+ * Composites @buf1 on @buf2 with the given @mask, draws the result on
+ * @area and queues a redraw on the given rectangle.
  *
  * Since GIMP 2.2
  **/
@@ -1002,19 +1001,19 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                         gint             rowstride1,
                         const guchar    *buf2,
                         gint             rowstride2,
-                        guchar          *mask,
+                        const guchar    *mask,
                         gint             rowstride_mask)
 {
-  const guchar    *src1;
-  const guchar    *src2;
-  const guchar    *src_mask;
-  guchar          *dest;
-  guint            size;
-  guchar           light;
-  guchar           dark;
-  gint             row;
-  gint             col;
-  gint             i;
+  const guchar *src1;
+  const guchar *src2;
+  const guchar *src_mask;
+  guchar       *dest;
+  guint         size;
+  guchar        light;
+  guchar        dark;
+  gint          row;
+  gint          col;
+  gint          i;
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
   g_return_if_fail (width > 0 && height > 0);
@@ -1089,6 +1088,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                d[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * m[0]) >> 8;
                d[2] = ((s1[2] << 8) + (s2[2] - s1[2]) * m[0]) >> 8;
             }
+
           src1     += rowstride1;
           src2     += rowstride2;
           src_mask += rowstride_mask;
@@ -1235,9 +1235,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
           guchar       *d  = dest;
 
           for (col = 0; col < width; col++, s1++, s2++, m++, d += 3)
-            {
-              d[0] = d[1] = d[2] = ((s1[0] << 8) + (s2[0] - s1[0]) * m[0]) >> 8;
-            }
+            d[0] = d[1] = d[2] = ((s1[0] << 8) + (s2[0] - s1[0]) * m[0]) >> 8;
 
           src1     += rowstride1;
           src2     += rowstride2;
@@ -1478,8 +1476,8 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                                 gushort a = cmap1[i] * s1[1];
                                 gushort b = cmap2[i] * s2[1];
 
-                                inter[i] =
-                                  (((a << 8) + (b  - a) * m[0]) >> 8) / inter[3];
+                                inter[i] = ((((a << 8) + (b  - a) * m[0]) >> 8)
+                                            / inter[3]);
                               }
                           }
                       }
@@ -1501,9 +1499,12 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                           register guint alpha = inter[3] + 1;
                           register guint check = CHECK_COLOR (area, row, col);
 
-                          d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
-                          d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
-                          d[2] = ((check << 8) + (inter[2] - check) * alpha) >> 8;
+                          d[0] =
+                            ((check << 8) + (inter[0] - check) * alpha) >> 8;
+                          d[1] =
+                            ((check << 8) + (inter[1] - check) * alpha) >> 8;
+                          d[2] =
+                            ((check << 8) + (inter[2] - check) * alpha) >> 8;
                         }
                         break;
                       }
@@ -1530,11 +1531,12 @@ gimp_preview_area_mask (GimpPreviewArea *area,
  * @y:      y offset in preview
  * @width:  buffer width
  * @height: buffer height
- * @red:
- * @green:
- * @blue:
+ * @red:    red component of the fill color (0-255)
+ * @green:  green component of the fill color (0-255)
+ * @blue:   red component of the fill color (0-255)
  *
- * Fills the @area in the given color.
+ * Fills @area in the given color and queues a redraw on the given
+ * rectangle.
  *
  * Since GIMP 2.2
  **/
@@ -1600,7 +1602,6 @@ gimp_preview_area_fill (GimpPreviewArea *area,
   for (row = 1, d = dest; row < height; row++)
     {
       d += area->rowstride;
-
       memcpy (d, dest, width * 3);
     }
 
@@ -1700,18 +1701,17 @@ gimp_preview_area_menu_toggled (GtkWidget       *item,
 
   if (active)
     {
-      const gchar *name;
-      gint         value;
-
-      name  = g_object_get_data (G_OBJECT (item),
-                                 "gimp-preview-area-prop-name");
-      value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (item),
-                                                  "gimp-preview-area-prop-value"));
-
+      const gchar *name = g_object_get_data (G_OBJECT (item),
+                                             "gimp-preview-area-prop-name");
       if (name)
-        g_object_set (area,
-                      name, value,
-                      NULL);
+        {
+          gint  value =
+            GPOINTER_TO_INT (g_object_get_data (G_OBJECT (item),
+                                                "gimp-preview-area-prop-value"));
+          g_object_set (area,
+                        name, value,
+                        NULL);
+        }
     }
 }
 

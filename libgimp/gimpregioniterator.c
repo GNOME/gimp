@@ -210,6 +210,9 @@ gimp_rgn_iterate1 (GimpDrawable *drawable,
 
   total_area = (x2 - x1) * (y2 - y1);
 
+  if (total_area <= 0)
+    return;
+
   area_so_far   = 0;
   progress_skip = 0;
 
@@ -260,6 +263,9 @@ gimp_rgn_iterate2 (GimpDrawable *drawable,
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   total_area = (x2 - x1) * (y2 - y1);
+
+  if (total_area <= 0)
+    return;
 
   area_so_far   = 0;
   progress_skip = 0;

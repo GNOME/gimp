@@ -97,7 +97,7 @@ void        gimp_preview_area_mask           (GimpPreviewArea *area,
                                               gint             rowstride1,
                                               const guchar    *buf2,
                                               gint             rowstride2,
-                                              guchar          *mask,
+                                              const guchar    *mask,
                                               gint             rowstride_mask);
 void        gimp_preview_area_fill           (GimpPreviewArea *area,
                                               gint             x,

@@ -1,3 +1,11 @@
+2004-12-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpregioniterator.c: added some checks to avoid
+	division by zero.
+
+	* libgimpwidgets/gimppreviewarea.[ch]: minor cleanups, improved
+	API documentation.
+
 2004-12-26  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-arc.c
