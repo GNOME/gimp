@@ -1,3 +1,9 @@
+2004-10-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/grid.c (run): applied patch by Joao S. O. Bueno
+	that implements the opacity parameters the way it is documented.
+	Fixes bug #156750; merged from HEAD branch.
+
 2004-10-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/jpeg.c: pass the name in filesystem encoding to

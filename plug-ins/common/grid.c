@@ -190,27 +190,29 @@ run (const gchar      *name,
           grid_cfg.hoffset = MAX (0, param[5].data.d_int32);
           grid_cfg.hcolor  = param[6].data.d_color;
 
-          /*  FIXME: this used to be the alpha value
-                             param[7].data.d_int8;
-           */
+          gimp_rgb_set_alpha (&(grid_cfg.hcolor),
+                              ((double) (guint) param[7].data.d_int8) / 255.0);
+
 
           grid_cfg.vwidth  = MAX (0, param[8].data.d_int32);
           grid_cfg.vspace  = MAX (1, param[9].data.d_int32);
           grid_cfg.voffset = MAX (0, param[10].data.d_int32);
           grid_cfg.vcolor  = param[11].data.d_color;
 
-          /*  FIXME: this used to be the alpha value
-                             param[12].data.d_int8;
-           */
+          gimp_rgb_set_alpha (&(grid_cfg.vcolor),
+                              ((double) (guint)  param[12].data.d_int8) / 255.0);
+
+
 
           grid_cfg.iwidth  = MAX (0, param[13].data.d_int32);
           grid_cfg.ispace  = MAX (0, param[14].data.d_int32);
           grid_cfg.ioffset = MAX (0, param[15].data.d_int32);
           grid_cfg.icolor  = param[16].data.d_color;
 
-          /*  FIXME: this used to be the alpha value
-                             param[17].data.d_int8);
-           */
+          gimp_rgb_set_alpha (&(grid_cfg.icolor),
+                              ((double) (guint) param[17].data.d_int8) / 255.0);
+
+
         }
     }
   else
