@@ -50,10 +50,18 @@ msgid ""
 "PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
+"Usage : $0 [arguments Gimp...] [arguments interface...] [arguments script...]\n"
+"        Les arguments de Gimp sont :\n"
+"            -gimp <n'importe quoi>       à usage interne seulement\n"
+"            -h | -help | --help | -?     affiche l'aide\n"
+"            -v | --verbose               mode verbeux\n"
+"            --host|--tcp MACHINE[:PORT]  se connecter à la MACHINE\n"
+"                                         (en utilisant en option le PORT)\n"
+"                                         (informations : voir Gimp::Net(3))\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "$_ is not a valid import tag for package $pkg"
-msgstr ""
+msgstr "$_ n'est pas un label d'importation correct pour le package $pkg"
 
 #: Gimp/Fu.pm:0
 msgid "$_: illegal switch, try $0 --help\n"
@@ -61,29 +69,29 @@ msgstr "$_ : option incorrecte, essayez $0 --help\n"
 
 #: Gimp/Fu.pm:0
 msgid "$_: unknown/illegal file-save option"
-msgstr ""
+msgstr "$_ : option d'enregistrement de fichier illégale"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
 "a-z and _ allowed"
-msgstr ""
+msgstr "$function : le nom d'argument '$p->[1]' contient des caractères illégaux. Seuls 0-9, a-z et _ sont permis."
 
 #: Gimp/Fu.pm:0
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
-msgstr ""
+msgstr "$function : argument/valeur de retour '$p->[1]' de type illégal '$p->[0]'."
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
-msgstr ""
+msgstr "$function : appeler $AUTOLOAD sans spécifier le label d'importation :auto est obsolète !\n"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "$function: function name contains unusual characters, good style is to use "
 "only 0-9, a-z and _"
-msgstr ""
+msgstr "$function : le nom de la fonction contient des caractères inhabituels, il est recommandé de n'utiliser que 0-9, a-z et _."
 
 #: Gimp/Fu.pm:0
 msgid "$s: not an integer\n"
@@ -91,19 +99,19 @@ msgstr "$s : n'est pas un entier\n"
 
 #: Gimp/Lib.xs:0
 msgid "%s arguments for function '%s'"
-msgstr ""
+msgstr "%s arguments pour la fonction '%s'"
 
 #: Gimp/Lib.xs:0
 msgid "%s: procedural database execution failed on invalid input arguments"
-msgstr ""
+msgstr "%s : l'exécution de la procédure a échoué en raison d'arguments d'entrée incorrects."
 
 #: Gimp/Lib.xs:0
 msgid "%s: procedural database execution failed"
-msgstr ""
+msgstr "%s : échec de l'exécution dans la base de procédures."
 
 #: Gimp/Lib.xs:0
 msgid "(UNINITIALIZED)"
-msgstr ""
+msgstr "(NON INITIALISÉ)"
 
 #: UI/UI.pm:0
 msgid "(none)"
@@ -111,7 +119,7 @@ msgstr "(aucun)"
 
 #: Gimp/Lib.xs:0
 msgid ", %d bytes data]"
-msgstr ""
+msgstr ", %d octets de données]"
 
 #: Perl-Server:0
 msgid ", authorization required"
@@ -149,11 +157,11 @@ msgstr "/Exts/Rendu/POV-Ray"
 
 #: UI/UI.pm:0
 msgid "9x15bold"
-msgstr ""
+msgstr "9x15bold"
 
 #: Gimp/Fu.pm:0
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
-msgstr ""
+msgstr "<Image> plug-in appelé avec à la fois une image et un drawable en argument !\n"
 
 #: examples/repdup:0
 msgid "<Image>/Edit/Repeat & Duplicate..."
@@ -394,11 +402,11 @@ msgstr "<Image>/Vue/Surface 3D..."
 
 #: Gimp/Fu.pm:0
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr ""
+msgstr "<Load> plug-in appelé sans les 3 arguments standards !\n"
 
 #: Gimp/Fu.pm:0
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
-msgstr ""
+msgstr "<Save> plug-in appelé sans les 5 arguments standards !\n"
 
 #: examples/billboard:0
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
@@ -494,13 +502,16 @@ msgstr "<Toolbox>/Exts/Scripteur visuel..."
 
 #: examples/PDB:0
 msgid "Accelerator"
-msgstr "Accélerateur"
+msgstr "Raccourci"
 
+# SPIN BACK = ?
 #: examples/sethspin:0
 msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
 msgstr ""
+"Un nombre pair d'images est demandé.\n"
+"Ajustement du nombre à $frames."
 
 #: examples/PDB:0
 msgid "Author"
@@ -508,7 +519,7 @@ msgstr "Auteur"
 
 #: UI/UI.pm:0
 msgid "BG"
-msgstr ""
+msgstr "AR"
 
 #: UI/UI.pm:0
 msgid ""
@@ -543,7 +554,7 @@ msgstr "Annuler"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "Cannot call '$AUTOLOAD' at this time"
-msgstr ""
+msgstr "Je ne peux pas appeler '$AUTOLOAD' en ce moment."
 
 #: examples/PDB:0
 msgid "Close"
