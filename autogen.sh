@@ -19,7 +19,7 @@ LIBTOOL_WIN32=1.5
 AUTOCONF_REQUIRED_VERSION=2.54
 AUTOMAKE_REQUIRED_VERSION=1.6
 GLIB_REQUIRED_VERSION=2.2.0
-INTLTOOL_REQUIRED_VERSION=0.17
+INTLTOOL_REQUIRED_VERSION=0.31
 
 
 srcdir=`dirname $0`
@@ -165,36 +165,6 @@ else
     DIE=1
 fi
 
-# Special test for problematic versions of intltool.  Details at:
-#   http://bugzilla.gnome.org/show_bug.cgi?id=137502
-# Print a warning message, but do not exit.
-INTLTOOL_BUG_MIN_VERSION=0.28
-INTLTOOL_BUG_MAX_VERSION=0.31
-echo -n "checking for intltool < $INTLTOOL_BUG_MIN_VERSION or > $INTLTOOL_BUG_MAX_VERSION ... "
-if (intltoolize --version) < /dev/null > /dev/null 2>&1; then
-    VER=`intltoolize --version \
-         | grep intltoolize | sed "s/.* \([0-9.]*\)/\1/"`
-    if expr $VER \>= $INTLTOOL_BUG_MIN_VERSION > /dev/null; then
-        if expr $VER \<= $INTLTOOL_BUG_MAX_VERSION > /dev/null; then
-            echo "no"
-            echo
-            echo " Versions of intltool between 0.28 and 0.31 are known to"
-            echo " generate incorrect XML output when processing gimp-tips.xml."
-	    echo " Please consider updating to a more recent version."
-	    echo
-	    echo " This problem is not harmless, but you may continue to build."
-	    echo " Please don't package the result of this build though." 
-	    echo
-        else
-            echo "yes"
-        fi
-    else
-        echo "yes"
-    fi
-else
-    echo "not found"
-fi
-
 
 echo -n "checking for xsltproc ... "
 if (xsltproc --version) < /dev/null > /dev/null 2>&1; then
@@ -241,7 +211,7 @@ fi
 if test -z "$ACLOCAL_FLAGS"; then
 
     acdir=`$ACLOCAL --print-ac-dir`
-    m4list="glib-2.0.m4 glib-gettext.m4 gtk-2.0.m4 intltool.m4 pkg.m4"
+    m4list="glib-2.0.m4 glib-gettext.m4 gtk-doc.m4 gtk-2.0.m4 intltool.m4 pkg.m4"
 
     for file in $m4list
     do

@@ -1,5 +1,9 @@
 2004-12-17  Sven Neumann  <sven@gimp.org>
 
+	* autogen.sh: check for gtk-doc.m4, depend on intltool > 0.31.
+
+2004-12-17  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpmovetool.c (gimp_move_tool_cursor_update): don't
 	use the rect-select cursor if the tool is in move-layer mode.
 	Spotted by Joao S. O. Bueno, bug #161465.
