@@ -12,6 +12,7 @@ app/actions/buffers-actions.c
 app/actions/channels-actions.c
 app/actions/channels-commands.c
 app/actions/colormap-editor-actions.c
+app/actions/colormap-editor-commands.c
 app/actions/context-actions.c
 app/actions/data-commands.c
 app/actions/debug-actions.c
@@ -38,6 +39,7 @@ app/actions/images-actions.c
 app/actions/layers-actions.c
 app/actions/layers-commands.c
 app/actions/palette-editor-actions.c
+app/actions/palette-editor-commands.c
 app/actions/palettes-actions.c
 app/actions/palettes-commands.c
 app/actions/patterns-actions.c
