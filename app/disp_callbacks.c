@@ -618,17 +618,21 @@ gdisplay_drag_drop (GtkWidget      *widget,
 
   if ((src_widget = gtk_drag_get_source_widget (context)))
     {
-      GimpDrawable *drawable   = NULL;
-      Layer        *layer      = NULL;
-      Channel      *channel    = NULL;
-      Layer        *layer_mask = NULL;
+      GimpDrawable *drawable       = NULL;
+      Layer        *layer          = NULL;
+      Channel      *channel        = NULL;
+      LayerMask    *layer_mask     = NULL;
+      GImage       *component      = NULL;
+      ChannelType   component_type = -1;
 
       layer = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
 					     "gimp_layer");
       channel = (Channel *) gtk_object_get_data (GTK_OBJECT (src_widget),
 						 "gimp_channel");
-      layer_mask = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						  "gimp_layer_mask");
+      layer_mask = (LayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						      "gimp_layer_mask");
+      component = (GImage *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						  "gimp_component");
 
       if (layer)
 	{
@@ -640,7 +644,13 @@ gdisplay_drag_drop (GtkWidget      *widget,
 	}
       else if (layer_mask)
 	{
-	  drawable = GIMP_DRAWABLE (layer_get_mask (layer_mask));
+	  drawable = GIMP_DRAWABLE (layer_mask);
+	}
+      else if (component)
+	{
+	  component_type =
+	    (ChannelType) gtk_object_get_data (GTK_OBJECT (src_widget),
+					       "gimp_component_type");
 	}
 
       /*  FIXME: implement special treatment of channel etc.

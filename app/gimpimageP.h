@@ -1,3 +1,20 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
 #ifndef __GIMPIMAGEP_H__
 #define __GIMPIMAGEP_H__
 
@@ -17,35 +34,36 @@
 struct _GimpImage
 {
   GimpObject gobject;
-  char *filename;		      /*  original filename            */
-  int has_filename;                   /*  has a valid filename         */
+
+  gchar         *filename;	      /*  original filename            */
+  gboolean       has_filename;        /*  has a valid filename         */
   PlugInProcDef *save_proc;           /*  last PDB save proc used      */
 
-  int width, height;		      /*  width and height attributes  */
-  double xresolution;                 /*  image x-res, in dpi          */
-  double yresolution;                 /*  image y-res, in dpi          */
-  GUnit unit;                         /*  image unit                   */
+  gint     width, height;              /*  width and height attributes  */
+  gdouble  xresolution;               /*  image x-res, in dpi          */
+  gdouble  yresolution;               /*  image y-res, in dpi          */
+  GUnit    unit;                      /*  image unit                   */
   GimpImageBaseType base_type;        /*  base gimp_image type         */
 
-  unsigned char * cmap;               /*  colormap--for indexed        */
-  int num_cols;                       /*  number of cols--for indexed  */
+  guchar *cmap;                       /*  colormap--for indexed        */
+  int     num_cols;                   /*  number of cols--for indexed  */
 
-  int dirty;                          /*  dirty flag -- # of ops       */
-  int undo_on;                        /*  Is undo enabled?             */
+  gint      dirty;                    /*  dirty flag -- # of ops       */
+  gboolean  undo_on;                  /*  Is undo enabled?             */
 
-  int instance_count;                 /*  number of instances          */
-  int ref_count;                      /*  number of references         */
+  gint instance_count;                /*  number of instances          */
+  gint ref_count;                     /*  number of references         */
 
   Tattoo tattoo_state;                /*  the next unique tattoo to use*/
 
   TileManager *shadow;                /*  shadow buffer tiles          */
 
                                       /*  Projection attributes  */
-  int construct_flag;                 /*  flag for construction        */
-  GimpImageType proj_type;            /*  type of the projection image */
-  int proj_bytes;                     /*  bpp in projection image      */
-  int proj_level;                     /*  projection level             */
-  TileManager *projection;            /*  The projection--layers &     */
+  gint           construct_flag;      /*  flag for construction        */
+  GimpImageType  proj_type;           /*  type of the projection image */
+  gint           proj_bytes;          /*  bpp in projection image      */
+  gint           proj_level;          /*  projection level             */
+  TileManager   *projection;          /*  The projection--layers &     */
                                       /*  channels                     */
 
   GList *guides;                      /*  guides                       */
@@ -55,47 +73,46 @@ struct _GimpImage
   GSList *channels;                   /*  the list of masks            */
   GSList *layer_stack;                /*  the layers in MRU order      */
 
-  Layer * active_layer;               /*  ID of active layer           */
-  Channel * active_channel;	      /*  ID of active channel         */
-  Layer * floating_sel;               /*  ID of fs layer               */
-  Channel * selection_mask;           /*  selection mask channel       */
+  Layer   *active_layer;              /*  ID of active layer           */
+  Channel *active_channel;	      /*  ID of active channel         */
+  Layer   *floating_sel;              /*  ID of fs layer               */
+  Channel *selection_mask;            /*  selection mask channel       */
 
   ParasiteList *parasites;            /*  Plug-in parasite data        */
 
   PathsList *paths;                   /*  Paths data for this image    */
 
-  int visible [MAX_CHANNELS];         /*  visible channels             */
-  int active  [MAX_CHANNELS];         /*  active channels              */
+  gint visible [MAX_CHANNELS];        /*  visible channels             */
+  gint active  [MAX_CHANNELS];        /*  active channels              */
 
-  int by_color_select;                /*  TRUE if there's an active    */
+  gboolean  by_color_select;           /*  TRUE if there's an active    */
                                       /*  "by color" selection dialog  */
 
-  int qmask_state;                    /*  TRUE if qmask is on          */
-  double qmask_opacity;               /*  opacity of the qmask channel */
-  unsigned char qmask_color[3];       /*  rgb triplet of the color     */
+  gboolean  qmask_state;              /*  TRUE if qmask is on          */
+  gdouble   qmask_opacity;            /*  opacity of the qmask channel */
+  guchar    qmask_color[3];           /*  rgb triplet of the color     */
 
                                       /*  Undo apparatus  */
   GSList *undo_stack;                 /*  stack for undo operations    */
   GSList *redo_stack;                 /*  stack for redo operations    */
-  int undo_bytes;                     /*  bytes in undo stack          */
-  int undo_levels;                    /*  levels in undo stack         */
-  int pushing_undo_group;             /*  undo group status flag       */
+  gint    undo_bytes;                 /*  bytes in undo stack          */
+  gint    undo_levels;                /*  levels in undo stack         */
+  gint    pushing_undo_group;         /*  undo group status flag       */
 
                                       /*  Composite preview  */
   TempBuf *comp_preview;              /*  the composite preview        */
-  int comp_preview_valid[3];          /*  preview valid-1/channel      */
+  gint comp_preview_valid[3];         /*  preview valid-1/channel      */
 };
 
 struct _GimpImageClass
 {
   GimpObjectClass parent_class;
-  void (*dirty) (GtkObject*);
+  void (*dirty)   (GtkObject*);
   void (*repaint) (GtkObject*);
-  void (*rename) (GtkObject*);
+  void (*rename)  (GtkObject*);
 };
 typedef struct _GimpImageClass GimpImageClass;
 
-#define GIMP_IMAGE_CLASS(klass) \
-GTK_CHECK_CLASS_CAST (klass, GIMP_TYPE_IMAGE, GimpImageClass)
+#define GIMP_IMAGE_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, GIMP_TYPE_IMAGE, GimpImageClass)
 
-#endif
+#endif /* __GIMPIMAGEP_H__ */

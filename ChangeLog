@@ -1,3 +1,38 @@
+1999-08-22  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/color_area.[ch]
+	* app/color_panel.[ch]
+	* app/gimpdnd.[ch]: enabled dnd for colors (compatible with the
+	standard gtk/gnome color dnd). The color selection is now invoked
+	on a real click, not on button_down to avoid confusion with dnd.
+
+	* app/channels_dialog.c
+	* app/disp_callbacks.c
+	* app/interface.c
+	* app/layers_dialog.c: minor dnd updates/fixes.
+
+	* app/channel.[ch]
+	* app/channel_pvt.h
+	* app/docindex.[ch]
+	* app/docindexif.[ch]
+	* app/drawable.[ch]
+	* app/floating_sel.c
+	* app/gimage.[ch]
+	* app/gimage_mask.c
+	* app/gimpdrawable.[ch]
+	* app/gimpdrawableP.h
+	* app/gimpimage.[ch]
+	* app/gimpimageP.h
+	* app/layer.[ch]
+	* app/layer_pvt.h
+	* app/undo.c
+	* app/xcf.c: wanted to do some s/int/gboolean/ in the layer files
+	where appropriate and found myself spending the whole night doing
+	a big code review for layers/channels/drawables/images:
+	s/int/gboolean/, s/<type>/g<type>/, lots of indentation, removed
+	some old global variables and deprecated functions, #include
+	cleanups, proper prototypes, copyright headers, ...
+
 1999-08-22  Tomas Ogren  <stric@ing.umu.se>
 
 	* app/bucket_fill.c

@@ -33,7 +33,8 @@
 void
 gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 				    GdkDragContext *context,
-				    GimpDrawable   *drawable)
+				    GimpDrawable   *drawable,
+				    GdkGC          *gc)
 {
   GdkPixmap *drag_pixmap;
   GImage    *gimage;
@@ -46,7 +47,6 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
   guchar    *p0, *p1, *even, *odd;
   gint       width;
   gint       height;
-  GdkGC     *gc = NULL;
   gdouble    ratio;
   gint       offx, offy;
 
@@ -70,23 +70,19 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 
   gimp_drawable_offsets (drawable, &offx, &offy);
 
-  offx *= ratio;
-  offy *= ratio;
+  offx = (int) (ratio * offx);
+  offy = (int) (ratio * offy);
 
   drag_pixmap = gdk_pixmap_new (widget->window,
 				width+2, height+2, -1);
 
-  /*  Is this always valid???  */
-  gc = widget->style->bg_gc[GTK_STATE_NORMAL];
-
   gdk_draw_rectangle (drag_pixmap, 
-		      gc,
+		      /*  Is this always valid???  */
+		      widget->style->bg_gc[GTK_STATE_NORMAL],
 		      TRUE,
 		      0, 0,
 		      width + 2,
 		      height + 2);
-
-  gc = widget->style->black_gc;
 
   gdk_draw_rectangle (drag_pixmap, 
 		      gc,
@@ -127,7 +123,7 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
   bpp = tmpbuf->bytes;
 
   /*  Draw the thumbnail with checks  */
-  src =  temp_buf_data (tmpbuf);
+  src = temp_buf_data (tmpbuf);
 
   even = g_malloc (width * 3);
   odd  = g_malloc (width * 3);

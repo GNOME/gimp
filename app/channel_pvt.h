@@ -30,21 +30,21 @@ struct _GimpChannel
 {
   GimpDrawable drawable;
 
-  unsigned char col[3];         /*  RGB triplet for channel color*/
-  int opacity;                  /*  Channel opacity              */
-  int show_masked;              /*  Show masked areas--as        */
-                                /*  opposed to selected areas    */
+  guchar     col[3];            /*  RGB triplet for channel color  */
+  gint       opacity;           /*  Channel opacity                */
+  gboolean   show_masked;       /*  Show masked areas--as          */
+                                /*  opposed to selected areas      */
 
   /*  Selection mask variables  */
-  int boundary_known;           /*  is the current boundary valid*/
-  BoundSeg  *segs_in;           /*  outline of selected region   */
-  BoundSeg  *segs_out;          /*  outline of selected region   */
-  int num_segs_in;              /*  number of lines in boundary  */
-  int num_segs_out;             /*  number of lines in boundary  */
-  int empty;                    /*  is the region empty?         */
-  int bounds_known;             /*  recalculate the bounds?      */
-  int x1, y1;                   /*  coordinates for bounding box */
-  int x2, y2;                   /*  lower right hand coordinate  */
+  gboolean   boundary_known;    /*  is the current boundary valid  */
+  BoundSeg  *segs_in;           /*  outline of selected region     */
+  BoundSeg  *segs_out;          /*  outline of selected region     */
+  gint       num_segs_in;       /*  number of lines in boundary    */
+  gint       num_segs_out;      /*  number of lines in boundary    */
+  gboolean   empty;             /*  is the region empty?           */
+  gboolean   bounds_known;      /*  recalculate the bounds?        */
+  gint       x1, y1;            /*  coordinates for bounding box   */
+  gint       x2, y2;            /*  lower right hand coordinate    */
 };
 
 struct _GimpChannelClass

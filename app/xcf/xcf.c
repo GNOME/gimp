@@ -2064,7 +2064,7 @@ xcf_load_channel_props (XcfInfo *info,
 	  channel_delete (gimage->selection_mask);
 	  gimage->selection_mask = channel;
 	  channel->boundary_known = FALSE;
-	  channel->bounds_known = FALSE;
+	  channel->bounds_known   = FALSE;
 	  break;
 	case PROP_OPACITY:
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &channel->opacity, 1);
@@ -2135,14 +2135,14 @@ xcf_load_layer (XcfInfo *info,
   LayerMask *layer_mask;
   guint32 hierarchy_offset;
   guint32 layer_mask_offset;
-  int apply_mask;
-  int edit_mask;
-  int show_mask;
-  int width;
-  int height;
-  int type;
-  int add_floating_sel;
-  char *name;
+  gboolean apply_mask;
+  gboolean edit_mask;
+  gboolean show_mask;
+  gint width;
+  gint height;
+  gint type;
+  gint add_floating_sel;
+  gchar *name;
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment at
@@ -2191,14 +2191,14 @@ xcf_load_layer (XcfInfo *info,
       GIMP_DRAWABLE(layer_mask)->offset_y = GIMP_DRAWABLE(layer)->offset_y;
 
       apply_mask = layer->apply_mask;
-      edit_mask = layer->edit_mask;
-      show_mask = layer->show_mask;
+      edit_mask  = layer->edit_mask;
+      show_mask  = layer->show_mask;
 
       layer_add_mask (layer, layer_mask);
 
       layer->apply_mask = apply_mask;
-      layer->edit_mask = edit_mask;
-      layer->show_mask = show_mask;
+      layer->edit_mask  = edit_mask;
+      layer->show_mask  = show_mask;
     }
 
   /* attach the floating selection... */

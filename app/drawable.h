@@ -20,11 +20,12 @@
 
 #include "gimpdrawable.h"
 
-int drawable_ID (GimpDrawable *);
-void drawable_fill (GimpDrawable *drawable, GimpFillType fill_type);
-void drawable_update (GimpDrawable *drawable, int x, int y, int w, int h);
-void drawable_apply_image (GimpDrawable *, int, int, int, int, 
-			   TileManager *, int);
+int drawable_ID           (GimpDrawable *);
+void drawable_fill        (GimpDrawable *drawable, GimpFillType fill_type);
+void drawable_update      (GimpDrawable *drawable,
+			   gint x, gint y, gint w, gint h);
+void drawable_apply_image (GimpDrawable *, gint, gint, gint, gint, 
+			   TileManager *, gint);
 
 
 #define drawable_merge_shadow gimp_drawable_merge_shadow

@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
@@ -82,7 +81,7 @@ gimage_mask_boundary (GImage    *gimage,
     }
   /*  Otherwise, return the boundary...if a channel is active  */
   else if ((d = gimage_active_drawable (gimage)) &&
-	   drawable_channel (d))
+	   GIMP_IS_CHANNEL (d))
     {
       return channel_boundary (gimage_get_mask (gimage),
 			       segs_in, segs_out,
@@ -304,20 +303,20 @@ gimage_mask_extract (GImage       *gimage,
       /*  If we're cutting, remove either the layer (or floating selection),
        *  the layer mask, or the channel
        */
-      if (cut_gimage && drawable_layer (drawable))
+      if (cut_gimage && GIMP_IS_LAYER (drawable))
 	{
 	  if (layer_is_floating_sel (GIMP_LAYER (drawable)))
 	    floating_sel_remove (GIMP_LAYER (drawable));
 	  else
 	    gimage_remove_layer (gimage, GIMP_LAYER (drawable));
 	}
-      else if (cut_gimage && drawable_layer_mask (drawable))
+      else if (cut_gimage && GIMP_IS_LAYER_MASK (drawable))
 	{
-	  gimage_remove_layer_mask (gimage, GIMP_LAYER_MASK(drawable)->layer,
+	  gimage_remove_layer_mask (gimage, GIMP_LAYER_MASK (drawable)->layer,
 				    DISCARD);
 	}
-      else if (cut_gimage && drawable_channel (drawable))
-	gimage_remove_channel (gimage, GIMP_CHANNEL(drawable));
+      else if (cut_gimage && GIMP_IS_CHANNEL (drawable))
+	gimage_remove_channel (gimage, GIMP_CHANNEL (drawable));
     }
 
   return tiles;

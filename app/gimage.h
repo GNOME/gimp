@@ -24,15 +24,21 @@
 
 typedef GimpImage GImage;
 
-GImage*    gimage_new                   (int width, int height, GimpImageBaseType base_type);
-GImage*    gimage_get_ID                (gint ID);
-void       gimage_delete                (GImage *gimage);
+GImage*    gimage_new                   (gint               width,
+					 gint               height,
+					 GimpImageBaseType  base_type);
+GImage*    gimage_get_ID                (gint               ID);
+void       gimage_delete                (GImage            *gimage);
 void       gimage_invalidate_previews   (void);
-void       gimage_set_layer_mask_apply  (GImage *gimage, GimpLayer *layer);
-void       gimage_set_layer_mask_edit   (GImage *gimage, GimpLayer *layer, int edit);
-void       gimage_set_layer_mask_show   (GImage *gimage, GimpLayer *layer);
-void       gimage_foreach               (GFunc func, gpointer user_data);
-
+void       gimage_set_layer_mask_apply  (GImage            *gimage,
+					 GimpLayer         *layer);
+void       gimage_set_layer_mask_edit   (GImage            *gimage,
+					 GimpLayer         *layer,
+					 gboolean           edit);
+void       gimage_set_layer_mask_show   (GImage            *gimage,
+					 GimpLayer         *layer);
+void       gimage_foreach               (GFunc              func,
+					 gpointer           user_data);
 
 #define gimage_set_filename gimp_image_set_filename
 #define gimage_set_resolution gimp_image_set_resolution

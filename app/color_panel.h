@@ -23,18 +23,18 @@ typedef struct _ColorPanel ColorPanel;
 struct _ColorPanel
 {
   /*  The calling procedure is respondible for showing this widget  */
-  GtkWidget *   color_panel_widget;
+  GtkWidget *color_panel_widget;
 
   /*  The actual color  */
-  unsigned char color [3];
+  guchar     color [3];
 
   /*  Don't touch this :)  */
-  void *        private_part;
+  void      *private_part;
 };
 
-ColorPanel * color_panel_new    (unsigned char * initial,
-				 int             width,
-				 int             height);
-void         color_panel_free   (ColorPanel *    color_panel);
+ColorPanel * color_panel_new    (guchar     *initial,
+				 gint        width,
+				 gint        height);
+void         color_panel_free   (ColorPanel *color_panel);
 
 #endif  /*  __COLOR_PANEL_H__  */

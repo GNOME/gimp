@@ -123,8 +123,7 @@ static GtkTargetEntry toolbox_target_table[] =
   GIMP_TARGET_NETSCAPE_URL,
   GIMP_TARGET_LAYER,
   GIMP_TARGET_CHANNEL,
-  GIMP_TARGET_LAYER_MASK,
-  GIMP_TARGET_COMPONENT
+  GIMP_TARGET_LAYER_MASK
 };
 static guint toolbox_n_targets = (sizeof (toolbox_target_table) /
 				  sizeof (toolbox_target_table[0]));
@@ -1494,16 +1493,16 @@ toolbox_drag_drop (GtkWidget      *widget,
       GimpDrawable *drawable       = NULL;
       Layer        *layer          = NULL;
       Channel      *channel        = NULL;
-      Layer        *layer_mask     = NULL;
-      GimpImage    *component      = NULL;
+      LayerMask    *layer_mask     = NULL;
+      GImage       *component      = NULL;
       ChannelType   component_type = -1;
 
       layer = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
 					     "gimp_layer");
       channel = (Channel *) gtk_object_get_data (GTK_OBJECT (src_widget),
 						 "gimp_channel");
-      layer_mask = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						  "gimp_layer_mask");
+      layer_mask = (LayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						      "gimp_layer_mask");
       component = (GImage *) gtk_object_get_data (GTK_OBJECT (src_widget),
 						  "gimp_component");
 
@@ -1517,7 +1516,7 @@ toolbox_drag_drop (GtkWidget      *widget,
 	}
       else if (layer_mask)
 	{
-	  drawable = GIMP_DRAWABLE (layer_get_mask (layer_mask));
+	  drawable = GIMP_DRAWABLE (layer_mask);
 	}
       else if (component)
 	{
@@ -1613,7 +1612,8 @@ toolbox_drag_drop (GtkWidget      *widget,
 
 	  gimage_add_layer (new_gimage, new_layer, 0);
 
-	  gdisplay_new (new_gimage, 0x0101);
+	  gimp_context_set_display (gimp_context_get_user (),
+				    gdisplay_new (new_gimage, 0x0101));
 
 	  gimage_enable_undo (new_gimage);
 

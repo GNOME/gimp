@@ -12,7 +12,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-
 #include <string.h>
 #include <stdlib.h>
 
@@ -20,6 +19,7 @@
 
 #include "docindexif.h"
 #include "docindex.h"
+#include "gimpdnd.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpenv.h"
@@ -29,49 +29,50 @@ idea_manager *ideas = NULL;
 static GList *idea_list = NULL;   /* of gchar *. */
 static gint x = 0, y = 0, width = 0, height = 0;
 
-
-enum {
-  TARGET_URI_LIST
+static GtkTargetEntry drag_types[] =
+{
+  GIMP_TARGET_URI_LIST
 };
+static gint n_drag_types = sizeof (drag_types) / sizeof (drag_types[0]);
 
-static void create_idea_list( void );
-void docindex_configure_drop_on_widget(GtkWidget * widget);
-void docindex_cell_configure_drop_on_widget(GtkWidget * widget);
+static void create_idea_list                       (void);
+void        docindex_configure_drop_on_widget      (GtkWidget * widget);
+void        docindex_cell_configure_drop_on_widget (GtkWidget * widget);
 
 
 static void
-docindex_dnd_filenames_dropped( GtkWidget *widget,
-				GdkDragContext *context,
-				gint x,
-				gint y,
+docindex_dnd_filenames_dropped (GtkWidget        *widget,
+				GdkDragContext   *context,
+				gint              x,
+				gint              y,
 				GtkSelectionData *selection_data,
-				guint info,
-				guint time)
+				guint             info,
+				guint             time)
 {
   gint len;
   gchar *data;
   gchar *end;
 
-  switch ( info )
+  switch (info)
     {
-    case TARGET_URI_LIST:
+    case GIMP_DND_TYPE_URI_LIST:
       data = (gchar *) selection_data->data;
       len = selection_data->length;
-      while( len > 0 )
+      while (len > 0)
 	{
-	  end = strstr( data, "\x0D\x0A" );
-	  if ( end != NULL )
+	  end = strstr (data, "\x0D\x0A");
+	  if (end != NULL)
 	    *end = 0;
-	  if ( *data != '#' )
+	  if (*data != '#')
 	    {
-	      gchar *filename = strchr( data, ':' );
-	      if ( filename != NULL )
+	      gchar *filename = strchr (data, ':');
+	      if (filename != NULL)
 		filename ++;
 	      else
 		filename = data;
-	      open_file_in_position( filename, -1 );
+	      open_file_in_position (filename, -1);
 	    }
-	  if ( end )
+	  if (end)
 	    {
 	      len -= end - data + 2;
 	      data = end + 2;
@@ -85,14 +86,8 @@ docindex_dnd_filenames_dropped( GtkWidget *widget,
 }
 
 void
-docindex_configure_drop_on_widget(GtkWidget * widget)
+docindex_configure_drop_on_widget (GtkWidget * widget)
 {
-  static GtkTargetEntry drag_types[] =
-  {
-    { "text/uri-list", 0, TARGET_URI_LIST },
-  };
-  static gint n_drag_types = sizeof(drag_types)/sizeof(drag_types[0]);
-
   gtk_drag_dest_set (widget,
                      GTK_DEST_DEFAULT_MOTION |
                      GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -100,44 +95,45 @@ docindex_configure_drop_on_widget(GtkWidget * widget)
                      drag_types, n_drag_types,
                      GDK_ACTION_COPY);
 
-  gtk_signal_connect(GTK_OBJECT(widget), "drag_data_received",
-                       GTK_SIGNAL_FUNC(docindex_dnd_filenames_dropped), NULL);
+  gtk_signal_connect (GTK_OBJECT (widget), "drag_data_received",
+		      GTK_SIGNAL_FUNC (docindex_dnd_filenames_dropped),
+		      NULL);
 }
 
 static void
-docindex_cell_dnd_filenames_dropped( GtkWidget *widget,
-				     GdkDragContext *context,
-				     gint x,
-				     gint y,
+docindex_cell_dnd_filenames_dropped (GtkWidget        *widget,
+				     GdkDragContext   *context,
+				     gint              x,
+				     gint              y,
 				     GtkSelectionData *selection_data,
-				     guint info,
-				     guint time)
+				     guint             info,
+				     guint             time)
 {
   gint len;
   gchar *data;
   gchar *end;
-  gint position = g_list_index( GTK_TREE( ideas->tree )->children, widget );
+  gint position = g_list_index (GTK_TREE (ideas->tree)->children, widget);
 
-  switch ( info )
+  switch (info)
     {
-    case TARGET_URI_LIST:
+    case GIMP_DND_TYPE_URI_LIST:
       data = (gchar *) selection_data->data;
       len = selection_data->length;
-      while( len > 0 )
+      while (len > 0)
 	{
-	  end = strstr( data, "\x0D\x0A" );
-	  if ( end != NULL )
+	  end = strstr (data, "\x0D\x0A");
+	  if (end != NULL)
 	    *end = 0;
-	  if ( *data != '#' )
+	  if (*data != '#')
 	    {
-	      gchar *filename = strchr( data, ':' );
-	      if ( filename != NULL )
+	      gchar *filename = strchr (data, ':');
+	      if (filename != NULL)
 		filename ++;
 	      else
 		filename = data;
-	      open_file_in_position( filename, position );
+	      open_file_in_position (filename, position);
 	    }
-	  if ( end )
+	  if (end)
 	    {
 	      len -= end - data + 2;
 	      data = end + 2;
@@ -151,14 +147,8 @@ docindex_cell_dnd_filenames_dropped( GtkWidget *widget,
 }
 
 void
-docindex_cell_configure_drop_on_widget(GtkWidget * widget)
+docindex_cell_configure_drop_on_widget (GtkWidget *widget)
 {
-  static GtkTargetEntry drag_types[] =
-  {
-    { "text/uri-list", 0, TARGET_URI_LIST },
-  };
-  static gint n_drag_types = sizeof(drag_types)/sizeof(drag_types[0]);
-
   gtk_drag_dest_set (widget,
                      GTK_DEST_DEFAULT_MOTION |
                      GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -166,73 +156,78 @@ docindex_cell_configure_drop_on_widget(GtkWidget * widget)
                      drag_types, n_drag_types,
                      GDK_ACTION_COPY);
 
-  gtk_signal_connect(GTK_OBJECT(widget), "drag_data_received",
-                       GTK_SIGNAL_FUNC(docindex_cell_dnd_filenames_dropped), NULL);
+  gtk_signal_connect (GTK_OBJECT (widget), "drag_data_received",
+		      GTK_SIGNAL_FUNC (docindex_cell_dnd_filenames_dropped),
+		      NULL);
 }
 
 gboolean
-idea_window_delete_event_callback( GtkWidget *widget, GdkEvent *event, gpointer data )
+idea_window_delete_event_callback (GtkWidget *widget,
+				   GdkEvent  *event,
+				   gpointer   data)
 {
-  if ( ! exit_from_go() )
+  if (! exit_from_go ())
     {
-      save_idea_manager( ideas );
-      create_idea_list();
-      g_free( ideas );
+      save_idea_manager (ideas);
+      create_idea_list ();
+      g_free (ideas);
       ideas = 0;
     }
-  
+
   return FALSE;
 }
 
 void
-idea_hide_callback( GtkWidget *widget, gpointer data )
+idea_hide_callback (GtkWidget *widget,
+		    gpointer   data)
 {
-  if ( ideas || idea_list || width || height )
-    save_idea_manager( ideas );
+  if (ideas || idea_list || width || height)
+    save_idea_manager (ideas);
 
   /* False if exitting */
-  if( ( ! exit_from_go() ) && ideas )
+  if ((! exit_from_go ()) && ideas)
     {
-      create_idea_list();
-      gtk_widget_destroy( ideas->window );
-      g_free( ideas );
+      create_idea_list ();
+      gtk_widget_destroy (ideas->window);
+      g_free (ideas);
       ideas = 0;
     }
 }
 
 void
-open_idea_window( void )
+open_idea_window (void)
 {
-  make_idea_window( -1, -1 );
+  make_idea_window (-1, -1);
 }
 
 static void
-load_from_list( gpointer data, gpointer data_null )
+load_from_list (gpointer data,
+		gpointer data_null)
 {
-  idea_add_in_position( (gchar *) data, -1 );
+  idea_add_in_position ((gchar *) data, -1);
 }
 
 FILE *
 idea_manager_parse_init (/* RETURNS: */
-			 int *window_x,
-			 int *window_y,
-			 int *window_width,
-			 int *window_height)
+			 gint *window_x,
+			 gint *window_y,
+			 gint *window_width,
+			 gint *window_height)
 {
   FILE *fp = NULL;
   gchar *desktopfile;
 
   desktopfile = gimp_personal_rc_file ("ideas");
-  fp = fopen( desktopfile, "r" );
-  g_free( desktopfile );
+  fp = fopen (desktopfile, "r");
+  g_free (desktopfile);
       
   /* Read in persistant desktop information. */
-  if ( fp )
+  if (fp)
     {	  
-      *window_x = getinteger( fp );
-      *window_y = getinteger( fp );
-      *window_width = getinteger( fp );
-      *window_height = getinteger( fp );
+      *window_x      = getinteger (fp);
+      *window_y      = getinteger (fp);
+      *window_width  = getinteger (fp);
+      *window_height = getinteger (fp);
     }
 
   return fp;
@@ -241,12 +236,12 @@ idea_manager_parse_init (/* RETURNS: */
 gchar *
 idea_manager_parse_line (FILE * fp)
 {
-  int length;
+  gint length;
   gchar *filename;
 
   length = getinteger (fp);
 
-  if (!feof( fp ) && !ferror (fp))
+  if (!feof (fp) && !ferror (fp))
     {
       filename = g_malloc0 (length + 1);
       filename[fread (filename, 1, length, fp)] = 0;
@@ -258,323 +253,367 @@ idea_manager_parse_line (FILE * fp)
 }
 
 void
-load_idea_manager( idea_manager *ideas )
+load_idea_manager (idea_manager *ideas)
 {
   FILE *fp = NULL;
 
   if ( ! idea_list )
     fp = idea_manager_parse_init (&x, &y, &width, &height);
 
-  if ( idea_list || fp )
+  if (idea_list || fp)
     {
-      gtk_widget_set_usize( ideas->window, width, height );
-      gtk_widget_show( ideas->window );
-      gtk_widget_set_uposition( ideas->window, x, y );
-      gtk_idle_add( reset_usize, ideas->window );
-      if( fp )
+      gtk_widget_set_usize (ideas->window, width, height);
+      gtk_widget_show (ideas->window);
+      gtk_widget_set_uposition (ideas->window, x, y);
+      gtk_idle_add (reset_usize, ideas->window);
+      if (fp)
 	{
 	  gchar *title;
-	  clear_white( fp );
+	  clear_white (fp);
 	  
 	  while ((title = idea_manager_parse_line (fp)))
 	    {
-	      idea_add_in_position( title, -1 );
-	      g_free( title );
+	      idea_add_in_position (title, -1);
+	      g_free (title);
 	    }
-	  fclose( fp );
+	  fclose (fp);
 	}
       else
 	{
-	  g_list_foreach( idea_list, load_from_list, NULL );
-	  g_list_foreach( idea_list, (GFunc) g_free, NULL );
-	  g_list_free( idea_list );
+	  g_list_foreach (idea_list, load_from_list, NULL);
+	  g_list_foreach (idea_list, (GFunc) g_free, NULL);
+	  g_list_free (idea_list);
 	  idea_list = 0;
 	}
     }
   else
-    gtk_widget_show( ideas->window );
+    gtk_widget_show (ideas->window);
 }
 
 static void
-save_to_ideas( gpointer data, gpointer user_data )
+save_to_ideas (gpointer data,
+	       gpointer user_data)
 {
-  gchar *title = GTK_LABEL( GTK_BIN( (GtkWidget *) data )->child )->label;
-  
-  fprintf( (FILE *) user_data, "%d %s\n", strlen( title ), title );
+  gchar *title = GTK_LABEL (GTK_BIN ((GtkWidget *) data)->child)->label;
+
+  fprintf ((FILE *) user_data, "%d %s\n", strlen (title), title);
 }
 
 static void
-save_list_to_ideas( gpointer data, gpointer user_data )
+save_list_to_ideas (gpointer data,
+		    gpointer user_data)
 {
   gchar *title = (gchar *) data;
-  
-  fprintf( (FILE *) user_data, "%d %s\n", strlen( title ), title );
+
+  fprintf ((FILE *) user_data, "%d %s\n", strlen (title), title);
 }
 
 void
-save_idea_manager( idea_manager *ideas )
+save_idea_manager (idea_manager *ideas)
 {
   FILE *fp;
   gchar *desktopfile;
     
   /* open persistant desktop file. */
   desktopfile = gimp_personal_rc_file ("ideas");
-  fp = fopen( desktopfile, "w" );
-  g_free( desktopfile );
+  fp = fopen (desktopfile, "w");
+  g_free (desktopfile);
 
-  if ( fp )
+  if (fp)
     {
-      if ( ideas )
+      if (ideas)
 	{
-	  int x, y, width, height;
+	  gint x, y, width, height;
 	  
-	  gdk_window_get_geometry( ideas->window->window, &x, &y, &width, &height, NULL );
-	  gdk_window_get_origin( ideas->window->window, &x, &y );
-	  
-	  fprintf( fp, "%d %d %d %d\n", x, y, width, height );
-	  
-	  g_list_foreach( GTK_TREE( ideas->tree )->children, save_to_ideas, fp );
+	  gdk_window_get_geometry (ideas->window->window,
+				   &x, &y, &width, &height, NULL);
+	  gdk_window_get_origin (ideas->window->window, &x, &y);
+
+	  fprintf (fp, "%d %d %d %d\n", x, y, width, height);
+
+	  g_list_foreach (GTK_TREE (ideas->tree)->children, save_to_ideas, fp);
 	}
       else
 	{
-	  if ( idea_list )
+	  if (idea_list)
 	    {
-	      fprintf( fp, "%d %d %d %d\n", x, y, width, height );
-	      
-	      g_list_foreach( idea_list, save_list_to_ideas, fp );
+	      fprintf (fp, "%d %d %d %d\n", x, y, width, height);
+
+	      g_list_foreach (idea_list, save_list_to_ideas, fp);
 	    }
 	}
-      
-      fclose( fp );
+
+      fclose (fp);
     }
 }
 
 static void
-save_to_list( gpointer data, gpointer null_data )
+save_to_list (gpointer data,
+	      gpointer null_data)
 {
-  gchar *title = g_strdup( GTK_LABEL( GTK_BIN( (GtkWidget *) data )->child )->label );
-  idea_list = g_list_append( idea_list, title );
+  gchar *title = g_strdup (GTK_LABEL (GTK_BIN ((GtkWidget *) data)->child)->label);
+  idea_list = g_list_append (idea_list, title);
 }
 
 static void
-create_idea_list( void )
+create_idea_list (void)
 {
-  gdk_window_get_geometry( ideas->window->window, &x, &y, &width, &height, NULL );
-  gdk_window_get_origin( ideas->window->window, &x, &y );
+  gdk_window_get_geometry (ideas->window->window,
+			   &x, &y, &width, &height, NULL);
+  gdk_window_get_origin (ideas->window->window, &x, &y);
 
-  if( idea_list )
+  if (idea_list)
     {
-      g_list_foreach( idea_list, (GFunc) g_free, NULL );
-      g_list_free( idea_list );
+      g_list_foreach (idea_list, (GFunc) g_free, NULL);
+      g_list_free (idea_list);
       idea_list = 0;
     }
-  
-  g_list_foreach( GTK_TREE( ideas->tree )->children, save_to_list, NULL );
+
+  g_list_foreach (GTK_TREE (ideas->tree)->children, save_to_list, NULL);
 }
 
 static gint
-open_or_raise_callback( GtkWidget *widget, GdkEventButton *event, gpointer func_data )
+open_or_raise_callback (GtkWidget      *widget,
+			GdkEventButton *event,
+			gpointer        func_data )
 {
-  if ( GTK_IS_TREE_ITEM( widget ) &&
-       event->type==GDK_2BUTTON_PRESS )
+  if (GTK_IS_TREE_ITEM (widget) &&
+      event->type == GDK_2BUTTON_PRESS)
     {
-      open_or_raise( GTK_LABEL( GTK_BIN( widget )->child )->label );
+      open_or_raise (GTK_LABEL (GTK_BIN (widget)->child )->label);
     }
 
   return FALSE;
 } 
 
-void raise_idea_callback( GtkWidget *widget, gpointer data )
+void
+raise_idea_callback (GtkWidget *widget,
+		     gpointer   data)
 {
-  if ( ideas )
-    gdk_window_raise( ideas->window->window );
+  if (ideas)
+    gdk_window_raise (ideas->window->window);
   else
-    open_idea_window();
+    open_idea_window ();
 }
 
-static void check_needed( gpointer data, gpointer user_data )
+static void
+check_needed (gpointer data,
+	      gpointer user_data)
 {
   GtkWidget *widget = (GtkWidget *) data;
   struct bool_char_pair *pair = (struct bool_char_pair *) user_data;
-  
-  if ( strcmp( pair->string, GTK_LABEL( GTK_BIN( widget )->child )->label ) == 0 )
+
+  if (strcmp (pair->string, GTK_LABEL (GTK_BIN (widget)->child )->label) == 0)
     {
       pair->boole = TRUE;
     }
 }
 
-static void check_needed_list( gpointer data, gpointer user_data )
+static void
+check_needed_list (gpointer data,
+		   gpointer user_data)
 {
   struct bool_char_pair *pair = (struct bool_char_pair *) user_data;
-  
-  if ( strcmp( pair->string, (gchar *) data ) == 0 )
+
+  if (strcmp (pair->string, (gchar *) data ) == 0)
     {
       pair->boole = TRUE;
     }
 }
 
-void idea_add( gchar *title )
-{
-  idea_add_in_position( title, 0 );
-}
-
-static void idea_add_in_position_with_select( gchar *title, gint position, gboolean select )
+static void
+idea_add_in_position_with_select (gchar    *title,
+				  gint      position,
+				  gboolean  select )
 {
   GtkWidget *treeitem;
   struct bool_char_pair pair;
 
   pair.boole = FALSE;
   pair.string = title;
-      
-  if ( ideas )
+
+  if (ideas)
     {
-      g_list_foreach( GTK_TREE( ideas->tree )->children, check_needed, &pair );
-      
-      if ( ! pair.boole )
+      g_list_foreach (GTK_TREE (ideas->tree)->children, check_needed, &pair);
+
+      if (! pair.boole)
 	{
-	  treeitem = gtk_tree_item_new_with_label( title );
-	  if ( position < 0 )
-	    gtk_tree_append( GTK_TREE( ideas->tree ), treeitem );
+	  treeitem = gtk_tree_item_new_with_label (title);
+	  if (position < 0)
+	    gtk_tree_append (GTK_TREE (ideas->tree), treeitem);
 	  else
-	    gtk_tree_insert( GTK_TREE( ideas->tree ), treeitem, position );
-	  
-	  gtk_signal_connect( GTK_OBJECT( treeitem ),
+	    gtk_tree_insert (GTK_TREE (ideas->tree), treeitem, position);
+
+	  gtk_signal_connect (GTK_OBJECT (treeitem),
 			      "button_press_event",
-			      GTK_SIGNAL_FUNC( open_or_raise_callback ),
-			      NULL );
-	  
-	  docindex_cell_configure_drop_on_widget( treeitem );
-	  
-	  gtk_widget_show( treeitem );
-	  
-	  if ( select )
-	    gtk_tree_select_item( GTK_TREE( ideas->tree ), gtk_tree_child_position( GTK_TREE( ideas->tree ), treeitem ) );
+			      GTK_SIGNAL_FUNC (open_or_raise_callback),
+			      NULL);
+
+	  docindex_cell_configure_drop_on_widget (treeitem);
+
+	  gtk_widget_show (treeitem);
+
+	  if (select)
+	    gtk_tree_select_item (GTK_TREE (ideas->tree),
+				  gtk_tree_child_position (GTK_TREE (ideas->tree ), treeitem));
 	}
     }
   else
     {
-      if( ! idea_list )
+      if (! idea_list)
 	{
 	  FILE *fp = NULL;
 	  gchar *desktopfile;
-	  
+
 	  /* open persistant desktop file. */
 	  desktopfile = gimp_personal_rc_file ("ideas");
-	  fp = fopen( desktopfile, "r" );
-	  g_free( desktopfile );
-	  
+	  fp = fopen (desktopfile, "r");
+	  g_free (desktopfile);
+
 	  /* Read in persistant desktop information. */
-	  if ( fp )
-	    {	  
+	  if (fp)
+	    {  
 	      gchar *title;
 	      gint length;
 
-	      x = getinteger( fp );
-	      y = getinteger( fp );
-	      width = getinteger( fp );
-	      height = getinteger( fp );
+	      x      = getinteger (fp);
+	      y      = getinteger (fp);
+	      width  = getinteger (fp);
+	      height = getinteger (fp);
 
-	      clear_white( fp );
-	  
-	      while ( ! feof( fp ) && !ferror( fp ) )
+	      clear_white (fp);
+
+	      while (!feof (fp) && !ferror (fp))
 		{
-		  length = getinteger( fp );
-		  title = g_malloc0( length + 1 );
-		  title[fread( title, 1, length, fp )] = 0;
-		  idea_list = g_list_append( idea_list, g_strdup( title ) );
-		  g_free( title );
-		  clear_white( fp );
+		  length = getinteger (fp);
+		  title = g_malloc0 (length + 1);
+		  title[fread (title, 1, length, fp)] = 0;
+		  idea_list = g_list_append (idea_list, g_strdup (title));
+		  g_free (title);
+		  clear_white (fp);
 		}
-	      fclose( fp );
+	      fclose (fp);
 	    }
 	}
 
-      g_list_foreach( idea_list, check_needed_list, &pair );
-      
-      if ( ! pair.boole )
+      g_list_foreach (idea_list, check_needed_list, &pair);
+
+      if (! pair.boole)
 	{
-	  if ( position < 0 )
-	    idea_list = g_list_append( idea_list, g_strdup( title ) );
+	  if (position < 0)
+	    idea_list = g_list_append (idea_list, g_strdup (title));
 	  else
-	    idea_list = g_list_insert( idea_list, g_strdup( title ), position );
+	    idea_list = g_list_insert (idea_list, g_strdup (title), position);
 	}
     }
 }
 
-void idea_add_in_position( gchar *title, gint position )
+void
+idea_add (gchar *title)
 {
-  idea_add_in_position_with_select( title, position, TRUE );
+  idea_add_in_position (title, 0);
 }
 
-static gint idea_move( GtkWidget *widget, gint distance, gboolean select )
+void
+idea_add_in_position (gchar *title,
+		      gint   position)
 {
-  gint orig_position = g_list_index( GTK_TREE( ideas->tree )->children, widget );
+  idea_add_in_position_with_select (title, position, TRUE);
+}
+
+static gint
+idea_move (GtkWidget *widget,
+	   gint       distance,
+	   gboolean   select)
+{
+  gint orig_position = g_list_index (GTK_TREE (ideas->tree)->children, widget);
   gint position = orig_position + distance;
   gchar *title;
-			  
-  if( position < 0 )
+
+  if (position < 0)
     position = 0;
-  if ( position >= g_list_length( GTK_TREE( ideas->tree )->children ) )
-    position = g_list_length( GTK_TREE( ideas->tree )->children ) - 1;
-  if ( position != orig_position )
+
+  if (position >= g_list_length (GTK_TREE (ideas->tree)->children))
+    position = g_list_length (GTK_TREE (ideas->tree)->children) - 1;
+
+  if (position != orig_position)
     {
-      title = g_strdup( GTK_LABEL( GTK_BIN( widget )->child )->label );
-      gtk_container_remove( GTK_CONTAINER( ideas->tree ), widget );
-      idea_add_in_position_with_select( title, position, select );
-      g_free( title ); 
+      title = g_strdup (GTK_LABEL (GTK_BIN (widget)->child )->label);
+      gtk_container_remove (GTK_CONTAINER (ideas->tree), widget);
+      idea_add_in_position_with_select (title, position, select);
+      g_free (title); 
    }
+
   return position - orig_position;
 }
 
-static void idea_remove( GtkWidget *widget )
+static void
+idea_remove (GtkWidget *widget)
 {
-  gint position = g_list_index( GTK_TREE( ideas->tree )->children, widget );
-  gtk_container_remove( GTK_CONTAINER( ideas->tree ), widget );
-  if ( g_list_length( GTK_TREE( ideas->tree )->children ) - 1 < position )
-    position = g_list_length( GTK_TREE( ideas->tree )->children ) - 1;
-  gtk_tree_select_item( GTK_TREE( ideas->tree ), position );  
+  gint position = g_list_index (GTK_TREE (ideas->tree )->children, widget);
+
+  gtk_container_remove (GTK_CONTAINER (ideas->tree), widget);
+
+  if (g_list_length (GTK_TREE (ideas->tree)->children) - 1 < position)
+    position = g_list_length (GTK_TREE (ideas->tree)->children) - 1;
+
+  gtk_tree_select_item (GTK_TREE (ideas->tree), position);  
 }
 
-void idea_up_callback( GtkWidget *widget, gpointer data )
+void
+idea_up_callback (GtkWidget *widget,
+		  gpointer   data)
 {
   GtkWidget *selected;
-  if ( GTK_TREE( ideas->tree )->selection )
+
+  if (GTK_TREE (ideas->tree)->selection)
     {
-      selected = GTK_TREE( ideas->tree )->selection->data;
-      if ( idea_move( selected, -1, TRUE ) != -1 )
-	gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, _("This file cannot be moved up.") );
+      selected = GTK_TREE (ideas->tree)->selection->data;
+      if (idea_move (selected, -1, TRUE) != -1)
+	gtk_statusbar_push (GTK_STATUSBAR (ideas->status), ideas->contextid,
+			    _("This file cannot be moved up."));
     }
   else
-    gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, _("There's no selection to move up.") );
+    gtk_statusbar_push (GTK_STATUSBAR (ideas->status), ideas->contextid,
+			_("There's no selection to move up."));
 }
 
-void idea_down_callback( GtkWidget *widget, gpointer data )
+void
+idea_down_callback (GtkWidget *widget,
+		    gpointer   data)
 {
   GtkWidget *selected;
-  if ( GTK_TREE( ideas->tree )->selection )
+
+  if (GTK_TREE (ideas->tree)->selection)
     {
-      selected = GTK_TREE( ideas->tree )->selection->data;
-      if ( idea_move( selected, 1, TRUE ) != 1 )
-	gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, _("This file cannot be moved down.") );
+      selected = GTK_TREE (ideas->tree)->selection->data;
+      if (idea_move (selected, 1, TRUE) != 1)
+	gtk_statusbar_push (GTK_STATUSBAR (ideas->status), ideas->contextid,
+			    _("This file cannot be moved down."));
     }
   else
-    gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, _("There's no selection to move down.") );
+    gtk_statusbar_push (GTK_STATUSBAR (ideas->status), ideas->contextid,
+			_("There's no selection to move down."));
 }
 
-void idea_remove_callback( GtkWidget *widget, gpointer data )
+void
+idea_remove_callback (GtkWidget *widget,
+		      gpointer   data)
 {
   GtkWidget *selected;
-  if ( GTK_TREE( ideas->tree )->selection )
+
+  if (GTK_TREE (ideas->tree)->selection)
     {
-      selected = GTK_TREE( ideas->tree )->selection->data;
-      idea_remove( selected );
+      selected = GTK_TREE (ideas->tree)->selection->data;
+      idea_remove (selected);
     }
   else
-    gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, _("There's no selection to remove.") );
+    gtk_statusbar_push (GTK_STATUSBAR (ideas->status), ideas->contextid,
+			_("There's no selection to remove."));
 }
 
 void
 close_idea_window( void )
 {
-  idea_hide_callback( NULL, NULL );
+  idea_hide_callback (NULL, NULL);
 }

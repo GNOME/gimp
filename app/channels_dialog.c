@@ -1085,13 +1085,13 @@ channels_dialog_drag_new_channel_callback (GtkWidget      *widget,
 					   gint            y,
 					   guint           time)
 {
-  GtkWidget     *src_widget;
-  ChannelWidget *src;
-
+  GtkWidget *src_widget;
   gboolean return_val = FALSE;
 
   if ((src_widget = gtk_drag_get_source_widget (context)))
     {
+      ChannelWidget *src;
+
       src
         = (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (src_widget));
 
@@ -1149,13 +1149,13 @@ channels_dialog_drag_duplicate_channel_callback (GtkWidget      *widget,
 						 gint            y,
 						 guint           time)
 {
-  GtkWidget     *src_widget;
-  ChannelWidget *src;
-
+  GtkWidget *src_widget;
   gboolean return_val = FALSE;
 
   if ((src_widget = gtk_drag_get_source_widget (context)))
     {
+      ChannelWidget *src;
+
       src
         = (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (src_widget));
 
@@ -1180,13 +1180,13 @@ channels_dialog_drag_channel_to_sel_callback (GtkWidget      *widget,
 					      gint            y,
 					      guint           time)
 {
-  GtkWidget     *src_widget;
-  ChannelWidget *src;
-
+  GtkWidget *src_widget;
   gboolean return_val = FALSE;
 
   if ((src_widget = gtk_drag_get_source_widget (context)))
     {
+      ChannelWidget *src;
+
       src
         = (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (src_widget));
 
@@ -1211,13 +1211,13 @@ channels_dialog_drag_delete_channel_callback (GtkWidget      *widget,
 					      gint            y,
 					      guint           time)
 {
-  GtkWidget     *src_widget;
-  ChannelWidget *src;
-
+  GtkWidget *src_widget;
   gboolean return_val = FALSE;
 
   if ((src_widget = gtk_drag_get_source_widget (context)))
     {
+      ChannelWidget *src;
+
       src
         = (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (src_widget));
 
@@ -1513,7 +1513,8 @@ channel_widget_drag_begin_callback (GtkWidget      *widget,
     (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
   gimp_dnd_set_drawable_preview_icon (widget, context,
-				      GIMP_DRAWABLE (channel_widget->channel));
+				      GIMP_DRAWABLE (channel_widget->channel),
+				      channel_widget->channel_preview->style->black_gc);
 }
 
 static gboolean
@@ -1860,7 +1861,8 @@ channel_widget_preview_events (GtkWidget *widget,
 	      valid = GIMP_DRAWABLE(channel_widget->channel)->preview_valid;
 	      break;
 	    default:
-	      valid = gimage_preview_valid (channel_widget->gimage, channel_widget->type);
+	      valid = gimage_preview_valid (channel_widget->gimage,
+					    channel_widget->type);
 	      break;
 	    }
 
@@ -2238,7 +2240,8 @@ channel_widget_channel_flush (GtkWidget *widget,
       update_preview = !GIMP_DRAWABLE(channel_widget->channel)->preview_valid;
       break;
     default:
-      update_preview = !gimage_preview_valid (channel_widget->gimage, channel_widget->type);
+      update_preview = !gimage_preview_valid (channel_widget->gimage,
+					      channel_widget->type);
       break;
     }
 

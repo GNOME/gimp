@@ -1,4 +1,3 @@
-
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -16,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "drawable.h"
 #include "drawable_pvt.h"
 #include "palette.h"
@@ -26,61 +24,68 @@
 
 #include "libgimp/gimpintl.h"
 
-int
+gint
 drawable_ID (GimpDrawable *drawable)
 {
   if (drawable)
     return drawable->ID;
   else
-    g_warning("drawable_ID called on a NULL pointer");
+    g_warning ("drawable_ID called on a NULL pointer");
+
   return 0;
 }
 
 void
 drawable_fill (GimpDrawable *drawable,
-	       GimpFillType fill_type)
+	       GimpFillType  fill_type)
 {
-  guchar r,g,b,a;
+  guchar r, g, b, a;
 
-  a=255;
+  a = 255;
+
   switch (fill_type)
     {
     case FOREGROUND_FILL:
-      palette_get_foreground(&r, &g, &b);
+      palette_get_foreground (&r, &g, &b);
       break;
-      
+
     case BACKGROUND_FILL:
-      palette_get_background(&r, &g, &b);
+      palette_get_background (&r, &g, &b);
       break;
-      
+
     case WHITE_FILL:
-      r=g=b=255;
+      r = g = b = 255;
       break;
-      
+
     case TRANSPARENT_FILL:
-      a=r=g=b=0;
+      a = r = g = b = 0;
       break;
-      
+
     case NO_FILL:
       return;
-      
+
     default:
       g_warning (_("drawable_fill called with unknown fill type"));
-      a=r=g=b=0;
+      a = r = g = b = 0;
       break;
     }
-  gimp_drawable_fill(drawable,r,g,b,a);
+
+  gimp_drawable_fill (drawable,r,g,b,a);
   
   drawable_update (drawable, 0, 0,
-		   gimp_drawable_width (drawable),
+		   gimp_drawable_width  (drawable),
 		   gimp_drawable_height (drawable));
 }
 
 void
-drawable_update (GimpDrawable *drawable, int x, int y, int w, int h)
+drawable_update (GimpDrawable *drawable,
+		 gint          x,
+		 gint          y,
+		 gint          w,
+		 gint          h)
 {
   GimpImage *gimage;
-  int offset_x, offset_y;
+  gint offset_x, offset_y;
 
   if (! drawable)
     return;
@@ -99,8 +104,12 @@ drawable_update (GimpDrawable *drawable, int x, int y, int w, int h)
 
 void
 drawable_apply_image (GimpDrawable *drawable, 
-		      int x1, int y1, int x2, int y2, 
-		      TileManager *tiles, int sparse)
+		      gint          x1,
+		      gint          y1,
+		      gint          x2,
+		      gint          y2, 
+		      TileManager  *tiles,
+		      gint          sparse)
 {
   if (drawable)
     {
@@ -112,4 +121,3 @@ drawable_apply_image (GimpDrawable *drawable,
 			     x1, y1, x2, y2, tiles, sparse);
     }
 }
-

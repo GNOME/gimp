@@ -32,7 +32,8 @@ enum
   GIMP_DND_TYPE_CHANNEL,
   GIMP_DND_TYPE_LAYER_MASK,
   GIMP_DND_TYPE_COMPONENT,
-  GIMP_DND_TYPE_PATH
+  GIMP_DND_TYPE_PATH,
+  GIMP_DND_TYPE_COLOR
 };
 
 #define GIMP_TARGET_URI_LIST \
@@ -62,6 +63,9 @@ enum
 #define GIMP_TARGET_PATH \
         { "GIMP_PATH", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_PATH }
 
+#define GIMP_TARGET_COLOR \
+        { "application/x-color", 0, GIMP_DND_TYPE_COLOR }
+
 typedef enum
 {
   GIMP_DROP_NONE,
@@ -71,6 +75,7 @@ typedef enum
 
 void  gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 					  GdkDragContext *context,
-					  GimpDrawable   *drawable);
+					  GimpDrawable   *drawable,
+					  GdkGC          *gc);
 
 #endif /* __GIMP_DND_H__ */

@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
@@ -36,7 +35,7 @@
 #include "tile_manager_pvt.h"		/* ick. */
 
 void
-floating_sel_attach (Layer *layer,
+floating_sel_attach (Layer        *layer,
 		     GimpDrawable *drawable)
 {
   GImage *gimage;
@@ -52,14 +51,17 @@ floating_sel_attach (Layer *layer,
       floating_sel_anchor (gimage_floating_sel (gimage));
 
       /*  if we were pasting to the old floating selection, paste now to the drawable  */
-      if (drawable == GIMP_DRAWABLE(floating_sel))
+      if (drawable == GIMP_DRAWABLE (floating_sel))
 	drawable = gimage_active_drawable (gimage);
     }
 
   /*  set the drawable and allocate a backing store  */
   layer->preserve_trans = TRUE;
   layer->fs.drawable = drawable;
-  layer->fs.backing_store = tile_manager_new (GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, drawable_bytes (drawable));
+  layer->fs.backing_store =
+    tile_manager_new (GIMP_DRAWABLE (layer)->width,
+		      GIMP_DRAWABLE (layer)->height,
+		      drawable_bytes (drawable));
 
   /*  because setting the sensitivity in the layers_dialog lock call redraws the
    *  previews, we need to lock the dialogs before the floating sel is actually added.
@@ -79,7 +81,7 @@ floating_sel_remove (Layer *layer)
 {
   GImage *gimage;
 
-  if (! (gimage = drawable_gimage ( (layer->fs.drawable))))
+  if (! (gimage = drawable_gimage (layer->fs.drawable)))
     return;
 
   /*  store the affected area from the drawable in the backing store  */
@@ -89,7 +91,7 @@ floating_sel_remove (Layer *layer)
    *  because it will not be done until the floating selection is removed,
    *  at which point the obscured drawable's preview will not be declared invalid
    */
-  drawable_invalidate_preview (GIMP_DRAWABLE(layer));
+  drawable_invalidate_preview (GIMP_DRAWABLE (layer));
 
   /*  remove the layer from the gimage  */
   gimage_remove_layer (gimage, layer);
@@ -100,7 +102,7 @@ floating_sel_anchor (Layer *layer)
 {
   GImage *gimage;
 
-  if (! (gimage = drawable_gimage (GIMP_DRAWABLE(layer))))
+  if (! (gimage = drawable_gimage (GIMP_DRAWABLE (layer))))
     return;
   if (! layer_is_floating_sel (layer))
     {
@@ -115,8 +117,11 @@ floating_sel_anchor (Layer *layer)
   floating_sel_relax (layer, TRUE);
 
   /*  Composite the floating selection contents  */
-  floating_sel_composite (layer, GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y,
-			  GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
+  floating_sel_composite (layer,
+			  GIMP_DRAWABLE (layer)->offset_x,
+			  GIMP_DRAWABLE (layer)->offset_y,
+			  GIMP_DRAWABLE (layer)->width,
+			  GIMP_DRAWABLE (layer)->height, TRUE);
 
   /*  remove the floating selection  */
   gimage_remove_layer (gimage, layer);
@@ -129,24 +134,22 @@ floating_sel_anchor (Layer *layer)
 }
 
 void
-floating_sel_reset (layer)
-     Layer *layer;
+floating_sel_reset (Layer *layer)
 {
   GImage *gimage;
 
-  if (! (gimage = drawable_gimage (GIMP_DRAWABLE(layer))))
+  if (! (gimage = drawable_gimage (GIMP_DRAWABLE (layer))))
     return;
 
   /*  set the underlying drawable to active  */
-  if (drawable_layer ( (layer->fs.drawable)))
+  if (GIMP_IS_LAYER (layer->fs.drawable))
     gimage_set_active_layer (gimage, GIMP_LAYER (layer->fs.drawable));
-  else if (GIMP_IS_LAYER_MASK(layer->fs.drawable))
-	  gimage_set_active_layer (gimage,
-				   GIMP_LAYER_MASK(layer->fs.drawable)
-				   ->layer);
-  else if (drawable_channel ( (layer->fs.drawable)))
+  else if (GIMP_IS_LAYER_MASK (layer->fs.drawable))
+    gimage_set_active_layer (gimage,
+			     GIMP_LAYER_MASK (layer->fs.drawable)->layer);
+  else if (GIMP_IS_CHANNEL (layer->fs.drawable))
     {
-      gimage_set_active_channel (gimage, GIMP_CHANNEL(layer->fs.drawable));
+      gimage_set_active_channel (gimage, GIMP_CHANNEL (layer->fs.drawable));
       if (gimage->layers)
 	gimage->active_layer = (((Layer *) gimage->layer_stack->data));
       else
@@ -163,12 +166,11 @@ floating_sel_to_layer (Layer *layer)
 
   GImage *gimage;
 
-  if (! (gimage = drawable_gimage (GIMP_DRAWABLE(layer))))
+  if (! (gimage = drawable_gimage (GIMP_DRAWABLE (layer))))
     return;
 
   /*  Check if the floating layer belongs to a channel...  */
-  if (drawable_channel (layer->fs.drawable) ||
-      drawable_layer_mask (layer->fs.drawable))
+  if (GIMP_IS_CHANNEL (layer->fs.drawable))
     {
       g_message (_("Cannot create a new layer from the floating\n"
 		 "selection because it belongs to a\n"
@@ -177,7 +179,11 @@ floating_sel_to_layer (Layer *layer)
     }
 
   /*  restore the contents of the drawable  */
-  floating_sel_restore (layer, GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+  floating_sel_restore (layer,
+			GIMP_DRAWABLE (layer)->offset_x,
+			GIMP_DRAWABLE (layer)->offset_y,
+			GIMP_DRAWABLE (layer)->width,
+			GIMP_DRAWABLE (layer)->height);
 
   /*  determine whether the resulting layer needs an update  */
   drawable_offsets (layer->fs.drawable, &off_x, &off_y);
@@ -187,11 +193,11 @@ floating_sel_to_layer (Layer *layer)
   /*  update the fs drawable--this updates the gimage composite preview
    *  as well as the underlying drawable's
    */
-  drawable_invalidate_preview (GIMP_DRAWABLE(layer));
+  drawable_invalidate_preview (GIMP_DRAWABLE (layer));
 
   /*  allocate the undo structure  */
-  fsu = (FStoLayerUndo *) g_malloc (sizeof (FStoLayerUndo));
-  fsu->layer = layer;
+  fsu = g_new (FStoLayerUndo, 1);
+  fsu->layer    = layer;
   fsu->drawable = layer->fs.drawable;
 
   undo_push_fs_to_layer (gimage, fsu);
@@ -202,7 +208,7 @@ floating_sel_to_layer (Layer *layer)
   /*  Set pointers  */
   layer->fs.drawable = NULL;
   gimage->floating_sel = NULL;
-  GIMP_DRAWABLE(layer)->visible = TRUE;
+  GIMP_DRAWABLE (layer)->visible = TRUE;
 
   /*  if the floating selection exceeds the attached layer's extents,
       update the new layer  */
@@ -401,7 +407,7 @@ floating_sel_composite (Layer *layer,
 	   *  underneath having preserve transparency on, and disallowing
 	   *  the composited floating selection from being shown
 	   */
-	  if (drawable_layer (layer->fs.drawable))
+	  if (GIMP_IS_LAYER (layer->fs.drawable))
 	    {
 	      d_layer = GIMP_LAYER (layer->fs.drawable);
 	      if ((preserve_trans = d_layer->preserve_trans))

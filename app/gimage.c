@@ -218,9 +218,9 @@ gimage_set_layer_mask_apply (GImage    *gimage,
 
 
 void
-gimage_set_layer_mask_edit (GImage *gimage, 
-			    Layer  *layer, 
-			    int     edit)
+gimage_set_layer_mask_edit (GImage   *gimage, 
+			    Layer    *layer, 
+			    gboolean  edit)
 {
   /*  find the layer  */
   if (!layer)

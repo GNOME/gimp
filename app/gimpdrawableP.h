@@ -27,41 +27,41 @@ struct _GimpDrawable
 {
   GimpObject data;
 
-  char *name;				/* name of drawable */
-  TileManager *tiles;			/* tiles for drawable data */
-  int visible;				/* controls visibility */
-  int width, height;			/* size of drawable */
-  int offset_x, offset_y;		/* offset of layer in image */
+  gchar         *name;                  /* name of drawable               */
+  TileManager   *tiles;                 /* tiles for drawable data        */
+  gboolean       visible;               /* controls visibility            */
+  gint           width, height;		/* size of drawable               */
+  gint           offset_x, offset_y;	/* offset of layer in image       */
 
-  int bytes;				/* bytes per pixel */
-  int dirty;				/* dirty bit */
-  int ID;				/* provides a unique ID */
-  guint32 tattoo;			/* provides a perminant ID */
-  GimpImage* gimage;			/* gimage owner */
-  GimpImageType type;			/* type of drawable */
-  int has_alpha;			/* drawable has alpha */
+  gint           bytes;			/* bytes per pixel                */
+  gboolean       dirty;			/* dirty bit                      */
+  gint           ID;			/* provides a unique ID           */
+  guint32        tattoo;		/* provides a perminant ID        */
+  GimpImage     *gimage;		/* gimage owner                   */
+  GimpImageType  type;			/* type of drawable               */
+  gboolean       has_alpha;		/* drawable has alpha             */
 
-  ParasiteList *parasites;              /* Plug-in parasite data   */
+  ParasiteList  *parasites;             /* Plug-in parasite data          */
 
   /*  Preview variables  */
-  GSList *preview_cache;	       	/* preview caches of the channel */
-  int preview_valid;			/* is the preview valid? */
+  GSList        *preview_cache;	       	/* preview caches of the channel  */
+  gboolean       preview_valid;		/* is the preview valid?          */
 };
 
 struct _GimpDrawableClass
 {
   GimpObjectClass parent_class;
 
-  void (*invalidate_preview) (GtkObject *);
+  void (* invalidate_preview) (GtkObject *);
 };
 
 typedef struct _GimpDrawableClass GimpDrawableClass;
 
-#define GIMP_DRAWABLE_CLASS(klass)          (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE, GimpDrawableClass))
+#define GIMP_DRAWABLE_CLASS(klass)     (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE, GimpDrawableClass))
 
-#define GIMP_IS_DRAWABLE_CLASS(klass)       (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE))
+#define GIMP_IS_DRAWABLE_CLASS(klass)  (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE))
 
-void gimp_drawable_configure (GimpDrawable *, GimpImage*,
-			      gint, gint, GimpImageType, gchar*);
+void gimp_drawable_configure (GimpDrawable *, GimpImage *,
+			      gint, gint, GimpImageType, gchar *);
 
 #endif /* __GIMPDRAWABLEP_H__ */

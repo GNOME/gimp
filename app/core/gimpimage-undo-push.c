@@ -1391,10 +1391,10 @@ undo_pop_layer_mask (GImage *gimage,
       (state == REDO && lmu->undo_type == 1))
     {
       /*  remove the layer mask  */
-      lmu->layer->mask = NULL;
-      lmu->layer->apply_mask = 0;
-      lmu->layer->edit_mask = 0;
-      lmu->layer->show_mask = 0;
+      lmu->layer->mask       = NULL;
+      lmu->layer->apply_mask = FALSE;
+      lmu->layer->edit_mask  = FALSE;
+      lmu->layer->show_mask  = FALSE;
 
       /*  if this is redoing a remove operation &
        *  the mode of application was DISCARD or
@@ -1407,10 +1407,10 @@ undo_pop_layer_mask (GImage *gimage,
   /*  restore layer  */
   else
     {
-      lmu->layer->mask = lmu->mask;
+      lmu->layer->mask       = lmu->mask;
       lmu->layer->apply_mask = lmu->apply_mask;
-      lmu->layer->edit_mask = lmu->edit_mask;
-      lmu->layer->show_mask = lmu->show_mask;
+      lmu->layer->edit_mask  = lmu->edit_mask;
+      lmu->layer->show_mask  = lmu->show_mask;
 
       gimage_set_layer_mask_edit (gimage, lmu->layer, lmu->edit_mask);
 

@@ -15,30 +15,32 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #ifndef __COLOR_AREA_H__
 #define __COLOR_AREA_H__
 
 /*
- *  Functions
- */
-GtkWidget * color_area_create (int        width,
-			       int        height,
-			       GdkPixmap *default_pixmap,
-			       GdkPixmap *swap_pixmap);
-void        color_area_update (void);
-
-/* Exported for use by color_select */
-void
-color_area_draw_rect (GdkDrawable *drawable,
-		      GdkGC *gc,
-		      gint x, gint y, gint width, gint height,
-		      unsigned char r, unsigned char g, unsigned char b);
-
-/*
  *  Global variables
  */
-extern int active_color;  /*  foreground (= 0) or background (= 1) */
+extern gint active_color;  /*  foreground (= 0) or background (= 1) */
 
+/*
+ *  Functions
+ */
+GtkWidget * color_area_create    (gint       width,
+			          gint       height,
+			          GdkPixmap *default_pixmap,
+				  GdkPixmap *swap_pixmap);
+void        color_area_update    (void);
+
+/* Exported for use by color_select */
+void        color_area_draw_rect (GdkDrawable *drawable,
+				  GdkGC       *gc,
+				  gint         x,
+				  gint         y,
+				  gint         width,
+				  gint         height,
+				  guchar       r,
+				  guchar       g,
+				  guchar       b);
 
 #endif  /*  __COLOR_AREA_H__  */
