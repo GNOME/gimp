@@ -5,12 +5,14 @@
 <!ELEMENT tip (welcome*, thetip+)>
 <!ATTLIST tip level (start|beginner|intermediate|advanced) #REQUIRED>
 
-<!ELEMENT welcome (#PCDATA|b|big|tt)*>
+<!ENTITY % markup "(#PCDATA|b|big|tt)*">
+
+<!ELEMENT b %markup;>
+<!ELEMENT big %markup;>
+<!ELEMENT tt %markup;>
+
+<!ELEMENT welcome %markup;>
 <!ATTLIST welcome xml:lang CDATA #IMPLIED>
 
-<!ELEMENT thetip (#PCDATA|b|big|tt)*>
+<!ELEMENT thetip %markup;>
 <!ATTLIST thetip xml:lang CDATA #IMPLIED>
-
-<!ELEMENT b (#PCDATA|big|tt)*>
-<!ELEMENT big (#PCDATA|b|tt)*>
-<!ELEMENT tt (#PCDATA|b|big)*>

@@ -1,13 +1,18 @@
 2002-03-09  Sven Neumann  <sven@gimp.org>
 
-	* Makefile.am: fixed the dist-hook rule.
+	* Makefile.am: added update-po rule, improved dist-hook rule.
+	Removed the the old gimp_tips.*.txt files from EXTRA_DIST.
+
+	* gimp-tips.dtd: improved.
+
+	* update.sh: validate gimp-tips.xml after regeneration.
 
 2002-03-08  Sven Neumann  <sven@gimp.org>
 
 	* gimp-tips.dtd: new file defining the GIMP tips document type.
 
 	* Makefile.am: added a dist-hook that attempts to validate
-	gimp-tips.xml using xmllint when building a tarball.
+	gimp-tips.xml using xmllint.
 
 	* gimp-tips.xml.in: specify the DTD. Removed <i> markup tags I
 	accidentally left in there.
