@@ -1,3 +1,9 @@
+2002-11-06  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/png.c: applied patch from Raphael Quinet that
+	untoggles the "Save background color" option for images w/o an
+	alpha channel (#92395).
+
 2002-10-29  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/png.c: Back-ported patch from HEAD to
