@@ -1089,15 +1089,15 @@ msgstr ""
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'net' not found\n"
-msgstr ""
+msgstr "le rappel de signal 'net' requis n'a pas été trouvé\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'query' not found\n"
-msgstr ""
+msgstr "le rappel de signal 'query' requis n'a pas été trouvé\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'run' not found\n"
-msgstr "l'indispensable callback \"run\" n'a pas été trouvé\n"
+msgstr "le rappel de signal 'run' requis n'a pas été trouvé\n"
 
 #: Gimp/Fu.pm:0
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
