@@ -1,19 +1,26 @@
+2003-08-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/iwarp.c (iwarp_frame): fixed handling of
+	drawables without alpha channel (bug #120083).
+
 2003-08-17  Helvetix Victorinox  <helvetix@gimp.org>
 
-	* app/composite/gimp-composite-{mmx,sse,altivec,vis}-{installer,test}.c: regnerated
-	
+	* app/composite/gimp-composite-{mmx,sse,altivec,vis}-installer.c
+	* app/composite/gimp-composite-{mmx,sse,altivec,vis}-test.c:
+	regenerated.
+
 	* app/composite/gimp-composite-sse.c
-	   (gimp_composite_overlay_rgba8_rgba8_rgba8_sse): fixed (rewrote)
+	(gimp_composite_overlay_rgba8_rgba8_rgba8_sse): fixed (rewrote).
+
+	* app/composite/make-installer.py: command line option --iterations
+	to set the number of iterations for a test. command line option
+	--n_ixels to set the number of pixels for a test.
  
-	 * app/composite/make-installer.py:
-	   command line option --iterations to set the number of iterations for a test.
-	   command line option --n_ixels to set the number of pixels for a test.
- 
-	 * app/composite/gimp-composite-mmx.c
-	   (gimp_composite_grain_merge_rgba8_rgba8_rgba8_mmx): fixed (rewrote)
-	   (gimp_composite_overlay_rgba8_rgba8_rgba8_mmx): fixed (rewrote)
-	   (gimp_composite_value_rgba8_rgba8_rgba8_mmx):
-	     new testing shows it to be broken (temporarily removed from use)
+	* app/composite/gimp-composite-mmx.c
+	(gimp_composite_grain_merge_rgba8_rgba8_rgba8_mmx): fixed (rewrote).
+	(gimp_composite_overlay_rgba8_rgba8_rgba8_mmx): fixed (rewrote).
+	(gimp_composite_value_rgba8_rgba8_rgba8_mmx): new testing shows it to
+	be broken (temporarily removed from use).
 
 2003-08-17  Sven Neumann  <sven@gimp.org>
 

@@ -702,23 +702,18 @@ iwarp_frame (void)
 		  if (fabs(xv) > 0.0 || fabs(yv) > 0.0)
 		    {
 		      iwarp_get_point (pre2img * xv + col,
-				       pre2img *yv + row,
+				       pre2img * yv + row,
 				       color);
-		      for (i = 0; i < image_bpp; i++)
+		
+                      for (i = 0; i < image_bpp; i++)
 			*dest++ = color[i];
-
-		      if( !layer_alpha )
-		       *dest++ = 255;
-		      
 		    }
 		  else
 		    {
 		      iwarp_get_pixel (col, row, color);
+
 		      for (i = 0; i < image_bpp; i++)
 			*dest++ = color[i];
-
-		      if( !layer_alpha )
-		        *dest++ = 255;
 		    }
 		}
 	      dest_row += dest_rgn.rowstride;
@@ -889,7 +884,7 @@ iwarp_init (void)
   image_bpp = gimp_drawable_bpp (drawable->drawable_id);
   
   if (gimp_drawable_is_layer (drawable->drawable_id))
-    preserve_trans = (gimp_layer_get_preserve_transparency (drawable->drawable_id));
+    preserve_trans = gimp_layer_get_preserve_transparency (drawable->drawable_id);
   else
     preserve_trans = FALSE;
   
@@ -901,18 +896,20 @@ iwarp_init (void)
   dx = (gdouble) sel_width / MAX_PREVIEW_WIDTH;
   dy = (gdouble) sel_height / MAX_PREVIEW_HEIGHT;
   
-  if (dx >dy)
+  if (dx > dy)
     pre2img = dx;
   else
     pre2img = dy;
   
-  if (dx <=1.0 && dy <= 1.0)
+  if (dx <= 1.0 && dy <= 1.0)
     pre2img = 1.0;  
   
   img2pre = 1.0 / pre2img;
-  preview_width = (gint) (sel_width / pre2img);
+
+  preview_width  = (gint) (sel_width  / pre2img);
   preview_height = (gint) (sel_height / pre2img);
-  tile_width = gimp_tile_width ();
+
+  tile_width  = gimp_tile_width ();
   tile_height = gimp_tile_height ();
 
   srcimage = g_new (guchar, preview_width * preview_height * image_bpp);
