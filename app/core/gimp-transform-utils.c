@@ -28,12 +28,12 @@
 
 
 void
-gimp_drawable_transform_matrix_rotate (gint        x1,
-                                       gint        y1,
-                                       gint        x2,
-                                       gint        y2,
-                                       gdouble     angle,
-                                       GimpMatrix3 result)
+gimp_drawable_transform_matrix_rotate (gint         x1,
+                                       gint         y1,
+                                       gint         x2,
+                                       gint         y2,
+                                       gdouble      angle,
+                                       GimpMatrix3 *result)
 {
   gdouble cx;
   gdouble cy;
@@ -48,10 +48,10 @@ gimp_drawable_transform_matrix_rotate (gint        x1,
 }
 
 void
-gimp_drawable_transform_matrix_rotate_center (gdouble     cx,
-                                              gdouble     cy,
-                                              gdouble     angle,
-                                              GimpMatrix3 result)
+gimp_drawable_transform_matrix_rotate_center (gdouble      cx,
+                                              gdouble      cy,
+                                              gdouble      angle,
+                                              GimpMatrix3 *result)
 {
   gimp_matrix3_identity  (result);
   gimp_matrix3_translate (result, -cx, -cy);
@@ -60,15 +60,15 @@ gimp_drawable_transform_matrix_rotate_center (gdouble     cx,
 }
 
 void
-gimp_drawable_transform_matrix_scale (gint        x1,
-                                      gint        y1,
-                                      gint        x2,
-                                      gint        y2,
-                                      gdouble     tx1,
-                                      gdouble     ty1,
-                                      gdouble     tx2,
-                                      gdouble     ty2,
-                                      GimpMatrix3 result)
+gimp_drawable_transform_matrix_scale (gint         x1,
+                                      gint         y1,
+                                      gint         x2,
+                                      gint         y2,
+                                      gdouble      tx1,
+                                      gdouble      ty1,
+                                      gdouble      tx2,
+                                      gdouble      ty2,
+                                      GimpMatrix3 *result)
 {
   gdouble scalex;
   gdouble scaley;
@@ -94,7 +94,7 @@ gimp_drawable_transform_matrix_shear (gint                 x1,
                                       gint                 y2,
                                       GimpOrientationType  orientation,
                                       gdouble              amount,
-                                      GimpMatrix3          result)
+                                      GimpMatrix3         *result)
 {
   gint    width;
   gint    height;
@@ -124,19 +124,19 @@ gimp_drawable_transform_matrix_shear (gint                 x1,
 }
 
 void
-gimp_drawable_transform_matrix_perspective (gint        x1,
-                                            gint        y1,
-                                            gint        x2,
-                                            gint        y2,
-                                            gdouble     tx1,
-                                            gdouble     ty1,
-                                            gdouble     tx2,
-                                            gdouble     ty2,
-                                            gdouble     tx3,
-                                            gdouble     ty3,
-                                            gdouble     tx4,
-                                            gdouble     ty4,
-                                            GimpMatrix3 result)
+gimp_drawable_transform_matrix_perspective (gint         x1,
+                                            gint         y1,
+                                            gint         x2,
+                                            gint         y2,
+                                            gdouble      tx1,
+                                            gdouble      ty1,
+                                            gdouble      tx2,
+                                            gdouble      ty2,
+                                            gdouble      tx3,
+                                            gdouble      ty3,
+                                            gdouble      tx4,
+                                            gdouble      ty4,
+                                            GimpMatrix3 *result)
 {
   GimpMatrix3 matrix;
   gdouble     scalex;
@@ -167,14 +167,14 @@ gimp_drawable_transform_matrix_perspective (gint        x1,
     /*  Is the mapping affine?  */
     if ((dx3 == 0.0) && (dy3 == 0.0))
       {
-        matrix[0][0] = tx2 - tx1;
-        matrix[0][1] = tx4 - tx2;
-        matrix[0][2] = tx1;
-        matrix[1][0] = ty2 - ty1;
-        matrix[1][1] = ty4 - ty2;
-        matrix[1][2] = ty1;
-        matrix[2][0] = 0.0;
-        matrix[2][1] = 0.0;
+        matrix.coeff[0][0] = tx2 - tx1;
+        matrix.coeff[0][1] = tx4 - tx2;
+        matrix.coeff[0][2] = tx1;
+        matrix.coeff[1][0] = ty2 - ty1;
+        matrix.coeff[1][1] = ty4 - ty2;
+        matrix.coeff[1][2] = ty1;
+        matrix.coeff[2][0] = 0.0;
+        matrix.coeff[2][1] = 0.0;
       }
     else
       {
@@ -182,24 +182,24 @@ gimp_drawable_transform_matrix_perspective (gint        x1,
 
         det1 = dx3 * dy2 - dy3 * dx2;
         det2 = dx1 * dy2 - dy1 * dx2;
-        matrix[2][0] = det1 / det2;
+        matrix.coeff[2][0] = det1 / det2;
         det1 = dx1 * dy3 - dy1 * dx3;
-        matrix[2][1] = det1 / det2;
+        matrix.coeff[2][1] = det1 / det2;
 
-        matrix[0][0] = tx2 - tx1 + matrix[2][0] * tx2;
-        matrix[0][1] = tx3 - tx1 + matrix[2][1] * tx3;
-        matrix[0][2] = tx1;
+        matrix.coeff[0][0] = tx2 - tx1 + matrix.coeff[2][0] * tx2;
+        matrix.coeff[0][1] = tx3 - tx1 + matrix.coeff[2][1] * tx3;
+        matrix.coeff[0][2] = tx1;
 
-        matrix[1][0] = ty2 - ty1 + matrix[2][0] * ty2;
-        matrix[1][1] = ty3 - ty1 + matrix[2][1] * ty3;
-        matrix[1][2] = ty1;
+        matrix.coeff[1][0] = ty2 - ty1 + matrix.coeff[2][0] * ty2;
+        matrix.coeff[1][1] = ty3 - ty1 + matrix.coeff[2][1] * ty3;
+        matrix.coeff[1][2] = ty1;
       }
 
-    matrix[2][2] = 1.0;
+    matrix.coeff[2][2] = 1.0;
   }
 
   gimp_matrix3_identity  (result);
   gimp_matrix3_translate (result, -x1, -y1);
   gimp_matrix3_scale     (result, scalex, scaley);
-  gimp_matrix3_mult      (matrix, result);
+  gimp_matrix3_mult      (&matrix, result);
 }

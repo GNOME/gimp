@@ -90,7 +90,7 @@ struct _GimpItemClass
                             gdouble                 center_y,
                             gboolean                clip_result);
   void       (* transform) (GimpItem               *item,
-                            GimpMatrix3             matrix,
+                            const GimpMatrix3      *matrix,
                             GimpTransformDirection  direction,
                             GimpInterpolationType   interpolation_type,
                             gboolean                clip_result,
@@ -165,13 +165,13 @@ void            gimp_item_rotate           (GimpItem       *item,
                                             gdouble         center_x,
                                             gdouble         center_y,
                                             gboolean        flip_result);
-void            gimp_item_transform        (GimpItem       *item,
-                                            GimpMatrix3     matrix,
+void            gimp_item_transform        (GimpItem               *item,
+                                            const GimpMatrix3      *matrix,
                                             GimpTransformDirection  direction,
                                             GimpInterpolationType   interpolation_type,
-                                            gboolean        clip_result,
-                                            GimpProgressFunc  progress_callback,
-                                            gpointer        progress_data);
+                                            gboolean                clip_result,
+                                            GimpProgressFunc        progress_callback,
+                                            gpointer                progress_data);
 
 gint            gimp_item_get_ID           (GimpItem       *item);
 GimpItem      * gimp_item_get_by_ID        (Gimp           *gimp,

@@ -80,38 +80,38 @@ static void       gimp_vectors_rotate       (GimpItem         *item,
                                              gdouble           center_x,
                                              gdouble           center_y,
                                              gboolean          clip_result);
-static void       gimp_vectors_transform    (GimpItem         *item,
-                                             GimpMatrix3       matrix,
-                                             GimpTransformDirection direction,
-                                             GimpInterpolationType  interp_type,
-                                             gboolean          clip_result,
-                                             GimpProgressFunc  progress_callback,
-                                             gpointer          progress_data);
+static void       gimp_vectors_transform    (GimpItem               *item,
+                                             const GimpMatrix3      *matrix,
+                                             GimpTransformDirection  direction,
+                                             GimpInterpolationType   interp_type,
+                                             gboolean                clip_result,
+                                             GimpProgressFunc        progress_callback,
+                                             gpointer                progress_data);
 
-static void       gimp_vectors_real_thaw           (GimpVectors       *vectors);
-static void       gimp_vectors_real_stroke_add     (GimpVectors       *vectors,
-                                                    GimpStroke        *stroke);
-static GimpStroke * gimp_vectors_real_stroke_get   (const GimpVectors *vectors,
-                                                    const GimpCoords  *coord);
+static void       gimp_vectors_real_thaw            (GimpVectors       *vectors);
+static void       gimp_vectors_real_stroke_add      (GimpVectors       *vectors,
+                                                     GimpStroke        *stroke);
+static GimpStroke * gimp_vectors_real_stroke_get    (const GimpVectors *vectors,
+                                                     const GimpCoords  *coord);
 static GimpStroke *gimp_vectors_real_stroke_get_next(const GimpVectors *vectors,
                                                      const GimpStroke  *prev);
-static gdouble gimp_vectors_real_stroke_get_length (const GimpVectors *vectors,
-                                                    const GimpStroke  *prev);
-static GimpAnchor * gimp_vectors_real_anchor_get   (const GimpVectors *vectors,
-                                                    const GimpCoords  *coord,
-                                                    GimpStroke       **ret_stroke);
-static void       gimp_vectors_real_anchor_delete  (GimpVectors       *vectors,
-                                                    GimpAnchor        *anchor);
-static gdouble    gimp_vectors_real_get_length     (const GimpVectors *vectors,
-                                                    const GimpAnchor  *start);
-static gdouble    gimp_vectors_real_get_distance   (const GimpVectors *vectors,
-                                                    const GimpCoords  *coord);
-static gint       gimp_vectors_real_interpolate    (const GimpVectors *vectors,
-                                                    const GimpStroke  *stroke,
-                                                    gdouble            precision,
-                                                    gint               max_points,
-                                                    GimpCoords        *ret_coords);
-static GimpVectors * gimp_vectors_real_make_bezier (const GimpVectors *vectors);
+static gdouble gimp_vectors_real_stroke_get_length  (const GimpVectors *vectors,
+                                                     const GimpStroke  *prev);
+static GimpAnchor * gimp_vectors_real_anchor_get    (const GimpVectors *vectors,
+                                                     const GimpCoords  *coord,
+                                                     GimpStroke       **ret_stroke);
+static void       gimp_vectors_real_anchor_delete   (GimpVectors       *vectors,
+                                                     GimpAnchor        *anchor);
+static gdouble    gimp_vectors_real_get_length      (const GimpVectors *vectors,
+                                                     const GimpAnchor  *start);
+static gdouble    gimp_vectors_real_get_distance    (const GimpVectors *vectors,
+                                                     const GimpCoords  *coord);
+static gint       gimp_vectors_real_interpolate     (const GimpVectors *vectors,
+                                                     const GimpStroke  *stroke,
+                                                     gdouble            precision,
+                                                     gint               max_points,
+                                                     GimpCoords        *ret_coords);
+static GimpVectors * gimp_vectors_real_make_bezier  (const GimpVectors *vectors);
 
 
 /*  private variables  */
@@ -463,7 +463,7 @@ gimp_vectors_rotate (GimpItem         *item,
     }
 
   gimp_drawable_transform_matrix_rotate_center (center_x, center_y, angle,
-                                                matrix);
+                                                &matrix);
 
   vectors = GIMP_VECTORS (item);
 
@@ -482,7 +482,7 @@ gimp_vectors_rotate (GimpItem         *item,
         {
           GimpAnchor *anchor = list2->data;
 
-          gimp_matrix3_transform_point (matrix,
+          gimp_matrix3_transform_point (&matrix,
                                         anchor->position.x,
                                         anchor->position.y,
                                         &anchor->position.x,
@@ -495,7 +495,7 @@ gimp_vectors_rotate (GimpItem         *item,
 
 static void
 gimp_vectors_transform (GimpItem               *item,
-                        GimpMatrix3             matrix,
+                        const GimpMatrix3      *matrix,
                         GimpTransformDirection  direction,
                         GimpInterpolationType   interpolation_type,
                         gboolean                clip_result,

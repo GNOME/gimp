@@ -224,7 +224,7 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
       tr_tool->old_trans_info[i] = 0.0;
     }
 
-  gimp_matrix3_identity (tr_tool->transform);
+  gimp_matrix3_identity (&tr_tool->transform);
 
   tr_tool->use_grid         = TRUE;
   tr_tool->use_center       = TRUE;
@@ -728,24 +728,24 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                   FALSE);
     }
 
+#if 0
   if (tr_tool->type == GIMP_TRANSFORM_TYPE_PATH)
     {
-      GimpMatrix3 tmp_matrix;
-
       if (options->direction == GIMP_TRANSFORM_BACKWARD)
 	{
-	  gimp_matrix3_invert (tr_tool->transform, tmp_matrix);
+          GimpMatrix3  inv_matrix = tr_tool->transform;
+	  
+          gimp_matrix3_invert (&inv_matrix);
+          path_transform_draw_current (tool->gdisp,
+                                       draw_tool, inv_matrix);
 	}
       else
-	{
-	  gimp_matrix3_duplicate (tr_tool->transform, tmp_matrix);
-	}
-
-#if 0
-      path_transform_draw_current (tool->gdisp,
-                                   draw_tool, tmp_matrix);
-#endif
+        {
+          path_transform_draw_current (tool->gdisp,
+                                       draw_tool, tr_tool->transform);
+        }
     }
+#endif
 }
 
 static TileManager *
@@ -768,7 +768,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                   NULL, NULL);
 
   if (gimp_item_get_linked (active_item))
-    gimp_item_linked_transform (active_item, tr_tool->transform,
+    gimp_item_linked_transform (active_item, &tr_tool->transform,
                                 options->direction,
                                 options->interpolation, options->clip,
                                 progress ?
@@ -792,7 +792,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
         ret =
           gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (active_item),
                                                 tr_tool->original,
-                                                tr_tool->transform,
+                                                &tr_tool->transform,
                                                 options->direction,
                                                 options->interpolation,
                                                 clip_result,
@@ -952,20 +952,20 @@ gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
 {
   g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
 
-  gimp_matrix3_transform_point (tr_tool->transform,
+  gimp_matrix3_transform_point (&tr_tool->transform,
 				tr_tool->x1, tr_tool->y1,
 				&tr_tool->tx1, &tr_tool->ty1);
-  gimp_matrix3_transform_point (tr_tool->transform,
+  gimp_matrix3_transform_point (&tr_tool->transform,
 				tr_tool->x2, tr_tool->y1,
 				&tr_tool->tx2, &tr_tool->ty2);
-  gimp_matrix3_transform_point (tr_tool->transform,
+  gimp_matrix3_transform_point (&tr_tool->transform,
 				tr_tool->x1, tr_tool->y2,
 				&tr_tool->tx3, &tr_tool->ty3);
-  gimp_matrix3_transform_point (tr_tool->transform,
+  gimp_matrix3_transform_point (&tr_tool->transform,
 				tr_tool->x2, tr_tool->y2,
 				&tr_tool->tx4, &tr_tool->ty4);
 
-  gimp_matrix3_transform_point (tr_tool->transform,
+  gimp_matrix3_transform_point (&tr_tool->transform,
 				tr_tool->cx, tr_tool->cy,
 				&tr_tool->tcx, &tr_tool->tcy);
 
@@ -979,7 +979,7 @@ gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
 
       for (i = 0; i < k; i++)
 	{
-	  gimp_matrix3_transform_point (tr_tool->transform,
+	  gimp_matrix3_transform_point (&tr_tool->transform,
 					tr_tool->grid_coords[gci],
 					tr_tool->grid_coords[gci + 1],
 					&tr_tool->tgrid_coords[gci],

@@ -687,7 +687,7 @@ gimp_item_rotate (GimpItem         *item,
 
 void
 gimp_item_transform (GimpItem               *item,
-                     GimpMatrix3             matrix,
+                     const GimpMatrix3      *matrix,
                      GimpTransformDirection  direction,
                      GimpInterpolationType   interpolation_type,
                      gboolean                clip_result,

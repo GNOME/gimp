@@ -24,17 +24,19 @@ basic matrix manipulations and tests.
 #GimpVector4
 </para>
 
-<!-- ##### TYPEDEF GimpMatrix3[3][3] ##### -->
+<!-- ##### STRUCT GimpMatrix3 ##### -->
 <para>
 
 </para>
 
+@coeff: 
 
-<!-- ##### TYPEDEF GimpMatrix4[4][4] ##### -->
+<!-- ##### STRUCT GimpMatrix4 ##### -->
 <para>
 
 </para>
 
+@coeff: 
 
 <!-- ##### FUNCTION gimp_matrix3_transform_point ##### -->
 <para>
@@ -127,16 +129,6 @@ basic matrix manipulations and tests.
 </para>
 
 @matrix: 
-@matrix_inv: 
-
-
-<!-- ##### FUNCTION gimp_matrix3_duplicate ##### -->
-<para>
-
-</para>
-
-@src: 
-@target: 
 
 
 <!-- ##### FUNCTION gimp_matrix3_is_diagonal ##### -->

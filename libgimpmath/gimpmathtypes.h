@@ -24,29 +24,12 @@
 
 G_BEGIN_DECLS
 
-
-typedef gdouble GimpMatrix3[3][3];
-typedef gdouble GimpMatrix4[4][4];
+typedef struct _GimpMatrix3 GimpMatrix3;
+typedef struct _GimpMatrix4 GimpMatrix4;
 
 typedef struct _GimpVector2 GimpVector2;
 typedef struct _GimpVector3 GimpVector3;
 typedef struct _GimpVector4 GimpVector4;
-
-struct _GimpVector2
-{
-  gdouble x, y;
-};
-
-struct _GimpVector3
-{
-  gdouble x, y, z;
-};
-
-struct _GimpVector4
-{
-  gdouble x, y, z, w;
-};
-
 
 G_END_DECLS
 

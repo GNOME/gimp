@@ -30,6 +30,21 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+struct _GimpVector2
+{
+  gdouble x, y;
+};
+
+struct _GimpVector3
+{
+  gdouble x, y, z;
+};
+
+struct _GimpVector4
+{
+  gdouble x, y, z, w;
+};
+
 
 /* Two dimensional vector functions */
 /* ================================ */

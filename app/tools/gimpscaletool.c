@@ -398,7 +398,7 @@ gimp_scale_tool_recalc (GimpTransformTool *tr_tool,
                                         tr_tool->trans_info[Y0],
                                         tr_tool->trans_info[X1],
                                         tr_tool->trans_info[Y1],
-                                        tr_tool->transform);
+                                        &tr_tool->transform);
 
   /*  transform the bounding box  */
   gimp_transform_tool_transform_bounding_box (tr_tool);

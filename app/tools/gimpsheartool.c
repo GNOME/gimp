@@ -286,7 +286,7 @@ gimp_shear_tool_recalc (GimpTransformTool *tr_tool,
                                         tr_tool->y2,
                                         tr_tool->trans_info[HORZ_OR_VERT],
                                         amount,
-                                        tr_tool->transform);
+                                        &tr_tool->transform);
 
   /*  transform the bounding box  */
   gimp_transform_tool_transform_bounding_box (tr_tool);

@@ -100,7 +100,7 @@ sample_linear(PixelSurround *surround,
 TileManager *
 gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                       TileManager            *orig_tiles,
-                                      GimpMatrix3             matrix,
+                                      const GimpMatrix3      *matrix,
                                       GimpTransformDirection  direction,
                                       GimpInterpolationType   interpolation_type,
                                       gboolean                clip_result,
@@ -110,8 +110,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   GimpImage     *gimage;
   PixelRegion    destPR;
   TileManager   *new_tiles;
-  GimpMatrix3    m;
-  GimpMatrix3    im;
+  GimpMatrix3    m   = *matrix;
+  GimpMatrix3    inv = *matrix;
   PixelSurround  surround;
 
   gint         x1, y1, x2, y2;        /* target bounding box */
@@ -191,14 +191,12 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       /*  keep the original matrix here, so we dont need to recalculate
        *  the inverse later
        */
-      gimp_matrix3_duplicate (matrix, m);
-      gimp_matrix3_invert (matrix, im);
-      matrix = im;
+      gimp_matrix3_invert (&inv);
     }
   else
     {
       /*  Find the inverse of the transformation matrix  */
-      gimp_matrix3_invert (matrix, m);
+      gimp_matrix3_invert (&m);
     }
 
   tile_manager_get_offsets (orig_tiles, &u1, &v1);
@@ -224,10 +222,10 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       gdouble dx3, dy3;
       gdouble dx4, dy4;
 
-      gimp_matrix3_transform_point (matrix, u1, v1, &dx1, &dy1);
-      gimp_matrix3_transform_point (matrix, u2, v1, &dx2, &dy2);
-      gimp_matrix3_transform_point (matrix, u1, v2, &dx3, &dy3);
-      gimp_matrix3_transform_point (matrix, u2, v2, &dx4, &dy4);
+      gimp_matrix3_transform_point (&inv, u1, v1, &dx1, &dy1);
+      gimp_matrix3_transform_point (&inv, u2, v1, &dx2, &dy2);
+      gimp_matrix3_transform_point (&inv, u1, v2, &dx3, &dy3);
+      gimp_matrix3_transform_point (&inv, u2, v2, &dx4, &dy4);
 
       x1 = ROUND (MIN4 (dx1, dx2, dx3, dx4));
       y1 = ROUND (MIN4 (dy1, dy2, dy3, dy4));
@@ -261,9 +259,9 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 
   dest = g_new (guchar, tile_manager_width (new_tiles) * bytes);
 
-  uinc = m[0][0];
-  vinc = m[1][0];
-  winc = m[2][0];
+  uinc = m.coeff[0][0];
+  vinc = m.coeff[1][0];
+  winc = m.coeff[2][0];
 
   coords = (interpolation_type != GIMP_INTERPOLATION_NONE) ? 5 : 1;
 
@@ -277,30 +275,30 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
         (* progress_callback) (y1, y2, y, progress_data);
 
       /* set up inverse transform steps */
-      tu[0] = uinc * (x1 + 0.5) + m[0][1] * (y + 0.5) + m[0][2] - 0.5;
-      tv[0] = vinc * (x1 + 0.5) + m[1][1] * (y + 0.5) + m[1][2] - 0.5;
-      tw[0] = winc * (x1 + 0.5) + m[2][1] * (y + 0.5) + m[2][2];
+      tu[0] = uinc * (x1 + 0.5) + m.coeff[0][1] * (y + 0.5) + m.coeff[0][2] - 0.5;
+      tv[0] = vinc * (x1 + 0.5) + m.coeff[1][1] * (y + 0.5) + m.coeff[1][2] - 0.5;
+      tw[0] = winc * (x1 + 0.5) + m.coeff[2][1] * (y + 0.5) + m.coeff[2][2];
 
       if (interpolation_type != GIMP_INTERPOLATION_NONE)
         {
           gdouble xx = x1 + 0.5;
           gdouble yy = y + 0.5;
 
-          tu[1] = uinc * (xx - 1) + m[0][1] * (yy    ) + m[0][2] - 0.5;
-          tv[1] = vinc * (xx - 1) + m[1][1] * (yy    ) + m[1][2] - 0.5;
-          tw[1] = winc * (xx - 1) + m[2][1] * (yy    ) + m[2][2];
+          tu[1] = uinc * (xx - 1) + m.coeff[0][1] * (yy    ) + m.coeff[0][2] - 0.5;
+          tv[1] = vinc * (xx - 1) + m.coeff[1][1] * (yy    ) + m.coeff[1][2] - 0.5;
+          tw[1] = winc * (xx - 1) + m.coeff[2][1] * (yy    ) + m.coeff[2][2];
 
-          tu[2] = uinc * (xx    ) + m[0][1] * (yy - 1) + m[0][2] - 0.5;
-          tv[2] = vinc * (xx    ) + m[1][1] * (yy - 1) + m[1][2] - 0.5;
-          tw[2] = winc * (xx    ) + m[2][1] * (yy - 1) + m[2][2];
+          tu[2] = uinc * (xx    ) + m.coeff[0][1] * (yy - 1) + m.coeff[0][2] - 0.5;
+          tv[2] = vinc * (xx    ) + m.coeff[1][1] * (yy - 1) + m.coeff[1][2] - 0.5;
+          tw[2] = winc * (xx    ) + m.coeff[2][1] * (yy - 1) + m.coeff[2][2];
 
-          tu[3] = uinc * (xx + 1) + m[0][1] * (yy    ) + m[0][2] - 0.5;
-          tv[3] = vinc * (xx + 1) + m[1][1] * (yy    ) + m[1][2] - 0.5;
-          tw[3] = winc * (xx + 1) + m[2][1] * (yy    ) + m[2][2];
+          tu[3] = uinc * (xx + 1) + m.coeff[0][1] * (yy    ) + m.coeff[0][2] - 0.5;
+          tv[3] = vinc * (xx + 1) + m.coeff[1][1] * (yy    ) + m.coeff[1][2] - 0.5;
+          tw[3] = winc * (xx + 1) + m.coeff[2][1] * (yy    ) + m.coeff[2][2];
 
-          tu[4] = uinc * (xx    ) + m[0][1] * (yy + 1) + m[0][2] - 0.5;
-          tv[4] = vinc * (xx    ) + m[1][1] * (yy + 1) + m[1][2] - 0.5;
-          tw[4] = winc * (xx    ) + m[2][1] * (yy + 1) + m[2][2];
+          tu[4] = uinc * (xx    ) + m.coeff[0][1] * (yy + 1) + m.coeff[0][2] - 0.5;
+          tv[4] = vinc * (xx    ) + m.coeff[1][1] * (yy + 1) + m.coeff[1][2] - 0.5;
+          tw[4] = winc * (xx    ) + m.coeff[2][1] * (yy + 1) + m.coeff[2][2];
         }
 
       d = dest;
@@ -805,7 +803,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
 
 gboolean
 gimp_drawable_transform_affine (GimpDrawable           *drawable,
-                                GimpMatrix3             matrix,
+                                const GimpMatrix3      *matrix,
                                 GimpTransformDirection  direction,
                                 GimpInterpolationType   interpolation_type,
                                 gboolean                clip_result)

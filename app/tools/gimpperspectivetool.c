@@ -230,7 +230,7 @@ gimp_perspective_tool_recalc (GimpTransformTool *tr_tool,
                                               tr_tool->trans_info[Y2],
                                               tr_tool->trans_info[X3],
                                               tr_tool->trans_info[Y3],
-                                              tr_tool->transform);
+                                              &tr_tool->transform);
 
   /*  transform the bounding box  */
   gimp_transform_tool_transform_bounding_box (tr_tool);
@@ -252,7 +252,7 @@ perspective_info_update (GimpTransformTool *tr_tool)
       for (j = 0; j < 3; j++)
 	{
 	  p += g_snprintf (p, MAX_INFO_BUF - (p - matrix_row_buf[i]),
-			   "%10.3g", tr_tool->transform[i][j]);
+			   "%10.3g", tr_tool->transform.coeff[i][j]);
 	}
     }
 

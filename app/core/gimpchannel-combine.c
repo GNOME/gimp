@@ -83,13 +83,13 @@ static void       gimp_channel_rotate      (GimpItem         *item,
                                             gdouble           center_x,
                                             gdouble           center_y,
                                             gboolean          flip_result);
-static void       gimp_channel_transform   (GimpItem         *item,
-                                            GimpMatrix3       matrix,
-                                            GimpTransformDirection direction,
-                                            GimpInterpolationType  interpolation_type,
-                                            gboolean          clip_result,
-                                            GimpProgressFunc  progress_callback,
-                                            gpointer          progress_data);
+static void       gimp_channel_transform   (GimpItem               *item,
+                                            const GimpMatrix3      *matrix,
+                                            GimpTransformDirection  direction,
+                                            GimpInterpolationType   interpolation_type,
+                                            gboolean                clip_result,
+                                            GimpProgressFunc        progress_callback,
+                                            gpointer                progress_data);
 
 static void       gimp_channel_push_undo   (GimpChannel      *mask,
                                             const gchar      *undo_desc);
@@ -468,7 +468,7 @@ gimp_channel_rotate (GimpItem         *item,
 
 static void
 gimp_channel_transform (GimpItem               *item,
-                        GimpMatrix3             matrix,
+                        const GimpMatrix3      *matrix,
                         GimpTransformDirection  direction,
                         GimpInterpolationType   interpolation_type,
                         gboolean                clip_result,

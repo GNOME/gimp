@@ -172,7 +172,7 @@ perspective_invoker (Gimp     *gimp,
 						  trans_info[Y2],
 						  trans_info[X3],
 						  trans_info[Y3],
-						  matrix);
+						  &matrix);
     
       if (interpolation)
 	interpolation_type = gimp->config->interpolation_type;
@@ -181,7 +181,7 @@ perspective_invoker (Gimp     *gimp,
     
       /* Perspective the selection */
       success = gimp_drawable_transform_affine (drawable,
-						matrix, GIMP_TRANSFORM_FORWARD,
+						&matrix, GIMP_TRANSFORM_FORWARD,
 						interpolation_type, FALSE);
     }
 
@@ -301,7 +301,7 @@ rotate_invoker (Gimp     *gimp,
       /* Assemble the transformation matrix */
       gimp_drawable_transform_matrix_rotate (x1, y1, x2, y2,
 					     angle,
-					     matrix);
+					     &matrix);
     
       if (interpolation)
 	interpolation_type = gimp->config->interpolation_type;
@@ -310,7 +310,7 @@ rotate_invoker (Gimp     *gimp,
     
       /* Rotate the selection */
       success = gimp_drawable_transform_affine (drawable,
-						matrix, GIMP_TRANSFORM_FORWARD,
+						&matrix, GIMP_TRANSFORM_FORWARD,
 						interpolation_type, FALSE);
     }
 
@@ -406,7 +406,7 @@ scale_invoker (Gimp     *gimp,
 						trans_info[Y0],
 						trans_info[X1],
 						trans_info[Y1],
-						matrix);
+						&matrix);
     
 	  if (interpolation)
 	    interpolation_type = gimp->config->interpolation_type;
@@ -415,7 +415,7 @@ scale_invoker (Gimp     *gimp,
     
 	  /* Scale the selection */
 	  success = gimp_drawable_transform_affine (drawable,
-						    matrix, GIMP_TRANSFORM_FORWARD,
+						    &matrix, GIMP_TRANSFORM_FORWARD,
 						    interpolation_type, FALSE);
 	}
       else
@@ -525,7 +525,7 @@ shear_invoker (Gimp     *gimp,
       gimp_drawable_transform_matrix_shear (x1, y1, x2, y2,
 					    shear_type,
 					    magnitude,
-					    matrix);
+					    &matrix);
     
       if (interpolation)
 	interpolation_type = gimp->config->interpolation_type;
@@ -534,7 +534,7 @@ shear_invoker (Gimp     *gimp,
     
       /* Shear the selection */
       success = gimp_drawable_transform_affine (drawable,
-						matrix, GIMP_TRANSFORM_FORWARD,
+						&matrix, GIMP_TRANSFORM_FORWARD,
 						interpolation_type, FALSE);
     }
 
@@ -636,11 +636,11 @@ transform_2d_invoker (Gimp     *gimp,
   if (success)
     {
       /* Assemble the transformation matrix */
-      gimp_matrix3_identity  (matrix);
-      gimp_matrix3_translate (matrix, -source_x, -source_y);
-      gimp_matrix3_scale     (matrix, scale_x, scale_y);
-      gimp_matrix3_rotate    (matrix, angle);
-      gimp_matrix3_translate (matrix, dest_x, dest_y);
+      gimp_matrix3_identity  (&matrix);
+      gimp_matrix3_translate (&matrix, -source_x, -source_y);
+      gimp_matrix3_scale     (&matrix, scale_x, scale_y);
+      gimp_matrix3_rotate    (&matrix, angle);
+      gimp_matrix3_translate (&matrix, dest_x, dest_y);
     
       if (interpolation)
 	interpolation_type = gimp->config->interpolation_type;
@@ -649,7 +649,7 @@ transform_2d_invoker (Gimp     *gimp,
     
       /* Transform the selection */
       success = gimp_drawable_transform_affine (drawable,
-						matrix, GIMP_TRANSFORM_FORWARD,
+						&matrix, GIMP_TRANSFORM_FORWARD,
 						interpolation_type, FALSE);
     }
 

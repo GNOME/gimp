@@ -101,7 +101,7 @@ static void       gimp_layer_rotate             (GimpItem           *item,
                                                  gdouble             center_y,
                                                  gboolean            clip_result);
 static void       gimp_layer_transform          (GimpItem           *item,
-                                                 GimpMatrix3         matrix,
+                                                 const GimpMatrix3  *matrix,
                                                  GimpTransformDirection direction,
                                                  GimpInterpolationType  interpolation_type,
                                                  gboolean            clip_result,
@@ -540,7 +540,7 @@ gimp_layer_rotate (GimpItem         *item,
 
 static void
 gimp_layer_transform (GimpItem               *item,
-                      GimpMatrix3             matrix,
+                      const GimpMatrix3      *matrix,
                       GimpTransformDirection  direction,
                       GimpInterpolationType   interpolation_type,
                       gboolean                clip_result,

@@ -1,5 +1,30 @@
 2003-07-07  Sven Neumann  <sven@gimp.org>
 
+	* libgimpmath/gimpmathtypes.h
+	* libgimpmath/gimpvector.h: moved struct declarations.
+
+	* libgimpmath/gimpmatrix.[ch]: made GimpMatrix3 and GimpMatrix4
+	structs instead of typedefs for arrays. Pass them by reference,
+	not by value. Added lots of const qualifiers.
+
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-transform-utils.[ch]
+	* app/core/gimpdrawable-transform.[ch]
+	* app/core/gimpdrawable.c
+	* app/core/gimpitem-linked.[ch]
+	* app/core/gimpitem.[ch]
+	* app/core/gimplayer.c
+	* app/pdb/transform_tools_cmds.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimptransformtool.c
+	* app/vectors/gimpvectors.c
+	* tools/pdbgen/pdb/transform_tools.pdb: changed accordingly.
+
+2003-07-07  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mng.c: applied a patch from S. Mukund that fixes
 	a problem with newer versions of libmng (bug #115544).
 

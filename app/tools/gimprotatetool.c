@@ -344,7 +344,7 @@ gimp_rotate_tool_recalc (GimpTransformTool *tr_tool,
   gimp_drawable_transform_matrix_rotate_center (tr_tool->cx,
                                                 tr_tool->cy,
                                                 tr_tool->trans_info[ANGLE],
-                                                tr_tool->transform);
+                                                &tr_tool->transform);
 
   /*  transform the bounding box  */
   gimp_transform_tool_transform_bounding_box (tr_tool);
