@@ -32,3 +32,22 @@ Changes in GIMP 2.3
 - prepared code for accessing remote files in the file-chooser
 - let all dialogs obey the gtk-alternative-button-order setting
 - extended GimpProgress PDB API
+- improved file type handling in file save dialog
+- resurrected threaded pixel processor and enable it by default
+- parallelized a few more internal functions
+- speed up gradient dithering
+- improved PSD save plug-in
+- improved Python bindings
+- allow to resize layers with the image
+- allow to control letter spacing in the text tool
+- added path-on-path functionality, use it to implement Text on Path
+- improved gradient editor
+- allow to import paths from a string
+- ported all code to gstdio wrappers
+- added infrastructure for color sample points
+- added first draft of a metadata editor plug-in
+- speed up burn compositing function
+- added Altivec versions of some compositing functions
+- added PDB API to control the number of columns in a palette
+- lots of bug-fixes
+
