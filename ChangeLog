@@ -1,3 +1,18 @@
+2003-04-11  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimppreview.[ch]
+	* app/widgets/gimppreviewrenderer.[ch]: moved background
+	functionality into the renderer. Removed some GimpPreview
+	functions that used to wrap GimpPreviewRenderer functionality.
+
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/display/gimpnavigationview.c
+	* app/gui/dialogs-constructors.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainermenuimpl.c
+	* app/widgets/gimppreview-popup.c
+	* app/widgets/gimpselectioneditor.[ch]: changed accordingly.
+
 2003-04-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpnavigationpreview.c: set the cursor on

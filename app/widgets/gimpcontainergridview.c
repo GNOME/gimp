@@ -367,7 +367,8 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
 				   view->preview_size,
 				   1,
 				   FALSE, TRUE, TRUE);
-  gimp_preview_set_border_color (GIMP_PREVIEW (preview), &white_color);
+  gimp_preview_renderer_set_border_color (GIMP_PREVIEW (preview)->renderer,
+                                          &white_color);
 
   gtk_wrap_box_pack (GTK_WRAP_BOX (grid_view->wrap_box), preview,
 		     FALSE, FALSE, FALSE, FALSE);
@@ -463,12 +464,11 @@ gimp_container_grid_view_set_preview_size (GimpContainerView *view)
        child;
        child = child->next)
     {
-      GimpPreview *preview;
+      GimpPreview *preview = GIMP_PREVIEW (child->widget);
 
-      preview = GIMP_PREVIEW (child->widget);
-
-      gimp_preview_set_size (preview, view->preview_size,
-                             preview->renderer->border_width);
+      gimp_preview_renderer_set_size (preview->renderer,
+                                      view->preview_size,
+                                      preview->renderer->border_width);
     }
 
   gtk_widget_queue_resize (grid_view->wrap_box);
@@ -518,7 +518,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
 
   if (preview)
     {
-      gimp_preview_set_border_color (preview, &white_color);
+      gimp_preview_renderer_set_border_color (preview->renderer, &white_color);
       gimp_preview_renderer_update (preview->renderer);
     }
 
@@ -555,7 +555,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
                                     (row + 1) * item_height - adj->page_size);
         }
 
-      gimp_preview_set_border_color (preview, &black_color);
+      gimp_preview_renderer_set_border_color (preview->renderer, &black_color);
       gimp_preview_renderer_update (preview->renderer);
 
       name = gimp_viewable_get_description (preview->renderer->viewable, NULL);

@@ -793,7 +793,7 @@ dialogs_selection_editor_new (GimpDialogFactory *factory,
 
   gimage = gimp_context_get_image (context);
 
-  view = gimp_selection_editor_new (gimage, context->gimp->config);
+  view = gimp_selection_editor_new (gimage);
 
   dockable = dialogs_dockable_new (view,
 				   _("Selection Editor"), _("Selection"),

@@ -301,13 +301,11 @@ gimp_container_menu_impl_set_preview_size (GimpContainerMenu *menu)
     {
       if (GIMP_IS_MENU_ITEM (list->data))
         {
-          GimpMenuItem *menu_item;
+          GimpMenuItem *menu_item = GIMP_MENU_ITEM (list->data);
 
-          menu_item = GIMP_MENU_ITEM (list->data);
-
-          gimp_preview_set_size (GIMP_PREVIEW (menu_item->preview),
-                                 menu->preview_size,
-                                 menu->preview_border_width);
+          gimp_preview_renderer_set_size (GIMP_PREVIEW (menu_item->preview)->renderer,
+                                          menu->preview_size,
+                                          menu->preview_border_width);
         }
     }
 }

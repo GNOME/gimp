@@ -67,6 +67,9 @@ static void     gimp_preview_renderer_real_render  (GimpPreviewRenderer *rendere
 
 static void     gimp_preview_renderer_size_changed (GimpPreviewRenderer *renderer,
                                                     GimpViewable        *viewable);
+static GdkGC *  gimp_preview_renderer_create_gc    (GimpPreviewRenderer *renderer,
+                                                    GdkWindow           *window,
+                                                    GtkWidget           *widget);
 
 
 static guint renderer_signals[LAST_SIGNAL] = { 0 };
@@ -137,13 +140,14 @@ gimp_preview_renderer_init (GimpPreviewRenderer *renderer)
   renderer->is_popup          = FALSE;
 
   gimp_rgba_set (&renderer->border_color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-  renderer->border_gc        = NULL;
+  renderer->gc                = NULL;
 
   renderer->buffer            = NULL;
   renderer->rowstride         = 0;
   renderer->bytes             = 3;
 
   renderer->no_preview_pixbuf = NULL;
+  renderer->bg_stock_id       = NULL;
 
   renderer->size              = -1;
   renderer->needs_render      = TRUE;
@@ -178,10 +182,16 @@ gimp_preview_renderer_finalize (GObject *object)
       renderer->no_preview_pixbuf = NULL;
     }
 
-  if (renderer->border_gc)
+  if (renderer->bg_stock_id)
     {
-      g_object_unref (renderer->border_gc);
-      renderer->border_gc = NULL;
+      g_free (renderer->bg_stock_id);
+      renderer->bg_stock_id = NULL;
+    }
+
+  if (renderer->gc)
+    {
+      g_object_unref (renderer->gc);
+      renderer->gc = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -410,7 +420,7 @@ gimp_preview_renderer_set_border_color (GimpPreviewRenderer *renderer,
     {
       renderer->border_color = *color;
 
-      if (renderer->border_gc)
+      if (renderer->gc)
         {
           GdkColor gdk_color;
           guchar   r, g, b;
@@ -421,10 +431,28 @@ gimp_preview_renderer_set_border_color (GimpPreviewRenderer *renderer,
           gdk_color.green = g | g << 8;
           gdk_color.blue  = b | b << 8;
 
-          gdk_gc_set_rgb_fg_color (renderer->border_gc, &gdk_color);
+          gdk_gc_set_rgb_fg_color (renderer->gc, &gdk_color);
         }
 
       gimp_preview_renderer_update_idle (renderer);
+    }
+}
+
+void
+gimp_preview_renderer_set_background (GimpPreviewRenderer *renderer,
+                                      const gchar         *stock_id)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));
+
+  if (renderer->bg_stock_id)
+    g_free (renderer->bg_stock_id);
+
+  renderer->bg_stock_id = g_strdup (stock_id);
+
+  if (renderer->gc)
+    {
+      g_object_unref (renderer->gc);
+      renderer->gc = NULL;
     }
 }
 
@@ -520,6 +548,18 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
 
   if (renderer->no_preview_pixbuf)
     {
+      if (renderer->bg_stock_id)
+        {
+          if (!renderer->gc)
+            renderer->gc = gimp_preview_renderer_create_gc (renderer,
+                                                            window, widget);
+
+          gdk_draw_rectangle (GDK_DRAWABLE (window), renderer->gc,
+                              TRUE,
+                              expose_area->x,     expose_area->y,
+                              expose_area->width, expose_area->height);
+        }
+
       buf_rect.width  = gdk_pixbuf_get_width  (renderer->no_preview_pixbuf);
       buf_rect.height = gdk_pixbuf_get_height (renderer->no_preview_pixbuf);
       buf_rect.x      = (draw_area->width  - buf_rect.width)  / 2;
@@ -578,25 +618,13 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
     {
       gint i;
 
-      if (! renderer->border_gc)
-        {
-          GdkColor color;
-          guchar   r, g, b;
-
-          renderer->border_gc = gdk_gc_new (window);
-
-          gimp_rgb_get_uchar (&renderer->border_color, &r, &g, &b);
-
-          color.red   = r | r << 8;
-          color.green = g | g << 8;
-          color.blue  = b | b << 8;
-
-          gdk_gc_set_rgb_fg_color (renderer->border_gc, &color);
-        }
+      if (! renderer->gc)
+        renderer->gc = gimp_preview_renderer_create_gc (renderer,
+                                                        window, widget);
 
       for (i = 0; i < renderer->border_width; i++)
         gdk_draw_rectangle (window,
-                            renderer->border_gc,
+                            renderer->gc,
                             FALSE,
                             border_rect.x + i,
                             border_rect.y + i,
@@ -945,4 +973,78 @@ gimp_preview_render_to_buffer (TempBuf       *temp_buf,
               render_temp_buf,
               dest_width * dest_bytes);
     }
+}
+
+static GdkGC *
+gimp_preview_renderer_create_gc (GimpPreviewRenderer *renderer,
+                                 GdkWindow           *window,
+                                 GtkWidget           *widget)
+{
+  GdkGC           *gc;
+  GdkPixmap       *pixmap = NULL;
+  GdkGCValues      values;
+  GdkGCValuesMask  mask;
+  guchar           r, g, b;
+
+  gimp_rgb_get_uchar (&renderer->border_color, &r, &g, &b);
+  
+  values.foreground.red   = r | r << 8;
+  values.foreground.green = g | g << 8;
+  values.foreground.blue  = b | b << 8;
+
+  mask = GDK_GC_FOREGROUND;
+
+  if (renderer->bg_stock_id)
+    {
+      GdkPixbuf *pixbuf;
+
+      pixbuf = gtk_widget_render_icon (widget,
+                                       renderer->bg_stock_id,
+                                       GTK_ICON_SIZE_DIALOG, NULL);
+
+      if (pixbuf)
+        {
+          GdkColormap *colormap;
+          gint         width;
+          gint         height;
+
+          colormap = gdk_drawable_get_colormap (window);
+
+          width  = gdk_pixbuf_get_width (pixbuf);
+          height = gdk_pixbuf_get_height (pixbuf);
+
+          pixmap = gdk_pixmap_new (window, width, height,
+                                   gdk_colormap_get_visual (colormap)->depth);
+          gdk_drawable_set_colormap (pixmap, colormap);
+
+          gdk_draw_rectangle (pixmap, widget->style->white_gc,
+                              TRUE,
+                              0, 0, width, height);
+
+          gdk_draw_pixbuf (pixmap, widget->style->white_gc,
+                           pixbuf, 0, 0,
+                           0, 0, width, height,
+                           GDK_RGB_DITHER_NORMAL, 0, 0);
+
+          g_object_unref (pixbuf);
+        }
+
+      if (pixmap)
+        {
+          values.fill        = GDK_TILED;
+          values.tile        = pixmap;
+          values.ts_x_origin = 0;
+          values.ts_y_origin = 0;
+
+          mask |= (GDK_GC_FILL |
+                   GDK_GC_TILE | GDK_GC_TS_X_ORIGIN | GDK_GC_TS_Y_ORIGIN);
+        }
+    }
+
+  gc = gdk_gc_new_with_values (GDK_DRAWABLE (window), &values, mask);
+
+  if (pixmap)
+    g_object_unref (pixmap);
+
+  return gc;
 }

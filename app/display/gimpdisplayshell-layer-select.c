@@ -31,6 +31,7 @@
 #include "core/gimplayer.h"
 
 #include "widgets/gimppreview.h"
+#include "widgets/gimppreviewrenderer.h"
 
 #include "gimpdisplayshell-layer-select.h"
 
@@ -224,8 +225,8 @@ layer_select_set_image (LayerSelect *layer_select,
 
   gimp_preview_set_viewable (GIMP_PREVIEW (layer_select->preview),
 			     GIMP_VIEWABLE (layer_select->current_layer));
-  gimp_preview_set_size (GIMP_PREVIEW (layer_select->preview),
-			 gimage->gimp->config->layer_preview_size, 1);
+  gimp_preview_renderer_set_size (GIMP_PREVIEW (layer_select->preview)->renderer,
+                                  gimage->gimp->config->layer_preview_size, 1);
   gtk_label_set_text (GTK_LABEL (layer_select->label),
 		      GIMP_OBJECT (layer_select->current_layer)->name);
 }

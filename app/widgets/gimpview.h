@@ -50,8 +50,6 @@ struct _GimpPreview
   /*< private >*/
   gboolean             in_button;
   GdkModifierType      press_state;
-  gchar               *bg_stock_id;
-  GdkPixmap           *bg_pixmap;
 };
 
 struct _GimpPreviewClass
@@ -95,21 +93,8 @@ GtkWidget * gimp_preview_new_full_by_types (GType          preview_type,
 
 void        gimp_preview_set_viewable      (GimpPreview   *preview,
 					    GimpViewable  *viewable);
-void        gimp_preview_set_size          (GimpPreview   *preview,
-					    gint           size,
-					    gint           border_width);
-void        gimp_preview_set_size_full     (GimpPreview   *preview,
-					    gint           width,
-					    gint           height,
-					    gint           border_width);
 void        gimp_preview_set_expand        (GimpPreview   *preview,
                                             gboolean       expand);
-void        gimp_preview_set_dot_for_dot   (GimpPreview   *preview,
-					    gboolean       dot_for_dot);
-void        gimp_preview_set_border_color  (GimpPreview   *preview,
-					    const GimpRGB *border_color);
-void        gimp_preview_set_background    (GimpPreview   *preview,
-                                            const gchar   *stock_id);
 
 
 #endif /* __GIMP_PREVIEW_H__ */

@@ -94,9 +94,6 @@ static void   gimp_navigation_view_shell_scrolled   (GimpDisplayShell   *shell,
 static void   gimp_navigation_view_shell_reconnect  (GimpDisplayShell   *shell,
                                                      GimpNavigationView *view);
 static void   gimp_navigation_view_update_marker    (GimpNavigationView *view);
-static void   gimp_navigation_view_set_background   (GObject            *config,
-                                                     GParamSpec         *pspec,
-                                                     GimpPreview        *preview);
 
 
 static GimpEditorClass *parent_class = NULL;
@@ -364,9 +361,9 @@ gimp_navigation_view_new_private (GimpDisplayShell  *shell,
     {
       GimpPreview *preview = GIMP_PREVIEW (view->preview);
 
-      gimp_preview_set_size (preview,
-                             config->nav_preview_size * 3,
-                             preview->renderer->border_width);
+      gimp_preview_renderer_set_size (preview->renderer,
+                                      config->nav_preview_size * 3,
+                                      preview->renderer->border_width);
     }
   else
     {
@@ -450,14 +447,8 @@ gimp_navigation_view_new_private (GimpDisplayShell  *shell,
   if (shell)
     gimp_navigation_view_set_shell (view, shell);
 
-
-  if (! GIMP_CORE_CONFIG (config)->layer_previews)
-    gimp_preview_set_background (GIMP_PREVIEW (view->preview),
-                                 GIMP_STOCK_TEXTURE);
-
-  g_signal_connect_object (config, "notify::layer-previews",
-                           G_CALLBACK (gimp_navigation_view_set_background),
-                           view->preview, 0);
+  gimp_preview_renderer_set_background (GIMP_PREVIEW (view->preview)->renderer,
+                                        GIMP_STOCK_TEXTURE);
 
   return GTK_WIDGET (view);
 }
@@ -683,35 +674,22 @@ gimp_navigation_view_shell_reconnect (GimpDisplayShell   *shell,
 static void
 gimp_navigation_view_update_marker (GimpNavigationView *view)
 {
-  gdouble xratio;
-  gdouble yratio;
+  GimpPreviewRenderer *renderer;
+  gdouble              xratio;
+  gdouble              yratio;
+
+  renderer = GIMP_PREVIEW (view->preview)->renderer;
 
   xratio = SCALEFACTOR_X (view->shell);
   yratio = SCALEFACTOR_Y (view->shell);
 
-  if (GIMP_PREVIEW (view->preview)->renderer->dot_for_dot !=
-      view->shell->dot_for_dot)
-    gimp_preview_set_dot_for_dot (GIMP_PREVIEW (view->preview),
-                                  view->shell->dot_for_dot);
+  if (renderer->dot_for_dot != view->shell->dot_for_dot)
+    gimp_preview_renderer_set_dot_for_dot (renderer,
+                                           view->shell->dot_for_dot);
 
   gimp_navigation_preview_set_marker (GIMP_NAVIGATION_PREVIEW (view->preview),
                                       view->shell->offset_x    / xratio,
                                       view->shell->offset_y    / yratio,
                                       view->shell->disp_width  / xratio,
                                       view->shell->disp_height / yratio);
-}
-
-static void
-gimp_navigation_view_set_background (GObject     *config,
-                                     GParamSpec  *pspec,
-                                     GimpPreview *preview)
-{
-  gboolean  layer_previews;
-
-  g_object_get (config,
-                "layer-previews", &layer_previews,
-                NULL);
-
-  gimp_preview_set_background (preview,
-                               layer_previews ? NULL : GIMP_STOCK_TEXTURE);
 }

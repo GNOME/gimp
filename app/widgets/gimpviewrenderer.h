@@ -49,7 +49,7 @@ struct _GimpPreviewRenderer
   gboolean      is_popup;
 
   GimpRGB       border_color;
-  GdkGC        *border_gc;
+  GdkGC        *gc;
 
   /*< private >*/
   guchar       *buffer;
@@ -57,6 +57,7 @@ struct _GimpPreviewRenderer
   gint          bytes;
 
   GdkPixbuf    *no_preview_pixbuf;
+  gchar        *bg_stock_id;
 
   gint          size;
   gboolean      needs_render;
@@ -101,6 +102,8 @@ void   gimp_preview_renderer_set_dot_for_dot  (GimpPreviewRenderer *renderer,
                                                gboolean             dot_for_dot);
 void   gimp_preview_renderer_set_border_color (GimpPreviewRenderer *renderer,
                                                const GimpRGB       *border_color);
+void   gimp_preview_renderer_set_background   (GimpPreviewRenderer *renderer,
+                                               const gchar         *stock_id);
 
 void   gimp_preview_renderer_invalidate       (GimpPreviewRenderer *renderer);
 void   gimp_preview_renderer_update           (GimpPreviewRenderer *renderer);

@@ -79,9 +79,6 @@ static void   gimp_selection_editor_drop_color     (GtkWidget           *widget,
 
 static void   gimp_selection_editor_mask_changed   (GimpImage           *gimage,
                                                     GimpSelectionEditor *editor);
-static void   gimp_selection_editor_set_background (GObject             *config,
-                                                    GParamSpec          *pspec,
-                                                    GimpPreview         *preview);
 
 
 static GimpImageEditorClass *parent_class = NULL;
@@ -229,23 +226,16 @@ gimp_selection_editor_set_image (GimpImageEditor *image_editor,
 #define PREVIEW_HEIGHT      256
 
 GtkWidget *
-gimp_selection_editor_new (GimpImage      *gimage,
-                           GimpCoreConfig *config)
+gimp_selection_editor_new (GimpImage *gimage)
 {
   GimpSelectionEditor *editor;
 
   g_return_val_if_fail (! gimage || GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (GIMP_IS_CORE_CONFIG (config), NULL);
 
   editor = g_object_new (GIMP_TYPE_SELECTION_EDITOR, NULL);
 
-  if (! config->layer_previews)
-    gimp_preview_set_background (GIMP_PREVIEW (editor->preview),
-                                 GIMP_STOCK_TEXTURE);
-
-  g_signal_connect_object (config, "notify::layer-previews",
-                           G_CALLBACK (gimp_selection_editor_set_background),
-                           editor->preview, 0);
+  gimp_preview_renderer_set_background (GIMP_PREVIEW (editor->preview)->renderer,
+                                        GIMP_STOCK_TEXTURE);
 
   if (gimage)
     gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (editor), gimage);
@@ -445,19 +435,4 @@ gimp_selection_editor_mask_changed (GimpImage           *gimage,
                                     GimpSelectionEditor *editor)
 {
   gimp_preview_renderer_invalidate (GIMP_PREVIEW (editor->preview)->renderer);
-}
-
-static void
-gimp_selection_editor_set_background (GObject     *config,
-                                      GParamSpec  *pspec,
-                                      GimpPreview *preview)
-{
-  gboolean  layer_previews;
-
-  g_object_get (config,
-                "layer-previews", &layer_previews,
-                NULL);
-
-  gimp_preview_set_background (preview,
-                               layer_previews ? NULL : GIMP_STOCK_TEXTURE);
 }

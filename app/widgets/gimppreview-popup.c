@@ -30,6 +30,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimppreview.h"
+#include "gimppreviewrenderer.h"
 #include "gimppreview-popup.h"
 
 
@@ -176,7 +177,8 @@ gimp_preview_popup_timeout (GimpPreviewPopup *popup)
                                    popup->popup_width,
                                    popup->popup_height,
                                    0, TRUE, FALSE, FALSE);
-  gimp_preview_set_dot_for_dot (GIMP_PREVIEW (preview), popup->dot_for_dot);
+  gimp_preview_renderer_set_dot_for_dot (GIMP_PREVIEW (preview)->renderer,
+                                         popup->dot_for_dot);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 

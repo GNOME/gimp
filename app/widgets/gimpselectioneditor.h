@@ -53,8 +53,7 @@ struct _GimpSelectionEditorClass
 
 GType       gimp_selection_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_selection_editor_new       (GimpImage      *gimage,
-                                             GimpCoreConfig *config);
+GtkWidget * gimp_selection_editor_new       (GimpImage *gimage);
 
 
 #endif /* __GIMP_SELECTION_EDITOR_H__ */
