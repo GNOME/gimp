@@ -1,3 +1,7 @@
+2004-07-27  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added libgimpbase/gimpmemsize.c.
+
 2004-07-15  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
 
 	* ru.po: Updated Russian translation

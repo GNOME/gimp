@@ -9,6 +9,7 @@ libgimp/gimpmenu.c
 libgimp/gimppatternmenu.c
 libgimp/gimpunitcache.c
 
+libgimpbase/gimpmemsize.c
 libgimpbase/gimputils.c
 
 libgimpmodule/gimpmodule.c
