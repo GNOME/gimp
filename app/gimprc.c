@@ -486,10 +486,17 @@ parse_gimprc_file (gchar *filename)
 
   if (!g_path_is_absolute (filename))
     {
-      if (g_get_home_dir () != NULL)
+      gchar *home_dir = g_get_home_dir ();
+      gchar *home_dir_sep;
+
+      if (home_dir != NULL)
 	{
-	  rfilename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
-				       g_get_home_dir (), filename);
+	  if (home_dir[strlen (home_dir) -1] != G_DIR_SEPARATOR)
+	    home_dir_sep = G_DIR_SEPARATOR_S;
+	  else
+	    home_dir_sep = "";
+	  rfilename = g_strdup_printf ("%s%s%s", home_dir, home_dir_sep,
+				       filename);
 	  parsed = parse_absolute_gimprc_file (rfilename);
 	  g_free (rfilename);
 	  return parsed;

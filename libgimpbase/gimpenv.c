@@ -83,6 +83,7 @@ gimp_directory (void)
   static gchar *gimp_dir = NULL;
   gchar *env_gimp_dir;
   gchar *home_dir;
+  gchar *home_dir_sep;
 
   if (gimp_dir != NULL)
     return gimp_dir;
@@ -90,16 +91,21 @@ gimp_directory (void)
   env_gimp_dir = g_getenv ("GIMP_DIRECTORY");
   home_dir = g_get_home_dir ();
 
+  if (home_dir != NULL && home_dir[strlen (home_dir)-1] != G_DIR_SEPARATOR)
+    home_dir_sep = G_DIR_SEPARATOR_S;
+  else
+    home_dir_sep = "";
+
   if (NULL != env_gimp_dir)
     {
       if (g_path_is_absolute (env_gimp_dir))
-	gimp_dir = g_strdup(env_gimp_dir);
+	gimp_dir = g_strdup (env_gimp_dir);
       else
 	{
 	  if (NULL != home_dir)
 	    {
 	      gimp_dir = g_strconcat (home_dir,
-				      G_DIR_SEPARATOR_S,
+				      home_dir_sep,
 				      env_gimp_dir,
 				      NULL);
 	    }
@@ -120,8 +126,10 @@ gimp_directory (void)
 #endif      
 	if (NULL != home_dir)
 	{
-	  gimp_dir = g_strconcat (home_dir, G_DIR_SEPARATOR_S,
-				  GIMPDIR, NULL);
+	  gimp_dir = g_strconcat (home_dir,
+				  home_dir_sep,
+				  GIMPDIR,
+				  NULL);
 	}
       else
 	{

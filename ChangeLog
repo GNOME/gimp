@@ -1,3 +1,13 @@
+2000-10-28  Tor Lillqvist  <tml@iki.fi>
+
+	* app/gimprc.c (parse_gimprc_file) 
+	* libgimp/gimpenv.c (gimp_directory): Make sure the directory
+	doesn't get double path separators in case HOME ends with one. On
+	Windows, if the user has set his HOME to \, we get into trouble
+	when we try to access a path like \\_gimp1.1\gimprc. Windows
+	thinks it's an UNC path to a network server called "_gimp1.1", and
+	the program hangs for a moment.
+
 2000-10-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpdrawable.[ch]
