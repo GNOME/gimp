@@ -24,7 +24,7 @@
 
 
 /*  possible measure functions  */
-typedef enum 
+typedef enum
 {
   CREATING,
   ADDING,
@@ -59,6 +59,11 @@ struct _GimpMeasureTool
   gint             y[3];        /*  three y coordinates        */
   gdouble          angle1;      /*  first angle                */
   gdouble          angle2;      /*  second angle               */
+
+  GtkWidget       *dialog;
+  GtkWidget       *distance_label[2];
+  GtkWidget       *angle_label[2];
+  GtkWidget       *unit_label[2];
 };
 
 struct _GimpMeasureToolClass

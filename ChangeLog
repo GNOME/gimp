@@ -1,5 +1,10 @@
 2003-10-20  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpmeasuretool.[ch]: don't use InfoDialog; always
+	display pixels and real-world units in the info window.
+
+2003-10-20  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpobject.c (gimp_object_name_collate): must use
 	strcmp() not strcoll() on the collation keys obtained from
 	g_utf8_collate_key().
