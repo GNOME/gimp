@@ -941,10 +941,13 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
 					     tearoff_path->str))
 	    {
 	      GimpItemFactoryEntry tearoff_entry =
-	      { { tearoff_path->str, NULL, tearoff_cmd_callback, 0,
-		  "<Tearoff>" },
-		NULL, NULL };
-
+	      { 
+		{ NULL, NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
+		NULL, 
+		NULL 
+	      };
+	      
+	      tearoff_entry.entry.path = tearoff_path->str;
 	      menus_create_item (item_factory, &tearoff_entry, NULL, 2);
 	    }
 
@@ -1511,10 +1514,13 @@ menus_create_items (GtkItemFactory       *item_factory,
 
 	  {
 	    GimpItemFactoryEntry tearoff_entry =
-	    { { tearoff_path, NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
-	      NULL, NULL
+	    { 
+	      { NULL, NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
+	      NULL, 
+	      NULL
 	    };
 
+	    tearoff_entry.entry.path = tearoff_path;
 	    menus_create_item (item_factory, &tearoff_entry, NULL, 2);
 	  }
 
@@ -1771,34 +1777,38 @@ help_debug_cmd_callback (GtkWidget *widget,
 			 gpointer   callback_data,
 			 guint      callback_action)
 {
-  GtkItemFactory *factories[] = { toolbox_factory,
-				  image_factory,
-				  layers_factory,
-				  channels_factory,
-				  paths_factory,
-				  load_factory,
-				  save_factory };
-  gint n_factories = (sizeof (factories) /
-		      sizeof (factories[0]));
-
-  GimpItemFactoryEntry *entries[] = { toolbox_entries,
-				      image_entries,
-				      layers_entries,
-				      channels_entries,
-				      paths_entries,
-				      load_entries,
-				      save_entries };
-
-  gint num_entries[] = { n_toolbox_entries,
-			 n_image_entries,
-			 n_layers_entries,
-			 n_channels_entries,
-			 n_paths_entries,
-			 n_load_entries,
-			 n_save_entries };
-
+  /* ugly, but ANSI C compliant */
+  gint n_factories = 7;
+  GtkItemFactory *factories[7];
+  GimpItemFactoryEntry *entries[7];
+  gint num_entries[7];
   gchar *help_path;
   gint i, j;
+
+
+  factories[0] = toolbox_factory;
+  factories[1] = image_factory;
+  factories[2] = layers_factory;
+  factories[3] = channels_factory;
+  factories[4] = paths_factory;
+  factories[5] = load_factory;
+  factories[6] = save_factory;
+
+  entries[0] = toolbox_entries;
+  entries[1] = image_entries;
+  entries[2] = layers_entries;
+  entries[3] = channels_entries;
+  entries[4] = paths_entries;
+  entries[5] = load_entries;
+  entries[6] = save_entries;
+
+  num_entries[0] = n_toolbox_entries;  
+  num_entries[1] = n_image_entries;
+  num_entries[2] = n_layers_entries;
+  num_entries[3] = n_channels_entries;
+  num_entries[4] = n_paths_entries;
+  num_entries[5] = n_load_entries;
+  num_entries[6] = n_save_entries;
 
   for (i = 0;  i < n_factories; i++)
     {

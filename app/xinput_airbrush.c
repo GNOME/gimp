@@ -502,8 +502,8 @@ static XinputAirbrushOptions *
   }
 
 
-#ifdef GTK_HAVE_SIX_VALUATORS
 static AirBlob *
+#ifdef GTK_HAVE_SIX_VALUATORS
 xinput_airbrush_pen_ellipse (XinputAirbrushTool      *xinput_airbrush_tool, 
 			     gdouble x_center, gdouble y_center,
 			     gdouble pressure, gdouble xtiltv,
