@@ -1,5 +1,15 @@
 2002-05-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/undo_history.c: create the "Undo" and "Redo" buttons from
+	stock items.
+
+	* pixmaps/Makefile.am
+	* pixmaps/lower.xpm
+	* pixmaps/paste.xpm
+	* pixmaps/raise.xpm: removed them because they are not used any more.
+
+2002-05-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainermenuimpl.c: don't try to set the
 	preview_size of plain GtkMenuItems.
 

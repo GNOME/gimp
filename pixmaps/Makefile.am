@@ -3,11 +3,8 @@
 EXTRA_DIST = @STRIP_BEGIN@ \
 	delete.xpm		\
 	duplicate.xpm		\
-	lower.xpm		\
 	new.xpm			\
-	paste.xpm		\
 	penstroke.xpm		\
-	raise.xpm		\
 	topath.xpm		\
 	toselection.xpm		\
 	\

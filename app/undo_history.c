@@ -72,8 +72,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/raise.xpm"
-#include "pixmaps/lower.xpm"
 #include "pixmaps/yes.xpm"
 #include "pixmaps/question.xpm"
 
@@ -918,14 +916,14 @@ undo_history_new (GimpImage *gimage)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  st->undo_button = button = gimp_pixmap_button_new (raise_xpm, _("Undo"));
+  st->undo_button = button = gtk_button_new_from_stock (GTK_STOCK_UNDO);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (undo_history_undo_callback),
                     st);
   gtk_widget_show (GTK_WIDGET (button));
 
-  st->redo_button = button = gimp_pixmap_button_new (lower_xpm, _("Redo"));
+  st->redo_button = button = gtk_button_new_from_stock (GTK_STOCK_REDO);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (undo_history_redo_callback),
