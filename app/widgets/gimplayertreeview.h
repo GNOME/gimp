@@ -56,8 +56,8 @@ struct _GimpLayerTreeView
   GQuark                mode_changed_handler_id;
   GQuark                opacity_changed_handler_id;
   GQuark                preserve_trans_changed_handler_id;
-  GQuark                linked_changed_handler_id;
   GQuark                mask_changed_handler_id;
+  GQuark                alpha_changed_handler_id;
 };
 
 struct _GimpLayerTreeViewClass

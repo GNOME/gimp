@@ -283,9 +283,6 @@ gimp_drawable_tree_view_set_image (GimpItemTreeView *item_view,
 {
   GimpDrawableTreeView *view;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE_TREE_VIEW (item_view));
-  g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));
-
   view = GIMP_DRAWABLE_TREE_VIEW (item_view);
 
   if (item_view->gimage)

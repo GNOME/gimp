@@ -58,6 +58,7 @@
 enum
 {
   VISIBILITY_CHANGED,
+  ALPHA_CHANGED,
   LAST_SIGNAL
 };
 
@@ -164,6 +165,15 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
+  gimp_drawable_signals[ALPHA_CHANGED] =
+    g_signal_new ("alpha_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpDrawableClass, alpha_changed),
+		  NULL, NULL,
+		  gimp_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
   object_class->finalize             = gimp_drawable_finalize;
 
   gimp_object_class->get_memsize     = gimp_drawable_get_memsize;
@@ -181,6 +191,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   item_class->transform              = gimp_drawable_transform;
 
   klass->visibility_changed          = NULL;
+  klass->alpha_changed               = NULL;
 }
 
 static void
@@ -930,6 +941,14 @@ gimp_drawable_set_visible (GimpDrawable *drawable,
 
       gimp_drawable_update (drawable, 0, 0, item->width, item->height);
     }
+}
+
+void
+gimp_drawable_alpha_changed (GimpDrawable *drawable)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  g_signal_emit (drawable, gimp_drawable_signals[ALPHA_CHANGED], 0);
 }
 
 guchar *

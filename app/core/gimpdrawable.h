@@ -54,6 +54,7 @@ struct _GimpDrawableClass
   GimpItemClass  parent_class;
 
   void (* visibility_changed) (GimpDrawable *drawable);
+  void (* alpha_changed)      (GimpDrawable *drawable);
 };
 
 
@@ -116,6 +117,8 @@ gboolean	gimp_drawable_get_visible        (const GimpDrawable *drawable);
 void            gimp_drawable_set_visible        (GimpDrawable       *drawable,
                                                   gboolean            visible,
                                                   gboolean            push_undo);
+
+void            gimp_drawable_alpha_changed      (GimpDrawable       *drawable);
 
 guchar        * gimp_drawable_cmap               (const GimpDrawable *drawable);
 

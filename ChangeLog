@@ -1,3 +1,21 @@
+2003-05-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable.[ch]: added GimpDrawable::alpha_changed()
+	signal.
+
+	* app/core/gimpimage-undo-push.c
+	* app/core/gimplayer.c: emit it when alpha is removed from or
+	added to a layer.
+
+	* app/widgets/gimpcontainertreeview.[ch]: added a
+	"name_attributes" column to the list store which provides a
+	PangoAttrList for the name column.
+
+	* app/widgets/gimplayertreeview.[ch]: connect to all layers'
+	"alpha_changed" and set the BG layer's name to bold.
+
+	* app/widgets/gimpdrawabletreeview.c: removed redundant assertions.
+
 2003-05-21  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpscanconvert.[ch]: Extended to be able to handle

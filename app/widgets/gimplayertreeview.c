@@ -64,13 +64,13 @@ static gpointer gimp_layer_tree_view_insert_item  (GimpContainerView   *view,
 static gboolean gimp_layer_tree_view_select_item  (GimpContainerView   *view,
 						   GimpViewable        *item,
 						   gpointer             insert_data);
-static void   gimp_layer_tree_view_set_preview_size (GimpContainerView *view);
+static void gimp_layer_tree_view_set_preview_size (GimpContainerView   *view);
 
-static gboolean gimp_layer_tree_view_drop_possible  (GimpContainerTreeView *view,
-                                                     GimpViewable      *src_viewable,
-                                                     GimpViewable      *dest_viewable,
-                                                     GtkTreeViewDropPosition  drop_pos,
-                                                     GdkDragAction     *drag_action);
+static gboolean gimp_layer_tree_view_drop_possible(GimpContainerTreeView *view,
+                                                   GimpViewable        *src_viewable,
+                                                   GimpViewable        *dest_viewable,
+                                                   GtkTreeViewDropPosition drop_pos,
+                                                   GdkDragAction       *drag_action);
 
 static void   gimp_layer_tree_view_remove_item    (GimpImage           *gimage,
                                                    GimpItem            *layer);
@@ -113,6 +113,12 @@ static void   gimp_layer_tree_view_layer_clicked  (GimpCellRendererViewable *cel
 static void   gimp_layer_tree_view_mask_clicked   (GimpCellRendererViewable *cell,
                                                    const gchar         *path,
                                                    GdkModifierType      state,
+                                                   GimpLayerTreeView   *view);
+
+static void   gimp_layer_tree_view_alpha_update   (GimpLayerTreeView   *view,
+                                                   GtkTreeIter         *iter,
+                                                   GimpLayer           *layer);
+static void   gimp_layer_tree_view_alpha_changed  (GimpLayer           *layer,
                                                    GimpLayerTreeView   *view);
 
 
@@ -386,6 +392,8 @@ gimp_layer_tree_view_set_container (GimpContainerView *view,
 				     layer_view->preserve_trans_changed_handler_id);
       gimp_container_remove_handler (view->container,
 				     layer_view->mask_changed_handler_id);
+      gimp_container_remove_handler (view->container,
+				     layer_view->alpha_changed_handler_id);
     }
 
   GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_container (view, container);
@@ -408,6 +416,10 @@ gimp_layer_tree_view_set_container (GimpContainerView *view,
 	gimp_container_add_handler (view->container, "mask_changed",
 				    G_CALLBACK (gimp_layer_tree_view_mask_changed),
 				    view);
+      layer_view->alpha_changed_handler_id =
+	gimp_container_add_handler (view->container, "alpha_changed",
+				    G_CALLBACK (gimp_layer_tree_view_alpha_changed),
+				    view);
     }
 }
 
@@ -428,6 +440,9 @@ gimp_layer_tree_view_insert_item (GimpContainerView *view,
                                                                 index);
 
   layer = GIMP_LAYER (viewable);
+
+  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+    gimp_layer_tree_view_alpha_update (layer_view, iter, layer);
 
   gimp_layer_tree_view_mask_update (layer_view, iter, layer);
 
@@ -1025,4 +1040,51 @@ gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
     }
 
   gtk_tree_path_free (path);
+}
+
+
+/*  GimpDrawable alpha callbacks  */
+
+static void
+gimp_layer_tree_view_alpha_update (GimpLayerTreeView *view,
+                                   GtkTreeIter       *iter,
+                                   GimpLayer         *layer)
+{
+  GimpContainerTreeView *tree_view;
+  static PangoAttrList  *attrs = NULL;
+
+  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+
+  if (! attrs)
+    {
+      PangoAttribute *attr;
+
+      attrs = pango_attr_list_new ();
+
+      attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+      attr->start_index = 0;
+      attr->end_index   = -1;
+      pango_attr_list_insert (attrs, attr);
+    }
+
+  gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
+                      tree_view->model_column_name_attributes,
+                      gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)) ?
+                      NULL : attrs,
+                      -1);
+}
+
+static void
+gimp_layer_tree_view_alpha_changed (GimpLayer         *layer,
+                                    GimpLayerTreeView *layer_view)
+{
+  GimpContainerView *view;
+  GtkTreeIter       *iter;
+
+  view = GIMP_CONTAINER_VIEW (layer_view);
+
+  iter = g_hash_table_lookup (view->hash_table, layer);
+
+  if (iter)
+    gimp_layer_tree_view_alpha_update (layer_view, iter, layer);
 }

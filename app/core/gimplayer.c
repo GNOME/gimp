@@ -1179,6 +1179,8 @@ gimp_layer_add_alpha (GimpLayer *layer)
   GIMP_DRAWABLE (layer)->has_alpha     = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
   GIMP_DRAWABLE (layer)->preview_valid = FALSE;
 
+  gimp_drawable_alpha_changed (GIMP_DRAWABLE (layer));
+
   gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
   if (gimp_container_num_children (gimage->layers) == 1)

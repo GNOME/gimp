@@ -46,6 +46,7 @@ enum
 {
   COLUMN_RENDERER,
   COLUMN_NAME,
+  COLUMN_NAME_ATTRIBUTES,
   NUM_COLUMNS
 };
 
@@ -156,11 +157,13 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
 
   tree_view->n_model_columns = NUM_COLUMNS;
 
-  tree_view->model_columns[COLUMN_RENDERER] = GIMP_TYPE_PREVIEW_RENDERER;
-  tree_view->model_columns[COLUMN_NAME]     = G_TYPE_STRING;
+  tree_view->model_columns[COLUMN_RENDERER]        = GIMP_TYPE_PREVIEW_RENDERER;
+  tree_view->model_columns[COLUMN_NAME]            = G_TYPE_STRING;
+  tree_view->model_columns[COLUMN_NAME_ATTRIBUTES] = PANGO_TYPE_ATTR_LIST;
 
-  tree_view->model_column_renderer = COLUMN_RENDERER;
-  tree_view->model_column_name     = COLUMN_NAME;
+  tree_view->model_column_renderer        = COLUMN_RENDERER;
+  tree_view->model_column_name            = COLUMN_NAME;
+  tree_view->model_column_name_attributes = COLUMN_NAME_ATTRIBUTES;
 
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (view->scrolled_win),
                                        GTK_SHADOW_IN);
@@ -219,7 +222,8 @@ gimp_container_tree_view_constructor (GType                  type,
 
   gtk_tree_view_column_set_attributes (tree_view->main_column,
                                        tree_view->name_cell,
-                                       "text", COLUMN_NAME,
+                                       "text",       COLUMN_NAME,
+                                       "attributes", COLUMN_NAME_ATTRIBUTES,
                                        NULL);
 
   tree_view->renderer_cells = g_list_prepend (tree_view->renderer_cells,

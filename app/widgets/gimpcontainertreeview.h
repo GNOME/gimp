@@ -46,6 +46,7 @@ struct _GimpContainerTreeView
 
   gint               model_column_renderer;
   gint               model_column_name;
+  gint               model_column_name_attributes;
 
   GtkTreeView       *view;
   GtkTreeSelection  *selection;

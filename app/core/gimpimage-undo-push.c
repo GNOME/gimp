@@ -1632,10 +1632,12 @@ undo_pop_layer_mod (GimpUndo            *undo,
     }
 
   if (GIMP_IMAGE_TYPE_HAS_ALPHA (GIMP_DRAWABLE (layer)->type) !=
-      GIMP_IMAGE_TYPE_HAS_ALPHA (lmu->type) &&
-      undo->gimage->layers->num_children == 1)
+      GIMP_IMAGE_TYPE_HAS_ALPHA (lmu->type))
     {
-      gimp_image_alpha_changed (undo->gimage);
+      gimp_drawable_alpha_changed (GIMP_DRAWABLE (layer));
+
+      if (undo->gimage->layers->num_children == 1)
+        gimp_image_alpha_changed (undo->gimage);
     }
 
   if (GIMP_ITEM (layer)->width  != tile_manager_width  (lmu->tiles) ||
