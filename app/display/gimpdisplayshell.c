@@ -624,6 +624,7 @@ create_display_shell (int   gdisp_id,
 
   /*  The toplevel shell */
   gdisp->shell = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_widget_ref  (gdisp->shell);
   gtk_window_set_title (GTK_WINDOW (gdisp->shell), title);
   gtk_window_set_wmclass (GTK_WINDOW (gdisp->shell), "image_window", "Gimp");
   gtk_window_set_policy (GTK_WINDOW (gdisp->shell), TRUE, TRUE, TRUE);

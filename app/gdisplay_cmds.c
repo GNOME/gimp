@@ -116,7 +116,7 @@ gdisplay_delete_invoker (Argument *args)
 
   int_value = args[0].value.pdb_int;
   if ((gdisplay = gdisplay_get_ID (int_value)))
-    gdisplay_remove_and_delete (gdisplay);
+    gtk_widget_destroy (gdisplay->shell);
   else
     success = FALSE;
 

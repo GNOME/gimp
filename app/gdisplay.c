@@ -210,6 +210,8 @@ gdisplay_delete (GDisplay *gdisp)
   if (popup_shell == gdisp->shell)
     popup_shell= NULL;
 
+  gtk_widget_unref (gdisp->shell);
+
   g_free (gdisp);
 }
 
@@ -1379,12 +1381,14 @@ void
 gdisplays_delete ()
 {
   GSList *list = display_list;
+  GDisplay *gdisp;
 
   /*  traverse the linked list of displays  */
   while (list)
     {
-      gdisplay_delete ((GDisplay *) list->data);
+      gdisp = (GDisplay *) list->data;
       list = g_slist_next (list);
+      gtk_widget_destroy (gdisp->shell);
     }
 
   /*  free up linked list data  */
