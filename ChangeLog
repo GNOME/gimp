@@ -1,3 +1,9 @@
+2004-08-15  DindinX  <david@dindinx.org>
+
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: Replaced the GtkPreviews by
+	GimpPreviewAreas.
+
 2004-08-14  Manish Singh  <yosh@gimp.org>
 
 	* libgimpbase/gimpprotocol.c (_gp_params_read): make sure array

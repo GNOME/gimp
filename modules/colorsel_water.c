@@ -22,11 +22,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -140,14 +135,14 @@ colorsel_water_get_type (GTypeModule *module)
       static const GTypeInfo select_info =
       {
         sizeof (ColorselWaterClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) colorsel_water_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (ColorselWater),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) colorsel_water_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) colorsel_water_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (ColorselWater),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) colorsel_water_init,
       };
 
       colorsel_water_type =
@@ -206,10 +201,11 @@ colorsel_water_init (ColorselWater *water)
   event_box = gtk_event_box_new ();
   gtk_container_add (GTK_CONTAINER (frame), event_box);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), IMAGE_SIZE, IMAGE_SIZE);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, IMAGE_SIZE, IMAGE_SIZE);
   gtk_container_add (GTK_CONTAINER (event_box), preview);
-  select_area_draw (preview);
+  g_signal_connect (preview, "size-allocate",
+                    G_CALLBACK (select_area_draw), NULL);
 
   /* Event signals */
   g_signal_connect (event_box, "motion_notify_event",
@@ -226,13 +222,13 @@ colorsel_water_init (ColorselWater *water)
                     water);
 
   gtk_widget_set_events (event_box,
-			 GDK_EXPOSURE_MASK            |
-			 GDK_LEAVE_NOTIFY_MASK        |
-			 GDK_BUTTON_PRESS_MASK        |
-			 GDK_KEY_PRESS_MASK           |
-			 GDK_POINTER_MOTION_MASK      |
-			 GDK_POINTER_MOTION_HINT_MASK |
-			 GDK_PROXIMITY_OUT_MASK);
+                         GDK_EXPOSURE_MASK            |
+                         GDK_LEAVE_NOTIFY_MASK        |
+                         GDK_BUTTON_PRESS_MASK        |
+                         GDK_KEY_PRESS_MASK           |
+                         GDK_POINTER_MOTION_MASK      |
+                         GDK_POINTER_MOTION_HINT_MASK |
+                         GDK_PROXIMITY_OUT_MASK);
 
   /* The following call enables tracking and processing of extension
    * events for the drawing area
@@ -241,7 +237,7 @@ colorsel_water_init (ColorselWater *water)
   gtk_widget_grab_focus (event_box);
 
   adj = gtk_adjustment_new (200.0 - water->pressure_adjust * 100.0,
-			    0.0, 200.0, 1.0, 1.0, 0.0);
+                            0.0, 200.0, 1.0, 1.0, 0.0);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (pressure_adjust_update),
                     water);
@@ -291,7 +287,7 @@ calc (gdouble x,
 static void
 select_area_draw (GtkWidget *preview)
 {
-  guchar  buf[3 * IMAGE_SIZE];
+  guchar  buf[3 * IMAGE_SIZE * IMAGE_SIZE];
   gint    x, y;
   gdouble r, g, b;
   gdouble dr, dg, db;
@@ -307,25 +303,28 @@ select_area_draw (GtkWidget *preview)
       db = calc (1, y, 240) - b;
 
       for (x = 0; x < IMAGE_SIZE; x++)
-	{
-	  buf[x * 3]     = CLAMP ((gint) r, 0, 255);
-	  buf[x * 3 + 1] = CLAMP ((gint) g, 0, 255);
-	  buf[x * 3 + 2] = CLAMP ((gint) b, 0, 255);
-	  r += dr;
-	  g += dg;
-	  b += db;
-	}
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, y, IMAGE_SIZE);
+        {
+          buf[(x + IMAGE_SIZE * y) * 3]     = CLAMP ((gint) r, 0, 255);
+          buf[(x + IMAGE_SIZE * y) * 3 + 1] = CLAMP ((gint) g, 0, 255);
+          buf[(x + IMAGE_SIZE * y) * 3 + 2] = CLAMP ((gint) b, 0, 255);
+          r += dr;
+          g += dg;
+          b += db;
+        }
     }
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, IMAGE_SIZE, IMAGE_SIZE,
+                          GIMP_RGB_IMAGE,
+                          buf,
+                          3 * IMAGE_SIZE);
 }
 
 static void
 add_pigment (ColorselWater *water,
-	     gboolean       erase,
-	     gdouble        x,
-	     gdouble        y,
-	     gdouble        much)
+             gboolean       erase,
+             gdouble        x,
+             gdouble        y,
+             gdouble        much)
 {
   GimpColorSelector *selector;
   gdouble            r, g, b;
@@ -366,11 +365,11 @@ add_pigment (ColorselWater *water,
 
 static void
 draw_brush (ColorselWater *water,
-	    GtkWidget     *widget,
-	    gboolean       erase,
-	    gdouble        x,
-	    gdouble        y,
-	    gdouble        pressure)
+            GtkWidget     *widget,
+            gboolean       erase,
+            gdouble        x,
+            gdouble        y,
+            gdouble        pressure)
 {
   gdouble much; /* how much pigment to mix in */
 
@@ -378,10 +377,10 @@ draw_brush (ColorselWater *water,
     water->last_pressure = pressure;
 
   much = sqrt ((x - water->last_x) * (x - water->last_x) +
-	       (y - water->last_y) * (y - water->last_y) +
-	       1000 *
-	       (pressure - water->last_pressure) *
-	       (pressure - water->last_pressure));
+               (y - water->last_y) * (y - water->last_y) +
+               1000 *
+               (pressure - water->last_pressure) *
+               (pressure - water->last_pressure));
 
   much *= pressure * 0.05;
 
@@ -394,8 +393,8 @@ draw_brush (ColorselWater *water,
 
 static gboolean
 button_press_event (GtkWidget      *widget,
-		    GdkEventButton *event,
-		    ColorselWater  *water)
+                    GdkEventButton *event,
+                    ColorselWater  *water)
 {
   gboolean erase = FALSE;
 
@@ -419,8 +418,8 @@ button_press_event (GtkWidget      *widget,
 
 static gboolean
 button_release_event (GtkWidget      *widget,
-		      GdkEventButton *event,
-		      ColorselWater  *water)
+                      GdkEventButton *event,
+                      ColorselWater  *water)
 {
   water->button_state &= ~(1 << event->button);
 
@@ -429,8 +428,8 @@ button_release_event (GtkWidget      *widget,
 
 static gboolean
 motion_notify_event (GtkWidget      *widget,
-		     GdkEventMotion *event,
-		     ColorselWater  *water)
+                     GdkEventMotion *event,
+                     ColorselWater  *water)
 {
   GdkTimeCoord **coords;
   gint           nevents;
@@ -438,9 +437,9 @@ motion_notify_event (GtkWidget      *widget,
   gboolean       erase;
 
   if (event->state & (GDK_BUTTON1_MASK |
-		      GDK_BUTTON2_MASK |
-		      GDK_BUTTON3_MASK |
-		      GDK_BUTTON4_MASK))
+                      GDK_BUTTON2_MASK |
+                      GDK_BUTTON3_MASK |
+                      GDK_BUTTON4_MASK))
     {
       guint32 last_motion_time;
 
@@ -459,8 +458,8 @@ motion_notify_event (GtkWidget      *widget,
                                   event->time,
                                   &coords,
                                   &nevents))
- 	{
-	  for (i = 0; i < nevents; i++)
+        {
+          for (i = 0; i < nevents; i++)
             {
               gdouble x        = 0.0;
               gdouble y        = 0.0;
@@ -476,16 +475,16 @@ motion_notify_event (GtkWidget      *widget,
               draw_brush (water, widget, erase, x, y, pressure);
             }
 
-	  g_free (coords);
-	}
+          g_free (coords);
+        }
       else
-	{
+        {
           gdouble pressure = 0.5;
 
           gdk_event_get_axis ((GdkEvent *) event, GDK_AXIS_PRESSURE, &pressure);
 
-	  draw_brush (water, widget, erase, event->x, event->y, pressure);
-	}
+          draw_brush (water, widget, erase, event->x, event->y, pressure);
+        }
     }
 
   if (event->is_hint)
@@ -497,14 +496,14 @@ motion_notify_event (GtkWidget      *widget,
 static gboolean
 proximity_out_event (GtkWidget         *widget,
                      GdkEventProximity *event,
-		     ColorselWater     *water)
+                     ColorselWater     *water)
 {
   return TRUE;
 }
 
 static void
 pressure_adjust_update (GtkAdjustment *adj,
-			ColorselWater *water)
+                        ColorselWater *water)
 {
   water->pressure_adjust = (adj->upper - adj->value) / 100.0;
 }
