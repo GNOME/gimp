@@ -155,15 +155,15 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",        "Input image" },
-    { PARAM_DRAWABLE, "drawable",     "Input drawable" },
-    { PARAM_INT8,    "redstretch",   "Red component stretching factor (0-128)" },
-    { PARAM_INT8,    "greenstretch", "Green component stretching factor (0-128)" },
-    { PARAM_INT8,    "bluestretch",  "Blue component stretching factor (0-128)" },
-    { PARAM_INT8,    "redmode",      "Red application mode (0:SIN;1:COS;2:NONE)" },
-    { PARAM_INT8,    "greenmode",    "Green application mode (0:SIN;1:COS;2:NONE)" },
-    { PARAM_INT8,    "bluemode",     "Blue application mode (0:SIN;1:COS;2:NONE)" },
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable" },
+    { GIMP_PDB_INT8,    "redstretch",   "Red component stretching factor (0-128)" },
+    { GIMP_PDB_INT8,    "greenstretch", "Green component stretching factor (0-128)" },
+    { GIMP_PDB_INT8,    "bluestretch",  "Blue component stretching factor (0-128)" },
+    { GIMP_PDB_INT8,    "redmode",      "Red application mode (0:SIN;1:COS;2:NONE)" },
+    { GIMP_PDB_INT8,    "greenmode",    "Green application mode (0:SIN;1:COS;2:NONE)" },
+    { GIMP_PDB_INT8,    "bluemode",     "Blue application mode (0:SIN;1:COS;2:NONE)" },
   };
   static GimpParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
@@ -179,7 +179,7 @@ query (void)
         		  "1th May 1997",
         		  N_("<Image>/Filters/Colors/Map/Alien Map..."),
         		  "RGB*",
-        		  PROC_PLUG_IN,
+        		  GIMP_PLUGIN,
         		  nargs, nreturn_vals,
         		  args, return_vals);
 }
@@ -264,16 +264,16 @@ run (char       *name,
   static GimpParam values[1];
 /*   GDrawable *drawable; */
 /*   gint32 image_ID; */
-  GimpRunModeType  run_mode;
-  double        xhsiz, yhsiz;
-  int   	pwidth, pheight;
-  GStatusType   status = STATUS_SUCCESS;
+  GimpRunModeType   run_mode;
+  double            xhsiz, yhsiz;
+  int   	    pwidth, pheight;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
  
   INIT_I18N_UI ();
 
   run_mode = param[0].data.d_int32;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
@@ -334,7 +334,7 @@ run (char       *name,
   /* See how we will run */
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
       gimp_get_data("plug_in_alienmap", &wvals);
 
@@ -344,12 +344,12 @@ run (char       *name,
 
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       /* Make sure all the arguments are present */
       if (nparams != 9)
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  wvals.redstretch   = param[3].data.d_int8;
 	  wvals.greenstretch = param[4].data.d_int8;
@@ -361,7 +361,7 @@ run (char       *name,
 
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
       gimp_get_data ("plug_in_alienmap", &wvals);
       break;
@@ -370,7 +370,7 @@ run (char       *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is indexed or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id))
@@ -382,20 +382,17 @@ run (char       *name,
 
 	  /* Run! */
 
-/*          gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width ()
-        			       + 1));*/
           alienmap (drawable);
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush();
 
 	  /* Store data */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data("plug_in_alienmap", &wvals, sizeof(alienmap_vals_t));
         }
       else
         {
-/*           gimp_message("This filter only applies on RGB-images"); */
-          status = STATUS_EXECUTION_ERROR;
+          status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
 

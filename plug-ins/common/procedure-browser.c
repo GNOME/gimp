@@ -77,7 +77,7 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, [non-interactive]" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, [non-interactive]" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -89,7 +89,7 @@ query (void)
                           "23th june 1997",
                           N_("<Toolbox>/Xtns/DB Browser..."),
 			  "",
-                          PROC_EXTENSION,
+                          GIMP_EXTENSION,
 			  nargs, 0,
                           args, NULL);
 }
@@ -102,18 +102,18 @@ run (gchar      *name,
      GimpParam  **return_vals)
 {
   static GimpParam values[1];
-  GRunModeType run_mode;
+  GimpRunModeType run_mode;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_SUCCESS;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_SUCCESS;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE: 
+    case GIMP_RUN_INTERACTIVE: 
       {
 	INIT_I18N_UI(); 
 
@@ -126,10 +126,10 @@ run (gchar      *name,
       }
       break;
       
-    case RUN_WITH_LAST_VALS:
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
+    case GIMP_RUN_NONINTERACTIVE:
       g_warning ("dbbrowser allows only interactive invocation");
-      values[0].data.d_status = STATUS_CALLING_ERROR;
+      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
       break;
 
     default:
