@@ -40,6 +40,8 @@
 #include "tools/gimptool.h"
 #include "tools/gimptoolinfo.h"
 
+#include "widgets/gimpdialogfactory.h"
+
 #include "app_procs.h"
 #include "appenv.h"
 #include "color_notebook.h"
@@ -92,6 +94,7 @@ typedef enum
   TT_XMENUPATH,
   TT_XDEVICE,
   TT_XSESSIONINFO,
+  TT_XNEWSESSIONINFO,
   TT_XCOLORHISTORY,
   TT_XUNITINFO,
   TT_XPARASITE,
@@ -143,6 +146,7 @@ static gint           parse_plug_in_def         (gpointer val1p, gpointer val2p)
 static gint           parse_device              (gpointer val1p, gpointer val2p);
 static gint           parse_menu_path           (gpointer val1p, gpointer val2p);
 static gint           parse_session_info        (gpointer val1p, gpointer val2p);
+static gint           parse_new_session_info    (gpointer val1p, gpointer val2p);
 static gint           parse_unit_info           (gpointer val1p, gpointer val2p);
 static gint           parse_parasite            (gpointer val1p, gpointer val2p);
 static gint           parse_help_browser        (gpointer val1p, gpointer val2p);
@@ -327,6 +331,7 @@ static ParseFunc funcs[] =
   { "menu-path",                 TT_XMENUPATH,     NULL, NULL },
   { "device",                    TT_XDEVICE,       NULL, NULL },
   { "session-info",              TT_XSESSIONINFO,  NULL, NULL },
+  { "new-session-info",          TT_XNEWSESSIONINFO,  NULL, NULL },
   { "color-history",             TT_XCOLORHISTORY, NULL, NULL },
   { "unit-info",                 TT_XUNITINFO,     NULL, NULL },
   { "monitor-xresolution",       TT_DOUBLE,        &monitor_xres, NULL },
@@ -355,24 +360,6 @@ static ParseFunc funcs[] =
 };
 static gint n_funcs = (sizeof (funcs) /
 		       sizeof (funcs[0]));
-
-
-static SessionInfo *session_infos[] =
-{
-  &toolbox_session_info,
-  &lc_dialog_session_info,
-  &info_dialog_session_info,
-  &tool_options_session_info,
-  &palette_session_info,
-  &brush_select_session_info,
-  &pattern_select_session_info,
-  &gradient_select_session_info,
-  &device_status_session_info,
-  &error_console_session_info,
-  &document_index_session_info
-};
-static gint n_session_infos = (sizeof (session_infos) /
-			       sizeof (session_infos[0]));
 
 
 static ParseInfo   parse_info = { NULL };
@@ -907,6 +894,8 @@ parse_statement (void)
 	  return parse_device (funcs[i].val1p, funcs[i].val2p);
 	case TT_XSESSIONINFO:
 	  return parse_session_info (funcs[i].val1p, funcs[i].val2p);
+	case TT_XNEWSESSIONINFO:
+	  return parse_new_session_info (funcs[i].val1p, funcs[i].val2p);
 	case TT_XCOLORHISTORY:
 	  return parse_color_history (funcs[i].val1p, funcs[i].val2p);
 	case TT_XUNITINFO:
@@ -2336,6 +2325,24 @@ parse_session_info (gpointer val1p,
   gint         token;
   SessionInfo *info = NULL;
 
+  static SessionInfo *session_infos[] =
+  {
+    &toolbox_session_info,
+    &lc_dialog_session_info,
+    &info_dialog_session_info,
+    &tool_options_session_info,
+    &palette_session_info,
+    &brush_select_session_info,
+    &pattern_select_session_info,
+    &gradient_select_session_info,
+    &device_status_session_info,
+    &error_console_session_info,
+    &document_index_session_info
+  };
+  static gint n_session_infos = (sizeof (session_infos) /
+				 sizeof (session_infos[0]));
+
+
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))
     return ERROR;
@@ -2407,6 +2414,124 @@ parse_session_info (gpointer val1p,
   session_info_updates = g_list_append (session_info_updates, info);
 
   return OK;
+}
+
+static gint
+parse_new_session_info (gpointer val1p, 
+			gpointer val2p)
+{
+  gint               token;
+  GimpDialogFactory *factory;
+  GimpSessionInfo   *info = NULL;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_STRING))
+    goto error;
+  token = get_next_token ();
+
+  factory = gimp_dialog_factory_from_name (token_str);
+
+  if (! factory)
+    goto error;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_STRING))
+    goto error;
+  token = get_next_token ();
+
+  info = g_new0 (GimpSessionInfo, 1);
+
+  /* Parse options for session info */
+
+  while (peek_next_token () == TOKEN_LEFT_PAREN)
+    {
+      token = get_next_token ();
+
+      token = peek_next_token ();
+      if (!token || (token != TOKEN_SYMBOL))
+	goto error;
+      token = get_next_token ();
+
+      if (!strcmp ("position", token_sym))
+	{
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_NUMBER))
+	    goto error;
+	  token = get_next_token ();
+	  info->x = token_int;
+
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_NUMBER))
+	    goto error;
+	  token = get_next_token ();
+	  info->y = token_int;
+	}
+      else if (!strcmp ("size", token_sym))
+	{
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_NUMBER))
+	    goto error;
+	  token = get_next_token ();
+	  info->width = token_int;
+
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_NUMBER))
+	    goto error;
+	  token = get_next_token ();
+	  info->height = token_int;
+	}
+      else if (!strcmp ("open-on-exit", token_sym))
+	{
+	  info->open = TRUE;
+	}
+      else if (!strcmp ("dock", token_sym))
+	{
+	  while (peek_next_token () == TOKEN_LEFT_PAREN)
+	    {
+	      token = get_next_token ();
+
+	      info->sub_dialogs = g_list_prepend (info->sub_dialogs, NULL);
+
+	      while (peek_next_token () == TOKEN_STRING)
+		{
+		  token = get_next_token ();
+
+		  info->sub_dialogs->data =
+		    g_list_append (info->sub_dialogs->data,
+				   g_strdup (token_str));
+		}
+
+	      token = peek_next_token ();
+	      if (!token || (token != TOKEN_RIGHT_PAREN))
+		goto error;
+	      token = get_next_token ();
+	    }
+
+	  info->sub_dialogs = g_list_reverse (info->sub_dialogs);
+	}
+      else
+	{
+	  goto error;
+	}
+
+      token = peek_next_token ();
+      if (!token || (token != TOKEN_RIGHT_PAREN))
+	goto error;
+      token = get_next_token ();
+    }
+
+  if (!token || (token != TOKEN_RIGHT_PAREN))
+    goto error;
+  token = get_next_token ();
+
+  factory->session_infos = g_list_append (factory->session_infos, info);
+
+  return OK;
+
+ error:
+  g_free (info);
+
+  return ERROR;
 }
 
 static gint
@@ -2750,6 +2875,7 @@ value_to_str (gchar *name)
 	case TT_XMENUPATH:
 	case TT_XDEVICE:
 	case TT_XSESSIONINFO:
+	case TT_XNEWSESSIONINFO:
 	case TT_XCOLORHISTORY:
 	case TT_XUNITINFO:
 	case TT_XPARASITE:

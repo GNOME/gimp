@@ -24,6 +24,7 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
+#include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 
 #include "dialogs-commands.h"
@@ -40,13 +41,13 @@ dialogs_add_tab_cmd_callback (GtkWidget *widget,
 
   if (dockbook && action)
     {
-      GimpDockable *dockable;
+      GtkWidget *dockable;
 
       dockable = gimp_dialog_factory_dialog_new (dockbook->dock->factory,
 						 GUINT_TO_POINTER (action));
 
       if (dockable)
-	gimp_dockbook_add (dockbook, dockable, -1);
+	gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), -1);
     }
 }
 

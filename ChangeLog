@@ -1,3 +1,28 @@
+2001-04-16  Michael Natterer  <mitch@gimp.org>
+
+	First attempt to get the docks session managed:
+
+	* app/gimprc.c: new gimprc type "new-session-info" which will soon
+	replace the original one.
+
+	* app/menus.c
+	* app/gui/dialogs.c: s/_/-/g in all dialog identifier strings.
+
+	* app/session.[ch]: call the dialog factory's session functions.
+
+	* app/test_commands.c: use the dialog factory to create the tabs.
+
+	* app/gui/dialogs-commands.c
+	* app/gui/dialogs-constructors.[ch]: the constructors return widgets,
+	not dockables now.
+
+	* app/widgets/gimpdialogfactory.[ch]: maintain a list of dialog
+	factories in the class struct. Added ugly code to do the GimpDock
+	session management.
+
+	* app/gui/gui.c
+	* app/widgets/gimpdock.c: changed accordingly.
+
 2001-04-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/Makefile.am: new files:

@@ -21,9 +21,12 @@
 
 
 extern GimpDialogFactory *global_dialog_factory;
+extern GimpDialogFactory *global_dock_factory;
+extern GimpDialogFactory *global_image_dock_factory;
 
 
-void   dialogs_register (void);
+void   dialogs_init (void);
+void   dialogs_exit (void);
 
 
 #endif /* __DIALOGS_H__ */

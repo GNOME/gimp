@@ -46,28 +46,28 @@
 #include "libgimp/gimpintl.h"
 
 
-static GtkWidget    * dialogs_brush_tab_func    (GimpDockable *dockable,
-						 GimpDockbook *dockbook,
-						 gint          size);
-static GtkWidget    * dialogs_pattern_tab_func  (GimpDockable *dockable,
-						 GimpDockbook *dockbook,
-						 gint          size);
-static GtkWidget    * dialogs_gradient_tab_func (GimpDockable *dockable,
-						 GimpDockbook *dockbook,
-						 gint          size);
-static GtkWidget    * dialogs_palette_tab_func  (GimpDockable *dockable,
-						 GimpDockbook *dockbook,
-						 gint          size);
+static GtkWidget * dialogs_brush_tab_func    (GimpDockable *dockable,
+					      GimpDockbook *dockbook,
+					      gint          size);
+static GtkWidget * dialogs_pattern_tab_func  (GimpDockable *dockable,
+					      GimpDockbook *dockbook,
+					      gint          size);
+static GtkWidget * dialogs_gradient_tab_func (GimpDockable *dockable,
+					      GimpDockbook *dockbook,
+					      gint          size);
+static GtkWidget * dialogs_palette_tab_func  (GimpDockable *dockable,
+					      GimpDockbook *dockbook,
+					      gint          size);
 
-static GimpDockable * dialogs_dockable_new (GtkWidget              *widget,
-					    const gchar            *name,
-					    const gchar            *short_name,
-					    GimpDockableGetTabFunc  get_tab_func);
+static GtkWidget * dialogs_dockable_new (GtkWidget              *widget,
+					 const gchar            *name,
+					 const gchar            *short_name,
+					 GimpDockableGetTabFunc  get_tab_func);
 
 
 /*  public functions  */
 
-GimpDockable *
+GtkWidget *
 dialogs_image_list_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
@@ -82,7 +82,7 @@ dialogs_image_list_view_new (GimpDialogFactory *factory)
 			       NULL);
 }
 
-GimpDockable *
+GtkWidget *
 dialogs_brush_list_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
@@ -99,7 +99,7 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory)
 			       dialogs_brush_tab_func);
 }
 
-GimpDockable *
+GtkWidget *
 dialogs_pattern_list_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
@@ -116,7 +116,7 @@ dialogs_pattern_list_view_new (GimpDialogFactory *factory)
 			       dialogs_pattern_tab_func);
 }
 
-GimpDockable *
+GtkWidget *
 dialogs_gradient_list_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
@@ -133,7 +133,7 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory)
 			       dialogs_gradient_tab_func);
 }
 
-GimpDockable *
+GtkWidget *
 dialogs_palette_list_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
@@ -150,7 +150,7 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory)
 			       dialogs_palette_tab_func);
 }
 
-GimpDockable *
+GtkWidget *
 dialogs_tool_list_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
@@ -168,7 +168,7 @@ dialogs_tool_list_view_new (GimpDialogFactory *factory)
 
 /*  grid views  */
 
-GimpDockable *
+GtkWidget *
 dialogs_image_grid_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
@@ -183,7 +183,7 @@ dialogs_image_grid_view_new (GimpDialogFactory *factory)
 			       NULL);
 }
 
-GimpDockable *
+GtkWidget *
 dialogs_brush_grid_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
@@ -200,7 +200,7 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory)
 			       dialogs_brush_tab_func);
 }
 
-GimpDockable *
+GtkWidget *
 dialogs_pattern_grid_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
@@ -217,7 +217,7 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory)
 			       dialogs_pattern_tab_func);
 }
 
-GimpDockable *
+GtkWidget *
 dialogs_gradient_grid_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
@@ -234,7 +234,7 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory)
 			       dialogs_gradient_tab_func);
 }
 
-GimpDockable *
+GtkWidget *
 dialogs_palette_grid_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
@@ -251,7 +251,7 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory)
 			       dialogs_palette_tab_func);
 }
 
-GimpDockable *
+GtkWidget *
 dialogs_tool_grid_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
@@ -365,7 +365,7 @@ dialogs_palette_tab_func (GimpDockable *dockable,
   return preview;
 }
 
-GimpDockable *
+GtkWidget *
 dialogs_dockable_new (GtkWidget              *widget,
 		      const gchar            *name,
 		      const gchar            *short_name,
@@ -380,5 +380,5 @@ dialogs_dockable_new (GtkWidget              *widget,
   gtk_container_add (GTK_CONTAINER (dockable), widget);
   gtk_widget_show (widget);
 
-  return GIMP_DOCKABLE (dockable);
+  return dockable;
 }

@@ -31,54 +31,76 @@
 #include "gimpcontext.h"
 
 
-GimpDialogFactory *global_dialog_factory = NULL;
+GimpDialogFactory *global_dialog_factory     = NULL;
+GimpDialogFactory *global_dock_factory       = NULL;
+GimpDialogFactory *global_image_dock_factory = NULL;
 
 
 void
-dialogs_register (void)
+dialogs_init (void)
 {
-  GtkItemFactory *item_factory;
+  global_dialog_factory =
+    gimp_dialog_factory_new ("toplevel",
+			     gimp_context_get_user (),
+			     NULL);
 
-  item_factory = menus_get_dialogs_factory ();
+  global_dock_factory =
+    gimp_dialog_factory_new ("dock",
+			     gimp_context_get_user (),
+			     menus_get_dialogs_factory ());
 
-  global_dialog_factory = gimp_dialog_factory_new (gimp_context_get_user (),
-						   item_factory);
+  global_image_dock_factory =
+    gimp_dialog_factory_new ("image-dock",
+			     gimp_context_get_user (),
+			     NULL);
 
-  gimp_dialog_factory_register (global_dialog_factory,
-				"gimp:image_list",
+  gimp_dialog_factory_register (global_dock_factory,
+				"gimp:image-list",
 				dialogs_image_list_view_new);
-  gimp_dialog_factory_register (global_dialog_factory,
-				"gimp:brush_list",
+  gimp_dialog_factory_register (global_dock_factory,
+				"gimp:brush-list",
 				dialogs_brush_list_view_new);
-  gimp_dialog_factory_register (global_dialog_factory,
-				"gimp:pattern_list",
+  gimp_dialog_factory_register (global_dock_factory,
+				"gimp:pattern-list",
 				dialogs_pattern_list_view_new);
-  gimp_dialog_factory_register (global_dialog_factory,
-				"gimp:gradient_list",
+  gimp_dialog_factory_register (global_dock_factory,
+				"gimp:gradient-list",
 				dialogs_gradient_list_view_new);
-  gimp_dialog_factory_register (global_dialog_factory,
-				"gimp:palette_list",
+  gimp_dialog_factory_register (global_dock_factory,
+				"gimp:palette-list",
 				dialogs_palette_list_view_new);
-  gimp_dialog_factory_register (global_dialog_factory,
-				"gimp:tool_list",
+  gimp_dialog_factory_register (global_dock_factory,
+				"gimp:tool-list",
 				dialogs_tool_list_view_new);
 
-  gimp_dialog_factory_register (global_dialog_factory,
-				"gimp:image_grid",
+  gimp_dialog_factory_register (global_dock_factory,
+				"gimp:image-grid",
 				dialogs_image_grid_view_new);
-  gimp_dialog_factory_register (global_dialog_factory,
-				"gimp:brush_grid",
+  gimp_dialog_factory_register (global_dock_factory,
+				"gimp:brush-grid",
 				dialogs_brush_grid_view_new);
-  gimp_dialog_factory_register (global_dialog_factory,
-				"gimp:pattern_grid",
+  gimp_dialog_factory_register (global_dock_factory,
+				"gimp:pattern-grid",
 				dialogs_pattern_grid_view_new);
-  gimp_dialog_factory_register (global_dialog_factory,
-				"gimp:gradient_grid",
+  gimp_dialog_factory_register (global_dock_factory,
+				"gimp:gradient-grid",
 				dialogs_gradient_grid_view_new);
-  gimp_dialog_factory_register (global_dialog_factory,
-				"gimp:palette_grid",
+  gimp_dialog_factory_register (global_dock_factory,
+				"gimp:palette-grid",
 				dialogs_palette_grid_view_new);
-  gimp_dialog_factory_register (global_dialog_factory,
-				"gimp:tool_grid",
+  gimp_dialog_factory_register (global_dock_factory,
+				"gimp:tool-grid",
 				dialogs_tool_grid_view_new);
+}
+
+void
+dialogs_exit (void)
+{
+  gtk_object_unref (GTK_OBJECT (global_dialog_factory));
+  gtk_object_unref (GTK_OBJECT (global_dock_factory));
+  gtk_object_unref (GTK_OBJECT (global_image_dock_factory));
+
+  global_dialog_factory     = NULL;
+  global_dock_factory       = NULL;
+  global_image_dock_factory = NULL;
 }

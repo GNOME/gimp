@@ -59,7 +59,7 @@ gui_init (void)
   gximage_init ();
   render_setup (transparency_type, transparency_size);
 
-  dialogs_register ();
+  dialogs_init ();
 
   devices_init ();
   session_init ();
@@ -120,6 +120,7 @@ gui_exit (void)
   render_free ();
   tool_options_dialog_free ();
   save_sessionrc ();
+  dialogs_exit ();
 }
 
 void

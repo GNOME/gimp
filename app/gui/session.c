@@ -49,6 +49,8 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpdialogfactory.h"
+
 #include "app_procs.h"
 #include "appenv.h"
 #include "color_notebook.h"
@@ -73,6 +75,7 @@ GList *session_info_updates = NULL;
 
 
 /* global session variables */
+
 SessionInfo toolbox_session_info =
 {
   "toolbox",
@@ -262,6 +265,8 @@ save_sessionrc (void)
   /* save window geometries */
   g_list_foreach (session_info_updates, (GFunc) sessionrc_write_info, fp);
 
+  gimp_dialog_factories_session_save (fp);
+
   /* save last tip shown */
   fprintf (fp, "(last-tip-shown %d)\n\n", last_tip + 1);
 
@@ -299,16 +304,20 @@ session_init (void)
 
 void
 session_restore (void)
-{      
+{
   /* open dialogs */
   if (restore_session)
     g_list_foreach (session_info_updates, (GFunc)session_open_dialog, NULL);
 
   /* reset the open state in the session_infos */
   g_list_foreach (session_info_updates, (GFunc)session_reset_open_state, NULL);
+
+  gimp_dialog_factories_session_restore ();
 }
 
-/* internal function */
+
+/*  private functions  */
+
 static void
 sessionrc_write_info (SessionInfo *info,
 		      FILE        *fp)

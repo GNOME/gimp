@@ -136,7 +136,7 @@ gimp_dock_destroy (GtkObject *object)
 
   dock = GIMP_DOCK (object);
 
-  gimp_dialog_factory_remove_dock (dock->factory, dock);
+  gimp_dialog_factory_remove_toplevel (dock->factory, GTK_WIDGET (dock));
 
   g_list_free (dock->dockbooks);
 
@@ -156,7 +156,7 @@ gimp_dock_new (GimpDialogFactory *factory)
 
   dock->factory = factory;
 
-  gimp_dialog_factory_add_dock (dock->factory, dock);
+  gimp_dialog_factory_add_toplevel (dock->factory, GTK_WIDGET (dock));
 
   return GTK_WIDGET (dock);
 }
