@@ -1,3 +1,8 @@
+Mon Jul  6 12:02:43 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/convert.c: check for > 256 colors palettes when indexing,
+	since the code doesn't handle it (from Yasuhiro SHIRASAKI)
+
 Mon Jul  6 13:18:12 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* pixmaps.h pixmaps2.h tools.c: splits pixmaps up into two headers

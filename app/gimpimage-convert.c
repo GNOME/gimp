@@ -554,13 +554,16 @@ build_palette_menu(int *default_palette){
 	  UserHasWebPal = TRUE;
 	}
 
-      menu_item = gtk_menu_item_new_with_label (entries->name);
-      gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
-			  (GtkSignalFunc) palette_entries_callback,
-			  (gpointer)entries);
-      gtk_container_add(GTK_CONTAINER(menu), menu_item);
-      gtk_widget_show(menu_item);
-      if (theCustomPalette == entries) *default_palette = i;
+      /* We can't dither to > 256 colors */
+      if (entries->n_colors <= 256) {
+	menu_item = gtk_menu_item_new_with_label (entries->name);
+	gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
+			    (GtkSignalFunc) palette_entries_callback,
+			    (gpointer)entries);
+	gtk_container_add(GTK_CONTAINER(menu), menu_item);
+	gtk_widget_show(menu_item);
+	if (theCustomPalette == entries) *default_palette = i;
+      }
     }
 
    /* default to first one (only used if 'web' palette not avail.) */
