@@ -1,5 +1,25 @@
 2004-10-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/file-commands.c (file_save_cmd_callback): don't
+	g_return_if_fail() if there is no active drawable, just silently
+	return.
+
+	* app/actions/image-commands.c: remember the last merge_type of
+	the "Merge Visible Layers" dialog.
+
+	* app/actions/layers-commands.c: remeber the last values of the
+	"Add Layer Mask" dialog.
+
+	* app/actions/select-commands.c: renamed a bunch of static
+	variables to be consistent with other variables used to remember
+	dialog values.
+
+	* app/actions/view-commands.c (view_fullscreen_cmd_callback): it's
+	useless to update the "view-fullscreen" actions here because the
+	"fullscreen" state of the shell changes asynchronously
+
+2004-10-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/image-merge-layers-dialog.c
 	* app/dialogs/layer-add-mask-dialog.c: made them not resizable.
 

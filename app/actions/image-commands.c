@@ -96,6 +96,11 @@ static void   image_merge_layers_response  (GtkWidget              *widget,
                                             ImageMergeLayersDialog *dialog);
 
 
+/*  private variables  */
+
+static GimpMergeType image_merge_layers_type = GIMP_EXPAND_AS_NECESSARY;
+
+
 /*  public functions  */
 
 void
@@ -366,7 +371,7 @@ image_merge_layers_cmd_callback (GtkAction *action,
   dialog = image_merge_layers_dialog_new (gimage,
                                           action_data_get_context (data),
                                           widget,
-                                          GIMP_EXPAND_AS_NECESSARY);
+                                          image_merge_layers_type);
 
   g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (image_merge_layers_response),
@@ -634,9 +639,11 @@ image_merge_layers_response (GtkWidget              *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
+      image_merge_layers_type = dialog->merge_type;
+
       gimp_image_merge_visible_layers (dialog->gimage,
                                        dialog->context,
-                                       dialog->merge_type);
+                                       image_merge_layers_type);
       gimp_image_flush (dialog->gimage);
     }
 

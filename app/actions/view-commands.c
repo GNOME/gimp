@@ -631,7 +631,6 @@ view_fullscreen_cmd_callback (GtkAction *action,
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
   gboolean          active;
-  gboolean          fullscreen;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
@@ -639,18 +638,6 @@ view_fullscreen_cmd_callback (GtkAction *action,
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
   gimp_display_shell_set_fullscreen (shell, active);
-
-  fullscreen = (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
-
-  if (active != fullscreen)
-    {
-      SET_ACTIVE (shell->menubar_manager, "view-fullscreen",
-                  fullscreen);
-
-      if (IS_ACTIVE_DISPLAY (gdisp))
-        SET_ACTIVE (shell->popup_manager, "view-fullscreen",
-                    fullscreen);
-    }
 }
 
 void
