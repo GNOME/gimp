@@ -273,6 +273,9 @@ gimp_dialog_create_action_area (GimpDialog *dialog,
  * @dialog: The #GimpDialog you want to create the action_area for.
  * @args: A @va_list as obtained with va_start() describing the action_area
  *        buttons.
+ *
+ * This function creates the action area of a #GimpDialog. You will rarely
+ * need to call it directly. Instead use gimp_dialog_new() or its variants.
  **/
 void
 gimp_dialog_create_action_areav (GimpDialog *dialog,

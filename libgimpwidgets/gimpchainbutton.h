@@ -72,7 +72,7 @@ struct _GimpChainButtonClass
 {
   GtkTableClass  parent_class;
 
-  void (* toggled)  (GimpChainButton *gcb);
+  void (* toggled)  (GimpChainButton *button);
 };
 
 
@@ -80,9 +80,9 @@ GType       gimp_chain_button_get_type   (void) G_GNUC_CONST;
 
 GtkWidget * gimp_chain_button_new        (GimpChainPosition  position);
 
-void        gimp_chain_button_set_active (GimpChainButton   *gcb,
+void        gimp_chain_button_set_active (GimpChainButton   *button,
 					  gboolean           active);
-gboolean    gimp_chain_button_get_active (GimpChainButton   *gcb);
+gboolean    gimp_chain_button_get_active (GimpChainButton   *button);
 
 
 G_END_DECLS

@@ -2,11 +2,14 @@
 GimpMemsizeEntry
 
 <!-- ##### SECTION Short_Description ##### -->
+A composite widget that allows to enter a memory size.
 
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Similar to a #GimpSizeEntry but instead of lengths, this widget is used to let
+the user enter memory sizes. An option menu allows to switch between
+Kilobytes, Megabytes and Gigabytes. Used in the GIMP preferences dialog.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -16,7 +19,7 @@ GimpMemsizeEntry
 
 <!-- ##### STRUCT GimpMemsizeEntry ##### -->
 <para>
-
+The #GimpSizeEntry struct is considered private.
 </para>
 
 

@@ -211,6 +211,8 @@ create_query_box (const gchar   *title,
  * @callback:  The function which will be called when the user selects "OK".
  * @data:      The callback's user data.
  *
+ * Creates a new #GtkDialog that queries the user for a string value.
+ *
  * Returns: A pointer to the new #GtkDialog.
  **/
 GtkWidget *
@@ -264,6 +266,8 @@ gimp_query_string_box (const gchar             *title,
  * @signal:    The object's signal which will cause the query box to be closed.
  * @callback:  The function which will be called when the user selects "OK".
  * @data:      The callback's user data.
+ *
+ * Creates a new #GtkDialog that queries the user for an integer value.
  *
  * Returns: A pointer to the new #GtkDialog.
  **/
@@ -322,6 +326,8 @@ gimp_query_int_box (const gchar          *title,
  * @signal:    The object's signal which will cause the query box to be closed.
  * @callback:  The function which will be called when the user selects "OK".
  * @data:      The callback's user data.
+ *
+ * Creates a new #GtkDialog that queries the user for a double value.
  *
  * Returns: A pointer to the new #GtkDialog.
  **/
@@ -387,6 +393,9 @@ gimp_query_double_box (const gchar             *title,
  *               to be closed.
  * @callback:    The function which will be called when the user selects "OK".
  * @data:        The callback's user data.
+ *
+ * Creates a new #GtkDialog that queries the user for a size using a
+ * #GimpSizeEntry.
  *
  * Returns: A pointer to the new #GtkDialog.
  **/
@@ -458,6 +467,8 @@ gimp_query_size_box (const gchar           *title,
  * @callback:     The function which will be called when the user clicks one
  *                of the buttons.
  * @data:         The callback's user data.
+ *
+ * Creates a new #GtkDialog that asks the user to do a boolean decision.
  *
  * Returns: A pointer to the new #GtkDialog.
  **/

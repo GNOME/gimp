@@ -57,7 +57,7 @@ struct _GimpFileSelectionClass
 {
   GtkHBoxClass  parent_class;
 
-  void (* filename_changed) (GimpFileSelection *gfs);
+  void (* filename_changed) (GimpFileSelection *selection);
 };
 
 
@@ -68,9 +68,9 @@ GtkWidget * gimp_file_selection_new         (const gchar        *title,
 					     gboolean            dir_only,
 					     gboolean            check_valid);
 
-gchar     * gimp_file_selection_get_filename (GimpFileSelection *gfs);
+gchar     * gimp_file_selection_get_filename (GimpFileSelection *selection);
 
-void        gimp_file_selection_set_filename (GimpFileSelection *gfs,
+void        gimp_file_selection_set_filename (GimpFileSelection *selection,
 					      const gchar       *filename);
 
 

@@ -175,13 +175,12 @@ Note that you have to g_free() the returned string.
 @callback: 
 @data: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@eek: 
 
 
 <!-- ##### MACRO GIMP_QUERY_BOX_VBOX ##### -->
 <para>
-
+A macro to access the #GtkVBox in a #GimpQueryBox. Useful if you want to add
+more widgets.
 </para>
 
 @qbox: 

@@ -278,8 +278,9 @@ gimp_color_area_new (const GimpRGB     *color,
 /**
  * gimp_color_area_set_color:
  * @area: Pointer to a #GimpColorArea.
- * @color:
+ * @color: Pointer to a #GimpRGB struct that defines the new color.
  * 
+ * Sets @area to a different @color.
  **/
 void       
 gimp_color_area_set_color (GimpColorArea *area,
@@ -300,6 +301,13 @@ gimp_color_area_set_color (GimpColorArea *area,
     }
 }
 
+/**
+ * gimp_color_area_get_color:
+ * @area: Pointer to a #GimpColorArea.
+ * @color: Pointer to a #GimpRGB struct that is used to return the color.
+ *
+ * Retrieves the current color of the @area.
+ **/
 void
 gimp_color_area_get_color (GimpColorArea *area,
 			   GimpRGB       *color)
@@ -310,6 +318,15 @@ gimp_color_area_get_color (GimpColorArea *area,
   *color = area->color;
 }
 
+/**
+ * gimp_color_area_has_alpha:
+ * @area: Pointer to a #GimpColorArea.
+ *
+ * Checks whether the @area shows transparency information. This is determined
+ * via the @area's #GimpColorAreaType.
+ *
+ * Returns: %TRUE if @area shows transparency information, %FALSE otherwise.
+ **/
 gboolean    
 gimp_color_area_has_alpha (GimpColorArea *area)
 {
@@ -318,6 +335,15 @@ gimp_color_area_has_alpha (GimpColorArea *area)
   return area->type != GIMP_COLOR_AREA_FLAT;
 }
 
+/**
+ * gimp_color_area_set_type:
+ * @area: Pointer to a #GimpColorArea.
+ * @type: A #GimpColorAreaType. 
+ *
+ * Allows to change the type of @area. The #GimpColorAreaType determines
+ * whether the widget shows transparency information and chooses the size of
+ * the checkerboard used to do that.
+ **/
 void
 gimp_color_area_set_type (GimpColorArea     *area,
 			  GimpColorAreaType  type)

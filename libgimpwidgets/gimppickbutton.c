@@ -168,6 +168,13 @@ gimp_pick_button_destroy (GtkObject *object)
 
 /*  public functions  */
 
+/**
+ * gimp_pick_button_new:
+ *
+ * Creates a new #GimpPickButton widget.
+ * 
+ * Returns: A new #GimpPickButton widget.
+ **/
 GtkWidget *
 gimp_pick_button_new (void)
 {

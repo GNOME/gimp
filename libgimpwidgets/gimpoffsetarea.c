@@ -212,10 +212,10 @@ gimp_offset_area_set_size (GimpOffsetArea *offset_area,
 }
 
 /**
- * gimp_offset_area_set_size:
+ * gimp_offset_area_set_offsets:
  * @offset_area: a #GimpOffsetArea.
- * @width: the X offset
- * @height: the Y offset
+ * @offset_x: the X offset
+ * @offset_y: the Y offset
  * 
  * Sets the offsets of the image/drawable displayed by the #GimpOffsetArea.
  * It does not emit the %offsets_changed signal.

@@ -59,7 +59,7 @@ struct _GimpColorButtonClass
 {
   GimpButtonClass  parent_class;
 
-  void (* color_changed) (GimpColorButton *gcb);
+  void (* color_changed) (GimpColorButton *button);
 };
 
 
@@ -71,12 +71,12 @@ GtkWidget * gimp_color_button_new        (const gchar       *title,
 					  const GimpRGB     *color,
 					  GimpColorAreaType  type);
 
-void        gimp_color_button_set_color  (GimpColorButton   *gcb,
+void        gimp_color_button_set_color  (GimpColorButton   *button,
 					  const GimpRGB     *color);
-void        gimp_color_button_get_color  (GimpColorButton   *gcb,
+void        gimp_color_button_get_color  (GimpColorButton   *button,
 					  GimpRGB           *color);
-gboolean    gimp_color_button_has_alpha  (GimpColorButton   *gcb);
-void        gimp_color_button_set_type   (GimpColorButton   *gcb,
+gboolean    gimp_color_button_has_alpha  (GimpColorButton   *button);
+void        gimp_color_button_set_type   (GimpColorButton   *button,
 					  GimpColorAreaType  type);
 
 

@@ -63,7 +63,7 @@ struct _GimpColorAreaClass
 {
   GtkDrawingAreaClass  parent_class;
 
-  void (* color_changed) (GimpColorArea *gca);
+  void (* color_changed) (GimpColorArea *area);
 };
 
 

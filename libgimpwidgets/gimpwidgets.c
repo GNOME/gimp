@@ -83,6 +83,8 @@ gimp_widgets_init (void)
  * @menu_only: #TRUE if the function should return a #GtkMenu only.
  * @...:       A #NULL terminated @va_list describing the menu items.
  *
+ * Convenience function to create a #GtkOptionMenu or a #GtkMenu.
+ *
  * Returns: A #GtkOptionMenu or a #GtkMenu (depending on @menu_only).
  **/
 GtkWidget *
@@ -195,6 +197,8 @@ gimp_option_menu_new (gboolean            menu_only,
  * @initial:            The @item_data of the initially selected menu item.
  * @...:                A #NULL terminated @va_list describing the menu items.
  *
+ * Convenience function to create a #GtkOptionMenu or a #GtkMenu.
+ *
  * Returns: A #GtkOptionMenu or a #GtkMenu (depending on @menu_only).
  **/
 GtkWidget *
@@ -296,6 +300,10 @@ gimp_option_menu_new2 (gboolean         menu_only,
  * @option_menu: A #GtkOptionMenu as returned by gimp_option_menu_new() or
  *               gimp_option_menu_new2().
  * @item_data:   The @item_data of the menu item you want to select.
+ *
+ * Iterates over all entries in a #GtkOptionMenu and selects the one with the
+ * matching @item_data. Probably only makes sense to use with a #GtkOptionMenu
+ * that was created using gimp_option_menu_new() or gimp_option_menu_new2().
  **/
 void
 gimp_option_menu_set_history (GtkOptionMenu *option_menu,
@@ -373,6 +381,9 @@ gimp_option_menu_set_sensitive (GtkOptionMenu                     *option_menu,
  * @in_frame:    #TRUE if you want a #GtkFrame around the radio button group.
  * @frame_title: The title of the Frame or #NULL if you don't want a title.
  * @...:         A #NULL terminated @va_list describing the radio buttons.
+ *
+ * Convenience function to create a group of radio buttons embedded into
+ * a #GtkFrame or #GtkVbox.
  *
  * Returns: A #GtkFrame or #GtkVbox (depending on @in_frame).
  **/
@@ -482,6 +493,9 @@ gimp_radio_group_new (gboolean            in_frame,
  * @...:                   A #NULL terminated @va_list describing
  *                         the radio buttons.
  *
+ * Convenience function to create a group of radio buttons embedded into
+ * a #GtkFrame or #GtkVbox.
+ *
  * Returns: A #GtkFrame or #GtkVbox (depending on @in_frame).
  **/
 GtkWidget *
@@ -571,6 +585,14 @@ gimp_radio_group_new2 (gboolean         in_frame,
   return vbox;
 }
 
+/**
+ * gimp_radio_group_set_active:
+ * @radio_button: Pointer to a #GtkRadioButton.
+ * @item_data: The @item_data of the radio button you want to select.
+ *
+ * Calls gtk_toggle_button_set_active() with the radio button that was created
+ * with a matching @item_data.
+ **/
 void
 gimp_radio_group_set_active (GtkRadioButton *radio_button,
                              gpointer        item_data)
@@ -650,7 +672,7 @@ gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
 				     adjustment);
 }
 
-GtkObject *
+static GtkObject *
 gimp_scale_entry_new_internal (gboolean     color_scale,
                                GtkTable    *table,
                                gint         column,
@@ -1083,9 +1105,11 @@ gimp_coordinates_callback (GtkWidget *widget,
  * @ysize_0:                The Y value which will be treated as 0%.
  * @ysize_100:              The Y value which will be treated as 100%.
  *
- * Returns: A #GimpSizeEntry with two fields for x/y coordinates/sizes with
- *          a #GimpChainButton attached to constrain either the two fields'
- *          values or the ratio between them.
+ * Convenience function that creates a #GimpSizeEntry with two fields for x/y
+ * coordinates/sizes with a #GimpChainButton attached to constrain either the
+ * two fields' values or the ratio between them.
+ *
+ * Returns: The new #GimpSizeEntry.
  **/
 GtkWidget *
 gimp_coordinates_new (GimpUnit         unit,
@@ -1202,7 +1226,10 @@ gimp_coordinates_new (GimpUnit         unit,
  * @xpm_data: The XPM data which will be passed to gimp_pixmap_new().
  * @text:     An optional text which will appear right of the pixmap.
  *
- * Returns: A #GtkButton with a #GimpPixmap and an optional #GtkLabel.
+ * Convenience function that creates a #GtkButton with a #GimpPixmap and an
+ * optional #GtkLabel.
+ * 
+ * Returns: The new #GtkButton.
  **/
 GtkWidget *
 gimp_pixmap_button_new (gchar       **xpm_data,

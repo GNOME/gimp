@@ -47,8 +47,10 @@ color, the "color_changed" signal is emitted.
 
 </para>
 
-@gcb: 
+@button: 
 @color: 
+<!-- # Unused Parameters # -->
+@gcb: 
 
 
 <!-- ##### FUNCTION gimp_color_button_get_color ##### -->
@@ -56,8 +58,10 @@ color, the "color_changed" signal is emitted.
 
 </para>
 
-@gcb: 
+@button: 
 @color: 
+<!-- # Unused Parameters # -->
+@gcb: 
 
 
 <!-- ##### FUNCTION gimp_color_button_has_alpha ##### -->
@@ -65,8 +69,10 @@ color, the "color_changed" signal is emitted.
 
 </para>
 
-@gcb: 
+@button: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@gcb: 
 
 
 <!-- ##### FUNCTION gimp_color_button_set_type ##### -->
@@ -74,9 +80,10 @@ color, the "color_changed" signal is emitted.
 
 </para>
 
-@gcb: 
+@button: 
 @type: 
 <!-- # Unused Parameters # -->
+@gcb: 
 @alpha: 
 
 
