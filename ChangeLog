@@ -1,3 +1,11 @@
+2003-06-03  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/gifload.c: When initializing the LZW state,
+	watch out for a completely bogus input_code_size [based on fix
+	by Raphael Quinet]  Also, fix a stupid old bug when clearing the
+	code table between subimages.  (Enables us to deal better with errors
+	when the stream is corrupted pretty early in a subimage.) [me]
+
 2003-06-02  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpvectorstreeview.h

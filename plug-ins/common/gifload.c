@@ -1,50 +1,54 @@
-/* GIF loading file filter for The GIMP version 1.0/1.1
- *
- *    - Adam D. Moss
- *    - Peter Mattis
- *    - Spencer Kimball
- *
- *      Based around original GIF code by David Koblas.
- *
- *
- * Version 1.0.3 - 2000/03/31
+/* GIF loading file filter for The GIMP 1.3/1.4
+ * +-------------------------------------------------------------------+
+ * |  Copyright Adam D. Moss, Peter Mattis, Spencer Kimball            |
+ * +-------------------------------------------------------------------+
+ * Version 1.50.4 - 2003/06/03
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
-/*
- * This filter uses code taken from the "giftopnm" and "ppmtogif" programs
- *    which are part of the "netpbm" package.
+
+/* Copyright notice for old GIF code from which this plugin was long ago */
+/* derived (David Koblas has kindly granted permission to relicense):    */
+/* +-------------------------------------------------------------------+ */
+/* | Copyright 1990, 1991, 1993, David Koblas.  (koblas@extra.com)     | */
+/* +-------------------------------------------------------------------+ */
+/* Also...
+ * 'This filter uses code taken from the "giftopnm" and "ppmtogif" programs
+ *    which are part of the "netpbm" package.'
  */
-/*
+/* Additionally...
  *  "The Graphics Interchange Format(c) is the Copyright property of
  *  CompuServe Incorporated.  GIF(sm) is a Service Mark property of
  *  CompuServe Incorporated." 
  */
-/* Copyright notice for GIF code from which this plugin was long ago     */
-/* derived (David Koblas has granted permission to relicense):           */
-/* +-------------------------------------------------------------------+ */
-/* | Copyright 1990, 1991, 1993, David Koblas.  (koblas@extra.com)     | */
-/* +-------------------------------------------------------------------+ */
 
 /*
  * REVISION HISTORY
+ *
+ * 2003/06/03
+ * 1.50.04 - When initializing the LZW state, watch out for a completely
+ *     bogus input_code_size [based on fix by Raphael Quinet]
+ *     Also, fix a stupid old bug when clearing the code table between
+ *     subimages.  (Enables us to deal better with errors when the stream is
+ *     corrupted pretty early in a subimage.) [adam]
+ *     Minor-version-bump to distinguish between gimp1.2/1.4 branches.
  *
  * 2000/03/31
  * 1.00.03 - Just mildly more useful comments/messages concerning frame
  *     disposals.
  *
- * 99/11/20
+ * 1999/11/20
  * 1.00.02 - Fixed a couple of possible infinite loops where an
  *     error condition was not being checked.  Also changed some g_message()s
  *     back to g_warning()s as they should be (don't get carried away with
  *     the user feedback fellahs, no-one wants to be told of every single
  *     corrupt byte and block in its own little window.  :-( ).
  *
- * 99/11/11
+ * 1999/11/11
  * 1.00.01 - Fixed an uninitialized variable which has been around
  *     forever... thanks to jrb@redhat.com for noticing that there
  *     was a problem somewhere!
  *
- * 99/03/20
+ * 1999/03/20
  * 1.00.00 - GIF load-only code split from main GIF plugin.
  *
  * For previous revision information, please consult the comments
@@ -380,7 +384,7 @@ load_image (gchar *filename)
       if (c != ',')
 	{
 	  /* Not a valid start character */
-	  g_warning ("GIF: bogus character 0x%02x, ignoring\n", (int) c);
+	  g_printerr ("GIF: bogus character 0x%02x, ignoring\n", (int) c);
 	  continue;
 	}
 
@@ -644,7 +648,7 @@ GetCode (FILE *fd,
 
 static int
 LZWReadByte (FILE *fd,
-	     int   flag,
+	     int   just_reset_LZW,
 	     int   input_code_size)
 {
   static int fresh = FALSE;
@@ -657,8 +661,14 @@ LZWReadByte (FILE *fd,
   static int stack[(1 << (MAX_LZW_BITS)) * 2], *sp;
   register int i;
 
-  if (flag)
+  if (just_reset_LZW)
     {
+      if (input_code_size > MAX_LZW_BITS)
+	{
+	  g_message("GIF: value out of range for code size (corrupted file?)");
+	  return -1;
+	}
+
       set_code_size = input_code_size;
       code_size = set_code_size + 1;
       clear_code = 1 << set_code_size;
@@ -670,15 +680,18 @@ LZWReadByte (FILE *fd,
 
       fresh = TRUE;
 
+      sp = stack;
+
       for (i = 0; i < clear_code; ++i)
 	{
 	  table[0][i] = 0;
 	  table[1][i] = i;
 	}
       for (; i < (1 << MAX_LZW_BITS); ++i)
-	table[0][i] = table[1][0] = 0;
-
-      sp = stack;
+	{
+	  table[0][i] = 0;
+	  table[1][i] = 0;
+	}
 
       return 0;
     }
@@ -707,7 +720,10 @@ LZWReadByte (FILE *fd,
 	      table[1][i] = i;
 	    }
 	  for (; i < (1 << MAX_LZW_BITS); ++i)
-	    table[0][i] = table[1][i] = 0;
+	    {
+	      table[0][i] = 0;
+	      table[1][i] = 0;
+	    }
 	  code_size = set_code_size + 1;
 	  max_code_size = 2 * clear_code;
 	  max_code = clear_code + 2;
