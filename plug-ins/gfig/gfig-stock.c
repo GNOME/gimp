@@ -52,7 +52,8 @@ static GtkStockItem gfig_stock_items[] =
 
 
 static void
-add_stock_icon (const gchar  *stock_id, 
+add_stock_icon (const gchar  *stock_id,
+                GtkIconSize   size,
 		const guint8 *inline_data)
 {
   GtkIconSource *source;
@@ -61,7 +62,7 @@ add_stock_icon (const gchar  *stock_id,
   
   source = gtk_icon_source_new ();
 
-  gtk_icon_source_set_size (source, GTK_ICON_SIZE_BUTTON);
+  gtk_icon_source_set_size (source, size);
   gtk_icon_source_set_size_wildcarded (source, FALSE);
 
   pixbuf = gdk_pixbuf_new_from_inline (-1, inline_data, FALSE, NULL);
@@ -89,19 +90,21 @@ gfig_stock_init (void)
 
   gfig_icon_factory = gtk_icon_factory_new ();
 
-  add_stock_icon (GFIG_STOCK_BEZIER,        stock_bezier);
-  add_stock_icon (GFIG_STOCK_CIRCLE,        stock_circle);
-  add_stock_icon (GFIG_STOCK_COPY_OBJECT,   stock_copy_object);
-  add_stock_icon (GFIG_STOCK_CURVE,         stock_curve);
-  add_stock_icon (GFIG_STOCK_DELETE_OBJECT, stock_delete_object);
-  add_stock_icon (GFIG_STOCK_ELLIPSE,       stock_ellipse);
-  add_stock_icon (GFIG_STOCK_LINE,          stock_line);
-  add_stock_icon (GFIG_STOCK_MOVE_OBJECT,   stock_move_object);
-  add_stock_icon (GFIG_STOCK_MOVE_POINT,    stock_move_point);
-  add_stock_icon (GFIG_STOCK_POLYGON,       stock_polygon);
-  add_stock_icon (GFIG_STOCK_SPIRAL,        stock_spiral);
-  add_stock_icon (GFIG_STOCK_STAR,          stock_star);
-  
+  add_stock_icon (GFIG_STOCK_BEZIER,        GTK_ICON_SIZE_BUTTON, stock_bezier);
+  add_stock_icon (GFIG_STOCK_CIRCLE,        GTK_ICON_SIZE_BUTTON, stock_circle);
+  add_stock_icon (GFIG_STOCK_COPY_OBJECT,   GTK_ICON_SIZE_BUTTON, stock_copy_object);
+  add_stock_icon (GFIG_STOCK_CURVE,         GTK_ICON_SIZE_BUTTON, stock_curve);
+  add_stock_icon (GFIG_STOCK_DELETE_OBJECT, GTK_ICON_SIZE_BUTTON, stock_delete_object);
+  add_stock_icon (GFIG_STOCK_ELLIPSE,       GTK_ICON_SIZE_BUTTON, stock_ellipse);
+  add_stock_icon (GFIG_STOCK_LINE,          GTK_ICON_SIZE_BUTTON, stock_line);
+  add_stock_icon (GFIG_STOCK_MOVE_OBJECT,   GTK_ICON_SIZE_BUTTON, stock_move_object);
+  add_stock_icon (GFIG_STOCK_MOVE_POINT,    GTK_ICON_SIZE_BUTTON, stock_move_point);
+  add_stock_icon (GFIG_STOCK_POLYGON,       GTK_ICON_SIZE_BUTTON, stock_polygon);
+  add_stock_icon (GFIG_STOCK_SPIRAL,        GTK_ICON_SIZE_BUTTON, stock_spiral);
+  add_stock_icon (GFIG_STOCK_STAR,          GTK_ICON_SIZE_BUTTON, stock_star);
+
+  add_stock_icon (GFIG_STOCK_LOGO,          GTK_ICON_SIZE_DIALOG, stock_logo);
+
   gtk_icon_factory_add_default (gfig_icon_factory);
 
   gtk_stock_add_static (gfig_stock_items, G_N_ELEMENTS (gfig_stock_items));

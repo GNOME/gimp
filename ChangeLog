@@ -1,3 +1,14 @@
+2003-01-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gfig/images/Makefile.am
+	* plug-ins/gfig/images/stock-logo.png: new Gfig logo courtesy of
+	Owen <oc@webone.com.au>.
+
+	* plug-ins/gfig/gfig-stock.[ch]
+	* plug-ins/gfig/gfig.c: use the new logo icon.
+
+	* plug-ins/gfig/pix_data.h: removed the old one.
+
 2003-01-09  Jakub Steiner <jimmac@ximian.com>
 
 	* data/images/gimp_splash.png: new splash

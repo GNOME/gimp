@@ -998,7 +998,7 @@ gfig_list_load_all (GList *plist)
       dir = g_dir_open (path, 0, NULL);
 
       if (!dir)
-	g_warning ("Error reading GFig folder \"%s\"", path);
+	g_warning ("Error reading Gfig folder \"%s\"", path);
       else
 	{
 	  while ((dir_ent = g_dir_read_name (dir)))
@@ -3902,7 +3902,7 @@ gfig_dialog (void)
   img_height = gimp_drawable_height (gfig_select_drawable->drawable_id);
 
   /* Start buildng the dialog up */
-  top_level_dlg = gimp_dialog_new (_("GFig"), "gfig",
+  top_level_dlg = gimp_dialog_new (_("Gfig"), "gfig",
 				   gimp_standard_help_func, "filters/gfig.html",
 				   GTK_WIN_POS_MOUSE,
 				   FALSE, FALSE, FALSE,
@@ -4792,9 +4792,9 @@ about_button_callback (GtkWidget *widget,
   GtkWidget *label;
   GtkWidget *hbox;
   GtkWidget *vbox;
-  GtkWidget *pm;
+  GtkWidget *image;
 
-  window = gimp_dialog_new (_("About GFig"), "gfig",
+  window = gimp_dialog_new (_("About Gfig"), "gfig",
 			    gimp_standard_help_func, "filters/gfig.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, FALSE, FALSE,
@@ -4804,19 +4804,19 @@ about_button_callback (GtkWidget *widget,
 
 			    NULL);
 
-  /* Bits and bobs */
-  pm = gimp_pixmap_new (rulers_comp_xpm);
-  gtk_widget_show (pm);
+  image = gtk_image_new_from_stock (GFIG_STOCK_LOGO, GTK_ICON_SIZE_DIALOG);
+  gtk_widget_show (image);
 
-  hbox = gtk_hbox_new (FALSE, 1);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 1);
+  vbox = gtk_vbox_new (FALSE, 4);
   gtk_widget_show (vbox);
 
-  gtk_box_pack_start (GTK_BOX (hbox), pm, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), image, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), hbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox),
+                      hbox, TRUE, TRUE, 0);
 
   label = gtk_label_new (_("Gfig - GIMP plug-in"));
   gtk_misc_set_padding (GTK_MISC (label), 2, 2);
@@ -4833,7 +4833,7 @@ about_button_callback (GtkWidget *widget,
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Email alt@picnic.demon.co.uk"));
+  label = gtk_label_new ("Email alt@picnic.demon.co.uk");
   gtk_misc_set_padding (GTK_MISC (label), 2, 2);
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -4843,7 +4843,7 @@ about_button_callback (GtkWidget *widget,
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Isometric grid By Rob Saunders"));
+  label = gtk_label_new ("Isometric grid By Rob Saunders");
   gtk_misc_set_padding (GTK_MISC (label), 2, 2);
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);

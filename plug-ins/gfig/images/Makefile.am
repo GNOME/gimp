@@ -12,7 +12,8 @@ STOCK_IMAGES = \
 	stock-move-point.png	\
 	stock-polygon.png	\
 	stock-spiral.png	\
-	stock-star.png
+	stock-star.png		\
+	stock-logo.png
 
 EXTRA_DIST = $(STOCK_IMAGES)
 

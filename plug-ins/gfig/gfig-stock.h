@@ -40,6 +40,8 @@
 #define GFIG_STOCK_SPIRAL         "gfig-spiral"
 #define GFIG_STOCK_STAR           "gfig-star"
 
+#define GFIG_STOCK_LOGO           "gfig-logo"
+
 
 void  gfig_stock_init (void);
 
