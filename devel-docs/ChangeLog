@@ -1,3 +1,9 @@
+2003-06-19  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimp.sgml
+	* libgimp/tmpl/gimptile.sgml: updated/regenerated.
+
 2003-06-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

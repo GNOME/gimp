@@ -20,7 +20,7 @@ GimpParamData
 GimpParam
 MAIN
 gimp_main
-gimp_default_display
+gimp_quit
 gimp_install_procedure
 gimp_install_temp_proc
 gimp_uninstall_temp_proc
@@ -28,11 +28,19 @@ gimp_run_procedure
 gimp_run_procedure2
 gimp_destroy_params
 gimp_destroy_paramdefs
+gimp_tile_width
+gimp_tile_height
+gimp_shm_ID
+gimp_shm_addr
 gimp_gamma
 gimp_install_cmap
 gimp_min_colors
 gimp_show_tool_tips
+gimp_default_display
 gimp_get_progname
+gimp_extension_enable
+gimp_extension_ack
+gimp_extension_process
 gimp_parasite_find
 gimp_parasite_list
 gimp_parasite_attach
@@ -524,8 +532,6 @@ gimp_tile_unref
 gimp_tile_flush
 gimp_tile_cache_size
 gimp_tile_cache_ntiles
-gimp_tile_width
-gimp_tile_height
 </SECTION>
 
 <SECTION>

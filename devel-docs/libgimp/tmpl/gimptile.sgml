@@ -79,19 +79,3 @@ Functions for working with tiles.
 @ntiles: 
 
 
-<!-- ##### FUNCTION gimp_tile_width ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_tile_height ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-

@@ -181,14 +181,6 @@ all other GIMP Library headers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_default_display ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_install_procedure ##### -->
 <para>
 
@@ -203,10 +195,13 @@ all other GIMP Library headers.
 @menu_path: 
 @image_types: 
 @type: 
-@nparams: 
-@nreturn_vals: 
+@n_params: 
+@n_return_vals: 
 @params: 
 @return_vals: 
+<!-- # Unused Parameters # -->
+@nparams: 
+@nreturn_vals: 
 
 
 <!-- ##### FUNCTION gimp_install_temp_proc ##### -->
@@ -223,11 +218,14 @@ all other GIMP Library headers.
 @menu_path: 
 @image_types: 
 @type: 
-@nparams: 
-@nreturn_vals: 
+@n_params: 
+@n_return_vals: 
 @params: 
 @return_vals: 
 @run_proc: 
+<!-- # Unused Parameters # -->
+@nparams: 
+@nreturn_vals: 
 
 
 <!-- ##### FUNCTION gimp_uninstall_temp_proc ##### -->
@@ -255,10 +253,13 @@ all other GIMP Library headers.
 </para>
 
 @name: 
-@nreturn_vals: 
-@nparams: 
+@n_return_vals: 
+@n_params: 
 @params: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@nreturn_vals: 
+@nparams: 
 
 
 <!-- ##### FUNCTION gimp_destroy_params ##### -->
@@ -267,6 +268,8 @@ all other GIMP Library headers.
 </para>
 
 @params: 
+@n_params: 
+<!-- # Unused Parameters # -->
 @nparams: 
 
 
@@ -276,7 +279,41 @@ all other GIMP Library headers.
 </para>
 
 @paramdefs: 
+@n_params: 
+<!-- # Unused Parameters # -->
 @nparams: 
+
+
+<!-- ##### FUNCTION gimp_tile_width ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_tile_height ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_shm_ID ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_shm_addr ##### -->
+<para>
+
+</para>
+
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_gamma ##### -->
@@ -311,12 +348,42 @@ all other GIMP Library headers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_default_display ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_get_progname ##### -->
 <para>
 
 </para>
 
 @Returns: 
+
+
+<!-- ##### FUNCTION gimp_extension_enable ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gimp_extension_ack ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gimp_extension_process ##### -->
+<para>
+
+</para>
+
+@timeout: 
 
 
 <!-- ##### FUNCTION gimp_parasite_find ##### -->
