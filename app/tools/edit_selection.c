@@ -110,7 +110,7 @@ static void      gimp_edit_selection_tool_control        (GimpTool       *tool,
 static void      gimp_edit_selection_tool_cursor_update  (GimpTool       *tool,
 							  GdkEventMotion *mevent,
 							  GDisplay       *gdisp);
-static void      gimp_edit_selection_tool_arrow_key      (GimpTool       *tool,
+void             gimp_edit_selection_tool_arrow_key      (GimpTool       *tool,
 							  GdkEventKey    *kevent,
 							  GDisplay       *gdisp);
 
@@ -164,7 +164,6 @@ gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass)
   tool_class->button_release = gimp_edit_selection_tool_button_release;
   tool_class->motion         = gimp_edit_selection_tool_motion;
   tool_class->cursor_update  = gimp_edit_selection_tool_cursor_update;
-  tool_class->arrow_key      = gimp_edit_selection_tool_arrow_key;
 
   draw_class->draw	     = gimp_edit_selection_tool_draw;
 }
@@ -878,19 +877,16 @@ process_event_queue_keys (GdkEventKey *kevent,
 #undef FILTER_MAX_KEYS
 }
 
-static void
+void
 gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 				    GdkEventKey *kevent,
 				    GDisplay    *gdisp)
 {
-  GimpEditSelectionTool *edit_select;
-  gint                   inc_x, inc_y, mask_inc_x, mask_inc_y;
-  GimpLayer             *layer;
-  GimpLayer             *floating_layer;
-  GList                 *layer_list;
-  EditType               edit_type;
-
-  edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
+  gint       inc_x, inc_y, mask_inc_x, mask_inc_y;
+  GimpLayer *layer;
+  GimpLayer *floating_layer;
+  GList     *layer_list;
+  EditType   edit_type;
 
   layer = NULL;
 

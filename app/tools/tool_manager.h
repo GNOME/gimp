@@ -20,24 +20,27 @@
 #define __TOOL_MANAGER_H__
 
 
-#include "tool.h" /* EEEEEEEEEEK */
+/*  Global Data Structures  */
+extern GimpTool      *active_tool;
+
+extern GimpContainer *global_tool_info_list;
 
 
-/*  Function declarations  */
-void        tool_manager_select_tool           (GimpTool       *tool);
+void        tool_manager_select_tool              (GimpTool       *tool);
 
-void        tool_manager_push_tool             (GimpTool       *tool);
-void        tool_manager_pop_tool              (void);
+void        tool_manager_push_tool                (GimpTool       *tool);
+void        tool_manager_pop_tool                 (void);
 
 
-void        tool_manager_initialize_tool       (GimpTool       *tool,
-						GDisplay       *gdisp);
+void        tool_manager_initialize_tool          (GimpTool       *tool,
+						   GDisplay       *gdisp);
 
-void        tool_manager_control_active        (ToolAction      action,
-						GDisplay       *gdisp);
+void        tool_manager_control_active           (ToolAction      action,
+						   GDisplay       *gdisp);
 
-void        tool_manager_register              (GimpToolClass  *tool_type
-						/*, ToolOptions *tool_options*/);
+const gchar  * tool_manager_active_get_PDB_string (void);
+const gchar  * tool_manager_active_get_help_data  (void);
+
 
 
 void        tool_manager_init                  (void);
@@ -56,21 +59,12 @@ void        tool_manager_register_tool         (GtkType         tool_type,
 void        tool_manager_register_tool_options (GtkType         tool_type,
 						ToolOptions    *tool_options);
 
-GimpToolInfo * tool_manager_get_info_by_type      (GtkType        tool_type);
-GimpToolInfo * tool_manager_get_info_by_tool      (GimpTool      *tool);
+GimpToolInfo * tool_manager_get_info_by_type   (GtkType         tool_type);
+GimpToolInfo * tool_manager_get_info_by_tool   (GimpTool       *tool);
 
-
-const gchar  * tool_manager_active_get_PDB_string (void);
-const gchar  * tool_manager_active_get_help_data  (void);
 
 
 void	       tool_manager_help_func             (const gchar   *help_data);
-
-
-/*  Global Data Structures  */
-extern GimpTool      *active_tool;
-
-extern GimpContainer *global_tool_info_list;
 
 
 #endif  /*  __TOOL_MANAGER_H__  */

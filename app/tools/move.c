@@ -134,6 +134,7 @@ gimp_move_tool_class_init (GimpMoveToolClass *klass)
   tool_class->button_release = move_tool_button_release;
   tool_class->motion         = move_tool_motion;
   tool_class->cursor_update  = move_tool_cursor_update;
+  tool_class->arrow_key      = gimp_edit_selection_tool_arrow_key;
 }
 
 static void

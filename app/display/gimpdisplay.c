@@ -27,6 +27,9 @@
 
 #include "apptypes.h"
 
+#include "tools/tool.h"
+#include "tools/tool_manager.h"
+
 #include "appenv.h"
 #include "colormaps.h"
 #include "cursorutil.h"
@@ -60,8 +63,6 @@
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color.h"
 #endif /* DISPLAY_FILTERS */
-
-#include "tools/tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 

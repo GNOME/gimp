@@ -35,4 +35,9 @@ void   init_edit_selection (GimpTool       *tool,
                             EditType        edit_type);
 
 
+void   gimp_edit_selection_tool_arrow_key (GimpTool       *tool,
+                                           GdkEventKey    *kevent,
+                                           GDisplay       *gdisp);
+
+
 #endif  /*  __GIMP_EDIT_SELECTION_TOOL_H__  */

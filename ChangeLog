@@ -1,5 +1,19 @@
 2001-02-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/gdisplay.c
+	* app/gimage.c. #include "tools/tool.h"
+
+	* app/tools/edit_selection.[ch]: the arrow_key function is not
+	a method of edit_selection but of any tool that needs it.
+
+	* app/tools/gimppaintbrushtool.c: removed variables.
+
+	* app/tools/move.c: use the arrow_key function.
+
+	* app/tools/tool_manager.h: removed the include of "tool.h"
+
+2001-02-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/Makefile.am
 	* app/tools/edit_selection.[ch]: back as real tool which gets
 	temporarily pushed to the tool_manager's new tool stack.
@@ -45,7 +59,7 @@
 
 	* app/tools/gimptoolinfo.[ch]: added a "tool_context" boolean to
 	the constructor and create a private context for the tool
-	initialized with global_paint_options's values.
+	initialized with global_paint_options' values.
 
 	* app/tools/tool_manager.[ch]: changed tool_manager_register_tool()
 	accordingly.

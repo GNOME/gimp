@@ -73,14 +73,10 @@ struct _PaintbrushOptions
 static PaintbrushOptions * paintbrush_options = NULL;
 
 /*  local variables  */
-static gdouble   non_gui_fade_out;
-static gdouble   non_gui_gradient_length;
-static gint      non_gui_gradient_type;
 static gdouble   non_gui_incremental;
-static GimpUnit  non_gui_fade_unit;
-static GimpUnit  non_gui_gradient_unit;
 
-static GimpPaintToolClass *parent_class;
+static GimpPaintToolClass *parent_class = NULL;
+
 
 /*  forward function declarations  */
 static void  gimp_paintbrush_tool_motion     (GimpPaintTool        *,
