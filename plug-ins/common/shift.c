@@ -38,11 +38,10 @@
 
 /* Some useful macros */
 
-#define SCALE_WIDTH     200
+#define SPIN_BUTTON_WIDTH 75
 #define TILE_CACHE_SIZE  16
 #define HORIZONTAL        0
 #define VERTICAL          1
-#define ENTRY_WIDTH      35
 
 typedef struct
 {
@@ -67,9 +66,10 @@ static void    run    (gchar      *name,
 
 static void    shift  (GimpDrawable *drawable);
 
-static gint    shift_dialog      (void);
+static gint    shift_dialog      (gint32 image_ID);
 static void    shift_ok_callback (GtkWidget *widget,
 				  gpointer   data);
+static void    shift_amount_update_callback(GtkWidget * widget, gpointer data);
 
 static GimpTile * shift_pixel (GimpDrawable *drawable,
                                GimpTile     *tile,
@@ -143,10 +143,12 @@ run (gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
+  gint32             image_ID;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
+  image_ID = param[1].data.d_int32;
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -165,7 +167,7 @@ run (gchar      *name,
       gimp_get_data ("plug_in_shift", &shvals);
 
       /*  First acquire information with a dialog  */
-      if (! shift_dialog ())
+      if (! shift_dialog (image_ID))
 	return;
       break;
 
@@ -355,14 +357,16 @@ shift (GimpDrawable *drawable)
 
 
 static gint
-shift_dialog (void)
+shift_dialog (gint32 image_ID)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *radio_vbox;
   GtkWidget *sep;
-  GtkWidget *table;
-  GtkObject *amount_data;
+  GtkWidget *size_entry;
+  GimpUnit   unit;
+  gdouble    xres;
+  gdouble    yres;
 
   gimp_ui_init ("shift", FALSE);
 
@@ -406,19 +410,30 @@ shift_dialog (void)
   gtk_box_pack_start (GTK_BOX (radio_vbox), sep, FALSE, FALSE, 3);
   gtk_widget_show (sep);
 
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (radio_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  /*  Get the image resolution and unit  */
+  gimp_image_get_resolution (image_ID, &xres, &yres);
+  unit = gimp_image_get_unit (image_ID);
 
-  amount_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				      _("Shift _Amount:"), SCALE_WIDTH, 0,
-				      shvals.shift_amount, 0, 200, 1, 10, 0,
-				      TRUE, 0, 0,
-				      NULL, NULL);
-  g_signal_connect (G_OBJECT (amount_data), "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  size_entry = gimp_size_entry_new(1, unit, "%a", TRUE, FALSE, FALSE, 
+				   SPIN_BUTTON_WIDTH, 
+				   GIMP_SIZE_ENTRY_UPDATE_SIZE);
+
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0, 
+					 1.0, 200.0);
+  gtk_table_set_col_spacing (GTK_TABLE (size_entry), 0, 4);
+  gtk_table_set_col_spacing (GTK_TABLE (size_entry), 2, 12);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_entry), 0, 
+			      (gdouble) shvals.shift_amount);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry), 
+				_("Shift _Amount:"), 1, 0, 0.0);
+
+  g_signal_connect (G_OBJECT (size_entry), "value_changed",
+                    G_CALLBACK (shift_amount_update_callback),
                     &shvals.shift_amount);
+  gtk_box_pack_start (GTK_BOX (radio_vbox), size_entry, FALSE, FALSE, 0);
+  gtk_widget_show (size_entry);
 
   gtk_widget_show (frame);
 
@@ -428,6 +443,13 @@ shift_dialog (void)
   gdk_flush ();
 
   return shint.run;
+}
+
+static void 
+shift_amount_update_callback(GtkWidget * widget, gpointer data)
+{
+  shvals.shift_amount = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 
+						    0);
 }
 
 static void

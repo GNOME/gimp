@@ -1,5 +1,10 @@
 2002-06-14  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
+	* plug-ins/common/shift.c: #84588 (use standard size entry widget
+	for 'Shift Amount').
+
+2002-06-14  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
 	* plug-ins/imagemap/imap_cmd_unselect.c
 	* plug-ins/imagemap/imap_cmd_select.c
 	* plug-ins/imagemap/imap_rectangle.c: Fix for #71478 (Imagemap 
