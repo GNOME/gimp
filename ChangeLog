@@ -1,3 +1,8 @@
+2003-09-04  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh (LIBTOOL_WIN32): changed to 1.5 since win32 libtool
+	doesn't seem to be reporting the micro version number.
+
 2003-09-04  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/paths.pdb: init path_list to quell gcc warning.
