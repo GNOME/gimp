@@ -52,6 +52,8 @@ static GTokenType plug_in_locale_def_deserialize (GScanner      *scanner,
                                                   PlugInDef     *plug_in_def);
 static GTokenType plug_in_help_def_deserialize   (GScanner      *scanner,
                                                   PlugInDef     *plug_in_def);
+static GTokenType plug_in_has_init_deserialize   (GScanner      *scanner,
+                                                  PlugInDef     *plug_in_def);
 
 static inline gboolean parse_token               (GScanner      *scanner,
                                                   GTokenType     token);
@@ -69,6 +71,7 @@ enum
   PROC_DEF,
   LOCALE_DEF,
   HELP_DEF,
+  HAS_INIT,
   PROC_ARG
 };
 
@@ -103,6 +106,8 @@ plug_in_rc_parse (const gchar *filename)
                               "locale-def", GINT_TO_POINTER (LOCALE_DEF));
   g_scanner_scope_add_symbol (scanner, 0, 
                               "help-def", GINT_TO_POINTER (HELP_DEF));
+  g_scanner_scope_add_symbol (scanner, 0, 
+                              "has-init", GINT_TO_POINTER (HAS_INIT));
   g_scanner_scope_add_symbol (scanner, 0, 
                               "proc-arg", GINT_TO_POINTER (PROC_ARG));
 
@@ -206,6 +211,10 @@ plug_in_def_deserialize (GScanner *scanner)
               
             case HELP_DEF:
               token = plug_in_help_def_deserialize (scanner, plug_in_def);
+              break;
+              
+            case HAS_INIT:
+              token = plug_in_has_init_deserialize (scanner, plug_in_def);
               break;
 
             default:
@@ -352,6 +361,18 @@ plug_in_help_def_deserialize (GScanner  *scanner,
 {
   if (!parse_string (scanner, &plug_in_def->help_path))
     return G_TOKEN_STRING;
+
+  if (!parse_token (scanner, G_TOKEN_RIGHT_PAREN))
+    return G_TOKEN_RIGHT_PAREN;
+
+  return G_TOKEN_LEFT_PAREN;
+}
+
+static GTokenType 
+plug_in_has_init_deserialize (GScanner  *scanner,
+                              PlugInDef *plug_in_def)
+{
+  plug_in_def->has_init = TRUE;
 
   if (!parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
@@ -569,6 +590,11 @@ plug_in_rc_write (GSList      *plug_in_defs,
 	  if (plug_in_def->help_path)
 	    {
 	      fprintf (fp, "\n\t(help-def \"%s\")", plug_in_def->help_path);
+	    }
+	    
+	  if (plug_in_def->has_init)
+	    {
+	      fprintf (fp, "\n\t(has-init)");
 	    }
 
 	  fprintf (fp, ")\n");

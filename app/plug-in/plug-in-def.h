@@ -72,6 +72,7 @@ struct _PlugInDef
   gchar    *help_path;
   time_t    mtime;
   gboolean  query;
+  gboolean  has_init;     /* Does the plug-in need to be initialized? */
 };
 
 

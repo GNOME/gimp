@@ -110,6 +110,12 @@ static void _gp_params_write             (GIOChannel   *channel,
 /* used by gimp.c:gimp_destroy_params() */
 void        _gp_params_destroy           (GPParam      *params,
 					  gint          nparams);
+static void _gp_has_init_read            (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_has_init_write           (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_has_init_destroy         (WireMessage  *msg);
+
 
 
 void
@@ -163,6 +169,10 @@ gp_init (void)
 		 _gp_extension_ack_read,
 		 _gp_extension_ack_write,
 		 _gp_extension_ack_destroy);
+  wire_register (GP_HAS_INIT,
+		 _gp_has_init_read,
+		 _gp_has_init_write,
+		 _gp_has_init_destroy);
 }
 
 gboolean
@@ -345,6 +355,21 @@ gp_extension_ack_write (GIOChannel *channel)
   WireMessage msg;
 
   msg.type = GP_EXTENSION_ACK;
+  msg.data = NULL;
+
+  if (!wire_write_msg (channel, &msg))
+    return FALSE;
+  if (!wire_flush (channel))
+    return FALSE;
+  return TRUE;
+}
+
+gboolean
+gp_has_init_write (GIOChannel *channel)
+{
+  WireMessage msg;
+
+  msg.type = GP_HAS_INIT;
   msg.data = NULL;
 
   if (!wire_write_msg (channel, &msg))
@@ -1425,3 +1450,23 @@ _gp_params_destroy (GPParam *params,
 
   g_free (params);
 }
+
+/* has_init */
+
+static void
+_gp_has_init_read (GIOChannel  *channel,
+	           WireMessage *msg)
+{
+}
+
+static void
+_gp_has_init_write (GIOChannel  *channel,
+	     	    WireMessage *msg)
+{
+}
+
+static void
+_gp_has_init_destroy (WireMessage *msg)
+{
+}
+

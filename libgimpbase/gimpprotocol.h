@@ -27,7 +27,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GP_VERSION 0x000B
+#define GP_VERSION 0x000C
 
 
 enum
@@ -43,7 +43,8 @@ enum
   GP_TEMP_PROC_RETURN,
   GP_PROC_INSTALL,
   GP_PROC_UNINSTALL,
-  GP_EXTENSION_ACK
+  GP_EXTENSION_ACK,
+  GP_HAS_INIT
 };
 
 
@@ -201,6 +202,7 @@ gboolean  gp_proc_install_write     (GIOChannel      *channel,
 gboolean  gp_proc_uninstall_write   (GIOChannel      *channel,
 				     GPProcUninstall *proc_uninstall);
 gboolean  gp_extension_ack_write    (GIOChannel      *channel);
+gboolean  gp_has_init_write         (GIOChannel      *channel);
 
 
 G_END_DECLS

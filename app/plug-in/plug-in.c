@@ -160,6 +160,7 @@ static void plug_in_handle_proc_run       (GPProcRun         *proc_run);
 static void plug_in_handle_proc_return    (GPProcReturn      *proc_return);
 static void plug_in_handle_proc_install   (GPProcInstall     *proc_install);
 static void plug_in_handle_proc_uninstall (GPProcUninstall   *proc_uninstall);
+static void plug_in_handle_has_init       (void);
 static void plug_in_init_file             (const gchar       *filename,
 					   gpointer           loader_data);
 static void plug_in_query                 (PlugInDef         *plug_in_def);
@@ -438,8 +439,7 @@ plug_in_init (Gimp               *gimp,
       plug_in_def = tmp->data;
       tmp = tmp->next;
 
-      /* FIXME: only initialize when needed */
-      /* if (plug_in_def->init) */
+      if (plug_in_def->has_init)
 	{
 	  if (gimp->be_verbose)
 	    g_print (_("initializing plug-in: \"%s\"\n"), plug_in_def->prog);
@@ -1622,6 +1622,8 @@ plug_in_handle_message (WireMessage *msg)
     case GP_EXTENSION_ACK:
       gimp_main_loop_quit (the_gimp);
       break;
+    case GP_HAS_INIT:
+      plug_in_handle_has_init();
     }
 }
 
@@ -2195,6 +2197,11 @@ plug_in_handle_proc_uninstall (GPProcUninstall *proc_uninstall)
 	  break;
 	}
     }
+}
+static void
+plug_in_handle_has_init (void)
+{
+  current_plug_in->user_data->has_init = TRUE;
 }
 
 static gboolean

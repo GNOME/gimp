@@ -282,8 +282,12 @@ gimp_main (int   argc,
 
   if (strcmp (argv[4], "-query") == 0)
     {
+      if (PLUG_IN_INFO.init_proc)
+        gp_has_init_write(_writechannel);
+        
       if (PLUG_IN_INFO.query_proc)
 	(* PLUG_IN_INFO.query_proc) ();
+	
       gimp_close ();
       return 0;
     }
@@ -292,6 +296,7 @@ gimp_main (int   argc,
     {
       if (PLUG_IN_INFO.init_proc)
 	(* PLUG_IN_INFO.init_proc) ();
+	
       gimp_close ();
       return 0;
     }
@@ -773,6 +778,9 @@ gimp_process_message (WireMessage *msg)
     case GP_PROC_INSTALL:
       g_warning ("unexpected proc install message received (should not happen)\n");
       break;
+    case GP_HAS_INIT:
+      g_warning ("unexpected has init message received (should not happen)\n");
+      break;
     }
 }
 
@@ -1056,6 +1064,9 @@ gimp_loop (void)
 	  break;
 	case GP_PROC_INSTALL:
 	  g_warning ("unexpected proc install message received (should not happen)\n");
+	  break;
+	case GP_HAS_INIT:
+	  g_warning ("unexpected has init message received (should not happen)\n");
 	  break;
 	}
 
