@@ -1,13 +1,13 @@
 # Translation of the GIMP plug-ins.
 # Copyright (C) 1999 Free Software Foundation, Inc.
-# Kenneth Christiansen <kenneth@ripen.dk>, 1999.
+# Kenneth Christiansen <kenneth@gnome.dk>, 1999-2000
 # Birger Langkjer <birger.langkjer@image.dk>, 2000.
 # Keld Simonsen <keld@dkuug.dk>, 2000.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2000-04-21 11:39-0700\n"
+"POT-Creation-Date: 2000-04-27 01:42+0200\n"
 "PO-Revision-Date: 2000-03-17 16:34+01:00\n"
 "Last-Translator: Birger Langkjer <birger.langkjer@image.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
@@ -17,16 +17,15 @@ msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:180
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
-msgstr "<Image>/Filtre/Farver/Mappe/Rumuhyrekort..."
+msgstr "<Image>/Filtre/Farver/Mappe/Alienkort..."
 
 #: plug-ins/AlienMap/AlienMap.c:378
-#, fuzzy
 msgid "AlienMap: Transforming..."
-msgstr "Rumuhyrekort: Transformerer..."
+msgstr "Alienkort: Transformerer..."
 
 #: plug-ins/AlienMap/AlienMap.c:627
 msgid "AlienMap"
-msgstr "Rumuhyrekort"
+msgstr "Alienkort"
 
 #: plug-ins/AlienMap/AlienMap.c:632 plug-ins/AlienMap2/AlienMap2.c:624
 #: plug-ins/FractalExplorer/Dialogs.c:298
@@ -76,7 +75,7 @@ msgstr "Om"
 #: plug-ins/common/noisify.c:333 plug-ins/common/nova.c:364
 #: plug-ins/common/oilify.c:462 plug-ins/common/papertile.c:248
 #: plug-ins/common/pat.c:428 plug-ins/common/pixelize.c:289
-#: plug-ins/common/plasma.c:295 plug-ins/common/png.c:1034
+#: plug-ins/common/plasma.c:295 plug-ins/common/png.c:1028
 #: plug-ins/common/pnm.c:950 plug-ins/common/polar.c:943
 #: plug-ins/common/ps.c:2550 plug-ins/common/ps.c:2731
 #: plug-ins/common/psp.c:443 plug-ins/common/randomize.c:710
@@ -158,7 +157,7 @@ msgstr "Ok"
 #: plug-ins/common/nova.c:366 plug-ins/common/oilify.c:464
 #: plug-ins/common/papertile.c:250 plug-ins/common/pat.c:430
 #: plug-ins/common/pixelize.c:291 plug-ins/common/plasma.c:297
-#: plug-ins/common/png.c:1036 plug-ins/common/pnm.c:952
+#: plug-ins/common/png.c:1030 plug-ins/common/pnm.c:952
 #: plug-ins/common/polar.c:945 plug-ins/common/ps.c:2552
 #: plug-ins/common/ps.c:2733 plug-ins/common/psp.c:445
 #: plug-ins/common/randomize.c:712 plug-ins/common/ripple.c:598
@@ -333,32 +332,31 @@ msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:893
 msgid "About AlienMap"
-msgstr "Om Rumuhyrekort"
+msgstr "Om Alienkort"
 
 #: plug-ins/AlienMap2/AlienMap2.c:205
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
-msgstr ""
+msgstr "<Image>/Filtre/Farver/Kort/AlienKort 2..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:380
-#, fuzzy
 msgid "AlienMap2: Transforming..."
-msgstr "Rumuhyrekort: Transformerer..."
+msgstr "Alienkort2: Transformerer..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:619
 msgid "AlienMap2"
-msgstr ""
+msgstr "AlienKort2"
 
 #: plug-ins/AlienMap2/AlienMap2.c:668
 msgid "R/H-Frequency:"
-msgstr ""
+msgstr "R/H-frekvens:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:671
 msgid "Change frequency of the red/hue channel"
-msgstr ""
+msgstr "Ændr frekvens af den røde/hue kanal"
 
 #: plug-ins/AlienMap2/AlienMap2.c:678
 msgid "R/H-Phaseshift:"
-msgstr ""
+msgstr "R/H-fraseskift:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:681
 msgid "Change angle of the red/hue channel"
@@ -366,16 +364,15 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:688
 msgid "G/S-Frequency:"
-msgstr ""
+msgstr "G/S-frekvens"
 
 #: plug-ins/AlienMap2/AlienMap2.c:691
-#, fuzzy
 msgid "Change frequency of the green/saturation channel"
-msgstr "Ændre intensitet af den grønne kanal"
+msgstr "Ændre intensitet af den grønne/saturations kanal"
 
 #: plug-ins/AlienMap2/AlienMap2.c:698
 msgid "G/S-Phaseshift:"
-msgstr ""
+msgstr "G/S-fraseskift:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:701
 msgid "Change angle of the green/saturation channel"
@@ -383,7 +380,7 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:708
 msgid "B/L-Frequency:"
-msgstr ""
+msgstr "B/L-frekvens:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:711
 msgid "Change frequency of the blue/luminance channel"
@@ -391,7 +388,7 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:718
 msgid "B/L-Phaseshift:"
-msgstr ""
+msgstr "B/L-fraseskift"
 
 #: plug-ins/AlienMap2/AlienMap2.c:721
 msgid "Change angle of the blue/luminance channel"
@@ -414,7 +411,7 @@ msgstr "HSL farvemodel"
 
 #: plug-ins/AlienMap2/AlienMap2.c:746
 msgid "Modify Red/Hue Channel"
-msgstr ""
+msgstr "Ændr den røde/hue kanal"
 
 #: plug-ins/AlienMap2/AlienMap2.c:753
 msgid "Use function for red/hue component"
@@ -422,7 +419,7 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:756
 msgid "Modify Green/Saturation Channel"
-msgstr ""
+msgstr "Ændr den grønne/saturations kanal"
 
 #: plug-ins/AlienMap2/AlienMap2.c:764
 msgid "Use function for green/saturation component"
@@ -430,15 +427,15 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:767
 msgid "Modify Blue/Luminance Channel"
-msgstr ""
+msgstr "Ændre den blå/luminans kanal"
 
 #: plug-ins/AlienMap2/AlienMap2.c:775
 msgid "Use function for blue/luminance component"
-msgstr ""
+msgstr "Benyt funktion for den blå/luminans komponent"
 
 #: plug-ins/AlienMap2/AlienMap2.c:907
 msgid "About AlienMap2"
-msgstr "Om Rumuhyrekort2"
+msgstr "Om AlienKort2"
 
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:324 plug-ins/Lighting/lighting_ui.c:1093
@@ -465,7 +462,7 @@ msgstr "Miniature"
 
 #: plug-ins/FractalExplorer/Dialogs.c:368
 msgid "Realtime Preview"
-msgstr ""
+msgstr "Realtidsvisning"
 
 #: plug-ins/FractalExplorer/Dialogs.c:375
 msgid "If you enable this option the preview will be redrawn automatically"
@@ -502,11 +499,11 @@ msgstr "Gentag sidste zoom"
 
 #: plug-ins/FractalExplorer/Dialogs.c:413
 msgid "Step In"
-msgstr ""
+msgstr "Trin ind"
 
 #: plug-ins/FractalExplorer/Dialogs.c:420
 msgid "Step Out"
-msgstr ""
+msgstr "Trin ud"
 
 #.
 #. *  Scales
@@ -523,7 +520,7 @@ msgstr "Fraktale parametre"
 
 #: plug-ins/FractalExplorer/Dialogs.c:454
 msgid "XMIN:"
-msgstr ""
+msgstr "XMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:457
 msgid "Change the first (minimal) x-coordinate delimitation"
@@ -531,7 +528,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:465
 msgid "XMAX:"
-msgstr ""
+msgstr "XMAX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:468
 msgid "Change the second (maximal) x-coordinate delimitation"
@@ -539,7 +536,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:476
 msgid "YMIN:"
-msgstr ""
+msgstr "YMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:479
 msgid "Change the first (minimal) y-coordinate delimitation"
@@ -547,7 +544,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:487
 msgid "YMAX:"
-msgstr ""
+msgstr "YMAX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:490
 msgid "Change the second (maximal) y-coordinate delimitation"
@@ -628,24 +625,23 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:577
 msgid "Julia"
-msgstr ""
+msgstr "Julia"
 
 #: plug-ins/FractalExplorer/Dialogs.c:579
 msgid "Barnsley 1"
-msgstr ""
+msgstr "Barnsley 1"
 
 #: plug-ins/FractalExplorer/Dialogs.c:581
 msgid "Barnsley 2"
-msgstr ""
+msgstr "Barnsley 2"
 
 #: plug-ins/FractalExplorer/Dialogs.c:583
 msgid "Barnsley 3"
-msgstr ""
+msgstr "Barnsley 3"
 
 #: plug-ins/FractalExplorer/Dialogs.c:585
-#, fuzzy
 msgid "Spider"
-msgstr "pica"
+msgstr "Edderkop"
 
 #: plug-ins/FractalExplorer/Dialogs.c:587
 msgid "Man'o'war"
@@ -653,12 +649,11 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:589
 msgid "Lambda"
-msgstr ""
+msgstr "Lambda"
 
 #: plug-ins/FractalExplorer/Dialogs.c:591
-#, fuzzy
 msgid "Sierpinski"
-msgstr "Sinus"
+msgstr "Sierpinski"
 
 #: plug-ins/FractalExplorer/Dialogs.c:637
 #: plug-ins/imagemap/imap_preferences.c:542 plug-ins/sinus/sinus.c:910
@@ -694,17 +689,14 @@ msgid "Color Density"
 msgstr "Farvetæthed"
 
 #: plug-ins/FractalExplorer/Dialogs.c:692
-#, fuzzy
 msgid "Change the intensity of the red channel"
 msgstr "Ændre intensitet af den røde kanal"
 
 #: plug-ins/FractalExplorer/Dialogs.c:702
-#, fuzzy
 msgid "Change the intensity of the green channel"
 msgstr "Ændre intensitet af den grønne kanal"
 
 #: plug-ins/FractalExplorer/Dialogs.c:712
-#, fuzzy
 msgid "Change the intensity of the blue channel"
 msgstr "Ændre intensitet af den blå kanal"
 
@@ -716,16 +708,14 @@ msgstr "Farvefunktion"
 #: plug-ins/FractalExplorer/Dialogs.c:742
 #: plug-ins/FractalExplorer/Dialogs.c:783
 #: plug-ins/FractalExplorer/Dialogs.c:824
-#, fuzzy
 msgid "Use sine-function for this color component"
-msgstr "Brug sinus-funktion for rød komponent"
+msgstr "Brug sinus-funktion for denne røde komponent"
 
 #: plug-ins/FractalExplorer/Dialogs.c:745
 #: plug-ins/FractalExplorer/Dialogs.c:786
 #: plug-ins/FractalExplorer/Dialogs.c:827
-#, fuzzy
 msgid "Use cosine-function for this color component"
-msgstr "Brug kosinus-funktion for rød komponent"
+msgstr "Brug kosinus-funktion for denne røde komponent"
 
 #: plug-ins/FractalExplorer/Dialogs.c:748
 #: plug-ins/FractalExplorer/Dialogs.c:789
@@ -781,13 +771,13 @@ msgid "Fractals"
 msgstr "Fraktaler"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1582 plug-ins/gfig/gfig.c:1492
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening: %s"
-msgstr "Fejl: kunne ikke åbne \"%s\""
+msgstr "Fejl ved åbning af: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1584 plug-ins/gfig/gfig.c:1494
 msgid "Could not save."
-msgstr ""
+msgstr "Kunne ikke gemme."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1600
 msgid "Failed to write file\n"
@@ -815,9 +805,8 @@ msgid "Click here to cancel load procedure"
 msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:1716
-#, fuzzy
 msgid "Save Fractal Parameters"
-msgstr "Gem som animation"
+msgstr "Gem fraktal-parametre"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1728
 msgid "Click here to save your file"
@@ -935,7 +924,7 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:147 plug-ins/Lighting/lighting_ui.c:1029
 #: plug-ins/common/spheredesigner.c:2612
 msgid "Bump"
-msgstr ""
+msgstr "Bump"
 
 #: plug-ins/Lighting/lighting_ui.c:174 plug-ins/Lighting/lighting_ui.c:1037
 msgid "Env"
@@ -1034,9 +1023,8 @@ msgid "Light Settings"
 msgstr "Kalkulationsindstillinger"
 
 #: plug-ins/Lighting/lighting_ui.c:571 plug-ins/MapObject/mapobject_ui.c:706
-#, fuzzy
 msgid "Point Light"
-msgstr "Lys"
+msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:573 plug-ins/MapObject/mapobject_ui.c:708
 #, fuzzy
@@ -1044,14 +1032,12 @@ msgid "Directional Light"
 msgstr "Retning"
 
 #: plug-ins/Lighting/lighting_ui.c:575
-#, fuzzy
 msgid "Spot Light"
-msgstr "Lys"
+msgstr "Spotlys"
 
 #: plug-ins/Lighting/lighting_ui.c:577 plug-ins/MapObject/mapobject_ui.c:710
-#, fuzzy
 msgid "No Light"
-msgstr "Lys"
+msgstr "Intet lys"
 
 #: plug-ins/Lighting/lighting_ui.c:582 plug-ins/MapObject/mapobject_ui.c:715
 #, fuzzy
@@ -1068,9 +1054,8 @@ msgid "Select Lightsource Color"
 msgstr "Første farve: "
 
 #: plug-ins/Lighting/lighting_ui.c:591 plug-ins/MapObject/mapobject_ui.c:724
-#, fuzzy
 msgid "Lightsource Color:"
-msgstr "Første farve"
+msgstr "Lyskilde-farve:"
 
 #: plug-ins/Lighting/lighting_ui.c:595 plug-ins/MapObject/mapobject_ui.c:728
 #, fuzzy
@@ -1186,7 +1171,7 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:854 plug-ins/MapObject/mapobject_ui.c:987
 #: plug-ins/common/jigsaw.c:2397
 msgid "Highlight:"
-msgstr ""
+msgstr "Oplysning:"
 
 #: plug-ins/Lighting/lighting_ui.c:867 plug-ins/MapObject/mapobject_ui.c:1000
 msgid "Higher values makes the highlights more focused"
@@ -1208,7 +1193,7 @@ msgstr "Lineær"
 
 #: plug-ins/Lighting/lighting_ui.c:920
 msgid "Logarithmic"
-msgstr ""
+msgstr "Logaritmisk"
 
 #: plug-ins/Lighting/lighting_ui.c:921 plug-ins/flame/flame.c:715
 msgid "Sinusoidal"
@@ -1299,9 +1284,8 @@ msgid "Map to:"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:554
-#, fuzzy
 msgid "Plane"
-msgstr "Sinus"
+msgstr "Flad"
 
 #: plug-ins/MapObject/mapobject_ui.c:555
 msgid "Sphere"
@@ -1461,8 +1445,8 @@ msgstr ""
 #: plug-ins/common/gbr.c:284 plug-ins/common/gifload.c:308
 #: plug-ins/common/hrz.c:340 plug-ins/common/jpeg.c:748
 #: plug-ins/common/pat.c:263 plug-ins/common/pcx.c:318
-#: plug-ins/common/pix.c:329 plug-ins/common/png.c:423
-#: plug-ins/common/png.c:425 plug-ins/common/pnm.c:416
+#: plug-ins/common/pix.c:329 plug-ins/common/png.c:417
+#: plug-ins/common/png.c:419 plug-ins/common/pnm.c:416
 #: plug-ins/common/psd.c:1708 plug-ins/common/sunras.c:443
 #: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:445
 #: plug-ins/common/xbm.c:675 plug-ins/common/xpm.c:335
@@ -1509,7 +1493,7 @@ msgstr ""
 #: plug-ins/common/lic.c:903 plug-ins/common/papertile.c:314
 #: plug-ins/common/pat.c:306 plug-ins/common/pcx.c:349
 #: plug-ins/common/pcx.c:355 plug-ins/common/pix.c:373
-#: plug-ins/common/png.c:571 plug-ins/common/pnm.c:504
+#: plug-ins/common/png.c:569 plug-ins/common/pnm.c:504
 #: plug-ins/common/psd.c:2089 plug-ins/common/smooth_palette.c:237
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
 #: plug-ins/common/tiff.c:655 plug-ins/common/tile.c:264
@@ -1537,7 +1521,7 @@ msgstr "kan ikke åbne %s\n"
 #: plug-ins/common/gtm.c:248 plug-ins/common/hrz.c:478
 #: plug-ins/common/jpeg.c:1196 plug-ins/common/pat.c:345
 #: plug-ins/common/pcx.c:564 plug-ins/common/pix.c:535
-#: plug-ins/common/png.c:748 plug-ins/common/png.c:750
+#: plug-ins/common/png.c:749 plug-ins/common/png.c:751
 #: plug-ins/common/pnm.c:788 plug-ins/common/ps.c:1002
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
 #: plug-ins/common/tiff.c:1230 plug-ins/common/xbm.c:959
@@ -1579,7 +1563,7 @@ msgstr ""
 
 #: plug-ins/borderaverage/borderaverage.c:426
 msgid "Thickness:"
-msgstr ""
+msgstr "Tykhed:"
 
 #: plug-ins/borderaverage/borderaverage.c:448
 msgid "Bucket Size:"
@@ -2145,7 +2129,7 @@ msgstr ""
 #: plug-ins/common/max_rgb.c:277 plug-ins/common/nlfilt.c:400
 #: plug-ins/common/noisify.c:345 plug-ins/common/nova.c:376
 #: plug-ins/common/oilify.c:474 plug-ins/common/pixelize.c:301
-#: plug-ins/common/plasma.c:309 plug-ins/common/png.c:1045
+#: plug-ins/common/plasma.c:309 plug-ins/common/png.c:1039
 #: plug-ins/common/polar.c:984 plug-ins/common/randomize.c:728
 #: plug-ins/common/ripple.c:692 plug-ins/common/scatter_hsv.c:445
 #: plug-ins/common/sel_gauss.c:258 plug-ins/common/sharpen.c:627
@@ -5076,7 +5060,7 @@ msgstr "Præferencer"
 msgid "Search:"
 msgstr ""
 
-#: plug-ins/common/png.c:400
+#: plug-ins/common/png.c:394
 #, c-format
 msgid ""
 "%s\n"
@@ -5084,26 +5068,40 @@ msgid ""
 msgstr ""
 
 #. Aie! Unknown type
-#: plug-ins/common/png.c:517
+#: plug-ins/common/png.c:514
 #, c-format
 msgid ""
 "%s\n"
 "PNG unknown color model"
 msgstr ""
 
-#: plug-ins/common/png.c:1029
+#: plug-ins/common/png.c:732
+#, c-format
+msgid ""
+"%s\n"
+"PNG error. Couldn't save image"
+msgstr ""
+
+#: plug-ins/common/png.c:742
+#, c-format
+msgid ""
+"%s\n"
+"Couldn't create file"
+msgstr ""
+
+#: plug-ins/common/png.c:1023
 msgid "Save as PNG"
 msgstr ""
 
-#: plug-ins/common/png.c:1058
+#: plug-ins/common/png.c:1052
 msgid "Interlacing (Adam7)"
 msgstr ""
 
-#: plug-ins/common/png.c:1067
+#: plug-ins/common/png.c:1061
 msgid "Skip Ancillary Chunks"
 msgstr ""
 
-#: plug-ins/common/png.c:1084
+#: plug-ins/common/png.c:1078
 msgid "Compression Level:"
 msgstr ""
 
@@ -9569,15 +9567,15 @@ msgstr ""
 msgid "Insert the selected char at the cursor position"
 msgstr ""
 
-#: plug-ins/gdyntext/font_selection.c:138
+#: plug-ins/gdyntext/font_selection.c:142
 msgid "MAX_FONTS exceeded. Some fonts may be missing."
 msgstr ""
 
 #. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
-#: plug-ins/gdyntext/font_selection.c:210
-#: plug-ins/gdyntext/font_selection.c:264
-#: plug-ins/gdyntext/font_selection.c:351
-#: plug-ins/gdyntext/font_selection.c:375 plug-ins/imagemap/imap_circle.c:265
+#: plug-ins/gdyntext/font_selection.c:214
+#: plug-ins/gdyntext/font_selection.c:268
+#: plug-ins/gdyntext/font_selection.c:355
+#: plug-ins/gdyntext/font_selection.c:379 plug-ins/imagemap/imap_circle.c:265
 #: plug-ins/imagemap/imap_circle.c:271 plug-ins/imagemap/imap_circle.c:277
 #: plug-ins/imagemap/imap_grid.c:202 plug-ins/imagemap/imap_grid.c:208
 #: plug-ins/imagemap/imap_polygon.c:437 plug-ins/imagemap/imap_polygon.c:444
@@ -9588,17 +9586,17 @@ msgstr ""
 msgid "pixels"
 msgstr ""
 
-#: plug-ins/gdyntext/font_selection.c:211
-#: plug-ins/gdyntext/font_selection.c:351
+#: plug-ins/gdyntext/font_selection.c:215
+#: plug-ins/gdyntext/font_selection.c:355
 msgid "points"
 msgstr ""
 
-#: plug-ins/gdyntext/font_selection.c:311
+#: plug-ins/gdyntext/font_selection.c:315
 #, c-format
 msgid "Unknown font family \"%s\".\n"
 msgstr ""
 
-#: plug-ins/gdyntext/font_selection.c:335
+#: plug-ins/gdyntext/font_selection.c:339
 #, c-format
 msgid "Unknown font style \"%s\" for family \"%s\".\n"
 msgstr ""
