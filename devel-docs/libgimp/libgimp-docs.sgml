@@ -18,7 +18,6 @@
 <!ENTITY GimpImage SYSTEM "xml/gimpimage.xml">
 <!ENTITY GimpLayer SYSTEM "xml/gimplayer.xml">
 <!ENTITY GimpMessage SYSTEM "xml/gimpmessage.xml">
-<!ENTITY GimpMisc SYSTEM "xml/gimpmisc.xml">
 <!ENTITY GimpPalette SYSTEM "xml/gimppalette.xml">
 <!ENTITY GimpPatterns SYSTEM "xml/gimppatterns.xml">
 <!ENTITY GimpPixelrgn SYSTEM "xml/gimppixelrgn.xml">
@@ -66,7 +65,6 @@
     &GimpImage;
     &GimpLayer;
     &GimpMessage;
-    &GimpMisc;
     &GimpPalette;
     &GimpPatterns;
     &GimpPixelrgn;

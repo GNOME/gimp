@@ -1,6 +1,7 @@
 <SECTION>
 <FILE>gimp</FILE>
 GIMPVAR
+gimp_version
 gimp_major_version
 gimp_minor_version
 gimp_micro_version
@@ -385,11 +386,6 @@ gimp_layer_set_preserve_transparency
 gimp_message
 gimp_message_get_handler
 gimp_message_set_handler
-</SECTION>
-
-<SECTION>
-<FILE>gimpmisc</FILE>
-gimp_version
 </SECTION>
 
 <SECTION>

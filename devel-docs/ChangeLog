@@ -1,5 +1,13 @@
 2003-02-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimp.sgml: moved content of gimpmisc into gimp.sgml.
+
+	* libgimp/tmpl/gimpmisc.sgml: removed.
+
+2003-02-06  Sven Neumann  <sven@gimp.org>
+
 	* Makefile.am
 	* README.gtkdoc
 	* libgimp*/Makefile.am	

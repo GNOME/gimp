@@ -24,6 +24,14 @@ all other GIMP Library headers.
 
 
 
+<!-- ##### FUNCTION gimp_version ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### VARIABLE gimp_major_version ##### -->
 <para>
 
