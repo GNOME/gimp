@@ -1,3 +1,8 @@
+2003-11-11  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimptooldialog.c: updated gtk-doc comments.
+
 2003-11-11 Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpvectors.c: New vectors now are invisible by

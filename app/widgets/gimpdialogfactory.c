@@ -547,6 +547,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 /**
  * gimp_dialog_factory_dialog_new:
  * @factory:    a #GimpDialogFactory
+ * @screen:     the #GdkScreen the dialog should appear on
  * @identifier: the identifier of the dialog as registered with
  *              gimp_dialog_factory_register_entry()
  * @preview_size:
@@ -580,6 +581,7 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
 /**
  * gimp_dialog_factory_dialog_raise:
  * @factory   : a #GimpDialogFactory
+ * @screen:     the #GdkScreen the dialog should appear on
  * @identifier: the identifier of the dialog as registered with
  *              gimp_dialog_factory_register_entry()
  * @preview_size:
@@ -648,6 +650,7 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
 /**
  * gimp_dialog_factory_dock_new:
  * @factory: a #GimpDialogFacotry
+ * @screen: the #GdkScreen the dock should appear on
  *
  * Returns a new #GimpDock in this %factory's context. We use a function
  * pointer passed to this %factory's constructor instead of simply

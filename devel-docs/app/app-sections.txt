@@ -151,6 +151,7 @@ GimpProgressEndFunc
 GimpPDBDialogsCheckFunc
 GimpGetProgramClassFunc
 GimpGetDisplayNameFunc
+GimpGetThemeDirFunc
 <TITLE>Gimp</TITLE>
 Gimp
 gimp_new
@@ -176,6 +177,7 @@ gimp_end_progress
 gimp_pdb_dialogs_check
 gimp_get_program_class
 gimp_get_display_name
+gimp_get_theme_dir
 gimp_get_standard_context
 gimp_set_default_context
 gimp_get_default_context
@@ -1347,6 +1349,35 @@ gimp_viewable_get_type
 GIMP_VIEWABLE_CLASS
 GIMP_IS_VIEWABLE_CLASS
 GIMP_VIEWABLE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpcanvas</FILE>
+<TITLE>GimpCanvas</TITLE>
+GimpCanvas
+GimpCanvasStyle
+gimp_canvas_new
+gimp_canvas_draw_cursor
+gimp_canvas_draw_point
+gimp_canvas_draw_line
+gimp_canvas_draw_lines
+gimp_canvas_draw_rectangle
+gimp_canvas_draw_arc
+gimp_canvas_draw_polygon
+gimp_canvas_draw_segments
+gimp_canvas_draw_rgb
+gimp_canvas_set_clip_rect
+gimp_canvas_set_bg_color
+gimp_canvas_set_custom_gc
+<SUBSECTION Standard>
+GimpCanvasClass
+GIMP_CANVAS
+GIMP_IS_CANVAS
+GIMP_TYPE_CANVAS
+gimp_canvas_get_type
+GIMP_CANVAS_CLASS
+GIMP_IS_CANVAS_CLASS
+GIMP_CANVAS_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -5845,7 +5876,6 @@ ColorNotebook
 ColorNotebookState
 ColorNotebookCallback
 color_notebook_new
-color_notebook_viewable_new
 color_notebook_free
 color_notebook_set_viewable
 color_notebook_set_title
@@ -5906,6 +5936,7 @@ dialogs_toggle_auto_cmd_callback
 dialogs_create_lc_cmd_callback
 dialogs_create_data_cmd_callback
 dialogs_create_stuff_cmd_callback
+dialogs_change_screen_cmd_callback
 dialogs_show_toolbox
 </SECTION>
 
@@ -6576,6 +6607,7 @@ view_toggle_grid_cmd_callback
 view_snap_to_grid_cmd_callback
 view_new_view_cmd_callback
 view_shrink_wrap_cmd_callback
+view_change_screen_cmd_callback
 </SECTION>
 
 <SECTION>

@@ -406,6 +406,7 @@
 
     <chapter id="app-display-display">
       <title>The GimpDisplay Object</title>
+      <xi:include href="xml/gimpcanvas.xml"/>
       <xi:include href="xml/gimpdisplay.xml"/>
       <xi:include href="xml/gimpdisplay-area.xml"/>
       <xi:include href="xml/gimpdisplay-foreach.xml"/>

@@ -38,6 +38,7 @@
 /**
  * gimp_tool_dialog_new:
  * @tool_info: a #GimpToolInfo
+ * @parent: the parent widget of this dialog
  * @desc: a string to use in the dialog header or %NULL to use the help
  *        field from #GimpToolInfo
  * @...: a %NULL-terminated valist of button parameters as described in
