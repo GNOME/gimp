@@ -427,16 +427,15 @@ sel_gauss (GimpDrawable *drawable,
   src  = g_new (guchar, width * height * bytes);
   dest = g_new (guchar, width * height * bytes);
 
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, drawable->width,
-		       drawable->height, FALSE, FALSE);
-
+  gimp_pixel_rgn_init (&src_rgn,
+                       drawable, x1, y1, width, height, FALSE, FALSE);
   gimp_pixel_rgn_get_rect (&src_rgn, src, x1, y1, width, height);
 
   matrixmult (src, dest, width, height, mat, numrad,
 	      bytes, has_alpha, maxdelta);
 
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, width, height,
-		       TRUE, TRUE);
+  gimp_pixel_rgn_init (&dest_rgn,
+                       drawable, x1, y1, width, height, TRUE, TRUE);
   gimp_pixel_rgn_set_rect (&dest_rgn, dest, x1, y1, width, height);
 
   /*  merge the shadow, update the drawable  */

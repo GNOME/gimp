@@ -1,3 +1,8 @@
+2002-12-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/sel_gauss.c: applied a patch from Toby Smith
+	that fixes bug #90968.
+
 2002-12-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-ins.c (plug_ins_proc_def_add): fixed a comment.
