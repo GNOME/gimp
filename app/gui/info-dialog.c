@@ -110,17 +110,15 @@ info_dialog_popup (InfoDialog *idialog)
 {
   g_return_if_fail (idialog != NULL);
 
-  if (! GTK_WIDGET_VISIBLE (idialog->shell))
-    gtk_widget_show (idialog->shell);
+  gtk_window_present (GTK_WINDOW (idialog->shell));
 }
 
 void
 info_dialog_popdown (InfoDialog *idialog)
 {
   g_return_if_fail (idialog != NULL);
-  
-  if (GTK_WIDGET_VISIBLE (idialog->shell))
-    gtk_widget_hide (idialog->shell);
+
+  gtk_widget_hide (idialog->shell);
 }
 
 void

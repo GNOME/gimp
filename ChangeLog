@@ -1,3 +1,8 @@
+2003-11-14  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/info-dialog.c (info_dialog_popup): use gtk_window_present().
+	Fixes bug #126941.
+
 2003-11-14  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpquerybox.c
