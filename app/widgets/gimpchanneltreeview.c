@@ -157,7 +157,6 @@ gimp_channel_tree_view_init (GimpChannelTreeView *view)
                          gimp_get_mod_separator (),
                          gimp_get_mod_name_control ());
 
-  /*  To Selection button  */
   view->toselection_button =
     gimp_editor_add_button (GIMP_EDITOR (view),
                             GIMP_STOCK_SELECTION_REPLACE, str,

@@ -112,12 +112,9 @@ gimp_container_popup_get_type (void)
 static void
 gimp_container_popup_class_init (GimpContainerPopupClass *klass)
 {
-  GObjectClass   *object_class;
-  GtkWidgetClass *widget_class;
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkBindingSet  *binding_set;
-
-  object_class = G_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -242,13 +239,10 @@ static gboolean
 gimp_container_popup_button_press (GtkWidget      *widget,
                                    GdkEventButton *bevent)
 {
-  GimpContainerPopup *popup;
-  GtkWidget          *event_widget;
-  gboolean            cancel = FALSE;
+  GtkWidget *event_widget;
+  gboolean   cancel = FALSE;
 
-  popup = GIMP_CONTAINER_POPUP (widget);
-
-  event_widget =  gtk_get_event_widget ((GdkEvent *) bevent);
+  event_widget = gtk_get_event_widget ((GdkEvent *) bevent);
 
   if (event_widget == widget)
     {

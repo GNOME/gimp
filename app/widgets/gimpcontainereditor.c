@@ -93,6 +93,7 @@ gimp_container_editor_get_type (void)
         0,              /* n_preallocs */
         (GInstanceInitFunc) gimp_container_editor_init,
       };
+
       static const GInterfaceInfo docked_iface_info =
       {
         (GInterfaceInitFunc) gimp_container_editor_docked_iface_init,
@@ -163,8 +164,8 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
     case GIMP_VIEW_TYPE_GRID:
       editor->view =
 	GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (container,
-							   context,
-							   preview_size,
+                                                           context,
+                                                           preview_size,
                                                            preview_border_width,
                                                            reorderable));
       break;
@@ -172,14 +173,14 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
     case GIMP_VIEW_TYPE_LIST:
       editor->view =
 	GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (container,
-							   context,
-							   preview_size,
+                                                           context,
+                                                           preview_size,
                                                            preview_border_width,
                                                            reorderable));
       break;
 
     default:
-      g_warning ("%s(): unknown GimpViewType passed", G_GNUC_FUNCTION);
+      g_warning ("%s: unknown GimpViewType passed", G_STRFUNC);
       return FALSE;
     }
 
@@ -192,19 +193,14 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   gtk_widget_show (GTK_WIDGET (editor->view));
 
   g_signal_connect_object (editor->view, "select_item",
-			   G_CALLBACK (gimp_container_editor_select_item),
-			   editor,
-			   0);
-
+                           G_CALLBACK (gimp_container_editor_select_item),
+                           editor, 0);
   g_signal_connect_object (editor->view, "activate_item",
-			   G_CALLBACK (gimp_container_editor_activate_item),
-			   editor,
-			   0);
-
+                           G_CALLBACK (gimp_container_editor_activate_item),
+                           editor, 0);
   g_signal_connect_object (editor->view, "context_item",
-			   G_CALLBACK (gimp_container_editor_context_item),
-			   editor,
-			   0);
+                           G_CALLBACK (gimp_container_editor_context_item),
+                           editor, 0);
 
   return TRUE;
 }
@@ -218,9 +214,7 @@ gimp_container_editor_select_item (GtkWidget           *widget,
 				   gpointer             insert_data,
 				   GimpContainerEditor *editor)
 {
-  GimpContainerEditorClass *klass;
-
-  klass = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
+  GimpContainerEditorClass *klass = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
 
   if (klass->select_item)
     klass->select_item (editor, viewable);
@@ -234,9 +228,7 @@ gimp_container_editor_activate_item (GtkWidget           *widget,
 				     gpointer             insert_data,
 				     GimpContainerEditor *editor)
 {
-  GimpContainerEditorClass *klass;
-
-  klass = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
+  GimpContainerEditorClass *klass = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
 
   if (klass->activate_item)
     klass->activate_item (editor, viewable);
@@ -248,9 +240,7 @@ gimp_container_editor_context_item (GtkWidget           *widget,
 				    gpointer             insert_data,
 				    GimpContainerEditor *editor)
 {
-  GimpContainerEditorClass *klass;
-
-  klass = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
+  GimpContainerEditorClass *klass = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
 
   if (klass->context_item)
     klass->context_item (editor, viewable);

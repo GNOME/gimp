@@ -101,4 +101,3 @@ gimp_pattern_factory_view_new (GimpViewType      view_type,
 
   return GTK_WIDGET (factory_view);
 }
-

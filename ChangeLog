@@ -1,5 +1,23 @@
 2004-05-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpcontainerbox.[ch]
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpcontainergridview.[ch]
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimpcontainertreeview.[ch]
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimpfontview.c
+	* app/widgets/gimpimageview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimppatternfactoryview.c
+	* app/widgets/gimptemplateview.c
+	* app/widgets/gimpvectorstreeview.c: code review / cleanup.
+
+2004-05-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpcontainerview.[ch]: made GimpContainerView an
 	interface. Added accessors for all members in the private struct

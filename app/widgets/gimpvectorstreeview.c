@@ -49,7 +49,7 @@
 static void   gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass);
 static void   gimp_vectors_tree_view_init       (GimpVectorsTreeView      *view);
 
-static void   gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *view_iface);
+static void  gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *view_iface);
 
 static gboolean gimp_vectors_tree_view_select_item  (GimpContainerView   *view,
 						     GimpViewable        *item,
@@ -156,10 +156,8 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
 static void
 gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
 {
-  GimpEditor *editor;
+  GimpEditor *editor = GIMP_EDITOR (view);
   gchar      *str;
-
-  editor = GIMP_EDITOR (view);
 
   /*  Hide basically useless Edit button  */
 

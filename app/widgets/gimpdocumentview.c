@@ -115,9 +115,7 @@ gimp_document_view_get_type (void)
 static void
 gimp_document_view_class_init (GimpDocumentViewClass *klass)
 {
-  GimpContainerEditorClass *editor_class;
-
-  editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
+  GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -269,12 +267,9 @@ static void
 gimp_document_view_raise_display (gpointer data,
                                   gpointer user_data)
 {
-  GimpDisplay  *gdisp;
-  RaiseClosure *closure;
+  GimpDisplay  *gdisp   = (GimpDisplay *) data;
+  RaiseClosure *closure = (RaiseClosure *) user_data;
   const gchar  *uri;
-
-  gdisp   = (GimpDisplay *) data;
-  closure = (RaiseClosure *) user_data;
 
   uri = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
 

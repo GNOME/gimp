@@ -231,16 +231,12 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
 static void
 gimp_layer_tree_view_init (GimpLayerTreeView *view)
 {
-  GimpContainerTreeView *tree_view;
-  GimpDrawableTreeView  *drawable_view;
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkWidget             *hbox;
   GtkWidget             *toggle;
   GtkWidget             *image;
   GtkIconSize            icon_size;
   PangoAttribute        *attr;
-
-  tree_view     = GIMP_CONTAINER_TREE_VIEW (view);
-  drawable_view = GIMP_DRAWABLE_TREE_VIEW (view);
 
   /* The following used to read:
    *
@@ -463,11 +459,9 @@ static void
 gimp_layer_tree_view_style_set (GtkWidget *widget,
 				GtkStyle  *prev_style)
 {
-  GimpLayerTreeView *layer_view;
+  GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (widget);
   gint               content_spacing;
   gint               button_spacing;
-
-  layer_view = GIMP_LAYER_TREE_VIEW (widget);
 
   gtk_widget_style_get (widget,
                         "content_spacing", &content_spacing,
@@ -562,15 +556,12 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
 				  GimpViewable      *item,
 				  gpointer           insert_data)
 {
-  GimpItemTreeView  *item_view;
-  GimpLayerTreeView *layer_view;
-  gboolean           options_sensitive   = FALSE;
-  gboolean           anchor_sensitive    = FALSE;
-  gboolean           raise_sensitive     = FALSE;
+  GimpItemTreeView  *item_view         = GIMP_ITEM_TREE_VIEW (view);
+  GimpLayerTreeView *layer_view        = GIMP_LAYER_TREE_VIEW (view);
+  gboolean           options_sensitive = FALSE;
+  gboolean           anchor_sensitive  = FALSE;
+  gboolean           raise_sensitive   = FALSE;
   gboolean           success;
-
-  item_view  = GIMP_ITEM_TREE_VIEW (view);
-  layer_view = GIMP_LAYER_TREE_VIEW (view);
 
   success = parent_view_iface->select_item (view, item, insert_data);
 
@@ -656,16 +647,10 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
                                     GtkTreeViewDropPosition  drop_pos,
                                     GdkDragAction           *drag_action)
 {
-  GimpLayer *src_layer;
-  GimpLayer *dest_layer;
-  GimpImage *src_image;
-  GimpImage *dest_image;
-
-  src_layer  = GIMP_LAYER (src_viewable);
-  dest_layer = GIMP_LAYER (dest_viewable);
-
-  src_image  = gimp_item_get_image (GIMP_ITEM (src_layer));
-  dest_image = gimp_item_get_image (GIMP_ITEM (dest_layer));
+  GimpLayer *src_layer  = GIMP_LAYER (src_viewable);
+  GimpLayer *dest_layer = GIMP_LAYER (dest_viewable);
+  GimpImage *src_image  = gimp_item_get_image (GIMP_ITEM (src_layer));
+  GimpImage *dest_image = gimp_item_get_image (GIMP_ITEM (dest_layer));
 
   if (gimp_image_floating_sel (dest_image))
     return FALSE;
@@ -917,10 +902,8 @@ static void
 gimp_layer_tree_view_layer_signal_handler (GimpLayer         *layer,
 					   GimpLayerTreeView *view)
 {
-  GimpItemTreeView *item_view;
+  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
   GimpLayer        *active_layer;
-
-  item_view = GIMP_ITEM_TREE_VIEW (view);
 
   active_layer = (GimpLayer *)
     GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (item_view->gimage);
@@ -1071,13 +1054,11 @@ static void
 gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
                                      GtkTreeIter       *iter)
 {
-  GimpContainerTreeView *tree_view;
+  GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (layer_view);
   GimpPreviewRenderer   *layer_renderer;
   GimpPreviewRenderer   *mask_renderer;
-  GimpLayerMask         *mask        = NULL;
+  GimpLayerMask         *mask       = NULL;
   GimpPreviewBorderType  layer_type = GIMP_PREVIEW_BORDER_BLACK;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
 
   gtk_tree_model_get (tree_view->model, iter,
                       tree_view->model_column_renderer, &layer_renderer,
@@ -1138,11 +1119,9 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
                                     GdkModifierType           state,
                                     GimpLayerTreeView        *layer_view)
 {
-  GimpContainerTreeView *tree_view;
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
   GtkTreePath           *path;
   GtkTreeIter            iter;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
 
   path = gtk_tree_path_new_from_string (path_str);
 
@@ -1179,11 +1158,9 @@ gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
                                    GdkModifierType           state,
                                    GimpLayerTreeView        *layer_view)
 {
-  GimpContainerTreeView *tree_view;
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
   GtkTreePath           *path;
   GtkTreeIter            iter;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
 
   path = gtk_tree_path_new_from_string (path_str);
 

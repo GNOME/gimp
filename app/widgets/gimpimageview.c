@@ -39,20 +39,20 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_image_view_class_init           (GimpImageViewClass  *klass);
-static void   gimp_image_view_init                 (GimpImageView       *view);
+static void   gimp_image_view_class_init     (GimpImageViewClass  *klass);
+static void   gimp_image_view_init           (GimpImageView       *view);
 
-static void   gimp_image_view_raise_clicked        (GtkWidget           *widget,
-                                                    GimpImageView       *view);
-static void   gimp_image_view_new_clicked          (GtkWidget           *widget,
-                                                    GimpImageView       *view);
-static void   gimp_image_view_delete_clicked       (GtkWidget           *widget,
-                                                    GimpImageView       *view);
+static void   gimp_image_view_raise_clicked  (GtkWidget           *widget,
+                                              GimpImageView       *view);
+static void   gimp_image_view_new_clicked    (GtkWidget           *widget,
+                                              GimpImageView       *view);
+static void   gimp_image_view_delete_clicked (GtkWidget           *widget,
+                                              GimpImageView       *view);
 
-static void   gimp_image_view_select_item          (GimpContainerEditor *editor,
-                                                    GimpViewable        *viewable);
-static void   gimp_image_view_activate_item        (GimpContainerEditor *editor,
-                                                    GimpViewable        *viewable);
+static void   gimp_image_view_select_item    (GimpContainerEditor *editor,
+                                              GimpViewable        *viewable);
+static void   gimp_image_view_activate_item  (GimpContainerEditor *editor,
+                                              GimpViewable        *viewable);
 
 
 static GimpContainerEditorClass *parent_class = NULL;
@@ -89,9 +89,7 @@ gimp_image_view_get_type (void)
 static void
 gimp_image_view_class_init (GimpImageViewClass *klass)
 {
-  GimpContainerEditorClass *editor_class;
-
-  editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
+  GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -244,12 +242,11 @@ static void
 gimp_image_view_select_item (GimpContainerEditor *editor,
                              GimpViewable        *viewable)
 {
-  GimpImageView *view = GIMP_IMAGE_VIEW (editor);
+  GimpImageView *view             = GIMP_IMAGE_VIEW (editor);
   GimpContainer *container;
-
-  gboolean  raise_sensitive  = FALSE;
-  gboolean  new_sensitive    = FALSE;
-  gboolean  delete_sensitive = FALSE;
+  gboolean       raise_sensitive  = FALSE;
+  gboolean       new_sensitive    = FALSE;
+  gboolean       delete_sensitive = FALSE;
 
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);

@@ -86,9 +86,7 @@ gimp_font_view_get_type (void)
 static void
 gimp_font_view_class_init (GimpFontViewClass *klass)
 {
-  GimpContainerEditorClass *editor_class;
-
-  editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
+  GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

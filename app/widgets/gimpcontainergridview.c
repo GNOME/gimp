@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainergridview.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2004 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -239,8 +239,8 @@ gimp_container_grid_view_view_iface_init (GimpContainerViewInterface *view_iface
 
 GtkWidget *
 gimp_container_grid_view_new (GimpContainer *container,
-			      GimpContext   *context,
-			      gint           preview_size,
+                              GimpContext   *context,
+                              gint           preview_size,
                               gint           preview_border_width,
                               gboolean       reorderable)
 {
@@ -352,7 +352,7 @@ gimp_container_grid_view_focus (GtkWidget        *widget,
 {
   GimpContainerGridView *view = GIMP_CONTAINER_GRID_VIEW (widget);
 
-  if (GTK_WIDGET_CAN_FOCUS (widget) && !GTK_WIDGET_HAS_FOCUS (widget))
+  if (GTK_WIDGET_CAN_FOCUS (widget) && ! GTK_WIDGET_HAS_FOCUS (widget))
     {
       gtk_widget_grab_focus (GTK_WIDGET (widget));
       return TRUE;
@@ -563,7 +563,7 @@ gimp_container_grid_view_item_selected (GtkWidget      *widget,
 {
   if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
     {
-      if (GTK_WIDGET_CAN_FOCUS (data) && !GTK_WIDGET_HAS_FOCUS (data))
+      if (GTK_WIDGET_CAN_FOCUS (data) && ! GTK_WIDGET_HAS_FOCUS (data))
         gtk_widget_grab_focus (GTK_WIDGET (data));
 
       gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data),

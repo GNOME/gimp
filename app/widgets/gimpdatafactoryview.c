@@ -105,9 +105,7 @@ gimp_data_factory_view_get_type (void)
 static void
 gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
 {
-  GimpContainerEditorClass *editor_class;
-
-  editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
+  GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

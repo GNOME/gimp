@@ -107,9 +107,7 @@ gimp_template_view_get_type (void)
 static void
 gimp_template_view_class_init (GimpTemplateViewClass *klass)
 {
-  GimpContainerEditorClass *editor_class;
-
-  editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
+  GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -353,9 +351,7 @@ gimp_template_view_delete_callback (GtkWidget *widget,
                                     gboolean   delete,
                                     gpointer   data)
 {
-  GimpTemplateDeleteData *delete_data;
-
-  delete_data = (GimpTemplateDeleteData *) data;
+  GimpTemplateDeleteData *delete_data = data;
 
   if (! delete)
     return;
