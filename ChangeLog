@@ -1,5 +1,11 @@
 2003-11-13  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpsessioninfo.c (gimp_session_info_deserialize): 
+	restore compatibility with older sessionrc format. No need to
+	break everyone's sessionrc again.
+
+2003-11-13  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-deserialize.c
 	(gimp_config_deserialize_unknown)
 	(gimp_config_deserialize_property): unset the scanner scope to

@@ -459,6 +459,10 @@ gimp_session_info_deserialize (GScanner *scanner,
             case SESSION_INFO_OPEN:
               info->open = TRUE;
 
+              /*  for backward compatibility  */
+              if (g_scanner_peek_next_token (scanner) == G_TOKEN_RIGHT_PAREN)
+                break;
+
               token = G_TOKEN_INT;
               if (! gimp_scanner_parse_int (scanner, &info->screen))
                 goto error;
