@@ -675,7 +675,8 @@ gimp_curves_tool_settings_load (GimpImageMapTool *image_map_tool,
 	  fields = fscanf (file, "%d %d ", &index[i][j], &value[i][j]);
 	  if (fields != 2)
 	    {
-	      g_print ("fields != 2");
+              /*  FIXME: should have a helpful error message here  */
+	      g_printerr ("fields != 2");
 	      return FALSE;
 	    }
 	}

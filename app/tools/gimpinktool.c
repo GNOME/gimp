@@ -512,7 +512,7 @@ ink_pen_ellipse (GimpInkOptions *options,
     velocity = 3.0;
 
 #ifdef VERBOSE
-  g_print ("%f (%f) -> ", (float)size, (float)velocity);
+  g_printerr ("%g (%g) -> ", size, velocity);
 #endif
 
   size = (options->vel_sensitivity *
@@ -520,7 +520,7 @@ ink_pen_ellipse (GimpInkOptions *options,
           + (1.0 - options->vel_sensitivity) * size);
 
 #ifdef VERBOSE
-  g_print ("%f\n", (float)size);
+  g_printerr ("%g\n", (gfloat) size);
 #endif
 
   /* Clamp resulting size to sane limits */
@@ -547,8 +547,9 @@ ink_pen_ellipse (GimpInkOptions *options,
        ytilt * tscale_c + xtilt * tscale_s);
 
 #ifdef VERBOSE
-  g_print ("angle %g aspect %g; %g %g; %g %g\n",
-	   options->blob_angle, options->blob_aspect, tscale_c, tscale_s, x, y);
+  g_printerr ("angle %g aspect %g; %g %g; %g %g\n",
+              options->blob_angle, options->blob_aspect,
+              tscale_c, tscale_s, x, y);
 #endif
 
   aspect = sqrt (x*x + y*y);
