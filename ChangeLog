@@ -1,3 +1,10 @@
+Sat Jul 11 23:57:09 1998  Owen Taylor  <otaylor@gtk.org>
+
+	* app/ink.c (tools_free_ink): Free last_blob when destroying
+	  tool.
+
+	* app/blob.c: Fix off-by-one error when searhing for gaps.
+	
 Sat Jul 11 19:57:28 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/tile.c: Added some more debugging code.

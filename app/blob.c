@@ -194,7 +194,7 @@ blob_convex_union (Blob *b1, Blob *b2)
      not a big deal either way after anti-aliasing */
 
   /*     left edge */
-  for (i1=start; i1<result->height-1; i1++)
+  for (i1=start; i1<result->height-2; i1++)
     {
       /* Find empty gaps */
       if (!(present[i1+1] & LEFT))
@@ -245,7 +245,7 @@ blob_convex_union (Blob *b1, Blob *b2)
     }
 
   /*     right edge */
-  for (i1=start; i1<result->height-1; i1++)
+  for (i1=start; i1<result->height-2; i1++)
     {
       /* Find empty gaps */
       if (!(present[i1+1] & RIGHT))

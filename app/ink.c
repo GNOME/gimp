@@ -1068,6 +1068,10 @@ tools_free_ink (Tool *tool)
   if (ink_tool->core)
     draw_core_free (ink_tool->core);
 
+  /*  Free the last blob, if any */
+  if (ink_tool->last_blob)
+    g_free (ink_tool->last_blob);
+  
   /*  Cleanup memory  */
   ink_cleanup ();
 
