@@ -1,3 +1,8 @@
+Mon May 11 23:28:20 MEST 1998 Sven Neumanns <sven@gimp.org>
+
+	* added two new scripts from Hrvoje Horvat 
+	(glossy.scm, 3d-outline.scm)
+
 Mon May 11 21:40:25 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* updated print plug-in	

@@ -3,6 +3,7 @@
 scriptdatadir = $(gimpdatadir)/scripts
 
 scriptdata_DATA = \
+	3d-outline.scm				\
 	3dTruchet.scm				\
 	add-bevel.scm				\
 	addborder.scm				\
@@ -44,6 +45,7 @@ scriptdata_DATA = \
 	frosty-logo.scm				\
 	gimp-headers.scm			\
 	gimp-labels.scm				\
+	glossy.scm				\
 	glowing-logo.scm			\
 	gradient-bevel-logo.scm			\
 	gradient-example.scm			\
