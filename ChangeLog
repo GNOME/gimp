@@ -1,3 +1,8 @@
+2004-08-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* devel-docs/ggr.txt: added new file decribing the ggr 
+	(Gimp gradient) file format.
+	
 2004-08-25  DindinX  <david@dindinx.org>
 
 	* app/display/gimpnavigationview.c
