@@ -22,6 +22,8 @@
 
 #include <glib.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "xcf-read.h"
 
 #include "gimp-intl.h"
@@ -101,21 +103,10 @@ xcf_read_string (FILE   *fp,
           if (str[tmp - 1] != '\0')
             str[tmp - 1] = '\0';
 
-          if (! g_utf8_validate (str, -1, NULL))
-            {
-              gchar *utf8_str;
+          data[i] = gimp_any_to_utf8 (str, -1,
+                                      _("Invalid UTF-8 string in XCF file"));
 
-              utf8_str = g_locale_to_utf8 (str, -1, NULL, NULL, NULL);
-
-              g_free (str);
-
-              if (utf8_str)
-                str = utf8_str;
-              else
-                str = g_strdup (_("(invalid UTF-8 string)"));
-            }
-
-          data[i] = str;
+          g_free (str);
         }
       else
         {

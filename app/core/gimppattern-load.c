@@ -41,6 +41,8 @@
 #define _O_BINARY 0
 #endif
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "config/gimpbaseconfig.h"
@@ -390,6 +392,8 @@ gimp_pattern_load (const gchar  *filename,
   /*  Read in the pattern name  */
   if ((bn_size = (header.header_size - sizeof (header))))
     {
+      gchar *utf8;
+
       name = g_new (gchar, bn_size);
 
       if ((read (fd, name, bn_size)) < bn_size)
@@ -400,13 +404,11 @@ gimp_pattern_load (const gchar  *filename,
 	  goto error;
         }
 
-      if (!g_utf8_validate (name, -1, NULL))
-        {
-          g_message (_("Invalid UTF-8 string in pattern file '%s'."),
-                     filename);
-          g_free (name);
-          name = NULL;
-        }
+      utf8 = gimp_any_to_utf8 (name, -1,
+                               _("Invalid UTF-8 string in pattern file '%s'."),
+                               filename);
+      g_free (name);
+      name = utf8;
     }
 
   if (!name)

@@ -1,5 +1,17 @@
 2003-10-16  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpbase/gimputils.[ch]: new function which takes any string
+	and returns UTF-8 (it returns "(invalid UTF-8 string)" if all
+	conversion attempts fail).
+
+	* app/core/gimpbrush.c
+	* app/core/gimpgradient.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c
+	* app/xcf/xcf-read.c: use it. Fixes bug #79897.
+
+2003-10-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppaletteeditor.c: added "realize" and
 	"size_allocate" callbacks and cleaned up calling of
 	palette_editor_redraw(). Fixes bug #110356 without a complete

@@ -374,28 +374,30 @@ gimp_gradient_load (const gchar  *filename,
   fgets (line, 1024, file);
   if (! strncmp (line, "Name: ", strlen ("Name: ")))
     {
-      if (g_utf8_validate (line, -1, NULL))
-        {
-          gimp_object_set_name (GIMP_OBJECT (gradient),
-                                g_strstrip (&line[strlen ("Name: ")]));
-        }
-      else
-        {
-          g_message (_("Invalid UTF-8 string in gradient file '%s'."),
-                     filename);
-          gimp_object_set_name (GIMP_OBJECT (gradient), _("Unnamed"));
-        }
+      gchar *utf8;
+
+      utf8 = gimp_any_to_utf8 (&line[strlen ("Name: ")], -1,
+                               _("Invalid UTF-8 string in gradient file '%s'."),
+                               filename);
+      g_strstrip (utf8);
+
+      gimp_object_set_name (GIMP_OBJECT (gradient), utf8);
+      g_free (utf8);
 
       fgets (line, 1024, file);
     }
   else /* old gradient format */
     {
       gchar *basename;
+      gchar *utf8;
 
       basename = g_path_get_basename (filename);
 
-      gimp_object_set_name (GIMP_OBJECT (gradient), basename);
+      utf8 = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
       g_free (basename);
+
+      gimp_object_set_name (GIMP_OBJECT (gradient), utf8);
+      g_free (utf8);
     }
 
   num_segments = atoi (line);

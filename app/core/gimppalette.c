@@ -28,6 +28,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
@@ -430,16 +431,14 @@ gimp_palette_load (const gchar  *filename,
 
   if (! strncmp (str, "Name: ", strlen ("Name: ")))
     {
-      if (g_utf8_validate (str, -1, NULL))
-        {
-          gimp_object_set_name (GIMP_OBJECT (palette),
-                                g_strstrip (&str[strlen ("Name: ")]));
-        }
-      else
-        {
-          g_message (_("Invalid UTF-8 string in palette file '%s'"), filename);
-          gimp_object_set_name (GIMP_OBJECT (palette), _("Unnamed"));
-        }
+      gchar *utf8;
+
+      utf8 = gimp_any_to_utf8 (&str[strlen ("Name: ")], -1,
+                               _("Invalid UTF-8 string in palette file '%s'"),
+                               filename);
+      g_strstrip (utf8);
+
+      gimp_object_set_name (GIMP_OBJECT (palette), utf8);
 
       if (! fgets (str, 1024, fp))
 	{
@@ -485,11 +484,15 @@ gimp_palette_load (const gchar  *filename,
   else /* old palette format */
     {
       gchar *basename;
+      gchar *utf8;
 
       basename = g_path_get_basename (filename);
 
-      gimp_object_set_name (GIMP_OBJECT (palette), basename);
+      utf8 = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
       g_free (basename);
+
+      gimp_object_set_name (GIMP_OBJECT (palette), utf8);
+      g_free (utf8);
     }
 
   while (! feof (fp))

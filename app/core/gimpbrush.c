@@ -42,6 +42,8 @@
 
 #include <stdio.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "base/brush-scale.h"
@@ -585,7 +587,10 @@ gimp_brush_load_brush (gint          fd,
    /*  Read in the brush name  */
   if ((bn_size = (header.header_size - sizeof (header))))
     {
+      gchar *utf8;
+
       name = g_new (gchar, bn_size);
+
       if ((read (fd, name, bn_size)) < bn_size)
 	{
 	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
@@ -596,13 +601,11 @@ gimp_brush_load_brush (gint          fd,
 	  return NULL;
 	}
 
-      if (!g_utf8_validate (name, -1, NULL))
-        {
-          g_message (_("Invalid UTF-8 string in brush file '%s'."),
-                     filename);
-          g_free (name);
-          name = NULL;
-        }
+      utf8 = gimp_any_to_utf8 (name, -1,
+                               _("Invalid UTF-8 string in brush file '%s'."),
+                               filename);
+      g_free (name);
+      name = utf8;
     }
 
   if (!name)

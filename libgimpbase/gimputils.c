@@ -40,7 +40,7 @@
  * Creates a (possibly trimmed) copy of @str. The string is cut if it
  * exceeds @max_chars characters or on the first newline. The fact
  * that the string was trimmed is indicated by appending an ellipsis.
- * 
+ *
  * Returns: A (possibly trimmed) copy of @str which should be freed
  * using g_free() when it is not needed any longer.
  **/
@@ -100,14 +100,85 @@ gimp_utf8_strtrim (const gchar *str,
 }
 
 /**
+ * gimp_any_to_utf8:
+ * @str:            The string to be converted to UTF-8.
+ * @len:            The length of the string, or -1 if the string
+ *                  is nul-terminated.
+ * @warning_format: The message format for the warning message if conversion
+ *                  to UTF-8 fails. See the <function>printf()</function>
+ *                  documentation.
+ * @Varargs:        The parameters to insert into the format string.
+ *
+ * This function takes any string (UTF-8 or not) and always returns a valid
+ * UTF-8 string.
+ *
+ * If @str is valid UTF-8, a copy of the string is returned.
+ *
+ * If UTF-8 validation fails, g_locale_to_utf8() is tried and if it
+ * succeeds the resulting string is returned.
+ *
+ * Otherwise, the portion of @str that is UTF-8, concatenated
+ * with "(invalid UTF-8 string)" is returned. If not even the start
+ * of @str is valid UTF-8, only "(invalid UTF-8 string)" is returned.
+ *
+ * Return value: The UTF-8 string as described above.
+ **/
+gchar *
+gimp_any_to_utf8 (const gchar  *str,
+                  gssize        len,
+                  const gchar  *warning_format,
+                  ...)
+{
+  const gchar *start_invalid;
+  gchar       *utf8;
+
+  g_return_val_if_fail (str != NULL, NULL);
+
+  if (g_utf8_validate (str, len, &start_invalid))
+    utf8 = g_strdup (str);
+  else
+    utf8 = g_locale_to_utf8 (str, len, NULL, NULL, NULL);
+
+  if (! utf8)
+    {
+      if (warning_format)
+        {
+          va_list warning_args;
+
+          va_start (warning_args, warning_format);
+
+          g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE,
+                  warning_format, warning_args);
+
+          va_end (warning_args);
+        }
+
+      if (start_invalid > str)
+        {
+          gchar *tmp;
+
+          tmp = g_strndup (str, start_invalid - str);
+          utf8 = g_strconcat (tmp, _("(invalid UTF-8 string)"), NULL);
+          g_free (tmp);
+        }
+      else
+        {
+          utf8 = g_strdup (_("(invalid UTF-8 string)"));
+        }
+    }
+
+  return utf8;
+}
+
+/**
  * gimp_memsize_to_string:
  * @memsize: A memory size in bytes.
- * 
+ *
  * This function returns a human readable, translated representation
  * of the passed @memsize. Large values are rounded to the closest
  * reasonable memsize unit, e.g.: "3456" becomes "3456 Bytes", "4100"
  * becomes "4 KB" and so on.
- * 
+ *
  * Return value: A human-readable, translated string.
  **/
 gchar *
