@@ -99,7 +99,7 @@ typedef struct {
 	gint32		drawable_id;
 	gchar		text[MAX_TEXT_SIZE];
 	gchar		xlfd[1024];
-	gint32		color;
+	GimpRGB		color;
 	gboolean	antialias;
 	GdtAlign	alignment;
 	gint		rotation;

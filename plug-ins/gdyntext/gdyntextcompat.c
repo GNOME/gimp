@@ -36,13 +36,14 @@
 
 gboolean gdt_compat_load(GdtVals *data)
 {
-	gchar *gdtparams = NULL;
-	gchar *gdtparams0 = NULL;
+	gchar  *gdtparams = NULL;
+	gchar  *gdtparams0 = NULL;
 	gchar **params = NULL;
-	gchar font_family[1024];
-	gchar font_style[1024];
+	gchar   font_family[1024];
+	gchar   font_style[1024];
 	gint	font_size;
 	gint	font_metric;
+	gint32  color;
 	GimpParasite *parasite = NULL;
 
 
@@ -82,7 +83,9 @@ gboolean gdt_compat_load(GdtVals *data)
 		gimp_parasite_free(parasite);
 		parasite = gimp_drawable_parasite_find(data->drawable_id,
 			GDYNTEXT_PARASITE_130_FONT_COLOR);
-		data->color = *(gint32*)gimp_parasite_data(parasite);
+		color = *(gint32*)gimp_parasite_data(parasite);
+		gimp_rgb_set_uchar (&data->color, 
+				    color >> 16, color >> 8, color);
 		gimp_parasite_free(parasite);
 		parasite = gimp_drawable_parasite_find(data->drawable_id,
 			GDYNTEXT_PARASITE_130_ANTIALIAS);
@@ -128,9 +131,10 @@ gboolean gdt_compat_load(GdtVals *data)
 	params = g_strsplit(gdtparams0, "}{", -1);
 	g_free(gdtparams0);
 
-	data->new_layer		= FALSE;
-	data->color				= strtol(params[C_FONT_COLOR], (char **)NULL, 16);
-	data->antialias		= atoi(params[C_ANTIALIAS]);
+	data->new_layer = FALSE;
+	color		= strtol(params[C_FONT_COLOR], (gchar **)NULL, 16);
+	gimp_rgb_set_uchar (&data->color, color >> 16, color >> 8, color);
+	data->antialias	= atoi(params[C_ANTIALIAS]);
 	font_size					= atoi(params[C_FONT_SIZE]);
 	font_metric				= atoi(params[C_FONT_SIZE_T]);
 	

@@ -175,9 +175,10 @@ gdt_run (gchar       *name,
 	  gdtvals.alignment	  = param[5].data.d_int32;
 	  gdtvals.rotation	  = param[6].data.d_int32;
 	  gdtvals.line_spacing	  = param[7].data.d_int32;
-	  gdtvals.color 	  = ((guint)param[8].data.d_color.red << 16) +
-	                            ((guint)param[8].data.d_color.green << 8) +
-	                             (guint)param[8].data.d_color.blue;
+	  gimp_rgb_set_uchar (&gdtvals.color,
+			      param[8].data.d_color.red,
+			      param[8].data.d_color.green,
+			      param[8].data.d_color.blue);
 	  gdtvals.layer_alignment = param[9].data.d_int32;
 	  strncpy(gdtvals.xlfd, param[10].data.d_string, sizeof(gdtvals.xlfd));
 	}
@@ -185,10 +186,10 @@ gdt_run (gchar       *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data ("plug_in_gdyntext", &gdtvals);
-      gdtvals.image_id		 = param[1].data.d_image;
-      gdtvals.drawable_id	 = param[2].data.d_drawable;
-      gdtvals.layer_id		 = param[2].data.d_layer;
-      gdtvals.new_layer		 = !gimp_drawable_has_alpha (gdtvals.drawable_id);
+      gdtvals.image_id	  = param[1].data.d_image;
+      gdtvals.drawable_id = param[2].data.d_drawable;
+      gdtvals.layer_id	  = param[2].data.d_layer;
+      gdtvals.new_layer   = !gimp_drawable_has_alpha (gdtvals.drawable_id);
       break;
     }
   
@@ -207,17 +208,17 @@ gdt_run (gchar       *name,
 void 
 gdt_load (GdtVals *data)
 {
-  gchar  *gdtparams  = NULL;
-  gchar  *gdtparams0 = NULL;
-  gchar **params     = NULL;
-  GimpRGB  color;
-  guchar   red, green, blue;
-  GimpParasite   *parasite = NULL;  
+  gint32          color;
+  gchar          *gdtparams  = NULL;
+  gchar          *gdtparams0 = NULL;
+  gchar         **params     = NULL;
+  GimpParasite   *parasite   = NULL;  
 	
   if (gdt_compat_load (data))
     return;
   
-  if ((parasite = gimp_drawable_parasite_find (data->drawable_id, GDYNTEXT_PARASITE)) != NULL)
+  if ((parasite = gimp_drawable_parasite_find (data->drawable_id, 
+					       GDYNTEXT_PARASITE)) != NULL)
     {
       gdtparams = g_strdup (gimp_parasite_data (parasite));
       gimp_parasite_free (parasite);
@@ -232,15 +233,13 @@ gdt_load (GdtVals *data)
       data->messages = g_list_append (data->messages, _(" Current layer isn't a GDynText layer or it has no alpha channel."
 							" Forcing new layer creation."));
       data->new_layer = TRUE;
+
       if (!data->valid)   /* setup default values if it wasn't already done */
 	{		
 	  strcpy (data->text, "");
 	  strcpy (data->xlfd, "");
 
-	  gimp_palette_get_foreground_rgb (&color);
-	  gimp_rgb_get_uchar (&color, &red, &green, &blue);
-
-	  data->color = (red << 16) + (green << 8) + blue;
+	  gimp_palette_get_foreground_rgb (&data->color);
 
 	  data->antialias         = TRUE;
 	  data->alignment 	  = LEFT;
@@ -278,10 +277,13 @@ gdt_load (GdtVals *data)
   data->rotation        = atoi (params[ROTATION]);
   data->line_spacing	= atoi (params[LINE_SPACING]);
   data->layer_alignment	= atoi (params[LAYER_ALIGNMENT]);
-  data->color		= strtol (params[COLOR], (gchar **)NULL, 16);
+
+  color = strtol (params[COLOR], (gchar **)NULL, 16);
+  gimp_rgb_set_uchar (&data->color, color >> 16, color >> 8, color);
 
   strncpy (data->xlfd, params[XLFD], sizeof(data->xlfd));
   strncpy (data->text, params[TEXT], sizeof(data->text));
+
   {
     gchar *text = gimp_strcompress (data->text);
     g_snprintf (data->text, sizeof(data->text), "%s", text);
@@ -295,15 +297,25 @@ gdt_load (GdtVals *data)
 void 
 gdt_save (GdtVals *data)
 {
-  gchar *lname, *text;
+  gchar        *lname;
+  gchar        *text;
+  guchar        r, g, b;
+  gint32        color;
   GimpParasite *parasite;
   
   text = gimp_strescape (data->text, NULL);
+  gimp_rgb_get_uchar (&data->color, &r, &g, &b);
+  color = (r << 16) | (g << 8) | b;
   lname = g_strdup_printf (GDYNTEXT_MAGIC
 			   "{%s}{%d}{%d}{%d}{%d}{%06X}{%d}{%s}",
 			   text,
-			   data->antialias, data->alignment, data->rotation, data->line_spacing,
-			   data->color, data->layer_alignment, data->xlfd);
+			   data->antialias, 
+			   data->alignment, 
+			   data->rotation, 
+			   data->line_spacing,
+			   color, 
+			   data->layer_alignment, 
+			   data->xlfd);
   g_free(text);
   
   parasite = gimp_parasite_new (GDYNTEXT_PARASITE,
@@ -349,7 +361,7 @@ gdt_render_text_p (GdtVals  *data,
   gint32 font_size_type;
   gchar **text_xlfd, **text_lines;
   gint32 *text_lines_w;
-  GimpRGB  old_color, text_color;
+  GimpRGB  old_color;
   
   if (show_progress)
     gimp_progress_init (_("GIMP Dynamic Text"));
@@ -462,11 +474,7 @@ gdt_render_text_p (GdtVals  *data,
   gimp_palette_get_foreground_rgb (&old_color);
   
   /* set foreground color to the wanted text color */
-  gimp_rgb_set_uchar (&text_color, 
-		      (data->color & 0xff0000) >> 16,
-		      (data->color & 0xff00) >> 8,
-		      data->color & 0xff);
-  gimp_palette_set_foreground_rgb (&text_color);
+  gimp_palette_set_foreground_rgb (&data->color);
   
   /* write text */
   for (i = 0; text_lines[i]; i++) 

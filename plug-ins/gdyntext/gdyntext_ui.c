@@ -67,6 +67,7 @@ typedef struct {
 	GtkWidget *line_spacing;
 	GtkWidget *textarea;
 	GtkWidget *font_preview;
+        GtkWidget *color_button;
 	GtkWidget *hbox_fp;
 	GtkWidget *charmap_window_toggle;
 	GtkWidget *new_layer_toggle;
@@ -78,31 +79,55 @@ typedef struct {
 
 
 static GtkWidget     *create_about_dialog            (void);
-static GdtMainWindow *create_main_window             (GdtMainWindow **main_window, GdtVals *data);
+static GdtMainWindow *create_main_window             (GdtMainWindow **main_window, 
+						      GdtVals    *data);
 static GtkWidget     *create_message_window          (GtkWidget **mw);
-static void           set_gdt_vals                   (GdtVals *data);
-static void           gtk_text_set_font              (GtkText *text, GdkFont *font);
-static void           load_text                      (GtkWidget *widget, gpointer data);
-static void           on_about_dialog_destroy        (GtkWidget *widget, gpointer data);
-static void           on_button_toggled              (GtkWidget *widget, gpointer data);
-static void           on_charmap_window_insert       (GtkWidget *widget, gpointer data);
-static void           on_charmap_button_toggled      (GtkWidget *widget, gpointer data);
-static void           on_font_preview_button_clicked (GtkWidget *widget, gpointer data);
-static void           on_font_preview_toggled        (GtkWidget *widget, gpointer data);
-static void           on_font_selection_changed      (GtkWidget *widget, gpointer data);
-static void           on_load_text_clicked           (GtkWidget *widget, gpointer data);
-static void           on_layer_align_change          (GtkWidget *widget, gpointer data);
-static void           on_main_window_about_clicked   (GtkWidget *widget, gpointer data);
-static void           on_main_window_align_c_clicked (GtkWidget *widget, gpointer data);
-static void           on_main_window_align_l_clicked (GtkWidget *widget, gpointer data);
-static void           on_main_window_align_r_clicked (GtkWidget *widget, gpointer data);
-static void           on_main_window_apply_clicked   (GtkWidget *widget, gpointer data);
-static void           on_main_window_cancel_clicked  (GtkWidget *widget, gpointer data);
-static void           on_main_window_ok_press_event  (GtkWidget *widget, GdkEvent *event, gpointer data);
-static void           on_main_window_ok_clicked      (GtkWidget *widget, gpointer data);
-static void           on_window_close                (GtkWidget *widget, gpointer data);
-static void           on_window_destroy              (GtkWidget *widget, gpointer data);
-static void           toggle_button_update           (GtkWidget *widget, GtkWidget *window);
+static void           set_gdt_vals                   (GdtVals    *data);
+static void           gtk_text_set_font              (GtkText    *text, 
+						      GdkFont    *font);
+static void           load_text                      (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_about_dialog_destroy        (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_button_toggled              (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_charmap_window_insert       (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_charmap_button_toggled      (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_font_preview_button_clicked (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_font_preview_toggled        (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_font_selection_changed      (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_load_text_clicked           (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_layer_align_change          (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_main_window_about_clicked   (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_main_window_align_c_clicked (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_main_window_align_l_clicked (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_main_window_align_r_clicked (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_main_window_apply_clicked   (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_main_window_cancel_clicked  (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_main_window_ok_press_event  (GtkWidget  *widget, 
+						      GdkEvent   *event, 
+						      gpointer    data);
+static void           on_main_window_ok_clicked      (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_window_close                (GtkWidget  *widget, 
+						      gpointer    data);
+static void           on_window_destroy              (GtkWidget  *widget, 
+						      gpointer    data);
+static void           toggle_button_update           (GtkWidget  *widget, 
+						      GtkWidget  *window);
 
 
 static GdtMainWindow	*main_window            = NULL;
@@ -110,7 +135,6 @@ static GtkWidget	*message_window         = NULL;
 static GtkWidget  	*charmap_window         = NULL;
 static GtkWidget	*about_dialog           = NULL;
 static GtkWidget	*load_file_selection    = NULL;
-static GimpRGB	         color;
 
 
 #define COLOR_PREVIEW_WIDTH		20
@@ -226,7 +250,6 @@ create_main_window (GdtMainWindow **main_window,
   GtkWidget *hbbox2;
   GtkWidget *label;
   GtkWidget *toolbar;
-  GtkWidget *color_button;
   GtkWidget *button_about;
   GtkWidget *button_ok;
   GtkWidget *button_cancel;
@@ -322,64 +345,75 @@ create_main_window (GdtMainWindow **main_window,
   gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
   
   /* FONT COLOR */
-  gimp_rgb_set (&color, 
-		(gdouble) (((guint)data->color) >> 16) / 255.0,
-		(gdouble) (((guint)data->color) >> 8)  / 255.0,
-		(gdouble)  ((guint)data->color)        / 255.0);
-  color_button = gimp_color_button_new (_("GDynText: Select Color"), 
-					COLOR_PREVIEW_WIDTH, 
-					COLOR_PREVIEW_HEIGHT,
-					&color, GIMP_COLOR_AREA_FLAT);
-  gtk_signal_connect (GTK_OBJECT (color_button), "color_changed",
-		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
-		      &color);
-  gtk_button_set_relief (GTK_BUTTON (color_button), GTK_RELIEF_NONE); 
-  gtk_widget_show (color_button);
-  gtk_toolbar_append_element (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_CHILD_WIDGET, 
-			      color_button,
+  mw->color_button = gimp_color_button_new (_("GDynText: Select Color"), 
+					    COLOR_PREVIEW_WIDTH, 
+					    COLOR_PREVIEW_HEIGHT,
+					    &data->color, 
+					    GIMP_COLOR_AREA_FLAT);
+  gtk_button_set_relief (GTK_BUTTON (mw->color_button), GTK_RELIEF_NONE); 
+  gtk_widget_show (mw->color_button);
+  gtk_toolbar_append_element (GTK_TOOLBAR (toolbar), 
+			      GTK_TOOLBAR_CHILD_WIDGET, 
+			      mw->color_button,
 			      NULL, _("Text color"), NULL, 
 			      NULL,
 			      NULL, NULL);
   
-  gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar));
   
   /* ANTIALIASING Toggle */
-  icon = gdk_pixmap_create_from_xpm_d(mw->window->window, &mask, transparent, antialias_xpm);
+  icon = gdk_pixmap_create_from_xpm_d(mw->window->window, 
+				      &mask, transparent, antialias_xpm);
   gtk_icon = gtk_pixmap_new(icon, mask);
   telem = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_CHILD_TOGGLEBUTTON, NULL,
 				     NULL, _("Toggle anti-aliased text"), NULL, 
 				     gtk_icon, 
 				     NULL, NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (telem), data->antialias);
-  gtk_signal_connect(GTK_OBJECT(telem), "clicked", GTK_SIGNAL_FUNC(on_button_toggled), &data->antialias);
+  gtk_signal_connect(GTK_OBJECT(telem), "clicked", 
+		     GTK_SIGNAL_FUNC(on_button_toggled), 
+		     &data->antialias);
   
   gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 	
   /* LEFT Align */
-  icon = gdk_pixmap_create_from_xpm_d(mw->window->window, &mask, &toolbar->style->bg[GTK_STATE_NORMAL], align_left_xpm);
+  icon = gdk_pixmap_create_from_xpm_d(mw->window->window, 
+				      &mask, 
+				      &toolbar->style->bg[GTK_STATE_NORMAL], 
+				      align_left_xpm);
   gtk_icon = gtk_pixmap_new(icon, mask);
   rbutt = gtk_radio_button_new(NULL);
-  telem = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_CHILD_RADIOBUTTON, rbutt,
+  telem = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar), 
+				     GTK_TOOLBAR_CHILD_RADIOBUTTON, rbutt,
 				     NULL, _("Left aligned text"), NULL, 
 				     gtk_icon, 
-				     GTK_SIGNAL_FUNC(on_main_window_align_l_clicked), &data->alignment);
+				     GTK_SIGNAL_FUNC(on_main_window_align_l_clicked), 
+				     &data->alignment);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (telem),
 				data->alignment == LEFT);
   
   /* CENTER Align */
-  icon = gdk_pixmap_create_from_xpm_d(mw->window->window, &mask, &toolbar->style->bg[GTK_STATE_NORMAL], align_center_xpm);
+  icon = gdk_pixmap_create_from_xpm_d(mw->window->window, 
+				      &mask, 
+				      &toolbar->style->bg[GTK_STATE_NORMAL], 
+				      align_center_xpm);
   gtk_icon = gtk_pixmap_new(icon, mask);
   group = gtk_radio_button_group(GTK_RADIO_BUTTON(rbutt));
   rbutt = gtk_radio_button_new(group);
-  telem = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_CHILD_RADIOBUTTON, rbutt,
+  telem = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar), 
+				     GTK_TOOLBAR_CHILD_RADIOBUTTON, rbutt,
 				     NULL, _("Centered text"), NULL, 
 				     gtk_icon, 
-				     GTK_SIGNAL_FUNC(on_main_window_align_c_clicked), &data->alignment);
+				     GTK_SIGNAL_FUNC(on_main_window_align_c_clicked), 
+				     &data->alignment);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (telem),
 				data->alignment == CENTER);
   
   /* RIGHT Align */
-  icon = gdk_pixmap_create_from_xpm_d(mw->window->window, &mask, &toolbar->style->bg[GTK_STATE_NORMAL], align_right_xpm);
+  icon = gdk_pixmap_create_from_xpm_d(mw->window->window, 
+				      &mask, 
+				      &toolbar->style->bg[GTK_STATE_NORMAL], 
+				      align_right_xpm);
   gtk_icon = gtk_pixmap_new(icon, mask);
   group = gtk_radio_button_group(GTK_RADIO_BUTTON(rbutt));
   rbutt = gtk_radio_button_new(group);
@@ -658,8 +692,6 @@ gdt_create_ui (GdtVals *data)
 static void 
 set_gdt_vals (GdtVals *data) 
 {
-  guint32 col[3];
-
   data->preview = main_window->font_preview_enabled;
   strncpy(data->xlfd,
 	  font_selection_get_font_name(FONT_SELECTION(main_window->font_selection)),
@@ -668,11 +700,8 @@ set_gdt_vals (GdtVals *data)
   data->line_spacing = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (main_window->line_spacing));
   data->layer_alignment = main_window->layer_alignment;
   strncpy(data->text, gtk_editable_get_chars (GTK_EDITABLE(main_window->textarea), 0, -1), sizeof(data->text));
-
-  col[0] = color.r * 255.0;
-  col[1] = color.g * 255.0;
-  col[2] = color.b * 255.0;
-  data->color = (col[0] << 16) + (col[1] << 8) + col[2];
+  gimp_color_button_get_color (GIMP_COLOR_BUTTON (main_window->color_button),
+			       &data->color);
 }
 
 
@@ -1014,7 +1043,7 @@ main (void)
   strcpy(data->text, "Test\nLine 1\nLine 2");
   strcpy(data->xlfd,
 	 "-star division-helmet-medium-r-normal-*-*-200-*-*-p-*-adobe-fontspecific");
-  data->color	        = 0xffdead;
+  data->color	        = { 0.0, 0.2, 0.3, 1.0 };
   data->antialias	= TRUE;
   data->alignment	= CENTER;
   data->rotation	= 45;

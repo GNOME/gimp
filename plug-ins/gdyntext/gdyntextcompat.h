@@ -49,16 +49,16 @@
 /* parasite blocks */
 typedef enum
 {
-	C_TEXT				= 0,
+	C_TEXT		= 0,
 	C_FONT_FAMILY	= 1,
-	C_FONT_SIZE		= 2,
+	C_FONT_SIZE	= 2,
 	C_FONT_SIZE_T	= 3,
 	C_FONT_COLOR	= 4,
-	C_ANTIALIAS		= 5,
-	C_ALIGNMENT		= 6,
-	C_ROTATION		= 7,
+	C_ANTIALIAS	= 5,
+	C_ALIGNMENT	= 6,
+	C_ROTATION	= 7,
 	C_FONT_STYLE	= 8,
-	C_SPACING			= 9
+	C_SPACING	= 9
 } GDTCompatBlock;
 
 
@@ -74,3 +74,10 @@ gboolean gdt_compat_load(GdtVals *data);
 #endif /* _GDYNTEXTCOMPAT_H_ */
 
 /* vim: set ts=2 sw=2 tw=79 ai nowrap: */
+
+
+
+
+
+
+
