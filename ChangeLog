@@ -1,3 +1,9 @@
+2000-12-18  Daniel Egger <egger@suse.de>
+
+	* plug-ins/ifcompose/ifscompose.c:
+	Added patch from David Neary to fix calulations. 
+	Fixes bug #9156.
+
 2000-12-18  Sven Neumann  <sven@gimp.org>
 	    Jens Lautenbacher <jtl@gimp.org>
 
