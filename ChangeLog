@@ -1,5 +1,9 @@
 2003-11-11  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-selection.[ch]: some more cleanup.
+
+2003-11-11  Sven Neumann  <sven@gimp.org>
+
 	* app/display/Makefile.am
 	* app/display/gimpdisplayshell-marching-ants.h: removed this file.
 

@@ -349,10 +349,11 @@ selection_render_points (Selection *select)
 				 x, y);
 	    x += dx;
 	    r += dya;
-	    if (r >= (dxa << 1)) {
-	      y += dy;
-	      r -= (dxa << 1);
-	    }
+	    if (r >= (dxa << 1))
+              {
+                y += dy;
+                r -= (dxa << 1);
+              }
 	  } while (x != select->segs_in[i].x2);
 	}
       else if (dxa < dya)
@@ -365,10 +366,11 @@ selection_render_points (Selection *select)
 				 x, y);
 	    y += dy;
 	    r += dxa;
-	    if (r >= (dya << 1)) {
-	      x += dx;
-	      r -= (dya << 1);
-	    }
+	    if (r >= (dya << 1))
+              {
+                x += dx;
+                r -= (dya << 1);
+              }
 	  } while (y != select->segs_in[i].y2);
 	}
       else

@@ -23,7 +23,6 @@
 struct _Selection
 {
   GimpDisplayShell *shell;            /*  shell that owns the selection     */
-
   GdkSegment       *segs_in;          /*  gdk segments of area boundary     */
   GdkSegment       *segs_out;         /*  gdk segments of area boundary     */
   GdkSegment       *segs_layer;       /*  gdk segments of area boundary     */
@@ -37,7 +36,6 @@ struct _Selection
   gboolean          hidden;           /*  is the selection hidden?          */
   gboolean          layer_hidden;     /*  is the layer boundary hidden?     */
   guint             timeout_id;       /*  timer for successive draws        */
-  GdkPixmap        *cycle_pix;        /*  cycling pixmap                    */
   GdkPoint         *points_in[8];     /*  points of segs_in for fast ants   */
   gint              num_points_in[8]; /*  number of points in points_in     */
 };
