@@ -47,6 +47,7 @@ gimp_paint_core_stroke (GimpPaintCore    *core,
 
   if (gimp_paint_core_start (core, drawable, paint_options, &strokes[0]))
     {
+      GimpBrush *current_brush;
       gint i;
 
       core->start_coords = strokes[0];
@@ -54,7 +55,9 @@ gimp_paint_core_stroke (GimpPaintCore    *core,
 
       gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT);
 
+      current_brush = core->brush;
       gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT);
+      core->brush = current_brush;
 
       for (i = 1; i < n_strokes; i++)
         {
@@ -117,12 +120,15 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
 
   do
     {
+      GimpBrush *current_brush;
       gint i;
 
       core->start_coords = g_array_index (coords, GimpCoords, 0);
       core->last_coords  = g_array_index (coords, GimpCoords, 0);
 
+      current_brush = core->brush;
       gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT);
+      core->brush = current_brush;
 
       for (i = 1; i < coords->len; i++)
         {

@@ -1,3 +1,25 @@
+2003-05-02  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/paint/gimppaintcore-stroke.c (gimp_paint_core_stroke,
+	gimp_paint_core_stroke_vectors): Save brush pointer before first
+	stroke and restore it after. Fixes bug #102162.
+
+	* plug-ins/common/flarefx.c (FlareFX): Use
+	gimp_fixme_preview_do_row instead of memcpy. Fixes bug #112042 for
+	this plug-in.
+
+	* plug-ins/common/jigsaw.c: Several cleanups.
+	(jigsaw_values_changed): New function as a result of the cleanups.
+	(jigsaw): Use gimp_fixme_preview_do_row instead of memcpy.
+	Together with the fix to flarefx, fixes bug #112042.
+	(draw_jigsaw): Warn if passed a NULL buffer (solves the crash
+	reported in bug #112012).
+
+	* plug-ins/gimpressionist/orientation.c: Slightly reformatted.
+	(create_orientationpage): Modify orientfirst/orientlast instead of
+	sizefirst/sizelast in the corresponding adjustments. Fixes bug 
+	#112061.
+
 2003-05-01  Manish Singh  <yosh@gimp.org>
 
 	* app/text/gimpfontlist.c: Query fontconfig directly for the font

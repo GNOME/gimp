@@ -468,8 +468,7 @@ FlareFX (GimpDrawable *drawable,
 	}
       if (preview_mode) 
 	{
-	  memcpy (preview->buffer + preview->rowstride * row, cur_row, 
-		  preview->rowstride);
+	  gimp_fixme_preview_do_row (preview, row, preview->width, cur_row);
 	} 
       else 
 	{

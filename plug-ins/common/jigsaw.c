@@ -68,17 +68,18 @@ static void run   (gchar      *name,
 		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
-static gint jigsaw     (gboolean preview_mode);
+static gint jigsaw                 (gboolean preview_mode);
+static void jigsaw_values_changed  (GtkWidget *widget, gpointer data);
 
 static void  jigsaw_radio_button_update (GtkWidget *widget, gpointer data);
 static void  dialog_box (void);
-static void run_callback          (GtkWidget *widget, gpointer   data);
+static void run_callback           (GtkWidget *widget, gpointer   data);
 
-static void draw_jigsaw           (guchar    *buffer, 
-				   gint       width, 
-				   gint       height, 
-				   gint       bytes, 
-				   gboolean   preview_mode);
+static void draw_jigsaw            (guchar    *buffer,
+				    gint       width,
+				    gint       height,
+				    gint       bytes,
+				    gboolean   preview_mode);
 
 static void draw_vertical_border   (guchar *buffer, gint width, gint height,
 				    gint bytes, gint x_offset, gint ytiles,
@@ -313,7 +314,7 @@ struct globals_tag
   gint  *cachex2[4];
   gint  *cachey1[4];
   gint  *cachey2[4];
-  gint  steps[4];
+  gint   steps[4];
   gint  *gridx;
   gint  *gridy;
   gint **blend_outer_cachex1[4];
@@ -517,7 +518,14 @@ jigsaw (gboolean preview_mode)
   /* cleanup */
   if (preview_mode) 
     {
-      memcpy (preview->buffer, buffer, buffer_size);
+      int y;
+
+      for (y = 0; y < preview->height; y++)
+	{
+	  gimp_fixme_preview_do_row (preview, y, preview->width,
+				     &buffer[preview->rowstride * y]);
+	}
+
       gtk_widget_queue_draw (preview->widget);
     } 
   else 
@@ -531,6 +539,12 @@ jigsaw (gboolean preview_mode)
   g_free(buffer);
 
   return 0;
+}
+
+static void
+jigsaw_values_changed (GtkWidget *widget, gpointer data)
+{
+  jigsaw (TRUE);
 }
 
 static void
@@ -585,13 +599,15 @@ draw_jigsaw (guchar   *buffer,
   style_t style = config.style;
   gint progress_total = xlines + ylines - 1;
 
+  g_return_if_fail (buffer != NULL);
+
   globals.gridx = g_new (gint, xtiles);
   globals.gridy = g_new (gint, ytiles);
   x = globals.gridx;
   y = globals.gridy;
 
   generate_grid (width, height, xtiles, ytiles, globals.gridx, globals.gridy);
- 
+
   init_right_bump (width, height);
   init_left_bump  (width, height);
   init_up_bump    (width, height);
@@ -668,7 +684,7 @@ draw_vertical_border (guchar  *buffer,
   gdouble sigma = blend_amount / blend_lines;
   gint right;
   bump_t style_index;
-  
+
   for (i = 0; i < ytiles; i++)
     {
       right = g_random_int_range (0, 2);
@@ -943,13 +959,13 @@ draw_right_bump (guchar   *buffer,
 
   for (i = 0; i < steps; i++)
     {
-      x = *(globals.cachex1[RIGHT] + i) + x_offset;
-      y = *(globals.cachey1[RIGHT] + i) + curve_start_offset;
+      x = globals.cachex1[RIGHT][i] + x_offset;
+      y = globals.cachey1[RIGHT][i] + curve_start_offset;
       index = y * rowstride + x * bytes;
       DRAW_POINT(buffer, index);
 
-      x = *(globals.cachex2[RIGHT] + i) + x_offset;
-      y = *(globals.cachey2[RIGHT] + i) + curve_start_offset;
+      x = globals.cachex2[RIGHT][i] + x_offset;
+      y = globals.cachey2[RIGHT][i] + curve_start_offset;
       index = y * rowstride + x * bytes;
       DRAW_POINT(buffer, index);
     }
@@ -973,13 +989,13 @@ draw_left_bump (guchar   *buffer,
 
   for (i = 0; i < steps; i++)
     {
-      x = *(globals.cachex1[LEFT] + i) + x_offset;
-      y = *(globals.cachey1[LEFT] + i) + curve_start_offset;
+      x = globals.cachex1[LEFT][i] + x_offset;
+      y = globals.cachey1[LEFT][i] + curve_start_offset;
       index = y * rowstride + x * bytes;
       DRAW_POINT(buffer, index);
 
-      x = *(globals.cachex2[LEFT] + i) + x_offset;
-      y = *(globals.cachey2[LEFT] + i) + curve_start_offset;
+      x = globals.cachex2[LEFT][i] + x_offset;
+      y = globals.cachey2[LEFT][i] + curve_start_offset;
       index = y * rowstride + x * bytes;
       DRAW_POINT(buffer, index);
     }
@@ -1003,13 +1019,13 @@ draw_up_bump (guchar   *buffer,
 
   for (i = 0; i < steps; i++)
     {
-      x = *(globals.cachex1[UP] + i) + curve_start_offset;
-      y = *(globals.cachey1[UP] + i) + y_offset;
+      x = globals.cachex1[UP][i] + curve_start_offset;
+      y = globals.cachey1[UP][i] + y_offset;
       index = y * rowstride + x * bytes;
       DRAW_POINT(buffer, index);
 
-      x = *(globals.cachex2[UP] + i) + curve_start_offset;
-      y = *(globals.cachey2[UP] + i) + y_offset;
+      x = globals.cachex2[UP][i] + curve_start_offset;
+      y = globals.cachey2[UP][i] + y_offset;
       index = y * rowstride + x * bytes;
       DRAW_POINT(buffer, index);
     }
@@ -1033,13 +1049,13 @@ draw_down_bump (guchar   *buffer,
 
   for (i = 0; i < steps; i++)
     {
-      x = *(globals.cachex1[DOWN] + i) + curve_start_offset;
-      y = *(globals.cachey1[DOWN] + i) + y_offset;
+      x = globals.cachex1[DOWN][i] + curve_start_offset;
+      y = globals.cachey1[DOWN][i] + y_offset;
       index = y * rowstride + x * bytes;
       DRAW_POINT(buffer, index);
 
-      x = *(globals.cachex2[DOWN] + i) + curve_start_offset;
-      y = *(globals.cachey2[DOWN] + i) + y_offset;
+      x = globals.cachex2[DOWN][i] + curve_start_offset;
+      y = globals.cachey2[DOWN][i] + y_offset;
       index = y * rowstride + x * bytes;
       DRAW_POINT(buffer, index);
     }
@@ -1050,34 +1066,33 @@ malloc_cache (void)
 {
   gint i, j;
   gint blend_lines = config.blend_lines;
-  gint length = blend_lines * sizeof(gint *);
 
   for (i = 0; i < 4; i++)
     {
-      gint steps_length = globals.steps[i] * sizeof(gint);
+      gint steps = globals.steps[i];
 
-      globals.cachex1[i] = g_malloc (steps_length);
-      globals.cachex2[i] = g_malloc (steps_length);
-      globals.cachey1[i] = g_malloc (steps_length);
-      globals.cachey2[i] = g_malloc (steps_length);
-      globals.blend_outer_cachex1[i] = g_malloc (length);
-      globals.blend_outer_cachex2[i] = g_malloc (length);
-      globals.blend_outer_cachey1[i] = g_malloc (length);
-      globals.blend_outer_cachey2[i] = g_malloc (length);
-      globals.blend_inner_cachex1[i] = g_malloc (length);
-      globals.blend_inner_cachex2[i] = g_malloc (length);
-      globals.blend_inner_cachey1[i] = g_malloc (length);
-      globals.blend_inner_cachey2[i] = g_malloc (length);
+      globals.cachex1[i] = g_new (gint, steps);
+      globals.cachex2[i] = g_new (gint, steps);
+      globals.cachey1[i] = g_new (gint, steps);
+      globals.cachey2[i] = g_new (gint, steps);
+      globals.blend_outer_cachex1[i] = g_new (gint *, blend_lines);
+      globals.blend_outer_cachex2[i] = g_new (gint *, blend_lines);
+      globals.blend_outer_cachey1[i] = g_new (gint *, blend_lines);
+      globals.blend_outer_cachey2[i] = g_new (gint *, blend_lines);
+      globals.blend_inner_cachex1[i] = g_new (gint *, blend_lines);
+      globals.blend_inner_cachex2[i] = g_new (gint *, blend_lines);
+      globals.blend_inner_cachey1[i] = g_new (gint *, blend_lines);
+      globals.blend_inner_cachey2[i] = g_new (gint *, blend_lines);
       for (j = 0; j < blend_lines; j++)
 	{
-	  *(globals.blend_outer_cachex1[i] + j) = g_malloc (steps_length);
-	  *(globals.blend_outer_cachex2[i] + j) = g_malloc (steps_length);
-	  *(globals.blend_outer_cachey1[i] + j) = g_malloc (steps_length);
-	  *(globals.blend_outer_cachey2[i] + j) = g_malloc (steps_length);
-	  *(globals.blend_inner_cachex1[i] + j) = g_malloc (steps_length);
-	  *(globals.blend_inner_cachex2[i] + j) = g_malloc (steps_length);
-	  *(globals.blend_inner_cachey1[i] + j) = g_malloc (steps_length);
-	  *(globals.blend_inner_cachey2[i] + j) = g_malloc (steps_length);
+	  globals.blend_outer_cachex1[i][j] = g_new (gint, steps);
+	  globals.blend_outer_cachex2[i][j] = g_new (gint, steps);
+	  globals.blend_outer_cachey1[i][j] = g_new (gint, steps);
+	  globals.blend_outer_cachey2[i][j] = g_new (gint, steps);
+	  globals.blend_inner_cachex1[i][j] = g_new (gint, steps);
+	  globals.blend_inner_cachex2[i][j] = g_new (gint, steps);
+	  globals.blend_inner_cachey1[i][j] = g_new (gint, steps);
+	  globals.blend_inner_cachey2[i][j] = g_new (gint, steps);
 	}
     }
 }
@@ -1096,14 +1111,14 @@ free_cache (void)
       g_free (globals.cachey2[i]);
       for (j = 0; j < blend_lines; j++)
 	{
-	  g_free (*(globals.blend_outer_cachex1[i] + j));
-	  g_free (*(globals.blend_outer_cachex2[i] + j));
-	  g_free (*(globals.blend_outer_cachey1[i] + j));
-	  g_free (*(globals.blend_outer_cachey2[i] + j));
-	  g_free (*(globals.blend_inner_cachex1[i] + j));
-	  g_free (*(globals.blend_inner_cachex2[i] + j));
-	  g_free (*(globals.blend_inner_cachey1[i] + j));
-	  g_free (*(globals.blend_inner_cachey2[i] + j));
+	  g_free (globals.blend_outer_cachex1[i][j]);
+	  g_free (globals.blend_outer_cachex2[i][j]);
+	  g_free (globals.blend_outer_cachey1[i][j]);
+	  g_free (globals.blend_outer_cachey2[i][j]);
+	  g_free (globals.blend_inner_cachex1[i][j]);
+	  g_free (globals.blend_inner_cachex2[i][j]);
+	  g_free (globals.blend_inner_cachey1[i][j]);
+	  g_free (globals.blend_inner_cachey2[i][j]);
 	}
       g_free (globals.blend_outer_cachex1[i]);
       g_free (globals.blend_outer_cachex2[i]);
@@ -1148,8 +1163,8 @@ init_right_bump (gint width,
     {
        py[0]--; py[1]--; py[2]--; px[3]++;
        generate_bezier(px, py, steps,
-		       *(globals.blend_outer_cachex1[RIGHT] + i),
-		       *(globals.blend_outer_cachey1[RIGHT] + i));
+		       globals.blend_outer_cachex1[RIGHT][i],
+		       globals.blend_outer_cachey1[RIGHT][i]);
     }
   /* inside right bump */
   py[0] += blend_lines; py[1] += blend_lines; py[2] += blend_lines;
@@ -1158,8 +1173,8 @@ init_right_bump (gint width,
     {
       py[0]++; py[1]++; py[2]++; px[3]--;
       generate_bezier(px, py, steps,
-		      *(globals.blend_inner_cachex1[RIGHT] + i),
-		      *(globals.blend_inner_cachey1[RIGHT] + i));
+		      globals.blend_inner_cachex1[RIGHT][i],
+		      globals.blend_inner_cachey1[RIGHT][i]);
     }
 
   /* bottom half of bump */
@@ -1178,8 +1193,8 @@ init_right_bump (gint width,
     {
       py[1]++; py[2]++; py[3]++; px[0]++;
       generate_bezier(px, py, steps,
-		      *(globals.blend_outer_cachex2[RIGHT] + i),
-		      *(globals.blend_outer_cachey2[RIGHT] + i));
+		      globals.blend_outer_cachex2[RIGHT][i],
+		      globals.blend_outer_cachey2[RIGHT][i]);
     }
   /* inner right bump */
   py[1] -= blend_lines; py[2] -= blend_lines; py[3] -= blend_lines;
@@ -1188,8 +1203,8 @@ init_right_bump (gint width,
     {
       py[1]--; py[2]--; py[3]--; px[0]--;
       generate_bezier(px, py, steps,
-		      *(globals.blend_inner_cachex2[RIGHT] + i),
-		      *(globals.blend_inner_cachey2[RIGHT] + i));
+		      globals.blend_inner_cachex2[RIGHT][i],
+		      globals.blend_inner_cachey2[RIGHT][i]);
     }
   return;
 }
@@ -1226,8 +1241,8 @@ init_left_bump (gint width,
     {
       py[0]--; py[1]--; py[2]--; px[3]--;
       generate_bezier(px, py, steps,
-		      *(globals.blend_outer_cachex1[LEFT] + i),
-		      *(globals.blend_outer_cachey1[LEFT] + i));
+		      globals.blend_outer_cachex1[LEFT][i],
+		      globals.blend_outer_cachey1[LEFT][i]);
     }
   /* inner left bump */
   py[0] += blend_lines; py[1] += blend_lines; py[2] += blend_lines;
@@ -1236,8 +1251,8 @@ init_left_bump (gint width,
     {
       py[0]++; py[1]++; py[2]++; px[3]++;
       generate_bezier(px, py, steps,
-		      *(globals.blend_inner_cachex1[LEFT] + i),
-		      *(globals.blend_inner_cachey1[LEFT] + i));
+		      globals.blend_inner_cachex1[LEFT][i],
+		      globals.blend_inner_cachey1[LEFT][i]);
     }
 
   /* bottom half of bump */
@@ -1256,8 +1271,8 @@ init_left_bump (gint width,
     {
       py[1]++; py[2]++; py[3]++; px[0]--;
       generate_bezier(px, py, steps,
-		      *(globals.blend_outer_cachex2[LEFT] + i),
-		      *(globals.blend_outer_cachey2[LEFT] + i));
+		      globals.blend_outer_cachex2[LEFT][i],
+		      globals.blend_outer_cachey2[LEFT][i]);
     }
   /* inner left bump */
   py[1] -= blend_lines; py[2] -= blend_lines; py[3] -= blend_lines;
@@ -1266,8 +1281,8 @@ init_left_bump (gint width,
     {
       py[1]--; py[2]--; py[3]--; px[0]++;
       generate_bezier(px, py, steps,
-		      *(globals.blend_inner_cachex2[LEFT] + i),
-		      *(globals.blend_inner_cachey2[LEFT] + i));
+		      globals.blend_inner_cachex2[LEFT][i],
+		      globals.blend_inner_cachey2[LEFT][i]);
     }
 }
 
@@ -1303,8 +1318,8 @@ init_up_bump (gint width,
     {
       px[0]--; px[1]--; px[2]--; py[3]--;
       generate_bezier(px, py, steps,
-		      *(globals.blend_outer_cachex1[UP] + i),
-		      *(globals.blend_outer_cachey1[UP] + i));
+		      globals.blend_outer_cachex1[UP][i],
+		      globals.blend_outer_cachey1[UP][i]);
     }
   /* inner up bump */
   px[0] += blend_lines; px[1] += blend_lines; px[2] += blend_lines;
@@ -1313,8 +1328,8 @@ init_up_bump (gint width,
     {
       px[0]++; px[1]++; px[2]++; py[3]++;
       generate_bezier(px, py, steps,
-		      *(globals.blend_inner_cachex1[UP] + i),
-		      *(globals.blend_inner_cachey1[UP] + i));
+		      globals.blend_inner_cachex1[UP][i],
+		      globals.blend_inner_cachey1[UP][i]);
     }
 
   /* bottom half of bump */
@@ -1333,8 +1348,8 @@ init_up_bump (gint width,
     {
       px[1]++; px[2]++; px[3]++; py[0]--;
       generate_bezier(px, py, steps,
-		      *(globals.blend_outer_cachex2[UP] + i),
-		      *(globals.blend_outer_cachey2[UP] + i));
+		      globals.blend_outer_cachex2[UP][i],
+		      globals.blend_outer_cachey2[UP][i]);
     }
   /* inner up bump */
   px[1] -= blend_lines; px[2] -= blend_lines; px[3] -= blend_lines;
@@ -1343,8 +1358,8 @@ init_up_bump (gint width,
     {
       px[1]--; px[2]--; px[3]--; py[0]++;
       generate_bezier(px, py, steps,
-		      *(globals.blend_inner_cachex2[UP] + i),
-		      *(globals.blend_inner_cachey2[UP] + i));
+		      globals.blend_inner_cachex2[UP][i],
+		      globals.blend_inner_cachey2[UP][i]);
     }
   return;
 }
@@ -1381,8 +1396,8 @@ init_down_bump (gint width,
     {
       px[0]--; px[1]--; px[2]--; py[3]++;
       generate_bezier(px, py, steps,
-		      *(globals.blend_outer_cachex1[DOWN] + i),
-		      *(globals.blend_outer_cachey1[DOWN] + i));
+		      globals.blend_outer_cachex1[DOWN][i],
+		      globals.blend_outer_cachey1[DOWN][i]);
     }
   /* inner down bump */
   px[0] += blend_lines; px[1] += blend_lines; px[2] += blend_lines;
@@ -1391,8 +1406,8 @@ init_down_bump (gint width,
     {
       px[0]++; px[1]++; px[2]++; py[3]--;
       generate_bezier(px, py, steps,
-		      *(globals.blend_inner_cachex1[DOWN] + i),
-		      *(globals.blend_inner_cachey1[DOWN] + i));
+		      globals.blend_inner_cachex1[DOWN][i],
+		      globals.blend_inner_cachey1[DOWN][i]);
     }
 
   /* bottom half of bump */
@@ -1411,8 +1426,8 @@ init_down_bump (gint width,
     {
       px[1]++; px[2]++; px[3]++; py[0]++;
       generate_bezier(px, py, steps,
-		      *(globals.blend_outer_cachex2[DOWN] + i),
-		      *(globals.blend_outer_cachey2[DOWN] + i));
+		      globals.blend_outer_cachex2[DOWN][i],
+		      globals.blend_outer_cachey2[DOWN][i]);
     }
   /* inner down bump */
   px[1] -= blend_lines; px[2] -= blend_lines; px[3] -= blend_lines;
@@ -1421,8 +1436,8 @@ init_down_bump (gint width,
     {
       px[1]--; px[2]--; px[3]--; py[0]--;
       generate_bezier(px, py, steps,
-		      *(globals.blend_inner_cachex2[DOWN] + i),
-		      *(globals.blend_inner_cachey2[DOWN] + i));
+		      globals.blend_inner_cachex2[DOWN][i],
+		      globals.blend_inner_cachey2[DOWN][i]);
     }
   return;
 }
@@ -1618,9 +1633,9 @@ darken_right_bump (guchar *buffer,
   for (i = 0; i < steps; i++)
     {
       x = x_offset
-	+ *(*(globals.blend_inner_cachex1[RIGHT] + j) + i);
+	+ globals.blend_inner_cachex1[RIGHT][j][i];
       y = curve_start_offset
-	+ *(*(globals.blend_inner_cachey1[RIGHT] + j) + i);
+	+ globals.blend_inner_cachey1[RIGHT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
 	{
@@ -1636,9 +1651,9 @@ darken_right_bump (guchar *buffer,
 	}
 
       x = x_offset
-	+ *(*(globals.blend_inner_cachex2[RIGHT] + j) + i);
+	+ globals.blend_inner_cachex2[RIGHT][j][i];
       y = curve_start_offset
-	+ *(*(globals.blend_inner_cachey2[RIGHT] + j) + i);
+	+ globals.blend_inner_cachey2[RIGHT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
 	{
@@ -1673,9 +1688,9 @@ lighten_right_bump (guchar   *buffer,
   for (i = 0; i < steps; i++)
     {
       x = x_offset
-	+ *(*(globals.blend_outer_cachex1[RIGHT] + j) + i);
+	+ globals.blend_outer_cachex1[RIGHT][j][i];
       y = curve_start_offset
-	+ *(*(globals.blend_outer_cachey1[RIGHT] + j) + i);
+	+ globals.blend_outer_cachey1[RIGHT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
 	{
@@ -1691,9 +1706,9 @@ lighten_right_bump (guchar   *buffer,
 	}
       
       x = x_offset
-	+ *(*(globals.blend_outer_cachex2[RIGHT] + j) + i);
+	+ globals.blend_outer_cachex2[RIGHT][j][i];
       y = curve_start_offset
-	+ *(*(globals.blend_outer_cachey2[RIGHT] + j) + i);
+	+ globals.blend_outer_cachey2[RIGHT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
 	{
@@ -1728,9 +1743,9 @@ darken_left_bump (guchar   *buffer,
   for (i = 0; i < steps; i++)
     {
       x = x_offset
-	+ *(*(globals.blend_outer_cachex1[LEFT] + j) + i);
+	+ globals.blend_outer_cachex1[LEFT][j][i];
       y = curve_start_offset
-	+ *(*(globals.blend_outer_cachey1[LEFT] + j) + i);
+	+ globals.blend_outer_cachey1[LEFT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
 	{
@@ -1739,9 +1754,9 @@ darken_left_bump (guchar   *buffer,
 	}
 
       x = x_offset
-	+ *(*(globals.blend_outer_cachex2[LEFT] + j) + i);
+	+ globals.blend_outer_cachex2[LEFT][j][i];
       y = curve_start_offset
-	+ *(*(globals.blend_outer_cachey2[LEFT] + j) + i);
+	+ globals.blend_outer_cachey2[LEFT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
 	{
@@ -1783,9 +1798,9 @@ lighten_left_bump (guchar *buffer,
   for (i = 0; i < steps; i++)
     {
       x = x_offset
-	+ *(*(globals.blend_inner_cachex1[LEFT] + j) + i);
+	+ globals.blend_inner_cachex1[LEFT][j][i];
       y = curve_start_offset
-	+ *(*(globals.blend_inner_cachey1[LEFT] + j) + i);
+	+ globals.blend_inner_cachey1[LEFT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
 	{
@@ -1794,9 +1809,9 @@ lighten_left_bump (guchar *buffer,
 	}
 
       x = x_offset
-	+ *(*(globals.blend_inner_cachex2[LEFT] + j) + i);
+	+ globals.blend_inner_cachex2[LEFT][j][i];
       y = curve_start_offset
-	+ *(*(globals.blend_inner_cachey2[LEFT] + j) + i);
+	+ globals.blend_inner_cachey2[LEFT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
 	{
@@ -1838,9 +1853,9 @@ darken_up_bump (guchar   *buffer,
   for (i = 0; i < steps; i++)
     {
       x = curve_start_offset
-	+ *(*(globals.blend_outer_cachex1[UP] + j) + i);
+	+ globals.blend_outer_cachex1[UP][j][i];
       y = y_offset
-	+ *(*(globals.blend_outer_cachey1[UP] + j) + i);
+	+ globals.blend_outer_cachey1[UP][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
 	{
@@ -1849,9 +1864,9 @@ darken_up_bump (guchar   *buffer,
 	}
 
       x = curve_start_offset
-	+ *(*(globals.blend_outer_cachex2[UP] + j) + i);
+	+ globals.blend_outer_cachex2[UP][j][i];
       y = y_offset
-	+ *(*(globals.blend_outer_cachey2[UP] + j) + i);
+	+ globals.blend_outer_cachey2[UP][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
 	{
@@ -1893,9 +1908,9 @@ lighten_up_bump (guchar   *buffer,
   for (i = 0; i < steps; i++)
     {
       x = curve_start_offset
-	+ *(*(globals.blend_inner_cachex1[UP] + j) + i);
+	+ globals.blend_inner_cachex1[UP][j][i];
       y = y_offset
-	+ *(*(globals.blend_inner_cachey1[UP] + j) + i);
+	+ globals.blend_inner_cachey1[UP][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
 	{
@@ -1904,9 +1919,9 @@ lighten_up_bump (guchar   *buffer,
 	}
 
       x = curve_start_offset
-	+ *(*(globals.blend_inner_cachex2[UP] + j) + i);
+	+ globals.blend_inner_cachex2[UP][j][i];
       y = y_offset
-	+ *(*(globals.blend_inner_cachey2[UP] + j) + i);
+	+ globals.blend_inner_cachey2[UP][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
 	{
@@ -1948,9 +1963,9 @@ darken_down_bump (guchar   *buffer,
   for (i = 0; i < steps; i++)
     {
       x = curve_start_offset
-	+ *(*(globals.blend_inner_cachex1[DOWN] + j) + i);
+	+ globals.blend_inner_cachex1[DOWN][j][i];
       y = y_offset
-	+ *(*(globals.blend_inner_cachey1[DOWN] + j) + i);
+	+ globals.blend_inner_cachey1[DOWN][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
 	{
@@ -1966,9 +1981,9 @@ darken_down_bump (guchar   *buffer,
 	}
 
       x = curve_start_offset
-	+ *(*(globals.blend_inner_cachex2[DOWN] + j) + i);
+	+ globals.blend_inner_cachex2[DOWN][j][i];
       y = y_offset
-	+ *(*(globals.blend_inner_cachey2[DOWN] + j) + i);
+	+ globals.blend_inner_cachey2[DOWN][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
 	{
@@ -2003,9 +2018,9 @@ lighten_down_bump (guchar   *buffer,
   for (i = 0; i < steps; i++)
     {
       x = curve_start_offset
-	+ *(*(globals.blend_outer_cachex1[DOWN] + j) + i);
+	+ globals.blend_outer_cachex1[DOWN][j][i];
       y = y_offset
-	+ *(*(globals.blend_outer_cachey1[DOWN] + j) + i);
+	+ globals.blend_outer_cachey1[DOWN][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
 	{
@@ -2021,9 +2036,9 @@ lighten_down_bump (guchar   *buffer,
 	}
 
       x = curve_start_offset
-	+ *(*(globals.blend_outer_cachex2[DOWN] + j) + i);
+	+ globals.blend_outer_cachex2[DOWN][j][i];
       y = y_offset
-	+ *(*(globals.blend_outer_cachey2[DOWN] + j) + i);
+	+ globals.blend_outer_cachey2[DOWN][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
 	{
@@ -2504,7 +2519,7 @@ dialog_box (void)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.x);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (jigsaw),
+                    G_CALLBACK (jigsaw_values_changed),
                     NULL);
 
   /* ytiles */
@@ -2517,7 +2532,7 @@ dialog_box (void)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.y);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (jigsaw),
+                    G_CALLBACK (jigsaw_values_changed),
                     NULL);
 
   gtk_widget_show (table);
@@ -2544,7 +2559,7 @@ dialog_box (void)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.blend_lines);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (jigsaw),
+                    G_CALLBACK (jigsaw_values_changed),
                     NULL);
 
   /* blending amount */
@@ -2559,7 +2574,7 @@ dialog_box (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config.blend_amount);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (jigsaw),
+                    G_CALLBACK (jigsaw_values_changed),
                     NULL);
 
   gtk_widget_show (table);
