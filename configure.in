@@ -306,8 +306,21 @@ LIBS=$gimp_save_LIBS
 
 AC_PATH_XTRA
 
-AM_PATH_GTK_2_0($GTK_REQUIRED_VERSION,,
-  AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
+dnl Additional test for GTK+ 2.2.2.  We want to avoid bug reports
+dnl related to XInput support (known to be broken in 2.2.1) but we do
+dnl not want to make the upgrade mandatory yet.  The extra test can
+dnl be removed once GTK+ 2.2.2 or later becomes mandatory (this is
+dnl planned for the next stable release).
+AM_PATH_GTK_2_0(2.2.2,gimp_broken_gtk=no,gimp_broken_gtk=yes)
+if test x$gimp_broken_gtk = xyes; then
+  AM_PATH_GTK_2_0($GTK_REQUIRED_VERSION,
+    AC_MSG_WARN([Please upgrade your GTK+ installation!
+*** The GTK+ version you are using is too old.
+*** Please upgrade to GTK+ version 2.2.2 or better
+*** or your extended input devices (tablets) will not
+*** work at all!]),
+    AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
+fi
 
 AC_PATH_PROG(GDK_PIXBUF_CSOURCE, gdk-pixbuf-csource, no)
 if test x$GDK_PIXBUF_CSOURCE = xno; then

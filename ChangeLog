@@ -1,3 +1,9 @@
+2003-08-09  Raphael Quinet  <quinet@gamers.org>
+
+	* configure.in: Print a warning if the version of GTK+ is lower
+	than 2.2.2.  The next stable release will probably require 2.2.2
+	or later but for the moment we only issue a warning.
+
 2003-08-09  Sven Neumann  <neo@bender>
 
 	* configure.in: added devel-docs/app.
