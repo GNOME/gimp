@@ -1,3 +1,8 @@
+2003-10-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/info-window.c: eek. should actually commit what i
+	claimed below...
+
 2003-10-15  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-utils.c (gimp_config_sync): fixed comment.
