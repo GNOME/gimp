@@ -1,3 +1,8 @@
+2002-02-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/gradmap.c: merged fix for bug #70964 from stable 
+	branch.
+
 2002-02-08  Nathan Summers  <rock@gimp.org>
 
         * app/tools/gimptoolmodule.[ch]: split registering classes and

@@ -20,7 +20,7 @@
  */
 
 /*
- * version 1.06
+ * version 1.07
  * This plug-in requires GIMP v0.99.10 or above.
  *
  * This plug-in maps the image using active gradient. (See help_string
@@ -28,6 +28,11 @@
  *
  *	Eiichi Takamori <taka@ma1.seikyou.ne.jp>
  *	http://ha1.seikyou.ne.jp/home/taka/gimp/
+ *
+ * Changes from version 1.06 to version 1.07:
+ * - If layer is RGBA or GRAYA (partially transparent), preserve
+ *   the alpha channel instead of making invisible pixels visible.
+ *   See also: http://bugzilla.gnome.org/show_bug.cgi?id=70964
  *
  * Changes from version 1.05 to version 1.06:
  * - Fixed bug that completely white pixel (= grayscale 255) was not
@@ -179,18 +184,16 @@ gradmap (GimpDrawable *drawable)
   gint		progress, max_progress;
   gint		x1, y1, x2, y2;
   gint		row, col;
-  gint		bpp, color, has_alpha, alpha;
+  gint		bpp, color, has_alpha;
   guchar	*samples, *samp;
   gint		lum;				/* luminosity */
   gint		b;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  bpp = alpha = gimp_drawable_bpp( drawable->drawable_id );
-  color = gimp_drawable_is_rgb( drawable->drawable_id );
-  has_alpha = gimp_drawable_has_alpha( drawable->drawable_id );
-  if( has_alpha )
-    alpha--;
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
+  color = gimp_drawable_is_rgb (drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   samples = get_samples (drawable);
 
@@ -207,14 +210,14 @@ gradmap (GimpDrawable *drawable)
       src_row = src_rgn.data;
       dest_row = dest_rgn.data;
 
-      for ( row = 0; row < src_rgn.h; row++ )
+      for (row = 0; row < src_rgn.h; row++)
 	{
 	  src = src_row;
 	  dest = dest_row;
 
-	  for ( col = 0; col < src_rgn.w; col++ )
+	  for (col = 0; col < src_rgn.w; col++)
 	    {
-	      if( color )
+	      if (color)
 		{
 		  lum = LUMINOSITY (src);
 		  lum = CLAMP (lum, 0, 255);	/* to make sure */
@@ -223,8 +226,17 @@ gradmap (GimpDrawable *drawable)
 		lum = src[0];
 
 	      samp = &samples[lum * bpp];
-	      for( b = 0; b < bpp; b++ )
-		dest[b] = samp[b];
+	      if (has_alpha)
+		{
+		  for (b = 0; b < bpp - 1; b++)
+		    dest[b] = samp[b];
+		  dest[b] = ((guint)(samp[b]) * (guint)(src[b])) / 255;
+		}
+	      else
+		{
+		  for (b = 0; b < bpp; b++)
+		    dest[b] = samp[b];
+		}
 
 	      src += src_rgn.bpp;
 	      dest += dest_rgn.bpp;
