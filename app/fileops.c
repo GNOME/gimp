@@ -488,6 +488,7 @@ file_open_callback (GtkWidget *w,
       if (GTK_WIDGET_VISIBLE (fileload))
 	return;
 
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION(fileload), ".");
       gtk_window_set_title (GTK_WINDOW (fileload), "Load Image");
     }
 
@@ -578,6 +579,7 @@ file_save_as_callback (GtkWidget *w,
       if (GTK_WIDGET_VISIBLE (filesave))
 	return;
 
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave), ".");
       gtk_window_set_title (GTK_WINDOW (filesave), "Save Image");
     }
 
@@ -954,7 +956,7 @@ file_overwrite (char *filename, char* raw_filename)
   overwrite_box->full_filename = filename;
   overwrite_box->raw_filename = raw_filename;
   overwrite_box->obox = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (overwrite_box->obox), "fiel_exists", "Gimp");
+  gtk_window_set_wmclass (GTK_WINDOW (overwrite_box->obox), "file_exists", "Gimp");
   gtk_window_set_title (GTK_WINDOW (overwrite_box->obox), "File Exists!");
   gtk_window_position (GTK_WINDOW (overwrite_box->obox), GTK_WIN_POS_MOUSE);
 

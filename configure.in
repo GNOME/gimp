@@ -218,9 +218,6 @@ if test $gimp_ok = no; then
     AC_DEFINE(NO_FD_SET)
 fi
 
-dnl TVM: check for compiler characteristics
-AC_C_INLINE
-
 dnl Check for random number functions
 AC_CHECK_FUNC(random,
     AC_DEFINE(RAND_FUNC, random) AC_DEFINE(SRAND_FUNC, srandom),

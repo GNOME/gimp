@@ -35,12 +35,6 @@
 #include <gtk/gtk.h>
 #include <plug-ins/megawidget/megawidget.h>
 
-#ifdef __GNUC__
-#define inline inline
-#else
-#define inline
-#endif
-
 static mw_preview_t nlfilt_do_preview;
 
 struct Grgb {

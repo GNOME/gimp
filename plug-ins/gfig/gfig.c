@@ -89,9 +89,17 @@
 #define BRUSH_PREVIEW_SZ 32
 #define GFIG_HEADER "GFIG Version 0.1\n"
 
-
-#define TRUE 1
+#ifndef FALSE
 #define FALSE 0
+#endif
+ 
+#ifndef TRUE
+#define TRUE 1
+#endif
+ 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 #define PREVIEW_MASK   GDK_EXPOSURE_MASK | \
                        GDK_MOTION_NOTIFY | \
@@ -4562,7 +4570,7 @@ gfig_grid_colours(GtkWidget *w,GdkColormap *cmap)
   GdkGCValues values;
   GdkColor new_col1;
   GdkColor new_col2;
-  char stipple[8] =
+  unsigned char stipple[8] =
   {
     0xAA,    /*  ####----  */
     0x55,    /*  ###----#  */

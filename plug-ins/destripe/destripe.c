@@ -50,12 +50,6 @@
 #include <libgimp/gimpui.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#define inline inline
-#else
-#define inline
-#endif
-
 /*
  * Constants...
  */

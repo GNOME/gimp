@@ -42,12 +42,6 @@
 #include "sinus_logo.h"
 #endif
 
-#ifdef __GNUC__
-#define inline inline
-#else
-#define inline
-#endif
-
 #ifndef M_PI
 #define M_PI    3.14159265358979323846
 #endif /* M_PI */

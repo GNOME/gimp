@@ -56,12 +56,6 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
-#ifdef __GNUC__
-#define inline inline
-#else
-#define inline
-#endif
-
 static void   query      (void);
 static void   run        (char    *name,
                           int      nparams,

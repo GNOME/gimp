@@ -16,12 +16,6 @@
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
 
-#ifdef __GNUC__
-#define inline inline
-#else
-#define inline
-#endif
-
 /* Declare local functions. */
 static void query(void);
 static void run(char *name,

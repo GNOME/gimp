@@ -1,3 +1,15 @@
+Tue Mar 24 20:32:53 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/fileops.c: refresh the open/save as dialogs upon open
+
+	* applied gimp-quinet-980323-0, fixing more M_PI madness
+
+	* applied gimp-quinet-980323-1 which fixes redundant inline
+	checks
+
+	* plug-ins/gfig/gfig.c: changed stipple to type unsigned char to
+	quell warnings
+
 Tue Mar 24 18:03:37 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: corrected test for libXmu for some systems; added
