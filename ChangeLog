@@ -1,3 +1,7 @@
+2003-10-08  Ville Pätsi  <drc@gimp.org>
+
+	* gimp.spec.in: Enabled debuginfo packages again.
+
 2003-10-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp-edit.c (gimp_edit_fill_internal): new utility
