@@ -648,8 +648,10 @@ find_vectors (unsigned test_index, pixel_outline_type outline,
   unsigned n_done;
   coordinate_type candidate = O_COORDINATE (outline, test_index);
 
-  *in = (vector_type) { 0.0, 0.0 };
-  *out = (vector_type) { 0.0, 0.0 };
+  in->dx = 0.0;
+  in->dy = 0.0;
+  out->dx = 0.0;
+  out->dy = 0.0;
 
   /* Add up the differences from p of the `corner_surround' points
      before p.  */ 
@@ -996,7 +998,10 @@ find_curve_vectors (unsigned test_index, curve_type curve,
 
   /* Add up the differences from p of the `surround' points
      before p.  */ 
-  *in = (vector_type) { 0.0, 0.0 };
+
+  in->dx = 0.0;
+  in->dy = 0.0;
+
   for (i = CURVE_PREV (curve, test_index), n_done = 0;
        i >= 0 && n_done < surround;  /* Do not wrap around.  */
        i = CURVE_PREV (curve, i), n_done++)
@@ -1005,7 +1010,9 @@ find_curve_vectors (unsigned test_index, curve_type curve,
 
   /* And the points after p.  Don't use more points after p than we
      ended up with before it.  */
-  *out = (vector_type) { 0.0, 0.0 };
+  out->dx = 0.0;
+  out->dy = 0.0;
+
   for (i = CURVE_NEXT (curve, test_index), n_done = 0;
        i < CURVE_LENGTH (curve) && n_done < surround && n_done < in_count;
        i = CURVE_NEXT (curve, i), n_done++)
@@ -1017,7 +1024,9 @@ find_curve_vectors (unsigned test_index, curve_type curve,
      but for this few of points, efficiency doesn't matter.)  */
   if (out_count < in_count)
     {
-      *in = (vector_type) { 0.0, 0.0 };
+      in->dx = 0.0;
+      in->dy = 0.0;
+
       for (i = CURVE_PREV (curve, test_index), n_done = 0;
            i >= 0 && n_done < out_count;
            i = CURVE_PREV (curve, i), n_done++)
