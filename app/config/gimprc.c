@@ -541,7 +541,7 @@ gimp_rc_query (GimpRc      *rc,
 
 /**
  * gimp_rc_save:
- * @rc: a #GimpRc object.
+ * @gimprc: a #GimpRc object.
  * 
  * Saves any settings that differ from the system-wide defined
  * defaults to the users personal gimprc file.

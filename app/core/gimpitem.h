@@ -131,7 +131,7 @@ void            gimp_item_translate        (GimpItem       *item,
                                             gint            offset_y,
                                             gboolean        push_undo);
 
-gboolean        gimp_item_check_scaling    (const GimpItem *layer,
+gboolean        gimp_item_check_scaling    (const GimpItem *item,
                                             gint            new_width,
                                             gint            new_height);
 void            gimp_item_scale            (GimpItem       *item,
@@ -139,15 +139,15 @@ void            gimp_item_scale            (GimpItem       *item,
                                             gint            new_height,
                                             gint            new_offset_x,
                                             gint            new_offset_y,
-                                            GimpInterpolationType  interp_type);
+                                            GimpInterpolationType  interpolation);
 gboolean        gimp_item_scale_by_factors (GimpItem       *item,
                                             gdouble         w_factor, 
                                             gdouble         h_factor,
-                                            GimpInterpolationType interp_type);
+                                            GimpInterpolationType interpolation);
 void            gimp_item_scale_by_origin  (GimpItem       *item,
                                             gint            new_width,
                                             gint            new_height,
-                                            GimpInterpolationType interp_type,
+                                            GimpInterpolationType interpolation,
                                             gboolean        local_origin);
 void            gimp_item_resize           (GimpItem       *item,
                                             gint            new_width,

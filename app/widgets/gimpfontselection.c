@@ -297,7 +297,7 @@ gimp_font_selection_get_fontname (GimpFontSelection *fontsel)
 /**
  * gimp_font_selection_set_font_desc:
  * @fontsel: 
- * @new_desc: 
+ * @font_desc: 
  * 
  * This function does not check if there is a font matching the 
  * new font description. It should only be used with validated
@@ -305,23 +305,23 @@ gimp_font_selection_get_fontname (GimpFontSelection *fontsel)
  **/
 void
 gimp_font_selection_set_font_desc (GimpFontSelection          *fontsel,
-                                   const PangoFontDescription *new_desc)
+                                   const PangoFontDescription *font_desc)
 {
 
   g_return_if_fail (GIMP_IS_FONT_SELECTION (fontsel));
-  g_return_if_fail (new_desc != NULL);
+  g_return_if_fail (font_desc != NULL);
   
   if (!fontsel->font_desc)
     {
-      fontsel->font_desc = pango_font_description_copy (new_desc);
+      fontsel->font_desc = pango_font_description_copy (font_desc);
       gimp_font_selection_font_changed (fontsel);
       return;
     }
 
-  if (pango_font_description_equal (fontsel->font_desc, new_desc))
+  if (pango_font_description_equal (fontsel->font_desc, font_desc))
     return;
 
-  pango_font_description_merge (fontsel->font_desc, new_desc, TRUE);
+  pango_font_description_merge (fontsel->font_desc, font_desc, TRUE);
 
   gimp_font_selection_font_changed (fontsel);
 }

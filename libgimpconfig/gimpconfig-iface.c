@@ -318,13 +318,14 @@ gimp_config_deserialize_file (GObject      *object,
  * @object: a #GObject that implements the #GimpConfigInterface.
  * @text: string to deserialize (in UTF-8 encoding)
  * @text_len: length of @text in bytes or -1
+ * @data:
  * @error:
  *
  * Configures @object from @text. Basically this function creates a
  * properly configured #GScanner for you and calls the deserialize
  * function of the @object's #GimpConfigInterface.
  *
- * Return value: %TRUE if deserialization succeeded, %FALSE otherwise.
+ * Returns: %TRUE if deserialization succeeded, %FALSE otherwise.
  **/
 gboolean
 gimp_config_deserialize_string (GObject      *object,
@@ -575,6 +576,8 @@ gimp_config_add_unknown_token (GObject     *object,
  * This function retrieves data that was previously attached using
  * gimp_config_add_unknown_token(). You should not free or modify
  * the returned string.
+ *
+ * Returns: a pointer to a constant string.
  **/
 const gchar *
 gimp_config_lookup_unknown_token (GObject     *object,

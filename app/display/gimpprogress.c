@@ -348,7 +348,7 @@ gimp_progress_end (GimpProgress *progress)
  * gimp_progress_update_and_flush:
  * @min:  The minimum, ...
  * @max:  ... the maximum, ...
- * @curr: ... and the current progress of your operation.
+ * @current: ... and the current progress of your operation.
  * @data: The #GimpProgress you want to update.
  * 
  * This function's prototype is conveniently
@@ -357,11 +357,11 @@ gimp_progress_end (GimpProgress *progress)
 void
 gimp_progress_update_and_flush (gint      min,
                                 gint      max,
-                                gint      curr,
+                                gint      current,
                                 gpointer  data)
 {
   gimp_progress_update ((GimpProgress *) data,
-                        (gfloat) (curr - min) / (gfloat) (max - min));
+                        (gfloat) (current - min) / (gfloat) (max - min));
 
   while (gtk_events_pending ())
     gtk_main_iteration ();

@@ -102,7 +102,7 @@ static inline gboolean  scanner_string_utf8_valid (GScanner    *scanner,
  * gimp_config_deserialize_properties:
  * @object: a #GObject.
  * @scanner: a #GScanner.
- * @embedded_scope: %TRUE if a trailing ')' should not trigger a parse error.
+ * @nest_level:
  * @store_unknown_tokens: %TRUE if you want to store unknown tokens.
  * 
  * This function uses the @scanner to configure the properties of @object.

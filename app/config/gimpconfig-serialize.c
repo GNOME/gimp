@@ -58,6 +58,8 @@ static void  serialize_unknown_token (const gchar  *key,
  * @writer: a #GimpConfigWriter.
  * 
  * This function writes all object properties to the @writer.
+ *
+ * Returns: %TRUE if serialization succeeded, %FALSE otherwise
  **/
 gboolean
 gimp_config_serialize_properties (GObject          *object,
@@ -100,6 +102,8 @@ gimp_config_serialize_properties (GObject          *object,
  * 
  * This function writes all object properties that have been changed from
  * their default values to the @writer.
+ *
+ * Returns: %TRUE if serialization succeeded, %FALSE otherwise
  **/
 gboolean
 gimp_config_serialize_changed_properties (GObject          *object,
@@ -153,6 +157,8 @@ gimp_config_serialize_changed_properties (GObject          *object,
  * This function compares @object and @compare and writes all
  * properties of @object that have different values than @compare to
  * the @writer.
+ *
+ * Returns: %TRUE if serialization succeeded, %FALSE otherwise
  **/
 gboolean
 gimp_config_serialize_properties_diff (GObject          *object,
@@ -481,6 +487,8 @@ gimp_config_serialize_value (const GValue *value,
  * 
  * Writes all unknown tokens attached to #object to the @writer.  See
  * gimp_config_add_unknown_token().
+ *
+ * Returns: %TRUE if serialization succeeded, %FALSE otherwise
  **/
 gboolean
 gimp_config_serialize_unknown_tokens (GObject          *object,

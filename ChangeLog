@@ -1,3 +1,16 @@
+2003-08-08  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-serialize.c
+	* app/config/gimpconfig.c
+	* app/config/gimprc.c
+	* app/core/gimpitem.[ch]
+	* app/display/gimpprogress.[ch]
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimpenummenu.c
+	* app/widgets/gimpfontselection.c
+	* app/widgets/gimpwidgets-utils.c: documentation fixes.
+
 2003-08-08  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimppainttool.c: Added changing the opacity via

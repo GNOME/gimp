@@ -585,6 +585,7 @@ gimp_enum_radio_frame_new_with_range (GType        enum_type,
  * gimp_enum_stock_box_new:
  * @enum_type: the #GType of an enum.
  * @stock_prefix: the prefix of the group of stock ids to use.
+ * @icon_size:
  * @callback: a callback to connect to the "toggled" signal of each
  *            #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.

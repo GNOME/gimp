@@ -522,7 +522,7 @@ gimp_get_screen_resolution (GdkScreen *screen,
 
 /**
  * gimp_rgb_get_gdk_color:
- * @color: the source color as #GimpRGB
+ * @rgb: the source color as #GimpRGB
  * @gdk_color: pointer to a #GdkColor
  * 
  * Initializes @gdk_color from a #GimpRGB. This function does not
@@ -530,15 +530,15 @@ gimp_get_screen_resolution (GdkScreen *screen,
  * you may have to call gdk_colormap_alloc_color().
  **/
 void          
-gimp_rgb_get_gdk_color (const GimpRGB *color,
+gimp_rgb_get_gdk_color (const GimpRGB *rgb,
                         GdkColor      *gdk_color)
 {
   guchar r, g, b;
 
-  g_return_if_fail (color != NULL);
+  g_return_if_fail (rgb != NULL);
   g_return_if_fail (gdk_color != NULL);
   
-  gimp_rgb_get_uchar (color, &r, &g, &b);
+  gimp_rgb_get_uchar (rgb, &r, &g, &b);
   
   gdk_color->red   = (r << 8) | r;
   gdk_color->green = (g << 8) | g;

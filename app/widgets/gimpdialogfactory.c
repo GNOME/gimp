@@ -561,6 +561,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
  * @factory:    a #GimpDialogFactory
  * @identifier: the identifier of the dialog as registered with
  *              gimp_dialog_factory_register_entry()
+ * preview_size: 
  * 
  * Creates a new toplevel dialog or a #GimpDockable, depending on whether
  * %factory is a toplevel of dockable factory.
@@ -590,6 +591,7 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
  * @factory   : a #GimpDialogFactory
  * @identifier: the identifier of the dialog as registered with
  *              gimp_dialog_factory_register_entry()
+ * @preview_size:
  * 
  * Raises an already existing toplevel dialog or #GimpDockable if it was
  * already created by this %facory.
@@ -619,6 +621,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
  * @dock      : a #GimpDock crated by this %factory.
  * @identifier: the identifier of the dialog as registered with
  *              gimp_dialog_factory_register_entry()
+ * preview_size:
  * 
  * Creates a new #GimpDockable in the context of the #GimpDock it will be
  * added to.

@@ -34,9 +34,9 @@ void           gimp_progress_update           (GimpProgress  *progress,
 void           gimp_progress_step             (GimpProgress  *progress);
 void           gimp_progress_end              (GimpProgress  *progress);
 
-void           gimp_progress_update_and_flush (gint           ymin,
-                                               gint           ymax,
-                                               gint           curr_x,
+void           gimp_progress_update_and_flush (gint           min,
+                                               gint           max,
+                                               gint           current,
                                                gpointer       data);
 
 

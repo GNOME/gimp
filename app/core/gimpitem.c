@@ -78,7 +78,7 @@ static void       gimp_item_real_scale     (GimpItem      *item,
                                             gint           new_height,
                                             gint           new_offset_x,
                                             gint           new_offset_y,
-                                            GimpInterpolationType  interp_type);
+                                            GimpInterpolationType  interpolation);
 static void       gimp_item_real_resize    (GimpItem      *item,
                                             gint           new_width,
                                             gint           new_height,
@@ -322,7 +322,7 @@ gimp_item_real_scale (GimpItem              *item,
                       gint                   new_height,
                       gint                   new_offset_x,
                       gint                   new_offset_y,
-                      GimpInterpolationType  interp_type)
+                      GimpInterpolationType  interpolation)
 {
   item->width     = new_width;
   item->height    = new_height;
@@ -493,7 +493,7 @@ gimp_item_scale (GimpItem              *item,
                  gint                   new_height,
                  gint                   new_offset_x,
                  gint                   new_offset_y,
-                 GimpInterpolationType  interpolation_type)
+                 GimpInterpolationType  interpolation)
 {
   GimpItemClass *item_class;
 
@@ -505,7 +505,7 @@ gimp_item_scale (GimpItem              *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
 
   item_class->scale (item, new_width, new_height, new_offset_x, new_offset_y,
-                     interpolation_type);
+                     interpolation);
 }
 
 /**
@@ -513,6 +513,7 @@ gimp_item_scale (GimpItem              *item,
  * @item:     Item to be transformed by explicit width and height factors.
  * @w_factor: scale factor to apply to width and horizontal offset
  * @h_factor: scale factor to apply to height and vertical offset
+ * @interpolation: 
  * 
  * Scales item dimensions and offsets by uniform width and
  * height factors.
@@ -540,7 +541,7 @@ gboolean
 gimp_item_scale_by_factors (GimpItem              *item,
                             gdouble                w_factor,
                             gdouble                h_factor,
-                            GimpInterpolationType  interpolation_type)
+                            GimpInterpolationType  interpolation)
 {
   gint new_width, new_height;
   gint new_offset_x, new_offset_y;
@@ -563,7 +564,7 @@ gimp_item_scale_by_factors (GimpItem              *item,
       gimp_item_scale (item,
                        new_width, new_height,
                        new_offset_x, new_offset_y,
-                       interpolation_type);
+                       interpolation);
       return TRUE;
     }
 
@@ -600,7 +601,7 @@ void
 gimp_item_scale_by_origin (GimpItem              *item,
                            gint                   new_width,
                            gint                   new_height,
-                           GimpInterpolationType  interpolation_type,
+                           GimpInterpolationType  interpolation,
                            gboolean               local_origin)
 {
   gint new_offset_x, new_offset_y;
@@ -632,7 +633,7 @@ gimp_item_scale_by_origin (GimpItem              *item,
   gimp_item_scale (item,
                    new_width, new_height,
                    new_offset_x, new_offset_y,
-                   interpolation_type);
+                   interpolation);
 }
 
 void
@@ -689,7 +690,7 @@ void
 gimp_item_transform (GimpItem               *item,
                      const GimpMatrix3      *matrix,
                      GimpTransformDirection  direction,
-                     GimpInterpolationType   interpolation_type,
+                     GimpInterpolationType   interpolation,
                      gboolean                clip_result,
                      GimpProgressFunc        progress_callback,
                      gpointer                progress_data)
@@ -700,7 +701,7 @@ gimp_item_transform (GimpItem               *item,
 
   item_class = GIMP_ITEM_GET_CLASS (item);
 
-  item_class->transform (item, matrix, direction, interpolation_type,
+  item_class->transform (item, matrix, direction, interpolation,
                          clip_result,
                          progress_callback, progress_data);
 }
