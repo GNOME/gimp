@@ -1,3 +1,9 @@
+1998-12-22  Chris Lahey  <clahey@umich.edu>
+
+	* app/docindex.c, app/docindex.h, app/docindexif.c,
+	app/docindexif.h: Fixed multiple file drop.  Brought docindex.c
+	and docindex.h to to be consistent with go's versions of the same.
+	
 1998-12-22  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* TODO: added some GUI ideas..

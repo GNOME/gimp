@@ -52,6 +52,9 @@ void idea_up_callback( GtkWidget *widget, gpointer data );
 void idea_down_callback( GtkWidget *widget, gpointer data );
 void idea_remove_callback( GtkWidget *widget, gpointer data );
 void save_idea_manager( idea_manager * );
+gboolean idea_window_delete_event_callback( GtkWidget *widget, GdkEvent *event, gpointer data );
+void docindex_configure_drop_on_widget(GtkWidget * widget);
+void load_idea_manager( idea_manager * );
 
 extern idea_manager *ideas;
 

@@ -13,13 +13,13 @@
  * GNU General Public License for more details.
  */
 
+#include "docindexif.h"
+#include "docindex.h"
+
 #include <gtk/gtk.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "docindex.h"
-#include "docindexif.h"
 
 idea_manager *ideas = NULL;
 static GList *idea_list = NULL;   /* of gchar *. */
@@ -31,7 +31,9 @@ enum {
 };
 
 static void create_idea_list( void );
-static void load_idea_manager( idea_manager * );
+void docindex_configure_drop_on_widget(GtkWidget * widget);
+void docindex_cell_configure_drop_on_widget(GtkWidget * widget);
+
 
 static void
 docindex_dnd_filenames_dropped( GtkWidget *widget,
@@ -53,7 +55,7 @@ docindex_dnd_filenames_dropped( GtkWidget *widget,
       len = selection_data->length;
       while( len > 0 )
 	{
-	  end = strstr( data, "\x13\x10" );
+	  end = strstr( data, "\x0D\x0A" );
 	  if ( end != NULL )
 	    *end = 0;
 	  if ( *data != '#' )
@@ -119,7 +121,7 @@ docindex_cell_dnd_filenames_dropped( GtkWidget *widget,
       len = selection_data->length;
       while( len > 0 )
 	{
-	  end = strstr( data, "\x13\x10" );
+	  end = strstr( data, "\x0D\x0A" );
 	  if ( end != NULL )
 	    *end = 0;
 	  if ( *data != '#' )
@@ -164,14 +166,14 @@ docindex_cell_configure_drop_on_widget(GtkWidget * widget)
                        GTK_SIGNAL_FUNC(docindex_cell_dnd_filenames_dropped), NULL);
 }
 
-static gboolean
+gboolean
 idea_window_delete_event_callback( GtkWidget *widget, GdkEvent *event, gpointer data )
 {
   if ( ! exit_from_go() )
     {
       save_idea_manager( ideas );
       create_idea_list();
-      free( ideas );
+      g_free( ideas );
       ideas = 0;
     }
   
@@ -189,7 +191,7 @@ idea_hide_callback( GtkWidget *widget, gpointer data )
     {
       create_idea_list();
       gtk_widget_destroy( ideas->window );
-      free( ideas );
+      g_free( ideas );
       ideas = 0;
     }
 }
@@ -200,96 +202,13 @@ open_idea_window( void )
   make_idea_window( -1, -1 );
 }
 
-void
-make_idea_window( int x, int y )
-{
-  GtkWidget *main_vbox, *menu;
-  GtkWidget *scrolled_win;
-  GtkWidget *toolbar;
-  GtkAccelGroup *accel;
-
-  /* malloc idea_manager */
-  ideas = g_malloc0( sizeof( idea_manager ) );
-
-  /* Setup tree */
-  ideas->tree = gtk_tree_new();
-  gtk_tree_set_selection_mode( GTK_TREE( ideas->tree ), GTK_SELECTION_BROWSE );
-  
-  /* Setup scrolled window */
-  scrolled_win = gtk_scrolled_window_new( NULL, NULL );
-  gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW( scrolled_win ), GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS );
-  gtk_scrolled_window_add_with_viewport( GTK_SCROLLED_WINDOW( scrolled_win ), ideas->tree );
-  gtk_widget_show( ideas->tree );
-
-  /* allocate the window and attach the menu */
-  ideas->window = gtk_window_new( GTK_WINDOW_TOPLEVEL );
-  ideas->menubar = create_idea_menu( ideas );
-  if( ideas->menubar )
-    {
-      menu = ideas->menubar->widget;
-      /* Setup accelerator (hotkey) table */
-      accel = ideas->menubar->accel_group;
-      
-      /* Add accelerators to window widget */
-      gtk_window_add_accel_group( GTK_WINDOW( ideas->window ), accel );
-    }
-  else menu = NULL;
-  
-  /* Setup the status bar */
-  ideas->status = gtk_statusbar_new();
-  ideas->contextid = gtk_statusbar_get_context_id( GTK_STATUSBAR( ideas->status ), "main context" );
-
-  /* Setup the toolbar */
-  toolbar = create_idea_toolbar();
-  
-  /* Setup a vbox to contain the menu */
-  main_vbox = gtk_vbox_new( FALSE, 0 );
-  if( menu )
-    gtk_box_pack_start( GTK_BOX( main_vbox ), menu, FALSE, FALSE, 0 );
-  gtk_box_pack_start( GTK_BOX( main_vbox ), toolbar, FALSE, FALSE, 0 );
-  gtk_box_pack_start( GTK_BOX( main_vbox ), scrolled_win, TRUE, TRUE, 0 ); 
-  gtk_box_pack_start( GTK_BOX( main_vbox ), ideas->status, FALSE, FALSE, 0 );
-  if( menu )
-    gtk_widget_show( menu );
-  gtk_widget_show( scrolled_win );
-  gtk_widget_show( ideas->status );
-
-  /* Set the GOWindow title */
-  ideas->title = g_strdup( _("Document Index") );
-
-  /* Set the GtkWindow title */
-  gtk_window_set_title( GTK_WINDOW( ideas->window ), ideas->title );
-
-  /* Set the initial status message */
-  gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid,  _("GTK successfully started") );
-
-  /* Connect the signals */
-  gtk_signal_connect( GTK_OBJECT( ideas->window ), "delete_event",
-		      GTK_SIGNAL_FUNC( idea_window_delete_event_callback ),
-		      NULL );
-  
-  /* Add the main vbox to the window */
-  gtk_container_set_border_width( GTK_CONTAINER( ideas->window ), 0 );
-  gtk_container_add( GTK_CONTAINER( ideas->window ), main_vbox );
-  gtk_widget_show( main_vbox );
-
-  docindex_configure_drop_on_widget(ideas->tree);
-
-  /* Load and Show window */
-  load_idea_manager( ideas );
-
-  /* Set the position of the window if it was requested */
-  if ( x >= 0 && y >= 0 )
-    gtk_widget_set_uposition( ideas->window, x, y );
-}
-
 static void
 load_from_list( gpointer data, gpointer data_null )
 {
   idea_add_in_position( (gchar *) data, -1 );
 }
 
-static void
+void
 load_idea_manager( idea_manager *ideas )
 {
   FILE *fp = NULL;
