@@ -27,6 +27,7 @@
 #include "colormaps.h"
 #include "disp_callbacks.h"
 #include "errors.h"
+#include "float16.h"
 #include "paint_funcs_area.h"
 #include "tag.h"
 
@@ -68,22 +69,20 @@ static void preview_scroll_update        (GtkAdjustment *, gpointer);
 static void opacity_scale_update         (GtkAdjustment *, gpointer);
 static void spacing_scale_update         (GtkAdjustment *, gpointer);
 
-/* 8bit channels data functions */
+/* get row for different data types */
 static void display_brush_get_row_u8     (guchar *, Canvas *, gint, gint);
-
-/* 16bit channels data functions */
 static void display_brush_get_row_u16    (guchar *, Canvas *, gint, gint);
-
-/* float channels data functions */
 static void display_brush_get_row_float  (guchar *, Canvas *, gint, gint);
+static void display_brush_get_row_float16  (guchar *, Canvas *, gint, gint);
 
 /* Convert row of brush to 8bit display */
 typedef void  (*DisplayBrushGetRowFunc) (guchar *, Canvas *, gint, gint);
-static DisplayBrushGetRowFunc display_brush_get_row_funcs[3] =
+static DisplayBrushGetRowFunc display_brush_get_row_funcs[4] =
 {
   display_brush_get_row_u8,
   display_brush_get_row_u16,
-  display_brush_get_row_float
+  display_brush_get_row_float,
+  display_brush_get_row_float16
 };
 
 /*  the option menu items -- the paint modes  */
@@ -492,7 +491,9 @@ display_brush_get_row_u8(
       break;
     }	
 }
+
 #define U16_TO_U8(x) ((x)>>8)
+
 static void  
 display_brush_get_row_u16(  
                         guchar *buf,
@@ -544,6 +545,35 @@ display_brush_get_row_float(
       for (i = 0; i < width; i++)
         {
 	  *b++ = 255 -  (gint)(255 * *s++ + .5);
+        }
+      break;	
+    default:
+      break;
+    }	
+}
+
+static void  
+display_brush_get_row_float16(  
+                        guchar *buf,
+			Canvas *brush_canvas,
+			gint row,
+                        gint width
+		  )
+{
+  Tag tag = canvas_tag (brush_canvas);
+  gint channels_per_row = tag_num_channels (tag) * canvas_width (brush_canvas);
+  guint16 * s = (guint16*)canvas_portion_data (brush_canvas,0,0) + row * channels_per_row;
+  guchar *b = buf; 
+  gint i;
+  Format f = tag_format (canvas_tag (brush_canvas));
+  
+  switch (f)
+    {
+    case FORMAT_GRAY:
+      /*  Invert the mask for display. */ 
+      for (i = 0; i < width; i++)
+        {
+	  *b++ = 255 -  (gint)(255 * FLT (*s++) + .5);
         }
       break;	
     default:

@@ -77,6 +77,7 @@ tag_set_precision (
     case PRECISION_U8:
     case PRECISION_U16:
     case PRECISION_FLOAT:
+    case PRECISION_FLOAT16:
       break;
     default:
       x = PRECISION_NONE;
@@ -214,6 +215,9 @@ tag_bytes (
     case PRECISION_FLOAT:
       y *= sizeof(gfloat);
       break;
+    case PRECISION_FLOAT16:
+      y *= sizeof(guint16);
+      break;
     case PRECISION_NONE:
       return 0;
     }
@@ -248,9 +252,11 @@ tag_string_precision (
     case PRECISION_U8:
       return "8 bit";
     case PRECISION_U16:
-      return "16 bit";
+      return "16bit integer";
     case PRECISION_FLOAT:
-      return "floating point";
+      return "32bit float";
+    case PRECISION_FLOAT16:
+      return "16bit float";
     }
   return "<invalid precision!>";
 }
@@ -314,6 +320,8 @@ tag_valid (
  
   switch (p)
   {
+    case PRECISION_FLOAT16:
+      if (f == FORMAT_INDEXED) valid = FALSE;
     case PRECISION_FLOAT:
       if (f == FORMAT_INDEXED) valid = FALSE;
     case PRECISION_U16:
@@ -402,6 +410,18 @@ tag_to_drawable_type (
           break; 
 	} 
       break;
+
+    case PRECISION_FLOAT16:
+      switch (f)
+	{
+        case FORMAT_RGB:
+          return (a == ALPHA_YES)?  FLOAT16_RGBA_GIMAGE: FLOAT_RGB_GIMAGE;
+        case FORMAT_GRAY:
+          return (a == ALPHA_YES)?  FLOAT16_GRAYA_GIMAGE: FLOAT_GRAY_GIMAGE;
+        default:
+          break; 
+	} 
+      break;
     default:
       break;
     }
@@ -453,6 +473,18 @@ tag_to_image_type (
           return  FLOAT_RGB;
         case FORMAT_GRAY:
           return  FLOAT_GRAY;
+        default:
+          break; 
+	} 
+      break;
+    
+    case PRECISION_FLOAT16:
+      switch (f)
+	{
+        case FORMAT_RGB:
+          return  FLOAT16_RGB;
+        case FORMAT_GRAY:
+          return  FLOAT16_GRAY;
         default:
           break; 
 	} 
@@ -528,6 +560,20 @@ tag_from_drawable_type (
       f = FORMAT_GRAY;
       break;
      
+    /* The float 16 data cases */
+    case FLOAT16_RGBA_GIMAGE:
+      a = ALPHA_YES;
+    case FLOAT16_RGB_GIMAGE:
+      p = PRECISION_FLOAT;
+      f = FORMAT_RGB;
+      break;
+    case FLOAT16_GRAYA_GIMAGE:
+      a = ALPHA_YES;
+    case FLOAT16_GRAY_GIMAGE:
+      p = PRECISION_FLOAT;
+      f = FORMAT_GRAY;
+      break;
+
     /* any undefined cases */
     default:
       p = PRECISION_NONE;
@@ -588,6 +634,16 @@ tag_from_image_type (
       f = FORMAT_GRAY;
       break;
      
+    /* The float 16 data cases */
+    case FLOAT16_RGB:
+      p = PRECISION_FLOAT16;
+      f = FORMAT_RGB;
+      break;
+    case FLOAT16_GRAY:
+      p = PRECISION_FLOAT16;
+      f = FORMAT_GRAY;
+      break;
+    
     /* any undefined cases */
     default:
       p = PRECISION_NONE;

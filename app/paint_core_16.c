@@ -25,6 +25,7 @@
 #include "draw_core.h"
 #include "drawable.h"
 #include "errors.h"
+#include "float16.h"
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_mask.h"
@@ -67,9 +68,10 @@ static Canvas *  brush_mask_subsample          (Canvas *, double, double);
 #endif
 static Canvas *  brush_mask_solidify           (Canvas *);
 
-static void brush_solidify_mask_float ( Canvas *, Canvas *);
 static void brush_solidify_mask_u8 ( Canvas *, Canvas *);
 static void brush_solidify_mask_u16 ( Canvas *, Canvas *);
+static void brush_solidify_mask_float ( Canvas *, Canvas *);
+static void brush_solidify_mask_float16 ( Canvas *, Canvas *);
 
 
 /* the portions of the original image which have been modified */
@@ -1132,7 +1134,8 @@ static BrushSolidifyMaskFunc brush_solidify_mask_funcs[] =
 {
   brush_solidify_mask_u8,
   brush_solidify_mask_u16,
-  brush_solidify_mask_float
+  brush_solidify_mask_float,
+  brush_solidify_mask_float16
 };
 
 static Canvas * 
@@ -1261,3 +1264,31 @@ static void brush_solidify_mask_float (
     }
 }
 
+static void brush_solidify_mask_float16 (
+			Canvas *brush_mask,
+			Canvas *solid_brush
+		      )
+{  
+  /* get the data and advance one line into it  */
+#ifdef BRUSH_WITH_BORDER
+  guint16* data =(guint16*)canvas_portion_data (solid_brush, 0, 1);
+#else
+  guint16* data =(guint16*)canvas_portion_data (solid_brush, 0, 0);
+#endif
+  guint16* src = (guint16*)canvas_portion_data (brush_mask, 0, 0);
+  gint i, j;
+
+  for (i = 0; i < canvas_height (brush_mask); i++)
+    {
+#ifdef BRUSH_WITH_BORDER
+      data++;
+#endif
+      for (j = 0; j < canvas_width (brush_mask); j++)
+	{
+	  *data++ = (*src++) ? FLT16 (1.0) : FLT16 (0.0);
+	}
+#ifdef BRUSH_WITH_BORDER
+      data++;
+#endif
+    }
+}

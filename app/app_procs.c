@@ -766,6 +766,20 @@ gimp_shmem_init( int precision, key_t shmid, int chans, long offset,
 			break;
 		}
 		break;
+	
+ 	case PRECISION_FLOAT16:
+		switch( chans )
+		{
+		case 1:
+			type = FLOAT16_GRAY;
+			break;
+
+		case 3:
+		case 4:
+			type = FLOAT16_RGB;
+			break;
+		}
+		break;
 	}
 
 	return_vals = procedural_db_run_proc ("gimp_image_new",
@@ -837,6 +851,23 @@ gimp_shmem_init( int precision, key_t shmid, int chans, long offset,
 
 		case 4:
 			drawable = FLOAT_RGBA_GIMAGE;
+			break;
+		}
+		break;
+	
+	case PRECISION_FLOAT16:
+		switch( chans )
+		{
+		case 1:
+			drawable = FLOAT16_GRAY_GIMAGE;
+			break;
+
+		case 3:
+			drawable = FLOAT16_RGB_GIMAGE;
+			break;
+
+		case 4:
+			drawable = FLOAT16_RGBA_GIMAGE;
 			break;
 		}
 		break;

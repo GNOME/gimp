@@ -22,6 +22,7 @@
 #include "color_select.h"
 #include "colormaps.h"
 #include "errors.h"
+#include "float16.h"
 #include "gimprc.h"
 #include "paint_funcs_area.h"
 #include "pixelrow.h"
@@ -750,7 +751,11 @@ color_select_format_entry  (
           break;
 
         case PRECISION_FLOAT:
-          sprintf (buffer, "%7.5f", csp->values[i]);
+          sprintf (buffer, "%7.6f", csp->values[i]);
+          break;
+        
+        case PRECISION_FLOAT16:
+          sprintf (buffer, "%7.6f", FLT (FLT16 (csp->values[i])));
           break;
 
         case PRECISION_NONE:
@@ -1223,6 +1228,9 @@ color_select_entry_update (GtkWidget *w,
                 break;
 
               case PRECISION_FLOAT:
+                break;
+              
+	      case PRECISION_FLOAT16:
                 break;
                 
               case PRECISION_NONE:

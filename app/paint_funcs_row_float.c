@@ -20,6 +20,7 @@
 #include <string.h>
 #include <math.h>
 #include "appenv.h"
+#include "float16.h"
 #include "paint_funcs_area.h"
 #include "paint_funcs_row_float.h"
 #include "pixelrow.h"
@@ -1894,7 +1895,7 @@ extract_from_inten_row_float (
                      copy routines
 ********************************************************/
 
-#define INTENSITY(r,g,b) ((r) * 0.30 + (g) * 0.59 + (b) * 0.11 + 0.001)
+#define INTENSITY(r,g,b) ((r) * 0.30 + (g) * 0.59 + (b) * 0.11)
 
 static void
 copy_row_rgb_to_u8_rgb (
@@ -2224,6 +2225,115 @@ copy_row_rgb_to_float_gray  (
     }
 }
 
+static void 
+copy_row_rgb_to_float16_rgb  (
+                            PixelRow * src_row,
+                            PixelRow * dest_row
+                            )
+{
+  int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
+  Tag stag = pixelrow_tag (src_row);
+  Tag dtag = pixelrow_tag (dest_row);
+  gfloat * s = (gfloat*) pixelrow_data (src_row);
+  guint16 * d = (guint16*) pixelrow_data (dest_row);
+
+  if (tag_alpha (stag) == ALPHA_YES)
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = FLT16 (s[0]);
+            d[1] = FLT16 (s[1]);
+            d[2] = FLT16 (s[2]);
+            d[3] = FLT16 (s[3]);
+            s += 4;
+            d += 4;
+          }
+      else
+        while (w--)
+          {
+            d[0] = FLT16 (s[0]);
+            d[1] = FLT16 (s[1]);
+            d[2] = FLT16 (s[2]);
+            s += 4;
+            d += 3;
+          }
+    }
+  else
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = FLT16 (s[0]);
+            d[1] = FLT16 (s[1]);
+            d[2] = FLT16 (s[2]);
+            d[3] = FLT16 (1.0);
+            s += 3;
+            d += 4;
+          }
+      else
+        while (w--)
+          {
+            d[0] = FLT16 (s[0]);
+            d[1] = FLT16 (s[1]);
+            d[2] = FLT16 (s[2]);
+            s += 3;
+            d += 3;
+          }
+    }
+}
+
+
+static void 
+copy_row_rgb_to_float16_gray  (
+                             PixelRow * src_row,
+                             PixelRow * dest_row
+                             )
+{
+  int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
+  Tag stag = pixelrow_tag (src_row);
+  Tag dtag = pixelrow_tag (dest_row);
+  gfloat * s = (gfloat*) pixelrow_data (src_row);
+  guint16 * d = (guint16*) pixelrow_data (dest_row);
+
+  if (tag_alpha (stag) == ALPHA_YES)
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = FLT16 (INTENSITY (s[0], s[1], s[2]));
+            d[1] = FLT16 (s[3]);
+            s += 4;
+            d += 2;
+          }
+      else
+        while (w--)
+          {
+            d[0] = FLT16 (INTENSITY (s[0], s[1], s[2]));
+            s += 4;
+            d += 1;
+          }
+    }
+  else
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = FLT16 (INTENSITY (s[0], s[1], s[2]));
+            d[1] = FLT16 (1.0);
+            s += 3;
+            d += 2;
+          }
+      else
+        while (w--)
+          {
+            d[0] = FLT16 (INTENSITY (s[0], s[1], s[2]));
+            s += 3;
+            d += 1;
+          }
+    }
+}
+
 
 static void 
 copy_row_gray_to_u8_rgb  (
@@ -2527,10 +2637,111 @@ copy_row_gray_to_float_gray  (
     }
 }
 
+static void 
+copy_row_gray_to_float16_rgb  (
+                             PixelRow * src_row,
+                             PixelRow * dest_row
+                             )
+{
+  int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
+  Tag stag = pixelrow_tag (src_row);
+  Tag dtag = pixelrow_tag (dest_row);
+  gfloat * s = (gfloat*) pixelrow_data (src_row);
+  guint16 * d = (guint16*) pixelrow_data (dest_row);
+
+  if (tag_alpha (stag) == ALPHA_YES)
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = FLT16 (s[0]);
+            d[3] = FLT16 (s[1]);
+            s += 2;
+            d += 4;
+          }
+      else
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = FLT16 (s[0]);
+            s += 2;
+            d += 3;
+          }
+    }
+  else
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = FLT16 (s[0]);
+            d[3] = FLT16 (1.0);
+            s += 1;
+            d += 4;
+          }
+      else
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = FLT16 (s[0]);
+            s += 1;
+            d += 3;
+          }
+    }
+}
+
+
+static void 
+copy_row_gray_to_float16_gray  (
+                              PixelRow * src_row,
+                              PixelRow * dest_row
+                              )
+{
+  int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
+  Tag stag = pixelrow_tag (src_row);
+  Tag dtag = pixelrow_tag (dest_row);
+  gfloat * s = (gfloat*) pixelrow_data (src_row);
+  guint16 * d = (guint16*) pixelrow_data (dest_row);
+
+  if (tag_alpha (stag) == ALPHA_YES)
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = FLT16 (s[0]);
+            d[1] = FLT16 (s[1]);
+            s += 2;
+            d += 2;
+          }
+      else
+        while (w--)
+          {
+            d[0] = FLT16 (s[0]);
+            s += 2;
+            d += 1;
+          }
+    }
+  else
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = FLT16 (s[0]);
+            d[1] = FLT16 (1.0);
+            s += 1;
+            d += 2;
+          }
+      else
+        while (w--)
+          {
+            d[0] = FLT16 (s[0]);
+            s += 1;
+            d += 1;
+          }
+    }
+}
+
 
 typedef void (*CopyRowFunc) (PixelRow *, PixelRow *);
 
-static CopyRowFunc funcs[2][3][2] =
+static CopyRowFunc funcs[2][4][2] =
 {
   {
     {
@@ -2544,6 +2755,10 @@ static CopyRowFunc funcs[2][3][2] =
     {
       copy_row_rgb_to_float_rgb,
       copy_row_rgb_to_float_gray
+    },
+    {
+      copy_row_rgb_to_float16_rgb,
+      copy_row_rgb_to_float16_gray
     }
   },
   
@@ -2559,6 +2774,10 @@ static CopyRowFunc funcs[2][3][2] =
     {
       copy_row_gray_to_float_rgb,
       copy_row_gray_to_float_gray
+    },
+    {
+      copy_row_gray_to_float16_rgb,
+      copy_row_gray_to_float16_gray
     }
   }
 };
@@ -2588,6 +2807,7 @@ copy_row_float (
     case PRECISION_U8:    y = 0; break;
     case PRECISION_U16:   y = 1; break;
     case PRECISION_FLOAT: y = 2; break;
+    case PRECISION_FLOAT16: y = 3; break;
     case PRECISION_NONE:
     default:
       g_warning ("unsupported dest precision in copy_row_float()");

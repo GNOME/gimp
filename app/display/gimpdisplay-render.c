@@ -21,6 +21,7 @@
 #include "canvas.h"
 #include "colormaps.h"
 #include "errors.h"
+#include "float16.h"
 #include "gimprc.h"
 #include "gximage.h"
 #include "image_render.h"
@@ -226,6 +227,23 @@ static void    render_image_rgb_a_float_2     (RenderInfo *info);
 static void    render_image_rgb_a_float_3     (RenderInfo *info);
 static void    render_image_rgb_a_float_4     (RenderInfo *info);
 
+static void    render_image_gray_float16_1      (RenderInfo *info);
+static void    render_image_gray_float16_2      (RenderInfo *info);
+static void    render_image_gray_float16_3      (RenderInfo *info);
+static void    render_image_gray_float16_4      (RenderInfo *info);
+static void    render_image_gray_a_float16_1    (RenderInfo *info);
+static void    render_image_gray_a_float16_2    (RenderInfo *info);
+static void    render_image_gray_a_float16_3    (RenderInfo *info);
+static void    render_image_gray_a_float16_4    (RenderInfo *info);
+static void    render_image_rgb_float16_1       (RenderInfo *info);
+static void    render_image_rgb_float16_2       (RenderInfo *info);
+static void    render_image_rgb_float16_3       (RenderInfo *info);
+static void    render_image_rgb_float16_4       (RenderInfo *info);
+static void    render_image_rgb_a_float16_1     (RenderInfo *info);
+static void    render_image_rgb_a_float16_2     (RenderInfo *info);
+static void    render_image_rgb_a_float16_3     (RenderInfo *info);
+static void    render_image_rgb_a_float16_4     (RenderInfo *info);
+
 static void    render_image_init_info          (RenderInfo   *info,
 						GDisplay     *gdisp,
 						int           x,
@@ -337,6 +355,34 @@ static RenderFunc render_funcs_float[4][4] =
   },
 };
 
+static RenderFunc render_funcs_float16[4][4] =
+{
+  {
+    render_image_rgb_float16_1,
+    render_image_rgb_float16_2,
+    render_image_rgb_float16_3,
+    render_image_rgb_float16_4,
+  },
+  {
+    render_image_rgb_a_float16_1,
+    render_image_rgb_a_float16_2,
+    render_image_rgb_a_float16_3,
+    render_image_rgb_a_float16_4,
+  },
+  {
+    render_image_gray_float16_1,
+    render_image_gray_float16_2,
+    render_image_gray_float16_3,
+    render_image_gray_float16_4,
+  },
+  {
+    render_image_gray_a_float16_1,
+    render_image_gray_a_float16_2,
+    render_image_gray_a_float16_3,
+    render_image_gray_a_float16_4,
+  },
+};
+
 /*****************************************************************/
 /*  This function is the core of the display--it offsets and     */
 /*  scales the image according to the current parameters in the  */
@@ -397,6 +443,9 @@ render_image (GDisplay *gdisp,
   	break;
       case PRECISION_FLOAT:
         (* render_funcs_float[image_type][info.dest_bpp-1]) (&info);
+  	break;
+      case PRECISION_FLOAT16:
+        (* render_funcs_float16[image_type][info.dest_bpp-1]) (&info);
   	break;
       case PRECISION_NONE:
         break;
@@ -2413,12 +2462,18 @@ render_image_rgb_a_4 (RenderInfo *info)
 		    r = blend_dark_check[(a | src[RED_PIX])];
 		    g = blend_dark_check[(a | src[GREEN_PIX])];
 		    b = blend_dark_check[(a | src[BLUE_PIX])];
+		    r =  src[RED_PIX];
+		    g =  src[GREEN_PIX];
+		    b =  src[BLUE_PIX];
 		  }
 		else
 		  {
 		    r = blend_light_check[(a | src[RED_PIX])];
 		    g = blend_light_check[(a | src[GREEN_PIX])];
 		    b = blend_light_check[(a | src[BLUE_PIX])];
+		    r =  src[RED_PIX];
+		    g =  src[GREEN_PIX];
+		    b =  src[BLUE_PIX];
 		  }
 
 		val = COLOR_COMPOSE (r, g, b);
@@ -3862,12 +3917,18 @@ render_image_rgb_a_u16_4 (RenderInfo *info)
 		    r = blend_dark_check[(a | U16_TO_U8(src[RED_PIX]))];
 		    g = blend_dark_check[(a | U16_TO_U8(src[GREEN_PIX]))];
 		    b = blend_dark_check[(a | U16_TO_U8(src[BLUE_PIX]))];
+		    r =  U16_TO_U8(src[RED_PIX]);
+		    g =  U16_TO_U8(src[GREEN_PIX]);
+		    b =  U16_TO_U8(src[BLUE_PIX]);
 		  }
 		else
 		  {
 		    r = blend_light_check[(a | U16_TO_U8(src[RED_PIX]))];
 		    g = blend_light_check[(a | U16_TO_U8(src[GREEN_PIX]))];
 		    b = blend_light_check[(a | U16_TO_U8(src[BLUE_PIX]))];
+		    r =  U16_TO_U8(src[RED_PIX]);
+		    g =  U16_TO_U8(src[GREEN_PIX]);
+		    b =  U16_TO_U8(src[BLUE_PIX]);
 		  }
 
 		val = COLOR_COMPOSE (r, g, b);
@@ -5162,6 +5223,763 @@ render_image_rgb_a_float_4 (RenderInfo *info)
 		    r = blend_light_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))];
 		    g = blend_light_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))];
 		    b = blend_light_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[1] = val >> 16;
+		dest[2] = val >> 8;
+		dest[3] = val;
+		dest += 4;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+/*************************/
+/* 16bit float channel data functions */
+/*************************/
+
+static void
+render_image_gray_float16_1 (RenderInfo *info)
+{
+}
+
+static void
+render_image_gray_float16_2 (RenderInfo *info)
+{
+}
+
+static void
+render_image_gray_float16_3 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  gint src8bit;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*)info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		src8bit = FLOAT_TO_8BIT( FLT (src[GRAY_PIX]) );
+		val = COLOR_COMPOSE ( src8bit, src8bit, src8bit);
+		src += 1;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 3;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		src8bit = FLOAT_TO_8BIT( FLT (src[GRAY_PIX]) );
+		val = COLOR_COMPOSE ( src8bit, src8bit, src8bit);
+		src += 1;
+
+		dest[0] = val >> 16;
+		dest[1] = val >> 8;
+		dest[2] = val;
+		dest += 3;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_gray_float16_4 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  gint src8bit;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*) info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		src8bit = FLOAT_TO_8BIT( FLT (src[GRAY_PIX]) );
+		val = COLOR_COMPOSE ( src8bit, src8bit, src8bit);
+		src += 1;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 4;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		src8bit = FLOAT_TO_8BIT( FLT (src[GRAY_PIX]) );
+		val = COLOR_COMPOSE ( src8bit, src8bit, src8bit);
+		src += 1;
+
+		dest[1] = val >> 16;
+		dest[2] = val >> 8;
+		dest[3] = val;
+		dest += 4;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+
+static void
+render_image_gray_a_float16_1 (RenderInfo *info)
+{
+}
+
+static void
+render_image_gray_a_float16_2 (RenderInfo *info)
+{
+}
+
+static void
+render_image_gray_a_float16_3 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  guint *alpha;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*) info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[ FLOAT_TO_8BIT (FLT (src[ALPHA_G_PIX])) ];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | FLOAT_TO_8BIT ( FLT (src[GRAY_PIX])))];
+		else
+		  val = blend_light_check[(a | FLOAT_TO_8BIT ( FLT (src[GRAY_PIX])))];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 3;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[ FLOAT_TO_8BIT ( FLT (src[ALPHA_G_PIX])) ];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | FLOAT_TO_8BIT( FLT (src[GRAY_PIX])))];
+		else
+		  val = blend_light_check[(a | FLOAT_TO_8BIT( FLT (src[GRAY_PIX])))];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[0] = val >> 16;
+		dest[1] = val >> 8;
+		dest[2] = val;
+		dest += 3;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_gray_a_float16_4 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  guint *alpha;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*)info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[ FLOAT_TO_8BIT( FLT (src[ALPHA_G_PIX])) ];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[GRAY_PIX])))];
+		else
+		  val = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[GRAY_PIX])))];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 4;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[ FLOAT_TO_8BIT(FLT (src[ALPHA_G_PIX])) ];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[GRAY_PIX])))];
+		else
+		  val = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[GRAY_PIX])))];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[1] = val >> 16;
+		dest[2] = val >> 8;
+		dest[3] = val;
+		dest += 4;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+
+static void
+render_image_rgb_float16_1 (RenderInfo *info)
+{
+}
+
+
+static void
+render_image_rgb_float16_2 (RenderInfo *info)
+{
+}
+
+static void
+render_image_rgb_float16_3 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*) info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (FLOAT_TO_8BIT (FLT (src[RED_PIX])),
+				      FLOAT_TO_8BIT (FLT (src[GREEN_PIX])),
+				      FLOAT_TO_8BIT (FLT (src[BLUE_PIX])));
+		src += 3;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 3;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (FLOAT_TO_8BIT( FLT (src[RED_PIX])),
+				     FLOAT_TO_8BIT( FLT (src[GREEN_PIX])),
+				     FLOAT_TO_8BIT( FLT (src[BLUE_PIX])));
+		src += 3;
+
+		dest[0] = val >> 16;
+		dest[1] = val >> 8;
+		dest[2] = val;
+		dest += 3;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_rgb_float16_4 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if ((y % info->scaledest) && !initial)
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src = (guint16 *) info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (FLOAT_TO_8BIT(FLT (src[RED_PIX])),
+				     FLOAT_TO_8BIT(FLT (src[GREEN_PIX])),
+				     FLOAT_TO_8BIT(FLT (src[BLUE_PIX])));
+		src += 3;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 4;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (FLOAT_TO_8BIT(FLT (src[RED_PIX])),
+				     FLOAT_TO_8BIT(FLT (src[GREEN_PIX])),
+				     FLOAT_TO_8BIT(FLT (src[BLUE_PIX])));
+		src += 3;
+
+		dest[1] = val >> 16;
+		dest[2] = val >> 8;
+		dest[3] = val;
+		dest += 4;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+
+static void
+render_image_rgb_a_float16_1 (RenderInfo *info)
+{
+}
+
+static void
+render_image_rgb_a_float16_2 (RenderInfo *info)
+{
+}
+
+static void
+render_image_rgb_a_float16_3 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  guint *alpha;
+  gulong r, g, b;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src = (guint16 *)info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[FLOAT_TO_8BIT(src[ALPHA_PIX])];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | FLOAT_TO_8BIT (FLT (src[RED_PIX])))];
+		    g = blend_dark_check[(a | FLOAT_TO_8BIT (FLT (src[GREEN_PIX])))];
+		    b = blend_dark_check[(a | FLOAT_TO_8BIT (FLT (src[BLUE_PIX])))];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | FLOAT_TO_8BIT (FLT (src[RED_PIX])))];
+		    g = blend_light_check[(a | FLOAT_TO_8BIT (FLT (src[GREEN_PIX])))];
+		    b = blend_light_check[(a | FLOAT_TO_8BIT (FLT (src[BLUE_PIX])))];
+		  }
+	        a = alpha[FLOAT_TO_8BIT (FLT (src[ALPHA_PIX]))];
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 3;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[FLOAT_TO_8BIT (FLT (src[ALPHA_PIX]))];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | FLOAT_TO_8BIT ( FLT (src[RED_PIX])))];
+		    g = blend_dark_check[(a | FLOAT_TO_8BIT ( FLT (src[GREEN_PIX])))];
+		    b = blend_dark_check[(a | FLOAT_TO_8BIT ( FLT (src[BLUE_PIX])))];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | FLOAT_TO_8BIT( FLT (src[RED_PIX])))];
+		    g = blend_light_check[(a | FLOAT_TO_8BIT( FLT (src[GREEN_PIX])))];
+		    b = blend_light_check[(a | FLOAT_TO_8BIT( FLT (src[BLUE_PIX])))];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val >> 16;
+		dest[1] = val >> 8;
+		dest[2] = val;
+		dest += 3;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_rgb_a_float16_4 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  guint *alpha;
+  gulong r, g, b;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*) info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[FLOAT_TO_8BIT(src[ALPHA_PIX])];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[RED_PIX])))];
+		    g = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[GREEN_PIX])))];
+		    b = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[BLUE_PIX])))];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[RED_PIX])))];
+		    g = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[GREEN_PIX])))];
+		    b = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[BLUE_PIX])))];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 4;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[FLOAT_TO_8BIT(src[ALPHA_PIX])];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[RED_PIX])))];
+		    g = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[GREEN_PIX])))];
+		    b = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[BLUE_PIX])))];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[RED_PIX])))];
+		    g = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[GREEN_PIX])))];
+		    b = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[BLUE_PIX])))];
 		  }
 
 		val = COLOR_COMPOSE (r, g, b);

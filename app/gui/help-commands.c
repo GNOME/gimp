@@ -1278,6 +1278,16 @@ file_pref_cmd_callback (GtkWidget *widget,
                          (GtkSignalFunc) file_prefs_toggle_callback,
 			  &default_precision);
       gtk_widget_show (button);
+      button = gtk_radio_button_new_with_label (group, "FLOAT16");
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) PRECISION_FLOAT16);
+      if (default_precision == PRECISION_FLOAT16) 
+	  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                         (GtkSignalFunc) file_prefs_toggle_callback,
+			  &default_precision);
+      gtk_widget_show (button);
       hbox = gtk_hbox_new (FALSE, 2);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
       gtk_widget_show (hbox);

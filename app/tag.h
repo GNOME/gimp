@@ -45,7 +45,8 @@ typedef enum
   PRECISION_NONE,
   PRECISION_U8,
   PRECISION_U16,
-  PRECISION_FLOAT
+  PRECISION_FLOAT,
+  PRECISION_FLOAT16
 } Precision;
 
 
@@ -151,6 +152,12 @@ Tag       tag_from_image_type    (gint);
 #define FLOAT_GRAY_GIMAGE         14 
 #define FLOAT_GRAYA_GIMAGE        15 
 
+/* These are the 16bit float types */
+#define FLOAT16_RGB_GIMAGE          16 
+#define FLOAT16_RGBA_GIMAGE         17 
+#define FLOAT16_GRAY_GIMAGE         18 
+#define FLOAT16_GRAYA_GIMAGE        19 
+
 /* base types */
 #define RGB              0
 #define GRAY             1
@@ -160,6 +167,8 @@ Tag       tag_from_image_type    (gint);
 #define U16_INDEXED		 5
 #define FLOAT_RGB 		 6    /*float*/
 #define FLOAT_GRAY 		 7
+#define FLOAT16_RGB 		 8    /*float16*/
+#define FLOAT16_GRAY 		 9
 
 
 #endif /* __TAG_H__ */
