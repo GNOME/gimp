@@ -305,17 +305,15 @@ save_image (gchar  *filename,
 	    gint32  drawable_ID,
 	    gint32  run_mode)
 {
-  GimpParam* params;
-  gint retvals;
   gchar *ext;
   gchar *tmpname;
 #ifndef G_OS_WIN32
-  FILE *f;
-  gint pid;
-  gint status;
+  FILE  *f;
+  gint   pid;
+  gint   status;
 #else
-  FILE *in, *out;
-  STARTUPINFO startupinfo;
+  FILE  *in, *out;
+  STARTUPINFO         startupinfo;
   PROCESS_INFORMATION processinfo;
 #endif
 
@@ -327,35 +325,18 @@ save_image (gchar  *filename,
 
   /* get a temp name with the right extension and save into it. */
 
-  params = gimp_run_procedure ("gimp_temp_name",
-			       &retvals,
-			       GIMP_PDB_STRING, ext + 1,
-			       GIMP_PDB_END);
+  tmpname = gimp_temp_name (ext + 1);
 
-  tmpname = g_strdup (params[1].data.d_string);
-  gimp_destroy_params (params, retvals);
-
-  params = gimp_run_procedure ("gimp_file_save",
-			       &retvals,
- 			       GIMP_PDB_INT32, run_mode,
-			       GIMP_PDB_IMAGE, image_ID,
-			       GIMP_PDB_DRAWABLE, drawable_ID,
-			       GIMP_PDB_STRING, tmpname,
-			       GIMP_PDB_STRING, tmpname,
-			       GIMP_PDB_END);
-
-  if (!valid_file (tmpname) ||
-      params[0].data.d_status != GIMP_PDB_SUCCESS)
+  if (! (gimp_file_save (run_mode,
+			 image_ID,
+			 drawable_ID,
+			 tmpname, 
+			 tmpname) && valid_file (tmpname)) )
     {
       unlink (tmpname);
       g_free (tmpname);
-      return params[0].data.d_status;
+      return GIMP_PDB_EXECUTION_ERROR;
     }
-
-/*   if (! file_save(image_ID, tmpname, tmpname)) { */
-/*     unlink (tmpname); */
-/*     return -1; */
-/*   } */
 
 #ifndef G_OS_WIN32
 #ifndef __EMX__
@@ -441,21 +422,20 @@ save_image (gchar  *filename,
 }
 
 static gint32
-load_image (gchar       *filename,
-	    gint32       run_mode,
+load_image (gchar             *filename,
+	    gint32             run_mode,
 	    GimpPDBStatusType *status /* return value */)
 {
-  GimpParam* params;
-  gint retvals;
-  gchar *ext;
-  gchar *tmpname;
+  gint32  image_ID;
+  gchar  *ext;
+  gchar  *tmpname;
 #ifndef G_OS_WIN32
-  gint pid;
-  gint process_status;
+  gint    pid;
+  gint    process_status;
 #else
-  FILE *in, *out;
+  FILE   *in, *out;
   SECURITY_ATTRIBUTES secattr;
-  STARTUPINFO startupinfo;
+  STARTUPINFO         startupinfo;
   PROCESS_INFORMATION processinfo;
 #endif
 
@@ -465,13 +445,7 @@ load_image (gchar       *filename,
     }
 
   /* find a temp name */
-  params = gimp_run_procedure ("gimp_temp_name",
-			       &retvals,
-			       GIMP_PDB_STRING, ext + 1,
-			       GIMP_PDB_END);
-
-  tmpname = g_strdup (params[1].data.d_string);
-  gimp_destroy_params (params, retvals);
+  tmpname = gimp_temp_name (ext + 1);
 
 #ifndef G_OS_WIN32
 #ifndef __EMX__
@@ -560,26 +534,20 @@ load_image (gchar       *filename,
 
   /* now that we un-gziped it, load the temp file */
 
-  params = gimp_run_procedure ("gimp_file_load",
-			       &retvals,
-			       GIMP_PDB_INT32, run_mode,
-			       GIMP_PDB_STRING, tmpname,
-			       GIMP_PDB_STRING, tmpname,
-			       GIMP_PDB_END);
+  image_ID = gimp_file_load (run_mode, tmpname, tmpname);
+
   unlink (tmpname);
   g_free (tmpname);
 
-  *status = params[0].data.d_status;
-
-  if (params[0].data.d_status != GIMP_PDB_SUCCESS)
+  if (image_ID != -1)
     {
-      return -1;
+      *status = GIMP_PDB_SUCCESS;
+      gimp_image_set_filename (image_ID, filename);
     }
   else
-    {
-      gimp_image_set_filename (params[1].data.d_int32, filename);
-      return params[1].data.d_int32;
-    }
+    *status = GIMP_PDB_EXECUTION_ERROR;
+
+  return image_ID;
 }
 
 static gboolean

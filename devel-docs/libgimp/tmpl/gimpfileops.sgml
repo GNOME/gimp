@@ -14,6 +14,39 @@ gimpfileops
 
 </para>
 
+<!-- ##### FUNCTION gimp_temp_name ##### -->
+<para>
+
+</para>
+
+@extension: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_file_load ##### -->
+<para>
+
+</para>
+
+@run_mode: 
+@filename: 
+@raw_filename: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_file_save ##### -->
+<para>
+
+</para>
+
+@run_mode: 
+@image_ID: 
+@drawable_ID: 
+@filename: 
+@raw_filename: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_register_magic_load_handler ##### -->
 <para>
 

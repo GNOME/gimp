@@ -138,7 +138,6 @@ static void      run    (gchar    *name,
 			 GimpParam  **return_vals);
 
 static gint      gfig_dialog               (void);
-static void      gfig_clear_selection      (gint32 ID);
 static void      gfig_ok_callback          (GtkWidget *widget,
 					    gpointer   data);
 static void      gfig_paint_callback       (GtkWidget *widget,
@@ -707,7 +706,7 @@ run (gchar    *name,
   tile_height = gimp_tile_height ();
 
   /* TMP Hack - clear any selections */
-  gfig_clear_selection (gfig_image);
+  gimp_selection_clear (gfig_image);
 
   gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
@@ -784,23 +783,6 @@ run (gchar    *name,
   values[0].data.d_status = status;
 
   gimp_drawable_detach (drawable);
-}
-
-static void
-gfig_clear_selection (gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-
-  /* Clear any selection - needed because drawing circles/ellipses 
-   * uses the selection method and will confuse the output.
-   */
-  return_vals = gimp_run_procedure ("gimp_selection_clear",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
-  
-  gimp_destroy_params (return_vals, nreturn_vals);
 }
 
 /*
@@ -7174,8 +7156,6 @@ d_draw_circle (Dobject * obj)
 static void
 d_paint_circle (Dobject *obj)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
   DobjPoints * center_pnt;
   DobjPoints * edge_pnt;
   gint radius;
@@ -7238,12 +7218,7 @@ d_paint_circle (Dobject *obj)
 
   gimp_edit_stroke (gfig_drawable);
 
-  return_vals = gimp_run_procedure ("gimp_selection_clear", &nreturn_vals,
-				    GIMP_PDB_IMAGE, gfig_image,
-				    GIMP_PDB_END);
-  
-  gimp_destroy_params (return_vals, nreturn_vals);
-
+  gimp_selection_clear (gfig_image);
 }
 
 static Dobject *
@@ -7644,8 +7619,6 @@ d_paint_approx_ellipse (Dobject *obj)
 static void
 d_paint_ellipse (Dobject *obj)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
   DobjPoints * center_pnt;
   DobjPoints * edge_pnt;
   gint bound_wx;
@@ -7721,12 +7694,7 @@ d_paint_ellipse (Dobject *obj)
 
   gimp_edit_stroke (gfig_drawable);
 
-  return_vals = gimp_run_procedure ("gimp_selection_clear", &nreturn_vals,
-				    GIMP_PDB_IMAGE, gfig_image,
-				    GIMP_PDB_END);
-  
-  gimp_destroy_params (return_vals, nreturn_vals);
-
+  gimp_selection_clear (gfig_image);
 }
 
 static Dobject *

@@ -128,16 +128,16 @@
 
 
 static void   query (void);
-static void   run   (gchar   *name,
-		     gint     nparams,
+static void   run   (gchar      *name,
+		     gint        nparams,
 		     GimpParam  *param,
-		     gint    *nreturn_vals,
+		     gint       *nreturn_vals,
 		     GimpParam **return_vals);
 
 static GimpPDBStatusType save_image (gchar  *filename,
-			       gint32  image_ID,
-			       gint32  drawable_ID,
-			       gint32  run_mode);
+			             gint32  image_ID,
+			             gint32  drawable_ID,
+				     gint32  run_mode);
 
 static gint   save_dialog          (void);
 static void   ok_callback          (GtkWidget *widget,
@@ -225,17 +225,17 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunModeType  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
+  static GimpParam   values[2];
+  GimpRunModeType    run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint32  image_ID;
+  gint32  drawable_ID;
 
   INIT_I18N_UI();
 
@@ -309,13 +309,10 @@ save_image (gchar  *filename,
 	    gint32  drawable_ID,
 	    gint32  run_mode)
 {
-  GimpParam *params;
-  gint    retvals;
   gchar  *ext;
   gchar  *tmpname;
   gchar   mailcmdline[512];
   gint    pid;
-  gint    status;
   gint    process_status;
   FILE   *mailpipe;
   FILE   *infile;
@@ -324,13 +321,7 @@ save_image (gchar  *filename,
     return GIMP_PDB_CALLING_ERROR;
 
   /* get a temp name with the right extension and save into it. */
-  params = gimp_run_procedure ("gimp_temp_name",
-			       &retvals,
-			       GIMP_PDB_STRING, ext + 1,
-			       GIMP_PDB_END);
-
-  tmpname = g_strdup (params[1].data.d_string);
-  gimp_destroy_params (params, retvals);
+  tmpname = gimp_temp_name (ext + 1);
 
   /* construct the "sendmail user@location" line */
   strcpy (mailcmdline, MAILER);
@@ -348,28 +339,15 @@ save_image (gchar  *filename,
   /* This is necessary to make the comments and headers work correctly. Not real sure why */
   fflush (mailpipe);      
 
-  params = gimp_run_procedure ("gimp_file_save",
-			       &retvals,
-			       GIMP_PDB_INT32, run_mode,
-			       GIMP_PDB_IMAGE, image_ID,
-			       GIMP_PDB_DRAWABLE, drawable_ID,
-			       GIMP_PDB_STRING, tmpname,
-			       GIMP_PDB_STRING, tmpname,
-			       GIMP_PDB_END);
-  
-
-  /*  need to figure a way to make sure the user is trying to save
-   *  in an approriate format but this can wait....
-   */
-
-  status = params[0].data.d_status;
-
-  if (! valid_file (tmpname) ||
-      status != GIMP_PDB_SUCCESS)
+  if (! (gimp_file_save (run_mode,
+			 image_ID,
+			 drawable_ID,
+			 tmpname, 
+			 tmpname) && valid_file (tmpname)) )
     {
       unlink (tmpname);
       g_free (tmpname);
-      return status;
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 
   if (mail_info.encapsulation == ENCAPSULATION_UUENCODE)

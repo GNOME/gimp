@@ -24,6 +24,124 @@
 #include "gimp.h"
 
 /**
+ * gimp_file_load:
+ * @run_mode: The run mode.
+ * @filename: The name of the file to load.
+ * @raw_filename: The name entered.
+ *
+ * Loads a file by extension.
+ *
+ * This procedure invokes the correct file load handler according to
+ * the file's extension and/or prefix. The name of the file to load is
+ * typically a full pathname, and the name entered is what the user
+ * actually typed before prepending a directory path. The reason for
+ * this is that if the user types http://www.xcf/~gimp/ he wants to
+ * fetch a URL, and the full pathname will not look like a URL.
+ *
+ * Returns: The output image.
+ */
+gint32
+gimp_file_load (GimpRunModeType  run_mode,
+		gchar           *filename,
+		gchar           *raw_filename)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 image_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_file_load",
+				    &nreturn_vals,
+				    GIMP_PDB_INT32, run_mode,
+				    GIMP_PDB_STRING, filename,
+				    GIMP_PDB_STRING, raw_filename,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    image_ID = return_vals[1].data.d_image;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return image_ID;
+}
+
+/**
+ * gimp_file_save:
+ * @run_mode: The run mode.
+ * @image_ID: Input image.
+ * @drawable_ID: Drawable to save.
+ * @filename: The name of the file to save the image in.
+ * @raw_filename: The name of the file to save the image in.
+ *
+ * Saves a file by extension.
+ *
+ * This procedure invokes the correct file save handler according to
+ * the file's extension and/or prefix. The name of the file to save is
+ * typically a full pathname, and the name entered is what the user
+ * actually typed before prepending a directory path. The reason for
+ * this is that if the user types http://www.xcf/~gimp/ she wants to
+ * fetch a URL, and the full pathname will not look like a URL.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_file_save (GimpRunModeType  run_mode,
+		gint32           image_ID,
+		gint32           drawable_ID,
+		gchar           *filename,
+		gchar           *raw_filename)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_file_save",
+				    &nreturn_vals,
+				    GIMP_PDB_INT32, run_mode,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_STRING, filename,
+				    GIMP_PDB_STRING, raw_filename,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_temp_name:
+ * @extension: The extension the file will have.
+ *
+ * Generates a unique filename.
+ *
+ * Generates a unique filename using the temp path supplied in the
+ * user's gimprc.
+ *
+ * Returns: The new temp filename.
+ */
+gchar *
+gimp_temp_name (gchar *extension)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_temp_name",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, extension,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return name;
+}
+
+/**
  * gimp_register_magic_load_handler:
  * @procedure_name: The name of the procedure to be used for loading.
  * @extensions: comma separated list of extensions this handler can load (i.e. \"jpg,jpeg\").

@@ -2105,19 +2105,34 @@ typedef enum
 gint32                 *image_ID,gint32                 *drawable_ID,gchar                  *format_name,GimpExportCapabilities  capabilities
 </FUNCTION>
 <FUNCTION>
+<NAME>gimp_file_load</NAME>
+<RETURNS>gint32  </RETURNS>
+GimpRunModeType  run_mode,gchar           *filename,gchar           *raw_filename
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_file_save</NAME>
+<RETURNS>gboolean  </RETURNS>
+GimpRunModeType  run_mode,gint32           image_ID,gint32           drawable_ID,gchar           *filename,gchar           *raw_filename
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_temp_name</NAME>
+<RETURNS>gchar *</RETURNS>
+gchar           *extension
+</FUNCTION>
+<FUNCTION>
 <NAME>gimp_register_magic_load_handler</NAME>
 <RETURNS>gboolean  </RETURNS>
-gchar *procedure_name,gchar *extensions,gchar *prefixes,gchar *magics
+gchar           *procedure_name,gchar           *extensions,gchar           *prefixes,gchar           *magics
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_register_load_handler</NAME>
 <RETURNS>gboolean  </RETURNS>
-gchar *procedure_name,gchar *extensions,gchar *prefixes
+gchar           *procedure_name,gchar           *extensions,gchar           *prefixes
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_register_save_handler</NAME>
 <RETURNS>gboolean  </RETURNS>
-gchar *procedure_name,gchar *extensions,gchar *prefixes
+gchar           *procedure_name,gchar           *extensions,gchar           *prefixes
 </FUNCTION>
 <MACRO>
 <NAME>GIMP_TYPE_FILE_SELECTION</NAME>
@@ -4127,13 +4142,78 @@ gint32 image_ID,gint32 drawable_ID,gint   offx,gint   offy
 gint32    image_ID,gboolean *non_empty,gint     *x1,gint     *y1,gint     *x2,gint     *y2
 </FUNCTION>
 <FUNCTION>
+<NAME>gimp_selection_value</NAME>
+<RETURNS>gint  </RETURNS>
+gint32    image_ID,gint      x,gint      y
+</FUNCTION>
+<FUNCTION>
 <NAME>gimp_selection_is_empty</NAME>
+<RETURNS>gboolean  </RETURNS>
+gint32    image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_translate</NAME>
+<RETURNS>gboolean  </RETURNS>
+gint32    image_ID,gint      offx,gint      offy
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_clear</NAME>
+<RETURNS>gboolean  </RETURNS>
+gint32    image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_invert</NAME>
+<RETURNS>gboolean  </RETURNS>
+gint32    image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_sharpen</NAME>
+<RETURNS>gboolean  </RETURNS>
+gint32    image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_all</NAME>
 <RETURNS>gboolean  </RETURNS>
 gint32    image_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_selection_none</NAME>
 <RETURNS>gboolean  </RETURNS>
+gint32    image_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_feather</NAME>
+<RETURNS>gboolean  </RETURNS>
+gint32    image_ID,gdouble   radius
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_border</NAME>
+<RETURNS>gboolean  </RETURNS>
+gint32    image_ID,gint      radius
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_grow</NAME>
+<RETURNS>gboolean  </RETURNS>
+gint32    image_ID,gint      steps
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_shrink</NAME>
+<RETURNS>gboolean  </RETURNS>
+gint32    image_ID,gint      radius
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_layer_alpha</NAME>
+<RETURNS>gboolean  </RETURNS>
+gint32    layer_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_load</NAME>
+<RETURNS>gboolean  </RETURNS>
+gint32    channel_ID
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_selection_save</NAME>
+<RETURNS>gint32  </RETURNS>
 gint32    image_ID
 </FUNCTION>
 <MACRO>

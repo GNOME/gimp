@@ -38,5 +38,5 @@ typedef struct {
 
 extern void render_rectangle(frame_spec *spec, unsigned char *out,
 			     int out_width, int field, int nchan,
-			     void progress(double));
+			     int progress(double));
 

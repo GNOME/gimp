@@ -56,17 +56,17 @@
 static void          query       (void);
 static void          run         (gchar       *name,
 				  gint         nparams,
-				  GimpParam      *param,
+				  GimpParam   *param,
 				  gint        *nreturn_vals,
-				  GimpParam     **return_vals);
+				  GimpParam  **return_vals);
 
 static gint32        load_image  (gchar       *filename,
 				  gint32       run_mode,
 				  GimpPDBStatusType *status /* return value */);
-static GimpPDBStatusType   save_image  (gchar       *filename,
-				  gint32       image_ID,
-				  gint32       drawable_ID,
-				  gint32       run_mode);
+static GimpPDBStatusType save_image  (gchar       *filename,
+				      gint32       image_ID,
+				      gint32       drawable_ID,
+				      gint32       run_mode);
 
 static gboolean   valid_file     (gchar       *filename);
 static gchar    * find_extension (gchar       *filename);
@@ -142,16 +142,16 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunModeType  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
+  static GimpParam   values[2];
+  GimpRunModeType    run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint32 image_ID;
 
   run_mode = param[0].data.d_int32;
 
@@ -256,13 +256,11 @@ save_image (gchar  *filename,
 	    gint32  drawable_ID,
 	    gint32  run_mode)
 {
-  FILE *f;
-  GimpParam *params;
-  gint retvals;
+  FILE  *f;
   gchar *ext;
   gchar *tmpname;
-  gint pid;
-  gint status;
+  gint   pid;
+  gint   status;
 
   if (NULL == (ext = find_extension (filename)))
     {
@@ -272,36 +270,18 @@ save_image (gchar  *filename,
     }
 
   /* get a temp name with the right extension and save into it. */
-
-  params = gimp_run_procedure ("gimp_temp_name",
-			       &retvals,
-			       GIMP_PDB_STRING, ext + 1,
-			       GIMP_PDB_END);
-
-  tmpname = g_strdup (params[1].data.d_string);
-  gimp_destroy_params (params, retvals);
-
-  params = gimp_run_procedure ("gimp_file_save",
-			       &retvals,
- 			       GIMP_PDB_INT32, run_mode,
-			       GIMP_PDB_IMAGE, image_ID,
-			       GIMP_PDB_DRAWABLE, drawable_ID,
-			       GIMP_PDB_STRING, tmpname,
-			       GIMP_PDB_STRING, tmpname,
-			       GIMP_PDB_END);
-
-  if (!valid_file (tmpname) ||
-      params[0].data.d_status != GIMP_PDB_SUCCESS)
+  tmpname = gimp_temp_name (ext + 1);
+  
+  if (! (gimp_file_save (run_mode,
+			 image_ID,
+			 drawable_ID,
+			 tmpname, 
+			 tmpname) && valid_file (tmpname)) )
     {
       unlink (tmpname);
       g_free (tmpname);
-      return params[0].data.d_status;
+      return GIMP_PDB_EXECUTION_ERROR;
     }
-
-/*   if (! file_save(image_ID, tmpname, tmpname)) { */
-/*     unlink (tmpname); */
-/*     return -1; */
-/*   } */
 
 #ifndef __EMX__
   /* fork off a bzip2 process */
@@ -357,16 +337,15 @@ save_image (gchar  *filename,
 }
 
 static gint32
-load_image (gchar       *filename,
-	    gint32       run_mode,
+load_image (gchar             *filename,
+	    gint32             run_mode,
 	    GimpPDBStatusType *status /* return value */)
 {
-  GimpParam *params;
-  gint retvals;
-  gchar *ext;
-  gchar *tmpname;
-  gint pid;
-  gint process_status;
+  gint32  image_ID;
+  gchar  *ext;
+  gchar  *tmpname;
+  gint    pid;
+  gint    process_status;
 
   if (NULL == (ext = find_extension (filename)))
     {
@@ -377,13 +356,7 @@ load_image (gchar       *filename,
     }
 
   /* find a temp name */
-  params = gimp_run_procedure ("gimp_temp_name",
-			       &retvals,
-			       GIMP_PDB_STRING, ext + 1,
-			       GIMP_PDB_END);
-
-  tmpname = g_strdup (params[1].data.d_string);
-  gimp_destroy_params (params, retvals);
+  tmpname = gimp_temp_name (ext + 1);
 
 #ifndef __EMX__
   /* fork off a g(un)zip and wait for it */
@@ -438,27 +411,20 @@ load_image (gchar       *filename,
 
   /* now that we un-bzip2ed it, load the temp file */
 
-  params = gimp_run_procedure ("gimp_file_load",
-			       &retvals,
-			       GIMP_PDB_INT32, run_mode,
-			       GIMP_PDB_STRING, tmpname,
-			       GIMP_PDB_STRING, tmpname,
-			       GIMP_PDB_END);
-
+  image_ID = gimp_file_load (run_mode, tmpname, tmpname);
+  
   unlink (tmpname);
   g_free (tmpname);
 
-  *status = params[0].data.d_status;
-
-  if (params[0].data.d_status != GIMP_PDB_SUCCESS)
+  if (image_ID != -1)
     {
-      return -1;
+      *status = GIMP_PDB_SUCCESS;
+      gimp_image_set_filename (image_ID, filename);
     }
   else
-    {
-      gimp_image_set_filename (params[1].data.d_int32, filename);
-      return params[1].data.d_int32;
-    }
+    *status = GIMP_PDB_EXECUTION_ERROR;
+
+  return image_ID;
 }
 
 static gboolean

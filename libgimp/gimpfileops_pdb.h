@@ -31,16 +31,25 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_register_magic_load_handler (gchar *procedure_name,
-					   gchar *extensions,
-					   gchar *prefixes,
-					   gchar *magics);
-gboolean gimp_register_load_handler       (gchar *procedure_name,
-					   gchar *extensions,
-					   gchar *prefixes);
-gboolean gimp_register_save_handler       (gchar *procedure_name,
-					   gchar *extensions,
-					   gchar *prefixes);
+gint32   gimp_file_load                   (GimpRunModeType  run_mode,
+					   gchar           *filename,
+					   gchar           *raw_filename);
+gboolean gimp_file_save                   (GimpRunModeType  run_mode,
+					   gint32           image_ID,
+					   gint32           drawable_ID,
+					   gchar           *filename,
+					   gchar           *raw_filename);
+gchar*   gimp_temp_name                   (gchar           *extension);
+gboolean gimp_register_magic_load_handler (gchar           *procedure_name,
+					   gchar           *extensions,
+					   gchar           *prefixes,
+					   gchar           *magics);
+gboolean gimp_register_load_handler       (gchar           *procedure_name,
+					   gchar           *extensions,
+					   gchar           *prefixes);
+gboolean gimp_register_save_handler       (gchar           *procedure_name,
+					   gchar           *extensions,
+					   gchar           *prefixes);
 
 
 #ifdef __cplusplus

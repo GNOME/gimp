@@ -2487,7 +2487,7 @@ static ProcRecord image_thumbnail_proc =
 {
   "gimp_image_thumbnail",
   "Get a thumbnail of an image.",
-  "This function gets data from which a thumbnail of an image preview can be created. Maximum x or y dimension is 128 pixels. The pixles are returned in the RGB[A] format. The bpp return value gives the number of bytes in the image. The alpha channel also returned if the image has one.",
+  "This function gets data from which a thumbnail of an image preview can be created. Maximum x or y dimension is 128 pixels. The pixels are returned in the RGB[A] format. The bpp return value gives the number of bits per pixel in the image. If the image has an alpha channel, it is also returned.",
   "Andy Thomas",
   "Andy Thomas",
   "1999",
@@ -2759,7 +2759,7 @@ static ProcArg image_get_active_layer_outargs[] =
 static ProcRecord image_get_active_layer_proc =
 {
   "gimp_image_get_active_layer",
-  "Returns if the specified image's active layer.",
+  "Returns the specified image's active layer.",
   "If there is an active layer, its ID will be returned, otherwise, -1. If a channel is currently active, then no layer will be. If a layer mask is active, then this will return the associated layer.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
@@ -2810,7 +2810,7 @@ static ProcArg image_set_active_layer_inargs[] =
 static ProcRecord image_set_active_layer_proc =
 {
   "gimp_image_set_active_layer",
-  "Sets if the specified image's active layer.",
+  "Sets the specified image's active layer.",
   "If the layer exists, it is set as the active layer in the image. Any previous active layer or channel is set to inactive. An exception is a previously existing floating selection, in which case this procedure will return an execution error.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
@@ -2867,7 +2867,7 @@ static ProcArg image_get_active_channel_outargs[] =
 static ProcRecord image_get_active_channel_proc =
 {
   "gimp_image_get_active_channel",
-  "Returns if the specified image's active channel.",
+  "Returns the specified image's active channel.",
   "If there is an active channel, this will return the channel ID, otherwise, -1.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
@@ -2918,7 +2918,7 @@ static ProcArg image_set_active_channel_inargs[] =
 static ProcRecord image_set_active_channel_proc =
 {
   "gimp_image_set_active_channel",
-  "Sets if the specified image's active channel.",
+  "Sets the specified image's active channel.",
   "If the channel exists, it is set as the active channel in the image. Any previous active channel or channel is set to inactive. An exception is a previously existing floating selection, in which case this procedure will return an execution error.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
@@ -2975,8 +2975,8 @@ static ProcArg image_get_selection_outargs[] =
 static ProcRecord image_get_selection_proc =
 {
   "gimp_image_get_selection",
-  "Returns if the specified image's selection.",
-  "This will always return a valid ID for a selection--which is represented as a channel internally.",
+  "Returns the specified image's selection.",
+  "This will always return a valid ID for a selection -- which is represented as a channel internally.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3049,7 +3049,7 @@ static ProcRecord image_get_component_active_proc =
 {
   "gimp_image_get_component_active",
   "Returns if the specified image's image component is active.",
-  "This procedure returns if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is active or inactive--whether or not it can be modified. If the specified component is not valid for the image type, an error is returned.",
+  "This procedure returns if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is active or inactive -- whether or not it can be modified. If the specified component is not valid for the image type, an error is returned.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3118,7 +3118,7 @@ static ProcRecord image_set_component_active_proc =
 {
   "gimp_image_set_component_active",
   "Sets if the specified image's image component is active.",
-  "This procedure sets if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is active or inactive--whether or not it can be modified. If the specified component is not valid for the image type, an error is returned.",
+  "This procedure sets if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is active or inactive -- whether or not it can be modified. If the specified component is not valid for the image type, an error is returned.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3191,7 +3191,7 @@ static ProcRecord image_get_component_visible_proc =
 {
   "gimp_image_get_component_visible",
   "Returns if the specified image's image component is visible.",
-  "This procedure returns if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is visible or invisible--whether or not it can be seen. If the specified component is not valid for the image type, an error is returned.",
+  "This procedure returns if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is visible or invisible -- whether or not it can be seen. If the specified component is not valid for the image type, an error is returned.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3260,7 +3260,7 @@ static ProcRecord image_set_component_visible_proc =
 {
   "gimp_image_set_component_visible",
   "Sets if the specified image's image component is visible.",
-  "This procedure sets if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is visible or invisible--whether or not it can be seen. If the specified component is not valid for the image type, an error is returned.",
+  "This procedure sets if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is visible or invisible -- whether or not it can be seen. If the specified component is not valid for the image type, an error is returned.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3312,8 +3312,8 @@ static ProcArg image_get_filename_outargs[] =
 static ProcRecord image_get_filename_proc =
 {
   "gimp_image_get_filename",
-  "Returns if the specified image's filename.",
-  "This procedure returns if the specified image's filename--if it was loaded or has since been saved. Otherwise, returns NULL.",
+  "Returns the specified image's filename.",
+  "This procedure returns the specified image's filename -- if it was loaded or has since been saved. Otherwise, returns NULL.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3363,8 +3363,8 @@ static ProcArg image_set_filename_inargs[] =
 static ProcRecord image_set_filename_proc =
 {
   "gimp_image_set_filename",
-  "Sets if the specified image's filename.",
-  "This procedure sets if the specified image's filename.",
+  "Sets the specified image's filename.",
+  "This procedure sets the specified image's filename.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3424,8 +3424,8 @@ static ProcArg image_get_resolution_outargs[] =
 static ProcRecord image_get_resolution_proc =
 {
   "gimp_image_get_resolution",
-  "Returns if the specified image's resolution.",
-  "This procedure returns if the specified image's resolution in dots per inch. This value is independent of any of the layers in this image.",
+  "Returns the specified image's resolution.",
+  "This procedure returns the specified image's resolution in dots per inch. This value is independent of any of the layers in this image.",
   "Austin Donnelly",
   "Austin Donnelly",
   "1998",
@@ -3496,8 +3496,8 @@ static ProcArg image_set_resolution_inargs[] =
 static ProcRecord image_set_resolution_proc =
 {
   "gimp_image_set_resolution",
-  "Sets if the specified image's resolution.",
-  "This procedure sets if the specified image's resolution in dots per inch. This value is independent of any of the layers in this image. No scaling or resizing is performed.",
+  "Sets the specified image's resolution.",
+  "This procedure sets the specified image's resolution in dots per inch. This value is independent of any of the layers in this image. No scaling or resizing is performed.",
   "Austin Donnelly",
   "Austin Donnelly",
   "1998",
@@ -3549,8 +3549,8 @@ static ProcArg image_get_unit_outargs[] =
 static ProcRecord image_get_unit_proc =
 {
   "gimp_image_get_unit",
-  "Returns if the specified image's unit.",
-  "This procedure returns if the specified image's unit. This value is independent of any of the layers in this image. See the gimp_unit_* procedure definitions for the valid range of unit IDs and a description of the unit system.",
+  "Returns the specified image's unit.",
+  "This procedure returns the specified image's unit. This value is independent of any of the layers in this image. See the gimp_unit_* procedure definitions for the valid range of unit IDs and a description of the unit system.",
   "Michael Natterer",
   "Michael Natterer",
   "1998",
@@ -3600,8 +3600,8 @@ static ProcArg image_set_unit_inargs[] =
 static ProcRecord image_set_unit_proc =
 {
   "gimp_image_set_unit",
-  "Sets if the specified image's unit.",
-  "This procedure sets if the specified image's unit. No scaling or resizing is performed. This value is independent of any of the layers in this image. See the gimp_unit_* procedure definitions for the valid range of unit IDs and a description of the unit system.",
+  "Sets the specified image's unit.",
+  "This procedure sets the specified image's unit. No scaling or resizing is performed. This value is independent of any of the layers in this image. See the gimp_unit_* procedure definitions for the valid range of unit IDs and a description of the unit system.",
   "Michael Natterer",
   "Michael Natterer",
   "1998",

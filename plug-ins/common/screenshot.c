@@ -255,12 +255,7 @@ shoot (void)
   gint     i = 0;
 
   /* get a temp name with the right extension and save into it. */
-  params = gimp_run_procedure ("gimp_temp_name",
-			       &retvals,
-			       GIMP_PDB_STRING, "xwd",
-			       GIMP_PDB_END);
-  tmpname = g_strdup (params[1].data.d_string);
-  gimp_destroy_params (params, retvals);
+  tmpname = gimp_temp_name ("xwd");
 
   /* construct the xwd arguments */
   xwdargv[i++] = XWD;

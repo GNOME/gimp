@@ -142,13 +142,12 @@ load_image (gchar             *filename,
 	    GimpRunModeType    run_mode,
 	    GimpPDBStatusType *status)
 {
-  GimpParam *params;
-  gint       retvals;
-  gchar     *ext = strrchr (filename, '.');
-  gchar     *tmpname;
-  gint       pid;
-  gint       process_status;
-  gint       p[2];
+  gint32  image_ID;
+  gchar  *ext = strrchr (filename, '.');
+  gchar  *tmpname;
+  gint    pid;
+  gint    process_status;
+  gint    p[2];
 
   if (!ext || ext[1] == 0 || strchr(ext, '/'))
     {
@@ -157,13 +156,7 @@ load_image (gchar             *filename,
       return -1;
     }
 
-  params = gimp_run_procedure ("gimp_temp_name",
-			       &retvals,
-			       GIMP_PDB_STRING, ext + 1,
-			       GIMP_PDB_END);
-
-  tmpname = g_strdup (params[1].data.d_string);
-  gimp_destroy_params (params, retvals);
+  tmpname = gimp_temp_name (ext + 1);
 
 #ifndef __EMX__
   if (pipe (p) != 0)
@@ -425,25 +418,18 @@ load_image (gchar             *filename,
   }
 #endif
 
-  params = gimp_run_procedure ("gimp_file_load",
-			       &retvals,
-			       GIMP_PDB_INT32, 0,
-			       GIMP_PDB_STRING, tmpname,
-			       GIMP_PDB_STRING, tmpname,
-			       GIMP_PDB_END);
+  image_ID = gimp_file_load (GIMP_RUN_INTERACTIVE, tmpname, tmpname);
 
   unlink (tmpname);
   g_free (tmpname);
 
-  *status = params[0].data.d_status;
-
-  if (params[0].data.d_status != GIMP_PDB_SUCCESS)
+  if (image_ID != -1)
     {
-      return -1;
+      *status = GIMP_PDB_SUCCESS;
+      gimp_image_set_filename (image_ID, filename);
     }
   else
-    {
-      gimp_image_set_filename (params[1].data.d_int32, filename);
-      return params[1].data.d_int32;
-    }
+    *status = GIMP_PDB_EXECUTION_ERROR;
+
+  return image_ID;
 }

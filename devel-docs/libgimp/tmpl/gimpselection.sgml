@@ -14,21 +14,6 @@ gimpselection
 
 </para>
 
-<!-- ##### FUNCTION gimp_selection_float ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@drawable_ID: 
-@offx: 
-@offy: 
-@Returns: 
-<!-- # Unused Parameters # -->
-@x_offset: 
-@y_offset: 
-
-
 <!-- ##### FUNCTION gimp_selection_bounds ##### -->
 <para>
 
@@ -45,7 +30,7 @@ gimpselection
 @none_empty: 
 
 
-<!-- ##### FUNCTION gimp_selection_is_empty ##### -->
+<!-- ##### FUNCTION gimp_selection_all ##### -->
 <para>
 
 </para>
@@ -60,6 +45,146 @@ gimpselection
 </para>
 
 @image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_selection_clear ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_selection_is_empty ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_selection_float ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@drawable_ID: 
+@offx: 
+@offy: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@x_offset: 
+@y_offset: 
+
+
+<!-- ##### FUNCTION gimp_selection_load ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_selection_save ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_selection_value ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@x: 
+@y: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_selection_grow ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@steps: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_selection_shrink ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@radius: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_selection_invert ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_selection_feather ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@radius: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_selection_sharpen ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_selection_border ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@radius: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_selection_translate ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@offx: 
+@offy: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_selection_layer_alpha ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
 @Returns: 
 
 

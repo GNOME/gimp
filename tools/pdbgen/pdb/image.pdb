@@ -114,9 +114,13 @@ HELP
 sub image_get_prop_proc {
     my ($prop, $type, $desc, $func) = @_;
 
-    $blurb = "Returns if the specified image's $desc.";
-
-    $help = "This procedure returns if the specified image's $desc. ";
+    if ($desc =~ /\bis\b/) {
+	$blurb = "Returns if the specified image's $desc.";
+	$help = "This procedure returns if the specified image's $desc. ";
+    } else {
+	$blurb = "Returns the specified image's $desc.";
+	$help = "This procedure returns the specified image's $desc. ";
+    }
 
     &std_pdb_misc;
 
@@ -148,9 +152,13 @@ sub image_get_prop_proc {
 sub image_set_prop_proc {
     my ($prop, $type, $desc, $func) = @_;
 
-    $blurb = "Sets if the specified image's $desc.";
-
-    $help = "This procedure sets if the specified image's $desc. ";
+    if ($desc =~ /\bis\b/) {
+	$blurb = "Sets if the specified image's $desc.";
+	$help = "This procedure sets if the specified image's $desc. ";
+    } else {
+	$blurb = "Sets the specified image's $desc.";
+	$help = "This procedure sets the specified image's $desc. ";
+    }
 
     &std_pdb_misc;
 
@@ -1093,7 +1101,7 @@ CODE2
     $outargs[0]->{init} = 1;
 
     $help = <<'HELP';
-This will always return a valid ID for a selection--which is represented as a
+This will always return a valid ID for a selection -- which is represented as a
 channel internally.
 HELP
 CODE
@@ -1121,7 +1129,7 @@ my $comp_help = <<'CODE';
 			       in an RGB image)/;
 	$help =~ s/\. $/ /;
 	$help .= <<HELP;
-or in%%type%%--whether or not it can be %%action%%. If the specified component
+or in%%type%% -- whether or not it can be %%action%%. If the specified component
 is not valid for the image type, an error is returned.
 HELP
 CODE
@@ -1165,7 +1173,7 @@ CODE2
 		 [ <<'CODE', undef ]);
     $help =~ s/\. $//;
     $help .= <<'HELP';
---if it was loaded or has since been saved. Otherwise, returns NULL.
+ -- if it was loaded or has since been saved. Otherwise, returns NULL.
 HELP
 
     $outargs[0]->{alias} =~ s/get_//;
@@ -1299,9 +1307,9 @@ sub image_thumbnail {
 
     $help = <<'HELP';
 This function gets data from which a thumbnail of an image preview can be 
-created. Maximum x or y dimension is 128 pixels. The pixles are returned in the
-RGB[A] format. The bpp return value gives the number of bytes in the image. The
-alpha channel also returned if the image has one.
+created. Maximum x or y dimension is 128 pixels. The pixels are returned in the
+RGB[A] format. The bpp return value gives the number of bits per pixel in the 
+image. If the image has an alpha channel, it is also returned.
 HELP
 
     $author = $copyright = 'Andy Thomas';

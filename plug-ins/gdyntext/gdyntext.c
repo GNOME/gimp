@@ -335,7 +335,7 @@ void
 gdt_render_text_p (GdtVals  *data, 
 		   gboolean  show_progress)
 {
-  gint layer_ox, layer_oy, i, nret_vals, xoffs;
+  gint layer_ox, layer_oy, i, xoffs;
   gint32 layer_f, selection_empty, selection_channel = -1;
   gint32 text_width, text_height = 0;
   gint32 text_ascent, text_descent;
@@ -346,7 +346,6 @@ gdt_render_text_p (GdtVals  *data,
   gint32 font_size_type;
   gchar **text_xlfd, **text_lines;
   gint32 *text_lines_w;
-  GimpParam      *ret_vals;
   GimpParamColor  old_color, text_color;
   
   if (show_progress)
@@ -360,11 +359,7 @@ gdt_render_text_p (GdtVals  *data,
   if (!selection_empty) 
     {
       /* there is an active selection to save */
-      ret_vals = gimp_run_procedure ("gimp_selection_save", &nret_vals,
-				     GIMP_PDB_IMAGE, data->image_id, GIMP_PDB_END);
-      selection_channel = ret_vals[1].data.d_int32;
-      gimp_destroy_params (ret_vals, nret_vals);
-      
+      selection_channel = gimp_selection_save (data->image_id);
       gimp_selection_none (data->image_id);
     }
 
@@ -578,10 +573,7 @@ gdt_render_text_p (GdtVals  *data,
   /* restore old selection if any */
   if (selection_empty == FALSE) 
     {
-      ret_vals = gimp_run_procedure ("gimp_selection_load", &nret_vals,
-				     GIMP_PDB_IMAGE, data->image_id,
-				     GIMP_PDB_CHANNEL, selection_channel, GIMP_PDB_END);
-      gimp_destroy_params (ret_vals, nret_vals);
+      gimp_selection_load (selection_channel);
       gimp_image_remove_channel (data->image_id, selection_channel);
     }
 

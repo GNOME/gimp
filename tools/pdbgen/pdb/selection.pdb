@@ -364,7 +364,7 @@ HELP
 	    selection_invert selection_sharpen selection_all selection_none
 	    selection_feather selection_border selection_grow selection_shrink
 	    selection_layer_alpha selection_load selection_save);
-%exports = (app => [@procs], lib => [@procs[0,2,4,9]]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image mask';
 

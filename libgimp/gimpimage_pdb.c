@@ -1384,10 +1384,10 @@ gimp_image_floating_sel_attached_to (gint32 image_ID)
  * Get a thumbnail of an image.
  *
  * This function gets data from which a thumbnail of an image preview
- * can be created. Maximum x or y dimension is 128 pixels. The pixles
+ * can be created. Maximum x or y dimension is 128 pixels. The pixels
  * are returned in the RGB[A] format. The bpp return value gives the
- * number of bytes in the image. The alpha channel also returned if the
- * image has one.
+ * number of bits per pixel in the image. If the image has an alpha
+ * channel, it is also returned.
  *
  * Returns: TRUE on success.
  */
@@ -1577,7 +1577,7 @@ gimp_image_height (gint32 image_ID)
  * gimp_image_get_active_layer:
  * @image_ID: The image.
  *
- * Returns if the specified image's active layer.
+ * Returns the specified image's active layer.
  *
  * If there is an active layer, its ID will be returned, otherwise, -1.
  * If a channel is currently active, then no layer will be. If a layer
@@ -1610,7 +1610,7 @@ gimp_image_get_active_layer (gint32 image_ID)
  * @image_ID: The image.
  * @active_layer_ID: The new image active layer.
  *
- * Sets if the specified image's active layer.
+ * Sets the specified image's active layer.
  *
  * If the layer exists, it is set as the active layer in the image. Any
  * previous active layer or channel is set to inactive. An exception is
@@ -1644,7 +1644,7 @@ gimp_image_set_active_layer (gint32 image_ID,
  * gimp_image_get_active_channel:
  * @image_ID: The image.
  *
- * Returns if the specified image's active channel.
+ * Returns the specified image's active channel.
  *
  * If there is an active channel, this will return the channel ID,
  * otherwise, -1.
@@ -1676,7 +1676,7 @@ gimp_image_get_active_channel (gint32 image_ID)
  * @image_ID: The image.
  * @active_channel_ID: The new image active channel.
  *
- * Sets if the specified image's active channel.
+ * Sets the specified image's active channel.
  *
  * If the channel exists, it is set as the active channel in the image.
  * Any previous active channel or channel is set to inactive. An
@@ -1710,9 +1710,9 @@ gimp_image_set_active_channel (gint32 image_ID,
  * gimp_image_get_selection:
  * @image_ID: The image.
  *
- * Returns if the specified image's selection.
+ * Returns the specified image's selection.
  *
- * This will always return a valid ID for a selection--which is
+ * This will always return a valid ID for a selection -- which is
  * represented as a channel internally.
  *
  * Returns: The selection channel.
@@ -1746,7 +1746,7 @@ gimp_image_get_selection (gint32 image_ID)
  *
  * This procedure returns if the specified image's image component
  * (i.e. Red, Green, Blue intensity channels in an RGB image) is active
- * or inactive--whether or not it can be modified. If the specified
+ * or inactive -- whether or not it can be modified. If the specified
  * component is not valid for the image type, an error is returned.
  *
  * Returns: Component is active.
@@ -1783,7 +1783,7 @@ gimp_image_get_component_active (gint32          image_ID,
  *
  * This procedure sets if the specified image's image component (i.e.
  * Red, Green, Blue intensity channels in an RGB image) is active or
- * inactive--whether or not it can be modified. If the specified
+ * inactive -- whether or not it can be modified. If the specified
  * component is not valid for the image type, an error is returned.
  *
  * Returns: TRUE on success.
@@ -1820,7 +1820,7 @@ gimp_image_set_component_active (gint32          image_ID,
  *
  * This procedure returns if the specified image's image component
  * (i.e. Red, Green, Blue intensity channels in an RGB image) is
- * visible or invisible--whether or not it can be seen. If the
+ * visible or invisible -- whether or not it can be seen. If the
  * specified component is not valid for the image type, an error is
  * returned.
  *
@@ -1858,8 +1858,8 @@ gimp_image_get_component_visible (gint32          image_ID,
  *
  * This procedure sets if the specified image's image component (i.e.
  * Red, Green, Blue intensity channels in an RGB image) is visible or
- * invisible--whether or not it can be seen. If the specified component
- * is not valid for the image type, an error is returned.
+ * invisible -- whether or not it can be seen. If the specified
+ * component is not valid for the image type, an error is returned.
  *
  * Returns: TRUE on success.
  */
@@ -1890,9 +1890,9 @@ gimp_image_set_component_visible (gint32          image_ID,
  * gimp_image_get_filename:
  * @image_ID: The image.
  *
- * Returns if the specified image's filename.
+ * Returns the specified image's filename.
  *
- * This procedure returns if the specified image's filename--if it was
+ * This procedure returns the specified image's filename -- if it was
  * loaded or has since been saved. Otherwise, returns NULL.
  *
  * Returns: The filename.
@@ -1922,9 +1922,9 @@ gimp_image_get_filename (gint32 image_ID)
  * @image_ID: The image.
  * @filename: The new image filename.
  *
- * Sets if the specified image's filename.
+ * Sets the specified image's filename.
  *
- * This procedure sets if the specified image's filename.
+ * This procedure sets the specified image's filename.
  *
  * Returns: TRUE on success.
  */
@@ -1955,11 +1955,10 @@ gimp_image_set_filename (gint32  image_ID,
  * @xresolution: The resolutionin the x-axis, in dots per inch.
  * @yresolution: The resolutionin the y-axis, in dots per inch.
  *
- * Returns if the specified image's resolution.
+ * Returns the specified image's resolution.
  *
- * This procedure returns if the specified image's resolution in dots
- * per inch. This value is independent of any of the layers in this
- * image.
+ * This procedure returns the specified image's resolution in dots per
+ * inch. This value is independent of any of the layers in this image.
  *
  * Returns: TRUE on success.
  */
@@ -1999,9 +1998,9 @@ gimp_image_get_resolution (gint32   image_ID,
  * @xresolution: The new image resolution in the x-axis, in dots per inch.
  * @yresolution: The new image resolution in the y-axis, in dots per inch.
  *
- * Sets if the specified image's resolution.
+ * Sets the specified image's resolution.
  *
- * This procedure sets if the specified image's resolution in dots per
+ * This procedure sets the specified image's resolution in dots per
  * inch. This value is independent of any of the layers in this image.
  * No scaling or resizing is performed.
  *
@@ -2034,9 +2033,9 @@ gimp_image_set_resolution (gint32  image_ID,
  * gimp_image_get_unit:
  * @image_ID: The image.
  *
- * Returns if the specified image's unit.
+ * Returns the specified image's unit.
  *
- * This procedure returns if the specified image's unit. This value is
+ * This procedure returns the specified image's unit. This value is
  * independent of any of the layers in this image. See the gimp_unit_*
  * procedure definitions for the valid range of unit IDs and a
  * description of the unit system.
@@ -2068,9 +2067,9 @@ gimp_image_get_unit (gint32 image_ID)
  * @image_ID: The image.
  * @unit: The new image unit.
  *
- * Sets if the specified image's unit.
+ * Sets the specified image's unit.
  *
- * This procedure sets if the specified image's unit. No scaling or
+ * This procedure sets the specified image's unit. No scaling or
  * resizing is performed. This value is independent of any of the
  * layers in this image. See the gimp_unit_* procedure definitions for
  * the valid range of unit IDs and a description of the unit system.

@@ -1,5 +1,29 @@
 2000-08-25  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/selection.pdb: added a few more PDB wrappers
+
+	* tools/pdbgen/pdb/image.pdb: tweaked the help and blurb strings
+	
+	* app/image_cmds.c
+	* libgimp/gimpfileops_pdb.[ch]
+	* libgimp/gimpimage_pdb.c
+	* libgimp/gimpselection_pdb.[ch]: regenerated
+
+	* plug-ins/common/bz2.c
+	* plug-ins/common/gz.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/url.c
+	* plug-ins/gdyntext/gdyntext.c
+	* plug-ins/gfig/gfig.c: use new PDB wrappers.
+	For GDynText this change fixes a bug since it used to use the
+	wrong number of arguments for gimp_selection_load().
+
+	* plug-ins/flame/rect.[ch]: removed compiler warning
+
+2000-08-25  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpchannel.c
 	* libgimp/gimpimage.c
 	* libgimp/gimplayer.c

@@ -641,6 +641,9 @@ gimp_edit_stroke
 
 <SECTION>
 <FILE>gimpfileops</FILE>
+gimp_temp_name
+gimp_file_load
+gimp_file_save
 gimp_register_magic_load_handler
 gimp_register_load_handler
 gimp_register_save_handler
@@ -887,10 +890,23 @@ gimp_procedural_db_get_data_size
 
 <SECTION>
 <FILE>gimpselection</FILE>
-gimp_selection_float
 gimp_selection_bounds
-gimp_selection_is_empty
+gimp_selection_all
 gimp_selection_none
+gimp_selection_clear
+gimp_selection_is_empty
+gimp_selection_float
+gimp_selection_load
+gimp_selection_save
+gimp_selection_value
+gimp_selection_grow
+gimp_selection_shrink
+gimp_selection_invert
+gimp_selection_feather
+gimp_selection_sharpen
+gimp_selection_border
+gimp_selection_translate
+gimp_selection_layer_alpha
 </SECTION>
 
 <SECTION>
