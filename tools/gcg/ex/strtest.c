@@ -1,4 +1,4 @@
-#include <ex/file_ostream_i.h>
+#include <ex/file_ostream.i.h>
 
 void putstring_handler(Ostream* o, gchar* msg, gpointer data){
 	gchar* s = data;
