@@ -26338,7 +26338,7 @@
 	* themes/Default/images/stock-eye-12.png: sharp icons
 
 2003-03-21  Manish Singh  <yosh@gimp.org>
-                                                                                
+
 	* plug-ins/common/ps.c: always quote the filename, since system/popen
 	uses the shell. Also, never quote the filename if we are reading from
 	a parameter file (only in the win32 case). Fixes #108648.
@@ -26346,7 +26346,7 @@
 	* plug-ins/dbbrowser/dbbrowser_utils.c: double click on a list item
 	files Apply, if applicable. Remove the existing model in the treeview
 	(which will deallocate it) instead of clearing it.
-                                                                                
+
 2003-03-22  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/stock-channel-16.png
@@ -29666,7 +29666,7 @@
         This byte --> <-- is the millionth in this file!
 
 2003-02-05  Manish Singh  <yosh@gimp.org>
-                                                                                
+
 	* plug-ins/common/jpeg.c (run): if the quality level is close to zero
 	in non-interactive mode, use default settings. This is hack until
 	the PDB gets default arguments, so gimp-file-save works sanely with
@@ -30295,7 +30295,7 @@
 	inspired by GimpDrawTool.  Not actually used by anything yet.
 
 2003-01-29  Manish Singh  <yosh@gimp.org>
-                                                                                
+
 	* plug-ins/common/jpeg.c (load_image): don't divide by zero if
 	we get all zero resolution info when we load the jpeg.
 
