@@ -1,3 +1,7 @@
+2004-05-05  Jakub Steiner <jimmac@ximian.com>
+
+	* data/images/gimp_splash.png: ustable splash
+
 2004-05-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/menus.c: register a <Dock> UI manager which has all
