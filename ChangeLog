@@ -1,5 +1,12 @@
 2004-07-12  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/scripts/round-corners.scm: applied patch from
+	Dave Neary that changes the behavior from undo disable/enable to
+	using an undo group if the script doesn't work on a copy of the
+	image. Fixes bug #146344.
+
+2004-07-12  Michael Natterer  <mitch@gimp.org>
+
 	* menus/toolbox-menu.xml.in: applied patch from Brion Vibber
 	which adds <Toolbox>/Acquire/Paste as new. Fixes bug #147358.
 
