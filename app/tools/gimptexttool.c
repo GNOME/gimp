@@ -366,7 +366,8 @@ gimp_text_tool_connect (GimpTextTool *tool,
                                                 tool);
         }
 
-      gimp_config_disconnect (G_OBJECT (options->text), G_OBJECT (tool->text));
+      gimp_config_disconnect (G_OBJECT (options->text),
+                              G_OBJECT (tool->text));
 
       g_object_unref (tool->text);
       tool->text = NULL;
@@ -384,7 +385,9 @@ gimp_text_tool_connect (GimpTextTool *tool,
       gimp_config_sync (GIMP_CONFIG (tool->text),
                         GIMP_CONFIG (options->text), 0);
 
-      gimp_config_connect (G_OBJECT (options->text), G_OBJECT (tool->text));
+      gimp_config_connect (G_OBJECT (options->text),
+                           G_OBJECT (tool->text),
+                           NULL);
 
       tool->offset_x = off_x;
       tool->offset_y = off_y;

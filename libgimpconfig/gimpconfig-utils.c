@@ -52,7 +52,10 @@ gimp_config_connect_notify (GObject    *src,
       g_value_init (&value, param_spec->value_type);
 
       g_object_get_property (src,  param_spec->name, &value);
+
+      g_signal_handlers_block_by_func (dest, gimp_config_connect_notify, src);
       g_object_set_property (dest, param_spec->name, &value);
+      g_signal_handlers_unblock_by_func (dest, gimp_config_connect_notify, src);
 
       g_value_unset (&value);
     }
@@ -61,43 +64,70 @@ gimp_config_connect_notify (GObject    *src,
 
 /**
  * gimp_config_connect:
- * @src: a #GObject
- * @dest: another #GObject of the same type as @src
+ * @a: a #GObject
+ * @b: another #GObject
+ * @property_name: the name of a property to connect or %NULL for all
  *
- * Connects @dest with @src so that all property changes of @src are
- * applied to @dest using a "notify" handler.
+ * Connects the two object @a and @b in a way that property changes of
+ * one are propagated to the other. This is a two-way connection.
+ *
+ * If @property_name is %NULL the connection is setup for all
+ * properties.  It is then required that @a and @b are of the same
+ * type.  If a name is given, only this property is connected. In this
+ * case, the two objects don't need to be of the same type but they
+ * should both have a property of the same type that has the given
+ * @property_name.
  **/
 void
-gimp_config_connect (GObject *src,
-                     GObject *dest)
+gimp_config_connect (GObject     *a,
+                     GObject     *b,
+                     const gchar *property_name)
 {
-  g_return_if_fail (G_IS_OBJECT (src));
-  g_return_if_fail (G_IS_OBJECT (dest));
-  g_return_if_fail (G_TYPE_FROM_INSTANCE (src) == G_TYPE_FROM_INSTANCE (dest));
+  gchar *signal_name;
 
-  g_signal_connect_object (src, "notify",
+  g_return_if_fail (a != b);
+  g_return_if_fail (G_IS_OBJECT (a));
+  g_return_if_fail (G_IS_OBJECT (b));
+  g_return_if_fail (property_name != NULL ||
+                    G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b));
+
+  if (property_name)
+    signal_name = g_strconcat ("notify::", property_name, NULL);
+  else
+    signal_name = "notify";
+
+  g_signal_connect_object (a, signal_name,
                            G_CALLBACK (gimp_config_connect_notify),
-                           dest, 0);
+                           b, 0);
+  g_signal_connect_object (b, signal_name,
+                           G_CALLBACK (gimp_config_connect_notify),
+                           a, 0);
+
+  if (property_name)
+    g_free (signal_name);
 }
 
 /**
  * gimp_config_disconnect:
- * @src: a #GObject
- * @dest: another #GObject of the same type as @src
+ * @a: a #GObject
+ * @a: another #GObject
  *
  * Removes a connection between @dest and @src that was previously set
  * up using gimp_config_connect().
  **/
 void
-gimp_config_disconnect (GObject *src,
-                        GObject *dest)
+gimp_config_disconnect (GObject *a,
+                        GObject *b)
 {
-  g_return_if_fail (G_IS_OBJECT (src));
-  g_return_if_fail (G_IS_OBJECT (dest));
+  g_return_if_fail (G_IS_OBJECT (a));
+  g_return_if_fail (G_IS_OBJECT (b));
 
-  g_signal_handlers_disconnect_by_func (src,
+  g_signal_handlers_disconnect_by_func (b,
                                         G_CALLBACK (gimp_config_connect_notify),
-                                        dest);
+                                        a);
+  g_signal_handlers_disconnect_by_func (a,
+                                        G_CALLBACK (gimp_config_connect_notify),
+                                        b);
 }
 
 

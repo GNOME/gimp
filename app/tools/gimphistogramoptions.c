@@ -23,6 +23,7 @@
 #include "tools-types.h"
 
 #include "config/gimpconfig-params.h"
+#include "config/gimpconfig-utils.h"
 
 #include "widgets/gimphistogramview.h"
 #include "widgets/gimppropwidgets.h"
@@ -50,10 +51,6 @@ static void   gimp_histogram_options_get_property (GObject      *object,
                                                    guint         property_id,
                                                    GValue       *value,
                                                    GParamSpec   *pspec);
-
-static void   gimp_histogram_options_scale_notify (GObject      *src,
-                                                   GParamSpec   *pspec,
-                                                   GObject      *dest);
 
 
 static GimpColorOptionsClass *parent_class = NULL;
@@ -100,7 +97,7 @@ gimp_histogram_options_class_init (GimpHistogramOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SCALE,
                                  "histogram-scale", NULL,
                                  GIMP_TYPE_HISTOGRAM_SCALE,
-                                 GIMP_HISTOGRAM_SCALE_LOGARITHMIC,
+                                 GIMP_HISTOGRAM_SCALE_LINEAR,
                                  0);
 }
 
@@ -165,35 +162,7 @@ gimp_histogram_options_connect_view (GimpHistogramOptions *options,
   g_return_if_fail (GIMP_IS_HISTOGRAM_OPTIONS (options));
   g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
 
-  g_signal_connect_object (options, "notify::histogram-scale",
-                           G_CALLBACK (gimp_histogram_options_scale_notify),
-                           view, 0);
-  g_signal_connect_object (view, "notify::histogram-scale",
-                           G_CALLBACK (gimp_histogram_options_scale_notify),
-                           options, 0);
+  gimp_config_connect (G_OBJECT (options), G_OBJECT (view), "histogram-scale");
 
   g_object_notify (G_OBJECT (options), "histogram-scale");
-}
-
-static void
-gimp_histogram_options_scale_notify (GObject    *src,
-                                     GParamSpec *pspec,
-                                     GObject    *dest)
-{
-  GValue  value = { 0, };
-
-  g_return_if_fail (g_type_is_a (pspec->value_type,
-                                 GIMP_TYPE_HISTOGRAM_SCALE));
-
-  g_value_init (&value, pspec->value_type);
-
-  g_object_get_property (src, pspec->name, &value);
-
-  g_signal_handlers_block_by_func (dest,
-                                   gimp_histogram_options_scale_notify, src);
-  g_object_set_property (dest, pspec->name, &value);
-  g_signal_handlers_unblock_by_func (dest,
-                                     gimp_histogram_options_scale_notify, src);
-
-  g_value_unset (&value);
 }

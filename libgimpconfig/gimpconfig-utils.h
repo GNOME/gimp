@@ -23,10 +23,11 @@
 #define __GIMP_CONFIG_UTILS_H__
 
 
-void       gimp_config_connect               (GObject      *src,
-                                              GObject      *dest);
-void       gimp_config_disconnect            (GObject      *src,
-                                              GObject      *dest);
+void       gimp_config_connect               (GObject      *a,
+                                              GObject      *b,
+                                              const gchar  *property_name);
+void       gimp_config_disconnect            (GObject      *a,
+                                              GObject      *b);
 
 GList    * gimp_config_diff                  (GimpConfig   *a,
                                               GimpConfig   *b,

@@ -1,3 +1,14 @@
+2003-10-25  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-utils.[ch] (gimp_config_connect): make it
+	a two-way connection and added a property_name parameter so it
+	can be used to connect only a certain property.
+
+	* app/tools/gimptexttool.c: changed accordingly.
+
+	* app/tools/gimphistogramoptions.c: use gimp_config_connect().
+	Changed the default histogram scale to linear.
+	
 2003-10-25  DindinX <david@dindinx.net>
 
 	* plug-ins/gimpressionist/Makefile.am: added a real dependency for
