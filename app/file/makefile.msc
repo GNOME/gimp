@@ -19,9 +19,17 @@ INCLUDES = \
 DEFINES = \
 	-DG_LOG_DOMAIN=\"Gimp-File\"
 
+PKG_LINK = \
+	$(GLIB_LIBS) $(INTL_LIBS) \
+	..\base\appbase-$(PKG_VER).lib \
+	..\core\appcore-$(PKG_VER).lib \
+
 all : \
 	$(PRJ_TOP)\config.h \
-	$(PACKAGE).lib
+	$(PACKAGE).lib \
+!IFDEF DLLGIMP
+	$(PACKAGE)-$(PKG_VER).dll
+!ENDIF
 
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32

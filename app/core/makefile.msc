@@ -6,16 +6,26 @@ PKG_VER = 1.3
 !INCLUDE $(TOP)\glib\build\win32\make.msc
 
 PKG_LINK = \
-	$(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS) \
-	$(LIBART_LIBS) \
-	..\base\appbase-$(PKG_VER).lib \
-	..\paint-funcs\apppaint-funcs-$(PKG_VER).lib \
-#	..\vectors\appvectors-$(PKG_VER).lib \
-	..\xcf\xcf.lib \
+	$(GLIB_LIBS) $(GTK2)\gdk-pixbuf\gdk_pixbuf-$(GTK2_VER).lib $(INTL_LIBS) \
+	$(LIBART_LIBS) $(PANGOFT2_LIBS) \
+	\
+	..\..\regexrepl\regexrepl.lib \
+	\
 	..\..\libgimpbase\gimpbase-$(PKG_VER).lib \
 	..\..\libgimpcolor\gimpcolor-$(PKG_VER).lib \
 	..\..\libgimpmath\gimpmath-$(PKG_VER).lib \
-	..\..\libgimpwidgets\gimpwidgets-$(PKG_VER).lib
+	..\..\libgimpmodule\gimpmodule-$(PKG_VER).lib \
+	..\..\libgimpwidgets\gimpwidgets-$(PKG_VER).lib \
+	\
+	..\config\appconfig-$(PKG_VER).lib \
+	..\base\appbase-$(PKG_VER).lib \
+	..\paint-funcs\apppaint-funcs-$(PKG_VER).lib \
+	..\vectors\appvectors.lib \
+	..\paint\apppaint.lib \
+	..\pdb\apppdb.lib \
+	..\plug-in\appplug-in.lib \
+	..\file\appfile.lib \
+	..\xcf\xcf.lib \
 
 OBJECTS = \
 #	..\undo.obj \

@@ -31,6 +31,10 @@
 
 #include <gtk/gtk.h>
 
+#ifdef G_OS_WIN32
+#include <direct.h> /* _mkdir() */
+#endif
+
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"

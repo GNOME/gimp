@@ -20,15 +20,18 @@ OBJECTS = \
 	gimpconfig.obj \
 	gimpconfig-deserialize.obj \
 	gimpconfig-params.obj \
+	gimpconfig-path.obj \
 	gimpconfig-serialize.obj \
-	gimpconfig-substitute.obj \
 	gimpconfig-types.obj \
 	gimpconfig-utils.obj \
 	gimpcoreconfig.obj \
 	gimpdisplayconfig.obj \
 	gimpguiconfig.obj \
+	gimppluginconfig.obj \
 	gimprc.obj \
-	gimpscanner.obj
+	gimpscanner.obj \
+	\
+#	config-noelf.obj
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \

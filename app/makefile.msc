@@ -61,6 +61,7 @@ gimp_LDFLAGS = \
 	-export-dynamic -export-symbols $(srcdir)/gimp.sym
 
 INCLUDES = \
+	-DGIMP_APP_GLUE_COMPILATION \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/intl \
 	$(GTK2_CFLAGS) \

@@ -16,7 +16,6 @@ INCLUDES = \
 
 EXTRA_DIST = \
 	makefile.msc		\
-	module.def		\
 	colorsel_water.c
 
 lib_LTLIBRARIES = \

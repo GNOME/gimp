@@ -19,7 +19,7 @@ PKG_LINK = \
 	..\core\appcore-$(PKG_VER).lib \
 	..\config\appconfig-$(PKG_VER).lib \
 	..\file\appfile-$(PKG_VER).lib \
-	..\pdb\apppdb-$(PKG_VER).lib \
+#	..\pdb\apppdb-$(PKG_VER).lib \
 #	..\gui\appgui-$(PKG_VER).lib
 
 OBJECTS = \
@@ -103,6 +103,9 @@ INCLUDES = \
 	-I$(top_srcdir)/app \
 	$(GTK2_CFLAGS) $(FREETYPE2_CFLAGS) \
 	-I$(includedir)
+
+DEFINES = \
+	-DG_LOG_DOMAIN=\"Gimp-Widgets\"
 
 all : \
 	$(PRJ_TOP)\config.h \

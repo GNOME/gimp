@@ -1,3 +1,23 @@
+2003-01-01  Hans Breuer  <hans@breuer.org>
+
+	* libgimpbase/gimpdatafiles.c : when checking for
+	'excecutable' make sure it is a regular file too
+	(on win32 even directories carry the IXUSR flag)
+
+	* app/app_procs.h : there is still no #warning with
+	msvc, special case to make it build with non GCC
+
+	* makefile.msc */makefile.msc */*/makefile.msc : updated
+
+	* app/gui/user-install-dialog.c : get prototype for mkdir
+
+	* libgimpwidgets/libgimp-glue.c : make it compile without
+	LT_RELEASE being defined
+
+	* modules/module.def : removed
+	  modules/Makefile.am : no export file needed when 
+	functions get exported by G_MODULE_EXPORT
+
 2003-01-01  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/imagemap/imap_about.c

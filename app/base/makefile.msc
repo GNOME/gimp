@@ -10,7 +10,8 @@ PKG_VER = 1.3
 PKG_LINK = \
 	$(GLIB_LIBS) \
 	..\..\libgimpcolor\gimpcolor-$(PKG_VER).lib \
-	..\paint-funcs\apppaint-funcs.lib 
+	..\paint-funcs\apppaint-funcs-$(PKG_VER).lib \
+	..\config\appconfig-$(PKG_VER).lib
 
 OBJECTS = \
 	base.obj \

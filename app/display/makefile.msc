@@ -15,6 +15,11 @@ INCLUDES = \
 DEFINES = \
 	-DG_LOG_DOMAIN=\"Gimp-Display\"
 
+PKG_LINK = \
+	$(GLIB_LIBS) $(GTK2_LIBS) \
+	..\base\appbase-$(PKG_VER).lib \
+	..\core\appcore-$(PKG_VER).lib \
+
 OBJECTS = \
 	gimpdisplay.obj \
 	gimpdisplay-area.obj \
@@ -38,8 +43,10 @@ OBJECTS = \
 
 all : \
 	$(PRJ_TOP)\config.h \
-	$(PACKAGE).lib
-
+	$(PACKAGE).lib \
+!IFDEF DLLGIMP
+	$(PACKAGE)-$(PKG_VER).dll
+!ENDIF
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32
 	copy $(PRJ_TOP)\config.h.win32 $(PRJ_TOP)\config.h

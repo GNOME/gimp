@@ -29,7 +29,8 @@ BIN = $(GIMP)\modules
 MODULES = \
 #	colorsel_gtk-$(GIMP_VER).dll \
 	colorsel_triangle-$(GIMP_VER).dll \
-#	colorsel_water-$(GIMP_VER).dll \
+	colorsel_water-$(GIMP_VER).dll \
+	cdisplay_colorblind-$(GIMP_VER).dll \
 	cdisplay_gamma-$(GIMP_VER).dll \
 	cdisplay_highcontrast-$(GIMP_VER).dll
 
@@ -43,36 +44,44 @@ install : all
 ..\config.h : ..\config.h.win32
 	copy ..\config.h.win32 ..\config.h
 
-colorsel_gtk-$(GIMP_VER).dll : colorsel_gtk.obj module.def
+colorsel_gtk-$(GIMP_VER).dll : colorsel_gtk.obj
 	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_gtk.obj $(LDFLAGS) \
 	..\app\gimp.lib \
 	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
-	$(DEPLIBS) /def:module.def
+	$(DEPLIBS)
 
-colorsel_triangle-$(GIMP_VER).dll : colorsel_triangle.obj module.def
+colorsel_triangle-$(GIMP_VER).dll : colorsel_triangle.obj
 	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_triangle.obj $(LDFLAGS) \
 	..\app\gimp.lib \
 	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
-	$(DEPLIBS) /def:module.def
+	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
+	..\libgimpmodule\gimpmodule-$(GIMP_VER).lib \
+	$(DEPLIBS)
 
-colorsel_water-$(GIMP_VER).dll : colorsel_water.obj module.def
+colorsel_water-$(GIMP_VER).dll : colorsel_water.obj
 	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_water.obj $(LDFLAGS) \
 	..\app\gimp.lib \
 	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
-	$(DEPLIBS) /def:module.def
+	$(DEPLIBS)
 
-cdisplay_gamma-$(GIMP_VER).dll : cdisplay_gamma.obj module.def
+cdisplay_colorblind-$(GIMP_VER).dll : cdisplay_colorblind.obj
+	$(CC) $(CFLAGS) -LD -Fe$@ cdisplay_colorblind.obj $(LDFLAGS) ..\app\gimp.lib \
+	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
+	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
+	$(DEPLIBS)
+
+cdisplay_gamma-$(GIMP_VER).dll : cdisplay_gamma.obj
 	$(CC) $(CFLAGS) -LD -Fe$@ cdisplay_gamma.obj $(LDFLAGS) ..\app\gimp.lib \
 	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
-	$(DEPLIBS) /def:module.def
+	$(DEPLIBS)
 
-cdisplay_highcontrast-$(GIMP_VER).dll : cdisplay_highcontrast.obj module.def
+cdisplay_highcontrast-$(GIMP_VER).dll : cdisplay_highcontrast.obj
 	$(CC) $(CFLAGS) -LD -Fe$@ cdisplay_highcontrast.obj $(LDFLAGS) ..\app\gimp.lib \
 	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
-	$(DEPLIBS) /def:module.def
+	$(DEPLIBS)
 
 # General rule for building 
 .c.obj:
