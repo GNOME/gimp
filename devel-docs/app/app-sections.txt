@@ -827,6 +827,7 @@ gimp_image_get_foreground
 gimp_image_get_background
 gimp_image_get_color
 gimp_image_transform_color
+gimp_image_transform_rgb
 gimp_image_transform_temp_buf
 gimp_image_shadow
 gimp_image_free_shadow
@@ -871,11 +872,15 @@ gimp_image_add_channel
 gimp_image_remove_channel
 gimp_image_raise_channel
 gimp_image_lower_channel
+gimp_image_raise_channel_to_top
+gimp_image_lower_channel_to_bottom
 gimp_image_position_channel
 gimp_image_add_vectors
 gimp_image_remove_vectors
 gimp_image_raise_vectors
 gimp_image_lower_vectors
+gimp_image_raise_vectors_to_top
+gimp_image_lower_vectors_to_bottom
 gimp_image_position_vectors
 gimp_image_layer_boundary
 gimp_image_pick_correlate_layer
@@ -3415,6 +3420,8 @@ GimpToggleActionEntry
 GimpRadioActionEntry
 GimpEnumActionEntry
 GimpStringActionEntry
+GimpActionGroupSetupFunc
+GimpActionGroupUpdateFunc
 gimp_action_group_new
 gimp_action_group_add_actions
 gimp_action_group_add_toggle_actions
@@ -5999,6 +6006,7 @@ gimp_item_get_popup_size
 <SECTION>
 <FILE>gimppalette-import</FILE>
 <TITLE>GimpPalette-import</TITLE>
+gimp_palette_import_from_file
 gimp_palette_import_from_gradient
 gimp_palette_import_from_image
 gimp_palette_import_from_indexed_image
@@ -6050,6 +6058,7 @@ gimp_marshal_VOID__OBJECT
 gimp_marshal_VOID__OBJECT_INT
 gimp_marshal_VOID__OBJECT_POINTER
 gimp_marshal_VOID__POINTER
+gimp_marshal_VOID__STRING
 gimp_marshal_VOID__STRING_FLAGS
 gimp_marshal_VOID__VOID
 </SECTION>
@@ -6140,6 +6149,8 @@ buffers_menu_update
 channels_new_cmd_callback
 channels_raise_cmd_callback
 channels_lower_cmd_callback
+channels_raise_to_top_cmd_callback
+channels_lower_to_bottom_cmd_callback
 channels_duplicate_cmd_callback
 channels_delete_cmd_callback
 channels_to_selection_cmd_callback
@@ -6337,6 +6348,7 @@ edit_cut_cmd_callback
 edit_copy_cmd_callback
 edit_paste_cmd_callback
 edit_paste_as_new_cmd_callback
+edit_paste_into_cmd_callback
 edit_named_cut_cmd_callback
 edit_named_copy_cmd_callback
 edit_named_paste_cmd_callback
@@ -6370,7 +6382,6 @@ file_save_as_cmd_callback
 file_save_a_copy_cmd_callback
 file_save_template_cmd_callback
 file_revert_cmd_callback
-file_pref_cmd_callback
 file_close_cmd_callback
 file_quit_cmd_callback
 file_file_open_dialog
@@ -6653,6 +6664,8 @@ offset_dialog_create
 <FILE>palette-editor-commands</FILE>
 palette_editor_edit_color_cmd_callback
 palette_editor_delete_color_cmd_callback
+palette_editor_new_color_fg_cmd_callback
+palette_editor_new_color_bg_cmd_callback
 palette_editor_zoom_in_cmd_callback
 palette_editor_zoom_out_cmd_callback
 palette_editor_zoom_all_cmd_callback
@@ -6856,6 +6869,8 @@ user_install_dialog_run
 vectors_new_cmd_callback
 vectors_raise_cmd_callback
 vectors_lower_cmd_callback
+vectors_raise_to_top_cmd_callback
+vectors_lower_to_bottom_cmd_callback
 vectors_duplicate_cmd_callback
 vectors_delete_cmd_callback
 vectors_merge_visible_cmd_callback
