@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.3\n"
-"POT-Creation-Date: 2001-10-24 10:35+0200\n"
-"PO-Revision-Date: 2001-10-24 10:35+0200\n"
+"POT-Creation-Date: 2001-11-08 10:03+0100\n"
+"PO-Revision-Date: 2001-11-08 10:03+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:282
 #: plug-ins/FractalExplorer/Dialogs.c:1372 plug-ins/common/AlienMap.c:1396
 #: plug-ins/common/AlienMap2.c:1388 plug-ins/gdyntext/gdyntext_ui.c:560
-#: plug-ins/gfig/gfig.c:3374 plug-ins/imagemap/imap_about.c:33
+#: plug-ins/gfig/gfig.c:3374 plug-ins/imagemap/imap_about.c:36
 #: plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
 msgstr "À propos"
@@ -54,7 +54,7 @@ msgstr "À propos"
 #: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1147
 #: plug-ins/common/gif.c:1218 plug-ins/common/gih.c:854
 #: plug-ins/common/glasstile.c:260 plug-ins/common/gqbist.c:640
-#: plug-ins/common/grid.c:659 plug-ins/common/gtm.c:375
+#: plug-ins/common/grid.c:661 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:570
 #: plug-ins/common/iwarp.c:1142 plug-ins/common/jigsaw.c:2486
 #: plug-ins/common/jpeg.c:1595 plug-ins/common/lic.c:1021
@@ -64,7 +64,7 @@ msgstr "À propos"
 #: plug-ins/common/noisify.c:489 plug-ins/common/nova.c:466
 #: plug-ins/common/oilify.c:458 plug-ins/common/papertile.c:250
 #: plug-ins/common/pat.c:455 plug-ins/common/pixelize.c:280
-#: plug-ins/common/plasma.c:307 plug-ins/common/png.c:1045
+#: plug-ins/common/plasma.c:308 plug-ins/common/png.c:1049
 #: plug-ins/common/pnm.c:930 plug-ins/common/polar.c:914
 #: plug-ins/common/ps.c:2615 plug-ins/common/ps.c:2797
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
@@ -135,7 +135,7 @@ msgstr "Valider"
 #: plug-ins/common/gbr.c:570 plug-ins/common/gicon.c:443
 #: plug-ins/common/gif.c:1149 plug-ins/common/gif.c:1220
 #: plug-ins/common/gih.c:856 plug-ins/common/glasstile.c:262
-#: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:661
+#: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:663
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
 #: plug-ins/common/illusion.c:572 plug-ins/common/iwarp.c:1146
 #: plug-ins/common/jigsaw.c:2488 plug-ins/common/jpeg.c:1597
@@ -145,8 +145,8 @@ msgstr "Valider"
 #: plug-ins/common/nlfilt.c:370 plug-ins/common/noisify.c:491
 #: plug-ins/common/nova.c:468 plug-ins/common/oilify.c:460
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:457
-#: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:309
-#: plug-ins/common/png.c:1047 plug-ins/common/pnm.c:932
+#: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:310
+#: plug-ins/common/png.c:1051 plug-ins/common/pnm.c:932
 #: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2617
 #: plug-ins/common/ps.c:2799 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
@@ -167,7 +167,7 @@ msgstr "Valider"
 #: plug-ins/common/xpm.c:802 plug-ins/fits/fits.c:989
 #: plug-ins/flame/flame.c:636 plug-ins/flame/flame.c:925
 #: plug-ins/fp/fp_gtk.c:908 plug-ins/gap/gap_arr_dialog.c:1012
-#: plug-ins/gap/gap_dbbrowser_utils.c:210
+#: plug-ins/gap/gap_dbbrowser_utils.c:215
 #: plug-ins/gap/gap_decode_mpeg_main.c:337 plug-ins/gap/gap_decode_xanim.c:176
 #: plug-ins/gap/gap_decode_xanim.c:341 plug-ins/gap/gap_filter_foreach.c:134
 #: plug-ins/gap/gap_lib.c:1034 plug-ins/gap/gap_mod_layer.c:149
@@ -198,11 +198,11 @@ msgstr "Annuler"
 #: plug-ins/common/blinds.c:343 plug-ins/common/curve_bend.c:1503
 #: plug-ins/common/destripe.c:575 plug-ins/common/emboss.c:739
 #: plug-ins/common/fractaltrace.c:746 plug-ins/common/glasstile.c:276
-#: plug-ins/common/grid.c:680 plug-ins/common/illusion.c:589
+#: plug-ins/common/grid.c:682 plug-ins/common/illusion.c:589
 #: plug-ins/common/iwarp.c:1160 plug-ins/common/jigsaw.c:2511
 #: plug-ins/common/mapcolor.c:576 plug-ins/common/max_rgb.c:364
 #: plug-ins/common/nlfilt.c:587 plug-ins/common/noisify.c:506
-#: plug-ins/common/plasma.c:326 plug-ins/common/polar.c:935
+#: plug-ins/common/plasma.c:327 plug-ins/common/polar.c:935
 #: plug-ins/common/ps.c:2938 plug-ins/common/sharpen.c:552
 #: plug-ins/common/sinus.c:2123 plug-ins/common/tileit.c:407
 #: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
@@ -212,7 +212,7 @@ msgstr "Annuler"
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:918
 #: plug-ins/imagemap/imap_edit_area_info.c:287
-#: plug-ins/imagemap/imap_grid.c:232 plug-ins/print/gimp_main_window.c:295
+#: plug-ins/imagemap/imap_grid.c:236 plug-ins/print/gimp_main_window.c:295
 #: plug-ins/rcm/rcm_dialog.c:119 plug-ins/rcm/rcm_dialog.c:631
 msgid "Preview"
 msgstr "Aperçu"
@@ -366,8 +366,8 @@ msgstr "Remets les paramètres à leur valeurs par défaut."
 
 #: plug-ins/FractalExplorer/Dialogs.c:537 plug-ins/common/CML_explorer.c:1222
 #: plug-ins/common/gqbist.c:694 plug-ins/gfig/gfig.c:3927
-#: plug-ins/gfig/gfig.c:5256 plug-ins/imagemap/imap_menu.c:218
-#: plug-ins/imagemap/imap_toolbar.c:112
+#: plug-ins/gfig/gfig.c:5256 plug-ins/imagemap/imap_menu.c:219
+#: plug-ins/imagemap/imap_toolbar.c:114
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -418,7 +418,7 @@ msgstr "Sierpinski"
 
 #: plug-ins/FractalExplorer/Dialogs.c:621 plug-ins/common/sinus.c:1859
 #: plug-ins/common/sinus.c:1877 plug-ins/common/sinus.c:1963
-#: plug-ins/imagemap/imap_preferences.c:542
+#: plug-ins/imagemap/imap_preferences.c:543
 msgid "Colors"
 msgstr "Couleurs"
 
@@ -706,8 +706,8 @@ msgstr "Effacer la fractale"
 #: plug-ins/FractalExplorer/FractalExplorer.c:1401 plug-ins/gfig/gfig.c:3568
 #: plug-ins/gfig/gfig.c:5021 plug-ins/gflare/gflare.c:3102
 #: plug-ins/gflare/gflare.c:3378 plug-ins/gimpressionist/presets.c:648
-#: plug-ins/ifscompose/ifscompose.c:807 plug-ins/imagemap/imap_cmd_delete.c:53
-#: plug-ins/imagemap/imap_selection.c:175
+#: plug-ins/ifscompose/ifscompose.c:807 plug-ins/imagemap/imap_cmd_delete.c:56
+#: plug-ins/imagemap/imap_selection.c:177 plug-ins/imagemap/imap_tools.c:155
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -1141,7 +1141,7 @@ msgstr "Carte d'environnement"
 msgid "Lighting Effects"
 msgstr "Jeux d'éclairage"
 
-#: plug-ins/Lighting/lighting_ui.c:1187 plug-ins/common/grid.c:709
+#: plug-ins/Lighting/lighting_ui.c:1187 plug-ins/common/grid.c:711
 #: plug-ins/gap/gap_mov_dialog.c:507
 msgid "Update Preview"
 msgstr "Mise à jour de l'aperçu"
@@ -1315,7 +1315,7 @@ msgstr "Taille"
 #: plug-ins/common/nlfilt.c:430 plug-ins/common/nova.c:504
 #: plug-ins/common/unsharp.c:812 plug-ins/common/whirlpinch.c:877
 #: plug-ins/gfig/gfig.c:3175 plug-ins/gflare/gflare.c:2911
-#: plug-ins/imagemap/imap_circle.c:273
+#: plug-ins/imagemap/imap_circle.c:275
 msgid "Radius:"
 msgstr "Rayon :"
 
@@ -1355,7 +1355,7 @@ msgstr "Agrandir"
 
 #: plug-ins/MapObject/mapobject_ui.c:1447
 msgid "Show Preview Wireframe"
-msgstr "Montrer l'aperçu en fil de fer"
+msgstr "Afficher l'aperçu en fil de fer"
 
 #: plug-ins/MapObject/mapobject_ui.c:1455
 msgid "Show/hide preview wireframe"
@@ -1441,8 +1441,8 @@ msgstr "Impossible d'ouvrir %s"
 #: plug-ins/common/gih.c:1218 plug-ins/common/gtm.c:247
 #: plug-ins/common/hrz.c:471 plug-ins/common/jpeg.c:1197
 #: plug-ins/common/pat.c:384 plug-ins/common/pcx.c:547
-#: plug-ins/common/pix.c:532 plug-ins/common/png.c:775
-#: plug-ins/common/png.c:777 plug-ins/common/pnm.c:783
+#: plug-ins/common/pix.c:532 plug-ins/common/png.c:777
+#: plug-ins/common/png.c:779 plug-ins/common/pnm.c:783
 #: plug-ins/common/ps.c:1003 plug-ins/common/sunras.c:525
 #: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1337
 #: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:653
@@ -2182,13 +2182,13 @@ msgstr "Aligner les calques visibles"
 #: plug-ins/common/destripe.c:636 plug-ins/common/edge.c:662
 #: plug-ins/common/emboss.c:559 plug-ins/common/engrave.c:236
 #: plug-ins/common/gauss_iir.c:378 plug-ins/common/gauss_rle.c:373
-#: plug-ins/common/glasstile.c:294 plug-ins/common/grid.c:720
+#: plug-ins/common/glasstile.c:294 plug-ins/common/grid.c:722
 #: plug-ins/common/illusion.c:606 plug-ins/common/jpeg.c:1643
 #: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:381
 #: plug-ins/common/nlfilt.c:409 plug-ins/common/noisify.c:524
 #: plug-ins/common/nova.c:478 plug-ins/common/oilify.c:470
-#: plug-ins/common/pixelize.c:292 plug-ins/common/plasma.c:344
-#: plug-ins/common/png.c:1056 plug-ins/common/polar.c:955
+#: plug-ins/common/pixelize.c:292 plug-ins/common/plasma.c:345
+#: plug-ins/common/png.c:1060 plug-ins/common/polar.c:955
 #: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:676
 #: plug-ins/common/scatter_hsv.c:428 plug-ins/common/sel_gauss.c:254
 #: plug-ins/common/sharpen.c:612 plug-ins/common/shift.c:389
@@ -2277,16 +2277,16 @@ msgstr "Utiliser le calque le plus bas (invisible) comme base"
 msgid "Grid Size:"
 msgstr "Taille de grille :"
 
-#: plug-ins/common/animationplay.c:264
+#: plug-ins/common/animationplay.c:272
 msgid "<Image>/Filters/Animation/Animation Playback..."
 msgstr "<Image>/Filtres/Animation/Rejouer l'animation..."
 
-#: plug-ins/common/animationplay.c:660
+#: plug-ins/common/animationplay.c:668
 msgid "Animation Playback: "
 msgstr "Jouer une animation : "
 
 #. if no buttons are specified use one CLOSE button per default
-#: plug-ins/common/animationplay.c:667 plug-ins/common/plugindetails.c:1009
+#: plug-ins/common/animationplay.c:675 plug-ins/common/plugindetails.c:1009
 #: plug-ins/common/sample_colorize.c:1374 plug-ins/common/uniteditor.c:526
 #: plug-ins/dbbrowser/dbbrowser_utils.c:159
 #: plug-ins/dbbrowser/dbbrowser_utils.c:176 plug-ins/gap/gap_arr_dialog.c:783
@@ -2294,29 +2294,29 @@ msgstr "Jouer une animation : "
 #: plug-ins/gdyntext/charmap_window.c:139 plug-ins/gdyntext/gdyntext_ui.c:593
 #: plug-ins/gfig/gfig.c:1952 plug-ins/gfig/gfig.c:2012
 #: plug-ins/helpbrowser/helpbrowser.c:833
-#: plug-ins/ifscompose/ifscompose.c:1255 plug-ins/imagemap/imap_menu.c:227
+#: plug-ins/ifscompose/ifscompose.c:1255 plug-ins/imagemap/imap_menu.c:228
 #: plug-ins/print/gimp_color_window.c:142
 msgid "Close"
 msgstr "Fermer"
 
 #. The 'playback' half of the dialog
-#: plug-ins/common/animationplay.c:681 plug-ins/common/animationplay.c:684
+#: plug-ins/common/animationplay.c:689 plug-ins/common/animationplay.c:692
 msgid "Playback: "
 msgstr "Jouer : "
 
-#: plug-ins/common/animationplay.c:714
+#: plug-ins/common/animationplay.c:722
 msgid "Play/Stop"
 msgstr "Jouer/Stop"
 
-#: plug-ins/common/animationplay.c:720
+#: plug-ins/common/animationplay.c:728
 msgid "Rewind"
 msgstr "Rembobiner"
 
-#: plug-ins/common/animationplay.c:726
+#: plug-ins/common/animationplay.c:734
 msgid "Step"
 msgstr "Pas"
 
-#: plug-ins/common/animationplay.c:784
+#: plug-ins/common/animationplay.c:792
 msgid "Frame %v of %u"
 msgstr "Image %v sur %u"
 
@@ -2402,13 +2402,13 @@ msgid "Blinds"
 msgstr "Fenêtre avec store"
 
 #. attach labels
-#: plug-ins/common/blinds.c:373 plug-ins/common/grid.c:770
+#: plug-ins/common/blinds.c:373 plug-ins/common/grid.c:772
 #: plug-ins/common/ripple.c:638 plug-ins/common/tileit.c:451
 #: plug-ins/pagecurl/pagecurl.c:647
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: plug-ins/common/blinds.c:374 plug-ins/common/grid.c:771
+#: plug-ins/common/blinds.c:374 plug-ins/common/grid.c:773
 #: plug-ins/common/ripple.c:639 plug-ins/common/tileit.c:459
 #: plug-ins/pagecurl/pagecurl.c:648
 msgid "Vertical"
@@ -2432,7 +2432,7 @@ msgstr "Nombre de segments"
 msgid "<Image>/Filters/Blur/Blur..."
 msgstr "<Image>/Filtres/Flou/Flou..."
 
-#: plug-ins/common/blur.c:648 plug-ins/common/plasma.c:359
+#: plug-ins/common/blur.c:648 plug-ins/common/plasma.c:360
 #: plug-ins/common/randomize.c:737 plug-ins/common/sinus.c:1811
 #: plug-ins/common/snoise.c:542 plug-ins/gflare/gflare.c:4102
 msgid "Random Seed:"
@@ -2608,7 +2608,7 @@ msgstr "Coloriser"
 #: plug-ins/common/colorify.c:338 plug-ins/common/colortoalpha.c:418
 #: plug-ins/common/ps.c:2707 plug-ins/common/xpm.c:439
 #: plug-ins/gap/gap_mov_dialog.c:274 plug-ins/gimpressionist/color.c:51
-#: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
+#: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:328
 #: plug-ins/print/gimp_main_window.c:758
 msgid "Color"
 msgstr "Couleur"
@@ -2961,9 +2961,9 @@ msgstr "Tordre selon une courbe"
 #. menu_item copy
 #: plug-ins/common/curve_bend.c:1363 plug-ins/gap/gap_navigator_dialog.c:2922
 #: plug-ins/gfig/gfig.c:2835 plug-ins/gfig/gfig.c:5283
-#: plug-ins/gflare/gflare.c:3101 plug-ins/imagemap/imap_cmd_copy.c:49
-#: plug-ins/imagemap/imap_cmd_copy_object.c:50
-#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:132
+#: plug-ins/gflare/gflare.c:3101 plug-ins/imagemap/imap_cmd_copy.c:52
+#: plug-ins/imagemap/imap_cmd_copy_object.c:53
+#: plug-ins/imagemap/imap_menu.c:290 plug-ins/imagemap/imap_toolbar.c:134
 msgid "Copy"
 msgstr "Copier"
 
@@ -3271,7 +3271,7 @@ msgstr "Créer histogramme"
 #: plug-ins/common/destripe.c:670 plug-ins/common/gtm.c:551
 #: plug-ins/common/ps.c:2664 plug-ins/common/ps.c:2840
 #: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:428
-#: plug-ins/gap/gap_mov_dialog.c:1873 plug-ins/imagemap/imap_rectangle.c:387
+#: plug-ins/gap/gap_mov_dialog.c:1873 plug-ins/imagemap/imap_rectangle.c:391
 #: plug-ins/print/gimp_main_window.c:638
 msgid "Width:"
 msgstr "Largeur :"
@@ -3426,7 +3426,7 @@ msgstr "Limiter la largeur de ligne"
 #: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2673
 #: plug-ins/common/ps.c:2849 plug-ins/common/smooth_palette.c:439
 #: plug-ins/common/tile.c:432 plug-ins/gap/gap_mov_dialog.c:1890
-#: plug-ins/imagemap/imap_rectangle.c:393
+#: plug-ins/imagemap/imap_rectangle.c:397
 #: plug-ins/print/gimp_main_window.c:652
 msgid "Height:"
 msgstr "Hauteur :"
@@ -3510,7 +3510,7 @@ msgid "Add >>"
 msgstr "Ajouter >>"
 
 #: plug-ins/common/film.c:1142 plug-ins/common/iwarp.c:1037
-#: plug-ins/imagemap/imap_polygon.c:464
+#: plug-ins/imagemap/imap_polygon.c:466
 msgid "Remove"
 msgstr "Ôter"
 
@@ -3748,7 +3748,7 @@ msgstr "Espacement :"
 
 #: plug-ins/common/gbr.c:599 plug-ins/common/gih.c:892
 #: plug-ins/common/pat.c:478 plug-ins/gimpressionist/presets.c:373
-#: plug-ins/imagemap/imap_settings.c:93
+#: plug-ins/imagemap/imap_settings.c:94
 msgid "Description:"
 msgstr "Description :"
 
@@ -3974,12 +3974,12 @@ msgid "Background (%dms)"
 msgstr "Arriere-plan (%dms)"
 
 #: plug-ins/common/gifload.c:899 plug-ins/common/iwarp.c:741
-#: plug-ins/common/iwarp.c:765 plug-ins/common/mpeg.c:302
+#: plug-ins/common/iwarp.c:765 plug-ins/common/mpeg.c:303
 #, c-format
 msgid "Frame %d"
 msgstr "Image %d"
 
-#: plug-ins/common/gifload.c:901 plug-ins/common/mpeg.c:299
+#: plug-ins/common/gifload.c:901 plug-ins/common/mpeg.c:300
 #, c-format
 msgid "Frame %d (%dms)"
 msgstr "Image %d (%dms)"
@@ -4032,48 +4032,48 @@ msgstr "<Image>/Filtres/Couleurs/Palette/Application de dégradé"
 msgid "Gradient Map..."
 msgstr "Application de dégradé..."
 
-#: plug-ins/common/grid.c:158
+#: plug-ins/common/grid.c:160
 msgid "<Image>/Filters/Render/Pattern/Grid..."
 msgstr "<Image>/Filtres/Rendu/Motif/Grille..."
 
-#: plug-ins/common/grid.c:242
+#: plug-ins/common/grid.c:244
 msgid "Drawing Grid..."
 msgstr "Tracé de la grille..."
 
-#: plug-ins/common/grid.c:654 plug-ins/gfig/gfig.c:3396
-#: plug-ins/imagemap/imap_menu.c:400 plug-ins/imagemap/imap_popup.c:148
-#: plug-ins/imagemap/imap_toolbar.c:163
+#: plug-ins/common/grid.c:656 plug-ins/gfig/gfig.c:3396
+#: plug-ins/imagemap/imap_menu.c:403 plug-ins/imagemap/imap_popup.c:148
+#: plug-ins/imagemap/imap_toolbar.c:165
 msgid "Grid"
 msgstr "Grille"
 
-#: plug-ins/common/grid.c:772
+#: plug-ins/common/grid.c:774
 msgid "Intersection"
 msgstr "Intersection"
 
-#: plug-ins/common/grid.c:773
+#: plug-ins/common/grid.c:775
 msgid "Width: "
 msgstr "Largeur :"
 
 #. attach labels
-#: plug-ins/common/grid.c:830
+#: plug-ins/common/grid.c:832
 msgid "Spacing: "
 msgstr "Espacement :"
 
 #. attach labels
-#: plug-ins/common/grid.c:890
+#: plug-ins/common/grid.c:892
 msgid "Offset: "
 msgstr "Décalage :"
 
 #. attach color selectors
-#: plug-ins/common/grid.c:920
+#: plug-ins/common/grid.c:922
 msgid "Horizontal Color"
 msgstr "Couleur des horizontales"
 
-#: plug-ins/common/grid.c:930
+#: plug-ins/common/grid.c:932
 msgid "Vertical Color"
 msgstr "Couleur des verticales"
 
-#: plug-ins/common/grid.c:940
+#: plug-ins/common/grid.c:942
 msgid "Intersection Color"
 msgstr "Couleur des intersections"
 
@@ -4320,8 +4320,8 @@ msgid "Deform Mode"
 msgstr "Mode de déformation"
 
 #: plug-ins/common/iwarp.c:1034 plug-ins/ifscompose/ifscompose.c:873
-#: plug-ins/ifscompose/ifscompose.c:1140 plug-ins/imagemap/imap_cmd_move.c:80
-#: plug-ins/imagemap/imap_cmd_object_move.c:53
+#: plug-ins/ifscompose/ifscompose.c:1140 plug-ins/imagemap/imap_cmd_move.c:83
+#: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Déplacer"
 
@@ -4622,7 +4622,7 @@ msgid "Subject:"
 msgstr "Sujet :"
 
 #: plug-ins/common/mail.c:541 plug-ins/gfig/gfig.c:3749
-#: plug-ins/imagemap/imap_settings.c:79
+#: plug-ins/imagemap/imap_settings.c:80
 msgid "Filename:"
 msgstr "Nom du fichier :"
 
@@ -4766,7 +4766,7 @@ msgstr "Paramètres de flou"
 msgid "Angle:"
 msgstr "Angle :"
 
-#: plug-ins/common/mpeg.c:232
+#: plug-ins/common/mpeg.c:233
 msgid "Loading MPEG movie..."
 msgstr "Chargement d'une animation MPEG en cours..."
 
@@ -5049,19 +5049,19 @@ msgstr "Pixeliser"
 msgid "Pixel Width:"
 msgstr "Largeur de pixel :"
 
-#: plug-ins/common/plasma.c:187
+#: plug-ins/common/plasma.c:188
 msgid "<Image>/Filters/Render/Clouds/Plasma..."
 msgstr "<Image>/Filtres/Rendu/Nuages/Plasma..."
 
-#: plug-ins/common/plasma.c:265
+#: plug-ins/common/plasma.c:266
 msgid "Plasma..."
 msgstr "Plasma..."
 
-#: plug-ins/common/plasma.c:302
+#: plug-ins/common/plasma.c:303
 msgid "Plasma"
 msgstr "Plasma"
 
-#: plug-ins/common/plasma.c:371
+#: plug-ins/common/plasma.c:372
 msgid "Turbulence:"
 msgstr "Turbulence :"
 
@@ -5107,20 +5107,20 @@ msgstr "Chemin dans le menu :"
 #. show the name
 #: plug-ins/common/plugindetails.c:355
 #: plug-ins/dbbrowser/dbbrowser_utils.c:344
-#: plug-ins/gap/gap_dbbrowser_utils.c:324
+#: plug-ins/gap/gap_dbbrowser_utils.c:329
 msgid "Name:"
 msgstr "Nom :"
 
 #. show the description
 #: plug-ins/common/plugindetails.c:377
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
-#: plug-ins/gap/gap_dbbrowser_utils.c:341
+#: plug-ins/gap/gap_dbbrowser_utils.c:346
 msgid "Blurb:"
 msgstr "Description :"
 
 #: plug-ins/common/plugindetails.c:399
 #: plug-ins/dbbrowser/dbbrowser_utils.c:479
-#: plug-ins/gap/gap_dbbrowser_utils.c:458
+#: plug-ins/gap/gap_dbbrowser_utils.c:463
 msgid "Help:"
 msgstr "Aide :"
 
@@ -5136,7 +5136,7 @@ msgstr "Descriptions des greffons"
 #: plug-ins/common/plugindetails.c:1007
 #: plug-ins/dbbrowser/dbbrowser_utils.c:153
 #: plug-ins/dbbrowser/dbbrowser_utils.c:172
-#: plug-ins/gap/gap_dbbrowser_utils.c:174
+#: plug-ins/gap/gap_dbbrowser_utils.c:179
 msgid "Search by Name"
 msgstr "Rechercher par nom"
 
@@ -5172,7 +5172,7 @@ msgstr "Vue en arbre"
 
 #: plug-ins/common/plugindetails.c:1109
 #: plug-ins/dbbrowser/dbbrowser_utils.c:226
-#: plug-ins/gap/gap_dbbrowser_utils.c:137
+#: plug-ins/gap/gap_dbbrowser_utils.c:142
 msgid "Search:"
 msgstr "Chercher :"
 
@@ -5195,7 +5195,7 @@ msgstr ""
 "%s\n"
 "Modèle de couleur PNG inconnu"
 
-#: plug-ins/common/png.c:758
+#: plug-ins/common/png.c:760
 #, c-format
 msgid ""
 "%s\n"
@@ -5204,7 +5204,7 @@ msgstr ""
 "%s\n"
 "Erreur PNG. Impossible d'enregistrer l'image"
 
-#: plug-ins/common/png.c:768
+#: plug-ins/common/png.c:770
 #, c-format
 msgid ""
 "%s\n"
@@ -5213,35 +5213,35 @@ msgstr ""
 "%s\n"
 "Impossible de créer le fichier"
 
-#: plug-ins/common/png.c:1040
+#: plug-ins/common/png.c:1044
 msgid "Save as PNG"
 msgstr "Enregistrer en PNG"
 
-#: plug-ins/common/png.c:1069
+#: plug-ins/common/png.c:1073
 msgid "Interlacing (Adam7)"
 msgstr "Entrelacement"
 
-#: plug-ins/common/png.c:1078
+#: plug-ins/common/png.c:1082
 msgid "Save background color"
 msgstr "Enregistrer la couleur d'arrière-plan"
 
-#: plug-ins/common/png.c:1087
+#: plug-ins/common/png.c:1091
 msgid "Save gamma"
 msgstr "Enregistrer le gamma"
 
-#: plug-ins/common/png.c:1096
+#: plug-ins/common/png.c:1100
 msgid "Save layer offset"
 msgstr "Enregistrer le décalage de calque"
 
-#: plug-ins/common/png.c:1105
+#: plug-ins/common/png.c:1109
 msgid "Save resolution"
 msgstr "Enregistrer la résolution"
 
-#: plug-ins/common/png.c:1114
+#: plug-ins/common/png.c:1118
 msgid "Save creation time"
 msgstr "Enregistrer la date de création"
 
-#: plug-ins/common/png.c:1131
+#: plug-ins/common/png.c:1135
 msgid "Compression Level:"
 msgstr "Niveau de compression :"
 
@@ -7216,33 +7216,33 @@ msgstr "Explorateur de la base de procédures (initialisation)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:155
 #: plug-ins/dbbrowser/dbbrowser_utils.c:174
-#: plug-ins/gap/gap_dbbrowser_utils.c:182
+#: plug-ins/gap/gap_dbbrowser_utils.c:187
 msgid "Search by Blurb"
 msgstr "Rechercher par blurb"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:382
-#: plug-ins/gap/gap_dbbrowser_utils.c:363
+#: plug-ins/gap/gap_dbbrowser_utils.c:368
 msgid "In:"
 msgstr "Entrée :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:429
-#: plug-ins/gap/gap_dbbrowser_utils.c:409
+#: plug-ins/gap/gap_dbbrowser_utils.c:414
 msgid "Out:"
 msgstr "Sortie :"
 
 #. show the author & the copyright
 #: plug-ins/dbbrowser/dbbrowser_utils.c:518
-#: plug-ins/gap/gap_dbbrowser_utils.c:496 plug-ins/imagemap/imap_settings.c:89
+#: plug-ins/gap/gap_dbbrowser_utils.c:501 plug-ins/imagemap/imap_settings.c:90
 msgid "Author:"
 msgstr "Auteur :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:533
-#: plug-ins/gap/gap_dbbrowser_utils.c:511
+#: plug-ins/gap/gap_dbbrowser_utils.c:516
 msgid "Date:"
 msgstr "Date :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:548
-#: plug-ins/gap/gap_dbbrowser_utils.c:526
+#: plug-ins/gap/gap_dbbrowser_utils.c:531
 msgid "Copyright:"
 msgstr "Copyright :"
 
@@ -7581,36 +7581,36 @@ msgid "Press Button"
 msgstr "Bouton poussoir"
 
 #: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:4005
-#: plug-ins/imagemap/imap_cmd_select.c:49
+#: plug-ins/imagemap/imap_cmd_select.c:52 plug-ins/imagemap/imap_tools.c:130
 msgid "Select"
 msgstr "Sélectionner"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:65
+#: plug-ins/gap/gap_dbbrowser_utils.c:70
 msgid "GAP Animated Filter apply"
 msgstr "Appliquer un filtre sur une animation (filtre GAP)"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:86
+#: plug-ins/gap/gap_dbbrowser_utils.c:91
 msgid "Animated Filter apply (init)"
 msgstr "Appliquer un filtre sur une animation (initialiser)"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:165
+#: plug-ins/gap/gap_dbbrowser_utils.c:170
 msgid "Gen Code by name"
 msgstr "Gen Code par nom"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:665
+#: plug-ins/gap/gap_dbbrowser_utils.c:670
 msgid "Animated Filter apply (by name - please wait)"
 msgstr "Appliquer un filtre sur une animation (par nom - veuillez patienter)"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:689
+#: plug-ins/gap/gap_dbbrowser_utils.c:694
 msgid "Animated Filter apply (by blurb - please wait)"
 msgstr ""
 "Appliquer un filtre sur une animation (par « blurb » - veuillez patienter)"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:697
+#: plug-ins/gap/gap_dbbrowser_utils.c:702
 msgid "Animated Filter apply (please wait)"
 msgstr "Appliquer un filtre sur une animation (veuillez patienter)"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:744
+#: plug-ins/gap/gap_dbbrowser_utils.c:749
 #: plug-ins/gap/gap_filter_foreach.c:163 plug-ins/gap/gap_mod_layer.c:287
 msgid "Animated Filter apply"
 msgstr "Appliquer un filtre sur une animation"
@@ -7687,7 +7687,7 @@ msgstr ""
 "le disque (le numéro de l'image et .xcf seront ajoutés)."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
-#: plug-ins/imagemap/imap_toolbar.c:110
+#: plug-ins/imagemap/imap_toolbar.c:112
 msgid "Open"
 msgstr "Ouvrir"
 
@@ -7991,19 +7991,19 @@ msgstr ""
 "Appel non interactif de %s\n"
 "(pour tous les calques intermédiaires)"
 
-#: plug-ins/gap/gap_filter_foreach.c:278
+#: plug-ins/gap/gap_filter_foreach.c:279
 msgid "Applying Filter to all Layers..."
 msgstr "Application du filtre à tous les calques..."
 
-#: plug-ins/gap/gap_filter_foreach.c:552
+#: plug-ins/gap/gap_filter_foreach.c:553
 msgid "Select Filter for Animated apply"
 msgstr "Sélectionner le filtre à appliquer sur l'animation"
 
-#: plug-ins/gap/gap_filter_foreach.c:553 plug-ins/gap/gap_mod_layer.c:664
+#: plug-ins/gap/gap_filter_foreach.c:554 plug-ins/gap/gap_mod_layer.c:664
 msgid "Apply Constant"
 msgstr "Paramètres constants"
 
-#: plug-ins/gap/gap_filter_foreach.c:554 plug-ins/gap/gap_mod_layer.c:665
+#: plug-ins/gap/gap_filter_foreach.c:555 plug-ins/gap/gap_mod_layer.c:665
 msgid "Apply Varying"
 msgstr "Paramètres variables"
 
@@ -8956,19 +8956,19 @@ msgstr ""
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:2038
 msgid "Show Path"
-msgstr "Montrer chemin"
+msgstr "Afficher le chemin"
 
 #: plug-ins/gap/gap_mov_dialog.c:2045
 msgid ""
 "Show Path Lines and enable pick/drag with left button or move with right "
 "button"
 msgstr ""
-"Montrer les lignes de chemin et permettre ramasser/tirer avec le bouton de "
+"Afficher les lignes de chemin et permettre ramasser/tirer avec le bouton de "
 "gauche et déplacer avec le bouton de droite"
 
 #: plug-ins/gap/gap_mov_dialog.c:2055
-#: plug-ins/imagemap/imap_cmd_insert_point.c:57
-#: plug-ins/imagemap/imap_polygon.c:683
+#: plug-ins/imagemap/imap_cmd_insert_point.c:60
+#: plug-ins/imagemap/imap_polygon.c:685
 msgid "Insert Point"
 msgstr "Insérer un Point"
 
@@ -8981,8 +8981,8 @@ msgstr ""
 "(le point est dupliqué)."
 
 #: plug-ins/gap/gap_mov_dialog.c:2067
-#: plug-ins/imagemap/imap_cmd_delete_point.c:57
-#: plug-ins/imagemap/imap_polygon.c:669
+#: plug-ins/imagemap/imap_cmd_delete_point.c:60
+#: plug-ins/imagemap/imap_polygon.c:671
 msgid "Delete Point"
 msgstr "Supprimer le Point"
 
@@ -8996,7 +8996,7 @@ msgstr "Point précédent"
 
 #: plug-ins/gap/gap_mov_dialog.c:2089
 msgid "Show Previous Controlpoint"
-msgstr "Montrer le point de contrôle précédent"
+msgstr "Afficher le point de contrôle précédent"
 
 #: plug-ins/gap/gap_mov_dialog.c:2093
 msgid "Next Point"
@@ -9004,7 +9004,7 @@ msgstr "Point suivant"
 
 #: plug-ins/gap/gap_mov_dialog.c:2101
 msgid "Show Next Controlpoint"
-msgstr "Montrer le point de contrôle suivant"
+msgstr "Afficher le point de contrôle suivant"
 
 #: plug-ins/gap/gap_mov_dialog.c:2107
 msgid "First Point"
@@ -9012,7 +9012,7 @@ msgstr "Premier point"
 
 #: plug-ins/gap/gap_mov_dialog.c:2115
 msgid "Show First Controlpoint"
-msgstr "Montrer le premier point de contrôle"
+msgstr "Afficher le premier point de contrôle"
 
 #: plug-ins/gap/gap_mov_dialog.c:2119
 msgid "Last Point"
@@ -9020,7 +9020,7 @@ msgstr "Dernier point"
 
 #: plug-ins/gap/gap_mov_dialog.c:2127
 msgid "Show Last Controlpoint"
-msgstr "Montrer le dernier point de contrôle"
+msgstr "Afficher le dernier point de contrôle"
 
 #: plug-ins/gap/gap_mov_dialog.c:2133
 msgid "Clear Point"
@@ -9527,9 +9527,9 @@ msgstr "Ne peut ouvrir plus d'une fenêtre de navigation vidéo."
 
 #. menu_item cut
 #: plug-ins/gap/gap_navigator_dialog.c:2932
-#: plug-ins/imagemap/imap_cmd_cut.c:53
-#: plug-ins/imagemap/imap_cmd_cut_object.c:51
-#: plug-ins/imagemap/imap_menu.c:284 plug-ins/imagemap/imap_toolbar.c:129
+#: plug-ins/imagemap/imap_cmd_cut.c:56
+#: plug-ins/imagemap/imap_cmd_cut_object.c:54
+#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:131
 msgid "Cut"
 msgstr "Couper"
 
@@ -10073,7 +10073,7 @@ msgstr "Car : %c, %d, 0x%02x"
 msgid "Selected char:"
 msgstr "Caractère sélectionné :"
 
-#: plug-ins/gdyntext/charmap_window.c:133 plug-ins/imagemap/imap_polygon.c:452
+#: plug-ins/gdyntext/charmap_window.c:133 plug-ins/imagemap/imap_polygon.c:454
 msgid "Insert"
 msgstr "Insérer"
 
@@ -10082,14 +10082,14 @@ msgid "Insert the selected char at the cursor position"
 msgstr "Insère le car sélectionné à la position du curseur"
 
 #: plug-ins/gdyntext/font_selection.c:166
-#: plug-ins/gdyntext/font_selection.c:309 plug-ins/imagemap/imap_circle.c:265
-#: plug-ins/imagemap/imap_circle.c:271 plug-ins/imagemap/imap_circle.c:277
-#: plug-ins/imagemap/imap_grid.c:202 plug-ins/imagemap/imap_grid.c:208
-#: plug-ins/imagemap/imap_polygon.c:437 plug-ins/imagemap/imap_polygon.c:444
-#: plug-ins/imagemap/imap_rectangle.c:379
-#: plug-ins/imagemap/imap_rectangle.c:385
-#: plug-ins/imagemap/imap_rectangle.c:391
-#: plug-ins/imagemap/imap_rectangle.c:397
+#: plug-ins/gdyntext/font_selection.c:309 plug-ins/imagemap/imap_circle.c:267
+#: plug-ins/imagemap/imap_circle.c:273 plug-ins/imagemap/imap_circle.c:279
+#: plug-ins/imagemap/imap_grid.c:206 plug-ins/imagemap/imap_grid.c:212
+#: plug-ins/imagemap/imap_polygon.c:439 plug-ins/imagemap/imap_polygon.c:446
+#: plug-ins/imagemap/imap_rectangle.c:383
+#: plug-ins/imagemap/imap_rectangle.c:389
+#: plug-ins/imagemap/imap_rectangle.c:395
+#: plug-ins/imagemap/imap_rectangle.c:401
 msgid "pixels"
 msgstr "pixels"
 
@@ -10331,8 +10331,8 @@ msgstr "Aperçu"
 
 #. More Buttons
 #: plug-ins/gfig/gfig.c:1914 plug-ins/gfig/gfig.c:5296
-#: plug-ins/gflare/gflare.c:3100 plug-ins/imagemap/imap_menu.c:277
-#: plug-ins/imagemap/imap_selection.c:171
+#: plug-ins/gflare/gflare.c:3100 plug-ins/imagemap/imap_menu.c:280
+#: plug-ins/imagemap/imap_selection.c:173 plug-ins/imagemap/imap_tools.c:150
 msgid "Edit"
 msgstr "Éditer"
 
@@ -10380,7 +10380,7 @@ msgstr "Fermer la courbe lorsqu'elle est terminée"
 
 #: plug-ins/gfig/gfig.c:2037
 msgid "Show Line Frame"
-msgstr "Montrer les lignes de l'image"
+msgstr "Afficher les lignes de l'image"
 
 #: plug-ins/gfig/gfig.c:2042
 msgid "Draws lines between the control points. Only during curve creation"
@@ -10506,7 +10506,7 @@ msgid "Draw on:"
 msgstr "Tracer sur :"
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:358
+#: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:360
 #: plug-ins/rcm/rcm_dialog.c:668
 msgid "Selection"
 msgstr "Sélection"
@@ -10653,14 +10653,15 @@ msgstr "Arc comme :"
 #. Put buttons in
 #: plug-ins/gfig/gfig.c:3281
 msgid "Show Image"
-msgstr "Montrer image"
+msgstr "Afficher l'image"
 
 #: plug-ins/gfig/gfig.c:3292
 msgid "Reload Image"
 msgstr "Recharger image"
 
-#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:384
-#: plug-ins/imagemap/imap_popup.c:132 plug-ins/imagemap/imap_rectangle.c:60
+#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:387
+#: plug-ins/imagemap/imap_popup.c:132 plug-ins/imagemap/imap_rectangle.c:64
+#: plug-ins/imagemap/imap_tools.c:135
 msgid "Rectangle"
 msgstr "Rectangle"
 
@@ -10694,7 +10695,7 @@ msgstr "Niveaux d'annulation :"
 
 #: plug-ins/gfig/gfig.c:3341
 msgid "Show Position"
-msgstr "Montrer position"
+msgstr "Afficher la position"
 
 #: plug-ins/gfig/gfig.c:3352
 msgid "Hide Control Points"
@@ -10702,7 +10703,7 @@ msgstr "Cacher les Points de Contrôle"
 
 #: plug-ins/gfig/gfig.c:3364
 msgid "Show Tooltips"
-msgstr "Montrer les bulles d'aide"
+msgstr "Afficher les bulles d'aide"
 
 #: plug-ins/gfig/gfig.c:3415
 msgid "Display Grid"
@@ -10770,13 +10771,13 @@ msgstr "Terminé"
 msgid "Paint"
 msgstr "Dessiner"
 
-#: plug-ins/gfig/gfig.c:3929 plug-ins/imagemap/imap_cmd_clear.c:50
-#: plug-ins/imagemap/imap_menu.c:298
+#: plug-ins/gfig/gfig.c:3929 plug-ins/imagemap/imap_cmd_clear.c:53
+#: plug-ins/imagemap/imap_menu.c:301
 msgid "Clear"
 msgstr "Effacer"
 
 #: plug-ins/gfig/gfig.c:3931 plug-ins/ifscompose/ifscompose.c:1205
-#: plug-ins/imagemap/imap_toolbar.c:120
+#: plug-ins/imagemap/imap_toolbar.c:122
 msgid "Undo"
 msgstr "Défaire"
 
@@ -11066,7 +11067,7 @@ msgstr "Options de dessin des effets secondaires"
 
 #: plug-ins/gflare/gflare.c:3684 plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
-#: plug-ins/imagemap/imap_preferences.c:467
+#: plug-ins/imagemap/imap_preferences.c:468
 msgid "General"
 msgstr "Général"
 
@@ -11127,13 +11128,15 @@ msgstr "Dégradé probabilité :"
 msgid "Shape of Second Flares"
 msgstr "Ombre des Deuxièmes Éblouissement"
 
-#: plug-ins/gflare/gflare.c:4054 plug-ins/imagemap/imap_circle.c:60
-#: plug-ins/imagemap/imap_menu.c:387 plug-ins/imagemap/imap_popup.c:135
+#: plug-ins/gflare/gflare.c:4054 plug-ins/imagemap/imap_circle.c:62
+#: plug-ins/imagemap/imap_menu.c:390 plug-ins/imagemap/imap_popup.c:135
+#: plug-ins/imagemap/imap_tools.c:140
 msgid "Circle"
 msgstr "Cercle"
 
-#: plug-ins/gflare/gflare.c:4070 plug-ins/imagemap/imap_menu.c:389
-#: plug-ins/imagemap/imap_polygon.c:69 plug-ins/imagemap/imap_popup.c:138
+#: plug-ins/gflare/gflare.c:4070 plug-ins/imagemap/imap_menu.c:392
+#: plug-ins/imagemap/imap_polygon.c:71 plug-ins/imagemap/imap_popup.c:138
+#: plug-ins/imagemap/imap_tools.c:145
 msgid "Polygon"
 msgstr "Polygone"
 
@@ -11392,7 +11395,7 @@ msgstr "À propos..."
 
 #: plug-ins/gimpressionist/gimpressionist.c:498
 msgid "Show some information about program"
-msgstr "Montrer des informations sur cet extension et son auteur"
+msgstr "Afficher des informations sur cet extension et son auteur"
 
 #: plug-ins/gimpressionist/orientation.c:73
 msgid "Directions:"
@@ -11716,7 +11719,7 @@ msgstr ""
 "dans la prochaine version !\n"
 
 #: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:877
-#: plug-ins/gimpressionist/repaint.c:879 plug-ins/imagemap/imap_polygon.c:446
+#: plug-ins/gimpressionist/repaint.c:879 plug-ins/imagemap/imap_polygon.c:448
 msgid "Update"
 msgstr "Mettre à jour"
 
@@ -11877,8 +11880,8 @@ msgstr "Contenu"
 msgid "Index"
 msgstr "Index"
 
-#: plug-ins/helpbrowser/helpbrowser.c:419 plug-ins/imagemap/imap_main.c:511
-#: plug-ins/imagemap/imap_settings.c:149
+#: plug-ins/helpbrowser/helpbrowser.c:419 plug-ins/imagemap/imap_main.c:512
+#: plug-ins/imagemap/imap_settings.c:150
 msgid "<Untitled>"
 msgstr "<SansTitre>"
 
@@ -12011,16 +12014,16 @@ msgid "Relative Probability:"
 msgstr "Probabilité Relative :"
 
 #: plug-ins/ifscompose/ifscompose.c:1181
-#: plug-ins/imagemap/imap_cmd_select_all.c:50
-#: plug-ins/imagemap/imap_menu.c:294
+#: plug-ins/imagemap/imap_cmd_select_all.c:53
+#: plug-ins/imagemap/imap_menu.c:297
 msgid "Select All"
-msgstr "Tout Sélectionner"
+msgstr "Tout sélectionner"
 
 #: plug-ins/ifscompose/ifscompose.c:1193
 msgid "Recompute Center"
 msgstr "Recalculer le Centre"
 
-#: plug-ins/ifscompose/ifscompose.c:1217 plug-ins/imagemap/imap_toolbar.c:123
+#: plug-ins/ifscompose/ifscompose.c:1217 plug-ins/imagemap/imap_toolbar.c:125
 msgid "Redo"
 msgstr "Refaire"
 
@@ -12051,7 +12054,7 @@ msgstr "Synthèse IFS en cours (%d/%d)..."
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Copie de la fractale vers l'image en cours (%d/%d)..."
 
-#: plug-ins/imagemap/imap_about.c:39
+#: plug-ins/imagemap/imap_about.c:42
 msgid ""
 "Imagemap plug-in 1.3\n"
 "\n"
@@ -12067,33 +12070,33 @@ msgstr ""
 "\n"
 "  Distribué sous les termes de la Licence Publique Générale GNU  "
 
-#: plug-ins/imagemap/imap_circle.c:261
+#: plug-ins/imagemap/imap_circle.c:263
 msgid "Center x:"
 msgstr "Centre x :"
 
-#: plug-ins/imagemap/imap_circle.c:267
+#: plug-ins/imagemap/imap_circle.c:269
 msgid "Center y:"
 msgstr "Centre y :"
 
-#: plug-ins/imagemap/imap_cmd_create.c:52
+#: plug-ins/imagemap/imap_cmd_create.c:55
 msgid "Create"
 msgstr "Créer"
 
-#: plug-ins/imagemap/imap_cmd_edit_object.c:50
+#: plug-ins/imagemap/imap_cmd_edit_object.c:53
 msgid "Edit Object"
 msgstr "Éditer l'Objet"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:71
-#: plug-ins/imagemap/imap_cmd_guides.c:132
+#: plug-ins/imagemap/imap_cmd_guides.c:73
+#: plug-ins/imagemap/imap_cmd_guides.c:134
 msgid "Create Guides"
 msgstr "Créer des Guides"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:111
+#: plug-ins/imagemap/imap_cmd_guides.c:113
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
 msgstr "Limites du Guide Résultant: %d,%d à %d,%d (%d zones)"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:136
+#: plug-ins/imagemap/imap_cmd_guides.c:138
 msgid ""
 "Guides are pre-defined rectangles covering the image. You define\n"
 "them by their width, height, and spacing from each other. This\n"
@@ -12105,100 +12108,109 @@ msgstr ""
 "d'eux. Cela vous permet de créer rapidement le type de plan de l'image -\n"
 "une collection de petites images, adaptée aux barres de navigation."
 
-#: plug-ins/imagemap/imap_cmd_guides.c:164 plug-ins/imagemap/imap_grid.c:198
+#: plug-ins/imagemap/imap_cmd_guides.c:166 plug-ins/imagemap/imap_grid.c:202
 msgid "Width"
 msgstr "Largeur"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:169
+#: plug-ins/imagemap/imap_cmd_guides.c:171
 msgid "Left Start at"
 msgstr "Départ Gauche à"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:174 plug-ins/imagemap/imap_grid.c:204
+#: plug-ins/imagemap/imap_cmd_guides.c:176 plug-ins/imagemap/imap_grid.c:208
 msgid "Height"
 msgstr "Hauteur"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:179
+#: plug-ins/imagemap/imap_cmd_guides.c:181
 msgid "Top Start at"
 msgstr "Départ Haut à"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:184
+#: plug-ins/imagemap/imap_cmd_guides.c:186
 msgid "Horz. Spacing"
 msgstr "Espacement Hor."
 
-#: plug-ins/imagemap/imap_cmd_guides.c:189
+#: plug-ins/imagemap/imap_cmd_guides.c:191
 msgid "No. Across"
 msgstr "Nb. en largeur"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:194
+#: plug-ins/imagemap/imap_cmd_guides.c:196
 msgid "Vert. Spacing"
 msgstr "Espacement Vert."
 
-#: plug-ins/imagemap/imap_cmd_guides.c:199
+#: plug-ins/imagemap/imap_cmd_guides.c:201
 msgid "No. Down"
 msgstr "Nb. en hauteur"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:207
+#: plug-ins/imagemap/imap_cmd_guides.c:209
 msgid "Base URL:"
 msgstr "URL de base :"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:224
+#: plug-ins/imagemap/imap_cmd_guides.c:226
 #, c-format
 msgid "Image dimensions: %d x %d"
 msgstr "Dimension de l'image : %d x %d"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:229
+#: plug-ins/imagemap/imap_cmd_guides.c:231
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
 msgstr "Limites du guide résultant: 0,0 à 0,0 (0 zones)"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:264
+#: plug-ins/imagemap/imap_cmd_guides.c:266
 msgid "Guides"
 msgstr "Guides"
 
-#: plug-ins/imagemap/imap_cmd_move_down.c:52
-#: plug-ins/imagemap/imap_cmd_object_down.c:51
-#: plug-ins/imagemap/imap_selection.c:166
+#: plug-ins/imagemap/imap_cmd_move_down.c:55
+#: plug-ins/imagemap/imap_cmd_object_down.c:54
+#: plug-ins/imagemap/imap_selection.c:168
 msgid "Move Down"
 msgstr "Descendre"
 
-#: plug-ins/imagemap/imap_cmd_move_sash.c:64
+#: plug-ins/imagemap/imap_cmd_move_sash.c:67
 msgid "Move Sash"
 msgstr "Déplacer le cadre"
 
-#: plug-ins/imagemap/imap_cmd_move_selected.c:52
+#: plug-ins/imagemap/imap_cmd_move_selected.c:55
 msgid "Move Selected Objects"
 msgstr "Déplacer les objets sélectionnés"
 
-#: plug-ins/imagemap/imap_cmd_move_up.c:52
-#: plug-ins/imagemap/imap_cmd_object_up.c:51
-#: plug-ins/imagemap/imap_selection.c:163
+#: plug-ins/imagemap/imap_cmd_move_to_front.c:54
+#: plug-ins/imagemap/imap_toolbar.c:156
+msgid "Move To Front"
+msgstr "Déplacer vers l'avant"
+
+#: plug-ins/imagemap/imap_cmd_move_up.c:55
+#: plug-ins/imagemap/imap_cmd_object_up.c:54
+#: plug-ins/imagemap/imap_selection.c:165
 msgid "Move Up"
 msgstr "Monter"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:48 plug-ins/imagemap/imap_menu.c:290
-#: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:135
+#: plug-ins/imagemap/imap_cmd_paste.c:51 plug-ins/imagemap/imap_menu.c:293
+#: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:137
 msgid "Paste"
 msgstr "Coller"
 
-#: plug-ins/imagemap/imap_cmd_select_next.c:51
+#: plug-ins/imagemap/imap_cmd_select_next.c:55
 msgid "Select Next"
-msgstr "Sélectionner le Suivant"
+msgstr "Sélectionner le suivant"
 
-#: plug-ins/imagemap/imap_cmd_select_region.c:63
+#: plug-ins/imagemap/imap_cmd_select_prev.c:54
+msgid "Select Previous"
+msgstr "Sélectionnez le précédent"
+
+#: plug-ins/imagemap/imap_cmd_select_region.c:66
 msgid "Select Region"
-msgstr "Sélectionner une Région"
+msgstr "Sélectionner une région"
 
-#: plug-ins/imagemap/imap_cmd_send_to_back.c:51
-#: plug-ins/imagemap/imap_toolbar.c:158
+#: plug-ins/imagemap/imap_cmd_send_to_back.c:54
+#: plug-ins/imagemap/imap_toolbar.c:160
 msgid "Send To Back"
-msgstr "Envoyer en Arrière"
+msgstr "Envoyer en arrière"
 
-#: plug-ins/imagemap/imap_cmd_unselect.c:49
+#: plug-ins/imagemap/imap_cmd_unselect.c:52
 msgid "Unselect"
 msgstr "Désélectionner"
 
 #: plug-ins/imagemap/imap_cmd_unselect_all.c:50
 msgid "Unselect All"
-msgstr "Tout Désélectionner"
+msgstr "Tout désélectionner"
 
 #: plug-ins/imagemap/imap_default_dialog.c:139
 msgid "Help..."
@@ -12206,15 +12218,15 @@ msgstr "Aide..."
 
 #: plug-ins/imagemap/imap_edit_area_info.c:168
 msgid "Link Type"
-msgstr "Type de Lien"
+msgstr "Type de lien"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:177
 msgid "Web Site"
-msgstr "Site Web"
+msgstr "Site web"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:183
 msgid "Ftp Site"
-msgstr "Site Ftp"
+msgstr "Site FTP"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:189
 msgid "Gopher"
@@ -12230,7 +12242,7 @@ msgstr "Autre"
 #. * always first in the list, else call psearch.
 #.
 #: plug-ins/imagemap/imap_edit_area_info.c:201
-#: plug-ins/imagemap/imap_menu.c:211 plug-ins/print/print.c:973
+#: plug-ins/imagemap/imap_menu.c:212 plug-ins/print/print.c:973
 #: plug-ins/print/print.c:974 plug-ins/print/print.c:1055
 #: plug-ins/print/print.c:1056 plug-ins/print/print.c:1155
 #: plug-ins/print/print.c:1156 plug-ins/print/print.c:1392
@@ -12292,7 +12304,7 @@ msgstr "Paramètres de la zone"
 msgid "Area #%d Settings"
 msgstr "Paramètres de la zone #%d"
 
-#: plug-ins/imagemap/imap_file.c:50 plug-ins/imagemap/imap_menu.c:66
+#: plug-ins/imagemap/imap_file.c:50 plug-ins/imagemap/imap_menu.c:67
 msgid "Error opening file"
 msgstr "Erreur lors de l'ouverture du fichier"
 
@@ -12320,55 +12332,55 @@ msgstr "Enregistrer le plan de l'image"
 msgid "Error"
 msgstr "Erreur"
 
-#: plug-ins/imagemap/imap_grid.c:143
+#: plug-ins/imagemap/imap_grid.c:147
 msgid "Grid Settings"
 msgstr "Paramètre de la grille"
 
-#: plug-ins/imagemap/imap_grid.c:154
+#: plug-ins/imagemap/imap_grid.c:158
 msgid "Snap-To Grid Enabled"
 msgstr "Colle_à_la_Grille activé"
 
-#: plug-ins/imagemap/imap_grid.c:160
+#: plug-ins/imagemap/imap_grid.c:164
 msgid "Grid Visibility and Type"
 msgstr "Visibilité de la grille et type"
 
-#: plug-ins/imagemap/imap_grid.c:167
+#: plug-ins/imagemap/imap_grid.c:171
 msgid "Hidden"
 msgstr "Caché"
 
-#: plug-ins/imagemap/imap_grid.c:174
+#: plug-ins/imagemap/imap_grid.c:178
 msgid "Lines"
 msgstr "Lignes"
 
-#: plug-ins/imagemap/imap_grid.c:183
+#: plug-ins/imagemap/imap_grid.c:187
 msgid "Crosses"
 msgstr "Croix"
 
-#: plug-ins/imagemap/imap_grid.c:190
+#: plug-ins/imagemap/imap_grid.c:194
 msgid "Grid Granularity"
 msgstr "Granularité de la grille"
 
-#: plug-ins/imagemap/imap_grid.c:213
+#: plug-ins/imagemap/imap_grid.c:217
 msgid "Grid Offset"
 msgstr "Décalage de la grille"
 
-#: plug-ins/imagemap/imap_grid.c:224
+#: plug-ins/imagemap/imap_grid.c:228
 msgid "pixels from left"
 msgstr "pixels à gauche"
 
-#: plug-ins/imagemap/imap_grid.c:229
+#: plug-ins/imagemap/imap_grid.c:233
 msgid "pixels from top"
 msgstr "pixels en haut"
 
-#: plug-ins/imagemap/imap_main.c:145
+#: plug-ins/imagemap/imap_main.c:146
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/Filtres/Web/Image cliquable Web..."
 
-#: plug-ins/imagemap/imap_main.c:660
+#: plug-ins/imagemap/imap_main.c:661
 msgid "Data changed"
 msgstr "Données modifiées"
 
-#: plug-ins/imagemap/imap_main.c:664
+#: plug-ins/imagemap/imap_main.c:665
 msgid ""
 "Some data has been changed.\n"
 "Do you really want to continue?"
@@ -12376,20 +12388,20 @@ msgstr ""
 "Des données ont été modifiées. \n"
 "Voulez vous vraiment continuer ?"
 
-#: plug-ins/imagemap/imap_main.c:873
+#: plug-ins/imagemap/imap_main.c:874
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Fichier « %s » enregistré."
 
-#: plug-ins/imagemap/imap_main.c:877
+#: plug-ins/imagemap/imap_main.c:878
 msgid "Couldn't save file:"
 msgstr "N'a pu enregistrer le fichier :"
 
-#: plug-ins/imagemap/imap_main.c:902
+#: plug-ins/imagemap/imap_main.c:903
 msgid "Image size changed"
 msgstr "La taille de l'image a changé."
 
-#: plug-ins/imagemap/imap_main.c:906
+#: plug-ins/imagemap/imap_main.c:907
 msgid ""
 "Image size has changed.\n"
 "Resize Area's?"
@@ -12397,120 +12409,120 @@ msgstr ""
 "La taille de l'image a changé.\n"
 "Redimensionner les zones ?"
 
-#: plug-ins/imagemap/imap_main.c:937
+#: plug-ins/imagemap/imap_main.c:938
 msgid "Couldn't read file:"
 msgstr "N'a pu lire le fichier :"
 
-#: plug-ins/imagemap/imap_main.c:983
+#: plug-ins/imagemap/imap_main.c:984
 #, c-format
 msgid "URL: %s"
 msgstr "URL : %s"
 
-#: plug-ins/imagemap/imap_menu.c:215
+#: plug-ins/imagemap/imap_menu.c:216
 msgid "Open..."
 msgstr "Ouvrir..."
 
-#: plug-ins/imagemap/imap_menu.c:221
+#: plug-ins/imagemap/imap_menu.c:222
 msgid "Save As..."
 msgstr "Enregistrer sous..."
 
-#: plug-ins/imagemap/imap_menu.c:224
+#: plug-ins/imagemap/imap_menu.c:225
 msgid "Preferences..."
 msgstr "Préférences..."
 
-#: plug-ins/imagemap/imap_menu.c:230
+#: plug-ins/imagemap/imap_menu.c:231
 msgid "Quit"
 msgstr "Quitter"
 
-#: plug-ins/imagemap/imap_menu.c:243
+#: plug-ins/imagemap/imap_menu.c:244
 #, c-format
 msgid "Undo %s"
 msgstr "Défaire %s"
 
-#: plug-ins/imagemap/imap_menu.c:254
+#: plug-ins/imagemap/imap_menu.c:256
 #, c-format
 msgid "Redo %s"
 msgstr "Refaire %s"
 
-#: plug-ins/imagemap/imap_menu.c:301
+#: plug-ins/imagemap/imap_menu.c:304
 msgid "Edit Area Info..."
 msgstr "Éditer les infos de la zone..."
 
-#: plug-ins/imagemap/imap_menu.c:313
+#: plug-ins/imagemap/imap_menu.c:316
 msgid "View"
 msgstr "Voir"
 
-#: plug-ins/imagemap/imap_menu.c:317
+#: plug-ins/imagemap/imap_menu.c:320
 msgid "Area List"
 msgstr "Liste de zone"
 
-#: plug-ins/imagemap/imap_menu.c:321
+#: plug-ins/imagemap/imap_menu.c:324
 msgid "Source..."
 msgstr "Source..."
 
-#: plug-ins/imagemap/imap_menu.c:329
+#: plug-ins/imagemap/imap_menu.c:332
 msgid "Grayscale"
 msgstr "Échelle de gris"
 
-#: plug-ins/imagemap/imap_menu.c:341
+#: plug-ins/imagemap/imap_menu.c:344
 msgid "Zoom In"
 msgstr "Zoom +"
 
-#: plug-ins/imagemap/imap_menu.c:344
+#: plug-ins/imagemap/imap_menu.c:347
 msgid "Zoom Out"
 msgstr "Zoom -"
 
-#: plug-ins/imagemap/imap_menu.c:349
+#: plug-ins/imagemap/imap_menu.c:352
 msgid "Zoom To"
 msgstr "Zoomer à"
 
-#: plug-ins/imagemap/imap_menu.c:379
+#: plug-ins/imagemap/imap_menu.c:382
 msgid "Mapping"
 msgstr "Tracé"
 
-#: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:129
+#: plug-ins/imagemap/imap_menu.c:385 plug-ins/imagemap/imap_popup.c:129
 msgid "Arrow"
 msgstr "Pointer"
 
-#: plug-ins/imagemap/imap_menu.c:392
+#: plug-ins/imagemap/imap_menu.c:395
 msgid "Edit Map Info..."
 msgstr "Éditer les paramètres..."
 
-#: plug-ins/imagemap/imap_menu.c:399
+#: plug-ins/imagemap/imap_menu.c:402
 msgid "Goodies"
 msgstr "Bricoles"
 
-#: plug-ins/imagemap/imap_menu.c:401 plug-ins/imagemap/imap_popup.c:149
+#: plug-ins/imagemap/imap_menu.c:404 plug-ins/imagemap/imap_popup.c:149
 msgid "Grid Settings..."
 msgstr "Paramètres de la grille..."
 
-#: plug-ins/imagemap/imap_menu.c:403
+#: plug-ins/imagemap/imap_menu.c:406
 msgid "Create Guides..."
 msgstr "Créer des guides..."
 
-#: plug-ins/imagemap/imap_menu.c:410 plug-ins/maze/maze_face.c:193
+#: plug-ins/imagemap/imap_menu.c:413 plug-ins/maze/maze_face.c:193
 msgid "Help"
 msgstr "Aide"
 
-#: plug-ins/imagemap/imap_menu.c:413
+#: plug-ins/imagemap/imap_menu.c:416
 msgid "About ImageMap..."
-msgstr "À propos de l'outil Image cliquable Web..."
+msgstr "À propos d'ImageMap..."
 
-#: plug-ins/imagemap/imap_polygon.c:391
+#: plug-ins/imagemap/imap_polygon.c:393
 msgid "x (pixels)"
 msgstr "x (pixels)"
 
-#: plug-ins/imagemap/imap_polygon.c:391
+#: plug-ins/imagemap/imap_polygon.c:393
 msgid "y (pixels)"
 msgstr "y (pixels)"
 
-#: plug-ins/imagemap/imap_polygon.c:458
+#: plug-ins/imagemap/imap_polygon.c:460
 msgid "Append"
 msgstr "Appliquer"
 
 #: plug-ins/imagemap/imap_popup.c:125
 msgid "Map Info..."
-msgstr "Info sur le plan..."
+msgstr "Info sur la carte..."
 
 #: plug-ins/imagemap/imap_popup.c:128
 msgid "Tools"
@@ -12528,155 +12540,151 @@ msgstr "Dehors"
 msgid "Guides..."
 msgstr "Guides..."
 
-#: plug-ins/imagemap/imap_preferences.c:204
+#: plug-ins/imagemap/imap_preferences.c:205
 msgid "Couldn't save resource file:"
 msgstr "Je n'ai pu enregistrer le fichier de ressources :"
 
-#: plug-ins/imagemap/imap_preferences.c:356
+#: plug-ins/imagemap/imap_preferences.c:357
 msgid "Select Color"
 msgstr "Régler la couleur"
 
-#: plug-ins/imagemap/imap_preferences.c:434
+#: plug-ins/imagemap/imap_preferences.c:435
 msgid "Default Map Type"
 msgstr "Type d'image par défaut :"
 
-#: plug-ins/imagemap/imap_preferences.c:453
+#: plug-ins/imagemap/imap_preferences.c:454
 msgid "Prompt for area info"
 msgstr "Renseigner immédiatement la zone créée"
 
-#: plug-ins/imagemap/imap_preferences.c:455
+#: plug-ins/imagemap/imap_preferences.c:456
 msgid "Require default URL"
 msgstr "Demander une URL par défaut"
 
-#: plug-ins/imagemap/imap_preferences.c:457
+#: plug-ins/imagemap/imap_preferences.c:458
 msgid "Show area handles"
-msgstr "Montrer les poignées autour des zones"
+msgstr "Afficher les poignées autour des zones"
 
-#: plug-ins/imagemap/imap_preferences.c:459
+#: plug-ins/imagemap/imap_preferences.c:460
 msgid "Keep NCSA circles true"
 msgstr "Rendre fidèlement les cercles NCSA"
 
-#: plug-ins/imagemap/imap_preferences.c:461
+#: plug-ins/imagemap/imap_preferences.c:462
 msgid "Show area URL tip"
-msgstr "Montrer des bulles d'aides pour les URL"
+msgstr "Afficher des bulles d'aides pour les URL"
 
-#: plug-ins/imagemap/imap_preferences.c:464
+#: plug-ins/imagemap/imap_preferences.c:465
 msgid "Use double-sized grab handles"
 msgstr "Poignées de taille double"
 
-#: plug-ins/imagemap/imap_preferences.c:488
+#: plug-ins/imagemap/imap_preferences.c:489
 msgid "Number of Undo levels (1 - 99):"
 msgstr "Nombre de niveaux d'annulation (1-99) :"
 
-#: plug-ins/imagemap/imap_preferences.c:491
+#: plug-ins/imagemap/imap_preferences.c:492
 msgid "Number of MRU entries (1 - 16):"
 msgstr "Nombre d'entrées de documents récents (1-16) :"
 
-#: plug-ins/imagemap/imap_preferences.c:494
+#: plug-ins/imagemap/imap_preferences.c:495
 msgid "Menu"
 msgstr "Menu"
 
-#: plug-ins/imagemap/imap_preferences.c:530
+#: plug-ins/imagemap/imap_preferences.c:531
 msgid "Normal:"
 msgstr "Normal :"
 
-#: plug-ins/imagemap/imap_preferences.c:536
+#: plug-ins/imagemap/imap_preferences.c:537
 msgid "Selected:"
 msgstr "Sélectionné :"
 
-#: plug-ins/imagemap/imap_preferences.c:564
+#: plug-ins/imagemap/imap_preferences.c:565
 msgid "General Preferences"
 msgstr "Préférences générale"
 
-#: plug-ins/imagemap/imap_rectangle.c:375
+#: plug-ins/imagemap/imap_rectangle.c:379
 msgid "Upper left x:"
 msgstr "Haut gauche x :"
 
-#: plug-ins/imagemap/imap_rectangle.c:381
+#: plug-ins/imagemap/imap_rectangle.c:385
 msgid "Upper left y:"
 msgstr "Haut gauche y :"
 
-#: plug-ins/imagemap/imap_selection.c:336
+#: plug-ins/imagemap/imap_selection.c:338
 msgid "URL"
 msgstr "URL"
 
-#: plug-ins/imagemap/imap_selection.c:336
+#: plug-ins/imagemap/imap_selection.c:338
 msgid "Target"
 msgstr "Cible"
 
-#: plug-ins/imagemap/imap_selection.c:336
+#: plug-ins/imagemap/imap_selection.c:338
 msgid "Comment"
 msgstr "Commentaire"
 
-#: plug-ins/imagemap/imap_settings.c:68
+#: plug-ins/imagemap/imap_settings.c:69
 msgid "Settings for this Mapfile"
 msgstr "Réglages pour cette image cliquable"
 
-#: plug-ins/imagemap/imap_settings.c:82
+#: plug-ins/imagemap/imap_settings.c:83
 msgid "Image name:"
 msgstr "Nom de l'image :"
 
-#: plug-ins/imagemap/imap_settings.c:83
+#: plug-ins/imagemap/imap_settings.c:84
 msgid "Select Image File"
 msgstr "Sélectionner l'image"
 
-#: plug-ins/imagemap/imap_settings.c:87
+#: plug-ins/imagemap/imap_settings.c:88
 msgid "Title:"
 msgstr "Titre :"
 
-#: plug-ins/imagemap/imap_settings.c:91
+#: plug-ins/imagemap/imap_settings.c:92
 msgid "Default URL:"
 msgstr "URL par défaut :"
 
-#: plug-ins/imagemap/imap_settings.c:108
+#: plug-ins/imagemap/imap_settings.c:109
 msgid "Map file format"
 msgstr "Format de fichier ImageMap"
 
-#: plug-ins/imagemap/imap_source.c:54
+#: plug-ins/imagemap/imap_source.c:57
 msgid "View Source"
 msgstr "Voir la source"
 
-#: plug-ins/imagemap/imap_toolbar.c:115
+#: plug-ins/imagemap/imap_toolbar.c:117
 msgid "Preferences"
 msgstr "Préférences"
 
-#: plug-ins/imagemap/imap_toolbar.c:142
+#: plug-ins/imagemap/imap_toolbar.c:144
 msgid "Zoom in"
 msgstr "Zoom +"
 
-#: plug-ins/imagemap/imap_toolbar.c:145
+#: plug-ins/imagemap/imap_toolbar.c:147
 msgid "Zoom out"
 msgstr "Zoom -"
 
-#: plug-ins/imagemap/imap_toolbar.c:150
+#: plug-ins/imagemap/imap_toolbar.c:152
 msgid "Edit Map Info"
 msgstr "Éditer les paramètres de l'image cliquable"
 
-#: plug-ins/imagemap/imap_toolbar.c:154
-msgid "Move To Front"
-msgstr "Déplacer vers l'avant"
-
-#: plug-ins/imagemap/imap_tools.c:128
+#: plug-ins/imagemap/imap_tools.c:131
 msgid "Select existing area"
 msgstr "Sélectionner une zone existante"
 
-#: plug-ins/imagemap/imap_tools.c:132
+#: plug-ins/imagemap/imap_tools.c:136
 msgid "Define Rectangle area"
 msgstr "Définir une zone Rectangle"
 
-#: plug-ins/imagemap/imap_tools.c:136
+#: plug-ins/imagemap/imap_tools.c:141
 msgid "Define Circle/Oval area"
 msgstr "Définir une zone Circulaire/Ovale"
 
-#: plug-ins/imagemap/imap_tools.c:140
+#: plug-ins/imagemap/imap_tools.c:146
 msgid "Define Polygon area"
 msgstr "Définir une zone Polygonale"
 
-#: plug-ins/imagemap/imap_tools.c:144
+#: plug-ins/imagemap/imap_tools.c:151
 msgid "Edit selected area info"
 msgstr "Éditer les infos de la zone sélectionnée"
 
-#: plug-ins/imagemap/imap_tools.c:148
+#: plug-ins/imagemap/imap_tools.c:156
 msgid "Delete selected area"
 msgstr "Effacer la zone sélectionnée"
 
@@ -13107,7 +13115,7 @@ msgstr "Rotation de la carte des couleurs en cours..."
 
 #: plug-ins/rcm/rcm_callback.c:154 plug-ins/rcm/rcm_dialog.c:265
 msgid "Switch to clockwise"
-msgstr "Passer en mode horraire"
+msgstr "Passer en mode horaire"
 
 #: plug-ins/rcm/rcm_callback.c:154 plug-ins/rcm/rcm_dialog.c:265
 msgid "Switch to c/clockwise"
@@ -13119,7 +13127,7 @@ msgstr "Changer l'ordre des lignes"
 
 #: plug-ins/rcm/rcm_dialog.c:279
 msgid "Select all"
-msgstr "Tout Sélectionner"
+msgstr "Tout sélectionner"
 
 #. spinbutton 1
 #: plug-ins/rcm/rcm_dialog.c:289 plug-ins/rcm/rcm_dialog.c:360
@@ -15335,7 +15343,7 @@ msgstr "Erreur : le fichier de propriétés XJT %s est vide"
 #~ msgstr "Annule les changements et fermer l'extension."
 
 #~ msgid "Show information about the plug-in and the author"
-#~ msgstr "Montrer des informations sur cet extension et son auteur"
+#~ msgstr "Afficher des informations sur cet extension et son auteur"
 
 #~ msgid "Loading..."
 #~ msgstr "Chargement..."
@@ -15604,7 +15612,7 @@ msgstr "Erreur : le fichier de propriétés XJT %s est vide"
 #~ msgstr "Noircir"
 
 #~ msgid "Show information about this plug-in and the author"
-#~ msgstr "Montrer des informations sur cet extension et son auteur"
+#~ msgstr "Afficher des informations sur cet extension et son auteur"
 
 #~ msgid "Accept settings and apply filter on image"
 #~ msgstr "Accepter les paratétres et appliquer le filtre sur l'image"
