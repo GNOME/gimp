@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-11-03 01:00+0100\n"
-"PO-Revision-Date: 2003-11-04 19:17+0100\n"
+"PO-Revision-Date: 2003-11-23 22:13+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -4251,7 +4251,7 @@ msgstr "_Genera un documento HTML completo"
 msgid ""
 "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
-msgstr "Se selezionata GTM produrrà un documento HTML completo di tag <HTM>, <BODY>, ecc. invece che solamente una tabella HTML.\n"
+msgstr "Se selezionata GTM produrrà un documento HTML completo di tag <HTM>, <BODY>, ecc. invece che solamente una tabella HTML."
 
 #. HTML Table Creation Options
 #: plug-ins/common/gtm.c:489
