@@ -5,3 +5,28 @@ This is the development branch of The GIMP. Here's where new features
 are being added. Somewhen this summer the next stable GIMP release,
 GIMP 2.2, will emerge out of this.
 
+
+Overview of Changes since 2.0
+=============================
+
+ - Use new widgets and frameworks provided by GTK+ 2.4; this means
+   * use the new GtkFileChooser dialog
+   * ported the menus to GtkUIManager, create all core menus from XML
+     files at runtime
+   * use a global accelerator table in all docks and image windows
+   * added replacement widgets based on GtkComboBox for most users of
+     GtkOptionMenu (GimpUnitMenu remains to be ported)
+   * started to make the order and visibility of tools in the toolbox
+     configurable
+   * allow to keep toolbox and dock windows above (if the WM supports
+     this hint)
+ - Plug-ins can now register the same procedures in multiple places,
+   the API to register menu entries has been changed in a
+   backward-compatible fashion.
+ - AlienMap and GIcon plug-ins were removed.
+ - A plug-in to load and save windows icon files has been added.
+ - Work has begun to make the GIMP user interface comply better with
+   the GNOME HIG. This is an ongoing effort and the interface is quite
+   inconsistent at the moment.
+ - Allow to clear the undo history.
+ - Allow pixels as image unit; simplifies handling of units.
