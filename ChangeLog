@@ -1,3 +1,9 @@
+2000-08-08  Sven Neumann  <sven@gimp.org>
+
+	* app/palette.c: don't crash when no palettes are available
+	(thanks to Daniel for pointing me to this), but allow to open
+	the Palette Editor so you can refresh or create a new one.
+
 2000-08-07  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/gdyntext/gdyntext.c: no need to INIT_I18N_UI() in the

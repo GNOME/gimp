@@ -148,7 +148,7 @@ static void  palette_dialog_draw_entries    (PaletteDialog *palette,
 static void  palette_dialog_redraw          (PaletteDialog *palette);
 static void  palette_dialog_scroll_top_left (PaletteDialog *palette);
 
-static PaletteDialog * palette_dialog_new        (gboolean vert);
+static PaletteDialog * palette_dialog_new        (gboolean       editor);
 static ImportDialog  * palette_import_dialog_new (PaletteDialog *palette);
 
 
@@ -398,7 +398,7 @@ palette_entries_load (gchar *filename)
   if (! (fp = fopen (filename, "r")))
     {
       palette_entries_free (entries);
-      g_warning ("failed to open palette file %s: can't happen?", filename);
+      g_warning ("Failed to open palette file %s: can't happen?", filename);
       return;
     }
 
@@ -516,7 +516,7 @@ palette_entries_save (PaletteEntries *palette,
   /*  Open the requested file  */
   if (! (fp = fopen (filename, "w")))
     {
-      g_message (_("can't save palette \"%s\"\n"), filename);
+      g_message (_("Can't save palette \"%s\"\n"), filename);
       return;
     }
 
@@ -557,7 +557,7 @@ palette_entries_update_small_preview (PaletteEntries *entries,
 				      GdkGC          *gc)
 {
   guchar rgb_buf[SM_PREVIEW_WIDTH * SM_PREVIEW_HEIGHT * 3];
-  GSList *tmp_link;
+  GSList *list;
   gint index;
   PaletteEntry *entry;
 
@@ -574,12 +574,12 @@ palette_entries_update_small_preview (PaletteEntries *entries,
 		      SM_PREVIEW_WIDTH*3);
 
   index = 0;
-  for (tmp_link = entries->colors; tmp_link; tmp_link = g_slist_next (tmp_link))
+  for (list = entries->colors; list; list = g_slist_next (list))
     {
       guchar cell[3*3*3];
       gint loop;
 
-      entry = tmp_link->data;
+      entry = list->data;
 
       for (loop = 0; loop < 27 ; loop+=3)
 	{
@@ -590,8 +590,8 @@ palette_entries_update_small_preview (PaletteEntries *entries,
 
       gdk_draw_rgb_image (entries->pixmap,
 			  gc,
-			  1+(index%((SM_PREVIEW_WIDTH-2)/3))*3,
-			  1+(index/((SM_PREVIEW_WIDTH-2)/3))*3,
+			  1 + (index % ((SM_PREVIEW_WIDTH-2) / 3)) * 3,
+			  1 + (index / ((SM_PREVIEW_WIDTH-2) / 3)) * 3,
 			  3,
 			  3,
 			  GDK_RGB_DITHER_NORMAL,
@@ -600,7 +600,7 @@ palette_entries_update_small_preview (PaletteEntries *entries,
 
       index++;
 
-      if (index >= (((SM_PREVIEW_WIDTH-2)*(SM_PREVIEW_HEIGHT-2))/9))
+      if (index >= (((SM_PREVIEW_WIDTH-2) * (SM_PREVIEW_HEIGHT-2)) / 9))
 	break;
     }
 }
@@ -1253,7 +1253,7 @@ palette_dialog_color_area_events (GtkWidget     *widget,
       row = (bevent->y - 1) / entry_height;
       pos = row * palette->columns + col;
       
-      tmp_link = g_slist_nth (palette->entries->colors, pos);
+      tmp_link = (palette->entries != NULL) ? g_slist_nth (palette->entries->colors, pos) : NULL;
 
       if (tmp_link)
 	palette->dnd_color = tmp_link->data;
@@ -1609,6 +1609,9 @@ palette_dialog_redraw (PaletteDialog *palette)
   gint preview_width;
   guint width;
 
+  if (!palette->entries)
+    return;
+
   width = palette->color_area->parent->parent->parent->allocation.width;
 
   if ((palette->columns_valid) && palette->last_width == width)
@@ -1691,6 +1694,7 @@ palette_dialog_color_name_entry_changed (GtkWidget *widget,
   PaletteDialog *palette;
 
   palette = data;
+  g_return_if_fail (palette->entries != NULL);
 
   if (palette->color->name)
     g_free (palette->color->name);
@@ -1935,21 +1939,14 @@ palette_dialog_edit_callback (GtkWidget *widget,
   palette = (PaletteDialog *) data;
   sel_list = GTK_CLIST (palette->clist)->selection;
 
-  while (sel_list)
+  if (sel_list)
     {
-      gint row;
-
-      row = GPOINTER_TO_INT (sel_list->data);
-
       p_entries = 
 	(PaletteEntries *) gtk_clist_get_row_data (GTK_CLIST (palette->clist),
-						   row);
-
-      palette_create_edit (p_entries);
-
-      /* One only */
-      return;
+						   GPOINTER_TO_INT (sel_list->data));
     }
+
+  palette_create_edit (p_entries);
 }
 
 static void
@@ -2028,7 +2025,7 @@ palette_dialog_drop_color (GtkWidget *widget,
 /*  the palette & palette edit dialog constructor  ***************************/
 
 PaletteDialog *
-palette_dialog_new (gint vert)
+palette_dialog_new (gboolean editor)
 {
   PaletteDialog *palette;
   GtkWidget *hbox;
@@ -2043,20 +2040,14 @@ palette_dialog_new (gint vert)
   GtkWidget *button;
   gchar     *titles[3];
 
-  palette = g_new (PaletteDialog, 1);
+  palette = g_new0 (PaletteDialog, 1);
   palette->entries               = default_palette_entries;
-  palette->color                 = NULL;
-  palette->dnd_color             = NULL;
-  palette->color_notebook        = NULL;
-  palette->color_notebook_active = FALSE;
   palette->zoom_factor           = 1.0;
-  palette->last_width            = 0;
-  palette->col_width             = 0;
   palette->columns               = COLUMNS;
   palette->columns_valid         = TRUE;
   palette->freeze_update         = FALSE;
 
-  if (!vert)
+  if (!editor)
     {
       palette->shell =
 	gimp_dialog_new (_("Color Palette Edit"), "color_palette_edit",
@@ -2089,10 +2080,10 @@ palette_dialog_new (gint vert)
 			 palette, NULL, NULL, TRUE, TRUE,
 
 			 NULL);
-    }
+     }
 
   /*  The main container widget  */
-  if (vert)
+  if (editor)
     {
       hbox = gtk_notebook_new ();
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 1);
@@ -2165,6 +2156,7 @@ palette_dialog_new (gint vert)
   gtk_widget_show (entry);
   gtk_box_pack_start (GTK_BOX (hbox2), entry, TRUE, TRUE, 0);
   gtk_entry_set_text (GTK_ENTRY (entry), _("Undefined"));
+  gtk_widget_set_sensitive (entry, FALSE);
   palette->entry_sig_id =
     gtk_signal_connect (GTK_OBJECT (entry), "changed",
 			GTK_SIGNAL_FUNC (palette_dialog_color_name_entry_changed),
@@ -2191,7 +2183,7 @@ palette_dialog_new (gint vert)
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_ALWAYS);
 
-  if (vert)
+  if (editor)
     {
       gtk_notebook_append_page (GTK_NOTEBOOK (hbox), vbox,
 				gtk_label_new (_("Palette")));
@@ -2216,7 +2208,7 @@ palette_dialog_new (gint vert)
   gtk_clist_column_titles_passive (GTK_CLIST (palette->clist));
   gtk_container_add (GTK_CONTAINER (scrolledwindow), palette->clist);
 
-  if (!vert)
+  if (!editor)
     gtk_clist_set_selection_mode (GTK_CLIST (palette->clist),
 				  GTK_SELECTION_EXTENDED);
 
@@ -2225,7 +2217,7 @@ palette_dialog_new (gint vert)
 		      (gpointer) palette);
   gtk_widget_show (palette->clist);
   
-  if (!vert) 
+  if (!editor) 
     {
       frame = gtk_frame_new (_("Palette Ops"));
       gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
