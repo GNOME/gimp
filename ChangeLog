@@ -1,5 +1,12 @@
 2003-02-24  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptext.[ch]
+	* app/text/gimptextlayout.c: added a language property to GimpText
+	which defaults to the language derived from the users locale. Set
+	the language on the PangoContext.
+
+2003-02-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mblur.c: added parentheses to please the
 	compiler and to make the code more legible.
 

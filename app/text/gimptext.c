@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <glib-object.h>
 
 #include "libgimpbase/gimplimits.h"
@@ -43,6 +45,7 @@ enum
   PROP_FONT,
   PROP_FONT_SIZE,
   PROP_FONT_SIZE_UNIT,
+  PROP_LANGUAGE,
   PROP_COLOR,
   PROP_FIXED_WIDTH,
   PROP_JUSTIFICATION,
@@ -52,16 +55,18 @@ enum
   PROP_BORDER
 };
 
-static void  gimp_text_class_init   (GimpTextClass *klass);
-static void  gimp_text_finalize     (GObject       *object);
-static void  gimp_text_get_property (GObject       *object,
-                                     guint          property_id,
-                                     GValue        *value,
-                                     GParamSpec    *pspec);
-static void  gimp_text_set_property (GObject       *object,
-                                     guint          property_id,
-                                     const GValue  *value,
-                                     GParamSpec    *pspec);
+static void    gimp_text_class_init           (GimpTextClass *klass);
+static void    gimp_text_finalize             (GObject       *object);
+static void    gimp_text_get_property         (GObject       *object,
+                                               guint          property_id,
+                                               GValue        *value,
+                                               GParamSpec    *pspec);
+static void    gimp_text_set_property         (GObject       *object,
+                                               guint          property_id,
+                                               const GValue  *value,
+                                               GParamSpec    *pspec);
+static gchar * gimp_text_get_default_language (void);
+
 
 static GObjectClass *parent_class = NULL;
 
@@ -109,6 +114,7 @@ gimp_text_class_init (GimpTextClass *klass)
   GObjectClass *object_class;
   GParamSpec   *param_spec;
   GimpRGB       black;
+  gchar        *language;
 
   object_class = G_OBJECT_CLASS (klass);
 
@@ -119,6 +125,8 @@ gimp_text_class_init (GimpTextClass *klass)
   object_class->set_property = gimp_text_set_property;
 
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+
+  language = gimp_text_get_default_language ();
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_TEXT,
 				   "text", NULL,
@@ -136,6 +144,10 @@ gimp_text_class_init (GimpTextClass *klass)
 				 "font-size-unit", NULL,
 				 TRUE, GIMP_UNIT_PIXEL,
 				 0);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
+				   "language", NULL,
+				   language,
+				   0);
   GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_COLOR,
 				  "color", NULL,
 				  &black,
@@ -172,6 +184,7 @@ gimp_text_class_init (GimpTextClass *klass)
                                  G_PARAM_CONSTRUCT | G_PARAM_WRITABLE);
   g_object_class_install_property (object_class, PROP_BORDER, param_spec);
 
+  g_free (language);
 }
 
 static void
@@ -188,6 +201,11 @@ gimp_text_finalize (GObject *object)
     {
       g_free (text->font);
       text->font = NULL;
+    }
+  if (text->language)
+    {
+      g_free (text->language);
+      text->language = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -214,6 +232,9 @@ gimp_text_get_property (GObject      *object,
       break;
     case PROP_FONT_SIZE_UNIT:
       g_value_set_int (value, text->font_size_unit);
+      break;
+    case PROP_LANGUAGE:
+      g_value_set_string (value, text->language);
       break;
     case PROP_COLOR:
       g_value_set_boxed (value, &text->color);
@@ -264,6 +285,10 @@ gimp_text_set_property (GObject      *object,
     case PROP_FONT_SIZE_UNIT:
       text->font_size_unit = g_value_get_int (value);
       break;
+    case PROP_LANGUAGE:
+      g_free (text->language);
+      text->language = g_value_dup_string (value);
+      break;
     case PROP_COLOR:
       color = g_value_get_boxed (value);
       text->color = *color;
@@ -290,4 +315,45 @@ gimp_text_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+
+/* 
+ *  basically copied from gtk_get_default_language()
+ */
+static gchar *
+gimp_text_get_default_language (void)
+{
+  gchar *lang;
+  gchar *p;
+  
+#ifdef G_OS_WIN32
+  p = getenv ("LC_ALL");
+  if (p != NULL)
+    lang = g_strdup (p);
+  else
+    {
+      p = getenv ("LANG");
+      if (p != NULL)
+	lang = g_strdup (p);
+      else
+	{
+	  p = getenv ("LC_CTYPE");
+	  if (p != NULL)
+	    lang = g_strdup (p);
+	  else
+	    lang = g_win32_getlocale ();
+	}
+    }
+#else
+  lang = g_strdup (setlocale (LC_CTYPE, NULL));
+#endif
+  p = strchr (lang, '.');
+  if (p)
+    *p = '\0';
+  p = strchr (lang, '@');
+  if (p)
+    *p = '\0';
+
+  return lang;
 }

@@ -40,6 +40,7 @@ struct _GimpText
   gchar                 *font;
   gdouble                font_size;
   GimpUnit               font_size_unit;
+  gchar                 *language;
   GimpRGB                color;
   GimpTextJustification  justify;
   gdouble                indent;

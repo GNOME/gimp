@@ -177,6 +177,10 @@ gimp_text_layout_new (GimpText  *text,
 
   context = gimp_image_get_pango_context (image);
 
+  if (text->language)
+    pango_context_set_language (context,
+                                pango_language_from_string (text->language));
+
   layout = g_object_new (GIMP_TYPE_TEXT_LAYOUT, NULL);
   layout->text   = g_object_ref (text);
   layout->layout = pango_layout_new (context);
