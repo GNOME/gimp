@@ -1,5 +1,10 @@
 2003-05-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimppaletteeditor.c (color_palette_target_table): 
+	removed GIMP_TARGET_PALETTE. Fixes bug #113237.
+
+2003-05-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-convert.c (gimp_image_convert): push a
 	colormap undo if the image was INDEXED. Fixes bug #113236.
 	Minor Cleanups.

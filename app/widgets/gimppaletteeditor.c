@@ -113,8 +113,7 @@ static void   palette_editor_invalidate_preview    (GimpPalette       *palette,
 /*  dnd stuff  */
 static GtkTargetEntry color_palette_target_table[] =
 {
-  GIMP_TARGET_COLOR,
-  GIMP_TARGET_PALETTE
+  GIMP_TARGET_COLOR
 };
 
 
