@@ -38,6 +38,7 @@
 #include "gimpcontext.h"
 #include "gimpcoreconfig.h"
 #include "gimpdatafactory.h"
+#include "gimpdocuments.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimpimage-new.h"
@@ -149,10 +150,7 @@ gimp_init (Gimp *gimp)
   gtk_object_ref (GTK_OBJECT (gimp->tool_info_list));
   gtk_object_sink (GTK_OBJECT (gimp->tool_info_list));
 
-  gimp->documents           = gimp_list_new (GIMP_TYPE_IMAGEFILE,
-					     GIMP_CONTAINER_POLICY_STRONG);
-  gtk_object_ref (GTK_OBJECT (gimp->documents));
-  gtk_object_sink (GTK_OBJECT (gimp->documents));
+  gimp_documents_init (gimp);
 
   gimp->image_base_type_names   = NULL;
   gimp->fill_type_names         = NULL;
@@ -185,11 +183,7 @@ gimp_destroy (GtkObject *object)
 
   gimp_image_new_exit (gimp);
 
-  if (gimp->documents)
-    {
-      g_object_unref (G_OBJECT (gimp->documents));
-      gimp->documents = NULL;
-    }
+  gimp_documents_exit (gimp);
 
   if (gimp->tool_info_list)
     {
@@ -274,6 +268,7 @@ gimp_new (void)
   g_type_class_ref (GIMP_TYPE_CONTEXT);
   g_type_class_ref (GIMP_TYPE_CONTAINER);
   g_type_class_ref (GIMP_TYPE_IMAGE);
+  g_type_class_ref (GIMP_TYPE_IMAGEFILE);
 
   gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
 
@@ -389,20 +384,24 @@ gimp_restore (Gimp     *gimp,
   gimp_parasiterc_load (gimp);
 
   /*  initialize the list of gimp brushes    */
-  app_init_update_status (NULL, _("Brushes"), 0.20);
+  app_init_update_status (NULL, _("Brushes"), 0.18);
   gimp_data_factory_data_init (gimp->brush_factory, no_data); 
 
   /*  initialize the list of gimp patterns   */
-  app_init_update_status (NULL, _("Patterns"), 0.40);
+  app_init_update_status (NULL, _("Patterns"), 0.36);
   gimp_data_factory_data_init (gimp->pattern_factory, no_data); 
 
   /*  initialize the list of gimp palettes   */
-  app_init_update_status (NULL, _("Palettes"), 0.60);
+  app_init_update_status (NULL, _("Palettes"), 0.54);
   gimp_data_factory_data_init (gimp->palette_factory, no_data); 
 
   /*  initialize the list of gimp gradients  */
-  app_init_update_status (NULL, _("Gradients"), 0.80);
+  app_init_update_status (NULL, _("Gradients"), 0.72);
   gimp_data_factory_data_init (gimp->gradient_factory, no_data); 
+
+  /*  initialize  the global parasite table  */
+  app_init_update_status (NULL, _("Documents"), 0.90);
+  gimp_documents_load (gimp);
 
   app_init_update_status (NULL, NULL, 1.00);
 }
@@ -417,6 +416,7 @@ gimp_shutdown (Gimp *gimp)
   gimp_data_factory_data_save (gimp->pattern_factory);
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_save (gimp->palette_factory);
+  gimp_documents_save (gimp);
   gimp_parasiterc_save (gimp);
   gimp_unitrc_save (gimp);
 }

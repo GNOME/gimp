@@ -45,6 +45,8 @@
 
 #include "core/gimp.h"
 #include "core/gimpcoreconfig.h"
+#include "core/gimpimagefile.h"
+#include "core/gimplist.h"
 #include "core/gimpparasite.h"
 #include "core/gimptoolinfo.h"
 
@@ -103,7 +105,8 @@ typedef enum
   TT_XNAVPREVSIZE,
   TT_XHELPBROWSER,
   TT_XCURSORMODE,
-  TT_XCOMMENT
+  TT_XCOMMENT,
+  TT_XDOCUMENT
 } TokenType;
 
 
@@ -153,6 +156,7 @@ static gint           parse_parasite            (gpointer val1p, gpointer val2p)
 static gint           parse_help_browser        (gpointer val1p, gpointer val2p);
 static gint           parse_cursor_mode         (gpointer val1p, gpointer val2p);
 static gint           parse_color_history       (gpointer val1p, gpointer val2p);
+static gint           parse_document            (gpointer val1p, gpointer val2p);
 
 static gint           parse_locale_def          (PlugInDef      *plug_in_def);
 static gint           parse_help_def            (PlugInDef      *plug_in_def);
@@ -315,13 +319,6 @@ static ParseFunc funcs[] =
     &(gimprc.show_tool_tips) },
   { "default-dot-for-dot",       TT_BOOLEAN,
     &(gimprc.default_dot_for_dot), NULL },
-  { "plug-in",                   TT_XPLUGIN,       NULL, NULL },
-  { "plug-in-def",               TT_XPLUGINDEF,    NULL, NULL },
-  { "menu-path",                 TT_XMENUPATH,     NULL, NULL },
-  { "device",                    TT_XDEVICE,       NULL, NULL },
-  { "session-info",              TT_XSESSIONINFO,  NULL, NULL },
-  { "color-history",             TT_XCOLORHISTORY, NULL, NULL },
-  { "unit-info",                 TT_XUNITINFO,     NULL, NULL },
   { "monitor-xresolution",       TT_DOUBLE,
     &(gimprc.monitor_xres), NULL },
   { "monitor-yresolution",       TT_DOUBLE,
@@ -364,10 +361,17 @@ static ParseFunc funcs[] =
   { "theme-path",                TT_PATH,
     &(gimprc.theme_path), NULL },
   { "theme",                     TT_STRING,
-    &(gimprc.theme), NULL }
+    &(gimprc.theme), NULL },
+
+  { "plug-in",                   TT_XPLUGIN,       NULL, NULL },
+  { "plug-in-def",               TT_XPLUGINDEF,    NULL, NULL },
+  { "menu-path",                 TT_XMENUPATH,     NULL, NULL },
+  { "device",                    TT_XDEVICE,       NULL, NULL },
+  { "session-info",              TT_XSESSIONINFO,  NULL, NULL },
+  { "color-history",             TT_XCOLORHISTORY, NULL, NULL },
+  { "unit-info",                 TT_XUNITINFO,     NULL, NULL },
+  { "document",                  TT_XDOCUMENT,     NULL, NULL }
 };
-static gint n_funcs = (sizeof (funcs) /
-		       sizeof (funcs[0]));
 
 
 static ParseInfo  parse_info = { NULL };
@@ -408,8 +412,6 @@ gimprc_init (Gimp *gimp)
 	{ "interpolation-type", TT_INTERP,  NULL, NULL },
 	{ "num-processors",     TT_INT,     NULL, NULL }
       };
-      static gint n_base_funcs = (sizeof (base_funcs) /
-				  sizeof (base_funcs[0]));
 
       static ParseFunc core_funcs[] =
       {
@@ -435,8 +437,6 @@ gimprc_init (Gimp *gimp)
 	{ "module-load-inhibit",      TT_PATH,      NULL, NULL },
 	{ "thumbnail-mode",           TT_INT,       NULL, NULL }
       };
-      static gint n_core_funcs = (sizeof (core_funcs) /
-				  sizeof (core_funcs[0]));
 
       /*  this hurts badly  */
       base_funcs[0].val1p  = &base_config->temp_path;
@@ -471,17 +471,17 @@ gimprc_init (Gimp *gimp)
 
       parse_func_hash = g_hash_table_new (g_str_hash, g_str_equal);
 
-      for (i = 0; i < n_base_funcs; i++)
+      for (i = 0; i < G_N_ELEMENTS (base_funcs); i++)
 	g_hash_table_insert (parse_func_hash,
 			     base_funcs[i].name,
 			     &base_funcs[i]);
 
-      for (i = 0; i < n_core_funcs; i++)
+      for (i = 0; i < G_N_ELEMENTS (core_funcs); i++)
 	g_hash_table_insert (parse_func_hash,
 			     core_funcs[i].name,
 			     &core_funcs[i]);
 
-      for (i = 0; i < n_funcs; i++)
+      for (i = 0; i < G_N_ELEMENTS (funcs); i++)
 	g_hash_table_insert (parse_func_hash,
 			     funcs[i].name,
 			     &funcs[i]);
@@ -1003,6 +1003,8 @@ parse_statement (void)
 	  return parse_cursor_mode (func->val1p, func->val2p);
 	case TT_XCOMMENT:
 	  return parse_string (func->val1p, func->val2p);
+	case TT_XDOCUMENT:
+	  return parse_document (func->val1p, func->val2p);
 	}
     }
 
@@ -2816,6 +2818,46 @@ parse_cursor_mode (gpointer val1p,
 }
 
 static gint
+parse_document (gpointer val1p, 
+		gpointer val2p)
+{
+  gint           token    = 0;
+  gchar         *filename = NULL;
+  GimpImagefile *imagefile;
+
+  token = peek_next_token ();
+  if (!token || token != TOKEN_STRING)
+    goto error;
+
+  token = get_next_token ();
+  filename = g_strdup (token_str);
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_RIGHT_PAREN))
+    goto error;
+  token = get_next_token ();
+
+  imagefile = gimp_imagefile_new (filename);
+
+  g_free (filename);
+
+  GIMP_LIST (the_gimp->documents)->list =
+    g_list_append (GIMP_LIST (the_gimp->documents)->list, imagefile);
+
+  gtk_object_ref (GTK_OBJECT (imagefile));
+  gtk_object_sink (GTK_OBJECT (imagefile));
+
+  the_gimp->documents->num_children++;
+
+  return OK;
+
+ error:
+  g_free (filename);
+
+  return ERROR;
+}
+
+static gint
 parse_unknown (gchar *token_sym)
 {
   gint          token;
@@ -2926,6 +2968,7 @@ value_to_str (gchar *name)
 	case TT_XCOLORHISTORY:
 	case TT_XUNITINFO:
 	case TT_XPARASITE:
+	case TT_XDOCUMENT:
 	  return NULL;
 	}
     }

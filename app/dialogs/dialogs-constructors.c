@@ -741,6 +741,23 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
 /*  misc dockables  */
 
 GtkWidget *
+dialogs_document_history_new (GimpDialogFactory *factory,
+			      GimpContext       *context)
+{
+  GtkWidget *view;
+
+  view = gimp_container_list_view_new (context->gimp->documents,
+				       context,
+				       32,
+				       5, 3);
+
+  return dialogs_dockable_new (view,
+			       "Document History", "History",
+			       NULL,
+			       dialogs_set_view_context_func);
+}
+
+GtkWidget *
 dialogs_error_console_get (GimpDialogFactory *factory,
 			   GimpContext       *context)
 {

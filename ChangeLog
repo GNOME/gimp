@@ -1,3 +1,32 @@
+2001-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/gimpdocuments.[ch]: new file implementing the
+	docindex.* replacement.
+
+	* app/gimprc.c: added TT_XDOCUMENT to parse the new document
+	history.
+
+	* app/file-save.c
+	* app/gui/file-open-dialog.c: add opened & saved images to the
+	document history.
+
+	* app/core/gimp.c: call gimp_documents_init/exit() instead of
+	doing it here.
+
+	* app/core/gimpimagefile.[ch]: removed the "filename" attribute
+	and use GimpObject's "name" instead.
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c
+	* app/gui/menus.c: added a menu entry/dockable for the document
+	history.
+
+	* app/widgets/gimpdnd.[ch]: make it DND-able.
+
+	* app/widgets/gimppreview.c: fix  preview rendering correctly this
+	itme.
+
 2001-08-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/Makefile.am
@@ -7,7 +36,7 @@
 
 	* libgimpwidgets/gimpfileselection.c: more GObject porting.
 
-2001-08-10  Michael Natterer  <mitch@convergence.de>
+2001-08-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/nav_window.c: fix compiler warning.
 

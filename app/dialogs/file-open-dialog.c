@@ -45,6 +45,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpcoreconfig.h"
+#include "core/gimpdocuments.h"
 #include "core/gimpimage.h"
 
 #include "file-dialog-utils.h"
@@ -192,6 +193,7 @@ file_open_with_proc_and_display (const gchar   *filename,
 
       absolute = file_open_absolute_filename (filename);
 
+      gimp_documents_add (the_gimp, filename);
       document_index_add (absolute);
       menus_last_opened_add (absolute);
 

@@ -40,8 +40,6 @@ struct _GimpImagefile
 {
   GimpViewable  parent_instance;
 
-  gchar        *filename;
-
   gint          width;
   gint          height;
   gint          size;
@@ -53,8 +51,9 @@ struct _GimpImagefileClass
 };
 
 
-GType          gimp_imagefile_get_type (void);
-GimpImagefile *gimp_imagefile_new      (const gchar *filename);
+GType           gimp_imagefile_get_type (void);
+
+GimpImagefile * gimp_imagefile_new      (const gchar *filename);
 
 
 #endif /* __GIMP_IMAGEFILE_H__ */

@@ -940,6 +940,7 @@ gimp_preview_render_and_flush (GimpPreview *preview,
   gboolean  color;
   gint      alpha;
   gboolean  has_alpha;
+  gboolean  render_composite;
   gint      image_bytes;
   gint      offset;
   gint      border;
@@ -986,14 +987,16 @@ gimp_preview_render_and_flush (GimpPreview *preview,
    */
   if (has_alpha && (channel == -1))
     {
-      buf   = render_check_buf;
-      alpha = ((color) ? ALPHA_PIX :
-	       ((channel != -1) ? (temp_buf->bytes - 1) :
-		ALPHA_G_PIX));
+      buf              = render_check_buf;
+      render_composite = TRUE;
+      alpha            = ((color) ? ALPHA_PIX :
+			  ((channel != -1) ? (temp_buf->bytes - 1) :
+			   ALPHA_G_PIX));
     }
   else
     {
-      buf = render_empty_buf;
+      buf              = render_empty_buf;
+      render_composite = FALSE;
     }
 
   x1 = CLAMP (temp_buf->x, 0, width);
@@ -1054,7 +1057,7 @@ gimp_preview_render_and_flush (GimpPreview *preview,
 	    {
 	      if (color)
 		{
-		  if (has_alpha && (channel == -1))
+		  if (has_alpha && render_composite)
 		    {
 		      a = s[alpha] << 8;
 
@@ -1086,7 +1089,7 @@ gimp_preview_render_and_flush (GimpPreview *preview,
 		}
 	      else
 		{
-		  if (has_alpha && (channel == -1))
+		  if (has_alpha && render_composite)
 		    {
 		      a = s[alpha] << 8;
 

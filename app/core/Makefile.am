@@ -44,6 +44,8 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpdatafiles.h			\
 	gimpdatalist.c			\
 	gimpdatalist.h			\
+	gimpdocuments.c			\
+	gimpdocuments.h			\
 	gimpdrawable.c			\
 	gimpdrawable.h			\
 	gimpdrawable-desaturate.c	\

@@ -74,7 +74,8 @@ gimp_imagefile_get_type (void)
 	(GInstanceInitFunc) gimp_imagefile_init,
       };
 
-      imagefile_type = g_type_register_static (G_TYPE_OBJECT, "GimpImagefile", 
+      imagefile_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
+					       "GimpImagefile", 
                                                &imagefile_info, 0);
     }
   
@@ -100,10 +101,9 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
 static void
 gimp_imagefile_init (GimpImagefile *imagefile)
 {
-  imagefile->filename = NULL;
-  imagefile->width    = -1;
-  imagefile->height   = -1;
-  imagefile->size     = -1;
+  imagefile->width  = -1;
+  imagefile->height = -1;
+  imagefile->size   = -1;
 }
 
 static void
@@ -112,8 +112,6 @@ gimp_imagefile_finalize (GObject *object)
   GimpImagefile *imagefile;
 
   imagefile = GIMP_IMAGEFILE (object);
-
-  g_free (imagefile->filename);
 
   if (G_OBJECT_CLASS (parent_class)->finalize)
     G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -126,8 +124,9 @@ gimp_imagefile_new (const gchar *filename)
 
   g_return_val_if_fail (filename != NULL, NULL);
 
-  imagefile = GIMP_IMAGEFILE (g_object_new (gimp_imagefile_get_type (), NULL));
-  imagefile->filename = g_strdup (filename);
+  imagefile = GIMP_IMAGEFILE (g_object_new (GIMP_TYPE_IMAGEFILE, NULL));
+
+  gimp_object_set_name (GIMP_OBJECT (imagefile), filename);
 
   return imagefile;
 }
@@ -156,10 +155,10 @@ gimp_imagefile_get_new_preview (GimpViewable *viewable,
 
   imagefile = GIMP_IMAGEFILE (viewable);
 
-  g_return_val_if_fail (imagefile->filename != NULL, NULL);
+  g_return_val_if_fail (GIMP_OBJECT (imagefile)->name != NULL, NULL);
  
-  dirname  = g_dirname (imagefile->filename);
-  basename = g_basename (imagefile->filename);
+  dirname  = g_dirname (GIMP_OBJECT (imagefile)->name);
+  basename = g_basename (GIMP_OBJECT (imagefile)->name);
 
   thumbname = g_strconcat (dirname, G_DIR_SEPARATOR_S,
                            ".xvpics", G_DIR_SEPARATOR_S,
@@ -171,7 +170,7 @@ gimp_imagefile_get_new_preview (GimpViewable *viewable,
    *  be out of date.
    */
   if ((stat (thumbname, &thumb_stat) == 0) &&
-      (stat (imagefile->filename, &file_stat ) == 0))
+      (stat (GIMP_OBJECT (imagefile)->name, &file_stat ) == 0))
     {
       if ((thumb_stat.st_mtime) < (file_stat.st_mtime))
 	{

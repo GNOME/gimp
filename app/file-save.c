@@ -172,7 +172,7 @@ file_save (GimpImage   *gimage,
       /*  set this image to clean  */
       gimp_image_clean_all (gimage);
 
-      /* these calls must come before the call to gimage_set_filename */
+      gimp_documents_add (gimage->gimp, filename);
       document_index_add (filename);
       menus_last_opened_add (filename);
 
@@ -199,7 +199,6 @@ file_save (GimpImage   *gimage,
 	{
 	  /*  set the image title  */
 	  gimp_object_set_name (GIMP_OBJECT (gimage), filename);
-	  /* note: 'filename' may have been free'd by above call! */
 	}
     }
 

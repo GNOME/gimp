@@ -63,28 +63,30 @@ static const gint n_toplevel_entries = (sizeof (toplevel_entries) /
 
 static const GimpDialogFactoryEntry dock_entries[] =
 {
-  { "gimp:image-list",      dialogs_image_list_view_new,    FALSE, FALSE, FALSE, TRUE },
-  { "gimp:brush-list",      dialogs_brush_list_view_new,    FALSE, FALSE, FALSE, TRUE },
-  { "gimp:pattern-list",    dialogs_pattern_list_view_new,  FALSE, FALSE, FALSE, TRUE },
-  { "gimp:gradient-list",   dialogs_gradient_list_view_new, FALSE, FALSE, FALSE, TRUE },
-  { "gimp:palette-list",    dialogs_palette_list_view_new,  FALSE, FALSE, FALSE, TRUE },
-  { "gimp:tool-list",       dialogs_tool_list_view_new,     FALSE, FALSE, FALSE, TRUE },
-  { "gimp:buffer-list",     dialogs_buffer_list_view_new,   FALSE, FALSE, FALSE, TRUE },
+  { "gimp:image-list",       dialogs_image_list_view_new,    FALSE, FALSE, FALSE, TRUE },
+  { "gimp:brush-list",       dialogs_brush_list_view_new,    FALSE, FALSE, FALSE, TRUE },
+  { "gimp:pattern-list",     dialogs_pattern_list_view_new,  FALSE, FALSE, FALSE, TRUE },
+  { "gimp:gradient-list",    dialogs_gradient_list_view_new, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:palette-list",     dialogs_palette_list_view_new,  FALSE, FALSE, FALSE, TRUE },
+  { "gimp:tool-list",        dialogs_tool_list_view_new,     FALSE, FALSE, FALSE, TRUE },
+  { "gimp:buffer-list",      dialogs_buffer_list_view_new,   FALSE, FALSE, FALSE, TRUE },
 
-  { "gimp:image-grid",      dialogs_image_grid_view_new,    FALSE, FALSE, FALSE, TRUE },
-  { "gimp:brush-grid",      dialogs_brush_grid_view_new,    FALSE, FALSE, FALSE, TRUE },
-  { "gimp:pattern-grid",    dialogs_pattern_grid_view_new,  FALSE, FALSE, FALSE, TRUE },
-  { "gimp:gradient-grid",   dialogs_gradient_grid_view_new, FALSE, FALSE, FALSE, TRUE },
-  { "gimp:palette-grid",    dialogs_palette_grid_view_new,  FALSE, FALSE, FALSE, TRUE },
-  { "gimp:tool-grid",       dialogs_tool_grid_view_new,     FALSE, FALSE, FALSE, TRUE },
-  { "gimp:buffer-grid",     dialogs_buffer_grid_view_new,   FALSE, FALSE, FALSE, TRUE },
+  { "gimp:image-grid",       dialogs_image_grid_view_new,    FALSE, FALSE, FALSE, TRUE },
+  { "gimp:brush-grid",       dialogs_brush_grid_view_new,    FALSE, FALSE, FALSE, TRUE },
+  { "gimp:pattern-grid",     dialogs_pattern_grid_view_new,  FALSE, FALSE, FALSE, TRUE },
+  { "gimp:gradient-grid",    dialogs_gradient_grid_view_new, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:palette-grid",     dialogs_palette_grid_view_new,  FALSE, FALSE, FALSE, TRUE },
+  { "gimp:tool-grid",        dialogs_tool_grid_view_new,     FALSE, FALSE, FALSE, TRUE },
+  { "gimp:buffer-grid",      dialogs_buffer_grid_view_new,   FALSE, FALSE, FALSE, TRUE },
 
-  { "gimp:layer-list",      dialogs_layer_list_view_new,    FALSE, FALSE, FALSE, TRUE },
-  { "gimp:channel-list",    dialogs_channel_list_view_new,  FALSE, FALSE, FALSE, TRUE },
-  { "gimp:path-list",       dialogs_path_list_view_new,     TRUE,  FALSE, FALSE, TRUE },
-  { "gimp:indexed-palette", dialogs_indexed_palette_new,    FALSE, FALSE, FALSE, TRUE },
+  { "gimp:layer-list",       dialogs_layer_list_view_new,    FALSE, FALSE, FALSE, TRUE },
+  { "gimp:channel-list",     dialogs_channel_list_view_new,  FALSE, FALSE, FALSE, TRUE },
+  { "gimp:path-list",        dialogs_path_list_view_new,     TRUE,  FALSE, FALSE, TRUE },
+  { "gimp:indexed-palette",  dialogs_indexed_palette_new,    FALSE, FALSE, FALSE, TRUE },
 
-  { "gimp:error-console",   dialogs_error_console_get,      TRUE,  FALSE, FALSE, TRUE }
+  { "gimp:document-history", dialogs_document_history_new,   FALSE, FALSE, FALSE, TRUE },
+
+  { "gimp:error-console",    dialogs_error_console_get,      TRUE,  FALSE, FALSE, TRUE }
 };
 static const gint n_dock_entries = (sizeof (dock_entries) /
 				    sizeof (dock_entries[0]));
