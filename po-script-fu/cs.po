@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.1.22\n"
-"POT-Creation-Date: 2000-05-16 20:36+0200\n"
-"PO-Revision-Date: 2000-05-16 20:41+02:00\n"
+"POT-Creation-Date: 2000-05-21 20:20+0200\n"
+"PO-Revision-Date: 2000-05-21 21:27+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -642,6 +642,14 @@ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
 msgstr "<Toolbox>/Roz¹./Webový prohlí¾eè/GIMP.ORG/Program GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+msgstr "<Toolbox>/Roz¹./Webový prohlí¾eè/Gimp-Savvy.com"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+msgstr "<Toolbox>/Roz¹./Webový prohlí¾eè/GIMP.ORG/Grokking the GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
 msgstr "<Toolbox>/Roz¹./Webový prohlí¾eè/Registr modulù"
 
@@ -760,6 +768,10 @@ msgstr "Barva základny"
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Base Radius (pixel)"
 msgstr "Polomìr základny (pixly)"
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Behaviour"
+msgstr "Chování"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "Bevel Height (Sharpness)"
@@ -985,6 +997,10 @@ msgstr "Popis"
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Detail Level"
 msgstr "Podrobná úroveò"
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Detail in Middle"
+msgstr "Detail uprostøed"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "Diameter"
@@ -1250,15 +1266,12 @@ msgstr "Polomìr ¾áru"
 msgid "Gradient"
 msgstr "Pøechod"
 
-#: plug-ins/script-fu/scripts/camo.scm:0
-msgid "Granularity (0-15)"
-msgstr "Zrnitost (0-15)"
-
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Granularity (1 is Low)"
 msgstr "Zrnitost (1 je malá)"
 
+#: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Granularity"
 msgstr "Zrnitost"
@@ -1427,12 +1440,8 @@ msgid "Max. Blur Radius"
 msgstr "Nejvy¹¹í polomìr rozostøení"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid ""
-"Mosaic Tile Type\n"
-"Squares 0, Hex 1, Oct 2"
-msgstr ""
-"Typ dla¾dic mozaiky\n"
-"ètverce 0, ¹estiúhelníky 1, osmiúhelníky 2"
+msgid "Mosaic Tile Type"
+msgstr "Typ dla¾dicování mozaiky"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Mottle"
@@ -1797,6 +1806,10 @@ msgstr "Barva koule"
 msgid "Spread"
 msgstr "Roz¹íøit"
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Squares"
+msgstr "Ètverce"
+
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid "Stains"
 msgstr "Skvrny"
@@ -1825,10 +1838,6 @@ msgstr "Poèáteèní mísení"
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "Supersample"
 msgstr "Pøevzorkování"
-
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "TRUE = Detail in Middle, FALSE = Tile"
-msgstr "TRUE = detail uprostøed, FALSE = dla¾dice"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Text Color (Active)"
@@ -1915,6 +1924,10 @@ msgstr "Délka vlákna"
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Threshold (Bigger 1<-->255 Smaller)"
 msgstr "Práh (vìt¹í 1<-->255 men¹í)"
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Tile"
+msgstr "Dla¾dice"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.22\n"
-"POT-Creation-Date: 2000-05-16 20:35+0200\n"
-"PO-Revision-Date: 2000-05-16 20:40+02:00\n"
+"POT-Creation-Date: 2000-05-21 20:19+0200\n"
+"PO-Revision-Date: 2000-05-21 20:50+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1447,7 +1447,7 @@ msgstr "Ukázat/skrýt náhledový drátový model"
 
 #. memory mapped file data
 #. must check file size
-#: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:266
+#: plug-ins/bmp/bmpread.c:51 plug-ins/common/CEL.c:266
 #: plug-ins/common/gbr.c:281 plug-ins/common/gifload.c:306
 #: plug-ins/common/hrz.c:338 plug-ins/common/jpeg.c:745
 #: plug-ins/common/pat.c:261 plug-ins/common/pcx.c:301
@@ -1463,32 +1463,32 @@ msgstr "Ukázat/skrýt náhledový drátový model"
 msgid "Loading %s:"
 msgstr "Ète se %s:"
 
-#: plug-ins/bmp/bmpread.c:64
+#: plug-ins/bmp/bmpread.c:63
 #, c-format
 msgid "%s: can't open \"%s\""
 msgstr "%s: nelze otevøít \"%s\""
 
-#: plug-ins/bmp/bmpread.c:72
+#: plug-ins/bmp/bmpread.c:71
 #, c-format
 msgid "%s: %s is not a valid BMP file"
 msgstr "%s: %s není platný BMP soubor"
 
-#: plug-ins/bmp/bmpread.c:90 plug-ins/bmp/bmpread.c:108
-#: plug-ins/bmp/bmpread.c:128 plug-ins/bmp/bmpread.c:146
-#: plug-ins/bmp/bmpread.c:164 plug-ins/bmp/bmpread.c:169
-#: plug-ins/bmp/bmpread.c:174
+#: plug-ins/bmp/bmpread.c:89 plug-ins/bmp/bmpread.c:107
+#: plug-ins/bmp/bmpread.c:127 plug-ins/bmp/bmpread.c:145
+#: plug-ins/bmp/bmpread.c:163 plug-ins/bmp/bmpread.c:168
+#: plug-ins/bmp/bmpread.c:173
 #, c-format
 msgid "%s: error reading BMP file header"
 msgstr "%s: chyba pøi ètení hlavièky souboru BMP"
 
-#: plug-ins/bmp/bmpread.c:247
+#: plug-ins/bmp/bmpread.c:246
 #, c-format
 msgid "%s: bad colormap"
 msgstr "%s: ¹patná barevná mapa"
 
 #. Create an indexed-alpha layer to hold the image...
-#: plug-ins/bmp/bmpread.c:289 plug-ins/bmp/bmpread.c:296
-#: plug-ins/bmp/bmpread.c:303 plug-ins/common/CEL.c:304
+#: plug-ins/bmp/bmpread.c:288 plug-ins/bmp/bmpread.c:295
+#: plug-ins/bmp/bmpread.c:302 plug-ins/common/CEL.c:304
 #: plug-ins/common/blinds.c:380 plug-ins/common/compose.c:543
 #: plug-ins/common/decompose.c:445 plug-ins/common/film.c:1006
 #: plug-ins/common/gbr.c:343 plug-ins/common/gifload.c:850
@@ -2198,7 +2198,7 @@ msgstr "Pøehrátí animace: "
 #: plug-ins/gap/gap_navigator_dialog.c:3158
 #: plug-ins/gdyntext/charmap_window.c:143 plug-ins/gdyntext/gdyntext_ui.c:636
 #: plug-ins/gfig/gfig.c:1986 plug-ins/gfig/gfig.c:2046
-#: plug-ins/helpbrowser/helpbrowser.c:787
+#: plug-ins/helpbrowser/helpbrowser.c:803
 #: plug-ins/ifscompose/ifscompose.c:1232 plug-ins/imagemap/imap_menu.c:227
 #: plug-ins/print/gimp_color_window.c:81
 msgid "Close"
@@ -11433,30 +11433,34 @@ msgstr "Obsah"
 msgid "Index"
 msgstr "Rejstøík"
 
-#: plug-ins/helpbrowser/helpbrowser.c:401 plug-ins/imagemap/imap_main.c:511
+#: plug-ins/helpbrowser/helpbrowser.c:407 plug-ins/imagemap/imap_main.c:511
 #: plug-ins/imagemap/imap_settings.c:149
 msgid "<Untitled>"
 msgstr "<Beze jména>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:726
+#: plug-ins/helpbrowser/helpbrowser.c:733
+#: plug-ins/helpbrowser/helpbrowser.c:749
+#, c-format
 msgid ""
 "GIMP Help Browser Error.\n"
 "\n"
-"Couldn't find my root html directory."
+"Couldn't find my root html directory.\n"
+"(%s)"
 msgstr ""
 "Chyba prohlí¾eèe GIMP nápovìdy.\n"
 "\n"
-"Nelze nalézt koøen jeho html adresáøe."
+"Nelze nalézt koøen jeho html adresáøe.\n"
+"(%s)"
 
-#: plug-ins/helpbrowser/helpbrowser.c:749
+#: plug-ins/helpbrowser/helpbrowser.c:765
 msgid "GIMP Help Browser"
 msgstr "Prohlí¾eè GIMP nápovìdy"
 
-#: plug-ins/helpbrowser/helpbrowser.c:764
+#: plug-ins/helpbrowser/helpbrowser.c:780
 msgid "Back"
 msgstr "Zpìt"
 
-#: plug-ins/helpbrowser/helpbrowser.c:773
+#: plug-ins/helpbrowser/helpbrowser.c:789
 msgid "Forward"
 msgstr "Dopøedu"
 
