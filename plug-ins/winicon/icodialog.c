@@ -23,8 +23,6 @@
 
 #include <stdio.h>
 
-#include <gtk/gtk.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -44,7 +42,7 @@ static void       combo_bpp_changed           (GtkWidget *combo,
 
 
 static GtkWidget *
-ico_preview_new(gint32 layer)
+ico_preview_new (gint32 layer)
 {
   GtkWidget *icon_preview;
 
@@ -59,10 +57,10 @@ static void
 ico_fill_preview_with_thumb (GtkWidget *widget,
                              gint32     drawable_ID)
 {
-  guchar  *drawable_data;
-  gint     bpp;
-  gint     width;
-  gint     height;
+  guchar *drawable_data;
+  gint    bpp;
+  gint    width;
+  gint    height;
 
   width  = gimp_drawable_width (drawable_ID);
   height = gimp_drawable_height (drawable_ID);
@@ -95,7 +93,7 @@ ico_fill_preview_with_thumb (GtkWidget *widget,
 
 /* This function creates and returns an hbox for an icon,
    which then gets added to the dialog's main vbox. */
-static GtkWidget*
+static GtkWidget *
 ico_create_icon_hbox (GtkWidget *icon_preview,
                       gint32     layer,
                       gint       layer_num)
@@ -105,7 +103,10 @@ ico_create_icon_hbox (GtkWidget *icon_preview,
   GtkWidget *combo;
 
   hbox = gtk_hbox_new (FALSE, 6);
+
   alignment = gtk_alignment_new (0.5, 0.5, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), alignment, FALSE, FALSE, 0);
+  gtk_widget_show (alignment);
 
   /* To make life easier for the callbacks, we store the
      layer's ID and stacking number with the hbox. */
@@ -116,10 +117,8 @@ ico_create_icon_hbox (GtkWidget *icon_preview,
                      "icon_layer_num", GINT_TO_POINTER (layer_num));
 
   g_object_set_data (G_OBJECT (hbox), "icon_preview", icon_preview);
-  gtk_widget_show (icon_preview);
-  gtk_box_pack_start (GTK_BOX (hbox), alignment, TRUE, TRUE, 0);
-  gtk_widget_show (alignment);
   gtk_container_add (GTK_CONTAINER (alignment), icon_preview);
+  gtk_widget_show (icon_preview);
 
   combo = gimp_int_combo_box_new (_("1 bpp, 1-bit alpha, 2-slot palette"),   1,
                                   _("4 bpp, 1-bit alpha, 16-slot palette"),  4,
@@ -133,21 +132,20 @@ ico_create_icon_hbox (GtkWidget *icon_preview,
                     hbox);
 
   g_object_set_data (G_OBJECT (hbox), "icon_menu", combo);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
   return hbox;
 }
 
 
-GtkWidget*
+GtkWidget *
 ico_specs_dialog_new (gint num_layers)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *scrolledwindow;
-  GtkWidget *viewport;
   gint      *icon_depths, i;
 
   dialog = gimp_dialog_new (_("GIMP Windows Icon Plugin"), "winicon",
@@ -171,11 +169,10 @@ ico_specs_dialog_new (gint num_layers)
 
   g_object_set_data (G_OBJECT (dialog), "icon_depths", icon_depths);
 
-  vbox = GTK_DIALOG (dialog)->vbox;
-
   frame = gimp_frame_new (_("Icon details"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
+                      TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
@@ -184,13 +181,11 @@ ico_specs_dialog_new (gint num_layers)
   gtk_container_add (GTK_CONTAINER (frame), scrolledwindow);
   gtk_widget_show (scrolledwindow);
 
-  viewport = gtk_viewport_new (NULL, NULL);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow), viewport);
-  gtk_widget_show (viewport);
-
-  vbox = gtk_vbox_new (TRUE, 6);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   g_object_set_data (G_OBJECT (dialog), "icons_vbox", vbox);
-  gtk_container_add (GTK_CONTAINER (viewport), vbox);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolledwindow),
+                                         vbox);
   gtk_widget_show (vbox);
 
   return dialog;
@@ -236,9 +231,10 @@ ico_specs_dialog_add_icon (GtkWidget *dialog,
   gchar      key[MAXLEN];
 
   vbox = g_object_get_data (G_OBJECT (dialog), "icons_vbox");
+
   preview = ico_preview_new (layer);
   hbox = ico_create_icon_hbox (preview, layer, layer_num);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /* Let's make the hbox accessible through the layer ID */

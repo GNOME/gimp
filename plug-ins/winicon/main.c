@@ -24,8 +24,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#include <gtk/gtk.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -38,15 +36,12 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-gboolean interactive_ico = FALSE;
-
-
 static void   query (void);
 static void   run   (const gchar      *name,
                      gint              nparams,
-		     const GimpParam  *param,
-		     gint             *nreturn_vals,
-		     GimpParam       **return_vals);
+                     const GimpParam  *param,
+                     gint             *nreturn_vals,
+                     GimpParam       **return_vals);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -57,7 +52,9 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
+
 MAIN ()
+
 
 static void
 query (void)
@@ -83,30 +80,30 @@ query (void)
   };
 
   gimp_install_procedure ("file_ico_load",
-			  "Loads files of Windows ICO file format",
-			  "Loads files of Windows ICO file format",
-			  "Christian Kreibich <christian@whoop.org>",
-			  "Christian Kreibich <christian@whoop.org>",
-			  "2002",
+                          "Loads files of Windows ICO file format",
+                          "Loads files of Windows ICO file format",
+                          "Christian Kreibich <christian@whoop.org>",
+                          "Christian Kreibich <christian@whoop.org>",
+                          "2002",
                           N_("Microsoft Windows icon"),
-			  NULL,
-			  GIMP_PLUGIN,
+                          NULL,
+                          GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
   gimp_register_file_handler_mime ("file_ico_load", "image/x-ico");
   gimp_register_magic_load_handler ("file_ico_load",
-				    "ico",
-				    "",
-				    "0,string,\\000\\001\\000\\000,0,string,\\000\\002\\000\\000");
+                                    "ico",
+                                    "",
+                                    "0,string,\\000\\001\\000\\000,0,string,\\000\\002\\000\\000");
 
   gimp_install_procedure ("file_ico_save",
                           "Saves files in Windows ICO file format",
                           "Saves files in Windows ICO file format",
-			  "Christian Kreibich <christian@whoop.org>",
-			  "Christian Kreibich <christian@whoop.org>",
-			  "2002",
+                          "Christian Kreibich <christian@whoop.org>",
+                          "Christian Kreibich <christian@whoop.org>",
+                          "2002",
                           N_("Microsoft Windows icon"),
                           "INDEXEDA, GRAYA, RGBA",
                           GIMP_PLUGIN,
@@ -143,36 +140,34 @@ run (const gchar      *name,
   if (strcmp (name, "file_ico_load") == 0)
     {
       switch (run_mode)
-	{
+        {
         case GIMP_RUN_INTERACTIVE:
-	  interactive_ico = TRUE;
           break;
 
-	case GIMP_RUN_NONINTERACTIVE:
-	  interactive_ico = FALSE;
-	  if (nparams != 3)
-	    status = GIMP_PDB_CALLING_ERROR;
-	  break;
+        case GIMP_RUN_NONINTERACTIVE:
+          if (nparams != 3)
+            status = GIMP_PDB_CALLING_ERROR;
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  image_ID = LoadICO (param[1].data.d_string);
+        {
+          image_ID = LoadICO (param[1].data.d_string);
 
-	   if (image_ID != -1)
-	     {
-	       *nreturn_vals = 2;
-	       values[1].type         = GIMP_PDB_IMAGE;
-	       values[1].data.d_image = image_ID;
-	     }
-	   else
-	     {
-	       status = GIMP_PDB_EXECUTION_ERROR;
-	     }
-	}
+          if (image_ID != -1)
+            {
+              *nreturn_vals = 2;
+              values[1].type         = GIMP_PDB_IMAGE;
+              values[1].data.d_image = image_ID;
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
     }
   else if (strcmp (name, "file_ico_save") == 0)
     {
@@ -185,18 +180,15 @@ run (const gchar      *name,
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-	  interactive_ico = TRUE;
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
-	  interactive_ico = FALSE;
           /*  Make sure all the arguments are there!  */
-	  if (nparams < 5)
+          if (nparams < 5)
             status = GIMP_PDB_CALLING_ERROR;
           break;
 
         case GIMP_RUN_WITH_LAST_VALS:
-	  interactive_ico = FALSE;
           break;
 
         default:
@@ -204,53 +196,53 @@ run (const gchar      *name,
         }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  status = SaveICO (file_name, image_ID);
-	}
+        {
+          status = SaveICO (file_name, image_ID);
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
     }
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
 
-guint8   *
-ico_alloc_map(gint  width,
-              gint  height,
-              gint  bpp,
-              gint *length)
+guint8 *
+ico_alloc_map (gint  width,
+               gint  height,
+               gint  bpp,
+               gint *length)
 {
-  gint len = 0;
+  gint    len = 0;
   guint8 *map = NULL;
 
   switch (bpp)
     {
     case 1:
       if ((width % 32) == 0)
-	len = (width * height / 8);
+        len = (width * height / 8);
       else
-	len = 4 * ((width/32 + 1) * height);
+        len = 4 * ((width/32 + 1) * height);
       break;
 
     case 4:
       if ((width % 8) == 0)
-	len = (width * height / 2);
+        len = (width * height / 2);
       else
-	len = 4 * ((width/8 + 1) * height);
+        len = 4 * ((width/8 + 1) * height);
       break;
 
     case 8:
       if ((width % 4) == 0)
-	len = width * height;
+        len = width * height;
       else
-	len = 4 * ((width/4 + 1) * height);
+        len = 4 * ((width/4 + 1) * height);
       break;
 
     default:
@@ -258,7 +250,7 @@ ico_alloc_map(gint  width,
     }
 
   *length = len;
-  map = g_new0(guint8, len);
+  map = g_new0 (guint8, len);
 
   return map;
 }
@@ -273,11 +265,11 @@ ico_cmap_contains_black (guchar *cmap,
   for (i = 0; i < num_colors; i++)
     {
       if ((cmap[3*i] == 0)   &&
-	  (cmap[3*i+1] == 0) &&
-	  (cmap[3*i+2] == 0))
-	{
-	  return TRUE;
-	}
+          (cmap[3*i+1] == 0) &&
+          (cmap[3*i+2] == 0))
+        {
+          return TRUE;
+        }
     }
 
   return FALSE;
@@ -288,29 +280,29 @@ void
 ico_image_reduce_layer_bpp (guint32 layer,
                             gint    bpp)
 {
-  GimpPixelRgn    src_pixel_rgn, dst_pixel_rgn;
-  gint32          tmp_image;
-  gint32          tmp_layer;
-  gint            w, h;
-  guchar         *buffer;
+  GimpPixelRgn  src_pixel_rgn, dst_pixel_rgn;
+  gint32        tmp_image;
+  gint32        tmp_layer;
+  gint          w, h;
+  guchar       *buffer;
 
-  w = gimp_drawable_width(layer);
-  h = gimp_drawable_height(layer);
+  w = gimp_drawable_width (layer);
+  h = gimp_drawable_height (layer);
 
   if (bpp <= 8)
     {
       buffer = g_new (guchar, w * h * 4);
 
       tmp_image = gimp_image_new (gimp_drawable_width (layer),
-				  gimp_drawable_height (layer),
-				  GIMP_RGB);
+                                  gimp_drawable_height (layer),
+                                  GIMP_RGB);
 
       tmp_layer = gimp_layer_new (tmp_image, "tmp", w, h,
-				  GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
-      gimp_pixel_rgn_init (&src_pixel_rgn, gimp_drawable_get(layer),
-			   0, 0, w, h, TRUE, FALSE);
-      gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get(tmp_layer),
-			   0, 0, w, h, TRUE, FALSE);
+                                  GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
+      gimp_pixel_rgn_init (&src_pixel_rgn, gimp_drawable_get (layer),
+                           0, 0, w, h, TRUE, FALSE);
+      gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get (tmp_layer),
+                           0, 0, w, h, TRUE, FALSE);
       gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
       gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
       gimp_image_add_layer (tmp_image, tmp_layer, 0);
@@ -326,7 +318,7 @@ ico_image_reduce_layer_bpp (guint32 layer,
       gimp_image_convert_rgb (tmp_image);
 
       gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get (tmp_layer),
-			   0, 0, w, h, TRUE, FALSE);
+                           0, 0, w, h, TRUE, FALSE);
       gimp_pixel_rgn_get_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
       gimp_pixel_rgn_set_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
 
@@ -367,49 +359,49 @@ ico_image_get_reduced_buf (guint32   layer,
   if (bpp <= 8)
     {
       tmp_image = gimp_image_new (gimp_drawable_width (layer),
-				  gimp_drawable_height (layer),
+                                  gimp_drawable_height (layer),
                                   GIMP_RGB);
 
       tmp_layer = gimp_layer_new (tmp_image, "tmp", w, h,
-				  GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
+                                  GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
       gimp_pixel_rgn_init (&src_pixel_rgn, gimp_drawable_get(layer),
-			   0, 0, w, h, TRUE, FALSE);
-      gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get(tmp_layer),
-			   0, 0, w, h, TRUE, FALSE);
+                           0, 0, w, h, TRUE, FALSE);
+      gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get (tmp_layer),
+                           0, 0, w, h, TRUE, FALSE);
       gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
       gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
       gimp_image_add_layer (tmp_image, tmp_layer, 0);
 
-      result = gimp_image_convert_indexed(tmp_image,
-					  GIMP_FS_DITHER,
-					  GIMP_MAKE_PALETTE,
-					  1 << bpp,
-					  TRUE,
-					  FALSE,
-					  "dummy");
+      result = gimp_image_convert_indexed (tmp_image,
+                                           GIMP_FS_DITHER,
+                                           GIMP_MAKE_PALETTE,
+                                           1 << bpp,
+                                           TRUE,
+                                           FALSE,
+                                           "dummy");
 
       cmap = gimp_image_get_colormap (tmp_image, num_colors);
 
       if (*num_colors == (1 << bpp) &&
           !ico_cmap_contains_black(cmap, *num_colors))
-	{
-	  /* Damn. Windows icons with color maps need the color black.
-	     We need to eliminate one more color to make room for black: */
+        {
+          /* Damn. Windows icons with color maps need the color black.
+             We need to eliminate one more color to make room for black: */
 
-	  result = gimp_image_convert_rgb(tmp_image);
+          result = gimp_image_convert_rgb (tmp_image);
 
-	  gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get(tmp_layer),
-			       0, 0, w, h, TRUE, FALSE);
-	  gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
+          gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get (tmp_layer),
+                               0, 0, w, h, TRUE, FALSE);
+          gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
 
-	  result = gimp_image_convert_indexed(tmp_image,
-					      GIMP_FS_DITHER,
-					      GIMP_MAKE_PALETTE,
-					      (1 << bpp) - 1,
-					      TRUE,
-					      FALSE,
-					      "dummy");
-	}
+          result = gimp_image_convert_indexed (tmp_image,
+                                               GIMP_FS_DITHER,
+                                               GIMP_MAKE_PALETTE,
+                                               (1 << bpp) - 1,
+                                               TRUE,
+                                               FALSE,
+                                               "dummy");
+        }
 
       cmap = gimp_image_get_colormap (tmp_image, num_colors);
       *cmap_out = g_memdup (cmap, *num_colors * 3);
@@ -417,18 +409,18 @@ ico_image_get_reduced_buf (guint32   layer,
       result = gimp_image_convert_rgb (tmp_image);
 
       gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get(tmp_layer),
-			   0, 0, w, h, TRUE, FALSE);
+                           0, 0, w, h, TRUE, FALSE);
       gimp_pixel_rgn_get_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
 
-      drawable = gimp_drawable_get(tmp_layer);
+      drawable = gimp_drawable_get (tmp_layer);
       *buf_bpp = drawable->bpp;
 
-      gimp_image_delete(tmp_image);
+      gimp_image_delete (tmp_image);
     }
   else
     {
-      gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get(layer),
-			   0, 0, w, h, TRUE, FALSE);
+      gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get (layer),
+                           0, 0, w, h, TRUE, FALSE);
       gimp_pixel_rgn_get_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
 
       drawable = gimp_drawable_get (layer);
@@ -466,7 +458,7 @@ ico_get_layer_num_colors (gint32    layer,
   buffer = g_new (gint32, w * h);
 
   gimp_pixel_rgn_init (&pixel_rgn, gimp_drawable_get (layer),
-		       0, 0, w, h, TRUE, FALSE);
+                       0, 0, w, h, TRUE, FALSE);
   gimp_pixel_rgn_get_rect (&pixel_rgn, (guchar*) buffer, 0, 0, w, h);
 
   hash = g_hash_table_new (g_int_hash, g_int_equal);
@@ -475,22 +467,22 @@ ico_get_layer_num_colors (gint32    layer,
   for (y = 0; y < h; y++)
     for (x = 0; x < w; x++)
       {
-	color = g_new0 (guint32, 1);
-	*color = buffer[y * w + x];
-	alpha = ((guint8*) color)[3];
+        color = g_new0 (guint32, 1);
+        *color = buffer[y * w + x];
+        alpha = ((guint8*) color)[3];
 
-	if (alpha != 0 && alpha != 255)
-	  *uses_alpha_levels = TRUE;
+        if (alpha != 0 && alpha != 255)
+          *uses_alpha_levels = TRUE;
 
-	g_hash_table_insert(hash, color, color);
+        g_hash_table_insert (hash, color, color);
       }
 
-  num_colors = g_hash_table_size(hash);
+  num_colors = g_hash_table_size (hash);
 
   g_hash_table_foreach (hash, ico_free_color_item, NULL);
   g_hash_table_destroy (hash);
 
-  g_free(buffer);
+  g_free (buffer);
 
   return num_colors;
 }
@@ -506,7 +498,7 @@ ico_cleanup (MsIcon *ico)
     return;
 
   if (ico->fp)
-    fclose(ico->fp);
+    fclose (ico->fp);
 
   if (ico->icon_dir)
     g_free (ico->icon_dir);
@@ -514,13 +506,11 @@ ico_cleanup (MsIcon *ico)
   if (ico->icon_data)
     {
       for (i = 0; i < ico->icon_count; i++)
-	{
-	  g_free (ico->icon_data[i].palette);
-	  g_free (ico->icon_data[i].xor_map);
-	  g_free (ico->icon_data[i].and_map);
-	}
+        {
+          g_free (ico->icon_data[i].palette);
+          g_free (ico->icon_data[i].xor_map);
+          g_free (ico->icon_data[i].and_map);
+        }
       g_free (ico->icon_data);
     }
 }
-
-

@@ -1,3 +1,13 @@
+2004-11-10  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/winicon/icodialog.[ch]
+	* plug-ins/winicon/icoload.[ch]
+	* plug-ins/winicon/icosave.[ch]
+	* plug-ins/winicon/main.[ch]: call progress functions
+	unconditionally; removed global "interactive" variable; use
+	standard strings for open/save progress messages; gui, indentation
+	& coding style cleanup; untabified.
+
 2004-11-10  Michael Schumacher <schumaml@cvs.gnome.org>
 
 	* plug-ins/winsnap/winsnap.c: applied a patch from Sven Neumann

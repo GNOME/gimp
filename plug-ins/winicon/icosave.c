@@ -25,8 +25,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -57,8 +55,8 @@ static void     ico_set_byte_in_data   (guint8 *data, gint line_width,
 
 static gint
 ico_write_int32 (FILE     *fp,
-		 guint32  *data,
-		 gint      count)
+                 guint32  *data,
+                 gint      count)
 {
   gint total;
 
@@ -87,8 +85,8 @@ ico_write_int32 (FILE     *fp,
 
 static gint
 ico_write_int16 (FILE     *fp,
-		 guint16  *data,
-		 gint      count)
+                 guint16  *data,
+                 gint      count)
 {
   gint total;
 
@@ -117,8 +115,8 @@ ico_write_int16 (FILE     *fp,
 
 static gint
 ico_write_int8 (FILE     *fp,
-		guint8   *data,
-		gint      count)
+                guint8   *data,
+                gint      count)
 {
   gint total;
   gint bytes;
@@ -163,8 +161,8 @@ ico_show_icon_dialog (gint32  image_ID,
 
   /* Scale the thing to approximately fit its content, but not too large ... */
   gtk_window_set_default_size (GTK_WINDOW (dialog),
-			       350,
-			       (num_layers > 5 ? 500 : num_layers * 100));
+                               350,
+                               (num_layers > 5 ? 500 : num_layers * 100));
 
   icon_depths = g_object_get_data (G_OBJECT (dialog), "icon_depths");
 
@@ -181,32 +179,32 @@ ico_show_icon_dialog (gint32  image_ID,
       icon_menu = g_object_get_data (G_OBJECT (hbox), "icon_menu");
 
       if (!uses_alpha_values)
-	{
-	  if (num_colors <= 2)
-	    {
-	      /* Let's suggest monochrome */
-	      icon_depths[i] = 1;
-	      icon_depths[num_layers + i] = 1;
-	      ico_specs_dialog_update_icon_preview (dialog, layers[i], 2);
-	      gtk_combo_box_set_active (GTK_COMBO_BOX (icon_menu), 0);
-	    }
-	  else if (num_colors <= 16)
-	    {
-	      /* Let's suggest 4bpp */
-	      icon_depths[i] = 4;
-	      icon_depths[num_layers + i] = 4;
-	      ico_specs_dialog_update_icon_preview (dialog, layers[i], 4);
-	      gtk_combo_box_set_active (GTK_COMBO_BOX (icon_menu), 1);
-	    }
-	  else if (num_colors <= 256)
-	    {
-	      /* Let's suggest 8bpp */
-	      icon_depths[i] = 8;
-	      icon_depths[num_layers + i] = 8;
-	      ico_specs_dialog_update_icon_preview (dialog, layers[i], 8);
-	      gtk_combo_box_set_active (GTK_COMBO_BOX (icon_menu), 2);
-	    }
-	}
+        {
+          if (num_colors <= 2)
+            {
+              /* Let's suggest monochrome */
+              icon_depths[i] = 1;
+              icon_depths[num_layers + i] = 1;
+              ico_specs_dialog_update_icon_preview (dialog, layers[i], 2);
+              gtk_combo_box_set_active (GTK_COMBO_BOX (icon_menu), 0);
+            }
+          else if (num_colors <= 16)
+            {
+              /* Let's suggest 4bpp */
+              icon_depths[i] = 4;
+              icon_depths[num_layers + i] = 4;
+              ico_specs_dialog_update_icon_preview (dialog, layers[i], 4);
+              gtk_combo_box_set_active (GTK_COMBO_BOX (icon_menu), 1);
+            }
+          else if (num_colors <= 256)
+            {
+              /* Let's suggest 8bpp */
+              icon_depths[i] = 8;
+              icon_depths[num_layers + i] = 8;
+              ico_specs_dialog_update_icon_preview (dialog, layers[i], 8);
+              gtk_combo_box_set_active (GTK_COMBO_BOX (icon_menu), 2);
+            }
+        }
 
       /* Otherwise, or if real alpha levels are used, stick with 32bpp */
     }
@@ -358,28 +356,28 @@ ico_create_palette(guchar *cmap,
       palette[i * 4]     = cmap[i * 3 + 2];
 
       if ((cmap[i*3]     == 0) &&
-	  (cmap[i*3 + 1] == 0) &&
-	  (cmap[i*3 + 2] == 0))
-	{
-	  *black_slot = i;
-	}
+          (cmap[i*3 + 1] == 0) &&
+          (cmap[i*3 + 2] == 0))
+        {
+          *black_slot = i;
+        }
     }
 
   if (*black_slot == -1)
     {
       if (num_colors_used == num_colors)
-	{
-	  D(("WARNING -- no room for black, this shouldn't happen.\n"));
-	  *black_slot = num_colors - 1;
+        {
+          D(("WARNING -- no room for black, this shouldn't happen.\n"));
+          *black_slot = num_colors - 1;
 
-	  palette[(num_colors-1) * 4]     = 0;
-	  palette[(num_colors-1) * 4 + 1] = 0;
-	  palette[(num_colors-1) * 4 + 2] = 0;
-	}
+          palette[(num_colors-1) * 4]     = 0;
+          palette[(num_colors-1) * 4 + 1] = 0;
+          palette[(num_colors-1) * 4 + 2] = 0;
+        }
       else
-	{
-	  *black_slot = num_colors_used;
-	}
+        {
+          *black_slot = num_colors_used;
+        }
     }
 
   return (guint32 *) palette;
@@ -497,7 +495,7 @@ ico_init_data (MsIcon *ico,
       color_to_slot = ico_create_color_to_palette_map (data->palette,
                                                        num_colors_used);
       D(("  created %i-slot colormap with %i colors, black at slot %i\n",
-	 num_colors, num_colors_used, black_index));
+         num_colors, num_colors_used, black_index));
     }
 
   /* Create and_map. It's padded out to 32 bits per line: */
@@ -507,9 +505,9 @@ ico_init_data (MsIcon *ico,
   for (y = 0; y < entry->height; y++)
     for (x = 0; x < entry->width; x++)
       {
-	pixel = (guint8 *) &buffer32[y * entry->width + x];
+        pixel = (guint8 *) &buffer32[y * entry->width + x];
 
-	ico_set_bit_in_data (data->and_map, entry->width,
+        ico_set_bit_in_data (data->and_map, entry->width,
                              (entry->height-y-1) * entry->width + x,
                              (pixel[3] == 255 ? 0 : 1));
       }
@@ -522,91 +520,91 @@ ico_init_data (MsIcon *ico,
     {
     case 1:
       for (y = 0; y < entry->height; y++)
-	for (x = 0; x < entry->width; x++)
-	  {
-	    pixel = (guint8 *) &buffer32[y * entry->width + x];
-	    palette_index = ico_get_palette_index (color_to_slot,
+        for (x = 0; x < entry->width; x++)
+          {
+            pixel = (guint8 *) &buffer32[y * entry->width + x];
+            palette_index = ico_get_palette_index (color_to_slot,
                                                    pixel[0], pixel[1], pixel[2]);
 
-	    if (ico_get_bit_from_data (data->and_map, entry->width,
+            if (ico_get_bit_from_data (data->and_map, entry->width,
                                        (entry->height-y-1) * entry->width + x))
-	      {
-		ico_set_bit_in_data (data->xor_map, entry->width,
+              {
+                ico_set_bit_in_data (data->xor_map, entry->width,
                                      (entry->height-y-1) * entry->width + x,
                                      black_index);
-	      }
-	    else
-	      {
-		ico_set_bit_in_data (data->xor_map, entry->width,
+              }
+            else
+              {
+                ico_set_bit_in_data (data->xor_map, entry->width,
                                      (entry->height-y-1) * entry->width + x,
                                      palette_index);
-	      }
-	  }
+              }
+          }
       break;
 
     case 4:
       for (y = 0; y < entry->height; y++)
-	for (x = 0; x < entry->width; x++)
-	  {
-	    pixel = (guint8 *) &buffer32[y * entry->width + x];
-	    palette_index = ico_get_palette_index(color_to_slot,
+        for (x = 0; x < entry->width; x++)
+          {
+            pixel = (guint8 *) &buffer32[y * entry->width + x];
+            palette_index = ico_get_palette_index(color_to_slot,
                                                   pixel[0], pixel[1], pixel[2]);
 
-	    if (ico_get_bit_from_data (data->and_map, entry->width,
+            if (ico_get_bit_from_data (data->and_map, entry->width,
                                        (entry->height-y-1) * entry->width + x))
-	      {
-		ico_set_nibble_in_data (data->xor_map, entry->width,
+              {
+                ico_set_nibble_in_data (data->xor_map, entry->width,
                                         (entry->height-y-1) * entry->width + x,
                                         black_index);
-	      }
-	    else
-	      {
-		ico_set_nibble_in_data (data->xor_map, entry->width,
+              }
+            else
+              {
+                ico_set_nibble_in_data (data->xor_map, entry->width,
                                         (entry->height-y-1) * entry->width + x,
                                         palette_index);
-	      }
-	  }
+              }
+          }
       break;
 
     case 8:
       for (y = 0; y < entry->height; y++)
-	for (x = 0; x < entry->width; x++)
-	  {
-	    pixel = (guint8 *) &buffer32[y * entry->width + x];
-	    palette_index = ico_get_palette_index (color_to_slot,
+        for (x = 0; x < entry->width; x++)
+          {
+            pixel = (guint8 *) &buffer32[y * entry->width + x];
+            palette_index = ico_get_palette_index (color_to_slot,
                                                    pixel[0],
                                                    pixel[1],
                                                    pixel[2]);
 
-	    if (ico_get_bit_from_data (data->and_map, entry->width,
+            if (ico_get_bit_from_data (data->and_map, entry->width,
                                        (entry->height-y-1) * entry->width + x))
-	      {
-		ico_set_byte_in_data (data->xor_map, entry->width,
+              {
+                ico_set_byte_in_data (data->xor_map, entry->width,
                                       (entry->height-y-1) * entry->width + x,
                                       black_index);
-	      }
-	    else
-	      {
-		ico_set_byte_in_data (data->xor_map, entry->width,
+              }
+            else
+              {
+                ico_set_byte_in_data (data->xor_map, entry->width,
                                       (entry->height-y-1) * entry->width + x,
                                       palette_index);
-	      }
+              }
 
-	  }
+          }
       break;
 
     default:
       for (y = 0; y < entry->height; y++)
-	for (x = 0; x < entry->width; x++)
-	  {
-	    pixel = (guint8 *) &buffer32[y * entry->width + x];
+        for (x = 0; x < entry->width; x++)
+          {
+            pixel = (guint8 *) &buffer32[y * entry->width + x];
 
-	    ((guint32 *) data->xor_map)[(entry->height-y-1) * entry->width + x] =
-	      GUINT32_TO_LE ((pixel[0] << 16) |
+            ((guint32 *) data->xor_map)[(entry->height-y-1) * entry->width + x] =
+              GUINT32_TO_LE ((pixel[0] << 16) |
                              (pixel[1] << 8)  |
                              (pixel[2])       |
                              (pixel[3] << 24));
-	  }
+          }
     }
 
   D(("  filled and_map of length %i, xor_map of length %i\n",
@@ -639,8 +637,7 @@ ico_setup (MsIcon *ico,
   for (i = 0; i < num_icons; i++)
     {
       ico_init_direntry (&ico->icon_dir[i], layers[i], icon_depths[i]);
-      if (interactive_ico)
-	gimp_progress_update ((gdouble) i / (gdouble) num_icons * 0.3);
+      gimp_progress_update ((gdouble) i / (gdouble) num_icons * 0.3);
     }
 
   /* Set up data entries (the actual icons), and calculate each one's size */
@@ -649,13 +646,12 @@ ico_setup (MsIcon *ico,
       ico_init_data (ico, i, layers[i], icon_depths[i]);
 
       ico->icon_dir[i].size =
-	ico->icon_data[i].header_size +
-	ico->icon_data[i].palette_len +
-	ico->icon_data[i].xor_len +
-	ico->icon_data[i].and_len;
+        ico->icon_data[i].header_size +
+        ico->icon_data[i].palette_len +
+        ico->icon_data[i].xor_len +
+        ico->icon_data[i].and_len;
 
-      if (interactive_ico)
-	gimp_progress_update (0.3 + (gdouble) i / (gdouble) num_icons * 0.3);
+      gimp_progress_update (0.3 + (gdouble) i / (gdouble) num_icons * 0.3);
     }
 
   /* Finally, calculate offsets for each icon and store them in each entry */
@@ -666,14 +662,12 @@ ico_setup (MsIcon *ico,
       ico->icon_dir[i].offset = offset;
       offset += ico->icon_dir[i].size;
 
-      if (interactive_ico)
-	gimp_progress_update (0.6 + (gdouble) i / (gdouble) num_icons * 0.3);
+      gimp_progress_update (0.6 + (gdouble) i / (gdouble) num_icons * 0.3);
     }
 
-  if (interactive_ico)
-    gimp_progress_update (1.0);
+  gimp_progress_update (1.0);
 
-  g_free(layers);
+  g_free (layers);
 }
 
 
@@ -727,12 +721,12 @@ ico_sync_image_to_ico (gint32  image,
   for (i = 0; i < num_layers; i++)
     {
       if (icon_depths[i] < icon_depths[num_layers + i])
-	{
-	  D(("Layer '%s' was reduced to %i bpp -- updating source image.\n",
-	     gimp_layer_get_name (layers[i]), icon_depths[i]));
+        {
+          D(("Layer '%s' was reduced to %i bpp -- updating source image.\n",
+             gimp_layer_get_name (layers[i]), icon_depths[i]));
 
-	  ico_image_reduce_layer_bpp (layers[i], icon_depths[i]);
-	}
+          ico_image_reduce_layer_bpp (layers[i], icon_depths[i]);
+        }
     }
 
   g_free(layers);
@@ -750,11 +744,11 @@ ico_layers_too_big (gint32 image)
   for (i = 0; i < num_layers; i++)
     {
       if ((gimp_drawable_width (layers[i])  > 255) ||
-	  (gimp_drawable_height (layers[i]) > 255))
-	{
-	  g_free (layers);
-	  return TRUE;
-	}
+          (gimp_drawable_height (layers[i]) > 255))
+        {
+          g_free (layers);
+          return TRUE;
+        }
     }
 
   g_free (layers);
@@ -766,14 +760,15 @@ GimpPDBStatusType
 SaveICO (const gchar *filename,
          gint32       image)
 {
-  MsIcon    ico;
-  gint     *icon_depths = NULL;
-  gint      num_icons;
-  GimpPDBStatusType exit_state;
+  MsIcon             ico;
+  gchar             *temp_buf;
+  gint              *icon_depths = NULL;
+  gint               num_icons;
+  GimpPDBStatusType  exit_state;
 
   D(("*** Saving Microsoft icon file %s\n", filename));
 
-  if (ico_layers_too_big(image))
+  if (ico_layers_too_big (image))
     {
       g_message (_("Windows icons cannot be higher or wider than 255 pixels."));
       return GIMP_PDB_EXECUTION_ERROR;
@@ -782,20 +777,17 @@ SaveICO (const gchar *filename,
   if (gimp_image_base_type (image) != GIMP_RGB)
     {
       if (! gimp_image_convert_rgb (image))
-	return GIMP_PDB_EXECUTION_ERROR;
+        return GIMP_PDB_EXECUTION_ERROR;
     }
 
   /* First, set up the icon specs dialog and show it: */
-  if ((icon_depths = ico_show_icon_dialog(image, &num_icons)) == NULL)
+  if ((icon_depths = ico_show_icon_dialog (image, &num_icons)) == NULL)
     return GIMP_PDB_CANCEL;
 
-  if (interactive_ico)
-    {
-      guchar *temp_buf = g_strdup_printf (_("Saving %s:"),
-                                          gimp_filename_to_utf8 (filename));
-      gimp_progress_init (temp_buf);
-      g_free (temp_buf);
-    }
+  temp_buf = g_strdup_printf (_("Saving '%s'..."),
+                              gimp_filename_to_utf8 (filename));
+  gimp_progress_init (temp_buf);
+  g_free (temp_buf);
 
   /* Okay, let's actually save the thing with the depths the
      user specified. */

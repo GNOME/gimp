@@ -23,9 +23,6 @@
 #define __MAIN_H__
 
 
-extern gboolean   interactive_ico;
-
-
 #ifdef ICO_DBG
 #define D(x) \
 { \
@@ -112,4 +109,4 @@ gint     ico_get_layer_num_colors   (gint32     layer,
 void     ico_cleanup                (MsIcon    *ico);
 
 
-#endif
+#endif /* __MAIN_H__ */

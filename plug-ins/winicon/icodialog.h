@@ -32,4 +32,4 @@ void        ico_specs_dialog_update_icon_preview (GtkWidget *dialog,
                                                   gint       bpp);
 
 
-#endif
+#endif /* __ICO_DIALOG_H__ */

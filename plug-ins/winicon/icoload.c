@@ -25,8 +25,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#include <gtk/gtk.h>
-
 #include <libgimp/gimp.h>
 
 /* #define ICO_DBG */
@@ -59,8 +57,8 @@ static gint32     ico_to_gimp    (MsIcon *ico);
 
 static gint
 ico_read_int32 (FILE     *fp,
-		guint32  *data,
-		gint      count)
+                guint32  *data,
+                gint      count)
 {
   gint i, total;
 
@@ -69,7 +67,7 @@ ico_read_int32 (FILE     *fp,
     {
       ico_read_int8 (fp, (guint8 *) data, count * 4);
       for (i = 0; i < count; i++)
-	data[i] = GUINT32_FROM_LE (data[i]);
+        data[i] = GUINT32_FROM_LE (data[i]);
     }
 
   return total * 4;
@@ -78,8 +76,8 @@ ico_read_int32 (FILE     *fp,
 
 static gint
 ico_read_int16 (FILE     *fp,
-		guint16  *data,
-		gint      count)
+                guint16  *data,
+                gint      count)
 {
   gint i, total;
 
@@ -88,7 +86,7 @@ ico_read_int16 (FILE     *fp,
     {
       ico_read_int8 (fp, (guint8 *) data, count * 2);
       for (i = 0; i < count; i++)
-	data[i] = GUINT16_FROM_LE (data[i]);
+        data[i] = GUINT16_FROM_LE (data[i]);
     }
 
   return total * 2;
@@ -97,8 +95,8 @@ ico_read_int16 (FILE     *fp,
 
 static gint
 ico_read_int8 (FILE   *fp,
-	       guint8 *data,
-	       gint    count)
+               guint8 *data,
+               gint    count)
 {
   gint total;
   gint bytes;
@@ -221,10 +219,10 @@ ico_read_data (MsIcon *ico,
   if (data->bpp <= 8)
     {
       if (data->used_clrs == 0)
-	data->used_clrs = (1 << data->bpp);
+        data->used_clrs = (1 << data->bpp);
 
       D(("  allocating a %i-slot palette for %i bpp.\n",
-	 data->used_clrs, data->bpp));
+         data->used_clrs, data->bpp));
 
       data->palette = g_new0 (guint32, data->used_clrs);
       ico->cp += ico_read_int8 (ico->fp,
@@ -256,7 +254,7 @@ ico_load (MsIcon *ico)
   ico->icon_data = g_new0 (MsIconData, ico->icon_count);
 
   D(("*** %s: Microsoft icon file, containing %i icon(s)\n",
-	 ico->filename, ico->icon_count));
+         ico->filename, ico->icon_count));
 
   for (i = 0; i < ico->icon_count; i++)
     ico_read_entry(ico, &ico->icon_dir[i]);
@@ -352,9 +350,9 @@ ico_to_gimp (MsIcon *ico)
   for (icon_nr = 0; icon_nr < ico->icon_count; icon_nr++)
     {
       if (ico->icon_dir[icon_nr].width > max_w)
-	max_w = ico->icon_dir[icon_nr].width;
+        max_w = ico->icon_dir[icon_nr].width;
       if (ico->icon_dir[icon_nr].height > max_h)
-	max_h = ico->icon_dir[icon_nr].height;
+        max_h = ico->icon_dir[icon_nr].height;
     }
 
   /* Allocate the Gimp image */
@@ -368,8 +366,7 @@ ico_to_gimp (MsIcon *ico)
     {
       GimpPixelRgn pixel_rgn;
 
-      if (interactive_ico)
-	gimp_progress_update ((gdouble) icon_nr / (gdouble) ico->icon_count);
+      gimp_progress_update ((gdouble) icon_nr / (gdouble) ico->icon_count);
 
       w = ico->icon_dir[icon_nr].width;
       h = ico->icon_dir[icon_nr].height;
@@ -385,7 +382,7 @@ ico_to_gimp (MsIcon *ico)
                               GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
 
       if (first_layer == -1)
-	first_layer = layer;
+        first_layer = layer;
 
       gimp_image_add_layer (image, layer, icon_nr);
       drawable = gimp_drawable_get (layer);
@@ -393,97 +390,97 @@ ico_to_gimp (MsIcon *ico)
       dest_vec = g_malloc (w * h * 4);
 
       switch (idata->bpp)
-	{
-	case 1:
-	  for (y = 0; y < h; y++)
-	    for (x = 0; x < w; x++)
-	      {
-		guint32 color = palette[ico_get_bit_from_data (xor_map,
+        {
+        case 1:
+          for (y = 0; y < h; y++)
+            for (x = 0; x < w; x++)
+              {
+                guint32 color = palette[ico_get_bit_from_data (xor_map,
                                                                w, y * w + x)];
-		guint32 *dest = &(dest_vec[(h-1-y) * w + x]);
+                guint32 *dest = &(dest_vec[(h-1-y) * w + x]);
 
-		R_VAL_GIMP (dest) = R_VAL (&color);
-		G_VAL_GIMP (dest) = G_VAL (&color);
-		B_VAL_GIMP (dest) = B_VAL (&color);
+                R_VAL_GIMP (dest) = R_VAL (&color);
+                G_VAL_GIMP (dest) = G_VAL (&color);
+                B_VAL_GIMP (dest) = B_VAL (&color);
 
-		if (ico_get_bit_from_data (and_map, w, y*w + x))
-		  A_VAL_GIMP (dest) = 0;
-		else
-		  A_VAL_GIMP (dest) = 255;
-	      }
-	  break;
+                if (ico_get_bit_from_data (and_map, w, y*w + x))
+                  A_VAL_GIMP (dest) = 0;
+                else
+                  A_VAL_GIMP (dest) = 255;
+              }
+          break;
 
-	case 4:
-	  for (y = 0; y < h; y++)
-	    for (x = 0; x < w; x++)
-	      {
-		guint32 color = palette[ico_get_nibble_from_data (xor_map,
+        case 4:
+          for (y = 0; y < h; y++)
+            for (x = 0; x < w; x++)
+              {
+                guint32 color = palette[ico_get_nibble_from_data (xor_map,
                                                                   w, y * w + x)];
-		guint32 *dest = &(dest_vec[(h-1-y) * w + x]);
+                guint32 *dest = &(dest_vec[(h-1-y) * w + x]);
 
-		R_VAL_GIMP (dest) = R_VAL (&color);
-		G_VAL_GIMP (dest) = G_VAL (&color);
-		B_VAL_GIMP (dest) = B_VAL (&color);
+                R_VAL_GIMP (dest) = R_VAL (&color);
+                G_VAL_GIMP (dest) = G_VAL (&color);
+                B_VAL_GIMP (dest) = B_VAL (&color);
 
-		if (ico_get_bit_from_data (and_map, w, y*w + x))
-		  A_VAL_GIMP (dest) = 0;
-		else
-		  A_VAL_GIMP (dest) = 255;
-	      }
-	  break;
+                if (ico_get_bit_from_data (and_map, w, y*w + x))
+                  A_VAL_GIMP (dest) = 0;
+                else
+                  A_VAL_GIMP (dest) = 255;
+              }
+          break;
 
-	case 8:
-	  for (y = 0; y < h; y++)
-	    for (x = 0; x < w; x++)
-	      {
-		guint32 color = palette[ico_get_byte_from_data (xor_map,
+        case 8:
+          for (y = 0; y < h; y++)
+            for (x = 0; x < w; x++)
+              {
+                guint32 color = palette[ico_get_byte_from_data (xor_map,
                                                                 w, y * w + x)];
-		guint32 *dest = &(dest_vec[(h-1-y) * w + x]);
+                guint32 *dest = &(dest_vec[(h-1-y) * w + x]);
 
-		R_VAL_GIMP (dest) = R_VAL (&color);
-		G_VAL_GIMP (dest) = G_VAL (&color);
-		B_VAL_GIMP (dest) = B_VAL (&color);
+                R_VAL_GIMP (dest) = R_VAL (&color);
+                G_VAL_GIMP (dest) = G_VAL (&color);
+                B_VAL_GIMP (dest) = B_VAL (&color);
 
-		if (ico_get_bit_from_data (and_map, w, y*w + x))
-		  A_VAL_GIMP (dest) = 0;
-		else
-		  A_VAL_GIMP (dest) = 255;
-	      }
-	  break;
+                if (ico_get_bit_from_data (and_map, w, y*w + x))
+                  A_VAL_GIMP (dest) = 0;
+                else
+                  A_VAL_GIMP (dest) = 255;
+              }
+          break;
 
-	default:
-	  {
-	    int bytespp = idata->bpp/8;
+        default:
+          {
+            int bytespp = idata->bpp/8;
 
-	    for (y = 0; y < h; y++)
-	      for (x = 0; x < w; x++)
-		{
-		  guint32 *dest = &(dest_vec[(h-1-y) * w + x]);
+            for (y = 0; y < h; y++)
+              for (x = 0; x < w; x++)
+                {
+                  guint32 *dest = &(dest_vec[(h-1-y) * w + x]);
 
-		  B_VAL_GIMP(dest) = xor_map[(y * w + x) * bytespp];
-		  G_VAL_GIMP(dest) = xor_map[(y * w + x) * bytespp + 1];
-		  R_VAL_GIMP(dest) = xor_map[(y * w + x) * bytespp + 2];
+                  B_VAL_GIMP(dest) = xor_map[(y * w + x) * bytespp];
+                  G_VAL_GIMP(dest) = xor_map[(y * w + x) * bytespp + 1];
+                  R_VAL_GIMP(dest) = xor_map[(y * w + x) * bytespp + 2];
 
-		  if (idata->bpp < 32)
-		    {
-		      if (ico_get_bit_from_data (and_map, w, y*w + x))
-			A_VAL_GIMP (dest) = 0;
-		      else
-			A_VAL_GIMP (dest) = 255;
-		    }
-		  else
-		    {
-		      A_VAL_GIMP (dest) = xor_map[(y * w + x) * bytespp + 3];
-		    }
-		}
-	  }
-	}
+                  if (idata->bpp < 32)
+                    {
+                      if (ico_get_bit_from_data (and_map, w, y*w + x))
+                        A_VAL_GIMP (dest) = 0;
+                      else
+                        A_VAL_GIMP (dest) = 255;
+                    }
+                  else
+                    {
+                      A_VAL_GIMP (dest) = xor_map[(y * w + x) * bytespp + 3];
+                    }
+                }
+          }
+        }
 
       gimp_pixel_rgn_init (&pixel_rgn, drawable,
-			   0, 0, drawable->width, drawable->height,
+                           0, 0, drawable->width, drawable->height,
                            TRUE, FALSE);
       gimp_pixel_rgn_set_rect (&pixel_rgn, (guchar*) dest_vec,
-			       0, 0, drawable->width, drawable->height);
+                               0, 0, drawable->width, drawable->height);
 
       g_free(dest_vec);
       gimp_drawable_flush (drawable);
@@ -492,8 +489,7 @@ ico_to_gimp (MsIcon *ico)
 
   gimp_image_set_active_layer (image, first_layer);
 
-  if (interactive_ico)
-    gimp_progress_update (1.0);
+  gimp_progress_update (1.0);
 
   return image;
 }
@@ -502,16 +498,14 @@ ico_to_gimp (MsIcon *ico)
 gint32
 LoadICO (const gchar *filename)
 {
-  gint32 image_ID;
-  MsIcon ico;
+  gchar  *temp;
+  gint32  image_ID;
+  MsIcon  ico;
 
-  if (interactive_ico)
-    {
-      guchar *temp = g_strdup_printf (_("Loading %s:"),
-                                      gimp_filename_to_utf8 (filename));
-      gimp_progress_init (temp);
-      g_free (temp);
-    }
+  temp = g_strdup_printf (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init (temp);
+  g_free (temp);
 
   if (! ico_init (filename, &ico))
     return -1;

@@ -24,7 +24,7 @@
 
 
 GimpPDBStatusType SaveICO (const gchar *file_name,
-			   gint32       image_ID);
+                           gint32       image_ID);
 
 
-#endif
+#endif /* __ICO_SAVE_H__ */

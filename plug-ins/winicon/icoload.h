@@ -30,4 +30,4 @@ gint   ico_get_byte_from_data   (guint8 *data, gint line_width, gint byte);
 gint32 LoadICO                  (const gchar *file_name);
 
 
-#endif
+#endif /* __ICO_LOAD_H__ */
