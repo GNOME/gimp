@@ -468,7 +468,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Channel:"));
+  label = gtk_label_new_with_mnemonic (_("Cha_nnel:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -489,6 +489,8 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (menu);
 
   tool->channel_menu = menu;
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), menu);
 
   button = gtk_button_new_with_mnemonic (_("R_eset channel"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -1044,7 +1046,8 @@ curves_graph_events (GtkWidget      *widget,
 
               if (x2 != x1)
                 for (i = x1; i <= x2; i++)
-                  tool->curves->curve[tool->channel][i] = 255 - (y1 + ((y2 - y1) * (i - x1)) / (x2 - x1));
+                  tool->curves->curve[tool->channel][i] =
+                    255 - (y1 + ((y2 - y1) * (i - x1)) / (x2 - x1));
               else
                 tool->curves->curve[tool->channel][x] = 255 - y;
 
@@ -1224,10 +1227,12 @@ curves_graph_expose (GtkWidget      *widget,
       gdk_draw_line (widget->window,
                      graph_gc,
                      RADIUS +
-                     ROUND ((gdouble) width  * (tool->col_value[channel]) / 256.0),
+                     ROUND ((gdouble) width *
+                            (tool->col_value[channel]) / 256.0),
                      RADIUS,
                      RADIUS +
-                     ROUND ((gdouble) width  * (tool->col_value[channel]) / 256.0),
+                     ROUND ((gdouble) width *
+                            (tool->col_value[channel]) / 256.0),
                      height + RADIUS - 1);
 
       /* and xpos indicator */

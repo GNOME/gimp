@@ -1,3 +1,9 @@
+2005-03-08  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcurvestool.c (gimp_curves_tool_dialog)
+	* app/tools/gimplevelstool.c (gimp_levels_tool_dialog): added
+	mnemonics for the Channels menu.
+
 2005-03-07  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/metadata/interface.c
