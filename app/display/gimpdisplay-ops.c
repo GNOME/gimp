@@ -171,6 +171,10 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       width = ((width + border_x) < s_width) ? width : max_auto_width;
       height = ((height + border_y) < s_height) ? height : max_auto_height;
 
+      if (width < gdisp->statusarea->requisition.width) 
+        { 
+          width = gdisp->statusarea->requisition.width; 
+        }
       /* I don't know why, but if I don't hide the window, it doesn't work */
       gtk_widget_hide(gdisp->shell); 
       gtk_drawing_area_size(GTK_DRAWING_AREA(gdisp->canvas),
@@ -207,6 +211,11 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       max_auto_width = MINIMUM (max_auto_width, width);
       max_auto_height = MINIMUM (max_auto_height, height);
       
+      if (width < gdisp->statusarea->requisition.width) 
+        { 
+          width = gdisp->statusarea->requisition.width; 
+        }
+
       /* I don't know why, but if I don't hide the window, it doesn't work */
       gtk_widget_hide(gdisp->shell); 
       gtk_drawing_area_size(GTK_DRAWING_AREA(gdisp->canvas),

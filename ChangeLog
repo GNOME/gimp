@@ -1,3 +1,11 @@
+Mon Jan 24 22:28:00 CET 2000  Seth Burgess <sjburges@gimp.org>
+	
+	* app/gdisplay_ops.c: Added a minimum width for shrink wrap;
+        without it, it would map improperly and create a mess for small
+	images.  Its not a very shrunk wrap since the statusbar is so
+        large, but at least it works.  I welcome other suggestions on
+	better ways to fix this.
+
 Mon Jan 24 23:28:08 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gimpdnd.c: I think this time I got it right. Still the same
