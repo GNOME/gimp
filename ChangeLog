@@ -1,3 +1,8 @@
+2003-12-03  Jakub Steiner <jimmac@ximian.com>
+
+	* data/patterns/Stripes1px.pat
+	* data/patterns/Stripes2px.pat: rename to Stripes & Stripes Fine
+
 2003-12-03  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/nlfilt.c: use G_MAXINT instead of a custom define.
