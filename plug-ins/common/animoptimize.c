@@ -969,6 +969,7 @@ g_warning("stat fun");
 				}
 			    }
 			skip_right:
+		          /* nop */;
 			} /* xit */
 
 		      /* Compare with next pixels from right to left */
@@ -1009,6 +1010,7 @@ g_warning("stat fun");
 				}
 			    }
 			skip_left:
+		          /* nop */;
 			} /* xit */
 		    } /* yit */
 		}
