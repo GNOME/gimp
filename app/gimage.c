@@ -825,6 +825,7 @@ gimage_add_hguide (GImage *gimage)
   Guide *guide;
 
   guide = g_new (Guide, 1);
+  guide->ref_count = 0;
   guide->position = -1;
   guide->orientation = HORIZONTAL_GUIDE;
 
@@ -839,6 +840,7 @@ gimage_add_vguide (GImage *gimage)
   Guide *guide;
 
   guide = g_new (Guide, 1);
+  guide->ref_count = 0;
   guide->position = -1;
   guide->orientation = VERTICAL_GUIDE;
 

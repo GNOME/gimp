@@ -1974,6 +1974,7 @@ undo_push_guide (GImage *gimage,
 
   if ((new = undo_push (gimage, size, GIMAGE_MOD)))
     {
+      ((Guide *)(guide))->ref_count++;
       data               = g_new (GuideUndo, 1);
       new->data          = data;
       new->pop_func      = undo_pop_guide;
@@ -1998,14 +1999,17 @@ undo_pop_guide (GImage *gimage,
 {
   GuideUndo *data;
   Guide tmp;
+  int tmp_ref;
 
   data = data_ptr;
 
   gdisplays_expose_guide (gimage->ID, data->guide);
   gdisplays_expose_guide (gimage->ID, &data->orig);
 
+  tmp_ref = data->guide->ref_count;
   tmp = *(data->guide);
   *(data->guide) = data->orig;
+  data->guide->ref_count = tmp_ref;
   data->orig = tmp;
 
   switch (state)
@@ -2030,8 +2034,9 @@ undo_free_guide (int   state,
 
   data = data_ptr;
 
-  if (data->guide->position < 0)
-    gimage_delete_guide (data->gimage, data->guide);
+  data->guide->ref_count--;
+  if (data->guide->position < 0 && data->guide->ref_count <= 0)
+      gimage_delete_guide (data->gimage, data->guide);
 
   g_free (data_ptr);
 }

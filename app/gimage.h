@@ -87,6 +87,7 @@ typedef struct _GImage GImage;
 
 struct _Guide
 {
+  int ref_count;
   int position;
   int orientation;
 };
