@@ -154,10 +154,10 @@
 		    "1997"
 		    ""
 
-		    SF-ADJUSTMENT _"Block Size" '(32 2 512 1 10 1 1)
+		    SF-ADJUSTMENT _"Block size" '(32 2 512 1 10 1 1)
 		    SF-ADJUSTMENT _"Thickness" '(2 1 512 1 10 1 1)
-		    SF-COLOR      _"Background Color" '(255 255 255)
-		    SF-COLOR      _"Foreground Color" '(0 0 0)
-		    SF-ADJUSTMENT _"Number of X Tiles" '(5 1 512 1 10 1 1)
-		    SF-ADJUSTMENT _"Number of Y Tiles" '(5 1 512 1 10 1 1)
+		    SF-COLOR      _"Background color" '(255 255 255)
+		    SF-COLOR      _"Foreground color" '(0 0 0)
+		    SF-ADJUSTMENT _"Number of X tiles" '(5 1 512 1 10 1 1)
+		    SF-ADJUSTMENT _"Number of Y tiles" '(5 1 512 1 10 1 1)
 		    )

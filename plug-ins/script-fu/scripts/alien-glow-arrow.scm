@@ -157,6 +157,6 @@
                                                        _"Left" 
                                                        _"Up" 
                                                        _"Down")
-                    SF-COLOR      _"Glow Color"       '(63 252 0)
-                    SF-COLOR      _"Background Color" '(0 0 0)
-                    SF-TOGGLE     _"Flatten Image"    TRUE)
+                    SF-COLOR      _"Glow color"       '(63 252 0)
+                    SF-COLOR      _"Background color" '(0 0 0)
+                    SF-TOGGLE     _"Flatten image"    TRUE)

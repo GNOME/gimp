@@ -111,6 +111,6 @@
 		    SF-ADJUSTMENT _"Size" '(10 0 100 1 10 0 1)
 		    SF-ADJUSTMENT _"Roughness" '(7 3 50 1 10 0 0)
 		    SF-GRADIENT _"Gradient" "German flag smooth"
-		    SF-TOGGLE   _"Keep Selection" TRUE
-		    SF-TOGGLE   _"Separate Layer" TRUE
-		    SF-TOGGLE   _"Use Current Gradient" FALSE)
+		    SF-TOGGLE   _"Keep selection" TRUE
+		    SF-TOGGLE   _"Separate layer" TRUE
+		    SF-TOGGLE   _"Use current gradient" FALSE)

@@ -128,4 +128,4 @@
 		    "*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-ADJUSTMENT _"Relative Radius" '(1 0 128 .1 1 1 1))
+		    SF-ADJUSTMENT _"Relative radius" '(1 0 128 .1 1 1 1))

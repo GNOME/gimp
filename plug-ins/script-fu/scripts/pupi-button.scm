@@ -188,18 +188,18 @@
 		    "June 1998"
 		    ""
 		    SF-STRING     _"Text"                 "The GIMP"
-		    SF-ADJUSTMENT _"Font Size (pixels)"   '(16 2 100 1 1 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)"   '(16 2 100 1 1 0 1)
 		    SF-FONT       _"Font"                 "Sans"
-		    SF-COLOR      _"Upper Color"          '(192 192 0)
-		    SF-COLOR      _"Lower Color"          '(128 108 0)
-		    SF-COLOR      _"Text Color"           '(0 0 0)
-		    SF-COLOR      _"Upper Color (Active)" '(255 255 0)
-		    SF-COLOR      _"Lower Color (Active)" '(128 108 0)
-		    SF-COLOR      _"Text Color (Active)"  '(0 0 192)
+		    SF-COLOR      _"Upper color"          '(192 192 0)
+		    SF-COLOR      _"Lower color"          '(128 108 0)
+		    SF-COLOR      _"Text color"           '(0 0 0)
+		    SF-COLOR      _"Upper color (active)" '(255 255 0)
+		    SF-COLOR      _"Lower color (active)" '(128 108 0)
+		    SF-COLOR      _"Text color (active)"  '(0 0 192)
 		    SF-ADJUSTMENT _"Padding X"            '(4 0 100 1 10 0 1)
 		    SF-ADJUSTMENT _"Padding Y"            '(4 0 100 1 10 0 1)
-		    SF-ADJUSTMENT _"Bevel Width"          '(2 0 100 1 10 0 1)
-		    SF-ADJUSTMENT _"Round Ratio"          '(1 0.05 20 0.05 1 2 1)
-		    SF-TOGGLE     _"Not Pressed"          TRUE
-		    SF-TOGGLE     _"Not Pressed (Active)" TRUE
+		    SF-ADJUSTMENT _"Bevel width"          '(2 0 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Round ratio"          '(1 0.05 20 0.05 1 2 1)
+		    SF-TOGGLE     _"Not pressed"          TRUE
+		    SF-TOGGLE     _"Not pressed (active)" TRUE
 		    SF-TOGGLE     _"Pressed"              TRUE)

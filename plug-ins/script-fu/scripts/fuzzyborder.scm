@@ -154,14 +154,14 @@
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
     "3rd April 1998"
     "RGB* GRAY*"
-    SF-IMAGE "The Image" 0
-    SF-DRAWABLE "The Layer" 0
+    SF-IMAGE "The image" 0
+    SF-DRAWABLE "The layer" 0
     SF-COLOR  _"Color"      '(255 255 255)
-    SF-ADJUSTMENT  _"Border Size" '(16 1 300 1 10 0 1)
-    SF-TOGGLE _"Blur Border" TRUE
+    SF-ADJUSTMENT  _"Border size" '(16 1 300 1 10 0 1)
+    SF-TOGGLE _"Blur border" TRUE
     SF-ADJUSTMENT _"Granularity (1 is Low)" '(4 1 16 0.25 5 2 0)
-    SF-TOGGLE _"Add Shadow" FALSE
-    SF-ADJUSTMENT _"Shadow Weight (%)" '(100 0 100 1 10 0 0)
-    SF-TOGGLE _"Work on Copy" TRUE
-    SF-TOGGLE _"Flatten Image" TRUE
+    SF-TOGGLE _"Add shadow" FALSE
+    SF-ADJUSTMENT _"Shadow weight (%)" '(100 0 100 1 10 0 0)
+    SF-TOGGLE _"Work on copy" TRUE
+    SF-TOGGLE _"Flatten image" TRUE
 )

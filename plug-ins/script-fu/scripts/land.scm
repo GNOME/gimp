@@ -73,12 +73,12 @@
 		    "Adrian Likins"
 		    "1997"
 		    ""
-		    SF-ADJUSTMENT _"Image Width" '(256 10 1000 1 10 0 1)
-		    SF-ADJUSTMENT _"Image Height" '(256 10 1000 1 10 0 1)
-		    SF-ADJUSTMENT _"Random Seed" '(32 0 15000000 1 10 0 1)
-		    SF-ADJUSTMENT _"Detail Level" '(4 1 15 1 5 0 0)
-		    SF-ADJUSTMENT _"Land Height" '(60 1 65 1 10 0 1)
-		    SF-ADJUSTMENT _"Sea Depth" '(4 1 65 1 10 0 1)
+		    SF-ADJUSTMENT _"Image width" '(256 10 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Image height" '(256 10 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Random seed" '(32 0 15000000 1 10 0 1)
+		    SF-ADJUSTMENT _"Detail level" '(4 1 15 1 5 0 0)
+		    SF-ADJUSTMENT _"Land height" '(60 1 65 1 10 0 1)
+		    SF-ADJUSTMENT _"Sea depth" '(4 1 65 1 10 0 1)
 		    SF-ADJUSTMENT _"Scale X" '(4 0.1 16 1 5 0.1 0)
 		    SF-ADJUSTMENT _"Scale Y" '(4 0.1 16 1 5 0.1 0)
 		    SF-GRADIENT   _"Gradient" "Land 1")

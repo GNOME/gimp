@@ -112,9 +112,9 @@
 		    "April 1998"
 		    ""
 		    SF-STRING     _"Text" "Fear the Cow"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(80 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(80 2 1000 1 10 0 1)
 		    SF-FONT       _"Font" "RoostHeavy"
 		    SF-ADJUSTMENT _"Spots density X" '(16 1 16 1 10 0 1)
 		    SF-ADJUSTMENT _"Spots density Y" '(4 1 16 1 10 0 1)
-		    SF-COLOR      _"Background Color" '(255 255 255))
+		    SF-COLOR      _"Background color" '(255 255 255))
 

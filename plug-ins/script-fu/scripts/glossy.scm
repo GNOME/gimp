@@ -182,22 +182,22 @@
 		    "RGBA"
                     SF-IMAGE      "Image"                     0
                     SF-DRAWABLE   "Drawable"                  0
-                    SF-GRADIENT   _"Blend Gradient (Text)"    "Shadows 2"
-		    SF-TOGGLE     _"Text Gradient Reverse"    FALSE
-                    SF-GRADIENT   _"Blend Gradient (Outline)" "Shadows 2"
-		    SF-TOGGLE     _"Outline Gradient Reverse" FALSE
-                    SF-ADJUSTMENT _"Outline Size"             '(5 0 250 1 10 0 1)
-		    SF-COLOR      _"Background Color"         '(255 255 255)
-		    SF-TOGGLE     _"Use Pattern for Text instead of Gradient" FALSE
-		    SF-PATTERN    _"Pattern (Text)"           "Electric Blue"
-		    SF-TOGGLE     _"Use Pattern for Outline instead of Gradient" FALSE
-		    SF-PATTERN    _"Pattern (Outline)"        "Electric Blue"
-		    SF-TOGGLE     _"Use Pattern Overlay"      FALSE
-		    SF-PATTERN    _"Pattern (Overlay)"        "Parque #1"
-		    SF-TOGGLE     _"Default Bumpmap Settings" TRUE
+                    SF-GRADIENT   _"Blend gradient (text)"    "Shadows 2"
+		    SF-TOGGLE     _"Text gradient reverse"    FALSE
+                    SF-GRADIENT   _"Blend gradient (outline)" "Shadows 2"
+		    SF-TOGGLE     _"Outline gradient reverse" FALSE
+                    SF-ADJUSTMENT _"Outline size"             '(5 0 250 1 10 0 1)
+		    SF-COLOR      _"Background color"         '(255 255 255)
+		    SF-TOGGLE     _"Use pattern for text instead of gradient" FALSE
+		    SF-PATTERN    _"Pattern (text)"           "Electric Blue"
+		    SF-TOGGLE     _"Use tattern for outline instead of gradient" FALSE
+		    SF-PATTERN    _"Pattern (outline)"        "Electric Blue"
+		    SF-TOGGLE     _"Use pattern overlay"      FALSE
+		    SF-PATTERN    _"Pattern (overlay)"        "Parque #1"
+		    SF-TOGGLE     _"Default bumpmap settings" TRUE
 		    SF-TOGGLE     _"Shadow"                   TRUE
-		    SF-ADJUSTMENT _"Shadow X Offset"          '(8 0 100 1 10 0 1)
-                    SF-ADJUSTMENT _"Shadow Y Offset"          '(8 0 100 1 10 0 1))
+		    SF-ADJUSTMENT _"Shadow X offset"          '(8 0 100 1 10 0 1)
+                    SF-ADJUSTMENT _"Shadow Y offset"          '(8 0 100 1 10 0 1))
 
 
 (define (script-fu-glossy-logo text
@@ -245,21 +245,21 @@
                     "14/04/1998"
                     ""
                     SF-STRING     _"Text"                     "Galaxy"
-                    SF-ADJUSTMENT _"Font Size (pixels)"       '(100 2 1000 1 10 0 1)
+                    SF-ADJUSTMENT _"Font size (pixels)"       '(100 2 1000 1 10 0 1)
                     SF-FONT       _"Font"                     "Eras"
-                    SF-GRADIENT   _"Blend Gradient (Text)"    "Shadows 2"
-		    SF-TOGGLE     _"Text Gradient Reverse"    FALSE
-                    SF-GRADIENT   _"Blend Gradient (Outline)" "Shadows 2"
-		    SF-TOGGLE     _"Outline Gradient Reverse" FALSE
-                    SF-ADJUSTMENT _"Outline Size"             '(5 0 250 1 10 0 1)
-		    SF-COLOR      _"Background Color"         '(255 255 255)
-		    SF-TOGGLE     _"Use Pattern for Text instead of Gradient" FALSE
-		    SF-PATTERN    _"Pattern (Text)"           "Electric Blue"
-		    SF-TOGGLE     _"Use Pattern for Outline instead of Gradient" FALSE
-		    SF-PATTERN    _"Pattern (Outline)"        "Electric Blue"
-		    SF-TOGGLE     _"Use Pattern Overlay"      FALSE
-		    SF-PATTERN    _"Pattern (Overlay)"        "Parque #1"
-		    SF-TOGGLE     _"Default Bumpmap Settings" TRUE
+                    SF-GRADIENT   _"Blend gradient (sext)"    "Shadows 2"
+		    SF-TOGGLE     _"Text gradient reverse"    FALSE
+                    SF-GRADIENT   _"Blend gradient (outline)" "Shadows 2"
+		    SF-TOGGLE     _"Outline gradient reverse" FALSE
+                    SF-ADJUSTMENT _"Outline size"             '(5 0 250 1 10 0 1)
+		    SF-COLOR      _"Background color"         '(255 255 255)
+		    SF-TOGGLE     _"Use pattern for text instead of gradient" FALSE
+		    SF-PATTERN    _"Pattern (text)"           "Electric Blue"
+		    SF-TOGGLE     _"Use pattern for outline instead of gradient" FALSE
+		    SF-PATTERN    _"Pattern (outline)"        "Electric Blue"
+		    SF-TOGGLE     _"Use pattern overlay"      FALSE
+		    SF-PATTERN    _"Pattern (overlay)"        "Parque #1"
+		    SF-TOGGLE     _"Default bumpmap settings" TRUE
 		    SF-TOGGLE     _"Shadow"                   TRUE
-		    SF-ADJUSTMENT _"Shadow X Offset"          '(8 0 100 1 10 0 1)
-                    SF-ADJUSTMENT _"Shadow Y Offset"          '(8 0 100 1 10 0 1))
+		    SF-ADJUSTMENT _"Shadow X offset"          '(8 0 100 1 10 0 1)
+                    SF-ADJUSTMENT _"Shadow Y offset"          '(8 0 100 1 10 0 1))

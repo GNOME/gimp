@@ -219,11 +219,11 @@
 		    "Adrian Likins"
 		    "1997"
 		    ""
-		    SF-ADJUSTMENT _"Block Size"        '(64 5 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Block size"        '(64 5 1000 1 10 0 1)
 		    SF-ADJUSTMENT _"Thickness"         '(12 2 100 1 10 0 1)
-		    SF-COLOR      _"Background Color"  '(255 255 255)
-		    SF-COLOR      _"Start Blend"       '(0 0 0)
-		    SF-COLOR      _"End Blend"         '(255 255 255)
+		    SF-COLOR      _"Background color"  '(255 255 255)
+		    SF-COLOR      _"Start blend"       '(0 0 0)
+		    SF-COLOR      _"End blend"         '(255 255 255)
 		    SF-TOGGLE     _"Supersample"       TRUE
-		    SF-ADJUSTMENT _"Number of X Tiles" '(5 1 1000 1 10 0 1)
-		    SF-ADJUSTMENT _"Number of Y Tiles" '(5 1 1000 1 10 0 1))
+		    SF-ADJUSTMENT _"Number of X tiles" '(5 1 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Number of Y tiles" '(5 1 1000 1 10 0 1))

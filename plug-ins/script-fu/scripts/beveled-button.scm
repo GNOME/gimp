@@ -144,11 +144,11 @@
 		    "June 1997"
 		    ""
 		    SF-STRING     _"Text"               "Hello world!"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(16 2 100 1 1 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(16 2 100 1 1 0 1)
 		    SF-FONT       _"Font"               "Sans"
-		    SF-COLOR      _"Upper-Left color"   '(0 255 127)
-		    SF-COLOR      _"Lower-Right color"  '(0 127 255)
-		    SF-COLOR      _"Text Color"         '(0 0 0)
+		    SF-COLOR      _"Upper-left color"   '(0 255 127)
+		    SF-COLOR      _"Lower-right color"  '(0 127 255)
+		    SF-COLOR      _"Text color"         '(0 0 0)
 		    SF-ADJUSTMENT _"Padding"            '(2 1 100 1 10 0 1)
-		    SF-ADJUSTMENT _"Bevel Width"        '(4 1 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Bevel width"        '(4 1 100 1 10 0 1)
 		    SF-TOGGLE     _"Pressed"            FALSE)

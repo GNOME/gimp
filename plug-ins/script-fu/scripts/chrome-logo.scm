@@ -107,7 +107,7 @@
 		    "1997"
 		    ""
 		    SF-STRING     _"Text" "The GIMP"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
 		    SF-FONT       _"Font" "Bodoni"
-		    SF-COLOR      _"Background Color" '(191 191 191)
+		    SF-COLOR      _"Background color" '(191 191 191)
 		    )

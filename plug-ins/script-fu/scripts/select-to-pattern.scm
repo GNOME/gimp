@@ -81,5 +81,5 @@
 		    "RGB* GRAY*"
 		    SF-IMAGE    "Image"         0
 		    SF-DRAWABLE "Drawable"      0
-		    SF-STRING   _"Pattern Name" "My Pattern"
+		    SF-STRING   _"Pattern name" "My Pattern"
 		    SF-STRING   _"Filename"     "mypattern")

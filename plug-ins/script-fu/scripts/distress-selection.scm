@@ -91,11 +91,11 @@
 		    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
 		    "23rd April 1998"
 		    "RGB*"
-		    SF-IMAGE       "The Image" 0
-		    SF-DRAWABLE    "The Layer" 0
-		    SF-ADJUSTMENT _"Threshold (Bigger 1<-->255 Smaller)" '(127 1 255 1 10 0 0)
+		    SF-IMAGE       "The image" 0
+		    SF-DRAWABLE    "The layer" 0
+		    SF-ADJUSTMENT _"Threshold (bigger 1<-->255 smaller)" '(127 1 255 1 10 0 0)
 		    SF-ADJUSTMENT _"Spread"   '(8 0 1000 1 10 0 1)
-		    SF-ADJUSTMENT _"Granularity (1 is Low)" '(4 1 25 1 10 0 1)
+		    SF-ADJUSTMENT _"Granularity (1 is low)" '(4 1 25 1 10 0 1)
 		    SF-ADJUSTMENT _"Smooth"   '(2 0 150 1 10 0 1)
-		    SF-TOGGLE     _"Smooth Horizontally" TRUE
-		    SF-TOGGLE     _"Smooth Vertically"   TRUE)
+		    SF-TOGGLE     _"Smooth horizontally" TRUE
+		    SF-TOGGLE     _"Smooth vertically"   TRUE)

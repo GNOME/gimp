@@ -134,8 +134,8 @@
 		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-ADJUSTMENT _"Oilify Mask Size" '(17 3 50 1 10 0 1)
-		    SF-ADJUSTMENT _"Circuit Seed" '(3 1 3000000 1 10 0 1)
-		    SF-TOGGLE _"No Background (only for separate layer)" FALSE
-		    SF-TOGGLE _"Keep Selection" TRUE
-		    SF-TOGGLE _"Separate Layer" TRUE)
+		    SF-ADJUSTMENT _"Oilify mask size" '(17 3 50 1 10 0 1)
+		    SF-ADJUSTMENT _"Circuit seed" '(3 1 3000000 1 10 0 1)
+		    SF-TOGGLE _"No background (only for separate layer)" FALSE
+		    SF-TOGGLE _"Keep selection" TRUE
+		    SF-TOGGLE _"Separate layer" TRUE)

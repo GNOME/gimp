@@ -101,6 +101,6 @@
 		    "1997"
 		    ""
 		    SF-ADJUSTMENT _"Radius"           '(16 1 100 1 10 0 1)
-		    SF-COLOR      _"Glow Color"       '(63 252 0)
-		    SF-COLOR      _"Background Color" '(0 0 0)
-		    SF-TOGGLE     _"Flatten Image"    TRUE)
+		    SF-COLOR      _"Glow color"       '(63 252 0)
+		    SF-COLOR      _"Background color" '(0 0 0)
+		    SF-TOGGLE     _"Flatten image"    TRUE)

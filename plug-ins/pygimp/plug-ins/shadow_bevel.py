@@ -46,7 +46,7 @@ register(
     "<Image>/Python-Fu/Effects/_Drop Shadow and Bevel",
     "RGBA, GRAYA",
     [
-        (PF_SLIDER, "blur",   "Shadow Blur", 6, (1, 30, 1)),
+        (PF_SLIDER, "blur",   "Shadow blur", 6, (1, 30, 1)),
 	(PF_BOOL,   "bevel",  "Bevel the image", TRUE),
 	(PF_BOOL,   "shadow", "Make a drop shadow", TRUE),
 	(PF_INT,    "drop_x", "Drop shadow X displacement", 3),

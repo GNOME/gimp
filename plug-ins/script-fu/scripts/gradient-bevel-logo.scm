@@ -96,10 +96,10 @@
 		    "RGBA"
                     SF-IMAGE      "Image"                     0
                     SF-DRAWABLE   "Drawable"                  0
-		    SF-ADJUSTMENT _"Border Size (pixels)"     '(22 1 300 1 10 0 1)
-		    SF-ADJUSTMENT _"Bevel Height (Sharpness)" '(40 1 250 1 10 0 1)
-		    SF-ADJUSTMENT _"Bevel Width"              '(2.5 1 200 1 10 1 1)
-		    SF-COLOR      _"Background Color"         '(255 255 255))
+		    SF-ADJUSTMENT _"Border size (pixels)"     '(22 1 300 1 10 0 1)
+		    SF-ADJUSTMENT _"Bevel height (Sharpness)" '(40 1 250 1 10 0 1)
+		    SF-ADJUSTMENT _"Bevel width"              '(2.5 1 200 1 10 1 1)
+		    SF-COLOR      _"Background color"         '(255 255 255))
 
 (define (script-fu-gradient-bevel-logo text
 				       size
@@ -126,8 +126,8 @@
 		    "April 1998"
 		    ""
 		    SF-STRING     _"Text"                     "Moo"
-		    SF-ADJUSTMENT _"Font Size (pixels)"       '(90 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)"       '(90 2 1000 1 10 0 1)
 		    SF-FONT       _"Font"                     "Futura_Poster"
-		    SF-ADJUSTMENT _"Bevel Height (Sharpness)" '(40 1 250 1 10 0 1)
-		    SF-ADJUSTMENT _"Bevel Width"              '(2.5 1 200 1 10 1 1)
-		    SF-COLOR      _"Background Color"         '(255 255 255))
+		    SF-ADJUSTMENT _"Bevel height (sharpness)" '(40 1 250 1 10 0 1)
+		    SF-ADJUSTMENT _"Bevel width"              '(2.5 1 200 1 10 1 1)
+		    SF-COLOR      _"Background color"         '(255 255 255))

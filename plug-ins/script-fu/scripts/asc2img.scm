@@ -232,8 +232,8 @@
 		    "*"
 		    SF-IMAGE      "Image"               0
 		    SF-DRAWABLE   "Layer"               0
-		    SF-FILENAME   _"Filename"           "afile"
+		    SF-FILENAME   _"File name"           "afile"
 		    SF-FONT       _"Font"               "Bitstream Charter"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(45 2 1000 1 10 0 1)
-		    SF-COLOR      _"Text Color"         '(0 0 0)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(45 2 1000 1 10 0 1)
+		    SF-COLOR      _"Text color"         '(0 0 0)
 )

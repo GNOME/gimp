@@ -74,5 +74,5 @@
 		    SF-ADJUSTMENT _"Radius (pixels)"    '(100 5 500 1 10 0 1)
 		    SF-ADJUSTMENT _"Lighting (degrees)" '(45 0 360 1 10 0 0)
 		    SF-TOGGLE     _"Shadow"             TRUE
-		    SF-COLOR      _"Background Color"   '(255 255 255)
-		    SF-COLOR      _"Sphere Color"       '(255 0 0))
+		    SF-COLOR      _"Background color"   '(255 255 255)
+		    SF-COLOR      _"Sphere color"       '(255 0 0))

@@ -129,10 +129,10 @@
 		    "RGBA"
                     SF-IMAGE      "Image"                 0
                     SF-DRAWABLE   "Drawable"              0
-		    SF-ADJUSTMENT _"Effect Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-COLOR      _"Background Color"     '(255 255 255)
+		    SF-ADJUSTMENT _"Effect size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-COLOR      _"Background color"     '(255 255 255)
 		    SF-GRADIENT   _"Gradient"             "Horizon 1"
-		    SF-TOGGLE     _"Gradient Reverse"     FALSE)
+		    SF-TOGGLE     _"Gradient reverse"     FALSE)
 
 
 (define (script-fu-cool-metal-logo text
@@ -159,8 +159,8 @@
 		    "1997"
 		    ""
 		    SF-STRING     _"Text"               "Cool Metal"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
 		    SF-FONT       _"Font"               "Crillee"
-		    SF-COLOR      _"Background Color"   '(255 255 255)
+		    SF-COLOR      _"Background color"   '(255 255 255)
 		    SF-GRADIENT   _"Gradient"           "Horizon 1"
-		    SF-TOGGLE     _"Gradient Reverse"   FALSE)
+		    SF-TOGGLE     _"Gradient reverse"   FALSE)

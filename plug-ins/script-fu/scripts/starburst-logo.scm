@@ -84,9 +84,9 @@
 		    "RGBA"
                     SF-IMAGE      "Image" 0
                     SF-DRAWABLE   "Drawable" 0
-		    SF-ADJUSTMENT _"Effect Size (pixels * 30)" '(150 0 512 1 10 0 1)
-		    SF-COLOR      _"Burst Color" '(60 196 33)
-		    SF-COLOR      _"Background Color" '(255 255 255)
+		    SF-ADJUSTMENT _"Effect size (pixels * 30)" '(150 0 512 1 10 0 1)
+		    SF-COLOR      _"Burst color" '(60 196 33)
+		    SF-COLOR      _"Background color" '(255 255 255)
 		    )
 
 
@@ -110,8 +110,8 @@
 		    "1997"
 		    ""
 		    SF-STRING     _"Text" "GIMP"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 0 512 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(150 0 512 1 10 0 1)
 		    SF-FONT       _"Font" "Blippo"
-		    SF-COLOR      _"Burst Color" '(60 196 33)
-		    SF-COLOR      _"Background Color" '(255 255 255)
+		    SF-COLOR      _"Burst color" '(60 196 33)
+		    SF-COLOR      _"Background color" '(255 255 255)
 		    )

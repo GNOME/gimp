@@ -46,8 +46,8 @@
 		    "Tim Newsome"
 		    "4/11/97"
 		    "RGB* GRAY*"
-		    SF-IMAGE "Input Image" 0
-		    SF-DRAWABLE "Input Drawable" 0
+		    SF-IMAGE "Input image" 0
+		    SF-DRAWABLE "Input drawable" 0
 		    SF-ADJUSTMENT _"Blur X" '(9 3 100 1 10 0 1)
 		    SF-ADJUSTMENT _"Blur Y" '(9 3 100 1 10 0 1)
 		    SF-ADJUSTMENT _"Azimuth" '(135 0 360 1 10 1 0)

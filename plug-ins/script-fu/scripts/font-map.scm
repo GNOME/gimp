@@ -137,10 +137,10 @@
 		    "1997"
 		    ""
 		    SF-STRING     _"_Text" "How quickly daft jumping zebras vex."
-		    SF-TOGGLE     _"Use Font _Name as Text" FALSE
+		    SF-TOGGLE     _"Use font _name as text" FALSE
 		    SF-TOGGLE     _"_Labels"                TRUE
 		    SF-STRING     _"_Filter (regexp)"       "Sans"
-		    SF-ADJUSTMENT _"Font _Size (pixels)"    '(32 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Font _size (pixels)"    '(32 2 1000 1 10 0 1)
 		    SF-ADJUSTMENT _"_Border (pixels)"       '(10 0  200 1 10 0 1)
-		    SF-OPTION     _"_Color Scheme"          '(_"Black on White"
-							      _"Active Colors"))
+		    SF-OPTION     _"_Color scheme"          '(_"Black on white"
+							      _"Active colors"))

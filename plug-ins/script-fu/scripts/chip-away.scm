@@ -138,13 +138,13 @@
 		    "RGBA"
                     SF-IMAGE      "Image" 0
                     SF-DRAWABLE   "Drawable" 0
-		    SF-ADJUSTMENT _"Chip Amount" '(30 0 250 1 10 0 1)
-		    SF-ADJUSTMENT _"Blur Amount" '(3 1 100 1 10 1 0)
+		    SF-ADJUSTMENT _"Chip amount" '(30 0 250 1 10 0 1)
+		    SF-ADJUSTMENT _"Blur amount" '(3 1 100 1 10 1 0)
 		    SF-TOGGLE     _"Invert" FALSE
-		    SF-TOGGLE     _"Drop Shadow" TRUE
-		    SF-TOGGLE     _"Keep Bump Layer" FALSE
-		    SF-TOGGLE     _"Fill BG with Pattern" TRUE
-		    SF-TOGGLE     _"Keep Background" TRUE
+		    SF-TOGGLE     _"Drop shadow" TRUE
+		    SF-TOGGLE     _"Keep bump layer" FALSE
+		    SF-TOGGLE     _"Fill BG with pattern" TRUE
+		    SF-TOGGLE     _"Keep background" TRUE
 		    SF-PATTERN    _"Pattern" "Burlwood"
 		    )
 
@@ -180,14 +180,14 @@
 		    ""
 		    SF-STRING _"Text" "Sloth"
 		    SF-FONT   _"Font" "RoostHeavy"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(200 2 1000 1 10 0 1)
-		    SF-ADJUSTMENT _"Chip Amount" '(30 0 250 1 10 0 1)
-		    SF-ADJUSTMENT _"Blur Amount" '(3 1 100 1 10 1 0)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(200 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Chip amount" '(30 0 250 1 10 0 1)
+		    SF-ADJUSTMENT _"Blur amount" '(3 1 100 1 10 1 0)
 		    SF-TOGGLE     _"Invert" FALSE
-		    SF-TOGGLE     _"Drop Shadow" TRUE
-		    SF-TOGGLE     _"Keep Bump Layer" FALSE
-		    SF-TOGGLE     _"Fill BG with Pattern" TRUE
-		    SF-TOGGLE     _"Keep Background" TRUE
+		    SF-TOGGLE     _"Drop shadow" TRUE
+		    SF-TOGGLE     _"Keep bump layer" FALSE
+		    SF-TOGGLE     _"Fill BG with pattern" TRUE
+		    SF-TOGGLE     _"Keep background" TRUE
 		    SF-PATTERN    _"Pattern" "Burlwood"
 		    )
 

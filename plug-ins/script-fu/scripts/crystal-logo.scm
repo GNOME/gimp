@@ -193,15 +193,15 @@
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-ADJUSTMENT  _"Chrome Factor" '(1.0 0.2 4 0.1 1 1 0)
+		    SF-ADJUSTMENT  _"Chrome factor" '(1.0 0.2 4 0.1 1 1 0)
 		    SF-STRING _"Text" "Crystal"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
 		    SF-FONT   _"Font" "Engraver"
-		    SF-FILENAME _"Background Image"
+		    SF-FILENAME _"Background image"
 		                (string-append ""
 					       gimp-data-dir
 					       "/scripts/images/texture1.jpg")
-		    SF-FILENAME _"Environment Map"
+		    SF-FILENAME _"Environment map"
 		                (string-append ""
 					       gimp-data-dir
 					       "/scripts/images/beavis.jpg"))

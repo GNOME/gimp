@@ -103,12 +103,12 @@
 		    "RGBA"
                     SF-IMAGE      "Image" 0
                     SF-DRAWABLE   "Drawable" 0
-		    SF-ADJUSTMENT _"Border Size (pixels)" '(20 1 200 1 10 0 1)
-                    SF-ADJUSTMENT _"Hit Rate" '(0.2 0 1 .01 .01 2 0)
-                    SF-ADJUSTMENT _"Edge Width" '(2 0 128 1 1 0 0)
-		    SF-TOGGLE     _"Edge Only" FALSE
-		    SF-COLOR      _"Base Color" '(0 40 0)
-		    SF-COLOR      _"Background Color" '(255 255 255)
+		    SF-ADJUSTMENT _"Border size (pixels)" '(20 1 200 1 10 0 1)
+                    SF-ADJUSTMENT _"Hit rate" '(0.2 0 1 .01 .01 2 0)
+                    SF-ADJUSTMENT _"Edge width" '(2 0 128 1 1 0 0)
+		    SF-TOGGLE     _"Edge only" FALSE
+		    SF-COLOR      _"Base color" '(0 40 0)
+		    SF-COLOR      _"Background color" '(255 255 255)
 		    )
 
 
@@ -138,13 +138,13 @@
 		    "1997"
 		    ""
 		    SF-STRING     _"Text" "The GIMP"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 1 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(100 1 1000 1 10 0 1)
 		    SF-FONT       _"Font" "Becker"
-            SF-ADJUSTMENT _"Hit Rate" '(0.2 0 1 .01 .01 2 0)
-            SF-ADJUSTMENT _"Edge Width" '(2 0 128 1 1 0 0)
-		    SF-TOGGLE     _"Edge Only" FALSE
-		    SF-COLOR      _"Base Color" '(0 40 0)
-		    SF-COLOR      _"Background Color" '(255 255 255)
+            SF-ADJUSTMENT _"Hit rate" '(0.2 0 1 .01 .01 2 0)
+            SF-ADJUSTMENT _"Edge width" '(2 0 128 1 1 0 0)
+		    SF-TOGGLE     _"Edge only" FALSE
+		    SF-COLOR      _"Base color" '(0 40 0)
+		    SF-COLOR      _"Background color" '(255 255 255)
 		    )
 
 ; end of t-o-p.scm

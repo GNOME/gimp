@@ -68,4 +68,4 @@
 		    ""
 		    SF-ADJUSTMENT _"Width"            '(400 1 2000 1 10 0 1)
 		    SF-ADJUSTMENT _"Height"           '(30 1 2000 1 10 0 1)
-		    SF-TOGGLE     _"Gradient Reverse" FALSE)
+		    SF-TOGGLE     _"Gradient reverse" FALSE)

@@ -183,7 +183,7 @@
 		    "Spencer Kimball"
 		    "1997"
 		    "GRAY"
-		    SF-IMAGE "Mask Image" 0
-		    SF-DRAWABLE "Mask Drawable" 0
-		    SF-DRAWABLE _"Image to Carve" 0
-		    SF-TOGGLE   _"Carve White Areas" TRUE)
+		    SF-IMAGE "Mask image" 0
+		    SF-DRAWABLE "Mask drawable" 0
+		    SF-DRAWABLE _"Image to carve" 0
+		    SF-TOGGLE   _"Carve white areas" TRUE)

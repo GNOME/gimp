@@ -64,8 +64,8 @@
 		    "RGBA"
                     SF-IMAGE      "Image"                   0
                     SF-DRAWABLE   "Drawable"                0
-		    SF-ADJUSTMENT _"Glow Size (pixels * 4)" '(150 2 1000 1 10 0 1)
-		    SF-COLOR      _"Glow Color"             '(63 252 0))
+		    SF-ADJUSTMENT _"Glow size (pixels * 4)" '(150 2 1000 1 10 0 1)
+		    SF-COLOR      _"Glow color"             '(63 252 0))
 
 (define (script-fu-alien-glow-logo text
 				   size
@@ -95,6 +95,6 @@
 		    "1997"
 		    ""
 		    SF-STRING     _"Text"               "ALIEN"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
 		    SF-FONT       _"Font"               "Futura_Poster"
-		    SF-COLOR      _"Glow Color"         '(63 252 0))
+		    SF-COLOR      _"Glow color"         '(63 252 0))

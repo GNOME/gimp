@@ -140,9 +140,9 @@
  ""
  SF-STRING     _"Text" "The GNU Image Manipulation Program Version 2.0 "
  SF-ADJUSTMENT _"Radius"             '(80 1 8000 1 1 0 1)
- SF-ADJUSTMENT _"Start Angle"        '(0 -180 180 1 1 0 1)
- SF-ADJUSTMENT _"Fill Angle"         '(360 -360 360 1 1 0 1)
- SF-ADJUSTMENT _"Font Size (pixels)" '(18 1 1000 1 1 0 1)
+ SF-ADJUSTMENT _"Start angle"        '(0 -180 180 1 1 0 1)
+ SF-ADJUSTMENT _"Fill angle"         '(360 -360 360 1 1 0 1)
+ SF-ADJUSTMENT _"Font size (pixels)" '(18 1 1000 1 1 0 1)
  SF-TOGGLE     _"Antialias"          TRUE
  SF-FONT       _"Font"               "Sans"
 )

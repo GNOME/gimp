@@ -78,7 +78,7 @@
 		    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
 		    "25th April 1998"
 		    "RGB*"
-		    SF-IMAGE       "The Image" 0
-		    SF-DRAWABLE    "The Layer" 0
+		    SF-IMAGE       "The image" 0
+		    SF-DRAWABLE    "The layer" 0
 		    SF-ADJUSTMENT _"Stains"    '(3 1 10 1 1 0 0)
-		    SF-TOGGLE     _"Darken Only\n(Better, but only for Images with alot of White)" TRUE)
+		    SF-TOGGLE     _"Darken only\n(Better, but only for images with alot of white)" TRUE)

@@ -143,15 +143,15 @@
 		    ""
 		    SF-STRING _"Text" "gimp.org"
 		    SF-FONT   _"Font" "Serif"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(50 2 1000 1 10 0 1)
-		    SF-COLOR  _"Text Color" '(82 108 159)
-		    SF-COLOR  _"Highlight Color" '(190 220 250)
-		    SF-COLOR  _"Dark Color" '(46 74 92)
-		    SF-COLOR  _"Shadow Color" '(0 0 0)
-		    SF-TOGGLE _"AutoCrop" TRUE
-		    SF-TOGGLE _"Remove Background" TRUE
-		    SF-TOGGLE _"Index Image" TRUE
-		    SF-ADJUSTMENT _"Number of Colors" '(15 2 255 1 10 0 1))
+		    SF-ADJUSTMENT _"Font size (pixels)" '(50 2 1000 1 10 0 1)
+		    SF-COLOR  _"Text color" '(82 108 159)
+		    SF-COLOR  _"Highlight color" '(190 220 250)
+		    SF-COLOR  _"Dark color" '(46 74 92)
+		    SF-COLOR  _"Shadow color" '(0 0 0)
+		    SF-TOGGLE _"Autocrop" TRUE
+		    SF-TOGGLE _"Remove background" TRUE
+		    SF-TOGGLE _"Index image" TRUE
+		    SF-ADJUSTMENT _"Number of colors" '(15 2 255 1 10 0 1))
 
 (script-fu-register "script-fu-small-header-gimp-org"
 		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
@@ -162,14 +162,14 @@
 		    ""
 		    SF-STRING _"Text" "gimp.org"
 		    SF-FONT   _"Font" "Sans"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(24 2 1000 1 10 0 1)
-		    SF-COLOR  _"Text Color" '(135 220 220)
-		    SF-COLOR  _"Highlight Color" '(210 240 245)
-		    SF-COLOR  _"Dark Color" '(46 74 92)
-		    SF-COLOR  _"Shadow Color" '(0 0 0)
-		    SF-TOGGLE _"AutoCrop" TRUE
-		    SF-TOGGLE _"Remove Background" TRUE
-		    SF-TOGGLE _"Index Image" TRUE
-		    SF-ADJUSTMENT _"Number of Colors" '(15 2 255 1 10 0 1)
-		    SF-ADJUSTMENT _"Select-By-Color Threshold" '(1 1 256 1 10 0 1))
+		    SF-ADJUSTMENT _"Font size (pixels)" '(24 2 1000 1 10 0 1)
+		    SF-COLOR  _"Text color" '(135 220 220)
+		    SF-COLOR  _"Highlight color" '(210 240 245)
+		    SF-COLOR  _"Dark color" '(46 74 92)
+		    SF-COLOR  _"Shadow color" '(0 0 0)
+		    SF-TOGGLE _"Autocrop" TRUE
+		    SF-TOGGLE _"Remove background" TRUE
+		    SF-TOGGLE _"Index image" TRUE
+		    SF-ADJUSTMENT _"Number of colors" '(15 2 255 1 10 0 1)
+		    SF-ADJUSTMENT _"Select-by-color threshold" '(1 1 256 1 10 0 1))
 

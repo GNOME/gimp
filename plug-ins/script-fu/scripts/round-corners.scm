@@ -123,10 +123,10 @@
 		    "RGB GRAY"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-ADJUSTMENT _"Edge Radius" '(15 0 4096 1 10 0 1)
-		    SF-TOGGLE     _"Add Drop-Shadow" TRUE
-		    SF-ADJUSTMENT _"Shadow X Offset" '(8 -4096 4096 1 10 0 1)
-		    SF-ADJUSTMENT _"Shadow Y Offset" '(8 -4096 4096 1 10 0 1)
-		    SF-ADJUSTMENT _"Blur Radius" '(15 0 1024 1 10 0 1)
-		    SF-TOGGLE     _"Add Background" TRUE
-		    SF-TOGGLE     _"Work on Copy" TRUE)
+		    SF-ADJUSTMENT _"Edge radius" '(15 0 4096 1 10 0 1)
+		    SF-TOGGLE     _"Add drop-shadow" TRUE
+		    SF-ADJUSTMENT _"Shadow X offset" '(8 -4096 4096 1 10 0 1)
+		    SF-ADJUSTMENT _"Shadow Y offset" '(8 -4096 4096 1 10 0 1)
+		    SF-ADJUSTMENT _"Blur radius" '(15 0 1024 1 10 0 1)
+		    SF-TOGGLE     _"Add background" TRUE
+		    SF-TOGGLE     _"Work on copy" TRUE)

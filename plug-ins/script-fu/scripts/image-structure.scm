@@ -143,17 +143,17 @@
  "RGB*, GRAY*"
  SF-IMAGE "image" 0
  SF-DRAWABLE "Drawable (unused)" 0
- SF-TOGGLE _"Create New Image" script-fu-show-image-structure-new-image?
- SF-ADJUSTMENT _"Space Between Layers" (cons script-fu-show-image-structure-space '(0 1000 1 10 0 1))
- SF-ADJUSTMENT _"Shear Length" (cons script-fu-show-image-structure-shear-length '(1 1000 1 10 0 1))
- SF-ADJUSTMENT _"Outer Border" (cons script-fu-show-image-structure-border '(0 250 1 10 0 1))
- SF-TOGGLE _"Apply Layer Mask (or discard)" script-fu-show-image-structure-apply-layer-mask?
- SF-TOGGLE _"Insert Layer Names" script-fu-show-image-structure-with-layer-name?
- SF-TOGGLE _"Padding for Transparent Regions" script-fu-show-image-structure-with-pad?
- SF-COLOR  _"Pad Color" script-fu-show-image-structure-padding-color
- SF-ADJUSTMENT _"Pad Opacity" (cons script-fu-show-image-structure-padding-opacity '(0 100 1 10 1 0))
- SF-TOGGLE _"Make New Background" script-fu-show-image-structure-with-background?
- SF-COLOR  _"Background Color" script-fu-show-image-structure-background-color
+ SF-TOGGLE _"Create new image" script-fu-show-image-structure-new-image?
+ SF-ADJUSTMENT _"Space between layers" (cons script-fu-show-image-structure-space '(0 1000 1 10 0 1))
+ SF-ADJUSTMENT _"Shear length" (cons script-fu-show-image-structure-shear-length '(1 1000 1 10 0 1))
+ SF-ADJUSTMENT _"Outer border" (cons script-fu-show-image-structure-border '(0 250 1 10 0 1))
+ SF-TOGGLE _"Apply layer mask (or discard)" script-fu-show-image-structure-apply-layer-mask?
+ SF-TOGGLE _"Insert layer names" script-fu-show-image-structure-with-layer-name?
+ SF-TOGGLE _"Padding for transparent regions" script-fu-show-image-structure-with-pad?
+ SF-COLOR  _"Pad color" script-fu-show-image-structure-padding-color
+ SF-ADJUSTMENT _"Pad opacity" (cons script-fu-show-image-structure-padding-opacity '(0 100 1 10 1 0))
+ SF-TOGGLE _"Make new background" script-fu-show-image-structure-with-background?
+ SF-COLOR  _"Background color" script-fu-show-image-structure-background-color
 )
 
 ;;; image-structure.scm ends here

@@ -113,8 +113,8 @@
 		    "1997"
 		    ""
 		    SF-STRING _"Text" "?"
-		    SF-TOGGLE _"Remove Background" TRUE
-		    SF-TOGGLE _"Index Image" TRUE)
+		    SF-TOGGLE _"Remove background" TRUE
+		    SF-TOGGLE _"Index image" TRUE)
 
 (script-fu-register "script-fu-tube-subbutton-label-gimp-org"
 		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button Label..."
@@ -124,8 +124,8 @@
 		    "1997"
 		    ""
 		    SF-STRING _"Text" "?"
-		    SF-TOGGLE _"Remove Background" TRUE
-		    SF-TOGGLE _"Index Image" TRUE)
+		    SF-TOGGLE _"Remove background" TRUE
+		    SF-TOGGLE _"Index image" TRUE)
 
 (script-fu-register "script-fu-tube-subsubbutton-label-gimp-org"
 		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-Button Label..."
@@ -135,8 +135,8 @@
 		    "1997"
 		    ""
 		    SF-STRING _"Text" "?"
-		    SF-TOGGLE _"Remove Background" TRUE
-		    SF-TOGGLE _"Index Image" TRUE)
+		    SF-TOGGLE _"Remove background" TRUE
+		    SF-TOGGLE _"Index image" TRUE)
 
 
 (script-fu-register "script-fu-labels-gimp-org"
@@ -148,14 +148,14 @@
 		    ""
 		    SF-STRING _"Text" "Gimp.Org"
 		    SF-FONT   _"Font" "Sans"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(18 2 1000 1 10 0 1)
- 		    SF-COLOR  _"Text Color" '(130 165 235)
-	 	    SF-COLOR  _"Shadow Color" '(0 0 0)
-		    SF-COLOR  _"Background Color" '(255 255 255)
-		    SF-TOGGLE _"Remove Background" TRUE
-		    SF-TOGGLE _"Index Image" TRUE
-		    SF-ADJUSTMENT _"Number of Colors" '(15 2 255 1 10 0 1)
-		    SF-ADJUSTMENT _"Select-By-Color Threshold" '(1 1 256 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(18 2 1000 1 10 0 1)
+ 		    SF-COLOR  _"Text color" '(130 165 235)
+	 	    SF-COLOR  _"Shadow color" '(0 0 0)
+		    SF-COLOR  _"Background color" '(255 255 255)
+		    SF-TOGGLE _"Remove background" TRUE
+		    SF-TOGGLE _"Index image" TRUE
+		    SF-ADJUSTMENT _"Number of colors" '(15 2 255 1 10 0 1)
+		    SF-ADJUSTMENT _"Select-by-color threshold" '(1 1 256 1 10 0 1)
 		    SF-ADJUSTMENT _"Offset X" '(8 0 50 1 10 0 1)
 		    SF-ADJUSTMENT _"Offset Y" '(0 0 50 1 10 0 1)
 		    SF-ADJUSTMENT _"Height"   '(30 2 1000 1 10 0 1))

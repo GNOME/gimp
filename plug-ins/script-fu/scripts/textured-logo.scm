@@ -121,14 +121,14 @@
 		    "RGBA"
                     SF-IMAGE      "Image"                 0
                     SF-DRAWABLE   "Drawable"              0
-		    SF-ADJUSTMENT _"Border Size (pixels)" '(20 1 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Border size (pixels)" '(20 1 100 1 10 0 1)
 		    SF-PATTERN    _"Pattern"              "Fibers"
-		    SF-OPTION     _"Mosaic Tile Type"     '(_"Squares"
+		    SF-OPTION     _"Mosaic tile type"     '(_"Squares"
 							     _"Hexagons"
 							     _"Octagons")
-		    SF-COLOR      _"Background Color"     '(255 255 255)
-		    SF-COLOR      _"Starting Blend"       '(32 106 0)
-		    SF-COLOR      _"Ending Blend"         '(0 0 106))
+		    SF-COLOR      _"Background color"     '(255 255 255)
+		    SF-COLOR      _"Starting blend"       '(32 106 0)
+		    SF-COLOR      _"Ending blend"         '(0 0 106))
 
 (define (script-fu-textured-logo text
 				 size
@@ -157,12 +157,12 @@
 		    "1996"
 		    ""
 		    SF-STRING     _"Text"               "The GIMP"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(200 1 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(200 1 1000 1 10 0 1)
 		    SF-FONT       _"Font"               "CuneiFont"
-		    SF-PATTERN    _"Text Pattern"       "Fibers"
-		    SF-OPTION     _"Mosaic Tile Type"   '(_"Squares"
+		    SF-PATTERN    _"Text pattern"       "Fibers"
+		    SF-OPTION     _"Mosaic tile type"   '(_"Squares"
 							   _"Hexagons"
 							   _"Octagons")
-		    SF-COLOR      _"Background Color"   '(255 255 255)
-		    SF-COLOR      _"Starting Blend"     '(32 106 0)
-		    SF-COLOR      _"Ending Blend"       '(0 0 106))
+		    SF-COLOR      _"Background color"   '(255 255 255)
+		    SF-COLOR      _"Starting blend"     '(32 106 0)
+		    SF-COLOR      _"Ending blend"       '(0 0 106))

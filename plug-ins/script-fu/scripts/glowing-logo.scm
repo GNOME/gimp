@@ -75,8 +75,8 @@
 		    "RGBA"
                     SF-IMAGE      "Image" 0
                     SF-DRAWABLE   "Drawable" 0
-		    SF-ADJUSTMENT _"Effect Size (pixels * 3)" '(150 2 1000 1 10 0 1)
-		    SF-COLOR      _"Background Color" '(7 0 20)
+		    SF-ADJUSTMENT _"Effect size (pixels * 3)" '(150 2 1000 1 10 0 1)
+		    SF-COLOR      _"Background color" '(7 0 20)
 		    )
 
 (define (script-fu-glowing-logo text
@@ -99,7 +99,7 @@
 		    "1997"
 		    ""
 		    SF-STRING     _"Text" "GLOWING"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
 		    SF-FONT       _"Font" "Slogan"
-		    SF-COLOR      _"Background Color" '(7 0 20)
+		    SF-COLOR      _"Background color" '(7 0 20)
 		    )

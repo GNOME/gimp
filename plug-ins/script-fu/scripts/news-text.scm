@@ -73,9 +73,9 @@
 		    ""
 		    SF-STRING     _"Text" "Newsprint"
 		    SF-FONT       _"Font" "Sans"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-ADJUSTMENT _"Cell Size (pixels)" '(7 1 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Cell size (pixels)" '(7 1 100 1 10 0 1)
 		    SF-ADJUSTMENT _"Density (%)" '(60 0 100 1 10 0 0)
-		    SF-ADJUSTMENT _"Blur Radius" '(0 0 100 1 5 0 0)
-                    SF-COLOR      _"Text Color" '(0 0 0)
-		    SF-COLOR      _"Background Color" '(255 255 255))
+		    SF-ADJUSTMENT _"Blur radius" '(0 0 100 1 5 0 0)
+                    SF-COLOR      _"Text color" '(0 0 0)
+		    SF-COLOR      _"Background color" '(255 255 255))

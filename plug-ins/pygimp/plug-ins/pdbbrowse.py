@@ -83,12 +83,12 @@ def define_browse_win():
 	    hbox.pack_start(entry, expand=FALSE)
 	    entry.show()
 
-	    button = gtk.Button("Search by Name")
+	    button = gtk.Button("Search by name")
 	    button.connect("clicked", self.search_name, entry)
 	    hbox.pack_start(button, expand=FALSE)
 	    button.show()
 		
-	    button = gtk.Button("Search by Blurb")
+	    button = gtk.Button("Search by blurb")
 	    button.connect("clicked", self.search_blurb, entry)
 	    hbox.pack_start(button, expand=FALSE)
 	    button.show()

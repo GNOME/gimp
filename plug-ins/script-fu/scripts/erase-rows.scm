@@ -31,7 +31,7 @@
 		    "RGB* GRAY* INDEXED*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-OPTION _"Rows/Cols" '(_"Rows" _"Columns")
-		    SF-OPTION _"Even/Odd"  '(_"Even" _"Odd")
-		    SF-OPTION _"Erase/Fill"  '(_"Erase" _"Fill with BG"))
+		    SF-OPTION _"Rows/cols" '(_"Rows" _"Columns")
+		    SF-OPTION _"Even/odd"  '(_"Even" _"Odd")
+		    SF-OPTION _"Erase/fill"  '(_"Erase" _"Fill with BG"))
 

@@ -132,8 +132,8 @@
 		    "RGBA"
                     SF-IMAGE      "Image"                     0
                     SF-DRAWABLE   "Drawable"                  0
-		    SF-ADJUSTMENT _"Effect Size (pixels * 4)" '(150 1 1000 1 10 0 1)
-		    SF-COLOR      _"Glow Color"               '(28 65 188))
+		    SF-ADJUSTMENT _"Effect size (pixels * 4)" '(150 1 1000 1 10 0 1)
+		    SF-COLOR      _"Glow color"               '(28 65 188))
 
 
 (define (script-fu-starscape-logo text
@@ -158,6 +158,6 @@
 		    "1997"
 		    ""
 		    SF-STRING     _"Text"               "Nova"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 1 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(150 1 1000 1 10 0 1)
 		    SF-FONT       _"Font"               "Engraver"
-		    SF-COLOR      _"Glow Color"         '(28 65 188))
+		    SF-COLOR      _"Glow color"         '(28 65 188))

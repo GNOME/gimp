@@ -91,8 +91,8 @@
 		    "RGB*, INDEXED*, GRAY*"
 		    SF-IMAGE     "Image to use"          0
 		    SF-DRAWABLE  "Drawable to draw grid" 0
-		    SF-VALUE    _"X Divisions" script-fu-grid-system-x-divides
-		    SF-VALUE    _"Y Divisions" script-fu-grid-system-y-divides
+		    SF-VALUE    _"X divisions" script-fu-grid-system-x-divides
+		    SF-VALUE    _"Y divisions" script-fu-grid-system-y-divides
 )
   
 ;;; grid-system.scm ends here

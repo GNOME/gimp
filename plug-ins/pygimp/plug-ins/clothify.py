@@ -56,10 +56,10 @@ register(
 	"<Image>/Python-Fu/Alchemy/_Clothify",
 	"RGB*, GRAY*",
 	[
-		(PF_INT, "x_blur", "X Blur", 9),
-		(PF_INT, "y_blur", "Y Blur", 9),
+		(PF_INT, "x_blur", "X blur", 9),
+		(PF_INT, "y_blur", "Y blur", 9),
 		(PF_INT, "azimuth", "Azimuth", 135),
-		(PF_INT, "elevation", "elevation", 45),
+		(PF_INT, "elevation", "Elevation", 45),
 		(PF_INT, "depth", "Depth", 3)
 	],
 	[],

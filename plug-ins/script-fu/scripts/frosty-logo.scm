@@ -92,8 +92,8 @@
 		    "RGBA"
                     SF-IMAGE      "Image" 0
                     SF-DRAWABLE   "Drawable" 0
-		    SF-ADJUSTMENT _"Effect Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-COLOR  _"Background Color" '(255 255 255)
+		    SF-ADJUSTMENT _"Effect size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-COLOR  _"Background color" '(255 255 255)
 		    )
 
 (define (script-fu-frosty-logo text
@@ -117,7 +117,7 @@
 		    "1997"
 		    ""
 		    SF-STRING _"Text" "The GIMP"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
 		    SF-FONT   _"Font" "Becker"
-		    SF-COLOR  _"Background Color" '(255 255 255)
+		    SF-COLOR  _"Background color" '(255 255 255)
 		    )

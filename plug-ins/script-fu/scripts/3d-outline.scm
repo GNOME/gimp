@@ -113,12 +113,12 @@
                     SF-IMAGE    "Image" 0
                     SF-DRAWABLE "Drawable" 0
 		    SF-PATTERN _"Pattern" "Parque #1"
-                    SF-ADJUSTMENT   _"Outline Blur Radius" '(5 1 200 1 10 0 1)
-                    SF-ADJUSTMENT   _"Shadow Blur Radius" '(10 1 200 1 10 0 1)
-                    SF-ADJUSTMENT   _"Bumpmap (Alpha Layer) Blur Radius" '(5 1 200 1 10 0 1)
-		    SF-TOGGLE  _"Default Bumpmap Settings" TRUE
-		    SF-ADJUSTMENT   _"Shadow X Offset" '(0 0 200 1 5 0 1)
-                    SF-ADJUSTMENT   _"Shadow Y Offset" '(0 0 200 1 5 0 1))
+                    SF-ADJUSTMENT   _"Outline blur radius" '(5 1 200 1 10 0 1)
+                    SF-ADJUSTMENT   _"Shadow blur radius" '(10 1 200 1 10 0 1)
+                    SF-ADJUSTMENT   _"Bumpmap (alpha layer) blur radius" '(5 1 200 1 10 0 1)
+		    SF-TOGGLE  _"Default bumpmap settings" TRUE
+		    SF-ADJUSTMENT   _"Shadow X offset" '(0 0 200 1 5 0 1)
+                    SF-ADJUSTMENT   _"Shadow Y offset" '(0 0 200 1 5 0 1))
 
 (define (script-fu-3d-outline-logo text-pattern
 				   text
@@ -149,11 +149,11 @@
                     ""
 		    SF-PATTERN _"Pattern" "Parque #1"
                     SF-STRING  _"Text" "The Gimp"
-                    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+                    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
                     SF-FONT    _"Font" "RoostHeavy"
-                    SF-ADJUSTMENT   _"Outline Blur Radius" '(5 1 200 1 10 0 1)
-                    SF-ADJUSTMENT   _"Shadow Blur Radius" '(10 1 200 1 10 0 1)
-                    SF-ADJUSTMENT   _"Bumpmap (Alpha Layer) Blur Radius" '(5 1 200 1 10 0 1)
-		    SF-TOGGLE  _"Default Bumpmap Settings" TRUE
-		    SF-ADJUSTMENT   _"Shadow X Offset" '(0 0 200 1 5 0 1)
-                    SF-ADJUSTMENT   _"Shadow Y Offset" '(0 0 200 1 5 0 1))
+                    SF-ADJUSTMENT   _"Outline blur radius" '(5 1 200 1 10 0 1)
+                    SF-ADJUSTMENT   _"Shadow blur radius" '(10 1 200 1 10 0 1)
+                    SF-ADJUSTMENT   _"Bumpmap (alpha layer) blur radius" '(5 1 200 1 10 0 1)
+		    SF-TOGGLE  _"Default bumpmap settings" TRUE
+		    SF-ADJUSTMENT   _"Shadow X offset" '(0 0 200 1 5 0 1)
+                    SF-ADJUSTMENT   _"Shadow Y offset" '(0 0 200 1 5 0 1))

@@ -82,4 +82,4 @@
 		    ""
 		    SF-ADJUSTMENT _"Diameter"               '(16 1 150 1 10 0 1)
 		    SF-PATTERN    _"Pattern"                "Wood"
-		    SF-TOGGLE     _"Transparent Background" FALSE)
+		    SF-TOGGLE     _"Transparent background" FALSE)

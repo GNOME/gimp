@@ -119,8 +119,8 @@
 		    "July 1997"
 		    ""
 		    SF-STRING  _"Text"       "Hello world!"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(32 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(32 2 1000 1 10 0 1)
 		    SF-FONT    _"Font" "Sans"
-		    SF-COLOR   _"Text Color" '(0 0 0)
+		    SF-COLOR   _"Text color" '(0 0 0)
 		    SF-PATTERN _"Pattern"    "Wood"
 		    SF-TOGGLE  _"Pressed"   FALSE)

@@ -104,8 +104,8 @@
 		    "RGB*"
 		    SF-IMAGE       "Image"          0
 		    SF-DRAWABLE    "Drawable"       0
-		    SF-ADJUSTMENT _"Edge Amount"    '(2 0 24 1 1 0 0)
+		    SF-ADJUSTMENT _"Edge amount"    '(2 0 24 1 1 0 0)
 		    SF-TOGGLE     _"Pixelize"       TRUE
-		    SF-ADJUSTMENT _"Pixel Amount"   '(3 1 16 1 1 0 0)
-		    SF-TOGGLE     _"Keep Selection" TRUE
-		    SF-TOGGLE     _"Separate Layer" TRUE)
+		    SF-ADJUSTMENT _"Pixel amount"   '(3 1 16 1 1 0 0)
+		    SF-TOGGLE     _"Keep selection" TRUE
+		    SF-TOGGLE     _"Separate layer" TRUE)

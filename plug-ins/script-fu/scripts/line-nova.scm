@@ -79,9 +79,9 @@
  ""
  SF-IMAGE "Image" 0
  SF-DRAWABLE "Drawable" 0
- SF-ADJUSTMENT _"Number of Lines" '(200 40 1000 1 1 0 1)
+ SF-ADJUSTMENT _"Number of lines" '(200 40 1000 1 1 0 1)
  SF-ADJUSTMENT _"Sharpness (degrees)" '(1.0 0.0 10.0 0.1 1 1 1)
- SF-ADJUSTMENT _"Offset Radius" '(100 0 2000 1 1 0 1)
+ SF-ADJUSTMENT _"Offset radius" '(100 0 2000 1 1 0 1)
  SF-ADJUSTMENT _"Randomness" '(30 0 2000 1 1 0 1)
 )
 ;;; line-nova.scm ends here

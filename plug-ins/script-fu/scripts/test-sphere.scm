@@ -220,21 +220,21 @@
 		    SF-ADJUSTMENT "Radius (in pixels)" '(100 1 5000 1 10 0 1)
 		    SF-ADJUSTMENT "Lighting (degrees)" '(45 0 360 1 10 1 0)
 		    SF-TOGGLE     "Shadow"             TRUE
-		    SF-COLOR      "Background Color"   '(255 255 255)
-		    SF-COLOR      "Sphere Color"       '(255 0 0)
+		    SF-COLOR      "Background color"   '(255 255 255)
+		    SF-COLOR      "Sphere color"       '(255 0 0)
 		    SF-BRUSH      "Brush"              '("Circle (03)" 1.0 44 0)
 		    SF-STRING     "Text"               "Script-Fu rocks!"
 		    SF-PATTERN    "Pattern"            "Maple Leaves"
 		    SF-GRADIENT   "Gradient"           "Deep Sea"
-		    SF-TOGGLE     "Gradient Reverse"   FALSE
+		    SF-TOGGLE     "Gradient reverse"   FALSE
 		    SF-FONT       "Font"               "Agate"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(50 1 1000 1 10 0 1)
-		    SF-FILENAME   "Environment Map"
+		    SF-ADJUSTMENT "Font xize (pixels)" '(50 1 1000 1 10 0 1)
+		    SF-FILENAME   "Environment map"
 		                  (string-append ""
 						 gimp-data-dir
 						 "/scripts/images/beavis.jpg")
 		    SF-OPTION     "Orientation"        '("Horizontal" "Vertical")
-		    SF-DIRNAME    "Output Directory"   "/var/tmp/"
+		    SF-DIRNAME    "Output directory"   "/var/tmp/"
 		    SF-IMAGE      "Image"              -1
 		    SF-LAYER      "Layer"              -1
 		    SF-CHANNEL    "Channel"            -1

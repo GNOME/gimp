@@ -168,6 +168,6 @@
 		    "June 1997"
 		    ""
 		    SF-STRING     _"Text"               "Hello world!"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(32 2 256 1 10 0 0)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(32 2 256 1 10 0 0)
 		    SF-FONT       _"Font"               "Sans"
-		    SF-TOGGLE     _"Gradient Reverse"   FALSE)
+		    SF-TOGGLE     _"Gradient reverse"   FALSE)

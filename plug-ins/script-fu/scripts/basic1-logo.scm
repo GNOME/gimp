@@ -57,8 +57,8 @@
 		    "RGBA"
                     SF-IMAGE      "Image"             0
                     SF-DRAWABLE   "Drawable"          0
-		    SF-COLOR      _"Background Color" '(255 255 255)
-		    SF-COLOR      _"Text Color"       '(6 6 206))
+		    SF-COLOR      _"Background color" '(255 255 255)
+		    SF-COLOR      _"Text color"       '(6 6 206))
 
 (define (script-fu-basic1-logo text
 			       size
@@ -82,7 +82,7 @@
 		    "1996"
 		    ""
 		    SF-STRING     _"Text"               "The Gimp"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
 		    SF-FONT       _"Font"               "Dragonwick"
-		    SF-COLOR      _"Background Color"   '(255 255 255)
-		    SF-COLOR      _"Text Color"         '(6 6 206))
+		    SF-COLOR      _"Background color"   '(255 255 255)
+		    SF-COLOR      _"Text color"         '(6 6 206))

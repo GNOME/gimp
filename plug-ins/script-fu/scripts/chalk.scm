@@ -73,7 +73,7 @@
                     "RGBA"
                     SF-IMAGE      "Image" 0
                     SF-DRAWABLE   "Drawable" 0
-                    SF-COLOR      _"Background Color" '(0 0 0)
+                    SF-COLOR      _"Background color" '(0 0 0)
 		    )
 
 
@@ -104,8 +104,8 @@
                     "October 1997"
                     ""
                     SF-STRING     _"Text" "CHALK"
-                    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
+                    SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
                     SF-FONT       _"Font" "Cooper"
-                    SF-COLOR      _"Background Color" '(0 0 0)
-                    SF-COLOR      _"Chalk Color" '(255 255 255)
+                    SF-COLOR      _"Background color" '(0 0 0)
+                    SF-COLOR      _"Chalk color" '(255 255 255)
 		    )

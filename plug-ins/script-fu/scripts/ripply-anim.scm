@@ -99,8 +99,8 @@
 		    "Adam D. Moss"
 		    "1997"
 		    "RGB* GRAY*"
-		    SF-IMAGE "Image to Animage" 0
-		    SF-DRAWABLE "Drawable to Animate" 0
-		    SF-ADJUSTMENT _"Rippling Strength" '(3 0 256 1 10 1 0)
-		    SF-ADJUSTMENT _"Number of Frames" '(15 0 256 1 10 0 1)
-		    SF-OPTION _"Edge Behaviour" '(_"Wrap" _"Smear" _"Black"))
+		    SF-IMAGE "Image to animage" 0
+		    SF-DRAWABLE "Drawable to animate" 0
+		    SF-ADJUSTMENT _"Rippling strength" '(3 0 256 1 10 1 0)
+		    SF-ADJUSTMENT _"Number of frames" '(15 0 256 1 10 0 1)
+		    SF-OPTION _"Edge behaviour" '(_"Wrap" _"Smear" _"Black"))

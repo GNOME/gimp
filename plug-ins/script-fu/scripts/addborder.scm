@@ -165,10 +165,10 @@
 		    "Andy Thomas"
 		    "6/10/97"
 		    "RGB*"
-		    SF-IMAGE "Input Image" 0
-		    SF-DRAWABLE "Input Drawable" 0
-		    SF-ADJUSTMENT _"Border X Size" '(12 1 250 1 10 0 1)
-		    SF-ADJUSTMENT _"Border Y Size" '(12 1 250 1 10 0 1)
-		    SF-COLOR _"Border Color" '(38 31 207)
-		    SF-ADJUSTMENT _"Delta Value on Color" '(25 1 255 1 10 0 1)
+		    SF-IMAGE "Input image" 0
+		    SF-DRAWABLE "Input drawable" 0
+		    SF-ADJUSTMENT _"Border X size" '(12 1 250 1 10 0 1)
+		    SF-ADJUSTMENT _"Border Y size" '(12 1 250 1 10 0 1)
+		    SF-COLOR _"Border color" '(38 31 207)
+		    SF-ADJUSTMENT _"Delta value on color" '(25 1 255 1 10 0 1)
 		    )
