@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.9\n"
-"POT-Creation-Date: 1999-10-05 00:43+0200\n"
+"POT-Creation-Date: 1999-10-06 13:09-0700\n"
 "PO-Revision-Date: 1999-10-05 00:56+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -236,7 +236,6 @@ msgstr "Maks dybde:"
 
 #. threshold scale
 #: app/blend.c:458 app/bucket_fill.c:132 app/fuzzy_select.c:641
-#: app/iscissors.c:385
 msgid "Threshold:"
 msgstr "Terskel:"
 
@@ -1345,11 +1344,11 @@ msgstr "Feil under lagring: "
 msgid "/File/Open"
 msgstr "/Fil/Åpne"
 
-#: app/fileops.c:1581 app/fileops.c:1597 app/gdisplay.c:1650 app/menus.c:151
+#: app/fileops.c:1581 app/fileops.c:1597 app/gdisplay.c:1651 app/menus.c:151
 msgid "/File/Save"
 msgstr "/Fil/Lagre"
 
-#: app/fileops.c:1582 app/fileops.c:1598 app/gdisplay.c:1651 app/menus.c:153
+#: app/fileops.c:1582 app/fileops.c:1598 app/gdisplay.c:1652 app/menus.c:153
 msgid "/File/Save as"
 msgstr "/Fil/Lagre som"
 
@@ -1430,248 +1429,248 @@ msgstr "indeksert-tom"
 msgid "indexed"
 msgstr "indeksert"
 
-#: app/gdisplay.c:1652 app/menus.c:155
+#: app/gdisplay.c:1653 app/menus.c:155
 msgid "/File/Revert"
 msgstr "/Fil/Forkast"
 
-#: app/gdisplay.c:1653 app/gdisplay_ops.c:299 app/gdisplay_ops.c:314
+#: app/gdisplay.c:1654 app/gdisplay_ops.c:299 app/gdisplay_ops.c:314
 #: app/gdisplay_ops.c:345 app/menus.c:162
 msgid "/File/Close"
 msgstr "/Fil/Lukk"
 
-#: app/gdisplay.c:1655
+#: app/gdisplay.c:1656
 msgid "/Edit"
 msgstr "/Rediger"
 
-#: app/gdisplay.c:1658 app/menus.c:171
+#: app/gdisplay.c:1659 app/menus.c:171
 msgid "/Edit/Cut"
 msgstr "/Rediger/Klipp ut"
 
-#: app/gdisplay.c:1659 app/menus.c:173
+#: app/gdisplay.c:1660 app/menus.c:173
 msgid "/Edit/Copy"
 msgstr "/Rediger/Kopier"
 
-#: app/gdisplay.c:1660 app/menus.c:175
+#: app/gdisplay.c:1661 app/menus.c:175
 msgid "/Edit/Paste"
 msgstr "/Rediger/Lim inn"
 
-#: app/gdisplay.c:1661 app/menus.c:177
+#: app/gdisplay.c:1662 app/menus.c:177
 msgid "/Edit/Paste Into"
 msgstr "/Rediger/Lim inn i"
 
-#: app/gdisplay.c:1662 app/menus.c:179
+#: app/gdisplay.c:1663 app/menus.c:179
 msgid "/Edit/Paste As New"
 msgstr "/Rediger/Lim inn som nytt"
 
-#: app/gdisplay.c:1663 app/menus.c:183
+#: app/gdisplay.c:1664 app/menus.c:183
 msgid "/Edit/Clear"
 msgstr "/Rediger/Nullstill"
 
-#: app/gdisplay.c:1664 app/menus.c:185
+#: app/gdisplay.c:1665 app/menus.c:185
 msgid "/Edit/Fill"
 msgstr "/Rediger/Fyll"
 
-#: app/gdisplay.c:1665 app/menus.c:187
+#: app/gdisplay.c:1666 app/menus.c:187
 msgid "/Edit/Stroke"
 msgstr "/Rediger/Strøk"
 
-#: app/gdisplay.c:1666 app/menus.c:189
+#: app/gdisplay.c:1667 app/menus.c:189
 msgid "/Edit/Undo"
 msgstr "/Rediger/Angre"
 
-#: app/gdisplay.c:1667 app/menus.c:191
+#: app/gdisplay.c:1668 app/menus.c:191
 msgid "/Edit/Redo"
 msgstr "/Rediger/Gjenopprett"
 
-#: app/gdisplay.c:1668 app/menus.c:197
+#: app/gdisplay.c:1669 app/menus.c:197
 msgid "/Edit/Cut Named"
 msgstr "/Rediger/Klipp ut navngitt"
 
-#: app/gdisplay.c:1669 app/menus.c:199
+#: app/gdisplay.c:1670 app/menus.c:199
 msgid "/Edit/Copy Named"
 msgstr "/Rediger/Kopier navngitt"
 
-#: app/gdisplay.c:1670 app/menus.c:201
+#: app/gdisplay.c:1671 app/menus.c:201
 msgid "/Edit/Paste Named"
 msgstr "/Rediger/Lim inn navngitt"
 
-#: app/gdisplay.c:1673
+#: app/gdisplay.c:1674
 msgid "/Select"
 msgstr "/Velg"
 
-#: app/gdisplay.c:1674 app/menus.c:230
+#: app/gdisplay.c:1675 app/menus.c:230
 msgid "/Select/Save To Channel"
 msgstr "/Velg/Lagre til kanal"
 
-#: app/gdisplay.c:1676
+#: app/gdisplay.c:1677
 msgid "/View"
 msgstr "/Vis"
 
-#: app/gdisplay.c:1679 app/menus.c:266
+#: app/gdisplay.c:1680 app/menus.c:266
 msgid "/View/Toggle Selection"
 msgstr "/Vis/Slå av/på utvalg"
 
-#: app/gdisplay.c:1680 app/menus.c:268
+#: app/gdisplay.c:1681 app/menus.c:268
 msgid "/View/Toggle Rulers"
 msgstr "/Vis/Slå av/på linjaler"
 
-#: app/gdisplay.c:1682 app/menus.c:272
+#: app/gdisplay.c:1683 app/menus.c:272
 msgid "/View/Toggle Guides"
 msgstr "/Vis/Slå av på guider"
 
-#: app/gdisplay.c:1683 app/menus.c:274
+#: app/gdisplay.c:1684 app/menus.c:274
 msgid "/View/Snap To Guides"
 msgstr "/Vis/Fest til guider"
 
-#: app/gdisplay.c:1684 app/menus.c:270
+#: app/gdisplay.c:1685 app/menus.c:270
 msgid "/View/Toggle Statusbar"
 msgstr "/Vis/Slå av/på statuslinje"
 
-#: app/gdisplay.c:1686 app/menus.c:257
+#: app/gdisplay.c:1687 app/menus.c:257
 msgid "/View/Dot for dot"
 msgstr "/Vis/Punkt for punkt"
 
-#: app/gdisplay.c:1689
+#: app/gdisplay.c:1690
 msgid "/Image"
 msgstr "/Bilde"
 
-#: app/gdisplay.c:1690 app/gdisplay.c:1701
+#: app/gdisplay.c:1691 app/gdisplay.c:1702
 msgid "/Image/Colors"
 msgstr "/Bilde/Farger"
 
-#: app/gdisplay.c:1691
+#: app/gdisplay.c:1692
 msgid "/Image/Channels"
 msgstr "/Bilde/Kanaler"
 
-#: app/gdisplay.c:1692
+#: app/gdisplay.c:1693
 msgid "/Image/Alpha"
 msgstr "/Bilde/Alfa"
 
-#: app/gdisplay.c:1693 app/menus.c:68
+#: app/gdisplay.c:1694 app/menus.c:68
 msgid "/Image/Transforms"
 msgstr "/Bilde/Transformering"
 
-#: app/gdisplay.c:1696 app/menus.c:312
+#: app/gdisplay.c:1697 app/menus.c:312
 msgid "/Image/RGB"
 msgstr "/Bilde/RGB"
 
-#: app/gdisplay.c:1697 app/menus.c:314
+#: app/gdisplay.c:1698 app/menus.c:314
 msgid "/Image/Grayscale"
 msgstr "/Bilde/Gråtone"
 
-#: app/gdisplay.c:1698 app/menus.c:316
+#: app/gdisplay.c:1699 app/menus.c:316
 msgid "/Image/Indexed"
 msgstr "/Bilde/Indeksert"
 
-#: app/gdisplay.c:1699 app/tools.c:658
+#: app/gdisplay.c:1700 app/tools.c:658
 msgid "/Image/Histogram"
 msgstr "/Bilde/Histogram"
 
-#: app/gdisplay.c:1702 app/tools.c:613
+#: app/gdisplay.c:1703 app/tools.c:613
 msgid "/Image/Colors/Threshold"
 msgstr "/Bilde/Farger/Terskel"
 
-#: app/gdisplay.c:1703 app/tools.c:598
+#: app/gdisplay.c:1704 app/tools.c:598
 msgid "/Image/Colors/Posterize"
 msgstr "/Bilde/Farger/Posteriser"
 
-#: app/gdisplay.c:1704 app/menus.c:288
+#: app/gdisplay.c:1705 app/menus.c:288
 msgid "/Image/Colors/Equalize"
 msgstr "/Bilde/Farger/Jevn ut"
 
-#: app/gdisplay.c:1705 app/menus.c:290
+#: app/gdisplay.c:1706 app/menus.c:290
 msgid "/Image/Colors/Invert"
 msgstr "/Bilde/Farger/Inverter"
 
-#: app/gdisplay.c:1706 app/tools.c:553
+#: app/gdisplay.c:1707 app/tools.c:553
 msgid "/Image/Colors/Color Balance"
 msgstr "/Bilde/Farger/Fargebalanse"
 
-#: app/gdisplay.c:1707 app/tools.c:568
+#: app/gdisplay.c:1708 app/tools.c:568
 msgid "/Image/Colors/Brightness-Contrast"
 msgstr "/Bilde/Farger/Lys-Kontrast"
 
-#: app/gdisplay.c:1709 app/tools.c:583
+#: app/gdisplay.c:1710 app/tools.c:583
 msgid "/Image/Colors/Hue-Saturation"
 msgstr "/Bilde/Farger/Glød-Metning"
 
-#: app/gdisplay.c:1710 app/tools.c:628
+#: app/gdisplay.c:1711 app/tools.c:628
 msgid "/Image/Colors/Curves"
 msgstr "/Bilde/Farger/Kurver"
 
-#: app/gdisplay.c:1711 app/tools.c:643
+#: app/gdisplay.c:1712 app/tools.c:643
 msgid "/Image/Colors/Levels"
 msgstr "/Bilde/Farger/Nivåer"
 
-#: app/gdisplay.c:1712 app/menus.c:294
+#: app/gdisplay.c:1713 app/menus.c:294
 msgid "/Image/Colors/Desaturate"
 msgstr "/Bilde/Farger/Mindre mettet"
 
-#: app/gdisplay.c:1714 app/menus.c:302
+#: app/gdisplay.c:1715 app/menus.c:302
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "/Bilde/Alfa/Legg til alfakanal"
 
-#: app/gdisplay.c:1717 app/menus.c:307
+#: app/gdisplay.c:1718 app/menus.c:307
 msgid "/Image/Transforms/Offset"
 msgstr "/Bilde/Transformering/Avstand"
 
-#: app/gdisplay.c:1720
+#: app/gdisplay.c:1721
 msgid "/Layers/Stack"
 msgstr "/Lag/Stabel"
 
-#: app/gdisplay.c:1723 app/menus.c:335
+#: app/gdisplay.c:1724 app/menus.c:335
 msgid "/Layers/Stack/Previous Layer"
 msgstr "/Lag/Stabel/Forrige lag"
 
-#: app/gdisplay.c:1725 app/menus.c:337
+#: app/gdisplay.c:1726 app/menus.c:337
 msgid "/Layers/Stack/Next Layer"
 msgstr "/Lag/Stabel/Neste lag"
 
-#: app/gdisplay.c:1727 app/menus.c:339
+#: app/gdisplay.c:1728 app/menus.c:339
 msgid "/Layers/Stack/Raise Layer"
 msgstr "/Lag/Stabel/Hev lag"
 
-#: app/gdisplay.c:1729 app/menus.c:341
+#: app/gdisplay.c:1730 app/menus.c:341
 msgid "/Layers/Stack/Lower Layer"
 msgstr "/Lag/Stabel/Senk lag"
 
-#: app/gdisplay.c:1731 app/menus.c:343
+#: app/gdisplay.c:1732 app/menus.c:343
 msgid "/Layers/Stack/Layer to Top"
 msgstr "/Lag/Stabel/Lag til topp"
 
-#: app/gdisplay.c:1733 app/menus.c:345
+#: app/gdisplay.c:1734 app/menus.c:345
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr "/Lag/Stabel/Lag til bunn"
 
-#: app/gdisplay.c:1737 app/menus.c:349
+#: app/gdisplay.c:1738 app/menus.c:349
 msgid "/Layers/Anchor Layer"
 msgstr "/Lag/Forankre lag"
 
-#: app/gdisplay.c:1738 app/menus.c:351
+#: app/gdisplay.c:1739 app/menus.c:351
 msgid "/Layers/Merge Visible Layers"
 msgstr "/Lag/Flett sammen synlige lag"
 
-#: app/gdisplay.c:1739 app/menus.c:353
+#: app/gdisplay.c:1740 app/menus.c:353
 msgid "/Layers/Flatten Image"
 msgstr "/Lag/Flat ut bilde"
 
-#: app/gdisplay.c:1740 app/menus.c:355
+#: app/gdisplay.c:1741 app/menus.c:355
 msgid "/Layers/Alpha To Selection"
 msgstr "/Lag/Legg til alfakanal"
 
-#: app/gdisplay.c:1741 app/menus.c:357
+#: app/gdisplay.c:1742 app/menus.c:357
 msgid "/Layers/Mask To Selection"
 msgstr "/Lag/Maske til utvalg"
 
-#: app/gdisplay.c:1742 app/menus.c:359
+#: app/gdisplay.c:1743 app/menus.c:359
 msgid "/Layers/Add Alpha Channel"
 msgstr "/Lag/Legg til alfakanal"
 
-#: app/gdisplay.c:1745
+#: app/gdisplay.c:1746
 msgid "/Filters"
 msgstr "/Filtre"
 
-#: app/gdisplay.c:1747
+#: app/gdisplay.c:1748
 msgid "/Script-Fu"
 msgstr "/Script-Fu"
 
@@ -2663,7 +2662,7 @@ msgstr "%s: Vindusinformasjon"
 msgid "Dimensions (w x h):"
 msgstr "Dimensjoner (b x h):"
 
-#: app/info_window.c:306 app/iscissors.c:356
+#: app/info_window.c:306
 msgid "Resolution:"
 msgstr "Oppløsning:"
 
@@ -3296,20 +3295,6 @@ msgstr "Inverter opererer ikke på indekserte tegnede objekter."
 #: app/invert.c:53
 msgid "Invert operation failed."
 msgstr "Inverteringsoperasjonene feilet."
-
-#: app/iscissors.c:350
-msgid "Curve"
-msgstr "Kurver"
-
-#. the threshold scale
-#: app/iscissors.c:379
-msgid "Edge Detect "
-msgstr "Detekter kant "
-
-#. the elasticity scale
-#: app/iscissors.c:408
-msgid "Elasticity:"
-msgstr "Elastisitet:"
 
 #: app/layer.c:248
 msgid "Zero width or height layers not allowed."
@@ -6252,3 +6237,12 @@ msgstr ""
 #: libgimp/gimpexport.c:332
 msgid "The export conversion won't modify your original image."
 msgstr ""
+
+#~ msgid "Curve"
+#~ msgstr "Kurver"
+
+#~ msgid "Edge Detect "
+#~ msgstr "Detekter kant "
+
+#~ msgid "Elasticity:"
+#~ msgstr "Elastisitet:"

@@ -429,6 +429,7 @@ gimp_SOURCES = \
 	undo.h			\
 	undo_cmds.c		\
 	undo_history.c		\
+	undo_types.h		\
 	unitrc.h		\
 	unit_cmds.c		\
 	wilber.h		\

@@ -108,15 +108,13 @@ gamma_new (int type)
   GammaContext *context = NULL;
 
   context = g_new (GammaContext, 1);
-  context->gamma = 2.2;
+  context->gamma = 1.0;
   context->lookup = g_new (guchar, 256);
   context->shell = NULL;
   context->spinner = NULL;
 
   for (i = 0; i < 256; i++)
     context->lookup[i] = i;
-
-  gamma_create_lookup_table (context);
 
   return context;
 }

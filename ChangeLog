@@ -27,6 +27,10 @@ Wed Oct  6 23:29:53 BST 1999 Andy Thomas <alt@gimp.org>
 	Expanding the dialog causes the width of the cells to change
 	where as the +/- buttons cause the height of the cells to change.	
 
+Wed Oct  6 15:02:45 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.10 release
+
 Wed Oct  6 14:24:46 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* libgimp/gimp.c

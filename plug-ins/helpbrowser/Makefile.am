@@ -6,6 +6,7 @@ libexec_PROGRAMS = helpbrowser
 
 helpbrowser_SOURCES = \
 	back.xpm		\
+	forward.xpm		\
 	helpbrowser.c		\
 	queue.c			\
 	queue.h
