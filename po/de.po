@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.27\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-12 16:23+0100\n"
+"POT-Creation-Date: 2004-03-13 04:25+0100\n"
 "PO-Revision-Date: 2004-03-12 00:38+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -1222,20 +1222,20 @@ msgid "Linked Item"
 msgstr "Verknüpftes Objekt"
 
 #: app/core/core-enums.c:599 app/core/gimplayer.c:622 app/core/gimplayer.c:624
-#: app/gui/layers-commands.c:1139 app/gui/resize-dialog.c:204
+#: app/gui/layers-commands.c:1138 app/gui/resize-dialog.c:204
 #: app/pdb/layer_cmds.c:453
 msgid "Scale Layer"
 msgstr "Ebene skalieren"
 
 #: app/core/core-enums.c:600 app/core/gimpimage-crop.c:117
 #: app/core/gimplayer.c:660 app/core/gimplayer.c:662
-#: app/gui/layers-commands.c:1238 app/pdb/layer_cmds.c:548
+#: app/gui/layers-commands.c:1237 app/pdb/layer_cmds.c:548
 msgid "Resize Layer"
 msgstr "Ebenengröße ändern"
 
 #: app/core/core-enums.c:601 app/core/core-enums.c:631
-#: app/core/gimplayer.c:1030 app/gui/layers-commands.c:1007
-#: app/gui/layers-commands.c:1046
+#: app/core/gimplayer.c:1030 app/gui/layers-commands.c:1006
+#: app/gui/layers-commands.c:1045
 msgid "Add Layer Mask"
 msgstr "Ebenenmaske hinzufügen"
 
@@ -1265,12 +1265,12 @@ msgid "Cut"
 msgstr "Ausschneiden"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:637
-#: app/tools/gimptexttool.c:107 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:105 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Text"
 
 #: app/core/core-enums.c:609 app/core/core-enums.c:650
-#: app/core/gimpdrawable-transform.c:824
+#: app/core/gimpdrawable-transform.c:825
 msgid "Transform"
 msgstr "Transformation"
 
@@ -1328,8 +1328,8 @@ msgstr "Objekt umbenennen"
 msgid "Set Item Linked"
 msgstr "Objekt verknüpfen"
 
-#: app/core/core-enums.c:628 app/gui/layers-commands.c:717
-#: app/gui/layers-commands.c:748 app/gui/layers-commands.c:782
+#: app/core/core-enums.c:628 app/gui/layers-commands.c:716
+#: app/gui/layers-commands.c:747 app/gui/layers-commands.c:781
 #: app/widgets/gimpdrawabletreeview.c:219 app/widgets/gimplayertreeview.c:212
 msgid "New Layer"
 msgstr "Neue Ebene"
@@ -1660,7 +1660,7 @@ msgstr "Kanal spiegeln"
 msgid "Rotate Channel"
 msgstr "Kanal drehen"
 
-#: app/core/gimpchannel.c:597 app/core/gimpdrawable-transform.c:1104
+#: app/core/gimpchannel.c:597 app/core/gimpdrawable-transform.c:1105
 msgid "Transform Channel"
 msgstr "Kanal transformieren"
 
@@ -1775,24 +1775,24 @@ msgid "Render Stroke"
 msgstr "Nachziehen"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:878 app/tools/gimpfliptool.c:84
+#: app/core/gimpdrawable-transform.c:879 app/tools/gimpfliptool.c:84
 msgid "Flip"
 msgstr "Spiegeln"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:944 app/tools/gimprotatetool.c:103
+#: app/core/gimpdrawable-transform.c:945 app/tools/gimprotatetool.c:103
 msgid "Rotate"
 msgstr "Drehen"
 
-#: app/core/gimpdrawable-transform.c:1049
+#: app/core/gimpdrawable-transform.c:1050
 msgid "Transformation"
 msgstr "Transformation"
 
-#: app/core/gimpdrawable-transform.c:1064
+#: app/core/gimpdrawable-transform.c:1065
 msgid "Paste Transform"
 msgstr "Transformation einfügen"
 
-#: app/core/gimpdrawable-transform.c:1101 app/core/gimplayer.c:751
+#: app/core/gimpdrawable-transform.c:1102 app/core/gimplayer.c:751
 #: app/tools/tools-enums.c:73
 msgid "Transform Layer"
 msgstr "Ebene transformieren"
@@ -2362,7 +2362,7 @@ msgstr ""
 "Die Auswahl konnte nicht schwebend gemacht werden, da der ausgewählte "
 "Bereich leer ist."
 
-#: app/core/gimpselection.c:853 app/gui/layers-commands.c:965
+#: app/core/gimpselection.c:853 app/gui/layers-commands.c:964
 msgid "Floating Selection"
 msgstr "Schwebende Auswahl"
 
@@ -3814,7 +3814,7 @@ msgstr ""
 msgid "Layer Too Small"
 msgstr "Ebene zu klein"
 
-#: app/gui/image-commands.c:633 app/gui/layers-commands.c:1133
+#: app/gui/image-commands.c:633 app/gui/layers-commands.c:1132
 #: app/tools/gimpscaletool.c:162
 msgid "Scaling..."
 msgstr "Skalierung"
@@ -4867,24 +4867,24 @@ msgstr "Ebene zuschneiden"
 msgid "Layer Mask to Selection"
 msgstr "Auswahl aus Ebenenmaske"
 
-#: app/gui/layers-commands.c:723
+#: app/gui/layers-commands.c:722
 msgid "Empty Layer Copy"
 msgstr "Leere Ebenen-Kopie"
 
-#: app/gui/layers-commands.c:750
+#: app/gui/layers-commands.c:749
 msgid "Create a New Layer"
 msgstr "Eine neue Ebene erstellen"
 
-#: app/gui/layers-commands.c:784
+#: app/gui/layers-commands.c:783
 msgid "Layer _Name:"
 msgstr "Ebenen_name:"
 
 #. The size labels
-#: app/gui/layers-commands.c:788
+#: app/gui/layers-commands.c:787
 msgid "Layer Width:"
 msgstr "Ebenenbreite:"
 
-#: app/gui/layers-commands.c:794 app/gui/resize-dialog.c:299
+#: app/gui/layers-commands.c:793 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
 #: app/tools/gimpcroptool.c:1002 app/tools/gimpscaletool.c:174
 #: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
@@ -4892,35 +4892,35 @@ msgstr "Ebenenbreite:"
 msgid "Height:"
 msgstr "Höhe:"
 
-#: app/gui/layers-commands.c:853
+#: app/gui/layers-commands.c:852
 msgid "Layer Fill Type"
 msgstr "Ebenenfüllart"
 
-#: app/gui/layers-commands.c:930
+#: app/gui/layers-commands.c:929
 msgid "Layer Attributes"
 msgstr "Ebeneneigenschaften"
 
-#: app/gui/layers-commands.c:932 app/widgets/gimplayertreeview.c:210
+#: app/gui/layers-commands.c:931 app/widgets/gimplayertreeview.c:210
 msgid "Edit Layer Attributes"
 msgstr "Ebeneneigenschaften bearbeiten"
 
-#: app/gui/layers-commands.c:968
+#: app/gui/layers-commands.c:967
 msgid "Layer _Name"
 msgstr "Ebenen_name"
 
-#: app/gui/layers-commands.c:1048
+#: app/gui/layers-commands.c:1047
 msgid "Add a Mask to the Layer"
 msgstr "Eine Maske zur Ebene hinzufügen"
 
-#: app/gui/layers-commands.c:1067
+#: app/gui/layers-commands.c:1066
 msgid "Initialize Layer Mask to:"
 msgstr "Initialisierung Ebenenmaske nach:"
 
-#: app/gui/layers-commands.c:1084
+#: app/gui/layers-commands.c:1083
 msgid "In_vert Mask"
 msgstr "Maske in_vertieren"
 
-#: app/gui/layers-commands.c:1167 app/gui/layers-commands.c:1263
+#: app/gui/layers-commands.c:1166 app/gui/layers-commands.c:1262
 msgid "Invalid width or height. Both must be positive."
 msgstr "Ungültige Breite oder Höhe. Beide müssen positiv sein."
 
@@ -7396,7 +7396,7 @@ msgstr ""
 "Zwei Boxkämpfer jagen\n"
 "Eva quer durch Sylt."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:315
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:309
 msgid "Add Text Layer"
 msgstr "Textebene hinzufügen"
 
@@ -8482,7 +8482,7 @@ msgstr "Auswahl auf alle sichtbaren Bereiche stützen"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Beim Verkleinern der Auswahl alle sichtbaren Ebenen verwenden"
 
-#: app/tools/gimpselectionoptions.c:403 app/tools/gimptextoptions.c:436
+#: app/tools/gimpselectionoptions.c:403 app/tools/gimptextoptions.c:434
 msgid "Antialiasing"
 msgstr "Kantenglättung"
 
@@ -8565,35 +8565,35 @@ msgstr "Den Dialog zur Schriftauswahl öffnen"
 msgid "_Font:"
 msgstr "_Schrift:"
 
-#: app/tools/gimptextoptions.c:410
+#: app/tools/gimptextoptions.c:411
 msgid "_Size:"
 msgstr "_Größe:"
 
-#: app/tools/gimptextoptions.c:420
+#: app/tools/gimptextoptions.c:418
 msgid "_Hinting"
 msgstr "_Hinting"
 
-#: app/tools/gimptextoptions.c:427
+#: app/tools/gimptextoptions.c:425
 msgid "Force Auto-Hinter"
 msgstr "Auto-Hinting erzwingen"
 
-#: app/tools/gimptextoptions.c:442
+#: app/tools/gimptextoptions.c:440
 msgid "Text Color"
 msgstr "Text-Farbe"
 
-#: app/tools/gimptextoptions.c:447
+#: app/tools/gimptextoptions.c:445
 msgid "Color:"
 msgstr "Farbe:"
 
-#: app/tools/gimptextoptions.c:452
+#: app/tools/gimptextoptions.c:450
 msgid "Justify:"
 msgstr "Ausrichtung:"
 
-#: app/tools/gimptextoptions.c:458
+#: app/tools/gimptextoptions.c:456
 msgid "Indent:"
 msgstr "Einzug:"
 
-#: app/tools/gimptextoptions.c:464
+#: app/tools/gimptextoptions.c:462
 msgid ""
 "Line\n"
 "Spacing:"
@@ -8601,19 +8601,19 @@ msgstr ""
 "Zeilen-\n"
 "abstand:"
 
-#: app/tools/gimptextoptions.c:467
+#: app/tools/gimptextoptions.c:465
 msgid "Create Path from Text"
 msgstr "Pfad aus Text erzeugen"
 
-#: app/tools/gimptexttool.c:108
+#: app/tools/gimptexttool.c:106
 msgid "Add text to the image"
 msgstr "Text zum Bild hinzufügen"
 
-#: app/tools/gimptexttool.c:109
+#: app/tools/gimptexttool.c:107
 msgid "/Tools/Te_xt"
 msgstr "/Werkzeuge/Te_xt"
 
-#: app/tools/gimptexttool.c:401
+#: app/tools/gimptexttool.c:391
 msgid "GIMP Text Editor"
 msgstr "GIMP Text Editor"
 
@@ -9093,6 +9093,7 @@ msgstr "Indizierte Paletten-Farben bearbeiten"
 
 #: app/widgets/gimpcontainergridview.c:204
 #: app/widgets/gimpcontainergridview.c:616
+#: app/widgets/gimpcontainermenuimpl.c:145
 #: app/widgets/gimphistogrameditor.c:137 app/widgets/gimphistogrameditor.c:326
 msgid "(None)"
 msgstr "(Keine)"

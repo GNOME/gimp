@@ -1,3 +1,7 @@
+2004-03-13  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added app/widgets/gimpcontainermenuimpl.c.
+
 2004-03-12  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added missing app/widgets/gimpthumbbox.c.

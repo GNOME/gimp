@@ -34,6 +34,8 @@
 #include "gimppreview.h"
 #include "gimppreviewrenderer.h"
 
+#include "gimp-intl.h"
+
 
 static void     gimp_container_menu_impl_class_init   (GimpContainerMenuImplClass *klass);
 static void     gimp_container_menu_impl_init         (GimpContainerMenuImpl      *panel);
@@ -140,7 +142,7 @@ gimp_container_menu_new (GimpContainer *container,
   menu->preview_size         = preview_size;
   menu->preview_border_width = preview_border_width;
 
-  menu_impl->empty_item = gtk_menu_item_new_with_label ("(none)");
+  menu_impl->empty_item = gtk_menu_item_new_with_label (_("(None)"));
   gtk_widget_set_size_request (menu_impl->empty_item,
                                -1,
                                preview_size +

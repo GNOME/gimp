@@ -1,5 +1,10 @@
 2004-03-13  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontainermenuimpl.c: marked missing string for
+	translation (spotted by Branko Collin).
+
+2004-03-13  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptextoptions.[ch]: use a GimpSizeEntry for the
 	font size.
 
