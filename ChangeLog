@@ -1,3 +1,14 @@
+2004-10-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_tool_events): dispatch GDK_Escape to
+	GimpTool::key_press().
+
+	* app/tools/gimpcroptool.c (gimp_crop_tool_key_press)
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_key_press):
+	* app/tools/gimptransformtool.c (gimp_transform_tool_key_press):
+	cancel the tool on <Escape>.
+
 2004-10-01  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/dbbrowser/plugin-browser.c: it's Plug-In, not Plugin.

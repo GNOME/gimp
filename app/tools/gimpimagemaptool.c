@@ -22,6 +22,7 @@
 #include <errno.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -62,6 +63,9 @@ static gboolean gimp_image_map_tool_initialize (GimpTool         *tool,
                                                 GimpDisplay      *gdisp);
 static void     gimp_image_map_tool_control    (GimpTool         *tool,
                                                 GimpToolAction    action,
+                                                GimpDisplay      *gdisp);
+static gboolean gimp_image_map_tool_key_press  (GimpTool         *tool,
+                                                GdkEventKey      *kevent,
                                                 GimpDisplay      *gdisp);
 
 static gboolean gimp_image_map_tool_pick_color (GimpColorTool    *color_tool,
@@ -138,6 +142,7 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
 
   tool_class->initialize = gimp_image_map_tool_initialize;
   tool_class->control    = gimp_image_map_tool_control;
+  tool_class->key_press  = gimp_image_map_tool_key_press;
 
   color_tool_class->pick = gimp_image_map_tool_pick_color;
 
@@ -314,6 +319,36 @@ gimp_image_map_tool_control (GimpTool       *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+}
+
+static gboolean
+gimp_image_map_tool_key_press (GimpTool    *tool,
+                               GdkEventKey *kevent,
+                               GimpDisplay *gdisp)
+{
+  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
+
+  if (gdisp == tool->gdisp)
+    {
+      switch (kevent->keyval)
+        {
+        case GDK_KP_Enter:
+        case GDK_Return:
+          gimp_image_map_tool_response (NULL, GTK_RESPONSE_OK, image_map_tool);
+          return TRUE;
+
+        case GDK_Delete:
+        case GDK_BackSpace:
+          gimp_image_map_tool_response (NULL, RESPONSE_RESET, image_map_tool);
+          return TRUE;
+
+        case GDK_Escape:
+          gimp_image_map_tool_response (NULL, GTK_RESPONSE_CANCEL, image_map_tool);
+          return TRUE;
+        }
+    }
+
+  return FALSE;
 }
 
 static gboolean

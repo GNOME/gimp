@@ -537,6 +537,10 @@ gimp_crop_tool_key_press (GimpTool    *tool,
       crop_response (NULL, options->crop_mode, crop);
       return TRUE;
 
+    case GDK_Escape:
+      crop_response (NULL, GTK_RESPONSE_CANCEL, crop);
+      return TRUE;
+
     default:
       return FALSE;
     }

@@ -530,7 +530,7 @@ gimp_transform_tool_key_press (GimpTool    *tool,
                                GimpDisplay *gdisp)
 {
   GimpTransformTool *trans_tool = GIMP_TRANSFORM_TOOL (tool);
-  GimpDrawTool      *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpDrawTool      *draw_tool  = GIMP_DRAW_TOOL (tool);
 
   if (gdisp == draw_tool->gdisp)
     {
@@ -544,6 +544,10 @@ gimp_transform_tool_key_press (GimpTool    *tool,
         case GDK_Delete:
         case GDK_BackSpace:
           gimp_transform_tool_response (NULL, RESPONSE_RESET, trans_tool);
+          return TRUE;
+
+        case GDK_Escape:
+          gimp_transform_tool_response (NULL, GTK_RESPONSE_CANCEL, trans_tool);
           return TRUE;
         }
     }
