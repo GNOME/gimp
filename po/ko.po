@@ -3,9 +3,9 @@
 # Sung-Hyun Nam <namsh@lgic.co.kr>, 1998
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1\n"
+"Project-Id-Version: gimp 1.1.2\n"
 "POT-Creation-Date: 1999-03-05 19:11+0900\n"
-"PO-Revision-Date: 1999-03-06 04:17:19+0900\n"
+"PO-Revision-Date: 1999-03-08 07:38:21+0900\n"
 "Last-Translator: Sung-Hyun Nam <namsh@lgic.co.kr>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -85,7 +85,7 @@ msgstr "팔렛"
 #. initialize the list of gimp palettes
 #: app/app_procs.c:547 app/gradient_select.c:575
 msgid "Gradients"
-msgstr ""
+msgstr "색감변화도"
 
 #: app/app_procs.c:683 app/app_procs.c:705
 msgid "<Toolbox>/File/Quit"
@@ -133,24 +133,24 @@ msgstr "일괄처리 명령: 성공적으로 수행됨.\n"
 
 #: app/bezier_select.c:447
 msgid "tried to edit on open bezier curve in edit selection"
-msgstr ""
+msgstr "편집 선택에서 열린 베지에 곡선을 편집하려고 함"
 
 #: app/bezier_select.c:794
 msgid "Encountered orphaned bezier control point"
-msgstr ""
+msgstr "홀로된 베지어 제어점을 만남"
 
 #: app/bezier_select.c:1151 app/bezier_select.c:2274
 msgid "bad bezier segment"
-msgstr ""
+msgstr "나쁜 베지어 조각"
 
 #: app/bezier_select.c:1168 app/bezier_select.c:2291
 #, c-format
 msgid "unknown coordinate space: %d"
-msgstr ""
+msgstr "모르는 좌표 영역: %d"
 
 #: app/bezier_select.c:1309
 msgid "tried to convert an open bezier curve"
-msgstr ""
+msgstr "열린 베지어 곡선을 변환하려고 함"
 
 #: app/bezier_select.c:1861
 #, c-format
@@ -198,7 +198,7 @@ msgstr "모드:"
 #: app/bezier_select.c:2171 app/palette.c:1718 app/palette.c:1737
 #: app/palette.c:2465
 msgid "New"
-msgstr ""
+msgstr "새 것"
 
 #: app/bezier_select.c:2172 app/by_color_select.c:545
 #: app/colormap_dialog.i.c:99
@@ -230,11 +230,11 @@ msgstr "저장"
 
 #: app/bezier_select.c:2200
 msgid "Paste Bezier Named Buffer"
-msgstr ""
+msgstr "명명된 베지어 버퍼를 붙이기"
 
 #: app/bezier_select.c:2208
 msgid "Select a buffer to operate:"
-msgstr ""
+msgstr "작업 수행을 위한 버퍼 선택:"
 
 #: app/blend.c:225
 msgid "FG to BG RGB"
@@ -254,7 +254,7 @@ msgstr ""
 
 #: app/blend.c:235 app/gradient.c:403
 msgid "Linear"
-msgstr ""
+msgstr "선형"
 
 #: app/blend.c:236
 msgid "Bi-Linear"
@@ -266,15 +266,15 @@ msgstr ""
 
 #: app/blend.c:238
 msgid "Square"
-msgstr ""
+msgstr "정사각형"
 
 #: app/blend.c:239
 msgid "Conical (symmetric)"
-msgstr ""
+msgstr "원뿔형 (대칭)"
 
 #: app/blend.c:240
 msgid "Conical (asymmetric)"
-msgstr ""
+msgstr "원뿔형 (비대칭)"
 
 #: app/blend.c:241
 msgid "Shapeburst (angular)"
@@ -290,11 +290,11 @@ msgstr ""
 
 #: app/blend.c:244
 msgid "Spiral (clockwise)"
-msgstr ""
+msgstr "나선형 (시계방향)"
 
 #: app/blend.c:245
 msgid "Spiral (anticlockwise)"
-msgstr ""
+msgstr "나선형 (반시계방향)"
 
 #: app/blend.c:256 app/preferences_dialog.c:954
 msgid "None"
@@ -302,16 +302,16 @@ msgstr ""
 
 #: app/blend.c:257
 msgid "Sawtooth wave"
-msgstr ""
+msgstr "톱니모양의 웨이브"
 
 #: app/blend.c:258
 msgid "Triangular wave"
-msgstr ""
+msgstr "삼각형 웨이브"
 
 #. the main label
 #: app/blend.c:374
 msgid "Blend Options"
-msgstr ""
+msgstr "혼합 옵션"
 
 #. the opacity scale
 #: app/blend.c:384 app/brush_select.c:285 app/layers_dialog.c:709
@@ -321,22 +321,22 @@ msgstr "불투명:"
 #. the offset scale
 #: app/blend.c:402
 msgid "Offset:"
-msgstr ""
+msgstr "오프셋:"
 
 #. the blend mode menu
 #: app/blend.c:433
 msgid "Blend:"
-msgstr ""
+msgstr "혼합:"
 
 #. the gradient type menu
 #: app/blend.c:446
 msgid "Gradient:"
-msgstr ""
+msgstr "색감변화도:"
 
 #. the repeat option
 #: app/blend.c:460
 msgid "Repeat:"
-msgstr ""
+msgstr "반복:"
 
 #. supersampling toggle
 #: app/blend.c:479
@@ -346,7 +346,7 @@ msgstr ""
 #. max depth scale
 #: app/blend.c:501
 msgid "Max depth:"
-msgstr ""
+msgstr "최대 깊이:"
 
 #. threshold scale
 #: app/blend.c:520
@@ -355,38 +355,38 @@ msgstr ""
 
 #: app/blend.c:574
 msgid "Blend: Invalid for indexed images."
-msgstr ""
+msgstr "혼합: 색인된 이미지에는 유효하지 않음."
 
 #: app/blend.c:599
 msgid "Blend: 0, 0"
-msgstr ""
+msgstr "혼합: 0, 0"
 
 #: app/blend.c:661
 msgid "Blend operation failed."
-msgstr ""
+msgstr "혼합 동작 실패."
 
 #: app/blend.c:667
 msgid "Blending..."
-msgstr ""
+msgstr "혼합중..."
 
 #: app/blend.c:717 app/blend.c:727
 msgid "Blend: "
-msgstr ""
+msgstr "혼합: "
 
 #: app/blend.c:1373
 #, c-format
 msgid "gradient_render_pixel(): unknown gradient type %d"
-msgstr ""
+msgstr "gradient_render_pixel(): 모르는 색감변화도 형식 %d"
 
 #: app/blend.c:1508
 #, c-format
 msgid "gradient_fill_region(): unknown blend mode %d"
-msgstr ""
+msgstr "gradient_fill_region(): 모르는 혼합 모드 %d"
 
 #: app/blend.c:1549
 #, c-format
 msgid "gradient_fill_region(): unknown gradient type %d"
-msgstr ""
+msgstr "gradient_fill_region(): 모르는 색감변화도 형식 %d"
 
 #: app/blend.c:1571
 #, c-format
@@ -395,15 +395,15 @@ msgstr "gradient_fill_region(): 모르는 반복 모드 %d"
 
 #: app/boundary.c:177
 msgid "Unable to reallocate segments array for mask boundary."
-msgstr ""
+msgstr "마스크 경계를 위한 조각 배열을 재할당할 수 없음."
 
 #: app/boundary.c:219
 msgid "Unable to reallocate empty segments array for mask boundary."
-msgstr ""
+msgstr "마스크 경계를 위한 빈 조각 배열을 재할당할 수 없음."
 
 #: app/boundary.c:474
 msgid "sort_boundary(): Unconnected boundary group!"
-msgstr ""
+msgstr "sort_boundary(): 연결되지 않은 경계 그룹!"
 
 #: app/brightness_contrast.c:223
 msgid "Brightness-Contrast Options"
@@ -442,17 +442,17 @@ msgstr "취소"
 
 #: app/brightness_contrast.c:320 app/tools.c:504
 msgid "Brightness-Contrast"
-msgstr ""
+msgstr "환함-대조"
 
 #. Create the brightness scale widget
 #: app/brightness_contrast.c:336
 msgid "Brightness"
-msgstr ""
+msgstr "환함"
 
 #. Create the contrast scale widget
 #: app/brightness_contrast.c:370
 msgid "Contrast"
-msgstr ""
+msgstr "대조"
 
 #. The preview toggle
 #: app/brightness_contrast.c:408 app/color_balance.c:507 app/curves.c:547
@@ -463,7 +463,7 @@ msgstr "미리보기"
 
 #: app/brightness_contrast.c:464
 msgid "brightness_contrast_preview(): No image map"
-msgstr ""
+msgstr "brightness_contrast_preview(): 이미지 맵 없음"
 
 #. The close push button
 #: app/brush_edit.c:38 app/brush_select.c:117 app/by_color_select.c:664
@@ -484,82 +484,82 @@ msgstr "브러쉬 편집기"
 #. brush radius scale
 #: app/brush_edit.c:240
 msgid "Radius:"
-msgstr ""
+msgstr "반경:"
 
 #. brush hardness scale
 #: app/brush_edit.c:257
 msgid "Hardness:"
-msgstr ""
+msgstr "경도"
 
 #. brush aspect ratio scale
 #: app/brush_edit.c:273
 msgid "Aspect Ratio:"
-msgstr ""
+msgstr "방위 비율:"
 
 #. brush angle scale
 #: app/brush_edit.c:289
 msgid "Angle:"
-msgstr ""
+msgstr "각도:"
 
 #: app/brush_select.c:95 app/layers_dialog.c:266 app/paint_funcs.c:72
 msgid "Normal"
-msgstr ""
+msgstr "표준"
 
 #: app/brush_select.c:96 app/layers_dialog.c:267 app/paint_funcs.c:73
 msgid "Dissolve"
-msgstr ""
+msgstr "분해"
 
 #: app/brush_select.c:97 app/paint_funcs.c:74
 msgid "Behind"
-msgstr ""
+msgstr "뒤로"
 
 #: app/brush_select.c:98 app/layers_dialog.c:268 app/paint_funcs.c:75
 msgid "Multiply (Burn)"
-msgstr ""
+msgstr "곱하기 (Burn)"
 
 #: app/brush_select.c:99 app/layers_dialog.c:269 app/paint_funcs.c:87
 msgid "Divide (Dodge)"
-msgstr ""
+msgstr "나누기 (Dodge)"
 
 #: app/brush_select.c:100 app/layers_dialog.c:270 app/paint_funcs.c:76
 msgid "Screen"
-msgstr ""
+msgstr "화면"
 
 #: app/brush_select.c:101 app/layers_dialog.c:271 app/paint_funcs.c:77
 msgid "Overlay"
-msgstr ""
+msgstr "씌우기"
 
 #: app/brush_select.c:102 app/layers_dialog.c:272 app/paint_funcs.c:78
 msgid "Difference"
-msgstr ""
+msgstr "차이점"
 
 #: app/brush_select.c:103 app/layers_dialog.c:273 app/paint_funcs.c:79
 msgid "Addition"
-msgstr ""
+msgstr "더하기"
 
 #: app/brush_select.c:104 app/by_color_select.c:546 app/layers_dialog.c:274
 msgid "Subtract"
-msgstr ""
+msgstr "빼기"
 
 #: app/brush_select.c:105 app/layers_dialog.c:275 app/paint_funcs.c:81
 msgid "Darken Only"
-msgstr ""
+msgstr "어둡게만"
 
 #: app/brush_select.c:106 app/layers_dialog.c:276 app/paint_funcs.c:82
 msgid "Lighten Only"
-msgstr ""
+msgstr "밝게만"
 
 #. Create the hue scale widget
 #: app/brush_select.c:107 app/hue_saturation.c:543 app/layers_dialog.c:277
 #: app/paint_funcs.c:83
 msgid "Hue"
-msgstr ""
+msgstr "색조"
 
 #. Create the saturation scale widget
 #: app/brush_select.c:108 app/hue_saturation.c:611 app/layers_dialog.c:278
 #: app/paint_funcs.c:84
 msgid "Saturation"
-msgstr ""
+msgstr "채도"
 
 #: app/brush_select.c:109 app/layers_dialog.c:279 app/paint_funcs.c:85
 msgid "Color"
@@ -568,23 +568,23 @@ msgstr "색상"
 #: app/brush_select.c:110 app/curves.c:313 app/layers_dialog.c:280
 #: app/levels.c:320 app/paint_funcs.c:86
 msgid "Value"
-msgstr ""
+msgstr "값"
 
 #: app/brush_select.c:118 app/palette.c:2538 app/pattern_select.c:77
 msgid "Refresh"
-msgstr ""
+msgstr "다시 그림"
 
 #: app/brush_select.c:190
 msgid "Brush Selection"
-msgstr ""
+msgstr "브러쉬 선택"
 
 #: app/brush_select.c:258 app/pattern_select.c:148
 msgid "Active"
-msgstr ""
+msgstr "활성"
 
 #: app/brush_select.c:302
 msgid "Spacing:"
-msgstr ""
+msgstr "간격"
 
 #: app/brush_select.c:319
 msgid "Edit Brush"
@@ -603,6 +603,8 @@ msgid ""
 "We are all fresh out of brush editors today,\n"
 "please write your own or try back tomorrow\n"
 msgstr ""
+"오늘은 브러쉬 편집기를 사용할 수 없습니다,\n"
+"당신 자신의 것을 만들거나 내일 다시 시도하십시오\n"
 
 #: app/bucket_fill.c:147
 msgid "Color Fill"
@@ -691,15 +693,15 @@ msgstr "선택 마스크"
 
 #: app/channel_ops.c:105
 msgid "Offset"
-msgstr ""
+msgstr "오프셋"
 
 #: app/channel_ops.c:139 app/resize.c:276
 msgid "Offset X:"
-msgstr ""
+msgstr "오프셋 X:"
 
 #: app/channel_ops.c:149 app/resize.c:293
 msgid "Offset Y:"
-msgstr ""
+msgstr "오프셋 Y:"
 
 #. the wrap around option
 #: app/channel_ops.c:161
@@ -714,7 +716,7 @@ msgstr "채움 옵션"
 #: app/channel_ops.c:173 app/file_new_dialog.c:128 app/file_new_dialog.c:529
 #: app/layers_dialog.c:3157
 msgid "Background"
-msgstr ""
+msgstr "배경"
 
 #: app/channel_ops.c:184 app/file_new_dialog.c:551 app/layers_dialog.c:3159
 msgid "Transparent"
@@ -732,11 +734,11 @@ msgstr "새 채널"
 
 #: app/channels_dialog.c:157 app/channels_dialog.c:174
 msgid "Raise Channel"
-msgstr ""
+msgstr "채널 올리기"
 
 #: app/channels_dialog.c:159 app/channels_dialog.c:175
 msgid "Lower Channel"
-msgstr ""
+msgstr "채널 내리기"
 
 #: app/channels_dialog.c:161 app/channels_dialog.c:176
 msgid "Duplicate Channel"
@@ -753,7 +755,7 @@ msgstr "선택할 채널"
 #: app/channels_dialog.c:605 app/channels_dialog.c:659
 #, c-format
 msgid "error in %s at %d: this shouldn't happen."
-msgstr ""
+msgstr "%s의 %d에서 에러: 결코 일어날 수 없음."
 
 #: app/channels_dialog.c:1052 app/color_balance.c:439 app/color_picker.c:156
 #: app/color_picker.c:166 app/curves.c:314 app/levels.c:321
@@ -776,7 +778,7 @@ msgstr "회색"
 
 #: app/channels_dialog.c:1056
 msgid "Indexed"
-msgstr "Indexed"
+msgstr "색인됨"
 
 #: app/channels_dialog.c:1778
 msgid "New Channel Options"
@@ -809,15 +811,15 @@ msgstr "패턴 소스"
 
 #: app/clone.c:121
 msgid "Non Aligned"
-msgstr "정렬 않함"
+msgstr "정렬 않됨"
 
 #: app/clone.c:122
 msgid "Aligned"
-msgstr "정렬"
+msgstr "정렬됨"
 
 #: app/clone.c:123
 msgid "Registered"
-msgstr ""
+msgstr "등록됨"
 
 #. the main label
 #: app/clone.c:135
@@ -840,7 +842,7 @@ msgstr "이 작업을 할 수 있는 패턴이 없습니다."
 
 #: app/color_balance.c:251
 msgid "Color Balance Options"
-msgstr ""
+msgstr "색상 균형 옵션"
 
 #: app/color_balance.c:295
 msgid "Color balance operates only on RGB color drawables."
@@ -848,7 +850,7 @@ msgstr ""
 
 #: app/color_balance.c:349
 msgid "Shadows"
-msgstr ""
+msgstr "그림자"
 
 #: app/color_balance.c:350
 msgid "Midtones"
@@ -856,15 +858,15 @@ msgstr ""
 
 #: app/color_balance.c:351
 msgid "Highlights"
-msgstr ""
+msgstr "강조"
 
 #: app/color_balance.c:368 app/tools.c:489
 msgid "Color Balance"
-msgstr ""
+msgstr "색상 균형"
 
 #: app/color_balance.c:383
 msgid "Color Levels: "
-msgstr "색상 Levels: "
+msgstr "색상 수준: "
 
 #. Create the cyan-red scale widget
 #: app/color_balance.c:422
@@ -884,11 +886,11 @@ msgstr "황색"
 #. The preserve luminosity toggle
 #: app/color_balance.c:516
 msgid "Preserve Luminosity"
-msgstr ""
+msgstr "밝음 유지"
 
 #: app/color_balance.c:649
 msgid "color_balance_preview(): No image map"
-msgstr ""
+msgstr "color_balance_preview(): 이미지 맵 없음"
 
 #: app/color_notebook.c:109 app/color_select.c:186
 msgid "Color Selection"
@@ -901,11 +903,11 @@ msgstr "이전 색상으로 복원"
 #. the main label
 #: app/color_picker.c:104
 msgid "Color Picker Options"
-msgstr ""
+msgstr "색상 고르기 옵션"
 
 #: app/color_picker.c:149 app/tools.c:323
 msgid "Color Picker"
-msgstr ""
+msgstr "색상 고르기"
 
 #: app/color_picker.c:159 app/color_picker.c:165 app/color_picker.c:174
 #: app/curves.c:317 app/levels.c:324
@@ -914,7 +916,7 @@ msgstr "알파"
 
 #: app/color_picker.c:160 app/color_picker.c:169 app/color_picker.c:175
 msgid "Hex Triplet"
-msgstr ""
+msgstr "세개의 십육진수"
 
 #: app/color_picker.c:164
 msgid "Index"
@@ -922,7 +924,7 @@ msgstr "색인"
 
 #: app/color_picker.c:173
 msgid "Intensity"
-msgstr ""
+msgstr "명암"
 
 #: app/color_picker.c:343 app/color_picker.c:344 app/color_picker.c:345
 #: app/color_picker.c:346 app/color_picker.c:347 app/color_picker.c:348
@@ -933,7 +935,7 @@ msgstr ""
 
 #: app/color_select.c:386 app/colormap_dialog.i.c:199
 msgid "Hex Triplet:"
-msgstr ""
+msgstr "세개의 십육진수:"
 
 #: app/colormap_dialog.i.c:101 app/gradient_select.c:94 app/palette.c:1711
 #: app/palette.c:2544 app/palette_select.c:59
@@ -942,7 +944,7 @@ msgstr "편집"
 
 #: app/colormap_dialog.i.c:121
 msgid "Indexed Color Palette"
-msgstr ""
+msgstr "색인된 색상 팔렛"
 
 #. The GIMP image option menu
 #: app/colormap_dialog.i.c:136 app/layers_dialog.c:340
@@ -951,7 +953,7 @@ msgstr "이미지:"
 
 #: app/colormap_dialog.i.c:155
 msgid "Operations"
-msgstr ""
+msgstr "동작"
 
 #: app/colormap_dialog.i.c:192
 msgid "Index:"
@@ -963,11 +965,11 @@ msgstr ""
 
 #: app/commands.c:373
 msgid "Border Selection"
-msgstr ""
+msgstr "테두리 선택"
 
 #: app/commands.c:374
 msgid "Border selection by:"
-msgstr ""
+msgstr "...에 의해 테두리 선택:"
 
 #: app/commands.c:389
 msgid "Feather Selection"
