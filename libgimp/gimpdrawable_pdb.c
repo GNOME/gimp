@@ -464,8 +464,8 @@ gimp_drawable_offsets (gint32  drawable_ID,
 }
 
 void
-gimp_drawable_fill (gint32 drawable_ID,
-		    gint   fill_type)
+gimp_drawable_fill (gint32       drawable_ID,
+		    GimpFillType fill_type)
 {
   GParam *return_vals;
   int nreturn_vals;

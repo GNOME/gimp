@@ -1,3 +1,12 @@
+Mon Dec 27 12:57:52 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimp.h
+	* libgimp/gimpdrawable.c
+	* libgimp/gimpimage.c
+	* libgimp/gimplayer.c: use enums instead of gint where appropriate
+
+	* plug-ins/common/pnm.c: got rid of a few compiler warnings 
+
 Sat Dec 25 23:15:46 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* Makefile.am: added spec file to EXTRA_DIST

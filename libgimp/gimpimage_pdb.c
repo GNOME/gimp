@@ -507,8 +507,8 @@ gimp_image_lower_layer (gint32 image_ID,
 }
 
 gint32
-gimp_image_merge_visible_layers (gint32 image_ID,
-				 gint   merge_type)
+gimp_image_merge_visible_layers (gint32        image_ID,
+				 GimpMergeType merge_type)
 {
   GParam *return_vals;
   int nreturn_vals;
@@ -1250,13 +1250,13 @@ gimp_image_convert_grayscale (gint32 image_ID)
 }     
 
 void
-gimp_image_convert_indexed (gint32  image_ID, 
-			    gint    dither_type,
-			    gint    palette_type,
-			    gint    num_colors,
-			    gint    alpha_dither,
-			    gint    remove_unused,
-			    gchar  *palette)
+gimp_image_convert_indexed (gint32                 image_ID, 
+			    GimpConvertDitherType  dither_type,
+			    GimpConvertPaletteType palette_type,
+			    gint                   num_colors,
+			    gint                   alpha_dither,
+			    gint                   remove_unused,
+			    gchar                 *palette)
 {
   GParam *return_vals;
   int nreturn_vals;

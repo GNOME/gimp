@@ -1,21 +1,22 @@
-/* LIBGIMP - The GIMP Library                                                   
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.             
- *                                                                              
- * This library is distributed in the hope that it will be useful,              
- * but WITHOUT ANY WARRANTY; without even the implied warranty of               
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- */                                                                             
+ */
+
 #ifndef __GIMP_H__
 #define __GIMP_H__
 
@@ -454,7 +455,7 @@ void       gimp_image_lower_channel         (gint32     image_ID,
 void       gimp_image_lower_layer           (gint32     image_ID,
 					     gint32     layer_ID);
 gint32     gimp_image_merge_visible_layers  (gint32     image_ID,
-					     gint       merge_type);
+					     GimpMergeType merge_type);
 gint32     gimp_image_pick_correlate_layer  (gint32     image_ID,
 					     gint       x,
 					     gint       y);
@@ -534,9 +535,9 @@ guchar *   gimp_image_get_thumbnail_data    (gint32     image_ID,
 					     gint      *bytes);
 void       gimp_image_convert_rgb           (gint32     image_ID);
 void       gimp_image_convert_grayscale     (gint32     image_ID);
-void       gimp_image_convert_indexed       (gint32     image_ID, 
-					     gint       dither_type,
-					     gint       palette_type,
+void       gimp_image_convert_indexed       (gint32     image_ID,
+					     GimpConvertDitherType  dither_type,
+					     GimpConvertPaletteType palette_type,
 					     gint       num_colors,
 					     gint       alpha_dither,
 					     gint       remove_unused,
@@ -585,10 +586,10 @@ void          gimp_layer_delete                    (gint32        layer_ID);
 guint         gimp_layer_width                     (gint32        layer_ID);
 guint         gimp_layer_height                    (gint32        layer_ID);
 guint         gimp_layer_bpp                       (gint32        layer_ID);
-GDrawableType gimp_layer_type                      (gint32       layer_ID);
+GDrawableType gimp_layer_type                      (gint32        layer_ID);
 void          gimp_layer_add_alpha                 (gint32        layer_ID);
 gint32        gimp_layer_create_mask               (gint32        layer_ID,
-						    gint          mask_type);
+						    GimpAddMaskType mask_type);
 void          gimp_layer_resize                    (gint32        layer_ID,
 						    guint         new_width,
 						    guint         new_height,
@@ -711,7 +712,7 @@ void          gimp_drawable_offsets      (gint32     drawable_ID,
 					  gint      *offset_x,
 					  gint      *offset_y);
 void          gimp_drawable_fill         (gint32     drawable_ID,
-					  gint       fill_type);
+					  GimpFillType fill_type);
 void          gimp_drawable_set_name     (gint32     drawable_ID,
 					  char      *name);
 void          gimp_drawable_set_visible  (gint32     drawable_ID,

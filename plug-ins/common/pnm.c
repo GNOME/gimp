@@ -630,6 +630,7 @@ pnm_load_rawpbm (PNMScanner *scan,
 	  CHECK_FOR_ERROR((rowlen != read(fd, buf, rowlen)),
 			  info->jmpbuf, "pnm filter: error reading file\n");
 	  bufpos = 0;
+	  curbyte = buf[0];
 
 	  for (x = 0; x < info->xres; x++)
 	    {
@@ -730,10 +731,10 @@ save_image (char   *filename,
   char *rowbuf;
   char buf[BUFLEN];
   char *temp;
-  int np;
+  int np = 0;
   int xres, yres;
   int ypos, yend;
-  int rowbufsize;
+  int rowbufsize = 0;
   int fd;
 
   drawable = gimp_drawable_get (drawable_ID);
@@ -765,52 +766,54 @@ save_image (char   *filename,
 
   /* write out magic number */
   if (psvals.raw == FALSE)
-    {
-      if (drawable_type == GRAY_IMAGE)
-	{
-	  write(fd, "P2\n", 3);
-	  np = 1;
-	  rowbufsize = xres * 4;
-	  saverow = pnmsaverow_ascii;
-	}
-      else if (drawable_type == RGB_IMAGE)
-	{
-	  write(fd, "P3\n", 3);
-	  np = 3;
-	  rowbufsize = xres * 12;
-	  saverow = pnmsaverow_ascii;
-	}
-      else if (drawable_type == INDEXED_IMAGE)
-	{
-	  write(fd, "P3\n", 3);
-	  np = 1;
-	  rowbufsize = xres * 12;
-	  saverow = pnmsaverow_ascii_indexed;
-	}
-    }
+    switch (drawable_type)
+      {
+      case GRAY_IMAGE:
+	write(fd, "P2\n", 3);
+	np = 1;
+	rowbufsize = xres * 4;
+	saverow = pnmsaverow_ascii;
+	break;
+      case RGB_IMAGE:
+	write(fd, "P3\n", 3);
+	np = 3;
+	rowbufsize = xres * 12;
+	saverow = pnmsaverow_ascii;
+	break;
+      case INDEXED_IMAGE:
+	write(fd, "P3\n", 3);
+	np = 1;
+	rowbufsize = xres * 12;
+	saverow = pnmsaverow_ascii_indexed;
+	break;
+      default:
+	g_warning ("pnm: unknown drawable_type\n");
+	return FALSE;
+      }
   else if (psvals.raw == TRUE)
-    {
-      if (drawable_type == GRAY_IMAGE)
-	{
-	  write(fd, "P5\n", 3);
-	  np = 1;
-	  rowbufsize = xres;
-	  saverow = pnmsaverow_raw;
-	}
-      else if (drawable_type == RGB_IMAGE)
-	{
-	  write(fd, "P6\n", 3);
-	  np = 3;
-	  rowbufsize = xres * 3;
-	  saverow = pnmsaverow_raw;
-	}
-      else if (drawable_type == INDEXED_IMAGE)
-	{
-	  write(fd, "P6\n", 3);
-	  np = 1;
-	  rowbufsize = xres * 3;
-	  saverow = pnmsaverow_raw_indexed;
-	}
+    switch (drawable_type)
+      {
+      case GRAY_IMAGE:
+	write(fd, "P5\n", 3);
+	np = 1;
+	rowbufsize = xres;
+	saverow = pnmsaverow_raw;
+	break;
+      case RGB_IMAGE:
+	write(fd, "P6\n", 3);
+	np = 3;
+	rowbufsize = xres * 3;
+	saverow = pnmsaverow_raw;
+	break;
+      case INDEXED_IMAGE:
+	write(fd, "P6\n", 3);
+	np = 1;
+	rowbufsize = xres * 3;
+	saverow = pnmsaverow_raw_indexed;
+	break;
+      default:
+	g_warning ("pnm: unknown drawable_type\n");
+	return FALSE;
     }
 
   if (drawable_type == INDEXED_IMAGE)
@@ -849,9 +852,11 @@ save_image (char   *filename,
   rowinfo.xres = xres;
   rowinfo.np = np;
 
+  d = NULL; /* only to please the compiler */
+
   /* Write the body out */
   for (ypos = 0; ypos < yres; ypos++)
-    {
+    {      
       if ((ypos % gimp_tile_height ()) == 0)
 	{
 	  yend = ypos + gimp_tile_height ();
