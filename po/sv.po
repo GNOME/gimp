@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-06-14 11:50+0200\n"
-"PO-Revision-Date: 2003-06-14 11:55+0200\n"
+"POT-Creation-Date: 2003-06-20 11:09+0200\n"
+"PO-Revision-Date: 2003-06-20 11:14+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Kör GIMP med flaggan \"--no-interface\" för att utföra användarinstallation."
 
 #: app/app_procs.c:306 app/gui/file-commands.c:187
-#: app/gui/file-open-dialog.c:704 app/widgets/gimpdocumentview.c:451
+#: app/gui/file-open-dialog.c:703 app/widgets/gimpdocumentview.c:451
 #: app/widgets/gimpdnd.c:1005
 #, c-format
 msgid ""
@@ -1796,7 +1796,7 @@ msgstr "Kan inte ångra %s"
 
 #: app/core/gimpimage.c:910 app/core/gimppalette-import.c:204
 #: app/core/gimppalette.c:652 app/gui/palette-import-dialog.c:589
-#: app/pdb/image_cmds.c:3755 app/widgets/gimpdatafactoryview.c:281
+#: app/pdb/image_cmds.c:3754 app/widgets/gimpdatafactoryview.c:281
 msgid "Untitled"
 msgstr "Namnlös"
 
@@ -3198,11 +3198,11 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr "Bekräfta bildstorlek"
 
-#: app/gui/file-open-dialog.c:157 app/gui/file-open-dialog.c:184
+#: app/gui/file-open-dialog.c:156 app/gui/file-open-dialog.c:183
 msgid "Open Image"
 msgstr "Öppna bild"
 
-#: app/gui/file-open-dialog.c:231
+#: app/gui/file-open-dialog.c:230
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -3213,15 +3213,15 @@ msgstr ""
 "aktuell"
 
 #. The preview toggle
-#: app/gui/file-open-dialog.c:248 app/tools/gimpimagemaptool.c:247
+#: app/gui/file-open-dialog.c:247 app/tools/gimpimagemaptool.c:247
 msgid "_Preview"
 msgstr "_Förhandsgranskning"
 
-#: app/gui/file-open-dialog.c:298 app/gui/file-open-dialog.c:406
+#: app/gui/file-open-dialog.c:297 app/gui/file-open-dialog.c:405
 msgid "No Selection"
 msgstr "Ingen markering"
 
-#: app/gui/file-open-dialog.c:497 app/gui/file-open-dialog.c:528
+#: app/gui/file-open-dialog.c:496 app/gui/file-open-dialog.c:527
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniatyrbild %d av %d"
@@ -6630,7 +6630,7 @@ msgstr "Nyans-Mättnad"
 msgid "Threshold"
 msgstr "Tröskelvärde"
 
-#: app/pdb/image_cmds.c:3887
+#: app/pdb/image_cmds.c:3886
 msgid ""
 "Image resolution is out of bounds,\n"
 "using the default resolution instead."
@@ -6750,24 +6750,23 @@ msgstr "Transformeringsverktygsprocedurer"
 msgid "Units"
 msgstr "Enheter"
 
-#: app/pdb/procedural_db.c:181 app/pdb/procedural_db.c:194
-#, c-format
-msgid "PDB calling error %s not found"
-msgstr "PDB-anropsfel, hittade inte %s"
-
-#: app/pdb/procedural_db.c:212
-#, c-format
-msgid "PDB calling error %s"
-msgstr "PDB-anropsfel %s"
-
-#: app/pdb/procedural_db.c:304
+#: app/pdb/procedural_db.c:177
 #, c-format
 msgid ""
-"Incorrect arguments passed to procedural_db_run_proc:\n"
-"Argument %d to '%s' should be a %s, but got passed a %s"
+"PDB calling error:\n"
+"procedure '%s' not found"
 msgstr ""
-"Felaktigt antal parametrar skickades till procedural_db_run_proc:\n"
-"Argument %d till \"%s\" borde vara en %s, men skickade en %s"
+"PDB-anropsfel:\n"
+"procedur \"%s\" kunde inte hittas"
+
+#: app/pdb/procedural_db.c:215 app/pdb/procedural_db.c:314
+#, c-format
+msgid ""
+"PDB calling error for procedure '%s':\n"
+"Argument #%d type mismatch (expected %s, got %s)"
+msgstr ""
+"PDB-anropsfel för procedur \"%s\":\n"
+"Typfel för argument %d (väntade %s, fick %s)"
 
 #: app/pdb/procedural_db_cmds.c:63
 msgid "Internal GIMP procedure"
@@ -9025,6 +9024,16 @@ msgstr "Skapa och redigera bilder eller fotografier"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (ostabil)"
+
+#~ msgid "PDB calling error %s"
+#~ msgstr "PDB-anropsfel %s"
+
+#~ msgid ""
+#~ "Incorrect arguments passed to procedural_db_run_proc:\n"
+#~ "Argument %d to '%s' should be a %s, but got passed a %s"
+#~ msgstr ""
+#~ "Felaktigt antal parametrar skickades till procedural_db_run_proc:\n"
+#~ "Argument %d till \"%s\" borde vara en %s, men skickade en %s"
 
 #~ msgid "Clear Console"
 #~ msgstr "Töm konsoll"
