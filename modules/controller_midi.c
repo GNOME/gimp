@@ -409,43 +409,41 @@ midi_read_event (GIOChannel   *io,
             {
               if (buf[pos] >= 0xf8)  /* realtime messages */
                 {
-                  /* nop */
-
+                  switch (buf[pos])
+                    {
+                    case 0xf8:  /* timing clock   */
+                    case 0xf9:  /* (undefined)    */
+                    case 0xfa:  /* start          */
+                    case 0xfb:  /* continue       */
+                    case 0xfc:  /* stop           */
+                    case 0xfd:  /* (undefined)    */
+                    case 0xfe:  /* active sensing */
+                    case 0xff:  /* system reset   */
+                      /* nop */
 #if 0
-                  g_print ("MIDI: realtime message (%02x)\n", buf[pos]);
+                      g_print ("MIDI: realtime message (%02x)\n", buf[pos]);
 #endif
-                }
-              else if (buf[pos] >= 0xf0)  /* system messages */
-                {
-                  if (buf[pos] == 0xf0)  /* sysex start */
-                    {
-                      midi->swallow = TRUE;
-
-                      D (g_print ("MIDI: sysex start\n"));
+                      break;
                     }
-                  else
-                    {
-                      midi->swallow = FALSE;  /* any status bytes ends swallowing */
+                }
+              else
+                {
+                  midi->swallow = FALSE;  /* any status bytes ends swallowing */
 
+                  if (buf[pos] >= 0xf0)  /* system messages */
+                    {
                       switch (buf[pos])
                         {
-                        case 0xf7:  /* sysex end */
-                          D (g_print ("MIDI: sysex end\n"));
+                        case 0xf0:  /* sysex start */
+                          midi->swallow = TRUE;
+
+                          D (g_print ("MIDI: sysex start\n"));
                           break;
 
-                        case 0xf6:  /* tune request */
-                          D (g_print ("MIDI: tune request\n"));
-                          break;
+                        case 0xf1:              /* time code   */
+                          midi->swallow = TRUE; /* type + data */
 
-                        case 0xf5:  /* undefined */
-                        case 0xf4:  /* undefined */
-                          D (g_print ("MIDI: undefined system message\n"));
-                          break;
-
-                        case 0xf3:              /* song select */
-                          midi->swallow = TRUE; /* song number */
-
-                          D (g_print ("MIDI: song select\n"));
+                          D (g_print ("MIDI: time code\n"));
                           break;
 
                         case 0xf2:              /* song position */
@@ -454,26 +452,37 @@ midi_read_event (GIOChannel   *io,
                           D (g_print ("MIDI: song position\n"));
                           break;
 
-                        case 0xf1:              /* time code   */
-                          midi->swallow = TRUE; /* type + data */
+                        case 0xf3:              /* song select */
+                          midi->swallow = TRUE; /* song number */
 
-                          D (g_print ("MIDI: time code\n"));
+                          D (g_print ("MIDI: song select\n"));
+                          break;
+
+                        case 0xf4:  /* (undefined) */
+                        case 0xf5:  /* (undefined) */
+                          D (g_print ("MIDI: undefined system message\n"));
+                          break;
+
+                        case 0xf6:  /* tune request */
+                          D (g_print ("MIDI: tune request\n"));
+                          break;
+
+                        case 0xf7:  /* sysex end */
+                          D (g_print ("MIDI: sysex end\n"));
                           break;
                         }
                     }
-                }
-              else  /* channel messages */
-                {
-                  midi->swallow = FALSE;  /* any status byte ends swallowing */
+                  else  /* channel messages */
+                    {
+                      midi->command = buf[pos] >> 4;
+                      midi->channel = buf[pos] & 0xf;
 
-                  midi->command = buf[pos] >> 4;
-                  midi->channel = buf[pos] & 0xf;
-
-                  /* reset running status */
-                  midi->key      = -1;
-                  midi->velocity = -1;
-                  midi->msb      = -1;
-                  midi->lsb      = -1;
+                      /* reset running status */
+                      midi->key      = -1;
+                      midi->velocity = -1;
+                      midi->msb      = -1;
+                      midi->lsb      = -1;
+                    }
                 }
 
               pos++;  /* status byte consumed */

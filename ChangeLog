@@ -1,5 +1,11 @@
 2004-06-19  Michael Natterer  <mitch@gimp.org>
 
+	* modules/controller_midi.c (midi_read_event): simplified
+	swallowing of SysEx messages and unwanted data bytes. Reordered
+	and commented stuff to be more readable.
+
+2004-06-19  Michael Natterer  <mitch@gimp.org>
+
 	* modules/Makefile.am
 	* modules/controller_midi.c: new controller for MIDI input. Maps
 	all note on and note off events and all MIDI controllers to
