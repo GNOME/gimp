@@ -289,7 +289,7 @@ gimp_histogram_box_border_notify (GimpHistogramView *view,
 GtkWidget *
 gimp_histogram_box_new (void)
 {
-  return GTK_WIDGET (g_object_new (GIMP_TYPE_HISTOGRAM_BOX, NULL));
+  return g_object_new (GIMP_TYPE_HISTOGRAM_BOX, NULL);
 }
 
 void

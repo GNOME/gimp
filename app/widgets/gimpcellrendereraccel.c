@@ -346,7 +346,7 @@ ungrab_stuff (GtkWidget             *widget,
   gdk_display_keyboard_ungrab (display, GDK_CURRENT_TIME);
   gdk_display_pointer_ungrab (display, GDK_CURRENT_TIME);
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (accel->grab_widget),
+  g_signal_handlers_disconnect_by_func (accel->grab_widget,
                                         G_CALLBACK (grab_key_callback),
                                         accel);
 }
@@ -436,7 +436,7 @@ gimp_cell_renderer_accel_start_editing (GtkCellRenderer      *cell,
 
   accel->grab_widget = widget;
 
-  g_signal_connect (G_OBJECT (widget), "key_press_event",
+  g_signal_connect (widget, "key_press_event",
                     G_CALLBACK (grab_key_callback),
                     accel);
 
@@ -469,7 +469,7 @@ gimp_cell_renderer_accel_start_editing (GtkCellRenderer      *cell,
 
   gtk_widget_show_all (accel->edit_widget);
 
-  g_signal_connect (G_OBJECT (accel->edit_widget), "unrealize",
+  g_signal_connect (accel->edit_widget, "unrealize",
                     G_CALLBACK (ungrab_stuff),
                     accel);
 

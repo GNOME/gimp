@@ -340,21 +340,21 @@ gfig_dialog (void)
 
   menuitem = gtk_menu_item_new_with_mnemonic ("_Open");
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  g_signal_connect (G_OBJECT (menuitem), "activate",
+  g_signal_connect (menuitem, "activate",
                     G_CALLBACK (load_button_callback),
                     NULL);
   gtk_widget_show (menuitem);
 
   menuitem = gtk_menu_item_new_with_mnemonic ("_Import");
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  g_signal_connect (G_OBJECT (menuitem), "activate",
+  g_signal_connect (menuitem, "activate",
                     G_CALLBACK (merge_button_callback),
                     NULL);
   gtk_widget_show (menuitem);
 
   menuitem = gtk_menu_item_new_with_mnemonic ("_Save");
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  g_signal_connect (G_OBJECT (menuitem), "activate",
+  g_signal_connect (menuitem, "activate",
                     G_CALLBACK (gfig_save_menu_callback),
                     NULL);
   gtk_widget_show (menuitem);
@@ -370,14 +370,14 @@ gfig_dialog (void)
 
   menuitem = gtk_menu_item_new_with_mnemonic ("_Grid");
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  g_signal_connect (G_OBJECT (menuitem), "activate",
+  g_signal_connect (menuitem, "activate",
                     G_CALLBACK (adjust_grid_callback),
                     NULL);
   gtk_widget_show (menuitem);
 
   menuitem = gtk_menu_item_new_with_mnemonic ("_Options");
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  g_signal_connect (G_OBJECT (menuitem), "activate",
+  g_signal_connect (menuitem, "activate",
                     G_CALLBACK (options_dialog_callback),
                     NULL);
   gtk_widget_show (menuitem);
