@@ -566,6 +566,7 @@ gdt_render_text_p (GdtVals  *data,
       break;
     case LA_NONE:
     default:
+      break;
     }
   
   gimp_layer_set_preserve_transparency (data->layer_id, 1);
