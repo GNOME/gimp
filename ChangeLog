@@ -9,7 +9,7 @@
 	"gc != NULL" because the signals were the real reason.
 
 	* app/transform_core.c: originally wanted to fix the bug here but
-	ended up with just some function headers made ansii compliant.
+	ended up with just some function headers made ansi compliant.
 
 1999-05-31  Tuomas Kuosmanen  <tigert@gimp.org>
 
