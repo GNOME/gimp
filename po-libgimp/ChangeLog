@@ -1,3 +1,7 @@
+2003-08-13  Gil "Dolfin" Osher <dolfin@rpg.org.il>
+
+	* he.po: Added Hebrew translation.
+
 2003-07-31  Christophe Merlet  <redfox@redfoxcenter.org>
 
 	* fr.po: Updated French translation from
@@ -7,7 +11,7 @@
 
         * pt.po: Updated Portuguese translation.
 
-2003-07-26  Jan Mor√©n  <jan.moren@lucs.lu.se>
+2003-07-26  Jan Mor?©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -33,7 +37,7 @@
 
 	* de.po: updated german translation.
 
-2003-07-14  Danilo ≈†egan  <dsegan@gmx.net>
+2003-07-14  Danilo ? egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation by Serbian team 
 	(Prevod.org).
@@ -60,7 +64,7 @@
 	nl.po, no.po, ro.po, ru.po, sk.po, tr.po, uk.po: Converted
 	to UTF-8.
 
-2003-06-18  Jan Mor√©n  <jan.moren@lucs.lu.se>
+2003-06-18  Jan Mor?©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -74,7 +78,7 @@
 
 	* cs.po: Updated Czech translation.
 
-2003-06-10  Jan Mor√©n  <jan.moren@lucs.lu.se>
+2003-06-10  Jan Mor?©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -86,7 +90,7 @@
 
 	* ko.po: Converted to UTF-8. (seems unmaintained)
 
-2003-05-21  Danilo ≈†egan  <dsegan@gmx.net>
+2003-05-21  Danilo ? egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Added Serbian translation by Serbian team 
 	(Prevod.org).
@@ -108,7 +112,7 @@
 
 	* sk.po: Updated Slovak translation by Zdenko Podobny <zdpo@mailbox.sk>.
 
-2003-04-19  Jan Mor√©n  <jan.moren@lucs.lu.se>
+2003-04-19  Jan Mor?©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -143,7 +147,7 @@
 
 	* pt.po: Updated Portuguese translation.
 
-2003-02-25  Jan Mor√©n  <jan.moren@lucs.lu.se>
+2003-02-25  Jan Mor?©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -336,7 +340,7 @@
 
 2002-09-23  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokm√•l) translation.
+	* no.po: Updated Norwegian (bokm?•l) translation.
 	
 2002-09-16  Pablo Saratxaga  <pablo@mandrakesoft.com>
 
@@ -360,7 +364,7 @@
 
 2002-07-02  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokm√•l) translation.
+	* no.po: Updated Norwegian (bokm?•l) translation.
 
 2002-06-30  Christophe Merlet  <christophe@merlet.net>
 
@@ -505,7 +509,7 @@
 
 2001-12-16  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokm√•l) translation.
+	* no.po: Updated Norwegian (bokm?•l) translation.
 	
 2001-12-15  Valek Filippov <frob@df.ru>
 
@@ -704,7 +708,7 @@ Mon Jul 10 22:39:30 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* de.po: updated german translation
 
-2000-06-07 Ville Hautam√§ki <villeh@cs.joensuu.fi>
+2000-06-07 Ville Hautam?§ki <villeh@cs.joensuu.fi>
 
 	* fi.po: added one translation
 	
