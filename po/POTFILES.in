@@ -168,6 +168,7 @@ app/plug-in/plug-in-rc.c
 app/plug-in/plug-ins.c
 
 app/text/text-enums.c
+app/text/gimpfont.c
 app/text/gimptext.c
 app/text/gimptext-compat.c
 
@@ -240,6 +241,7 @@ app/widgets/gimpchanneltreeview.c
 app/widgets/gimpcoloreditor.c
 app/widgets/gimpcolormapeditor.c
 app/widgets/gimpcontainergridview.c
+app/widgets/gimpcontainerpopup.c
 app/widgets/gimpdataeditor.c
 app/widgets/gimpdatafactoryview.c
 app/widgets/gimpdock.c
