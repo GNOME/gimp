@@ -1,3 +1,8 @@
+1999-03-29  Pavel Machek  <pavel@artax.karlin.mff.cuni.cz>
+
+	* app/menus.c (toolbox_entries): underline letters so keyboard is
+	bit more usable
+
 Sun Mar 28 14:03:59 1999  Raph Levien  <raph@gimp.org>
 
 	* plug-ins/sharpen/sharpen.c (rgba_filter, gray_filter,
