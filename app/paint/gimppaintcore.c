@@ -392,7 +392,7 @@ gimp_paint_core_start (GimpPaintCore    *core,
 
   /*  Allocate the undo structure  */
   if (core->undo_tiles)
-    tile_manager_destroy (core->undo_tiles);
+    tile_manager_unref (core->undo_tiles);
 
   core->undo_tiles = tile_manager_new (gimp_item_width (item),
                                        gimp_item_height (item),
@@ -400,7 +400,7 @@ gimp_paint_core_start (GimpPaintCore    *core,
 
   /*  Allocate the canvas blocks structure  */
   if (core->canvas_tiles)
-    tile_manager_destroy (core->canvas_tiles);
+    tile_manager_unref (core->canvas_tiles);
 
   core->canvas_tiles = tile_manager_new (gimp_item_width (item),
                                          gimp_item_height (item),
@@ -453,6 +453,8 @@ gimp_paint_core_finish (GimpPaintCore *core,
                            core->x2, core->y2,
                            core->undo_tiles,
                            TRUE);
+
+  tile_manager_unref (core->undo_tiles);
   core->undo_tiles = NULL;
 
   gimp_image_undo_group_end (gimage);
@@ -470,13 +472,13 @@ gimp_paint_core_cleanup (GimpPaintCore *core)
 
   if (core->undo_tiles)
     {
-      tile_manager_destroy (core->undo_tiles);
+      tile_manager_unref (core->undo_tiles);
       core->undo_tiles = NULL;
     }
 
   if (core->canvas_tiles)
     {
-      tile_manager_destroy (core->canvas_tiles);
+      tile_manager_unref (core->canvas_tiles);
       core->canvas_tiles = NULL;
     }
 

@@ -847,11 +847,14 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
                                                         NULL, NULL);
 
       /* Free the cut/copied buffer */
-      tile_manager_destroy (orig_tiles);
+      tile_manager_unref (orig_tiles);
 
       if (new_tiles)
-        success = gimp_drawable_transform_paste (drawable, new_tiles,
-                                                 new_layer);
+        {
+          success = gimp_drawable_transform_paste (drawable, new_tiles,
+                                                   new_layer);
+          tile_manager_unref (new_tiles);
+        }
     }
 
   /*  push the undo group end  */
@@ -911,11 +914,14 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
                                                       flip_type, axis, FALSE);
 
       /* Free the cut/copied buffer */
-      tile_manager_destroy (orig_tiles);
+      tile_manager_unref (orig_tiles);
 
       if (new_tiles)
-        success = gimp_drawable_transform_paste (drawable, new_tiles,
-                                                 new_layer);
+        {
+          success = gimp_drawable_transform_paste (drawable, new_tiles,
+                                                   new_layer);
+          tile_manager_unref (new_tiles);
+        }
     }
 
   /*  push the undo group end  */
@@ -966,11 +972,14 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
                                                         FALSE);
 
       /* Free the cut/copied buffer */
-      tile_manager_destroy (orig_tiles);
+      tile_manager_unref (orig_tiles);
 
       if (new_tiles)
-        success = gimp_drawable_transform_paste (drawable, new_tiles,
-                                                 new_layer);
+        {
+          success = gimp_drawable_transform_paste (drawable, new_tiles,
+                                                   new_layer);
+          tile_manager_unref (new_tiles);
+        }
     }
 
   /*  push the undo group end  */
@@ -1062,9 +1071,6 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
       /*  End the group undo  */
       gimp_image_undo_group_end (gimage);
 
-      /*  Free the tiles  */
-      tile_manager_destroy (tiles);
-
       return TRUE;
     }
   else
@@ -1102,7 +1108,8 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
                                           channel);
 
       /*  set the current layer's data  */
-      drawable->tiles = tiles;
+      tile_manager_unref (drawable->tiles);
+      drawable->tiles = tile_manager_ref (tiles);
 
       /*  Fill in the new layer's attributes  */
       GIMP_ITEM (drawable)->width  = tile_manager_width (tiles);

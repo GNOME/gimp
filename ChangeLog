@@ -1,3 +1,46 @@
+2003-05-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/tile-manager-private.h: added "gint ref_count" to the
+	TileManager struct.
+
+	* app/base/tile-manager.[ch]: replaced tile_manager_destroy()
+	by tile_manager_ref() and tile_manager_unref().
+
+	* app/core/gimpimage-undo-push.c: ref the tile managers stored in
+	the undo system and DON'T destroy them if no undo could be pushed.
+	Should fix the remaining crashes with undo disabled like in
+	bug #9350.
+
+	(!!!) Note that the tiles passed to gimp_image_undo_push_image()
+	and gimp_drawable_push_undo() as well as the tile managers of
+	drawables passed to gimp_image_undo_push_[layer|channel]_mod()
+	must be unref'ed by the caller now.
+
+	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_paste):
+	don't take ownership of the passed tiles but ref them if needed.
+
+	(!!!) Callers must unref the passed tiles themselves now.
+
+	* app/core/gimpbuffer.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable-offset.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-projection.c
+	* app/core/gimpimage.c
+	* app/core/gimpimagemap.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimplayer.c
+	* app/paint/gimppaintcore.c
+	* app/text/gimptextlayer.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimptransformtool-undo.c
+	* app/tools/gimptransformtool.c: changed accordingly.
+
 2003-05-26  Raphael Quinet  <quinet@gamers.org>
 
 	* plug-ins/imagemap/Makefile.am: Moved the -i flag for lex.

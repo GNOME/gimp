@@ -86,7 +86,8 @@ gimp_transform_tool_push_undo (GimpImage   *gimage,
       for (i = 0; i < TRAN_INFO_SIZE; i++)
 	tu->trans_info[i] = trans_info[i];
 
-      tu->original  = original;
+      if (original)
+        tu->original = tile_manager_ref (original);
 
       return TRUE;
     }
@@ -154,7 +155,7 @@ undo_free_transform (GimpUndo     *undo,
   tu = (TransformUndo *) undo->data;
 
   if (tu->original)
-    tile_manager_destroy (tu->original);
+    tile_manager_unref (tu->original);
 
   g_free (tu);
 }

@@ -217,7 +217,7 @@ gimp_drawable_finalize (GObject *object)
 
   if (drawable->tiles)
     {
-      tile_manager_destroy (drawable->tiles);
+      tile_manager_unref (drawable->tiles);
       drawable->tiles = NULL;
     }
 
@@ -365,6 +365,7 @@ gimp_drawable_scale (GimpItem              *item,
                 gimp_drawable_is_indexed (drawable) ?
                 GIMP_INTERPOLATION_NONE : interpolation_type);
 
+  tile_manager_unref (drawable->tiles);
   drawable->tiles = new_tiles;
 
   GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
@@ -444,6 +445,7 @@ gimp_drawable_resize (GimpItem *item,
       copy_region (&srcPR, &destPR);
     }
 
+  tile_manager_unref (drawable->tiles);
   drawable->tiles = new_tiles;
 
   GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
@@ -481,7 +483,10 @@ gimp_drawable_flip (GimpItem            *item,
   tile_manager_set_offsets (drawable->tiles, old_off_x, old_off_y);
 
   if (tiles)
-    gimp_drawable_transform_paste (drawable, tiles, FALSE);
+    {
+      gimp_drawable_transform_paste (drawable, tiles, FALSE);
+      tile_manager_unref (tiles);
+    }
 }
 
 static void
@@ -511,7 +516,10 @@ gimp_drawable_rotate (GimpItem         *item,
   tile_manager_set_offsets (drawable->tiles, old_off_x, old_off_y);
 
   if (tiles)
-    gimp_drawable_transform_paste (drawable, tiles, FALSE);
+    {
+      gimp_drawable_transform_paste (drawable, tiles, FALSE);
+      tile_manager_unref (tiles);
+    }
 }
 
 static void
@@ -546,7 +554,10 @@ gimp_drawable_transform (GimpItem               *item,
   tile_manager_set_offsets (drawable->tiles, old_off_x, old_off_y);
 
   if (tiles)
-    gimp_drawable_transform_paste (drawable, tiles, FALSE);
+    {
+      gimp_drawable_transform_paste (drawable, tiles, FALSE);
+      tile_manager_unref (tiles);
+    }
 }
 
 void
@@ -570,7 +581,7 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
 
   if (drawable->tiles)
-    tile_manager_destroy (drawable->tiles);
+    tile_manager_unref (drawable->tiles);
 
   drawable->tiles = tile_manager_new (width, height,
                                       drawable->bytes);

@@ -22,6 +22,8 @@
 
 struct _TileManager
 {
+  gint               ref_count;     /*  reference counter                    */
+
   gint               x, y;          /*  tile manager offsets                 */
 
   gint               width;         /*  the width of the tiled area          */

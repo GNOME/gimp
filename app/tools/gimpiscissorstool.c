@@ -1067,7 +1067,7 @@ gimp_iscissors_tool_reset (GimpIscissorsTool *iscissors)
           cur_tile = NULL;
         }
 
-      tile_manager_destroy (iscissors->gradient_map);
+      tile_manager_unref (iscissors->gradient_map);
       iscissors->gradient_map = NULL;
     }
 

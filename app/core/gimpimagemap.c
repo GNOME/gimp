@@ -236,9 +236,9 @@ gimp_image_map_apply (GimpImageMap          *image_map,
       if (! image_map->undo_tiles ||
 	  width != (x2 - x1) || height != (y2 - y1))
 	{
-	  /*  Destroy old tiles--If they exist  */
+	  /*  Destroy old tiles  */
 	  if (image_map->undo_tiles)
-	    tile_manager_destroy (image_map->undo_tiles);
+	    tile_manager_unref (image_map->undo_tiles);
 
 	  /*  Allocate new tiles  */
 	  image_map->undo_tiles =
@@ -329,6 +329,9 @@ gimp_image_map_commit (GimpImageMap *image_map)
                                image_map->undo_desc,
                                x1, y1, x2, y2,
                                image_map->undo_tiles, FALSE);
+
+      tile_manager_unref (image_map->undo_tiles);
+      image_map->undo_tiles = NULL;
     }
 
   g_object_unref (image_map);
@@ -381,7 +384,7 @@ gimp_image_map_clear (GimpImageMap *image_map)
 	{
 	  g_message ("image depth change, unable to restore original image");
 
-	  tile_manager_destroy (image_map->undo_tiles);
+	  tile_manager_unref (image_map->undo_tiles);
           gimp_image_undo_thaw (gimage);
 
 #if 0
@@ -401,7 +404,7 @@ gimp_image_map_clear (GimpImageMap *image_map)
 			    width, height);
 
       /*  Free the undo_tiles tile manager  */
-      tile_manager_destroy (image_map->undo_tiles);
+      tile_manager_unref (image_map->undo_tiles);
       image_map->undo_tiles = NULL;
     }
 }

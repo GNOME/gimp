@@ -315,7 +315,7 @@ gimp_text_layer_render (GimpTextLayer *layer)
           GIMP_ITEM (drawable)->height = height;
           
           if (drawable->tiles)
-            tile_manager_destroy (drawable->tiles);
+            tile_manager_unref (drawable->tiles);
           
           drawable->tiles = tile_manager_new (width, height, drawable->bytes);
 
@@ -363,7 +363,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 
   apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
   
-  tile_manager_destroy (mask);
+  tile_manager_unref (mask);
 
   gimp_drawable_update (drawable, 0, 0, width, height);
 }

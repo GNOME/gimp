@@ -131,7 +131,7 @@ gimp_image_projection_free (GimpImage *gimage)
 
   if (gimage->projection)
     {
-      tile_manager_destroy (gimage->projection);
+      tile_manager_unref (gimage->projection);
       gimage->projection = NULL;
     }
 }
@@ -141,9 +141,9 @@ gimp_image_projection (GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  if ((gimage->projection == NULL) ||
-      (tile_manager_width (gimage->projection) != gimage->width) ||
-      (tile_manager_height (gimage->projection) != gimage->height))
+  if (gimage->projection == NULL                                ||
+      tile_manager_width  (gimage->projection) != gimage->width ||
+      tile_manager_height (gimage->projection) != gimage->height)
     {
       gimp_image_projection_allocate (gimage);
     }

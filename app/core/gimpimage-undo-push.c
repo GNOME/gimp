@@ -187,7 +187,7 @@ gimp_image_undo_push_image_mod (GimpImage    *gimage,
 
       image_undo = new->data;
 
-      image_undo->tiles  = tiles;
+      image_undo->tiles  = tile_manager_ref (tiles);
       image_undo->x1     = x1;
       image_undo->y1     = y1;
       image_undo->x2     = x2;
@@ -196,8 +196,6 @@ gimp_image_undo_push_image_mod (GimpImage    *gimage,
 
       return TRUE;
     }
-
-  tile_manager_destroy (tiles);
 
   return FALSE;
 }
@@ -239,9 +237,9 @@ undo_pop_image (GimpUndo            *undo,
     }
   else
     {
-      int i, j;
       Tile *src_tile;
       Tile *dest_tile;
+      gint  i, j;
 
       w = image_undo->x2 - image_undo->x1;
       h = image_undo->y2 - image_undo->y1;
@@ -251,6 +249,7 @@ undo_pop_image (GimpUndo            *undo,
 	  for (j = x; j < image_undo->x2; j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	    {
 	      src_tile = tile_manager_get_tile (tiles, j, i, FALSE, FALSE);
+
 	      if (tile_is_valid (src_tile) == TRUE)
 		{
 		  /* swap tiles, not pixels! */
@@ -289,7 +288,7 @@ undo_free_image (GimpUndo     *undo,
 
   image_undo = (ImageUndo *) undo->data;
 
-  tile_manager_destroy (image_undo->tiles);
+  tile_manager_unref (image_undo->tiles);
   g_free (image_undo);
 }
 
@@ -878,7 +877,7 @@ gimp_image_undo_push_mask (GimpImage   *gimage,
     }
 
   if (undo_tiles)
-    tile_manager_destroy (undo_tiles);
+    tile_manager_unref (undo_tiles);
 
   return FALSE;
 }
@@ -934,7 +933,7 @@ undo_pop_mask (GimpUndo            *undo,
 
       copy_region (&srcPR, &destPR);
 
-      tile_manager_destroy (mu->tiles);
+      tile_manager_unref (mu->tiles);
     }
 
   if (channel == gimp_image_get_mask (undo->gimage))
@@ -996,7 +995,7 @@ undo_free_mask (GimpUndo     *undo,
   mu = (MaskUndo *) undo->data;
 
   if (mu->tiles)
-    tile_manager_destroy (mu->tiles);
+    tile_manager_unref (mu->tiles);
 
   g_free (mu);
 }
@@ -1567,15 +1566,13 @@ gimp_image_undo_push_layer_mod (GimpImage   *gimage,
 
       lmu = new->data;
 
-      lmu->tiles    = tiles;
+      lmu->tiles    = tile_manager_ref (tiles);
       lmu->type     = GIMP_DRAWABLE (layer)->type;
       lmu->offset_x = GIMP_ITEM (layer)->offset_x;
       lmu->offset_y = GIMP_ITEM (layer)->offset_y;
 
       return TRUE;
     }
-
-  tile_manager_destroy (tiles);
 
   return FALSE;
 }
@@ -1663,7 +1660,7 @@ undo_free_layer_mod (GimpUndo     *undo,
 
   lmu = (LayerModUndo *) undo->data;
 
-  tile_manager_destroy (lmu->tiles);
+  tile_manager_unref (lmu->tiles);
   g_free (lmu);
 }
 
@@ -2204,12 +2201,10 @@ gimp_image_undo_push_channel_mod (GimpImage   *gimage,
 
       cmu = new->data;
 
-      cmu->tiles = tiles;
+      cmu->tiles = tile_manager_ref (tiles);
 
       return TRUE;
     }
-
-  tile_manager_destroy (tiles);
 
   return FALSE;
 }
@@ -2250,7 +2245,7 @@ undo_pop_channel_mod (GimpUndo            *undo,
   GIMP_DRAWABLE (channel)->tiles = tiles;
   GIMP_ITEM (channel)->width     = tile_manager_width (tiles);
   GIMP_ITEM (channel)->height    = tile_manager_height (tiles);
-  channel->bounds_known          = FALSE; 
+  channel->bounds_known          = FALSE;
 
   if (GIMP_ITEM (channel)->width  != tile_manager_width  (cmu->tiles) ||
       GIMP_ITEM (channel)->height != tile_manager_height (cmu->tiles))
@@ -2282,7 +2277,7 @@ undo_free_channel_mod (GimpUndo     *undo,
 
   cmu = (ChannelModUndo *) undo->data;
 
-  tile_manager_destroy (cmu->tiles);
+  tile_manager_unref (cmu->tiles);
   g_free (cmu);
 }
 
@@ -2817,7 +2812,7 @@ gimp_image_undo_push_fs_to_layer (GimpImage    *gimage,
       return TRUE;
     }
 
-  tile_manager_destroy (floating_layer->fs.backing_store);
+  tile_manager_unref (floating_layer->fs.backing_store);
   floating_layer->fs.backing_store = NULL;
 
   return FALSE;
@@ -2895,7 +2890,7 @@ undo_free_fs_to_layer (GimpUndo     *undo,
 
   if (undo_mode == GIMP_UNDO_MODE_UNDO)
     {
-      tile_manager_destroy (fsu->floating_layer->fs.backing_store);
+      tile_manager_unref (fsu->floating_layer->fs.backing_store);
       fsu->floating_layer->fs.backing_store = NULL;
     }
 

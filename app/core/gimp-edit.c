@@ -76,7 +76,7 @@ gimp_edit_cut (GimpImage    *gimage,
 
       if (cropped_cut != cut)
 	{
-	  tile_manager_destroy (cut);
+	  tile_manager_unref (cut);
 	  cut = NULL;
 	}
     }
@@ -134,7 +134,7 @@ gimp_edit_copy (GimpImage    *gimage,
 
       if (cropped_copy != copy)
 	{
-	  tile_manager_destroy (copy);
+	  tile_manager_unref (copy);
 	  copy = NULL;
 	}
     }
@@ -323,7 +323,7 @@ gimp_edit_clear (GimpImage    *gimage,
 			(x2 - x1), (y2 - y1));
 
   /*  free the temporary tiles  */
-  tile_manager_destroy (buf_tiles);
+  tile_manager_unref (buf_tiles);
 
   return TRUE;
 }
@@ -405,7 +405,7 @@ gimp_edit_fill (GimpImage    *gimage,
 			(x2 - x1), (y2 - y1));
 
   /*  free the temporary tiles  */
-  tile_manager_destroy (buf_tiles);
+  tile_manager_unref (buf_tiles);
 
   return TRUE;
 }

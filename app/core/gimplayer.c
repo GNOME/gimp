@@ -265,7 +265,7 @@ gimp_layer_finalize (GObject *object)
   /*  free the floating selection if it exists  */
   if (layer->fs.backing_store)
     {
-      tile_manager_destroy (layer->fs.backing_store);
+      tile_manager_unref (layer->fs.backing_store);
       layer->fs.backing_store = NULL;
     }
 
@@ -800,7 +800,7 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
           break;
         }
 
-      tile_manager_destroy (new_drawable->tiles);
+      tile_manager_unref (new_drawable->tiles);
 
       new_drawable->tiles     = new_tiles;
       new_drawable->type      = new_type;
@@ -1034,7 +1034,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
           }
 
         if (copy_tiles)
-          tile_manager_destroy (copy_tiles);
+          tile_manager_unref (copy_tiles);
       }
 
       GIMP_CHANNEL (mask)->bounds_known = FALSE;
@@ -1173,6 +1173,8 @@ gimp_layer_add_alpha (GimpLayer *layer)
                                   _("Add Alpha Channel"), layer);
 
   /*  Configure the new layer  */
+  tile_manager_unref (GIMP_DRAWABLE (layer)->tiles);
+
   GIMP_DRAWABLE (layer)->tiles         = new_tiles;
   GIMP_DRAWABLE (layer)->type          = type;
   GIMP_DRAWABLE (layer)->bytes         = GIMP_DRAWABLE (layer)->bytes + 1;

@@ -676,18 +676,18 @@ ink_init (GimpInkTool  *ink_tool,
 {
   GimpItem *item = GIMP_ITEM (drawable);
 
-  /*  free the block structures  */
-  if (undo_tiles)
-    tile_manager_destroy (undo_tiles);
-  if (canvas_tiles)
-    tile_manager_destroy (canvas_tiles);
-
   /*  Allocate the undo structure  */
+  if (undo_tiles)
+    tile_manager_unref (undo_tiles);
+
   undo_tiles = tile_manager_new (gimp_item_width  (item),
 				 gimp_item_height (item),
 				 gimp_drawable_bytes (drawable));
 
   /*  Allocate the canvas blocks structure  */
+  if (canvas_tiles)
+    tile_manager_unref (canvas_tiles);
+
   canvas_tiles = tile_manager_new (gimp_item_width  (item),
 				   gimp_item_height (item), 1);
 
@@ -704,6 +704,8 @@ ink_finish (GimpInkTool  *ink_tool,
                            ink_tool->x1, ink_tool->y1,
                            ink_tool->x2, ink_tool->y2,
                            undo_tiles, TRUE);
+
+  tile_manager_unref (undo_tiles);
   undo_tiles = NULL;
 
   /*  invalidate the drawable--have to do it here, because
@@ -718,14 +720,14 @@ ink_cleanup (void)
   /*  If the undo tiles exist, nuke them  */
   if (undo_tiles)
     {
-      tile_manager_destroy (undo_tiles);
+      tile_manager_unref (undo_tiles);
       undo_tiles = NULL;
     }
 
   /*  If the canvas blocks exist, nuke them  */
   if (canvas_tiles)
     {
-      tile_manager_destroy (canvas_tiles);
+      tile_manager_unref (canvas_tiles);
       canvas_tiles = NULL;
     }
 

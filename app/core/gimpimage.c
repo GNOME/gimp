@@ -1611,7 +1611,7 @@ gimp_image_free_shadow (GimpImage *gimage)
 
   if (gimage->shadow)
     {
-      tile_manager_destroy (gimage->shadow);
+      tile_manager_unref (gimage->shadow);
       gimage->shadow = NULL;
     }
 }

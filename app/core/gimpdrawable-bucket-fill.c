@@ -320,7 +320,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
                           TRUE, _("Bucket Fill"),
 			  opacity, paint_mode,
                           NULL, x1, y1);
-  tile_manager_destroy (buf_tiles);
+  tile_manager_unref (buf_tiles);
 
   /*  update the image  */
   gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));

@@ -46,54 +46,70 @@ tile_manager_new (gint toplevel_width,
   gint         width;
   gint         height;
 
-  tm = g_new (TileManager, 1);
-
-  tm->user_data     = NULL;
-  tm->validate_proc = NULL;
+  tm = g_new0 (TileManager, 1);
 
   width  = toplevel_width;
   height = toplevel_height;
 
-  tm->x           = 0;
-  tm->y           = 0;
-  tm->width       = width;
-  tm->height      = height;
-  tm->bpp         = bpp;
-  tm->ntile_rows  = (height + TILE_HEIGHT - 1) / TILE_HEIGHT;
-  tm->ntile_cols  = (width  + TILE_WIDTH  - 1) / TILE_WIDTH;
-  tm->tiles       = NULL;
-  
-  tm->cached_num  = -1;
-  tm->cached_tile = NULL;
-  
+  tm->ref_count     = 1;
+  tm->x             = 0;
+  tm->y             = 0;
+  tm->width         = width;
+  tm->height        = height;
+  tm->bpp           = bpp;
+  tm->ntile_rows    = (height + TILE_HEIGHT - 1) / TILE_HEIGHT;
+  tm->ntile_cols    = (width  + TILE_WIDTH  - 1) / TILE_WIDTH;
+  tm->tiles         = NULL;
+  tm->validate_proc = NULL;
+
+  tm->cached_num    = -1;
+  tm->cached_tile   = NULL;
+
+  tm->user_data     = NULL;
+
+  return tm;
+}
+
+TileManager *
+tile_manager_ref (TileManager *tm)
+{
+  g_return_val_if_fail (tm != NULL, NULL);
+
+  tm->ref_count++;
+
   return tm;
 }
 
 void
-tile_manager_destroy (TileManager *tm)
+tile_manager_unref (TileManager *tm)
 {
-  gint ntiles;
-  gint i;
-
   g_return_if_fail (tm != NULL);
-  
-  if (tm->cached_tile)
-    tile_release (tm->cached_tile, FALSE);
 
-  if (tm->tiles)
+  tm->ref_count--;
+
+  if (tm->ref_count < 1)
     {
-      ntiles = tm->ntile_rows * tm->ntile_cols;
+      gint ntiles;
+      gint i;
 
-      for (i = 0; i < ntiles; i++)
-	{
-	  TILE_MUTEX_LOCK (tm->tiles[i]);
-	  tile_detach (tm->tiles[i], tm, i);
-	}
+      if (tm->cached_tile)
+        tile_release (tm->cached_tile, FALSE);
 
-      g_free (tm->tiles);
+      if (tm->tiles)
+        {
+          ntiles = tm->ntile_rows * tm->ntile_cols;
+
+          for (i = 0; i < ntiles; i++)
+            {
+              TILE_MUTEX_LOCK (tm->tiles[i]);
+              tile_detach (tm->tiles[i], tm, i);
+            }
+
+          g_free (tm->tiles);
+        }
+
+      g_free (tm);
     }
-
-  g_free (tm);
 }
 
 

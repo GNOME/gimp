@@ -42,9 +42,10 @@ TileManager * tile_manager_new               (gint toplevel_width,
 					      gint toplevel_height,
 					      gint bpp);
 
-/* Destroy a tile manager and all the tiles it contains.
+/* Ref/Unref a tile manager.
  */
-void          tile_manager_destroy           (TileManager *tm);
+TileManager * tile_manager_ref               (TileManager *tm);
+void          tile_manager_unref             (TileManager *tm);
 
 /* Set the validate procedure for the tile manager.
  *  The validate procedure is called when an invalid tile

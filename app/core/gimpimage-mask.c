@@ -406,7 +406,7 @@ gimp_image_mask_float (GimpImage    *gimage,
   GIMP_ITEM (layer)->offset_y = y1 + off_y;
 
   /*  Free the temp buffer  */
-  tile_manager_destroy (tiles);
+  tile_manager_unref (tiles);
 
   /*  Add the floating layer to the gimage  */
   floating_sel_attach (layer, drawable);

@@ -322,6 +322,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
                            FALSE);
 
   /*  swap the tiles  */
+  tile_manager_unref (drawable->tiles);
   drawable->tiles = new_tiles;
 
   /*  update the drawable  */

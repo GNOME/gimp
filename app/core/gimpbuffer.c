@@ -128,7 +128,7 @@ gimp_buffer_finalize (GObject *object)
 
   if (buffer->tiles)
     {
-      tile_manager_destroy (buffer->tiles);
+      tile_manager_unref (buffer->tiles);
       buffer->tiles = NULL;
     }
 

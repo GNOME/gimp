@@ -262,7 +262,7 @@ floating_sel_store (GimpLayer *layer,
        gimp_drawable_bytes (layer->fs.drawable)))
     {
       /*  free the backing store and allocate anew  */
-      tile_manager_destroy (layer->fs.backing_store);
+      tile_manager_unref (layer->fs.backing_store);
 
       layer->fs.backing_store =
 	tile_manager_new (GIMP_ITEM (layer)->width,

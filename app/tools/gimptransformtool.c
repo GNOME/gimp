@@ -249,7 +249,7 @@ gimp_transform_tool_finalize (GObject *object)
 
   if (tr_tool->original)
     {
-      tile_manager_destroy (tr_tool->original);
+      tile_manager_unref (tr_tool->original);
       tr_tool->original = NULL;
     }
 
@@ -880,6 +880,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
       gimp_drawable_transform_paste (tool->drawable,
                                      new_tiles,
                                      new_layer);
+      tile_manager_unref (new_tiles);
 
       /*  Make a note of the new current drawable (since we may have
        *  a floating selection, etc now.
@@ -959,7 +960,7 @@ gimp_transform_tool_reset (GimpTransformTool *tr_tool)
 
   if (tr_tool->original)
     {
-      tile_manager_destroy (tr_tool->original);
+      tile_manager_unref (tr_tool->original);
       tr_tool->original = NULL;
     }
 

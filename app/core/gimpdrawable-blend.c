@@ -226,7 +226,7 @@ gimp_drawable_blend (GimpDrawable     *drawable,
 
   if (distR.tiles)
     {
-      tile_manager_destroy (distR.tiles);
+      tile_manager_unref (distR.tiles);
       distR.tiles = NULL;
     }
 
@@ -240,7 +240,7 @@ gimp_drawable_blend (GimpDrawable     *drawable,
   gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 
   /*  free the temporary buffer  */
-  tile_manager_destroy (buf_tiles);
+  tile_manager_unref (buf_tiles);
 
   gimp_unset_busy (gimage->gimp);
 }
@@ -675,7 +675,7 @@ gradient_precalc_shapeburst (GimpImage    *gimage,
       pixel_region_init (&distR, distR.tiles, 0, 0, PR->w, PR->h, FALSE);
     }
 
-  tile_manager_destroy (tempR.tiles);
+  tile_manager_unref (tempR.tiles);
 }
 
 
