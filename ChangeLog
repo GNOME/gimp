@@ -1,3 +1,8 @@
+2005-01-23  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/edge.c: don't read beyond the src buffer. Fixes
+	bug #164963.
+
 2005-01-23  Maurits Rijk  <m.rijk@chello.nl>
 
 	* plug-ins/imagemap/imap_toolbar.[ch]
