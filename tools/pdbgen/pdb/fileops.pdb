@@ -227,7 +227,7 @@ HELP
 
   success = TRUE;
 
-done:
+done: ;
 }
 CODE
     );
@@ -297,7 +297,7 @@ HELP
 
   success = TRUE;
 
-done:
+done: ;
 }
 CODE
     );

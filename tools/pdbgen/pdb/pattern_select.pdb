@@ -142,7 +142,7 @@ CODE
     );
 }
 
-@headers = qw("pattern_select.h");
+@headers = qw(<string.h> "pattern_select.h");
 
 $extra{app}->{code} = <<'CODE';
 static PatternSelectP

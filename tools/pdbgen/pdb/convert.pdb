@@ -125,7 +125,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("palette.h") ],
+	headers => [ qw(<string.h> "palette.h") ],
 	code => <<'CODE'
 {
   if ((success = (gimage_base_type (gimage) != INDEXED)))

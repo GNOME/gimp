@@ -255,7 +255,7 @@ CODE
     );
 }
 
-@headers = qw("gradient_header.h" "gradient.h");
+@headers = qw(<string.h> "gradient_header.h" "gradient.h");
 
 $extra{app}->{code} = <<'CODE';
 static GradSelectP

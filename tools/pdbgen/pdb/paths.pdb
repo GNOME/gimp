@@ -463,7 +463,7 @@ CODE
 }
 
 
-@headers = qw("gimage.h" "pathsP.h");
+@headers = qw(<string.h> "gimage.h" "pathsP.h");
 
 @procs = qw(path_list path_get_points path_get_current path_set_current
 	    path_set_points path_stroke_current path_get_point_at_dist

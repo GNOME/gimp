@@ -245,7 +245,7 @@ HELP
     );
 }
 
-@headers = qw("text_tool.h" <stdio.h>);
+@headers = qw("text_tool.h" <stdio.h> <string.h>);
 
 $extra{app}->{code} = <<'CODE';
 static gchar *

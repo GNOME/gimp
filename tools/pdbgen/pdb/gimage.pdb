@@ -1180,7 +1180,7 @@ CODE
 SUB
 }
 
-@headers = qw("gimage.h");
+@headers = qw(<string.h> "gimage.h");
 
 $extra{app}->{code} = <<'CODE';
 /* Yuup, this is somewhat unsmooth, to say the least */
