@@ -494,7 +494,7 @@ marshall_proc_db_call (LISP a)
   int success = TRUE;
   LISP color_list;
   LISP intermediate_val;
-  LISP return_val;
+  LISP return_val = NIL;
   char *string;
   int string_len;
   LISP a_saved;

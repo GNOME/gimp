@@ -2606,19 +2606,23 @@ control_move(grad_segment_t *range_l, grad_segment_t *range_r, double delta)
 	/* Fix the segments that surround the range */
 
 	if (!is_first)
+	  {
 		if (!g_editor->control_compress)
 			range_l->prev->right = range_l->left;
 		else
 			control_compress_range(range_l->prev, range_l->prev,
 					       range_l->prev->left, range_l->left);
-
+	  }
+	
 	if (!is_last)
+	  {
 		if (!g_editor->control_compress)
 			range_r->next->left = range_r->right;
 		else
 			control_compress_range(range_r->next, range_r->next,
 					       range_r->right, range_r->next->right);
-
+	  }
+	
 	return delta;
 } /* control_move */
 

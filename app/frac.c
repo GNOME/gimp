@@ -999,10 +999,12 @@ void
 CloseOutputBitFile (BIT_FILE *bit_file )
 {
   if ( bit_file->mask != 0x80 )
-    if ( putc( bit_file->rack, bit_file->file ) != bit_file->rack )
-      g_error( "Fatal error in CloseOutputBitFile!\n" );
-    else
-      (*(bit_file->cp)) += 1;
+    {
+      if ( putc( bit_file->rack, bit_file->file ) != bit_file->rack )
+	g_error( "Fatal error in CloseOutputBitFile!\n" );
+      else
+	(*(bit_file->cp)) += 1;
+    }
   /*  fclose (bit_file->file );
       free ((char *) bit_file);  */
 }

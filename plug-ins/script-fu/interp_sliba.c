@@ -1511,7 +1511,7 @@ string2number (LISP x, LISP b)
 {
   char *str;
   long base, value = 0;
-  double result;
+  double result = 0.0;
   str = get_c_string (x);
   if NULLP
     (b)
@@ -1646,7 +1646,7 @@ init_base64_table (void)
   base64_decode_table = (char *) malloc (256);
   memset (base64_decode_table, -1, 256);
   for (j = 0; j < 65; ++j)
-    base64_decode_table[base64_encode_table[j]] = j;
+    base64_decode_table[(unsigned char) base64_encode_table[j]] = j;
 }
 
 #define BITMSK(N) ((1 << (N)) - 1)
@@ -1712,10 +1712,12 @@ base64decode (LISP in)
   if (n % 4)
     err ("illegal base64 data length", in);
   if (s[n - 1] == base64_encode_table[64])
-    if (s[n - 2] == base64_encode_table[64])
-      leftover = 1;
-    else
-      leftover = 2;
+    {
+      if (s[n - 2] == base64_encode_table[64])
+	leftover = 1;
+      else
+	leftover = 2;
+    }
   else
     leftover = 0;
   chunks = (n / 4) - ((leftover) ? 1 : 0);
@@ -1947,13 +1949,13 @@ butlast (LISP l)
   STACK_CHECK (&l);
   if NULLP
     (l) err ("list is empty", l);
-  if CONSP
-    (l)
-      if NULLP
-      (CDR (l))
+  if CONSP (l)
+    {
+      if NULLP (CDR (l))
 	return (NIL);
-    else
-      return (cons (CAR (l), butlast (CDR (l))));
+      else
+	return (cons (CAR (l), butlast (CDR (l))));
+    }
   return (err ("not a list", l));
 }
 
@@ -2052,7 +2054,7 @@ LISP
 benchmark_funcall1 (LISP ln, LISP f, LISP a1)
 {
   long j, n;
-  LISP value;
+  LISP value = NIL;
   n = get_c_long (ln);
   for (j = 0; j < n; ++j)
     value = funcall1 (f, a1);
@@ -2067,7 +2069,7 @@ benchmark_funcall2 (LISP l)
   LISP f = car (cdr (l));
   LISP a1 = car (cdr (cdr (l)));
   LISP a2 = car (cdr (cdr (cdr (l))));
-  LISP value;
+  LISP value = NULL;
   n = get_c_long (ln);
   for (j = 0; j < n; ++j)
     value = funcall2 (f, a1, a2);
@@ -2078,7 +2080,7 @@ LISP
 benchmark_eval (LISP ln, LISP exp, LISP env)
 {
   long j, n;
-  LISP value;
+  LISP value = NIL;
   n = get_c_long (ln);
   for (j = 0; j < n; ++j)
     value = leval (exp, env);

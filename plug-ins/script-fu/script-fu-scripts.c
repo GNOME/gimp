@@ -549,7 +549,7 @@ script_fu_script_proc (char     *name,
 	  if (status == STATUS_SUCCESS)
 	    {
 	      gint err_msg;
-	      char *text;
+	      char *text = NULL;
 	      char *command, *c;
 	      char buffer[32];
 	      int length;
@@ -966,7 +966,7 @@ script_fu_ok_callback (GtkWidget *widget,
 {
   SFScript *script;
   gint err_msg;
-  char *text;
+  char *text = NULL;
   char *command, *c;
   char buffer[32];
   int length;

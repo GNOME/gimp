@@ -178,7 +178,7 @@ process_cla (int argc, char **argv, int warnflag)
 {
   int k;
   char *ptr;
-  static siod_lib_set = 0;
+  static int siod_lib_set = 0;
 #if !defined(vms)
   if (!siod_lib_set)
     {
@@ -1885,12 +1885,13 @@ user_gc (LISP args)
   flag = no_interrupt (1);
   errjmp_ok = 0;
   old_status_flag = gc_status_flag;
-  if NNULLP
-    (args)
-      if NULLP
-      (car (args)) gc_status_flag = 0;
-    else
-      gc_status_flag = 1;
+  if NNULLP (args)
+    {
+      if NULLP (car (args)) 
+	  gc_status_flag = 0;
+      else
+	gc_status_flag = 1;
+    }
   gc_mark_and_sweep ();
   gc_status_flag = old_status_flag;
   errjmp_ok = 1;
@@ -1921,12 +1922,14 @@ LISP
 gc_status (LISP args)
 {
   long n, m;
-  if NNULLP
-    (args)
-      if NULLP
-      (car (args)) gc_status_flag = 0;
-    else
-      gc_status_flag = 1;
+  if NNULLP (args)
+    {
+      if NULLP (car (args)) 
+	gc_status_flag = 0;
+      else
+	gc_status_flag = 1;
+    }
+  
   if (gc_kind_copying == 1)
     {
       if (gc_status_flag)
@@ -2805,10 +2808,13 @@ flush_ws (struct gen_readio *f, char *eoferr)
     {
       c = GETC_FCN (f);
       if (c == EOF)
-	if (eoferr)
-	  err (eoferr, NIL);
-	else
-	  return (c);
+	{
+	  if (eoferr)
+	    err (eoferr, NIL);
+	  else
+	    return (c);
+	}
+      
       if (commentp)
 	{
 	  if (c == '\n')

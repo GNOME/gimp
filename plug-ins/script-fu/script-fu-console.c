@@ -28,6 +28,7 @@
 #include "libgimp/gimpui.h"
 #include "siod.h"
 #include "script-fu-console.h"
+#include <plug-ins/dbbrowser/dbbrowser.h>
 
 #define TEXT_WIDTH  400
 #define TEXT_HEIGHT 400

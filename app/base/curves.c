@@ -1362,11 +1362,15 @@ curves_spline_invoker (Argument *args)
       if (success)
 	{
 	  if (drawable_gray (drawable))
-	    if (int_value != 0)
-	      success = FALSE;
+	    {
+	      if (int_value != 0)
+		success = FALSE;
+	    }
 	  else if (drawable_color (drawable))
-	    if (int_value < 0 || int_value > 3)
-	      success = FALSE;
+	    {
+	      if (int_value < 0 || int_value > 3)
+		success = FALSE;
+	    }
 	  else
 	    success = FALSE;
 	}
@@ -1514,11 +1518,15 @@ curves_explicit_invoker (Argument *args)
       if (success)
 	{
 	  if (drawable_gray (drawable))
-	    if (int_value != 0)
-	      success = FALSE;
+	    {
+	      if (int_value != 0)
+		success = FALSE;
+	    }
 	  else if (drawable_color (drawable))
-	    if (int_value < 0 || int_value > 3)
-	      success = FALSE;
+	    {
+	      if (int_value < 0 || int_value > 3)
+		success = FALSE;
+	    }
 	  else
 	    success = FALSE;
 	}

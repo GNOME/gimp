@@ -137,11 +137,14 @@ drawable_apply_image (GimpDrawable *drawable,
 		      TileManager *tiles, int sparse)
 {
   if (drawable)
-    if (! tiles)
-      undo_push_image (gimage_get_ID (drawable->gimage_ID), drawable, x1, y1, x2, y2);
-    else
-      undo_push_image_mod (gimage_get_ID (drawable->gimage_ID), drawable, x1, y1, x2, y2, tiles, sparse);
-  
+    {
+      if (! tiles)
+	undo_push_image (gimage_get_ID (drawable->gimage_ID), drawable, 
+			 x1, y1, x2, y2);
+      else
+	undo_push_image_mod (gimage_get_ID (drawable->gimage_ID), drawable, 
+			     x1, y1, x2, y2, tiles, sparse);
+    }
 }
 
 
