@@ -12,22 +12,13 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
+SUBDIRS = images
+
 libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = imagemap
 
 EXTRA_DIST = \
-	arrow.xpm	\
-	circle.xpm	\
-	coord.xpm	\
-	dimension.xpm	\
-	java.xpm	\
-	link.xpm	\
-	map_info.xpm	\
-	polygon.xpm	\
-	rectangle.xpm	\
-	to_back.xpm	\
-	to_front.xpm	\
 	AUTHORS		\
 	NEWS		\
 	README		\
@@ -139,7 +130,8 @@ imagemap_SOURCES = \
 	imap_toolbar.c			\
 	imap_toolbar.h			\
 	imap_tools.c			\
-	imap_tools.h
+	imap_tools.h			\
+	pix-data.h
 
 INCLUDES = \
 	-I$(top_srcdir)	\

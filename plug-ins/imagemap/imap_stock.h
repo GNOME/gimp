@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,15 +24,15 @@
 #ifndef _IMAP_STOCK_H
 #define _IMAP_STOCK_H
 
-#define IMAP_STOCK_ARROW		"imap_arrow"
-#define IMAP_STOCK_CIRCLE		"imap_circle"
-#define IMAP_STOCK_COORD	       	"imap_coord"
-#define IMAP_STOCK_DIMENSION   		"imap_dimension"
-#define IMAP_STOCK_JAVA			"imap_java"
-#define IMAP_STOCK_LINK			"imap_link"
+#define IMAP_STOCK_ARROW		"imap-arrow"
+#define IMAP_STOCK_CIRCLE		"imap-circle"
+#define IMAP_STOCK_COORD	       	"imap-coord"
+#define IMAP_STOCK_DIMENSION   		"imap-dimension"
+#define IMAP_STOCK_JAVA			"imap-java"
+#define IMAP_STOCK_LINK			"imap-link"
 #define IMAP_STOCK_MAP_INFO		"imap-map-info"
-#define IMAP_STOCK_POLYGON		"imap_polygon"
-#define IMAP_STOCK_RECTANGLE		"imap_rectangle"
+#define IMAP_STOCK_POLYGON		"imap-polygon"
+#define IMAP_STOCK_RECTANGLE		"imap-rectangle"
 #define IMAP_STOCK_TO_BACK		"imap-to-back"
 #define IMAP_STOCK_TO_FRONT		"imap-to-front"
 

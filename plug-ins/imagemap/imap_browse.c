@@ -24,7 +24,6 @@
 #include <gtk/gtk.h>
 
 #include "imap_browse.h"
-#include "imap_stock.h"
 
 static GtkTargetEntry target_table[] = {
    {"STRING", 0, 1 },
