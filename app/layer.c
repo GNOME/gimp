@@ -68,8 +68,8 @@ gimp_layer_get_type ()
 	sizeof (GimpLayerClass),
 	(GtkClassInitFunc) gimp_layer_class_init,
 	(GtkObjectInitFunc) gimp_layer_init,
-        /* reversed_1 */ NULL,
-	/* reversed_2 */ NULL,
+        /* reserved_1 */ NULL,
+	/* reserved_2 */ NULL,
 	(GtkClassInitFunc) NULL,
       };
 
@@ -117,8 +117,8 @@ gimp_layer_mask_get_type ()
 	sizeof (GimpLayerMaskClass),
 	(GtkClassInitFunc) gimp_layer_mask_class_init,
 	(GtkObjectInitFunc) gimp_layer_mask_init,
-        /* reversed_1 */ NULL,
-	/* reversed_2 */ NULL,
+        /* reserved_1 */ NULL,
+	/* reserved_2 */ NULL,
 	(GtkClassInitFunc) NULL,
       };
 

@@ -1259,7 +1259,7 @@ gdisplays_update_area (GimpImage* gimage,
 {
   GDisplay *gdisp;
   GSList *list = display_list;
-  int x1, y1, x2, y2;
+  /* int x1, y1, x2, y2; */
   /*  int count = 0; */
 
   /*  traverse the linked list of displays  */

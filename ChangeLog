@@ -1,3 +1,13 @@
+Sat Jul  4 16:58:43 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/tile_swap.c: made the g_message errors a little smarter instead
+	of popping up a ton of dialogs
+
+	* app/layer.c
+	* app/channel.c
+	* app/gdisplay.c
+	* app/gimprc.c: some code cleanups
+
 Thu Jul  2 18:10:43 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* blend.c boundary.c by_color_select.c channel.c color_picker.c
