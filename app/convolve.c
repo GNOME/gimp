@@ -243,7 +243,8 @@ convolve_motion (PaintCore *paint_core,
     return;
 
   /*  If the image type is indexed, don't convolve  */
-  if (drawable_type (drawable) == INDEXED_GIMAGE)
+  if ((drawable_type (drawable) == INDEXED_GIMAGE) ||
+      (drawable_type (drawable) == INDEXEDA_GIMAGE))
     return;
 
   /*  Get a region which can be used to paint to  */

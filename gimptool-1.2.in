@@ -72,6 +72,27 @@ while test $# -gt 0; do
     --libs)
       echo -L@libdir@ -lgimpui -lgimp `$gtk_config --libs`
       ;;
+    --install-bin | --install-admin-bin)
+      case $1 in
+        --install-bin)
+          install_dir="$HOME/.gimp/plug-ins" ;;
+        --install-admin-bin)
+          install_dir="$plug_in_dir/plug-ins" ;;
+      esac
+      if test "x$1" != "x"; then
+        if test -e "$1"; then
+          cp -a "$1" "$install_dir/$1"
+        else
+          echo "${notfound}" 1>&2
+          echo "${usage}" 1>&2
+          exit 1
+        fi  
+      else
+        echo "${noarg}" 1>&2
+        echo "${usage}" 1>&2
+        exit 1
+      fi
+      ;;
     --build | --install | --install-admin)
       case $1 in
         --build)

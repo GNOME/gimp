@@ -1922,7 +1922,10 @@ text_render (GImage *gimage,
   else 
     {
       if (newmask) 
-	warning("text_render: could not allocate image");
+	{
+	  warning("text_render: could not allocate image");
+          tile_manager_destroy (newmask);
+	}
       layer = NULL;
     }
 

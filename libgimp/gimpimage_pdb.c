@@ -554,8 +554,8 @@ gimp_image_get_component_active (gint32 image_ID,
 }
 
 gint
-gimp_image_get_component_visibile (gint32 image_ID,
-				   gint   component)
+gimp_image_get_component_visible (gint32 image_ID,
+				  gint   component)
 {
   GParam *return_vals;
   int nreturn_vals;

@@ -332,7 +332,8 @@ void fli_read_frame(FILE *f, s_fli_header *fli_header, guchar *framebuf, guchar 
 						lpf=0; lpn=0;
 						while (pc & 0x8000) {
 							if (pc & 0x4000) {
-								yc+=pc & 0x3FFF;
+								/* yc+=pc & 0x3FFF; */ /* BANG! */
+								yc+=0x10000-pc; /* better */
 							} else {
 								lpf=1;lpn=pc&0xFF;
 							}

@@ -953,6 +953,7 @@ layer_pick_correlate (layer, x, y)
 	  mask_tile = tile_manager_get_tile (GIMP_DRAWABLE(layer->mask)->tiles, x, y, 0);
 	  tile_ref (mask_tile);
 	  val = (val * mask_tile->data[mask_tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)]) / 255;
+	  tile_unref (mask_tile, FALSE);
 	}
 
       tile_unref (tile, FALSE);

@@ -1,3 +1,19 @@
+Mon May 11 16:59:18 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* gimptool.in: added --install-bin options for installing already
+	built plugins
+
+	* app/convolve.c: check for indexed images properly
+
+	* app/layer.c: fix tile refcount oversight
+
+	* app/text_tool.c: fix for unlikely memleak
+
+	* libgimp/gimpimage.c: stupid ytpo ;)
+
+	* plug-ins/gfli/gfli.c: applied gimp-wh-980507-0 to fix
+	"chunk-type-7-bug"
+
 Mon May 11 23:28:20 MEST 1998 Sven Neumanns <sven@gimp.org>
 
 	* added two new scripts from Hrvoje Horvat 
