@@ -852,6 +852,7 @@ void
 gimp_vectors_anchor_select (GimpVectors *vectors,
                             GimpStroke  *target_stroke,
                             GimpAnchor  *anchor,
+                            gboolean     selected,
                             gboolean     exclusive)
 {
   GList      *stroke_list;
@@ -863,7 +864,7 @@ gimp_vectors_anchor_select (GimpVectors *vectors,
       stroke = GIMP_STROKE (stroke_list->data);
       gimp_stroke_anchor_select (stroke,
                                  stroke == target_stroke ? anchor : NULL,
-                                 exclusive);
+                                 selected, exclusive);
     }
 }
 

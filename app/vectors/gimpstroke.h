@@ -63,6 +63,7 @@ struct _GimpStrokeClass
                                           const GimpAnchor      *prev);
   void          (* anchor_select)        (GimpStroke            *stroke,
                                           GimpAnchor            *anchor,
+                                          gboolean               selected,
                                           gboolean               exclusive);
   void          (* anchor_move_relative) (GimpStroke            *stroke,
                                           GimpAnchor            *anchor,
@@ -169,6 +170,7 @@ GimpAnchor * gimp_stroke_anchor_get_next      (const GimpStroke      *stroke,
 
 void         gimp_stroke_anchor_select        (GimpStroke            *stroke,
                                                GimpAnchor            *anchor,
+                                               gboolean               selected,
                                                gboolean               exclusive);
 
 /* type will be an xorable enum:

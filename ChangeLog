@@ -1,3 +1,17 @@
+2003-09-17  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpvectors.[ch]: Changed gimp_*_anchor_select to
+	accept the selection state as an argument.
+
+	* app/tools/gimpdrawtool.[ch]: Added "exclusive" boolean parameter
+	to gimp_draw_tool_on_vectors_handle(), so that you can specify
+	that you just get exactly the type of anchor you want to have.
+
+	* app/tools/gimpvectortool.[ch]: Handling of multiple selected
+	anchors: Shift-Clicking in Extend mode selects them, you can
+	move them together.
+
 2003-09-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/tools.c (tools_init): moved the path tool after the

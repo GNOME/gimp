@@ -857,6 +857,7 @@ gimp_draw_tool_on_vectors_handle (GimpDrawTool    *draw_tool,
                                   gint             width,
                                   gint             height,
                                   GimpAnchorType   preferred,
+                                  gboolean         exclusive,
                                   GimpAnchor     **ret_anchor,
                                   GimpStroke     **ret_stroke)
 {
@@ -946,15 +947,16 @@ gimp_draw_tool_on_vectors_handle (GimpDrawTool    *draw_tool,
 
       return TRUE;
     }
-  else if (anchor && gimp_draw_tool_on_handle (draw_tool, gdisp,
-                                               coord->x,
-                                               coord->y,
-                                               GIMP_HANDLE_CIRCLE,
-                                               anchor->position.x,
-                                               anchor->position.y,
-                                               width, height,
-                                               GTK_ANCHOR_CENTER,
-                                               FALSE))
+  else if (!exclusive && anchor &&
+           gimp_draw_tool_on_handle (draw_tool, gdisp,
+                                     coord->x,
+                                     coord->y,
+                                     GIMP_HANDLE_CIRCLE,
+                                     anchor->position.x,
+                                     anchor->position.y,
+                                     width, height,
+                                     GTK_ANCHOR_CENTER,
+                                     FALSE))
     {
       if (ret_anchor)
         *ret_anchor = anchor;
@@ -963,6 +965,10 @@ gimp_draw_tool_on_vectors_handle (GimpDrawTool    *draw_tool,
       return TRUE;
     }
 
+  if (ret_anchor)
+    *ret_anchor = NULL;
+  if (ret_stroke)
+    *ret_stroke = NULL;
   return FALSE;
 }
 

@@ -125,6 +125,7 @@ void          gimp_vectors_anchor_delete        (GimpVectors        *vectors,
 void          gimp_vectors_anchor_select        (GimpVectors        *vectors,
                                                  GimpStroke         *target_stroke,
                                                  GimpAnchor         *anchor,
+                                                 gboolean            selected,
                                                  gboolean            exclusive);
 
 

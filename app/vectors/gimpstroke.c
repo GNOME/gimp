@@ -66,6 +66,7 @@ static GimpAnchor * gimp_stroke_real_anchor_get_next (const GimpStroke *stroke,
                                                       const GimpAnchor *prev);
 static void         gimp_stroke_real_anchor_select   (GimpStroke       *stroke,
                                                       GimpAnchor       *anchor,
+                                                      gboolean          selected,
                                                       gboolean          exclusive);
 static void    gimp_stroke_real_anchor_move_relative (GimpStroke       *stroke,
                                                       GimpAnchor       *anchor,
@@ -508,23 +509,26 @@ gimp_stroke_real_anchor_get_next (const GimpStroke *stroke,
 void
 gimp_stroke_anchor_select (GimpStroke *stroke,
                            GimpAnchor *anchor,
+                           gboolean    selected,
                            gboolean    exclusive)
 {
   g_return_if_fail (GIMP_IS_STROKE (stroke));
 
-  GIMP_STROKE_GET_CLASS (stroke)->anchor_select (stroke, anchor, exclusive);
+  GIMP_STROKE_GET_CLASS (stroke)->anchor_select (stroke, anchor,
+                                                 selected, exclusive);
 }
 
 static void
 gimp_stroke_real_anchor_select (GimpStroke *stroke,
                                 GimpAnchor *anchor,
+                                gboolean    selected,
                                 gboolean    exclusive)
 {
   GList *list;
 
   list = stroke->anchors;
 
-  if (exclusive || anchor == NULL)
+  if (exclusive)
     {
       while (list)
         {
@@ -536,7 +540,7 @@ gimp_stroke_real_anchor_select (GimpStroke *stroke,
   list = g_list_find (stroke->anchors, anchor);
 
   if (list)
-    GIMP_ANCHOR (list->data)->selected = TRUE;
+    GIMP_ANCHOR (list->data)->selected = selected;
 }
 
 

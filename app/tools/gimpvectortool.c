@@ -113,6 +113,10 @@ static void   gimp_vector_tool_vectors_freeze  (GimpVectors     *vectors,
 static void   gimp_vector_tool_vectors_thaw    (GimpVectors     *vectors,
                                                 GimpVectorTool  *vector_tool);
 
+static void gimp_vector_tool_move_selected_anchors
+                                               (GimpVectorTool  *vector_tool,
+                                                gdouble          x,
+                                                gdouble          y);
 static void   gimp_vector_tool_verify_state    (GimpVectorTool  *vector_tool);
 static void   gimp_vector_tool_undo_push       (GimpVectorTool  *vector_tool,
                                                 const gchar     *desc);
@@ -397,11 +401,12 @@ gimp_vector_tool_button_press (GimpTool        *tool,
         {
           gimp_vectors_anchor_select (vector_tool->vectors,
                                       vector_tool->cur_stroke,
-                                      vector_tool->cur_anchor, TRUE);
+                                      vector_tool->cur_anchor,
+                                      TRUE, TRUE);
           gimp_draw_tool_on_vectors_handle (GIMP_DRAW_TOOL (tool), gdisp,
                                             vector_tool->vectors, coords,
                                             TARGET, TARGET,
-                                            GIMP_ANCHOR_CONTROL,
+                                            GIMP_ANCHOR_CONTROL, FALSE,
                                             &vector_tool->cur_anchor,
                                             &vector_tool->cur_stroke);
         }
@@ -416,7 +421,29 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
       gimp_vectors_anchor_select (vector_tool->vectors,
                                   vector_tool->cur_stroke,
-                                  vector_tool->cur_anchor, TRUE);
+                                  vector_tool->cur_anchor,
+                                  TRUE, TRUE);
+    }
+
+
+  /* move multiple anchors */
+
+  if (vector_tool->function == VECTORS_MOVE_ANCHORSET)
+    {
+      gimp_vector_tool_undo_push (vector_tool, _("Drag Anchors"));
+
+      if (state & TOGGLE_MASK)
+        {
+          gimp_vectors_anchor_select (vector_tool->vectors,
+                                      vector_tool->cur_stroke,
+                                      vector_tool->cur_anchor,
+                                      !vector_tool->cur_anchor->selected,
+                                      FALSE);
+          if (vector_tool->cur_anchor->selected == FALSE)
+            vector_tool->function = VECTORS_FINISHED;
+        }
+      vector_tool->last_x = coords->x;
+      vector_tool->last_y = coords->y;
     }
 
 
@@ -441,7 +468,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
       gimp_vectors_anchor_select (vector_tool->vectors,
                                   vector_tool->sel_stroke,
-                                  vector_tool->sel_anchor, TRUE);
+                                  vector_tool->sel_anchor, TRUE, TRUE);
 
       vector_tool->function = VECTORS_FINISHED;
     }
@@ -455,7 +482,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
       gimp_vectors_anchor_select (vector_tool->vectors,
                                   vector_tool->cur_stroke,
-                                  vector_tool->cur_anchor, TRUE);
+                                  vector_tool->cur_anchor, TRUE, TRUE);
     }
 
 
@@ -484,7 +511,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
         {
           gimp_vectors_anchor_select (vector_tool->vectors,
                                       vector_tool->cur_stroke,
-                                      vector_tool->cur_anchor, TRUE);
+                                      vector_tool->cur_anchor, TRUE, TRUE);
 
           vector_tool->function = VECTORS_MOVE_ANCHOR;
         }
@@ -633,6 +660,16 @@ gimp_vector_tool_motion (GimpTool        *tool,
                                        coords, vector_tool->restriction);
       break;
 
+    case VECTORS_MOVE_ANCHORSET:
+      gimp_vector_tool_move_selected_anchors (vector_tool,
+                                              coords->x - vector_tool->last_x,
+                                              coords->y - vector_tool->last_y);
+
+      vector_tool->last_x = coords->x;
+      vector_tool->last_y = coords->y;
+
+      break;
+
     case VECTORS_MOVE_STROKE:
       if (vector_tool->cur_stroke)
         {
@@ -756,6 +793,7 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
                                                     coords,
                                                     TARGET, TARGET,
                                                     GIMP_ANCHOR_ANCHOR,
+                                                    vector_tool->sel_count > 2,
                                                     &anchor, &stroke);
 
       if (! on_handle)
@@ -804,7 +842,17 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
         {
           if (anchor->type == GIMP_ANCHOR_ANCHOR)
             {
-              vector_tool->function = VECTORS_MOVE_ANCHOR;
+              if (state & TOGGLE_MASK)
+                {
+                  vector_tool->function = VECTORS_MOVE_ANCHORSET;
+                }
+              else
+                {
+                  if (vector_tool->sel_count >= 2 && anchor->selected)
+                    vector_tool->function = VECTORS_MOVE_ANCHORSET;
+                  else
+                    vector_tool->function = VECTORS_MOVE_ANCHOR;
+                }
             }
           else
             {
@@ -993,6 +1041,7 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
     case VECTORS_MOVE_CURVE:
     case VECTORS_MOVE_STROKE:
     case VECTORS_MOVE_VECTORS:
+    case VECTORS_MOVE_ANCHORSET:
       cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
       break;
     case VECTORS_CONNECT_STROKES:
@@ -1057,46 +1106,49 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
       g_list_free (draw_anchors);
 
-      /* control handles */
-      draw_anchors = gimp_stroke_get_draw_controls (cur_stroke);
-
-      for (list = draw_anchors; list; list = g_list_next (list))
+      if (vector_tool->sel_count <= 2)
         {
-          cur_anchor = GIMP_ANCHOR (list->data);
+          /* control handles */
+          draw_anchors = gimp_stroke_get_draw_controls (cur_stroke);
 
-          gimp_draw_tool_draw_handle (draw_tool,
-                                      GIMP_HANDLE_SQUARE,
-                                      cur_anchor->position.x,
-                                      cur_anchor->position.y,
-                                      TARGET - 3,
-                                      TARGET - 3,
-                                      GTK_ANCHOR_CENTER,
-                                      FALSE);
-        }
-
-      g_list_free (draw_anchors);
-
-      /* the lines to the control handles */
-      coords = gimp_stroke_get_draw_lines (cur_stroke);
-
-      if (coords)
-        {
-          if (coords->len % 2 == 0)
+          for (list = draw_anchors; list; list = g_list_next (list))
             {
-              gint i;
+              cur_anchor = GIMP_ANCHOR (list->data);
 
-              for (i = 0; i < coords->len; i += 2)
+              gimp_draw_tool_draw_handle (draw_tool,
+                                          GIMP_HANDLE_SQUARE,
+                                          cur_anchor->position.x,
+                                          cur_anchor->position.y,
+                                          TARGET - 3,
+                                          TARGET - 3,
+                                          GTK_ANCHOR_CENTER,
+                                          FALSE);
+            }
+
+          g_list_free (draw_anchors);
+
+          /* the lines to the control handles */
+          coords = gimp_stroke_get_draw_lines (cur_stroke);
+
+          if (coords)
+            {
+              if (coords->len % 2 == 0)
                 {
-                  gimp_draw_tool_draw_dashed_line (draw_tool,
+                  gint i;
+
+                  for (i = 0; i < coords->len; i += 2)
+                    {
+                      gimp_draw_tool_draw_dashed_line (draw_tool,
                                     g_array_index (coords, GimpCoords, i).x,
                                     g_array_index (coords, GimpCoords, i).y,
                                     g_array_index (coords, GimpCoords, i + 1).x,
                                     g_array_index (coords, GimpCoords, i + 1).y,
                                     FALSE);
+                    }
                 }
-            }
 
-          g_array_free (coords, TRUE);
+              g_array_free (coords, TRUE);
+            }
         }
 
       /* the stroke itself */
@@ -1312,11 +1364,46 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 }
 
 static void
+gimp_vector_tool_move_selected_anchors (GimpVectorTool *vector_tool,
+                                        gdouble         x,
+                                        gdouble         y)
+{
+  GimpAnchor *cur_anchor;
+  GimpStroke *cur_stroke = NULL;
+  GList *anchors;
+  GList *list;
+  GimpCoords offset = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+      
+  offset.x = x;
+  offset.y = y;
+
+  while ((cur_stroke = gimp_vectors_stroke_get_next (vector_tool->vectors,
+                                                     cur_stroke)))
+    {
+      /* anchors */
+      anchors = gimp_stroke_get_draw_anchors (cur_stroke);
+
+      for (list = anchors; list; list = g_list_next (list))
+        {
+          cur_anchor = GIMP_ANCHOR (list->data);
+
+          if (cur_anchor->selected)
+            gimp_stroke_anchor_move_relative (cur_stroke,
+                                              cur_anchor,
+                                              &offset,
+                                              GIMP_ANCHOR_FEATURE_NONE);
+        }
+
+      g_list_free (anchors);
+    }
+}
+
+static void
 gimp_vector_tool_verify_state (GimpVectorTool *vector_tool)
 {
   GimpStroke *cur_stroke = NULL;
   GimpAnchor *cur_anchor;
-  GList      *draw_anchors;
+  GList      *anchors;
   GList      *list;
   gboolean    cur_anchor_valid;
   gboolean    cur_stroke_valid;
@@ -1340,12 +1427,12 @@ gimp_vector_tool_verify_state (GimpVectorTool *vector_tool)
                                                      cur_stroke)))
     {
       /* anchor handles */
-      draw_anchors = gimp_stroke_get_draw_anchors (cur_stroke);
+      anchors = gimp_stroke_get_draw_anchors (cur_stroke);
 
       if (cur_stroke == vector_tool->cur_stroke)
         cur_stroke_valid = TRUE;
 
-      for (list = draw_anchors; list; list = g_list_next (list))
+      for (list = anchors; list; list = g_list_next (list))
         {
           cur_anchor = GIMP_ANCHOR (list->data);
 
@@ -1369,9 +1456,9 @@ gimp_vector_tool_verify_state (GimpVectorTool *vector_tool)
             }
         }
 
-      draw_anchors = gimp_stroke_get_draw_controls (cur_stroke);
+      anchors = gimp_stroke_get_draw_controls (cur_stroke);
 
-      for (list = draw_anchors; list; list = g_list_next (list))
+      for (list = anchors; list; list = g_list_next (list))
         {
           cur_anchor = GIMP_ANCHOR (list->data);
 

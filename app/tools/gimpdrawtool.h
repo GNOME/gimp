@@ -185,6 +185,7 @@ gboolean   gimp_draw_tool_on_vectors_handle        (GimpDrawTool   *draw_tool,
                                                     gint            width,
                                                     gint            height,
                                                     GimpAnchorType  preferred,
+                                                    gboolean        exclusive,
                                                     GimpAnchor    **ret_anchor,
                                                     GimpStroke    **ret_stroke);
 gboolean   gimp_draw_tool_on_vectors_curve         (GimpDrawTool   *draw_tool,
