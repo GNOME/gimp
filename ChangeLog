@@ -1,3 +1,8 @@
+2004-01-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/layers-commands.c (layers_add_mask_query): use the
+	new GIMP_STOCK_LAYER_MASK icon for "Add Layer Mask" dialog.
+
 2004-01-27  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/stock-channel-indexed-16.png

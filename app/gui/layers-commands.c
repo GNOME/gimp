@@ -1038,7 +1038,7 @@ layers_add_mask_query (GimpLayer *layer,
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (layer),
                               _("Add Layer Mask"), "gimp-layer-add-mask",
-                              GTK_STOCK_ADD,
+                              GIMP_STOCK_LAYER_MASK,
                               _("Add a Mask to the Layer"),
                               parent,
                               gimp_standard_help_func,
