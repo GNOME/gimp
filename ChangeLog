@@ -1,3 +1,8 @@
+2004-12-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/unsharp.c: more code cleanup and micro
+	optimizations.
+
 2004-12-21  Sven Neumann  <neumann@jpk.com>
 
 	* plug-ins/common/unsharp.c: reverted the last change since it

@@ -42,10 +42,11 @@
 #define SCALE_WIDTH   150
 #define ENTRY_WIDTH     4
 
-/* Uncomment this line to get a rough estimate of
- * how long the plug-in takes to run.
+/* Uncomment this line to get a rough estimate of how long the plug-in
+ * takes to run.
  */
-/* #define TIMER */
+
+/*  #define TIMER  */
 
 
 typedef struct
@@ -69,34 +70,34 @@ static void      run   (const gchar      *name,
                         gint             *nreturn_vals,
                         GimpParam       **return_vals);
 
-static inline void  blur_line            (const gdouble *ctable,
-                                          const gdouble *cmatrix,
-                                          gint           cmatrix_length,
-                                          const guchar  *src,
-                                          guchar        *dest,
-                                          gint           y,
-                                          glong          bytes);
-static gint      gen_convolve_matrix     (gdouble        std_dev,
-                                          gdouble      **cmatrix);
-static gdouble * gen_lookup_table        (const gdouble *cmatrix,
-                                          gint           cmatrix_length);
-static void      unsharp_region          (GimpPixelRgn  *srcPTR,
-                                          GimpPixelRgn  *dstPTR,
-                                          gint           bytes,
-                                          gdouble        radius,
-                                          gdouble        amount,
-                                          gint           x1,
-                                          gint           x2,
-                                          gint           y1,
-                                          gint           y2,
-                                          gboolean       show_progress);
+static void      blur_line           (const gdouble  *ctable,
+                                      const gdouble  *cmatrix,
+                                      gint            cmatrix_length,
+                                      const guchar   *src,
+                                      guchar         *dest,
+                                      gint            len,
+                                      glong           bytes);
+static gint      gen_convolve_matrix (gdouble         std_dev,
+                                      gdouble       **cmatrix);
+static gdouble * gen_lookup_table    (const gdouble  *cmatrix,
+                                      gint            cmatrix_length);
+static void      unsharp_region      (GimpPixelRgn   *srcPTR,
+                                      GimpPixelRgn   *dstPTR,
+                                      gint            bytes,
+                                      gdouble         radius,
+                                      gdouble         amount,
+                                      gint            x1,
+                                      gint            x2,
+                                      gint            y1,
+                                      gint            y2,
+                                      gboolean        show_progress);
 
-static void      unsharp_mask            (GimpDrawable  *drawable,
-                                          gdouble        radius,
-                                          gdouble        amount);
+static void      unsharp_mask        (GimpDrawable   *drawable,
+                                      gdouble         radius,
+                                      gdouble         amount);
 
-static gboolean  unsharp_mask_dialog     (GimpDrawable  *drawable);
-static void      preview_update          (GimpPreview   *preview);
+static gboolean  unsharp_mask_dialog (GimpDrawable   *drawable);
+static void      preview_update      (GimpPreview    *preview);
 
 
 /* create a few globals, set default values */
@@ -241,7 +242,7 @@ run (const gchar      *name,
     }
 
 #ifdef TIMER
-  g_printerr ("%f seconds\n", g_timer_elapsed (timer));
+  g_printerr ("%f seconds\n", g_timer_elapsed (timer, NULL));
   g_timer_destroy (timer);
 #endif
 }
@@ -250,13 +251,13 @@ run (const gchar      *name,
    even though it can operate on rows, too.  There is no difference
    in the processing of the lines, at least to the blur_line function.
  */
-static inline void
+static void
 blur_line (const gdouble *ctable,
            const gdouble *cmatrix,
            gint           cmatrix_length,
            const guchar  *src,
            guchar        *dest,
-           gint           y,
+           gint           len,
            glong          bytes)
 {
   gdouble scale;
@@ -270,37 +271,36 @@ blur_line (const gdouble *ctable,
   const gdouble *ctable_p;
   const guchar  *src_p;
   const guchar  *src_p1;
-  guchar        *dest_p;
 
   /* this first block is the same as the non-optimized version --
    * it is only used for very small pictures, so speed isn't a
    * big concern.
    */
-  if (cmatrix_length > y)
+  if (cmatrix_length > len)
     {
-      for (row = 0; row < y ; row++)
+      for (row = 0; row < len; row++)
         {
           scale = 0;
           /* find the scale factor */
-          for (j = 0; j < y ; j++)
+          for (j = 0; j < len; j++)
             {
               /* if the index is in bounds, add it to the scale counter */
-              if ((j + cmatrix_middle - row >= 0) &&
-                  (j + cmatrix_middle - row < cmatrix_length))
+              if (j + cmatrix_middle - row >= 0 &&
+                  j + cmatrix_middle - row < cmatrix_length)
                 scale += cmatrix[j + cmatrix_middle - row];
             }
 
           for (i = 0; i < bytes; i++)
             {
+              src_p1 = src_p;
               sum = 0;
-              for (j = 0; j < y; j++)
+              for (j = 0; j < len; j++)
                 {
-                  if ((j >= row - cmatrix_middle) &&
-                      (j <= row + cmatrix_middle))
+                  if (j >= row - cmatrix_middle && j <= row + cmatrix_middle)
                     sum += src[j * bytes + i] * cmatrix[j];
                 }
 
-              dest[row * bytes + i] = (guchar) ROUND (sum / scale);
+              *dest++ = (guchar) ROUND (sum / scale);
             }
         }
     }
@@ -311,7 +311,6 @@ blur_line (const gdouble *ctable,
         {
           /* find scale factor */
           scale = 0;
-
           for (j = cmatrix_middle - row; j < cmatrix_length; j++)
             scale += cmatrix[j];
 
@@ -319,26 +318,22 @@ blur_line (const gdouble *ctable,
             {
               sum = 0;
               for (j = cmatrix_middle - row; j < cmatrix_length; j++)
-                {
-                  sum +=
-                    src[(row + j - cmatrix_middle) * bytes + i] * cmatrix[j];
-                }
+                sum += src[(row + j - cmatrix_middle) * bytes + i] * cmatrix[j];
 
-              dest[row * bytes + i] = (guchar) ROUND (sum / scale);
+              *dest++ = ROUND (sum / scale);
             }
         }
+
       /* go through each pixel in each col */
-      dest_p = dest + row * bytes;
-      for (; row < y - cmatrix_middle; row++)
+      for (; row < len - cmatrix_middle; row++)
         {
-          src_p = (row - cmatrix_middle) * bytes + src;
+          src_p = src + (row - cmatrix_middle) * bytes;
           for (i = 0; i < bytes; i++)
             {
-              sum = 0;
               cmatrix_p = cmatrix;
               src_p1 = src_p;
               ctable_p = ctable;
-
+              sum = 0;
               for (j = cmatrix_length; j > 0; j--)
                 {
                   sum += *(ctable_p + *src_p1);
@@ -347,27 +342,25 @@ blur_line (const gdouble *ctable,
                 }
 
               src_p++;
-              *(dest_p++) = ROUND (sum);
+              *dest++ = ROUND (sum);
             }
         }
 
       /* for the edge condition, we only use available info and scale to one */
-      for (; row < y; row++)
+      for (; row < len; row++)
         {
           /* find scale factor */
           scale = 0;
-          for (j = 0; j < y - row + cmatrix_middle; j++)
+          for (j = 0; j < len - row + cmatrix_middle; j++)
             scale += cmatrix[j];
+
           for (i = 0; i < bytes; i++)
             {
               sum = 0;
-              for (j = 0; j < y - row + cmatrix_middle; j++)
-                {
-                  sum +=
-                    src[(row + j - cmatrix_middle) * bytes + i] * cmatrix[j];
-                }
+              for (j = 0; j < len - row + cmatrix_middle; j++)
+                sum += src[(row + j - cmatrix_middle) * bytes + i] * cmatrix[j];
 
-              dest[row * bytes + i] = (guchar) ROUND (sum / scale);
+              *dest++ = ROUND (sum / scale);
             }
         }
     }
