@@ -1,3 +1,8 @@
+Thu Jun  8 15:45:40 CEST 2000 Marc Lehmann <pcg@goof.com>
+
+        * plug-ins/common/gif.c: gimp-comment's were wrongly assumed to be
+        zero-terminated strings.
+
 2000-06-08  Sven Neumann  <sven@gimp.org>
 
 	* tips/gimp_tips.txt: somehow a few spaces sneaked in here

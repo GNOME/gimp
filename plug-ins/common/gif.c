@@ -1274,8 +1274,9 @@ save_dialog (gint32 image_ID)
   GIF2_CMNT = gimp_image_parasite_find (image_ID, "gimp-comment");
   if (GIF2_CMNT)
     {
-      globalcomment = g_malloc (GIF2_CMNT->size);
-      strcpy (globalcomment, GIF2_CMNT->data);
+      globalcomment = g_malloc (GIF2_CMNT->size+1);
+      memcpy (globalcomment, GIF2_CMNT->data, GIF2_CMNT->size);
+      globalcomment[GIF2_CMNT->size] = 0;
     }
   else
     {
