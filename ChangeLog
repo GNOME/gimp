@@ -1,3 +1,11 @@
+2004-07-13  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/presets.c: fixed Bug # 147483 (gimpressionist 
+	will delete global presets if the user running GIMP has priviliges to 
+	do so ). This was done by creating a function to check if a preset is 
+	global, and by making sure the delete button is in-sensitive when this
+	is the case.
+
 2004-07-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorbutton.c

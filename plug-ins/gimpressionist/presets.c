@@ -29,10 +29,27 @@ static GtkWidget    *presetnameentry = NULL;
 static GtkWidget    *presetlist      = NULL;
 static GtkWidget    *presetdesclabel = NULL;
 static GtkWidget    *presetsavebutton = NULL;
+static GtkWidget    *delete_button = NULL;
 static GtkListStore *store;
 static gchar        *selected_preset_orig_name = NULL;
 static gchar        *selected_preset_filename = NULL;
 
+static gboolean can_delete_preset (const gchar *abs)
+{
+  gchar *user_data_dir;
+  gboolean ret;
+
+  user_data_dir = g_strconcat (gimp_directory (),
+                               G_DIR_SEPARATOR_S,
+                               NULL);
+
+
+  ret = (!strncmp (abs, user_data_dir, strlen (user_data_dir)));
+
+  g_free (user_data_dir);
+
+  return ret;
+}
 
 void preset_save_button_set_sensitive (gboolean s)
 {
@@ -489,7 +506,12 @@ static void deletepreset(GtkWidget *w, GtkTreeSelection *selection)
 
           if (abs)
             {
-              unlink (abs);
+              /* Don't delete global presets - bug # 147483 */
+              if (can_delete_preset (abs))
+                {
+                  unlink (abs);
+                }
+
               g_free (abs);
             }
 
@@ -773,9 +795,20 @@ static void readdesc(const char *fn)
 
   if (!fname)
     {
-      set_preset_description_text("");
+      if (!strcmp (fn, factory_defaults))
+        {
+          gtk_widget_set_sensitive (delete_button, FALSE);
+          set_preset_description_text (_("The Gimpressionist Defaults"));
+        }
+      else
+        {
+          set_preset_description_text("");
+        }
       return;
     }
+
+  /* Don't delete global presets - bug # 147483 */
+  gtk_widget_set_sensitive (delete_button, can_delete_preset (fname));
 
   f = fopen(fname, "rt");
   g_free(fname);
@@ -937,7 +970,7 @@ void create_presetpage(GtkNotebook *notebook)
   gimp_help_set_help_data
     (tmpw, _("Reads the selected Preset into memory"), NULL);
 
-  tmpw = gtk_button_new_from_stock (GTK_STOCK_DELETE);
+  tmpw = delete_button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK(deletepreset), selection);
