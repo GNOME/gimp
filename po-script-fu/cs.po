@@ -1,16 +1,16 @@
-# translation of cs.po to Czech
-# Czech translation of GIMP script-fu 1.2.1.
+# Czech translation of GIMP script-fu
 # Copyright (C) 2001,2003 Free Software Foundation, Inc.
+# Copyright (C) 2004 Miloslav Trmac <mitr@volny.cz>
 # Stanislav Brabec <utx@penguin.cz>, 2000-2001.
 # Michal Bukovjan <bukm@centrum.cz>, 2003
-# Miloslav Trmac <mitr@volny.cz>, 2003.
+# Miloslav Trmac <mitr@volny.cz>, 2003, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: cs\n"
+"Project-Id-Version: gimp-script-fu VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:25+0100\n"
-"PO-Revision-Date: 2003-12-08 13:27+0100\n"
+"POT-Creation-Date: 2004-01-09 15:05+0100\n"
+"PO-Revision-Date: 2004-01-09 18:13+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -64,7 +64,7 @@ msgstr "Skript-fu: %s"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1168
 msgid "About"
-msgstr "O programu"
+msgstr "O aplikaci"
 
 #. the script arguments frame
 #: plug-ins/script-fu/script-fu-scripts.c:1178
@@ -660,8 +660,8 @@ msgid "Width of Gaps"
 msgstr "Šířka mezer"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
-msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
-msgstr "<Image>/Skript-fu/Pomůcky/ASCII to vrstvy obrázku..."
+msgid "<Image>/Script-Fu/Utils/_ASCII to Layer..."
+msgstr "<Image>/Skript-fu/Pomůcky/ASCII to vrstvy..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
@@ -2425,23 +2425,11 @@ msgstr "Y posun světel"
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
 #~ msgstr "<Toolbox>/Rozš./Skript-fu/Vzorky/_Víry (dlaždicovatelné)..."
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-#~ msgstr "<Toolbox>/Rozš./Webový prohlížeč/Chyby programu GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-#~ msgstr "<Toolbox>/Rozš./Webový prohlížeč/Manuál k programu GIMP"
-
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
 #~ msgstr "<Toolbox>/Rozš./Webový prohlížeč/GIMP novinky"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-#~ msgstr "<Toolbox>/Rozš./Webový prohlížeč/Výuka programu GIMP"
-
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
 #~ msgstr "<Toolbox>/Rozš./Webový prohlížeč/GIMP.ORG/Dokumentace"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-#~ msgstr "<Toolbox>/Rozš./Webový prohlížeč/GIMP.ORG/Získání programu"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
 #~ msgstr "<Toolbox>/Rozš./Webový prohlížeč/GIMP.ORG/GIMP umění"
@@ -2457,9 +2445,6 @@ msgstr "Y posun světel"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
 #~ msgstr "<Toolbox>/Rozš./Webový prohlížeč/GIMP.ORG/Zdroje"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-#~ msgstr "<Toolbox>/Rozš./Webový prohlížeč/GIMP.ORG/Program GIMP"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
 #~ msgstr "<Toolbox>/Rozš./Webový prohlížeč/Gimp-Savvy.com"
