@@ -335,17 +335,22 @@ action_data_get_display (gpointer data)
 GtkWidget *
 action_data_get_widget (gpointer data)
 {
+  GimpDisplay *display = NULL;
+
   if (! data)
     return NULL;
 
   if (GIMP_IS_DISPLAY (data))
-    return ((GimpDisplay *) data)->shell;
+    display = data;
   else if (GIMP_IS_GIMP (data))
-    return dialogs_get_toolbox ();
+    display = gimp_context_get_display (gimp_get_user_context (data));
   else if (GTK_IS_WIDGET (data))
     return data;
 
-  return NULL;
+  if (display)
+    return display->shell;
+
+  return dialogs_get_toolbox ();
 }
 
 gdouble
