@@ -71,7 +71,8 @@ typedef struct
 
 typedef struct
 {
-  GtkWidget *cc;
+  GtkWidget *status;
+  GtkWidget *entry;
   SFScript  *script;
 } SFInterface;
 
@@ -121,7 +122,7 @@ static gint       script_fu_preview_delete   (GtkWidget *widget,
 
 static SFInterface sf_interface =
 {
-  NULL,  /*  current command  */
+  NULL,  /*  status (current command) */
   NULL   /*  active script    */
 };
 
@@ -487,7 +488,9 @@ script_fu_report_cc (gchar *command)
       new_command = g_new (gchar, strlen (command) + 10);
       sprintf (new_command, "%s <%d>", command, ++consec_command_count);
       if (current_command_enabled == TRUE)
-	gtk_entry_set_text (GTK_ENTRY (sf_interface.cc), new_command);
+	{
+	  gtk_entry_set_text (GTK_ENTRY (sf_interface.status), new_command);
+	}
       g_free (new_command);
       g_free (last_command);
     }
@@ -495,7 +498,7 @@ script_fu_report_cc (gchar *command)
     {
       consec_command_count = 1;
       if (current_command_enabled == TRUE)
-	gtk_entry_set_text (GTK_ENTRY (sf_interface.cc), command);
+	gtk_entry_set_text (GTK_ENTRY (sf_interface.status), command);
       if (last_command)
 	g_free (last_command);
     }
@@ -748,7 +751,10 @@ script_fu_interface (SFScript *script)
   GtkWidget *label;
   GtkWidget *menu;
   GtkWidget *table;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
   guchar *title;
+  guchar *buf;
   gchar **argv;
   gint argc;
   int start_args;
@@ -780,47 +786,40 @@ script_fu_interface (SFScript *script)
     }
 
   sf_interface.script = script;
+  
+  title = g_new (guchar, strlen ("Script-Fu: ") + strlen (script->description));   
+  buf = strstr (script->description, "Script-Fu/");
+  if (buf)
+    sprintf ((char *)title, "Script-Fu: %s", (buf + 10));
+  else 
+    sprintf ((char *)title, "Script-Fu: %s", script->description);
 
-  title = g_new (guchar, strlen ("Script-Fu: ") + strlen (script->description) + 1);
-  sprintf ((char *)title, "Script-Fu: %s", script->description);
-
-  dlg = gtk_dialog_new ();
+  dlg = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_quit_add_destroy (1, GTK_OBJECT (dlg));
   gtk_window_set_title (GTK_WINDOW (dlg), (const gchar *)title);
+  gtk_window_set_wmclass (GTK_WINDOW (dlg), "script_fu", "Gimp");
+  gtk_signal_connect (GTK_OBJECT (dlg), "delete_event",
+		      (GtkSignalFunc) script_fu_close_callback,
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) script_fu_close_callback,
 		      NULL);
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), 2);
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
 
-  /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) script_fu_ok_callback,
-                      NULL);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
+  /* the vbox holding all widgets */
+  vbox = gtk_vbox_new (0,2);
+  gtk_container_add (GTK_CONTAINER (dlg), vbox);
+  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
 
-  button = gtk_button_new_with_label ("Cancel");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) script_fu_close_callback,
-                      NULL);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  /*  The info vbox  */
+  /*  The info label  */
   label = gtk_label_new ("Script Arguments");
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), label, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
   gtk_widget_show (label);
 
   /*  The argument table  */
   table = gtk_table_new (script->num_args, 2, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
   script->args_widgets = g_new (GtkWidget *, script->num_args);
 
@@ -914,16 +913,38 @@ script_fu_interface (SFScript *script)
     }
   gtk_widget_show (table);
 
-  /*  The current command  */
-  label = gtk_label_new ("Current Command");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), label, FALSE, TRUE, 0);
-  gtk_widget_show (label);
-  sf_interface.cc = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), sf_interface.cc, FALSE, TRUE, 0);
-  gtk_widget_show (sf_interface.cc);
+  /*  Action area  */
+  hbox = gtk_hbox_new (0, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
+  gtk_container_border_width (GTK_CONTAINER (hbox), 2);
 
-  sf_interface.script = script;
+  button = gtk_button_new_with_label ("OK");
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+                      (GtkSignalFunc) script_fu_ok_callback,
+                      NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_grab_default (button);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label ("Cancel");
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+                      (GtkSignalFunc) script_fu_close_callback,
+                      NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  gtk_widget_show (hbox);
+
+  /* The statusbar (well it's a faked statusbar...) */
+  sf_interface.status = gtk_entry_new ();
+  gtk_entry_set_editable (GTK_ENTRY (sf_interface.status), FALSE);
+  gtk_box_pack_end (GTK_BOX (vbox), sf_interface.status, FALSE, TRUE, 0);
+  gtk_entry_set_text (GTK_ENTRY (sf_interface.status), title);
+  gtk_widget_show (sf_interface.status);
+
+  gtk_widget_show (vbox);
   gtk_widget_show (dlg);
 
   gtk_main ();

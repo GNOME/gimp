@@ -1,3 +1,8 @@
+Sat Jul 18 19:28:53 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: cosmetic change
+	to the Script-Fu dialog
+
 Sat Jul 18 16:32:51 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* app/fileops.c: Fixed my idiotic comment syntax
