@@ -3047,7 +3047,10 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
    *   grayscale drawables through the rgb pass2 functions
    */
   if (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)))
-    red_pix = green_pix = blue_pix = GRAY_PIX;
+    {
+      red_pix = green_pix = blue_pix = GRAY_PIX;
+      alpha_pix = ALPHA_G_PIX;
+    }
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
@@ -3136,7 +3139,10 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
    *   grayscale drawables through the rgb pass2 functions
    */
   if (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)))
-    red_pix = green_pix = blue_pix = GRAY_PIX;
+    {
+      red_pix = green_pix = blue_pix = GRAY_PIX;
+      alpha_pix = ALPHA_G_PIX;
+    }
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 

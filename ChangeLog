@@ -1,3 +1,12 @@
+2004-02-07  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/core/gimpimage-convert.c (median_cut_pass2_no_dither_rgb):
+	Corrected position for alpha_pix in the case of grayscale images
+	with custom or mono palette and no dither. Fixes bug #133642.
+
+	(median_cut_pass2_fixed_dither_rgb): Ditto for fixed dither
+	(Positioned Color Dither).
+
 2004-02-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-draw.c
