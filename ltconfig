@@ -736,7 +736,14 @@ if test "$with_gnu_ld" = yes && test "$gnu_ld_acts_native" != yes; then
 
   # See if GNU ld supports shared libraries.
   if $LD --help 2>&1 | egrep ': supported targets:.* elf' > /dev/null; then
-    archive_cmds='$CC -shared ${wl}-soname $wl$soname -o $lib$libobjs'
+    case "$host_os" in
+    linux-gnu*)
+      archive_cmds='$CC -shared ${wl}-soname $wl$soname -o $lib$libobjs $deplibs'
+      ;;
+    *)
+      archive_cmds='$CC -shared ${wl}-soname $wl$soname -o $lib$libobjs'
+      ;;
+    esac
     runpath_var=LD_RUN_PATH
     ld_shlibs=yes
   else
@@ -988,11 +995,11 @@ void nm_test_func(){}
 main(){nm_test_var='a';nm_test_func();return(0);}
 EOF
 
-echo "$progname:991: checking if global_symbol_pipe works" >&5
-if { (eval echo $progname:992: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; } && test -s conftest.o; then
+echo "$progname:998: checking if global_symbol_pipe works" >&5
+if { (eval echo $progname:999: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; } && test -s conftest.o; then
   # Now try to grab the symbols.
   nlist=conftest.nm
-  if { echo "$progname:995: eval \"$NM conftest.o | $global_symbol_pipe > $nlist\"" >&5; eval "$NM conftest.o | $global_symbol_pipe > $nlist 2>&5"; } && test -s "$nlist"; then
+  if { echo "$progname:1002: eval \"$NM conftest.o | $global_symbol_pipe > $nlist\"" >&5; eval "$NM conftest.o | $global_symbol_pipe > $nlist 2>&5"; } && test -s "$nlist"; then
 
     # Try sorting and uniquifying the output.
     if sort "$nlist" | uniq > "$nlist"T; then
@@ -1050,7 +1057,7 @@ EOF
 	save_CFLAGS="$CFLAGS"
         LIBS='conftestm.o'
 	CFLAGS="$CFLAGS$no_builtin_flag"
-        if { (eval echo $progname:1053: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest; then
+        if { (eval echo $progname:1060: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest; then
           pipe_works=yes
         else
           echo "$progname: failed program was:" >&5

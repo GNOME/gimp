@@ -137,11 +137,11 @@ get_token (ParseInfo *info)
 	info->position = -1;
       if ((info->position == -1) || (buffer[info->position] == '\0'))
 	{
-	  info->position = 0;
 	  count = fread (buffer, sizeof (char), info->buffer_size - 1, info->fp);
 	  if ((count == 0) && feof (info->fp))
 	    return TOKEN_EOF;
 	  buffer[count] = '\0';
+	  info->position = 0;
 	}
 
       info->inc_charnum = TRUE;

@@ -1,3 +1,13 @@
+Thu Oct  1 14:05:06 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/general.c: applied gimp-bjj-980922-0, makes get_token's
+	EOF report "sticky"
+
+Mon Sep 28 18:08:14 BST 1998  Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/gif.c: Fixed an uninitialized variable bug
+	which was making TigerT's gifs blow up.  Sigh!
+
 Sun Sep 27 14:55:23 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Made 1.0.1 release

@@ -99,7 +99,7 @@ Many of the developers hang out there.  Some of the Byxnet servers are:
 	levien.com:6666
 
 You can customize the look of the interface quite a bit my editing the
-~/.gimp/gtkrc file. A sample file, gtkrc.forest, is included (Thanks to
+~/.gimp/gtkrc file. A sample file, gtkrc.forest2, is included (Thanks to
 Tuomas Kuosmanen)
 
 Included is a set of keybindings similar to those in Adobe Photoshop (tm).
