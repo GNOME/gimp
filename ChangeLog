@@ -1,3 +1,11 @@
+2003-04-25  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/paint-funcs/paint-funcs.c: Some reformattings to improve
+	readability.
+	(shrink_line): Added some explanatory comments.
+	(border_region): Fixed wrong (though harmless) allocation bug: used
+	sizeof(gint16 *) where sizeof(gint16) was needed.
+
 2003-04-23  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/url.c (query): register the plug-in for https
