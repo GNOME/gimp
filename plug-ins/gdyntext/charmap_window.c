@@ -19,13 +19,16 @@
  *
  * $Id$
  */
+#include "config.h"
 
 #include <stdio.h>
+
 #include <gtk/gtk.h>
-#include "libgimp/stdplugins-intl.h"
+
 #include "charmap.h"
 #include "charmap_window.h"
 
+#include "libgimp/stdplugins-intl.h"
 
 static void charmap_window_class_init(CharMapWindowClass *class);
 static void charmap_window_init(CharMapWindow *mw);

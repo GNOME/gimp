@@ -1,3 +1,8 @@
+2000-04-19  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/gdnytext/*: fixed all files to include the i18n stuff
+	correctly and don't mess up Gimp's locale setup. Fixes #7878.
+
 2000-04-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/user_install.c: Creating the user's gimp directory may take

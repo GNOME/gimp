@@ -20,15 +20,19 @@
  * $Id$
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include <ctype.h>
+
 #include <libgimp/gimp.h>
+
 #include "gdyntext.h"
 #include "gdyntext_ui.h"
 
+#include "libgimp/stdplugins-intl.h"
 
 char *strunescape(char *text);
 char *strescape(char *text);
@@ -528,7 +532,7 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 	} else {
 		/* create a new layer */
 		data->layer_id = data->drawable_id = gimp_layer_new(data->image_id,
-			_("GDynText Layer "), layer_width, layer_height,
+			_("GDynText Layer"), layer_width, layer_height,
 			(GDrawableType)(gimp_image_base_type(data->image_id) * 2 + 1),
 			100.0, NORMAL_MODE);
 		gimp_layer_add_alpha(data->layer_id);

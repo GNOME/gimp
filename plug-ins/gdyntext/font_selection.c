@@ -19,19 +19,17 @@
  *
  * $Id$
  */
+#include "config.h"
 
 #include <stdio.h>
 #include <string.h>
+
 #include <gtk/gtk.h>
-#include <gtk/gtkfeatures.h>
-#if GTK_CHECK_VERSION(1,3,0)
-#include <gdk/gdkprivate.h>	/* For gdk_error_warnings, really needed? */
-#else
-#include <gdk/gdkx.h>		/* Need Xlib headers */
-#endif
-#include "libgimp/stdplugins-intl.h"
+#include <gdk/gdkx.h>
+
 #include "font_selection.h"
 
+#include "libgimp/stdplugins-intl.h"
 
 static void font_selection_class_init(FontSelectionClass *class);
 static void font_selection_init(FontSelection *fs);

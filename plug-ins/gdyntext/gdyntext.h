@@ -23,8 +23,6 @@
 #ifndef _GDYNTEXT_H_
 #define _GDYNTEXT_H_
 
-#include "libgimp/stdplugins-intl.h"
-
 #define GDYNTEXT_VERSION				"1.4.3"
 #define GDYNTEXT_MAGIC					"GDT09"
 #define GDYNTEXT_WEB_PAGE				"http://www.geocities.com/Tokyo/1474/gimp/"

@@ -28,9 +28,12 @@
 #endif
 #include <stdio.h>
 #include <string.h>
+
 #include <libgimp/gimp.h>
-#include <gdk/gdk.h>
+
 #include "gdyntext_ui.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 #include "graphics/antialias.xpm"
 #include "graphics/align_left.xpm"
@@ -671,7 +674,6 @@ gdt_create_ui (GdtVals *data)
   argv = g_new0(gchar *, 1);
   argv[0] = g_strdup("gdyntext");
 
-  gtk_set_locale();
   gtk_init(&argc, &argv);
   gtk_rc_parse(gimp_gtkrc());
   gdk_set_use_xshm(gimp_use_xshm());
