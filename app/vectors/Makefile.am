@@ -34,7 +34,3 @@ libappvectors_a_SOURCES = \
 	gimpvectors-import.h	\
 	gimpvectors-preview.c	\
 	gimpvectors-preview.h
-
-## This is a truly ugly hack
-libappvectors_a_LIBADD = ../config/gimpxmlparser.o
-

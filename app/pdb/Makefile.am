@@ -48,9 +48,6 @@ libapppdb_a_SOURCES = \
 	undo_cmds.c		\
 	unit_cmds.c
 
-## This is a truly ugly hack
-libapppdb_a_LIBADD = ../core/gimpcontainer-filter.o
-
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-PDB\"	\
 	@GIMP_THREAD_FLAGS@ 		\

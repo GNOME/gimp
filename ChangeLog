@@ -1,3 +1,11 @@
+2003-09-16  Manish Singh  <yosh@gimp.org>
+
+	* app/Makefile.am: use -u to prevent garbage collection of symbols
+	prematurely. I wonder if this works everywhere...
+
+	* app/pdb/Makefile.am
+	* app/vectors/Makefile.am: remove gross hacks
+
 2003-09-16  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpvectors.[ch]: Implemented an (unused/untested)

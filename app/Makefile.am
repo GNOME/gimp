@@ -50,8 +50,15 @@ REGEXREPL = $(top_builddir)/regexrepl/libregex.a
 endif
 
 if OS_WIN32
-gimp_1_3_LDFLAGS = -mwindows
+mwindows = -mwindows
 endif
+
+gimp_1_3_LDFLAGS = \
+	$(mwindows)					\
+	-u gimp_container_get_filtered_name_array	\
+	-u gimp_xml_parser_new				\
+	-u gimp_xml_parser_parse_file			\
+	-u gimp_xml_parser_free
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp\"		\
