@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-09-02 21:30+0200\n"
-"PO-Revision-Date: 2003-08-31 21:32+0200\n"
+"POT-Creation-Date: 2003-09-06 20:36+0200\n"
+"PO-Revision-Date: 2003-09-06 20:39+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -390,7 +390,7 @@ msgstr "Fraktaler"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1599 plug-ins/bmp/bmpwrite.c:199
 #: plug-ins/common/CEL.c:497 plug-ins/common/CML_explorer.c:2165
-#: plug-ins/common/gbr.c:494 plug-ins/common/gif.c:1014
+#: plug-ins/common/gbr.c:490 plug-ins/common/gif.c:1014
 #: plug-ins/common/gih.c:1228 plug-ins/common/gtm.c:238
 #: plug-ins/common/jpeg.c:1300 plug-ins/common/pat.c:385
 #: plug-ins/common/pcx.c:579 plug-ins/common/pix.c:514
@@ -451,7 +451,7 @@ msgstr "Klicka här för att avbryta sparningsprocessen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2008 plug-ins/bmp/bmpread.c:97
 #: plug-ins/common/CEL.c:253 plug-ins/common/CML_explorer.c:2391
-#: plug-ins/common/gbr.c:299 plug-ins/common/gih.c:628
+#: plug-ins/common/gbr.c:298 plug-ins/common/gih.c:628
 #: plug-ins/common/hrz.c:337 plug-ins/common/jpeg.c:771
 #: plug-ins/common/pat.c:269 plug-ins/common/pcx.c:301
 #: plug-ins/common/pix.c:333 plug-ins/common/png.c:487
@@ -1173,7 +1173,7 @@ msgstr "Felaktig färgkarta"
 
 #. Set up progress display
 #: plug-ins/bmp/bmpread.c:102 plug-ins/common/CEL.c:257
-#: plug-ins/common/gbr.c:304 plug-ins/common/gih.c:632
+#: plug-ins/common/gbr.c:303 plug-ins/common/gih.c:632
 #: plug-ins/common/gifload.c:300 plug-ins/common/hrz.c:341
 #: plug-ins/common/jpeg.c:775 plug-ins/common/pat.c:273
 #: plug-ins/common/pcx.c:305 plug-ins/common/pix.c:338
@@ -2392,59 +2392,59 @@ msgstr "<Image>/Lager/Färger/Auto/_Sträck ut kontrast"
 msgid "Auto-Stretching Contrast..."
 msgstr "Sträcker ut kontrast..."
 
-#: plug-ins/common/ccanalyze.c:189
+#: plug-ins/common/ccanalyze.c:191
 msgid "<Image>/Filters/Colors/Colorcube A_nalysis..."
 msgstr "<Image>/Filter/Färger/Färgkubs_analys..."
 
-#: plug-ins/common/ccanalyze.c:269
+#: plug-ins/common/ccanalyze.c:277
 msgid "Colorcube Analysis..."
 msgstr "Färgkubsanalys..."
 
 #. set up the dialog
-#: plug-ins/common/ccanalyze.c:509
+#: plug-ins/common/ccanalyze.c:554
 msgid "Colorcube Analysis"
 msgstr "Färgkubsanalys..."
 
 #. set up frame
-#: plug-ins/common/ccanalyze.c:524
+#: plug-ins/common/ccanalyze.c:569
 msgid "Results"
 msgstr "Resultat"
 
 #. output results
-#: plug-ins/common/ccanalyze.c:548
+#: plug-ins/common/ccanalyze.c:593
 #, c-format
 msgid "Image dimensions: %dx%d"
 msgstr "Bilddimensioner: %d×%d"
 
-#: plug-ins/common/ccanalyze.c:549
+#: plug-ins/common/ccanalyze.c:594
 #, c-format
 msgid "Uncompressed size in bytes: %d"
 msgstr "Okompirmerad storlek i byte: %d"
 
-#: plug-ins/common/ccanalyze.c:552
+#: plug-ins/common/ccanalyze.c:597
 msgid "No colors (?)"
 msgstr "Inga färger (?)"
 
-#: plug-ins/common/ccanalyze.c:554
+#: plug-ins/common/ccanalyze.c:599
 msgid "Only one unique color"
 msgstr "Endast en unik färg"
 
-#: plug-ins/common/ccanalyze.c:556
+#: plug-ins/common/ccanalyze.c:601
 #, c-format
 msgid "Number of unique colors: %d"
 msgstr "Antal unika färger: %d"
 
-#: plug-ins/common/ccanalyze.c:560
+#: plug-ins/common/ccanalyze.c:605
 #, c-format
 msgid "Filename: %s"
 msgstr "Filnamn: %s"
 
-#: plug-ins/common/ccanalyze.c:564
+#: plug-ins/common/ccanalyze.c:609
 #, c-format
 msgid "Compressed size in bytes: %u"
 msgstr "Komprimerad storlek i byte: %u"
 
-#: plug-ins/common/ccanalyze.c:565
+#: plug-ins/common/ccanalyze.c:610
 #, c-format
 msgid "Compression ratio (approx.): %d to 1"
 msgstr "Kompressionsförhållande (ung.): %d till 1"
@@ -3759,7 +3759,7 @@ msgstr "Du måste välja horisontell eller vertikal (eller båda)"
 msgid "RLE Gaussian Blur"
 msgstr "RLE Gaussisk oskärpa"
 
-#: plug-ins/common/gbr.c:348
+#: plug-ins/common/gbr.c:344
 #, c-format
 msgid ""
 "Error in GIMP brush file\n"
@@ -3768,29 +3768,29 @@ msgstr ""
 "Fel i GIMP-penselfilen\n"
 "\"%s\""
 
-#: plug-ins/common/gbr.c:356 plug-ins/common/gih.c:480
+#: plug-ins/common/gbr.c:352 plug-ins/common/gih.c:480
 #: plug-ins/common/gih.c:1128
 msgid "Unnamed"
 msgstr "Namnlös"
 
-#: plug-ins/common/gbr.c:486
+#: plug-ins/common/gbr.c:482
 msgid "GIMP brushes are either GRAYSCALE or RGBA\n"
 msgstr "GIMP-penslar är antingen GRÅSKALA eller RGBA\n"
 
-#: plug-ins/common/gbr.c:499
+#: plug-ins/common/gbr.c:495
 #, c-format
 msgid "Saving %s:"
 msgstr "Sparar %s:"
 
-#: plug-ins/common/gbr.c:565
+#: plug-ins/common/gbr.c:561
 msgid "Save as Brush"
 msgstr "Spara som pensel"
 
-#: plug-ins/common/gbr.c:592
+#: plug-ins/common/gbr.c:588
 msgid "Spacing:"
 msgstr "Mellanrum:"
 
-#: plug-ins/common/gbr.c:603 plug-ins/common/gih.c:886
+#: plug-ins/common/gbr.c:599 plug-ins/common/gih.c:886
 #: plug-ins/common/pat.c:479 plug-ins/gimpressionist/presets.c:376
 msgid "Description:"
 msgstr "Beskrivning:"
@@ -5952,20 +5952,20 @@ msgid "<Toolbox>/File/Acquire/_Screen Shot..."
 msgstr "<Toolbox>/Arkiv/Inhämta/_Skärmdump..."
 
 #: plug-ins/common/screenshot.c:268
-msgid "Screen Shot: Error grabbing the pointer"
-msgstr "Skärmdump: Fel vid fångande av pekare"
+msgid "Error grabbing the pointer"
+msgstr "Fel vid fångande av pekare"
 
 #: plug-ins/common/screenshot.c:359
 msgid "Loading Screen Shot..."
 msgstr "Läser skärmdump..."
 
 #: plug-ins/common/screenshot.c:434
-msgid "Screen Shot: Specified window not found"
-msgstr "Skärmdump: Angett fönster kan inte hittas"
+msgid "Specified window not found"
+msgstr "Angett fönster kan inte hittas"
 
 #: plug-ins/common/screenshot.c:466
-msgid "Screen Shot: Error obtaining screenshot"
-msgstr "Skärmdump: Fel vid fångande av skärmdump"
+msgid "Error obtaining screenshot"
+msgstr "Fel vid fångande av skärmdump"
 
 #. main dialog
 #: plug-ins/common/screenshot.c:508
@@ -5973,23 +5973,23 @@ msgid "Screen Shot"
 msgstr "Skärmdump"
 
 #. single window
-#: plug-ins/common/screenshot.c:531 plug-ins/winsnap/winsnap.c:906
+#: plug-ins/common/screenshot.c:532 plug-ins/winsnap/winsnap.c:906
 msgid "Grab"
 msgstr "Fånga"
 
-#: plug-ins/common/screenshot.c:540
-msgid "_Single Window"
-msgstr "_Ensamt fönster"
+#: plug-ins/common/screenshot.c:541
+msgid "a _Single Window"
+msgstr "ett _Ensamt fönster"
 
-#: plug-ins/common/screenshot.c:555
-msgid "_Whole Screen"
+#: plug-ins/common/screenshot.c:556
+msgid "the _Whole Screen"
 msgstr "_Hela skärmen"
 
-#: plug-ins/common/screenshot.c:574
+#: plug-ins/common/screenshot.c:575
 msgid "_after"
 msgstr "_efter"
 
-#: plug-ins/common/screenshot.c:587 plug-ins/winsnap/winsnap.c:1023
+#: plug-ins/common/screenshot.c:588 plug-ins/winsnap/winsnap.c:1023
 msgid "Seconds Delay"
 msgstr "sekunders fördröjning"
 
