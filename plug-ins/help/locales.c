@@ -27,10 +27,8 @@
 
 #include <glib.h>
 
+#include "help.h"
 #include "locales.h"
-
-
-#define GIMP_HELP_DEFAULT_LOCALE  "en"
 
 
 GList *
@@ -54,9 +52,9 @@ locales_parse (const gchar *help_locales)
     }
 
   if (*s)
-    locales = g_list_prepend (locales, g_strdup (s));
+    locales = g_list_append (locales, g_strdup (s));
 
-  /*  append locales w/o variants unless they exist already */
+  /*  add locales w/o variants unless they exist already */
   for (list = locales; list; list = list->next)
     {
       s = (const gchar *) list->data;

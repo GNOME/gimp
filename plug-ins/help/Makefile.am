@@ -12,7 +12,8 @@ help_SOURCES = \
 	domain.h	\
 	locales.c	\
 	locales.h	\
-	help.c
+	help.c		\
+	help.h
 
 INCLUDES = \
 	-I$(top_srcdir)		\

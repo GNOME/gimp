@@ -30,6 +30,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "domain.h"
+#include "help.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -38,6 +39,13 @@ struct _HelpDomain
 {
   gchar      *help_domain;
   gchar      *help_uri;
+  GHashTable *help_locales;
+};
+
+typedef struct _HelpLocale HelpLocale;
+struct _HelpLocale
+{
+  gchar      *locale_id;
   GHashTable *help_id_mapping;
   gchar      *help_missing;
 };
@@ -45,12 +53,22 @@ struct _HelpDomain
 
 /*  local function prototypes  */
 
-static HelpDomain * domain_new   (const gchar  *domain_name,
-                                  const gchar  *domain_uri);
-static void         domain_free  (HelpDomain   *domain);
-static gboolean     domain_parse (HelpDomain   *domain,
-                                  GError      **error);
 
+static HelpDomain  * domain_new           (const gchar  *domain_name,
+                                           const gchar  *domain_uri);
+static void          domain_free          (HelpDomain   *domain);
+
+static HelpLocale  * domain_locale_new    (const gchar  *locale_id);
+static void          domain_locale_free   (HelpLocale   *locale);
+
+static HelpLocale  * domain_locale_lookup (HelpDomain   *domain,
+                                           const gchar  *locale_id);
+static const gchar * domain_locale_map    (HelpLocale  *locale,
+                                           const gchar *help_id);
+
+static gboolean      domain_locale_parse  (HelpDomain    *domain,
+                                           HelpLocale    *locale,
+                                           GError       **error);
 
 /*  private variables  */
 
@@ -96,37 +114,45 @@ domain_map (HelpDomain   *domain,
             GList        *help_locales,
             const gchar  *help_id)
 {
-  const gchar *ref;
+  HelpLocale  *locale = NULL;
+  const gchar *ref    = NULL;
+  GList       *list;
 
   g_return_val_if_fail (domain != NULL, NULL);
   g_return_val_if_fail (help_locales != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
 
-  if (! domain->help_id_mapping)
+  for (list = help_locales; list && !ref; list = list->next)
     {
-      GError *error = NULL;
-
-      if (! domain_parse (domain, &error) || error)
-        {
-          if (! domain->help_id_mapping)
-            g_message (_("Failed to open help files:\n%s"), error->message);
-          else
-            g_message (_("Parse error in help domain:\n%s\n\n"
-                         "(entries appearing before the error have been added anyway)"),
-                       error->message);
-
-          if (error)
-            g_clear_error (&error);
-        }
-
-      if (! domain->help_id_mapping)
-        return NULL;
+      locale = domain_locale_lookup (domain, (const gchar *) list->data);
+      if (locale)
+        ref = domain_locale_map (locale, help_id);
     }
 
-  ref = g_hash_table_lookup (domain->help_id_mapping, help_id);
+  /*  error message that need to be added back;
+      stored here to avoid string changes        */
+#if 0
+  if (! strcmp (domain->help_domain, GIMP_HELP_DEFAULT_DOMAIN))
+    msg = _("The GIMP help files are not installed.");
+  else
+    msg = _("The requested help files are not installed.");
 
-  if (! ref)
-    ref = domain->help_missing;
+  msg2 = g_strdup_printf (_("Could not open '%s' for reading: %s"),
+                          gimp_filename_to_utf8 (filename),
+                          (*error)->message);
+
+  g_clear_error (error);
+
+  g_set_error (error, 0, 0, "%s\n\n%s\n\n%s",
+               msg, msg2, _("Please check your installation."));
+
+  if (! domain->help_id_mapping)
+    g_message (_("Failed to open help files:\n%s"), error->message);
+  else
+    g_message (_("Parse error in help domain:\n%s\n\n"
+                 "(entries appearing before the error have been added anyway)"),
+               error->message);
+#endif
 
   if (! ref)
     {
@@ -134,7 +160,27 @@ domain_map (HelpDomain   *domain,
       return NULL;
     }
 
-  return g_strconcat (domain->help_uri, "/", ref, NULL);
+  return g_strconcat (domain->help_uri,  "/",
+                      locale->locale_id, "/",
+                      ref,
+                      NULL);
+}
+
+static const gchar *
+domain_locale_map (HelpLocale  *locale,
+                   const gchar *help_id)
+{
+  const gchar *ref;
+
+  if (! locale->help_id_mapping)
+    return NULL;
+
+  ref = g_hash_table_lookup (locale->help_id_mapping, help_id);
+
+  if (! ref)
+    ref = locale->help_missing;
+
+  return ref;
 }
 
 
@@ -157,13 +203,64 @@ domain_free (HelpDomain *domain)
 {
   g_return_if_fail (domain != NULL);
 
-  if (domain->help_id_mapping)
-    g_hash_table_destroy (domain->help_id_mapping);
-
   g_free (domain->help_domain);
   g_free (domain->help_uri);
-  g_free (domain->help_missing);
   g_free (domain);
+}
+
+
+static
+HelpLocale *
+domain_locale_new (const gchar *locale_id)
+{
+  HelpLocale *locale = g_new0 (HelpLocale, 1);
+
+  locale->locale_id = g_strdup (locale_id);
+
+  return locale;
+}
+
+static void
+domain_locale_free (HelpLocale *locale)
+{
+  if (locale->help_id_mapping)
+    g_hash_table_destroy (locale->help_id_mapping);
+
+  g_free (locale->locale_id);
+  g_free (locale->help_missing);
+}
+
+static HelpLocale *
+domain_locale_lookup (HelpDomain  *domain,
+                      const gchar *locale_id)
+{
+  HelpLocale *locale = NULL;
+  GError     *error  = NULL;
+
+  if (domain->help_locales)
+    locale = g_hash_table_lookup (domain->help_locales, locale_id);
+  else
+    domain->help_locales =
+      g_hash_table_new_full (g_str_hash, g_str_equal,
+                             g_free,
+                             (GDestroyNotify) domain_locale_free);
+
+  if (locale)
+    return locale;
+
+  locale = domain_locale_new (locale_id);
+  g_hash_table_insert (domain->help_locales, g_strdup (locale_id), locale);
+
+  if (! domain_locale_parse (domain, locale, &error))
+    {
+      if (error->code != G_FILE_ERROR_NOENT)
+        {
+          g_message (error->message);
+          g_error_free (error);
+        }
+    }
+
+  return locale;
 }
 
 
@@ -188,6 +285,7 @@ typedef struct
   GString           *value;
 
   HelpDomain        *domain;
+  HelpLocale        *locale;
   gchar             *id_attr_name;
 } DomainParser;
 
@@ -229,8 +327,9 @@ static const GMarkupParser markup_parser =
 };
 
 static gboolean
-domain_parse (HelpDomain  *domain,
-              GError     **error)
+domain_locale_parse (HelpDomain  *domain,
+                     HelpLocale  *locale,
+                     GError     **error)
 {
   GMarkupParseContext *context;
   DomainParser        *parser;
@@ -239,47 +338,27 @@ domain_parse (HelpDomain  *domain,
   GIOChannel          *io;
 
   g_return_val_if_fail (domain != NULL, FALSE);
-  g_return_val_if_fail (domain->help_id_mapping == NULL, FALSE);
+  g_return_val_if_fail (locale != NULL, FALSE);
+  g_return_val_if_fail (locale->help_id_mapping == NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   base_dir = g_filename_from_uri (domain->help_uri, NULL, NULL);
-  filename = g_build_filename (base_dir, "gimp-help.xml", NULL);
+  filename = g_build_filename (base_dir,
+                               locale->locale_id,
+                               "gimp-help.xml",
+                               NULL);
   g_free (base_dir);
 
   io = g_io_channel_new_file (filename, "r", error);
   if (!io)
-    {
-      const gchar *msg;
-      gchar       *msg2;
-
-      if (! error)
-        return FALSE;
-
-      if (! strcmp (domain->help_domain, GIMP_HELP_DEFAULT_DOMAIN))
-        msg = _("The GIMP help files are not installed.");
-      else
-        msg = _("The requested help files are not installed.");
-
-      msg2 = g_strdup_printf (_("Could not open '%s' for reading: %s"),
-                              gimp_filename_to_utf8 (filename),
-                              (*error)->message);
-
-      g_clear_error (error);
-
-      g_set_error (error, 0, 0, "%s\n\n%s\n\n%s",
-                   msg, msg2, _("Please check your installation."));
-
-      g_free (msg2);
-      g_free (filename);
-
-      return FALSE;
-    }
+    return FALSE;
 
   parser = g_new0 (DomainParser, 1);
   parser->filename     = filename;
   parser->value        = g_string_new (NULL);
   parser->id_attr_name = g_strdup ("id");
   parser->domain       = domain;
+  parser->locale       = locale;
 
   context = g_markup_parse_context_new (&markup_parser, 0, parser, NULL);
 
@@ -294,7 +373,7 @@ domain_parse (HelpDomain  *domain,
 
   g_free (filename);
 
-  return (domain->help_id_mapping != NULL);
+  return (locale->help_id_mapping != NULL);
 }
 
 static gboolean
@@ -451,8 +530,10 @@ domain_parser_parse_namespace (DomainParser  *parser,
           parser->id_attr_name = g_strdup_printf ("%s:id", *names + 6);
 
 #ifdef GIMP_HELP_DEBUG
-          g_printerr ("help: id attribute name for \"%s\" is \"%s\"\n",
-                      parser->domain->help_domain, parser->id_attr_name);
+          g_printerr ("help (%s): id attribute name for \"%s\" is \"%s\"\n",
+                      parser->locale->locale_id,
+                      parser->domain->help_domain,
+                      parser->id_attr_name);
 #endif
         }
     }
@@ -477,17 +558,18 @@ domain_parser_parse_item (DomainParser  *parser,
 
   if (id && ref)
     {
-      if (! parser->domain->help_id_mapping)
-        parser->domain->help_id_mapping = g_hash_table_new_full (g_str_hash,
+      if (! parser->locale->help_id_mapping)
+        parser->locale->help_id_mapping = g_hash_table_new_full (g_str_hash,
                                                                  g_str_equal,
                                                                  g_free,
                                                                  g_free);
 
-      g_hash_table_insert (parser->domain->help_id_mapping,
+      g_hash_table_insert (parser->locale->help_id_mapping,
                            g_strdup (id), g_strdup (ref));
 
 #ifdef GIMP_HELP_DEBUG
-      g_printerr ("help: added mapping \"%s\" -> \"%s\"\n", id, ref);
+      g_printerr ("help (%s): added mapping \"%s\" -> \"%s\"\n",
+                  parser->locale->locale_id, id, ref);
 #endif
     }
 }
@@ -506,12 +588,13 @@ domain_parser_parse_missing (DomainParser  *parser,
     }
 
   if (ref &&
-      parser->domain->help_missing == NULL)
+      parser->locale->help_missing == NULL)
     {
-      parser->domain->help_missing = g_strdup (ref);
+      parser->locale->help_missing = g_strdup (ref);
 
 #ifdef GIMP_HELP_DEBUG
-      g_printerr ("help: added fallback for missing help -> \"%s\"\n", ref);
+      g_printerr ("help (%s): added fallback for missing help -> \"%s\"\n",
+                  parser->locale->locale_id, ref);
 #endif
     }
 }

@@ -30,6 +30,7 @@
 #include "libgimp/gimp.h"
 
 #include "domain.h"
+#include "help.h"
 #include "locales.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -42,8 +43,6 @@
 
 #define GIMP_HELP_PREFIX          "help"
 #define GIMP_HELP_ENV_URI         "GIMP2_HELP_URI"
-
-#define GIMP_HELP_DEFAULT_ID      "gimp-main"
 
 
 typedef struct

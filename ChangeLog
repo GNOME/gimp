@@ -1,12 +1,27 @@
 2004-03-18  Sven Neumann  <sven@gimp.org>
 
+	Added support for localized help (bug #136996). Will need some
+	minor touches to improve error reporting but basically it works.
+
+	* plug-ins/help/Makefile.am
+	* plug-ins/help/help.h: new file with common defines.
+
+	* plug-ins/help/help.c
+	* plug-ins/help/locales.c: include help.h, made debugging output
+	optional.
+
+	* plug-ins/help/domain.[ch]: added a hash table with locales for
+	each help domain.
+
+2004-03-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help/Makefile.am
 	* plug-ins/help/locales.[ch]: new files with code to handle locales.
 
 	* plug-ins/help/help.c: changed accordingly.
 
 	* plug-ins/help/domain.[ch]: added support for a fallback URL to
-	handle missing help content. i18n support is missing still.
+	handle missing help content. I18n support is missing still.
 
 2004-03-17  Simon Budig  <simon@gimp.org>
 
