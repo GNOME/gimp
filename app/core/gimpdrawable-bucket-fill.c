@@ -313,6 +313,17 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
 	  has_alpha = TRUE;
 	}
     }
+  else if (pat_buf->bytes == 2 || pat_buf->bytes == 4)
+    {
+      /* If pattern being applied has an alpha channel, 
+       * add one to the temp buffer from the image too.
+       */
+      if (! has_alpha)
+	{
+	  bytes ++;
+	  has_alpha = TRUE;
+	}
+    }
 
   buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
