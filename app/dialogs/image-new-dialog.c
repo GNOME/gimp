@@ -185,6 +185,8 @@ image_new_response (GtkWidget      *widget,
     case RESPONSE_RESET:
       gimp_config_sync (GIMP_CONFIG (dialog->gimp->config->default_image),
                         GIMP_CONFIG (dialog->template), 0);
+      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (dialog->combo),
+                                       NULL);
       break;
 
     case GTK_RESPONSE_OK:
