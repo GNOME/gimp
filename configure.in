@@ -289,7 +289,6 @@ plug-ins/maze/Makefile
 plug-ins/max_rgb/Makefile
 plug-ins/mail/Makefile
 plug-ins/magiceye/Makefile
-plug-ins/lic/Makefile
 plug-ins/laplace/Makefile
 plug-ins/ifscompose/Makefile
 plug-ins/iwarp/Makefile
@@ -307,10 +306,8 @@ plug-ins/gfli/Makefile
 plug-ins/gbr/Makefile
 plug-ins/gauss_iir/Makefile
 plug-ins/gauss_rle/Makefile
-plug-ins/fp/Makefile
 plug-ins/fits/Makefile
 plug-ins/film/Makefile
-plug-ins/figures/Makefile
 plug-ins/faxg3/Makefile
 plug-ins/exchange/Makefile
 plug-ins/engrave/Makefile
@@ -358,13 +355,10 @@ plug-ins/flame/Makefile
 plug-ins/gimptcl/Makefile
 plug-ins/gimptcl/scripts/Makefile
 plug-ins/fuse/Makefile
-plug-ins/mathmap/Makefile
 plug-ins/rcm/Makefile
-plug-ins/refract/Makefile
 plug-ins/struc/Makefile
 plug-ins/twist/Makefile
 plug-ins/user_filter/Makefile
-plug-ins/warp/Makefile
 plug-ins/zealouscrop/Makefile
 plug-ins/xwd/Makefile
 plug-ins/whirlpinch/Makefile

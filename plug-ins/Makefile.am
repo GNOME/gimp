@@ -14,11 +14,9 @@ SUBDIRS = 			\
 	fuse			\
 	gflare			\
 	@GIMPTCL@		\
-	refract			\
 	script-fu		\
 	struc			\
 	twist			\
-	warp			\
 	@TIFF@			\
 	@JPEG@			\
 	@PNG@			\
@@ -57,12 +55,10 @@ SUBDIRS = 			\
 	engrave			\
 	exchange		\
 	faxg3			\
-	figures			\
 	film			\
 	fits			\
 	flame			\
 	flarefx			\
-	fp			\
 	fractaltrace		\
 	gauss_iir		\
 	gauss_rle		\
@@ -83,7 +79,6 @@ SUBDIRS = 			\
 	illusion		\
 	iwarp			\
 	laplace			\
-	lic			\
 	magiceye		\
 	mail			\
 	max_rgb			\
