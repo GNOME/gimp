@@ -178,13 +178,13 @@ static guint n_help_dnd_targets = (sizeof (help_dnd_target_table) /
 /*  GIMP plugin stuff  */
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
-		   GParam  *param,
-		   gint    *nreturn_vals,
-		   GParam **return_vals);
+static void run   (gchar      *name,
+		   gint        nparams,
+		   GimpParam  *param,
+		   gint       *nreturn_vals,
+		   GimpParam **return_vals);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -547,10 +547,10 @@ xmhtml_activate (GtkWidget *html,
       /*  try to call netscape through the web_browser interface */
       return_vals = gimp_run_procedure ("extension_web_browser",
 					&nreturn_vals,
-					PARAM_INT32,  RUN_NONINTERACTIVE,
-					PARAM_STRING, cbs->href,
-					PARAM_INT32,  FALSE,
-					PARAM_END);
+					GIMP_PDB_INT32,  GIMP_RUN_NONINTERACTIVE,
+					GIMP_PDB_STRING, cbs->href,
+					GIMP_PDB_INT32,  FALSE,
+					GIMP_PDB_END);
        gimp_destroy_params (return_vals, nreturn_vals);
       break;
     }
@@ -997,14 +997,14 @@ idle_load_page (gpointer data)
 }
 
 static void
-run_temp_proc (gchar   *name,
-	       gint     nparams,
-	       GParam  *param,
-	       gint    *nreturn_vals,
-	       GParam **return_vals)
+run_temp_proc (gchar      *name,
+	       gint        nparams,
+	       GimpParam  *param,
+	       gint       *nreturn_vals,
+	       GimpParam **return_vals)
 {
-  static GParam values[1];
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam  values[1];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gchar *help_path;
   gchar *locale;
   gchar *help_file;
@@ -1051,7 +1051,7 @@ run_temp_proc (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
@@ -1074,12 +1074,12 @@ input_callback (GIOChannel   *channel,
 static void
 install_temp_proc (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_STRING, "help_path", "" },
-    { PARAM_STRING, "locale",    "Langusge to use" },
-    { PARAM_STRING, "help_file", "Path of a local document to open. "
-                                 "Can be relative to GIMP_HELP_PATH." }
+    { GIMP_PDB_STRING, "help_path", "" },
+    { GIMP_PDB_STRING, "locale",    "Langusge to use" },
+    { GIMP_PDB_STRING, "help_file", "Path of a local document to open. "
+                                    "Can be relative to GIMP_HELP_PATH." }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -1092,7 +1092,7 @@ install_temp_proc (void)
 			  "1999",
 			  NULL,
 			  "",
-			  PROC_TEMPORARY,
+			  GIMP_TEMPORARY,
 			  nargs, 0,
 			  args, NULL,
 			  run_temp_proc);
@@ -1122,13 +1122,13 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,  "run_mode",  "Interactive" },
-    { PARAM_STRING, "help_path", "" },
-    { PARAM_STRING, "locale",    "Language to use" },
-    { PARAM_STRING, "help_file", "Path of a local document to open. "
-                                 "Can be relative to GIMP_HELP_PATH." }
+    { GIMP_PDB_INT32,  "run_mode",  "Interactive" },
+    { GIMP_PDB_STRING, "help_path", "" },
+    { GIMP_PDB_STRING, "locale",    "Language to use" },
+    { GIMP_PDB_STRING, "help_file", "Path of a local document to open. "
+                                    "Can be relative to GIMP_HELP_PATH." }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -1142,28 +1142,28 @@ query (void)
                           "1999",
                           NULL,
                           "",
-                          PROC_EXTENSION,
+                          GIMP_EXTENSION,
                           nargs, 0,
                           args, NULL);
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GParam  *param,
-     gint    *nreturn_vals,
-     GParam **return_vals)
+run (gchar      *name,
+     gint        nparams,
+     GimpParam  *param,
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam  values[1];
+  GimpRunModeType   run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gchar *help_path = NULL;
   gchar *locale    = NULL;
   gchar *help_file = NULL;
 
   run_mode = param[0].data.d_int32;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
@@ -1175,9 +1175,9 @@ run (gchar   *name,
     {
       switch (run_mode)
         {
-        case RUN_INTERACTIVE:
-        case RUN_NONINTERACTIVE:
-	case RUN_WITH_LAST_VALS:
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_NONINTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  set default values  */
 	  help_path = g_strconcat (gimp_data_directory(), G_DIR_SEPARATOR_S, 
 				   GIMP_HELP_PREFIX, NULL);
@@ -1208,16 +1208,16 @@ run (gchar   *name,
           break;
 
         default:
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
           break;
         }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
         {
        	  if (!open_url (help_path, locale, help_file))
-            values[0].data.d_status = STATUS_EXECUTION_ERROR;
+            values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	  else
-	    values[0].data.d_status = STATUS_SUCCESS;
+	    values[0].data.d_status = GIMP_PDB_SUCCESS;
 
 	  g_free (help_path);
 	  g_free (locale);
@@ -1227,5 +1227,5 @@ run (gchar   *name,
         values[0].data.d_status = status;
     }
   else
-    values[0].data.d_status = STATUS_CALLING_ERROR;
+    values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 }

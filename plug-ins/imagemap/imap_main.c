@@ -108,12 +108,12 @@ static gpointer _button_press_param;
 static void query (void);
 static void run (char *name,
 		 int nparams,
-		 GParam * param,
+		 GimpParam * param,
 		 int *nreturn_vals,
-		 GParam ** return_vals);
-static gint dialog(GDrawable *drawable);
+		 GimpParam ** return_vals);
+static gint dialog(GimpDrawable *drawable);
 
-GPlugInInfo PLUG_IN_INFO = {
+GimpPlugInInfo PLUG_IN_INFO = {
    NULL,			/* init_proc */
    NULL,			/* quit_proc */
    query,			/* query_proc */
@@ -127,12 +127,12 @@ MAIN ()
 
 static void query()
 {
-   static GParamDef args[] = {
-      {PARAM_INT32, "run_mode", "Interactive"},
-      {PARAM_IMAGE, "image", "Input image (unused)"},
-      {PARAM_DRAWABLE, "drawable", "Input drawable"},
+   static GimpParamDef args[] = {
+      {GIMP_PDB_INT32, "run_mode", "Interactive"},
+      {GIMP_PDB_IMAGE, "image", "Input image (unused)"},
+      {GIMP_PDB_DRAWABLE, "drawable", "Input drawable"},
    };
-   static GParamDef *return_vals = NULL;
+   static GimpParamDef *return_vals = NULL;
    static int nargs = sizeof (args) / sizeof (args[0]);
    static int nreturn_vals = 0;
    
@@ -144,19 +144,19 @@ static void query()
 			  "1998-1999",
 			  N_("<Image>/Filters/Web/ImageMap..."),
 			  "RGB*, GRAY*, INDEXED*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
 }
 
 static void
-run(char *name, int n_params, GParam *param, int *nreturn_vals,
-    GParam **return_vals)
+run(char *name, int n_params, GimpParam *param, int *nreturn_vals,
+    GimpParam **return_vals)
 {
-   static GParam values[1];
-   GDrawable *drawable;
-   GRunModeType run_mode;
-   GStatusType status = STATUS_SUCCESS;
+   static GimpParam values[1];
+   GimpDrawable *drawable;
+   GimpRunModeType run_mode;
+   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
    INIT_I18N_UI();
 
@@ -171,20 +171,20 @@ run(char *name, int n_params, GParam *param, int *nreturn_vals,
 
    _map_info.color = gimp_drawable_is_rgb(drawable->id);
 
-   run_mode = (GRunModeType) param[0].data.d_int32;
+   run_mode = (GimpRunModeType) param[0].data.d_int32;
    
-   if (run_mode == RUN_INTERACTIVE) {
+   if (run_mode == GIMP_RUN_INTERACTIVE) {
       if (!dialog(drawable)) {
 	 /* The dialog was closed, or something similarly evil happened. */
-	 status = STATUS_EXECUTION_ERROR;
+	 status = GIMP_PDB_EXECUTION_ERROR;
       }
    }
       
-   if (status == STATUS_SUCCESS) {
+   if (status == GIMP_PDB_SUCCESS) {
       gimp_drawable_detach(drawable);
    }
    
-   values[0].type = PARAM_STATUS;
+   values[0].type = GIMP_PDB_STATUS;
    values[0].data.d_status = status;
 }
 
@@ -1315,7 +1315,7 @@ factory_move_down(void)
 }
 
 static gint
-dialog(GDrawable *drawable)
+dialog(GimpDrawable *drawable)
 {
    GtkWidget 	*dlg;
    GtkWidget 	*hbox;

@@ -601,10 +601,10 @@ maze_help (GtkWidget *widget,
       maze_msg (message);
       g_free (message);
       gimp_run_procedure ("extension_web_browser", &baz,
-			  PARAM_INT32, RUN_NONINTERACTIVE,
-			  PARAM_STRING, MAZE_URL,
-			  PARAM_INT32, HELP_OPENS_NEW_WINDOW,
-			  PARAM_END);
+			  GIMP_PDB_INT32, GIMP_RUN_NONINTERACTIVE,
+			  GIMP_PDB_STRING, MAZE_URL,
+			  GIMP_PDB_INT32, HELP_OPENS_NEW_WINDOW,
+			  GIMP_PDB_END);
     } 
   else 
     {

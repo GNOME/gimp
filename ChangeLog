@@ -1,5 +1,17 @@
 2000-08-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/helpbrowser/helpbrowser.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_preview.[ch]
+	* plug-ins/maze/handy.c
+	* plug-ins/maze/maze.c
+	* plug-ins/maze/maze_face.c
+	* plug-ins/mosaic/mosaic.c
+	* plug-ins/pagecurl/pagecurl.c: removed COMPAT_CRUFT
+
+2000-08-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/threshold_alpha.c: avoid floating point exception
 	on small images (reported by Steven Grady)
 

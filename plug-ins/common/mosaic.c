@@ -99,12 +99,12 @@ typedef struct
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar     *name,
-			 gint       nparams,
-			 GParam    *param,
-			 gint      *nreturn_vals,
-			 GParam   **return_vals);
-static void      mosaic (GDrawable *drawable);
+static void      run    (gchar        *name,
+			 gint          nparams,
+			 GimpParam    *param,
+			 gint         *nreturn_vals,
+			 GimpParam   **return_vals);
+static void      mosaic (GimpDrawable *drawable);
 
 /*  user interface functions  */
 static gint      mosaic_dialog      (void);
@@ -112,14 +112,14 @@ static void      mosaic_ok_callback (GtkWidget *widget,
 				     gpointer   data);
 
 /*  gradient finding machinery  */
-static void      find_gradients    (GDrawable *drawable,
-				    gdouble   std_dev);
-static void      find_max_gradient (GPixelRgn *src_rgn,
-				    GPixelRgn *dest_rgn);
+static void      find_gradients    (GimpDrawable *drawable,
+				    gdouble       std_dev);
+static void      find_max_gradient (GimpPixelRgn *src_rgn,
+				    GimpPixelRgn *dest_rgn);
 
 /*  gaussian & 1st derivative  */
-static void      gaussian_deriv    (GPixelRgn *src_rgn,
-				    GPixelRgn *dest_rgn,
+static void      gaussian_deriv    (GimpPixelRgn *src_rgn,
+				    GimpPixelRgn *dest_rgn,
 				    gint      direction,
 				    gdouble   std_dev,
 				    gint *    prog,
@@ -152,10 +152,10 @@ static void      grid_localize        (gint x1,
 				       gint y1,
 				       gint x2,
 				       gint y2);
-static void      grid_render          (GDrawable * drawable);
-static void      split_poly           (Polygon  * poly,
-				       GDrawable * drawable,
-				       guchar   * col,
+static void      grid_render          (GimpDrawable * drawable);
+static void      split_poly           (Polygon      * poly,
+				       GimpDrawable * drawable,
+				       guchar  *  col,
 				       gdouble *  dir,
 				       gdouble    color_vary);
 static void      clip_poly            (gdouble *  vec,
@@ -171,11 +171,11 @@ static void      clip_point           (gdouble *  dir,
 				       Polygon *  poly);
 static void      process_poly         (Polygon *  poly,
 				       gint       allow_split,
-				       GDrawable * drawable,
+				       GimpDrawable * drawable,
 				       guchar *   col,
 				       gint       vary);
 static void      render_poly          (Polygon *  poly,
-				       GDrawable * drawable,
+				       GimpDrawable * drawable,
 				       guchar *   col,
 				       gdouble    vary);
 static void      find_poly_dir        (Polygon *  poly,
@@ -189,7 +189,7 @@ static void      find_poly_dir        (Polygon *  poly,
 				       gint       x2,
 				       gint       y2);
 static void      find_poly_color      (Polygon *  poly,
-				       GDrawable * drawable,
+				       GimpDrawable * drawable,
 				       guchar *   col,
 				       double     vary);
 static void      scale_poly           (Polygon *  poly,
@@ -197,10 +197,10 @@ static void      scale_poly           (Polygon *  poly,
 				       gdouble    cy,
 				       gdouble    scale);
 static void      fill_poly_color      (Polygon *  poly,
-				       GDrawable * drawable,
+				       GimpDrawable * drawable,
 				       guchar *   col);
 static void      fill_poly_image      (Polygon *  poly,
-				       GDrawable * drawable,
+				       GimpDrawable * drawable,
 				       gdouble    vary);
 static void      calc_spec_vec        (SpecVec *  vec,
 				       gint       xs,
@@ -278,7 +278,7 @@ static MosaicInterface mint =
   FALSE,        /* run */
 };
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -292,24 +292,24 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_FLOAT, "tile_size", "Average diameter of each tile (in pixels)" },
-    { PARAM_FLOAT, "tile_height", "Apparent height of each tile (in pixels)" },
-    { PARAM_FLOAT, "tile_spacing", "Inter-tile spacing (in pixels)" },
-    { PARAM_FLOAT, "tile_neatness", "Deviation from perfectly formed tiles (0.0 - 1.0)" },
-    { PARAM_FLOAT, "light_dir", "Direction of light-source (in degrees)" },
-    { PARAM_FLOAT, "color_variation", "Magnitude of random color variations (0.0 - 1.0)" },
-    { PARAM_INT32, "antialiasing", "Enables smoother tile output at the cost of speed" },
-    { PARAM_INT32, "color_averaging", "Tile color based on average of subsumed pixels" },
-    { PARAM_INT32, "tile_type", "Tile geometry: { SQUARES (0), HEXAGONS (1), OCTAGONS (2) }" },
-    { PARAM_INT32, "tile_surface", "Surface characteristics: { SMOOTH (0), ROUGH (1) }" },
-    { PARAM_INT32, "grout_color", "Grout color (black/white or fore/background): { BW (0), FG_BG (1) }" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_FLOAT, "tile_size", "Average diameter of each tile (in pixels)" },
+    { GIMP_PDB_FLOAT, "tile_height", "Apparent height of each tile (in pixels)" },
+    { GIMP_PDB_FLOAT, "tile_spacing", "Inter-tile spacing (in pixels)" },
+    { GIMP_PDB_FLOAT, "tile_neatness", "Deviation from perfectly formed tiles (0.0 - 1.0)" },
+    { GIMP_PDB_FLOAT, "light_dir", "Direction of light-source (in degrees)" },
+    { GIMP_PDB_FLOAT, "color_variation", "Magnitude of random color variations (0.0 - 1.0)" },
+    { GIMP_PDB_INT32, "antialiasing", "Enables smoother tile output at the cost of speed" },
+    { GIMP_PDB_INT32, "color_averaging", "Tile color based on average of subsumed pixels" },
+    { GIMP_PDB_INT32, "tile_type", "Tile geometry: { SQUARES (0), HEXAGONS (1), OCTAGONS (2) }" },
+    { GIMP_PDB_INT32, "tile_surface", "Surface characteristics: { SMOOTH (0), ROUGH (1) }" },
+    { GIMP_PDB_INT32, "grout_color", "Grout color (black/white or fore/background): { BW (0), FG_BG (1) }" }
   };
-  static GParamDef *return_vals = NULL;
+  static GimpParamDef *return_vals = NULL;
 
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
@@ -324,33 +324,33 @@ query (void)
 			  "1996",
 			  N_("<Image>/Filters/Render/Pattern/Mosaic..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GParam  *param,
-     gint    *nreturn_vals,
-     GParam **return_vals)
+run (gchar      *name,
+     gint        nparams,
+     GimpParam  *param,
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
-  GDrawable    *active_drawable;
+  static GimpParam values[1];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
+  GimpDrawable    *active_drawable;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_mosaic", &mvals);
@@ -360,12 +360,12 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 14)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  mvals.tile_size = param[3].data.d_float;
 	  mvals.tile_height = param[4].data.d_float;
@@ -379,18 +379,18 @@ run (gchar   *name,
 	  mvals.tile_surface = param[12].data.d_int32;
 	  mvals.grout_color = param[13].data.d_int32;
 	}
-      if (status == STATUS_SUCCESS &&
+      if (status == GIMP_PDB_SUCCESS &&
 	  (mvals.tile_type < SQUARES || mvals.tile_type > OCTAGONS))
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS &&
+	status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS &&
 	  (mvals.tile_surface < SMOOTH || mvals.tile_surface > ROUGH))
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS &&
+	status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS &&
 	  (mvals.grout_color < BW || mvals.grout_color > FG_BG))
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_mosaic", &mvals);
       break;
@@ -403,7 +403,7 @@ run (gchar   *name,
   active_drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Create the mosaic  */
-  if ((status == STATUS_SUCCESS) &&
+  if ((status == GIMP_PDB_SUCCESS) &&
       (gimp_drawable_is_rgb (active_drawable->id) ||
        gimp_drawable_is_gray (active_drawable->id)))
     {
@@ -416,17 +416,17 @@ run (gchar   *name,
       mosaic (active_drawable);
 
       /*  If the run mode is interactive, flush the displays  */
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
       /*  Store mvals data  */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_mosaic", &mvals, sizeof (MosaicVals));
     }
-  else if (status == STATUS_SUCCESS)
+  else if (status == GIMP_PDB_SUCCESS)
     {
       /* gimp_message ("mosaic: cannot operate on indexed color images"); */
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -435,7 +435,7 @@ run (gchar   *name,
 }
 
 static void
-mosaic (GDrawable *drawable)
+mosaic (GimpDrawable *drawable)
 {
   gint x1, y1, x2, y2;
   gint alpha;
@@ -731,11 +731,11 @@ mosaic_ok_callback (GtkWidget *widget,
  */
 
 static void
-find_gradients (GDrawable *drawable,
-		gdouble    std_dev)
+find_gradients (GimpDrawable *drawable,
+		gdouble       std_dev)
 {
-  GPixelRgn src_rgn;
-  GPixelRgn dest_rgn;
+  GimpPixelRgn src_rgn;
+  GimpPixelRgn dest_rgn;
   gint bytes;
   gint width, height;
   gint i, j;
@@ -752,9 +752,9 @@ find_gradients (GDrawable *drawable,
   bytes = drawable->bpp;
 
   /*  allocate the gradient maps  */
-  h_grad = (guchar *) malloc (width * height);
-  v_grad = (guchar *) malloc (width * height);
-  m_grad = (guchar *) malloc (width * height);
+  h_grad = g_new (guchar, width * height);
+  v_grad = g_new (guchar, width * height);
+  m_grad = g_new (guchar, width * height);
 
   /*  Calculate total number of rows to be processed  */
   rows = width * 2 + height * 2;
@@ -817,8 +817,8 @@ find_gradients (GDrawable *drawable,
 
 
 static void
-find_max_gradient (GPixelRgn *src_rgn,
-		   GPixelRgn *dest_rgn)
+find_max_gradient (GimpPixelRgn *src_rgn,
+		   GimpPixelRgn *dest_rgn)
 {
   guchar *s, *d, *s_iter, *s_end;
   gpointer pr;
@@ -875,13 +875,13 @@ find_max_gradient (GPixelRgn *src_rgn,
 
 
 static void
-gaussian_deriv (GPixelRgn *src_rgn,
-		GPixelRgn *dest_rgn,
-		gint       type,
-		gdouble    std_dev,
-		gint      *prog,
-		gint       max_prog,
-		gint       ith_prog)
+gaussian_deriv (GimpPixelRgn *src_rgn,
+		GimpPixelRgn *dest_rgn,
+		gint          type,
+		gdouble       std_dev,
+		gint         *prog,
+		gint          max_prog,
+		gint          ith_prog)
 {
   guchar *dest, *dp;
   guchar *src, *sp, *s;
@@ -907,7 +907,7 @@ gaussian_deriv (GPixelRgn *src_rgn,
 
   /*  allocate buffers for get/set pixel region rows/cols  */
   length = MAX (src_rgn->w, src_rgn->h) * bytes;
-  data = (guchar *) malloc (length * 2);
+  data = g_new (guchar, length * 2);
   src = data;
   dest = data + length;
 
@@ -921,7 +921,7 @@ gaussian_deriv (GPixelRgn *src_rgn,
   /*  initialize  */
   curve = curve_array + length;
   sum = sum_array + length;
-  buf = (gint *) malloc (sizeof (gint) * MAX ((x2 - x1), (y2 - y1)) * bytes);
+  buf = g_new (gint, MAX ((x2 - x1), (y2 - y1)) * bytes);
 
   if (type == VERTICAL)
     {
@@ -1013,7 +1013,7 @@ gaussian_deriv (GPixelRgn *src_rgn,
       gimp_pixel_rgn_set_col (dest_rgn, dest, col, y1, (y2 - y1));
 
       if (! ((*prog)++ % ith_prog))
-	gimp_progress_update ((double) *prog / (double) max_prog);
+	gimp_progress_update ((gdouble) *prog / (gdouble) max_prog);
     }
 
   if (type == HORIZONTAL)
@@ -1106,11 +1106,11 @@ gaussian_deriv (GPixelRgn *src_rgn,
       gimp_pixel_rgn_set_row (dest_rgn, dest, x1, row, (x2 - x1));
 
       if (! ((*prog)++ % ith_prog))
-	gimp_progress_update ((double) *prog / (double) max_prog);
+	gimp_progress_update ((gdouble) *prog / (gdouble) max_prog);
     }
 
-  free (buf);
-  free (data);
+  g_free (buf);
+  g_free (data);
 #ifndef UNOPTIMIZED_CODE
   /* end bad hack */
 #undef length
@@ -1210,7 +1210,7 @@ grid_create_squares (gint x1,
   rows = (height + size - 1) / size;
   cols = (width + size - 1) / size;
 
-  grid = (Vertex *) malloc (sizeof (Vertex) * (cols + 2) * (rows + 2));
+  grid = g_new (Vertex, (cols + 2) * (rows + 2));
   grid += (cols + 2) + 1;
 
   for (i = -1; i <= rows; i++)
@@ -1255,7 +1255,7 @@ grid_create_hexagons (gint x1,
   rows = ((height + hex_height - 1) / hex_height);
   cols = ((width + hex_width * 2 - 1) / hex_width);
 
-  grid = (Vertex *) malloc (sizeof (Vertex) * (cols + 2) * 4 * (rows + 2));
+  grid = g_new (Vertex, (cols + 2) * 4 * (rows + 2));
   grid += (cols + 2) * 4 + 4;
 
   for (i = -1; i <= rows; i++)
@@ -1306,7 +1306,7 @@ grid_create_octagons (gint x1,
   rows = ((height + oct_size - 1) / oct_size);
   cols = ((width + oct_size * 2 - 1) / oct_size);
 
-  grid = (Vertex *) malloc (sizeof (Vertex) * (cols + 2) * 8 * (rows + 2));
+  grid = g_new (Vertex, (cols + 2) * 8 * (rows + 2));
   grid += (cols + 2) * 8 + 8;
 
   for (i = -1; i < rows + 1; i++)
@@ -1409,9 +1409,9 @@ grid_localize (gint x1,
 
 
 static void
-grid_render (GDrawable *drawable)
+grid_render (GimpDrawable *drawable)
 {
-  GPixelRgn src_rgn;
+  GimpPixelRgn src_rgn;
   gint i, j, k;
   gint x1, y1, x2, y2;
   guchar *data;
@@ -1595,11 +1595,11 @@ grid_render (GDrawable *drawable)
 
 
 static void
-process_poly (Polygon   *poly,
-	      gint       allow_split,
-	      GDrawable *drawable,
-	      guchar    *col,
-	      gint       vary)
+process_poly (Polygon      *poly,
+	      gint          allow_split,
+	      GimpDrawable *drawable,
+	      guchar       *col,
+	      gint          vary)
 {
   gdouble dir[2];
   gdouble loc[2];
@@ -1637,10 +1637,10 @@ process_poly (Polygon   *poly,
 
 
 static void
-render_poly (Polygon   *poly,
-	     GDrawable *drawable,
-	     guchar    *col,
-	     gdouble    vary)
+render_poly (Polygon      *poly,
+	     GimpDrawable *drawable,
+	     guchar       *col,
+	     gdouble       vary)
 {
   gdouble cx, cy;
 
@@ -1659,11 +1659,11 @@ render_poly (Polygon   *poly,
 
 
 static void
-split_poly (Polygon   *poly,
-	    GDrawable *drawable,
-	    guchar    *col,
-	    gdouble   *dir,
-	    gdouble    vary)
+split_poly (Polygon      *poly,
+	    GimpDrawable *drawable,
+	    guchar       *col,
+	    gdouble      *dir,
+	    gdouble       vary)
 {
   Polygon new_poly;
   gdouble spacing;
@@ -1721,13 +1721,13 @@ split_poly (Polygon   *poly,
 
 
 static void
-clip_poly (double  *dir,
-	   double  *pt,
-	   Polygon *poly,
-	   Polygon *poly_new)
+clip_poly (gdouble  *dir,
+	   gdouble  *pt,
+	   Polygon  *poly,
+	   Polygon  *poly_new)
 {
-  int i;
-  double x1, y1, x2, y2;
+  gint i;
+  gdouble x1, y1, x2, y2;
 
   for (i = 0; i < poly->npts; i++)
     {
@@ -1837,15 +1837,15 @@ find_poly_dir (Polygon *poly,
   loc[1] = 0.0;
 
   polygon_extents (poly, &dmin_x, &dmin_y, &dmax_x, &dmax_y);
-  min_x = (int) dmin_x;
-  min_y = (int) dmin_y;
-  max_x = (int) dmax_x;
-  max_y = (int) dmax_y;
+  min_x = (gint) dmin_x;
+  min_y = (gint) dmin_y;
+  max_x = (gint) dmax_x;
+  max_y = (gint) dmax_y;
   size_y = max_y - min_y;
   size_x = max_x - min_x;
 
-  min_scanlines = (int *) malloc (sizeof (int) * size_y);
-  max_scanlines = (int *) malloc (sizeof (int) * size_y);
+  min_scanlines = g_new (gint, size_y);
+  max_scanlines = g_new (gint, size_y);
   for (i = 0; i < size_y; i++)
     {
       min_scanlines[i] = max_x;
@@ -1854,10 +1854,10 @@ find_poly_dir (Polygon *poly,
 
   for (i = 0; i < poly->npts; i++)
     {
-      xs = (int) ((i) ? poly->pts[i-1].x : poly->pts[poly->npts-1].x);
-      ys = (int) ((i) ? poly->pts[i-1].y : poly->pts[poly->npts-1].y);
-      xe = (int) poly->pts[i].x;
-      ye = (int) poly->pts[i].y;
+      xs = (gint) ((i) ? poly->pts[i-1].x : poly->pts[poly->npts-1].x);
+      ys = (gint) ((i) ? poly->pts[i-1].y : poly->pts[poly->npts-1].y);
+      xe = (gint) poly->pts[i].x;
+      ye = (gint) poly->pts[i].y;
 
       convert_segment (xs, ys, xe, ye, min_y,
 		       min_scanlines, max_scanlines);
@@ -1907,18 +1907,18 @@ find_poly_dir (Polygon *poly,
       loc[1] = 0.0;
     }
 
-  free (min_scanlines);
-  free (max_scanlines);
+  g_free (min_scanlines);
+  g_free (max_scanlines);
 }
 
 
 static void
-find_poly_color (Polygon   *poly,
-		 GDrawable *drawable,
-		 guchar    *col,
-		 gdouble    color_var)
+find_poly_color (Polygon      *poly,
+		 GimpDrawable *drawable,
+		 guchar       *col,
+		 gdouble       color_var)
 {
-  GPixelRgn src_rgn;
+  GimpPixelRgn src_rgn;
   gdouble dmin_x, dmin_y;
   gdouble dmax_x, dmax_y;
   gint xs, ys;
@@ -1948,8 +1948,8 @@ find_poly_color (Polygon   *poly,
   size_y = max_y - min_y;
   size_x = max_x - min_x;
 
-  min_scanlines = (gint *) malloc (sizeof (gint) * size_y);
-  max_scanlines = (gint *) malloc (sizeof (gint) * size_y);
+  min_scanlines = g_new (int, size_y);
+  max_scanlines = g_new (int, size_y);
   for (i = 0; i < size_y; i++)
     {
       min_scanlines[i] = max_x;
@@ -2002,8 +2002,8 @@ find_poly_color (Polygon   *poly,
 	  col[b] = col_sum[b];
       }
 
-  free (min_scanlines);
-  free (max_scanlines);
+  g_free (min_scanlines);
+  g_free (max_scanlines);
 }
 
 
@@ -2020,11 +2020,11 @@ scale_poly (Polygon *poly,
 
 
 static void
-fill_poly_color (Polygon   *poly,
-		 GDrawable *drawable,
-		 guchar    *col)
+fill_poly_color (Polygon      *poly,
+		 GimpDrawable *drawable,
+		 guchar       *col)
 {
-  GPixelRgn src_rgn;
+  GimpPixelRgn src_rgn;
   gdouble dmin_x, dmin_y;
   gdouble dmax_x, dmax_y;
   gint xs, ys;
@@ -2046,7 +2046,7 @@ fill_poly_color (Polygon   *poly,
   gint supersample2;
   gint x1, y1, x2, y2;
   Vertex *pts_tmp;
-  const int poly_npts = poly->npts;
+  const gint poly_npts = poly->npts;
 
   /*  Determine antialiasing  */
   if (mvals.antialiasing)
@@ -2094,8 +2094,8 @@ fill_poly_color (Polygon   *poly,
   size_y = (max_y - min_y) * supersample;
   size_x = (max_x - min_x) * supersample;
 
-  min_scanlines = min_scanlines_iter = (gint *) malloc (sizeof (gint) * size_y);
-  max_scanlines = max_scanlines_iter = (gint *) malloc (sizeof (gint) * size_y);
+  min_scanlines = min_scanlines_iter = g_new (gint, size_y);
+  max_scanlines = max_scanlines_iter = g_new (gint, size_y);
   for (i = 0; i < size_y; i++)
     {
       min_scanlines[i] = max_x * supersample;
@@ -2141,7 +2141,7 @@ fill_poly_color (Polygon   *poly,
 		       drawable->width, drawable->height,
 		       TRUE, TRUE);
 
-  vals = (gint *) malloc (sizeof (gint) * size_x);
+  vals = g_new (gint, size_x);
   for (i = 0; i < size_y; i++, min_scanlines_iter++, max_scanlines_iter++)
     {
       if (! (i % supersample))
@@ -2193,18 +2193,18 @@ fill_poly_color (Polygon   *poly,
 	}
     }
 
-  free (vals);
-  free (min_scanlines);
-  free (max_scanlines);
+  g_free (vals);
+  g_free (min_scanlines);
+  g_free (max_scanlines);
 }
 
 
 static void
-fill_poly_image (Polygon   *poly,
-		 GDrawable *drawable,
-		 gdouble    vary)
+fill_poly_image (Polygon      *poly,
+		 GimpDrawable *drawable,
+		 gdouble       vary)
 {
-  GPixelRgn src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   gdouble dmin_x, dmin_y;
   gdouble dmax_x, dmax_y;
   gint xs, ys;
@@ -2258,8 +2258,8 @@ fill_poly_image (Polygon   *poly,
   size_y = (max_y - min_y) * supersample;
   size_x = (max_x - min_x) * supersample;
 
-  min_scanlines = (gint *) malloc (sizeof (gint) * size_y);
-  max_scanlines = (gint *) malloc (sizeof (gint) * size_y);
+  min_scanlines = g_new (gint, size_y);
+  max_scanlines = g_new (gint, size_y);
   for (i = 0; i < size_y; i++)
     {
       min_scanlines[i] = max_x * supersample;
@@ -2288,7 +2288,7 @@ fill_poly_image (Polygon   *poly,
   gimp_pixel_rgn_init (&dest_rgn, drawable, 0, 0,
 		       drawable->width, drawable->height,
 		       TRUE, TRUE);
-  vals = (gint *) malloc (sizeof (gint) * size_x);
+  vals = g_new (gint, size_x);
   for (i = 0; i < size_y; i++)
     {
       if (! (i % supersample))
@@ -2351,9 +2351,9 @@ fill_poly_image (Polygon   *poly,
 	}
     }
 
-  free (vals);
-  free (min_scanlines);
-  free (max_scanlines);
+  g_free (vals);
+  g_free (min_scanlines);
+  g_free (max_scanlines);
 }
 
 

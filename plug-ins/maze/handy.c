@@ -31,13 +31,13 @@
    nice little arrays.  It works nicely for RGB and grayscale images,
    however handling of indexed images is somewhat broken.  Patches
    appreciated. */
-void      get_colors (GDrawable * drawable,
+void      get_colors (GimpDrawable * drawable,
 		      guint8 *fg,
 		      guint8 *bg);
 
-/* drawbox draws a solid colored box in a GPixelRgn, hopefully fairly
+/* drawbox draws a solid colored box in a GimpPixelRgn, hopefully fairly
    quickly.  See comments below. */
-void      drawbox (GPixelRgn *dest_rgn, 
+void      drawbox (GimpPixelRgn *dest_rgn, 
 		   guint x, 
 		   guint y,
 		   guint w,
@@ -46,20 +46,20 @@ void      drawbox (GPixelRgn *dest_rgn,
 
 
 void 
-get_colors (GDrawable *drawable, 
+get_colors (GimpDrawable *drawable, 
 	    guint8    *fg, 
 	    guint8    *bg) 
 {
   switch ( gimp_drawable_type (drawable->id) )
     {
-    case RGBA_IMAGE:   /* ASSUMPTION: Assuming the user wants entire */
+    case GIMP_RGBA_IMAGE:   /* ASSUMPTION: Assuming the user wants entire */
       fg[3] = 255;                 /* area to be fully opaque.       */
       bg[3] = 255;
-    case RGB_IMAGE:
+    case GIMP_RGB_IMAGE:
       gimp_palette_get_foreground (&fg[0], &fg[1], &fg[2]);
       gimp_palette_get_background (&bg[0], &bg[1], &bg[2]);
       break;
-    case GRAYA_IMAGE:       /* and again */
+    case GIMP_GRAYA_IMAGE:       /* and again */
       gimp_palette_get_foreground (&fg[0], &fg[1], &fg[2]);
       gimp_palette_get_background (&bg[0], &bg[1], &bg[2]);
       fg[0] = INTENSITY (fg[0], fg[1], fg[2]);
@@ -67,14 +67,14 @@ get_colors (GDrawable *drawable,
       fg[1] = 255;
       bg[1] = 255;
       break;
-    case GRAY_IMAGE:
+    case GIMP_GRAY_IMAGE:
       gimp_palette_get_foreground (&fg[0], &fg[1], &fg[2]);
       gimp_palette_get_background (&bg[0], &bg[1], &bg[2]);
       fg[0] = INTENSITY (fg[0], fg[1], fg[2]);
       bg[0] = INTENSITY (bg[0], bg[1], bg[2]);
       break;
-    case INDEXEDA_IMAGE:
-    case INDEXED_IMAGE:     /* FIXME: Should use current fg/bg colors.  */
+    case GIMP_INDEXEDA_IMAGE:
+    case GIMP_INDEXED_IMAGE:     /* FIXME: Should use current fg/bg colors.  */
 	g_warning("maze: get_colors: Indexed image.  Using colors 15 and 0.\n");
 	fg[0] = 15;        /* As a plugin, I protest.  *I* shouldn't be the */
 	bg[0] = 0;       /* one who has to deal with this colormapcrap.   */
@@ -84,7 +84,7 @@ get_colors (GDrawable *drawable,
     }
 }
 
-/* Draws a solid color box in a GPixelRgn. */
+/* Draws a solid color box in a GimpPixelRgn. */
 /* Optimization assumptions:
  * (Or, "Why Maze is Faster Than Checkerboard.")
  * 
@@ -114,7 +114,7 @@ get_colors (GDrawable *drawable,
  *  re-fill it every time...  */
 
 void 
-drawbox( GPixelRgn *dest_rgn, 
+drawbox( GimpPixelRgn *dest_rgn, 
 	 guint x, guint y, guint w, guint h, 
 	 guint8 clr[4])
 {

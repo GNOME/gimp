@@ -177,7 +177,7 @@ typedef struct
   AffElementVals  current_vals;
   gint            auto_preview;
 
-  gint       in_update;		/* true if we're currently in
+  gboolean   in_update;		/* true if we're currently in
 				   update_values() - don't do anything
 				   on updates */
 } IfsDialog;
@@ -190,14 +190,14 @@ typedef struct
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar     *name,
-			 gint       nparams,
-			 GParam    *param,
-			 gint      *nreturn_vals,
-			 GParam   **return_vals);
+static void      run    (gchar      *name,
+			 gint        nparams,
+			 GimpParam  *param,
+			 gint       *nreturn_vals,
+			 GimpParam **return_vals);
 
 /*  user interface functions  */
-static gint       ifs_compose_dialog     (GDrawable *drawable);
+static gint       ifs_compose_dialog     (GimpDrawable *drawable);
 static void       ifs_options_dialog     (void);
 static GtkWidget *ifs_compose_trans_page (void);
 static GtkWidget *ifs_compose_color_page (void);
@@ -229,42 +229,47 @@ static void undo_exchange (gint el);
 static void undo          (void);
 static void redo          (void);
 
-static void recompute_center    (int save_undo);
-static void recompute_center_cb (GtkWidget *, gpointer);
+static void recompute_center              (gboolean   save_undo);
+static void recompute_center_cb           (GtkWidget *widget, 
+				           gpointer   data);
 
-static void ifs_compose (GDrawable *drawable);
+static void ifs_compose                   (GimpDrawable *drawable);
 
-static void color_map_set_preview_color (GtkWidget *preview,
-					 IfsColor *color);
-static ColorMap *color_map_create (gchar *name,IfsColor *orig_color,
-				   IfsColor *data, gint fixed_point);
-static void color_map_color_changed_cb (GtkWidget *widget,
-					ColorMap *color_map);
-static void color_map_update           (ColorMap *color_map);
+static void color_map_set_preview_color   (GtkWidget *preview,
+					   IfsColor  *color);
+static ColorMap *color_map_create         (gchar     *name,
+					   IfsColor  *orig_color,
+					   IfsColor  *data, 
+					   gint       fixed_point);
+static void color_map_color_changed_cb    (GtkWidget *widget,
+					   ColorMap  *color_map);
+static void color_map_update               (ColorMap *color_map);
 
 /* interface functions */
-static void simple_color_toggled (GtkWidget *widget,gpointer data);
-static void simple_color_set_sensitive (void);
-static void val_changed_update (void);
-static ValuePair *value_pair_create (gpointer data,
-				     gdouble lower, gdouble upper,
-				     gboolean create_scale, ValuePairType type);
-static void value_pair_update (ValuePair *value_pair);
-static void value_pair_entry_callback (GtkWidget   *w,
-				       ValuePair   *value_pair);
-static void value_pair_destroy_callback (GtkWidget   *widget,
-					 ValuePair   *value_pair);
-static void value_pair_button_release (GtkWidget *widget,
-				       GdkEventButton *event,
-				       gpointer data);
-static void value_pair_scale_callback   (GtkAdjustment *adjustment,
-					 ValuePair *value_pair);
+static void simple_color_toggled          (GtkWidget *widget,gpointer data);
+static void simple_color_set_sensitive    (void);
+static void val_changed_update            (void);
+static ValuePair *value_pair_create       (gpointer   data,
+					   gdouble    lower, 
+					   gdouble    upper,
+					   gboolean   create_scale, 
+					   ValuePairType type);
+static void value_pair_update             (ValuePair *value_pair);
+static void value_pair_entry_callback     (GtkWidget *w,
+					   ValuePair *value_pair);
+static void value_pair_destroy_callback   (GtkWidget *widget,
+					   ValuePair *value_pair);
+static void value_pair_button_release     (GtkWidget *widget,
+					   GdkEventButton *event,
+					   gpointer   data);
+static void value_pair_scale_callback     (GtkAdjustment *adjustment,
+					   ValuePair *value_pair);
 
-static void auto_preview_callback      (GtkWidget *widget, gpointer data);
-static void design_op_callback         (GtkWidget *widget, gpointer data);
-static void design_op_update_callback  (GtkWidget *widget, gpointer data);
-static void flip_check_button_callback (GtkWidget *widget, gpointer data);
-static gint preview_idle_render        (void);
+static void auto_preview_callback         (GtkWidget *widget, gpointer data);
+static void design_op_callback            (GtkWidget *widget, gpointer data);
+static void design_op_update_callback     (GtkWidget *widget, gpointer data);
+static void flip_check_button_callback    (GtkWidget *widget, gpointer data);
+static gint preview_idle_render           (void);
 
 static void ifs_compose_set_defaults      (void);
 static void ifs_compose_defaults_callback (GtkWidget *widget,
@@ -316,7 +321,7 @@ static IfsComposeInterface ifscint =
   FALSE,        /* run */
 };
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
   NULL,    /* quit_proc */
@@ -330,14 +335,14 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
 
-  static GParamDef *return_vals = NULL;
+  static GimpParamDef *return_vals = NULL;
 
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
@@ -346,40 +351,40 @@ query (void)
 
   gimp_install_procedure ("plug_in_ifs_compose",
 			  "Create an Iterated Function System Fractal",
-   "Interactively create an Iterated Function System fractal."
-     "Use the window on the upper left to adjust the component"
-     "transformations of the fractal. The operation that is performed"
-     "is selected by the buttons underneath the window, or from a"
-     "menu popped up by the right mouse button. The fractal will be"
-     "rendered with a transparent background if the current image has"
-     "a transparent background.",
+			  "Interactively create an Iterated Function System fractal. "
+			  "Use the window on the upper left to adjust the component "
+			  "transformations of the fractal. The operation that is performed "
+			  "is selected by the buttons underneath the window, or from a "
+			  "menu popped up by the right mouse button. The fractal will be "
+			  "rendered with a transparent background if the current image has "
+			  "a transparent background.",
 			  "Owen Taylor",
 			  "Owen Taylor",
 			  "1997",
 			  N_("<Image>/Filters/Render/Nature/IfsCompose..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GParam  *param,
-     gint    *nreturn_vals,
-     GParam **return_vals)
+run (gchar      *name,
+     gint        nparams,
+     GimpParam  *param,
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *active_drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
-  GimpParasite *parasite = NULL;
-  gboolean found_parasite;
+  static GimpParam   values[1];
+  GimpDrawable      *active_drawable;
+  GimpRunModeType    run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpParasite      *parasite = NULL;
+  gboolean           found_parasite;
 
   run_mode = param[0].data.d_int32;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
@@ -394,7 +399,7 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data; first look for a parasite -
        *  if not found, fall back to global values
        */
@@ -429,14 +434,14 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
 /*      gimp_get_data ("plug_in_ifs_compose", &mvals); */
       break;
 
@@ -445,7 +450,7 @@ run (gchar   *name,
     }
 
   /*  Render the fractal  */
-  if ((status == STATUS_SUCCESS) &&
+  if ((status == GIMP_PDB_SUCCESS) &&
       (gimp_drawable_is_rgb (active_drawable->id) ||
        gimp_drawable_is_gray (active_drawable->id)))
     {
@@ -457,13 +462,13 @@ run (gchar   *name,
       ifs_compose (active_drawable);
 
       /*  If the run mode is interactive, flush the displays  */
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
       /*  Store data for next invocation - both globally and
        *  as a parasite on this layer
        */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	{
 	  gchar *str = ifsvals_stringify (&ifsvals, elements);
 	  GimpParasite *parasite;
@@ -479,9 +484,9 @@ run (gchar   *name,
 	  g_free (str);
 	}
     }
-  else if (status == STATUS_SUCCESS)
+  else if (status == GIMP_PDB_SUCCESS)
     {
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -611,8 +616,8 @@ ifs_compose_color_page (void)
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *label;
-  GSList *group = NULL;
-  IfsColor color;
+  GSList    *group = NULL;
+  IfsColor   color;
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -721,7 +726,7 @@ ifs_compose_color_page (void)
 }
 
 static gint
-ifs_compose_dialog (GDrawable *drawable)
+ifs_compose_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *label;
@@ -1104,7 +1109,7 @@ design_area_create (GtkWidget *window,
 static void
 design_op_menu_create (GtkWidget *window)
 {
-  GtkWidget *menu_item;
+  GtkWidget     *menu_item;
   GtkAccelGroup *accel_group;
 
   ifsDesign->op_menu = gtk_menu_new();
@@ -1316,10 +1321,10 @@ ifs_options_dialog (void)
 }
 
 static void
-ifs_compose (GDrawable *drawable)
+ifs_compose (GimpDrawable *drawable)
 {
   gint i,j;
-  GDrawableType type = gimp_drawable_type(drawable->id);
+  GimpImageType type = gimp_drawable_type (drawable->id);
   gchar *buffer;
 
   gint width = drawable->width;
@@ -1349,7 +1354,7 @@ ifs_compose (GDrawable *drawable)
       guchar *dest;
       guchar *destrow;
       guchar maskval;
-      GPixelRgn dest_rgn;
+      GimpPixelRgn dest_rgn;
       gint progress;
       gint max_progress;
 
@@ -1430,27 +1435,27 @@ ifs_compose (GDrawable *drawable)
 		  /* and store it */
 		  switch (type)
 		    {
- 		    case GRAY_IMAGE:
+ 		    case GIMP_GRAY_IMAGE:
 		      *dest++ = (mtot*(rtot+btot+gtot)+
 				 (255-mtot)*(rc+gc+bc))/(3*255);
 		      break;
-		    case GRAYA_IMAGE:
+		    case GIMP_GRAYA_IMAGE:
 		      *dest++ = (rtot+btot+gtot)/3;
 		      *dest++ = mtot;
 		      break;
-		    case RGB_IMAGE:
+		    case GIMP_RGB_IMAGE:
 		      *dest++ = (mtot*rtot + (255-mtot)*rc)/255;
 		      *dest++ = (mtot*gtot + (255-mtot)*gc)/255;
 		      *dest++ = (mtot*btot + (255-mtot)*bc)/255;
 		      break;
-		    case RGBA_IMAGE:
+		    case GIMP_RGBA_IMAGE:
 		      *dest++ = rtot;
 		      *dest++ = gtot;
 		      *dest++ = btot;
 		      *dest++ = mtot;
 		      break;
-		    case INDEXED_IMAGE:
-		    case INDEXEDA_IMAGE:
+		    case GIMP_INDEXED_IMAGE:
+		    case GIMP_INDEXEDA_IMAGE:
 		      g_error("Indexed images not supported by IfsCompose");
 		      break;
 		    }
@@ -1576,7 +1581,7 @@ static gint
 design_area_configure (GtkWidget         *widget,
 		       GdkEventConfigure *event)
 {
-  int i;
+  gint i;
   gdouble width = widget->allocation.width;
   gdouble height = widget->allocation.height;
 
@@ -2342,32 +2347,32 @@ design_op_update_callback (GtkWidget *widget,
       switch (op)
 	{
 	case OP_TRANSLATE:
-	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ifsD->move_button),
-				       TRUE);
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(ifsD->move_button),
+					TRUE);
 	  break;
 	case OP_ROTATE:
-	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ifsD->rotate_button),
-				      TRUE);
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(ifsD->rotate_button),
+					TRUE);
 	  break;
 	case OP_STRETCH:
-	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ifsD->stretch_button),
-				      TRUE);
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(ifsD->stretch_button),
+					TRUE);
 	  break;
 	}
     }
 }
 
 static void
-recompute_center_cb (GtkWidget *w,
+recompute_center_cb (GtkWidget *widget,
 		     gpointer   data)
 {
-  recompute_center(TRUE);
+  recompute_center (TRUE);
 }
 
 static void
-recompute_center (int save_undo)
+recompute_center (gboolean save_undo)
 {
-  int i;
+  gint    i;
   gdouble x,y;
   gdouble center_x = 0.0;
   gdouble center_y = 0.0;

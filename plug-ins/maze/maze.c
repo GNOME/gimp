@@ -61,10 +61,10 @@ extern gint      maze_dialog (void);
 static void      query  (void);
 static void      run    (gchar    *name,
 			 gint      nparams,
-			 GParam   *param,
+			 GimpParam   *param,
 			 gint     *nreturn_vals,
-			 GParam  **return_vals);
-static void      maze   (GDrawable * drawable);
+			 GimpParam  **return_vals);
+static void      maze   (GimpDrawable * drawable);
 
 static void      mask_maze(gint32 selection_ID, guchar *maz, guint mw, guint mh, 
 			   gint x1, gint x2, gint y1, gint y2, gint deadx, gint deady);
@@ -91,18 +91,18 @@ extern void      prim_tileable(guchar *maz,
 			       gint rnd);
 
 /* In handy.c */
-extern void      get_colors (GDrawable * drawable,
+extern void      get_colors (GimpDrawable * drawable,
 			     guint8 *fg,
 			     guint8 *bg);
 
-extern void      drawbox (GPixelRgn *dest_rgn, 
+extern void      drawbox (GimpPixelRgn *dest_rgn, 
 			  guint x, 
 			  guint y,
 			  guint w,
 			  guint h, 
 			  guint8 clr[4]);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
   NULL,    /* quit_proc */
@@ -131,22 +131,22 @@ MAIN () /*;*/
 static void
 query ()
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image_ID", "(unused)" },
-    { PARAM_DRAWABLE, "drawable_ID", "ID of drawable" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image_ID", "(unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable_ID", "ID of drawable" },
     /* If we did have parameters, these be them: */
-    { PARAM_INT16, "width", "Width of the passages" },
-    { PARAM_INT16, "height", "Height of the passages"},
-    { PARAM_INT8, "tileable", "Tileable maze?"},
-    { PARAM_INT8, "algorithm", "Generation algorithm" 
+    { GIMP_PDB_INT16, "width", "Width of the passages" },
+    { GIMP_PDB_INT16, "height", "Height of the passages"},
+    { GIMP_PDB_INT8, "tileable", "Tileable maze?"},
+    { GIMP_PDB_INT8, "algorithm", "Generation algorithm" 
                               "(0=DEPTH FIRST, 1=PRIM'S ALGORITHM)" },
-    { PARAM_INT32, "seed", "Random Seed"},
-    { PARAM_INT16, "multiple", "Multiple (use 57)" },
-    { PARAM_INT16, "offset", "Offset (use 1)" }
+    { GIMP_PDB_INT32, "seed", "Random Seed"},
+    { GIMP_PDB_INT16, "multiple", "Multiple (use 57)" },
+    { GIMP_PDB_INT16, "offset", "Offset (use 1)" }
   };
-  static GParamDef *return_vals = NULL;
+  static GimpParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
   gchar *help;
@@ -160,7 +160,7 @@ query ()
 			  "1997, 1998",
 			  N_("<Image>/Filters/Render/Pattern/Maze..."),
 			  "RGB*, GRAY*, INDEXED*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
   g_free (help);
@@ -169,14 +169,14 @@ query ()
 static void
 run    (gchar    *name,
 	gint      nparams,
-	GParam   *param,
+	GimpParam   *param,
 	gint     *nreturn_vals,
-	GParam  **return_vals)
+	GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint x1, y1, x2, y2;
 
 #ifdef MAZE_DEBUG
@@ -189,14 +189,14 @@ run    (gchar    *name,
 
   INIT_I18N_UI(); 
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
       gimp_get_data ("plug_in_maze", &mvals);
       
@@ -211,12 +211,12 @@ run    (gchar    *name,
       }
       break;
       
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 10)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  mvals.width = (gint16)    param[3].data.d_int16;
 	  mvals.height = (gint16)   param[4].data.d_int16;
@@ -227,7 +227,7 @@ run    (gchar    *name,
 	  mvals.offset = (gint16)   param[9].data.d_int16;
 	}
       break;
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
       gimp_get_data ("plug_in_maze", &mvals);
       break;
@@ -241,14 +241,14 @@ run    (gchar    *name,
 
       maze (drawable);
       
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	  gimp_displays_flush ();
       
-      if (run_mode == RUN_INTERACTIVE || 
-	  (mvals.timeseed && run_mode == RUN_WITH_LAST_VALS))
+      if (run_mode == GIMP_RUN_INTERACTIVE || 
+	  (mvals.timeseed && run_mode == GIMP_RUN_WITH_LAST_VALS))
 	  gimp_set_data ("plug_in_maze", &mvals, sizeof (MazeValues));
   } else {
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
   }
 
   values[0].data.d_status = status;
@@ -285,9 +285,9 @@ maze_dumpX(guchar *maz, gint mw, gint mh)
 #endif
 
 static void
-maze( GDrawable * drawable)
+maze( GimpDrawable * drawable)
 {
-  GPixelRgn dest_rgn;
+  GimpPixelRgn dest_rgn;
   guint mw, mh;
   gint deadx, deady;
   guint progress, max_progress;
@@ -508,7 +508,7 @@ mask_maze(gint32 drawable_ID, guchar *maz, guint mw, guint mh,
 	  gint x1, gint x2, gint y1, gint y2, gint deadx, gint deady)
 {
      gint32 selection_ID;
-     GPixelRgn sel_rgn;  
+     GimpPixelRgn sel_rgn;  
      gint xx0=0, yy0=0, xoff, yoff;
      guint xx=0, yy=0;
      guint foo=0;

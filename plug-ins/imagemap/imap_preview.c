@@ -72,7 +72,7 @@ preview_get_height(GtkWidget *preview)
 }
 
 static void
-render_gray_image(GtkWidget *preview, GPixelRgn *srcrgn)
+render_gray_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
 {
    guchar	 *src_row, *dest_row, *src, *dest;
    gint		 row, col;
@@ -119,7 +119,7 @@ render_gray_image(GtkWidget *preview, GPixelRgn *srcrgn)
 }
 
 static void
-render_indexed_image(GtkWidget *preview, GPixelRgn *srcrgn)
+render_indexed_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
 {
    guchar	 *src_row, *dest_row, *src, *dest;
    gint		 row, col;
@@ -183,7 +183,7 @@ render_indexed_image(GtkWidget *preview, GPixelRgn *srcrgn)
 }
 
 static void
-render_rgb_image(GtkWidget *preview, GPixelRgn *srcrgn)
+render_rgb_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
 {
    guchar	 *src_row, *dest_row, *src, *dest;
    gint		 row, col;
@@ -260,19 +260,19 @@ render_rgb_image(GtkWidget *preview, GPixelRgn *srcrgn)
 }
 
 static void
-render_preview(GtkWidget *preview, GPixelRgn *srcrgn)
+render_preview(GtkWidget *preview, GimpPixelRgn *srcrgn)
 {
    switch (gimp_drawable_type(srcrgn->drawable->id)) {
-   case RGB_IMAGE:
-   case RGBA_IMAGE:
+   case GIMP_RGB_IMAGE:
+   case GIMP_RGBA_IMAGE:
       render_rgb_image(preview, srcrgn);
       break;
-   case GRAY_IMAGE:
-   case GRAYA_IMAGE:
+   case GIMP_GRAY_IMAGE:
+   case GIMP_GRAYA_IMAGE:
       render_gray_image(preview, srcrgn);
       break;
-   case INDEXED_IMAGE:
-   case INDEXEDA_IMAGE:
+   case GIMP_INDEXED_IMAGE:
+   case GIMP_INDEXEDA_IMAGE:
       render_indexed_image(preview, srcrgn);
       break;
    }
@@ -388,7 +388,7 @@ handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
 }
 
 Preview_t*
-make_preview(GDrawable *drawable)
+make_preview(GimpDrawable *drawable)
 {
    Preview_t *data = g_new(Preview_t, 1);
    GtkWidget *preview;

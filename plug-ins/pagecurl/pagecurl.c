@@ -97,11 +97,11 @@ typedef struct
 /***** Prototypes *****/
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
-		   GParam  *param,
-		   gint    *nreturn_vals,
-		   GParam **return_vals);
+static void run   (gchar      *name,
+		   gint        nparams,
+		   GimpParam  *param,
+		   gint       *nreturn_vals,
+		   GimpParam **return_vals);
 
 static void set_default_params (void);
 
@@ -125,11 +125,11 @@ static gint inside_circle  (gdouble x, gdouble y);
 static void    do_curl_effect      (void);
 static void    clear_curled_region (void);
 static void    page_curl           (void);
-static guchar *get_samples         (GDrawable *drawable);
+static guchar *get_samples         (GimpDrawable *drawable);
 
 /***** Variables *****/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -142,8 +142,8 @@ static CurlParams curl;
 /* Image parameters */
 
 static gint32     image_id;
-static GDrawable *curl_layer;
-static GDrawable *drawable;
+static GimpDrawable *curl_layer;
+static GimpDrawable *drawable;
 
 static GdkPixmap *gdk_curl_pixmaps[8];
 static GdkBitmap *gdk_curl_masks[8];
@@ -187,21 +187,21 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive (0), non-interactive (1)" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "mode", "Pagecurl-mode: Use FG- and BG-Color (0), Use current gradient (1)" },
-    { PARAM_INT32, "edge", "Edge to curl (1-4, clockwise, starting in the lower right edge)" },
-    { PARAM_INT32, "type", "vertical (0), horizontal (1)" },
-    { PARAM_INT32, "shade", "Shade the region under the curl (1) or not (0)" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive (0), non-interactive (1)" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "mode", "Pagecurl-mode: Use FG- and BG-Color (0), Use current gradient (1)" },
+    { GIMP_PDB_INT32, "edge", "Edge to curl (1-4, clockwise, starting in the lower right edge)" },
+    { GIMP_PDB_INT32, "type", "vertical (0), horizontal (1)" },
+    { GIMP_PDB_INT32, "shade", "Shade the region under the curl (1) or not (0)" },
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  static GParamDef return_vals[] =
+  static GimpParamDef return_vals[] =
   {
-    { PARAM_LAYER, "Curl Layer", "The new layer with the curl." }
+    { GIMP_PDB_LAYER, "Curl Layer", "The new layer with the curl." }
   }; 
   static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
@@ -215,7 +215,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Distorts/Pagecurl..."),
 			  "RGBA, GRAYA",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs,
 			  nreturn_vals,
 			  args,
@@ -223,15 +223,15 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GParam  *param,
-     gint    *nreturn_vals,
-     GParam **return_vals)
+run (gchar      *name,
+     gint        nparams,
+     GimpParam  *param,
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam  values[2];
+  GimpRunModeType   run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -243,9 +243,9 @@ run (gchar   *name,
   *nreturn_vals = 2;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-  values[1].type = PARAM_LAYER;
+  values[1].type = GIMP_PDB_LAYER;
   values[1].data.d_layer = -1;
 
   /*  Get the specified drawable  */
@@ -258,19 +258,19 @@ run (gchar   *name,
     {
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
 	  /*  First acquire information with a dialog  */
 	  if (!do_dialog ())
 	    return;
 	  break;
 
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 7)
-	    status = STATUS_CALLING_ERROR;
-	  if (status == STATUS_SUCCESS)
+	    status = GIMP_PDB_CALLING_ERROR;
+	  if (status == GIMP_PDB_SUCCESS)
 	    {
 	      curl.do_curl_shade = (param[3].data.d_int32 == 0) ? 1 : 0;
 	      curl.do_curl_gradient = 1 - curl.do_curl_shade;
@@ -309,7 +309,7 @@ run (gchar   *name,
 	    }
 	  break;
 
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
 	  break;
 
@@ -317,19 +317,19 @@ run (gchar   *name,
 	  break;
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  page_curl ();
 	  values[1].data.d_layer = curl_layer_ID;
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
             gimp_set_data (PLUG_IN_NAME, &curl, sizeof (CurlParams));
 	}
     }
   else
     /* Sorry - no indexed/noalpha images */
-    status = STATUS_EXECUTION_ERROR;
+    status = GIMP_PDB_EXECUTION_ERROR;
 
   values[0].data.d_status = status;
 }
@@ -813,7 +813,7 @@ do_curl_effect (void)
   gdouble      dl_mag, dr_mag, angle, factor;
   guchar      *pp, *dest, fore_grayval, back_grayval;
   guchar      *gradsamp;
-  GPixelRgn    dest_rgn;
+  GimpPixelRgn    dest_rgn;
   gpointer     pr;
   guchar      *grad_samples = NULL;
 
@@ -823,8 +823,8 @@ do_curl_effect (void)
 				       _("Curl Layer"),
 				       true_sel_width,
 				       true_sel_height,
-				       color_image ? RGBA_IMAGE : GRAYA_IMAGE,
-				       100, NORMAL_MODE));
+				       color_image ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE,
+				       100, GIMP_NORMAL_MODE));
   gimp_image_add_layer (image_id, curl_layer->id, drawable_position);
   curl_layer_ID = curl_layer->id;
 
@@ -994,7 +994,7 @@ do_curl_effect (void)
 static void
 clear_curled_region (void)
 {
-  GPixelRgn src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   gpointer pr;
   gint x, y;
   guint x1, y1, i;
@@ -1083,7 +1083,7 @@ page_curl (void)
   "ripped" from gradmap.c.
  */
 static guchar *
-get_samples (GDrawable *drawable)
+get_samples (GimpDrawable *drawable)
  {
   gdouble       *f_samples, *f_samp;    /* float samples */
   guchar        *b_samples, *b_samp;    /* byte samples */

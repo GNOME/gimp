@@ -28,7 +28,7 @@
 #include "gtk/gtk.h"
 
 typedef struct {
-   GDrawable 	*drawable;
+   GimpDrawable 	*drawable;
    GtkWidget	*window;
    GtkWidget 	*frame;
    GtkWidget	*preview;
@@ -37,12 +37,12 @@ typedef struct {
    gint		width;
    gint		height;
    gint		exp_id;
-   GPixelRgn 	src_rgn;
+   GimpPixelRgn 	src_rgn;
 
    GdkCursorType cursor;
 } Preview_t;
 
-Preview_t *make_preview(GDrawable *drawable);
+Preview_t *make_preview(GimpDrawable *drawable);
 void preview_redraw(Preview_t *preview);
 
 void add_preview_motion_event(Preview_t *preview, GtkSignalFunc func);
