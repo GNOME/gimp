@@ -98,7 +98,8 @@ static void       gimp_container_get_property    (GObject            *object,
                                                   GValue             *value,
                                                   GParamSpec         *pspec);
 
-static gsize      gimp_container_get_memsize     (GimpObject         *object);
+static gsize      gimp_container_get_memsize     (GimpObject         *object,
+                                                  gsize              *gui_size);
 
 static gboolean   gimp_container_serialize       (GObject            *object,
                                                   GimpConfigWriter   *writer,
@@ -360,7 +361,8 @@ gimp_container_get_property (GObject    *object,
 }
 
 static gsize
-gimp_container_get_memsize (GimpObject *object)
+gimp_container_get_memsize (GimpObject *object,
+                            gsize      *gui_size)
 {
   GimpContainer *container;
   GList         *list;
@@ -379,7 +381,8 @@ gimp_container_get_memsize (GimpObject *object)
                   strlen (handler->signame));
     }
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 typedef struct

@@ -47,7 +47,8 @@ static void       gimp_gradient_init             (GimpGradient      *gradient);
 
 static void       gimp_gradient_finalize         (GObject           *object);
 
-static gsize      gimp_gradient_get_memsize      (GimpObject        *object);
+static gsize      gimp_gradient_get_memsize      (GimpObject        *object,
+                                                  gsize             *gui_size);
 
 static void       gimp_gradient_get_preview_size (GimpViewable      *viewable,
                                                   gint               size,
@@ -167,7 +168,8 @@ gimp_gradient_finalize (GObject *object)
 }
 
 static gsize
-gimp_gradient_get_memsize (GimpObject *object)
+gimp_gradient_get_memsize (GimpObject *object,
+                           gsize      *gui_size)
 {
   GimpGradient        *gradient;
   GimpGradientSegment *segment;
@@ -176,11 +178,10 @@ gimp_gradient_get_memsize (GimpObject *object)
   gradient = GIMP_GRADIENT (object);
 
   for (segment = gradient->segments; segment; segment = segment->next)
-    {
-      memsize += sizeof (GimpGradientSegment);
-    }
+    memsize += sizeof (GimpGradientSegment);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 static void

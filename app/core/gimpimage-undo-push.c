@@ -269,7 +269,7 @@ undo_pop_image (GimpUndo            *undo,
 			       tile_data_pointer (dest_tile, 0, 0),
 			       tile_size (src_tile));
 #endif
-		  
+
 		  tile_release (dest_tile, FALSE /* TRUE */);
 		  tile_release (src_tile, FALSE /* TRUE */);
 		}
@@ -1109,7 +1109,7 @@ static void     undo_free_item_rename (GimpUndo            *undo,
                                        GimpUndoMode         undo_mode);
 
 gboolean
-gimp_image_undo_push_item_rename (GimpImage   *gimage, 
+gimp_image_undo_push_item_rename (GimpImage   *gimage,
                                   const gchar *undo_desc,
                                   GimpItem    *item)
 {
@@ -1357,7 +1357,7 @@ static void     undo_free_drawable_visibility (GimpUndo            *undo,
                                                GimpUndoMode         undo_mode);
 
 gboolean
-gimp_image_undo_push_drawable_visibility (GimpImage    *gimage, 
+gimp_image_undo_push_drawable_visibility (GimpImage    *gimage,
                                           const gchar  *undo_desc,
                                           GimpDrawable *drawable)
 {
@@ -1478,7 +1478,10 @@ undo_push_layer (GimpImage    *gimage,
   g_return_val_if_fail (type == GIMP_UNDO_LAYER_ADD ||
 			type == GIMP_UNDO_LAYER_REMOVE, FALSE);
 
-  size = sizeof (LayerUndo) + gimp_object_get_memsize (GIMP_OBJECT (layer));
+  size = sizeof (LayerUndo);
+
+  if (type == GIMP_UNDO_LAYER_REMOVE)
+    size += gimp_object_get_memsize (GIMP_OBJECT (layer), NULL);
 
   if ((new = gimp_image_undo_push_item (gimage, GIMP_ITEM (layer),
                                         size, sizeof (LayerUndo),
@@ -1519,9 +1522,14 @@ undo_pop_layer (GimpUndo            *undo,
     {
       /*  remove layer  */
 
+      g_print ("undo_pop_layer: taking ownership, size += %d\n",
+               gimp_object_get_memsize (GIMP_OBJECT (layer), NULL));
+
+      undo->size += gimp_object_get_memsize (GIMP_OBJECT (layer), NULL);
+
       /*  Make sure we're not caching any old selection info  */
       gimp_layer_invalidate_boundary (layer);
-              
+
       /*  record the current position  */
       lu->prev_position = gimp_image_get_layer_index (undo->gimage, layer);
 
@@ -1570,6 +1578,11 @@ undo_pop_layer (GimpUndo            *undo,
     {
       /*  restore layer  */
 
+      g_print ("undo_pop_layer: dropping ownership, size -= %d\n",
+               gimp_object_get_memsize (GIMP_OBJECT (layer), NULL));
+
+      undo->size -= gimp_object_get_memsize (GIMP_OBJECT (layer), NULL);
+
       /*  record the active layer  */
       lu->prev_layer = gimp_image_get_active_layer (undo->gimage);
 
@@ -1588,7 +1601,7 @@ undo_pop_layer (GimpUndo            *undo,
         }
 
       /*  add the new layer  */
-      gimp_container_insert (undo->gimage->layers, 
+      gimp_container_insert (undo->gimage->layers,
 			     GIMP_OBJECT (layer), lu->prev_position);
       gimp_image_set_active_layer (undo->gimage, layer);
 
@@ -1738,7 +1751,7 @@ undo_pop_layer_mod (GimpUndo            *undo,
 
   /*  Issue the second update  */
   gimp_drawable_update (GIMP_DRAWABLE (layer),
-			0, 0, 
+			0, 0,
 			GIMP_ITEM (layer)->width,
 			GIMP_ITEM (layer)->height);
 
@@ -1816,7 +1829,10 @@ undo_push_layer_mask (GimpImage     *gimage,
   g_return_val_if_fail (type == GIMP_UNDO_LAYER_MASK_ADD ||
 			type == GIMP_UNDO_LAYER_MASK_REMOVE, FALSE);
 
-  size = sizeof (LayerMaskUndo) + gimp_object_get_memsize (GIMP_OBJECT (mask));
+  size = sizeof (LayerMaskUndo);
+
+  if (type == GIMP_UNDO_LAYER_MASK_REMOVE)
+    size += gimp_object_get_memsize (GIMP_OBJECT (mask), NULL);
 
   if ((new = gimp_image_undo_push_item (gimage, GIMP_ITEM (layer),
                                         size,
@@ -1857,11 +1873,15 @@ undo_pop_layer_mask (GimpUndo            *undo,
     {
       /*  remove layer mask  */
 
+      undo->size += gimp_object_get_memsize (GIMP_OBJECT (lmu->mask), NULL);
+
       gimp_layer_apply_mask (layer, GIMP_MASK_DISCARD, FALSE);
     }
   else
     {
       /*  restore layer  */
+
+      undo->size -= gimp_object_get_memsize (GIMP_OBJECT (lmu->mask), NULL);
 
       gimp_layer_add_mask (layer, lmu->mask, FALSE);
     }
@@ -1900,7 +1920,7 @@ static void     undo_free_layer_reposition (GimpUndo            *undo,
                                             GimpUndoMode         undo_mode);
 
 gboolean
-gimp_image_undo_push_layer_reposition (GimpImage   *gimage, 
+gimp_image_undo_push_layer_reposition (GimpImage   *gimage,
                                        const gchar *undo_desc,
                                        GimpLayer   *layer)
 {
@@ -1911,7 +1931,7 @@ gimp_image_undo_push_layer_reposition (GimpImage   *gimage,
 
   if ((new = gimp_image_undo_push_item (gimage, GIMP_ITEM (layer),
                                         sizeof (LayerRepositionUndo),
-                                        sizeof (LayerRepositionUndo), 
+                                        sizeof (LayerRepositionUndo),
                                         GIMP_UNDO_LAYER_REPOSITION, undo_desc,
                                         TRUE,
                                         undo_pop_layer_reposition,
@@ -2154,7 +2174,10 @@ undo_push_channel (GimpImage    *gimage,
   g_return_val_if_fail (type == GIMP_UNDO_CHANNEL_ADD ||
 			type == GIMP_UNDO_CHANNEL_REMOVE, FALSE);
 
-  size = sizeof (ChannelUndo) + gimp_object_get_memsize (GIMP_OBJECT (channel));
+  size = sizeof (ChannelUndo);
+
+  if (type == GIMP_UNDO_CHANNEL_REMOVE)
+    size += gimp_object_get_memsize (GIMP_OBJECT (channel), NULL);
 
   if ((new = gimp_image_undo_push_item (gimage, GIMP_ITEM (channel),
                                         size,
@@ -2196,6 +2219,8 @@ undo_pop_channel (GimpUndo            *undo,
     {
       /*  remove channel  */
 
+      undo->size += gimp_object_get_memsize (GIMP_OBJECT (channel), NULL);
+
       /*  record the current position  */
       cu->prev_position = gimp_image_get_channel_index (undo->gimage,
                                                         channel);
@@ -2215,7 +2240,7 @@ undo_pop_channel (GimpUndo            *undo,
 
       /*  update the area  */
       gimp_drawable_update (GIMP_DRAWABLE (channel),
-			    0, 0, 
+			    0, 0,
 			    GIMP_ITEM (channel)->width,
 			    GIMP_ITEM (channel)->height);
     }
@@ -2223,17 +2248,19 @@ undo_pop_channel (GimpUndo            *undo,
     {
       /*  restore channel  */
 
+      undo->size -= gimp_object_get_memsize (GIMP_OBJECT (channel), NULL);
+
       /*  record the active channel  */
       cu->prev_channel = gimp_image_get_active_channel (undo->gimage);
 
       /*  add the new channel  */
-      gimp_container_insert (undo->gimage->channels, 
+      gimp_container_insert (undo->gimage->channels,
 			     GIMP_OBJECT (channel), cu->prev_position);
       gimp_image_set_active_channel (undo->gimage, channel);
 
       /*  update the area  */
       gimp_drawable_update (GIMP_DRAWABLE (channel),
-			    0, 0, 
+			    0, 0,
 			    GIMP_ITEM (channel)->width,
 			    GIMP_ITEM (channel)->height);
     }
@@ -2393,7 +2420,7 @@ static void     undo_free_channel_reposition (GimpUndo            *undo,
                                               GimpUndoMode         undo_mode);
 
 gboolean
-gimp_image_undo_push_channel_reposition (GimpImage   *gimage, 
+gimp_image_undo_push_channel_reposition (GimpImage   *gimage,
                                          const gchar *undo_desc,
                                          GimpChannel *channel)
 {
@@ -2469,7 +2496,7 @@ static void     undo_free_channel_color (GimpUndo            *undo,
                                          GimpUndoMode         undo_mode);
 
 gboolean
-gimp_image_undo_push_channel_color (GimpImage   *gimage, 
+gimp_image_undo_push_channel_color (GimpImage   *gimage,
                                     const gchar *undo_desc,
                                     GimpChannel *channel)
 {
@@ -2590,7 +2617,10 @@ undo_push_vectors (GimpImage    *gimage,
   g_return_val_if_fail (type == GIMP_UNDO_VECTORS_ADD ||
 			type == GIMP_UNDO_VECTORS_REMOVE, FALSE);
 
-  size = sizeof (VectorsUndo) + gimp_object_get_memsize (GIMP_OBJECT (vectors));
+  size = sizeof (VectorsUndo);
+
+  if (type == GIMP_UNDO_VECTORS_REMOVE)
+    size += gimp_object_get_memsize (GIMP_OBJECT (vectors), NULL);
 
   if ((new = gimp_image_undo_push_item (gimage, GIMP_ITEM (vectors),
                                         size,
@@ -2632,6 +2662,8 @@ undo_pop_vectors (GimpUndo            *undo,
     {
       /*  remove vectors  */
 
+      undo->size += gimp_object_get_memsize (GIMP_OBJECT (vectors), NULL);
+
       /*  record the current position  */
       vu->prev_position = gimp_image_get_vectors_index (undo->gimage,
                                                         vectors);
@@ -2658,11 +2690,13 @@ undo_pop_vectors (GimpUndo            *undo,
     {
       /*  restore vectors  */
 
+      undo->size -= gimp_object_get_memsize (GIMP_OBJECT (vectors), NULL);
+
       /*  record the active vectors  */
       vu->prev_vectors = gimp_image_get_active_vectors (undo->gimage);
 
       /*  add the new vectors  */
-      gimp_container_insert (undo->gimage->vectors, 
+      gimp_container_insert (undo->gimage->vectors,
 			     GIMP_OBJECT (vectors), vu->prev_position);
       gimp_image_set_active_vectors (undo->gimage, vectors);
     }
@@ -2707,7 +2741,7 @@ gimp_image_undo_push_vectors_mod (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
 
   size = (sizeof (VectorsModUndo) +
-          gimp_object_get_memsize (GIMP_OBJECT (vectors)));
+          gimp_object_get_memsize (GIMP_OBJECT (vectors), NULL));
 
   if ((new = gimp_image_undo_push_item (gimage, GIMP_ITEM (vectors),
                                         size,
@@ -2798,7 +2832,7 @@ static void     undo_free_vectors_reposition (GimpUndo            *undo,
                                               GimpUndoMode         undo_mode);
 
 gboolean
-gimp_image_undo_push_vectors_reposition (GimpImage   *gimage, 
+gimp_image_undo_push_vectors_reposition (GimpImage   *gimage,
                                          const gchar *undo_desc,
                                          GimpVectors *vectors)
 {
@@ -2931,10 +2965,10 @@ undo_pop_fs_to_layer (GimpUndo            *undo,
       undo->gimage->floating_sel = fsu->floating_layer;
 
       /*  restore the contents of the drawable  */
-      floating_sel_store (fsu->floating_layer, 
-			  GIMP_ITEM (fsu->floating_layer)->offset_x, 
+      floating_sel_store (fsu->floating_layer,
+			  GIMP_ITEM (fsu->floating_layer)->offset_x,
 			  GIMP_ITEM (fsu->floating_layer)->offset_y,
-			  GIMP_ITEM (fsu->floating_layer)->width, 
+			  GIMP_ITEM (fsu->floating_layer)->width,
 			  GIMP_ITEM (fsu->floating_layer)->height);
       fsu->floating_layer->fs.initial = TRUE;
 
@@ -2947,10 +2981,10 @@ undo_pop_fs_to_layer (GimpUndo            *undo,
 
     case GIMP_UNDO_MODE_REDO:
       /*  restore the contents of the drawable  */
-      floating_sel_restore (fsu->floating_layer, 
-			    GIMP_ITEM (fsu->floating_layer)->offset_x, 
+      floating_sel_restore (fsu->floating_layer,
+			    GIMP_ITEM (fsu->floating_layer)->offset_x,
 			    GIMP_ITEM (fsu->floating_layer)->offset_y,
-			    GIMP_ITEM (fsu->floating_layer)->width, 
+			    GIMP_ITEM (fsu->floating_layer)->width,
 			    GIMP_ITEM (fsu->floating_layer)->height);
 
       /*  Update the preview for the gimage and underlying drawable  */

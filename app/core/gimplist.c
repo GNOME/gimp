@@ -36,7 +36,8 @@ static void         gimp_list_init               (GimpList            *list);
 
 static void         gimp_list_dispose            (GObject             *object);
 
-static gsize        gimp_list_get_memsize        (GimpObject          *object);
+static gsize        gimp_list_get_memsize        (GimpObject          *object,
+                                                  gsize               *gui_size);
 
 static void         gimp_list_add                (GimpContainer       *container,
 						  GimpObject          *object);
@@ -82,7 +83,7 @@ gimp_list_get_type (void)
       };
 
       list_type = g_type_register_static (GIMP_TYPE_CONTAINER,
-					  "GimpList", 
+					  "GimpList",
 					  &list_info, 0);
     }
 
@@ -139,7 +140,8 @@ gimp_list_dispose (GObject *object)
 }
 
 static gsize
-gimp_list_get_memsize (GimpObject *object)
+gimp_list_get_memsize (GimpObject *object,
+                       gsize      *gui_size)
 {
   GimpList *gimp_list;
   gsize     memsize = 0;
@@ -155,12 +157,11 @@ gimp_list_get_memsize (GimpObject *object)
       GList *list;
 
       for (list = gimp_list->list; list; list = g_list_next (list))
-        {
-          memsize += gimp_object_get_memsize (GIMP_OBJECT (list->data));
-        }
+        memsize += gimp_object_get_memsize (GIMP_OBJECT (list->data), gui_size);
     }
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 static void

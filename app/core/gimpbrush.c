@@ -69,7 +69,8 @@ static void        gimp_brush_init                  (GimpBrush      *brush);
 
 static void        gimp_brush_finalize              (GObject        *object);
 
-static gsize       gimp_brush_get_memsize           (GimpObject     *object);
+static gsize       gimp_brush_get_memsize           (GimpObject     *object,
+                                                     gsize          *gui_size);
 
 static gboolean    gimp_brush_get_popup_size        (GimpViewable   *viewable,
                                                      gint            width,
@@ -200,7 +201,8 @@ gimp_brush_finalize (GObject *object)
 }
 
 static gsize
-gimp_brush_get_memsize (GimpObject *object)
+gimp_brush_get_memsize (GimpObject *object,
+                        gsize      *gui_size)
 {
   GimpBrush *brush;
   gsize      memsize = 0;
@@ -213,7 +215,8 @@ gimp_brush_get_memsize (GimpObject *object)
   if (brush->pixmap)
     memsize += temp_buf_get_memsize (brush->pixmap);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 static gboolean

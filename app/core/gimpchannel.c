@@ -55,7 +55,8 @@ static void       gimp_channel_init        (GimpChannel      *channel);
 
 static void       gimp_channel_finalize    (GObject          *object);
 
-static gsize      gimp_channel_get_memsize (GimpObject       *object);
+static gsize      gimp_channel_get_memsize (GimpObject       *object,
+                                            gsize            *gui_size);
 
 static GimpItem * gimp_channel_duplicate   (GimpItem         *item,
                                             GType             new_type,
@@ -205,17 +206,17 @@ gimp_channel_finalize (GObject *object)
 }
 
 static gsize
-gimp_channel_get_memsize (GimpObject *object)
+gimp_channel_get_memsize (GimpObject *object,
+                          gsize      *gui_size)
 {
   GimpChannel *channel;
-  gsize        memsize = 0;
 
   channel = GIMP_CHANNEL (object);
 
-  memsize += channel->num_segs_in  * sizeof (BoundSeg);
-  memsize += channel->num_segs_out * sizeof (BoundSeg);
+  *gui_size += channel->num_segs_in  * sizeof (BoundSeg);
+  *gui_size += channel->num_segs_out * sizeof (BoundSeg);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return GIMP_OBJECT_CLASS (parent_class)->get_memsize (object, gui_size);
 }
 
 static GimpItem *

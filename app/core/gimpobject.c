@@ -57,7 +57,8 @@ static void    gimp_object_get_property     (GObject         *object,
                                              guint            property_id,
                                              GValue          *value,
                                              GParamSpec      *pspec);
-static gsize   gimp_object_real_get_memsize (GimpObject      *object);
+static gsize   gimp_object_real_get_memsize (GimpObject      *object,
+                                             gsize           *gui_size);
 
 
 static guint   object_signals[LAST_SIGNAL] = { 0 };
@@ -281,8 +282,12 @@ gboolean gimp_debug_memsize = FALSE;
 #endif
 
 gsize
-gimp_object_get_memsize (GimpObject *object)
+gimp_object_get_memsize (GimpObject *object,
+                         gsize      *gui_size)
 {
+  gsize my_size     = 0;
+  gsize my_gui_size = 0;
+
   g_return_val_if_fail (GIMP_IS_OBJECT (object), 0);
 
 #ifdef DEBUG_MEMSIZE
@@ -293,6 +298,7 @@ gimp_object_get_memsize (GimpObject *object)
       static gchar  indent_buf[256];
 
       gsize  memsize;
+      gsize  gui_memsize = 0;
       gint   i;
       gint   my_indent_level;
       gchar *object_size;
@@ -301,7 +307,8 @@ gimp_object_get_memsize (GimpObject *object)
 
       my_indent_level = indent_level;
 
-      memsize = GIMP_OBJECT_GET_CLASS (object)->get_memsize (object);
+      memsize = GIMP_OBJECT_GET_CLASS (object)->get_memsize (object,
+                                                             &gui_memsize);
 
       indent_level--;
 
@@ -311,11 +318,12 @@ gimp_object_get_memsize (GimpObject *object)
       indent_buf[i] = '\0';
 
       /* FIXME: are we going to ever have > 4 GB objects?? */
-      object_size = g_strdup_printf ("%s%s \"%s\": %u\n",
+      object_size = g_strdup_printf ("%s%s \"%s\": %u (%u)\n",
                                      indent_buf,
                                      g_type_name (G_TYPE_FROM_INSTANCE (object)),
                                      object->name,
-                                     (guint) memsize);
+                                     (guint) memsize,
+                                     (guint) gui_memsize);
 
       aggregation_tree = g_list_prepend (aggregation_tree, object_size);
 
@@ -332,7 +340,13 @@ gimp_object_get_memsize (GimpObject *object)
     }
 #endif /* DEBUG_MEMSIZE */
 
-  return GIMP_OBJECT_GET_CLASS (object)->get_memsize (object);
+  my_size = GIMP_OBJECT_GET_CLASS (object)->get_memsize (object,
+                                                         &my_gui_size);
+
+  if (gui_size)
+    *gui_size = my_gui_size;
+
+  return my_size;
 }
 
 gsize
@@ -351,7 +365,8 @@ gimp_g_object_get_memsize (GObject *object)
 }
 
 static gsize
-gimp_object_real_get_memsize (GimpObject *object)
+gimp_object_real_get_memsize (GimpObject *object,
+                              gsize      *gui_size)
 {
   gsize memsize = 0;
 

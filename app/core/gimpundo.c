@@ -43,7 +43,8 @@ static void      gimp_undo_init                (GimpUndo            *undo);
 
 static void      gimp_undo_finalize            (GObject             *object);
 
-static gsize     gimp_undo_get_memsize         (GimpObject          *object);
+static gsize     gimp_undo_get_memsize         (GimpObject          *object,
+                                                gsize               *gui_size);
 
 static gboolean  gimp_undo_get_popup_size      (GimpViewable        *viewable,
                                                 gint                 width,
@@ -111,7 +112,7 @@ gimp_undo_class_init (GimpUndoClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  undo_signals[POP] = 
+  undo_signals[POP] =
     g_signal_new ("pop",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -122,7 +123,7 @@ gimp_undo_class_init (GimpUndoClass *klass)
                   GIMP_TYPE_UNDO_MODE,
                   G_TYPE_POINTER);
 
-  undo_signals[FREE] = 
+  undo_signals[FREE] =
     g_signal_new ("free",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -178,7 +179,8 @@ gimp_undo_finalize (GObject *object)
 }
 
 static gsize
-gimp_undo_get_memsize (GimpObject *object)
+gimp_undo_get_memsize (GimpObject *object,
+                       gsize      *gui_size)
 {
   GimpUndo *undo;
   gsize     memsize = 0;
@@ -188,9 +190,10 @@ gimp_undo_get_memsize (GimpObject *object)
   memsize += undo->size;
 
   if (undo->preview)
-    memsize += temp_buf_get_memsize (undo->preview);
+    *gui_size += temp_buf_get_memsize (undo->preview);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 static gboolean

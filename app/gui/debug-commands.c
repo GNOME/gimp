@@ -93,7 +93,7 @@ debug_mem_profile_cmd_callback (GtkWidget *widget,
 
   gimp_debug_memsize = TRUE;
 
-  gimp_object_get_memsize (GIMP_OBJECT (data));
+  gimp_object_get_memsize (GIMP_OBJECT (data), NULL);
 
   gimp_debug_memsize = FALSE;
 }
@@ -111,73 +111,33 @@ debug_dump_menus_recurse_menu (GtkWidget *menu,
   GList          *list;
   const gchar    *label;
   gchar          *help_page;
-  gchar          *help_path;
-  gchar          *factory_path;
-  gchar          *hash;
   gchar          *full_path;
   gchar          *format_str;
 
   for (list = GTK_MENU_SHELL (menu)->children; list; list = g_list_next (list))
     {
       menu_item = GTK_WIDGET (list->data);
-      
+
       if (GTK_IS_LABEL (GTK_BIN (menu_item)->child))
 	{
 	  label = gtk_label_get_text (GTK_LABEL (GTK_BIN (menu_item)->child));
 	  full_path = g_strconcat (path, "/", label, NULL);
 
 	  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path (path));
-          help_page    = g_object_get_data (G_OBJECT (menu_item), "help_page");
+          help_page    = g_object_get_data (G_OBJECT (menu_item),
+                                            "gimp-help-id");
 
-	  if (item_factory)
-	    {
-	      factory_path = g_object_get_data (G_OBJECT (item_factory),
-                                                "factory_path");
+          help_page = g_strdup (help_page);
 
-              if (factory_path)
-                {
-                  help_page = g_build_filename (factory_path, help_page, NULL);
-                }
-              else
-                {
-                  help_page = g_strdup (help_page);
-                }
-	    }
-	  else
-	    {
-	      help_page = g_strdup (help_page);
-	    }
-
-	  if (help_page)
-	    {
-	      help_path = g_build_filename (gimp_data_directory (),
-                                            "help", "C", help_page, NULL);
-
-	      if ((hash = strchr (help_path, '#')) != NULL)
-		*hash = '\0';
-
-	      if (g_file_test (help_path, G_FILE_TEST_EXISTS))
-		{
-		  g_free (help_path);
-		  help_path = g_strconcat ("! ", help_page, NULL);
-		  g_free (help_page);
-		  help_page = help_path;
-		}
-	      else
-		{
-		  g_free (help_path);
-		}
-	    }
-
-	  format_str = g_strdup_printf ("%%%ds%%%ds %%-20s %%s\n", 
+	  format_str = g_strdup_printf ("%%%ds%%%ds %%-20s %%s\n",
 					depth * 2, depth * 2 - 40);
-	  g_print (format_str, 
+	  g_print (format_str,
 		   "", label, "", help_page ? help_page : "");
 	  g_free (format_str);
 	  g_free (help_page);
 
 	  if (GTK_MENU_ITEM (menu_item)->submenu)
-	    debug_dump_menus_recurse_menu (GTK_MENU_ITEM (menu_item)->submenu, 
+	    debug_dump_menus_recurse_menu (GTK_MENU_ITEM (menu_item)->submenu,
                                            depth + 1, full_path);
 
 	  g_free (full_path);

@@ -66,7 +66,8 @@ static void       gimp_layer_init               (GimpLayer          *layer);
 
 static void       gimp_layer_finalize           (GObject            *object);
 
-static gsize      gimp_layer_get_memsize        (GimpObject         *object);
+static gsize      gimp_layer_get_memsize        (GimpObject         *object,
+                                                 gsize              *gui_size);
 
 static void       gimp_layer_invalidate_preview (GimpViewable       *viewable);
 
@@ -273,7 +274,8 @@ gimp_layer_finalize (GObject *object)
 }
 
 static gsize
-gimp_layer_get_memsize (GimpObject *object)
+gimp_layer_get_memsize (GimpObject *object,
+                        gsize      *gui_size)
 {
   GimpLayer *layer;
   gsize      memsize = 0;
@@ -281,14 +283,15 @@ gimp_layer_get_memsize (GimpObject *object)
   layer = GIMP_LAYER (object);
 
   if (layer->mask)
-    memsize += gimp_object_get_memsize (GIMP_OBJECT (layer->mask));
+    memsize += gimp_object_get_memsize (GIMP_OBJECT (layer->mask), gui_size);
 
   if (layer->fs.backing_store)
-    memsize += tile_manager_get_memsize (layer->fs.backing_store);
+    *gui_size += tile_manager_get_memsize (layer->fs.backing_store);
 
-  memsize += layer->fs.num_segs * sizeof (BoundSeg);
+  *gui_size += layer->fs.num_segs * sizeof (BoundSeg);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 static void

@@ -437,7 +437,7 @@ gimp_preview_button_press_event (GtkWidget      *widget,
     {
       gimp_debug_memsize = TRUE;
 
-      gimp_object_get_memsize (GIMP_OBJECT (preview->viewable));
+      gimp_object_get_memsize (GIMP_OBJECT (preview->viewable), NULL);
 
       gimp_debug_memsize = FALSE;
     }

@@ -46,7 +46,8 @@ struct _GimpObjectClass
   void  (* name_changed) (GimpObject *object);
 
   /*  virtual functions  */
-  gsize (* get_memsize)  (GimpObject *object);
+  gsize (* get_memsize)  (GimpObject *object,
+                          gsize      *gui_size);
 };
 
 
@@ -59,7 +60,8 @@ void          gimp_object_set_name_safe (GimpObject       *object,
                                          const gchar      *name);
 void          gimp_object_name_changed  (GimpObject       *object);
 
-gsize         gimp_object_get_memsize   (GimpObject       *object);
+gsize         gimp_object_get_memsize   (GimpObject       *object,
+                                         gsize            *gui_size);
 gsize         gimp_g_object_get_memsize (GObject          *object);
 
 

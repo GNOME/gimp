@@ -59,7 +59,8 @@ static void       gimp_pattern_init            (GimpPattern      *pattern);
 
 static void       gimp_pattern_finalize        (GObject          *object);
 
-static gsize      gimp_pattern_get_memsize     (GimpObject       *object);
+static gsize      gimp_pattern_get_memsize     (GimpObject       *object,
+                                                gsize            *gui_size);
 
 static gboolean   gimp_pattern_get_popup_size  (GimpViewable     *viewable,
                                                 gint              width,
@@ -158,7 +159,8 @@ gimp_pattern_finalize (GObject *object)
 }
 
 static gsize
-gimp_pattern_get_memsize (GimpObject *object)
+gimp_pattern_get_memsize (GimpObject *object,
+                          gsize      *gui_size)
 {
   GimpPattern *pattern;
   gsize        memsize = 0;
@@ -168,7 +170,8 @@ gimp_pattern_get_memsize (GimpObject *object)
   if (pattern->mask)
     memsize += temp_buf_get_memsize (pattern->mask);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 static gboolean

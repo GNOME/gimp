@@ -38,7 +38,8 @@ static void         gimp_stroke_init                 (GimpStroke       *stroke);
 
 static void         gimp_stroke_finalize             (GObject          *object);
 
-static gsize        gimp_stroke_get_memsize          (GimpObject       *object);
+static gsize        gimp_stroke_get_memsize          (GimpObject       *object,
+                                                      gsize            *gui_size);
 
 static GimpAnchor * gimp_stroke_real_anchor_get      (const GimpStroke *stroke,
                                                       const GimpCoords *coord);
@@ -224,7 +225,8 @@ gimp_stroke_finalize (GObject *object)
 }
 
 static gsize
-gimp_stroke_get_memsize (GimpObject *object)
+gimp_stroke_get_memsize (GimpObject *object,
+                         gsize      *gui_size)
 {
   GimpStroke *stroke;
   gsize       memsize = 0;
@@ -234,7 +236,8 @@ gimp_stroke_get_memsize (GimpObject *object)
   memsize += g_list_length (stroke->anchors) * (sizeof (GList) +
                                                 sizeof (GimpAnchor));
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 
@@ -253,7 +256,7 @@ gimp_stroke_nearest_point_get    (const GimpStroke *stroke,
                                   const GimpCoords *coord,
                                   const gdouble     precision,
                                   GimpCoords       *ret_point,
-                                  GimpAnchor      **ret_segment_start,                              
+                                  GimpAnchor      **ret_segment_start,
                                   gdouble          *ret_pos)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
@@ -475,7 +478,7 @@ gimp_stroke_real_anchor_delete (GimpStroke *stroke,
 {
   g_printerr ("gimp_stroke_anchor_delete: default implementation\n");
 }
- 
+
 GimpStroke *
 gimp_stroke_open (GimpStroke *stroke,
                   GimpAnchor *end_anchor)
@@ -492,7 +495,7 @@ gimp_stroke_real_open (GimpStroke *stroke,
   g_printerr ("gimp_stroke_open: default implementation\n");
   return NULL;
 }
- 
+
 gboolean
 gimp_stroke_anchor_is_insertable (GimpStroke *stroke,
                                   GimpAnchor *predec,
@@ -848,7 +851,7 @@ gimp_stroke_real_rotate (GimpStroke       *stroke,
                          gboolean          clip_result)
 {
   GList       *list;
-  GimpMatrix3  matrix; 
+  GimpMatrix3  matrix;
   gdouble      angle = 0.0;
 
   switch (rotate_type)

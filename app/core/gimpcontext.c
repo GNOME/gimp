@@ -56,7 +56,7 @@
 
 #include "text/gimpfont.h"
 
-#include "gimp-intl.h" 
+#include "gimp-intl.h"
 
 
 typedef void (* GimpContextCopyPropFunc) (GimpContext *src,
@@ -87,7 +87,8 @@ static void       gimp_context_get_property   (GObject               *object,
                                                guint                  property_id,
                                                GValue                *value,
                                                GParamSpec            *pspec);
-static gsize      gimp_context_get_memsize    (GimpObject            *object);
+static gsize      gimp_context_get_memsize    (GimpObject            *object,
+                                               gsize                 *gui_size);
 
 static gboolean   gimp_context_serialize            (GObject          *object,
                                                      GimpConfigWriter *writer,
@@ -340,7 +341,7 @@ gimp_context_get_type (void)
 	0,              /* n_preallocs    */
 	(GInstanceInitFunc) gimp_context_init,
       };
-      static const GInterfaceInfo config_iface_info = 
+      static const GInterfaceInfo config_iface_info =
       {
         (GInterfaceInitFunc) gimp_context_config_iface_init,
         NULL,           /* iface_finalize */
@@ -348,7 +349,7 @@ gimp_context_get_type (void)
       };
 
       context_type = g_type_register_static (GIMP_TYPE_OBJECT,
-					     "GimpContext", 
+					     "GimpContext",
 					     &context_info, 0);
 
       g_type_add_interface_static (context_type,
@@ -1073,7 +1074,8 @@ gimp_context_get_property (GObject    *object,
 }
 
 static gsize
-gimp_context_get_memsize (GimpObject *object)
+gimp_context_get_memsize (GimpObject *object,
+                          gsize      *gui_size)
 {
   GimpContext *context;
   gsize        memsize = 0;
@@ -1095,7 +1097,8 @@ gimp_context_get_memsize (GimpObject *object)
   if (context->font_name)
     memsize += strlen (context->font_name) + 1;
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 static gboolean
@@ -2207,7 +2210,7 @@ gimp_context_brush_list_thaw (GimpContainer *container,
     }
 
   if (gimp_container_num_children (container))
-    gimp_context_real_set_brush 
+    gimp_context_real_set_brush
       (context, GIMP_BRUSH (gimp_container_get_child_by_index (container, 0)));
   else
     gimp_context_real_set_brush (context,

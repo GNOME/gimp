@@ -70,7 +70,8 @@ static void       gimp_drawable_init               (GimpDrawable      *drawable)
 
 static void       gimp_drawable_finalize           (GObject           *object);
 
-static gsize      gimp_drawable_get_memsize        (GimpObject        *object);
+static gsize      gimp_drawable_get_memsize        (GimpObject        *object,
+                                                    gsize             *gui_size);
 
 static void       gimp_drawable_invalidate_preview (GimpViewable      *viewable);
 
@@ -228,7 +229,8 @@ gimp_drawable_finalize (GObject *object)
 }
 
 static gsize
-gimp_drawable_get_memsize (GimpObject *object)
+gimp_drawable_get_memsize (GimpObject *object,
+                           gsize      *gui_size)
 {
   GimpDrawable *drawable;
   gsize         memsize = 0;
@@ -239,9 +241,10 @@ gimp_drawable_get_memsize (GimpObject *object)
     memsize += tile_manager_get_memsize (drawable->tiles);
 
   if (drawable->preview_cache)
-    memsize += gimp_preview_cache_get_memsize (drawable->preview_cache);
+    *gui_size += gimp_preview_cache_get_memsize (drawable->preview_cache);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 static void

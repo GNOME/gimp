@@ -348,14 +348,14 @@ gimp_image_undo_free_space (GimpImage *gimage)
 #if 0
   g_print ("undo_steps: %d    undo_bytes: %d\n",
            gimp_container_num_children (container),
-           gimp_object_get_memsize (GIMP_OBJECT (container)));
+           gimp_object_get_memsize (GIMP_OBJECT (container), NULL));
 #endif
 
   /*  keep at least min_undo_levels undo steps  */
   if (gimp_container_num_children (container) <= min_undo_levels)
     return;
 
-  while ((gimp_object_get_memsize (GIMP_OBJECT (container)) > undo_size) ||
+  while ((gimp_object_get_memsize (GIMP_OBJECT (container), NULL) > undo_size) ||
          (gimp_container_num_children (container) > max_undo_levels))
     {
       GimpUndo *freed;
@@ -366,7 +366,7 @@ gimp_image_undo_free_space (GimpImage *gimage)
 #if 0
       g_print ("freed one step: undo_steps: %d    undo_bytes: %d\n",
                gimp_container_num_children (container),
-               gimp_object_get_memsize (GIMP_OBJECT (container)));
+               gimp_object_get_memsize (GIMP_OBJECT (container), NULL));
 #endif
 
       gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_EXPIRED, freed);
@@ -388,7 +388,7 @@ gimp_image_undo_free_redo (GimpImage *gimage)
 #if 0
   g_print ("redo_steps: %d    redo_bytes: %d\n",
            gimp_container_num_children (container),
-           gimp_object_get_memsize (GIMP_OBJECT (container)));
+           gimp_object_get_memsize (GIMP_OBJECT (container)), NULL);
 #endif
 
   while (gimp_container_num_children (container) > 0)
@@ -401,7 +401,7 @@ gimp_image_undo_free_redo (GimpImage *gimage)
 #if 0
       g_print ("freed one step: redo_steps: %d    redo_bytes: %d\n",
                gimp_container_num_children (container),
-               gimp_object_get_memsize (GIMP_OBJECT (container)));
+               gimp_object_get_memsize (GIMP_OBJECT (container)), NULL);
 #endif
 
       gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_REDO_EXPIRED, freed);

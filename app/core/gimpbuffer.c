@@ -38,7 +38,8 @@ static void      gimp_buffer_init             (GimpBuffer      *buffer);
 
 static void      gimp_buffer_finalize         (GObject         *object);
 
-static gsize     gimp_buffer_get_memsize      (GimpObject      *object);
+static gsize     gimp_buffer_get_memsize      (GimpObject      *object,
+                                               gsize           *gui_size);
 
 static void      gimp_buffer_get_preview_size (GimpViewable    *viewable,
                                                gint             size,
@@ -136,7 +137,8 @@ gimp_buffer_finalize (GObject *object)
 }
 
 static gsize
-gimp_buffer_get_memsize (GimpObject *object)
+gimp_buffer_get_memsize (GimpObject *object,
+                         gsize      *gui_size)
 {
   GimpBuffer *buffer;
   gsize       memsize = 0;
@@ -146,7 +148,8 @@ gimp_buffer_get_memsize (GimpObject *object)
   if (buffer->tiles)
     memsize += tile_manager_get_memsize (buffer->tiles);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 static void

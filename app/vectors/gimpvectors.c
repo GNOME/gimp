@@ -51,7 +51,8 @@ static void       gimp_vectors_init         (GimpVectors      *vectors);
 
 static void       gimp_vectors_finalize     (GObject          *object);
 
-static gsize      gimp_vectors_get_memsize  (GimpObject       *object);
+static gsize      gimp_vectors_get_memsize  (GimpObject       *object,
+                                             gsize            *gui_size);
 
 static GimpItem * gimp_vectors_duplicate    (GimpItem         *item,
                                              GType             new_type,
@@ -241,7 +242,8 @@ gimp_vectors_finalize (GObject *object)
 }
 
 static gsize
-gimp_vectors_get_memsize (GimpObject *object)
+gimp_vectors_get_memsize (GimpObject *object,
+                          gsize      *gui_size)
 {
   GimpVectors *vectors;
   GList       *list;
@@ -250,10 +252,11 @@ gimp_vectors_get_memsize (GimpObject *object)
   vectors = GIMP_VECTORS (object);
 
   for (list = vectors->strokes; list; list = g_list_next (list))
-    memsize += (gimp_object_get_memsize (GIMP_OBJECT (list->data)) +
+    memsize += (gimp_object_get_memsize (GIMP_OBJECT (list->data), gui_size) +
                 sizeof (GList));
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 

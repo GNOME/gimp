@@ -1,5 +1,52 @@
 2003-08-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpobject.[ch]: changed GimpObject::get_memsize() to
+	return a second value named "gui_size", where the primary return
+	value is the "constant" actual size (as long as no operation is
+	performed on the object), and the second "gui_size" return value
+	is the size of temporary stuff like preview caches or boundary
+	segments (which may change asynchronously, even if the object is
+	on the undo stack).
+
+	* app/core/gimp.c
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpbuffer.c
+	* app/core/gimpchannel.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpcontext.c
+	* app/core/gimpdata.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpgradient.c
+	* app/core/gimpimage-undo.c
+	* app/core/gimpimage.c
+	* app/core/gimpitem.c
+	* app/core/gimplayer.c
+	* app/core/gimplist.c
+	* app/core/gimppalette.c
+	* app/core/gimpparasitelist.c
+	* app/core/gimppattern.c
+	* app/core/gimpundo.c
+	* app/core/gimpundostack.c
+	* app/core/gimpviewable.c
+	* app/text/gimptextlayer.c
+	* app/vectors/gimpstroke.c
+	* app/vectors/gimpvectors.c: changed get_memsize() implementations
+	accordingly.
+
+	* app/display/gimpdisplayshell-title.c
+	* app/gui/debug-commands.c
+	* app/widgets/gimppreview.c: changed callers accordingly.
+
+	* app/core/gimpimage-undo-push.c: changed layer, channel, vectors
+	and layer_mask undo steps to add/subtract the size of the
+	resp. objects whenever they take/drop ownership of them. Ignore
+	the objects' "gui_size" to get identical sizes on
+	adding/subtracting. Fixes bug #120429.
+
+2003-08-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpnavigationview.c: forgot this one.
 
 2003-08-24  Seth Burgess <sjburges@gimp.org>

@@ -46,7 +46,8 @@ static void       gimp_palette_init             (GimpPalette       *palette);
 
 static void       gimp_palette_finalize         (GObject           *object);
 
-static gsize      gimp_palette_get_memsize      (GimpObject        *object);
+static gsize      gimp_palette_get_memsize      (GimpObject        *object,
+                                                 gsize             *gui_size);
 
 static void       gimp_palette_get_preview_size (GimpViewable      *viewable,
                                                  gint               size,
@@ -101,7 +102,7 @@ gimp_palette_get_type (void)
       };
 
       palette_type = g_type_register_static (GIMP_TYPE_DATA,
-					     "GimpPalette", 
+					     "GimpPalette",
 					     &palette_info, 0);
     }
 
@@ -166,7 +167,8 @@ gimp_palette_finalize (GObject *object)
 }
 
 static gsize
-gimp_palette_get_memsize (GimpObject *object)
+gimp_palette_get_memsize (GimpObject *object,
+                          gsize      *gui_size)
 {
   GimpPalette *palette;
   GList       *list;
@@ -186,7 +188,8 @@ gimp_palette_get_memsize (GimpObject *object)
         memsize += strlen (entry->name) + 1;
     }
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 static void

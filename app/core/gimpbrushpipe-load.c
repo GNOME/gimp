@@ -58,23 +58,24 @@
 static void        gimp_brush_pipe_class_init       (GimpBrushPipeClass *klass);
 static void        gimp_brush_pipe_init             (GimpBrushPipe      *pipe);
 
-static void        gimp_brush_pipe_finalize         (GObject    *object);
+static void        gimp_brush_pipe_finalize         (GObject      *object);
 
-static gsize       gimp_brush_pipe_get_memsize      (GimpObject *object);
+static gsize       gimp_brush_pipe_get_memsize      (GimpObject   *object,
+                                                     gsize        *gui_size);
 
-static gboolean    gimp_brush_pipe_get_popup_size   (GimpViewable   *viewable,
-                                                     gint            width,
-                                                     gint            height,
-                                                     gboolean        dot_for_dot,
-                                                     gint           *popup_width,
-                                                     gint           *popup_height);
+static gboolean    gimp_brush_pipe_get_popup_size   (GimpViewable *viewable,
+                                                     gint          width,
+                                                     gint          height,
+                                                     gboolean      dot_for_dot,
+                                                     gint         *popup_width,
+                                                     gint         *popup_height);
 
-static GimpBrush * gimp_brush_pipe_select_brush     (GimpBrush  *brush,
-                                                     GimpCoords *last_coords,
-                                                     GimpCoords *cur_coords);
-static gboolean    gimp_brush_pipe_want_null_motion (GimpBrush  *brush,
-                                                     GimpCoords *last_coords,
-                                                     GimpCoords *cur_coords);
+static GimpBrush * gimp_brush_pipe_select_brush     (GimpBrush    *brush,
+                                                     GimpCoords   *last_coords,
+                                                     GimpCoords   *cur_coords);
+static gboolean    gimp_brush_pipe_want_null_motion (GimpBrush    *brush,
+                                                     GimpCoords   *last_coords,
+                                                     GimpCoords   *cur_coords);
 
 
 static GimpBrushClass *parent_class = NULL;
@@ -101,7 +102,7 @@ gimp_brush_pipe_get_type (void)
       };
 
       brush_type = g_type_register_static (GIMP_TYPE_BRUSH,
-					   "GimpBrushPipe", 
+					   "GimpBrushPipe",
 					   &brush_info, 0);
     }
 
@@ -196,7 +197,8 @@ gimp_brush_pipe_finalize (GObject *object)
 }
 
 static gsize
-gimp_brush_pipe_get_memsize (GimpObject *object)
+gimp_brush_pipe_get_memsize (GimpObject *object,
+                             gsize      *gui_size)
 {
   GimpBrushPipe *pipe;
   gsize          memsize = 0;
@@ -209,11 +211,11 @@ gimp_brush_pipe_get_memsize (GimpObject *object)
                                 sizeof (PipeSelectModes));
 
   for (i = 0; i < pipe->nbrushes; i++)
-    {
-      memsize += gimp_object_get_memsize (GIMP_OBJECT (pipe->brushes[i]));
-    }
+    memsize += gimp_object_get_memsize (GIMP_OBJECT (pipe->brushes[i]),
+                                        gui_size);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 static gboolean
@@ -358,7 +360,7 @@ gimp_brush_pipe_load (const gchar  *filename,
   buffer = g_string_new (NULL);
   while (read (fd, &c, 1) == 1 && c != '\n' && buffer->len < 1024)
     g_string_append_c (buffer, c);
-    
+
   if (buffer->len > 0 && buffer->len < 1024)
     {
       pipe = GIMP_BRUSH_PIPE (g_object_new (GIMP_TYPE_BRUSH_PIPE, NULL));
@@ -369,7 +371,7 @@ gimp_brush_pipe_load (const gchar  *filename,
         }
       else
         {
-          g_message (_("Invalid UTF-8 string in brush file '%s'."), 
+          g_message (_("Invalid UTF-8 string in brush file '%s'."),
                      filename);
           gimp_object_set_name (GIMP_OBJECT (pipe), _("Unnamed"));
         }
@@ -496,7 +498,7 @@ gimp_brush_pipe_load (const gchar  *filename,
 	  g_object_unref (pipe);
 	  return NULL;
 	}
-  
+
       pipe->nbrushes++;
     }
 

@@ -65,7 +65,8 @@ static void    gimp_viewable_get_property           (GObject        *object,
                                                      GValue         *value,
                                                      GParamSpec     *pspec);
 
-static gsize   gimp_viewable_get_memsize             (GimpObject    *object);
+static gsize   gimp_viewable_get_memsize             (GimpObject    *object,
+                                                      gsize         *gui_size);
 
 static void    gimp_viewable_real_invalidate_preview (GimpViewable  *viewable);
 
@@ -92,7 +93,7 @@ static GQuark  quark_preview_temp_buf = 0;
 static GQuark  quark_preview_pixbuf   = 0;
 
 
-GType 
+GType
 gimp_viewable_get_type (void)
 {
   static GType viewable_type = 0;
@@ -111,7 +112,7 @@ gimp_viewable_get_type (void)
         0,              /* n_preallocs */
         (GInstanceInitFunc) gimp_viewable_init,
       };
-      static const GInterfaceInfo config_iface_info = 
+      static const GInterfaceInfo config_iface_info =
       {
         (GInterfaceInitFunc) gimp_viewable_config_iface_init,
         NULL,           /* iface_finalize */
@@ -226,7 +227,7 @@ gimp_viewable_set_property (GObject      *object,
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;      
+      break;
     }
 }
 
@@ -245,23 +246,21 @@ gimp_viewable_get_property (GObject    *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
-    }  
+    }
 }
 
 static gsize
-gimp_viewable_get_memsize (GimpObject *object)
+gimp_viewable_get_memsize (GimpObject *object,
+                           gsize      *gui_size)
 {
   TempBuf   *temp_buf;
   GdkPixbuf *pixbuf;
-  gsize      memsize = 0;
 
   temp_buf = g_object_get_qdata (G_OBJECT (object), quark_preview_temp_buf);
   pixbuf   = g_object_get_qdata (G_OBJECT (object), quark_preview_pixbuf);
 
   if (temp_buf)
-    {
-      memsize += temp_buf_get_memsize (temp_buf);
-    }
+    *gui_size += temp_buf_get_memsize (temp_buf);
 
   if (pixbuf)
     {
@@ -276,12 +275,12 @@ gimp_viewable_get_memsize (GimpObject *object)
           pixbuf_instance_size = type_query.instance_size;
         }
 
-      memsize += (pixbuf_instance_size +
-                  gdk_pixbuf_get_height (pixbuf) *
-                  gdk_pixbuf_get_rowstride (pixbuf));
+      *gui_size += (pixbuf_instance_size +
+                    gdk_pixbuf_get_height (pixbuf) *
+                    gdk_pixbuf_get_rowstride (pixbuf));
     }
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return GIMP_OBJECT_CLASS (parent_class)->get_memsize (object, gui_size);
 }
 
 static void

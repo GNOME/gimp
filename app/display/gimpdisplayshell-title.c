@@ -269,7 +269,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                 gulong  memsize;
                 gchar  *memsize_str;
 
-                memsize = gimp_object_get_memsize (GIMP_OBJECT (gimage));
+                memsize = gimp_object_get_memsize (GIMP_OBJECT (gimage), NULL);
 
                 memsize_str = gimp_memsize_to_string (memsize);
 

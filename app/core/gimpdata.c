@@ -63,7 +63,8 @@ static void    gimp_data_init         (GimpData      *data);
 static void    gimp_data_finalize     (GObject       *object);
 
 static void    gimp_data_name_changed (GimpObject    *object);
-static gsize   gimp_data_get_memsize  (GimpObject    *object);
+static gsize   gimp_data_get_memsize  (GimpObject    *object,
+                                       gsize         *gui_size);
 
 static void    gimp_data_real_dirty   (GimpData      *data);
 
@@ -112,7 +113,7 @@ gimp_data_class_init (GimpDataClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  data_signals[DIRTY] = 
+  data_signals[DIRTY] =
     g_signal_new ("dirty",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -167,7 +168,8 @@ gimp_data_name_changed (GimpObject *object)
 }
 
 static gsize
-gimp_data_get_memsize (GimpObject *object)
+gimp_data_get_memsize (GimpObject *object,
+                       gsize      *gui_size)
 {
   GimpData *data;
   gsize     memsize = 0;
@@ -177,7 +179,8 @@ gimp_data_get_memsize (GimpObject *object)
   if (data->filename)
     memsize += strlen (data->filename) + 1;
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 gboolean

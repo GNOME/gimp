@@ -61,7 +61,8 @@ static void       gimp_item_init           (GimpItem      *item);
 static void       gimp_item_finalize       (GObject       *object);
 
 static void       gimp_item_name_changed   (GimpObject    *object);
-static gsize      gimp_item_get_memsize    (GimpObject    *object);
+static gsize      gimp_item_get_memsize    (GimpObject    *object,
+                                            gsize         *gui_size);
 
 static GimpItem * gimp_item_real_duplicate (GimpItem      *item,
                                             GType          new_type,
@@ -226,16 +227,18 @@ gimp_item_name_changed (GimpObject *object)
 }
 
 static gsize
-gimp_item_get_memsize (GimpObject *object)
+gimp_item_get_memsize (GimpObject *object,
+                       gsize      *gui_size)
 {
   GimpItem *item;
   gsize     memsize = 0;
 
   item = GIMP_ITEM (object);
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (item->parasites));
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (item->parasites), gui_size);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 static GimpItem *
