@@ -221,7 +221,7 @@ gimp_help_internal (Gimp        *gimp,
       args[3].arg_type          = GIMP_PDB_STRING;
       args[3].value.pdb_pointer = (gpointer) help_data;
 
-      plug_in_run (gimp, proc_rec, args, 4, FALSE, TRUE, 0);
+      plug_in_run (gimp, proc_rec, args, 4, FALSE, TRUE, -1);
 
       g_free (args);
     }
