@@ -19,7 +19,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include <glib.h>
+#include "config.h"
 
 #include "gimp.h"
 

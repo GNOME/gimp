@@ -1,5 +1,43 @@
 2002-05-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimpmath/gimpmath.h: removed FINITE() macro.
+
+	* tools/pdbgen/pdb/image.pdb
+	* app/pdb/image_cmds.c: define FINITE() here, where it is used.
+
+	* tools/pdbgen/pdb/lib.pl: add "config.h" to all generated libgimp
+	.c files.
+
+	* libgimp/gimp*_pdb.c: regenerated.
+
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpchannel.c
+	* libgimp/gimpdrawable.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimphelp.c
+	* libgimp/gimpimage.c
+	* libgimp/gimplayer.c
+	* libgimp/gimppatternmenu.c
+	* libgimp/gimppixelrgn.c
+	* libgimp/gimpproceduraldb.c
+	* libgimp/gimpselection.c
+	* libgimp/gimptile.c
+	* libgimp/gimpui.c
+	* libgimpmath/gimpmatrix.c
+	* libgimpmath/gimpvector.c
+	* plug-ins/MapObject/arcball.c
+	* plug-ins/fp/fp_gdk.c
+	* plug-ins/fp/fp_misc.c
+	* plug-ins/ifscompose/ifscompose_storage.c
+	* plug-ins/ifscompose/ifscompose_utils.c
+	* plug-ins/maze/handy.c
+	* plug-ins/rcm/rcm_gdk.c
+	* plug-ins/sel2path/edge.c
+	* plug-ins/xjt/xjpeg.c
+	* plug-ins/xjt/xpdb_calls.c: include "config.h".
+	
+2002-05-13  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig.c (gimp_config_serialize): serialize to a
 	temporary file and rename it to the target filename when it is
 	completely written.

@@ -23,6 +23,8 @@
  *
  */
 
+#include "config.h"
+
 #include <string.h>
 
 #include "libgimp/gimp.h"

@@ -29,15 +29,19 @@
  * version 1.00.00; 1998/10/26  hof: 1.st (pre) release
  */
 
+#include "config.h"
+
 #include <setjmp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 /* Include for External Libraries */
 #include <jpeglib.h>
 
 /* GIMP includes */
 #include "libgimp/gimp.h"
+
 #include "xjpeg.h"
 
 extern int xjt_debug;

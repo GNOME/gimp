@@ -8,7 +8,6 @@ MAX255
 CLAMP0255
 gimp_deg_to_rad
 gimp_rad_to_deg
-FINITE
 </SECTION>
 
 <SECTION>

@@ -64,31 +64,14 @@ G_BEGIN_DECLS
 /* Square */
 #define SQR(x) ((x) * (x))
 
-/* limit a (0->511) int to 255 */
+/* Limit a (0->511) int to 255 */
 #define MAX255(a)  ((a) | (((a) & 256) - (((a) & 256) >> 8)))
 
-/* clamp a >>int32<<-range int between 0 and 255 inclusive */
-/* broken! -> #define CLAMP0255(a)  ((a & 0xFFFFFF00)? (~(a>>31)) : a) */
+/* Clamp a >>int32<<-range int between 0 and 255 inclusive */
 #define CLAMP0255(a)  CLAMP(a,0,255)
 
 #define gimp_deg_to_rad(angle) ((angle) * (2.0 * G_PI) / 360.0)
 #define gimp_rad_to_deg(angle) ((angle) * 360.0 / (2.0 * G_PI))
-
-#ifdef HAVE_FINITE
-#define FINITE(x) finite(x)
-#else
-#ifdef HAVE_ISFINITE
-#define FINITE(x) isfinite(x)
-#else
-#ifdef G_OS_WIN32
-#define FINITE(x) _finite(x)
-#else
-#ifdef __EMX__
-#define FINITE(x) isfinite(x)
-#endif /* __EMX__ */
-#endif /* G_OS_WIN32 */
-#endif /* HAVE_ISFINITE */
-#endif /* HAVE_FINITE */
 
 
 G_END_DECLS

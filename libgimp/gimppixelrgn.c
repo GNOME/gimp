@@ -19,6 +19,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 /* Experimental: comment-out the following #define if a memcpy() call is
    slower than compiler-optimized memory copies for transfers of approx.
    64-256 bytes.

@@ -27,6 +27,8 @@
 /* A little collection of useful vector stuff */
 /**********************************************/
 
+#include "config.h"
+
 #include <glib.h>
 
 #include "gimpmath.h"

@@ -596,6 +596,7 @@ HEADER
         print CFILE $lgpl_top;
         print CFILE " * $cname\n";
         print CFILE $lgpl_bottom;
+        print CFILE qq/#include "config.h"\n\n/;
 	print CFILE $out->{headers}, "\n" if exists $out->{headers};
 	print CFILE qq/#include "gimp.h"\n/;
 	print CFILE qq/#include "gimpprivate.h"\n/ if $privatevars;

@@ -32,15 +32,17 @@
  * version 1.01.00; 1998/11/22  hof: PDB-calls to load/save guides under GIMP 1.1
  * version 1.00.00; 1998/10/31  hof: 1.st (pre) release
  */
+
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 /* GIMP includes */
 #include "libgimp/gimp.h"
-#include "xjpeg.h"
 
-/* #include "cursorutil.h" */
+#include "xjpeg.h"
 
 /* XJT includes */
 #include "xpdb_calls.h"

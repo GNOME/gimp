@@ -3,7 +3,7 @@
 /* Modified by Tom Bech, 1996       */
 /************************************/
 
-#include <gdk/gdk.h>
+#include "config.h"
 
 #include <libgimp/gimp.h>
 

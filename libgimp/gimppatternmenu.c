@@ -20,7 +20,9 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include "string.h"
+#include "config.h"
+
+#include <string.h>
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
