@@ -229,9 +229,9 @@ gimp_memsize_entry_new (guint64  value,
                     G_CALLBACK (gimp_memsize_entry_adj_callback),
                     entry);
 
-  entry->menu = gimp_int_combo_box_new (_("KiloBytes"), 10,
-                                        _("MegaBytes"), 20,
-                                        _("GigaBytes"), 30,
+  entry->menu = gimp_int_combo_box_new (_("Kilobytes"), 10,
+                                        _("Megabytes"), 20,
+                                        _("Gigabytes"), 30,
                                         NULL);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (entry->menu), shift);

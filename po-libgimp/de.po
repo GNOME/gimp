@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-27 15:40+0200\n"
-"PO-Revision-Date: 2004-10-27 15:42+0200\n"
+"POT-Creation-Date: 2004-10-31 12:53+0100\n"
+"PO-Revision-Date: 2004-10-31 12:54+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -477,16 +477,16 @@ msgid "Select File"
 msgstr "Datei auswählen"
 
 #: libgimpwidgets/gimpmemsizeentry.c:232
-msgid "KiloBytes"
-msgstr "KiloByte"
+msgid "Kilobytes"
+msgstr "Kilobyte"
 
 #: libgimpwidgets/gimpmemsizeentry.c:233
-msgid "MegaBytes"
-msgstr "MegaByte"
+msgid "Megabytes"
+msgstr "Megabyte"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
-msgid "GigaBytes"
-msgstr "GigaByte"
+msgid "Gigabytes"
+msgstr "Gigabyte"
 
 #: libgimpwidgets/gimppatheditor.c:243
 msgid "Writable"
