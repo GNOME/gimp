@@ -109,6 +109,8 @@ gimp_file_dialog_init (GimpFileDialog *dialog)
 
   gtk_container_set_border_width (GTK_CONTAINER (fs), 6);
   gtk_container_set_border_width (GTK_CONTAINER (fs->button_area), 4);
+
+  gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 }
 
 static void
