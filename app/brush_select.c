@@ -736,7 +736,7 @@ brush_select_events (GtkWidget    *widget,
 	}
       break;
     case GDK_DELETE:
-      g_warning ("test");
+      /* g_warning ("test"); */
       break;
 
     default:

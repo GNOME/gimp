@@ -483,7 +483,7 @@ static void
 brightness_contrast_preview (BrightnessContrastDialog *bcd)
 {
   if (!bcd->image_map)
-    g_warning ("No image map");
+    g_message ("brightness_contrast_preview(): No image map");
   active_tool->preserve = TRUE;
   image_map_apply (bcd->image_map, brightness_contrast, (void *) bcd);
   active_tool->preserve = FALSE;

@@ -115,6 +115,33 @@ After fixing a problem, it is safest to delete the file 'config.cache'
 before re-running ./configure.
 
 
+
+When ./configure fails on plug-ins
+==================================
+
+There are some GIMP plug-ins that need additional third-party libraries 
+installed on your system. For example to compile the plug-ins that load 
+and save JPEG, PNG or TIFF files you need the related libraries and header 
+files installed, otherwise you'll get a message that plugin xyz will not 
+be build. 
+
+If you are sure that those libraries are correctly installed, but configure
+fails to detect them, the following might help:
+
+Set your LDFLAGS environment variable to look for the library in a certain
+place, e.g. if you are working in a bash shell you would say:
+      export LDFLAGS="-L<path_to_library> -L<path_to_another_one>"
+before you run configure.
+
+Set your CPPFLAGS environment variable to look for the header file in a
+certain place, e.g. if you are working in a bash shell you would say:
+      export CPPFLAGS="-I<path_to_header_file> -I<path_to_another_one>"
+before you run configure.
+
+It's wise to remove the file 'config.cache' before re-running configure.
+
+
+
       Generic Instructions for Building Auto-Configured Packages
       ==========================================================
 

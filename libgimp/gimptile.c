@@ -156,7 +156,7 @@ gimp_tile_get (GTile *tile)
 
   if (msg.type != GP_TILE_DATA)
     {
-      g_warning ("unexpected message: %d\n", msg.type);
+      g_message ("unexpected message: %d\n", msg.type);
       gimp_quit ();
     }
 
@@ -168,7 +168,7 @@ gimp_tile_get (GTile *tile)
       (tile_data->height != tile->eheight) ||
       (tile_data->bpp != tile->bpp))
     {
-      g_warning ("received tile info did not match computed tile info\n");
+      g_message ("received tile info did not match computed tile info\n");
       gimp_quit ();
     }
 
@@ -212,7 +212,7 @@ gimp_tile_put (GTile *tile)
 
   if (msg.type != GP_TILE_DATA)
     {
-      g_warning ("unexpected message: %d\n", msg.type);
+      g_message ("unexpected message: %d\n", msg.type);
       gimp_quit ();
     }
 
@@ -240,7 +240,7 @@ gimp_tile_put (GTile *tile)
 
   if (msg.type != GP_TILE_ACK)
     {
-      g_warning ("unexpected message: %d\n", msg.type);
+      g_message ("unexpected message: %d\n", msg.type);
       gimp_quit ();
     }
 

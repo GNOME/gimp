@@ -621,7 +621,7 @@ static void
 color_balance_preview (ColorBalanceDialog *cbd)
 {
   if (!cbd->image_map)
-    g_warning ("No image map");
+    g_message ("color_balance_preview(): No image map");
   active_tool->preserve = TRUE;
   image_map_apply (cbd->image_map, color_balance, (void *) cbd);
   active_tool->preserve = FALSE;

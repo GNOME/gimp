@@ -1,5 +1,5 @@
 /* cel.c -- KISS CEL file format plug-in for The GIMP
- * (copyright) 1997 Nick Lamb (njl195@ecs.soton.ac.uk)
+ * (copyright) 1997,1998 Nick Lamb (njl195@ecs.soton.ac.uk)
  *
  * Skeleton cloned from Michael Sweet's PNG plug-in. KISS format courtesy
  * of the KISS/GS documentation. Problem reports to the above address
@@ -14,10 +14,13 @@
  * 0.6  File dialogs, palette handling, better magic behaviour
  * 0.7  Handle interactivity settings, tidy up
  * 1.0  Fixed for GIMP 0.99.27 running on GTK+ 1.0.0, and released
+ * 1.1  Oops, #include unistd.h, thanks Tamito Kajiyama
+ * 1.2  Changed email address, tidied up
+ * 1.3  Added g_message features, fixed Saving bugs...
+ * 1.4  Offsets work (needed them for a nice example set)
  *
  * Possible future additions:
  *  +   Save (perhaps optionally?) the palette in a KCF
- *  +   Support offsets -- like GIF?
  */
 
 #include <stdio.h>
@@ -88,7 +91,7 @@ static void query(void) {
   gimp_install_procedure("file_cel_load",
       "Loads files in KISS CEL file format",
       "This plug-in loads individual KISS cell files.",
-      "Nick Lamb", "Nick Lamb", "April 1998", "<Load>/CEL", NULL, PROC_PLUG_IN, 
+      "Nick Lamb", "Nick Lamb", "May 1998", "<Load>/CEL", NULL, PROC_PLUG_IN, 
       nload_args, nload_return_vals, load_args, load_return_vals);
 
   gimp_register_magic_load_handler("file_cel_load", "cel",
@@ -97,7 +100,7 @@ static void query(void) {
   gimp_install_procedure("file_cel_save",
       "Saves files in KISS CEL file format",
       "This plug-in saves individual KISS cell files.",
-      "Nick Lamb", "Nick Lamb", "April 1998", "<Save>/CEL", "INDEXED*",
+      "Nick Lamb", "Nick Lamb", "May 1998", "<Save>/CEL", "INDEXEDA",
       PROC_PLUG_IN, nsave_args, 0, save_args, NULL);
 
   gimp_register_save_handler("file_cel_save", "cel", "");
@@ -175,6 +178,7 @@ static gint32 load_image(char *file, char *brief) {
   char		*progress;	/* Title for progress display */
   guchar	header[32];	/* File header */
   int		height, width,	/* Dimensions of image */
+  		offx, offy,	/* Layer offets */
   		colours;	/* Number of colours */
 
   gint32	image,		/* Image */
@@ -192,7 +196,7 @@ static gint32 load_image(char *file, char *brief) {
   fp = fopen(file, "r");
 
   if (fp == NULL) {
-    g_print("Can't open file\n");
+    g_message("%s\nis not present or is unreadable", file);
     gimp_quit();
   }
 
@@ -208,17 +212,21 @@ static gint32 load_image(char *file, char *brief) {
     colours= 16;
     width= header[0] + (256 * header[1]);
     height= header[2] + (256 * header[3]);
+    offx= 0;
+    offy= 0;
   } else { /* New-style image file, read full header */
     fread(header, 28, 1, fp);
     colours= (1 << header[1]);
     width= header[4] + (256 * header[5]);
     height= header[6] + (256 * header[7]);
+    offx= header[8] + (256 * header[9]);
+    offy= header[10] + (256 * header[11]);
   }
 
-  image = gimp_image_new(width, height, INDEXED);
+  image = gimp_image_new(width + offx, height + offy, INDEXED);
 
   if (image == -1) {
-    g_print("Can't allocate new image\n");
+    g_message("Can't create a new image");
     gimp_quit();
   }
 
@@ -229,6 +237,7 @@ static gint32 load_image(char *file, char *brief) {
   layer = gimp_layer_new(image, "Background", width, height,
                          INDEXEDA_IMAGE, 100, NORMAL_MODE);
   gimp_image_add_layer(image, layer, 0);
+  gimp_layer_set_offsets(layer, offx, offy);
 
  /* Get the drawable and set the pixel region for our load... */
 
@@ -248,19 +257,37 @@ static gint32 load_image(char *file, char *brief) {
     case 16:
       fread(buffer, (width+1)/2, 1, fp);
       for (j = 0, k = 0; j < width*2; j+= 4, ++k) { 
-        line[j]= buffer[k] / 16;
-        line[j+1]= line[j] ? 255 : 0;
-        line[j+2]= buffer[k] & 15;
-        line[j+3]= line[j+2] ? 255 : 0;
+        if (buffer[k] / 16 == 0) {
+          line[j]= 16;
+          line[j+1]= 0;
+        } else {
+          line[j]= (buffer[k] / 16) - 1;
+          line[j+1]= 255;
+        }
+        if (buffer[k] % 16 == 0) {
+          line[j+2]= 16;
+          line[j+3]= 0;
+        } else {
+          line[j+2]= (buffer[k] % 16) - 1;
+          line[j+3]= 255;
+        }
       }
       break;
     case 256:
       fread(buffer, width, 1, fp);
       for (j = 0, k = 0; j < width*2; j+= 2, ++k) {
-        line[j]= buffer[k];
-        line[j+1]= line[j] ? 255 : 0;
+        if (buffer[k] == 0) {
+          line[j]= 255;
+          line[j+1]= 0;
+        } else {
+          line[j]= buffer[k] - 1;
+          line[j+1]= 255;
+        }
       }
       break;
+    default:
+      g_error("Unsupported number of colours (%d)\n", colours);
+      gimp_quit();
     }
     
     gimp_pixel_rgn_set_rect(&pixel_rgn, line, 0, i, drawable->width, 1);
@@ -270,8 +297,8 @@ static gint32 load_image(char *file, char *brief) {
  /* Close image files, give back allocated memory */
 
   fclose(fp);
-  free(buffer);
-  free(line);
+  g_free(buffer);
+  g_free(line);
 
  /* Use palette from file or otherwise default grey palette */
   palette = g_new(guchar, colours*3);
@@ -291,12 +318,12 @@ static gint32 load_image(char *file, char *brief) {
     }
   }
 
-  gimp_image_set_cmap(image, palette, colours);
+  gimp_image_set_cmap(image, palette + 3, colours - 1);
 
  /* Close palette file, give back allocated memory */
 
   fclose(fp);
-  free(palette);
+  g_free(palette);
 
  /* Now get everything redrawn and hand back the finished image */
 
@@ -344,7 +371,8 @@ static gint save_image(char *file, char *brief, gint32 image, gint32 layer) {
   FILE*		fp;		/* Write file pointer */
   char		*progress;	/* Title for progress display */
   guchar	header[32];	/* File header */
-  gint		colours, type;	/* Number of colours, type of layer */
+  gint		colours, type,	/* Number of colours, type of layer */
+  		offx, offy;	/* Layer offsets */
 
   guchar	*buffer,	/* Temporary buffer */
   		*line;		/* Pixel data */
@@ -355,28 +383,36 @@ static gint save_image(char *file, char *brief, gint32 image, gint32 layer) {
 
  /* Check that this is an indexed image, fail otherwise */
   type= gimp_drawable_type(layer);
-  if (type != INDEXED_IMAGE && type != INDEXEDA_IMAGE) {
-    g_print("GIMP tried to save a non-indexed image as CEL.\n");
-    return FALSE;
+  if (type != INDEXEDA_IMAGE) {
+    g_message("Only an indexed-alpha image can be saved in CEL format");
+    gimp_quit();
   }
+
+  /* Find out how offset this layer was */
+  gimp_drawable_offsets(layer, &offx, &offy);
 
   drawable = gimp_drawable_get(layer);
 
  /* Open the file for writing */
   fp = fopen(file, "w");
 
+  if (fp == NULL) {
+    g_message("Couldn't write image to\n%s", file);
+    gimp_quit();
+  }
+
   progress= g_malloc(strlen(brief) + 9);
   sprintf(progress, "Saving %s:", brief);
   gimp_progress_init(progress);
 
  /* Headers */
-  memset(header, 0, 32);
+  bzero(header, 32);
   strcpy(header, "KiSS");
   header[4]= 0x20;
 
  /* Work out whether to save as 8bit or 4bit */
   gimp_image_get_cmap(image, &colours);
-  if (colours > 16) {
+  if (colours > 15) {
     header[5]= 8;
   } else {
     header[5]= 4;
@@ -387,6 +423,10 @@ static gint save_image(char *file, char *brief, gint32 image, gint32 layer) {
   header[9]= drawable->width / 256;
   header[10]= drawable->height % 256;
   header[11]= drawable->height / 256;
+  header[12]= offx % 256;
+  header[13]= offx / 256;
+  header[14]= offy % 256;
+  header[15]= offy / 256;
   fwrite(header, 32, 1, fp);
 
  /* Arrange for memory etc. */
@@ -398,21 +438,27 @@ static gint save_image(char *file, char *brief, gint32 image, gint32 layer) {
  /* Get the image from the GIMP one line at a time and write it out */
   for (i = 0; i < drawable->height; ++i) {
     gimp_pixel_rgn_get_rect(&pixel_rgn, line, 0, i, drawable->width, 1);
+    memset(buffer, 0, drawable->width);
 
-    switch (colours) {
-    case 16:
-      for (j = 0, k = 0; j < drawable->width*2; j+= 4, ++k) { 
-        buffer[k]= 16 * (line[j+1] ? line[j] : 0)
-                 + (line[j+3] ? line[j+2] : 0);
-      }
-      fwrite(buffer, (drawable->width+1)/2, 1, fp);
-      break;
-    case 256:
+    if (colours > 16) {
       for (j = 0, k = 0; j < drawable->width*2; j+= 2, ++k) {
-        buffer[k]= line[j+1] ? line[j] : 0;
+        if (line[j+1] > 127) {
+          buffer[k]= line[j] + 1;
+        }
       }
       fwrite(buffer, drawable->width, 1, fp);
-      break;
+
+    } else {
+      for (j = 0, k = 0; j < drawable->width*2; j+= 4, ++k) { 
+        buffer[k]= 0;
+        if (line[j+1] > 127) {
+          buffer[k]+= (line[j] + 1)<< 4;
+        }
+        if (line[j+3] > 127) {
+          buffer[k]+= (line[j+2] + 1);
+        }
+      }
+      fwrite(buffer, (drawable->width+1)/2, 1, fp);
     }
 
     gimp_progress_update((float) i / (float) drawable->height);
@@ -420,8 +466,8 @@ static gint save_image(char *file, char *brief, gint32 image, gint32 layer) {
 
  /* Close files, give back allocated memory */
   fclose(fp);
-  free(buffer);
-  free(line);
+  g_free(buffer);
+  g_free(line);
 
   return TRUE;
 }

@@ -276,14 +276,14 @@ render_image (GDisplay *gdisp,
   image_type = gimage_projection_type (gdisp->gimage);
   if ((image_type < 0) || (image_type > 5))
     {
-      g_warning ("unknown gimage projection type: %d",
+      g_message ("unknown gimage projection type: %d",
 		 gimage_projection_type (gdisp->gimage));
       return;
     }
 
   if ((info.dest_bpp < 1) || (info.dest_bpp > 4))
     {
-      g_warning ("unsupported destination bytes per pixel: %d", info.dest_bpp);
+      g_message ("unsupported destination bytes per pixel: %d", info.dest_bpp);
       return;
     }
 

@@ -252,7 +252,7 @@ tile_swap_command (Tile *tile,
     swap_file = g_hash_table_lookup (swap_files, &tile->swap_num);
     if (!swap_file)
       {
-	g_warning ("could not find swap file for tile");
+	g_message ("could not find swap file for tile");
 	return;
       }
 
@@ -287,7 +287,7 @@ tile_swap_open (SwapFile *swap_file)
   swap_file->fd = open (swap_file->filename, O_CREAT|O_RDWR, S_IRUSR|S_IWUSR);
   if (swap_file->fd == -1)
     {
-      g_warning ("unable to open swap file...BAD THINGS WILL HAPPEN SOON");
+      g_message ("unable to open swap file...BAD THINGS WILL HAPPEN SOON");
       return;
     }
 
@@ -326,7 +326,7 @@ tile_swap_default (int       fd,
       tile_swap_default_delete (def_swap_file, fd, tile);
       break;
     case SWAP_COMPRESS:
-      g_warning ("tile_swap_default: SWAP_COMPRESS: UNFINISHED");
+      g_message ("tile_swap_default: SWAP_COMPRESS: UNFINISHED");
       break;
     }
 
@@ -352,7 +352,7 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
       offset = lseek (fd, tile->swap_offset, SEEK_SET);
       if (offset == -1)
 	{
-	  g_warning ("unable to seek to tile location on disk: %d", err);
+	  g_message ("unable to seek to tile location on disk: %d", err);
 	  return;
 	}
     }
@@ -369,7 +369,7 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
 
       if (err <= 0)
 	{
-	  g_warning ("unable to read tile data from disk: %d ( %d ) bytes read", err, nleft);
+	  g_message ("unable to read tile data from disk: %d ( %d ) bytes read", err, nleft);
 	  return;
 	}
 
@@ -407,7 +407,7 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
       offset = lseek (fd, tile->swap_offset, SEEK_SET);
       if (offset == -1)
 	{
-	  g_warning ("unable to seek to tile location on disk: %d", errno);
+	  g_message ("unable to seek to tile location on disk: %d", errno);
 	  return;
 	}
     }
@@ -418,7 +418,7 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
       err = write (fd, tile->data + rbytes - nleft, nleft);
       if (err <= 0)
 	{
-	  g_warning ("unable to write tile data to disk: %d ( %d ) bytes written", err, nleft);
+	  g_message ("unable to write tile data to disk: %d ( %d ) bytes written", err, nleft);
 	  return;
 	}
 

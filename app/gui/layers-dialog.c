@@ -825,7 +825,7 @@ layers_dialog_update (int gimage_id)
       layer_widget_delete (lw);
     }
   if (layersD->layer_widgets)
-    g_warning ("layersD->layer_widgets not empty!");
+    g_message ("layersD->layer_widgets not empty!");
   layersD->layer_widgets = NULL;
 
   if (! (gimage = gimage_get_ID (layersD->gimage_id)))

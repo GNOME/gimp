@@ -722,7 +722,7 @@ save_image (char   *filename,
   fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
   if (fd == -1)
     {
-      fprintf (stderr, "pnm: can't open \"%s\"\n", filename);
+      g_message ("pnm: can't open \"%s\"\n", filename);
       return FALSE;
     }
 

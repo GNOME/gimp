@@ -33,5 +33,7 @@ extern int no_splash;
 extern int no_splash_image;
 extern int no_data;
 extern int be_verbose;
+extern int use_debug_handler;
+extern int console_messages;
 
 #endif /*  APPENV_H  */

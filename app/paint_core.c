@@ -899,7 +899,7 @@ paint_core_replace (paint_core, brush_mask, drawable, brush_opacity, image_opaci
 
   if (mode != INCREMENTAL)
     {
-      g_warning ("paint_core_replace only works in INCREMENTAL mode");
+      g_message ("paint_core_replace only works in INCREMENTAL mode");
       return;
     }
 

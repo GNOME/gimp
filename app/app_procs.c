@@ -516,7 +516,8 @@ app_init (void)
       render_setup (transparency_type, transparency_size);
       tools_options_dialog_new ();
       tools_select (RECT_SELECT);
-      g_set_message_handler (&message_box_func);
+      if (console_messages == FALSE)
+        g_set_message_handler (&message_box_func);
     }
 
   color_transfer_init ();
@@ -538,6 +539,8 @@ app_exit_finish (void)
   if (app_exit_finish_done ())
     return;
   is_app_exit_finish_done = TRUE;
+
+  g_set_message_handler (&message_console_func);
 
   lc_dialog_free ();
   gdisplays_delete ();

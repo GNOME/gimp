@@ -447,7 +447,7 @@ psd_type_to_gimp_base_type (psd_imagetype psdtype)
     case PSD_INDEXEDA_IMAGE:
     case PSD_INDEXED_IMAGE: return(INDEXED);
     default:
-      printf("PSD: Error: Can't convert PSD imagetype to GIMP imagetype\n");
+      g_message ("PSD: Error: Can't convert PSD imagetype to GIMP imagetype\n");
       gimp_quit();
       return(RGB);
     }
@@ -464,7 +464,7 @@ psd_mode_to_gimp_base_type (gushort psdtype)
     case 2: return(INDEXED);
     case 3: return(RGB);
     default:
-      printf("PSD: Error: Can't convert PSD mode to GIMP base imagetype\n");
+      g_message ("PSD: Error: Can't convert PSD mode to GIMP base imagetype\n");
       gimp_quit();
       return(RGB);
     }
@@ -715,7 +715,7 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
 
   if (psd_image.layer[layernum].num_channels > MAX_CHANNELS)
     {
-      printf("\nPSD: Sorry - this image has too many channels.  Tell Adam!\n");
+      g_message ("\nPSD: Sorry - this image has too many channels.  Tell Adam!\n");
       gimp_quit();
     }
   
@@ -744,7 +744,7 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
   
   if (strncmp(sig, "8BIM", 4)!=0)
     {
-      printf("PSD: Error - layer blend signature is incorrect. :-(\n");
+      g_message ("PSD: Error - layer blend signature is incorrect. :-(\n");
       gimp_quit();
     }
 
@@ -884,7 +884,7 @@ do_layer_struct(FILE *fd, guint32 *offset)
 
   if (psd_image.num_layers > MAX_LAYERS)
     {
-      printf("\nPSD: Sorry - this image has too many layers.  Tell Adam!\n");
+      g_message ("\nPSD: Sorry - this image has too many layers.  Tell Adam!\n");
       gimp_quit();
     }
 
@@ -1003,7 +1003,7 @@ do_layer_pixeldata(FILE *fd, guint32 *offset)
 	      }
 	      break;
 	    default: /* *unknown* */
-	      printf("*** Unknown compression type in channel.\n");
+	      g_message ("*** Unknown compression type in channel.\n");
 	      gimp_quit();
 	      break;
 	    }

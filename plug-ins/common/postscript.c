@@ -234,8 +234,6 @@ static void   save_toggle_update       (GtkWidget *widget,
 static void   save_mm_toggle_update    (GtkWidget *widget,
                                         gpointer   data);
 
-static void   show_message             (char *);
-
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -531,7 +529,7 @@ load_image (char *filename)
  ifp = fopen (filename, "r");
  if (ifp == NULL)
  {
-   show_message ("can't open file for reading");
+   g_message ("can't open file for reading");
    return (-1);
  }
  fclose (ifp);
@@ -548,14 +546,14 @@ load_image (char *filename)
  ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury);
  if (!ifp)
  {
-   show_message ("can't interprete file");
+   g_message ("can't interprete file");
    return (-1);
  }
 
  image_list = (gint32 *)g_malloc (10 * sizeof (gint32));
  if (image_list == NULL)
  {
-   show_message ("out of memory");
+   g_message ("out of memory");
    return (-1);
  }
  n_images = 0;
@@ -635,7 +633,7 @@ save_image (char *filename,
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
   {
-    show_message ("PostScript save cannot handle images with alpha channels");
+    g_message ("PostScript save cannot handle images with alpha channels");
     return FALSE;
   }
 
@@ -646,7 +644,7 @@ save_image (char *filename,
     case RGB_IMAGE:
       break;
     default:
-      show_message ("cannot operate on unknown image types");
+      g_message ("cannot operate on unknown image types");
       return (FALSE);
       break;
   }
@@ -655,7 +653,7 @@ save_image (char *filename,
   ofp = fopen (filename, "wb");
   if (!ofp)
   {
-    show_message ("cant open file for writing");
+    g_message ("cant open file for writing");
     return (FALSE);
   }
 
@@ -1272,7 +1270,7 @@ load_ps (char *filename,
  if (bitline) g_free (bitline);
 
  if (err)
-   show_message ("EOF encountered on reading");
+   g_message ("EOF encountered on reading");
 
  gimp_drawable_flush (drawable);
 
@@ -1662,7 +1660,7 @@ save_gray  (FILE *ofp,
 
   if (ferror (ofp))
   {
-    show_message ("write error occured");
+    g_message ("write error occured");
     return (FALSE);
   }
   return (TRUE);
@@ -1751,7 +1749,7 @@ save_index (FILE *ofp,
 
   if (ferror (ofp))
   {
-    show_message ("write error occured");
+    g_message ("write error occured");
     return (FALSE);
   }
   return (TRUE);
@@ -1820,7 +1818,7 @@ save_rgb (FILE *ofp,
 
   if (ferror (ofp))
   {
-    show_message ("write error occured");
+    g_message ("write error occured");
     return (FALSE);
   }
   return (TRUE);
@@ -2441,19 +2439,4 @@ save_mm_toggle_update (GtkWidget *widget,
       }
     }
   }
-}
-
-
-/* Show a message. Where to show it, depends on the runmode */
-static void show_message (char *message)
-
-{
-#ifdef Simple_Message_Box_Available
- /* If there would be a simple message box like the one */
- /* used in ../app/interface.h, I would like to use it. */
- if (l_run_mode == RUN_INTERACTIVE)
-   gtk_message_box (message);
- else
-#endif
-   fprintf (stderr, "ps: %s\n", message);
 }

@@ -283,7 +283,7 @@ about_dialog_load_logo (GtkWidget *window)
 
   sprintf (buf, "%s/gimp_logo.ppm", DATADIR);
 
-  fp = fopen (buf, "r");
+  fp = fopen (buf, "rb");
   if (!fp)
     return 0;
 

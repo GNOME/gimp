@@ -1,3 +1,12 @@
+Fri May 29 23:54:42 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* more changes to use g_message. All of app uses it now, plus
+	the major file plugins.
+
+	* plug-ins/CEL/CEL.c: update from author
+
+	* INSTALL: info about why optional plugins won't build
+
 Sat May 30 02:03:19 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* plug-ins/grid/grid.c: fix by sjburges to fix grid on selections.

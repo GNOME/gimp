@@ -245,24 +245,24 @@ save_image (char   *filename,
   /* fork off a bzip2 process */
   if ((pid = fork()) < 0)
     {
-      g_warning ("bz2: fork failed: %s\n", g_strerror(errno));
+      g_message ("bz2: fork failed: %s\n", g_strerror(errno));
       return -1;
     }
   else if (pid == 0)
     {
 
       if (!(f = fopen(filename,"w"))){
-	      g_warning("bz2: fopen failed: %s\n", g_strerror(errno));
+	      g_message("bz2: fopen failed: %s\n", g_strerror(errno));
 	      _exit(127);
       }
 
       /* make stdout for this process be the output file */
       if (-1 == dup2(fileno(f),fileno(stdout)))
-	g_warning ("bz2: dup2 failed: %s\n", g_strerror(errno));
+	g_message ("bz2: dup2 failed: %s\n", g_strerror(errno));
 
       /* and bzip2 into it */
       execlp ("bzip2", "bzip2", "-cf", tmpname, NULL);
-      g_warning ("bz2: exec failed: bzip2: %s\n", g_strerror(errno));
+      g_message ("bz2: exec failed: bzip2: %s\n", g_strerror(errno));
       _exit(127);
     }
   else
@@ -272,7 +272,7 @@ save_image (char   *filename,
       if (!WIFEXITED(status) ||
 	  WEXITSTATUS(status) != 0)
 	{
-	  g_warning ("bz2: bzip2 exited abnormally on file %s\n", tmpname);
+	  g_message ("bz2: bzip2 exited abnormally on file %s\n", tmpname);
 	  return 0;
 	}
     }
@@ -305,24 +305,24 @@ load_image (char *filename, gint32 run_mode)
   /* fork off a g(un)zip and wait for it */
   if ((pid = fork()) < 0)
     {
-      g_warning ("bz2: fork failed: %s\n", g_strerror(errno));
+      g_message ("bz2: fork failed: %s\n", g_strerror(errno));
       return -1;
     }
   else if (pid == 0)  /* child process */
     {
       FILE* f;
        if (!(f = fopen(tmpname,"w"))){
-	      g_warning("bz2: fopen failed: %s\n", g_strerror(errno));
+	      g_message("bz2: fopen failed: %s\n", g_strerror(errno));
 	      _exit(127);
       }
 
       /* make stdout for this child process be the temp file */
       if (-1 == dup2(fileno(f),fileno(stdout)))
-	g_warning ("bz2: dup2 failed: %s\n", g_strerror(errno));
+	g_message ("bz2: dup2 failed: %s\n", g_strerror(errno));
 
       /* and unzip into it */
       execlp ("bzip2", "bzip2", "-cfd", filename, NULL);
-      g_warning ("bz2: exec failed: bunzip2: %s\n", g_strerror(errno));
+      g_message ("bz2: exec failed: bunzip2: %s\n", g_strerror(errno));
       _exit(127);
     }
   else  /* parent process */
@@ -332,7 +332,7 @@ load_image (char *filename, gint32 run_mode)
       if (!WIFEXITED(status) ||
 	  WEXITSTATUS(status) != 0)
 	{
-	  g_warning ("bz2: bzip2 exited abnormally on file %s\n", filename);
+	  g_message ("bz2: bzip2 exited abnormally on file %s\n", filename);
 	  return -1;
 	}
     }
@@ -386,7 +386,7 @@ static char* find_extension (char* filename)
   while (1) {
     if (!ext || ext[1] == 0 || strchr(ext, '/'))
       {
-	g_warning ("bz2: can't open bzip2ed file without a sensible extension\n");
+	g_message ("bz2: can't open bzip2ed file without a sensible extension\n");
 	return NULL;
       }
     if (0 == strcmp(ext, ".xcfbz2")) {

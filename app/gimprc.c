@@ -253,7 +253,7 @@ gimp_directory ()
 	      gimp_dir[len_env_home_dir] = '/';
 	    }
 	  else
-	    g_warning ("No home directory.");
+	    g_message ("warning: no home directory.");
 
 	  strncpy (&gimp_dir[len_env_home_dir+1],
 		   env_gimp_dir,
@@ -268,7 +268,7 @@ gimp_directory ()
 	  gimp_dir[len_env_home_dir] = '/';
 	}
       else
-	g_warning ("No home directory.");
+	g_message ("warning: no home directory.");
 
       strncpy (&gimp_dir[len_env_home_dir+1],
 	       GIMPDIR,
@@ -1060,7 +1060,7 @@ parse_plug_in_def (gpointer val1p,
   return OK;
 
 error:
-  g_warning ("error parsing pluginrc");
+  g_message ("error parsing pluginrc");
   tmp_list = plug_in_def->proc_defs;
   while (tmp_list)
     {

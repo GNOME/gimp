@@ -392,7 +392,7 @@ register_magic_load_handler_invoker (Argument *args)
 	       (proc->args[2].arg_type != PDB_STRING) ||
 	       (proc->values[0].arg_type != PDB_IMAGE)))
     {
-      g_warning ("load handler \"%s\" does not take the standard load handler args",
+      g_message ("load handler \"%s\" does not take the standard load handler args",
 		 (char*) args[0].value.pdb_pointer);
       goto done;
     }
@@ -404,7 +404,7 @@ register_magic_load_handler_invoker (Argument *args)
 
   if (!file_proc)
     {
-      g_warning ("attempt to register non-existant load handler \"%s\"",
+      g_message ("attempt to register non-existant load handler \"%s\"",
 		 (char*) args[0].value.pdb_pointer);
       goto done;
     }
@@ -438,7 +438,7 @@ register_save_handler_invoker (Argument *args)
 	       (proc->args[3].arg_type != PDB_STRING) ||
 	       (proc->args[4].arg_type != PDB_STRING)))
     {
-      g_warning ("save handler \"%s\" does not take the standard save handler args",
+      g_message ("save handler \"%s\" does not take the standard save handler args",
 		 (char*) args[0].value.pdb_pointer);
       goto done;
     }
@@ -450,7 +450,7 @@ register_save_handler_invoker (Argument *args)
 
   if (!file_proc)
     {
-      g_warning ("attempt to register non-existant save handler \"%s\"",
+      g_message ("attempt to register non-existant save handler \"%s\"",
 		 (char*) args[0].value.pdb_pointer);
       goto done;
     }

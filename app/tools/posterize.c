@@ -356,7 +356,7 @@ static void
 posterize_preview (PosterizeDialog *pd)
 {
   if (!pd->image_map)
-    g_warning ("No image map");
+    g_message ("posterize_preview(): No image map");
   active_tool->preserve = TRUE;
   image_map_apply (pd->image_map, posterize, (void *) pd);
   active_tool->preserve = FALSE;

@@ -128,7 +128,7 @@ load_image (char *filename)
 
   if (!ext || ext[1] == 0 || strchr(ext, '/'))
     {
-      g_warning ("url: can't open URL without an extension\n");
+      g_message ("url: can't open URL without an extension\n");
       return -1;
     }
 
@@ -141,13 +141,13 @@ load_image (char *filename)
 
   if ((pid = fork()) < 0)
     {
-      g_warning ("url: fork failed: %s\n", g_strerror(errno));
+      g_message ("url: fork failed: %s\n", g_strerror(errno));
       return -1;
     }
   else if (pid == 0)
     {
       execlp ("wget", "wget", filename, "-O", tmpname, NULL);
-      g_warning ("url: exec failed: wget: %s\n", g_strerror(errno));
+      g_message ("url: exec failed: wget: %s\n", g_strerror(errno));
       _exit(127);
     }
   else
@@ -157,7 +157,7 @@ load_image (char *filename)
       if (!WIFEXITED(status) ||
 	  WEXITSTATUS(status) != 0)
 	{
-	  g_warning ("url: wget exited abnormally on URL %s\n", filename);
+	  g_message ("url: wget exited abnormally on URL %s\n", filename);
 	  return -1;
 	}
     }

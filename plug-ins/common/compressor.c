@@ -246,7 +246,7 @@ save_image (char   *filename,
 
   ext = find_extension(filename);
   if (0 == *ext) {
-    g_warning("gz: no sensible extension, saving as gzip'd xcf\n");
+    g_message("gz: no sensible extension, saving as gzip'd xcf\n");
     ext = ".xcf";
   }
 
@@ -281,24 +281,24 @@ save_image (char   *filename,
   /* fork off a gzip process */
   if ((pid = fork()) < 0)
     {
-      g_warning ("gz: fork failed: %s\n", g_strerror(errno));
+      g_message ("gz: fork failed: %s\n", g_strerror(errno));
       return -1;
     }
   else if (pid == 0)
     {
 
       if (!(f = fopen(filename,"w"))){
-	      g_warning("gz: fopen failed: %s\n", g_strerror(errno));
+	      g_message("gz: fopen failed: %s\n", g_strerror(errno));
 	      _exit(127);
       }
 
       /* make stdout for this process be the output file */
       if (-1 == dup2(fileno(f),fileno(stdout)))
-	g_warning ("gz: dup2 failed: %s\n", g_strerror(errno));
+	g_message ("gz: dup2 failed: %s\n", g_strerror(errno));
 
       /* and gzip into it */
       execlp ("gzip", "gzip", "-cf", tmpname, NULL);
-      g_warning ("gz: exec failed: gzip: %s\n", g_strerror(errno));
+      g_message ("gz: exec failed: gzip: %s\n", g_strerror(errno));
       _exit(127);
     }
   else
@@ -308,7 +308,7 @@ save_image (char   *filename,
       if (!WIFEXITED(status) ||
 	  WEXITSTATUS(status) != 0)
 	{
-	  g_warning ("gz: gzip exited abnormally on file %s\n", tmpname);
+	  g_message ("gz: gzip exited abnormally on file %s\n", tmpname);
 	  return 0;
 	}
     }
@@ -330,7 +330,7 @@ load_image (char *filename, gint32 run_mode)
 
   ext = find_extension(filename);
   if (0 == *ext) {
-    g_warning("gz: no sensible extension, attempting to load with file magic\n");
+    g_message("gz: no sensible extension, attempting to load with file magic\n");
   }
 
   /* find a temp name */
@@ -344,24 +344,24 @@ load_image (char *filename, gint32 run_mode)
   /* fork off a g(un)zip and wait for it */
   if ((pid = fork()) < 0)
     {
-      g_warning ("gz: fork failed: %s\n", g_strerror(errno));
+      g_message ("gz: fork failed: %s\n", g_strerror(errno));
       return -1;
     }
   else if (pid == 0)  /* child process */
     {
       FILE* f;
        if (!(f = fopen(tmpname,"w"))){
-	      g_warning("gz: fopen failed: %s\n", g_strerror(errno));
+	      g_message("gz: fopen failed: %s\n", g_strerror(errno));
 	      _exit(127);
       }
 
       /* make stdout for this child process be the temp file */
       if (-1 == dup2(fileno(f),fileno(stdout)))
-	g_warning ("gz: dup2 failed: %s\n", g_strerror(errno));
+	g_message ("gz: dup2 failed: %s\n", g_strerror(errno));
 
       /* and unzip into it */
       execlp ("gzip", "gzip", "-cfd", filename, NULL);
-      g_warning ("gz: exec failed: gunzip: %s\n", g_strerror(errno));
+      g_message ("gz: exec failed: gunzip: %s\n", g_strerror(errno));
       _exit(127);
     }
   else  /* parent process */
@@ -371,7 +371,7 @@ load_image (char *filename, gint32 run_mode)
       if (!WIFEXITED(status) ||
 	  WEXITSTATUS(status) != 0)
 	{
-	  g_warning ("gz: gzip exited abnormally on file %s\n", filename);
+	  g_message ("gz: gzip exited abnormally on file %s\n", filename);
 	  return -1;
 	}
     }

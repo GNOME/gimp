@@ -48,7 +48,7 @@ install_verify (InstallCallback install_callback)
   filename = gimp_directory ();
   if ('\000' == filename[0])
     {
-      g_warning ("No home directory--skipping GIMP user installation.");
+      g_message ("No home directory--skipping GIMP user installation.");
       (* install_callback) ();
     }
 

@@ -883,7 +883,7 @@ replace_pixels (unsigned char *src1,
 
   if (b1 != b2)
     {
-      g_warning ("replace_pixels only works on commensurate pixel regions");
+      g_message ("replace_pixels only works on commensurate pixel regions");
       return;
     }
 

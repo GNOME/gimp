@@ -25,17 +25,17 @@
 #include <unistd.h>
 
 #include <gtk/gtk.h>
+#include "appenv.h"
 #include "app_procs.h"
 #include "interface.h"
 #include "errors.h"
 
 extern char *prog_name;
-extern int use_debug_handler;
 
 void
 message_console_func (char *str)
 {
-  g_print ("%s: %s\n", prog_name, str);
+  fprintf (stderr, "%s: %s\n", prog_name, str);
 }
 
 void

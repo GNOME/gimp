@@ -508,7 +508,7 @@ save_image (char   *filename,
    */
   if ((outfile = fopen (filename, "wb")) == NULL)
     {
-      fprintf (stderr, "can't open %s\n", filename);
+      g_message ("can't open %s\n", filename);
       return FALSE;
     }
   jpeg_stdio_dest (&cinfo, outfile);

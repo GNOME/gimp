@@ -316,7 +316,7 @@ menus_set_sensitive (char *path,
   if (menu_path)
     gtk_widget_set_sensitive (menu_path->widget, sensitive);
   else
-    g_warning ("Unable to set sensitivity for menu which doesn't exist: %s", path);
+    g_message ("Unable to set sensitivity for menu which doesn't exist: %s", path);
 }
 
 void
@@ -335,7 +335,7 @@ menus_set_state (char *path,
 	gtk_check_menu_item_set_state (GTK_CHECK_MENU_ITEM (menu_path->widget), state);
     }
   else
-    g_warning ("Unable to set state for menu which doesn't exist: %s", path);
+    g_message ("Unable to set state for menu which doesn't exist: %s", path);
 }
 
 void

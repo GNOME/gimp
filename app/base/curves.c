@@ -817,7 +817,7 @@ static void
 curves_preview (CurvesDialog *cd)
 {
   if (!cd->image_map)
-    g_warning ("No image map");
+    g_message ("curves_preview(): No image map");
 
   active_tool->preserve = TRUE;  /* Going to dirty the display... */
 

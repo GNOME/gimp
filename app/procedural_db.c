@@ -580,7 +580,7 @@ procedural_db_execute (gchar    *name,
 	      return_args->arg_type = PDB_STATUS;
 	      return_args->value.pdb_int = PDB_CALLING_ERROR;
 
-	      g_warning ("PDB calling error %s", procedure->name);
+	      g_message ("PDB calling error %s", procedure->name);
 
 	      return return_args;
 	    }
@@ -656,7 +656,7 @@ procedural_db_run_proc (gchar *name,
     {
       if (proc->args[i].arg_type != (params[i].arg_type = va_arg (args, PDBArgType)))
 	{
-	  g_warning ("Incorrect arguments passed to procedural_db_run_proc");
+	  g_message ("Incorrect arguments passed to procedural_db_run_proc");
 	  g_free (params);
 	  return NULL;
 	}

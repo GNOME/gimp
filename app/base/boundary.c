@@ -467,7 +467,7 @@ sort_boundary (BoundSeg *segs,
 	    }
 
 	  if (x != startx || y != starty)
-	    g_warning ("Unconnected boundary group!");
+	    g_message ("sort_boundary(): Unconnected boundary group!");
 
 	  /*  Mark the end of a group  */
 	  *num_groups = *num_groups + 1;

@@ -215,7 +215,7 @@ get_name_ver_and_xd (gchar* filename0,
 
   if (!ext1 || strcmp (ext1, ".xd") != 0)
     {
-      g_warning ("xd: unrecognized extension %s\n", filename);
+      g_message ("xd: unrecognized extension %s\n", filename);
       goto bail;
     }
 
@@ -225,7 +225,7 @@ get_name_ver_and_xd (gchar* filename0,
 
   if (!ext2)
     {
-      g_warning ("xd: unrecognized extension %s\n", filename);
+      g_message ("xd: unrecognized extension %s\n", filename);
       goto bail;
     }
 
@@ -237,7 +237,7 @@ get_name_ver_and_xd (gchar* filename0,
 
       if (end[0] != 0 || *version < 0)
 	{
-	  g_warning ("xd: illegal version number %s\n", ext2+1);
+	  g_message ("xd: illegal version number %s\n", ext2+1);
 	  goto bail;
 	}
 
@@ -248,7 +248,7 @@ get_name_ver_and_xd (gchar* filename0,
 
   if (!ext3)
     {
-      g_warning ("xd: unrecognized extension %s\n", filename);
+      g_message ("xd: unrecognized extension %s\n", filename);
       goto bail;
     }
 
@@ -268,14 +268,14 @@ get_name_ver_and_xd (gchar* filename0,
 
   if (!*xd)
     {
-      g_warning ("xd: open failed: %s\n", gdbm_strerror (gdbm_errno));
+      g_message ("xd: open failed: %s\n", gdbm_strerror (gdbm_errno));
 
       return FALSE;
     }
 
   if (*version > ((*xd)->versions + (save_or_n_load && 1)))
     {
-      g_warning ("xd: version number too high\n");
+      g_message ("xd: version number too high\n");
       goto bail;
     }
 
@@ -364,7 +364,7 @@ save_image (char   *filename,
     {
       xd_close (xd);
       unlink (tmpname);
-      g_warning ("xd: checkin failed\n");
+      g_message ("xd: checkin failed\n");
       return -1;
     }
 
@@ -397,7 +397,7 @@ load_image (char *filename, gint32 run_mode, gboolean interactive)
 
   if (xd_checkout (xd, tmpname, ver) != 0)
     {
-      g_warning ("xd: checkout failed\n");
+      g_message ("xd: checkout failed\n");
       xd_close (xd);
       return -1;
     }
@@ -532,7 +532,7 @@ get_buffer (XdFile* xd, gchar* ext, gint ver)
 
       if (xd_checkout (xd, tmpname, ver) != 0)
 	{
-	  g_warning ("xd: checkout failed\n");
+	  g_message ("xd: checkout failed\n");
 	  return err;
 	}
 
@@ -598,7 +598,7 @@ get_buffer (XdFile* xd, gchar* ext, gint ver)
 
 bail:
 
-  g_warning ("xd: save failed in preview generation\n");
+  g_message ("xd: save failed in preview generation\n");
 
   return err;
 }
@@ -613,7 +613,7 @@ gdk_pixmap_create_from_xpm_b (GdkWindow  *window,
   gchar* foo = "/tmp/foo.xpm";
   FILE* f;
 
-  g_warning ("gdk_pixmap_create_from_xpm: this proceedure is slow because Peter is a wuss.  it should be rewritten.");
+  g_print ("gdk_pixmap_create_from_xpm: this proceedure is slow because Peter is a wuss.  it should be rewritten.");
 
   f = fopen (foo, "w");
 

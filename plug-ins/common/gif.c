@@ -426,7 +426,7 @@ run (char    *name,
        *  or trim down the number of GIMP colours at load-time.  We do the
        *  latter for now.
        */
-      printf("GIF: Highest used index is %d\n", highest_used_index);
+      g_print ("GIF: Highest used index is %d\n", highest_used_index);
       if (!promote_to_rgb)
 	{
 	  gimp_image_set_cmap (image_ID, gimp_cmap, highest_used_index+1);
@@ -607,7 +607,7 @@ load_image (char *filename)
   fd = fopen (filename, "rb");
   if (!fd)
     {
-      printf ("GIF: can't open \"%s\"\n", filename);
+      g_message ("GIF: can't open \"%s\"\n", filename);
       return -1;
     }
 
@@ -619,13 +619,13 @@ load_image (char *filename)
 
   if (!ReadOK (fd, buf, 6))
     {
-      printf ("GIF: error reading magic number\n");
+      g_message ("GIF: error reading magic number\n");
       return -1;
     }
 
   if (strncmp ((char *) buf, "GIF", 3) != 0)
     {
-      printf ("GIF: not a GIF file\n");
+      g_message ("GIF: not a GIF file\n");
       return -1;
     }
 
@@ -634,13 +634,13 @@ load_image (char *filename)
 
   if ((strcmp (version, "87a") != 0) && (strcmp (version, "89a") != 0))
     {
-      printf ("GIF: bad version number, not '87a' or '89a'\n");
+      g_message ("GIF: bad version number, not '87a' or '89a'\n");
       return -1;
     }
 
   if (!ReadOK (fd, buf, 7))
     {
-      printf ("GIF: failed to read screen descriptor\n");
+      g_message ("GIF: failed to read screen descriptor\n");
       return -1;
     }
 
@@ -656,14 +656,14 @@ load_image (char *filename)
       /* Global Colormap */
       if (ReadColorMap (fd, GifScreen.BitPixel, GifScreen.ColorMap, &GifScreen.GrayScale))
 	{
-	  printf ("GIF: error reading global colormap\n");
+	  g_message ("GIF: error reading global colormap\n");
 	  return -1;
 	}
     }
 
   if (GifScreen.AspectRatio != 0 && GifScreen.AspectRatio != 49)
     {
-      printf ("GIF: warning - non-square pixels\n");
+      g_message ("GIF: warning - non-square pixels\n");
     }
 
 
@@ -674,7 +674,7 @@ load_image (char *filename)
     {
       if (!ReadOK (fd, &c, 1))
 	{
-	  printf ("GIF: EOF / read error on image data\n");
+	  g_message ("GIF: EOF / read error on image data\n");
 	  return image_ID; /* will be -1 if failed on first image! */
 	}
 
@@ -689,7 +689,7 @@ load_image (char *filename)
 	  /* Extension */
 	  if (!ReadOK (fd, &c, 1))
 	    {
-	      printf ("GIF: OF / read error on extention function code\n");
+	      g_message ("GIF: OF / read error on extention function code\n");
 	      return image_ID; /* will be -1 if failed on first image! */
 	    }
 	  DoExtension (fd, c);
@@ -699,7 +699,7 @@ load_image (char *filename)
       if (c != ',')
 	{
 	  /* Not a valid start character */
-	  printf ("GIF: bogus character 0x%02x, ignoring\n", (int) c);
+	  g_message ("GIF: bogus character 0x%02x, ignoring\n", (int) c);
 	  continue;
 	}
 
@@ -707,7 +707,7 @@ load_image (char *filename)
 
       if (!ReadOK (fd, buf, 9))
 	{
-	  printf ("GIF: couldn't read left/top/width/height\n");
+	  g_message ("GIF: couldn't read left/top/width/height\n");
 	  return image_ID; /* will be -1 if failed on first image! */
 	}
 
@@ -719,7 +719,7 @@ load_image (char *filename)
 	{
 	  if (ReadColorMap (fd, bitPixel, localColorMap, &grayScale))
 	    {
-	      printf ("GIF: error reading local colormap\n");
+	      g_message ("GIF: error reading local colormap\n");
 	      return image_ID; /* will be -1 if failed on first image! */
 	    }
 	  image_ID = ReadImage (fd, filename, LM_to_uint (buf[4], buf[5]),
@@ -768,7 +768,7 @@ ReadColorMap (FILE *fd,
     {
       if (!ReadOK (fd, rgb, sizeof (rgb)))
 	{
-	  printf ("GIF: bad colormap\n");
+	  g_message ("GIF: bad colormap\n");
 	  return TRUE;
 	}
 
@@ -829,7 +829,7 @@ DoExtension (FILE *fd,
       while (GetDataBlock (fd, (unsigned char *) buf) != 0)
 	{
 	  if (showComment)
-	    printf ("GIF: gif comment: %s\n", buf);
+	    g_print ("GIF: gif comment: %s\n", buf);
 	}
       return FALSE;
     case 0xf9:			/* Graphic Control Extension */
@@ -852,7 +852,7 @@ DoExtension (FILE *fd,
       break;
     }
 
-  printf ("GIF: got a '%s' extension\n", str);
+  g_print ("GIF: got a '%s' extension\n", str);
 
   while (GetDataBlock (fd, (unsigned char *) buf) != 0)
     ;
@@ -870,7 +870,7 @@ GetDataBlock (FILE          *fd,
 
   if (!ReadOK (fd, &count, 1))
     {
-      printf ("GIF: error in getting DataBlock size\n");
+      g_message ("GIF: error in getting DataBlock size\n");
       return -1;
     }
 
@@ -878,7 +878,7 @@ GetDataBlock (FILE          *fd,
 
   if ((count != 0) && (!ReadOK (fd, buf, count)))
     {
-      printf ("GIF: error in reading DataBlock\n");
+      g_message ("GIF: error in reading DataBlock\n");
       return -1;
     }
 
@@ -909,7 +909,7 @@ GetCode (FILE *fd,
 	{
 	  if (curbit >= lastbit)
 	    {
-	      printf ("GIF: ran off the end of by bits\n");
+	      g_message ("GIF: ran off the end of by bits\n");
 	      gimp_quit ();
 	    }
 	  return -1;
@@ -1020,7 +1020,7 @@ LWZReadByte (FILE *fd,
 	    ;
 
 	  if (count != 0)
-	    printf ("GIF: missing EOD in data stream (common occurence)");
+	    g_print ("GIF: missing EOD in data stream (common occurence)");
 	  return -2;
 	}
 
@@ -1037,7 +1037,7 @@ LWZReadByte (FILE *fd,
 	  *sp++ = table[1][code];
 	  if (code == table[0][code])
 	    {
-	      printf ("GIF: circular table entry BIG ERROR\n");
+	      g_message ("GIF: circular table entry BIG ERROR\n");
 	      gimp_quit ();
 	    }
 	  code = table[0][code];
@@ -1105,13 +1105,13 @@ ReadImage (FILE *fd,
    */
   if (!ReadOK (fd, &c, 1))
     {
-      printf ("GIF: EOF / read error on image data\n");
+      g_message ("GIF: EOF / read error on image data\n");
       return -1;
     }
 
   if (LWZReadByte (fd, TRUE, c) < 0)
     {
-      printf ("GIF: error while reading\n");
+      g_message ("GIF: error while reading\n");
       return -1;
     }
 
@@ -1167,7 +1167,7 @@ ReadImage (FILE *fd,
 		  promote_to_rgb = TRUE;
 		  
 		  /* Promote everything we have so far into RGB(A) */
-		  printf("GIF: Promoting image to RGB...\n");
+		  g_print ("GIF: Promoting image to RGB...\n");
 		  gimp_run_procedure("gimp_convert_rgb", &nreturn_vals,
 				     PARAM_IMAGE, image_ID,
 				     PARAM_END);
@@ -1193,10 +1193,10 @@ ReadImage (FILE *fd,
 	case 0x06:
 	case 0x07:
 	  strcat(framename," (unknown disposal)");
-	  printf("GIF: Hmm... please forward this GIF to the "
-		 "GIF plugin author!\n  (adam@foxbox.org)\n");
+	  g_message ("GIF: Hmm... please forward this GIF to the "
+		     "GIF plugin author!\n  (adam@foxbox.org)\n");
 	  break;
-	default: printf("GIF: Something got corrupted.\n"); break;
+	default: g_message ("GIF: Something got corrupted.\n"); break;
 	}
 
       previous_disposal = Gif89.disposal;
@@ -1225,12 +1225,12 @@ ReadImage (FILE *fd,
     dest = (guchar *) g_malloc (len * height);
 
   if (verbose)
-    printf ("GIF: reading %d by %d%s GIF image, ncols=%d\n",
-	    len, height, interlace ? " interlaced" : "", ncols);
+    g_print ("GIF: reading %d by %d%s GIF image, ncols=%d\n",
+	     len, height, interlace ? " interlaced" : "", ncols);
 
   if (!alpha_frame && promote_to_rgb)
     {
-      printf("GIF: Ouchie!  Can't handle non-alpha RGB frames.\n     Please mail the plugin author.  (adam@gimp.org)\n");
+      g_message ("GIF: Ouchie!  Can't handle non-alpha RGB frames.\n     Please mail the plugin author.  (adam@gimp.org)\n");
       exit(-1);
     }
 
@@ -1319,7 +1319,7 @@ ReadImage (FILE *fd,
 
 fini:
   if (LWZReadByte (fd, FALSE, c) >= 0)
-    printf ("GIF: too much input data, ignoring extra...\n");
+    g_print ("GIF: too much input data, ignoring extra...\n");
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, TRUE, FALSE);
   gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, 0, drawable->width, drawable->height);
@@ -1426,7 +1426,7 @@ static int find_unused_ia_colour (guchar *pixels,
   gboolean ix_used[256];
 
   /*
-  fprintf(stderr,"GIF: Image has >=256 colors - attempting to reduce...\n");
+  g_message ("GIF: Image has >=256 colors - attempting to reduce...\n");
   */
 
   for (i=0;i<256;i++)
@@ -1439,12 +1439,12 @@ static int find_unused_ia_colour (guchar *pixels,
     if (ix_used[i] == (gboolean)FALSE)
       {
 
-	fprintf(stderr,"GIF: Found unused colour index %d.\n",(int)i);
+	g_message ("GIF: Found unused colour index %d.\n",(int)i);
 
 	return i;
       }
 
-  fprintf(stderr,"GIF: Couldn't simply reduce colours further.  Saving as opaque.\n");
+  g_message ("GIF: Couldn't simply reduce colours further.  Saving as opaque.\n");
   return (-1);
 }
 
@@ -1688,9 +1688,7 @@ save_image (char   *filename,
       break;
 
     default:
-      /* FIXME: should be a popup (or, of course, ideally GIMP shouldn't
-	 let RGB images through in the first place :) ) */
-      fprintf (stderr, "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\nor GRAY first.\n");
+      g_message ("GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\nor GRAY first.\n");
       return FALSE;
       break;
     }
@@ -1707,7 +1705,7 @@ save_image (char   *filename,
   outfile = fopen (filename, "wb");
   if (!outfile)
     {
-      fprintf (stderr, "GIF: can't open %s\n", filename);
+      g_message ("GIF: can't open %s\n", filename);
       return FALSE;
     }
 
@@ -1722,7 +1720,7 @@ save_image (char   *filename,
   else
     {
       BitsPerPixel = colorstobpp (256);
-      fprintf (stderr, "GIF: Too many colours?\n");
+      g_message ("GIF: Too many colours?\n");
     }
 
   cols = gimp_image_width(image_ID);
@@ -2159,7 +2157,7 @@ colorstobpp (int colors)
     bpp = 8;
   else
     {
-      printf ("GIF: too many colors: %d\n", colors);
+      g_message ("GIF: too many colors: %d\n", colors);
       return 8;
     }
 
@@ -2691,7 +2689,7 @@ static void GIFEncodeCommentExt (FILE *fp, char *comment)
 {
   if (comment==NULL||strlen(comment)<1)
     {
-      printf("GIF: warning: no comment given - comment block not written.\n");
+      g_message ("GIF: warning: no comment given - comment block not written.\n");
       return;
     }
 
@@ -3087,7 +3085,7 @@ cl_hash (register count_int hsize)			/* reset code table */
 static void
 writeerr ()
 {
-  printf ("GIF: error writing output file\n");
+  g_message ("GIF: error writing output file\n");
   return;
 }
 
@@ -3240,7 +3238,7 @@ comment_entry_callback (GtkWidget *widget,
   /* Temporary kludge for overlength strings - just return */
   if (ssize>240)
     {
-      printf("GIF save: Your comment string is too long.\n");
+      g_message ("GIF save: Your comment string is too long.\n");
       return;
     }
 
@@ -3249,7 +3247,7 @@ comment_entry_callback (GtkWidget *widget,
 
   strcpy(globalcomment, gtk_entry_get_text (GTK_ENTRY (widget)));
 
-  /* printf("COMMENT: %s\n",globalcomment); */
+  /* g_print ("COMMENT: %s\n",globalcomment); */
 }
 
 /* The End */
