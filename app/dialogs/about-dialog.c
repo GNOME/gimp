@@ -42,22 +42,22 @@ static gint  about_dialog_button      (GtkWidget *widget, GdkEventButton *event)
 static gint  about_dialog_timer       (gpointer data);
 
 
-static GtkWidget *about_dialog = NULL;
-static GtkWidget *logo_area = NULL;
-static GtkWidget *scroll_area = NULL;
-static GdkPixmap *logo_pixmap = NULL;
+static GtkWidget *about_dialog  = NULL;
+static GtkWidget *logo_area     = NULL;
+static GtkWidget *scroll_area   = NULL;
+static GdkPixmap *logo_pixmap   = NULL;
 static GdkPixmap *scroll_pixmap = NULL;
-static guchar *dissolve_map = NULL;
-static gint  dissolve_width;
-static gint  dissolve_height;
-static gint  logo_width = 0;
-static gint  logo_height = 0;
-static gint  do_animation = 0;
-static gint  do_scrolling = 0;
-static gint  scroll_state = 0;
-static gint  frame = 0;
-static gint  offset = 0;
-static gint  timer = 0;
+static guchar    *dissolve_map  = NULL;
+static gint       dissolve_width;
+static gint       dissolve_height;
+static gint       logo_width  = 0;
+static gint       logo_height = 0;
+static gboolean   do_animation = FALSE;
+static gboolean   do_scrolling = FALSE;
+static gint       scroll_state = 0;
+static gint       frame  = 0;
+static gint       offset = 0;
+static gint       timer  = 0;
 
 /* See the end of the list for how to add names with Non-ASCII characters */
 static gchar *scroll_text[] =
@@ -187,13 +187,18 @@ about_dialog_create (gint timeout)
       gtk_window_set_wmclass (GTK_WINDOW (about_dialog), "about_dialog", "Gimp");
       gtk_window_set_title (GTK_WINDOW (about_dialog), _("About the GIMP"));
       gtk_window_set_policy (GTK_WINDOW (about_dialog), FALSE, FALSE, FALSE);
-      gtk_window_position (GTK_WINDOW (about_dialog), GTK_WIN_POS_CENTER);
+      gtk_window_set_position (GTK_WINDOW (about_dialog), GTK_WIN_POS_CENTER);
+
       gtk_signal_connect (GTK_OBJECT (about_dialog), "destroy",
-			  (GtkSignalFunc) about_dialog_destroy, NULL);
+			  GTK_SIGNAL_FUNC (about_dialog_destroy),
+			  NULL);
       gtk_signal_connect (GTK_OBJECT (about_dialog), "unmap_event",
-			  (GtkSignalFunc) about_dialog_unmap, NULL);
+			  GTK_SIGNAL_FUNC (about_dialog_unmap),
+			  NULL);
       gtk_signal_connect (GTK_OBJECT (about_dialog), "button_press_event",
-			  (GtkSignalFunc) about_dialog_button, NULL);
+			  GTK_SIGNAL_FUNC (about_dialog_button),
+			  NULL);
+
       gtk_widget_set_events (about_dialog, GDK_BUTTON_PRESS_MASK);
 
       if (!about_dialog_load_logo (about_dialog))
@@ -216,8 +221,10 @@ about_dialog_create (gint timeout)
 
       logo_area = gtk_drawing_area_new ();
       gtk_signal_connect (GTK_OBJECT (logo_area), "expose_event",
-			  (GtkSignalFunc) about_dialog_logo_expose, NULL);
-      gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area), logo_width, logo_height);
+			  GTK_SIGNAL_FUNC (about_dialog_logo_expose),
+			  NULL);
+      gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area),
+			     logo_width, logo_height);
       gtk_widget_set_events (logo_area, GDK_EXPOSURE_MASK);
       gtk_container_add (GTK_CONTAINER (aboutframe), logo_area);
       gtk_widget_show (logo_area);
@@ -234,8 +241,8 @@ about_dialog_create (gint timeout)
       label_text = g_strdup_printf (_("Version %s brought to you by"),
 				    GIMP_VERSION);
       label = gtk_label_new (label_text);
-      g_free(label_text); 
-      label_text=NULL;
+      g_free (label_text);
+      label_text = NULL;
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 
