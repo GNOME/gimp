@@ -4,10 +4,14 @@
 
 # adapted from pxgettext as found in the plug-ins/perl directory
 
-# 5.005_02 in particular seems to have a BIG BUG
+# There are rumors that perl version 5.005_02 has a bug
 # resulting in an endless loop and a memory leak in the 
-# regex machinery :(
-exit 1 unless $] > 5.005_02;
+# regex machinery. 
+#
+# It seems to work however. I'll leave this check commented out until
+# people report problems.
+#
+# die ("Your version of Perl (5.005_02) is broken!\nCan't extract the strings from the scripts.\nA lot of messages will be missing from your gimp-script-fu.pot file.\n\n") if $] eq 5.005_02;
 
 undef $/;
 
