@@ -1,3 +1,8 @@
+2004-12-31  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/paint/gimpbrushcore.c: invert dependence of brush size on pressure,
+	using formula from Dave Ahlswede in bug #149576.
+	
 2004-12-31  Michael Natterer  <mitch@gimp.org>
 
 	Applied modified patch from Ben Campbell which adds drop
