@@ -406,6 +406,25 @@ CODE
     );
 }
 
+sub drawable_set_image {
+    $blurb = 'Set image where drawable belongs to.';
+
+    $help = <<'HELP';
+Set the image the drawable should be a part of (Use this before adding a
+drawable to another image).
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	&std_image_arg
+    );
+    delete $inargs[0]->{no_success};
+
+    %invoke = ( code => 'gimp_drawable_set_gimage (drawable, gimage);' );
+}
+
 @headers = qw("drawable.h");
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
@@ -414,7 +433,7 @@ CODE
 	    drawable_gray drawable_indexed drawable_bytes drawable_width
 	    drawable_height drawable_offsets drawable_layer
 	    drawable_layer_mask drawable_channel drawable_set_pixel
-	    drawable_get_pixel);
+	    drawable_get_pixel drawable_set_image);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Drawable procedures';
