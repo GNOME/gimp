@@ -1,8 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpviewabledialog.c
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * gimptooldialog.c
+ * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,9 +35,21 @@
 #include "gimpviewabledialog.h"
 
 
+/**
+ * gimp_tool_dialog_new:
+ * @tool_info: a #GimpToolInfo
+ * @desc: a string to use in the dialog header or %NULL to use the help
+ *        field from #GimpToolInfo
+ *
+ * This function conveniently creates a #GimpViewableDialog using the
+ * information stored in @tool_info. It also registers the tool with
+ * the "toplevel" dialog factory.
+ *
+ * Return value: a new #GimpViewableDialog
+ **/
 GtkWidget *
-gimp_tool_dialog_new (GimpToolInfo     *tool_info,
-                      const gchar      *desc,
+gimp_tool_dialog_new (GimpToolInfo *tool_info,
+                      const gchar  *desc,
                       ...)
 {
   GtkWidget   *dialog;
