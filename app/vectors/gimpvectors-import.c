@@ -296,6 +296,16 @@ gimp_vectors_import (GimpImage    *image,
           success = FALSE;
         }
     }
+  else if (error && *error && filename) /*  parser reported an error  */
+    {
+      gchar *msg = (*error)->message;
+
+      (*error)->message =
+        g_strdup_printf (_("Failed to import paths from '%s': %s"),
+                         gimp_filename_to_utf8 (filename), msg);
+
+      g_free (msg);
+    }
 
   while ((base = g_queue_pop_head (parser.stack)) != NULL)
     {

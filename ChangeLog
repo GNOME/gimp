@@ -1,3 +1,8 @@
+2004-03-03  Sven Neumann  <sven@gimp.org>
+
+	* app/vectors/gimpvectors-import.c (gimp_vectors_import): better
+	error reporting in case of a parser error.
+
 2004-03-03  Simon Budig  <simon@gimp.org>
 
 	* app/xcf/xcf-load.c: make the path-loading debug output conditional.
