@@ -1,3 +1,11 @@
+Thu Nov  4 22:06:24 GMT 1999 Andy Thomas <alt@gimp.org>
+
+	* app/gradient_select_cmds.c
+	* tools/pdbgen/pdb/gradient_select.pdb
+
+	Fixed crash when main gradient dialog is opened and 
+	one lauched via the PDB interface (ie scriptfu) is also open.
+
 Thu Nov  4 20:46:25 MET 1999  Sven Neumann <sven.gimp.org>
 	
 	* app/channel.c: get rid of compiler warnings

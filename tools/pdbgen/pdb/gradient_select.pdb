@@ -249,7 +249,7 @@ gradients_get_gradientselect (gchar *name)
     {
       gsp = (GradientSelect *) list->data;
       
-      if (!strcmp (name, gsp->callback_name))
+      if (gsp->callback_name && !strcmp (name, gsp->callback_name))
 	return gsp;
     }
 
