@@ -31,6 +31,26 @@
 
 	* app/plug_in.c: Use _spawnv, not spawnv, on Win32 and OS/2.
 	
+	* libgimp/gimp.c: No need for <io.h> on Win32.
+
+	* libgimp/{gimp,gimpui}.def: Add two entry points.
+
+	* libgimp/gimp.h: Can't use __declspec(dllexport) for PLUG_IN_INFO
+	when compiling with gcc on Win32. Also handle __argc, __argv and
+	_stdcall differently with gcc on Win32
+
+	* libgimp/gimpenv.c: Include <string.h>.
+
+	* libgimp/gimpfeatures.h.in: Remove lots of extraneous trailing blanks.
+
+	* libgimp/gimpfileselection.c: Include <glib.h> early, see above.
+
+	* libgimp/{gimpwire,parasite}.c: Test for NATIVE_WIN32, not
+	_MSC_VER.
+
+	* libgimp/makefile.msc: Miscellaneous updates. The gimpi library
+ 	is now built as a static library.
+
 Thu May 27 22:04:49 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* app/channel.c: applied fix for the channel_bounds bug from

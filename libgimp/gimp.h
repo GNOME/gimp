@@ -89,7 +89,11 @@ struct _GPlugInInfo
  * In gimp.c, we don't declare it at all, but fetch the address
  * of it with GetProcAddress.
  */
+#ifdef __GNUC__
+GPlugInInfo PLUG_IN_INFO;
+#else
 __declspec(dllexport) GPlugInInfo PLUG_IN_INFO;
+#endif
 #endif
 
 struct _GTile
@@ -190,6 +194,13 @@ struct _GParam
  * define a main() in case some plug-in still is built as a console
  * application.
  */
+#  ifdef __GNUC__
+   /* With gcc these must be handled differently */
+#    define __argc _argc
+#    define __argv _argv
+#    define _stdcall __attribute__((stdcall))
+#  endif
+
 #  define MAIN()			\
    int _stdcall				\
    WinMain (int hInstance,		\

@@ -4,6 +4,10 @@ EXPORTS
 	gimp_brush_select_widget_set_popup
 	gimp_channel_menu_new
 	gimp_drawable_menu_new
+	gimp_file_selection_get_filename
+	gimp_file_selection_get_type
+	gimp_file_selection_new
+	gimp_file_selection_set_filename
 	gimp_gradient_select_widget
 	gimp_gradient_select_widget_close_popup
 	gimp_gradient_select_widget_set_popup

@@ -53,9 +53,6 @@
 #ifdef WIN32
 #  define STRICT
 #  include <windows.h>
-#  ifdef _MSC_VER
-#    include <io.h>
-#  endif
 #endif
 #ifdef __EMX__
 #  include <fcntl.h>

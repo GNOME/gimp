@@ -1,10 +1,10 @@
-## Makefile for building the GIMP DLLs with Microsoft C.
+## Makefile for building the GIMP DLLs and LIBs with Microsoft C.
 ## Use: nmake -f makefile.msc
 
 # Change this to wherever you want to install the DLLs. This directory
 # should be in your PATH. As these DLLs are for the GIMP and its plug-ins
 # only, it probably is best to keep them in the GIMP's bin directory.
-BIN = D:\gimp\bin
+BIN = C:\gimp\bin
 
 GIMP_VER = 1.1
 
@@ -47,7 +47,6 @@ gimpfeatures.h : gimpfeatures.h.win32
 	copy gimpfeatures.h.win32 gimpfeatures.h
 
 install : all
-	$(INSTALL) gimpi-$(GIMP_VER).dll $(BIN)
 	$(INSTALL) gimp-$(GIMP_VER).dll $(BIN)
 	$(INSTALL) gimpui-$(GIMP_VER).dll $(BIN)
 	$(TOUCH) install
@@ -91,6 +90,8 @@ gimp_OBJECTS = \
 gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
 	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) user32.lib /def:gimp.def
 
+# Pass -DLIBGIMP_COMPILATION when compiling these
+
 gimp.obj : gimp.c
 	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimp.c
 gimpchannel.obj : gimpchannel.c
@@ -131,6 +132,7 @@ parasite.obj : parasite.c
 gimpui_OBJECTS = \
 	gimpmenu.obj	\
 	gimpbrushmenu.obj\
+	gimpfileselection.obj\
 	gimpgradientmenu.obj\
 	gimppatternmenu.obj
 
