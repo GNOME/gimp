@@ -1,5 +1,24 @@
 2001-01-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/color_notebook.[ch]
+	* app/color_select.c: moved the "old" and "new" color areas from the
+	notebook to the action_area.
+
+	* TODO.xml: updated.
+
+	* app/color_area.c
+	* app/color_panel.c
+	* app/colormap_dialog.c
+	* app/palette.c
+	* libgimp/gimpcolorselector.h
+	* modules/colorsel_gtk.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: removed the "set_current" parameter all
+	over the place because it was always TRUE and not used in the modules
+	at all.
+
+2001-01-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/color_notebook.c
 	* app/color_select.c
 	* libgimp/gimpcolorselector.h: more cleanup before chopping it up.

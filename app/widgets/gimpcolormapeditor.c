@@ -955,7 +955,7 @@ ipal_edit_callback (GtkWidget *widget,
   else
     {
       color_notebook_show (ipal->color_notebook);
-      color_notebook_set_color (ipal->color_notebook, r, g, b, 255, TRUE);
+      color_notebook_set_color (ipal->color_notebook, r, g, b, 255);
     }
 }
 

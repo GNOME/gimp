@@ -30,13 +30,37 @@
 
 #include "apptypes.h"
 
+#include "color_area.h"
 #include "color_notebook.h"
+#include "colormaps.h"
+#include "gimpdnd.h"
 #include "gimpui.h"
 
 #include "libgimp/gimphelpui.h"
 #include "libgimp/gimpcolorselector.h"
 
 #include "libgimp/gimpintl.h"
+
+
+#define COLOR_AREA_WIDTH   74
+#define COLOR_AREA_HEIGHT  20
+
+
+enum
+{
+  RED,
+  GREEN,
+  BLUE,
+  ALPHA
+};
+
+typedef enum
+{
+  UPDATE_NOTEBOOK   = 1 << 0,
+  UPDATE_NEW_COLOR  = 1 << 1,
+  UPDATE_ORIG_COLOR = 1 << 2,
+  UPDATE_CALLER     = 1 << 3
+} ColorNotebookUpdateType;
 
 
 /* information we keep on each registered colour selector */
@@ -66,34 +90,64 @@ struct _ColorSelectorInstance
 };
 
 
-static void color_notebook_ok_callback     (GtkWidget         *widget,
-					    gpointer           data);
-static void color_notebook_cancel_callback (GtkWidget         *widget,
-					    gpointer           data);
-static void color_notebook_update_callback (gpointer           data,
-					    gint               red,
-					    gint               green,
-					    gint               blue,
-					    gint               alpha);
-static void color_notebook_page_switch     (GtkWidget         *widget,
-					    GtkNotebookPage   *page,
-					    guint              page_num,
-					    gpointer           data);
-static void color_notebook_help_func       (const gchar       *help_data);
+static void       color_notebook_ok_callback     (GtkWidget         *widget,
+						  gpointer           data);
+static void       color_notebook_cancel_callback (GtkWidget         *widget,
+						  gpointer           data);
+static void       color_notebook_update_callback (gpointer           data,
+						  gint               red,
+						  gint               green,
+						  gint               blue,
+						  gint               alpha);
+static void       color_notebook_page_switch     (GtkWidget         *widget,
+						  GtkNotebookPage   *page,
+						  guint              page_num,
+						  gpointer           data);
+static void       color_notebook_help_func       (const gchar       *help_data);
 
-static void color_notebook_selector_death  (ColorSelectorInfo *info);
+static void       color_notebook_selector_death  (ColorSelectorInfo *info);
+
+static void       color_notebook_update          (ColorNotebook     *cnp,
+						  ColorNotebookUpdateType update);
+static void       color_notebook_update_notebook (ColorNotebook     *cnp);
+static void       color_notebook_update_caller   (ColorNotebook     *cnp);
+static void       color_notebook_update_colors   (ColorNotebook     *cnp,
+						  ColorNotebookUpdateType which);
+
+static gboolean   color_notebook_color_events    (GtkWidget         *widget,
+						  GdkEvent          *event,
+						  gpointer           data);
+
+static void       color_notebook_drag_new_color  (GtkWidget         *widget,
+						  guchar            *r,
+						  guchar            *g,
+						  guchar            *b,
+						  guchar            *a,
+						  gpointer           data);
+static void       color_notebook_drop_new_color  (GtkWidget         *widget,
+						  guchar             r,
+						  guchar             g,
+						  guchar             b,
+						  guchar             a,
+						  gpointer           data);
+static void       color_notebook_drag_old_color  (GtkWidget         *widget,
+						  guchar            *r,
+						  guchar            *g,
+						  guchar            *b,
+						  guchar            *a,
+						  gpointer           data);
 
 
 /* master list of all registered colour selectors */
 static ColorSelectorInfo *selector_info = NULL;
 
-enum
+/*  dnd stuff  */
+static GtkTargetEntry color_notebook_target_table[] =
 {
-  RED,
-  GREEN,
-  BLUE,
-  ALPHA
+  GIMP_TARGET_COLOR
 };
+static guint n_color_notebook_targets = (sizeof (color_notebook_target_table) /
+					 sizeof (color_notebook_target_table[0]));
 
 
 ColorNotebook *
@@ -107,13 +161,19 @@ color_notebook_new (gint                   red,
 		    gboolean               show_alpha)
 {
   ColorNotebook         *cnp;
+  GtkWidget             *main_hbox;
+  /*GtkWidget             *right_vbox;*/
+  GtkWidget             *colors_frame;
+  GtkWidget             *colors_hbox;
   GtkWidget             *label;
   ColorSelectorInfo     *info;
   ColorSelectorInstance *csel;
 
   g_return_val_if_fail (selector_info != NULL, NULL);
 
-  cnp = g_new (ColorNotebook, 1);
+  cnp = g_new0 (ColorNotebook, 1);
+
+  cnp->gc            = NULL;
 
   cnp->callback      = callback;
   cnp->client_data   = client_data;
@@ -141,12 +201,17 @@ color_notebook_new (gint                   red,
 
 		     NULL);
 
+  main_hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 1);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (cnp->shell)->vbox), main_hbox);
+  gtk_widget_show (main_hbox);
+
   /* do we actually need a notebook? */
   if (selector_info->next)
     {
       cnp->notebook = gtk_notebook_new ();
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cnp->shell)->vbox),
-			  cnp->notebook, TRUE, TRUE, 1);
+      gtk_box_pack_start (GTK_BOX (main_hbox), cnp->notebook,
+			  FALSE, FALSE, 0);
       gtk_widget_show (cnp->notebook);
     }
   else /* only one selector */
@@ -178,12 +243,13 @@ color_notebook_new (gint                   red,
 	      /* hide the frame, so it doesn't get selected by mistake */
 	      gtk_widget_hide (csel->frame);
 	      gtk_notebook_append_page (GTK_NOTEBOOK (cnp->notebook),
-					csel->frame, label);
+					csel->frame,
+					label);
 	    }
 	  else
 	    {
-	      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cnp->shell)->vbox),
-				  csel->frame, TRUE, TRUE, 1);
+	      gtk_box_pack_start (GTK_BOX (main_hbox), csel->frame,
+				  FALSE, FALSE, 0);
 	    }
 
 	  gtk_widget_show (csel->frame);
@@ -199,11 +265,83 @@ color_notebook_new (gint                   red,
       info = info->next;
     }
 
+  /*  The right vertical box with old/new color area and color space sliders  */
+  /*
+  right_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (main_hbox), right_vbox, TRUE, TRUE, 0);
+  gtk_widget_show (right_vbox);
+  */
+
+  /*  The old/new color area frame and hbox  */
+  colors_frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (colors_frame), GTK_SHADOW_IN);
+
+  /* gtk_box_pack_start (GTK_BOX (right_vbox), colors_frame, FALSE, FALSE, 0); */
+
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cnp->shell)->action_area),
+		      colors_frame,
+		      FALSE, FALSE, 0);
+
+  gtk_widget_show (colors_frame);
+
+  colors_hbox = gtk_hbox_new (TRUE, 2);
+  gtk_container_add (GTK_CONTAINER (colors_frame), colors_hbox);
+  gtk_widget_show (colors_hbox);
+
+  /*  The new color area  */
+  cnp->new_color = gtk_drawing_area_new ();
+  gtk_drawing_area_size (GTK_DRAWING_AREA (cnp->new_color),
+                         COLOR_AREA_WIDTH, COLOR_AREA_HEIGHT);
+  gtk_widget_set_events (cnp->new_color, GDK_EXPOSURE_MASK);
+  gtk_signal_connect (GTK_OBJECT (cnp->new_color), "event",
+                      GTK_SIGNAL_FUNC (color_notebook_color_events),
+                      cnp);
+
+  gtk_object_set_user_data (GTK_OBJECT (cnp->new_color), cnp);
+  gtk_box_pack_start (GTK_BOX (colors_hbox), cnp->new_color, TRUE, TRUE, 0);
+  gtk_widget_show (cnp->new_color);
+
+  /*  dnd stuff  */
+  gtk_drag_source_set (cnp->new_color,
+                       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+                       color_notebook_target_table, n_color_notebook_targets,
+                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
+  gimp_dnd_color_source_set (cnp->new_color, color_notebook_drag_new_color, cnp);
+
+  gtk_drag_dest_set (cnp->new_color,
+                     GTK_DEST_DEFAULT_HIGHLIGHT |
+                     GTK_DEST_DEFAULT_MOTION |
+                     GTK_DEST_DEFAULT_DROP,
+                     color_notebook_target_table, n_color_notebook_targets,
+                     GDK_ACTION_COPY);
+  gimp_dnd_color_dest_set (cnp->new_color, color_notebook_drop_new_color, cnp);
+
+  /*  The old color area  */
+  cnp->orig_color = gtk_drawing_area_new ();
+  gtk_drawing_area_size (GTK_DRAWING_AREA (cnp->orig_color),
+                         COLOR_AREA_WIDTH, COLOR_AREA_HEIGHT);
+  gtk_widget_set_events (cnp->orig_color, GDK_EXPOSURE_MASK);
+  gtk_signal_connect (GTK_OBJECT (cnp->orig_color), "event",
+                      GTK_SIGNAL_FUNC (color_notebook_color_events),
+                      cnp);
+  gtk_object_set_user_data (GTK_OBJECT (cnp->orig_color), cnp);
+  gtk_box_pack_start (GTK_BOX (colors_hbox), cnp->orig_color, TRUE, TRUE, 0);
+  gtk_widget_show (cnp->orig_color);
+
+  /*  dnd stuff  */
+  gtk_drag_source_set (cnp->orig_color,
+                       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+                       color_notebook_target_table, n_color_notebook_targets,
+                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
+  gimp_dnd_color_source_set (cnp->orig_color, color_notebook_drag_old_color,
+			     cnp);
+
   gtk_widget_show (cnp->shell);
 
   /* this must come after showing the widget, otherwise we get a
    * switch_page signal for a non-visible color selector, which is bad
-   * news. */
+   * news.
+   */
   if (cnp->notebook)
     {
       gtk_signal_connect (GTK_OBJECT (cnp->notebook), "switch_page",
@@ -261,11 +399,8 @@ color_notebook_set_color (ColorNotebook *cnp,
 			  gint           red,
 			  gint           green,
 			  gint           blue,
-			  gint           alpha,
-			  gboolean       set_current)
+			  gint           alpha)
 {
-  ColorSelectorInstance *csel;
-
   g_return_if_fail (cnp != NULL);
 
   cnp->orig_values[RED]   = red;
@@ -273,18 +408,15 @@ color_notebook_set_color (ColorNotebook *cnp,
   cnp->orig_values[BLUE]  = blue;
   cnp->orig_values[ALPHA] = alpha;
 
-  if (set_current)
-    {
-      cnp->values[RED]   = red;
-      cnp->values[GREEN] = green;
-      cnp->values[BLUE]  = blue;
-      cnp->values[ALPHA] = alpha;
-    }
+  cnp->values[RED]   = red;
+  cnp->values[GREEN] = green;
+  cnp->values[BLUE]  = blue;
+  cnp->values[ALPHA] = alpha;
 
-  csel = cnp->cur_page;
-  csel->info->methods.setcolor (csel->selector_data,
-				red, green, blue, alpha,
-				set_current);
+  color_notebook_update (cnp,
+			 UPDATE_NOTEBOOK   |
+			 UPDATE_ORIG_COLOR |
+			 UPDATE_NEW_COLOR);
 }
 
 /*
@@ -310,15 +442,7 @@ color_notebook_update_callback (gpointer data,
   cnp->values[BLUE]  = blue;
   cnp->values[ALPHA] = alpha;
 
-  if (cnp->wants_updates && cnp->callback)
-    {
-      (* cnp->callback) (cnp->values[RED],
-			 cnp->values[GREEN],
-			 cnp->values[BLUE],
-			 cnp->values[ALPHA],
-			 COLOR_NOTEBOOK_UPDATE,
-			 cnp->client_data);
-    }
+  color_notebook_update (cnp, UPDATE_NEW_COLOR | UPDATE_CALLER);
 }
 
 static void
@@ -375,12 +499,8 @@ color_notebook_page_switch (GtkWidget       *widget,
   g_return_if_fail (cnp != NULL && csel != NULL);
 
   cnp->cur_page = csel;
-  csel->info->methods.setcolor (csel->selector_data,
-				cnp->values[RED], 
-				cnp->values[GREEN],
-				cnp->values[BLUE],
-				cnp->values[ALPHA],
-				TRUE);
+
+  color_notebook_update (cnp, UPDATE_NOTEBOOK);
 }
 
 static void
@@ -490,4 +610,192 @@ color_notebook_selector_death (ColorSelectorInfo *info)
     }
 
   g_warning ("color selector %p not found, can't happen!", info);
+}
+
+static void
+color_notebook_update (ColorNotebook           *cnp,
+		       ColorNotebookUpdateType  update)
+{
+  if (!cnp)
+    return;
+
+  if (update & UPDATE_NOTEBOOK)
+    color_notebook_update_notebook (cnp);
+
+  if (update & UPDATE_NEW_COLOR)
+    color_notebook_update_colors (cnp, UPDATE_NEW_COLOR);
+
+  if (update & UPDATE_ORIG_COLOR)
+    color_notebook_update_colors (cnp, UPDATE_ORIG_COLOR);
+
+  if (update & UPDATE_CALLER && cnp->wants_updates)
+    color_notebook_update_caller (cnp);
+}
+
+static void
+color_notebook_update_notebook (ColorNotebook *cnp)
+{
+  ColorSelectorInstance *csel;
+
+  g_return_if_fail (cnp != NULL);
+
+  csel = cnp->cur_page;
+  csel->info->methods.setcolor (csel->selector_data,
+				cnp->values[RED],
+				cnp->values[GREEN],
+				cnp->values[BLUE],
+				cnp->values[ALPHA]);
+}
+
+static void
+color_notebook_update_caller (ColorNotebook *cnp)
+{
+  if (cnp && cnp->callback)
+    {
+      (* cnp->callback) (cnp->values[RED],
+			 cnp->values[GREEN],
+			 cnp->values[BLUE],
+			 cnp->values[ALPHA],
+			 COLOR_NOTEBOOK_UPDATE,
+			 cnp->client_data);
+    }
+}
+
+static void
+color_notebook_update_colors (ColorNotebook           *cnp,
+			      ColorNotebookUpdateType  which)
+{
+  GdkWindow *window;
+  GdkColor   color;
+  gint       red, green, blue;
+  gint       width, height;
+
+  if (!cnp)
+    return;
+
+  if (which == UPDATE_ORIG_COLOR)
+    {
+      window = cnp->orig_color->window;
+      red    = cnp->orig_values[0];
+      green  = cnp->orig_values[1];
+      blue   = cnp->orig_values[2];
+    }
+  else if (which == UPDATE_NEW_COLOR)
+    {
+      window = cnp->new_color->window;
+      red    = cnp->values[RED];
+      green  = cnp->values[GREEN];
+      blue   = cnp->values[BLUE];
+    }
+  else
+    {
+      return;
+    }
+
+  /* if we haven't yet been realized, there's no need to redraw
+   * anything.
+   */
+  if (!window)
+    return;
+
+  color.pixel = get_color (red, green, blue);
+
+  gdk_window_get_size (window, &width, &height);
+
+  if (cnp->gc)
+    {
+      color_area_draw_rect (window, cnp->gc,
+                            0, 0, width, height,
+                            red, green, blue);
+    }
+}
+
+static gboolean
+color_notebook_color_events (GtkWidget *widget,
+			     GdkEvent  *event,
+			     gpointer   data)
+{
+  ColorNotebook *cnp;
+
+  cnp = (ColorNotebook *) data;
+
+  if (!cnp)
+    return FALSE;
+
+  switch (event->type)
+    {
+    case GDK_EXPOSE:
+      if (!cnp->gc)
+        cnp->gc = gdk_gc_new (widget->window);
+
+      if (widget == cnp->new_color)
+        color_notebook_update (cnp, UPDATE_NEW_COLOR);
+      else if (widget == cnp->orig_color)
+        color_notebook_update (cnp, UPDATE_ORIG_COLOR);
+      break;
+
+    default:
+      break;
+    }
+
+  return FALSE;
+}
+
+static void
+color_notebook_drag_new_color (GtkWidget *widget,
+			       guchar    *r,
+			       guchar    *g,
+			       guchar    *b,
+			       guchar    *a,
+			       gpointer   data)
+{
+  ColorNotebook *cnp;
+
+  cnp = (ColorNotebook *) data;
+
+  *r = (guchar) cnp->values[RED];
+  *g = (guchar) cnp->values[GREEN];
+  *b = (guchar) cnp->values[BLUE];
+  *a = (guchar) cnp->values[ALPHA];
+}
+
+static void
+color_notebook_drop_new_color (GtkWidget *widget,
+			       guchar     r,
+			       guchar     g,
+			       guchar     b,
+			       guchar     a,
+			       gpointer   data)
+{
+  ColorNotebook *cnp;
+
+  cnp = (ColorNotebook *) data;
+
+  cnp->values[RED]   = (gint) r;
+  cnp->values[GREEN] = (gint) g;
+  cnp->values[BLUE]  = (gint) b;
+  cnp->values[ALPHA] = (gint) a;
+
+  color_notebook_update (cnp,
+			 UPDATE_NOTEBOOK  |
+			 UPDATE_NEW_COLOR |
+			 UPDATE_CALLER);
+}
+
+static void
+color_notebook_drag_old_color (GtkWidget *widget,
+			       guchar    *r,
+			       guchar    *g,
+			       guchar    *b,
+			       guchar    *a,
+			       gpointer   data)
+{
+  ColorNotebook *cnp;
+
+  cnp = (ColorNotebook *) data;
+
+  *r = (guchar) cnp->orig_values[0];
+  *g = (guchar) cnp->orig_values[1];
+  *b = (guchar) cnp->orig_values[2];
+  *a = (guchar) cnp->orig_values[3];
 }

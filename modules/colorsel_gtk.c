@@ -46,10 +46,14 @@ static void        colorsel_gtk_setcolor (gpointer                   data,
 					  gint                       r,
 					  gint                       g,
 					  gint                       b,
-					  gint                       a,
-					  gboolean                   set_current);
+					  gint                       a);
 static void        colorsel_gtk_update   (GtkWidget                 *widget,
 					  gpointer                   data);
+
+/* EEK */
+static gboolean    colorsel_gtk_widget_idle_hide (gpointer           data);
+static void        colorsel_gtk_widget_hide      (GtkWidget         *widget,
+						  gpointer           data);
 
 
 /* local methods */
@@ -141,7 +145,20 @@ colorsel_gtk_new (gint                       r,
   p->callback    = callback;
   p->client_data = data;
 
-  colorsel_gtk_setcolor (p, r, g, b, a, FALSE);
+  gtk_color_selection_set_opacity (GTK_COLOR_SELECTION (p->selector),
+				   show_alpha);
+
+  /*
+  gtk_widget_hide (GTK_COLOR_SELECTION (p->selector)->sample_area->parent);
+  */
+
+  colorsel_gtk_setcolor (p, r, g, b, a);
+
+  /* EEK: to be removed */
+  gtk_signal_connect_object_after
+    (GTK_OBJECT (GTK_COLOR_SELECTION (p->selector)->sample_area), "realize",
+     GTK_SIGNAL_FUNC (colorsel_gtk_widget_hide),
+     GTK_OBJECT (GTK_COLOR_SELECTION (p->selector)->sample_area->parent));
 
   gtk_signal_connect (GTK_OBJECT (p->selector), "color_changed",
 		      GTK_SIGNAL_FUNC (colorsel_gtk_update),
@@ -177,8 +194,7 @@ colorsel_gtk_setcolor (gpointer  data,
 		       gint      r,
 		       gint      g,
 		       gint      b,
-		       gint      a,
-		       gboolean  set_current)
+		       gint      a)
 {
   ColorselGtk *p = data;
 
@@ -211,4 +227,20 @@ colorsel_gtk_update (GtkWidget *widget,
   a = (gint) (color[3] * 255.999);
 
   p->callback (p->client_data, r, g, b, a);
+}
+
+/* EEK */
+static gboolean
+colorsel_gtk_widget_idle_hide (gpointer data)
+{
+  gtk_widget_hide (GTK_WIDGET (data));
+
+  return FALSE;
+}
+
+static void
+colorsel_gtk_widget_hide (GtkWidget *widget,
+			  gpointer   data)
+{
+  g_idle_add (colorsel_gtk_widget_idle_hide, widget);
 }

@@ -41,6 +41,11 @@ struct _ColorNotebook
   GtkWidget             *shell;
   GtkWidget             *notebook;
 
+  GtkWidget             *new_color;
+  GtkWidget             *orig_color;
+
+  GdkGC                 *gc;
+
   gint                   values[4];
   gint                   orig_values[4];
 
@@ -70,7 +75,7 @@ void            color_notebook_set_color (ColorNotebook        *cnb,
 					  gint                  red,
 					  gint                  green,
 					  gint                  blue,
-					  gint                  alpha,
-					  gboolean              set_current);
+					  gint                  alpha);
+
 
 #endif /* __COLOR_NOTEBOOK_H__ */

@@ -47,8 +47,7 @@ static void        colorsel_water_setcolor    (gpointer  data,
 					       gint      r,
 					       gint      g,
 					       gint      b,
-					       gint      a,
-					       gboolean  set_current);
+					       gint      a);
 static void        colorsel_water_update      (void);
 static void        colorsel_water_drag_begin  (GtkWidget          *widget,
 					       GdkDragContext     *context,
@@ -747,7 +746,7 @@ colorsel_water_new (gint                       r,
 
   gtk_widget_show_all (hbox);
   
-  colorsel_water_setcolor (coldata, r, g, b, a, 0);
+  colorsel_water_setcolor (coldata, r, g, b, a);
   draw_all_buckets ();
 
   return vbox;
@@ -765,8 +764,7 @@ colorsel_water_setcolor (gpointer  data,
 			 gint      r,
 			 gint      g,
 			 gint      b,
-			 gint      a,
-			 gboolean  set_current)
+			 gint      a)
 {
   set_bucket (0, 
 	      ((gdouble) r) / 255.999, 

@@ -34,7 +34,7 @@ typedef void        (* GimpColorSelectorCallback) (gpointer   data,
 						   gint       b,
 						   gint       a);
 
-typedef GtkWidget * (* GimpColorSelectorNewFunc)  (gint       r,
+typedef GtkWidget *  (* GimpColorSelectorNewFunc) (gint       r,
 						   gint       g,
 						   gint       b,
 						   gint       a,
@@ -50,8 +50,7 @@ typedef void    (* GimpColorSelectorSetColorFunc) (gpointer   selector_data,
 						   gint       r,
 						   gint       g,
 						   gint       b,
-						   gint       a,
-						   gboolean   set_current);
+						   gint       a);
 
 typedef void      (* GimpColorSelectorFinishedCB) (gpointer   finished_data);
 

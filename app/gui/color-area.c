@@ -349,7 +349,7 @@ color_area_edit (void)
       else 
 	gdk_window_raise (color_notebook->shell->window);
 
-      color_notebook_set_color (color_notebook, r, g, b, 255, TRUE);
+      color_notebook_set_color (color_notebook, r, g, b, 255);
     }
 }
 
@@ -561,7 +561,7 @@ color_area_drop_color (GtkWidget *widget,
   if (color_notebook_active &&
       active_color == edit_color)
     {
-      color_notebook_set_color (color_notebook, r, g, b, 255, TRUE);
+      color_notebook_set_color (color_notebook, r, g, b, 255);
     }
   else
     {

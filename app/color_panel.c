@@ -167,8 +167,7 @@ color_panel_set_color (ColorPanel *color_panel,
 
   if (private->color_notebook_active)
     color_notebook_set_color (private->color_notebook,
-			      r, g, b, a,
-			      TRUE);
+			      r, g, b, a);
 
   if (private->gc)
     color_panel_draw (color_panel);
@@ -274,8 +273,7 @@ color_panel_events (GtkWidget *widget,
 					color_panel->color[0],
 					color_panel->color[1],
 					color_panel->color[2],
-					color_panel->color[3],
-					TRUE);
+					color_panel->color[3]);
 	    }
 	  private->button_down = FALSE;
 	}
@@ -364,7 +362,7 @@ color_panel_drop_color (GtkWidget *widget,
   color_panel->color[3] = a;
 
   if (private->color_notebook_active)
-    color_notebook_set_color (private->color_notebook, r, g, b, a, TRUE);
+    color_notebook_set_color (private->color_notebook, r, g, b, a);
 
   color_panel_draw (color_panel);
 }

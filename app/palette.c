@@ -1111,8 +1111,7 @@ palette_dialog_edit_entry_callback (GtkWidget *widget,
 	    }
 
 	  color_notebook_set_color (palette->color_notebook,
-				    color[0], color[1], color[2], 255,
-				    TRUE);
+				    color[0], color[1], color[2], 255);
 	}
     }
 }

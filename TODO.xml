@@ -262,7 +262,7 @@
       </contact>
     </entry>
 
-    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+    <entry size="medium" difficulty="medium" status="20%" target="1.4">
       <title>Cleanup GIMP's color selectors</title>
       <description>
 	<p>
