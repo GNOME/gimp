@@ -1,5 +1,11 @@
 2004-10-03  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/common/emboss.c: ported to GimpAspectPreview and made some
+	cleanups so this plug-in now use the same naming scheme as other
+	plug-ins do.
+
+2004-10-03  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/whirlpinch.c: ported to GimpAspectPreview.
 
 2004-10-03  Sven Neumann  <sven@gimp.org>

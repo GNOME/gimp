@@ -49,13 +49,21 @@ enum
 
 typedef struct
 {
-  gint32 img;
-  gint32 drw;
-  gdouble azimuth;
-  gdouble elevation;
-  gint32 depth;
-  gint32 embossp;
+  gdouble  azimuth;
+  gdouble  elevation;
+  gint32   depth;
+  gint32   embossp;
+  gboolean preview;
 } piArgs;
+
+static piArgs evals =
+{
+  30.0,    /* azimuth   */
+  45.0,    /* elevation */
+  20,      /* depth     */
+  1,       /* emboss    */
+  TRUE     /* preview   */
+};
 
 struct embossFilter
 {
@@ -68,27 +76,6 @@ struct embossFilter
   gdouble bg;
 } Filter;
 
-/*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
-
-typedef struct
-{
-  gint     width;
-  gint     height;
-  gint     bpp;
-  gdouble  scale;
-  guchar  *bits;
-} mwPreview;
-
-#define PREVIEW_SIZE 100
-
-static gint do_preview = TRUE;
-
-static GtkWidget *mw_preview_new   (GtkWidget        *parent,
-                                    mwPreview *mwp);
-static mwPreview *mw_preview_build (GimpDrawable        *drw);
-
-
-
 static void query (void);
 static void run   (const gchar      *name,
                    gint              nparam,
@@ -96,20 +83,21 @@ static void run   (const gchar      *name,
                    gint             *nretvals,
                    GimpParam       **retvals);
 
-static gint pluginCore        (piArgs *argp);
-static gint pluginCoreIA      (piArgs *argp);
+static gint emboss            (GimpDrawable *drawable);
+static gint emboss_dialog     (GimpDrawable *drawable);
 
-static void emboss_do_preview (GtkWidget     *preview);
+static void emboss_do_preview (GimpDrawable *drawable,
+                               GimpPreview  *preview);
 
-static inline void EmbossInit (gdouble  azimuth,
-                               gdouble  elevation,
-                               gushort  width45);
-static inline void EmbossRow  (guchar  *src,
-                               guchar  *texture,
-                               guchar  *dst,
-                               guint    xSize,
-                               guint    bypp,
-                               gint     alpha);
+static inline void EmbossInit (gdouble       azimuth,
+                               gdouble       elevation,
+                               gushort       width45);
+static inline void EmbossRow  (guchar       *src,
+                               guchar       *texture,
+                               guchar       *dst,
+                               guint         xSize,
+                               guint         bypp,
+                               gint          alpha);
 
 #define DtoR(d) ((d)*(G_PI/(gdouble)180))
 
@@ -120,8 +108,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   query, /* query */
   run,   /* run   */
 };
-
-static mwPreview *thePreview;
 
 MAIN ()
 
@@ -164,15 +150,14 @@ run (const gchar      *name,
      GimpParam       **retvals)
 {
   static GimpParam  rvals[1];
-  piArgs            args;
-  GimpDrawable     *drw;
+  GimpDrawable     *drawable;
 
   *nretvals = 1;
   *retvals = rvals;
 
   INIT_I18N ();
 
-  memset(&args, (int) 0, sizeof (piArgs));
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   rvals[0].type = GIMP_PDB_STATUS;
   rvals[0].data.d_status = GIMP_PDB_SUCCESS;
@@ -180,28 +165,15 @@ run (const gchar      *name,
   switch (param[0].data.d_int32)
     {
     case GIMP_RUN_INTERACTIVE:
-      args.img = args.drw = 0;
-      gimp_get_data ("plug_in_emboss", &args);
-      if (args.img == 0 && args.drw == 0)
-        {
-          /* initial conditions */
-          args.azimuth = 30.0;
-          args.elevation = 45.0;
-          args.depth = 20;
-          args.embossp = FUNCTION_EMBOSS;
-        }
-      args.img = param[1].data.d_image;
-      args.drw = param[2].data.d_drawable;
-      drw = gimp_drawable_get (args.drw);
-      thePreview = mw_preview_build (drw);
+      gimp_get_data ("plug_in_emboss", &evals);
 
-      if (pluginCoreIA (&args) == -1)
+      if (emboss_dialog (drawable) == -1)
         {
           rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
         }
       else
         {
-          gimp_set_data ("plug_in_emboss", &args, sizeof (piArgs));
+          gimp_set_data ("plug_in_emboss", &evals, sizeof (piArgs));
         }
 
       break;
@@ -213,14 +185,12 @@ run (const gchar      *name,
           break;
         }
 
-      args.img = param[1].data.d_image;
-      args.drw = param[2].data.d_drawable;
-      args.azimuth = param[3].data.d_float;
-      args.elevation = param[4].data.d_float;
-      args.depth = param[5].data.d_int32;
-      args.embossp = param[6].data.d_int32;
+      evals.azimuth   = param[3].data.d_float;
+      evals.elevation = param[4].data.d_float;
+      evals.depth     = param[5].data.d_int32;
+      evals.embossp   = param[6].data.d_int32;
 
-      if (pluginCore(&args)==-1)
+      if (emboss (drawable)==-1)
         {
           rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
           break;
@@ -228,13 +198,12 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data("plug_in_emboss", &args);
+      gimp_get_data ("plug_in_emboss", &evals);
       /* use this image and drawable, even with last args */
-      args.img = param[1].data.d_image;
-      args.drw = param[2].data.d_drawable;
-      if (pluginCore(&args)==-1) {
-        rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-      }
+      if (emboss (drawable)==-1)
+        {
+          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+        }
     break;
   }
 }
@@ -357,41 +326,38 @@ EmbossRow (guchar *src,
 }
 
 static gint
-pluginCore (piArgs *argp)
+emboss (GimpDrawable *drawable)
 {
-  GimpDrawable *drw;
-  GimpPixelRgn src, dst;
-  gint p_update;
-  gint y;
-  gint x1, y1, x2, y2;
-  guint width, height;
-  gint bypp, rowsize, has_alpha;
-  guchar *srcbuf, *dstbuf;
+  GimpPixelRgn  src, dst;
+  gint          p_update;
+  gint          y;
+  gint          x1, y1, x2, y2;
+  guint         width, height;
+  gint          bypp, rowsize, has_alpha;
+  guchar       *srcbuf, *dstbuf;
 
-  drw = gimp_drawable_get (argp->drw);
-
-  gimp_drawable_mask_bounds (argp->drw, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   /* expand the bounds a little */
-  x1 = MAX (0, x1 - argp->depth);
-  y1 = MAX (0, y1 - argp->depth);
-  x2 = MIN (drw->width, x2 + argp->depth);
-  y2 = MIN (drw->height, y2 + argp->depth);
+  x1 = MAX (0, x1 - evals.depth);
+  y1 = MAX (0, y1 - evals.depth);
+  x2 = MIN (drawable->width, x2 + evals.depth);
+  y2 = MIN (drawable->height, y2 + evals.depth);
 
   width = x2 - x1;
   height = y2 - y1;
-  bypp = drw->bpp;
+  bypp = drawable->bpp;
   p_update = height / 20;
   rowsize = width * bypp;
-  has_alpha = gimp_drawable_has_alpha (argp->drw);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
-  gimp_pixel_rgn_init (&src, drw, x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dst, drw, x1, y1, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&src, drawable, x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dst, drawable, x1, y1, width, height, TRUE, TRUE);
 
   srcbuf = g_new0 (guchar, rowsize * 3);
   dstbuf = g_new0 (guchar, rowsize);
 
-  EmbossInit (DtoR(argp->azimuth), DtoR(argp->elevation), argp->depth);
+  EmbossInit (DtoR(evals.azimuth), DtoR(evals.elevation), evals.depth);
   gimp_progress_init (_("Emboss"));
 
   gimp_tile_cache_ntiles ((width + gimp_tile_width () - 1) / gimp_tile_width ());
@@ -399,14 +365,14 @@ pluginCore (piArgs *argp)
   /* first row */
   gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y1, width, 3);
   memcpy (srcbuf, srcbuf + rowsize, rowsize);
-  EmbossRow (srcbuf, argp->embossp ? (guchar *) 0 : srcbuf,
+  EmbossRow (srcbuf, evals.embossp ? (guchar *) 0 : srcbuf,
              dstbuf, width, bypp, has_alpha);
   gimp_pixel_rgn_set_row (&dst, dstbuf, 0, 0, width);
 
   /* last row */
   gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y2-3, width, 3);
   memcpy (srcbuf + rowsize * 2, srcbuf + rowsize, rowsize);
-  EmbossRow (srcbuf, argp->embossp ? (guchar *) 0 : srcbuf,
+  EmbossRow (srcbuf, evals.embossp ? (guchar *) 0 : srcbuf,
              dstbuf, width, bypp, has_alpha);
   gimp_pixel_rgn_set_row (&dst, dstbuf, x1, y2-1, width);
 
@@ -416,7 +382,7 @@ pluginCore (piArgs *argp)
           gimp_progress_update ((gdouble) y / (gdouble) height);
 
       gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y1+y, width, 3);
-      EmbossRow (srcbuf, argp->embossp ? (guchar *) 0 : srcbuf,
+      EmbossRow (srcbuf, evals.embossp ? (guchar *) 0 : srcbuf,
                  dstbuf, width, bypp, has_alpha);
      gimp_pixel_rgn_set_row (&dst, dstbuf, x1, y1+y+1, width);
   }
@@ -425,99 +391,68 @@ pluginCore (piArgs *argp)
   g_free (srcbuf);
   g_free (dstbuf);
 
-  gimp_drawable_flush (drw);
-  gimp_drawable_merge_shadow (drw->drawable_id, TRUE);
-  gimp_drawable_update (drw->drawable_id, x1, y1, width, height);
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
   gimp_displays_flush ();
 
   return 0;
 }
 
-static void
-emboss_radio_button_callback (GtkWidget *widget,
-                              gpointer   data)
+static gint
+emboss_dialog (GimpDrawable *drawable)
 {
-  gimp_radio_button_update (widget, data);
-
-  if (do_preview && GTK_TOGGLE_BUTTON (widget)->active)
-    emboss_do_preview (NULL);
-}
-
-static void
-emboss_float_adjustment_callback (GtkAdjustment *adj,
-                                  gpointer       data)
-{
-  gdouble *value;
-
-  value = (gdouble *) data;
-
-  *value = adj->value;
-
-  if (do_preview)
-    emboss_do_preview (NULL);
-}
-
-static void
-emboss_int_adjustment_callback (GtkAdjustment *adj,
-                                gpointer       data)
-{
-  gint *value;
-
-  value = (gint *) data;
-
-  *value = (gint) adj->value;
-
-  if (do_preview)
-    emboss_do_preview (NULL);
-}
-
-static gboolean
-pluginCoreIA (piArgs *argp)
-{
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *main_vbox;
-  GtkWidget *hbox;
-  GtkWidget *table;
   GtkWidget *preview;
+  GtkWidget *radio1;
+  GtkWidget *radio2;
   GtkWidget *frame;
+  GtkWidget *table;
   GtkObject *adj;
   gboolean   run;
 
   gimp_ui_init ("emboss", TRUE);
 
-  dlg = gimp_dialog_new (_("Emboss"), "emboss",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-emboss",
+  dialog = gimp_dialog_new (_("Emboss"), "emboss",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-emboss",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
-                      TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  preview = mw_preview_new (hbox, thePreview);
-  g_object_set_data (G_OBJECT (preview), "piArgs", argp);
+  preview = gimp_aspect_preview_new (drawable, NULL);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (emboss_do_preview),
+                            drawable);
 
   frame = gimp_int_radio_group_new (TRUE, _("Function"),
-                                    G_CALLBACK (emboss_radio_button_callback),
-                                    &argp->embossp, argp->embossp,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &evals.embossp, evals.embossp,
 
-                                    _("_Bumpmap"), FUNCTION_BUMPMAP, NULL,
-                                    _("_Emboss"),  FUNCTION_EMBOSS,  NULL,
+                                    _("_Bumpmap"), FUNCTION_BUMPMAP, &radio1,
+                                    _("_Emboss"),  FUNCTION_EMBOSS,  &radio2,
 
                                     NULL);
 
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  g_signal_connect_swapped (radio1, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (radio2, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -526,197 +461,95 @@ pluginCoreIA (piArgs *argp)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                               _("_Azimuth:"), 100, 6,
-                              argp->azimuth, 0.0, 360.0, 1.0, 10.0, 2,
+                              evals.azimuth, 0.0, 360.0, 1.0, 10.0, 2,
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (emboss_float_adjustment_callback),
-                    &argp->azimuth);
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &evals.azimuth);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("E_levation:"), 100, 6,
-                              argp->elevation, 0.0, 180.0, 1.0, 10.0, 2,
+                              evals.elevation, 0.0, 180.0, 1.0, 10.0, 2,
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (emboss_float_adjustment_callback),
-                    &argp->elevation);
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &evals.elevation);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
                               _("_Depth:"), 100, 6,
-                              argp->depth, 1.0, 100.0, 1.0, 5.0, 0,
+                              evals.depth, 1.0, 100.0, 1.0, 5.0, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (emboss_int_adjustment_callback),
-                    &argp->depth);
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &evals.depth);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (table);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  emboss_do_preview (preview);
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   if (run)
-    return pluginCore (argp);
+    return emboss (drawable);
   else
     return -1;
 }
 
 static void
-emboss_do_preview (GtkWidget *w)
+emboss_do_preview (GimpDrawable *drawable,
+                   GimpPreview  *preview)
 {
-  static GtkWidget *theWidget = NULL;
-  piArgs *ap;
-  guchar *dst, *c;
-  gint y, rowsize;
+  guchar  *dst, *c, *src;
+  gint     y, rowsize;
+  gint     width, height, bpp;
+  gboolean has_alpha;
 
-  if (theWidget == NULL)
-    {
-      theWidget = w;
-    }
+  gimp_preview_get_size (preview, &width, &height);
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                          &width, &height, &bpp);
 
-  ap = g_object_get_data (G_OBJECT (theWidget), "piArgs");
-  rowsize = thePreview->width * thePreview->bpp;
+  rowsize = width * bpp;
 
-  dst = g_new (guchar, rowsize * thePreview->height);
-  c = g_new (guchar, rowsize * 3);
-  memcpy (c, thePreview->bits, rowsize);
-  memcpy (c + rowsize, thePreview->bits, rowsize * 2);
-  EmbossInit (DtoR (ap->azimuth), DtoR (ap->elevation), ap->depth);
+  dst = g_new (guchar, rowsize * height);
+  c = g_new (guchar, rowsize * bpp);
+  memcpy (c, src, rowsize);
+  memcpy (c + rowsize, src, rowsize * 2);
+  EmbossInit (DtoR (evals.azimuth), DtoR (evals.elevation),
+              MAX (1, evals.depth * width / drawable->width));
 
-  EmbossRow (c, ap->embossp ? (guchar *) 0 : c,
-             dst, thePreview->width, thePreview->bpp, FALSE);
+  EmbossRow (c, evals.embossp ? (guchar *) 0 : c,
+             dst, width, bpp, has_alpha);
 
-  memcpy (c,
-          thePreview->bits + ((thePreview->height-2) * rowsize),
-          rowsize * 2);
-  memcpy (c + (rowsize * 2),
-          thePreview->bits + ((thePreview->height - 1) * rowsize),
-          rowsize);
-  EmbossRow (c, ap->embossp ? (guchar *) 0 : c,
-             dst+rowsize*(thePreview->height-1),
-             thePreview->width, thePreview->bpp, FALSE);
+  memcpy (c, src + ((height-2) * rowsize), rowsize * 2);
+  memcpy (c + (rowsize * 2), src + ((height - 1) * rowsize), rowsize);
+  EmbossRow (c, evals.embossp ? (guchar *) 0 : c,
+             dst + rowsize * (height-1), width, bpp, has_alpha);
   g_free (c);
 
-  for (y = 0, c = thePreview->bits; y<thePreview->height - 2; y++, c += rowsize)
+  for (y = 0, c = src; y < height - 2; y++, c += rowsize)
     {
-      EmbossRow (c, ap->embossp ? (guchar *) 0 : c,
-                 dst + rowsize * (y+1),
-                 thePreview->width, thePreview->bpp, FALSE);
+      EmbossRow (c, evals.embossp ? (guchar *) 0 : c,
+                 dst + rowsize * (y+1), width, bpp, has_alpha);
     }
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (theWidget),
-                          1, 0, thePreview->width-2, thePreview->height,
-                          GIMP_RGB_IMAGE,
-                          dst+3,
-                          3 * thePreview->width);
+  gimp_preview_draw_buffer (preview, dst, rowsize);
 
   g_free (dst);
+  g_free (src);
 }
-
-static void
-mw_preview_toggle_callback (GtkWidget *widget,
-                            gpointer   data)
-{
-  gimp_toggle_button_update (widget, data);
-
-  if (do_preview)
-    emboss_do_preview (NULL);
-}
-
-static mwPreview *
-mw_preview_build_virgin (GimpDrawable *drw)
-{
-  mwPreview *mwp;
-
-  mwp = g_new (mwPreview, 1);
-
-  if (drw->width > drw->height)
-    {
-      mwp->scale  = (gdouble) drw->width / (gdouble) PREVIEW_SIZE;
-      mwp->width  = PREVIEW_SIZE;
-      mwp->height = drw->height / mwp->scale;
-    }
-  else
-    {
-      mwp->scale  = (gdouble) drw->height / (gdouble) PREVIEW_SIZE;
-      mwp->height = PREVIEW_SIZE;
-      mwp->width  = drw->width / mwp->scale;
-    }
-
-  mwp->bpp  = 3;
-  mwp->bits = NULL;
-
-  return mwp;
-}
-
-static mwPreview *
-mw_preview_build (GimpDrawable *drw)
-{
-  mwPreview *mwp;
-  gint x, y, b;
-  guchar *bc;
-  guchar *drwBits;
-  GimpPixelRgn pr;
-
-  mwp = mw_preview_build_virgin (drw);
-
-  gimp_pixel_rgn_init (&pr, drw, 0, 0, drw->width, drw->height, FALSE, FALSE);
-  drwBits = g_new (guchar, drw->width * drw->bpp);
-
-  bc = mwp->bits = g_new (guchar, mwp->width * mwp->height * mwp->bpp);
-  for (y = 0; y < mwp->height; y++)
-    {
-      gimp_pixel_rgn_get_row (&pr, drwBits, 0, (int)(y*mwp->scale), drw->width);
-
-      for (x = 0; x < mwp->width; x++)
-        {
-          for (b = 0; b < mwp->bpp; b++)
-            *bc++ = *(drwBits +
-                      ((gint) (x * mwp->scale) * drw->bpp) + b % drw->bpp);
-        }
-    }
-  g_free (drwBits);
-
-  return mwp;
-}
-
-static GtkWidget *
-mw_preview_new (GtkWidget *parent,
-                mwPreview *mwp)
-{
-  GtkWidget *preview;
-  GtkWidget *frame;
-  GtkWidget *vbox;
-  GtkWidget *button;
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (parent), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview, mwp->width, mwp->height);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
-  gtk_widget_show (preview);
-
-  button = gtk_check_button_new_with_mnemonic (_("Do pre_view"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (mw_preview_toggle_callback),
-                    &do_preview);
-
-  return preview;
-}
-
