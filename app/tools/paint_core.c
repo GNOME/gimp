@@ -1210,6 +1210,8 @@ paint_core_calculate_brush_size (MaskBuf *mask,
 				 gint    *width,
 				 gint    *height)
 {
+  scale = CLAMP (scale, 0.0, 1.0);
+
   if (current_device == GDK_CORE_POINTER)
     {
       *width  = mask->width;
@@ -1455,6 +1457,8 @@ paint_core_scale_mask (MaskBuf *brush_mask,
   gint dest_width;
   gint dest_height;
 
+  scale = CLAMP (scale, 0.0, 1.0);
+
   if (scale == 0.0) 
     return NULL;
 
@@ -1490,6 +1494,8 @@ paint_core_scale_pixmap (MaskBuf *brush_mask,
   static gint     last_height = 0.0; 
   gint dest_width;
   gint dest_height;
+
+  scale = CLAMP (scale, 0.0, 1.0);
 
   if (scale == 0.0) 
     return NULL;

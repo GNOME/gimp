@@ -1,5 +1,10 @@
 2000-12-11  Sven Neumann  <sven@gimp.org>
 
+	* app/paint_core.c: clamp scale factor between 0.0 and 1.0 to avoid
+	problems with broken XInput drivers. Should fix bug #18913.
+
+2000-12-11  Sven Neumann  <sven@gimp.org>
+
 	* configure.in
 	* plug-ins/print/Makefile.am: removed obsolete checks for lpc, lpstat
 	and friends
