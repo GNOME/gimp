@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-11-06 22:59+0100\n"
-"PO-Revision-Date: 2002-11-01 21:18+0100\n"
+"POT-Creation-Date: 2002-11-17 17:51+0100\n"
+"PO-Revision-Date: 2002-11-17 17:53+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -191,9 +191,8 @@ msgid "Module error"
 msgstr "Modulfejl"
 
 #: libgimpmodule/gimpmodule.c:364
-#, fuzzy
 msgid "Loaded"
-msgstr "Indlæsning lykkedes"
+msgstr "Indlæst"
 
 #: libgimpmodule/gimpmodule.c:365
 msgid "Load failed"
@@ -201,7 +200,7 @@ msgstr "Indlæsning mislykkedes"
 
 #: libgimpmodule/gimpmodule.c:366
 msgid "Not loaded"
-msgstr ""
+msgstr "Ikke indlæst"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
@@ -295,7 +294,7 @@ msgstr "Vælg fil"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr ""
+msgstr "Klik på farvevælgeren og klik derefter på en hvilken som helst farve på skærmen for at vælge den farve."
 
 #: libgimpwidgets/gimpstock.c:88
 msgid "Anchor"

@@ -1,4 +1,8 @@
-2002-11-10  Jan Morén  <jan.moren@lucs.lu.se>
+2002-11-17  Ole Laursen  <olau@hardworking.dk>
+
+	* da.po: Updated Danish translation.
+
+2002-11-10  Jan MorÃ©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -6,15 +10,15 @@
 
 	* de.po: updated german translation.
 
-2002-11-10  Jan Morén  <jan.moren@lucs.lu.se>
+2002-11-10  Jan MorÃ©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
-2002-11-09  Jan Morén  <jan.moren@lucs.lu.se>
+2002-11-09  Jan MorÃ©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
-2002-11-09  Jan Morén  <jan.moren@lucs.lu.se>
+2002-11-09  Jan MorÃ©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -31,7 +35,7 @@
 2002-10-25  Christian Rose  <menthos@menthos.com>
 
 	* sv.po: Updated Swedish translation by
-	Jan Morén <jan.moren@lucs.lu.se>.
+	Jan MorÃ©n <jan.moren@lucs.lu.se>.
 
 2002-10-11  Stanislav Brabec  <sbrabec@suse.cz>
 
@@ -44,7 +48,7 @@
 
 2002-09-23  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokmål) translation.
+	* no.po: Updated Norwegian (bokmÃ¥l) translation.
 	
 2002-09-13  Christian Neumair  <chris@gnome-de.org>
 
@@ -129,7 +133,7 @@
 
 2002-06-10  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokmål) translation.
+	* no.po: Updated Norwegian (bokmÃ¥l) translation.
 	
 2002-06-01  Pablo Saratxaga  <pablo@mandrakesoft.com>
 
@@ -354,7 +358,7 @@
 2001-02-12  Daniel Egger  <egger@suse.de>
 
 	* es.po: Fixed wrong phrase. Mentioned by Manuel Ignacio 
-	Monge GarcÃa in bug #34595.
+	Monge GarcÃa in bug #34595.
 
 2001-01-19  Valek Filippov  <frob@df.ru>
 
@@ -541,7 +545,7 @@ Thu Oct 19 22:50:13 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 2000-10-07  Tor Lillqvist  <tml@iki.fi>
 
 	* fi.po: Fix fuzzy translations. Fix some incorrectly split
-	words. (Lappeen ranta ilmiö.)
+	words. (Lappeen ranta ilmiÃ¶.)
 
 2000-10-06  Sven Neumann  <sven@gimp.org>
 
@@ -704,7 +708,7 @@ Mon Jul 10 22:40:46 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* it.po: updates to italian translation by Daniele Medri
 
-2000-06-09 Ville Hautamäki <villeh@cs.joensuu.fi>
+2000-06-09 Ville HautamÃ¤ki <villeh@cs.joensuu.fi>
 
 	* fi.po: updated translation
 
@@ -716,7 +720,7 @@ Fri Jun  9 15:30:58 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* ru.po: updated russian translation.
 
-2000-06-06 Ville Hautamäki <villeh@cs.joensuu.fi>
+2000-06-06 Ville HautamÃ¤ki <villeh@cs.joensuu.fi>
 
 	* fi.po: updated translation
 	
@@ -732,7 +736,7 @@ Tue Jun  6 00:01:31 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.
 
-2000-06-05 Ville Hautamäki <villeh@cs.joensuu.fi>
+2000-06-05 Ville HautamÃ¤ki <villeh@cs.joensuu.fi>
 
 	* fi.po: Finnish update
 
@@ -748,7 +752,7 @@ Wed May 31 13:39:01 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.
 
-2000-05-24  Artur Polaczyñski  <artie@kmfms.com>
+2000-05-24  Artur PolaczyÃ±ski  <artie@kmfms.com>
  
 	* pl.po: Updated translation.
  	+ Updated translation by Krzysztof Jakubowski 
@@ -1218,7 +1222,7 @@ Tue Jan 25 21:50:52 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.
 
-2000-01-21 Artur Polaczyñski  <artie@kmfms.com>
+2000-01-21 Artur PolaczyÃ±ski  <artie@kmfms.com>
  
        * pl.po: Updated translation.
 	
