@@ -149,7 +149,7 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 	if (gimage_mask_is_empty (gdisp->gimage) ||
 	    gimage_mask_value (gdisp->gimage, x, y))
 	  {
-	    if (GIMP_DRAWABLE(layer->mask))
+	    if (layer->mask != NULL && GIMP_DRAWABLE(layer->mask))
 	      {
 		message_box ("Transformations do not work on\nlayers that contain layer masks.", NULL, NULL);
 		tool->state = INACTIVE;
@@ -1211,6 +1211,7 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
       if ((layer = drawable_layer ( (drawable))) == NULL)
 	return NULL;
 
+      layer_add_alpha (layer);
       floating_layer = gimage_floating_sel (gimage);
 
       if (floating_layer)
@@ -1232,25 +1233,6 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
       GIMP_DRAWABLE(layer)->bytes = tiles->levels[0].bpp;
       GIMP_DRAWABLE(layer)->offset_x = tiles->x;
       GIMP_DRAWABLE(layer)->offset_y = tiles->y;
-
-      /*  Select the layer type based on the number of bytes  */
-      layer_type = GIMP_DRAWABLE(layer)->type;
-      switch (layer_type)
-	{
-	case RGB_GIMAGE : case RGBA_GIMAGE:
-	  GIMP_DRAWABLE(layer)->type = (GIMP_DRAWABLE(layer)->bytes == 4) ? RGBA_GIMAGE : RGB_GIMAGE;
-	  break;
-	case GRAY_GIMAGE : case GRAYA_GIMAGE:
-	  GIMP_DRAWABLE(layer)->type = (GIMP_DRAWABLE(layer)->bytes == 2) ? GRAYA_GIMAGE : GRAY_GIMAGE;
-	  break;
-	case INDEXED_GIMAGE : case INDEXEDA_GIMAGE:
-	  GIMP_DRAWABLE(layer)->type = (GIMP_DRAWABLE(layer)->bytes == 2) ? INDEXEDA_GIMAGE : INDEXED_GIMAGE;
-	  break;
-	}
-
-      /*  If the layer type changed, update the gdisplay titles  */
-      if (GIMP_DRAWABLE(layer)->type != layer_type)
-	gdisplays_update_title (gimage->ID);
 
       if (floating_layer)
 	floating_sel_rigor (floating_layer, TRUE);

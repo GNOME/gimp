@@ -1,3 +1,8 @@
+Tue Mar 10 00:38:31 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/transform_core.c: transform tools add alpha channel
+	properly, fixing that really nasty painting bug
+
 Sun Mar  8 17:44:05 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/app_procs.c: fix for (install-colormap) and splash screen
