@@ -112,7 +112,7 @@ _type_mapping = {
     PF_TOGGLE      : PDB_INT32,
     PF_SLIDER      : PDB_FLOAT,
     PF_SPINNER     : PDB_INT32,
-	
+
     PF_FONT        : PDB_STRING,
     PF_FILE        : PDB_STRING,
     PF_BRUSH       : PDB_STRING,
@@ -139,18 +139,20 @@ def register(func_name, blurb, help, author, copyright, date, menupath,
 	raise error, "function name contains illegal characters"
     for ent in params:
 	if len(ent) < 4:
-	    raise error, "sequence not long enough for "+ent[0]
+	    raise error, ("parameter definition must contain at least 4 "
+                          "elements (%s given: %s)" % (len(ent), ent))
 	if type(ent[0]) != type(42):
 	    raise error, "parameter types must be integers"
 	if not letterCheck(ent[1]):
-	    raise error, "parameter name contains ilegal characters"
+	    raise error, "parameter name contains illegal characters"
     for ent in results:
 	if len(ent) < 3:
-	    raise error, "sequence not long enough for "+ent[0]
+	    raise error, ("result definition must contain at least 3 elements "
+                          "(%s given: %s)" % (len(ent), ent))
 	if type(ent[0]) != type(42):
 	    raise error, "result types must be integers"
 	if not letterCheck(ent[1]):
-	    raise error,"result name contains ilegal characters"
+	    raise error, "result name contains illegal characters"
     if menupath[:8] == '<Image>/' or \
        menupath[:7] == '<Load>/' or \
        menupath[:7] == '<Save>/' or \
@@ -210,7 +212,7 @@ def _get_defaults(func_name):
      menupath, imagetypes, plugin_type,
      params, results, function,
      on_query, on_run) = _registered_plugins_[func_name]
-	
+
     key = "python-fu-save--" + func_name
     if gimpshelf.shelf.has_key(key):
 	return gimpshelf.shelf[key]
@@ -335,7 +337,7 @@ def _interact(func_name, start_params):
             if radio.get_active():
                 self.active_value = value
         def get_value(self):
-            return self.active_value 
+            return self.active_value
 
     _edit_mapping = {
 	PF_INT8        : IntEntry,
@@ -357,7 +359,7 @@ def _interact(func_name, start_params):
 
 	PF_TOGGLE      : ToggleEntry,
 	PF_SLIDER      : SliderEntry,
-	PF_SPINNER     : SpinnerEntry,	
+	PF_SPINNER     : SpinnerEntry,
 	PF_RADIO       : RadioEntry,
 
 	PF_FONT        : gimpui.FontSelector,
@@ -390,7 +392,7 @@ def _interact(func_name, start_params):
     pix = _get_logo(vbox.get_colormap())
     vbox.pack_start(pix, expand=gtk.FALSE)
     pix.show()
-	
+
     label = gtk.Label(blurb)
     label.set_line_wrap(gtk.TRUE)
     label.set_justify(gtk.JUSTIFY_LEFT)
