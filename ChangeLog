@@ -1,3 +1,7 @@
+2005-01-14  Jay Cox  <jaycox@gimp.org>
+
+	* plug-ins/common/psd_save.c: Much less wasted memory.  Save guides.
+
 2005-01-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintcore-undo.c: doesn't need "gimp-intl.h" either.

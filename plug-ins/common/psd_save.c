@@ -45,6 +45,8 @@
 
 /*
  * TODO:
+ *       Save preview
+ *       Use less memory
  */
 
 /*
@@ -429,10 +431,6 @@ static void
 write_glong (FILE *fd, glong val, gchar *why)
 {
   unsigned char b[4];
-  /*  b[0] = val & 255;
-      b[1] = (val >> 8) & 255;
-      b[2] = (val >> 16) & 255;
-      b[3] = (val >> 24) & 255;*/
 
   b[3] = val & 255;
   b[2] = (val >> 8) & 255;
@@ -774,7 +772,6 @@ static void
 save_resources (FILE *fd, gint32 image_id)
 {
   gint i;
-  gchar    **chName = NULL;       /* Channel names */
   gchar     *fileName;            /* Image file name */
   gint32     idActLayer;          /* Id of the active layer */
   guint      nActiveLayer = 0;    /* Number of the active layer */
@@ -791,16 +788,6 @@ save_resources (FILE *fd, gint32 image_id)
 
   IFDBG printf (" Function: save_resources\n");
 
-  /* Get channel names */
-
-  if (PSDImageData.nChannels > 0)
-    chName = (char **) xmalloc(sizeof (char *) * PSDImageData.nChannels);
-
-  for (i = 0; i < PSDImageData.nChannels; i++)
-    {
-      chName[i] = gimp_drawable_get_name (PSDImageData.lChannels[i]);
-      IFDBG printf ("      Channel %d name: %s\n", i, chName[i]);
-    }
 
   /* Get the image title from its filename */
 
@@ -853,9 +840,11 @@ save_resources (FILE *fd, gint32 image_id)
     /* Write all strings */
 
     for (i = PSDImageData.nChannels - 1; i >= 0; i--)
-      /*write_pascalstring (fd, chName[i], 2, "chanel name"); */
-      write_string (fd, chName[i], "channel name");
-
+    {
+      char *chName = gimp_drawable_get_name (PSDImageData.lChannels[i]);
+      write_string (fd, chName, "channel name");
+      g_free (chName);
+    }
     /* Calculate and write actual resource's length */
 
     eof_pos = ftell (fd);
@@ -875,6 +864,45 @@ save_resources (FILE *fd, gint32 image_id)
       write_gchar (fd, 0, "pad byte");
   }
 
+  /* --------------- Write Guides --------------- */
+  if (gimp_image_find_next_guide(image_id, 0))
+    {
+      gint n_guides = 0;
+      gint guide_id =0;
+
+      /* Count the guides */
+      while ((guide_id = gimp_image_find_next_guide(image_id, guide_id)))
+	n_guides++;
+
+      xfwrite (fd, "8BIM", 4, "imageresources signature");
+      write_gshort (fd, 0x0408, "0x0408 Id (Guides)");
+      /* write_pascalstring (fd, Name, "Id name"); */
+      write_gshort (fd, 0, "Id name"); /* Set to null string (two zeros) */
+      write_glong (fd, 16 + 5 * n_guides, "0x0408 resource size");
+      /* Save grid and guide header */
+      write_glong (fd,   1, "grid/guide header version");
+      write_glong (fd, 576, "grid custom spacing horizontal");/* dpi*32/4??*/
+      write_glong (fd, 576, "grid custom spacing vertical");  /* dpi*32/4??*/
+      write_glong (fd, n_guides, "number of guides");
+
+      /* write the guides */
+      while ((guide_id = gimp_image_find_next_guide(image_id, guide_id)))
+        {
+	  gchar orientation;
+	  glong position;
+	  orientation = gimp_image_get_guide_orientation(image_id, guide_id);
+	  position    = 32 * gimp_image_get_guide_position(image_id, guide_id);
+	  orientation ^= 1; /* in the psd vert =0 , horiz = 1 */
+	  write_glong (fd, position, "Position of guide");
+	  write_gchar (fd, orientation, "Orientation of guide");
+	  n_guides--;
+	}
+      if ((ftell(fd) & 1))
+	write_gchar(fd, 0, "pad byte");
+      if (n_guides != 0)
+	g_warning("Screwed up guide resource:: wrong number of guides\n");
+      IFDBG printf ("      Total length of 0x0400 resource: %d\n", (int) sizeof (gshort));
+    }
 
   /* --------------- Write Active Layer Number --------------- */
 
@@ -906,8 +934,6 @@ save_resources (FILE *fd, gint32 image_id)
   /* Return to EOF to continue writing */
 
   fseek (fd, eof_pos, SEEK_SET);
-
-  g_free (chName);
 }
 
 
@@ -949,7 +975,7 @@ get_compress_channel_data (guchar  *channel_data,
                          + sizeof (gshort));
 }
 
-
+
 static void
 save_channel_data (FILE *fd,
                    guchar *channel_data,
@@ -960,70 +986,53 @@ save_channel_data (FILE *fd,
 {
   gint    i;
   gint32  len;                  /* Length of compressed data */
-  glong   TotalRawLen;          /* Total length of raw data */
   glong   TotalCompressedLen;   /* Total length of compressed data */
   gshort *LengthsTable;         /* Lengths of every compressed row */
   gshort  rowlen;               /* Length of row currently being handled */
   guchar *remdata;              /* Compressed data from a row */
   guchar *start;                /* Start position of a row in channel_data */
   guchar *end;                  /* End position of a row in channel_data */
-  gint32  channel_length;       /* Total channel's length */
+  gint32 length_table_pos;      /* position in file of the length table */
 
-
-  channel_length = channel_cols * channel_rows;
-  remdata = g_new (guchar, channel_length * 2);
   LengthsTable = g_new (gshort, channel_rows);
-
-  /* For every row in the channel */
+  remdata = g_new (gchar, channel_cols + 10 + (channel_cols/100));
 
   len = 0;
+
+  IFDBG printf ("        Saving data (RLE)\n");
+
+  write_gshort (fd, 1, "Compression (RLE)"); /* Write compression type */
+      
+  length_table_pos = ftell(fd);
+
+  for (i = 0; i < channel_rows; i++) /* write dummy length table */
+    write_gshort (fd, LengthsTable[i], "Dummy RLE length");
+
   for (i = 0; i < channel_rows; i++)
     {
       start = channel_data + (i * channel_cols);
       end = start + channel_cols;
 
-      /* Create compressed data for this row */
-      pack_pb_line (start, end, remdata + len, &rowlen);
+      pack_pb_line (start, end, remdata, &rowlen);
       LengthsTable[i] = rowlen;
       len += rowlen;
+
+      xfwrite (fd, remdata, rowlen, why); /* Write compressed data */
     }
 
-  /* Calculate total lengths of both kinds */
+  /* Write compressed lengths table */
+  fseek (fd, length_table_pos, SEEK_SET);
+  for (i = 0; i < channel_rows; i++) /* write real length table */
+    write_gshort (fd, LengthsTable[i], "RLE length");
 
-  TotalRawLen = (channel_rows * channel_cols) + sizeof (gshort);
+
+  /* Update total compressed length */
+  fseek (fd, posLong, SEEK_SET);
   TotalCompressedLen = ((len + channel_rows * sizeof (gshort))
-                        + sizeof (gshort));
+			+ sizeof (gshort));
+  write_glong (fd, TotalCompressedLen, "channel data length");
+  fseek (fd, 0, SEEK_END);
 
-/*  IFDBG printf ("\nCompressed length: %ld\n", TotalCompressedLen);
-  IFDBG printf ("\nRaw length: %ld\n", TotalRawLen); */
-
-  if (TotalCompressedLen < TotalRawLen)
-    {
-      IFDBG printf ("        Saving data (RLE): %ld\n", TotalCompressedLen);
-
-      write_gshort (fd, 1, "Compression"); /* Write compression type */
-
-      /* Write compressed lengths table */
-
-      for (i = 0; i < channel_rows; i++)
-        write_gshort (fd, LengthsTable[i], "RLE length");
-
-      xfwrite (fd, remdata, len, why); /* Write compressed data */
-
-      /* Update total compressed length */
-
-      fseek (fd, posLong, SEEK_SET);
-      write_glong (fd, TotalCompressedLen, "channel data length");
-      fseek (fd, 0, SEEK_END);
-    }
-  else
-    {
-      IFDBG printf ("        Write raw data: %ld\n", TotalRawLen);
-
-      write_gshort (fd, 0, "Compression"); /* Save compression type */
-
-      xfwrite (fd, channel_data, channel_length, why); /* Save raw data */
-    }
   g_free (remdata);
   g_free (LengthsTable);
 }
@@ -1235,6 +1244,7 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
                                  PSDImageData.layersDim[i].height,
                                  ChannelLengthPos[i][nChannel++],
                                  "alpha channel");
+	      g_free(alpha);
             }
           else
             RGB_to_chans (data, ChanSize * nChannelsLayer, &red, &green, &blue);
@@ -1256,6 +1266,9 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
                              PSDImageData.layersDim[i].height,
                              ChannelLengthPos[i][nChannel++],
                              "blue channel");
+	  g_free(red);
+	  g_free(green);
+	  g_free(blue);
           break;
 
         case GIMP_GRAY:
@@ -1275,6 +1288,8 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
                                  PSDImageData.layersDim[i].height,
                                  ChannelLengthPos[i][nChannel++],
                                  "gray channel");
+	      g_free(alpha);
+	      g_free(gray);
             }
           else
             {
@@ -1295,10 +1310,9 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
                              "indexed channel");
           break;
         }
-
+      g_free (data);
 
     }
-
 
   eof_pos = ftell (fd);
 
