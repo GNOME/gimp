@@ -1,3 +1,29 @@
+2003-05-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/tools-enums.[ch]: added enum GimpTransformType which
+	can be one of { LAYER, SELECTION, PATH }
+
+	* app/tools/gimptransformoptions.[ch]: added a GimpTransformType
+	property to GimpTransformOptions. Added a GUI for the new
+	option.
+
+	* app/tools/gimpflipoptions.[ch]: derive it from
+	GimpTransformOptions and add the GUI here, too.
+
+	* app/tools/gimpfliptool.c
+	* app/tools/gimptransformtool.[ch]: added support for transforming
+	the selection. Added framework for transforming paths (still
+	unimplemented).
+
+	* app/tools/gimpselectionoptions.c: small cleanup.
+
+	* libgimpwidgets/gimpstock.[ch]
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-path-16.png
+	* themes/Default/images/stock-path-22.png
+	* themes/Default/images/stock-selection-16.png: new icons for the
+	new transform options buttons. Simply copied existing ones...
+
 2003-05-30  Tor Lillqvist  <tml@iki.fi>
 
 	* configure.in: As gimp uses fontconfig directly, check for it.

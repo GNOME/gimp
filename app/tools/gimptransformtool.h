@@ -89,8 +89,8 @@ struct _GimpTransformTool
                                    */
   gdouble	 *tgrid_coords;   /*  transformed grid_coords          */
 
-  gboolean        notify_connected;
-  gboolean        show_path;
+  gboolean           notify_connected;
+  GimpTransformType  type;
 
   /*  transform info dialog  */
   const gchar    *shell_identifier;
@@ -105,15 +105,16 @@ struct _GimpTransformToolClass
   GimpDrawToolClass parent_class;
 
   /*  virtual functions  */
-  void          (* dialog)    (GimpTransformTool    *tool);
-  void          (* prepare)   (GimpTransformTool    *tool,
-                               GimpDisplay          *gdisp);
-  void          (* motion)    (GimpTransformTool    *tool,
-                               GimpDisplay          *gdisp);
-  void          (* recalc)    (GimpTransformTool    *tool,
-                               GimpDisplay          *gdisp);
-  TileManager * (* transform) (GimpTransformTool    *tool,
-                               GimpDisplay          *gdisp);
+  void          (* dialog)    (GimpTransformTool *tool);
+  void          (* prepare)   (GimpTransformTool *tool,
+                               GimpDisplay       *gdisp);
+  void          (* motion)    (GimpTransformTool *tool,
+                               GimpDisplay       *gdisp);
+  void          (* recalc)    (GimpTransformTool *tool,
+                               GimpDisplay       *gdisp);
+  TileManager * (* transform) (GimpTransformTool *tool,
+                               GimpItem          *item,
+                               GimpDisplay       *gdisp);
 };
 
 

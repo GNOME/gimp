@@ -92,6 +92,18 @@ typedef enum /*< pdb-skip >*/
 } GimpRectSelectMode;
 
 
+#define GIMP_TYPE_TRANSFORM_TYPE (gimp_transform_type_get_type ())
+
+GType gimp_transform_type_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< pdb-skip >*/
+{
+  GIMP_TRANSFORM_TYPE_LAYER,     /*< desc="Transform Active Layer" >*/
+  GIMP_TRANSFORM_TYPE_SELECTION, /*< desc="Transform Selection"    >*/
+  GIMP_TRANSFORM_TYPE_PATH       /*< desc="Transform Active Path"  >*/
+} GimpTransformType;
+
+
 #define GIMP_TYPE_TRANSFORM_GRID_TYPE (gimp_transform_grid_type_get_type ())
 
 GType gimp_transform_grid_type_get_type (void) G_GNUC_CONST;

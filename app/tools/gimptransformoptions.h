@@ -38,12 +38,12 @@ struct _GimpTransformOptions
 {
   GimpToolOptions         parent_instance;
 
+  GimpTransformType       type;
   GimpTransformDirection  direction;
   GimpInterpolationType   interpolation;
   gboolean                clip;
   GimpTransformGridType   grid_type;
-  gint	                  grid_size;
-  gboolean                show_path;
+  gint                    grid_size;
   gboolean                constrain_1;
   gboolean                constrain_2;
 };

@@ -61,6 +61,7 @@ STOCK_MENU_IMAGES = \
 	stock-list-16.png				\
 	stock-merge-down-16.png				\
 	stock-navigation-16.png				\
+	stock-path-16.png				\
 	stock-paths-16.png				\
 	stock-plugin-16.png				\
 	stock-portrait-16.png				\
@@ -72,6 +73,7 @@ STOCK_MENU_IMAGES = \
 	stock-rotate-270-16.png				\
 	stock-rotate-90-16.png				\
 	stock-scale-16.png				\
+	stock-selection-16.png				\
 	stock-selection-all-16.png			\
 	stock-selection-grow-16.png			\
 	stock-selection-none-16.png			\
@@ -127,6 +129,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-paste-as-new-16.png		\
 	stock-paste-into-16.png			\
 	stock-path-stroke-16.png		\
+	stock-path-22.png			\
 	stock-paths-22.png			\
 	stock-reset-16.png			\
 	stock-selection-add-16.png		\

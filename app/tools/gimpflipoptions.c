@@ -56,7 +56,7 @@ static void   gimp_flip_options_get_property (GObject         *object,
                                               GParamSpec      *pspec);
 
 
-static GimpToolOptionsClass *parent_class = NULL;
+static GimpTransformOptionsClass *parent_class = NULL;
 
 
 GType
@@ -79,7 +79,7 @@ gimp_flip_options_get_type (void)
 	(GInstanceInitFunc) gimp_flip_options_init,
       };
 
-      type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
+      type = g_type_register_static (GIMP_TYPE_TRANSFORM_OPTIONS,
                                      "GimpFlipOptions",
                                      &info, 0);
     }
@@ -158,6 +158,8 @@ gimp_flip_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config;
   GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *label;
   GtkWidget *frame;
   gchar     *str;
 
@@ -165,8 +167,17 @@ gimp_flip_options_gui (GimpToolOptions *tool_options)
 
   vbox = gimp_tool_options_gui (tool_options);
 
+  hbox = gimp_prop_enum_stock_box_new (config, "type", "gimp", 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Affect:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (hbox), label, 0);
+  gtk_widget_show (label);
+
   /*  tool toggle  */
-  str = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_control ());
+  str = g_strdup_printf (_("Flip Type  %s"), gimp_get_mod_name_control ());
 
   frame = gimp_prop_enum_radio_frame_new (config, "flip-type",
                                           str,

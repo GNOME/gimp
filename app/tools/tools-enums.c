@@ -113,6 +113,26 @@ gimp_rect_select_mode_get_type (void)
 }
 
 
+static const GEnumValue gimp_transform_type_enum_values[] =
+{
+  { GIMP_TRANSFORM_TYPE_LAYER, N_("Transform Active Layer"), "layer" },
+  { GIMP_TRANSFORM_TYPE_SELECTION, N_("Transform Selection"), "selection" },
+  { GIMP_TRANSFORM_TYPE_PATH, N_("Transform Active Path"), "path" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_transform_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpTransformType", gimp_transform_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_transform_grid_type_enum_values[] =
 {
   { GIMP_TRANSFORM_GRID_TYPE_NONE, N_("Don't Show Grid"), "none" },

@@ -20,7 +20,7 @@
 #define __GIMP_FLIP_OPTIONS_H__
 
 
-#include "tool_options.h"
+#include "gimptransformoptions.h"
 
 
 #define GIMP_TYPE_FLIP_OPTIONS            (gimp_flip_options_get_type ())
@@ -36,9 +36,9 @@ typedef struct _GimpToolOptionsClass GimpFlipOptionsClass;
 
 struct _GimpFlipOptions
 {
-  GimpToolOptions      parent_instance;
+  GimpTransformOptions  parent_instance;
 
-  GimpOrientationType  flip_type;
+  GimpOrientationType   flip_type;
 };
 
 

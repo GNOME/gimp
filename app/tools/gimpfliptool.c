@@ -63,6 +63,7 @@ static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
 						   GimpDisplay       *gdisp);
 
 static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
+                                                   GimpItem          *item,
 						   GimpDisplay       *gdisp);
 
 
@@ -231,32 +232,27 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 
 static TileManager *
 gimp_flip_tool_transform (GimpTransformTool *trans_tool,
+                          GimpItem          *active_item,
 			  GimpDisplay       *gdisp)
 {
-  GimpFlipOptions *options;
-  GimpDrawable    *active_drawable;
-  GimpItem        *active_item;
-  gint             off_x, off_y;
-  gint             width, height;
-  gdouble          axis = 0.0;
+  GimpTransformOptions *tr_options;
+  GimpFlipOptions      *options;
+  gdouble               axis = 0.0;
+  TileManager          *ret  = NULL;
 
   options = GIMP_FLIP_OPTIONS (GIMP_TOOL (trans_tool)->tool_info->tool_options);
-
-  active_drawable = gimp_image_active_drawable (gdisp->gimage);
-  active_item     = GIMP_ITEM (active_drawable);
-
-  tile_manager_get_offsets (trans_tool->original, &off_x, &off_y);
-  width  = tile_manager_width  (trans_tool->original);
-  height = tile_manager_height (trans_tool->original);
+  tr_options = GIMP_TRANSFORM_OPTIONS (options);
 
   switch (options->flip_type)
     {
     case GIMP_ORIENTATION_HORIZONTAL:
-      axis = ((gdouble) off_x + (gdouble) width / 2.0);
+      axis = ((gdouble) trans_tool->x1 +
+              (gdouble) (trans_tool->x2 - trans_tool->x1) / 2.0);
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
-      axis = ((gdouble) off_y + (gdouble) height / 2.0);
+      axis = ((gdouble) trans_tool->y1 +
+              (gdouble) (trans_tool->y2 - trans_tool->y1) / 2.0);
       break;
 
     default:
@@ -266,7 +262,20 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
   if (gimp_item_get_linked (active_item))
     gimp_item_linked_flip (active_item, options->flip_type, axis, FALSE);
 
-  return gimp_drawable_transform_tiles_flip (active_drawable,
-                                             trans_tool->original,
-                                             options->flip_type, axis, FALSE);
+  switch (tr_options->type)
+    {
+    case GIMP_TRANSFORM_TYPE_LAYER:
+    case GIMP_TRANSFORM_TYPE_SELECTION:
+      ret = gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (active_item),
+                                                trans_tool->original,
+                                                options->flip_type, axis,
+                                                FALSE);
+      break;
+
+    case GIMP_TRANSFORM_TYPE_PATH:
+      /* TODO */
+      break;
+    }
+
+  return ret;
 }

@@ -133,6 +133,7 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_VCHAIN,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VCHAIN_BROKEN,            NULL,        0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_STOCK_SELECTION,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SELECTION_REPLACE,        NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SELECTION_ADD,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SELECTION_SUBTRACT,       NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -189,6 +190,7 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_CHANNEL_BLUE,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CHANNEL_GRAY,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CHANNEL_ALPHA,            NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_PATH,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TEMPLATE,                 NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_SELECTION_ALL,            NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -287,6 +289,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_VCHAIN,                   stock_vchain_24                   },
   { GIMP_STOCK_VCHAIN_BROKEN,            stock_vchain_broken_24            },
 
+  { GIMP_STOCK_SELECTION,                stock_selection_16                },
   { GIMP_STOCK_SELECTION_REPLACE,        stock_selection_replace_16        },
   { GIMP_STOCK_SELECTION_ADD,            stock_selection_add_16            },
   { GIMP_STOCK_SELECTION_SUBTRACT,       stock_selection_subtract_16       },
@@ -325,6 +328,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_IMAGE,                    stock_image_24                    },
   { GIMP_STOCK_LAYER,                    stock_layer_24                    },
   { GIMP_STOCK_TEXT_LAYER,               stock_text_layer_24               },
+  { GIMP_STOCK_PATH,                     stock_path_22                     },
   { GIMP_STOCK_TEMPLATE,                 stock_template_24                 },
 
   { GIMP_STOCK_LINKED,                   stock_linked_20                   },
@@ -417,6 +421,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_IMAGE,                    stock_image_16                    },
   { GIMP_STOCK_LAYER,                    stock_layer_16                    },
   { GIMP_STOCK_TEXT_LAYER,               stock_text_layer_16               },
+  { GIMP_STOCK_PATH,                     stock_path_16                     },
   { GIMP_STOCK_TEMPLATE,                 stock_template_16                 },
 
   { GIMP_STOCK_LINKED,                   stock_linked_12                   },

@@ -44,12 +44,12 @@
 enum
 {
   PROP_0,
+  PROP_TYPE,
   PROP_DIRECTION,
   PROP_INTERPOLATION,
   PROP_CLIP,
   PROP_GRID_TYPE,
   PROP_GRID_SIZE,
-  PROP_SHOW_PATH,
   PROP_CONSTRAIN_1,
   PROP_CONSTRAIN_2
 };
@@ -121,6 +121,11 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
 
   options_class->reset       = gimp_transform_options_reset;
 
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TYPE,
+                                 "type", NULL,
+                                 GIMP_TYPE_TRANSFORM_TYPE,
+                                 GIMP_TRANSFORM_TYPE_LAYER,
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DIRECTION,
                                  "direction", NULL,
                                  GIMP_TYPE_TRANSFORM_DIRECTION,
@@ -144,10 +149,6 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                 "grid-size", NULL,
                                 1, 128, 15,
                                 0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_PATH,
-                                    "show-path", NULL,
-                                    FALSE,
-                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_1,
                                     "constrain-1", NULL,
                                     FALSE,
@@ -175,6 +176,9 @@ gimp_transform_options_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_TYPE:
+      options->type = g_value_get_enum (value);
+      break;
     case PROP_DIRECTION:
       options->direction = g_value_get_enum (value);
       break;
@@ -189,9 +193,6 @@ gimp_transform_options_set_property (GObject      *object,
       break;
     case PROP_GRID_SIZE:
       options->grid_size = g_value_get_int (value);
-      break;
-    case PROP_SHOW_PATH:
-      options->show_path = g_value_get_boolean (value);
       break;
     case PROP_CONSTRAIN_1:
       options->constrain_1 = g_value_get_boolean (value);
@@ -217,6 +218,9 @@ gimp_transform_options_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_TYPE:
+      g_value_set_enum (value, options->type);
+      break;
     case PROP_DIRECTION:
       g_value_set_enum (value, options->direction);
       break;
@@ -231,9 +235,6 @@ gimp_transform_options_get_property (GObject    *object,
       break;
     case PROP_GRID_SIZE:
       g_value_set_int (value, options->grid_size);
-      break;
-    case PROP_SHOW_PATH:
-      g_value_set_boolean (value, options->show_path);
       break;
     case PROP_CONSTRAIN_1:
       g_value_set_boolean (value, options->constrain_1);
@@ -270,7 +271,7 @@ gimp_transform_options_reset (GimpToolOptions *tool_options)
 GtkWidget *
 gimp_transform_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
+  GObject              *config;
   GimpTransformOptions *options;
   GtkWidget            *vbox;
   GtkWidget            *hbox;
@@ -280,10 +281,19 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   GtkWidget            *optionmenu;
   GtkWidget            *button;
 
-  config = G_OBJECT (tool_options);
+  config  = G_OBJECT (tool_options);
   options = GIMP_TRANSFORM_OPTIONS (tool_options);
 
   vbox = gimp_tool_options_gui (tool_options);
+
+  hbox = gimp_prop_enum_stock_box_new (config, "type", "gimp", 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Affect:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (hbox), label, 0);
+  gtk_widget_show (label);
 
   frame = gimp_prop_enum_radio_frame_new (config, "direction",
                                           _("Transform Direction"), 0, 0);
@@ -334,11 +344,6 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
                              _("Density:"),
                              1.0, 8.0, 0,
                              FALSE, 0.0, 0.0);
-
-  /*  the show_path toggle button  */
-  button = gimp_prop_check_button_new (config, "show-path", _("Show Path"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   if (tool_options->tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL ||
       tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
