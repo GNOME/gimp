@@ -1,3 +1,8 @@
+2002-11-19  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-params.[ch]: derive GimpParamSpecMemsize
+	from GParamSpecULong.
+
 2002-11-19  Manish Singh  <yosh@gimp.org>
 
 	* data/environ/Makefile.am: really fix a comment

@@ -196,7 +196,7 @@ gimp_param_memsize_get_type (void)
         0, NULL, NULL
       };
 
-      spec_type = g_type_register_static (G_TYPE_PARAM_UINT, 
+      spec_type = g_type_register_static (G_TYPE_PARAM_ULONG, 
                                           "GimpParamMemsize", 
                                           &type_info, 0);
     }
@@ -214,18 +214,18 @@ GParamSpec *
 gimp_param_spec_memsize (const gchar *name,
                          const gchar *nick,
                          const gchar *blurb,
-                         guint        minimum,
-                         guint        maximum,
-                         guint        default_value,
+                         gulong       minimum,
+                         gulong       maximum,
+                         gulong       default_value,
                          GParamFlags  flags)
 {
-  GParamSpecUInt *pspec;
+  GParamSpecULong *pspec;
 
   pspec = g_param_spec_internal (GIMP_TYPE_PARAM_MEMSIZE,
                                  name, nick, blurb, flags);
   
-  pspec->minimum = minimum;
-  pspec->maximum = maximum;
+  pspec->minimum       = minimum;
+  pspec->maximum       = maximum;
   pspec->default_value = default_value;
   
   return G_PARAM_SPEC (pspec);

@@ -50,9 +50,9 @@ GType        gimp_param_memsize_get_type  (void) G_GNUC_CONST;
 GParamSpec * gimp_param_spec_memsize      (const gchar    *name,
                                            const gchar    *nick,
                                            const gchar    *blurb,
-                                           guint           minimum,
-                                           guint           maximum,
-                                           guint           default_value,
+                                           gulong          minimum,
+                                           gulong          maximum,
+                                           gulong          default_value,
                                            GParamFlags     flags);
 
 
