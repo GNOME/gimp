@@ -42,11 +42,9 @@ static Dobject  * d_new_line              (gint x, gint y);
 
 void
 d_save_line (Dobject *obj,
-	     FILE    *to)
+             GString *string)
 {
-  fprintf (to, "<LINE>\n");
-  do_save_obj (obj, to);
-  fprintf (to, "</LINE>\n");
+  do_save_obj (obj, string);
 }
 
 Dobject *
@@ -59,22 +57,21 @@ d_load_line (FILE *from)
 
   while (get_line (buf, MAX_LOAD_LINE, from, 0))
     {
+      /* kludge */
+      if (buf[0] == '<')
+          return new_obj;
+
       if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
-	{
-	  /* Must be the end */
-	  if (strcmp ("</LINE>", buf))
-	    {
-	      g_warning ("[%d] Internal load error while loading line",
-			line_no);
-	      return NULL;
-	    }
-	  return new_obj;
-	}
+        {
+          g_warning ("[%d] Internal load error while loading line",
+                     line_no);
+          return NULL;
+        }
 
       if (!new_obj)
-	new_obj = d_new_line (xpnt, ypnt);
+        new_obj = d_new_line (xpnt, ypnt);
       else
-	d_pnt_add_line (new_obj, xpnt, ypnt, -1);
+        d_pnt_add_line (new_obj, xpnt, ypnt, -1);
     }
 
   return new_obj;
@@ -154,17 +151,17 @@ d_paint_line (Dobject *obj)
   if (selvals.painttype == PAINT_BRUSH_TYPE)
     {
       gfig_paint (selvals.brshtype,
-		  gfig_drawable,
-		  seg_count * 2, line_pnts);
+                  gfig_context->drawable_id,
+                  seg_count * 2, line_pnts);
     }
   else 
     {
-      gimp_free_select (gfig_image,
-			seg_count * 2, line_pnts,
-			selopt.type,
-			selopt.antia,
-			selopt.feather,
-			selopt.feather_radius);
+      gimp_free_select (gfig_context->image_id,
+                        seg_count * 2, line_pnts,
+                        selopt.type,
+                        selopt.antia,
+                        selopt.feather,
+                        selopt.feather_radius);
     }
 
   g_free (line_pnts);
@@ -176,7 +173,7 @@ d_paint_line (Dobject *obj)
 
 static Dobject *
 d_new_line (gint x,
-	    gint y)
+            gint y)
 {
   Dobject    *nobj;
 
@@ -213,9 +210,9 @@ d_delete_line (Dobject *obj)
  
 void
 d_pnt_add_line (Dobject *obj,
-		gint     x,
-		gint     y,
-		gint     pos)
+                gint     x,
+                gint     y,
+                gint     pos)
 {
   DobjPoints *npnts = new_dobjpoint (x, y);
 
@@ -233,18 +230,18 @@ d_pnt_add_line (Dobject *obj,
 
       /* Go down chain until the end if pos */
       while (pos < 0 || pos-- > 0)
-	{
-	  if (!(pnt->next) || !pos)
-	    {
-	      npnts->next = pnt->next;
-	      pnt->next = npnts;
-	      break;
-	    }
-	  else
-	    {
-	      pnt = pnt->next;
-	    }
-	}
+        {
+          if (!(pnt->next) || !pos)
+            {
+              npnts->next = pnt->next;
+              pnt->next = npnts;
+              break;
+            }
+          else
+            {
+              pnt = pnt->next;
+            }
+        }
     }
 }
 
@@ -270,13 +267,13 @@ d_update_line (GdkPoint *pnt)
       /* Draw square on point */
       draw_circle (&epnt->pnt);
       
-      gdk_draw_line (gfig_preview->window,
-		     /*gfig_preview->style->bg_gc[GTK_STATE_NORMAL],*/
-		     gfig_gc,
-		     spnt->pnt.x,
-		     spnt->pnt.y,
-		     epnt->pnt.x,
-		     epnt->pnt.y);
+      gdk_draw_line (gfig_context->preview->window,
+                     /*gfig_context->preview->style->bg_gc[GTK_STATE_NORMAL],*/
+                     gfig_gc,
+                     spnt->pnt.x,
+                     spnt->pnt.y,
+                     epnt->pnt.x,
+                     epnt->pnt.y);
       g_free (epnt);
     }
 
@@ -286,19 +283,19 @@ d_update_line (GdkPoint *pnt)
 
   epnt = new_dobjpoint (pnt->x, pnt->y);
 
-  gdk_draw_line (gfig_preview->window,
-		 /*gfig_preview->style->bg_gc[GTK_STATE_NORMAL],*/
-		 gfig_gc,
-		 spnt->pnt.x,
-		 spnt->pnt.y,
-		 epnt->pnt.x,
-		 epnt->pnt.y);
+  gdk_draw_line (gfig_context->preview->window,
+                 /*gfig_context->preview->style->bg_gc[GTK_STATE_NORMAL],*/
+                 gfig_gc,
+                 spnt->pnt.x,
+                 spnt->pnt.y,
+                 epnt->pnt.x,
+                 epnt->pnt.y);
   spnt->next = epnt;
 }
 
 void
 d_line_start (GdkPoint *pnt,
-	      gint      shift_down)
+              gint      shift_down)
 {
   if (!obj_creating || !shift_down)
     {
@@ -315,7 +312,7 @@ d_line_start (GdkPoint *pnt,
 
 void
 d_line_end (GdkPoint *pnt,
-	    gint      shift_down)
+            gint      shift_down)
 {
   /* Undraw the last circle */
   draw_circle (pnt);
@@ -323,49 +320,49 @@ d_line_end (GdkPoint *pnt,
   if (shift_down)
     {
       if (tmp_line)
-	{
-	  GdkPoint tmp_pnt = *pnt;
+        {
+          GdkPoint tmp_pnt = *pnt;
 
-	  if (need_to_scale)
-	    {
-	      tmp_pnt.x = pnt->x * scale_x_factor;
-	      tmp_pnt.y = pnt->y * scale_y_factor;
-	    }
+          if (need_to_scale)
+            {
+              tmp_pnt.x = pnt->x * scale_x_factor;
+              tmp_pnt.y = pnt->y * scale_y_factor;
+            }
 
-	  d_pnt_add_line (tmp_line, tmp_pnt.x, tmp_pnt.y, -1);
-	  free_one_obj (obj_creating);
-	  /* Must free obj_creating */
-	}
+          d_pnt_add_line (tmp_line, tmp_pnt.x, tmp_pnt.y, -1);
+          free_one_obj (obj_creating);
+          /* Must free obj_creating */
+        }
       else
-	{
-	  tmp_line = obj_creating;
-	  add_to_all_obj (current_obj, obj_creating);
-	}
+        {
+          tmp_line = obj_creating;
+          add_to_all_obj (gfig_context->current_obj, obj_creating);
+        }
 
       obj_creating = d_new_line (pnt->x, pnt->y);
     }
   else
     {
       if (tmp_line)
-	{
-	  GdkPoint tmp_pnt = *pnt;
+        {
+          GdkPoint tmp_pnt = *pnt;
 
-	  if (need_to_scale)
-	    {
-	      tmp_pnt.x = pnt->x * scale_x_factor;
-	      tmp_pnt.y = pnt->y * scale_y_factor;
-	    }
+          if (need_to_scale)
+            {
+              tmp_pnt.x = pnt->x * scale_x_factor;
+              tmp_pnt.y = pnt->y * scale_y_factor;
+            }
 
-	  d_pnt_add_line (tmp_line, tmp_pnt.x, tmp_pnt.y, -1);
-	  free_one_obj (obj_creating);
-	  /* Must free obj_creating */
-	}
+          d_pnt_add_line (tmp_line, tmp_pnt.x, tmp_pnt.y, -1);
+          free_one_obj (obj_creating);
+          /* Must free obj_creating */
+        }
       else
-	{
-	  add_to_all_obj (current_obj, obj_creating);
-	}
+        {
+          add_to_all_obj (gfig_context->current_obj, obj_creating);
+        }
       obj_creating = NULL;
       tmp_line = NULL;
     }
-  /*gtk_widget_queue_draw (gfig_preview);*/
+  /*gtk_widget_queue_draw (gfig_context->preview);*/
 }

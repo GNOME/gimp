@@ -70,7 +70,6 @@ static gint             gfig_invscale_x         (gint x);
 static gint             gfig_invscale_y         (gint y);
 static GtkWidget*       gfig_pos_labels         (void);
 static GtkWidget*       make_pos_info           (void);
-static GtkWidget*       make_status             (void);
 
 static void             gfig_pos_update         (gint x,
                                                  gint y);
@@ -84,22 +83,22 @@ make_preview (void)
   GtkWidget *table;
   GtkWidget *ruler;
 
-  gfig_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_widget_set_events (GTK_WIDGET (gfig_preview), PREVIEW_MASK);
+  gfig_context->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_widget_set_events (GTK_WIDGET (gfig_context->preview), PREVIEW_MASK);
 
-  g_signal_connect (gfig_preview , "realize",
+  g_signal_connect (gfig_context->preview , "realize",
                     G_CALLBACK (gfig_preview_realize),
                     NULL);
 
-  g_signal_connect (gfig_preview , "event",
+  g_signal_connect (gfig_context->preview , "event",
                     G_CALLBACK (gfig_preview_events),
                     NULL);
 
-  g_signal_connect_after (gfig_preview , "expose_event",
+  g_signal_connect_after (gfig_context->preview , "expose_event",
                           G_CALLBACK (gfig_preview_expose),
                           NULL);
 
-  gtk_preview_size (GTK_PREVIEW (gfig_preview), preview_width,
+  gtk_preview_size (GTK_PREVIEW (gfig_context->preview), preview_width,
                     preview_height);
 
   frame = gtk_frame_new (NULL);
@@ -107,13 +106,13 @@ make_preview (void)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_attach (GTK_TABLE (table), gfig_preview, 1, 2, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), gfig_context->preview, 1, 2, 1, 2,
                     GTK_FILL , GTK_FILL , 0, 0);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   ruler = gtk_hruler_new ();
   gtk_ruler_set_range (GTK_RULER (ruler), 0, preview_width, 0, PREVIEW_SIZE);
-  g_signal_connect_swapped (gfig_preview, "motion_notify_event",
+  g_signal_connect_swapped (gfig_context->preview, "motion_notify_event",
                             G_CALLBACK (GTK_WIDGET_CLASS (G_OBJECT_GET_CLASS (ruler))->motion_notify_event),
                             ruler);
   gtk_table_attach (GTK_TABLE (table), ruler, 1, 2, 0, 1,
@@ -122,7 +121,7 @@ make_preview (void)
 
   ruler = gtk_vruler_new ();
   gtk_ruler_set_range (GTK_RULER (ruler), 0, preview_height, 0, PREVIEW_SIZE);
-  g_signal_connect_swapped (gfig_preview, "motion_notify_event",
+  g_signal_connect_swapped (gfig_context->preview, "motion_notify_event",
                             G_CALLBACK (GTK_WIDGET_CLASS (G_OBJECT_GET_CLASS (ruler))->motion_notify_event),
                             ruler);
   gtk_table_attach (GTK_TABLE (table), ruler, 0, 1, 1, 2,
@@ -138,9 +137,6 @@ make_preview (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   frame = make_pos_info ();
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-
-  frame = make_status ();
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
   gtk_widget_show (vbox);
@@ -169,24 +165,24 @@ refill_cache (GimpDrawable *drawable)
 
   if (!preview_cursor1)
     {
-      GdkDisplay *display = gtk_widget_get_display (GTK_WIDGET (gfig_preview));
+      GdkDisplay *display = gtk_widget_get_display (GTK_WIDGET (gfig_context->preview));
 
       preview_cursor1 = gdk_cursor_new_for_display (display, GDK_WATCH);
       preview_cursor2 = gdk_cursor_new_for_display (display, GDK_TOP_LEFT_ARROW);
     }
 
   gdk_window_set_cursor
-    (gtk_widget_get_toplevel (GTK_WIDGET (gfig_preview))->window,
+    (gtk_widget_get_toplevel (GTK_WIDGET (gfig_context->preview))->window,
      preview_cursor1);
 
-  gdk_window_set_cursor (gfig_preview->window, preview_cursor1);
+  gdk_window_set_cursor (gfig_context->preview->window, preview_cursor1);
 
   gdk_flush ();
 
   cache_preview (drawable);
 
   gdk_window_set_cursor
-    (gtk_widget_get_toplevel (GTK_WIDGET (gfig_preview))->window,
+    (gtk_widget_get_toplevel (GTK_WIDGET (gfig_context->preview))->window,
      preview_cursor2);
 
   toggle_obj_type (NULL, GINT_TO_POINTER (selvals.otype));
@@ -273,7 +269,7 @@ dialog_update_preview (GimpDrawable *drawable)
       memset (preview_row, -1, preview_width*4);
       for (y = 0; y < preview_height; y++)
         {
-          gtk_preview_draw_row (GTK_PREVIEW (gfig_preview), preview_row,
+          gtk_preview_draw_row (GTK_PREVIEW (gfig_context->preview), preview_row,
                                 0, y, preview_width);
         }
       return;
@@ -326,7 +322,7 @@ dialog_update_preview (GimpDrawable *drawable)
             }
         }
 
-      gtk_preview_draw_row (GTK_PREVIEW (gfig_preview), preview_row,
+      gtk_preview_draw_row (GTK_PREVIEW (gfig_context->preview), preview_row,
                             0, y, preview_width);
     }
 }
@@ -336,27 +332,25 @@ gfig_preview_realize (GtkWidget *widget)
 {
   GdkDisplay *display = gtk_widget_get_display (widget);
 
-  gdk_window_set_cursor (gfig_preview->window,
+  gdk_window_set_cursor (gfig_context->preview->window,
                          gdk_cursor_new_for_display (display, GDK_CROSSHAIR));
 }
 
 static void
-draw_background (void)
+draw_background ()
 {
-  static GdkPixbuf *pixbuf = NULL;
+  if (! back_pixbuf)
+    back_pixbuf = gimp_image_get_thumbnail (gfig_context->image_id,
+                                            preview_width, preview_height,
+                                            GIMP_PIXBUF_LARGE_CHECKS);
 
-  if (! pixbuf)
-    pixbuf = gimp_image_get_thumbnail (gfig_image,
-                                       preview_width, preview_height,
-                                       GIMP_PIXBUF_LARGE_CHECKS);
-
-  if (pixbuf)
-    gdk_draw_pixbuf (gfig_preview->window,
-                     gfig_preview->style->fg_gc[GTK_STATE_NORMAL],
-                     pixbuf, 0, 0,
+  if (back_pixbuf)
+    gdk_draw_pixbuf (gfig_context->preview->window,
+                     gfig_context->preview->style->fg_gc[GTK_STATE_NORMAL],
+                     back_pixbuf, 0, 0,
                      0, 0,
-                     gdk_pixbuf_get_width (pixbuf),
-                     gdk_pixbuf_get_height (pixbuf),
+                     gdk_pixbuf_get_width (back_pixbuf),
+                     gdk_pixbuf_get_height (back_pixbuf),
                      GDK_RGB_DITHER_NONE, 0, 0);
 }
 
@@ -364,7 +358,7 @@ gboolean
 gfig_preview_expose (GtkWidget *widget,
                      GdkEvent  *event)
 {
-  gdk_window_clear (gfig_preview->window);
+  gdk_window_clear (gfig_context->preview->window);
 
   if (gfig_context->show_background)
     draw_background ();
@@ -462,8 +456,8 @@ gfig_preview_events (GtkWidget *widget,
             break;
         }
 
-      /* make small preview reflect changes ?*/
-      list_button_update (current_obj);
+      gfig_paint_callback ();
+      list_button_update (gfig_context->current_obj);
       break;
 
     case GDK_MOTION_NOTIFY:
@@ -543,95 +537,6 @@ make_pos_info (void)
   gtk_widget_show (frame);
 
   return frame;
-}
-
-static GtkWidget*
-make_status (void)
-{
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *label;
-
-  frame = gimp_frame_new (_("Collection Details"));
-
-  table = gtk_table_new (6, 6, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
-
-  label = gtk_label_new (_("Draw name:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (_("Filename:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  status_label_dname = gtk_label_new (_("(none)"));
-  gtk_misc_set_alignment (GTK_MISC (status_label_dname), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), status_label_dname, 2, 4, 0, 1,
-                    GTK_FILL | GTK_EXPAND, 0, 0, 0);
-  gtk_widget_show (status_label_dname);
-
-  status_label_fname = gtk_label_new (_("(none)"));
-  gtk_misc_set_alignment (GTK_MISC (status_label_fname), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), status_label_fname, 2, 4, 1, 2,
-                    GTK_FILL | GTK_EXPAND, 0, 0, 0);
-  gtk_widget_show (status_label_fname);
-
-  gtk_widget_show (frame);
-
-  return frame;
-}
-
-void
-gfig_update_stat_labels (void)
-{
-  gchar str[45];
-
-  if (current_obj->draw_name)
-    sprintf (str, "%.34s", current_obj->draw_name);
-  else
-    sprintf (str,_("<NONE>"));
-
-  gtk_label_set_text (GTK_LABEL (status_label_dname), str);
-
-  if (current_obj->filename)
-    {
-      gint         slen;
-      const gchar *hm  = g_get_home_dir ();
-      gchar       *dfn = g_strdup (current_obj->filename);
-
-      if (hm != NULL && !strncmp (dfn, hm, strlen (hm)-1))
-        {
-          strcpy (dfn, "~");
-          strcat (dfn, &dfn[strlen (hm)]);
-        }
-      if ((slen = strlen (dfn)) > 40)
-        {
-          strncpy (str, dfn, 19);
-          str[19] = '\0';
-          strcat (str, "...");
-          strncat (str, &dfn[slen - 21], 19);
-          str[40] ='\0';
-        }
-      else
-        {
-          sprintf (str, "%.40s", dfn);
-        }
-
-      g_free (dfn);
-    }
-  else
-    sprintf (str,_("<NONE>"));
-
-  gtk_label_set_text (GTK_LABEL (status_label_fname), str);
-
 }
 
 static gint

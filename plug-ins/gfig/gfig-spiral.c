@@ -49,25 +49,23 @@ static gint spiral_toggle    = 0; /* 0 = clockwise -1 = anti-clockwise */
 
 gint
 spiral_button_press (GtkWidget      *widget,
-		     GdkEventButton *event,
-		     gpointer        data)
+                     GdkEventButton *event,
+                     gpointer        data)
 {
   if ((event->type == GDK_2BUTTON_PRESS) &&
       (event->button == 1))
     num_sides_dialog (_("Spiral Number of Turns"),
-		      &spiral_num_turns, &spiral_toggle, 1, 20);
+                      &spiral_num_turns, &spiral_toggle, 1, 20);
   return FALSE;
 }
 
 static void
 d_save_spiral (Dobject *obj,
-	       FILE    *to)
+               GString *string)
 {
-  fprintf (to, "<SPIRAL>\n");
-  do_save_obj (obj, to);
-  fprintf (to, "<EXTRA>\n");
-  fprintf (to, "%d\n</EXTRA>\n", obj->type_data);
-  fprintf (to, "</SPIRAL>\n");
+  do_save_obj (obj, string);
+  g_string_append_printf (string, "<EXTRA>\n");
+  g_string_append_printf (string, "%d\n</EXTRA>\n", obj->type_data);
 }
 
 /* Load a spiral from the specified stream */
@@ -83,49 +81,44 @@ d_load_spiral (FILE *from)
   while (get_line (buf, MAX_LOAD_LINE, from, 0))
     {
       if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
-	{
-	  /* Must be the end */
-	  if (!strcmp ("<EXTRA>", buf))
-	    {
-	      gint nsides = 3;
-	      /* Number of sides - data item */
-	      if (!new_obj)
-		{
-		  g_warning ("[%d] Internal load error while loading spiral (extra area)",
-			    line_no);
-		  return (NULL);
-		}
-	      get_line (buf, MAX_LOAD_LINE, from, 0);
-	      if (sscanf (buf, "%d", &nsides) != 1)
-		{
-		  g_warning ("[%d] Internal load error while loading spiral (extra area scanf)",
-			    line_no);
-		  return (NULL);
-		}
-	      new_obj->type_data = nsides;
-	      get_line (buf, MAX_LOAD_LINE, from, 0);
-	      if (strcmp ("</EXTRA>", buf))
-		{
-		  g_warning ("[%d] Internal load error while loading spiral",
-			    line_no);
-		  return (NULL);
-		} 
-	      /* Go around and read the last line */
-	      continue;
-	    }
-	  else if (strcmp ("</SPIRAL>", buf))
-	    {
-	      g_warning ("[%d] Internal load error while loading spiral",
-			line_no);
-	      return (NULL);
-	    }
-	  return (new_obj);
-	}
+        {
+          /* Must be the end */
+          if (!strcmp ("<EXTRA>", buf))
+            {
+              gint nsides = 3;
+              /* Number of sides - data item */
+              if (!new_obj)
+                {
+                  g_warning ("[%d] Internal load error while loading spiral (extra area)",
+                            line_no);
+                  return (NULL);
+                }
+              get_line (buf, MAX_LOAD_LINE, from, 0);
+              if (sscanf (buf, "%d", &nsides) != 1)
+                {
+                  g_warning ("[%d] Internal load error while loading spiral (extra area scanf)",
+                            line_no);
+                  return (NULL);
+                }
+              new_obj->type_data = nsides;
+              get_line (buf, MAX_LOAD_LINE, from, 0);
+              if (strcmp ("</EXTRA>", buf))
+                {
+                  g_warning ("[%d] Internal load error while loading spiral",
+                            line_no);
+                  return (NULL);
+                } 
+              /* Go around and read the last line */
+              continue;
+            }
+          else 
+            return (new_obj);
+        }
       
       if (!new_obj)
-	new_obj = d_new_spiral (xpnt, ypnt);
+        new_obj = d_new_spiral (xpnt, ypnt);
       else
-	d_pnt_add_line (new_obj, xpnt, ypnt,-1);
+        d_pnt_add_line (new_obj, xpnt, ypnt,-1);
     }
   return (new_obj);
 }
@@ -192,13 +185,13 @@ d_draw_spiral (Dobject *obj)
 
 
   for (loop = 0 ; loop <= abs (obj->type_data * 180) + 
-	 clock_wise * (gint)RINT (offset_angle/ang_grid) ; loop++)
+         clock_wise * (gint)RINT (offset_angle/ang_grid) ; loop++)
     {
       gdouble lx, ly;
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid;
-	
+        
       lx = sp_cons * ang_loop * cos (ang_loop)*clock_wise;
       ly = sp_cons * ang_loop * sin (ang_loop);
 
@@ -206,18 +199,18 @@ d_draw_spiral (Dobject *obj)
       calc_pnt.y = RINT (ly + center_pnt->pnt.y);
 
       if (do_line)
-	{
-	  /* Miss out points that come to the same location */
-	  if (calc_pnt.x == start_pnt.x && calc_pnt.y == start_pnt.y)
-	    continue;
+        {
+          /* Miss out points that come to the same location */
+          if (calc_pnt.x == start_pnt.x && calc_pnt.y == start_pnt.y)
+            continue;
 
-	  gfig_draw_line (calc_pnt.x, calc_pnt.y, start_pnt.x, start_pnt.y);
-	}
+          gfig_draw_line (calc_pnt.x, calc_pnt.y, start_pnt.x, start_pnt.y);
+        }
       else
-	{
-	  do_line = TRUE;
-	  first_pnt = calc_pnt;
-	}
+        {
+          do_line = TRUE;
+          first_pnt = calc_pnt;
+        }
       start_pnt = calc_pnt;
     }
 }
@@ -283,7 +276,7 @@ d_paint_spiral (Dobject *obj)
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid;
-	
+        
       lx = sp_cons * ang_loop * cos (ang_loop)*clock_wise;
       ly = sp_cons * ang_loop * sin (ang_loop);
 
@@ -292,12 +285,12 @@ d_paint_spiral (Dobject *obj)
 
       /* Miss out duped pnts */
       if (!loop)
-	{
-	  if (calc_pnt.x == last_pnt.x && calc_pnt.y == last_pnt.y)
-	    {
-	      continue;
-	    }
-	}
+        {
+          if (calc_pnt.x == last_pnt.x && calc_pnt.y == last_pnt.y)
+            {
+              continue;
+            }
+        }
 
       line_pnts[i++] = calc_pnt.x;
       line_pnts[i++] = calc_pnt.y;
@@ -318,17 +311,17 @@ d_paint_spiral (Dobject *obj)
   if (selvals.painttype == PAINT_BRUSH_TYPE)
     {
       gfig_paint (selvals.brshtype,
-		  gfig_drawable,
-		  i, line_pnts);
+                  gfig_context->drawable_id,
+                  i, line_pnts);
     }
   else
     {
-      gimp_free_select (gfig_image,
-			i, line_pnts,
-			selopt.type,
-			selopt.antia,
-			selopt.feather,
-			selopt.feather_radius);
+      gimp_free_select (gfig_context->image_id,
+                        i, line_pnts,
+                        selopt.type,
+                        selopt.antia,
+                        selopt.feather,
+                        selopt.feather_radius);
     }
 
   g_free (line_pnts);
@@ -350,7 +343,7 @@ d_copy_spiral (Dobject *obj)
 
 static Dobject *
 d_new_spiral (gint x,
-	      gint y)
+              gint y)
 {
   Dobject *nobj;
 
@@ -418,7 +411,7 @@ d_update_spiral (GdkPoint *pnt)
 
 void
 d_spiral_start (GdkPoint *pnt,
-		gint      shift_down)
+                gint      shift_down)
 {
   obj_creating = d_new_spiral (pnt->x, pnt->y);
   obj_creating->type_data = spiral_num_turns * ((spiral_toggle == 0) ? 1 : -1);
@@ -426,9 +419,9 @@ d_spiral_start (GdkPoint *pnt,
 
 void
 d_spiral_end (GdkPoint *pnt,
-	      gint     shift_down)
+              gint     shift_down)
 {
   draw_circle (pnt);
-  add_to_all_obj (current_obj, obj_creating);
+  add_to_all_obj (gfig_context->current_obj, obj_creating);
   obj_creating = NULL;
 }

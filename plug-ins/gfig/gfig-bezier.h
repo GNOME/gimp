@@ -35,6 +35,6 @@ void       d_update_bezier         (GdkPoint *pnt);
 void       d_bezier_start          (GdkPoint *pnt, gint shift_down);
 void       d_bezier_end            (GdkPoint *pnt, gint shift_down);
 
-void	   bezier_dialog (void);
+void       bezier_dialog (void);
 
 #endif /* __GFIG_BEZIER_H__ */

@@ -47,9 +47,9 @@
 static GdkGC  *grid_hightlight_drawgc;
 gint    grid_gc_type = GTK_STATE_NORMAL;
 
-static GdkGC	*gfig_get_grid_gc       (GtkWidget *widget,
-					 gint       gctype);
-static gint 	 get_num_radials	(void);
+static GdkGC    *gfig_get_grid_gc       (GtkWidget *widget,
+                                         gint       gctype);
+static gint      get_num_radials        (void);
 
 /* find_grid_pos - Given an x, y point return the grid position of it */
 /* return the new position in the passed point */
@@ -85,19 +85,19 @@ gfig_grid_colours (GtkWidget *widget)
   values.foreground.pixel = col2.pixel;
   values.fill    = GDK_OPAQUE_STIPPLED;
   values.stipple = gdk_bitmap_create_from_data (widget->window,
-						(gchar *) stipple, 4, 4);
+                                                (gchar *) stipple, 4, 4);
   grid_hightlight_drawgc = gdk_gc_new_with_values (widget->window,
-						   &values,
-						   GDK_GC_FOREGROUND |
-						   GDK_GC_BACKGROUND |
-						   GDK_GC_FILL       |
-						   GDK_GC_STIPPLE);
+                                                   &values,
+                                                   GDK_GC_FOREGROUND |
+                                                   GDK_GC_BACKGROUND |
+                                                   GDK_GC_FILL       |
+                                                   GDK_GC_STIPPLE);
 }
 
 void
 find_grid_pos (GdkPoint *p,
-	       GdkPoint *gp,
-	       guint     is_butt3)
+               GdkPoint *gp,
+               guint     is_butt3)
 {
   gint16 x = p->x;
   gint16 y = p->y;
@@ -109,26 +109,26 @@ find_grid_pos (GdkPoint *p,
   if (selvals.opts.gridtype == RECT_GRID)
     {
       if (p->x % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
-	x += selvals.opts.gridspacing;
+        x += selvals.opts.gridspacing;
       
       if (p->y % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
-	y += selvals.opts.gridspacing;
+        y += selvals.opts.gridspacing;
       
       gp->x = (x/selvals.opts.gridspacing)*selvals.opts.gridspacing;
       gp->y = (y/selvals.opts.gridspacing)*selvals.opts.gridspacing;
 
       if (is_butt3)
-	{
-	  if (abs (gp->x - cons_pnt.x) < abs (gp->y - cons_pnt.y))
-	    gp->x = cons_pnt.x;
-	  else
-	    gp->y = cons_pnt.y;
-	}
+        {
+          if (abs (gp->x - cons_pnt.x) < abs (gp->y - cons_pnt.y))
+            gp->x = cons_pnt.x;
+          else
+            gp->y = cons_pnt.y;
+        }
       else
-	{
-	  /* Store the point since might be used later */
-	  cons_pnt = *gp; /* Structure copy */
-	}
+        {
+          /* Store the point since might be used later */
+          cons_pnt = *gp; /* Structure copy */
+        }
     }
   else if (selvals.opts.gridtype == POLAR_GRID)
     { 
@@ -146,28 +146,28 @@ find_grid_pos (GdkPoint *p,
       /* round radius */
       rounded_radius = (gint)(RINT (ang_radius/selvals.opts.gridspacing))*selvals.opts.gridspacing;
       if (rounded_radius <= 0 || real_radius <=0)
-	{
-	  /* DEAD CENTER */
-	  gp->x = preview_width/2;
-	  gp->y = preview_height/2;
-	  if (!is_butt3) cons_center = TRUE;
+        {
+          /* DEAD CENTER */
+          gp->x = preview_width/2;
+          gp->y = preview_height/2;
+          if (!is_butt3) cons_center = TRUE;
 #ifdef DEBUG
-	  printf ("Dead center\n");
+          printf ("Dead center\n");
 #endif /* DEBUG */
-	  return;
-	}
+          return;
+        }
 
       ang_grid = 2*G_PI/get_num_radials ();
 
       real_angle = atan2 (shift_y, shift_x);
       if (real_angle < 0)
-	real_angle += 2*G_PI;
+        real_angle += 2*G_PI;
 
       rounded_angle = (RINT ((real_angle/ang_grid)))*ang_grid;
 
 #ifdef DEBUG
       printf ("real_ang = %f ang_gid = %f rounded_angle = %f rounded radius = %d\n",
-	      real_angle, ang_grid, rounded_angle, rounded_radius);
+              real_angle, ang_grid, rounded_angle, rounded_radius);
 
       printf ("preview_width = %d preview_height = %d\n", preview_width, preview_height);
 #endif /* DEBUG */
@@ -176,27 +176,27 @@ find_grid_pos (GdkPoint *p,
       gp->y = -(gint)RINT ((rounded_radius*sin (rounded_angle))) + preview_height/2;
 
       if (is_butt3)
-	{
-	  if (!cons_center)
-	    {
-	      if (fabs (rounded_angle - cons_ang) > ang_grid/2)
-		{
-		  gp->x = (gint)RINT ((cons_radius*cos (rounded_angle))) + preview_width/2;
-		  gp->y = -(gint)RINT ((cons_radius*sin (rounded_angle))) + preview_height/2;
-		}
-	      else
-		{
-		  gp->x = (gint)RINT ((rounded_radius*cos (cons_ang))) + preview_width/2;
-		  gp->y = -(gint)RINT ((rounded_radius*sin (cons_ang))) + preview_height/2;
-		}
-	    }
-	}
+        {
+          if (!cons_center)
+            {
+              if (fabs (rounded_angle - cons_ang) > ang_grid/2)
+                {
+                  gp->x = (gint)RINT ((cons_radius*cos (rounded_angle))) + preview_width/2;
+                  gp->y = -(gint)RINT ((cons_radius*sin (rounded_angle))) + preview_height/2;
+                }
+              else
+                {
+                  gp->x = (gint)RINT ((rounded_radius*cos (cons_ang))) + preview_width/2;
+                  gp->y = -(gint)RINT ((rounded_radius*sin (cons_ang))) + preview_height/2;
+                }
+            }
+        }
       else
-	{
-	  cons_radius = rounded_radius;
-	  cons_ang = rounded_angle;
-	  cons_center = FALSE;
-	}
+        {
+          cons_radius = rounded_radius;
+          cons_ang = rounded_angle;
+          cons_center = FALSE;
+        }
     }
   else if (selvals.opts.gridtype == ISO_GRID)
     {
@@ -269,11 +269,11 @@ find_grid_pos (GdkPoint *p,
       m_hi_n_lo = m_lo_n_lo + 1;
       /* figure out which is the better candidate */
       if (abs((m_lo_n_lo * r + (0.5 * r * (n_lo % 2))) - y) <
-	  abs((m_hi_n_lo * r + (0.5 * r * (n_lo % 2))) - y)) {
-	m_n_lo = m_lo_n_lo;
+          abs((m_hi_n_lo * r + (0.5 * r * (n_lo % 2))) - y)) {
+        m_n_lo = m_lo_n_lo;
       }
       else {
-	m_n_lo = m_hi_n_lo;
+        m_n_lo = m_hi_n_lo;
       }
       
       /* evaluate m candidates for n_hi */
@@ -281,11 +281,11 @@ find_grid_pos (GdkPoint *p,
       m_hi_n_hi = m_lo_n_hi + 1;
       /* figure out which is the better candidate */
       if (abs((m_lo_n_hi * r + (0.5 * r * (n_hi % 2))) - y) <
-	  abs((m_hi_n_hi * r + (0.5 * r * (n_hi % 2))) - y)) {
-	m_n_hi = m_lo_n_hi;
+          abs((m_hi_n_hi * r + (0.5 * r * (n_hi % 2))) - y)) {
+        m_n_hi = m_lo_n_hi;
       }
       else {
-	m_n_hi = m_hi_n_hi;
+        m_n_hi = m_hi_n_hi;
       }
       
       /* Now, which is closer to [x,y]? we can use a somewhat abbreviated form of the 
@@ -297,13 +297,13 @@ find_grid_pos (GdkPoint *p,
       y2 = (gint) (m_n_hi * r + (0.5 * r * (n_hi % 2)));
       
       if (((x - x1) * (x - x1) + (y - y1) * (y - y1)) < 
-	  ((x - x2) * (x - x2) + (y - y2) * (y - y2))) {
-	gp->x =  x1;
-	gp->y =  y1;
+          ((x - x2) * (x - x2) + (y - y2) * (y - y2))) {
+        gp->x =  x1;
+        gp->y =  y1;
       }
       else {
-	gp->x =  x2;
-	gp->y =  y2;
+        gp->x =  x2;
+        gp->y =  y2;
       }
       
     }
@@ -326,43 +326,43 @@ draw_grid_polar (GdkGC *drawgc)
 
   step = selvals.opts.gridspacing;
   max_rad = sqrt (preview_width * preview_width +
-		  preview_height * preview_height) / 2;
+                  preview_height * preview_height) / 2;
 
   for (loop = 0; loop < max_rad; loop += step)
     {
       radius = loop;
 
-      gdk_draw_arc (gfig_preview->window,
-		    drawgc,
-		    0,
-		    grid_x_center - radius,
-		    grid_y_center - radius,
-		    radius*2,
-		    radius*2,
-		    0,
-		    360 * 64);
+      gdk_draw_arc (gfig_context->preview->window,
+                    drawgc,
+                    0,
+                    grid_x_center - radius,
+                    grid_y_center - radius,
+                    radius*2,
+                    radius*2,
+                    0,
+                    360 * 64);
     }
 
   /* Lines */
   ang_grid = 2 * G_PI / get_num_radials ();
   ang_radius = sqrt ((preview_width * preview_width) +
-		     (preview_height * preview_height)) / 2;
+                     (preview_height * preview_height)) / 2;
 
   for (loop = 0; loop <= get_num_radials (); loop++)
     {
       gint lx, ly;
 
       ang_loop = loop * ang_grid;
-	
+        
       lx = RINT (ang_radius * cos (ang_loop));
       ly = RINT (ang_radius * sin (ang_loop));
 
-      gdk_draw_line (gfig_preview->window,
-		     drawgc,
-		     lx + (preview_width) / 2,
-		     - ly + (preview_height) / 2,
-		     (preview_width) / 2,
-		     (preview_height) / 2);
+      gdk_draw_line (gfig_context->preview->window,
+                     drawgc,
+                     lx + (preview_width) / 2,
+                     - ly + (preview_height) / 2,
+                     (preview_width) / 2,
+                     (preview_height) / 2);
     }
 }
 
@@ -377,24 +377,24 @@ draw_grid_sq (GdkGC *drawgc)
 
   for (loop = 0 ; loop < preview_height ; loop += step)
     {
-      gdk_draw_line (gfig_preview->window,
-		     drawgc,
-		     0,
-		     loop,
-		     preview_width,
-		     loop);
+      gdk_draw_line (gfig_context->preview->window,
+                     drawgc,
+                     0,
+                     loop,
+                     preview_width,
+                     loop);
     }
 
   /* Draw the vertical lines */
 
   for (loop = 0 ; loop < preview_width ; loop += step)
     {
-      gdk_draw_line (gfig_preview->window,
-		     drawgc,
-		     loop,
-		     0,
-		     loop,
-		     preview_height);
+      gdk_draw_line (gfig_context->preview->window,
+                     drawgc,
+                     loop,
+                     0,
+                     loop,
+                     preview_height);
     }
 }
 
@@ -416,12 +416,12 @@ draw_grid_iso (GdkGC *drawgc)
   
   /* Draw the vertical lines - These are easy */
   for (loop = 0 ; loop < preview_width ; loop += hstep){
-    gdk_draw_line (gfig_preview->window,
-		   drawgc,
-		   (gint)loop,
-		   (gint)0,
-		   (gint)loop,
-		   (gint)preview_height);
+    gdk_draw_line (gfig_context->preview->window,
+                   drawgc,
+                   (gint)loop,
+                   (gint)0,
+                   (gint)loop,
+                   (gint)preview_height);
   }
   
   /* draw diag lines at a Theta of +/- 1/6 Pi Rad */
@@ -437,19 +437,19 @@ draw_grid_iso (GdkGC *drawgc)
   /* Draw diag lines */
   for (loop = diagonal_start ; loop < diagonal_end ; loop += vstep)
     {
-      gdk_draw_line (gfig_preview->window,
-  		      drawgc,
-		     (gint)0,
-		     (gint)loop,
-		     (gint)diagonal_width,
-		     (gint)loop + diagonal_height);
+      gdk_draw_line (gfig_context->preview->window,
+                      drawgc,
+                     (gint)0,
+                     (gint)loop,
+                     (gint)diagonal_width,
+                     (gint)loop + diagonal_height);
       
-      gdk_draw_line (gfig_preview->window,
-		     drawgc,
-		     (gint)0,
-		     (gint)loop,
-		     (gint)diagonal_width,
-		     (gint)loop - diagonal_height);
+      gdk_draw_line (gfig_context->preview->window,
+                     drawgc,
+                     (gint)0,
+                     (gint)loop,
+                     (gint)diagonal_width,
+                     (gint)loop - diagonal_height);
     }
 }
 
@@ -490,15 +490,14 @@ draw_grid (void)
    */
 
   if ((preview_width < selvals.opts.gridspacing &&
-       preview_height < selvals.opts.gridspacing) ||
-      drawing_pic)
+       preview_height < selvals.opts.gridspacing))
     {
       /* Don't draw if they don't fit */
       return;
     }
 
   if (selvals.opts.drawgrid)
-    drawgc = gfig_get_grid_gc (gfig_preview, grid_gc_type);
+    drawgc = gfig_get_grid_gc (gfig_context->preview, grid_gc_type);
   else
     return;
 

@@ -26,27 +26,15 @@
 #ifndef __GFIG_H__
 #define __GFIG_H__
 
-#include "gfig-dobject.h"
+#define MAX_UNDO         10
+#define MIN_UNDO         1
 
-#define MAX_LOAD_LINE    256
-#define SQ_SIZE 8
+struct Dobject; /* fwd declaration for DobjFunc */
 
-#define HELP_ID "plug-in-gfig"
-
-extern gint line_no;
-extern gint preview_width, preview_height;
-extern gboolean drawing_pic;
-extern gint need_to_scale;
-extern gint32        gfig_image;
-extern gint32        gfig_drawable;
-extern GdkGC  *gfig_gc;
-extern gdouble scale_x_factor, scale_y_factor;
-extern GdkPixbuf *back_pixbuf;
-
-extern GtkWidget    *gfig_preview;
-extern GtkWidget    *pic_preview;
-extern Dobject *tmp_line;
-extern gint obj_show_single;
+typedef void            (*DobjFunc)     (struct Dobject *);
+typedef struct Dobject *(*DobjGenFunc)  (struct Dobject *);
+typedef struct Dobject *(*DobjLoadFunc) (FILE *);
+typedef void            (*DobjSaveFunc) (struct Dobject *, GString *);
 
 typedef enum
 {
@@ -72,7 +60,6 @@ typedef enum
   REPLACE,
   INTERSECT
 } SelectionType;
-
 
 typedef enum
 {
@@ -113,13 +100,13 @@ typedef enum
 } DrawonLayers;
 
 typedef enum
-{
-  LAYER_TRANS_BG = 0,
-  LAYER_BG_BG,
-  LAYER_FG_BG,
-  LAYER_WHITE_BG,
-  LAYER_COPY_BG
-} LayersBGType;
+  {
+    LAYER_TRANS_BG = 0,
+    LAYER_BG_BG,
+    LAYER_FG_BG,
+    LAYER_WHITE_BG,
+    LAYER_COPY_BG
+  } LayersBGType;
 
 typedef enum
 {
@@ -129,12 +116,137 @@ typedef enum
 } PaintType;
 
 typedef enum
+  {
+    BRUSH_BRUSH_TYPE = 0,
+    BRUSH_PENCIL_TYPE,
+    BRUSH_AIRBRUSH_TYPE,
+    BRUSH_PATTERN_TYPE
+  } BrushType;
+
+typedef enum
+  {
+    STYLE_SOURCE_GIMP = 0,
+    STYLE_SOURCE_DEFAULT,
+    STYLE_SOURCE_STYLE,
+    STYLE_SOURCE_OBJECT
+  } StyleSource;
+
+typedef struct 
 {
-  BRUSH_BRUSH_TYPE = 0,
-  BRUSH_PENCIL_TYPE,
-  BRUSH_AIRBRUSH_TYPE,
-  BRUSH_PATTERN_TYPE
-} BrushType;
+  gchar        *name;
+  gchar        *brush_name;
+  gint          brush_width;
+  gint          brush_height;
+  gint          brush_spacing;
+  BrushType     brush_type;
+  gdouble       brushfade;
+  gdouble       brushgradient;
+  gdouble       airbrushpressure;
+  StyleSource   brush_source;
+  FillType      fill_type;
+  StyleSource   fill_type_source;
+  gchar        *pattern;
+  StyleSource   pattern_source;
+  gchar        *gradient;
+  StyleSource   gradient_source;
+  PaintType     paint_type;
+  GimpRGB       foreground;
+  StyleSource   foreground_source;
+  GimpRGB       background;
+  StyleSource   background_source;
+  gboolean      reverselines;
+} Style;
+
+typedef enum
+{
+  LINE,
+  CIRCLE,
+  ELLIPSE,
+  ARC,
+  POLY,
+  STAR,
+  SPIRAL,
+  BEZIER,
+  MOVE_OBJ,
+  MOVE_POINT,
+  COPY_OBJ,
+  MOVE_COPY_OBJ,
+  DEL_OBJ,
+  NULL_OPER
+} DobjType;
+
+typedef struct DobjPoints
+{
+  struct DobjPoints *next;
+  GdkPoint           pnt;
+  gint               found_me;
+} DobjPoints;
+
+/* The object itself */
+typedef struct Dobject
+{
+  DobjType      type;       /* What is the type? */
+  gint          type_data;  /* Extra data needed by the object */
+  DobjPoints   *points;     /* List of points */
+  Style         style;      /* this object's individual style settings */
+  gint          style_no;   /* style index of this specific object */
+  DobjFunc      drawfunc;   /* How do I draw myself */
+  DobjFunc      paintfunc;  /* Draw me on canvas */
+  DobjGenFunc   copyfunc;   /* copy */
+  DobjLoadFunc  loadfunc;   /* Load this type of object */
+  DobjSaveFunc  savefunc;   /* Save me out */
+} Dobject;
+
+typedef struct DAllObjs
+{
+  struct DAllObjs *next; 
+  Dobject         *obj; /* Object on list */
+} DAllObjs;
+
+/* States of the object */
+#define GFIG_OK       0x0
+#define GFIG_MODIFIED 0x1
+#define GFIG_READONLY 0x2
+
+extern Dobject *obj_creating;
+
+void d_pnt_add_line (Dobject *obj,
+                     gint     x,
+                     gint     y,
+                     gint     pos);
+
+DobjPoints     *new_dobjpoint           (gint x, gint y);
+void            do_save_obj             (Dobject *obj, 
+                                         GString *to);
+
+DobjPoints     *d_copy_dobjpoints       (DobjPoints * pnts);
+void            free_one_obj            (Dobject *obj);
+void            d_delete_dobjpoints     (DobjPoints * pnts);
+void            object_update           (GdkPoint *pnt);
+DAllObjs       *copy_all_objs           (DAllObjs *objs);
+void            draw_objects            (DAllObjs *objs, gint show_single);
+
+void       object_start            (GdkPoint *pnt, gint);
+void       object_operation        (GdkPoint *pnt, gint);
+void       object_operation_start  (GdkPoint *pnt, gint shift_down);
+void       object_operation_end    (GdkPoint *pnt, gint);
+void       object_end              (GdkPoint *pnt, gint shift_down);
+
+#define MAX_LOAD_LINE    256
+#define SQ_SIZE 8
+
+#define HELP_ID "plug-in-gfig"
+
+extern gint line_no;
+extern gint preview_width, preview_height;
+extern gint need_to_scale;
+extern GdkGC  *gfig_gc;
+extern gdouble scale_x_factor, scale_y_factor;
+extern GdkPixbuf *back_pixbuf;
+
+extern GtkWidget    *pic_preview;
+extern Dobject *tmp_line;
+extern gint obj_show_single;
 
 
 typedef struct
@@ -171,14 +283,48 @@ typedef struct DFigObj
   GtkWidget *pixmap_widget;
 } GFigObj;
 
+/* this is temp, should be able to get rid of */
+typedef struct BrushDesc
+{
+  gchar                *name;
+  gdouble               opacity;
+  gint                  spacing;
+  GimpLayerModeEffects  paint_mode;
+  gint                  width;
+  gint                  height;
+  guchar               *pv_buf;  /* Buffer where brush placed */
+  gint16                x_off;
+  gint16                y_off;
+  const gchar          *popup;
+} BrushDesc;
+
 typedef struct
 {
-  gboolean   show_background;
+  gboolean      debug_styles;
+  gboolean      show_background;  /* show thumbnail of image behind figure */
+  gint32        image_id;         /* Gimp image id */
+  gint32        drawable_id;      /* Gimp drawable to paint on */
+  GFigObj      *current_obj;
+  Dobject      *selected_obj;
+  GtkWidget    *preview;
+  Style       *style[1000];       /* hack, but hopefully way more than enough! */
+  gint         num_styles;
+  Style        gimp_style;
+  Style        default_style;
+  Style       *current_style;
+  BrushDesc    bdesc;
+  GtkWidget   *fg_color_button;
+  GtkWidget   *bg_color_button;
+  GtkWidget   *brush_select;
+  GtkWidget   *pattern_select;
+  GtkWidget   *gradient_select;
+  GtkWidget   *fillstyle_combo;
+  GimpRGB     *fg_color;
+  GimpRGB     *bg_color;
 } GFigContext;
 
 GFigContext *gfig_context;
 
-extern GFigObj  *current_obj;
 extern GFigObj  *pic_obj;
 
 extern selection_option selopt;
@@ -235,4 +381,36 @@ void    gfig_draw_line          (gint x0,
 
 gboolean gfig_preview_expose    (GtkWidget *widget,
                                  GdkEvent  *event);
+void      gfig_paint_callback   (void);
+void     gfig_read_gimp_style   (Style *style,
+                                 const gchar *name);
+GFigObj  *gfig_load             (const gchar *filename,
+                                 const gchar *name);
+void   gfig_name_encode         (gchar *dest,
+                                 gchar *src);
+void   gfig_name_decode         (gchar       *dest,
+                                 const gchar *src);
+
+gint   gfig_list_pos            (GFigObj *gfig);
+gint   gfig_list_insert         (GFigObj *gfig);
+void   gfig_free                (GFigObj *gfig);
+
+void   save_options             (GString *string);
+
+GString *gfig_save_as_string    (void);
+gboolean gfig_save_as_parasite  (void);
+GFigObj *gfig_load_from_parasite (void);
+GFigObj  * gfig_new             (void);
+void     gfig_save_callbk       (void);
+
+
+
+
+GtkWidget    *top_level_dlg;
+GimpDrawable *gfig_drawable;
+GList        *gfig_list;
+gdouble       org_scale_x_factor, org_scale_y_factor;
+
+
+
 #endif /* __GFIG_H__ */

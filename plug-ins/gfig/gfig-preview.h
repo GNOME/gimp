@@ -28,11 +28,11 @@
 
 #define PREVIEW_SIZE     400
 
-GtkWidget      *make_preview 		(void);
-void		gfig_update_stat_labels (void);
-void      	gfig_pos_enable         (GtkWidget *widget,
-					 gpointer   data);
-void      	dialog_update_preview   (GimpDrawable *drawable);
-void		refill_cache		(GimpDrawable *drawable);
+GtkWidget      *make_preview            (void);
+void            gfig_update_stat_labels (void);
+void            gfig_pos_enable         (GtkWidget *widget,
+                                         gpointer   data);
+void            dialog_update_preview   (GimpDrawable *drawable);
+void            refill_cache            (GimpDrawable *drawable);
 
 #endif /* __GFIG_PREVIEW_H__ */

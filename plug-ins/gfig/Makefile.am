@@ -12,7 +12,7 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
-SUBDIRS = gfig-examples images
+SUBDIRS = images
 
 libexecdir = $(gimpplugindir)/plug-ins
 
@@ -27,6 +27,8 @@ gfig_SOURCES = \
 	gfig-bezier.h	\
 	gfig-circle.c	\
 	gfig-circle.h	\
+	gfig-dialog.c	\
+	gfig-dialog.h	\
 	gfig-dobject.c	\
 	gfig-dobject.h	\
 	gfig-ellipse.c	\
@@ -45,6 +47,8 @@ gfig_SOURCES = \
 	gfig-star.h	\
 	gfig-stock.c	\
 	gfig-stock.h	\
+	gfig-style.c	\
+	gfig-style.h	\
 	pix-data.h
 
 EXTRA_DIST = README

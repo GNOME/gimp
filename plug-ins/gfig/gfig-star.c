@@ -40,7 +40,8 @@
 
 static gint star_num_sides = 3; /* Default to three sided object */
 
-static void      d_save_star             (Dobject * obj, FILE *to);
+static void      d_save_star             (Dobject * obj, 
+                                          GString * string);
 static void      d_draw_star             (Dobject *obj);
 static void      d_paint_star            (Dobject *obj);
 static Dobject  *d_copy_star             (Dobject * obj);
@@ -48,25 +49,23 @@ static Dobject  *d_new_star              (gint x, gint y);
 
 gboolean
 star_button_press (GtkWidget      *widget,
-		   GdkEventButton *event,
-		   gpointer        data)
+                   GdkEventButton *event,
+                   gpointer        data)
 {
   if ((event->type == GDK_2BUTTON_PRESS) &&
       (event->button == 1))
     num_sides_dialog (_("Star Number of Points"),
-		      &star_num_sides, NULL, 3, 200);
+                      &star_num_sides, NULL, 3, 200);
   return FALSE;
 }
 
 static void
 d_save_star (Dobject *obj,
-	     FILE    *to)
+             GString *string)
 {
-  fprintf (to, "<STAR>\n");
-  do_save_obj (obj, to);
-  fprintf (to, "<EXTRA>\n");
-  fprintf (to, "%d\n</EXTRA>\n", obj->type_data);
-  fprintf (to, "</STAR>\n");
+  do_save_obj (obj, string);
+  g_string_append_printf (string, "<EXTRA>\n");
+  g_string_append_printf (string, "%d\n</EXTRA>\n", obj->type_data);
 }
 
 Dobject *
@@ -80,49 +79,44 @@ d_load_star (FILE *from)
   while (get_line (buf, MAX_LOAD_LINE, from, 0))
     {
       if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
-	{
-	  /* Must be the end */
-	  if (!strcmp ("<EXTRA>", buf))
-	    {
-	      gint nsides = 3;
-	      /* Number of sides - data item */
-	      if (!new_obj)
-		{
-		  g_warning ("[%d] Internal load error while loading star (extra area)",
-			    line_no);
-		  return (NULL);
-		}
-	      get_line (buf, MAX_LOAD_LINE, from, 0);
-	      if (sscanf (buf, "%d", &nsides) != 1)
-		{
-		  g_warning ("[%d] Internal load error while loading star (extra area scanf)",
-			    line_no);
-		  return (NULL);
-		}
-	      new_obj->type_data = nsides;
-	      get_line (buf, MAX_LOAD_LINE, from, 0);
-	      if (strcmp ("</EXTRA>", buf))
-		{
-		  g_warning ("[%d] Internal load error while loading star",
-			    line_no);
-		  return NULL;
-		} 
-	      /* Go around and read the last line */
-	      continue;
-	    }
-	  else if (strcmp ("</STAR>", buf))
-	    {
-	      g_warning ("[%d] Internal load error while loading star",
-			line_no);
-	      return NULL;
-	    }
-	  return new_obj;
-	}
+        {
+          /* Must be the end */
+          if (!strcmp ("<EXTRA>", buf))
+            {
+              gint nsides = 3;
+              /* Number of sides - data item */
+              if (!new_obj)
+                {
+                  g_warning ("[%d] Internal load error while loading star (extra area)",
+                            line_no);
+                  return (NULL);
+                }
+              get_line (buf, MAX_LOAD_LINE, from, 0);
+              if (sscanf (buf, "%d", &nsides) != 1)
+                {
+                  g_warning ("[%d] Internal load error while loading star (extra area scanf)",
+                            line_no);
+                  return (NULL);
+                }
+              new_obj->type_data = nsides;
+              get_line (buf, MAX_LOAD_LINE, from, 0);
+              if (strcmp ("</EXTRA>", buf))
+                {
+                  g_warning ("[%d] Internal load error while loading star",
+                            line_no);
+                  return NULL;
+                } 
+              /* Go around and read the last line */
+              continue;
+            }
+          else 
+            return new_obj;
+        }
       
       if (!new_obj)
-	new_obj = d_new_star (xpnt, ypnt);
+        new_obj = d_new_star (xpnt, ypnt);
       else
-	d_pnt_add_line (new_obj, xpnt, ypnt,-1);
+        d_pnt_add_line (new_obj, xpnt, ypnt,-1);
     }
   return new_obj;
 }
@@ -202,35 +196,35 @@ d_draw_star (Dobject *obj)
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
-	
+        
       if (loop % 2)
-	{
-	  lx = inner_radius * cos (ang_loop);
-	  ly = inner_radius * sin (ang_loop);
-	}
+        {
+          lx = inner_radius * cos (ang_loop);
+          ly = inner_radius * sin (ang_loop);
+        }
       else
-	{
-	  lx = outer_radius * cos (ang_loop);
-	  ly = outer_radius * sin (ang_loop);
-	}
+        {
+          lx = outer_radius * cos (ang_loop);
+          ly = outer_radius * sin (ang_loop);
+        }
 
       calc_pnt.x = RINT (lx + center_pnt->pnt.x);
       calc_pnt.y = RINT (ly + center_pnt->pnt.y);
 
       if (do_line)
-	{
+        {
 
-	  /* Miss out points that come to the same location */
-	  if (calc_pnt.x == start_pnt.x && calc_pnt.y == start_pnt.y)
-	    continue;
+          /* Miss out points that come to the same location */
+          if (calc_pnt.x == start_pnt.x && calc_pnt.y == start_pnt.y)
+            continue;
 
-	  gfig_draw_line (calc_pnt.x, calc_pnt.y, start_pnt.x, start_pnt.y);
-	}
+          gfig_draw_line (calc_pnt.x, calc_pnt.y, start_pnt.x, start_pnt.y);
+        }
       else
-	{
-	  do_line = TRUE;
-	  first_pnt = calc_pnt;
-	}
+        {
+          do_line = TRUE;
+          first_pnt = calc_pnt;
+        }
       start_pnt = calc_pnt;
     }
 
@@ -313,39 +307,39 @@ d_paint_star (Dobject *obj)
       GdkPoint calc_pnt;
       
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
-	
+        
       if (loop % 2)
-	{
-	  lx = inner_radius * cos (ang_loop);
-	  ly = inner_radius * sin (ang_loop);
-	}
+        {
+          lx = inner_radius * cos (ang_loop);
+          ly = inner_radius * sin (ang_loop);
+        }
       else
-	{
-	  lx = outer_radius * cos (ang_loop);
-	  ly = outer_radius * sin (ang_loop);
-	}
+        {
+          lx = outer_radius * cos (ang_loop);
+          ly = outer_radius * sin (ang_loop);
+        }
 
       calc_pnt.x = RINT (lx + center_pnt->pnt.x);
       calc_pnt.y = RINT (ly + center_pnt->pnt.y);
 
       /* Miss out duped pnts */
       if (!first)
-	{
-	  if (calc_pnt.x == last_pnt.x && calc_pnt.y == last_pnt.y)
-	    {
-	      continue;
-	    }
-	}
+        {
+          if (calc_pnt.x == last_pnt.x && calc_pnt.y == last_pnt.y)
+            {
+              continue;
+            }
+        }
 
       line_pnts[i++] = calc_pnt.x;
       line_pnts[i++] = calc_pnt.y;
       last_pnt = calc_pnt;
 
       if (first)
-	{
-	  first_pnt = calc_pnt;
-	  first = FALSE;
-	}
+        {
+          first_pnt = calc_pnt;
+          first = FALSE;
+        }
     }
 
   line_pnts[i++] = first_pnt.x;
@@ -365,17 +359,17 @@ d_paint_star (Dobject *obj)
   if (selvals.painttype == PAINT_BRUSH_TYPE)
     {
       gfig_paint (selvals.brshtype,
-		  gfig_drawable,
-		  i, line_pnts);
+                  gfig_context->drawable_id,
+                  i, line_pnts);
     }
   else
     {
-      gimp_free_select (gfig_image,
-			i, line_pnts,
-			selopt.type,
-			selopt.antia,
-			selopt.feather,
-			selopt.feather_radius);
+      gimp_free_select (gfig_context->image_id,
+                        i, line_pnts,
+                        selopt.type,
+                        selopt.antia,
+                        selopt.feather,
+                        selopt.feather_radius);
     }
 
   g_free (line_pnts);
@@ -397,7 +391,7 @@ d_copy_star (Dobject *obj)
 
 static Dobject *
 d_new_star (gint x,
-	    gint y)
+            gint y)
 {
   Dobject *nobj;
 
@@ -458,9 +452,9 @@ d_update_star (GdkPoint *pnt)
       outer_pnt = center_pnt->next;
       /* Inner radius */
       d_pnt_add_line (obj_creating,
-		      pnt->x + (2*(center_pnt->pnt.x - pnt->x))/3,
-		      pnt->y + (2*(center_pnt->pnt.y - pnt->y))/3,
-		      -1);
+                      pnt->x + (2*(center_pnt->pnt.x - pnt->x))/3,
+                      pnt->y + (2*(center_pnt->pnt.y - pnt->y))/3,
+                      -1);
       inner_pnt = outer_pnt->next;
     }
 
@@ -476,7 +470,7 @@ d_update_star (GdkPoint *pnt)
 
 void
 d_star_start (GdkPoint *pnt,
-	      gint      shift_down)
+              gint      shift_down)
 {
   obj_creating = d_new_star (pnt->x, pnt->y);
   obj_creating->type_data = star_num_sides;
@@ -484,10 +478,10 @@ d_star_start (GdkPoint *pnt,
 
 void
 d_star_end (GdkPoint *pnt,
-	    gint      shift_down)
+            gint      shift_down)
 {
   draw_circle (pnt);
-  add_to_all_obj (current_obj, obj_creating);
+  add_to_all_obj (gfig_context->current_obj, obj_creating);
   obj_creating = NULL;
 }
 

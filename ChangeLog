@@ -1,3 +1,13 @@
+2004-07-04  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/gfig/gfig-dialog.[ch]:
+	* plug-ins/gfig/gfig-style.[ch]:
+	* plug-ins/gfig/notes.txt:       New files.
+	* plug-ins/gfig/*.[ch]:  Complete reworking of the gfig plug-in.  
+	See 'notes.txt' for a summary of what has changed, and how to use
+	it now.  Plenty of bugs have been  introduced, which will take a 
+	while to straighten out. 
+
 2004-07-04  Tor Lillqvist  <tml@iki.fi>
 
 	* app/core/gimpdrawable-equalize.c (gimp_drawable_equalize): Drop

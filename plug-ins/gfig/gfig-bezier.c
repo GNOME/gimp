@@ -40,7 +40,7 @@
 
 static gint bezier_closed     = 0; /* Closed curve 0 = false 1 = true */
 static gint bezier_line_frame = 0; /* Show frame = false 1 = true */
-Dobject *tmp_bezier;   		   /* Needed when drawing bezier curves */
+Dobject *tmp_bezier;               /* Needed when drawing bezier curves */
 
 static void       d_paint_bezier          (Dobject *obj);
 static Dobject  * d_copy_bezier           (Dobject * obj);
@@ -48,13 +48,11 @@ static Dobject  * d_new_bezier            (gint x, gint y);
 
 static void
 d_save_bezier (Dobject *obj,
-	       FILE    *to)
+               GString *string)
 {
-  fprintf (to, "<BEZIER>\n");
-  do_save_obj (obj, to);
-  fprintf (to, "<EXTRA>\n");
-  fprintf (to, "%d\n</EXTRA>\n", obj->type_data);
-  fprintf (to, "</BEZIER>\n");
+  do_save_obj (obj, string);
+  g_string_append_printf (string, "<EXTRA>\n");
+  g_string_append_printf (string, "%d\n</EXTRA>\n", obj->type_data);
 }
 
 Dobject *
@@ -68,49 +66,44 @@ d_load_bezier (FILE *from)
   while (get_line (buf, MAX_LOAD_LINE, from, 0))
     {
       if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
-	{
-	  /* Must be the end */
-	  if (!strcmp ("<EXTRA>", buf))
-	    {
-	      gint nsides = 3;
-	      /* Number of sides - data item */
-	      if ( !new_obj)
-		{
-		  g_message ("[%d] Internal load error while loading bezier "
-			     "(extra area)", line_no);
-		  return NULL;
-		}
-	      get_line (buf, MAX_LOAD_LINE, from, 0);
-	      if (sscanf (buf, "%d", &nsides) != 1)
-		{
-		  g_message ("[%d] Internal load error while loading bezier "
-			     "(extra area scanf)", line_no);
-		  return NULL;
-		}
-	      new_obj->type_data = nsides;
-	      get_line (buf, MAX_LOAD_LINE, from, 0);
-	      if (strcmp ("</EXTRA>", buf))
-		{
-		  g_message ("[%d] Internal load error while loading bezier",
-			     line_no);
-		  return NULL;
-		}
-	      /* Go around and read the last line */
-	      continue;
-	    }
-	  else if (strcmp ("</BEZIER>", buf))
-	    {
-	      g_message ("[%d] Internal load error while loading bezier",
-			 line_no);
-	      return NULL;
-	    }
-	  return new_obj;
-	}
+        {
+          /* Must be the end */
+          if (!strcmp ("<EXTRA>", buf))
+            {
+              gint nsides = 3;
+              /* Number of sides - data item */
+              if ( !new_obj)
+                {
+                  g_message ("[%d] Internal load error while loading bezier "
+                             "(extra area)", line_no);
+                  return NULL;
+                }
+              get_line (buf, MAX_LOAD_LINE, from, 0);
+              if (sscanf (buf, "%d", &nsides) != 1)
+                {
+                  g_message ("[%d] Internal load error while loading bezier "
+                             "(extra area scanf)", line_no);
+                  return NULL;
+                }
+              new_obj->type_data = nsides;
+              get_line (buf, MAX_LOAD_LINE, from, 0);
+              if (strcmp ("</EXTRA>", buf))
+                {
+                  g_message ("[%d] Internal load error while loading bezier",
+                             line_no);
+                  return NULL;
+                }
+              /* Go around and read the last line */
+              continue;
+            }
+          else 
+            return new_obj;
+        }
 
       if (!new_obj)
-	new_obj = d_new_bezier (xpnt, ypnt);
+        new_obj = d_new_bezier (xpnt, ypnt);
       else
-	d_pnt_add_line (new_obj, xpnt, ypnt, -1);
+        d_pnt_add_line (new_obj, xpnt, ypnt, -1);
     }
 
   return new_obj;
@@ -132,9 +125,9 @@ fp_pnt_start (void)
 /* Add a line segment to collection array */
 static void
 fp_pnt_add (gdouble p1,
-	    gdouble p2,
-	    gdouble p3,
-	    gdouble p4)
+            gdouble p2,
+            gdouble p3,
+            gdouble p4)
 {
   if (!fp_pnt_pnts)
     {
@@ -147,8 +140,8 @@ fp_pnt_add (gdouble p1,
       /* more space pls */
       fp_pnt_chunk++;
       fp_pnt_pnts =
-	(gdouble *) g_realloc (fp_pnt_pnts,
-			       sizeof (gdouble) * fp_pnt_chunk * FP_PNT_MAX);
+        (gdouble *) g_realloc (fp_pnt_pnts,
+                               sizeof (gdouble) * fp_pnt_chunk * FP_PNT_MAX);
     }
 
   fp_pnt_pnts[fp_pnt_cnt++] = p1;
@@ -188,9 +181,9 @@ typedef gdouble (*fp_pnt)[2];
 
 static void
 DrawBezier (gdouble (*points)[2],
-	    gint      np,
-	    gdouble   mid,
-	    gint      depth)
+            gint      np,
+            gdouble   mid,
+            gint      depth)
 {
   gint i, j, x0 = 0, y0 = 0, x1, y1;
   fp_pnt left;
@@ -198,48 +191,48 @@ DrawBezier (gdouble (*points)[2],
 
     if (depth == 0) /* draw polyline */
       {
-	for (i = 0; i < np; i++)
-	  {
-	    x1 = (int) points[i][0];
-	    y1 = (int) points[i][1];
-	    if (i > 0 && (x1 != x0 || y1 != y0))
-	      {
-		/* Add pnts up */
-		fp_pnt_add ((gdouble) x0, (gdouble) y0,
-			    (gdouble) x1, (gdouble) y1);
-	      }
-	    x0 = x1;
-	    y0 = y1;
-	  }
+        for (i = 0; i < np; i++)
+          {
+            x1 = (int) points[i][0];
+            y1 = (int) points[i][1];
+            if (i > 0 && (x1 != x0 || y1 != y0))
+              {
+                /* Add pnts up */
+                fp_pnt_add ((gdouble) x0, (gdouble) y0,
+                            (gdouble) x1, (gdouble) y1);
+              }
+            x0 = x1;
+            y0 = y1;
+          }
       }
     else /* subdivide control points at mid */
       {
-	left = (fp_pnt) g_new (gdouble, np * 2);
-	right = (fp_pnt) g_new (gdouble, np * 2);
-	for (i = 0; i < np; i++)
-	  {
-	    right[i][0] = points[i][0];
-	    right[i][1] = points[i][1];
-	  }
-	left[0][0] = right[0][0];
-	left[0][1] = right[0][1];
-	for (j = np - 1; j >= 1; j--)
-	  {
-	    for (i = 0; i < j; i++)
-	      {
-		right[i][0] = (1 - mid) * right[i][0] + mid * right[i + 1][0];
-		right[i][1] = (1 - mid) * right[i][1] + mid * right[i + 1][1];
-	      }
-	    left[np - j][0] = right[0][0];
-	    left[np - j][1] = right[0][1];
-	  }
-	if (depth > 0)
-	  {
-	    DrawBezier (left, np, mid, depth - 1);
-	    DrawBezier (right, np, mid, depth - 1);
-	    g_free (left);
-	    g_free (right);
-	  }
+        left = (fp_pnt) g_new (gdouble, np * 2);
+        right = (fp_pnt) g_new (gdouble, np * 2);
+        for (i = 0; i < np; i++)
+          {
+            right[i][0] = points[i][0];
+            right[i][1] = points[i][1];
+          }
+        left[0][0] = right[0][0];
+        left[0][1] = right[0][1];
+        for (j = np - 1; j >= 1; j--)
+          {
+            for (i = 0; i < j; i++)
+              {
+                right[i][0] = (1 - mid) * right[i][0] + mid * right[i + 1][0];
+                right[i][1] = (1 - mid) * right[i][1] + mid * right[i + 1][1];
+              }
+            left[np - j][0] = right[0][0];
+            left[np - j][1] = right[0][1];
+          }
+        if (depth > 0)
+          {
+            DrawBezier (left, np, mid, depth - 1);
+            DrawBezier (right, np, mid, depth - 1);
+            g_free (left);
+            g_free (right);
+          }
       }
 }
 
@@ -272,7 +265,7 @@ d_draw_bezier (Dobject *obj)
 
   /* Generate an array of doubles which are the control points */
 
-  if (!drawing_pic && bezier_line_frame && tmp_bezier)
+  if (bezier_line_frame && tmp_bezier)
     {
       fp_pnt_start ();
       DrawBezier (line_pnts, seg_count, 0.5, 0);
@@ -330,17 +323,17 @@ d_paint_bezier (Dobject *obj)
   if (selvals.painttype == PAINT_BRUSH_TYPE)
     {
       gfig_paint (selvals.brshtype,
-		  gfig_drawable,
-		  i, line_pnts);
+                  gfig_context->drawable_id,
+                  i, line_pnts);
     }
   else
     {
-      gimp_free_select (gfig_image,
-			i, line_pnts,
-			selopt.type,
-			selopt.antia,
-			selopt.feather,
-			selopt.feather_radius);
+      gimp_free_select (gfig_context->image_id,
+                        i, line_pnts,
+                        selopt.type,
+                        selopt.antia,
+                        selopt.feather,
+                        selopt.feather_radius);
     }
 
   g_free (bz_line_pnts);
@@ -401,9 +394,9 @@ d_update_bezier (GdkPoint *pnt)
     {
       /* Undraw */
       while (l_pnt->next)
-	{
-	  l_pnt = l_pnt->next;
-	}
+        {
+          l_pnt = l_pnt->next;
+        }
 
       draw_circle (&l_pnt->pnt);
       selvals.opts.showcontrol = 0;
@@ -456,38 +449,38 @@ d_bezier_end (GdkPoint *pnt, gint shift_down)
     {
       /* Undraw circle on last pnt */
       while (l_pnt->next)
-	{
-	  l_pnt = l_pnt->next;
-	}
+        {
+          l_pnt = l_pnt->next;
+        }
 
       if (l_pnt)
-	{
-	  draw_circle (&l_pnt->pnt);
-	  draw_sqr (&l_pnt->pnt);
+        {
+          draw_circle (&l_pnt->pnt);
+          draw_sqr (&l_pnt->pnt);
 
-	  if (bezier_closed)
-	    {
-	      gint tmp_frame = bezier_line_frame;
-	      /* if closed then add first point */
-	      d_draw_bezier (tmp_bezier);
-	      d_pnt_add_line (tmp_bezier,
-			     tmp_bezier->points->pnt.x,
-			     tmp_bezier->points->pnt.y,-1);
-	      /* Final has no frame */
-	      bezier_line_frame = 0; /* False */
-	      d_draw_bezier (tmp_bezier);
-	      bezier_line_frame = tmp_frame; /* What is was */
-	    }
-	  else if (bezier_line_frame)
-	    {
-	      d_draw_bezier (tmp_bezier);
-	      bezier_line_frame = 0; /* False */
-	      d_draw_bezier (tmp_bezier);
-	      bezier_line_frame = 1; /* What is was */
-	    }
+          if (bezier_closed)
+            {
+              gint tmp_frame = bezier_line_frame;
+              /* if closed then add first point */
+              d_draw_bezier (tmp_bezier);
+              d_pnt_add_line (tmp_bezier,
+                             tmp_bezier->points->pnt.x,
+                             tmp_bezier->points->pnt.y,-1);
+              /* Final has no frame */
+              bezier_line_frame = 0; /* False */
+              d_draw_bezier (tmp_bezier);
+              bezier_line_frame = tmp_frame; /* What is was */
+            }
+          else if (bezier_line_frame)
+            {
+              d_draw_bezier (tmp_bezier);
+              bezier_line_frame = 0; /* False */
+              d_draw_bezier (tmp_bezier);
+              bezier_line_frame = 1; /* What is was */
+            }
 
-	  add_to_all_obj (current_obj, obj_creating);
-	}
+          add_to_all_obj (gfig_context->current_obj, obj_creating);
+        }
 
       /* small mem leak if !l_pnt ? */
       tmp_bezier = NULL;
@@ -496,10 +489,10 @@ d_bezier_end (GdkPoint *pnt, gint shift_down)
   else
     {
       if (!tmp_bezier->points->next)
-	{
-	  draw_circle (&tmp_bezier->points->pnt);
-	  draw_sqr (&tmp_bezier->points->pnt);
-	}
+        {
+          draw_circle (&tmp_bezier->points->pnt);
+          draw_sqr (&tmp_bezier->points->pnt);
+        }
 
       d_draw_bezier (tmp_bezier);
       d_pnt_add_line (tmp_bezier, pnt->x, pnt->y,-1);
@@ -522,11 +515,11 @@ bezier_dialog (void)
 
   window = gimp_dialog_new (_("Bezier Settings"), "gfig",
                             NULL, 0,
-			    gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, HELP_ID,
 
-			    GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
-			    NULL);
+                            NULL);
 
   g_signal_connect (window, "response",
                     G_CALLBACK (gtk_widget_destroy),
@@ -538,7 +531,7 @@ bezier_dialog (void)
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox,
-		      FALSE, FALSE, 0);
+                      FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
   toggle = gtk_check_button_new_with_label (_("Closed"));
@@ -546,7 +539,7 @@ bezier_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &bezier_closed);
   gimp_help_set_help_data (toggle,
-			_("Close curve on completion"), NULL);
+                        _("Close curve on completion"), NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bezier_closed);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -556,8 +549,8 @@ bezier_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &bezier_line_frame);
   gimp_help_set_help_data (toggle,
-			_("Draws lines between the control points. "
-			  "Only during curve creation"), NULL);
+                        _("Draws lines between the control points. "
+                          "Only during curve creation"), NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bezier_line_frame);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);

@@ -58,11 +58,11 @@ dist (gdouble x1,
 /* Mid point of line returned */
 static void
 mid_point (gdouble x1,
-	   gdouble y1,
-	   gdouble x2,
-	   gdouble y2,
-	   gdouble *mx,
-	   gdouble *my)
+           gdouble y1,
+           gdouble x2,
+           gdouble y2,
+           gdouble *mx,
+           gdouble *my)
 {
   *mx = (x1 + x2) / 2.0;
   *my = (y1 + y2) / 2.0;
@@ -71,9 +71,9 @@ mid_point (gdouble x1,
 /* Careful about infinite grads */
 static gdouble
 line_grad (gdouble x1,
-	   gdouble y1,
-	   gdouble x2,
-	   gdouble y2)
+           gdouble y1,
+           gdouble x2,
+           gdouble y2)
 {
   double dx, dy;
   
@@ -86,8 +86,8 @@ line_grad (gdouble x1,
 /* Constant of line that goes through x, y with grad lgrad */
 static gdouble
 line_cons (gdouble x,
-	   gdouble y,
-	   gdouble lgrad)
+           gdouble y,
+           gdouble lgrad)
 {
   return y - lgrad * x;
 }
@@ -95,11 +95,11 @@ line_cons (gdouble x,
 /*Get grad & const for perpend. line to given points */
 static void
 line_definition (gdouble  x1,
-		 gdouble  y1,
-		 gdouble  x2,
-		 gdouble  y2,
-		 gdouble *lgrad,
-		 gdouble *lconst)
+                 gdouble  y1,
+                 gdouble  x2,
+                 gdouble  y2,
+                 gdouble *lgrad,
+                 gdouble *lconst)
 {
   double grad1;
   double midx, midy;
@@ -130,10 +130,10 @@ line_definition (gdouble  x1,
 
 static void
 arc_details (GdkPoint *vert_a,
-	     GdkPoint *vert_b,
-	     GdkPoint *vert_c,
-	     GdkPoint *center_pnt,
-	     gdouble  *radius)
+             GdkPoint *vert_b,
+             GdkPoint *vert_c,
+             GdkPoint *center_pnt,
+             gdouble  *radius)
 {
   /* Only vertices are in whole numbers - everything else is in doubles */
   double ax, ay;
@@ -195,37 +195,37 @@ arc_details (GdkPoint *vert_a,
     {
       /* vert line -> mid point gives inter_x */
       if (ax == bx && bx == cx)
-	{
-	  /* Straight line */
-	  double miny = ay;
-	  double maxy = ay;
+        {
+          /* Straight line */
+          double miny = ay;
+          double maxy = ay;
 
-	  if (by > maxy)
-	    maxy = by;
-	  
-	  if (by < miny)
-	    miny = by;
+          if (by > maxy)
+            maxy = by;
+          
+          if (by < miny)
+            miny = by;
 
-	  if (cy > maxy)
-	    maxy = cy;
+          if (cy > maxy)
+            maxy = cy;
 
-	  if (cy < miny)
-	    miny = cy;
+          if (cy < miny)
+            miny = cy;
 
-	  inter_y = (maxy - miny)/2 + miny;
-	}
+          inter_y = (maxy - miny)/2 + miny;
+        }
       else if (ax == bx)
-	{
-	  inter_y = (ay - by)/2 + by;
-	}
+        {
+          inter_y = (ay - by)/2 + by;
+        }
       else if (bx == cx)
-	{
-	  inter_y = (by - cy)/2 + cy;
-	}
+        {
+          inter_y = (by - cy)/2 + cy;
+        }
       else
-	{
-	  inter_y = (cy - ay)/2 + ay;
-	}
+        {
+          inter_y = (cy - ay)/2 + ay;
+        }
       got_y = 1;
     }
 
@@ -233,37 +233,37 @@ arc_details (GdkPoint *vert_a,
     {
       /* Horz line -> midpoint gives inter_y */
       if (ax == bx && bx == cx)
-	{
-	  /* Straight line */
-	  double minx = ax;
-	  double maxx = ax;
+        {
+          /* Straight line */
+          double minx = ax;
+          double maxx = ax;
 
-	  if (bx > maxx)
-	    maxx = bx;
-	  
-	  if (bx < minx)
-	    minx = bx;
+          if (bx > maxx)
+            maxx = bx;
+          
+          if (bx < minx)
+            minx = bx;
 
-	  if (cx > maxx)
-	    maxx = cx;
+          if (cx > maxx)
+            maxx = cx;
 
-	  if (cx < minx)
-	    minx = cx;
+          if (cx < minx)
+            minx = cx;
 
-	  inter_x = (maxx - minx)/2 + minx;
-	}
+          inter_x = (maxx - minx)/2 + minx;
+        }
       else if (ay == by)
-	{
-	  inter_x = (ax - bx)/2 + bx;
-	}
+        {
+          inter_x = (ax - bx)/2 + bx;
+        }
       else if (by == cy)
-	{
-	  inter_x = (bx - cx)/2 + cx;
-	}
+        {
+          inter_x = (bx - cx)/2 + cx;
+        }
       else
-	{
-	  inter_x = (cx - ax)/2 + ax;
-	}
+        {
+          inter_x = (cx - ax)/2 + ax;
+        }
       got_x = 1;
     }
 
@@ -272,14 +272,14 @@ arc_details (GdkPoint *vert_a,
       /* At least two of the lines are not parallel to the axis */
       /*first line */
       if (ax != bx && ay != by)
-	line_definition (ax, ay, bx, by, &line1_grad, &line1_const);
+        line_definition (ax, ay, bx, by, &line1_grad, &line1_const);
       else
-	line_definition (ax, ay, cx, cy, &line1_grad, &line1_const);
+        line_definition (ax, ay, cx, cy, &line1_grad, &line1_const);
       /* second line */
       if (bx != cx && by != cy)
-	line_definition (bx, by, cx, cy, &line2_grad, &line2_const);
+        line_definition (bx, by, cx, cy, &line2_grad, &line2_const);
       else
-	line_definition (ax, ay, cx, cy, &line2_grad, &line2_const);
+        line_definition (ax, ay, cx, cy, &line2_grad, &line2_const);
     }
 
   /* Intersection point */
@@ -295,7 +295,7 @@ arc_details (GdkPoint *vert_a,
 
 static gdouble
 arc_angle (GdkPoint *pnt,
-	   GdkPoint *center)
+           GdkPoint *center)
 {
   /* Get angle (in degress) of point given origin of center */
   gint16 shift_x;
@@ -314,11 +314,9 @@ arc_angle (GdkPoint *pnt,
 
 static void
 d_save_arc (Dobject *obj,
-	    FILE    *to)
+            GString *string)
 {
-  fprintf (to, "<ARC>\n");
-  do_save_obj (obj, to);
-  fprintf (to, "</ARC>\n");
+  do_save_obj (obj, string);
 }
 
 Dobject *
@@ -333,25 +331,18 @@ d_load_arc (FILE *from)
   while (get_line (buf, MAX_LOAD_LINE, from, 0))
     {
       if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
-	{
-	  /* Must be the end */
-	  if (strcmp ("</ARC>", buf) || num_pnts != 3)
-	    {
-	      g_warning ("[%d] Internal load error while loading arc",
-			line_no);
-	      return NULL;
-	    }
-	  return new_obj;
-	}
+        {
+          return new_obj;
+        }
       
       num_pnts++;
 
       if (!new_obj)
-	new_obj = d_new_arc (xpnt, ypnt);
+        new_obj = d_new_arc (xpnt, ypnt);
       else
-	{
-	  d_pnt_add_line (new_obj, xpnt, ypnt,-1);
-	}
+        {
+          d_pnt_add_line (new_obj, xpnt, ypnt,-1);
+        }
     }
   g_warning ("[%d] Not enough points for arc", line_no);
   return NULL;
@@ -359,12 +350,12 @@ d_load_arc (FILE *from)
 
 static void
 arc_drawing_details (Dobject  *obj,
-		     gdouble  *minang,
-		     GdkPoint *center_pnt,
-		     gdouble  *arcang,
-		     gdouble  *radius,
-		     gint      draw_cnts,
-		     gint      do_scale)
+                     gdouble  *minang,
+                     GdkPoint *center_pnt,
+                     gdouble  *arcang,
+                     gdouble  *radius,
+                     gint      draw_cnts,
+                     gint      do_scale)
 {
   DobjPoints * pnt1 = NULL;
   DobjPoints * pnt2 = NULL;
@@ -412,16 +403,16 @@ arc_drawing_details (Dobject  *obj,
       pnt3 = &dpnts[2];
 
       for (j = 0 ; j < 3; j++)
-	{
-	  xy[0] = dpnts[j].pnt.x;
-	  xy[1] = dpnts[j].pnt.y;
-	  if (selvals.scaletoimage)
-	    scale_to_original_xy (&xy[0], 1);
-	  else
-	    scale_to_xy (&xy[0], 1);
-	  dpnts[j].pnt.x = xy[0];
-	  dpnts[j].pnt.y = xy[1];
-	}
+        {
+          xy[0] = dpnts[j].pnt.x;
+          xy[1] = dpnts[j].pnt.y;
+          if (selvals.scaletoimage)
+            scale_to_original_xy (&xy[0], 1);
+          else
+            scale_to_xy (&xy[0], 1);
+          dpnts[j].pnt.x = xy[0];
+          dpnts[j].pnt.y = xy[1];
+        }
     }
 
   arc_details (&pnt1->pnt, &pnt2->pnt, &pnt3->pnt, center_pnt, radius);
@@ -460,7 +451,7 @@ d_draw_arc (Dobject * obj)
     return;
 
   arc_drawing_details (obj, &minang, &center_pnt, &arcang, &radius, TRUE, 
-		       FALSE);
+                       FALSE);
   gfig_draw_arc (center_pnt.x, center_pnt.y, radius, radius, minang, arcang);
 }
 
@@ -521,22 +512,22 @@ d_paint_arc (Dobject *obj)
 
       /* Miss out duped pnts */
       if (!first)
-	{
-	  if (calc_pnt.x == last_pnt.x && calc_pnt.y == last_pnt.y)
-	    {
-	      continue;
-	    }
-	}
+        {
+          if (calc_pnt.x == last_pnt.x && calc_pnt.y == last_pnt.y)
+            {
+              continue;
+            }
+        }
 
       line_pnts[i++] = calc_pnt.x;
       line_pnts[i++] = calc_pnt.y;
       last_pnt = calc_pnt;
 
       if (first)
-	{
-	  first_pnt = calc_pnt;
-	  first = FALSE;
-	}
+        {
+          first_pnt = calc_pnt;
+          first = FALSE;
+        }
     }
 
   /* Reverse line if approp */
@@ -547,24 +538,24 @@ d_paint_arc (Dobject *obj)
   if (selvals.painttype == PAINT_BRUSH_TYPE)
     {
       gfig_paint (selvals.brshtype,
-		  gfig_drawable,
-		  i, line_pnts);
+                  gfig_context->drawable_id,
+                  i, line_pnts);
     }
   else
     {
       if (selopt.as_pie)
-	{
-	  /* Add center point - cause a pie like selection... */
-	  line_pnts[i++] = center_pnt.x;
-	  line_pnts[i++] = center_pnt.y;
-	}
+        {
+          /* Add center point - cause a pie like selection... */
+          line_pnts[i++] = center_pnt.x;
+          line_pnts[i++] = center_pnt.y;
+        }
 
-      gimp_free_select (gfig_image,
-			i, line_pnts,
-			selopt.type,
-			selopt.antia,
-			selopt.feather,
-			selopt.feather_radius);
+      gimp_free_select (gfig_context->image_id,
+                        i, line_pnts,
+                        selopt.type,
+                        selopt.antia,
+                        selopt.feather,
+                        selopt.feather_radius);
     }
 
   g_free (line_pnts);
@@ -585,7 +576,7 @@ d_copy_arc (Dobject * obj)
 
 static Dobject *
 d_new_arc (gint x,
-	   gint y)
+           gint y)
 {
   Dobject *nobj;
 
@@ -629,7 +620,7 @@ d_update_arc (GdkPoint *pnt)
 
 void
 d_arc_start (GdkPoint *pnt,
-	     gint      shift_down)
+             gint      shift_down)
 {
   /* Draw lines to start with -- then convert to an arc */
   if (!tmp_line)
@@ -639,7 +630,7 @@ d_arc_start (GdkPoint *pnt,
 
 void
 d_arc_end (GdkPoint *pnt,
-	   gint      shift_down)
+           gint      shift_down)
 {
   /* Under contrl point */
   if (!tmp_line ||
@@ -663,15 +654,15 @@ d_arc_end (GdkPoint *pnt,
       d_line_end (pnt, FALSE);
       /*d_draw_line (newarc);  Should undraw line */
       if (need_to_scale)
-	{
-	  selvals.scaletoimage = 0;
-	}
+        {
+          selvals.scaletoimage = 0;
+        }
       /*d_draw_arc (newarc);*/
-      gtk_widget_queue_draw (gfig_preview);
+      gtk_widget_queue_draw (gfig_context->preview);
       if (need_to_scale)
-	{
-	  selvals.scaletoimage = 1;
-	}
+        {
+          selvals.scaletoimage = 1;
+        }
     }
 }
 

@@ -20,20 +20,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * 
+ *
  */
 
-#ifndef __GFIG_STAR_H__
-#define __GFIG_STAR_H__
+#ifndef __GFIG_DIALOG_H__
+#define __GFIG_DIALOG_H__
 
-gboolean   star_button_press       (GtkWidget      *widget,
-                                    GdkEventButton *event,
-                                    gpointer        data);
+#define RESPONSE_UNDO    1
+#define RESPONSE_CLEAR   2
+#define RESPONSE_SAVE    3
+#define RESPONSE_PAINT   4
 
-void       d_update_star           (GdkPoint *pnt);
-void       d_star_start            (GdkPoint *pnt, gint shift_down);
-void       d_star_end              (GdkPoint *pnt, gint shift_down);
+gint      gfig_dialog               (void);
+void      update_options            (GFigObj *old_obj);
 
-Dobject  * d_load_star             (FILE *from);
+gint           undo_water_mark; /* Last slot filled in -1 = no undo */
+DAllObjs      *undo_table[MAX_UNDO];
 
-#endif /* __GFIG_STAR_H__ */
+#endif /* __GFIG_DIALOG_H__ */

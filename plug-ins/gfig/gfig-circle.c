@@ -43,11 +43,9 @@ static Dobject *d_new_circle (gint x, gint y);
 
 static void
 d_save_circle (Dobject *obj,
-	       FILE    *to)
+               GString *string)
 {
-  fprintf (to, "<CIRCLE>\n");
-  do_save_obj (obj, to);
-  fprintf (to, "</CIRCLE>\n");
+  do_save_obj (obj, string);
 }
 
 Dobject *
@@ -60,24 +58,21 @@ d_load_circle (FILE *from)
 
   while (get_line (buf, MAX_LOAD_LINE, from, 0))
     {
+      /* kludge */
+      if (buf[0] == '<')
+          return new_obj;
+
       if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
-	{
-	  /* Must be the end */
-	  if (strcmp ("</CIRCLE>", buf))
-	    {
-	      g_warning ("[%d] Internal load error while loading circle",
-			 line_no);
-	      return NULL;
-	    }
-	  return new_obj;
-	}
+        {
+          g_warning ("[%d] Internal load error while loading circle",
+                     line_no);
+          return NULL;
+        }
 
       if (!new_obj)
-	new_obj = d_new_circle (xpnt, ypnt);
+        new_obj = d_new_circle (xpnt, ypnt);
       else
-	{
-	  new_obj->points->next = new_dobjpoint (xpnt, ypnt);
-	}
+        new_obj->points->next = new_dobjpoint (xpnt, ypnt);
     }
 
   g_warning ("[%d] Not enough points for circle", line_no);
@@ -164,21 +159,21 @@ d_paint_circle (Dobject *obj)
   else
     scale_to_xy (&dpnts[0], 2);
 
-  gimp_ellipse_select (gfig_image,
-		       dpnts[0], dpnts[1],
-		       dpnts[2], dpnts[3],
-		       selopt.type,
-		       selopt.antia,
-		       selopt.feather,
-		       selopt.feather_radius);
+  gimp_ellipse_select (gfig_context->image_id,
+                       dpnts[0], dpnts[1],
+                       dpnts[2], dpnts[3],
+                       selopt.type,
+                       selopt.antia,
+                       selopt.feather,
+                       selopt.feather_radius);
 
   /* Is selection all we need ? */
   if (selvals.painttype == PAINT_SELECTION_TYPE)
     return;
 
-  gimp_edit_stroke (gfig_drawable);
+  gimp_edit_stroke (gfig_context->drawable_id);
 
-  gimp_selection_clear (gfig_image);
+  gimp_selection_clear (gfig_context->image_id);
 }
 
 static Dobject*
@@ -196,7 +191,7 @@ d_copy_circle (Dobject * obj)
 
 static Dobject *
 d_new_circle (gint x,
-	      gint y)
+              gint y)
 {
   Dobject *nobj;
 
@@ -231,15 +226,15 @@ d_update_circle (GdkPoint *pnt)
       draw_circle (&edge_pnt->pnt);
       radius = calc_radius (&center_pnt->pnt, &edge_pnt->pnt);
       
-      gdk_draw_arc (gfig_preview->window,
-		    gfig_gc,
-		    0,
-		    center_pnt->pnt.x - (gint) RINT (radius),
-		    center_pnt->pnt.y - (gint) RINT (radius),
-		    (gint) RINT (radius) * 2,
-		    (gint) RINT (radius) * 2,
-		    0,
-		    360 * 64);
+      gdk_draw_arc (gfig_context->preview->window,
+                    gfig_gc,
+                    0,
+                    center_pnt->pnt.x - (gint) RINT (radius),
+                    center_pnt->pnt.y - (gint) RINT (radius),
+                    (gint) RINT (radius) * 2,
+                    (gint) RINT (radius) * 2,
+                    0,
+                    360 * 64);
     }
 
   draw_circle (pnt);
@@ -247,29 +242,29 @@ d_update_circle (GdkPoint *pnt)
   edge_pnt = new_dobjpoint (pnt->x, pnt->y);
   radius = calc_radius (&center_pnt->pnt, &edge_pnt->pnt);
 
-  gdk_draw_arc (gfig_preview->window,
-		gfig_gc,
-		0,
-		center_pnt->pnt.x - (gint) RINT (radius),
-		center_pnt->pnt.y - (gint) RINT (radius),
-		(gint) RINT (radius) * 2,
-		(gint) RINT (radius) * 2,
-		0,
-		360 * 64);
+  gdk_draw_arc (gfig_context->preview->window,
+                gfig_gc,
+                0,
+                center_pnt->pnt.x - (gint) RINT (radius),
+                center_pnt->pnt.y - (gint) RINT (radius),
+                (gint) RINT (radius) * 2,
+                (gint) RINT (radius) * 2,
+                0,
+                360 * 64);
 
   center_pnt->next = edge_pnt;
 }
 
 void
 d_circle_start (GdkPoint *pnt,
-		gint      shift_down)
+                gint      shift_down)
 {
   obj_creating = d_new_circle (pnt->x, pnt->y);
 }
 
 void
 d_circle_end (GdkPoint *pnt,
-	      gint      shift_down)
+              gint      shift_down)
 {
   /* Under contrl point */
   if (!obj_creating->points->next)
@@ -280,7 +275,7 @@ d_circle_end (GdkPoint *pnt,
   else
     {
       draw_circle (pnt);
-      add_to_all_obj (current_obj, obj_creating);
+      add_to_all_obj (gfig_context->current_obj, obj_creating);
     }
 
   obj_creating = NULL;

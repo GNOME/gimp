@@ -27,8 +27,8 @@
 #define __GFIG_SPIRAL_H__
 
 gint spiral_button_press (GtkWidget      *widget,
-			  GdkEventButton *event,
-			  gpointer        data);
+                          GdkEventButton *event,
+                          gpointer        data);
 
 void       d_update_spiral         (GdkPoint *pnt);
 void       d_spiral_start          (GdkPoint *pnt, gint shift_down);

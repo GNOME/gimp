@@ -30,8 +30,8 @@ Dobject *d_load_arc (FILE *from);
 
 void d_update_arc (GdkPoint *pnt);
 void d_arc_start (GdkPoint *pnt,
-		  gint      shift_down);
+                  gint      shift_down);
 void d_arc_end (GdkPoint *pnt,
-		gint      shift_down);
+                gint      shift_down);
 
 #endif /* __GFIG_ARC_H__ */

@@ -27,8 +27,8 @@
 #define __GFIG_POLY_H__
 
 gboolean poly_button_press (GtkWidget      *widget,
-			    GdkEventButton *event,
-			    gpointer        data);
+                            GdkEventButton *event,
+                            gpointer        data);
 
 Dobject *d_load_poly             (FILE *from);
 
@@ -38,7 +38,7 @@ void    d_poly_end              (GdkPoint *pnt, gint shift_down);
 
 void    d_paint_poly            (Dobject *obj);
 
-void	d_poly2lines (Dobject *obj);
-void	d_star2lines (Dobject *obj);
+void    d_poly2lines (Dobject *obj);
+void    d_star2lines (Dobject *obj);
 
 #endif /* __GFIG_POLY_H__ */

@@ -44,11 +44,9 @@ static Dobject *d_new_ellipse (gint x, gint y);
 
 static void
 d_save_ellipse (Dobject *obj,
-		FILE    *to)
+                GString *string)
 {
-  fprintf (to, "<ELLIPSE>\n");
-  do_save_obj (obj, to);
-  fprintf (to, "</ELLIPSE>\n");
+  do_save_obj (obj, string);
 }
 
 Dobject *
@@ -61,24 +59,20 @@ d_load_ellipse (FILE *from)
 
   while (get_line (buf, MAX_LOAD_LINE, from, 0))
     {
-      if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
-	{
-	  /* Must be the end */
-	  if (strcmp ("</ELLIPSE>", buf))
-	    {
-	      g_message ("[%d] Internal load error while loading ellipse",
-			 line_no);
-	      return NULL;
-	    }
-	  return new_obj;
-	}
+      /* kludge */
+      if (buf[0] == '<')
+          return new_obj;
 
+      if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
+        {
+          g_message ("[%d] Not enough points for ellipse", line_no);
+          return NULL;
+        }
+         
       if (!new_obj)
-	new_obj = d_new_ellipse (xpnt, ypnt);
+        new_obj = d_new_ellipse (xpnt, ypnt);
       else
-	{
-	  new_obj->points->next = new_dobjpoint (xpnt, ypnt);
-	}
+        new_obj->points->next = new_dobjpoint (xpnt, ypnt);
     }
 
   g_message ("[%d] Not enough points for ellipse", line_no);
@@ -176,8 +170,8 @@ d_paint_approx_ellipse (Dobject *obj)
       ang_loop = (gdouble)loop * ang_grid;
 
       radius = (a_axis * b_axis /
-		(sqrt (cos (ang_loop) * cos (ang_loop) *
-		       (b_axis * b_axis - a_axis * a_axis) + a_axis * a_axis)));
+                (sqrt (cos (ang_loop) * cos (ang_loop) *
+                       (b_axis * b_axis - a_axis * a_axis) + a_axis * a_axis)));
 
       lx = radius * cos (ang_loop);
       ly = radius * sin (ang_loop);
@@ -187,22 +181,22 @@ d_paint_approx_ellipse (Dobject *obj)
 
       /* Miss out duped pnts */
       if (!first)
-	{
-	  if (calc_pnt.x == last_pnt.x && calc_pnt.y == last_pnt.y)
-	    {
-	      continue;
-	    }
-	}
+        {
+          if (calc_pnt.x == last_pnt.x && calc_pnt.y == last_pnt.y)
+            {
+              continue;
+            }
+        }
 
       line_pnts[i++] = calc_pnt.x;
       line_pnts[i++] = calc_pnt.y;
       last_pnt = calc_pnt;
 
       if (first)
-	{
-	  first_pnt = calc_pnt;
-	  first = FALSE;
-	}
+        {
+          first_pnt = calc_pnt;
+          first = FALSE;
+        }
     }
 
   line_pnts[i++] = first_pnt.x;
@@ -222,17 +216,17 @@ d_paint_approx_ellipse (Dobject *obj)
   if (selvals.painttype == PAINT_BRUSH_TYPE)
     {
       gfig_paint (selvals.brshtype,
-		  gfig_drawable,
-		  i, line_pnts);
+                  gfig_context->drawable_id,
+                  i, line_pnts);
     }
   else
     {
-      gimp_free_select (gfig_image,
-			i, line_pnts,
-			selopt.type,
-			selopt.antia,
-			selopt.feather,
-			selopt.feather_radius);
+      gimp_free_select (gfig_context->image_id,
+                        i, line_pnts,
+                        selopt.type,
+                        selopt.antia,
+                        selopt.feather,
+                        selopt.feather_radius);
     }
 
   g_free (line_pnts);
@@ -301,21 +295,21 @@ d_paint_ellipse (Dobject *obj)
     scale_to_xy (&dpnts[0], 2);
 
 
-  gimp_ellipse_select (gfig_image,
-		       dpnts[0], dpnts[1],
-		       dpnts[2], dpnts[3],
-		       selopt.type,
-		       selopt.antia,
-		       selopt.feather,
-		       selopt.feather_radius);
+  gimp_ellipse_select (gfig_context->image_id,
+                       dpnts[0], dpnts[1],
+                       dpnts[2], dpnts[3],
+                       selopt.type,
+                       selopt.antia,
+                       selopt.feather,
+                       selopt.feather_radius);
 
   /* Is selection all we need ? */
   if (selvals.painttype == PAINT_SELECTION_TYPE)
     return;
 
-  gimp_edit_stroke (gfig_drawable);
+  gimp_edit_stroke (gfig_context->drawable_id);
 
-  gimp_selection_clear (gfig_image);
+  gimp_selection_clear (gfig_context->image_id);
 }
 
 static Dobject *
@@ -372,26 +366,26 @@ d_update_ellipse (GdkPoint *pnt)
       bound_wy = abs (center_pnt->pnt.y - edge_pnt->pnt.y)*2;
       
       if (edge_pnt->pnt.x > center_pnt->pnt.x)
-	top_x = 2*center_pnt->pnt.x - edge_pnt->pnt.x;
+        top_x = 2*center_pnt->pnt.x - edge_pnt->pnt.x;
       else
-	top_x = edge_pnt->pnt.x;
+        top_x = edge_pnt->pnt.x;
       
       if (edge_pnt->pnt.y > center_pnt->pnt.y)
-	top_y = 2*center_pnt->pnt.y - edge_pnt->pnt.y;
+        top_y = 2*center_pnt->pnt.y - edge_pnt->pnt.y;
       else
-	top_y = edge_pnt->pnt.y;
+        top_y = edge_pnt->pnt.y;
 
       draw_circle (&edge_pnt->pnt);
       
-      gdk_draw_arc (gfig_preview->window,
-		    gfig_gc,
-		    0,
-		    top_x,
-		    top_y,
-		    bound_wx,
-		    bound_wy,
-		    0,
-		    360*64);
+      gdk_draw_arc (gfig_context->preview->window,
+                    gfig_gc,
+                    0,
+                    top_x,
+                    top_y,
+                    bound_wx,
+                    bound_wy,
+                    0,
+                    360*64);
     }
 
   draw_circle (pnt);
@@ -411,15 +405,15 @@ d_update_ellipse (GdkPoint *pnt)
   else
     top_y = edge_pnt->pnt.y;
   
-  gdk_draw_arc (gfig_preview->window,
-		gfig_gc,
-		0,
-		top_x,
-		top_y,
-		bound_wx,
-		bound_wy,
-		0,
-		360*64);
+  gdk_draw_arc (gfig_context->preview->window,
+                gfig_gc,
+                0,
+                top_x,
+                top_y,
+                bound_wx,
+                bound_wy,
+                0,
+                360*64);
   
   center_pnt->next = edge_pnt;
 }
@@ -442,7 +436,7 @@ d_ellipse_end (GdkPoint *pnt, gint shift_down)
   else
     {
       draw_circle (pnt);
-      add_to_all_obj (current_obj, obj_creating);
+      add_to_all_obj (gfig_context->current_obj, obj_creating);
     }
 
   obj_creating = NULL;
