@@ -73,15 +73,23 @@ fi
 
 echo -n "checking for automake >= $AUTOMAKE_REQUIRED_VERSION ... "
 if (automake-1.6 --version) < /dev/null > /dev/null 2>&1; then
-    VER=`automake-1.6 --version \
-         | grep automake | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
-    check_version $VER $AUTOMAKE_REQUIRED_VERSION
+   AUTOMAKE=automake-1.6
+   ACLOCAL=aclocal-1.6
+elif (automake-1.7 --version) < /dev/null > /dev/null 2>&1; then
+   AUTOMAKE=automake-1.7
+   ACLOCAL=aclocal-1.7
 else
     echo
     echo "  You must have automake 1.6 installed to compile $PROJECT."
     echo "  Get ftp://ftp.gnu.org/pub/gnu/automake/automake-1.6.3.tar.gz"
     echo "  (or a newer version if it is available)"
     DIE=1
+fi
+
+if test x$AUTOMAKE != x; then
+    VER=`$AUTOMAKE --version \
+         | grep automake | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
+    check_version $VER $AUTOMAKE_REQUIRED_VERSION
 fi
 
 echo -n "checking for glib-gettextize >= $GLIB_REQUIRED_VERSION ... "
@@ -104,9 +112,9 @@ if (intltoolize --version) < /dev/null > /dev/null 2>&1; then
     check_version $VER $INTLTOOL_REQUIRED_VERSION
 else
     echo
-    echo "You must have intltool installed to compile $PROJECT."
-    echo "Get the latest version from"
-    echo "ftp://ftp.gnome.org/pub/GNOME/sources/intltool/"
+    echo "  You must have intltool installed to compile $PROJECT."
+    echo "  Get the latest version from"
+    echo "  ftp://ftp.gnome.org/pub/GNOME/sources/intltool/"
     DIE=1
 fi
 
@@ -135,7 +143,7 @@ fi
 
 if test -z "$ACLOCAL_FLAGS"; then
 
-    acdir=`aclocal-1.6 --print-ac-dir`
+    acdir=`$ACLOCAL --print-ac-dir`
     m4list="glib-2.0.m4 glib-gettext.m4 gtk-2.0.m4 intltool.m4 pkg.m4"
 
     for file in $m4list
@@ -153,7 +161,7 @@ if test -z "$ACLOCAL_FLAGS"; then
     done
 fi
 
-if ! aclocal-1.6 $ACLOCAL_FLAGS; then
+if ! $ACLOCAL $ACLOCAL_FLAGS; then
    echo "$ACLOCAL gave errors. Please fix the error conditions and try again."
    exit 1
 fi
@@ -161,7 +169,7 @@ fi
 # optionally feature autoheader
 (autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader
 
-automake-1.6 --add-missing
+$AUTOMAKE --add-missing
 autoconf
 
 libtoolize --copy --force
