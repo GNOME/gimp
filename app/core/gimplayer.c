@@ -79,8 +79,8 @@ static gboolean   gimp_layer_is_attached        (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
                                                  GType               new_type,
                                                  gboolean            add_alpha);
-static void       gimp_layer_convert_to         (GimpItem           *item,
-                                                 GimpItem           *src_item);
+static void       gimp_layer_convert            (GimpItem           *item,
+                                                 GimpImage          *dest_image);
 static gboolean   gimp_layer_rename             (GimpItem           *item,
                                                  const gchar        *new_name,
                                                  const gchar        *undo_desc);
@@ -239,7 +239,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->removed                 = gimp_layer_removed;
   item_class->is_attached             = gimp_layer_is_attached;
   item_class->duplicate               = gimp_layer_duplicate;
-  item_class->convert_to              = gimp_layer_convert_to;
+  item_class->convert                 = gimp_layer_convert;
   item_class->rename                  = gimp_layer_rename;
   item_class->translate               = gimp_layer_translate;
   item_class->scale                   = gimp_layer_scale;
@@ -487,19 +487,16 @@ gimp_layer_duplicate (GimpItem *item,
 }
 
 static void
-gimp_layer_convert_to (GimpItem *item,
-                       GimpItem *src_item)
+gimp_layer_convert (GimpItem  *item,
+                    GimpImage *dest_image)
 {
   GimpLayer         *layer    = GIMP_LAYER (item);
   GimpDrawable      *drawable = GIMP_DRAWABLE (item);
   GimpImageBaseType  old_base_type;
   GimpImageBaseType  new_base_type;
 
-  if (GIMP_ITEM_CLASS (parent_class)->convert_to)
-    GIMP_ITEM_CLASS (parent_class)->convert_to (item, src_item);
-
   old_base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
-  new_base_type = gimp_image_base_type (gimp_item_get_image (item));
+  new_base_type = gimp_image_base_type (dest_image);
 
   if (old_base_type != new_base_type)
     {
@@ -560,8 +557,10 @@ gimp_layer_convert_to (GimpItem *item,
       tile_manager_unref (new_tiles);
     }
 
-  if (layer->mask && item->gimage != src_item->gimage)
-    gimp_item_set_image (GIMP_ITEM (layer->mask), item->gimage);
+  if (layer->mask)
+    gimp_item_set_image (GIMP_ITEM (layer->mask), dest_image);
+
+  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image);
 }
 
 static gboolean

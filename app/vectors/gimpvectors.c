@@ -69,10 +69,8 @@ static gboolean   gimp_vectors_is_attached  (GimpItem         *item);
 static GimpItem * gimp_vectors_duplicate    (GimpItem         *item,
                                              GType             new_type,
                                              gboolean          add_alpha);
-static GimpItem * gimp_vectors_convert_from (GimpItem         *item,
-                                             GimpImage        *dest_image,
-                                             GType             new_type,
-                                             gboolean          add_alpha);
+static void       gimp_vectors_convert      (GimpItem         *item,
+                                             GimpImage        *dest_image);
 static void       gimp_vectors_translate    (GimpItem         *item,
                                              gint              offset_x,
                                              gint              offset_y,
@@ -220,7 +218,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
 
   item_class->is_attached          = gimp_vectors_is_attached;
   item_class->duplicate            = gimp_vectors_duplicate;
-  item_class->convert_from         = gimp_vectors_convert_from;
+  item_class->convert              = gimp_vectors_convert;
   item_class->translate            = gimp_vectors_translate;
   item_class->scale                = gimp_vectors_scale;
   item_class->resize               = gimp_vectors_resize;
@@ -332,29 +330,14 @@ gimp_vectors_duplicate (GimpItem *item,
   return new_item;
 }
 
-static GimpItem *
-gimp_vectors_convert_from (GimpItem  *item,
-                           GimpImage *dest_image,
-                           GType      new_type,
-                           gboolean   add_alpha)
+static void
+gimp_vectors_convert (GimpItem  *item,
+                      GimpImage *dest_image)
 {
-  GimpItem *new_item;
+  item->width  = dest_image->width;
+  item->height = dest_image->height;
 
-  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_VECTORS), NULL);
-
-  new_item = GIMP_ITEM_CLASS (parent_class)->convert_from (item, dest_image,
-                                                           new_type, add_alpha);
-
-  if (! GIMP_IS_VECTORS (new_item))
-    return new_item;
-
-  if (dest_image != item->gimage)
-    {
-      new_item->width  = dest_image->width;
-      new_item->height = dest_image->height;
-    }
-
-  return new_item;
+  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image);
 }
 
 static void
