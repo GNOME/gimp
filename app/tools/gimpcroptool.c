@@ -774,11 +774,10 @@ tools_free_crop (Tool *tool)
   if (tool->state == ACTIVE)
     draw_core_stop (crop->core, tool);
 
-  draw_core_free (crop->core);
-
   if (crop_info)
     crop_close_callback (NULL, NULL);
 
+  draw_core_free (crop->core);
   g_free (crop);
 }
 

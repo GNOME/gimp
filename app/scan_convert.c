@@ -94,6 +94,11 @@ convert_segment (ScanConverter *sc,
     GSList **scanlines;
     float xinc, xstart;
 
+    x1 = CLAMP(x1,0,(int)(sc->width * sc->antialias)-1);
+    y1 = CLAMP(y1,0,(int)(sc->height * sc->antialias)-1);
+    x2 = CLAMP(x2,0,(int)(sc->width * sc->antialias)-1);
+    y2 = CLAMP(y2,0,(int)(sc->height * sc->antialias)-1);
+
     if (y1 > y2)
     {
 	tmp = y2; y2 = y1; y1 = tmp;

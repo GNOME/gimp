@@ -2664,6 +2664,7 @@ paths_draw_current(GDisplay * gdisp,
   BezierSelect * bezier_sel;
   PATHP          p_copy;
   GSList       * points_list;
+  GSList       * plist;
 
   /* Get bzpath structure  */
   plp = (PATHIMAGELISTP)gimp_image_get_paths(gdisp->gimage);
@@ -2671,8 +2672,11 @@ paths_draw_current(GDisplay * gdisp,
   if(!plp)
     return;
 
-  bzp = (PATHP)g_slist_nth_data(plp->bz_paths,plp->last_selected_row); 
+  plist = plp->bz_paths;
 
+  while(plist)
+    {
+      bzp = (PATHP)plist->data;
   /* This image path is locked */
   if(bzp->locked)
     {
@@ -2704,6 +2708,8 @@ paths_draw_current(GDisplay * gdisp,
       bezier_draw(gdisp,bezier_sel);
       beziersel_free(bezier_sel);
       path_free(p_copy,NULL);
+    }
+  plist = g_slist_next(plist);
     }
 }
 
