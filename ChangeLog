@@ -42,6 +42,30 @@
 
 	* plug-ins/common/scatter_hsv.c: ported to GimpPreviewArea.
 
+2004-08-01  Hans Breuer  <hans@breuer.org>
+
+	* app/display/makefile.msc app/widgets/makefile.msc : build
+	but *dont link* display-enums.obj, widget-enums.obj and
+	gimpdisplayoptions.obj. They must be in the dll
+	* app/makefile.msc : build gimp.exe and gimp-console.exe both
+	using the same gimp-core.dll
+	* app/gimpcore.def : new file, exports for gimp-core.dll
+	* app/Makefile.am : added to EXTRA_DIST
+
+	* cursors/makefile.msc : new file to create gimp-tool-cursors.h 
+	* cursors/Makefile.am : added to EXTRA_DIST
+
+	* **/makefile.msc : updated
+
+	* app/main.c app/app_procs.c : moved code to close the console
+	from the former to the later. It only is to be used if The Gimp 
+	is not build as console app.
+
+	* plug-ins/gfig/gfig.c : dont gimp_drawable_detach() the same 
+	drawable twice
+	* plug-ins/gfig-dialog.c() : added a g_return_if_fail() to avoid
+	crashing on File/Import
+
 2004-08-01  Simon Budig  <simon@gimp.org>
 
 	* app/widgets/gimpbrusheditor.c: Fixed oversight that accidentially
