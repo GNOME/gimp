@@ -997,12 +997,12 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       type = drawable_type (drawable);
     }
 
-  menus_set_sensitive ("<Image>/Layers/Raise Layer", !fs && !aux && lp);
-  menus_set_sensitive ("<Image>/Layers/Lower Layer", !fs && !aux && lp);
+  menus_set_sensitive ("<Image>/Layers/Raise Layer", !fs && !aux && lp && alpha);
+  menus_set_sensitive ("<Image>/Layers/Lower Layer", !fs && !aux && lp && alpha);
   menus_set_sensitive ("<Image>/Layers/Anchor Layer", fs && !aux && lp);
   menus_set_sensitive ("<Image>/Layers/Merge Visible Layers", !fs && !aux && lp);
   menus_set_sensitive ("<Image>/Layers/Flatten Image", !fs && !aux && lp);
-  menus_set_sensitive ("<Image>/Layers/Alpha To Selection", !aux && lp);
+  menus_set_sensitive ("<Image>/Layers/Alpha To Selection", !aux && lp && alpha);
   menus_set_sensitive ("<Image>/Layers/Mask To Selection", !aux && lm && lp);
   menus_set_sensitive ("<Image>/Layers/Add Alpha Channel", !fs && !aux && lp && !lm && !alpha);
 

@@ -1165,11 +1165,11 @@ layers_dialog_set_menu_sensitivity ()
   gtk_widget_set_sensitive (layers_ops[0].widget, gimage);
   ops_button_set_sensitive (layers_ops_buttons[0], gimage);
   /* raise layer */
-  gtk_widget_set_sensitive (layers_ops[1].widget, fs && ac && gimage && lp);
-  ops_button_set_sensitive (layers_ops_buttons[1], fs && ac && gimage && lp);
+  gtk_widget_set_sensitive (layers_ops[1].widget, fs && ac && gimage && lp && alpha);
+  ops_button_set_sensitive (layers_ops_buttons[1], fs && ac && gimage && lp && alpha);
   /* lower layer */
-  gtk_widget_set_sensitive (layers_ops[2].widget, fs && ac && gimage && lp);
-  ops_button_set_sensitive (layers_ops_buttons[2], fs && ac && gimage && lp);
+  gtk_widget_set_sensitive (layers_ops[2].widget, fs && ac && gimage && lp && alpha);
+  ops_button_set_sensitive (layers_ops_buttons[2], fs && ac && gimage && lp && alpha);
   /* duplicate layer */
   gtk_widget_set_sensitive (layers_ops[3].widget, fs && ac && gimage && lp);
   ops_button_set_sensitive (layers_ops_buttons[3], fs && ac && gimage && lp);
@@ -1192,7 +1192,7 @@ layers_dialog_set_menu_sensitivity ()
   /* flatten image */
   gtk_widget_set_sensitive (layers_ops[11].widget, fs && ac && gimage && lp);
   /* alpha select */
-  gtk_widget_set_sensitive (layers_ops[12].widget, fs && ac && gimage && lp);
+  gtk_widget_set_sensitive (layers_ops[12].widget, fs && ac && gimage && lp && alpha);
   /* mask select */
   gtk_widget_set_sensitive (layers_ops[13].widget, fs && ac && gimage && lm && lp);
   /* add alpha */
