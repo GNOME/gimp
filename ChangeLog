@@ -1,3 +1,7 @@
+2004-09-15  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/mblur.c: fix the preview for the zoom blur mode.
+
 2004-09-15  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppreviewarea.c

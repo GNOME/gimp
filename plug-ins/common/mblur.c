@@ -6,14 +6,14 @@
  *
  * This plug-in is port of Motion Blur plug-in for GIMP 0.54 by
  * Thorsten Martinsen
- * 	Copyright (C) 1996 Torsten Martinsen <torsten@danbbs.dk>
- * 	Bresenham algorithm stuff hacked from HP2xx written by
+ *      Copyright (C) 1996 Torsten Martinsen <torsten@danbbs.dk>
+ *      Bresenham algorithm stuff hacked from HP2xx written by
  *      Heinz W. Werntges
- * 	Changes for version 1.11/1.12 Copyright (C) 1996 Federico Mena Quintero
- * 	quartic@polloux.fciencias.unam.mx
+ *      Changes for version 1.11/1.12 Copyright (C) 1996 Federico Mena Quintero
+ *      quartic@polloux.fciencias.unam.mx
  *
  * I also used some code from Whirl and Pinch plug-in by Federico Mena Quintero
- * 	(federico@nuclecu.unam.mx)
+ *      (federico@nuclecu.unam.mx)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,14 +32,14 @@
 
 /* Version 1.2
  *
- * 	Everything is new - no changes
+ *      Everything is new - no changes
  *
  * TODO:
  *     Bilinear interpolation from original mblur for 0.54
  *     Speed all things up
- *		? better caching scheme
- *		- while bluring along long trajektory do not averrage all
- * 		  pixels but averrage only few samples
+ *              ? better caching scheme
+ *              - while bluring along long trajektory do not averrage all
+ *                pixels but averrage only few samples
  *     Function for weight of samples along trajectory
  *     Preview
  *     Support paths in GiMP 1.1 :-)
@@ -61,8 +61,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_NAME 	"plug_in_mblur"
-#define PLUG_IN_VERSION	"Sep 1997, 1.2"
+#define PLUG_IN_NAME    "plug_in_mblur"
+#define PLUG_IN_VERSION "Sep 1997, 1.2"
 #define HELP_ID         "plug-in-mblur"
 
 typedef enum
@@ -88,26 +88,26 @@ typedef struct
 
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+                   gint              nparams,
+                   const GimpParam  *param,
+                   gint             *nreturn_vals,
+                   GimpParam       **return_vals);
 
-static void		mblur        (GimpDrawable *drawable,
+static void             mblur        (GimpDrawable *drawable,
                                       GimpPreview  *preview);
-static void 		mblur_linear (GimpDrawable *drawable,
+static void             mblur_linear (GimpDrawable *drawable,
                                       GimpPreview  *preview,
                                       gint          x1,
                                       gint          y1,
                                       gint          width,
                                       gint          height);
-static void 	        mblur_radial (GimpDrawable *drawable,
+static void             mblur_radial (GimpDrawable *drawable,
                                       GimpPreview  *preview,
                                       gint          x1,
                                       gint          y1,
                                       gint          width,
                                       gint          height);
-static void 	        mblur_zoom   (GimpDrawable *drawable,
+static void             mblur_zoom   (GimpDrawable *drawable,
                                       GimpPreview  *preview,
                                       gint          x1,
                                       gint          y1,
@@ -129,9 +129,9 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static mblur_vals_t mbvals =
 {
-  MBLUR_LINEAR,	/* mblur_type */
-  5,		/* length     */
-  45,		/* radius     */
+  MBLUR_LINEAR, /* mblur_type */
+  5,            /* length     */
+  45,           /* radius     */
   100000.0,     /* center_x   */
   100000.0,     /* center_y   */
   FALSE         /* preview    */
@@ -166,18 +166,18 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Motion blur of image",
-			  "This plug-in simulates the effect seen when "
-			  "photographing a moving object at a slow shutter "
-			  "speed. Done by adding multiple displaced copies.",
-			  "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",
-			  "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",
-			  PLUG_IN_VERSION,
-			  N_("_Motion Blur..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Motion blur of image",
+                          "This plug-in simulates the effect seen when "
+                          "photographing a moving object at a slow shutter "
+                          "speed. Done by adding multiple displaced copies.",
+                          "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",
+                          "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",
+                          PLUG_IN_VERSION,
+                          N_("_Motion Blur..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_NAME,
                              N_("<Image>/Filters/Blur"));
@@ -228,25 +228,25 @@ run (const gchar      *name,
 
       /* Get information from the dialog */
       if (! mblur_dialog (param[1].data.d_image, drawable))
-	return;
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /* Make sure all the arguments are present */
       if (nparams == 8)
-	{
-	  mbvals.center_x = param[6].data.d_float;
-	  mbvals.center_y = param[7].data.d_float;
-	}
+        {
+          mbvals.center_x = param[6].data.d_float;
+          mbvals.center_y = param[7].data.d_float;
+        }
       else if (nparams != 6)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  mbvals.mblur_type = param[3].data.d_int32;
-	  mbvals.length     = param[4].data.d_int32;
-	  mbvals.angle      = param[5].data.d_int32;
-	}
+        {
+          mbvals.mblur_type = param[3].data.d_int32;
+          mbvals.length     = param[4].data.d_int32;
+          mbvals.angle      = param[5].data.d_int32;
+        }
 
     if ((mbvals.mblur_type < 0) || (mbvals.mblur_type > MBLUR_MAX))
       status= GIMP_PDB_CALLING_ERROR;
@@ -269,7 +269,7 @@ run (const gchar      *name,
     {
       /* Set the tile cache size */
       gimp_tile_cache_ntiles (2 * (drawable->width +
-				   gimp_tile_width () - 1) / gimp_tile_width ());
+                                   gimp_tile_width () - 1) / gimp_tile_width ());
 
       /* Run! */
       has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
@@ -277,11 +277,11 @@ run (const gchar      *name,
 
       /* If run mode is interactive, flush displays */
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
 
       /* Store data */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_set_data (PLUG_IN_NAME, &mbvals, sizeof(mblur_vals_t));
+        gimp_set_data (PLUG_IN_NAME, &mbvals, sizeof(mblur_vals_t));
     }
   else if (status == GIMP_PDB_SUCCESS)
     status = GIMP_PDB_EXECUTION_ERROR;
@@ -299,9 +299,9 @@ mblur_linear (GimpDrawable *drawable,
               gint          width,
               gint          height)
 {
-  GimpPixelRgn	    dest_rgn;
+  GimpPixelRgn      dest_rgn;
   GimpPixelFetcher *pft;
-  gpointer	    pr;
+  gpointer          pr;
   GimpRGB           background;
 
   guchar *dest;
@@ -309,7 +309,7 @@ mblur_linear (GimpDrawable *drawable,
   guchar  pixel[4];
   gint32  sum[4];
   gint    progress, max_progress;
-  gint	  c;
+  gint    c;
   gint    x, y, i, xx, yy, n;
   gint    dx, dy, px, py, swapdir, err, e, s1, s2;
 
@@ -336,12 +336,12 @@ mblur_linear (GimpDrawable *drawable,
   if ((dx = px) != 0)
     {
       if (dx < 0)
-	{
-	  dx = -dx;
-	  s1 = -1;
-	}
+        {
+          dx = -dx;
+          s1 = -1;
+        }
       else
-	s1 = 1;
+        s1 = 1;
     }
   else
     s1 = 0;
@@ -349,12 +349,12 @@ mblur_linear (GimpDrawable *drawable,
   if ((dy = py) != 0)
     {
       if (dy < 0)
-	{
-	  dy = -dy;
-	  s2 = -1;
-	}
+        {
+          dy = -dy;
+          s2 = -1;
+        }
       else
-	s2 = 1;
+        s2 = 1;
     }
   else
     s2 = 0;
@@ -370,7 +370,7 @@ mblur_linear (GimpDrawable *drawable,
     swapdir = 0;
 
   dy *= 2;
-  err = dy - dx;	/* Initial error term	*/
+  err = dy - dx;        /* Initial error term   */
   dx *= 2;
 
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
@@ -380,18 +380,18 @@ mblur_linear (GimpDrawable *drawable,
       dest = dest_rgn.data;
 
       for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
-	{
-	  d = dest;
+        {
+          d = dest;
 
-	  for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
-	    {
-	      xx = x; yy = y; e = err;
-	      for (c = 0; c < img_bpp; c++)
-		sum[c]= 0;
+          for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
+            {
+              xx = x; yy = y; e = err;
+              for (c = 0; c < img_bpp; c++)
+                sum[c]= 0;
 
-	      for (i = 0; i < n; )
-		{
-		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, pixel);
+              for (i = 0; i < n; )
+                {
+                  gimp_pixel_fetcher_get_pixel (pft, xx, yy, pixel);
                   if (has_alpha)
                     {
                       gint32 alpha = pixel[img_bpp-1];
@@ -407,33 +407,33 @@ mblur_linear (GimpDrawable *drawable,
                     }
                   i++;
 
-		  while (e >= 0 && dx)
-		    {
-		      if (swapdir)
-			xx += s1;
-		      else
-			yy += s2;
-		      e -= dx;
-		    }
+                  while (e >= 0 && dx)
+                    {
+                      if (swapdir)
+                        xx += s1;
+                      else
+                        yy += s2;
+                      e -= dx;
+                    }
 
-		  if (swapdir)
-		    yy += s2;
-		  else
-		    xx += s1;
+                  if (swapdir)
+                    yy += s2;
+                  else
+                    xx += s1;
 
-		  e += dy;
+                  e += dy;
 
-		  if ((xx < x1) || (xx >= x1 + width) ||
-		      (yy < y1) || (yy >= y1 + height))
-		    break;
-		}
+                  if ((xx < x1) || (xx >= x1 + width) ||
+                      (yy < y1) || (yy >= y1 + height))
+                    break;
+                }
 
-	      if (i == 0)
-		{
-		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, d);
-		}
-	      else
-		{
+              if (i == 0)
+                {
+                  gimp_pixel_fetcher_get_pixel (pft, xx, yy, d);
+                }
+              else
+                {
                   if (has_alpha)
                     {
                       gint32 alpha = sum[img_bpp-1];
@@ -449,13 +449,13 @@ mblur_linear (GimpDrawable *drawable,
                       for (c = 0; c < img_bpp; c++)
                         d[c] = sum[c] / i;
                     }
-		}
+                }
 
-	      d += dest_rgn.bpp;
-	    }
+              d += dest_rgn.bpp;
+            }
 
-	  dest += dest_rgn.rowstride;
-	}
+          dest += dest_rgn.rowstride;
+        }
 
       if (preview)
         {
@@ -480,9 +480,9 @@ mblur_radial (GimpDrawable *drawable,
               gint          width,
               gint          height)
 {
-  GimpPixelRgn	    dest_rgn;
+  GimpPixelRgn      dest_rgn;
   GimpPixelFetcher *pft;
-  gpointer	    pr;
+  gpointer          pr;
   GimpRGB           background;
 
   gdouble   center_x;
@@ -494,8 +494,8 @@ mblur_radial (GimpDrawable *drawable,
 
   gint      progress, max_progress, c;
 
-  gint 	    x, y, i, n, xr, yr;
-  gint 	    count, R, r, w, h, step;
+  gint      x, y, i, n, xr, yr;
+  gint      count, R, r, w, h, step;
   gfloat    angle, theta, * ct, * st, offset, xx, yy;
 
   /* initialize */
@@ -507,7 +507,7 @@ mblur_radial (GimpDrawable *drawable,
   center_y = mbvals.center_y;
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, width, height, (preview == NULL), TRUE);
+                       x1, y1, width, height, (preview == NULL), TRUE);
 
   pft = gimp_pixel_fetcher_new (drawable, FALSE);
 
@@ -542,36 +542,36 @@ mblur_radial (GimpDrawable *drawable,
       dest = dest_rgn.data;
 
       for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
-	{
-	  d = dest;
+        {
+          d = dest;
 
-	  for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
-	    {
-	      xr = x - center_x;
-	      yr = y - center_y;
-	      r = sqrt (xr * xr + yr * yr);
+          for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
+            {
+              xr = x - center_x;
+              yr = y - center_y;
+              r = sqrt (xr * xr + yr * yr);
 
-	      if (r == 0)
-		step = 1;
-	      else if ((step = R / r) == 0)
-		step = 1;
-	      else if (step > n-1)
-		step = n-1;
+              if (r == 0)
+                step = 1;
+              else if ((step = R / r) == 0)
+                step = 1;
+              else if (step > n-1)
+                step = n-1;
 
-	      for (c = 0; c < img_bpp; c++)
-		sum[c] = 0;
+              for (c = 0; c < img_bpp; c++)
+                sum[c] = 0;
 
-	      for (i = 0, count = 0; i < n; i += step)
-		{
-		  xx = center_x + xr * ct[i] - yr * st[i];
-		  yy = center_y + xr * st[i] + yr * ct[i];
+              for (i = 0, count = 0; i < n; i += step)
+                {
+                  xx = center_x + xr * ct[i] - yr * st[i];
+                  yy = center_y + xr * st[i] + yr * ct[i];
 
-		  if ((yy < y1) || (yy >= y1 + height) ||
-		      (xx < x1) || (xx >= x1 + width))
-		    continue;
+                  if ((yy < y1) || (yy >= y1 + height) ||
+                      (xx < x1) || (xx >= x1 + width))
+                    continue;
 
-		  ++count;
-		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, pixel);
+                  ++count;
+                  gimp_pixel_fetcher_get_pixel (pft, xx, yy, pixel);
 
                   if (has_alpha)
                     {
@@ -587,14 +587,14 @@ mblur_radial (GimpDrawable *drawable,
                       for (c = 0; c < img_bpp; c++)
                         sum[c] += pixel[c];
                     }
-		}
+                }
 
-	      if (count == 0)
-		{
-		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, d);
-		}
-	      else
-		{
+              if (count == 0)
+                {
+                  gimp_pixel_fetcher_get_pixel (pft, xx, yy, d);
+                }
+              else
+                {
                   if (has_alpha)
                     {
                       gint32 alpha = sum[img_bpp-1];
@@ -610,13 +610,13 @@ mblur_radial (GimpDrawable *drawable,
                       for (c = 0; c < img_bpp; c++)
                         d[c] = sum[c] / count;
                     }
-		}
+                }
 
-	      d += dest_rgn.bpp;
-	    }
+              d += dest_rgn.bpp;
+            }
 
-	  dest += dest_rgn.rowstride;
-	}
+          dest += dest_rgn.rowstride;
+        }
 
       if (preview)
         {
@@ -644,9 +644,9 @@ mblur_zoom (GimpDrawable *drawable,
             gint          width,
             gint          height)
 {
-  GimpPixelRgn	    dest_rgn;
+  GimpPixelRgn      dest_rgn;
   GimpPixelFetcher *pft;
-  gpointer	    pr;
+  gpointer          pr;
   GimpRGB           background;
 
   gdouble   center_x;
@@ -656,8 +656,10 @@ mblur_zoom (GimpDrawable *drawable,
   gint32    sum[4];
 
   gint      progress, max_progress;
-  gint 	    x, y, i, xx, yy, n, c;
+  gint      x, y, i, xx, yy, n, c;
   gfloat    f;
+  gint      drawable_x1, drawable_y1;
+  gint      drawable_x2, drawable_y2;
 
   /* initialize */
 
@@ -666,8 +668,11 @@ mblur_zoom (GimpDrawable *drawable,
   center_x = mbvals.center_x;
   center_y = mbvals.center_y;
 
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+                             &drawable_x1, &drawable_y1,
+                             &drawable_x2, &drawable_y2);
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, width, height, (preview == NULL), TRUE);
+                       x1, y1, width, height, (preview == NULL), TRUE);
 
   pft = gimp_pixel_fetcher_new (drawable, FALSE);
 
@@ -687,24 +692,24 @@ mblur_zoom (GimpDrawable *drawable,
       dest = dest_rgn.data;
 
       for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
-	{
-	  d = dest;
+        {
+          d = dest;
 
-	  for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
-	    {
-	      for (c = 0; c < img_bpp; c++)
-		sum[c] = 0;
+          for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
+            {
+              for (c = 0; c < img_bpp; c++)
+                sum[c] = 0;
 
-	      for (i = 0; i < n; ++i)
-		{
-		  xx = center_x + (x - center_x) * (1.0 - f * i);
-		  yy = center_y + (y - center_y) * (1.0 - f * i);
+              for (i = 0; i < n; ++i)
+                {
+                  xx = center_x + (x - center_x) * (1.0 - f * i);
+                  yy = center_y + (y - center_y) * (1.0 - f * i);
 
-		  if ((yy < y1) || (yy >= y1 + height) ||
-		      (xx < x1) || (xx >= x1 + width))
-		    break;
+                  if ((yy < drawable_y1) || (yy >= drawable_y2) ||
+                      (xx < drawable_x1) || (xx >= drawable_x2))
+                    break;
 
-		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, pixel);
+                  gimp_pixel_fetcher_get_pixel (pft, xx, yy, pixel);
                   if (has_alpha)
                     {
                       gint32 alpha = pixel[img_bpp-1];
@@ -719,14 +724,14 @@ mblur_zoom (GimpDrawable *drawable,
                       for (c = 0; c < img_bpp; c++)
                         sum[c] += pixel[c];
                     }
-		}
+                }
 
-	      if (i == 0)
-		{
-		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, d);
-		}
-	      else
-		{
+              if (i == 0)
+                {
+                  gimp_pixel_fetcher_get_pixel (pft, xx, yy, d);
+                }
+              else
+                {
                   if (has_alpha)
                     {
                       gint32 alpha = sum[img_bpp-1];
@@ -742,13 +747,13 @@ mblur_zoom (GimpDrawable *drawable,
                       for (c = 0; c < img_bpp; c++)
                         d[c] = sum[c] / i;
                     }
-		}
+                }
 
-	      d += dest_rgn.bpp;
-	    }
+              d += dest_rgn.bpp;
+            }
 
-	  dest += dest_rgn.rowstride;
-	}
+          dest += dest_rgn.rowstride;
+        }
 
       if (preview)
         {
@@ -825,7 +830,7 @@ static void
 mblur_set_sensitivity (void)
 {
   if (!length || !angle)
-    return;			/* Not initialized yet */
+    return;                     /* Not initialized yet */
 
   switch (mbvals.mblur_type)
     {
@@ -888,12 +893,12 @@ mblur_dialog (gint32        image_ID,
 
   dialog = gimp_dialog_new (_("Motion Blur"), "mblur",
                             NULL, 0,
-			    gimp_standard_help_func, "plug-in-mblur",
+                            gimp_standard_help_func, "plug-in-mblur",
 
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -943,16 +948,16 @@ mblur_dialog (gint32        image_ID,
 
   g_signal_connect (length, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
-		    &mbvals.length);
+                    &mbvals.length);
   g_signal_connect_swapped (length, "value_changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
   angle = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				_("_Angle:"), 150, 3,
-				mbvals.angle, 0.0, 360.0, 1.0, 15.0, 0,
-				TRUE, 0, 0,
-				NULL, NULL);
+                                _("_Angle:"), 150, 3,
+                                mbvals.angle, 0.0, 360.0, 1.0, 15.0, 0,
+                                TRUE, 0, 0,
+                                NULL, NULL);
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (angle));
 
   g_signal_connect (angle, "value_changed",
@@ -970,8 +975,8 @@ mblur_dialog (gint32        image_ID,
 
   entry = gimp_size_entry_new (1,
                                GIMP_UNIT_PIXEL, "%a",
- 			       TRUE, FALSE, FALSE, 5,
- 			       GIMP_SIZE_ENTRY_UPDATE_SIZE);
+                               TRUE, FALSE, FALSE, 5,
+                               GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gtk_table_set_row_spacings (GTK_TABLE (entry), 2);
   gtk_table_set_col_spacing (GTK_TABLE (entry), 0, 6);
   gtk_table_set_col_spacing (GTK_TABLE (entry), 2, 6);
