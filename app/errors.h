@@ -20,24 +20,17 @@
 #define __ERRORS_H__
 
 
-typedef enum
-{
-  STACK_TRACE_NEVER,
-  STACK_TRACE_QUERY,
-  STACK_TRACE_ALWAYS
-} StackTraceMode;
+void  gimp_message_log_func (const gchar    *log_domain,
+			     GLogLevelFlags  flags,
+			     const gchar    *message,
+			     gpointer        data);
+void  gimp_error_log_func   (const gchar    *domain,
+			     GLogLevelFlags  flags,
+			     const gchar    *message,
+			     gpointer        data);
 
-
-void  gimp_message_func (const gchar    *log_domain,
-			 GLogLevelFlags  log_level,
-			 const gchar    *message,
-			 gpointer        data);
-
-void  gimp_fatal_error  (gchar *, ...);
-void  gimp_terminate    (gchar *, ...);
-
-
-extern StackTraceMode stack_trace_mode;
+void  gimp_fatal_error      (gchar *, ...);
+void  gimp_terminate        (gchar *, ...);
 
 
 #endif /* __ERRORS_H__ */

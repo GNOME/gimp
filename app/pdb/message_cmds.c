@@ -28,6 +28,7 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
+#include "appenums.h"
 #include "appenv.h"
 
 static ProcRecord message_proc;

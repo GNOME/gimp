@@ -39,11 +39,7 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimppattern.h"
 
-#include "appenv.h"
-#include "app_procs.h"
-#include "gdisplay.h"
-#include "gimprc.h"
-#include "undo.h"
+#include "pdb/procedural_db.h"
 
 #include "gimpbucketfilltool.h"
 #include "gimpfuzzyselecttool.h"
@@ -51,7 +47,9 @@
 #include "paint_options.h"
 #include "tool_manager.h"
 
-#include "pdb/procedural_db.h"
+#include "gdisplay.h"
+#include "gimprc.h"
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -535,7 +533,7 @@ bucket_fill (GimpImage      *gimage,
 	pat_buf = pattern->mask;
     }
 
-  gimp_set_busy ();
+  gimp_set_busy (gimage->gimp);
 
   bytes = gimp_drawable_bytes (drawable);
   has_alpha = gimp_drawable_has_alpha (drawable);
@@ -611,7 +609,7 @@ bucket_fill (GimpImage      *gimage,
   if (new_buf)
     temp_buf_free (pat_buf);
 
-  gimp_unset_busy ();
+  gimp_unset_busy (gimage->gimp);
 }
 
 static void

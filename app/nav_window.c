@@ -885,10 +885,10 @@ nav_dialog_update_preview (NavigationDialog *nav_dialog)
   gint       xoff = 0;
   gint       yoff = 0;
 
-  gimp_set_busy (); 
-
   gdisp  = nav_dialog->gdisp;
   gimage = gdisp->gimage;
+
+  gimp_set_busy (gimage->gimp); 
 
   /* Min size is 2 */
   pwidth  = nav_dialog->pwidth;
@@ -1034,7 +1034,7 @@ nav_dialog_update_preview (NavigationDialog *nav_dialog)
   if (preview_buf_notdot)
     temp_buf_free (preview_buf_notdot);
 
-  gimp_unset_busy ();
+  gimp_unset_busy (gimage->gimp);
 }
 
 static void 

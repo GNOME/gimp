@@ -16,15 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __USER_INSTALL_H__
-#define __USER_INSTALL_H__
+#ifndef __USER_INSTALL_DIALOG_H__
+#define __USER_INSTALL_DIALOG_H__
 
 
-/*  Install callback function  */
-typedef void (* UserInstallCallback) (void);
-
-/*  Function declarations  */
-void user_install_verify (UserInstallCallback user_install_callback);
+void   user_install_dialog_create (Gimp *gimp);
 
 
-#endif /* __USER_INSTALL_H__ */
+#endif /* __USER_INSTALL_DIALOG_H__ */

@@ -45,52 +45,43 @@
 #include "appenv.h"
 #include "app_procs.h"
 #include "errors.h"
-#include "user_install.h"
 
 #include "libgimp/gimpintl.h"
 
 #ifdef G_OS_WIN32
 #include <windows.h>
 #else
-static void   gimp_sigfatal_handler (gint sig_num);
-static void   gimp_sigchld_handler  (gint sig_num);
+static void     gimp_sigfatal_handler (gint sig_num);
+static void     gimp_sigchld_handler  (gint sig_num);
 #endif
-
-static void   init                  (void);
-static void   gimp_error_handler    (const gchar    *domain,
-				     GLogLevelFlags  flags,
-				     const gchar    *msg,
-				     gpointer        user_data);
-
-/* GLOBAL data */
-gboolean no_interface      = FALSE;
-gboolean no_data           = FALSE;
-gboolean no_splash         = FALSE;
-gboolean no_splash_image   = FALSE;
-gboolean be_verbose        = FALSE;
-gboolean use_shm           = FALSE;
-gboolean use_debug_handler = FALSE;
-gboolean console_messages  = FALSE;
-gboolean restore_session   = FALSE;
-gboolean double_speed      = FALSE;
-gboolean use_mmx           = FALSE;
 
 /* TODO: this should probably go into a header file */
 #ifdef HAVE_ASM_MMX
-unsigned long intel_cpu_features(void);
+unsigned long   intel_cpu_features    (void);
 #endif
 
-MessageHandlerType message_handler = CONSOLE;
 
-gchar  *prog_name 		= NULL; /* The path name we are invoked with */
-gchar  *alternate_gimprc        = NULL;
-gchar  *alternate_system_gimprc = NULL;
-gchar **batch_cmds              = NULL;
+/*  command line options  */
+gboolean         no_interface            = FALSE;
+gboolean         no_data                 = FALSE;
+gboolean         no_splash               = FALSE;
+gboolean         no_splash_image         = FALSE;
+gboolean         be_verbose              = FALSE;
+gboolean         use_shm                 = FALSE;
+gboolean         use_debug_handler       = FALSE;
+gboolean         console_messages        = FALSE;
+gboolean         restore_session         = FALSE;
+StackTraceMode   stack_trace_mode        = STACK_TRACE_QUERY;
+gchar           *alternate_gimprc        = NULL;
+gchar           *alternate_system_gimprc = NULL;
+gchar          **batch_cmds              = NULL;
 
+/*  other global variables  */
+gchar              *prog_name       = NULL;  /* our executable name */
+MessageHandlerType  message_handler = CONSOLE;
+gboolean            double_speed    = FALSE;
+gboolean            use_mmx         = FALSE;
 
-/* LOCAL data */
-static gint    gimp_argc = 0;
-static gchar **gimp_argv = NULL;
 
 /*
  *  argv processing: 
@@ -100,7 +91,6 @@ static gchar **gimp_argv = NULL;
  *      the argv[] array are NULLed. We do this because
  *      unparsed args are treated as images to load on
  *      startup.
- *
  *
  *      The GTK switches are processed first (X switches are
  *      processed here, not by any X routines).  Then the
@@ -117,11 +107,11 @@ int
 main (int    argc,
       char **argv)
 {
-  gboolean show_version = FALSE;
-  gboolean show_help    = FALSE;
-  gint i, j;
+  gboolean  show_version = FALSE;
+  gboolean  show_help    = FALSE;
+  gint      i, j;
 #ifdef HAVE_PUTENV
-  gchar *display_env;
+  gchar    *display_env;
 #endif
 
   g_atexit (g_mem_profile);
@@ -306,7 +296,9 @@ main (int    argc,
 #endif
 
   if (show_version)
-    g_print ( "%s %s\n", _("GIMP version"), GIMP_VERSION);
+    {
+      g_print ( "%s %s\n", _("GIMP version"), GIMP_VERSION);
+    }
 
   if (show_help)
     {
@@ -355,31 +347,40 @@ main (int    argc,
 
   g_log_set_handler ("Gimp",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_func,
+		     gimp_message_log_func,
 		     NULL);
   g_log_set_handler ("Gimp-Base",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_func,
+		     gimp_message_log_func,
 		     NULL);
   g_log_set_handler ("Gimp-Core",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_func,
+		     gimp_message_log_func,
 		     NULL);
   g_log_set_handler ("Gimp-PDB",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_func,
+		     gimp_message_log_func,
+		     NULL);
+  g_log_set_handler ("Gimp-XCF",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
 		     NULL);
   g_log_set_handler ("Gimp-Widgets",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_func,
+		     gimp_message_log_func,
 		     NULL);
   g_log_set_handler ("Gimp-Tools",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_func,
+		     gimp_message_log_func,
 		     NULL);
   g_log_set_handler ("Gimp-GUI",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_func,
+		     gimp_message_log_func,
+		     NULL);
+
+  g_log_set_handler (NULL,
+		     G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
+		     gimp_error_log_func,
 		     NULL);
 
 #ifndef G_OS_WIN32
@@ -412,24 +413,17 @@ main (int    argc,
 
 #endif /* G_OS_WIN32 */
 
-  g_log_set_handler (NULL,
-		     G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
-		     gimp_error_handler,
-		     NULL);
-
-  /* Keep the command line arguments--for use in gimp_init */
-  gimp_argc = argc - 1;
-  gimp_argv = argv + 1;
-
-  /* Check the user_installation */
-  user_install_verify (init);
+  /* Initialize the application */
+  app_init (argc - 1,
+	    argv + 1);
 
   /* Main application loop */
-  if (!app_exit_finish_done ())
+  if (! app_exit_finish_done ())
     gtk_main ();
 
   return 0;
 }
+
 
 #ifdef G_OS_WIN32
 
@@ -450,26 +444,11 @@ WinMain (struct HINSTANCE__ *hInstance,
   return main (__argc, __argv);
 }
 
-#endif
+#endif /* G_OS_WIN32 */
 
-static void
-init (void)
-{
-  /*  Continue initializing  */
-  app_init (gimp_argc, gimp_argv);
-}
-
-
-static void
-gimp_error_handler (const gchar    *domain,
-		    GLogLevelFlags  flags,
-		    const gchar    *msg,
-		    gpointer        user_data)
-{
-  gimp_fatal_error ("%s", msg);
-}
 
 #ifndef G_OS_WIN32
+
 
 /* gimp core signal handler for fatal signals */
 
@@ -512,4 +491,4 @@ gimp_sigchld_handler (gint sig_num)
     }
 }
 
-#endif /* !G_OS_WIN32 */
+#endif /* ! G_OS_WIN32 */

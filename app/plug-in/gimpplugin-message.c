@@ -341,7 +341,7 @@ plug_in_init (void)
     filename = gimp_personal_rc_file ("pluginrc");
 
   app_init_update_status (_("Resource configuration"), filename, -1);
-  parse_gimprc_file (filename);
+  gimprc_parse_file (filename);
 
   /* query any plug-ins that have changed since we last wrote out
    *  the pluginrc file.

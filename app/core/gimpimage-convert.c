@@ -107,6 +107,7 @@
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
 
+#include "gimp.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-convert.h"
@@ -115,10 +116,8 @@
 #include "gimplayer.h"
 #include "gimppalette.h"
 
-#include "app_procs.h"
-#include "gdisplay.h"
-
 #include "floating_sel.h"
+#include "gdisplay.h"
 #include "undo.h"
 
 
@@ -694,7 +693,7 @@ gimp_image_convert (GimpImage          *gimage,
 
   theCustomPalette = custom_palette;
 
-  gimp_set_busy ();
+  gimp_set_busy (gimage->gimp);
 
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
@@ -947,7 +946,7 @@ gimp_image_convert (GimpImage          *gimage,
 
   gimp_image_mode_changed (gimage);
 
-  gimp_unset_busy ();
+  gimp_unset_busy (gimage->gimp);
 }
 
 static void

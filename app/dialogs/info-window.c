@@ -45,6 +45,7 @@
 #include "app_procs.h"
 #include "colormaps.h"
 #include "gdisplay.h"
+#include "unitrc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -501,12 +502,16 @@ info_window_update_extended (GDisplay *gdisp,
   else
     {
       /*  width and height  */
-      unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
-      unit_digits = gimp_unit_get_digits (gdisp->gimage->unit);
+      unit_factor = _gimp_unit_get_factor (gdisp->gimage->gimp,
+					   gdisp->gimage->unit);
+      unit_digits = _gimp_unit_get_digits (gdisp->gimage->gimp,
+					   gdisp->gimage->unit);
 
-      if (iwd->unit_str != gimp_unit_get_abbreviation (gdisp->gimage->unit))
+      if (iwd->unit_str != _gimp_unit_get_abbreviation (gdisp->gimage->gimp,
+							gdisp->gimage->unit))
         {
-          iwd->unit_str = gimp_unit_get_abbreviation (gdisp->gimage->unit);
+          iwd->unit_str = _gimp_unit_get_abbreviation (gdisp->gimage->gimp,
+						       gdisp->gimage->unit);
 
           gtk_label_set_text (GTK_LABEL (iwd->unit_labels[0]), iwd->unit_str);
           gtk_label_set_text (GTK_LABEL (iwd->unit_labels[1]), iwd->unit_str);
@@ -608,8 +613,10 @@ info_window_update (GDisplay *gdisp)
     return;
 
   /*  width and height  */
-  unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
-  unit_digits = gimp_unit_get_digits (gdisp->gimage->unit);
+  unit_factor = _gimp_unit_get_factor (gdisp->gimage->gimp,
+				       gdisp->gimage->unit);
+  unit_digits = _gimp_unit_get_digits (gdisp->gimage->gimp,
+				       gdisp->gimage->unit);
 
   g_snprintf (iwd->dimensions_str, MAX_BUF,
 	      _("%d x %d pixels"),
@@ -618,7 +625,8 @@ info_window_update (GDisplay *gdisp)
   g_snprintf (format_buf, sizeof (format_buf),
 	      "%%.%df x %%.%df %s",
 	      unit_digits + 1, unit_digits + 1,
-	      gimp_unit_get_plural (gdisp->gimage->unit));
+	      _gimp_unit_get_plural (gdisp->gimage->gimp,
+				     gdisp->gimage->unit));
   g_snprintf (iwd->real_dimensions_str, MAX_BUF, format_buf,
 	      gdisp->gimage->width * unit_factor / gdisp->gimage->xresolution,
 	      gdisp->gimage->height * unit_factor / gdisp->gimage->yresolution);

@@ -53,7 +53,6 @@
 #include "gimpparasitelist.h"
 #include "gimpundostack.h"
 
-#include "app_procs.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "path.h"
@@ -767,7 +766,7 @@ gimp_image_resize (GimpImage *gimage,
   GList       *list;
   GList       *guide_list;
 
-  gimp_set_busy ();
+  gimp_set_busy (gimage->gimp);
 
   g_assert (new_width > 0 && new_height > 0);
 
@@ -853,7 +852,7 @@ gimp_image_resize (GimpImage *gimage,
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 
-  gimp_unset_busy ();
+  gimp_unset_busy (gimage->gimp);
 }
 
 void
@@ -880,7 +879,7 @@ gimp_image_scale (GimpImage *gimage,
       return;
     }
 
-  gimp_set_busy ();
+  gimp_set_busy (gimage->gimp);
 
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
@@ -981,7 +980,7 @@ gimp_image_scale (GimpImage *gimage,
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 
-  gimp_unset_busy ();
+  gimp_unset_busy (gimage->gimp);
 }
 
 /**
@@ -2341,10 +2340,10 @@ gimp_image_validate (TileManager *tm,
   gint       x, y;
   gint       w, h;
 
-  gimp_set_busy_until_idle ();
-
   /*  Get the gimage from the tilemanager  */
   gimage = (GimpImage *) tile_manager_get_user_data (tm);
+
+  gimp_set_busy_until_idle (gimage->gimp);
 
   /*  Find the coordinates of this tile  */
   tile_manager_get_tile_coordinates (tm, tile, &x, &y);
@@ -3021,12 +3020,12 @@ gimp_image_merge_visible_layers (GimpImage *gimage,
 
   if (merge_list && merge_list->next)
     {
-      gimp_set_busy ();
+      gimp_set_busy (gimage->gimp);
 
       layer = gimp_image_merge_layers (gimage, merge_list, merge_type);
       g_slist_free (merge_list);
 
-      gimp_unset_busy ();
+      gimp_unset_busy (gimage->gimp);
 
       return layer;
     }
@@ -3054,7 +3053,7 @@ gimp_image_flatten (GimpImage *gimage)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  gimp_set_busy ();
+  gimp_set_busy (gimage->gimp);
 
   /* if there's a floating selection, anchor it */
   if (gimp_image_floating_sel (gimage))
@@ -3075,7 +3074,7 @@ gimp_image_flatten (GimpImage *gimage)
 
   gimp_image_alpha_changed (gimage);
 
-  gimp_unset_busy ();
+  gimp_unset_busy (gimage->gimp);
 
   return layer;
 }
@@ -3116,12 +3115,12 @@ gimp_image_merge_down (GimpImage *gimage,
     {
       merge_list = g_slist_prepend (merge_list, current_layer);
 
-      gimp_set_busy ();
+      gimp_set_busy (gimage->gimp);
 
       layer = gimp_image_merge_layers (gimage, merge_list, merge_type);
       g_slist_free (merge_list);
 
-      gimp_unset_busy ();
+      gimp_unset_busy (gimage->gimp);
 
       return layer;
     }

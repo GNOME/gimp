@@ -617,7 +617,7 @@ file_open_genbutton_callback (GtkWidget *widget,
       return;
     }
 
-  gimp_set_busy ();
+  gimp_set_busy (the_gimp);
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), FALSE);
 
   /* new mult-file preview make: */  
@@ -702,7 +702,7 @@ file_open_genbutton_callback (GtkWidget *widget,
   }
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
-  gimp_unset_busy ();
+  gimp_unset_busy (the_gimp);
 }
 
 static void

@@ -67,10 +67,11 @@ static struct stat filestat;
 static gboolean
 is_script (const gchar *filename)
 {
-  const gchar *ext = strrchr (filename, '.');
-  gchar *pathext;
   static gchar **exts = NULL;
-  gint i;
+
+  const gchar   *ext = strrchr (filename, '.');
+  gchar         *pathext;
+  gint           i;
 
   if (exts == NULL)
     {
@@ -125,12 +126,12 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 				 GimpDataFileLoaderFunc  loader_func,
 				 gpointer                loader_data)
 {
-  gchar *local_path;
-  GList *path;
-  GList *list;
-  gchar *filename;
-  gint   err;
-  DIR   *dir;
+  gchar         *local_path;
+  GList         *path;
+  GList         *list;
+  gchar         *filename;
+  gint           err;
+  DIR           *dir;
   struct dirent *dir_ent;
 
   g_return_if_fail (path_str != NULL);

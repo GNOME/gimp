@@ -24,9 +24,9 @@
 
 #include "core/core-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 
-#include "appenv.h"
 #include "colormaps.h"
 #include "gdisplay_ops.h"
 #include "gimprc.h"
@@ -117,7 +117,7 @@ gdisplay_close_window (GDisplay *gdisp,
   /*  FIXME: gimp_busy HACK not really appropriate here because we only
    *  want to prevent the busy image and display to be closed.  --Mitch
    */
-  if (gimp_busy)
+  if (gdisp->gimage->gimp->busy)
     return;
 
   /*  If the image has been modified, give the user a chance to save

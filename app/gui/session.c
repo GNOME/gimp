@@ -73,7 +73,7 @@ session_init (void)
   filename = gimp_personal_rc_file ("sessionrc");
   app_init_update_status (NULL, filename, -1);
 
-  if (! parse_gimprc_file (filename))
+  if (! gimprc_parse_file (filename))
     {
       /*  always show L&C&P, Tool Options and Brushes on first invocation  */
 

@@ -149,7 +149,7 @@ gimp_parasiterc_load (Gimp *gimp)
   gchar *filename;
 
   filename = gimp_personal_rc_file ("parasiterc");
-  parse_gimprc_file (filename);
+  gimprc_parse_file (filename);
   g_free (filename);
 }
 

@@ -31,14 +31,11 @@
 #include "base/tile-manager.h"
 #include "base/tile.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
-
-#include "app_procs.h"
-#include "gdisplay.h"
-#include "gimprc.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimpfuzzyselecttool.h"
@@ -46,6 +43,9 @@
 #include "selection_options.h"
 #include "tool_options.h"
 #include "tool_manager.h"
+
+#include "gdisplay.h"
+#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -631,7 +631,7 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
 
   drawable  = gimp_image_active_drawable (gdisp->gimage);
 
-  gimp_set_busy ();
+  gimp_set_busy (gdisp->gimage->gimp);
 
   use_offsets = fuzzy_options->sample_merged ? FALSE : TRUE;
 
@@ -677,7 +677,7 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
   /*  free boundary segments  */
   g_free (bsegs);
 
-  gimp_unset_busy ();
+  gimp_unset_busy (gdisp->gimage->gimp);
 
   return segs;
 }

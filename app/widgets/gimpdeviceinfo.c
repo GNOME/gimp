@@ -324,7 +324,7 @@ devices_restore (void)
 
   /* Augment with information from rc file */
   filename = gimp_personal_rc_file ("devicerc");
-  parse_gimprc_file (filename);
+  gimprc_parse_file (filename);
   g_free (filename);
 
   if ((device_info = device_info_get_by_id (current_device)) == NULL)

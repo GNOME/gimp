@@ -49,6 +49,7 @@
 #include "floating_sel.h"
 #include "path.h"
 #include "pathP.h"
+#include "unitrc.h"
 
 
 static void xcf_save_image_props   (XcfInfo     *info,
@@ -60,6 +61,7 @@ static void xcf_save_channel_props (XcfInfo     *info,
 				    GimpImage   *gimage,
 				    GimpChannel *channel);
 static void xcf_save_prop          (XcfInfo     *info,
+				    GimpImage   *gimage,
 				    PropType     prop_type,
 				    ...);
 static void xcf_save_layer         (XcfInfo     *info,
@@ -250,31 +252,31 @@ xcf_save_image_props (XcfInfo   *info,
 {
   /* check and see if we should save the colormap property */
   if (gimage->cmap)
-    xcf_save_prop (info, PROP_COLORMAP, gimage->num_cols, gimage->cmap);
+    xcf_save_prop (info, gimage, PROP_COLORMAP, gimage->num_cols, gimage->cmap);
 
   if (info->compression != COMPRESS_NONE)
-    xcf_save_prop (info, PROP_COMPRESSION, info->compression);
+    xcf_save_prop (info, gimage, PROP_COMPRESSION, info->compression);
 
   if (gimage->guides)
-    xcf_save_prop (info, PROP_GUIDES, gimage->guides);
+    xcf_save_prop (info, gimage, PROP_GUIDES, gimage->guides);
 
-  xcf_save_prop (info, PROP_RESOLUTION,
+  xcf_save_prop (info, gimage, PROP_RESOLUTION,
 		 gimage->xresolution, gimage->yresolution);
 
-  xcf_save_prop (info, PROP_TATTOO, gimage->tattoo_state);
+  xcf_save_prop (info, gimage, PROP_TATTOO, gimage->tattoo_state);
 
   if (gimp_parasite_list_length (gimage->parasites) > 0)
-    xcf_save_prop (info, PROP_PARASITES, gimage->parasites);
+    xcf_save_prop (info, gimage, PROP_PARASITES, gimage->parasites);
 
-  if (gimage->unit < gimp_unit_get_number_of_built_in_units ())
-    xcf_save_prop (info, PROP_UNIT, gimage->unit);
+  if (gimage->unit < _gimp_unit_get_number_of_built_in_units (gimage->gimp))
+    xcf_save_prop (info, gimage, PROP_UNIT, gimage->unit);
 
-  xcf_save_prop (info, PROP_PATHS, gimage->paths);
+  xcf_save_prop (info, gimage, PROP_PATHS, gimage->paths);
 
-  if (gimage->unit >= gimp_unit_get_number_of_built_in_units ())
-    xcf_save_prop (info, PROP_USER_UNIT, gimage->unit);
+  if (gimage->unit >= _gimp_unit_get_number_of_built_in_units (gimage->gimp))
+    xcf_save_prop (info, gimage, PROP_USER_UNIT, gimage->unit);
 
-  xcf_save_prop (info, PROP_END);
+  xcf_save_prop (info, gimage, PROP_END);
 }
 
 static void
@@ -283,43 +285,45 @@ xcf_save_layer_props (XcfInfo   *info,
 		      GimpLayer *layer)
 {
   if (layer == gimp_image_get_active_layer (gimage))
-    xcf_save_prop (info, PROP_ACTIVE_LAYER);
+    xcf_save_prop (info, gimage, PROP_ACTIVE_LAYER);
 
   if (layer == gimp_image_floating_sel (gimage))
     {
       info->floating_sel_drawable = layer->fs.drawable;
-      xcf_save_prop (info, PROP_FLOATING_SELECTION);
+      xcf_save_prop (info, gimage, PROP_FLOATING_SELECTION);
     }
 
-  xcf_save_prop (info, PROP_OPACITY, layer->opacity);
-  xcf_save_prop (info, PROP_VISIBLE,
+  xcf_save_prop (info, gimage, PROP_OPACITY, layer->opacity);
+  xcf_save_prop (info, gimage, PROP_VISIBLE,
 		 gimp_drawable_get_visible (GIMP_DRAWABLE (layer)));
-  xcf_save_prop (info, PROP_LINKED, layer->linked);
-  xcf_save_prop (info, PROP_PRESERVE_TRANSPARENCY, layer->preserve_trans);
+  xcf_save_prop (info, gimage, PROP_LINKED, layer->linked);
+  xcf_save_prop (info, gimage, PROP_PRESERVE_TRANSPARENCY,
+		 layer->preserve_trans);
 
   if (layer->mask)
     {
-      xcf_save_prop (info, PROP_APPLY_MASK, layer->mask->apply_mask);
-      xcf_save_prop (info, PROP_EDIT_MASK,  layer->mask->edit_mask);
-      xcf_save_prop (info, PROP_SHOW_MASK,  layer->mask->show_mask);
+      xcf_save_prop (info, gimage, PROP_APPLY_MASK, layer->mask->apply_mask);
+      xcf_save_prop (info, gimage, PROP_EDIT_MASK,  layer->mask->edit_mask);
+      xcf_save_prop (info, gimage, PROP_SHOW_MASK,  layer->mask->show_mask);
     }
   else
     {
-      xcf_save_prop (info, PROP_APPLY_MASK, FALSE);
-      xcf_save_prop (info, PROP_EDIT_MASK,  FALSE);
-      xcf_save_prop (info, PROP_SHOW_MASK,  FALSE);
+      xcf_save_prop (info, gimage, PROP_APPLY_MASK, FALSE);
+      xcf_save_prop (info, gimage, PROP_EDIT_MASK,  FALSE);
+      xcf_save_prop (info, gimage, PROP_SHOW_MASK,  FALSE);
     }
 
-  xcf_save_prop (info, PROP_OFFSETS,
+  xcf_save_prop (info, gimage, PROP_OFFSETS,
 		 GIMP_DRAWABLE (layer)->offset_x,
 		 GIMP_DRAWABLE (layer)->offset_y);
-  xcf_save_prop (info, PROP_MODE, layer->mode);
-  xcf_save_prop (info, PROP_TATTOO, GIMP_DRAWABLE (layer)->tattoo);
+  xcf_save_prop (info, gimage, PROP_MODE, layer->mode);
+  xcf_save_prop (info, gimage, PROP_TATTOO, GIMP_DRAWABLE (layer)->tattoo);
 
   if (gimp_parasite_list_length (GIMP_DRAWABLE (layer)->parasites) > 0)
-    xcf_save_prop (info, PROP_PARASITES, GIMP_DRAWABLE (layer)->parasites);
+    xcf_save_prop (info, gimage, PROP_PARASITES,
+		   GIMP_DRAWABLE (layer)->parasites);
 
-  xcf_save_prop (info, PROP_END);
+  xcf_save_prop (info, gimage, PROP_END);
 }
 
 static void
@@ -330,25 +334,27 @@ xcf_save_channel_props (XcfInfo     *info,
   guchar col[3];
 
   if (channel == gimp_image_get_active_channel (gimage))
-    xcf_save_prop (info, PROP_ACTIVE_CHANNEL);
+    xcf_save_prop (info, gimage, PROP_ACTIVE_CHANNEL);
 
   if (channel == gimage->selection_mask)
-    xcf_save_prop (info, PROP_SELECTION);
+    xcf_save_prop (info, gimage, PROP_SELECTION);
 
-  xcf_save_prop (info, PROP_OPACITY, (gint) (channel->color.a * 255.999));
-  xcf_save_prop (info, PROP_VISIBLE,
+  xcf_save_prop (info, gimage, PROP_OPACITY, 
+		 (gint) (channel->color.a * 255.999));
+  xcf_save_prop (info, gimage, PROP_VISIBLE,
 		 gimp_drawable_get_visible (GIMP_DRAWABLE (channel)));
-  xcf_save_prop (info, PROP_SHOW_MASKED, channel->show_masked);
+  xcf_save_prop (info, gimage, PROP_SHOW_MASKED, channel->show_masked);
 
   gimp_rgb_get_uchar (&channel->color, &col[0], &col[1], &col[2]);
-  xcf_save_prop (info, PROP_COLOR, col);
+  xcf_save_prop (info, gimage, PROP_COLOR, col);
 
-  xcf_save_prop (info, PROP_TATTOO, GIMP_DRAWABLE (channel)->tattoo);
+  xcf_save_prop (info, gimage, PROP_TATTOO, GIMP_DRAWABLE (channel)->tattoo);
 
   if (gimp_parasite_list_length (GIMP_DRAWABLE (channel)->parasites) > 0)
-    xcf_save_prop (info, PROP_PARASITES, GIMP_DRAWABLE (channel)->parasites);
+    xcf_save_prop (info, gimage, PROP_PARASITES,
+		   GIMP_DRAWABLE (channel)->parasites);
 
-  xcf_save_prop (info, PROP_END);
+  xcf_save_prop (info, gimage, PROP_END);
 }
 
 static void 
@@ -440,8 +446,9 @@ write_bzpaths (PathList *paths,
 }
 
 static void
-xcf_save_prop (XcfInfo  *info,
-	       PropType  prop_type,
+xcf_save_prop (XcfInfo   *info,
+	       GimpImage *gimage,
+	       PropType   prop_type,
 	       ...)
 {
   guint32 size;
@@ -770,13 +777,13 @@ xcf_save_prop (XcfInfo  *info,
 	unit = va_arg (args, guint32);
 
 	/* write the entire unit definition */
-	unit_strings[0] = gimp_unit_get_identifier (unit);
-	factor          = gimp_unit_get_factor (unit);
-	digits          = gimp_unit_get_digits (unit);
-	unit_strings[1] = gimp_unit_get_symbol (unit);
-	unit_strings[2] = gimp_unit_get_abbreviation (unit);
-	unit_strings[3] = gimp_unit_get_singular (unit);
-	unit_strings[4] = gimp_unit_get_plural (unit);
+	unit_strings[0] = _gimp_unit_get_identifier (gimage->gimp, unit);
+	factor          = _gimp_unit_get_factor (gimage->gimp, unit);
+	digits          = _gimp_unit_get_digits (gimage->gimp, unit);
+	unit_strings[1] = _gimp_unit_get_symbol (gimage->gimp, unit);
+	unit_strings[2] = _gimp_unit_get_abbreviation (gimage->gimp, unit);
+	unit_strings[3] = _gimp_unit_get_singular (gimage->gimp, unit);
+	unit_strings[4] = _gimp_unit_get_plural (gimage->gimp, unit);
 
 	size =
 	  2 * 4 +

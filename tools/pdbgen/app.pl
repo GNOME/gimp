@@ -269,7 +269,7 @@ sub marshal_inargs {
 		$typeinfo[0] = 'GIMP_UNIT_PIXEL' unless defined $typeinfo[0];
 		$result .= &make_arg_test($_, sub { ${$_[0]} = "!(${$_[0]})" },
 					  "$var < $typeinfo[0] || $var >= " .
-					  'gimp_unit_get_number_of_units ()');
+					  '_gimp_unit_get_number_of_units (gimp)');
 	    }
 	    elsif ($pdbtype eq 'enum' && !$enums{$typeinfo[0]}->{contig}) {
 		if (!exists $_->{no_success} || exists $_->{on_success} ||

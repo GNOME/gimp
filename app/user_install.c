@@ -74,9 +74,11 @@
 #define PAGE_STYLE(widget)  gtk_widget_set_style (widget, page_style)
 #define TITLE_STYLE(widget) gtk_widget_set_style (widget, title_style)
 
-static void     user_install_dialog_create     (UserInstallCallback);
-static void     user_install_continue_callback (GtkWidget *widget, gpointer data);
-static void     user_install_cancel_callback   (GtkWidget *widget, gpointer data);
+
+static void     user_install_continue_callback (GtkWidget *widget,
+						gpointer data);
+static void     user_install_cancel_callback   (GtkWidget *widget,
+						gpointer data);
 
 static gboolean user_install_run               (void);
 static void     user_install_tuning            (void);
@@ -84,39 +86,6 @@ static void     user_install_tuning_done       (void);
 static void     user_install_resolution        (void);
 static void     user_install_resolution_done   (void);
 
-
-void
-user_install_verify (UserInstallCallback user_install_callback)
-{
-  gboolean     properly_installed = TRUE;
-  const gchar *filename;
-  struct stat  stat_buf;
-
-  /* gimp_directory now always returns something */
-  filename = gimp_directory ();
-
-  if (stat (filename, &stat_buf) != 0)
-    properly_installed = FALSE;
-
-  /*  If there is already a proper installation, invoke the callback  */
-  if (properly_installed)
-    {
-      (* user_install_callback) ();
-    }
-  /*  Otherwise, prepare for installation  */
-  else if (no_interface)
-    {
-      g_print (_("The GIMP is not properly installed for the current user\n"));
-      g_print (_("User installation was skipped because the '--nointerface' flag was encountered\n"));
-      g_print (_("To perform user installation, run the GIMP without the '--nointerface' flag\n"));
-
-      (* user_install_callback) ();
-    }
-  else
-    {
-      user_install_dialog_create (user_install_callback);
-    }
-}
 
 /*  private stuff  */
 
@@ -350,9 +319,10 @@ user_install_continue_callback (GtkWidget *widget,
 				gpointer   data)
 {
   static gint notebook_index = 0;
-  UserInstallCallback callback;
 
-  callback = (UserInstallCallback) data;
+  Gimp *gimp;
+
+  gimp = (Gimp *) data;
 
   switch (notebook_index)
     {
@@ -382,9 +352,9 @@ user_install_continue_callback (GtkWidget *widget,
 #ifdef G_OS_WIN32
       FreeConsole ();
 #endif
-      gimprc_init ();
-      parse_unitrc ();
-      parse_gimprc ();
+      gimprc_init (gimp);
+      gimp_unitrc_load (gimp);
+      gimprc_parse (gimp);
       user_install_tuning ();
       break;
 
@@ -401,7 +371,7 @@ user_install_continue_callback (GtkWidget *widget,
       gtk_style_unref (title_style);
       gtk_style_unref (page_style);
 
-      (* callback) ();
+      gtk_main_quit ();
       return;
       break;
 
@@ -426,7 +396,7 @@ user_install_cancel_callback (GtkWidget *widget,
 
   gtk_widget_destroy (continue_button);
   user_install_notebook_set_page (GTK_NOTEBOOK (notebook), EEK_PAGE);
-  timeout = gtk_timeout_add (1024, (GtkFunction)gtk_exit, (gpointer)0);
+  timeout = gtk_timeout_add (1024, (GtkFunction) gtk_exit, (gpointer) 0);
 }
 
 static gint
@@ -534,7 +504,7 @@ user_install_ctree_select_row (GtkWidget      *widget,
 }
 
 void
-user_install_dialog_create (UserInstallCallback callback)
+user_install_dialog_create (Gimp *gimp)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
@@ -553,9 +523,9 @@ user_install_dialog_create (UserInstallCallback callback)
 		     FALSE, FALSE, FALSE,
 
 		     _("Continue"), user_install_continue_callback,
-		     callback, NULL, &continue_button, TRUE, FALSE,
+		     gimp, NULL, &continue_button, TRUE, FALSE,
 		     _("Cancel"), user_install_cancel_callback,
-		     callback, 1, &cancel_button, FALSE, TRUE,
+		     gimp, 1, &cancel_button, FALSE, TRUE,
 
 		     NULL);
 
@@ -939,11 +909,11 @@ quote_spaces (char *string)
 static gboolean
 user_install_run (void)
 {
-  FILE *pfp;
-  gchar buffer[2048];
-  struct stat stat_buf;
-  gint err;
-  gboolean executable = TRUE;
+  FILE        *pfp;
+  gchar        buffer[2048];
+  struct stat  stat_buf;
+  gint         err;
+  gboolean     executable = TRUE;
 
   /*  Generate output  */
   g_snprintf (buffer, sizeof (buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL,
@@ -1328,7 +1298,7 @@ user_install_resolution_done (void)
       gimprc.monitor_yres = 0.0;
     }
 
-  save_gimprc (&update, &remove);
+  gimprc_save (&update, &remove);
 
   if (gimprc.using_xserver_resolution)
     gdisplay_xserver_resolution (&gimprc.monitor_xres, &gimprc.monitor_yres);

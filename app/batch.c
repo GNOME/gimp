@@ -51,11 +51,10 @@ static void batch_pserver  (Gimp              *gimp,
 
 static ProcRecord *eval_proc;
 
+
 void
 batch_init (Gimp *gimp)
 {
-  extern gchar **batch_cmds;
-
   gboolean read_from_stdin;
   gboolean perl_server_already_running = FALSE;
   gint     i;

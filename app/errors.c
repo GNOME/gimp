@@ -33,7 +33,6 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "appenv.h"
-#include "app_procs.h"
 #include "errorconsole.h"
 #include "errors.h"
 
@@ -41,15 +40,12 @@
 #include <windows.h>
 #endif
 
-extern gchar *prog_name;
-
-StackTraceMode stack_trace_mode = STACK_TRACE_QUERY;
 
 void
-gimp_message_func (const gchar    *log_domain,
-		   GLogLevelFlags  log_level,
-		   const gchar    *message,
-		   gpointer        data)
+gimp_message_log_func (const gchar    *log_domain,
+		       GLogLevelFlags  flags,
+		       const gchar    *message,
+		       gpointer        data)
 {
   if (console_messages == FALSE)
     {
@@ -75,15 +71,27 @@ gimp_message_func (const gchar    *log_domain,
 }
 
 void
+gimp_error_log_func (const gchar    *domain,
+		     GLogLevelFlags  flags,
+		     const gchar    *message,
+		     gpointer        data)
+{
+  gimp_fatal_error ("%s", message);
+}
+
+void
 gimp_fatal_error (gchar *fmt, ...)
 {
-  va_list args;
+  va_list  args;
+  gchar   *message;
+
+  va_start (args, fmt);
+  message = g_strdup_vprintf (fmt, args);
+  va_end (args);
 
 #ifndef G_OS_WIN32
 
-  va_start (args, fmt);
-  g_printerr ("%s: fatal error: %s\n", prog_name, g_strdup_vprintf (fmt, args));
-  va_end (args);
+  g_printerr ("%s: fatal error: %s\n", prog_name, message);
 
   switch (stack_trace_mode)
     {
@@ -117,31 +125,27 @@ gimp_fatal_error (gchar *fmt, ...)
 #else
 
   /* g_on_error_* don't do anything reasonable on Win32. */
-  gchar *msg;
 
-  va_start (args, fmt);
-  msg = g_strdup_vprintf (fmt, args);
-  va_end (args);
-
-  MessageBox (NULL, msg, prog_name, MB_OK|MB_ICONERROR);
-  /* I don't dare do anything more. */
-  ExitProcess (1);
+  MessageBox (NULL, message, prog_name, MB_OK|MB_ICONERROR);
 
 #endif /* ! G_OS_WIN32 */
 
-  app_exit (TRUE);
+  gdk_exit (1);
 }
 
 void
 gimp_terminate (gchar *fmt, ...)
 {
-  va_list args;
+  va_list  args;
+  gchar   *message;
+
+  va_start (args, fmt);
+  message = g_strdup_vprintf (fmt, args);
+  va_end (args);
 
 #ifndef G_OS_WIN32
 
-  va_start (args, fmt);
-  g_printerr ("%s terminated: %s\n", prog_name, g_strdup_vprintf (fmt, args));
-  va_end (args);
+  g_printerr ("%s terminated: %s\n", prog_name, message);
 
   if (use_debug_handler)
     {
@@ -178,13 +182,8 @@ gimp_terminate (gchar *fmt, ...)
 #else
 
   /* g_on_error_* don't do anything reasonable on Win32. */
-  gchar *msg;
 
-  va_start (args, fmt);
-  msg = g_strdup_vprintf (fmt, args);
-  va_end (args);
-
-  MessageBox (NULL, msg, prog_name, MB_OK|MB_ICONERROR);
+  MessageBox (NULL, message, prog_name, MB_OK|MB_ICONERROR);
 
 #endif /* ! G_OS_WIN32 */
 

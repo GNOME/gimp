@@ -28,6 +28,7 @@
 #include "core/gimpcontext.h"
 
 #include "app_procs.h"
+#include "unitrc.h"
 #include "libgimp_glue.h"
 
 
@@ -69,4 +70,98 @@ gimp_palette_get_background (GimpRGB *color)
   gimp_context_get_background (gimp_get_user_context (the_gimp), color);
 
   return TRUE;
+}
+
+gint
+gimp_unit_get_number_of_units (void)
+{
+  return _gimp_unit_get_number_of_units (the_gimp);
+}
+
+gint
+gimp_unit_get_number_of_built_in_units (void)
+{
+  return GIMP_UNIT_END;
+}
+
+GimpUnit
+gimp_unit_new (gchar   *identifier,
+	       gdouble  factor,
+	       gint     digits,
+	       gchar   *symbol,
+	       gchar   *abbreviation,
+	       gchar   *singular,
+	       gchar   *plural)
+{
+  return _gimp_unit_new (the_gimp,
+			 identifier,
+			 factor,
+			 digits,
+			 symbol,
+			 abbreviation,
+			 singular,
+			 plural);
+}
+
+
+gboolean
+gimp_unit_get_deletion_flag (GimpUnit unit)
+{
+  return _gimp_unit_get_deletion_flag (the_gimp, unit);
+}
+
+void
+gimp_unit_set_deletion_flag (GimpUnit unit,
+			     gboolean deletion_flag)
+{
+  _gimp_unit_set_deletion_flag (the_gimp, unit, deletion_flag);
+}
+
+
+gdouble
+gimp_unit_get_factor (GimpUnit unit)
+{
+  return _gimp_unit_get_factor (the_gimp, unit);
+}
+
+
+gint
+gimp_unit_get_digits (GimpUnit unit)
+{
+  return _gimp_unit_get_digits (the_gimp, unit);
+}
+
+
+gchar * 
+gimp_unit_get_identifier (GimpUnit unit)
+{
+  return _gimp_unit_get_identifier (the_gimp, unit);
+}
+
+
+gchar *
+gimp_unit_get_symbol (GimpUnit unit)
+{
+  return _gimp_unit_get_symbol (the_gimp, unit);
+}
+
+
+gchar *
+gimp_unit_get_abbreviation (GimpUnit unit)
+{
+  return _gimp_unit_get_abbreviation (the_gimp, unit);
+}
+
+
+gchar *
+gimp_unit_get_singular (GimpUnit unit)
+{
+  return _gimp_unit_get_singular (the_gimp, unit);
+}
+
+
+gchar *
+gimp_unit_get_plural (GimpUnit unit)
+{
+  return _gimp_unit_get_plural (the_gimp, unit);
 }

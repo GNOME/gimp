@@ -20,6 +20,20 @@
 #define __APPENUMS_H__
 
 
+typedef enum
+{
+  MESSAGE_BOX,
+  CONSOLE,
+  ERROR_CONSOLE
+} MessageHandlerType;
+
+typedef enum
+{
+  STACK_TRACE_NEVER,
+  STACK_TRACE_QUERY,
+  STACK_TRACE_ALWAYS
+} StackTraceMode;
+
 /* Brush application types  */
 typedef enum
 {

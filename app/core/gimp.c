@@ -45,16 +45,19 @@
 #include "gimpparasite.h"
 #include "gimptoolinfo.h"
 
-#include "appenv.h"
 #include "app_procs.h"
+#include "unitrc.h"
 
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_class_init (GimpClass *klass);
-static void   gimp_init       (Gimp      *gimp);
+static void   gimp_class_init               (GimpClass *klass);
+static void   gimp_init                     (Gimp      *gimp);
 
-static void   gimp_destroy    (GtkObject *object);
+static void   gimp_destroy                  (GtkObject *object);
+
+static void   gimp_context_destroy_callback (GimpContext *context,
+					     Gimp        *gimp);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -100,40 +103,15 @@ gimp_class_init (GimpClass *klass)
 static void
 gimp_init (Gimp *gimp)
 {
-  GimpContext *context;
+  gimp->create_display_func = NULL;
+  gimp->gui_set_busy_func   = NULL;
+  gimp->gui_unset_busy_func = NULL;
 
-  static const GimpDataFactoryLoaderEntry brush_loader_entries[] =
-  {
-    { gimp_brush_load,           GIMP_BRUSH_FILE_EXTENSION           },
-    { gimp_brush_load,           GIMP_BRUSH_PIXMAP_FILE_EXTENSION    },
-    { gimp_brush_generated_load, GIMP_BRUSH_GENERATED_FILE_EXTENSION },
-    { gimp_brush_pipe_load,      GIMP_BRUSH_PIPE_FILE_EXTENSION      }
-  };
-  static gint n_brush_loader_entries = (sizeof (brush_loader_entries) /
-					sizeof (brush_loader_entries[0]));
+  gimp->busy                = FALSE;
+  gimp->busy_idle_id        = 0;
 
-  static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
-  {
-    { gimp_pattern_load, GIMP_PATTERN_FILE_EXTENSION }
-  };
-  static gint n_pattern_loader_entries = (sizeof (pattern_loader_entries) /
-					  sizeof (pattern_loader_entries[0]));
-
-  static const GimpDataFactoryLoaderEntry gradient_loader_entries[] =
-  {
-    { gimp_gradient_load, GIMP_GRADIENT_FILE_EXTENSION },
-    { gimp_gradient_load, NULL /* legacy loader */     }
-  };
-  static gint n_gradient_loader_entries = (sizeof (gradient_loader_entries) /
-					   sizeof (gradient_loader_entries[0]));
-
-  static const GimpDataFactoryLoaderEntry palette_loader_entries[] =
-  {
-    { gimp_palette_load, GIMP_PALETTE_FILE_EXTENSION },
-    { gimp_palette_load, NULL /* legacy loader */    }
-  };
-  static gint n_palette_loader_entries = (sizeof (palette_loader_entries) /
-					  sizeof (palette_loader_entries[0]));
+  gimp->user_units          = NULL;
+  gimp->n_user_units        = 0;
 
   gimp->images = gimp_list_new (GIMP_TYPE_IMAGE,
 				GIMP_CONTAINER_POLICY_WEAK);
@@ -146,47 +124,12 @@ gimp_init (Gimp *gimp)
   gtk_object_ref (GTK_OBJECT (gimp->named_buffers));
   gtk_object_sink (GTK_OBJECT (gimp->named_buffers));
 
-  gimp_parasites_init (gimp);
+  gimp->parasites = NULL;
 
-  gimp->brush_factory =
-    gimp_data_factory_new (GIMP_TYPE_BRUSH,
-			   (const gchar **) &core_config->brush_path,
-			   brush_loader_entries,
-			   n_brush_loader_entries,
-			   gimp_brush_new,
-			   gimp_brush_get_standard);
-  gtk_object_ref (GTK_OBJECT (gimp->brush_factory));
-  gtk_object_sink (GTK_OBJECT (gimp->brush_factory));
-
-  gimp->pattern_factory =
-    gimp_data_factory_new (GIMP_TYPE_PATTERN,
-			   (const gchar **) &core_config->pattern_path,
-			   pattern_loader_entries,
-			   n_pattern_loader_entries,
-			   gimp_pattern_new,
-			   gimp_pattern_get_standard);
-  gtk_object_ref (GTK_OBJECT (gimp->pattern_factory));
-  gtk_object_sink (GTK_OBJECT (gimp->pattern_factory));
-
-  gimp->gradient_factory =
-    gimp_data_factory_new (GIMP_TYPE_GRADIENT,
-			   (const gchar **) &core_config->gradient_path,
-			   gradient_loader_entries,
-			   n_gradient_loader_entries,
-			   gimp_gradient_new,
-			   gimp_gradient_get_standard);
-  gtk_object_ref (GTK_OBJECT (gimp->gradient_factory));
-  gtk_object_sink (GTK_OBJECT (gimp->gradient_factory));
-
-  gimp->palette_factory =
-    gimp_data_factory_new (GIMP_TYPE_PALETTE,
-			   (const gchar **) &core_config->palette_path,
-			   palette_loader_entries,
-			   n_palette_loader_entries,
-			   gimp_palette_new,
-			   gimp_palette_get_standard);
-  gtk_object_ref (GTK_OBJECT (gimp->palette_factory));
-  gtk_object_sink (GTK_OBJECT (gimp->palette_factory));
+  gimp->brush_factory    = NULL;
+  gimp->pattern_factory  = NULL;
+  gimp->gradient_factory = NULL;
+  gimp->palette_factory  = NULL;
 
   procedural_db_init (gimp);
 
@@ -195,20 +138,15 @@ gimp_init (Gimp *gimp)
   gtk_object_ref (GTK_OBJECT (gimp->tool_info_list));
   gtk_object_sink (GTK_OBJECT (gimp->tool_info_list));
 
-  gimp_image_new_init (gimp);
+  gimp->image_base_type_names   = NULL;
+  gimp->fill_type_names         = NULL;
+  gimp->have_current_cut_buffer = FALSE;
 
-  gimp->standard_context = gimp_create_context (gimp, "Standard", NULL);
-  gtk_object_ref (GTK_OBJECT (gimp->standard_context));
-  gtk_object_sink (GTK_OBJECT (gimp->standard_context));
-
-  /*  TODO: load from disk  */
-  context = gimp_create_context (gimp, "Default", NULL);
-  gimp_set_default_context (gimp, context);
-
-  context = gimp_create_context (gimp, "User", context);
-  gimp_set_user_context (gimp, context);
-
-  gimp_set_current_context (gimp, context);
+  gimp->context_list            = NULL;
+  gimp->standard_context        = NULL;
+  gimp->default_context         = NULL;
+  gimp->user_context            = NULL;
+  gimp->current_context         = NULL;
 }
 
 static void
@@ -287,6 +225,15 @@ gimp_destroy (GtkObject *object)
       gimp->images = NULL;
     }
 
+  if (gimp->user_units)
+    {
+      g_list_foreach (gimp->user_units, (GFunc) g_free, NULL);
+      g_list_free (gimp->user_units);
+
+      gimp->user_units   = NULL;
+      gimp->n_user_units = 0;
+    }
+
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
@@ -302,7 +249,107 @@ gimp_new (void)
 }
 
 void
-gimp_restore (Gimp *gimp)
+gimp_initialize (Gimp *gimp)
+{
+  GimpContext *context;
+
+  static const GimpDataFactoryLoaderEntry brush_loader_entries[] =
+  {
+    { gimp_brush_load,           GIMP_BRUSH_FILE_EXTENSION           },
+    { gimp_brush_load,           GIMP_BRUSH_PIXMAP_FILE_EXTENSION    },
+    { gimp_brush_generated_load, GIMP_BRUSH_GENERATED_FILE_EXTENSION },
+    { gimp_brush_pipe_load,      GIMP_BRUSH_PIPE_FILE_EXTENSION      }
+  };
+  static gint n_brush_loader_entries = (sizeof (brush_loader_entries) /
+					sizeof (brush_loader_entries[0]));
+
+  static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
+  {
+    { gimp_pattern_load, GIMP_PATTERN_FILE_EXTENSION }
+  };
+  static gint n_pattern_loader_entries = (sizeof (pattern_loader_entries) /
+					  sizeof (pattern_loader_entries[0]));
+
+  static const GimpDataFactoryLoaderEntry gradient_loader_entries[] =
+  {
+    { gimp_gradient_load, GIMP_GRADIENT_FILE_EXTENSION },
+    { gimp_gradient_load, NULL /* legacy loader */     }
+  };
+  static gint n_gradient_loader_entries = (sizeof (gradient_loader_entries) /
+					   sizeof (gradient_loader_entries[0]));
+
+  static const GimpDataFactoryLoaderEntry palette_loader_entries[] =
+  {
+    { gimp_palette_load, GIMP_PALETTE_FILE_EXTENSION },
+    { gimp_palette_load, NULL /* legacy loader */    }
+  };
+  static gint n_palette_loader_entries = (sizeof (palette_loader_entries) /
+					  sizeof (palette_loader_entries[0]));
+
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  gimp_parasites_init (gimp);
+
+  gimp->brush_factory =
+    gimp_data_factory_new (GIMP_TYPE_BRUSH,
+			   (const gchar **) &core_config->brush_path,
+			   brush_loader_entries,
+			   n_brush_loader_entries,
+			   gimp_brush_new,
+			   gimp_brush_get_standard);
+  gtk_object_ref (GTK_OBJECT (gimp->brush_factory));
+  gtk_object_sink (GTK_OBJECT (gimp->brush_factory));
+
+  gimp->pattern_factory =
+    gimp_data_factory_new (GIMP_TYPE_PATTERN,
+			   (const gchar **) &core_config->pattern_path,
+			   pattern_loader_entries,
+			   n_pattern_loader_entries,
+			   gimp_pattern_new,
+			   gimp_pattern_get_standard);
+  gtk_object_ref (GTK_OBJECT (gimp->pattern_factory));
+  gtk_object_sink (GTK_OBJECT (gimp->pattern_factory));
+
+  gimp->gradient_factory =
+    gimp_data_factory_new (GIMP_TYPE_GRADIENT,
+			   (const gchar **) &core_config->gradient_path,
+			   gradient_loader_entries,
+			   n_gradient_loader_entries,
+			   gimp_gradient_new,
+			   gimp_gradient_get_standard);
+  gtk_object_ref (GTK_OBJECT (gimp->gradient_factory));
+  gtk_object_sink (GTK_OBJECT (gimp->gradient_factory));
+
+  gimp->palette_factory =
+    gimp_data_factory_new (GIMP_TYPE_PALETTE,
+			   (const gchar **) &core_config->palette_path,
+			   palette_loader_entries,
+			   n_palette_loader_entries,
+			   gimp_palette_new,
+			   gimp_palette_get_standard);
+  gtk_object_ref (GTK_OBJECT (gimp->palette_factory));
+  gtk_object_sink (GTK_OBJECT (gimp->palette_factory));
+
+  gimp_image_new_init (gimp);
+
+  gimp->standard_context = gimp_create_context (gimp, "Standard", NULL);
+  gtk_object_ref (GTK_OBJECT (gimp->standard_context));
+  gtk_object_sink (GTK_OBJECT (gimp->standard_context));
+
+  /*  TODO: load from disk  */
+  context = gimp_create_context (gimp, "Default", NULL);
+  gimp_set_default_context (gimp, context);
+
+  context = gimp_create_context (gimp, "User", context);
+  gimp_set_user_context (gimp, context);
+
+  gimp_set_current_context (gimp, context);
+}
+
+void
+gimp_restore (Gimp     *gimp,
+	      gboolean  no_data)
 {
   g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -333,11 +380,71 @@ gimp_restore (Gimp *gimp)
 void
 gimp_shutdown (Gimp *gimp)
 {
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   gimp_data_factory_data_save (gimp->brush_factory);
   gimp_data_factory_data_save (gimp->pattern_factory);
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_save (gimp->palette_factory);
   gimp_parasiterc_save (gimp);
+  gimp_unitrc_save (gimp);
+}
+
+void
+gimp_set_busy (Gimp *gimp)
+{
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  /* FIXME: gimp_busy HACK */
+  gimp->busy = TRUE;
+
+  if (gimp->gui_set_busy_func)
+    gimp->gui_set_busy_func (the_gimp);
+}
+
+static gboolean
+gimp_idle_unset_busy (gpointer data)
+{
+  Gimp *gimp;
+
+  gimp = (Gimp *) data;
+
+  gimp_unset_busy (gimp);
+
+  gimp->busy_idle_id = 0;
+
+  return FALSE;
+}
+
+void
+gimp_set_busy_until_idle (Gimp *gimp)
+{
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (! gimp->busy_idle_id)
+    {
+      gimp_set_busy (gimp);
+
+      gimp->busy_idle_id = g_idle_add_full (G_PRIORITY_HIGH,
+					    gimp_idle_unset_busy, gimp,
+					    NULL);
+    }
+}
+
+void
+gimp_unset_busy (Gimp *gimp)
+{
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->gui_unset_busy_func)
+    gimp->gui_unset_busy_func (the_gimp);
+
+  /* FIXME: gimp_busy HACK */
+  gimp->busy = FALSE;
 }
 
 GimpImage *
@@ -445,12 +552,26 @@ gimp_create_context (Gimp        *gimp,
 
   gimp->context_list = g_list_prepend (gimp->context_list, context);
 
+  gtk_signal_connect (GTK_OBJECT (context), "destroy",
+		      GTK_SIGNAL_FUNC (gimp_context_destroy_callback),
+		      gimp);
+
   return context;
+}
+
+static void
+gimp_context_destroy_callback (GimpContext *context,
+			       Gimp        *gimp)
+{
+  gimp->context_list = g_list_remove (gimp->context_list, context);
 }
 
 GimpContext *
 gimp_get_standard_context (Gimp *gimp)
 {
+  g_return_val_if_fail (gimp != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   return gimp->standard_context;
 }
 
@@ -458,12 +579,30 @@ void
 gimp_set_default_context (Gimp        *gimp,
 			  GimpContext *context)
 {
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+
+  if (gimp->default_context)
+    {
+      gtk_object_unref (GTK_OBJECT (gimp->default_context));
+    }
+
   gimp->default_context = context;
+
+  if (gimp->default_context)
+    {
+      gtk_object_ref (GTK_OBJECT (gimp->default_context));
+      gtk_object_sink (GTK_OBJECT (gimp->default_context));
+    }
 }
 
 GimpContext *
 gimp_get_default_context (Gimp *gimp)
 {
+  g_return_val_if_fail (gimp != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   return gimp->default_context;
 }
 
@@ -471,12 +610,30 @@ void
 gimp_set_user_context (Gimp        *gimp,
 		       GimpContext *context)
 {
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+
+  if (gimp->user_context)
+    {
+      gtk_object_unref (GTK_OBJECT (gimp->user_context));
+    }
+
   gimp->user_context = context;
+
+  if (gimp->user_context)
+    {
+      gtk_object_ref (GTK_OBJECT (gimp->user_context));
+      gtk_object_sink (GTK_OBJECT (gimp->user_context));
+    }
 }
 
 GimpContext *
 gimp_get_user_context (Gimp *gimp)
 {
+  g_return_val_if_fail (gimp != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   return gimp->user_context;
 }
 
@@ -484,11 +641,28 @@ void
 gimp_set_current_context (Gimp        *gimp,
 			  GimpContext *context)
 {
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+
+  if (gimp->current_context)
+    {
+      gtk_object_unref (GTK_OBJECT (gimp->current_context));
+    }
+
   gimp->current_context = context;
+
+  if (gimp->current_context)
+    {
+      gtk_object_ref (GTK_OBJECT (gimp->current_context));
+    }
 }
 
 GimpContext *
 gimp_get_current_context (Gimp *gimp)
 {
+  g_return_val_if_fail (gimp != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   return gimp->current_context;
 }

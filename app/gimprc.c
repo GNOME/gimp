@@ -371,11 +371,6 @@ static gint       cur_token;
 static gint       next_token;
 
 
-/*  extern variables  */
-extern gchar *alternate_gimprc;
-extern gchar *alternate_system_gimprc;
-
-
 static gchar *
 gimp_system_rc_file (void)
 {
@@ -391,7 +386,7 @@ gimp_system_rc_file (void)
 }
 
 gboolean
-gimprc_init (void)
+gimprc_init (Gimp *gimp)
 {
   if (! parse_info.buffer)
     {
@@ -512,7 +507,7 @@ parse_add_directory_tokens (void)
 }
 
 void
-parse_gimprc (void)
+gimprc_parse (Gimp *gimp)
 {
   gchar *libfilename;
   gchar *filename;
@@ -524,7 +519,7 @@ parse_gimprc (void)
   else
     libfilename = g_strdup (gimp_system_rc_file ());
 
-  if (! parse_gimprc_file (libfilename))
+  if (! gimprc_parse_file (libfilename))
     g_message ("Can't open '%s' for reading.", libfilename);
 
   if (alternate_gimprc != NULL) 
@@ -533,7 +528,7 @@ parse_gimprc (void)
     filename = gimp_personal_rc_file ("gimprc");
 
   if (g_strcasecmp (filename, libfilename) != 0)
-    parse_gimprc_file (filename);
+    gimprc_parse_file (filename);
 
   g_free (filename);
   g_free (libfilename);
@@ -582,7 +577,7 @@ parse_absolute_gimprc_file (char *filename)
 }
 
 gboolean
-parse_gimprc_file (gchar *filename)
+gimprc_parse_file (gchar *filename)
 {
   gchar    *rfilename;
   gboolean  parsed;
@@ -772,7 +767,7 @@ save_gimprc_strings (gchar *token,
 }
 
 void
-save_gimprc (GList **updated_options,
+gimprc_save (GList **updated_options,
 	     GList **conflicting_options)
 {
   gchar  timestamp[40];

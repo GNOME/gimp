@@ -351,7 +351,7 @@ image_resize_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimp_set_busy_until_idle ();
+      gimp_set_busy_until_idle (gimp);
       gimp_image_resize (gimage, new_width, new_height, offx, offy);
     }
 
@@ -426,7 +426,7 @@ image_scale_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimp_set_busy_until_idle ();
+      gimp_set_busy_until_idle (gimp);
       gimp_image_scale (gimage, new_width, new_height);
     }
 
@@ -3789,7 +3789,7 @@ image_set_unit_invoker (Gimp     *gimp,
     success = FALSE;
 
   unit = args[1].value.pdb_int;
-  if (unit < GIMP_UNIT_INCH || unit >= gimp_unit_get_number_of_units ())
+  if (unit < GIMP_UNIT_INCH || unit >= _gimp_unit_get_number_of_units (gimp))
     success = FALSE;
 
   if (success)

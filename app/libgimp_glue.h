@@ -26,10 +26,30 @@
  */
 
 
-gboolean   gimp_palette_set_foreground (const GimpRGB *color);
-gboolean   gimp_palette_get_foreground (GimpRGB       *color);
-gboolean   gimp_palette_set_background (const GimpRGB *color);
-gboolean   gimp_palette_get_background (GimpRGB       *color);
+gboolean   gimp_palette_set_foreground            (const GimpRGB *color);
+gboolean   gimp_palette_get_foreground            (GimpRGB       *color);
+gboolean   gimp_palette_set_background            (const GimpRGB *color);
+gboolean   gimp_palette_get_background            (GimpRGB       *color);
+
+gint       gimp_unit_get_number_of_units          (void);
+gint       gimp_unit_get_number_of_built_in_units (void);
+GimpUnit   gimp_unit_new                          (gchar         *identifier,
+						   gdouble        factor,
+						   gint           digits,
+						   gchar         *symbol,
+						   gchar         *abbreviation,
+						   gchar         *singular,
+						   gchar         *plural);
+gboolean   gimp_unit_get_deletion_flag            (GimpUnit       unit);
+void       gimp_unit_set_deletion_flag            (GimpUnit       unit,
+						   gboolean       deletion_flag);
+gdouble    gimp_unit_get_factor                   (GimpUnit       unit);
+gint       gimp_unit_get_digits                   (GimpUnit       unit);
+gchar    * gimp_unit_get_identifier               (GimpUnit       unit);
+gchar    * gimp_unit_get_symbol                   (GimpUnit       unit);
+gchar    * gimp_unit_get_abbreviation             (GimpUnit       unit);
+gchar    * gimp_unit_get_singular                 (GimpUnit       unit);
+gchar    * gimp_unit_get_plural                   (GimpUnit       unit);
 
 
 #endif /* __LIBGIMP_GLUE_H__ */

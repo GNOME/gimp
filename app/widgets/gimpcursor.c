@@ -24,7 +24,7 @@
 
 #include "gimpcursor.h"
 
-/* standard gimp cursors */
+/*  standard gimp cursors  */
 #include "cursors/mouse.xbm"
 #include "cursors/mouse_mask.xbm"
 #include "cursors/crosshair.xbm"
@@ -38,7 +38,7 @@
 #include "cursors/dropper.xbm"
 #include "cursors/dropper_mask.xbm"
 
-/* stock tool cursors */
+/*  stock tool cursors  */
 #include "cursors/rect_select_small.xbm"
 #include "cursors/rect_select_small_mask.xbm"
 #include "cursors/ellipse_select_small.xbm"
@@ -100,7 +100,7 @@
 #include "cursors/measure_small.xbm"
 #include "cursors/measure_small_mask.xbm"
 
-/* modifiers */
+/*  modifiers  */
 #include "cursors/plus.xbm"
 #include "cursors/plus_mask.xbm"
 #include "cursors/minus.xbm"
@@ -175,7 +175,7 @@ static GimpBitmapCursor gimp_cursors[] =
 };
 
 static GimpBitmapCursor gimp_stock_tool_cursors[] =
-/* these have to match up with the enum in appenums.h */
+/* these have to match up with the enum in widgets-types.h */
 {
   {
     NULL, NULL,
@@ -335,7 +335,7 @@ static GimpBitmapCursor gimp_stock_tool_cursors[] =
 };
 
 static GimpBitmapCursor gimp_modifier_cursors[] =
-/* these have to match up with the enum in appenums.h */
+/* these have to match up with the enum in widgets-types.h */
 {
   {
     NULL, NULL,

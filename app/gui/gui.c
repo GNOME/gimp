@@ -69,7 +69,10 @@
 
 /*  local function prototypes  */
 
+static void   gui_set_busy                        (Gimp        *gimp);
+static void   gui_unset_busy                      (Gimp        *gimp);
 static void   gui_display_new                     (GimpImage   *gimage);
+
 static gint   gui_rotate_the_shield_harmonics     (GtkWidget   *widget,
 						   GdkEvent    *eevent,
 						   gpointer     data);
@@ -121,6 +124,11 @@ void
 gui_init (Gimp *gimp)
 {
   gimp->create_display_func = gui_display_new;
+  gimp->gui_set_busy_func   = gui_set_busy;
+  gimp->gui_unset_busy_func = gui_unset_busy;
+
+  if (gimprc.always_restore_session)
+    restore_session = TRUE;
 
   image_destroy_handler_id =
     gimp_container_add_handler (gimp->images, "destroy",
@@ -243,6 +251,8 @@ gui_shutdown (Gimp *gimp)
   pattern_dialog_free ();
   palette_dialog_free ();
   gradient_dialog_free ();
+
+  gdisplays_delete ();
 }
 
 void
@@ -275,42 +285,6 @@ gui_exit (Gimp *gimp)
   image_size_changed_handler_id     = 0;
   image_alpha_changed_handler_id    = 0;
   image_update_handler_id           = 0;
-}
-
-void
-gui_set_busy (Gimp *gimp)
-{
-  GDisplay *gdisp;
-  GSList   *list;
-
-  /* Canvases */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GDisplay *) list->data;
-      gdisplay_install_override_cursor (gdisp, GDK_WATCH);
-    }
-
-  /* Dialogs */
-  dialog_idle_all ();
-
-  gdk_flush ();
-}
-
-void
-gui_unset_busy (Gimp *gimp)
-{
-  GDisplay *gdisp;
-  GSList   *list;
-
-  /* Canvases */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GDisplay *) list->data;
-      gdisplay_remove_override_cursor (gdisp);
-    }
-
-  /* Dialogs */
-  dialog_unidle_all ();
 }
 
 void
@@ -350,6 +324,42 @@ gui_display_new (GimpImage *gimage)
     gtk_signal_connect_after (GTK_OBJECT (gdisp->canvas), "expose_event",
 			      GTK_SIGNAL_FUNC (gui_rotate_the_shield_harmonics),
 			      NULL);
+}
+
+static void
+gui_set_busy (Gimp *gimp)
+{
+  GDisplay *gdisp;
+  GSList   *list;
+
+  /* Canvases */
+  for (list = display_list; list; list = g_slist_next (list))
+    {
+      gdisp = (GDisplay *) list->data;
+      gdisplay_install_override_cursor (gdisp, GDK_WATCH);
+    }
+
+  /* Dialogs */
+  dialog_idle_all ();
+
+  gdk_flush ();
+}
+
+static void
+gui_unset_busy (Gimp *gimp)
+{
+  GDisplay *gdisp;
+  GSList   *list;
+
+  /* Canvases */
+  for (list = display_list; list; list = g_slist_next (list))
+    {
+      gdisp = (GDisplay *) list->data;
+      gdisplay_remove_override_cursor (gdisp);
+    }
+
+  /* Dialogs */
+  dialog_unidle_all ();
 }
 
 static gint

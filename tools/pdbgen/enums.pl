@@ -128,6 +128,23 @@ package Gimp::CodeGen::enums;
 		       GIMP_PDB_SUCCESS => 'PDB_SUCCESS',
 		       GIMP_PDB_CANCEL => 'PDB_CANCEL' }
 	},
+    MessageHandlerType =>
+	{ contig => 1,
+	  header => 'appenums.h',
+	  symbols => [ qw(MESSAGE_BOX CONSOLE ERROR_CONSOLE) ],
+	  mapping => { MESSAGE_BOX => '0',
+		       CONSOLE => '1',
+		       ERROR_CONSOLE => '2' }
+	},
+    StackTraceMode =>
+	{ contig => 1,
+	  header => 'appenums.h',
+	  symbols => [ qw(STACK_TRACE_NEVER STACK_TRACE_QUERY
+			  STACK_TRACE_ALWAYS) ],
+	  mapping => { STACK_TRACE_NEVER => '0',
+		       STACK_TRACE_QUERY => '1',
+		       STACK_TRACE_ALWAYS => '2' }
+	},
     BrushApplicationMode =>
 	{ contig => 1,
 	  header => 'appenums.h',
@@ -201,23 +218,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { RUN_INTERACTIVE => '0',
 		       RUN_NONINTERACTIVE => '1',
 		       RUN_WITH_LAST_VALS => '2' }
-	},
-    MessageHandlerType =>
-	{ contig => 1,
-	  header => 'appenv.h',
-	  symbols => [ qw(MESSAGE_BOX CONSOLE ERROR_CONSOLE) ],
-	  mapping => { MESSAGE_BOX => '0',
-		       CONSOLE => '1',
-		       ERROR_CONSOLE => '2' }
-	},
-    StackTraceMode =>
-	{ contig => 1,
-	  header => 'errors.h',
-	  symbols => [ qw(STACK_TRACE_NEVER STACK_TRACE_QUERY
-			  STACK_TRACE_ALWAYS) ],
-	  mapping => { STACK_TRACE_NEVER => '0',
-		       STACK_TRACE_QUERY => '1',
-		       STACK_TRACE_ALWAYS => '2' }
 	},
     LayerModeEffects =>
 	{ contig => 1,

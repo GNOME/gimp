@@ -28,8 +28,6 @@
 
 #include "gimpcolorpanel.h"
 
-#include "appenv.h"
-
 
 struct _GimpColorPanel
 {
@@ -38,6 +36,7 @@ struct _GimpColorPanel
   ColorNotebook   *color_notebook;
   gboolean         color_notebook_active;
 };
+
 
 /*  local function prototypes  */
 static void   gimp_color_panel_class_init      (GimpColorPanelClass *klass);

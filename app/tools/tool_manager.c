@@ -49,7 +49,6 @@
 #include "gimppenciltool.h"
 #include "gimpsmudgetool.h"
 
-#include "appenv.h"
 #include "app_procs.h"
 #include "gdisplay.h"
 #include "gimprc.h"
@@ -581,7 +580,7 @@ tool_manager_tool_changed (GimpContext  *user_context,
   tool_manager = (GimpToolManager *) data;
 
   /* FIXME: gimp_busy HACK */
-  if (gimp_busy)
+  if (user_context->gimp->busy)
     {
       /*  there may be contexts waiting for the user_context's "tool_changed"
        *  signal, so stop emitting it.

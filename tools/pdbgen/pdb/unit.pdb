@@ -43,7 +43,7 @@ sub unit_prop_proc {
     @outargs = (
 	{ name => $prop, type => $type,
 	  desc => "The unit's $desc",
-	  alias => "gimp_unit_get_$prop (unit)",
+	  alias => "_gimp_unit_get_$prop (gimp, unit)",
 	  no_declare => 1 }
     );
 
@@ -62,7 +62,7 @@ sub unit_get_number_of_units {
     @outargs = (
 	{ name => 'num_units', type => 'int32', libdef => 'GIMP_UNIT_END',
 	  desc => 'The number of units', wrap => 1,
-	  alias => 'gimp_unit_get_number_of_units ()', no_declare => 1 }
+	  alias => '_gimp_unit_get_number_of_units (gimp)', no_declare => 1 }
     );
 }
 
@@ -78,7 +78,7 @@ HELP
     @outargs = (
 	{ name => 'num_units', type => 'int32', libdef => 'GIMP_UNIT_END',
 	  desc => 'The number of built-in units', wrap => 1,
-	  alias => 'gimp_unit_get_number_of_units ()', no_declare => 1 }
+	  alias => '_gimp_unit_get_number_of_units (gimp)', no_declare => 1 }
     );
 }
 
@@ -118,8 +118,8 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-unit = gimp_unit_new (identifier, factor, digits, symbol, abbreviation,
-		      singular, plural);
+unit = _gimp_unit_new (gimp, identifier, factor, digits, symbol, abbreviation,
+		       singular, plural);
 CODE
     );
 }
@@ -150,7 +150,7 @@ HELP
 	  desc => 'The new deletion flag of the unit' }
     );
 
-    %invoke = ( code => 'gimp_unit_set_deletion_flag (unit, deletion_flag);' );
+    %invoke = ( code => '_gimp_unit_set_deletion_flag (gimp, unit, deletion_flag);' );
 }
 
 sub unit_get_identifier {
@@ -214,7 +214,7 @@ HELP
     &unit_prop_proc('plural', 'string', 'plural form');
 }
 
-@headers = qw("libgimpbase/gimpunit.h");
+@headers = qw("libgimpbase/gimpunit.h" "unitrc.h");
 
 @procs = qw(unit_get_number_of_units unit_get_number_of_built_in_units
 	    unit_new unit_get_deletion_flag unit_set_deletion_flag

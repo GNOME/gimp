@@ -19,6 +19,7 @@
 #ifndef __GIMPRC_H__
 #define __GIMPRC_H__
 
+
 typedef struct _GimpRc GimpRc;
 
 /*  global gimprc variables  - need some comments on this stuff */
@@ -67,14 +68,16 @@ struct _GimpRc
 
 extern GimpRc gimprc;
 
-/*  function prototypes  */
-gboolean    gimprc_init         (void); /* this has to be called before any file
-					 * is parsed
-					 */
-void        parse_gimprc        (void);
-gboolean    parse_gimprc_file   (gchar  *filename);
-void        save_gimprc         (GList **updated_options,
+/* this has to be called before any file is parsed
+ */
+gboolean    gimprc_init         (Gimp   *gimp);
+
+void        gimprc_parse        (Gimp   *gimp);
+void        gimprc_save         (GList **updated_options,
 				 GList **conflicting_options);
+
+gboolean    gimprc_parse_file   (gchar  *filename);
+
 gchar     * gimprc_find_token   (gchar  *token);
 gchar     * gimprc_value_to_str (gchar  *name);
 void        save_gimprc_strings (gchar  *token,

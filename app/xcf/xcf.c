@@ -27,6 +27,7 @@
 
 #include "core/core-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 
 #include "xcf.h"
@@ -35,7 +36,6 @@
 #include "xcf-read.h"
 #include "xcf-save.h"
 
-#include "app_procs.h"
 #include "plug_in.h"
 
 #include "libgimp/gimpintl.h"
@@ -193,7 +193,7 @@ xcf_load_invoker (Gimp     *gimp,
   gboolean   success;
   gchar      id[14];
 
-  gimp_set_busy ();
+  gimp_set_busy (gimp);
 
   gimage = NULL;
 
@@ -263,7 +263,7 @@ xcf_load_invoker (Gimp     *gimp,
   if (success)
     return_args[1].value.pdb_int = gimp_image_get_ID (gimage);
 
-  gimp_unset_busy ();
+  gimp_unset_busy (gimp);
 
   return return_args;
 }
@@ -278,7 +278,7 @@ xcf_save_invoker (Gimp     *gimp,
   gchar     *filename;
   gboolean   success;
 
-  gimp_set_busy ();
+  gimp_set_busy (gimp);
 
   success = FALSE;
 
@@ -313,7 +313,7 @@ xcf_save_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&xcf_plug_in_save_proc.db_info,
 					   success);
 
-  gimp_unset_busy ();
+  gimp_unset_busy (gimp);
 
   return return_args;
 }

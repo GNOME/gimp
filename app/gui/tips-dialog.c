@@ -28,7 +28,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "tips-dialog.h"
 
@@ -208,7 +208,7 @@ tips_dialog_destroy (GtkWidget *widget,
       update = g_list_append (update, "show-tips");
       remove = g_list_append (remove, "dont-show-tips");
       old_show_tips = gimprc.show_tips;
-      save_gimprc (&update, &remove);
+      gimprc_save (&update, &remove);
     }
   g_list_free (update);
   g_list_free (remove);

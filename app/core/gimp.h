@@ -25,6 +25,8 @@
 
 
 typedef void (* GimpCreateDisplayFunc) (GimpImage *gimage);
+typedef void (* GimpSetBusyFunc)       (Gimp      *gimp);
+typedef void (* GimpUnsetBusyFunc)     (Gimp      *gimp);
 
 
 #define GIMP_TYPE_GIMP            (gimp_get_type ())
@@ -41,6 +43,14 @@ struct _Gimp
   GimpObject             parent_instance;
 
   GimpCreateDisplayFunc  create_display_func;
+  GimpSetBusyFunc        gui_set_busy_func;
+  GimpUnsetBusyFunc      gui_unset_busy_func;
+
+  gboolean               busy;
+  guint                  busy_idle_id;
+
+  GList                 *user_units;
+  gint                   n_user_units;
 
   GimpContainer         *images;
 
@@ -89,8 +99,15 @@ struct _GimpClass
 GtkType       gimp_get_type             (void);
 Gimp        * gimp_new                  (void);
 
-void          gimp_restore              (Gimp              *gimp);
+void          gimp_initialize           (Gimp              *gimp);
+
+void          gimp_restore              (Gimp              *gimp,
+					 gboolean           no_data);
 void          gimp_shutdown             (Gimp              *gimp);
+
+void          gimp_set_busy             (Gimp              *gimp);
+void          gimp_set_busy_until_idle  (Gimp              *gimp);
+void          gimp_unset_busy           (Gimp              *gimp);
 
 GimpImage   * gimp_create_image         (Gimp              *gimp,
 					 gint               width,

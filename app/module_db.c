@@ -210,7 +210,7 @@ module_db_init (void)
 
   /* load the modulerc file */
   filename = gimp_personal_rc_file ("modulerc");
-  parse_gimprc_file (filename);
+  gimprc_parse_file (filename);
   g_free (filename);
 
   /* Load and initialize gimp modules */

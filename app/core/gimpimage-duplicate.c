@@ -44,7 +44,6 @@
 #include "gimplist.h"
 #include "gimpparasitelist.h"
 
-#include "app_procs.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "path.h"
@@ -73,7 +72,7 @@ gimp_image_duplicate (GimpImage *gimage)
   g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  gimp_set_busy_until_idle ();
+  gimp_set_busy_until_idle (gimage->gimp);
 
   /*  Create a new image  */
   new_gimage = gimp_create_image (gimage->gimp,

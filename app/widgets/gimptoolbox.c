@@ -56,7 +56,6 @@
 #include "menus.h"
 
 #include "app_procs.h"
-#include "appenv.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -587,7 +586,7 @@ toolbox_drop_buffer (GtkWidget    *widget,
 		     GimpViewable *viewable,
 		     gpointer      data)
 {
-  if (gimp_busy)
+  if (the_gimp->busy)
     return;
 
   gimp_edit_paste_as_new (the_gimp, NULL, GIMP_BUFFER (viewable)->tiles);

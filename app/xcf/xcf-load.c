@@ -511,7 +511,7 @@ xcf_load_image_props (XcfInfo   *info,
 	    info->cp += xcf_read_int32 (info->fp, &unit, 1);
 	    
 	    if ((unit <= GIMP_UNIT_PIXEL) ||
-		(unit >= gimp_unit_get_number_of_built_in_units()))
+		(unit >= _gimp_unit_get_number_of_built_in_units (gimage->gimp)))
 	      {
 		g_message ("Warning, unit out of range in XCF file, falling back to inches");
 		unit = GIMP_UNIT_INCH;
@@ -546,17 +546,19 @@ xcf_load_image_props (XcfInfo   *info,
 	      if (unit_strings[i] == NULL)
 		unit_strings[i] = g_strdup ("");
 
-	    num_units = gimp_unit_get_number_of_units ();
-	    
-	    for (unit = gimp_unit_get_number_of_built_in_units ();
+	    num_units = _gimp_unit_get_number_of_units (gimage->gimp);
+
+	    for (unit = _gimp_unit_get_number_of_built_in_units (gimage->gimp);
 		 unit < num_units; unit++)
 	      {
 		/* if the factor and the identifier match some unit
 		 * in unitrc, use the unitrc unit
 		 */
-		if ((ABS (gimp_unit_get_factor (unit) - factor) < 1e-5) &&
+		if ((ABS (_gimp_unit_get_factor (gimage->gimp,
+						 unit) - factor) < 1e-5) &&
 		    (strcmp (unit_strings[0],
-			     gimp_unit_get_identifier (unit)) == 0))
+			     _gimp_unit_get_identifier (gimage->gimp,
+							unit)) == 0))
 		  {
 		    break;
 		  }
@@ -564,13 +566,14 @@ xcf_load_image_props (XcfInfo   *info,
 	    
 	    /* no match */
 	    if (unit == num_units)
-	      unit = gimp_unit_new (unit_strings[0],
-				    factor,
-				    digits,
-				    unit_strings[1],
-				    unit_strings[2],
-				    unit_strings[3],
-				    unit_strings[4]);
+	      unit = _gimp_unit_new (gimage->gimp,
+				     unit_strings[0],
+				     factor,
+				     digits,
+				     unit_strings[1],
+				     unit_strings[2],
+				     unit_strings[3],
+				     unit_strings[4]);
 
 	    gimage->unit = unit;
 

@@ -558,7 +558,7 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
   gboolean       new_layer;
   gint           i, x, y;
 
-  gimp_set_busy ();
+  gimp_set_busy (gdisp->gimage->gimp);
 
   tool = GIMP_TOOL (gt_tool);
 
@@ -655,7 +655,7 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
 	}
     }
 
-  gimp_unset_busy ();
+  gimp_unset_busy (gdisp->gimage->gimp);
 
   gdisplays_flush ();
 

@@ -30,7 +30,8 @@
 
 #include "core/core-types.h"
 
-#include "app_procs.h"
+#include "core/gimp.h"
+
 #include "gimprc.h"
 #include "unitrc.h"
 
@@ -74,45 +75,45 @@ static GimpUnitDef gimp_unit_percent =
   FALSE,    0.0, 0, "percent",     "%",  "%",  N_("percent"),    N_("percent")
 };
 
-static GSList* user_units = NULL;
-static gint    number_of_user_units = 0;
 
 /* private functions */
 
 static GimpUnitDef *
-gimp_unit_get_user_unit (GimpUnit unit)
+_gimp_unit_get_user_unit (Gimp     *gimp,
+			  GimpUnit  unit)
 {
-  return g_slist_nth_data (user_units, unit - GIMP_UNIT_END);
+  return g_list_nth_data (gimp->user_units, unit - GIMP_UNIT_END);
 }
 
 
 /* public functions */
 
 gint
-gimp_unit_get_number_of_units (void)
+_gimp_unit_get_number_of_units (Gimp *gimp)
 {
-  return GIMP_UNIT_END + number_of_user_units;
+  return GIMP_UNIT_END + gimp->n_user_units;
 }
 
 gint
-gimp_unit_get_number_of_built_in_units (void)
+_gimp_unit_get_number_of_built_in_units (Gimp *gimp)
 {
   return GIMP_UNIT_END;
 }
 
-
 GimpUnit
-gimp_unit_new (gchar   *identifier,
-	       gdouble  factor,
-	       gint     digits,
-	       gchar   *symbol,
-	       gchar   *abbreviation,
-	       gchar   *singular,
-	       gchar   *plural)
+_gimp_unit_new (Gimp    *gimp,
+		gchar   *identifier,
+		gdouble  factor,
+		gint     digits,
+		gchar   *symbol,
+		gchar   *abbreviation,
+		gchar   *singular,
+		gchar   *plural)
 {
   GimpUnitDef *user_unit;
 
-  user_unit = g_new (GimpUnitDef, 1);
+  user_unit = g_new0 (GimpUnitDef, 1);
+
   user_unit->delete_on_exit = TRUE;
   user_unit->factor         = factor;
   user_unit->digits         = digits;
@@ -122,70 +123,71 @@ gimp_unit_new (gchar   *identifier,
   user_unit->singular       = g_strdup (singular);
   user_unit->plural         = g_strdup (plural);
 
-  user_units = g_slist_append (user_units, user_unit);
-  number_of_user_units++;
+  gimp->user_units = g_list_append (gimp->user_units, user_unit);
+  gimp->n_user_units++;
 
-  return GIMP_UNIT_END + number_of_user_units - 1;
+  return GIMP_UNIT_END + gimp->n_user_units - 1;
 }
 
-
 gboolean
-gimp_unit_get_deletion_flag (GimpUnit unit)
+_gimp_unit_get_deletion_flag (Gimp     *gimp,
+			      GimpUnit  unit)
 {
   g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) && 
-			(unit < (GIMP_UNIT_END + number_of_user_units)), FALSE);
+			(unit < (GIMP_UNIT_END + gimp->n_user_units)), FALSE);
 
   if (unit < GIMP_UNIT_END)
     return FALSE;
 
-  return gimp_unit_get_user_unit (unit)->delete_on_exit;
+  return _gimp_unit_get_user_unit (gimp, unit)->delete_on_exit;
 }
 
 void
-gimp_unit_set_deletion_flag (GimpUnit unit,
-			     gboolean deletion_flag)
+_gimp_unit_set_deletion_flag (Gimp     *gimp,
+			      GimpUnit  unit,
+			      gboolean  deletion_flag)
 {
   g_return_if_fail ((unit >= GIMP_UNIT_END) && 
-		    (unit < (GIMP_UNIT_END + number_of_user_units)));
+		    (unit < (GIMP_UNIT_END + gimp->n_user_units)));
 
-  gimp_unit_get_user_unit (unit)->delete_on_exit =
+  _gimp_unit_get_user_unit (gimp, unit)->delete_on_exit = 
     deletion_flag ? TRUE : FALSE;
 }
 
-
 gdouble
-gimp_unit_get_factor (GimpUnit unit)
+_gimp_unit_get_factor (Gimp     *gimp,
+		       GimpUnit  unit)
 {
   g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) && 
-			(unit < (GIMP_UNIT_END + number_of_user_units)),
+			(unit < (GIMP_UNIT_END + gimp->n_user_units)),
 			gimp_unit_defs[GIMP_UNIT_INCH].factor);
 
   if (unit < GIMP_UNIT_END)
     return gimp_unit_defs[unit].factor;
 
-  return gimp_unit_get_user_unit (unit)->factor;
+  return _gimp_unit_get_user_unit (gimp, unit)->factor;
 }
 
-
 gint
-gimp_unit_get_digits (GimpUnit unit)
+_gimp_unit_get_digits (Gimp     *gimp,
+		       GimpUnit  unit)
 {
   g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) &&
-			(unit < (GIMP_UNIT_END + number_of_user_units)),
+			(unit < (GIMP_UNIT_END + gimp->n_user_units)),
 			gimp_unit_defs[GIMP_UNIT_INCH].digits);
 
   if (unit < GIMP_UNIT_END)
     return gimp_unit_defs[unit].digits;
 
-  return gimp_unit_get_user_unit (unit)->digits;
+  return _gimp_unit_get_user_unit (gimp, unit)->digits;
 }
 
-
 gchar * 
-gimp_unit_get_identifier (GimpUnit unit)
+_gimp_unit_get_identifier (Gimp     *gimp,
+			   GimpUnit  unit)
 {
   g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) && 
-			(unit < (GIMP_UNIT_END + number_of_user_units)) ||
+			(unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gimp_unit_defs[GIMP_UNIT_INCH].identifier);
 
@@ -195,15 +197,15 @@ gimp_unit_get_identifier (GimpUnit unit)
   if (unit == GIMP_UNIT_PERCENT)
     return gimp_unit_percent.identifier;
 
-  return gimp_unit_get_user_unit (unit)->identifier;
+  return _gimp_unit_get_user_unit (gimp, unit)->identifier;
 }
 
-
 gchar *
-gimp_unit_get_symbol (GimpUnit unit)
+_gimp_unit_get_symbol (Gimp     *gimp,
+		       GimpUnit  unit)
 {
   g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) &&
-			(unit < (GIMP_UNIT_END + number_of_user_units)) ||
+			(unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gimp_unit_defs[GIMP_UNIT_INCH].symbol);
 
@@ -213,15 +215,15 @@ gimp_unit_get_symbol (GimpUnit unit)
   if (unit == GIMP_UNIT_PERCENT)
     return gimp_unit_percent.symbol;
 
-  return gimp_unit_get_user_unit (unit)->symbol;
+  return _gimp_unit_get_user_unit (gimp, unit)->symbol;
 }
 
-
 gchar *
-gimp_unit_get_abbreviation (GimpUnit unit)
+_gimp_unit_get_abbreviation (Gimp     *gimp,
+			     GimpUnit  unit)
 {
   g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) &&
-			(unit < (GIMP_UNIT_END + number_of_user_units)) ||
+			(unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gimp_unit_defs[GIMP_UNIT_INCH].abbreviation);
 
@@ -231,15 +233,15 @@ gimp_unit_get_abbreviation (GimpUnit unit)
   if (unit == GIMP_UNIT_PERCENT)
     return gimp_unit_percent.abbreviation;
 
-  return gimp_unit_get_user_unit (unit)->abbreviation;
+  return _gimp_unit_get_user_unit (gimp, unit)->abbreviation;
 }
 
-
 gchar *
-gimp_unit_get_singular (GimpUnit unit)
+_gimp_unit_get_singular (Gimp     *gimp,
+			 GimpUnit  unit)
 {
   g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) &&
-			(unit < (GIMP_UNIT_END + number_of_user_units)) ||
+			(unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gettext (gimp_unit_defs[GIMP_UNIT_INCH].singular));
 
@@ -249,15 +251,15 @@ gimp_unit_get_singular (GimpUnit unit)
   if (unit == GIMP_UNIT_PERCENT)
     return gettext (gimp_unit_percent.singular);
 
-  return gettext (gimp_unit_get_user_unit (unit)->singular);
+  return gettext (_gimp_unit_get_user_unit (gimp, unit)->singular);
 }
 
-
 gchar *
-gimp_unit_get_plural (GimpUnit unit)
+_gimp_unit_get_plural (Gimp     *gimp,
+		       GimpUnit  unit)
 {
   g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) &&
-			(unit < (GIMP_UNIT_END + number_of_user_units)) ||
+			(unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gettext (gimp_unit_defs[GIMP_UNIT_INCH].plural));
 
@@ -267,25 +269,24 @@ gimp_unit_get_plural (GimpUnit unit)
   if (unit == GIMP_UNIT_PERCENT)
     return gettext (gimp_unit_percent.plural);
 
-  return gettext (gimp_unit_get_user_unit (unit)->plural);
+  return gettext (_gimp_unit_get_user_unit (gimp, unit)->plural);
 }
 
 
 /*  unitrc functions  **********/
 
 void
-parse_unitrc (void)
+gimp_unitrc_load (Gimp *gimp)
 {
   gchar *filename;
 
   filename = gimp_personal_rc_file ("unitrc");
-  parse_gimprc_file (filename);
+  gimprc_parse_file (filename);
   g_free (filename);
 }
 
-
 void
-save_unitrc (void)
+gimp_unitrc_save (Gimp *gimp)
 {
   gint   i;
   gchar *filename;

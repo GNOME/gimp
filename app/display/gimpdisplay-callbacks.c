@@ -53,8 +53,6 @@
 #include "gui/info-window.h"
 #include "gui/layer-select.h"
 
-#include "appenv.h"
-#include "app_procs.h"
 #include "devices.h"
 #include "dialog_handler.h"
 #include "disp_callbacks.h"
@@ -224,7 +222,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
     }
 
   /*  Find out what device the event occurred upon  */
-  if (! gimp_busy && devices_check_change (event))
+  if (! gdisp->gimage->gimp->busy && devices_check_change (event))
     gdisplay_check_device_cursor (gdisp);
 
   switch (event->type)
@@ -270,7 +268,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
       state = bevent->state;
 
       /*  ignore new mouse events  */
-      if (gimp_busy)
+      if (gdisp->gimage->gimp->busy)
 	return TRUE;
 
       switch (bevent->button)
@@ -409,8 +407,9 @@ gdisplay_canvas_events (GtkWidget *canvas,
        *
        *  ugly: fuzzy_select sets busy cursors while ACTIVE.
        */
-      if (gimp_busy && ! (GIMP_IS_FUZZY_SELECT_TOOL (active_tool)  &&
-	                  active_tool->state == ACTIVE))
+      if (gdisp->gimage->gimp->busy &&
+	  ! (GIMP_IS_FUZZY_SELECT_TOOL (active_tool)  &&
+	     active_tool->state == ACTIVE))
 	return TRUE;
 
       switch (bevent->button)
@@ -482,8 +481,9 @@ gdisplay_canvas_events (GtkWidget *canvas,
        *
        *  ugly: fuzzy_select sets busy cursors while ACTIVE.
        */
-      if (gimp_busy && ! (GIMP_IS_FUZZY_SELECT_TOOL (active_tool) &&
-			  active_tool->state == ACTIVE))
+      if (gdisp->gimage->gimp->busy &&
+	  ! (GIMP_IS_FUZZY_SELECT_TOOL (active_tool) &&
+	     active_tool->state == ACTIVE))
 	return TRUE;
 
       /* Ask for the pointer position, but ignore it except for cursor
@@ -561,7 +561,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
       state = kevent->state;
 
       /*  ignore any key presses  */
-      if (gimp_busy)
+      if (gdisp->gimage->gimp->busy)
 	return TRUE;
 
       switch (kevent->keyval)
@@ -612,7 +612,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
       state = kevent->state;
 
       /*  ignore any key releases  */
-      if (gimp_busy)
+      if (gdisp->gimage->gimp->busy)
 	return TRUE;
 
       switch (kevent->keyval)
@@ -640,7 +640,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
     }
 
   /*  if we reached this point in gimp_busy mode, return now  */
-  if (gimp_busy)
+  if (gdisp->gimage->gimp->busy)
     return TRUE;
 
   /* Cursor update support                               */
@@ -684,7 +684,7 @@ gdisplay_hruler_button_press (GtkWidget      *widget,
 
   gdisp = (GDisplay *) data;
 
-  if (gimp_busy)
+  if (gdisp->gimage->gimp->busy)
     return TRUE;
 
   if (event->button == 1)
@@ -722,7 +722,7 @@ gdisplay_vruler_button_press (GtkWidget      *widget,
 
   gdisp = (GDisplay *) data;
 
-  if (gimp_busy)
+  if (gdisp->gimage->gimp->busy)
     return TRUE;
 
   if (event->button == 1)
@@ -784,7 +784,7 @@ gdisplay_origin_button_press (GtkWidget      *widget,
 
   gdisp = (GDisplay *) data;
 
-  if (! gimp_busy && event->button == 1)
+  if (! gdisp->gimage->gimp->busy && event->button == 1)
     {
       gint x, y;
 
@@ -824,11 +824,12 @@ gdisplay_drop_drawable (GtkWidget    *widget,
   gint              bytes; 
   GimpImageBaseType type;
 
-  if (gimp_busy)
+  gdisp = (GDisplay *) data;
+
+  if (gdisp->gimage->gimp->busy)
     return;
 
   drawable = GIMP_DRAWABLE (viewable);
-  gdisp    = (GDisplay *) data;
 
   src_gimage = gimp_drawable_gimage (drawable);
   src_width  = gimp_drawable_width  (drawable);
@@ -933,15 +934,17 @@ gdisplay_bucket_fill (GtkWidget      *widget,
   TempBuf  *pat_buf = NULL;
   gboolean  new_buf = FALSE;
 
-  if (gimp_busy)
-    return;
-
   gimage = ((GDisplay *) data)->gimage;
-  drawable = gimp_image_active_drawable (gimage);
-  if (!drawable)
+
+  if (gimage->gimp->busy)
     return;
 
-  gimp_set_busy ();
+  drawable = gimp_image_active_drawable (gimage);
+
+  if (! drawable)
+    return;
+
+  gimp_set_busy (gimage->gimp);
 
   /*  Get the bucket fill context  */
   tool_info = tool_manager_get_info_by_type (gimage->gimp,
@@ -1023,7 +1026,7 @@ gdisplay_bucket_fill (GtkWidget      *widget,
   if (new_buf)
     temp_buf_free (pat_buf);
 
-  gimp_unset_busy ();
+  gimp_unset_busy (gimage->gimp);
 }
 
 void
@@ -1062,11 +1065,12 @@ gdisplay_drop_buffer (GtkWidget    *widget,
   GimpBuffer *buffer;
   GDisplay   *gdisp;
 
-  if (gimp_busy)
+  gdisp = (GDisplay *) data;
+
+  if (gdisp->gimage->gimp->busy)
     return;
 
   buffer = GIMP_BUFFER (viewable);
-  gdisp  = (GDisplay *) data;
 
   /* FIXME: popup a menu for selecting "Paste Into" */
 

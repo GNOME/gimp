@@ -45,7 +45,6 @@
 
 #include "widgets/gimpdnd.h"
 
-#include "appenv.h"
 #include "app_procs.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -923,7 +922,7 @@ blend (GimpImage        *gimage,
   gint         bytes;
   gint         x1, y1, x2, y2;
 
-  gimp_set_busy ();
+  gimp_set_busy (gimage->gimp);
 
   has_selection = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
@@ -958,7 +957,7 @@ blend (GimpImage        *gimage,
   /*  free the temporary buffer  */
   tile_manager_destroy (buf_tiles);
 
-  gimp_unset_busy ();
+  gimp_unset_busy (gimage->gimp);
 }
 
 static gdouble

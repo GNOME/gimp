@@ -27,9 +27,6 @@ void   gui_post_init          (Gimp *gimp);
 void   gui_shutdown           (Gimp *gimp);
 void   gui_exit               (Gimp *gimp);
 
-void   gui_set_busy           (Gimp *gimp);
-void   gui_unset_busy         (Gimp *gimp);
-
 void   gui_really_quit_dialog (void);
 
 

@@ -76,6 +76,8 @@ HELP
     %invoke = ( code => 'message_handler = handler;' );
 }
 
+@headers = qw("appenv.h");
+
 @procs = qw(message message_get_handler message_set_handler);
 %exports = (app => [@procs], lib => [@procs]);
 

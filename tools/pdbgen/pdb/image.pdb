@@ -297,7 +297,7 @@ HELP
 	headers => [ qw("app_procs.h") ],
 	code => <<'CODE'
 {
-  gimp_set_busy_until_idle ();
+  gimp_set_busy_until_idle (gimp);
   gimp_image_resize (gimage, new_width, new_height, offx, offy);
 }
 CODE
@@ -325,7 +325,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_set_busy_until_idle ();
+  gimp_set_busy_until_idle (gimp);
   gimp_image_scale (gimage, new_width, new_height);
 }
 CODE

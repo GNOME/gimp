@@ -813,7 +813,7 @@ prefs_save_callback (GtkWidget *widget,
     }
 
 
-  save_gimprc (&update, &remove);
+  gimprc_save (&update, &remove);
 
 
   if (gimprc.using_xserver_resolution)

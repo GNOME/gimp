@@ -36,7 +36,6 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
-#include "appenv.h"
 #include "gdisplay.h"
 #include "gimprc.h"
 

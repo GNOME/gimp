@@ -560,9 +560,6 @@ gimp_context_destroy (GtkObject *object)
   if (context->parent)
     gimp_context_unset_parent (context);
 
-  context->gimp->context_list = g_list_remove (context->gimp->context_list,
-					       context);
-
   context->image   = NULL;
   context->display = NULL;
 

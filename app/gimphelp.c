@@ -164,7 +164,7 @@ gimp_help_internal_not_found_callback (GtkWidget *widget,
       gimprc.help_browser = HELP_BROWSER_NETSCAPE;
 
       update = g_list_append (update, "help-browser");
-      save_gimprc (&update, &remove);
+      gimprc_save (&update, &remove);
     }
   
   gtk_main_quit ();

@@ -1,3 +1,87 @@
+2001-07-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.[ch]: removed the gimp_busy boolean, check whether
+	user_installation is needed here, not in user_install.c, parse
+	gtkrc an friends only if(!no_interface), create the Gimp object
+	before parsing gimp's rc files an pas it to the parse functions,
+	many other cleanups.
+
+	* app/appenums.h: added MessageHandlerType and StackTraceMode.
+
+	* app/appenv.h: removed MessageHandlerType, declare all global
+	variables from main.c (no more hidden global stuff please).
+
+	* app/errors.[ch]: added the fatal message func here (from main.c),
+	removed the StackTraceMode enum.
+
+	* app/gimprc.[ch]: renamed functions to gimprc_*(), pass a Gimp
+	pointer to some functions.
+
+	* app/gimpunit.c
+	* app/unitrc.h: ok, this is ugly: renamed all functions to
+	_gimp_unit_*() and made them public. The unit list is part
+	of the Gimp object now, so pass a Gimp* to all functions.
+
+	* app/libgimp_glue.[ch]: added EEKy wrappers for all gimp_unit_*()
+	functions which are used by widgets.
+
+	* app/main.c: cleaned up the global variables, removed the fatal
+	message handler, call app_init() directly, not via the
+	user_install stuff, misc. cleanups.
+
+	* app/user_install.[ch]: removed the check if user_installation is
+	needed (done by app_procs.c now).
+
+	* app/core/gimp.[ch]: added the user_unit list and the "busy"
+	boolean. Moved gimp_[set|unset]_busy() here. Added
+	gimp_initialize() which is called after unitrc and gimprc are
+	parsed.
+
+	* app/batch.c
+	* app/colormaps.c
+	* app/devices.c
+	* app/disp_callbacks.c
+	* app/gdisplay_ops.c
+	* app/gimphelp.c
+	* app/module_db.c
+	* app/nav_window.c
+	* app/plug_in.c
+	* app/core/gimpcontext.c
+	* app/core/gimpdatafiles.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage.c
+	* app/core/gimpparasite.c
+	* app/core/gimpparasitelist.h
+	* app/gui/file-open-dialog.c
+	* app/gui/gui.[ch]
+	* app/gui/info-dialog.c
+	* app/gui/info-window.c
+	* app/gui/preferences-dialog.c
+	* app/gui/session.c
+	* app/gui/tips-dialog.c
+	* app/gui/toolbox.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/tool_manager.c
+	* app/widgets/gimpcolorpanel.c
+	* app/widgets/gimpcursor.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/enums.pl
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/message.pdb
+	* tools/pdbgen/pdb/unit.pdb
+	* app/pdb/image_cmds.c
+	* app/pdb/message_cmds.c
+	* app/pdb/unit_cmds.c: changed accordingly, minor cleanups.
+
 2001-07-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
