@@ -2935,6 +2935,9 @@ gfig_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (top_level_dlg),
+                                     RESPONSE_UNDO, undo_water_mark >= 0);
+
   main_hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox), main_hbox,
@@ -3045,8 +3048,8 @@ gfig_response (GtkWidget *widget,
           current_obj->obj_status |= GFIG_MODIFIED;
         }
 
-      if (undo_water_mark < 0)
-        gtk_widget_set_sensitive (widget, FALSE);
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
+                                         RESPONSE_UNDO, undo_water_mark >= 0);
       break;
 
     case RESPONSE_CLEAR:

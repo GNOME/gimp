@@ -1,5 +1,11 @@
 2004-02-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gfig/gfig.c (gfig_response): set the Undo button
+	insensitive, not the whole dialog (bug #134419). Also start the
+	dialog with the Undo button set insensitive.
+
+2004-02-16  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcroptool.c (crop_info_create): use limits from
 	libgimpbase instead of arbitrary numbers. Don't allow a crop width
 	or height smaller than 1 (or GIMP_MIN_IMAGE_SIZE actually).
