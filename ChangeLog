@@ -1,5 +1,11 @@
 2003-01-23  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_colorblind.c: use bpl (line pitch) when
+	iterating over the buffer. Added a simple color cache that speeds
+	up the filter for images that only use a few colors.
+
+2003-01-23  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_colorblind.c: moved some intialisation code out
 	of the convert method. Added NONE as possible choice of deficiency
 	so you can switch the filter on and off more easily.	

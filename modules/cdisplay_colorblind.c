@@ -2,7 +2,8 @@
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * cdisplay_colorblind.c
- * Copyright (C) 2002-2003 Michael Natterer <mitch@gimp.org>, 
+ * Copyright (C) 2002-2003 Michael Natterer <mitch@gimp.org>,
+ *                         Sven Neumann <sven@gimp.org>,
  *                         Robert Dougherty <bob@vischeck.com> and
  *                         Alex Wade <alex@vischeck.com>
  *
@@ -50,7 +51,8 @@ typedef enum
 } ColorblindDeficiency;
 
 
-#define DEFAULT_DEFICIENCY COLORBLIND_DEFICIENCY_DEUTERANOPIA
+#define DEFAULT_DEFICIENCY  COLORBLIND_DEFICIENCY_DEUTERANOPIA
+#define COLOR_CACHE_SIZE    1021
 
 
 #define CDISPLAY_TYPE_COLORBLIND            (cdisplay_colorblind_type)
@@ -76,6 +78,8 @@ struct _CdisplayColorblind
   gfloat                a1, b1, c1;
   gfloat                a2, b2, c2;
   gfloat                inflection;
+
+  guint32               cache[2 * COLOR_CACHE_SIZE];
 
   GtkWidget            *hbox;
   GtkWidget            *optionmenu;
@@ -291,7 +295,7 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
   gfloat              a1, b1, c1, a2, b2, c2;
   gfloat              tmp;
   gfloat              red, green, blue, redOld, greenOld;
-  gint                npix;
+  gint                x, y;
 
   /* Require 3 bytes per pixel (assume RGB) */
   if (bpp != 3)
@@ -308,88 +312,105 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
   a1 = colorblind->a1; b1 = colorblind->b1; c1 = colorblind->c1;
   a2 = colorblind->a2; b2 = colorblind->b2; c2 = colorblind->c2;
 
-  npix = height * width; /* number of pixels in the image   */
-  b    = buf;            /* pointer to the RGB color buffer */
+  for (y = 0; y < height; y++, buf += bpl)
+    for (x = 0, b = buf; x < width; x++, b += bpp)
+      {
+        guint32 pixel;
+        guint   index;
 
-  while (npix--)
-    {
-      red   = b[0];
-      green = b[1];
-      blue  = b[2];
+        /* First check our cache */
+        pixel = b[0] << 16 | b[1] << 8 | b[2];
+        index = pixel % COLOR_CACHE_SIZE;
 
-      /* Remove gamma to linearize RGB intensities */
-      red   = pow (red,   1.0 / colorblind->gammaRGB[0]);
-      green = pow (green, 1.0 / colorblind->gammaRGB[1]);
-      blue  = pow (blue,  1.0 / colorblind->gammaRGB[2]);
+        if (colorblind->cache[2 * index] == pixel)
+          {
+            pixel = colorblind->cache[2 * index + 1];
+          
+            b[2] = pixel & 0xFF; pixel >>= 8;
+            b[1] = pixel & 0xFF; pixel >>= 8;
+            b[0] = pixel & 0xFF;
 
-      /* Convert to LMS (dot product with transform matrix) */
-      redOld   = red;
-      greenOld = green;
+            continue;
+          }
 
-      red   = redOld * rgb2lms[0] + greenOld * rgb2lms[1] + blue * rgb2lms[2];
-      green = redOld * rgb2lms[3] + greenOld * rgb2lms[4] + blue * rgb2lms[5];
-      blue  = redOld * rgb2lms[6] + greenOld * rgb2lms[7] + blue * rgb2lms[8];
+        red   = b[0];
+        green = b[1];
+        blue  = b[2];
 
-      switch (colorblind->deficiency)
-        {
-        case COLORBLIND_DEFICIENCY_DEUTERANOPIA:   
-          tmp = blue / red;
-          /* See which side of the inflection line we fall... */
-          if (tmp < colorblind->inflection)
+        /* Remove gamma to linearize RGB intensities */
+        red   = pow (red,   1.0 / colorblind->gammaRGB[0]);
+        green = pow (green, 1.0 / colorblind->gammaRGB[1]);
+        blue  = pow (blue,  1.0 / colorblind->gammaRGB[2]);
+        
+        /* Convert to LMS (dot product with transform matrix) */
+        redOld   = red;
+        greenOld = green;
+        
+        red   = redOld * rgb2lms[0] + greenOld * rgb2lms[1] + blue * rgb2lms[2];
+        green = redOld * rgb2lms[3] + greenOld * rgb2lms[4] + blue * rgb2lms[5];
+        blue  = redOld * rgb2lms[6] + greenOld * rgb2lms[7] + blue * rgb2lms[8];
+      
+        switch (colorblind->deficiency)
+          {
+          case COLORBLIND_DEFICIENCY_DEUTERANOPIA:   
+            tmp = blue / red;
+            /* See which side of the inflection line we fall... */
+            if (tmp < colorblind->inflection)
             green = -(a1 * red + c1 * blue) / b1;
-          else
-            green = -(a2 * red + c2 * blue) / b2;
-          break;
+            else
+              green = -(a2 * red + c2 * blue) / b2;
+            break;
 
-        case COLORBLIND_DEFICIENCY_PROTANOPIA:     
-          tmp = blue / green;
-          /* See which side of the inflection line we fall... */
-          if (tmp < colorblind->inflection)
-            red = -(b1 * green + c1 * blue) / a1;
-          else
-            red = -(b2 * green + c2 * blue) / a2;
-          break;
+          case COLORBLIND_DEFICIENCY_PROTANOPIA:     
+            tmp = blue / green;
+            /* See which side of the inflection line we fall... */
+            if (tmp < colorblind->inflection)
+              red = -(b1 * green + c1 * blue) / a1;
+            else
+              red = -(b2 * green + c2 * blue) / a2;
+            break;
+            
+          case COLORBLIND_DEFICIENCY_TRITANOPIA:
+            tmp = green / red;
+            /* See which side of the inflection line we fall... */
+            if (tmp < colorblind->inflection)
+              blue = -(a1 * red + b1 * green) / c1;
+            else
+              blue = -(a2 * red + b2 * green) / c2;
+            break;
 
-        case COLORBLIND_DEFICIENCY_TRITANOPIA:
-          tmp = green / red;
-          /* See which side of the inflection line we fall... */
-          if (tmp < colorblind->inflection)
-            blue = -(a1 * red + b1 * green) / c1;
-          else
-            blue = -(a2 * red + b2 * green) / c2;
-          break;
+          default:
+            break;
+          }
 
-        default:
-          break;
-        }
-
-      /* Convert back to RGB (cross product with transform matrix) */
-      redOld   = red;
-      greenOld = green;
-
-      red   = redOld * lms2rgb[0] + greenOld * lms2rgb[1] + blue * lms2rgb[2];
-      green = redOld * lms2rgb[3] + greenOld * lms2rgb[4] + blue * lms2rgb[5];
-      blue  = redOld * lms2rgb[6] + greenOld * lms2rgb[7] + blue * lms2rgb[8];
-
-      /* Apply gamma to go back to non-linear intensities */
-      red   = pow (red,   colorblind->gammaRGB[0]);
-      green = pow (green, colorblind->gammaRGB[1]);
-      blue  = pow (blue,  colorblind->gammaRGB[2]);
-
-      /* Ensure that we stay within the RGB gamut */
-      /* *** FIX THIS: it would be better to desaturate than blindly clip. */
-      red   = CLAMP (red,   0, 255);
-      green = CLAMP (green, 0, 255);
-      blue  = CLAMP (blue,  0, 255);
-
-      /* Stuff result back into buffer */
-      b[0] = (guchar) red;
-      b[1] = (guchar) green;
-      b[2] = (guchar) blue;
-
-      /* Increment b by the number of bytes per pixel. */
-      b += bpp;
-    }
+        /* Convert back to RGB (cross product with transform matrix) */
+        redOld   = red;
+        greenOld = green;
+        
+        red   = redOld * lms2rgb[0] + greenOld * lms2rgb[1] + blue * lms2rgb[2];
+        green = redOld * lms2rgb[3] + greenOld * lms2rgb[4] + blue * lms2rgb[5];
+        blue  = redOld * lms2rgb[6] + greenOld * lms2rgb[7] + blue * lms2rgb[8];
+        
+        /* Apply gamma to go back to non-linear intensities */
+        red   = pow (red,   colorblind->gammaRGB[0]);
+        green = pow (green, colorblind->gammaRGB[1]);
+        blue  = pow (blue,  colorblind->gammaRGB[2]);
+        
+        /* Ensure that we stay within the RGB gamut */
+        /* *** FIX THIS: it would be better to desaturate than blindly clip. */
+        red   = CLAMP (red,   0, 255);
+        green = CLAMP (green, 0, 255);
+        blue  = CLAMP (blue,  0, 255);
+        
+        /* Stuff result back into buffer */
+        b[0] = (guchar) red;
+        b[1] = (guchar) green;
+        b[2] = (guchar) blue;
+        
+        /* Put the result into our cache */
+        colorblind->cache[2 * index]     = pixel;
+        colorblind->cache[2 * index + 1] = b[0] << 16 | b[1] << 8 | b[2];
+      }
 }
 
 static void
@@ -576,6 +597,9 @@ cdisplay_colorblind_changed (GimpColorDisplay *display)
       colorblind->inflection = (anchor_e[1] / anchor_e[0]);
       break;
     }
+
+  /* Invalidate the cache */
+  memset (colorblind->cache, 0, sizeof (colorblind->cache));
 }
 
 static void
