@@ -1,3 +1,7 @@
+Sun Apr 26 03:06:16 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* oh goodie, the PSD plugin doesn't relay on endian junk anymore
+
 Sun Apr 26 02:34:21 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* updated CEL plugin
