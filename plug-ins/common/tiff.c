@@ -332,8 +332,10 @@ run (const gchar      *name,
 
       parasite = gimp_image_parasite_find (orig_image, "gimp-comment");
       if (parasite)
-        image_comment = g_strdup (parasite->data);
-      gimp_parasite_free (parasite);
+        {
+          image_comment = g_strdup (parasite->data);
+          gimp_parasite_free (parasite);
+        }
 
       switch (run_mode)
         {
@@ -2134,7 +2136,7 @@ save_dialog (void)
   entry = gtk_entry_new ();
   gtk_widget_show (entry);
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_entry_set_text (GTK_ENTRY (entry), image_comment);
+  gtk_entry_set_text (GTK_ENTRY (entry), image_comment ? image_comment : "");
 
   g_signal_connect (entry, "changed",
                     G_CALLBACK (comment_entry_callback),
