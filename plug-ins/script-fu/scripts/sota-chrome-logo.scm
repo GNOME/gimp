@@ -88,7 +88,7 @@
 	 (old-bg (car (gimp-palette-get-background)))
 	 (old-brush (car (gimp-brushes-get-brush)))
 	 (old-pattern (car (gimp-patterns-get-pattern))))
-  
+
     (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
     (gimp-image-add-layer img shadow 0)
@@ -149,7 +149,7 @@
 
     (gimp-selection-all img)
     (gimp-patterns-set-pattern "Marble #1")
-    (gimp-bucket-fill text-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+    (gimp-edit-bucket-fill text-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img)
 
     (gimp-image-convert-rgb img)

@@ -1,14 +1,14 @@
-; This is a slightly modified copy of the sphere script to show and test 
+; This is a slightly modified copy of the sphere script to show and test
 ; the possibilities of the new Script-Fu API extensions.
 ;
 ; ----------------------------------------------------------------------
-; SF-ADJUSTMENT 
+; SF-ADJUSTMENT
 ; is only useful in interactive mode, if you call a script from
 ; the console, it acts just like a normal SF-VALUE
 ; In interactive mode it creates an adjustment widget in the dialog.
 ;
-; Usage: 
-; SF-ADJUSTMENT "label" '(value, lower, upper, step_inc, page_inc, digits, type) 
+; Usage:
+; SF-ADJUSTMENT "label" '(value, lower, upper, step_inc, page_inc, digits, type)
 ;
 ; type is one of: SF-SLIDER(0), SF-SPINNER(1)
 ; ----------------------------------------------------------------------
@@ -21,23 +21,23 @@
 ;                      x-pos y-pos text border antialias size unit font)
 ;  (gimp-text-get-extents-fontname text size unit font))
 ;
-; where font is the fontname you get. The size specified in the fontname 
+; where font is the fontname you get. The size specified in the fontname
 ; is silently ignored. It is only used in the font-selector. So you are
 ; asked to set it to a useful value (24 pixels is a good choice) when
 ; using SF-FONT.
 ;
 ; Usage:
-; SF-FONT "label" "fontname"		
+; SF-FONT "label" "fontname"
 ; ----------------------------------------------------------------------
-; SF-BRUSH 
+; SF-BRUSH
 ; is only useful in interactive mode. It will create a widget in the control
-; dialog. The widget consists of a preview area (which when pressed will 
+; dialog. The widget consists of a preview area (which when pressed will
 ; produce a popup preview ) and a button with the "..." label. The button will
-; popup a dialog where brushes can be selected and each of the 
+; popup a dialog where brushes can be selected and each of the
 ; characteristics of the brush can be modified.
-; 
-; The actual value returned when the script is invoked is a list 
-; consisting of Brush name, opacity, spacing and brush mode in the same 
+;
+; The actual value returned when the script is invoked is a list
+; consisting of Brush name, opacity, spacing and brush mode in the same
 ; units as passed in as the default value.
 ;
 ; Usage:
@@ -45,22 +45,22 @@
 ;
 ; Here the brush dialog will be popped up with a default brush of Circle (03)
 ; opacity 1.0, spacing 44 and paint mode of Normal (value 0).
-; If this selection was unchanged the value passed to the function as a 
+; If this selection was unchanged the value passed to the function as a
 ; paramater would be '("Circle (03)" 1.0 44 0). BTW the widget used
 ; is generally available in the libgimpui library for any plugin that
 ; wishes to select a brush.
 ; ----------------------------------------------------------------------
 ; SF-PATTERN
 ; Only useful in interactive mode. It will create a widget in the control
-; dialog. The widget consists of a preview area (which when pressed will 
+; dialog. The widget consists of a preview area (which when pressed will
 ; produce a popup preview ) and a button with the "..." label. The button will
 ; popup a dialog where patterns can be selected.
 ;
 ; Usage:
 ; SF-PATTERN "Pattern" "Maple Leaves"
 ;
-; The value returned when the script is invoked is a string containing the 
-; pattern name. If the above selection was not altered the string would 
+; The value returned when the script is invoked is a string containing the
+; pattern name. If the above selection was not altered the string would
 ; contain "Maple Leaves"
 ; ----------------------------------------------------------------------
 ; SF-GRADIENT
@@ -71,8 +71,8 @@
 ; Usage:
 ; SF-GRADIENT "Gradient" "Deep Sea"
 ;
-; The value returned when the script is invoked is a string containing the 
-; gradient name. If the above selection was not altered the string would 
+; The value returned when the script is invoked is a string containing the
+; gradient name. If the above selection was not altered the string would
 ; contain "Deep Sea"
 ; ----------------------------------------------------------------------
 ; SF-FILENAME
@@ -84,7 +84,7 @@
 ; SF-FILENAME "Environment Map"
 ;             (string-append "" gimp-data-dir "/scripts/beavis.jpg")
 ;
-; The value returned when the script is invoked is a string containing the 
+; The value returned when the script is invoked is a string containing the
 ; filename.
 ; ----------------------------------------------------------------------
 ; SF-DIRNAME
@@ -94,13 +94,13 @@
 ; Usage:
 ; SF-DIRNAME "Image Directory" "/var/tmp/images"
 ;
-; The value returned when the script is invoked is a string containing the 
+; The value returned when the script is invoked is a string containing the
 ; dirname.
 ; ----------------------------------------------------------------------
 ; SF-OPTION
 ; Only useful in interactive mode. It will create a widget in the control
 ; dialog. The widget is an option_menu showing the options that are passed
-; as a list. The first option is the default choice. 
+; as a list. The first option is the default choice.
 ;
 ; Usage:
 ; SF-OPTION "Orientation" '("Horizontal" "Vertical")
@@ -172,7 +172,7 @@
 	  (gimp-ellipse-select img shadow-x shadow-y shadow-w shadow-h
 			       REPLACE TRUE TRUE 7.5)
 	  (gimp-patterns-set-pattern pattern)
-	  (gimp-bucket-fill drawable PATTERN-BUCKET-FILL MULTIPLY-MODE
+	  (gimp-edit-bucket-fill drawable PATTERN-BUCKET-FILL MULTIPLY-MODE
 			    100 0 FALSE 0 0)))
 
     (gimp-ellipse-select img (- cx radius) (- cy radius)

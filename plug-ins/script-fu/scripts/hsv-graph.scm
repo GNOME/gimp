@@ -151,7 +151,7 @@
   (define (fill-color-band img drawable x scale x-base y-base color)
     (gimp-palette-set-foreground color)
     (gimp-rect-select img (+ x-base (* scale x)) 0 scale y-base REPLACE FALSE 0)
-    (gimp-bucket-fill drawable FG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+    (gimp-edit-bucket-fill drawable FG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img))
 
   (define (plot-hsv img drawable x scale x-base y-base hsv)

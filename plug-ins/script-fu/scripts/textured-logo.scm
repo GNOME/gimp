@@ -45,7 +45,7 @@
     (gimp-selection-all img)
     (gimp-patterns-set-pattern text-pattern)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
-    (gimp-bucket-fill logo-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+    (gimp-edit-bucket-fill logo-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img)
     (gimp-edit-clear text-shadow-layer)
     (gimp-edit-clear drop-shadow-layer)

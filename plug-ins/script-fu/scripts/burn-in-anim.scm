@@ -34,11 +34,11 @@
 
     ;--- check image and work on a copy
     (if (= (car (gimp-image-get-layers org-img)) 2)
-    
+
         ;--- main program structure starts here, begin of "if-1"
 	(begin
 	  (set! img (car (gimp-image-duplicate org-img)))
-	  (gimp-image-undo-disable img) 
+	  (gimp-image-undo-disable img)
 	  (if (> (car (gimp-drawable-type org-layer)) 1 )
 	      (gimp-image-convert-rgb img))
 	  (set! source-layer    (aref (cadr (gimp-image-get-layers img)) 0 ))
@@ -101,8 +101,8 @@
 		 (if (= fadeout FALSE)
 		     (begin
 		       (gimp-palette-set-foreground '(255 255 255))
-		       (gimp-bucket-fill bl-mask FG-BUCKET-FILL NORMAL-MODE
-					 100 255 0 0 0)))
+		       (gimp-edit-bucket-fill bl-mask FG-BUCKET-FILL NORMAL-MODE
+                                              100 255 0 0 0)))
 
 		 (gimp-layer-remove-mask bl-layer MASK-APPLY)
 

@@ -48,7 +48,7 @@
 
 	  (gimp-ellipse-select img shadow-x shadow-y shadow-w shadow-h
 			       REPLACE TRUE TRUE 7.5)
-	  (gimp-bucket-fill drawable BG-BUCKET-FILL MULTIPLY 100 0 FALSE 0 0)))
+	  (gimp-edit-bucket-fill drawable BG-BUCKET-FILL MULTIPLY 100 0 FALSE 0 0)))
 
     (gimp-ellipse-select img (- cx radius) (- cy radius)
 			 (* 2 radius) (* 2 radius) REPLACE TRUE FALSE 0)

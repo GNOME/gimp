@@ -38,7 +38,7 @@
 
     (gimp-selection-all img)
     (gimp-patterns-set-pattern "Crack")
-    (gimp-bucket-fill logo-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+    (gimp-edit-bucket-fill logo-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img)
 
     (gimp-selection-layer-alpha logo-layer)

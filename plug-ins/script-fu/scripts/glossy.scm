@@ -1,6 +1,6 @@
 ; glossy-patterned-shadowed-and-bump-mapped-logo
 ; creates anything you can create with it :)
-; (use it wisely, use it in peace...) 
+; (use it wisely, use it in peace...)
 ;
 ; The GIMP -- an image manipulation program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -60,7 +60,7 @@
 
     (gimp-palette-set-background bg-color)
     (gimp-selection-all img)
-    (gimp-bucket-fill bg-layer BG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+    (gimp-edit-bucket-fill bg-layer BG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img)
     (gimp-palette-set-background old-bg)
 
@@ -73,7 +73,7 @@
     (if (= use-pattern-text TRUE)
       (begin
         (gimp-patterns-set-pattern pattern-text)
-        (gimp-bucket-fill logo-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+        (gimp-edit-bucket-fill logo-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
         (gimp-patterns-set-pattern old-patterns)))
 
     (if (= use-pattern-text FALSE)
@@ -99,7 +99,7 @@
     (if (= use-pattern-outline TRUE)
       (begin
         (gimp-patterns-set-pattern pattern-outline)
-        (gimp-bucket-fill grow-me PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+        (gimp-edit-bucket-fill grow-me PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
         (gimp-patterns-set-pattern old-patterns)))
 
     (if (= use-pattern-outline FALSE)
@@ -121,10 +121,10 @@
       (begin
         (gimp-selection-layer-alpha grow-me)
         (gimp-patterns-set-pattern pattern-overlay)
-        (gimp-bucket-fill grow-me PATTERN-BUCKET-FILL OVERLAY 100 0 FALSE 0 0)
+        (gimp-edit-bucket-fill grow-me PATTERN-BUCKET-FILL OVERLAY 100 0 FALSE 0 0)
         (gimp-patterns-set-pattern old-patterns)
         (gimp-selection-none img)))
-   
+
     (if (= shadow-toggle TRUE)
       (begin
 	(gimp-selection-layer-alpha logo-layer)

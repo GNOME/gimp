@@ -59,7 +59,7 @@
 		   (+ (nth 1 drw-offsets) (/ drw-height 2))
 		   (* index dir-deg/line))
       (set! index (+ index 1)))
-    (gimp-bucket-fill drw FG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+    (gimp-edit-bucket-fill drw FG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (if old-selection
 	(begin
 	  (gimp-selection-load old-selection)

@@ -60,7 +60,7 @@
 
     (gimp-selection-all img)
     (gimp-patterns-set-pattern text-pattern)
-    (gimp-bucket-fill pattern PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+    (gimp-edit-bucket-fill pattern PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (plug-in-bump-map noninteractive img pattern layer2
 		      110.0 45.0 4 0 0 0 0 TRUE FALSE 0)
 
@@ -81,7 +81,7 @@
     (gimp-drawable-set-visible layer2 FALSE)
     (gimp-drawable-set-visible pattern TRUE)
     ;;(set! final (car (gimp-image-flatten img)))
-    
+
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)))
 

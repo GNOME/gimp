@@ -152,7 +152,7 @@
 
     (gimp-selection-all img)
     (gimp-patterns-set-pattern "Marble #1")
-    (gimp-bucket-fill bg-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+    (gimp-edit-bucket-fill bg-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img)
 
     (gimp-image-convert-rgb img)

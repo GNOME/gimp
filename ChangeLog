@@ -1,3 +1,27 @@
+2004-01-07  Henrik Brix Andersen  <brix@gimp.org>
+
+	* plug-ins/script-fu/scripts/beveled-pattern-heading.scm
+	* plug-ins/script-fu/scripts/image-structure.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-bullet.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-hrule.scm
+	* plug-ins/script-fu/scripts/3d-outline.scm
+	* plug-ins/script-fu/scripts/add-bevel.scm
+	* plug-ins/script-fu/scripts/line-nova.scm
+	* plug-ins/script-fu/scripts/starburst-logo.scm
+	* plug-ins/script-fu/scripts/chip-away.scm
+	* plug-ins/script-fu/scripts/sphere.scm
+	* plug-ins/script-fu/scripts/hsv-graph.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-arrow.scm
+	* plug-ins/script-fu/scripts/glossy.scm
+	* plug-ins/script-fu/scripts/burn-in-anim.scm
+	* plug-ins/script-fu/scripts/starscape-logo.scm
+	* plug-ins/script-fu/scripts/sota-chrome-logo.scm
+	* plug-ins/script-fu/scripts/chrome-it.scm
+	* plug-ins/script-fu/scripts/test-sphere.scm
+	* plug-ins/script-fu/scripts/textured-logo.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-button.scm:
+	s/gimp-bucket-fill/gimp-edit-bucket-fill/ + whitespace clean-up.
+
 2004-01-07  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/gimprc.pdb: removed redundant "success = TRUE"
@@ -12,7 +36,7 @@
 	* Made 2.0pre1 release.
 
 2004-01-07  Sven Neumann  <sven@gimp.org>
- 
+
 	* configure.in: set GIMP_VERSION to 2.0pre1.
 
 	* HACKING

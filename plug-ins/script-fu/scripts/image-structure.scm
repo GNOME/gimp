@@ -13,7 +13,7 @@
 (if (not (symbol-bound? 'script-fu-show-image-structure-new-image?
 			(the-environment)))
     (define script-fu-show-image-structure-new-image? TRUE))
-(if (not (symbol-bound? 'script-fu-show-image-structure-space 
+(if (not (symbol-bound? 'script-fu-show-image-structure-space
 			(the-environment)))
     (define script-fu-show-image-structure-space 50))
 (if (not (symbol-bound? 'script-fu-show-image-structure-shear-length
@@ -85,10 +85,10 @@
 	    (gimp-selection-invert img)
 	    (gimp-layer-set-preserve-trans layer FALSE)
 	    (gimp-palette-set-foreground padding-color)
-	    (gimp-bucket-fill layer FG-BUCKET-FILL NORMAL-MODE
-			      padding-opacity 0 0 0 0)
+	    (gimp-edit-bucket-fill layer FG-BUCKET-FILL NORMAL-MODE
+                                   padding-opacity 0 0 0 0)
 	    (gimp-selection-none img)))
-      
+
       (gimp-layer-translate layer
 			    (+ border shear-length) (+ border (* space index)))
       (gimp-shear layer TRUE 0 (* (/ (car (gimp-drawable-height layer))

@@ -13,7 +13,7 @@
 ;           Keep bump layer? - whether to keep the layer used as the bump map
 ;           fill bg with pattern? - whether to fill the background with the pattern or leave it white
 ;           Keep Backgroun - whether or not to remove the background layer
-; 
+;
 ;  Adrian Likins  (Adrian@gimp.org)
 ;  Jan 11, 1998 v1
 ;
@@ -23,12 +23,12 @@
 ; it under the terms of the GNU General Public License as published by
 ; the Free Software Foundation; either version 2 of the License, or
 ; (at your option) any later version.
-; 
+;
 ; This program is distributed in the hope that it will be useful,
 ; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ; GNU General Public License for more details.
-; 
+;
 ; You should have received a copy of the GNU General Public License
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -52,7 +52,7 @@
 	 (bump-layer (car (gimp-layer-new img width height RGBA-IMAGE "Bump Layer" 100 NORMAL-MODE)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background)))
-	 (old-pattern (car (gimp-patterns-get-pattern))))   
+	 (old-pattern (car (gimp-patterns-get-pattern))))
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
@@ -62,7 +62,7 @@
     (gimp-selection-all img)
 
     (if (= bg-fill TRUE)
-	(gimp-bucket-fill bg-layer 2 NORMAL-MODE 100 255 FALSE 1 1)
+	(gimp-edit-bucket-fill bg-layer 2 NORMAL-MODE 100 255 FALSE 1 1)
 	(gimp-edit-fill bg-layer BACKGROUND-FILL))
 
     (gimp-selection-all img)
@@ -70,18 +70,18 @@
     (gimp-selection-none img)
     (gimp-selection-layer-alpha logo-layer)
     (gimp-edit-fill bump-layer BACKGROUND-FILL)
-    (gimp-bucket-fill logo-layer 2 NORMAL-MODE 100 255 FALSE 1 1)
+    (gimp-edit-bucket-fill logo-layer 2 NORMAL-MODE 100 255 FALSE 1 1)
     (gimp-selection-none img)
-    
+
     (gimp-image-add-layer img bump-layer 1)
 
     (gimp-layer-set-preserve-trans bump-layer FALSE)
     (plug-in-spread 1 img bump-layer spread-amount spread-amount)
     (gimp-selection-layer-alpha bump-layer)
     (plug-in-gauss-rle 1 img bump-layer blur-amount TRUE TRUE)
-   
+
     (gimp-selection-none img)
-    
+
     (plug-in-bump-map 1 img logo-layer bump-layer 135.00 25.0 60 0 0 0 0 TRUE invert 1)
 
     (gimp-drawable-set-visible bump-layer FALSE)
@@ -105,7 +105,7 @@
 
      (if (= keep-back FALSE)
 	 (gimp-image-remove-layer img bg-layer))
-    
+
     (gimp-patterns-set-pattern old-pattern)
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)

@@ -3,17 +3,17 @@
 ;
 ; add-bevel.scm version 1.03
 ; Time-stamp: <1997-12-16 09:17:24 ard>
-; 
+;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
 ; the Free Software Foundation; either version 2 of the License, or
 ; (at your option) any later version.
-; 
+;
 ; This program is distributed in the hope that it will be useful,
 ; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ; GNU General Public License for more details.
-; 
+;
 ; You should have received a copy of the GNU General Public License
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -21,7 +21,7 @@
 ; Copyright (C) 1997 Andrew Donkin  (ard@cs.waikato.ac.nz)
 ; Contains code from add-shadow.scm by Sven Neumann
 ; (neumanns@uni-duesseldorf.de) (thanks Sven).
-;  
+;
 ; Adds a bevel to an image.  See http://www.cs.waikato.ac.nz/~ard/gimp/
 ;
 ; If there is a selection, it is bevelled.
@@ -63,7 +63,7 @@
 ; Sometimes (and that's the scary bit) gives bogloads of GTK warnings.
 ;
 
-  
+
 (define (script-fu-add-bevel img
 			     drawable
 			     thickness
@@ -131,13 +131,13 @@
 	   (set! greyness (/ (* index 255) thickness))
 	   (gimp-palette-set-background (list greyness greyness greyness))
 	   ;(gimp-selection-feather image 1) ;Stop the slopey jaggies?
-	   (gimp-bucket-fill bump-layer BG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+	   (gimp-editbucket-fill bump-layer BG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
 	   (gimp-selection-shrink image 1)
 	   (set! index (+ index 1))
 	   )
     ; Now the white interior
     (gimp-palette-set-background '(255 255 255))
-    (gimp-bucket-fill bump-layer BG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+    (gimp-edit-bucket-fill bump-layer BG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
 
     ;------------------------------------------------------------
     ;
