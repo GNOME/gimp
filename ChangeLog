@@ -1,5 +1,28 @@
 2004-12-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpuimanager.[ch]: renamed
+	gimp_ui_manager_get_action() to gimp_ui_manager_find_action().
+
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimptooloptionseditor.c
+	* app/display/gimpdisplayshell-close.c: changed accordingly.
+
+	(this change is quite useless as it stands, but will help keeping
+	the diff between 2.2 and 2.3 small as soon as we're branched).
+
+	* app/widgets/gimpcolormapeditor.c
+	(gimp_colormap_preview_button_press): invoke the "edit-color", not
+	"new-color" action upon double click.
+
+	(palette_editor_select_entry): update the ui manager after
+	selecting the entry so the entry-specific actions become sensitive
+	if there was no entry selected before.
+
+2004-12-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppropwidgets.[ch]: added new prop_widget
 	gimp_prop_int_combo_box_new() which takes a pre-built GimpIntStore
 	and allows to create views on int properties with arbitrary sets

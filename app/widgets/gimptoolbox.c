@@ -764,7 +764,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
           name = g_strdup_printf ("tools-%s", tmp);
           g_free (tmp);
 
-          action = gimp_ui_manager_get_action (ui_manager, "tools", name);
+          action = gimp_ui_manager_find_action (ui_manager, "tools", name);
 
           g_free (name);
 

@@ -353,9 +353,9 @@ gimp_tool_options_editor_save_clicked (GtkWidget             *widget,
     {
       GtkAction *action;
 
-      action = gimp_ui_manager_get_action (GIMP_EDITOR (editor)->ui_manager,
-                                           "tool-options",
-                                           "tool-options-save-new");
+      action = gimp_ui_manager_find_action (GIMP_EDITOR (editor)->ui_manager,
+                                            "tool-options",
+                                            "tool-options-save-new");
 
       if (action)
         gtk_action_activate (action);

@@ -677,9 +677,9 @@ gimp_item_tree_view_activate_item (GimpContainerView *view,
     {
       GtkAction *action;
 
-      action = gimp_ui_manager_get_action (GIMP_EDITOR (view)->ui_manager,
-                                           item_view_class->action_group,
-                                           item_view_class->activate_action);
+      action = gimp_ui_manager_find_action (GIMP_EDITOR (view)->ui_manager,
+                                            item_view_class->action_group,
+                                            item_view_class->activate_action);
 
       if (action)
         gtk_action_activate (action);
@@ -804,9 +804,9 @@ gimp_item_tree_view_new_dropped (GtkWidget    *widget,
     {
       GtkAction *action;
 
-      action = gimp_ui_manager_get_action (GIMP_EDITOR (view)->ui_manager,
-                                           item_view_class->action_group,
-                                           item_view_class->new_default_action);
+      action = gimp_ui_manager_find_action (GIMP_EDITOR (view)->ui_manager,
+                                            item_view_class->action_group,
+                                            item_view_class->new_default_action);
 
       if (action)
         {

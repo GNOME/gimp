@@ -644,9 +644,9 @@ palette_editor_color_area_button_press (GtkWidget         *widget,
     {
       GtkAction *action;
 
-      action = gimp_ui_manager_get_action (GIMP_EDITOR (editor)->ui_manager,
-                                           "palette-editor",
-                                           "palette-editor-new-color");
+      action = gimp_ui_manager_find_action (GIMP_EDITOR (editor)->ui_manager,
+                                            "palette-editor",
+                                            "palette-editor-edit-color");
 
       if (action)
         gtk_action_activate (action);
@@ -1004,6 +1004,9 @@ palette_editor_select_entry (GimpPaletteEditor *editor,
 
       gtk_widget_set_sensitive (editor->color_name,
                                 entry && data_editor->data_editable);
+
+      gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                              GIMP_EDITOR (editor)->popup_data);
     }
 }
 

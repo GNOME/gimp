@@ -426,9 +426,9 @@ gimp_ui_manager_get_action_group (GimpUIManager   *manager,
 }
 
 GtkAction *
-gimp_ui_manager_get_action (GimpUIManager *manager,
-                            const gchar   *group_name,
-                            const gchar   *action_name)
+gimp_ui_manager_find_action (GimpUIManager *manager,
+                             const gchar   *group_name,
+                             const gchar   *action_name)
 {
   GimpActionGroup *group;
 
