@@ -1,3 +1,8 @@
+2004-09-21  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-close.c
+	(gimp_display_shell_close_dialog): resolved a mnemonics collision.
+
 2004-09-21  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/psd.c: Correctly set overlay, hard light and 

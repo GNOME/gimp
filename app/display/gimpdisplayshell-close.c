@@ -121,7 +121,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                               gimp_standard_help_func,
                               GIMP_HELP_FILE_CLOSE_CONFIRM,
 
-                              _("_Close without Saving"), GTK_RESPONSE_CLOSE,
+                              _("Cl_ose without Saving"), GTK_RESPONSE_CLOSE,
                               GTK_STOCK_CANCEL,           GTK_RESPONSE_CANCEL,
                               GTK_STOCK_SAVE,             RESPONSE_SAVE,
 
