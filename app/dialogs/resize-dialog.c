@@ -38,9 +38,8 @@
 #include "libgimp/gimpintl.h"
 
 
-#define EVENT_MASK        GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
-#define DRAWING_AREA_SIZE 200
-#define TEXT_WIDTH        35
+#define TEXT_WIDTH  35
+
 
 typedef struct _ResizePrivate ResizePrivate;
 
@@ -58,7 +57,7 @@ struct _ResizePrivate
 
   /*  offset frame  */
   GtkWidget *offset_se;
-  GtkWidget *drawing_area;
+  GtkWidget *offset_area;
 
   /*  resolution frame  */
   GtkWidget *printsize_se;
@@ -73,7 +72,6 @@ struct _ResizePrivate
   gint    orig_x, orig_y;
 };
 
-static void  resize_draw                 (Resize    *resize);
 static void  unit_update                 (GtkWidget *widget,
 					  gpointer   data);
 static gint  resize_bound_off_x          (Resize    *resize,
@@ -93,10 +91,12 @@ static void  size_update                 (Resize    *widget,
 					  gdouble    height,
 					  gdouble    ratio_x,
 					  gdouble    ratio_y);
+static void offset_area_offsets_changed  (GtkWidget *offset_area,
+                                          gint       offset_x,
+                                          gint       offset_y,
+                                          gpointer   data);
 static void  offset_update               (GtkWidget *widget,
 					  gpointer   data);
-static gint  resize_events               (GtkWidget *widget,
-					  GdkEvent  *event);
 static void  printsize_update            (GtkWidget *widget,
 					  gpointer   data);
 static void  resolution_callback         (GtkWidget *widget,
@@ -158,15 +158,6 @@ resize_widget_new (ResizeType    type,
   resize->ratio_y      = 1.0;
   resize->offset_x     = 0;
   resize->offset_y     = 0;
-
-  /*  Get the image width and height variables, based on the gimage  */
-  if (width > height)
-    private->ratio = (gdouble) DRAWING_AREA_SIZE / (gdouble) width;
-  else
-    private->ratio = (gdouble) DRAWING_AREA_SIZE / (gdouble) height;
-
-  private->area_width  = (gint) (private->ratio * width);
-  private->area_height = (gint) (private->ratio * height);
 
   /*  dialog box  */
   {
@@ -493,7 +484,7 @@ resize_widget_new (ResizeType    type,
 
       gtk_widget_show (abox);
 
-      /*  frame to hold drawing area  */
+      /*  frame to hold GimpOffsetArea  */
       abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
       gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
 
@@ -501,18 +492,14 @@ resize_widget_new (ResizeType    type,
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
       gtk_container_add (GTK_CONTAINER (abox), frame);
 
-      private->drawing_area = gtk_drawing_area_new ();
-      gtk_drawing_area_size (GTK_DRAWING_AREA (private->drawing_area),
-			     private->area_width, private->area_height);
-      gtk_widget_set_events (private->drawing_area, EVENT_MASK);
-      gtk_signal_connect (GTK_OBJECT (private->drawing_area), "event",
-			  GTK_SIGNAL_FUNC (resize_events),
-			  NULL);
-      gtk_object_set_user_data (GTK_OBJECT (private->drawing_area), resize);
-      gtk_container_add (GTK_CONTAINER (frame), private->drawing_area);
-      gtk_widget_show (private->drawing_area);
+      private->offset_area = gimp_offset_area_new (private->old_width,
+                                                   private->old_height);
+      gtk_signal_connect (GTK_OBJECT (private->offset_area), "offsets_changed",
+			  GTK_SIGNAL_FUNC (offset_area_offsets_changed),
+			  resize);
+      gtk_container_add (GTK_CONTAINER (frame), private->offset_area);
+      gtk_widget_show (private->offset_area);
       gtk_widget_show (frame);
-
       gtk_widget_show (abox);
       gtk_widget_show (vbox);
     }
@@ -669,98 +656,6 @@ resize_widget_new (ResizeType    type,
   return resize;
 }
 
-static void
-resize_draw (Resize *resize)
-{
-  GtkWidget *widget;
-  ResizePrivate *private;
-  gint aw, ah;
-  gint x, y;
-  gint w, h;
-
-  /*  Only need to draw if it's a resize widget  */
-  if (resize->type != ResizeWidget)
-    return;
-
-  private = (ResizePrivate *) resize->private_part;
-  widget = private->drawing_area;
-
-  /*  If we're making the size larger  */
-  if (private->old_width <= resize->width)
-    w = resize->width;
-  /*  otherwise, if we're making the size smaller  */
-  else
-    w = private->old_width * 2 - resize->width;
-  /*  If we're making the size larger  */
-  if (private->old_height <= resize->height)
-    h = resize->height;
-  /*  otherwise, if we're making the size smaller  */
-  else
-    h = private->old_height * 2 - resize->height;
-
-  if (w > h)
-    private->ratio = (gdouble) DRAWING_AREA_SIZE / (gdouble) w;
-  else
-    private->ratio = (gdouble) DRAWING_AREA_SIZE / (gdouble) h;
-
-  aw = (gint) (private->ratio * w);
-  ah = (gint) (private->ratio * h);
-
-  if (aw != private->area_width || ah != private->area_height)
-    {
-      private->area_width  = aw;
-      private->area_height = ah;
-      gtk_drawing_area_size (GTK_DRAWING_AREA (private->drawing_area), aw, ah);
-    }
-
-  if (private->old_width <= resize->width)
-    x = private->ratio * resize->offset_x;
-  else
-    x = private->ratio * (resize->offset_x + private->old_width - resize->width);
-  if (private->old_height <= resize->height)
-    y = private->ratio * resize->offset_y;
-  else
-    y = private->ratio * (resize->offset_y + private->old_height - resize->height);
-
-  w = private->ratio * private->old_width;
-  h = private->ratio * private->old_height;
-
-  gdk_window_clear (private->drawing_area->window);
-  gtk_draw_shadow (widget->style, widget->window,
-		   GTK_STATE_NORMAL, GTK_SHADOW_OUT,
-		   x, y, w, h);
-
-  /*  If we're making the size smaller  */
-  if (private->old_width > resize->width ||
-      private->old_height > resize->height)
-    {
-      if (private->old_width > resize->width)
-	{
-	  x = private->ratio * (private->old_width - resize->width);
-	  w = private->ratio * resize->width;
-	}
-      else
-	{
-	  x = -1;
-	  w = aw + 2;
-	}
-      if (private->old_height > resize->height)
-	{
-	  y = private->ratio * (private->old_height - resize->height);
-	  h = private->ratio * resize->height;
-	}
-      else
-	{
-	  y = -1;
-	  h = ah + 2;
-	}
-
-      gdk_draw_rectangle (private->drawing_area->window,
-			  widget->style->black_gc, 0,
-			  x, y, w, h);
-    }
-}
-
 static gint
 resize_bound_off_x (Resize *resize,
 		    gint    off_x)
@@ -852,27 +747,18 @@ offset_update (GtkWidget *widget,
 {
   Resize *resize;
   ResizePrivate *private;
-  gint offset_x;
-  gint offset_y;
 
   resize = (Resize *) data;
   private = (ResizePrivate *) resize->private_part;
 
-  offset_x =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 0));
-  offset_x = resize_bound_off_x (resize, offset_x);
+  resize->offset_x = resize_bound_off_x (resize, 
+                                         RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 0)));
 
-  offset_y =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 1));
-  offset_y = resize_bound_off_y (resize, offset_y);
+  resize->offset_y = resize_bound_off_y (resize, 
+                                         RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 1)));  
 
-  if ((offset_x != resize->offset_x) ||
-      (offset_y != resize->offset_y))
-    {
-      resize->offset_x = offset_x;
-      resize->offset_y = offset_y;
-      resize_draw (resize);
-    }
+  gimp_offset_area_set_offsets (GIMP_OFFSET_AREA (private->offset_area),
+                                resize->offset_x, resize->offset_y); 
 }
 
 /*
@@ -990,11 +876,14 @@ size_update (Resize *resize,
 
   private = (ResizePrivate *) resize->private_part;
 
-  resize->width = (gint) (width + 0.5);
+  resize->width  = (gint) (width  + 0.5);
   resize->height = (gint) (height + 0.5);
 
   resize->ratio_x = ratio_x;
   resize->ratio_y = ratio_y;
+
+  gimp_offset_area_set_size  (GIMP_OFFSET_AREA (private->offset_area), 
+                              resize->width, resize->height);
 
   gtk_signal_handler_block_by_data (GTK_OBJECT (private->size_se), resize);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se),
@@ -1009,25 +898,17 @@ size_update (Resize *resize,
   gtk_adjustment_set_value (GTK_ADJUSTMENT (private->ratio_y_adj), ratio_y);
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_x_adj), resize);
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_y_adj), resize);
-
+  
   if (resize->type == ResizeWidget)
     {
-      resize->offset_x = resize_bound_off_x (resize, resize->offset_x);
-      resize->offset_y = resize_bound_off_y (resize, resize->offset_y);
-
       gimp_size_entry_set_refval_boundaries
-	(GIMP_SIZE_ENTRY (private->offset_se), 0,
-	 MIN (0, resize->width - private->old_width),
-	 MAX (0, resize->width - private->old_width));
+        (GIMP_SIZE_ENTRY (private->offset_se), 0,
+         MIN (0, resize->width - private->old_width),
+         MAX (0, resize->width - private->old_width));
       gimp_size_entry_set_refval_boundaries
-	(GIMP_SIZE_ENTRY (private->offset_se), 1,
-	 MIN (0, resize->height - private->old_height),
-	 MAX (0, resize->height - private->old_height));
-
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se),
-				  0, resize->offset_x);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se),
-				  1, resize->offset_y);
+        (GIMP_SIZE_ENTRY (private->offset_se), 1,
+         MIN (0, resize->height - private->old_height),
+         MAX (0, resize->height - private->old_height));
     }
 
   if ((resize->type == ScaleWidget) && (resize->target == ResizeImage))
@@ -1041,9 +922,29 @@ size_update (Resize *resize,
       gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->printsize_se),
 					  resize);
     }
-
-  resize_draw (resize);
 }
+
+static void
+offset_area_offsets_changed (GtkWidget *offset_area,
+                             gint       offset_x,
+                             gint       offset_y,
+                             gpointer   data)
+{
+  Resize        *resize;
+  ResizePrivate *private;
+
+  resize  = (Resize *) data;
+  private = (ResizePrivate *) resize->private_part;
+
+  resize->offset_x = offset_x;
+  resize->offset_y = offset_y;
+  
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se),
+                              0, resize->offset_x);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se),
+                              1, resize->offset_y);
+}
+
 
 static void
 printsize_update (GtkWidget *widget,
@@ -1195,62 +1096,6 @@ resolution_update (Resize  *resize,
 				      resize);
 }
 
-static gint
-resize_events (GtkWidget *widget,
-	       GdkEvent  *event)
-{
-  Resize *resize;
-  ResizePrivate *private;
-  gint dx, dy;
-  gint off_x, off_y;
-
-  resize  = (Resize *) gtk_object_get_user_data (GTK_OBJECT (widget));
-  private = (ResizePrivate *) resize->private_part;
-
-  switch (event->type)
-    {
-    case GDK_EXPOSE:
-      resize_draw (resize);
-      break;
-    case GDK_BUTTON_PRESS:
-      gdk_pointer_grab (private->drawing_area->window, FALSE,
-			(GDK_BUTTON1_MOTION_MASK |
-			 GDK_BUTTON_RELEASE_MASK),
-			NULL, NULL, event->button.time);
-      private->orig_x  = resize->offset_x;
-      private->orig_y  = resize->offset_y;
-      private->start_x = event->button.x;
-      private->start_y = event->button.y;
-      break;
-    case GDK_MOTION_NOTIFY:
-      /*  X offset  */
-      dx = event->motion.x - private->start_x;
-      off_x = private->orig_x + dx / private->ratio;
-      off_x = resize_bound_off_x (resize, off_x);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se),
-				  0, off_x);
-
-      /*  Y offset  */
-      dy = event->motion.y - private->start_y;
-      off_y = private->orig_y + dy / private->ratio;
-      off_y = resize_bound_off_y (resize, off_y);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se),
-				  1, off_y);
-
-      gtk_signal_emit_by_name (GTK_OBJECT (private->offset_se), "value_changed",
-			       resize);
-      break;
-    case GDK_BUTTON_RELEASE:
-      gdk_pointer_ungrab (event->button.time);
-      break;
-    default:
-      break;
-    }
-
-  return FALSE;
-}
-
-/*** Resize sanity checks ***/
 
 void
 resize_scale_implement (ImageResize *image_scale)

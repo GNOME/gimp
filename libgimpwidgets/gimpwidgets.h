@@ -33,6 +33,7 @@
 #include <libgimpwidgets/gimpdialog.h>
 #include <libgimpwidgets/gimpfileselection.h>
 #include <libgimpwidgets/gimphelpui.h>
+#include <libgimpwidgets/gimpoffsetarea.h>
 #include <libgimpwidgets/gimppatheditor.h>
 #include <libgimpwidgets/gimppixmap.h>
 #include <libgimpwidgets/gimpquerybox.h>

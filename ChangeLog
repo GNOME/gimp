@@ -1,3 +1,17 @@
+2001-05-06  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimpoffsetarea.c
+	* libgimpwidgets/gimpoffsetarea.h: new widget GimpOffsetArea cut 
+	of the resize dialog, allows to interactively specify offsets when 
+	resizing images or drawables.
+
+	* libgimpwidgets/gimppixmap.c: removed empty destroy method.
+
+	* app/resize.c: use new GimpOffsetArea.
+
 2001-05-06  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/Makefile.am

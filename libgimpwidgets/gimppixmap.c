@@ -29,7 +29,6 @@
 #include "gimppixmap.h"
 
 
-static void gimp_pixmap_destroy           (GtkObject  *object);
 static void gimp_pixmap_realize           (GtkWidget  *widget);
 static void gimp_pixmap_create_from_xpm_d (GimpPixmap *pixmap);
 
@@ -38,28 +37,14 @@ static GtkPixmapClass *parent_class = NULL;
 
 
 static void
-gimp_pixmap_destroy (GtkObject *object)
-{
-  GimpPixmap *pixmap = GIMP_PIXMAP (object);
-
-  g_return_if_fail (pixmap != NULL);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-static void
 gimp_pixmap_class_init (GimpPixmapClass *class)
 {
-  GtkObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = (GtkObjectClass *) class;
   widget_class = (GtkWidgetClass *) class;
 
   parent_class = gtk_type_class (gtk_pixmap_get_type ());
 
-  object_class->destroy = gimp_pixmap_destroy;
   widget_class->realize = gimp_pixmap_realize;
 }
 

@@ -42,6 +42,8 @@ libgimpwidgets_1_3_la_SOURCES = \
 	gimpfileselection.h	\
 	gimphelpui.c		\
 	gimphelpui.h		\
+	gimpoffsetarea.c	\
+	gimpoffsetarea.h	\
 	gimppatheditor.c	\
 	gimppatheditor.h	\
 	gimppixmap.c		\
@@ -62,6 +64,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpdialog.h		\
 	gimpfileselection.h	\
 	gimphelpui.h		\
+	gimpoffsetarea.h	\
 	gimppatheditor.h	\
 	gimppixmap.h		\
 	gimpquerybox.h		\
