@@ -1,5 +1,11 @@
 2003-02-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpselectioneditor.c: changed include to follow
+	selection options change. Don't use the tool_manager to find
+	by_color_select's options.
+
+2003-02-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/transform_options.[ch]
 	* app/tools/selection_options.[ch]: removed...
 

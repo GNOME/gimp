@@ -34,6 +34,8 @@
 
 #include "tools/tools-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
@@ -41,9 +43,7 @@
 #include "core/gimpimage-projection.h"
 #include "core/gimptoolinfo.h"
 
-#include "tools/gimpbycolorselecttool.h"
-#include "tools/selection_options.h"
-#include "tools/tool_manager.h"
+#include "tools/gimpselectionoptions.h"
 
 #include "gimpselectioneditor.h"
 #include "gimpdnd.h"
@@ -376,8 +376,12 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
   if (! editor->gimage)
     return TRUE;
 
-  tool_info = tool_manager_get_info_by_type (editor->gimage->gimp,
-                                             GIMP_TYPE_BY_COLOR_SELECT_TOOL);
+  tool_info = (GimpToolInfo *)
+    gimp_container_get_child_by_name (editor->gimage->gimp->tool_info_list,
+                                      "gimp-by-color-select-tool");
+
+  if (! tool_info)
+    return TRUE;
 
   options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
 
@@ -468,8 +472,12 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
   if (! editor->gimage)
     return;
 
-  tool_info = tool_manager_get_info_by_type (editor->gimage->gimp,
-                                             GIMP_TYPE_BY_COLOR_SELECT_TOOL);
+  tool_info = (GimpToolInfo *)
+    gimp_container_get_child_by_name (editor->gimage->gimp->tool_info_list,
+                                      "gimp-by-color-select-tool");
+
+  if (! tool_info)
+    return;
 
   options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
 
