@@ -1,3 +1,19 @@
+2004-01-25  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/info-window.c (info_window_create): don't update the fields
+	here...
+
+	* app/gui/view-commands.c (view_info_window_cmd_callback): ... but
+	here when the info window is connected to the display shell. Patch
+	from Shlomi Fish; fixes bug #132329.
+
+	* app/gui/info-window.c (info_window_update_extended): fixed update
+	of info window in automatic mode. Bug #118084, patch by Shlomi Fish.
+
+	* autogen.sh: check for automake-1.8 also.
+
+	* HACKING: note that automake-1.8 should work as well.
+
 2004-01-24  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/color.pdb (levels, curves): fiddle with the
