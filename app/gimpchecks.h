@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995-2001 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,29 +16,28 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __IMAGE_RENDER_H__
-#define __IMAGE_RENDER_H__
-
-#include "gimpchecks.h"
-
-/*  Functions  */
-void   render_setup (GimpCheckType  check_type,
-		     GimpCheckSize  check_size);
-void   render_free  (void);
-void   render_image (GDisplay *gdisp,
-		     gint      x,
-		     gint      y,
-		     gint      w,
-		     gint      h);
-
-/*
- *  Extern variables
- */
-extern guchar *render_check_buf;
-extern guchar *render_empty_buf;
-extern guchar *render_temp_buf;
-extern guchar *render_blend_dark_check;
-extern guchar *render_blend_light_check;
+#ifndef __GIMP_CHECKS_H__
+#define __GIMP_CHECKS_H__
 
 
-#endif  /*  __IMAGE_RENDER_H__  */
+/*  Transparency representation  */
+
+typedef enum
+{
+  LIGHT_CHECKS = 0,
+  GRAY_CHECKS  = 1,
+  DARK_CHECKS  = 2,
+  WHITE_ONLY   = 3,
+  GRAY_ONLY    = 4,
+  BLACK_ONLY   = 5
+} GimpCheckType;
+
+typedef enum
+{
+  SMALL_CHECKS  = 0,
+  MEDIUM_CHECKS = 1,
+  LARGE_CHECKS  = 2
+} GimpCheckSize;
+
+#endif  /*  __GIMP_CHECKS_H__  */
+

@@ -1,3 +1,12 @@
+2001-02-21  Daniel Egger  <egger@suse.de>
+
+	* app/gimpchecks.h: New file containing the check types.
+	
+	* app/image_render.h: ... definitions taken from here.
+	* app/temp_buf.c:
+	* app/temp_buf.h: New function temp_buf_new_check to create
+	a new checked temp_buf.
+
 2001-02-20  Simon Budig  <simon@gimp.org>
 	
 	* app/gdisplay.[ch]

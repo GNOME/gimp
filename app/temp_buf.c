@@ -43,7 +43,7 @@
 #include "paint_funcs.h"
 #include "pixel_region.h"
 #include "temp_buf.h"
-
+#include "image_render.h"
 
 static guchar * temp_buf_allocate (guint);
 static void     temp_buf_to_color (TempBuf *src_buf,
@@ -188,6 +188,81 @@ temp_buf_new (gint    width,
     }
 
   return temp;
+}
+
+/* This function simply renders a checkerboard with the given
+   parameters into a newly allocated tempbuf */
+
+TempBuf *
+temp_buf_new_check (gint width,
+		    gint height,
+		    GimpCheckType check_type,
+	            GimpCheckSize check_size)
+{
+  TempBuf *newbuf = NULL;
+  guchar *data = 0;
+  guchar check_shift = 0;
+  guchar fg_color = 0;
+  guchar bg_color = 0;
+  gint j, i = 0;
+
+  if (check_type < LIGHT_CHECKS || check_type > BLACK_ONLY)
+    g_error ("invalid check_type argument to temp_buf_check: %d", check_type);
+  if (check_size < SMALL_CHECKS || check_size > LARGE_CHECKS)
+    g_error ("invalid check_size argument to temp_buf_check: %d", check_size);
+
+  switch (check_size)
+    {
+    case SMALL_CHECKS:
+      check_shift = 2;
+      break;
+    case MEDIUM_CHECKS:
+      check_shift = 4;
+      break;
+    case LARGE_CHECKS:
+      check_shift = 6;
+    }
+ 
+  switch (check_type)
+    {
+      case LIGHT_CHECKS:
+        fg_color = 204;
+        bg_color = 255;
+	break;
+      case GRAY_CHECKS:
+        fg_color = 102;
+        bg_color = 153;
+	break;
+      case DARK_CHECKS:
+        fg_color = 0;
+        bg_color = 51;
+	break;
+      case WHITE_ONLY:
+        fg_color = 255;
+        bg_color = 255;
+	break;
+      case GRAY_ONLY:
+        fg_color = 127;
+        bg_color = 127;
+	break;
+      case BLACK_ONLY:
+        fg_color = 0;
+        bg_color = 0;
+    }
+ 
+  newbuf = temp_buf_new (width, height, 3, 0, 0, NULL);
+  data = temp_buf_data (newbuf);
+  
+  for (j = 1; i <= height; j++)
+    {
+      for (i = 1; i <= width; i++)
+	{
+	  *(data + i - 1) = ((j & check_shift) && (i & check_shift)) 
+	                    ? fg_color : bg_color;
+	}	  
+    } 
+ 
+  return newbuf;
 }
 
 TempBuf *

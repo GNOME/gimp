@@ -19,26 +19,7 @@
 #ifndef __IMAGE_RENDER_H__
 #define __IMAGE_RENDER_H__
 
-
-/*  Transparency representation  */
-
-typedef enum
-{
-  LIGHT_CHECKS = 0,
-  GRAY_CHECKS  = 1,
-  DARK_CHECKS  = 2,
-  WHITE_ONLY   = 3,
-  GRAY_ONLY    = 4,
-  BLACK_ONLY   = 5
-} GimpCheckType;
-
-typedef enum
-{
-  SMALL_CHECKS  = 0,
-  MEDIUM_CHECKS = 1,
-  LARGE_CHECKS  = 2
-} GimpCheckSize;
-
+#include "gimpchecks.h"
 
 /*  Functions  */
 void   render_setup (GimpCheckType  check_type,
