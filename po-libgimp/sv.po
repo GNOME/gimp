@@ -1,43 +1,40 @@
 # Swedish translations for GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
+# Christian Rose <menthos@menthos.com>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.10\n"
-"POT-Creation-Date: 2000-08-30 00:31-0700\n"
-"PO-Revision-Date: 1999-10-17 22:36+0100\n"
-"Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
+"Project-Id-Version: gimp\n"
+"POT-Creation-Date: 2000-09-24 01:39+0200\n"
+"PO-Revision-Date: 2000-09-24 01:50+0200\n"
+"Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso8859-1\n"
-"Content-Transfer-Encoding: 8-bit\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpcolorbutton.c:118
 msgid "/Use Foreground Color"
-msgstr ""
+msgstr "/Använd förgrundsfärg"
 
 #: libgimp/gimpcolorbutton.c:119
 msgid "/Use Background Color"
-msgstr ""
+msgstr "/Använd bakgrundsfärg"
 
 #: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
-#, fuzzy
 msgid "can't handle layers"
-msgstr "kan ej hantera lager"
+msgstr "kan inte hantera lager"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
-#, fuzzy
 msgid "Merge Visible Layers"
-msgstr "Sammanfoga synliga lager"
+msgstr "Slå samman synliga lager"
 
 #: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
-#, fuzzy
 msgid "can only handle layers as animation frames"
 msgstr "kan endast hantera lager som bildrutor i en animation"
 
 #: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
-#, fuzzy
 msgid "Save as Animation"
 msgstr "Spara som animation"
 
@@ -46,12 +43,10 @@ msgid "Flatten Image"
 msgstr "Platta till bilden"
 
 #: libgimp/gimpexport.c:194
-#, fuzzy
 msgid "can't handle transparency"
-msgstr "kan ej hantera transparens"
+msgstr "kan inte hantera transparens"
 
 #: libgimp/gimpexport.c:203
-#, fuzzy
 msgid "can only handle RGB images"
 msgstr "kan endast hantera RGB-bilder"
 
@@ -60,53 +55,44 @@ msgid "Convert to RGB"
 msgstr "Konvertera till RGB"
 
 #: libgimp/gimpexport.c:212
-#, fuzzy
 msgid "can only handle grayscale images"
 msgstr "kan endast hantera gråskalebilder"
 
 #: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
-#, fuzzy
 msgid "Convert to Grayscale"
 msgstr "Konvertera till gråskala"
 
 #: libgimp/gimpexport.c:221
-#, fuzzy
 msgid "can only handle indexed images"
 msgstr "kan endast hantera indexerade bilder"
 
 #: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
-#, fuzzy
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Konvertera till indexerat läge med standardinställningar\n"
+"Konvertera till Indexerat med standardinställningar\n"
 "(Gör det manuellt om du vill finjustera)"
 
 #: libgimp/gimpexport.c:231
-#, fuzzy
 msgid "can only handle RGB or grayscale images"
-msgstr "kan endast hantera RGB eller gråskalebilder"
+msgstr "kan endast hantera RGB-bilder eller gråskalebilder"
 
 #: libgimp/gimpexport.c:240
-#, fuzzy
 msgid "can only handle RGB or indexed images"
-msgstr "kan endast hantera RGB eller indexerade bilder"
+msgstr "kan endast hantera RGB-bilder eller indexerade bilder"
 
 #: libgimp/gimpexport.c:250
-#, fuzzy
 msgid "can only handle grayscale or indexed images"
-msgstr "kan endast hantera gråskale- eller indexerade bilder"
+msgstr "kan endast hantera gråskalebilder eller indexerade bilder"
 
 #: libgimp/gimpexport.c:261
-#, fuzzy
 msgid "needs an alpha channel"
-msgstr "behöver en alfa-kanal"
+msgstr "behöver en alfakanal"
 
 #: libgimp/gimpexport.c:262
-#, fuzzy
 msgid "Add Alpha Channel"
-msgstr "Lägg till alfa-kanal"
+msgstr "Lägg till alfakanal"
 
 #.
 #. *  Plug-ins have called gtk_init () before calling gimp_export ().
@@ -135,7 +121,7 @@ msgstr "Avbryt"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "Din bild borde exporteras före den kan sparas av följande anledning:"
+msgstr "Din bild bör exporteras innan den kan sparas av följande anledningar:"
 
 #. the footline
 #: libgimp/gimpexport.c:418
@@ -150,7 +136,7 @@ msgstr "Välj fil"
 #: libgimp/gimpquerybox.c:293 libgimp/gimpquerybox.c:356
 #: libgimp/gimpunitmenu.c:499
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: libgimp/gimpunitmenu.c:238
 msgid "More..."
@@ -161,7 +147,6 @@ msgid "Unit Selection"
 msgstr "Enhetsval"
 
 #: libgimp/gimpunitmenu.c:531
-#, fuzzy
 msgid "Unit"
 msgstr "Enhet "
 
@@ -221,40 +206,29 @@ msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
+"Om du inte trycker \"Tid\"-knappen kan du ange ett värde här för generering "
+"av ett slumptalsfrö - det låter dig upprepa en given \"slump\"-funktion"
 
 #: libgimp/gimpwidgets.c:714
 msgid "Time"
-msgstr ""
+msgstr "Tid"
 
 #: libgimp/gimpwidgets.c:723
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
+"Skapa slumptalsfrö till slumptalsgeneratorn baserat på den aktuella tiden - "
+"detta garanterar en vettig slumpfunktion"
 
 #: libgimp/gimpwidgets.c:1035
 msgid "Bytes"
-msgstr ""
+msgstr "byte"
 
 #: libgimp/gimpwidgets.c:1036
 msgid "KiloBytes"
-msgstr ""
+msgstr "kilobyte"
 
 #: libgimp/gimpwidgets.c:1037
 msgid "MegaBytes"
-msgstr ""
-
-#~ msgid "Select"
-#~ msgstr "Välj"
-
-#~ msgid "Close"
-#~ msgstr "Stäng"
-
-#~ msgid "warning: no home directory."
-#~ msgstr "varning: ingen hemkatalog"
-
-#~ msgid "unit-menu-format string ended within %%-sequence"
-#~ msgstr "enhet-meny-format strängen slutade inom %%-sekvens"
-
-#~ msgid "unit-menu-format contains unknown format sequence '%%%c'"
-#~ msgstr "enhet-meny-format innehåller okänd formatsekvens '%%%c'"
+msgstr "megabyte"
