@@ -2236,25 +2236,26 @@ copy_row_rgb_to_float16_rgb  (
   Tag dtag = pixelrow_tag (dest_row);
   gfloat * s = (gfloat*) pixelrow_data (src_row);
   guint16 * d = (guint16*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT16 (s[0]);
-            d[1] = FLT16 (s[1]);
-            d[2] = FLT16 (s[2]);
-            d[3] = FLT16 (s[3]);
+            d[0] = FLT16 (s[0], u);
+            d[1] = FLT16 (s[1], u);
+            d[2] = FLT16 (s[2], u);
+            d[3] = FLT16 (s[3], u);
             s += 4;
             d += 4;
           }
       else
         while (w--)
           {
-            d[0] = FLT16 (s[0]);
-            d[1] = FLT16 (s[1]);
-            d[2] = FLT16 (s[2]);
+            d[0] = FLT16 (s[0], u);
+            d[1] = FLT16 (s[1], u);
+            d[2] = FLT16 (s[2], u);
             s += 4;
             d += 3;
           }
@@ -2264,19 +2265,19 @@ copy_row_rgb_to_float16_rgb  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT16 (s[0]);
-            d[1] = FLT16 (s[1]);
-            d[2] = FLT16 (s[2]);
-            d[3] = FLT16 (1.0);
+            d[0] = FLT16 (s[0], u);
+            d[1] = FLT16 (s[1], u);
+            d[2] = FLT16 (s[2], u);
+            d[3] = FLT16 (1.0, u);
             s += 3;
             d += 4;
           }
       else
         while (w--)
           {
-            d[0] = FLT16 (s[0]);
-            d[1] = FLT16 (s[1]);
-            d[2] = FLT16 (s[2]);
+            d[0] = FLT16 (s[0], u);
+            d[1] = FLT16 (s[1], u);
+            d[2] = FLT16 (s[2], u);
             s += 3;
             d += 3;
           }
@@ -2295,21 +2296,22 @@ copy_row_rgb_to_float16_gray  (
   Tag dtag = pixelrow_tag (dest_row);
   gfloat * s = (gfloat*) pixelrow_data (src_row);
   guint16 * d = (guint16*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT16 (INTENSITY (s[0], s[1], s[2]));
-            d[1] = FLT16 (s[3]);
+            d[0] = FLT16 (INTENSITY (s[0], s[1], s[2]), u);
+            d[1] = FLT16 (s[3], u);
             s += 4;
             d += 2;
           }
       else
         while (w--)
           {
-            d[0] = FLT16 (INTENSITY (s[0], s[1], s[2]));
+            d[0] = FLT16 (INTENSITY (s[0], s[1], s[2]), u);
             s += 4;
             d += 1;
           }
@@ -2319,15 +2321,15 @@ copy_row_rgb_to_float16_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT16 (INTENSITY (s[0], s[1], s[2]));
-            d[1] = FLT16 (1.0);
+            d[0] = FLT16 (INTENSITY (s[0], s[1], s[2]), u);
+            d[1] = FLT16 (1.0, u);
             s += 3;
             d += 2;
           }
       else
         while (w--)
           {
-            d[0] = FLT16 (INTENSITY (s[0], s[1], s[2]));
+            d[0] = FLT16 (INTENSITY (s[0], s[1], s[2]), u);
             s += 3;
             d += 1;
           }
@@ -2648,21 +2650,22 @@ copy_row_gray_to_float16_rgb  (
   Tag dtag = pixelrow_tag (dest_row);
   gfloat * s = (gfloat*) pixelrow_data (src_row);
   guint16 * d = (guint16*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT16 (s[0]);
-            d[3] = FLT16 (s[1]);
+            d[0] = d[1] = d[2] = FLT16 (s[0], u);
+            d[3] = FLT16 (s[1], u);
             s += 2;
             d += 4;
           }
       else
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT16 (s[0]);
+            d[0] = d[1] = d[2] = FLT16 (s[0], u);
             s += 2;
             d += 3;
           }
@@ -2672,15 +2675,15 @@ copy_row_gray_to_float16_rgb  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT16 (s[0]);
-            d[3] = FLT16 (1.0);
+            d[0] = d[1] = d[2] = FLT16 (s[0], u);
+            d[3] = FLT16 (1.0, u);
             s += 1;
             d += 4;
           }
       else
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT16 (s[0]);
+            d[0] = d[1] = d[2] = FLT16 (s[0], u);
             s += 1;
             d += 3;
           }
@@ -2699,21 +2702,22 @@ copy_row_gray_to_float16_gray  (
   Tag dtag = pixelrow_tag (dest_row);
   gfloat * s = (gfloat*) pixelrow_data (src_row);
   guint16 * d = (guint16*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT16 (s[0]);
-            d[1] = FLT16 (s[1]);
+            d[0] = FLT16 (s[0], u);
+            d[1] = FLT16 (s[1], u);
             s += 2;
             d += 2;
           }
       else
         while (w--)
           {
-            d[0] = FLT16 (s[0]);
+            d[0] = FLT16 (s[0], u);
             s += 2;
             d += 1;
           }
@@ -2723,15 +2727,15 @@ copy_row_gray_to_float16_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT16 (s[0]);
-            d[1] = FLT16 (1.0);
+            d[0] = FLT16 (s[0], u);
+            d[1] = FLT16 (1.0, u);
             s += 1;
             d += 2;
           }
       else
         while (w--)
           {
-            d[0] = FLT16 (s[0]);
+            d[0] = FLT16 (s[0], u);
             s += 1;
             d += 1;
           }

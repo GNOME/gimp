@@ -216,7 +216,7 @@ paintbrush_motion (PaintCore *paint_core,
         palette_get_foreground (&paint);
         color_area (&a, &paint);
       }
-      
+    
       /* apply it to the image */
       paint_core_16_area_paste (paint_core, drawable,
                                 (gfloat) paint_left,

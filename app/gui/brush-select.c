@@ -566,6 +566,7 @@ display_brush_get_row_float16(
   guchar *b = buf; 
   gint i;
   Format f = tag_format (canvas_tag (brush_canvas));
+  ShortsFloat u;
   
   switch (f)
     {
@@ -573,7 +574,7 @@ display_brush_get_row_float16(
       /*  Invert the mask for display. */ 
       for (i = 0; i < width; i++)
         {
-	  *b++ = 255 -  (gint)(255 * FLT (*s++) + .5);
+	  *b++ = 255 -  (gint)(255 * FLT (*s++, u) + .5);
         }
       break;	
     default:

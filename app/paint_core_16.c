@@ -1270,6 +1270,7 @@ static void brush_solidify_mask_float16 (
 		      )
 {  
   /* get the data and advance one line into it  */
+  ShortsFloat u;
 #ifdef BRUSH_WITH_BORDER
   guint16* data =(guint16*)canvas_portion_data (solid_brush, 0, 1);
 #else
@@ -1285,7 +1286,7 @@ static void brush_solidify_mask_float16 (
 #endif
       for (j = 0; j < canvas_width (brush_mask); j++)
 	{
-	  *data++ = (*src++) ? FLT16 (1.0) : FLT16 (0.0);
+	  *data++ = (*src++) ? FLT16 (1.0, u) : FLT16 (0.0, u);
 	}
 #ifdef BRUSH_WITH_BORDER
       data++;

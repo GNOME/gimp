@@ -756,7 +756,11 @@ color_select_format_entry  (
           break;
         
         case PRECISION_FLOAT16:
-          sprintf (buffer, "%7.6f", FLT (FLT16 (csp->values[i])));
+	  {
+	    ShortsFloat u;
+	    guint16 val16 = FLT16 (csp->values[i], u);
+            sprintf (buffer, "%7.6f", FLT (val16, u));
+	  }
           break;
 
         case PRECISION_NONE:
@@ -1232,7 +1236,11 @@ color_select_entry_update (GtkWidget *w,
                 break;
               
 	      case PRECISION_FLOAT16:
-		val = FLT (FLT16 (val));
+		{
+		  ShortsFloat u;
+		  guint16 val16 = FLT16( val, u);
+		  val = FLT (val16, u);
+		}
                 break;
                 
               case PRECISION_NONE:

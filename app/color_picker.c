@@ -491,15 +491,16 @@ color_picker_info_update_float16  (
 {
   guint16 * src = (guint16*) pixelrow_data (&color);
   Tag sample_tag = pixelrow_tag (&color);
+  ShortsFloat u;
   
   switch (tag_format (sample_tag))
     {
     case FORMAT_RGB:
-      sprintf (red_buf, "%7.6f", FLT (src [0]));
-      sprintf (green_buf, "%7.6f", FLT (src [1]));
-      sprintf (blue_buf, "%7.6f", FLT (src [2]));
+      sprintf (red_buf, "%7.6f", FLT (src [0], u));
+      sprintf (green_buf, "%7.6f", FLT (src [1], u));
+      sprintf (blue_buf, "%7.6f", FLT (src [2], u));
       if (tag_alpha (sample_tag) == ALPHA_YES)
-        sprintf (alpha_buf, "%7.6f", FLT (src [3]));
+        sprintf (alpha_buf, "%7.6f", FLT (src [3], u));
       else
         sprintf (alpha_buf, "N/A");
       sprintf (hex_buf, "N/A");
@@ -515,9 +516,9 @@ color_picker_info_update_float16  (
       break;
 
     case FORMAT_GRAY:
-      sprintf (gray_buf, "%7.6f", FLT (src [0]));
+      sprintf (gray_buf, "%7.6f", FLT (src [0], u));
       if (tag_alpha (sample_tag) == ALPHA_YES)
-        sprintf (alpha_buf, "%7.6f", FLT (src [1]));
+        sprintf (alpha_buf, "%7.6f", FLT (src [1], u));
       else
         sprintf (alpha_buf, "N/A");
       sprintf (hex_buf, "N/A");

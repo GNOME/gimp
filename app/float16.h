@@ -19,22 +19,26 @@
 #define __FLOAT16_H__
 
 #include <glib.h>
+#include <endian.h>
 
 #define ONE_FLOAT16 16256
 #define HALF_FLOAT16 16128
 #define ZERO_FLOAT16 0
 
-extern guint16 f16_shorts_in[];
-extern const gfloat *f16_float_in;
-extern gfloat f16_float_out;
-extern const guint16 *f16_shorts_out;
+typedef union
+{
+  guint16 s[2];
+  gfloat f;
+}ShortsFloat;
+
+#define FLT16( x, t ) (t.f = (x), t.s[0])   
 
 #if BYTE_ORDER == BIG_ENDIAN
-#define FLT(x) (*f16_shorts_in = (x), *f16_float_in)
-#define FLT16(x) (f16_float_out = (x), *f16_shorts_out) 
-#elif BYTE_ORDER == LITTLE_ENDIAN
-#define FLT(x) (f16_shorts_in[1] = (x), *f16_float_in)
-#define FLT16(x) (f16_float_out = (x), f16_shorts_out[1]) 
+#define FLT( x, t ) (t.s[0] = (x), t.s[1]= 0, t.f) 
+#endif
+
+#if BYTE_ORDER == LITTLE_ENDIAN 
+#define FLT( x, t ) (t.s[1] = (x), t.s[0]= 0, t.f) 
 #endif
 
 #endif

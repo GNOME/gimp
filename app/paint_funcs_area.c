@@ -1658,6 +1658,7 @@ convolve_area_float16 (PixelArea *src_area,
   gint bytes;
   Tag src_tag = pixelarea_tag (src_area); 
   gfloat val;
+  ShortsFloat u;
   
   /*  Initialize some values  */
   src_width = pixelarea_areawidth (src_area);
@@ -1705,7 +1706,7 @@ convolve_area_float16 (PixelArea *src_area,
 		{
 		  for (b = 0; b < num_channels; b++)
 			{
-			  val = FLT (*s++);
+			  val = FLT (*s++, u);
 		          total [b] += (*m) * val;
 			}
 				
@@ -1723,7 +1724,7 @@ convolve_area_float16 (PixelArea *src_area,
 	      if (total [b] < 0 && mode)
 		total [b] = - total [b];
 
-		*dest++ = FLT16 (total [b]);
+		*dest++ = FLT16 (total [b], u);
 	    }
 	  src += num_channels;
 	}
@@ -2354,8 +2355,9 @@ gaussian_blur_row_float16  (
   gint alpha = num_channels - 1;  /*same for both */
   guint16 *sp = src_data + alpha;
   guint16 *dp = dest_data + alpha;
-  gfloat initial_p = FLT (sp[0]);
-  gfloat initial_m = FLT (sp[(width -1) * num_channels]);
+  ShortsFloat u;
+  gfloat initial_p = FLT (sp[0], u);
+  gfloat initial_m = FLT (sp[(width -1) * num_channels], u);
   
   for (x = 0; x < width; x++)
     {
@@ -2375,7 +2377,7 @@ gaussian_blur_row_float16  (
 	  i += pixels;
 	  if (i > end)
 	    i = end;
-	  val += FLT (*rle_values_ptr) * (sum[i] - sum[start]);
+	  val += FLT (*rle_values_ptr, u) * (sum[i] - sum[start]);
 	  rle_values_ptr += pixels;
 	  rle_count_ptr += pixels;
 	  start = i;
@@ -2384,7 +2386,7 @@ gaussian_blur_row_float16  (
       if (end != length)
 	val += initial_m * (sum[length] - sum[end]);
 
-      dp[x * num_channels] = FLT16 (val / total);
+      dp[x * num_channels] = FLT16 (val / total, u);
     }
 }
 
@@ -2920,11 +2922,12 @@ scale_set_dest_row_float16  (
   guint16 * dest = g_malloc (width * chan * sizeof (guint16));
   PixelRow temp;
   gint x;
+  ShortsFloat u;
 
   pixelrow_init (&temp, tag, (guchar *)dest, width);
   for (x = 0; x < width * chan; x++)
     {
-      dest[x] = FLT16 (row_accum[x]);
+      dest[x] = FLT16 (row_accum[x], u);
     }
   pixelarea_write_row (area, &temp, 0, row, width);
   g_free (dest);
@@ -3326,6 +3329,8 @@ scale_row_resample_float16  (
   gdouble *r = row_accum;   /*the acumulated array so far*/ 
   gint frac = 0;
   gint j = width;
+  ShortsFloat t, u, v, w;
+  gfloat cubic1, cubic2, cubic3, cubic4;
   
   /* loop through the x values in dest */
  
@@ -3355,34 +3360,32 @@ scale_row_resample_float16  (
 	  case MagnifyX_MagnifyY:
 	    for (b = 0; b < num_channels; b++)
 	      {
-	           r[b] += cubic ( dy, 
-                   cubic (dx, FLT (s_m1[b+minus_x]), FLT (s_m1[b]), 
-				FLT (s_m1[b+plus_x]), FLT (s_m1[b+plus2_x]), G_MAXFLOAT, G_MINFLOAT),
-		   cubic (dx, FLT (s[b+minus_x]), FLT (s[b]), 
-				FLT (s[b+plus_x]), FLT (s[b+plus2_x]), G_MAXFLOAT, G_MINFLOAT),
-		   cubic (dx, FLT (s_p1[b+minus_x]), FLT (s_p1[b]), 
-				FLT (s_p1[b+plus_x]), FLT (s_p1[b+plus2_x]), G_MAXFLOAT, G_MINFLOAT),
-		   cubic (dx, FLT (s_p2[b+minus_x]), FLT (s_p2[b]), 
-				FLT (s_p2[b+plus_x]), FLT (s_p2[b+plus2_x]), G_MAXFLOAT, G_MINFLOAT), 
-		   G_MAXFLOAT, 
-		   G_MINFLOAT) * tot_frac;
+		   cubic1 = cubic (dx, FLT (s_m1[b+minus_x], u), FLT (s_m1[b], v), 
+				FLT (s_m1[b+plus_x], w), FLT (s_m1[b+plus2_x], t), G_MAXFLOAT, G_MINFLOAT);
+		   cubic2 = cubic (dx, FLT (s[b+minus_x], u), FLT (s[b], v), 
+				FLT (s[b+plus_x], w), FLT (s[b+plus2_x], t), G_MAXFLOAT, G_MINFLOAT);
+		   cubic3 = cubic (dx, FLT (s_p1[b+minus_x], u), FLT (s_p1[b], v), 
+				FLT (s_p1[b+plus_x], w), FLT (s_p1[b+plus2_x], t), G_MAXFLOAT, G_MINFLOAT);
+		   cubic4 = cubic (dx, FLT (s_p2[b+minus_x], u), FLT (s_p2[b], v), 
+				FLT (s_p2[b+plus_x], w), FLT (s_p2[b+plus2_x], t), G_MAXFLOAT, G_MINFLOAT); 
+	           r[b] += cubic ( dy, cubic1, cubic2, cubic3, cubic4, G_MAXFLOAT, G_MINFLOAT) * tot_frac;
 	      }
 	    break;
 	  case MagnifyX_MinifyY:
 	    for (b = 0; b < num_channels; b++)
-	      r[b] += cubic (dx, FLT (s[b+minus_x]), FLT (s[b]), 
-				FLT (s[b+plus_x]), FLT (s[b+plus2_x]), 
+	      r[b] += cubic (dx, FLT (s[b+minus_x], u), FLT (s[b], v), 
+				FLT (s[b+plus_x], w), FLT (s[b+plus2_x], t), 
 				G_MAXFLOAT ,G_MINFLOAT) * tot_frac;
 	    break;
 	  case MinifyX_MagnifyY:
 	    for (b = 0; b < num_channels; b++)
-	      r[b] += cubic (dy, FLT (s_m1[b]), FLT (s[b]), 
-				FLT (s_p1[b]), FLT (s_p2[b]), 
+	      r[b] += cubic (dy, FLT (s_m1[b], u), FLT (s[b], v), 
+				FLT (s_p1[b], w), FLT (s_p2[b], t), 
 				G_MAXFLOAT, G_MINFLOAT) * tot_frac;
 	    break;
 	  case MinifyX_MinifyY:
 	    for (b = 0; b < num_channels; b++)
-	      r[b] += FLT (s[b]) * tot_frac;
+	      r[b] += FLT (s[b], u) * tot_frac;
 	    break;
 	  }
       else
@@ -3390,20 +3393,20 @@ scale_row_resample_float16  (
 	  {
 	  case MagnifyX_MagnifyY:
 	    for (b = 0; b < num_channels; b++)
-	      r[b] += ((1 - dy) * ((1 - dx) * FLT (s[b]) + dx * FLT (s[b+plus_x])) +
-		       dy  * ((1 - dx) * FLT (s_p1[b]) + dx * FLT (s_p1[b+plus_x]))) * tot_frac;
+	      r[b] += ((1 - dy) * ((1 - dx) * FLT (s[b], u) + dx * FLT (s[b+plus_x], v)) +
+		       dy  * ((1 - dx) * FLT (s_p1[b], w) + dx * FLT (s_p1[b+plus_x], t))) * tot_frac;
 	    break;
 	  case MagnifyX_MinifyY:
 	    for (b = 0; b < num_channels; b++)
-	      r[b] += (FLT (s[b]) * (1 - dx) + FLT (s[b+plus_x]) * dx) * tot_frac;
+	      r[b] += (FLT (s[b], u) * (1 - dx) + FLT (s[b+plus_x], v) * dx) * tot_frac;
 	    break;
 	  case MinifyX_MagnifyY:
 	    for (b = 0; b < num_channels; b++)
-	      r[b] += (FLT (s[b]) * (1 - dy) + FLT (s_p1[b]) * dy) * tot_frac;
+	      r[b] += (FLT (s[b], u) * (1 - dy) + FLT (s_p1[b], v) * dy) * tot_frac;
 	    break;
 	  case MinifyX_MinifyY:
 	    for (b = 0; b < num_channels; b++)
-	      r[b] += FLT (s[b]) * tot_frac;
+	      r[b] += FLT (s[b], u) * tot_frac;
 	    break;
 	  }
 
@@ -3844,6 +3847,7 @@ thin_row_float16  (
   guint16 *dest =(guint16*) pixelrow_data (dest_row);
   gint width = pixelrow_width (cur_row);
   gfloat c_prev, c_nxt, p, n, d;
+  ShortsFloat u;
 
   for (j = 0; j < width; j++)
     {
@@ -3854,11 +3858,11 @@ thin_row_float16  (
 	      found_one = TRUE;
 	      dest[j] = cur[j];
 		
-		c_prev = FLT (cur[j-1]);
-		c_nxt = FLT (cur[j+1]);
-		p = FLT (prev[j]);
-		n = FLT (next[j]);
-		d = FLT (dest[j]);
+		c_prev = FLT (cur[j-1], u);
+		c_nxt = FLT (cur[j+1], u);
+		p = FLT (prev[j], u);
+		n = FLT (next[j], u);
+		d = FLT (dest[j], u);
 
 	      if (c_prev < d)
 		dest[j] = cur[j - 1];
@@ -3879,11 +3883,11 @@ thin_row_float16  (
 	      found_one = TRUE;
 	      dest[j] = cur[j];
 		
-		c_prev = FLT (cur[j-1]);
-		c_nxt = FLT (cur[j+1]);
-		p = FLT (prev[j]);
-		n = FLT (next[j]);
-		d = FLT (dest[j]);
+		c_prev = FLT (cur[j-1], u);
+		c_nxt = FLT (cur[j+1], u);
+		p = FLT (prev[j], u);
+		n = FLT (next[j], u);
+		d = FLT (dest[j], u);
 
 	      if (c_prev > d)
 		dest[j] = cur[j - 1];

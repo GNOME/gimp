@@ -49,17 +49,18 @@ x_add_row_float16  (
   gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
   gint    width        = pixelrow_width (dest_row);  
   gfloat  sb, db;
+  ShortsFloat u;
 
   while (width--)
     {
       for (b = 0; b < num_channels; b++)
 	{
-	  db = FLT (dest[b]);
-	  sb = FLT (src[b]);
+	  db = FLT (dest[b], u);
+	  sb = FLT (src[b], u);
 
           db = MIN (1.0, sb + db);
 
-	  dest[b] = FLT16 (db);
+	  dest[b] = FLT16 (db, u);
 	}
 
       src += num_channels;
@@ -80,17 +81,18 @@ x_sub_row_float16  (
   gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
   gint    width        = pixelrow_width (dest_row);  
   gfloat  sb, db;
+  ShortsFloat u;
 
   while (width--)
     {
       for (b = 0; b < num_channels; b++)
 	{
-	  db = FLT (dest[b]);
-	  sb = FLT (src[b]);
+	  db = FLT (dest[b], u);
+	  sb = FLT (src[b], u);
 
           db = MAX (0, db - sb);
 
-	  dest[b] = FLT16 (db);
+	  dest[b] = FLT16 (db, u);
 	}
 
       src += num_channels;
@@ -110,15 +112,16 @@ x_min_row_float16  (
   gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
   gint    width        = pixelrow_width (dest_row);  
   gfloat  sb, db;
+  ShortsFloat u;
 
   while (width--)
     {
       for (b = 0; b < num_channels; b++)
 	{
-	  db = FLT (dest[b]);
-	  sb = FLT (src[b]);
+	  db = FLT (dest[b], u);
+	  sb = FLT (src[b], u);
           db = MIN (sb, db);
-	  dest[b] = FLT16 (db);
+	  dest[b] = FLT16 (db, u);
 	}
 
       src += num_channels;
@@ -139,14 +142,15 @@ invert_row_float16  (
   gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
   gint    width        = pixelrow_width (dest_row);  
   gfloat  db;
+  ShortsFloat u;
 
   while (width--)
     {
       for (b = 0; b < num_channels; b++)
 	{
-	  db = FLT (dest[b]);
+	  db = FLT (dest[b], u);
           db = 1.0 - db;
-	  dest[b] = FLT16 (db);
+	  dest[b] = FLT16 (db, u);
 	}
 
       dest += num_channels;
@@ -192,6 +196,7 @@ absdiff_row_float16  (
   gint    src_channels  = tag_num_channels (pixelrow_tag (image));
   gint    dest_channels = tag_num_channels (pixelrow_tag (mask));
   gfloat sb, cb;
+  ShortsFloat u;
 
   
 
@@ -210,8 +215,8 @@ absdiff_row_float16  (
           
           for (b = 0; b < src_channels; b++)
             {
-	      sb = FLT (src[b]);
-	      cb = FLT (color[b]);
+	      sb = FLT (src[b], u);
+	      cb = FLT (color[b], u);
               diff = sb - cb;
               diff = fabs (diff);
               if (diff > max)
@@ -226,7 +231,7 @@ absdiff_row_float16  (
               if (aa <= 0)
                 *dest = ZERO_FLOAT16;
               else if (aa < 0.5)
-                *dest = FLT16 (aa * 2.0);
+                *dest = FLT16 (aa * 2.0, u);
               else
                 *dest = ONE_FLOAT16;
             }
@@ -298,17 +303,18 @@ blend_row_float16  (
   gint    num_channels = tag_num_channels (src1_tag);
   gfloat  blend_comp   = (1.0 - blend);
   gfloat  s1b, s2b, db;
+  ShortsFloat u;
 
   alpha = (has_alpha) ? num_channels - 1 : num_channels;
   while (width --)
     {
       for (b = 0; b < alpha; b++)
 	{
-	  db = FLT (dest[b]);
-	  s1b = FLT (src1[b]);
-	  s2b = FLT (src2[b]);
+	  db = FLT (dest[b], u);
+	  s1b = FLT (src1[b], u);
+	  s2b = FLT (src2[b], u);
 	  db = s1b * blend_comp + s2b * blend;
-	  dest[b] = FLT16 (db);
+	  dest[b] = FLT16 (db, u);
 	}
 	
       if (has_alpha)
@@ -339,16 +345,17 @@ shade_row_float16  (
   gfloat  blend_comp   = (1.0 - blend);
   guint16 *col          = (guint16*) pixelrow_data (color);
   gfloat  sb, cb, db;
+  ShortsFloat u;
 
   alpha = (has_alpha) ? num_channels - 1 : num_channels;
   while (width --)
     {
       for (b = 0; b < alpha; b++)
 	{
-	  cb = FLT (col[b]);
-	  sb = FLT (src[b]);
+	  cb = FLT (col[b], u);
+	  sb = FLT (src[b], u);
 	  db = sb * blend_comp + cb * blend;
-	  dest[b] = FLT16 (db);
+	  dest[b] = FLT16 (db, u);
 	}
       if (has_alpha)
 	dest[alpha] = src[alpha];  /* alpha channel */
@@ -375,6 +382,7 @@ extract_alpha_row_float16 (
   gint    width         = pixelrow_width (dest_row);
   gint    num_channels = tag_num_channels (src_tag);
   gfloat sa, m_float, d; 
+  ShortsFloat u;
 
   if (mask)
     m = mask;
@@ -384,10 +392,10 @@ extract_alpha_row_float16 (
   alpha = num_channels - 1;
   while (width --)
     {
-	sa = FLT (src[alpha]);
-	m_float  = FLT (*m);
+	sa = FLT (src[alpha], u);
+	m_float  = FLT (*m, u);
         d = sa * m_float;
-	*dest++ = FLT16 (d);
+	*dest++ = FLT16 (d, u);
 
       if (mask)
 	m++;
@@ -416,6 +424,7 @@ darken_row_float16 (
   gint    num_channels1 = tag_num_channels (src1_tag);
   gint    num_channels2 = tag_num_channels (src2_tag);
   gfloat  db; 
+  ShortsFloat u;
 
   alpha = (ha1 || ha2) ? MAXIMUM (num_channels1, num_channels2) - 1 : num_channels1;
 
@@ -423,17 +432,17 @@ darken_row_float16 (
     {
       for (b = 0; b < alpha; b++)
 	{
-	  s1 = FLT (src1[b]);
-	  s2 = FLT (src2[b]);
+	  s1 = FLT (src1[b], u);
+	  s2 = FLT (src2[b], u);
 	  db = (s1 < s2) ? s1 : s2;
-	  dest[b] = FLT16 (db);
+	  dest[b] = FLT16 (db, u);
 	}
 
       if (ha1 && ha2)
 	{
-	  s1 = FLT (src1[alpha]);
-	  s2 = FLT (src2[alpha]);
-	  dest[alpha] = FLT16 (MIN (s1, s2));
+	  s1 = FLT (src1[alpha], u);
+	  s2 = FLT (src2[alpha], u);
+	  dest[alpha] = FLT16 (MIN (s1, s2), u);
 	}
       else if (ha2)
 	dest[alpha] = src2[alpha];
@@ -466,6 +475,7 @@ lighten_row_float16 (
   gint    num_channels1 = tag_num_channels (src1_tag);
   gint    num_channels2 = tag_num_channels (src2_tag);
   gfloat  d; 
+  ShortsFloat u;
 
   alpha = (ha1 || ha2) ? MAXIMUM (num_channels1, num_channels2) - 1 : num_channels1;
 
@@ -473,17 +483,17 @@ lighten_row_float16 (
     {
       for (b = 0; b < alpha; b++)
 	{
-	  s1 = FLT (src1[b]);
-	  s2 = FLT (src2[b]);
+	  s1 = FLT (src1[b], u);
+	  s2 = FLT (src2[b], u);
 	  d = (s1 < s2) ? s2 : s1;
-	  dest[b] = FLT16 (d);
+	  dest[b] = FLT16 (d, u);
 	}
 
       if (ha1 && ha2)
 	{
-	  s1 = FLT (src1[alpha]);
-	  s2 = FLT (src2[alpha]);
-	  dest[alpha] = FLT16 (MIN (s1, s2));
+	  s1 = FLT (src1[alpha], u);
+	  s2 = FLT (src2[alpha], u);
+	  dest[alpha] = FLT16 (MIN (s1, s2), u);
 	}
       else if (ha2)
 	dest[alpha] = src2[alpha];
@@ -516,12 +526,13 @@ hsv_only_row_float16 (
   gint    num_channels1 = tag_num_channels (src1_tag);
   gint    num_channels2 = tag_num_channels (src2_tag);
   gfloat  s1, s2;
+  ShortsFloat u;
 
   /*  assumes inputs are only 4 channel RGBA pixels  */
   while (width--)
     {
-      r1 = FLT (src1[0]); g1 = FLT (src1[1]); b1 = FLT (src1[2]);
-      r2 = FLT (src2[0]); g2 = FLT (src2[1]); b2 = FLT (src2[2]);
+      r1 = FLT (src1[0], u); g1 = FLT (src1[1], u); b1 = FLT (src1[2], u);
+      r2 = FLT (src2[0], u); g2 = FLT (src2[1], u); b2 = FLT (src2[2], u);
 
 /*    rgb_to_hsv (&r1, &g1, &b1); */
 /*    rgb_to_hsv (&r2, &g2, &b2); */
@@ -542,13 +553,13 @@ hsv_only_row_float16 (
       /*  set the destination  */
 /*    hsv_to_rgb (&r1, &g1, &b1); */
 
-      dest[0] = FLT16 (r1); dest[1] = FLT16 (g1); dest[2] = FLT16 (b1);
+      dest[0] = FLT16 (r1, u); dest[1] = FLT16 (g1, u); dest[2] = FLT16 (b1, u);
 
       if (ha1 && ha2)
 	{
-	  s1 = FLT (src1[3]);
-	  s2 = FLT (src2[3]);
-	  dest[3] = FLT16 (MIN (s1, s2));
+	  s1 = FLT (src1[3], u);
+	  s2 = FLT (src2[3], u);
+	  dest[3] = FLT16 (MIN (s1, s2), u);
 	}
       else if (ha2)
 	dest[3] = src2[3];
@@ -581,12 +592,13 @@ color_only_row_float16 (
   gint    num_channels1 = tag_num_channels (src1_tag);
   gint    num_channels2 = tag_num_channels (src2_tag);
   gfloat  s1, s2;
+  ShortsFloat u;
   
   /*  assumes inputs are only 4 byte RGBA pixels  */
   while (width--)
     {
-      r1 = FLT (src1[0]); g1 = FLT (src1[1]); b1 = FLT (src1[2]);
-      r2 = FLT (src2[0]); g2 = FLT (src2[1]); b2 = FLT (src2[2]);
+      r1 = FLT (src1[0], u); g1 = FLT (src1[1], u); b1 = FLT (src1[2], u);
+      r2 = FLT (src2[0], u); g2 = FLT (src2[1], u); b2 = FLT (src2[2], u);
 /*    rgb_to_hls (&r1, &g1, &b1); */
 /*    rgb_to_hls (&r2, &g2, &b2); */
 
@@ -597,13 +609,13 @@ color_only_row_float16 (
       /*  set the destination  */
 /*    hls_to_rgb (&r1, &g1, &b1); */
 
-      dest[0] = FLT16 (r1); dest[1] = FLT16 (g1); dest[2] = FLT16 (b1);
+      dest[0] = FLT16 (r1, u); dest[1] = FLT16 (g1, u); dest[2] = FLT16 (b1, u);
 
       if (ha1 && ha2)
 	{
-	  s1 = FLT (src1[3]);
-	  s2 = FLT (src2[3]);
-	  dest[3] = FLT16 (MIN (s1, s2));
+	  s1 = FLT (src1[3], u);
+	  s2 = FLT (src2[3], u);
+	  dest[3] = FLT16 (MIN (s1, s2), u);
 	}
       else if (ha2)
 	dest[3] = src2[3];
@@ -634,6 +646,7 @@ multiply_row_float16 (
   gint    num_channels1 = tag_num_channels (src1_tag);
   gint    num_channels2 = tag_num_channels (src2_tag);
   gfloat s1, s2;
+  ShortsFloat u;
 
   alpha = (ha1  || ha2 ) ? 
 	MAXIMUM (num_channels1, num_channels2) - 1 : num_channels1;
@@ -642,16 +655,16 @@ multiply_row_float16 (
     {
       for (b = 0; b < alpha; b++)
 	{
-	  s1 = FLT (src1[b]);
-	  s2 = FLT (src2[b]);
-	  dest[b] = FLT16 (s1 * s2);
+	  s1 = FLT (src1[b], u);
+	  s2 = FLT (src2[b], u);
+	  dest[b] = FLT16 (s1 * s2, u);
 	}
 
       if (ha1 == TRUE && ha2 == TRUE)
 	{
-	  s1 = FLT (src1[alpha]);
-	  s2 = FLT (src2[alpha]);
-	  dest[alpha] = FLT16 (MIN (s1, s2));
+	  s1 = FLT (src1[alpha], u);
+	  s2 = FLT (src2[alpha], u);
+	  dest[alpha] = FLT16 (MIN (s1, s2), u);
 	}
       else if (ha2 == TRUE)
 	dest[alpha] = src2[alpha];
@@ -682,6 +695,7 @@ screen_row_float16 (
   gint    num_channels1 = tag_num_channels (src1_tag);
   gint    num_channels2 = tag_num_channels (src2_tag);
   gfloat s1, s2;
+  ShortsFloat u;
 
   alpha = (ha1 || ha2) ? MAXIMUM (num_channels1, num_channels2) - 1 : num_channels1;
 
@@ -689,16 +703,16 @@ screen_row_float16 (
     {
       for (b = 0; b < alpha; b++)
 	{
-	  s1 = FLT (src1[b]);
-	  s2 = FLT (src2[b]);
-	  dest[b] = FLT16 (1.0 - ((1.0 - s1) * (1.0 - s2)));
+	  s1 = FLT (src1[b], u);
+	  s2 = FLT (src2[b], u);
+	  dest[b] = FLT16 (1.0 - ((1.0 - s1) * (1.0 - s2)), u);
 	}
 
       if (ha1 && ha2)
 	{
-	  s1 = FLT (src1[alpha]);
-	  s2 = FLT (src2[alpha]);
-	  dest[alpha] = FLT16 (MIN (s1, s2));
+	  s1 = FLT (src1[alpha], u);
+	  s2 = FLT (src2[alpha], u);
+	  dest[alpha] = FLT16 (MIN (s1, s2), u);
 	}
       else if (ha2)
 	dest[alpha] = src2[alpha];
@@ -730,6 +744,7 @@ overlay_row_float16 (
   gint    num_channels1 = tag_num_channels (src1_tag);
   gint    num_channels2 = tag_num_channels (src2_tag);
   gfloat s1, s2;
+  ShortsFloat u;
 
   alpha = (ha1 || ha2) ? MAXIMUM (num_channels1, num_channels2) - 1 : num_channels1;
 
@@ -737,18 +752,18 @@ overlay_row_float16 (
     {
       for (b = 0; b < alpha; b++)
 	{
-	  s1 = FLT (src1[b]);
-	  s2 = FLT (src2[b]);
+	  s1 = FLT (src1[b], u);
+	  s2 = FLT (src2[b], u);
 	  screen = 1.0 - ((1.0 - s1) * (1.0 - s2)); 
 	  mult = s1 * s2 ;
-	  dest[b] = FLT16 (screen * s1 + mult * (1.0 - s1));
+	  dest[b] = FLT16 (screen * s1 + mult * (1.0 - s1), u);
 	}
 
       if (ha1 && ha2)
 	{
-	  s1 = FLT (src1[alpha]);
-	  s2 = FLT (src2[alpha]);
-	  dest[alpha] = FLT16 (MIN (s1, s2));
+	  s1 = FLT (src1[alpha], u);
+	  s2 = FLT (src2[alpha], u);
+	  dest[alpha] = FLT16 (MIN (s1, s2), u);
 	}
       else if (ha2)
 	dest[alpha] = src2[alpha];
@@ -780,6 +795,7 @@ add_row_float16 (
   gint    num_channels1 = tag_num_channels (src1_tag);
   gint    num_channels2 = tag_num_channels (src2_tag);
   gfloat  s1, s2;
+  ShortsFloat u;
 
   alpha = (ha1 || ha2) ? MAXIMUM (num_channels1, num_channels2) - 1 : num_channels1;
 
@@ -787,16 +803,16 @@ add_row_float16 (
     {
       for (b = 0; b < alpha; b++)
 	{
-	  s1 = FLT (src1[b]);
-	  s2 = FLT (src2[b]);
+	  s1 = FLT (src1[b], u);
+	  s2 = FLT (src2[b], u);
 	  sum = s1 + s2;
-	  dest[b] = FLT16 ((sum > 1.0) ? 1.0 : sum);
+	  dest[b] = FLT16 ((sum > 1.0) ? 1.0 : sum, u);
 	}
 
       if (ha1 && ha2)
 	{
-	  s1 = FLT (src1[alpha]);
-	  s2 = FLT (src2[alpha]);
+	  s1 = FLT (src1[alpha], u);
+	  s2 = FLT (src2[alpha], u);
 	  dest[alpha] = MIN (s1, s2);
 	}
       else if (ha2)
@@ -829,6 +845,7 @@ subtract_row_float16 (
   gint    num_channels1 = tag_num_channels (src1_tag);
   gint    num_channels2 = tag_num_channels (src2_tag);
   gfloat  s1, s2;
+  ShortsFloat u;
 
   alpha = (ha1 || ha2) ? MAXIMUM (num_channels1, num_channels2) - 1 : num_channels1;
 
@@ -836,17 +853,17 @@ subtract_row_float16 (
     {
       for (b = 0; b < alpha; b++)
 	{
-	  s1 = FLT (src1[b]);
-	  s2 = FLT (src2[b]);
+	  s1 = FLT (src1[b], u);
+	  s2 = FLT (src2[b], u);
 	  diff = s1 - s2;
-	  dest[b] = FLT16 ((diff < 0.0) ? 0.0 : diff);
+	  dest[b] = FLT16 ((diff < 0.0) ? 0.0 : diff, u);
 	}
 
       if (ha1 && ha2)
 	{
-	  s1 = FLT (src1[alpha]);
-	  s2 = FLT (src2[alpha]);
-	  dest[alpha] = FLT16 (MIN (s1, s2));
+	  s1 = FLT (src1[alpha], u);
+	  s2 = FLT (src2[alpha], u);
+	  dest[alpha] = FLT16 (MIN (s1, s2), u);
 	}
       else if (ha2)
 	dest[alpha] = src2[alpha];
@@ -878,6 +895,7 @@ difference_row_float16 (
   gint    num_channels1 = tag_num_channels (src1_tag);
   gint    num_channels2 = tag_num_channels (src2_tag);
   gfloat  s1, s2;
+  ShortsFloat u;
 
   alpha = (ha1 || ha2) ? MAXIMUM (num_channels1, num_channels2) - 1 : num_channels1;
 
@@ -885,17 +903,17 @@ difference_row_float16 (
     {
       for (b = 0; b < alpha; b++)
 	{
-	  s1 = FLT (src1[b]);
-	  s2 = FLT (src2[b]);
+	  s1 = FLT (src1[b], u);
+	  s2 = FLT (src2[b], u);
 	  diff = s1 - s2;
-	  dest[b] = FLT16 ((diff < 0.0) ? -diff : diff);
+	  dest[b] = FLT16 ((diff < 0.0) ? -diff : diff, u);
 	}
 
       if (ha1 && ha2)
 	{
-	  s1 = FLT (src1[alpha]);
-	  s2 = FLT (src2[alpha]);
-	  dest[alpha] =FLT16 (MIN (s1, s2));
+	  s1 = FLT (src1[alpha], u);
+	  s2 = FLT (src2[alpha], u);
+	  dest[alpha] =FLT16 (MIN (s1, s2), u);
 	}
       else if (ha2)
 	dest[alpha] = src2[alpha];
@@ -927,6 +945,7 @@ dissolve_row_float16  (
   gint    dest_num_channels = tag_num_channels (dest_tag);
   gint    src_num_channels = tag_num_channels (src_tag);
   gfloat sa, da;
+  ShortsFloat u;
 
   alpha = dest_num_channels - 1;
 
@@ -941,14 +960,14 @@ dissolve_row_float16  (
 
       if (has_alpha)
 	{
-	  sa = FLT (src[alpha]);
+	  sa = FLT (src[alpha], u);
 	  da = (rand_val > opacity) ? 0.0 : sa;
-	  dest[alpha] = FLT16 (da);
+	  dest[alpha] = FLT16 (da, u);
 	}
       else
 	{
 	  da = (rand_val > opacity) ? 0.0 : OPAQUE_FLOAT;
-	  dest[alpha] = FLT16 (da);
+	  dest[alpha] = FLT16 (da, u);
 	}
 
       dest += dest_num_channels;
@@ -981,6 +1000,7 @@ replace_row_float16  (
   gint    width         = pixelrow_width (dest_row);
   gint    num_channels1 = tag_num_channels (src1_tag);
   gint    num_channels2 = tag_num_channels (src2_tag);
+  ShortsFloat u;
 
   if (num_channels1 != num_channels2)
     {
@@ -992,10 +1012,10 @@ replace_row_float16  (
 
   while (width --)
     {
-      mask_val = FLT (mask[0]) * opacity;
+      mask_val = FLT (mask[0], u) * opacity;
       /* calculate new alpha first. */
-      s1_a = FLT (src1[alpha]);
-      s2_a = FLT (src2[alpha]);
+      s1_a = FLT (src1[alpha], u);
+      s2_a = FLT (src2[alpha], u);
       a_val = s1_a + mask_val * (s2_a - s1_a);
       if (a_val == 0.0)
 	a_recip = 0.0;
@@ -1004,14 +1024,14 @@ replace_row_float16  (
       /* possible optimization: fold a_recip into s1_a and s2_a */
       for (b = 0; b < alpha; b++)
 	{
-	  s1b = FLT (src1[b]);
-	  s2b = FLT (src2[b]);
+	  s1b = FLT (src1[b], u);
+	  s2b = FLT (src2[b], u);
 	
 	  new_val =  a_recip * (s1b * s1_a + mask_val * (s2b * s2_a - s1b * s1_a));
-	  dest[b] = FLT16 (affect[b] ? MIN (new_val, 1.0) : s1b);
+	  dest[b] = FLT16 (affect[b] ? MIN (new_val, 1.0) : s1b, u);
 	}
 
-      dest[alpha] = FLT16 (affect[alpha] ? a_val : s1_a);
+      dest[alpha] = FLT16 (affect[alpha] ? a_val : s1_a, u);
       src1 += num_channels1;
       src2 += num_channels2;
       dest += num_channels2;
@@ -1053,9 +1073,10 @@ scale_row_float16 (
   guint16 *dest  = (guint16*)pixelrow_data (dest_row);
   guint16 *src   = (guint16*)pixelrow_data (src_row);
   gint    width = pixelrow_width (dest_row);
+  ShortsFloat u, v;
   
   while (width --)
-    *dest++ = FLT16 (FLT (*src++) * scale);
+    *dest++ = FLT16 (FLT (*src++, v) * scale, u);
 }
 
 
@@ -1101,16 +1122,17 @@ flatten_row_float16 (
   gint    num_channels = tag_num_channels (src_tag);
   guint16 *bg           = (guint16*) pixelrow_data (background);
   gfloat sb, sa, db;
+  ShortsFloat u;
 
   alpha = num_channels - 1;
   while (width --)
     {
       for (b = 0; b < alpha; b++)
 	{
-	  sb = FLT (src[b]);
-	  sa = FLT (src[alpha]);
-	  db = sb * sa + FLT (bg[b]) * (1.0 - sa);
-	  dest[b] = FLT16 (db);
+	  sb = FLT (src[b], u);
+	  sa = FLT (src[alpha], u);
+	  db = sb * sa + FLT (bg[b], u) * (1.0 - sa);
+	  dest[b] = FLT16 (db, u);
 	}
 
       src += num_channels;
@@ -1130,15 +1152,16 @@ multiply_alpha_row_float16(
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
   gint    width        = pixelrow_width (src_row);
   gfloat sb;
+  ShortsFloat u;
 
   while (width --)
     {
-      alpha = FLT (src[num_channels-1]);
+      alpha = FLT (src[num_channels-1], u);
       for (b = 0; b < num_channels - 1; b++)
 	{
-	  sb = FLT (src[b]); 
+	  sb = FLT (src[b], u); 
 	  sb *=  alpha;
-	  src[b] = FLT16 (sb); 
+	  src[b] = FLT16 (sb, u); 
 	}
       src += num_channels;
     }
@@ -1156,18 +1179,19 @@ void separate_alpha_row_float16(
   guint16 *src          =(guint16*)pixelrow_data (src_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
   gint    width        = pixelrow_width (src_row);
+  ShortsFloat u;
   
   alpha = num_channels-1;
   for (x = 0; x < width; x++)
     {
       if (src[alpha] != 0.0 && src[alpha] != 1.0)
 	{
-	  alpha_recip = 1.0 / FLT (src[alpha]);
+	  alpha_recip = 1.0 / FLT (src[alpha], u);
 	  for (b = 0; b < num_channels - 1; b++)
 	    {
-	      new_val =  FLT (src[b]) * alpha_recip;
+	      new_val =  FLT (src[b], u) * alpha_recip;
 	      new_val = MIN (new_val, 1.0);
-	      src[b] = FLT16 (new_val);
+	      src[b] = FLT16 (new_val, u);
 	    }
 	}
       src += num_channels;
@@ -1188,6 +1212,7 @@ gray_to_rgb_row_float16 (
   guint16 *dest         = (guint16*)pixelrow_data (dest_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
   gint    width        = pixelrow_width (src_row);
+  ShortsFloat u;
 
   has_alpha = (num_channels == 2) ? 1 : 0;
   dest_num_channels = (has_alpha) ? 4 : 3;
@@ -1220,13 +1245,14 @@ apply_mask_to_alpha_channel_row_float16  (
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
   gint    width        = pixelrow_width (src_row);
   gfloat sa;
+  ShortsFloat u;
 
   alpha = num_channels - 1;
   while (width --)
     {
-      sa = FLT (src[alpha]);
-      sa = sa * FLT (*mask++) * opacity;
-      src[alpha] = FLT16 (sa);
+      sa = FLT (src[alpha], u);
+      sa = sa * FLT (*mask++, u) * opacity;
+      src[alpha] = FLT16 (sa, u);
       src += num_channels;
     }
 }
@@ -1247,14 +1273,15 @@ combine_mask_and_alpha_channel_row_float16  (
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
   gint    width        = pixelrow_width (src_row);
   gfloat sa;
+  ShortsFloat u;
 
   alpha = num_channels - 1;
   while (width --)
     {
-      mask_val = FLT (*mask++) * opacity;
-      sa = FLT (src[alpha]);
+      mask_val = FLT (*mask++, u) * opacity;
+      sa = FLT (src[alpha], u);
       sa = sa + (1.0 - sa) * mask_val;
-      src[alpha] = FLT16 (sa);
+      src[alpha] = FLT16 (sa, u);
       src += num_channels;
     }
 }
@@ -1277,6 +1304,7 @@ copy_gray_to_inten_a_row_float16 (
   guint16 *dest         = (guint16*)pixelrow_data (dest_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
   gint    width        = pixelrow_width (src_row);
+  ShortsFloat u;
 
   alpha = num_channels - 1;
   while (width --)
@@ -1341,6 +1369,7 @@ initial_inten_row_float16  (
   gint    width        = pixelrow_width (src_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
   gfloat mask_val, sb;
+  ShortsFloat u;
 
   if (mask)
     m = mask;
@@ -1358,13 +1387,13 @@ initial_inten_row_float16  (
 	{
 	  for (b = 0; b < num_channels; b++)
 	    {
-	      sb = FLT (src[b]);
-	      dest [b] = affect [b] ? FLT16 (sb) : TRANSPARENT_FLOAT16;
+	      sb = FLT (src[b], u);
+	      dest [b] = affect [b] ? FLT16 (sb, u) : TRANSPARENT_FLOAT16;
 	    } 
 	  
 	  /*  Set the alpha channel  */
-	  mask_val = opacity * FLT (*m++); 
-	  dest[b] = affect [b] ? FLT16 (mask_val) : TRANSPARENT_FLOAT16;
+	  mask_val = opacity * FLT (*m++, u); 
+	  dest[b] = affect [b] ? FLT16 (mask_val, u) : TRANSPARENT_FLOAT16;
 	    
 	  dest += dest_num_channels;
 	  src += num_channels;
@@ -1378,7 +1407,7 @@ initial_inten_row_float16  (
 	    dest [b] = affect [b] ? src [b] : TRANSPARENT_FLOAT16;
 	    
 	  /*  Set the alpha channel  */
-	  dest[b] = affect [b] ? FLT16 (opacity) : TRANSPARENT_FLOAT16;
+	  dest[b] = affect [b] ? FLT16 (opacity, u) : TRANSPARENT_FLOAT16;
 	    
 	  dest += dest_num_channels;
 	  src += num_channels;
@@ -1407,6 +1436,7 @@ initial_inten_a_row_float16  (
   gint    width        = pixelrow_width (src_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
   gfloat val;
+  ShortsFloat u, v;
 
   alpha = num_channels - 1;
   if (mask)
@@ -1418,8 +1448,8 @@ initial_inten_a_row_float16  (
 	    dest[b] = affect[b] ? src[b] : TRANSPARENT_FLOAT16;
 	  
 	  /*  Set the alpha channel  */
-	  val = opacity * FLT (src[alpha]) * FLT (*m);
-	  dest[alpha] = affect [alpha] ? FLT16 (val)  : TRANSPARENT_FLOAT16;
+	  val = opacity * FLT (src[alpha], v) * FLT (*m, u);
+	  dest[alpha] = affect [alpha] ? FLT16 (val, u)  : TRANSPARENT_FLOAT16;
 	  
 	  dest += num_channels;
 	  src += num_channels;
@@ -1432,9 +1462,9 @@ initial_inten_a_row_float16  (
 	  for (b = 0; b < alpha; b++)
 	    dest[b] = affect[b] ? src[b] : TRANSPARENT_FLOAT16;
 	  
-	  val = opacity * FLT (src[alpha]);
+	  val = opacity * FLT (src[alpha], u);
 	  /*  Set the alpha channel  */
-	  dest[alpha] = affect [alpha] ? FLT16 (val) : TRANSPARENT_FLOAT16;
+	  dest[alpha] = affect [alpha] ? FLT16 (val, u) : TRANSPARENT_FLOAT16;
 	  
 	  dest += num_channels;
 	  src += num_channels;
@@ -1466,20 +1496,21 @@ combine_inten_and_inten_row_float16  (
   gint    width        = pixelrow_width (src1_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src1_row));
   gfloat s1b, s2b, val;
+  ShortsFloat u;
 
   if (mask)
     {
       m = mask;
       while (width --)
 	{
-	  new_alpha = FLT (*m++) * opacity;
+	  new_alpha = FLT (*m++, u) * opacity;
 
 	  for (b = 0; b < num_channels; b++)
 	    {
-	      s1b = FLT (src1[b]);
-	      s2b = FLT (src2[b]);
+	      s1b = FLT (src1[b], u);
+	      s2b = FLT (src2[b], u);
 	      val = s2b * new_alpha + s1b * (1.0 - new_alpha);	
-	      dest[b] = (affect[b]) ? FLT16 (val) : src1[b];
+	      dest[b] = (affect[b]) ? FLT16 (val, u) : src1[b];
 	    }
 
 	  src1 += num_channels;
@@ -1495,10 +1526,10 @@ combine_inten_and_inten_row_float16  (
 
 	  for (b = 0; b < num_channels; b++)
 	    {
-	      s1b = FLT (src1[b]);
-	      s2b = FLT (src2[b]);
+	      s1b = FLT (src1[b], u);
+	      s2b = FLT (src2[b], u);
 	      val = s2b * new_alpha + s1b * (1.0 - new_alpha);
-	      dest[b] = (affect[b]) ? FLT16 (val): src1[b];
+	      dest[b] = (affect[b]) ? FLT16 (val, u): src1[b];
 	    }
 
 	  src1 += num_channels;
@@ -1533,6 +1564,7 @@ combine_inten_and_inten_a_row_float16  (
   gint    width        = pixelrow_width (src1_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src1_row));
   gfloat db, s1b, s2b;
+  ShortsFloat u, v;
 
   alpha = num_channels;
   src2_num_channels = num_channels + 1;
@@ -1542,17 +1574,17 @@ combine_inten_and_inten_a_row_float16  (
       m = mask;
       while (width --)
 	{
-	  new_alpha = FLT (src2[alpha]) * FLT (*m) * opacity ;
+	  new_alpha = FLT (src2[alpha], u) * FLT (*m, v) * opacity ;
 
 	  for (b = 0; b < num_channels; b++)
 	    {
-		s2b = FLT (src2[b]);
-		s1b = FLT (src1[b]);
+		s2b = FLT (src2[b], u);
+		s1b = FLT (src1[b], u);
 
 		db = (affect[b]) ?
 		  s2b * new_alpha + s1b * (1.0 - new_alpha) : s1b;
 
-		dest[b] = FLT16 (db);
+		dest[b] = FLT16 (db, u);
 	    }
 
 	  m++;
@@ -1565,17 +1597,17 @@ combine_inten_and_inten_a_row_float16  (
     {
       while (width --)
 	{
-	  new_alpha = FLT (src2[alpha]) * opacity;
+	  new_alpha = FLT (src2[alpha], u) * opacity;
 
 	  for (b = 0; b < num_channels; b++)
 	    {
-		s2b = FLT (src2[b]);
-		s1b = FLT (src1[b]);
+		s2b = FLT (src2[b], u);
+		s1b = FLT (src1[b], u);
 
 	        db = (affect[b]) ?
 	          s2b * new_alpha + s1b * (1.0 - new_alpha) : s1b;
 
-		dest[b] = FLT16 (db);
+		dest[b] = FLT16 (db, u);
 	     }
 
 	  src1 += num_channels;
@@ -1631,6 +1663,7 @@ combine_inten_a_and_inten_row_float16  (
   gint    width        = pixelrow_width (src1_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src1_row));
   gfloat s1a, s2a, s1b, s2b, val;
+  ShortsFloat u, v;
 
   src2_num_channels = num_channels - 1;
   alpha = num_channels - 1;
@@ -1640,9 +1673,9 @@ combine_inten_a_and_inten_row_float16  (
       m = mask;
       while (width --)
 	{
-	  s1a = FLT (src1[alpha]); 
-	  s2a = FLT (src2[alpha]);
-	  src2_alpha = FLT (*m) * opacity ;
+	  s1a = FLT (src1[alpha], u); 
+	  s2a = FLT (src2[alpha], u);
+	  src2_alpha = FLT (*m, u) * opacity ;
 	  new_alpha = s1a + (1.0 - s1a) * src2_alpha;
 
 	  if (new_alpha == 0 || src2_alpha == 0)
@@ -1661,17 +1694,17 @@ combine_inten_a_and_inten_row_float16  (
 	    compl_ratio = 1.0 - ratio;								
 	    for (b = 0; b < alpha; b++)								
 	      { 
-		s1b = FLT (src1[b]); 
-		s2b = FLT (src2[b]);
-		dest[b] = affect[b] ? FLT16 (s2b * ratio + s1b * compl_ratio) : src1[b];
+		s1b = FLT (src1[b], u); 
+		s2b = FLT (src2[b], u);
+		dest[b] = affect[b] ? FLT16 (s2b * ratio + s1b * compl_ratio, u) : src1[b];
 	      } 
 	    } 
 	  if (mode_affect)
-	    dest[alpha] = (affect[alpha]) ? FLT16 (new_alpha) : src1[alpha];
+	    dest[alpha] = (affect[alpha]) ? FLT16 (new_alpha, u) : src1[alpha];
 	  else
 	    {
-	      val = affect[alpha] ? new_alpha : FLT (src1[alpha]);
-	      dest[alpha] = (FLT(src1[alpha])) ? src1[alpha] : FLT16 (val);
+	      val = affect[alpha] ? new_alpha : FLT (src1[alpha], u);
+	      dest[alpha] = (FLT(src1[alpha], v)) ? src1[alpha] : FLT16 (val, u);
 	    }
 
 	  m++;
@@ -1685,8 +1718,8 @@ combine_inten_a_and_inten_row_float16  (
     {
       while (width --)
 	{
-	  s1a = FLT (src1[alpha]); 
-	  s2a = FLT (src2[alpha]);
+	  s1a = FLT (src1[alpha], u); 
+	  s2a = FLT (src2[alpha], u);
 	  src2_alpha = opacity;
 	  new_alpha = s1a + (1.0 - s1a) * src2_alpha;
 	  
@@ -1706,18 +1739,18 @@ combine_inten_a_and_inten_row_float16  (
 	    compl_ratio = 1.0 - ratio;								
 	    for (b = 0; b < alpha; b++)								
 	      {
-		s1b = FLT (src1[b]); 
-		s2b = FLT (src2[b]);
-	        dest[b] = affect[b] ? FLT16(s2b * ratio + s1b * compl_ratio) : src1[b];
+		s1b = FLT (src1[b], u); 
+		s2b = FLT (src2[b], u);
+	        dest[b] = affect[b] ? FLT16(s2b * ratio + s1b * compl_ratio, u) : src1[b];
 	      }
 	    }
 	  
 	  if (mode_affect)
-	    dest[alpha] = (affect[alpha]) ? FLT16 (new_alpha) : src1[alpha];
+	    dest[alpha] = (affect[alpha]) ? FLT16 (new_alpha, u) : src1[alpha];
 	  else
 	    {
-	      val = affect[alpha] ? new_alpha : FLT (src1[alpha]);
-	      dest[alpha] = (FLT(src1[alpha])) ? src1[alpha] : FLT16 (val);
+	      val = affect[alpha] ? new_alpha : FLT (src1[alpha], u);
+	      dest[alpha] = (FLT(src1[alpha], v)) ? src1[alpha] : FLT16 (val, u);
 	     }
 
 	  src1 += num_channels;
@@ -1754,15 +1787,16 @@ combine_inten_a_and_inten_a_row_float16  (
   gint    width        = pixelrow_width (src1_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src1_row));
   gfloat s1a, s2a, s1b, s2b, val;
+  ShortsFloat u, v;
 
   alpha = num_channels - 1;
   if (mask){
     m = mask;
     while (width --)
       {
-	s1a = FLT (src1[alpha]); 
-	s2a = FLT (src2[alpha]);
-	src2_alpha =  s2a * FLT (*m) * opacity;
+	s1a = FLT (src1[alpha], u); 
+	s2a = FLT (src2[alpha], u);
+	src2_alpha =  s2a * FLT (*m, u) * opacity;
 	new_alpha = s1a + (1.0 - s1a) * src2_alpha;
 
 	if (new_alpha == 0 || src2_alpha == 0)
@@ -1781,18 +1815,18 @@ combine_inten_a_and_inten_a_row_float16  (
 	  compl_ratio = 1.0 - ratio;
 	  for (b = 0; b < alpha; b++)
 	    {
-	       s1b = FLT (src1[b]); 
-	       s2b = FLT (src2[b]);
-	       dest[b] = affect[b] ? FLT16 (s2b * ratio + s1b * compl_ratio) : src1[b];
+	       s1b = FLT (src1[b], u); 
+	       s2b = FLT (src2[b], u);
+	       dest[b] = affect[b] ? FLT16 (s2b * ratio + s1b * compl_ratio, u) : src1[b];
 	    }
 	  }
 
 	if (mode_affect)
-	  dest[alpha] = (affect[alpha]) ? FLT16 (new_alpha) : src1[alpha];
+	  dest[alpha] = (affect[alpha]) ? FLT16 (new_alpha, u) : src1[alpha];
 	else
 	  {
-	    val = affect[alpha] ? new_alpha : FLT (src1[alpha]);
-	    dest[alpha] = (FLT(src1[alpha])) ? src1[alpha] : FLT16 (val);
+	    val = affect[alpha] ? new_alpha : FLT (src1[alpha], u);
+	    dest[alpha] = (FLT(src1[alpha], v)) ? src1[alpha] : FLT16 (val, u);
 	  }
 	
 	m++;
@@ -1804,8 +1838,8 @@ combine_inten_a_and_inten_a_row_float16  (
   } else {
     while (width --)
       {
-	s1a = FLT (src1[alpha]); 
-	s2a = FLT (src2[alpha]);
+	s1a = FLT (src1[alpha], u); 
+	s2a = FLT (src2[alpha], u);
 	src2_alpha = s2a * opacity;
 	new_alpha = s1a + (1.0 - s1a) * src2_alpha;
 	
@@ -1825,18 +1859,18 @@ combine_inten_a_and_inten_a_row_float16  (
 	  compl_ratio = 1.0 - ratio;								
 	  for (b = 0; b < alpha; b++)								
 	    {
-	      s1b = FLT (src1[b]); 
-	      s2b = FLT (src2[b]);
-	      dest[b] = affect[b] ? FLT16(s2b * ratio + s1b * compl_ratio) : src1[b];
+	      s1b = FLT (src1[b], u); 
+	      s2b = FLT (src2[b], u);
+	      dest[b] = affect[b] ? FLT16(s2b * ratio + s1b * compl_ratio, u) : src1[b];
 	    }
 	  }
 	
 	if (mode_affect)
-	  dest[alpha] = (affect[alpha]) ? FLT16(new_alpha) : src1[alpha];
+	  dest[alpha] = (affect[alpha]) ? FLT16(new_alpha, u) : src1[alpha];
 	else
 	  {
-	    val = affect[alpha] ? new_alpha : FLT (src1[alpha]);
-	    dest[alpha] = (FLT(src1[alpha])) ? src1[alpha] : FLT16 (val);
+	    val = affect[alpha] ? new_alpha : FLT (src1[alpha], u);
+	    dest[alpha] = (FLT(src1[alpha], v)) ? src1[alpha] : FLT16 (val, u);
 	  }
 
 	src1 += num_channels;
@@ -1872,14 +1906,15 @@ combine_inten_a_and_channel_mask_row_float16  (
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
   guint16 *color        = (guint16*) pixelrow_data (col);
   gfloat sa, sb, cb;
+  ShortsFloat u;
 
   alpha = num_channels - 1;
   while (width --)
     {
-      channel_alpha =(1.0 - FLT (*channel)) * opacity;
+      channel_alpha =(1.0 - FLT (*channel, u)) * opacity;
       if (channel_alpha)
 	{
-	  sa = FLT (src[alpha]); 
+	  sa = FLT (src[alpha], u); 
 	  new_alpha = sa + (1.0 - sa) * channel_alpha;
 
 	  if (new_alpha != 1.0)
@@ -1888,9 +1923,9 @@ combine_inten_a_and_channel_mask_row_float16  (
 
 	  for (b = 0; b < alpha; b++)
 	    {
-	      cb = FLT (color[b]);
-	      sb = FLT (src[b]);
-	      dest[b] = FLT16 (cb * channel_alpha + sb * compl_alpha);
+	      cb = FLT (color[b], u);
+	      sb = FLT (src[b], u);
+	      dest[b] = FLT16 (cb * channel_alpha + sb * compl_alpha, u);
 	    }
 	  dest[b] = new_alpha;
 	}
@@ -1926,14 +1961,15 @@ combine_inten_a_and_channel_selection_row_float16  (
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
   guint16 *color        = (guint16*) pixelrow_data (col);
   gfloat sa, sb, cb;
+  ShortsFloat u;
 
   alpha = num_channels - 1;
   while (width --)
     {
-      channel_alpha = FLT (*channel) * opacity;
+      channel_alpha = FLT (*channel, u) * opacity;
       if (channel_alpha)
 	{
-	  sa = FLT (src[alpha]); 
+	  sa = FLT (src[alpha], u); 
 	  new_alpha = sa + (1.0 - sa) * channel_alpha;
 
 	  if (new_alpha != 1.0)
@@ -1942,9 +1978,9 @@ combine_inten_a_and_channel_selection_row_float16  (
 
 	  for (b = 0; b < alpha; b++)
 	    {
-	      cb = FLT (color[b]);
-	      sb = FLT (src[b]);
-	      dest[b] = FLT16 (cb * channel_alpha + sb * compl_alpha);
+	      cb = FLT (color[b], u);
+	      sb = FLT (src[b], u);
+	      dest[b] = FLT16 (cb * channel_alpha + sb * compl_alpha, u);
 	    }
 	  dest[b] = new_alpha;
 	}
@@ -1988,6 +2024,7 @@ behind_inten_row_float16  (
   gint    src1_num_channels = tag_num_channels (pixelrow_tag (src1_row));
   gint    src2_num_channels = tag_num_channels (pixelrow_tag (src2_row));
   gfloat  s1b, s2b;
+  ShortsFloat u, v;
 
   if (mask)
     m = mask;
@@ -1999,8 +2036,8 @@ behind_inten_row_float16  (
 
   while (width --)
     {
-      src1_alpha = FLT (src1[alpha]);
-      src2_alpha = FLT (src2[alpha]) * FLT (*m) * opacity;
+      src1_alpha = FLT (src1[alpha], u);
+      src2_alpha = FLT (src2[alpha], u) * FLT (*m, v) * opacity;
       new_alpha = src2_alpha + (1.0 - src2_alpha) * src1_alpha; 
       if (new_alpha)
 	ratio = src1_alpha / new_alpha;
@@ -2010,9 +2047,9 @@ behind_inten_row_float16  (
 
       for (b = 0; b < alpha; b++)
 	{
-	  s1b = FLT (src1[b]);
-	  s2b = FLT (src2[b]);
-	  dest[b] = (affect[b]) ?  FLT16 (s1b * ratio + s2b * compl_ratio) : src1[b];
+	  s1b = FLT (src1[b], u);
+	  s2b = FLT (src2[b], u);
+	  dest[b] = (affect[b]) ?  FLT16 (s1b * ratio + s2b * compl_ratio, u) : src1[b];
 	}
 
       dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
@@ -2055,6 +2092,7 @@ replace_inten_row_float16  (
   gint    ha1           = (tag_alpha (src1_tag)==ALPHA_YES)? TRUE: FALSE;
   gint    ha2           = (tag_alpha (src2_tag)==ALPHA_YES)? TRUE: FALSE;
   gfloat s1b, s2b;
+  ShortsFloat u;
 
   if (mask)
     m = mask;
@@ -2064,13 +2102,13 @@ replace_inten_row_float16  (
   num_channels = MINIMUM (num_channels1, num_channels2);
   while (width --)
     {
-      mask_alpha = FLT (*m) * opacity ;
+      mask_alpha = FLT (*m, u) * opacity ;
 
       for (b = 0; b < num_channels; b++)
 	{
-	  s2b = FLT (src2[b]); 
-	  s1b = FLT (src1[b]);
-	  dest[b] = (affect[b]) ?  FLT16 (s2b * mask_alpha + s1b *(1.0 - mask_alpha)): src1[b];
+	  s2b = FLT (src2[b], u); 
+	  s1b = FLT (src1[b], u);
+	  dest[b] = (affect[b]) ?  FLT16 (s2b * mask_alpha + s1b *(1.0 - mask_alpha), u): src1[b];
 	}
 
       if (ha1 && !ha2)
@@ -2109,6 +2147,7 @@ erase_inten_row_float16  (
   gint    width         = pixelrow_width (src1_row);
   gint    num_channels  = tag_num_channels (pixelrow_tag (src1_row));
   gfloat s1a, s2a;
+  ShortsFloat u;
 
   if (mask)
     m = mask;
@@ -2120,11 +2159,11 @@ erase_inten_row_float16  (
     {
       for (b = 0; b < alpha; b++)
 	dest[b] = src1[b];
-      s1a = FLT (src1[alpha]); 
-      s2a = FLT (src2[alpha]);
+      s1a = FLT (src1[alpha], u); 
+      s2a = FLT (src2[alpha], u);
 	
-      src2_alpha = s2a * FLT (*m) * opacity ;
-      dest[alpha] =  FLT16 (s1a * (1.0 - src2_alpha));
+      src2_alpha = s2a * FLT (*m, u) * opacity ;
+      dest[alpha] =  FLT16 (s1a * (1.0 - src2_alpha), u);
 
       if (mask)
 	m++;
@@ -2161,6 +2200,7 @@ extract_from_inten_row_float16 (
   gint    has_alpha      = (tag_alpha (src_tag)==ALPHA_YES)? TRUE: FALSE;
   guint16 *bg            = (guint16*) pixelrow_data (background);
   gfloat m_val, sa, sb, bg_val;
+  ShortsFloat u;
 
   if (mask)
     m = mask;
@@ -2174,14 +2214,14 @@ extract_from_inten_row_float16 (
       for (b = 0; b < alpha; b++)
 	dest[b] = src[b];
       
-      m_val = FLT (*m);
+      m_val = FLT (*m, u);
 
       if (has_alpha)
 	{
-	  sa = FLT (src[alpha]);
-	  dest[alpha] = FLT16 (m_val * sa);
+	  sa = FLT (src[alpha], u);
+	  dest[alpha] = FLT16 (m_val * sa, u);
 	  if (cut)
-	    src[alpha] = FLT16 ((1.0 - m_val) * sa);
+	    src[alpha] = FLT16 ((1.0 - m_val) * sa, u);
 	}
       else
 	{
@@ -2189,9 +2229,9 @@ extract_from_inten_row_float16 (
 	  if (cut)
 	    for (b = 0; b < num_channels; b++)
  	      {	
-		bg_val = FLT (bg[b]);
-		sb = FLT (src[b]);
-	        src[b] = FLT16 (m_val * bg_val + (1.0 - m_val) * sb);
+		bg_val = FLT (bg[b], u);
+		sb = FLT (src[b], u);
+	        src[b] = FLT16 (m_val * bg_val + (1.0 - m_val) * sb, u);
 	      }
 	}
 
@@ -2220,25 +2260,26 @@ copy_row_rgb_to_u8_rgb (
   Tag dtag = pixelrow_tag (dest_row);
   guint16 * s = (guint16*) pixelrow_data (src_row);
   guint8 * d = (guint8*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT (s[0]) * 255;
-            d[1] = FLT (s[1]) * 255;
-            d[2] = FLT (s[2]) * 255;
-            d[3] = FLT (s[3]) * 255;
+            d[0] = FLT (s[0], u) * 255;
+            d[1] = FLT (s[1], u) * 255;
+            d[2] = FLT (s[2], u) * 255;
+            d[3] = FLT (s[3], u) * 255;
             s += 4;
             d += 4;
           }
       else
         while (w--)
           {
-            d[0] = FLT (s[0]) * 255;
-            d[1] = FLT (s[1]) * 255;
-            d[2] = FLT (s[2]) * 255;
+            d[0] = FLT (s[0], u) * 255;
+            d[1] = FLT (s[1], u) * 255;
+            d[2] = FLT (s[2], u) * 255;
             s += 4;
             d += 3;
           }
@@ -2248,9 +2289,9 @@ copy_row_rgb_to_u8_rgb (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT (s[0]) * 255;
-            d[1] = FLT (s[1]) * 255;
-            d[2] = FLT (s[2]) * 255;
+            d[0] = FLT (s[0], u) * 255;
+            d[1] = FLT (s[1], u) * 255;
+            d[2] = FLT (s[2], u) * 255;
             d[3] = 255;
             s += 3;
             d += 4;
@@ -2258,9 +2299,9 @@ copy_row_rgb_to_u8_rgb (
       else
         while (w--)
           {
-            d[0] = FLT (s[0]) * 255;
-            d[1] = FLT (s[1]) * 255;
-            d[2] = FLT (s[2]) * 255;
+            d[0] = FLT (s[0], u) * 255;
+            d[1] = FLT (s[1], u) * 255;
+            d[2] = FLT (s[2], u) * 255;
             s += 3;
             d += 3;
           }
@@ -2280,16 +2321,17 @@ copy_row_rgb_to_u8_gray  (
   guint16 * s = (guint16*) pixelrow_data (src_row);
   guint8 * d = (guint8*) pixelrow_data (dest_row);
   gfloat s0, s1, s2, s3;
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-	    s0 = FLT (s[0]);
-	    s1 = FLT (s[1]);
-	    s2 = FLT (s[2]);
-	    s3 = FLT (s[3]);
+	    s0 = FLT (s[0], u);
+	    s1 = FLT (s[1], u);
+	    s2 = FLT (s[2], u);
+	    s3 = FLT (s[3], u);
 
             d[0] = INTENSITY (s0 * 255, s1 * 255, s2 * 255);
             d[1] = s3 * 255;
@@ -2299,9 +2341,9 @@ copy_row_rgb_to_u8_gray  (
       else
         while (w--)
           {
-	    s0 = FLT (s[0]);
-	    s1 = FLT (s[1]);
-	    s2 = FLT (s[2]);
+	    s0 = FLT (s[0], u);
+	    s1 = FLT (s[1], u);
+	    s2 = FLT (s[2], u);
             
 	    d[0] = INTENSITY (s0 * 255, s1 * 255, s2 * 255);
             s += 4;
@@ -2313,9 +2355,9 @@ copy_row_rgb_to_u8_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-	    s0 = FLT (s[0]);
-	    s1 = FLT (s[1]);
-	    s2 = FLT (s[2]);
+	    s0 = FLT (s[0], u);
+	    s1 = FLT (s[1], u);
+	    s2 = FLT (s[2], u);
             
 	    d[0] = INTENSITY (s0*255, s1*255, s2*255);
             d[1] = 255;
@@ -2325,9 +2367,9 @@ copy_row_rgb_to_u8_gray  (
       else
         while (w--)
           {
-	    s0 = FLT (s[0]);
-	    s1 = FLT (s[1]);
-	    s2 = FLT (s[2]);
+	    s0 = FLT (s[0], u);
+	    s1 = FLT (s[1], u);
+	    s2 = FLT (s[2], u);
 
             d[0] = INTENSITY (s0*255, s1*255, s2*255);
             s += 3;
@@ -2348,16 +2390,17 @@ copy_row_rgb_to_u16_rgb  (
   guint16 * s = (guint16*) pixelrow_data (src_row);
   guint16 * d = (guint16*) pixelrow_data (dest_row);
   gfloat s0, s1, s2, s3;
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-	    s0 = FLT (s[0]);
-	    s1 = FLT (s[1]);
-	    s2 = FLT (s[2]);
-	    s3 = FLT (s[3]);
+	    s0 = FLT (s[0], u);
+	    s1 = FLT (s[1], u);
+	    s2 = FLT (s[2], u);
+	    s3 = FLT (s[3], u);
             d[0] = s0 * 65535;
             d[1] = s1 * 65535;
             d[2] = s2 * 65535;
@@ -2368,9 +2411,9 @@ copy_row_rgb_to_u16_rgb  (
       else
         while (w--)
           {
-	    s0 = FLT (s[0]);
-	    s1 = FLT (s[1]);
-	    s2 = FLT (s[2]);
+	    s0 = FLT (s[0], u);
+	    s1 = FLT (s[1], u);
+	    s2 = FLT (s[2], u);
             d[0] = s0 * 65535;
             d[1] = s1 * 65535;
             d[2] = s2 * 65535;
@@ -2383,9 +2426,9 @@ copy_row_rgb_to_u16_rgb  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-	    s0 = FLT (s[0]);
-	    s1 = FLT (s[1]);
-	    s2 = FLT (s[2]);
+	    s0 = FLT (s[0], u);
+	    s1 = FLT (s[1], u);
+	    s2 = FLT (s[2], u);
             d[0] = s0 * 65535;
             d[1] = s1 * 65535;
             d[2] = s2 * 65535;
@@ -2396,9 +2439,9 @@ copy_row_rgb_to_u16_rgb  (
       else
         while (w--)
           {
-	    s0 = FLT (s[0]);
-	    s1 = FLT (s[1]);
-	    s2 = FLT (s[2]);
+	    s0 = FLT (s[0], u);
+	    s1 = FLT (s[1], u);
+	    s2 = FLT (s[2], u);
             d[0] = s0 * 65535;
             d[1] = s1 * 65535;
             d[2] = s2 * 65535;
@@ -2421,17 +2464,18 @@ copy_row_rgb_to_u16_gray  (
   guint16 * s = (guint16*) pixelrow_data (src_row);
   guint16 * d = (guint16*) pixelrow_data (dest_row);
   gfloat s0, s1, s2, s3;
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-	    s0 = FLT (s[0]);
-	    s1 = FLT (s[1]);
-	    s2 = FLT (s[2]);
-	    s3 = FLT (s[3]);
-            d[0] = INTENSITY ((s0*65535), (s1*65535), (s2*65535));
+	    s0 = FLT (s[0], u);
+	    s1 = FLT (s[1], u);
+	    s2 = FLT (s[2], u);
+	    s3 = FLT (s[3], u);
+            d[0] = INTENSITY (s0*65535, s1*65535, s2*65535);
             d[1] = s3 * 65535;
             s += 4;
             d += 2;
@@ -2439,10 +2483,10 @@ copy_row_rgb_to_u16_gray  (
       else
         while (w--)
           {
-	    s0 = FLT (s[0]);
-	    s1 = FLT (s[1]);
-	    s2 = FLT (s[2]);
-            d[0] = INTENSITY ((s0*65535), (s1*65535), (s2*65535));
+	    s0 = FLT (s[0], u);
+	    s1 = FLT (s[1], u);
+	    s2 = FLT (s[2], u);
+            d[0] = INTENSITY (s0*65535, s1*65535, s2*65535);
             s += 4;
             d += 1;
           }
@@ -2452,10 +2496,10 @@ copy_row_rgb_to_u16_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-	    s0 = FLT (s[0]);
-	    s1 = FLT (s[1]);
-	    s2 = FLT (s[2]);
-            d[0] = INTENSITY ((s0*65535), (s1*65535), (s2*65535));
+	    s0 = FLT (s[0], u);
+	    s1 = FLT (s[1], u);
+	    s2 = FLT (s[2], u);
+            d[0] = INTENSITY (s0*65535, s1*65535, s2*65535);
             d[1] = 65535;
             s += 3;
             d += 2;
@@ -2463,10 +2507,10 @@ copy_row_rgb_to_u16_gray  (
       else
         while (w--)
           {
-	    s0 = FLT (s[0]);
-	    s1 = FLT (s[1]);
-	    s2 = FLT (s[2]);
-            d[0] = INTENSITY ((s0*65535), (s1*65535), (s2*65535));
+	    s0 = FLT (s[0], u);
+	    s1 = FLT (s[1], u);
+	    s2 = FLT (s[2], u);
+            d[0] = INTENSITY (s0*65535, s1*65535, s2*65535);
             s += 3;
             d += 1;
           }
@@ -2485,25 +2529,26 @@ copy_row_rgb_to_float_rgb  (
   Tag dtag = pixelrow_tag (dest_row);
   guint16 * s = (guint16*) pixelrow_data (src_row);
   gfloat * d = (gfloat*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT (s[0]);
-            d[1] = FLT (s[1]);
-            d[2] = FLT (s[2]);
-            d[3] = FLT (s[3]);
+            d[0] = FLT (s[0], u);
+            d[1] = FLT (s[1], u);
+            d[2] = FLT (s[2], u);
+            d[3] = FLT (s[3], u);
             s += 4;
             d += 4;
           }
       else
         while (w--)
           {
-            d[0] = FLT (s[0]);
-            d[1] = FLT (s[1]);
-            d[2] = FLT (s[2]);
+            d[0] = FLT (s[0], u);
+            d[1] = FLT (s[1], u);
+            d[2] = FLT (s[2], u);
             s += 4;
             d += 3;
           }
@@ -2513,9 +2558,9 @@ copy_row_rgb_to_float_rgb  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT (s[0]);
-            d[1] = FLT (s[1]);
-            d[2] = FLT (s[2]);
+            d[0] = FLT (s[0], u);
+            d[1] = FLT (s[1], u);
+            d[2] = FLT (s[2], u);
             d[3] = 1.0;
             s += 3;
             d += 4;
@@ -2523,9 +2568,9 @@ copy_row_rgb_to_float_rgb  (
       else
         while (w--)
           {
-            d[0] = FLT (s[0]);
-            d[1] = FLT (s[1]);
-            d[2] = FLT (s[2]);
+            d[0] = FLT (s[0], u);
+            d[1] = FLT (s[1], u);
+            d[2] = FLT (s[2], u);
             s += 3;
             d += 3;
           }
@@ -2544,13 +2589,18 @@ copy_row_rgb_to_float_gray  (
   Tag dtag = pixelrow_tag (dest_row);
   guint16 * s = (guint16*) pixelrow_data (src_row);
   gfloat * d = (gfloat*) pixelrow_data (dest_row);
+  gfloat r,g,b;
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = INTENSITY (FLT (s[0]), FLT (s[1]), FLT (s[2]));
+	    r = FLT (s[0], u);
+	    g = FLT (s[1], u);
+	    b = FLT (s[2], u);
+            d[0] = INTENSITY (r,g,b);
             d[1] = s[3];
             s += 4;
             d += 2;
@@ -2558,7 +2608,10 @@ copy_row_rgb_to_float_gray  (
       else
         while (w--)
           {
-            d[0] = INTENSITY (FLT (s[0]), FLT (s[1]), FLT (s[2]));
+	    r = FLT (s[0], u);
+	    g = FLT (s[1], u);
+	    b = FLT (s[2], u);
+            d[0] = INTENSITY (r,g,b);
             s += 4;
             d += 1;
           }
@@ -2568,7 +2621,10 @@ copy_row_rgb_to_float_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = INTENSITY (FLT (s[0]), FLT (s[1]), FLT (s[2]));
+	    r = FLT (s[0], u);
+	    g = FLT (s[1], u);
+	    b = FLT (s[2], u);
+            d[0] = INTENSITY (r,g,b);
             d[1] = 1.0;
             s += 3;
             d += 2;
@@ -2576,7 +2632,10 @@ copy_row_rgb_to_float_gray  (
       else
         while (w--)
           {
-            d[0] = INTENSITY (FLT (s[0]), FLT (s[1]), FLT (s[2]));
+	    r = FLT (s[0], u);
+	    g = FLT (s[1], u);
+	    b = FLT (s[2], u);
+            d[0] = INTENSITY (r,g,b);
             s += 3;
             d += 1;
           }
@@ -2594,6 +2653,7 @@ copy_row_rgb_to_float16_rgb  (
   Tag dtag = pixelrow_tag (dest_row);
   guint16 * s = (guint16*) pixelrow_data (src_row);
   guint16 * d = (guint16*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
@@ -2653,13 +2713,18 @@ copy_row_rgb_to_float16_gray  (
   Tag dtag = pixelrow_tag (dest_row);
   guint16 * s = (guint16*) pixelrow_data (src_row);
   guint16 * d = (guint16*) pixelrow_data (dest_row);
+  gfloat r,g,b;
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT16 (INTENSITY (FLT (s[0]), FLT (s[1]), FLT (s[2])));
+	    r = FLT (s[0], u);
+	    g = FLT (s[1], u);
+	    b = FLT (s[2], u);
+            d[0] = FLT16 (INTENSITY (r,g,b), u);
             d[1] = s[3];
             s += 4;
             d += 2;
@@ -2667,7 +2732,10 @@ copy_row_rgb_to_float16_gray  (
       else
         while (w--)
           {
-            d[0] = FLT16 (INTENSITY (FLT (s[0]), FLT (s[1]), FLT (s[2])));
+	    r = FLT (s[0], u);
+	    g = FLT (s[1], u);
+	    b = FLT (s[2], u);
+            d[0] = FLT16 (INTENSITY (r,g,b), u);
             s += 4;
             d += 1;
           }
@@ -2677,7 +2745,10 @@ copy_row_rgb_to_float16_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT16 (INTENSITY (FLT (s[0]), FLT (s[1]), FLT (s[2])));
+	    r = FLT (s[0], u);
+	    g = FLT (s[1], u);
+	    b = FLT (s[2], u);
+            d[0] = FLT16 (INTENSITY (r,g,b), u);
             d[1] = OPAQUE_FLOAT16;
             s += 3;
             d += 2;
@@ -2685,7 +2756,10 @@ copy_row_rgb_to_float16_gray  (
       else
         while (w--)
           {
-            d[0] = FLT16 (INTENSITY (FLT (s[0]), FLT (s[1]), FLT (s[2])));
+	    r = FLT (s[0], u);
+	    g = FLT (s[1], u);
+	    b = FLT (s[2], u);
+            d[0] = FLT16 (INTENSITY (r,g,b), u);
             s += 3;
             d += 1;
           }
@@ -2704,21 +2778,22 @@ copy_row_gray_to_u8_rgb  (
   Tag dtag = pixelrow_tag (dest_row);
   guint16 * s = (guint16*) pixelrow_data (src_row);
   guint8 * d = (guint8*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT (s[0]) * 255;
-            d[3] = FLT (s[1]) * 255;
+            d[0] = d[1] = d[2] = FLT (s[0], u) * 255;
+            d[3] = FLT (s[1], u) * 255;
             s += 2;
             d += 4;
           }
       else
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT (s[0]) * 255;
+            d[0] = d[1] = d[2] = FLT (s[0], u) * 255;
             s += 2;
             d += 3;
           }
@@ -2728,7 +2803,7 @@ copy_row_gray_to_u8_rgb  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT (s[0]) * 255;
+            d[0] = d[1] = d[2] = FLT (s[0], u) * 255;
             d[3] = 255;
             s += 1;
             d += 4;
@@ -2736,7 +2811,7 @@ copy_row_gray_to_u8_rgb  (
       else
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT (s[0]) * 255;
+            d[0] = d[1] = d[2] = FLT (s[0], u) * 255;
             s += 1;
             d += 3;
           }
@@ -2754,21 +2829,22 @@ copy_row_gray_to_u8_gray  (
   Tag dtag = pixelrow_tag (dest_row);
   guint16 * s = (guint16*) pixelrow_data (src_row);
   guint8 * d = (guint8*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT (s[0]) * 255;
-            d[1] = FLT (s[1]) * 255;
+            d[0] = FLT (s[0], u) * 255;
+            d[1] = FLT (s[1], u) * 255;
             s += 2;
             d += 2;
           }
       else
         while (w--)
           {
-            d[0] = FLT (s[0]) * 255;
+            d[0] = FLT (s[0], u) * 255;
             s += 2;
             d += 1;
           }
@@ -2778,7 +2854,7 @@ copy_row_gray_to_u8_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT (s[0]) * 255;
+            d[0] = FLT (s[0], u) * 255;
             d[1] = 255;
             s += 1;
             d += 2;
@@ -2786,7 +2862,7 @@ copy_row_gray_to_u8_gray  (
       else
         while (w--)
           {
-            d[0] = FLT (s[0]) * 255;
+            d[0] = FLT (s[0], u) * 255;
             s += 1;
             d += 1;
           }
@@ -2804,21 +2880,22 @@ copy_row_gray_to_u16_rgb  (
   Tag dtag = pixelrow_tag (dest_row);
   guint16 * s = (guint16*) pixelrow_data (src_row);
   guint16 * d = (guint16*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT (s[0]) * 65535;
-            d[3] = FLT (s[1]) * 65535;
+            d[0] = d[1] = d[2] = FLT (s[0], u) * 65535;
+            d[3] = FLT (s[1], u) * 65535;
             s += 2;
             d += 4;
           }
       else
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT (s[0]) * 65535;
+            d[0] = d[1] = d[2] = FLT (s[0], u) * 65535;
             s += 2;
             d += 3;
           }
@@ -2828,7 +2905,7 @@ copy_row_gray_to_u16_rgb  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT (s[0]) * 65535;
+            d[0] = d[1] = d[2] = FLT (s[0], u) * 65535;
             d[3] = 65535;
             s += 1;
             d += 4;
@@ -2836,7 +2913,7 @@ copy_row_gray_to_u16_rgb  (
       else
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT (s[0]) * 65535;
+            d[0] = d[1] = d[2] = FLT (s[0], u) * 65535;
             s += 1;
             d += 3;
           }
@@ -2855,21 +2932,22 @@ copy_row_gray_to_u16_gray (
   Tag dtag = pixelrow_tag (dest_row);
   guint16 * s = (guint16*) pixelrow_data (src_row);
   guint16 * d = (guint16*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT (s[0]) * 65535;
-            d[1] = FLT (s[1]) * 65535;
+            d[0] = FLT (s[0], u) * 65535;
+            d[1] = FLT (s[1], u) * 65535;
             s += 2;
             d += 2;
           }
       else
         while (w--)
           {
-            d[0] = FLT (s[0]) * 65535;
+            d[0] = FLT (s[0], u) * 65535;
             s += 2;
             d += 1;
           }
@@ -2879,7 +2957,7 @@ copy_row_gray_to_u16_gray (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT (s[0]) * 65535;
+            d[0] = FLT (s[0], u) * 65535;
             d[1] = 65535;
             s += 1;
             d += 2;
@@ -2887,7 +2965,7 @@ copy_row_gray_to_u16_gray (
       else
         while (w--)
           {
-            d[0] = FLT (s[0]) * 65535;
+            d[0] = FLT (s[0], u) * 65535;
             s += 1;
             d += 1;
           }
@@ -2905,21 +2983,22 @@ copy_row_gray_to_float_rgb  (
   Tag dtag = pixelrow_tag (dest_row);
   guint16 * s = (guint16*) pixelrow_data (src_row);
   gfloat * d = (gfloat*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT (s[0]);
-            d[3] = FLT (s[1]);
+            d[0] = d[1] = d[2] = FLT (s[0], u);
+            d[3] = FLT (s[1], u);
             s += 2;
             d += 4;
           }
       else
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT (s[0]);
+            d[0] = d[1] = d[2] = FLT (s[0], u);
             s += 2;
             d += 3;
           }
@@ -2929,7 +3008,7 @@ copy_row_gray_to_float_rgb  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT (s[0]);
+            d[0] = d[1] = d[2] = FLT (s[0], u);
             d[3] = 1.0;
             s += 1;
             d += 4;
@@ -2937,7 +3016,7 @@ copy_row_gray_to_float_rgb  (
       else
         while (w--)
           {
-            d[0] = d[1] = d[2] = FLT (s[0]);
+            d[0] = d[1] = d[2] = FLT (s[0], u);
             s += 1;
             d += 3;
           }
@@ -2956,21 +3035,22 @@ copy_row_gray_to_float_gray  (
   Tag dtag = pixelrow_tag (dest_row);
   guint16 * s = (guint16*) pixelrow_data (src_row);
   gfloat * d = (gfloat*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT (s[0]);
-            d[1] = FLT (s[1]);
+            d[0] = FLT (s[0], u);
+            d[1] = FLT (s[1], u);
             s += 2;
             d += 2;
           }
       else
         while (w--)
           {
-            d[0] = FLT (s[0]);
+            d[0] = FLT (s[0], u);
             s += 2;
             d += 1;
           }
@@ -2980,7 +3060,7 @@ copy_row_gray_to_float_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = FLT (s[0]);
+            d[0] = FLT (s[0], u);
             d[1] = 1.0;
             s += 1;
             d += 2;
@@ -2988,7 +3068,7 @@ copy_row_gray_to_float_gray  (
       else
         while (w--)
           {
-            d[0] = FLT (s[0]);
+            d[0] = FLT (s[0], u);
             s += 1;
             d += 1;
           }
@@ -3006,6 +3086,7 @@ copy_row_gray_to_float16_rgb  (
   Tag dtag = pixelrow_tag (dest_row);
   guint16 * s = (guint16*) pixelrow_data (src_row);
   guint16* d = (guint16*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {
@@ -3057,6 +3138,7 @@ copy_row_gray_to_float16_gray  (
   Tag dtag = pixelrow_tag (dest_row);
   guint16 * s = (guint16*) pixelrow_data (src_row);
   guint16 * d = (guint16*) pixelrow_data (dest_row);
+  ShortsFloat u;
 
   if (tag_alpha (stag) == ALPHA_YES)
     {

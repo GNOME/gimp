@@ -988,10 +988,11 @@ layer_pick_correlate (layer, x, y)
           {
             guint16 * d = (guint16*) c_data;
             gfloat val = d[alpha];
+	    ShortsFloat u;
             if (layer->mask)
               {
                 guint16 * m = (guint16*) m_data;
-                val = val * FLT (*m);
+                val = val * FLT (*m, u);
               }
             if (val > .25)
               rc = TRUE;

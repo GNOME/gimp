@@ -616,8 +616,9 @@ channel_value (Channel *mask, int x, int y)
     
      case PRECISION_FLOAT16:
       {
+	ShortsFloat u;
         guint16 * data = (guint16*) canvas_portion_data (canvas, x, y);
-        val = FLT (*data);
+        val = FLT (*data, u);
       }
       break;
     case PRECISION_NONE:
@@ -758,10 +759,11 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
 		case PRECISION_FLOAT16:
 		  {
 		    guint16 *d = (guint16*)data;
+		    ShortsFloat u;
 		    found = FALSE;
 		    for (x = pixelarea_x (&maskPR); x < ex; x++ )
 		      {
-			if ( FLT (*d++) )
+			if ( FLT (*d++, u) )
 			  {
 			    if (x < *x1)
 			      *x1 = x;
@@ -898,9 +900,10 @@ channel_is_empty (Channel *mask)
       case PRECISION_FLOAT16:
 	{
 	  guint16* d = (guint16*) data;
+	  ShortsFloat u;
 	  for (y = 0; y < pixelarea_height (&maskPR); y++)
 	    for (x = 0; x < pixelarea_width (&maskPR); x++)
-	      if ( FLT (*d++))
+	      if ( FLT (*d++, u))
 	        {
 		  pixelarea_process_stop (pr);
 		  return FALSE;
@@ -1031,6 +1034,7 @@ channel_add_segment (Channel *mask, int x, int y, int width, gfloat value)
       {
         guint16 * data;
         gfloat val;
+ 	ShortsFloat u;
         
         for (pr = pixelarea_register (1, &maskPR); 
              pr != NULL; 
@@ -1040,10 +1044,10 @@ channel_add_segment (Channel *mask, int x, int y, int width, gfloat value)
             width = pixelarea_width (&maskPR);
             while (width--)
               {
-                val = FLT (*data) + value;
+                val = FLT (*data, u) + value;
                 if (val > 1.0)
                   val = 1.0;
-                *data++ = FLT16 (val);
+                *data++ = FLT16 (val, u);
               }
           }
       }
@@ -1152,6 +1156,7 @@ channel_sub_segment (Channel *mask, int x, int y, int width, gfloat value)
       {
         guint16 * data;
         gfloat val;
+	ShortsFloat u;
         
         for (pr = pixelarea_register (1, &maskPR); 
              pr != NULL; 
@@ -1161,10 +1166,10 @@ channel_sub_segment (Channel *mask, int x, int y, int width, gfloat value)
             width = pixelarea_width (&maskPR);
             while (width--)
               {
-                val = FLT (*data) - value;
+                val = FLT (*data, u) - value;
                 if (val < 0)
                   val = 0;
-                *data++ = FLT16 (val);
+                *data++ = FLT16 (val, u);
               }
           }
       }
@@ -1266,6 +1271,7 @@ channel_inter_segment (Channel *mask, int x, int y, int width, gfloat value)
       {
         guint16 * data;
         gfloat val;
+	ShortsFloat u;
         
         for (pr = pixelarea_register (1, &maskPR); 
              pr != NULL; 
@@ -1275,8 +1281,8 @@ channel_inter_segment (Channel *mask, int x, int y, int width, gfloat value)
             width = pixelarea_width (&maskPR);
             while (width--)
               {
-                val = MINIMUM( FLT (*data), value);
-                *data++ = FLT16 (val);
+                val = MINIMUM( FLT (*data, u), value);
+                *data++ = FLT16 (val, u);
               }
           }
       }
@@ -1743,9 +1749,10 @@ channel_sharpen (Channel *mask)
 	case PRECISION_FLOAT16:
 	  {
 	    gfloat *d = (gfloat*)data;
+	    ShortsFloat u;
 	    while (size--)
 	      {
-		if ( FLT (*d) > .5 )
+		if ( FLT (*d, u) > .5 )
 		  *d++ = ONE_FLOAT16;
 		else
 		  *d++ = ZERO_FLOAT16;

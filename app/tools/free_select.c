@@ -453,6 +453,7 @@ scan_convert_helper_float16 (
   int start, end;
   int x, x2, w;
   int i, j;
+  ShortsFloat u;
 
   
   pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)),
@@ -518,7 +519,7 @@ scan_convert_helper_float16 (
 	      for (x = 0; x < SUPERSAMPLE; x++)
 		val += vals[j + x];
 
-	      *b++ = FLT16 (val / SUPERSAMPLE2);
+	      *b++ = FLT16 (val / SUPERSAMPLE2, u);
 	    }
 
 	  pixelarea_write_row (&maskPR, &bufRow, 0, (i / SUPERSAMPLE), (width / SUPERSAMPLE));

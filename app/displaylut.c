@@ -65,7 +65,8 @@ display_u8_from_float(gfloat code)
       break;
     case PRECISION_FLOAT16:
       {
-	guint16 c = FLT16 (code);
+	ShortsFloat u;
+	guint16 c = FLT16 (code, u);
 	if (film_mode)
 	{
 	  if (c < IM_FLOAT16_TO_FILM_LOOKUP_START )

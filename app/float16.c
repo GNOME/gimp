@@ -17,9 +17,4 @@
  */
 #include "float16.h"
 
-/* For conversions between float and float16 */
 
-guint16 f16_shorts_in[2] = {0,0};
-const gfloat *f16_float_in = (gfloat *)&f16_shorts_in;
-gfloat f16_float_out;
-const guint16 *f16_shorts_out = (guint16 *)&f16_float_out;

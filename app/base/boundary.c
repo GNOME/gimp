@@ -377,6 +377,7 @@ void find_empty_segs_line_float16(
   Tag tag = pixelarea_tag (area);
   gint num_channels = tag_num_channels (tag);
   void *pag;
+  ShortsFloat u;
   empty_segs[(*num_empty)++] = 0;
   last = -1;
   x = start; 
@@ -396,7 +397,7 @@ void find_empty_segs_line_float16(
       while( width --)
       {
 	empty_segs[*num_empty] = x;
-	val = (FLT (d[chan]) > .5)? 1: -1;  	
+	val = (FLT (d[chan], u) > .5)? 1: -1;  	
 
 	/*  The IgnoreBounds case  */
 	if (val == 1 && type == IgnoreBounds)
