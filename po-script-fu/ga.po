@@ -17,7 +17,6 @@ msgstr ""
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr ""
 
-"Content-Transfer-Encoding: ENCODING\n"
 #: plug-ins/script-fu/script-fu-console.c:186
 msgid "Script-Fu Console"
 msgstr ""
