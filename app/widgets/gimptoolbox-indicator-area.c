@@ -136,14 +136,16 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   /*  brush preview  */
 
   brush_preview =
-    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_brush (context)),
-                           CELL_SIZE, CELL_SIZE, 0,
-                           FALSE, TRUE, TRUE);
+    gimp_preview_new_full_by_types (GIMP_TYPE_PREVIEW, GIMP_TYPE_BRUSH,
+                                    CELL_SIZE, CELL_SIZE, 0,
+                                    FALSE, TRUE, TRUE);
+  gimp_preview_set_viewable (GIMP_PREVIEW (brush_preview),
+                             GIMP_VIEWABLE (gimp_context_get_brush (context)));
   gtk_table_attach_defaults (GTK_TABLE (indicator_table), brush_preview,
 			     0, 1, 0, 1);
   gtk_widget_show (brush_preview);
 
-  gimp_help_set_help_data (brush_preview, 
+  gimp_help_set_help_data (brush_preview,
 			   _("The active brush.\n"
 			     "Click to open the Brush Dialog."), NULL);
 
@@ -164,9 +166,12 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   /*  pattern preview  */
 
   pattern_preview =
-    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_pattern (context)),
-                           CELL_SIZE, CELL_SIZE, 0,
-                           FALSE, TRUE, TRUE);
+    gimp_preview_new_full_by_types (GIMP_TYPE_PREVIEW, GIMP_TYPE_PATTERN,
+                                    CELL_SIZE, CELL_SIZE, 0,
+                                    FALSE, TRUE, TRUE);
+  gimp_preview_set_viewable (GIMP_PREVIEW (pattern_preview),
+                             GIMP_VIEWABLE (gimp_context_get_pattern (context)));
+
   gtk_table_attach_defaults (GTK_TABLE (indicator_table), pattern_preview,
 			     1, 2, 0, 1);
   gtk_widget_show (pattern_preview);
@@ -192,14 +197,17 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   /*  gradient preview  */
 
   gradient_preview =
-    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_gradient (context)),
-                           GRAD_CELL_WIDTH, GRAD_CELL_HEIGHT, 0,
-                           FALSE, TRUE, TRUE);
+    gimp_preview_new_full_by_types (GIMP_TYPE_PREVIEW, GIMP_TYPE_GRADIENT,
+                                    GRAD_CELL_WIDTH, GRAD_CELL_HEIGHT, 0,
+                                    FALSE, TRUE, TRUE);
+  gimp_preview_set_viewable (GIMP_PREVIEW (gradient_preview),
+                             GIMP_VIEWABLE (gimp_context_get_gradient (context)));
+
   gtk_table_attach_defaults (GTK_TABLE (indicator_table), gradient_preview,
 			     0, 2, 1, 2);
   gtk_widget_show (gradient_preview);
 
-  gimp_help_set_help_data (gradient_preview, 
+  gimp_help_set_help_data (gradient_preview,
 			   _("The active gradient.\n"
 			     "Click to open the Gradient Dialog."), NULL);
 

@@ -1,3 +1,10 @@
+2003-11-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/widgets/gimptoolbox-indicator-area.c: use
+	gimp_preview_new_by_types() instead of just gimp_preview_new() so
+	the new preview code remembers the correct GType.
+
 2003-11-24  Ville Pätsi  <drc@gimp.org>
 
 	* gimp.spec.in: Added depedency for lcms

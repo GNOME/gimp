@@ -150,8 +150,11 @@ layer_select_new (GimpImage *gimage,
   gtk_box_pack_start (GTK_BOX (hbox), alignment, FALSE, FALSE, 0);
   gtk_widget_show (alignment);
 
-  layer_select->preview = gimp_preview_new (GIMP_VIEWABLE (layer),
-                                            preview_size, 1, FALSE);
+  layer_select->preview = gimp_preview_new_by_types (GIMP_TYPE_PREVIEW,
+                                                     GIMP_TYPE_LAYER,
+                                                     preview_size, 1, FALSE);
+  gimp_preview_set_viewable (GIMP_PREVIEW (layer_select->preview),
+                             GIMP_VIEWABLE (layer));
   gtk_container_add (GTK_CONTAINER (alignment), layer_select->preview);
   gtk_widget_show (layer_select->preview);
   gtk_widget_show (alignment);
