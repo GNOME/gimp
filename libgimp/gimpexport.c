@@ -174,7 +174,7 @@ static ExportAction export_action_animate_or_flatten =
   NULL,
   export_flatten,
   N_("can only Handle Layers as Animation Frames"),
-  { N_("Save as Animation"), N_("Flatten") },
+  { N_("Save as Animation"), N_("Flatten Image") },
   0
 };
 
