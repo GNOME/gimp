@@ -233,8 +233,10 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   if (!font_desc)
     return FALSE;
 
+  height = CLAMP (height, 12, GIMP_VIEWABLE_MAX_POPUP_SIZE / 4);
+
   pango_font_description_set_size (font_desc,
-                                   PANGO_SCALE * MAX (12, height));
+                                   PANGO_SCALE * height * 2.0 / 3.0);
 
   if (font->popup_layout)
     g_object_unref (font->popup_layout);
