@@ -249,10 +249,8 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
             }
         }
     }
-  else
-    {
-      GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
-    }
+
+  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }
 
 
@@ -261,11 +259,9 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 static GtkWidget *
 gimp_clone_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
+  GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *frame;
-
-  config = G_OBJECT (tool_options);
 
   vbox = gimp_paint_options_gui (tool_options);
 

@@ -1,3 +1,10 @@
+2004-06-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpclonetool.c (gimp_clone_tool_draw): chain up
+	unconditionally now that we draw the brush outline while
+	painting. Fixes brush outline artefacts on button_press and
+	button_release. Spotted by sjburges.
+
 2004-06-22  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image): unset
