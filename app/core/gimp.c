@@ -36,6 +36,8 @@
 
 #include "paint/paint.h"
 
+#include "text/gimpfontlist.h"
+
 #include "xcf/xcf.h"
 
 #include "gimp.h"
@@ -226,6 +228,9 @@ gimp_init (Gimp *gimp)
 					     GIMP_CONTAINER_POLICY_STRONG);
   gimp_object_set_name (GIMP_OBJECT (gimp->named_buffers), "named buffers");
 
+  gimp->fonts               = gimp_font_list_new ();
+  gimp_object_set_name (GIMP_OBJECT (gimp->fonts), "fonts");
+
   gimp->brush_factory       = NULL;
   gimp->pattern_factory     = NULL;
   gimp->gradient_factory    = NULL;
@@ -348,6 +353,12 @@ gimp_finalize (GObject *object)
       gimp->palette_factory = NULL;
     }
 
+  if (gimp->fonts)
+    {
+      g_object_unref (gimp->fonts);
+      gimp->fonts = NULL;
+    }
+
   if (gimp->named_buffers)
     {
       g_object_unref (gimp->named_buffers);
@@ -438,6 +449,7 @@ gimp_get_memsize (GimpObject *object)
     memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->global_buffer));
 
   memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->named_buffers)) +
+              gimp_object_get_memsize (GIMP_OBJECT (gimp->fonts)) +
               gimp_object_get_memsize (GIMP_OBJECT (gimp->brush_factory)) +
               gimp_object_get_memsize (GIMP_OBJECT (gimp->pattern_factory)) +
               gimp_object_get_memsize (GIMP_OBJECT (gimp->gradient_factory)) +

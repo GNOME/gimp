@@ -107,6 +107,8 @@ struct _Gimp
 
   GimpBuffer             *global_buffer;
   GimpContainer          *named_buffers;
+
+  GimpContainer          *fonts;
  
   GimpDataFactory        *brush_factory;
   GimpDataFactory        *pattern_factory;

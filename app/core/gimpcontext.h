@@ -41,8 +41,9 @@ typedef enum
   GIMP_CONTEXT_PROP_PATTERN    = 10,
   GIMP_CONTEXT_PROP_GRADIENT   = 11,
   GIMP_CONTEXT_PROP_PALETTE    = 12,
-  GIMP_CONTEXT_PROP_BUFFER     = 13,
-  GIMP_CONTEXT_PROP_IMAGEFILE  = 14,
+  GIMP_CONTEXT_PROP_FONT       = 13,
+  GIMP_CONTEXT_PROP_BUFFER     = 14,
+  GIMP_CONTEXT_PROP_IMAGEFILE  = 15,
 
   GIMP_CONTEXT_LAST_PROP       = GIMP_CONTEXT_PROP_IMAGEFILE
 } GimpContextPropType;
@@ -60,8 +61,9 @@ typedef enum
   GIMP_CONTEXT_PATTERN_MASK    = 1 << 10,
   GIMP_CONTEXT_GRADIENT_MASK   = 1 << 11,
   GIMP_CONTEXT_PALETTE_MASK    = 1 << 12,
-  GIMP_CONTEXT_BUFFER_MASK     = 1 << 13,
-  GIMP_CONTEXT_IMAGEFILE_MASK  = 1 << 14,
+  GIMP_CONTEXT_FONT_MASK       = 1 << 13,
+  GIMP_CONTEXT_BUFFER_MASK     = 1 << 14,
+  GIMP_CONTEXT_IMAGEFILE_MASK  = 1 << 15,
 
   /*  aliases  */
   GIMP_CONTEXT_PAINT_PROPS_MASK = (GIMP_CONTEXT_FOREGROUND_MASK |
@@ -75,6 +77,7 @@ typedef enum
 				   GIMP_CONTEXT_DISPLAY_MASK    |
 				   GIMP_CONTEXT_TOOL_MASK       |
 				   GIMP_CONTEXT_PALETTE_MASK    |
+				   GIMP_CONTEXT_FONT_MASK       |
 				   GIMP_CONTEXT_BUFFER_MASK     |
 				   GIMP_CONTEXT_IMAGEFILE_MASK  |
 				   GIMP_CONTEXT_PAINT_PROPS_MASK)
@@ -125,6 +128,9 @@ struct _GimpContext
   GimpPalette          *palette;
   gchar                *palette_name;
 
+  GimpFont             *font;
+  gchar                *font_name;
+
   GimpBuffer           *buffer;
   GimpImagefile        *imagefile;
 };
@@ -157,6 +163,8 @@ struct _GimpContextClass
 			       GimpGradient         *gradient);
   void (* palette_changed)    (GimpContext          *context,
 			       GimpPalette          *palette);
+  void (* font_changed)       (GimpContext          *context,
+			       GimpFont             *font);
   void (* buffer_changed)     (GimpContext          *context,
 			       GimpBuffer           *buffer);
   void (* imagefile_changed)  (GimpContext          *context,
@@ -300,6 +308,13 @@ GimpPalette   * gimp_context_get_palette        (GimpContext     *context);
 void            gimp_context_set_palette        (GimpContext     *context,
                                                  GimpPalette     *palette);
 void            gimp_context_palette_changed    (GimpContext     *context);
+
+
+/*  font  */
+GimpFont      * gimp_context_get_font           (GimpContext     *context);
+void            gimp_context_set_font           (GimpContext     *context,
+                                                 GimpFont        *font);
+void            gimp_context_font_changed       (GimpContext     *context);
 
 
 /*  buffer  */

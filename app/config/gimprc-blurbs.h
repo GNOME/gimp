@@ -45,6 +45,10 @@ N_("Context-dependent cursors are cool.  They are enabled by default. " \
 N_("When enabled, this will ensure that each pixel of an image gets " \
    "mapped to a pixel on the screen.")
 
+#define DEFAULT_FONT_BLURB \
+"Specify a default font.  The font is searched for in the " \
+"fontconfig font path."
+
 #define DEFAULT_GRADIENT_BLURB \
 "Specify a default gradient.  The gradient is searched for in the " \
 "specified gradient path."

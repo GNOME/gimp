@@ -1,5 +1,17 @@
 2003-03-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimpcoreconfig.[ch]: added "gchar *default_font".
+	* app/config/gimprc-blurbs.h: and its blurb.
+
+	* app/core/gimp.[ch]: keep a GimpFontList around.
+
+	* app/core/gimpcontext.[ch]: added a GimpFont and all needed
+	fonctions to let it work like brush, pattern etc.
+
+	* app/core/gimpdatalist.c: cosmetic.
+
+2003-03-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/text/Makefile.am
 	* app/text/text-types.h
 	* app/text/gimpfontlist.[ch]: new GimpList subclass. Unused...

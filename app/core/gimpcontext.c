@@ -48,6 +48,8 @@
 #include "gimppattern.h"
 #include "gimptoolinfo.h"
 
+#include "text/gimpfont.h"
+
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-types.h"
 #include "config/gimpconfig-params.h"
@@ -187,6 +189,17 @@ static void gimp_context_palette_list_thaw   (GimpContainer    *container,
 static void gimp_context_real_set_palette    (GimpContext      *context,
 					      GimpPalette      *palatte);
 
+/*  font  */
+static void gimp_context_font_dirty          (GimpFont         *font,
+					      GimpContext      *context);
+static void gimp_context_font_removed        (GimpContainer    *container,
+					      GimpFont         *font,
+					      GimpContext      *context);
+static void gimp_context_font_list_thaw      (GimpContainer    *container,
+					      GimpContext      *context);
+static void gimp_context_real_set_font       (GimpContext      *context,
+					      GimpFont         *font);
+
 /*  buffer  */
 static void gimp_context_buffer_dirty        (GimpBuffer       *buffer,
 					      GimpContext      *context);
@@ -235,6 +248,7 @@ enum
   PATTERN_CHANGED,
   GRADIENT_CHANGED,
   PALETTE_CHANGED,
+  FONT_CHANGED,
   BUFFER_CHANGED,
   IMAGEFILE_CHANGED,
   LAST_SIGNAL
@@ -255,6 +269,7 @@ static gchar *gimp_context_prop_names[] =
   "pattern",
   "gradient",
   "palette",
+  "font",
   "buffer",
   "imagefile"
 };
@@ -275,6 +290,7 @@ static GType gimp_context_prop_types[] =
   0,
   0,
   0,
+  0,
   0
 };
 
@@ -288,6 +304,7 @@ static GimpBrush    *standard_brush     = NULL;
 static GimpPattern  *standard_pattern   = NULL;
 static GimpGradient *standard_gradient  = NULL;
 static GimpPalette  *standard_palette   = NULL;
+static GimpFont     *standard_font      = NULL;
 
 
 GType
@@ -454,6 +471,16 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_PALETTE);
 
+  gimp_context_signals[FONT_CHANGED] =
+    g_signal_new ("font_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpContextClass, font_changed),
+		  NULL, NULL,
+		  gimp_marshal_VOID__OBJECT,
+		  G_TYPE_NONE, 1,
+		  GIMP_TYPE_FONT);
+
   gimp_context_signals[BUFFER_CHANGED] =
     g_signal_new ("buffer_changed",
 		  G_TYPE_FROM_CLASS (klass),
@@ -493,6 +520,7 @@ gimp_context_class_init (GimpContextClass *klass)
   klass->pattern_changed         = NULL;
   klass->gradient_changed        = NULL;
   klass->palette_changed         = NULL;
+  klass->font_changed            = NULL;
   klass->buffer_changed          = NULL;
   klass->imagefile_changed       = NULL;
 
@@ -502,6 +530,7 @@ gimp_context_class_init (GimpContextClass *klass)
   gimp_context_prop_types[GIMP_CONTEXT_PROP_PATTERN]   = GIMP_TYPE_PATTERN;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_GRADIENT]  = GIMP_TYPE_GRADIENT;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_PALETTE]   = GIMP_TYPE_PALETTE;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_FONT]      = GIMP_TYPE_FONT;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_BUFFER]    = GIMP_TYPE_BUFFER;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGEFILE] = GIMP_TYPE_IMAGEFILE;
 
@@ -580,6 +609,12 @@ gimp_context_class_init (GimpContextClass *klass)
                                    GIMP_TYPE_PALETTE,
                                    G_PARAM_WRITABLE);
 
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_FONT,
+                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_FONT],
+                                   NULL,
+                                   GIMP_TYPE_FONT,
+                                   G_PARAM_WRITABLE);
+
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_BUFFER,
 				   g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_BUFFER],
 							NULL, NULL,
@@ -619,6 +654,9 @@ gimp_context_init (GimpContext *context)
 
   context->palette       = NULL;
   context->palette_name  = NULL;
+
+  context->font          = NULL;
+  context->font_name     = NULL;
 
   context->buffer        = NULL;
   context->imagefile     = NULL;
@@ -698,6 +736,15 @@ gimp_context_constructor (GType                  type,
 			   0);
   g_signal_connect_object (gimp->palette_factory->container, "thaw",
 			   G_CALLBACK (gimp_context_palette_list_thaw),
+			   object,
+			   0);
+
+  g_signal_connect_object (gimp->fonts, "remove",
+			   G_CALLBACK (gimp_context_font_removed),
+			   object,
+			   0);
+  g_signal_connect_object (gimp->fonts, "thaw",
+			   G_CALLBACK (gimp_context_font_list_thaw),
 			   object,
 			   0);
 
@@ -807,6 +854,17 @@ gimp_context_finalize (GObject *object)
       context->palette_name = NULL;
     }
 
+  if (context->font)
+    {
+      g_object_unref (context->font);
+      context->font = NULL;
+    }
+  if (context->font_name)
+    {
+      g_free (context->font_name);
+      context->font_name = NULL;
+    }
+
   if (context->buffer)
     {
       g_object_unref (context->buffer);
@@ -871,6 +929,9 @@ gimp_context_set_property (GObject      *object,
       break;
     case GIMP_CONTEXT_PROP_PALETTE:
       gimp_context_set_palette (context, g_value_get_object (value));
+      break;
+    case GIMP_CONTEXT_PROP_FONT:
+      gimp_context_set_font (context, g_value_get_object (value));
       break;
     case GIMP_CONTEXT_PROP_BUFFER:
       gimp_context_set_buffer (context, g_value_get_object (value));
@@ -942,6 +1003,9 @@ gimp_context_get_property (GObject    *object,
     case GIMP_CONTEXT_PROP_PALETTE:
       g_value_set_object (value, gimp_context_get_palette (context));
       break;
+    case GIMP_CONTEXT_PROP_FONT:
+      g_value_set_object (value, gimp_context_get_font (context));
+      break;
     case GIMP_CONTEXT_PROP_BUFFER:
       g_value_set_object (value, gimp_context_get_buffer (context));
       break;
@@ -973,6 +1037,9 @@ gimp_context_get_memsize (GimpObject *object)
 
   if (context->palette_name)
     memsize += strlen (context->palette_name) + 1;
+
+  if (context->font_name)
+    memsize += strlen (context->font_name) + 1;
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
@@ -1010,6 +1077,7 @@ gimp_context_serialize_property (GObject          *object,
     case GIMP_CONTEXT_PROP_PATTERN:
     case GIMP_CONTEXT_PROP_GRADIENT:
     case GIMP_CONTEXT_PROP_PALETTE:
+    case GIMP_CONTEXT_PROP_FONT:
       serialize_obj = g_value_get_object (value);
       break;
 
@@ -1077,6 +1145,12 @@ gimp_context_deserialize_property (GObject    *object,
       container = context->gimp->palette_factory->container;
       current   = (GimpObject *) context->palette;
       name_loc  = &context->palette_name;
+      break;
+
+    case GIMP_CONTEXT_PROP_FONT:
+      container = context->gimp->fonts;
+      current   = (GimpObject *) context->font;
+      name_loc  = &context->font_name;
       break;
 
     default:
@@ -1364,6 +1438,14 @@ gimp_context_copy_property (GimpContext         *src,
       standard_object = standard_palette;
       src_name        = src->palette_name;
       dest_name_loc   = &dest->palette_name;
+      break;
+
+    case GIMP_CONTEXT_PROP_FONT:
+      gimp_context_real_set_font (dest, src->font);
+      object          = src->font;
+      standard_object = standard_font;
+      src_name        = src->font_name;
+      dest_name_loc   = &dest->font_name;
       break;
 
     case GIMP_CONTEXT_PROP_BUFFER:
@@ -2575,6 +2657,141 @@ gimp_context_real_set_palette (GimpContext *context,
 
   g_object_notify (G_OBJECT (context), "palette");
   gimp_context_palette_changed (context);
+}
+
+
+/*****************************************************************************/
+/*  font     *****************************************************************/
+
+GimpFont *
+gimp_context_get_font (GimpContext *context)
+{
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  return context->font;
+}
+
+void
+gimp_context_set_font (GimpContext *context,
+                       GimpFont    *font)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  context_find_defined (context, GIMP_CONTEXT_PROP_FONT);
+
+  gimp_context_real_set_font (context, font);
+}
+
+void
+gimp_context_font_changed (GimpContext *context)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  g_signal_emit (context,
+		 gimp_context_signals[FONT_CHANGED], 0,
+		 context->font);
+}
+
+/*  the active palette was modified  */
+static void
+gimp_context_font_dirty (GimpFont    *font,
+                         GimpContext *context)
+{
+  g_free (context->font_name);
+  context->font_name = g_strdup (GIMP_OBJECT (font)->name);
+
+  g_object_notify (G_OBJECT (context), "font");
+  gimp_context_font_changed (context);
+}
+
+/*  the global font list is there again after refresh  */
+static void
+gimp_context_font_list_thaw (GimpContainer *container,
+                             GimpContext   *context)
+{
+  GimpFont *font;
+
+  if (! context->font_name)
+    context->font_name = g_strdup (context->gimp->config->default_font);
+
+  if ((font = (GimpFont *)
+       gimp_container_get_child_by_name (container,
+					 context->font_name)))
+    {
+      gimp_context_real_set_font (context, font);
+      return;
+    }
+
+  if (gimp_container_num_children (container))
+    gimp_context_real_set_font
+      (context,
+       GIMP_FONT (gimp_container_get_child_by_index (container, 0)));
+  else
+    gimp_context_real_set_font (context,
+                                GIMP_FONT (gimp_font_get_standard ()));
+}
+
+/*  the active font disappeared  */
+static void
+gimp_context_font_removed (GimpContainer *container,
+                           GimpFont      *font,
+                           GimpContext   *context)
+{
+  if (font == context->font)
+    {
+      context->font = NULL;
+
+      g_signal_handlers_disconnect_by_func (font,
+					    gimp_context_font_dirty,
+					    context);
+      g_object_unref (font);
+
+      if (! gimp_container_frozen (container))
+	gimp_context_font_list_thaw (container, context);
+    }
+}
+
+static void
+gimp_context_real_set_font (GimpContext *context,
+                            GimpFont    *font)
+{
+  if (! standard_font)
+    standard_font = GIMP_FONT (gimp_font_get_standard ());
+
+  if (context->font == font)
+    return;
+
+  if (context->font_name && font != standard_font)
+    {
+      g_free (context->font_name);
+      context->font_name = NULL;
+    }
+
+  /*  disconnect from the old font's signals  */
+  if (context->font)
+    {
+      g_signal_handlers_disconnect_by_func (context->font,
+					    gimp_context_font_dirty,
+					    context);
+      g_object_unref (context->font);
+    }
+
+  context->font = font;
+
+  if (font)
+    {
+      g_object_ref (font);
+
+      g_signal_connect_object (font, "name_changed",
+			       G_CALLBACK (gimp_context_font_dirty),
+			       context,
+			       0);
+
+      if (font != standard_font)
+	context->font_name = g_strdup (GIMP_OBJECT (font)->name);
+    }
+
+  g_object_notify (G_OBJECT (context), "font");
+  gimp_context_font_changed (context);
 }
 
 

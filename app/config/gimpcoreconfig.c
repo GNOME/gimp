@@ -53,6 +53,7 @@ static void  gimp_core_config_get_property (GObject             *object,
 #define DEFAULT_PATTERN   "Pine"
 #define DEFAULT_PALETTE   "Default"
 #define DEFAULT_GRADIENT  "FG to BG (RGB)"
+#define DEFAULT_FONT      "Sans"
 #define DEFAULT_COMMENT   "Created with The GIMP"
 
 enum
@@ -71,6 +72,7 @@ enum
   PROP_DEFAULT_PATTERN,
   PROP_DEFAULT_PALETTE,
   PROP_DEFAULT_GRADIENT,
+  PROP_DEFAULT_FONT,
   PROP_DEFAULT_COMMENT,
   PROP_DEFAULT_IMAGE_TYPE,
   PROP_DEFAULT_IMAGE_WIDTH,
@@ -197,6 +199,10 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    "default-gradient", DEFAULT_GRADIENT_BLURB,
                                    DEFAULT_GRADIENT,
                                    0);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_FONT,
+                                   "default-font", DEFAULT_FONT_BLURB,
+                                   DEFAULT_FONT,
+                                   0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_COMMENT,
                                    "default-comment", DEFAULT_COMMENT_BLURB,
                                    DEFAULT_COMMENT,
@@ -304,6 +310,7 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->default_pattern);
   g_free (core_config->default_palette);
   g_free (core_config->default_gradient);
+  g_free (core_config->default_font);
   g_free (core_config->default_comment);
   g_free (core_config->plug_in_rc_path);
   g_free (core_config->module_load_inhibit);
@@ -373,6 +380,10 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_DEFAULT_GRADIENT:
       g_free (core_config->default_gradient);
       core_config->default_gradient = g_value_dup_string (value);
+      break;
+    case PROP_DEFAULT_FONT:
+      g_free (core_config->default_font);
+      core_config->default_font = g_value_dup_string (value);
       break;
     case PROP_DEFAULT_COMMENT:
       g_free (core_config->default_comment);
@@ -488,6 +499,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_DEFAULT_GRADIENT:
       g_value_set_string (value, core_config->default_gradient);
+      break;
+    case PROP_DEFAULT_FONT:
+      g_value_set_string (value, core_config->default_font);
       break;
     case PROP_DEFAULT_COMMENT:
       g_value_set_string (value, core_config->default_comment);

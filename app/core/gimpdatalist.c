@@ -135,7 +135,6 @@ gimp_data_list_remove (GimpContainer *container,
 
 GimpContainer *
 gimp_data_list_new (GType children_type)
-
 {
   GimpDataList *list;
 

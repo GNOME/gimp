@@ -53,6 +53,7 @@ struct _GimpCoreConfig
   gchar                 *default_pattern;
   gchar                 *default_palette;
   gchar                 *default_gradient;
+  gchar                 *default_font;
   gchar                 *default_comment;
   GimpImageBaseType      default_image_type;
   gint                   default_image_width;
