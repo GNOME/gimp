@@ -1,5 +1,13 @@
 2003-10-21  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcoloroptions.c: changed the default value for
+	"sample_average" to TRUE (for Levels and Curves tools).
+
+	* app/tools/gimpcolorpickeroptions.c: override the default value
+	for "sample_average" and set it back to FALSE (for Color Picker).
+
+2003-10-21  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptooldialog.c: documented gimp_tool_dialog_new().
 
 2003-10-21  Sven Neumann  <sven@gimp.org>

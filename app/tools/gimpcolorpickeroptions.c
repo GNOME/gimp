@@ -37,12 +37,12 @@
 enum
 {
   PROP_0,
+  PROP_SAMPLE_AVERAGE, /* overrides a GimpColorOptions property */
   PROP_UPDATE_TOOLBOX,
   PROP_PICK_MODE
 };
 
 
-static void   gimp_color_picker_options_init       (GimpColorPickerOptions      *options);
 static void   gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *options_class);
 
 static void   gimp_color_picker_options_set_property (GObject      *object,
@@ -75,7 +75,7 @@ gimp_color_picker_options_get_type (void)
 	NULL,           /* class_data     */
 	sizeof (GimpColorPickerOptions),
 	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_color_picker_options_init,
+	NULL            /* instance_init  */
       };
 
       type = g_type_register_static (GIMP_TYPE_COLOR_OPTIONS,
@@ -98,6 +98,11 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
   object_class->set_property = gimp_color_picker_options_set_property;
   object_class->get_property = gimp_color_picker_options_get_property;
 
+  /* override a GimpColorOptions property to get a different default value */
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
+                                    "sample-average", NULL,
+                                    FALSE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_UPDATE_TOOLBOX,
                                     "update-toolbox", NULL,
                                     TRUE,
@@ -110,22 +115,18 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
 }
 
 static void
-gimp_color_picker_options_init (GimpColorPickerOptions *options)
-{
-}
-
-static void
 gimp_color_picker_options_set_property (GObject      *object,
                                         guint         property_id,
                                         const GValue *value,
                                         GParamSpec   *pspec)
 {
-  GimpColorPickerOptions *options;
-
-  options = GIMP_COLOR_PICKER_OPTIONS (object);
+  GimpColorPickerOptions *options = GIMP_COLOR_PICKER_OPTIONS (object);
 
   switch (property_id)
     {
+    case PROP_SAMPLE_AVERAGE:
+      GIMP_COLOR_OPTIONS (options)->sample_average = g_value_get_boolean (value);
+      break;
     case PROP_UPDATE_TOOLBOX:
       options->update_toolbox = g_value_get_boolean (value);
       break;
@@ -144,12 +145,14 @@ gimp_color_picker_options_get_property (GObject    *object,
                                         GValue     *value,
                                         GParamSpec *pspec)
 {
-  GimpColorPickerOptions *options;
-
-  options = GIMP_COLOR_PICKER_OPTIONS (object);
+  GimpColorPickerOptions *options = GIMP_COLOR_PICKER_OPTIONS (object);
 
   switch (property_id)
     {
+    case PROP_SAMPLE_AVERAGE:
+      g_value_set_boolean (value,
+                           GIMP_COLOR_OPTIONS (options)->sample_average);
+      break;
     case PROP_UPDATE_TOOLBOX:
       g_value_set_boolean (value, options->update_toolbox);
       break;
@@ -165,15 +168,12 @@ gimp_color_picker_options_get_property (GObject    *object,
 GtkWidget *
 gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 {
-  GimpColorPickerOptions *options;
-  GObject                *config;
+  GimpColorPickerOptions *options = GIMP_COLOR_PICKER_OPTIONS (tool_options);
+  GObject                *config  = G_OBJECT (tool_options);
   GtkWidget              *vbox;
   GtkWidget              *button;
   GtkWidget              *frame;
   gchar                  *str;
-
-  options = GIMP_COLOR_PICKER_OPTIONS (tool_options);
-  config  = G_OBJECT (tool_options);
 
   vbox = gimp_color_options_gui (tool_options);
 

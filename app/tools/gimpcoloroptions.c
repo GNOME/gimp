@@ -43,7 +43,6 @@ enum
 };
 
 
-static void   gimp_color_options_init       (GimpColorOptions      *options);
 static void   gimp_color_options_class_init (GimpColorOptionsClass *options_class);
 
 static void   gimp_color_options_set_property (GObject      *object,
@@ -76,7 +75,7 @@ gimp_color_options_get_type (void)
 	NULL,           /* class_data     */
 	sizeof (GimpColorOptions),
 	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_color_options_init,
+	NULL            /* instance_init  */
       };
 
       type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
@@ -87,12 +86,10 @@ gimp_color_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_color_options_class_init (GimpColorOptionsClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -105,7 +102,7 @@ gimp_color_options_class_init (GimpColorOptionsClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
                                     "sample-average", NULL,
-                                    FALSE,
+                                    TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_AVERAGE_RADIUS,
                                    "average-radius", NULL,
@@ -114,19 +111,12 @@ gimp_color_options_class_init (GimpColorOptionsClass *klass)
 }
 
 static void
-gimp_color_options_init (GimpColorOptions *options)
-{
-}
-
-static void
 gimp_color_options_set_property (GObject      *object,
 				 guint         property_id,
 				 const GValue *value,
 				 GParamSpec   *pspec)
 {
-  GimpColorOptions *options;
-
-  options = GIMP_COLOR_OPTIONS (object);
+  GimpColorOptions *options = GIMP_COLOR_OPTIONS (object);
 
   switch (property_id)
     {
@@ -151,9 +141,7 @@ gimp_color_options_get_property (GObject    *object,
 				 GValue     *value,
 				 GParamSpec *pspec)
 {
-  GimpColorOptions *options;
-
-  options = GIMP_COLOR_OPTIONS (object);
+  GimpColorOptions *options = GIMP_COLOR_OPTIONS (object);
 
   switch (property_id)
     {
@@ -175,13 +163,11 @@ gimp_color_options_get_property (GObject    *object,
 GtkWidget *
 gimp_color_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config;
+  GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *button;
-
-  config = G_OBJECT (tool_options);
 
   vbox = gimp_tool_options_gui (tool_options);
 
