@@ -324,7 +324,7 @@ gimp_layer_new (GimpImage            *gimage,
 
   gimp_drawable_configure (GIMP_DRAWABLE (layer),
 			   gimage,
-                           width, height,
+                           0, 0, width, height,
                            type,
                            name);
 
@@ -1227,7 +1227,7 @@ gimp_layer_resize (GimpLayer *layer,
     }
 
   /*  Update the old layer position  */
-  gimp_drawable_update (GIMP_DRAWABLE( layer),
+  gimp_drawable_update (GIMP_DRAWABLE (layer),
 			0, 0,
 			GIMP_DRAWABLE (layer)->width,
 			GIMP_DRAWABLE (layer)->height);

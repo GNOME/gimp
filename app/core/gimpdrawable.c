@@ -216,6 +216,8 @@ gimp_drawable_invalidate_preview (GimpViewable *viewable)
 void
 gimp_drawable_configure (GimpDrawable  *drawable,
 			 GimpImage     *gimage,
+                         gint           offset_x,
+                         gint           offset_y,
 			 gint           width,
 			 gint           height, 
 			 GimpImageType  type,
@@ -235,8 +237,8 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   drawable->type      = type;
   drawable->bytes     = GIMP_IMAGE_TYPE_BYTES (type);
   drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
-  drawable->offset_x  = 0;
-  drawable->offset_y  = 0;
+  drawable->offset_x  = offset_x;
+  drawable->offset_y  = offset_y;
 
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
@@ -310,14 +312,14 @@ gimp_drawable_copy (GimpDrawable *drawable,
 
   gimp_drawable_configure (new_drawable,
                            gimp_item_get_image (GIMP_ITEM (drawable)),
+                           drawable->offset_x,
+                           drawable->offset_y,
                            gimp_drawable_width (drawable),
                            gimp_drawable_height (drawable),
                            new_image_type,
                            new_name);
   g_free (new_name);
 
-  new_drawable->offset_x = drawable->offset_x;
-  new_drawable->offset_y = drawable->offset_y;
   new_drawable->visible  = drawable->visible;
 
   pixel_region_init (&srcPR, drawable->tiles, 

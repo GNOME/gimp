@@ -1,5 +1,17 @@
 2003-01-31  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable.[ch]: added offset_x and offset_y to
+	gimp_drawable_configure().
+
+	* app/core/gimpchannel.c
+	* app/core/gimplayer.c
+	* app/core/gimplayermask.c: changed accordingly.
+
+	* app/text/gimptextlayer.[ch]: update the layer when the associated
+	GimpText object changes.
+
+2003-01-31  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpfontselection.c: allow NULL as context parameter
 	in gimp_font_selection_new(). The widget then uses a default
 	PangoFT2Context.

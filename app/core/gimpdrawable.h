@@ -65,6 +65,8 @@ GType           gimp_drawable_get_type           (void) G_GNUC_CONST;
 
 void            gimp_drawable_configure          (GimpDrawable       *drawable,
 						  GimpImage          *gimage,
+                                                  gint                offset_x,
+                                                  gint                offset_y,
 						  gint                width,
 						  gint                height,
 						  GimpImageType       type,

@@ -156,8 +156,13 @@ gimp_text_layer_new (GimpImage *image,
 
   layer = g_object_new (GIMP_TYPE_TEXT_LAYER, NULL);
 
-  layer->text = g_object_ref (text);
   gimp_item_set_image (GIMP_ITEM (layer), image);
+
+  layer->text = g_object_ref (text);
+
+  g_signal_connect_object (text, "notify",
+                           G_CALLBACK (gimp_text_layer_render),
+                           layer, G_CONNECT_SWAPPED);
 
   if (!gimp_text_layer_render (layer))
     {
@@ -166,6 +171,14 @@ gimp_text_layer_new (GimpImage *image,
     }
 
   return GIMP_LAYER (layer);
+}
+
+GimpText *
+gimp_text_layer_get_text (GimpTextLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_TEXT_LAYER (layer), NULL);
+  
+  return layer->text;
 }
 
 static gsize
@@ -200,10 +213,13 @@ gimp_text_layer_get_preview (GimpViewable *viewable,
 static gboolean
 gimp_text_layer_render (GimpTextLayer *layer)
 {
-  GimpDrawable   *drawable;
-  PangoLayout    *layout;
-  gint            x, y;
-  gint            width, height;
+  GimpImage    *image;
+  GimpDrawable *drawable;
+  PangoLayout  *layout;
+  gchar        *name;
+  gchar        *newline;
+  gint          x, y;
+  gint          width, height;
 
   layout = gimp_text_layer_layout_new (layer);
 
@@ -214,26 +230,45 @@ gimp_text_layer_render (GimpTextLayer *layer)
       return FALSE;
     }
 
+  newline = strchr (layer->text->text, '\n');
+  if (newline)
+    name = g_strndup (layer->text->text, newline - layer->text->text);
+  else
+    name = layer->text->text;
+
+  image    = gimp_item_get_image (GIMP_ITEM (layer));
   drawable = GIMP_DRAWABLE (layer);
 
   if (width  != gimp_drawable_width (drawable) ||
       height != gimp_drawable_height (drawable))
     {
-      GimpImage * image = gimp_item_get_image (GIMP_ITEM (drawable));
+      gimp_drawable_update (GIMP_DRAWABLE (layer),
+                            0, 0,
+                            gimp_drawable_width (drawable),
+                            gimp_drawable_height (drawable));
 
       gimp_drawable_configure (drawable,
                                image,
+                               drawable->offset_x,
+                               drawable->offset_y,
                                width, height,
                                gimp_image_base_type_with_alpha (image),
-                               layer->text->text  /* name */);
+                               name);
+
+      gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
     }
   else
     {
-      gimp_object_set_name (GIMP_OBJECT (layer), layer->text->text);
+      gimp_object_set_name (GIMP_OBJECT (layer), name);
     }
+
+  if (newline)
+    g_free (name);
 
   gimp_text_layer_render_layout (layer, layout, x, y);
   g_object_unref (layout);
+
+  gimp_image_flush (image);
 
   return TRUE;
 }
@@ -416,6 +451,8 @@ gimp_text_layer_render_layout (GimpTextLayer *layer,
   apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
   
   tile_manager_destroy (mask);
+
+  gimp_drawable_update (drawable, 0, 0, width, height);
 }
 
 
