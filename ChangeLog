@@ -1,3 +1,8 @@
+Sat Jul 10 16:05:58 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/sel2path/math.c: 
+	* plug-ins/sel2path/fit.c: Add <float.h> for FLT_MAX,FLT_MIN.
+
 1999-07-10  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/gdisplay.c (gdisplay_set_menu_sensitivity): Undo/Redo should
