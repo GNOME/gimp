@@ -51,14 +51,13 @@ endif
 
 if OS_WIN32
 mwindows = -mwindows
-symprefix = _
 endif
 
 gimp_1_3_LDFLAGS = \
 	$(mwindows)				\
-	-u $(symprefix)gimp_container_filter	\
-	-u $(symprefix)gimp_xml_parser_new	\
-	-u $(symprefix)gimp_drawable_stroke_vectors
+	-u $(SYMPREFIX)gimp_container_filter	\
+	-u $(SYMPREFIX)gimp_xml_parser_new	\
+	-u $(SYMPREFIX)gimp_drawable_stroke_vectors
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp\"		\
