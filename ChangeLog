@@ -1,3 +1,7 @@
+2004-11-14  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 2.2-pre2.
+
 2004-11-13  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb: Adapted Sven's code into pdbgen so
@@ -12,7 +16,7 @@
 
 	* app/dialogs/Makefile.am
 	* app/dialogs/print-size-dialog.[ch]: new files for the Print Size
-	dialog that is still missing. Still work in progress...
+	dialog that was missing. Still work in progress...
 
 	* app/actions/image-actions.c
 	* app/actions/image-commands.[ch]

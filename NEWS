@@ -10,6 +10,35 @@ checking that it isn't reported already).
 Please follow the installation instructions in INSTALL.
 
 
+Overview of Changes in GIMP 2.2.0-pre2
+======================================
+
+- More work on GFig (still more to come here).
+
+- Improvements and fixes to the migration of user settings.
+
+- Final touches to the new PDB APIs.
+
+- Ported some more item factories to GtkUIManager.
+
+- Added new PDB function gimp_layer_from_mask().
+
+- User interface cleanups in IFS Fractal plug-in (former IfsCompose).
+
+- Allow file plug-ins to provide means to access an image thumbnail if
+  the file format provides one or can be rendered at small sizes.
+
+- Lots of bug fixes.
+
+
+Contributors: 
+
+   Michael Natterer, Sven Neumann, David Odin, Manish Singh, Kevin Cozens,
+   Joao S. O. Bueno, Geert Jordaens, David Gowers, Øyvind Kolås, Cai Qian,
+   Simon Budig
+
+
+
 Overview of Changes in GIMP 2.2.0-pre1
 ======================================
 
