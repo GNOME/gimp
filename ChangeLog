@@ -1,5 +1,10 @@
 2004-07-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_add_filters):
+	show extensions in the filters menu.
+
+2004-07-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpbrushmenu.c
 	* libgimp/gimppatternmenu.c: attempt to make the brush and pattern
 	selectors look less like buttons (supposed to fix bug #147777).

@@ -313,7 +313,7 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
   GSList        *list;
 
   filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All Files"));
+  gtk_file_filter_set_name (filter, _("All Files (*.*)"));
   gtk_file_filter_add_pattern (filter, "*");
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
@@ -325,25 +325,36 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
       if (file_proc->menu_paths && file_proc->extensions_list)
         {
           const gchar *domain;
-          gchar       *label;
+          GString     *label;
           GSList      *ext;
+          gboolean     first = TRUE;
 
           domain = plug_ins_locale_domain (gimp, file_proc->prog, NULL);
-          label = plug_in_proc_def_get_label (file_proc, domain);
+
+          label = g_string_new (plug_in_proc_def_get_label (file_proc, domain));
 
           filter = gtk_file_filter_new ();
-          gtk_file_filter_set_name (filter, label);
-          g_free (label);
 
-          for (ext = file_proc->extensions_list;
-               ext;
-               ext = g_slist_next (ext))
+          for (ext = file_proc->extensions_list; ext; ext = g_slist_next (ext))
             {
-              gchar *pattern = g_strdup_printf ("*.%s", (gchar *) ext->data);
+              const gchar *extension = ext->data;
+              gchar       *pattern   = g_strdup_printf ("*.%s", extension);
 
               gtk_file_filter_add_pattern (filter, pattern);
               g_free (pattern);
+
+              if (first)
+                {
+                  g_string_append (label, " (*.");
+                  first = FALSE;
+                }
+
+              g_string_append (label, extension);
+              g_string_append (label, ext->next ? ", *." : ")");
             }
+
+          gtk_file_filter_set_name (filter, label->str);
+          g_string_free (label, TRUE);
 
           gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
         }
