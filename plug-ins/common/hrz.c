@@ -526,9 +526,9 @@ save_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (dlg, "destroy",
+                    G_CALLBACK (gtk_main_quit),
+		    NULL);
 
   gtk_main ();
   gdk_flush ();

@@ -414,10 +414,9 @@ void create_sizemap_dialog(void)
   gtk_preview_size(GTK_PREVIEW(tmpw), OMWIDTH, OMHEIGHT);
   gtk_container_add(GTK_CONTAINER(tmpw2), tmpw);
   gtk_widget_show(tmpw);
-  gtk_widget_set_events(tmpw2, GDK_BUTTON_PRESS_MASK);
-  gtk_signal_connect(GTK_OBJECT(tmpw2), "button_press_event",
-                     GTK_SIGNAL_FUNC(smmapclick), NULL);
-  gtk_widget_realize(tmpw2);
+  gtk_widget_add_events (tmpw2, GDK_BUTTON_PRESS_MASK);
+  g_signal_connect(G_OBJECT(tmpw2), "button_press_event",
+                   G_CALLBACK (smmapclick), NULL);
   gtk_widget_show(tmpw2);
 
   smvectprevbrightadjust = gtk_adjustment_new(50.0, 0.0, 100.0, 1.0, 1.0, 1.0);
@@ -425,8 +424,8 @@ void create_sizemap_dialog(void)
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), FALSE);
   gtk_box_pack_start(GTK_BOX(hbox), tmpw,FALSE,FALSE,0);
   gtk_widget_show(tmpw);
-  gtk_signal_connect(GTK_OBJECT(smvectprevbrightadjust), "value_changed",
-                     (GtkSignalFunc)updatesmvectorprev, NULL);
+  g_signal_connect (smvectprevbrightadjust, "value_changed",
+                    G_CALLBACK (updatesmvectorprev), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Adjust the preview's brightness"), NULL);
 
   tmpw2 = tmpw = gtk_frame_new( _("Preview"));
@@ -447,8 +446,8 @@ void create_sizemap_dialog(void)
   prev_button = tmpw = gtk_button_new_with_mnemonic("_<<");
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(smprevclick), NULL);
+  g_signal_connect (tmpw, "clicked",
+                    G_CALLBACK (smprevclick), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Select previous smvector"), NULL);
 

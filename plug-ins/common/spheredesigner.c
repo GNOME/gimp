@@ -22,9 +22,7 @@
 
 #define PLUG_IN_NAME "SphereDesigner"
 
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include <stdio.h>
 #include <string.h>
@@ -36,6 +34,11 @@
 #endif
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
 
 #include <gtk/gtk.h>
 
@@ -1163,9 +1166,9 @@ void objnormal(vector *res, common *obj, vector *p)
 
 void calclight(vector *col, vector *point, common *obj)
 {
-  int i, j, o;
+  gint i, j;
   ray r;
-  double d, b, a;
+  gdouble d, b, a;
   vector lcol;
   vector norm;
   vector pcol;
@@ -1576,7 +1579,7 @@ texture *currenttexture(void)
   texture *t;
   tmpw = currentitem(texturelist);
   if(!tmpw) return NULL;
-  t = gtk_object_get_data(GTK_OBJECT(tmpw), "texture");
+  t = g_object_get_data (G_OBJECT(tmpw), "texture");
   return t;
 }
 
@@ -1648,10 +1651,10 @@ void addtexture(void)
 
   setdefaults(&s.com.texture[n]);
 
-  item = gtk_list_item_new_with_label(mklabel(&s.com.texture[n]));
-  gtk_object_set_data (GTK_OBJECT(item), "texture", &s.com.texture[n]);
-  gtk_container_add(GTK_CONTAINER(texturelist), item);
-  gtk_widget_show(item);
+  item = gtk_list_item_new_with_label (mklabel(&s.com.texture[n]));
+  g_object_set_data (G_OBJECT (item), "texture", &s.com.texture[n]);
+  gtk_container_add (GTK_CONTAINER(texturelist), item);
+  gtk_widget_show (item);
 
   gtk_list_select_child(GTK_LIST(texturelist), item);
 
@@ -1671,7 +1674,7 @@ void duptexture(void)
   s.com.texture[n] = *t;
 
   item = gtk_list_item_new_with_label(mklabel(&s.com.texture[n]));
-  gtk_object_set_data (GTK_OBJECT(item), "texture", &s.com.texture[n]);
+  g_object_set_data (G_OBJECT(item), "texture", &s.com.texture[n]);
   gtk_container_add(GTK_CONTAINER(texturelist), item);
   gtk_widget_show(item);
 
@@ -1698,8 +1701,8 @@ void rebuildlist(void)
 
   for(n = 0; n < s.com.numtexture; n++) {
     item = gtk_list_item_new_with_label(mklabel(&s.com.texture[n]));
-    gtk_object_set_data (GTK_OBJECT(item), "texture", &s.com.texture[n]);
-    gtk_container_add(GTK_CONTAINER(texturelist), item);
+    g_object_set_data (G_OBJECT(item), "texture", &s.com.texture[n]);
+    gtk_container_add (GTK_CONTAINER(texturelist), item);
     gtk_widget_show(item);
   }
   restartrender();
@@ -1738,7 +1741,7 @@ void deltexture(void)
   gtk_widget_destroy(tmpw);
 }
 
-void loadit(char *fn)
+void loadit(const gchar *fn)
 {
   FILE *f;
   char line[1024];
@@ -1768,7 +1771,7 @@ void loadit(char *fn)
 
 void loadpreset_ok(GtkWidget *w, GtkFileSelection *fs)
 {
-  char *fn = gtk_file_selection_get_filename(GTK_FILE_SELECTION (fs));
+  const gchar *fn = gtk_file_selection_get_filename(GTK_FILE_SELECTION (fs));
   gtk_widget_hide(GTK_WIDGET(fs));
   gtk_list_clear_items(GTK_LIST(texturelist), 0, -1);
   loadit(fn);
@@ -1776,7 +1779,7 @@ void loadpreset_ok(GtkWidget *w, GtkFileSelection *fs)
   restartrender();
 }
 
-void saveit(char *fn)
+void saveit(const gchar *fn)
 {
   gint  i;
   FILE *f;
@@ -1821,7 +1824,7 @@ void saveit(char *fn)
 
 void savepreset_ok(GtkWidget *w, GtkFileSelection *fs)
 {
-  char *fn = gtk_file_selection_get_filename(GTK_FILE_SELECTION (fs));
+  const char *fn = gtk_file_selection_get_filename(GTK_FILE_SELECTION (fs));
   gtk_widget_hide(GTK_WIDGET(fs));
   saveit(fn);
 }
@@ -1847,19 +1850,21 @@ void fileselect(int action)
     windows[action] = gtk_file_selection_new( gettext(titles[action]));
     gtk_window_set_position (GTK_WINDOW (windows[action]), GTK_WIN_POS_MOUSE);
     
-    gtk_signal_connect (GTK_OBJECT (windows[action]), "destroy",
-			GTK_SIGNAL_FUNC(gtk_widget_destroy),
-                        &windows[action]);
-    gtk_signal_connect (GTK_OBJECT (windows[action]), "delete_event",
-			GTK_SIGNAL_FUNC(gtk_widget_hide),
-                        &windows[action]);
+    g_signal_connect (windows[action], "destroy",
+                      G_CALLBACK (gtk_widget_destroy),
+                      &windows[action]);
+    g_signal_connect (windows[action], "delete_event",
+                      G_CALLBACK (gtk_widget_hide),
+                      &windows[action]);
 
-    gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (windows[action])->ok_button),
-                        "clicked", GTK_SIGNAL_FUNC(handlers[action]),
-                        windows[action]);
-    gtk_signal_connect_object(GTK_OBJECT (GTK_FILE_SELECTION (windows[action])->cancel_button),
-                              "clicked", GTK_SIGNAL_FUNC(gtk_widget_destroy),
-                              GTK_OBJECT (windows[action]));
+    g_signal_connect (GTK_FILE_SELECTION (windows[action])->ok_button,
+                      "clicked",
+                      G_CALLBACK(handlers[action]),
+                      windows[action]);
+    g_signal_connect_swapped (GTK_FILE_SELECTION (windows[action])->cancel_button,
+                              "clicked",
+                              G_CALLBACK(gtk_widget_destroy),
+                              windows[action]);
 
     gimp_help_connect (windows[action], gimp_standard_help_func,
 			  "filters/spheredesigner.html");
@@ -2010,8 +2015,9 @@ void mktexturemenu(GtkWidget *texturemenu_menu)
     item = gtk_menu_item_new_with_label ( gettext(t->s));
     gtk_widget_show(item);
     gtk_menu_append (GTK_MENU (texturemenu_menu), item);
-    gtk_signal_connect (GTK_OBJECT(item), "activate",
-			GTK_SIGNAL_FUNC(selecttexture), (void *)t->n);
+    g_signal_connect (item, "activate",
+                      G_CALLBACK (selecttexture),
+                      (gpointer) t->n);
     t++;
   }
 }
@@ -2108,9 +2114,9 @@ void selectcolor1(vector *col)
   
   gtk_color_selection_set_current_alpha (GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG (window)->colorsel), TRUE);
 
-  gtk_signal_connect (GTK_OBJECT (window), "destroy",
-                      GTK_SIGNAL_FUNC(gtk_widget_destroyed),
-                      &window);
+  g_signal_connect (window, "destroy",
+                    G_CALLBACK(gtk_widget_destroyed),
+                    &window);
   tmpcol[0] = t->color1.x;
   tmpcol[1] = t->color1.y;
   tmpcol[2] = t->color1.z;
@@ -2118,13 +2124,13 @@ void selectcolor1(vector *col)
 
   gtk_color_selection_set_color(GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG(window)->colorsel), tmpcol);
 
-  gtk_signal_connect(GTK_OBJECT(GTK_COLOR_SELECTION_DIALOG(window)->ok_button),
-		     "clicked",
-                     GTK_SIGNAL_FUNC(selectcolor1_ok), window);
-  gtk_signal_connect_object(GTK_OBJECT(GTK_COLOR_SELECTION_DIALOG(window)->cancel_button),
-			    "clicked",
-			    GTK_SIGNAL_FUNC(gtk_widget_destroy),
-                            GTK_OBJECT (window));
+  g_signal_connect (GTK_COLOR_SELECTION_DIALOG (window)->ok_button, "clicked",
+                    G_CALLBACK (selectcolor1_ok),
+                    window);
+  g_signal_connect_swapped (GTK_COLOR_SELECTION_DIALOG (window)->cancel_button,
+                            "clicked",
+			    G_CALLBACK (gtk_widget_destroy),
+                            window);
   gtk_widget_show (window);
 }
 
@@ -2146,9 +2152,9 @@ void selectcolor2(vector *col)
 
   gtk_color_selection_set_current_alpha (GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG (window)->colorsel), TRUE);
 
-  gtk_signal_connect (GTK_OBJECT (window), "destroy",
-                      GTK_SIGNAL_FUNC(gtk_widget_destroyed),
-                      &window);
+  g_signal_connect (window, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &window);
   tmpcol[0] = t->color2.x;
   tmpcol[1] = t->color2.y;
   tmpcol[2] = t->color2.z;
@@ -2156,13 +2162,13 @@ void selectcolor2(vector *col)
 
   gtk_color_selection_set_color(GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG(window)->colorsel), tmpcol);
 
-  gtk_signal_connect(GTK_OBJECT(GTK_COLOR_SELECTION_DIALOG(window)->ok_button),
-		     "clicked",
-                     GTK_SIGNAL_FUNC(selectcolor2_ok), window);
-  gtk_signal_connect_object(GTK_OBJECT(GTK_COLOR_SELECTION_DIALOG(window)->cancel_button),
+  g_signal_connect (GTK_COLOR_SELECTION_DIALOG (window)->ok_button, "clicked",
+                    G_CALLBACK (selectcolor2_ok),
+                    window);
+  g_signal_connect_swapped (GTK_COLOR_SELECTION_DIALOG (window)->cancel_button,
 			    "clicked",
-			    GTK_SIGNAL_FUNC(gtk_widget_destroy),
-                            GTK_OBJECT (window));
+			    G_CALLBACK (gtk_widget_destroy),
+                            window);
   gtk_widget_show (window);
 }
 
@@ -2236,13 +2242,13 @@ GtkWidget* makewindow (void)
 
 			    NULL);
 
-  gtk_object_set_data (GTK_OBJECT (window), "window", window);
-  gtk_object_set_data (GTK_OBJECT (window), "okbutton", okbutton);
-  gtk_object_set_data (GTK_OBJECT (window), "cancelbutton", cancelbutton);
-  gtk_object_set_data (GTK_OBJECT (window), "resetbutton", cancelbutton);
+  g_object_set_data (G_OBJECT (window), "window", window);
+  g_object_set_data (G_OBJECT (window), "okbutton", okbutton);
+  g_object_set_data (G_OBJECT (window), "cancelbutton", cancelbutton);
+  g_object_set_data (G_OBJECT (window), "resetbutton", cancelbutton);
 
   table1 = gtk_table_new (3, 3, FALSE);
-  gtk_object_set_data (GTK_OBJECT (window), "table1", table1);
+  g_object_set_data (G_OBJECT (window), "table1", table1);
   gtk_widget_show (table1);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (window)->vbox), table1);
   gtk_table_set_row_spacings (GTK_TABLE (table1), 4);
@@ -2250,102 +2256,111 @@ GtkWidget* makewindow (void)
   gtk_container_set_border_width (GTK_CONTAINER (table1), 6);
 
   frame2 = gtk_frame_new (_("Preview"));
-  gtk_object_set_data (GTK_OBJECT (window), "frame2", frame2);
+  g_object_set_data (G_OBJECT (window), "frame2", frame2);
   gtk_widget_show (frame2);
   gtk_table_attach (GTK_TABLE (table1), frame2, 0, 1, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   drawarea = gtk_drawing_area_new ();
-  gtk_object_set_data (GTK_OBJECT (window), "drawarea", drawarea);
+  g_object_set_data (G_OBJECT (window), "drawarea", drawarea);
   gtk_widget_show (drawarea);
   gtk_container_add (GTK_CONTAINER (frame2), drawarea);
   gtk_widget_set_size_request (drawarea, PREVIEWSIZE, PREVIEWSIZE);
-  gtk_signal_connect (GTK_OBJECT (drawarea), "expose_event",
-                      (GtkSignalFunc) expose_event, NULL);
+  g_signal_connect (drawarea, "expose_event",
+                    G_CALLBACK (expose_event),
+                    NULL);
 
   updatebutton = gtk_button_new_with_label ( _("Update"));
-  gtk_object_set_data (GTK_OBJECT (window), "updatebutton", updatebutton);
+  g_object_set_data (G_OBJECT (window), "updatebutton", updatebutton);
   gtk_widget_show (updatebutton);
   gtk_table_attach (GTK_TABLE (table1), updatebutton, 0, 1, 1, 2,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
 
-  gtk_signal_connect (GTK_OBJECT(updatebutton), "clicked", GTK_SIGNAL_FUNC(restartrender), NULL);
+  g_signal_connect (updatebutton, "clicked",
+                    G_CALLBACK (restartrender),
+                    NULL);
 
 
   frame3 = gtk_frame_new ( _("Textures"));
-  gtk_object_set_data (GTK_OBJECT (window), "frame3", frame3);
+  g_object_set_data (G_OBJECT (window), "frame3", frame3);
   gtk_widget_show (frame3);
   gtk_table_attach (GTK_TABLE (table1), frame3, 1, 2, 0, 2,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
 
   viewport2 = gtk_viewport_new (NULL, NULL);
-  gtk_object_set_data (GTK_OBJECT (window), "viewport2", viewport2);
+  g_object_set_data (G_OBJECT (window), "viewport2", viewport2);
   gtk_widget_set_size_request (viewport2, 150, -1);
   gtk_widget_show (viewport2);
   gtk_container_add (GTK_CONTAINER (frame3), viewport2);
 
   texturelist = gtk_list_new ();
-  gtk_object_set_data (GTK_OBJECT (window), "texturelist", texturelist);
+  g_object_set_data (G_OBJECT (window), "texturelist", texturelist);
   gtk_widget_show (texturelist);
   gtk_container_add (GTK_CONTAINER (viewport2), texturelist);
-  gtk_signal_connect (GTK_OBJECT(texturelist), "selection_changed",
-                      GTK_SIGNAL_FUNC(selectitem), texturelist);
+  g_signal_connect (texturelist, "selection_changed",
+                    G_CALLBACK (selectitem),
+                    texturelist);
 
   hbox1 = gtk_hbox_new (TRUE, 0);
-  gtk_object_set_data (GTK_OBJECT (window), "hbox1", hbox1);
+  g_object_set_data (G_OBJECT (window), "hbox1", hbox1);
   gtk_widget_show (hbox1);
   gtk_table_attach (GTK_TABLE (table1), hbox1, 1, 2, 2, 3,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
 
   addbutton = gtk_button_new_with_label ( _("Add"));
-  gtk_object_set_data (GTK_OBJECT (window), "addbutton", addbutton);
+  g_object_set_data (G_OBJECT (window), "addbutton", addbutton);
   gtk_widget_show (addbutton);
   gtk_box_pack_start (GTK_BOX (hbox1), addbutton, TRUE, TRUE, 0);
-  gtk_signal_connect_object (GTK_OBJECT (addbutton), "clicked",
-                             GTK_SIGNAL_FUNC (addtexture), NULL);
+  g_signal_connect_swapped (addbutton, "clicked",
+                            G_CALLBACK (addtexture),
+                            NULL);
 
   dupbutton = gtk_button_new_with_label ( _("Dup"));
-  gtk_object_set_data (GTK_OBJECT (window), "dupbutton", dupbutton);
+  g_object_set_data (G_OBJECT (window), "dupbutton", dupbutton);
   gtk_widget_show (dupbutton);
   gtk_box_pack_start (GTK_BOX (hbox1), dupbutton, TRUE, TRUE, 0);
-  gtk_signal_connect_object (GTK_OBJECT (dupbutton), "clicked",
-                             GTK_SIGNAL_FUNC (duptexture), NULL);
+  g_signal_connect_swapped (dupbutton, "clicked",
+                            G_CALLBACK (duptexture),
+                            NULL);
 
   delbutton = gtk_button_new_with_label ( _("Del"));
-  gtk_object_set_data (GTK_OBJECT (window), "delbutton", delbutton);
+  g_object_set_data (G_OBJECT (window), "delbutton", delbutton);
   gtk_widget_show (delbutton);
   gtk_box_pack_start (GTK_BOX (hbox1), delbutton, TRUE, TRUE, 0);
-  gtk_signal_connect_object (GTK_OBJECT (delbutton), "clicked",
-                             GTK_SIGNAL_FUNC (deltexture), NULL);
+  g_signal_connect_swapped (delbutton, "clicked",
+                            G_CALLBACK (deltexture),
+                            NULL);
 
   hbox1 = gtk_hbox_new (TRUE, 0);
-  gtk_object_set_data (GTK_OBJECT (window), "hbox1", hbox1);
+  g_object_set_data (G_OBJECT (window), "hbox1", hbox1);
   gtk_widget_show (hbox1);
   gtk_table_attach (GTK_TABLE (table1), hbox1, 0, 1, 2, 3,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
 
   loadbutton = gtk_button_new_with_label ( _("Load"));
-  gtk_object_set_data (GTK_OBJECT (window), "loadbutton", loadbutton);
+  g_object_set_data (G_OBJECT (window), "loadbutton", loadbutton);
   gtk_widget_show (loadbutton);
   gtk_box_pack_start (GTK_BOX (hbox1), loadbutton, TRUE, TRUE, 0);
-  gtk_signal_connect_object (GTK_OBJECT (loadbutton), "clicked",
-                             GTK_SIGNAL_FUNC (loadpreset), NULL);
+  g_signal_connect_swapped (loadbutton, "clicked",
+                            G_CALLBACK (loadpreset),
+                            NULL);
 
   savebutton = gtk_button_new_with_label ( _("Save"));
-  gtk_object_set_data (GTK_OBJECT (window), "savebutton", savebutton);
+  g_object_set_data (G_OBJECT (window), "savebutton", savebutton);
   gtk_widget_show (savebutton);
   gtk_box_pack_start (GTK_BOX (hbox1), savebutton, TRUE, TRUE, 0);
-  gtk_signal_connect_object (GTK_OBJECT (savebutton), "clicked",
-                             GTK_SIGNAL_FUNC (savepreset), NULL);
+  g_signal_connect_swapped (savebutton, "clicked",
+                            G_CALLBACK (savepreset),
+                            NULL);
 
   frame4 = gtk_frame_new ( _("Texture Properties"));
-  gtk_object_set_data (GTK_OBJECT (window), "frame4", frame4);
+  g_object_set_data (G_OBJECT (window), "frame4", frame4);
   gtk_widget_show (frame4);
   gtk_table_attach (GTK_TABLE (table1), frame4, 2, 3, 0, 3,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
 
   table2 = gtk_table_new (6, 4, FALSE);
-  gtk_object_set_data (GTK_OBJECT (window), "table2", table2);
+  g_object_set_data (G_OBJECT (window), "table2", table2);
   gtk_widget_show (table2);
   gtk_container_add (GTK_CONTAINER (frame4), table2);
   gtk_container_set_border_width (GTK_CONTAINER (table2), 5);
@@ -2353,38 +2368,39 @@ GtkWidget* makewindow (void)
   gtk_table_set_row_spacings (GTK_TABLE (table2), 2);
 
   label2 = gtk_label_new ( _("Type:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label2", label2);
+  g_object_set_data (G_OBJECT (window), "label2", label2);
   gtk_widget_show (label2);
   gtk_table_attach (GTK_TABLE (table2), label2, 0, 1, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label2), 1.0, 0.5);
 
   label3 = gtk_label_new ( _("Texture:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label3", label3);
+  g_object_set_data (G_OBJECT (window), "label3", label3);
   gtk_widget_show (label3);
   gtk_table_attach (GTK_TABLE (table2), label3, 0, 1, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label3), 1.0, 0.5);
 
   label4 = gtk_label_new ( _("Colors:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label4", label4);
+  g_object_set_data (G_OBJECT (window), "label4", label4);
   gtk_widget_show (label4);
   gtk_table_attach (GTK_TABLE (table2), label4, 0, 1, 2, 3,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label4), 1.0, 0.5);
 
   hbox3 = gtk_hbox_new (FALSE, 0);
-  gtk_object_set_data (GTK_OBJECT (window), "hbox3", hbox3);
+  g_object_set_data (G_OBJECT (window), "hbox3", hbox3);
   gtk_widget_show (hbox3);
   gtk_table_attach (GTK_TABLE (table2), hbox3, 1, 2, 2, 3,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
 
   colorbutton1 = gtk_button_new();
-  gtk_object_set_data (GTK_OBJECT (window), "colorbutton1", colorbutton1);
+  g_object_set_data (G_OBJECT (window), "colorbutton1", colorbutton1);
   gtk_widget_show (colorbutton1);
   gtk_box_pack_start (GTK_BOX (hbox3), colorbutton1, TRUE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (colorbutton1), "clicked",
-                      (GtkSignalFunc)selectcolor1, NULL);
+  g_signal_connect (G_OBJECT (colorbutton1), "clicked",
+                    G_CALLBACK (selectcolor1),
+                    NULL);
   tmpw = gtk_preview_new(GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (tmpw), COLORBUTTONWIDTH, COLORBUTTONHEIGHT);
   gtk_container_add (GTK_CONTAINER (colorbutton1), tmpw);
@@ -2392,11 +2408,12 @@ GtkWidget* makewindow (void)
   drawcolor1(tmpw);
 
   colorbutton2 = gtk_button_new();
-  gtk_object_set_data (GTK_OBJECT (window), "colorbutton2", colorbutton2);
+  g_object_set_data (G_OBJECT (window), "colorbutton2", colorbutton2);
   gtk_widget_show (colorbutton2);
   gtk_box_pack_start (GTK_BOX (hbox3), colorbutton2, TRUE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (colorbutton2), "clicked",
-                      (GtkSignalFunc)selectcolor2, NULL);
+  g_signal_connect (colorbutton2, "clicked",
+                    G_CALLBACK (selectcolor2),
+                    NULL);
   tmpw = gtk_preview_new(GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (tmpw), COLORBUTTONWIDTH, COLORBUTTONHEIGHT);
   gtk_container_add (GTK_CONTAINER (colorbutton2), tmpw);
@@ -2404,7 +2421,7 @@ GtkWidget* makewindow (void)
   drawcolor2(tmpw);
 
   label5 = gtk_label_new ( _("Scale:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label5", label5);
+  g_object_set_data (G_OBJECT (window), "label5", label5);
   gtk_widget_show (label5);
   gtk_table_attach (GTK_TABLE (table2), label5, 0, 1, 3, 4,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -2412,16 +2429,17 @@ GtkWidget* makewindow (void)
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scalescale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_scalescale, 100, -1);
-  gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
+  g_object_set_data (G_OBJECT (window), "_scalescale", _scalescale);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table2), _scalescale, 1, 2, 3, 4,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
-  gtk_signal_connect(GTK_OBJECT(scalescale), "value_changed",
-                     (GtkSignalFunc)getscales, NULL);
+  g_signal_connect (scalescale, "value_changed",
+                    G_CALLBACK (getscales),
+                    NULL);
 
   label5 = gtk_label_new ( _("Turbulence:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label5", label5);
+  g_object_set_data (G_OBJECT (window), "label5", label5);
   gtk_widget_show (label5);
   gtk_table_attach (GTK_TABLE (table2), label5, 0, 1, 4, 5,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -2429,16 +2447,17 @@ GtkWidget* makewindow (void)
 
   _turbulencescale = gtk_hscale_new (GTK_ADJUSTMENT (turbulencescale = gtk_adjustment_new (0.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_turbulencescale, 100, -1);
-  gtk_object_set_data (GTK_OBJECT (window), "_turbulencescale", _turbulencescale);
+  g_object_set_data (G_OBJECT (window), "_turbulencescale", _turbulencescale);
   gtk_widget_show (_turbulencescale);
   gtk_table_attach (GTK_TABLE (table2), _turbulencescale, 1, 2, 4, 5,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
   gtk_scale_set_digits (GTK_SCALE (_turbulencescale), 2);
-  gtk_signal_connect(GTK_OBJECT(turbulencescale), "value_changed",
-                     (GtkSignalFunc)getscales, NULL);
+  g_signal_connect (turbulencescale, "value_changed",
+                    G_CALLBACK (getscales),
+                    NULL);
 
   label6 = gtk_label_new ( _("Scale X:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
+  g_object_set_data (G_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -2446,16 +2465,16 @@ GtkWidget* makewindow (void)
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scalexscale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_scalescale, 100, -1);
-  gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
+  g_object_set_data (G_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table2), _scalescale, 3, 4, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(scalexscale), "value_changed",
-                     (GtkSignalFunc)getscales, NULL);
+  g_signal_connect (scalexscale, "value_changed",
+                    G_CALLBACK (getscales), NULL);
 
   label6 = gtk_label_new ( _("Scale Y:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
+  g_object_set_data (G_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -2463,16 +2482,16 @@ GtkWidget* makewindow (void)
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scaleyscale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_scalescale, 100, -1);
-  gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
+  g_object_set_data (G_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table2), _scalescale, 3, 4, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(scaleyscale), "value_changed",
-                     (GtkSignalFunc)getscales, NULL);
+  g_signal_connect (scaleyscale, "value_changed",
+                    G_CALLBACK (getscales), NULL);
 
   label6 = gtk_label_new ( _("Scale Z:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
+  g_object_set_data (G_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 2, 3,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -2480,17 +2499,17 @@ GtkWidget* makewindow (void)
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scalezscale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_scalescale, 100, -1);
-  gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
+  g_object_set_data (G_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table2), _scalescale, 3, 4, 2, 3,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(scalezscale), "value_changed",
-                     (GtkSignalFunc)getscales, NULL);
+  g_signal_connect (scalezscale, "value_changed",
+                    G_CALLBACK (getscales), NULL);
 
 
   label6 = gtk_label_new ( _("Rotate X:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
+  g_object_set_data (G_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 3, 4,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -2498,16 +2517,16 @@ GtkWidget* makewindow (void)
 
   _rotscale = gtk_hscale_new (GTK_ADJUSTMENT (rotxscale = gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_rotscale, 100, -1);
-  gtk_object_set_data (GTK_OBJECT (window), "_rotscale", _rotscale);
+  g_object_set_data (G_OBJECT (window), "_rotscale", _rotscale);
   gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
   gtk_widget_show (_rotscale);
   gtk_table_attach (GTK_TABLE (table2), _rotscale, 3, 4, 3, 4,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(rotxscale), "value_changed",
-                     (GtkSignalFunc)getscales, NULL);
+  g_signal_connect (G_OBJECT (rotxscale), "value_changed",
+                    G_CALLBACK (getscales), NULL);
 
   label6 = gtk_label_new ( _("Rotate Y:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
+  g_object_set_data (G_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 4, 5,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -2515,16 +2534,16 @@ GtkWidget* makewindow (void)
 
   _rotscale = gtk_hscale_new (GTK_ADJUSTMENT (rotyscale = gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_rotscale, 100, -1);
-  gtk_object_set_data (GTK_OBJECT (window), "_rotscale", _rotscale);
+  g_object_set_data (G_OBJECT (window), "_rotscale", _rotscale);
   gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
   gtk_widget_show (_rotscale);
   gtk_table_attach (GTK_TABLE (table2), _rotscale, 3, 4, 4, 5,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(rotyscale), "value_changed",
-                     (GtkSignalFunc)getscales, NULL);
+  g_signal_connect (rotyscale, "value_changed",
+                    G_CALLBACK (getscales), NULL);
 
   label6 = gtk_label_new ( _("Rotate Z:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
+  g_object_set_data (G_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 5, 6,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -2532,16 +2551,16 @@ GtkWidget* makewindow (void)
 
   _rotscale = gtk_hscale_new (GTK_ADJUSTMENT (rotzscale = gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_rotscale, 100, -1);
-  gtk_object_set_data (GTK_OBJECT (window), "_rotscale", _rotscale);
+  g_object_set_data (G_OBJECT (window), "_rotscale", _rotscale);
   gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
   gtk_widget_show (_rotscale);
   gtk_table_attach (GTK_TABLE (table2), _rotscale, 3, 4, 5, 6,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(rotzscale), "value_changed",
-                     (GtkSignalFunc)getscales, NULL);
+  g_signal_connect (rotzscale, "value_changed",
+                    G_CALLBACK (getscales), NULL);
 
   label6 = gtk_label_new ( _("Pos X:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
+  g_object_set_data (G_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 5, 6, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -2549,16 +2568,16 @@ GtkWidget* makewindow (void)
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (posxscale = gtk_adjustment_new (0.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_scalescale, 100, -1);
-  gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
+  g_object_set_data (G_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table2), _scalescale, 6, 7, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(posxscale), "value_changed",
-                     (GtkSignalFunc)getscales, NULL);
+  g_signal_connect (posxscale, "value_changed",
+                    G_CALLBACK (getscales), NULL);
 
   label6 = gtk_label_new ( _("Pos Y:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
+  g_object_set_data (G_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 5, 6, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -2566,16 +2585,16 @@ GtkWidget* makewindow (void)
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (posyscale = gtk_adjustment_new (1.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_scalescale, 100, -1);
-  gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
+  g_object_set_data (G_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table2), _scalescale, 6, 7, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(posyscale), "value_changed",
-                     (GtkSignalFunc)getscales, NULL);
+  g_signal_connect (posyscale, "value_changed",
+                    G_CALLBACK (getscales), NULL);
 
   label6 = gtk_label_new ( _("Pos Z:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
+  g_object_set_data (G_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 5, 6, 2, 3,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -2583,42 +2602,45 @@ GtkWidget* makewindow (void)
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (poszscale = gtk_adjustment_new (1.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_scalescale, 100, -1);
-  gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
+  g_object_set_data (G_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table2), _scalescale, 6, 7, 2, 3,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(poszscale), "value_changed",
-                     (GtkSignalFunc)getscales, NULL);
+  g_signal_connect (poszscale, "value_changed",
+                    G_CALLBACK (getscales), NULL);
 
   typemenu = gtk_option_menu_new ();
-  gtk_object_set_data (GTK_OBJECT (window), "typemenu", typemenu);
+  g_object_set_data (G_OBJECT (window), "typemenu", typemenu);
   gtk_widget_show (typemenu);
   gtk_table_attach (GTK_TABLE (table2), typemenu, 1, 2, 0, 1,
                     GTK_FILL | GTK_EXPAND, GTK_EXPAND, 0, 0);
   typemenu_menu = gtk_menu_new ();
   item = gtk_menu_item_new_with_label ( _("Texture"));
   gtk_widget_show (item);
-  gtk_signal_connect (GTK_OBJECT(item), "activate",
-		      GTK_SIGNAL_FUNC(selecttype), NULL);
+  g_signal_connect (item, "activate",
+                    G_CALLBACK (selecttype),
+                    NULL);
   gtk_menu_append (GTK_MENU (typemenu_menu), item);
 
   item = gtk_menu_item_new_with_label ( _("Bump"));
   gtk_widget_show (item);
-  gtk_signal_connect (GTK_OBJECT(item), "activate",
-		      GTK_SIGNAL_FUNC(selecttype), (long *)1);
+  g_signal_connect (item, "activate",
+                    G_CALLBACK (selecttype),
+                    (long *)1);
   gtk_menu_append (GTK_MENU (typemenu_menu), item);
 
   item = gtk_menu_item_new_with_label ( _("Light"));
   gtk_widget_show (item);
-  gtk_signal_connect (GTK_OBJECT(item), "activate",
-		      GTK_SIGNAL_FUNC(selecttype), (long *)2);
+  g_signal_connect (item, "activate",
+                    G_CALLBACK (selecttype),
+                    (long *)2);
   gtk_menu_append (GTK_MENU (typemenu_menu), item);
 
   gtk_option_menu_set_menu (GTK_OPTION_MENU (typemenu), typemenu_menu);
 
   texturemenu = gtk_option_menu_new ();
-  gtk_object_set_data (GTK_OBJECT (window), "texturemenu", texturemenu);
+  g_object_set_data (G_OBJECT (window), "texturemenu", texturemenu);
   gtk_widget_show (texturemenu);
   gtk_table_attach (GTK_TABLE (table2), texturemenu, 1, 2, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
@@ -2629,7 +2651,7 @@ GtkWidget* makewindow (void)
   gtk_option_menu_set_menu (GTK_OPTION_MENU (texturemenu), texturemenu_menu);
 
   label7 = gtk_label_new ( _("Amount:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label7", label7);
+  g_object_set_data (G_OBJECT (window), "label7", label7);
   gtk_widget_show (label7);
   gtk_table_attach (GTK_TABLE (table2), label7, 0, 1, 5, 6,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -2637,16 +2659,16 @@ GtkWidget* makewindow (void)
 
   _amountscale = gtk_hscale_new (GTK_ADJUSTMENT (amountscale = gtk_adjustment_new (1.0, 0, 1.01, .01, .01, .01)));
   gtk_widget_set_size_request (_amountscale, 100, -1);
-  gtk_object_set_data (GTK_OBJECT (window), "_amountscale", _amountscale);
+  g_object_set_data (G_OBJECT (window), "_amountscale", _amountscale);
   gtk_widget_show (_amountscale);
   gtk_table_attach (GTK_TABLE (table2), _amountscale, 1, 2, 5, 6,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_scale_set_digits (GTK_SCALE (_amountscale), 2);
-  gtk_signal_connect(GTK_OBJECT(amountscale), "value_changed",
-                     (GtkSignalFunc)getscales, NULL);
+  g_signal_connect (amountscale, "value_changed",
+                    G_CALLBACK (getscales), NULL);
 
   label8 = gtk_label_new ( _("Exp:"));
-  gtk_object_set_data (GTK_OBJECT (window), "label8", label8);
+  g_object_set_data (G_OBJECT (window), "label8", label8);
   gtk_widget_show (label8);
   gtk_table_attach (GTK_TABLE (table2), label8, 0, 1, 6, 7,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -2654,16 +2676,16 @@ GtkWidget* makewindow (void)
 
   _expscale = gtk_hscale_new (GTK_ADJUSTMENT (expscale = gtk_adjustment_new (1.0, 0, 1.01, .01, .01, .01)));
   gtk_widget_set_size_request (_expscale, 100, -1);
-  gtk_object_set_data (GTK_OBJECT (window), "_expscale", _expscale);
+  g_object_set_data (G_OBJECT (window), "_expscale", _expscale);
   gtk_widget_show (_expscale);
   gtk_table_attach (GTK_TABLE (table2), _expscale, 1, 2, 6, 7,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_scale_set_digits (GTK_SCALE (_expscale), 2);
-  gtk_signal_connect(GTK_OBJECT(expscale), "value_changed",
-                     (GtkSignalFunc)getscales, NULL);
+  g_signal_connect (expscale, "value_changed",
+                    G_CALLBACK (getscales), NULL);
 
   label1 = gtk_label_new ( _("by Vidar Madsen\nSeptember 1999"));
-  gtk_object_set_data (GTK_OBJECT (window), "label1", label1);
+  g_object_set_data (G_OBJECT (window), "label1", label1);
   gtk_widget_show (label1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->action_area), label1,
 		      TRUE, TRUE, 0);

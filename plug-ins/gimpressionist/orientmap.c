@@ -468,27 +468,30 @@ void create_orientmap_dialog(void)
   gtk_container_add(GTK_CONTAINER(frame), hbox);
   gtk_widget_show(hbox);
 
-  ebox = gtk_event_box_new();
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), ebox, _("The vector-field. Left-click to move selected vector, Right-click to point it towards mouse, Middle-click to add a new vector."), NULL);
+  ebox = gtk_event_box_new ();
+  gtk_tooltips_set_tip (GTK_TOOLTIPS (tooltips), ebox,
+                        _("The vector-field. "
+                          "Left-click to move selected vector, "
+                          "Right-click to point it towards mouse, "
+                          "Middle-click to add a new vector."), NULL);
   gtk_box_pack_start(GTK_BOX(hbox), ebox, FALSE, FALSE, 0);
 
-  tmpw = vectorprev = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW(tmpw), OMWIDTH, OMHEIGHT);
-  gtk_container_add(GTK_CONTAINER(ebox), tmpw);
-  gtk_widget_show(tmpw);
-  gtk_widget_set_events(ebox, GDK_BUTTON_PRESS_MASK);
-  gtk_signal_connect(GTK_OBJECT(ebox), "button_press_event",
-                     GTK_SIGNAL_FUNC(mapclick), NULL);
-  gtk_widget_realize(ebox);
-  gtk_widget_show(ebox);
+  tmpw = vectorprev = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (tmpw), OMWIDTH, OMHEIGHT);
+  gtk_container_add (GTK_CONTAINER (ebox), tmpw);
+  gtk_widget_show (tmpw);
+  gtk_widget_add_events (ebox, GDK_BUTTON_PRESS_MASK);
+  g_signal_connect (ebox, "button_press_event",
+                   G_CALLBACK (mapclick), NULL);
+  gtk_widget_show (ebox);
 
   vectprevbrightadjust = gtk_adjustment_new(50.0, 0.0, 100.0, 1.0, 1.0, 1.0);
   tmpw = gtk_vscale_new(GTK_ADJUSTMENT(vectprevbrightadjust));
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), FALSE);
   gtk_box_pack_start(GTK_BOX(hbox), tmpw,FALSE,FALSE,0);
   gtk_widget_show(tmpw);
-  gtk_signal_connect(GTK_OBJECT(vectprevbrightadjust), "value_changed",
-                     (GtkSignalFunc)updatevectorprev, NULL);
+  g_signal_connect (vectprevbrightadjust, "value_changed",
+                    G_CALLBACK (updatevectorprev), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Adjust the preview's brightness"), NULL);
 

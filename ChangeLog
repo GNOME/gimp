@@ -1,4 +1,15 @@
-2003-01-07  Sven Neumann  <neo@wintermute>
+2003-01-07  Sven Neumann  <sven@gimp.org>
+
+	* common/hrz.c
+	* common/plugindetails.c
+	* common/spheredesigner.c
+	* gimpressionist/orientmap.c
+	* gimpressionist/sizemap.c
+	* plugin-helper/color_picker.c
+	* plugin-helper/iwarp.c
+	* winsnap/winsnap.c: ported to GObject signal API.
+
+2003-01-07  Sven Neumann  <sven@gimp.org>
 
 	* configure.in
 	* plug-ins/gfig/Makefile.am

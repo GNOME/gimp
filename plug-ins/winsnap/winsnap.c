@@ -895,16 +895,16 @@ snap_dialog(void)
   dialog = gtk_dialog_new ();
   gtk_window_set_title(GTK_WINDOW(dialog), PLUG_IN_PRINT_NAME);
   gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
-		     (GtkSignalFunc) snap_close_callback,
-		     NULL);
+  g_signal_connect (dialog, "destroy",
+                    G_CALLBACK (snap_close_callback),
+                    NULL);
 
   /*  Action area  */
   button = gtk_button_new_with_label(_("Grab"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT (button), "clicked",
-                     (GtkSignalFunc) snap_grab_callback,
-                     dialog);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (snap_grab_callback),
+                    dialog);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
 		button, TRUE, TRUE, 0);
   gtk_widget_grab_default(button);
@@ -912,9 +912,9 @@ snap_dialog(void)
 
   button = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT(dialog));
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (gtk_widget_destroy),
+                            dialog);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG (dialog)->action_area),
 		      button, TRUE, TRUE, 0);
   gtk_widget_show(button);
@@ -937,9 +937,9 @@ snap_dialog(void)
   radio_group = gtk_radio_button_group ( GTK_RADIO_BUTTON (winsnapintf.single_button) );
   gtk_box_pack_start (GTK_BOX (hbox),
 		      winsnapintf.single_button, TRUE, TRUE, 0);
-  gtk_signal_connect ( GTK_OBJECT (winsnapintf.single_button), "toggled",
-		       (GtkSignalFunc) snap_toggle_update,
-		       &radio_pressed[0]);
+  g_signal_connect (winsnapintf.single_button, "toggled",
+		    G_CALLBACK (snap_toggle_update),
+                    &radio_pressed[0]);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (winsnapintf.single_button),
 				radio_pressed[0]);
   gtk_widget_show (winsnapintf.single_button);
@@ -955,9 +955,9 @@ snap_dialog(void)
   gtk_box_pack_end (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   winsnapintf.decor_button =
     gtk_check_button_new_with_label (_("Include decorations"));
-  gtk_signal_connect (GTK_OBJECT (winsnapintf.decor_button), "toggled",
-                      (GtkSignalFunc) snap_toggle_update,
-                      &decorations);
+  g_signal_connect (winsnapintf.decor_button, "toggled",
+                    G_CALLBACK (snap_toggle_update),
+                    &decorations);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (winsnapintf.decor_button),
 				decorations);
   gtk_box_pack_end (GTK_BOX (hbox), winsnapintf.decor_button, FALSE, FALSE, 0);
@@ -983,9 +983,9 @@ snap_dialog(void)
   winsnapintf.root_button = gtk_radio_button_new ( radio_group );
   radio_group = gtk_radio_button_group ( GTK_RADIO_BUTTON (winsnapintf.root_button) );
   gtk_box_pack_start (GTK_BOX (hbox),  winsnapintf.root_button, TRUE, TRUE, 0);
-  gtk_signal_connect ( GTK_OBJECT (winsnapintf.root_button), "toggled",
-		       (GtkSignalFunc) snap_toggle_update,
-		       &radio_pressed[1]);
+  g_signal_connect (winsnapintf.root_button, "toggled",
+                    G_CALLBACK (snap_toggle_update),
+                    &radio_pressed[1]);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (winsnapintf.root_button),
 				radio_pressed[1]);
   gtk_widget_show (winsnapintf.root_button);

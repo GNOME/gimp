@@ -1011,9 +1011,9 @@ gimp_plugin_desc (void)
 
   plugindesc->details_showing = FALSE;
 
-  gtk_signal_connect (GTK_OBJECT (plugindesc->dlg), "destroy",
-                      GTK_SIGNAL_FUNC (dialog_close_callback),
-		      plugindesc);
+  g_signal_connect (plugindesc->dlg, "destroy",
+                    G_CALLBACK (dialog_close_callback),
+                    plugindesc);
 
   /* hbox : left=notebook ; right=description */
   
@@ -1042,9 +1042,9 @@ gimp_plugin_desc (void)
   clabels[3] = g_strdup (_("Image Types")); 
   plugindesc->clist = gtk_clist_new_with_titles (4, clabels); 
 
-  gtk_signal_connect (GTK_OBJECT (plugindesc->clist), "click_column",
-		      GTK_SIGNAL_FUNC (clist_click_column),
-		      NULL);
+  g_signal_connect (plugindesc->clist, "click_column",
+                    G_CALLBACK (clist_click_column),
+                    NULL);
   gtk_clist_column_titles_show (GTK_CLIST (plugindesc->clist));
   swindow = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swindow),
@@ -1053,9 +1053,9 @@ gimp_plugin_desc (void)
 			        GTK_SELECTION_BROWSE);
 
   gtk_widget_set_size_request (plugindesc->clist, DBL_LIST_WIDTH, DBL_HEIGHT);
-  gtk_signal_connect (GTK_OBJECT (plugindesc->clist), "select_row",
-		      GTK_SIGNAL_FUNC (procedure_clist_select_callback),
-		      plugindesc);
+  g_signal_connect (plugindesc->clist, "select_row",
+                    G_CALLBACK (procedure_clist_select_callback),
+                    plugindesc);
   
   label = gtk_label_new (_("List View"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), swindow, label);
@@ -1073,9 +1073,9 @@ gimp_plugin_desc (void)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swindow),
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_widget_set_size_request (plugindesc->ctree, DBL_LIST_WIDTH, DBL_HEIGHT);
-  gtk_signal_connect (GTK_OBJECT (plugindesc->ctree), "tree_select_row",
-		      GTK_SIGNAL_FUNC (procedure_ctree_select_callback),
-		      plugindesc);
+  g_signal_connect (plugindesc->ctree, "tree_select_row",
+                    G_CALLBACK (procedure_ctree_select_callback),
+                    plugindesc);
   gtk_clist_set_column_auto_resize (GTK_CLIST (plugindesc->ctree), 0, TRUE);
   gtk_clist_set_column_auto_resize (GTK_CLIST (plugindesc->ctree), 1, TRUE);
   gtk_clist_set_column_auto_resize (GTK_CLIST (plugindesc->ctree), 2, TRUE);
@@ -1088,9 +1088,9 @@ gimp_plugin_desc (void)
   gtk_widget_show (plugindesc->ctree);
   gtk_widget_show (swindow);
 
-  gtk_signal_connect_after (GTK_OBJECT (notebook), "switch_page",
-			    GTK_SIGNAL_FUNC (page_select_callback),
-			    plugindesc);
+  g_signal_connect_after (notebook, "switch_page",
+                          G_CALLBACK (page_select_callback),
+                          plugindesc);
   
   gtk_widget_show (notebook);
 
@@ -1114,9 +1114,9 @@ gimp_plugin_desc (void)
 
   button = gtk_button_new_with_label (_("Details >>"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (details_callback),
-		      plugindesc);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (details_callback),
+                    plugindesc);
   gtk_box_pack_start (GTK_BOX (searchhbox), button,
 		      FALSE, FALSE, 0);
   gtk_widget_show (button);
