@@ -1,3 +1,20 @@
+2004-08-27  DindinX  <david@dindinx.org>
+
+	* app/widgets/gimpnavigationpreview.c
+	* app/widgets/gimpnavigationpreview.h: renamed these files to ...
+
+	* app/widgets/gimpnavigationview.c
+	* app/widgets/gimpnavigationview.h: to these.
+	And renamed the GimpNavigationPreview type to GimpNavigationView.
+
+	Hopefully, this is the last change in file names for the Preview->View
+	renaming process.
+
+	* app/display/gimpnavigationeditor.c
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h: Changed accordingly.
+
 2004-08-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.[ch]: removed "gboolean use_default_values"

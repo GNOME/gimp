@@ -38,7 +38,7 @@
 
 #include "widgets/gimpdocked.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpnavigationpreview.h"
+#include "widgets/gimpnavigationview.h"
 #include "widgets/gimpviewrenderer.h"
 
 #include "gimpdisplay.h"
@@ -69,15 +69,15 @@ static GtkWidget * gimp_navigation_editor_new_private    (GimpDisplayShell   *sh
 static gboolean gimp_navigation_editor_button_release    (GtkWidget          *widget,
                                                           GdkEventButton     *bevent,
                                                           GimpDisplayShell   *shell);
-static void   gimp_navigation_editor_marker_changed      (GimpNavigationPreview *preview,
-                                                          gdouble                x,
-                                                          gdouble                y,
-                                                          GimpNavigationEditor  *editor);
-static void   gimp_navigation_editor_zoom                (GimpNavigationPreview *preview,
-                                                          GimpZoomType           direction,
-                                                          GimpNavigationEditor  *editor);
-static void   gimp_navigation_editor_scroll              (GimpNavigationPreview *preview,
-                                                          GdkScrollDirection     direction,
+static void   gimp_navigation_editor_marker_changed      (GimpNavigationView   *view,
+                                                          gdouble               x,
+                                                          gdouble               y,
+                                                          GimpNavigationEditor *editor);
+static void   gimp_navigation_editor_zoom                (GimpNavigationView   *view,
+                                                          GimpZoomType          direction,
+                                                          GimpNavigationEditor *editor);
+static void   gimp_navigation_editor_scroll              (GimpNavigationView   *view,
+                                                          GdkScrollDirection    direction,
                                                           GimpNavigationEditor  *editor);
 
 static void   gimp_navigation_editor_zoom_adj_changed    (GtkAdjustment        *adj,
@@ -170,7 +170,7 @@ gimp_navigation_editor_init (GimpNavigationEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  editor->view = gimp_view_new_by_types (GIMP_TYPE_NAVIGATION_PREVIEW,
+  editor->view = gimp_view_new_by_types (GIMP_TYPE_NAVIGATION_VIEW,
                                          GIMP_TYPE_IMAGE,
                                          GIMP_PREVIEW_SIZE_MEDIUM, 0, TRUE);
   gtk_container_add (GTK_CONTAINER (frame), editor->view);
@@ -320,11 +320,11 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
                               gint              click_x,
                               gint              click_y)
 {
-  GimpNavigationEditor  *editor;
-  GimpNavigationPreview *preview;
-  GdkScreen             *screen;
-  gint                   x, y;
-  gint                   x_org, y_org;
+  GimpNavigationEditor *editor;
+  GimpNavigationView   *view;
+  GdkScreen            *screen;
+  gint                  x, y;
+  gint                  x_org, y_org;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GTK_IS_WIDGET (widget));
@@ -363,7 +363,7 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
 
   gtk_window_set_screen (GTK_WINDOW (shell->nav_popup), screen);
 
-  preview = GIMP_NAVIGATION_PREVIEW (editor->view);
+  view = GIMP_NAVIGATION_VIEW (editor->view);
 
   /* decide where to put the popup */
   gdk_window_get_origin (widget->window, &x_org, &y_org);
@@ -371,13 +371,13 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
 #define BORDER_PEN_WIDTH  3
 
   x = (x_org + click_x -
-       preview->p_x -
-       0.5 * (preview->p_width  - BORDER_PEN_WIDTH) -
+       view->p_x -
+       0.5 * (view->p_width  - BORDER_PEN_WIDTH) -
        2   * widget->style->xthickness);
 
   y = (y_org + click_y -
-       preview->p_y -
-       0.5 * (preview->p_height - BORDER_PEN_WIDTH) -
+       view->p_y -
+       0.5 * (view->p_height - BORDER_PEN_WIDTH) -
        2   * widget->style->ythickness);
 
   /* If the popup doesn't fit into the screen, we have a problem.
@@ -391,10 +391,10 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
    */
 
   x = CLAMP (x, 0, (gdk_screen_get_width (screen)  -
-                    GIMP_VIEW (preview)->renderer->width  -
+                    GIMP_VIEW (view)->renderer->width  -
                     4 * widget->style->xthickness));
   y = CLAMP (y, 0, (gdk_screen_get_height (screen) -
-                    GIMP_VIEW (preview)->renderer->height -
+                    GIMP_VIEW (view)->renderer->height -
                     4 * widget->style->ythickness));
 
   gtk_window_move (GTK_WINDOW (shell->nav_popup), x, y);
@@ -403,12 +403,12 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
   gdk_flush ();
 
   /* fill in then grab pointer */
-  preview->motion_offset_x = 0.5 * (preview->p_width  - BORDER_PEN_WIDTH);
-  preview->motion_offset_y = 0.5 * (preview->p_height - BORDER_PEN_WIDTH);
+  view->motion_offset_x = 0.5 * (view->p_width  - BORDER_PEN_WIDTH);
+  view->motion_offset_y = 0.5 * (view->p_height - BORDER_PEN_WIDTH);
 
 #undef BORDER_PEN_WIDTH
 
-  gimp_navigation_preview_grab_pointer (preview);
+  gimp_navigation_view_grab_pointer (view);
 }
 
 
@@ -550,10 +550,10 @@ gimp_navigation_editor_button_release (GtkWidget        *widget,
 }
 
 static void
-gimp_navigation_editor_marker_changed (GimpNavigationPreview *preview,
-                                       gdouble                x,
-                                       gdouble                y,
-                                       GimpNavigationEditor  *editor)
+gimp_navigation_editor_marker_changed (GimpNavigationView   *view,
+                                       gdouble               x,
+                                       gdouble               y,
+                                       GimpNavigationEditor *editor)
 {
   if (editor->shell)
     {
@@ -573,9 +573,9 @@ gimp_navigation_editor_marker_changed (GimpNavigationPreview *preview,
 }
 
 static void
-gimp_navigation_editor_zoom (GimpNavigationPreview *preview,
-                             GimpZoomType           direction,
-                             GimpNavigationEditor  *editor)
+gimp_navigation_editor_zoom (GimpNavigationView   *view,
+                             GimpZoomType          direction,
+                             GimpNavigationEditor *editor)
 {
   g_return_if_fail (direction != GIMP_ZOOM_TO);
 
@@ -586,9 +586,9 @@ gimp_navigation_editor_zoom (GimpNavigationPreview *preview,
 }
 
 static void
-gimp_navigation_editor_scroll (GimpNavigationPreview *preview,
-                               GdkScrollDirection     direction,
-                               GimpNavigationEditor  *editor)
+gimp_navigation_editor_scroll (GimpNavigationView   *view,
+                               GdkScrollDirection    direction,
+                               GimpNavigationEditor *editor)
 {
   if (editor->shell)
     {
@@ -754,9 +754,9 @@ gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
     gimp_view_renderer_set_dot_for_dot (renderer,
                                         editor->shell->dot_for_dot);
 
-  gimp_navigation_preview_set_marker (GIMP_NAVIGATION_PREVIEW (editor->view),
-                                      editor->shell->offset_x    / xratio,
-                                      editor->shell->offset_y    / yratio,
-                                      editor->shell->disp_width  / xratio,
-                                      editor->shell->disp_height / yratio);
+  gimp_navigation_view_set_marker (GIMP_NAVIGATION_VIEW (editor->view),
+                                   editor->shell->offset_x    / xratio,
+                                   editor->shell->offset_y    / yratio,
+                                   editor->shell->disp_width  / xratio,
+                                   editor->shell->disp_height / yratio);
 }

@@ -165,7 +165,7 @@ typedef struct _GimpThumbBox                 GimpThumbBox;
 /*  views  */
 
 typedef struct _GimpView                     GimpView;
-typedef struct _GimpNavigationPreview        GimpNavigationPreview;
+typedef struct _GimpNavigationView           GimpNavigationView;
 
 
 /*  view renderers  */
