@@ -344,7 +344,7 @@ save_image (gchar  *filename,
    if (spawn_gzip (filename, tmpname, "-cf", &pid) == -1)  
     {
       g_free (tmpname);
-      return STATUS_EXECUTION_ERROR;
+      return GIMP_PDB_EXECUTION_ERROR;
     }
   sleep (2); /* silly wait */
 #else /* UNIX */
@@ -456,7 +456,7 @@ load_image (gchar             *filename,
    if (spawn_gzip (tmpname, filename, "-cfd", &pid) == -1)
      {
        g_free (tmpname);
-       *status = STATUS_EXECUTION_ERROR;
+       *status = GIMP_PDB_EXECUTION_ERROR;
        return -1;
      }
 #else /* UNIX */

@@ -1,3 +1,8 @@
+2000-12-17  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* plug-ins/common/gz.c (save_image): Use GIMP_PDB_EXECUTION_ERROR. 
+	OS/2 fix.
+
 2000-12-16  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am
