@@ -5,21 +5,21 @@ SUBDIRS = \
 	tools			\
 	regexrepl		\
 	pixmaps			\
+	cursors			\
 	themes			\
+	po			\
+	po-libgimp		\
+	po-plug-ins		\
+	po-script-fu		\
+	$(GIMP_PERL_PO)		\
 	libgimpbase		\
 	libgimpcolor		\
 	libgimpmath		\
 	libgimpwidgets		\
 	libgimp			\
 	app			\
-	$(GIMP_PLUGINS)		\
 	$(GIMP_MODULES)		\
-	po			\
-	po-libgimp		\
-	po-plug-ins		\
-	$(GIMP_PERL_PO)		\
-	po-script-fu		\
-	cursors			\
+	$(GIMP_PLUGINS)		\
 	data			\
 	tips			\
 	docs			\

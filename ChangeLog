@@ -1,5 +1,11 @@
 2001-11-14  Michael Natterer  <mitch@gimp.org>
 
+	* Makefile.am: changed build order of toplevel directories so that
+	the stuff which is most likely to be broken during "make dist"
+	(the po stuff) is built before the actual source.
+
+2001-11-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.[ch]: added "update_guide" signal.
 
 	* app/display/gimpdisplay-foreach.[ch]: removed
