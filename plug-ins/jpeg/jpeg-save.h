@@ -1347,7 +1347,8 @@ save_image (const gchar *filename,
    */
   jpeg_set_defaults (&cinfo);
 
-  jpeg_set_quality (&cinfo, (gint) (jsvals.quality * 100), jsvals.baseline);
+  jpeg_set_quality (&cinfo, (gint) ((jsvals.quality + 0.005) * 100),
+		    jsvals.baseline);
   cinfo.smoothing_factor = (gint) (jsvals.smoothing * 100);
   cinfo.optimize_coding = jsvals.optimize;
 
@@ -1892,6 +1893,10 @@ save_dialog (void)
 			     1.0, 0.5,
 			     menu, 1, FALSE);
 
+  dtype = gimp_drawable_type (drawable_ID_global);
+  if (dtype != GIMP_RGB_IMAGE && dtype != GIMP_RGBA_IMAGE)
+    gtk_widget_set_sensitive (menu, FALSE);
+
   /* DCT method */
   menu =
     gimp_int_option_menu_new (FALSE,
@@ -1908,10 +1913,6 @@ save_dialog (void)
 			     _("DCT method (Speed/quality tradeoff):"),
 			     1.0, 0.5,
 			     menu, 1, FALSE);
-
-  dtype = gimp_drawable_type (drawable_ID_global);
-  if (dtype != GIMP_RGB_IMAGE && dtype != GIMP_RGBA_IMAGE)
-    gtk_widget_set_sensitive (menu, FALSE);
 
   com_frame = gtk_frame_new (_("Image comments"));
   gtk_box_pack_start (GTK_BOX (main_vbox), com_frame, TRUE, TRUE, 0);

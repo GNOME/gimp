@@ -1,3 +1,10 @@
+2004-01-08  Raphaël Quinet  <quinet@gamers.org>
+
+	* plug-ins/common/jpeg.c: applied a (slightly modified) patch from
+	keith@goatman.me.uk, fixing a problem with the save dialog for
+	grayscale images and a small rounding error in the JPEG quality
+	level.  Fixes bug #130912.
+
 2004-01-08  Henrik Brix Andersen  <brix@gimp.org>
 
 	* app/config/gimpdisplayconfig.c: added %D* to
