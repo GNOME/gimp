@@ -1,5 +1,25 @@
 2004-05-13  Michael Natterer  <mitch@gimp.org>
 
+	* menus/tool-options-menu.xml: added "name" attributes to all
+	submenus.
+
+	* app/menus/tool-options-menu.c: use the menu names instead of the
+	overly long action names.
+
+	* app/actions/colormap-editor-commands.c
+	* app/actions/tool-options-commands.c: added some callback
+	implementations.
+
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimptooloptionseditor.c: removed the callbacks here
+	and use action buttons.
+
+	* app/actions/actions.c
+	* app/actions/colormap-editor-actions.c
+	* app/actions/edit-actions.c: code review / cleanup.
+
+2004-05-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcontainer.c (gimp_container_add_handler): don't
 	try to lookup detailed "notify::foo" signal specs.
 

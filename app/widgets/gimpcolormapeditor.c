@@ -88,6 +88,10 @@ enum
 static void   gimp_colormap_editor_class_init (GimpColormapEditorClass *klass);
 static void   gimp_colormap_editor_init       (GimpColormapEditor      *colormap_editor);
 
+static GObject * gimp_colormap_editor_constructor  (GType               type,
+                                                    guint               n_params,
+                                                    GObjectConstructParam *params);
+
 static void   gimp_colormap_editor_destroy         (GtkObject          *object);
 static void   gimp_colormap_editor_unmap           (GtkWidget          *widget);
 
@@ -127,11 +131,6 @@ static gboolean gimp_colormap_hex_entry_focus_out  (GtkEntry           *entry,
 
 static void   gimp_colormap_edit_clicked           (GtkWidget          *widget,
                                                     GimpColormapEditor *editor);
-static void   gimp_colormap_add_clicked            (GtkWidget          *widget,
-                                                    GimpColormapEditor *editor);
-static void   gimp_colormap_add_ext_clicked        (GtkWidget          *widget,
-                                                    GdkModifierType     state,
-                                                    GimpColormapEditor *editor);
 
 static void   gimp_colormap_image_mode_changed     (GimpImage          *gimage,
                                                     GimpColormapEditor *editor);
@@ -148,41 +147,38 @@ static GimpImageEditorClass *parent_class = NULL;
 GType
 gimp_colormap_editor_get_type (void)
 {
-  static GType gcd_type = 0;
+  static GType type = 0;
 
-  if (! gcd_type)
+  if (! type)
     {
-      static const GTypeInfo gcd_info =
+      static const GTypeInfo info =
       {
         sizeof (GimpColormapEditorClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_colormap_editor_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpColormapEditor),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_colormap_editor_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_colormap_editor_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpColormapEditor),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_colormap_editor_init,
       };
 
-      gcd_type = g_type_register_static (GIMP_TYPE_IMAGE_EDITOR,
-                                         "GimpColormapEditor",
-                                         &gcd_info, 0);
+      type = g_type_register_static (GIMP_TYPE_IMAGE_EDITOR,
+                                     "GimpColormapEditor",
+                                     &info, 0);
     }
 
-  return gcd_type;
+  return type;
 }
 
 static void
 gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
 {
-  GtkObjectClass       *object_class;
-  GtkWidgetClass       *widget_class;
-  GimpImageEditorClass *image_editor_class;
-
-  object_class       = GTK_OBJECT_CLASS (klass);
-  widget_class       = GTK_WIDGET_CLASS (klass);
-  image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
+  GObjectClass         *object_class       = G_OBJECT_CLASS (klass);
+  GtkObjectClass       *gtk_object_class   = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass       *widget_class       = GTK_WIDGET_CLASS (klass);
+  GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -196,7 +192,9 @@ gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
 		  G_TYPE_NONE, 1,
                   GDK_TYPE_MODIFIER_TYPE);
 
-  object_class->destroy         = gimp_colormap_editor_destroy;
+  object_class->constructor     = gimp_colormap_editor_constructor;
+
+  gtk_object_class->destroy     = gimp_colormap_editor_destroy;
 
   widget_class->unmap           = gimp_colormap_editor_unmap;
 
@@ -208,8 +206,6 @@ gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
 static void
 gimp_colormap_editor_init (GimpColormapEditor *editor)
 {
-  gchar *str;
-
   editor->col_index        = 0;
   editor->dnd_col_index    = 0;
   editor->palette          = NULL;
@@ -220,6 +216,20 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
   editor->index_spinbutton = NULL;
   editor->color_entry      = NULL;
   editor->color_notebook   = NULL;
+}
+
+static GObject *
+gimp_colormap_editor_constructor (GType                  type,
+                                  guint                  n_params,
+                                  GObjectConstructParam *params)
+{
+  GObject            *object;
+  GimpColormapEditor *editor;
+  gchar              *str;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  editor = GIMP_COLORMAP_EDITOR (object);
 
   editor->edit_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
@@ -232,13 +242,16 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
   str = g_strdup_printf (_("Add Color from FG\n%s  from BG"),
                          gimp_get_mod_name_control ());
   editor->add_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor),
-                            GTK_STOCK_ADD, str,
-                            GIMP_HELP_INDEXED_PALETTE_ADD,
-                            G_CALLBACK (gimp_colormap_add_clicked),
-                            G_CALLBACK (gimp_colormap_add_ext_clicked),
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap-editor",
+                                   "colormap-editor-add-color-from-fg",
+                                   "colormap-editor-add-color-from-bg",
+                                   GDK_CONTROL_MASK,
+                                   NULL);
+  gimp_help_set_help_data (editor->add_button, str,
+                           GIMP_HELP_INDEXED_PALETTE_ADD);
   g_free (str);
+
+  return object;
 }
 
 static void
@@ -926,36 +939,6 @@ gimp_colormap_edit_clicked (GtkWidget          *widget,
           color_notebook_show (editor->color_notebook);
           color_notebook_set_color (editor->color_notebook, &color);
         }
-    }
-}
-
-static void
-gimp_colormap_add_clicked (GtkWidget          *widget,
-                           GimpColormapEditor *editor)
-{
-  gimp_colormap_add_ext_clicked (widget, 0, editor);
-}
-
-static void
-gimp_colormap_add_ext_clicked (GtkWidget          *widget,
-                               GdkModifierType     state,
-                               GimpColormapEditor *editor)
-{
-  GimpImage *gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
-
-  if (gimage && gimage->num_cols < 256)
-    {
-      GimpContext *context;
-      GimpRGB      color;
-
-      context = gimp_get_user_context (gimage->gimp);
-
-      if (state & GDK_CONTROL_MASK)
-        gimp_context_get_background (context, &color);
-      else
-        gimp_context_get_foreground (context, &color);
-
-      gimp_image_add_colormap_entry (gimage, &color);
     }
 }
 

@@ -311,4 +311,3 @@ action_data_get_widget (gpointer data)
 
   return NULL;
 }
-

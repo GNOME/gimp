@@ -27,9 +27,9 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcolormapeditor.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "actions.h"
 #include "colormap-editor-actions.h"
 #include "colormap-editor-commands.h"
 
@@ -79,13 +79,11 @@ void
 colormap_editor_actions_update (GimpActionGroup *group,
                                 gpointer         data)
 {
-  GimpColormapEditor *editor;
-  GimpImage          *gimage;
-  gboolean            indexed    = FALSE;
-  gint                num_colors = 0;
+  GimpImage *gimage;
+  gboolean   indexed    = FALSE;
+  gint       num_colors = 0;
 
-  editor = GIMP_COLORMAP_EDITOR (data);
-  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+  gimage = action_data_get_image (data);
 
   if (gimage)
     {

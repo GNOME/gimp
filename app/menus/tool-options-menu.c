@@ -47,7 +47,7 @@ static void   tool_options_menu_update_presets (GimpUIManager *manager,
                                                 guint          merge_id,
                                                 const gchar   *ui_path,
                                                 const gchar   *menu_path,
-                                                const gchar   *action_prefix,
+                                                const gchar   *which_action,
                                                 GimpContainer *presets);
 
 
@@ -110,23 +110,19 @@ tool_options_menu_update_after (GimpUIManager *manager,
                      GUINT_TO_POINTER (merge_id));
 
   tool_options_menu_update_presets (manager, merge_id, ui_path,
-                                    "tool-options-save-menu",
-                                    "tool-options-save-",
+                                    "Save", "save",
                                     tool_info->options_presets);
 
   tool_options_menu_update_presets (manager, merge_id, ui_path,
-                                    "tool-options-restore-menu",
-                                    "tool-options-restore-",
+                                    "Restore", "restore",
                                     tool_info->options_presets);
 
   tool_options_menu_update_presets (manager, merge_id, ui_path,
-                                    "tool-options-rename-menu",
-                                    "tool-options-rename-",
+                                    "Rename", "rename",
                                     tool_info->options_presets);
 
   tool_options_menu_update_presets (manager, merge_id, ui_path,
-                                    "tool-options-delete-menu",
-                                    "tool-options-delete-",
+                                    "Delete", "delete",
                                     tool_info->options_presets);
 
   gtk_ui_manager_ensure_update (GTK_UI_MANAGER (manager));
@@ -137,11 +133,11 @@ tool_options_menu_update_presets (GimpUIManager *manager,
                                   guint          merge_id,
                                   const gchar   *ui_path,
                                   const gchar   *menu_path,
-                                  const gchar   *action_prefix,
+                                  const gchar   *which_action,
                                   GimpContainer *presets)
 {
-  gint  n_children;
-  gint  i;
+  gint n_children;
+  gint i;
 
   n_children = gimp_container_num_children (presets);
 
@@ -150,8 +146,8 @@ tool_options_menu_update_presets (GimpUIManager *manager,
       gchar *action_name;
       gchar *path;
 
+      action_name = g_strdup_printf ("tool-options-%s-%03d", which_action, i);
       path        = g_strdup_printf ("%s/%s", ui_path, menu_path);
-      action_name = g_strdup_printf ("%s%03d", action_prefix, i);
 
       gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
                              path, action_name, action_name,

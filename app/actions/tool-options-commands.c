@@ -174,21 +174,54 @@ void
 tool_options_reset_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
-  GimpToolOptionsEditor *editor = GIMP_TOOL_OPTIONS_EDITOR (data);
+  GimpEditor   *editor    = GIMP_EDITOR (data);
+  GimpContext  *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpToolInfo *tool_info = gimp_context_get_tool (context);
 
-  if (GTK_WIDGET_SENSITIVE (editor->reset_button))
-    gtk_button_clicked (GTK_BUTTON (editor->reset_button));
+  gimp_tool_options_reset (tool_info->tool_options);
+}
+
+static void
+tool_options_reset_all_callback (GtkWidget *widget,
+                                 gboolean   reset_all,
+                                 gpointer   data)
+{
+  Gimp *gimp = GIMP (data);
+
+  if (reset_all)
+    {
+      GList *list;
+
+      for (list = GIMP_LIST (gimp->tool_info_list)->list;
+           list;
+           list = g_list_next (list))
+        {
+          GimpToolInfo *tool_info = list->data;
+
+          gimp_tool_options_reset (tool_info->tool_options);
+        }
+    }
 }
 
 void
 tool_options_reset_all_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
-  GimpToolOptionsEditor *editor = GIMP_TOOL_OPTIONS_EDITOR (data);
+  GimpEditor *editor = GIMP_EDITOR (data);
+  GtkWidget  *qbox;
 
-  if (GTK_WIDGET_SENSITIVE (editor->reset_button))
-    gimp_button_extended_clicked (GIMP_BUTTON (editor->reset_button),
-                                  GDK_SHIFT_MASK);
+  qbox = gimp_query_boolean_box (_("Reset Tool Options"),
+                                 GTK_WIDGET (editor),
+                                 gimp_standard_help_func,
+                                 GIMP_HELP_TOOL_OPTIONS_RESET,
+                                 GTK_STOCK_DIALOG_QUESTION,
+                                 _("Do you really want to reset all "
+                                   "tool options to default values?"),
+                                 GIMP_STOCK_RESET, GTK_STOCK_CANCEL,
+                                 G_OBJECT (editor), "unmap",
+                                 tool_options_reset_all_callback,
+                                 editor->ui_manager->gimp);
+  gtk_widget_show (qbox);
 }
 
 

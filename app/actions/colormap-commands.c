@@ -24,8 +24,13 @@
 
 #include "actions-types.h"
 
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-colormap.h"
+
 #include "widgets/gimpcolormapeditor.h"
 
+#include "actions.h"
 #include "colormap-editor-commands.h"
 
 
@@ -46,9 +51,21 @@ colormap_editor_add_color_cmd_callback (GtkAction *action,
                                         gint       value,
                                         gpointer   data)
 {
-  GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
+  GimpContext *context;
+  GimpImage   *gimage;
+  return_if_no_context (context, data);
+  return_if_no_image (gimage, data);
 
-  if (GTK_WIDGET_SENSITIVE (editor->add_button))
-    gimp_button_extended_clicked (GIMP_BUTTON (editor->add_button),
-                                  value ? GDK_CONTROL_MASK : 0);
+  if (gimage->num_cols < 256)
+    {
+      GimpRGB color;
+
+      if (value)
+        gimp_context_get_background (context, &color);
+      else
+        gimp_context_get_foreground (context, &color);
+
+      gimp_image_add_colormap_entry (gimage, &color);
+      gimp_image_flush (gimage);
+    }
 }

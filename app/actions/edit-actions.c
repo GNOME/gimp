@@ -151,6 +151,7 @@ edit_actions_setup (GimpActionGroup *group)
 {
   GimpContext *user_context;
   GimpRGB      color;
+  GimpPattern *pattern;
 
   gimp_action_group_add_actions (group,
                                  edit_actions,
@@ -183,6 +184,9 @@ edit_actions_setup (GimpActionGroup *group)
 
   gimp_context_get_background (user_context, &color);
   edit_actions_background_changed (user_context, &color, group);
+
+  pattern = gimp_context_get_pattern (user_context);
+  edit_actions_pattern_changed (user_context, pattern, group);
 }
 
 void
@@ -190,16 +194,37 @@ edit_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
   GimpImage    *gimage;
-  GimpDrawable *drawable = NULL;
-  gboolean      sel      = FALSE;
+  GimpDrawable *drawable     = NULL;
+  gchar        *undo_name    = NULL;
+  gchar        *redo_name    = NULL;
+  gboolean      undo_enabled = FALSE;
 
   gimage = action_data_get_image (data);
 
   if (gimage)
     {
-      sel = ! gimp_channel_is_empty (gimp_image_get_mask (gimage));
+      GimpUndo *undo;
+      GimpUndo *redo;
 
       drawable = gimp_image_active_drawable (gimage);
+
+      undo_enabled = gimp_image_undo_is_enabled (gimage);
+
+      if (undo_enabled)
+        {
+          undo = gimp_undo_stack_peek (gimage->undo_stack);
+          redo = gimp_undo_stack_peek (gimage->redo_stack);
+
+          if (undo)
+            undo_name =
+              g_strdup_printf (_("_Undo %s"),
+                               gimp_object_get_name (GIMP_OBJECT (undo)));
+
+          if (redo)
+            redo_name =
+              g_strdup_printf (_("_Redo %s"),
+                               gimp_object_get_name (GIMP_OBJECT (redo)));
+        }
     }
 
 #define SET_LABEL(action,label) \
@@ -207,42 +232,15 @@ edit_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  {
-    gchar    *undo_name = NULL;
-    gchar    *redo_name = NULL;
-    gboolean  enabled   = FALSE;
+  SET_LABEL ("edit-undo", undo_name ? undo_name : _("_Undo"));
+  SET_LABEL ("edit-redo", redo_name ? redo_name : _("_Redo"));
 
-    if (gimage && gimp_image_undo_is_enabled (gimage))
-      {
-        GimpUndo *undo;
-        GimpUndo *redo;
+  SET_SENSITIVE ("edit-undo",       undo_enabled && undo_name);
+  SET_SENSITIVE ("edit-redo",       undo_enabled && redo_name);
+  SET_SENSITIVE ("edit-undo-clear", undo_enabled && (redo_name || redo_name));
 
-        undo = gimp_undo_stack_peek (gimage->undo_stack);
-        redo = gimp_undo_stack_peek (gimage->redo_stack);
-
-        enabled = TRUE;
-
-        if (undo)
-          undo_name =
-            g_strdup_printf (_("_Undo %s"),
-                             gimp_object_get_name (GIMP_OBJECT (undo)));
-
-        if (redo)
-          redo_name =
-            g_strdup_printf (_("_Redo %s"),
-                             gimp_object_get_name (GIMP_OBJECT (redo)));
-      }
-
-    SET_LABEL ("edit-undo", undo_name ? undo_name : _("_Undo"));
-    SET_LABEL ("edit-redo", redo_name ? redo_name : _("_Redo"));
-
-    SET_SENSITIVE ("edit-undo",       enabled && undo_name);
-    SET_SENSITIVE ("edit-redo",       enabled && redo_name);
-    SET_SENSITIVE ("edit-undo-clear", enabled && (redo_name || redo_name));
-
-    g_free (undo_name);
-    g_free (redo_name);
-  }
+  g_free (undo_name);
+  g_free (redo_name);
 
   SET_SENSITIVE ("edit-cut",        drawable);
   SET_SENSITIVE ("edit-copy",       drawable);
