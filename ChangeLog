@@ -1,3 +1,7 @@
+2002-02-03  Manish Singh  <yosh@gimp.org>
+
+	* docs/Makefile.am: don't install gimp-remote manpage yet
+
 2002-02-03  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-convert.c: merged fix from stable branch (#70344).
