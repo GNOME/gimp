@@ -22,8 +22,8 @@ $VERSION = 1.049;
 	PARAM_SELECTION	PARAM_STATUS	PARAM_INT32ARRAY
 );
 
-# constants to be autoloaded
-@_al_consts = (@_param,qw(
+# constants that, in some earlier version, were autoloaded
+@_consts = (@_param,qw(
 	ADDITION_MODE	ALPHA_MASK	APPLY		BEHIND_MODE	BG_BUCKET_FILL
 	BG_IMAGE_FILL	BILINEAR	BLACK_MASK	BLUE_CHANNEL	BLUR
 	CLIP_TO_BOTTOM_LAYER		CLIP_TO_IMAGE	COLOR_MODE	CONICAL_ASYMMETRIC
@@ -47,9 +47,6 @@ $VERSION = 1.049;
 	TRACE_NONE	TRACE_CALL	TRACE_TYPE	TRACE_NAME	TRACE_DESC
 	TRACE_ALL
 	
-));
-
-@_consts = (@_al_consts,qw(
 	MESSAGE_BOX	CONSOLE
 	
 	ALL_HUES	RED_HUES	YELLOW_HUES	GREEN_HUES	CYAN_HUES
@@ -63,30 +60,6 @@ $VERSION = 1.049;
 );
 
 bootstrap Gimp $VERSION;
-
-# use subs is broken for our purpose, so no constant autoloading...
-for(@_al_consts) {
-   my $val = constant($_);
-   *{$_} = sub (){ $val };
-}
-
-sub ALL_HUES		(){ 0 };
-sub RED_HUES		(){ 1 };
-sub YELLOW_HUES		(){ 2 };
-sub GREEN_HUES		(){ 3 };
-sub CYAN_HUES		(){ 4 };
-sub BLUE_HUES		(){ 5 };
-sub MAGENTA_HUES	(){ 6 };
-
-sub MESSAGE_BOX		(){ 0 };
-sub CONSOLE		(){ 1 };
-
-sub SHADOWS		(){ 0 };
-sub MIDTONES		(){ 1 };
-sub HIGHLIGHTS		(){ 2 };
-
-sub HORIZONTAL		(){ 0 };
-sub VERTICAL		(){ 1 };
 
 # internal constants shared with Perl-Server
 
@@ -248,40 +221,35 @@ sub _croak($) {
 
 sub AUTOLOAD {
    my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
-   my $val = Gimp::constant($name);
-   if ($!) {
-      for(@{"${class}::PREFIXES"}) {
-         my $sub = $_.$name;
-         if (exists $ignore_function{$sub}) {
-           *{$AUTOLOAD} = sub { () };
-           goto &$AUTOLOAD;
-         } elsif (UNIVERSAL::can($interface_pkg,$sub)) {
-            my $ref = \&{"${interface_pkg}::$sub"};
-            *{$AUTOLOAD} = sub {
-               shift unless ref $_[0];
+   for(@{"${class}::PREFIXES"}) {
+      my $sub = $_.$name;
+      if (exists $ignore_function{$sub}) {
+        *{$AUTOLOAD} = sub { () };
+        goto &$AUTOLOAD;
+      } elsif (UNIVERSAL::can($interface_pkg,$sub)) {
+         my $ref = \&{"${interface_pkg}::$sub"};
+         *{$AUTOLOAD} = sub {
+            shift unless ref $_[0];
 #               goto &$ref;	# does not always work, PERLBUG! #FIXME
-               my @r = eval { &$ref };
-               _croak $@ if $@;
-               wantarray ? @r : $r[0];
-            };
-            goto &$AUTOLOAD;
-         } elsif (_gimp_procedure_available ($sub)) {
-            *{$AUTOLOAD} = sub {
-               shift unless ref $_[0];
+            my @r = eval { &$ref };
+            _croak $@ if $@;
+            wantarray ? @r : $r[0];
+         };
+         goto &$AUTOLOAD;
+      } elsif (_gimp_procedure_available ($sub)) {
+         *{$AUTOLOAD} = sub {
+            shift unless ref $_[0];
 #               goto gimp_call_procedure
-               my @r=eval { gimp_call_procedure ($sub,@_) };
-               _croak $@ if $@;
-               wantarray ? @r : $r[0];
-            };
-            goto &$AUTOLOAD;
-         } elsif (defined(*{"${interface_pkg}::$sub"}{CODE})) {
-            die "safety net $interface_pkg :: $sub";#d#
-         }
+            my @r=eval { gimp_call_procedure ($sub,@_) };
+            _croak $@ if $@;
+            wantarray ? @r : $r[0];
+         };
+         goto &$AUTOLOAD;
+      } elsif (defined(*{"${interface_pkg}::$sub"}{CODE})) {
+         die "safety net $interface_pkg :: $sub";#d#
       }
-      croak "function/macro \"$name\" not found in $class";
    }
-   *{$AUTOLOAD} = sub (){ $val };
-   goto &$AUTOLOAD;
+   croak "function/macro \"$name\" not found in $class";
 }
 
 # FIXME: why is this necessary? try to understand, hard!

@@ -31,286 +31,185 @@ extern "C" {
 #define GIMP_PARASITE 1
 #endif
 
-static double
-constant(name)
-char *name;
+/* Shamelesssly stolen from IO.xs.  See perlguts, this is only for
+ * 5.004 compatibility.
+ */
+#ifndef newCONSTSUB
+static void
+newCONSTSUB(stash,name,sv)
+    HV *stash;
+    char *name;
+    SV *sv;
 {
-    errno = 0;
-    switch (*name) {
-    case 'A':
-	if (strEQ(name, "ADDITION_MODE"))
-	    return ADDITION_MODE;
-	if (strEQ(name, "ALPHA_MASK"))
-	    return ALPHA_MASK;
-	if (strEQ(name, "APPLY"))
-	    return APPLY;
-	break;
-    case 'B':
-	if (strEQ(name, "BEHIND_MODE"))
-	    return BEHIND_MODE;
-	if (strEQ(name, "BG_BUCKET_FILL"))
-	    return BG_BUCKET_FILL;
-	if (strEQ(name, "BG_IMAGE_FILL"))
-	    return BG_IMAGE_FILL;
-	if (strEQ(name, "BILINEAR"))
-	    return BILINEAR;
-	if (strEQ(name, "BLACK_MASK"))
-	    return BLACK_MASK;
-	if (strEQ(name, "BLUE_CHANNEL"))
-	    return BLUE_CHANNEL;
-	if (strEQ(name, "BLUR"))
-	    return BLUR;
-	break;
-    case 'C':
-	if (strEQ(name, "CLIP_TO_BOTTOM_LAYER"))
-	    return CLIP_TO_BOTTOM_LAYER;
-	if (strEQ(name, "CLIP_TO_IMAGE"))
-	    return CLIP_TO_IMAGE;
-	if (strEQ(name, "COLOR_MODE"))
-	    return COLOR_MODE;
-	if (strEQ(name, "CONICAL_ASYMMETRIC"))
-	    return CONICAL_ASYMMETRIC;
-	if (strEQ(name, "CONICAL_SYMMETRIC"))
-	    return CONICAL_SYMMETRIC;
-	if (strEQ(name, "CUSTOM"))
-	    return CUSTOM;
-	break;
-    case 'D':
-	if (strEQ(name, "DARKEN_ONLY_MODE"))
-	    return DARKEN_ONLY_MODE;
-	if (strEQ(name, "DIFFERENCE_MODE"))
-	    return DIFFERENCE_MODE;
-	if (strEQ(name, "DISCARD"))
-	    return DISCARD;
-	if (strEQ(name, "DISSOLVE_MODE"))
-	    return DISSOLVE_MODE;
-#if HAVE_DIVIDE_MODE || IN_GIMP
-	if (strEQ(name, "DIVIDE_MODE"))
-	    return DIVIDE_MODE;
+#ifdef dTHR
+    dTHR;
 #endif
-	break;
-    case 'E':
-	if (strEQ(name, "EXPAND_AS_NECESSARY"))
-	    return EXPAND_AS_NECESSARY;
-	break;
-    case 'F':
-#if GIMP11
-	if (strEQ(name, "FG_IMAGE_FILL"))
-	    return FG_IMAGE_FILL;
-#endif
-	if (strEQ(name, "FG_BG_HSV"))
-	    return FG_BG_HSV;
-	if (strEQ(name, "FG_BG_RGB"))
-	    return FG_BG_RGB;
-	if (strEQ(name, "FG_BUCKET_FILL"))
-	    return FG_BUCKET_FILL;
-	if (strEQ(name, "FG_TRANS"))
-	    return FG_TRANS;
-	break;
-    case 'G':
-	if (strEQ(name, "GRAY"))
-	    return GRAY;
-	if (strEQ(name, "GRAYA_IMAGE"))
-	    return GRAYA_IMAGE;
-	if (strEQ(name, "GRAY_CHANNEL"))
-	    return GRAY_CHANNEL;
-	if (strEQ(name, "GRAY_IMAGE"))
-	    return GRAY_IMAGE;
-	if (strEQ(name, "GREEN_CHANNEL"))
-	    return GREEN_CHANNEL;
-	break;
-    case 'H':
-	if (strEQ(name, "HUE_MODE"))
-	    return HUE_MODE;
-	break;
-    case 'I':
-	if (strEQ(name, "IMAGE_CLONE"))
-	    return IMAGE_CLONE;
-	if (strEQ(name, "INDEXED"))
-	    return INDEXED;
-	if (strEQ(name, "INDEXEDA_IMAGE"))
-	    return INDEXEDA_IMAGE;
-	if (strEQ(name, "INDEXED_CHANNEL"))
-	    return INDEXED_CHANNEL;
-	if (strEQ(name, "INDEXED_IMAGE"))
-	    return INDEXED_IMAGE;
-	break;
-    case 'L':
-	if (strEQ(name, "LIGHTEN_ONLY_MODE"))
-	    return LIGHTEN_ONLY_MODE;
-	if (strEQ(name, "LINEAR"))
-	    return LINEAR;
-	break;
-    case 'M':
-	if (strEQ(name, "MULTIPLY_MODE"))
-	    return MULTIPLY_MODE;
-	break;
-    case 'N':
-	if (strEQ(name, "NORMAL_MODE"))
-	    return NORMAL_MODE;
-#if GIMP11
-	if (strEQ(name, "NO_IMAGE_FILL"))
-	    return NO_IMAGE_FILL;
-#endif
-	break;
-    case 'O':
-	if (strEQ(name, "OVERLAY_MODE"))
-	    return OVERLAY_MODE;
-	break;
-    case 'P':
-#if GIMP_PARASITE
-	if (strEQ(name, "PARAM_PARASITE"))
-	    return PARAM_PARASITE;
-	if (strEQ(name, "PARASITE_PERSISTANT"))
-	    return PARASITE_PERSISTANT;
-#endif
-	if (strEQ(name, "PARAM_BOUNDARY"))
-	    return PARAM_BOUNDARY;
-	if (strEQ(name, "PARAM_CHANNEL"))
-	    return PARAM_CHANNEL;
-	if (strEQ(name, "PARAM_COLOR"))
-	    return PARAM_COLOR;
-	if (strEQ(name, "PARAM_DISPLAY"))
-	    return PARAM_DISPLAY;
-	if (strEQ(name, "PARAM_DRAWABLE"))
-	    return PARAM_DRAWABLE;
-	if (strEQ(name, "PARAM_END"))
-	    return PARAM_END;
-	if (strEQ(name, "PARAM_FLOAT"))
-	    return PARAM_FLOAT;
-	if (strEQ(name, "PARAM_FLOATARRAY"))
-	    return PARAM_FLOATARRAY;
-	if (strEQ(name, "PARAM_IMAGE"))
-	    return PARAM_IMAGE;
-	if (strEQ(name, "PARAM_INT16"))
-	    return PARAM_INT16;
-	if (strEQ(name, "PARAM_INT16ARRAY"))
-	    return PARAM_INT16ARRAY;
-	if (strEQ(name, "PARAM_INT32"))
-	    return PARAM_INT32;
-	if (strEQ(name, "PARAM_INT32ARRAY"))
-	    return PARAM_INT32ARRAY;
-	if (strEQ(name, "PARAM_INT8"))
-	    return PARAM_INT8;
-	if (strEQ(name, "PARAM_INT8ARRAY"))
-	    return PARAM_INT8ARRAY;
-	if (strEQ(name, "PARAM_LAYER"))
-	    return PARAM_LAYER;
-	if (strEQ(name, "PARAM_PATH"))
-	    return PARAM_PATH;
-	if (strEQ(name, "PARAM_REGION"))
-	    return PARAM_REGION;
-	if (strEQ(name, "PARAM_SELECTION"))
-	    return PARAM_SELECTION;
-	if (strEQ(name, "PARAM_STATUS"))
-	    return PARAM_STATUS;
-	if (strEQ(name, "PARAM_STRING"))
-	    return PARAM_STRING;
-	if (strEQ(name, "PARAM_STRINGARRAY"))
-	    return PARAM_STRINGARRAY;
-	if (strEQ(name, "PATTERN_BUCKET_FILL"))
-	    return PATTERN_BUCKET_FILL;
-	if (strEQ(name, "PATTERN_CLONE"))
-	    return PATTERN_CLONE;
-	if (strEQ(name, "PIXELS"))
-	    return PIXELS;
-	if (strEQ(name, "POINTS"))
-	    return POINTS;
-	if (strEQ(name, "PROC_EXTENSION"))
-	    return PROC_EXTENSION;
-	if (strEQ(name, "PROC_PLUG_IN"))
-	    return PROC_PLUG_IN;
-	if (strEQ(name, "PROC_TEMPORARY"))
-	    return PROC_TEMPORARY;
-	break;
-    case 'R':
-	if (strEQ(name, "RADIAL"))
-	    return RADIAL;
-	if (strEQ(name, "RED_CHANNEL"))
-	    return RED_CHANNEL;
-	if (strEQ(name, "REPEAT_NONE"))
-	    return REPEAT_NONE;
-	if (strEQ(name, "REPEAT_SAWTOOTH"))
-	    return REPEAT_SAWTOOTH;
-	if (strEQ(name, "REPEAT_TRIANGULAR"))
-	    return REPEAT_TRIANGULAR;
-	if (strEQ(name, "RGB"))
-	    return RGB;
-	if (strEQ(name, "RGBA_IMAGE"))
-	    return RGBA_IMAGE;
-	if (strEQ(name, "RGB_IMAGE"))
-	    return RGB_IMAGE;
-	if (strEQ(name, "RUN_INTERACTIVE"))
-	    return RUN_INTERACTIVE;
-	if (strEQ(name, "RUN_NONINTERACTIVE"))
-	    return RUN_NONINTERACTIVE;
-	if (strEQ(name, "RUN_WITH_LAST_VALS"))
-	    return RUN_WITH_LAST_VALS;
-	break;
-    case 'S':
-	if (strEQ(name, "SATURATION_MODE"))
-	    return SATURATION_MODE;
-	if (strEQ(name, "SCREEN_MODE"))
-	    return SCREEN_MODE;
-	if (strEQ(name, "SELECTION_ADD"))
-	    return SELECTION_ADD;
-	if (strEQ(name, "SELECTION_INTERSECT"))
-	    return SELECTION_INTERSECT;
-	if (strEQ(name, "SELECTION_REPLACE"))
-	    return SELECTION_REPLACE;
-	if (strEQ(name, "SELECTION_SUB"))
-	    return SELECTION_SUB;
-	if (strEQ(name, "SHAPEBURST_ANGULAR"))
-	    return SHAPEBURST_ANGULAR;
-	if (strEQ(name, "SHAPEBURST_DIMPLED"))
-	    return SHAPEBURST_DIMPLED;
-	if (strEQ(name, "SHAPEBURST_SPHERICAL"))
-	    return SHAPEBURST_SPHERICAL;
-	if (strEQ(name, "SHARPEN"))
-	    return SHARPEN;
-	if (strEQ(name, "SQUARE"))
-	    return SQUARE;
-	if (strEQ(name, "STATUS_CALLING_ERROR"))
-	    return STATUS_CALLING_ERROR;
-	if (strEQ(name, "STATUS_EXECUTION_ERROR"))
-	    return STATUS_EXECUTION_ERROR;
-	if (strEQ(name, "STATUS_PASS_THROUGH"))
-	    return STATUS_PASS_THROUGH;
-	if (strEQ(name, "STATUS_SUCCESS"))
-	    return STATUS_SUCCESS;
-	if (strEQ(name, "SUBTRACT_MODE"))
-	    return SUBTRACT_MODE;
-	break;
-    case 'T':
-	if (strEQ(name, "TRANS_IMAGE_FILL"))
-	    return TRANS_IMAGE_FILL;
-	if (strEQ(name, "TRACE_NONE")) return TRACE_NONE;
-	if (strEQ(name, "TRACE_CALL")) return TRACE_CALL;
-	if (strEQ(name, "TRACE_TYPE")) return TRACE_TYPE;
-	if (strEQ(name, "TRACE_NAME")) return TRACE_NAME;
-	if (strEQ(name, "TRACE_DESC")) return TRACE_DESC;
-	if (strEQ(name, "TRACE_ALL"))  return TRACE_ALL;
-	break;
-    case 'V':
-	if (strEQ(name, "VALUE_MODE"))
-	    return VALUE_MODE;
-	break;
-    case 'W':
-	if (strEQ(name, "WHITE_IMAGE_FILL"))
-	    return WHITE_IMAGE_FILL;
-	if (strEQ(name, "WHITE_MASK"))
-	    return WHITE_MASK;
-	break;
-    }
-    errno = EINVAL;
-    return 0;
+    U32 oldhints = hints;
+    HV *old_cop_stash = curcop->cop_stash;
+    HV *old_curstash = curstash;
+    line_t oldline = curcop->cop_line;
+    curcop->cop_line = copline;
+
+    hints &= ~HINT_BLOCK_SCOPE;
+    if(stash)
+	curstash = curcop->cop_stash = stash;
+
+    newSUB(
+	MY_start_subparse(FALSE, 0),
+	newSVOP(OP_CONST, 0, newSVpv(name,0)),
+	newSVOP(OP_CONST, 0, &sv_no),	/* SvPV(&sv_no) == "" -- GMB */
+	newSTATEOP(0, Nullch, newSVOP(OP_CONST, 0, sv))
+    );
+
+    hints = oldhints;
+    curcop->cop_stash = old_cop_stash;
+    curstash = old_curstash;
+    curcop->cop_line = oldline;
 }
+#endif
 
 MODULE = Gimp	PACKAGE = Gimp
 
 PROTOTYPES: ENABLE
 
-double
-constant(name)
-	char *		name
+BOOT:
+{
+   HV *stash = gv_stashpvn("Gimp", 4, TRUE);
+   
+   newCONSTSUB(stash,"ADDITION_MODE",newSViv(ADDITION_MODE));
+   newCONSTSUB(stash,"ALPHA_MASK",newSViv(ALPHA_MASK));
+   newCONSTSUB(stash,"APPLY",newSViv(APPLY));
+   newCONSTSUB(stash,"BEHIND_MODE",newSViv(BEHIND_MODE));
+   newCONSTSUB(stash,"BG_BUCKET_FILL",newSViv(BG_BUCKET_FILL));
+   newCONSTSUB(stash,"BG_IMAGE_FILL",newSViv(BG_IMAGE_FILL));
+   newCONSTSUB(stash,"BILINEAR",newSViv(BILINEAR));
+   newCONSTSUB(stash,"BLACK_MASK",newSViv(BLACK_MASK));
+   newCONSTSUB(stash,"BLUE_CHANNEL",newSViv(BLUE_CHANNEL));
+   newCONSTSUB(stash,"BLUR",newSViv(BLUR));
+   newCONSTSUB(stash,"CLIP_TO_BOTTOM_LAYER",newSViv(CLIP_TO_BOTTOM_LAYER));
+   newCONSTSUB(stash,"CLIP_TO_IMAGE",newSViv(CLIP_TO_IMAGE));
+   newCONSTSUB(stash,"COLOR_MODE",newSViv(COLOR_MODE));
+   newCONSTSUB(stash,"CONICAL_ASYMMETRIC",newSViv(CONICAL_ASYMMETRIC));
+   newCONSTSUB(stash,"CONICAL_SYMMETRIC",newSViv(CONICAL_SYMMETRIC));
+   newCONSTSUB(stash,"CUSTOM",newSViv(CUSTOM));
+   newCONSTSUB(stash,"DARKEN_ONLY_MODE",newSViv(DARKEN_ONLY_MODE));
+   newCONSTSUB(stash,"DIFFERENCE_MODE",newSViv(DIFFERENCE_MODE));
+   newCONSTSUB(stash,"DISCARD",newSViv(DISCARD));
+   newCONSTSUB(stash,"DISSOLVE_MODE",newSViv(DISSOLVE_MODE));
+   newCONSTSUB(stash,"EXPAND_AS_NECESSARY",newSViv(EXPAND_AS_NECESSARY));
+   newCONSTSUB(stash,"FG_BG_HSV",newSViv(FG_BG_HSV));
+   newCONSTSUB(stash,"FG_BG_RGB",newSViv(FG_BG_RGB));
+   newCONSTSUB(stash,"FG_BUCKET_FILL",newSViv(FG_BUCKET_FILL));
+   newCONSTSUB(stash,"FG_TRANS",newSViv(FG_TRANS));
+   newCONSTSUB(stash,"GRAY",newSViv(GRAY));
+   newCONSTSUB(stash,"GRAYA_IMAGE",newSViv(GRAYA_IMAGE));
+   newCONSTSUB(stash,"GRAY_CHANNEL",newSViv(GRAY_CHANNEL));
+   newCONSTSUB(stash,"GRAY_IMAGE",newSViv(GRAY_IMAGE));
+   newCONSTSUB(stash,"GREEN_CHANNEL",newSViv(GREEN_CHANNEL));
+   newCONSTSUB(stash,"HUE_MODE",newSViv(HUE_MODE));
+   newCONSTSUB(stash,"IMAGE_CLONE",newSViv(IMAGE_CLONE));
+   newCONSTSUB(stash,"INDEXED",newSViv(INDEXED));
+   newCONSTSUB(stash,"INDEXEDA_IMAGE",newSViv(INDEXEDA_IMAGE));
+   newCONSTSUB(stash,"INDEXED_CHANNEL",newSViv(INDEXED_CHANNEL));
+   newCONSTSUB(stash,"INDEXED_IMAGE",newSViv(INDEXED_IMAGE));
+   newCONSTSUB(stash,"LIGHTEN_ONLY_MODE",newSViv(LIGHTEN_ONLY_MODE));
+   newCONSTSUB(stash,"LINEAR",newSViv(LINEAR));
+   newCONSTSUB(stash,"MULTIPLY_MODE",newSViv(MULTIPLY_MODE));
+   newCONSTSUB(stash,"NORMAL_MODE",newSViv(NORMAL_MODE));
+   newCONSTSUB(stash,"OVERLAY_MODE",newSViv(OVERLAY_MODE));
+   newCONSTSUB(stash,"PARAM_BOUNDARY",newSViv(PARAM_BOUNDARY));
+   newCONSTSUB(stash,"PARAM_CHANNEL",newSViv(PARAM_CHANNEL));
+   newCONSTSUB(stash,"PARAM_COLOR",newSViv(PARAM_COLOR));
+   newCONSTSUB(stash,"PARAM_DISPLAY",newSViv(PARAM_DISPLAY));
+   newCONSTSUB(stash,"PARAM_DRAWABLE",newSViv(PARAM_DRAWABLE));
+   newCONSTSUB(stash,"PARAM_END",newSViv(PARAM_END));
+   newCONSTSUB(stash,"PARAM_FLOAT",newSViv(PARAM_FLOAT));
+   newCONSTSUB(stash,"PARAM_FLOATARRAY",newSViv(PARAM_FLOATARRAY));
+   newCONSTSUB(stash,"PARAM_IMAGE",newSViv(PARAM_IMAGE));
+   newCONSTSUB(stash,"PARAM_INT16",newSViv(PARAM_INT16));
+   newCONSTSUB(stash,"PARAM_INT16ARRAY",newSViv(PARAM_INT16ARRAY));
+   newCONSTSUB(stash,"PARAM_INT32",newSViv(PARAM_INT32));
+   newCONSTSUB(stash,"PARAM_INT32ARRAY",newSViv(PARAM_INT32ARRAY));
+   newCONSTSUB(stash,"PARAM_INT8",newSViv(PARAM_INT8));
+   newCONSTSUB(stash,"PARAM_INT8ARRAY",newSViv(PARAM_INT8ARRAY));
+   newCONSTSUB(stash,"PARAM_LAYER",newSViv(PARAM_LAYER));
+   newCONSTSUB(stash,"PARAM_PATH",newSViv(PARAM_PATH));
+   newCONSTSUB(stash,"PARAM_REGION",newSViv(PARAM_REGION));
+   newCONSTSUB(stash,"PARAM_SELECTION",newSViv(PARAM_SELECTION));
+   newCONSTSUB(stash,"PARAM_STATUS",newSViv(PARAM_STATUS));
+   newCONSTSUB(stash,"PARAM_STRING",newSViv(PARAM_STRING));
+   newCONSTSUB(stash,"PARAM_STRINGARRAY",newSViv(PARAM_STRINGARRAY));
+   newCONSTSUB(stash,"PATTERN_BUCKET_FILL",newSViv(PATTERN_BUCKET_FILL));
+   newCONSTSUB(stash,"PATTERN_CLONE",newSViv(PATTERN_CLONE));
+   newCONSTSUB(stash,"PIXELS",newSViv(PIXELS));
+   newCONSTSUB(stash,"POINTS",newSViv(POINTS));
+   newCONSTSUB(stash,"PROC_EXTENSION",newSViv(PROC_EXTENSION));
+   newCONSTSUB(stash,"PROC_PLUG_IN",newSViv(PROC_PLUG_IN));
+   newCONSTSUB(stash,"PROC_TEMPORARY",newSViv(PROC_TEMPORARY));
+   newCONSTSUB(stash,"RADIAL",newSViv(RADIAL));
+   newCONSTSUB(stash,"RED_CHANNEL",newSViv(RED_CHANNEL));
+   newCONSTSUB(stash,"REPEAT_NONE",newSViv(REPEAT_NONE));
+   newCONSTSUB(stash,"REPEAT_SAWTOOTH",newSViv(REPEAT_SAWTOOTH));
+   newCONSTSUB(stash,"REPEAT_TRIANGULAR",newSViv(REPEAT_TRIANGULAR));
+   newCONSTSUB(stash,"RGB",newSViv(RGB));
+   newCONSTSUB(stash,"RGBA_IMAGE",newSViv(RGBA_IMAGE));
+   newCONSTSUB(stash,"RGB_IMAGE",newSViv(RGB_IMAGE));
+   newCONSTSUB(stash,"RUN_INTERACTIVE",newSViv(RUN_INTERACTIVE));
+   newCONSTSUB(stash,"RUN_NONINTERACTIVE",newSViv(RUN_NONINTERACTIVE));
+   newCONSTSUB(stash,"RUN_WITH_LAST_VALS",newSViv(RUN_WITH_LAST_VALS));
+   newCONSTSUB(stash,"SATURATION_MODE",newSViv(SATURATION_MODE));
+   newCONSTSUB(stash,"SCREEN_MODE",newSViv(SCREEN_MODE));
+   newCONSTSUB(stash,"SELECTION_ADD",newSViv(SELECTION_ADD));
+   newCONSTSUB(stash,"SELECTION_INTERSECT",newSViv(SELECTION_INTERSECT));
+   newCONSTSUB(stash,"SELECTION_REPLACE",newSViv(SELECTION_REPLACE));
+   newCONSTSUB(stash,"SELECTION_SUB",newSViv(SELECTION_SUB));
+   newCONSTSUB(stash,"SHAPEBURST_ANGULAR",newSViv(SHAPEBURST_ANGULAR));
+   newCONSTSUB(stash,"SHAPEBURST_DIMPLED",newSViv(SHAPEBURST_DIMPLED));
+   newCONSTSUB(stash,"SHAPEBURST_SPHERICAL",newSViv(SHAPEBURST_SPHERICAL));
+   newCONSTSUB(stash,"SHARPEN",newSViv(SHARPEN));
+   newCONSTSUB(stash,"SQUARE",newSViv(SQUARE));
+   newCONSTSUB(stash,"STATUS_CALLING_ERROR",newSViv(STATUS_CALLING_ERROR));
+   newCONSTSUB(stash,"STATUS_EXECUTION_ERROR",newSViv(STATUS_EXECUTION_ERROR));
+   newCONSTSUB(stash,"STATUS_PASS_THROUGH",newSViv(STATUS_PASS_THROUGH));
+   newCONSTSUB(stash,"STATUS_SUCCESS",newSViv(STATUS_SUCCESS));
+   newCONSTSUB(stash,"SUBTRACT_MODE",newSViv(SUBTRACT_MODE));
+   newCONSTSUB(stash,"TRANS_IMAGE_FILL",newSViv(TRANS_IMAGE_FILL));
+   newCONSTSUB(stash,"TRACE_NONE",newSViv(TRACE_NONE));
+   newCONSTSUB(stash,"TRACE_CALL",newSViv(TRACE_CALL));
+   newCONSTSUB(stash,"TRACE_TYPE",newSViv(TRACE_TYPE));
+   newCONSTSUB(stash,"TRACE_NAME",newSViv(TRACE_NAME));
+   newCONSTSUB(stash,"TRACE_DESC",newSViv(TRACE_DESC));
+   newCONSTSUB(stash,"TRACE_ALL",newSViv(TRACE_ALL));
+   newCONSTSUB(stash,"VALUE_MODE",newSViv(VALUE_MODE));
+   newCONSTSUB(stash,"WHITE_IMAGE_FILL",newSViv(WHITE_IMAGE_FILL));
+   newCONSTSUB(stash,"WHITE_MASK",newSViv(WHITE_MASK));
+#if HAVE_DIVIDE_MODE || IN_GIMP
+   newCONSTSUB(stash,"DIVIDE_MODE",newSViv(DIVIDE_MODE));
+#endif
+#if GIMP11
+   newCONSTSUB(stash,"FG_IMAGE_FILL",newSViv(FG_IMAGE_FILL));
+   newCONSTSUB(stash,"NO_IMAGE_FILL",newSViv(NO_IMAGE_FILL));
+#endif
+#if GIMP_PARASITE
+   newCONSTSUB(stash,"PARAM_PARASITE",newSViv(PARAM_PARASITE));
+   newCONSTSUB(stash,"PARASITE_PERSISTANT",newSViv(PARASITE_PERSISTANT));
+#endif
+   newCONSTSUB(stash,"ALL_HUES",	newSViv(0));
+   newCONSTSUB(stash,"RED_HUES",	newSViv(1));
+   newCONSTSUB(stash,"YELLOW_HUES",	newSViv(2));
+   newCONSTSUB(stash,"GREEN_HUES",	newSViv(3));
+   newCONSTSUB(stash,"CYAN_HUES",	newSViv(4));
+   newCONSTSUB(stash,"BLUE_HUES",	newSViv(5));
+   newCONSTSUB(stash,"MAGENTA_HUES",	newSViv(6));
+
+   newCONSTSUB(stash,"MESSAGE_BOX",	newSViv(0));
+   newCONSTSUB(stash,"CONSOLE",		newSViv(1));
+
+   newCONSTSUB(stash,"SHADOWS",		newSViv(0));
+   newCONSTSUB(stash,"MIDTONES",	newSViv(1));
+   newCONSTSUB(stash,"HIGHLIGHTS",	newSViv(2));
+
+   newCONSTSUB(stash,"HORIZONTAL",	newSViv(0));
+   newCONSTSUB(stash,"VERTICAL",	newSViv(1));
+}
 

@@ -6,6 +6,7 @@ shortcuts (don't ask)
 gimp -b "(extension-perl-server 0 0 0)"
 gimp ~/pix/ka001.jpg -b "(extension-perl-server 0 0 0)"
 file:///usr/app/lib/perl5/site_perl/i686-linux/PDL/HtmlDocs/
+make test TEST_VERBOSE=1
 
 bugs
 
@@ -22,6 +23,9 @@ bugs
   
 important issues
 
+  * gimp->object_id, drawable_object_id remove!
+  * PF_CUSTOM
+  * gimp_display_image
   * wamp up homepage
   * --ui and --noui for Gimp::Fu
   * [PF_CUSTOM]

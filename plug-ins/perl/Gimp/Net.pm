@@ -231,7 +231,7 @@ sub get_connection() {
 }
 
 sub set_connection($) {
-   ($server_fh,$gimp_pid)=@$_;
+   ($server_fh,$gimp_pid)=@{+shift};
 }
 
 END {

@@ -1,10 +1,14 @@
 Revision history for Gimp-Perl extension.
 
+1.049 Mon Nov 23 20:54:41 CET 1998
 	- updated configure to require 1.0.2
 	- added some more scripts to the dist
 	- brushes are no longer shown inverted
-	- belp button && logo for Gimp::Fu. the first doesn't work properly
+	- help button && logo for Gimp::Fu. the first doesn't work properly
 	  and the second is ugly. feel free to send me a better version.
+	- constants are no longer autoloaded (yeah!)
+	- bug in Gimp::Net::set_connection fixed as suggested by
+	  <alex@mediaconsult.com>
 
 1.048 Fri Nov 13 20:39:52 CET 1998
 	- Gimp::Fu::save_image now correctly respects the quality setting
