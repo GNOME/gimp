@@ -1169,7 +1169,7 @@ if test "x$enable_python" != xno; then
   AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
 
   dnl check for PyGTK
-  PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= 1.99.12)
+  PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= 1.99.15)
   AC_SUBST(PYGTK_CFLAGS)
 fi
 AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)

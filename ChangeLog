@@ -1,3 +1,8 @@
+2004-01-12  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: we need at least pygtk 1.99.15 for pygimp. Enforce
+	this.
+
 2004-01-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/CML_explorer.c (parse_line_to_gdouble): use
