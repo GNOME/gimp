@@ -1053,7 +1053,7 @@ msgstr ""
 
 #: Perl-Server:0
 msgid "received QUIT request"
-msgstr ""
+msgstr "отримано запит QUIT"
 
 #: Gimp/Fu.pm:0
 msgid "register called with too many or wrong arguments\n"
@@ -1077,7 +1077,7 @@ msgstr ""
 
 #: Perl-Server:0
 msgid "server going down..."
-msgstr ""
+msgstr "зарешення роботи сервера..."
 
 #: Net/Net.pm:0
 msgid "server requests authorization, but no authorization available\n"
@@ -1113,15 +1113,15 @@ msgstr "надто багато"
 
 #: Net/Net.pm:0
 msgid "trying to start gimp with options \"$opt\"\n"
-msgstr ""
+msgstr "спроба запустити GIMP з параметрами \"$opt\"\n"
 
 #: Perl-Server:0
 msgid "unable to accept tcp connection: $!\n"
-msgstr "неможливо прийняти TCP-з'╓днання: $!\n"
+msgstr "не вдялося прийняти TCP-з'╓днання: $!\n"
 
 #: Perl-Server:0
 msgid "unable to accept unix connection: $!\n"
-msgstr ""
+msgstr "не вдалося прийняти UNIX-з'╓днання: $!\n"
 
 #: Gimp/Lib.xs:0
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
@@ -1133,7 +1133,7 @@ msgstr "невдалось створити \"$fn\": $!"
 
 #: Perl-Server:0
 msgid "unable to create listening tcp socket: $!\n"
-msgstr ""
+msgstr "не вдалось створити прослуховування сокету: $!\n"
 
 #: Perl-Server:0
 msgid "unable to create listening unix socket: $!\n"
@@ -1181,64 +1181,4 @@ msgstr "невдала авторизац╕я, з'╓днання об╕рвано"
 
 #: Gimp/Compat.pm:0
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
-msgstr ""
-
-#~ msgid "<Image>/Filters/Logulator/Bovination"
-#~ msgstr "<Image>/Ф╕льтри/Ре╓стратор/Bovination"
-
-#~ msgid "<Image>/Filters/Logulator/Blended"
-#~ msgstr "<Image>/Ф╕льтри/Ре╓стратор/Зм╕шаний"
-
-#~ msgid "<Image>/Filters/Logulator/Basic I"
-#~ msgstr "<Image>/Ф╕льтри/Ре╓стратор/Основний I"
-
-#~ msgid "<Image>/Filters/Logulator/3D Outline..."
-#~ msgstr "<Image>/Ф╕льтри/Logulator/3D Контур..."
-
-#~ msgid "<Image>/Filters/Logulator/Glowing Hot"
-#~ msgstr "<Image>/Ф╕льтри/Ре╓стратор/Glowing Hot"
-
-#~ msgid "<Image>/Filters/Logulator/Basic II"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Основний II"
-
-#~ msgid "<Image>/Filters/Logulator/Starburst"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Starburst"
-
-#~ msgid "<Image>/Filters/Logulator/Comic Book"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Ком╕кси"
-
-#~ msgid "<Image>/Filters/Logulator/Chalk"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Крейда"
-
-#~ msgid "<Image>/Filters/Logulator/Glossy"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Глянс"
-
-#~ msgid "<Image>/Filters/Logulator/Particle Trace"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Сл╕д частки"
-
-#~ msgid "<Image>/Filters/Logulator/Alien Glow"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Чуже сяйво"
-
-#~ msgid "<Image>/Filters/Logulator/Cool Metal"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Холодний метал"
-
-#~ msgid "<Image>/Filters/Logulator/Textured"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Текстура"
-
-#~ msgid "<Image>/Filters/Logulator/Gradient Bevel"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Град╕╓нтний ск╕с"
-
-#~ msgid "<Image>/Filters/Logulator/Frosty"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Мороз"
-
-#~ msgid "<Image>/Filters/Logulator/Neon"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Неон"
-
-#~ msgid "<Image>/Filters/Logulator/Chrome"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Хром"
-
-#~ msgid "<Image>/Filters/Logulator/Chip Away"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Chip Away"
-
-#~ msgid "<Image>/Filters/Logulator/Starscape"
-#~ msgstr "<Image>/Ф╕льтри/Logulator/Starscape"
+msgstr "xlfd_unpack: несп╕впале XLFD \"$fontname\"\n"
