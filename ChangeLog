@@ -1,3 +1,12 @@
+2000-05-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/errors.c (gimp_fatal_error): oops, forgot a debugging
+	g_print().
+
+	* app/gdisplay.c (gdisplay_set_menu_sensitivity): there _can_ be
+	an active drawable even if there is no layer. Also reordered
+	the rest if the checks.
+
 2000-05-08  Sven Neumann  <sven@gimp.org>
 
         * libgimp/gimpmenu.[ch]: code review, no real changes

@@ -1615,32 +1615,39 @@ gdisplay_remove_tool_cursor (GDisplay *gdisp)
 void
 gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 {
-  Layer *layer = NULL;
-  gboolean fs  = FALSE;
-  gboolean aux = FALSE;
-  gboolean lm  = FALSE;
-  gboolean lp  = FALSE;
+  GimpImageBaseType  base_type = 0;
+  GimpImageType      type      = -1;
+  GimpDrawable      *drawable  = NULL;
+  Layer             *layer     = NULL;
+  gboolean fs    = FALSE;
+  gboolean aux   = FALSE;
+  gboolean lm    = FALSE;
+  gboolean lp    = FALSE;
   gboolean alpha = FALSE;
-  GimpDrawable *drawable = NULL;
-  GimpImageBaseType base_type = 0;
-  GimpImageType type = -1;
-  gint lind = -1;
-  gint lnum = -1;
+  gint     lind  = -1;
+  gint     lnum  = -1;
 
   if (gdisp)
     {
-      fs = (gimage_floating_sel (gdisp->gimage) != NULL);
-      aux = (gimage_get_active_channel (gdisp->gimage) != NULL);
-      if ((layer = gimage_get_active_layer (gdisp->gimage)) != NULL)
-	lm = (layer->mask) ? TRUE : FALSE;
       base_type = gimage_base_type (gdisp->gimage);
-      lp = (gdisp->gimage->layers != NULL);
-      alpha = layer && layer_has_alpha (layer);
+
+      fs  = (gimage_floating_sel (gdisp->gimage) != NULL);
+      aux = (gimage_get_active_channel (gdisp->gimage) != NULL);
+      lp  = (gdisp->gimage->layers != NULL);
+
+      drawable = gimage_active_drawable (gdisp->gimage);
+      if (drawable)
+	type = drawable_type (drawable);
 
       if (lp)
 	{
-	  drawable = gimage_active_drawable (gdisp->gimage);
-	  type = drawable_type (drawable);
+	  layer = gimage_get_active_layer (gdisp->gimage);
+	  if (layer)
+	    {
+	      lm    = layer_get_mask (layer) ? TRUE : FALSE;
+	      alpha = layer_has_alpha (layer);
+	    }
+
 	  lind = gimage_get_layer_index (gdisp->gimage,
 					 gdisp->gimage->active_layer);
 	  lnum = g_slist_length (gdisp->gimage->layers);

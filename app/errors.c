@@ -78,8 +78,6 @@ gimp_fatal_error (gchar *fmt, ...)
   g_print ("%s: fatal error: %s\n", prog_name, g_strdup_vprintf (fmt, args));
   va_end (args);
 
-  g_print ("g_on_error_query()\n");
-
   g_on_error_query (prog_name);
 #else
   /* g_on_error_query doesn't do anything reasonable on Win32. */
