@@ -111,7 +111,9 @@ static void     gimp_pixel_rgn_configure  (GimpPixelRgnHolder   *prh,
  *                                  using the current selection as a mask.
  *
  * - dirty = TRUE, shadow = FALSE:  the region will be used to directly change
- *                                  the drawable content. Don't do this.
+ *                                  the drawable content. Don't do this, since
+ *                                  this could prevent the Undo-System from
+ *                                  working as expected.
  **/
 void
 gimp_pixel_rgn_init (GimpPixelRgn *pr,
