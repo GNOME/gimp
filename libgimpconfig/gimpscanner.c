@@ -47,12 +47,22 @@
 #include "gimp-intl.h"
 
 
+typedef struct
+{
+  gint      fd;
+  gchar    *name;
+  GError  **error;
+} GimpScannerData;
+
+
 /*  local function prototypes  */
 
-static GScanner * gimp_scanner_new     (GError   **error);
-static void       gimp_scanner_message (GScanner  *scanner,
-                                        gchar     *message,
-                                        gboolean   is_error);
+static GScanner * gimp_scanner_new     (const gchar  *name,
+                                        gint          fd,
+                                        GError      **error);
+static void       gimp_scanner_message (GScanner     *scanner,
+                                        gchar        *message,
+                                        gboolean      is_error);
 
 
 /*  public functions  */
@@ -61,8 +71,8 @@ GScanner *
 gimp_scanner_new_file (const gchar  *filename,
 		       GError      **error)
 {
-  gint        fd;
-  GScanner   *scanner;
+  GScanner *scanner;
+  gint      fd;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -80,10 +90,9 @@ gimp_scanner_new_file (const gchar  *filename,
       return NULL;
     }
 
-  scanner = gimp_scanner_new (error);
+  scanner = gimp_scanner_new (filename, fd, error);
 
   g_scanner_input_file (scanner, fd);
-  scanner->input_name = g_strdup (filename);
 
   return scanner;
 }
@@ -101,7 +110,7 @@ gimp_scanner_new_string (const gchar  *text,
   if (text_len < 0)
     text_len = strlen (text);
 
-  scanner = gimp_scanner_new (error);
+  scanner = gimp_scanner_new (NULL, -1, error);
 
   g_scanner_input_text (scanner, text, text_len);
 
@@ -109,19 +118,27 @@ gimp_scanner_new_string (const gchar  *text,
 }
 
 static GScanner *
-gimp_scanner_new (GError **error)
+gimp_scanner_new (const gchar  *name,
+                  gint          fd,
+                  GError      **error)
 {
-  GScanner *scanner;
+  GScanner        *scanner;
+  GimpScannerData *data;
 
   scanner = g_scanner_new (NULL);
 
-  scanner->user_data   = error;
+  data = g_new0 (GimpScannerData, 1);
+
+  data->name  = g_strdup (name);
+  data->fd    = fd;
+  data->error = error;
+
+  scanner->user_data   = data;
   scanner->msg_handler = gimp_scanner_message;
 
   scanner->config->cset_identifier_first = ( G_CSET_a_2_z G_CSET_A_2_Z );
   scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z G_CSET_A_2_Z
                                              G_CSET_DIGITS "-_" );
-
   scanner->config->scan_identifier_1char = TRUE;
 
   return scanner;
@@ -130,10 +147,22 @@ gimp_scanner_new (GError **error)
 void
 gimp_scanner_destroy (GScanner *scanner)
 {
+  GimpScannerData *data;
+
   g_return_if_fail (scanner != NULL);
 
-  close (scanner->input_fd);
-  g_free ((gchar *) scanner->input_name);
+  data = scanner->user_data;
+
+  if (data->fd > 0)
+    {
+      if (close (data->fd))
+        g_warning ("%s: could not close file descriptor: %s",
+                   G_GNUC_PRETTY_FUNCTION, g_strerror (errno));
+    }
+
+  g_free (data->name);
+  g_free (data);
+
   g_scanner_destroy (scanner);
 }
 
@@ -376,18 +405,19 @@ gimp_scanner_message (GScanner *scanner,
                       gchar    *message,
                       gboolean  is_error)
 {
-  GError **error = scanner->user_data;
+  GimpScannerData *data = scanner->user_data;
 
   /* we don't expect warnings */
   g_return_if_fail (is_error);
 
-  if (scanner->input_name)
-    g_set_error (error,
+  if (data->name)
+    g_set_error (data->error,
                  GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
                  _("Error while parsing '%s' in line %d:\n%s"), 
-                 scanner->input_name, scanner->line, message);
+                 data->name, scanner->line, message);
   else
-    g_set_error (error,
+    /*  should never happen, thus not marked for translation  */
+    g_set_error (data->error,
                  GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
                  "Error parsing internal buffer: %s", message);    
 }
