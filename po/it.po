@@ -2638,11 +2638,11 @@ msgstr "Ignora"
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "\n"
-msgstr """
+msgstr ""
 
 #: app/install.c:121
 msgid "Copyright (C) 1995 Spencer Kimball e Peter Mattis\n"
-msgstr "Copyright (C) 1995 Spencer Kimball e Peter Mattis"
+msgstr "Copyright (C) 1995 Spencer Kimball e Peter Mattis\n"
 
 #: app/install.c:125
 msgid ""
@@ -2853,7 +2853,7 @@ msgstr ""
 "\t\tcontrolla questa directory oltre a quelle di sistema\n"
 "\t\tdove sono disposti le palette basilari presenti con la comune\n"
 "\t\tinstallazione di gimp. Questa funzionalità serve ad utilizzare\n"
-"\t\tle palette durante l'esecuzione di GIMP."
+"\t\tle palette durante l'esecuzione di GIMP.\n"
 
 #: app/install.c:213
 msgid "patterns\n"
