@@ -136,6 +136,20 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_FLIP_HORIZONTAL ##### -->
+<para>
+<inlinegraphic fileref="stock-flip-horizontal-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_FLIP_VERTICAL ##### -->
+<para>
+<inlinegraphic fileref="stock-flip-vertical-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_ROTATE_180 ##### -->
 <para>
 <inlinegraphic fileref="stock-rotate-180-16.png" format="png"></inlinegraphic>
