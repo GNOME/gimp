@@ -1,5 +1,16 @@
 2001-11-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/tool_manager.[ch]: added
+	tool_manager_button_press_active() and friends functions.
+
+	* app/display/gimpdisplayshell-callbacks.c:
+	gimp_display_shell_canvas_events(): use the functions instead of
+	re-fetching the active_tool whenever it may have changed
+	(which requires knowledge about the tools' implementation).
+	Also moved lots of variables around.
+
+2001-11-14  Michael Natterer  <mitch@gimp.org>
+
 	* Makefile.am: changed build order of toplevel directories so that
 	the stuff which is most likely to be broken during "make dist"
 	(the po stuff) is built before the actual source.

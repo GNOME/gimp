@@ -390,6 +390,149 @@ tool_manager_control_active (Gimp        *gimp,
 }
 
 void
+tool_manager_button_press_active (Gimp            *gimp,
+                                  GimpCoords      *coords,
+                                  guint32          time,
+                                  GdkModifierType  state,
+                                  GimpDisplay     *gdisp)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      gimp_tool_button_press (tool_manager->active_tool,
+                              coords, time, state,
+                              gdisp);
+    }
+}
+
+void
+tool_manager_button_release_active (Gimp            *gimp,
+                                    GimpCoords      *coords,
+                                    guint32          time,
+                                    GdkModifierType  state,
+                                    GimpDisplay     *gdisp)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      gimp_tool_button_release (tool_manager->active_tool,
+                                coords, time, state,
+                                gdisp);
+    }
+}
+
+void
+tool_manager_motion_active (Gimp            *gimp,
+                            GimpCoords      *coords,
+                            guint32          time,
+                            GdkModifierType  state,
+                            GimpDisplay     *gdisp)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      gimp_tool_motion (tool_manager->active_tool,
+                        coords, time, state,
+                        gdisp);
+    }
+}
+
+void
+tool_manager_arrow_key_active (Gimp        *gimp,
+                               GdkEventKey *kevent,
+                               GimpDisplay *gdisp)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      gimp_tool_arrow_key (tool_manager->active_tool,
+                           kevent,
+                           gdisp);
+    }
+}
+
+void
+tool_manager_modifier_key_active (Gimp            *gimp,
+                                  GdkModifierType  key,
+                                  gboolean         press,
+                                  GdkModifierType  state,
+                                  GimpDisplay     *gdisp)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      gimp_tool_modifier_key (tool_manager->active_tool,
+                              key, press, state,
+                              gdisp);
+    }
+}
+
+void
+tool_manager_oper_update_active (Gimp            *gimp,
+                                 GimpCoords      *coords,
+                                 GdkModifierType  state,
+                                 GimpDisplay     *gdisp)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      gimp_tool_oper_update (tool_manager->active_tool,
+                             coords, state,
+                             gdisp);
+    }
+}
+
+void
+tool_manager_cursor_update_active (Gimp            *gimp,
+                                   GimpCoords      *coords,
+                                   GdkModifierType  state,
+                                   GimpDisplay     *gdisp)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      gimp_tool_cursor_update (tool_manager->active_tool,
+                               coords, state,
+                               gdisp);
+    }
+}
+
+void
 tool_manager_register_tool (Gimp         *gimp,
 			    GType         tool_type,
 			    gboolean      tool_context,

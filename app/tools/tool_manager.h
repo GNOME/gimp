@@ -41,6 +41,38 @@ void           tool_manager_initialize_active     (Gimp             *gimp,
 void           tool_manager_control_active        (Gimp             *gimp,
 						   ToolAction        action,
 						   GimpDisplay      *gdisp);
+void           tool_manager_button_press_active   (Gimp             *gimp,
+                                                   GimpCoords       *coords,
+                                                   guint32           time,
+                                                   GdkModifierType   state,
+                                                   GimpDisplay      *gdisp);
+void           tool_manager_button_release_active (Gimp             *gimp,
+                                                   GimpCoords       *coords,
+                                                   guint32           time,
+                                                   GdkModifierType   state,
+                                                   GimpDisplay      *gdisp);
+void           tool_manager_motion_active         (Gimp             *gimp,
+                                                   GimpCoords       *coords,
+                                                   guint32           time,
+                                                   GdkModifierType   state,
+                                                   GimpDisplay      *gdisp);
+void           tool_manager_arrow_key_active      (Gimp             *gimp,
+                                                   GdkEventKey      *kevent,
+                                                   GimpDisplay      *gdisp);
+void           tool_manager_modifier_key_active   (Gimp             *gimp,
+                                                   GdkModifierType   key,
+                                                   gboolean          press,
+                                                   GdkModifierType   state,
+                                                   GimpDisplay      *gdisp);
+void           tool_manager_oper_update_active    (Gimp             *gimp,
+                                                   GimpCoords       *coords,
+                                                   GdkModifierType   state,
+                                                   GimpDisplay      *gdisp);
+void           tool_manager_cursor_update_active  (Gimp             *gimp,
+                                                   GimpCoords       *coords,
+                                                   GdkModifierType   state,
+                                                   GimpDisplay      *gdisp);
+
 
 const gchar  * tool_manager_active_get_help_data  (Gimp             *gimp);
 
