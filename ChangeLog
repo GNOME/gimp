@@ -1,5 +1,10 @@
 2004-03-11  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpcontext.c: reverted a small change that I didn't
+	want to commit at all.
+	
+2004-03-11  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-utils.c: made gimp_config_sync() and
 	gimp_config_connect() also work on objects of different types.
 	Properties with the same name and the same type are synced /

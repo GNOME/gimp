@@ -1119,16 +1119,12 @@ gimp_context_serialize_property (GimpConfig       *config,
                                  GParamSpec       *pspec,
                                  GimpConfigWriter *writer)
 {
-  GimpContext *context;
+  GimpContext *context = GIMP_CONTEXT (config);
   GimpObject  *serialize_obj;
 
-  context = GIMP_CONTEXT (config);
-
-  //#if 0
   /*  serialize nothing if the property is not defined  */
   if (! ((1 << property_id) & context->defined_props))
     return TRUE;
-  //#endif
 
   switch (property_id)
     {
@@ -1165,14 +1161,12 @@ gimp_context_deserialize_property (GimpConfig *object,
                                    GScanner   *scanner,
                                    GTokenType *expected)
 {
-  GimpContext   *context;
+  GimpContext   *context = GIMP_CONTEXT (object);
   GimpContainer *container;
   GimpObject    *current;
   gchar        **name_loc;
   gboolean       no_data = FALSE;
   gchar         *object_name;
-
-  context = GIMP_CONTEXT (object);
 
   switch (property_id)
     {
