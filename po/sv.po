@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.10\n"
-"POT-Creation-Date: 1999-11-01 08:54-0800\n"
-"PO-Revision-Date: 1999-10-09 20:40+0200\n"
+"Project-Id-Version: GIMP 1.1.11\n"
+"POT-Creation-Date: 1999-11-01 21:57+0100\n"
+"PO-Revision-Date: 1999-11-01 21:57+0100\n"
 "Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -221,7 +221,6 @@ msgid "Adaptive supersampling"
 msgstr "Adaptiv supersampling"
 
 #: app/blend.c:412
-#, fuzzy
 msgid "Max Depth:"
 msgstr "Max djup:"
 
@@ -840,14 +839,12 @@ msgid "General Palette Options"
 msgstr "Standard palett-inställningar"
 
 #: app/convert.c:525
-#, fuzzy
 msgid "Generate optimal palette:"
-msgstr "Generera optimal palett: "
+msgstr "Generera optimal palett:"
 
 #: app/convert.c:567
-#, fuzzy
 msgid "# of colors:"
-msgstr "# färger: "
+msgstr "# färger:"
 
 #: app/convert.c:585
 msgid "Use custom palette"
@@ -894,9 +891,8 @@ msgid "Remove unused colours from final palette"
 msgstr "Ta bort oanvända färger från den slutgiltiga paletten"
 
 #: app/convert.c:775
-#, fuzzy
 msgid "[ Warning ]"
-msgstr " [ Varning ] "
+msgstr "[ Varning ]"
 
 #: app/convert.c:785
 msgid ""
@@ -2048,14 +2044,14 @@ msgid "Default"
 msgstr "Standard"
 
 #: app/gradient.c:782
-#, fuzzy, c-format
+#, c-format
 msgid "gradient_get_color_at(): Unknown gradient type %d"
-msgstr "grad_get_color_at(): Okänd färgskaletyp %d"
+msgstr "gradient_get_color_at(): Okänd färgskaletyp %d"
 
 #: app/gradient.c:839
-#, fuzzy, c-format
+#, c-format
 msgid "gradient_get_color_at(): Unknown coloring mode %d"
-msgstr "grad_get_color_at(): Okänt färga-läge %d"
+msgstr "gradient_get_color_at(): Okänt färga-läge %d"
 
 #: app/gradient.c:886
 msgid "Gradient Editor"
@@ -2639,22 +2635,19 @@ msgstr "%s: Fönsterinformation"
 
 #: app/info_window.c:217
 msgid "A:"
-msgstr ""
+msgstr "A:"
 
 #: app/info_window.c:222
-#, fuzzy
 msgid "B:"
-msgstr "B"
+msgstr "B:"
 
 #: app/info_window.c:227
-#, fuzzy
 msgid "G:"
-msgstr "G"
+msgstr "G:"
 
 #: app/info_window.c:232
-#, fuzzy
 msgid "R:"
-msgstr "Röd:"
+msgstr "R:"
 
 #: app/info_window.c:251
 msgid "Extended"
@@ -2703,7 +2696,7 @@ msgstr "Gråtoningar:"
 
 #: app/info_window.c:443
 msgid "%%d x %%d pixels (%%.%df x %%.%df %s)"
-msgstr ""
+msgstr "%%d x %%d pixels (%%.%df x %%.%df %s)"
 
 #: app/info_window.c:469
 msgid "RGB Color"
@@ -4226,9 +4219,8 @@ msgid "/Path to Selection"
 msgstr "/Slinga till markering"
 
 #: app/menus.c:531 app/paths_dialog.c:249
-#, fuzzy
 msgid "/Selection to Path"
-msgstr "Markering till slinga"
+msgstr "/Markering till slinga"
 
 #: app/menus.c:533 app/paths_dialog.c:252
 msgid "/Stroke Path"
@@ -5243,9 +5235,9 @@ msgid "Procedural Database"
 msgstr "Procedurell databas"
 
 #: app/procedural_db.c:137 app/procedural_db.c:149
-#, fuzzy, c-format
+#, c-format
 msgid "PDB calling error %s not found"
-msgstr "PDB anropsfel %s"
+msgstr "PDB anropsfel, hittade inte %s"
 
 #: app/procedural_db.c:167
 #, c-format
@@ -5985,45 +5977,40 @@ msgid "/Select/By Color..."
 msgstr "/Markera/Per färg..."
 
 #: app/tools.c:602
-#, fuzzy
 msgid "Select regions by color"
-msgstr "Markera med Bezier-kurvor"
+msgstr "Markera region per färg"
 
 #: app/tools.c:619
-#, fuzzy
 msgid "Adjust color balance"
-msgstr "Färgbalans"
+msgstr "Justera färgbalans"
 
 #: app/tools.c:636
-#, fuzzy
 msgid "Adjust brightness and contrast"
-msgstr "Ljusstyrka-Kontrast"
+msgstr "Justera ljusstyrka och kontrast"
 
 #: app/tools.c:653
 msgid "Adjust hue and saturation"
-msgstr ""
+msgstr "Justera nyans och mättnad"
 
 #: app/tools.c:670
 msgid "Reduce image to a fixed numer of colors"
-msgstr ""
+msgstr "Reducera bilden till ett fixt antal färger"
 
 #: app/tools.c:687
 msgid "Reduce image to two colors using a threshold"
-msgstr ""
+msgstr "Reducera bilden till två färger mha ett tröskelvärde"
 
 #: app/tools.c:704
 msgid "Adjust color curves"
-msgstr ""
+msgstr "Justera färgkurvor"
 
 #: app/tools.c:721
-#, fuzzy
 msgid "Adjust color levels"
-msgstr "Auto-nivå"
+msgstr "Justera färgnivåer"
 
 #: app/tools.c:738
-#, fuzzy
 msgid "View image historgam"
-msgstr "/Bild/Histogram"
+msgstr "Visa bildens histogram"
 
 #: app/transform_core.c:244
 msgid "Rotate"
@@ -6117,6 +6104,190 @@ msgstr "[ grundbild ]"
 #: app/undo_history.c:770
 msgid "Redo"
 msgstr "Gör om"
+
+#: app/undo.c:2794
+#, c-format
+msgid "Can't undo %s"
+msgstr "Kan ej ångra %s"
+
+#: app/undo.c:2822
+msgid "<<invalid>>"
+msgstr "<<ogiltig>>"
+
+#: app/undo.c:2823
+msgid "image"
+msgstr "bild"
+
+#: app/undo.c:2824
+msgid "image mod"
+msgstr "bildmod"
+
+#: app/undo.c:2825
+msgid "mask"
+msgstr "mask"
+
+#: app/undo.c:2826
+msgid "layer move"
+msgstr "lagerflytt"
+
+#. ok
+#: app/undo.c:2827
+msgid "transform"
+msgstr "transform"
+
+#: app/undo.c:2828
+msgid "paint"
+msgstr "måla"
+
+#: app/undo.c:2829
+msgid "new layer"
+msgstr "nytt lager"
+
+#: app/undo.c:2830
+msgid "delete layer"
+msgstr "ta bort lager"
+
+#: app/undo.c:2831
+msgid "layer mod"
+msgstr "lagermod"
+
+#: app/undo.c:2832
+msgid "add layer mask"
+msgstr "lägg till lagermask"
+
+#. ok
+#: app/undo.c:2833
+msgid "delete layer mask"
+msgstr "ta bort lagermask"
+
+#. ok
+#: app/undo.c:2834
+msgid "rename layer"
+msgstr "döp om lager"
+
+#: app/undo.c:2835
+msgid "layer reposition"
+msgstr "lagerpos. ändrad"
+
+#. ok
+#: app/undo.c:2836
+msgid "new channel"
+msgstr "ny kanal"
+
+#: app/undo.c:2837
+msgid "delete channel"
+msgstr "ta bort kanal"
+
+#: app/undo.c:2838
+msgid "channel mod"
+msgstr "kanalmod"
+
+#: app/undo.c:2839
+msgid "FS to layer"
+msgstr "FM till lager"
+
+#. ok
+#: app/undo.c:2840
+msgid "gimage"
+msgstr "gimage"
+
+#: app/undo.c:2841
+msgid "FS rigor"
+msgstr "FM rigor"
+
+#: app/undo.c:2842
+msgid "FS relax"
+msgstr "FM relax"
+
+#: app/undo.c:2843
+msgid "guide"
+msgstr "guide"
+
+#: app/undo.c:2844
+msgid "float selection"
+msgstr "flytande markering"
+
+#: app/undo.c:2845
+msgid "paste"
+msgstr "klistra in"
+
+#: app/undo.c:2846
+msgid "cut"
+msgstr "klipp ut"
+
+#: app/undo.c:2847
+msgid "transform core"
+msgstr "transformera"
+
+#: app/undo.c:2848
+msgid "paint core"
+msgstr "måla"
+
+#: app/undo.c:2849
+msgid "floating layer"
+msgstr "flytande lager"
+
+#. unused!
+#: app/undo.c:2850
+msgid "linked layer"
+msgstr "länkat lager"
+
+#: app/undo.c:2851
+msgid "apply layer mask"
+msgstr "applicera lagermask"
+
+#. ok
+#: app/undo.c:2852
+msgid "layer merge"
+msgstr "sammanslagning lager"
+
+#: app/undo.c:2853
+msgid "FS anchor"
+msgstr "FM ankra"
+
+#: app/undo.c:2854
+msgid "gimage mod"
+msgstr "gimage mod"
+
+#: app/undo.c:2855
+msgid "crop"
+msgstr "beskär"
+
+#: app/undo.c:2856
+msgid "layer scale"
+msgstr "skala lager"
+
+#: app/undo.c:2857
+msgid "layer resize"
+msgstr "ändra storlek lager"
+
+#: app/undo.c:2858
+msgid "quickmask"
+msgstr "snabbmask"
+
+#: app/undo.c:2859
+msgid "attach parasite"
+msgstr "koppla parasit"
+
+#: app/undo.c:2860
+msgid "remove parasite"
+msgstr "ta bort parasit"
+
+#: app/undo.c:2861
+msgid "resolution change"
+msgstr "ändrad upplösning"
+
+#: app/undo.c:2862
+msgid "image scale"
+msgstr "skala om bild"
+
+#: app/undo.c:2863
+msgid "image resize"
+msgstr "ändra storlek på bild"
+
+#: app/undo.c:2864
+msgid "misc"
+msgstr "div"
 
 #: app/xcf.c:364
 #, c-format
@@ -6315,39 +6486,3 @@ msgstr "Din bild borde exporteras före den kan sparas av följande anledning:"
 #: libgimp/gimpexport.c:373
 msgid "The export conversion won't modify your original image."
 msgstr "Konverteringen vid export modifierar inte originalbilden."
-
-#~ msgid "Gradient:"
-#~ msgstr "Färgskala:"
-
-#~ msgid "get_active_brush(): Specified default brush not found!"
-#~ msgstr "get_active_brush(): Specifierad standardpensel ej hittad!"
-
-#~ msgid "get_active_pattern(): Specified default pattern not found!"
-#~ msgstr "get_active_pattern(): Specifierat standardmönster ej hittat!"
-
-#~ msgid "/File"
-#~ msgstr "/Arkiv"
-
-#~ msgid "/Layers"
-#~ msgstr "/Lager"
-
-#~ msgid "/Tools"
-#~ msgstr "/Verktyg"
-
-#~ msgid "/Dialogs"
-#~ msgstr "/Fönster"
-
-#~ msgid "Gamma"
-#~ msgstr "Gamma"
-
-#~ msgid "Gamma:"
-#~ msgstr "Gamma:"
-
-#~ msgid "Curve"
-#~ msgstr "Kurva"
-
-#~ msgid "Edge Detect "
-#~ msgstr "Kant-detektering "
-
-#~ msgid "Elasticity:"
-#~ msgstr "Elasticitet:"

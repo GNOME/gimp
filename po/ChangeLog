@@ -1,3 +1,7 @@
+1999-11-01  Tomas Ogren  <stric@ing.umu.se>
+
+	* sv.po: Updated
+
 1999-10-31  Tor Lillqvist  <tml@iki.fi>
 
 	* makefile.cygwin: Use the generic (UTF-8 based) makefile.cygwin
@@ -19,7 +23,7 @@
 	
 	* makefile.msc: Add Shift-JIS Japanese version.
 
-1999-10-70  Tomas Ogren  <stric@ing.umu.se>
+1999-10-20  Tomas Ogren  <stric@ing.umu.se>
 
 	* sv.po: Updated
 
