@@ -305,7 +305,7 @@ void rgb_to_unshifted_lin(const unsigned char r,
   double sL, sa, sb;
   int or, og, ob;
 
-  rgb_to_space(r,g,b, &sL, &sa, &sb);
+  cpercep_rgb_to_space(r,g,b, &sL, &sa, &sb);
 
   /* fprintf(stderr, " %d-%d-%d -> %0.3f,%0.3f,%0.3f ", r, g, b, sL, sa, sb);*/
 
@@ -352,7 +352,7 @@ void rgb_to_lin(const unsigned char r,
       for (g=0; g<256; g++)
 	for (b=0; b<256; b++)
 	  {
-	    rgb_to_space(r,g,b, &sL, &sa, &sb);
+	    cpercep_rgb_to_space(r,g,b, &sL, &sa, &sb);
 
 	    if (sL > high_l)
 	      high_l = sL;
@@ -441,8 +441,8 @@ void lin_to_rgb(const double hr, const double hg, const double hb,
 
   /*  fprintf(stderr, "%0.1f,%0.1f,%0.1f ", ir,ig,ib); */
 
-  space_to_rgb(ir, ig, ib,
-	       &sr, &sg, &sb);
+  cpercep_space_to_rgb(ir, ig, ib,
+		       &sr, &sg, &sb);
 
   *r = RINT(CLAMP(sr, 0.0F, 255.0F));
   *g = RINT(CLAMP(sg, 0.0F, 255.0F));
@@ -751,7 +751,7 @@ gimp_image_convert (GimpImage          *gimage,
   gimage->base_type = new_type;
 
   /* initialize the colour conversion routines */
-  init_conversions();
+  cpercep_init_conversions();
 
   /*  Convert to indexed?  Build histogram if necessary.  */
   if (new_type == GIMP_INDEXED)

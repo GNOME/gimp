@@ -34,21 +34,21 @@ from the Author.
 */
 
 void
-init_conversions(void);
+cpercep_init_conversions(void);
 
 void
-rgb_to_space (double inr, double ing, double inb,
-	      double* outr, double* outg, double* outb);
+cpercep_rgb_to_space (double inr, double ing, double inb,
+		      double* outr, double* outg, double* outb);
 
 void
-space_to_rgb (double inr, double ing, double inb,
-	      double* outr, double* outg, double* outb);
+cpercep_space_to_rgb (double inr, double ing, double inb,
+		      double* outr, double* outg, double* outb);
 
 
 /* This is in the header so that it can potentially be inlined. */
 static const double
-distance_space (const double L1, const double a1, const double b1,
-		const double L2, const double a2, const double b2)
+cpercep_distance_space (const double L1, const double a1, const double b1,
+			const double L2, const double a2, const double b2)
 {
   const double Ld = L1 - L2;
   const double ad = a1 - a2;

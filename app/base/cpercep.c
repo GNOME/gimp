@@ -299,7 +299,7 @@ rgb_to_xyz (double *inr_outx,
 
 /* call this before using the CPercep function */
 void
-init_conversions(void)
+cpercep_init_conversions(void)
 {
   rgbxyzrgb_init();
 }
@@ -440,8 +440,8 @@ lab_to_xyz (double *inl,
 
 
 void
-rgb_to_space (double inr, double ing, double inb,
-	      double* outr, double* outg, double* outb)
+cpercep_rgb_to_space (double inr, double ing, double inb,
+		      double* outr, double* outg, double* outb)
 {
 #ifdef APPROX
 #ifdef SANITY
@@ -517,8 +517,8 @@ rgb_to_space (double inr, double ing, double inb,
 
 
 void
-space_to_rgb (double inr, double ing, double inb,
-	      double* outr, double* outg, double* outb)
+cpercep_space_to_rgb (double inr, double ing, double inb,
+		      double* outr, double* outg, double* outb)
 {
   lab_to_xyz(&inr, &ing, &inb);
 
