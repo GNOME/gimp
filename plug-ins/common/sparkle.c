@@ -29,13 +29,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-
-#ifndef M_PI
-#define M_PI  3.14159265358979323846
-#endif /* M_PI */
 
 #define SCALE_WIDTH 175
 #define MAX_CHANNELS 4
@@ -981,8 +977,8 @@ fspike (GPixelRgn *dest_rgn,
                color[2] = b * 255.0;
 	}
 
-      dx = 0.2 * cos (theta * M_PI / 180.0);
-      dy = 0.2 * sin (theta * M_PI / 180.0);
+      dx = 0.2 * cos (theta * G_PI / 180.0);
+      dy = 0.2 * sin (theta * G_PI / 180.0);
       xrt = xr;
       yrt = yr;
       rpos = 0.2;

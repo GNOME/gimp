@@ -1,3 +1,28 @@
+1999-09-14  Tor Lillqvist  <tml@iki.fi>
+
+	* app/brush_select.c: Include config.h, guard inclusion of
+	<unistd.h>.
+
+	* app/gimpcontextpreview.c: Include config.h, <string.h> and
+	appenv.h.
+
+	* app/xinput_airbrush.c: Include config.h, <stdio.h>, appenv.h and
+	libgimp/gimpmath.h. Use G_PI.	
+
+	* app/makefile.{cygwin,msc}: Updates.
+
+	* plug-ins/makefile.{cygwin,msc}: Add the unofficial sel_gauss
+	plug-in. Add new object files for FractalExplorer and
+	gimpressionist.
+
+	* plug-ins/common/iwarp.c (iwarp_deform): Combine two loops over
+	the same xi, yi area into one. Remove the then actually unused
+	deform_area_vectors array. Only one element of the array was used
+	for each x,yi loop.
+
+	* plug-ins/common/sparkle.c: Don't include <math.h>,
+	libgimp/gimpmath.h includes it. Use G_PI.
+
 Tue Sep 14 13:51:45 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/gfli/fli.[ch]

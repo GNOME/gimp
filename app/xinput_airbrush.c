@@ -16,9 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 Hmm a little
  */
+#include "config.h"
+
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
+
 #include "appenv.h"
 #include "drawable.h"
 #include "draw_core.h"
@@ -33,12 +37,10 @@ Hmm a little
 #include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 #include "tile.h"			/* ick. */
 
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 #define SUBSAMPLE 8
 
@@ -442,18 +444,18 @@ xinput_airbrush_pen_ellipse (XinputAirbrushTool      *xinput_airbrush_tool, gdou
     /*Values that should be adjust able*/
 
     height = 50.;
-    sprayangle = M_PI/12;
+    sprayangle = G_PI/12;
 
     /*Tan of x and y tilt plus spray angles x r/l and y t/b tan*/
 
-    tanx = tan(xtilt * M_PI / 2.0);
-    tany = tan(ytilt * M_PI / 2.0);
+    tanx = tan(xtilt * G_PI / 2.0);
+    tany = tan(ytilt * G_PI / 2.0);
 
 
-    tanytop = tan((ytilt * M_PI / 2.0) + (sprayangle/2));
-    tanxright = tan((xtilt * M_PI / 2.0) +  (sprayangle/2));
-    tanybot = tan((ytilt * M_PI / 2.0) - (sprayangle/2));
-    tanxleft = tan((xtilt * M_PI / 2.0) - (sprayangle/2));
+    tanytop = tan((ytilt * G_PI / 2.0) + (sprayangle/2));
+    tanxright = tan((xtilt * G_PI / 2.0) +  (sprayangle/2));
+    tanybot = tan((ytilt * G_PI / 2.0) - (sprayangle/2));
+    tanxleft = tan((xtilt * G_PI / 2.0) - (sprayangle/2));
 
     /* Offset from cursor due to tilt in x and y  depening on the hight*/
 
@@ -473,15 +475,15 @@ xinput_airbrush_pen_ellipse (XinputAirbrushTool      *xinput_airbrush_tool, gdou
 
     xinput_airbrush_tool->xcenter=x_center;
     xinput_airbrush_tool->ycenter=y_center;
-    xinput_airbrush_tool->direction_abs=atan2(ytiltv, xtiltv) + M_PI;
+    xinput_airbrush_tool->direction_abs=atan2(ytiltv, xtiltv) + G_PI;
     xinput_airbrush_tool->direction=atan(ytiltv/xtiltv);
     xinput_airbrush_tool->c_direction=atan(ytiltv/xtilt);
-    xinput_airbrush_tool->c_direction_abs=atan2(ytiltv, xtilt) + M_PI;
+    xinput_airbrush_tool->c_direction_abs=atan2(ytiltv, xtilt) + G_PI;
 
     return create_air_blob(x_center * SUBSAMPLE, y_center * SUBSAMPLE,
 			   0., ytop * SUBSAMPLE, xright * SUBSAMPLE, 0.,
 			   0., ybot * SUBSAMPLE, xleft * SUBSAMPLE, 0.,
-			   (xinput_airbrush_tool->c_direction_abs - M_PI),
+			   (xinput_airbrush_tool->c_direction_abs - G_PI),
 			   xinput_airbrush_tool->c_direction);
 }
 
@@ -1992,7 +1994,7 @@ render_airbrush_line (AirBrushBlob *airbrush_blob, guchar *dest,
       x_dest = (left + i)/SUBSAMPLE;
       xdist  =  (airbrush_blob->min_x/SUBSAMPLE) + x_dest - xinput_airbrush_tool->xcenter;
       ydist  =  xinput_airbrush_tool->ycenter - (airbrush_blob->y/SUBSAMPLE) - y;
-      angle	 =  atan2(ydist, xdist) + M_PI;
+      angle	 =  atan2(ydist, xdist) + G_PI;
       dist   =  hypot(xdist, ydist);
       for (j=1; j< (airbrush_blob->height - 1) ; j++)
 	{
@@ -2101,7 +2103,7 @@ calc_angle (AirBrushBlob *airbrush_blob, double xcenter, double ycenter)
 
       y_dist = y_center - i;
       x_dist = airbrush_blob->data[i].left - x_center;
-      left_ang_abs = atan2(y_dist, x_dist) + M_PI;
+      left_ang_abs = atan2(y_dist, x_dist) + G_PI;
       left_ang = atan(y_dist/x_dist);
       airbrush_blob->data[i].angle_left = left_ang;
       airbrush_blob->data[i].angle_left_abs = left_ang_abs;
@@ -2112,7 +2114,7 @@ calc_angle (AirBrushBlob *airbrush_blob, double xcenter, double ycenter)
 	}
 
       x_dist = airbrush_blob->data[i].right - x_center;
-      right_ang_abs = atan2(y_dist, x_dist) + M_PI;
+      right_ang_abs = atan2(y_dist, x_dist) + G_PI;
       right_ang = atan(y_dist/x_dist);
       airbrush_blob->data[i].angle_right = right_ang;
       airbrush_blob->data[i].angle_right_abs = right_ang_abs;

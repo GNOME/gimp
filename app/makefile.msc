@@ -64,6 +64,7 @@ gimp_OBJECTS = \
 	about_dialog.obj	\
 	actionarea.obj		\
 	airbrush.obj		\
+	airbrush_blob.obj	\
 	app_procs.obj		\
 	asupsample.obj		\
 	batch.obj		\
@@ -163,6 +164,7 @@ gimp_OBJECTS = \
 	guides_cmds.obj		\
 	gtkwrapbox.obj		\
 	gtkhwrapbox.obj		\
+	gtkvwrapbox.obj		\
 	gximage.obj		\
 	histogramwidget.obj 	\
 	histogram_tool.obj	\
@@ -204,6 +206,7 @@ gimp_OBJECTS = \
 	paintbrush.obj		\
 	parasite_cmds.obj	\
 	parasitelist.obj	\
+	path_tool.obj		\
 	paths_cmds.obj		\
 	paths_dialog.obj	\
 	pattern_select.obj	\
@@ -250,7 +253,8 @@ gimp_OBJECTS = \
 	undo_cmds.obj		\
 	unit_cmds.obj		\
 	vector2d.obj		\
-	xcf.obj
+	xcf.obj			\
+	xinput_airbrush.obj
 
 # .SUFFIXES: .gc
 

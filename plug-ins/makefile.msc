@@ -35,7 +35,7 @@ SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp borderaverage dbbrows
 # ..\unofficial-plug-ins directory, go there, and do "nmake -f
 # makefile.msc unofficial".
 
-UNOFFICIAL = Anamorphose RGB_Displace ccanalyze fuse gimp_ace guash pmosaic user_filter
+UNOFFICIAL = Anamorphose RGB_Displace ccanalyze fuse gimp_ace guash pmosaic sel_gauss user_filter
 
 # The main target
 
@@ -148,6 +148,16 @@ gimpressionist-data-install :
 
 # If a plug-in has several object files, or needs extra libraries or
 # compiler flags, these are in an EXTRA_xxx part.
+
+!IFDEF EXTRA_FractalExplorer
+OBJECTS = \
+	Callbacks.obj \
+	Dialogs.obj \
+	Events.obj \
+	FractalExplorer.obj \
+	Globals.obj \
+	Languages.obj
+!ENDIF
 
 !IFDEF EXTRA_Lighting
 OBJECTS = \
@@ -344,6 +354,7 @@ OBJECTS = \
 OBJECTS = \
 	about.obj \
 	brush.obj \
+	color.obj \
 	general.obj \
 	gimp.obj \
 	gimpressionist.obj \

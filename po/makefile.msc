@@ -5,7 +5,7 @@
 # Locale directory.
 LOCALEDIR = c:\gimp\locale
 
-LANGUAGES= da de fi fr hu it ja ko nl no pl ru sv
+LANGUAGES= cs da de fi fr hu it ja ko nl no pl ru sv
 
 ################################################################
 
