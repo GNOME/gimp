@@ -41,6 +41,9 @@ Revision history for Gimp-Perl extension.
         - new plug-in: clear alpha.
         - fix the "manpages installed twice under different names" bug that
           nobody had noticed.
+        - do no longer install roundrectsel and map_to_gradient plug-ins, since
+          (almost) equivalent c versions exist. If you need these plug-ins you
+          have to install them manually.
 
 1.19  Thu Jan  6 00:21:58 CET 2000
         - used N_ to mark all the menu paths, since gimp now tries to
