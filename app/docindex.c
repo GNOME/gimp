@@ -218,7 +218,7 @@ make_idea_window( int x, int y )
   /* Setup scrolled window */
   scrolled_win = gtk_scrolled_window_new( NULL, NULL );
   gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW( scrolled_win ), GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS );
-  gtk_container_add( GTK_CONTAINER( scrolled_win ), ideas->tree );
+  gtk_scrolled_window_add_with_viewport( GTK_SCROLLED_WINDOW( scrolled_win ), ideas->tree );
   gtk_widget_show( ideas->tree );
 
   /* allocate the window and attach the menu */
