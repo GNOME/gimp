@@ -1,3 +1,6 @@
+Tue Jul  6 22:05 CST 1999 Seth Burgess <sjburges@gimp.org>
+	* app/qmask.h : took out a relic pixmaps.h that broke compilation (oops)
+
 Tue Jul	 6 20:55 CST 1999 Seth Burgess <sjburges@gimp.org>
 	* pixmaps/qmasknosel.xpm 
 	* pixmaps/qmasksel.xpm: Ugly pixmaps that tigert promised to replace

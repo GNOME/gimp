@@ -17,7 +17,6 @@
  */
 #ifndef __QMASK_H__
 #define __QMASK_H__
-#include "pixmaps.h"
 #ifdef icky
 GtkWidget *
 qmask_area_create (GDisplay *display);
