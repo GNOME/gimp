@@ -20,7 +20,12 @@
 #define __GIMP_PAINT_OPTIONS_H__
 
 
-#include "tools/tool_options.h"
+#include "core/gimptooloptions.h"
+
+
+#define GIMP_PAINT_OPTIONS_CONTEXT_MASK GIMP_CONTEXT_OPACITY_MASK    | \
+                                        GIMP_CONTEXT_PAINT_MODE_MASK | \
+                                        GIMP_CONTEXT_BRUSH_MASK
 
 
 typedef struct _GimpPressureOptions GimpPressureOptions;

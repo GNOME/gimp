@@ -91,6 +91,8 @@ libapptools_a_sources = \
 	gimpmovetool.h			\
 	gimppaintbrushtool.c		\
 	gimppaintbrushtool.h		\
+	gimppaintoptions-gui.c		\
+	gimppaintoptions-gui.h		\
 	gimppainttool.c			\
 	gimppainttool.h			\
 	gimppenciltool.c		\
@@ -123,6 +125,8 @@ libapptools_a_sources = \
 	gimptool.h			\
 	gimptoolcontrol.c		\
 	gimptoolcontrol.h		\
+	gimptooloptions-gui.c		\
+	gimptooloptions-gui.h		\
 	gimptransformoptions.c     	\
 	gimptransformoptions.h     	\
 	gimptransformtool.c		\
@@ -133,10 +137,6 @@ libapptools_a_sources = \
 	gimpvectoroptions.h		\
 	gimpvectortool.c		\
 	gimpvectortool.h		\
-	paint_options.c			\
-	paint_options.h			\
-	tool_options.c			\
-	tool_options.h			\
 	tool_manager.c			\
 	tool_manager.h
 

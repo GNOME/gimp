@@ -27,11 +27,10 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimptooloptions.h"
 
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpeditor.h"
-
-#include "tools/tool_options.h"
 
 #include "tool-options-dialog.h"
 

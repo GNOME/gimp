@@ -37,8 +37,8 @@
 #include "widgets/gimppropwidgets.h"
 
 #include "gimpclonetool.h"
+#include "gimppaintoptions-gui.h"
 #include "gimptoolcontrol.h"
-#include "paint_options.h"
 
 #include "gimp-intl.h"
 
@@ -92,7 +92,7 @@ gimp_clone_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_CLONE_TOOL,
                 GIMP_TYPE_CLONE_OPTIONS,
                 gimp_clone_options_gui,
-                GIMP_PAINT_TOOL_OPTIONS_MASK |
+                GIMP_PAINT_OPTIONS_CONTEXT_MASK |
                 GIMP_CONTEXT_PATTERN_MASK,
                 "gimp-clone-tool",
                 _("Clone"),

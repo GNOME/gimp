@@ -30,6 +30,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcropoptions.h"
+#include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"
 

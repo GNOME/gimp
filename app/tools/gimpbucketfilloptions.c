@@ -37,7 +37,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpbucketfilloptions.h"
-#include "paint_options.h"
+#include "gimppaintoptions-gui.h"
 
 #include "gimp-intl.h"
 

@@ -110,7 +110,6 @@ tools_init (Gimp *gimp)
 
     /*  non-modifying tools  */
 
-    gimp_vector_tool_register,
     gimp_measure_tool_register,
     gimp_magnify_tool_register,
     gimp_histogram_tool_register,
@@ -119,6 +118,7 @@ tools_init (Gimp *gimp)
     /*  selection tools */
 
     gimp_iscissors_tool_register,
+    gimp_vector_tool_register,
     gimp_by_color_select_tool_register,
     gimp_fuzzy_select_tool_register,
     gimp_free_select_tool_register,

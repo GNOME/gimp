@@ -16,11 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef  __GIMP_COLOR_OPTIONS_H__
-#define  __GIMP_COLOR_OPTIONS_H__
+#ifndef __GIMP_COLOR_OPTIONS_H__
+#define __GIMP_COLOR_OPTIONS_H__
 
 
-#include "tool_options.h"
+#include "core/gimptooloptions.h"
 
 
 #define GIMP_TYPE_COLOR_OPTIONS            (gimp_color_options_get_type ())
@@ -48,4 +48,4 @@ GType       gimp_color_options_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_color_options_gui      (GimpToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_COLOR_OPTIONS_H__  */
+#endif /* __GIMP_COLOR_OPTIONS_H__ */

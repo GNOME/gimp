@@ -28,8 +28,8 @@
 #include "paint/gimppaintoptions.h"
 
 #include "gimppaintbrushtool.h"
+#include "gimppaintoptions-gui.h"
 #include "gimptoolcontrol.h"
-#include "paint_options.h"
 
 #include "gimp-intl.h"
 
@@ -50,7 +50,7 @@ gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_PAINTBRUSH_TOOL,
                 GIMP_TYPE_PAINT_OPTIONS,
                 gimp_paint_options_gui,
-                GIMP_PAINT_TOOL_OPTIONS_MASK |
+                GIMP_PAINT_OPTIONS_CONTEXT_MASK |
                 GIMP_CONTEXT_GRADIENT_MASK,
                 "gimp-paintbrush-tool",
                 _("Paintbrush"),

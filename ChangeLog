@@ -1,5 +1,50 @@
 2003-06-29  Michael Natterer  <mitch@gimp.org>
 
+	Getting rid of some legacy filenames:
+
+	* app/core/Makefile.am
+	* app/core/gimptooloptions.[ch]: new files.
+
+	* app/paint/gimppaintoptions.h: changed #include accordingly.
+	#define GIMP_PAINT_OPTIONS_CONTEXT_MASK here.
+
+	* app/tools/paint_options.[ch]
+	* app/tools/tool_options.[ch]: removed these files.
+
+	* app/tools/gimppaintoptions-gui.[ch]
+	* app/tools/gimptooloptions-gui.[ch]: new files.
+
+	* app/tools/gimppainttool.h: removed GIMP_PAINT_TOOL_OPTIONS_MASK
+	define again.
+
+	* app/tools/Makefile.am
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcoloroptions.[ch]
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcropoptions.[ch]
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpflipoptions.[ch]
+	* app/tools/gimpinkoptions.c
+	* app/tools/gimpmagnifyoptions.[ch]
+	* app/tools/gimpmeasureoptions.[ch]
+	* app/tools/gimpmoveoptions.[ch]
+	* app/tools/gimppaintbrushtool.c
+	* app/tools/gimppenciltool.c
+	* app/tools/gimpselectionoptions.[ch]
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptextoptions.[ch]
+	* app/tools/gimptransformoptions.[ch]
+	* app/tools/tool_manager.c
+	* app/gui/tool-options-dialog.c: changed accordingly.
+
+	* app/tools/tools.c: moved the vector tool before iscissors.
+
+2003-06-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpvectorstreeview.c
 	(gimp_vectors_tree_view_toselection_extended_clicked): added
 	missing gimp_image_flush(). Fixes bug #116190.

@@ -16,14 +16,25 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_PAINT_OPTIONS_GUI_H__
-#define __GIMP_PAINT_OPTIONS_GUI_H__
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "tools-types.h"
+
+#include "core/gimptooloptions.h"
+
+#include "gimptooloptions-gui.h"
 
 
-#define GIMP_PAINT_OPTIONS_TABLE_KEY "gimp-paint-options-table"
+GtkWidget *
+gimp_tool_options_gui (GimpToolOptions *tool_options)
+{
+  GtkWidget *vbox;
 
+  g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), NULL);
 
-GtkWidget * gimp_paint_options_gui (GimpToolOptions *tool_options);
+  vbox = gtk_vbox_new (FALSE, 2);
 
-
-#endif /* __GIMP_PAINT_OPTIONS_GUI_H__ */
+  return vbox;
+}

@@ -33,8 +33,8 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimperasertool.h"
+#include "gimppaintoptions-gui.h"
 #include "gimptoolcontrol.h"
-#include "paint_options.h"
 
 #include "gimp-intl.h"
 
@@ -65,7 +65,7 @@ gimp_eraser_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_ERASER_TOOL,
                 GIMP_TYPE_ERASER_OPTIONS,
                 gimp_eraser_options_gui,
-                GIMP_PAINT_TOOL_OPTIONS_MASK,
+                GIMP_PAINT_OPTIONS_CONTEXT_MASK,
                 "gimp-eraser-tool",
                 _("Eraser"),
                 _("Erase to background or transparency"),

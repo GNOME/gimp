@@ -34,6 +34,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpmagnifyoptions.h"
+#include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"
 

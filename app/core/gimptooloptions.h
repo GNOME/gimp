@@ -16,11 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __TOOL_OPTIONS_H__
-#define __TOOL_OPTIONS_H__
+#ifndef __GIMP_TOOL_OPTIONS_H__
+#define __GIMP_TOOL_OPTIONS_H__
 
 
-#include "core/gimpcontext.h"
+#include "gimpcontext.h"
 
 
 #define GIMP_TYPE_TOOL_OPTIONS            (gimp_tool_options_get_type ())
@@ -59,7 +59,5 @@ gboolean   gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
                                           const gchar      *extension,
                                           GError          **error);
 
-gpointer   gimp_tool_options_gui         (GimpToolOptions *tool_options);
 
-
-#endif  /*  __TOOL_OPTIONS_H__  */
+#endif  /*  __GIMP_TOOL_OPTIONS_H__  */

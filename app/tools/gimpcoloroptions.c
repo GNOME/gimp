@@ -29,6 +29,7 @@
 #include "widgets/gimppropwidgets.h"
 
 #include "gimpcoloroptions.h"
+#include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"
 

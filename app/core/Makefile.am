@@ -174,6 +174,8 @@ libappcore_a_sources = \
 	gimptemplate.h			\
 	gimptoolinfo.c			\
 	gimptoolinfo.h			\
+	gimptooloptions.c		\
+	gimptooloptions.h		\
 	gimpunit.c			\
 	gimpunit.h			\
 	gimpunits.c			\

@@ -20,7 +20,7 @@
 #define __GIMP_TEXT_OPTIONS_H__
 
 
-#include "tool_options.h"
+#include "core/gimptooloptions.h"
 
 
 #define GIMP_TYPE_TEXT_OPTIONS            (gimp_text_options_get_type ())

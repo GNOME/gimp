@@ -33,8 +33,8 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdodgeburntool.h"
+#include "gimppaintoptions-gui.h"
 #include "gimptoolcontrol.h"
-#include "paint_options.h"
 
 #include "gimp-intl.h"
 
@@ -65,7 +65,7 @@ gimp_dodgeburn_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_DODGEBURN_TOOL,
                 GIMP_TYPE_DODGE_BURN_OPTIONS,
                 gimp_dodge_burn_options_gui,
-                GIMP_PAINT_TOOL_OPTIONS_MASK,
+                GIMP_PAINT_OPTIONS_CONTEXT_MASK,
                 "gimp-dodgeburn-tool",
                 _("Dodge/Burn"),
                 _("Dodge or Burn strokes"),

@@ -32,6 +32,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpmoveoptions.h"
+#include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"
 

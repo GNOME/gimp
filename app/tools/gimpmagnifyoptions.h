@@ -20,7 +20,7 @@
 #define __GIMP_MAGNIFY_OPTIONS_H__
 
 
-#include "tool_options.h"
+#include "core/gimptooloptions.h"
 
 
 #define GIMP_TYPE_MAGNIFY_OPTIONS            (gimp_magnify_options_get_type ())

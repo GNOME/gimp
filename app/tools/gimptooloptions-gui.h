@@ -16,14 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PAINT_OPTIONS_H__
-#define __PAINT_OPTIONS_H__
+#ifndef __GIMP_TOOL_OPTIONS_GUI_H__
+#define __GIMP_TOOL_OPTIONS_GUI_H__
 
 
-#define GIMP_PAINT_OPTIONS_TABLE_KEY "gimp-paint-options-table"
+GtkWidget *  gimp_tool_options_gui (GimpToolOptions *tool_options);
 
 
-GtkWidget * gimp_paint_options_gui (GimpToolOptions *tool_options);
-
-
-#endif  /*  __PAINT_OPTIONS_H__  */
+#endif  /*  __GIMP_TOOL_OPTIONS_GUI_H__  */

@@ -1,4 +1,4 @@
-/*
+/* The GIMP -- an image manipulation program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,19 +18,16 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 
-#include "tools-types.h"
+#include "core-types.h"
 
 #include "config/gimpconfig.h"
 
-#include "core/gimptoolinfo.h"
-
-#include "tool_options.h"
-
-#include "gimp-intl.h"
+#include "gimptoolinfo.h"
+#include "gimptooloptions.h"
 
 
 enum
@@ -248,14 +245,4 @@ gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
   g_free (filename);
 
   return retval;
-}
-
-gpointer
-gimp_tool_options_gui (GimpToolOptions *tool_options)
-{
-  GtkWidget *vbox;
-
-  vbox = gtk_vbox_new (FALSE, 2);
-
-  return vbox;
 }

@@ -20,7 +20,7 @@
 #define __GIMP_MEASURE_OPTIONS_H__
 
 
-#include "tool_options.h"
+#include "core/gimptooloptions.h"
 
 
 #define GIMP_TYPE_MEASURE_OPTIONS            (gimp_measure_options_get_type ())

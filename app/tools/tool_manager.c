@@ -25,11 +25,10 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimptooloptions.h"
 
 #include "display/gimpdisplay.h"
 
@@ -44,8 +43,8 @@
 #include "gimprectselecttool.h"
 #include "gimpsmudgetool.h"
 #include "gimptoolcontrol.h"
+#include "gimptooloptions-gui.h"
 #include "tool_manager.h"
-#include "tool_options.h"
 #include "tools.h"
 
 #include "gimp-intl.h"

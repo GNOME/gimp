@@ -36,7 +36,7 @@
 
 #include "gimpinkoptions.h"
 #include "gimpinktool-blob.h"
-#include "paint_options.h"
+#include "gimppaintoptions-gui.h"
 
 #include "gimp-intl.h"
 

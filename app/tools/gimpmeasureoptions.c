@@ -34,6 +34,7 @@
 #include "widgets/gimppropwidgets.h"
 
 #include "gimpmeasureoptions.h"
+#include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"
 

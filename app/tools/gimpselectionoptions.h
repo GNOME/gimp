@@ -20,7 +20,7 @@
 #define __GIMP_SELECTION_OPTIONS_H__
 
 
-#include "tool_options.h"
+#include "core/gimptooloptions.h"
 
 
 #define GIMP_TYPE_SELECTION_OPTIONS            (gimp_selection_options_get_type ())

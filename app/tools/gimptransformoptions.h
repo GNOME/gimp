@@ -20,7 +20,7 @@
 #define __GIMP_TRANSFORM_OPTIONS_H_
 
 
-#include "tool_options.h"
+#include "core/gimptooloptions.h"
 
 
 #define GIMP_TYPE_TRANSFORM_OPTIONS            (gimp_transform_options_get_type ())

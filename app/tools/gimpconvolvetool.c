@@ -44,8 +44,8 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpconvolvetool.h"
+#include "gimppaintoptions-gui.h"
 #include "gimptoolcontrol.h"
-#include "paint_options.h"
 
 #include "gimp-intl.h"
 
@@ -85,7 +85,7 @@ gimp_convolve_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_CONVOLVE_TOOL,
                 GIMP_TYPE_CONVOLVE_OPTIONS,
                 gimp_convolve_options_gui,
-                GIMP_PAINT_TOOL_OPTIONS_MASK,
+                GIMP_PAINT_OPTIONS_CONTEXT_MASK,
                 "gimp-convolve-tool",
                 _("Convolve"),
                 _("Blur or Sharpen"),

@@ -34,7 +34,7 @@
 #include "widgets/gimppropwidgets.h"
 
 #include "gimpblendoptions.h"
-#include "paint_options.h"
+#include "gimppaintoptions-gui.h"
 
 #include "gimp-intl.h"
 

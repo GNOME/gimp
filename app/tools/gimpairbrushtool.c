@@ -32,8 +32,8 @@
 #include "widgets/gimppropwidgets.h"
 
 #include "gimpairbrushtool.h"
+#include "gimppaintoptions-gui.h"
 #include "gimptoolcontrol.h"
-#include "paint_options.h"
 
 #include "gimp-intl.h"
 
@@ -56,7 +56,7 @@ gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_AIRBRUSH_TOOL,
                 GIMP_TYPE_AIRBRUSH_OPTIONS,
                 gimp_airbrush_options_gui,
-                GIMP_PAINT_TOOL_OPTIONS_MASK,
+                GIMP_PAINT_OPTIONS_CONTEXT_MASK,
                 "gimp-airbrush-tool",
                 _("Airbrush"),
                 _("Airbrush with variable pressure"),

@@ -44,6 +44,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimptextoptions.h"
+#include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"
 
