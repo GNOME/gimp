@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:57+0200\n"
-"PO-Revision-Date: 2004-06-07 15:59-0300\n"
+"POT-Creation-Date: 2004-07-14 17:35-0400\n"
+"PO-Revision-Date: 2004-07-13 16:25-0300\n"
 "Last-Translator: João S. O. Bueno <gwidion@mpc.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -59,7 +59,7 @@ msgid ""
 msgstr ""
 "O GIMP não pôde inicializar a interface gráfica.\n"
 "Certifique-se de que existe uma configuração de ambiente para o DISPLAY a "
-"utilizar.."
+"utilizar."
 
 #: app/main.c:237 app/widgets/gimptoolbox.c:439
 #: data/misc/gimp.desktop.in.in.h:2
@@ -705,7 +705,7 @@ msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
-"Quando habilitado, o padrão é que a barra de menus seja visivel . Isso "
+"Quando habilitado, o padrão é que a barra de menus seja visível . Isso "
 "também pode ser alterado com o comando \"Visualizar->Exibir Barra de Menu\"."
 
 #: app/config/gimprc-blurbs.h:271
@@ -713,7 +713,7 @@ msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-"Quando habilitado, o padrão é que as réguas sejam visiveis. Isso também pode "
+"Quando habilitado, o padrão é que as réguas sejam visíveis. Isso também pode "
 "ser alterado com o comando \"Visualizar->Exibir Réguas\"."
 
 #: app/config/gimprc-blurbs.h:275
@@ -721,7 +721,7 @@ msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"Quando habilitado, o padrão é que as barras de rolagem sejam visiveis. Isso "
+"Quando habilitado, o padrão é que as barras de rolagem sejam visíveis. Isso "
 "também pode ser alterado com o comando \"Visualizar->Exibir Barras de Rolagem"
 "\"."
 
@@ -730,7 +730,7 @@ msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr ""
-"Quando habilitado, o padrão é que a barra de estado seja visivel. Isso "
+"Quando habilitado, o padrão é que a barra de estado seja visível. Isso "
 "também pode ser alterado com o comando \"Visualizar->Exibir Barra de Estado"
 "\"."
 
@@ -739,7 +739,7 @@ msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
-"Quando habilitado, o padrão é que a seleção seja visivel. Isso também pode "
+"Quando habilitado, o padrão é que a seleção seja visível. Isso também pode "
 "ser alterado com o comando \"Visualizar->Exibir Seleção\"."
 
 #: app/config/gimprc-blurbs.h:287
@@ -1663,7 +1663,7 @@ msgstr "Erro fatal de análise: O arquivo de pincel  '%s' parece truncado."
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "String UTF-8 inválida no arquivo de pincel '%s'."
 
-#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
+#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
 #: app/core/gimpitem.c:466 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
@@ -2039,7 +2039,7 @@ msgstr "Habilitar Máscara Rápida"
 msgid "Disable QuickMask"
 msgstr "Desabilitar Máscara Rápida"
 
-#: app/core/gimpimage-undo-push.c:2939
+#: app/core/gimpimage-undo-push.c:2937
 #, c-format
 msgid "Can't undo %s"
 msgstr "Impossível desfazer %s"
@@ -6280,7 +6280,7 @@ msgid "_Vertical:"
 msgstr "_Vertical:"
 
 #: app/gui/select-commands.c:149 app/gui/vectors-commands.c:181
-#: app/pdb/paths_cmds.c:1135 app/tools/gimpvectortool.c:1819
+#: app/pdb/paths_cmds.c:1173 app/tools/gimpvectortool.c:1819
 #: app/widgets/gimpvectorstreeview.c:289
 msgid "Path to Selection"
 msgstr "Vetor para seleção"
@@ -6773,7 +6773,7 @@ msgid ""
 msgstr ""
 "Este diretório pode ser usado para armazenar módulos DLLS temporários ou não "
 "suportados pelo sistema que foram criados pelo usuário. O arquivo padrão "
-"gimprc verifica a sua existencia além do diretório módulo GIMP system-wide "
+"gimprc verifica a sua existência além do diretório módulo GIMP system-wide "
 "ao pesquisar por módulo para carregar ao inicializar."
 
 #: app/gui/user-install-dialog.c:245
@@ -7499,7 +7499,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr "Abcdefghijklmnopqrstuvwxyz"
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
 msgid "Add Text Layer"
 msgstr "Adicionar Camada de Texto"
 
@@ -7995,17 +7995,17 @@ msgstr "Salvar Curvas"
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Curvas para camadas indexados não podem ser ajustadas"
 
-#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:411
+#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:412
 #: app/widgets/gimphistogrameditor.c:148
 msgid "Channel:"
 msgstr "Canal:"
 
-#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:425
+#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:426
 msgid "R_eset Channel"
 msgstr "R_einicializar Canal"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:637
+#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:638
 msgid "All Channels"
 msgstr "Todos os Canais"
 
@@ -8274,45 +8274,45 @@ msgstr "Salvar Níveis"
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Níveis não podem ser ajustados para imagens indexadas."
 
-#: app/tools/gimplevelstool.c:351
+#: app/tools/gimplevelstool.c:352
 msgid "Pick Black Point"
 msgstr "Selecionar Ponto Negro"
 
-#: app/tools/gimplevelstool.c:355
+#: app/tools/gimplevelstool.c:356
 msgid "Pick Gray Point"
 msgstr "Selecionar Ponto Cinza"
 
-#: app/tools/gimplevelstool.c:359
+#: app/tools/gimplevelstool.c:360
 msgid "Pick White Point"
 msgstr "Selecionar Ponto Branco"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:440
+#: app/tools/gimplevelstool.c:441
 msgid "Input Levels"
 msgstr "Níveis de Entrada"
 
-#: app/tools/gimplevelstool.c:535
+#: app/tools/gimplevelstool.c:536
 msgid "Gamma"
 msgstr "Gama"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:565
+#: app/tools/gimplevelstool.c:566
 msgid "Output Levels"
 msgstr "Níveis de Saída"
 
-#: app/tools/gimplevelstool.c:656
+#: app/tools/gimplevelstool.c:657
 msgid "Read levels settings from file"
 msgstr "Ler ajustes de nível de arquivo"
 
-#: app/tools/gimplevelstool.c:662
+#: app/tools/gimplevelstool.c:663
 msgid "Save levels settings to file"
 msgstr "Salvar ajustes de nível em arquivo"
 
-#: app/tools/gimplevelstool.c:670
+#: app/tools/gimplevelstool.c:671
 msgid "_Auto"
 msgstr "_Automático"
 
-#: app/tools/gimplevelstool.c:672
+#: app/tools/gimplevelstool.c:673
 msgid "Adjust levels automatically"
 msgstr "Ajustar níveis automaticamente"
 
@@ -8720,15 +8720,15 @@ msgstr "Adiciona texto à imagem"
 msgid "/Tools/Te_xt"
 msgstr "/Ferramentas/Te_xto"
 
-#: app/tools/gimptexttool.c:726
+#: app/tools/gimptexttool.c:731
 msgid "GIMP Text Editor"
 msgstr "Editor de Texto do GIMP"
 
-#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
+#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
 msgid "Confirm Text Editing"
 msgstr "Confirme Edição de Texto"
 
-#: app/tools/gimptexttool.c:860
+#: app/tools/gimptexttool.c:865
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "

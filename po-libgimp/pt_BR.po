@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:17+0200\n"
+"POT-Creation-Date: 2004-07-14 17:37-0400\n"
 "PO-Revision-Date: 2004-06-07 12:32-0300\n"
 "Last-Translator: João S. O. Bueno <gwidion@mpc.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -471,11 +471,11 @@ msgstr "Espaçamento das L_inhas"
 
 #: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
-msgstr "_Redimensionar"
+msgstr "Muda_r Tamanho"
 
 #: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
 msgid "_Scale"
-msgstr "E_scalar"
+msgstr "Redimen_sionar"
 
 #: libgimpwidgets/gimpstock.c:263
 msgid "Crop"
