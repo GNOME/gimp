@@ -290,6 +290,7 @@ load_image (const gchar *filename)
   gint               bn_size;
   GimpImageBaseType  base_type;
   GimpImageType      image_type;
+  gssize             size;
 
   fd = open (filename, O_RDONLY | _O_BINARY);
 
@@ -319,21 +320,37 @@ load_image (const gchar *filename)
   bh.magic_number = g_ntohl (bh.magic_number);
   bh.spacing      = g_ntohl (bh.spacing);
 
-  if (bh.version == 1)
+  switch (bh.version)
     {
-      /* Version 1 didn't know about spacing */
+    case 1:
+      /* Version 1 didn't have a magic number and had no spacing  */
       bh.spacing = 25;
       /* And we need to rewind the handle, 4 due spacing and 4 due magic */
       lseek (fd, -8, SEEK_CUR);
       bh.header_size += 8;
-    }
-  /* Version 1 didn't know about magic either */
-  if ((bh.version != 1 &&
-       (bh.magic_number != GBRUSH_MAGIC || bh.version != 2)) ||
-      bh.header_size <= sizeof (bh))
-    {
-      close (fd);
-      return -1;
+      break;
+
+    case 3: /*  cinepaint brush  */
+      if (bh.bytes == 18 /* FLOAT16_GRAY_GIMAGE */)
+        {
+          bh.bytes = 2;
+        }
+      else
+        {
+          g_message (_("Unsupported brush format"));
+          close (fd);
+          return -1;
+        }
+      /*  fallthrough  */
+
+    case 2:
+      if (bh.magic_number != GBRUSH_MAGIC || bh.header_size <= sizeof (bh))
+        {
+          close (fd);
+          return -1;
+        }
+      break;
+
     }
 
   if ((bn_size = (bh.header_size - sizeof (bh))) > 0)
@@ -354,10 +371,10 @@ load_image (const gchar *filename)
 
   /* Now there's just raw data left. */
 
-  brush_buf = g_malloc (bh.width * bh.height * bh.bytes);
+  size = bh.width * bh.height * bh.bytes;
+  brush_buf = g_malloc (size);
 
-  if (read (fd, brush_buf,
-	    bh.width * bh.height * bh.bytes) != bh.width * bh.height * bh.bytes)
+  if (read (fd, brush_buf, size) != size)
     {
       close (fd);
       g_free (brush_buf);
@@ -366,49 +383,87 @@ load_image (const gchar *filename)
     }
 
 
-  if (bh.bytes == 1)
+  switch (bh.bytes)
     {
-      PatternHeader ph;
+    case 1:
+      {
+        PatternHeader ph;
 
-      /*  For backwards-compatibility, check if a pattern follows.
-	  The obsolete .gpb format did it this way.  */
+        /*  For backwards-compatibility, check if a pattern follows.
+            The obsolete .gpb format did it this way.  */
 
-      if (read (fd, &ph, sizeof(ph)) == sizeof(ph))
-	{
-	  /*  rearrange the bytes in each unsigned int  */
-	  ph.header_size  = g_ntohl (ph.header_size);
-	  ph.version      = g_ntohl (ph.version);
-	  ph.width        = g_ntohl (ph.width);
-	  ph.height       = g_ntohl (ph.height);
-	  ph.bytes        = g_ntohl (ph.bytes);
-	  ph.magic_number = g_ntohl (ph.magic_number);
+        if (read (fd, &ph, sizeof(ph)) == sizeof(ph))
+          {
+            /*  rearrange the bytes in each unsigned int  */
+            ph.header_size  = g_ntohl (ph.header_size);
+            ph.version      = g_ntohl (ph.version);
+            ph.width        = g_ntohl (ph.width);
+            ph.height       = g_ntohl (ph.height);
+            ph.bytes        = g_ntohl (ph.bytes);
+            ph.magic_number = g_ntohl (ph.magic_number);
 
-	  if (ph.magic_number == GPATTERN_MAGIC && ph.version == 1 &&
-	      ph.header_size > sizeof (ph) &&
-	      ph.bytes == 3 && ph.width == bh.width && ph.height == bh.height &&
-	      lseek (fd, ph.header_size - sizeof (ph), SEEK_CUR) > 0)
-	    {
-	      guchar *plain_brush = brush_buf;
-	      gint    i;
+            if (ph.magic_number == GPATTERN_MAGIC &&
+                ph.version == 1                   &&
+                ph.header_size > sizeof (ph)      &&
+                ph.bytes   == 3                   &&
+                ph.width   == bh.width            &&
+                ph.height  == bh.height           &&
+                lseek (fd, ph.header_size - sizeof (ph), SEEK_CUR) > 0)
+              {
+                guchar *plain_brush = brush_buf;
+                gint    i;
 
-	      bh.bytes = 4;
-	      brush_buf = g_malloc (4 * bh.width * bh.height);
+                bh.bytes = 4;
+                brush_buf = g_malloc (4 * bh.width * bh.height);
 
-	      for (i = 0; i < ph.width * ph.height; i++)
-		{
-		  if (read (fd, brush_buf + i * 4, 3) != 3)
-		    {
-		      close (fd);
-		      g_free (name);
-		      g_free (plain_brush);
-		      g_free (brush_buf);
-		      return -1;
-		    }
-		  brush_buf[i * 4 + 3] = plain_brush[i];
-		}
-	      g_free (plain_brush);
-	    }
-	}
+                for (i = 0; i < ph.width * ph.height; i++)
+                  {
+                    if (read (fd, brush_buf + i * 4, 3) != 3)
+                      {
+                        close (fd);
+                        g_free (name);
+                        g_free (plain_brush);
+                        g_free (brush_buf);
+                        return -1;
+                      }
+                    brush_buf[i * 4 + 3] = plain_brush[i];
+                  }
+                g_free (plain_brush);
+              }
+          }
+      }
+      break;
+
+    case 2:  /*  cinepaint brush (16 bit floats) -- convert to 8bit  */
+      {
+        guint16 *buf = (guint16 *) brush_buf;
+        gint     i;
+
+        for (i = 0; i < bh.width * bh.height; i++, buf++)
+          {
+            union
+            {
+              guint16 u[2];
+              gfloat  f;
+            } short_float;
+
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+            short_float.u[0] = 0;
+            short_float.u[1] = GUINT16_FROM_BE (*buf);
+#else
+            short_float.u[0] = GUINT16_FROM_BE (*buf);
+            short_float.u[1] = 0;
+#endif
+
+            brush_buf[i] = (guchar) (short_float.f *= 255.9999);
+          }
+
+        bh.bytes = 1;
+      }
+      break;
+
+    default:
+      break;
     }
 
   /*
@@ -427,7 +482,8 @@ load_image (const gchar *filename)
       image_type = GIMP_RGBA_IMAGE;
       break;
     default:
-      g_message ("Unsupported brush depth: %d\nGIMP Brushes must be GRAY or RGBA\n",
+      g_message ("Unsupported brush depth: %d\n"
+                 "GIMP Brushes must be GRAY or RGBA\n",
 		 bh.bytes);
       return -1;
     }

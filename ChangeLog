@@ -1,5 +1,10 @@
 2003-11-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/gbr.c: added support for loading cinepaint
+	brushes (GIMP brush version 3).
+
+2003-11-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/screenshot.c: rewrote clipping code using
 	gdk_rectangle_intersect().
 
