@@ -1,5 +1,9 @@
 2003-05-25  Michael Natterer  <mitch@gimp.org>
 
+	* data/misc/Makefile.am: forgot some hardcoded "1.3" here.
+
+2003-05-25  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/uniteditor.c (unit_editor_dialog): removed a
 	left over GTK_CHECK_VERSION(2,2,0).
 

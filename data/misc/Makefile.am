@@ -30,18 +30,18 @@ install-data-local:
 if GNOME_DATADIR
 	if test -d $(DESTDIR)@GNOME_DATADIR@/applications; then \
 		cd $(DESTDIR)@GNOME_DATADIR@/applications \
-		&& rm -f gimp-1.3.desktop \
-		&& $(LN_S) $(miscdatadir)/gimp.desktop gimp-1.3.desktop \
+		&& rm -f gimp-$(LT_RELEASE).desktop \
+		&& $(LN_S) $(miscdatadir)/gimp.desktop gimp-$(LT_RELEASE).desktop \
 	; fi
 	if test -d $(DESTDIR)@GNOME_DATADIR@/application-registry; then \
 		cd $(DESTDIR)@GNOME_DATADIR@/application-registry \
-		&& rm -f gimp-1.3.applications \
-		&& $(LN_S) $(miscdatadir)/gimp.applications gimp-1.3.applications \
+		&& rm -f gimp-$(LT_RELEASE).applications \
+		&& $(LN_S) $(miscdatadir)/gimp.applications gimp-$(LT_RELEASE).applications \
 	; fi
 	if test -d $(DESTDIR)@GNOME_DATADIR@/mime-info; then \
 		cd $(DESTDIR)@GNOME_DATADIR@/mime-info \
-		&& rm -f gimp-1.3.keys \
-		&& $(LN_S) $(miscdatadir)/gimp.keys gimp-1.3.keys \
+		&& rm -f gimp-$(LT_RELEASE).keys \
+		&& $(LN_S) $(miscdatadir)/gimp.keys gimp-$(LT_RELEASE).keys \
 	; fi
 endif
 
@@ -49,14 +49,14 @@ uninstall-local:
 if GNOME_DATADIR
 	if test -d $(DESTDIR)@GNOME_DATADIR@/applications; then \
 		cd $(DESTDIR)@GNOME_DATADIR@/applications \
-		&& rm -f gimp-1.3.desktop \
+		&& rm -f gimp-$(LT_RELEASE).desktop \
 	; fi
 	if test -d $(DESTDIR)@GNOME_DATADIR@/application-registry; then \
 		cd $(DESTDIR)@GNOME_DATADIR@/application-registry \
-		&& rm -f gimp-1.3.applications \
+		&& rm -f gimp-$(LT_RELEASE).applications \
 	; fi
 	if test -d $(DESTDIR)@GNOME_DATADIR@/mime-info; then \
 		cd $(DESTDIR)@GNOME_DATADIR@/mime-info \
-		&& rm -f gimp-1.3.keys \
+		&& rm -f gimp-$(LT_RELEASE).keys \
 	; fi
 endif
