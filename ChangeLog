@@ -1,3 +1,8 @@
+2004-10-26  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/retinex.c: cleaned up the GUI and GIMP-specific
+	code a bit. Use gimp_drawable_mask_intersect().
+
 2004-10-25  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/enumcode.pl: Use $1 instead of deprecated \1 for
