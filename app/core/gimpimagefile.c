@@ -436,10 +436,10 @@ gimp_imagefile_save_fail_thumb (GimpImagefile *imagefile,
     return;
 
   pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, 1, 1);
-      
+
   desc  = g_strdup_printf ("Thumbnail failure for %s", uri);
-  t_str = g_strdup_printf ("%ld", image_mtime);
-  s_str = g_strdup_printf ("%ld", image_size);
+  t_str = g_strdup_printf ("%ld",  image_mtime);
+  s_str = g_strdup_printf ("%lld", image_size);
 
   if (! gdk_pixbuf_save (pixbuf, thumb_name, "png", &error,
                          TAG_DESCRIPTION,        desc,
@@ -828,7 +828,7 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
     goto cleanup;
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_SIZE);
-  if (!option || sscanf (option, "%ld", &thumb_image_size) != 1)
+  if (!option || sscanf (option, "%lld", &thumb_image_size) != 1)
     goto cleanup;
 
   if (thumb_image_mtime == imagefile->image_mtime &&
@@ -940,11 +940,11 @@ gimp_imagefile_save_png_thumb (GimpImagefile *imagefile,
     type_str = g_enum_get_value (enum_class, type)->value_nick;
 
     desc  = g_strdup_printf ("Thumbnail of %s", uri);
-    t_str = g_strdup_printf ("%ld", image_mtime);
-    w_str = g_strdup_printf ("%d",  gimage->width);
-    h_str = g_strdup_printf ("%d",  gimage->height);
-    s_str = g_strdup_printf ("%ld", image_size);
-    l_str = g_strdup_printf ("%d",  gimage->layers->num_children);
+    t_str = g_strdup_printf ("%ld",  image_mtime);
+    w_str = g_strdup_printf ("%d",   gimage->width);
+    h_str = g_strdup_printf ("%d",   gimage->height);
+    s_str = g_strdup_printf ("%lld", image_size);
+    l_str = g_strdup_printf ("%d",   gimage->layers->num_children);
 
     success =  gdk_pixbuf_save (pixbuf, thumb_name, "png", &error,
                                 TAG_DESCRIPTION,        desc,

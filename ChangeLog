@@ -1,3 +1,8 @@
+2002-05-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimagefile.c: use "%lld" when printing or parsing
+	file sizes because AC_SYS_LARGEFILE makes off_t a long long.
+
 2002-05-27  Sven Neumann  <sven@gimp.org>
 
 	* HACKING
