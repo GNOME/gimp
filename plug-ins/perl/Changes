@@ -15,6 +15,7 @@ Revision history for Gimp-Perl extension.
           now.
         - fixed a few bugs in Gimp::Fu. PF_PATTERN & friends confused the
           current with the default value and didn't restore it properly.
+        - gimpdoc can now output a html file tree.
         
 1.1   Fri Jul 30 07:37:30 CEST 1999
 	- one of the most successful releases, in terms of features & bugfixes.

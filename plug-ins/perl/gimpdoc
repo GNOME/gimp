@@ -321,7 +321,7 @@ if ($opt_w) {
 <h1>Gimp PDB Documentation</h1>
 
 The following pages contain a htmlified version of the <a
-href="http://ww.gimp.org/"><b>Gimp</b></a> PDB documentation</b>. They
+href="http://www.gimp.org/"><b>Gimp</b></a> PDB documentation</b>. They
 were automatically generated on $today from gimp version $version, using
 the program <tt>gimpdoc</tt> (part of the $version distribution). If
 you have any questions please ask <a href=\"mailto:pcg\@goof.com\">Marc
