@@ -139,6 +139,17 @@ curves_calculate_curve (Curves               *curves,
 
 	  curves_plot_curve (curves, channel, p1, p2, p3, p4);
 	}
+
+      /* ensure that the control points are used exactly */
+      for (i = 0; i < num_pts; i++)
+        {
+          gint x, y;
+
+          x = curves->points[channel][points[i]][0];
+          y = curves->points[channel][points[i]][1];
+          curves->curve[channel][x] = y;
+        }
+
       break;
     }
 }

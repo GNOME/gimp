@@ -1,3 +1,12 @@
+2004-01-07  Simon Budig  <simon@gimp.org>
+
+	* app/base/curves.c: copy the positions of the control points
+	for a smooth curve into the lookup table, after the points
+	inbetween have been interpolated. This ensures that the
+	positions of the control points always get respected.
+
+	Fixes bug #35335.
+
 2004-01-07  Henrik Brix Andersen  <brix@gimp.org>
 
 	* app/core/gimpimage-contiguous-region.c
