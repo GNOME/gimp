@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP cvs\n"
-"POT-Creation-Date: 2000-09-22 23:00+0200\n"
+"POT-Creation-Date: 2000-09-22 11:39-0700\n"
 "PO-Revision-Date: 2000-08-15 15:09+02:00\n"
 "Last-Translator: Christian Meyer <linux@chrisime.de>\n"
 "Language-Team: German <de@li.org>\n"

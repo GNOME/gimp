@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1\n"
-"POT-Creation-Date: Sun Aug 27 18:38:09 2000\n"
+"POT-Creation-Date: Wed Aug 30 00:31:39 2000\n"
 "PO-Revision-Date: 2000-01-07 23:02+03:00\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -12,19 +12,19 @@ msgstr ""
 "Content-Type: text/plain; charset=koi8-u\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid " (press Tab to complete)"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid " = [argument error]\n"
 msgstr ""
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid " matching functions"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid ""
 "       interface-arguments are\n"
 "           -o | --output <filespec>   write image to disk, don't display\n"
@@ -32,7 +32,7 @@ msgid ""
 "       script-arguments are\n"
 msgstr ""
 
-#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
 "       gimp-arguments are\n"
@@ -44,462 +44,461 @@ msgid ""
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
 
-#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "$_ is not a valid import tag for package $pkg"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "$_: unknown/illegal file-save option"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
 "a-z and _ allowed"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr ""
 
-#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid ""
 "$function: function name contains unusual characters, good style is to use "
 "only 0-9, a-z and _"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "$s: not an integer\n"
 msgstr "$s: не ц╕ле\n"
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "%s arguments for function '%s'"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "%s: procedural database execution failed on invalid input arguments"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "%s: procedural database execution failed"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "(UNINITIALIZED)"
 msgstr "(НЕ╤Н╤Ц╤АЛ╤ЗОВАНО)"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "(none)"
 msgstr "(нема╓)"
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid ", %d bytes data]"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid ", authorization required"
 msgstr ""
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
 msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-koi8-u"
 
-#: plug-ins/perl/examples/logulator:0
+#: examples/logulator:0
 msgid "/Filters/Logulator"
 msgstr "/Ф╕льтри/Logulator"
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "/Xtns/Perl"
 msgstr "/Розш./Perl"
 
-#: plug-ins/perl/examples/fire:0 plug-ins/perl/examples/glowing_steel:0
-#: plug-ins/perl/examples/innerbevel:0 plug-ins/perl/examples/povray:0
-#: plug-ins/perl/examples/stamps:0
+#: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
+#: examples/povray:0 examples/stamps:0
 msgid "/Xtns/Render"
 msgstr "/Розш./В╕зуал╕зац╕я"
 
-#: plug-ins/perl/examples/fire:0 plug-ins/perl/examples/glowing_steel:0
-#: plug-ins/perl/examples/innerbevel:0 plug-ins/perl/examples/povray:0
+#: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
+#: examples/povray:0
 msgid "/Xtns/Render/Logos"
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Емблеми"
 
-#: plug-ins/perl/examples/povray:0
+#: examples/povray:0
 msgid "/Xtns/Render/Povray"
 msgstr "/Розш./В╕зуал╕зац╕я/Povray"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "9x15bold"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
 msgstr ""
 
-#: plug-ins/perl/examples/repdup:0
+#: examples/repdup:0
 msgid "<Image>/Edit/Repeat & Duplicate..."
 msgstr "<Image>/Редагування/Повторення та дублювання"
 
-#: plug-ins/perl/examples/animate_cells:0
+#: examples/animate_cells:0
 msgid "<Image>/Filters/Animation/Animate Cells..."
 msgstr "<Image>/Ф╕льтри/Ан╕мац╕я/Ан╕мувати ком╕рки..."
 
-#: plug-ins/perl/examples/blowinout:0
+#: examples/blowinout:0
 msgid "<Image>/Filters/Animation/BlowInOut..."
 msgstr "<Image>/Ф╕льтри/Ан╕мац╕я/BlowInOut..."
 
-#: plug-ins/perl/examples/frame_filter:0
+#: examples/frame_filter:0
 msgid "<Image>/Filters/Apply Perl Expression..."
 msgstr "<Image>/Ф╕льтри/Застосувати вираз Perl..."
 
-#: plug-ins/perl/examples/gouge:0
+#: examples/gouge:0
 msgid "<Image>/Filters/Blur/2x2 Blur"
 msgstr "<Image>/Ф╕льтри/Розмивання/Размивання 2х2"
 
-#: plug-ins/perl/examples/colourtoalpha:0
+#: examples/colourtoalpha:0
 msgid "<Image>/Filters/Colors/Colour To Alpha..."
 msgstr "<Image>/Ф╕льтри/Кольори/Кол╕р у альфа..."
 
-#: plug-ins/perl/examples/fire:0
+#: examples/fire:0
 msgid "<Image>/Filters/Colors/Fire..."
 msgstr "<Image>/Ф╕льтри/Кольори/Вогонь..."
 
-#: plug-ins/perl/examples/map_to_gradient:0
+#: examples/map_to_gradient:0
 msgid "<Image>/Filters/Colors/Map To Gradient..."
 msgstr "<Image>/Ф╕льтри/Кольори/Мапа в град╕╓нт..."
 
-#: plug-ins/perl/examples/mirrorsplit:0
+#: examples/mirrorsplit:0
 msgid "<Image>/Filters/Distorts/MirrorSplit..."
 msgstr "<Image>/Ф╕льтри/Спотворення/MirrorSplit..."
 
-#: plug-ins/perl/examples/scratches:0
+#: examples/scratches:0
 msgid "<Image>/Filters/Distorts/Scratches..."
 msgstr "<Image>/Ф╕льтри/Спотворення/Подряпини..."
 
-#: plug-ins/perl/examples/windify:0
+#: examples/windify:0
 msgid "<Image>/Filters/Distorts/Windify..."
 msgstr "<Image>/Ф╕льтри/Искажения/Windify..."
 
-#: plug-ins/perl/examples/gouge:0
+#: examples/gouge:0
 msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
 msgstr "<Image>/Ф╕льтри/Знаходження краю/2х2 знаходження краю"
 
-#: plug-ins/perl/examples/gouge:0
+#: examples/gouge:0
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr "<Image>/Ф╕льтри/Покращення/2х2 Покращення контрасту"
 
-#: plug-ins/perl/examples/warp-sharp:0
+#: examples/warp-sharp:0
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
 msgstr ""
 
-#: plug-ins/perl/examples/blended2:0
+#: examples/blended2:0
 msgid "<Image>/Filters/Logulator/Blended II..."
 msgstr "<Image>/Ф╕льтри/Logulator/Зм╕шаний II..."
 
-#: plug-ins/perl/examples/logulator:0
+#: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Carved"
 msgstr "<Image>/Ф╕льтри/Logulator/Вир╕зка"
 
-#: plug-ins/perl/examples/logulator:0
+#: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Crystal"
 msgstr "<Image>/Ф╕льтри/Logulator/Кристал"
 
-#: plug-ins/perl/examples/logulator:0
+#: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Imigre-26"
 msgstr "<Image>/Ф╕льтри/Logulator/Imigre-26"
 
-#: plug-ins/perl/examples/logulator:0
+#: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Newsprint text"
 msgstr "<Image>/Ф╕льтри/Logulator/Газетний текст"
 
-#: plug-ins/perl/examples/logulator:0
+#: examples/logulator:0
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
 msgstr "<Image>/Ф╕льтри/Logulator/SOTA Хром"
 
-#: plug-ins/perl/examples/logulator:0
+#: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Speed text"
 msgstr "<Image>/Ф╕льтри/Logulator/Швидк╕сний текст"
 
-#: plug-ins/perl/examples/translogo:0
+#: examples/translogo:0
 msgid "<Image>/Filters/Logulator/Transparent Logo..."
 msgstr "<Image>/Ф╕льтри/Logulator/Прозора емблема..."
 
-#: plug-ins/perl/examples/logulator:0
+#: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Web title header"
 msgstr "<Image>/Ф╕льтри/Logulator/Web title header"
 
-#: plug-ins/perl/examples/image_tile:0
+#: examples/image_tile:0
 msgid "<Image>/Filters/Map/Image Tile..."
 msgstr "<Image>/Ф╕льтри/Мапа/Image Tile..."
 
-#: plug-ins/perl/examples/pixelmap:0
+#: examples/pixelmap:0
 msgid "<Image>/Filters/Map/Pixelmap..."
 msgstr "<Image>/Ф╕льтри/Мапа/Точкова мапа..."
 
-#: plug-ins/perl/examples/xachlego:0
+#: examples/xachlego:0
 msgid "<Image>/Filters/Map/Xach Blocks..."
 msgstr "<Image>/Ф╕льтри/Мапа/Xach-блоки..."
 
-#: plug-ins/perl/examples/xachshadow:0
+#: examples/xachshadow:0
 msgid "<Image>/Filters/Map/Xach Shadows..."
 msgstr "<Image>/Ф╕льтри/Мапа/Xach-т╕н╕..."
 
-#: plug-ins/perl/examples/border:0
+#: examples/border:0
 msgid "<Image>/Filters/Misc/Border Average..."
 msgstr "<Image>/Ф╕льтри/Р╕зне/Border Average..."
 
-#: plug-ins/perl/examples/gimpmagick:0
+#: examples/gimpmagick:0
 msgid "<Image>/Filters/Misc/Magick..."
 msgstr "<Image>/Ф╕льтри/Р╕зне/Маг╕я..."
 
-#: plug-ins/perl/examples/ditherize:0
+#: examples/ditherize:0
 msgid "<Image>/Filters/Noise/Ditherize..."
 msgstr ""
 
-#: plug-ins/perl/examples/feedback:0
+#: examples/feedback:0
 msgid "<Image>/Filters/Noise/Feedback..."
 msgstr "<Image>/Ф╕льтри/Шум/Зворотн╕й зв'язок..."
 
-#: plug-ins/perl/examples/xachvision:0
+#: examples/xachvision:0
 msgid "<Image>/Filters/Noise/Xach Vision..."
 msgstr "<Image>/Ф╕льтри/Шум/Xach-бачення..."
 
-#: plug-ins/perl/examples/dust:0
+#: examples/dust:0
 msgid "<Image>/Filters/Render/Add Dust..."
 msgstr ""
 
-#: plug-ins/perl/examples/glowing_steel:0
+#: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Add Glow"
 msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Додати сяйво"
 
-#: plug-ins/perl/examples/glowing_steel:0
+#: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Brushed Metal..."
 msgstr ""
 
-#: plug-ins/perl/examples/burst:0
+#: examples/burst:0
 msgid "<Image>/Filters/Render/Burst..."
 msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Вибух..."
 
-#: plug-ins/perl/examples/fit-text:0
+#: examples/fit-text:0
 msgid "<Image>/Filters/Render/Fit Text..."
 msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Fit Text..."
 
-#: plug-ins/perl/examples/glowing_steel:0
+#: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Highlight Edges..."
 msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Яскрав╕ кра╖..."
 
-#: plug-ins/perl/examples/randomblends:0
+#: examples/randomblends:0
 msgid "<Image>/Filters/Render/Random Blends..."
 msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Випадков╕ сум╕ш╕..."
 
-#: plug-ins/perl/examples/stampify:0
+#: examples/stampify:0
 msgid "<Image>/Filters/Render/Stampify..."
 msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Штампувати..."
 
-#: plug-ins/perl/examples/tex-to-float:0
+#: examples/tex-to-float:0
 msgid "<Image>/Filters/Render/TeX String..."
 msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Рядок TeX..."
 
-#: plug-ins/perl/examples/terral_text:0
+#: examples/terral_text:0
 msgid "<Image>/Filters/Render/Terral Text..."
 msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Земляний текст..."
 
-#: plug-ins/perl/examples/perlotine:0
+#: examples/perlotine:0
 msgid "<Image>/Filters/Web/Perl-o-tine..."
 msgstr "<Image>/Ф╕льтри/WWW/Perl-o-tine..."
 
-#: plug-ins/perl/examples/prep4gif:0
+#: examples/prep4gif:0
 msgid "<Image>/Filters/Web/Prepare for GIF..."
 msgstr "<Image>/Ф╕льтри/WWW/П╕дготувати для GIF..."
 
-#: plug-ins/perl/examples/webify:0
+#: examples/webify:0
 msgid "<Image>/Filters/Web/Webify..."
 msgstr "<Image>/Ф╕льтри/WWW/Webify..."
 
-#: plug-ins/perl/examples/centerguide:0
+#: examples/centerguide:0
 msgid "<Image>/Guides/Center Guide..."
 msgstr "<Image>/Направляюч╕/Центрувати..."
 
-#: plug-ins/perl/examples/guidegrid:0
+#: examples/guidegrid:0
 msgid "<Image>/Guides/Guide Grid..."
 msgstr "<Image>/Направляюч╕/С╕тка..."
 
-#: plug-ins/perl/examples/guide_remove:0
+#: examples/guide_remove:0
 msgid "<Image>/Guides/Remove Guides"
 msgstr "<Image>/Направляюч╕/Видалити"
 
-#: plug-ins/perl/examples/guides_to_selection:0
+#: examples/guides_to_selection:0
 msgid "<Image>/Guides/To Selection..."
 msgstr "<Image>/Направляюч╕/У вид╕лення..."
 
-#: plug-ins/perl/examples/alpha2color:0
+#: examples/alpha2color:0
 msgid "<Image>/Image/Alpha/Alpha2Color..."
 msgstr "<Image>/Зображення/Альфа/Альфа в кол╕р..."
 
-#: plug-ins/perl/examples/clear_alpha:0
+#: examples/clear_alpha:0
 msgid "<Image>/Image/Alpha/Clear Alpha..."
 msgstr "<Image>/Зображення/Альфа/Альфа в кол╕р..."
 
-#: plug-ins/perl/examples/layerfuncs:0
+#: examples/layerfuncs:0
 msgid "<Image>/Layers/Center Layer"
 msgstr "<Image>/Шари/Центрувати шар"
 
-#: plug-ins/perl/examples/frame_reshuffle:0
+#: examples/frame_reshuffle:0
 msgid "<Image>/Layers/Stack/Reorder Layers..."
 msgstr "<Image>/Шари/Купа/Впорядкувати шари..."
 
-#: plug-ins/perl/examples/roundrectsel:0
+#: examples/roundrectsel:0
 msgid "<Image>/Select/Round Rectangular Selection..."
 msgstr "<Image>/Вид╕лення/Вид╕лення заокругленого прямокутника..."
 
-#: plug-ins/perl/examples/roundsel:0
+#: examples/roundsel:0
 msgid "<Image>/Select/Round..."
 msgstr ""
 
-#: plug-ins/perl/examples/triangle:0
+#: examples/triangle:0
 msgid "<Image>/Select/Triangle..."
 msgstr "<Image>/Вид╕лення/Трикутник..."
 
-#: plug-ins/perl/examples/gap-vcr:0
+#: examples/gap-vcr:0
 msgid "<Image>/Video/VCR Console..."
 msgstr "<Image>/В╕део/Пульт в╕деомагн╕тофона..."
 
-#: plug-ins/perl/examples/view3d:0
+#: examples/view3d:0
 msgid "<Image>/View/3D Surface..."
 msgstr "<Image>/Вигляд/3D поверхня..."
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
 msgstr ""
 
-#: plug-ins/perl/examples/billboard:0
+#: examples/billboard:0
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
 msgstr "<Toolbox>/Розш./Ан╕мац╕я/Дошка оголошень..."
 
-#: plug-ins/perl/examples/sethspin:0
+#: examples/sethspin:0
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
 msgstr "<Toolbox>/Розш./Ан╕мац╕я/Дошка оголошень..."
 
-#: plug-ins/perl/examples/Create_Images:0
+#: examples/Create_Images:0
 msgid "<Toolbox>/Xtns/Create_Images"
 msgstr "<Toolbox>/Розш./Створити_зображення"
 
-#: plug-ins/perl/examples/example-fu:0
+#: examples/example-fu:0
 msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
 msgstr "<Toolbox>/Розш./Приклад Gimp::Fu..."
 
-#: plug-ins/perl/examples/homepage-logo:0
+#: examples/homepage-logo:0
 msgid "<Toolbox>/Xtns/Homepage-Logo"
 msgstr "<Toolbox>/Розш./Емблема домашньо╖ стор╕нки"
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "<Toolbox>/Xtns/PDB Explorer..."
 msgstr "<Toolbox>/Розш./Досл╕дник ПБД..."
 
-#: plug-ins/perl/examples/parasite-editor:0
+#: examples/parasite-editor:0
 msgid "<Toolbox>/Xtns/Parasite Editor..."
 msgstr "<Toolbox>/Розш./Редактор паразит╕в..."
 
-#: plug-ins/perl/examples/example-oo:0
+#: examples/example-oo:0
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
 msgstr "<Toolbox>/Розш./Приклад доповнення Perl"
 
-#: plug-ins/perl/examples/perlcc:0
+#: examples/perlcc:0
 msgid "<Toolbox>/Xtns/Perl/Control Center..."
 msgstr "<Toolbox>/Розш./Perl/Центр керування..."
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "<Toolbox>/Xtns/Perl/Server"
 msgstr "<Toolbox>/Розш./Perl/Сервер"
 
-#: plug-ins/perl/examples/bricks:0
+#: examples/bricks:0
 msgid "<Toolbox>/Xtns/Render/Bricks..."
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Цегла..."
 
-#: plug-ins/perl/examples/font_table:0
+#: examples/font_table:0
 msgid "<Toolbox>/Xtns/Render/Font Table..."
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Шрифтова таблица..."
 
-#: plug-ins/perl/examples/goldenmean:0
+#: examples/goldenmean:0
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Золота середина..."
 
-#: plug-ins/perl/examples/fire:0
+#: examples/fire:0
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Емблеми/Вогняний текст..."
 
-#: plug-ins/perl/examples/glowing_steel:0
+#: examples/glowing_steel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Емблеми/Сяюча сталь"
 
-#: plug-ins/perl/examples/innerbevel:0
+#: examples/innerbevel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Емблеми/Inner Bevel..."
 
-#: plug-ins/perl/examples/pixelmap:0
+#: examples/pixelmap:0
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Крапкогенератор..."
 
-#: plug-ins/perl/examples/povray:0
+#: examples/povray:0
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Povray/Налаштування..."
 
-#: plug-ins/perl/examples/povray:0
+#: examples/povray:0
 msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Povray/Текстура..."
 
-#: plug-ins/perl/examples/randomart1:0
+#: examples/randomart1:0
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Випадкове мистецтво #1..."
 
-#: plug-ins/perl/examples/stamps:0
+#: examples/stamps:0
 msgid "<Toolbox>/Xtns/Render/Stamps..."
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Штампи..."
 
-#: plug-ins/perl/examples/yinyang:0
+#: examples/yinyang:0
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Yin-Yang..."
 
-#: plug-ins/perl/examples/visual:0
+#: examples/visual:0
 msgid "<Toolbox>/Xtns/Visual Scriptor..."
 msgstr "<Toolbox>/Розш./Visual Scriptor..."
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Accelerator"
 msgstr "Прискорювач"
 
-#: plug-ins/perl/examples/sethspin:0
+#: examples/sethspin:0
 msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
 msgstr ""
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Author"
 msgstr "Автор"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "BG"
 msgstr "ТЛО"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid ""
 "BLURB:\n"
 "\n"
@@ -517,297 +516,297 @@ msgstr ""
 "\n"
 "$help"
 
-#: plug-ins/perl/examples/example-fu:0
+#: examples/example-fu:0
 msgid "Background"
 msgstr "Тло"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Browse"
 msgstr "Перегляд"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Brush Selection Dialog"
 msgstr "Д╕алог вибору пензля"
 
-#: plug-ins/perl/examples/translogo:0
+#: examples/translogo:0
 msgid "Bumpmap"
 msgstr ""
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Cancel"
 msgstr "В╕дм╕на"
 
-#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr ""
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Close"
 msgstr "Закрити"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Color"
 msgstr "Кол╕р"
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Command"
 msgstr "Команда"
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Copyright"
 msgstr "Авторське право"
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "DESCRIPTION"
 msgstr "ОПИС"
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Date/Version"
 msgstr "Дата/Верс╕я"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Defaults"
 msgstr ""
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Description"
 msgstr "Опис"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Edit"
 msgstr "Редагування"
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
 "string"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid ""
 "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
 "'use strict'"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "FATAL: canonicalize_colour did not return a value!"
 msgstr ""
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "FATAL: unable to create $tmp: $!\n"
 msgstr "ПОМИЛКА: невдалося створити $tmp: $!\n"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "FG"
 msgstr "Передн╕й план"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Fileselector for $name"
 msgstr "Виб╕р файлу для $name"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Font Selection Dialog ($desc)"
 msgstr "Д╕алог вибору шрифту ($desc)"
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Function Info"
 msgstr "╤нформац╕я про функц╕ю"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Gradient Selection Dialog"
 msgstr "Д╕алог вибору град╕╓нту"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Help for "
 msgstr "Дов╕дка про "
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Help"
 msgstr "Дов╕дка"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Illegal default font description for $function: $val\n"
 msgstr ""
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Image Types"
 msgstr "Типи зображень"
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Last Modified"
 msgstr "Востанн╓ зм╕нено"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Load $name"
 msgstr ""
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Load"
 msgstr "Завантажити"
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Menu Path"
 msgstr "Шлях до меню"
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "More..."
 msgstr "Ще..."
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "NAME"
 msgstr "НАЗВА"
 
-#: plug-ins/perl/examples/perlotine:0
+#: examples/perlotine:0
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr ""
 "Не знайдено н╕ вертикальних н╕ горизонтальних направляючих. Виконання "
 "перервано."
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "OK"
 msgstr "Гаразд"
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
 msgstr "Досл╕дник ПБД - olof-редакц╕я (ще лиша╓ться альфа-верс╕╓ю)"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Pattern Selection Dialog"
 msgstr "Д╕алог вибору шаблона"
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Plug-In Path"
 msgstr "Шлях до доповнення"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Previous"
 msgstr "Попередн╓"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Reset all values to their default"
 msgstr "Скинути вс╕ значення до початкових"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Restore values to the previous ones"
 msgstr ""
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Save $name"
 msgstr "Зберегти $name"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Save"
 msgstr "Зберегти"
 
-#: plug-ins/perl/examples/colorhtml:0
+#: examples/colorhtml:0
 msgid "Saving '$filename' as COLORHTML..."
 msgstr "Збереження \"$filename\" як COLORHTML..."
 
-#: plug-ins/perl/examples/dataurl:0
+#: examples/dataurl:0
 msgid "Saving '$filename' as DATAURL..."
 msgstr "Збереження \"$filename\" як DATAURL..."
 
-#: plug-ins/perl/examples/sethspin:0
+#: examples/sethspin:0
 msgid "Seth Spin..."
 msgstr ""
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Shortcuts"
 msgstr "Скорочення"
 
-#: plug-ins/perl/examples/sethspin:0
+#: examples/sethspin:0
 msgid "Spin Layer DEST (250ms)"
 msgstr ""
 
-#: plug-ins/perl/examples/sethspin:0
+#: examples/sethspin:0
 msgid "Spin Layer SRC (250ms)"
 msgstr ""
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Status"
 msgstr "Стан"
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "Synopsis"
 msgstr "Резюме"
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "TYPE"
 msgstr "ТИП"
 
-#: plug-ins/perl/examples/translogo:0
+#: examples/translogo:0
 msgid "Text"
 msgstr "Текст"
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "This module was built without support for PDL."
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "Unable to convert a reference to type '%s'"
 msgstr ""
 
-#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "Unable to grok '%s' as colour specifier"
 msgstr ""
 
-#: plug-ins/perl/examples/colorhtml:0 plug-ins/perl/examples/dataurl:0
+#: examples/colorhtml:0 examples/dataurl:0
 msgid "Unable to open '$filename' for writing: $!\n"
 msgstr "Невдалося в╕дкрити \"$filename\" для запису: $!\n"
 
-#: plug-ins/perl/examples/dataurl:0
+#: examples/dataurl:0
 msgid "Unable to read temporary image tile $tmp: $!"
 msgstr ""
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "Unsupported argumenttype $type"
 msgstr ""
 
-#: plug-ins/perl/examples/visual:0
+#: examples/visual:0
 msgid "Visual Scriptor"
 msgstr ""
 
-#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "WARNING"
 msgstr "ПОПЕРЕДЖЕННЯ"
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "WARNING: client tried to unlock without holding a lock"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "WARNING: shared locking requested but not implemented"
 msgstr ""
 
-#: plug-ins/perl/examples/translogo:0
+#: examples/translogo:0
 msgid "You can't run this script with an INDEXED image!!"
 msgstr "Ви не можете запустити цей скрипт на ╕ндексованому зображеннями!"
 
-#: plug-ins/perl/examples/translogo:0
+#: examples/translogo:0
 msgid "You can't run this script without an ALPHA CHANNEL!!"
 msgstr ""
 
-#: plug-ins/perl/examples/prep4gif:0
+#: examples/prep4gif:0
 msgid "You need at least 2 layers to perform prep4gif"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "[undefined]"
 msgstr "[невизначено]"
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "[unfinished]\n"
 msgstr "[незавершено]\n"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid ""
 "\n"
 "\n"
@@ -815,372 +814,372 @@ msgid ""
 "\n"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "a color must have three components (array elements)"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "accepted tcp connection from "
 msgstr "прийнято tcp-з'╓днання з "
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "accepted unix connection"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "accepting connections in $host"
 msgstr "прийнання з'╓днань на $host"
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "accepting connections on $unix_path"
 msgstr "приймання з'╓днань на $unix_path"
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "accepting connections on port $Gimp::Net::default_tcp_port"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "accepting connections on port $port"
 msgstr "прийон з'╓днань на порту $port"
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "argument incompatible with type IMAGE"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "argument is not of type %s"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "argument type %s expected (not %s)"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "arguments to main not yet supported!"
 msgstr ""
 
-#: plug-ins/perl/Net/Net.pm:0
+#: Net/Net.pm:0
 msgid "authorization failed: $r[1]\n"
 msgstr "авторизац╕я не вдалась: $r[1]\n"
 
-#: plug-ins/perl/Net/Net.pm:0
+#: Net/Net.pm:0
 msgid "authorization ok, but: $r[1]\n"
 msgstr "авторизац╕я пройшла усп╕шно, але: $r[1]\n"
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "authorization required for tcp connections"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "authorization unnecessary"
 msgstr "авторизац╕я непотр╕бна"
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "being called as '%s', but '%s' not registered in the pdb"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "closing connection %d (%d requests in %g seconds)"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
 msgstr ""
 
-#: plug-ins/perl/Net/Net.pm:0
+#: Net/Net.pm:0
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid ""
 "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid ""
 "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "dunno how to pass arg type %d"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "dunno how to return param type %d"
 msgstr ""
 
-#: plug-ins/perl/Net/Net.pm:0
+#: Net/Net.pm:0
 msgid "expected perl-server at other end of socket, got @r\n"
 msgstr ""
 
-#: plug-ins/perl/Net/Net.pm:0
+#: Net/Net.pm:0
 msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
 msgstr ""
 
-#: plug-ins/perl/examples/colorhtml:0 plug-ins/perl/examples/dataurl:0
+#: examples/colorhtml:0 examples/dataurl:0
 msgid "export failed"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "function '$exe' not found in this script (must be one of "
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "function name contains dashes instead of underscores"
 msgstr ""
 
-#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "function/macro \"$name\" not found in $class"
 msgstr ""
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "get current background colour from the gimp"
 msgstr ""
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "get current foreground colour from the gimp"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "gimp procedure '%s' not found"
 msgstr "процедуру Gimp '%s' не знайдено"
 
-#: plug-ins/perl/Net/Net.xs:0
+#: Net/Net.xs:0
 msgid "gimp-perl-pixel functions require the PDL::Core module"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid ""
 "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
 "gimp-1.1 and report this error"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "gimp_tile_get_data is not yet implemented\n"
 msgstr "gimp_tile_get_data ще не реал╕зовано\n"
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "gimp_tile_set_data is not yet implemented\n"
 msgstr "gimp_tile_set_data ще не реал╕зовано\n"
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "illegal command received, aborting connection"
 msgstr "отримано недопустиму команду, з'╓днання об╕рвано"
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "illegal parasite specification, arrayref expected"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "illegal parasite specification, expected three array members"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "illegal parasite specification, reference expected"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "illegal type for colour specification"
 msgstr "нев╕рний тип специф╕кац╕╖ кольору"
 
-#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "interface '$interface_type' unsupported."
 msgstr ""
 
-#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "interface=... tag is no longer supported\n"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid ""
 "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
 msgstr ""
 
-#: plug-ins/perl/UI/UI.xs:0
+#: UI/UI.xs:0
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
 "PARAM_TYPE"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid ""
 "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "no additional information available, use --help\n"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Util.pm:0
+#: Gimp/Util.pm:0
 msgid "no font specified, using default"
 msgstr "шрифту не вказано, використову╓ться типовий"
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "not enough"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "only blessed scalars accepted here"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "parameter '$entry->[1]' is not optional\n"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "params and return_vals must be array refs (even if empty)!"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "pdl height != region height"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "perl-arrayref required as datatype for a gimp-array"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid ""
 "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "plug-in returned %d more values than expected"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "received QUIT request"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "register called with too many or wrong arguments\n"
 msgstr ""
 
-#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'net' not found\n"
 msgstr ""
 
-#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'query' not found\n"
 msgstr ""
 
-#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'run' not found\n"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "server going down..."
 msgstr ""
 
-#: plug-ins/perl/Net/Net.pm:0
+#: Net/Net.pm:0
 msgid "server requests authorization, but no authorization available\n"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "server version $Gimp::VERSION started"
 msgstr "серверну верс╕ю $Gimp::VERSION запущено"
 
-#: plug-ins/perl/Gimp/Util.pm:0
+#: Gimp/Util.pm:0
 msgid "text string is empty"
 msgstr "текстовий рядок порожн╕й"
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid ""
 "the gtk perl module is required to open a dialog\n"
 "window, running with default values"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Fu.pm:0
+#: Gimp/Fu.pm:0
 msgid ""
 "the gtk perl module is required to run\n"
 "this plug-in in interactive mode\n"
 msgstr ""
 
-#: plug-ins/perl/examples/PDB:0
+#: examples/PDB:0
 msgid "too many arguments"
 msgstr "недто багато аргумент╕в"
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "too many"
 msgstr "надто багато"
 
-#: plug-ins/perl/Net/Net.pm:0
+#: Net/Net.pm:0
 msgid "trying to start gimp with options \"$opt\"\n"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "unable to accept tcp connection: $!\n"
 msgstr "неможливо прийняти TCP-з'╓днання: $!\n"
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "unable to accept unix connection: $!\n"
 msgstr ""
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
 msgstr ""
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "unable to create '$fn': $!"
 msgstr "невдалось створити \"$fn\": $!"
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "unable to create listening tcp socket: $!\n"
 msgstr ""
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "unable to create listening unix socket: $!\n"
 msgstr "неможливо зд╕йснити прослуховування на UNIX-сокет╕: $!\n"
 
-#: plug-ins/perl/Net/Net.pm:0
+#: Net/Net.pm:0
 msgid "unable to create socketpair for gimp communications: $!"
 msgstr ""
 
-#: plug-ins/perl/Net/Net.pm:0
+#: Net/Net.pm:0
 msgid "unable to fork: $!"
 msgstr "невдалося розгалудити: $!"
 
-#: plug-ins/perl/Gimp/Lib.xs:0
+#: Gimp/Lib.xs:0
 msgid "unable to grok colour specification"
 msgstr ""
 
-#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "unable to open $rgb_db_path"
 msgstr "невдалося в╕дкрити $rgb_db_path"
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "unable to open Gimp::Net communications socket: $!\n"
 msgstr ""
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "unable to read '$fn': $!"
 msgstr "невдалося зчитати \"$fn\": $!"
 
-#: plug-ins/perl/UI/UI.pm:0
+#: UI/UI.pm:0
 msgid "unable to read temporary file $tmp: $!"
 msgstr "нездолося зчитати тимчасовий файл $tmp: $!"
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "unauthorized command received, aborting connection"
 msgstr ""
 
-#: plug-ins/perl/examples/dataurl:0
+#: examples/dataurl:0
 msgid "url size is too large ($max > 1024)\n"
 msgstr "розм╕р url надто великий ($max > 1024)\n"
 
-#: plug-ins/perl/Perl-Server:0
+#: Perl-Server:0
 msgid "wrong authorization, aborting connection"
 msgstr "невдала авторизац╕я, з'╓днання об╕рвано"
 
-#: plug-ins/perl/Gimp/Compat.pm:0
+#: Gimp/Compat.pm:0
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr ""
 

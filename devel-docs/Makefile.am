@@ -5,7 +5,6 @@ EXTRA_DIST = \
 	README.gtkdoc		\
 	pdb/pdb_self_doc.el 	\
 	pdb/pdb_dump		\
-	pdb/pdb_dump.texi	\
 	pdb/texinfo.tex 	\
 	gih.txt  		\
 	gpb.txt  		\

@@ -47,7 +47,7 @@ SOURCES = cat-id-tbl.c
 POFILES = @POFILES@
 GMOFILES = @GMOFILES@
 DISTFILES = ChangeLog Makefile.in.in POTFILES.in $(PACKAGE).pot \
-stamp-cat-id $(POFILES) $(GMOFILES) $(SOURCES) $(PXGETTEXT)
+stamp-cat-id $(POFILES) $(GMOFILES) $(SOURCES) $(srcdir)/pxgettext
 
 POTFILES = \
 
@@ -196,11 +196,11 @@ maintainer-clean: distclean
 	@echo "it deletes files that may require special tools to rebuild."
 	rm -f $(GMOFILES)
 
-distdir = ../$(PACKAGE)-$(VERSION)/$(subdir)
+distdir = ../../../$(PACKAGE)-$(VERSION)/$(subdir)
 dist distdir: update-po $(DISTFILES)
 	dists="$(DISTFILES)"; \
 	for file in $$dists; do \
-	  ln $(srcdir)/$$file $(distdir) 2> /dev/null \
+	  ln $(srcdir)/$$file ../../$(distdir) 2> /dev/null \
 	    || cp -p $(srcdir)/$$file $(distdir); \
 	done
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-09-01 16:16+0300\n"
+"POT-Creation-Date: 2000-09-22 11:39-0700\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:282
 #: plug-ins/FractalExplorer/Dialogs.c:1372 plug-ins/common/AlienMap.c:1396
 #: plug-ins/common/AlienMap2.c:1388 plug-ins/gdyntext/gdyntext_ui.c:560
-#: plug-ins/gfig/gfig.c:3338 plug-ins/imagemap/imap_about.c:33
+#: plug-ins/gfig/gfig.c:3374 plug-ins/imagemap/imap_about.c:33
 #: plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
 msgstr "Про"
@@ -63,7 +63,7 @@ msgstr "Про"
 #: plug-ins/common/pat.c:412 plug-ins/common/pixelize.c:280
 #: plug-ins/common/plasma.c:307 plug-ins/common/png.c:1045
 #: plug-ins/common/pnm.c:933 plug-ins/common/polar.c:914
-#: plug-ins/common/ps.c:2594 plug-ins/common/ps.c:2776
+#: plug-ins/common/ps.c:2586 plug-ins/common/ps.c:2768
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
 #: plug-ins/common/ripple.c:580 plug-ins/common/scatter_hsv.c:375
 #: plug-ins/common/sel_gauss.c:242 plug-ins/common/sharpen.c:523
@@ -87,8 +87,8 @@ msgstr "Про"
 #: plug-ins/gap/gap_mod_layer.c:145 plug-ins/gap/gap_mov_dialog.c:487
 #: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
 #: plug-ins/gdyntext/gdyntext_ui.c:199 plug-ins/gdyntext/gdyntext_ui.c:573
-#: plug-ins/gfig/gfig.c:4044 plug-ins/gfig/gfig.c:4389
-#: plug-ins/gfig/gfig.c:4472 plug-ins/gfig/gfig.c:4774
+#: plug-ins/gfig/gfig.c:4080 plug-ins/gfig/gfig.c:4425
+#: plug-ins/gfig/gfig.c:4508 plug-ins/gfig/gfig.c:4813
 #: plug-ins/gflare/gflare.c:2458 plug-ins/gflare/gflare.c:3468
 #: plug-ins/gfli/gfli.c:821 plug-ins/gfli/gfli.c:890
 #: plug-ins/gimpressionist/gimpressionist.c:356
@@ -144,8 +144,8 @@ msgstr "Гаразд"
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:414
 #: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:309
 #: plug-ins/common/png.c:1047 plug-ins/common/pnm.c:935
-#: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2596
-#: plug-ins/common/ps.c:2778 plug-ins/common/psp.c:430
+#: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2588
+#: plug-ins/common/ps.c:2770 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
 #: plug-ins/common/scatter_hsv.c:377 plug-ins/common/screenshot.c:375
 #: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:525
@@ -171,9 +171,9 @@ msgstr "Гаразд"
 #: plug-ins/gap/gap_mod_layer.c:261 plug-ins/gap/gap_mov_dialog.c:518
 #: plug-ins/gap/gap_mov_dialog.c:3023 plug-ins/gap/gap_mpege.c:189
 #: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_range_ops.c:1243
-#: plug-ins/gap/gap_resi_dialog.c:158 plug-ins/gfig/gfig.c:3897
-#: plug-ins/gfig/gfig.c:4044 plug-ins/gfig/gfig.c:4391
-#: plug-ins/gfig/gfig.c:4474 plug-ins/gfig/gfig.c:4982
+#: plug-ins/gap/gap_resi_dialog.c:158 plug-ins/gfig/gfig.c:3933
+#: plug-ins/gfig/gfig.c:4080 plug-ins/gfig/gfig.c:4427
+#: plug-ins/gfig/gfig.c:4510 plug-ins/gfig/gfig.c:5021
 #: plug-ins/gflare/gflare.c:2460 plug-ins/gflare/gflare.c:3369
 #: plug-ins/gflare/gflare.c:3470 plug-ins/gfli/gfli.c:823
 #: plug-ins/gfli/gfli.c:892 plug-ins/gimpressionist/gimpressionist.c:486
@@ -200,12 +200,12 @@ msgstr "В╕дмова"
 #: plug-ins/common/jigsaw.c:2510 plug-ins/common/mapcolor.c:576
 #: plug-ins/common/max_rgb.c:363 plug-ins/common/nlfilt.c:575
 #: plug-ins/common/noisify.c:505 plug-ins/common/plasma.c:326
-#: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2917
+#: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2909
 #: plug-ins/common/sharpen.c:550 plug-ins/common/sinus.c:2123
 #: plug-ins/common/spheredesigner.c:2254 plug-ins/common/tileit.c:407
 #: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
 #: plug-ins/common/wind.c:1030 plug-ins/flame/flame.c:940
-#: plug-ins/gfig/gfig.c:3920 plug-ins/gflare/gflare.c:2485
+#: plug-ins/gfig/gfig.c:3956 plug-ins/gflare/gflare.c:2485
 #: plug-ins/gflare/gflare.c:3493 plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:901
@@ -343,7 +343,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:520 plug-ins/common/CML_explorer.c:1229
 #: plug-ins/common/gqbist.c:686 plug-ins/common/spheredesigner.c:2329
-#: plug-ins/gfig/gfig.c:3512
+#: plug-ins/gfig/gfig.c:3548
 msgid "Load"
 msgstr "Завантажити"
 
@@ -366,7 +366,7 @@ msgstr "Встановити параметри у типов╕ значення"
 
 #: plug-ins/FractalExplorer/Dialogs.c:537 plug-ins/common/CML_explorer.c:1222
 #: plug-ins/common/gqbist.c:694 plug-ins/common/spheredesigner.c:2336
-#: plug-ins/gfig/gfig.c:3891 plug-ins/gfig/gfig.c:5217
+#: plug-ins/gfig/gfig.c:3927 plug-ins/gfig/gfig.c:5256
 #: plug-ins/imagemap/imap_menu.c:218 plug-ins/imagemap/imap_toolbar.c:112
 msgid "Save"
 msgstr "Зберегти"
@@ -524,7 +524,7 @@ msgstr "Косинус"
 #: plug-ins/common/AlienMap.c:1472 plug-ins/common/AlienMap.c:1495
 #: plug-ins/common/AlienMap.c:1518 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
-#: plug-ins/common/ps.c:2701 plug-ins/common/ps.c:2714
+#: plug-ins/common/ps.c:2693 plug-ins/common/ps.c:2706
 #: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1551
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:301
 msgid "None"
@@ -609,12 +609,12 @@ msgstr ""
 msgid "Fractals"
 msgstr "Фрактали"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1566 plug-ins/gfig/gfig.c:1454
+#: plug-ins/FractalExplorer/Dialogs.c:1566 plug-ins/gfig/gfig.c:1458
 #, c-format
 msgid "Error opening: %s"
 msgstr "Помилка в╕дкривання: %s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1568 plug-ins/gfig/gfig.c:1456
+#: plug-ins/FractalExplorer/Dialogs.c:1568 plug-ins/gfig/gfig.c:1460
 msgid "Could not save."
 msgstr "Не вдалось зберегти."
 
@@ -677,7 +677,7 @@ msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Шаблон/Досл╕дник фрактал╕в..."
 msgid "Rendering Fractal..."
 msgstr "В╕зуал╕зац╕я фрактала..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:735 plug-ins/gfig/gfig.c:4973
+#: plug-ins/FractalExplorer/FractalExplorer.c:735 plug-ins/gfig/gfig.c:5012
 #: plug-ins/gflare/gflare.c:3360
 #, c-format
 msgid ""
@@ -692,8 +692,8 @@ msgid "Delete Fractal"
 msgstr "Стерти фрактал"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:744
-#: plug-ins/FractalExplorer/FractalExplorer.c:1404 plug-ins/gfig/gfig.c:3532
-#: plug-ins/gfig/gfig.c:4982 plug-ins/gflare/gflare.c:3093
+#: plug-ins/FractalExplorer/FractalExplorer.c:1404 plug-ins/gfig/gfig.c:3568
+#: plug-ins/gfig/gfig.c:5021 plug-ins/gflare/gflare.c:3093
 #: plug-ins/gflare/gflare.c:3369 plug-ins/gimpressionist/presets.c:648
 #: plug-ins/ifscompose/ifscompose.c:790 plug-ins/imagemap/imap_cmd_delete.c:53
 #: plug-ins/imagemap/imap_selection.c:175
@@ -735,7 +735,7 @@ msgid "Choose Fractal by double-clicking on it"
 msgstr ""
 
 #. Put buttons in
-#: plug-ins/FractalExplorer/FractalExplorer.c:1394 plug-ins/gfig/gfig.c:3501
+#: plug-ins/FractalExplorer/FractalExplorer.c:1394 plug-ins/gfig/gfig.c:3537
 msgid "Rescan"
 msgstr ""
 
@@ -1085,7 +1085,7 @@ msgstr "Зображення середовища"
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1072 plug-ins/MapObject/mapobject_ui.c:1314
 #: plug-ins/common/lic.c:1037 plug-ins/common/ripple.c:604
-#: plug-ins/gap/gap_mov_dialog.c:861 plug-ins/gfig/gfig.c:3974
+#: plug-ins/gap/gap_mov_dialog.c:861 plug-ins/gfig/gfig.c:4010
 msgid "Options"
 msgstr "Параметри"
 
@@ -1211,7 +1211,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Позиц╕я об'╓кта по Z у простор╕ XYZ"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2879
+#: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2871
 #: plug-ins/gdyntext/gdyntext_ui.c:470
 msgid "Rotation"
 msgstr "Обертання"
@@ -1291,7 +1291,7 @@ msgstr "Розм╕р"
 #: plug-ins/MapObject/mapobject_ui.c:1272 plug-ins/common/despeckle.c:744
 #: plug-ins/common/nlfilt.c:410 plug-ins/common/nova.c:503
 #: plug-ins/common/unsharp.c:811 plug-ins/common/whirlpinch.c:877
-#: plug-ins/gfig/gfig.c:3141 plug-ins/gflare/gflare.c:2902
+#: plug-ins/gfig/gfig.c:3175 plug-ins/gflare/gflare.c:2902
 #: plug-ins/imagemap/imap_circle.c:273
 msgid "Radius:"
 msgstr "Рад╕ус:"
@@ -1395,8 +1395,8 @@ msgstr ""
 #: plug-ins/common/tiff.c:676 plug-ins/common/tile.c:268
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
 #: plug-ins/common/xbm.c:873 plug-ins/faxg3/faxg3.c:448
-#: plug-ins/fits/fits.c:521 plug-ins/gfig/gfig.c:2823
-#: plug-ins/gfig/gfig.c:3151 plug-ins/sgi/sgi.c:378 plug-ins/twain/twain.c:722
+#: plug-ins/fits/fits.c:521 plug-ins/gfig/gfig.c:2832
+#: plug-ins/gfig/gfig.c:3185 plug-ins/sgi/sgi.c:378 plug-ins/twain/twain.c:722
 #: plug-ins/winsnap/winsnap.c:1235
 msgid "Background"
 msgstr "Тло"
@@ -2186,7 +2186,7 @@ msgid "Fill (right to left)"
 msgstr "Заповнити (справа нал╕во)"
 
 #: plug-ins/common/align_layers.c:460 plug-ins/common/align_layers.c:493
-#: plug-ins/gfig/gfig.c:3371
+#: plug-ins/gfig/gfig.c:3407
 msgid "Snap to Grid"
 msgstr "Вир╕вняти за с╕ткою"
 
@@ -2258,7 +2258,7 @@ msgstr "В╕дтворення ан╕мац╕╖: "
 #: plug-ins/dbbrowser/dbbrowser_utils.c:176 plug-ins/gap/gap_arr_dialog.c:783
 #: plug-ins/gap/gap_navigator_dialog.c:3159
 #: plug-ins/gdyntext/charmap_window.c:139 plug-ins/gdyntext/gdyntext_ui.c:593
-#: plug-ins/gfig/gfig.c:1948 plug-ins/gfig/gfig.c:2008
+#: plug-ins/gfig/gfig.c:1952 plug-ins/gfig/gfig.c:2012
 #: plug-ins/helpbrowser/helpbrowser.c:822
 #: plug-ins/ifscompose/ifscompose.c:1238 plug-ins/imagemap/imap_menu.c:227
 #: plug-ins/print/gimp_color_window.c:85
@@ -2381,7 +2381,7 @@ msgid "Vertical"
 msgstr "Вертикальна"
 
 #: plug-ins/common/blinds.c:387 plug-ins/common/fractaltrace.c:772
-#: plug-ins/common/papertile.c:380 plug-ins/gfig/gfig.c:2822
+#: plug-ins/common/papertile.c:380 plug-ins/gfig/gfig.c:2831
 #: plug-ins/gimpressionist/general.c:240
 msgid "Transparent"
 msgstr "Прозорий"
@@ -2568,7 +2568,7 @@ msgid "Colorify"
 msgstr "Розмальовування"
 
 #: plug-ins/common/colorify.c:338 plug-ins/common/colortoalpha.c:414
-#: plug-ins/common/ps.c:2686 plug-ins/common/xpm.c:439
+#: plug-ins/common/ps.c:2678 plug-ins/common/xpm.c:439
 #: plug-ins/gap/gap_mov_dialog.c:276 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
 #: plug-ins/print/gimp_main_window.c:504
@@ -2738,7 +2738,7 @@ msgid "Channel Representations"
 msgstr "Представлення канал╕в"
 
 #: plug-ins/common/convmatrix.c:82 plug-ins/common/newsprint.c:383
-#: plug-ins/gfig/gfig.c:3286
+#: plug-ins/gfig/gfig.c:3322
 msgid "Grey"
 msgstr ""
 
@@ -2784,7 +2784,7 @@ msgstr "Д╕льник:"
 msgid "Offset:"
 msgstr "Зм╕щення:"
 
-#: plug-ins/common/convmatrix.c:900 plug-ins/common/ps.c:2687
+#: plug-ins/common/convmatrix.c:900 plug-ins/common/ps.c:2679
 #: plug-ins/fits/fits.c:1020
 msgid "Automatic"
 msgstr ""
@@ -2908,7 +2908,7 @@ msgstr "Згин криво╖"
 
 #. menu_item copy
 #: plug-ins/common/curve_bend.c:1363 plug-ins/gap/gap_navigator_dialog.c:2921
-#: plug-ins/gfig/gfig.c:2825 plug-ins/gfig/gfig.c:5244
+#: plug-ins/gfig/gfig.c:2835 plug-ins/gfig/gfig.c:5283
 #: plug-ins/gflare/gflare.c:3092 plug-ins/imagemap/imap_cmd_copy.c:49
 #: plug-ins/imagemap/imap_cmd_copy_object.c:50
 #: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:132
@@ -2959,7 +2959,7 @@ msgstr "Згладжування криво╖"
 
 #. The antialiasing toggle
 #: plug-ins/common/curve_bend.c:1523 plug-ins/common/newsprint.c:1410
-#: plug-ins/common/ripple.c:613 plug-ins/gfig/gfig.c:3114
+#: plug-ins/common/ripple.c:613 plug-ins/gfig/gfig.c:3148
 #: plug-ins/mosaic/mosaic.c:585
 msgid "Antialiasing"
 msgstr "Згладжування контур╕в"
@@ -3217,7 +3217,7 @@ msgstr "Створити г╕стограму"
 #. Widht Scale
 #. table col, row
 #: plug-ins/common/destripe.c:670 plug-ins/common/gtm.c:551
-#: plug-ins/common/ps.c:2643 plug-ins/common/ps.c:2819
+#: plug-ins/common/ps.c:2635 plug-ins/common/ps.c:2811
 #: plug-ins/common/smooth_palette.c:429 plug-ins/common/tile.c:406
 #: plug-ins/gap/gap_mov_dialog.c:2139 plug-ins/imagemap/imap_rectangle.c:387
 #: plug-ins/print/gimp_main_window.c:387
@@ -3308,7 +3308,7 @@ msgstr "Пляма"
 #: plug-ins/common/fractaltrace.c:774 plug-ins/common/newsprint.c:449
 #: plug-ins/common/ripple.c:653 plug-ins/common/warp.c:534
 #: plug-ins/fits/fits.c:1008 plug-ins/flame/flame.c:1107
-#: plug-ins/gfig/gfig.c:3284
+#: plug-ins/gfig/gfig.c:3320
 msgid "Black"
 msgstr "Чорний"
 
@@ -3370,8 +3370,8 @@ msgstr ""
 #. Height Scale
 #. table col, row
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1239
-#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2652
-#: plug-ins/common/ps.c:2828 plug-ins/common/smooth_palette.c:438
+#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2644
+#: plug-ins/common/ps.c:2820 plug-ins/common/smooth_palette.c:438
 #: plug-ins/common/tile.c:410 plug-ins/gap/gap_mov_dialog.c:2156
 #: plug-ins/imagemap/imap_rectangle.c:393
 #: plug-ins/print/gimp_main_window.c:398
@@ -3584,7 +3584,7 @@ msgid "Warp"
 msgstr ""
 
 #: plug-ins/common/fractaltrace.c:776 plug-ins/fits/fits.c:1009
-#: plug-ins/gfig/gfig.c:2824 plug-ins/gfig/gfig.c:3285
+#: plug-ins/gfig/gfig.c:2834 plug-ins/gfig/gfig.c:3321
 msgid "White"
 msgstr ""
 
@@ -3909,7 +3909,7 @@ msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Шаблон/С╕тка..."
 msgid "Drawing Grid..."
 msgstr "Малювання с╕тки..."
 
-#: plug-ins/common/grid.c:653 plug-ins/gfig/gfig.c:3360
+#: plug-ins/common/grid.c:653 plug-ins/gfig/gfig.c:3396
 #: plug-ins/imagemap/imap_menu.c:400 plug-ins/imagemap/imap_popup.c:148
 #: plug-ins/imagemap/imap_toolbar.c:163
 msgid "Grid"
@@ -3950,7 +3950,7 @@ msgstr "Кол╕р перетин╕в"
 msgid "GIMP Table Magic"
 msgstr "Таблична маг╕я GIMP"
 
-#: plug-ins/common/gtm.c:400 plug-ins/gfig/gfig.c:4039
+#: plug-ins/common/gtm.c:400 plug-ins/gfig/gfig.c:4075
 msgid "Warning"
 msgstr "Попередження"
 
@@ -4204,7 +4204,7 @@ msgstr "Максимальна глибина:"
 #. parameter settings
 #: plug-ins/common/iwarp.c:1120 plug-ins/common/sample_colorize.c:1383
 #: plug-ins/common/sinus.c:1847 plug-ins/gap/gap_mod_layer.c:219
-#: plug-ins/gfig/gfig.c:3931 plug-ins/gflare/gflare.c:3032
+#: plug-ins/gfig/gfig.c:3967 plug-ins/gflare/gflare.c:3032
 msgid "Settings"
 msgstr "Налаштування"
 
@@ -4471,7 +4471,7 @@ msgstr "В╕дправник:"
 msgid "Subject:"
 msgstr "Заголовок:"
 
-#: plug-ins/common/mail.c:539 plug-ins/gfig/gfig.c:3713
+#: plug-ins/common/mail.c:539 plug-ins/gfig/gfig.c:3749
 #: plug-ins/imagemap/imap_settings.c:79
 msgid "Filename:"
 msgstr "Назва файлу:"
@@ -5169,8 +5169,8 @@ msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr ""
-"Якщо в╕дм╕чено, в╕дображення розпочнеться з право╖ сторони, в ╕ншому випадку - "
-"з л╕во╖."
+"Якщо в╕дм╕чено, в╕дображення розпочнеться з право╖ сторони, в ╕ншому випадку "
+"- з л╕во╖."
 
 #: plug-ins/common/polar.c:1004
 msgid "Map from Top"
@@ -5217,116 +5217,116 @@ msgstr ""
 msgid "PS: can't open file for writing"
 msgstr "PS: не вдалося в╕дкрити файл на запис"
 
-#: plug-ins/common/ps.c:2172 plug-ins/common/ps.c:2298
-#: plug-ins/common/ps.c:2442 plug-ins/common/ps.c:2564
+#: plug-ins/common/ps.c:2164 plug-ins/common/ps.c:2290
+#: plug-ins/common/ps.c:2434 plug-ins/common/ps.c:2556
 msgid "write error occured"
 msgstr "сталася помилка запису"
 
-#: plug-ins/common/ps.c:2589
+#: plug-ins/common/ps.c:2581
 msgid "Load PostScript"
 msgstr "Завантажити PostScript"
 
 #. Rendering
-#: plug-ins/common/ps.c:2616 plug-ins/flame/flame.c:994
+#: plug-ins/common/ps.c:2608 plug-ins/flame/flame.c:994
 msgid "Rendering"
 msgstr "В╕зуал╕зац╕я"
 
-#: plug-ins/common/ps.c:2634 plug-ins/print/gimp_main_window.c:482
+#: plug-ins/common/ps.c:2626 plug-ins/print/gimp_main_window.c:482
 msgid "Resolution:"
 msgstr "Розд╕льн╕сть:"
 
-#: plug-ins/common/ps.c:2662
+#: plug-ins/common/ps.c:2654
 msgid "Pages:"
 msgstr "Стор╕нки:"
 
-#: plug-ins/common/ps.c:2668
+#: plug-ins/common/ps.c:2660
 msgid "Try Bounding Box"
 msgstr ""
 
 #. Colouring
-#: plug-ins/common/ps.c:2680
+#: plug-ins/common/ps.c:2672
 msgid "Coloring"
 msgstr ""
 
-#: plug-ins/common/ps.c:2684
+#: plug-ins/common/ps.c:2676
 msgid "B/W"
 msgstr ""
 
 #. * Gray *
-#: plug-ins/common/ps.c:2685 plug-ins/rcm/rcm_dialog.c:394
+#: plug-ins/common/ps.c:2677 plug-ins/rcm/rcm_dialog.c:394
 msgid "Gray"
 msgstr ""
 
-#: plug-ins/common/ps.c:2697
+#: plug-ins/common/ps.c:2689
 msgid "Text Antialiasing"
 msgstr ""
 
-#: plug-ins/common/ps.c:2702 plug-ins/common/ps.c:2715
+#: plug-ins/common/ps.c:2694 plug-ins/common/ps.c:2707
 msgid "Weak"
 msgstr ""
 
-#: plug-ins/common/ps.c:2703 plug-ins/common/ps.c:2716
+#: plug-ins/common/ps.c:2695 plug-ins/common/ps.c:2708
 msgid "Strong"
 msgstr ""
 
-#: plug-ins/common/ps.c:2709
+#: plug-ins/common/ps.c:2701
 msgid "Graphic Antialiasing"
 msgstr ""
 
-#: plug-ins/common/ps.c:2771
+#: plug-ins/common/ps.c:2763
 msgid "Save as PostScript"
 msgstr "Зберегти як PostScript"
 
 #. Image Size
-#: plug-ins/common/ps.c:2801
+#: plug-ins/common/ps.c:2793
 msgid "Image Size"
 msgstr "Розм╕р зображення"
 
-#: plug-ins/common/ps.c:2837
+#: plug-ins/common/ps.c:2829
 msgid "X-Offset:"
 msgstr ""
 
-#: plug-ins/common/ps.c:2846
+#: plug-ins/common/ps.c:2838
 msgid "Y-Offset:"
 msgstr ""
 
-#: plug-ins/common/ps.c:2852
+#: plug-ins/common/ps.c:2844
 msgid "Keep Aspect Ratio"
 msgstr ""
 
-#: plug-ins/common/ps.c:2853
+#: plug-ins/common/ps.c:2845
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
 
 #. Unit
-#: plug-ins/common/ps.c:2864
+#: plug-ins/common/ps.c:2856
 msgid "Unit"
 msgstr "Одиниця"
 
-#: plug-ins/common/ps.c:2868 plug-ins/print/gimp_main_window.c:317
+#: plug-ins/common/ps.c:2860 plug-ins/print/gimp_main_window.c:317
 msgid "Inch"
 msgstr "Дюйм"
 
-#: plug-ins/common/ps.c:2869
+#: plug-ins/common/ps.c:2861
 msgid "Millimeter"
 msgstr "М╕л╕метр"
 
 #. Format
-#: plug-ins/common/ps.c:2893
+#: plug-ins/common/ps.c:2885
 msgid "Output"
 msgstr "Вив╕д"
 
-#: plug-ins/common/ps.c:2901
+#: plug-ins/common/ps.c:2893
 msgid "PostScript Level 2"
 msgstr "PostScript Level 2"
 
-#: plug-ins/common/ps.c:2909
+#: plug-ins/common/ps.c:2901
 msgid "Encapsulated PostScript"
 msgstr "Encapsulated PostScript"
 
-#: plug-ins/common/ps.c:2937
+#: plug-ins/common/ps.c:2929
 msgid "Preview Size:"
 msgstr "Розм╕р перегляду:"
 
@@ -6029,7 +6029,7 @@ msgstr ""
 msgid "Textures"
 msgstr "Текстури"
 
-#: plug-ins/common/spheredesigner.c:2302 plug-ins/gfig/gfig.c:3103
+#: plug-ins/common/spheredesigner.c:2302 plug-ins/gfig/gfig.c:3137
 #: plug-ins/gimpressionist/orientmap.c:531
 #: plug-ins/gimpressionist/sizemap.c:431
 msgid "Add"
@@ -7284,7 +7284,7 @@ msgstr "Вихор"
 msgid "Horseshoe"
 msgstr "П╕дкова"
 
-#: plug-ins/flame/flame.c:726 plug-ins/gfig/gfig.c:3271
+#: plug-ins/flame/flame.c:726 plug-ins/gfig/gfig.c:3305
 msgid "Polar"
 msgstr "Полярн╕сть"
 
@@ -7511,7 +7511,7 @@ msgstr "Значення: "
 msgid "Press Button"
 msgstr "Натисн╕ть кнопку"
 
-#: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:3969
+#: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:4005
 #: plug-ins/imagemap/imap_cmd_select.c:49
 msgid "Select"
 msgstr ""
@@ -8337,7 +8337,7 @@ msgstr ""
 msgid "No selected Layer in start frame"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:264 plug-ins/gfig/gfig.c:3283
+#: plug-ins/gap/gap_mov_dialog.c:264 plug-ins/gfig/gfig.c:3319
 #: plug-ins/gflare/gflare.c:594 plug-ins/gimpressionist/orientmap.c:590
 msgid "Normal"
 msgstr ""
@@ -8363,7 +8363,7 @@ msgstr ""
 msgid "Addition"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:271 plug-ins/gfig/gfig.c:3104
+#: plug-ins/gap/gap_mov_dialog.c:271 plug-ins/gfig/gfig.c:3138
 msgid "Subtract"
 msgstr ""
 
@@ -9945,11 +9945,11 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:669
+#: plug-ins/gfig/gfig.c:673
 msgid "<Image>/Filters/Render/Gfig..."
 msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Gfig..."
 
-#: plug-ins/gfig/gfig.c:814
+#: plug-ins/gfig/gfig.c:818
 #, c-format
 msgid ""
 "No gfig-path in gimprc:\n"
@@ -9958,528 +9958,533 @@ msgid ""
 "to your %s file."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:831
+#: plug-ins/gfig/gfig.c:835
 msgid "gfig-path misconfigured - the following directories were not found"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1054
+#: plug-ins/gfig/gfig.c:1058
 msgid "First Gfig"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1881
+#: plug-ins/gfig/gfig.c:1885
 msgid "Prev"
 msgstr ""
 
 #. More Buttons
-#: plug-ins/gfig/gfig.c:1910 plug-ins/gfig/gfig.c:5257
+#: plug-ins/gfig/gfig.c:1914 plug-ins/gfig/gfig.c:5296
 #: plug-ins/gflare/gflare.c:3091 plug-ins/imagemap/imap_menu.c:277
 #: plug-ins/imagemap/imap_selection.c:171
 msgid "Edit"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1915
+#: plug-ins/gfig/gfig.c:1919
 msgid "Edit Gfig object collection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1918
+#: plug-ins/gfig/gfig.c:1922
 msgid "Merge"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1923
+#: plug-ins/gfig/gfig.c:1927
 msgid "Merge Gfig Object collection into the current edit session"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1962
+#: plug-ins/gfig/gfig.c:1966
 msgid "Number of Sides/Points/Turns:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1978
+#: plug-ins/gfig/gfig.c:1982
 msgid "Clockwise"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1979
+#: plug-ins/gfig/gfig.c:1983
 msgid "Anti-Clockwise"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1983 plug-ins/gimpressionist/orientation.c:121
+#: plug-ins/gfig/gfig.c:1987 plug-ins/gimpressionist/orientation.c:121
 #: plug-ins/print/gimp_main_window.c:473
 msgid "Orientation:"
 msgstr "Ор╕╓нтац╕я:"
 
-#: plug-ins/gfig/gfig.c:2003
+#: plug-ins/gfig/gfig.c:2007
 msgid "Bezier Settings"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2023
+#: plug-ins/gfig/gfig.c:2027
 msgid "Closed"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2028
+#: plug-ins/gfig/gfig.c:2032
 msgid "Close curve on completion"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2033
+#: plug-ins/gfig/gfig.c:2037
 msgid "Show Line Frame"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2038
+#: plug-ins/gfig/gfig.c:2042
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2054
+#: plug-ins/gfig/gfig.c:2058
 msgid "Regular Polygon Number of Sides"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2066
+#: plug-ins/gfig/gfig.c:2070
 msgid "Star Number of Points"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2078
+#: plug-ins/gfig/gfig.c:2082
 msgid "Spiral Number of Points"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2102
+#: plug-ins/gfig/gfig.c:2106
 msgid "Ops"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2115
+#: plug-ins/gfig/gfig.c:2119
 msgid "Create line"
 msgstr "Створити пряму"
 
-#: plug-ins/gfig/gfig.c:2120
+#: plug-ins/gfig/gfig.c:2124
 msgid "Create circle"
 msgstr "Створити коло"
 
-#: plug-ins/gfig/gfig.c:2125
+#: plug-ins/gfig/gfig.c:2129
 msgid "Create ellipse"
 msgstr "Створити ел╕пс"
 
-#: plug-ins/gfig/gfig.c:2130
+#: plug-ins/gfig/gfig.c:2134
 msgid "Create arch"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2139
+#: plug-ins/gfig/gfig.c:2143
 msgid "Create reg polygon"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2156
+#: plug-ins/gfig/gfig.c:2160
 msgid "Create spiral"
 msgstr "творити сп╕раль"
 
-#: plug-ins/gfig/gfig.c:2166
+#: plug-ins/gfig/gfig.c:2170
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2172
+#: plug-ins/gfig/gfig.c:2176
 msgid "Move an object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2177
+#: plug-ins/gfig/gfig.c:2181
 msgid "Move a single point"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2182
+#: plug-ins/gfig/gfig.c:2186
 msgid "Copy an object"
 msgstr "Скоп╕ювати об'╓кт"
 
-#: plug-ins/gfig/gfig.c:2187
+#: plug-ins/gfig/gfig.c:2191
 msgid "Delete an object"
 msgstr "Стерти об'╓кт"
 
-#: plug-ins/gfig/gfig.c:2346 plug-ins/gfig/gfig.c:2780
-#: plug-ins/gfig/gfig.c:3961 plug-ins/gimpressionist/brush.c:351
+#: plug-ins/gfig/gfig.c:2354 plug-ins/gfig/gfig.c:2789
+#: plug-ins/gfig/gfig.c:3997 plug-ins/gimpressionist/brush.c:351
 #: plug-ins/gimpressionist/brush.c:356
 msgid "Brush"
 msgstr "Пензель"
 
-#: plug-ins/gfig/gfig.c:2347
+#: plug-ins/gfig/gfig.c:2355
 msgid "Airbrush"
 msgstr "Аерограф"
 
-#: plug-ins/gfig/gfig.c:2348
+#: plug-ins/gfig/gfig.c:2356
 msgid "Pencil"
 msgstr "Ол╕вець"
 
-#: plug-ins/gfig/gfig.c:2349 plug-ins/gfig/gfig.c:3149
+#: plug-ins/gfig/gfig.c:2357 plug-ins/gfig/gfig.c:3183
 msgid "Pattern"
 msgstr "Шаблон"
 
-#: plug-ins/gfig/gfig.c:2356
+#: plug-ins/gfig/gfig.c:2364
 msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
 "paints with currently selected brush with a pattern. Only applies to "
 "circles/ellipses if Approx. Circles/Ellipses toggle is set."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2762 plug-ins/rcm/rcm_dialog.c:121
+#: plug-ins/gfig/gfig.c:2770 plug-ins/rcm/rcm_dialog.c:121
 msgid "Original"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2763 plug-ins/gfig/gfig.c:3522
+#: plug-ins/gfig/gfig.c:2771 plug-ins/gfig/gfig.c:3558
 #: plug-ins/gflare/gflare.c:3090 plug-ins/ifscompose/ifscompose.c:788
 #: plug-ins/webbrowser/webbrowser.c:319
 msgid "New"
 msgstr "Нове"
 
-#: plug-ins/gfig/gfig.c:2764
+#: plug-ins/gfig/gfig.c:2772
 msgid "Multiple"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2768
+#: plug-ins/gfig/gfig.c:2777
 msgid "Draw all objects on one layer (original or new) or one object per layer"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2773
+#: plug-ins/gfig/gfig.c:2782
 msgid "Draw on:"
 msgstr ""
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2782 plug-ins/imagemap/imap_selection.c:358
+#: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:358
 #: plug-ins/rcm/rcm_dialog.c:664
 msgid "Selection"
 msgstr "Вид╕лення"
 
-#: plug-ins/gfig/gfig.c:2784
+#: plug-ins/gfig/gfig.c:2793
 msgid "Selection+Fill"
 msgstr "Вид╕лення+Заповнення"
 
-#: plug-ins/gfig/gfig.c:2811
+#: plug-ins/gfig/gfig.c:2820
 msgid ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2815
+#: plug-ins/gfig/gfig.c:2824
 msgid "Using:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2829
+#: plug-ins/gfig/gfig.c:2833 plug-ins/gfig/gfig.c:3184
+msgid "Foreground"
+msgstr "Передн╕й план"
+
+#: plug-ins/gfig/gfig.c:2839
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2834
+#: plug-ins/gfig/gfig.c:2844
 msgid "With BG of:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2837
+#: plug-ins/gfig/gfig.c:2847
 msgid "Reverse Line"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2844
+#: plug-ins/gfig/gfig.c:2854
 msgid "Draw lines in reverse order"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2852
+#: plug-ins/gfig/gfig.c:2862
 msgid "Scale to Image"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2860
+#: plug-ins/gfig/gfig.c:2870
 msgid "Scale drawings to images size"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2882
+#: plug-ins/gfig/gfig.c:2892
 msgid "Approx. Circles/Ellipses"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2889
+#: plug-ins/gfig/gfig.c:2899
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2964
+#: plug-ins/gfig/gfig.c:2975
 msgid "Fade out:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2984
+#: plug-ins/gfig/gfig.c:2998
+#, fuzzy
+msgid "Gradient:"
+msgstr "Град╕╓нт"
+
+#: plug-ins/gfig/gfig.c:3018
 msgid "Pressure:"
 msgstr "Натиск:"
 
-#: plug-ins/gfig/gfig.c:3002
+#: plug-ins/gfig/gfig.c:3036
 msgid "No Options..."
 msgstr "Нема╓ параметр╕в..."
 
-#: plug-ins/gfig/gfig.c:3105
+#: plug-ins/gfig/gfig.c:3139
 msgid "Replace"
 msgstr "Зам╕щення"
 
-#: plug-ins/gfig/gfig.c:3106
+#: plug-ins/gfig/gfig.c:3140
 msgid "Intersect"
 msgstr "Перетин"
 
-#: plug-ins/gfig/gfig.c:3110
+#: plug-ins/gfig/gfig.c:3144
 msgid "Selection Type:"
 msgstr "Тип вид╕лення:"
 
 #. 3
-#: plug-ins/gfig/gfig.c:3123
+#: plug-ins/gfig/gfig.c:3157
 msgid "Feather"
 msgstr "Перо"
 
-#: plug-ins/gfig/gfig.c:3150
-msgid "Foreground"
-msgstr "Передн╕й план"
-
-#: plug-ins/gfig/gfig.c:3155
+#: plug-ins/gfig/gfig.c:3189
 msgid "Fill Type:"
 msgstr "Тип заповнення:"
 
-#: plug-ins/gfig/gfig.c:3168
+#: plug-ins/gfig/gfig.c:3202
 msgid "Fill Opacity:"
 msgstr "Непрозор╕сть заповнення:"
 
-#: plug-ins/gfig/gfig.c:3176
+#: plug-ins/gfig/gfig.c:3210
 msgid "Each Selection"
 msgstr "Кожне вид╕лення"
 
-#: plug-ins/gfig/gfig.c:3177
+#: plug-ins/gfig/gfig.c:3211
 msgid "All Selections"
 msgstr "Вс╕ вид╕лення"
 
-#: plug-ins/gfig/gfig.c:3181
+#: plug-ins/gfig/gfig.c:3215
 msgid "Fill after:"
 msgstr "Заповнювати п╕сля:"
 
-#: plug-ins/gfig/gfig.c:3188
+#: plug-ins/gfig/gfig.c:3222
 msgid "Segment"
 msgstr "Се╜мент"
 
-#: plug-ins/gfig/gfig.c:3189
+#: plug-ins/gfig/gfig.c:3223
 msgid "Sector"
 msgstr "Сектор"
 
-#: plug-ins/gfig/gfig.c:3193
+#: plug-ins/gfig/gfig.c:3227
 msgid "Arc as:"
 msgstr "Дуга як:"
 
 #. Put buttons in
-#: plug-ins/gfig/gfig.c:3247
+#: plug-ins/gfig/gfig.c:3281
 msgid "Show Image"
 msgstr "Показати зображення"
 
-#: plug-ins/gfig/gfig.c:3258
+#: plug-ins/gfig/gfig.c:3292
 msgid "Reload Image"
 msgstr "Перезавантажити зображення"
 
-#: plug-ins/gfig/gfig.c:3270 plug-ins/imagemap/imap_menu.c:384
+#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:384
 #: plug-ins/imagemap/imap_popup.c:132 plug-ins/imagemap/imap_rectangle.c:60
 msgid "Rectangle"
 msgstr "Прямокутник"
 
-#: plug-ins/gfig/gfig.c:3272
+#: plug-ins/gfig/gfig.c:3306
 msgid "Isometric"
 msgstr "╤зометр╕я"
 
-#: plug-ins/gfig/gfig.c:3276
+#: plug-ins/gfig/gfig.c:3310
 msgid "Grid Type:"
 msgstr "Тип с╕тки:"
 
-#: plug-ins/gfig/gfig.c:3287
+#: plug-ins/gfig/gfig.c:3323
 msgid "Darker"
 msgstr "Темн╕ше"
 
-#: plug-ins/gfig/gfig.c:3288
+#: plug-ins/gfig/gfig.c:3324
 msgid "Lighter"
 msgstr "Св╕тл╕ше"
 
-#: plug-ins/gfig/gfig.c:3289
+#: plug-ins/gfig/gfig.c:3325
 msgid "Very Dark"
 msgstr "Дуже темне"
 
-#: plug-ins/gfig/gfig.c:3293
+#: plug-ins/gfig/gfig.c:3329
 msgid "Grid Color:"
 msgstr "Кол╕р с╕тки:"
 
-#: plug-ins/gfig/gfig.c:3297
+#: plug-ins/gfig/gfig.c:3333
 msgid "Max Undo:"
 msgstr "Максимальна к╕льк╕сть в╕дм╕н:"
 
-#: plug-ins/gfig/gfig.c:3305
+#: plug-ins/gfig/gfig.c:3341
 msgid "Show Position"
 msgstr "Показати позиц╕ю"
 
-#: plug-ins/gfig/gfig.c:3316
+#: plug-ins/gfig/gfig.c:3352
 msgid "Hide Control Points"
 msgstr "Прибрати контрольн╕ точки"
 
-#: plug-ins/gfig/gfig.c:3328
+#: plug-ins/gfig/gfig.c:3364
 msgid "Show Tooltips"
 msgstr "Показати п╕дказки"
 
-#: plug-ins/gfig/gfig.c:3379
+#: plug-ins/gfig/gfig.c:3415
 msgid "Display Grid"
 msgstr "Показати с╕тку"
 
-#: plug-ins/gfig/gfig.c:3390
+#: plug-ins/gfig/gfig.c:3426
 msgid "Lock on Grid"
 msgstr "Вир╕внювати на с╕тку"
 
-#: plug-ins/gfig/gfig.c:3405
+#: plug-ins/gfig/gfig.c:3441
 msgid "Grid Spacing:"
 msgstr "╤нтервал с╕тки:"
 
-#: plug-ins/gfig/gfig.c:3470
+#: plug-ins/gfig/gfig.c:3506
 msgid "Object"
 msgstr "Об'╓кт"
 
-#: plug-ins/gfig/gfig.c:3506
+#: plug-ins/gfig/gfig.c:3542
 msgid "Select directory and rescan Gfig object collection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3517
+#: plug-ins/gfig/gfig.c:3553
 msgid "Load a single Gfig object collection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3526
+#: plug-ins/gfig/gfig.c:3562
 msgid "Create a new Gfig object collection for editing"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3536
+#: plug-ins/gfig/gfig.c:3572
 msgid "Delete currently selected Gfig Object collection"
 msgstr ""
 
 #. Position labels
-#: plug-ins/gfig/gfig.c:3650
+#: plug-ins/gfig/gfig.c:3686
 msgid "XY Position:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3671
+#: plug-ins/gfig/gfig.c:3707
 msgid "Object Details"
 msgstr "Подробиц╕ об'╓кту"
 
-#: plug-ins/gfig/gfig.c:3700
+#: plug-ins/gfig/gfig.c:3736
 msgid "Collection Details"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3707
+#: plug-ins/gfig/gfig.c:3743
 msgid "Draw Name:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3719 plug-ins/gfig/gfig.c:3725
+#: plug-ins/gfig/gfig.c:3755 plug-ins/gfig/gfig.c:3761
 msgid "(none)"
 msgstr ""
 
 #. Start buildng the dialog up
-#: plug-ins/gfig/gfig.c:3882
+#: plug-ins/gfig/gfig.c:3918
 msgid "GFig"
 msgstr "GFig"
 
-#: plug-ins/gfig/gfig.c:3887
+#: plug-ins/gfig/gfig.c:3923
 msgid "Done"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3889 plug-ins/gfig/gfig.c:3956
+#: plug-ins/gfig/gfig.c:3925 plug-ins/gfig/gfig.c:3992
 msgid "Paint"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3893 plug-ins/imagemap/imap_cmd_clear.c:50
+#: plug-ins/gfig/gfig.c:3929 plug-ins/imagemap/imap_cmd_clear.c:50
 #: plug-ins/imagemap/imap_menu.c:298
 msgid "Clear"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3895 plug-ins/ifscompose/ifscompose.c:1188
+#: plug-ins/gfig/gfig.c:3931 plug-ins/ifscompose/ifscompose.c:1188
 #: plug-ins/imagemap/imap_toolbar.c:120
 msgid "Undo"
 msgstr "В╕дм╕нити"
 
-#: plug-ins/gfig/gfig.c:4037
+#: plug-ins/gfig/gfig.c:4073
 #, c-format
 msgid ""
 "%d unsaved Gfig objects.\n"
 "Continue with exiting?"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4384
+#: plug-ins/gfig/gfig.c:4420
 msgid "Enter Gfig Entry Name"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4408
+#: plug-ins/gfig/gfig.c:4444
 msgid "Gfig Object Name:"
 msgstr ""
 
 #. the dialog
-#: plug-ins/gfig/gfig.c:4467
+#: plug-ins/gfig/gfig.c:4503
 msgid "Rescan for Gfig Objects"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4485
+#: plug-ins/gfig/gfig.c:4521
 msgid "Add Gfig Path"
 msgstr ""
 
 #. Load a single object
-#: plug-ins/gfig/gfig.c:4563
+#: plug-ins/gfig/gfig.c:4599
 msgid "Load Gfig obj"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4588
+#: plug-ins/gfig/gfig.c:4624
 msgid "Error in copy layer for onlayers"
 msgstr ""
 
 #. RGBA or GRAYA type
 #. opacity
 #. mode
-#: plug-ins/gfig/gfig.c:4620
+#: plug-ins/gfig/gfig.c:4656
 msgid "Error in creating layer"
 msgstr "Помилка в створенн╕ шару"
 
-#: plug-ins/gfig/gfig.c:4696
+#: plug-ins/gfig/gfig.c:4735
 #, c-format
 msgid "Gfig Layer %d"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4769
+#: plug-ins/gfig/gfig.c:4808
 msgid "About GFig"
 msgstr "Про GFig"
 
-#: plug-ins/gfig/gfig.c:4793
+#: plug-ins/gfig/gfig.c:4832
 msgid "Gfig - GIMP plug-in"
 msgstr "Gfig - доповнення до GIMP"
 
-#: plug-ins/gfig/gfig.c:4798
+#: plug-ins/gfig/gfig.c:4837
 msgid "Release 1.3"
 msgstr "Випуск 1.3"
 
-#: plug-ins/gfig/gfig.c:4808
+#: plug-ins/gfig/gfig.c:4847
 msgid "Email alt@picnic.demon.co.uk"
 msgstr "Е-пошта alt@picnic.demon.co.uk"
 
-#: plug-ins/gfig/gfig.c:4818
+#: plug-ins/gfig/gfig.c:4857
 msgid "Isometric grid By Rob Saunders"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4851
+#: plug-ins/gfig/gfig.c:4890
 msgid "New gfig obj"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4977
+#: plug-ins/gfig/gfig.c:5016
 msgid "Delete Gfig Drawing"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:5005 plug-ins/gfig/gfig.c:5045
+#: plug-ins/gfig/gfig.c:5044 plug-ins/gfig/gfig.c:5084
 msgid "<NONE>"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:5083
+#: plug-ins/gfig/gfig.c:5122
 msgid "Editing read-only object - you will not be able to save it"
 msgstr ""
 
 #. Create new entry with name + copy at end & copy object into it
-#: plug-ins/gfig/gfig.c:5186
+#: plug-ins/gfig/gfig.c:5225
 #, c-format
 msgid "%s copy"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:5231
+#: plug-ins/gfig/gfig.c:5270
 msgid "Save as..."
 msgstr "Зберегти як..."
 
-#: plug-ins/gfig/gfig.c:6114
+#: plug-ins/gfig/gfig.c:6153
 msgid "Error reading file"
 msgstr "Помилка зчитування файлу"
 
-#: plug-ins/gfig/gfig.c:6471
+#: plug-ins/gfig/gfig.c:6510
 msgid "Hey where has the object gone ?"
 msgstr ""
 

@@ -12,7 +12,8 @@ INCLUDES = \
         -I$(includedir)
 
 EXTRA_DIST = \
-	makefile.cygwin		\
+	makefile.mingw		\
+	makefile.mingw.in	\
 	makefile.msc		\
 	module.def		\
 	gimpmodregister.c	\

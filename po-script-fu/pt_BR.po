@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.21\n"
-"POT-Creation-Date: 2000-08-19 09:14-0700\n"
+"POT-Creation-Date: 2000-08-30 00:31-0700\n"
 "PO-Revision-Date: 2000-05-10 14:36-03:00\n"
 "Last-Translator: Marcia Norie Nakaza <norie@conectiva.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -174,11 +174,11 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Console..."
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Servidor..."
 
-#: plug-ins/script-fu/script-fu.c:1016 plug-ins/script-fu/script-fu.c:1017
+#: plug-ins/script-fu/script-fu.c:1022 plug-ins/script-fu/script-fu.c:1023
 msgid "Re-read all available scripts"
 msgstr "Nova leitura de todos os scripts disponíveis"
 
-#: plug-ins/script-fu/script-fu.c:1021
+#: plug-ins/script-fu/script-fu.c:1027
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Script-Fu/Restaurar"
 

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
-"POT-Creation-Date: 2000-08-19 09:14-0700\n"
+"POT-Creation-Date: 2000-08-30 00:31-0700\n"
 "PO-Revision-Date: 2000-06-10 23:41+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
@@ -176,11 +176,11 @@ msgstr "<Toolbox>/Xtns/Skript-Fu/Konsol..."
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Server..."
 
-#: plug-ins/script-fu/script-fu.c:1016 plug-ins/script-fu/script-fu.c:1017
+#: plug-ins/script-fu/script-fu.c:1022 plug-ins/script-fu/script-fu.c:1023
 msgid "Re-read all available scripts"
 msgstr "Genindlæs alle skrifttyper"
 
-#: plug-ins/script-fu/script-fu.c:1021
+#: plug-ins/script-fu/script-fu.c:1027
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Skript-Fu/Genopfrisk"
 

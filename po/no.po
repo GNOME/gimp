@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.25\n"
-"POT-Creation-Date: 2000-09-04 22:32+0200\n"
+"POT-Creation-Date: 2000-09-22 11:39-0700\n"
 "PO-Revision-Date: 2000-09-04 22:32+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -76,22 +76,22 @@ msgid "Parasites"
 msgstr "Parasitter"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:553 app/internal_procs.c:71 app/preferences_dialog.c:2493
+#: app/app_procs.c:553 app/internal_procs.c:71 app/preferences_dialog.c:2485
 msgid "Brushes"
 msgstr "Pensler"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:555 app/internal_procs.c:140 app/preferences_dialog.c:2501
+#: app/app_procs.c:555 app/internal_procs.c:140 app/preferences_dialog.c:2493
 msgid "Patterns"
 msgstr "Mønstre"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:557 app/preferences_dialog.c:2505
+#: app/app_procs.c:557 app/preferences_dialog.c:2497
 msgid "Palettes"
 msgstr "Paletter"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:559 app/internal_procs.c:104 app/preferences_dialog.c:2509
+#: app/app_procs.c:559 app/internal_procs.c:104 app/preferences_dialog.c:2501
 msgid "Gradients"
 msgstr "Gradienter"
 
@@ -123,7 +123,7 @@ msgstr "Avslutt"
 #: app/gradient.c:4840 app/gradient.c:5401 app/hue_saturation.c:374
 #: app/interface.c:1039 app/layers_dialog.c:3484 app/layers_dialog.c:3666
 #: app/layers_dialog.c:3761 app/layers_dialog.c:4021 app/levels.c:341
-#: app/palette.c:1818 app/posterize.c:202 app/preferences_dialog.c:1465
+#: app/palette.c:1818 app/posterize.c:202 app/preferences_dialog.c:1457
 #: app/qmask.c:278 app/resize.c:194 app/resize.c:1324 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1191 modules/cdisplay_gamma.c:332
 #: modules/cdisplay_highcontrast.c:325
@@ -170,7 +170,7 @@ msgstr "Egendefinert gradient"
 msgid "Blend:"
 msgstr "Blanding:"
 
-#: app/blend.c:320 app/gradient.c:532 app/preferences_dialog.c:2233
+#: app/blend.c:320 app/gradient.c:532 app/preferences_dialog.c:2225
 msgid "Linear"
 msgstr "Lineær"
 
@@ -218,7 +218,7 @@ msgstr "Spiral (mot klokken)"
 msgid "Gradient:"
 msgstr "Gradient:"
 
-#: app/blend.c:342 app/by_color_select.c:844 app/preferences_dialog.c:1820
+#: app/blend.c:342 app/by_color_select.c:844 app/preferences_dialog.c:1812
 msgid "None"
 msgstr "Ingen"
 
@@ -282,7 +282,7 @@ msgstr "Lysstyrke-kontrast opererer ikke på indekserte tegneobjekter."
 #: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:370
 #: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3759
 #: app/layers_dialog.c:4019 app/levels.c:337 app/module_db.c:314
-#: app/posterize.c:198 app/preferences_dialog.c:1461 app/qmask.c:276
+#: app/posterize.c:198 app/preferences_dialog.c:1453 app/qmask.c:276
 #: app/resize.c:192 app/resize.c:1324 app/threshold.c:271
 #: app/user_install.c:1189 modules/cdisplay_gamma.c:330
 #: modules/cdisplay_highcontrast.c:323
@@ -326,7 +326,7 @@ msgstr "Penseleditor"
 #: app/histogram_tool.c:275 app/info_window.c:255 app/lc_dialog.c:195
 #: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2051
 #: app/palette.c:2067 app/palette.c:3098 app/palette_select.c:66
-#: app/pattern_select.c:172 app/preferences_dialog.c:367 app/tips_dialog.c:160
+#: app/pattern_select.c:172 app/preferences_dialog.c:364 app/tips_dialog.c:160
 #: app/tools.c:1544 app/undo_history.c:759
 msgid "Close"
 msgstr "Lukk"
@@ -1022,7 +1022,7 @@ msgid "Load"
 msgstr "Last"
 
 #: app/curves.c:707 app/devices.c:753 app/levels.c:608 app/palette.c:2047
-#: app/preferences_dialog.c:365 app/preferences_dialog.c:1463
+#: app/preferences_dialog.c:362 app/preferences_dialog.c:1455
 msgid "Save"
 msgstr "Lagre"
 
@@ -1052,7 +1052,7 @@ msgstr "Desaturering opererer kun på tegnede objekter i RGB-farge."
 msgid "Device Status"
 msgstr "Enhetsstatus"
 
-#: app/disp_callbacks.c:816 app/global_edit.c:297 app/global_edit.c:303
+#: app/disp_callbacks.c:842 app/global_edit.c:297 app/global_edit.c:303
 #: app/global_edit.c:375
 msgid "Pasted Layer"
 msgstr "Innlimt lag"
@@ -1202,8 +1202,8 @@ msgstr "Bildestørrelse: %s"
 msgid "New Image"
 msgstr "Nytt bilde"
 
-#: app/file_new_dialog.c:453 app/preferences_dialog.c:1536
-#: app/preferences_dialog.c:1573 app/user_install.c:1379
+#: app/file_new_dialog.c:453 app/preferences_dialog.c:1528
+#: app/preferences_dialog.c:1565 app/user_install.c:1379
 msgid "Pixels"
 msgstr "Piksler"
 
@@ -1400,13 +1400,13 @@ msgstr "Nei"
 msgid "Flip Tool"
 msgstr "Verktøy for vending"
 
-#: app/flip_tool.c:92 app/preferences_dialog.c:1587
-#: app/preferences_dialog.c:2380
+#: app/flip_tool.c:92 app/preferences_dialog.c:1579
+#: app/preferences_dialog.c:2372
 msgid "Horizontal"
 msgstr "Horisontal"
 
-#: app/flip_tool.c:94 app/preferences_dialog.c:1589
-#: app/preferences_dialog.c:2382
+#: app/flip_tool.c:94 app/preferences_dialog.c:1581
+#: app/preferences_dialog.c:2374
 msgid "Vertical"
 msgstr "Vertikal"
 
@@ -1432,7 +1432,7 @@ msgstr ""
 msgid "RGB-empty"
 msgstr "RGB-tom"
 
-#: app/gdisplay.c:227 app/image_new.c:60 app/preferences_dialog.c:1633
+#: app/gdisplay.c:227 app/image_new.c:60 app/preferences_dialog.c:1625
 msgid "RGB"
 msgstr "RGB"
 
@@ -2282,7 +2282,7 @@ msgstr ""
 "bruker standard oppløsning istedet."
 
 #: app/image_new.c:65 app/info_window.c:65 app/info_window.c:534
-#: app/preferences_dialog.c:1634
+#: app/preferences_dialog.c:1626
 msgid "Grayscale"
 msgstr "Gråtone"
 
@@ -2348,8 +2348,8 @@ msgstr ""
 "Den aktive gradienten.\n"
 "Klikk for å åpne dialogen for gradienter."
 
-#: app/info_dialog.c:185 app/preferences_dialog.c:1794
-#: app/preferences_dialog.c:1900
+#: app/info_dialog.c:185 app/preferences_dialog.c:1786
+#: app/preferences_dialog.c:1892
 msgid "General"
 msgstr "Generelt"
 
@@ -2552,8 +2552,8 @@ msgstr "Bilde"
 msgid "Layer"
 msgstr "Lag"
 
-#: app/internal_procs.c:122 app/preferences_dialog.c:1784
-#: app/preferences_dialog.c:1786
+#: app/internal_procs.c:122 app/preferences_dialog.c:1776
+#: app/preferences_dialog.c:1778
 msgid "Interface"
 msgstr "Grensesnitt"
 
@@ -4243,51 +4243,51 @@ msgstr "Posterisering"
 msgid "Posterize Levels:"
 msgstr "Nivåer for posterisering:"
 
-#: app/preferences_dialog.c:247
+#: app/preferences_dialog.c:245
 msgid "Error: Levels of undo must be zero or greater."
 msgstr "Feil: Angrenivåer må være null eller større."
 
-#: app/preferences_dialog.c:253
+#: app/preferences_dialog.c:251
 msgid "Error: Marching speed must be 50 or greater."
 msgstr "Feil: Marsjfart må være 50 eller større."
 
-#: app/preferences_dialog.c:259
+#: app/preferences_dialog.c:257
 msgid "Error: Default width must be one or greater."
 msgstr "Feil: Standard bredde må være en eller større."
 
-#: app/preferences_dialog.c:265
+#: app/preferences_dialog.c:263
 msgid "Error: Default height must be one or greater."
 msgstr "Feil: Standard høyde må være en eller større."
 
-#: app/preferences_dialog.c:272
+#: app/preferences_dialog.c:270
 msgid "Error: Default unit must be within unit range."
 msgstr "Feil: Standard enhet må være innenfor enhetsområdet."
 
-#: app/preferences_dialog.c:279
+#: app/preferences_dialog.c:277
 msgid "Error: Default resolution must not be zero."
 msgstr "Feil: Standard oppløsning må ikke være null."
 
-#: app/preferences_dialog.c:287
+#: app/preferences_dialog.c:285
 msgid "Error: Default resolution unit must be within unit range."
 msgstr "Feil: Standard oppløsningsenhet må være innenfor enhetsområdet."
 
-#: app/preferences_dialog.c:294
+#: app/preferences_dialog.c:292
 msgid "Error: Monitor resolution must not be zero."
 msgstr "Feil: Monitoroppløsningen kan ikke være null."
 
-#: app/preferences_dialog.c:301
+#: app/preferences_dialog.c:299
 msgid "Error: Image title format must not be NULL."
 msgstr "Feil: Tittelformat for bildet må ikke være NULL."
 
-#: app/preferences_dialog.c:308
+#: app/preferences_dialog.c:306
 msgid "Error: Number of processors must be between 1 and 30."
 msgstr "Feil: Antall prosessorer må være mellom 1 og 30."
 
-#: app/preferences_dialog.c:359
+#: app/preferences_dialog.c:356
 msgid "Save Preferences ?"
 msgstr "Lagre brukervalg ?"
 
-#: app/preferences_dialog.c:380
+#: app/preferences_dialog.c:377
 msgid ""
 "At least one of the changes you made will only\n"
 "take effect after you restart the GIMP.\n"
@@ -4305,511 +4305,511 @@ msgstr ""
 "for å for å fortsette uten å aktivere de kritiske delene\n"
 "av endringene."
 
-#: app/preferences_dialog.c:474
+#: app/preferences_dialog.c:470
 msgid "You will need to restart GIMP for these changes to take effect."
 msgstr ""
 "Du vil måtte starte GIMP på nytt for at disse endringene skal tre i kraft."
 
-#: app/preferences_dialog.c:1029
+#: app/preferences_dialog.c:1022
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Standardkommentaren er begrenset til %d tegn."
 
-#: app/preferences_dialog.c:1455
+#: app/preferences_dialog.c:1447
 msgid "Preferences"
 msgstr "Preferanser"
 
 #. The categories tree
-#: app/preferences_dialog.c:1477
+#: app/preferences_dialog.c:1469
 msgid "Categories"
 msgstr "Kategorier"
 
-#: app/preferences_dialog.c:1505 app/preferences_dialog.c:1507
+#: app/preferences_dialog.c:1497 app/preferences_dialog.c:1499
 msgid "New File"
 msgstr "Ny fil"
 
-#: app/preferences_dialog.c:1518
+#: app/preferences_dialog.c:1510
 msgid "Default Image Size and Unit"
 msgstr "Standard størrelse og enhet for bilde"
 
-#: app/preferences_dialog.c:1532
+#: app/preferences_dialog.c:1524
 msgid "Width"
 msgstr "Bredde"
 
-#: app/preferences_dialog.c:1534
+#: app/preferences_dialog.c:1526
 msgid "Height"
 msgstr "Høyde"
 
-#: app/preferences_dialog.c:1564
+#: app/preferences_dialog.c:1556
 msgid "Default Image Resolution and Resolution Unit"
 msgstr "Standard oppløsning og oppløsningsenhet for bilde"
 
-#: app/preferences_dialog.c:1591 app/preferences_dialog.c:2384
+#: app/preferences_dialog.c:1583 app/preferences_dialog.c:2376
 msgid "dpi"
 msgstr "dpi"
 
-#: app/preferences_dialog.c:1638
+#: app/preferences_dialog.c:1630
 msgid "Default Image Type:"
 msgstr "Standard bildetype:"
 
-#: app/preferences_dialog.c:1650
+#: app/preferences_dialog.c:1642
 msgid "Maximum Image Size:"
 msgstr "Maksimum bildestørrelse:"
 
-#: app/preferences_dialog.c:1655 app/preferences_dialog.c:1657
+#: app/preferences_dialog.c:1647 app/preferences_dialog.c:1649
 msgid "Default Comment"
 msgstr "Standard kommentar"
 
-#: app/preferences_dialog.c:1665
+#: app/preferences_dialog.c:1657
 msgid "Comment Used for New Images"
 msgstr "Kommentar som brukes for nye bilder"
 
-#: app/preferences_dialog.c:1685 app/preferences_dialog.c:1687
+#: app/preferences_dialog.c:1677 app/preferences_dialog.c:1679
 msgid "Display"
 msgstr "Skjerm"
 
-#: app/preferences_dialog.c:1695
+#: app/preferences_dialog.c:1687
 msgid "Transparency"
 msgstr "Gjennomsiktighet"
 
-#: app/preferences_dialog.c:1714
+#: app/preferences_dialog.c:1706
 msgid "Light Checks"
 msgstr "Lyse ruter"
 
-#: app/preferences_dialog.c:1715
+#: app/preferences_dialog.c:1707
 msgid "Mid-Tone Checks"
 msgstr "Halvlyse ruter"
 
-#: app/preferences_dialog.c:1716
+#: app/preferences_dialog.c:1708
 msgid "Dark Checks"
 msgstr "Mørke ruter"
 
-#: app/preferences_dialog.c:1717
+#: app/preferences_dialog.c:1709
 msgid "White Only"
 msgstr "Kun hvitt"
 
-#: app/preferences_dialog.c:1718
+#: app/preferences_dialog.c:1710
 msgid "Gray Only"
 msgstr "Kun grått"
 
-#: app/preferences_dialog.c:1719
+#: app/preferences_dialog.c:1711
 msgid "Black Only"
 msgstr "Kun sort"
 
-#: app/preferences_dialog.c:1723
+#: app/preferences_dialog.c:1715
 msgid "Transparency Type:"
 msgstr "Type gjennomsiktighet"
 
-#: app/preferences_dialog.c:1730 app/preferences_dialog.c:1822
-#: app/preferences_dialog.c:1836
+#: app/preferences_dialog.c:1722 app/preferences_dialog.c:1814
+#: app/preferences_dialog.c:1828
 msgid "Small"
 msgstr "Liten"
 
-#: app/preferences_dialog.c:1731 app/preferences_dialog.c:1823
-#: app/preferences_dialog.c:1837
+#: app/preferences_dialog.c:1723 app/preferences_dialog.c:1815
+#: app/preferences_dialog.c:1829
 msgid "Medium"
 msgstr "Medium"
 
-#: app/preferences_dialog.c:1732 app/preferences_dialog.c:1824
-#: app/preferences_dialog.c:1838
+#: app/preferences_dialog.c:1724 app/preferences_dialog.c:1816
+#: app/preferences_dialog.c:1830
 msgid "Large"
 msgstr "Stor"
 
-#: app/preferences_dialog.c:1736
+#: app/preferences_dialog.c:1728
 msgid "Check Size:"
 msgstr "Størrelse på rute:"
 
-#: app/preferences_dialog.c:1739
+#: app/preferences_dialog.c:1731
 msgid "8-Bit Displays"
 msgstr "8-bits skjermer"
 
-#: app/preferences_dialog.c:1760
+#: app/preferences_dialog.c:1752
 msgid "Minimum Number of Colors:"
 msgstr "Minimum antall farger:"
 
-#: app/preferences_dialog.c:1763
+#: app/preferences_dialog.c:1755
 msgid "Install Colormap"
 msgstr "Installer fargekart"
 
-#: app/preferences_dialog.c:1772
+#: app/preferences_dialog.c:1764
 msgid "Colormap Cycling"
 msgstr "Bytting av fargekart"
 
-#: app/preferences_dialog.c:1821
+#: app/preferences_dialog.c:1813
 msgid "Tiny"
 msgstr "Liten"
 
-#: app/preferences_dialog.c:1825
+#: app/preferences_dialog.c:1817
 msgid "Huge"
 msgstr "Stor"
 
-#: app/preferences_dialog.c:1829
+#: app/preferences_dialog.c:1821
 msgid "Preview Size:"
 msgstr "Størrelse for forhåndsvisning"
 
-#: app/preferences_dialog.c:1842
+#: app/preferences_dialog.c:1834
 msgid "Nav Preview Size:"
 msgstr "Nav størrelse for forhåndsvisning"
 
-#: app/preferences_dialog.c:1852
+#: app/preferences_dialog.c:1844
 msgid "Recent Documents List Size:"
 msgstr "Størrelse på liste over nylig åpnede filer:"
 
 #. Indicators
-#: app/preferences_dialog.c:1856
+#: app/preferences_dialog.c:1848
 msgid "Toolbox"
 msgstr "Verktøyskasse"
 
-#: app/preferences_dialog.c:1859
+#: app/preferences_dialog.c:1851
 msgid "Display Brush, Pattern and Gradient Indicators"
 msgstr "Vis pensel-, mønster- og gradient-indikatorer"
 
-#: app/preferences_dialog.c:1868
+#: app/preferences_dialog.c:1860
 msgid "Dialog Behaviour"
 msgstr "Dialogoppførsel"
 
-#: app/preferences_dialog.c:1870
+#: app/preferences_dialog.c:1862
 msgid "Navigation Window per Display"
 msgstr "Navigasjonsvindu per skjerm"
 
-#: app/preferences_dialog.c:1879
+#: app/preferences_dialog.c:1871
 msgid "Info Window Follows Mouse"
 msgstr "Infovindu følger musen"
 
-#: app/preferences_dialog.c:1890 app/preferences_dialog.c:1892
+#: app/preferences_dialog.c:1882 app/preferences_dialog.c:1884
 msgid "Help System"
 msgstr "Hjelpesystem"
 
-#: app/preferences_dialog.c:1902
+#: app/preferences_dialog.c:1894
 msgid "Show Tool Tips"
 msgstr "Vis verktøytips"
 
-#: app/preferences_dialog.c:1912
+#: app/preferences_dialog.c:1904
 msgid "Context Sensitive Help with \"F1\""
 msgstr "Kontekstsensitiv hjelp med \"F1\""
 
-#: app/preferences_dialog.c:1921
+#: app/preferences_dialog.c:1913
 msgid "Help Browser"
 msgstr "Hjelp leser"
 
-#: app/preferences_dialog.c:1933
+#: app/preferences_dialog.c:1925
 msgid "Internal"
 msgstr "Intern"
 
-#: app/preferences_dialog.c:1934
+#: app/preferences_dialog.c:1926
 msgid "Netscape"
 msgstr "Netscape"
 
-#: app/preferences_dialog.c:1938
+#: app/preferences_dialog.c:1930
 msgid "Help Browser to Use:"
 msgstr "Hjelp leser som skal brukes"
 
-#: app/preferences_dialog.c:1943 app/preferences_dialog.c:1945
+#: app/preferences_dialog.c:1935 app/preferences_dialog.c:1937
 msgid "Image Windows"
 msgstr "Bildevindu"
 
-#: app/preferences_dialog.c:1953
+#: app/preferences_dialog.c:1945
 msgid "Appearance"
 msgstr "Utseende"
 
-#: app/preferences_dialog.c:1955
+#: app/preferences_dialog.c:1947
 msgid "Use \"Dot for Dot\" by default"
 msgstr "Bruk \"Punkt for punkt\" som standard"
 
-#: app/preferences_dialog.c:1964
+#: app/preferences_dialog.c:1956
 msgid "Resize Window on Zoom"
 msgstr "Endre størrelse på vinduet ved zoom"
 
-#: app/preferences_dialog.c:1973
+#: app/preferences_dialog.c:1965
 msgid "Show Rulers"
 msgstr "Vis linjaler"
 
-#: app/preferences_dialog.c:1982
+#: app/preferences_dialog.c:1974
 msgid "Show Statusbar"
 msgstr "Vis statuslinje"
 
-#: app/preferences_dialog.c:2006
+#: app/preferences_dialog.c:1998
 msgid "Marching Ants Speed:"
 msgstr "Hastighet for marsjerende maur:"
 
 #. Set the currently used string as "Custom"
-#: app/preferences_dialog.c:2014
+#: app/preferences_dialog.c:2006
 msgid "Custom"
 msgstr "Egendefinert"
 
 #. set some commonly used format strings
-#: app/preferences_dialog.c:2020
+#: app/preferences_dialog.c:2012
 msgid "Standard"
 msgstr "Standard"
 
-#: app/preferences_dialog.c:2025
+#: app/preferences_dialog.c:2017
 msgid "Show zoom percentage"
 msgstr "Vis zoom-prosent"
 
-#: app/preferences_dialog.c:2030
+#: app/preferences_dialog.c:2022
 msgid "Show zoom ratio"
 msgstr "Vis zoom-rate"
 
-#: app/preferences_dialog.c:2035
+#: app/preferences_dialog.c:2027
 msgid "Show reversed zoom ratio"
 msgstr "Vis reversert zoom-rate"
 
-#: app/preferences_dialog.c:2046
+#: app/preferences_dialog.c:2038
 msgid "Image Title Format:"
 msgstr "Tittelformat for bilde:"
 
 #. End of the title format string
-#: app/preferences_dialog.c:2050
+#: app/preferences_dialog.c:2042
 msgid "Pointer Movement Feedback"
 msgstr "Tilbakemelding på pekerbevegelse"
 
-#: app/preferences_dialog.c:2053
+#: app/preferences_dialog.c:2045
 msgid "Perfect-but-Slow Pointer Tracking"
 msgstr "Perfekt-men-treg pekerfølging"
 
-#: app/preferences_dialog.c:2062
+#: app/preferences_dialog.c:2054
 msgid "Disable Cursor Updating"
 msgstr "Slå av oppdatering av markøren"
 
-#: app/preferences_dialog.c:2081
+#: app/preferences_dialog.c:2073
 msgid "Tool Icon"
 msgstr "Verktøysikon"
 
-#: app/preferences_dialog.c:2083
+#: app/preferences_dialog.c:2075
 msgid "Tool Icon with Crosshair"
 msgstr "Verktøysikon med \"crosshair\""
 
-#: app/preferences_dialog.c:2085
+#: app/preferences_dialog.c:2077
 msgid "Crosshair only"
 msgstr "Kun \"crosshair\""
 
-#: app/preferences_dialog.c:2090
+#: app/preferences_dialog.c:2082
 msgid "Cursor Mode:"
 msgstr "Markørmodus:"
 
-#: app/preferences_dialog.c:2096 app/preferences_dialog.c:2098
+#: app/preferences_dialog.c:2088 app/preferences_dialog.c:2090
 #: app/tools.c:1536
 msgid "Tool Options"
 msgstr "Verktøysalternativer"
 
-#: app/preferences_dialog.c:2106
+#: app/preferences_dialog.c:2098
 msgid "Paint Options"
 msgstr "Alternativer for tegning"
 
-#: app/preferences_dialog.c:2109
+#: app/preferences_dialog.c:2101
 msgid "Use Global Paint Options"
 msgstr "Bruk globale alternativer for tegning"
 
-#: app/preferences_dialog.c:2118
+#: app/preferences_dialog.c:2110
 msgid "Finding Contiguous Regions"
 msgstr "Velg sammenhengende områder"
 
-#: app/preferences_dialog.c:2137
+#: app/preferences_dialog.c:2129
 msgid "Default Threshold:"
 msgstr "Standard terskel:"
 
-#: app/preferences_dialog.c:2146 app/preferences_dialog.c:2148
+#: app/preferences_dialog.c:2138 app/preferences_dialog.c:2140
 msgid "Environment"
 msgstr "Mijø"
 
-#: app/preferences_dialog.c:2156
+#: app/preferences_dialog.c:2148
 msgid "Resource Consumption"
 msgstr "Ressursbruk"
 
-#: app/preferences_dialog.c:2158
+#: app/preferences_dialog.c:2150
 msgid "Conservative Memory Usage"
 msgstr "Konservativt minnebruk"
 
-#: app/preferences_dialog.c:2186
+#: app/preferences_dialog.c:2178
 msgid "Levels of Undo:"
 msgstr "Angrenivåer:"
 
-#: app/preferences_dialog.c:2198 app/user_install.c:1105
+#: app/preferences_dialog.c:2190 app/user_install.c:1105
 msgid "Tile Cache Size:"
 msgstr "Størrelse på flisbuffer:"
 
-#: app/preferences_dialog.c:2209
+#: app/preferences_dialog.c:2201
 msgid "Number of Processors to Use:"
 msgstr "Antall prosessorer som skal brukes:"
 
-#: app/preferences_dialog.c:2213 app/transform_tool.c:215
+#: app/preferences_dialog.c:2205 app/transform_tool.c:215
 msgid "Scaling"
 msgstr "Skalering"
 
-#: app/preferences_dialog.c:2231
+#: app/preferences_dialog.c:2223
 msgid "Nearest Neighbor (Fast)"
 msgstr "Nærmeste nabo (Rask)"
 
-#: app/preferences_dialog.c:2235
+#: app/preferences_dialog.c:2227
 msgid "Cubic (Slow)"
 msgstr "Kubisk (Treg)"
 
-#: app/preferences_dialog.c:2240
+#: app/preferences_dialog.c:2232
 msgid "Interpolation Type:"
 msgstr "Type interpolasjon:"
 
-#: app/preferences_dialog.c:2243
+#: app/preferences_dialog.c:2235
 msgid "File Saving"
 msgstr "Lagring av fil"
 
-#: app/preferences_dialog.c:2260 app/preferences_dialog.c:2273
+#: app/preferences_dialog.c:2252 app/preferences_dialog.c:2265
 msgid "Always"
 msgstr "Alltid"
 
-#: app/preferences_dialog.c:2261
+#: app/preferences_dialog.c:2253
 msgid "Never"
 msgstr "Aldri"
 
-#: app/preferences_dialog.c:2265
+#: app/preferences_dialog.c:2257
 msgid "Try to Write a Thumbnail File:"
 msgstr "Prøv å skrive en miniatyrfil:"
 
-#: app/preferences_dialog.c:2272
+#: app/preferences_dialog.c:2264
 msgid "Only when Modified"
 msgstr "Kun når endret"
 
-#: app/preferences_dialog.c:2277
+#: app/preferences_dialog.c:2269
 msgid "\"File > Save\" Saves the Image:"
 msgstr "\"Fil > Lagre\" lagrer bildet:"
 
-#: app/preferences_dialog.c:2283
+#: app/preferences_dialog.c:2275
 msgid "Session Management"
 msgstr "Sesjonsbehandling"
 
-#: app/preferences_dialog.c:2285
+#: app/preferences_dialog.c:2277
 msgid "Session"
 msgstr "Sesjon"
 
-#: app/preferences_dialog.c:2293
+#: app/preferences_dialog.c:2285
 msgid "Window Positions"
 msgstr "Vindusposisjoner"
 
-#: app/preferences_dialog.c:2295
+#: app/preferences_dialog.c:2287
 msgid "Save Window Positions on Exit"
 msgstr "Lagre vindusposisjoner ved avslutt"
 
-#: app/preferences_dialog.c:2309
+#: app/preferences_dialog.c:2301
 msgid "Clear Saved Window Positions Now"
 msgstr "Nullstill lagrede vindusposisjoner nå"
 
-#: app/preferences_dialog.c:2317
+#: app/preferences_dialog.c:2309
 msgid "Always Try to Restore Session"
 msgstr "Alltid prøv å gjenopprette sesjon"
 
-#: app/preferences_dialog.c:2326
+#: app/preferences_dialog.c:2318
 msgid "Devices"
 msgstr "Enheter"
 
-#: app/preferences_dialog.c:2328
+#: app/preferences_dialog.c:2320
 msgid "Save Device Status on Exit"
 msgstr "Lagre enhetsstatus ved avslutt"
 
-#: app/preferences_dialog.c:2339 app/preferences_dialog.c:2341
+#: app/preferences_dialog.c:2331 app/preferences_dialog.c:2333
 msgid "Monitor"
 msgstr "Monitor"
 
-#: app/preferences_dialog.c:2349
+#: app/preferences_dialog.c:2341
 msgid "Get Monitor Resolution"
 msgstr "Hent oppløsning for monitor"
 
-#: app/preferences_dialog.c:2357
+#: app/preferences_dialog.c:2349
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "(Den er nå %d x %d dpi)"
 
-#: app/preferences_dialog.c:2409
+#: app/preferences_dialog.c:2401
 msgid "From windowing system"
 msgstr "Fra vindussystemet"
 
-#: app/preferences_dialog.c:2424
+#: app/preferences_dialog.c:2416
 msgid "Manually:"
 msgstr "Manuelt"
 
-#: app/preferences_dialog.c:2437 app/preferences_dialog.c:2439
+#: app/preferences_dialog.c:2429 app/preferences_dialog.c:2431
 msgid "Directories"
 msgstr "Kataloger"
 
-#: app/preferences_dialog.c:2456
+#: app/preferences_dialog.c:2448
 msgid "Temp Dir:"
 msgstr "Temp-katalog:"
 
-#: app/preferences_dialog.c:2456
+#: app/preferences_dialog.c:2448
 msgid "Select Temp Dir"
 msgstr "Velg temp-katalog"
 
-#: app/preferences_dialog.c:2457
+#: app/preferences_dialog.c:2449
 msgid "Swap Dir:"
 msgstr "Swap-katalog:"
 
-#: app/preferences_dialog.c:2457 app/user_install.c:1125
+#: app/preferences_dialog.c:2449 app/user_install.c:1125
 msgid "Select Swap Dir"
 msgstr "Velg swap-katalog"
 
-#: app/preferences_dialog.c:2493
+#: app/preferences_dialog.c:2485
 msgid "Brushes Directories"
 msgstr "Katalog for pensler"
 
-#: app/preferences_dialog.c:2495
+#: app/preferences_dialog.c:2487
 msgid "Select Brushes Dir"
 msgstr "Velg katalog for pensler"
 
-#: app/preferences_dialog.c:2497
+#: app/preferences_dialog.c:2489
 msgid "Generated Brushes"
 msgstr "Genererte pensler"
 
-#: app/preferences_dialog.c:2497
+#: app/preferences_dialog.c:2489
 msgid "Generated Brushes Directories"
 msgstr "Kataloger for genererte pensler"
 
-#: app/preferences_dialog.c:2499
+#: app/preferences_dialog.c:2491
 msgid "Select Generated Brushes Dir"
 msgstr "Velg katalog for genererte pensler"
 
-#: app/preferences_dialog.c:2501
+#: app/preferences_dialog.c:2493
 msgid "Patterns Directories"
 msgstr "Katalog for mønstre"
 
-#: app/preferences_dialog.c:2503
+#: app/preferences_dialog.c:2495
 msgid "Select Patterns Dir"
 msgstr "Velg katalog for mønstre"
 
-#: app/preferences_dialog.c:2505
+#: app/preferences_dialog.c:2497
 msgid "Palettes Directories"
 msgstr "Kataloger for paletter"
 
-#: app/preferences_dialog.c:2507
+#: app/preferences_dialog.c:2499
 msgid "Select Palettes Dir"
 msgstr "Velg katalog for mønstre"
 
-#: app/preferences_dialog.c:2509
+#: app/preferences_dialog.c:2501
 msgid "Gradients Directories"
 msgstr "Katalog for gradienter"
 
-#: app/preferences_dialog.c:2511
+#: app/preferences_dialog.c:2503
 msgid "Select Gradients Dir"
 msgstr "Velg katalog for gradienter"
 
-#: app/preferences_dialog.c:2513
+#: app/preferences_dialog.c:2505
 msgid "Plug-Ins"
 msgstr "Tillegg"
 
-#: app/preferences_dialog.c:2513
+#: app/preferences_dialog.c:2505
 msgid "Plug-Ins Directories"
 msgstr "Kataloger for tillegg"
 
-#: app/preferences_dialog.c:2515
+#: app/preferences_dialog.c:2507
 msgid "Select Plug-Ins Dir"
 msgstr "Velg katalog for tillegg"
 
-#: app/preferences_dialog.c:2517
+#: app/preferences_dialog.c:2509
 msgid "Modules"
 msgstr "Moduler"
 
-#: app/preferences_dialog.c:2517
+#: app/preferences_dialog.c:2509
 msgid "Modules Directories"
 msgstr "Kataloger for moduler"
 
-#: app/preferences_dialog.c:2519
+#: app/preferences_dialog.c:2511
 msgid "Select Modules Dir"
 msgstr "Velg katalog for moduler"
 

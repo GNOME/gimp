@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-08-19 09:14-0700\n"
+"POT-Creation-Date: 2000-08-30 00:31-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -184,11 +184,11 @@ msgstr "Script-Fu ÄÜ¼Ö"
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:1016 plug-ins/script-fu/script-fu.c:1017
+#: plug-ins/script-fu/script-fu.c:1022 plug-ins/script-fu/script-fu.c:1023
 msgid "Re-read all available scripts"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:1021
+#: plug-ins/script-fu/script-fu.c:1027
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr ""
 
