@@ -1,3 +1,7 @@
+Wed Feb 16 03:08:10 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/interface.c: new default toolbox layout: 5x5 tools
+
 Wed Feb 16 02:36:48 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* tools/pdbgen/pdb/paths.pdb

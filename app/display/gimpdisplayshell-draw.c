@@ -580,7 +580,7 @@ create_toolbox (void)
   wbox = gtk_hwrap_box_new (FALSE);
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (wbox), GTK_JUSTIFY_TOP);
   gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (wbox), GTK_JUSTIFY_LEFT);
-  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), 252.0 / 136.0);  /*  9x3 tools  */
+  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), 140.0 / 192.0);  /* 5x5 tools */
   gtk_container_set_border_width (GTK_CONTAINER (wbox), 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), wbox, TRUE, TRUE, 0);
   gtk_widget_show (wbox);
