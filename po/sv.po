@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-05-31 11:49+0200\n"
-"PO-Revision-Date: 2003-05-31 11:54+0200\n"
+"POT-Creation-Date: 2003-06-04 11:02+0200\n"
+"PO-Revision-Date: 2003-06-04 11:05+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -961,14 +961,13 @@ msgstr "Bakåt (korrektiv)"
 msgid "<<invalid>>"
 msgstr "<<ogiltig>>"
 
-#: app/core/core-enums.c:451 app/core/gimpimage-scale.c:73
-#: app/gui/image-commands.c:519 app/gui/image-commands.c:532
-#: app/gui/image-commands.c:549 app/gui/resize-dialog.c:201
+#: app/core/core-enums.c:451 app/core/gimpimage-scale.c:72
+#: app/gui/image-commands.c:527 app/gui/resize-dialog.c:201
 msgid "Scale Image"
 msgstr "Skala bild"
 
 #: app/core/core-enums.c:452 app/core/gimpimage-crop.c:145
-#: app/core/gimpimage-resize.c:59
+#: app/core/gimpimage-resize.c:68
 msgid "Resize Image"
 msgstr "Ändra storlek på bild"
 
@@ -1001,7 +1000,7 @@ msgid "Guide"
 msgstr "Hjälplinje"
 
 #: app/core/core-enums.c:460 app/core/core-enums.c:488
-#: app/core/gimpchannel.c:707
+#: app/core/gimpchannel.c:719
 msgid "Selection Mask"
 msgstr "Markeringsmask"
 
@@ -1280,7 +1279,7 @@ msgid "Documents"
 msgstr "Dokument"
 
 #. initialize the template list
-#: app/core/gimp.c:787 app/gui/dialogs-constructors.c:894
+#: app/core/gimp.c:787 app/gui/dialogs-constructors.c:899
 msgid "Templates"
 msgstr "Mallar"
 
@@ -1380,71 +1379,71 @@ msgstr "Flytta kanal"
 msgid "Scale Channel"
 msgstr "Skala kanal"
 
-#: app/core/gimpchannel.c:393
+#: app/core/gimpchannel.c:399
 msgid "Resize Channel"
 msgstr "Ändra storlek på kanal"
 
-#: app/core/gimpchannel.c:416
+#: app/core/gimpchannel.c:428
 msgid "Flip Channel"
 msgstr "Vänd kanal"
 
-#: app/core/gimpchannel.c:443
+#: app/core/gimpchannel.c:455
 msgid "Rotate Channel"
 msgstr "Rotera kanal"
 
-#: app/core/gimpchannel.c:473 app/core/gimpdrawable-transform.c:1107
+#: app/core/gimpchannel.c:485 app/core/gimpdrawable-transform.c:1107
 msgid "Transform Channel"
 msgstr "Transformera kanal"
 
-#: app/core/gimpchannel.c:603
+#: app/core/gimpchannel.c:615
 msgid "Set Channel Color"
 msgstr "Sätt kanalfärg"
 
-#: app/core/gimpchannel.c:652
+#: app/core/gimpchannel.c:664
 msgid "Set Channel Opacity"
 msgstr "Sätt kanalopacitet"
 
-#: app/core/gimpchannel.c:1476
+#: app/core/gimpchannel.c:1488
 msgid "Feather Channel"
 msgstr "Fjädra kanal"
 
-#: app/core/gimpchannel.c:1498
+#: app/core/gimpchannel.c:1510
 msgid "Sharpen Channel"
 msgstr "Gör kanalen skarpare"
 
-#: app/core/gimpchannel.c:1524
+#: app/core/gimpchannel.c:1536
 msgid "Clear Channel"
 msgstr "Rensa kanal"
 
-#: app/core/gimpchannel.c:1562
+#: app/core/gimpchannel.c:1574
 msgid "Fill Channel"
 msgstr "Fyll kanal"
 
-#: app/core/gimpchannel.c:1587
+#: app/core/gimpchannel.c:1599
 msgid "Invert Channel"
 msgstr "Invertera kanal"
 
-#: app/core/gimpchannel.c:1653
+#: app/core/gimpchannel.c:1665
 msgid "Border Channel"
 msgstr "Kantmarkera kanal"
 
-#: app/core/gimpchannel.c:1710
+#: app/core/gimpchannel.c:1722
 msgid "Grow Channel"
 msgstr "Öka kanal"
 
-#: app/core/gimpchannel.c:1761
+#: app/core/gimpchannel.c:1773
 msgid "Shrink Channel"
 msgstr "Minska kanal"
 
-#: app/core/gimpchannel.c:1782
+#: app/core/gimpchannel.c:1794
 msgid "Channel Load"
 msgstr "Läs in kanal"
 
-#: app/core/gimpchannel.c:1811
+#: app/core/gimpchannel.c:1823
 msgid "Channel from Alpha"
 msgstr "Kanal från alfa"
 
-#: app/core/gimpchannel.c:1848
+#: app/core/gimpchannel.c:1860
 msgid "Channel from Mask"
 msgstr "Kanal från mask"
 
@@ -1687,15 +1686,15 @@ msgstr "Fjädermarkering"
 msgid "Sharpen Selection"
 msgstr "Gör markering skarpare"
 
-#: app/core/gimpimage-mask.c:475 app/widgets/gimpselectioneditor.c:168
+#: app/core/gimpimage-mask.c:475 app/widgets/gimpselectioneditor.c:177
 msgid "Select None"
 msgstr "Markera inget"
 
-#: app/core/gimpimage-mask.c:489 app/widgets/gimpselectioneditor.c:160
+#: app/core/gimpimage-mask.c:489 app/widgets/gimpselectioneditor.c:169
 msgid "Select All"
 msgstr "Markera allt"
 
-#: app/core/gimpimage-mask.c:501 app/widgets/gimpselectioneditor.c:176
+#: app/core/gimpimage-mask.c:501 app/widgets/gimpselectioneditor.c:185
 msgid "Invert Selection"
 msgstr "Omvänd markering"
 
@@ -1748,7 +1747,7 @@ msgstr ""
 msgid "No selection to stroke."
 msgstr "Ingen markering att stryka."
 
-#: app/core/gimpimage-mask.c:709 app/widgets/gimpselectioneditor.c:192
+#: app/core/gimpimage-mask.c:709 app/widgets/gimpselectioneditor.c:215
 msgid "Stroke Selection"
 msgstr "Stryk markering"
 
@@ -2822,66 +2821,66 @@ msgstr "Indexerad palett"
 msgid "Colormap"
 msgstr "Färgkarta"
 
-#: app/gui/dialogs-constructors.c:778
+#: app/gui/dialogs-constructors.c:783
 msgid "Selection Editor"
 msgstr "Markeringsredigerare"
 
-#: app/gui/dialogs-constructors.c:778
+#: app/gui/dialogs-constructors.c:783
 msgid "Selection"
 msgstr "Markering"
 
-#: app/gui/dialogs-constructors.c:802
+#: app/gui/dialogs-constructors.c:807
 msgid "Undo History"
 msgstr "Ångringshistorik"
 
-#: app/gui/dialogs-constructors.c:802 app/gui/image-menu.c:1261
+#: app/gui/dialogs-constructors.c:807 app/gui/image-menu.c:1261
 #: app/pdb/internal_procs.c:185 app/widgets/gimpundoeditor.c:122
 msgid "Undo"
 msgstr "Ångra"
 
-#: app/gui/dialogs-constructors.c:825
+#: app/gui/dialogs-constructors.c:830
 msgid "Color Editor"
 msgstr "Färgredigerare"
 
-#: app/gui/dialogs-constructors.c:825 app/pdb/internal_procs.c:89
+#: app/gui/dialogs-constructors.c:830 app/pdb/internal_procs.c:89
 #: app/tools/paint_options.c:316 app/widgets/gimpwidgets-constructors.c:70
 #: app/widgets/gimpwidgets-constructors.c:103
 msgid "Color"
 msgstr "Färg"
 
-#: app/gui/dialogs-constructors.c:846
+#: app/gui/dialogs-constructors.c:851
 msgid "Document History List"
 msgstr "Lista på dokumenthistorik"
 
-#: app/gui/dialogs-constructors.c:846 app/gui/dialogs-constructors.c:867
+#: app/gui/dialogs-constructors.c:851 app/gui/dialogs-constructors.c:872
 msgid "History"
 msgstr "Historik"
 
-#: app/gui/dialogs-constructors.c:867
+#: app/gui/dialogs-constructors.c:872
 msgid "Document History Grid"
 msgstr "Rutnät för dokumenthistorik"
 
-#: app/gui/dialogs-constructors.c:894
+#: app/gui/dialogs-constructors.c:899
 msgid "List of Templates"
 msgstr "Malllista"
 
-#: app/gui/dialogs-constructors.c:915
+#: app/gui/dialogs-constructors.c:920
 msgid "Brush Editor"
 msgstr "Penselredigerare"
 
-#: app/gui/dialogs-constructors.c:944
+#: app/gui/dialogs-constructors.c:949
 msgid "Gradient Editor"
 msgstr "Färgskaleredigerare"
 
-#: app/gui/dialogs-constructors.c:973
+#: app/gui/dialogs-constructors.c:978
 msgid "Palette Editor"
 msgstr "Palettredigerare"
 
-#: app/gui/dialogs-constructors.c:1009
+#: app/gui/dialogs-constructors.c:1014
 msgid "Display Navigation"
 msgstr "Displaynavigation"
 
-#: app/gui/dialogs-constructors.c:1009
+#: app/gui/dialogs-constructors.c:1014
 msgid "Navigation"
 msgstr "Navigation"
 
@@ -3629,16 +3628,20 @@ msgstr "Klippt efter bilden"
 msgid "Clipped to bottom layer"
 msgstr "Klippt efter understa lagret"
 
-#: app/gui/image-commands.c:429
+#: app/gui/image-commands.c:423
+msgid "Resizing..."
+msgstr "Ändrar storlek..."
+
+#: app/gui/image-commands.c:439
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 "Fel vid ändring av storlek: Både bredd och höjd måste vara större än 0."
 
-#: app/gui/image-commands.c:462
+#: app/gui/image-commands.c:472
 msgid "Layer Too Small"
 msgstr "Lager för litet"
 
-#: app/gui/image-commands.c:466
+#: app/gui/image-commands.c:476
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -3648,11 +3651,11 @@ msgstr ""
 "krympa bort några lager helt.\n"
 "Är detta vad du vill?"
 
-#: app/gui/image-commands.c:552 app/tools/gimpscaletool.c:164
+#: app/gui/image-commands.c:543 app/tools/gimpscaletool.c:164
 msgid "Scaling..."
 msgstr "Skalar..."
 
-#: app/gui/image-commands.c:567
+#: app/gui/image-commands.c:556
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
 "Fel vid omskalning av bild: Både bredd och höjd måste vara större än 0."
@@ -8561,9 +8564,18 @@ msgstr "Redigera färgpalettpost"
 msgid "This text input field is limited to %d characters."
 msgstr "Detta textinmatningsfält är begränsat till %d tecken."
 
-#: app/widgets/gimpselectioneditor.c:184
+#: app/widgets/gimpselectioneditor.c:193
 msgid "Save Selection to Channel"
 msgstr "Spara markering till kanal"
+
+#: app/widgets/gimpselectioneditor.c:198 app/widgets/gimpvectorstreeview.c:161
+#, c-format
+msgid ""
+"Selection to Path\n"
+"%s  Advanced Options"
+msgstr ""
+"Markering till slingai\n"
+"%s  Avancerade inställningar"
 
 #: app/widgets/gimptemplateeditor.c:464
 msgid "_Name:"
@@ -8709,15 +8721,6 @@ msgstr ""
 "%s  Lägg till\n"
 "%s  Ta bort\n"
 "%s%s%s  Snitt"
-
-#: app/widgets/gimpvectorstreeview.c:161
-#, c-format
-msgid ""
-"Selection to Path\n"
-"%s  Advanced Options"
-msgstr ""
-"Markering till slingai\n"
-"%s  Avancerade inställningar"
 
 #: app/widgets/gimpvectorstreeview.c:176
 msgid "Stroke Path"
