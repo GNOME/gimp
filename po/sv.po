@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:14+0100\n"
-"PO-Revision-Date: 2004-10-26 21:51+0900\n"
+"POT-Creation-Date: 2004-11-02 12:30+0900\n"
+"PO-Revision-Date: 2004-11-02 12:32+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -895,9 +895,8 @@ msgid "M_ove to Screen..."
 msgstr "Fl_ytta till skärm..."
 
 #: app/actions/dockable-actions.c:76
-#, fuzzy
 msgid "_Show Image Selection"
-msgstr "Visa m_arkering"
+msgstr "Visa bildm_arkering"
 
 #: app/actions/dockable-actions.c:82
 msgid "Auto _Follow Active Image"
@@ -1043,20 +1042,20 @@ msgstr ""
 "%s"
 
 #: app/actions/drawable-actions.c:45
-msgid "_White Balance"
-msgstr ""
-
-#: app/actions/drawable-actions.c:50
 msgid "_Desaturate"
 msgstr "Avfärga"
 
-#: app/actions/drawable-actions.c:55
+#: app/actions/drawable-actions.c:50
 msgid "_Equalize"
 msgstr "_Jämna ut"
 
-#: app/actions/drawable-actions.c:60
+#: app/actions/drawable-actions.c:55
 msgid "In_vert"
 msgstr "In_vertera"
+
+#: app/actions/drawable-actions.c:60
+msgid "_White Balance"
+msgstr "_Vitbalans"
 
 #: app/actions/drawable-actions.c:65
 msgid "_Offset..."
@@ -1091,22 +1090,21 @@ msgstr "Rotera _180 grader"
 msgid "Rotate 90 degrees CC_W"
 msgstr "Rotera 90 grader m_oturs"
 
-#: app/actions/drawable-commands.c:60
-#, fuzzy
-msgid "White Balance operates only on RGB color layers."
-msgstr "Färgbalans fungerar endast på RGB-lager."
-
-#: app/actions/drawable-commands.c:78
+#: app/actions/drawable-commands.c:58
 msgid "Desaturate operates only on RGB color layers."
 msgstr "Avfärga fungerar endast på RGB-färglager."
 
-#: app/actions/drawable-commands.c:96
+#: app/actions/drawable-commands.c:76
 msgid "Equalize does not operate on indexed layers."
 msgstr "Jämna ut fungerar inte på indexerade lager."
 
-#: app/actions/drawable-commands.c:162
+#: app/actions/drawable-commands.c:94
 msgid "Invert does not operate on indexed layers."
 msgstr "Kan inte använda invert på indexerade lager."
+
+#: app/actions/drawable-commands.c:114
+msgid "White Balance operates only on RGB color layers."
+msgstr "Vitbalans fungerar endast på RGB-lager."
 
 #: app/actions/edit-actions.c:61
 msgid "_Edit"
@@ -1843,7 +1841,7 @@ msgstr "Ändrar storlek..."
 msgid "Flipping..."
 msgstr "Vänder..."
 
-#: app/actions/image-commands.c:278 app/pdb/drawable_transform_cmds.c:632
+#: app/actions/image-commands.c:278 app/pdb/drawable_transform_cmds.c:603
 #: app/pdb/transform_tools_cmds.c:340 app/tools/gimprotatetool.c:159
 msgid "Rotating..."
 msgstr "Roterar..."
@@ -1863,7 +1861,7 @@ msgid "Scale Image"
 msgstr "Skala bild"
 
 #: app/actions/image-commands.c:462 app/actions/layers-commands.c:959
-#: app/pdb/drawable_transform_cmds.c:795 app/pdb/transform_tools_cmds.c:459
+#: app/pdb/drawable_transform_cmds.c:766 app/pdb/transform_tools_cmds.c:459
 #: app/tools/gimpscaletool.c:153
 msgid "Scaling..."
 msgstr "Skalar..."
@@ -3243,7 +3241,7 @@ msgstr "Kan inte expandera ${%s}"
 #: app/core/gimpbrushpipe.c:344 app/core/gimpgradient-load.c:63
 #: app/core/gimppalette.c:360 app/core/gimppattern.c:328
 #: app/tools/gimpimagemaptool.c:602 app/widgets/gimptexteditor.c:435
-#: app/xcf/xcf.c:293
+#: app/xcf/xcf.c:291
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Kunde inte öppna \"%s\" för läsning: %s"
@@ -3252,7 +3250,7 @@ msgstr "Kunde inte öppna \"%s\" för läsning: %s"
 #: app/core/gimpbrushgenerated.c:255 app/core/gimpgradient-save.c:51
 #: app/core/gimpgradient-save.c:142 app/core/gimppalette.c:567
 #: app/gui/themes.c:238 app/tools/gimpimagemaptool.c:601
-#: app/vectors/gimpvectors-export.c:83 app/xcf/xcf.c:350
+#: app/vectors/gimpvectors-export.c:83 app/xcf/xcf.c:348
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kunde inte öppna \"%s\" för skrivning: %s"
@@ -3503,6 +3501,9 @@ msgid ""
 "path is being picked. This used to be the default behaviour in older "
 "versions."
 msgstr ""
+"Om aktiverat ändrar flyttningsverktyget det aktiva lagret eller slingan när "
+"ett lager eller en slinga väljs. Detta var det normala beteendet i äldre "
+"versioner."
 
 #: app/config/gimprc-blurbs.h:214
 msgid ""
@@ -4606,7 +4607,7 @@ msgstr "Vänd kanal"
 msgid "Rotate Channel"
 msgstr "Rotera kanal"
 
-#: app/core/gimpchannel.c:287 app/core/gimpdrawable-transform.c:1109
+#: app/core/gimpchannel.c:287 app/core/gimpdrawable-transform.c:1125
 msgid "Transform Channel"
 msgstr "Transformera kanal"
 
@@ -4767,15 +4768,15 @@ msgid "Flip"
 msgstr "Vänd"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:1003 app/tools/gimprotatetool.c:97
+#: app/core/gimpdrawable-transform.c:1012 app/tools/gimprotatetool.c:97
 msgid "Rotate"
 msgstr "Rotera"
 
-#: app/core/gimpdrawable-transform.c:1107 app/core/gimplayer.c:259
+#: app/core/gimpdrawable-transform.c:1123 app/core/gimplayer.c:259
 msgid "Transform Layer"
 msgstr "Transformera lager"
 
-#: app/core/gimpdrawable-transform.c:1122
+#: app/core/gimpdrawable-transform.c:1138
 msgid "Transformation"
 msgstr "Transformation"
 
@@ -6307,9 +6308,8 @@ msgid "Move Tool"
 msgstr "Flyttaverktyg"
 
 #: app/dialogs/preferences-dialog.c:1597
-#, fuzzy
 msgid "Change current layer or path"
-msgstr "Endast aktuellt lager"
+msgstr "Ändra aktuellt lager eller slinga"
 
 #: app/dialogs/preferences-dialog.c:1610 app/dialogs/preferences-dialog.c:1613
 msgid "Toolbox"
@@ -6758,7 +6758,6 @@ msgid "I_nterpolation:"
 msgstr "I_nterpolation:"
 
 #: app/dialogs/scale-dialog.c:194
-#, fuzzy
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect channels and masks only."
@@ -7031,13 +7030,13 @@ msgstr "Fortsätt"
 #. GPL_PAGE
 #. version number
 #: app/dialogs/user-install-dialog.c:764
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Welcome to\n"
 "The GIMP %d.%d User Installation"
 msgstr ""
 "Välkommen till\n"
-"GIMPs användarinstallation"
+"GIMP %d.%d användarinstallation"
 
 #: app/dialogs/user-install-dialog.c:770
 msgid "Click \"Continue\" to enter the GIMP user installation."
@@ -7089,25 +7088,23 @@ msgstr ""
 
 #: app/dialogs/user-install-dialog.c:809
 msgid "Migrate User Settings"
-msgstr ""
+msgstr "Flytta användarinställningar"
 
 #: app/dialogs/user-install-dialog.c:810
-#, fuzzy
 msgid "Click \"Continue\" to proceed with the user installation."
-msgstr "Tryck på \"Fortsätt\" för att starta GIMPs användarinstallation."
+msgstr "Tryck på \"Fortsätt\" för att genomföra användarinstallationen."
 
 #: app/dialogs/user-install-dialog.c:815
 msgid "It seems you have used GIMP 2.0 before."
-msgstr ""
+msgstr "Det verkar som att du har använt GIMP 2.0 tidigare."
 
 #: app/dialogs/user-install-dialog.c:819
 msgid "_Migrate GIMP 2.0 user settings"
-msgstr ""
+msgstr "_Flytta GIMP 2.0 användarsinställningar"
 
 #: app/dialogs/user-install-dialog.c:822
-#, fuzzy
 msgid "Do a _fresh user installation"
-msgstr "Användarinstallation av GIMP"
+msgstr "Gör en _ny användarinstallation"
 
 #: app/dialogs/user-install-dialog.c:850
 msgid "Personal GIMP Folder"
@@ -7530,52 +7527,51 @@ msgstr "Konstant"
 msgid "Incremental"
 msgstr "Inkrementell"
 
-#: app/pdb/color_cmds.c:137 app/tools/gimpbrightnesscontrasttool.c:85
+#: app/pdb/color_cmds.c:139 app/tools/gimpbrightnesscontrasttool.c:85
 msgid "Brightness-Contrast"
 msgstr "Ljusstyrka-Kontrast"
 
-#: app/pdb/color_cmds.c:399 app/tools/gimpposterizetool.c:78
+#: app/pdb/color_cmds.c:452 app/tools/gimpposterizetool.c:78
 msgid "Posterize"
 msgstr "Posterisering"
 
-#: app/pdb/color_cmds.c:680 app/pdb/color_cmds.c:804
+#: app/pdb/color_cmds.c:733 app/pdb/color_cmds.c:857
 #: app/tools/gimpcurvestool.c:143
 msgid "Curves"
 msgstr "Kurvor"
 
-#: app/pdb/color_cmds.c:928 app/tools/gimpcolorbalancetool.c:96
+#: app/pdb/color_cmds.c:981 app/tools/gimpcolorbalancetool.c:96
 msgid "Color Balance"
 msgstr "Färgbalans"
 
-#: app/pdb/color_cmds.c:1052 app/tools/gimpcolorizetool.c:96
+#: app/pdb/color_cmds.c:1105 app/tools/gimpcolorizetool.c:96
 msgid "Colorize"
 msgstr "Färglägg"
 
-#: app/pdb/color_cmds.c:1329 app/tools/gimphuesaturationtool.c:110
+#: app/pdb/color_cmds.c:1382 app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
 msgstr "Nyans-Mättnad"
 
-#: app/pdb/color_cmds.c:1434 app/tools/gimpthresholdtool.c:92
+#: app/pdb/color_cmds.c:1487 app/tools/gimpthresholdtool.c:92
 msgid "Threshold"
 msgstr "Tröskelvärde"
 
-#: app/pdb/drawable_transform_cmds.c:272
-#, fuzzy
+#: app/pdb/drawable_transform_cmds.c:243
 msgid "Flip..."
-msgstr "Vänder..."
+msgstr "Vänd..."
 
-#: app/pdb/drawable_transform_cmds.c:448 app/pdb/transform_tools_cmds.c:197
+#: app/pdb/drawable_transform_cmds.c:419 app/pdb/transform_tools_cmds.c:197
 #: app/tools/gimpperspectivetool.c:141
 msgid "Perspective..."
 msgstr "Perspektiv..."
 
-#: app/pdb/drawable_transform_cmds.c:958 app/pdb/transform_tools_cmds.c:587
+#: app/pdb/drawable_transform_cmds.c:929 app/pdb/transform_tools_cmds.c:587
 #: app/tools/gimpsheartool.c:158
 msgid "Shearing..."
 msgstr "Lutar..."
 
-#: app/pdb/drawable_transform_cmds.c:1126
-#: app/pdb/drawable_transform_cmds.c:1328 app/pdb/transform_tools_cmds.c:720
+#: app/pdb/drawable_transform_cmds.c:1097
+#: app/pdb/drawable_transform_cmds.c:1299 app/pdb/transform_tools_cmds.c:720
 msgid "2D Transform..."
 msgstr "2d-transform..."
 
@@ -7620,9 +7616,8 @@ msgid "Drawable procedures"
 msgstr "Rityteprocedurer"
 
 #: app/pdb/internal_procs.c:113
-#, fuzzy
 msgid "Transformation procedures"
-msgstr "Transformeringsverktygsprocedurer"
+msgstr "Transformeringsprocedurer"
 
 #: app/pdb/internal_procs.c:116
 msgid "Edit procedures"
@@ -7755,9 +7750,9 @@ msgid "Free Select"
 msgstr "Fri markering"
 
 #: app/plug-in/plug-in.c:543 app/plug-in/plug-in.c:573
-#, fuzzy, c-format
+#, c-format
 msgid "Terminating plug-in: '%s'\n"
-msgstr "Undersöker insticksmodul: \"%s\"\n"
+msgstr "Avslutar insticksmodul: \"%s\"\n"
 
 #: app/plug-in/plug-in.c:720
 #, c-format
@@ -8734,9 +8729,8 @@ msgid "Distance:"
 msgstr "Distans:"
 
 #: app/tools/gimpmoveoptions.c:171
-#, fuzzy
 msgid "Pick a layer or guide"
-msgstr "Välj ett lager eller guide att flytta"
+msgstr "Välj ett lager eller guide"
 
 #: app/tools/gimpmoveoptions.c:172
 msgid "Move the current layer"
@@ -8747,9 +8741,8 @@ msgid "Move selection"
 msgstr "Flytta markering"
 
 #: app/tools/gimpmoveoptions.c:180
-#, fuzzy
 msgid "Pick a path"
-msgstr "Välj en slinga att flytta"
+msgstr "Välj en slinga"
 
 #: app/tools/gimpmoveoptions.c:181
 msgid "Move the current path"
@@ -9628,9 +9621,8 @@ msgid "Event"
 msgstr "Händelse"
 
 #: app/widgets/gimpcontrollereditor.c:513
-#, fuzzy
 msgid "Select Controller Event Action"
-msgstr "Markeringsåtgärder"
+msgstr "Välj händelseåtgärd"
 
 #: app/widgets/gimpcontrollerkeyboard.c:68
 msgid "Key Up (Shift + Control + Alt)"
@@ -10232,14 +10224,14 @@ msgid "pixels/%a"
 msgstr "bildpunkter/%a"
 
 #: app/widgets/gimpsizebox.c:557
-#, fuzzy, c-format
+#, c-format
 msgid "%d x %d dpi"
-msgstr "%d × %d bpi, %s"
+msgstr "%d × %d dpi"
 
 #: app/widgets/gimpsizebox.c:561
-#, fuzzy, c-format
+#, c-format
 msgid "%d dpi"
-msgstr "%d dpi, %s"
+msgstr "%d dpi"
 
 #: app/widgets/gimpstrokeeditor.c:198
 msgid "Line Width:"
@@ -10652,7 +10644,7 @@ msgid "Invalid UTF-8 string in XCF file"
 msgstr "Ogiltig UTF-8-sträng i XCF-fil"
 
 #: app/xcf/xcf-save.c:157 app/xcf/xcf-save.c:167 app/xcf/xcf-save.c:177
-#: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:211 app/xcf/xcf.c:344
+#: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:211 app/xcf/xcf.c:342
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Fel vid sparande av XCF-fil: %s"
@@ -10671,7 +10663,7 @@ msgstr "Kunde inte spola i XCF-fil: %s"
 msgid "GIMP XCF image"
 msgstr "GIMP XCF-bild"
 
-#: app/xcf/xcf.c:284
+#: app/xcf/xcf.c:282
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF-fel: XCF-filversion %d som inte stöds påträffad"
