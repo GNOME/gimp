@@ -28,36 +28,21 @@
 
 #include "plug-in/plug-in.h"
 
-#include "commands.h"
+#include "help-commands.h"
 
-
-/*****  Help  *****/
 
 void
 help_help_cmd_callback (GtkWidget *widget,
-			gpointer   data)
+			gpointer   data,
+                        guint      action)
 {
   gimp_standard_help_func (NULL);
 }
 
 void
 help_context_help_cmd_callback (GtkWidget *widget,
-				gpointer   data)
+				gpointer   data,
+                                guint      action)
 {
   gimp_context_help ();
-}
-
-/*****  Debug  *****/
-
-void
-debug_mem_profile_cmd_callback (GtkWidget *widget,
-                                gpointer   data)
-{
-  extern gboolean gimp_debug_memsize;
-
-  gimp_debug_memsize = TRUE;
-
-  gimp_object_get_memsize (GIMP_OBJECT (data));
-
-  gimp_debug_memsize = FALSE;
 }

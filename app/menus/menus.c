@@ -40,7 +40,6 @@
 #include "buffers-commands.h"
 #include "channels-commands.h"
 #include "colormap-editor-commands.h"
-#include "commands.h"
 #include "data-commands.h"
 #include "dialogs-commands.h"
 #include "documents-commands.h"
@@ -49,6 +48,7 @@
 #include "file-commands.h"
 #include "gradient-editor-commands.h"
 #include "gradients-commands.h"
+#include "help-commands.h"
 #include "image-commands.h"
 #include "layers-commands.h"
 #include "menus.h"
@@ -89,12 +89,15 @@ static void    menus_color_changed          (GimpContext     *context,
                                              GimpItemFactory *item_factory);
 static void    menus_filters_subdirs_to_top (GtkMenu         *menu);
 #ifdef ENABLE_DEBUG_ENTRIES
-static void    menus_debug_recurse_menu     (GtkWidget       *menu,
-                                             gint             depth,
-                                             gchar           *path);
-static void    menus_debug_cmd_callback     (GtkWidget       *widget,
-                                             gpointer         data,
-                                             guint            action);
+static void    menus_debug_recurse_menu       (GtkWidget       *menu,
+                                               gint             depth,
+                                               gchar           *path);
+static void    menus_debug_cmd_callback       (GtkWidget       *widget,
+                                               gpointer         data,
+                                               guint            action);
+static void    menus_mem_profile_cmd_callback (GtkWidget       *widget,
+                                               gpointer         data,
+                                               guint            action);
 #endif  /*  ENABLE_DEBUG_ENTRIES  */
 
 
@@ -212,7 +215,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
     NULL, NULL, NULL },
 
   { { "/File/Debug/Mem Profile", NULL,
-      debug_mem_profile_cmd_callback, 0 },
+      menus_mem_profile_cmd_callback, 0 },
     NULL, NULL, NULL },
   { { "/File/Debug/Dump Items", NULL,
       menus_debug_cmd_callback, 0 },
@@ -248,7 +251,8 @@ static GimpItemFactoryEntry toolbox_entries[] =
     NULL,
     "help/dialogs/help.html", NULL },
   { { N_("/Help/Context Help..."), "<shift>F1",
-      help_context_help_cmd_callback, 0 },
+      help_context_help_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_HELP },
     NULL,
     "help/context_help.html", NULL },
   { { N_("/Help/Tip of the Day..."), NULL,
@@ -2725,6 +2729,20 @@ menus_debug_cmd_callback (GtkWidget *widget,
       g_print ("\n");
     }
 #endif
+}
+
+static void
+menus_mem_profile_cmd_callback (GtkWidget *widget,
+                                gpointer   data,
+                                guint      action)
+{
+  extern gboolean gimp_debug_memsize;
+
+  gimp_debug_memsize = TRUE;
+
+  gimp_object_get_memsize (GIMP_OBJECT (data));
+
+  gimp_debug_memsize = FALSE;
 }
 
 #endif  /*  ENABLE_DEBUG_ENTRIES  */

@@ -20,8 +20,6 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	color-select.h			\
 	colormap-editor-commands.c	\
 	colormap-editor-commands.h	\
-	commands.c			\
-	commands.h			\
 	convert-dialog.c		\
 	convert-dialog.h		\
 	data-commands.c			\
@@ -61,6 +59,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	gui.c				\
 	gui.h				\
 	gui-types.h			\
+	help-commands.c			\
+	help-commands.h			\
 	image-commands.c		\
 	image-commands.h		\
 	info-dialog.c			\

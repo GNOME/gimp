@@ -1,3 +1,13 @@
+2002-03-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/Makefile.am
+	* app/gui/commands.[ch]: removed...
+
+	* app/gui/help-commands.[ch]: ...and added here.
+
+	* app/gui/menus.c: changed accordingly and added the mem_profile
+	debug callback so all debug stuff is in one place.
+
 2002-03-20  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am: moved display after gui to make the build work

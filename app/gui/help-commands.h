@@ -16,17 +16,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __COMMANDS_H__
-#define __COMMANDS_H__
+#ifndef __HELP_COMMANDS_H__
+#define __HELP_COMMANDS_H__
 
 
 void   help_help_cmd_callback         (GtkWidget *widget,
-				       gpointer   data);
+				       gpointer   data,
+                                       guint      action);
 void   help_context_help_cmd_callback (GtkWidget *widget,
-				       gpointer   data);
-
-void   debug_mem_profile_cmd_callback (GtkWidget *widget,
-				       gpointer   data);
+				       gpointer   data,
+                                       guint      action);
 
 
-#endif /* __COMMANDS_H__ */
+#endif /* __HELP_COMMANDS_H__ */
