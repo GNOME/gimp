@@ -15,22 +15,30 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef __CONVERT_H__
-#define __CONVERT_H__
+#ifndef __PALETTE_ENTRIES_H__
+#define __PALETTE_ENTRIES_H__
 
-#include "procedural_db.h"
-#include "gimpimageF.h"
-#include "palette_entries.h"
+#include "gtk/gtk.h"
+#include "general.h"
 
-/*  convert functions  */
-void  convert_to_rgb        (GimpImage *);
-void  convert_to_grayscale  (GimpImage *);
-void  convert_to_indexed    (GimpImage *);
+struct _PaletteEntries {
+  char *name;
+  char *filename;
+  GSList *colors;
+  int n_colors;
+  int changed;
+  GdkPixmap *pixmap;
+};
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord convert_rgb_proc;
-extern ProcRecord convert_grayscale_proc;
-extern ProcRecord convert_indexed_proc;
-extern ProcRecord convert_indexed_palette_proc;
+typedef struct _PaletteEntries _PaletteEntries, *PaletteEntriesP;
 
-#endif  /*  __CONVERT_H__  */
+struct _PaletteEntry {
+  unsigned char color[3];
+  char *name;
+  int position;
+};
+typedef struct _PaletteEntry _PaletteEntry, *PaletteEntryP;
+
+extern GSList * palette_entries_list;
+
+#endif /* __PALETTE_H__ */

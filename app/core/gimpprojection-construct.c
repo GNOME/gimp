@@ -2894,7 +2894,7 @@ gimp_image_composite_bytes (GimpImage *gimage)
   return gimp_image_projection_bytes (gimage);
 }
 
-static TempBuf *
+TempBuf *
 gimp_image_construct_composite_preview (GimpImage *gimage, int width, int height)
 {
   Layer * layer;

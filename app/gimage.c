@@ -53,6 +53,8 @@ gimage_new(int width, int height, GimpImageBaseType base_type)
   
   gimp_set_add(image_context, gimage);
   indexed_palette_update_image_list ();
+
+  palette_import_image_new(gimage);
   return gimage;
 }
 
@@ -107,6 +109,8 @@ gimage_destroy_handler (GimpImage* gimage)
   undo_free (gimage);
 
   indexed_palette_update_image_list ();
+
+  palette_import_image_destroyed(gimage);
 }
 
 static void
@@ -115,6 +119,8 @@ gimage_rename_handler (GimpImage* gimage)
   gdisplays_update_title (gimage);
   lc_dialog_update_image_list ();
   indexed_palette_update_image_list ();
+
+  palette_import_image_renamed(gimage);
 }
 
 static void

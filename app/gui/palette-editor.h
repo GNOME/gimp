@@ -40,26 +40,11 @@ void palette_set_background (int, int, int);
 void palette_set_active_color (int, int, int, int);
 void palette_set_default_colors (void);
 void palette_swap_colors (void);
-
-struct _PaletteEntries {
-  char *name;
-  char *filename;
-  GSList *colors;
-  int n_colors;
-  int changed;
-};
-typedef struct _PaletteEntries _PaletteEntries, *PaletteEntriesP;
-
-struct _PaletteEntry {
-  unsigned char color[3];
-  char *name;
-  int position;
-};
-typedef struct _PaletteEntry _PaletteEntry, *PaletteEntryP;
-
-extern GSList * palette_entries_list;
 void palette_init_palettes (int no_data);
 void palette_free_palettes (void);
+void palette_import_image_new(GimpImage * gimage);
+void palette_import_image_destroyed(GimpImage* gimage);
+void palette_import_image_renamed(GimpImage* gimage);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord palette_get_foreground_proc;

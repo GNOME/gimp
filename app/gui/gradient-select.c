@@ -80,6 +80,8 @@ static Argument    *return_args;
 static void grad_select_close_callback    (GtkWidget *, gpointer);
 static void grad_select_edit_callback  (GtkWidget *, gpointer);
 static void grad_change_callbacks(GradSelectP gsp, gint closing);
+extern void import_palette_grad_update(gradient_t *); /* ALT Hmm... */
+
 
 static ActionAreaItem action_items[2] =
 {
@@ -253,6 +255,7 @@ sel_update_dialogs(gint row, gradient_t *grad)
   if(gradient_select_dialog)
     gtk_clist_set_text(GTK_CLIST(gradient_select_dialog->clist),row,1,grad->name);  
 
+  import_palette_grad_update(grad);
 }
 
 static void
@@ -271,6 +274,7 @@ sel_list_item_update(GtkWidget *widget,
   if(gsp == gradient_select_dialog)
     {
       grad_set_grad_to_name(gsp->grad->name);
+      import_palette_grad_update(gsp->grad);
     }
   else
     {

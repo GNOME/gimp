@@ -20,6 +20,8 @@
 
 #include "procedural_db.h"
 #include "gimpimageF.h"
+#include "palette_entries.h"
+
 /*  convert functions  */
 void  convert_to_rgb        (GimpImage *);
 void  convert_to_grayscale  (GimpImage *);

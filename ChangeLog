@@ -1,3 +1,23 @@
+Fri Dec 18 23:46:11 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
+
+	Changed the palette dialog. New functionality. Better previews. 
+	Can display larger palettes. Can import palettes from images and from 
+	gradients. Fixed colour selection so that the hightlighted
+	square says in sync on redraws.
+	
+	* app/convert.h
+	* app/palette.h
+	* app/palette.c
+	* app/gradient.c
+	* app/gradient_select.c
+	* app/gimage.c
+	* app/gimpimage.c
+	* app/gimpimage.h
+
+	New file:-	
+
+	* app/palette_entries.h
+
 Thu Dec 17 03:50:51 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/Makefile.am: added some missing files

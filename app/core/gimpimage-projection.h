@@ -223,5 +223,6 @@ int             gimp_image_preview_valid          (GimpImage *, ChannelType);
 void            gimp_image_invalidate_preview     (GimpImage *);
 
 void            gimp_image_invalidate_previews    (void);
+TempBuf *       gimp_image_construct_composite_preview (GimpImage *gimage, int width, int height);
 
 #endif
