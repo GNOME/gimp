@@ -316,7 +316,9 @@ parse_gimprc_file2 (char *filename)
   gimp_dir = gimp_directory ();
    printf(" SET GLOBAL variables !!!\n");
   add_gimp_directory_token (gimp_dir);
-
+#ifdef __EMX__
+  add_x11root_token(getenv("X11ROOT"));
+#endif
   parse_buffers_init();
 /*  next_token = -1;*/
 #endif
@@ -389,6 +391,6 @@ main (int argc, char **argv)
 	printf ("ex: %s ideas\n",argv[0]);
 	exit (0);
     }
-    parse_gimp_files(argv[1]); 
+    parse_gimp_files(argv[1]);
 }
 
