@@ -1,3 +1,14 @@
+2003-09-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpcroptool.c: minor cleanups.
+
+	(gimp_crop_tool_modifier_key): s/crop-type/crop-mode/. Fixes tool
+	toggling which was broken after my GimpCropMode change.
+
+	(crop_tool_crop_image): replaced parameter "gboolean crop_layers"
+	by "GimpCropMode crop_mode". Makes its callers simpler and more
+	readable.
+
 2003-09-29  Simon Budig  <simon@gimp.org>
 
 	* app/widgets/gimppreviewrenderervectors.c: Fixed a bad
