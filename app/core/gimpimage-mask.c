@@ -204,11 +204,10 @@ gimp_image_mask_extract (GimpImage    *gimage,
   TileManager       *tiles;
   GimpChannel       *sel_mask;
   PixelRegion        srcPR, destPR, maskPR;
-  guchar             bg[MAX_CHANNELS];
+  guchar             bg_color[MAX_CHANNELS];
   GimpImageBaseType  base_type = GIMP_RGB;
   gint               bytes     = 0;
-  gint               x1, y1;
-  gint               x2, y2;
+  gint               x1, y1, x2, y2;
   gint               off_x, off_y;
   gboolean           non_empty;
 
@@ -266,7 +265,7 @@ gimp_image_mask_extract (GimpImage    *gimage,
   else
     sel_mask = NULL;
 
-  gimp_image_get_background (gimage, drawable, bg);
+  gimp_image_get_background (gimage, drawable, bg_color);
 
   /*  If a cut was specified, and the selection mask is not empty,
    *  push an undo
@@ -277,16 +276,20 @@ gimp_image_mask_extract (GimpImage    *gimage,
   gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
   /*  Allocate the temp buffer  */
-  tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
+  tiles = tile_manager_new (x2 - x1, y2 - y1, bytes);
   tile_manager_set_offsets (tiles, x1 + off_x, y1 + off_y);
 
   /* configure the pixel regions  */
   pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-		     x1, y1, (x2 - x1), (y2 - y1), cut_gimage);
-  pixel_region_init (&destPR, tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
+		     x1, y1,
+                     x2 - x1, y2 - y1,
+                     cut_gimage);
+  pixel_region_init (&destPR, tiles,
+                     0, 0,
+                     x2 - x1, y2 - y1,
+                     TRUE);
 
-  /*  If there is a selection, extract from it  */
-  if (non_empty)
+  if (non_empty) /*  If there is a selection, extract from it  */
     {
       pixel_region_init (&maskPR, GIMP_DRAWABLE (sel_mask)->tiles,
 			 (x1 + off_x), (y1 + off_y), (x2 - x1), (y2 - y1),
@@ -294,7 +297,7 @@ gimp_image_mask_extract (GimpImage    *gimage,
 
       extract_from_region (&srcPR, &destPR, &maskPR,
 			   gimp_drawable_cmap (drawable),
-			   bg, base_type,
+			   bg_color, base_type,
 			   gimp_drawable_has_alpha (drawable), cut_gimage);
 
       if (cut_gimage)
@@ -311,14 +314,13 @@ gimp_image_mask_extract (GimpImage    *gimage,
 	  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
 	}
     }
-  /*  Otherwise, get the entire active layer  */
-  else
+  else /*  Otherwise, get the entire active layer  */
     {
       /*  If the layer is indexed...we need to extract pixels  */
       if (base_type == GIMP_INDEXED && !keep_indexed)
 	extract_from_region (&srcPR, &destPR, NULL,
 			     gimp_drawable_cmap (drawable),
-			     bg, base_type,
+			     bg_color, base_type,
 			     gimp_drawable_has_alpha (drawable), FALSE);
       /*  If the layer doesn't have an alpha channel, add one  */
       else if (bytes > srcPR.bytes)
