@@ -931,11 +931,7 @@ tools/pdbgen/Makefile
 tips/Makefile],
 [
    chmod +x gimptool-1.4
-   sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile
-   sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile
-   sed -e "/POTFILES =/r plug-ins/perl/po/POTFILES" plug-ins/perl/po/Makefile.in > plug-ins/perl/po/Makefile
-   sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile
-   sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile
+   sed -e "s/^     ..\/..\/..\//     ..\//" plug-ins/perl/po/Makefile > plug-ins/perl/po/Makefile.eek && mv plug-ins/perl/po/Makefile.eek plug-ins/perl/po/Makefile
    case "$CONFIG_FILES" in
    *plug-ins/perl*)
       if test -f plug-ins/perl/config.status; then

@@ -6,7 +6,7 @@ to have the following packages installed:
 	- GNU autoconf 2.13
 	- GNU automake 1.4
 	- GNU libtool 1.2d
-	- GNU gettext 10.35
+	- GNU gettext 10.38
 		Available in ftp://alpha.gnu.org/gnu
 
 These should be available by ftp from prep.ai.mit.edu or any of the
