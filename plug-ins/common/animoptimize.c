@@ -74,7 +74,7 @@ static void run(char *name,
 		int *nreturn_vals,
 		GParam ** return_vals);
 
-static        void do_optimizations   (void);
+static      gint32 do_optimizations   (GRunModeType run_mode);
 /*static         int parse_ms_tag       (char *str);*/
 static DisposeType parse_disposal_tag (char *str);
 
@@ -120,9 +120,12 @@ static void query()
     {PARAM_IMAGE, "image", "Input image"},
     {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
   };
-  static GParamDef *return_vals = NULL;
+  static GParamDef return_args[] =
+  {
+    {PARAM_IMAGE, "result", "Resulting image"},
+  };
   static int nargs = sizeof(args) / sizeof(args[0]);
-  static int nreturn_vals = 0;
+  static int nreturn_args = sizeof(return_args) / sizeof(return_args[0]);
 
   INIT_I18N();
 
@@ -136,8 +139,8 @@ static void query()
 			 N_("<Image>/Filters/Animation/Animation Optimize"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
-			 nargs, nreturn_vals,
-			 args, return_vals);
+			 nargs, nreturn_args,
+			 args, return_args);
 
   gimp_install_procedure("plug_in_animationunoptimize",
 			 _("This plugin 'simplifies' a GIMP layer-based"
@@ -152,18 +155,18 @@ static void query()
 			 N_("<Image>/Filters/Animation/Animation UnOptimize"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
-			 nargs, nreturn_vals,
-			 args, return_vals);
+			 nargs, nreturn_args,
+			 args, return_args);
 }
 
 static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
 		GParam ** return_vals)
 {
-  static GParam values[1];
+  static GParam values[2];
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
 
-  *nreturn_vals = 1;
+  *nreturn_vals = 2;
   *return_vals = values;
 
   run_mode = param[0].data.d_int32;
@@ -188,7 +191,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
     {
       image_id = param[1].data.d_image;
       
-      do_optimizations();
+      new_image_id = do_optimizations(run_mode);
       
       if (run_mode != RUN_NONINTERACTIVE)
 	gimp_displays_flush();
@@ -196,6 +199,9 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
   
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
+
+  values[1].type = PARAM_IMAGE;
+  values[1].data.d_image = new_image_id;
 }
 
 
@@ -267,8 +273,8 @@ total_alpha(guchar* imdata, guint32 numpix, guchar bytespp)
   memset(imdata, 0, numpix*bytespp);
 }
 
-static void
-do_optimizations(void)
+static gint32
+do_optimizations(GRunModeType run_mode)
 {
   GPixelRgn pixel_rgn;
   static guchar* rawframe = NULL;
@@ -832,7 +838,8 @@ do_optimizations(void)
 			    ((double)total_frames));
     }
 
-  gimp_display_new (new_image_id);
+    if (run_mode != RUN_NONINTERACTIVE)
+       gimp_display_new (new_image_id);
 
   g_free(rawframe);
   rawframe = NULL;
@@ -842,6 +849,8 @@ do_optimizations(void)
   this_frame = NULL;
   g_free(opti_frame);
   opti_frame = NULL;
+
+  return new_image_id;
 }
 
 
