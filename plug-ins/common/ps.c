@@ -2984,6 +2984,7 @@ save_dialog (void)
   gtk_widget_show (dialog);
 
   gtk_main ();
+  gimp_help_free ();
   gdk_flush ();
 
   psvals.level = (vals->level) ? 2 : 1;

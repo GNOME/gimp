@@ -552,6 +552,7 @@ sparkle_dialog (void)
   gtk_widget_show (dlg);
 
   gtk_main ();
+  gimp_help_free ();
   gdk_flush ();
 
   return sint.run;

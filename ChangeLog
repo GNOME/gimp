@@ -1,3 +1,16 @@
+2002-04-12  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/gtm.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/wind.c
+	* plug-ins/maze/maze_face.c
+	* plug-ins/sel2path/sel2path.c
+	* plug-ins/sel2path/sel2path_adv_dialog.c: applied a patch from 
+	<iccii@hotmail.com> that adds calls to gimp_help_free() even though I 
+	think that omitting gimp_help_free() is tolerable lazyness (#76984).
+
 2002-04-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-crop.c: reordered some lines, no logic

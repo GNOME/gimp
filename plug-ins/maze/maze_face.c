@@ -339,6 +339,7 @@ maze_dialog (void)
   gtk_widget_show_all (dlg);
 
   gtk_main ();
+  gimp_help_free ();
   gdk_flush ();
 
   return maze_run;

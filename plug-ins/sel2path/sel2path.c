@@ -322,6 +322,7 @@ sel2path_dialog (SELVALS *sels)
   retVal = FALSE;
 
   gimp_ui_init ("sel2path", FALSE);
+  gimp_help_init ();
 
   dlg = gimp_dialog_new (_("Sel2Path Advanced Settings"), "sel2path",
 			 gimp_standard_help_func, "filters/sel2path.html",
@@ -351,6 +352,7 @@ sel2path_dialog (SELVALS *sels)
   gtk_widget_show (dlg);
 
   gtk_main ();
+  gimp_help_free ();
 
   return retVal;
 }

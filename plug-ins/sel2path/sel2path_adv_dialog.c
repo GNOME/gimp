@@ -87,8 +87,6 @@ dialog_create_selection_area (SELVALS *sels)
   GtkObject *adj;
   gint       row;
 
-  gimp_help_init ();
-
   table = gtk_table_new (20, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
