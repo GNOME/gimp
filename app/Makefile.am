@@ -34,6 +34,8 @@ gimp_SOURCES = \
 	actionarea.h		\
 	airbrush.c		\
 	airbrush.h		\
+	airbrush_blob.c		\
+	airbrush_blob.h		\
 	app_procs.c		\
 	app_procs.h		\
 	appenv.h		\
@@ -417,7 +419,9 @@ gimp_SOURCES = \
 	vector2d.c		\
 	vector2d.h		\
 	xcf.c			\
-	xcf.h
+	xcf.h			\
+	xinput_airbrush.c	\
+	xinput_airbrush.h
 
 EXTRA_DIST = \
 	makefile.cygwin		\

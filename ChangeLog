@@ -1,3 +1,16 @@
+Tue Sep  7 03:15:20 CEST 1999 Olof S Kylander <olof@frozenriver.com>
+
+	* app/airbrush_blob.[ch] new file
+	* app/xinput_airbrush.[ch] new file
+	* gimp/app/Makefile.am
+	* gimp/app/pixmaps2.h
+	* gimp/app/tool_options.c
+	* gimp/app/tools.c
+	* gimp/app/toolsF.h
+
+	Added my far from finished xinput airbrush tool please read 
+	my dev-mail about it.
+
 Tue Sep  7 03:16:56 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* configure.in: build the Makefile in plug-ins/gflare/gflares.

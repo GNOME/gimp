@@ -972,3 +972,35 @@ static char *measure_bits [] =
   "....a............a....",
   "......................"
 };
+/*  GIMP icon image format -- S. Kimball, P. Mattis  */
+/*  Image name: xinput_airbrush  */
+
+
+#define xinput_airbrush_width 22
+#define xinput_airbrush_height 22
+static char *xinput_airbrush_bits [] =
+{
+  "......................",
+  "........aaaaaa........",
+  ".......adddddda.......",
+  "......affffffffa......",
+  ".......dddddddd.......",
+  "......affffffffa......",
+  ".......daaadddd.......",
+  "......affafffffa......",
+  ".......afaffffa.......",
+  "..aaaaaaaaaaaaaaaaaa..",
+  ".aahhhhhhaaaaaaaaaaaa.",
+  ".aaggggggaaaaaaaaaaaaa",
+  "..aaaaaaaaaaaaaaaaaaa.",
+  "......adeagggeda......",
+  ".....addeagggedda.....",
+  "....aadeeaaageedaa....",
+  "....acdegggaggedca....",
+  "...aaccegaagggeccaa...",
+  "...aaccegaggggeccaa...",
+  "...aaccegaaaggeccaa...",
+  "...aaccegggaggeccaa...",
+  "......................"
+};               
+
