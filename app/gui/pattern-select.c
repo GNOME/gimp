@@ -20,13 +20,16 @@
 #include <string.h>
 #include "appenv.h"
 #include "actionarea.h"
+#include "canvas.h"
 #include "patterns.h"
 #include "pattern_select.h"
 #include "buildmenu.h"
 #include "colormaps.h"
 #include "disp_callbacks.h"
 #include "errors.h"
+#include "lookup_tables.h"
 #include "paint_funcs.h"
+#include "tag.h"
 
 
 #define MIN_CELL_SIZE    32
@@ -63,6 +66,24 @@ static void pattern_select_refresh_callback  (GtkWidget *, gpointer);
 static gint pattern_select_events            (GtkWidget *, GdkEvent *, PatternSelectP);
 static gint pattern_select_resize            (GtkWidget *, GdkEvent *, PatternSelectP);
 static void pattern_select_scroll_update     (GtkAdjustment *, gpointer);
+
+/* 8bit channels data functions */
+static void display_pattern_get_row_u8     (guchar *, Canvas *, gint, gint);
+
+/* 16bit channels data functions */
+static void display_pattern_get_row_u16    (guchar *, Canvas *, gint, gint);
+
+/* float channels data functions */
+static void display_pattern_get_row_float  (guchar *, Canvas *, gint, gint);
+
+/* Convert row of pattern to 8bit display */
+typedef void  (*DisplayPatternGetRowFunc) (guchar *, Canvas *, gint, gint);
+static DisplayPatternGetRowFunc display_pattern_get_row_funcs[3] =
+{
+  display_pattern_get_row_u8,
+  display_pattern_get_row_u16,
+  display_pattern_get_row_float
+};
 
 /*  the action area structure  */
 static ActionAreaItem action_items[2] =
@@ -216,6 +237,10 @@ pattern_popup_open (PatternSelectP psp,
   gint x_org, y_org;
   gint scr_w, scr_h;
   gchar *src, *buf;
+  gint pattern_width, pattern_height;
+  gint rowbytes;
+  Tag pattern_tag;
+  Precision pattern_prec;
 
   /* make sure the popup exists and is not visible */
   if (psp->pattern_popup == NULL)
@@ -240,36 +265,27 @@ pattern_popup_open (PatternSelectP psp,
   gdk_window_get_origin (psp->preview->window, &x_org, &y_org);
   scr_w = gdk_screen_width ();
   scr_h = gdk_screen_height ();
-  x = x_org + x - pattern->mask->width * 0.5;
-  y = y_org + y - pattern->mask->height * 0.5;
+  pattern_width = canvas_width (pattern->mask_canvas);
+  pattern_height = canvas_height (pattern->mask_canvas);
+  x = x_org + x - pattern_width * 0.5;
+  y = y_org + y - pattern_height * 0.5;
   x = (x < 0) ? 0 : x;
   y = (y < 0) ? 0 : y;
-  x = (x + pattern->mask->width > scr_w) ? scr_w - pattern->mask->width : x;
-  y = (y + pattern->mask->height > scr_h) ? scr_h - pattern->mask->height : y;
-  gtk_preview_size (GTK_PREVIEW (psp->pattern_preview), pattern->mask->width, pattern->mask->height);
+  x = (x + pattern_width > scr_w) ? scr_w - pattern_width : x;
+  y = (y + pattern_height > scr_h) ? scr_h - pattern_height : y;
+  gtk_preview_size (GTK_PREVIEW (psp->pattern_preview), pattern_width, pattern_height);
   gtk_widget_popup (psp->pattern_popup, x, y);
 
   /*  Draw the pattern  */
-  buf = g_new (gchar, pattern->mask->width * 3);
-  src = temp_buf_data (pattern->mask);
-  for (y = 0; y < pattern->mask->height; y++)
+  buf = g_new (gchar, pattern_width * 3);
+  pattern_tag = canvas_tag (pattern->mask_canvas);
+  pattern_prec = tag_precision (pattern_tag);
+  src = canvas_portion_data (pattern->mask_canvas,0,0);
+  rowbytes = canvas_portion_rowstride (pattern->mask_canvas,0,0);
+  for (y = 0; y < pattern_height; y++)
     {
-      if (pattern->mask->bytes == 1)
-	for (x = 0; x < pattern->mask->width; x++)
-	  {
-	    buf[x*3+0] = src[x];
-	    buf[x*3+1] = src[x];
-	    buf[x*3+2] = src[x];
-	  }
-      else
-	for (x = 0; x < pattern->mask->width; x++)
-	  {
-	    buf[x*3+0] = src[x*3+0];
-	    buf[x*3+1] = src[x*3+1];
-	    buf[x*3+2] = src[x*3+2];
-	  }
-      gtk_preview_draw_row (GTK_PREVIEW (psp->pattern_preview), buf, 0, y, pattern->mask->width);
-      src += pattern->mask->width * pattern->mask->bytes;
+      (*display_pattern_get_row_funcs [pattern_prec-1]) (buf, pattern->mask_canvas, y, pattern_width); 
+      gtk_preview_draw_row (GTK_PREVIEW (psp->pattern_preview), buf, 0, y, pattern_width);
     }
   g_free(buf);
   
@@ -290,29 +306,36 @@ display_pattern (PatternSelectP psp,
 		 int            col,
 		 int            row)
 {
-  TempBuf * pattern_buf;
-  unsigned char * src, *s;
-  unsigned char * buf, *b;
+  Canvas *pattern_buf_canvas = pattern->mask_canvas;
+  unsigned char * buf;
   int cell_width, cell_height;
   int width, height;
-  int rowstride;
   int offset_x, offset_y;
   int yend;
   int ystart;
-  int i, j;
-
+  int i;
+  Tag pattern_tag = canvas_tag (pattern->mask_canvas);
+  Precision pattern_prec = tag_precision (pattern_tag);
+  Alpha pattern_alpha = tag_alpha (pattern_tag);
+  
+  if ( pattern_alpha == ALPHA_YES )
+    {
+      g_warning("Pattern %s has alpha channel. Cant display.\n", pattern->name);
+      return;
+    }
+  
+  /*  get a 8bit channels buffer for display */
   buf = (unsigned char *) g_malloc (sizeof (char) * psp->cell_width * 3);
-
-  pattern_buf = pattern->mask;
 
   /*  calculate the offset into the image  */
   cell_width = psp->cell_width - 2*MARGIN_WIDTH;
   cell_height = psp->cell_height - 2*MARGIN_HEIGHT;
-  width = (pattern_buf->width > cell_width) ? cell_width :
-    pattern_buf->width;
-  height = (pattern_buf->height > cell_height) ? cell_height :
-    pattern_buf->height;
-
+  
+  width = (canvas_width (pattern_buf_canvas) > cell_width) ? cell_width :
+    canvas_width (pattern_buf_canvas);
+  height = (canvas_height(pattern_buf_canvas) > cell_height) ? cell_height :
+    canvas_height(pattern_buf_canvas);
+  
   offset_x = col * psp->cell_width + ((cell_width - width) >> 1) + MARGIN_WIDTH;
   offset_y = row * psp->cell_height + ((cell_height - height) >> 1)
     - psp->scroll_offset + MARGIN_HEIGHT;
@@ -320,37 +343,131 @@ display_pattern (PatternSelectP psp,
   ystart = BOUNDS (offset_y, 0, psp->preview->requisition.height);
   yend = BOUNDS (offset_y + height, 0, psp->preview->requisition.height);
 
-  /*  Get the pointer into the pattern mask data  */
-  rowstride = pattern_buf->width * pattern_buf->bytes;
-  src = temp_buf_data (pattern_buf) + (ystart - offset_y) * rowstride;
-
+  /*  Fill the pattern display buffer and display it */ 
   for (i = ystart; i < yend; i++)
     {
-      s = src;
-      b = buf;
-
-      if (pattern_buf->bytes == 1)
-	for (j = 0; j < width; j++)
-	  {
-	    *b++ = *s;
-	    *b++ = *s;
-	    *b++ = *s++;
-	  }
-      else
-	for (j = 0; j < width; j++)
-	  {
-	    *b++ = *s++;
-	    *b++ = *s++;
-	    *b++ = *s++;
-	  }
-
+    (*display_pattern_get_row_funcs [pattern_prec-1]) (buf, pattern_buf_canvas, 
+						       i - offset_y , width); 
       gtk_preview_draw_row (GTK_PREVIEW (psp->preview), buf, offset_x, i, width);
-
-      src += rowstride;
     }
-
   g_free (buf);
 }
+
+static void  
+display_pattern_get_row_u8(  
+                        guchar *buf,
+			Canvas *pattern_canvas,
+			gint row,
+                        gint width
+		  )
+{
+  Tag tag = canvas_tag (pattern_canvas);
+  gint channels_per_row = tag_num_channels (tag) * canvas_width (pattern_canvas);
+  guint8 * s = (guint8*)canvas_portion_data (pattern_canvas,0,0) + row * channels_per_row;
+  guchar *b = buf; 
+  gint i;
+  Format f = tag_format (canvas_tag (pattern_canvas));
+  
+  switch (f)
+    {
+    case FORMAT_RGB:
+      for (i = 0; i < width; i++)
+	{
+	  *b++ = *s++;
+	  *b++ = *s++;
+	  *b++ = *s++;
+	}
+      break;	
+    case FORMAT_GRAY:
+      for (i = 0; i < width; i++)
+        {
+	  *b++ = *s;
+	  *b++ = *s;
+	  *b++ = *s++;
+        }
+      break;	
+    default:
+      break;
+    }	
+}
+
+static void  
+display_pattern_get_row_u16(  
+                        guchar *buf,
+			Canvas *pattern_canvas,
+			gint row,
+                        gint width
+		  )
+{
+  Tag tag = canvas_tag (pattern_canvas);
+  gint channels_per_row = tag_num_channels (tag) * canvas_width (pattern_canvas);
+  guint16 * s = (guint16*)canvas_portion_data (pattern_canvas,0,0) + row * channels_per_row;
+  guchar *b = buf; 
+  gint i;
+  Format f = tag_format (canvas_tag (pattern_canvas));
+  
+  switch (f)
+    {
+    case FORMAT_RGB:
+      for (i = 0; i < width; i++)
+	{
+	  *b++ = g_lookup_16_to_8[*s++];
+	  *b++ = g_lookup_16_to_8[*s++];
+	  *b++ = g_lookup_16_to_8[*s++];
+	}
+      break;	
+    case FORMAT_GRAY:
+      for (i = 0; i < width; i++)
+        {
+	  *b++ = g_lookup_16_to_8[*s];
+	  *b++ = g_lookup_16_to_8[*s];
+	  *b++ = g_lookup_16_to_8[*s++];
+        }
+      break;	
+    default:
+      break;
+    }	
+}
+
+
+static void  
+display_pattern_get_row_float(  
+                        guchar *buf,
+			Canvas *pattern_canvas,
+			gint row,
+                        gint width
+		  )
+{
+  Tag tag = canvas_tag (pattern_canvas);
+  gint channels_per_row = tag_num_channels (tag) * canvas_width (pattern_canvas);
+  gfloat * s = (gfloat*)canvas_portion_data (pattern_canvas,0,0) + row * channels_per_row;
+  guchar *b = buf; 
+  gint i;
+  Format f = tag_format (canvas_tag (pattern_canvas));
+  
+  switch (f)
+    {
+    case FORMAT_RGB:
+      for (i = 0; i < width; i++)
+	{
+	  *b++ = *s++ * 255.0 + .5;
+	  *b++ = *s++ * 255.0 + .5;
+	  *b++ = *s++ * 255.0 + .5;
+	}
+      break;	
+    case FORMAT_GRAY:
+      for (i = 0; i < width; i++)
+        {
+	  *b++ = *s * 255.0 + .5;
+	  *b++ = *s * 255.0 + .5;
+	  *b++ = *s++ * 255.0 + .5;
+        }
+      break;	
+    default:
+      break;
+    }	
+}
+
 
 static void
 display_setup (PatternSelectP psp)
@@ -532,7 +649,7 @@ update_active_pattern_field (PatternSelectP psp)
   gtk_label_set (GTK_LABEL (psp->pattern_name), pattern->name);
 
   /*  Set pattern size  */
-  sprintf (buf, "(%d X %d)", pattern->mask->width, pattern->mask->height);
+  sprintf (buf, "(%d X %d)", canvas_width (pattern->mask_canvas), canvas_height (pattern->mask_canvas));
   gtk_label_set (GTK_LABEL (psp->pattern_size), buf);
 }
 
@@ -619,8 +736,8 @@ pattern_select_events (GtkWidget      *widget,
 	      /*  Make this pattern the active pattern  */
 	      select_pattern (pattern);
 	      /*  Show the pattern popup window if the pattern is too large  */
-	      if (pattern->mask->width > psp->cell_width ||
-		  pattern->mask->height > psp->cell_height)
+	      if (canvas_width (pattern->mask_canvas) > psp->cell_width ||
+		  canvas_height (pattern->mask_canvas) > psp->cell_height)
 		pattern_popup_open (psp, bevent->x, bevent->y, pattern);
 	    }
 	}

@@ -1307,28 +1307,84 @@ clone_motion_pattern  (
   gimage = drawable_gimage (drawable);
   if (gimage)
     {
-      PixelArea destPR;
+      PixelArea painthit_area;
       void * pag;
+      gint pattern_width = canvas_width (pattern->mask_canvas);
+      gint pattern_height = canvas_height (pattern->mask_canvas);
 
-      pixelarea_init (&destPR, painthit, NULL,
+      pixelarea_init (&painthit_area, painthit, NULL,
                       0, 0, 0, 0, TRUE);
-      
-      for (pag = pixelarea_register (1, &destPR);
+      for (pag = pixelarea_register (1, &painthit_area);
            pag != NULL;
            pag = pixelarea_process (pag))
         {
-#if 0
-          guchar * d = destPR.data;
-          int y1;
-          
-          for (y1 = 0; y1 < destPR.h; y1++)
-            {
-              clone_line_pattern (gimage, drawable, pattern, d,
-                                  x, y + y1,
-                                  destPR.bytes, destPR.w);
-              d += destPR.rowstride;
-            }
-#endif
+	   PixelArea painthit_portion_area, pat_area;
+	   GdkRectangle pat_rect;
+	   GdkRectangle painthit_portion_rect;
+	   GdkRectangle r;
+	   gint x_pat, y_pat;
+	   gint x_pat_start, y_pat_start;
+	   gint x_portion, y_portion, w_portion, h_portion;
+	   gint extra;
+	   x_portion = pixelarea_x ( &painthit_area );
+	   y_portion = pixelarea_y ( &painthit_area );
+	   w_portion = pixelarea_width ( &painthit_area );
+	   h_portion = pixelarea_height ( &painthit_area );
+	   
+           if (x + x_portion >= 0)
+             extra = (x + x_portion) % pattern_width;
+           else
+	   {
+	     extra = (x + x_portion) % pattern_width;
+	     extra += pattern_width;
+	   }
+	   x_pat_start = (x + x_portion) - extra; 
+           
+	   if (y + y_portion >= 0)
+             extra = (y + y_portion) % pattern_height;
+           else
+	   {
+	     extra = (y + y_portion) % pattern_height;
+	     extra += pattern_height;
+	   }
+	   y_pat_start = (y + y_portion) - extra;
+	   
+	   x_pat = x_pat_start;
+	   y_pat = y_pat_start;
+	   /* tile the portion with the pattern */ 
+	   while (1)
+	   {
+	     pat_rect.x = x_pat;
+	     pat_rect.y = y_pat;
+	     pat_rect.width = pattern_width;
+	     pat_rect.height = pattern_height;
+
+	     painthit_portion_rect.x =  x + x_portion;
+	     painthit_portion_rect.y =  y + y_portion;
+	     painthit_portion_rect.width = w_portion;
+	     painthit_portion_rect.height = h_portion;
+	     
+	     gdk_rectangle_intersect (&pat_rect, &painthit_portion_rect, &r);
+
+	     pixelarea_init ( &painthit_portion_area, painthit, NULL, 
+				r.x - painthit_portion_rect.x, 
+				r.y - painthit_portion_rect.y, 
+				r.width, r.height, TRUE);	 
+	     pixelarea_init ( &pat_area, pattern->mask_canvas, NULL, 
+				r.x - pat_rect.x, r.y - pat_rect.y, 
+				r.width, r.height, FALSE);	 
+	     
+	     copy_area (&pat_area, &painthit_portion_area);
+	     
+             x_pat += pattern_width;
+	     if (x_pat >= (x + x_portion) + w_portion)
+	     {
+		x_pat = x_pat_start;
+		y_pat += pattern_height;
+		if ( y_pat >= (y + y_portion) + h_portion )
+		  break;
+	     }
+	   }
         }
       rc = TRUE;
     }

@@ -22,6 +22,7 @@
 #include "temp_buf.h"
 #include "procedural_db.h"
 
+struct _Canvas;
 typedef struct _GPattern  GPattern, * GPatternP;
 
 struct _GPattern
@@ -30,6 +31,7 @@ struct _GPattern
   char *     name;         /*  pattern's name--for pattern selection dialog  */
   int        index;        /*  pattern's index...                            */
   TempBuf *  mask;         /*  the actual mask...                            */
+  struct _Canvas *  mask_canvas;  /*  the actual mask as canvas                  */
 };
 
 /*  function declarations  */

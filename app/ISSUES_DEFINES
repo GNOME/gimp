@@ -8,15 +8,11 @@ BRUSHES_C_2_cw
 I dont know if there is an analogue to temp_buf_swap to put here. 
 There are a number of these in this file.
 BRUSHES_C_3_cw
-This is a hack for version 2 of the gbr file. We'll have
-version 2 work with 16bit/float but it will still put
-the bytes in this field. Im working on straightening
-this out.
+This is a hack for version 1 and 2 of the gbr file.
 BRUSHES_C_4_cw
-Just make some default brushes if none found. This is 
-temp --just to see some 16bit/brushes.
+Make some square solid brushes for debugging paint_funcs.
 BRUSHES_C_5_cw
-This should be a check for the compiled data types.
+A check for data types. Should be done differently.
 
 
 BRUSH_SELECT_C_1_cw
@@ -26,15 +22,7 @@ this will only display gray-scale brushes.
 
 
 BRUSH_HEADER_C_2_cw
-Because I changed the name of this field and since gbr plugin
-actually includes this file (egads!!) I have to change
-the gbr.c plugin. Well I have to alter gbr to
-work with 16bit tags anyway...I didnt change the FILE_VERSION
-of gbrs yet though. Once the gbr.c actually saves 
-the real tag (not just bytes) we'll have to change the
-FILE_VERSION. Someone else may have plans about all this
--we'll have to check.
-
+FILE_VERSION changed to 3 for Brushes in gimp16.
 
 DRAWABLE_CMDS_C_1_cw
 Here we get the drawable tag and convert it to a plugin

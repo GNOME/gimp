@@ -39,7 +39,6 @@
 #include "pixelarea.h"
 #include "tag.h"
 
-
 /*  global variables  */
 GBrushP             active_brush = NULL;
 GSList *            brush_list = NULL;
@@ -101,23 +100,34 @@ brushes_init ()
   list = brush_list;
   
 #define BRUSHES_C_4_cw
-  /* Make defaults if no valid brushes in brush_path */
-  if (!list)
+  /* Make some extra brushes for debugging paint_funcs */
+#if 0
   {
     GBrushP brush;
     brush = create_default_brush(1,1);
     brush_list = insert_brush_in_list(brush_list, brush);
     brush = create_default_brush(2,2);
-    active_brush = brush;
-    have_default_brush = 1;
+    brush_list = insert_brush_in_list(brush_list, brush);
+    brush = create_default_brush(3,3);
     brush_list = insert_brush_in_list(brush_list, brush);
     brush = create_default_brush(5,5);
     brush_list = insert_brush_in_list(brush_list, brush);
     brush = create_default_brush(10,10);
     brush_list = insert_brush_in_list(brush_list, brush);
+    brush = create_default_brush(20,20);
+    brush_list = insert_brush_in_list(brush_list, brush);
+    brush = create_default_brush(30,30);
+    brush_list = insert_brush_in_list(brush_list, brush);
     brush = create_default_brush(40,40);
     brush_list = insert_brush_in_list(brush_list, brush);
+    brush = create_default_brush(50,50);
+    brush_list = insert_brush_in_list(brush_list, brush);
+    brush = create_default_brush(100,100);
+    brush_list = insert_brush_in_list(brush_list, brush);
+    brush = create_default_brush(200,200);
+    brush_list = insert_brush_in_list(brush_list, brush);
   }
+#endif
   
   /*  assign indexes to the loaded brushes  */
   while (list) {
@@ -250,7 +260,6 @@ load_brush(char *filename)
 
   brush->filename = g_strdup (filename);
   brush->name = NULL;
-  brush->mask = NULL;
   brush->mask_canvas = NULL;
 
   /*  Open the requested file  */
@@ -520,8 +529,8 @@ brushes_get_brush_invoker (Argument *args)
   if (success)
     {
       return_args[1].value.pdb_pointer = g_strdup (brushp->name);
-      return_args[2].value.pdb_int = brushp->mask->width;
-      return_args[3].value.pdb_int = brushp->mask->height;
+      return_args[2].value.pdb_int = canvas_width (brushp->mask_canvas);
+      return_args[3].value.pdb_int = canvas_height (brushp->mask_canvas);
       return_args[4].value.pdb_int = brushp->spacing;
     }
 

@@ -20,7 +20,7 @@
 
 typedef struct _PatternHeader PatternHeader;
 
-#define FILE_VERSION   1
+#define FILE_VERSION   2
 #define GPATTERN_MAGIC   (('G' << 24) + ('P' << 16) + ('A' << 8) + ('T' << 0))
 #define sz_PatternHeader (sizeof (PatternHeader))
 
@@ -32,7 +32,7 @@ struct _PatternHeader
   unsigned int   version;      /*  pattern file version #  */
   unsigned int   width;        /*  width of pattern  */
   unsigned int   height;       /*  height of pattern  */
-  unsigned int   bytes;        /*  depth of pattern in bytes  */
+  unsigned int   type;        /*  = bpp in version 1,  but layer type in version >=2 */
   unsigned int   magic_number; /*  GIMP pattern magic number  */
 };
 

@@ -23,6 +23,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include "appenv.h"
+#include "canvas.h"
 #include "colormaps.h"
 #include "datafiles.h"
 #include "patterns.h"
@@ -34,6 +35,7 @@
 #include "general.h"
 #include "gimprc.h"
 #include "menus.h"
+#include "tag.h"
 
 
 /*  global variables  */
@@ -157,6 +159,8 @@ load_pattern (char *filename)
   PatternHeader header;
   unsigned int * hp;
   int i;
+  gint bytes; 
+  Tag tag;
 
   pattern = (GPatternP) g_malloc (sizeof (GPattern));
 
@@ -196,8 +200,20 @@ load_pattern (char *filename)
 	  return;
 	}
     }
+  
+  if (header.version == 1)
+    {
+      /* If its version 1 the type field contains just
+         the number of bytes and must be converted to a drawable type. */    
+#define PATTERNS_C_1_cw
+      if (header.type == 1)    
+ 	header.type = GRAY_GIMAGE;	   
+      else if (header.type == 3)
+        header.type = RGB_GIMAGE;	   
+
+    }
   /*  Check for correct version  */
-  if (header.version != FILE_VERSION)
+  else if (header.version != FILE_VERSION)
     {
       warning ("Unknown GIMP version #%d in \"%s\"\n", header.version,
 	       filename);
@@ -206,8 +222,27 @@ load_pattern (char *filename)
       return;
     }
 
+  tag = tag_from_drawable_type ( header.type );
+
+#define PATTERNS_C_2_cw
+#ifdef U8_SUPPORT
+     if (tag_precision (tag) != PRECISION_U8 )
+#elif U16_SUPPORT
+     if (tag_precision (tag) != PRECISION_U16 )
+#elif FLOAT_SUPPORT 
+     if (tag_precision (tag) != PRECISION_FLOAT )
+#endif
+     { 
+	  fclose (fp);
+	  free_pattern (pattern);
+	  return;
+     }
+  
   /*  Get a new pattern mask  */
-  pattern->mask = temp_buf_new (header.width, header.height, header.bytes, 0, 0, NULL);
+  pattern->mask_canvas = canvas_new ( tag, 
+					header.width,
+					header.height,
+					STORAGE_FLAT );					
 
   /*  Read in the pattern name  */
   if ((bn_size = (header.header_size - sz_PatternHeader)))
@@ -224,17 +259,21 @@ load_pattern (char *filename)
   else
     pattern->name = g_strdup ("Unnamed");
 
+  /* ref the canvas to allocate memory */
+  canvas_portion_ref( pattern->mask_canvas,0,0); 
+  
   /*  Read the pattern mask data  */
-  /*  Read the image data  */
-  if ((fread (temp_buf_data (pattern->mask), 1,
-	      header.width * header.height * header.bytes, fp)) <
-      header.width * header.height * header.bytes)
-    warning ("GIMP pattern file appears to be truncated.");
 
+  /*  Read the brush mask data  */
+  bytes = tag_bytes (tag); 
+  if ((fread (canvas_portion_data (pattern->mask_canvas,0,0), 1, header.width * header.height * bytes, fp)) <
+      header.width * header.height * bytes)
+    warning ("GIMP pattern file appears to be truncated.");
+  
+  canvas_portion_unref (pattern->mask_canvas,0,0); 
   /*  Clean up  */
   fclose (fp);
 
-  /*temp_buf_swap (pattern->mask);*/
 
   pattern_list = insert_pattern_in_list(pattern_list, pattern);
 

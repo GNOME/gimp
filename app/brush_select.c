@@ -69,17 +69,17 @@ static void preview_scroll_update        (GtkAdjustment *, gpointer);
 static void opacity_scale_update         (GtkAdjustment *, gpointer);
 static void spacing_scale_update         (GtkAdjustment *, gpointer);
 
-/* static 8bit channel data functions */
-static void display_brush_get_row_u8     (guchar *, guchar *, gint);
+/* 8bit channels data functions */
+static void display_brush_get_row_u8     (guchar *, Canvas *, gint, gint);
 
-/* static 16bit channel data functions */
-static void display_brush_get_row_u16    (guchar *, guchar *, gint);
+/* 16bit channels data functions */
+static void display_brush_get_row_u16    (guchar *, Canvas *, gint, gint);
 
-/* static float channel data functions */
-static void display_brush_get_row_float  (guchar *, guchar *, gint);
+/* float channels data functions */
+static void display_brush_get_row_float  (guchar *, Canvas *, gint, gint);
 
-/* function pointers for different data types */
-typedef void  (*DisplayBrushGetRowFunc) (guchar *, guchar *,gint);
+/* Convert row of brush to 8bit display */
+typedef void  (*DisplayBrushGetRowFunc) (guchar *, Canvas *, gint, gint);
 static DisplayBrushGetRowFunc display_brush_get_row_funcs[3] =
 {
   display_brush_get_row_u8,
@@ -347,8 +347,7 @@ brush_popup_open (BrushSelectP bsp,
   gint x_org, y_org;
   gint scr_w, scr_h;
   gint brush_width, brush_height;
-  gint rowbytes;
-  guchar *src, *buf;
+  guchar  *buf;
   Tag brush_tag;
   Precision brush_prec;
 
@@ -395,13 +394,10 @@ brush_popup_open (BrushSelectP bsp,
   buf = g_new (gchar, brush_width);
   brush_tag = canvas_tag (brush->mask_canvas);
   brush_prec = tag_precision (brush_tag);
-  src = canvas_portion_data (brush->mask_canvas,0,0);
-  rowbytes = canvas_portion_rowstride (brush->mask_canvas,0,0);
   for (y = 0; y < brush_height; y++)
     {
-      (*display_brush_get_row_funcs [brush_prec-1]) (buf, src, brush_width); 
+      (*display_brush_get_row_funcs [brush_prec-1]) (buf, brush->mask_canvas, y, brush_width); 
       gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), buf, 0, y, brush_width);
-      src += rowbytes;
     }
   g_free(buf);
   
@@ -424,23 +420,25 @@ display_brush (BrushSelectP bsp,
 	       int          col,
 	       int          row)
 {
-  Canvas *brush_buf_canvas;
-  unsigned char * src, *s;
-  unsigned char * buf, *b;
+  Canvas *brush_buf_canvas = brush->mask_canvas;
+  unsigned char * buf;
   int width, height;
   int offset_x, offset_y;
   int yend;
   int ystart;
-  int i, j;
-  Tag brush_tag;
-  Precision brush_prec;
+  int i;
+  Tag brush_tag = canvas_tag (brush->mask_canvas);
+  Precision brush_prec = tag_precision (brush_tag);
+  Alpha brush_alpha = tag_alpha (brush_tag);
+  
+  if ( brush_alpha == ALPHA_YES )
+    {
+      g_warning("Brush %s has alpha channel. Cant display.\n", brush->name);
+      return;
+    }
 
   buf = (unsigned char *) g_malloc (sizeof (char) * bsp->cell_width);
 
-  brush_buf_canvas = brush->mask_canvas;
-  brush_tag = canvas_tag (brush->mask_canvas);
-  brush_prec = tag_precision (brush_tag);
-  
   /*  calculate the offset into the image  */
   width = (canvas_width (brush_buf_canvas) > bsp->cell_width) ? bsp->cell_width :
     canvas_width (brush_buf_canvas);
@@ -454,84 +452,103 @@ display_brush (BrushSelectP bsp,
   ystart = BOUNDS (offset_y, 0, bsp->preview->requisition.height);
   yend = BOUNDS (offset_y + height, 0, bsp->preview->requisition.height);
   
-  /*  Get a generic pointer into the brush mask data */
-  {
-    gint rowbytes = canvas_portion_rowstride (brush_buf_canvas,0,0);
-    guchar* src = canvas_portion_data (brush_buf_canvas,0,0) + (ystart - offset_y) * rowbytes;
-    
-    /*  Fill the brush display buffer and display it */ 
-    for (i = ystart; i < yend; i++)
-      {
-      (*display_brush_get_row_funcs [brush_prec-1]) (buf, src, width); 
-	gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf, offset_x, i, width);
-	src += rowbytes;
-      }
-  }
+  /*  Fill the brush display buffer and display it */ 
+  for (i = ystart; i < yend; i++)
+    {
+      (*display_brush_get_row_funcs [brush_prec-1]) (buf, brush_buf_canvas, 
+						     i - offset_y , width); 
+      gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf, offset_x, i, width);
+    }
   g_free (buf);
 }
 
-#define BRUSH_SELECT_C_1_cw
 static void  
 display_brush_get_row_u8(  
                         guchar *buf,
-			guchar *src,
+			Canvas *brush_canvas,
+			gint row,
                         gint width
 		  )
 {
-  guint8 *s; 
-  guchar *b; 
+  Tag tag = canvas_tag (brush_canvas);
+  gint channels_per_row = tag_num_channels (tag) * canvas_width (brush_canvas);
+  guint8 * s = (guint8*)canvas_portion_data (brush_canvas,0,0) + row * channels_per_row;
+  guchar *b = buf; 
   gint i;
-      
-      s = (guint8*)src;
-      b = buf;
-      
-      /*  Invert the mask for display.  We're doing this because
-       *  a value of 255 in the  mask means it is full intensity.
-       *  However, it makes more sense for full intensity to show
-       *  up as black in this brush preview window...
-       */
-      
-       for (i = 0; i < width; i++)
-	*b++ = 255 - *s++;
+  Format f = tag_format (canvas_tag (brush_canvas));
+  
+  switch (f)
+    {
+    case FORMAT_GRAY:
+      /*  Invert the mask for display. */ 
+      for (i = 0; i < width; i++)
+        {
+	  *b++ = 255 - *s++;
+        }
+      break;	
+    default:
+      break;
+    }	
 }
 
 static void  
 display_brush_get_row_u16(  
                         guchar *buf,
-			guchar *src,
+			Canvas *brush_canvas,
+			gint row,
                         gint width
 		  )
 {
-  guint16 *s;
-  guchar *b; 
+  Tag tag = canvas_tag (brush_canvas);
+  gint channels_per_row = tag_num_channels (tag) * canvas_width (brush_canvas);
+  guint16 * s = (guint16*)canvas_portion_data (brush_canvas,0,0) + row * channels_per_row;
+  guchar *b = buf; 
   gint i;
-      
-      s = (guint16*)src;
-      b = buf;
-      
+  Format f = tag_format (canvas_tag (brush_canvas));
+  
+  switch (f)
+    {
+    case FORMAT_GRAY:
       /*  Invert the mask for display. */ 
       for (i = 0; i < width; i++)
-	*b++ = 255 - g_lookup_16_to_8[*s++];
+        {
+	  *b++ = 255 - g_lookup_16_to_8[*s++];
+        }
+      break;	
+    default:
+      break;
+    }	
 }
 
 static void  
 display_brush_get_row_float(  
                         guchar *buf,
-			guchar *src,
+			Canvas *brush_canvas,
+			gint row,
                         gint width
 		  )
 {
-  gfloat *s;
-  guchar *b; 
+  Tag tag = canvas_tag (brush_canvas);
+  gint channels_per_row = tag_num_channels (tag) * canvas_width (brush_canvas);
+  gfloat * s = (gfloat*)canvas_portion_data (brush_canvas,0,0) + row * channels_per_row;
+  guchar *b = buf; 
   gint i;
-      
-      s = (gfloat*)src;
-      b = buf;
-      
+  Format f = tag_format (canvas_tag (brush_canvas));
+  
+  switch (f)
+    {
+    case FORMAT_GRAY:
       /*  Invert the mask for display. */ 
       for (i = 0; i < width; i++)
-	*b++ = 255 -  (gint)(255 * *s++ + .5);
+        {
+	  *b++ = 255 -  (gint)(255 * *s++ + .5);
+        }
+      break;	
+    default:
+      break;
+    }	
 }
+
 
 static void
 display_setup (BrushSelectP bsp)
@@ -741,8 +758,6 @@ update_active_brush_field (BrushSelectP bsp)
   gtk_label_set (GTK_LABEL (bsp->brush_name), brush->name);
 
   /*  Set brush size  */
-#define BRUSH_SELECT_C_1_cw
-  /*sprintf (buf, "(%d X %d)", brush->mask->width, brush->mask->height);*/
   sprintf (buf, "(%d X %d)", canvas_width(brush->mask_canvas), canvas_height(brush->mask_canvas));
   gtk_label_set (GTK_LABEL (bsp->brush_size), buf);
 

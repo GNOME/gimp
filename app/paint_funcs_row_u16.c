@@ -392,7 +392,7 @@ multiply_row_u16 (
 
       if (ha1 && ha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2 == ALPHA_YES)
+      else if (ha2)
 	dest[alpha] = src2[alpha];
 
       src1 += num_channels1;
