@@ -2,9 +2,9 @@
 
 gckincludedir = $(includedir)/gck
 
-lib_LTLIBRARIES = libgck-1.1.la
+lib_LTLIBRARIES = libgck.la
 
-libgck_1_1_la_SOURCES = \
+libgck_la_SOURCES = \
 	gckcolor.c	\
 	gcklistbox.c	\
 	gckmath.c	\
@@ -22,7 +22,8 @@ gckinclude_HEADERS = \
 	gckui.h		\
 	gckvector.h
 
-libgck_1_1_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+libgck_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -release $(LT_RELEASE)
 
 INCLUDES = \
 	-I..			\

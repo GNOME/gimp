@@ -1804,7 +1804,7 @@ ProcArg gimage_merge_down_args[] =
     "The image"
   },
   { PDB_LAYER,
-    "layer"
+    "layer",
     "The layer to merge down from"
   },
   { PDB_INT32,

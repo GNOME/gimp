@@ -14,15 +14,13 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
-	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
-	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la	
+	$(top_builddir)/libgimp/libgimp.la	
 
-libgpc_aDEPENDENCIES = $(DEPS)
+libgpc_a_DEPENDENCIES = $(DEPS)
 
 EXTRA_DIST=gpc.3 gpc.man
 

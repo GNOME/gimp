@@ -29,7 +29,6 @@
 #include <string.h>
 #include <fcntl.h>
 
-#include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include "g3.h"
 

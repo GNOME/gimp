@@ -25,13 +25,25 @@
 
 # A lot of this script is taken from autoconf-2.10.
 
+# Check that we are running under the correct shell.
+SHELL=${CONFIG_SHELL-/bin/sh}
+echo=echo
+if test "X$1" = X--no-reexec; then
+  # Discard the --no-reexec flag, and continue.
+  shift
+elif test "X`($echo '\t') 2>/dev/null`" = 'X\t'; then
+  # Yippee, $echo works!
+  :
+else
+  # Restart under the correct shell.
+  exec "$SHELL" "$0" --no-reexec ${1+"$@"}
+fi
+
 # The HP-UX ksh and POSIX shell print the target directory to stdout
 # if CDPATH is set.
 if test "${CDPATH+set}" = set; then CDPATH=; export CDPATH; fi
 
-echo=echo
-if test "X`($echo '\t') 2>/dev/null`" = 'X\t'; then :
-else
+if test "X`($echo '\t') 2>/dev/null`" != 'X\t'; then
   # The Solaris, AIX, and Digital Unix default echo programs unquote
   # backslashes.  This makes it impossible to quote backslashes using
   #   echo "$something" | sed 's/\\/\\\\/g'
@@ -51,20 +63,15 @@ else
     if test "X`(print -r '\t') 2>/dev/null`" = 'X\t'; then
       # This shell has a builtin print -r that does the trick.
       echo='print -r'
-#
-# The following is from libtool-1.2a, won't work with this patched
-# libtool-1.2
-#
-#    elif test -f /bin/ksh && test "X$CONFIG_SHELL" != X/bin/ksh; then
-#      # If we have ksh, try running ltconfig again with it.
-#      CONFIG_SHELL=/bin/ksh
-#      export CONFIG_SHELL
-#      exec "$CONFIG_SHELL" "$0" --no-reexec ${1+"$@"}
+    elif test -f /bin/ksh && test "X$CONFIG_SHELL" != X/bin/ksh; then
+      # If we have ksh, try running ltconfig again with it.
+      CONFIG_SHELL=/bin/ksh
+      export CONFIG_SHELL
+      exec "$CONFIG_SHELL" "$0" --no-reexec ${1+"$@"}
     else
       # Try using printf.
       echo='printf %s\n'
-      if test "X`($echo '\t') 2>/dev/null`" = 'X\t'; then :
-      else
+      if test "X`($echo '\t') 2>/dev/null`" != 'X\t'; then
         # Oops.  We lost completely, so just stick with echo.
         echo=echo
       fi
@@ -86,7 +93,7 @@ progname=`$echo "X$0" | $Xsed -e 's%^.*/%%'`
 # Constants:
 PROGRAM=ltconfig
 PACKAGE=libtool
-VERSION=1.2
+VERSION=1.2b
 ac_compile='${CC-cc} -c $CFLAGS $CPPFLAGS conftest.c 1>&5'
 ac_link='${CC-cc} -o conftest $CFLAGS $CPPFLAGS $LDFLAGS conftest.c $LIBS 1>&5'
 rm="rm -f"
@@ -94,6 +101,7 @@ rm="rm -f"
 help="Try \`$progname --help' for more information."
 
 # Global variables:
+default_ofile=libtool
 can_build_shared=yes
 enable_shared=yes
 # All known linkers require a `.a' archive for static linking.
@@ -105,6 +113,7 @@ ac_config_guess=
 ac_config_sub=
 host=
 nonopt=
+ofile="$default_ofile"
 verify_host=yes
 with_gcc=no
 with_gnu_ld=no
@@ -141,10 +150,12 @@ Usage: $progname [OPTION]... LTMAIN [HOST]
 
 Generate a system-specific libtool script.
 
+    --debug                enable verbose shell tracing
     --disable-shared       do not build shared libraries
     --disable-static       do not build static libraries
     --help                 display this help and exit
     --no-verify            do not verify that HOST is a valid host type
+-o, --output=FILE          specify the output file [default=$default_ofile]
     --quiet                same as \`--silent'
     --silent               do not print informational messages
     --srcdir=DIR           find \`config.guess' in DIR
@@ -160,6 +171,11 @@ EOM
   exit 0
   ;;
 
+  --debug)
+    echo "$progname: enabling shell trace mode"
+    set -x
+    ;;
+
   --disable-shared) enable_shared=no ;;
 
   --disable-static) enable_static=no ;;
@@ -170,6 +186,9 @@ EOM
   --srcdir=*) srcdir="$optarg" ;;
 
   --no-verify) verify_host=no ;;
+
+  --output | -o) prev=ofile ;;
+  --output=*) ofile="$optarg" ;;
 
   --version) echo "$PROGRAM (GNU $PACKAGE) $VERSION"; exit 0 ;;
 
@@ -205,8 +224,7 @@ if test -z "$ltmain"; then
   exit 1
 fi
 
-if test -f "$ltmain"; then :
-else
+if test ! -f "$ltmain"; then
   echo "$progname: \`$ltmain' does not exist" 1>&2
   echo "$help" 1>&2
   exit 1
@@ -284,7 +302,7 @@ if test "$verify_host" = yes; then
   ac_config_sub=$ac_aux_dir/config.sub
 
   # Make sure we can run config.sub.
-  if $ac_config_sub sun4 >/dev/null 2>&1; then :
+  if $SHELL $ac_config_sub sun4 >/dev/null 2>&1; then :
   else
     echo "$progname: cannot run $ac_config_sub" 1>&2
     echo "$help" 1>&2
@@ -296,14 +314,14 @@ if test "$verify_host" = yes; then
   host_alias=$host
   case "$host_alias" in
   "")
-    if host_alias=`$ac_config_guess`; then :
+    if host_alias=`$SHELL $ac_config_guess`; then :
     else
       echo "$progname: cannot guess host type; you must specify one" 1>&2
       echo "$help" 1>&2
       exit 1
     fi ;;
   esac
-  host=`$ac_config_sub $host_alias`
+  host=`$SHELL $ac_config_sub $host_alias`
   echo "$ac_t$host" 1>&6
 
   # Make sure the host verified.
@@ -441,7 +459,7 @@ if test "$with_gcc" != yes || test -z "$CC"; then
   # Now see if the compiler is really GCC.
   with_gcc=no
   echo $ac_n "checking whether we are using GNU C... $ac_c" 1>&6
-  echo "$progname:444: checking whether we are using GNU C" >&5
+  echo "$progname:462: checking whether we are using GNU C" >&5
 
   $rm conftest.c
   cat > conftest.c <<EOF
@@ -449,7 +467,7 @@ if test "$with_gcc" != yes || test -z "$CC"; then
   yes;
 #endif
 EOF
-  if { ac_try='${CC-cc} -E conftest.c'; { (eval echo $progname:452: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }; } | egrep yes >/dev/null 2>&1; then
+  if { ac_try='${CC-cc} -E conftest.c'; { (eval echo $progname:470: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }; } | egrep yes >/dev/null 2>&1; then
     with_gcc=yes
   fi
   $rm conftest.c
@@ -497,7 +515,7 @@ else
     link_static_flag='-bnso -bI:/lib/syscalls.exp'
     ;;
 
-  hpux9* | hpux10*)
+  hpux9* | hpux10* | hpux11*)
     # Is there a better link_static_flag that works with the bundled CC?
     wl='-Wl,'
     link_static_flag="${wl}-a ${wl}archive"
@@ -564,8 +582,8 @@ if test -n "$pic_flag"; then
   echo "int some_variable = 0;" > conftest.c
   save_CFLAGS="$CFLAGS"
   CFLAGS="$CFLAGS $pic_flag -DPIC"
-  echo "$progname:567: checking if $compiler PIC flag $pic_flag works" >&5
-  if { (eval echo $progname:568: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>conftest.err; } && test -s conftest.o; then
+  echo "$progname:585: checking if $compiler PIC flag $pic_flag works" >&5
+  if { (eval echo $progname:586: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>conftest.err; } && test -s conftest.o; then
     # Append any warnings to the config.log.
     cat conftest.err 1>&5
 
@@ -608,8 +626,8 @@ $rm conftest*
 echo 'main(){return(0);}' > conftest.c
 save_LDFLAGS="$LDFLAGS"
 LDFLAGS="$LDFLAGS $link_static_flag"
-echo "$progname:611: checking if $compiler static flag $link_static_flag works" >&5
-if { (eval echo $progname:612: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest; then
+echo "$progname:629: checking if $compiler static flag $link_static_flag works" >&5
+if { (eval echo $progname:630: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest; then
   echo "$ac_t$link_static_flag" 1>&6
 else
   echo "$ac_t"none 1>&6
@@ -641,11 +659,11 @@ if test -z "$LD"; then
   if test "$with_gcc" = yes; then
     # Check if gcc -print-prog-name=ld gives a path.
     echo $ac_n "checking for ld used by GCC... $ac_c" 1>&6
-    echo "$progname:644: checking for ld used by GCC" >&5
+    echo "$progname:662: checking for ld used by GCC" >&5
     ac_prog=`($CC -print-prog-name=ld) 2>&5`
     case "$ac_prog" in
     # Accept absolute paths.
-    /* | [A-Za-z]:\\*)
+    /* | [A-Za-z]:[/\\]*)
       test -z "$LD" && LD="$ac_prog"
       ;;
     "")
@@ -659,10 +677,10 @@ if test -z "$LD"; then
     esac
   elif test "$with_gnu_ld" = yes; then
     echo $ac_n "checking for GNU ld... $ac_c" 1>&6
-    echo "$progname:662: checking for GNU ld" >&5
+    echo "$progname:680: checking for GNU ld" >&5
   else
     echo $ac_n "checking for non-GNU ld""... $ac_c" 1>&6
-    echo "$progname:665: checking for non-GNU ld" >&5
+    echo "$progname:683: checking for non-GNU ld" >&5
   fi
 
   if test -z "$LD"; then
@@ -714,6 +732,7 @@ no_undefined_flag=
 archive_cmds=
 old_archive_from_new_cmds=
 export_dynamic_flag_spec=
+whole_archive_flag_spec=
 hardcode_libdir_flag_spec=
 hardcode_libdir_separator=
 hardcode_direct=no
@@ -721,31 +740,42 @@ hardcode_minus_L=no
 hardcode_shlibpath_var=unsupported
 runpath_var=
 
-case "$host_os" in
-amigaos* | sunos4*)
-  # On these operating systems, we should treat GNU ld like the system ld.
-  gnu_ld_acts_native=yes
-  ;;
-*)
-  gnu_ld_acts_native=no
-  ;;
-esac
-
 ld_shlibs=yes
-if test "$with_gnu_ld" = yes && test "$gnu_ld_acts_native" != yes; then
+if test "$with_gnu_ld" = yes; then
 
   # See if GNU ld supports shared libraries.
-  if $LD --help 2>&1 | egrep ': supported targets:.* elf' > /dev/null; then
-    archive_cmds='$CC -shared ${wl}-soname $wl$soname -o $lib$libobjs'
-    runpath_var=LD_RUN_PATH
-    ld_shlibs=yes
-  else
-    ld_shlibs=no
-  fi
+  case "$host_os" in
+  amigaos*)
+    archive_cmds='$rm $objdir/a2ixlibrary.data;$echo "#define NAME $libname" > $objdir/a2ixlibrary.data;$echo "#define LIBRARY_ID 1" >> $objdir/a2ixlibrary.data;$echo "#define VERSION $major" >> $objdir/a2ixlibrary.data;$echo "#define REVISION $revision" >> $objdir/a2ixlibrary.data;$AR cru $lib$libobjs;$RANLIB $lib;(cd $objdir && a2ixlibrary -32)'
+    hardcode_libdir_flag_spec='-L$libdir'
+    hardcode_minus_L=yes
+    ;;
+
+  sunos4*)
+    archive_cmds='$LD -assert pure-text -Bstatic -o $lib$libobjs'
+    hardcode_direct=yes
+    hardcode_minus_L=yes
+    hardcode_shlibpath_var=no
+    ;;
+
+  linux-gnu*)
+    archive_cmds='$CC -shared ${wl}-soname $wl$soname -o $lib$libobjs $deplibs'
+    ;;
+
+  *)
+    if $LD --help 2>&1 | egrep ': supported targets:.* elf' > /dev/null; then
+      archive_cmds='$CC -shared ${wl}-soname $wl$soname -o $lib$libobjs'
+    else
+      ld_shlibs=no
+    fi
+    ;;
+  esac
 
   if test "$ld_shlibs" = yes; then
+    runpath_var=LD_RUN_PATH
     hardcode_libdir_flag_spec='${wl}--rpath ${wl}$libdir'
     export_dynamic_flag_spec='${wl}--export-dynamic'
+    whole_archive_flag_spec='${wl}--whole-archive$convenience ${wl}--no-whole-archive'
   fi
 else
   # PORTME fill in a description of your system's linker (not GNU ld)
@@ -801,7 +831,7 @@ else
     archive_cmds='$CC -shared -o $lib$libobjs'
     hardcode_libdir_flag_spec='-R$libdir'
     hardcode_direct=yes
-    hardcode_minus_L=yes
+    hardcode_minus_L=no
     hardcode_shlibpath_var=no
     ;;
 
@@ -813,7 +843,7 @@ else
     export_dynamic_flag_spec='${wl}-E'
     ;;
 
-  hpux10*)
+  hpux10* | hpux11*)
     archive_cmds='$LD -b +h $soname +s +b $install_libdir -o $lib$libobjs'
     hardcode_libdir_flag_spec='${wl}+b ${wl}$libdir'
     hardcode_direct=yes
@@ -822,7 +852,11 @@ else
     ;;
 
   irix5* | irix6*)
-    archive_cmds='$LD -shared -o $lib -soname $soname -set_version $verstring$libobjs'
+    if test "$with_gcc" = yes; then
+      archive_cmds='$CC -shared -o $lib ${wl}-soname ${wl}$soname ${wl}-set_version ${wl}$verstring$libobjs'
+    else
+      archive_cmds='$LD -shared -o $lib -soname $soname -set_version $verstring$libobjs'
+    fi
     hardcode_libdir_flag_spec='${wl}-rpath ${wl}$libdir'
     ;;
 
@@ -876,15 +910,7 @@ else
     ;;
 
   sunos4*)
-    if test "$with_gcc" = yes; then
-      archive_cmds='$CC -shared -o $lib$libobjs'
-    else
-      archive_cmds='$LD -assert pure-text -Bstatic -o $lib$libobjs'
-    fi
-
-    if test "$with_gnu_ld" = yes; then
-      export_dynamic_flag_spec='${wl}-export-dynamic'
-    fi
+    archive_cmds='$LD -assert pure-text -Bstatic -o $lib$libobjs'
     hardcode_libdir_flag_spec='-L$libdir'
     hardcode_direct=yes
     hardcode_minus_L=yes
@@ -910,7 +936,7 @@ echo "$ac_t$ld_shlibs" 1>&6
 if test -z "$NM"; then
   echo $ac_n "checking for BSD-compatible nm... $ac_c" 1>&6
   case "$NM" in
-  /* | [A-Za-z]:\\*) ;; # Let the user override the test with a path.
+  /* | [A-Za-z]:[/\\]*) ;; # Let the user override the test with a path.
   *)
     IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS="${IFS}:"
     for ac_dir in /usr/ucb /usr/ccs/bin $PATH /bin; do
@@ -988,11 +1014,11 @@ void nm_test_func(){}
 main(){nm_test_var='a';nm_test_func();return(0);}
 EOF
 
-echo "$progname:991: checking if global_symbol_pipe works" >&5
-if { (eval echo $progname:992: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; } && test -s conftest.o; then
+echo "$progname:1013: checking if global_symbol_pipe works" >&5
+if { (eval echo $progname:1014: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; } && test -s conftest.o; then
   # Now try to grab the symbols.
   nlist=conftest.nm
-  if { echo "$progname:995: eval \"$NM conftest.o | $global_symbol_pipe > $nlist\"" >&5; eval "$NM conftest.o | $global_symbol_pipe > $nlist 2>&5"; } && test -s "$nlist"; then
+  if { echo "$progname:1017: eval \"$NM conftest.o | $global_symbol_pipe > $nlist\"" >&5; eval "$NM conftest.o | $global_symbol_pipe > $nlist 2>&5"; } && test -s "$nlist"; then
 
     # Try sorting and uniquifying the output.
     if sort "$nlist" | uniq > "$nlist"T; then
@@ -1050,7 +1076,7 @@ EOF
 	save_CFLAGS="$CFLAGS"
         LIBS='conftestm.o'
 	CFLAGS="$CFLAGS$no_builtin_flag"
-        if { (eval echo $progname:1053: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest; then
+        if { (eval echo $progname:1075: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest; then
           pipe_works=yes
         else
           echo "$progname: failed program was:" >&5
@@ -1093,25 +1119,20 @@ if test -n "$hardcode_libdir_flag_spec" || \
     # We can link without hardcoding, and we can hardcode nonexisting dirs.
     hardcode_action=immediate
   fi
-elif test "$hardcode_direct" != yes && \
-     test "$hardcode_minus_L" != yes && \
-     test "$hardcode_shlibpath_var" != yes; then
-  # We cannot hardcode anything.
-  hardcode_action=unsupported
 else
-  # We can only hardcode existing directories.
-  hardcode_action=relink
+  # We cannot hardcode anything, or else we can only hardcode existing
+  # directories.
+  hardcode_action=unsupported
 fi
 echo "$ac_t$hardcode_action" 1>&6
-test "$hardcode_action" = unsupported && can_build_shared=no
 
 
 reload_flag=
 reload_cmds='$LD$reload_flag -o $output$reload_objs'
 echo $ac_n "checking for $LD option to reload object files... $ac_c" 1>&6
-# PORTME Some linker may need a different reload flag.
+# PORTME Some linkers may need a different reload flag.
 reload_flag='-r'
-echo "$ac_t$reload_flag"
+echo "$ac_t$reload_flag" 1>&6
 test -n "$reload_flag" && reload_flag=" $reload_flag"
 
 # PORTME Fill in your ld.so characteristics
@@ -1130,11 +1151,11 @@ echo $ac_n "checking dynamic linker characteristics... $ac_c" 1>&6
 case "$host_os" in
 aix3* | aix4*)
   version_type=linux
-  library_names_spec='${libname}${release}.so.$versuffix $libname.a'
+  library_names_spec='${libname}${release}.so$versuffix $libname.a'
   shlibpath_var=LIBPATH
 
   # AIX has no versioning support, so we append a major version to the name.
-  soname_spec='${libname}${release}.so.$major'
+  soname_spec='${libname}${release}.so$major'
   ;;
 
 amigaos*)
@@ -1145,25 +1166,25 @@ amigaos*)
 
 freebsd2* | freebsd3*)
   version_type=sunos
-  library_names_spec='${libname}${release}.so.$versuffix $libname.so'
-  finish_cmds='PATH="$PATH:/sbin" ldconfig -m $libdir'
+  library_names_spec='${libname}${release}.so$versuffix $libname.so'
+  finish_cmds='PATH="\$PATH:/sbin" ldconfig -m $libdir'
   shlibpath_var=LD_LIBRARY_PATH
   ;;
 
 gnu*)
-  version_type=sunos
-  library_names_spec='${libname}${release}.so.$versuffix'
+  version_type=linux
+  library_names_spec='${libname}${release}.so$versuffix ${libname}.so'
   shlibpath_var=LD_LIBRARY_PATH
   ;;
 
-hpux9* | hpux10*)
+hpux9* | hpux10* | hpux11*)
   # Give a soname corresponding to the major version so that dld.sl refuses to
   # link against other versions.
   dynamic_linker="$host_os dld.sl"
   version_type=sunos
   shlibpath_var=SHLIB_PATH
-  library_names_spec='${libname}${release}.sl.$versuffix ${libname}${release}.sl.$major $libname.sl'
-  soname_spec='${libname}${release}.sl.$major'
+  library_names_spec='${libname}${release}.sl$versuffix ${libname}${release}.sl$major $libname.sl'
+  soname_spec='${libname}${release}.sl$major'
   # HP-UX runs *really* slowly unless shared libraries are mode 555.
   postinstall_cmds='chmod 555 $lib'
   ;;
@@ -1171,7 +1192,7 @@ hpux9* | hpux10*)
 irix5* | irix6*)
   version_type=osf
   soname_spec='${libname}${release}.so'
-  library_names_spec='${libname}${release}.so.$versuffix $libname.so'
+  library_names_spec='${libname}${release}.so$versuffix $libname.so'
   shlibpath_var=LD_LIBRARY_PATH
   ;;
 
@@ -1183,9 +1204,9 @@ linux-gnuoldld* | linux-gnuaout* | linux-gnucoff*)
 # This must be Linux ELF.
 linux-gnu*)
   version_type=linux
-  library_names_spec='${libname}${release}.so.$versuffix ${libname}${release}.so.$major $libname.so'
-  soname_spec='${libname}${release}.so.$major'
-  finish_cmds='PATH="$PATH:/sbin" ldconfig -n $libdir'
+  library_names_spec='${libname}${release}.so$versuffix ${libname}${release}.so$major $libname.so'
+  soname_spec='${libname}${release}.so$major'
+  finish_cmds='PATH="\$PATH:/sbin" ldconfig -n $libdir'
   shlibpath_var=LD_LIBRARY_PATH
 
   if test -f /lib/ld.so.1; then
@@ -1201,8 +1222,8 @@ linux-gnu*)
 
 netbsd* | openbsd*)
   version_type=sunos
-  library_names_spec='${libname}${release}.so.$versuffix'
-  finish_cmds='PATH="$PATH:/sbin" ldconfig -m $libdir'
+  library_names_spec='${libname}${release}.so$versuffix'
+  finish_cmds='PATH="\$PATH:/sbin" ldconfig -m $libdir'
   shlibpath_var=LD_LIBRARY_PATH
   ;;
 
@@ -1216,42 +1237,44 @@ os2*)
 osf3* | osf4*)
   version_type=osf
   soname_spec='${libname}${release}.so'
-  library_names_spec='${libname}${release}.so.$versuffix $libname.so'
+  library_names_spec='${libname}${release}.so$versuffix $libname.so'
   shlibpath_var=LD_LIBRARY_PATH
   ;;
 
 sco3.2v5*)
   version_type=osf
-  soname_spec='${libname}${release}.so.$major'
-  library_names_spec='${libname}${release}.so.$versuffix ${libname}${release}.so.$major $libname.so'
+  soname_spec='${libname}${release}.so$major'
+  library_names_spec='${libname}${release}.so$versuffix ${libname}${release}.so$major $libname.so'
   shlibpath_var=LD_LIBRARY_PATH
   ;;
 
 solaris2*)
   version_type=linux
-  library_names_spec='${libname}${release}.so.$versuffix ${libname}${release}.so.$major $libname.so'
-  soname_spec='${libname}${release}.so.$major'
+  library_names_spec='${libname}${release}.so$versuffix ${libname}${release}.so$major $libname.so'
+  soname_spec='${libname}${release}.so$major'
   shlibpath_var=LD_LIBRARY_PATH
+  # ldd complains unless libraries are executable
+  postinstall_cmds='chmod +x $lib'
   ;;
 
 sunos4*)
   version_type=sunos
-  library_names_spec='${libname}${release}.so.$versuffix'
-  finish_cmds='PATH="$PATH:/usr/etc" ldconfig $libdir'
+  library_names_spec='${libname}${release}.so$versuffix'
+  finish_cmds='PATH="\$PATH:/usr/etc" ldconfig $libdir'
   shlibpath_var=LD_LIBRARY_PATH
   ;;
 
 sysv4.2uw2*)
   version_type=linux
-  library_names_spec='${libname}${release}.so.$versuffix ${libname}${release}.so.$major $libname.so'
-  soname_spec='${libname}${release}.so.$major'
+  library_names_spec='${libname}${release}.so$versuffix ${libname}${release}.so$major $libname.so'
+  soname_spec='${libname}${release}.so$major'
   shlibpath_var=LD_LIBRARY_PATH
   ;;
 
 uts4*)
   version_type=linux
-  library_names_spec='${libname}${release}.so.$versuffix ${libname}${release}.so.$major $libname.so'
-  soname_spec='${libname}${release}.so.$major'
+  library_names_spec='${libname}${release}.so$versuffix ${libname}${release}.so$major $libname.so'
+  soname_spec='${libname}${release}.so$major'
   shlibpath_var=LD_LIBRARY_PATH
   ;;
 
@@ -1307,7 +1330,7 @@ ltecho="$echo"
 for var in ltecho old_CC old_CFLAGS old_CPPFLAGS old_LD old_NM old_RANLIB \
   old_LN_S AR CC LD LN_S NM reload_flag reload_cmds wl pic_flag \
   link_static_flag no_builtin_flag export_dynamic_flag_spec \
-  libname_spec library_names_spec soname_spec RANLIB \
+  whole_archive_flag_spec libname_spec library_names_spec soname_spec RANLIB \
   old_archive_cmds old_archive_from_new_cmds old_postinstall_cmds \
   old_postuninstall_cmds archive_cmds postinstall_cmds postuninstall_cmds \
   allow_undefined_flag no_undefined_flag \
@@ -1327,14 +1350,13 @@ for var in ltecho old_CC old_CFLAGS old_CPPFLAGS old_LD old_NM old_RANLIB \
   esac
 done
 
-ofile=libtool
-trap "$rm $ofile; exit 1" 1 2 15
-echo creating $ofile
-$rm $ofile
-cat <<EOF > $ofile
-#! /bin/sh
+trap "$rm \"$ofile\"; exit 1" 1 2 15
+echo "creating $ofile"
+$rm "$ofile"
+cat <<EOF > "$ofile"
+#! $SHELL
 
-# libtool - Provide generalized library-building support services.
+# `$echo "$ofile" | sed 's%^.*/%%'` - Provide generalized library-building support services.
 # Generated automatically by $PROGRAM - GNU $PACKAGE $VERSION
 # NOTE: Changes made to this file will be lost: look at ltconfig or ltmain.sh.
 #
@@ -1360,8 +1382,15 @@ cat <<EOF > $ofile
 # configuration script generated by Autoconf, you may include it under
 # the same distribution terms that you use for the rest of that program.
 
-# This program was configured as follows,
-# on host `(hostname || uname -n) 2>/dev/null | sed 1q`:
+# Sed that helps us avoid accidentally triggering echo(1) options like -n.
+Xsed="sed -e s/^X//"
+
+# The HP-UX ksh and POSIX shell print the target directory to stdout
+# if CDPATH is set.
+if test "\${CDPATH+set}" = set; then CDPATH=; export CDPATH; fi
+
+### BEGIN LIBTOOL CONFIG
+# Libtool was configured as follows, on host `(hostname || uname -n) 2>/dev/null | sed 1q`:
 #
 # CC="$old_CC" CFLAGS="$old_CFLAGS" CPPFLAGS="$old_CPPFLAGS" \\
 # LD="$old_LD" NM="$old_NM" RANLIB="$old_RANLIB" LN_S="$old_LN_S" \\
@@ -1370,31 +1399,24 @@ cat <<EOF > $ofile
 # Compiler and other test output produced by $progname, useful for
 # debugging $progname, is in ./config.log if it exists.
 
-# Sed that helps us avoid accidentally triggering echo(1) options like -n.
-Xsed="sed -e s/^X//"
-
-# The HP-UX ksh and POSIX shell print the target directory to stdout
-# if CDPATH is set.
-if test "\${CDPATH+set}" = set; then CDPATH=; export CDPATH; fi
-
-# An echo program that does not interpret backslashes.
-echo="$ltecho"
-
 # The version of $progname that generated this script.
 LTCONFIG_VERSION="$VERSION"
 
 # Shell to use when invoking shell scripts.
-SHELL=${CONFIG_SHELL-/bin/sh}
+SHELL="$SHELL"
 
-# Whether or not to build libtool libraries.
+# Whether or not to build shared libraries.
 build_libtool_libs=$enable_shared
 
-# Whether or not to build old-style libraries.
+# Whether or not to build static libraries.
 build_old_libs=$enable_static
 
 # The host system.
 host_alias="$host_alias"
 host="$host"
+
+# An echo program that does not interpret backslashes.
+echo="$ltecho"
 
 # The archiver.
 AR="$AR"
@@ -1432,6 +1454,9 @@ no_builtin_flag="$no_builtin_flag"
 
 # Compiler flag to allow reflexive dlopens.
 export_dynamic_flag_spec="$export_dynamic_flag_spec"
+
+# Compiler flag to generate shared objects directly from archives.
+whole_archive_flag_spec="$whole_archive_flag_spec"
 
 # Library versioning type.
 version_type=$version_type
@@ -1502,12 +1527,12 @@ hardcode_minus_L=$hardcode_minus_L
 # Set to yes if using SHLIBPATH_VAR=DIR during linking hardcodes DIR into
 # the resulting binary.
 hardcode_shlibpath_var=$hardcode_shlibpath_var
-
 EOF
 
 case "$host_os" in
 aix3*)
-  cat <<\EOF >> $ofile
+  cat <<\EOF >> "$ofile"
+
 # AIX sometimes has problems with the GCC collect2 program.  For some
 # reason, if we set the COLLECT_NAMES environment variable, the problems
 # vanish in a puff of smoke.
@@ -1515,15 +1540,17 @@ if test "${COLLECT_NAMES+set}" != set; then
   COLLECT_NAMES=
   export COLLECT_NAMES
 fi
-
 EOF
   ;;
 esac
 
-# Append the ltmain.sh script.
-cat "$ltmain" >> $ofile || (rm -f $ofile; exit 1)
+echo '### END LIBTOOL CONFIG' >> "$ofile"
+echo >> "$ofile"
 
-chmod +x $ofile
+# Append the ltmain.sh script.
+cat "$ltmain" >> "$ofile" || (rm -f "$ofile"; exit 1)
+
+chmod +x "$ofile"
 exit 0
 
 # Local Variables:

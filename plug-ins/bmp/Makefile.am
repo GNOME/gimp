@@ -11,18 +11,16 @@ bmp_SOURCES = \
 	bmpwrite.c   
 
 INCLUDES = \
-	$(GTK_CFLAGS)			\
 	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
-	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
-	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la
+	$(top_builddir)/libgimp/libgimp.la
 
 bmp_DEPENDENCIES = $(DEPS)
 

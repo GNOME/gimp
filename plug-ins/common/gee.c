@@ -182,7 +182,10 @@ build_dialog(GImageType basetype,
   GtkWidget* vbox;
   GtkWidget* hbox;
   GtkWidget* hbox2;
+
+#ifndef RAPH_IS_HOME
   guchar* color_cube;
+#endif
 
   argc = 1;
   argv = g_new (gchar *, 1);

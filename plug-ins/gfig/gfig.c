@@ -55,8 +55,9 @@
 #include <dirent.h>
 #include <ctype.h>
 #include <math.h>
-#include "gtk/gtk.h"
+#include <gtk/gtk.h>
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #include "pix_data.h"
 
 
@@ -3329,6 +3330,7 @@ paint_page()
   return(vbox);
 }
 
+#if 0 /* NOT USED */
 static void
 gfig_get_brushes(GtkWidget *list)
 {
@@ -3387,7 +3389,7 @@ gfig_get_brushes(GtkWidget *list)
   gimp_destroy_params (return_vals, nreturn_vals);
   gtk_list_select_item(GTK_LIST(list),list_item2sel);
 }
-
+#endif
 
 #if 0 /* NOT USED */
 static gint
@@ -3473,9 +3475,6 @@ select_brush_press(GtkWidget *widget,
 static GtkWidget *
 brush_page()
 {
-  GtkWidget *list_frame;
-  GtkWidget *list;
-  GtkWidget *scrolled_win;
   GtkWidget *table;
   GtkWidget *label;
   GtkWidget *pw;

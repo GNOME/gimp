@@ -161,12 +161,12 @@ fp_row (const guchar *src_row,
 	if (P[k]!=m && P[k]!=M) middle=P[k];
       
 	for (k=0; k<3; k++) 
-	  if (M!=m)
+	  if (M!=m) {
 	    if (P[k] == M)
 	      P[k] = MAX(P[k]+Current.satAdj[JudgeBy][Intensity],middle);
 	    else if (P[k] == m)
 	      P[k] = MIN(P[k]-Current.satAdj[JudgeBy][Intensity],middle); 
-	
+	  }
 
 	
 	P[0] += Current.redAdj[JudgeBy][Intensity];

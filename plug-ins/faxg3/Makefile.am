@@ -12,17 +12,15 @@ faxg3_SOURCES = \
 
 INCLUDES = \
 	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
+	$(GLIB_CFLAGS)			\
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
-	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
-	$(GTK_LIBS)
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GLIB_LIBS)
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
-	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la	
+	$(top_builddir)/libgimp/libgimp.la	
 
 faxg3_DEPENDENCIES = $(DEPS)
 

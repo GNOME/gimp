@@ -34,6 +34,16 @@ typedef gint (*GimpConstraintFunc) (gint32   image_id,
 typedef void (*GimpMenuCallback)   (gint32   id,
 				    gpointer data);
 
+/* Popup the brush dialog interactively */
+typedef void (* GRunBrushCallback) (gchar *, /* Name */
+                                    gdouble, /* opacity */
+                                    gint,    /* spacing */
+                                    gint,    /* paint_mode */
+                                    gint,    /* width */
+                                    gint,    /* height */
+                                    gchar *, /* mask data */
+                                    gint     /* dialog closing */);
+
 GtkWidget* gimp_image_menu_new    (GimpConstraintFunc constraint,
 				   GimpMenuCallback   callback,
 				   gpointer           data,
@@ -51,6 +61,9 @@ GtkWidget* gimp_drawable_menu_new (GimpConstraintFunc constraint,
 				   gpointer           data,
 				   gint32             active_drawable);
 
+void gimp_interactive_selection_brush (gchar *dialogname,
+				       gchar *brush_name,
+				       GRunBrushCallback callback);
 
 #ifdef __cplusplus
 }

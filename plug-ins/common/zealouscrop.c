@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <time.h>
 #include "libgimp/gimp.h"
-#include "gtk/gtk.h"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -129,8 +128,8 @@ static void do_zcrop(GDrawable *drawable, gint32 image_id)
   gint width, height, x, y;
   guchar *buffer;
   int nreturn_vals;
-  gboolean *killrows;
-  gboolean *killcols;
+  gint8 *killrows;
+  gint8 *killcols;
   gint32 livingrows, livingcols, destrow, destcol;
   int total_area, area;
 
@@ -141,8 +140,8 @@ static void do_zcrop(GDrawable *drawable, gint32 image_id)
   total_area = width * height * 4;
   area = 0;
 
-  killrows = g_malloc (sizeof(gboolean)*height);
-  killcols = g_malloc (sizeof(gboolean)*width);
+  killrows = g_malloc (sizeof(gint8)*height);
+  killcols = g_malloc (sizeof(gint8)*width);
 
   buffer = g_malloc((width > height ? width : height) * bytes);
 

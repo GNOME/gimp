@@ -13,14 +13,12 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
-	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
-	$(GTK_LIBS)						\
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
 	@LIBAA_LIB@
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
-	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la
+	$(top_builddir)/libgimp/libgimp.la
 
 aa_DEPENDENCIES = $(DEPS)
 

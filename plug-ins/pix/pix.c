@@ -46,7 +46,6 @@ static char ident[] = "@(#) GIMP Alias|Wavefront pix image file-plugin v1.0  24-
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 
 /* #define PIX_DEBUG */

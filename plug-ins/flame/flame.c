@@ -163,7 +163,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
 		GParam ** return_vals)
 {
   static GParam values[1];
-  GDrawable *drawable;
+  GDrawable *drawable = NULL;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
 

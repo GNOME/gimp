@@ -23,7 +23,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "libgimp/gimp.h"
-#include "gtk/gtk.h"
 
 /* Declare local functions. */
 static void query(void);

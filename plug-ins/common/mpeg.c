@@ -69,7 +69,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
-#include "gtk/gtk.h"
+#include <gtk/gtk.h>
 #include "libgimp/gimp.h"
 #include "mpeg.h"
 

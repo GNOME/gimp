@@ -43,7 +43,8 @@ The --install options can be prefixed with --install-admin instead to install
 a plug-in or script in the site directory instead of a user directory.
 
 For plug-ins which do not use GTK+, the --build and --install options can be
-appended with -noui for appropriate settings.
+appended with -noui for appropriate settings. For plug-ins that use GTK+ but
+not libgumpui, append -nogimpui.
 
 All binary build and install options can be appended with -strip to discard
 debugging information.
@@ -137,9 +138,9 @@ while test $# -gt 0; do
     --exec-prefix)
       echo $exec_prefix
       ;;
-    --cflags | --cflags-noui)
+    --cflags | --cflags-noui | --cflags-nogimpui)
       case $1 in
-        --cflags)
+        --cflags | --cflags-nogimpui)
           my_gtk_cflags=$gtk_cflags ;;
         --cflags-noui)
           my_gtk_cflags=`echo $gtk_cflags | sed 's/^.*\(-I[^ ]*glib[^ ]*  *-I[^ ]*\).*$/\1/'` ;;
@@ -154,7 +155,7 @@ while test $# -gt 0; do
       fi
       echo $includes $my_gtk_cflags
       ;;
-    --libs)
+    --libs | --libs-nogimpui)
       my_gtk_libs=
       libdirs=-L@libdir@
       for i in $gtk_libs ; do
@@ -166,7 +167,12 @@ while test $# -gt 0; do
           fi
         fi
       done
-      echo $libdirs -lgimpui-@LT_RELEASE@ -lgimp-@LT_RELEASE@ $my_gtk_libs
+      case $1 in
+        --libs)
+          echo $libdirs -lgimpui -lgimp $my_gtk_libs ;;
+        --libs-nogimpui)
+          echo $libdirs -lgimp $my_gtk_libs ;;
+      esac
       ;;
     --libs-noui)
       glib_ldflags=`echo $gtk_libs | sed -e 's/^.*-lgdk[^ ]* *\(-L[^ ]*\).*$/\1/' -e 's/^.* -lgdk[^ ]* .*$//'`
@@ -185,7 +191,7 @@ while test $# -gt 0; do
           fi
         fi
       done
-      echo -L@libdir@ -lgimp-@LT_RELEASE@ $my_glib_libs
+      echo -L@libdir@ -lgimp $my_glib_libs
       ;;
     --install-bin | --install-admin-bin \
     | --install-bin-strip | --install-admin-bin-strip \
@@ -231,8 +237,10 @@ while test $# -gt 0; do
         exit 1
       fi
       ;;
-    --build | --install | --install-admin \
-    | --build-strip | --install-strip | --install-admin-strip \
+    --build | --install | --install-admin | --build-strip | --install-strip \
+    | --install-admin-strip | --build-nogimpui | --install-nogimpui \
+    | --install-admin-nogimpui | --build-nogimpui-strip \
+    | --install-nogimpui-strip | --install-admin-nogimpui-strip \
     | --build-noui | --install-noui | --install-admin-noui \
     | --build-noui-strip | --install-noui-strip | --install-admin-noui-strip)
       opt=`echo $1 | sed 's/-strip$//'`
@@ -240,17 +248,21 @@ while test $# -gt 0; do
         cflags=`echo $cflags | sed -e 's/-g //g' -e 's/ -g//g'`
       fi
       case $opt in
-        --build | --build-noui)
+        --build | --build-noui | --build-nogimpui)
           install_dir=. ;;
-        --install | --install-noui)
+        --install | --install-noui | --install-nogimpui)
           install_dir="$HOME/@gimpdir@/plug-ins" ;;
-        --install-admin | --install-admin-noui)
+        --install-admin | --install-admin-noui | --install-admin-nogimpui)
           install_dir="$plug_in_dir/plug-ins" ;;
       esac
       noui=`echo $opt | sed 's/^.*\(noui\)$/\1/'`
+      nogimpui=`echo $opt | sed 's/^.*\(nogimpui\)$/\1/'`
       if test "$noui" = "noui" ; then
         gimp_cflags=`$0 --cflags-noui`
         gimp_libs=`$0 --libs-noui`
+      elif test "$nogimpui" = "nogimpui" ; then
+        gimp_cflags=`$0 --cflags-nogimpui`
+        gimp_libs=`$0 --libs-nogimpui`
       else
         gimp_cflags=`$0 --cflags`
         gimp_libs=`$0 --libs`

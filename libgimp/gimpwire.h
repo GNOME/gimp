@@ -91,5 +91,4 @@ int  wire_write_string (int              fd,
 			gchar          **data,
 			gint             count);
 
-
 #endif /* __GIMP_WIRE_H__ */

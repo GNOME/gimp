@@ -23,9 +23,43 @@
 #include "gimpui.h"
 
 
-static char* gimp_base_name     (char *str);
-static void  gimp_menu_callback (GtkWidget *w,
-				 gint32    *id);
+/* Copy data from temp_PDB call */
+struct _GBrushData {
+  gint busy;
+  gchar *bname;
+  gdouble opacity;
+  gint spacing;
+  gint paint_mode;
+  gint width;
+  gint height;
+  gchar *brush_mask_data;
+  GRunBrushCallback callback;
+  gint closing;
+};
+
+typedef struct _GBrushData GBrushData;
+
+
+static void    gimp_menu_callback    (GtkWidget        *w,
+				      gint32           *id);
+static void    do_brush_callback     (GBrushData       *bdata);
+static gint    idle_test             (GBrushData       *bdata);
+static void    temp_brush_invoker    (char             *name,
+				      int               nparams,
+				      GParam           *param,
+				      int              *nreturn_vals,
+				      GParam          **return_vals);
+static void    input_callback        (gpointer          data,
+				      gint              source,
+				      GdkInputCondition condition);
+static void    gimp_setup_callbacks  (void);
+static gchar*  gen_temp_plugin_name  (void);
+
+/* From gimp.c */
+void gimp_run_temp (void);
+
+static GHashTable *gbrush_ht = NULL;
+static GBrushData *active_brush_pdb = NULL;
 
 
 GtkWidget*
@@ -52,7 +86,7 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
       {
 	filename = gimp_image_get_filename (images[i]);
 	label = g_new (char, strlen (filename) + 16);
-	sprintf (label, "%s-%d", gimp_base_name (filename), images[i]);
+	sprintf (label, "%s-%d", g_basename (filename), images[i]);
 	g_free (filename);
 
 	menuitem = gtk_menu_item_new_with_label (label);
@@ -118,7 +152,7 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
       {
 	name = gimp_image_get_filename (images[i]);
 	image_label = g_new (char, strlen (name) + 16);
-	sprintf (image_label, "%s-%d", gimp_base_name (name), images[i]);
+	sprintf (image_label, "%s-%d", g_basename (name), images[i]);
 	g_free (name);
 
 	layers = gimp_image_get_layers (images[i], &nlayers);
@@ -198,7 +232,7 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
       {
 	name = gimp_image_get_filename (images[i]);
 	image_label = g_new (char, strlen (name) + 16);
-	sprintf (image_label, "%s-%d", gimp_base_name (name), images[i]);
+	sprintf (image_label, "%s-%d", g_basename (name), images[i]);
 	g_free (name);
 
 	channels = gimp_image_get_channels (images[i], &nchannels);
@@ -280,7 +314,7 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
       {
 	name = gimp_image_get_filename (images[i]);
 	image_label = g_new (char, strlen (name) + 16);
-	sprintf (image_label, "%s-%d", gimp_base_name (name), images[i]);
+	sprintf (image_label, "%s-%d", g_basename (name), images[i]);
 	g_free (name);
 
 	layers = gimp_image_get_layers (images[i], &nlayers);
@@ -360,17 +394,6 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 }
 
 
-static char*
-gimp_base_name (char *str)
-{
-  char *t;
-
-  t = strrchr (str, '/');
-  if (!t)
-    return str;
-  return t+1;
-}
-
 static void
 gimp_menu_callback (GtkWidget *w,
 		    gint32    *id)
@@ -394,27 +417,8 @@ gimp_menu_callback (GtkWidget *w,
  * we will restrict this to a temp PDB function we have registered.
  */
 
-/* Copy data from temp_PDB call */
-struct _GBrush_data {
-  gint busy;
-  gchar * bname;
-  gdouble opacity;
-  gint spacing;
-  gint paint_mode;
-  gint width;
-  gint height;
-  gchar * brush_mask_data;
-  GRunBrushCallback callback;
-  gint closing;
-};
-
-typedef struct _GBrush_data GBrush_data;
-
-static GHashTable * gbrush_ht = NULL;
-static GBrush_data * active_brush_pdb = NULL;
-
 static void 
-do_brush_callback(GBrush_data * bdata)
+do_brush_callback(GBrushData * bdata)
 {
   if(!bdata->busy)
     return;
@@ -440,10 +444,9 @@ do_brush_callback(GBrush_data * bdata)
 }
 
 static gint
-idle_test (GBrush_data * bd)
+idle_test (GBrushData * bdata)
 {
-  do_brush_callback(bd);
-
+  do_brush_callback(bdata);
   return FALSE;
 }
 
@@ -457,7 +460,7 @@ temp_brush_invoker(char    *name,
 {
   static GParam values[1];
   GStatusType status = STATUS_SUCCESS;
-  GBrush_data *bdata = (GBrush_data *)g_hash_table_lookup(gbrush_ht,name);
+  GBrushData *bdata = (GBrushData *)g_hash_table_lookup(gbrush_ht,name);
 
   if(!bdata)
     {
@@ -501,20 +504,18 @@ temp_brush_invoker(char    *name,
   values[0].data.d_status = status;
 }
 
-extern void gimp_run_temp(); /* gimp.c */
-
-void input_callback( gpointer          data,
-                     gint              source,
-                     GdkInputCondition condition )
+static void
+input_callback (gpointer          data,
+                gint              source,
+                GdkInputCondition condition)
 {
   /* We have some data in the wire - read it */
   /* The below will only ever run a single proc */
   gimp_run_temp();
-
 }
 
 static void
-gimp_setup_callbacks()
+gimp_setup_callbacks (void)
 {
   static int first_time = TRUE;
   extern int _readfd;
@@ -528,7 +529,7 @@ gimp_setup_callbacks()
 }
 
 static gchar *
-gen_temp_plugin_name()
+gen_temp_plugin_name (void)
 {
   GParam *return_vals;
   int nreturn_vals;
@@ -572,7 +573,7 @@ gimp_interactive_selection_brush(gchar *dialogname, gchar *brush_name,GRunBrushC
   gint bnreturn_vals;
   GParam *pdbreturn_vals;
   gchar *pdbname = gen_temp_plugin_name();
-  GBrush_data *bdata = g_malloc0(sizeof(struct _GBrush_data));
+  GBrushData *bdata = g_malloc0(sizeof(struct _GBrushData));
 
   gimp_install_temp_proc (pdbname,
 			  "Temp PDB for interactive popups",
@@ -618,7 +619,4 @@ gimp_interactive_selection_brush(gchar *dialogname, gchar *brush_name,GRunBrushC
 
   bdata->callback = callback;
   g_hash_table_insert(gbrush_ht,pdbname,bdata);
-
 }
-
-

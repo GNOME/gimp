@@ -6,7 +6,7 @@ scriptdata =
 
 EXTRA_DIST = gimpfeatures.h.in
 
-lib_LTLIBRARIES = libgimp-1.1.la libgimpui-1.1.la
+lib_LTLIBRARIES = libgimp.la libgimpui.la
 noinst_LIBRARIES = libgimpi.a
 
 libgimpi_a_SOURCES = \
@@ -16,9 +16,9 @@ libgimpi_a_SOURCES = \
 	gimpwire.h
 
 ## Evil hack to insure all deps are satisfied on first-run make
-libgimpi_a_DEPENDENCIES = libgimp-1.1.la
+libgimpi_a_DEPENDENCIES = libgimp.la
 
-libgimp_1_1_la_SOURCES = \
+libgimp_la_SOURCES = \
 	gimp.c		\
 	gimpchannel.c	\
 	gimpdisplay.c	\
@@ -34,7 +34,7 @@ libgimp_1_1_la_SOURCES = \
 	gimpwire.c	\
 	gimpwire.h
 
-libgimpui_1_1_la_SOURCES = \
+libgimpui_la_SOURCES = \
 	gimpmenu.c
 
 gimpinclude_HEADERS = \
@@ -45,8 +45,10 @@ gimpinclude_HEADERS = \
 	gimpui.h	\
 	gimpintl.h
 
-libgimp_1_1_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
-libgimpui_1_1_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+libgimp_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -release $(LT_RELEASE)
+libgimpui_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -release $(LT_RELEASE)
 
 CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"
@@ -55,12 +57,6 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/intl	\
 	-I../intl		\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)
-
-libgimpui_1_1_la_INCLUDES = \
-	-I$(top_srcdir)		\
-	-I$(top_srcdir)/intl	\
 	$(GTK_CFLAGS)		\
 	-I$(includedir)
 

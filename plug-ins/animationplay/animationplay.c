@@ -615,8 +615,11 @@ build_dialog(GImageType basetype,
   GtkWidget* hbox;
   GtkWidget* hbox2;
   GtkWidget* eventbox;
-  guchar* color_cube;
   GdkCursor* cursor;
+
+#ifndef RAPH_IS_HOME
+  guchar* color_cube;
+#endif
 
   argc = 1;
   argv = g_new (gchar *, 1);

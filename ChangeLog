@@ -1,4 +1,37 @@
+Sun Sep 20 15:52:21 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* Upgraded to libtool 1.2b
+
+	* Reversioned libgimp to use gtk-style without a funky soname
+ 
+	* configure.in: craft GLIB_CFLAGS and GLIB_LIBS
+
+	* Makefile.am (pretty much all of em): changed to use new library
+	naming scheme. Only link libgimpui and libgtk et al to the plugins
+	that actually need them.
+
+	* app/gimage_cmds.c: corrected typo that resulted in corrupt PDB
+	record
+
+	* libgimp/gimp.h
+	* libgimp/gimpwire.h
+	* libgimp/gimpmenu.[ch]: clean up the callback code
+
+	* Removed unecessary inclusion of gtk headers for plugins that
+	don't use em
+
+	* plug-ins/zealouscrop/zealouscrop.c: use gint8 instead of gboolean,
+	save some mem
+
+	* plugged some warnings in animationplay, flame, fp, gee, gfig
+
+	* gimptool.in: changes for library reversioning, added --nogimpui
+	option for not linking in libgimpui
+
+	* configure.in: added finnish translation
+
 Sun Sep 20 12:57:00 CST 1998 Seth Burgess <sjburges@gimp.org>
+
 	* plug-ins/gauss_iir/gauss_iir.c: Fixed segfault if neither 
 	horizontal nor vertical was selected (as reported by Marc Lehman).
 

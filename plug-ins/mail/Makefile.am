@@ -16,13 +16,11 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
-	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
-	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la	
+	$(top_builddir)/libgimp/libgimp.la	
 
 mail_DEPENDENCIES = $(DEPS)
 

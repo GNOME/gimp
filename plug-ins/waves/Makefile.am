@@ -15,14 +15,12 @@ INCLUDES = \
 
 LDADD = \
 	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
-	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
-	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(top_builddir)/libgimp/libgimp.la			\
 	$(GTK_LIBS)
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
-	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
-	$(top_builddir)/plug-ins/megawidget/libmegawidget.a
+	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
+	$(top_builddir)/libgimp/libgimp.la
 
 waves_DEPENDENCIES = $(DEPS)
 

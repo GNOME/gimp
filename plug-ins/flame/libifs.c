@@ -731,7 +731,7 @@ void parse_control_point(ss, cp)
    int argc, i, j;
    int set_cm = 0, set_image_size = 0, set_nbatches = 0, set_white_level = 0, set_cmap_inter = 0;
    int set_spatial_oversample = 0;
-   double *slot, xf, cm, t, nbatches, white_level, spatial_oversample, cmap_inter;
+   double *slot = NULL, xf, cm, t, nbatches, white_level, spatial_oversample, cmap_inter;
    double image_size[2];
 
    for (i = 0; i < NXFORMS; i++) {

@@ -62,12 +62,21 @@ AC_PROG_MAKE_SET
 AC_PROG_CPP
 
 dnl i18n stuff
-ALL_LINGUAS="sv ja it"
+ALL_LINGUAS="sv ja it fi"
 AM_GNU_GETTEXT
 
 dnl Check for GTK+
-AM_PATH_GTK(1.1.0,,
+AM_PATH_GTK(1.1.2,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
+
+dnl Evil stuff to extract GLIB stuff from gtk-config output
+dnl (we want to make sure it matches with the gtk we're using)
+GLIB_CFLAGS=`echo $GTK_CFLAGS | sed 's/^.*\(-I[[^ ]]*glib[[^ ]]*  *-I[[^ ]]*\).*$/\1/'`
+GLIB_LDFLAGS=`echo $gtk_libs | sed -e 's/^.*-lgdk[[^ ]]* *\(-L[[^ ]]*\).*$/\1/' -e 's/^.* -lgdk[[^ ]]* .*$//'`
+if test -z "$glib_ldflags" ; then
+  GLIB_LDFLAGS=`echo $GTK_LIBS | sed 's/^ *\(-L[[^ ]]*\) .*$/\1/'`
+fi 
+GLIB_LIBS="$GLIB_LDFLAGS `echo $GTK_LIBS | sed 's/^.*\(-lglib[[^ ]]*\).*$/\1/'`"
 
 if eval "test x$GCC = xyes"; then
   if echo "$CFLAGS" | grep "\-Wall" > /dev/null 2> /dev/null; then
@@ -456,6 +465,9 @@ AC_SUBST(LT_RELEASE)
 AC_SUBST(LT_CURRENT)
 AC_SUBST(LT_REVISION)
 AC_SUBST(LT_AGE)
+
+AC_SUBST(GLIB_CFLAGS)
+AC_SUBST(GLIB_LIBS)
 
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)
