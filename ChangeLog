@@ -1,5 +1,10 @@
 2001-07-02  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/helpbrowser/helpbrowser.c: removed special handling of 
+	undocumented filters, added support for anchors in URLs.
+
+2001-07-02  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/*/Makefile.am
 	* plug-ins/common/mkgen.pl: added -I$(top_srcdir)/intl to INCLUDES.
 	This will hopefully fix #51823 without breaking it for other platforms.
