@@ -219,6 +219,9 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->replace_region              = gimp_drawable_real_replace_region;
   klass->set_tiles                   = gimp_drawable_real_set_tiles;
   klass->swap_pixels                 = gimp_drawable_real_swap_pixels;
+
+  klass->scale_desc                  = NULL;
+  klass->resize_desc                 = NULL;
 }
 
 static void
@@ -373,7 +376,8 @@ gimp_drawable_scale (GimpItem              *item,
                 GIMP_INTERPOLATION_NONE : interpolation_type,
                 progress_callback, progress_data);
 
-  gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
+  gimp_drawable_set_tiles_full (drawable,  TRUE,
+                                GIMP_DRAWABLE_GET_CLASS (drawable)->scale_desc,
                                 new_tiles, gimp_drawable_type (drawable),
                                 new_offset_x, new_offset_y);
   tile_manager_unref (new_tiles);
@@ -393,8 +397,6 @@ gimp_drawable_resize (GimpItem *item,
   gint          new_offset_y;
   gint          copy_x, copy_y;
   gint          copy_width, copy_height;
-
-  drawable = GIMP_DRAWABLE (item);
 
   new_offset_x = item->offset_x - offset_x;
   new_offset_y = item->offset_y - offset_y;
@@ -441,7 +443,8 @@ gimp_drawable_resize (GimpItem *item,
       copy_region (&srcPR, &destPR);
     }
 
-  gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
+  gimp_drawable_set_tiles_full (drawable, TRUE,
+                                GIMP_DRAWABLE_GET_CLASS (drawable)->resize_desc,
                                 new_tiles, gimp_drawable_type (drawable),
                                 new_offset_x, new_offset_y);
   tile_manager_unref (new_tiles);
@@ -582,6 +585,10 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
   old_has_alpha = gimp_drawable_has_alpha (drawable);
 
   gimp_drawable_invalidate_boundary (drawable);
+
+  if (push_undo)
+    gimp_image_undo_push_drawable_mod (gimp_item_get_image (item), undo_desc,
+                                       drawable);
 
   if (drawable->tiles)
     tile_manager_unref (drawable->tiles);
@@ -822,6 +829,7 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (tiles != NULL);
+  g_return_if_fail (tile_manager_bpp (tiles) == GIMP_IMAGE_TYPE_BYTES (type));
 
   item = GIMP_ITEM (drawable);
 

@@ -265,6 +265,8 @@ gimp_channel_class_init (GimpChannelClass *klass)
   drawable_class->replace_region        = gimp_channel_replace_region;
   drawable_class->set_tiles             = gimp_channel_set_tiles;
   drawable_class->swap_pixels           = gimp_channel_swap_pixels;
+  drawable_class->scale_desc            = _("Scale Channel");
+  drawable_class->resize_desc           = _("Resize Channel");
 
   klass->boundary       = gimp_channel_real_boundary;
   klass->bounds         = gimp_channel_real_bounds;
@@ -495,12 +497,6 @@ gimp_channel_scale (GimpItem              *item,
                     GimpProgressFunc       progress_callback,
                     gpointer               progress_data)
 {
-  GimpChannel *channel = GIMP_CHANNEL (item);
-
-  gimp_image_undo_push_channel_mod (gimp_item_get_image (item),
-                                    _("Scale Channel"),
-                                    channel);
-
   if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
     {
       new_offset_x = 0;
@@ -511,9 +507,6 @@ gimp_channel_scale (GimpItem              *item,
                                          new_offset_x, new_offset_y,
                                          interpolation_type,
                                          progress_callback, progress_data);
-
-  /*  bounds are now unknown  */
-  channel->bounds_known = FALSE;
 }
 
 static void
@@ -523,12 +516,6 @@ gimp_channel_resize (GimpItem *item,
                      gint      offset_x,
                      gint      offset_y)
 {
-  GimpChannel *channel = GIMP_CHANNEL (item);
-
-  gimp_image_undo_push_channel_mod (gimp_item_get_image (item),
-                                    _("Resize Channel"),
-                                    channel);
-
   GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
                                           offset_x, offset_y);
 
@@ -537,9 +524,6 @@ gimp_channel_resize (GimpItem *item,
       item->offset_x = 0;
       item->offset_y = 0;
     }
-
-  /*  bounds are now unknown  */
-  channel->bounds_known = FALSE;
 }
 
 static void
@@ -775,11 +759,6 @@ gimp_channel_set_tiles (GimpDrawable *drawable,
                         gint          offset_x,
                         gint          offset_y)
 {
-  if (push_undo)
-    gimp_image_undo_push_channel_mod (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                      undo_desc,
-                                      GIMP_CHANNEL (drawable));
-
   GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
                                                  push_undo, undo_desc,
                                                  tiles, type,

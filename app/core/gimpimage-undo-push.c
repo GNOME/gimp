@@ -669,6 +669,98 @@ undo_free_drawable (GimpUndo     *undo,
 }
 
 
+/***********************/
+/*  Drawable Mod Undo  */
+/***********************/
+
+typedef struct _DrawableModUndo DrawableModUndo;
+
+struct _DrawableModUndo
+{
+  TileManager   *tiles;
+  GimpImageType  type;
+  gint           offset_x;
+  gint		 offset_y;
+};
+
+static gboolean undo_pop_drawable_mod  (GimpUndo            *undo,
+                                        GimpUndoMode         undo_mode,
+                                        GimpUndoAccumulator *accum);
+static void     undo_free_drawable_mod (GimpUndo            *undo,
+                                        GimpUndoMode         undo_mode);
+
+gboolean
+gimp_image_undo_push_drawable_mod (GimpImage   *gimage,
+                                   const gchar *undo_desc,
+                                   GimpDrawable   *drawable)
+{
+  GimpUndo *new;
+  gint64    size;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  size = sizeof (DrawableModUndo) + tile_manager_get_memsize (drawable->tiles);
+
+  if ((new = gimp_image_undo_push_item (gimage, GIMP_ITEM (drawable),
+                                        size, sizeof (DrawableModUndo),
+                                        GIMP_UNDO_DRAWABLE_MOD, undo_desc,
+                                        TRUE,
+                                        undo_pop_drawable_mod,
+                                        undo_free_drawable_mod)))
+    {
+      DrawableModUndo *drawable_undo = new->data;
+
+      drawable_undo->tiles    = tile_manager_ref (drawable->tiles);
+      drawable_undo->type     = drawable->type;
+      drawable_undo->offset_x = GIMP_ITEM (drawable)->offset_x;
+      drawable_undo->offset_y = GIMP_ITEM (drawable)->offset_y;
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_drawable_mod (GimpUndo            *undo,
+                       GimpUndoMode         undo_mode,
+                       GimpUndoAccumulator *accum)
+{
+  DrawableModUndo *drawable_undo = undo->data;
+  GimpDrawable    *drawable      = GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item);
+  TileManager     *tiles;
+  GimpImageType    drawable_type;
+  gint             offset_x, offset_y;
+
+  tiles         = drawable_undo->tiles;
+  drawable_type = drawable_undo->type;
+  offset_x      = drawable_undo->offset_x;
+  offset_y      = drawable_undo->offset_y;
+
+  drawable_undo->tiles    = tile_manager_ref (drawable->tiles);
+  drawable_undo->type     = drawable->type;
+  drawable_undo->offset_x = GIMP_ITEM (drawable)->offset_x;
+  drawable_undo->offset_y = GIMP_ITEM (drawable)->offset_y;
+
+  gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
+                                tiles, drawable_type, offset_x, offset_y);
+  tile_manager_unref (tiles);
+
+  return TRUE;
+}
+
+static void
+undo_free_drawable_mod (GimpUndo     *undo,
+                        GimpUndoMode  undo_mode)
+{
+  DrawableModUndo *drawable_undo = undo->data;
+
+  tile_manager_unref (drawable_undo->tiles);
+  g_free (drawable_undo);
+}
+
+
 /***************/
 /*  Mask Undo  */
 /***************/
@@ -1324,101 +1416,6 @@ undo_free_layer (GimpUndo     *undo,
 }
 
 
-/********************/
-/*  Layer Mod Undo  */
-/********************/
-
-typedef struct _LayerModUndo LayerModUndo;
-
-struct _LayerModUndo
-{
-  TileManager   *tiles;
-  GimpImageType  type;
-  gint           offset_x;
-  gint		 offset_y;
-};
-
-static gboolean undo_pop_layer_mod  (GimpUndo            *undo,
-                                     GimpUndoMode         undo_mode,
-                                     GimpUndoAccumulator *accum);
-static void     undo_free_layer_mod (GimpUndo            *undo,
-                                     GimpUndoMode         undo_mode);
-
-gboolean
-gimp_image_undo_push_layer_mod (GimpImage   *gimage,
-                                const gchar *undo_desc,
-                                GimpLayer   *layer)
-{
-  GimpUndo    *new;
-  TileManager *tiles;
-  gint64       size;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
-
-  tiles = GIMP_DRAWABLE (layer)->tiles;
-
-  size = sizeof (LayerModUndo) + tile_manager_get_memsize (tiles);
-
-  if ((new = gimp_image_undo_push_item (gimage, GIMP_ITEM (layer),
-                                        size, sizeof (LayerModUndo),
-                                        GIMP_UNDO_LAYER_MOD, undo_desc,
-                                        TRUE,
-                                        undo_pop_layer_mod,
-                                        undo_free_layer_mod)))
-    {
-      LayerModUndo *lmu = new->data;
-
-      lmu->tiles    = tile_manager_ref (tiles);
-      lmu->type     = GIMP_DRAWABLE (layer)->type;
-      lmu->offset_x = GIMP_ITEM (layer)->offset_x;
-      lmu->offset_y = GIMP_ITEM (layer)->offset_y;
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static gboolean
-undo_pop_layer_mod (GimpUndo            *undo,
-                    GimpUndoMode         undo_mode,
-                    GimpUndoAccumulator *accum)
-{
-  LayerModUndo  *lmu   = undo->data;
-  GimpLayer     *layer = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
-  GimpImageType  layer_type;
-  gint           offset_x, offset_y;
-  TileManager   *tiles;
-
-  tiles      = lmu->tiles;
-  layer_type = lmu->type;
-  offset_x   = lmu->offset_x;
-  offset_y   = lmu->offset_y;
-
-  lmu->tiles    = tile_manager_ref (GIMP_DRAWABLE (layer)->tiles);
-  lmu->type     = GIMP_DRAWABLE (layer)->type;
-  lmu->offset_x = GIMP_ITEM (layer)->offset_x;
-  lmu->offset_y = GIMP_ITEM (layer)->offset_y;
-
-  gimp_drawable_set_tiles_full (GIMP_DRAWABLE (layer), FALSE, NULL,
-                                tiles, layer_type, offset_x, offset_y);
-  tile_manager_unref (tiles);
-
-  return TRUE;
-}
-
-static void
-undo_free_layer_mod (GimpUndo     *undo,
-                     GimpUndoMode  undo_mode)
-{
-  LayerModUndo *lmu = undo->data;
-
-  tile_manager_unref (lmu->tiles);
-  g_free (lmu);
-}
-
-
 /********************************/
 /*  Layer Mask Add/Remove Undo  */
 /********************************/
@@ -1970,87 +1967,6 @@ undo_free_channel (GimpUndo     *undo,
                    GimpUndoMode  undo_mode)
 {
   g_free (undo->data);
-}
-
-
-/**********************/
-/*  Channel Mod Undo  */
-/**********************/
-
-typedef struct _ChannelModUndo ChannelModUndo;
-
-struct _ChannelModUndo
-{
-  TileManager *tiles;
-};
-
-static gboolean undo_pop_channel_mod  (GimpUndo            *undo,
-                                       GimpUndoMode         undo_mode,
-                                       GimpUndoAccumulator *accum);
-static void     undo_free_channel_mod (GimpUndo            *undo,
-                                       GimpUndoMode         undo_mode);
-
-gboolean
-gimp_image_undo_push_channel_mod (GimpImage   *gimage,
-                                  const gchar *undo_desc,
-                                  GimpChannel *channel)
-{
-  TileManager *tiles;
-  GimpUndo    *new;
-  gint64       size;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
-
-  tiles = GIMP_DRAWABLE (channel)->tiles;
-
-  size = sizeof (ChannelModUndo) + tile_manager_get_memsize (tiles);
-
-  if ((new = gimp_image_undo_push_item (gimage, GIMP_ITEM (channel),
-                                        size,
-                                        sizeof (ChannelModUndo),
-                                        GIMP_UNDO_CHANNEL_MOD, undo_desc,
-                                        TRUE,
-                                        undo_pop_channel_mod,
-                                        undo_free_channel_mod)))
-    {
-      ChannelModUndo *cmu = new->data;
-
-      cmu->tiles = tile_manager_ref (tiles);
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static gboolean
-undo_pop_channel_mod (GimpUndo            *undo,
-                      GimpUndoMode         undo_mode,
-                      GimpUndoAccumulator *accum)
-{
-  ChannelModUndo *cmu     = undo->data;
-  GimpChannel    *channel = GIMP_CHANNEL (GIMP_ITEM_UNDO (undo)->item);
-  TileManager    *tiles;
-
-  tiles = cmu->tiles;
-
-  cmu->tiles = tile_manager_ref (GIMP_DRAWABLE (channel)->tiles);
-
-  gimp_drawable_set_tiles (GIMP_DRAWABLE (channel), FALSE, NULL, tiles);
-  tile_manager_unref (tiles);
-
-  return TRUE;
-}
-
-static void
-undo_free_channel_mod (GimpUndo     *undo,
-                       GimpUndoMode  undo_mode)
-{
-  ChannelModUndo *cmu = undo->data;
-
-  tile_manager_unref (cmu->tiles);
-  g_free (cmu);
 }
 
 

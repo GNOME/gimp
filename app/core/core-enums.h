@@ -453,7 +453,8 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_IMAGE_GRID,               /*< desc="Grid"                      >*/
   GIMP_UNDO_IMAGE_GUIDE,              /*< desc="Guide"                     >*/
   GIMP_UNDO_IMAGE_COLORMAP,           /*< desc="Change Indexed Palette"    >*/
-  GIMP_UNDO_DRAWABLE,                 /*< desc="Drawable Mod"              >*/
+  GIMP_UNDO_DRAWABLE,                 /*< desc="Drawable"                  >*/
+  GIMP_UNDO_DRAWABLE_MOD,             /*< desc="Drawable Mod"              >*/
   GIMP_UNDO_MASK,                     /*< desc="Selection Mask"            >*/
   GIMP_UNDO_ITEM_RENAME,              /*< desc="Rename Item"               >*/
   GIMP_UNDO_ITEM_DISPLACE,            /*< desc="Move Item"                 >*/
@@ -461,7 +462,6 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_ITEM_LINKED,              /*< desc="Set Item Linked"           >*/
   GIMP_UNDO_LAYER_ADD,                /*< desc="New Layer"                 >*/
   GIMP_UNDO_LAYER_REMOVE,             /*< desc="Delete Layer"              >*/
-  GIMP_UNDO_LAYER_MOD,                /*< desc="Layer Mod"                 >*/
   GIMP_UNDO_LAYER_MASK_ADD,           /*< desc="Add Layer Mask"            >*/
   GIMP_UNDO_LAYER_MASK_REMOVE,        /*< desc="Delete Layer Mask"         >*/
   GIMP_UNDO_LAYER_REPOSITION,         /*< desc="Reposition Layer"          >*/
@@ -471,7 +471,6 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_TEXT_LAYER,               /*< desc="Text"                      >*/
   GIMP_UNDO_CHANNEL_ADD,              /*< desc="New Channel"               >*/
   GIMP_UNDO_CHANNEL_REMOVE,           /*< desc="Delete Channel"            >*/
-  GIMP_UNDO_CHANNEL_MOD,              /*< desc="Channel Mod"               >*/
   GIMP_UNDO_CHANNEL_REPOSITION,       /*< desc="Reposition Channel"        >*/
   GIMP_UNDO_CHANNEL_COLOR,            /*< desc="Channel Color"             >*/
   GIMP_UNDO_VECTORS_ADD,              /*< desc="New Vectors"               >*/

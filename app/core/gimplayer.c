@@ -256,6 +256,8 @@ gimp_layer_class_init (GimpLayerClass *klass)
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
   drawable_class->set_tiles             = gimp_layer_set_tiles;
+  drawable_class->scale_desc            = _("Scale Layer");
+  drawable_class->resize_desc           = _("Resize Layer");
 
   klass->opacity_changed              = NULL;
   klass->mode_changed                 = NULL;
@@ -396,11 +398,6 @@ gimp_layer_set_tiles (GimpDrawable *drawable,
                       gint          offset_y)
 {
   GimpLayer *layer = GIMP_LAYER (drawable);
-
-  if (push_undo)
-    gimp_image_undo_push_layer_mod (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                    undo_desc,
-                                    GIMP_LAYER (drawable));
 
   GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
                                                  push_undo, undo_desc,
@@ -658,8 +655,6 @@ gimp_layer_scale (GimpItem              *item,
     gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_SCALE,
                                  _("Scale Layer"));
 
-  gimp_image_undo_push_layer_mod (gimage, _("Scale Layer"), layer);
-
   GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
                                          new_offset_x, new_offset_y,
                                          interpolation_type,
@@ -692,8 +687,6 @@ gimp_layer_resize (GimpItem *item,
   if (layer->mask)
     gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
                                  _("Resize Layer"));
-
-  gimp_image_undo_push_layer_mod (gimage, _("Resize Layer"), layer);
 
   GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
                                           offset_x, offset_y);

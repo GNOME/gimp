@@ -49,6 +49,9 @@ gboolean gimp_image_undo_push_drawable              (GimpImage     *gimage,
                                                      gint           y,
                                                      gint           width,
                                                      gint           height);
+gboolean gimp_image_undo_push_drawable_mod          (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpDrawable  *drawable);
 
 
 /*  mask undo  */
@@ -86,9 +89,6 @@ gboolean gimp_image_undo_push_layer_remove          (GimpImage     *gimage,
                                                      GimpLayer     *layer,
                                                      gint           prev_position,
                                                      GimpLayer     *prev_layer);
-gboolean gimp_image_undo_push_layer_mod             (GimpImage     *gimage,
-                                                     const gchar   *undo_desc,
-                                                     GimpLayer     *layer);
 gboolean gimp_image_undo_push_layer_mask_add        (GimpImage     *gimage,
                                                      const gchar   *undo_desc,
                                                      GimpLayer     *layer,
@@ -127,9 +127,6 @@ gboolean gimp_image_undo_push_channel_remove        (GimpImage     *gimage,
                                                      GimpChannel   *channel,
                                                      gint           prev_position,
                                                      GimpChannel   *prev_channel);
-gboolean gimp_image_undo_push_channel_mod           (GimpImage     *gimage,
-                                                     const gchar   *undo_desc,
-                                                     GimpChannel   *channel);
 gboolean gimp_image_undo_push_channel_reposition    (GimpImage     *gimage,
                                                      const gchar   *undo_desc,
                                                      GimpChannel   *channel);

@@ -1,5 +1,34 @@
 2004-03-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-enums.[ch] (enum GimpUndoType): replaced
+	GIMP_UNDO_LAYER_MOD and GIMP_UNDO_CHANNEL_MOD by
+	GIMP_UNDO_DRAWABLE_MOD.
+
+	* app/core/gimpimage-undo-push.[ch]: ditto: replaced
+	gimp_image_undo_push_layer_mod() and
+	gimp_image_undo_push_channel_mod() by
+	gimp_image_undo_push_drawable_mod().
+
+	* app/core/gimpdrawable.[ch]: added undo_desc strings for "resize"
+	and "scale" to the GimpDrawableClass struct.
+
+	(gimp_drawable_scale)
+	(gimp_drawable_resize): pass push_undo = TRUE to
+	gimp_drawable_set_tiles_full() and use the undo_desc from the
+	class.
+
+	(gimp_drawable_real_set_tiles): push a GIMP_UNDO_DRAWABLE_MOD here...
+
+	* app/core/gimpchannel.c
+	* app/core/gimplayer.c: ...and don't push undos in
+	GimpItem::scale(), GimpItem::resize(), GimpDrawable::set_tiles().
+
+	* app/core/gimpchannel.c: Removed even more bounds_known = FALSE
+	assignments from functions which already call
+	gimp_drawable_set_tiles().
+
+2004-03-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable.c (gimp_drawable_set_tiles_full): emit
 	"update" signals from the drawable before and after setting tiles
 	and offsets.
