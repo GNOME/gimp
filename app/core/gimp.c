@@ -136,6 +136,7 @@ gimp_init (Gimp *gimp)
   gimp->be_verbose              = FALSE;
   gimp->no_data                 = FALSE;
   gimp->no_interface            = FALSE;
+  gimp->use_shm                 = FALSE;
   gimp->message_handler         = GIMP_CONSOLE;
   gimp->stack_trace_mode        = GIMP_STACK_TRACE_NEVER;
 
@@ -426,6 +427,7 @@ Gimp *
 gimp_new (gboolean           be_verbose,
           gboolean           no_data,
           gboolean           no_interface,
+          gboolean           use_shm,
           GimpStackTraceMode stack_trace_mode)
 {
   Gimp *gimp;
@@ -435,6 +437,7 @@ gimp_new (gboolean           be_verbose,
   gimp->be_verbose       = be_verbose   ? TRUE : FALSE;
   gimp->no_data          = no_data      ? TRUE : FALSE;
   gimp->no_interface     = no_interface ? TRUE : FALSE;
+  gimp->use_shm          = use_shm      ? TRUE : FALSE;
   gimp->stack_trace_mode = stack_trace_mode;
 
   return gimp;

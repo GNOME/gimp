@@ -97,6 +97,7 @@ app_init (gint    gimp_argc,
   the_gimp = gimp_new (be_verbose,
                        no_data,
                        no_interface,
+                       use_shm,
                        stack_trace_mode);
 
   gimp_object_set_name (GIMP_OBJECT (the_gimp), prog_name);

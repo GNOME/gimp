@@ -54,6 +54,7 @@ struct _Gimp
   gboolean               be_verbose;
   gboolean               no_data;
   gboolean               no_interface;
+  gboolean               use_shm;
   GimpMessageHandlerType message_handler;
   GimpStackTraceMode     stack_trace_mode;
 
@@ -143,6 +144,7 @@ GType         gimp_get_type             (void) G_GNUC_CONST;
 Gimp        * gimp_new                  (gboolean            be_verbose,
                                          gboolean            no_data,
                                          gboolean            no_interface,
+                                         gboolean            use_shm,
                                          GimpStackTraceMode  stack_trace_mode);
 
 void          gimp_set_config           (Gimp               *gimp,

@@ -104,9 +104,6 @@
 #include "plug-in-progress.h"
 #include "plug-in-rc.h"
 
-#include "appenv.h"
-#include "app_procs.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -273,7 +270,7 @@ plug_in_init (Gimp *gimp)
    *  to plug-ins. if we can't allocate a piece of shared memory then
    *  we'll fall back on sending the data over the pipe.
    */
-  if (use_shm)
+  if (gimp->use_shm)
     plug_in_init_shm ();
 }
 

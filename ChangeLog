@@ -1,3 +1,13 @@
+2002-12-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.[ch]: added "gboolean use_shm" to the Gimp struct
+	and to gimp_new().
+
+	* app/app_procs.c: pass "use_shm" to gimp_new().
+
+	* app/plug-in/plug-in.c (plug_in_init): get "use_shm" from the
+	passed "gimp".  Don't include "appenv.h" and "app_procs.h".
+
 2002-11-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpnavigationview.c: no need to include "appenv.h"
