@@ -685,12 +685,13 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-#if 0
   /*
-   * Inhale one whole i686 cache line at once. 64 bytes, 16 rgba8 pixels, 4 128 bit xmm registers.
+   * Inhale one whole i686 cache line at once. 64 bytes, 16 rgba8
+   * pixels, 4 128 bit xmm registers.
    */
   for (; op.n_pixels >= 16; op.n_pixels -= 16)
     {
+#ifdef __OPTIMIZE__
       asm volatile ("  movdqu      %0,%%xmm0\n"
                     "\tmovdqu      %1,%%xmm1\n"
                     "\tmovdqu      %2,%%xmm2\n"
@@ -715,10 +716,51 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     : /* empty */
                     : "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5", "%xmm6", "%xmm7"
                     );
+#else
+      asm volatile ("  movdqu      %0,%%xmm0\n"
+                    "\tmovdqu      %1,%%xmm1\n"
+                    "\tmovdqu      %2,%%xmm2\n"
+                    "\tmovdqu      %3,%%xmm3\n"
+                    : "+m" (op.A[0]), "+m" (op.B[0]),
+                      "+m" (op.A[1]), "+m" (op.B[1])
+                    : /* empty */
+                    : "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5", "%xmm6", "%xmm7"
+                    );
+
+      asm volatile ("\tmovdqu      %4,%%xmm4\n"
+                    "\tmovdqu      %5,%%xmm5\n"
+                    "\tmovdqu      %6,%%xmm6\n"
+                    "\tmovdqu      %7,%%xmm7\n"
+                    : "+m" (op.A[2]), "+m" (op.B[2]),
+                      "+m" (op.A[3]), "+m" (op.B[3])
+                    : /* empty */
+                    : "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5", "%xmm6", "%xmm7"
+                    );
+
+      asm volatile ("\tmovdqu      %%xmm0,%1\n"
+                    "\tmovdqu      %%xmm1,%0\n"
+                    "\tmovdqu      %%xmm2,%3\n"
+                    "\tmovdqu      %%xmm3,%2\n"
+                    : "+m" (op.A[0]), "+m" (op.B[0]),
+                      "+m" (op.A[1]), "+m" (op.B[1])
+                    : /* empty */
+                    : "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5", "%xmm6", "%xmm7"
+                    );
+
+      asm volatile ("\tmovdqu      %%xmm4,%5\n"
+                    "\tmovdqu      %%xmm5,%4\n"
+                    "\tmovdqu      %%xmm6,%7\n"
+                    "\tmovdqu      %%xmm7,%6\n"
+                    : "+m" (op.A[2]), "+m" (op.B[2]),
+                      "+m" (op.A[3]), "+m" (op.B[3])
+                    : /* empty */
+                    : "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5", "%xmm6", "%xmm7"
+                    );
+#endif
       op.A += 64;
       op.B += 64;
     }
-#endif
+
 
   for (; op.n_pixels >= 4; op.n_pixels -= 4)
     {

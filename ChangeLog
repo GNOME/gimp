@@ -1,3 +1,19 @@
+2003-09-16  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-{mmx,sse,sse2,altivec,vis}.c: Regenerated.
+
+	* app/composite/gimp-composite-regression.[ch]: Ensure all ints
+	  are now unsigned longs.
+
+	* app/composite/gimp-composite-sse2.c (gimp_composite_addition_rgba8_rgba8_rgba8_sse2):
+	  Enclosed the troublesome (rather dense) asm construct in
+	  __OPTIMIZE__ in which case the compiler can successfully
+	  allocate enough registers to load up the asm()
+
+	* app/composite/gimp-composite-sse2.c: Removed code that caused
+	  gcc to complain can't find a register in class `GENERAL_REGS' To
+	  be revisited later.
+
 2003-09-17  Seth Burgess <sjburges@gimp.org>
 
 	* plug-ins/common/sparkle.c: use the rowstride of a pixel region
@@ -71,9 +87,20 @@
 
 2003-09-16  Helvetix Victorinox  <helvetix@gimp.org>
 
+	* app/composite/gimp-composite-{mmx,sse,sse2,altivec,vis}.c: Regenerated.
+
+	* app/composite/gimp-composite-regression.[ch]: Ensure all ints
+	  are now unsigned longs.
+
+	* app/composite/gimp-composite-sse2.c (gimp_composite_addition_rgba8_rgba8_rgba8_sse2):
+	  Enclosed the troublesome (rather dense) asm construct in
+	  __OPTIMIZE__ in which case the compiler can successfully
+	  allocate enough registers to load up the asm()
+
 	* app/composite/gimp-composite-sse2.c: Removed code that caused
 	  gcc to complain can't find a register in class `GENERAL_REGS' To
 	  be revisited later.
+
 
 2003-09-16  Sven Neumann  <sven@gimp.org>
 

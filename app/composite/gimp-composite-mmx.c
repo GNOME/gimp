@@ -978,7 +978,7 @@ gimp_composite_scale_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 
   for (; op.n_pixels >= 2; op.n_pixels -= 2)
     {
-      asm volatile ("movq           %0,%%mm2\n"
+      asm volatile ("movq           %1,%%mm2\n"
                     "\tmovq      %%mm2,%%mm1\n"
                     "\tpunpcklbw %%mm0,%%mm1\n"
                     "\tmovq      %%mm3,%%mm5\n"
@@ -993,28 +993,28 @@ gimp_composite_scale_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 
                     "\tpackuswb  %%mm4,%%mm1\n"
 
-                    "\tmovq    %%mm1,%1\n"
-                    : /* empty */
-                    : "m" (*op.A), "m" (*op.D)
-                    : "0", "1", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
+                    "\tmovq    %%mm1,%0\n"
+                    : "=m" (*op.D)
+                    : "m" (*op.A)
+                    : "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
       op.A += 8;
       op.D += 8;
     }
 
   if (op.n_pixels)
     {
-    asm volatile ("movd           %0,%%mm2\n"
-                  "\tmovq      %%mm2,%%mm1\n"
-                  "\tpunpcklbw %%mm0,%%mm1\n"
-                  "\tmovq      %%mm3,%%mm5\n"
+      asm volatile ("movd           %1,%%mm2\n"
+                    "\tmovq      %%mm2,%%mm1\n"
+                    "\tpunpcklbw %%mm0,%%mm1\n"
+                    "\tmovq      %%mm3,%%mm5\n"
 
-                  "\t" pmulwX(mm5,mm1,mm7) "\n"
+                    "\t" pmulwX(mm5,mm1,mm7) "\n"
 
-                  "\tpackuswb  %%mm0,%%mm1\n"
-                  "\tmovd      %%mm1,%1\n"
-                  : /* empty */
-                  : "m" (*op.A), "m" (*op.D)
-                  : "0", "1", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
+                    "\tpackuswb  %%mm0,%%mm1\n"
+                    "\tmovd      %%mm1,%0\n"
+                    : "=m" (*op.D)
+                    : "m" (*op.A)
+                    : "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
   }
 
   asm("emms");
@@ -1149,8 +1149,8 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 
   for (; op.n_pixels >= 2; op.n_pixels -= 2)
     {
-      asm volatile ("  movq       %0,%%mm2\n"
-                    "\tmovq       %1,%%mm3\n"
+      asm volatile ("  movq       %1,%%mm2\n"
+                    "\tmovq       %2,%%mm3\n"
 
                     "\tmovq    %%mm2,%%mm4\n"
                     "\tpsubusb %%mm3,%%mm4\n"
@@ -1162,9 +1162,9 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 
                     "\tpand    %%mm0,%%mm2\n"
                     "\tpor     %%mm2,%%mm1\n"
-                    "\tmovq    %%mm1,%2\n"
-                    : /* empty */
-                    : "m" (*op.A), "m" (*op.B), "m" (*op.D)
+                    "\tmovq    %%mm1,%0\n"
+                    : "=m" (*op.D)
+                    : "m" (*op.A), "m" (*op.B)
                     : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
       op.A += 8;
       op.B += 8;

@@ -134,7 +134,7 @@ gimp_composite_regression_compare_contexts (char *operation, GimpCompositeContex
 int
 gimp_composite_regression_comp_rgba8 (char *str, gimp_rgba8_t *rgba8A, gimp_rgba8_t *rgba8B, gimp_rgba8_t *expected, gimp_rgba8_t *got, u_long length)
 {
-  int i;
+  u_long i;
   int failed;
   int fail_count;
 
@@ -223,12 +223,12 @@ gimp_composite_regression_timer_report (char *name, double t1, double t2)
 }
 
 double
-gimp_composite_regression_time_function (int iterations, void (*func)(), GimpCompositeContext *ctx)
+gimp_composite_regression_time_function (u_long iterations, void (*func)(), GimpCompositeContext *ctx)
 {
   struct timeval t0;
   struct timeval t1;
   struct timeval tv_elapsed;
-  int i;
+  u_long i;
 
   gettimeofday(&t0, NULL);
   for (i = 0; i < iterations; i++) { (*func)(ctx); }
@@ -239,10 +239,10 @@ gimp_composite_regression_time_function (int iterations, void (*func)(), GimpCom
 }
 
 gimp_rgba8_t *
-gimp_composite_regression_random_rgba8 (unsigned long n_pixels)
+gimp_composite_regression_random_rgba8 (u_long n_pixels)
 {
   gimp_rgba8_t *rgba8;
-  int i;
+  u_long i;
 
   if ((rgba8 = (gimp_rgba8_t *) calloc (sizeof(gimp_rgba8_t), n_pixels))) {
     for (i = 0; i < n_pixels; i++) {
@@ -257,11 +257,11 @@ gimp_composite_regression_random_rgba8 (unsigned long n_pixels)
 }
 
 gimp_rgba8_t *
-gimp_composite_regression_fixed_rgba8 (unsigned long n_pixels)
+gimp_composite_regression_fixed_rgba8 (u_long n_pixels)
 {
   gimp_rgba8_t *rgba8;
-  int i;
-  int v;
+  u_long i;
+  u_long v;
 
   if ((rgba8 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels))) {
     for (i = 0; i < n_pixels; i++) {
