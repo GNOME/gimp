@@ -734,7 +734,7 @@ GPL
 
 	    $headers .= "\n" if /libgimp/ && !$lib++ && $headers;
 
-            if ($_ eq '"regexrepl.h"') {
+            if ($_ eq '"regexrepl/regex.h"') {
 		$headers .= "\n";
 		$headers .= "#ifdef HAVE_GLIBC_REGEX\n";
 		$headers .= "#include <regex.h>\n";
@@ -743,7 +743,7 @@ GPL
 
 	    $headers .= "#include $_\n";
 
-            if ($_ eq '"regexrepl.h"') {
+            if ($_ eq '"regexrepl/regex.h"') {
 		$headers .= "#endif\n\n";
 	    }
 

@@ -6,7 +6,7 @@
 #include <string.h>
 
 #ifndef HAVE_GLIBC_REGEX
-#include "regexrepl.h"
+#include "regexrepl/regex.h"
 #else
 #include <regex.h>
 #endif

@@ -181,7 +181,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw(<stdlib.h> "regexrepl.h") ],
+	headers => [ qw(<stdlib.h> "regexrepl/regex.h") ],
 	vars => [ 'PDBQuery pdb_query' ],
 	code => <<CODE
 {

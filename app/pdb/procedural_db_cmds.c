@@ -36,7 +36,7 @@
 #ifdef HAVE_GLIBC_REGEX
 #include <regex.h>
 #else
-#include "regexrepl.h"
+#include "regexrepl/regex.h"
 #endif
 
 

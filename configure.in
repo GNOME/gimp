@@ -900,6 +900,7 @@ plug-ins/perl/po/Makefile.in
 po-plug-ins/Makefile.in
 po-script-fu/Makefile.in
 intl/Makefile
+regexrepl/Makefile
 tools/Makefile
 tools/authorsgen/Makefile
 tools/pdbgen/Makefile

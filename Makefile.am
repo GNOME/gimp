@@ -1,27 +1,28 @@
 ## Process this file with automake to produce Makefile.in
 
 SUBDIRS = \
-	tools		\
-	intl		\
-	libgimpbase	\
-	libgimpcolor	\
-	libgimpmath	\
-	libgimpwidgets	\
-	libgimp		\
-	app		\
-	$(GIMP_PLUGINS)	\
-	$(GIMP_MODULES)	\
-	po		\
-	po-libgimp	\
-	po-plug-ins	\
-	$(GIMP_PERL_PO)	\
-	po-script-fu	\
-	cursors		\
-	pixmaps		\
-	data		\
-	tips		\
-	docs		\
-	devel-docs	\
+	tools			\
+	intl			\
+	regexrepl		\
+	libgimpbase		\
+	libgimpcolor		\
+	libgimpmath		\
+	libgimpwidgets		\
+	libgimp			\
+	app			\
+	$(GIMP_PLUGINS)		\
+	$(GIMP_MODULES)		\
+	po			\
+	po-libgimp		\
+	po-plug-ins		\
+	$(GIMP_PERL_PO)		\
+	po-script-fu		\
+	cursors			\
+	pixmaps			\
+	data			\
+	tips			\
+	docs			\
+	devel-docs		\
 	build
 
 bin_SCRIPTS = gimptool-1.4 @GIMPINSTALL@

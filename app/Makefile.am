@@ -4,14 +4,6 @@ SUBDIRS = paint-funcs base core pdb xcf tools widgets gui
 
 scriptdata =
 
-if HAVE_GLIBC_REGEX
-regex_sources =
-else
-regex_sources = \
-	regexrepl.c 		\
-	regexrepl.h
-endif
-
 bin_PROGRAMS = gimp
 
 gimp_SOURCES = @STRIP_BEGIN@ \
@@ -127,7 +119,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 	gimphelp.h		\
 	libgimp_glue.c		\
 	libgimp_glue.h		\
-	$(regex_sources)	\
 @STRIP_END@
 
 EXTRA_DIST = \
@@ -138,16 +129,19 @@ EXTRA_DIST = \
 	gimp.sym			\
 	wilber.ico			\
 	arch/i386/mmx/detect_mmx.S	\
-	arch/i386/mmx/paint_funcs_mmx.S	\
-	regexrepl.c 			\
-	regexrepl.h
+	arch/i386/mmx/paint_funcs_mmx.S
+
+if HAVE_GLIBC_REGEX
+REGEXREPL =
+else
+REGEXREPL = $(top_builddir)/regexrepl/libregex.a
+endif
 
 gimp_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DLOCALEDIR=\""$(localedir)"\"	\
-	-DREGEX_MALLOC			\
 	-DG_LOG_DOMAIN=\"Gimp\"		\
 	@GIMP_THREAD_FLAGS@ 		\
 	@GIMP_MP_FLAGS@			\
@@ -177,6 +171,7 @@ gimp_LDADD = @STRIP_BEGIN@ \
 	$(GIMP_THREAD_LIBS)						\
 	$(GIMP_MP_LIBS)							\
 	$(INTLLIBS)							\
+	$(REGEXREPL)							\
 @STRIP_END@
 
 .PHONY: files

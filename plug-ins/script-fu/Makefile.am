@@ -1,11 +1,5 @@
 ## Process this file with automake to produce Makefile.in
 
-if HAVE_GLIBC_REGEX
-regex_sources =
-else
-regex_sources = regexrepl.c regexrepl.h
-endif
-
 SUBDIRS = scripts
 
 libexecdir = $(gimpplugindir)/plug-ins
@@ -30,18 +24,9 @@ script_fu_SOURCES = @STRIP_BEGIN@ \
 	script-fu-enums.h	\
 	siod.h			\
 	siodp.h			\
-	$(regex_sources)	\
 @STRIP_END@
 
-EXTRA_DIST = @STRIP_BEGIN@ \
-	regexrepl.c		\
-	regexrepl.h		\
-@STRIP_END@
-
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DREGEX_MALLOC			\
-	-DLOCALEDIR=\""$(localedir)"\"	\
-@STRIP_END@
+AM_CPPFLAGS = -DLOCALEDIR=\""$(localedir)"\"
 
 INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
@@ -49,6 +34,12 @@ INCLUDES = @STRIP_BEGIN@ \
 	$(GTK_CFLAGS)			\
 	-I$(includedir)			\
 @STRIP_END@
+
+if HAVE_GLIBC_REGEX
+REGEXREPL =
+else
+REGEXREPL = $(top_builddir)/regexrepl/libregex.a
+endif
 
 LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/plug-ins/dbbrowser/dbbrowser_utils.o		\
@@ -59,6 +50,7 @@ LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)							\
+	$(REGEXREPL)							\
 @STRIP_END@
 
 .PHONY: files

@@ -1,3 +1,26 @@
+2001-07-12  Sven Neumann  <sven@gimp.org>
+
+	* app/regexrepl.c
+	* app/regexrepl.h: removed here ...
+
+	* plug-ins/script-fu/regexrepl.c
+	* plug-ins/script-fu/regexrepl.h: ... and here ...
+
+	* regexrepl/Makefile.am
+	* regexrepl/regex.c
+	* regexrepl/regex.h: ... and added here again.
+	
+	* Makefile.am
+	* configure.in
+	* app/Makefile.am
+	* app/pdb/plug_in_cmds.c
+	* app/pdb/procedural_db_cmds.c
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/script-fu/interp_regex.c
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/plug_in.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb: changed accordingly.
+
 2001-07-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
