@@ -120,11 +120,11 @@
  */
 
 
-#include "config.h"		/* configure cares about HAVE_PROGRESSIVE_JPEG */
+#include "config.h"   /* configure cares about HAVE_PROGRESSIVE_JPEG */
 
-#include <glib.h>		/* We want glib.h first because of some
-				 * pretty obscure Win32 compilation issues.
-				 */
+#include <glib.h>     /* We want glib.h first because of some
+		       * pretty obscure Win32 compilation issues.
+		       */
 #include <setjmp.h>
 #include <signal.h>
 #include <stdio.h>
@@ -202,10 +202,11 @@ typedef struct
   GimpDrawable *drawable;
   GimpPixelRgn  pixel_rgn;
   gchar        *file_name;
-  gint          abort_me;
-} preview_persistent;
+  gboolean      abort_me;
+} PreviewPersistent;
 
-gint *abort_me = NULL;
+static gboolean *abort_me = NULL;
+
 
 /* Declare local functions.
  */
@@ -217,12 +218,12 @@ static void   run                       (gchar            *name,
 					 GimpParam       **return_vals);
 static gint32 load_image                (gchar            *filename, 
 					 GimpRunModeType   runmode, 
-					 gint              preview);
+					 gboolean          preview);
 static gint   save_image                (gchar            *filename,
 					 gint32            image_ID,
 					 gint32            drawable_ID,
 					 gint32            orig_image_ID,
-					 gint              preview);
+					 gboolean          preview);
 
 static gint   save_dialog                (void);
 
@@ -268,10 +269,11 @@ static JpegSaveInterface jsint =
   FALSE   /*  run  */
 };
 
-static gchar     *image_comment = NULL;
 
+static gchar     *image_comment         = NULL;
 static GtkWidget *restart_markers_scale = NULL;
 static GtkWidget *restart_markers_label = NULL;
+
 
 MAIN ()
 
@@ -422,12 +424,10 @@ run (gchar   *name,
 	default:
 	  break;
 	}
-
-      if (image_comment) 
-	{
-	  g_free (image_comment);
-	  image_comment = NULL;
-	}
+      
+      g_free (image_comment);
+      image_comment = NULL;
+}
 #ifdef GIMP_HAVE_PARASITES
       parasite = gimp_image_parasite_find (orig_image_ID, "gimp-comment");
       if (parasite) 
@@ -519,8 +519,7 @@ run (gchar   *name,
 	      jsvals.preview     = FALSE;
 
 	      /* free up the default -- wasted some effort earlier */
-	      if (image_comment) 
-		g_free (image_comment);
+	      g_free (image_comment);
 	      image_comment = g_strdup (param[9].data.d_string);
 
 	      if (jsvals.quality < 0.0 || jsvals.quality > 1.0)
@@ -594,7 +593,7 @@ run (gchar   *name,
        * and add new ones. */
       
       gimp_image_parasite_detach (orig_image_ID, "gimp-comment");
-      if (strlen (image_comment)) 
+      if (image_comment && strlen (image_comment)) 
 	{
 	  parasite = gimp_parasite_new ("gimp-comment",
 					GIMP_PARASITE_PERSISTENT,
@@ -697,9 +696,9 @@ my_error_exit (j_common_ptr cinfo)
 }
 
 static gint32
-load_image (gchar        *filename, 
+load_image (gchar           *filename, 
 	    GimpRunModeType  runmode, 
-	    gint          preview)
+	    gboolean         preview)
 {
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
@@ -721,7 +720,7 @@ load_image (gchar        *filename,
 #ifdef GIMP_HAVE_PARASITES
   JpegSaveVals local_save_vals;
   GimpParasite * volatile comment_parasite = NULL;
-  GimpParasite * volatile vals_parasite = NULL;
+  GimpParasite * volatile vals_parasite    = NULL;
 #endif /* GIMP_HAVE_PARASITES */
 
   
@@ -781,10 +780,10 @@ load_image (gchar        *filename,
 #ifdef GIMP_HAVE_PARASITES
   if (!preview) {
     /* if we had any comments then make a parasite for them */
-    if (local_image_comments) 
+    if (local_image_comments && local_image_comments->len) 
       {
-	char *string = local_image_comments->str;
-	g_string_free (local_image_comments,FALSE);
+	gchar *string = local_image_comments->str;
+	g_string_free (local_image_comments, FALSE);
 	local_image_comments = NULL;
 	comment_parasite = gimp_parasite_new ("gimp-comment",
 					      GIMP_PARASITE_PERSISTENT,
@@ -840,7 +839,8 @@ load_image (gchar        *filename,
    */
   /* temporary buffer */
   tile_height = gimp_tile_height ();
-  buf = g_new (guchar, tile_height * cinfo.output_width * cinfo.output_components);
+  buf = g_new (guchar, 
+	       tile_height * cinfo.output_width * cinfo.output_components);
   
   if (preview)
     padded_buf = g_new (guchar, tile_height * cinfo.output_width *
@@ -1065,14 +1065,14 @@ load_image (gchar        *filename,
 static void
 background_error_exit (j_common_ptr cinfo)
 {
-  if (abort_me) *abort_me = 1;
+  if (abort_me) 
+    *abort_me = TRUE;
   (*cinfo->err->output_message) (cinfo);
 }
 
 static gint
-background_jpeg_save (gpointer *ptr)
+background_jpeg_save (PreviewPersistent *pp)
 {
-  preview_persistent *pp = (preview_persistent *)ptr;
   guchar *t;
   guchar *s;
   gint i, j;
@@ -1118,7 +1118,8 @@ background_jpeg_save (gpointer *ptr)
       unlink (pp->file_name);
       g_free (pp->file_name);
 
-      if (abort_me == &(pp->abort_me)) abort_me = NULL;
+      if (abort_me == &(pp->abort_me)) 
+	abort_me = NULL;
 
       g_free (pp);
 
@@ -1160,11 +1161,11 @@ background_jpeg_save (gpointer *ptr)
 }
 
 static gint
-save_image (char   *filename,
-	    gint32  image_ID,
-	    gint32  drawable_ID,
-	    gint32  orig_image_ID,
-	    int     preview)
+save_image (gchar    *filename,
+	    gint32    image_ID,
+	    gint32    drawable_ID,
+	    gint32    orig_image_ID,
+	    gboolean  preview)
 {
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
@@ -1396,8 +1397,8 @@ save_image (char   *filename,
    */
   /* JSAMPLEs per row in image_buffer */
   rowstride = drawable->bpp * drawable->width;
-  temp = (guchar *) g_malloc (cinfo.image_width * cinfo.input_components);
-  data = (guchar *) g_malloc (rowstride * gimp_tile_height ());
+  temp = g_new (guchar, cinfo.image_width * cinfo.input_components);
+  data = g_new (guchar, rowstride * gimp_tile_height ());
 
   /* fault if cinfo.next_scanline isn't initially a multiple of
    * gimp_tile_height */
@@ -1410,24 +1411,23 @@ save_image (char   *filename,
 
   if (preview) 
     {
-      preview_persistent *pp = g_malloc (sizeof (preview_persistent));
-      if (pp == NULL) return FALSE;
+      PreviewPersistent *pp = g_new (PreviewPersistent, 1);
       
       /* pass all the information we need */
-      pp->cinfo = cinfo;
+      pp->cinfo       = cinfo;
       pp->tile_height = gimp_tile_height();
-      pp->data = data;
-      pp->outfile = outfile;
-      pp->has_alpha = has_alpha;
-      pp->rowstride = rowstride;
-      pp->temp = temp;
-      pp->data = data;
-      pp->drawable = drawable;
-      pp->pixel_rgn = pixel_rgn;
-      pp->src = NULL;
-      pp->file_name = filename;
+      pp->data        = data;
+      pp->outfile     = outfile;
+      pp->has_alpha   = has_alpha;
+      pp->rowstride   = rowstride;
+      pp->temp        = temp;
+      pp->data        = data;
+      pp->drawable    = drawable;
+      pp->pixel_rgn   = pixel_rgn;
+      pp->src         = NULL;
+      pp->file_name   = filename;
       
-      pp->abort_me = 0;
+      pp->abort_me    = FALSE;
       abort_me = &(pp->abort_me);
       
       jerr.pub.error_exit = background_error_exit;
@@ -1444,7 +1444,9 @@ save_image (char   *filename,
 	{
 	  yend = cinfo.next_scanline + gimp_tile_height ();
 	  yend = MIN (yend, cinfo.image_height);
-	  gimp_pixel_rgn_get_rect (&pixel_rgn, data, 0, cinfo.next_scanline, cinfo.image_width,
+	  gimp_pixel_rgn_get_rect (&pixel_rgn, data, 
+				   0, cinfo.next_scanline, 
+				   cinfo.image_width,
 				   (yend - cinfo.next_scanline));
 	  src = data;
 	}
@@ -1465,7 +1467,8 @@ save_image (char   *filename,
       jpeg_write_scanlines (&cinfo, (JSAMPARRAY) &temp, 1);
 
       if ((cinfo.next_scanline % 5) == 0)
-	gimp_progress_update ((double) cinfo.next_scanline / (double) cinfo.image_height);
+	gimp_progress_update ((gdouble) cinfo.next_scanline / 
+			      (gdouble) cinfo.image_height);
     }
 
   /* Step 6: Finish compression */
@@ -1498,9 +1501,12 @@ make_preview (void)
 
   if (jsvals.preview) 
     {
-      tn = tempnam(NULL, "gimp");	/* user temp dir? */
-      save_image (tn, image_ID_global,
-		  drawable_ID_global, orig_image_ID_global, TRUE);
+      tn = gimp_temp_name ("jpeg");
+      save_image (tn, 
+		  image_ID_global,
+		  drawable_ID_global, 
+		  orig_image_ID_global, 
+		  TRUE);
     }
   else 
     {
@@ -1510,7 +1516,6 @@ make_preview (void)
       gimp_displays_flush ();
       gdk_flush();
     }
-
 }
 
 static void
@@ -1518,7 +1523,7 @@ destroy_preview (void)
 {
   if (abort_me) 
     {
-      *abort_me = 1;   /* signal the background save to stop */
+      *abort_me = TRUE;   /* signal the background save to stop */
     }
   if (drawable_global) 
     {
@@ -1788,10 +1793,8 @@ save_dialog (void)
 
   dtype = gimp_drawable_type (drawable_ID_global);
   if (dtype != GIMP_RGB_IMAGE && dtype != GIMP_RGBA_IMAGE) 
-    {
-      gtk_widget_set_sensitive (menu, FALSE);
-    }
-
+    gtk_widget_set_sensitive (menu, FALSE);
+ 
   com_frame = gtk_frame_new (_("Image comments"));
   gtk_frame_set_shadow_type (GTK_FRAME (com_frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), com_frame, TRUE, TRUE, 0);
@@ -1859,17 +1862,16 @@ save_ok_callback (GtkWidget *widget,
 
   /* pw - get the comment text object and grab it's data */
   text = gtk_object_get_data (GTK_OBJECT (data), "text");
-  if (image_comment != NULL) 
-    {
-      g_free (image_comment);
-      image_comment = NULL;
-    }
   
   /* pw - gtk_editable_get_chars allocates a copy of the string, so
    * don't worry about the gtk_widget_destroy killing it.  */
 
-  image_comment = gtk_editable_get_chars (GTK_EDITABLE (text), 0, -1);
-  
+  g_free (image_comment);
+  image_comment = NULL;
+
+  if (text)
+    image_comment = gtk_editable_get_chars (GTK_EDITABLE (text), 0, -1);
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
