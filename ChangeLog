@@ -1,3 +1,12 @@
+2003-09-28  Ville Pätsi <drc@gimp.org>
+
+	* themes/Default/images/stock-join-round-16.png
+	* themes/Default/images/stock-join-miter-16.png
+	* themes/Default/images/stock-join-bevel-16.png
+	* themes/Default/images/stock-cap-square-16.png
+	* themes/Default/images/stock-cap-round-16.png
+	* themes/Default/images/stock-cap-butt-16.png: Changed these icons.
+
 2003-09-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimpmath/gimpvector.c: fixed inline documentation.
