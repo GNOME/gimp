@@ -1679,7 +1679,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     spinbutton, TRUE);
 
   /* Indicators */
-  vbox2 = file_prefs_frame_new (_("Toolbar"), GTK_BOX (vbox));
+  vbox2 = file_prefs_frame_new (_("Toolbox"), GTK_BOX (vbox));
 
   button = gtk_check_button_new_with_label
     (_("Display Brush, Pattern and Gradient Indicators"));
