@@ -534,6 +534,7 @@ app_init (void)
       render_setup (transparency_type, transparency_size);
       tools_options_dialog_new ();
       tools_select (RECT_SELECT);
+      /* FIXME: This needs to go in preferences */
       message_handler = MESSAGE_BOX;
     }
 

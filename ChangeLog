@@ -1,3 +1,16 @@
+Tue Jul 28 14:03:57 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/Makefile.am
+	* app/errors.c
+	* app/errorconsole.[ch]
+	* app/app_procs.c
+	* app/appenv.h
+	* app/menus.c: error console implementation from Nuke
+	<nuke@bayside.net> Hooks to g_message
+
+	* app/fileops.c: honor message_handler while still setting
+	filesel widget sensitivity properly
+
 Tue Jul 28 15:04:39 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/gimpdrawable.h: reordered the GimpFillType enum,

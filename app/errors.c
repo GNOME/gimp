@@ -28,6 +28,7 @@
 #include "appenv.h"
 #include "app_procs.h"
 #include "interface.h"
+#include "errorconsole.h"
 #include "errors.h"
 
 extern char *prog_name;
@@ -35,10 +36,23 @@ extern char *prog_name;
 void
 message_func (char *str)
 {
-  if ((console_messages == FALSE) && (message_handler == MESSAGE_BOX))
-      message_box (str, NULL, NULL);
+  if (console_messages == FALSE)
+    switch (message_handler)
+      {
+        case MESSAGE_BOX:
+          message_box (str, NULL, NULL);
+          break;
+
+        case ERROR_CONSOLE:
+          error_console_add (str);
+          break;
+
+        default:
+          fprintf (stderr, "%s: %s\n", prog_name, str);
+	  break;
+    }
   else
-      fprintf (stderr, "%s: %s\n", prog_name, str);
+    fprintf (stderr, "%s: %s\n", prog_name, str);
 }
 
 void

@@ -39,7 +39,8 @@
 
 typedef enum {
   MESSAGE_BOX,
-  CONSOLE
+  CONSOLE,
+  ERROR_CONSOLE
 } MessageHandlerType;
 
 extern int no_interface;

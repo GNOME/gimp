@@ -108,6 +108,8 @@ gimp_SOURCES = \
 	ellipse_select.h	\
 	eraser.c		\
 	eraser.h		\
+	errorconsole.c		\
+	errorconsole.h		\
 	errors.c		\
 	errors.h		\
 	equalize.c		\

@@ -302,6 +302,13 @@ static PlugInProcDef *save_file_proc = NULL;
 
 static GimpImage* the_gimage;
 
+#define FILE_ERR_MESSAGE(str)				G_STMT_START{	\
+  if (message_handler == MESSAGE_BOX)					\
+    message_box ((str), file_message_box_close_callback, (void *) fs);	\
+  else									\
+    g_message (str);							\
+    gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);	}G_STMT_END
+
 static void
 file_message_box_close_callback (GtkWidget *w,
 				 gpointer   client_data)
@@ -869,7 +876,7 @@ file_open_ok_callback (GtkWidget *w,
     {
       s = g_string_new ("Open failed: ");
       g_string_append (s, raw_filename);
-      message_box (s->str, file_message_box_close_callback, (void *) fs);
+      FILE_ERR_MESSAGE (s->str);
       g_string_free (s, TRUE);
     }
 
@@ -957,7 +964,7 @@ file_open_ok_callback (GtkWidget *w,
 		      {
 			s = g_string_new ("Open failed: ");
 			g_string_append (s, temp);
-			message_box (s->str, file_message_box_close_callback, (void *) fs);
+			FILE_ERR_MESSAGE (s->str);
 			g_string_free (s, TRUE);
 		      }
 		  }
@@ -1037,8 +1044,7 @@ file_save_ok_callback (GtkWidget *w,
 	  g_string_append (s, raw_filename);
 	}
     }
-  message_box (s->str, file_message_box_close_callback, (void *) fs);
-
+  FILE_ERR_MESSAGE (s->str);
 
   g_string_free (s, TRUE);
 }
@@ -1135,12 +1141,12 @@ file_overwrite_yes_callback (GtkWidget *w,
   else
     {
       GString* s;
+      GtkWidget *fs;
 
+      fs = filesave;
       s = g_string_new ("Save failed: ");
-
       g_string_append (s, overwrite_box->raw_filename);
-
-      message_box (s->str, file_message_box_close_callback, (void *) filesave);
+      FILE_ERR_MESSAGE (s->str);
       g_string_free (s, TRUE);
     }
 
