@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2001-06-25 22:35+0200\n"
-"PO-Revision-Date: 2001-09-27 01:33+0200\n"
+"POT-Creation-Date: 2001-11-12 11:33+0100\n"
+"PO-Revision-Date: 2001-11-12 11:35+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2694,7 +2694,7 @@ msgstr "Tylko ja¶niejsze"
 
 #: app/layers_dialog.c:1
 msgid "Keep Trans."
-msgstr "Prze¼r."
+msgstr "Przezrocz."
 
 #: app/layers_dialog.c:1
 msgid "Keep Transparency"
@@ -5533,6 +5533,15 @@ msgstr "/Obraz/Histogram..."
 msgid "View image histogram"
 msgstr "Wy¶wietla histogram obrazu"
 
+#: app/tools_cmds.c:1 app/tools_cmds.c:1 app/tools_cmds.c:1
+#: app/tools_cmds.c:1 app/tools_cmds.c:1 app/transform_core.c:1
+msgid ""
+"Transformations do not work on\n"
+"layers that contain layer masks."
+msgstr ""
+"Przekszta³cenia nie dzia³aj± na\n"
+"warstwach zawieraj±cych maski."
+
 #: app/transform_core.c:1
 msgid "Rotate"
 msgstr "Obróæ"
@@ -5544,14 +5553,6 @@ msgstr "Przeskaluj"
 #: app/transform_core.c:1
 msgid "Shear"
 msgstr "¦cinanie"
-
-#: app/transform_core.c:1
-msgid ""
-"Transformations do not work on\n"
-"layers that contain layer masks."
-msgstr ""
-"Przekszta³cenia nie dzia³aj± na\n"
-"warstwach zawieraj±cych maski."
 
 #: app/transform_core.c:1
 msgid "Transformation"
@@ -6243,22 +6244,47 @@ msgid "Aborting Installation..."
 msgstr "Rezygnacja z instalacji..."
 
 #: app/user_install.c:1
+#, c-format
+msgid "Cannot open %s for reading"
+msgstr "Nie mo¿na otworzyæ %s do odczytu"
+
+#: app/user_install.c:1
+#, c-format
+msgid "Cannot open %s for writing"
+msgstr "Nie mo¿na otworzyæ %s do zapisu"
+
+#: app/user_install.c:1
+#, c-format
+msgid "Error while writing %s"
+msgstr "Przy zapisie do %s wyst±pi³ b³±d"
+
+#: app/user_install.c:1
+#, c-format
+msgid "Error while reading %s"
+msgstr "Przy odczycie %s wyst±pi³ b³±d"
+
+#: app/user_install.c:1
+#, c-format
+msgid "Cannot open directory %s"
+msgstr "Nie mo¿na otworzyæ katalogu %s"
+
+#: app/user_install.c:1
+#, c-format
+msgid "Cannot create directory %s -- %s"
+msgstr "Nie mo¿na stworzyæ katalogu %s -- %s"
+
+#: app/user_install.c:1
+#, c-format
+msgid "Cannot get status of file %s"
+msgstr "Nie mo¿na uzyskaæ stanu pliku %s"
+
+#: app/user_install.c:1
 msgid "does not exist.  Cannot install."
 msgstr "nie istnieje. Nie mo¿na przeprowadziæ instalacji."
 
 #: app/user_install.c:1
 msgid "has invalid permissions.  Cannot install."
 msgstr "ma niew³a¶ciwe uprawnienia. Nie mo¿na przeprowadziæ instalacji."
-
-#: app/user_install.c:1
-msgid ""
-"Did you notice any error messages in the console window?\n"
-"If not, installation was successful!\n"
-"Otherwise, quit and investigate the possible reason..."
-msgstr ""
-"Czy dostrzegasz komunikaty b³êdów w oknie konsoli?\n"
-"Je¶li nie, instalacja przebieg³a pomy¶lnie!\n"
-"W przeciwnym wypadku zakoñcz instalacjê i zbadaj mo¿liwe przyczyny..."
 
 #: app/user_install.c:1
 msgid ""
@@ -6274,9 +6300,38 @@ msgstr ""
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "Kliknij \"Kontynuuj\", aby zakoñczyæ instalacjê GIMP-a."
 
-#: app/user_install.c:1
+#: app/user_install.c:1 app/user_install.c:1
 msgid "Installation failed.  Contact system administrator."
 msgstr "Instalacja nie powiod³a siê. Skontaktuj  siê z administratorem."
+
+#: app/user_install.c:1 app/user_install.c:1
+#, c-format
+msgid "Creating directory %s\n"
+msgstr "Tworzenie katalogu %s\n"
+
+#: app/user_install.c:1 app/user_install.c:1
+#, c-format
+msgid "Cannot create directory -- %s"
+msgstr "Nie mo¿na stworzyæ katalogu -- %s"
+
+#: app/user_install.c:1 app/user_install.c:1
+msgid "  Success\n"
+msgstr "  Powodzenie\n"
+
+#: app/user_install.c:1
+#, c-format
+msgid "Populating directory %s from %s\n"
+msgstr "Zape³nianie katalogu %s z %s\n"
+
+#: app/user_install.c:1
+#, c-format
+msgid "Copying file %s from %s\n"
+msgstr "Kopiowanie pliku %s z %s\n"
+
+#: app/user_install.c:1
+#, c-format
+msgid "  Failure -- %s\n"
+msgstr "  Niepowodzenie -- %s\n"
 
 #: app/user_install.c:1
 msgid ""
@@ -6373,3 +6428,12 @@ msgstr "Akwarela"
 #: modules/colorsel_water.c:1
 msgid "Color History"
 msgstr "Historia kolorów"
+
+msgid ""
+"Did you notice any error messages in the console window?\n"
+"If not, installation was successful!\n"
+"Otherwise, quit and investigate the possible reason..."
+msgstr ""
+"Czy dostrzegasz komunikaty b³êdów w oknie konsoli?\n"
+"Je¶li nie, instalacja przebieg³a pomy¶lnie!\n"
+"W przeciwnym wypadku zakoñcz instalacjê i zbadaj mo¿liwe przyczyny..."
