@@ -1,5 +1,9 @@
 2001-11-13  Michael Natterer  <mitch@gimp.org>
 
+	* POTFILES.in: removed modules/colorsel_gtk.c
+
+2001-11-13  Michael Natterer  <mitch@gimp.org>
+
 	* POTFILES.in: removed app/gdisplay_color_ui.c
 
 2001-11-12  Sven Neumann  <sven@gimp.org>

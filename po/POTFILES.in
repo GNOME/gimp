@@ -152,6 +152,5 @@ app/widgets/gimpwidgets-utils.c
 app/xcf/xcf-load.c
 app/xcf/xcf.c
 
-modules/colorsel_gtk.c
 modules/colorsel_triangle.c
 modules/colorsel_water.c
