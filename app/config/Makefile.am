@@ -33,8 +33,6 @@ libappconfig_a_SOURCES = \
 	gimprc-serialize.h		\
 	gimprc-unknown.c		\
 	gimprc-unknown.h		\
-	gimprc-utils.c			\
-	gimprc-utils.h			\
 	gimpxmlparser.c			\
 	gimpxmlparser.h
 

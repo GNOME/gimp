@@ -1,5 +1,18 @@
 2005-01-26  Sven Neumann  <sven@gimp.org>
 
+	* libgimpconfig/gimpconfig-path.h: added declarations for the
+	gimp_config_build_path functions.
+
+	* app/config/Makefile.am
+	* app/config/gimprc-utils.[ch]: removed these two files again;
+	they used to duplicate functionality from libgimpconfig.
+
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpguiconfig.c
+	* app/config/gimppluginconfig.c: changed accordingly.
+
+2005-01-26  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/Makefile.am
 	* libgimpbase/gimppath.[ch]: removed these two files again.
 

@@ -29,7 +29,6 @@
 #include "config-types.h"
 
 #include "gimprc-blurbs.h"
-#include "gimprc-utils.h"
 #include "gimpguiconfig.h"
 
 #include "gimp-intl.h"

@@ -71,5 +71,9 @@ gchar             * gimp_config_path_expand          (const gchar  *path,
                                                       gboolean      recode,
                                                       GError      **error);
 
+gchar             * gimp_config_build_data_path      (const gchar  *name);
+gchar             * gimp_config_build_writable_path  (const gchar  *name);
+gchar             * gimp_config_build_plug_in_path   (const gchar  *name);
+
 
 #endif /* __GIMP_CONFIG_PATH_H__ */
