@@ -3286,8 +3286,8 @@ subsample_region (PixelRegion *srcPR,
   height = destPR->h;
 
 #if 0
-  fprintf(stderr, "subsample_region: (%d x %d) -> (%d x %d)\n",
-          orig_width, orig_height, width, height);
+  g_printerr ("subsample_region: (%d x %d) -> (%d x %d)\n",
+              orig_width, orig_height, width, height);
 #endif
 
   /*  Some calculations...  */
@@ -3295,7 +3295,7 @@ subsample_region (PixelRegion *srcPR,
   destwidth = destPR->rowstride;
 
   /*  the data pointers...  */
-  src = (guchar *) g_malloc (orig_width * bytes);
+  src  = g_new (guchar, orig_width * bytes);
   dest = destPR->data;
 
   /*  find the ratios of old x to new x and old y to new y  */

@@ -1,3 +1,9 @@
+2004-03-13  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs.c: use g_printerr() for debug output.
+
+	* app/base/tile-manager.c: cleaned up stone-old debug output.
+
 2004-03-13  Raphaël Quinet  <quinet@gamers.org>
 
 	* app/tools/gimptransformoptions.[ch]: added new "supersample"
