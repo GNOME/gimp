@@ -1,3 +1,8 @@
+Wed Jan 12 00:53:58 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/menus.c: correctly connect "Intersect with Selection" 
+	(fixes bug #5124)
+
 Tue Jan 11 23:50:53 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/layer.c: in layer_new_from_tiles check if image_type has alpha 

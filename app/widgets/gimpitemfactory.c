@@ -768,7 +768,7 @@ static GimpItemFactoryEntry channels_entries[] =
     "channel_to_selection.html#add", NULL },
   { { N_("/Subtract from Selection"), NULL, channels_dialog_sub_channel_from_sel_callback, 0 },
     "channel_to_selection.html#subtract", NULL },
-  { { N_("/Intersect with Selection"), NULL, channels_dialog_sub_channel_from_sel_callback, 0 },
+  { { N_("/Intersect with Selection"), NULL, channels_dialog_intersect_channel_with_sel_callback, 0 },
     "channel_to_selection.html#intersect", NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>" },
