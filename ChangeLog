@@ -1,3 +1,9 @@
+2003-06-04  Sven Neumann  <sven@gimp.org>
+
+	* app/channels_dialog.c (channel_widget_channel_flush)
+	* app/layers_dialog.c (layer_widget_layer_flush): queue a redraw
+	on the visibility and linked icons. Fixes bug #114396.
+
 2003-06-03  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/gifload.c: When initializing the LZW state,

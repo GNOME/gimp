@@ -3473,6 +3473,9 @@ layer_widget_layer_flush (GtkWidget *widget,
     gtk_widget_queue_draw (layer_widget->layer_preview);
   if (update_mask_preview)
     gtk_widget_queue_draw (layer_widget->mask_preview);
+
+  gtk_widget_queue_draw (layer_widget->eye_widget);
+  gtk_widget_queue_draw (layer_widget->linked_widget);
 }
 
 /********************************/
