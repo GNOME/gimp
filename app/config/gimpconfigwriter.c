@@ -24,6 +24,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <string.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -128,6 +129,7 @@ gimp_config_writer_open (GimpConfigWriter *writer,
 			 const gchar      *name)
 {
   g_return_if_fail (writer != NULL);
+  g_return_if_fail (name != NULL);
 
   if (writer->error)
     return;
@@ -160,9 +162,11 @@ gimp_config_writer_print (GimpConfigWriter  *writer,
   if (len < 0)
     len = strlen (string);
 
-  g_string_append_c (writer->buffer, ' ');
-
-  g_string_append_len (writer->buffer, string, len);
+  if (len)
+    {
+      g_string_append_c (writer->buffer, ' ');
+      g_string_append_len (writer->buffer, string, len);
+    }
 }
 
 void
@@ -179,12 +183,11 @@ gimp_config_writer_printf (GimpConfigWriter *writer,
   if (writer->error)
     return;
 
-  g_string_append_c (writer->buffer, ' ');
-
   va_start (args, format);
   buffer = g_strdup_vprintf (format, args);
   va_end (args);
 
+  g_string_append_c (writer->buffer, ' ');
   g_string_append (writer->buffer, buffer);
 
   g_free (buffer);
@@ -245,7 +248,8 @@ gimp_config_writer_close (GimpConfigWriter *writer)
       g_string_append_c (writer->buffer, '\n');
       
       if (write (writer->fd, writer->buffer->str, writer->buffer->len) < 0)
-	g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+	g_set_error (&writer->error,
+                     GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
 		     g_strerror (errno));
 
       g_string_truncate (writer->buffer, 0);
@@ -301,7 +305,8 @@ gimp_config_writer_linefeed (GimpConfigWriter *writer)
   if (writer->buffer->len == 0)
     {
       if (write (writer->fd, "\n", 1) < 0)
-        g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+        g_set_error (&writer->error,
+                     GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
                      g_strerror (errno));
     }
   else
@@ -328,7 +333,8 @@ gimp_config_writer_comment (GimpConfigWriter *writer,
   gimp_config_serialize_comment (writer->buffer, comment);
 
   if (write (writer->fd, writer->buffer->str, writer->buffer->len) < 0)
-    g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+    g_set_error (&writer->error,
+                 GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
 		 g_strerror (errno));
   
   g_string_truncate (writer->buffer, 0);

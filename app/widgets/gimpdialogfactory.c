@@ -32,6 +32,8 @@
 
 #include "core/gimpcontext.h"
 
+#include "config/gimpconfigwriter.h"
+
 #include "gimpcontainerview.h"
 #include "gimpcontainerview-utils.h"
 #include "gimpcursor.h"
@@ -75,7 +77,7 @@ static void   gimp_dialog_factory_finalize            (GObject           *object
 
 static void   gimp_dialog_factories_save_foreach      (gchar             *name,
 						       GimpDialogFactory *factory,
-						       FILE              *fp);
+						       GimpConfigWriter  *writer);
 static void   gimp_dialog_factories_restore_foreach   (gchar             *name,
 						       GimpDialogFactory *factory,
 						       gpointer           data);
@@ -886,17 +888,17 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
 }
 
 void
-gimp_dialog_factories_session_save (FILE *file)
+gimp_dialog_factories_session_save (GimpConfigWriter *writer)
 {
   GimpDialogFactoryClass *factory_class;
 
-  g_return_if_fail (file != NULL);
+  g_return_if_fail (writer != NULL);
 
   factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
   g_hash_table_foreach (factory_class->factories,
 			(GHFunc) gimp_dialog_factories_save_foreach,
-			file);
+			writer);
 }
 
 void
@@ -999,7 +1001,7 @@ gimp_dialog_factories_unidle (void)
 static void
 gimp_dialog_factories_save_foreach (gchar             *name,
 				    GimpDialogFactory *factory,
-				    FILE              *fp)
+				    GimpConfigWriter  *writer)
 {
   GList *list;
 
@@ -1022,22 +1024,31 @@ gimp_dialog_factories_save_foreach (gchar             *name,
 	gimp_dialog_factory_get_window_info (info->widget, info);
 
       if (info->toplevel_entry)
-        {
-          dialog_name = info->toplevel_entry->identifier;
-        }
+        dialog_name = info->toplevel_entry->identifier;
       else
-        {
-          dialog_name = "dock";
-        }
+        dialog_name = "dock";
 
-      fprintf (fp, "(session-info \"%s\" \"%s\"\n", name, dialog_name);
-      fprintf (fp, "    (position %d %d)",          info->x, info->y);
+      gimp_config_writer_open (writer, "session-info");
+      gimp_config_writer_string (writer, name);
+      gimp_config_writer_string (writer, dialog_name);
+
+      gimp_config_writer_open (writer, "position");
+      gimp_config_writer_printf (writer, "%d %d", info->x, info->y);
+      gimp_config_writer_close (writer);
 
       if (info->width > 0 && info->height > 0)
-	fprintf (fp, "\n    (size %d %d)", info->width, info->height);
+        {
+          gimp_config_writer_open (writer, "size");
+          gimp_config_writer_printf (writer, "%d %d",
+                                     info->width, info->height);
+          gimp_config_writer_close (writer);
+        }
 
       if (info->open)
-	fprintf (fp, "\n    (open-on-exit)");
+        {
+          gimp_config_writer_open (writer, "open-on-exit");
+          gimp_config_writer_close (writer);
+        }
 
       /*  save aux-info  */
       if (info->widget)
@@ -1048,21 +1059,12 @@ gimp_dialog_factories_save_foreach (gchar             *name,
 	    {
 	      GList *aux;
 
-	      fprintf (fp, "\n    (aux-info (");
+              gimp_config_writer_open (writer, "aux-info");
 
 	      for (aux = info->aux_info; aux; aux = g_list_next (aux))
-		{
-		  gchar *str;
+                gimp_config_writer_string (writer, (gchar *) aux->data);
 
-		  str = (gchar *) aux->data;
-
-		  if (aux->prev)
-		    fprintf (fp, " \"%s\"", str);
-		  else
-		    fprintf (fp, "\"%s\"", str);
-		}
-
-	      fprintf (fp, "))");
+              gimp_config_writer_close (writer);
 
 	      g_list_foreach (info->aux_info, (GFunc) g_free, NULL);
 	      g_list_free (info->aux_info);
@@ -1077,7 +1079,7 @@ gimp_dialog_factories_save_foreach (gchar             *name,
 
 	  dock = GIMP_DOCK (info->widget);
 
-	  fprintf (fp, "\n    (dock ");
+	  gimp_config_writer_open (writer, "dock");
 
 	  for (books = dock->dockbooks; books; books = g_list_next (books))
 	    {
@@ -1087,7 +1089,7 @@ gimp_dialog_factories_save_foreach (gchar             *name,
 
 	      dockbook = (GimpDockbook *) books->data;
 
-	      fprintf (fp, "(");
+	      gimp_config_writer_open (writer, "book");
 
 	      children = gtk_container_get_children (GTK_CONTAINER (dockbook));
 
@@ -1106,6 +1108,8 @@ gimp_dialog_factories_save_foreach (gchar             *name,
                       GimpContainerView *view;
                       gint               preview_size = -1;
 
+                      gimp_config_writer_linefeed (writer);
+
                       view = gimp_container_view_get_by_dockable (dockable);
 
                       if (view && view->preview_size >= GIMP_PREVIEW_SIZE_TINY)
@@ -1116,29 +1120,27 @@ gimp_dialog_factories_save_foreach (gchar             *name,
                       if (preview_size > 0 &&
                           preview_size != entry->preview_size)
                         {
-                          fprintf (fp, "\"%s@%d\"",
-                                   entry->identifier, preview_size);
+                          gimp_config_writer_printf (writer, "\"%s@%d\"",
+                                                     entry->identifier,
+                                                     preview_size);
                         }
                       else
                         {
-                          fprintf (fp, "\"%s\"",
-                                   entry->identifier);
+                          gimp_config_writer_printf (writer, "\"%s\"",
+                                                     entry->identifier);
                         }
-
-                      if (pages->next)
-                        fprintf (fp, " ");
                     }
 		}
 
 	      g_list_free (children);
 
-	      fprintf (fp, ")%s", books->next ? "\n          " : "");
+	      gimp_config_writer_close (writer);  /* book */
 	    }
 
-	  fprintf (fp, ")");
+	  gimp_config_writer_close (writer);  /* dock */
 	}
 
-      fprintf (fp, ")\n\n");
+      gimp_config_writer_close (writer);  /* session-info */
     }
 }
 

@@ -22,19 +22,17 @@
 #ifndef __COLOR_HISTORY_H__
 #define __COLOR_HISTORY_H__
 
-#include <stdio.h> /* FILE */
-
 #define COLOR_HISTORY_SIZE 16
 
 
-gint   color_history_add         (const GimpRGB *rgb);
-void   color_history_set         (gint           index,
-                                  const GimpRGB *rgb);
-void   color_history_get         (gint           index,
-                                  GimpRGB       *rgb);
+gint   color_history_add         (const GimpRGB    *rgb);
+void   color_history_set         (gint              index,
+                                  const GimpRGB    *rgb);
+void   color_history_get         (gint              index,
+                                  GimpRGB          *rgb);
 
-void   color_history_add_from_rc (GimpRGB       *color);
-void   color_history_write       (FILE          *fp);
+void   color_history_add_from_rc (GimpRGB          *color);
+void   color_history_write       (GimpConfigWriter *writer);
 
 
 #endif /* __COLOR_HISTORY_H__ */

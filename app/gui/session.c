@@ -34,6 +34,7 @@
 
 #include "core/gimp.h"
 
+#include "config/gimpconfigwriter.h"
 #include "config/gimpscanner.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -46,9 +47,10 @@
 
 /*  local function prototypes  */
 
-static GTokenType   session_info_deserialize (GScanner *scanner,
-                                              Gimp     *gimp);
-
+static GTokenType   session_info_deserialize      (GScanner        *scanner,
+                                                   Gimp            *gimp);
+static GTokenType   session_info_dock_deserialize (GScanner        *scanner,
+                                                   GimpSessionInfo *info);
 
 /*  public functions  */
 
@@ -62,7 +64,9 @@ enum
   SESSION_INFO_SIZE,
   SESSION_INFO_OPEN,
   SESSION_INFO_AUX,
-  SESSION_INFO_DOCK
+  SESSION_INFO_DOCK,
+
+  SESSION_INFO_DOCK_BOOK
 };
 
 void
@@ -105,6 +109,9 @@ session_init (Gimp *gimp)
                               GINT_TO_POINTER (SESSION_INFO_AUX));
   g_scanner_scope_add_symbol (scanner, SESSION_INFO, "dock",
                               GINT_TO_POINTER (SESSION_INFO_DOCK));
+
+  g_scanner_scope_add_symbol (scanner, SESSION_INFO_DOCK, "book",
+                              GINT_TO_POINTER (SESSION_INFO_DOCK_BOOK));
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -191,35 +198,42 @@ session_restore (Gimp *gimp)
 void
 session_save (Gimp *gimp)
 {
-  gchar *filename;
-  FILE  *fp;
+  GimpConfigWriter *writer;
+  gchar            *filename;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("sessionrc");
 
-  fp = fopen (filename, "wt");
-  g_free (filename);
-  if (!fp)
+  writer = gimp_config_writer_new (filename,
+                                   TRUE,
+                                   "GIMP sessionrc\n\n"
+                                   "This file takes session-specific info "
+                                   "(that is info, you want to keep between "
+                                   "two gimp-sessions). You are not supposed "
+                                   "to edit it manually, but of course you "
+                                   "can do.\n"
+                                   "This file will be entirely rewritten "
+                                   "every time you quit the gimp. If this "
+                                   "file isn't found, defaults are used.",
+                                   NULL);
+
+  if (!writer)
     return;
 
-  fprintf (fp, ("# GIMP sessionrc\n"
-		"# This file takes session-specific info (that is info,\n"
-		"# you want to keep between two gimp-sessions). You are\n"
-		"# not supposed to edit it manually, but of course you\n"
-		"# can do. This file will be entirely rewritten every time\n" 
-		"# you quit the gimp. If this file isn't found, defaults\n"
-		"# are used.\n\n"));
-
-  gimp_dialog_factories_session_save (fp);
+  gimp_dialog_factories_session_save (writer);
+  gimp_config_writer_linefeed (writer);
 
   /* save last tip shown */
-  fprintf (fp, "(last-tip-shown %d)\n\n",
-	   GIMP_GUI_CONFIG (gimp->config)->last_tip + 1);
+  gimp_config_writer_open (writer, "last-tip-shown");
+  gimp_config_writer_printf (writer, "%d",
+                             GIMP_GUI_CONFIG (gimp->config)->last_tip + 1);
+  gimp_config_writer_close (writer);
+  gimp_config_writer_linefeed (writer);
 
-  color_history_write (fp);
+  color_history_write (writer);
 
-  fclose (fp);
+  gimp_config_writer_finish (writer, "end of sessionrc", NULL);
 }
 
 
@@ -234,6 +248,7 @@ session_info_deserialize (GScanner *scanner,
   GTokenType         token;
   gchar             *factory_name;
   gchar             *entry_name;
+  gchar             *string;
 
   token = G_TOKEN_STRING;
 
@@ -301,29 +316,22 @@ session_info_deserialize (GScanner *scanner,
               break;
 
             case SESSION_INFO_AUX:
-              if (! gimp_scanner_parse_string_list (scanner, &info->aux_info))
-                {
-                  token = G_TOKEN_NONE;
-                  goto error;
-                }
+              while (gimp_scanner_parse_string (scanner, &string))
+                info->aux_info = g_list_append (info->aux_info, string);
               break;
 
             case SESSION_INFO_DOCK:
               if (info->toplevel_entry)
                 goto error;
 
-              while (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
-                {
-                  GList *list = NULL;
+              g_scanner_set_scope (scanner, SESSION_INFO_DOCK);
+              token = session_info_dock_deserialize (scanner, info);
 
-                  if (! gimp_scanner_parse_string_list (scanner, &list))
-                    {
-                      token = G_TOKEN_NONE;
-                      goto error;
-                    }
+              if (token == G_TOKEN_LEFT_PAREN)
+                g_scanner_set_scope (scanner, SESSION_INFO);
+              else
+                goto error;
 
-                  info->sub_dialogs = g_list_append (info->sub_dialogs, list);
-                }
               break;
 
             default:
@@ -366,6 +374,57 @@ session_info_deserialize (GScanner *scanner,
 
       g_list_free (info->sub_dialogs);
       g_free (info);
+    }
+
+  return token;
+}
+
+static GTokenType
+session_info_dock_deserialize (GScanner        *scanner,
+                               GimpSessionInfo *info)
+{
+  GList      *list;
+  gchar      *string;
+  GTokenType  token;
+
+  token = G_TOKEN_LEFT_PAREN;
+
+  while (g_scanner_peek_next_token (scanner) == token)
+    {
+      token = g_scanner_get_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_LEFT_PAREN:
+          token = G_TOKEN_SYMBOL;
+          break;
+
+        case G_TOKEN_SYMBOL:
+          switch (GPOINTER_TO_INT (scanner->value.v_symbol))
+            {
+            case SESSION_INFO_DOCK_BOOK:
+              list = NULL;
+              while (gimp_scanner_parse_string (scanner, &string))
+                list = g_list_append (list, string);
+
+              if (list)
+                info->sub_dialogs = g_list_append (info->sub_dialogs, list);
+        
+              token = G_TOKEN_RIGHT_PAREN;
+              break;
+
+            default:
+              return token;
+            }
+          break;
+
+        case G_TOKEN_RIGHT_PAREN:
+          token = G_TOKEN_LEFT_PAREN;
+          break;
+
+        default:
+          break;
+        }
     }
 
   return token;

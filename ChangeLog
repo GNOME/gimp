@@ -1,3 +1,16 @@
+2003-03-10  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpscanner.[ch]: removed gimp_scanner_parse_string_list()
+	since the format it read wasn't proper s-expressions syntax.
+
+	* app/config/gimpconfigwriter.c: a couple of minor cleanups.
+
+	* app/gui/color-history.[ch]
+	* app/gui/session.c
+	* app/widgets/gimpdialogfactory.[ch]: use GimpConfigWriter to
+	write the sessionrc. Had to do some minor changes to the file
+	format.
+	
 2003-03-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimppalette.[ch]: added GimpData::duplicate()

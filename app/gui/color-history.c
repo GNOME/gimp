@@ -27,6 +27,8 @@
 
 #include "gui-types.h"
 
+#include "config/gimpconfigwriter.h"
+
 #include "color-history.h"
 
 
@@ -55,33 +57,35 @@ color_history_add_from_rc (GimpRGB *color)
 }
 
 void
-color_history_write (FILE *fp)
+color_history_write (GimpConfigWriter *writer)
 {
   gint i;
 
   if (! color_history_initialized)
     color_history_init ();
 
-  fprintf (fp, "(color-history");
+  gimp_config_writer_open (writer, "color-history");
 
   for (i = 0; i < COLOR_HISTORY_SIZE; i++)
     {
       gchar buf[4][G_ASCII_DTOSTR_BUF_SIZE];
 
-      g_ascii_formatd (buf[0],  
+      g_ascii_formatd (buf[0],
                        G_ASCII_DTOSTR_BUF_SIZE, "%f", color_history[i].r);
-      g_ascii_formatd (buf[1],  
+      g_ascii_formatd (buf[1],
                        G_ASCII_DTOSTR_BUF_SIZE, "%f", color_history[i].g);
-      g_ascii_formatd (buf[2],  
+      g_ascii_formatd (buf[2],
                        G_ASCII_DTOSTR_BUF_SIZE, "%f", color_history[i].b);
-      g_ascii_formatd (buf[3],  
+      g_ascii_formatd (buf[3],
                        G_ASCII_DTOSTR_BUF_SIZE, "%f", color_history[i].a);
 
-      fprintf (fp, "\n    (color-rgba %s %s %s %s)", 
-               buf[0], buf[1], buf[2], buf[3]);
+      gimp_config_writer_open (writer, "color-rgba");
+      gimp_config_writer_printf (writer, "%s %s %s %s",
+                                 buf[0], buf[1], buf[2], buf[3]);
+      gimp_config_writer_close (writer);
     }
 
-  fprintf (fp, ")\n\n");
+  gimp_config_writer_close (writer);
 }
 
 void

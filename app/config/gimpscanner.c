@@ -336,67 +336,6 @@ gimp_scanner_parse_color (GScanner *scanner,
   return (token == G_TOKEN_NONE);
 }
 
-gboolean
-gimp_scanner_parse_string_list (GScanner  *scanner,
-                                GList    **dest)
-{
-  GTokenType  token;
-  GList      *list = NULL;
-
-  token = G_TOKEN_LEFT_PAREN;
-
-  while (g_scanner_peek_next_token (scanner) == token)
-    {
-      token = g_scanner_get_next_token (scanner);
-
-      switch (token)
-        {
-        case G_TOKEN_LEFT_PAREN:
-          token = G_TOKEN_STRING;
-          break;
-
-        case G_TOKEN_STRING:
-          do
-            {
-              list = g_list_append (list, g_strdup (scanner->value.v_string));
-
-              token = g_scanner_peek_next_token (scanner);
-              if (token == G_TOKEN_STRING)
-                g_scanner_get_next_token (scanner);
-            }
-          while (token == G_TOKEN_STRING);
-          token = G_TOKEN_RIGHT_PAREN;
-          break;
-
-        case G_TOKEN_RIGHT_PAREN:
-          token = G_TOKEN_NONE; /* indicates success */
-          goto finish;
-
-        default: /* do nothing */
-          break;
-        }
-    }
-
- finish:
-
-  if (token != G_TOKEN_NONE)
-    {
-      g_list_foreach (list, (GFunc) g_free, NULL);
-      g_list_free (list);
-      list = NULL;
-
-      g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
-                             _("fatal parse error"), TRUE);
-    }
-  else
-    {
-      *dest = list;
-    }
-
-  return (token == G_TOKEN_NONE);
-}
-
 
 /*  private functions  */
 

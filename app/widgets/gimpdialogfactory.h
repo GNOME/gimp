@@ -23,8 +23,6 @@
 #define __GIMP_DIALOG_FACTORY_H__
 
 
-#include <stdio.h>
-
 #include "core/gimpobject.h"
 
 
@@ -145,7 +143,7 @@ void        gimp_dialog_factory_add_dialog        (GimpDialogFactory *factory,
 void        gimp_dialog_factory_remove_dialog     (GimpDialogFactory *factory,
 						   GtkWidget         *dialog);
 
-void        gimp_dialog_factories_session_save    (FILE              *file);
+void        gimp_dialog_factories_session_save    (GimpConfigWriter  *writer);
 void        gimp_dialog_factories_session_restore (void);
 void        gimp_dialog_factories_session_clear   (void);
 
