@@ -1,3 +1,8 @@
+2003-09-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/xcf/xcf.c (xcf_save_invoker): when opening fails, show the
+	same error message as all file plug-ins.
+
 2003-09-10  Sven Neumann  <sven@gimp.org>
 
 	* app/vectors/Makefile.am

@@ -323,7 +323,8 @@ xcf_save_invoker (Gimp     *gimp,
   else
     {
       gchar *utf8_filename = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
-      g_message (_("open failed on %s: %s\n"), utf8_filename, g_strerror (errno));
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 utf8_filename, g_strerror (errno));
       g_free (utf8_filename);
     }
 
