@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-19 01:02+0200\n"
-"PO-Revision-Date: 2003-09-19 01:02+0200\n"
+"POT-Creation-Date: 2003-09-19 21:44+0200\n"
+"PO-Revision-Date: 2003-09-19 21:43+0200\n"
 "Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
 "MIME-Version: 1.0\n"
@@ -1444,7 +1444,7 @@ msgstr "Neispravna UTF-8 reč u datoteci sa četkama „%s“"
 #: app/core/gimpcontext.c:1305 app/core/gimpgradient.c:386
 #: app/core/gimpitem.c:427 app/core/gimppalette.c:441
 #: app/core/gimppattern.c:413 app/gui/templates-commands.c:127
-#: app/tools/gimpvectortool.c:320
+#: app/tools/gimpvectortool.c:323
 msgid "Unnamed"
 msgstr "Neimenovano"
 
@@ -2240,7 +2240,7 @@ msgid "Stroke Selection"
 msgstr "Uzmi selekciju kao konturu"
 
 #: app/core/gimpselection.c:625 app/gui/channels-commands.c:206
-#: app/pdb/selection_cmds.c:915 app/pdb/selection_cmds.c:1031
+#: app/pdb/selection_cmds.c:915 app/pdb/selection_cmds.c:1032
 #: app/widgets/gimpchanneltreeview.c:291
 msgid "Channel to Selection"
 msgstr "Napravi selekciju na osnovu kanala"
@@ -2677,19 +2677,11 @@ msgstr "Vrati se na staru boju"
 msgid "Add the current color to the color history"
 msgstr "Dodaj tekuću boju u istorijat boja"
 
-#: app/gui/colormap-editor-commands.c:101
-msgid "Edit Indexed Color"
-msgstr "Izmeni indeksiranu boju"
-
-#: app/gui/colormap-editor-commands.c:103
-msgid "Edit Indexed Image Palette Color"
-msgstr "Izmeni izmeni boju palete indeksirane slike"
-
-#: app/gui/colormap-editor-menu.c:40 app/gui/palette-editor-menu.c:40
+#: app/gui/colormap-editor-menu.c:41 app/gui/palette-editor-menu.c:40
 msgid "/_Edit Color..."
 msgstr "/Izmeni boju..."
 
-#: app/gui/colormap-editor-menu.c:45
+#: app/gui/colormap-editor-menu.c:46
 msgid "/_Add Color"
 msgstr "/Dodaj boju"
 
@@ -2887,7 +2879,7 @@ msgid "Channel List"
 msgstr "Lista kanala"
 
 #: app/gui/dialogs-constructors.c:831 app/pdb/internal_procs.c:162
-#: app/tools/gimpvectortool.c:142
+#: app/tools/gimpvectortool.c:148
 msgid "Paths"
 msgstr "Putanje"
 
@@ -4756,7 +4748,7 @@ msgstr "Y:"
 #: app/gui/info-window.c:579 app/gui/info-window.c:580
 #: app/gui/info-window.c:581 app/gui/info-window.c:584
 #: app/gui/info-window.c:585 app/gui/info-window.c:610
-#: app/tools/gimpcolorpickertool.c:361 app/tools/gimpcolorpickertool.c:367
+#: app/tools/gimpcolorpickertool.c:371 app/tools/gimpcolorpickertool.c:377
 msgid "N/A"
 msgstr "N/D"
 
@@ -7554,47 +7546,47 @@ msgstr "Prečnik:"
 msgid "Update Active Color"
 msgstr "Ažuriraj akivnu boju"
 
-#: app/tools/gimpcolorpickertool.c:103 app/tools/gimpcolorpickertool.c:262
+#: app/tools/gimpcolorpickertool.c:104 app/tools/gimpcolorpickertool.c:272
 msgid "Color Picker"
 msgstr "Birač boja"
 
-#: app/tools/gimpcolorpickertool.c:104
+#: app/tools/gimpcolorpickertool.c:105
 msgid "Pick colors from the image"
 msgstr "Izaberi boju sa slike"
 
-#: app/tools/gimpcolorpickertool.c:105
+#: app/tools/gimpcolorpickertool.c:106
 msgid "/Tools/C_olor Picker"
 msgstr "/Alati/Birač boja"
 
-#: app/tools/gimpcolorpickertool.c:264
+#: app/tools/gimpcolorpickertool.c:274
 msgid "Color Picker Information"
 msgstr "Inormacije birača boja"
 
-#: app/tools/gimpcolorpickertool.c:280 app/tools/gimpcolorpickertool.c:291
+#: app/tools/gimpcolorpickertool.c:290 app/tools/gimpcolorpickertool.c:301
 msgid "Red:"
 msgstr "Crvena:"
 
-#: app/tools/gimpcolorpickertool.c:281 app/tools/gimpcolorpickertool.c:292
+#: app/tools/gimpcolorpickertool.c:291 app/tools/gimpcolorpickertool.c:302
 msgid "Green:"
 msgstr "Zelena:"
 
-#: app/tools/gimpcolorpickertool.c:282 app/tools/gimpcolorpickertool.c:293
+#: app/tools/gimpcolorpickertool.c:292 app/tools/gimpcolorpickertool.c:303
 msgid "Blue:"
 msgstr "Plava:"
 
-#: app/tools/gimpcolorpickertool.c:286
+#: app/tools/gimpcolorpickertool.c:296
 msgid "Intensity:"
 msgstr "Intenzitet:"
 
-#: app/tools/gimpcolorpickertool.c:290
+#: app/tools/gimpcolorpickertool.c:300
 msgid "Index:"
 msgstr "Indeks:"
 
-#: app/tools/gimpcolorpickertool.c:301
+#: app/tools/gimpcolorpickertool.c:311
 msgid "Alpha:"
 msgstr "Alfa:"
 
-#: app/tools/gimpcolorpickertool.c:302 app/widgets/gimpcolormapeditor.c:373
+#: app/tools/gimpcolorpickertool.c:312
 msgid "Hex Triplet:"
 msgstr "Heksadekadna trojka:"
 
@@ -8530,61 +8522,133 @@ msgstr "Režim uređivanja"
 msgid "Polygonal"
 msgstr "Poligonski"
 
-#: app/tools/gimpvectortool.c:143
+#: app/tools/gimpvectortool.c:149
 msgid "Create and edit paths"
 msgstr "Napravi i uredi putanje"
 
-#: app/tools/gimpvectortool.c:144
+#: app/tools/gimpvectortool.c:150
 msgid "/Tools/_Paths"
 msgstr "/Alati/Putanje"
 
-#: app/tools/gimpvectortool.c:342
+#: app/tools/gimpvectortool.c:345
 msgid "Add Stroke"
 msgstr "Dodaj poteѕ"
 
-#: app/tools/gimpvectortool.c:358
+#: app/tools/gimpvectortool.c:361
 msgid "Add Anchor"
 msgstr "Dodaj vezu"
 
-#: app/tools/gimpvectortool.c:379
+#: app/tools/gimpvectortool.c:382
 msgid "Insert Anchor"
 msgstr "Ubaci vezu"
 
-#: app/tools/gimpvectortool.c:406
+#: app/tools/gimpvectortool.c:409
 msgid "Drag Handle"
 msgstr "Prevuci ručku"
 
-#: app/tools/gimpvectortool.c:428
+#: app/tools/gimpvectortool.c:431
 msgid "Drag Anchor"
 msgstr "Prevuci vezu"
 
-#: app/tools/gimpvectortool.c:441
+#: app/tools/gimpvectortool.c:444
 msgid "Drag Anchors"
 msgstr "Prevuci veze"
 
-#: app/tools/gimpvectortool.c:462
+#: app/tools/gimpvectortool.c:465
 msgid "Drag Curve"
 msgstr "Prevuci krivu"
 
-#: app/tools/gimpvectortool.c:484
+#: app/tools/gimpvectortool.c:487
 msgid "Connect Strokes"
 msgstr "Poveži poteze"
 
-#: app/tools/gimpvectortool.c:522
+#: app/tools/gimpvectortool.c:525
 msgid "Convert Edge"
 msgstr "Pretvori ivicu"
 
-#: app/tools/gimpvectortool.c:551
+#: app/tools/gimpvectortool.c:554
 msgid "Delete Anchor"
 msgstr "Obriši vezu"
 
-#: app/tools/gimpvectortool.c:572
+#: app/tools/gimpvectortool.c:575
 msgid "Delete Segment"
 msgstr "Obriši segment"
 
-#: app/tools/gimpvectortool.c:752
+#: app/tools/gimpvectortool.c:757
 msgid "Move Anchors"
 msgstr "Premesti veze"
+
+#: app/tools/gimpvectortool.c:1092
+msgid "Click to pick Path to edit"
+msgstr "Kliknite da izaberete koju putanju da uređujete"
+
+#: app/tools/gimpvectortool.c:1095
+msgid "Click to create a new Path"
+msgstr "Kliknite da napravite novu putanju"
+
+#: app/tools/gimpvectortool.c:1098
+msgid "Click to create a new component of the path"
+msgstr "Kliknite da napravite novi sastojak putanje"
+
+#: app/tools/gimpvectortool.c:1101
+msgid "Click to create a new anchor, use SHIFT to create a new component."
+msgstr ""
+"Kliknite da napravite novu vezu, koristite Shift da napravite novi sastojak."
+
+#: app/tools/gimpvectortool.c:1105
+msgid "Click-Drag to move the anchor around"
+msgstr "Kliknite pa prevucite da premestite vezu"
+
+#: app/tools/gimpvectortool.c:1108
+msgid "Click-Drag to move the anchors around"
+msgstr "Kliknite pa prevucite da premestite veze"
+
+#: app/tools/gimpvectortool.c:1111
+msgid ""
+"Click-Drag to move the handle around. SHIFT moves the opposite handle "
+"symmetrically."
+msgstr ""
+"Kliknite pa prevucite da premestite ručku. Shift premešta suprotnu ručku "
+"simetrično."
+
+#: app/tools/gimpvectortool.c:1115
+msgid ""
+"Click-Drag to change the shape of the curve. SHIFT moves the opposite "
+"handles of the endpoints symmetrically."
+msgstr ""
+"Kliknite pa prevucite da izmenite izgled krive. Shift premešta suprotne "
+"ručke krajnjih tačaka simetrično."
+
+#: app/tools/gimpvectortool.c:1120 app/tools/gimpvectortool.c:1124
+msgid ""
+"Click-Drag to move the component around. SHIFT moves the complete path "
+"around."
+msgstr ""
+"Kliknite pa prevucite da premestite sastojak. Shift premešta celu putanju."
+
+#: app/tools/gimpvectortool.c:1128
+msgid "Click to insert an anchor on the path."
+msgstr "Kliknite da ubacite vezu na putanju."
+
+#: app/tools/gimpvectortool.c:1131
+msgid "Click to delete this anchor."
+msgstr "Kliknite da obrišete vezu."
+
+#: app/tools/gimpvectortool.c:1134
+msgid "Click to connect this anchor with the selected endpoint."
+msgstr "Kliknite da povežete ovu vezu sa izabranom tačkom."
+
+#: app/tools/gimpvectortool.c:1138
+msgid "Click to open up the path."
+msgstr "Kliknite da otvorite putanju."
+
+#: app/tools/gimpvectortool.c:1141
+msgid "Click to make this node angular."
+msgstr "Kliknite da pretvorite ovaj čvor u ugao."
+
+#: app/tools/gimpvectortool.c:1144
+msgid "Nothing to see here. Move along."
+msgstr "Ovde nema šta da se vidi. Produži dalje."
 
 #: app/vectors/gimpvectors.c:217
 msgid "Path"
@@ -8756,9 +8820,29 @@ msgstr "Izmeni boju četke"
 msgid "Edit Background Color"
 msgstr "Izmeni boju pozadine"
 
-#: app/widgets/gimpcolormapeditor.c:362
+#: app/widgets/gimpcolormapeditor.c:220 app/widgets/gimppaletteeditor.c:280
+msgid "Edit Color"
+msgstr "Izmeni boju..."
+
+#: app/widgets/gimpcolormapeditor.c:228
+msgid "Add Color"
+msgstr "Dodaj boju"
+
+#: app/widgets/gimpcolormapeditor.c:386
 msgid "Color Index:"
 msgstr "Indeks boja:"
+
+#: app/widgets/gimpcolormapeditor.c:397
+msgid "He_x Triplet:"
+msgstr "He_ksadekadna trojka:"
+
+#: app/widgets/gimpcolormapeditor.c:943
+msgid "Edit Indexed Color"
+msgstr "Izmeni indeksiranu boju"
+
+#: app/widgets/gimpcolormapeditor.c:945
+msgid "Edit Indexed Image Palette Color"
+msgstr "Izmeni izmeni boju palete indeksirane slike"
 
 #: app/widgets/gimpcontainergridview.c:201
 #: app/widgets/gimpcontainergridview.c:581
@@ -9099,10 +9183,6 @@ msgstr "Neodrećeno"
 #: app/widgets/gimppaletteeditor.c:265
 msgid "Columns:"
 msgstr "Kolone:"
-
-#: app/widgets/gimppaletteeditor.c:280
-msgid "Edit Color"
-msgstr "Izmeni boju..."
 
 #: app/widgets/gimppaletteeditor.c:288
 msgid "New Color"
@@ -9616,9 +9696,6 @@ msgstr "GIMP (nestabilna verzija)"
 
 #~ msgid "Path %d"
 #~ msgstr "Putanja %d"
-
-#~ msgid "Enter a new name for the path"
-#~ msgstr "Unesi novo ime za putanju"
 
 #~ msgid "Failed to read from '%s'."
 #~ msgstr "Ne mogu da čitam iz „%s“"
