@@ -92,7 +92,7 @@ GtkWidget * gimp_query_size_box   (gchar         *title,
 
 /*  a simple message box  */
 
-GtkWidget * gimp_message_box      (gchar        *message,
+void gimp_message_box             (gchar        *message,
 				   GtkCallback   callback,
 				   gpointer      data);
 

@@ -19,10 +19,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include "config.h"
+
+#include <stdio.h>
+
 #include "gimpui.h"
 
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpintl.h"
+
+extern gchar *prog_name;
+
+static void  gimp_message_box_close_callback  (GtkWidget *, gpointer);
 
 /*
  *  String, integer, double and size query boxes
@@ -398,21 +405,20 @@ typedef struct _MessageBox MessageBox;
 
 struct _MessageBox
 {
-  GtkWidget  *mbox;
-  GtkCallback callback;
-  gpointer    data;
+  GtkWidget   *mbox;
+  GtkWidget   *repeat_label;
+  gchar       *message;
+  gint         repeat_count;
+  GtkCallback  callback;
+  gpointer     data;
 };
 
-static void  gimp_message_box_close_callback  (GtkWidget *, gpointer);
+/*  the maximum number of concucrrent dialog boxes */
+#define MESSAGE_BOX_MAXIMUM  4 
 
-#define MESSAGE_BOX_MAXIMUM  7  /*  the maximum number of concucrrent
-				 *  dialog boxes
-				 */
+static GList *message_boxes    = NULL;
 
-static gint   message_pool     = MESSAGE_BOX_MAXIMUM;
-static gchar *message_box_last = NULL;
-
-GtkWidget *
+void
 gimp_message_box (gchar       *message,
 		  GtkCallback  callback,
 		  gpointer     data)
@@ -421,33 +427,56 @@ gimp_message_box (gchar       *message,
   GtkWidget  *mbox;
   GtkWidget  *vbox;
   GtkWidget  *label;
+  GList      *list;
 
-  static gint repeat_count;
+  if (!message)
+    return;
 
-  /* arguably, if message_pool <= 0 we could print to stdout */
-  if (!message || message_pool <= 0)
-    return NULL;
-
-  if (message_box_last && !strcmp (message_box_last, message))
+  if (g_list_length (message_boxes) > MESSAGE_BOX_MAXIMUM)
     {
-      repeat_count++;
-      if (repeat_count == 3)
-        message = "WARNING: message repeated too often, ignoring";
-      else if (repeat_count > 3)
-        return 0;
-    }
-  else
-    {
-      repeat_count = 0;
-      if (message_box_last)
-	g_free (message_box_last);
-      message_box_last = g_strdup (message);
+      fprintf (stderr, "%s: %s\n", prog_name, message);
+      return;
     }
 
-  if (message_pool == 1)
-    message = "WARNING: too many messages, close some dialog boxes first";
+  for (list = message_boxes; list; list = list->next)
+    {
+      msg_box = list->data;
+      if (strcmp (msg_box->message, message) == 0)
+	{
+	  msg_box->repeat_count++;
+	  if (msg_box->repeat_count > 1)
+	    {
+	      gchar *text = g_strdup_printf (_("Message repeated %d times"), 
+					     msg_box->repeat_count);
+	      gtk_label_set_text (GTK_LABEL (msg_box->repeat_label), text);
+	      g_free (text);
+	    }
+	  else
+	    {
+	      GtkWidget *hbox;
 
-  msg_box = g_new (MessageBox, 1);
+	      hbox = gtk_hbox_new (FALSE, 0);
+	      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (msg_box->mbox)->action_area), 
+				  hbox, TRUE, FALSE, 4);
+	      msg_box->repeat_label = gtk_label_new (_("Message repeated once"));
+	      gtk_container_add (GTK_CONTAINER (hbox), msg_box->repeat_label);
+
+	      gtk_widget_show (msg_box->repeat_label);
+	      gtk_widget_show (hbox);
+	    }
+	  return;
+	}
+    }
+
+  if (g_list_length (message_boxes) == MESSAGE_BOX_MAXIMUM)
+    {
+      fprintf (stderr, "%s: %s\n", prog_name, message);
+      message = _("WARNING:\n"
+		  "Too many open message dialogs.\n"
+		  "Messages are redirected to stderr.\n");
+    }
+  
+  msg_box = g_new0 (MessageBox, 1);
 
   mbox = gimp_dialog_new (_("GIMP Message"), "gimp_message",
 			  NULL, NULL,
@@ -470,15 +499,13 @@ gimp_message_box (gchar       *message,
   gtk_widget_show (label);
 
   msg_box->mbox = mbox;
+  msg_box->message = g_strdup (message);
   msg_box->callback = callback;
   msg_box->data = data;
 
+  message_boxes = g_list_append (message_boxes, msg_box);
+
   gtk_widget_show (mbox);
-
-  /* allocate message box */
-  message_pool--;
-
-  return mbox;
 }
 
 static void
@@ -497,7 +524,8 @@ gimp_message_box_close_callback (GtkWidget *widget,
   gtk_widget_destroy (msg_box->mbox);
   
   /* make this box available again */
-  message_pool++;
+  message_boxes = g_list_remove (message_boxes, msg_box);
 
+  g_free (msg_box->message);
   g_free (msg_box);
 }

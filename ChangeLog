@@ -1,3 +1,13 @@
+Thu Feb  3 00:08:34 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gimpui.c
+	* app/gimpui.h: Redid the function that shields us from millions
+	of message_boxes to appear. We now keep a list of open dialogs
+	and if the same message wants to be displayed again we add a label
+	with the repeat_count. A maximum of four different messages may
+	be displayed at once before messages get redirected to stderr and
+	a warning pops up. IMHO fixes bug #5743.
+
 Wed Feb  2 22:12:48 GMT 2000 Andy Thomas <alt@gimp.org>
 
 	* app/paths_dialog.c
