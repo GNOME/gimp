@@ -1,3 +1,8 @@
+2004-07-19  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/orientation.c: normalized some variables
+	in the module and fixed some indentation.
+
 2004-07-19  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-mmx.c (gimp_composite_addition_rgba8_rgba8_rgba8_mmx): 

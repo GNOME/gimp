@@ -9,13 +9,13 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static GtkWidget *orientradio[NUMORIENTRADIO];
-static GtkObject *orientnumadjust = NULL;
-static GtkObject *orientfirstadjust = NULL;
-static GtkObject *orientlastadjust = NULL;
+static GtkWidget *orient_radio[NUMORIENTRADIO];
+static GtkObject *orient_num_adjust = NULL;
+static GtkObject *orient_first_adjust = NULL;
+static GtkObject *orient_last_adjust = NULL;
 
 
-static void orientation_store(GtkWidget *wg, void *d)
+static void orientation_store (GtkWidget *wg, void *d)
 {
     pcvals.orienttype = GPOINTER_TO_INT (d);
 }
@@ -23,27 +23,27 @@ static void orientation_store(GtkWidget *wg, void *d)
 void orientation_restore(void)
 {
   gtk_toggle_button_set_active (
-      GTK_TOGGLE_BUTTON(orientradio[pcvals.orienttype]),
+      GTK_TOGGLE_BUTTON (orient_radio[pcvals.orienttype]),
       TRUE
       );
   gtk_adjustment_set_value (
-      GTK_ADJUSTMENT(orientnumadjust),
+      GTK_ADJUSTMENT (orient_num_adjust),
       pcvals.orientnum
       );
-  gtk_adjustment_set_value(
-      GTK_ADJUSTMENT(orientfirstadjust),
+  gtk_adjustment_set_value (
+      GTK_ADJUSTMENT (orient_first_adjust),
       pcvals.orientfirst
       );
-  gtk_adjustment_set_value(
-      GTK_ADJUSTMENT(orientlastadjust),
+  gtk_adjustment_set_value (
+      GTK_ADJUSTMENT (orient_last_adjust),
       pcvals.orientlast
       );
 }
 
-static void create_orientmap_dialog_helper(void)
+static void create_orientmap_dialog_helper (void)
 {
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (orientradio[7]), TRUE);
-    create_orientmap_dialog();
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (orient_radio[7]), TRUE);
+    create_orientmap_dialog ();
     return;
 }
 
@@ -54,7 +54,7 @@ static void create_orientradio_button (GtkWidget *box, int orienttype,
                                        )
 {
   create_radio_button (box, orienttype, orientation_store, label,
-                       help_string, radio_group, orientradio);
+                       help_string, radio_group, orient_radio);
   return;
 }
 
@@ -77,7 +77,7 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (thispage), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  orientnumadjust =
+  orient_num_adjust =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			  _("Directions:"),
 			  150, -1, pcvals.orientnum,
@@ -85,11 +85,11 @@ create_orientationpage (GtkNotebook *notebook)
 			  TRUE, 0, 0,
 			  _("The number of directions (i.e. brushes) to use"),
 			  NULL);
-  g_signal_connect (orientnumadjust, "value_changed",
+  g_signal_connect (orient_num_adjust, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pcvals.orientnum);
 
-  orientfirstadjust =
+  orient_first_adjust =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			  _("Start angle:"),
 			  150, -1, pcvals.orientfirst,
@@ -97,11 +97,11 @@ create_orientationpage (GtkNotebook *notebook)
 			  TRUE, 0, 0,
 			  _("The starting angle of the first brush to create"),
 			  NULL);
-  g_signal_connect (orientfirstadjust, "value_changed",
+  g_signal_connect (orient_first_adjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.orientfirst);
 
-  orientlastadjust =
+  orient_last_adjust =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			  _("Angle span:"),
 			  150, -1, pcvals.orientlast,
@@ -109,7 +109,7 @@ create_orientationpage (GtkNotebook *notebook)
 			  TRUE, 0, 0,
 			  _("The angle span of the first brush to create"),
 			  NULL);
-  g_signal_connect (orientlastadjust, "value_changed",
+  g_signal_connect (orient_last_adjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.orientlast);
 
@@ -134,17 +134,17 @@ create_orientationpage (GtkNotebook *notebook)
           &radio_group
           );
 
-  create_orientradio_button(box3, ORIENTATION_RADIUS, _("Radius"),
+  create_orientradio_button (box3, ORIENTATION_RADIUS, _("Radius"),
           _("The distance from the center of the image determines the direction of the stroke"),
           &radio_group
           );
 
-  create_orientradio_button(box3, ORIENTATION_RANDOM, _("Random"),
+  create_orientradio_button (box3, ORIENTATION_RANDOM, _("Random"),
           _("Selects a random direction of each stroke"),
           &radio_group
           );
 
-  create_orientradio_button(box3, ORIENTATION_RADIAL, _("Radial"),
+  create_orientradio_button (box3, ORIENTATION_RADIAL, _("Radial"),
           _("Let the direction from the center determine the direction of the stroke"),
           &radio_group
           );
@@ -153,17 +153,17 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box2), box3, FALSE, FALSE, 0);
   gtk_widget_show (box3);
 
-  create_orientradio_button(box3, ORIENTATION_FLOWING, _("Flowing"),
+  create_orientradio_button (box3, ORIENTATION_FLOWING, _("Flowing"),
           _("The strokes follow a \"flowing\" pattern"),
           &radio_group
           );
 
-  create_orientradio_button(box3, ORIENTATION_HUE, _("Hue"),
+  create_orientradio_button (box3, ORIENTATION_HUE, _("Hue"),
           _("The hue of the region determines the direction of the stroke"),
           &radio_group
           );
 
-  create_orientradio_button(box3, ORIENTATION_ADAPTIVE, _("Adaptive"),
+  create_orientradio_button (box3, ORIENTATION_ADAPTIVE, _("Adaptive"),
           _("The direction that matches the original image the closest is selected"),
           &radio_group
           );
@@ -172,7 +172,7 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box3), box4, FALSE, FALSE, 0);
   gtk_widget_show (box4);
 
-  create_orientradio_button(box4, ORIENTATION_MANUAL, _("Manual"),
+  create_orientradio_button (box4, ORIENTATION_MANUAL, _("Manual"),
           _("Manually specify the stroke orientation"),
           &radio_group
           );
