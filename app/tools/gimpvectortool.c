@@ -219,7 +219,7 @@ gimp_vector_tool_control (GimpTool       *tool,
 
     case HALT:
       gimp_tool_pop_status (tool);
-      gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
+      gimp_tool_control_halt (tool->control);
       break;
 
     default:

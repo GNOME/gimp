@@ -415,7 +415,7 @@ gimp_paint_tool_button_release (GimpTool        *tool,
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
 
   /*  Set tool state to inactive -- no longer painting */
-  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);
 
   gimp_paint_core_finish (core, drawable);
 

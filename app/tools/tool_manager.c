@@ -332,7 +332,6 @@ tool_manager_control_active (Gimp           *gimp,
     }
   else if (action == HALT)
     {
-      /* sets paused_count to 0 -- is this ok? */
       gimp_tool_control_halt (tool_manager->active_tool->control);
     }
 }

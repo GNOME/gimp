@@ -122,6 +122,6 @@ gimp_tool_real_button_release (GimpTool        *tool,
 			       GdkModifierType  state,
 			       GimpDisplay     *gdisp)
 {
-  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);
 }
 

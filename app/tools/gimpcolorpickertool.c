@@ -341,7 +341,7 @@ gimp_color_picker_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (cp_tool));
 
-  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);
 }
 
 static void

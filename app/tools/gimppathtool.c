@@ -249,7 +249,7 @@ gimp_path_tool_control (GimpTool       *tool,
       break;
 
     case HALT:
-      gimp_tool_control_halt (tool->control);  /* sets paused_count to 0 -- is this ok? */
+      gimp_tool_control_halt (tool->control);
       break;
 
     default:

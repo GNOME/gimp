@@ -198,7 +198,7 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);
 
   /*  First take care of the case where the user "cancels" the action  */
   if (! (state & GDK_BUTTON3_MASK))

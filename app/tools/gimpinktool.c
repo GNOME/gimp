@@ -430,7 +430,7 @@ gimp_ink_tool_button_release (GimpTool        *tool,
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
 
   /*  Set tool state to inactive -- no longer painting */
-  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);
 
   /*  free the last blob  */
   g_free (ink_tool->last_blob);

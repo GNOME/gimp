@@ -1112,7 +1112,7 @@ crop_cancel_callback (GtkWidget    *widget,
   if (gimp_tool_control_is_active (GIMP_TOOL (crop)->control))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (crop));
 
-  gimp_tool_control_halt (GIMP_TOOL (crop)->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (GIMP_TOOL (crop)->control);
 
   if (crop->crop_info)
     info_dialog_popdown (crop->crop_info);

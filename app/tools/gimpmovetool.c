@@ -323,7 +323,7 @@ gimp_move_tool_button_release (GimpTool        *tool,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);
 
   if (move->guide)
     {

@@ -128,7 +128,6 @@ gimp_tool_control_halt (GimpToolControl *control)
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
   control->state = INACTIVE;
-  control->paused_count = 0;
 }
 
 gboolean

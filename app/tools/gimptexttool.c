@@ -296,7 +296,6 @@ text_tool_button_release (GimpTool        *tool,
 			  GdkModifierType  state,
 			  GimpDisplay     *gdisp)
 {
-  /* sets paused_count to 0 -- is this ok? */
   gimp_tool_control_halt (tool->control);
 }
 

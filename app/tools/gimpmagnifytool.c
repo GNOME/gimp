@@ -254,7 +254,7 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-  gimp_tool_control_halt (tool->control); /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);
 
   /*  First take care of the case where the user "cancels" the action  */
   if (! (state & GDK_BUTTON3_MASK))

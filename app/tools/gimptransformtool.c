@@ -328,7 +328,7 @@ gimp_transform_tool_button_press (GimpTool        *tool,
             {
               g_message (_("Transformations do not work on\n"
                            "layers that contain layer masks."));
-              gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
+              gimp_tool_control_halt (tool->control);
               return;
             }
 
@@ -916,7 +916,7 @@ gimp_transform_tool_reset (GimpTransformTool *tr_tool)
   if (tr_tool->info_dialog)
     info_dialog_popdown (tr_tool->info_dialog);
 
-  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);
   tool->gdisp    = NULL;
   tool->drawable = NULL;
 }

@@ -330,7 +330,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
 
   tool_manager_pop_tool (gdisp->gimage->gimp);
 
-  gimp_tool_control_halt (tool_manager_get_active (gdisp->gimage->gimp)->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool_manager_get_active (gdisp->gimage->gimp)->control);
 
   /* EDIT_MASK_TRANSLATE is performed here at movement end, not 'live' like
    *  the other translation types.

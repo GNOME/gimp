@@ -485,7 +485,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
                                    iscissors->y))
 	{
 	  /*  Undraw the curve  */
-	  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
+	  gimp_tool_control_halt (tool->control);
 
 	  iscissors->draw = DRAW_CURVE;
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));

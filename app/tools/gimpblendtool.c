@@ -279,7 +279,7 @@ gimp_blend_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-  gimp_tool_control_halt (tool->control); /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);
 
   /*  if the 3rd button isn't pressed, fill the selected region  */
   if (! (state & GDK_BUTTON3_MASK) &&
