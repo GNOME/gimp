@@ -87,6 +87,7 @@ gimp_config_serialize_properties (GObject *object,
 
       g_string_assign (str, "(");
       g_string_append (str, prop_spec->name);
+      g_string_append_c (str, ' ');
       
       if (gimp_config_serialize_value (&value, str))
         {
@@ -162,6 +163,7 @@ gimp_config_serialize_changed_properties (GObject *new,
         {
           g_string_assign (str, "(");
           g_string_append (str, prop_spec->name);
+          g_string_append_c (str, ' ');
       
           if (gimp_config_serialize_value (&new_value, str))
             {
@@ -189,7 +191,7 @@ gimp_config_serialize_changed_properties (GObject *new,
  * gimp_config_serialize_value:
  * @value: a #GValue.
  * @str: a #Gstring.
- * 
+ *
  * This utility function appends a string representation of #GValue to @str.
  * 
  * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
@@ -203,7 +205,7 @@ gimp_config_serialize_value (const GValue *value,
       gboolean bool;
       
       bool = g_value_get_boolean (value);
-      g_string_append (str, bool ? " yes" : " no");
+      g_string_append (str, bool ? "yes" : "no");
       return TRUE;
     }
 
@@ -218,7 +220,6 @@ gimp_config_serialize_value (const GValue *value,
 
       if (enum_value && enum_value->value_nick)
         {
-          g_string_append_c (str, ' ');
           g_string_append (str, enum_value->value_nick);
           return TRUE;
         }
@@ -239,7 +240,7 @@ gimp_config_serialize_value (const GValue *value,
         return FALSE;
 
       escaped = g_strescape (cstr, NULL);
-      g_string_append_printf (str, " \"%s\"", escaped);
+      g_string_append_printf (str, "\"%s\"", escaped);
       g_free (escaped);
       return TRUE;
     }
@@ -255,7 +256,6 @@ gimp_config_serialize_value (const GValue *value,
         v_double = (gdouble) g_value_get_float (value);
 
       g_ascii_formatd (buf, sizeof (buf), "%f", v_double);
-      g_string_append_c (str, ' ');
       g_string_append (str, buf);
       return TRUE;
     }
@@ -267,7 +267,6 @@ gimp_config_serialize_value (const GValue *value,
       g_value_init (&tmp_value, G_TYPE_STRING);
       g_value_transform (value, &tmp_value);
 
-      g_string_append_c (str, ' ');
       g_string_append (str, g_value_get_string (&tmp_value));
 
       g_value_unset (&tmp_value);

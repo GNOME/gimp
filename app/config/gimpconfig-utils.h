@@ -25,6 +25,8 @@
 
 gboolean   gimp_config_values_equal       (const GValue *a,
                                            const GValue *b);
+void       gimp_config_copy_properties    (GObject      *src,
+                                           GObject      *dest);
 
 gchar    * gimp_config_build_data_path    (const gchar  *name);
 gchar    * gimp_config_build_plug_in_path (const gchar  *name);

@@ -32,13 +32,13 @@ struct _GimpConfigInterface
 {
   GTypeInterface base_iface;
 
-  void      (* serialize)    (GObject  *object,
-                              gint      fd);
-  gboolean   (* deserialize) (GObject  *object,
-                              GScanner *scanner);
-  GObject * (* duplicate)    (GObject  *object);
-  gboolean  (* equal)        (GObject  *a,
-                              GObject  *b);
+  void       (* serialize)    (GObject  *object,
+                               gint      fd);
+  gboolean   (* deserialize)  (GObject  *object,
+                               GScanner *scanner);
+  GObject  * (* duplicate)    (GObject  *object);
+  gboolean   (* equal)        (GObject  *a,
+                               GObject  *b);
 };
 
 typedef void  (* GimpConfigForeachFunc) (const gchar *key,

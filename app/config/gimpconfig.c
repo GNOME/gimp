@@ -114,36 +114,9 @@ gimp_config_iface_deserialize (GObject  *object,
 static GObject *
 gimp_config_iface_duplicate (GObject *object)
 {
-  GObject       *dup;
-  GObjectClass  *klass;
-  GParamSpec   **property_specs;
-  guint          n_property_specs;
-  guint          i;
+  GObject *dup = g_object_new (G_TYPE_FROM_INSTANCE (object), NULL);
 
-  dup = g_object_new (G_TYPE_FROM_INSTANCE (object), NULL);
-
-  klass = G_OBJECT_GET_CLASS (object);
-
-  property_specs = g_object_class_list_properties (klass, &n_property_specs);
-
-  if (!property_specs)
-    return dup;
-
-  for (i = 0; i < n_property_specs; i++)
-    {
-      GParamSpec  *prop_spec;
-      GValue       value = { 0, };
-
-      prop_spec = property_specs[i];
-
-      if (! (prop_spec->flags & G_PARAM_READWRITE))
-        continue;
-
-      g_value_init (&value, prop_spec->value_type);
-      
-      g_object_get_property (object,  prop_spec->name, &value);
-      g_object_set_property (dup, prop_spec->name, &value);
-    }
+  gimp_config_copy_properties (object, dup);
 
   return dup;
 }
@@ -377,7 +350,7 @@ gimp_config_is_equal_to (GObject *a,
 
   g_return_val_if_fail (G_IS_OBJECT (a), FALSE);
   g_return_val_if_fail (G_IS_OBJECT (b), FALSE);
-  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (a) != G_TYPE_FROM_INSTANCE (b),
+  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b),
                         FALSE);
 
   gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (a);
@@ -411,8 +384,10 @@ static void  gimp_config_destroy_unknown_tokens (GSList   *unknown_tokens);
  * 
  * This function allows to add arbitrary key/value pairs to a GObject.
  * It's purpose is to attach additional data to a #GimpConfig object
- * that is stored along with the object properties when serializing
- * the object to a configuration file.
+ * that can be stored along with the object properties when
+ * serializing the object to a configuration file. Please note however
+ * that the default gimp_config_serialize() implementation does not
+ * serialize unknown tokens.
  *
  * If you want to remove a key/value pair from the object, call this
  * function with a %NULL @value. 

@@ -48,6 +48,7 @@ main (int   argc,
   GimpRc      *gimprc2;
   const gchar *filename = "foorc";
   gchar       *header;
+  gchar       *result;
   gint         i;
   GError      *error = NULL;
 
@@ -131,9 +132,29 @@ main (int   argc,
     }
   else
     {
-      g_print ("This test should have failed :-(");
+      g_print ("This test should have failed :-(\n");
       return -1;
     }
+
+  g_print ("\n Querying for default-comment ... ");
+  
+  result = gimp_rc_query (gimprc, "default-comment");
+  if (result)
+    g_print ("OK, found %s.\n", result);
+  else
+    g_print ("failed!\n");
+
+  g_free (result);
+
+  g_print (" Querying for foobar ... ");
+  
+  result = gimp_rc_query (gimprc, "foobar");
+  if (result && strcmp (result, "hadjaha") == 0)
+    g_print ("OK, found %s.\n", result);
+  else
+    g_print ("failed!\n");
+
+  g_free (result);
 
   g_object_unref (G_OBJECT (gimprc));
   

@@ -59,6 +59,7 @@ test_config_DEPENDENCIES = @STRIP_BEGIN@ 				\
         ../base/libappbase.a						\
         ../core/libappcore.a						\
         ../display/libappdisplay.a					\
+        ../widgets/libappwidgets.a					\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 @STRIP_END@
 

@@ -1,3 +1,16 @@
+2002-05-06  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-serialize.c
+	* app/config/gimpconfig-utils.[ch]
+	* app/config/gimpconfig.[ch]
+	* app/config/gimprc.[ch]: added a GimpRc implementation of
+	gimp_config_duplicate() that also copies unknown tokens. Added new
+	function gimp_rc_query().
+
+	* app/config/test-config.c: added tests for gimp_rc_query().
+
+	* app/config/Makefile.am: need to link test app against libappwidgets.
+
 2002-05-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

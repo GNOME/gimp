@@ -39,20 +39,22 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "gimpconfig.h"
-#include "gimpconfig-serialize.h"
 #include "gimpconfig-deserialize.h"
+#include "gimpconfig-serialize.h"
+#include "gimpconfig-utils.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
 
-static void      gimp_rc_config_iface_init (gpointer  iface,
-                                            gpointer  iface_data);
-static void      gimp_rc_serialize         (GObject  *object,
-                                            gint      fd);
-static gboolean  gimp_rc_deserialize       (GObject  *object,
-                                            GScanner *scanner);
-static void      gimp_rc_write_header      (gint      fd);
+static void       gimp_rc_config_iface_init (gpointer  iface,
+                                             gpointer  iface_data);
+static void       gimp_rc_serialize         (GObject  *object,
+                                             gint      fd);
+static gboolean   gimp_rc_deserialize       (GObject  *object,
+                                             GScanner *scanner);
+static GObject  * gimp_rc_duplicate         (GObject  *object);
+static void       gimp_rc_write_header      (gint      fd);
 
 
 GType 
@@ -101,6 +103,7 @@ gimp_rc_config_iface_init (gpointer  iface,
 
   config_iface->serialize   = gimp_rc_serialize;
   config_iface->deserialize = gimp_rc_deserialize;
+  config_iface->duplicate   = gimp_rc_duplicate;
 }
 
 static void
@@ -118,6 +121,28 @@ gimp_rc_deserialize (GObject  *object,
   return gimp_config_deserialize_properties (object, scanner, TRUE);
 }
 
+static void
+gimp_rc_duplicate_unknown_token (const gchar *key,
+                                 const gchar *value,
+                                 gpointer     user_data)
+{
+  gimp_config_add_unknown_token (G_OBJECT (user_data), key, value);
+}
+
+static GObject *
+gimp_rc_duplicate (GObject *object)
+{
+  GObject *dup = g_object_new (GIMP_TYPE_RC, NULL);
+
+  gimp_config_copy_properties (object, dup);
+
+  gimp_config_foreach_unknown_token (object,
+                                     gimp_rc_duplicate_unknown_token,
+                                     dup);
+
+  return dup;
+}
+
 /**
  * gimp_rc_new:
  * 
@@ -129,6 +154,74 @@ GimpRc *
 gimp_rc_new (void)
 {
   return GIMP_RC (g_object_new (GIMP_TYPE_RC, NULL));
+}
+
+/**
+ * gimp_rc_query:
+ * @rc: a #GimpRc object.
+ * @key: a string used as a key for the lookup.
+ * 
+ * This function looks up @key in the object properties of @rc. If
+ * there's a matching property, a string representation of its value
+ * is returned. If no property is found, the list of unknown tokens
+ * attached to the @rc object is searched.
+ * 
+ * Return value: a newly allocated string representing the value or %NULL
+ *               if the key couldn't be found.
+ **/
+gchar *
+gimp_rc_query (GimpRc      *rc,
+               const gchar *key)
+{
+  GObjectClass  *klass;
+  GParamSpec   **property_specs;
+  GParamSpec    *prop_spec;
+  guint          i, n_property_specs;
+  gchar         *retval = NULL;
+
+  g_return_val_if_fail (GIMP_IS_RC (rc), NULL);
+  g_return_val_if_fail (key != NULL, NULL);
+
+  klass = G_OBJECT_GET_CLASS (rc);
+
+  property_specs = g_object_class_list_properties (klass, &n_property_specs);
+
+  if (!property_specs)
+    return NULL;
+
+  for (i = 0, prop_spec = NULL; i < n_property_specs && !prop_spec; i++)
+    {
+      prop_spec = property_specs[i];
+
+      if (! (prop_spec->flags & G_PARAM_READABLE) ||
+          strcmp (prop_spec->name, key))
+        {
+          prop_spec = NULL;
+        }
+    }
+
+  if (prop_spec)
+    {
+      GString *str   = g_string_new (NULL);
+      GValue   value = { 0, };
+
+      g_value_init (&value, prop_spec->value_type);
+      g_object_get_property (G_OBJECT (rc), prop_spec->name, &value);
+
+      if (gimp_config_serialize_value (&value, str))
+        retval = g_string_free (str, FALSE);
+      else
+        g_string_free (str, TRUE);
+
+      g_value_unset (&value);
+    }
+  else
+    {
+      retval = g_strdup (gimp_config_lookup_unknown_token (G_OBJECT (rc),
+                                                           key));
+    }
+
+  return retval;
 }
 
 /**
