@@ -80,10 +80,10 @@ gimp_vectors_export (const GimpImage    *image,
   fprintf (file,
            "<?xml version=\"1.0\" standalone=\"no\"?>\n"
            "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20010904//EN\"\n"
-           "\"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n");
+           "              \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n");
   fprintf (file,
-           "<svg viewBox=\"0 0 %d %d\"\n"
-           "     xmlns=\"http://www.w3.org/2000/svg\">\n",
+           "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
+           "     viewBox=\"0 0 %d %d\">\n\n",
            image->width, image->height);
 
   if (vectors)
@@ -98,8 +98,7 @@ gimp_vectors_export (const GimpImage    *image,
         gimp_vectors_export_path (GIMP_VECTORS (list->data), file);
     }
 
-  fprintf (file,
-           "</svg>\n");
+  fprintf (file, "</svg>\n");
 
   if (fclose (file))
     {
@@ -119,13 +118,13 @@ gimp_vectors_export_path (const GimpVectors *vectors,
   const gchar *name = gimp_object_get_name (GIMP_OBJECT (vectors));
   gchar       *data = gimp_vectors_path_data (vectors);
   gchar       *esc_name;
-  
+
   esc_name = g_markup_escape_text (name, strlen (name));
 
   fprintf (file,
            "  <path id=\"%s\"\n"
            "        fill=\"none\" stroke=\"black\" stroke-width=\"1\"\n"
-           "        d=\"%s\"/>\n",
+           "        d=\"%s\" />\n",
            esc_name, data);
 
   g_free (esc_name);
@@ -183,11 +182,11 @@ gimp_vectors_path_data (const GimpVectors *vectors)
               g_string_append_printf (str, " %s,%s", x_string, y_string);
 
               if (i % 3 == 1)
-                  g_string_append_printf (str, "\n           ");
+                g_string_append_printf (str, "\n           ");
             }
 
           if (closed && control_points->len > 3)
-              g_string_append_printf (str, "Z");
+            g_string_append_printf (str, "Z");
         }
       else
         {
@@ -218,15 +217,15 @@ gimp_vectors_path_data (const GimpVectors *vectors)
               g_string_append_printf (str, " %s,%s", x_string, y_string);
 
               if (i % 3 == 1)
-                  g_string_append_printf (str, "\n          ");
+                g_string_append_printf (str, "\n          ");
             }
 
           if (closed && control_points->len > 1)
-              g_string_append_printf (str, " Z");
+            g_string_append_printf (str, " Z");
         }
 
       g_array_free (control_points, TRUE);
     }
 
-  return g_string_free (str, FALSE);
+  return g_strchomp (g_string_free (str, FALSE));
 }

@@ -46,12 +46,12 @@
 
 
 typedef struct _SvgHandler SvgHandler;
-
 struct _SvgHandler
 {
   const gchar  *name;
   gdouble       width;
   gdouble       height;
+  gchar        *id;
   GList        *paths;
   GimpMatrix3  *transform;
 
@@ -59,6 +59,12 @@ struct _SvgHandler
                   const gchar **names,
                   const gchar **values);
 };
+
+typedef struct
+{
+  gchar        *id;
+  GList        *strokes;
+} SvgPath;
 
 
 static void  svg_parser_start_element (GMarkupParseContext  *context,
@@ -94,10 +100,10 @@ static void  svg_handler_path  (SvgHandler   *handler,
 
 static SvgHandler svg_handlers[] =
 {
-  { "svg",  0, 0, NULL, NULL, svg_handler_svg   },
-  { "g",    0, 0, NULL, NULL, svg_handler_group },
-  { "path", 0, 0, NULL, NULL, svg_handler_path  },
-  { NULL,   0, 0, NULL, NULL, NULL              }
+  { "svg",  0, 0, NULL, NULL, NULL, svg_handler_svg   },
+  { "g",    0, 0, NULL, NULL, NULL, svg_handler_group },
+  { "path", 0, 0, NULL, NULL, NULL, svg_handler_path  },
+  { NULL,   0, 0, NULL, NULL, NULL, NULL              }
 };
 
 
@@ -132,7 +138,6 @@ gimp_vectors_import (GimpImage    *image,
   FILE                *file;
   GQueue              *stack;
   GList               *paths;
-  GList               *list;
   SvgHandler          *base;
   gboolean             success = TRUE;
   gsize                bytes;
@@ -178,31 +183,41 @@ gimp_vectors_import (GimpImage    *image,
     {
       if (base->paths)
         {
-          GimpVectors *vectors;
+          GimpVectors *vectors = NULL;
 
           base->paths = g_list_reverse (base->paths);
+
+          merge = merge && base->paths->next;
 
           gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_VECTORS_IMPORT,
                                        _("Import Paths"));
 
-          vectors = gimp_vectors_new (image, _("Imported Path"));
-
           for (paths = base->paths; paths; paths = paths->next)
             {
-              for (list = paths->data; list; list = list->next)
-                gimp_vectors_stroke_add (vectors, GIMP_STROKE (list->data));
+              SvgPath *path = paths->data;
+              GList   *list;
 
-              if (!merge && paths->next)
+              if (!merge || !vectors)
                 {
+                  vectors = gimp_vectors_new (image,
+                                              ((merge || !path->id) ?
+                                               _("Imported Path") : path->id));
                   gimp_image_add_vectors (image, vectors, -1);
-                  vectors = gimp_vectors_new (image, _("Imported Path"));
+                  gimp_vectors_freeze (vectors);
                 }
 
-              g_list_free (paths->data);
-              paths->data = NULL;
+              for (list = path->strokes; list; list = list->next)
+                gimp_vectors_stroke_add (vectors, GIMP_STROKE (list->data));
+
+              if (!merge)
+                gimp_vectors_thaw (vectors);
+
+              g_list_free (path->strokes);
+              path->strokes = NULL;
             }
 
-          gimp_image_add_vectors (image, vectors, -1);
+          if (merge)
+            gimp_vectors_thaw (vectors);
 
           gimp_image_undo_group_end (image);
         }
@@ -217,10 +232,14 @@ gimp_vectors_import (GimpImage    *image,
     {
       for (paths = base->paths; paths; paths = paths->next)
         {
-          for (list = paths->data; list; list = list->next)
+          SvgPath *path = paths->data;
+          GList   *list;
+
+          for (list = path->strokes; list; list = list->next)
             g_object_unref (list->data);
 
-          g_list_free (paths->data);
+          g_free (path->id);
+          g_list_free (path->strokes);
         }
 
       g_list_free (base->paths);
@@ -285,9 +304,10 @@ svg_parser_end_element (GMarkupParseContext *context,
         {
           for (paths = handler->paths; paths; paths = paths->next)
             {
-              GList *list;
+              SvgPath *path = paths->data;
+              GList   *list;
 
-              for (list = paths->data; list; list = list->next)
+              for (list = path->strokes; list; list = list->next)
                 gimp_stroke_transform (GIMP_STROKE (list->data),
                                        handler->transform);
             }
@@ -347,12 +367,17 @@ svg_handler_path (SvgHandler   *handler,
                   const gchar **names,
                   const gchar **values)
 {
+  SvgPath *path = g_new0 (SvgPath, 1);
+
   while (*names)
     {
-      if (strcmp (*names, "d") == 0)
+      if (strcmp (*names, "id") == 0 && !path->id)
         {
-          handler->paths = g_list_prepend (handler->paths,
-                                           parse_path_data (*values));
+          path->id = g_strdup (*values);
+        }
+      else if (strcmp (*names, "d") == 0 && !path->strokes)
+        {
+          path->strokes = parse_path_data (*values);
         }
       else if (strcmp (*names, "transform") == 0 && !handler->transform)
         {
@@ -365,6 +390,8 @@ svg_handler_path (SvgHandler   *handler,
       names++;
       values++;
     }
+
+  handler->paths = g_list_prepend (handler->paths, path);
 }
 
 static gboolean
