@@ -1,5 +1,15 @@
 2004-03-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.c (gimp_drawable_real_set_tiles): emit
+	"alpha_changed" if the drawable got/lost an alpha channel by
+	setting the new tiles.
+
+	* app/core/gimpimage-undo-push.c (undo_pop_layer_mod)
+	* app/core/gimplayer.c (gimp_layer_add_alpha): removed explicit
+	calls to gimp_drawable_alpha_changed().
+
+2004-03-15  Michael Natterer  <mitch@gimp.org>
+
 	Closer to text layer undo:
 
 	* app/core/gimpchannel.c (gimp_channel_set_tiles): invalidate the

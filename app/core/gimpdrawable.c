@@ -600,7 +600,11 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
                               TileManager  *tiles,
                               GimpImageType type)
 {
+  gboolean old_has_alpha;
+
   g_return_if_fail (tile_manager_bpp (tiles) == GIMP_IMAGE_TYPE_BYTES (type));
+
+  old_has_alpha = gimp_drawable_has_alpha (drawable);
 
   if (drawable->tiles)
     tile_manager_unref (drawable->tiles);
@@ -609,6 +613,9 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
   drawable->type      = type;
   drawable->bytes     = tile_manager_bpp (tiles);
   drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
+
+  if (old_has_alpha != gimp_drawable_has_alpha (drawable))
+    gimp_drawable_alpha_changed (drawable);
 }
 
 static void

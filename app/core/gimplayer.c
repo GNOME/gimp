@@ -1406,8 +1406,6 @@ gimp_layer_add_alpha (GimpLayer *layer)
 
   GIMP_DRAWABLE (layer)->preview_valid = FALSE;
 
-  gimp_drawable_alpha_changed (GIMP_DRAWABLE (layer));
-
   if (gimp_container_num_children (gimage->layers) == 1)
     gimp_image_alpha_changed (gimage);
 }
