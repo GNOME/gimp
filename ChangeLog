@@ -1,3 +1,9 @@
+2004-08-28  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphelp-ids.h
+	* app/widgets/gimptoolbox.c (toolbox_create_image_area): added a
+	help-id for the image area.
+
 2004-08-27  Michael Natterer  <mitch@gimp.org>
 
 	Moved the gimp_progress_init() and gimp_progress_update() PDB

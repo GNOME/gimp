@@ -254,6 +254,7 @@
 
 #define GIMP_HELP_TOOLBOX                         "gimp-toolbox"
 #define GIMP_HELP_TOOLBOX_COLOR_AREA              "gimp-toolbox-color-area"
+#define GIMP_HELP_TOOLBOX_IMAGE_AREA              "gimp-toolbox-image-area"
 #define GIMP_HELP_TOOLBOX_INDICATOR_AREA          "gimp-toolbox-indicator-area"
 #define GIMP_HELP_TOOLBOX_DEFAULT_COLORS          "gimp-toolbox-default-colors"
 #define GIMP_HELP_TOOLBOX_SWAP_COLORS             "gimp-toolbox-swap-colors"

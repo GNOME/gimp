@@ -895,7 +895,7 @@ toolbox_create_image_area (GimpToolbox *toolbox,
   gtk_container_add (GTK_CONTAINER (frame), alignment);
   gtk_widget_show (alignment);
 
-  gimp_help_set_help_data (alignment, NULL, GIMP_HELP_TOOLBOX_INDICATOR_AREA);
+  gimp_help_set_help_data (alignment, NULL, GIMP_HELP_TOOLBOX_IMAGE_AREA);
 
   image_area = gimp_toolbox_image_area_create (toolbox, 52, 42);
   gtk_container_add (GTK_CONTAINER (alignment), image_area);
