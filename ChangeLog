@@ -1,3 +1,7 @@
+2001-12-20  Duarte Loreto <happyguy_pt@hotmail.com>
+
+        * configure.in: Added portuguese (pt) to ALL_LINGUAS
+
 2001-12-20  Marius Andreiana  <mandreiana@yahoo.com>
 
 	* configure.in: Added ro (Romanian) to ALL_LINGUAS
