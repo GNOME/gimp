@@ -72,6 +72,7 @@ STOCK_MENU_IMAGES = @STRIP_BEGIN@ \
 	stock-convert-indexed-16.png		\
 	stock-convert-rgb-16.png		\
 	stock-merge-down-16.png			\
+	stock-plugin-16.png		\
 	stock-reshow-filter-16.png		\
 	stock-rotate-180-16.png			\
 	stock-rotate-270-16.png			\
