@@ -1,5 +1,14 @@
 2004-02-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimphistogramview.c (gimp_histogram_view_button_press):
+	ignore double clicks so we don't grab the pointer away from the
+	curves dialog. Fixes bug #132356.
+
+	* app/tools/gimpcurvestool.c (curves_graph_events): ignore button
+	press and release events from all buttons except the first one.
+
+2004-02-12  Michael Natterer  <mitch@gimp.org>
+
 	Make sure that non-indexed images never have a colormap.
 	Fixes bug #121033.
 

@@ -922,6 +922,9 @@ curves_graph_events (GtkWidget      *widget,
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
 
+      if (bevent->button != 1)
+        return TRUE;
+
       new_cursor = GDK_TCROSS;
 
       switch (c_tool->curves->curve_type[c_tool->channel])
@@ -963,6 +966,11 @@ curves_graph_events (GtkWidget      *widget,
       return TRUE;
 
     case GDK_BUTTON_RELEASE:
+      bevent = (GdkEventButton *) event;
+
+      if (bevent->button != 1)
+        return TRUE;
+
       new_cursor = GDK_FLEUR;
       c_tool->grab_point = -1;
 

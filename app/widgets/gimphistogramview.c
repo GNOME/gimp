@@ -386,7 +386,7 @@ gimp_histogram_view_button_press (GtkWidget      *widget,
 {
   GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
 
-  if (bevent->button == 1)
+  if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
     {
       gint width;
 
