@@ -1,3 +1,14 @@
+2004-10-14  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/file-commands.c (file_revert_cmd_callback): creata
+	an UTF-8 filename from the image URI and display that instead of
+	the URI.
+
+	* app/dialogs/convert-dialog.c (convert_dialog_new): removed the
+	palette size warning for transparent images. The number of colors
+	is already adjusted to 255. This text was IMO more frightening
+	than helpful.
+
 2004-10-13  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/add-bevel.scm: two variables were

@@ -290,6 +290,7 @@ file_revert_cmd_callback (GtkAction *action,
   else
     {
       gchar *basename;
+      gchar *filename;
 
       dialog =
         gimp_message_dialog_new (_("Revert Image"), GIMP_STOCK_QUESTION,
@@ -310,9 +311,12 @@ file_revert_cmd_callback (GtkAction *action,
                         gdisp);
 
       basename = g_path_get_basename (uri);
+      filename = file_utils_uri_to_utf8_filename (uri);
+
       gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                          _("Revert '%s' to '%s'?"),
-                                         basename, uri);
+                                         basename, filename);
+      g_free (filename);
       g_free (basename);
 
       gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,

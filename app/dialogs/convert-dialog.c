@@ -319,26 +319,6 @@ convert_dialog_new (GimpImage    *gimage,
 		    G_CALLBACK (gimp_toggle_button_update),
 		    &dialog->alpha_dither);
 
-  /* if the image isn't non-alpha/layered, set the default number of
-     colours to one less than max, to leave room for a transparent index
-     for transparent/animated GIFs */
-  if (gimp_image_has_alpha (gimage))
-    {
-      frame = gimp_frame_new (_("[ Warning ]"));
-      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-
-      label = gtk_label_new
-	(_("You are attempting to convert an image with an alpha channel "
-           "to indexed colors.\n"
-           "Do not generate a palette of more than 255 colors if you "
-           "intend to create a transparent or animated GIF file."));
-      gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-      gtk_container_add (GTK_CONTAINER (frame), label);
-      gtk_widget_show (label);
-    }
-
   return dialog->shell;
 }
 
