@@ -1,3 +1,21 @@
+2003-02-05  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/Makefile.am: fixed rules for generated sources.
+
+	* app/text/Makefile.am
+	* app/text/text-enums.[ch]: added new files with text-related enums.
+
+	* app/text/gimptext.[ch]: added text alignment property.
+
+	* app/text/gimptext-render.[ch]: removed
+
+	* app/text/text-types.h
+	* app/text/gimptextlayout.[ch]: added new files that define
+	GimpTextLayout, a wrapper around PangoLayout. Moved render code to
+	this file.
+
+	* app/text/gimptextlayer.c: changed accordingly.
+
 2003-02-04  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpitemfactory.c (gimp_item_factory_item_key_press):

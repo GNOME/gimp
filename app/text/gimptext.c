@@ -41,6 +41,7 @@ enum
   PROP_FONT_SIZE,
   PROP_FONT_SIZE_UNIT,
   PROP_COLOR,
+  PROP_ALIGNMENT,
   PROP_LETTER_SPACING,
   PROP_LINE_SPACING,
   PROP_FIXED_WIDTH,
@@ -137,6 +138,11 @@ gimp_text_class_init (GimpTextClass *klass)
 				  "color", NULL,
 				  &black,
 				  0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ALIGNMENT,
+                                "alignment", NULL,
+                                 GIMP_TYPE_TEXT_ALIGNMENT,
+                                 GIMP_TEXT_ALIGNMENT_LEFT,
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
 				   "letter-spacing", NULL,
                                     0.0, 64.0, 1.0,
@@ -210,6 +216,9 @@ gimp_text_get_property (GObject      *object,
     case PROP_COLOR:
       g_value_set_boxed (value, &text->color);
       break;
+    case PROP_ALIGNMENT:
+      g_value_set_enum (value, text->alignment);
+      break;
     case PROP_LETTER_SPACING:
       g_value_set_double (value, text->letter_spacing);
       break;
@@ -259,6 +268,9 @@ gimp_text_set_property (GObject      *object,
     case PROP_COLOR:
       color = g_value_get_boxed (value);
       text->color = *color;
+      break;
+    case PROP_ALIGNMENT:
+      text->alignment = g_value_get_enum (value);
       break;
     case PROP_LETTER_SPACING:
       text->letter_spacing = g_value_get_double (value);

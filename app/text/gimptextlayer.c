@@ -26,8 +26,6 @@
 #include <glib-object.h>
 #include <pango/pangoft2.h>
 
-#include "libgimpbase/gimpbase.h"
-
 #include "text-types.h"
 
 #include "base/pixel-region.h"
@@ -38,8 +36,8 @@
 #include "core/gimpimage.h"
 
 #include "gimptext.h"
-#include "gimptext-render.h"
 #include "gimptextlayer.h"
+#include "gimptextlayout.h"
 
 
 static void      gimp_text_layer_class_init    (GimpTextLayerClass *klass);
@@ -47,26 +45,16 @@ static void      gimp_text_layer_init          (GimpTextLayer      *layer);
 static void      gimp_text_layer_finalize      (GObject            *object);
 
 static gsize     gimp_text_layer_get_memsize   (GimpObject         *object);
-
 static TempBuf * gimp_text_layer_get_preview   (GimpViewable       *viewable,
 						gint                width,
 						gint                height);
 
-static PangoLayout  * gimp_text_layer_layout_new      (GimpTextLayer  *layer);
-static gboolean       gimp_text_layer_render          (GimpTextLayer  *layer);
-static gboolean       gimp_text_layer_position_layout (GimpTextLayer  *layer,
-                                                       PangoLayout    *layout,
-                                                       PangoRectangle *pos);
-static void           gimp_text_layer_render_layout   (GimpTextLayer  *layer,
-                                                       PangoLayout    *layout,
-                                                       gint            x,
-                                                       gint            y);
-
-static PangoContext * gimp_image_get_pango_context    (GimpImage      *image);
+static gboolean  gimp_text_layer_render        (GimpTextLayer      *layer);
+static void      gimp_text_layer_render_layout (GimpTextLayer      *layer,
+                                                GimpTextLayout     *layout);
 
 
 static GimpLayerClass *parent_class = NULL;
-static GQuark          gimp_text_layer_context_quark;
 
 
 GType
@@ -115,8 +103,6 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   gimp_object_class->get_memsize = gimp_text_layer_get_memsize;
 
   viewable_class->get_preview = gimp_text_layer_get_preview;
-
-  gimp_text_layer_context_quark = g_quark_from_static_string ("pango-context");
 }
 
 static void
@@ -217,24 +203,28 @@ gimp_text_layer_render (GimpTextLayer *layer)
 {
   GimpImage      *image;
   GimpDrawable   *drawable;
-  PangoLayout    *layout;
-  PangoRectangle  pos;
+  GimpTextLayout *layout;
+  gint            width;
+  gint            height;
   gchar          *name;
   gchar          *newline;
 
-  layout = gimp_text_layer_layout_new (layer);
+  image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  if (!gimp_text_layer_position_layout (layer, layout, &pos))
+  layout = gimp_text_layout_new (layer->text, image);
+
+  gimp_text_layout_get_size (layout, &width, &height);
+
+  if (! gimp_text_layout_get_size (layout, &width, &height))
     {
       g_object_unref (layout);
       return FALSE;
     }
 
-  image    = gimp_item_get_image (GIMP_ITEM (layer));
   drawable = GIMP_DRAWABLE (layer);
 
-  if (pos.width  != gimp_drawable_width (drawable) ||
-      pos.height != gimp_drawable_height (drawable))
+  if (width  != gimp_drawable_width (drawable) ||
+      height != gimp_drawable_height (drawable))
     {
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
@@ -242,15 +232,13 @@ gimp_text_layer_render (GimpTextLayer *layer)
                             gimp_drawable_height (drawable));
 
 
-      drawable->width  = pos.width;
-      drawable->height = pos.height;
+      drawable->width  = width;
+      drawable->height = height;
 
       if (drawable->tiles)
         tile_manager_destroy (drawable->tiles);
 
-      drawable->tiles = tile_manager_new (drawable->width,
-                                          drawable->height,
-                                          drawable->bytes);
+      drawable->tiles = tile_manager_new (width, height, drawable->bytes);
 
       gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
     }
@@ -267,176 +255,18 @@ gimp_text_layer_render (GimpTextLayer *layer)
     gimp_object_set_name (GIMP_OBJECT (layer), layer->text->text);
   }
 
-  gimp_text_layer_render_layout (layer, layout, pos.x, pos.y);
+  gimp_text_layer_render_layout (layer, layout);
   g_object_unref (layout);
 
-  gimp_drawable_update (drawable, 0, 0, pos.width, pos.height);
+  gimp_drawable_update (drawable, 0, 0, width, height);
   gimp_image_flush (image);
 
   return TRUE;
 }
 
-static PangoLayout *
-gimp_text_layer_layout_new (GimpTextLayer *layer)
-{
-  GimpText             *text = layer->text;
-  GimpImage            *image;
-  PangoContext         *context;
-  PangoLayout          *layout;
-  PangoFontDescription *font_desc;
-  gint                  size;
-
-  font_desc = pango_font_description_from_string (text->font);
-  g_return_val_if_fail (font_desc != NULL, NULL);
-  if (!font_desc)
-    return NULL;
-
-  image = gimp_item_get_image (GIMP_ITEM (layer));
-
-  switch (text->font_size_unit)
-    {
-    case GIMP_UNIT_PIXEL:
-      size = PANGO_SCALE * text->font_size;
-      break;
-
-    default:
-      {
-	gdouble xres, yres;
-	gdouble factor;
-
-	factor = gimp_unit_get_factor (text->font_size_unit);
-	g_return_val_if_fail (factor > 0.0, NULL);
-
-	gimp_image_get_resolution (image, &xres, &yres);
-
-	size = (gdouble) PANGO_SCALE * text->font_size * yres / factor;
-      }
-      break;
-    }
-  
-  if (size > 1)
-    pango_font_description_set_size (font_desc, size);
-
-  context = gimp_image_get_pango_context (image);
-
-  layout = pango_layout_new (context);
-  g_object_unref (context);
-
-  pango_layout_set_font_description (layout, font_desc);
-  pango_font_description_free (font_desc);
-
-  pango_layout_set_text (layout, text->text, -1);
-
-  return layout;
-}
-
-static gboolean
-gimp_text_layer_position_layout (GimpTextLayer  *layer,
-                                 PangoLayout    *layout,
-                                 PangoRectangle *pos)
-{
-  GimpText       *text;
-  PangoRectangle  ink;
-  PangoRectangle  logical;
-  gint            x1, y1;
-  gint            x2, y2;
-  gboolean        fixed;
-
-  text = layer->text;
-  fixed = (text->fixed_width > 1 && text->fixed_height > 1);
-
-  pango_layout_get_pixel_extents (layout, &ink, &logical);
-
-  g_print ("ink rect: %d x %d @ %d, %d\n", 
-           ink.width, ink.height, ink.x, ink.y);
-  g_print ("logical rect: %d x %d @ %d, %d\n", 
-           logical.width, logical.height, logical.x, logical.y);
-
-  if (!fixed)
-    {
-      if (ink.width < 1 || ink.height < 1)
-        return FALSE;
-
-      /* sanity checks for insane font sizes */
-      if (ink.width  > 8192)  ink.width  = 8192;
-      if (ink.height > 8192)  ink.height = 8192;
-    }
-
-  x1 = MIN (0, logical.x);
-  y1 = MIN (0, logical.y);
-  x2 = MAX (ink.x + ink.width,  logical.x + logical.width);
-  y2 = MAX (ink.y + ink.height, logical.y + logical.height);
-
-  pos->width  = fixed ? text->fixed_width  : x2 - x1;
-  pos->height = fixed ? text->fixed_height : y2 - y1;
-
-  /* border should only be used by the compatibility API;
-     we assume that gravity is CENTER
-   */
-  if (text->border)
-    {
-      fixed = TRUE;
-
-      pos->width  += 2 * text->border;
-      pos->height += 2 * text->border;
-    }
-
-  pos->x = 0;
-  pos->y = 0;
-
-  if (!fixed)
-    return TRUE;
-
-  switch (text->gravity)
-    {
-    case GIMP_GRAVITY_NORTH_WEST:
-    case GIMP_GRAVITY_SOUTH_WEST:
-    case GIMP_GRAVITY_WEST:
-      break;
-      
-    case GIMP_GRAVITY_NONE:
-    case GIMP_GRAVITY_CENTER:
-    case GIMP_GRAVITY_NORTH:
-    case GIMP_GRAVITY_SOUTH:
-      pos->x += (pos->width - logical.width) / 2;
-      break;
-      
-    case GIMP_GRAVITY_NORTH_EAST:
-    case GIMP_GRAVITY_SOUTH_EAST:
-    case GIMP_GRAVITY_EAST:
-      pos->x += (pos->width - logical.width);
-      break;
-    }
-
-  switch (text->gravity)
-    {
-    case GIMP_GRAVITY_NORTH:
-    case GIMP_GRAVITY_NORTH_WEST:
-    case GIMP_GRAVITY_NORTH_EAST:
-      break;
-
-    case GIMP_GRAVITY_NONE:
-    case GIMP_GRAVITY_CENTER:
-    case GIMP_GRAVITY_WEST:
-    case GIMP_GRAVITY_EAST:
-      pos->y += (pos->height - logical.height) / 2;
-      break;
-
-    case GIMP_GRAVITY_SOUTH:
-    case GIMP_GRAVITY_SOUTH_WEST:
-    case GIMP_GRAVITY_SOUTH_EAST:
-      pos->y += (pos->height - logical.height);
-      break;
-    }
-
-  return TRUE;
-}
-
 static void
-gimp_text_layer_render_layout (GimpTextLayer *layer,
-			       PangoLayout   *layout,
-			       gint           x,
-			       gint           y)
+gimp_text_layer_render_layout (GimpTextLayer  *layer,
+			       GimpTextLayout *layout)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (layer);
   TileManager  *mask;
@@ -450,7 +280,7 @@ gimp_text_layer_render_layout (GimpTextLayer *layer,
   width  = gimp_drawable_width  (drawable);
   height = gimp_drawable_height (drawable);
 
-  mask = gimp_text_render_layout (layout, x, y, width, height);
+  mask = gimp_text_layout_render (layout);
 
   pixel_region_init (&textPR,
 		     GIMP_DRAWABLE (layer)->tiles, 0, 0, width, height, TRUE);
@@ -460,39 +290,4 @@ gimp_text_layer_render_layout (GimpTextLayer *layer,
   apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
   
   tile_manager_destroy (mask);
-}
-
-
-static void
-detach_pango_context (GObject *image)
-{
-  g_object_set_qdata (image, gimp_text_layer_context_quark, NULL);
-}
-
-static PangoContext *
-gimp_image_get_pango_context (GimpImage *image)
-{
-  PangoContext *context;
-
-  context = (PangoContext *) g_object_get_qdata (G_OBJECT (image),
-                                                 gimp_text_layer_context_quark);
-
-  if (!context)
-    {
-      gdouble xres, yres;
-      
-      gimp_image_get_resolution (image, &xres, &yres);
-
-      context = pango_ft2_get_context (xres, yres);
-
-      g_signal_connect_object (image, "resolution_changed",
-                               G_CALLBACK (detach_pango_context),
-                               context, 0);
-
-      g_object_set_qdata_full (G_OBJECT (image),
-                               gimp_text_layer_context_quark, context,
-                               (GDestroyNotify) g_object_unref);
-    }
-
-  return g_object_ref (context);
 }

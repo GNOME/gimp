@@ -142,6 +142,8 @@ app/plug-in/plug-in.c
 app/plug-in/plug-in-rc.c
 app/plug-in/plug-ins.c
 
+app/text/text-enums.c
+
 app/tools/gimpairbrushtool.c
 app/tools/gimpbezierselecttool.c
 app/tools/gimpblendtool.c

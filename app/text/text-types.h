@@ -24,9 +24,12 @@
 
 #include "core/core-types.h"
 
+#include "text/text-enums.h"
 
-typedef struct _GimpText       GimpText;
-typedef struct _GimpTextLayer  GimpTextLayer;
+
+typedef struct _GimpText        GimpText;
+typedef struct _GimpTextLayer   GimpTextLayer;
+typedef struct _GimpTextLayout  GimpTextLayout;
 
 
 #endif /* __TEXT_TYPES_H__ */

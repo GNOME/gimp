@@ -1,9 +1,6 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText
- * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -19,17 +16,21 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_TEXT_RENDER_H__
-#define __GIMP_TEXT_RENDER_H__
+#ifndef __TEXT_ENUMS_H__
+#define __TEXT_ENUMS_H__
 
 
-TileManager * gimp_text_render_layout (PangoLayout *layout,
-				       gint         x,
-				       gint         y,
-				       gint         width,
-				       gint         height);
-GimpLayer   * gimp_image_text_render  (GimpImage   *gimage,
-				       GimpText    *text);
+#define GIMP_TYPE_TEXT_ALIGNMENT (gimp_text_alignment_get_type ())
+
+GType gimp_text_alignment_get_type (void) G_GNUC_CONST;
+
+/* this enum must match the values of the PangoAlignment enum */
+typedef enum
+{
+  GIMP_TEXT_ALIGNMENT_LEFT,    /*< desc="Left Aligned"  >*/
+  GIMP_TEXT_ALIGNMENT_CENTER,  /*< desc="Centered"      >*/
+  GIMP_TEXT_ALIGNMENT_RIGHT    /*< desc="Right Aligned" >*/
+} GimpTextAlignment;
 
 
-#endif /* __GIMP_TEXT_RENDER_H__ */
+#endif /* __TEXT_ENUMS_H__ */
