@@ -29,9 +29,10 @@
 	* plug-ins/common/edge.c
 	* plug-ins/common/emboss.c
 	* plug-ins/common/engrave.c
-	* plug-ins/common/exchange.c: 
-	* plug-ins/common/film.c: 
-	* plug-ins/common/flarefx.c: 
+	* plug-ins/common/exchange.c 
+	* plug-ins/common/film.c
+	* plug-ins/common/flarefx.c: Use HIG capitalization style. 
+	Added GPL license in a few places. Minor code clean-up.
 
 2004-05-26  Sven Neumann  <sven@gimp.org>
 
