@@ -1,3 +1,8 @@
+Mon Jun 21 16:47:32 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/mpeg/mpeg.c: don't try to figure out G_BYTE_ORDER for
+	ourselves
+
 1999-06-21  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/context_manager.c: namespace cleanups.

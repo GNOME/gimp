@@ -71,18 +71,6 @@
  */
 
 
-/* endianness guessing from wmf.c */
-#define G_LITTLE_ENDIAN 1234
-#define G_BIG_ENDIAN    4321
-#if defined(__i386__)
-#define G_BYTE_ORDER G_LITTLE_ENDIAN
-#elif defined(__hppa) || defined(__sparc)
-#define G_BYTE_ORDER G_BIG_ENDIAN
-#else
-#error set byte order by hand by adding your machine above
-#endif
-
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
