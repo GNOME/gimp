@@ -38,9 +38,12 @@ bootstrap Gimp::Lib $VERSION;
 # various functions for 1.0 compatibility
 
 sub gimp_progress_init {
-   push @_,-1 if @_<2;
-   eval { gimp_call_procedure "gimp_progress_init",@_ };
-   gimp_call_procedure "gimp_progress_init",shift if $@;
+   if (@_<2) {
+      goto &_gimp_call_procedure;
+   } else {
+      eval { gimp_call_procedure "gimp_progress_init",@_ };
+      gimp_call_procedure "gimp_progress_init",shift if $@;
+   }
 }
 
 # functions to "autobless" where the autobless mechanism

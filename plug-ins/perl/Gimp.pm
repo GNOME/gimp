@@ -13,7 +13,7 @@ use subs qw(init end lock unlock canonicalize_color);
 require DynaLoader;
 
 @ISA=qw(DynaLoader);
-$VERSION = 1.083;
+$VERSION = 1.084;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -46,8 +46,9 @@ $VERSION = 1.083;
 'REPEAT_TRIANGULAR',   'BG_BUCKET_FILL',      'FG_BUCKET_FILL',      'PATTERN_BUCKET_FILL', 
 #ENUM_NAME#
 	'STATUS_CALLING_ERROR',		'STATUS_EXECUTION_ERROR',	'STATUS_PASS_THROUGH',
-        'STATUS_SUCCESS',		'PARASITE_PERSISTANT',		'PARASITE_ATTACH_PARENT',
+        'STATUS_SUCCESS',		'PARASITE_PERSISTENT',		'PARASITE_ATTACH_PARENT',
         'PARASITE_PARENT_PERSISTENT',	'PARASITE_ATTACH_GRANDPARENT',	'PARASITE_GRANDPARENT_PERSISTENT',
+        'PARASITE_UNDOABLE',		'PARASITE_PARENT_UNDOABLE',	'PARASITE_GRANDPARENT_UNDOABLE',
 	'TRACE_NONE',	'TRACE_CALL',	'TRACE_TYPE',	'TRACE_NAME',	'TRACE_DESC',	'TRACE_ALL',
 );
 
@@ -102,7 +103,7 @@ sub import($;@) {
 
    # make a quick but dirty guess ;)
    
-   @_=(@_procs,':auto') unless @_;
+   @_=(@_procs,':consts',':auto') unless @_;
    
    for(@_) {
       if ($_ eq ":auto") {
@@ -517,7 +518,7 @@ sub new($$$$$$$$) {
 package Gimp::Parasite;
 
 sub is_type($$)		{ $_[0]->[0] eq $_[1] }
-sub is_persistant($)	{ $_[0]->[1] & PARASITE_PERSISTANT }
+sub is_persistant($)	{ $_[0]->[1] & &Gimp::PARASITE_PERSISTANT }
 sub is_error($)		{ !defined $_[0]->[0] }
 sub has_flag($$)	{ $_[0]->[1] & $_[1] }
 sub copy($)		{ [@{$_[0]}] }
@@ -567,7 +568,7 @@ decision I believe...
 
 =head2 IMPORT TAGS
 
-If you don't specify any import tags, Gimp assumes :consts
+If you don't specify any import tags, Gimp assumes C<qw/:consts main xlfd_size/>
 which is usually what you want.
 
 =over 4
@@ -588,7 +589,7 @@ All constants from gimpenums.h (BG_IMAGE_FILL, RUN_NONINTERACTIVE, NORMAL_MODE, 
 
 =back
 
-The default (unless '' is specified) is C<main xlfd_size :auto>.
+The default (unless '' is specified) is C<main xlfd_size :consts>.
 
 =head1 GETTING STARTED
 

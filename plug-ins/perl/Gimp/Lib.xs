@@ -29,15 +29,6 @@
 #include "XSUB.h"
 #include "ppport.h"
 
-/* I actually do care a bit about older perls... */
-#ifndef ERRSV
-# define ERRSV perl_get_sv("@",FALSE)
-#endif
-/* And also for newer perls... */
-#ifndef dTHR
-# define dTHR (void)0
-#endif
-
 /* dirty is used in gimp.h AND in perl < 5.005 or with PERL_POLLUTE.  */
 #ifdef dirty
 # undef dirty
@@ -1833,6 +1824,19 @@ gimp_patterns_get_pattern_data(name)
 	}
 
 PROTOTYPES: ENABLE
+
+void
+_gimp_progress_init (message)
+	gchar *	message
+        CODE:
+        gimp_progress_init (message);
+
+#ifdef GIMP_HAVE_DEFAULT_DISPLAY
+
+DISPLAY
+gimp_default_display()
+
+#endif
 
 # functions using different calling conventions:
 #void

@@ -588,7 +588,7 @@ sub net {
    my $this = this_script;
    my(%map,@args);
    my($interact)=1;
-   my $params = $this->[8];
+   my $params = $this->[9];
    
    for(@{$this->[11]}) {
       return unless fu_feature_present($_,$this->[1]);
@@ -1098,7 +1098,7 @@ sub save_image($$) {
 # provide some clues ;)
 sub print_switches {
    my($this)=@_;
-   for(@{$this->[8]}) {
+   for(@{$this->[9]}) {
       my $type=$pf_type2string{$_->[0]};
       my $key=mangle_key($_->[1]);
       printf "           -%-25s %s%s\n","$key $type",$_->[2],defined $_->[3] ? " [$_->[3]]" : "";

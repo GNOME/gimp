@@ -91,7 +91,7 @@ other way to access the raw pixeldata in Gimp.
 
 Some exmaples:
 
- $region = $drawable->pixel_rgn (0,0, 100,100, 1,0);
+ $region = $drawable->get->pixel_rgn (0,0, 100,100, 1,0);
  $pixel = $region->get_pixel (5,7);	# fetches the pixel from (5|7)
  print $pixel;				# outputs something like
  					# [255, 127, 0], i.e. in
@@ -108,6 +108,6 @@ Marc Lehmann <pcg@goof.com>
 
 =head1 SEE ALSO
 
-perl(1), Gimp(1).
+L<Gimp::Pixel>, perl(1), Gimp(1).
 
 =cut

@@ -1,5 +1,12 @@
 Revision history for Gimp-Perl extension.
 
+	- removed compatibility code from Lib.xs.
+        - call the XS version of gimp_progress_init when only
+          one argument is given.
+        - re-added PARASITE_*-constants (including UNDOABLE variants).
+        - :auto is NO LONGER the default for the import method(!).
+          (NOT YET).
+
 1.083 Wed May 12 03:36:10 CEST 1999
 	- took a modified enums.pl to autogenerate constants. Some constants
           have changed:

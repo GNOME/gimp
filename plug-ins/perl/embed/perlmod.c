@@ -16,6 +16,14 @@ static GimpModuleInfo info = {
     "1999-04-14"
 };
 
+void ERR(char *msg)
+{
+  STRLEN dc;
+  dTHR;
+
+  fprintf (stderr, "(Perl module error, please report!) %s: %s\n", msg, SvPV(ERRSV,dc));
+}
+
 static PerlInterpreter *interp;
 
 static int perl_init(void)
@@ -30,13 +38,29 @@ static int perl_init(void)
       if (interp)
         {
 	  perl_construct(interp);
-	  perl_parse(interp, xs_init, 3, embedding, NULL);
-	  perl_eval_pv ("require Gimp::Module", TRUE);
+          {
+            dTHR; /* NOT earlier! */
 
-	  res = perl_eval_pv ("Gimp::Module::_init()", TRUE);
-	  if (res && SvIOK (res))
-	    return SvIV (res);
-	}
+            perl_parse(interp, xs_init, 3, embedding, NULL);
+            perl_eval_pv ("require Gimp::Module", TRUE);
+
+            if (SvTRUE (ERRSV))
+              {
+                ERR ("error during require Gimp::Module, perl NOT initialized!");
+                return GIMP_MODULE_UNLOAD;
+              }
+
+            res = perl_eval_pv ("Gimp::Module::_init()", FALSE);
+            if (SvTRUE (ERRSV))
+              {
+                ERR ("error during require Gimp::Module::_init(), perl NOT initialized!");
+                return GIMP_MODULE_UNLOAD;
+              }
+
+            if (res && SvIOK (res))
+              return SvIV (res);
+          }
+        }
 
       return GIMP_MODULE_UNLOAD;
     }
@@ -46,10 +70,16 @@ static int perl_init(void)
 
 static void perl_deinit(void)
 {
+  dTHR;
+
   if (interp)
     {
       perl_run(interp);
-      perl_eval_pv ("Gimp::Module::_deinit()", TRUE);
+      perl_eval_pv ("Gimp::Module::_deinit()", FALSE);
+
+      if (SvTRUE (ERRSV))
+        ERR ("error during require Gimp::Module::_init()");
+
       PL_perl_destruct_level = 0;
       perl_destruct(interp);
       perl_free(interp);
@@ -79,8 +109,8 @@ module_unload (void *shutdown_data,
                void *completed_data)
 {
   perl_deinit ();
-  /* perl is unloadable, *sigh* */
-  /*  completed_cb (completed_data);*/
+  /* perl is unloadable (atexit & friends), *sigh* */
+  /* completed_cb (completed_data); */
 }
 
 
