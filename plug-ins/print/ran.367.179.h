@@ -1,3 +1,25 @@
+/*
+ * "$Id$"
+ *
+ *   2:1 square dither matrix file for the gimp-print plugin.
+ *
+ *   Copyright 1997-2000 Thomas Tonino
+ *
+ *   This program is free software; you can redistribute it and/or modify it
+ *   under the terms of the GNU General Public License as published by the Free
+ *   Software Foundation; either version 2 of the License, or (at your option)
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful, but
+ *   WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ *   or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ *   for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
 0, 48278, 37723, 17025, 50819, 28890, 7865, 64580, 37510, 20077,
   52886, 13212, 46891, 31060, 652, 57462, 27340, 16506, 55167, 36759,
   6916, 45562, 23744, 52563, 2901, 41512, 21474, 32446, 53710, 4752,

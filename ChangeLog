@@ -1,3 +1,11 @@
+2000-10-04  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/print/*: a fresh snapshot of the CVS version from
+	sourceforge. Added new files "AUTHORS" and "print-intl.h".
+
+	The files are identical now (no need any more to add stuff like
+	#include "config.h" to make them work in the GIMP tree).
+
 2000-10-03  Simon Budig  <simon@gimp.org>
 
 	* tools/gimppath2svg.py: New file: Script to convert an exported

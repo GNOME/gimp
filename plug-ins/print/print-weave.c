@@ -20,8 +20,15 @@
  *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+/*
+ * This file must include only standard C header files.  The core code must
+ * compile on generic platforms that don't support glib, gimp, gtk, etc.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "print.h"
 
 #if 0
 #define TEST_RAW
@@ -77,13 +84,33 @@ typedef struct raw {
 	int advancebasis;
 	int subblocksperpassblock;
 	int passespersubblock;
+	int strategy;
 } raw_t;
+
+/*
+ * Strategy types currently defined:
+ *
+ *  0: microweave (intercepted at the escp2 driver level so we never
+ *     see it here)
+ *  1: zig-zag type pass block filling
+ *  2: ascending pass block filling
+ *  3: descending pass block filling
+ *  4: ascending fill with 2x expansion
+ *  5: ascending fill with 3x expansion
+ *  6: staggered zig-zag neighbour-avoidance fill
+ *
+ * In theory, strategy 1 should be optimal; in practice, it can lead
+ * to visible areas of banding.  If it's necessary to avoid filling
+ * neighbouring rows in neighbouring passes, strategy 6 should be optimal,
+ * at least for some weaves.
+ */
 
 static void
 initialize_raw_weave(raw_t *w,	/* I - weave struct to be filled in */
                      int S,	/* I - jet separation */
                      int J,	/* I - number of jets */
-                     int H)	/* I - oversampling factor */
+                     int H,	/* I - oversampling factor */
+                     int strat)	/* I - weave pattern variation to use */
 {
 	w->separation = S;
 	w->jets = J;
@@ -91,6 +118,7 @@ initialize_raw_weave(raw_t *w,	/* I - weave struct to be filled in */
 	w->advancebasis = J / H;
 	w->subblocksperpassblock = gcd(S, w->advancebasis);
 	w->passespersubblock = S / w->subblocksperpassblock;
+	w->strategy = strat;
 }
 
 static void
@@ -106,11 +134,56 @@ calculate_raw_pass_parameters(raw_t *w,		/* I - weave parameters */
 	subpassblock = pass % w->separation
 	                 * w->subblocksperpassblock / w->separation;
 
-	if (subpassblock * 2 < w->subblocksperpassblock)
-		subpassoffset = 2 * subpassblock;
-	else
-		subpassoffset = 2 * (w->subblocksperpassblock - subpassblock)
-		                 - 1;
+	switch (w->strategy) {
+	case 1:
+		if (subpassblock * 2 < w->subblocksperpassblock)
+			subpassoffset = 2 * subpassblock;
+		else
+			subpassoffset = 2 * (w->subblocksperpassblock
+			                      - subpassblock) - 1;
+		break;
+	case 2:
+		subpassoffset = subpassblock;
+		break;
+	case 3:
+		subpassoffset = w->subblocksperpassblock - 1 - subpassblock;
+		break;
+	case 4:
+		if (subpassblock * 2 < w->subblocksperpassblock)
+			subpassoffset = 2 * subpassblock;
+		else
+			subpassoffset = 1 + 2 * (subpassblock
+			                          - (w->subblocksperpassblock
+			                              + 1) / 2);
+		break;
+	case 5:
+		if (subpassblock * 3 < w->subblocksperpassblock)
+			subpassoffset = 3 * subpassblock;
+		else if (3 * (subpassblock - (w->subblocksperpassblock + 2) / 3)
+		          < w->subblocksperpassblock - 2)
+			subpassoffset = 2 + 3 * (subpassblock
+			                          - (w->subblocksperpassblock
+			                              + 2) / 3);
+		else
+			subpassoffset = 1 + 3 * (subpassblock
+			                          - (w->subblocksperpassblock
+			                              + 2) / 3
+						  - w->subblocksperpassblock
+						      / 3);
+		break;
+	case 6:
+		if (subpassblock * 2 < w->subblocksperpassblock)
+			subpassoffset = 2 * subpassblock;
+		else if (subpassblock * 2 < w->subblocksperpassblock + 2)
+			subpassoffset = 1;
+		else
+			subpassoffset = 2 * (w->subblocksperpassblock
+			                      - subpassblock) + 1;
+		break;
+	default:
+		subpassoffset = subpassblock;
+		break;
+	}
 
 	*startrow = w->separation * w->jets * band
 	              + w->advancebasis * passinband + subpassoffset;
@@ -128,11 +201,50 @@ calculate_raw_row_parameters(raw_t *w,		/* I - weave parameters */
 	int subblockoffset, subpassblock, band, baserow, passinband, offset;
 
 	subblockoffset = row % w->subblocksperpassblock;
-	if (subblockoffset % 2 == 0)
-		subpassblock = subblockoffset / 2;
-	else
-		subpassblock = w->subblocksperpassblock
-		                 - (subblockoffset + 1) / 2;
+	switch (w->strategy) {
+	case 1:
+		if (subblockoffset % 2 == 0)
+			subpassblock = subblockoffset / 2;
+		else
+			subpassblock = w->subblocksperpassblock
+			                 - (subblockoffset + 1) / 2;
+		break;
+	case 2:
+		subpassblock = subblockoffset;
+		break;
+	case 3:
+		subpassblock = w->subblocksperpassblock - 1 - subblockoffset;
+		break;
+	case 4:
+		if (subblockoffset % 2 == 0)
+			subpassblock = subblockoffset / 2;
+		else
+			subpassblock = (subblockoffset - 1) / 2
+			               + (w->subblocksperpassblock + 1) / 2;
+		break;
+	case 5:
+		if (subblockoffset % 3 == 0)
+			subpassblock = subblockoffset / 3;
+		else if (subblockoffset % 3 == 1)
+			subpassblock = (subblockoffset - 1) / 3
+			                 + (w->subblocksperpassblock + 2) / 3;
+		else
+			subpassblock = (subblockoffset - 2) / 3
+			                 + (w->subblocksperpassblock + 2) / 3
+			                 + (w->subblocksperpassblock + 1) / 3;
+		break;
+	case 6:
+		if (subblockoffset % 2 == 0)
+			subpassblock = subblockoffset / 2;
+		else if (subblockoffset == 1)
+			subpassblock = w->subblocksperpassblock / 2;
+		else
+			subpassblock = w->subblocksperpassblock
+			                 - (subblockoffset - 1) / 2;
+	default:
+		subpassblock = subblockoffset;
+		break;
+	}
 
 	band = row / (w->separation * w->jets);
 	baserow = row - subblockoffset - band * w->separation * w->jets;
@@ -223,8 +335,10 @@ static void
 invert_map(int *map, int *stagger, int count, int oldfirstpass,
            int newfirstpass)
 {
-	int newmap[count], newstagger[count];
 	int i;
+	int *newmap, *newstagger;
+	newmap = malloc(count * sizeof(int));
+	newstagger = malloc(count * sizeof(int));
 
 	for (i = 0; i < count; i++) {
 		newmap[map[i] - oldfirstpass] = i + newfirstpass;
@@ -233,6 +347,8 @@ invert_map(int *map, int *stagger, int count, int oldfirstpass,
 
 	memcpy(map, newmap, count * sizeof(int));
 	memcpy(stagger, newstagger, count * sizeof(int));
+	free(newstagger);
+	free(newmap);
 }
 
 static void
@@ -391,13 +507,14 @@ initialize_weave_params(int S,		/* I - jet separation */
                         int H,		/* I - oversampling factor */
                         int firstrow,	/* I - first row number to print */
                         int lastrow,	/* I - last row number to print */
-                        int pagelength)	/* I - number of rows on the whole
+                        int pagelength,	/* I - number of rows on the whole
                         		       page, without using any
                         		       expanded margin facilities */
+                        int strategy)	/* I - weave pattern variant to use */
 {
 	cooked_t *w = malloc(sizeof(cooked_t));
 	if (w) {
-		initialize_raw_weave(&w->rw, S, J, H);
+		initialize_raw_weave(&w->rw, S, J, H, strategy);
 		calculate_pass_map(w, pagelength, firstrow, lastrow);
 	}
 	return w;
@@ -623,6 +740,7 @@ main(int ac, char *av[])
 	int firstrow  =ac>4 ? atoi(av[4]) : 1;
 	int lastrow   =ac>5 ? atoi(av[5]) : 100;
 	int pagelength=ac>6 ? atoi(av[6]) : 1000;
+	int strategy  =ac>7 ? atoi(av[7]) : 1;
 	cooked_t *weave;
 	int passes;
 
@@ -632,10 +750,12 @@ main(int ac, char *av[])
 
 	memset(collect, 0, MAXCOLLECT*sizeof(int));
 	memset(prints, 0, MAXCOLLECT*sizeof(int));
-	printf("S=%d  J=%d  H=%d  firstrow=%d  lastrow=%d  pagelength=%d\n",
-	       S, J, H, firstrow, lastrow, pagelength);
+	printf("S=%d  J=%d  H=%d  firstrow=%d  lastrow=%d  "
+	       "pagelength=%d  strategy=%d\n",
+	       S, J, H, firstrow, lastrow, pagelength, strategy);
 
-	weave = initialize_weave_params(S, J, H, firstrow, lastrow, pagelength);
+	weave = initialize_weave_params(S, J, H, firstrow, lastrow,
+	                                pagelength, strategy);
 	passes = weave->first_unused_pass - weave->first_premapped_pass;
 
 	for (pass = 0; pass < passes; pass++) {
@@ -762,7 +882,7 @@ main(int ac, char *av[])
 			}
 			putchar('\n');
 		}
-		/*putchar('\n');*/
+		//putchar('\n');
 	}
 
 	return 0;

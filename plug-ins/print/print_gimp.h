@@ -31,7 +31,14 @@
 
 #include <gtk/gtk.h>
 
-#define GIMP_ENABLE_COMPAT_CRUFT  /*  should go away soon  */
+/*
+ * We define GIMP_ENABLE_COMPAT_CRUFT here because we are still using
+ * the old API names. This is because we have to support 1.0 as well.
+ * This define is required as the default in Gimp was changed 24 Aug 00.
+ * This should be removed when we stop supporting 1.0.
+ */
+
+#define GIMP_ENABLE_COMPAT_CRUFT
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -48,11 +55,13 @@
 /*
  * Constants for GUI...
  */
-#define PREVIEW_SIZE_VERT  240 /* Assuming max media size of 24" A2 */
-#define PREVIEW_SIZE_HORIZ 240 /* Assuming max media size of 24" A2 */
 
 #if !defined(GIMP_MINOR_VERSION) || (GIMP_MAJOR_VERSION == 1 && GIMP_MINOR_VERSION == 0) || (GIMP_MAJOR_VERSION == 1 && GIMP_MINOR_VERSION == 1 && GIMP_MICRO_VERSION < 21)
 #define GIMP_1_0
+#endif
+
+#if !defined(GIMP_PRINT_MAINT) && !defined(GIMP_1_0)
+#define NEW_UI_ONLY
 #endif
 
 /*

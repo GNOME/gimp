@@ -19,18 +19,11 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
- * Contents:
- *
- *   canon_parameters()     - Return the parameter values for the given
- *                            parameter.
- *   canon_imageable_area() - Return the imageable area of the page.
- *   canon_print()          - Print an image to a CANON printer.
- *   canon_write()          - Send 6-color graphics using compression.
- *
- * Revision History:
- *
- *   See ChangeLog
+ */
+
+/*
+ * This file must include only standard C header files.  The core code must
+ * compile on generic platforms that don't support glib, gimp, gtk, etc.
  */
 
 
@@ -344,12 +337,15 @@ canon_size_type(const vars_t *v, canon_cap_t caps)
       if (!strcmp(name,"Letter+"))     return 0x2a;
       if (!strcmp(name,"A4+"))         return 0x2b;
       if (!strcmp(name,"Canon 4x2"))   return 0x2d;
-    }
-  /* custom */
+      /* custom */
 
 #ifdef DEBUG
-  fprintf(stderr,"canon: Unknown paper size '%s' - using custom\n",name);
+      fprintf(stderr,"canon: Unknown paper size '%s' - using custom\n",name);
+    } else {
+      fprintf(stderr,"canon: Couldn't look up paper size %dx%d - "
+	      "using custom\n",v->page_height, v->page_width);
 #endif
+    }
   return 0;
 }
 
@@ -610,9 +606,9 @@ canon_cmd(FILE *prn, /* I - the printer         */
 
 static void
 canon_init_printer(FILE *prn, canon_cap_t caps,
-		   int output_type, char *media_str,
+		   int output_type, const char *media_str,
 		   const vars_t *v, int print_head,
-		   char *source_str,
+		   const char *source_str,
 		   int xdpi, int ydpi,
 		   int page_width, int page_height,
 		   int top, int left,
@@ -711,7 +707,7 @@ canon_init_printer(FILE *prn, canon_cap_t caps,
 
   canon_cmd(prn,ESC5b,0x4b, 2, 0x00,0x0f);
   if (caps.features & CANON_CAP_CMD61)
-    canon_cmd(prn,ESC5b,0x61, 1, 0x00,0x01);
+    canon_cmd(prn,ESC28,0x61, 1, 0x01);
   canon_cmd(prn,ESC28,0x62, 1, 0x01);
   canon_cmd(prn,ESC28,0x71, 1, 0x01);
 
@@ -744,6 +740,20 @@ canon_init_printer(FILE *prn, canon_cap_t caps,
   PUT("topskip ",top,ydpi);
   canon_cmd(prn,ESC28,0x65, 2, (top >> 8 ),(top & 255));
 }
+
+void canon_deinit_printer(FILE *prn, canon_cap_t caps)
+{
+  /* eject page */
+  fputc(0x0c,prn);
+
+  /* say goodbye */
+  canon_cmd(prn,ESC28,0x62,1,0);
+  if (caps.features & CANON_CAP_CMD61)
+    canon_cmd(prn,ESC28,0x61, 1, 0x00);
+  canon_cmd(prn,ESC40,0,0);
+  fflush(prn);
+}
+
 
 /*
  *  'alloc_buffer()' allocates buffer and fills it with 0
@@ -782,13 +792,13 @@ canon_print(const printer_t *printer,		/* I - Model */
 {
   unsigned char *cmap = v->cmap;
   int		model = printer->model;
-  char 		*resolution = v->resolution;
-  char          *media_type = v->media_type;
-  char          *media_source = v->media_source;
+  const char	*resolution = v->resolution;
+  const char	*media_type = v->media_type;
+  const char	*media_source = v->media_source;
   int 		output_type = v->output_type;
   int		orientation = v->orientation;
-  char          *ink_type = v->ink_type;
-  float 	scaling = v->scaling;
+  const char	*ink_type = v->ink_type;
+  double 	scaling = v->scaling;
   int		top = v->top;
   int		left = v->left;
   int		y;		/* Looping vars */
@@ -866,8 +876,6 @@ canon_print(const printer_t *printer,		/* I - Model */
 
   if (printhead == 0 || caps.inks == CANON_INK_K)
     output_type = OUTPUT_GRAY;
-  else if (image_bpp < 3 && cmap == NULL && output_type == OUTPUT_COLOR)
-    output_type = OUTPUT_GRAY_COLOR;
 
   /*
    * Choose the correct color conversion function...
@@ -1021,6 +1029,7 @@ canon_print(const printer_t *printer,		/* I - Model */
       lyellow = NULL;
     }
   }
+
 #ifdef DEBUG
   fprintf(stderr,"canon: driver will use colors ");
   if (cyan)     fputc('C',stderr);
@@ -1033,10 +1042,18 @@ canon_print(const printer_t *printer,		/* I - Model */
   fprintf(stderr,"\n");
 #endif
 
-  nv.density *= ydpi / xdpi;
+#ifdef DEBUG
+  fprintf(stderr,"density is %f\n",nv.density);
+#endif
+
+  nv.density = (nv.density * ydpi) / (xdpi * 1.0);
   if (nv.density > 1.0)
     nv.density = 1.0;
   compute_lut(256, &nv);
+
+#ifdef DEBUG
+  fprintf(stderr,"density is %f\n",nv.density);
+#endif
 
   if (xdpi > ydpi)
     dither = init_dither(image_width, out_width, 1, xdpi / ydpi, &nv);
@@ -1097,27 +1114,25 @@ canon_print(const printer_t *printer,		/* I - Model */
 
   for (y = 0; y < out_height; y ++)
   {
-    if ((y & 255) == 0)
+    int duplicate_line = 1;
+    if ((y & 63) == 0)
       Image_note_progress(image, y, out_height);
 
     if (errline != errlast)
     {
       errlast = errline;
+      duplicate_line = 0;
       Image_get_row(image, in, errline);
+      (*colorfunc)(in, out, image_width, image_bpp, cmap, &nv);
     }
 
-    (*colorfunc)(in, out, image_width, image_bpp, cmap, &nv);
-
-    if (output_type == OUTPUT_GRAY)
-      {
-	if (nv.image_type == IMAGE_MONOCHROME)
-	  dither_fastblack(out, y, dither, black);
-	else
-	  dither_black(out, y, dither, black);
-      } else {
-	dither_cmyk(out, y, dither, cyan, lcyan, magenta, lmagenta,
-		    yellow, lyellow, black);
-      }
+    if (nv.image_type == IMAGE_MONOCHROME)
+      dither_monochrome(out, y, dither, black, duplicate_line);
+    else if (output_type == OUTPUT_GRAY)
+      dither_black(out, y, dither, black, duplicate_line);
+    else
+      dither_cmyk(out, y, dither, cyan, lcyan, magenta, lmagenta,
+		  yellow, 0, black, duplicate_line);
 
 #ifdef DEBUG
     /* fprintf(stderr,","); */
@@ -1208,15 +1223,7 @@ canon_print(const printer_t *printer,		/* I - Model */
   if (lmagenta != NULL) free(lmagenta);
   if (lyellow != NULL)  free(lyellow);
 
-  /* eject page */
-  fputc(0x0c,prn);
-
-  /* say goodbye */
-  canon_cmd(prn,ESC28,0x62,1,0);
-  if (caps.features & CANON_CAP_CMD61)
-    canon_cmd(prn,ESC5b,0x61, 1, 0x00,0x00);
-  canon_cmd(prn,ESC40,0,0);
-  fflush(prn);
+  canon_deinit_printer(prn, caps);
 }
 
 /*

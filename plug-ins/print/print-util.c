@@ -19,19 +19,11 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
- * Contents:
- *
- *   gray_to_gray()       - Convert grayscale image data to grayscale.
- *   indexed_to_gray()    - Convert indexed image data to grayscale.
- *   indexed_to_rgb()     - Convert indexed image data to RGB.
- *   rgb_to_gray()        - Convert RGB image data to grayscale.
- *   rgb_to_rgb()         - Convert RGB image data to RGB.
- *   default_media_size() - Return the size of a default page size.
- *
- * Revision History:
- *
- *   See ChangeLog
+ */
+
+/*
+ * This file must include only standard C header files.  The core code must
+ * compile on generic platforms that don't support glib, gimp, gtk, etc.
  */
 
 /* #define PRINT_DEBUG */
@@ -39,17 +31,23 @@
 
 #include "print.h"
 #include <math.h>
+#include <limits.h>
 
 #ifndef __GNUC__
 #  define inline
 #endif /* !__GNUC__ */
 
-/*
- * EGCS 1.1.2/gcc 2.91 seems to have some particularly nasty inlining bugs
- */
-#if (__GNUC__ == 2 && __GNUC_MINOR__ == 91)
-#define inline
-#endif
+typedef struct
+{
+  unsigned steps;
+  unsigned short *composite;
+  unsigned short *red;
+  unsigned short *green;
+  unsigned short *blue;
+  unsigned shiftval;
+  unsigned bin_size;
+  unsigned bin_shift;
+} lut_t;
 
 /*
  * RGB to grayscale luminance constants...
@@ -61,6 +59,104 @@
 
 /* rgb/hsv conversions taken from Gimp common/autostretch_hsv.c */
 
+static vars_t default_vars =
+{
+	"",			/* Name of file or command to print to */
+	"ps2",			/* Name of printer "driver" */
+	"",			/* Name of PPD file */
+	OUTPUT_COLOR,		/* Color or grayscale output */
+	"",			/* Output resolution */
+	"",			/* Size of output media */
+	"",			/* Type of output media */
+	"",			/* Source of output media */
+	"",			/* Ink type */
+	"",			/* Dither algorithm */
+	1.0,			/* Output brightness */
+	100.0,			/* Scaling (100% means entire printable area, */
+				/*          -XXX means scale by PPI) */
+	-1,			/* Orientation (-1 = automatic) */
+	-1,			/* X offset (-1 = center) */
+	-1,			/* Y offset (-1 = center) */
+	1.0,			/* Screen gamma */
+	1.0,			/* Contrast */
+	1.0,			/* Cyan */
+	1.0,			/* Magenta */
+	1.0,			/* Yellow */
+	0,			/* Linear */
+	1.0,			/* Output saturation */
+	1.0,			/* Density */
+	IMAGE_CONTINUOUS,	/* Image type */
+	0,			/* Unit 0=Inch */
+	1.0,			/* Application gamma placeholder */
+	0,			/* Page width */
+	0			/* Page height */
+};
+
+static vars_t min_vars =
+{
+	"",			/* Name of file or command to print to */
+	"ps2",			/* Name of printer "driver" */
+	"",			/* Name of PPD file */
+	OUTPUT_COLOR,		/* Color or grayscale output */
+	"",			/* Output resolution */
+	"",			/* Size of output media */
+	"",			/* Type of output media */
+	"",			/* Source of output media */
+	"",			/* Ink type */
+	"",			/* Dither algorithm */
+	0,			/* Output brightness */
+	5.0,			/* Scaling (100% means entire printable area, */
+				/*          -XXX means scale by PPI) */
+	-1,			/* Orientation (-1 = automatic) */
+	-1,			/* X offset (-1 = center) */
+	-1,			/* Y offset (-1 = center) */
+	0.1,			/* Screen gamma */
+	0,			/* Contrast */
+	0,			/* Cyan */
+	0,			/* Magenta */
+	0,			/* Yellow */
+	0,			/* Linear */
+	0,			/* Output saturation */
+	.1,			/* Density */
+	IMAGE_CONTINUOUS,	/* Image type */
+	0,			/* Unit 0=Inch */
+	1.0,			/* Application gamma placeholder */
+	0,			/* Page width */
+	0			/* Page height */
+};
+
+static vars_t max_vars =
+{
+	"",			/* Name of file or command to print to */
+	"ps2",			/* Name of printer "driver" */
+	"",			/* Name of PPD file */
+	OUTPUT_COLOR,		/* Color or grayscale output */
+	"",			/* Output resolution */
+	"",			/* Size of output media */
+	"",			/* Type of output media */
+	"",			/* Source of output media */
+	"",			/* Ink type */
+	"",			/* Dither algorithm */
+	2.0,			/* Output brightness */
+	100.0,			/* Scaling (100% means entire printable area, */
+				/*          -XXX means scale by PPI) */
+	-1,			/* Orientation (-1 = automatic) */
+	-1,			/* X offset (-1 = center) */
+	-1,			/* Y offset (-1 = center) */
+	4.0,			/* Screen gamma */
+	4.0,			/* Contrast */
+	4.0,			/* Cyan */
+	4.0,			/* Magenta */
+	4.0,			/* Yellow */
+	0,			/* Linear */
+	9.0,			/* Output saturation */
+	2.0,			/* Density */
+	IMAGE_CONTINUOUS,	/* Image type */
+	0,			/* Unit 0=Inch */
+	1.0,			/* Application gamma placeholder */
+	0,			/* Page width */
+	0			/* Page height */
+};
 
 #define FMAX(a, b) ((a) > (b) ? (a) : (b))
 #define FMIN(a, b) ((a) < (b) ? (a) : (b))
@@ -73,6 +169,7 @@ calc_rgb_to_hsl(unsigned short *rgb, double *hue, double *sat,
   double h, s, l;
   double min, max;
   double delta;
+  int maxval;
 
   red   = rgb[0] / 65535.0;
   green = rgb[1] / 65535.0;
@@ -80,44 +177,59 @@ calc_rgb_to_hsl(unsigned short *rgb, double *hue, double *sat,
 
   if (red > green)
     {
-      max = FMAX(red, blue);
+      if (red > blue)
+	{
+	  max = red;
+	  maxval = 0;
+	}
+      else
+	{
+	  max = blue;
+	  maxval = 2;
+	}
       min = FMIN(green, blue);
     }
   else
     {
-      max = FMAX(green, blue);
+      if (green > blue)
+	{
+	  max = green;
+	  maxval = 1;
+	}
+      else
+	{
+	  max = blue;
+	  maxval = 2;
+	}
       min = FMIN(red, blue);
     }
 
   l = (max + min) / 2.0;
+  delta = max - min;
 
-  if (max == min)
+  if (delta < .000001)	/* Suggested by Eugene Anikin <eugene@anikin.com> */
     {
       s = 0.0;
       h = 0.0;
     }
   else
     {
-      delta = max - min;
-
       if (l <= .5)
 	s = delta / (max + min);
       else
 	s = delta / (2 - max - min);
 
-      if (red == max)
+      if (maxval == 0)
 	h = (green - blue) / delta;
-      else if (green == max)
+      else if (maxval == 1)
 	h = 2 + (blue - red) / delta;
       else
 	h = 4 + (red - green) / delta;
 
-      h /= 6.0;
-
       if (h < 0.0)
-	h += 1.0;
-      else if (h > 1.0)
-	h -= 1.0;
+	h += 6.0;
+      else if (h > 6.0)
+	h -= 6.0;
     }
 
   *hue = h;
@@ -129,15 +241,15 @@ static inline double
 hsl_value(double n1, double n2, double hue)
 {
   if (hue < 0)
-    hue += 1.0;
-  else if (hue > 1)
-    hue -= 1.0;
-  if (hue < (1.0 / 6.0))
-    return (n1 + (n2 - n1) * (hue * 6.0));
-  else if (hue < .5)
+    hue += 6.0;
+  else if (hue > 6)
+    hue -= 6.0;
+  if (hue < 1.0)
+    return (n1 + (n2 - n1) * hue);
+  else if (hue < 3.0)
     return (n2);
-  else if (hue < (4.0 / 6.0))
-    return (n1 + (n2 - n1) * (((4.0 / 6.0) - hue) * 6.0));
+  else if (hue < 4.0)
+    return (n1 + (n2 - n1) * (4.0 - hue));
   else
     return (n1);
 }
@@ -145,7 +257,7 @@ hsl_value(double n1, double n2, double hue)
 static inline void
 calc_hsl_to_rgb(unsigned short *rgb, double h, double s, double l)
 {
-  if (s == 0.0)
+  if (s < .0000001)
     {
       if (l > 1)
 	l = 1;
@@ -158,8 +270,9 @@ calc_hsl_to_rgb(unsigned short *rgb, double h, double s, double l)
   else
     {
       double m1, m2;
-      double h1 = h + (2.0 / 6.0);
-      double h2 = h - (2.0 / 6.0);
+      double h1, h2;
+      h1 = h + 2;
+      h2 = h - 2;
 
       if (l < .5)
 	m2 = l * (1 + s);
@@ -175,114 +288,74 @@ calc_hsl_to_rgb(unsigned short *rgb, double h, double s, double l)
 static inline void
 update_cmyk(unsigned short *rgb)
 {
-  unsigned c = 65535 - rgb[0];
-  unsigned m = 65535 - rgb[1];
-  unsigned y = 65535 - rgb[2];
-  unsigned nc, nm, ny;
-  unsigned k;
+  int c = 65535 - rgb[0];
+  int m = 65535 - rgb[1];
+  int y = 65535 - rgb[2];
+  int nc, nm, ny;
+  int k;
   if (c == m && c == y)
     return;
   k = FMIN(FMIN(c, m), y);
 
   /*
-   * Soften up the CMY primaries
+   * This is an attempt to achieve better color balance.  The goal
+   * is to weaken the pure cyan, magenta, and yellow and strengthen
+   * pure red, green, and blue.
+   *
+   * We also don't want S=1 V=1 cyan to be 100% cyan; it's simply
+   * too dark.
    */
 
-  nc = (c * 4 + FMIN(c, FMAX(m, y)) * 3 + k) / 8;
-  nm = (m * 4 + FMIN(m, FMAX(c, y)) * 3 + k) / 8;
-  ny = (y * 4 + FMIN(y, FMAX(c, m)) * 3 + k) / 8;
+  nc = (c * 3 + FMIN(c, FMAX(m, y)) * 5 + FMAX(m, y) * 0 + k) / 8;
+  nm = (m * 3 + FMIN(m, FMAX(c, y)) * 5 + FMAX(c, y) * 0 + k) / 8;
+  ny = (y * 3 + FMIN(y, FMAX(c, m)) * 5 + FMAX(c, m) * 0 + k) / 8;
 
   /*
    * Make sure we didn't go overboard.  We don't want to go too
    * close to white unnecessarily.
    */
-  nc = c + (nc - c) / 2;
-  nm = m + (nm - m) / 2;
-  ny = y + (ny - y) / 2;
+  nc = c + (nc - c) / 3;
+  nm = m + (nm - m) / 3;
+  ny = y + (ny - y) / 3;
+
+  if (nc > 65535)
+    nc = 65535;
+  if (nm > 65535)
+    nm = 65535;
+  if (ny > 65535)
+    ny = 65535;
 
   rgb[0] = 65535 - nc;
   rgb[1] = 65535 - nm;
   rgb[2] = 65535 - ny;
 }
 
+/*
+ * A lot of this stuff needs to be factored out of here
+ */
 static inline unsigned short
-lookup_value(unsigned short value, int lut_size, unsigned short *lut)
+lookup_value(unsigned short value, int lut_size, unsigned short *lut,
+	     unsigned shiftval, unsigned bin_size, unsigned bin_shift)
 {
-  unsigned shiftval;
-  switch (lut_size)
-    {
-    case 65536:
-      return value;
-      break;
-    case 16:
-      shiftval = 4;
-      break;
-    case 32:
-      shiftval = 5;
-      break;
-    case 64:
-      shiftval = 6;
-      break;
-    case 128:
-      shiftval = 7;
-      break;
-    case 256:
-      shiftval = 8;
-      break;
-    case 512:
-      shiftval = 9;
-      break;
-    case 1024:
-      shiftval = 10;
-      break;
-    case 2048:
-      shiftval = 11;
-      break;
-    case 4096:
-      shiftval = 12;
-      break;
-    case 8192:
-      shiftval = 13;
-      break;
-    case 16384:
-      shiftval = 14;
-      break;
-    case 32768:
-      shiftval = 15;
-      break;
-    default:
-      {
-	unsigned subrange = value / lut_size;
-	unsigned remainder = value % lut_size;
-	unsigned below = lut[subrange];
-	unsigned above;
-	if (subrange == lut_size - 1)
-	  above = 65535;
-	else
-	  above = lut[subrange + 1];
-	if (above == below)
-	  return above;
-	else
-	  return below + ((above - below) * remainder) / (65536 / lut_size);
-      }
-      break;
-    }
-  {
-    unsigned subrange = value >> shiftval;
-    unsigned remainder = value & (lut_size - 1);
-    unsigned below = lut[subrange];
-    unsigned above;
-    if (remainder == 0)
-      return below;
-    if (subrange == (lut_size - 1))
-      above = 65535;
-    else
-      above = lut[subrange + 1];
-    if (above == below)
-      return above;
-    else
-      return below + (((above - below) * remainder) >> (16 - shiftval));
-  }
+  unsigned subrange;
+  unsigned remainder;
+  unsigned below;
+  unsigned above;
+  if (lut_size == 65536)
+    return lut[value];
+  subrange = value >> bin_shift;
+  remainder = value & (bin_size - 1);
+  below = lut[subrange];
+  if (remainder == 0)
+    return below;
+  if (subrange == (bin_size - 1))
+    above = lut[subrange];
+  else
+    above = lut[subrange + 1];
+  if (above == below)
+    return above;
+  else
+    return below + (((above - below) * remainder) >> bin_shift);
 }
 
 /*
@@ -299,23 +372,115 @@ gray_to_gray(unsigned char *grayin,	/* I - RGB pixels */
 	     const vars_t	*vars
 	     )
 {
+  int i0 = -1;
+  int i1 = -1;
+  int use_previous = 0;
+  int o0 = 0;
+  lut_t *lut = (lut_t *)(vars->lut);
   while (width > 0)
     {
       if (bpp == 1)
-	/*
-	 * No alpha in image...
-	 */
-	*grayout = vars->lut->composite[grayin[0]];
-      else
-	*grayout = vars->lut->composite[grayin[0] * grayin[1] / 255 +
-				      255 - grayin[1]];
-      if (vars->density != 1.0 && vars->image_type != IMAGE_MONOCHROME)
 	{
-	  float t = ((float) *grayout) / 65536.0;
-	  t = (1.0 + ((t - 1.0) * vars->density));
-	  if (t < 0.0)
-	    t = 0.0;
-	  *grayout = (unsigned short) (t * 65536.0);
+	  /*
+	   * No alpha in image...
+	   */
+	  if (i0 == grayin[0])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = grayin[0];
+	      grayout[0] = lut->composite[grayin[0]];
+	    }
+	}
+      else
+	{
+	  if (i0 == grayin[0] && i1 == grayin[1])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = grayin[0];
+	      i1 = grayin[1];
+	      grayout[0] = lut->composite[grayin[0] * grayin[1] / 255 +
+					       255 - grayin[1]];
+	    }
+	}
+      if (use_previous)
+	{
+	  grayout[0] = o0;
+	}
+      else
+	{
+	  if (vars->density != 1.0)
+	    {
+	      double t = (65535.0 + ((grayout[0] - 65535.0) * vars->density));
+	      if (t < 0.0)
+		t = 0.0;
+	      grayout[0] = t + .5;
+	    }
+	  o0 = grayout[0];
+	}
+      grayin += bpp;
+      grayout ++;
+      width --;
+    }
+}
+
+static void
+gray_to_monochrome(unsigned char *grayin,	/* I - RGB pixels */
+		   unsigned short *grayout,	/* O - RGB pixels */
+		   int    	width,		/* I - Width of row */
+		   int    	bpp,		/* I - Bytes-per-pixel in grayin */
+		   unsigned char *cmap,		/* I - Colormap (unused) */
+		   const vars_t	*vars
+		   )
+{
+  int i0 = -1;
+  int i1 = -1;
+  int use_previous = 0;
+  int o0 = 0;
+  lut_t *lut = (lut_t *)(vars->lut);
+  while (width > 0)
+    {
+      if (bpp == 1)
+	{
+	  /*
+	   * No alpha in image...
+	   */
+	  if (i0 == grayin[0])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = grayin[0];
+	      grayout[0] = lut->composite[grayin[0]];
+	    }
+	}
+      else
+	{
+	  if (i0 == grayin[0] && i1 == grayin[1])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = grayin[0];
+	      i1 = grayin[1];
+	      grayout[0] = lut->composite[grayin[0] * grayin[1] / 255 +
+					       255 - grayin[1]];
+	    }
+	}
+      if (use_previous)
+	{
+	  grayout[0] = o0;
+	}
+      else
+	{
+	  if (grayout[0] < 32768)
+	    grayout[0] = 0;
+	  else
+	    grayout[0] = 65535;
+	  o0 = grayout[0];
 	}
       grayin += bpp;
       grayout ++;
@@ -336,7 +501,12 @@ indexed_to_gray(unsigned char *indexed,		/* I - Indexed pixels */
 		const vars_t   *vars
 		)
 {
-  int		i;
+  int i0 = -1;
+  int i1 = -1;
+  int o0 = 0;
+  int use_previous = 0;
+  int i;
+  lut_t *lut = (lut_t *)(vars->lut);
   unsigned char	gray_cmap[256];		/* Grayscale colormap */
 
   /* Really should precompute this silly thing... */
@@ -348,21 +518,116 @@ indexed_to_gray(unsigned char *indexed,		/* I - Indexed pixels */
   while (width > 0)
     {
       if (bpp == 1)
-	/*
-	 * No alpha in image...
-	 */
-
-	*gray = vars->lut->composite[gray_cmap[*indexed]];
-      else
-	*gray = vars->lut->composite[gray_cmap[indexed[0] * indexed[1] / 255]
-				   + 255 - indexed[1]];
-      if (vars->density != 1.0 && vars->image_type != IMAGE_MONOCHROME)
 	{
-	  float t = ((float) *gray) / 65536.0;
-	  t = (1.0 + ((t - 1.0) * vars->density));
-	  if (t < 0.0)
-	    t = 0.0;
-	  *gray = (unsigned short) (t * 65536.0);
+	  /*
+	   * No alpha in image...
+	   */
+	  if (i0 == indexed[0])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = indexed[0];
+	      gray[0] = lut->composite[gray_cmap[i0]];
+	    }
+	}
+      else
+	{
+	  if (i0 == indexed[0] && i1 == indexed[1])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = indexed[0];
+	      i1 = indexed[1];
+	      gray[0] = lut->composite[gray_cmap[i0 * i1 / 255]
+					    + 255 - i1];
+	    }
+	}
+      if (use_previous)
+	{
+	  gray[0] = o0;
+	}
+      else
+	{
+	  if (vars->density != 1.0)
+	    {
+	      double t = (65535.0 + ((gray[0] - 65535.0) * vars->density));
+	      if (t < 0.0)
+		t = 0.0;
+	      gray[0] = t + .5;
+	    }
+	  o0 = gray[0];
+	}
+      indexed += bpp;
+      gray ++;
+      width --;
+    }
+}
+
+static void
+indexed_to_monochrome(unsigned char *indexed,	/* I - Indexed pixels */
+		      unsigned short *gray,	/* O - Grayscale pixels */
+		      int    width,		/* I - Width of row */
+		      int    bpp,		/* I - bpp in indexed */
+		      unsigned char *cmap,	/* I - Colormap */
+		      const vars_t   *vars
+		      )
+{
+  int i0 = -1;
+  int i1 = -1;
+  int o0 = 0;
+  int use_previous = 0;
+  int i;
+  lut_t *lut = (lut_t *)(vars->lut);
+  unsigned char	gray_cmap[256];		/* Grayscale colormap */
+
+  /* Really should precompute this silly thing... */
+  for (i = 0; i < 256; i ++, cmap += 3)
+    gray_cmap[i] = (cmap[0] * LUM_RED +
+		    cmap[1] * LUM_GREEN +
+		    cmap[2] * LUM_BLUE) / 100;
+
+  while (width > 0)
+    {
+      if (bpp == 1)
+	{
+	  /*
+	   * No alpha in image...
+	   */
+	  if (i0 == indexed[0])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = indexed[0];
+	      gray[0] = lut->composite[gray_cmap[i0]];
+	    }
+	}
+      else
+	{
+	  if (i0 == indexed[0] && i1 == indexed[1])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = indexed[0];
+	      i1 = indexed[1];
+	      gray[0] = lut->composite[gray_cmap[i0 * i1 / 255]
+				      + 255 - i1];
+	    }
+	}
+      if (use_previous)
+	{
+	  gray[0] = o0;
+	}
+      else
+	{
+	  if (gray[0] < 32768)
+	    gray[0] = 0;
+	  else
+	    gray[0] = 65535;
+	  o0 = gray[0];
 	}
       indexed += bpp;
       gray ++;
@@ -383,27 +648,137 @@ rgb_to_gray(unsigned char *rgb,		/* I - RGB pixels */
 	    const vars_t   *vars
 	    )
 {
+  int i0 = -1;
+  int i1 = -1;
+  int i2 = -1;
+  int i3 = -1;
+  int o0 = 0;
+  int use_previous = 0;
+  lut_t *lut = (lut_t *)(vars->lut);
   while (width > 0)
     {
       if (bpp == 3)
-	/*
-	 * No alpha in image...
-	 */
-	*gray = vars->lut->composite[(rgb[0] * LUM_RED +
-				     rgb[1] * LUM_GREEN +
-				     rgb[2] * LUM_BLUE) / 100];
-      else
-	*gray = vars->lut->composite[((rgb[0] * LUM_RED +
-				      rgb[1] * LUM_GREEN +
-				      rgb[2] * LUM_BLUE) *
-				     rgb[3] / 25500 + 255 - rgb[3])];
-      if (vars->density != 1.0 && vars->image_type != IMAGE_MONOCHROME)
 	{
-	  float t = ((float) *gray) / 65536.0;
-	  t = (1.0 + ((t - 1.0) * vars->density));
-	  if (t < 0.0)
-	    t = 0.0;
-	  *gray = (unsigned short) (t * 65536.0);
+	  /*
+	   * No alpha in image...
+	   */
+	  if (i0 == rgb[0] && i1 == rgb[1] && i2 == rgb[2])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = rgb[0];
+	      i1 = rgb[1];
+	      i2 = rgb[2];
+	      gray[0] = lut->composite[(rgb[0] * LUM_RED +
+					rgb[1] * LUM_GREEN +
+					rgb[2] * LUM_BLUE) / 100];
+	    }
+	}
+      else
+	{
+	  if (i0 == rgb[0] && i1 == rgb[1] && i2 == rgb[2] && i3 == rgb[3])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = rgb[0];
+	      i1 = rgb[1];
+	      i2 = rgb[2];
+	      i3 = rgb[3];
+	  
+	      gray[0] = lut->composite[((rgb[0] * LUM_RED +
+					 rgb[1] * LUM_GREEN +
+					 rgb[2] * LUM_BLUE) *
+					rgb[3] / 25500 + 255 - rgb[3])];
+	    }
+	}
+      if (use_previous)
+	{
+	  gray[0] = o0;
+	}
+      else
+	{
+	  if (vars->density != 1.0)
+	    {
+	      double t = (65535.0 + ((gray[0] - 65535.0) * vars->density));
+	      if (t < 0.0)
+		t = 0.0;
+	      gray[0] = t + .5;
+	    }
+	  o0 = gray[0];
+	}
+      rgb += bpp;
+      gray ++;
+      width --;
+    }
+}
+
+static void
+rgb_to_monochrome(unsigned char *rgb,	/* I - RGB pixels */
+		  unsigned short *gray,	/* O - Grayscale pixels */
+		  int    width,		/* I - Width of row */
+		  int    bpp,		/* I - Bytes-per-pixel in RGB */
+		  unsigned char *cmap,	/* I - Colormap (unused) */
+		  const vars_t   *vars
+		  )
+{
+  int i0 = -1;
+  int i1 = -1;
+  int i2 = -1;
+  int i3 = -1;
+  int o0 = 0;
+  int use_previous = 0;
+  lut_t *lut = (lut_t *)(vars->lut);
+  while (width > 0)
+    {
+      if (bpp == 3)
+	{
+	  /*
+	   * No alpha in image...
+	   */
+	  if (i0 == rgb[0] && i1 == rgb[1] && i2 == rgb[2])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = rgb[0];
+	      i1 = rgb[1];
+	      i2 = rgb[2];
+	      gray[0] = lut->composite[(rgb[0] * LUM_RED +
+					rgb[1] * LUM_GREEN +
+					rgb[2] * LUM_BLUE) / 100];
+	    }
+	}
+      else
+	{
+	  if (i0 == rgb[0] && i1 == rgb[1] && i2 == rgb[2] && i3 == rgb[3])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = rgb[0];
+	      i1 = rgb[1];
+	      i2 = rgb[2];
+	      i3 = rgb[3];
+	  
+	      gray[0] = lut->composite[((rgb[0] * LUM_RED +
+					 rgb[1] * LUM_GREEN +
+					 rgb[2] * LUM_BLUE) *
+					rgb[3] / 25500 + 255 - rgb[3])];
+	    }
+	}
+      if (use_previous)
+	{
+	  gray[0] = o0;
+	}
+      else
+	{
+	  if (gray[0] < 32768)
+	    gray[0] = 0;
+	  else
+	    gray[0] = 65535;
+	  o0 = gray[0];
 	}
       rgb += bpp;
       gray ++;
@@ -426,9 +801,25 @@ rgb_to_rgb(unsigned char	*rgbin,		/* I - RGB pixels */
 {
   unsigned ld = vars->density * 65536;
   double isat = 1.0;
-  double ssat = sqrt(vars->saturation * 2);
+  double ssat = vars->saturation;
+  int i0 = -1;
+  int i1 = -1;
+  int i2 = -1;
+  int i3 = -1;
+  int o0 = 0;
+  int o1 = 0;
+  int o2 = 0;
+  int use_previous = 0;
+  lut_t *lut = (lut_t *)(vars->lut);
+  int compute_saturation = ssat <= .99999 || ssat >= 1.00001;
+  int split_saturation = ssat > 1.4;
+  if (split_saturation)
+    ssat = sqrt(ssat);
   if (ssat > 1)
     isat = 1.0 / ssat;
+#if 0
+printf("rgb-to-rgb: ssat=%f, isat=%f, do-sat=%d, split-sat=%d\n", ssat, isat, compute_saturation, split_saturation);
+#endif
   while (width > 0)
     {
       double h, s, v;
@@ -438,80 +829,142 @@ rgb_to_rgb(unsigned char	*rgbin,		/* I - RGB pixels */
 	  /*
 	   * No alpha in image, using colormap...
 	   */
-
-	  rgbout[0] = cmap[*rgbin * 3 + 0] * 257;
-	  rgbout[1] = cmap[*rgbin * 3 + 1] * 257;
-	  rgbout[2] = cmap[*rgbin * 3 + 2] * 257;
+	  if (i0 == rgbin[0])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = rgbin[0];
+	      rgbout[0] = cmap[rgbin[0] * 3 + 0] * 257;
+	      rgbout[1] = cmap[rgbin[0] * 3 + 1] * 257;
+	      rgbout[2] = cmap[rgbin[0] * 3 + 2] * 257;
+	    }
 	  break;
 	case 2:
-	  rgbout[0] = (cmap[rgbin[0] * 3 + 0] *
-		       rgbin[1] / 255 + 255 - rgbin[1]) * 257;
-	  rgbout[1] = (cmap[rgbin[1] * 3 + 0] *
-		     rgbin[1] / 255 + 255 - rgbin[1]) * 257;
-	  rgbout[2] = (cmap[rgbin[2] * 3 + 0] *
-		     rgbin[1] / 255 + 255 - rgbin[1]) * 257;
+	  if (i0 == rgbin[0] && i1 == rgbin[1])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = rgbin[0];
+	      i1 = rgbin[1];
+	      rgbout[0] = (cmap[rgbin[0] * 3 + 0] *
+			   rgbin[1] / 255 + 255 - rgbin[1]) * 257;
+	      rgbout[1] = (cmap[rgbin[0] * 3 + 0] *
+			   rgbin[1] / 255 + 255 - rgbin[1]) * 257;
+	      rgbout[2] = (cmap[rgbin[0] * 3 + 0] *
+			   rgbin[1] / 255 + 255 - rgbin[1]) * 257;
+	    }
 	  break;
 	case 3:
 	  /*
 	   * No alpha in image...
 	   */
-	  rgbout[0] = rgbin[0] * 257;
-	  rgbout[1] = rgbin[1] * 257;
-	  rgbout[2] = rgbin[2] * 257;
+	  if (i0 == rgbin[0] && i1 == rgbin[1] && i2 == rgbin[2])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = rgbin[0];
+	      i1 = rgbin[1];
+	      i2 = rgbin[2];
+	      rgbout[0] = rgbin[0] * 257;
+	      rgbout[1] = rgbin[1] * 257;
+	      rgbout[2] = rgbin[2] * 257;
+	    }
 	  break;
 	case 4:
-	  rgbout[0] = (rgbin[0] * rgbin[3] / 255 + 255 - rgbin[3]) * 257;
-	  rgbout[1] = (rgbin[1] * rgbin[3] / 255 + 255 - rgbin[3]) * 257;
-	  rgbout[2] = (rgbin[2] * rgbin[3] / 255 + 255 - rgbin[3]) * 257;
+	  if (i0 == rgbin[0] && i1 == rgbin[1] && i2 == rgbin[2] &&
+	      i3 == rgbin[3])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = rgbin[0];
+	      i1 = rgbin[1];
+	      i2 = rgbin[2];
+	      i3 = rgbin[3];
+	      rgbout[0] = (rgbin[0] * rgbin[3] / 255 + 255 - rgbin[3]) * 257;
+	      rgbout[1] = (rgbin[1] * rgbin[3] / 255 + 255 - rgbin[3]) * 257;
+	      rgbout[2] = (rgbin[2] * rgbin[3] / 255 + 255 - rgbin[3]) * 257;
+	    }
 	  break;
 	}
-      if (ssat != 1.0)
+      if (use_previous)
 	{
-	  rgbout[0] = 65535 - rgbout[0];
-	  rgbout[1] = 65535 - rgbout[1];
-	  rgbout[2] = 65535 - rgbout[2];
-	  calc_rgb_to_hsl(rgbout, &h, &s, &v);
-	  if (ssat < 1)
-	    s *= ssat;
-	  else
-	    s = pow(s, isat);
-	  if (s > 1)
-	    s = 1.0;
-	  calc_hsl_to_rgb(rgbout, h, s, v);
-	  rgbout[0] = 65535 - rgbout[0];
-	  rgbout[1] = 65535 - rgbout[1];
-	  rgbout[2] = 65535 - rgbout[2];
+	  rgbout[0] = o0;
+	  rgbout[1] = o1;
+	  rgbout[2] = o2;
 	}
-      update_cmyk(rgbout);	/* Fiddle with the INPUT */
-      rgbout[0] = lookup_value(rgbout[0], vars->lut->steps, vars->lut->red);
-      rgbout[1] = lookup_value(rgbout[1], vars->lut->steps, vars->lut->green);
-      rgbout[2] = lookup_value(rgbout[2], vars->lut->steps, vars->lut->blue);
-      if (ssat != 1.0)
+      else
 	{
-	  rgbout[0] = 65535 - rgbout[0];
-	  rgbout[1] = 65535 - rgbout[1];
-	  rgbout[2] = 65535 - rgbout[2];
-	  calc_rgb_to_hsl(rgbout, &h, &s, &v);
-	  if (ssat < 1)
-	    s *= ssat;
-	  else
-	    s = pow(s, isat);
-	  if (s > 1)
-	    s = 1.0;
-	  calc_hsl_to_rgb(rgbout, h, s, v);
-	  rgbout[0] = 65535 - rgbout[0];
-	  rgbout[1] = 65535 - rgbout[1];
-	  rgbout[2] = 65535 - rgbout[2];
-	}
-      if (ld < 65536)
-	{
-	  int i;
-	  for (i = 0; i < 3; i++)
+	  if (compute_saturation &&
+	      (rgbout[0] != rgbout[1] || rgbout[0] != rgbout[2]))
 	    {
-	      unsigned t = rgbout[i];
-	      t = 65535 - (65535 - t) * ld / 65536;
-	      rgbout[i] = (unsigned short) t;
+	      rgbout[0] = 65535 - rgbout[0];
+	      rgbout[1] = 65535 - rgbout[1];
+	      rgbout[2] = 65535 - rgbout[2];
+	      calc_rgb_to_hsl(rgbout, &h, &s, &v);
+	      if (ssat < 1)
+		s *= ssat;
+	      else
+		{
+		  double s1 = s * ssat;
+		  double s2 = 1.0 - ((1.0 - s) * isat);
+		  s = FMIN(s1, s2);
+		}
+	      if (s > 1)
+		s = 1.0;
+	      calc_hsl_to_rgb(rgbout, h, s, v);
+	      rgbout[0] = 65535 - rgbout[0];
+	      rgbout[1] = 65535 - rgbout[1];
+	      rgbout[2] = 65535 - rgbout[2];
 	    }
+	  update_cmyk(rgbout);	/* Fiddle with the INPUT */
+	  rgbout[0] = lookup_value(rgbout[0], lut->steps,
+				   lut->red, lut->shiftval,
+				   lut->bin_size, lut->bin_shift);
+	  rgbout[1] = lookup_value(rgbout[1], lut->steps,
+				   lut->green, lut->shiftval,
+				   lut->bin_size, lut->bin_shift);
+	  rgbout[2] = lookup_value(rgbout[2], lut->steps,
+				   lut->blue, lut->shiftval,
+				   lut->bin_size, lut->bin_shift);
+	  if (split_saturation &&
+	      (rgbout[0] != rgbout[1] || rgbout[0] != rgbout[2]))
+	    {
+	      rgbout[0] = 65535 - rgbout[0];
+	      rgbout[1] = 65535 - rgbout[1];
+	      rgbout[2] = 65535 - rgbout[2];
+	      calc_rgb_to_hsl(rgbout, &h, &s, &v);
+	      if (ssat < 1)
+		s *= ssat;
+	      else
+		{
+		  double s1 = s * ssat;
+		  double s2 = 1.0 - ((1.0 - s) * isat);
+		  s = FMIN(s1, s2);
+		}
+	      if (s > 1)
+		s = 1.0;
+	      calc_hsl_to_rgb(rgbout, h, s, v);
+	      rgbout[0] = 65535 - rgbout[0];
+	      rgbout[1] = 65535 - rgbout[1];
+	      rgbout[2] = 65535 - rgbout[2];
+	    }
+	  if (ld < 65536)
+	    {
+	      int i;
+	      for (i = 0; i < 3; i++)
+		{
+		  unsigned t = rgbout[i];
+		  t = 65535 - (65535 - t) * ld / 65536;
+		  rgbout[i] = (unsigned short) t;
+		}
+	    }
+	  o0 = rgbout[0];
+	  o1 = rgbout[1];
+	  o2 = rgbout[2];
 	}
       rgbin += bpp;
       rgbout += 3;
@@ -544,6 +997,13 @@ gray_to_rgb(unsigned char	*grayin,	/* I - grayscale pixels */
 	    const vars_t  	*vars
 	    )
 {
+  int use_previous = 0;
+  int i0 = -1;
+  int i1 = -1;
+  int o0 = 0;
+  int o1 = 0;
+  int o2 = 0;
+  lut_t *lut = (lut_t *)(vars->lut);
   while (width > 0)
     {
       unsigned short trgb[3];
@@ -552,33 +1012,66 @@ gray_to_rgb(unsigned char	*grayin,	/* I - grayscale pixels */
 	  /*
 	   * No alpha in image...
 	   */
-	  trgb[0] = grayin[0] * 257;
-	  trgb[1] = grayin[0] * 257;
-	  trgb[2] = grayin[0] * 257;
+	  if (i0 == grayin[0])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = grayin[0];
+	      trgb[0] = grayin[0] * 257;
+	      trgb[1] = grayin[0] * 257;
+	      trgb[2] = grayin[0] * 257;
+	    }
 	}
       else
 	{
-	  int lookup = (grayin[0] * grayin[1] / 255 + 255 - grayin[1]) * 257;
-	  trgb[0] = lookup;
-	  trgb[1] = lookup;
-	  trgb[2] = lookup;
-	}
-      update_cmyk(trgb);
-      rgbout[0] = lookup_value(trgb[0], vars->lut->steps, vars->lut->red);
-      rgbout[1] = lookup_value(trgb[1], vars->lut->steps, vars->lut->green);
-      rgbout[2] = lookup_value(trgb[2], vars->lut->steps, vars->lut->blue);
-      if (vars->density != 1.0)
-	{
-	  float t;
-	  int i;
-	  for (i = 0; i < 3; i++)
+	  if (i0 == grayin[0] && i1 == grayin[1])
+	    use_previous = 1;
+	  else
 	    {
-	      t = ((float) rgbout[i]) / 65536.0;
-	      t = (1.0 + ((t - 1.0) * vars->density));
-	      if (t < 0.0)
-		t = 0.0;
-	      rgbout[i] = (unsigned short) (t * 65536.0);
+	      int lookup = (grayin[0] * grayin[1] / 255 + 255 - grayin[1]) *
+		257;
+	      use_previous = 0;
+	      i0 = grayin[0];
+	      i1 = grayin[1];
+	      trgb[0] = lookup;
+	      trgb[1] = lookup;
+	      trgb[2] = lookup;
 	    }
+	}
+      if (use_previous)
+	{
+	  rgbout[0] = o0;
+	  rgbout[1] = o1;
+	  rgbout[2] = o2;
+	}
+      else
+	{
+	  update_cmyk(trgb);
+	  rgbout[0] = lookup_value(trgb[0], lut->steps,
+				   lut->red, lut->shiftval,
+				   lut->bin_size, lut->bin_shift);
+	  rgbout[1] = lookup_value(trgb[1], lut->steps,
+				   lut->green, lut->shiftval,
+				   lut->bin_size, lut->bin_shift);
+	  rgbout[2] = lookup_value(trgb[2], lut->steps,
+				   lut->blue, lut->shiftval,
+				   lut->bin_size, lut->bin_shift);
+	  if (vars->saturation != 1.0)
+	    {
+	      double t;
+	      int i;
+	      for (i = 0; i < 3; i++)
+		{
+		  t = (65535.0 + ((rgbout[i] - 65535.0) * vars->density));
+		  if (t < 0.0)
+		    t = 0.0;
+		  rgbout[i] = t + .5;
+		}
+	    }
+	  o0 = rgbout[0];
+	  o1 = rgbout[1];
+	  o2 = rgbout[2];
 	}
       grayin += bpp;
       rgbout += 3;
@@ -595,6 +1088,13 @@ fast_indexed_to_rgb(unsigned char *indexed,	/* I - Indexed pixels */
 		    const vars_t   *vars
 		    )
 {
+  int i0 = -1;
+  int i1 = -1;
+  int o0 = 0;
+  int o1 = 0;
+  int o2 = 0;
+  lut_t *lut = (lut_t *)(vars->lut);
+  int use_previous = 0;
   double isat = 1.0;
   if (vars->saturation > 1)
     isat = 1.0 / vars->saturation;
@@ -606,43 +1106,69 @@ fast_indexed_to_rgb(unsigned char *indexed,	/* I - Indexed pixels */
 	  /*
 	   * No alpha in image...
 	   */
-
-	  rgb[0] = vars->lut->red[cmap[*indexed * 3 + 0]];
-	  rgb[1] = vars->lut->green[cmap[*indexed * 3 + 1]];
-	  rgb[2] = vars->lut->blue[cmap[*indexed * 3 + 2]];
+	  if (i0 == indexed[0])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = indexed[0];
+	      rgb[0] = lut->red[cmap[i0 * 3 + 0]];
+	      rgb[1] = lut->green[cmap[i0 * 3 + 1]];
+	      rgb[2] = lut->blue[cmap[i0 * 3 + 2]];
+	    }
 	}
       else
 	{
-	  rgb[0] = vars->lut->red[cmap[indexed[0] * 3 + 0] * indexed[1] / 255
-				+ 255 - indexed[1]];
-	  rgb[1] = vars->lut->green[cmap[indexed[0] * 3 + 1] * indexed[1] / 255
-				  + 255 - indexed[1]];
-	  rgb[2] = vars->lut->blue[cmap[indexed[0] * 3 + 2] * indexed[1] / 255
-				 + 255 - indexed[1]];
-	}
-      if (vars->saturation != 1.0)
-	{
-	  calc_rgb_to_hsl(rgb, &h, &s, &v);
-	  if (vars->saturation < 1)
-	    s *= vars->saturation;
+	  if (i0 == indexed[0] && i1 == indexed[1])
+	    use_previous = 1;
 	  else
-	    s = pow(s, isat);
-	  if (s > 1)
-	    s = 1.0;
-	  calc_hsl_to_rgb(rgb, h, s, v);
-	}
-      if (vars->density != 1.0)
-	{
-	  float t;
-	  int i;
-	  for (i = 0; i < 3; i++)
 	    {
-	      t = ((float) rgb[i]) / 65536.0;
-	      t = (1.0 + ((t - 1.0) * vars->density));
-	      if (t < 0.0)
-		t = 0.0;
-	      rgb[i] = (unsigned short) (t * 65536.0);
+	      use_previous = 0;
+	      i0 = indexed[0];
+	      i1 = indexed[1];
+	      rgb[0] = lut->red[cmap[i0 * 3 + 0] * i1 / 255 + 255 - i1];
+	      rgb[1] = lut->green[cmap[i0 * 3 + 1] * i1 / 255 + 255 -i1];
+	      rgb[2] = lut->blue[cmap[i0 * 3 + 2] * i1 / 255 + 255 - i1];
 	    }
+	}
+      if (use_previous)
+	{
+	  rgb[0] = o0;
+	  rgb[1] = o1;
+	  rgb[2] = o2;
+	}
+      else
+	{
+	  if (vars->saturation != 1.0)
+	    {
+	      calc_rgb_to_hsl(rgb, &h, &s, &v);
+	      if (vars->saturation < 1)
+		s *= vars->saturation;
+	      else
+		{
+		  double s1 = s * vars->saturation;
+		  double s2 = 1.0 - ((1.0 - s) * isat);
+		  s = FMIN(s1, s2);
+		}
+	      if (s > 1)
+		s = 1.0;
+	      calc_hsl_to_rgb(rgb, h, s, v);
+	    }
+	  if (vars->density != 1.0)
+	    {
+	      double t;
+	      int i;
+	      for (i = 0; i < 3; i++)
+		{
+		  t = (65535.0 + ((rgb[i] - 65535.0) * vars->density));
+		  if (t < 0.0)
+		    t = 0.0;
+		  rgb[i] = t + .5;
+		}
+	    }
+	  o0 = rgb[0];
+	  o1 = rgb[1];
+	  o2 = rgb[2];
 	}
       indexed += bpp;
       rgb += 3;
@@ -664,6 +1190,15 @@ fast_rgb_to_rgb(unsigned char	*rgbin,		/* I - RGB pixels */
 		)
 {
   unsigned ld = vars->density * 65536;
+  int i0 = -1;
+  int i1 = -1;
+  int i2 = -1;
+  int i3 = -1;
+  int o0 = 0;
+  int o1 = 0;
+  int o2 = 0;
+  lut_t *lut = (lut_t *)(vars->lut);
+  int use_previous = 0;
   double isat = 1.0;
   if (vars->saturation > 1)
     isat = 1.0 / vars->saturation;
@@ -675,39 +1210,72 @@ fast_rgb_to_rgb(unsigned char	*rgbin,		/* I - RGB pixels */
 	  /*
 	   * No alpha in image...
 	   */
-	  rgbout[0] = vars->lut->red[rgbin[0]];
-	  rgbout[1] = vars->lut->green[rgbin[1]];
-	  rgbout[2] = vars->lut->blue[rgbin[2]];
+	  if (i0 == rgbin[0] && i1 == rgbin[1] && i2 == rgbin[2])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = rgbin[0];
+	      i1 = rgbin[1];
+	      i2 = rgbin[2];
+	      rgbout[0] = lut->red[rgbin[0]];
+	      rgbout[1] = lut->green[rgbin[1]];
+	      rgbout[2] = lut->blue[rgbin[2]];
+	    }
 	}
       else
 	{
-	  rgbout[0] = vars->lut->red[rgbin[0] * rgbin[3] / 255 +
-				   255 - rgbin[3]];
-	  rgbout[1] = vars->lut->green[rgbin[1] * rgbin[3] / 255 +
-				     255 - rgbin[3]];
-	  rgbout[2] = vars->lut->blue[rgbin[2] * rgbin[3] / 255 +
-				    255 - rgbin[3]];
-	}
-      if (vars->saturation != 1.0)
-	{
-	  calc_rgb_to_hsl(rgbout, &h, &s, &v);
-	  if (vars->saturation < 1)
-	    s *= vars->saturation;
+	  if (i0 == rgbin[0] && i1 == rgbin[1] && i2 == rgbin[2] &&
+	      i3 == rgbin[3])
+	    use_previous = 1;
 	  else
-	    s = pow(s, isat);
-	  if (s > 1)
-	    s = 1.0;
-	  calc_hsl_to_rgb(rgbout, h, s, v);
-	}
-      if (ld < 65536)
-	{
-	  int i;
-	  for (i = 0; i < 3; i++)
 	    {
-	      unsigned t = rgbout[i];
-	      t = 65535 - (65535 - t) * ld / 65536;
-	      rgbout[i] = (unsigned short) t;
+	      use_previous = 0;
+	      i0 = rgbin[0];
+	      i1 = rgbin[1];
+	      i2 = rgbin[2];
+	      i3 = rgbin[3];
+	      rgbout[0] = lut->red[i0 * i3 / 255 + 255 - i3];
+	      rgbout[1] = lut->green[i1 * i3 / 255 + 255 - i3];
+	      rgbout[2] = lut->blue[i2 * i3 / 255 + 255 - i3];
 	    }
+	}
+      if (use_previous)
+	{
+	  rgbout[0] = o0;
+	  rgbout[1] = o1;
+	  rgbout[2] = o2;
+	}
+      else
+	{
+	  if (vars->saturation != 1.0)
+	    {
+	      calc_rgb_to_hsl(rgbout, &h, &s, &v);
+	      if (vars->saturation < 1)
+		s *= vars->saturation;
+	      else
+		{
+		  double s1 = s * vars->saturation;
+		  double s2 = 1.0 - ((1.0 - s) * isat);
+		  s = FMIN(s1, s2);
+		}
+	      if (s > 1)
+		s = 1.0;
+	      calc_hsl_to_rgb(rgbout, h, s, v);
+	    }
+	  if (ld < 65536)
+	    {
+	      int i;
+	      for (i = 0; i < 3; i++)
+		{
+		  unsigned t = rgbout[i];
+		  t = 65535 - (65535 - t) * ld / 65536;
+		  rgbout[i] = (unsigned short) t;
+		}
+	    }
+	  o0 = rgbout[0];
+	  o1 = rgbout[1];
+	  o2 = rgbout[2];
 	}
       rgbin += bpp;
       rgbout += 3;
@@ -728,6 +1296,13 @@ fast_gray_to_rgb(unsigned char	*grayin,	/* I - grayscale pixels */
 		 const vars_t  	*vars
 		 )
 {
+  int use_previous = 0;
+  int i0 = -1;
+  int i1 = -1;
+  int o0 = 0;
+  int o1 = 0;
+  int o2 = 0;
+  lut_t *lut = (lut_t *)(vars->lut);
   while (width > 0)
     {
       if (bpp == 1)
@@ -735,31 +1310,56 @@ fast_gray_to_rgb(unsigned char	*grayin,	/* I - grayscale pixels */
 	  /*
 	   * No alpha in image...
 	   */
-
-	  rgbout[0] = vars->lut->red[grayin[0]];
-	  rgbout[1] = vars->lut->green[grayin[0]];
-	  rgbout[2] = vars->lut->blue[grayin[0]];
+	  if (i0 == grayin[0])
+	    use_previous = 1;
+	  else
+	    {
+	      use_previous = 0;
+	      i0 = grayin[0];
+	      rgbout[0] = lut->red[grayin[0]];
+	      rgbout[1] = lut->green[grayin[0]];
+	      rgbout[2] = lut->blue[grayin[0]];
+	    }
 	}
       else
 	{
-	  int lookup = (grayin[0] * grayin[1] / 255 +
-			255 - grayin[1]);
-	  rgbout[0] = vars->lut->red[lookup];
-	  rgbout[1] = vars->lut->green[lookup];
-	  rgbout[2] = vars->lut->blue[lookup];
-	}
-      if (vars->density != 1.0)
-	{
-	  float t;
-	  int i;
-	  for (i = 0; i < 3; i++)
+	  if (i0 == grayin[0] && i1 == grayin[1])
+	    use_previous = 1;
+	  else
 	    {
-	      t = ((float) rgbout[i]) / 65536.0;
-	      t = (1.0 + ((t - 1.0) * vars->density));
-	      if (t < 0.0)
-		t = 0.0;
-	      rgbout[i] = (unsigned short) (t * 65536.0);
+	      int lookup = (grayin[0] * grayin[1] / 255 +
+			    255 - grayin[1]);
+	      use_previous = 0;
+	      i0 = grayin[0];
+	      i1 = grayin[1];
+	      rgbout[0] = lut->red[lookup];
+	      rgbout[1] = lut->green[lookup];
+	      rgbout[2] = lut->blue[lookup];
 	    }
+	}
+      if (use_previous)
+	{
+	  rgbout[0] = o0;
+	  rgbout[1] = o1;
+	  rgbout[2] = o2;
+	}
+      else
+	{
+	  if (vars->density != 1.0)
+	    {
+	      double t;
+	      int i;
+	      for (i = 0; i < 3; i++)
+		{
+		  t = (65535.0 + ((rgbout[i] - 65535.0) * vars->density));
+		  if (t < 0.0)
+		    t = 0.0;
+		  rgbout[i] = t + .5;
+		}
+	    }
+      	  o0 = rgbout[0];
+	  o1 = rgbout[1];
+	  o2 = rgbout[2];
 	}
       grayin += bpp;
       rgbout += 3;
@@ -767,29 +1367,53 @@ fast_gray_to_rgb(unsigned char	*grayin,	/* I - grayscale pixels */
     }
 }
 
+#define ICLAMP(value)				\
+do						\
+{						\
+  if (user->value < min->value)			\
+    user->value = min->value;			\
+  else if (user->value > max->value)		\
+    user->value = max->value;			\
+} while (0)
+
 void
 merge_printvars(vars_t *user, const vars_t *print)
 {
-  user->red = (user->red * print->red) / 100.0;
-  user->green = (user->green * print->green) / 100.0;
-  user->blue = (user->blue * print->blue) / 100.0;
-  user->contrast = (user->contrast * print->contrast) / 100.0;
-  user->brightness = (user->brightness * print->brightness) / 100.0;
+  const vars_t *max = print_maximum_settings();
+  const vars_t *min = print_minimum_settings();
+  user->cyan = (user->cyan * print->cyan);
+  ICLAMP(cyan);
+  user->magenta = (user->magenta * print->magenta);
+  ICLAMP(magenta);
+  user->yellow = (user->yellow * print->yellow);
+  ICLAMP(yellow);
+  user->contrast = (user->contrast * print->contrast);
+  ICLAMP(contrast);
+  user->brightness = (user->brightness * print->brightness);
+  ICLAMP(brightness);
   user->gamma /= print->gamma;
+  ICLAMP(gamma);
   user->saturation *= print->saturation;
+  ICLAMP(saturation);
   user->density *= print->density;
-  /* Application gamma comes from the user variables */
+  ICLAMP(density);
 }
 
 static lut_t *
 allocate_lut(size_t steps)
 {
+  int i;
   lut_t *ret = malloc(sizeof(lut_t));
   ret->steps = steps;
   ret->composite = malloc(sizeof(unsigned short) * steps);
   ret->red = malloc(sizeof(unsigned short) * steps);
   ret->green = malloc(sizeof(unsigned short) * steps);
   ret->blue = malloc(sizeof(unsigned short) * steps);
+  ret->shiftval = 0;
+  for (i = 1; i < steps; i += i)
+    ret->shiftval++;
+  ret->bin_size = 65536 / steps;
+  ret->bin_shift = 16 - ret->shiftval;
   return ret;
 }
 
@@ -798,22 +1422,23 @@ free_lut(vars_t *v)
 {
   if (v->lut)
     {
-      if (v->lut->composite)
-	free(v->lut->composite);
-      if (v->lut->red)
-	free(v->lut->red);
-      if (v->lut->green)
-	free(v->lut->green);
-      if (v->lut->blue)
-	free(v->lut->blue);
-      v->lut->steps = 0;
-      v->lut->composite = NULL;
-      v->lut->red = NULL;
-      v->lut->green = NULL;
-      v->lut->blue = NULL;
+      lut_t *lut = (lut_t *)(v->lut);
+      if (lut->composite)
+	free(lut->composite);
+      if (lut->red)
+	free(lut->red);
+      if (lut->green)
+	free(lut->green);
+      if (lut->blue)
+	free(lut->blue);
+      lut->steps = 0;
+      lut->composite = NULL;
+      lut->red = NULL;
+      lut->green = NULL;
+      lut->blue = NULL;
       free(v->lut);
+      v->lut = NULL;
     }
-  v->lut = NULL;
 }
 
 /* #define PRINT_LUT */
@@ -821,7 +1446,7 @@ free_lut(vars_t *v)
 void
 compute_lut(size_t steps, vars_t *uv)
 {
-  float		pixel,		/* Pixel value */
+  double	pixel,		/* Pixel value */
 		red_pixel,	/* Pixel value */
 		green_pixel,	/* Pixel value */
 		blue_pixel;	/* Pixel value */
@@ -833,28 +1458,32 @@ compute_lut(size_t steps, vars_t *uv)
    * Got an output file/command, now compute a brightness lookup table...
    */
 
-  float red = 100.0 / uv->red;
-  float green = 100.0 / uv->green;
-  float blue = 100.0 / uv->blue;
-  float print_gamma = uv->gamma;
-  float contrast = uv->contrast / 100.0;
-  float app_gamma = uv->app_gamma;
-  float brightness = 100.0 / uv->brightness;
-  float screen_gamma = app_gamma * brightness / 1.7;
+  double cyan = uv->cyan;
+  double magenta = uv->magenta;
+  double yellow = uv->yellow;
+  double print_gamma = uv->gamma;
+  double contrast = uv->contrast;
+  double app_gamma = uv->app_gamma;
+  double brightness = uv->brightness;
+  double screen_gamma = app_gamma / 1.7;	/* Why 1.7??? */
+  lut_t *lut;
 
-  if (red < 0.01)
-    red = 0.01;
-  if (green < 0.01)
-    green = 0.01;
-  if (blue < 0.01)
-    blue = 0.01;
+  /*
+   * Monochrome mode simply thresholds the input
+   * to decide whether to print at all.  The printer gamma
+   * is intended to represent the analog response of the printer.
+   * Using it shifts the threshold, which is not the intent
+   * of how this works.
+   */
+  if (uv->image_type == IMAGE_MONOCHROME)
+    print_gamma = 1.0;
 
   uv->lut = allocate_lut(steps);
+  lut = (lut_t *)(uv->lut);
   for (i = 0; i < steps; i ++)
     {
-      float temp_pixel;
-      float fsteps = steps;
-      pixel = (float) i / (float) (steps - 1);
+      double temp_pixel;
+      pixel = (double) i / (double) (steps - 1);
 
       /*
        * First, correct contrast
@@ -863,81 +1492,96 @@ compute_lut(size_t steps, vars_t *uv)
 	temp_pixel = 1.0 - pixel;
       else
 	temp_pixel = pixel;
-      if (contrast >= 1)
-	temp_pixel = .5 * pow(2 * temp_pixel, 1.0 / contrast);
-      else
-	temp_pixel = temp_pixel * contrast;
+      if (temp_pixel <= .000001 && contrast <= .0001)
+	temp_pixel = .5;
+      else if (temp_pixel > 1)
+	temp_pixel = .5 * pow(2 * temp_pixel, pow(contrast, contrast));
+      else if (temp_pixel < 1)
+	temp_pixel = 0.5 -
+	  ((0.5 - .5 * pow(2 * temp_pixel, contrast)) * contrast);
+      if (temp_pixel > .5)
+	temp_pixel = .5;
+      else if (temp_pixel < 0)
+	temp_pixel = 0;
       if (pixel < .5)
 	pixel = temp_pixel;
       else
 	pixel = 1 - temp_pixel;
 
       /*
-       * Second, perform screen gamma correction
+       * Second, do brightness
+       */
+      if (brightness < 1)
+	pixel = pixel * brightness;
+      else
+	pixel = 1 - ((1 - pixel) * (2 - brightness));
+
+      /*
+       * Third, correct for the screen gamma
        */
       pixel = 1.0 - pow(pixel, screen_gamma);
 
       /*
-       * Third, fix up red, green, blue values
-       *
-       * I don't know how to do this correctly.  I think that what I'll do
-       * is if the correction is less than 1 to multiply it by the
-       * correction; if it's greater than 1, hinge it around 64K.
-       * Doubtless we can do better.  Oh well.
+       * Third, fix up cyan, magenta, yellow values
        */
       if (pixel < 0.0)
 	pixel = 0.0;
       else if (pixel > 1.0)
 	pixel = 1.0;
 
-      red_pixel = pow(pixel, 1.0 / (red * red));
-      green_pixel = pow(pixel, 1.0 / (green * green));
-      blue_pixel = pow(pixel, 1.0 / (blue * blue));
+      if (pixel > .9999 && cyan < .00001)
+	red_pixel = 0;
+      else
+	red_pixel = 1 - pow(1 - pixel, cyan);
+      if (pixel > .9999 && magenta < .00001)
+	green_pixel = 0;
+      else
+	green_pixel = 1 - pow(1 - pixel, magenta);
+      if (pixel > .9999 && yellow < .00001)
+	blue_pixel = 0;
+      else
+	blue_pixel = 1 - pow(1 - pixel, yellow);
 
       /*
        * Finally, fix up print gamma and scale
        */
 
-      pixel = fsteps * (fsteps - fsteps *
-		       pow(pixel, print_gamma));
-      red_pixel = fsteps * (fsteps - fsteps *
-			   pow(red_pixel, print_gamma));
-      green_pixel = fsteps * (fsteps - fsteps *
-			     pow(green_pixel, print_gamma));
-      blue_pixel = fsteps * (fsteps - fsteps *
-			    pow(blue_pixel, print_gamma));
+      pixel = 65535 * (1 - pow(pixel, print_gamma)) + .5;
+      red_pixel = 65535 * (1 - pow(red_pixel, print_gamma)) + .5;
+      green_pixel = 65535 * (1 - pow(green_pixel, print_gamma)) + .5;
+      blue_pixel = 65535 * (1 - pow(blue_pixel, print_gamma)) + .5;
 
       if (pixel <= 0.0)
-	uv->lut->composite[i] = 0;
+	lut->composite[i] = 0;
       else if (pixel >= 65535.0)
-	uv->lut->composite[i] = 65535;
+	lut->composite[i] = 65535;
       else
-	uv->lut->composite[i] = (unsigned)(pixel);
+	lut->composite[i] = (unsigned)(pixel);
 
       if (red_pixel <= 0.0)
-	uv->lut->red[i] = 0;
+	lut->red[i] = 0;
       else if (red_pixel >= 65535.0)
-	uv->lut->red[i] = 65535;
+	lut->red[i] = 65535;
       else
-	uv->lut->red[i] = (unsigned)(red_pixel);
+	lut->red[i] = (unsigned)(red_pixel);
 
       if (green_pixel <= 0.0)
-	uv->lut->green[i] = 0;
+	lut->green[i] = 0;
       else if (green_pixel >= 65535.0)
-	uv->lut->green[i] = 65535;
+	lut->green[i] = 65535;
       else
-	uv->lut->green[i] = (unsigned)(green_pixel);
+	lut->green[i] = (unsigned)(green_pixel);
 
       if (blue_pixel <= 0.0)
-	uv->lut->blue[i] = 0;
+	lut->blue[i] = 0;
       else if (blue_pixel >= 65535.0)
-	uv->lut->blue[i] = 65535;
+	lut->blue[i] = 65535;
       else
-	uv->lut->blue[i] = (unsigned)(blue_pixel);
+	lut->blue[i] = (unsigned)(blue_pixel);
 #ifdef PRINT_LUT
       fprintf(ltfile, "%3i  %5d  %5d  %5d  %5d  %f %f %f %f  %f %f %f  %f\n",
-	      i, uv->lut->composite[i], uv->lut->red[i],
-	      uv->lut->green[i], uv->lut->blue[i], pixel, red_pixel,
+	      i, lut->composite[i], lut->red[i],
+	      lut->green[i], lut->blue[i], pixel, red_pixel,
 	      green_pixel, blue_pixel, print_gamma, screen_gamma,
 	      print_gamma, app_gamma);
 #endif
@@ -959,16 +1603,18 @@ compute_lut(size_t steps, vars_t *uv)
 const static papersize_t paper_sizes[] =
 {
   /* Common imperial page sizes */
-  { "Postcard", 283,  416, PAPERSIZE_ENGLISH },	/* 100mm x 147mm */
-  { "4x6",      288,  432, PAPERSIZE_ENGLISH },
-  { "5x7",      360,  504, PAPERSIZE_ENGLISH },
-  { "5x8",      360,  576, PAPERSIZE_ENGLISH },
-  { "6x8",      432,  576, PAPERSIZE_ENGLISH },
-  { "8x10",     576,  720, PAPERSIZE_ENGLISH },
-  { "Manual",   396,  612, PAPERSIZE_ENGLISH },	/* 5.5in x 8.5in */
   { "Letter",   612,  792, PAPERSIZE_ENGLISH },	/* 8.5in x 11in */
   { "Legal",    612, 1008, PAPERSIZE_ENGLISH },	/* 8.5in x 14in */
   { "Tabloid",  792, 1224, PAPERSIZE_ENGLISH },	/*  11in x 17in */
+  { "Postcard", 283,  416, PAPERSIZE_ENGLISH },	/* 100mm x 147mm */
+  { "4x6",      288,  432, PAPERSIZE_ENGLISH },
+  { "Epson 4x6 Photo Paper", 306, 495, PAPERSIZE_ENGLISH },
+  { "5x7",      360,  504, PAPERSIZE_ENGLISH },
+  { "5x8",      360,  576, PAPERSIZE_ENGLISH },
+  { "HalfLetter", 396, 612, PAPERSIZE_ENGLISH },
+  { "6x8",      432,  576, PAPERSIZE_ENGLISH },
+  { "8x10",     576,  720, PAPERSIZE_ENGLISH },
+  { "Manual",   396,  612, PAPERSIZE_ENGLISH },	/* 5.5in x 8.5in */
   { "12x18",    864, 1296, PAPERSIZE_ENGLISH },
   { "13x19",    936, 1368, PAPERSIZE_ENGLISH },
 
@@ -993,19 +1639,19 @@ const static papersize_t paper_sizes[] =
    * millimetre.  Thus, A0 is 841mm x 1189mm.  Every other A
    * size is obtained by doubling or halving another A size.
    */
-  { "4A",       4767, 6740, PAPERSIZE_METRIC },	/* 1682mm x 2378mm */
-  { "2A",       3370, 4767, PAPERSIZE_METRIC },	/* 1189mm x 1682mm */
-  { "A0",       2383, 3370, PAPERSIZE_METRIC },	/*  841mm x 1189mm */
-  { "A1",       1683, 2383, PAPERSIZE_METRIC },	/*  594mm x  841mm */
-  { "A2",       1190, 1683, PAPERSIZE_METRIC },	/*  420mm x  594mm */
-  { "A3",        841, 1190, PAPERSIZE_METRIC },	/*  297mm x  420mm */
-  { "A4",        595,  841, PAPERSIZE_METRIC },	/*  210mm x  297mm */
-  { "A5",        419,  595, PAPERSIZE_METRIC },	/*  148mm x  210mm */
-  { "A6",        297,  419, PAPERSIZE_METRIC },	/*  105mm x  148mm */
-  { "A7",        209,  297, PAPERSIZE_METRIC },	/*   74mm x  105mm */
-  { "A8",        147,  209, PAPERSIZE_METRIC },	/*   52mm x   74mm */
-  { "A9",        104,  147, PAPERSIZE_METRIC },	/*   37mm x   52mm */
-  { "A10",        73,  104, PAPERSIZE_METRIC },	/*   26mm x   37mm */
+  { "4A",       4768, 6749, PAPERSIZE_METRIC },	/* 1682mm x 2378mm */
+  { "2A",       3370, 4768, PAPERSIZE_METRIC },	/* 1189mm x 1682mm */
+  { "A0",       2384, 3370, PAPERSIZE_METRIC },	/*  841mm x 1189mm */
+  { "A1",       1684, 2384, PAPERSIZE_METRIC },	/*  594mm x  841mm */
+  { "A2",       1191, 1684, PAPERSIZE_METRIC },	/*  420mm x  594mm */
+  { "A3",        842, 1191, PAPERSIZE_METRIC },	/*  297mm x  420mm */
+  { "A4",        595,  842, PAPERSIZE_METRIC },	/*  210mm x  297mm */
+  { "A5",        420,  595, PAPERSIZE_METRIC },	/*  148mm x  210mm */
+  { "A6",        297,  420, PAPERSIZE_METRIC },	/*  105mm x  148mm */
+  { "A7",        210,  297, PAPERSIZE_METRIC },	/*   74mm x  105mm */
+  { "A8",        148,  210, PAPERSIZE_METRIC },	/*   52mm x   74mm */
+  { "A9",        105,  148, PAPERSIZE_METRIC },	/*   37mm x   52mm */
+  { "A10",        73,  105, PAPERSIZE_METRIC },	/*   26mm x   37mm */
 
   /*
    * Stock sizes for normal trims.
@@ -1074,6 +1720,21 @@ const static papersize_t paper_sizes[] =
   { "C10",        79,  113, PAPERSIZE_METRIC },	/*   28mm x   40mm */
 
   /*
+   * US CAD standard paper sizes
+   */
+  { "ArchA",	 648,  864, PAPERSIZE_ENGLISH },
+  { "ArchB",	 864, 1296, PAPERSIZE_ENGLISH },
+  { "ArchC",	1296, 1728, PAPERSIZE_ENGLISH },
+  { "ArchD",	1728, 2592, PAPERSIZE_ENGLISH },
+  { "ArchE",	2592, 3456, PAPERSIZE_ENGLISH },
+
+  /*
+   * Foolscap
+   */
+  { "flsa",	 612,  936, PAPERSIZE_ENGLISH }, /* American foolscap */
+  { "flse",	 648,  936, PAPERSIZE_ENGLISH }, /* European foolscap */
+
+  /*
    * Sizes for book production
    * The BPIF and the Publishers Association jointly recommend ten
    * standard metric sizes for case-bound titles as follows:
@@ -1115,24 +1776,45 @@ get_papersize_by_name(const char *name)
   const papersize_t *val = &(paper_sizes[0]);
   while (strlen(val->name) > 0)
     {
-      if (!strcmp(val->name, name))
+      if (!strcasecmp(val->name, name))
 	return val;
       val++;
     }
   return NULL;
 }
 
+#define IABS(a) ((a) > 0 ? a : -(a))
+
+static int
+paper_size_mismatch(int l, int w, const papersize_t *val)
+{
+  int hdiff = IABS(l - (int) val->length);
+  int vdiff = fabs(w - (int) val->width);
+  return hdiff + vdiff;
+}
+
 const papersize_t *
 get_papersize_by_size(int l, int w)
 {
+  int score = INT_MAX;
+  const papersize_t *ref = NULL;
   const papersize_t *val = &(paper_sizes[0]);
   while (strlen(val->name) > 0)
     {
       if (val->width == w && val->length == l)
 	return val;
+      else
+	{
+	  int myscore = paper_size_mismatch(l, w, val);
+	  if (myscore < score && myscore < 20)
+	    {
+	      ref = val;
+	      score = myscore;
+	    }
+	}
       val++;
     }
-  return NULL;
+  return ref;
 }
 
 void
@@ -1241,7 +1923,18 @@ choose_colorfunc(int output_type,
 		 int *out_bpp,
 		 const vars_t *v)
 {
-  if (output_type == OUTPUT_COLOR)
+  if (v->image_type == IMAGE_MONOCHROME)
+    {
+      *out_bpp = 1;
+
+      if (image_bpp >= 3)
+	return rgb_to_monochrome;
+      else if (cmap == NULL)
+	return gray_to_monochrome;
+      else
+	return indexed_to_monochrome;
+    }
+  else if (output_type == OUTPUT_COLOR)
     {
       *out_bpp = 3;
 
@@ -1252,6 +1945,13 @@ choose_colorfunc(int output_type,
 	  else
 	    return fast_rgb_to_rgb;
 	}
+      else if (cmap == NULL)
+        {
+          if (v->image_type == IMAGE_CONTINUOUS)
+	    return gray_to_rgb;
+          else
+	    return fast_gray_to_rgb;
+        }
       else
 	{
 	  if (v->image_type == IMAGE_CONTINUOUS)
@@ -1259,14 +1959,6 @@ choose_colorfunc(int output_type,
 	  else
 	    return fast_indexed_to_rgb;
 	}
-    }
-  else if (output_type == OUTPUT_GRAY_COLOR)
-    {
-      *out_bpp = 3;
-      if (v->image_type == IMAGE_CONTINUOUS)
-	return gray_to_rgb;
-      else
-	return fast_gray_to_rgb;
     }
   else
     {
@@ -1286,7 +1978,7 @@ compute_page_parameters(int page_right,	/* I */
 			int page_left, /* I */
 			int page_top, /* I */
 			int page_bottom, /* I */
-			int scaling, /* I */
+			double scaling, /* I */
 			int image_width, /* I */
 			int image_height, /* I */
 			Image image, /* IO */
@@ -1313,18 +2005,25 @@ compute_page_parameters(int page_right,	/* I */
     }
 
   if (*orientation == ORIENT_LANDSCAPE)
-    {
       Image_rotate_ccw(image);
+  else if (*orientation == ORIENT_UPSIDEDOWN)
+      Image_rotate_180(image);
+  else if (*orientation == ORIENT_SEASCAPE)
+      Image_rotate_cw(image);
 
-      image_width  = Image_width(image);
-      image_height = Image_height(image);
-    }
+  image_width  = Image_width(image);
+  image_height = Image_height(image);
 
   /*
    * Calculate width/height...
    */
 
-  if (scaling < 0.0)
+  if (scaling == 0.0)
+    {
+      *out_width  = *page_width;
+      *out_height = *page_height;
+    }
+  else if (scaling < 0.0)
     {
       /*
        * Scale to pixels per inch...
@@ -1352,12 +2051,6 @@ compute_page_parameters(int page_right,	/* I */
 
       *out_width = FMIN(twidth0, twidth1);
       *out_height = FMIN(theight0, theight1);
-
-      if (*out_height > *page_height)
-	{
-	  *out_height = *page_height * scaling / 100.0;
-	  *out_width  = *out_height * image_width / image_height;
-	}
     }
 
   if (*out_width == 0)
@@ -1365,17 +2058,35 @@ compute_page_parameters(int page_right,	/* I */
   if (*out_height == 0)
     *out_height = 1;
 
-  if (*orientation == ORIENT_LANDSCAPE)
+  /*
+   * Adjust offsets depending on the page orientation...
+   */
+
+  if (*orientation == ORIENT_LANDSCAPE || *orientation == ORIENT_SEASCAPE)
     {
       int x;
 
-      /*
-       * Swap left/top offsets...
-       */
-
       x     = *left;
       *left = *top;
-      *top  = *page_height - x - *out_height;
+      *top  = x;
+    }
+
+  if ((*orientation == ORIENT_UPSIDEDOWN || *orientation == ORIENT_SEASCAPE)
+      && *left >= 0)
+    {
+      *left = *page_width - *left - *out_width;
+      if (*left < 0) {
+	*left = 0;
+      }
+    }
+
+  if ((*orientation == ORIENT_UPSIDEDOWN || *orientation == ORIENT_LANDSCAPE)
+      && *top >= 0)
+    {
+      *top = *page_height - *top - *out_height;
+      if (*top < 0) {
+	*top = 0;
+      }
     }
 
   if (*left < 0)
@@ -1500,3 +2211,44 @@ verify_printer_params(const printer_t *p, const vars_t *v)
   fprintf(stderr, "%s is not a valid dither algorithm\n", v->dither_algorithm);
   return 0;
 }
+
+const vars_t *
+print_default_settings()
+{
+  return &default_vars;
+}
+
+const vars_t *
+print_maximum_settings()
+{
+  return &max_vars;
+}
+
+const vars_t *
+print_minimum_settings()
+{
+  return &min_vars;
+}
+
+#ifdef QUANTIFY
+unsigned quantify_counts[NUM_QUANTIFY_BUCKETS] = {0};
+struct timeval quantify_buckets[NUM_QUANTIFY_BUCKETS] = {{0,0}};
+int quantify_high_index = 0;
+int quantify_first_time = 1;
+struct timeval quantify_cur_time;
+struct timeval quantify_prev_time;
+
+void print_timers() 
+{
+    int i;
+
+    printf("Quantify timers:\n");
+    for (i = 0; i <= quantify_high_index; i++) {
+       if (quantify_counts[i] == 0) continue;
+        printf("Bucket %d:\t%ld.%ld s\thit %u times\n", i, quantify_buckets[i].tv_sec, quantify_buckets[i].tv_usec, quantify_counts[i]);
+        quantify_buckets[i].tv_sec = 0;
+        quantify_buckets[i].tv_usec = 0;
+        quantify_counts[i] = 0;
+    }
+}
+#endif

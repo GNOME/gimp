@@ -1,0 +1,75 @@
+The original version, up to release 2.0, of the Gimp Print plug-in was
+written by Mike Sweet <mike@easysw.com>.
+
+Version 3.0, which is based on version 2, was written by Robert
+Krawitz <rlk@alum.mit.edu> in late 1999, and frozen in early 2000.
+
+Version 4.0 was developed by a team led by Robert Krawitz.  We hosted
+the development on SourceForge, a service provided to the free source
+community by VA Linux Systems.  The complete hosting service provided
+by SourceForge permitted the development team to concentrate on
+improving the software rather than having to worry about maintaining a
+development system.
+
+The list of contributors to release 4.0, in alphabetical order, is as
+follows.  The principal areas that each contributed to are listed in
+addition.
+
+Andy Thaller		<thaller@ph.tum.de>
+	Canon driver
+
+Charles Briscoe-Smith	<cpbs@debian.org>
+	Epson driver
+	Internals
+	UI
+
+Dave Hill		<dave@minnie.demon.co.uk>
+	PCL driver
+
+Eric Sharkey		<sharkey@ale.physics.sunysb.edu>
+	Debian support
+	Epson unprinter
+
+Eugene Anikin		<eugene@anikin.com>
+	Performance instrumentation
+	Sharp-eyed bug fixer
+
+Grant Taylor		<gtaylor@picante.com>
+	Implementor of the "foomatic" spooler configuration system
+
+Henryk "Buggs" Richter	<tfa652@cks1.rz.uni-rostock.de>
+	Initial implementation of the Ghostscript driver
+
+Ian Young		<ian@iay.org.uk>
+	Documentation of the Epson driver
+	Experimental inks/color management
+
+Jean-Marc Verbavatz	<verbavatz@ifrance.fr>
+	Dithering and color management
+
+Karl Heinz Kremer	<khk@khk.net>
+	Liaison with Epson
+	Engineering and design
+
+Michael Natterer	<mitschel@cs.tu-berlin.de>
+	New user interface
+	Liaison with the Gimp development team
+
+Mike Sweet		<mike@easysw.com>
+	CUPS work
+	Portability
+	Lots o'details
+
+Robert Krawitz		<rlk@alum.mit.edu>
+	Epson driver
+	Dithering and color management
+	User interface
+	Engineering/Project lead
+	Documentation
+	Ghostscript driver
+
+Steve Miller		<smiller@rni.net>
+	User interface
+
+Thomas Tonino		<ttonino@bio.vu.nl>
+	Vastly improved dithering and color management

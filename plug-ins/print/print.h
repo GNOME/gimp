@@ -26,16 +26,9 @@
  */
 
 /*
- *
- * This file must not include any gimp, glib, gtk, etc. headers.
- *
- * Eventually I intend to port this to GhostScript and/or CUPS.  The only
- * file that should have GIMP-specific code is print.c.  The rest of this
- * program should be completely generic.
- *
- * rlk 20000112
+ * This file must include only standard C header files.  The core code must
+ * compile on generic platforms that don't support glib, gimp, gtk, etc.
  */
-
 
 #ifndef PRINT_HEADER
 #define PRINT_HEADER
@@ -43,19 +36,11 @@
 /*
  * Include necessary header files...
  */
-#ifndef HAVE_UNISTD_H
-#define HAVE_UNISTD_H
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 /*
  * Constants...
@@ -68,6 +53,8 @@
 #define ORIENT_AUTO		-1	/* Best orientation */
 #define ORIENT_PORTRAIT		0	/* Portrait orientation */
 #define ORIENT_LANDSCAPE	1	/* Landscape orientation */
+#define ORIENT_UPSIDEDOWN	2	/* Reverse portrait orientation */
+#define ORIENT_SEASCAPE		3	/* Reverse landscape orientation */
 
 #define MAX_CARRIAGE_WIDTH	80 /* This really needs to go away */
 				/* For now, this is wide enough for 4B ISO */
@@ -76,21 +63,27 @@
 #define IMAGE_SOLID_TONE	1
 #define IMAGE_CONTINUOUS	2
 #define IMAGE_MONOCHROME	3
+#define NIMAGE_TYPES		4
 
+/* Uncomment the next line to get performance statistics:
+ * look for QUANT(#) in the code. At the end of escp2-print
+ * run, it will print out how long and how many time did 
+ * certain pieces of code take. Of course, don't forget about
+ * overhead of call to gettimeofday - it's not zero.
+ * If you need more detailed performance stats, just put
+ * QUANT() calls in the interesting spots in the code */
+/*#define QUANTIFY*/
+#ifdef QUANTIFY
+#include <assert.h>
+#include <sys/time.h>
+#include <unistd.h>
+#else
+#define QUANT(n)
+#endif
 
 /*
  * Printer driver control structure.  See "print.c" for the actual list...
  */
-
-typedef struct
-{
-  unsigned steps;
-  unsigned short *composite;
-  unsigned short *red;
-  unsigned short *green;
-  unsigned short *blue;
-} lut_t;
-
 
 typedef struct					/* Plug-in variables */
 {
@@ -104,17 +97,17 @@ typedef struct					/* Plug-in variables */
 	media_source[64],	/* Media source */
 	ink_type[64],		/* Ink or cartridge */
 	dither_algorithm[64];	/* Dithering algorithm */
-  int	brightness;		/* Output brightness */
+  float	brightness;		/* Output brightness */
   float	scaling;		/* Scaling, percent of printable area */
   int	orientation,		/* Orientation - 0 = port., 1 = land.,
 				   -1 = auto */
 	left,			/* Offset from lower-lefthand corner, points */
 	top;			/* ... */
   float gamma;                  /* Gamma */
-  int   contrast,		/* Output Contrast */
-	red,			/* Output red level */
-	green,			/* Output green level */
-	blue;			/* Output blue level */
+  float contrast,		/* Output Contrast */
+	cyan,			/* Output red level */
+	magenta,		/* Output green level */
+	yellow;			/* Output blue level */
   int	linear;			/* Linear density (mostly for testing!) */
   float	saturation;		/* Output saturation */
   float	density;		/* Maximum output density */
@@ -123,14 +116,14 @@ typedef struct					/* Plug-in variables */
   float app_gamma;		/* Application gamma */
   int	page_width;		/* Width of page in points */
   int	page_height;		/* Height of page in points */
-  lut_t *lut;			/* Look-up table */
+  void  *lut;			/* Look-up table */
   unsigned char *cmap;		/* Color map */
 } vars_t;
 
 typedef struct		/**** Printer List ****/
 {
   int	active;			/* Do we know about this printer? */
-  char	name[17];		/* Name of printer */
+  char	name[128];		/* Name of printer */
   vars_t v;
 } plist_t;
 
@@ -287,7 +280,6 @@ extern void	dither_set_max_ink(void *vd, int, double);
 extern void	dither_set_x_oversample(void *vd, int os);
 extern void	dither_set_y_oversample(void *vd, int os);
 extern void	dither_set_adaptive_divisor(void *vd, unsigned divisor);
-extern void	dither_set_error_mix(void *vd, double);
 
 
 extern void	free_dither(void *);
@@ -295,21 +287,25 @@ extern void	free_dither(void *);
 
 extern void *	initialize_weave_params(int S, int J, int O,
 		                        int firstrow, int lastrow,
-		                        int pagelength);
+		                        int pagelength, int strategy);
 extern void	calculate_row_parameters(void *w, int row, int subpass,
 		                         int *pass, int *jet, int *startrow,
 					 int *phantomrows, int *jetsused);
 extern void	destroy_weave_params(void *vw);
 
 
-extern void	dither_fastblack(unsigned short *, int, void *, unsigned char *);
+extern void	dither_monochrome(const unsigned short *, int, void *,
+				 unsigned char *, int duplicate_line);
 
-extern void	dither_black(unsigned short *, int, void *, unsigned char *);
+extern void	dither_black(const unsigned short *, int, void *,
+			     unsigned char *, int duplicate_line);
 
-extern void	dither_cmyk(unsigned short *, int, void *, unsigned char *,
+extern void	dither_cmyk(const unsigned short *, int, void *,
+			    unsigned char *,
 			    unsigned char *, unsigned char *,
 			    unsigned char *, unsigned char *,
-			    unsigned char *, unsigned char *);
+			    unsigned char *, unsigned char *,
+			    int duplicate_line);
 
 extern void	merge_printvars(vars_t *user, const vars_t *print);
 extern void	free_lut(vars_t *v);
@@ -389,13 +385,57 @@ extern convert_t choose_colorfunc(int, int, const unsigned char *, int *,
 				  const vars_t *);
 extern void
 compute_page_parameters(int page_right, int page_left, int page_top,
-			int page_bottom, int scaling, int image_width,
+			int page_bottom, double scaling, int image_width,
 			int image_height, Image image, int *orientation,
 			int *page_width, int *page_height, int *out_width,
 			int *out_height, int *left, int *top);
 
 extern int
 verify_printer_params(const printer_t *, const vars_t *);
+extern const vars_t *print_default_settings(void);
+extern const vars_t *print_maximum_settings(void);
+extern const vars_t *print_minimum_settings(void);
+
+#ifdef QUANTIFY
+/* Used for performance analysis - to be called before and after
+ * the interval to be quantified */
+#define NUM_QUANTIFY_BUCKETS 1024
+extern unsigned quantify_counts[NUM_QUANTIFY_BUCKETS];
+extern struct timeval quantify_buckets[NUM_QUANTIFY_BUCKETS];
+extern int quantify_high_index;
+extern int quantify_first_time;
+extern struct timeval quantify_cur_time;
+extern struct timeval quantify_prev_time;
+
+#define QUANT(number) \
+{\
+    gettimeofday(&quantify_cur_time, NULL);\
+    assert(number < NUM_QUANTIFY_BUCKETS);\
+    quantify_counts[number]++;\
+\
+    if (quantify_first_time) {\
+        quantify_first_time = 0;\
+    } else {\
+        if (number > quantify_high_index) quantify_high_index = number;\
+        if (quantify_prev_time.tv_usec > quantify_cur_time.tv_usec) {\
+           quantify_buckets[number].tv_usec += ((quantify_cur_time.tv_usec + 1000000) - quantify_prev_time.tv_usec);\
+           quantify_buckets[number].tv_sec += (quantify_cur_time.tv_sec - quantify_prev_time.tv_sec - 1);\
+        } else {\
+           quantify_buckets[number].tv_sec += quantify_cur_time.tv_sec - quantify_prev_time.tv_sec;\
+           quantify_buckets[number].tv_usec += quantify_cur_time.tv_usec - quantify_prev_time.tv_usec;\
+        }\
+        if (quantify_buckets[number].tv_usec >= 1000000)\
+        {\
+           quantify_buckets[number].tv_usec -= 1000000;\
+           quantify_buckets[number].tv_sec++;\
+        }\
+    }\
+\
+    gettimeofday(&quantify_prev_time, NULL);\
+}
+
+extern void  print_timers(void );
+#endif
 
 #endif /* PRINT_HEADER */
 /*
