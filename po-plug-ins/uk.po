@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-08-31 18:01+0300\n"
+"POT-Creation-Date: 2000-09-01 16:16+0300\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -1689,11 +1689,11 @@ msgstr "Покрокова k(1-x^p)"
 
 #: plug-ins/common/CML_explorer.c:140
 msgid "Delta function"
-msgstr ""
+msgstr "Дельта-функц╕я"
 
 #: plug-ins/common/CML_explorer.c:141
 msgid "Delta function stepped"
-msgstr ""
+msgstr "Покрокова дельта-функц╕я"
 
 #: plug-ins/common/CML_explorer.c:142
 msgid "sin^p-based function"
@@ -1764,43 +1764,43 @@ msgstr "Min (x-d, -), (x < 0.5)"
 #: plug-ins/print/gimp_main_window.c:999
 #: plug-ins/print/gimp_main_window.c:1069
 msgid "Standard"
-msgstr ""
+msgstr "Стандарт"
 
 #: plug-ins/common/CML_explorer.c:201
 msgid "Use average value"
-msgstr ""
+msgstr "Використовувати середн╓ значення"
 
 #: plug-ins/common/CML_explorer.c:202
 msgid "Use reverse value"
-msgstr ""
+msgstr "Використовувати зворотн╓ значення"
 
 #: plug-ins/common/CML_explorer.c:203
 msgid "With random power (0,10)"
-msgstr ""
+msgstr "З випадковим степенем (0,10)"
 
 #: plug-ins/common/CML_explorer.c:204
 msgid "With random power (0,1)"
-msgstr ""
+msgstr "З випадковим степенем (0,1)"
 
 #: plug-ins/common/CML_explorer.c:205
 msgid "With gradient power (0,1)"
-msgstr ""
+msgstr "З степенем град╕╓нта (0,1)"
 
 #: plug-ins/common/CML_explorer.c:206
 msgid "Multiply rand. value (0,1)"
-msgstr ""
+msgstr "Множити на випадкове число (0,1)"
 
 #: plug-ins/common/CML_explorer.c:207
 msgid "Multiply rand. value (0,2)"
-msgstr ""
+msgstr "Множити на випадкове число (0,2)"
 
 #: plug-ins/common/CML_explorer.c:208
 msgid "Multiply gradient (0,1)"
-msgstr ""
+msgstr "Множити град╕╓нт (0,1)"
 
 #: plug-ins/common/CML_explorer.c:209
 msgid "With p and random (0,1)"
-msgstr ""
+msgstr "╤з степенем p ╕ випадковим числом (0,1)"
 
 #: plug-ins/common/CML_explorer.c:222
 msgid "All black"
@@ -1816,19 +1816,19 @@ msgstr "Все б╕ле"
 
 #: plug-ins/common/CML_explorer.c:225
 msgid "The first row of the image"
-msgstr ""
+msgstr "Перший рядок зображення"
 
 #: plug-ins/common/CML_explorer.c:226
 msgid "Continuous gradient"
-msgstr ""
+msgstr "Безперервний град╕╓нт"
 
 #: plug-ins/common/CML_explorer.c:227
 msgid "Continuous grad. w/o gap"
-msgstr ""
+msgstr "Безперервний град╕╓нт без прогалин"
 
 #: plug-ins/common/CML_explorer.c:228
 msgid "Random, ch. independent"
-msgstr ""
+msgstr "Випадковий, незалежний в╕д каналу"
 
 #: plug-ins/common/CML_explorer.c:229
 msgid "Random shared"
@@ -1836,7 +1836,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:230
 msgid "Randoms from seed"
-msgstr ""
+msgstr "Випадков╕ з бази"
 
 #: plug-ins/common/CML_explorer.c:231
 msgid "Randoms from seed (shared)"
@@ -1899,7 +1899,7 @@ msgstr "Налаштування насиченост╕"
 
 #: plug-ins/common/CML_explorer.c:1289
 msgid "Value (Gray Image) Settings"
-msgstr ""
+msgstr "Налаштування яскравост╕ (с╕ре зображення)"
 
 #: plug-ins/common/CML_explorer.c:1294
 msgid "Advanced Settings"
@@ -1915,7 +1915,7 @@ msgstr "Налаштування ╕нших параметр╕в"
 
 #: plug-ins/common/CML_explorer.c:1315
 msgid "Channel Independed Parameters"
-msgstr ""
+msgstr "Незалежн╕ в╕д каналу параметри"
 
 #: plug-ins/common/CML_explorer.c:1366
 msgid "Initial Value:"
@@ -1923,7 +1923,7 @@ msgstr "Початкове значення:"
 
 #: plug-ins/common/CML_explorer.c:1370
 msgid "Zoom Scale:"
-msgstr ""
+msgstr "Маштаб:"
 
 #: plug-ins/common/CML_explorer.c:1378
 msgid "Start Offset:"
@@ -1983,11 +1983,11 @@ msgstr "Нуль"
 
 #: plug-ins/common/CML_explorer.c:1523
 msgid "Source Channel in File:"
-msgstr ""
+msgstr "Вих╕дний канал у файл╕:"
 
 #: plug-ins/common/CML_explorer.c:1545
 msgid "Misc Ops."
-msgstr ""
+msgstr "Р╕зн╕ параметри"
 
 #: plug-ins/common/CML_explorer.c:1639
 msgid "Function Type:"
@@ -11002,42 +11002,42 @@ msgstr ""
 #: plug-ins/gimpressionist/orientation.c:176
 #: plug-ins/gimpressionist/size.c:175
 msgid "Flowing"
-msgstr ""
+msgstr "Плаваючий"
 
 #: plug-ins/gimpressionist/orientation.c:182
 #: plug-ins/gimpressionist/size.c:181
 msgid "The strokes follow a \"flowing\" pattern"
-msgstr ""
+msgstr "Мазки в╕дпов╕дн╕ до \"плаваючого\" шаблону"
 
 #: plug-ins/gimpressionist/orientation.c:194
 msgid "The hue of the region determines the direction of the stroke"
-msgstr ""
+msgstr "В╕дт╕нок д╕лянки визнача╓ напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:204
 msgid "The direction that matches the original image the closest is selected"
-msgstr ""
+msgstr "Вибира╓ться напрямок, найб╕льш сп╕впада╓ з ори╜╕нальним зображенням"
 
 #: plug-ins/gimpressionist/orientation.c:213
 #: plug-ins/gimpressionist/size.c:210
 msgid "Manual"
-msgstr ""
+msgstr "Ручний"
 
 #: plug-ins/gimpressionist/orientation.c:219
 msgid "Manually specify the stroke orientation"
-msgstr ""
+msgstr "Напрямок мазк╕в вказу╓ться вручну"
 
 #: plug-ins/gimpressionist/orientation.c:223
 #: plug-ins/gimpressionist/size.c:220
 msgid "Edit..."
-msgstr ""
+msgstr "Виправити..."
 
 #: plug-ins/gimpressionist/orientation.c:228
 msgid "Opens up the Orientation Map Editor"
-msgstr ""
+msgstr "В╕дкрити редактор мап ор╕╓нтац╕╖"
 
 #: plug-ins/gimpressionist/orientmap.c:461
 msgid "Orientation Map Editor"
-msgstr ""
+msgstr "Редактор мап ор╕╓нтац╕╖"
 
 #: plug-ins/gimpressionist/orientmap.c:469
 msgid "Vectors"
@@ -11048,11 +11048,13 @@ msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
+"Векторне поле. Клацання л╕вою кнопкою пересува╓ вибраний вектор, клацання "
+"правою - вказу╓ вектор, клацання середньою - дода╓ новый вектор."
 
 #: plug-ins/gimpressionist/orientmap.c:500
 #: plug-ins/gimpressionist/sizemap.c:400
 msgid "Adjust the preview's brightness"
-msgstr ""
+msgstr "Налаштувати яскрав╕сть перегляду"
 
 #: plug-ins/gimpressionist/orientmap.c:522
 msgid "Select previous vector"
