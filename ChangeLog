@@ -1,5 +1,9 @@
 2003-03-06  Manish Singh  <yosh@gimp.org>
 
+	* configure.in: rework AltiVec tests some.
+
+2003-03-06  Manish Singh  <yosh@gimp.org>
+
 	* app/composite/gimp-composite-altivec-installer.c
 	* app/composite/gimp-composite-altivec-test.c: regenerated so the new
 	implementation is actually used.

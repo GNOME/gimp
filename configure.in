@@ -613,10 +613,10 @@ AC_ARG_ENABLE(altivec,
   enable_altivec=$have_ppc)
 
 if test "x$enable_altivec" = xyes; then
- 
-  ALTIVEC_EXTRA_CFLAGS=
+
+  altivec_flag= 
   for flag in '-faltivec' '-maltivec -mabi=altivec'; do
-    if test -z "$ALTIVEC_EXTRA_CFLAGS"; then
+    if test -z "$altivec_flag"; then
       altivec_save_CFLAGS="$CFLAGS"
       CFLAGS="$altivec_save_CFLAGS $flag"
       AC_MSG_CHECKING([whether [$]CC understands [$]flag])
@@ -624,20 +624,32 @@ if test "x$enable_altivec" = xyes; then
       AC_MSG_RESULT($altivec_flag_works)
       CFLAGS="$altivec_save_CFLAGS"
       if test "x$altivec_flag_works" = "xyes"; then
-        ALTIVEC_EXTRA_CFLAGS="$flag"
+        altivec_flag="$flag"
       fi
     fi
   done
+
+  ALTIVEC_EXTRA_CFLAGS=
+  case "$altivec_flag" in
+    -maltivec*)
+      altivec_save_CPPFLAGS="$CPPFLAGS"
+      CPPFLAGS="$altivec_save_CPPFLAGS $altivec_flag"
+      AC_CHECK_HEADERS(altivec.h, [ALTIVEC_EXTRA_CFLAGS="$altivec_flag"])
+      CPPFLAGS="$altivec_save_CPPFLAGS"
+      ;;
+    *)
+      ALTIVEC_EXTRA_CFLAGS="$altivec_flag"
+      ;;
+  esac
   AC_SUBST(ALTIVEC_EXTRA_CFLAGS)
 
   AC_MSG_CHECKING(whether we can compile AltiVec code)
 
+  can_use_altivec=no
   if test -z "$ALTIVEC_EXTRA_CFLAGS"; then
-    enable_altivec=no
     AC_MSG_WARN([The compiler does not support the AltiVec command set.])
     AC_MSG_RESULT(no)
   else
-    can_use_altivec=no
     case "$target_or_host" in
       *-*-darwin*)
         can_use_altivec=yes
@@ -653,16 +665,13 @@ if test "x$enable_altivec" = xyes; then
 
     if test "x$can_use_altivec" = "xyes"; then
       AC_DEFINE(USE_ALTIVEC, 1, [Define to 1 if AltiVec support is available.])
-
-      altivec_save_CPPFLAGS="$CPPFLAGS"
-      CPPFLAGS="$altivec_save_CPPFLAGS $ALTIVEC_EXTRA_CFLAGS"
-      AC_CHECK_HEADERS(altivec.h)
-      CPPFLAGS="$altivec_save_CPPFLAGS"
     else
       enable_altivec=no
       AC_MSG_WARN([The assembler does not support the AltiVec command set.])
     fi
   fi
+
+  enable_altivec="$can_use_altivec"
 fi
 
 
