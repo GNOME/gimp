@@ -38,6 +38,7 @@ app/core/gimpgradient.c
 app/core/gimpimage-colormap.c
 app/core/gimpimage-convert.c
 app/core/gimpimage-crop.c
+app/core/gimpimage-grid.c
 app/core/gimpimage-guides.c
 app/core/gimpimage-mask-select.c
 app/core/gimpimage-mask.c
@@ -152,7 +153,6 @@ app/paint/gimpdodgeburn.c
 app/paint/gimperaser.c
 app/paint/gimppaintbrush.c
 app/paint/gimppaintcore.c
-app/paint/gimppencil.c
 app/paint/gimpsmudge.c
 app/paint/paint-enums.c
 

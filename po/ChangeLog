@@ -1,7 +1,11 @@
+2003-07-14  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: updated.
+
 2003-07-14  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation by
-                 Francisco Javier F. Serrador <serrador@arrakis.es>.
+	* es.po: Updated Spanish translation by Francisco Javier
+	         F. Serrador <serrador@arrakis.es>.
 
 2003-07-13  Valek Filippov  <frob@df.ru>
 
@@ -34,7 +38,7 @@
 
 2003-06-26  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-06-30  Michael Natterer  <mitch@gimp.org>
 
@@ -61,7 +65,7 @@
 
 2003-06-26  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation by
+	* es.po: Updated Spanish translation by
                  Francisco Javier F. Serrador <serrador@arrakis.es>.
 
 2003-06-25  Sven Neumann  <sven@gimp.org>
