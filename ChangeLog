@@ -1,3 +1,8 @@
+2002-11-24  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gserialize.[ch]: removed from CVS, may always be pulled
+	out of the Attic if needed again.
+
 2002-11-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpdisplayconfig.c: removed GIMP_PARAM_RESTART from
@@ -17,7 +22,7 @@
 
 	* themes/Default/images/preferences/Makefile.am
 	* themes/Default/images/preferences/image-title.png: new image
-	for the new page. copied image-windows.png
+	for the new page, copied image-windows.png
 
 2002-11-23  Michael Natterer  <mitch@gimp.org>
 

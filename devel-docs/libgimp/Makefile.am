@@ -27,10 +27,10 @@ CFILE_GLOB = $(DOC_SOURCE_DIR)/*.c
 
 # Header files to ignore when scanning
 IGNORE_HFILES = \
+	gimpmisc.h		\
 	gimpintl.h 		\
 	libgimp-intl.h		\
-	stdplugins-intl.h	\
-	gserialize.h
+	stdplugins-intl.h
 
 # Images to copy into HTML directory
 HTML_IMAGES=

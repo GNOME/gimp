@@ -1,4 +1,11 @@
-2002-11-21  Sven Neumann  <neo@wintermute>
+2002-11-24  Sven Neumann  <sven@gimp.org>
+
+	* parasites.txt: updated for removal of gserialize.[ch].
+
+	* libgimp/Makefile.am: ignore gimpmisc.h when generating the
+	libgimp API reference.
+
+2002-11-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimpmath/libgimpmath-sections.txt
 	* libgimpmath/tmpl/gimpmath.sgml: bye, bye G_MAXRAND.
