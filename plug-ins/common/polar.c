@@ -27,6 +27,19 @@
  */
 
 
+/* Version 1.0:
+ * This is the follow-up release.  It contains a few minor changes, the
+ * most major being that the first time I released the wrong version of
+ * the code, and this time the changes have been fixed.  I also added
+ * tooltips to the dialog.
+ *
+ * Feel free to email me if you have any comments or suggestions on this
+ * plugin.
+ *               --Daniel Dunbar
+ *                 ddunbar@diads.com
+ */
+
+
 /* Version .5:
  * This is the first version publicly released, it will probably be the
  * last also unless i can think of some features i want to add.
@@ -73,9 +86,9 @@
 typedef struct {
 	gdouble circle;
 	gdouble angle;
-	gint8 backwards;
-	gint8 inverse;
-	gint8 polrec;
+	gint backwards;
+	gint inverse;
+	gint polrec;
 } polarize_vals_t;
 
 typedef struct {
@@ -129,9 +142,8 @@ static void dialog_close_callback(GtkWidget *widget, gpointer data);
 static void dialog_ok_callback(GtkWidget *widget, gpointer data);
 static void dialog_cancel_callback(GtkWidget *widget, gpointer data);
 
-static void backwards_toggled(GtkWidget *widget, gpointer data);
-static void top_toggled(GtkWidget *widget, gpointer data);
-static void pr_toggled(GtkWidget *widget, gpointer data);
+static void polar_toggle_callback(GtkWidget *widget, gpointer data);
+static void set_tooltip (GtkTooltips *tooltips, GtkWidget *widget, const char *desc);
 
 /***** Variables *****/
 
@@ -142,22 +154,22 @@ GPlugInInfo PLUG_IN_INFO = {
 	run     /* run_proc */
 }; /* PLUG_IN_INFO */
 
-static polarize_vals_t wpvals = {
+static polarize_vals_t pcvals = {
 	100.0, /* circle */
 	0.0,  /* angle */
 	0, /* backwards */
 	1,  /* inverse */
 	1  /* polar to rectangular? */
-}; /* wpvals */
+}; /* pcvals */
 
-static polarize_interface_t wpint = {
+static polarize_interface_t pcint = {
 	NULL,  /* preview */
 	NULL,  /* check_row_0 */
 	NULL,  /* check_row_1 */
 	NULL,  /* image */
 	NULL,  /* dimage */
 	FALSE  /* run */
-}; /* wpint */
+}; /* pcint */
 
 static GDrawable *drawable;
 
@@ -289,7 +301,7 @@ run(char    *name,
 		case RUN_INTERACTIVE:
 			/* Possibly retrieve data */
 
-			gimp_get_data(PLUG_IN_NAME, &wpvals);
+			gimp_get_data(PLUG_IN_NAME, &pcvals);
 
 			/* Get information from the dialog */
 
@@ -305,11 +317,11 @@ run(char    *name,
 				status = STATUS_CALLING_ERROR;
 
 			if (status == STATUS_SUCCESS) {
-				wpvals.circle  = param[3].data.d_float;
-				wpvals.angle  = param[4].data.d_float;
-				wpvals.backwards  = param[5].data.d_int8;
-				wpvals.inverse  = param[6].data.d_int8;
-				wpvals.polrec  = param[7].data.d_int8;
+				pcvals.circle  = param[3].data.d_float;
+				pcvals.angle  = param[4].data.d_float;
+				pcvals.backwards  = param[5].data.d_int8;
+				pcvals.inverse  = param[6].data.d_int8;
+				pcvals.polrec  = param[7].data.d_int8;
 			} /* if */
 
 			break;
@@ -317,7 +329,7 @@ run(char    *name,
 		case RUN_WITH_LAST_VALS:
 			/* Possibly retrieve data */
 
-			gimp_get_data(PLUG_IN_NAME, &wpvals);
+			gimp_get_data(PLUG_IN_NAME, &pcvals);
 			break;
 
 		default:
@@ -345,7 +357,7 @@ run(char    *name,
 		/* Store data */
 
 		if (run_mode == RUN_INTERACTIVE)
-			gimp_set_data(PLUG_IN_NAME, &wpvals, sizeof(polarize_vals_t));
+			gimp_set_data(PLUG_IN_NAME, &pcvals, sizeof(polarize_vals_t));
 	} else if (status == STATUS_SUCCESS)
 		status = STATUS_EXECUTION_ERROR;
 
@@ -472,11 +484,11 @@ calc_undistorted_coords(double wx, double wy,
   ydiff = y2 - y1;
   xm = xdiff / 2.0;
   ym = ydiff / 2.0;
-  circle = wpvals.circle;
-  angle = wpvals.angle;
+  circle = pcvals.circle;
+  angle = pcvals.angle;
   angl = (double)angle / 180.0 * M_PI;
 
-  if (wpvals.polrec) {
+  if (pcvals.polrec) {
     if (wx >= cen_x) {
       if (wy > cen_y) {
 	phi = M_PI - atan (((double)(wx - cen_x))/((double)(wy - cen_y)));
@@ -526,12 +538,12 @@ calc_undistorted_coords(double wx, double wy,
     
     phi = fmod (phi + angl, 2*M_PI);
     
-    if (wpvals.backwards)
+    if (pcvals.backwards)
       x_calc = x2 - 1 - (x2 - x1 - 1)/(2*M_PI) * phi;
     else
       x_calc = (x2 - x1 - 1)/(2*M_PI) * phi + x1;
     
-    if (wpvals.inverse)
+    if (pcvals.inverse)
       y_calc = (y2 - y1)/rmax   * r   + y1;
     else
       y_calc = y2 - (y2 - y1)/rmax * r;
@@ -549,7 +561,7 @@ calc_undistorted_coords(double wx, double wy,
     }
   } else {
     
-    if (wpvals.backwards)
+    if (pcvals.backwards)
       phi = (2 * M_PI) * (x2 - wx) / xdiff;
     else
       phi = (2 * M_PI) * (wx - x1) / xdiff;
@@ -598,7 +610,7 @@ calc_undistorted_coords(double wx, double wy,
     
     rmax = (rmax - t) / 100.0 * (100 - circle) + t;
     
-    if (wpvals.inverse)
+    if (pcvals.inverse)
       r = rmax * (double)((wy - y1) / (double)(ydiff));
     else
       r = rmax * (double)((y2 - wy) / (double)(ydiff));
@@ -778,10 +790,10 @@ build_preview_source_image(void)
 	guchar           pixel[4];
 	pixel_fetcher_t *pf;
 
-	wpint.check_row_0 = g_malloc(preview_width * sizeof(guchar));
-	wpint.check_row_1 = g_malloc(preview_width * sizeof(guchar));
-	wpint.image       = g_malloc(preview_width * preview_height * 4 * sizeof(guchar));
-	wpint.dimage      = g_malloc(preview_width * preview_height * 3 * sizeof(guchar));
+	pcint.check_row_0 = g_malloc(preview_width * sizeof(guchar));
+	pcint.check_row_1 = g_malloc(preview_width * sizeof(guchar));
+	pcint.image       = g_malloc(preview_width * preview_height * 4 * sizeof(guchar));
+	pcint.dimage      = g_malloc(preview_width * preview_height * 3 * sizeof(guchar));
 
 	left   = sel_x1;
 	right  = sel_x2 - 1;
@@ -795,7 +807,7 @@ build_preview_source_image(void)
 
 	pf = pixel_fetcher_new(drawable);
 
-	p = wpint.image;
+	p = pcint.image;
 
 	for (y = 0; y < preview_height; y++) {
 		px = left;
@@ -804,11 +816,11 @@ build_preview_source_image(void)
 			/* Checks */
 
 			if ((x / CHECK_SIZE) & 1) {
-				wpint.check_row_0[x] = CHECK_DARK;
-				wpint.check_row_1[x] = CHECK_LIGHT;
+				pcint.check_row_0[x] = CHECK_DARK;
+				pcint.check_row_1[x] = CHECK_LIGHT;
 			} else {
-				wpint.check_row_0[x] = CHECK_LIGHT;
-				wpint.check_row_1[x] = CHECK_DARK;
+				pcint.check_row_0[x] = CHECK_LIGHT;
+				pcint.check_row_1[x] = CHECK_DARK;
 			} /* else */
 
 			/* Thumbnail image */
@@ -854,6 +866,8 @@ polarize_dialog(void)
 	GtkWidget  *button;
 	GtkWidget  *toggle;
 	GtkWidget  *hbox;
+	GtkTooltips  *tips;
+	GdkColor tips_fg, tips_bg;
 	gint        argc;
 	gchar     **argv;
 	guchar     *color_cube;
@@ -894,6 +908,21 @@ polarize_dialog(void)
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), top_table, FALSE, FALSE, 0);
 	gtk_widget_show(top_table);
 
+	/* Initialize Tooltips */
+
+	/* use black as foreground: */
+	tips = gtk_tooltips_new ();
+	tips_fg.red   = 0;
+	tips_fg.green = 0;
+	tips_fg.blue  = 0;
+	/* postit yellow (khaki) as background: */
+	gdk_color_alloc (gtk_widget_get_colormap (dialog), &tips_fg);
+	tips_bg.red   = 61669;
+	tips_bg.green = 59113;
+	tips_bg.blue  = 35979;
+	gdk_color_alloc (gtk_widget_get_colormap (dialog), &tips_bg);
+	gtk_tooltips_set_colors (tips,&tips_bg,&tips_fg);
+	
 	/* Preview */
 
 	frame = gtk_frame_new(NULL);
@@ -901,10 +930,10 @@ polarize_dialog(void)
 	gtk_table_attach(GTK_TABLE(top_table), frame, 1, 2, 0, 1, 0, 0, 0, 0);
 	gtk_widget_show(frame);
 
-	wpint.preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-	gtk_preview_size(GTK_PREVIEW(wpint.preview), preview_width, preview_height);
-	gtk_container_add(GTK_CONTAINER(frame), wpint.preview);
-	gtk_widget_show(wpint.preview);
+	pcint.preview = gtk_preview_new(GTK_PREVIEW_COLOR);
+	gtk_preview_size(GTK_PREVIEW(pcint.preview), preview_width, preview_height);
+	gtk_container_add(GTK_CONTAINER(frame), pcint.preview);
+	gtk_widget_show(pcint.preview);
 
 	/* Controls */
 
@@ -913,8 +942,8 @@ polarize_dialog(void)
 	gtk_table_attach(GTK_TABLE(top_table), table, 0, 3, 1, 2, GTK_EXPAND | GTK_FILL, 0, 0, 0);
 	gtk_widget_show(table);
 
-	dialog_create_value("Circle depth in percent", GTK_TABLE(table), 0, &wpvals.circle, 0, 100.0, 1.0);
-	dialog_create_value("Offset angle", GTK_TABLE(table), 1, &wpvals.angle, 0, 359, 1.0);
+	dialog_create_value("Circle depth in percent", GTK_TABLE(table), 0, &pcvals.circle, 0, 100.0, 1.0);
+	dialog_create_value("Offset angle", GTK_TABLE(table), 1, &pcvals.angle, 0, 359, 1.0);
 
 
 	/* togglebuttons for backwards, top, polar->rectangular */
@@ -923,23 +952,32 @@ polarize_dialog(void)
 	gtk_table_attach( GTK_TABLE(top_table), hbox, 0, 3, 2, 3, 
 							GTK_FILL, 0 , 0, 0);
 
-	toggle = gtk_toggle_button_new_with_label("Map Backwards");
-	gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON(toggle), wpvals.backwards);
-	gtk_signal_connect( GTK_OBJECT(toggle), "clicked", (GtkSignalFunc)backwards_toggled,NULL);
+	toggle = gtk_check_button_new_with_label("Map Backwards");
+	gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON(toggle), pcvals.backwards);
+	gtk_signal_connect(GTK_OBJECT(toggle), "clicked", 
+			   (GtkSignalFunc) polar_toggle_callback,
+			   &pcvals.backwards);
 	gtk_box_pack_start( GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_widget_show(toggle);
+	set_tooltip(tips,toggle,"If checked the mapping will begin at the right side, as opposed to beginning at the left.");
 
-	toggle = gtk_toggle_button_new_with_label("Map from Top");
-	gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON(toggle), wpvals.inverse);
-	gtk_signal_connect( GTK_OBJECT(toggle), "clicked", (GtkSignalFunc)top_toggled, NULL);
+	toggle = gtk_check_button_new_with_label("Map from Top");
+	gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON(toggle), pcvals.inverse);
+	gtk_signal_connect( GTK_OBJECT(toggle), "clicked", 
+			    (GtkSignalFunc) polar_toggle_callback,
+			    &pcvals.inverse);
 	gtk_box_pack_start( GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_widget_show(toggle);
+	set_tooltip(tips,toggle,"If unchecked the mapping will put the bottom row in the middle and the top row on the outside.  If checked it will be the opposite.");
 
-	toggle = gtk_toggle_button_new_with_label("Polar to Rectangular");
-	gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON(toggle), wpvals.polrec);
-	gtk_signal_connect( GTK_OBJECT(toggle), "clicked", (GtkSignalFunc)pr_toggled, NULL);
+	toggle = gtk_check_button_new_with_label("Polar to Rectangular");
+	gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON(toggle), pcvals.polrec);
+	gtk_signal_connect( GTK_OBJECT(toggle), "clicked", 
+			    (GtkSignalFunc) polar_toggle_callback,
+			    &pcvals.polrec);
 	gtk_box_pack_start( GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_widget_show(toggle);
+	set_tooltip(tips,toggle,"If unchecked the image will be circularly mapped onto a rectangle.  If checked the image will be mapped onto a circle.");
 
 	gtk_widget_show(hbox);
 
@@ -970,14 +1008,15 @@ polarize_dialog(void)
 	dialog_update_preview();
 
 	gtk_main();
+	gtk_object_unref(GTK_OBJECT(tips));
 	gdk_flush();
 
-	g_free(wpint.check_row_0);
-	g_free(wpint.check_row_1);
-	g_free(wpint.image);
-	g_free(wpint.dimage);
+	g_free(pcint.check_row_0);
+	g_free(pcint.check_row_1);
+	g_free(pcint.image);
+	g_free(pcint.dimage);
 
-	return wpint.run;
+	return pcint.run;
 } /* polarize_dialog */
 
 
@@ -1019,16 +1058,16 @@ dialog_update_preview(void)
 
 	py = top;
 
-	p_ul = wpint.dimage;
-/*	p_lr = wpint.dimage + 3 * (preview_width * preview_height - 1);*/
+	p_ul = pcint.dimage;
+/*	p_lr = pcint.dimage + 3 * (preview_width * preview_height - 1);*/
 
 	for (y = 0; y < preview_height; y++) {
 		px = left;
 
 		if ((y / CHECK_SIZE) & 1)
-			check_ul = wpint.check_row_0;
+			check_ul = pcint.check_row_0;
 		else
-			check_ul = wpint.check_row_1;
+			check_ul = pcint.check_row_1;
 
 		for (x = 0; x < preview_width; x++) {
 			calc_undistorted_coords(px, py, &cx, &cy);
@@ -1043,7 +1082,7 @@ dialog_update_preview(void)
 
 			if ((ix >= 0) && (ix < preview_width) &&
 			    (iy >= 0) && (iy < preview_height))
-				i = wpint.image + 4 * (preview_width * iy + ix);
+				i = pcint.image + 4 * (preview_width * iy + ix);
 			else
 				i = outside;
 
@@ -1059,15 +1098,15 @@ dialog_update_preview(void)
 		py += dy;
 	} /* for */
 
-	p = wpint.dimage;
+	p = pcint.dimage;
 
 	for (y = 0; y < img_height; y++) {
-		gtk_preview_draw_row(GTK_PREVIEW(wpint.preview), p, 0, y, preview_width);
+		gtk_preview_draw_row(GTK_PREVIEW(pcint.preview), p, 0, y, preview_width);
 
 		p += preview_width * 3;
 	} /* for */
 
-	gtk_widget_draw(wpint.preview, NULL);
+	gtk_widget_draw(pcint.preview, NULL);
 	gdk_flush();
 } /* dialog_update_preview */
 
@@ -1183,7 +1222,7 @@ dialog_close_callback(GtkWidget *widget, gpointer data)
 static void
 dialog_ok_callback(GtkWidget *widget, gpointer data)
 {
-	wpint.run = TRUE;
+	pcint.run = TRUE;
 	gtk_widget_destroy(GTK_WIDGET(data));
 } /* dialog_ok_callback */
 
@@ -1196,25 +1235,23 @@ dialog_cancel_callback(GtkWidget *widget, gpointer data)
 	gtk_widget_destroy(GTK_WIDGET(data));
 } /* dialog_cancel_callback */
 
-static void
-backwards_toggled(GtkWidget *widget, gpointer data)
+static void polar_toggle_callback (GtkWidget *widget, gpointer   data)
 {
-  wpvals.backwards ^= 1;
+  int *toggle_val;
+
+  toggle_val = (int *) data;
+
+  if (GTK_TOGGLE_BUTTON (widget)->active)
+    *toggle_val = TRUE;
+  else
+    *toggle_val = FALSE;
+
   dialog_update_preview();
 }
 
 static void
-top_toggled(GtkWidget *widget, gpointer data)
+set_tooltip (GtkTooltips *tooltips, GtkWidget *widget, const char *desc)
 {
-  wpvals.inverse ^= 1;
-  dialog_update_preview();
+  if (desc && desc[0])
+    gtk_tooltips_set_tips (tooltips, widget, (char *) desc);
 }
- 
-static void 
-pr_toggled(GtkWidget *widget, gpointer data)
-{
-  wpvals.polrec ^= 1;
-  dialog_update_preview();
-}
-
-

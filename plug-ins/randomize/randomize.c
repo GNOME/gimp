@@ -30,8 +30,19 @@
 /****************************************************************************
  * Randomize:
  *
- * randomize version 1.0 (19 Oct 1997, MEO)
+ * randomize version 1.4 (3 Feb 1998, MEO)
  * history
+ *     1.4 -  3 Feb 1998 MEO
+ *         added details to PDB parameter help strings
+ *     1.3 -  3 Feb 1998 MEO
+ *         removed tooltips from action buttons
+ *         fixed param[5] type (was int32, should have been float)
+ *     1.2 -  2 Feb 1998 MEO
+ *         converted macro'd functions from 0.5 to inline functions
+ *         2 casts added for portability by 0.99.18 release coordinator
+ *         moved from Distorts to Noise menu
+ *         went to GUI convenience routines as much as reasonable
+ *         broke out GUI convenience routines into gpc.h and gpc.c
  *     1.1 - 30 Nov 1997 MEO
  *         added tooltips
  *     1.0 - 19 Nov 1997 MEO
@@ -120,6 +131,7 @@
 #include <time.h>
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
+#include "gpc.h"
 
 /*********************************
  *
@@ -127,11 +139,6 @@
  *
  ********************************/
 
-/*
- *  Set this to 1 for faster processing, to 0 if for some
- *  reason you want all functions to be subroutines
- */
-#define OPTIMIZE_SUBS 0
 
 /*
  *  progress meter update frequency
@@ -139,11 +146,11 @@
 #define PROG_UPDATE_TIME ((row % 10) == 0)
 
 #define PLUG_IN_NAME "plug_in_randomize"
-#define RNDM_VERSION "Randomize 1.1"
+#define RNDM_VERSION "Randomize 1.4"
 
 #define RNDM_BLUR 1
-#define RNDM_PICK 2
-#define RNDM_HURL 3
+#define RNDM_HURL 2
+#define RNDM_PICK 3
 #define RNDM_SLUR 4
 
 #define SEED_TIME 10
@@ -208,52 +215,21 @@ GPlugInInfo PLUG_IN_INFO = {
 
 static void randomize(GDrawable *drawable);
 
-#if (OPTIMIZE_SUBS == 0)
-    static void randomize_prepare_row(
-        GPixelRgn *pixel_rgn,
-        guchar *data,
-        int x,
-        int y,
-        int w
-    );
-#endif
+static inline void randomize_prepare_row(
+    GPixelRgn *pixel_rgn,
+    guchar *data,
+    int x,
+    int y,
+    int w
+);
 
 static gint randomize_dialog();
 
-static void randomize_close_callback(
-    GtkWidget *widget,
-    gpointer data
-);
 static void randomize_ok_callback(
     GtkWidget *widget,
     gpointer data
 );
-static void randomize_cancel_callback(
-    GtkWidget *widget,
-    gpointer data
-);
-static void randomize_scale_update(
-    GtkAdjustment *adjustment,
-    double *scale_val
-);
 
-static void randomize_toggle_update(
-    GtkWidget *widget,
-    gpointer data
-);
-
-static void randomize_text_update(
-    GtkWidget *widget,
-    gpointer data
-);
-
-static void set_tooltip(
-    GtkWidget *widget,
-    const char *tip
-);
-
-static void setup_tooltips();
-static GtkTooltips *tips;
 
 /************************************ Guts ***********************************/
 
@@ -274,9 +250,10 @@ query()
 	{ PARAM_INT32, "run_mode", "Interactive, non-interactive" },
 	{ PARAM_IMAGE, "image", "Input image (unused)" },
 	{ PARAM_DRAWABLE, "drawable", "Input drawable" },
-	{ PARAM_INT32, "rndm_type", "Randomization type" },
-	{ PARAM_FLOAT, "rndm_pct", "Randomization percentage" },
-	{ PARAM_FLOAT, "rndm_rcount", "Repeat count" },
+	{ PARAM_INT32, "rndm_type",
+            "Randomization type (1=blur 2=hurl 3=pick 4=slur)" },
+	{ PARAM_FLOAT, "rndm_pct", "Randomization percentage (1 - 100)" },
+	{ PARAM_FLOAT, "rndm_rcount", "Repeat count(1 - 100)" },
     };
     static GParamDef *return_vals = NULL;
     static int nargs = sizeof(args) / sizeof (args[0]);
@@ -307,12 +284,14 @@ query()
  *  candidate, although in the spirit of randomity
  *  we could pick one at random!
  */
-#define FIX_INDEX_BLUR() \
-if (gimp_drawable_indexed(drawable->id)) { \
-    is_indexed_drawable = TRUE; \
-    if (pivals.rndm_type == RNDM_BLUR) { \
-	pivals.rndm_type = RNDM_PICK; \
-    } \
+void
+fix_index_blur(GDrawable *drawable) {
+    if (gimp_drawable_indexed(drawable->id)) {
+        is_indexed_drawable = TRUE;
+        if (pivals.rndm_type == RNDM_BLUR) {
+            pivals.rndm_type = RNDM_PICK;
+        }
+    }
 }
 
 
@@ -358,7 +337,7 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
  *  If we're running interactively, pop up the dialog box.
  */
 	    case RUN_INTERACTIVE:
-		FIX_INDEX_BLUR();
+		fix_index_blur(drawable);
 		gimp_get_data(PLUG_IN_NAME, &pivals);
 		if (!randomize_dialog())	/* return on Cancel */
 		    return;
@@ -370,14 +349,14 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
  *  parameters have legitimate values.
  */
 	    case RUN_NONINTERACTIVE:
-		FIX_INDEX_BLUR();
+		fix_index_blur(drawable);
 		if (nparams != 6) {
 		    status = STATUS_CALLING_ERROR;
 		}
 		if (status == STATUS_SUCCESS) {
 		    pivals.rndm_type = (gint) param[3].data.d_int32;
 		    pivals.rndm_pct = (gdouble) param[4].data.d_float;
-		    pivals.rndm_rcount = (gdouble) param[5].data.d_int32;
+		    pivals.rndm_rcount = (gdouble) param[5].data.d_float;
 		}
 		if (status == STATUS_SUCCESS &&
 		  ((pivals.rndm_type != RNDM_PICK &&
@@ -401,39 +380,41 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
 	    default:
 		break;
 	}
+        if (status == STATUS_SUCCESS) {
 /*
  *  JUST DO IT!
  */
-	switch (pivals.rndm_type) {
-            case RNDM_BLUR: rndm_type_str = "blur"; break;
-            case RNDM_HURL: rndm_type_str = "hurl"; break;
-            case RNDM_PICK: rndm_type_str = "pick"; break;
-            case RNDM_SLUR: rndm_type_str = "slur"; break;
-        }
-	sprintf(prog_label, "%s (%s)", RNDM_VERSION, rndm_type_str);
-	gimp_progress_init(prog_label);
-	gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
+	    switch (pivals.rndm_type) {
+                case RNDM_BLUR: rndm_type_str = "blur"; break;
+                case RNDM_HURL: rndm_type_str = "hurl"; break;
+                case RNDM_PICK: rndm_type_str = "pick"; break;
+                case RNDM_SLUR: rndm_type_str = "slur"; break;
+            }
+	    sprintf(prog_label, "%s (%s)", RNDM_VERSION, rndm_type_str);
+	    gimp_progress_init(prog_label);
+	    gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
 /*
  *  Initialize the rand() function seed
  */
-	if (pivals.seed_type == SEED_TIME)
-	    srand(time(NULL));
-	else
-	    srand(pivals.rndm_seed);
+	    if (pivals.seed_type == SEED_TIME)
+	        srand(time(NULL));
+	    else
+	        srand(pivals.rndm_seed);
 
-	randomize(drawable);
+	    randomize(drawable);
 /*
  *  If we ran interactively (even repeating) update the display.
  */
-        if (run_mode != RUN_NONINTERACTIVE) {
-	    gimp_displays_flush();
-	}
+            if (run_mode != RUN_NONINTERACTIVE) {
+	        gimp_displays_flush();
+	    }
 /*
  *  If we use the dialog popup, set the data for future use.
  */
-	if (run_mode == RUN_INTERACTIVE) {
-	    gimp_set_data(PLUG_IN_NAME, &pivals, sizeof(RandomizeVals));
-	}
+	    if (run_mode == RUN_INTERACTIVE) {
+	        gimp_set_data(PLUG_IN_NAME, &pivals, sizeof(RandomizeVals));
+	    }
+        }
     } else {
 /*
  *  If we got the wrong drawable type, we need to complain.
@@ -458,8 +439,7 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
  *
  ********************************/
 
-#if (OPTIMIZE_SUBS == 0)
-static void
+static inline void
 randomize_prepare_row(GPixelRgn *pixel_rgn, guchar *data, int x, int y, int w)
 {
     int b;
@@ -479,27 +459,6 @@ randomize_prepare_row(GPixelRgn *pixel_rgn, guchar *data, int x, int y, int w)
 	data[w * pixel_rgn->bpp + b] = data[(w - 1) * pixel_rgn->bpp + b];
     }
 }
-#else
-#define randomize_prepare_row(pixel_rgn, data, x, y, w) \
-{ \
-    int b; \
- \
-    if (y == 0) { \
-      gimp_pixel_rgn_get_row(pixel_rgn, data, x, (y + 1), w); \
-    } else if (y == (pixel_rgn)->h) { \
-      gimp_pixel_rgn_get_row(pixel_rgn, data, x, (y - 1), w); \
-    } else { \
-      gimp_pixel_rgn_get_row(pixel_rgn, data, x, y, w); \
-    } \
-/* \
- *  Fill in edge pixels \
- */ \
-    for (b = 0; b < (pixel_rgn)->bpp; b++) { \
-	data[-(gint)(pixel_rgn)->bpp + b] = data[b]; \
-	data[w * (pixel_rgn)->bpp + b] = data[(w - 1) * (pixel_rgn)->bpp + b]; \
-    } \
-}
-#endif
 
 /*********************************
  *
@@ -711,34 +670,6 @@ randomize(GDrawable *drawable)
  *
  ********************************/
 
-#define randomize_add_action_button(label, callback, dialog, tip) \
-{ \
-    GtkWidget *button; \
-\
-    button = gtk_button_new_with_label(label); \
-    GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT); \
-    gtk_signal_connect(GTK_OBJECT(button), "clicked", callback, dialog); \
-    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), \
-	button, TRUE, TRUE, 0); \
-    gtk_widget_grab_default(button); \
-    gtk_widget_show(button); \
-    set_tooltip(button, tip); \
-}
-
-#define randomize_add_radio_button(group, label, box, callback, value, tip) \
-{  \
-    GtkWidget *toggle; \
-\
-    toggle = gtk_radio_button_new_with_label(group, label); \
-    group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle)); \
-    gtk_box_pack_start(GTK_BOX(box), toggle, FALSE, FALSE, 0); \
-    gtk_signal_connect(GTK_OBJECT(toggle), "toggled", \
-        (GtkSignalFunc) callback, value); \
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), *value); \
-    gtk_widget_show(toggle); \
-    gtk_widget_show(box); \
-    set_tooltip(toggle, tip); \
-}
 
 /*********************************
  *
@@ -749,9 +680,8 @@ randomize(GDrawable *drawable)
 static gint
 randomize_dialog()
 {
-    GtkWidget *dlg, *entry, *frame, *label, *scale,
+    GtkWidget *dlg, *entry, *frame,
 	*seed_hbox, *seed_vbox, *table, *toggle_hbox;
-    GtkObject *scale_data;
     GSList *type_group = NULL;
     GSList *seed_group = NULL;
     gchar **argv;
@@ -781,7 +711,7 @@ randomize_dialog()
     gtk_window_set_title(GTK_WINDOW(dlg), RNDM_VERSION);
     gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
     gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
-	(GtkSignalFunc) randomize_close_callback, NULL);
+	(GtkSignalFunc) gpc_close_callback, NULL);
 /*
  *  Parameter settings
  *
@@ -795,24 +725,18 @@ randomize_dialog()
     gtk_container_border_width(GTK_CONTAINER(table), 10);
     gtk_container_add(GTK_CONTAINER(frame), table);
     gtk_widget_show(table);
-    setup_tooltips(table);
+    gpc_setup_tooltips(table);
 /*
  *  Action area OK & Cancel buttons
  */
-    randomize_add_action_button("OK",
-	(GtkSignalFunc) randomize_ok_callback, dlg,
-        "Accept settings and apply filter to image");
-    randomize_add_action_button("Cancel",
-	(GtkSignalFunc) randomize_cancel_callback, dlg,
-        "Close plug-in without making any changes");
+    gpc_add_action_button("OK", (GtkSignalFunc) randomize_ok_callback, dlg
+        /* , "Accept settings and apply filter to image" */);
+    gpc_add_action_button("Cancel", (GtkSignalFunc) gpc_cancel_callback, dlg
+        /* , "Close plug-in without making any changes" */);
 /*
  *  Randomization Type - label & radio buttons
  */
-    label = gtk_label_new("Randomization Type:");
-    gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
-	GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
-    gtk_widget_show(label);
+    gpc_add_label("Randomization Type:", table, 0, 1, 0, 1);
 
     toggle_hbox = gtk_hbox_new(FALSE, 5);
     gtk_container_border_width(GTK_CONTAINER(toggle_hbox), 5);
@@ -823,29 +747,22 @@ randomize_dialog()
  *      don't allow blur as an option)
  */
     if (! is_indexed_drawable) {
-	randomize_add_radio_button(type_group, "Blur", toggle_hbox,
-	    (GtkSignalFunc) randomize_toggle_update, &do_blur,
+	gpc_add_radio_button(&type_group, "Blur", toggle_hbox, &do_blur,
             "Blur each pixel by averaging its value with those of its neighbors");
     }
 /*
  *  Hurl, Pick and Slur buttons
  */
-    randomize_add_radio_button(type_group, "Hurl", toggle_hbox,
-	(GtkSignalFunc) randomize_toggle_update, &do_hurl,
+    gpc_add_radio_button(&type_group, "Hurl", toggle_hbox, &do_hurl,
         "Hurl random colors onto pixels");
-    randomize_add_radio_button(type_group, "Pick", toggle_hbox,
-	(GtkSignalFunc) randomize_toggle_update, &do_pick,
+    gpc_add_radio_button(&type_group, "Pick", toggle_hbox, &do_pick,
         "Pick at random from neighboring pixels");
-    randomize_add_radio_button(type_group, "Slur", toggle_hbox,
-	(GtkSignalFunc) randomize_toggle_update, &do_slur,
+    gpc_add_radio_button(&type_group, "Slur", toggle_hbox, &do_slur,
         "Simplistic melt");
 /*
  *  Randomization seed initialization controls
  */
-    label = gtk_label_new("Randomization Seed");
-    gtk_misc_set_alignment(GTK_MISC (label), 0.0, 0.5);
-    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
-    gtk_widget_show(label);
+    gpc_add_label("Randomization Seed:", table, 0, 1, 1, 2);
 /*
  *  Box to hold seed initialization radio buttons
  */
@@ -856,8 +773,7 @@ randomize_dialog()
 /*
  *  Time button
  */
-    randomize_add_radio_button(seed_group, "Current Time", seed_vbox,
-	(GtkSignalFunc) randomize_toggle_update, &do_time,
+    gpc_add_radio_button(&seed_group, "Current Time", seed_vbox, &do_time,
         "Seed random number generator from the current time - this guarantees a reasonable randomization");
 /*
  *  Box to hold seed user initialization controls
@@ -868,8 +784,7 @@ randomize_dialog()
 /*
  *  User button
  */
-    randomize_add_radio_button(seed_group, "Other Value", seed_hbox,
-	(GtkSignalFunc) randomize_toggle_update, &do_user,
+    gpc_add_radio_button(&seed_group, "Other Value", seed_hbox, &do_user,
         "Enable user-entered value for random number generator seed - this allows you to repeat a given \"random\" operation");
 /*
  *  Randomization seed number (text)
@@ -880,54 +795,26 @@ randomize_dialog()
     sprintf(buffer, "%d", pivals.rndm_seed);
     gtk_entry_set_text(GTK_ENTRY(entry), buffer);
     gtk_signal_connect(GTK_OBJECT(entry), "changed",
-	(GtkSignalFunc) randomize_text_update, &pivals.rndm_seed);
+	(GtkSignalFunc) gpc_text_update, &pivals.rndm_seed);
     gtk_widget_show(entry);
-    set_tooltip(entry, "Value for seeding the random number generator");
+    gpc_set_tooltip(entry, "Value for seeding the random number generator");
     gtk_widget_show(seed_hbox);
 /*
  *  Randomization percentage label & scale (1 to 100)
  */
-    label = gtk_label_new("Randomization %:");
-    gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3,
-	GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
+    gpc_add_label("Randomization %:", table, 0, 1, 2, 3);
+    gpc_add_hscale(table, SCALE_WIDTH,
+        1.0, 100.0, &pivals.rndm_pct, 1, 2, 2, 3,
+        "Percentage of pixels to be filtered");
 
-    scale_data = gtk_adjustment_new(pivals.rndm_pct,
-	1.0, 100.0, 1.0, 1.0, 0.0);
-    scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-    gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-    gtk_table_attach(GTK_TABLE(table), scale, 1, 2, 2, 3,
-	GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-    gtk_scale_set_value_pos(GTK_SCALE(scale), GTK_POS_TOP);
-    gtk_scale_set_digits(GTK_SCALE(scale), 0);
-    gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_DELAYED);
-    gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-	(GtkSignalFunc) randomize_scale_update, &pivals.rndm_pct);
-    gtk_widget_show(label);
-    gtk_widget_show(scale);
-    set_tooltip(scale, "Percentage of pixels to be filtered");
 /*
  *  Repeat count label & scale (1 to 100)
  */
-    label = gtk_label_new("Repeat");
-    gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 3, 4,
-	GTK_FILL, 0, 5, 0);
+    gpc_add_label("Repeat:", table, 0, 1, 3, 4);
+    gpc_add_hscale(table, SCALE_WIDTH,
+        1.0, 100.0, &pivals.rndm_rcount, 1, 2, 3, 4,
+        "Number of times to apply filter");
 
-    scale_data = gtk_adjustment_new(pivals.rndm_rcount,
-	1.0, 100.0, 1.0, 1.0, 0.0);
-    scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-    gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-    gtk_table_attach(GTK_TABLE(table), scale, 1, 2, 3, 4,
-	GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-    gtk_scale_set_value_pos(GTK_SCALE(scale), GTK_POS_TOP);
-    gtk_scale_set_digits(GTK_SCALE(scale), 0);
-    gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_DELAYED);
-    gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-	(GtkSignalFunc) randomize_scale_update, &pivals.rndm_rcount);
-    gtk_widget_show(label);
-    gtk_widget_show(scale);
-    set_tooltip(scale, "Number of times to apply filter");
 /*
  *  Display everything.
  */
@@ -935,7 +822,6 @@ randomize_dialog()
     gtk_widget_show(dlg);
 
     gtk_main();
-    gtk_object_unref (GTK_OBJECT (tips));
     gdk_flush();
 /*
  *  Figure out which type of randomization to apply.
@@ -962,103 +848,8 @@ randomize_dialog()
 }
 
 
-/*********************************
- *
- *  GUI accessories (callbacks, etc)
- *
- ********************************/
-
-/*
- *  DESTROY callback
- */
-static void
-randomize_close_callback(GtkWidget *widget, gpointer data) {
-    gtk_main_quit();
-}
-
-/*
- *  OK BUTTON callback
- */
 static void
 randomize_ok_callback(GtkWidget *widget, gpointer data) {
     rndm_int.run = TRUE;
     gtk_widget_destroy(GTK_WIDGET(data));
-}
-
-/*
- *  CANCEL BUTTON callback
- */
-static void
-randomize_cancel_callback(GtkWidget *widget, gpointer data) {
-    gtk_widget_destroy(GTK_WIDGET(data));
-}
-
-/*
- *  SCALE UPDATE callback
- */
-static void
-randomize_scale_update(GtkAdjustment *adjustment, double *scale_val) {
-    *scale_val = adjustment->value;
-}
-
-/*
- *  TOGGLE UPDATE callback
- */
-static void
-randomize_toggle_update(GtkWidget *widget, gpointer data) {
-    int *toggle_val;
-
-    toggle_val = (int *) data;
-
-    if (GTK_TOGGLE_BUTTON(widget)->active)
-      *toggle_val = TRUE;
-    else
-      *toggle_val = FALSE;
-}
-
-/*
- *  TEXT UPDATE callback
- */
-static void
-randomize_text_update(GtkWidget *widget, gpointer data) {
-  gint *text_val;
-
-  text_val = (gint *) data;
-
-  *text_val = atoi(gtk_entry_get_text(GTK_ENTRY(widget)));
-}
-
-/*
- *  TOOLTIPS ROUTINES
- */
-
-
-void setup_tooltips(GtkWidget *parent)
-{
-    static GdkColor tips_fg, tips_bg;
-
-    tips = gtk_tooltips_new();
-
-    /* black as foreground: */
-
-    tips_fg.red   = 0;
-    tips_fg.green = 0;
-    tips_fg.blue  = 0;
-    gdk_color_alloc(gtk_widget_get_colormap(parent), &tips_fg);
-
-    /* postit yellow (khaki) as background: */
-
-    tips_bg.red   = 61669;
-    tips_bg.green = 59113;
-    tips_bg.blue  = 35979;
-    gdk_color_alloc(gtk_widget_get_colormap(parent), &tips_bg);
-
-    gtk_tooltips_set_colors(tips, &tips_bg, &tips_fg);
-}
-
-
-void set_tooltip(GtkWidget *widget, const char *tip)
-{
-    if (tip && tip[0])
-        gtk_tooltips_set_tips(tips, widget, (char *) tip);
 }

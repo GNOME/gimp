@@ -19,6 +19,14 @@
  * and used as a template to get me started on this one.  :)
  * 
  * Revision history:
+ * 0.6.1  - Made use-time-for-random-seed a toggle button that remembers
+ *          its state, and moved seed to the second notebook page.
+ * 0.6.0  - Width and height are now seperate options.  
+ *          ^^ Note this changed the PDB interface. ^^
+ *        
+ *        - Added interface for selecting sizes by "divisions".
+ *        - Added "Time" button for random seed.
+ *        - Turned out that GParam shouldn't have been "fixed".
  * 0.5.0  - Added the long-awaited "tileable" option.
  *           Required a change to PDB parameters.
  *        - fixed some stuff with GParam values in run();
@@ -46,11 +54,7 @@
  * 
  *   Fix that stray line down there between maze wall and dead space border...
  *
- *   Resolve the border & tileable maze difficulty.
- *
  *   Make get_colors() work with indexed.  * HELP! *
- *
- *   If we add many more paramaters, we'll need a preview box.
  *
  * Also someday:
  * Maybe make it work with irregularly shaped selections?
@@ -75,44 +79,16 @@
  *
  */
 
-#include <time.h>  /* For random seeding */
+#ifdef MAZE_DEBUG
 #include <stdio.h>
 #include <stdlib.h>
-#include "gtk/gtk.h"
+#endif
+
+#include <time.h>  /* For random seeding */
 #include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include "maze.h"
 
-#define ENTRY_WIDTH 75
-#define MAZE_TITLE "Maze 0.5.0"
-/* entscale stuff begin */
-#define ENTSCALE_INT_SCALE_WIDTH 125
-#define ENTSCALE_INT_ENTRY_WIDTH 40
-/* entscale stuff end */
-
-typedef struct {
-     gint width;
-     gint seed;
-     gint tile;
-     gint multiple;
-     gint offset;
-} MazeValues;
-
-typedef struct {
-    gint run;
-} MazeInterface;
-
-/* entscale stuff begin */
-typedef void (*EntscaleIntCallbackFunc) (gint value, gpointer data);
-
-typedef struct {
-  GtkObject     *adjustment;
-  GtkWidget     *entry;
-  gint          constraint;
-  EntscaleIntCallbackFunc	callback;
-  gpointer	call_data;
-} EntscaleIntData;
-/* entscale stuff end */
-
+extern gint      maze_dialog (void);
 static void      query  (void);
 static void      run    (gchar    *name,
 			 gint      nparams,
@@ -141,31 +117,6 @@ static void      drawbox (GPixelRgn *dest_rgn,
 			  guint h, 
 			  guint8 clr[4]);
 
-static gint maze_dialog (void);
-static void maze_close_callback (GtkWidget *widget, gpointer data);
-static void maze_ok_callback  (GtkWidget *widget, gpointer data);
-static void maze_entry_callback  (GtkWidget *widget, gpointer data);
-static void tile_toggle_callback (GtkWidget *widget, gpointer data);
-
-/* entscale stuff begin */
-void   entscale_int_new ( GtkWidget *table, gint x, gint y,
-			  gchar *caption, gint *intvar, 
-			  gint min, gint max, gint constraint,
-			  EntscaleIntCallbackFunc callback,
-			  gpointer data );
-
-static void   entscale_int_destroy_callback (GtkWidget *widget,
-					     gpointer data);
-static void   entscale_int_scale_update (GtkAdjustment *adjustment,
-					 gpointer      data);
-static void   entscale_int_entry_update (GtkWidget *widget,
-					 gpointer   data);
-/* entscale stuff end */
-/* message box stuff begin */
-GtkWidget *   message_box (char *, GtkCallback, gpointer);
-/* message box stuff end */
-
-
 GPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
@@ -174,19 +125,20 @@ GPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-static MazeValues mvals = 
+MazeValues mvals = 
 {
-    1,      /* Passage width */
+    /* Calling parameters */
+    5,      /* Passage width */
+    5,      /* Passage height */
     0,     /* seed */
     FALSE, /* Tileable? */
     57,    /* multiple * These two had "Experiment with this?" comments */
-    1      /* offset   * in the maz.c source, so, lets expiriment.  :) */
+    1,     /* offset   * in the maz.c source, so, lets expiriment.  :) */
+    /* Interface options */
+    TRUE /* Time seed? */
 };
 
-static MazeInterface mint =
-{
-    FALSE  /* run */
-};
+guint sel_w, sel_h;
 
 MAIN () /*;*/
 
@@ -199,8 +151,9 @@ query ()
     { PARAM_IMAGE, "image", "Input image (unused)" },
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
     /* If we did have parameters, these be them: */
-    { PARAM_INT32, "mazep_size", "Size of the passages" },
-    { PARAM_INT32, "maze_tile", "Tileable maze?"},
+    { PARAM_INT32, "mazep_width", "Width of the passages" },
+    { PARAM_INT32, "mazep_height", "Height of the passages"},
+    { PARAM_INT8, "maze_tile", "Tileable maze?"},
     { PARAM_INT32, "maze_rseed", "Random Seed"},
     { PARAM_INT32, "maze_multiple", "Multiple (use 57)" },
     { PARAM_INT32, "maze_offset", "Offset (use 1)" }
@@ -229,13 +182,15 @@ run    (gchar    *name,
 	gint     *nreturn_vals,
 	GParam  **return_vals)
 {
-  GParam *values;
+  static GParam values[1];
   GDrawable *drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
+  gint x1, y1, x2, y2;
 
-  values=g_new(GParam,1);
-
+#ifdef MAZE_DEBUG
+  g_print("maze PID: %d\n",getpid());
+#endif
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
@@ -246,16 +201,16 @@ run    (gchar    *name,
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-#ifdef MAZE_DEBUG
-  fprintf(stderr, "%d", param[2].data.d_drawable);
-#endif
-
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
       /* Possibly retrieve data */
       gimp_get_data ("plug_in_maze", &mvals);
       
+      /* The interface needs to know the dimensions of the image... */
+      gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+      sel_w=x2-x1; sel_h=y2-y1;
+
       /* Acquire info with a dialog */
       if (! maze_dialog ()) {
 	gimp_drawable_detach (drawable);
@@ -264,30 +219,23 @@ run    (gchar    *name,
       break;
       
     case RUN_NONINTERACTIVE:
-      /* WARNING: Stupidity Follows */
-      if (nparams != 8)
+      if (nparams != 9)
 	{
 	  status = STATUS_CALLING_ERROR;
 	}
       if (status == STATUS_SUCCESS)
 	{
 	  mvals.width = (gint) param[3].data.d_int32;
-	  mvals.seed = (gint) param[4].data.d_int32;
-	  mvals.tile = (gint) param[5].data.d_int32;
-	  mvals.multiple = (gint) param[6].data.d_int32;
-	  mvals.offset = (gint) param[7].data.d_int32;
+	  mvals.height = (gint) param[4].data.d_int32;
+	  mvals.seed = (gint) param[5].data.d_int32;
+	  mvals.tile = (gboolean) param[6].data.d_int32;
+	  mvals.multiple = (gint) param[7].data.d_int32;
+	  mvals.offset = (gint) param[8].data.d_int32;
 	}
       break;
-      /* #define MAZE_DEBUG */
-#ifdef MAZE_DEBUG
-      fprintf(stderr,"nparams: %d width: %d seed: %d multiple: %d offset: %d\n",
-	      nparams, mvals.width, mvals.seed, mvals.multiple, mvals.offset);
-#endif
     case RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
       gimp_get_data ("plug_in_maze", &mvals);
-      mvals.seed=time(NULL);   /* ** USES NEW SEED when reruning with "last" */
-      /*          values.  Maybe not the Right Thing, but I find it handy. */
       break;
       
     default:
@@ -303,7 +251,8 @@ run    (gchar    *name,
       if (run_mode != RUN_NONINTERACTIVE)
 	  gimp_displays_flush ();
       
-      if (run_mode == RUN_INTERACTIVE /*|| run_mode == RUN_WITH_LAST_VALS*/)         
+      if (run_mode == RUN_INTERACTIVE || 
+	  (mvals.timeseed && run_mode == RUN_WITH_LAST_VALS))
 	  gimp_set_data ("plug_in_maze", &mvals, sizeof (MazeValues));
   } else {
       status = STATUS_EXECUTION_ERROR;
@@ -328,7 +277,6 @@ maze( GDrawable * drawable)
   gpointer pr;
 
   gchar *maz;
-  gint i;
 
   /* Gets the input area... */
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
@@ -344,7 +292,7 @@ maze( GDrawable * drawable)
 
   /* Maze Stuff Happens Here */
   mw = (x2-x1) / mvals.width;
-  mh = (y2-y1) / mvals.width;
+  mh = (y2-y1) / mvals.height;
 
   if (!mvals.tile) {
        mw -= !(mw & 1); /* mazegen doesn't work with even-sized mazes. */
@@ -357,17 +305,17 @@ maze( GDrawable * drawable)
   /* It will really suck if your tileable maze ends up with this dead
      space around it.  Oh well, life is hard. */
   deadx = ((x2-x1) - mw * mvals.width)/2;
-  deady = ((y2-y1) - mh * mvals.width)/2;
+  deady = ((y2-y1) - mh * mvals.height)/2;
 
-  maz = g_malloc(mw * mh);
-
-  for (i = 0; i < (mw * mh); ++i)
-      maz[i] = 0;
+  maz = g_malloc0(mw * mh);
 
 #ifdef MAZE_DEBUG
-  printf("x:  %d\ty:  %d\nmw: %d\tmh: %d\ndx: %d\tdy: %d\nwidth:%d\n",
-	 (x2-x1),(y2-y1),mw,mh,deadx,deady,mvals.width);
+  printf("x:  %d\ty:  %d\nmw: %d\tmh: %d\ndx: %d\tdy: %d\nwidth:%d\theight: %d\n",
+	 (x2-x1),(y2-y1),mw,mh,deadx,deady,mvals.width, mvals.height);
 #endif
+
+  if (mvals.timeseed)
+       mvals.seed = time(NULL);
 
   if (mvals.tile) {
        (void) mazegen_tileable((mw+1), maz, mw, mh, mvals.seed);
@@ -389,9 +337,9 @@ maze( GDrawable * drawable)
 	     unbeknownst to us. */
 
 	  dx = mvals.width - (x % mvals.width);
-	  dy = mvals.width - (y % mvals.width);
+	  dy = mvals.height - (y % mvals.height);
 	  foo = x/mvals.width;
-	  bar = mw * (y/mvals.width);
+	  bar = mw * (y/mvals.height);
 
 	  /* Draws the upper-left [split] box */
 	  drawbox(&dest_rgn,0,0,dx,dy,
@@ -399,32 +347,26 @@ maze( GDrawable * drawable)
 
 	  baz=foo+1;
 	  /* Draw the top row [split] boxes */
-	  for(xx=dx/*1*/; xx < dest_rgn.w; xx+=mvals.width/*+1*/)
+	  for(xx=dx; xx < dest_rgn.w; xx+=mvals.width)
 	      { drawbox(&dest_rgn,xx,0,mvals.width,dy,
 			maz[bar + baz++] ? fg : bg ); }
 
 	  baz=bar+mw;
 	  /* Left column */
-	  for(yy=dy/*+1*/; yy < dest_rgn.h; yy+=mvals.width/*+1*/) {
-	      drawbox(&dest_rgn,0,yy,dx,mvals.width,
+	  for(yy=dy; yy < dest_rgn.h; yy+=mvals.height) {
+	      drawbox(&dest_rgn,0,yy,dx,mvals.height,
 		      maz[foo + baz] ? fg : bg );
 	      baz += mw;
 	  }
 	  
 	  foo++;
 	  /* Everything else */
-	  for(yy=dy/*+1*/; yy < dest_rgn.h; yy+=mvals.width/*+1*/) {
+	  for(yy=dy; yy < dest_rgn.h; yy+=mvals.height) {
 	      baz = foo; bar+=mw;
-	      for(xx=dx/*+1*/; xx < dest_rgn.w; xx+=mvals.width/*+1*/)
+	      for(xx=dx; xx < dest_rgn.w; xx+=mvals.width)
 		  { 
-#ifdef MAZE_DEBUG
-		      putchar(maz[bar+baz] ? '#' : '.');
-#endif
-		      drawbox(&dest_rgn,xx,yy,mvals.width,mvals.width,
+		      drawbox(&dest_rgn,xx,yy,mvals.width,mvals.height,
 			    maz[bar + baz++] ? fg : bg ); }
-#ifdef MAZE_DEBUG
-	      putchar('\n');
-#endif
 	  }
 
 	  progress += dest_rgn.w * dest_rgn.h;
@@ -438,9 +380,10 @@ maze( GDrawable * drawable)
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
-void drawbox( GPixelRgn *dest_rgn, 
-	      guint x, guint y, guint w, guint h, 
-	      guint8 clr[4])
+static void 
+drawbox( GPixelRgn *dest_rgn, 
+	 guint x, guint y, guint w, guint h, 
+	 guint8 clr[4])
 {
     guint xx,yy, foo, bar;
     guint8 bp;
@@ -542,9 +485,8 @@ gchar *maz;
 
 #define ABSMOD(A,B) ( ((A) < 0) ? (((B) + (A)) % (B)) : ((A) % (B)) )
 
-gint mazegen_tileable(pos, maz, x, y, rnd)
-gint pos, x, y, rnd;
-gchar *maz;
+/* Tileable mazes are my creation, based on the routine above. */
+static gint mazegen_tileable(gint pos, gchar *maz, gint x, gint y, gint rnd)
 {
     gchar d, i;
     gint c=0, j=1, npos=2;
@@ -698,368 +640,11 @@ get_colors (GDrawable *drawable, guint8 *fg, guint8 *bg)
 	break;
     case INDEXEDA_IMAGE:
     case INDEXED_IMAGE:     /* FIXME: Should use current fg/bg colors.  */
-	fputs("Maze: Using indexed colors 15 and 0 to draw maze.",stderr);
+	g_warning("maze: get_colors: Indexed image.  Using colors 15 and 0.\n");
 	fg[0] = 15;        /* As a plugin, I protest.  *I* shouldn't be the */
 	bg[0] = 0;       /* one who has to deal with this colormapcrap.   */
 	break;
     default:
       break;
     }
-}
-
-static gint maze_dialog() 
-{
-  GtkWidget *dlg;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *button;
-  GtkWidget *label;
-  GtkWidget *entry;
-  GtkWidget *notebook;
-  GtkWidget *tilecheck;
-  gchar **argv;
-  gint  argc;
-  gchar buffer[32];
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("maze");
-
-  gtk_init (&argc, &argv);
-
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), MAZE_TITLE);
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) maze_close_callback,
-		      NULL);
-
-  /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) maze_ok_callback,
-                      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ("Cancel");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  /* Create notebook */
-  notebook = gtk_notebook_new ();
-  gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), notebook, TRUE, TRUE, 0);
-  gtk_widget_show (notebook);
-
-  /*  Set up Options page  */
-  frame = gtk_frame_new ("Maze Options");
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  /* gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0); */
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-
-  /* Seed input box */
-  label = gtk_label_new ("Seed");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0 );
-  gtk_widget_show (label);
-  entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0 );
-  gtk_widget_set_usize( entry, ENTRY_WIDTH, 0 );
-  sprintf( buffer, "%d", mvals.seed );
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer );
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) maze_entry_callback,
-		      &mvals.seed);
-  gtk_widget_show (entry);
-
-  /* entscale == Entry and Scale pair function found in pixelize.c */
-  entscale_int_new (table, 0, 1, "Width:", &mvals.width, 
-		    1, 64, FALSE, 
-		    NULL, NULL);
-
-  tilecheck = gtk_check_button_new_with_label ("Tileable?");
-  gtk_signal_connect (GTK_OBJECT (tilecheck), "clicked",
-		      GTK_SIGNAL_FUNC (tile_toggle_callback), NULL);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tilecheck), mvals.tile);
-  gtk_table_attach (GTK_TABLE (table), tilecheck, 0, 2, 2, 3, GTK_FILL, 0, 5, 0 );
-  gtk_widget_show (tilecheck);
-
-  /* Add Options page to notebook */
-  gtk_widget_show (frame);
-  gtk_widget_show (table);
-
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame, 
-			    gtk_label_new ("Options"));
-
-  /* Set up other page */
-  frame = gtk_frame_new ("Don't change these");
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  /* gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0); */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-
-  /* Multiple input box */
-  label = gtk_label_new ("Multiple (57)");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0 );
-  gtk_widget_show (label);
-  entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0 );
-  gtk_widget_set_usize( entry, ENTRY_WIDTH, 0 );
-  sprintf( buffer, "%d", mvals.multiple );
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer );
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) maze_entry_callback,
-		      &mvals.multiple);
-  gtk_widget_show (entry);
-
-  /* Offset input box */
-  label = gtk_label_new ("Offset (1)");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0 );
-  gtk_widget_show (label);
-  entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0 );
-  gtk_widget_set_usize( entry, ENTRY_WIDTH, 0 );
-  sprintf( buffer, "%d", mvals.offset );
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer );
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) maze_entry_callback,
-		      &mvals.offset);
-  gtk_widget_show (entry);
-
-   /* Add Advanced page to notebook */
-  gtk_widget_show (frame);
-  gtk_widget_show (table);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame, 
-			    gtk_label_new ("Advanced"));
-
-  gtk_widget_show (dlg);
-
-  gtk_main ();
-  gdk_flush ();
-
-  return mint.run;
-}
-
-/* Maze Interface Functions */
-static void 
-maze_close_callback (GtkWidget *widget, 
-		     gpointer data)
-{
-    gtk_main_quit ();
-}
-
-static void
-maze_ok_callback (GtkWidget *widget,
-		  gpointer data)
-{
-    mint.run = TRUE;
-    gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void 
-maze_entry_callback (GtkWidget *widget,
-		       gpointer data)
-{
-    gint *text_val;
-
-    text_val = (gint *) data;
-
-    *text_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-}
-
-static void 
-tile_toggle_callback (GtkWidget *widget, gpointer   data)
-{
-    mvals.tile = GTK_TOGGLE_BUTTON (widget)->active;
-}
-
-/* ==================================================================== */
-/* As found in pixelize.c */
-
-/*
-  Entry and Scale pair 1.03
-
-  TODO:
-  - Do the proper thing when the user changes value in entry,
-  so that callback should not be called when value is actually not changed.
-  - Update delay
- */
-
-/*
- *  entscale: create new entscale with label. (int)
- *  1 row and 2 cols of table are needed.
- *  Input:
- *    x, y:       starting row and col in table
- *    caption:    label string
- *    intvar:     pointer to variable
- *    min, max:   the boundary of scale
- *    constraint: (bool) true iff the value of *intvar should be constraint
- *                by min and max
- *    callback:	  called when the value is actually changed
- *    call_data:  data for callback func
- */
-void
-entscale_int_new ( GtkWidget *table, gint x, gint y,
-		   gchar *caption, gint *intvar,
-		   gint min, gint max, gint constraint,
-		   EntscaleIntCallbackFunc callback,
-		   gpointer call_data)
-{
-  EntscaleIntData *userdata;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *entry;
-  GtkWidget *scale;
-  GtkObject *adjustment;
-  gchar    buffer[256];
-  gint	    constraint_val;
-
-  userdata = g_new ( EntscaleIntData, 1 );
-
-  label = gtk_label_new (caption);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-
-  /*
-    If the first arg of gtk_adjustment_new() isn't between min and
-    max, it is automatically corrected by gtk later with
-    "value_changed" signal. I don't like this, since I want to leave
-    *intvar untouched when `constraint' is false.
-    The lines below might look oppositely, but this is OK.
-   */
-  userdata->constraint = constraint;
-  if( constraint )
-    constraint_val = *intvar;
-  else
-    constraint_val = ( *intvar < min ? min : *intvar > max ? max : *intvar );
-
-  userdata->adjustment = adjustment = 
-    gtk_adjustment_new ( constraint_val, min, max, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new ( GTK_ADJUSTMENT(adjustment) );
-  gtk_widget_set_usize (scale, ENTSCALE_INT_SCALE_WIDTH, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-
-  userdata->entry = entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, ENTSCALE_INT_ENTRY_WIDTH, 0);
-  sprintf( buffer, "%d", *intvar );
-  gtk_entry_set_text( GTK_ENTRY (entry), buffer );
-
-  userdata->callback = callback;
-  userdata->call_data = call_data;
-
-  /* userdata is done */
-  gtk_object_set_user_data (GTK_OBJECT(adjustment), userdata);
-  gtk_object_set_user_data (GTK_OBJECT(entry), userdata);
-
-  /* now ready for signals */
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entscale_int_entry_update,
-		      intvar);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) entscale_int_scale_update,
-		      intvar);
-  gtk_signal_connect (GTK_OBJECT (entry), "destroy",
-		      (GtkSignalFunc) entscale_int_destroy_callback,
-		      userdata );
-
-  /* start packing */
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, TRUE, 0);
-
-  gtk_table_attach (GTK_TABLE (table), label, x, x+1, y, y+1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, x+1, x+2, y, y+1,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-
-  gtk_widget_show (label);
-  gtk_widget_show (entry);
-  gtk_widget_show (scale);
-  gtk_widget_show (hbox);
-}  
-
-
-/* when destroyed, userdata is destroyed too */
-static void
-entscale_int_destroy_callback (GtkWidget *widget,
-			       gpointer data)
-{
-  EntscaleIntData *userdata;
-
-  userdata = data;
-  g_free ( userdata );
-}
-
-static void
-entscale_int_scale_update (GtkAdjustment *adjustment,
-			   gpointer      data)
-{
-  EntscaleIntData *userdata;
-  GtkEntry	*entry;
-  gchar		buffer[256];
-  gint		*intvar = data;
-  gint		new_val;
-
-  userdata = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-
-  new_val = (gint) adjustment->value;
-
-  *intvar = new_val;
-
-  entry = GTK_ENTRY( userdata->entry );
-  sprintf (buffer, "%d", (int) new_val );
-  
-  /* avoid infinite loop (scale, entry, scale, entry ...) */
-  gtk_signal_handler_block_by_data ( GTK_OBJECT(entry), data );
-  gtk_entry_set_text ( entry, buffer);
-  gtk_signal_handler_unblock_by_data ( GTK_OBJECT(entry), data );
-
-  if (userdata->callback)
-    (*userdata->callback) (*intvar, userdata->call_data);
-}
-
-static void
-entscale_int_entry_update (GtkWidget *widget,
-			   gpointer   data)
-{
-  EntscaleIntData *userdata;
-  GtkAdjustment	*adjustment;
-  int		new_val, constraint_val;
-  int		*intvar = data;
-
-  userdata = gtk_object_get_user_data (GTK_OBJECT (widget));
-  adjustment = GTK_ADJUSTMENT( userdata->adjustment );
-
-  new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-  constraint_val = new_val;
-  if ( constraint_val < adjustment->lower )
-    constraint_val = adjustment->lower;
-  if ( constraint_val > adjustment->upper )
-    constraint_val = adjustment->upper;
-
-  if ( userdata->constraint )
-    *intvar = constraint_val;
-  else
-    *intvar = new_val;
-
-  adjustment->value = constraint_val;
-  gtk_signal_handler_block_by_data ( GTK_OBJECT(adjustment), data );
-  gtk_signal_emit_by_name ( GTK_OBJECT(adjustment), "value_changed");
-  gtk_signal_handler_unblock_by_data ( GTK_OBJECT(adjustment), data );
-  
-  if (userdata->callback)
-    (*userdata->callback) (*intvar, userdata->call_data);
 }

@@ -148,17 +148,17 @@ dnl Test for libmpeg
       AC_MSG_WARN(*** MPEG plug-in will not be built ***))
   fi
 
-dnl Test for libtcl
-  if test -z "$LIBTCL_LIB"; then
-	AC_CHECK_LIB(dl, dlopen, DL_LIBRARY=-ldl)
-	AC_ARG_WITH(tcl, --with-{tcl/tk}		use this tcl/tk library,
-    AC_CHECK_LIB($with_tcl, Tcl_StaticPackage,
-      GIMPTCL='gimptcl'; LIBTCL_LIB="-l$with_tcl -l$with_tk $DL_LIBRARY",
-      AC_MSG_WARN(*** gimptcl plug-in will not be built ***), -lm $DL_LIBRARY),
-    AC_CHECK_LIB(tcl, Tcl_StaticPackage,
-      GIMPTCL='gimptcl'; LIBTCL_LIB="-ltcl -ltk $DL_LIBRARY",
-      AC_MSG_WARN(*** gimptcl plug-in will not be built ***), -lm $DL_LIBRARY))
-  fi
+#dnl Test for libtcl
+#  if test -z "$LIBTCL_LIB"; then
+#	AC_CHECK_LIB(dl, dlopen, DL_LIBRARY=-ldl)
+#	AC_ARG_WITH(tcl, --with-{tcl/tk}		use this tcl/tk library,
+#    AC_CHECK_LIB($with_tcl, Tcl_StaticPackage,
+#      GIMPTCL='gimptcl'; LIBTCL_LIB="-l$with_tcl -l$with_tk $DL_LIBRARY",
+#      AC_MSG_WARN(*** gimptcl plug-in will not be built ***), -lm $DL_LIBRARY),
+#    AC_CHECK_LIB(tcl, Tcl_StaticPackage,
+#      GIMPTCL='gimptcl'; LIBTCL_LIB="-ltcl -ltk $DL_LIBRARY",
+#      AC_MSG_WARN(*** gimptcl plug-in will not be built ***), -lm $DL_LIBRARY))
+#  fi
 
 dnl Test for libxdelta
   if test -z "$LIBXDELTA_LIB"; then
@@ -256,8 +256,8 @@ AC_SUBST(PNG)
 AC_SUBST(LIBPNG_LIB)
 AC_SUBST(MPEG)
 AC_SUBST(LIBMPEG_LIB)
-AC_SUBST(GIMPTCL)
-AC_SUBST(LIBTCL_LIB)
+#AC_SUBST(GIMPTCL)
+#AC_SUBST(LIBTCL_LIB)
 AC_SUBST(XD)
 AC_SUBST(LIBXDELTA_LIB)
 AC_SUBST(XPM)
@@ -288,7 +288,6 @@ plug-ins/mblur/Makefile
 plug-ins/maze/Makefile
 plug-ins/max_rgb/Makefile
 plug-ins/mail/Makefile
-plug-ins/magiceye/Makefile
 plug-ins/laplace/Makefile
 plug-ins/ifscompose/Makefile
 plug-ins/iwarp/Makefile
@@ -319,7 +318,6 @@ plug-ins/depthmerge/Makefile
 plug-ins/deinterlace/Makefile
 plug-ins/decompose/Makefile
 plug-ins/cubism/Makefile
-plug-ins/coordmap/Makefile
 plug-ins/compose/Makefile
 plug-ins/checkerboard/Makefile
 plug-ins/bz2/Makefile
@@ -338,10 +336,7 @@ plug-ins/bmp/Makefile
 plug-ins/megawidget/Makefile
 plug-ins/blur/Makefile
 plug-ins/flame/Makefile
-plug-ins/gimptcl/Makefile
-plug-ins/gimptcl/scripts/Makefile
 plug-ins/struc/Makefile
-plug-ins/user_filter/Makefile
 plug-ins/zealouscrop/Makefile
 plug-ins/xwd/Makefile
 plug-ins/whirlpinch/Makefile
@@ -350,14 +345,12 @@ plug-ins/vpropagate/Makefile
 plug-ins/vinvert/Makefile
 plug-ins/video/Makefile
 plug-ins/url/Makefile
-plug-ins/universal/Makefile
 plug-ins/tiler/Makefile
 plug-ins/tile/Makefile
 plug-ins/tileit/Makefile
 plug-ins/threshold_alpha/Makefile
 plug-ins/tga/Makefile
 plug-ins/sunras/Makefile
-plug-ins/stereogram/Makefile
 plug-ins/spread/Makefile
 plug-ins/sparkle/Makefile
 plug-ins/sobel/Makefile
@@ -366,14 +359,12 @@ plug-ins/snoise/Makefile
 plug-ins/smooth_palette/Makefile
 plug-ins/sinus/Makefile
 plug-ins/shift/Makefile
-plug-ins/sharpen/Makefile
 plug-ins/sgi/Makefile
 plug-ins/scatter_hsv/Makefile
 plug-ins/rotators/Makefile
 plug-ins/rotate/Makefile
 plug-ins/ripple/Makefile
 plug-ins/randomize/Makefile
-plug-ins/psd/Makefile
 plug-ins/ps/Makefile
 plug-ins/print/Makefile
 plug-ins/polar/Makefile
@@ -382,7 +373,6 @@ plug-ins/plasma/Makefile
 plug-ins/pixelize/Makefile
 plug-ins/pcx/Makefile
 plug-ins/pat/Makefile
-plug-ins/blur2/Makefile
 plug-ins/blinds/Makefile
 plug-ins/autostretch_hsv/Makefile
 plug-ins/autocrop/Makefile

@@ -1,5 +1,0 @@
-A "make" should be enough, "make install" copies the binary to
-$(HOME)/.gimp/plug-ins.
-
-This plug-in requires GNU flex and bison. I haven't tested, if normal lex
-and yacc work.

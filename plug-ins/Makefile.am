@@ -2,10 +2,8 @@
 
 SUBDIRS = 			\
 	megawidget		\
-	libgck 			\
 	AlienMap		\
 	dbbrowser		\
-	@GIMPTCL@		\
 	script-fu		\
 	struc			\
 	@TIFF@			\
@@ -22,7 +20,6 @@ SUBDIRS = 			\
 	autostretch_hsv		\
 	blinds			\
 	blur			\
-	blur2			\
 	bmp			\
 	bumpmap			\
 	bz2			\
@@ -32,7 +29,6 @@ SUBDIRS = 			\
 	colorify		\
 	compose			\
 	convmatrix		\
-	coordmap		\
 	cubism			\
 	decompose		\
 	deinterlace		\
@@ -69,7 +65,6 @@ SUBDIRS = 			\
 	illusion		\
 	iwarp			\
 	laplace			\
-	magiceye		\
 	mail			\
 	max_rgb			\
 	maze			\
@@ -97,7 +92,6 @@ SUBDIRS = 			\
 	rotators		\
 	scatter_hsv		\
 	sgi			\
-	sharpen			\
 	shift			\
 	sinus			\
 	smooth_palette		\
@@ -106,14 +100,12 @@ SUBDIRS = 			\
 	sobel			\
 	sparkle			\
 	spread			\
-	stereogram		\
 	sunras			\
 	tga			\
 	threshold_alpha		\
 	tile			\
 	tileit			\
 	tiler			\
-	universal		\
 	url			\
 	video			\
 	vinvert			\

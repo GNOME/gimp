@@ -5,7 +5,7 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = randomize
 
 randomize_SOURCES = \
-	randomize.c   
+	randomize.c gpc.c gpc.h
 
 INCLUDES = \
 	$(X_CFLAGS)			\

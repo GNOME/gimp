@@ -5,7 +5,7 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = maze
 
 maze_SOURCES = \
-	maze.c   
+	maze.c maze.h maze_face.c
 
 INCLUDES = \
 	$(X_CFLAGS)			\
