@@ -40,6 +40,7 @@ gimp_SOURCES = \
 	by_color_select.h	\
 	channel.c		\
 	channel.h		\
+	channel_pvt.h		\
 	channel_cmds.c		\
 	channel_cmds.h		\
 	channels_dialog.c	\
@@ -85,6 +86,7 @@ gimp_SOURCES = \
 	draw_core.h		\
 	drawable.c		\
 	drawable.h		\
+	drawable_pvt.h		\
 	drawable_cmds.c		\
 	drawable_cmds.h		\
 	edit_cmds.c		\
@@ -167,6 +169,7 @@ gimp_SOURCES = \
 	iscissors.h		\
 	layer.c			\
 	layer.h			\
+	layer_pvt.h		\
 	layer_cmds.c		\
 	layer_cmds.h		\
 	layer_select.c		\
@@ -241,6 +244,7 @@ gimp_SOURCES = \
 	tile_cache.h		\
 	tile_manager.c		\
 	tile_manager.h		\
+	tile_manager_pvt.h	\
 	tile_swap.c		\
 	tile_swap.h		\
 	tips_dialog.c		\
@@ -270,7 +274,8 @@ CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DDATADIR=\""$(gimpdatadir)"\"	\
 	-DGIMPDIR=\""$(gimpdir)"\"	\
-	-DVERSION=\"$(VERSION)\"
+	-DVERSION=\"$(VERSION)\" \
+	-DNDEBUG
 
 INCLUDES = \
 	$(X_CFLAGS)			\

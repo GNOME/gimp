@@ -28,6 +28,8 @@
 #include "interface.h"
 #include "palette.h"
 
+#include "channel_pvt.h"
+
 #define ENTRY_WIDTH        60
 #define OFFSET_BACKGROUND  0
 #define OFFSET_TRANSPARENT 1
@@ -47,9 +49,8 @@ typedef struct
 } OffsetDialog;
 
 /*  Local procedures  */
-static GImage * duplicate  (GImage *gimage);
 static void     offset     (GImage *gimage,
-			    int     drawable,
+			    GimpDrawable *drawable,
 			    int     wrap_around,
 			    int     fill_type,
 			    int     offset_x,
@@ -71,21 +72,8 @@ static void  offset_wraparound_update (GtkWidget *widget,
 static void  offset_halfheight_update (GtkWidget *widget,
 				       gpointer   data);
 
-static Argument * channel_ops_duplicate_invoker  (Argument *args);
 static Argument * channel_ops_offset_invoker     (Argument *args);
 
-
-void
-channel_ops_duplicate (void *gimage_ptr)
-{
-  GImage *gimage;
-  GImage *new_gimage;
-
-  gimage = (GImage *) gimage_ptr;
-  new_gimage = duplicate (gimage);
-
-  gdisplay_new (new_gimage, 0x0101);
-}
 
 void
 channel_ops_offset (void *gimage_ptr)
@@ -100,15 +88,15 @@ channel_ops_offset (void *gimage_ptr)
   GtkWidget *toggle_vbox;
   GtkWidget *table;
   GSList *group = NULL;
-  int drawable_id;
+  GimpDrawable *drawable;
   GImage *gimage;
 
   gimage = (GImage *) gimage_ptr;
-  drawable_id = gimage_active_drawable (gimage);
+  drawable = gimage_active_drawable (gimage);
 
   off_d = g_new (OffsetDialog, 1);
   off_d->wrap_around = TRUE;
-  off_d->transparent = drawable_has_alpha (drawable_id);
+  off_d->transparent = drawable_has_alpha (drawable);
   off_d->background = !off_d->transparent;
   off_d->gimage_id = gimage->ID;
 
@@ -190,7 +178,7 @@ channel_ops_offset (void *gimage_ptr)
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), off_d->background);
   gtk_widget_show (toggle);
 
-  if (drawable_has_alpha (drawable_id))
+  if (drawable_has_alpha (drawable))
     {
       toggle = gtk_radio_button_new_with_label (group, "Transparent");
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
@@ -224,141 +212,24 @@ channel_ops_offset (void *gimage_ptr)
 		      off_d);
 }
 
-static GImage *
-duplicate (GImage *gimage)
-{
-  PixelRegion srcPR, destPR;
-  GImage *new_gimage;
-  Layer *layer, *new_layer;
-  Layer *floating_layer;
-  Channel *channel, *new_channel;
-  link_ptr list;
-  int active_layer = -1;
-  int active_channel = -1;
-  int new_floating_sel_drawable = -1;
-  int floating_sel_drawable = -1;
-  int count;
-
-  /*  Create a new image  */
-  new_gimage = gimage_new (gimage->width, gimage->height, gimage->base_type);
-  gimage_disable_undo (new_gimage);
-
-  floating_layer = gimage_floating_sel (gimage);
-  if (floating_layer)
-    {
-      floating_sel_relax (floating_layer, FALSE);
-
-      floating_sel_drawable = floating_layer->fs.drawable;
-      floating_layer = NULL;
-    }
-
-  /*  Copy the layers  */
-  list = gimage->layers;
-  count = 0;
-  layer = NULL;
-  while (list)
-    {
-      layer = (Layer *) list->data;
-      list = next_item (list);
-
-      new_layer = layer_copy (layer, FALSE);
-      new_layer->gimage_ID = new_gimage->ID;
-
-      /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
-      g_free (new_layer->name);
-      new_layer->name = g_strdup (layer->name);
-
-      /*  Make sure if the layer has a layer mask, it's name isn't screwed up  */
-      if (new_layer->mask)
-	{
-	  g_free (new_layer->mask->name);
-	  new_layer->mask->name = g_strdup (layer->mask->name);
-	}
-
-      if (gimage->active_layer == layer->ID)
-	active_layer = new_layer->ID;
-
-      if (gimage->floating_sel == layer->ID)
-	floating_layer = new_layer;
-
-      if (floating_sel_drawable == layer->ID)
-	new_floating_sel_drawable = new_layer->ID;
-
-      /*  Add the layer  */
-      if (floating_layer != new_layer)
-	gimage_add_layer (new_gimage, new_layer, count++);
-    }
-
-  /*  Copy the channels  */
-  list = gimage->channels;
-  count = 0;
-  while (list)
-    {
-      channel = (Channel *) list->data;
-      list = next_item (list);
-
-      new_channel = channel_copy (channel);
-
-      /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
-      g_free (new_channel->name);
-      new_channel->name = g_strdup (channel->name);
-
-      if (gimage->active_channel == layer->ID)
-	active_channel = new_channel->ID;
-
-      if (floating_sel_drawable == channel->ID)
-	new_floating_sel_drawable = new_channel->ID;
-
-      /*  Add the channel  */
-      gimage_add_channel (new_gimage, new_channel, count++);
-    }
-
-  /*  Copy the selection mask  */
-  pixel_region_init (&srcPR, gimage->selection_mask->tiles, 0, 0, gimage->width, gimage->height, FALSE);
-  pixel_region_init (&destPR, new_gimage->selection_mask->tiles, 0, 0, gimage->width, gimage->height, TRUE);
-  copy_region (&srcPR, &destPR);
-  new_gimage->selection_mask->bounds_known = FALSE;
-  new_gimage->selection_mask->boundary_known = FALSE;
-
-  /*  Set active layer, active channel  */
-  new_gimage->active_layer = active_layer;
-  new_gimage->active_channel = active_channel;
-  if (floating_layer)
-    floating_sel_attach (floating_layer, new_floating_sel_drawable);
-
-  /*  Copy the colormap if necessary  */
-  if (new_gimage->base_type == INDEXED)
-    memcpy (new_gimage->cmap, gimage->cmap, gimage->num_cols * 3);
-  new_gimage->num_cols = gimage->num_cols;
-
-  /*  copy state of all color channels  */
-  for (count = 0; count < MAX_CHANNELS; count++)
-    {
-      new_gimage->visible[count] = gimage->visible[count];
-      new_gimage->active[count] = gimage->active[count];
-    }
-
-  gimage_enable_undo (new_gimage);
-
-  return new_gimage;
-}
 
 static void
 offset (GImage *gimage,
-	int     drawable,
+	GimpDrawable *drawable,
 	int     wrap_around,
 	int     fill_type,
 	int     offset_x,
 	int     offset_y)
 {
   PixelRegion srcPR, destPR;
-  Channel *channel;
-  Layer *layer;
   TileManager *new_tiles;
   int width, height;
   int src_x, src_y;
   int dest_x, dest_y;
   unsigned char fill[MAX_CHANNELS] = { 0 };
+
+  if (!drawable) 
+    return;
 
   width = drawable_width (drawable);
   height = drawable_height (drawable);
@@ -565,10 +436,7 @@ offset (GImage *gimage,
 			drawable_data (drawable), FALSE);
 
   /*  swap the tiles  */
-  if ((channel = channel_get_ID (drawable)))
-    channel->tiles = new_tiles;
-  else if ((layer = layer_get_ID (drawable)))
-    layer->tiles = new_tiles;
+  drawable->tiles = new_tiles;
 
   /*  update the drawable  */
   drawable_update (drawable, 0, 0, drawable_width (drawable), drawable_height (drawable));
@@ -584,14 +452,14 @@ offset_ok_callback (GtkWidget *widget,
 {
   OffsetDialog *off_d;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int offset_x, offset_y;
   int fill_type;
 
   off_d = (OffsetDialog *) data;
   if ((gimage = gimage_get_ID (off_d->gimage_id)) != NULL)
     {
-      drawable_id = gimage_active_drawable (gimage);
+      drawable = gimage_active_drawable (gimage);
 
       offset_x = (int) atof (gtk_entry_get_text (GTK_ENTRY (off_d->off_x_entry)));
       offset_y = (int) atof (gtk_entry_get_text (GTK_ENTRY (off_d->off_y_entry)));
@@ -601,7 +469,7 @@ offset_ok_callback (GtkWidget *widget,
       else
 	fill_type = OFFSET_BACKGROUND;
 
-      offset (gimage, drawable_id, off_d->wrap_around, fill_type, offset_x, offset_y);
+      offset (gimage, drawable, off_d->wrap_around, fill_type, offset_x, offset_y);
       gdisplays_flush ();
     }
 
@@ -684,76 +552,6 @@ offset_halfheight_update (GtkWidget *widget,
  *  Procedure database functions and data structures
  */
 
-/*  The duplicate procedure definition  */
-ProcArg channel_ops_duplicate_args[] =
-{
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  }
-};
-
-ProcArg channel_ops_duplicate_out_args[] =
-{
-  { PDB_IMAGE,
-    "new_image",
-    "the new, duplicated image"
-  }
-};
-
-ProcRecord channel_ops_duplicate_proc =
-{
-  "gimp_channel_ops_duplicate",
-  "Duplicate the specified image",
-  "This procedure duplicates the specified image, copying all layers, channels, and image information.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1997",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  1,
-  channel_ops_duplicate_args,
-
-  /*  Output arguments  */
-  1,
-  channel_ops_duplicate_out_args,
-
-  /*  Exec method  */
-  { { channel_ops_duplicate_invoker } },
-};
-
-
-static Argument *
-channel_ops_duplicate_invoker (Argument *args)
-{
-  Argument *return_args;
-  int success = TRUE;
-  int int_value;
-  GImage *gimage, *new_gimage;
-
-  new_gimage = NULL;
-
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
-
-  if (success)
-    success = ((new_gimage = duplicate ((void *) gimage)) != NULL);
-
-  return_args = procedural_db_return_args (&channel_ops_duplicate_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = new_gimage->ID;
-
-  return return_args;
-}
-
-
 /*
  *  Procedure database functions and data structures
  */
@@ -816,7 +614,7 @@ channel_ops_offset_invoker (Argument *args)
   int success = TRUE;
   int int_value;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int wrap_around;
   int fill_type;
   int offset_x;
@@ -831,8 +629,9 @@ channel_ops_offset_invoker (Argument *args)
     }
   if (success)
     {
-      drawable_id = args[1].value.pdb_int;
-      if (gimage != drawable_gimage (drawable_id))
+      int_value = args[1].value.pdb_int;
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   if (success)
@@ -852,7 +651,7 @@ channel_ops_offset_invoker (Argument *args)
     }
 
   if (success)
-    offset (gimage, drawable_id, wrap_around, fill_type, offset_x, offset_y);
+    offset (gimage, drawable, wrap_around, fill_type, offset_x, offset_y);
 
   return procedural_db_return_args (&channel_ops_offset_proc, success);
 }

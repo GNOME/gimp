@@ -39,7 +39,7 @@ static void  color_picker_motion           (Tool *, GdkEventMotion *, gpointer);
 static void  color_picker_cursor_update    (Tool *, GdkEventMotion *, gpointer);
 static void  color_picker_control          (Tool *, int, void *);
 
-static int   get_color                     (GImage *, int, int, int, int, int);
+static int   get_color                     (GImage *, GimpDrawable *, int, int, int, int);
 static void  color_picker_info_update      (Tool *, int);
 
 static Argument *color_picker_invoker (Argument *);
@@ -47,7 +47,7 @@ static Argument *color_picker_invoker (Argument *);
 /*  local variables  */
 
 static int            col_value [5] = { 0, 0, 0, 0, 0 };
-static int            drawable_id;
+static GimpDrawable * active_drawable;
 static int            update_type;
 static int            sample_type;
 static InfoDialog *   color_picker_info = NULL;
@@ -131,17 +131,17 @@ color_picker_button_press (Tool           *tool,
    *  create (or recreate) the info dialog...
    */
   if (tool->state == INACTIVE || gdisp_ptr != tool->gdisp_ptr ||
-      drawable_id != gimage_active_drawable (gdisp->gimage))
+      active_drawable != gimage_active_drawable (gdisp->gimage))
     {
       /*  if the dialog exists, free it  */
       if (color_picker_info)
 	info_dialog_free (color_picker_info);
 
       color_picker_info = info_dialog_new ("Color Picker");
-      drawable_id = gimage_active_drawable (gdisp->gimage);
+      active_drawable = gimage_active_drawable (gdisp->gimage);
 
       /*  if the gdisplay is for a color image, the dialog must have RGB  */
-      switch (drawable_type (drawable_id))
+      switch (drawable_type (active_drawable))
 	{
 	case RGB_GIMAGE: case RGBA_GIMAGE:
 	  info_dialog_add_field (color_picker_info, "Red", red_buf);
@@ -186,14 +186,14 @@ color_picker_button_press (Tool           *tool,
    */
   if (bevent->state & GDK_SHIFT_MASK)
     {
-      color_picker_info_update (tool, get_color (gdisp->gimage, drawable_id, x, y,
+      color_picker_info_update (tool, get_color (gdisp->gimage, active_drawable, x, y,
 						 color_picker_options->sample_merged,
 						 COLOR_NEW));
       update_type = COLOR_UPDATE_NEW;
     }
   else
     {
-      color_picker_info_update (tool, get_color (gdisp->gimage, drawable_id, x, y,
+      color_picker_info_update (tool, get_color (gdisp->gimage, active_drawable, x, y,
 						 color_picker_options->sample_merged,
 						 COLOR_UPDATE));
       update_type = COLOR_UPDATE;
@@ -215,7 +215,7 @@ color_picker_button_release (Tool           *tool,
   /*  First, transform the coordinates to gimp image space  */
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
 
-  color_picker_info_update (tool, get_color (gdisp->gimage, drawable_id, x, y,
+  color_picker_info_update (tool, get_color (gdisp->gimage, active_drawable, x, y,
 					     color_picker_options->sample_merged,
 					     update_type));
 }
@@ -233,7 +233,7 @@ color_picker_motion (Tool           *tool,
   /*  First, transform the coordinates to gimp image space  */
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
 
-  color_picker_info_update (tool, get_color (gdisp->gimage, drawable_id, x, y,
+  color_picker_info_update (tool, get_color (gdisp->gimage, active_drawable, x, y,
 					     color_picker_options->sample_merged,
 					     update_type));
 }
@@ -264,7 +264,7 @@ color_picker_control (Tool     *tool,
 
 static int
 get_color (GImage *gimage,
-	   int     drawable_id,
+	   GimpDrawable *drawable,
 	   int     x,
 	   int     y,
 	   int     sample_merged,
@@ -279,18 +279,21 @@ get_color (GImage *gimage,
   int index;
   int has_alpha;
 
+  if (!drawable && !sample_merged) 
+    return FALSE;
+
   if (! sample_merged)
     {
-      drawable_offsets (drawable_id, &offx, &offy);
+      drawable_offsets (drawable, &offx, &offy);
       x -= offx;
       y -= offy;
-      width = drawable_width (drawable_id);
-      height = drawable_height (drawable_id);
-      tiles = drawable_data (drawable_id);
-      bytes = drawable_bytes (drawable_id);
-      has_alpha = drawable_has_alpha (drawable_id);
-      sample_type = drawable_type (drawable_id);
-      cmap = drawable_cmap (drawable_id);
+      width = drawable_width (drawable);
+      height = drawable_height (drawable);
+      tiles = drawable_data (drawable);
+      bytes = drawable_bytes (drawable);
+      has_alpha = drawable_has_alpha (drawable);
+      sample_type = drawable_type (drawable);
+      cmap = drawable_cmap (drawable);
     }
   else
     {
@@ -509,7 +512,7 @@ color_picker_invoker (Argument *args)
 {
   GImage *gimage;
   int success = TRUE;
-  int drawable_id;
+  GimpDrawable *drawable;
   double x, y;
   int sample_merged;
   int save_color;
@@ -517,7 +520,7 @@ color_picker_invoker (Argument *args)
   Argument *return_args;
   unsigned char *color;
 
-  drawable_id   = -1;
+  drawable = NULL;
   x             = 0;
   y             = 0;
   sample_merged = FALSE;
@@ -534,7 +537,7 @@ color_picker_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      drawable_id = int_value;
+      drawable = drawable_get_ID (int_value);
     }
   /*  x, y  */
   if (success)
@@ -557,12 +560,12 @@ color_picker_invoker (Argument *args)
 
   /*  Make sure that if we're not using the composite, the specified drawable is valid  */
   if (success && !sample_merged)
-    if ((drawable_gimage (int_value)) != gimage)
+    if (!drawable || (drawable_gimage (drawable)) != gimage)
       success = FALSE;
 
   /*  call the color_picker procedure  */
   if (success)
-    success = get_color (gimage, drawable_id, (int) x, (int) y, sample_merged, save_color);
+    success = get_color (gimage, drawable, (int) x, (int) y, sample_merged, save_color);
 
   return_args = procedural_db_return_args (&color_picker_proc, success);
 

@@ -123,9 +123,9 @@ void          transform_core_free         (Tool *);
 void          transform_core_reset        (Tool *, void *);
 
 /*  transform functions  */
-TileManager * transform_core_do           (GImage *, int, TileManager *, int, Matrix);
-TileManager * transform_core_cut          (GImage *, int, int *);
-Layer *       transform_core_paste        (GImage *, int, TileManager *, int);
+TileManager * transform_core_do           (GImage *, GimpDrawable *, TileManager *, int, Matrix);
+TileManager * transform_core_cut          (GImage *, GimpDrawable *, int *);
+Layer *       transform_core_paste        (GImage *, GimpDrawable *, TileManager *, int);
 
 /*  matrix functions  */
 void          transform_bounding_box      (Tool *);

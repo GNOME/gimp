@@ -136,7 +136,7 @@ static void   blend_motion                  (Tool *, GdkEventMotion *, gpointer)
 static void   blend_cursor_update           (Tool *, GdkEventMotion *, gpointer);
 static void   blend_control                 (Tool *, int, gpointer);
 
-static void   blend                         (GImage *gimage, int drawable_id,
+static void   blend                         (GImage *gimage, GimpDrawable *drawable,
 					     BlendMode blend_mode, int paint_mode,
 					     GradientType gradient_type,
 					     double opacity, double offset,
@@ -165,12 +165,12 @@ static double gradient_repeat_none(double val);
 static double gradient_repeat_sawtooth(double val);
 static double gradient_repeat_triangular(double val);
 
-static void   gradient_precalc_shapeburst   (GImage *gimage, int, PixelRegion *PR, double dist);
+static void   gradient_precalc_shapeburst   (GImage *gimage, GimpDrawable *drawable, PixelRegion *PR, double dist);
 
 static void   gradient_render_pixel(double x, double y, color_t *color, void *render_data);
 static void   gradient_put_pixel(int x, int y, color_t color, void *put_pixel_data);
 
-static void   gradient_fill_region          (GImage *gimage, int, PixelRegion *PR,
+static void   gradient_fill_region          (GImage *gimage, GimpDrawable *drawable, PixelRegion *PR,
 					     int width, int height,
 					     BlendMode blend_mode, GradientType gradient_type,
 					     double offset, RepeatMode repeat,
@@ -594,7 +594,7 @@ blend_button_release (Tool           *tool,
       return_vals = procedural_db_run_proc ("gimp_blend",
 					    &nreturn_vals,
 					    PDB_IMAGE, gimage->ID,
-					    PDB_DRAWABLE, gimage_active_drawable (gimage),
+					    PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gimage)),
 					    PDB_INT32, (gint32) blend_options->blend_mode,
 					    PDB_INT32, (gint32) blend_options->paint_mode,
 					    PDB_INT32, (gint32) blend_options->gradient_type,
@@ -726,7 +726,7 @@ blend_control (Tool     *tool,
 /*  The actual blending procedure  */
 static void
 blend (GImage       *gimage,
-       int           drawable_id,
+       GimpDrawable *drawable,
        BlendMode     blend_mode,
        int           paint_mode,
        GradientType  gradient_type,
@@ -748,10 +748,10 @@ blend (GImage       *gimage,
   int bytes;
   int x1, y1, x2, y2;
 
-  has_selection = drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+  has_selection = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-  has_alpha = drawable_has_alpha (drawable_id);
-  bytes = drawable_bytes (drawable_id);
+  has_alpha = drawable_has_alpha (drawable);
+  bytes = drawable_bytes (drawable);
 
   /*  Always create an alpha temp buf (for generality) */
   if (! has_alpha)
@@ -763,7 +763,7 @@ blend (GImage       *gimage,
   buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
 
-  gradient_fill_region (gimage, drawable_id,
+  gradient_fill_region (gimage, drawable,
 			&bufPR, (x2 - x1), (y2 - y1),
 			blend_mode, gradient_type, offset, repeat,
 			supersample, max_depth, threshold,
@@ -771,11 +771,11 @@ blend (GImage       *gimage,
 			(endx - x1), (endy - y1));
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable_id, &bufPR, TRUE,
+  gimage_apply_image (gimage, drawable, &bufPR, TRUE,
 		      (opacity * 255) / 100, paint_mode, NULL, x1, y1);
 
   /*  update the image  */
-  drawable_update (drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 
   /*  free the temporary buffer  */
   tile_manager_destroy (buf_tiles);
@@ -1085,7 +1085,7 @@ gradient_repeat_triangular(double val)
 /*****/
 static void
 gradient_precalc_shapeburst (GImage      *gimage,
-			     int          drawable_id,
+			     GimpDrawable *drawable,
 			     PixelRegion *PR,
 			     double       dist)
 {
@@ -1113,12 +1113,13 @@ gradient_precalc_shapeburst (GImage      *gimage,
       int x1, y1, x2, y2;
       int offx, offy;
 
-      drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
-      drawable_offsets (drawable_id, &offx, &offy);
+      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+      drawable_offsets (drawable, &offx, &offy);
 
       /*  the selection mask  */
       mask = gimage_get_mask (gimage);
-      pixel_region_init (&maskR, mask->tiles, x1 + offx, y1 + offy, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&maskR, drawable_data (GIMP_DRAWABLE(mask)), 
+			 x1 + offx, y1 + offy, (x2 - x1), (y2 - y1), FALSE);
 
       /*  copy the mask to the temp mask  */
       copy_region (&maskR, &tempR);
@@ -1127,11 +1128,11 @@ gradient_precalc_shapeburst (GImage      *gimage,
   else
     {
       /*  If the intended drawable has an alpha channel, use that  */
-      if (drawable_has_alpha (drawable_id))
+      if (drawable_has_alpha (drawable))
 	{
 	  PixelRegion drawableR;
 
-	  pixel_region_init (&drawableR, drawable_data (drawable_id), PR->x, PR->y, PR->w, PR->h, FALSE);
+	  pixel_region_init (&drawableR, drawable_data (drawable), PR->x, PR->y, PR->w, PR->h, FALSE);
 
 	  extract_alpha_region (&drawableR, NULL, &tempR);
 	}
@@ -1286,7 +1287,7 @@ gradient_put_pixel(int x, int y, color_t color, void *put_pixel_data)
 
 static void
 gradient_fill_region (GImage       *gimage,
-		      int           drawable_id,
+		      GimpDrawable *drawable,
 		      PixelRegion  *PR,
 		      int           width,
 		      int           height,
@@ -1387,7 +1388,7 @@ gradient_fill_region (GImage       *gimage,
     case ShapeburstSpherical:
     case ShapeburstDimpled:
       rbd.dist = sqrt(SQR(ex - sx) + SQR(ey - sy));
-      gradient_precalc_shapeburst(gimage, drawable_id, PR, rbd.dist);
+      gradient_precalc_shapeburst(gimage, drawable, PR, rbd.dist);
       break;
 
     default:
@@ -1769,7 +1770,7 @@ blend_invoker (Argument *args)
 {
   int success = TRUE;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   BlendMode blend_mode;
   int paint_mode;
   GradientType gradient_type;
@@ -1784,7 +1785,7 @@ blend_invoker (Argument *args)
   int int_value;
   double fp_value;
 
-  drawable_id = -1;
+  drawable    = NULL;
   blend_mode  = FG_BG_RGB_MODE;
   paint_mode  = NORMAL_MODE;
   gradient_type = Linear;
@@ -1806,9 +1807,8 @@ blend_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage == drawable_gimage (int_value))
-	drawable_id = int_value;
-      else
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   /*  blend mode  */
@@ -1920,7 +1920,7 @@ blend_invoker (Argument *args)
   /*  call the blend procedure  */
   if (success)
     {
-      blend (gimage, drawable_id, blend_mode, paint_mode, gradient_type,
+      blend (gimage, drawable, blend_mode, paint_mode, gradient_type,
 	     opacity, offset, repeat, supersample, max_depth, threshold, x1, y1, x2, y2);
     }
 

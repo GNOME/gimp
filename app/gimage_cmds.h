@@ -20,6 +20,8 @@
 
 #include "procedural_db.h"
 
+void  channel_ops_duplicate (void *);
+
 extern ProcRecord gimage_list_images_proc;
 extern ProcRecord gimage_new_proc;
 extern ProcRecord gimage_resize_proc;
@@ -63,5 +65,6 @@ extern ProcRecord gimage_enable_undo_proc;
 extern ProcRecord gimage_disable_undo_proc;
 extern ProcRecord gimage_clean_all_proc;
 extern ProcRecord gimage_floating_sel_proc;
+extern ProcRecord channel_ops_duplicate_proc;
 
 #endif  /*  __GIMAGE_CMDS_H__  */

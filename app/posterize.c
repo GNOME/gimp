@@ -42,7 +42,7 @@ struct _PosterizeDialog
   GtkWidget   *shell;
   GtkWidget   *levels_text;
 
-  int          drawable_id;
+  GimpDrawable *drawable;
   ImageMap     image_map;
   int          levels;
 
@@ -252,8 +252,8 @@ posterize_initialize (void *gdisp_ptr)
   else
     if (!GTK_WIDGET_VISIBLE (posterize_dialog->shell))
       gtk_widget_show (posterize_dialog->shell);
-  posterize_dialog->drawable_id = gimage_active_drawable (gdisp->gimage);
-  posterize_dialog->image_map = image_map_create (gdisp_ptr, posterize_dialog->drawable_id);
+  posterize_dialog->drawable = gimage_active_drawable (gdisp->gimage);
+  posterize_dialog->image_map = image_map_create (gdisp_ptr, posterize_dialog->drawable);
   if (posterize_dialog->preview)
     posterize_preview (posterize_dialog);
 }
@@ -482,13 +482,13 @@ posterize_invoker (Argument *args)
   int success = TRUE;
   PosterizeDialog pd;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int levels;
   int int_value;
   int x1, y1, x2, y2;
   void *pr;
 
-  drawable_id = -1;
+  drawable = NULL;
   levels = 0;
 
   /*  the gimage  */
@@ -502,9 +502,8 @@ posterize_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage == drawable_gimage (int_value))
-	drawable_id = int_value;
-      else
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   /*  levels  */
@@ -523,16 +522,16 @@ posterize_invoker (Argument *args)
       pd.levels = levels;
 
       /*  The application should occur only within selection bounds  */
-      drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-      pixel_region_init (&srcPR, drawable_data (drawable_id), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable_id), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
 	posterize (&srcPR, &destPR, (void *) &pd);
 
-      drawable_merge_shadow (drawable_id, TRUE);
-      drawable_update (drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+      drawable_merge_shadow (drawable, TRUE);
+      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 
   return procedural_db_return_args (&posterize_proc, success);

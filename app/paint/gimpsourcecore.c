@@ -42,16 +42,16 @@ typedef enum
 
 /*  forward function declarations  */
 static void         clone_draw            (Tool *);
-static void         clone_motion          (PaintCore *, int, int, CloneType, int, int);
-static void	    clone_line_image      (GImage *, GImage *, int, int, unsigned char *,
+static void         clone_motion          (PaintCore *, GimpDrawable *, GimpDrawable *, CloneType, int, int);
+static void	    clone_line_image      (GImage *, GImage *, GimpDrawable *, GimpDrawable *, unsigned char *,
 					   unsigned char *, int, int, int, int);
-static void         clone_line_pattern    (GImage *, int, GPatternP, unsigned char *,
+static void         clone_line_pattern    (GImage *, GimpDrawable *, GPatternP, unsigned char *,
 					   int, int, int, int);
 
 static Argument *   clone_invoker         (Argument *);
 
 
-static int non_gui_src_drawable;
+static GimpDrawable *non_gui_src_drawable;
 static int non_gui_offset_x;
 static int non_gui_offset_y;
 static CloneType non_gui_type;
@@ -73,7 +73,7 @@ static int          offset_y = 0;             /*  offset for cloning     */
 static int          first = TRUE;
 static int          trans_tx, trans_ty;       /*  transformed target  */
 static int          src_gdisp_ID = -1;        /*  ID of source gdisplay  */
-static int          src_drawable_ID = -1;     /*  ID of source drawable  */
+static GimpDrawable * src_drawable_ = NULL;   /*  source drawable */
 static CloneOptions *clone_options = NULL;
 
 
@@ -167,7 +167,7 @@ create_clone_options (void)
 
 void *
 clone_paint_func (PaintCore *paint_core,
-		  int        drawable_id,
+		  GimpDrawable *drawable,
 		  int        state)
 {
   GDisplay * gdisp;
@@ -208,7 +208,7 @@ clone_paint_func (PaintCore *paint_core,
 	      src_y = dest_y + offset_y;
 	    }
 
-	  clone_motion (paint_core, drawable_id, src_drawable_ID, clone_options->type, offset_x, offset_y);
+	  clone_motion (paint_core, drawable, src_drawable_, clone_options->type, offset_x, offset_y);
 	}
 
       draw_core_pause (paint_core->core, active_tool);
@@ -218,7 +218,7 @@ clone_paint_func (PaintCore *paint_core,
       if (paint_core->state & ControlMask)
 	{
 	  src_gdisp_ID = gdisp->ID;
-	  src_drawable_ID = drawable_id;
+	  src_drawable_ = drawable;
 	  src_x = paint_core->curx;
 	  src_y = paint_core->cury;
 	  first = TRUE;
@@ -306,8 +306,8 @@ clone_draw (Tool *tool)
 
 static void
 clone_motion (PaintCore *paint_core,
-	      int        drawable_id,
-	      int        src_drawable_id,
+	      GimpDrawable *drawable,
+	      GimpDrawable *src_drawable,
 	      CloneType  type,
 	      int        offset_x,
 	      int        offset_y)
@@ -329,16 +329,16 @@ clone_motion (PaintCore *paint_core,
   pattern = NULL;
 
   /*  Make sure we still have a source!  */
-  if ((! (src_gimage = drawable_gimage (src_drawable_id)) && type == ImageClone) ||
-      ! (gimage = drawable_gimage (drawable_id)))
+  if ((! (src_gimage = drawable_gimage (src_drawable)) && type == ImageClone) ||
+      ! (gimage = drawable_gimage (drawable)))
     return;
 
   /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable_id)))
+  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
     return;
 
   /*  Determine whether the source image has an alpha channel  */
-  has_alpha = drawable_has_alpha (src_drawable_id);
+  has_alpha = drawable_has_alpha (src_drawable);
 
   switch (type)
     {
@@ -352,34 +352,34 @@ clone_motion (PaintCore *paint_core,
        *  Otherwise, we need a call to get_orig_image to make sure
        *  we get a copy of the unblemished (offset) image
        */
-      if (src_drawable_id != drawable_id)
+      if (src_drawable != drawable)
 	{
-	  x1 = BOUNDS (area->x + offset_x, 0, drawable_width (src_drawable_id));
-	  y1 = BOUNDS (area->y + offset_y, 0, drawable_height (src_drawable_id));
+	  x1 = BOUNDS (area->x + offset_x, 0, drawable_width (src_drawable));
+	  y1 = BOUNDS (area->y + offset_y, 0, drawable_height (src_drawable));
 	  x2 = BOUNDS (area->x + offset_x + area->width,
-		       0, drawable_width (src_drawable_id));
+		       0, drawable_width (src_drawable));
 	  y2 = BOUNDS (area->y + offset_y + area->height,
-		       0, drawable_height (src_drawable_id));
+		       0, drawable_height (src_drawable));
 
 	  if (!(x2 - x1) || !(y2 - y1))
 	    return;
 
-	  pixel_region_init (&srcPR, drawable_data (src_drawable_id), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+	  pixel_region_init (&srcPR, drawable_data (src_drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
 	}
       else
 	{
-	  x1 = BOUNDS (area->x + offset_x, 0, drawable_width (drawable_id));
-	  y1 = BOUNDS (area->y + offset_y, 0, drawable_height (drawable_id));
+	  x1 = BOUNDS (area->x + offset_x, 0, drawable_width (drawable));
+	  y1 = BOUNDS (area->y + offset_y, 0, drawable_height (drawable));
 	  x2 = BOUNDS (area->x + offset_x + area->width,
-		       0, drawable_width (drawable_id));
+		       0, drawable_width (drawable));
 	  y2 = BOUNDS (area->y + offset_y + area->height,
-		       0, drawable_height (drawable_id));
+		       0, drawable_height (drawable));
 
 	  if (!(x2 - x1) || !(y2 - y1))
 	    return;
 
 	  /*  get the original image  */
-	  orig = paint_core_get_orig_image (paint_core, drawable_id, x1, y1, x2, y2);
+	  orig = paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2);
 
 	  srcPR.bytes = orig->bytes;
 	  srcPR.x = 0; srcPR.y = 0;
@@ -430,12 +430,12 @@ clone_motion (PaintCore *paint_core,
 	  switch (type)
 	    {
 	    case ImageClone:
-	      clone_line_image (gimage, src_gimage, drawable_id, src_drawable_id, s, d,
+	      clone_line_image (gimage, src_gimage, drawable, src_drawable, s, d,
 				has_alpha, srcPR.bytes, destPR.bytes, destPR.w);
 	      s += srcPR.rowstride;
 	      break;
 	    case PatternClone:
-	      clone_line_pattern (gimage, drawable_id, pattern, d,
+	      clone_line_pattern (gimage, drawable, pattern, d,
 				  area->x + offset_x, area->y + y + offset_y,
 				  destPR.bytes, destPR.w);
 	      break;
@@ -446,7 +446,7 @@ clone_motion (PaintCore *paint_core,
     }
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable_id, OPAQUE,
+  paint_core_paste_canvas (paint_core, drawable, OPAQUE,
 			   (int) (get_brush_opacity () * 255),
 			   get_brush_paint_mode (), SOFT, CONSTANT);
 }
@@ -454,8 +454,8 @@ clone_motion (PaintCore *paint_core,
 static void
 clone_line_image (GImage        *dest,
 		  GImage        *src,
-		  int            d_drawable,
-		  int            s_drawable,
+		  GimpDrawable  *d_drawable,
+		  GimpDrawable  *s_drawable,
 		  unsigned char *s,
 		  unsigned char *d,
 		  int            has_alpha,
@@ -486,7 +486,7 @@ clone_line_image (GImage        *dest,
 
 static void
 clone_line_pattern (GImage        *dest,
-		    int            drawable_id,
+		    GimpDrawable  *drawable,
 		    GPatternP      pattern,
 		    unsigned char *d,
 		    int            x,
@@ -515,7 +515,7 @@ clone_line_pattern (GImage        *dest,
     {
       p = pat + ((i + x) % pattern->mask->width) * pattern->mask->bytes;
 
-      gimage_transform_color (dest, drawable_id, p, d, color);
+      gimage_transform_color (dest, drawable, p, d, color);
 
       d[alpha] = OPAQUE;
 
@@ -525,10 +525,10 @@ clone_line_pattern (GImage        *dest,
 
 static void *
 clone_non_gui_paint_func (PaintCore *paint_core,
-			  int        drawable_id,
+			  GimpDrawable *drawable,
 			  int        state)
 {
-  clone_motion (paint_core, drawable_id, non_gui_src_drawable,
+  clone_motion (paint_core, drawable, non_gui_src_drawable,
 		non_gui_type, non_gui_offset_x, non_gui_offset_y);
 
   return NULL;
@@ -601,14 +601,15 @@ clone_invoker (Argument *args)
 {
   int success = TRUE;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
+  GimpDrawable *src_drawable;
   double src_x, src_y;
   int num_strokes;
   double *stroke_array;
   CloneType int_value;
   int i;
 
-  drawable_id = -1;
+  drawable = NULL;
   num_strokes = 0;
 
   /*  the gimage  */
@@ -622,19 +623,19 @@ clone_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (! (gimage == drawable_gimage (int_value)))
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
-      else
-	drawable_id = int_value;
     }
   /*  the src drawable  */
   if (success)
     {
       int_value = args[2].value.pdb_int;
-      if (! drawable_gimage (int_value))
+      src_drawable = drawable_get_ID (int_value);
+      if (src_drawable == NULL || gimage != drawable_gimage (src_drawable))
 	success = FALSE;
       else
-	non_gui_src_drawable = int_value;
+	non_gui_src_drawable = src_drawable;
     }
   /*  the clone type  */
   if (success)
@@ -669,7 +670,7 @@ clone_invoker (Argument *args)
 
   if (success)
     /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable_id,
+    success = paint_core_init (&non_gui_paint_core, drawable,
 			       stroke_array[0], stroke_array[1]);
 
   if (success)
@@ -684,21 +685,21 @@ clone_invoker (Argument *args)
       non_gui_offset_y = (int) (src_y - non_gui_paint_core.starty);
 
       if (num_strokes == 1)
-	clone_non_gui_paint_func (&non_gui_paint_core, drawable_id, 0);
+	clone_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
 	{
 	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
 	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
 
-	  paint_core_interpolate (&non_gui_paint_core, drawable_id);
+	  paint_core_interpolate (&non_gui_paint_core, drawable);
 
 	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
 	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
 	}
 
       /*  finish the painting  */
-      paint_core_finish (&non_gui_paint_core, drawable_id, -1);
+      paint_core_finish (&non_gui_paint_core, drawable, -1);
 
       /*  cleanup  */
       paint_core_cleanup ();

@@ -44,6 +44,7 @@
 #include "undo.h"
 #include "tools.h"
 
+#include "layer_pvt.h"			/* ick. */
 
 #define OVERHEAD          25  /*  in units of pixel area  */
 #define EPSILON           5
@@ -778,23 +779,25 @@ gdisplay_mask_bounds (GDisplay *gdisp,
 		      int      *y2)
 {
   Layer *layer;
+  int off_x, off_y;
 
   /*  If there is a floating selection, handle things differently  */
   if ((layer = gimage_floating_sel (gdisp->gimage)))
     {
+      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
       if (! channel_bounds (gimage_get_mask (gdisp->gimage), x1, y1, x2, y2))
 	{
-	  *x1 = layer->offset_x;
-	  *y1 = layer->offset_y;
-	  *x2 = layer->offset_x + layer->width;
-	  *y2 = layer->offset_y + layer->height;
+	  *x1 = off_x;
+	  *y1 = off_y;
+	  *x2 = off_x + drawable_width (GIMP_DRAWABLE(layer));
+	  *y2 = off_y + drawable_height (GIMP_DRAWABLE(layer));
 	}
       else
 	{
-	  *x1 = MINIMUM (layer->offset_x, *x1);
-	  *y1 = MINIMUM (layer->offset_y, *y1);
-	  *x2 = MAXIMUM (layer->offset_x + layer->width, *x2);
-	  *y2 = MAXIMUM (layer->offset_y + layer->height, *y2);
+	  *x1 = MINIMUM (off_x, *x1);
+	  *y1 = MINIMUM (off_y, *y1);
+	  *x2 = MAXIMUM (off_x + drawable_width (GIMP_DRAWABLE(layer)), *x2);
+	  *y2 = MAXIMUM (off_y + drawable_height (GIMP_DRAWABLE(layer)), *y2);
 	}
     }
   else if (! channel_bounds (gimage_get_mask (gdisp->gimage), x1, y1, x2, y2))
@@ -970,7 +973,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   gint aux;
   gint lm;
   gint lp;
-  gint drawable;
+  GimpDrawable *drawable;
   gint base_type;
   gint type;
 

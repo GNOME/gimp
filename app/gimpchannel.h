@@ -18,6 +18,8 @@
 #ifndef __CHANNEL_H__
 #define __CHANNEL_H__
 
+#include "drawable.h"
+
 #include "boundary.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
@@ -34,45 +36,16 @@
 
 /* structure declarations */
 
-typedef struct _Channel Channel;
+#define GIMP_CHANNEL(obj)        GTK_CHECK_CAST (obj, gimp_channel_get_type (), GimpChannel)
+#define GIMP_CHANNEL_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, gimp_channel_get_type(), GimpChannelClass)
+#define GIMP_IS_CHANNEL(obj)     GTK_CHECK_TYPE (obj, gimp_channel_get_type())
 
-struct _Channel
-{
-  char * name;                  /*  name of the channel          */
+typedef struct _GimpChannel      GimpChannel;
+typedef struct _GimpChannelClass GimpChannelClass;
 
-  TileManager *tiles;           /*  tiles for channel data       */
-  int visible;                  /*  controls visibility          */
+typedef GimpChannel Channel;		/* convenience */
 
-  int width, height;            /*  size of channel              */
-  int bytes;                    /*  bytes per pixel              */
-
-  unsigned char col[3];         /*  RGB triplet for channel color*/
-  int opacity;                  /*  Channel opacity              */
-  int show_masked;              /*  Show masked areas--as        */
-                                /*  opposed to selected areas    */
-
-  int dirty;                    /*  dirty bit                    */
-
-  int ID;                       /*  provides a unique ID         */
-  int layer_ID;                 /*  ID of layer-if a layer mask  */
-  int gimage_ID;                /*  ID of gimage owner           */
-
-  /*  Selection mask variables  */
-  int boundary_known;           /*  is the current boundary valid*/
-  BoundSeg  *segs_in;           /*  outline of selected region   */
-  BoundSeg  *segs_out;          /*  outline of selected region   */
-  int num_segs_in;              /*  number of lines in boundary  */
-  int num_segs_out;             /*  number of lines in boundary  */
-  int empty;                    /*  is the region empty?         */
-  int bounds_known;             /*  recalculate the bounds?      */
-  int x1, y1;                   /*  coordinates for bounding box */
-  int x2, y2;                   /*  lower right hand coordinate  */
-
-  /*  Preview variables  */
-  TempBuf *preview;             /*  preview of the channel       */
-  int preview_valid;            /*  is the preview valid?        */
-};
-
+guint gimp_channel_get_type (void);
 
 /*  Special undo type  */
 typedef struct _channel_undo ChannelUndo;
@@ -81,7 +54,7 @@ struct _channel_undo
 {
   Channel * channel;   /*  the actual channel         */
   int prev_position;   /*  former position in list    */
-  int prev_channel;    /*  previous active channel    */
+  Channel * prev_channel;    /*  previous active channel    */
   int undo_type;       /*  is this a new channel undo */
                        /*  or a remove channel undo?  */
 };
@@ -98,13 +71,10 @@ struct _mask_undo
 
 /* function declarations */
 
-void            channel_allocate (Channel *, int, int);
-void            channel_deallocate (Channel *);
 Channel *       channel_new (int, int, int, char *, int, unsigned char *);
 Channel *       channel_copy (Channel *);
 Channel *       channel_get_ID (int);
 void            channel_delete (Channel *);
-void            channel_apply_image (Channel *, int, int, int, int, TileManager *, int);
 void            channel_scale (Channel *, int, int);
 void            channel_resize (Channel *, int, int, int, int);
 
@@ -140,8 +110,12 @@ void            channel_border          (Channel *, int);
 void            channel_grow            (Channel *, int);
 void            channel_shrink          (Channel *, int);
 void            channel_translate       (Channel *, int, int);
-void            channel_layer_alpha     (Channel *, int);
-void            channel_layer_mask      (Channel *, int);
 void            channel_load            (Channel *, Channel *);
+void		channel_invalidate_bounds (Channel *);
+
+extern int channel_get_count;
+
+/* from drawable.c */
+Channel *        drawable_channel       (GimpDrawable *);
 
 #endif /* __CHANNEL_H__ */

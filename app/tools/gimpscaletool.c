@@ -29,6 +29,8 @@
 #include "transform_tool.h"
 #include "undo.h"
 
+#include "tile_manager_pvt.h"
+
 #define X1 0
 #define Y1 1
 #define X2 2
@@ -43,7 +45,7 @@ char          x_ratio_buf     [MAX_INFO_BUF];
 char          y_ratio_buf     [MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      scale_tool_scale   (GImage *, int, double *, TileManager *, int, Matrix);
+static void *      scale_tool_scale   (GImage *, GimpDrawable *, double *, TileManager *, int, Matrix);
 static void *      scale_tool_recalc  (Tool *, void *);
 static void        scale_tool_motion  (Tool *, void *);
 static void        scale_info_update  (Tool *);
@@ -352,9 +354,9 @@ scale_tool_recalc (tool, gdisp_ptr)
 }
 
 static void *
-scale_tool_scale (gimage, drawable_id, trans_info, float_tiles, interpolation, matrix)
+scale_tool_scale (gimage, drawable, trans_info, float_tiles, interpolation, matrix)
      GImage *gimage;
-     int drawable_id;
+     GimpDrawable *drawable;
      double *trans_info;
      TileManager *float_tiles;
      int interpolation;
@@ -378,8 +380,8 @@ scale_tool_scale (gimage, drawable_id, trans_info, float_tiles, interpolation, m
   pixel_region_init (&destPR, new_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
 
 
-  if (drawable_type (drawable_id) == INDEXED_GIMAGE ||
-      drawable_type (drawable_id) == INDEXEDA_GIMAGE ||
+  if (drawable_type (drawable) == INDEXED_GIMAGE ||
+      drawable_type (drawable) == INDEXEDA_GIMAGE ||
       !interpolation)
     scale_region_no_resample (&srcPR, &destPR);
   else
@@ -462,7 +464,7 @@ scale_invoker (args)
 {
   int success = TRUE;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int interpolation;
   double trans_info[4];
   int int_value;
@@ -473,7 +475,7 @@ scale_invoker (args)
   Layer *layer;
   Argument *return_args;
 
-  drawable_id = -1;
+  drawable = NULL;
   layer = NULL;
 
   /*  the gimage  */
@@ -487,9 +489,8 @@ scale_invoker (args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage == drawable_gimage (int_value))
-	drawable_id = int_value;
-      else
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   /*  interpolation  */
@@ -520,7 +521,7 @@ scale_invoker (args)
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
 
       /*  Cut/Copy from the specified drawable  */
-      float_tiles = transform_core_cut (gimage, drawable_id, &new_layer);
+      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
 
       scalex = scaley = 1.0;
       if (float_tiles->levels[0].width)
@@ -535,14 +536,14 @@ scale_invoker (args)
       translate_matrix (matrix, trans_info[X1], trans_info[Y1]);
 
       /*  scale the buffer  */
-      new_tiles = scale_tool_scale (gimage, drawable_id, trans_info,
+      new_tiles = scale_tool_scale (gimage, drawable, trans_info,
 				    float_tiles, interpolation, matrix);
 
       /*  free the cut/copied buffer  */
       tile_manager_destroy (float_tiles);
 
       if (new_tiles)
-	success = (layer = transform_core_paste (gimage, drawable_id, new_tiles, new_layer)) != NULL;
+	success = (layer = transform_core_paste (gimage, drawable, new_tiles, new_layer)) != NULL;
       else
 	success = FALSE;
 
@@ -553,7 +554,7 @@ scale_invoker (args)
   return_args = procedural_db_return_args (&scale_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer->ID;
+    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(layer));
 
   return return_args;
 }

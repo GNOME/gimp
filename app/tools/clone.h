@@ -22,7 +22,7 @@
 #include "procedural_db.h"
 #include "tools.h"
 
-void *        clone_paint_func  (PaintCore *, int, int);
+void *        clone_paint_func  (PaintCore *, GimpDrawable *, int);
 Tool *        tools_new_clone   (void);
 void          tools_free_clone  (Tool *);
 

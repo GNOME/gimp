@@ -28,8 +28,8 @@ void            gimage_mask_invalidate    (GImage *);
 int             gimage_mask_value         (GImage *, int, int);
 int             gimage_mask_is_empty      (GImage *);
 void            gimage_mask_translate     (GImage *, int, int);
-TileManager *   gimage_mask_extract       (GImage *, int, int, int);
-Layer *         gimage_mask_float         (GImage *, int, int, int);
+TileManager *   gimage_mask_extract       (GImage *, GimpDrawable *, int, int);
+Layer *         gimage_mask_float         (GImage *, GimpDrawable *, int, int);
 void            gimage_mask_clear         (GImage *);
 void            gimage_mask_undo          (GImage *);
 void            gimage_mask_invert        (GImage *);
@@ -40,10 +40,10 @@ void            gimage_mask_feather       (GImage *, double);
 void            gimage_mask_border        (GImage *, int);
 void            gimage_mask_grow          (GImage *, int);
 void            gimage_mask_shrink        (GImage *, int);
-void            gimage_mask_layer_alpha   (GImage *, int);
-void            gimage_mask_layer_mask    (GImage *, int);
-void            gimage_mask_load          (GImage *, int);
+void            gimage_mask_layer_alpha   (GImage *, Layer *);
+void            gimage_mask_layer_mask    (GImage *, Layer *);
+void            gimage_mask_load          (GImage *, Channel *);
 Channel *       gimage_mask_save          (GImage *);
-int             gimage_mask_stroke        (GImage *, int);
+int             gimage_mask_stroke        (GImage *, GimpDrawable *);
 
 #endif  /*  __GIMAGE_MASK_H__  */

@@ -79,7 +79,7 @@ struct _LevelsDialog
   GtkWidget *    channel_menu;
   Histogram *    histogram;
 
-  int            drawable_id;
+  GimpDrawable * drawable;
   ImageMap       image_map;
   int            color;
   int            channel;
@@ -438,12 +438,12 @@ levels_initialize (void *gdisp_ptr)
       levels_dialog->high_output[i] = 255;
     }
 
-  levels_dialog->drawable_id = gimage_active_drawable (gdisp->gimage);
-  levels_dialog->color = drawable_color (levels_dialog->drawable_id);
-  levels_dialog->image_map = image_map_create (gdisp_ptr, levels_dialog->drawable_id);
+  levels_dialog->drawable = gimage_active_drawable (gdisp->gimage);
+  levels_dialog->color = drawable_color (levels_dialog->drawable);
+  levels_dialog->image_map = image_map_create (gdisp_ptr, levels_dialog->drawable);
 
   /* check for alpha channel */
-  if (drawable_has_alpha (levels_dialog->drawable_id))
+  if (drawable_has_alpha (levels_dialog->drawable))
     gtk_widget_set_sensitive( color_option_items[4].widget, TRUE);
   else 
     gtk_widget_set_sensitive( color_option_items[4].widget, FALSE);
@@ -464,7 +464,7 @@ levels_initialize (void *gdisp_ptr)
   levels_update (levels_dialog, INPUT_LEVELS | OUTPUT_LEVELS);
 
   histogram_update (levels_dialog->histogram,
-		    levels_dialog->drawable_id,
+		    levels_dialog->drawable,
 		    levels_histogram_info,
 		    (void *) levels_dialog);
   histogram_range (levels_dialog->histogram, -1, -1);
@@ -1487,7 +1487,7 @@ levels_invoker (Argument *args)
   int success = TRUE;
   LevelsDialog ld;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int channel;
   int low_input;
   int high_input;
@@ -1500,7 +1500,7 @@ levels_invoker (Argument *args)
   int i;
   void *pr;
 
-  drawable_id = -1;
+  drawable = NULL;
   low_input   = 0;
   high_input  = 0;
   gamma       = 1.0;
@@ -1518,9 +1518,8 @@ levels_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage == drawable_gimage (int_value))
-	drawable_id = int_value;
-      else
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   /*  channel  */
@@ -1529,12 +1528,12 @@ levels_invoker (Argument *args)
       int_value = args[2].value.pdb_int;
       if (success)
 	{
-	  if (drawable_gray (drawable_id))
+	  if (drawable_gray (drawable))
 	    {
 	      if (int_value != 0)
 		success = FALSE;
 	    }
-	  else if (drawable_color (drawable_id))
+	  else if (drawable_color (drawable))
 	    {
 	      if (int_value < 0 || int_value > 3)
 		success = FALSE;
@@ -1603,7 +1602,7 @@ levels_invoker (Argument *args)
 	}
 
       ld.channel = channel;
-      ld.color = drawable_color (drawable_id);
+      ld.color = drawable_color (drawable);
       ld.low_input[channel] = low_input;
       ld.high_input[channel] = high_input;
       ld.gamma[channel] = gamma;
@@ -1614,16 +1613,16 @@ levels_invoker (Argument *args)
       levels_calculate_transfers (&ld);
 
       /*  The application should occur only within selection bounds  */
-      drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-      pixel_region_init (&srcPR, drawable_data (drawable_id), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable_id), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
 	levels (&srcPR, &destPR, (void *) &ld);
 
-      drawable_merge_shadow (drawable_id, TRUE);
-      drawable_update (drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+      drawable_merge_shadow (drawable, TRUE);
+      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 
   return procedural_db_return_args (&levels_proc, success);

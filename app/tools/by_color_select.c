@@ -83,8 +83,8 @@ static SelectionOptions *by_color_options = NULL;
 static ByColorDialog *by_color_dialog = NULL;
 
 static int        is_pixel_sufficiently_different (unsigned char *, unsigned char *, int, int, int, int);
-static Channel *  by_color_select_color (GImage *, int, unsigned char *, int, int, int);
-static void       by_color_select (GImage *, int, unsigned char *, int, int, int, int, double, int);
+static Channel *  by_color_select_color (GImage *, GimpDrawable *, unsigned char *, int, int, int);
+static void       by_color_select (GImage *, GimpDrawable *, unsigned char *, int, int, int, int, double, int);
 static Argument * by_color_select_invoker (Argument *);
 
 /*  by_color selection machinery  */
@@ -140,7 +140,7 @@ is_pixel_sufficiently_different (unsigned char *col1,
 
 static Channel *
 by_color_select_color (GImage        *gimage,
-		       int            drawable,
+		       GimpDrawable  *drawable,
 		       unsigned char *color,
 		       int            antialias,
 		       int            threshold,
@@ -199,7 +199,8 @@ by_color_select_color (GImage        *gimage,
 
   alpha = bytes - 1;
   mask = channel_new_mask (gimage->ID, width, height);
-  pixel_region_init (&maskPR, mask->tiles, 0, 0, width, height, TRUE);
+  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 
+		     0, 0, width, height, TRUE);
 
   /*  iterate over the entire image  */
   for (pr = pixel_regions_register (2, &imagePR, &maskPR); pr != NULL; pr = pixel_regions_process (pr))
@@ -237,7 +238,7 @@ by_color_select_color (GImage        *gimage,
 
 static void
 by_color_select (GImage        *gimage,
-		 int            drawable_id,
+		 GimpDrawable  *drawable,
 		 unsigned char *color,
 		 int            threshold,
 		 int            op,
@@ -249,7 +250,10 @@ by_color_select (GImage        *gimage,
   Channel * new_mask;
   int off_x, off_y;
 
-  new_mask = by_color_select_color (gimage, drawable_id, color, antialias, threshold, sample_merged);
+  if (!drawable) 
+    return;
+
+  new_mask = by_color_select_color (gimage, drawable, color, antialias, threshold, sample_merged);
 
   /*  if applicable, replace the current selection  */
   if (op == REPLACE)
@@ -262,7 +266,7 @@ by_color_select (GImage        *gimage,
       off_x = 0; off_y = 0;
     }
   else
-    drawable_offsets (drawable_id, &off_x, &off_y);
+    drawable_offsets (drawable, &off_x, &off_y);
 
   if (feather)
     channel_feather (new_mask, gimage_get_mask (gimage),
@@ -329,7 +333,7 @@ by_color_select_button_release (Tool           *tool,
   ByColorSelect * by_color_sel;
   GDisplay * gdisp;
   int x, y;
-  int drawable_id;
+  GimpDrawable *drawable;
   Tile *tile;
   unsigned char col[MAX_CHANNELS];
   unsigned char *data;
@@ -337,7 +341,7 @@ by_color_select_button_release (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
   by_color_sel = (ByColorSelect *) tool->private;
-  drawable_id = gimage_active_drawable (gdisp->gimage);
+  drawable = gimage_active_drawable (gdisp->gimage);
 
   tool->state = INACTIVE;
 
@@ -358,9 +362,9 @@ by_color_select_button_release (Tool           *tool,
 	}
       else
 	{
-	  if (x < 0 || y < 0 || x >= drawable_width (drawable_id) || y >= drawable_height (drawable_id))
+	  if (x < 0 || y < 0 || x >= drawable_width (drawable) || y >= drawable_height (drawable))
 	    return;
-	  tile = tile_manager_get_tile (drawable_data (drawable_id), x, y, 0);
+	  tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
 	  tile_ref (tile);
 	  data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
 	}
@@ -369,7 +373,7 @@ by_color_select_button_release (Tool           *tool,
       tile_unref (tile, FALSE);
 
       /*  select the area  */
-      by_color_select (gdisp->gimage, drawable_id, col,
+      by_color_select (gdisp->gimage, drawable, col,
 		       by_color_dialog->threshold,
 		       by_color_sel->operation,
 		       by_color_options->antialias,
@@ -406,7 +410,7 @@ by_color_select_cursor_update (Tool           *tool,
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
   if ((layer = gimage_pick_correlate_layer (gdisp->gimage, x, y)))
-    if (layer->ID == gdisp->gimage->active_layer)
+    if (layer == gdisp->gimage->active_layer)
       {
 	gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
 	return;
@@ -686,18 +690,18 @@ by_color_select_render (ByColorDialog *bcd,
   int scale;
 
   mask = gimage_get_mask (gimage);
-  if ((mask->width > PREVIEW_WIDTH) ||
-      (mask->height > PREVIEW_HEIGHT))
+  if ((drawable_width (GIMP_DRAWABLE(mask)) > PREVIEW_WIDTH) ||
+      (drawable_height (GIMP_DRAWABLE(mask)) > PREVIEW_HEIGHT))
     {
-      if (((float) mask->width / (float) PREVIEW_WIDTH) >
-	  ((float) mask->height / (float) PREVIEW_HEIGHT))
+      if (((float) drawable_width (GIMP_DRAWABLE (mask)) / (float) PREVIEW_WIDTH) >
+	  ((float) drawable_height (GIMP_DRAWABLE (mask)) / (float) PREVIEW_HEIGHT))
 	{
 	  width = PREVIEW_WIDTH;
-	  height = (mask->height * PREVIEW_WIDTH) / mask->width;
+	  height = (drawable_height (GIMP_DRAWABLE (mask)) * PREVIEW_WIDTH) / drawable_width (GIMP_DRAWABLE (mask));
 	}
       else
 	{
-	  width = (mask->width * PREVIEW_HEIGHT) / mask->height;
+	  width = (drawable_width (GIMP_DRAWABLE (mask)) * PREVIEW_HEIGHT) / drawable_height (GIMP_DRAWABLE (mask));
 	  height = PREVIEW_HEIGHT;
 	}
 
@@ -705,8 +709,8 @@ by_color_select_render (ByColorDialog *bcd,
     }
   else
     {
-      width = mask->width;
-      height = mask->height;
+      width = drawable_width (GIMP_DRAWABLE (mask));
+      height = drawable_height (GIMP_DRAWABLE (mask));
 
       scale = FALSE;
     }
@@ -730,11 +734,14 @@ by_color_select_render (ByColorDialog *bcd,
     {
       /*  calculate 'acceptable' subsample  */
       subsample = 1;
-      while ((width * (subsample + 1) * 2 < mask->width) &&
-	     (height * (subsample + 1) * 2 < mask->height))
+      while ((width * (subsample + 1) * 2 < drawable_width (GIMP_DRAWABLE (mask))) &&
+	     (height * (subsample + 1) * 2 < drawable_height (GIMP_DRAWABLE (mask))))
 	subsample = subsample + 1;
 
-      pixel_region_init (&srcPR, mask->tiles, 0, 0, mask->width, mask->height, FALSE);
+      pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE (mask)), 
+			 0, 0, 
+			 drawable_width (GIMP_DRAWABLE (mask)), 
+			 drawable_height (GIMP_DRAWABLE (mask)), FALSE);
 
       scaled_buf = mask_buf_new (width, height);
       destPR.bytes = 1;
@@ -750,7 +757,10 @@ by_color_select_render (ByColorDialog *bcd,
     }
   else
     {
-      pixel_region_init (&srcPR, mask->tiles, 0, 0, mask->width, mask->height, FALSE);
+      pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE (mask)), 
+			 0, 0, 
+			 drawable_width (GIMP_DRAWABLE (mask)), 
+			 drawable_height (GIMP_DRAWABLE (mask)), FALSE);
 
       scaled_buf = mask_buf_new (width, height);
       destPR.bytes = 1;
@@ -871,13 +881,13 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
 {
   int x, y;
   int replace, operation;
-  int drawable_id;
+  GimpDrawable *drawable;
   Tile *tile;
   unsigned char *col;
 
   if (!bcd->gimage)
     return;
-  drawable_id = gimage_active_drawable (bcd->gimage);
+  drawable = gimage_active_drawable (bcd->gimage);
 
   /*  Defaults  */
   replace = FALSE;
@@ -910,17 +920,17 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
     {
       int offx, offy;
 
-      drawable_offsets (drawable_id, &offx, &offy);
-      x = drawable_width (drawable_id) * bevent->x / bcd->preview->requisition.width - offx;
-      y = drawable_height (drawable_id) * bevent->y / bcd->preview->requisition.height - offy;
-      if (x < 0 || y < 0 || x >= drawable_width (drawable_id) || y >= drawable_height (drawable_id))
+      drawable_offsets (drawable, &offx, &offy);
+      x = drawable_width (drawable) * bevent->x / bcd->preview->requisition.width - offx;
+      y = drawable_height (drawable) * bevent->y / bcd->preview->requisition.height - offy;
+      if (x < 0 || y < 0 || x >= drawable_width (drawable) || y >= drawable_height (drawable))
 	return;
-      tile = tile_manager_get_tile (drawable_data (drawable_id), x, y, 0);
+      tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
       tile_ref (tile);
       col = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
     }
 
-  by_color_select (bcd->gimage, drawable_id, col,
+  by_color_select (bcd->gimage, drawable, col,
 		   bcd->threshold,
 		   operation,
 		   by_color_options->antialias,
@@ -1008,7 +1018,7 @@ by_color_select_invoker (Argument *args)
 {
   int success = TRUE;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int op;
   int threshold;
   int antialias;
@@ -1018,7 +1028,7 @@ by_color_select_invoker (Argument *args)
   double feather_radius;
   int int_value;
 
-  drawable_id = -1;
+  drawable    = NULL;
   op          = REPLACE;
   threshold   = 0;
 
@@ -1033,10 +1043,9 @@ by_color_select_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage != drawable_gimage (int_value))
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
-      else
-	drawable_id = int_value;
     }
   /*  color  */
   if (success)
@@ -1096,7 +1105,7 @@ by_color_select_invoker (Argument *args)
 
   /*  call the ellipse_select procedure  */
   if (success)
-    by_color_select (gimage, drawable_id, color, threshold, op,
+    by_color_select (gimage, drawable, color, threshold, op,
 		     antialias, feather, feather_radius, sample_merged);
 
   return procedural_db_return_args (&by_color_select_proc, success);

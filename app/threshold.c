@@ -48,7 +48,7 @@ struct _ThresholdDialog
   GtkWidget   *high_threshold_text;
   Histogram   *histogram;
 
-  int          drawable_id;
+  GimpDrawable *drawable;
   ImageMap     image_map;
   int          color;
   int          low_threshold;
@@ -347,11 +347,11 @@ threshold_initialize (void *gdisp_ptr)
     if (!GTK_WIDGET_VISIBLE (threshold_dialog->shell))
       gtk_widget_show (threshold_dialog->shell);
 
-  threshold_dialog->drawable_id = gimage_active_drawable (gdisp->gimage);
-  threshold_dialog->color = drawable_color (threshold_dialog->drawable_id);
-  threshold_dialog->image_map = image_map_create (gdisp_ptr, threshold_dialog->drawable_id);
+  threshold_dialog->drawable = gimage_active_drawable (gdisp->gimage);
+  threshold_dialog->color = drawable_color (threshold_dialog->drawable);
+  threshold_dialog->image_map = image_map_create (gdisp_ptr, threshold_dialog->drawable);
   histogram_update (threshold_dialog->histogram,
-		    threshold_dialog->drawable_id,
+		    threshold_dialog->drawable,
 		    threshold_histogram_info,
 		    (void *) threshold_dialog);
   histogram_range (threshold_dialog->histogram,
@@ -649,14 +649,14 @@ threshold_invoker (args)
   int success = TRUE;
   ThresholdDialog td;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int low_threshold;
   int high_threshold;
   int int_value;
   int x1, y1, x2, y2;
   void *pr;
 
-  drawable_id    = -1;
+  drawable    = NULL;
   low_threshold  = 0;
   high_threshold = 0;
 
@@ -671,9 +671,8 @@ threshold_invoker (args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage == drawable_gimage (int_value))
-	drawable_id = int_value;
-      else
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   /*  low threhsold  */
@@ -700,21 +699,21 @@ threshold_invoker (args)
   /*  arrange to modify the levels  */
   if (success)
     {
-      td.color = drawable_color (drawable_id);
+      td.color = drawable_color (drawable);
       td.low_threshold = low_threshold;
       td.high_threshold = high_threshold;
 
       /*  The application should occur only within selection bounds  */
-      drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-      pixel_region_init (&srcPR, drawable_data (drawable_id), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable_id), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
 	threshold (&srcPR, &destPR, (void *) &td);
 
-      drawable_merge_shadow (drawable_id, TRUE);
-      drawable_update (drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+      drawable_merge_shadow (drawable, TRUE);
+      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 
   return procedural_db_return_args (&threshold_proc, success);

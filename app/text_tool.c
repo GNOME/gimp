@@ -38,6 +38,9 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "tile_manager_pvt.h"
+#include "drawable_pvt.h"
+
 #define FONT_LIST_WIDTH  125
 #define FONT_LIST_HEIGHT 200
 
@@ -139,7 +142,7 @@ static int        text_load_font          (TextTool *);
 static void       text_init_render        (TextTool *);
 static void       text_gdk_image_to_region (GdkImage *, int, PixelRegion *);
 static int        text_get_extents        (char *, char *, int *, int *, int *, int *);
-static Layer *    text_render             (GImage *, int, int, int, char *, char *, int, int);
+static Layer *    text_render             (GImage *, GimpDrawable *, int, int, char *, char *, int, int);
 
 static Argument * text_tool_invoker              (Argument *);
 static Argument * text_tool_get_extents_invoker  (Argument *);
@@ -1501,7 +1504,7 @@ text_gdk_image_to_region (GdkImage    *image,
 
 static Layer *
 text_render (GImage *gimage,
-	     int     drawable_id,
+	     GimpDrawable *drawable,
 	     int     text_x,
 	     int     text_y,
 	     char   *fontname,
@@ -1530,8 +1533,8 @@ text_render (GImage *gimage,
   void * pr;
 
   /*  determine the layer type  */
-  if (drawable_id != -1)
-    layer_type = drawable_type_with_alpha (drawable_id);
+  if (drawable != NULL)
+    layer_type = drawable_type_with_alpha (drawable);
   else
     layer_type = gimage_base_type_with_alpha (gimage);
 
@@ -1652,22 +1655,22 @@ text_render (GImage *gimage,
 			 "Text Layer", OPAQUE, NORMAL_MODE)))
     {
       /*  color the layer buffer  */
-      gimage_get_foreground (gimage, drawable_id, color);
-      color[layer->bytes - 1] = OPAQUE;
-      pixel_region_init (&textPR, layer->tiles, 0, 0, layer->width, layer->height, TRUE);
+      gimage_get_foreground (gimage, drawable, color);
+      color[GIMP_DRAWABLE(layer)->bytes - 1] = OPAQUE;
+      pixel_region_init (&textPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
       color_region (&textPR, color);
 
       /*  apply the text mask  */
-      pixel_region_init (&textPR, layer->tiles, 0, 0, layer->width, layer->height, TRUE);
-      pixel_region_init (&maskPR, newmask, 0, 0, layer->width, layer->height, FALSE);
+      pixel_region_init (&textPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
+      pixel_region_init (&maskPR, newmask, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
       apply_mask_to_region (&textPR, &maskPR, OPAQUE);
 
       /*  Start a group undo  */
       undo_push_group_start (gimage, EDIT_PASTE_UNDO);
 
       /*  Set the layer offsets  */
-      layer->offset_x = text_x;
-      layer->offset_y = text_y;
+      GIMP_DRAWABLE(layer)->offset_x = text_x;
+      GIMP_DRAWABLE(layer)->offset_y = text_y;
 
       /*  If there is a selection mask clear it--
        *  this might not always be desired, but in general,
@@ -1677,11 +1680,11 @@ text_render (GImage *gimage,
 	channel_clear (gimage_get_mask (gimage));
 
       /*  If the drawable id is invalid, create a new layer  */
-      if (drawable_id == -1)
+      if (drawable == NULL)
 	gimage_add_layer (gimage, layer, -1);
       /*  Otherwise, instantiate the text as the new floating selection */
       else
-	floating_sel_attach (layer, drawable_id);
+	floating_sel_attach (layer, drawable);
 
       /*  end the group undo  */
       undo_push_group_end (gimage);
@@ -1949,7 +1952,7 @@ text_tool_invoker (Argument *args)
   int success = TRUE;
   GImage *gimage;
   Layer *text_layer;
-  int drawable_id;
+  GimpDrawable *drawable;
   double x, y;
   char *text;
   int border;
@@ -1968,7 +1971,7 @@ text_tool_invoker (Argument *args)
   Argument *return_args;
 
   text_layer  = NULL;
-  drawable_id = -1;
+  drawable    = NULL;
   x           = 0;
   y           = 0;
   text        = NULL;
@@ -1994,11 +1997,8 @@ text_tool_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage == drawable_gimage (int_value))
-	drawable_id = int_value;
-      else if (int_value == -1)
-	drawable_id = -1;
-      else
+      drawable = drawable_get_ID (int_value);
+      if (drawable != NULL && gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   /*  x, y coordinates  */
@@ -2067,13 +2067,13 @@ text_tool_invoker (Argument *args)
 
   /*  call the text render procedure  */
   if (success)
-    success = ((text_layer = text_render (gimage, drawable_id, x, y, fontname,
+    success = ((text_layer = text_render (gimage, drawable, x, y, fontname,
 					  text, border, antialias)) != NULL);
 
   return_args = procedural_db_return_args (&text_tool_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = text_layer->ID;
+    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(text_layer));
 
   return return_args;
 }

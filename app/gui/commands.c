@@ -39,6 +39,7 @@
 #include "floating_sel.h"
 #include "gdisplay_ops.h"
 #include "general.h"
+#include "gimage_cmds.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
 #include "global_edit.h"
@@ -213,7 +214,7 @@ file_new_ok_callback (GtkWidget *widget,
     gimage_add_layer (gimage, layer, 0);
     gimage_enable_undo (gimage);
     
-    drawable_fill (layer->ID, vals->fill_type);
+    drawable_fill (GIMP_DRAWABLE(layer), vals->fill_type);
 
     gimage_clean_all (gimage);
     

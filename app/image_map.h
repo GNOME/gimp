@@ -30,7 +30,7 @@ typedef void (* ImageMapApplyFunc)  (PixelRegion *, PixelRegion *, void *);
  *   MUST be followed with an image_map_commit or an image_map_abort call
  *   The image map is no longer valid after a call to commit or abort.
  */
-ImageMap  image_map_create  (void *, int);
+ImageMap  image_map_create  (void *, GimpDrawable *);
 void      image_map_apply   (ImageMap, ImageMapApplyFunc, void *);
 void      image_map_commit  (ImageMap);
 void      image_map_abort   (ImageMap);

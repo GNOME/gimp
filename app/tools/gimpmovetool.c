@@ -113,7 +113,7 @@ move_tool_button_press (Tool           *tool,
 	  /*  Otherwise, init the edit selection  */
 	  else
 	    {
-	      gimage_set_active_layer (gdisp->gimage, layer->ID);
+	      gimage_set_active_layer (gdisp->gimage, layer);
 	      init_edit_selection (tool, gdisp_ptr, bevent, LayerTranslate);
 	    }
 	  tool->state = ACTIVE;
@@ -314,7 +314,7 @@ move_tool_cursor_update (Tool           *tool,
 	  /*  if there is a floating selection, and this aint it...  */
 	  if (gimage_floating_sel (gdisp->gimage) && !layer_is_floating_sel (layer))
 	    gdisplay_install_tool_cursor (gdisp, GDK_SB_DOWN_ARROW);
-	  else if (layer->ID == gdisp->gimage->active_layer)
+	  else if (layer == gdisp->gimage->active_layer)
 	    gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
 	  else
 	    gdisplay_install_tool_cursor (gdisp, GDK_HAND2);

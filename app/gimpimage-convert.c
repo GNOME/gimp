@@ -66,6 +66,10 @@
 #include "undo.h"
 #include "palette.h"
 
+#include "layer_pvt.h"			/* ick. */
+#include "drawable_pvt.h"		/* ick ick. */
+#include "tile_manager_pvt.h"		/* ick ick ick. */
+
 #define MAXNUMCOLORS 256
 
 #define NODITHER 0
@@ -738,7 +742,7 @@ convert_image (GImage *gimage,
 	  break;
 	}
 
-      new_tiles = tile_manager_new (layer->width, layer->height, new_layer_bytes);
+      new_tiles = tile_manager_new (GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, new_layer_bytes);
 
       switch (new_type)
 	{
@@ -758,9 +762,10 @@ convert_image (GImage *gimage,
       /*  Push the layer on the undo stack  */
       undo_push_layer_mod (gimage, layer);
 
-      layer->tiles = new_tiles;
-      layer->bytes = new_layer_bytes;
-      layer->type = new_layer_type;
+      GIMP_DRAWABLE(layer)->tiles = new_tiles;
+      GIMP_DRAWABLE(layer)->bytes = new_layer_bytes;
+      GIMP_DRAWABLE(layer)->type = new_layer_type;
+      GIMP_DRAWABLE(layer)->has_alpha = TYPE_HAS_ALPHA(new_layer_type);
     }
 
   /*  Delete the quantizer object, if there is one */
@@ -800,8 +805,8 @@ rgb_converter (Layer       *layer,
   void *pr;
 
   has_alpha = layer_has_alpha (layer);
-  pixel_region_init (&srcPR, layer->tiles, 0, 0, layer->width, layer->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0, layer->width, layer->height, TRUE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
     {
@@ -832,7 +837,7 @@ rgb_converter (Layer       *layer,
 	    }
 	  break;
 	case INDEXED:
-	  cmap = drawable_cmap (layer->ID);
+	  cmap = drawable_cmap (GIMP_DRAWABLE(layer));
 	  for (row = 0; row < srcPR.h; row++)
 	    {
 	      s = src;
@@ -874,8 +879,8 @@ grayscale_converter (Layer       *layer,
   void *pr;
 
   has_alpha = layer_has_alpha (layer);
-  pixel_region_init (&srcPR, layer->tiles, 0, 0, layer->width, layer->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0, layer->width, layer->height, TRUE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
     {
@@ -903,7 +908,7 @@ grayscale_converter (Layer       *layer,
 	    }
 	  break;
 	case INDEXED:
-	  cmap = drawable_cmap (layer->ID);
+	  cmap = drawable_cmap (GIMP_DRAWABLE(layer));
 	  for (row = 0; row < srcPR.h; row++)
 	    {
 	      s = src;
@@ -966,7 +971,7 @@ generate_histogram_gray (Histogram  histogram,
 
   has_alpha = (gboolean) layer_has_alpha(layer);
 
-  pixel_region_init (&srcPR, layer->tiles, 0, 0, layer->width, layer->height, FALSE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   for (pr = pixel_regions_register (1, &srcPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
@@ -999,7 +1004,7 @@ generate_histogram_rgb (Histogram  histogram,
 
   g_print ("col_limit = %d, nfc = %d\n", col_limit, num_found_cols);
 
-  pixel_region_init (&srcPR, layer->tiles, 0, 0, layer->width, layer->height, FALSE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   for (pr = pixel_regions_register (1, &srcPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
@@ -2057,8 +2062,8 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
   zero_histogram_gray (histogram);
 
   has_alpha = layer_has_alpha (layer);
-  pixel_region_init (&srcPR, layer->tiles, 0, 0, layer->width, layer->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0, layer->width, layer->height, TRUE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
     {
       src = srcPR.data;
@@ -2107,14 +2112,14 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
   /*  In the case of web/mono palettes, we actually force
    *   grayscale drawables through the rgb pass2 functions
    */
-  if (drawable_gray (layer->ID))
+  if (drawable_gray (GIMP_DRAWABLE(layer)))
     red_pix = green_pix = blue_pix = GRAY_PIX;
 
   zero_histogram_rgb (histogram);
 
   has_alpha = layer_has_alpha (layer);
-  pixel_region_init (&srcPR, layer->tiles, 0, 0, layer->width, layer->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0, layer->width, layer->height, TRUE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
     {
       src = srcPR.data;
@@ -2167,8 +2172,8 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
 
 
   has_alpha = layer_has_alpha (layer);
-  pixel_region_init (&srcPR, layer->tiles, 0, 0, layer->width, layer->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0, layer->width, layer->height, TRUE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
     {
       src = srcPR.data;
@@ -2322,12 +2327,12 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   zero_histogram_gray (histogram);
 
   has_alpha = layer_has_alpha (layer);
-  pixel_region_init (&srcPR, layer->tiles, 0, 0, layer->width, layer->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0, layer->width, layer->height, TRUE);
-  src_bytes = layer->bytes;
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
+  src_bytes = GIMP_DRAWABLE(layer)->bytes;
   dest_bytes = new_tiles->levels[0].bpp;
-  width = layer->width;
-  height = layer->height;
+  width = GIMP_DRAWABLE(layer)->width;
+  height = GIMP_DRAWABLE(layer)->height;
 
   error_limiter = init_error_limit ();
   range_limiter = range_array + 256;
@@ -2472,18 +2477,18 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   /*  In the case of web/mono palettes, we actually force
    *   grayscale drawables through the rgb pass2 functions
    */
-  if (drawable_gray (layer->ID))
+  if (drawable_gray (GIMP_DRAWABLE(layer)))
     red_pix = green_pix = blue_pix = GRAY_PIX;
 
   zero_histogram_rgb (histogram);
 
   has_alpha = layer_has_alpha (layer);
-  pixel_region_init (&srcPR, layer->tiles, 0, 0, layer->width, layer->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0, layer->width, layer->height, TRUE);
-  src_bytes = layer->bytes;
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
+  src_bytes = GIMP_DRAWABLE(layer)->bytes;
   dest_bytes = new_tiles->levels[0].bpp;
-  width = layer->width;
-  height = layer->height;
+  width = GIMP_DRAWABLE(layer)->width;
+  height = GIMP_DRAWABLE(layer)->height;
 
   error_limiter = init_error_limit ();
   range_limiter = range_array + 256;

@@ -22,6 +22,10 @@
 #include "xcf.h"
 #include "frac.h"
 
+#include "drawable_pvt.h"
+#include "layer_pvt.h"
+#include "channel_pvt.h"
+#include "tile_manager_pvt.h"
 
 /* #define SWAP_FROM_FILE */
 
@@ -107,6 +111,8 @@ static gint     xcf_load_prop          (XcfInfo     *info,
 static Layer*   xcf_load_layer         (XcfInfo     *info,
 					GImage      *gimage);
 static Channel* xcf_load_channel       (XcfInfo     *info,
+					GImage      *gimage);
+static LayerMask* xcf_load_layer_mask  (XcfInfo     *info,
 					GImage      *gimage);
 static gint     xcf_load_hierarchy     (XcfInfo     *info,
 					TileManager *tiles);
@@ -295,7 +301,8 @@ xcf_load_invoker (Argument *args)
       info.filename = filename;
       info.active_layer = 0;
       info.active_channel = 0;
-      info.floating_sel_drawable = -1;
+      info.floating_sel_drawable = NULL;
+      info.floating_sel = NULL;
       info.floating_sel_offset = 0;
       info.swap_num = 0;
       info.ref_count = NULL;
@@ -366,7 +373,8 @@ xcf_save_invoker (Argument *args)
       info.filename = filename;
       info.active_layer = 0;
       info.active_channel = 0;
-      info.floating_sel_drawable = -1;
+      info.floating_sel_drawable = NULL;
+      info.floating_sel = NULL;
       info.floating_sel_offset = 0;
       info.swap_num = 0;
       info.ref_count = NULL;
@@ -577,7 +585,7 @@ xcf_save_layer_props (XcfInfo *info,
 		      GImage  *gimage,
 		      Layer   *layer)
 {
-  if (layer->ID == gimage->active_layer)
+  if (layer == gimage->active_layer)
     xcf_save_prop (info, PROP_ACTIVE_LAYER);
 
   if (layer == gimage_floating_sel (gimage))
@@ -587,13 +595,13 @@ xcf_save_layer_props (XcfInfo *info,
     }
 
   xcf_save_prop (info, PROP_OPACITY, layer->opacity);
-  xcf_save_prop (info, PROP_VISIBLE, layer->visible);
+  xcf_save_prop (info, PROP_VISIBLE, GIMP_DRAWABLE(layer)->visible);
   xcf_save_prop (info, PROP_LINKED, layer->linked);
   xcf_save_prop (info, PROP_PRESERVE_TRANSPARENCY, layer->preserve_trans);
   xcf_save_prop (info, PROP_APPLY_MASK, layer->apply_mask);
   xcf_save_prop (info, PROP_EDIT_MASK, layer->edit_mask);
   xcf_save_prop (info, PROP_SHOW_MASK, layer->show_mask);
-  xcf_save_prop (info, PROP_OFFSETS, layer->offset_x, layer->offset_y);
+  xcf_save_prop (info, PROP_OFFSETS, GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y);
   xcf_save_prop (info, PROP_MODE, layer->mode);
 
   xcf_save_prop (info, PROP_END);
@@ -604,14 +612,14 @@ xcf_save_channel_props (XcfInfo *info,
 			GImage  *gimage,
 			Channel *channel)
 {
-  if (channel->ID == gimage->active_channel)
+  if (channel == gimage->active_channel)
     xcf_save_prop (info, PROP_ACTIVE_CHANNEL);
 
   if (channel == gimage->selection_mask)
     xcf_save_prop (info, PROP_SELECTION);
 
   xcf_save_prop (info, PROP_OPACITY, channel->opacity);
-  xcf_save_prop (info, PROP_VISIBLE, channel->visible);
+  xcf_save_prop (info, PROP_VISIBLE, GIMP_DRAWABLE(channel)->visible);
   xcf_save_prop (info, PROP_SHOW_MASKED, channel->show_masked);
   xcf_save_prop (info, PROP_COLOR, channel->col);
 
@@ -863,7 +871,7 @@ xcf_save_layer (XcfInfo *info,
   /* check and see if this is the drawable that the floating
    *  selection is attached to.
    */
-  if (layer->ID == info->floating_sel_drawable)
+  if (GIMP_DRAWABLE(layer) == info->floating_sel_drawable)
     {
       saved_pos = info->cp;
       xcf_seek_pos (info, info->floating_sel_offset);
@@ -872,15 +880,15 @@ xcf_save_layer (XcfInfo *info,
     }
 
   /* write out the width, height and image type information for the layer */
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &layer->width, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &layer->height, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &layer->type, 1);
+  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->width, 1);
+  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->height, 1);
+  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->type, 1);
 
   if (info->compression == COMPRESS_FRACTAL)
-    xcf_compress_frac_info (layer->type);
+    xcf_compress_frac_info (GIMP_DRAWABLE(layer)->type);
 
   /* write out the layers name */
-  info->cp += xcf_write_string (info->fp, &layer->name, 1);
+  info->cp += xcf_write_string (info->fp, &GIMP_DRAWABLE(layer)->name, 1);
 
   /* write out the layer properties */
   xcf_save_layer_props (info, gimage, layer);
@@ -894,7 +902,7 @@ xcf_save_layer (XcfInfo *info,
   xcf_seek_pos (info, info->cp + 8);
   offset = info->cp;
 
-  xcf_save_hierarchy (info, layer->tiles);
+  xcf_save_hierarchy (info, GIMP_DRAWABLE(layer)->tiles);
 
   xcf_seek_pos (info, saved_pos);
   info->cp += xcf_write_int32 (info->fp, &offset, 1);
@@ -906,7 +914,7 @@ xcf_save_layer (XcfInfo *info,
       xcf_seek_end (info);
       offset = info->cp;
 
-      xcf_save_channel (info, gimage, layer->mask);
+      xcf_save_channel (info, gimage, GIMP_CHANNEL(layer->mask));
     }
   else
     offset = 0;
@@ -926,7 +934,7 @@ xcf_save_channel (XcfInfo *info,
   /* check and see if this is the drawable that the floating
    *  selection is attached to.
    */
-  if (channel->ID == info->floating_sel_drawable)
+  if (GIMP_DRAWABLE(channel) == info->floating_sel_drawable)
     {
       saved_pos = info->cp;
       xcf_seek_pos (info, info->floating_sel_offset);
@@ -935,11 +943,11 @@ xcf_save_channel (XcfInfo *info,
     }
 
   /* write out the width and height information for the channel */
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &channel->width, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &channel->height, 1);
+  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(channel)->width, 1);
+  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(channel)->height, 1);
 
   /* write out the channels name */
-  info->cp += xcf_write_string (info->fp, &channel->name, 1);
+  info->cp += xcf_write_string (info->fp, &GIMP_DRAWABLE(channel)->name, 1);
 
   /* write out the channel properties */
   xcf_save_channel_props (info, gimage, channel);
@@ -953,7 +961,7 @@ xcf_save_channel (XcfInfo *info,
   xcf_seek_pos (info, info->cp + 4);
   offset = info->cp;
 
-  xcf_save_hierarchy (info, channel->tiles);
+  xcf_save_hierarchy (info, GIMP_DRAWABLE(channel)->tiles);
 
   xcf_seek_pos (info, saved_pos);
   info->cp += xcf_write_int32 (info->fp, &offset, 1);
@@ -1262,10 +1270,10 @@ xcf_load_image (XcfInfo *info)
 	goto error;
 
       if (info->compression == COMPRESS_FRACTAL)
-	xcf_compress_frac_info (layer->type);
+	xcf_compress_frac_info (GIMP_DRAWABLE(layer)->type);
 
       /* add the layer to the image if its not the floating selection */
-      if (layer->ID != info->floating_sel_drawable)
+      if (layer != info->floating_sel)
 	gimage_add_layer (gimage, layer, list_length (gimage->layers));
 
       /* restore the saved position so we'll be ready to
@@ -1443,17 +1451,17 @@ xcf_load_layer_props (XcfInfo *info,
 	case PROP_END:
 	  return TRUE;
 	case PROP_ACTIVE_LAYER:
-	  info->active_layer = layer->ID;
+	  info->active_layer = layer;
 	  break;
 	case PROP_FLOATING_SELECTION:
-	  info->floating_sel_drawable = layer->ID;
+	  info->floating_sel = layer;
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &info->floating_sel_offset, 1);
 	  break;
 	case PROP_OPACITY:
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->opacity, 1);
 	  break;
 	case PROP_VISIBLE:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->visible, 1);
+	  info->cp += xcf_read_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->visible, 1);
 	  break;
 	case PROP_LINKED:
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->linked, 1);
@@ -1471,8 +1479,8 @@ xcf_load_layer_props (XcfInfo *info,
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->show_mask, 1);
 	  break;
 	case PROP_OFFSETS:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->offset_x, 1);
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->offset_y, 1);
+	  info->cp += xcf_read_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->offset_x, 1);
+	  info->cp += xcf_read_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->offset_y, 1);
 	  break;
 	case PROP_MODE:
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->mode, 1);
@@ -1516,7 +1524,7 @@ xcf_load_channel_props (XcfInfo *info,
 	case PROP_END:
 	  return TRUE;
 	case PROP_ACTIVE_CHANNEL:
-	  info->active_channel = channel->ID;
+	  info->active_channel = channel;
 	  break;
 	case PROP_SELECTION:
 	  channel_delete (gimage->selection_mask);
@@ -1528,7 +1536,7 @@ xcf_load_channel_props (XcfInfo *info,
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &channel->opacity, 1);
 	  break;
 	case PROP_VISIBLE:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &channel->visible, 1);
+	  info->cp += xcf_read_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(channel)->visible, 1);
 	  break;
 	case PROP_SHOW_MASKED:
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &channel->show_masked, 1);
@@ -1572,7 +1580,7 @@ xcf_load_layer (XcfInfo *info,
 		GImage  *gimage)
 {
   Layer *layer;
-  Channel *layer_mask;
+  LayerMask *layer_mask;
   guint32 hierarchy_offset;
   guint32 layer_mask_offset;
   int apply_mask;
@@ -1609,7 +1617,7 @@ xcf_load_layer (XcfInfo *info,
     goto error;
 
   if (info->compression == COMPRESS_FRACTAL)
-    xcf_compress_frac_info (layer->type);
+    xcf_compress_frac_info (GIMP_DRAWABLE(layer)->type);
 
   /* read the hierarchy and layer mask offsets */
   info->cp += xcf_read_int32 (info->fp, &hierarchy_offset, 1);
@@ -1617,7 +1625,7 @@ xcf_load_layer (XcfInfo *info,
 
   /* read in the hierarchy */
   xcf_seek_pos (info, hierarchy_offset);
-  if (!xcf_load_hierarchy (info, layer->tiles))
+  if (!xcf_load_hierarchy (info, GIMP_DRAWABLE(layer)->tiles))
     goto error;
 
   /* read in the layer mask */
@@ -1625,7 +1633,7 @@ xcf_load_layer (XcfInfo *info,
     {
       xcf_seek_pos (info, layer_mask_offset);
 
-      layer_mask = xcf_load_channel (info, gimage);
+      layer_mask = xcf_load_layer_mask (info, gimage);
       if (!layer_mask)
 	goto error;
 
@@ -1633,7 +1641,7 @@ xcf_load_layer (XcfInfo *info,
       edit_mask = layer->edit_mask;
       show_mask = layer->show_mask;
 
-      layer_add_mask (layer, layer_mask->ID);
+      layer_add_mask (layer, layer_mask);
 
       layer->apply_mask = apply_mask;
       layer->edit_mask = edit_mask;
@@ -1645,8 +1653,8 @@ xcf_load_layer (XcfInfo *info,
     {
       Layer *floating_sel;
 
-      floating_sel = layer_get_ID (info->floating_sel_drawable);
-      floating_sel_attach (floating_sel, layer->ID);
+      floating_sel = info->floating_sel;
+      floating_sel_attach (floating_sel, GIMP_DRAWABLE(layer));
     }
 
   return layer;
@@ -1696,7 +1704,7 @@ xcf_load_channel (XcfInfo *info,
 
   /* read in the hierarchy */
   xcf_seek_pos (info, hierarchy_offset);
-  if (!xcf_load_hierarchy (info, channel->tiles))
+  if (!xcf_load_hierarchy (info, GIMP_DRAWABLE(channel)->tiles))
     goto error;
 
   /* attach the floating selection... */
@@ -1704,14 +1712,73 @@ xcf_load_channel (XcfInfo *info,
     {
       Layer *floating_sel;
 
-      floating_sel = layer_get_ID (info->floating_sel_drawable);
-      floating_sel_attach (floating_sel, channel->ID);
+      floating_sel = info->floating_sel;
+      floating_sel_attach (floating_sel, GIMP_DRAWABLE(channel));
     }
 
   return channel;
 
 error:
   channel_delete (channel);
+  return NULL;
+}
+
+static LayerMask*
+xcf_load_layer_mask (XcfInfo *info,
+		     GImage  *gimage)
+{
+  LayerMask *layer_mask;
+  guint32 hierarchy_offset;
+  int width;
+  int height;
+  int add_floating_sel;
+  char *name;
+  guchar color[3] = { 0, 0, 0 };
+
+  /* check and see if this is the drawable the floating selection
+   *  is attached to. if it is then we'll do the attachment at
+   *  the end of this function.
+   */
+  add_floating_sel = (info->cp == info->floating_sel_offset);
+
+  /* read in the layer width, height and name */
+  info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32*) &height, 1);
+  info->cp += xcf_read_string (info->fp, &name, 1);
+
+  /* create a new layer mask */
+  layer_mask = layer_mask_new (gimage->ID, width, height, name, 255, color);
+  if (!layer_mask)
+    {
+      g_free (name);
+      return NULL;
+    }
+
+  /* read in the layer_mask properties */
+  if (!xcf_load_channel_props (info, gimage, GIMP_CHANNEL(layer_mask)))
+    goto error;
+
+  /* read the hierarchy and layer mask offsets */
+  info->cp += xcf_read_int32 (info->fp, &hierarchy_offset, 1);
+
+  /* read in the hierarchy */
+  xcf_seek_pos (info, hierarchy_offset);
+  if (!xcf_load_hierarchy (info, GIMP_DRAWABLE(layer_mask)->tiles))
+    goto error;
+
+  /* attach the floating selection... */
+  if (add_floating_sel)
+    {
+      Layer *floating_sel;
+
+      floating_sel = info->floating_sel;
+      floating_sel_attach (floating_sel, GIMP_DRAWABLE(layer_mask));
+    }
+
+  return layer_mask;
+
+error:
+  layer_mask_delete (layer_mask);
   return NULL;
 }
 

@@ -33,17 +33,18 @@ static int success;
 static Argument *
 drawable_merge_shadow_invoker (Argument *args)
 {
-  int drawable_id;
+  GimpDrawable *drawable;
   int undo;
 
   success = TRUE;
-  if (success)
-    drawable_id = args[0].value.pdb_int;
+  if ((drawable = drawable_get_ID (args[0].value.pdb_int)) == NULL)
+    success = FALSE;
+
   if (success)
     undo = (args[1].value.pdb_int) ? TRUE : FALSE;
 
   if (success)
-    drawable_merge_shadow (drawable_id, undo);
+    drawable_merge_shadow (drawable, undo);
 
   return procedural_db_return_args (&drawable_merge_shadow_proc, success);
 }
@@ -90,14 +91,14 @@ ProcRecord drawable_merge_shadow_proc =
 static Argument *
 drawable_fill_invoker (Argument *args)
 {
-  int drawable_id;
+  GimpDrawable *drawable;
   int fill_type;
 
   fill_type = WHITE_FILL;
 
   success = TRUE;
   if (success)
-    drawable_id = args[0].value.pdb_int;
+    drawable = drawable_get_ID (args[0].value.pdb_int);
   if (success)
     {
       int_value = args[1].value.pdb_int;
@@ -113,7 +114,7 @@ drawable_fill_invoker (Argument *args)
     }
 
   if (success)
-    drawable_fill (drawable_id, fill_type);
+    drawable_fill (drawable, fill_type);
 
   return procedural_db_return_args (&drawable_fill_proc, success);
 }
@@ -175,7 +176,7 @@ drawable_update_invoker (Argument *args)
     }
 
   if (success)
-    drawable_update (drawable_id, x, y, w, h);
+    drawable_update (drawable_get_ID (drawable_id), x, y, w, h);
 
   return procedural_db_return_args (&drawable_update_proc, success);
 }
@@ -244,7 +245,7 @@ drawable_mask_bounds_invoker (Argument *args)
     drawable_id = args[0].value.pdb_int;
 
   if (success)
-    non_empty = drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+    non_empty = drawable_mask_bounds (drawable_get_ID (drawable_id), &x1, &y1, &x2, &y2);
 
   return_args = procedural_db_return_args (&drawable_mask_bounds_proc, success);
 
@@ -330,7 +331,7 @@ drawable_gimage_invoker (Argument *args)
   if (success)
     drawable_id = args[0].value.pdb_int;
   if (success)
-    success = ((gimage = drawable_gimage (drawable_id)) != NULL);
+    success = ((gimage = drawable_gimage (drawable_get_ID (drawable_id))) != NULL);
 
   return_args = procedural_db_return_args (&drawable_gimage_proc, success);
 
@@ -386,15 +387,17 @@ ProcRecord drawable_gimage_proc =
 static Argument *
 drawable_type_invoker (Argument *args)
 {
-  int drawable_id;
-  int type;
+  GimpDrawable *drawable;
+  int type = -1;
   Argument *return_args;
 
   success = TRUE;
+
+  if ((drawable = drawable_get_ID (args[0].value.pdb_int)) == NULL)
+    success = FALSE;
+
   if (success)
-    drawable_id = args[0].value.pdb_int;
-  if (success)
-    type = drawable_type (drawable_id);
+    type = drawable_type (drawable);
 
   return_args = procedural_db_return_args (&drawable_type_proc, success);
 
@@ -458,7 +461,7 @@ drawable_has_alpha_invoker (Argument *args)
   if (success)
     drawable_id = args[0].value.pdb_int;
   if (success)
-    has_alpha = drawable_has_alpha (drawable_id);
+    has_alpha = drawable_has_alpha (drawable_get_ID (drawable_id));
 
   return_args = procedural_db_return_args (&drawable_has_alpha_proc, success);
 
@@ -514,15 +517,15 @@ ProcRecord drawable_has_alpha_proc =
 static Argument *
 drawable_type_with_alpha_invoker (Argument *args)
 {
-  int drawable_id;
-  int type_with_alpha;
+  GimpDrawable *drawable;
+  int type_with_alpha = -1;
   Argument *return_args;
 
   success = TRUE;
+  if ((drawable = drawable_get_ID (args[0].value.pdb_int)) == NULL)
+    success = FALSE;
   if (success)
-    drawable_id = args[0].value.pdb_int;
-  if (success)
-    type_with_alpha = drawable_type_with_alpha (drawable_id);
+    type_with_alpha = drawable_type_with_alpha (drawable);
 
   return_args = procedural_db_return_args (&drawable_type_with_alpha_proc, success);
 
@@ -586,7 +589,7 @@ drawable_color_invoker (Argument *args)
   if (success)
     drawable_id = args[0].value.pdb_int;
   if (success)
-    color = drawable_color (drawable_id);
+    color = drawable_color (drawable_get_ID (drawable_id));
 
   return_args = procedural_db_return_args (&drawable_color_proc, success);
 
@@ -650,7 +653,7 @@ drawable_gray_invoker (Argument *args)
   if (success)
     drawable_id = args[0].value.pdb_int;
   if (success)
-    gray = drawable_gray (drawable_id);
+    gray = drawable_gray (drawable_get_ID (drawable_id));
 
   return_args = procedural_db_return_args (&drawable_gray_proc, success);
 
@@ -714,7 +717,7 @@ drawable_indexed_invoker (Argument *args)
   if (success)
     drawable_id = args[0].value.pdb_int;
   if (success)
-    indexed = drawable_indexed (drawable_id);
+    indexed = drawable_indexed (drawable_get_ID (drawable_id));
 
   return_args = procedural_db_return_args (&drawable_indexed_proc, success);
 
@@ -777,7 +780,7 @@ drawable_bytes_invoker (Argument *args)
   if (success)
     drawable_id = args[0].value.pdb_int;
   if (success)
-    bytes = drawable_bytes (drawable_id);
+    bytes = drawable_bytes (drawable_get_ID (drawable_id));
 
   return_args = procedural_db_return_args (&drawable_bytes_proc, success);
 
@@ -841,7 +844,7 @@ drawable_width_invoker (Argument *args)
   if (success)
     drawable_id = args[0].value.pdb_int;
   if (success)
-    width = drawable_width (drawable_id);
+    width = drawable_width (drawable_get_ID (drawable_id));
 
   return_args = procedural_db_return_args (&drawable_width_proc, success);
 
@@ -904,7 +907,7 @@ drawable_height_invoker (Argument *args)
   if (success)
     drawable_id = args[0].value.pdb_int;
   if (success)
-    height = drawable_height (drawable_id);
+    height = drawable_height (drawable_get_ID (drawable_id));
 
   return_args = procedural_db_return_args (&drawable_height_proc, success);
 
@@ -969,7 +972,7 @@ drawable_offsets_invoker (Argument *args)
   if (success)
     drawable_id = args[0].value.pdb_int;
   if (success)
-    drawable_offsets (drawable_id, &offset_x, &offset_y);
+    drawable_offsets (drawable_get_ID (drawable_id), &offset_x, &offset_y);
 
   return_args = procedural_db_return_args (&drawable_offsets_proc, success);
 
@@ -1040,7 +1043,7 @@ drawable_layer_invoker (Argument *args)
   if (success)
     drawable_id = args[0].value.pdb_int;
   if (success)
-    layer = (drawable_layer (drawable_id)) ? TRUE : FALSE;
+    layer = (drawable_layer (drawable_get_ID (drawable_id))) ? TRUE : FALSE;
 
   return_args = procedural_db_return_args (&drawable_layer_proc, success);
 
@@ -1104,7 +1107,7 @@ drawable_layer_mask_invoker (Argument *args)
   if (success)
     drawable_id = args[0].value.pdb_int;
   if (success)
-    layer_mask = (drawable_layer_mask (drawable_id)) ? TRUE : FALSE;
+    layer_mask = (drawable_layer_mask (drawable_get_ID (drawable_id))) ? TRUE : FALSE;
 
   return_args = procedural_db_return_args (&drawable_layer_mask_proc, success);
 
@@ -1168,7 +1171,7 @@ drawable_channel_invoker (Argument *args)
   if (success)
     drawable_id = args[0].value.pdb_int;
   if (success)
-    channel = (drawable_channel (drawable_id)) ? TRUE : FALSE;
+    channel = (drawable_channel (drawable_get_ID (drawable_id))) ? TRUE : FALSE;
 
   return_args = procedural_db_return_args (&drawable_channel_proc, success);
 
@@ -1223,7 +1226,7 @@ ProcRecord drawable_channel_proc =
 static Argument *
 drawable_set_pixel_invoker (Argument *args)
 {
-  int drawable_id;
+  GimpDrawable *drawable;
   int x, y;
   int num_channels;
   unsigned char *pixel, *p;
@@ -1232,24 +1235,26 @@ drawable_set_pixel_invoker (Argument *args)
 
   success = TRUE;
   if (success)
-    drawable_id = args[0].value.pdb_int;
-  /*  Make sure the drawable exists  */
-  if (success)
-    success = (drawable_gimage (drawable_id) != NULL);
+    {
+      int_value = args[0].value.pdb_int;
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || drawable_gimage (drawable) == NULL)
+	success = FALSE;
+    }
   if (success)
     {
       x = args[1].value.pdb_int;
       y = args[2].value.pdb_int;
 
-      if (x < 0 || x >= drawable_width (drawable_id))
+      if (x < 0 || x >= drawable_width (drawable))
 	success = FALSE;
-      if (y < 0 || y >= drawable_height (drawable_id))
+      if (y < 0 || y >= drawable_height (drawable))
 	success = FALSE;
     }
   if (success)
     {
       num_channels = args[3].value.pdb_int;
-      if (num_channels != drawable_bytes (drawable_id))
+      if (num_channels != drawable_bytes (drawable))
 	success = FALSE;
     }
   if (success)
@@ -1257,7 +1262,7 @@ drawable_set_pixel_invoker (Argument *args)
 
   if (success)
     {
-      tile = tile_manager_get_tile (drawable_data (drawable_id), x, y, 0);
+      tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
       tile_ref (tile);
 
       x %= TILE_WIDTH;
@@ -1325,6 +1330,7 @@ static Argument *
 drawable_get_pixel_invoker (Argument *args)
 {
   int drawable_id;
+  GimpDrawable *drawable;
   int x, y;
   int num_channels;
   unsigned char *pixel, *p;
@@ -1341,25 +1347,27 @@ drawable_get_pixel_invoker (Argument *args)
   /*  Make sure the drawable exists  */
   if (success)
     {
-      success = (drawable_gimage (drawable_id) != NULL);
-      if (success)
-	num_channels = drawable_bytes (drawable_id);
+      drawable = drawable_get_ID (drawable_id);
+      if (drawable == NULL)
+	success = FALSE;
+      else 
+	num_channels = drawable_bytes (drawable);
     }
   if (success)
     {
       x = args[1].value.pdb_int;
       y = args[2].value.pdb_int;
 
-      if (x < 0 || x >= drawable_width (drawable_id))
+      if (x < 0 || x >= drawable_width (drawable))
 	success = FALSE;
-      if (y < 0 || y >= drawable_height (drawable_id))
+      if (y < 0 || y >= drawable_height (drawable))
 	success = FALSE;
     }
 
   if (success)
     {
       pixel = (unsigned char *) g_new (unsigned char, num_channels);
-      tile = tile_manager_get_tile (drawable_data (drawable_id), x, y, 0);
+      tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
       tile_ref (tile);
 
       x %= TILE_WIDTH;

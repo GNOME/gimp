@@ -22,8 +22,9 @@
 #include "drawable.h"
 #include "interface.h"
 #include "invert.h"
+#include "gimage.h"
 
-static void       invert (int);
+static void       invert (GimpDrawable *);
 static Argument * invert_invoker (Argument *);
 
 
@@ -32,14 +33,14 @@ image_invert (gimage_ptr)
      void *gimage_ptr;
 {
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   Argument *return_vals;
   int nreturn_vals;
 
   gimage = (GImage *) gimage_ptr;
-  drawable_id = gimage_active_drawable (gimage);
+  drawable = gimage_active_drawable (gimage);
 
-  if (drawable_indexed (drawable_id))
+  if (drawable_indexed (drawable))
     {
       message_box ("Invert does not operate on indexed drawables.", NULL, NULL);
       return;
@@ -48,7 +49,7 @@ image_invert (gimage_ptr)
   return_vals = procedural_db_run_proc ("gimp_invert",
 					&nreturn_vals,
 					PDB_IMAGE, gimage->ID,
-					PDB_DRAWABLE, drawable_id,
+					PDB_DRAWABLE, drawable_ID (drawable),
 					PDB_END);
 
   if (return_vals[0].value.pdb_int != PDB_SUCCESS)
@@ -61,8 +62,8 @@ image_invert (gimage_ptr)
 /*  Inverter  */
 
 static void
-invert (drawable_id)
-     int drawable_id;
+invert (drawable)
+     GimpDrawable *drawable;
 {
   PixelRegion srcPR, destPR;
   unsigned char *src, *s;
@@ -73,12 +74,12 @@ invert (drawable_id)
   void *pr;
   int x1, y1, x2, y2;
 
-  bytes = drawable_bytes (drawable_id);
-  has_alpha = drawable_has_alpha (drawable_id);
+  bytes = drawable_bytes (drawable);
+  has_alpha = drawable_has_alpha (drawable);
   alpha = has_alpha ? (bytes - 1) : bytes;
-  drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
-  pixel_region_init (&srcPR, drawable_data (drawable_id), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_shadow (drawable_id), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
     {
@@ -108,8 +109,8 @@ invert (drawable_id)
 	}
     }
 
-  drawable_merge_shadow (drawable_id, TRUE);
-  drawable_update (drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  drawable_merge_shadow (drawable, TRUE);
+  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 
@@ -156,9 +157,9 @@ invert_invoker (args)
   int success = TRUE;
   int int_value;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
 
-  drawable_id = -1;
+  drawable = NULL;
 
   /*  the gimage  */
   if (success)
@@ -171,17 +172,16 @@ invert_invoker (args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage != drawable_gimage (int_value))
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
-      else
-	drawable_id = int_value;
     }
   /*  make sure the drawable is not indexed color  */
   if (success)
-    success = ! drawable_indexed (drawable_id);
+    success = ! drawable_indexed (drawable);
 
   if (success)
-    invert (drawable_id);
+    invert (drawable);
 
   return procedural_db_return_args (&invert_proc, success);
 }

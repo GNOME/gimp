@@ -35,6 +35,10 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "layer_pvt.h"
+#include "drawable_pvt.h"
+#include "tile_manager_pvt.h"
+
 #define    SQR(x) ((x) * (x))
 /* define pi */
 #ifndef M_PI
@@ -74,6 +78,7 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
   int closest_dist;
   int x, y;
   int i;
+  int off_x, off_y;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -135,54 +140,57 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
    *  bounding box and handles...
    */
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
-  if ((layer = gimage_get_active_layer (gdisp->gimage)))
-    if (x >= layer->offset_x && y >= layer->offset_y &&
-	x < (layer->offset_x + layer->width) &&
-	y < (layer->offset_y + layer->height))
-      if (gimage_mask_is_empty (gdisp->gimage) ||
-	  gimage_mask_value (gdisp->gimage, x, y))
-	{
-	  if (layer->mask)
-	    {
-	      message_box ("Transformations do not work on\nlayers that contain layer masks.", NULL, NULL);
-	      tool->state = INACTIVE;
-	      return;
-	    }
-
-	  /*  If the tool is already active, clear the current state and reset  */
-	  if (tool->state == ACTIVE)
-	    transform_core_reset (tool, gdisp_ptr);
-
-	  /*  Set the pointer to the gdisplay that owns this tool  */
-	  tool->gdisp_ptr = gdisp_ptr;
-	  tool->state = ACTIVE;
-
-	  /*  Grab the pointer if we're in non-interactive mode  */
-	  if (!transform_core->interactive)
-	    gdk_pointer_grab (gdisp->canvas->window, FALSE,
-			      (GDK_POINTER_MOTION_HINT_MASK |
-			       GDK_BUTTON1_MOTION_MASK |
-			       GDK_BUTTON_RELEASE_MASK),
-			      NULL, NULL, bevent->time);
-
-	  /*  Find the transform bounds for some tools (like scale, perspective)
-	   *  that actually need the bounds for initializing
-	   */
-	  transform_core_bounds (tool, gdisp_ptr);
-
-	  /*  Initialize the transform tool  */
-	  (* transform_core->trans_func) (tool, gdisp_ptr, INIT);
-
-	  /*  Recalculate the transform tool  */
-	  transform_core_recalc (tool, gdisp_ptr);
-
-	  /*  start drawing the bounding box and handles...  */
-	  draw_core_start (transform_core->core, gdisp->canvas->window, tool);
-
-	  /*  recall this function to find which handle we're dragging  */
-	  if (transform_core->interactive)
-	    transform_core_button_press (tool, bevent, gdisp_ptr);
-	}
+  if ((layer = gimage_get_active_layer (gdisp->gimage))) 
+    {
+      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      if (x >= off_x && y >= off_y &&
+	  x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
+	  y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
+	if (gimage_mask_is_empty (gdisp->gimage) ||
+	    gimage_mask_value (gdisp->gimage, x, y))
+	  {
+	    if (GIMP_DRAWABLE(layer->mask))
+	      {
+		message_box ("Transformations do not work on\nlayers that contain layer masks.", NULL, NULL);
+		tool->state = INACTIVE;
+		return;
+	      }
+	    
+	    /*  If the tool is already active, clear the current state and reset  */
+	    if (tool->state == ACTIVE)
+	      transform_core_reset (tool, gdisp_ptr);
+	    
+	    /*  Set the pointer to the gdisplay that owns this tool  */
+	    tool->gdisp_ptr = gdisp_ptr;
+	    tool->state = ACTIVE;
+	    
+	    /*  Grab the pointer if we're in non-interactive mode  */
+	    if (!transform_core->interactive)
+	      gdk_pointer_grab (gdisp->canvas->window, FALSE,
+				(GDK_POINTER_MOTION_HINT_MASK |
+				 GDK_BUTTON1_MOTION_MASK |
+				 GDK_BUTTON_RELEASE_MASK),
+				NULL, NULL, bevent->time);
+	    
+	    /*  Find the transform bounds for some tools (like scale, perspective)
+	     *  that actually need the bounds for initializing
+	     */
+	    transform_core_bounds (tool, gdisp_ptr);
+	    
+	    /*  Initialize the transform tool  */
+	    (* transform_core->trans_func) (tool, gdisp_ptr, INIT);
+	    
+	    /*  Recalculate the transform tool  */
+	    transform_core_recalc (tool, gdisp_ptr);
+	    
+	    /*  start drawing the bounding box and handles...  */
+	    draw_core_start (transform_core->core, gdisp->canvas->window, tool);
+	    
+	    /*  recall this function to find which handle we're dragging  */
+	    if (transform_core->interactive)
+	      transform_core_button_press (tool, bevent, gdisp_ptr);
+	  }
+    }
 }
 
 void
@@ -336,9 +344,9 @@ transform_core_cursor_update (tool, mevent, gdisp_ptr)
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
   if ((layer = gimage_get_active_layer (gdisp->gimage)))
-    if (x >= layer->offset_x && y >= layer->offset_y &&
-	x < (layer->offset_x + layer->width) &&
-	y < (layer->offset_y + layer->height))
+    if (x >= GIMP_DRAWABLE(layer)->offset_x && y >= GIMP_DRAWABLE(layer)->offset_y &&
+	x < (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width) &&
+	y < (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height))
       {
 	if (gimage_mask_is_empty (gdisp->gimage) ||
 	    gimage_mask_value (gdisp->gimage, x, y))
@@ -760,13 +768,13 @@ transform_core_bounds (tool, gdisp_ptr)
   GDisplay * gdisp;
   TransformCore * transform_core;
   TileManager * tiles;
-  int drawable_id;
+  GimpDrawable *drawable;
   int offset_x, offset_y;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
   tiles = transform_core->original;
-  drawable_id = gimage_active_drawable (gdisp->gimage);
+  drawable = gimage_active_drawable (gdisp->gimage);
 
   /*  find the boundaries  */
   if (tiles)
@@ -778,8 +786,8 @@ transform_core_bounds (tool, gdisp_ptr)
     }
   else
     {
-      drawable_offsets (drawable_id, &offset_x, &offset_y);
-      drawable_mask_bounds (drawable_id,
+      drawable_offsets (drawable, &offset_x, &offset_y);
+      drawable_mask_bounds (drawable,
 			    &transform_core->x1, &transform_core->y1,
 			    &transform_core->x2, &transform_core->y2);
       transform_core->x1 += offset_x;
@@ -806,9 +814,9 @@ transform_core_recalc (tool, gdisp_ptr)
 
 /*  Actually carry out a transformation  */
 TileManager *
-transform_core_do (gimage, drawable_id, float_tiles, interpolation, matrix)
+transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
      GImage *gimage;
-     int drawable_id;
+     GimpDrawable *drawable;
      TileManager *float_tiles;
      int interpolation;
      Matrix matrix;
@@ -845,9 +853,9 @@ transform_core_do (gimage, drawable_id, float_tiles, interpolation, matrix)
   alpha = 0;
 
   /*  Get the background color  */
-  gimage_get_background (gimage, drawable_id, bg_col);
+  gimage_get_background (gimage, drawable, bg_col);
 
-  switch (drawable_type (drawable_id))
+  switch (drawable_type (drawable))
     {
     case RGB_GIMAGE: case RGBA_GIMAGE:
       bg_col[ALPHA_PIX] = TRANSPARENT;
@@ -1141,9 +1149,9 @@ transform_core_do (gimage, drawable_id, float_tiles, interpolation, matrix)
 
 
 TileManager *
-transform_core_cut (gimage, drawable_id, new_layer)
+transform_core_cut (gimage, drawable, new_layer)
      GImage *gimage;
-     int drawable_id;
+     GimpDrawable *drawable;
      int *new_layer;
 {
   TileManager *tiles;
@@ -1151,13 +1159,13 @@ transform_core_cut (gimage, drawable_id, new_layer)
   /*  extract the selected mask if there is a selection  */
   if (! gimage_mask_is_empty (gimage))
     {
-      tiles = gimage_mask_extract (gimage, drawable_id, TRUE, TRUE);
+      tiles = gimage_mask_extract (gimage, drawable, TRUE, TRUE);
       *new_layer = TRUE;
     }
   /*  otherwise, just copy the layer  */
   else
     {
-      tiles = gimage_mask_extract (gimage, drawable_id, FALSE, TRUE);
+      tiles = gimage_mask_extract (gimage, drawable, FALSE, TRUE);
       *new_layer = FALSE;
     }
 
@@ -1167,9 +1175,9 @@ transform_core_cut (gimage, drawable_id, new_layer)
 
 /*  Paste a transform to the gdisplay  */
 Layer *
-transform_core_paste (gimage, drawable_id, tiles, new_layer)
+transform_core_paste (gimage, drawable, tiles, new_layer)
      GImage *gimage;
-     int drawable_id;
+     GimpDrawable *drawable;
      TileManager *tiles;
      int new_layer;
 {
@@ -1179,14 +1187,14 @@ transform_core_paste (gimage, drawable_id, tiles, new_layer)
 
   if (new_layer)
     {
-      layer = layer_from_tiles (gimage, drawable_id, tiles, "Transformation", OPAQUE, NORMAL_MODE);
-      layer->offset_x = tiles->x;
-      layer->offset_y = tiles->y;
+      layer = layer_from_tiles (gimage, drawable, tiles, "Transformation", OPAQUE, NORMAL_MODE);
+      GIMP_DRAWABLE(layer)->offset_x = tiles->x;
+      GIMP_DRAWABLE(layer)->offset_y = tiles->y;
 
       /*  Start a group undo  */
       undo_push_group_start (gimage, EDIT_PASTE_UNDO);
 
-      floating_sel_attach (layer, drawable_id);
+      floating_sel_attach (layer, drawable);
 
       /*  End the group undo  */
       undo_push_group_end (gimage);
@@ -1200,7 +1208,7 @@ transform_core_paste (gimage, drawable_id, tiles, new_layer)
     }
   else
     {
-      if ((layer = drawable_layer (drawable_id)) == NULL)
+      if ((layer = drawable_layer ( (drawable))) == NULL)
 	return NULL;
 
       floating_layer = gimage_floating_sel (gimage);
@@ -1209,45 +1217,45 @@ transform_core_paste (gimage, drawable_id, tiles, new_layer)
 	floating_sel_relax (floating_layer, TRUE);
 
       gdisplays_update_area (gimage->ID,
-			     layer->offset_x, layer->offset_y,
-			     layer->width, layer->height);
+			     GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y,
+			     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 
       /*  Push an undo  */
       undo_push_layer_mod (gimage, layer);
 
       /*  set the current layer's data  */
-      layer->tiles = tiles;
+      GIMP_DRAWABLE(layer)->tiles = tiles;
 
       /*  Fill in the new layer's attributes  */
-      layer->width = tiles->levels[0].width;
-      layer->height = tiles->levels[0].height;
-      layer->bytes = tiles->levels[0].bpp;
-      layer->offset_x = tiles->x;
-      layer->offset_y = tiles->y;
+      GIMP_DRAWABLE(layer)->width = tiles->levels[0].width;
+      GIMP_DRAWABLE(layer)->height = tiles->levels[0].height;
+      GIMP_DRAWABLE(layer)->bytes = tiles->levels[0].bpp;
+      GIMP_DRAWABLE(layer)->offset_x = tiles->x;
+      GIMP_DRAWABLE(layer)->offset_y = tiles->y;
 
       /*  Select the layer type based on the number of bytes  */
-      layer_type = layer->type;
+      layer_type = GIMP_DRAWABLE(layer)->type;
       switch (layer_type)
 	{
 	case RGB_GIMAGE : case RGBA_GIMAGE:
-	  layer->type = (layer->bytes == 4) ? RGBA_GIMAGE : RGB_GIMAGE;
+	  GIMP_DRAWABLE(layer)->type = (GIMP_DRAWABLE(layer)->bytes == 4) ? RGBA_GIMAGE : RGB_GIMAGE;
 	  break;
 	case GRAY_GIMAGE : case GRAYA_GIMAGE:
-	  layer->type = (layer->bytes == 2) ? GRAYA_GIMAGE : GRAY_GIMAGE;
+	  GIMP_DRAWABLE(layer)->type = (GIMP_DRAWABLE(layer)->bytes == 2) ? GRAYA_GIMAGE : GRAY_GIMAGE;
 	  break;
 	case INDEXED_GIMAGE : case INDEXEDA_GIMAGE:
-	  layer->type = (layer->bytes == 2) ? INDEXEDA_GIMAGE : INDEXED_GIMAGE;
+	  GIMP_DRAWABLE(layer)->type = (GIMP_DRAWABLE(layer)->bytes == 2) ? INDEXEDA_GIMAGE : INDEXED_GIMAGE;
 	  break;
 	}
 
       /*  If the layer type changed, update the gdisplay titles  */
-      if (layer->type != layer_type)
+      if (GIMP_DRAWABLE(layer)->type != layer_type)
 	gdisplays_update_title (gimage->ID);
 
       if (floating_layer)
 	floating_sel_rigor (floating_layer, TRUE);
 
-      drawable_update (layer->ID, 0, 0, layer->width, layer->height);
+      drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 
       return layer;
     }

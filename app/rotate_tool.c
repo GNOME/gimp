@@ -31,6 +31,8 @@
 #include "transform_tool.h"
 #include "undo.h"
 
+#include "tile_manager_pvt.h"
+
 /*  index into trans_info array  */
 #define ANGLE          0
 #define REAL_ANGLE     1
@@ -41,7 +43,7 @@
 char          angle_buf  [MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      rotate_tool_rotate  (GImage *, int, double, TileManager *, int, Matrix);
+static void *      rotate_tool_rotate  (GImage *, GimpDrawable *, double, TileManager *, int, Matrix);
 static void *      rotate_tool_recalc  (Tool *, void *);
 static void        rotate_tool_motion  (Tool *, void *);
 static void        rotate_info_update  (Tool *);
@@ -227,15 +229,15 @@ rotate_tool_recalc (tool, gdisp_ptr)
  */
 
 static void *
-rotate_tool_rotate (gimage, drawable_id, angle, float_tiles, interpolation, matrix)
+rotate_tool_rotate (gimage, drawable, angle, float_tiles, interpolation, matrix)
      GImage *gimage;
-     int drawable_id;
+     GimpDrawable *drawable;
      double angle;
      TileManager *float_tiles;
      int interpolation;
      Matrix matrix;
 {
-  return transform_core_do (gimage, drawable_id, float_tiles, interpolation, matrix);
+  return transform_core_do (gimage, drawable, float_tiles, interpolation, matrix);
 }
 
 
@@ -297,7 +299,7 @@ rotate_invoker (args)
 {
   int success = TRUE;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int interpolation;
   double angle;
   int int_value;
@@ -308,7 +310,7 @@ rotate_invoker (args)
   Layer *layer;
   Argument *return_args;
 
-  drawable_id = -1;
+  drawable = NULL;
   layer = NULL;
 
   /*  the gimage  */
@@ -322,9 +324,8 @@ rotate_invoker (args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage == drawable_gimage (int_value))
-	drawable_id = int_value;
-      else
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   /*  interpolation  */
@@ -346,7 +347,7 @@ rotate_invoker (args)
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
 
       /*  Cut/Copy from the specified drawable  */
-      float_tiles = transform_core_cut (gimage, drawable_id, &new_layer);
+      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
 
       cx = float_tiles->x + float_tiles->levels[0].width / 2.0;
       cy = float_tiles->y + float_tiles->levels[0].height / 2.0;
@@ -358,13 +359,13 @@ rotate_invoker (args)
       translate_matrix (matrix, +cx, +cy);
 
       /*  rotate the buffer  */
-      new_tiles = rotate_tool_rotate (gimage, drawable_id, angle, float_tiles, interpolation, matrix);
+      new_tiles = rotate_tool_rotate (gimage, drawable, angle, float_tiles, interpolation, matrix);
 
       /*  free the cut/copied buffer  */
       tile_manager_destroy (float_tiles);
 
       if (new_tiles)
-	success = (layer = transform_core_paste (gimage, drawable_id, new_tiles, new_layer)) != NULL;
+	success = (layer = transform_core_paste (gimage, drawable, new_tiles, new_layer)) != NULL;
       else
 	success = FALSE;
 
@@ -375,7 +376,7 @@ rotate_invoker (args)
   return_args = procedural_db_return_args (&rotate_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer->ID;
+    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(layer));
 
   return return_args;
 }

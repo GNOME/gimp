@@ -22,7 +22,7 @@
 
 /*  Functions  */
 
-void       floating_sel_attach       (Layer *, int);
+void       floating_sel_attach       (Layer *, GimpDrawable *);
 void       floating_sel_remove       (Layer *);
 void       floating_sel_anchor       (Layer *);
 void       floating_sel_reset        (Layer *);

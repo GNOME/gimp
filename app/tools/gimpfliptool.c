@@ -24,6 +24,9 @@
 #include "temp_buf.h"
 #include "transform_core.h"
 #include "undo.h"
+#include "gimage.h"
+
+#include "tile_manager_pvt.h"		/* ick. */
 
 #define FLIP       0
 
@@ -37,8 +40,8 @@ struct _FlipOptions
 /*  forward function declarations  */
 static Tool *         tools_new_flip_horz  (void);
 static Tool *         tools_new_flip_vert  (void);
-static TileManager *  flip_tool_flip_horz  (GImage *, int, TileManager *, int);
-static TileManager *  flip_tool_flip_vert  (GImage *, int, TileManager *, int);
+static TileManager *  flip_tool_flip_horz  (GImage *, GimpDrawable *, TileManager *, int);
+static TileManager *  flip_tool_flip_vert  (GImage *, GimpDrawable *, TileManager *, int);
 static void           flip_change_type     (int);
 static Argument *     flip_invoker         (Argument *);
 
@@ -232,7 +235,7 @@ tools_new_flip_vert ()
 
 static TileManager *
 flip_tool_flip_horz (GImage      *gimage,
-		     int          drawable_id,
+		     GimpDrawable *drawable,
 		     TileManager *orig,
 		     int          flip)
 {
@@ -273,7 +276,7 @@ flip_tool_flip_horz (GImage      *gimage,
 
 static TileManager *
 flip_tool_flip_vert (GImage      *gimage,
-		     int          drawable_id,
+		     GimpDrawable *drawable,
 		     TileManager *orig,
 		     int          flip)
 {
@@ -376,7 +379,7 @@ flip_invoker (Argument *args)
 {
   int success = TRUE;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int flip_type;
   int int_value;
   TileManager *float_tiles;
@@ -385,7 +388,7 @@ flip_invoker (Argument *args)
   Layer *layer;
   Argument *return_args;
 
-  drawable_id = -1;
+  drawable = NULL;
   flip_type   = 0;
   new_tiles   = NULL;
   layer       = NULL;
@@ -401,9 +404,8 @@ flip_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage == drawable_gimage (int_value))
-	drawable_id = int_value;
-      else
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   /*  flip type */
@@ -425,16 +427,16 @@ flip_invoker (Argument *args)
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
 
       /*  Cut/Copy from the specified drawable  */
-      float_tiles = transform_core_cut (gimage, drawable_id, &new_layer);
+      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
 
       /*  flip the buffer  */
       switch (flip_type)
 	{
 	case 0: /* horz */
-	  new_tiles = flip_tool_flip_horz (gimage, drawable_id, float_tiles, -1);
+	  new_tiles = flip_tool_flip_horz (gimage, drawable, float_tiles, -1);
 	  break;
 	case 1: /* vert */
-	  new_tiles = flip_tool_flip_vert (gimage, drawable_id, float_tiles, -1);
+	  new_tiles = flip_tool_flip_vert (gimage, drawable, float_tiles, -1);
 	  break;
 	}
 
@@ -442,7 +444,7 @@ flip_invoker (Argument *args)
       tile_manager_destroy (float_tiles);
 
       if (new_tiles)
-	success = (layer = transform_core_paste (gimage, drawable_id, new_tiles, new_layer)) != NULL;
+	success = (layer = transform_core_paste (gimage, drawable, new_tiles, new_layer)) != NULL;
       else
 	success = FALSE;
 
@@ -453,7 +455,7 @@ flip_invoker (Argument *args)
   return_args = procedural_db_return_args (&flip_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer->ID;
+    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(layer));
 
   return return_args;
 }

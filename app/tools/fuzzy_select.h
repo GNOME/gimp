@@ -29,7 +29,7 @@ void          tools_free_fuzzy_select     (Tool *);
 
 
 /*  functions  */
-Channel *     find_contiguous_region      (GImage *, int, int, int, int, int, int);
+Channel *     find_contiguous_region      (GImage *, GimpDrawable *, int, int, int, int, int);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord fuzzy_select_proc;

@@ -31,6 +31,10 @@
 #include "paint_core.h"
 #include "undo.h"
 
+#include "layer_pvt.h"
+#include "tile_manager_pvt.h"
+#include "drawable_pvt.h"
+
 /*  feathering variables  */
 double gimage_mask_feather_radius = 5;
 int    gimage_mask_border_radius = 5;
@@ -39,7 +43,7 @@ int    gimage_mask_shrink_pixels = 1;
 int    gimage_mask_stroking = FALSE;
 
 /*  local functions  */
-static void * gimage_mask_stroke_paint_func (PaintCore *, int, int);
+static void * gimage_mask_stroke_paint_func (PaintCore *, GimpDrawable *, int);
 
 /*  functions  */
 int
@@ -86,10 +90,12 @@ gimage_mask_boundary (gimage, segs_in, segs_out, num_segs_in, num_segs_out)
   /*  if a layer is active, we return multiple boundaries based on the extents  */
   else if ((layer = gimage_get_active_layer (gimage)))
     {
-      x1 = BOUNDS (layer->offset_x, 0, gimage->width);
-      y1 = BOUNDS (layer->offset_y, 0, gimage->height);
-      x2 = BOUNDS (layer->offset_x + layer->width, 0, gimage->width);
-      y2 = BOUNDS (layer->offset_y + layer->height, 0, gimage->height);
+      int off_x, off_y;
+      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      x1 = BOUNDS (off_x, 0, gimage->width);
+      y1 = BOUNDS (off_y, 0, gimage->height);
+      x2 = BOUNDS (off_x + drawable_width (GIMP_DRAWABLE(layer)), 0, gimage->width);
+      y2 = BOUNDS (off_y + drawable_height (GIMP_DRAWABLE(layer)), 0, gimage->height);
 
       return channel_boundary (gimage_get_mask (gimage),
 			       segs_in, segs_out,
@@ -135,7 +141,7 @@ gimage_mask_invalidate (gimage)
    */
   layer = gimage_get_active_layer (gimage);
   if (layer && layer_is_floating_sel (layer))
-    drawable_update (layer->ID, 0, 0, layer->width, layer->height);
+    drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 }
 
 
@@ -174,15 +180,14 @@ gimage_mask_translate (gimage, off_x, off_y)
 
 
 TileManager *
-gimage_mask_extract (gimage, drawable_id, cut_gimage, keep_indexed)
+gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
      GImage * gimage;
-     int drawable_id;
+     GimpDrawable *drawable;
      int cut_gimage;
      int keep_indexed;
 {
   TileManager * tiles;
   Channel * sel_mask;
-  Channel * channel;
   PixelRegion srcPR, destPR, maskPR;
   unsigned char bg[MAX_CHANNELS];
   int bytes, type;
@@ -190,13 +195,16 @@ gimage_mask_extract (gimage, drawable_id, cut_gimage, keep_indexed)
   int off_x, off_y;
   int non_empty;
 
+  if (!drawable) 
+    return NULL;
+
   /*  If there are no bounds, then just extract the entire image
    *  This may not be the correct behavior, but after getting rid
    *  of floating selections, it's still tempting to "cut" or "copy"
    *  a small layer and expect it to work, even though there is no
    *  actual selection mask
    */
-  non_empty = drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+  non_empty = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   if (non_empty && (!(x2 - x1) || !(y2 - y1)))
     {
       message_box ("Unable to cut/copy because the selected\nregion is empty.", NULL, NULL);
@@ -204,7 +212,7 @@ gimage_mask_extract (gimage, drawable_id, cut_gimage, keep_indexed)
     }
 
   /*  How many bytes in the temp buffer?  */
-  switch (drawable_type (drawable_id))
+  switch (drawable_type (drawable))
     {
     case RGB_GIMAGE: case RGBA_GIMAGE:
       bytes = 4; type = RGB; break;
@@ -232,13 +240,13 @@ gimage_mask_extract (gimage, drawable_id, cut_gimage, keep_indexed)
   else
     sel_mask = NULL;
 
-  gimage_get_background (gimage, drawable_id, bg);
+  gimage_get_background (gimage, drawable, bg);
 
   /*  If a cut was specified, and the selection mask is not empty, push an undo  */
   if (cut_gimage && non_empty)
-    drawable_apply_image (drawable_id, x1, y1, x2, y2, NULL, FALSE);
+    drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
 
-  drawable_offsets (drawable_id, &off_x, &off_y);
+  drawable_offsets (drawable, &off_x, &off_y);
 
   /*  Allocate the temp buffer  */
   tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
@@ -246,16 +254,16 @@ gimage_mask_extract (gimage, drawable_id, cut_gimage, keep_indexed)
   tiles->y = y1 + off_y;
 
   /* configure the pixel regions  */
-  pixel_region_init (&srcPR, drawable_data (drawable_id), x1, y1, (x2 - x1), (y2 - y1), cut_gimage);
+  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), cut_gimage);
   pixel_region_init (&destPR, tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
 
   /*  If there is a selection, extract from it  */
   if (non_empty)
     {
-      pixel_region_init (&maskPR, sel_mask->tiles, (x1 + off_x), (y1 + off_y), (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&maskPR, GIMP_DRAWABLE(sel_mask)->tiles, (x1 + off_x), (y1 + off_y), (x2 - x1), (y2 - y1), FALSE);
 
-      extract_from_region (&srcPR, &destPR, &maskPR, drawable_cmap (drawable_id),
-			   bg, type, drawable_has_alpha (drawable_id), cut_gimage);
+      extract_from_region (&srcPR, &destPR, &maskPR, drawable_cmap (drawable),
+			   bg, type, drawable_has_alpha (drawable), cut_gimage);
 
       if (cut_gimage)
 	{
@@ -267,7 +275,7 @@ gimage_mask_extract (gimage, drawable_id, cut_gimage, keep_indexed)
 				 tiles->levels[0].width, tiles->levels[0].height);
 
 	  /*  Invalidate the preview  */
-	  drawable_invalidate_preview (drawable_id);
+	  drawable_invalidate_preview (drawable);
 	}
     }
   /*  Otherwise, get the entire active layer  */
@@ -275,8 +283,8 @@ gimage_mask_extract (gimage, drawable_id, cut_gimage, keep_indexed)
     {
       /*  If the layer is indexed...we need to extract pixels  */
       if (type == INDEXED && !keep_indexed)
-	extract_from_region (&srcPR, &destPR, NULL, drawable_cmap (drawable_id),
-			     bg, type, drawable_has_alpha (drawable_id), FALSE);
+	extract_from_region (&srcPR, &destPR, NULL, drawable_cmap (drawable),
+			     bg, type, drawable_has_alpha (drawable), FALSE);
       /*  If the layer doesn't have an alpha channel, add one  */
       else if (bytes > srcPR.bytes)
 	add_alpha_region (&srcPR, &destPR);
@@ -287,20 +295,19 @@ gimage_mask_extract (gimage, drawable_id, cut_gimage, keep_indexed)
       /*  If we're cutting, remove either the layer (or floating selection),
        *  the layer mask, or the channel
        */
-      if (cut_gimage && drawable_layer (drawable_id))
+      if (cut_gimage && drawable_layer (drawable))
 	{
-	  if (layer_is_floating_sel (drawable_layer (drawable_id)))
-	    floating_sel_remove (drawable_layer (drawable_id));
+	  if (layer_is_floating_sel (drawable_layer (drawable)))
+	    floating_sel_remove (drawable_layer (drawable));
 	  else
-	    gimage_remove_layer (gimage, drawable_id);
+	    gimage_remove_layer (gimage, GIMP_LAYER (drawable));
 	}
-      else if (cut_gimage && drawable_layer_mask (drawable_id))
+      else if (cut_gimage && drawable_layer_mask (drawable))
 	{
-	  if ((channel = channel_get_ID (drawable_id)))
-	    gimage_remove_layer_mask (gimage, channel->layer_ID, DISCARD);
+	  gimage_remove_layer_mask (gimage, GIMP_LAYER_MASK(drawable)->layer, DISCARD);
 	}
-      else if (cut_gimage && drawable_channel (drawable_id))
-	gimage_remove_channel (gimage, drawable_id);
+      else if (cut_gimage && drawable_channel (drawable))
+	gimage_remove_channel (gimage, GIMP_CHANNEL(drawable));
     }
 
   return tiles;
@@ -308,9 +315,9 @@ gimage_mask_extract (gimage, drawable_id, cut_gimage, keep_indexed)
 
 
 Layer *
-gimage_mask_float (gimage, drawable_id, off_x, off_y)
+gimage_mask_float (gimage, drawable, off_x, off_y)
      GImage * gimage;
-     int drawable_id;
+     GimpDrawable* drawable;
      int off_x, off_y;  /*  optional offset  */
 {
   Layer *layer;
@@ -320,7 +327,7 @@ gimage_mask_float (gimage, drawable_id, off_x, off_y)
   int x1, y1, x2, y2;
 
   /*  Make sure there is a region to float...  */
-  non_empty = drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+  non_empty = drawable_mask_bounds ( (drawable), &x1, &y1, &x2, &y2);
   if (! non_empty || (x2 - x1) == 0 || (y2 - y1) == 0)
     {
       message_box ("Float Selection: No selection to float.", NULL, NULL);
@@ -331,20 +338,20 @@ gimage_mask_float (gimage, drawable_id, off_x, off_y)
   undo_push_group_start (gimage, FLOAT_MASK_UNDO);
 
   /*  Cut the selected region  */
-  tiles = gimage_mask_extract (gimage, drawable_id, TRUE, FALSE);
+  tiles = gimage_mask_extract (gimage, drawable, TRUE, FALSE);
 
   /*  Create a new layer from the buffer  */
-  layer = layer_from_tiles (gimage, drawable_id, tiles, "Floated Layer", OPAQUE, NORMAL);
+  layer = layer_from_tiles (gimage, drawable, tiles, "Floated Layer", OPAQUE, NORMAL);
 
   /*  Set the offsets  */
-  layer->offset_x = tiles->x + off_x;
-  layer->offset_y = tiles->y + off_y;
+  GIMP_DRAWABLE(layer)->offset_x = tiles->x + off_x;
+  GIMP_DRAWABLE(layer)->offset_y = tiles->y + off_y;
 
   /*  Free the temp buffer  */
   tile_manager_destroy (tiles);
 
   /*  Add the floating layer to the gimage  */
-  floating_sel_attach (layer, drawable_id);
+  floating_sel_attach (layer, drawable);
 
   /*  End an undo group  */
   undo_push_group_end (gimage);
@@ -465,15 +472,15 @@ gimage_mask_shrink (gimage, shrink_pixels)
 
 
 void
-gimage_mask_layer_alpha (gimage, layer_id)
+gimage_mask_layer_alpha (gimage, layer)
      GImage *gimage;
-     int layer_id;
+     Layer *layer;
 {
   /*  extract the layer's alpha channel  */
-  if (drawable_has_alpha (layer_id))
+  if (drawable_has_alpha (GIMP_DRAWABLE (layer)))
     {
       /*  load the mask with the given layer's alpha channel  */
-      channel_layer_alpha (gimage_get_mask (gimage), layer_id);
+      channel_layer_alpha (gimage_get_mask (gimage), layer);
     }
   else
     {
@@ -484,20 +491,15 @@ gimage_mask_layer_alpha (gimage, layer_id)
 
 
 void
-gimage_mask_layer_mask (gimage, layer_id)
+gimage_mask_layer_mask (gimage, layer)
      GImage *gimage;
-     int layer_id;
+     Layer *layer;
 {
-  Layer *layer;
-
-  if ((layer = layer_get_ID (layer_id)) == NULL)
-    return;
-
   /*  extract the layer's alpha channel  */
   if (layer->mask)
     {
       /*  load the mask with the given layer's alpha channel  */
-      channel_layer_mask (gimage_get_mask (gimage), layer_id);
+      channel_layer_mask (gimage_get_mask (gimage), layer);
     }
   else
     {
@@ -508,12 +510,12 @@ gimage_mask_layer_mask (gimage, layer_id)
 
 
 void
-gimage_mask_load (gimage, channel_id)
+gimage_mask_load (gimage, channel)
      GImage *gimage;
-     int channel_id;
+     Channel *channel;
 {
   /*  Load the specified channel to the gimage mask  */
-  channel_load (gimage_get_mask (gimage), channel_get_ID (channel_id));
+  channel_load (gimage_get_mask (gimage), (channel));
 }
 
 
@@ -526,7 +528,7 @@ gimage_mask_save (gimage)
   new_channel = channel_copy (gimage_get_mask (gimage));
 
   /*  saved selections are not visible by default  */
-  new_channel->visible = FALSE;
+  GIMP_DRAWABLE(new_channel)->visible = FALSE;
   gimage_add_channel (gimage, new_channel, -1);
 
   return new_channel;
@@ -534,9 +536,9 @@ gimage_mask_save (gimage)
 
 
 int
-gimage_mask_stroke (gimage, drawable_id)
+gimage_mask_stroke (gimage, drawable)
      GImage *gimage;
-     int drawable_id;
+     GimpDrawable *drawable;
 {
   BoundSeg *bs_in;
   BoundSeg *bs_out;
@@ -559,10 +561,10 @@ gimage_mask_stroke (gimage, drawable_id)
     return TRUE;
 
   /*  find the drawable offsets  */
-  drawable_offsets (drawable_id, &offx, &offy);
+  drawable_offsets (drawable, &offx, &offy);
 
   /*  init the paint core  */
-  if (! paint_core_init (&non_gui_paint_core, drawable_id,
+  if (! paint_core_init (&non_gui_paint_core, drawable,
 			 (stroke_segs[0].x1 - offx),
 			 (stroke_segs[0].y1 - offy)))
     return FALSE;
@@ -582,7 +584,7 @@ gimage_mask_stroke (gimage, drawable_id)
 	  non_gui_paint_core.curx = (stroke_segs[seg].x2 - offx);
 	  non_gui_paint_core.cury = (stroke_segs[seg].y2 - offy);
 
-	  paint_core_interpolate (&non_gui_paint_core, drawable_id);
+	  paint_core_interpolate (&non_gui_paint_core, drawable);
 
 	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
 	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
@@ -596,7 +598,7 @@ gimage_mask_stroke (gimage, drawable_id)
     }
 
   /*  finish the painting  */
-  paint_core_finish (&non_gui_paint_core, drawable_id, -1);
+  paint_core_finish (&non_gui_paint_core, drawable, -1);
 
   /*  cleanup  */
   gimage_mask_stroking = FALSE;
@@ -607,22 +609,22 @@ gimage_mask_stroke (gimage, drawable_id)
 }
 
 static void *
-gimage_mask_stroke_paint_func (paint_core, drawable_id, state)
+gimage_mask_stroke_paint_func (paint_core, drawable, state)
      PaintCore *paint_core;
-     int drawable_id;
+     GimpDrawable *drawable;
      int state;
 {
   GImage *gimage;
   TempBuf * area;
   unsigned char col[MAX_CHANNELS];
 
-  if (! (gimage = drawable_gimage (drawable_id)))
+  if (! (gimage = drawable_gimage (drawable)))
     return NULL;
 
-  gimage_get_foreground (gimage, drawable_id, col);
+  gimage_get_foreground (gimage, drawable, col);
 
   /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable_id)))
+  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
     return NULL;
 
   /*  set the alpha channel  */
@@ -633,7 +635,7 @@ gimage_mask_stroke_paint_func (paint_core, drawable_id, state)
 		area->width * area->height, area->bytes);
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable_id, OPAQUE,
+  paint_core_paste_canvas (paint_core, drawable, OPAQUE,
 			   (int) (get_brush_opacity () * 255),
 			   get_brush_paint_mode (), SOFT, CONSTANT);
 

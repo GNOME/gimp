@@ -197,7 +197,9 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
 			 (int) pts[0].x, (int) pts[0].y);
     }
 
-  pixel_region_init (&maskPR, mask->tiles, 0, 0, mask->width, mask->height, TRUE);
+  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 0, 0, 
+		     drawable_width (GIMP_DRAWABLE(mask)), 
+		     drawable_height (GIMP_DRAWABLE(mask)), TRUE);
   for (i = 0; i < height; i++)
     {
       list = scanlines[i];
@@ -246,7 +248,8 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
 	      *b++ = (unsigned char) (val / SUPERSAMPLE2);
 	    }
 
-	  pixel_region_set_row (&maskPR, 0, (i / SUPERSAMPLE), mask->width, buf);
+	  pixel_region_set_row (&maskPR, 0, (i / SUPERSAMPLE), 
+				drawable_width (GIMP_DRAWABLE(mask)), buf);
 	}
 
       free_list (scanlines[i]);

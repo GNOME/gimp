@@ -22,8 +22,9 @@
 #include "drawable.h"
 #include "equalize.h"
 #include "interface.h"
+#include "gimage.h"
 
-static void       equalize (GImage *, int, int);
+static void       equalize (GImage *, GimpDrawable *, int);
 static void       eq_histogram (double [3][256], unsigned char [3][256], int, double);
 static Argument * equalize_invoker (Argument *);
 
@@ -33,25 +34,25 @@ image_equalize (gimage_ptr)
      void *gimage_ptr;
 {
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int mask_only = TRUE;
 
   gimage = (GImage *) gimage_ptr;
-  drawable_id = gimage_active_drawable (gimage);
+  drawable = gimage_active_drawable (gimage);
 
-  if (drawable_indexed (drawable_id))
+  if (drawable_indexed (drawable))
     {
       message_box ("Equalize does not operate on indexed drawables.", NULL, NULL);
       return;
     }
-  equalize (gimage, drawable_id, mask_only);
+  equalize (gimage, drawable, mask_only);
 }
 
 
 static void
-equalize(gimage, drawable_id, mask_only)
+equalize(gimage, drawable, mask_only)
      GImage *gimage;
-     int drawable_id;
+     GimpDrawable *drawable;
      int mask_only;
 {
   Channel *sel_mask;
@@ -73,18 +74,18 @@ equalize(gimage, drawable_id, mask_only)
   mask = NULL;
 
   sel_mask = gimage_get_mask (gimage);
-  drawable_offsets (drawable_id, &off_x, &off_y);
-  bytes = drawable_bytes (drawable_id);
-  has_alpha = drawable_has_alpha (drawable_id);
+  drawable_offsets (drawable, &off_x, &off_y);
+  bytes = drawable_bytes (drawable);
+  has_alpha = drawable_has_alpha (drawable);
   alpha = has_alpha ? (bytes - 1) : bytes;
   count = 0.0;
 
   /*  Determine the histogram from the drawable data and the attendant mask  */
-  no_mask = (drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2) == FALSE);
-  pixel_region_init (&srcPR, drawable_data (drawable_id), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  no_mask = (drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
+  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
   sel_maskPR = (no_mask) ? NULL : &maskPR;
   if (sel_maskPR)
-    pixel_region_init (sel_maskPR, sel_mask->tiles, x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
+    pixel_region_init (sel_maskPR, drawable_data (GIMP_DRAWABLE (sel_mask)), x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
 
   /* Initialize histogram */
   for (b = 0; b < alpha; b++)
@@ -135,8 +136,8 @@ equalize(gimage, drawable_id, mask_only)
   eq_histogram (hist, lut, alpha, count);
 
   /*  Apply the histogram  */
-  pixel_region_init (&srcPR, drawable_data (drawable_id), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_shadow (drawable_id), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
     {
@@ -166,8 +167,8 @@ equalize(gimage, drawable_id, mask_only)
 	}
     }
 
-  drawable_merge_shadow (drawable_id, TRUE);
-  drawable_update (drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  drawable_merge_shadow (drawable, TRUE);
+  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 
@@ -276,9 +277,9 @@ equalize_invoker (args)
   int int_value;
   int mask_only;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
 
-  drawable_id = -1;
+  drawable = NULL;
 
   /*  the gimage  */
   if (success)
@@ -291,10 +292,9 @@ equalize_invoker (args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage != drawable_gimage (int_value))
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
-      else
-	drawable_id = int_value;
     }
   /*  the mask only option  */
   if (success)
@@ -304,10 +304,10 @@ equalize_invoker (args)
     }
   /*  make sure the drawable is not indexed color  */
   if (success)
-    success = ! drawable_indexed (drawable_id);
+    success = ! drawable_indexed (drawable);
 
   if (success)
-    equalize (gimage, drawable_id, mask_only);
+    equalize (gimage, drawable, mask_only);
 
   return procedural_db_return_args (&equalize_proc, success);
 }

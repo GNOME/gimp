@@ -1114,8 +1114,10 @@ bezier_convert (BezierSelect *bezier_sel,
     bezier_convert_line (bezier_sel->scanlines, lastx, lasty,
 			 bezier_sel->points->x, bezier_sel->points->y);
 
-  pixel_region_init (&maskPR, bezier_sel->mask->tiles, 0, 0,
-		     bezier_sel->mask->width, bezier_sel->mask->height, TRUE);
+  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(bezier_sel->mask)), 
+		     0, 0,
+		     drawable_width (GIMP_DRAWABLE(bezier_sel->mask)),
+		     drawable_height (GIMP_DRAWABLE(bezier_sel->mask)), TRUE);
   for (i = 0; i < height; i++)
     {
       list = bezier_sel->scanlines[i];
@@ -1162,7 +1164,8 @@ bezier_convert (BezierSelect *bezier_sel,
 	      *b++ = (unsigned char) (val / SUPERSAMPLE2);
 	    }
 
-	  pixel_region_set_row (&maskPR, 0, (i / SUPERSAMPLE), bezier_sel->mask->width, buf);
+	  pixel_region_set_row (&maskPR, 0, (i / SUPERSAMPLE), 
+				drawable_width (GIMP_DRAWABLE(bezier_sel->mask)), buf);
 	}
 
       free_list (bezier_sel->scanlines[i]);
@@ -1177,7 +1180,7 @@ bezier_convert (BezierSelect *bezier_sel,
   g_free (bezier_sel->scanlines);
   bezier_sel->scanlines = NULL;
 
-  bezier_sel->mask->bounds_known = FALSE;
+  channel_invalidate_bounds (bezier_sel->mask);
 }
 
 static void

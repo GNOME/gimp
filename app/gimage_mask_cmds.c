@@ -349,7 +349,7 @@ static Argument *
 gimage_mask_float_invoker (Argument *args)
 {
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int offx, offy;
   Layer *layer;
 
@@ -364,17 +364,21 @@ gimage_mask_float_invoker (Argument *args)
     }
   if (success)
     {
-      drawable_id = args[1].value.pdb_int;
+      int_value = args[1].value.pdb_int;
+      drawable = drawable_get_ID (int_value);
+    }
+  if (success)
+    {
       offx = args[2].value.pdb_int;
       offy = args[3].value.pdb_int;
     }
   if (success)
-    success = ((layer = gimage_mask_float (gimage, drawable_id, offx, offy)) != NULL);
+    success = ((layer = gimage_mask_float (gimage, drawable, offx, offy)) != NULL);
 
   return_args = procedural_db_return_args (&gimage_mask_float_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer->ID;
+    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(layer));
 
   return return_args;
 }
@@ -981,7 +985,7 @@ gimage_mask_layer_alpha_invoker (Argument *args)
 	success = FALSE;
     }
   if (success)
-    gimage_mask_layer_alpha (gimage, layer->ID);
+    gimage_mask_layer_alpha (gimage, layer);
 
   return procedural_db_return_args (&gimage_mask_layer_alpha_proc, success);
 }
@@ -1044,11 +1048,12 @@ gimage_mask_load_invoker (Argument *args)
       if ((channel = channel_get_ID (int_value)) == NULL)
 	success = FALSE;
       else
-	success = (channel->width == gimage->width && channel->height == gimage->height);
+	success = (drawable_width (GIMP_DRAWABLE(channel)) == gimage->width && 
+		   drawable_height (GIMP_DRAWABLE(channel)) == gimage->height);
     }
 
   if (success)
-    gimage_mask_load (gimage, channel->ID);
+    gimage_mask_load (gimage, channel);
 
   return procedural_db_return_args (&gimage_mask_load_proc, success);
 }
@@ -1114,7 +1119,7 @@ gimage_mask_save_invoker (Argument *args)
   return_args = procedural_db_return_args (&gimage_mask_save_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = channel->ID;
+    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(channel));
 
   return return_args;
 }

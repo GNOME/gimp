@@ -21,11 +21,9 @@
 #include "procedural_db.h"
 
 /*  channel_ops functions  */
-void  channel_ops_duplicate (void *);
 void  channel_ops_offset    (void *);
 
 /*  Procedure definition and marshalling function  */
-extern ProcRecord channel_ops_duplicate_proc;
 extern ProcRecord channel_ops_offset_proc;
 
 #endif  /*  __CHANNEL_OPS_H__  */

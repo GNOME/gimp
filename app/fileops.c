@@ -776,7 +776,7 @@ file_save (int   image_ID,
 
   args[0].value.pdb_int = 0;
   args[1].value.pdb_int = image_ID;
-  args[2].value.pdb_int = gimage_active_drawable (gimage);
+  args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gimage));
   args[3].value.pdb_pointer = filename;
   args[4].value.pdb_pointer = raw_filename;
 

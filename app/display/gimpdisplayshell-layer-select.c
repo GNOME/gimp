@@ -39,7 +39,7 @@ struct _LayerSelect {
   GtkWidget *preview;
 
   GImage *gimage;
-  int current_layer;
+  Layer *current_layer;
   int dirty;
   int image_width, image_height;
   double ratio;
@@ -193,7 +193,7 @@ layer_select_advance (LayerSelect *layer_select,
   while (list)
     {
       layer = (Layer *) list->data;
-      if (layer->ID == layer_select->current_layer)
+      if (layer == layer_select->current_layer)
 	index = count;
       count++;
       list = next_item (list);
@@ -211,7 +211,7 @@ layer_select_advance (LayerSelect *layer_select,
   if (nth)
     {
       layer = (Layer *) nth->data;
-      layer_select->current_layer = layer->ID;
+      layer_select->current_layer = layer;
     }
 }
 
@@ -296,11 +296,11 @@ layer_select_set_layer (LayerSelect *layer_select)
 {
   Layer *layer;
 
-  if (! (layer = layer_get_ID (layer_select->current_layer)))
+  if (! (layer =  (layer_select->current_layer)))
     return;
 
   /*  Set the layer label  */
-  gtk_label_set (GTK_LABEL (layer_select->label), layer->name);
+  gtk_label_set (GTK_LABEL (layer_select->label), drawable_name (GIMP_DRAWABLE(layer)));
 }
 
 
@@ -404,7 +404,7 @@ preview_redraw (LayerSelect *layer_select)
   int w, h;
   int offx, offy;
 
-  if (! (layer = layer_get_ID (layer_select->current_layer)))
+  if (! (layer =  (layer_select->current_layer)))
     return;
 
   if (! layer_select->layer_pixmap)
@@ -417,11 +417,13 @@ preview_redraw (LayerSelect *layer_select)
     render_fs_preview (layer_select->layer_preview, layer_select->layer_pixmap);
   else
     {
+      int off_x, off_y;
+      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
       /*  determine width and height  */
-      w = (int) (layer_select->ratio * layer->width);
-      h = (int) (layer_select->ratio * layer->height);
-      offx = (int) (layer_select->ratio * layer->offset_x);
-      offy = (int) (layer_select->ratio * layer->offset_y);
+      w = (int) (layer_select->ratio * drawable_width (GIMP_DRAWABLE(layer)));
+      h = (int) (layer_select->ratio * drawable_height (GIMP_DRAWABLE(layer)));
+      offx = (int) (layer_select->ratio * off_x);
+      offy = (int) (layer_select->ratio * off_y);
 
       preview_buf = layer_preview (layer, w, h);
       preview_buf->x = offx;

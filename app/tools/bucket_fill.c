@@ -54,7 +54,7 @@ static void  bucket_fill_motion          (Tool *, GdkEventMotion *, gpointer);
 static void  bucket_fill_cursor_update   (Tool *, GdkEventMotion *, gpointer);
 static void  bucket_fill_control         (Tool *, int, gpointer);
 
-static void  bucket_fill                 (GImage *, int, FillMode, int,
+static void  bucket_fill                 (GImage *, GimpDrawable *, FillMode, int,
 					  double, double, int, double, double);
 
 static void  bucket_fill_region          (FillMode, PixelRegion *, PixelRegion *,
@@ -314,7 +314,7 @@ bucket_fill_button_release (tool, bevent, gdisp_ptr)
       return_vals = procedural_db_run_proc ("gimp_bucket_fill",
 					    &nreturn_vals,
 					    PDB_IMAGE, gdisp->gimage->ID,
-					    PDB_DRAWABLE, gimage_active_drawable (gdisp->gimage),
+					    PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gdisp->gimage)),
 					    PDB_INT32, (gint32) fill_mode,
 					    PDB_INT32, (gint32) bucket_options->paint_mode,
 					    PDB_FLOAT, (gdouble) bucket_options->opacity,
@@ -355,23 +355,27 @@ bucket_fill_cursor_update (tool, mevent, gdisp_ptr)
   Layer *layer;
   GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
   int x, y;
+  int off_x, off_y;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
-  if ((layer = gimage_get_active_layer (gdisp->gimage)))
-    if (x >= layer->offset_x && y >= layer->offset_y &&
-	x < (layer->offset_x + layer->width) &&
-	y < (layer->offset_y + layer->height))
-      {
-	/*  One more test--is there a selected region?
-	 *  if so, is cursor inside?
-	 */
-	if (gimage_mask_is_empty (gdisp->gimage))
-	  ctype = GDK_TCROSS;
-	else if (gimage_mask_value (gdisp->gimage, x, y))
-	  ctype = GDK_TCROSS;
-      }
+  if ((layer = gimage_get_active_layer (gdisp->gimage))) 
+    {
+      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      if (x >= off_x && y >= off_y &&
+	  x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
+	  y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
+	{
+	  /*  One more test--is there a selected region?
+	   *  if so, is cursor inside?
+	   */
+	  if (gimage_mask_is_empty (gdisp->gimage))
+	    ctype = GDK_TCROSS;
+	  else if (gimage_mask_value (gdisp->gimage, x, y))
+	    ctype = GDK_TCROSS;
+	}
+    }
   gdisplay_install_tool_cursor (gdisp, ctype);
 }
 
@@ -386,10 +390,10 @@ bucket_fill_control (tool, action, gdisp_ptr)
 
 
 static void
-bucket_fill (gimage, drawable_id, fill_mode, paint_mode,
+bucket_fill (gimage, drawable, fill_mode, paint_mode,
 	     opacity, threshold, sample_merged, x, y)
      GImage *gimage;
-     int drawable_id;
+     GimpDrawable *drawable;
      FillMode fill_mode;
      int paint_mode;
      double opacity;
@@ -411,9 +415,9 @@ bucket_fill (gimage, drawable_id, fill_mode, paint_mode,
   pat_buf = NULL;
 
   if (fill_mode == FgColorFill)
-    gimage_get_foreground (gimage, drawable_id, col);
+    gimage_get_foreground (gimage, drawable, col);
   else if (fill_mode == BgColorFill)
-    gimage_get_background (gimage, drawable_id, col);
+    gimage_get_background (gimage, drawable, col);
   else if (fill_mode == PatternFill)
     {
       pattern = get_active_pattern ();
@@ -427,12 +431,12 @@ bucket_fill (gimage, drawable_id, fill_mode, paint_mode,
       /*  If the pattern doesn't match the image in terms of color type,
        *  transform it.  (ie  pattern is RGB, image is indexed)
        */
-      if (((pattern->mask->bytes == 3) && !drawable_color (drawable_id)) ||
-	  ((pattern->mask->bytes == 1) && !drawable_gray (drawable_id)))
+      if (((pattern->mask->bytes == 3) && !drawable_color (drawable)) ||
+	  ((pattern->mask->bytes == 1) && !drawable_gray (drawable)))
 	{
 	  int size;
 
-	  if ((pattern->mask->bytes == 1) && drawable_color (drawable_id))
+	  if ((pattern->mask->bytes == 1) && drawable_color (drawable))
 	    pat_buf = temp_buf_new (pattern->mask->width, pattern->mask->height, 3, 0, 0, NULL);
 	  else
 	    pat_buf = temp_buf_new (pattern->mask->width, pattern->mask->height, 1, 0, 0, NULL);
@@ -443,7 +447,7 @@ bucket_fill (gimage, drawable_id, fill_mode, paint_mode,
 	  size = pattern->mask->width * pattern->mask->height;
 	  while (size--)
 	    {
-	      gimage_transform_color (gimage, drawable_id, d1, d2,
+	      gimage_transform_color (gimage, drawable, d1, d2,
 				      (pattern->mask->bytes == 3) ? RGB : GRAY);
 	      d1 += pattern->mask->bytes;
 	      d2 += pat_buf->bytes;
@@ -455,15 +459,15 @@ bucket_fill (gimage, drawable_id, fill_mode, paint_mode,
 	pat_buf = pattern->mask;
     }
 
-  bytes = drawable_bytes (drawable_id);
-  has_alpha = drawable_has_alpha (drawable_id);
+  bytes = drawable_bytes (drawable);
+  has_alpha = drawable_has_alpha (drawable);
 
   /*  If there is no selection mask, the do a seed bucket
    *  fill...To do this, calculate a new contiguous region
    */
-  if (! drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2))
+  if (! drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2))
     {
-      mask = find_contiguous_region (gimage, drawable_id, TRUE, (int) threshold,
+      mask = find_contiguous_region (gimage, drawable, TRUE, (int) threshold,
 				     (int) x, (int) y, sample_merged);
 
       channel_bounds (mask, &x1, &y1, &x2, &y2);
@@ -474,13 +478,14 @@ bucket_fill (gimage, drawable_id, fill_mode, paint_mode,
 	  int off_x, off_y;
 
 	  /*  Limit the channel bounds to the drawable's extents  */
-	  drawable_offsets (drawable_id, &off_x, &off_y);
-	  x1 = BOUNDS (x1, off_x, (off_x + drawable_width (drawable_id)));
-	  y1 = BOUNDS (y1, off_y, (off_y + drawable_height (drawable_id)));
-	  x2 = BOUNDS (x2, off_x, (off_x + drawable_width (drawable_id)));
-	  y2 = BOUNDS (y2, off_y, (off_y + drawable_height (drawable_id)));
+	  drawable_offsets (drawable, &off_x, &off_y);
+	  x1 = BOUNDS (x1, off_x, (off_x + drawable_width (drawable)));
+	  y1 = BOUNDS (y1, off_y, (off_y + drawable_height (drawable)));
+	  x2 = BOUNDS (x2, off_x, (off_x + drawable_width (drawable)));
+	  y2 = BOUNDS (y2, off_y, (off_y + drawable_height (drawable)));
 
-	  pixel_region_init (&maskPR, mask->tiles, x1, y1, (x2 - x1), (y2 - y1), TRUE);
+	  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 
+			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
 	  /*  translate mask bounds to drawable coords  */
 	  x1 -= off_x;
@@ -489,7 +494,8 @@ bucket_fill (gimage, drawable_id, fill_mode, paint_mode,
 	  y2 -= off_y;
 	}
       else
-	pixel_region_init (&maskPR, mask->tiles, x1, y1, (x2 - x1), (y2 - y1), TRUE);
+	pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 
+			   x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       /*  if the gimage doesn't have an alpha channel,
        *  make sure that the temp buf does.  We need the
@@ -511,11 +517,11 @@ bucket_fill (gimage, drawable_id, fill_mode, paint_mode,
     bucket_fill_region (fill_mode, &bufPR, NULL, col, pat_buf, x1, y1, has_alpha);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable_id, &bufPR, TRUE,
+  gimage_apply_image (gimage, drawable, &bufPR, TRUE,
 		      (opacity * 255) / 100, paint_mode, NULL, x1, y1);
 
   /*  update the image  */
-  drawable_update (drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 
   /*  free the temporary buffer  */
   tile_manager_destroy (buf_tiles);
@@ -755,7 +761,7 @@ bucket_fill_invoker (args)
 {
   int success = TRUE;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   FillMode fill_mode;
   int paint_mode;
   double opacity;
@@ -765,7 +771,7 @@ bucket_fill_invoker (args)
   int int_value;
   double fp_value;
 
-  drawable_id = -1;
+  drawable    = NULL;
   fill_mode   = BgColorFill;
   paint_mode  = NORMAL_MODE;
   opacity     = 100.0;
@@ -782,9 +788,8 @@ bucket_fill_invoker (args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage == drawable_gimage (int_value))
-	drawable_id = int_value;
-      else
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   /*  fill mode  */
@@ -842,7 +847,7 @@ bucket_fill_invoker (args)
   /*  call the blend procedure  */
   if (success)
     {
-      bucket_fill (gimage, drawable_id, fill_mode, paint_mode,
+      bucket_fill (gimage, drawable, fill_mode, paint_mode,
 		   opacity, threshold, sample_merged, x, y);
     }
 

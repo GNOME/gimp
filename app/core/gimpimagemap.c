@@ -27,6 +27,8 @@
 #include "image_map.h"
 #include "tile_manager.h"
 
+#include "tile_manager_pvt.h"
+
 #define WAITING 0
 #define WORKING 1
 
@@ -36,7 +38,7 @@
 typedef struct _ImageMap
 {
   GDisplay *        gdisp;
-  int               drawable_id;
+  GimpDrawable *    drawable;
   TileManager *     undo_tiles;
   ImageMapApplyFunc apply_func;
   void *            user_data;
@@ -60,7 +62,7 @@ image_map_do (gpointer data)
 
   _image_map = (_ImageMap *) data;
 
-  if (! (gimage = drawable_gimage (_image_map->drawable_id)))
+  if (! (gimage = drawable_gimage ( (_image_map->drawable))))
     {
       _image_map->state = WAITING;
       return FALSE;
@@ -76,13 +78,13 @@ image_map_do (gpointer data)
 
   /*  apply the results  */
   pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
-  gimage_apply_image (gimage, _image_map->drawable_id, &shadowPR,
+  gimage_apply_image (gimage, _image_map->drawable, &shadowPR,
 		      FALSE, OPAQUE, REPLACE_MODE, NULL, x, y);
 
   /*  display the results  */
   if (_image_map->gdisp)
     {
-      drawable_update (_image_map->drawable_id, x, y, w, h);
+      drawable_update ( (_image_map->drawable), x, y, w, h);
       gdisplay_flush (_image_map->gdisp);
     }
 
@@ -100,13 +102,13 @@ image_map_do (gpointer data)
 
 ImageMap
 image_map_create (void *gdisp_ptr,
-		  int   drawable_id)
+		  GimpDrawable *drawable)
 {
   _ImageMap *_image_map;
 
   _image_map = (_ImageMap *) g_malloc (sizeof (_ImageMap));
   _image_map->gdisp = (GDisplay *) gdisp_ptr;
-  _image_map->drawable_id = drawable_id;
+  _image_map->drawable = drawable;
   _image_map->undo_tiles = NULL;
   _image_map->state = WAITING;
 
@@ -134,11 +136,11 @@ image_map_apply (ImageMap           image_map,
     }
 
   /*  Make sure the drawable is still valid  */
-  if (! drawable_gimage (_image_map->drawable_id))
+  if (! drawable_gimage ( (_image_map->drawable)))
     return;
 
   /*  The application should occur only within selection bounds  */
-  drawable_mask_bounds (_image_map->drawable_id, &x1, &y1, &x2, &y2);
+  drawable_mask_bounds ( (_image_map->drawable), &x1, &y1, &x2, &y2);
 
   /*  If undo tiles don't exist, or change size, (re)allocate  */
   if (!_image_map->undo_tiles ||
@@ -155,7 +157,7 @@ image_map_apply (ImageMap           image_map,
 			     _image_map->undo_tiles->levels[0].width,
 			     _image_map->undo_tiles->levels[0].height,
 			     FALSE);
-	  pixel_region_init (&_image_map->destPR, drawable_data (_image_map->drawable_id),
+	  pixel_region_init (&_image_map->destPR, drawable_data ( (_image_map->drawable)),
 			     _image_map->undo_tiles->x, _image_map->undo_tiles->y,
 			     _image_map->undo_tiles->levels[0].width,
 			     _image_map->undo_tiles->levels[0].height,
@@ -175,11 +177,11 @@ image_map_apply (ImageMap           image_map,
 
 	  /*  Allocate new tiles  */
 	  _image_map->undo_tiles = tile_manager_new ((x2 - x1), (y2 - y1),
-						     drawable_bytes (_image_map->drawable_id));
+						     drawable_bytes ( (_image_map->drawable)));
 	}
 
       /*  Copy from the image to the new tiles  */
-      pixel_region_init (&_image_map->srcPR, drawable_data (_image_map->drawable_id),
+      pixel_region_init (&_image_map->srcPR, drawable_data ( (_image_map->drawable)),
 			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
       pixel_region_init (&_image_map->destPR, _image_map->undo_tiles,
 			 0, 0, (x2 - x1), (y2 - y1), TRUE);
@@ -196,7 +198,7 @@ image_map_apply (ImageMap           image_map,
 		     0, 0, (x2 - x1), (y2 - y1), FALSE);
 
   /*  Configure the dest as the shadow buffer  */
-  pixel_region_init (&_image_map->destPR, drawable_shadow (_image_map->drawable_id),
+  pixel_region_init (&_image_map->destPR, drawable_shadow ( (_image_map->drawable)),
 		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
   /*  Apply the image transformation to the pixels  */
@@ -224,7 +226,7 @@ image_map_commit (ImageMap image_map)
     }
 
   /*  Make sure the drawable is still valid  */
-  if (! drawable_gimage (_image_map->drawable_id))
+  if (! drawable_gimage ( (_image_map->drawable)))
     return;
 
   /*  Register an undo step  */
@@ -234,7 +236,7 @@ image_map_commit (ImageMap image_map)
       y1 = _image_map->undo_tiles->y;
       x2 = _image_map->undo_tiles->x + _image_map->undo_tiles->levels[0].width;
       y2 = _image_map->undo_tiles->y + _image_map->undo_tiles->levels[0].height;
-      drawable_apply_image (_image_map->drawable_id, x1, y1, x2, y2, _image_map->undo_tiles, FALSE);
+      drawable_apply_image ( (_image_map->drawable), x1, y1, x2, y2, _image_map->undo_tiles, FALSE);
     }
 
   g_free (_image_map);
@@ -256,7 +258,7 @@ image_map_abort (ImageMap image_map)
     }
 
   /*  Make sure the drawable is still valid  */
-  if (! drawable_gimage (_image_map->drawable_id))
+  if (! drawable_gimage ( (_image_map->drawable)))
     return;
 
   /*  restore the original image  */
@@ -267,7 +269,7 @@ image_map_abort (ImageMap image_map)
 			 _image_map->undo_tiles->levels[0].width,
 			 _image_map->undo_tiles->levels[0].height,
 			 FALSE);
-      pixel_region_init (&destPR, drawable_data (_image_map->drawable_id),
+      pixel_region_init (&destPR, drawable_data ( (_image_map->drawable)),
 			 _image_map->undo_tiles->x, _image_map->undo_tiles->y,
 			 _image_map->undo_tiles->levels[0].width,
 			 _image_map->undo_tiles->levels[0].height,
@@ -285,7 +287,7 @@ image_map_abort (ImageMap image_map)
       copy_region (&srcPR, &destPR);
 
       /*  Update the area  */
-      drawable_update (_image_map->drawable_id,
+      drawable_update ( (_image_map->drawable),
 		       _image_map->undo_tiles->x, _image_map->undo_tiles->y,
 		       _image_map->undo_tiles->levels[0].width,
 		       _image_map->undo_tiles->levels[0].height);

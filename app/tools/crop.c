@@ -563,6 +563,7 @@ crop_image (GImage *gimage,
   link_ptr list;
   int width, height;
   int lx1, ly1, lx2, ly2;
+  int off_x, off_y;
 
   width = x2 - x1;
   height = y2 - y1;
@@ -606,10 +607,12 @@ crop_image (GImage *gimage,
 
 	layer_translate (layer, -x1, -y1);
 
-	lx1 = BOUNDS (layer->offset_x, 0, gimage->width);
-	ly1 = BOUNDS (layer->offset_y, 0, gimage->height);
-	lx2 = BOUNDS ((layer->width + layer->offset_x), 0, gimage->width);
-	ly2 = BOUNDS ((layer->height + layer->offset_y), 0, gimage->height);
+	drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+
+	lx1 = BOUNDS (off_x, 0, gimage->width);
+	ly1 = BOUNDS (off_y, 0, gimage->height);
+	lx2 = BOUNDS ((drawable_width (GIMP_DRAWABLE (layer)) + off_x), 0, gimage->width);
+	ly2 = BOUNDS ((drawable_height (GIMP_DRAWABLE (layer)) + off_y), 0, gimage->height);
 	width = lx2 - lx1;
 	height = ly2 - ly1;
 
@@ -617,10 +620,10 @@ crop_image (GImage *gimage,
 
 	if (width && height)
 	  layer_resize (layer, width, height,
-			-(lx1 - layer->offset_x),
-			-(ly1 - layer->offset_y));
+			-(lx1 - off_x),
+			-(ly1 - off_y));
 	else
-	  gimage_remove_layer (gimage, layer->ID);
+	  gimage_remove_layer (gimage, layer);
       }
 
     /*  Make sure the projection matches the gimage size  */

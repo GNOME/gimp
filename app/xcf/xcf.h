@@ -12,9 +12,10 @@ struct _XcfInfo
   FILE *fp;
   guint cp;
   char *filename;
-  int active_layer;
-  int active_channel;
-  int floating_sel_drawable;
+  Layer * active_layer;
+  Channel * active_channel;
+  GimpDrawable * floating_sel_drawable;
+  Layer * floating_sel;
   guint floating_sel_offset;
   int swap_num;
   int *ref_count;

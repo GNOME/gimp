@@ -39,9 +39,9 @@ static Argument *
 edit_cut_invoker (Argument *args)
 {
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
 
-  drawable_id = -1;
+  drawable = NULL;
 
   success = TRUE;
 
@@ -54,15 +54,13 @@ edit_cut_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (drawable_gimage (int_value) != gimage)
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
-      else
-	drawable_id = int_value;
     }
-
   /*  create the new image  */
   if (success)
-    success = (edit_cut (gimage, drawable_id) != NULL);
+    success = (edit_cut (gimage, drawable) != NULL);
 
   return procedural_db_return_args (&edit_cut_proc, success);
 }
@@ -110,9 +108,9 @@ static Argument *
 edit_copy_invoker (Argument *args)
 {
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
 
-  drawable_id = -1;
+  drawable = NULL;
 
   success = TRUE;
 
@@ -125,15 +123,14 @@ edit_copy_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (drawable_gimage (int_value) != gimage)
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
-      else
-	drawable_id = int_value;
     }
 
   /*  create the new image  */
   if (success)
-    success = (edit_copy (gimage, drawable_id) != NULL);
+    success = (edit_copy (gimage, drawable) != NULL);
 
   return procedural_db_return_args (&edit_copy_proc, success);
 }
@@ -181,10 +178,10 @@ static Argument *
 edit_paste_invoker (Argument *args)
 {
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int paste_into;
 
-  drawable_id = -1;
+  drawable = NULL;
 
   success = TRUE;
 
@@ -197,10 +194,9 @@ edit_paste_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (drawable_gimage (int_value) != gimage)
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
-      else
-	drawable_id = int_value;
     }
   if (success)
     {
@@ -210,7 +206,7 @@ edit_paste_invoker (Argument *args)
 
   /*  create the new image  */
   if (success)
-    success = edit_paste (gimage, drawable_id, global_buf, paste_into);
+    success = edit_paste (gimage, drawable, global_buf, paste_into);
 
   return_args = procedural_db_return_args (&edit_paste_proc, success);
 
@@ -275,9 +271,9 @@ static Argument *
 edit_clear_invoker (Argument *args)
 {
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
 
-  drawable_id = -1;
+  drawable = NULL;
 
   success = TRUE;
 
@@ -290,15 +286,14 @@ edit_clear_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (drawable_gimage (int_value) != gimage)
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
-      else
-	drawable_id = int_value;
     }
 
   /*  create the new image  */
   if (success)
-    success = edit_clear (gimage, drawable_id);
+    success = edit_clear (gimage, drawable);
 
   return procedural_db_return_args (&edit_clear_proc, success);
 }
@@ -346,10 +341,9 @@ static Argument *
 edit_fill_invoker (Argument *args)
 {
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
 
-  drawable_id = -1;
-
+  drawable = NULL;
   success = TRUE;
 
   if (success)
@@ -361,15 +355,14 @@ edit_fill_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (drawable_gimage (int_value) != gimage)
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
-      else
-	drawable_id = int_value;
     }
 
   /*  create the new image  */
   if (success)
-    success = edit_fill (gimage, drawable_id);
+    success = edit_fill (gimage, drawable);
 
   return procedural_db_return_args (&edit_fill_proc, success);
 }
@@ -417,9 +410,9 @@ static Argument *
 edit_stroke_invoker (Argument *args)
 {
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
 
-  drawable_id = -1;
+  drawable = NULL;
 
   success = TRUE;
 
@@ -432,15 +425,14 @@ edit_stroke_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (drawable_gimage (int_value) != gimage)
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
-      else
-	drawable_id = int_value;
     }
 
   /*  create the new image  */
   if (success)
-    success = gimage_mask_stroke (gimage, drawable_id);
+    success = gimage_mask_stroke (gimage, drawable);
 
   return procedural_db_return_args (&edit_stroke_proc, success);
 }

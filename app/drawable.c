@@ -28,71 +28,159 @@
 #include "gimage_mask.h"
 #include "gdisplay.h"
 #include "layer.h"
-#include "linked.h"
 #include "palette.h"
+#include "undo.h"
+
+#include "drawable_pvt.h"
+
+enum {
+  INVALIDATE_PREVIEW,
+  LAST_SIGNAL
+};
+
+
+static void gimp_drawable_class_init (GimpDrawableClass *klass);
+static void gimp_drawable_init	     (GimpDrawable      *drawable);
+static void gimp_drawable_destroy    (GtkObject		*object);
+
+static gint drawable_signals[LAST_SIGNAL] = { 0 };
+
+static GimpDrawableClass *parent_class = NULL;
+
+
+guint
+gimp_drawable_get_type ()
+{
+  static guint drawable_type = 0;
+
+  if (!drawable_type)
+    {
+      GtkTypeInfo drawable_info =
+      {
+	"GimpDrawable",
+	sizeof (GimpDrawable),
+	sizeof (GimpDrawableClass),
+	(GtkClassInitFunc) gimp_drawable_class_init,
+	(GtkObjectInitFunc) gimp_drawable_init,
+	(GtkArgFunc) NULL,
+      };
+
+      drawable_type = gtk_type_unique (gtk_data_get_type (), &drawable_info);
+    }
+
+  return drawable_type;
+}
+
+static void
+gimp_drawable_class_init (GimpDrawableClass *class)
+{
+  GtkObjectClass *object_class;
+
+  object_class = (GtkObjectClass*) class;
+  parent_class = gtk_type_class (gtk_data_get_type ());
+
+  drawable_signals[INVALIDATE_PREVIEW] =
+    gtk_signal_new ("invalidate_preview",
+		    GTK_RUN_LAST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpDrawableClass, invalidate_preview),
+		    gtk_signal_default_marshaller,
+		    GTK_TYPE_NONE, 0);
+
+  gtk_object_class_add_signals (object_class, drawable_signals, LAST_SIGNAL);
+
+  object_class->destroy = gimp_drawable_destroy;
+}
 
 
 /*
  *  Static variables
  */
 int global_drawable_ID = 1;
+static GHashTable *drawable_table = NULL;
 
 /**************************/
 /*  Function definitions  */
 
-void
-drawable_apply_image (drawable_id, x1, y1, x2, y2, tiles, sparse)
-     int drawable_id;
-     int x1, y1;
-     int x2, y2;
-     TileManager *tiles;
-     int sparse;
+static guint
+drawable_hash (gpointer v)
 {
-  Channel *channel;
-  Layer *layer;
+  return (guint) v;
+}
 
-  if ((channel = channel_get_ID (drawable_id)))
-    channel_apply_image (channel, x1, y1, x2, y2, tiles, sparse);
-  else if ((layer = layer_get_ID (drawable_id)))
-    layer_apply_image (layer, x1, y1, x2, y2, tiles, sparse);
+static gint
+drawable_hash_compare (gpointer v1, gpointer v2)
+{
+  return ((guint) v1) == ((guint) v2);
+}
+
+GimpDrawable*
+drawable_get_ID (int drawable_id)
+{
+  if (drawable_table == NULL)
+    return NULL;
+
+  return (GimpDrawable*) g_hash_table_lookup (drawable_table, 
+					      (gpointer) drawable_id);
+}
+
+int
+drawable_ID (GimpDrawable *drawable)
+{
+  return drawable->ID;
+}
+
+void
+drawable_apply_image (GimpDrawable *drawable, 
+		      int x1, int y1, int x2, int y2, 
+		      TileManager *tiles, int sparse)
+{
+  if (drawable)
+    if (! tiles)
+      undo_push_image (gimage_get_ID (drawable->gimage_ID), drawable, x1, y1, x2, y2);
+    else
+      undo_push_image_mod (gimage_get_ID (drawable->gimage_ID), drawable, x1, y1, x2, y2, tiles, sparse);
+  
 }
 
 
 void
-drawable_merge_shadow (drawable_id, undo)
-     int drawable_id;
-     int undo;
+drawable_merge_shadow (GimpDrawable *drawable, int undo)
 {
   GImage *gimage;
   PixelRegion shadowPR;
   int x1, y1, x2, y2;
 
-  if (! (gimage = drawable_gimage (drawable_id)))
+  if (! drawable) 
+    return;
+
+  if (! (gimage = drawable_gimage (drawable)))
     return;
 
   /*  A useful optimization here is to limit the update to the
    *  extents of the selection mask, as it cannot extend beyond
    *  them.
    */
-  drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   pixel_region_init (&shadowPR, gimage->shadow, x1, y1,
 		     (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable_id, &shadowPR, undo, OPAQUE,
+  gimage_apply_image (gimage, drawable, &shadowPR, undo, OPAQUE,
 		      REPLACE_MODE, NULL, x1, y1);
 }
 
 
 void
-drawable_fill (drawable_id, fill_type)
-     int drawable_id;
-     int fill_type;
+drawable_fill (GimpDrawable *drawable, int fill_type)
 {
   GImage *gimage;
   PixelRegion destPR;
   unsigned char c[MAX_CHANNELS];
   unsigned char i, r, g, b, a;
 
-  if (! (gimage = drawable_gimage (drawable_id)))
+  if (! drawable)
+    return;
+
+  if (! (gimage = drawable_gimage (drawable)))
     return;
 
   a = 255;
@@ -115,27 +203,27 @@ drawable_fill (drawable_id, fill_type)
       break;
     }
 
-  switch (drawable_type (drawable_id))
+  switch (drawable_type (drawable))
     {
     case RGB_GIMAGE: case RGBA_GIMAGE:
       c[RED_PIX] = r;
       c[GREEN_PIX] = g;
       c[BLUE_PIX] = b;
-      if (drawable_type (drawable_id) == RGBA_GIMAGE)
+      if (drawable_type (drawable) == RGBA_GIMAGE)
 	c[ALPHA_PIX] = a;
       break;
     case GRAY_GIMAGE: case GRAYA_GIMAGE:
       c[GRAY_PIX] = r;
-      if (drawable_type (drawable_id) == GRAYA_GIMAGE)
+      if (drawable_type (drawable) == GRAYA_GIMAGE)
 	c[ALPHA_G_PIX] = a;
       break;
     case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
       c[RED_PIX] = r;
       c[GREEN_PIX] = g;
       c[BLUE_PIX] = b;
-      gimage_transform_color (gimage, drawable_id, c, &i, RGB);
+      gimage_transform_color (gimage, drawable, c, &i, RGB);
       c[INDEXED_PIX] = i;
-      if (drawable_type (drawable_id) == INDEXEDA_GIMAGE)
+      if (drawable_type (drawable) == INDEXEDA_GIMAGE)
 	  c[ALPHA_I_PIX] = a;
       break;
     default:
@@ -144,91 +232,86 @@ drawable_fill (drawable_id, fill_type)
     }
 
   pixel_region_init (&destPR,
-		     drawable_data (drawable_id),
+		     drawable_data (drawable),
 		     0, 0,
-		     drawable_width (drawable_id),
-		     drawable_height (drawable_id),
+		     drawable_width (drawable),
+		     drawable_height (drawable),
 		     TRUE);
   color_region (&destPR, c);
 
   /*  Update the filled area  */
-  drawable_update (drawable_id, 0, 0,
-		   drawable_width (drawable_id),
-		   drawable_height (drawable_id));
+  drawable_update (drawable, 0, 0,
+		   drawable_width (drawable),
+		   drawable_height (drawable));
 }
 
 
 void
-drawable_update (drawable_id, x, y, w, h)
-     int drawable_id;
-     int x, y;
-     int w, h;
+drawable_update (GimpDrawable *drawable, int x, int y, int w, int h)
 {
   GImage *gimage;
   int offset_x, offset_y;
 
-  if (! (gimage = drawable_gimage (drawable_id)))
+  if (! drawable)
     return;
 
-  drawable_offsets (drawable_id, &offset_x, &offset_y);
+  if (! (gimage = drawable_gimage (drawable)))
+    return;
+
+  drawable_offsets (drawable, &offset_x, &offset_y);
   x += offset_x;
   y += offset_y;
   gdisplays_update_area (gimage->ID, x, y, w, h);
 
   /*  invalidate the preview  */
-  drawable_invalidate_preview (drawable_id);
+  drawable_invalidate_preview (drawable);
 }
 
 
 int
-drawable_mask_bounds (drawable_id, x1, y1, x2, y2)
-     int drawable_id;
-     int *x1, *y1;
-     int *x2, *y2;
+drawable_mask_bounds (GimpDrawable *drawable, 
+		      int *x1, int *y1, int *x2, int *y2)
 {
   GImage *gimage;
   int off_x, off_y;
 
-  if (! (gimage = drawable_gimage (drawable_id)))
+  if (! drawable)
+    return FALSE;
+
+  if (! (gimage = drawable_gimage (drawable)))
     return FALSE;
 
   if (gimage_mask_bounds (gimage, x1, y1, x2, y2))
     {
-      drawable_offsets (drawable_id, &off_x, &off_y);
-      *x1 = BOUNDS (*x1 - off_x, 0, drawable_width (drawable_id));
-      *y1 = BOUNDS (*y1 - off_y, 0, drawable_height (drawable_id));
-      *x2 = BOUNDS (*x2 - off_x, 0, drawable_width (drawable_id));
-      *y2 = BOUNDS (*y2 - off_y, 0, drawable_height (drawable_id));
+      drawable_offsets (drawable, &off_x, &off_y);
+      *x1 = BOUNDS (*x1 - off_x, 0, drawable_width (drawable));
+      *y1 = BOUNDS (*y1 - off_y, 0, drawable_height (drawable));
+      *x2 = BOUNDS (*x2 - off_x, 0, drawable_width (drawable));
+      *y2 = BOUNDS (*y2 - off_y, 0, drawable_height (drawable));
       return TRUE;
     }
   else
     {
-      *x2 = drawable_width (drawable_id);
-      *y2 = drawable_height (drawable_id);
+      *x2 = drawable_width (drawable);
+      *y2 = drawable_height (drawable);
       return FALSE;
     }
 }
 
 
 void
-drawable_invalidate_preview (drawable_id)
-     int drawable_id;
+drawable_invalidate_preview (GimpDrawable *drawable)
 {
-  Channel *channel;
-  Layer *layer;
   GImage *gimage;
 
-  if ((channel = channel_get_ID (drawable_id)))
-    channel->preview_valid = FALSE;
-  else if ((layer = layer_get_ID (drawable_id)))
-    {
-      if (layer_is_floating_sel (layer))
-	floating_sel_invalidate (layer);
-      else
-	layer->preview_valid = FALSE;
-    }
+  if (! drawable)
+    return;
 
-  gimage = drawable_gimage (drawable_id);
+  drawable->preview_valid = FALSE;
+
+  gtk_signal_emit (GTK_OBJECT(drawable), drawable_signals[INVALIDATE_PREVIEW]);
+
+  gimage = drawable_gimage (drawable);
   if (gimage)
     {
       gimage->comp_preview_valid[0] = FALSE;
@@ -239,85 +322,71 @@ drawable_invalidate_preview (drawable_id)
 
 
 int
-drawable_dirty (int drawable_id)
+drawable_dirty (GimpDrawable *drawable)
 {
-  Channel *channel;
-  Layer *layer;
-
-  if ((channel = channel_get_ID (drawable_id)))
-    return channel->dirty = (channel->dirty < 0) ? 2 : channel->dirty + 1;
-  else if ((layer = layer_get_ID (drawable_id)))
-    return layer->dirty = (layer->dirty < 0) ? 2 : layer->dirty + 1;
+  if (drawable) 
+    return drawable->dirty = (drawable->dirty < 0) ? 2 : drawable->dirty + 1;
   else
     return 0;
 }
 
 
 int
-drawable_clean (int drawable_id)
+drawable_clean (GimpDrawable *drawable)
 {
-  Channel *channel;
-  Layer *layer;
-
-  if ((channel = channel_get_ID (drawable_id)))
-    return channel->dirty = (channel->dirty <= 0) ? 0 : channel->dirty - 1;
-  else if ((layer = layer_get_ID (drawable_id)))
-    return layer->dirty = (layer->dirty <= 0) ? 0 : layer->dirty - 1;
+  if (drawable) 
+    return drawable->dirty = (drawable->dirty <= 0) ? 0 : drawable->dirty - 1;
   else
     return 0;
 }
 
 
 GImage *
-drawable_gimage (int drawable_id)
+drawable_gimage (GimpDrawable *drawable)
 {
-  Channel *channel;
-  Layer *layer;
-
-  if ((channel = channel_get_ID (drawable_id)))
-    return gimage_get_ID (channel->gimage_ID);
-  else if ((layer = layer_get_ID (drawable_id)))
-    return gimage_get_ID (layer->gimage_ID);
+  if (drawable)
+    return gimage_get_ID (drawable->gimage_ID);
   else
     return NULL;
 }
 
 
 int
-drawable_type (int drawable_id)
+drawable_type (GimpDrawable *drawable)
 {
-  Channel *channel;
-  Layer *layer;
-
-  if ((channel = channel_get_ID (drawable_id)))
-    return GRAY_GIMAGE;
-  else if ((layer = layer_get_ID (drawable_id)))
-    return layer->type;
+  if (drawable)
+    return drawable->type;
   else
     return -1;
 }
 
-
 int
-drawable_has_alpha (int drawable_id)
+drawable_has_alpha (GimpDrawable *drawable)
 {
-  Channel *channel;
-  Layer *layer;
-
-  if ((channel = channel_get_ID (drawable_id)))
-    return FALSE;
-  else if ((layer = layer_get_ID (drawable_id)))
-    return layer_has_alpha (layer);
+  if (drawable)
+    return drawable->has_alpha;
   else
     return FALSE;
 }
 
 
-int
-drawable_type_with_alpha (int drawable_id)
+int 
+drawable_visible (GimpDrawable *drawable)
 {
-  int type = drawable_type (drawable_id);
-  int has_alpha = drawable_has_alpha (drawable_id);
+  return drawable->visible;
+}
+
+char *
+drawable_name (GimpDrawable *drawable)
+{
+  return drawable->name;
+}
+
+int
+drawable_type_with_alpha (GimpDrawable *drawable)
+{
+  int type = drawable_type (drawable);
+  int has_alpha = drawable_has_alpha (drawable);
 
   if (has_alpha)
     return type;
@@ -336,11 +405,10 @@ drawable_type_with_alpha (int drawable_id)
 
 
 int
-drawable_color (drawable_id)
-     int drawable_id;
+drawable_color (GimpDrawable *drawable)
 {
-  if (drawable_type (drawable_id) == RGBA_GIMAGE ||
-      drawable_type (drawable_id) == RGB_GIMAGE)
+  if (drawable_type (drawable) == RGBA_GIMAGE ||
+      drawable_type (drawable) == RGB_GIMAGE)
     return 1;
   else
     return 0;
@@ -348,11 +416,10 @@ drawable_color (drawable_id)
 
 
 int
-drawable_gray (drawable_id)
-     int drawable_id;
+drawable_gray (GimpDrawable *drawable)
 {
-  if (drawable_type (drawable_id) == GRAYA_GIMAGE ||
-      drawable_type (drawable_id) == GRAY_GIMAGE)
+  if (drawable_type (drawable) == GRAYA_GIMAGE ||
+      drawable_type (drawable) == GRAY_GIMAGE)
     return 1;
   else
     return 0;
@@ -360,11 +427,10 @@ drawable_gray (drawable_id)
 
 
 int
-drawable_indexed (drawable_id)
-     int drawable_id;
+drawable_indexed (GimpDrawable *drawable)
 {
-  if (drawable_type (drawable_id) == INDEXEDA_GIMAGE ||
-      drawable_type (drawable_id) == INDEXED_GIMAGE)
+  if (drawable_type (drawable) == INDEXEDA_GIMAGE ||
+      drawable_type (drawable) == INDEXED_GIMAGE)
     return 1;
   else
     return 0;
@@ -372,128 +438,79 @@ drawable_indexed (drawable_id)
 
 
 TileManager *
-drawable_data (int drawable_id)
+drawable_data (GimpDrawable *drawable)
 {
-  Channel *channel;
-  Layer *layer;
-
-  if ((channel = channel_get_ID (drawable_id)))
-    return channel->tiles;
-  else if ((layer = layer_get_ID (drawable_id)))
-    return layer->tiles;
+  if (drawable) 
+    return drawable->tiles;
   else
     return NULL;
 }
 
 
 TileManager *
-drawable_shadow (int drawable_id)
+drawable_shadow (GimpDrawable *drawable)
 {
   GImage *gimage;
-  Channel *channel;
-  Layer *layer;
 
-  if (! (gimage = drawable_gimage (drawable_id)))
+  if (! (gimage = drawable_gimage (drawable)))
     return NULL;
 
-  if ((channel = channel_get_ID (drawable_id)))
-    {
-      return gimage_shadow (gimage, channel->width, channel->height, 1);
-    }
-  else if ((layer = layer_get_ID (drawable_id)))
-    {
-      return gimage_shadow (gimage, layer->width, layer->height, layer->bytes);
-    }
+  if (drawable) 
+    return gimage_shadow (gimage, drawable->width, drawable->height, 
+			  drawable->bytes);
   else
     return NULL;
 }
 
 
 int
-drawable_bytes (int drawable_id)
+drawable_bytes (GimpDrawable *drawable)
 {
-  Channel *channel;
-  Layer *layer;
-
-  if ((channel = channel_get_ID (drawable_id)))
-    return channel->bytes;
-  else if ((layer = layer_get_ID (drawable_id)))
-    return layer->bytes;
+  if (drawable) 
+    return drawable->bytes;
   else
     return -1;
 }
 
 
 int
-drawable_width (int drawable_id)
+drawable_width (GimpDrawable *drawable)
 {
-  Channel *channel;
-  Layer *layer;
-
-  if ((channel = channel_get_ID (drawable_id)))
-    return channel->width;
-  else if ((layer = layer_get_ID (drawable_id)))
-    return layer->width;
+  if (drawable) 
+    return drawable->width;
   else
     return -1;
 }
 
 
 int
-drawable_height (int drawable_id)
+drawable_height (GimpDrawable *drawable)
 {
-  Channel *channel;
-  Layer *layer;
-
-  if ((channel = channel_get_ID (drawable_id)))
-    return channel->height;
-  else if ((layer = layer_get_ID (drawable_id)))
-    return layer->height;
+  if (drawable) 
+    return drawable->height;
   else
     return -1;
 }
 
 
 void
-drawable_offsets (drawable_id, off_x, off_y)
-     int drawable_id;
-     int *off_x;
-     int *off_y;
+drawable_offsets (GimpDrawable *drawable, int *off_x, int *off_y)
 {
-  Channel *channel;
-  Layer *layer;
-
-  /*  return the active layer offsets  */
-  if ((layer = layer_get_ID (drawable_id)))
+  if (drawable) 
     {
-      *off_x = layer->offset_x;
-      *off_y = layer->offset_y;
-      return;
+      *off_x = drawable->offset_x;
+      *off_y = drawable->offset_y;
     }
-  /*  The case of a layer mask  */
-  else if ((channel = channel_get_ID (drawable_id)))
-    {
-      if (channel->layer_ID != -1)
-	if ((layer = layer_get_ID (channel->layer_ID)))
-	  {
-	    *off_x = layer->offset_x;
-	    *off_y = layer->offset_y;
-	    return;
-	  }
-    }
-
-  *off_x = 0;
-  *off_y = 0;
+  else
+    *off_x = *off_y = 0;
 }
 
-
 unsigned char *
-drawable_cmap (drawable_id)
-     int drawable_id;
+drawable_cmap (GimpDrawable *drawable)
 {
   GImage *gimage;
 
-  if ((gimage = drawable_gimage (drawable_id)))
+  if ((gimage = drawable_gimage (drawable)))
     return gimage->cmap;
   else
     return NULL;
@@ -501,40 +518,140 @@ drawable_cmap (drawable_id)
 
 
 Layer *
-drawable_layer (drawable_id)
-     int drawable_id;
+drawable_layer (GimpDrawable *drawable)
 {
-  Layer *layer;
-
-  if ((layer = layer_get_ID (drawable_id)))
-    if (!layer->mask || (layer->mask && !layer->edit_mask))
-      return layer;
-
-  return NULL;
-}
-
-
-Channel *
-drawable_layer_mask (drawable_id)
-     int drawable_id;
-{
-  Channel *channel;
-
-  if ((channel = channel_get_ID (drawable_id)))
-    if (channel->layer_ID != -1)
-      return channel;
-
-  return NULL;
-}
-
-
-Channel *
-drawable_channel    (drawable_id)
-     int drawable_id;
-{
-  Channel *channel;
-  if ((channel = channel_get_ID (drawable_id)))
-    return channel;
+  if (drawable && GIMP_IS_LAYER(drawable))
+    return GIMP_LAYER (drawable);
   else
     return NULL;
 }
+
+
+LayerMask *
+drawable_layer_mask (GimpDrawable *drawable)
+{
+  if (drawable && GIMP_IS_LAYER_MASK(drawable))
+    return GIMP_LAYER_MASK(drawable);
+  else
+    return NULL;
+}
+
+
+Channel *
+drawable_channel    (GimpDrawable *drawable)
+{
+  if (drawable && GIMP_IS_CHANNEL(drawable))
+    return GIMP_CHANNEL(drawable);
+  else
+    return NULL;
+}
+
+void
+drawable_deallocate (GimpDrawable *drawable)
+{
+  if (drawable->tiles)
+    tile_manager_destroy (drawable->tiles);
+}
+
+static void
+gimp_drawable_init (GimpDrawable *drawable)
+{
+  drawable->name = NULL;
+  drawable->tiles = NULL;
+  drawable->visible = FALSE;
+  drawable->width = drawable->height = 0;
+  drawable->offset_x = drawable->offset_y = 0;
+  drawable->bytes = 0;
+  drawable->dirty = FALSE;
+  drawable->gimage_ID = -1;
+  drawable->type = -1;
+  drawable->has_alpha = FALSE;
+  drawable->preview = NULL;
+  drawable->preview_valid = FALSE;
+
+  drawable->ID = global_drawable_ID++;
+  if (drawable_table == NULL)
+    drawable_table = g_hash_table_new (drawable_hash,
+				       drawable_hash_compare);
+  g_hash_table_insert (drawable_table, (gpointer) drawable->ID,
+		       (gpointer) drawable);
+}
+
+static void
+gimp_drawable_destroy (GtkObject *object)
+{
+  GimpDrawable *drawable;
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (object));
+
+  drawable = GIMP_DRAWABLE (object);
+
+  g_hash_table_remove (drawable_table, (gpointer) drawable->ID);
+  
+  if (drawable->name)
+    g_free (drawable->name);
+
+  if (drawable->tiles)
+    tile_manager_destroy (drawable->tiles);
+
+  if (drawable->preview)
+    temp_buf_free (drawable->preview);
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    (*GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+}
+
+void
+gimp_drawable_configure (GimpDrawable *drawable,
+			 int gimage_ID, int width, int height, 
+			 int type, char *name)
+{
+  int bpp;
+  int alpha;
+
+  if (!name)
+    name = "unnamed";
+
+  switch (type)
+    {
+    case RGB_GIMAGE:
+      bpp = 3; alpha = 0; break;
+    case GRAY_GIMAGE:
+      bpp = 1; alpha = 0; break;
+    case RGBA_GIMAGE:
+      bpp = 4; alpha = 1; break;
+    case GRAYA_GIMAGE:
+      bpp = 2; alpha = 1; break;
+    case INDEXED_GIMAGE:
+      bpp = 1; alpha = 0; break;
+    case INDEXEDA_GIMAGE:
+      bpp = 2; alpha = 1; break;
+    default:
+      warning ("Layer type %d not supported.", type);
+      return;
+    }
+
+  if (drawable->name) 
+    g_free (drawable->name);
+  drawable->name = g_strdup(name);
+  drawable->width = width;
+  drawable->height = height;
+  drawable->bytes = bpp;
+  drawable->type = type;
+  drawable->has_alpha = alpha;
+  drawable->offset_x = 0;
+  drawable->offset_y = 0;
+
+  if (drawable->tiles)
+    tile_manager_destroy (drawable->tiles);
+  drawable->tiles = tile_manager_new (width, height, bpp);
+  drawable->dirty = FALSE;
+  drawable->visible = TRUE;
+
+  drawable->gimage_ID = gimage_ID;
+
+  /*  preview variables  */
+  drawable->preview = NULL;
+  drawable->preview_valid = FALSE;
+}
+  

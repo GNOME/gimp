@@ -62,7 +62,7 @@ struct _ColorBalanceDialog
   GtkAdjustment  *magenta_green_data;
   GtkAdjustment  *yellow_blue_data;
 
-  int          drawable_id;
+  GimpDrawable *drawable;
   ImageMap     image_map;
 
   double       cyan_red[3];
@@ -330,8 +330,8 @@ color_balance_initialize (void *gdisp_ptr)
       color_balance_dialog->magenta_green[i] = 0.0;
       color_balance_dialog->yellow_blue[i] = 0.0;
     }
-  color_balance_dialog->drawable_id = gimage_active_drawable (gdisp->gimage);
-  color_balance_dialog->image_map = image_map_create (gdisp_ptr, color_balance_dialog->drawable_id);
+  color_balance_dialog->drawable = gimage_active_drawable (gdisp->gimage);
+  color_balance_dialog->image_map = image_map_create (gdisp_ptr, color_balance_dialog->drawable);
   color_balance_update (color_balance_dialog, ALL);
 }
 
@@ -921,7 +921,6 @@ color_balance_invoker (Argument *args)
   int int_value;
   ColorBalanceDialog cbd;
   GImage *gimage;
-  int drawable_id;
   int transfer_mode;
   int preserve_lum;
   double cyan_red;
@@ -931,8 +930,9 @@ color_balance_invoker (Argument *args)
   int x1, y1, x2, y2;
   int i;
   void *pr;
+  GimpDrawable *drawable;
 
-  drawable_id   = -1;
+  drawable      = NULL;
   transfer_mode = MIDTONES;
   cyan_red      = 0;
   magenta_green = 0;
@@ -949,9 +949,8 @@ color_balance_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage == drawable_gimage (int_value))
-	drawable_id = int_value;
-      else
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   /*  transfer_mode  */
@@ -1016,16 +1015,16 @@ color_balance_invoker (Argument *args)
       cbd.yellow_blue[transfer_mode] = yellow_blue;
 
       /*  The application should occur only within selection bounds  */
-      drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-      pixel_region_init (&srcPR, drawable_data (drawable_id), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable_id), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
 	color_balance (&srcPR, &destPR, (void *) &cbd);
 
-      drawable_merge_shadow (drawable_id, TRUE);
-      drawable_update (drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+      drawable_merge_shadow (drawable, TRUE);
+      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 
   return procedural_db_return_args (&color_balance_proc, success);

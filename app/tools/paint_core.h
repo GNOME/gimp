@@ -37,7 +37,7 @@
 #define INCREMENTAL     1  /* convolve, smudge */
 
 typedef struct _paint_core PaintCore;
-typedef void * (* PaintFunc)   (PaintCore *, int, int);
+typedef void * (* PaintFunc)   (PaintCore *, GimpDrawable *, int);
 struct _paint_core
 {
   DrawCore *      core;         /*  Core select object          */
@@ -87,16 +87,16 @@ void          paint_core_control           (Tool *, int, gpointer);
 void          paint_core_no_draw      (Tool *);
 Tool *        paint_core_new          (int);
 void          paint_core_free         (Tool *);
-int           paint_core_init         (PaintCore *, int, double, double);
-void          paint_core_interpolate  (PaintCore *, int);
-void          paint_core_finish       (PaintCore *, int, int);
+int           paint_core_init         (PaintCore *, GimpDrawable *, double, double);
+void          paint_core_interpolate  (PaintCore *, GimpDrawable *);
+void          paint_core_finish       (PaintCore *, GimpDrawable *, int);
 void          paint_core_cleanup      (void);
 
 /*  paint tool painting functions  */
-TempBuf *     paint_core_get_paint_area    (PaintCore *, int);
-TempBuf *     paint_core_get_orig_image    (PaintCore *, int, int, int, int, int);
-void          paint_core_paste_canvas      (PaintCore *, int, int, int, int, int, int);
-void          paint_core_replace_canvas    (PaintCore *, int, int, int, int, int);
+TempBuf *     paint_core_get_paint_area    (PaintCore *, GimpDrawable *);
+TempBuf *     paint_core_get_orig_image    (PaintCore *, GimpDrawable *, int, int, int, int);
+void          paint_core_paste_canvas      (PaintCore *, GimpDrawable *, int, int, int, int, int);
+void          paint_core_replace_canvas    (PaintCore *, GimpDrawable *, int, int, int, int);
 
 
 #endif  /*  __PAINT_CORE_H__  */

@@ -224,7 +224,7 @@ histogram_free (Histogram  *histogram)
 
 void
 histogram_update (Histogram         *histogram,
-		  int                drawable_id,
+		  GimpDrawable      *drawable,
 		  HistogramInfoFunc  info_func,
 		  void              *user_data)
 {
@@ -241,20 +241,20 @@ histogram_update (Histogram         *histogram,
   histogram_p = (HistogramPrivate *) histogram->private_part;
 
   /*  Make sure the drawable is still valid  */
-  if (! (gimage = drawable_gimage (drawable_id)))
+  if (! (gimage = drawable_gimage ( (drawable))))
     return;
 
   /*  The information collection should occur only within selection bounds  */
-  no_mask = (drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2) == FALSE);
-  drawable_offsets (drawable_id, &off_x, &off_y);
+  no_mask = (drawable_mask_bounds ( (drawable), &x1, &y1, &x2, &y2) == FALSE);
+  drawable_offsets ( (drawable), &off_x, &off_y);
 
   /*  Configure the src from the drawable data  */
-  pixel_region_init (&srcPR, drawable_data (drawable_id),
+  pixel_region_init (&srcPR, drawable_data ( (drawable)),
 		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 
   /*  Configure the mask from the gimage's selection mask  */
   mask = gimage_get_mask (gimage);
-  pixel_region_init (&maskPR, mask->tiles,
+  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)),
 		     x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
 
   /*  Initialize the values array  */

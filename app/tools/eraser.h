@@ -22,7 +22,7 @@
 #include "procedural_db.h"
 #include "tools.h"
 
-void *        eraser_paint_func  (PaintCore *, int, int);
+void *        eraser_paint_func  (PaintCore *, GimpDrawable *, int);
 Tool *        tools_new_eraser   (void);
 void          tools_free_eraser  (Tool *);
 

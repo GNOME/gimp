@@ -56,7 +56,7 @@ struct _HistogramToolDialog
   double       count;
   double       percentile;
 
-  int          drawable_id;
+  GimpDrawable *drawable;
   ImageMap     image_map;
   int          channel;
   int          color;
@@ -393,8 +393,8 @@ histogram_tool_initialize (void *gdisp_ptr)
   else if (!GTK_WIDGET_VISIBLE (histogram_tool_dialog->shell))
     gtk_widget_show (histogram_tool_dialog->shell);
 
-  histogram_tool_dialog->drawable_id = gimage_active_drawable (gdisp->gimage);
-  histogram_tool_dialog->color = drawable_color (histogram_tool_dialog->drawable_id);
+  histogram_tool_dialog->drawable = gimage_active_drawable (gdisp->gimage);
+  histogram_tool_dialog->color = drawable_color (histogram_tool_dialog->drawable);
 
   /*  hide or show the channel menu based on image type  */
   if (histogram_tool_dialog->color)
@@ -403,7 +403,7 @@ histogram_tool_initialize (void *gdisp_ptr)
     gtk_widget_hide (histogram_tool_dialog->channel_menu);
 
   histogram_update (histogram_tool_dialog->histogram,
-		    histogram_tool_dialog->drawable_id,
+		    histogram_tool_dialog->drawable,
 		    histogram_tool_histogram_info,
 		    (void *) histogram_tool_dialog);
   histogram_range (histogram_tool_dialog->histogram, 0, 255);
@@ -708,7 +708,7 @@ histogram_invoker (Argument *args)
   HistogramToolDialog htd;
   GImage *gimage;
   Channel *mask;
-  int drawable_id;
+  GimpDrawable *drawable;
   int channel;
   int low_range;
   int high_range;
@@ -718,7 +718,7 @@ histogram_invoker (Argument *args)
   int off_x, off_y;
   void *pr;
 
-  drawable_id = -1;
+  drawable = NULL;
   low_range   = 0;
   high_range  = 0;
 
@@ -733,9 +733,8 @@ histogram_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage == drawable_gimage (int_value))
-	drawable_id = int_value;
-      else
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   /*  channel  */
@@ -744,12 +743,12 @@ histogram_invoker (Argument *args)
       int_value = args[2].value.pdb_int;
       if (success)
 	{
-	  if (drawable_gray (drawable_id))
+	  if (drawable_gray (drawable))
 	    {
 	      if (int_value != 0)
 		success = FALSE;
 	    }
-	  else if (drawable_color (drawable_id))
+	  else if (drawable_color (drawable))
 	    {
 	      if (int_value < 0 || int_value > 3)
 		success = FALSE;
@@ -783,22 +782,22 @@ histogram_invoker (Argument *args)
     {
       htd.shell = NULL;
       htd.channel = channel;
-      htd.drawable_id = drawable_id;
-      htd.color = drawable_color (drawable_id);
+      htd.drawable = drawable;
+      htd.color = drawable_color (drawable);
       htd.histogram = histogram_create (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT,
 					histogram_tool_histogram_range, (void *) &htd);
 
       /*  The information collection should occur only within selection bounds  */
-      no_mask = (drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2) == FALSE);
-      drawable_offsets (drawable_id, &off_x, &off_y);
+      no_mask = (drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
+      drawable_offsets (drawable, &off_x, &off_y);
 
       /*  Configure the src from the drawable data  */
-      pixel_region_init (&srcPR, drawable_data (drawable_id),
+      pixel_region_init (&srcPR, drawable_data (drawable),
 			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
 
       /*  Configure the mask from the gimage's selection mask  */
       mask = gimage_get_mask (gimage);
-      pixel_region_init (&maskPR, mask->tiles,
+      pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)),
 			 x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
 
       /*  Apply the image transformation to the pixels  */

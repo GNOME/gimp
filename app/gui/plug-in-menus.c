@@ -1041,7 +1041,7 @@ plug_in_repeat (int with_interface)
       /* initialize the first 3 plug-in arguments  */
       args[0].value.pdb_int = (with_interface ? RUN_INTERACTIVE : RUN_WITH_LAST_VALS);
       args[1].value.pdb_int = gdisplay->gimage->ID;
-      args[2].value.pdb_int = gimage_active_drawable (gdisplay->gimage);
+      args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
 
       /* run the plug-in procedure */
       plug_in_run (last_plug_in, args, FALSE, TRUE);
@@ -1220,9 +1220,9 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile_info = msg.data;
 
       if (tile_info->shadow)
-	tm = drawable_shadow (tile_info->drawable_ID);
+	tm = drawable_shadow (drawable_get_ID (tile_info->drawable_ID));
       else
-	tm = drawable_data (tile_info->drawable_ID);
+	tm = drawable_data (drawable_get_ID (tile_info->drawable_ID));
 
       if (!tm)
 	{
@@ -1259,9 +1259,9 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
   else
     {
       if (tile_req->shadow)
-	tm = drawable_shadow (tile_req->drawable_ID);
+	tm = drawable_shadow (drawable_get_ID (tile_req->drawable_ID));
       else
-	tm = drawable_data (tile_req->drawable_ID);
+	tm = drawable_data (drawable_get_ID (tile_req->drawable_ID));
 
       if (!tm)
 	{
@@ -2089,7 +2089,7 @@ plug_in_callback (GtkWidget *widget,
 	  /* initialize the first 3 plug-in arguments  */
 	  args[0].value.pdb_int = RUN_INTERACTIVE;
 	  args[1].value.pdb_int = gdisplay->gimage->ID;
-	  args[2].value.pdb_int = gimage_active_drawable (gdisplay->gimage);
+	  args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
 	}
       else
 	{
@@ -2108,7 +2108,7 @@ plug_in_callback (GtkWidget *widget,
 	  if (gdisplay)
 	    {
 	      args[1].value.pdb_int = gdisplay->gimage->ID;
-	      args[2].value.pdb_int = gimage_active_drawable (gdisplay->gimage);
+	      args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
 	    }
 	  else
 	    {

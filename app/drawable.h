@@ -18,33 +18,52 @@
 #ifndef __DRAWABLE_H__
 #define __DRAWABLE_H__
 
-#include "gimage.h"
+#include <gtk/gtkdata.h>
+#include "tile_manager.h"
+#include "temp_buf.h"
 
-/*  Drawable access functions  */
-void             drawable_apply_image        (int, int, int, int, int, TileManager *, int);
-void             drawable_merge_shadow       (int, int);
-void             drawable_fill               (int, int);
-void             drawable_update             (int, int, int, int, int);
-int              drawable_mask_bounds        (int, int *, int *, int *, int *);
-void             drawable_invalidate_preview (int);
-int              drawable_dirty              (int);
-int              drawable_clean              (int);
-GImage *         drawable_gimage             (int);
-int              drawable_type               (int);
-int              drawable_has_alpha          (int);
-int              drawable_type_with_alpha    (int);
-int              drawable_color              (int);
-int              drawable_gray               (int);
-int              drawable_indexed            (int);
-TileManager *    drawable_data               (int);
-TileManager *    drawable_shadow             (int);
-int              drawable_bytes              (int);
-int              drawable_width              (int);
-int              drawable_height             (int);
-void             drawable_offsets            (int, int *, int *);
-unsigned char *  drawable_cmap               (int);
-Layer *          drawable_layer              (int);
-Channel *        drawable_layer_mask         (int);
-Channel *        drawable_channel            (int);
+#define GIMP_DRAWABLE(obj)         GTK_CHECK_CAST (obj, gimp_drawable_get_type (), GimpDrawable)
+#define GIMP_DRAWABLE_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, gimp_drawable_get_type(), GimpDrawableClass)
+#define GIMP_IS_DRAWABLE(obj)      GTK_CHECK_TYPE (obj, gimp_drawable_get_type())
+
+typedef struct _GimpDrawable      GimpDrawable;
+typedef struct _GimpDrawableClass GimpDrawableClass;
+
+guint gimp_drawable_get_type (void);
+
+/*  drawable access functions  */
+int		 drawable_ID		     (GimpDrawable *);
+void             drawable_apply_image        (GimpDrawable *, 
+					      int, int, int, int, 
+					      TileManager *, int);
+void             drawable_merge_shadow       (GimpDrawable *, int);
+void             drawable_fill               (GimpDrawable *, int);
+void             drawable_update             (GimpDrawable *, 
+					      int, int, int, int);
+int              drawable_mask_bounds        (GimpDrawable *,
+					      int *, int *, int *, int *);
+void             drawable_invalidate_preview (GimpDrawable *);
+int              drawable_dirty              (GimpDrawable *);
+int              drawable_clean              (GimpDrawable *);
+int              drawable_type               (GimpDrawable *);
+int              drawable_has_alpha          (GimpDrawable *);
+int              drawable_type_with_alpha    (GimpDrawable *);
+int              drawable_color              (GimpDrawable *);
+int              drawable_gray               (GimpDrawable *);
+int              drawable_indexed            (GimpDrawable *);
+TileManager *    drawable_data               (GimpDrawable *);
+TileManager *    drawable_shadow             (GimpDrawable *);
+int              drawable_bytes              (GimpDrawable *);
+int              drawable_width              (GimpDrawable *);
+int              drawable_height             (GimpDrawable *);
+int		 drawable_visible	     (GimpDrawable *);
+void             drawable_offsets            (GimpDrawable *, int *, int *);
+unsigned char *  drawable_cmap               (GimpDrawable *);
+char *		 drawable_name		     (GimpDrawable *);
+
+GimpDrawable *   drawable_get_ID             (int);
+void		 drawable_deallocate	     (GimpDrawable *);
+void		 gimp_drawable_configure     (GimpDrawable *,
+					      int, int, int, int, char *);
 
 #endif /* __DRAWABLE_H__ */

@@ -19,6 +19,7 @@
 #define __GIMAGE_H__
 
 #include "boundary.h"
+#include "drawable.h"
 #include "channel.h"
 #include "layer.h"
 #include "linked.h"
@@ -33,6 +34,8 @@
 #define GRAYA_GIMAGE     3
 #define INDEXED_GIMAGE   4
 #define INDEXEDA_GIMAGE  5
+
+#define TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE)
 
 #define GRAY_PIX         0
 #define ALPHA_G_PIX      1
@@ -126,9 +129,9 @@ struct _GImage
   link_ptr channels;                  /*  the list of masks            */
   link_ptr layer_stack;               /*  the layers in MRU order      */
 
-  int active_layer;                   /*  ID of active layer           */
-  int active_channel;                 /*  ID of active channel         */
-  int floating_sel;                   /*  ID of fs layer               */
+  Layer * active_layer;               /*  ID of active layer           */
+  Channel * active_channel;	      /*  ID of active channel         */
+  Layer * floating_sel;               /*  ID of fs layer               */
   Channel * selection_mask;           /*  selection mask channel       */
 
   int visible [MAX_CHANNELS];         /*  visible channels             */
@@ -161,15 +164,15 @@ GImage *        gimage_get_ID                 (int);
 TileManager *   gimage_shadow                 (GImage *, int, int, int);
 void            gimage_free_shadow            (GImage *);
 void            gimage_delete                 (GImage *);
-void            gimage_apply_image            (GImage *, int, PixelRegion *, int, int, int,
+void            gimage_apply_image            (GImage *, GimpDrawable *, PixelRegion *, int, int, int,
 					       TileManager *, int, int);
-void            gimage_replace_image          (GImage *, int, PixelRegion *, int, int,
+void            gimage_replace_image          (GImage *, GimpDrawable *, PixelRegion *, int, int,
 					       PixelRegion *, int, int);
-void            gimage_get_foreground         (GImage *, int, unsigned char *);
-void            gimage_get_background         (GImage *, int, unsigned char *);
+void            gimage_get_foreground         (GImage *, GimpDrawable *, unsigned char *);
+void            gimage_get_background         (GImage *, GimpDrawable *, unsigned char *);
 void            gimage_get_color              (GImage *, int, unsigned char *,
 					       unsigned char *);
-void            gimage_transform_color        (GImage *, int, unsigned char *,
+void            gimage_transform_color        (GImage *, GimpDrawable *, unsigned char *,
 					       unsigned char *, int);
 Guide*          gimage_add_hguide             (GImage *);
 Guide*          gimage_add_vguide             (GImage *);
@@ -180,36 +183,36 @@ void            gimage_delete_guide           (GImage *, Guide *);
 
 /*  layer/channel functions  */
 
-int             gimage_get_layer_index        (GImage *, int);
-int             gimage_get_channel_index      (GImage *, int);
+int             gimage_get_layer_index        (GImage *, Layer *);
+int             gimage_get_channel_index      (GImage *, Channel *);
 Layer *         gimage_get_active_layer       (GImage *);
 Channel *       gimage_get_active_channel     (GImage *);
 Channel *       gimage_get_mask               (GImage *);
 int             gimage_get_component_active   (GImage *, ChannelType);
 int             gimage_get_component_visible  (GImage *, ChannelType);
 int             gimage_layer_boundary         (GImage *, BoundSeg **, int *);
-Layer *         gimage_set_active_layer       (GImage *, int);
-Channel *       gimage_set_active_channel     (GImage *, int);
+Layer *         gimage_set_active_layer       (GImage *, Layer *);
+Channel *       gimage_set_active_channel     (GImage *, Channel *);
 Channel *       gimage_unset_active_channel   (GImage *);
 void            gimage_set_component_active   (GImage *, ChannelType, int);
 void            gimage_set_component_visible  (GImage *, ChannelType, int);
 Layer *         gimage_pick_correlate_layer   (GImage *, int, int);
 void            gimage_set_layer_mask_apply   (GImage *, int);
-void            gimage_set_layer_mask_edit    (GImage *, int, int);
+void            gimage_set_layer_mask_edit    (GImage *, Layer *, int);
 void            gimage_set_layer_mask_show    (GImage *, int);
-Layer *         gimage_raise_layer            (GImage *, int);
-Layer *         gimage_lower_layer            (GImage *, int);
+Layer *         gimage_raise_layer            (GImage *, Layer *);
+Layer *         gimage_lower_layer            (GImage *, Layer *);
 Layer *         gimage_merge_visible_layers   (GImage *, MergeType);
 Layer *         gimage_flatten                (GImage *);
 Layer *         gimage_merge_layers           (GImage *, link_ptr, MergeType);
 Layer *         gimage_add_layer              (GImage *, Layer *, int);
-Layer *         gimage_remove_layer           (GImage *, int);
-Channel *       gimage_add_layer_mask         (GImage *, int, int);
-Channel *       gimage_remove_layer_mask      (GImage *, int, int);
-Channel *       gimage_raise_channel          (GImage *, int);
-Channel *       gimage_lower_channel          (GImage *, int);
+Layer *         gimage_remove_layer           (GImage *, Layer *);
+LayerMask *     gimage_add_layer_mask         (GImage *, Layer *, LayerMask *);
+Channel *       gimage_remove_layer_mask      (GImage *, Layer *, int);
+Channel *       gimage_raise_channel          (GImage *, Channel *);
+Channel *       gimage_lower_channel          (GImage *, Channel *);
 Channel *       gimage_add_channel            (GImage *, Channel *, int);
-Channel *       gimage_remove_channel         (GImage *, int);
+Channel *       gimage_remove_channel         (GImage *, Channel *);
 void            gimage_construct              (GImage *, int, int, int, int);
 void            gimage_invalidate             (GImage *, int, int, int, int, int, int, int, int);
 void            gimage_validate               (TileManager *, Tile *, int);
@@ -221,7 +224,7 @@ void            gimage_deflate                (GImage *);
 
 int             gimage_is_flat                (GImage *);
 int             gimage_is_empty               (GImage *);
-int             gimage_active_drawable        (GImage *);
+GimpDrawable *  gimage_active_drawable        (GImage *);
 int             gimage_base_type              (GImage *);
 int             gimage_base_type_with_alpha   (GImage *);
 char *          gimage_filename               (GImage *);
@@ -253,5 +256,8 @@ int             gimage_preview_valid          (GImage *, ChannelType);
 void            gimage_invalidate_preview     (GImage *);
 
 void            gimage_invalidate_previews    (void);
+
+/* from drawable.c */
+GImage *        drawable_gimage               (GimpDrawable*);
 
 #endif /* __GIMAGE_H__ */

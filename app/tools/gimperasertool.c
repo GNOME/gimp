@@ -29,15 +29,15 @@
 #include "tools.h"
 
 /*  forward function declarations  */
-static void        eraser_motion   (PaintCore *, int);
+static void        eraser_motion   (PaintCore *, GimpDrawable *);
 static Argument *  eraser_invoker  (Argument *);
 
 static void *  eraser_options = NULL;
 
 void *
-eraser_paint_func (paint_core, drawable_id, state)
+eraser_paint_func (paint_core, drawable, state)
      PaintCore *paint_core;
-     int drawable_id;
+     GimpDrawable *drawable;
      int state;
 {
   switch (state)
@@ -46,7 +46,7 @@ eraser_paint_func (paint_core, drawable_id, state)
       break;
 
     case MOTION_PAINT :
-      eraser_motion (paint_core, drawable_id);
+      eraser_motion (paint_core, drawable);
       break;
 
     case FINISH_PAINT :
@@ -87,21 +87,21 @@ tools_free_eraser (tool)
 
 
 void
-eraser_motion (paint_core, drawable_id)
+eraser_motion (paint_core, drawable)
      PaintCore *paint_core;
-     int drawable_id;
+     GimpDrawable *drawable;
 {
   GImage *gimage;
   TempBuf * area;
   unsigned char col[MAX_CHANNELS];
 
-  if (! (gimage = drawable_gimage (drawable_id)))
+  if (! (gimage = drawable_gimage (drawable)))
     return;
 
-  gimage_get_background (gimage, drawable_id, col);
+  gimage_get_background (gimage, drawable, col);
 
   /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable_id)))
+  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
     return;
 
   /*  set the alpha channel  */
@@ -112,16 +112,16 @@ eraser_motion (paint_core, drawable_id)
 		area->width * area->height, area->bytes);
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable_id, OPAQUE,
+  paint_core_paste_canvas (paint_core, drawable, OPAQUE,
 			   (int) (get_brush_opacity () * 255),
 			   ERASE_MODE, SOFT, CONSTANT);
 }
 
 
 static void *
-eraser_non_gui_paint_func (PaintCore *paint_core, int drawable_id, int state)
+eraser_non_gui_paint_func (PaintCore *paint_core, GimpDrawable *drawable, int state)
 {
-  eraser_motion (paint_core, drawable_id);
+  eraser_motion (paint_core, drawable);
 
   return NULL;
 }
@@ -178,13 +178,13 @@ eraser_invoker (args)
 {
   int success = TRUE;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int num_strokes;
   double *stroke_array;
   int int_value;
   int i;
 
-  drawable_id = -1;
+  drawable = NULL;
   num_strokes = 0;
 
   /*  the gimage  */
@@ -198,10 +198,9 @@ eraser_invoker (args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (! (gimage == drawable_gimage (int_value)))
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
-      else
-	drawable_id = int_value;
     }
   /*  num strokes  */
   if (success)
@@ -219,7 +218,7 @@ eraser_invoker (args)
 
   if (success)
     /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable_id,
+    success = paint_core_init (&non_gui_paint_core, drawable,
 			       stroke_array[0], stroke_array[1]);
 
   if (success)
@@ -231,21 +230,21 @@ eraser_invoker (args)
       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
 
       if (num_strokes == 1)
-	eraser_non_gui_paint_func (&non_gui_paint_core, drawable_id, 0);
+	eraser_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
 	{
 	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
 	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
 
-	  paint_core_interpolate (&non_gui_paint_core, drawable_id);
+	  paint_core_interpolate (&non_gui_paint_core, drawable);
 
 	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
 	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
 	}
 
       /*  finish the painting  */
-      paint_core_finish (&non_gui_paint_core, drawable_id, -1);
+      paint_core_finish (&non_gui_paint_core, drawable, -1);
 
       /*  cleanup  */
       paint_core_cleanup ();

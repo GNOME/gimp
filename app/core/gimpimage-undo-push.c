@@ -37,6 +37,11 @@
 #include "transform_core.h"
 #include "undo.h"
 
+#include "drawable_pvt.h"
+#include "layer_pvt.h"
+#include "channel_pvt.h"
+#include "tile_manager_pvt.h"
+
 
 typedef int   (* UndoPopFunc)  (GImage *, int, int, void *);
 typedef void  (* UndoFreeFunc) (int, void *);
@@ -105,11 +110,11 @@ layer_size (Layer *layer)
 {
   int size;
 
-  size = sizeof (Layer) + layer->width * layer->height * layer->bytes +
-    strlen (layer->name);
+  size = sizeof (Layer) + GIMP_DRAWABLE(layer)->width * GIMP_DRAWABLE(layer)->height * GIMP_DRAWABLE(layer)->bytes +
+    strlen (GIMP_DRAWABLE(layer)->name);
 
   if (layer_mask (layer))
-    size += channel_size (layer_mask (layer));
+    size += channel_size (GIMP_CHANNEL (layer_mask (layer)));
 
   return size;
 }
@@ -120,8 +125,8 @@ channel_size (Channel *channel)
 {
   int size;
 
-  size = sizeof (Channel) + channel->width * channel->height +
-    strlen (channel->name);
+  size = sizeof (Channel) + GIMP_DRAWABLE(channel)->width * GIMP_DRAWABLE(channel)->height +
+    strlen (GIMP_DRAWABLE(channel)->name);
 
   return size;
 }
@@ -409,7 +414,7 @@ typedef struct _image_undo ImageUndo;
 struct _image_undo
 {
   TileManager *tiles;
-  int drawable;
+  GimpDrawable *drawable;
   int x1, y1, x2, y2;
   int sparse;
 };
@@ -417,7 +422,7 @@ struct _image_undo
 
 int
 undo_push_image (GImage *gimage,
-		 int     drawable_ID,
+		 GimpDrawable *drawable,
 		 int     x1,
 		 int     y1,
 		 int     x2,
@@ -431,14 +436,14 @@ undo_push_image (GImage *gimage,
 
   /*  increment the dirty flag for this gimage  */
   gimage_dirty (gimage);
-  drawable_dirty (drawable_ID);
+  drawable_dirty (drawable);
 
-  x1 = BOUNDS (x1, 0, drawable_width (drawable_ID));
-  y1 = BOUNDS (y1, 0, drawable_height (drawable_ID));
-  x2 = BOUNDS (x2, 0, drawable_width (drawable_ID));
-  y2 = BOUNDS (y2, 0, drawable_height (drawable_ID));
+  x1 = BOUNDS (x1, 0, drawable_width (drawable));
+  y1 = BOUNDS (y1, 0, drawable_height (drawable));
+  x2 = BOUNDS (x2, 0, drawable_width (drawable));
+  y2 = BOUNDS (y2, 0, drawable_height (drawable));
 
-  size = (x2 - x1) * (y2 - y1) * drawable_bytes (drawable_ID) + sizeof (void *) * 2;
+  size = (x2 - x1) * (y2 - y1) * drawable_bytes (drawable) + sizeof (void *) * 2;
 
   if ((new = undo_push (gimage, size, IMAGE_UNDO)))
     {
@@ -447,14 +452,14 @@ undo_push_image (GImage *gimage,
       /*  If we cannot create a new temp buf--either because our parameters are
        *  degenerate or something else failed, simply return an unsuccessful push.
        */
-      tiles = tile_manager_new ((x2 - x1), (y2 - y1), drawable_bytes (drawable_ID));
-      pixel_region_init (&srcPR, drawable_data (drawable_ID), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      tiles = tile_manager_new ((x2 - x1), (y2 - y1), drawable_bytes (drawable));
+      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
       pixel_region_init (&destPR, tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
       copy_region (&srcPR, &destPR);
 
       /*  set the image undo structure  */
       image_undo->tiles = tiles;
-      image_undo->drawable = drawable_ID;
+      image_undo->drawable = drawable;
       image_undo->x1 = x1;
       image_undo->y1 = y1;
       image_undo->x2 = x2;
@@ -474,7 +479,7 @@ undo_push_image (GImage *gimage,
 
 int
 undo_push_image_mod (GImage *gimage,
-		     int     drawable_ID,
+		     GimpDrawable *drawable,
 		     int     x1,
 		     int     y1,
 		     int     x2,
@@ -489,15 +494,15 @@ undo_push_image_mod (GImage *gimage,
 
   /*  increment the dirty flag for this gimage  */
   gimage_dirty (gimage);
-  drawable_dirty (drawable_ID);
+  drawable_dirty (drawable);
 
   if (! tiles_ptr)
     return FALSE;
 
-  x1 = BOUNDS (x1, 0, drawable_width (drawable_ID));
-  y1 = BOUNDS (y1, 0, drawable_height (drawable_ID));
-  x2 = BOUNDS (x2, 0, drawable_width (drawable_ID));
-  y2 = BOUNDS (y2, 0, drawable_height (drawable_ID));
+  x1 = BOUNDS (x1, 0, drawable_width (drawable));
+  y1 = BOUNDS (y1, 0, drawable_height (drawable));
+  x2 = BOUNDS (x2, 0, drawable_width (drawable));
+  y2 = BOUNDS (y2, 0, drawable_height (drawable));
 
   tiles = (TileManager *) tiles_ptr;
   size = tiles->levels[0].width * tiles->levels[0].height *
@@ -507,7 +512,7 @@ undo_push_image_mod (GImage *gimage,
     {
       image_undo = (ImageUndo *) g_malloc (sizeof (ImageUndo));
       image_undo->tiles = tiles;
-      image_undo->drawable = drawable_ID;
+      image_undo->drawable = drawable;
       image_undo->x1 = x1;
       image_undo->y1 = y1;
       image_undo->x2 = x2;
@@ -674,7 +679,7 @@ undo_pop_mask (GImage *gimage,
   /*  save current selection mask  */
   sel_mask = gimage_get_mask (gimage);
   selection = channel_bounds (sel_mask, &x1, &y1, &x2, &y2);
-  pixel_region_init (&srcPR, sel_mask->tiles, x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(sel_mask)->tiles, x1, y1, (x2 - x1), (y2 - y1), FALSE);
 
   if (selection)
     {
@@ -683,7 +688,7 @@ undo_pop_mask (GImage *gimage,
 
       copy_region (&srcPR, &destPR);
 
-      pixel_region_init (&srcPR, sel_mask->tiles, x1, y1, (x2 - x1), (y2 - y1), TRUE);
+      pixel_region_init (&srcPR, GIMP_DRAWABLE(sel_mask)->tiles, x1, y1, (x2 - x1), (y2 - y1), TRUE);
       color_region (&srcPR, &empty);
     }
   else
@@ -694,7 +699,7 @@ undo_pop_mask (GImage *gimage,
       width = mask_undo->tiles->levels[0].width;
       height = mask_undo->tiles->levels[0].height;
       pixel_region_init (&srcPR, mask_undo->tiles, 0, 0, width, height, FALSE);
-      pixel_region_init (&destPR, sel_mask->tiles, mask_undo->x, mask_undo->y, width, height, TRUE);
+      pixel_region_init (&destPR, GIMP_DRAWABLE(sel_mask)->tiles, mask_undo->x, mask_undo->y, width, height, TRUE);
       copy_region (&srcPR, &destPR);
 
       tile_manager_destroy (mask_undo->tiles);
@@ -716,8 +721,8 @@ undo_pop_mask (GImage *gimage,
       sel_mask->empty = TRUE;
       sel_mask->x1 = 0;
       sel_mask->y1 = 0;
-      sel_mask->x2 = sel_mask->width;
-      sel_mask->y2 = sel_mask->height;
+      sel_mask->x2 = GIMP_DRAWABLE(sel_mask)->width;
+      sel_mask->y2 = GIMP_DRAWABLE(sel_mask)->height;
     }
 
   /*  set the new mask undo parameters  */
@@ -772,8 +777,8 @@ undo_push_layer_displace (GImage *gimage,
 
       info = (int *) new->data;
       info[0] = layer_ID;
-      info[1] = layer->offset_x;
-      info[2] = layer->offset_y;
+      info[1] = GIMP_DRAWABLE(layer)->offset_x;
+      info[2] = GIMP_DRAWABLE(layer)->offset_y;
 
       return TRUE;
     }
@@ -796,13 +801,19 @@ undo_pop_layer_displace (GImage *gimage,
   layer = layer_get_ID (info[0]);
   if (layer)
     {
-      old_offsets[0] = layer->offset_x;
-      old_offsets[1] = layer->offset_y;
-      drawable_update (layer->ID, 0, 0, layer->width, layer->height);
+      old_offsets[0] = GIMP_DRAWABLE(layer)->offset_x;
+      old_offsets[1] = GIMP_DRAWABLE(layer)->offset_y;
+      drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 
-      layer->offset_x = info[1];
-      layer->offset_y = info[2];
-      drawable_update (layer->ID, 0, 0, layer->width, layer->height);
+      GIMP_DRAWABLE(layer)->offset_x = info[1];
+      GIMP_DRAWABLE(layer)->offset_y = info[2];
+      drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+      if (layer->mask) 
+	{
+	  GIMP_DRAWABLE(layer->mask)->offset_x = info[1];
+	  GIMP_DRAWABLE(layer->mask)->offset_y = info[2];
+	}
+
 
       /*  invalidate the selection boundary because of a layer modification  */
       layer_invalidate_boundary (layer);
@@ -1006,7 +1017,7 @@ undo_push_layer (GImage *gimage,
 
   /*  increment the dirty flag for this gimage  */
   gimage_dirty (gimage);
-  drawable_dirty (lu->layer->ID);
+  drawable_dirty (GIMP_DRAWABLE(lu->layer));
 
   size = layer_size (lu->layer) + sizeof (LayerUndo);
 
@@ -1043,11 +1054,11 @@ undo_pop_layer (GImage *gimage,
     {
     case UNDO:
       gimage_clean (gimage);
-      drawable_clean (lu->layer->ID);
+      drawable_clean (GIMP_DRAWABLE(lu->layer));
       break;
     case REDO:
       gimage_dirty (gimage);
-      drawable_dirty (lu->layer->ID);
+      drawable_dirty (GIMP_DRAWABLE(lu->layer));
       break;
     }
 
@@ -1056,7 +1067,7 @@ undo_pop_layer (GImage *gimage,
       (state == REDO && lu->undo_type == 1))
     {
       /*  record the current position  */
-      lu->prev_position = gimage_get_layer_index (gimage, lu->layer->ID);
+      lu->prev_position = gimage_get_layer_index (gimage, lu->layer);
       /*  set the previous layer  */
       gimage_set_active_layer (gimage, lu->prev_layer);
 
@@ -1067,12 +1078,12 @@ undo_pop_layer (GImage *gimage,
       /*  reset the gimage values  */
       if (layer_is_floating_sel (lu->layer))
 	{
-	  gimage->floating_sel = -1;
+	  gimage->floating_sel = NULL;
 	  /*  reset the old drawable  */
 	  floating_sel_reset (lu->layer);
 	}
 
-      drawable_update (lu->layer->ID, 0, 0, lu->layer->width, lu->layer->height);
+      drawable_update (GIMP_DRAWABLE(lu->layer), 0, 0, GIMP_DRAWABLE(lu->layer)->width, GIMP_DRAWABLE(lu->layer)->height);
     }
   /*  restore layer  */
   else
@@ -1081,18 +1092,18 @@ undo_pop_layer (GImage *gimage,
       lu->prev_layer = gimage->active_layer;
 
       /*  hide the current selection--for all views  */
-      if (gimage->active_layer != -1)
-	layer_invalidate_boundary (layer_get_ID (gimage->active_layer));
+      if (gimage->active_layer != NULL)
+	layer_invalidate_boundary ((gimage->active_layer));
 
       /*  if this is a floating selection, set the fs pointer  */
       if (layer_is_floating_sel (lu->layer))
-	gimage->floating_sel = lu->layer->ID;
+	gimage->floating_sel = lu->layer;
 
       /*  add the new layer  */
       gimage->layers = insert_in_list (gimage->layers, lu->layer, lu->prev_position);
       gimage->layer_stack = add_to_list (gimage->layer_stack, lu->layer);
-      gimage->active_layer = lu->layer->ID;
-      drawable_update (lu->layer->ID, 0, 0, lu->layer->width, lu->layer->height);
+      gimage->active_layer = lu->layer;
+      drawable_update (GIMP_DRAWABLE(lu->layer), 0, 0, GIMP_DRAWABLE(lu->layer)->width, GIMP_DRAWABLE(lu->layer)->height);
     }
 
   return TRUE;
@@ -1137,12 +1148,12 @@ undo_push_layer_mod (GImage *gimage,
 
   /*  increment the dirty flag for this gimage  */
   gimage_dirty (gimage);
-  drawable_dirty (layer->ID);
+  drawable_dirty (GIMP_DRAWABLE(layer));
 
-  tiles = layer->tiles;
-  tiles->x = layer->offset_x;
-  tiles->y = layer->offset_y;
-  size = layer->width * layer->height * layer->bytes + sizeof (void *) * 3;
+  tiles = GIMP_DRAWABLE(layer)->tiles;
+  tiles->x = GIMP_DRAWABLE(layer)->offset_x;
+  tiles->y = GIMP_DRAWABLE(layer)->offset_y;
+  size = GIMP_DRAWABLE(layer)->width * GIMP_DRAWABLE(layer)->height * GIMP_DRAWABLE(layer)->bytes + sizeof (void *) * 3;
 
   if ((new = undo_push (gimage, size, LAYER_MOD)))
     {
@@ -1153,7 +1164,7 @@ undo_push_layer_mod (GImage *gimage,
 
       data[0] = layer_ptr;
       data[1] = (void *) tiles;
-      data[2] = (void *) ((long) layer->type);
+      data[2] = (void *) ((long) GIMP_DRAWABLE(layer)->type);
 
       return TRUE;
     }
@@ -1184,11 +1195,11 @@ undo_pop_layer_mod (GImage *gimage,
     {
     case UNDO:
       gimage_clean (gimage);
-      drawable_clean (layer->ID);
+      drawable_clean (GIMP_DRAWABLE(layer));
       break;
     case REDO:
       gimage_dirty (gimage);
-      drawable_dirty (layer->ID);
+      drawable_dirty (GIMP_DRAWABLE(layer));
       break;
     }
 
@@ -1196,34 +1207,40 @@ undo_pop_layer_mod (GImage *gimage,
 
   /*  Issue the first update  */
   gdisplays_update_area (gimage->ID,
-			 layer->offset_x, layer->offset_y,
-			 layer->width, layer->height);
+			 GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y,
+			 GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 
   /*  Create a tile manager to store the current layer contents  */
-  temp = layer->tiles;
-  temp->x = layer->offset_x;
-  temp->y = layer->offset_y;
+  temp = GIMP_DRAWABLE(layer)->tiles;
+  temp->x = GIMP_DRAWABLE(layer)->offset_x;
+  temp->y = GIMP_DRAWABLE(layer)->offset_y;
   layer_type = (long) data[2];
-  data[2] = (void *) ((long) layer->type);
+  data[2] = (void *) ((long) GIMP_DRAWABLE(layer)->type);
 
   /*  restore the layer's data  */
-  layer->tiles = tiles;
-  layer->offset_x = tiles->x;
-  layer->offset_y = tiles->y;
-  layer->width = tiles->levels[0].width;
-  layer->height = tiles->levels[0].height;
-  layer->bytes = tiles->levels[0].bpp;
-  layer->type = layer_type;
+  GIMP_DRAWABLE(layer)->tiles = tiles;
+  GIMP_DRAWABLE(layer)->offset_x = tiles->x;
+  GIMP_DRAWABLE(layer)->offset_y = tiles->y;
+  GIMP_DRAWABLE(layer)->width = tiles->levels[0].width;
+  GIMP_DRAWABLE(layer)->height = tiles->levels[0].height;
+  GIMP_DRAWABLE(layer)->bytes = tiles->levels[0].bpp;
+  GIMP_DRAWABLE(layer)->type = layer_type;
+
+  if (layer->mask) 
+    {
+      GIMP_DRAWABLE(layer->mask)->offset_x = tiles->x;
+      GIMP_DRAWABLE(layer->mask)->offset_y = tiles->y;
+    }
 
   /*  If the layer type changed, update the gdisplay titles  */
-  if (layer->type != (long) data[2])
-    gdisplays_update_title (layer->gimage_ID);
+  if (GIMP_DRAWABLE(layer)->type != (long) data[2])
+    gdisplays_update_title (GIMP_DRAWABLE(layer)->gimage_ID);
 
   /*  Set the new tile manager  */
   data[1] = temp;
 
   /*  Issue the second update  */
-  drawable_update (layer->ID, 0, 0, layer->width, layer->height);
+  drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 
   return TRUE;
 }
@@ -1256,9 +1273,9 @@ undo_push_layer_mask (GImage *gimage,
 
   /*  increment the dirty flag for this gimage  */
   gimage_dirty (gimage);
-  drawable_dirty (lmu->layer->ID);
+  drawable_dirty (GIMP_DRAWABLE(lmu->layer));
 
-  size = channel_size (lmu->mask) + sizeof (LayerMaskUndo);
+  size = channel_size (GIMP_CHANNEL (lmu->mask)) + sizeof (LayerMaskUndo);
 
   if ((new = undo_push (gimage, size, LAYER_MASK_UNDO)))
     {
@@ -1271,7 +1288,7 @@ undo_push_layer_mask (GImage *gimage,
   else
     {
       if (lmu->undo_type == 1)
-	channel_delete (lmu->mask);
+	layer_mask_delete (lmu->mask);
       g_free (lmu);
       return FALSE;
     }
@@ -1292,11 +1309,11 @@ undo_pop_layer_mask (GImage *gimage,
     {
     case UNDO:
       gimage_clean (gimage);
-      drawable_clean (lmu->layer->ID);
+      drawable_clean (GIMP_DRAWABLE(lmu->layer));
       break;
     case REDO:
       gimage_dirty (gimage);
-      drawable_dirty (lmu->layer->ID);
+      drawable_dirty (GIMP_DRAWABLE(lmu->layer));
       break;
     }
 
@@ -1315,7 +1332,7 @@ undo_pop_layer_mask (GImage *gimage,
        *  this is undoing an add...
        */
       if ((state == REDO && lmu->mode == DISCARD) || state == UNDO)
-	drawable_update (lmu->layer->ID, 0, 0, lmu->layer->width, lmu->layer->height);
+	drawable_update (GIMP_DRAWABLE(lmu->layer), 0, 0, GIMP_DRAWABLE(lmu->layer)->width, GIMP_DRAWABLE(lmu->layer)->height);
     }
   /*  restore layer  */
   else
@@ -1325,14 +1342,14 @@ undo_pop_layer_mask (GImage *gimage,
       lmu->layer->edit_mask = lmu->edit_mask;
       lmu->layer->show_mask = lmu->show_mask;
 
-      gimage_set_layer_mask_edit (gimage, lmu->layer->ID, lmu->edit_mask);
+      gimage_set_layer_mask_edit (gimage, lmu->layer, lmu->edit_mask);
 
       /*  if this is undoing a remove operation &
        *  the mode of application was DISCARD or
        *  this is redoing an add
        */
       if ((state == UNDO && lmu->mode == DISCARD) || state == REDO)
-	drawable_update (lmu->layer->ID, 0, 0, lmu->layer->width, lmu->layer->height);
+	drawable_update (GIMP_DRAWABLE(lmu->layer), 0, 0, GIMP_DRAWABLE(lmu->layer)->width, GIMP_DRAWABLE(lmu->layer)->height);
     }
 
   return TRUE;
@@ -1353,7 +1370,7 @@ undo_free_layer_mask (int   state,
    */
   if ((state == REDO && lmu->undo_type == 0) ||
       (state == UNDO && lmu->undo_type == 1))
-    channel_delete (lmu->mask);
+    layer_mask_delete (lmu->mask);
 
   g_free (lmu);
 }
@@ -1374,7 +1391,7 @@ undo_push_channel (GImage *gimage,
 
   /*  increment the dirty flag for this gimage  */
   gimage_dirty (gimage);
-  drawable_dirty (cu->channel->ID);
+  drawable_dirty (GIMP_DRAWABLE(cu->channel));
 
   size = channel_size (cu->channel) + sizeof (ChannelUndo);
 
@@ -1410,11 +1427,11 @@ undo_pop_channel (GImage *gimage,
     {
     case UNDO:
       gimage_clean (gimage);
-      drawable_clean (cu->channel->ID);
+      drawable_clean (GIMP_DRAWABLE(cu->channel));
       break;
     case REDO:
       gimage_dirty (gimage);
-      drawable_dirty (cu->channel->ID);
+      drawable_dirty (GIMP_DRAWABLE(cu->channel));
       break;
     }
 
@@ -1423,7 +1440,7 @@ undo_pop_channel (GImage *gimage,
       (state == REDO && cu->undo_type == 1))
     {
       /*  record the current position  */
-      cu->prev_position = gimage_get_channel_index (gimage, cu->channel->ID);
+      cu->prev_position = gimage_get_channel_index (gimage, cu->channel);
 
       /*  remove the channel  */
       gimage->channels = remove_from_list (gimage->channels, cu->channel);
@@ -1432,7 +1449,7 @@ undo_pop_channel (GImage *gimage,
       gimage_set_active_channel (gimage, cu->prev_channel);
 
       /*  update the area  */
-      drawable_update (cu->channel->ID, 0, 0, cu->channel->width, cu->channel->height);
+      drawable_update (GIMP_DRAWABLE(cu->channel), 0, 0, GIMP_DRAWABLE(cu->channel)->width, GIMP_DRAWABLE(cu->channel)->height);
     }
   /*  restore channel  */
   else
@@ -1444,10 +1461,10 @@ undo_pop_channel (GImage *gimage,
       gimage->channels = insert_in_list (gimage->channels, cu->channel, cu->prev_position);
 
       /*  set the new channel  */
-      gimage_set_active_channel (gimage, cu->channel->ID);
+      gimage_set_active_channel (gimage, cu->channel);
 
       /*  update the area  */
-      drawable_update (cu->channel->ID, 0, 0, cu->channel->width, cu->channel->height);
+      drawable_update (GIMP_DRAWABLE(cu->channel), 0, 0, GIMP_DRAWABLE(cu->channel)->width, GIMP_DRAWABLE(cu->channel)->height);
     }
 
   return TRUE;
@@ -1492,10 +1509,10 @@ undo_push_channel_mod (GImage *gimage,
 
   /*  increment the dirty flag for this gimage  */
   gimage_dirty (gimage);
-  drawable_dirty (channel->ID);
+  drawable_dirty (GIMP_DRAWABLE(channel));
 
-  tiles = channel->tiles;
-  size = channel->width * channel->height + sizeof (void *) * 2;
+  tiles = GIMP_DRAWABLE(channel)->tiles;
+  size = GIMP_DRAWABLE(channel)->width * GIMP_DRAWABLE(channel)->height + sizeof (void *) * 2;
 
   if ((new = undo_push (gimage, size, CHANNEL_MOD)))
     {
@@ -1535,29 +1552,29 @@ undo_pop_channel_mod (GImage *gimage,
     {
     case UNDO:
       gimage_clean (gimage);
-      drawable_clean (channel->ID);
+      drawable_clean (GIMP_DRAWABLE(channel));
       break;
     case REDO:
       gimage_dirty (gimage);
-      drawable_dirty (channel->ID);
+      drawable_dirty (GIMP_DRAWABLE(channel));
       break;
     }
 
   tiles = (TileManager *) data[1];
 
   /*  Issue the first update  */
-  drawable_update (channel->ID, 0, 0, channel->width, channel->height);
+  drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
 
-  temp = channel->tiles;
-  channel->tiles = tiles;
-  channel->width = tiles->levels[0].width;
-  channel->height = tiles->levels[0].height;
+  temp = GIMP_DRAWABLE(channel)->tiles;
+  GIMP_DRAWABLE(channel)->tiles = tiles;
+  GIMP_DRAWABLE(channel)->width = tiles->levels[0].width;
+  GIMP_DRAWABLE(channel)->height = tiles->levels[0].height;
 
   /*  Set the new buffer  */
   data[1] = temp;
 
   /*  Issue the second update  */
-  drawable_update (channel->ID, 0, 0, channel->width, channel->height);
+  drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
 
   return TRUE;
 }
@@ -1590,7 +1607,7 @@ undo_push_fs_to_layer (GImage *gimage,
 
   /*  increment the dirty flag for this gimage  */
   gimage_dirty (gimage);
-  drawable_dirty (fsu->layer->ID);
+  drawable_dirty (GIMP_DRAWABLE(fsu->layer));
 
   size = sizeof (FStoLayerUndo);
 
@@ -1625,11 +1642,11 @@ undo_pop_fs_to_layer (GImage *gimage,
     {
     case UNDO:
       gimage_clean (gimage);
-      drawable_clean (fsu->layer->ID);
+      drawable_clean (GIMP_DRAWABLE(fsu->layer));
       break;
     case REDO:
       gimage_dirty (gimage);
-      drawable_dirty (fsu->layer->ID);
+      drawable_dirty (GIMP_DRAWABLE(fsu->layer));
       break;
     }
 
@@ -1637,41 +1654,41 @@ undo_pop_fs_to_layer (GImage *gimage,
     {
     case UNDO:
       /*  Update the preview for the floating sel  */
-      drawable_invalidate_preview (fsu->layer->ID);
+      drawable_invalidate_preview (GIMP_DRAWABLE(fsu->layer));
 
       fsu->layer->fs.drawable = fsu->drawable;
-      gimage->active_layer = fsu->layer->ID;
-      gimage->floating_sel = fsu->layer->ID;
+      gimage->active_layer = fsu->layer;
+      gimage->floating_sel = fsu->layer;
 
       /*  restore the contents of the drawable  */
-      floating_sel_store (fsu->layer, fsu->layer->offset_x, fsu->layer->offset_y,
-			  fsu->layer->width, fsu->layer->height);
+      floating_sel_store (fsu->layer, GIMP_DRAWABLE(fsu->layer)->offset_x, GIMP_DRAWABLE(fsu->layer)->offset_y,
+			  GIMP_DRAWABLE(fsu->layer)->width, GIMP_DRAWABLE(fsu->layer)->height);
       fsu->layer->fs.initial = TRUE;
 
       /*  clear the selection  */
       layer_invalidate_boundary (fsu->layer);
 
       /*  Update the preview for the gimage and underlying drawable  */
-      drawable_invalidate_preview (fsu->layer->ID);
+      drawable_invalidate_preview (GIMP_DRAWABLE(fsu->layer));
       break;
 
     case REDO:
       /*  restore the contents of the drawable  */
-      floating_sel_restore (fsu->layer, fsu->layer->offset_x, fsu->layer->offset_y,
-			    fsu->layer->width, fsu->layer->height);
+      floating_sel_restore (fsu->layer, GIMP_DRAWABLE(fsu->layer)->offset_x, GIMP_DRAWABLE(fsu->layer)->offset_y,
+			    GIMP_DRAWABLE(fsu->layer)->width, GIMP_DRAWABLE(fsu->layer)->height);
 
       /*  Update the preview for the gimage and underlying drawable  */
-      drawable_invalidate_preview (fsu->layer->ID);
+      drawable_invalidate_preview (GIMP_DRAWABLE(fsu->layer));
 
       /*  clear the selection  */
       layer_invalidate_boundary (fsu->layer);
 
       /*  update the pointers  */
-      fsu->layer->fs.drawable = -1;
-      gimage->floating_sel = -1;
+      fsu->layer->fs.drawable = NULL;
+      gimage->floating_sel = NULL;
 
       /*  Update the fs drawable  */
-      drawable_invalidate_preview (fsu->layer->ID);
+      drawable_invalidate_preview (GIMP_DRAWABLE(fsu->layer));
       break;
     }
 
@@ -1741,16 +1758,16 @@ undo_pop_fs_rigor (GImage *gimage,
       /*  restore the contents of drawable the floating layer is attached to  */
       if (floating_layer->fs.initial == FALSE)
 	floating_sel_restore (floating_layer,
-			      floating_layer->offset_x, floating_layer->offset_y,
-			      floating_layer->width, floating_layer->height);
+			      GIMP_DRAWABLE(floating_layer)->offset_x, GIMP_DRAWABLE(floating_layer)->offset_y,
+			      GIMP_DRAWABLE(floating_layer)->width, GIMP_DRAWABLE(floating_layer)->height);
       floating_layer->fs.initial = TRUE;
       break;
 
     case REDO:
       /*  store the affected area from the drawable in the backing store  */
       floating_sel_store (floating_layer,
-			  floating_layer->offset_x, floating_layer->offset_y,
-			  floating_layer->width, floating_layer->height);
+			  GIMP_DRAWABLE(floating_layer)->offset_x, GIMP_DRAWABLE(floating_layer)->offset_y,
+			  GIMP_DRAWABLE(floating_layer)->width, GIMP_DRAWABLE(floating_layer)->height);
       floating_layer->fs.initial = TRUE;
       break;
     }
@@ -1814,8 +1831,8 @@ undo_pop_fs_relax (GImage *gimage,
     case UNDO:
       /*  store the affected area from the drawable in the backing store  */
       floating_sel_store (floating_layer,
-			  floating_layer->offset_x, floating_layer->offset_y,
-			  floating_layer->width, floating_layer->height);
+			  GIMP_DRAWABLE(floating_layer)->offset_x, GIMP_DRAWABLE(floating_layer)->offset_y,
+			  GIMP_DRAWABLE(floating_layer)->width, GIMP_DRAWABLE(floating_layer)->height);
       floating_layer->fs.initial = TRUE;
       break;
 
@@ -1823,8 +1840,8 @@ undo_pop_fs_relax (GImage *gimage,
       /*  restore the contents of drawable the floating layer is attached to  */
       if (floating_layer->fs.initial == FALSE)
 	floating_sel_restore (floating_layer,
-			      floating_layer->offset_x, floating_layer->offset_y,
-			      floating_layer->width, floating_layer->height);
+			      GIMP_DRAWABLE(floating_layer)->offset_x, GIMP_DRAWABLE(floating_layer)->offset_y,
+			      GIMP_DRAWABLE(floating_layer)->width, GIMP_DRAWABLE(floating_layer)->height);
       floating_layer->fs.initial = TRUE;
       break;
     }

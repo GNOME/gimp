@@ -23,6 +23,8 @@
 #include "channel.h"
 #include "channel_cmds.h"
 
+#include "channel_pvt.h"
+
 static int int_value;
 static double fp_value;
 static int success;
@@ -87,7 +89,7 @@ channel_new_invoker (Argument *args)
   return_args = procedural_db_return_args (&channel_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = channel->ID;
+    return_args[1].value.pdb_int = GIMP_DRAWABLE(channel)->ID;
 
   return return_args;
 }
@@ -178,7 +180,7 @@ channel_copy_invoker (Argument *args)
   return_args = procedural_db_return_args (&channel_copy_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = copy->ID;
+    return_args[1].value.pdb_int = GIMP_DRAWABLE(copy)->ID;
 
   return return_args;
 }
@@ -292,7 +294,7 @@ channel_get_name_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       if ((channel = channel_get_ID (int_value)))
-	name = channel->name;
+	name = GIMP_DRAWABLE(channel)->name;
       else
 	success = FALSE;
     }
@@ -364,10 +366,10 @@ channel_set_name_invoker (Argument *args)
   if (success)
     {
       name = (char *) args[1].value.pdb_pointer;
-      if (channel->name)
+      if (GIMP_DRAWABLE(channel)->name)
 	{
-	  g_free (channel->name);
-	  channel->name = (name) ? g_strdup (name) : NULL;
+	  g_free (GIMP_DRAWABLE(channel)->name);
+	  GIMP_DRAWABLE(channel)->name = (name) ? g_strdup (name) : NULL;
 	}
     }
 
@@ -427,7 +429,7 @@ channel_get_visible_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       if ((channel = channel_get_ID (int_value)))
-	visible = channel->visible;
+	visible = GIMP_DRAWABLE(channel)->visible;
       else
 	success = FALSE;
     }
@@ -499,7 +501,7 @@ channel_set_visible_invoker (Argument *args)
   if (success)
     {
       visible = args[1].value.pdb_int;
-      channel->visible = (visible) ? TRUE : FALSE;
+      GIMP_DRAWABLE(channel)->visible = (visible) ? TRUE : FALSE;
     }
 
   return procedural_db_return_args (&channel_set_visible_proc, success);

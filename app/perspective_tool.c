@@ -28,6 +28,8 @@
 #include "transform_tool.h"
 #include "undo.h"
 
+#include "tile_manager_pvt.h"
+
 #define X0 0
 #define Y0 1
 #define X1 2
@@ -43,7 +45,7 @@ char          matrix_row2_buf [256];
 char          matrix_row3_buf [256];
 
 /*  forward function declarations  */
-static void *      perspective_tool_perspective (GImage *, int, TileManager *, int, Matrix);
+static void *      perspective_tool_perspective (GImage *, GimpDrawable *, TileManager *, int, Matrix);
 static void        perspective_find_transform   (double *, Matrix);
 static void *      perspective_tool_recalc      (Tool *, void *);
 static void        perspective_tool_motion      (Tool *, void *);
@@ -279,14 +281,14 @@ perspective_find_transform (coords, m)
 
 
 static void *
-perspective_tool_perspective (gimage, drawable_id, float_tiles, interpolation, matrix)
+perspective_tool_perspective (gimage, drawable, float_tiles, interpolation, matrix)
      GImage *gimage;
-     int drawable_id;
+     GimpDrawable *drawable;
      TileManager *float_tiles;
      int interpolation;
      Matrix matrix;
 {
-  return transform_core_do (gimage, drawable_id, float_tiles, interpolation, matrix);
+  return transform_core_do (gimage, drawable, float_tiles, interpolation, matrix);
 }
 
 
@@ -376,7 +378,7 @@ perspective_invoker (args)
 {
   int success = TRUE;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int interpolation;
   double trans_info[8];
   int int_value;
@@ -387,7 +389,7 @@ perspective_invoker (args)
   Layer *layer;
   Argument *return_args;
 
-  drawable_id = -1;
+  drawable = NULL;
   layer = NULL;
 
   /*  the gimage  */
@@ -401,9 +403,8 @@ perspective_invoker (args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage == drawable_gimage (int_value))
-	drawable_id = int_value;
-      else
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   /*  interpolation  */
@@ -436,7 +437,7 @@ perspective_invoker (args)
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
 
       /*  Cut/Copy from the specified drawable  */
-      float_tiles = transform_core_cut (gimage, drawable_id, &new_layer);
+      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
 
       /*  determine the perspective transform that maps from
        *  the unit cube to the trans_info coordinates
@@ -459,13 +460,13 @@ perspective_invoker (args)
       mult_matrix      (m, matrix);
 
       /*  perspective the buffer  */
-      new_tiles = perspective_tool_perspective (gimage, drawable_id, float_tiles, interpolation, matrix);
+      new_tiles = perspective_tool_perspective (gimage, drawable, float_tiles, interpolation, matrix);
 
       /*  free the cut/copied buffer  */
       tile_manager_destroy (float_tiles);
 
       if (new_tiles)
-	success = (layer = transform_core_paste (gimage, drawable_id, new_tiles, new_layer)) != NULL;
+	success = (layer = transform_core_paste (gimage, drawable, new_tiles, new_layer)) != NULL;
       else
 	success = FALSE;
 
@@ -476,7 +477,7 @@ perspective_invoker (args)
   return_args = procedural_db_return_args (&perspective_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer->ID;
+    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(layer));
 
   return return_args;
 }

@@ -32,6 +32,9 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "tile_manager_pvt.h"
+#include "drawable_pvt.h"
+
 
 /*  The named paste dialog  */
 typedef struct _PasteNamedDlg PasteNamedDlg;
@@ -165,13 +168,13 @@ crop_buffer (TileManager *tiles,
 
 TileManager *
 edit_cut (GImage *gimage,
-	  int     drawable_id)
+	  GimpDrawable *drawable)
 {
   TileManager *cut;
   TileManager *cropped_cut;
   int empty;
 
-  if (!gimage || drawable_id == -1)
+  if (!gimage || drawable == NULL)
     return NULL;
 
   /*  Start a group undo  */
@@ -181,7 +184,7 @@ edit_cut (GImage *gimage,
   empty = gimage_mask_is_empty (gimage);
 
   /*  Next, cut the mask portion from the gimage  */
-  cut = gimage_mask_extract (gimage, drawable_id, TRUE, FALSE);
+  cut = gimage_mask_extract (gimage, drawable, TRUE, FALSE);
 
   /*  Only crop if the gimage mask wasn't empty  */
   if (cut && empty == FALSE)
@@ -215,20 +218,20 @@ edit_cut (GImage *gimage,
 
 TileManager *
 edit_copy (GImage *gimage,
-	   int     drawable_id)
+	   GimpDrawable *drawable)
 {
   TileManager * copy;
   TileManager * cropped_copy;
   int empty;
 
-  if (!gimage || drawable_id == -1)
+  if (!gimage || drawable == NULL)
     return NULL;
 
   /*  See if the gimage mask is empty  */
   empty = gimage_mask_is_empty (gimage);
 
   /*  First, copy the masked portion of the gimage  */
-  copy = gimage_mask_extract (gimage, drawable_id, FALSE, FALSE);
+  copy = gimage_mask_extract (gimage, drawable, FALSE, FALSE);
 
   /*  Only crop if the gimage mask wasn't empty  */
   if (copy && empty == FALSE)
@@ -259,7 +262,7 @@ edit_copy (GImage *gimage,
 
 int
 edit_paste (GImage      *gimage,
-	    int          drawable_id,
+	    GimpDrawable *drawable,
 	    TileManager *paste,
 	    int          paste_into)
 {
@@ -268,7 +271,7 @@ edit_paste (GImage      *gimage,
   int cx, cy;
 
   /*  Make a new floating layer  */
-  float_layer = layer_from_tiles (gimage, drawable_id, paste, "Pasted Layer", OPAQUE, NORMAL);
+  float_layer = layer_from_tiles (gimage, drawable, paste, "Pasted Layer", OPAQUE, NORMAL);
 
   if (float_layer)
     {
@@ -276,13 +279,13 @@ edit_paste (GImage      *gimage,
       undo_push_group_start (gimage, EDIT_PASTE_UNDO);
 
       /*  Set the offsets to the center of the image  */
-      drawable_offsets (drawable_id, &cx, &cy);
-      drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+      drawable_offsets ( (drawable), &cx, &cy);
+      drawable_mask_bounds ( (drawable), &x1, &y1, &x2, &y2);
       cx += (x1 + x2) >> 1;
       cy += (y1 + y2) >> 1;
 
-      float_layer->offset_x = cx - (float_layer->width >> 1);
-      float_layer->offset_y = cy - (float_layer->height >> 1);
+      GIMP_DRAWABLE(float_layer)->offset_x = cx - (GIMP_DRAWABLE(float_layer)->width >> 1);
+      GIMP_DRAWABLE(float_layer)->offset_y = cy - (GIMP_DRAWABLE(float_layer)->height >> 1);
 
       /*  If there is a selection mask clear it--
        *  this might not always be desired, but in general,
@@ -292,12 +295,12 @@ edit_paste (GImage      *gimage,
 	channel_clear (gimage_get_mask (gimage));
 
       /*  add a new floating selection  */
-      floating_sel_attach (float_layer, drawable_id);
+      floating_sel_attach (float_layer, drawable);
 
       /*  end the group undo  */
       undo_push_group_end (gimage);
 
-      return float_layer->ID;
+      return GIMP_DRAWABLE(float_layer)->ID;
     }
   else
     return 0;
@@ -305,35 +308,35 @@ edit_paste (GImage      *gimage,
 
 int
 edit_clear (GImage *gimage,
-	    int     drawable_id)
+	    GimpDrawable *drawable)
 {
   TileManager *buf_tiles;
   PixelRegion bufPR;
   int x1, y1, x2, y2;
   unsigned char col[MAX_CHANNELS];
 
-  if (!gimage || drawable_id == -1)
+  if (!gimage || drawable == NULL)
     return FALSE;
 
-  gimage_get_background (gimage, drawable_id, col);
-  if (drawable_has_alpha (drawable_id))
-    col [drawable_bytes (drawable_id) - 1] = OPAQUE;
+  gimage_get_background (gimage, drawable, col);
+  if (drawable_has_alpha (drawable))
+    col [drawable_bytes (drawable) - 1] = OPAQUE;
 
-  drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   if (!(x2 - x1) || !(y2 - y1))
     return FALSE;
 
-  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), drawable_bytes (drawable_id));
+  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), drawable_bytes (drawable));
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
   color_region (&bufPR, col);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable_id, &bufPR, 1, OPAQUE,
+  gimage_apply_image (gimage, drawable, &bufPR, 1, OPAQUE,
 		      ERASE_MODE, NULL, x1, y1);
 
   /*  update the image  */
-  drawable_update (drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 
   /*  free the temporary tiles  */
   tile_manager_destroy (buf_tiles);
@@ -343,35 +346,35 @@ edit_clear (GImage *gimage,
 
 int
 edit_fill (GImage *gimage,
-	   int     drawable_id)
+	   GimpDrawable *drawable)
 {
   TileManager *buf_tiles;
   PixelRegion bufPR;
   int x1, y1, x2, y2;
   unsigned char col[MAX_CHANNELS];
 
-  if (!gimage || drawable_id == -1)
+  if (!gimage || drawable == NULL)
     return FALSE;
 
-  gimage_get_background (gimage, drawable_id, col);
-  if (drawable_has_alpha (drawable_id))
-    col [drawable_bytes (drawable_id) - 1] = OPAQUE;
+  gimage_get_background (gimage, drawable, col);
+  if (drawable_has_alpha (drawable))
+    col [drawable_bytes (drawable) - 1] = OPAQUE;
 
-  drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   if (!(x2 - x1) || !(y2 - y1))
     return FALSE;
 
-  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), drawable_bytes (drawable_id));
+  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), drawable_bytes (drawable));
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
   color_region (&bufPR, col);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable_id, &bufPR, 1, OPAQUE,
+  gimage_apply_image (gimage, drawable, &bufPR, 1, OPAQUE,
 		      NORMAL_MODE, NULL, x1, y1);
 
   /*  update the image  */
-  drawable_update (drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 
   /*  free the temporary tiles  */
   tile_manager_destroy (buf_tiles);

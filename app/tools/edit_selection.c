@@ -220,7 +220,8 @@ edit_selection_button_release (Tool           *tool,
 	      while (layer_list)
 		{
 		  layer = (Layer *) layer_list->data;
-		  if ((layer->ID == gdisp->gimage->active_layer) || layer->linked)
+		  if (layer == gdisp->gimage->active_layer || 
+		      layer_linked (layer))
 		    layer_translate (layer, (x - edit_select.origx), (y - edit_select.origy));
 		  layer_list = next_item (layer_list);
 		}
@@ -299,6 +300,7 @@ edit_selection_draw (Tool *tool)
   int floating_sel;
   int x1, y1, x2, y2;
   int x3, y3, x4, y4;
+  int off_x, off_y;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   select = gdisp->select;
@@ -376,8 +378,8 @@ edit_selection_draw (Tool *tool)
     case LayerTranslate:
       gdisplay_transform_coords (gdisp, 0, 0, &x1, &y1, TRUE);
       gdisplay_transform_coords (gdisp,
-				 drawable_width (gdisp->gimage->active_layer),
-				 drawable_height (gdisp->gimage->active_layer),
+				 drawable_width ( GIMP_DRAWABLE (gdisp->gimage->active_layer)),
+				 drawable_height ( GIMP_DRAWABLE (gdisp->gimage->active_layer)),
 				 &x2, &y2, TRUE);
 
       /*  Now, expand the rectangle to include all linked layers as well  */
@@ -385,15 +387,13 @@ edit_selection_draw (Tool *tool)
       while (layer_list)
 	{
 	  layer = (Layer *) layer_list->data;
-	  if ((layer->ID != gdisp->gimage->active_layer) && layer->linked)
+	  if (((layer) != gdisp->gimage->active_layer) && layer_linked (layer))
 	    {
+	      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+	      gdisplay_transform_coords (gdisp, off_x, off_y, &x3, &y3, FALSE);
 	      gdisplay_transform_coords (gdisp,
-					 layer->offset_x,
-					 layer->offset_y,
-					 &x3, &y3, FALSE);
-	      gdisplay_transform_coords (gdisp,
-					 layer->offset_x + layer->width,
-					 layer->offset_y + layer->height,
+					 off_x + drawable_width (GIMP_DRAWABLE (layer)),
+					 off_y + drawable_height (GIMP_DRAWABLE (layer)),
 					 &x4, &y4, FALSE);
 	      if (x3 < x1)
 		x1 = x3;
@@ -545,7 +545,7 @@ edit_sel_arrow_keys_func (Tool        *tool,
       while (layer_list)
 	{
 	  layer = (Layer *) layer_list->data;
-	  if ((layer->ID == gdisp->gimage->active_layer) || layer->linked)
+	  if (((layer) == gdisp->gimage->active_layer) || layer_linked (layer))
 	    layer_translate (layer, inc_x, inc_y);
 	  layer_list = next_item (layer_list);
 	}

@@ -24,6 +24,10 @@
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_cmds.h"
+#include "floating_sel.h"
+
+#include "layer_pvt.h"			/* ick. */
+#include "drawable_pvt.h"		/* ick ick. */
 
 static int int_value;
 static int success;
@@ -31,6 +35,9 @@ static Argument *return_args;
 
 extern link_ptr image_list;
 
+static GImage * duplicate  (GImage *gimage);
+
+static Argument * channel_ops_duplicate_invoker  (Argument *args);
 /************************/
 /*  GIMAGE_LIST_IMAGES  */
 
@@ -498,7 +505,7 @@ gimage_get_layers_invoker (Argument *args)
 	  layer_ids = (int *) g_malloc (sizeof (int) * num_layers);
 
 	  for (i = 0; i < num_layers; i++, layer_list = next_item (layer_list))
-	    layer_ids[i] = ((Layer *) layer_list->data)->ID;
+	    layer_ids[i] = drawable_ID (GIMP_DRAWABLE(((Layer *) layer_list->data)));
 	}
 
       return_args[1].value.pdb_int = num_layers;
@@ -586,7 +593,7 @@ gimage_get_channels_invoker (Argument *args)
 	  channel_ids = (int *) g_malloc (sizeof (int) * num_channels);
 
 	  for (i = 0; i < num_channels; i++, channel_list = next_item (channel_list))
-	    channel_ids[i] = ((Channel *) channel_list->data)->ID;
+	    channel_ids[i] = drawable_ID (GIMP_DRAWABLE(((Channel *) channel_list->data)));
 	}
 
       return_args[1].value.pdb_int = num_channels;
@@ -665,7 +672,7 @@ gimage_get_active_layer_invoker (Argument *args)
   return_args = procedural_db_return_args (&gimage_get_active_layer_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = (layer) ? layer->ID : -1;
+    return_args[1].value.pdb_int = (layer) ? drawable_ID (GIMP_DRAWABLE(layer)) : -1;
 
   return return_args;
 }
@@ -735,7 +742,7 @@ gimage_get_active_channel_invoker (Argument *args)
   return_args = procedural_db_return_args (&gimage_get_active_channel_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = (channel) ? channel->ID : -1;
+    return_args[1].value.pdb_int = (channel) ? drawable_ID (GIMP_DRAWABLE(channel)) : -1;
 
   return return_args;
 }
@@ -805,7 +812,7 @@ gimage_get_selection_invoker (Argument *args)
   return_args = procedural_db_return_args (&gimage_get_selection_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = mask->ID;
+    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(mask));
 
   return return_args;
 }
@@ -1074,7 +1081,7 @@ gimage_set_active_layer_invoker (Argument *args)
     }
 
   if (success)
-    gimage_set_active_layer (gimage, layer->ID);
+    gimage_set_active_layer (gimage, layer);
 
   return procedural_db_return_args (&gimage_set_active_layer_proc, success);
 }
@@ -1139,7 +1146,7 @@ gimage_set_active_channel_invoker (Argument *args)
     }
 
   if (success)
-    gimage_set_active_channel (gimage, channel->ID);
+    gimage_set_active_channel (gimage, channel);
 
   return procedural_db_return_args (&gimage_set_active_channel_proc, success);
 }
@@ -1455,7 +1462,7 @@ gimage_pick_correlate_layer_invoker (Argument *args)
   return_args = procedural_db_return_args (&gimage_pick_correlate_layer_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer->ID;
+    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(layer));
 
   return return_args;
 }
@@ -1532,7 +1539,7 @@ gimage_raise_layer_invoker (Argument *args)
     }
 
   if (success)
-    success = ((gimage_raise_layer (gimage, layer->ID)) != NULL);
+    success = ((gimage_raise_layer (gimage, layer)) != NULL);
 
   return procedural_db_return_args (&gimage_raise_layer_proc, success);
 }
@@ -1597,7 +1604,7 @@ gimage_lower_layer_invoker (Argument *args)
     }
 
   if (success)
-    success = ((gimage_lower_layer (gimage, layer->ID)) != NULL);
+    success = ((gimage_lower_layer (gimage, layer)) != NULL);
 
   return procedural_db_return_args (&gimage_lower_layer_proc, success);
 }
@@ -1677,7 +1684,7 @@ gimage_merge_visible_layers_invoker (Argument *args)
   return_args = procedural_db_return_args (&gimage_merge_visible_layers_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer->ID;
+    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(layer));
 
   return return_args;
 }
@@ -1752,7 +1759,7 @@ gimage_flatten_invoker (Argument *args)
   return_args = procedural_db_return_args (&gimage_flatten_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer->ID;
+    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(layer));
 
   return return_args;
 }
@@ -1822,9 +1829,9 @@ gimage_add_layer_invoker (Argument *args)
 
       /*  make sure that this layer can be added to the specified image  */
       if ((!success) ||
-          (drawable_color (layer->ID) && gimage_base_type (gimage) != RGB) ||
-	  (drawable_gray (layer->ID) && gimage_base_type (gimage) != GRAY) ||
-	  (drawable_indexed (layer->ID) && gimage_base_type (gimage) != INDEXED))
+          (drawable_color (GIMP_DRAWABLE(layer)) && gimage_base_type (gimage) != RGB) ||
+	  (drawable_gray (GIMP_DRAWABLE(layer)) && gimage_base_type (gimage) != GRAY) ||
+	  (drawable_indexed (GIMP_DRAWABLE(layer)) && gimage_base_type (gimage) != INDEXED))
 	success = FALSE;
     }
   if (success)
@@ -1903,7 +1910,7 @@ gimage_remove_layer_invoker (Argument *args)
     }
 
   if (success)
-    gimage_remove_layer (gimage, layer->ID);
+    gimage_remove_layer (gimage, layer);
 
   return procedural_db_return_args (&gimage_remove_layer_proc, success);
 }
@@ -1952,7 +1959,7 @@ gimage_add_layer_mask_invoker (Argument *args)
 {
   GImage *gimage;
   Layer *layer;
-  Channel *mask;
+  LayerMask *mask;
 
   success = TRUE;
   if (success)
@@ -1970,12 +1977,12 @@ gimage_add_layer_mask_invoker (Argument *args)
   if (success)
     {
       int_value = args[2].value.pdb_int;
-      if ((mask = channel_get_ID (int_value)) == NULL)
+      if ((mask = layer_mask_get_ID (int_value)) == NULL)
 	success = FALSE;
     }
 
   if (success)
-    success = ((mask = gimage_add_layer_mask (gimage, layer->ID, mask->ID)) != NULL);
+    success = ((mask = gimage_add_layer_mask (gimage, layer, mask)) != NULL);
 
   return procedural_db_return_args (&gimage_add_layer_mask_proc, success);
 }
@@ -2057,7 +2064,7 @@ gimage_remove_layer_mask_invoker (Argument *args)
     }
 
   if (success)
-    gimage_remove_layer_mask (gimage, layer->ID, mode);
+    gimage_remove_layer_mask (gimage, layer, mode);
 
   return procedural_db_return_args (&gimage_remove_layer_mask_proc, success);
 }
@@ -2126,7 +2133,7 @@ gimage_raise_channel_invoker (Argument *args)
     }
 
   if (success)
-    success = ((gimage_raise_channel (gimage, channel->ID)) != NULL);
+    success = ((gimage_raise_channel (gimage, channel)) != NULL);
 
   return procedural_db_return_args (&gimage_raise_channel_proc, success);
 }
@@ -2191,7 +2198,7 @@ gimage_lower_channel_invoker (Argument *args)
     }
 
   if (success)
-    success = ((gimage_lower_channel (gimage, channel->ID)) != NULL);
+    success = ((gimage_lower_channel (gimage, channel)) != NULL);
 
   return procedural_db_return_args (&gimage_lower_channel_proc, success);
 }
@@ -2331,7 +2338,7 @@ gimage_remove_channel_invoker (Argument *args)
     }
 
   if (success)
-    success = (gimage_remove_channel (gimage, channel->ID) != NULL);
+    success = (gimage_remove_channel (gimage, channel) != NULL);
 
   return procedural_db_return_args (&gimage_remove_channel_proc, success);
 }
@@ -2379,17 +2386,17 @@ static Argument *
 gimage_active_drawable_invoker (Argument *args)
 {
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   Argument *return_args;
 
-  drawable_id = -1;
+  drawable = NULL;
 
   success = TRUE;
   if (success)
     {
       int_value = args[0].value.pdb_int;
       if ((gimage = gimage_get_ID (int_value)))
-	success = ((drawable_id = gimage_active_drawable (gimage)) != -1);
+	success = ((drawable = gimage_active_drawable (gimage)) != NULL);
       else
 	success = FALSE;
     }
@@ -2397,7 +2404,7 @@ gimage_active_drawable_invoker (Argument *args)
   return_args = procedural_db_return_args (&gimage_active_drawable_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_id;
+    return_args[1].value.pdb_int = drawable_ID (drawable);
 
   return return_args;
 }
@@ -3164,7 +3171,7 @@ gimage_floating_sel_invoker (Argument *args)
   return_args = procedural_db_return_args (&gimage_floating_sel_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = (floating_sel) ? floating_sel->ID : -1;
+    return_args[1].value.pdb_int = (floating_sel) ? drawable_ID (GIMP_DRAWABLE(floating_sel)) : -1;
 
   return return_args;
 }
@@ -3207,3 +3214,205 @@ ProcRecord gimage_floating_sel_proc =
   /*  Exec method  */
   { { gimage_floating_sel_invoker } },
 };
+
+static GImage *
+duplicate (GImage *gimage)
+{
+  PixelRegion srcPR, destPR;
+  GImage *new_gimage;
+  Layer *layer, *new_layer;
+  Layer *floating_layer;
+  Channel *channel, *new_channel;
+  link_ptr list;
+  Layer *active_layer = NULL;
+  Channel *active_channel = NULL;
+  GimpDrawable *new_floating_sel_drawable = NULL;
+  GimpDrawable *floating_sel_drawable = NULL;
+  int count;
+
+  /*  Create a new image  */
+  new_gimage = gimage_new (gimage->width, gimage->height, gimage->base_type);
+  gimage_disable_undo (new_gimage);
+
+  floating_layer = gimage_floating_sel (gimage);
+  if (floating_layer)
+    {
+      floating_sel_relax (floating_layer, FALSE);
+
+      floating_sel_drawable = floating_layer->fs.drawable;
+      floating_layer = NULL;
+    }
+
+  /*  Copy the layers  */
+  list = gimage->layers;
+  count = 0;
+  layer = NULL;
+  while (list)
+    {
+      layer = (Layer *) list->data;
+      list = next_item (list);
+
+      new_layer = layer_copy (layer, FALSE);
+      GIMP_DRAWABLE(new_layer)->ID = new_gimage->ID;
+
+      /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
+      g_free (drawable_name (GIMP_DRAWABLE(new_layer)));
+      GIMP_DRAWABLE(new_layer)-> name = g_strdup (drawable_name (GIMP_DRAWABLE(layer)));
+
+      /*  Make sure if the layer has a layer mask, it's name isn't screwed up  */
+      if (new_layer->mask)
+	{
+	  g_free (drawable_name (GIMP_DRAWABLE(new_layer->mask)));
+	  GIMP_DRAWABLE(new_layer->mask)->name = g_strdup (drawable_name (GIMP_DRAWABLE(layer->mask)));
+	}
+
+      if (gimage->active_layer == layer)
+	active_layer = new_layer;
+
+      if (gimage->floating_sel == layer)
+	floating_layer = new_layer;
+
+      if (floating_sel_drawable == GIMP_DRAWABLE(layer))
+	new_floating_sel_drawable = GIMP_DRAWABLE(new_layer);
+
+      /*  Add the layer  */
+      if (floating_layer != new_layer)
+	gimage_add_layer (new_gimage, new_layer, count++);
+    }
+
+  /*  Copy the channels  */
+  list = gimage->channels;
+  count = 0;
+  while (list)
+    {
+      channel = (Channel *) list->data;
+      list = next_item (list);
+
+      new_channel = channel_copy (channel);
+
+      /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
+      g_free (drawable_name (GIMP_DRAWABLE(new_channel)));
+      GIMP_DRAWABLE(new_channel)->name = g_strdup (drawable_name (GIMP_DRAWABLE(channel)));
+
+      if (gimage->active_channel == channel)
+	active_channel = (new_channel);
+
+      if (floating_sel_drawable == GIMP_DRAWABLE(channel))
+	new_floating_sel_drawable = GIMP_DRAWABLE(new_channel);
+
+      /*  Add the channel  */
+      gimage_add_channel (new_gimage, new_channel, count++);
+    }
+
+  /*  Copy the selection mask  */
+  pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE(gimage->selection_mask)), 0, 0, gimage->width, gimage->height, FALSE);
+  pixel_region_init (&destPR, drawable_data (GIMP_DRAWABLE(new_gimage->selection_mask)), 0, 0, gimage->width, gimage->height, TRUE);
+  copy_region (&srcPR, &destPR);
+  new_gimage->selection_mask->bounds_known = FALSE;
+  new_gimage->selection_mask->boundary_known = FALSE;
+
+  /*  Set active layer, active channel  */
+  new_gimage->active_layer = active_layer;
+  new_gimage->active_channel = active_channel;
+  if (floating_layer)
+    floating_sel_attach (floating_layer, new_floating_sel_drawable);
+
+  /*  Copy the colormap if necessary  */
+  if (new_gimage->base_type == INDEXED)
+    memcpy (new_gimage->cmap, gimage->cmap, gimage->num_cols * 3);
+  new_gimage->num_cols = gimage->num_cols;
+
+  /*  copy state of all color channels  */
+  for (count = 0; count < MAX_CHANNELS; count++)
+    {
+      new_gimage->visible[count] = gimage->visible[count];
+      new_gimage->active[count] = gimage->active[count];
+    }
+
+  gimage_enable_undo (new_gimage);
+
+  return new_gimage;
+}
+
+/*  The duplicate procedure definition  */
+ProcArg channel_ops_duplicate_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "the image"
+  }
+};
+
+ProcArg channel_ops_duplicate_out_args[] =
+{
+  { PDB_IMAGE,
+    "new_image",
+    "the new, duplicated image"
+  }
+};
+
+ProcRecord channel_ops_duplicate_proc =
+{
+  "gimp_channel_ops_duplicate",
+  "Duplicate the specified image",
+  "This procedure duplicates the specified image, copying all layers, channels, and image information.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1997",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  1,
+  channel_ops_duplicate_args,
+
+  /*  Output arguments  */
+  1,
+  channel_ops_duplicate_out_args,
+
+  /*  Exec method  */
+  { { channel_ops_duplicate_invoker } },
+};
+
+
+static Argument *
+channel_ops_duplicate_invoker (Argument *args)
+{
+  Argument *return_args;
+  int success = TRUE;
+  int int_value;
+  GImage *gimage, *new_gimage;
+
+  new_gimage = NULL;
+
+  /*  the gimage  */
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (! (gimage = gimage_get_ID (int_value)))
+	success = FALSE;
+    }
+
+  if (success)
+    success = ((new_gimage = duplicate ((void *) gimage)) != NULL);
+
+  return_args = procedural_db_return_args (&channel_ops_duplicate_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = new_gimage->ID;
+
+  return return_args;
+}
+
+
+void
+channel_ops_duplicate (void *gimage_ptr)
+{
+  GImage *gimage;
+  GImage *new_gimage;
+
+  gimage = (GImage *) gimage_ptr;
+  new_gimage = duplicate (gimage);
+
+  gdisplay_new (new_gimage, 0x0101);
+}
+

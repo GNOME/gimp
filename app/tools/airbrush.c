@@ -33,11 +33,11 @@ typedef struct _AirbrushTimeout AirbrushTimeout;
 struct _AirbrushTimeout
 {
   PaintCore *paint_core;
-  int drawable_id;
+  GimpDrawable *drawable;
 };
 
 /*  forward function declarations  */
-static void         airbrush_motion   (PaintCore *, int, double);
+static void         airbrush_motion   (PaintCore *, GimpDrawable *, double);
 static gint         airbrush_time_out (gpointer);
 static Argument *   airbrush_invoker  (Argument *);
 
@@ -139,10 +139,13 @@ create_airbrush_options (void)
 
 void *
 airbrush_paint_func (PaintCore *paint_core,
-		     int        drawable_id,
+		     GimpDrawable *drawable,
 		     int        state)
 {
   GBrushP brush;
+
+  if (!drawable) 
+    return NULL;
 
   brush = get_active_brush ();
   switch (state)
@@ -156,12 +159,12 @@ airbrush_paint_func (PaintCore *paint_core,
 	gtk_timeout_remove (timer);
       timer_state = OFF;
 
-      airbrush_motion (paint_core, drawable_id, airbrush_options->pressure);
+      airbrush_motion (paint_core, drawable, airbrush_options->pressure);
 
       if (airbrush_options->rate != 0.0)
 	{
 	  airbrush_timeout.paint_core = paint_core;
-	  airbrush_timeout.drawable_id = drawable_id;
+	  airbrush_timeout.drawable = drawable;
 	  timer = gtk_timeout_add ((10000 / airbrush_options->rate),
 				   airbrush_time_out, NULL);
 	  timer_state = ON;
@@ -216,7 +219,7 @@ airbrush_time_out (gpointer client_data)
 {
   /*  service the timer  */
   airbrush_motion (airbrush_timeout.paint_core,
-		   airbrush_timeout.drawable_id,
+		   airbrush_timeout.drawable,
 		   airbrush_options->pressure);
   gdisplays_flush ();
 
@@ -230,19 +233,22 @@ airbrush_time_out (gpointer client_data)
 
 static void
 airbrush_motion (PaintCore *paint_core,
-		 int        drawable_id,
+		 GimpDrawable *drawable,
 		 double     pressure)
 {
   GImage *gimage;
   TempBuf * area;
   unsigned char col[MAX_CHANNELS];
 
-  if (! (gimage = drawable_gimage (drawable_id)))
+  if (!drawable) 
     return;
 
-  gimage_get_foreground (gimage, drawable_id, col);
+  if (! (gimage = drawable_gimage (drawable)))
+    return;
 
-  if (! (area = paint_core_get_paint_area (paint_core, drawable_id)))
+  gimage_get_foreground (gimage, drawable, col);
+
+  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
     return;
 
   /*  color the pixels  */
@@ -253,7 +259,7 @@ airbrush_motion (PaintCore *paint_core,
 		area->width * area->height, area->bytes);
 
   /*  paste the newly painted area to the image  */
-  paint_core_paste_canvas (paint_core, drawable_id,
+  paint_core_paste_canvas (paint_core, drawable,
 			   (int) (pressure * 2.55),
 			   (int) (get_brush_opacity () * 255),
 			   get_brush_paint_mode (),
@@ -263,10 +269,10 @@ airbrush_motion (PaintCore *paint_core,
 
 static void *
 airbrush_non_gui_paint_func (PaintCore *paint_core,
-			     int        drawable_id,
+			     GimpDrawable *drawable,
 			     int        state)
 {
-  airbrush_motion (paint_core, drawable_id, non_gui_pressure);
+  airbrush_motion (paint_core, drawable, non_gui_pressure);
 
   return NULL;
 }
@@ -326,14 +332,14 @@ airbrush_invoker (Argument *args)
 {
   int success = TRUE;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int num_strokes;
   double *stroke_array;
   int int_value;
   double fp_value;
   int i;
 
-  drawable_id = -1;
+  drawable = NULL;
   num_strokes = 0;
 
   /*  the gimage  */
@@ -347,10 +353,9 @@ airbrush_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (! (gimage == drawable_gimage (int_value)))
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
-      else
-	drawable_id = int_value;
     }
   /*  pressure  */
   if (success)
@@ -377,7 +382,7 @@ airbrush_invoker (Argument *args)
 
   if (success)
     /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable_id,
+    success = paint_core_init (&non_gui_paint_core, drawable,
 			       stroke_array[0], stroke_array[1]);
 
   if (success)
@@ -389,21 +394,21 @@ airbrush_invoker (Argument *args)
       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
 
       if (num_strokes == 1)
-	airbrush_non_gui_paint_func (&non_gui_paint_core, drawable_id, 0);
+	airbrush_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
 	{
 	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
 	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
 
-	  paint_core_interpolate (&non_gui_paint_core, drawable_id);
+	  paint_core_interpolate (&non_gui_paint_core, drawable);
 
 	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
 	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
 	}
 
       /*  finish the painting  */
-      paint_core_finish (&non_gui_paint_core, drawable_id, -1);
+      paint_core_finish (&non_gui_paint_core, drawable, -1);
 
       /*  cleanup  */
       paint_core_cleanup ();

@@ -69,7 +69,7 @@ struct _HueSaturationDialog
   GtkAdjustment  *lightness_data;
   GtkAdjustment  *saturation_data;
 
-  int          drawable_id;
+  GimpDrawable *drawable;
   ImageMap     image_map;
 
   double       hue[7];
@@ -373,8 +373,8 @@ hue_saturation_initialize (void *gdisp_ptr)
       hue_saturation_dialog->saturation[i] = 0.0;
     }
 
-  hue_saturation_dialog->drawable_id = gimage_active_drawable (gdisp->gimage);
-  hue_saturation_dialog->image_map = image_map_create (gdisp_ptr, hue_saturation_dialog->drawable_id);
+  hue_saturation_dialog->drawable = gimage_active_drawable (gdisp->gimage);
+  hue_saturation_dialog->image_map = image_map_create (gdisp_ptr, hue_saturation_dialog->drawable);
   hue_saturation_update (hue_saturation_dialog, ALL);
 }
 
@@ -1066,7 +1066,7 @@ hue_saturation_invoker (Argument *args)
   int success = TRUE;
   HueSaturationDialog hsd;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int hue_range;
   double hue_offset;
   double lightness;
@@ -1077,7 +1077,7 @@ hue_saturation_invoker (Argument *args)
   int i;
   void *pr;
 
-  drawable_id = -1;
+  drawable = NULL;
   hue_range   = 0;
   hue_offset  = 0.0;
   lightness   = 0.0;
@@ -1094,9 +1094,8 @@ hue_saturation_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage == drawable_gimage (int_value))
-	drawable_id = int_value;
-      else
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   /*  hue_range  */
@@ -1154,16 +1153,16 @@ hue_saturation_invoker (Argument *args)
       hue_saturation_calculate_transfers (&hsd);
 
       /*  The application should occur only within selection bounds  */
-      drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-      pixel_region_init (&srcPR, drawable_data (drawable_id), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable_id), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
 	hue_saturation (&srcPR, &destPR, (void *) &hsd);
 
-      drawable_merge_shadow (drawable_id, TRUE);
-      drawable_update (drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+      drawable_merge_shadow (drawable, TRUE);
+      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 
   return procedural_db_return_args (&hue_saturation_proc, success);

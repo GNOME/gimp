@@ -22,7 +22,7 @@
 #include "paint_core.h"
 #include "procedural_db.h"
 
-void *        airbrush_paint_func  (PaintCore *, int, int);
+void *        airbrush_paint_func  (PaintCore *, GimpDrawable *, int);
 Tool *        tools_new_airbrush   (void);
 void          tools_free_airbrush  (Tool *);
 

@@ -65,7 +65,7 @@ static int         num_segs = 0;
 static Channel *   fuzzy_mask = NULL;
 static SelectionOptions *fuzzy_options = NULL;
 
-static void fuzzy_select (GImage *, int, int, int, double);
+static void fuzzy_select (GImage *, GimpDrawable *, int, int, double);
 static Argument *fuzzy_select_invoker (Argument *);
 
 /*************************************/
@@ -235,7 +235,7 @@ find_contiguous_region_helper (PixelRegion *mask, PixelRegion *src,
 }
 
 Channel *
-find_contiguous_region (GImage *gimage, int drawable_id, int antialias,
+find_contiguous_region (GImage *gimage, GimpDrawable *drawable, int antialias,
 			int threshold, int x, int y, int sample_merged)
 {
   PixelRegion srcPR, maskPR;
@@ -256,13 +256,13 @@ find_contiguous_region (GImage *gimage, int drawable_id, int antialias,
     }
   else
     {
-      pixel_region_init (&srcPR, drawable_data (drawable_id), 0, 0,
-			 drawable_width (drawable_id), drawable_height (drawable_id), FALSE);
-      has_alpha = drawable_has_alpha (drawable_id);
+      pixel_region_init (&srcPR, drawable_data (drawable), 0, 0,
+			 drawable_width (drawable), drawable_height (drawable), FALSE);
+      has_alpha = drawable_has_alpha (drawable);
     }
 
   mask = channel_new_mask (gimage->ID, srcPR.w, srcPR.h);
-  pixel_region_init (&maskPR, mask->tiles, 0, 0, mask->width, mask->height, TRUE);
+  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 0, 0, drawable_width (GIMP_DRAWABLE(mask)), drawable_height (GIMP_DRAWABLE(mask)), TRUE);
 
   tile = tile_manager_get_tile (srcPR.tiles, x, y, 0);
   if (tile)
@@ -281,7 +281,7 @@ find_contiguous_region (GImage *gimage, int drawable_id, int antialias,
 }
 
 static void
-fuzzy_select (GImage *gimage, int drawable_id, int op, int feather,
+fuzzy_select (GImage *gimage, GimpDrawable *drawable, int op, int feather,
 	      double feather_radius)
 {
   int off_x, off_y;
@@ -292,7 +292,7 @@ fuzzy_select (GImage *gimage, int drawable_id, int op, int feather,
   else
     gimage_mask_undo (gimage);
 
-  drawable_offsets (drawable_id, &off_x, &off_y);
+  drawable_offsets (drawable, &off_x, &off_y);
   if (feather)
     channel_feather (fuzzy_mask, gimage_get_mask (gimage),
 		     feather_radius, op, off_x, off_y);
@@ -366,7 +366,7 @@ fuzzy_select_button_release (Tool *tool, GdkEventButton *bevent,
 {
   FuzzySelect * fuzzy_sel;
   GDisplay * gdisp;
-  int drawable_id;
+  GimpDrawable *drawable;
 
   gdisp = (GDisplay *) gdisp_ptr;
   fuzzy_sel = (FuzzySelect *) tool->private;
@@ -380,8 +380,8 @@ fuzzy_select_button_release (Tool *tool, GdkEventButton *bevent,
   /*  First take care of the case where the user "cancels" the action  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
-      drawable_id = (fuzzy_options->sample_merged) ? -1 : gimage_active_drawable (gdisp->gimage);
-      fuzzy_select (gdisp->gimage, drawable_id, fuzzy_sel->op,
+      drawable = (fuzzy_options->sample_merged) ? NULL : gimage_active_drawable (gdisp->gimage);
+      fuzzy_select (gdisp->gimage, drawable, fuzzy_sel->op,
 		    fuzzy_options->feather, fuzzy_options->feather_radius);
 
       gdisplays_flush ();
@@ -446,19 +446,19 @@ fuzzy_select_calculate (Tool *tool, void *gdisp_ptr, int *nsegs)
   GdkSegment *segs;
   BoundSeg *bsegs;
   int i, x, y;
-  int drawable_id;
+  GimpDrawable *drawable;
   int use_offsets;
 
   fuzzy_sel = (FuzzySelect *) tool->private;
   gdisp = (GDisplay *) gdisp_ptr;
-  drawable_id = gimage_active_drawable (gdisp->gimage);
+  drawable = gimage_active_drawable (gdisp->gimage);
 
   use_offsets = (fuzzy_options->sample_merged) ? FALSE : TRUE;
 
   gdisplay_untransform_coords (gdisp, fuzzy_sel->x,
 			       fuzzy_sel->y, &x, &y, FALSE, use_offsets);
 
-  new = find_contiguous_region (gdisp->gimage, drawable_id, fuzzy_options->antialias,
+  new = find_contiguous_region (gdisp->gimage, drawable, fuzzy_options->antialias,
 				fuzzy_sel->threshold, x, y, fuzzy_options->sample_merged);
 
   if (fuzzy_mask)
@@ -468,11 +468,11 @@ fuzzy_select_calculate (Tool *tool, void *gdisp_ptr, int *nsegs)
   /*  calculate and allocate a new XSegment array which represents the boundary
    *  of the color-contiguous region
    */
-  pixel_region_init (&maskPR, fuzzy_mask->tiles, 0, 0, fuzzy_mask->width, fuzzy_mask->height, FALSE);
+  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(fuzzy_mask)), 0, 0, drawable_width (GIMP_DRAWABLE(fuzzy_mask)), drawable_height (GIMP_DRAWABLE(fuzzy_mask)), FALSE);
   bsegs = find_mask_boundary (&maskPR, nsegs, WithinBounds,
 			      0, 0,
-			      fuzzy_mask->width,
-			      fuzzy_mask->height);
+			      drawable_width (GIMP_DRAWABLE(fuzzy_mask)),
+			      drawable_height (GIMP_DRAWABLE(fuzzy_mask)));
 
   segs = (GdkSegment *) g_malloc (sizeof (GdkSegment) * *nsegs);
 
@@ -635,7 +635,7 @@ fuzzy_select_invoker (Argument *args)
 {
   int success = TRUE;
   GImage *gimage;
-  int drawable_id;
+  GimpDrawable *drawable;
   int op;
   int threshold;
   int antialias;
@@ -645,7 +645,7 @@ fuzzy_select_invoker (Argument *args)
   double feather_radius;
   int int_value;
 
-  drawable_id = -1;
+  drawable    = NULL;
   op          = REPLACE;
   threshold   = 0;
 
@@ -660,10 +660,9 @@ fuzzy_select_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (gimage != drawable_gimage (int_value))
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
-      else
-	drawable_id = int_value;
     }
   /*  x, y  */
   if (success)
@@ -723,12 +722,12 @@ fuzzy_select_invoker (Argument *args)
       Channel *new;
       Channel *old_fuzzy_mask;
 
-      new = find_contiguous_region (gimage, drawable_id, antialias, threshold, x, y, sample_merged);
+      new = find_contiguous_region (gimage, drawable, antialias, threshold, x, y, sample_merged);
       old_fuzzy_mask = fuzzy_mask;
       fuzzy_mask = new;
 
-      drawable_id = (sample_merged) ? -1 : drawable_id;
-      fuzzy_select (gimage, drawable_id, op, feather, feather_radius);
+      drawable = (sample_merged) ? NULL : drawable;
+      fuzzy_select (gimage, drawable, op, feather, feather_radius);
 
       fuzzy_mask = old_fuzzy_mask;
     }

@@ -22,7 +22,7 @@
 #include "paint_core.h"
 #include "procedural_db.h"
 
-void *        pencil_paint_func  (PaintCore *, int, int);
+void *        pencil_paint_func  (PaintCore *, GimpDrawable *, int);
 Tool *        tools_new_pencil   (void);
 void          tools_free_pencil  (Tool *);
 

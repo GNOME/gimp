@@ -25,6 +25,9 @@
 #include "layer_cmds.h"
 #include "undo.h"
 
+#include "layer_pvt.h"
+#include "drawable_pvt.h"
+
 static int int_value;
 static double fp_value;
 static int success;
@@ -99,7 +102,7 @@ layer_new_invoker (Argument *args)
   return_args = procedural_db_return_args (&layer_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer->ID;
+    return_args[1].value.pdb_int = GIMP_DRAWABLE(layer)->ID;
 
   return return_args;
 }
@@ -200,7 +203,7 @@ layer_copy_invoker (Argument *args)
   return_args = procedural_db_return_args (&layer_copy_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = copy->ID;
+    return_args[1].value.pdb_int = GIMP_DRAWABLE(copy)->ID;
 
   return return_args;
 }
@@ -256,7 +259,7 @@ static Argument *
 layer_create_mask_invoker (Argument *args)
 {
   Layer *layer;
-  Channel *mask;
+  LayerMask *mask;
   AddMaskType mask_type;
   Argument *return_args;
 
@@ -288,7 +291,7 @@ layer_create_mask_invoker (Argument *args)
   return_args = procedural_db_return_args (&layer_create_mask_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = mask->ID;
+    return_args[1].value.pdb_int = GIMP_DRAWABLE(mask)->ID;
 
   return return_args;
 }
@@ -367,7 +370,7 @@ layer_scale_invoker (Argument *args)
   if (success)
     local_origin = args[3].value.pdb_int;
   if (success)
-    success = ((gimage = gimage_get_ID (layer->gimage_ID)) != NULL);
+    success = ((gimage = gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID)) != NULL);
 
   if (success)
     {
@@ -466,7 +469,7 @@ layer_resize_invoker (Argument *args)
       offy = args[4].value.pdb_int;
     }
   if (success)
-    success = ((gimage = gimage_get_ID (layer->gimage_ID)) != NULL);
+    success = ((gimage = gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID)) != NULL);
 
   if (success)
     {
@@ -615,7 +618,7 @@ layer_translate_invoker (Argument *args)
       offy = args[2].value.pdb_int;
     }
   if (success)
-    success = ((gimage = gimage_get_ID (layer->gimage_ID)) != NULL);
+    success = ((gimage = gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID)) != NULL);
 
   if (success)
     {
@@ -753,7 +756,7 @@ layer_get_name_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       if ((layer = layer_get_ID (int_value)))
-	name = layer->name;
+	name = GIMP_DRAWABLE(layer)->name;
       else
 	success = FALSE;
     }
@@ -825,10 +828,10 @@ layer_set_name_invoker (Argument *args)
   if (success)
     {
       name = (char *) args[1].value.pdb_pointer;
-      if (layer->name)
+      if (GIMP_DRAWABLE(layer)->name)
 	{
-	  g_free (layer->name);
-	  layer->name = (name) ? g_strdup (name) : NULL;
+	  g_free (GIMP_DRAWABLE(layer)->name);
+	  GIMP_DRAWABLE(layer)->name = (name) ? g_strdup (name) : NULL;
 	}
     }
 
@@ -888,7 +891,7 @@ layer_get_visible_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       if ((layer = layer_get_ID (int_value)))
-	visible = layer->visible;
+	visible = GIMP_DRAWABLE(layer)->visible;
       else
 	success = FALSE;
     }
@@ -960,7 +963,7 @@ layer_set_visible_invoker (Argument *args)
   if (success)
     {
       visible = args[1].value.pdb_int;
-      layer->visible = (visible) ? TRUE : FALSE;
+      GIMP_DRAWABLE(layer)->visible = (visible) ? TRUE : FALSE;
     }
 
   return procedural_db_return_args (&layer_set_visible_proc, success);
@@ -1823,7 +1826,7 @@ layer_set_offsets_invoker (Argument *args)
       offy = args[2].value.pdb_int;
     }
   if (success)
-    success = ((gimage = gimage_get_ID (layer->gimage_ID)) != NULL);
+    success = ((gimage = gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID)) != NULL);
 
   if (success)
     {
@@ -1834,7 +1837,7 @@ layer_set_offsets_invoker (Argument *args)
       if (floating_layer)
 	floating_sel_relax (floating_layer, TRUE);
 
-      layer_translate (layer, (offx - layer->offset_x), (offy - layer->offset_y));
+      layer_translate (layer, (offx - GIMP_DRAWABLE(layer)->offset_x), (offy - GIMP_DRAWABLE(layer)->offset_y));
 
       if (floating_layer)
 	floating_sel_rigor (floating_layer, TRUE);
@@ -1902,7 +1905,7 @@ layer_mask_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       if ((layer = layer_get_ID (int_value)))
-	mask = (layer->mask) ? layer->mask->ID : -1;
+	mask = (layer->mask) ? GIMP_DRAWABLE(layer->mask)->ID : -1;
       else
 	success = FALSE;
     }
