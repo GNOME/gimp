@@ -1,5 +1,9 @@
 2003-10-15  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/preferences-dialog.c: some fine-tuning.
+
+2003-10-15  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-utils.c (gimp_config_diff) (gimp_config_sync)
 	* app/config/gimpconfig.c (gimp_config_iface_equal): compare and sync
 	aggregate objects recursively.

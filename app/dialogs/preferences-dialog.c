@@ -1004,7 +1004,7 @@ prefs_dialog_new (Gimp       *gimp,
   /***************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
-				     _("New Image"),
+				     _("Defaults for New Images"),
                                      "new-image.png",
 				     GTK_TREE_STORE (tree),
 				     _("New Image"),
@@ -1052,7 +1052,7 @@ prefs_dialog_new (Gimp       *gimp,
   /*********************************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
-				     _("Default Comment"),
+				     _("Default Image Comment"),
                                      "default-comment.png",
 				     GTK_TREE_STORE (tree),
 				     _("Default Comment"),
@@ -1091,7 +1091,7 @@ prefs_dialog_new (Gimp       *gimp,
   /*********************************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
-				     _("Default Grid"),
+				     _("Default Image Grid"),
                                      "default-grid.png",
 				     GTK_TREE_STORE (tree),
 				     _("Default Grid"),
@@ -1114,7 +1114,7 @@ prefs_dialog_new (Gimp       *gimp,
   /***************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
-				     _("Interface"),
+				     _("User Interface"),
                                      "interface.png",
 				     GTK_TREE_STORE (tree),
 				     _("Interface"),
@@ -1234,7 +1234,7 @@ prefs_dialog_new (Gimp       *gimp,
   /*****************************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
-				     _("Help System"),
+                                     _("Help System"),
                                      "help-system.png",
 				     GTK_TREE_STORE (tree),
 				     _("Help System"),
@@ -1270,7 +1270,7 @@ prefs_dialog_new (Gimp       *gimp,
   /******************************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
-				     _("Tool Options"),
+                                     _("Tool Options"),
                                      "tool-options.png",
 				     GTK_TREE_STORE (tree),
 				     _("Tool Options"),
@@ -1659,7 +1659,7 @@ prefs_dialog_new (Gimp       *gimp,
   /*************************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
-				     _("Monitor"),
+				     _("Monitor Resolution"),
                                      "monitor.png",
 				     GTK_TREE_STORE (tree),
 				     _("Monitor"),
@@ -1785,13 +1785,8 @@ prefs_dialog_new (Gimp       *gimp,
 				     &top_iter,
 				     page_index++);
 
-  /*  Resource Consumption  */
   vbox2 = prefs_frame_new (_("Resource Consumption"),
                            GTK_CONTAINER (vbox), FALSE);
-
-  prefs_check_button_add (object, "stingy-memory-use",
-                          _("Conservative Memory Usage"),
-                          GTK_BOX (vbox2));
 
 #ifdef ENABLE_MP
   table = prefs_table_new (4, GTK_CONTAINER (vbox2), FALSE);
@@ -1814,6 +1809,11 @@ prefs_dialog_new (Gimp       *gimp,
                          _("Number of Processors to Use:"),
                          GTK_TABLE (table), 3);
 #endif /* ENABLE_MP */
+
+  /*  Resource Consumption  */
+  prefs_check_button_add (object, "stingy-memory-use",
+                          _("Conservative Memory Usage"),
+                          GTK_BOX (vbox2));
 
   /*  File Saving  */
   vbox2 = prefs_frame_new (_("File Saving"), GTK_CONTAINER (vbox), FALSE);
