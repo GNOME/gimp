@@ -32,7 +32,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-
 /*
  * Constants...
  */
@@ -40,43 +39,37 @@
 #define PLUG_IN_NAME    "plug_in_sharpen"
 #define PLUG_IN_VERSION "1.4.2 - 3 June 1998"
 #define HELP_ID         "plug-in-sharpen"
-#define PREVIEW_SIZE    128
 #define SCALE_WIDTH     100
 
 /*
  * Local functions...
  */
 
-static void	query (void);
-static void	run   (const gchar      *name,
-		       gint              nparams,
-		       const GimpParam  *param,
-		       gint             *nreturn_vals,
-		       GimpParam       **returm_vals);
+static void     query (void);
+static void     run   (const gchar      *name,
+                       gint              nparams,
+                       const GimpParam  *param,
+                       gint             *nreturn_vals,
+                       GimpParam       **returm_vals);
 
-static void	compute_luts   (void);
-static void	sharpen        (void);
+static void     compute_luts   (void);
+static void     sharpen        (GimpDrawable        *drawable);
 
-static gboolean sharpen_dialog (void);
+static gboolean sharpen_dialog (GimpDrawable        *drawable);
 
-static void	dialog_iscale_update (GtkAdjustment *, gint *);
-
-static void	preview_init            (void);
-static void	preview_exit            (void);
-static void	preview_update          (void);
-static void	preview_scroll_callback (void);
+static void     preview_update (GimpDrawablePreview *preview);
 
 typedef gint32 intneg;
 typedef gint32 intpos;
 
-static void	gray_filter  (int width, guchar *src, guchar *dst, intneg *neg0,
-			      intneg *neg1, intneg *neg2);
-static void	graya_filter (int width, guchar *src, guchar *dst, intneg *neg0,
-			      intneg *neg1, intneg *neg2);
-static void	rgb_filter   (int width, guchar *src, guchar *dst, intneg *neg0,
-			      intneg *neg1, intneg *neg2);
-static void	rgba_filter  (int width, guchar *src, guchar *dst, intneg *neg0,
-			      intneg *neg1, intneg *neg2);
+static void     gray_filter  (int width, guchar *src, guchar *dst, intneg *neg0,
+                              intneg *neg1, intneg *neg2);
+static void     graya_filter (int width, guchar *src, guchar *dst, intneg *neg0,
+                              intneg *neg1, intneg *neg2);
+static void     rgb_filter   (int width, guchar *src, guchar *dst, intneg *neg0,
+                              intneg *neg1, intneg *neg2);
+static void     rgba_filter  (int width, guchar *src, guchar *dst, intneg *neg0,
+                              intneg *neg1, intneg *neg2);
 
 
 /*
@@ -91,32 +84,20 @@ GimpPlugInInfo PLUG_IN_INFO =
   run    /* run_proc   */
 };
 
-static GtkWidget *preview;		/* Preview widget */
-static gint       preview_width;	/* Width of preview widget */
-static gint       preview_height;	/* Height of preview widget */
-static gint       preview_rowstride;	/* Pitch of preview widget */
-static gint       preview_x1;		/* Upper-left X of preview */
-static gint       preview_y1;		/* Upper-left Y of preview */
-static gint       preview_x2;		/* Lower-right X of preview */
-static gint       preview_y2;		/* Lower-right Y of preview */
-static guchar    *preview_src;		/* Source pixel image */
-static intneg    *preview_neg;		/* Negative coefficient pixels */
-static guchar    *preview_dst;		/* Destination pixel image */
-static GtkObject *hscroll_data;		/* Horizontal scrollbar data */
-static GtkObject *vscroll_data;		/* Vertical scrollbar data */
+typedef struct
+{
+  gint     sharpen_percent;
+  gboolean update_preview;
+} SharpenParams;
 
-static GimpDrawable *drawable = NULL;	/* Current image */
-static gint       sel_x1;      		/* Selection bounds */
-static gint       sel_y1;
-static gint       sel_x2;
-static gint       sel_y2;
-static gint       sel_width;		/* Selection width */
-static gint       sel_height;		/* Selection height */
-static gint       img_bpp;		/* Bytes-per-pixel in image */
-static gint       sharpen_percent = 10;	/* Percent of sharpening */
+static SharpenParams sharpen_params =
+{
+  10,
+  TRUE
+};
 
-static intneg     neg_lut[256];		/* Negative coefficient LUT */
-static intpos     pos_lut[256];		/* Positive coefficient LUT */
+static intneg neg_lut[256];   /* Negative coefficient LUT */
+static intpos pos_lut[256];   /* Positive coefficient LUT */
 
 
 MAIN ()
@@ -124,7 +105,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef	args[] =
+  static GimpParamDef   args[] =
   {
     { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive"      },
     { GIMP_PDB_IMAGE,    "image",    "Input image"                       },
@@ -133,18 +114,18 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Sharpen filter, typically used to 'sharpen' a "
+                          "Sharpen filter, typically used to 'sharpen' a "
                           "photographic image.",
-			  "This plug-in selectively performs a convolution "
+                          "This plug-in selectively performs a convolution "
                           "filter on an image.",
-			  "Michael Sweet <mike@easysw.com>",
-			  "Copyright 1997-1998 by Michael Sweet",
-			  PLUG_IN_VERSION,
-			  N_("_Sharpen..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Michael Sweet <mike@easysw.com>",
+                          "Copyright 1997-1998 by Michael Sweet",
+                          PLUG_IN_VERSION,
+                          N_("_Sharpen..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_NAME,
                              N_("<Image>/Filters/Enhance"));
@@ -159,7 +140,8 @@ run (const gchar      *name,
 {
   GimpRunMode        run_mode;  /* Current run mode */
   GimpPDBStatusType  status;    /* Return status */
-  GimpParam	    *values;    /* Return values */
+  GimpParam         *values;    /* Return values */
+  GimpDrawable      *drawable;  /* Current image */
 
   /*
    * Initialize parameter data...
@@ -184,13 +166,6 @@ run (const gchar      *name,
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-
-  sel_width     = sel_x2 - sel_x1;
-  sel_height    = sel_y2 - sel_y1;
-  img_bpp       = gimp_drawable_bpp (drawable->drawable_id);
-
   /*
    * See how we will run
    */
@@ -201,13 +176,13 @@ run (const gchar      *name,
       /*
        * Possibly retrieve data...
        */
-      gimp_get_data (PLUG_IN_NAME, &sharpen_percent);
+      gimp_get_data (PLUG_IN_NAME, &sharpen_params);
 
       /*
        * Get information from the dialog...
        */
-      if (!sharpen_dialog ())
-	return;
+      if (!sharpen_dialog (drawable))
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -215,22 +190,22 @@ run (const gchar      *name,
        * Make sure all the arguments are present...
        */
       if (nparams != 4)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       else
-	sharpen_percent = param[3].data.d_int32;
+        sharpen_params.sharpen_percent = param[3].data.d_int32;
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*
        * Possibly retrieve data...
        */
-      gimp_get_data (PLUG_IN_NAME, &sharpen_percent);
+      gimp_get_data (PLUG_IN_NAME, &sharpen_params);
       break;
 
     default:
       status = GIMP_PDB_CALLING_ERROR;
       break;
-    };
+    }
 
   /*
    * Sharpen the image...
@@ -239,35 +214,35 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       if ((gimp_drawable_is_rgb (drawable->drawable_id) ||
-	   gimp_drawable_is_gray (drawable->drawable_id)))
-	{
-	  /*
-	   * Set the tile cache size...
-	   */
-	  gimp_tile_cache_ntiles (2 * (drawable->width + gimp_tile_width() - 1) /
-				  gimp_tile_width() + 1);
+           gimp_drawable_is_gray (drawable->drawable_id)))
+        {
+          /*
+           * Set the tile cache size...
+           */
+          gimp_tile_cache_ntiles (2 * (drawable->width + gimp_tile_width() - 1) /
+                                  gimp_tile_width() + 1);
 
-	  /*
-	   * Run!
-	   */
-	  sharpen ();
+          /*
+           * Run!
+           */
+          sharpen (drawable);
 
-	  /*
-	   * If run mode is interactive, flush displays...
-	   */
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
+          /*
+           * If run mode is interactive, flush displays...
+           */
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
 
-	  /*
-	   * Store data...
-	   */
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data (PLUG_IN_NAME,
-			   &sharpen_percent, sizeof (sharpen_percent));
-	}
+          /*
+           * Store data...
+           */
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_set_data (PLUG_IN_NAME,
+                           &sharpen_params, sizeof (SharpenParams));
+        }
       else
-	status = GIMP_PDB_EXECUTION_ERROR;
-    };
+        status = GIMP_PDB_EXECUTION_ERROR;
+    }
 
   /*
    * Reset the current run status...
@@ -284,10 +259,10 @@ run (const gchar      *name,
 static void
 compute_luts (void)
 {
-  gint i;	/* Looping var */
-  gint fact;	/* 1 - sharpness */
+  gint i;       /* Looping var */
+  gint fact;    /* 1 - sharpness */
 
-  fact = 100 - sharpen_percent;
+  fact = 100 - sharpen_params.sharpen_percent;
   if (fact < 1)
     fact = 1;
 
@@ -295,7 +270,7 @@ compute_luts (void)
     {
       pos_lut[i] = 800 * i / fact;
       neg_lut[i] = (4 + pos_lut[i] - (i << 3)) >> 3;
-    };
+    }
 }
 
 /*
@@ -303,23 +278,37 @@ compute_luts (void)
  */
 
 static void
-sharpen (void)
+sharpen (GimpDrawable *drawable)
 {
-  GimpPixelRgn	src_rgn,	/* Source image region */
-		dst_rgn;	/* Destination image region */
-  guchar	*src_rows[4],	/* Source pixel rows */
-		*src_ptr,	/* Current source pixel */
-		*dst_row;	/* Destination pixel row */
-  intneg	*neg_rows[4],	/* Negative coefficient rows */
-		*neg_ptr;	/* Current negative coefficient */
-  gint		i,		/* Looping vars */
-		y,		/* Current location in image */
-		row,		/* Current row in src_rows */
-		count,		/* Current number of filled src_rows */
-		width;		/* Byte width of the image */
-  void		(*filter)(int, guchar *, guchar *, intneg *, intneg *, intneg *);
+  GimpPixelRgn  src_rgn;        /* Source image region */
+  GimpPixelRgn  dst_rgn;        /* Destination image region */
+  guchar       *src_rows[4];    /* Source pixel rows */
+  guchar       *src_ptr;        /* Current source pixel */
+  guchar       *dst_row;        /* Destination pixel row */
+  intneg       *neg_rows[4];    /* Negative coefficient rows */
+  intneg       *neg_ptr;        /* Current negative coefficient */
+  gint          i;              /* Looping vars */
+  gint          y;              /* Current location in image */
+  gint          row;            /* Current row in src_rows */
+  gint          count;          /* Current number of filled src_rows */
+  gint          width;          /* Byte width of the image */
+  gint          x1;             /* Selection bounds */
+  gint          y1;
+  gint          x2;
+  gint          y2;
+  gint          sel_width;      /* Selection width */
+  gint          sel_height;     /* Selection height */
+  gint          img_bpp;        /* Bytes-per-pixel in image */
+  void          (*filter)(int, guchar *, guchar *, intneg *, intneg *, intneg *);
 
   filter = NULL;
+
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+                             &x1, &y1, &x2, &y2);
+
+  sel_width  = x2 - x1;
+  sel_height = y2 - y1;
+  img_bpp    = gimp_drawable_bpp (drawable->drawable_id);
 
   /*
    * Let the user know what we're doing...
@@ -331,9 +320,9 @@ sharpen (void)
    */
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
-		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
+                       x1, y1, sel_width, sel_height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dst_rgn, drawable,
-		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
+                       x1, y1, sel_width, sel_height, TRUE, TRUE);
 
   compute_luts ();
 
@@ -343,7 +332,7 @@ sharpen (void)
     {
       src_rows[row] = g_new (guchar, width);
       neg_rows[row] = g_new (intneg, width);
-    };
+    }
 
   dst_row = g_new (guchar, width);
 
@@ -351,7 +340,8 @@ sharpen (void)
    * Pre-load the first row for the filter...
    */
 
-  gimp_pixel_rgn_get_row (&src_rgn, src_rows[0], sel_x1, sel_y1, sel_width);
+  gimp_pixel_rgn_get_row (&src_rgn, src_rows[0], x1, y1, sel_width);
+
   for (i = width, src_ptr = src_rows[0], neg_ptr = neg_rows[0];
        i > 0;
        i --, src_ptr ++, neg_ptr ++)
@@ -384,74 +374,74 @@ sharpen (void)
    * Sharpen...
    */
 
-  for (y = sel_y1; y < sel_y2; y ++)
+  for (y = y1; y < y2; y ++)
     {
       /*
        * Load the next pixel row...
        */
 
-      if ((y + 1) < sel_y2)
-	{
-	  /*
-	   * Check to see if our src_rows[] array is overflowing yet...
-	   */
+      if ((y + 1) < y2)
+        {
+          /*
+           * Check to see if our src_rows[] array is overflowing yet...
+           */
 
-	  if (count >= 3)
-	    count --;
+          if (count >= 3)
+            count --;
 
-	  /*
-	   * Grab the next row...
-	   */
+          /*
+           * Grab the next row...
+           */
 
-	  gimp_pixel_rgn_get_row (&src_rgn, src_rows[row],
-				  sel_x1, y + 1, sel_width);
-	  for (i = width, src_ptr = src_rows[row], neg_ptr = neg_rows[row];
-	       i > 0;
-	       i --, src_ptr ++, neg_ptr ++)
-	    *neg_ptr = neg_lut[*src_ptr];
+          gimp_pixel_rgn_get_row (&src_rgn, src_rows[row],
+                                  x1, y + 1, sel_width);
+          for (i = width, src_ptr = src_rows[row], neg_ptr = neg_rows[row];
+               i > 0;
+               i --, src_ptr ++, neg_ptr ++)
+            *neg_ptr = neg_lut[*src_ptr];
 
-	  count ++;
-	  row = (row + 1) & 3;
-	}
+          count ++;
+          row = (row + 1) & 3;
+        }
       else
-	{
-	  /*
-	   * No more pixels at the bottom...  Drop the oldest samples...
-	   */
+        {
+          /*
+           * No more pixels at the bottom...  Drop the oldest samples...
+           */
 
-	  count --;
-	};
+          count --;
+        }
 
       /*
        * Now sharpen pixels and save the results...
        */
 
       if (count == 3)
-	{
-	  (* filter) (sel_width, src_rows[(row + 2) & 3], dst_row,
-		      neg_rows[(row + 1) & 3] + img_bpp,
-		      neg_rows[(row + 2) & 3] + img_bpp,
-		      neg_rows[(row + 3) & 3] + img_bpp);
+        {
+          (* filter) (sel_width, src_rows[(row + 2) & 3], dst_row,
+                      neg_rows[(row + 1) & 3] + img_bpp,
+                      neg_rows[(row + 2) & 3] + img_bpp,
+                      neg_rows[(row + 3) & 3] + img_bpp);
 
-	  /*
-	   * Set the row...
-	   */
+          /*
+           * Set the row...
+           */
 
-	  gimp_pixel_rgn_set_row (&dst_rgn, dst_row, sel_x1, y, sel_width);
-	}
+          gimp_pixel_rgn_set_row (&dst_rgn, dst_row, x1, y, sel_width);
+        }
       else if (count == 2)
-	{
-	  if (y == sel_y1)	/* first row */
-	    gimp_pixel_rgn_set_row (&dst_rgn, src_rows[0], 
-				    sel_x1, y, sel_width);
-	  else                  /* last row  */
-	    gimp_pixel_rgn_set_row (&dst_rgn, src_rows[(sel_height - 1) & 3], 
-				    sel_x1, y, sel_width);
-	};
+        {
+          if (y == y1)      /* first row */
+            gimp_pixel_rgn_set_row (&dst_rgn, src_rows[0],
+                                    x1, y, sel_width);
+          else                  /* last row  */
+            gimp_pixel_rgn_set_row (&dst_rgn, src_rows[(sel_height - 1) & 3],
+                                    x1, y, sel_width);
+        }
 
       if ((y & 15) == 0)
-	gimp_progress_update ((gdouble) (y - sel_y1) / (gdouble) sel_height);
-    };
+        gimp_progress_update ((gdouble) (y - y1) / (gdouble) sel_height);
+    }
 
   /*
    * OK, we're done.  Free all memory used...
@@ -461,7 +451,7 @@ sharpen (void)
     {
       g_free (src_rows[row]);
       g_free (neg_rows[row]);
-    };
+    }
 
   g_free (dst_row);
 
@@ -472,7 +462,7 @@ sharpen (void)
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id,
-			sel_x1, sel_y1, sel_width, sel_height);
+                        x1, y1, sel_width, sel_height);
 }
 
 
@@ -481,15 +471,13 @@ sharpen (void)
  */
 
 static gboolean
-sharpen_dialog (void)
+sharpen_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
+  GtkWidget *preview;
   GtkWidget *table;
-  GtkWidget *abox;
-  GtkWidget *ptable;
-  GtkWidget *frame;
-  GtkWidget *scrollbar;
+  GtkWidget *hbox;
   GtkObject *adj;
   gboolean   run;
 
@@ -497,7 +485,7 @@ sharpen_dialog (void)
 
   dialog = gimp_dialog_new (_("Sharpen"), "Sharpen",
                             NULL, 0,
-			    gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, HELP_ID,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -510,56 +498,16 @@ sharpen_dialog (void)
                       FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  ptable = gtk_table_new (2, 2, FALSE);
-  gtk_container_add (GTK_CONTAINER (abox), ptable);
-  gtk_widget_show (ptable);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (ptable), frame, 0, 1, 0, 1, 0, 0, 0, 0);
-  gtk_widget_show (frame);
-
-  preview_width  = MIN (sel_width, PREVIEW_SIZE);
-  preview_height = MIN (sel_height, PREVIEW_SIZE);
-
-  preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
+  preview = gimp_drawable_preview_new (drawable,
+                                       &sharpen_params.update_preview);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
-
-  hscroll_data = gtk_adjustment_new (0, 0, sel_width - 1, 1.0,
-				     MIN (preview_width, sel_width),
-				     MIN (preview_width, sel_width));
-
-  g_signal_connect (hscroll_data, "value_changed",
-                    G_CALLBACK (preview_scroll_callback),
-                    NULL);
-
-  scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (hscroll_data));
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE (ptable), scrollbar, 0, 1, 1, 2,
-		    GTK_FILL, 0, 0, 0);
-  gtk_widget_show (scrollbar);
-
-  vscroll_data = gtk_adjustment_new (0, 0, sel_height - 1, 1.0,
-				     MIN (preview_height, sel_height),
-				     MIN (preview_height, sel_height));
-
-  g_signal_connect (vscroll_data, "value_changed",
-                    G_CALLBACK (preview_scroll_callback),
-                    NULL);
-
-  scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (vscroll_data));
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE (ptable), scrollbar, 1, 2, 0, 1,
-		    0, GTK_FILL, 0, 0);
-  gtk_widget_show (scrollbar);
-
-  preview_init ();
+  g_signal_connect (preview, "invalidated",
+                    G_CALLBACK (preview_update), NULL);
 
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -567,82 +515,64 @@ sharpen_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Sharpness:"), SCALE_WIDTH, 0,
-			      sharpen_percent, 1, 99, 1, 10, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Sharpness:"), SCALE_WIDTH, 0,
+                              sharpen_params.sharpen_percent,
+                              1, 99, 1, 10, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (dialog_iscale_update),
-                    &sharpen_percent);
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &sharpen_params.sharpen_percent);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (dialog);
-
-  preview_update ();
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
-  preview_exit ();
-
   return run;
 }
 
-/*  preview functions  */
-
 static void
-preview_init (void)
+preview_update (GimpDrawablePreview *preview)
 {
-  /*
-   * Setup for preview filter...
-   */
+  GimpPixelRgn  src_rgn;        /* Source image region */
+  guchar        *src_ptr;       /* Current source pixel */
+  guchar        *dst_ptr;       /* Current destination pixel */
+  intneg        *neg_ptr;       /* Current negative pixel */
+  gint          i;              /* Looping var */
+  gint          y;              /* Current location in image */
+  gint          width;          /* Byte width of the image */
+  gint          x1, y1;
+  gint          preview_width, preview_height;
+  guchar       *preview_src, *preview_dst;
+  intneg       *preview_neg;
+  gint          img_bpp;        /* Bytes-per-pixel in image */
 
-  compute_luts();
-
-  preview_rowstride = preview_width * img_bpp;
-
-  preview_src = g_new (guchar, preview_rowstride * preview_height);
-  preview_neg = g_new (intneg, preview_rowstride * preview_height);
-  preview_dst = g_new (guchar, preview_rowstride * preview_height);
-
-  preview_x1 = sel_x1;
-  preview_y1 = sel_y1;
-  preview_x2 = preview_x1 + preview_width;
-  preview_y2 = preview_y1 + preview_height;
-}
-
-static void
-preview_scroll_callback (void)
-{
-  preview_x1 = sel_x1 + GTK_ADJUSTMENT (hscroll_data)->value;
-  preview_y1 = sel_y1 + GTK_ADJUSTMENT (vscroll_data)->value;
-  preview_x2 = preview_x1 + MIN (preview_width, sel_width);
-  preview_y2 = preview_y1 + MIN (preview_height, sel_height);
-
-  preview_update ();
-}
-
-static void
-preview_update (void)
-{
-  GimpPixelRgn	src_rgn;	/* Source image region */
-  guchar	*src_ptr,	/* Current source pixel */
-                *dst_ptr;	/* Current destination pixel */
-  intneg	*neg_ptr;	/* Current negative pixel */
-  gint		i,	  	/* Looping var */
-                y,              /* Current location in image */
-		width;		/* Byte width of the image */
-  void		(*filter)(int, guchar *, guchar *, intneg *, intneg *, intneg *);
+  void          (*filter)(int, guchar *, guchar *, intneg *, intneg *, intneg *);
 
   filter = NULL;
 
+  compute_luts();
   /*
    * Setup for filter...
    */
+  gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+  gimp_preview_get_size (GIMP_PREVIEW (preview),
+                         &preview_width, &preview_height);
+  img_bpp = gimp_drawable_bpp (preview->drawable->drawable_id);
 
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-		       preview_x1, preview_y1, preview_width, preview_height,
-		       FALSE, FALSE);
+
+  preview_src = g_new (guchar, preview_width * preview_height * img_bpp);
+  preview_neg = g_new (intneg, preview_width * preview_height * img_bpp);
+  preview_dst = g_new (guchar, preview_width * preview_height * img_bpp);
+
+  gimp_pixel_rgn_init (&src_rgn, GIMP_DRAWABLE_PREVIEW (preview)->drawable,
+                       x1, y1, preview_width, preview_height,
+                       FALSE, FALSE);
 
   width = preview_width * img_bpp;
 
@@ -650,8 +580,8 @@ preview_update (void)
    * Load the preview area...
    */
 
-  gimp_pixel_rgn_get_rect (&src_rgn, preview_src, preview_x1, preview_y1,
-			   preview_width, preview_height);
+  gimp_pixel_rgn_get_rect (&src_rgn, preview_src, x1, y1,
+                           preview_width, preview_height);
 
   for (i = width * preview_height, src_ptr = preview_src, neg_ptr = preview_neg;
        i > 0;
@@ -676,7 +606,7 @@ preview_update (void)
     case 4:
       filter = rgba_filter;
       break;
-    };
+    }
 
   /*
    * Sharpen...
@@ -684,58 +614,37 @@ preview_update (void)
 
   memcpy (preview_dst, preview_src, width);
   memcpy (preview_dst + width * (preview_height - 1),
-	  preview_src + width * (preview_height - 1),
-	  width);
+          preview_src + width * (preview_height - 1),
+          width);
 
   for (y = preview_height - 2, src_ptr = preview_src + width,
-	   neg_ptr = preview_neg + width + img_bpp,
-	   dst_ptr = preview_dst + width;
+           neg_ptr = preview_neg + width + img_bpp,
+           dst_ptr = preview_dst + width;
        y > 0;
        y --, src_ptr += width, neg_ptr += width, dst_ptr += width)
     (*filter)(preview_width, src_ptr, dst_ptr, neg_ptr - width,
               neg_ptr, neg_ptr + width);
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                          0, 0, preview_width, preview_height,
-                          gimp_drawable_type (drawable->drawable_id),
-                          preview_dst,
-                          preview_rowstride);
-}
+  gimp_drawable_preview_draw (preview, preview_dst);
 
-static void
-preview_exit (void)
-{
   g_free (preview_src);
   g_free (preview_neg);
   g_free (preview_dst);
 }
-
-/*  dialog callbacks  */
-
-static void
-dialog_iscale_update (GtkAdjustment *adjustment,
-		      gint          *value)
-{
-  gimp_int_adjustment_update (adjustment, value);
-
-  compute_luts ();
-  preview_update ();
-}
-
 
 /*
  * 'gray_filter()' - Sharpen grayscale pixels.
  */
 
 static void
-gray_filter (gint    width,	/* I - Width of line in pixels */
-	     guchar *src,	/* I - Source line */
-	     guchar *dst,	/* O - Destination line */
-	     intneg *neg0,	/* I - Top negative coefficient line */
-	     intneg *neg1,	/* I - Middle negative coefficient line */
-	     intneg *neg2)	/* I - Bottom negative coefficient line */
+gray_filter (gint    width,     /* I - Width of line in pixels */
+             guchar *src,       /* I - Source line */
+             guchar *dst,       /* O - Destination line */
+             intneg *neg0,      /* I - Top negative coefficient line */
+             intneg *neg1,      /* I - Middle negative coefficient line */
+             intneg *neg2)      /* I - Bottom negative coefficient line */
 {
-  intpos pixel;		/* New pixel value */
+  intpos pixel;         /* New pixel value */
 
   *dst++ = *src++;
   width -= 2;
@@ -743,8 +652,8 @@ gray_filter (gint    width,	/* I - Width of line in pixels */
   while (width > 0)
     {
       pixel = (pos_lut[*src++] - neg0[-1] - neg0[0] - neg0[1] -
-	       neg1[-1] - neg1[1] -
-	       neg2[-1] - neg2[0] - neg2[1]);
+               neg1[-1] - neg1[1] -
+               neg2[-1] - neg2[0] - neg2[1]);
       pixel = (pixel + 4) >> 3;
       *dst++ = CLAMP0255 (pixel);
 
@@ -752,7 +661,7 @@ gray_filter (gint    width,	/* I - Width of line in pixels */
       neg1 ++;
       neg2 ++;
       width --;
-    };
+    }
 
   *dst++ = *src++;
 }
@@ -762,14 +671,14 @@ gray_filter (gint    width,	/* I - Width of line in pixels */
  */
 
 static void
-graya_filter (gint   width,	/* I - Width of line in pixels */
-	      guchar *src,	/* I - Source line */
-	      guchar *dst,	/* O - Destination line */
-	      intneg *neg0,	/* I - Top negative coefficient line */
-	      intneg *neg1,	/* I - Middle negative coefficient line */
-	      intneg *neg2)	/* I - Bottom negative coefficient line */
+graya_filter (gint   width,     /* I - Width of line in pixels */
+              guchar *src,      /* I - Source line */
+              guchar *dst,      /* O - Destination line */
+              intneg *neg0,     /* I - Top negative coefficient line */
+              intneg *neg1,     /* I - Middle negative coefficient line */
+              intneg *neg2)     /* I - Bottom negative coefficient line */
 {
-  intpos pixel;		/* New pixel value */
+  intpos pixel;         /* New pixel value */
 
   *dst++ = *src++;
   *dst++ = *src++;
@@ -778,8 +687,8 @@ graya_filter (gint   width,	/* I - Width of line in pixels */
   while (width > 0)
     {
       pixel = (pos_lut[*src++] - neg0[-2] - neg0[0] - neg0[2] -
-	       neg1[-2] - neg1[2] -
-	       neg2[-2] - neg2[0] - neg2[2]);
+               neg1[-2] - neg1[2] -
+               neg2[-2] - neg2[0] - neg2[2]);
       pixel = (pixel + 4) >> 3;
       *dst++ = CLAMP0255 (pixel);
 
@@ -788,7 +697,7 @@ graya_filter (gint   width,	/* I - Width of line in pixels */
       neg1 += 2;
       neg2 += 2;
       width --;
-    };
+    }
 
   *dst++ = *src++;
   *dst++ = *src++;
@@ -799,14 +708,14 @@ graya_filter (gint   width,	/* I - Width of line in pixels */
  */
 
 static void
-rgb_filter (gint    width,	/* I - Width of line in pixels */
-	    guchar *src,	/* I - Source line */
-	    guchar *dst,	/* O - Destination line */
-	    intneg *neg0,	/* I - Top negative coefficient line */
-	    intneg *neg1,	/* I - Middle negative coefficient line */
-	    intneg *neg2)	/* I - Bottom negative coefficient line */
+rgb_filter (gint    width,      /* I - Width of line in pixels */
+            guchar *src,        /* I - Source line */
+            guchar *dst,        /* O - Destination line */
+            intneg *neg0,       /* I - Top negative coefficient line */
+            intneg *neg1,       /* I - Middle negative coefficient line */
+            intneg *neg2)       /* I - Bottom negative coefficient line */
 {
-  intpos pixel;		/* New pixel value */
+  intpos pixel;         /* New pixel value */
 
   *dst++ = *src++;
   *dst++ = *src++;
@@ -816,20 +725,20 @@ rgb_filter (gint    width,	/* I - Width of line in pixels */
   while (width > 0)
     {
       pixel = (pos_lut[*src++] - neg0[-3] - neg0[0] - neg0[3] -
-	       neg1[-3] - neg1[3] -
-	       neg2[-3] - neg2[0] - neg2[3]);
+               neg1[-3] - neg1[3] -
+               neg2[-3] - neg2[0] - neg2[3]);
       pixel = (pixel + 4) >> 3;
       *dst++ = CLAMP0255 (pixel);
 
       pixel = (pos_lut[*src++] - neg0[-2] - neg0[1] - neg0[4] -
-	       neg1[-2] - neg1[4] -
-	       neg2[-2] - neg2[1] - neg2[4]);
+               neg1[-2] - neg1[4] -
+               neg2[-2] - neg2[1] - neg2[4]);
       pixel = (pixel + 4) >> 3;
       *dst++ = CLAMP0255 (pixel);
 
       pixel = (pos_lut[*src++] - neg0[-1] - neg0[2] - neg0[5] -
-	       neg1[-1] - neg1[5] -
-	       neg2[-1] - neg2[2] - neg2[5]);
+               neg1[-1] - neg1[5] -
+               neg2[-1] - neg2[2] - neg2[5]);
       pixel = (pixel + 4) >> 3;
       *dst++ = CLAMP0255 (pixel);
 
@@ -837,7 +746,7 @@ rgb_filter (gint    width,	/* I - Width of line in pixels */
       neg1 += 3;
       neg2 += 3;
       width --;
-    };
+    }
 
   *dst++ = *src++;
   *dst++ = *src++;
@@ -849,14 +758,14 @@ rgb_filter (gint    width,	/* I - Width of line in pixels */
  */
 
 static void
-rgba_filter (gint   width,	/* I - Width of line in pixels */
-	     guchar *src,	/* I - Source line */
-	     guchar *dst,	/* O - Destination line */
-	     intneg *neg0,	/* I - Top negative coefficient line */
-	     intneg *neg1,	/* I - Middle negative coefficient line */
-	     intneg *neg2)	/* I - Bottom negative coefficient line */
+rgba_filter (gint   width,      /* I - Width of line in pixels */
+             guchar *src,       /* I - Source line */
+             guchar *dst,       /* O - Destination line */
+             intneg *neg0,      /* I - Top negative coefficient line */
+             intneg *neg1,      /* I - Middle negative coefficient line */
+             intneg *neg2)      /* I - Bottom negative coefficient line */
 {
-  intpos pixel;		/* New pixel value */
+  intpos pixel;         /* New pixel value */
 
   *dst++ = *src++;
   *dst++ = *src++;
@@ -867,20 +776,20 @@ rgba_filter (gint   width,	/* I - Width of line in pixels */
   while (width > 0)
     {
       pixel = (pos_lut[*src++] - neg0[-4] - neg0[0] - neg0[4] -
-	       neg1[-4] - neg1[4] -
-	       neg2[-4] - neg2[0] - neg2[4]);
+               neg1[-4] - neg1[4] -
+               neg2[-4] - neg2[0] - neg2[4]);
       pixel = (pixel + 4) >> 3;
       *dst++ = CLAMP0255 (pixel);
 
       pixel = (pos_lut[*src++] - neg0[-3] - neg0[1] - neg0[5] -
-	       neg1[-3] - neg1[5] -
-	       neg2[-3] - neg2[1] - neg2[5]);
+               neg1[-3] - neg1[5] -
+               neg2[-3] - neg2[1] - neg2[5]);
       pixel = (pixel + 4) >> 3;
       *dst++ = CLAMP0255 (pixel);
 
       pixel = (pos_lut[*src++] - neg0[-2] - neg0[2] - neg0[6] -
-	       neg1[-2] - neg1[6] -
-	       neg2[-2] - neg2[2] - neg2[6]);
+               neg1[-2] - neg1[6] -
+               neg2[-2] - neg2[2] - neg2[6]);
       pixel = (pixel + 4) >> 3;
       *dst++ = CLAMP0255 (pixel);
 
@@ -890,7 +799,7 @@ rgba_filter (gint   width,	/* I - Width of line in pixels */
       neg1 += 4;
       neg2 += 4;
       width --;
-    };
+    }
 
   *dst++ = *src++;
   *dst++ = *src++;
