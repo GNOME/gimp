@@ -491,8 +491,33 @@ gimp_unit_menu_create_selection (GimpUnitMenu *gum)
   gtk_clist_set_shadow_type (GTK_CLIST (gum->clist), GTK_SHADOW_IN);
   gtk_clist_set_selection_mode (GTK_CLIST (gum->clist), GTK_SELECTION_BROWSE);
   gtk_clist_column_titles_passive (GTK_CLIST (gum->clist));
-  gtk_container_add (GTK_CONTAINER (scrolled_win), gum->clist);
+  /*  the unit lines  */
+  num_units = gimp_unit_get_number_of_units ();
+  for (unit = UNIT_END; unit < num_units; unit++)
+    {
+      row[0] = g_strdup (gimp_unit_menu_build_string (gum->format, unit));
+      row[1] = g_strdup (gimp_unit_menu_build_string ("(%f)", unit));
+
+      gtk_clist_append (GTK_CLIST (gum->clist), row);
+      gtk_clist_set_row_data (GTK_CLIST (gum->clist),
+			      unit - UNIT_END,
+			      (gpointer) unit);
+
+      g_free (row[0]);
+      g_free (row[1]);
+    }
+
+  unit_width   = gtk_clist_optimal_column_width (GTK_CLIST (gum->clist), 0);
+  factor_width = gtk_clist_optimal_column_width (GTK_CLIST (gum->clist), 1);
+
+  gtk_clist_set_column_width (GTK_CLIST (gum->clist), 0, unit_width);
+  gtk_clist_set_column_width (GTK_CLIST (gum->clist), 1, factor_width);
+
+  gtk_widget_set_usize (gum->clist, -1, 150);
+
+  /*  now show the dialog  */
   gtk_widget_show (gum->clist);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), gum->clist);
 
   gtk_signal_connect (GTK_OBJECT (gum->selection), "destroy",
                       GTK_SIGNAL_FUNC (gtk_widget_destroyed),
@@ -530,31 +555,6 @@ gimp_unit_menu_create_selection (GimpUnitMenu *gum)
 		      gum);
   gtk_widget_show (button);
 
-  /*  the unit lines  */
-  num_units = gimp_unit_get_number_of_units ();
-  for (unit = UNIT_END; unit < num_units; unit++)
-    {
-      row[0] = g_strdup (gimp_unit_menu_build_string (gum->format, unit));
-      row[1] = g_strdup (gimp_unit_menu_build_string ("(%f)", unit));
-
-      gtk_clist_append (GTK_CLIST (gum->clist), row);
-      gtk_clist_set_row_data (GTK_CLIST (gum->clist),
-			      unit - UNIT_END,
-			      (gpointer) unit);
-
-      g_free (row[0]);
-      g_free (row[1]);
-    }
-
-  unit_width   = gtk_clist_optimal_column_width (GTK_CLIST (gum->clist), 0);
-  factor_width = gtk_clist_optimal_column_width (GTK_CLIST (gum->clist), 1);
-
-  gtk_clist_set_column_width (GTK_CLIST (gum->clist), 0, unit_width);
-  gtk_clist_set_column_width (GTK_CLIST (gum->clist), 1, factor_width);
-
-  gtk_widget_set_usize (gum->clist, -1, 150);
-
-  /*  now show the dialog  */
   gtk_widget_show (vbox);
   gtk_widget_show (gum->selection);
 

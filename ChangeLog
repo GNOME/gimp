@@ -1,3 +1,8 @@
+Sat Dec  4 05:30:38 GMT 1999 Nick Lamb <njl195@zepler.org.uk>
+
+	* libgimp/gimpunitmenu.c: Move mitch's change so now it
+	actually Works For Me (TM)
+
 1999-12-03  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpunitmenu.c: Set the clist columns to their
