@@ -17,6 +17,7 @@ WINSNAP = winsnap
 XJT =
 else
 PRINT = print
+XJT = xjt
 endif
 
 SUBDIRS = 			\
