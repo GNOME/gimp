@@ -573,7 +573,12 @@ layer_get_ID (gint ID)
 void
 layer_delete (Layer *layer)
 {
-  gtk_object_unref (GTK_OBJECT (layer));
+  /*  Layers are normally deleted by removing them from the associated
+      image. The only case where layer_delete() is useful is if you want
+      to remove a floating layer object that has not been added to an
+      image yet. We use gtk_object_sink() for this reason here.
+   */
+  gtk_object_sink (GTK_OBJECT (layer));
 }
 
 static void

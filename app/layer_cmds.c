@@ -546,6 +546,9 @@ layer_delete_invoker (Argument *args)
   if (layer == NULL)
     success = FALSE;
 
+  if (success)
+    layer_delete (layer);
+
   return procedural_db_return_args (&layer_delete_proc, success);
 }
 
@@ -562,7 +565,7 @@ static ProcRecord layer_delete_proc =
 {
   "gimp_layer_delete",
   "Delete a layer.",
-  "This procedure is obsolete and does nothing. Layers are automatically deleted when removed from an image or if the associated image is destroyed.",
+  "This procedure deletes the specified layer. This must not be done if the gimage containing this layer was already deleted or if the layer was already removed from the image. The only case in which this procedure is useful is if you want to get rid of a layer which has not yet been added to an image.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

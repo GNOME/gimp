@@ -1,5 +1,18 @@
 2000-12-28  Sven Neumann  <sven@gimp.org>
 
+	* app/channel.c
+	* app/layer.c: use gtk_object_sink() instead of gtk_object_unref()
+	when deleting a layer or channel since only floating objects should
+	be destroyed this way. A layer or channel that has been attached
+	to an image shall never be deleted.
+	
+	* app/layer_cmds.c
+	* libgimp/gimplayer_pdb.c
+	* tools/pdbgen/pdb/layer.pdb: reenabled the gimp_layer_delete() PDB
+	function since it might be useful under rare circumstances.
+	
+2000-12-28  Sven Neumann  <sven@gimp.org>
+
 	* app/commands.c
 	* app/layer_select.[ch]: small new feature: display a layer preview
 	popup when switching the active layer using PageUp/PageDown. Could

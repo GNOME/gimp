@@ -280,7 +280,12 @@ channel_get_ID (gint ID)
 void
 channel_delete (Channel *channel)
 {
-  gtk_object_unref (GTK_OBJECT (channel));
+  /*  Channels are normally deleted by removing them from the associated
+      image. The only case where channel_delete() is useful is if you want
+      to remove a floating channel object that has not been added to an
+      image yet. We use gtk_object_sink() for this reason here.
+   */
+  gtk_object_sink (GTK_OBJECT (channel));
 }
 
 static void
