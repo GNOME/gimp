@@ -1,3 +1,8 @@
+2005-04-01  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: revert previous commit because not all po files
+	were added and the ALL_LINGUAS change was broken too.
+
 2005-04-01  Steve Murphy  <murf@e-tools.com>
 
         * configure.in: Added "rw" to ALL_LINGUAS.
