@@ -1,3 +1,8 @@
+2004-03-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpstock.sgml: updated.
+
 2004-03-03  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpthumb/tmpl/gimpthumb-utils.sgml: updated.
