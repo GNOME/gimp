@@ -38,6 +38,25 @@
 #ifdef G_OS_WIN32
 #include <direct.h>		/* For _mkdir() */
 #define mkdir(path,mode) _mkdir(path)
+#include <io.h>
+#ifndef S_IWUSR
+#define S_IWUSR _S_IWRITE
+#endif
+#ifndef S_IRUSR
+#define S_IRUSR _S_IREAD
+#endif
+#ifndef S_IWGRP
+#define S_IWGRP (_S_IWRITE>>3)
+#define S_IWOTH (_S_IWRITE>>6)
+#endif
+#ifndef S_IRGRP
+#define S_IRGRP (_S_IREAD>>3)
+#define S_IROTH (_S_IREAD>>6)
+#endif
+#define uid_t gint
+#define gid_t gint
+#define geteuid() 0
+#define getegid() 0
 #endif
 
 #include "appenv.h"
@@ -63,70 +82,74 @@
 #include "libgimp/gimpintl.h"
 
 
-typedef struct _OverwriteBox OverwriteBox;
+typedef struct _OverwriteData OverwriteData;
 
-struct _OverwriteBox
+struct _OverwriteData
 {
-  GtkWidget *obox;
-  gchar     *full_filename;
-  gchar     *raw_filename;
+  gchar *full_filename;
+  gchar *raw_filename;
 };
 
-static void file_overwrite               (gchar       *filename,
-					  gchar       *raw_filename);
-static void file_overwrite_yes_callback  (GtkWidget   *widget,
-					  gpointer     data);
-static void file_overwrite_no_callback   (GtkWidget   *widget,
-					  gpointer     data);
+static void    file_overwrite               (gchar         *filename,
+					     gchar         *raw_filename);
+static void    file_overwrite_callback      (GtkWidget     *widget,
+					     gboolean       overwrite,
+					     gpointer       data);
 
-static GimpImage * file_open_image       (gchar       *filename,
-					  gchar       *raw_filename,
-					  RunModeType  runmode,
-					  gint        *status);
+static GimpImage * file_open_image          (gchar         *filename,
+					     gchar         *raw_filename,
+					     gchar         *open_mode,
+					     RunModeType    run_mode,
+					     gint          *status);
 
-static void file_open_genbutton_callback (GtkWidget   *widget,
-					  gpointer     data);
+static gint        file_save                (GimpImage     *gimage,
+					     gchar         *filename,
+					     gchar         *raw_filename,
+					     RunModeType    run_mode);
 
-static void file_open_clistrow_callback  (GtkWidget   *widget,
-					  gint         row);
+static void    file_open_genbutton_callback (GtkWidget     *widget,
+					     gpointer       data);
 
-static void file_open_ok_callback        (GtkWidget   *widget,
-					  gpointer     data);
+static void    file_open_clistrow_callback  (GtkWidget     *widget,
+					     gint           row);
 
-static void file_save_ok_callback        (GtkWidget   *widget,
-					  gpointer     data);
+static void    file_open_ok_callback        (GtkWidget     *widget,
+					     gpointer       data);
 
-static void file_dialog_show             (GtkWidget   *filesel);
-static int  file_dialog_hide             (GtkWidget   *filesel);
-static void file_update_name             (PlugInProcDef *proc,
-					  GtkWidget     *filesel);
+static void    file_save_ok_callback        (GtkWidget     *widget,
+					     gpointer       data);
 
-static void file_open_type_callback      (GtkWidget   *widget,
-					  gpointer     data);
-static void file_save_type_callback      (GtkWidget   *widget,
-					  gpointer     data);
+static void    file_dialog_show             (GtkWidget     *filesel);
+static gint    file_dialog_hide             (GtkWidget     *filesel);
+static void    file_update_name             (PlugInProcDef *proc,
+					     GtkWidget     *filesel);
 
-static void file_convert_string (gchar *instr,
-                                 gchar *outmem,
-                                 gint   maxmem,
-                                 gint  *nmem);
+static void    file_open_type_callback      (GtkWidget     *widget,
+					     gpointer       data);
+static void    file_save_type_callback      (GtkWidget     *widget,
+					     gpointer       data);
 
-static gchar * file_absolute_filename (gchar *name);
+static void    file_convert_string          (gchar         *instr,
+					     gchar         *outmem,
+					     gint           maxmem,
+					     gint          *nmem);
 
-static int  file_check_single_magic (gchar  *offset,
-                                     gchar  *type,
-                                     gchar  *value,
-                                     gint    headsize,
-                                     guchar *file_head,
-                                     FILE   *ifp);
+static gchar * file_absolute_filename       (gchar         *name);
 
-static int  file_check_magic_list (GSList *magics_list,
-                                   gint    headsize,
-                                   guchar *head,
-                                   FILE   *ifp);
+static gint    file_check_single_magic      (gchar         *offset,
+					     gchar         *type,
+					     gchar         *value,
+					     gint           headsize,
+					     guchar        *file_head,
+					     FILE          *ifp);
 
-static void file_update_menus     (GSList *procs,
-				   gint    image_type);
+static gint    file_check_magic_list        (GSList        *magics_list,
+					     gint           headsize,
+					     guchar        *head,
+					     FILE          *ifp);
+
+static void    file_update_menus            (GSList        *procs,
+					     gint           image_type);
 
 
 static GtkWidget  *fileload = NULL;
@@ -406,21 +429,25 @@ file_save_callback (GtkWidget *widget,
 	}
       else
 	{
+	  gchar *filename;
 	  gchar *raw_filename;
 	  gint   status;
 
-	  raw_filename = g_basename (gimage_filename (gdisplay->gimage));
+	  filename     = g_strdup (gimage_filename (gdisplay->gimage));
+	  raw_filename = g_basename (filename);
 	  
 	  status = file_save (gdisplay->gimage,
-			      gimage_filename (gdisplay->gimage),
+			      filename,
 			      raw_filename,
 			      RUN_WITH_LAST_VALS);
 
 	  if (status != PDB_SUCCESS &&
 	      status != PDB_CANCEL)
 	    {
-	      g_message (_("Save failed: %s"), raw_filename);
+	      g_message (_("Save failed.\n%s"), filename);
 	    }
+
+	  g_free (filename);
 	}
     }
 }
@@ -557,13 +584,15 @@ file_revert_callback (GtkWidget *widget,
 
   if (gdisplay->gimage->has_filename == FALSE)
     {
-      g_message (_("Can't revert. No filename associated with this image"));
+      g_message (_("Revert failed.\n"
+		   "No filename associated with this image."));
     }
   else
     {
       filename = gimage_filename (gdisplay->gimage);
 
-      gimage = file_open_image (filename, filename, RUN_INTERACTIVE, &status);
+      gimage = file_open_image (filename, filename, _("Revert"),
+				RUN_INTERACTIVE, &status);
 
       if (gimage != NULL)
 	{
@@ -573,7 +602,7 @@ file_revert_callback (GtkWidget *widget,
 	}
       else if (status != PDB_CANCEL)
 	{
-	  g_message (_("Revert failed."));
+	  g_message (_("Revert failed.\n%s"), filename);
 	}
     }
 }
@@ -647,7 +676,8 @@ file_save_type_callback (GtkWidget *widget,
 static GimpImage *
 file_open_image (gchar       *filename,
 		 gchar       *raw_filename,
-		 RunModeType  runmode,
+		 gchar       *open_mode,
+		 RunModeType  run_mode,
 		 gint        *status)
 {
   PlugInProcDef *file_proc;
@@ -656,15 +686,63 @@ file_open_image (gchar       *filename,
   Argument   *return_vals;
   gint gimage_id;
   gint i;
+  struct stat statbuf;
+
+  *status = PDB_CANCEL;  /* inhibits error messages by caller */
 
   file_proc = load_file_proc;
+
   if (!file_proc)
     file_proc = file_proc_find (load_procs, filename);
 
   if (!file_proc)
     {
-      /* WARNING */
+      /*  no errors when making thumbnails  */
+      if (run_mode == RUN_INTERACTIVE)
+	g_message (_("%s failed.\n"
+		     "%s: Unknown file type."),
+		   open_mode, filename);
+
       return NULL;
+    }
+
+  /* check if we are opening a file */
+  if (stat (filename, &statbuf) == 0)
+    {
+      uid_t euid;
+      gid_t egid;
+
+      if (! (statbuf.st_mode & S_IFREG))
+	{
+	  /*  no errors when making thumbnails  */
+	  if (run_mode == RUN_INTERACTIVE)
+	    g_message (_("%s failed.\n"
+			 "%s is not a regular file."),
+		       open_mode, filename);
+
+	  return NULL;
+	}
+
+      euid = geteuid ();
+      egid = getegid ();
+
+      if (! ((statbuf.st_mode & S_IRUSR) ||
+
+	     ((statbuf.st_mode & S_IRGRP) &&
+	      (statbuf.st_uid != euid)) ||
+
+	     ((statbuf.st_mode & S_IROTH) &&
+	      (statbuf.st_uid != euid) &&
+	      (statbuf.st_gid != egid))))
+	{
+	  /*  no errors when making thumbnails  */
+	  if (run_mode == RUN_INTERACTIVE)
+	    g_message (_("%s failed.\n"
+			 "%s: Permission denied."),
+		       open_mode, filename);
+
+	  return NULL;
+	}
     }
 
   proc = &file_proc->db_info;
@@ -674,7 +752,7 @@ file_open_image (gchar       *filename,
   for (i = 0; i < proc->num_args; i++)
     args[i].arg_type = proc->args[i].arg_type;
 
-  args[0].value.pdb_int     = runmode;
+  args[0].value.pdb_int     = run_mode;
   args[1].value.pdb_pointer = filename;
   args[2].value.pdb_pointer = raw_filename;
 
@@ -708,6 +786,7 @@ file_open (gchar *filename,
 
   if ((gimage = file_open_image (filename,
 				 raw_filename,
+				 _("Open"),
 				 RUN_INTERACTIVE,
 				 &status)) != NULL)
     {
@@ -725,7 +804,7 @@ file_open (gchar *filename,
 	gimp_context_set_display (gimp_context_get_user (), gdisplay);
 
       absolute = file_absolute_filename (filename);
-      idea_add (absolute);
+      document_index_add (absolute);
       menus_last_opened_add (absolute);
       g_free (absolute);
     }
@@ -735,8 +814,8 @@ file_open (gchar *filename,
 
 TempBuf *
 make_thumb_tempbuf (GimpImage *gimage)
-{  
-  gint w,h;
+{
+  gint w, h;
 
   if (gimage->width<=80 && gimage->height<=60)
     {
@@ -772,11 +851,11 @@ make_RGBbuf_from_tempbuf (TempBuf *tempbuf,
 			  gint    *width_rtn,
 			  gint    *height_rtn)
 {
-  gint i,j,w,h;
-  guchar* tbd;
-  guchar* ptr;
-  guchar* rtn = NULL;
-  guchar alpha,r,g,b;
+  gint    i, j, w, h;
+  guchar *tbd;
+  guchar *ptr;
+  guchar *rtn = NULL;
+  guchar  alpha, r, g, b;
 
   w = (*width_rtn) = tempbuf->width;
   h = (*height_rtn) = tempbuf->height;
@@ -990,11 +1069,11 @@ file_save_thumbnail (GimpImage  *gimage,
   return TRUE;
 }
 
-gint
+static gint
 file_save (GimpImage   *gimage,
-	   char        *filename,
-	   char        *raw_filename,
-           RunModeType  mode)
+	   gchar       *filename,
+	   gchar       *raw_filename,
+           RunModeType  run_mode)
 {
   PlugInProcDef *file_proc;
   ProcRecord *proc;
@@ -1002,6 +1081,7 @@ file_save (GimpImage   *gimage,
   Argument   *return_vals;
   gint status;
   gint i;
+  struct stat statbuf;
 
   if (gimage_active_drawable (gimage) == NULL)
     return FALSE;
@@ -1012,7 +1092,48 @@ file_save (GimpImage   *gimage,
     file_proc = file_proc_find (save_procs, raw_filename);
 
   if (!file_proc)
-    return FALSE;
+    {
+      g_message (_("Save failed.\n"
+		   "%s: Unknown file type."),
+		 filename);
+
+      return PDB_CANCEL;  /* inhibits error messages by caller */
+    }
+
+  /* check if we are saving to a file */
+  if (stat (filename, &statbuf) == 0)
+    {
+      uid_t euid;
+      gid_t egid;
+
+      if (! (statbuf.st_mode & S_IFREG))
+        {
+	  g_message (_("Save failed.\n"
+		       "%s is not a regular file."),
+		     filename);
+
+          return PDB_CANCEL;  /* inhibits error messages by caller */
+        }
+
+      euid = geteuid ();
+      egid = getegid ();
+
+      if (! ((statbuf.st_mode & S_IWUSR) ||
+
+             ((statbuf.st_mode & S_IWGRP) &&
+              (statbuf.st_uid != euid)) ||
+
+             ((statbuf.st_mode & S_IWOTH) &&
+              (statbuf.st_uid != euid) &&
+              (statbuf.st_gid != egid))))
+        {
+	  g_message (_("Save failed.\n"
+		       "%s: Permission denied."),
+		     filename);
+
+          return PDB_CANCEL;  /* inhibits error messages by caller */
+        }
+    }
 
   /* ref the image, so it can't get deleted during save */
   gtk_object_ref (GTK_OBJECT (gimage));
@@ -1024,7 +1145,7 @@ file_save (GimpImage   *gimage,
   for (i = 0; i < proc->num_args; i++)
     args[i].arg_type = proc->args[i].arg_type;
 
-  args[0].value.pdb_int     = mode;
+  args[0].value.pdb_int     = run_mode;
   args[1].value.pdb_int     = pdb_image_to_id (gimage);
   args[2].value.pdb_int     = drawable_ID (gimage_active_drawable (gimage));
   args[3].value.pdb_pointer = filename;
@@ -1040,7 +1161,7 @@ file_save (GimpImage   *gimage,
       gimage_clean_all (gimage);
 
       /* these calls must come before the call to gimage_set_filename */
-      idea_add (filename);
+      document_index_add (filename);
       menus_last_opened_add (filename);
 
       /*  use the same plug-in for this image next time  */
@@ -1055,7 +1176,8 @@ file_save (GimpImage   *gimage,
 	  break;
 	default:
 	  {
-	    TempBuf* tempbuf;
+	    TempBuf *tempbuf;
+
 	    tempbuf = make_thumb_tempbuf (gimage);
 	    file_save_thumbnail (gimage, filename, tempbuf);
 	  }
@@ -1182,14 +1304,15 @@ set_preview (const gchar *fullfname,
 
   pname = g_dirname (fullfname);
   fname = g_basename (fullfname); /* Don't free this! */
-  tname = g_strconcat (pname, G_DIR_SEPARATOR_S, ".xvpics", G_DIR_SEPARATOR_S,
-		       fname,
-		       NULL);
+  tname = g_strconcat (pname, G_DIR_SEPARATOR_S,
+		       ".xvpics", G_DIR_SEPARATOR_S,
+		       fname, NULL);
 
   g_free (pname);
 
-  /* If the file is newer than its thumbnail, the thumbnail may
-     be out of date. */
+  /*  If the file is newer than its thumbnail, the thumbnail may
+   *  be out of date.
+   */
   if ((stat (tname,     &thumb_stat) == 0) &&
       (stat (fullfname, &file_stat ) == 0))
     {
@@ -1286,7 +1409,7 @@ set_preview (const gchar *fullfname,
   else
     {
       if (imginfo)
-	g_free(imginfo);
+	g_free (imginfo);
 
       gtk_widget_hide (GTK_WIDGET (open_options_preview));
       gtk_label_set_text (GTK_LABEL (open_options_label),
@@ -1321,12 +1444,12 @@ static void
 file_open_genbutton_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  GimpImage* gimage_to_be_thumbed;
-  gchar* filename;
-  guchar* RGBbuf;
-  TempBuf* tempbuf;
-  gint RGBbuf_w;
-  gint RGBbuf_h;
+  GimpImage *gimage_to_be_thumbed;
+  gchar     *filename;
+  guchar    *RGBbuf;
+  TempBuf   *tempbuf;
+  gint       RGBbuf_w;
+  gint       RGBbuf_h;
 
   /* added for multi-file preview generation... */
   GtkFileSelection *fs;
@@ -1350,30 +1473,31 @@ file_open_genbutton_callback (GtkWidget *widget,
 
   /* new mult-file preview make: */  
   {
-    GList *row = GTK_CLIST(fs->file_list)->row_list;
-    gint rownum = 0;
-    gchar* temp;
+    GList *row = GTK_CLIST (fs->file_list)->row_list;
+    gint   rownum = 0;
+    gchar *temp;
 
     filedirname = g_dirname (filename);
 
     while (row)
       {
-	if (GTK_CLIST_ROW(row)->state == GTK_STATE_SELECTED)
+	if (GTK_CLIST_ROW (row)->state == GTK_STATE_SELECTED)
 	  {
-	    if (gtk_clist_get_cell_type(GTK_CLIST(fs->file_list),
-					rownum, 0) == GTK_CELL_TEXT)
+	    if (gtk_clist_get_cell_type (GTK_CLIST (fs->file_list),
+					 rownum, 0) == GTK_CELL_TEXT)
 	      {
-		gtk_clist_get_text (GTK_CLIST(fs->file_list),
+		gtk_clist_get_text (GTK_CLIST (fs->file_list),
 				    rownum, 0, &temp);
-		
+
 		mfilename = g_strdup (temp);
-		
+
 		err = stat (mfilename, &buf);
-		
+
 		if (! (err == 0 && (buf.st_mode & S_IFDIR)))
-		  { /* Is not directory. */
+		  {
+		    /* Is not directory. */
 		    gint dummy;
-		    
+
 		    if (err)
 		      {
 			g_free (mfilename);
@@ -1382,14 +1506,18 @@ file_open_genbutton_callback (GtkWidget *widget,
 						 temp, NULL);
 		      }
 
-		    if ((gimage_to_be_thumbed =
-			 file_open_image (mfilename,
-					  temp,
-					  RUN_NONINTERACTIVE,
-					  &dummy)))
+		    gimage_to_be_thumbed = file_open_image (mfilename,
+							    temp,
+							    NULL,
+							    RUN_NONINTERACTIVE,
+							    &dummy);
+
+		    if (gimage_to_be_thumbed)
 		      {			
 			tempbuf = make_thumb_tempbuf (gimage_to_be_thumbed);
-			RGBbuf = make_RGBbuf_from_tempbuf (tempbuf, &RGBbuf_w, &RGBbuf_h);
+			RGBbuf  = make_RGBbuf_from_tempbuf (tempbuf,
+							    &RGBbuf_w,
+							    &RGBbuf_h);
 			switch (thumbnail_mode)
 			  {
 			  case 0:
@@ -1399,15 +1527,15 @@ file_open_genbutton_callback (GtkWidget *widget,
 						 mfilename, tempbuf);
 			  }
 			set_preview (mfilename, RGBbuf, RGBbuf_w, RGBbuf_h);
-			
+
 			gimage_delete (gimage_to_be_thumbed);
-			
+
 			if (RGBbuf)
 			  g_free (RGBbuf);
 		      }
 		    else
 		      {
-			gtk_label_set_text (GTK_LABEL(open_options_label),
+			gtk_label_set_text (GTK_LABEL (open_options_label),
 					    _("(could not make preview)"));
 		      }
 		  }
@@ -1460,9 +1588,9 @@ file_open_ok_callback (GtkWidget *widget,
     {
       GString *s = g_string_new (filename);
       if (s->str[s->len - 1] != G_DIR_SEPARATOR)
-        {
-          g_string_append_c (s, G_DIR_SEPARATOR);
-        }
+	{
+	  g_string_append_c (s, G_DIR_SEPARATOR);
+	}
       gtk_file_selection_set_filename (fs, s->str);
       g_string_free (s, TRUE);
       return;
@@ -1481,7 +1609,7 @@ file_open_ok_callback (GtkWidget *widget,
     }
   else if (status != PDB_CANCEL)
     {
-      g_message (_("Open failed: %s"), raw_filename);
+      g_message (_("Open failed\n%s"), filename);
     }
 
   gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
@@ -1514,26 +1642,26 @@ file_open_ok_callback (GtkWidget *widget,
   filedirname = g_dirname (filename);
 
   {
-    GList *row = GTK_CLIST(fs->file_list)->row_list;
-    gint rownum = 0;
-    gchar* temp;
+    GList *row = GTK_CLIST (fs->file_list)->row_list;
+    gint   rownum = 0;
+    gchar *temp;
 
     while (row)
       {
 	if (GTK_CLIST_ROW (row)->state == GTK_STATE_SELECTED)
 	  {
-	    if (gtk_clist_get_cell_type(GTK_CLIST(fs->file_list),
-					rownum, 0) == GTK_CELL_TEXT)
+	    if (gtk_clist_get_cell_type (GTK_CLIST (fs->file_list),
+					 rownum, 0) == GTK_CELL_TEXT)
 	      {
-		gtk_clist_get_text (GTK_CLIST(fs->file_list),
+		gtk_clist_get_text (GTK_CLIST (fs->file_list),
 				    rownum, 0, &temp);
-		
+
 		/* When doing multiple selections, the name
 		 * of the first item touched with the cursor will
 		 * become the text-field default - and we don't
 		 * want to load that twice.
 		 */
-		if (strcmp(temp, raw_filename)==0)
+		if (strcmp (temp, raw_filename) == 0)
 		  {
 		    goto next_iter;
 		  }
@@ -1543,7 +1671,8 @@ file_open_ok_callback (GtkWidget *widget,
 		err = stat (mfilename, &buf);
 
 		if (! (err == 0 && (buf.st_mode & S_IFDIR)))
-		  { /* Is not directory. */
+		  {
+		    /* Is not directory. */
 		    if (err)
 		      {
 			g_free (mfilename);
@@ -1560,7 +1689,7 @@ file_open_ok_callback (GtkWidget *widget,
 		      }
 		    else if (status != PDB_CANCEL)
 		      {
-			g_message (_("Open failed: %s"), temp);
+			g_message (_("Open failed.\n%s"), mfilename);
 		      }
 
 		    gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
@@ -1596,9 +1725,10 @@ file_save_ok_callback (GtkWidget *widget,
   fs = GTK_FILE_SELECTION (data);
   filename = gtk_file_selection_get_filename (fs);
   raw_filename = gtk_entry_get_text (GTK_ENTRY(fs->selection_entry));
-  err = stat (filename, &buf);
 
   g_assert (filename && raw_filename);
+
+  err = stat (filename, &buf);
 
   if (err == 0)
     {
@@ -1609,15 +1739,10 @@ file_save_ok_callback (GtkWidget *widget,
 	  gtk_file_selection_set_filename (fs, s->str);
 	  g_string_free (s, TRUE);
 	}
-      else if (buf.st_mode & S_IFREG)
+      else
 	{
 	  gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 	  file_overwrite (g_strdup (filename), g_strdup (raw_filename));
-	}
-      else
-	{
-	  g_message (_("%s is an irregular file (%s)"),
-		     raw_filename, g_strerror (errno));
 	}
     }
   else
@@ -1638,7 +1763,7 @@ file_save_ok_callback (GtkWidget *widget,
 	}
       else if (status != PDB_CANCEL)
 	{
-	  g_message (_("Save failed: %s"), raw_filename);
+	  g_message (_("Save failed.\n%s"), filename);
 	}
 
       gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
@@ -1678,97 +1803,70 @@ static void
 file_overwrite (gchar *filename,
 		gchar *raw_filename)
 {
-  OverwriteBox *overwrite_box;
-  GtkWidget *vbox;
-  GtkWidget *label;
-  gchar *overwrite_text;
+  OverwriteData *overwrite_data;
+  GtkWidget *query_box;
+  gchar     *overwrite_text;
 
-  overwrite_box = g_new (OverwriteBox, 1);
+  overwrite_data = g_new (OverwriteData, 1);
+  overwrite_data->full_filename = filename;
+  overwrite_data->raw_filename  = raw_filename;
+
   overwrite_text = g_strdup_printf (_("%s exists, overwrite?"), filename);
 
-  overwrite_box->full_filename = filename;
-  overwrite_box->raw_filename = raw_filename;
-  overwrite_box->obox = gimp_dialog_new (_("File Exists!"), "file_exists",
-					 gimp_standard_help_func,
-					 "save/file_exists.html",
-					 GTK_WIN_POS_MOUSE,
-					 FALSE, TRUE, FALSE,
-
-					 _("Yes"), file_overwrite_yes_callback,
-					 overwrite_box, NULL, NULL, TRUE, FALSE,
-					 _("No"), file_overwrite_no_callback,
-					 overwrite_box, NULL, NULL, FALSE, TRUE,
-
-					 NULL);
-
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (overwrite_box->obox)->vbox),
-		     vbox);
-
-  label = gtk_label_new (overwrite_text);
-  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
-
-  gtk_widget_show (label);
-  gtk_widget_show (vbox);
-  gtk_widget_show (overwrite_box->obox);
+  query_box = gimp_query_boolean_box (_("File Exists!"),
+				      gimp_standard_help_func,
+				      "save/file_exists.html",
+				      FALSE,
+				      overwrite_text,
+				      _("Yes"), _("No"),
+				      NULL, NULL,
+				      file_overwrite_callback,
+				      overwrite_data);
 
   g_free (overwrite_text);
+
+  gtk_widget_show (query_box);
 }
 
 static void
-file_overwrite_yes_callback (GtkWidget *widget,
-			     gpointer   data)
+file_overwrite_callback (GtkWidget *widget,
+			 gboolean   overwrite,
+			 gpointer   data)
 {
-  OverwriteBox *overwrite_box;
+  OverwriteData *overwrite_data;
   GImage       *gimage;
   gint status = PDB_EXECUTION_ERROR;
 
-  overwrite_box = (OverwriteBox *) data;
+  overwrite_data = (OverwriteData *) data;
 
-  gtk_widget_destroy (overwrite_box->obox);
-
-  if ((gimage = the_gimage) != NULL)
-    { 
-      status = file_save (the_gimage,
-			  overwrite_box->full_filename,
-			  overwrite_box->raw_filename,
-			  RUN_INTERACTIVE);
-
-      if (status == PDB_SUCCESS)
+  if (overwrite)
+    {
+      if ((gimage = the_gimage) != NULL)
 	{
-	  the_gimage = NULL;
-	  file_dialog_hide (filesave);
+	  status = file_save (the_gimage,
+			      overwrite_data->full_filename,
+			      overwrite_data->raw_filename,
+			      RUN_INTERACTIVE);
+
+	  if (status == PDB_SUCCESS)
+	    {
+	      the_gimage = NULL;
+	      file_dialog_hide (filesave);
+	    }
+	}
+
+      if (status != PDB_SUCCESS &&
+	  status != PDB_CANCEL)
+	{
+	  g_message (_("Save failed.\n%s"), overwrite_data->full_filename);
 	}
     }
 
-  if (status != PDB_SUCCESS &&
-      status != PDB_CANCEL)
-    {
-      g_message (_("Save failed: %s"), overwrite_box->raw_filename);
-    }
-
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
 
-  g_free (overwrite_box->full_filename);
-  g_free (overwrite_box->raw_filename);
-  g_free (overwrite_box);
-}
-
-static void
-file_overwrite_no_callback (GtkWidget *widget,
-			    gpointer   data)
-{
-  OverwriteBox *overwrite_box;
-
-  overwrite_box = (OverwriteBox *) data;
-
-  gtk_widget_destroy (overwrite_box->obox);
-  g_free (overwrite_box->full_filename);
-  g_free (overwrite_box->raw_filename);
-  g_free (overwrite_box);
-
-  gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
+  g_free (overwrite_data->full_filename);
+  g_free (overwrite_data->raw_filename);
+  g_free (overwrite_data);
 }
 
 static PlugInProcDef *
@@ -1777,43 +1875,52 @@ file_proc_find_by_name (GSList   *procs,
 		        gboolean  skip_magic)
 {
   GSList *p;
-  gchar *ext = strrchr(filename, '.');
+  gchar  *ext = strrchr (filename, '.');
+
   if (ext)
     ext++;
 
-  for (p = procs; p; p = p->next)
+  for (p = procs; p; p = g_slist_next (p))
     {
       PlugInProcDef *proc = p->data;
-      GSList *prefixes;
+      GSList        *prefixes;
 
       if (skip_magic && proc->magics_list)
 	continue;
-      for (prefixes = proc->prefixes_list; prefixes; prefixes = prefixes->next)
+
+      for (prefixes = proc->prefixes_list;
+	   prefixes;
+	   prefixes = g_slist_next (prefixes))
 	{
 	  if (strncmp (filename, prefixes->data, strlen (prefixes->data)) == 0)
 	    return proc;
 	}
      }
 
-  for (p = procs; p; p = p->next)
+  for (p = procs; p; p = g_slist_next (p))
     {
       PlugInProcDef *proc = p->data;
-      GSList *extensions;
+      GSList        *extensions;
 
-      for (extensions = proc->extensions_list; ext && extensions; extensions = extensions->next)
+      for (extensions = proc->extensions_list;
+	   ext && extensions;
+	   extensions = g_slist_next (extensions))
 	{
 	  gchar *p1 = ext;
-	  gchar *p2 = (gchar *)extensions->data;
+	  gchar *p2 = (gchar *) extensions->data;
 
           if (skip_magic && proc->magics_list)
 	    continue;
+
 	  while (*p1 && *p2)
 	    {
 	      if (tolower (*p1) != tolower (*p2))
 		break;
+
 	      p1++;
 	      p2++;
 	    }
+
 	  if (!(*p1) && !(*p2))
 	    return proc;
 	}
@@ -1826,12 +1933,14 @@ PlugInProcDef *
 file_proc_find (GSList *procs,
 		gchar  *filename)
 {
-  PlugInProcDef *file_proc, *size_matched_proc;
+  PlugInProcDef *file_proc;
+  PlugInProcDef *size_matched_proc;
   GSList *all_procs = procs;
-  FILE *ifp = NULL;
-  gint head_size = -2, size_match_count = 0;
-  gint match_val;
-  guchar head[256];
+  FILE   *ifp = NULL;
+  gint    head_size        = -2;
+  gint    size_match_count = 0;
+  gint    match_val;
+  guchar  head[256];
 
   size_matched_proc = NULL;
 
@@ -1887,8 +1996,8 @@ file_convert_string (gchar *instr,
   /* Convert a string in C-notation to array of char */
   guchar *uin = (guchar *) instr;
   guchar *uout = (guchar *) outmem;
-  guchar tmp[5], *tmpptr;
-  gint k;
+  guchar  tmp[5], *tmpptr;
+  gint    k;
 
   while ((*uin != '\0') && ((((char *)uout) - outmem) < maxmem))
     {
@@ -1941,13 +2050,15 @@ file_absolute_filename (gchar *name)
   gchar  *current;
 
   g_return_val_if_fail (name != NULL, NULL);
-  
+
   /*  check for prefixes like http or ftp  */
-  for (procs = load_procs; procs; procs = procs->next)
+  for (procs = load_procs; procs; procs = g_slist_next (procs))
     {
       proc = (PlugInProcDef *)procs->data;
 
-      for (prefixes = proc->prefixes_list; prefixes; prefixes = prefixes->next)
+      for (prefixes = proc->prefixes_list;
+	   prefixes;
+	   prefixes = g_slist_next (prefixes))
 	{
 	  if (strncmp (name, prefixes->data, strlen (prefixes->data)) == 0)
 	    return g_strdup (name);
@@ -1972,13 +2083,14 @@ file_check_single_magic (gchar  *offset,
                          guchar *file_head,
                          FILE   *ifp)
 
-{ /* Return values are 0: no match, 1: magic match, 2: size match */
-  glong offs;
-  gulong num_testval, num_operatorval;
-  gulong fileval;
-  gint numbytes, k, c = 0, found = 0;
-  gchar *num_operator_ptr, num_operator, num_test;
-  guchar mem_testval[256];
+{
+  /* Return values are 0: no match, 1: magic match, 2: size match */
+  glong   offs;
+  gulong  num_testval, num_operatorval;
+  gulong  fileval;
+  gint    numbytes, k, c = 0, found = 0;
+  gchar  *num_operator_ptr, num_operator, num_test;
+  guchar  mem_testval[256];
 
   /* Check offset */
   if (sscanf (offset, "%ld", &offs) != 1) return (0);

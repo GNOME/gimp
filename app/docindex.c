@@ -158,26 +158,39 @@ document_index_free (void)
 }
 
 void
-idea_add (gchar *title)
+document_index_add (gchar *title)
 {
   idea_add_in_position (title, 0);
 }
 
 FILE *
-idea_manager_parse_init (void)
+document_index_parse_init (void)
 {
   FILE  *fp;
   gchar *desktopfile;
+  gint   dummy;
 
   desktopfile = gimp_personal_rc_file ("ideas");
+
   fp = fopen (desktopfile, "r");
+
+  if (fp != NULL)
+    {
+      /*  eventually strip away the old file format's first line  */
+      if (fscanf (fp, "%i %i %i %i", &dummy, &dummy, &dummy, &dummy) != 4)
+	{
+	  fclose (fp);
+	  fp = fopen (desktopfile, "r");
+	}
+    }
+
   g_free (desktopfile);
 
   return fp;
 }
 
 gchar *
-idea_manager_parse_line (FILE * fp)
+document_index_parse_line (FILE * fp)
 {
   gint   length;
   gchar *filename;
@@ -211,7 +224,7 @@ load_idea_manager (IdeaManager *ideas)
   FILE *fp = NULL;
 
   if (! idea_list)
-    fp = idea_manager_parse_init ();
+    fp = document_index_parse_init ();
 
   if (idea_list || fp)
     {
@@ -223,7 +236,7 @@ load_idea_manager (IdeaManager *ideas)
 
 	  clear_white (fp);
 
-	  while ((title = idea_manager_parse_line (fp)))
+	  while ((title = document_index_parse_line (fp)))
 	    {
 	      idea_add_in_position (title, -1);
 	      g_free (title);
@@ -414,13 +427,13 @@ idea_add_in_position_with_select (gchar    *title,
 	{
 	  FILE  *fp;
 
-	  fp = idea_manager_parse_init ();
+	  fp = document_index_parse_init ();
 
 	  if (fp)
 	    {  
 	      gchar *filename;
 
-	      while ((filename = idea_manager_parse_line (fp)))
+	      while ((filename = document_index_parse_line (fp)))
 		{
 		  idea_list = g_list_append (idea_list, g_strdup (filename));
 		  g_free (filename);
@@ -807,7 +820,7 @@ open_idea_window (void)
 	break;
 
       gtk_misc_set_padding (GTK_MISC (GTK_BIN (ops_buttons[i].widget)->child),
-			    8, 0);
+			    12, 0);
     }
 
   /* Load and Show window */

@@ -49,10 +49,6 @@ void file_save_by_extension_callback (GtkWidget   *widget,
 
 gint file_open                       (gchar       *filename,
 				      gchar       *raw_filename);
-gint file_save                       (GimpImage   *gimage,
-				      gchar       *filename,
-				      gchar       *raw_filename,
-				      RunModeType  mode);
 
 PlugInProcDef * file_proc_find       (GSList      *procs,
 				      gchar       *filename);

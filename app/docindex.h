@@ -19,12 +19,12 @@
 
 #include <gtk/gtk.h>
 
-void    document_index_create   (void);
-void    document_index_free     (void);
+void    document_index_create     (void);
+void    document_index_free       (void);
 
-void    idea_add                (gchar *label);
+void    document_index_add        (gchar *label);
 
-FILE  * idea_manager_parse_init (void);
-gchar * idea_manager_parse_line (FILE  *fp);
+FILE  * document_index_parse_init (void);
+gchar * document_index_parse_line (FILE  *fp);
 
 #endif /* __DOCINDEX_H__ */

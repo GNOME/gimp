@@ -1,3 +1,17 @@
+2000-05-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c
+	* app/docindex.[ch]: named all public functions document_index_*().
+	Don't loop/segfault when opening an old "ideas" file but silently
+	skip the first line.
+
+	* app/fileops.[ch]: do some file access sanity checks before
+	actually calling the load/save proc. Show the full file name
+	in all error messages. Use a query_boolean_box for the overwrite
+	warning. Made file_save() static.
+	Also copied some Win32 #define's from libgimp/gimpenv.c for the
+	file access stuff. Tor, could you have a look at them please?
+
 2000-05-07  Sven Neumann  <sven@gimp.org>
 
         * gimprc.in

@@ -131,8 +131,8 @@ static gint max_label_length  = MAXPATHLEN;
 
 
 void
-gimp_init (int    gimp_argc,
-	   char **gimp_argv)
+gimp_init (gint    gimp_argc,
+	   gchar **gimp_argv)
 {
   /* Initialize the application */
   app_init ();
@@ -597,11 +597,11 @@ app_init (void)
 	gchar **filenames = g_new (gchar *, last_opened_size);
 	gint    i;
 
-	if ((fp = idea_manager_parse_init ()))
+	if ((fp = document_index_parse_init ()))
 	  {
 	    /*  read the filenames...  */
 	    for (i = 0; i < last_opened_size; i++)
-	      if ((filenames[i] = idea_manager_parse_line (fp)) == NULL)
+	      if ((filenames[i] = document_index_parse_line (fp)) == NULL)
 		break;
 
 	    /*  ...and add them in reverse order  */
