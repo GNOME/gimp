@@ -84,7 +84,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 
   dialog = gimp_dialog_new (_("Calibrate Monitor Resolution"),
 			    "calibrate_resolution",
-                            resolution_entry,
+                            gtk_widget_get_toplevel (resolution_entry),
                             GTK_DIALOG_DESTROY_WITH_PARENT,
 			    NULL, NULL,
 
@@ -112,6 +112,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   if (pixbuf)
     {
       GtkWidget *image = gtk_image_new_from_pixbuf (pixbuf);
+
       gtk_table_attach (GTK_TABLE (table), image, 0, 1, 0, 1,
                         GTK_SHRINK, GTK_SHRINK, 4, 4);
       gtk_widget_show (image);
@@ -261,8 +262,9 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 
         chain_button = GIMP_COORDINATES_CHAINBUTTON (resolution_entry);
 
-        if (ABS (x -y) > GIMP_MIN_RESOLUTION)
-          gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), FALSE);
+        if (ABS (x - y) > GIMP_MIN_RESOLUTION)
+          gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button),
+                                        FALSE);
 
         gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_entry),
                                     0, calibrate_xres);

@@ -179,6 +179,7 @@ gimp_dialog_close (GtkDialog *dialog)
     }
 }
 
+
 /**
  * gimp_dialog_new:
  * @title:        The dialog's title which will be set with
@@ -242,9 +243,8 @@ gimp_dialog_new (const gchar    *title,
  * @help_id:      The help_id which will be passed to @help_func.
  * @args:         A @va_list destribing the action_area buttons.
  *
- * Creates a new @GimpDialog widget. If a @parent widget is specified,
- * the dialog will be made transient for the window this widget lives in
- * (or or to the @parent widget itself if it is already a #GtkWindow).
+ * Creates a new @GimpDialog widget. If a GtkWindow is specified as
+ * @parent then the dialog will be made transient for this window.
  *
  * For a description of the format of the @va_list describing the
  * action_area buttons see gtk_dialog_new_with_buttons().
@@ -269,13 +269,11 @@ gimp_dialog_new_valist (const gchar    *title,
   dialog = g_object_new (GIMP_TYPE_DIALOG,
                          "title", title,
                          "role",  role,
+                         "modal", (flags & GTK_DIALOG_MODAL),
                          NULL);
 
   if (parent)
     {
-      if (! GTK_IS_WINDOW (parent))
-        parent = gtk_widget_get_toplevel (parent);
-
       if (GTK_IS_WINDOW (parent))
         {
           gtk_window_set_transient_for (GTK_WINDOW (dialog),
@@ -286,13 +284,12 @@ gimp_dialog_new_valist (const gchar    *title,
           gtk_window_set_screen (GTK_WINDOW (dialog),
                                  gtk_widget_get_screen (parent));
         }
+
+      if (flags & GTK_DIALOG_DESTROY_WITH_PARENT)
+        g_signal_connect_object (parent, "destroy",
+                                 G_CALLBACK (gimp_dialog_close),
+                                 dialog, G_CONNECT_SWAPPED);
     }
-
-  if (flags & GTK_DIALOG_MODAL)
-    gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
-
-  if (flags & GTK_DIALOG_DESTROY_WITH_PARENT)
-    gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
 
   if (help_func)
     gimp_help_connect (dialog, help_func, help_id, dialog);
