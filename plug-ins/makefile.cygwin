@@ -49,6 +49,10 @@ install : libs-install common-plugins-install separate-plugins-install scripts-i
 
 unofficial:
 	for d in $(UNOFFICIAL); do $(MAKE) -f makefile.cygwin sub-one-separate DIR=$$d TARGET=install; done
+	-mkdir $(GIMP)/gimpressionist $(GIMP)/gimpressionist/Brushes $(GIMP)/gimpressionist/Paper $(GIMP)/gimpressionist/Presets
+	$(INSTALL) gimpressionist/Brushes/* $(GIMP)/gimpressionist/Brushes
+	$(INSTALL) gimpressionist/Paper/* $(GIMP)/gimpressionist/Paper
+	$(INSTALL) gimpressionist/Presets/* $(GIMP)/gimpressionist/Presets
 
 clean : libs-clean common-plugins-clean separate-plugins-clean
 
@@ -108,6 +112,7 @@ sub-one-separate :
 
 
 scripts-install :
+	-mkdir $(GIMP)/scripts
 	$(INSTALL) script-fu/scripts/*.scm $(GIMP)/scripts
 	$(INSTALL) script-fu/scripts/*.jpg $(GIMP)/scripts
 	for d in FractalExplorer/fractalexplorer-examples/*; do if [ -f $$d ]; then $(INSTALL) $$d $(GIMP)/fractalexplorer; fi; done
@@ -315,20 +320,22 @@ endif
 
 ifdef EXTRA_gimpressionist
 OBJECTS = \
-	gimpressionist.o \
-	ppmtool.o \
-	paper.o \
+	about.o \
 	brush.o \
-	orientation.o \
-	preview.o \
-	repaint.o \
 	general.o \
 	gimp.o \
-	plasma.o \
-	presets.o \
-	about.o \
+	gimpressionist.o \
+	orientation.o \
+	orientmap.o \
+	paper.o \
 	placement.o \
-	orientmap.o
+	plasma.o \
+	ppmtool.o \
+	presets.o \
+	preview.o \
+	repaint.o \
+	size.o \
+	sizemap.o
 endif
 
 ifdef EXTRA_guash

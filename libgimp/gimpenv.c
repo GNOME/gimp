@@ -139,8 +139,9 @@ gimp_data_directory ()
       if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
 	g_error ("GetModuleFilename failed\n");
       
-      /* If the executable file name is of the format <foobar>\bin\gimp.exe,
-       * use <foobar>. Otherwise, use the directory where the executable
+      /* If the executable file name is of the format
+       * <foobar>\bin\gimp.exe of <foobar>\plug-ins\filter.exe, * use
+       * <foobar>. Otherwise, use the directory where the executable
        * is.
        */
 
@@ -152,7 +153,8 @@ gimp_data_directory ()
 
       if (sep2 != NULL)
 	{
-	  if (g_strcasecmp (sep2 + 1, "bin") == 0)
+	  if (g_strcasecmp (sep2 + 1, "bin") == 0
+	      || g_strcasecmp (sep2 + 1, "plug-ins") == 0)
 	    *sep2 = '\0';
 	}
 

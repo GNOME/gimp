@@ -1,3 +1,16 @@
+Thu Jul 29 23:58:08 1999  Tor Lillqvist  <tml@iki.fi>
+
+	* app/makefile.{cygwin,msc}: Add gdiplay_color. Create gimp.def
+ 	from gimp.sym.
+
+	* app/gimp.def: Removed.
+
+	* libgimp/gimpenv.c (gimp_data_directory) (Win32): Also check for
+	the executable being in the plug-ins subdirectory.
+
+	* plug-ins/makefile.{cygwin,msc}: Install also GIMPressionist
+ 	brushes, papers and presets.
+
 Thu Jul 29 03:20:36 1999  Jay Cox  <jaycox@earthlink.net>
 
 	* app/paint_funcs.c, app/transform_core.c:  replace the cubic 

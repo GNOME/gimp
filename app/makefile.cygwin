@@ -125,6 +125,7 @@ gimp_OBJECTS = \
 	fuzzy_select.o		\
 	gdisplay.o		\
 	gdisplay_cmds.o		\
+	gdisplay_color.o	\
 	gdisplay_ops.o		\
 	general.o		\
 	gimage.o		\

@@ -48,6 +48,10 @@ install : libs-install common-plugins-install separate-plugins-install scripts-i
 
 unofficial:
 	for %d in ($(UNOFFICIAL)) do nmake -nologo -f makefile.msc sub-one-separate DIR=%d TARGET=install
+	-md $(GIMP)\gimpressionist $(GIMP)\gimpressionist\Brushes $(GIMP)\gimpressionist\Paper $(GIMP)\gimpressionist\Presets
+	$(INSTALL) gimpressionist\Brushes\* $(GIMP)\gimpressionist\Brushes
+	$(INSTALL) gimpressionist\Paper\* $(GIMP)\gimpressionist\Paper
+	$(INSTALL) gimpressionist\Presets\* $(GIMP)\gimpressionist\Presets
 
 clean : libs-clean common-plugins-clean separate-plugins-clean
 
@@ -121,6 +125,7 @@ sub-one-separate :
 
 
 scripts-install :
+	-md $(GIMP)\scripts
 	$(INSTALL) script-fu\scripts\*.scm $(GIMP)\scripts
 	$(INSTALL) script-fu\scripts\*.jpg $(GIMP)\scripts
 	$(INSTALL) FractalExplorer\fractalexplorer-examples\* $(GIMP)\fractalexplorer
@@ -337,20 +342,22 @@ OBJECTS = \
 !IFDEF EXTRA_gimpressionist
 
 OBJECTS = \
-	gimpressionist.obj \
-	ppmtool.obj \
-	paper.obj \
+	about.obj \
 	brush.obj \
-	orientation.obj \
-	preview.obj \
-	repaint.obj \
 	general.obj \
 	gimp.obj \
-	plasma.obj \
-	presets.obj \
-	about.obj \
+	gimpressionist.obj \
+	orientation.obj \
+	orientmap.obj \
+	paper.obj \
 	placement.obj \
-	orientmap.obj
+	plasma.obj \
+	ppmtool.obj \
+	presets.obj \
+	preview.obj \
+	repaint.obj \
+	size.obj \
+	sizemap.obj
 !ENDIF
 
 !IFDEF EXTRA_guash

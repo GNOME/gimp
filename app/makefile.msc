@@ -136,6 +136,7 @@ gimp_OBJECTS = \
 	fuzzy_select.obj	\
 	gdisplay.obj		\
 	gdisplay_cmds.obj	\
+	gdisplay_color.obj	\
 	gdisplay_ops.obj	\
 	general.obj		\
 	gimage.obj		\
@@ -253,6 +254,10 @@ gimp_OBJECTS = \
 
 gimp.res : gimp.rc wilber.ico
 	rc -r -fo gimp.res gimp.rc
+
+gimp.def: gimp.sym
+	echo EXPORTS >$@
+	copy /y $@+gimp.sym $@
 
 gimp.exe : ..\config.h $(gimp_OBJECTS) gimpim.lib gimp.def gimp.res ..\libgimp\gimpi.lib
 	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(GETTEXT)\intl\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(LDFLAGS) gimp.res gdi32.lib user32.lib /def:gimp.def

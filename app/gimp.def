@@ -1,3 +1,0 @@
-EXPORTS
-	gimp_color_selector_register
-	gimp_color_selector_unregister
