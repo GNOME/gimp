@@ -103,18 +103,20 @@ find_empty_segs (PixelRegion  *maskPR,
 		 gint          y2,
                  guchar        threshold)
 {
-  unsigned char *data;
-  int x;
-  int start, end;
-  int val, last;
-  int tilex;
-  Tile *tile = NULL;
-  int endx, l_num_empty, dstep = 0;
-
+  guchar *data;
+  gint    x;
+  gint    start, end;
+  gint    val, last;
+  gint    tilex;
+  Tile   *tile = NULL;
+  gint    endx;
+  gint    l_num_empty;
+  gint    dstep = 0;
 
   data  = NULL;
   start = 0;
   end   = 0;
+  endx  = 0;
 
   *num_empty = 0;
 
@@ -168,10 +170,13 @@ find_empty_segs (PixelRegion  *maskPR,
             {
               if (tile)
                 tile_release (tile, FALSE);
-              tile = tile_manager_get_tile (maskPR->tiles, x, scanline, TRUE, FALSE);
-              data = (guchar *) tile_data_pointer (tile,
-                                                   x % TILE_WIDTH,
-                                                   scanline % TILE_HEIGHT) + (tile_bpp(tile) - 1);
+              tile = tile_manager_get_tile (maskPR->tiles,
+					    x, scanline, TRUE, FALSE);
+              data =
+		(guchar *) tile_data_pointer (tile,
+					      x % TILE_WIDTH,
+					      scanline % TILE_HEIGHT) +
+		(tile_bpp(tile) - 1);
 
               tilex = x / TILE_WIDTH;
               dstep = tile_bpp (tile);
