@@ -1337,7 +1337,7 @@ msgstr ""
 
 #: app/gdisplay.c:217
 msgid "RGB-empty"
-msgstr ""
+msgstr "RGB - пусто"
 
 #: app/gdisplay.c:217 app/image_new.c:54 app/preferences_dialog.c:1602
 msgid "RGB"
@@ -1345,7 +1345,7 @@ msgstr "RGB"
 
 #: app/gdisplay.c:220
 msgid "grayscale-empty"
-msgstr ""
+msgstr "градац╕╖ с╕рого - пусто"
 
 #: app/gdisplay.c:220
 msgid "grayscale"
@@ -1353,7 +1353,7 @@ msgstr "градац╕╖ с╕рого"
 
 #: app/gdisplay.c:223
 msgid "indexed-empty"
-msgstr ""
+msgstr "╕ндексоване - пусто"
 
 #: app/gdisplay.c:223
 msgid "indexed"
@@ -1480,11 +1480,11 @@ msgstr "Неможливо заповнити зображення нев╕домого типу."
 
 #: app/gimpdrawable.c:498
 msgid "parasite attach to drawable"
-msgstr ""
+msgstr "паразит причепився до зображення"
 
 #: app/gimpdrawable.c:533
 msgid "detach parasite from drawable"
-msgstr ""
+msgstr "в╕дчепити паризита в╕д зображення"
 
 #: app/gimpdrawable.c:740
 msgid "unnamed"
@@ -1501,14 +1501,17 @@ msgid ""
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
+"Не вдалось знайти процедуру дов╕дково╖ системи GIMP.\n"
+"Можливо ╖╖ не було скомп╕льовано тому що у вас\n"
+"нема╓ GtkXmHTML."
 
 #: app/gimpimage.c:1176
 msgid "attach parasite to image"
-msgstr ""
+msgstr "причепити паразита до зображення"
 
 #: app/gimpimage.c:1201
 msgid "detach parasite from image"
-msgstr ""
+msgstr "в╕дчепити паризита в╕д зображення"
 
 #: app/gimpimage.c:2305
 msgid "Layer cannot be raised any further"
@@ -1887,31 +1890,34 @@ msgstr "Кол╕р тла встановлено в RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:2609
 msgid "Drag: move    Shift+drag: move & compress"
-msgstr ""
+msgstr "Перетягування: перем╕щення  Shift+перетягування: перем╕щення ╕ стиснення"
 
 #: app/gradient.c:2611 app/gradient.c:2614
 msgid "Click: select    Shift+click: extend selection"
-msgstr ""
+msgstr "Клацання: вид╕лення  Shift+клацання: розширення вид╕лення"
 
 #: app/gradient.c:2619
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr ""
+"Клацання: вид╕лення  Shift+клацання: розширення вид╕лення  Перетягування: перем╕щення"
 
 #: app/gradient.c:2631
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
 msgstr ""
+"Клацання: вид╕лення  Shift+клацання: розширення вид╕лення  Перетягування: перем╕щення  "
+"Shift+drag: перем╕щення та стиснення"
 
 #: app/gradient.c:2873 app/gradient.c:2882
 #, c-format
 msgid "Handle position: %0.6f"
-msgstr ""
+msgstr "Позиц╕я позначки: %0.6f"
 
 #: app/gradient.c:2900
 #, c-format
 msgid "Distance: %0.6f"
-msgstr "Дистанц╕я: %0.6f"
+msgstr "В╕дстань: %0.6f"
 
 #: app/gradient.c:3387 app/gradient.c:4450
 msgid "Left endpoint's color"
@@ -1951,19 +1957,19 @@ msgstr "Операц╕╖ вид╕лення"
 
 #: app/gradient.c:3728
 msgid "Blending function for segment"
-msgstr ""
+msgstr "Функц╕я затемнення для сегмента"
 
 #: app/gradient.c:3730
 msgid "Coloring type for segment"
-msgstr ""
+msgstr "Тип розмальовування для сегмента"
 
 #: app/gradient.c:3732
 msgid "Split segment at midpoint"
-msgstr ""
+msgstr "Розд╕лити сегмент в середн╕й точц╕"
 
 #: app/gradient.c:3734 app/gradient.c:4831
 msgid "Split segment uniformly"
-msgstr ""
+msgstr "Розд╕лити сегмент на р╕вн╕ частини"
 
 #: app/gradient.c:3736
 msgid "Delete segment"
@@ -1971,11 +1977,11 @@ msgstr "Видалити сегмент"
 
 #: app/gradient.c:3738
 msgid "Re-center segment's midpoint"
-msgstr ""
+msgstr "Перевизначити середню точку сегмента"
 
 #: app/gradient.c:3740
 msgid "Re-distribute handles in segment"
-msgstr ""
+msgstr "Перерозпод╕лити позначки в сегмент╕"
 
 #: app/gradient.c:3742
 msgid "Flip segment"
@@ -1987,31 +1993,31 @@ msgstr "Розмножити сергмент"
 
 #: app/gradient.c:3749
 msgid "Blending function for selection"
-msgstr ""
+msgstr "Функц╕я затемнення вид╕лено╖ д╕лянки"
 
 #: app/gradient.c:3751
 msgid "Coloring type for selection"
-msgstr ""
+msgstr "Тип розмальовування вид╕лено╖ д╕лянки"
 
 #: app/gradient.c:3753
 msgid "Split segments at midpoints"
-msgstr ""
+msgstr "Розд╕лити сегменти в середн╕х точках"
 
 #: app/gradient.c:3755 app/gradient.c:4832
 msgid "Split segments uniformly"
-msgstr ""
+msgstr "Род╕лити сегменти на р╕вн╕ частини"
 
 #: app/gradient.c:3757
 msgid "Delete selection"
-msgstr "Видалити вид╕лення"
+msgstr "Стерти вид╕лення"
 
 #: app/gradient.c:3759
 msgid "Re-center midpoints in selection"
-msgstr ""
+msgstr "Перевизначити середн╕ точки у вид╕ленн╕"
 
 #: app/gradient.c:3761
 msgid "Re-distribute handles in selection"
-msgstr ""
+msgstr "Перерозпод╕лити позначки у вид╕ленн╕"
 
 #: app/gradient.c:3763
 msgid "Flip selection"
@@ -2053,28 +2059,28 @@ msgstr "на яку ви хочете розд╕лити сегменти у вид╕лен╕"
 
 #: app/gradient.c:5220
 msgid "Blend endpoints' colors"
-msgstr ""
+msgstr "Кольори крайн╕х точок затемнення"
 
 #: app/gradient.c:5232
 msgid "Blend endpoints' opacity"
-msgstr ""
+msgstr "Непрозор╕сть крайн╕х точок затемнення"
 
 #: app/gradient.c:5400
 msgid "Replicate"
-msgstr ""
+msgstr "Розмножити"
 
 #. Instructions
 #: app/gradient.c:5413
 msgid "Please select the number of times"
-msgstr ""
+msgstr "Вибер╕ть ск╕льки раз╕в"
 
 #: app/gradient.c:5418
 msgid "you want to replicate the selected segment"
-msgstr ""
+msgstr "ви хочете в╕дтворити вид╕лений сегмент"
 
 #: app/gradient.c:5419
 msgid "you want to replicate the selection"
-msgstr ""
+msgstr "ви хочете в╕дтворити вид╕лення"
 
 #. The shell
 #: app/gradient_select.c:144
@@ -2092,11 +2098,11 @@ msgstr "Г╕стограма не д╕╓ на ╕ндексованих зображеннях."
 
 #: app/histogram_tool.c:256
 msgid "Mean:"
-msgstr ""
+msgstr "Середн╓:"
 
 #: app/histogram_tool.c:257
 msgid "Std Dev:"
-msgstr ""
+msgstr "Станд. в╕дхилення:"
 
 #: app/histogram_tool.c:258
 msgid "Median:"
@@ -2250,19 +2256,19 @@ msgstr "Загальне"
 
 #: app/info_window.c:64
 msgid "Static Gray"
-msgstr ""
+msgstr "Пост╕йне с╕ре"
 
 #: app/info_window.c:66
 msgid "Static Color"
-msgstr ""
+msgstr "Пост╕йне кольорове"
 
 #: app/info_window.c:67
 msgid "Pseudo Color"
-msgstr ""
+msgstr "Псевдокольорове"
 
 #: app/info_window.c:68
 msgid "True Color"
-msgstr ""
+msgstr "Повнокольорове"
 
 #: app/info_window.c:69
 msgid "Direct Color"
@@ -2286,7 +2292,7 @@ msgstr "A:"
 
 #: app/info_window.c:211
 msgid "Extended"
-msgstr ""
+msgstr "Розширене"
 
 #. add the information fields
 #: app/info_window.c:274
@@ -2299,7 +2305,7 @@ msgstr "Розд╕льн╕сть:"
 
 #: app/info_window.c:280
 msgid "Scale Ratio:"
-msgstr ""
+msgstr "В╕дношення стор╕н:"
 
 #: app/info_window.c:282
 msgid "Display Type:"
@@ -2454,6 +2460,9 @@ msgid ""
 "open the last time you quit The GIMP.  You can configure\n"
 "The GIMP to reopen these dialogs at the saved position."
 msgstr ""
+"sessionrc використову╓ться для збереження положення д╕алогових\n"
+"в╕кон в╕дкритих перед останн╕м виходом з GIMP. Ви можете\n"
+"настро╖ти GIMP, так щоб в╕дкривати ╖х в ц╕й позиц╕╖."
 
 #: app/install.c:188
 msgid ""
@@ -2463,6 +2472,11 @@ msgid ""
 "points and picas.  This file is overwritten each time\n"
 "you quit the GIMP."
 msgstr ""
+"unitrc використову╓ться для збереженя вашо╖ бази даних\n"
+"одиниць вим╕ру. Ви можете визначити додатков╕ одиниц╕ та\n"
+"використовувати ╖х так само, як ╕ владнан╕ одиниц╕: дюйми,\n"
+"м╕л╕метри, пункти ╕ п╕ки. Цей файл перепису╓ться щоразу,\n"
+"коли ви виходите з GIMP."
 
 #: app/install.c:196
 msgid ""
@@ -2514,6 +2528,13 @@ msgid ""
 "palettes during GIMP execution to persist across\n"
 "sessions."
 msgstr ""
+"Це п╕дкаталог, котрий може бути використано для\n"
+"збереження створених користувачем пал╕тр.  Типово\n"
+"у файл╕ gimprc вказано перев╕рку лише цього п╕д-\n"
+"каталогу (а не системного) при пошуку пал╕тр. П╕д\n"
+"час ╕нсталяц╕╖ системн╕ пал╕три коп╕юються сюди.\n"
+"Це зроблено, щоб дозволити збер╕гати модиф╕кац╕╖\n"
+"пал╕тр м╕ж сеансами роботи в GIMP."
 
 #: app/install.c:230
 msgid ""
@@ -2523,6 +2544,10 @@ msgid ""
 "wide GIMP patterns installation when searching for\n"
 "patterns."
 msgstr ""
+"Це п╕дкаталог, котрий може бути використано для\n"
+"збереження створених користувачем шаблон╕в.  Типово\n"
+"у файл╕ gimprc вказано перев╕рку цього п╕дкаталогу,\n"
+"на додаток до системного при пошуку шаблон╕в."
 
 #: app/install.c:238
 msgid ""
@@ -2532,6 +2557,11 @@ msgid ""
 "this subdirectory in addition to the systemwide\n"
 "GIMP plug-in directories when searching for plug-ins."
 msgstr ""
+"Цей п╕дкаталог може бути використано для збереження\n"
+"створених користувачем, тимчасових чи ╕нших неп╕д-\n"
+"тримуваних доповнень.  Типово у файл╕ gimprc вказано\n"
+"перев╕рку цього п╕дкаталогу, на додаток до системного\n"
+"при пошуку доповнень."
 
 #: app/install.c:246
 msgid ""
@@ -2541,6 +2571,12 @@ msgid ""
 "in addition to the system-wide GIMP module directory\n"
 "when searching for modules to load when initializing."
 msgstr ""
+"Цей п╕дкаталог може бути використано для збереження\n"
+"створених користувачем, тимчасових чи ╕нших неп╕д-\n"
+"тримуваних системою динам╕чно завантажуваних модул╕в.\n"
+"Типово у файл╕ gimprc вказано перев╕рку цього п╕дкаталогу,\n"
+"на додаток до системного при пошуку модул╕в, що за-\n"
+"вантажуються при ╕нц╕ал╕зац╕╖."
 
 #: app/install.c:254
 msgid ""
@@ -2549,6 +2585,10 @@ msgid ""
 "checks this subdirectory in addition to the systemwide\n"
 "GIMP scripts subdirectory when searching for scripts"
 msgstr ""
+"Цей п╕дкаталог використову╓ться GIMP для збереження\n"
+"створених користувачем ╕ встановлених скрипт╕в. Типово\n"
+"у файл╕ gimprc вказано перев╕рку цього п╕дкаталогу, на\n"
+"додаток до системного при пошуку скрипт╕в."
 
 #: app/install.c:261
 msgid ""
@@ -2558,18 +2598,27 @@ msgid ""
 "of the form: gimp<#>.<#>.  These files are useless across\n"
 "GIMP sessions and can be destroyed with impunity."
 msgstr ""
+"Цей п╕дкаталог використову╓ться GIMP для тимчасового збер╕гання\n"
+"буфер╕в в╕дмов для зменшення використання пам'ят╕. Якщо GIMP\n"
+"безцеремонно знищено, файли можуть лишитися в цьому каталоз╕\n"
+"у вигляд╕: gimp<#>.<#>. Ц╕ файли непотр╕бн╕ п╕сля переривання\n"
+"сеансу GIMP ╕ можуть бути знищен╕."
 
 #: app/install.c:269
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
 msgstr ""
+"Цей п╕дкаталог використову╓ться для збереження файлу\n"
+"параметр╕в ╕нструменту \"Крив╕\"."
 
 #: app/install.c:274
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
 msgstr ""
+"Цей п╕дкаталог використову╓ться для збереження файлу\n"
+"параметр╕в ╕нструменту \"Р╕вн╕\"."
 
 #: app/install.c:279
 msgid ""
@@ -2579,6 +2628,10 @@ msgid ""
 "in addition to the systemwide GIMP FractalExplorer\n"
 "installation when searching for fractals."
 msgstr ""
+"Це п╕дкаталог, котрий може бути використано для збереження\n"
+"створених користувачем фрактал╕в використовуваних доповненням\n"
+"FractalExplorer. Типово у файл╕ gimprc вказано перев╕рку цього\n"
+"п╕дкаталогу, на додаток до системного при пошуку фрактал╕в."
 
 #: app/install.c:287
 msgid ""
@@ -2588,6 +2641,10 @@ msgid ""
 "addition to the systemwide GIMP GFig installation\n"
 "when searching for gfig figures."
 msgstr ""
+"Це п╕дкаталог, котрий може бути використано для збереження\n"
+"створених користувачем ф╕гур використовуваних доповненням\n"
+"gfig. Тиопво у файл╕ gimprc вказано перев╕рку цього п╕д-\n"
+"каталогу, на додаток до системного при пошуку ф╕гур для gfig."
 
 #: app/install.c:295
 msgid ""
@@ -2597,6 +2654,10 @@ msgid ""
 "addition to the systemwide GIMP GFlares installation\n"
 "when searching for gflares."
 msgstr ""
+"Це п╕дкаталог, котрий може бути використано для збереження\n"
+"створених користувачем gflares використовуваних доповненням\n"
+"gflare. Типово у файл╕ gimprc вказано перев╕рку цього п╕д-\n"
+"каталогу, на додаток до системного при пошуку gflares."
 
 #: app/install.c:303
 msgid ""
@@ -2606,6 +2667,10 @@ msgid ""
 "in addition to the systemwide GIMP Gimpressionist\n"
 "installation when searching for data."
 msgstr ""
+"Це п╕дкаталог, котрий може бути використано для збереження\n"
+"створених користувачем даних використовуваних доповненням\n"
+"Gimpressionist. Типово у файл╕ gimprc вказано перев╕рку\n"
+"цього п╕дкаталогу, на додаток до системного при пошуку даних."
 
 #: app/install.c:526
 msgid "GIMP User Installation"
@@ -2701,6 +2766,9 @@ msgid ""
 "Click on one of the files or subdirectories in the tree\n"
 "to get more information about the selected item."
 msgstr ""
+"Цей п╕дкаталог м╕ститеме ряд важливих файл╕в.\n"
+"Для отримання додатково╖ ╕нформац╕╖ про файл\n"
+"чи п╕дкаталог в дерев╕ клацн╕ть на ньому."
 
 #: app/install.c:821
 msgid "User Installation Log"
@@ -2717,6 +2785,8 @@ msgstr "Клацн╕ть \"Продовжити\" щоб прийняти вказан╕ вище установки."
 #: app/install.c:831
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr ""
+"Для оптимально╖ продуктивност╕ GIMP, можуть бути п╕дрегульован╕ деяк╕ "
+"настройки."
 
 #: app/install.c:840
 msgid "Monitor Resolution"
@@ -2752,6 +2822,9 @@ msgid ""
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
+"Ви отримували як╕-небудь пов╕домлення про помилки в консольному\n"
+"в╕кн╕? Якщ╕ н╕ - ╕нсталяц╕я була усп╕шною!\n"
+"╤накше, вийд╕ть та досл╕д╕ть можлив╕ причини..."
 
 #: app/install.c:1029
 msgid ""
@@ -2759,6 +2832,9 @@ msgid ""
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
+"Ви отримували як╕-небудь пов╕домлення про помилки в рядках вище?\n"
+"Якщо н╕ - ╕нсталяц╕я була усп╕шною!\n"
+"╤накше, вийд╕ть та досл╕д╕ть можлив╕ причини..."
 
 #: app/install.c:1041
 msgid "Click \"Continue\" to complete GIMP installation."
@@ -2766,7 +2842,7 @@ msgstr "Клацн╕ть \"Продовжити\" щоб завершити ╕нсталяц╕ю GIMP."
 
 #: app/install.c:1046
 msgid "Installation failed.  Contact system administrator."
-msgstr ""
+msgstr "╤нсталяц╕я не вдалась.  Зверн╕ться до системного адм╕н╕стратора."
 
 #: app/install.c:1067
 msgid ""
@@ -2797,11 +2873,11 @@ msgstr "Каталог своп╕нгу:"
 
 #: app/install.c:1159
 msgid "Calibrate Monitor Resolution"
-msgstr ""
+msgstr "В╕дкал╕брувати розд╕льну здатн╕сть мон╕тора"
 
 #: app/install.c:1267
 msgid "Measure the rulers and enter their lengths below."
-msgstr ""
+msgstr "Вим╕ряйте л╕н╕йки та введ╕ть ╖х довжини н╕жче."
 
 #: app/install.c:1282
 msgid "Horizontal:"
@@ -2816,6 +2892,8 @@ msgid ""
 "GIMP can obtain this information from your X-server.\n"
 "However, most X-servers do not return useful values."
 msgstr ""
+"GIMP може отримати цю ╕нформац╕ю в╕д вашого X-сервера.\n"
+"Але б╕льш╕сть X-сервер╕в повертають непотр╕бн╕ значення."
 
 #: app/install.c:1335
 #, c-format
@@ -2824,7 +2902,7 @@ msgstr "Отримати розд╕льну здатн╕сть в╕д X-сервера (Зараз %d x %d т/д)"
 
 #: app/install.c:1349
 msgid "Alternatively, you can set the monitor resolution manually."
-msgstr ""
+msgstr "Кр╕м того, ви можете встановити розд╕льну здатн╕сть монитора вручну."
 
 #: app/install.c:1362
 msgid "Monitor Resolution X:"
@@ -2835,16 +2913,20 @@ msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
 msgstr ""
+"Ви можете також натиснути кнопку \"В╕дкал╕брувати\", щоб в╕дкрити в╕кно\n"
+"котре дозволить вам ╕нтерактивно визначити розд╕льну здатн╕сть монитора."
 
 #: app/install.c:1405
 msgid "Calibrate"
-msgstr ""
+msgstr "В╕дкал╕брувати"
 
 #: app/interface.c:312
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
 msgstr ""
+"Кольори переднього плану ╕ тла. Чорний ╕ б╕лий квадратики скасовують кольори. "
+"Стр╕лки перемикають кольори. Подв╕йне клацання дозволя╓ вибрати кол╕р з меню."
 
 #: app/internal_procs.c:68
 msgid "Internal Procedures"
@@ -2852,7 +2934,7 @@ msgstr "Внутр╕шн╕ процедури"
 
 #: app/internal_procs.c:68
 msgid "Brush UI"
-msgstr ""
+msgstr "UI пензл╕"
 
 #: app/internal_procs.c:74
 msgid "Channel"
@@ -3316,7 +3398,7 @@ msgstr ""
 
 #: app/main.c:309
 msgid "(This console window will close in ten seconds)\n"
-msgstr ""
+msgstr "(Це консольне в╕кно закри╓ться на протяз╕ десяти секунд)\n"
 
 #: app/measure.c:118 app/measure.c:279
 msgid "Measure Tool"
@@ -4194,7 +4276,7 @@ msgstr "Нема╓ пензл╕в доступних для використання з цим ╕нструментом."
 
 #: app/paint_funcs.c:85 app/tool_options.c:897
 msgid "Behind"
-msgstr ""
+msgstr "П╕дкладка"
 
 #: app/paint_funcs.c:91
 msgid "Subtraction"
@@ -4618,6 +4700,13 @@ msgid ""
 "and the critical parts of your changes will not\n"
 "be applied."
 msgstr ""
+"Принаймн╕ одна зроблена вами зм╕на буде д╕яти\n"
+"лише п╕сля запуску GIMP.\n"
+"\n"
+"Ви можете вибрати \"Зберегти\" щоб зробити ваш╕ зм╕ни\n"
+"пост╕йними, так щоб ви могли перезапустити GIMP, чи\n"
+"натиснути \"Закрити\" ╕ критичн╕ частини ваших зм╕н\n"
+"не будуть застосован╕."
 
 #: app/preferences_dialog.c:465
 msgid "You will need to restart GIMP for these changes to take effect."
@@ -4626,7 +4715,7 @@ msgstr "Щоб ц╕ зм╕ни вступили в д╕ю, необх╕дно перезапустити GIMP."
 #: app/preferences_dialog.c:1002
 #, c-format
 msgid "The default comment is limited to %d characters."
-msgstr ""
+msgstr "Коментар╕й типово обмежений %d символами."
 
 #: app/preferences_dialog.c:1424
 msgid "Preferences"
@@ -4823,7 +4912,7 @@ msgstr "Зовн╕шн╕й вигляд"
 
 #: app/preferences_dialog.c:1904
 msgid "Use \"Dot for Dot\" by default"
-msgstr ""
+msgstr "Використовувати \"Точка за точкою\" типово"
 
 #: app/preferences_dialog.c:1913
 msgid "Resize Window on Zoom"
@@ -4943,7 +5032,7 @@ msgstr "Н╕коли"
 
 #: app/preferences_dialog.c:2169
 msgid "Try to Write a Thumbnail File:"
-msgstr ""
+msgstr "Спробувати записати файл еск╕зу:"
 
 #: app/preferences_dialog.c:2176
 msgid "Only when Modified"
@@ -5564,7 +5653,7 @@ msgstr "/╤нструменти/Перетворення/Перетворення"
 
 #: app/tools.c:256 app/tools.c:274 app/tools.c:292 app/tools.c:310
 msgid "Rotation, scaling, shearing, perspective."
-msgstr ""
+msgstr "Обертання, масштабування, викривлення, перспектива."
 
 #: app/tools.c:322
 msgid "Flip"
@@ -5861,7 +5950,7 @@ msgstr "Показати контур"
 #. the clip resulting image toggle button
 #: app/transform_tool.c:315
 msgid "Clip Result"
-msgstr ""
+msgstr "Кадрувати результат"
 
 #: app/undo.c:2833
 #, c-format
@@ -5979,11 +6068,11 @@ msgstr "вир╕зання"
 
 #: app/undo.c:2890
 msgid "transform core"
-msgstr ""
+msgstr "перетворення ядра"
 
 #: app/undo.c:2891
 msgid "paint core"
-msgstr ""
+msgstr "малювання ядра"
 
 #: app/undo.c:2892
 msgid "floating layer"
@@ -6114,6 +6203,3 @@ msgstr "Акварель"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "╤стор╕я кольор╕в"
-
-#~ msgid "/Edit/Fill"
-#~ msgstr "/Редагування/Заповнити"
