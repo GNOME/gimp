@@ -1,3 +1,7 @@
+1999-01-13  Tomas Ogren  <stric@ing.umu.se>
+
+	* sv.po: Updated
+
 Thu Jan  7 15:49:37 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* POTFILES.in, remove indexed_palette.c, add colormap_dialog.c
