@@ -1,5 +1,10 @@
 2004-09-22  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/view-actions.c (view_zoom_actions): mark menu label
+	as translatable (bug #153456).
+
+2004-09-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/siod-wrapper.c
 	* plug-ins/script-fu/scripts/mkbrush.scm
 	* plug-ins/script-fu/scripts/select-to-brush.scm

@@ -242,7 +242,7 @@ static GimpRadioActionEntry view_zoom_actions[] =
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-other", NULL,
-    "O_ther...", NULL, NULL,
+    N_("O_ther..."), NULL, NULL,
     0,
     GIMP_HELP_VIEW_ZOOM_OTHER }
 };
