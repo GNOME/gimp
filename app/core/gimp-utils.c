@@ -103,12 +103,17 @@ gimp_g_list_get_memsize (GList  *list,
  *  basically copied from gtk_get_default_language()
  */
 gchar *
-gimp_get_default_language (void)
+gimp_get_default_language (const gchar *category)
 {
   gchar *lang;
   gchar *p;
+  gint   cat = LC_CTYPE;
+
+  if (! category)
+    category = "LC_CTYPE";
 
 #ifdef G_OS_WIN32
+
   p = getenv ("LC_ALL");
   if (p != NULL)
     lang = g_strdup (p);
@@ -119,16 +124,27 @@ gimp_get_default_language (void)
 	lang = g_strdup (p);
       else
 	{
-	  p = getenv ("LC_CTYPE");
+	  p = getenv (category);
 	  if (p != NULL)
 	    lang = g_strdup (p);
 	  else
 	    lang = g_win32_getlocale ();
 	}
     }
+
 #else
-  lang = g_strdup (setlocale (LC_CTYPE, NULL));
+
+  if (strcmp (category, "LC_CTYPE") == 0)
+    cat = LC_CTYPE;
+  else if (strcmp (category, "LC_MESSAGES") == 0)
+    cat = LC_MESSAGES;
+  else
+    g_warning ("unsupported category used with gimp_get_default_language()");
+
+  lang = g_strdup (setlocale (cat, NULL));
+
 #endif
+
   p = strchr (lang, '.');
   if (p)
     *p = '\0';

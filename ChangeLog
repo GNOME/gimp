@@ -1,3 +1,13 @@
+2004-04-13  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-utils.[ch] (gimp_get_default_language): added a
+	category parameter to make this function more flexible.
+
+	* app/text/gimptext.c: changed accordingly.
+
+	* app/widgets/gimphelp.c (gimp_help): localize the help pages
+	according to the value of LC_MESSAGES. Fixes bug #139917.
+
 2004-04-13  Michael Natterer  <mitch@gimp.org>
 
 	Moved the calls to floating_sel_relax()/rigor() from various

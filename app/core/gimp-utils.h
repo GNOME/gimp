@@ -20,27 +20,27 @@
 #define __APP_GIMP_UTILS_H__
 
 
-gboolean   gimp_rectangle_intersect      (gint     x1,
-                                          gint     y1,
-                                          gint     width1,
-                                          gint     height1,
-                                          gint     x2,
-                                          gint     y2,
-                                          gint     width2,
-                                          gint     height2,
-                                          gint    *dest_x,
-                                          gint    *dest_y,
-                                          gint    *dest_width,
-                                          gint    *dest_height);
+gboolean   gimp_rectangle_intersect      (gint         x1,
+                                          gint         y1,
+                                          gint         width1,
+                                          gint         height1,
+                                          gint         x2,
+                                          gint         y2,
+                                          gint         width2,
+                                          gint         height2,
+                                          gint        *dest_x,
+                                          gint        *dest_y,
+                                          gint        *dest_width,
+                                          gint        *dest_height);
 
-gint64     gimp_g_object_get_memsize     (GObject    *object);
-gint64     gimp_g_hash_table_get_memsize (GHashTable *hash);
-gint64     gimp_g_slist_get_memsize      (GSList     *slist,
-                                          gint64      data_size);
-gint64     gimp_g_list_get_memsize       (GList      *list,
-                                          gint64      data_size);
+gint64     gimp_g_object_get_memsize     (GObject     *object);
+gint64     gimp_g_hash_table_get_memsize (GHashTable  *hash);
+gint64     gimp_g_slist_get_memsize      (GSList      *slist,
+                                          gint64       data_size);
+gint64     gimp_g_list_get_memsize       (GList       *list,
+                                          gint64       data_size);
 
-gchar    * gimp_get_default_language     (void);
+gchar    * gimp_get_default_language     (const gchar *category);
 
 
 #endif /* __APP_GIMP_UTILS_H__ */

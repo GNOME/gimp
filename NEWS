@@ -36,3 +36,8 @@ Bugs fixed in GIMP 2.0.1
 - fixed X server authentification problems with gimp-remote (#139158, Sven)
 - let Script-Fu PDB marshallers handle NULL strings (#139386, Kevin Cozens)
 - fixed rounding error in transformation code (#120490, William Skaggs)
+- fixed winclipboard plug-in (Hans Breuer)
+- fixed Python Slice script (Yosh)
+- fixed configure check for Xmu (#139803, Sven)
+- fixed crash when scaling up a floating selection (#138356, Mitch)
+- use LC_MESSAGE for help localization (#139917, Sven)

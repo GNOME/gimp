@@ -146,7 +146,7 @@ gimp_text_class_init (GimpTextClass *klass)
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   gimp_matrix2_identity (&identity);
 
-  language = gimp_get_default_language ();
+  language = gimp_get_default_language (NULL);
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_TEXT,
 				   "text", NULL,

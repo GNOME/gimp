@@ -97,7 +97,7 @@ gimp_help (Gimp        *gimp,
       if (config->help_locales && strlen (config->help_locales))
         idle_help->help_locales = g_strdup (config->help_locales);
       else
-        idle_help->help_locales = gimp_get_default_language ();
+        idle_help->help_locales = gimp_get_default_language ("LC_MESSAGES");
 
       if (help_id && strlen (help_id))
 	idle_help->help_id = g_strdup (help_id);
