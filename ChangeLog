@@ -6,6 +6,11 @@
 	the _destroy entries). The files where these are defined go in
 	libgimp, not libgimpui (see Makefile.am). Sort the .def files.
 
+	* plug-ins/common/xpm.c: Merge from stable: On Win32 (with no
+	X11), don't include <X11/Xlib.h>. (Do include <X11/xpm.h>, though,
+	as such a file is provided by the libXpm-noX package.)
+	(parse_colors): If XPM_NO_X (Win32), use GDK to parse color names.
+	
 2003-07-26  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/libgck/gck/Makefile.am: Use -no-undefined on Windows.

@@ -46,10 +46,18 @@ Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <X11/Xlib.h>
-#include <X11/xpm.h>
 
 #include <gtk/gtk.h>
+
+#ifdef GDK_WINDOWING_WIN32
+#ifndef XPM_NO_X
+#define XPM_NO_X
+#endif
+#else
+#include <X11/Xlib.h>
+#endif
+
+#include <X11/xpm.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -361,15 +369,19 @@ load_image (const gchar *filename)
 static guchar*
 parse_colors (XpmImage  *xpm_image)
 {
+#ifndef XPM_NO_X
   Display  *display;
   Colormap  colormap;
+#endif
   gint      i, j;
   guchar   *cmap;
 
+#ifndef XPM_NO_X
   /* open the display and get the default color map */
   display  = XOpenDisplay (NULL);
   colormap = DefaultColormap (display, DefaultScreen (display));
-    
+#endif
+
   /* alloc a buffer to hold the parsed colors */
   cmap = g_new0 (guchar, 4 * xpm_image->ncolors);
 
@@ -378,7 +390,11 @@ parse_colors (XpmImage  *xpm_image)
     {
       gchar     *colorspec = "None";
       XpmColor *xpm_color;
+#ifndef XPM_NO_X
       XColor    xcolor;
+#else
+      GdkColor  xcolor;
+#endif
         
       xpm_color = &(xpm_image->colorTable[i]);
         
@@ -396,7 +412,11 @@ parse_colors (XpmImage  *xpm_image)
 	 g_new will memset the buffer to zeros */
       if (strcmp (colorspec, "None") != 0)
 	{
+#ifndef XPM_NO_X
 	  XParseColor (display, colormap, colorspec, &xcolor);
+#else
+	  gdk_color_parse (colorspec, &xcolor);
+#endif
 	  cmap[j++] = xcolor.red >> 8;
 	  cmap[j++] = xcolor.green >> 8;
 	  cmap[j++] = xcolor.blue >> 8;
@@ -407,9 +427,9 @@ parse_colors (XpmImage  *xpm_image)
 	  j += 4;
 	}
     }
-    
+#ifndef XPM_NO_X
   XCloseDisplay (display);
-
+#endif
   return cmap;
 }
 
