@@ -1,5 +1,10 @@
 2001-01-26  Daniel Egger  <egger@suse.de>
 
+	* plug-ins/common/iwarp.c: Cleaned up code and
+	implemented 2 small optimisations.
+
+2001-01-26  Daniel Egger  <egger@suse.de>
+
 	* libgimpmath/gimpvector.c:
 	* libgimpmath/gimpvector.h: Added pass-by-value functions
 	to allow code simplifications and functionchaining.

@@ -434,24 +434,24 @@ iwarp_supersample_test (GimpVector2 *v0,
 {
   gdouble dx, dy;
  
-  dx = 1.0+v1->x - v0->x;
+  dx = 1.0 + v1->x - v0->x;
   dy = v1->y - v0->y;
-  if (dx * dx + dy * dy > supersample_threshold_2)
+  if (SQR(dx) + SQR(dy) > supersample_threshold_2)
     return TRUE;
 
-  dx = 1.0+v2->x - v3->x;
+  dx = 1.0 + v2->x - v3->x;
   dy = v2->y - v3->y;
-  if (dx*dx+dy*dy > supersample_threshold_2) 
+  if (SQR(dx) + SQR(dy) > supersample_threshold_2) 
     return TRUE;
 
   dx = v2->x - v0->x;
-  dy = 1.0+v2->y - v0->y;
-  if (dx*dx+dy*dy > supersample_threshold_2) 
+  dy = 1.0 + v2->y - v0->y;
+  if (SQR(dx) + SQR(dy) > supersample_threshold_2) 
     return TRUE;
 
   dx = v3->x - v1->x;
-  dy = 1.0+v3->y - v1->y;
-  if (dx*dx+dy*dy > supersample_threshold_2) 
+  dy = 1.0 + v3->y - v1->y;
+  if (SQR(dx) + SQR(dy) > supersample_threshold_2) 
     return TRUE; 
 
   return FALSE;
@@ -809,7 +809,7 @@ iwarp_cpy_images (void)
   gdouble  alpha;
   guchar  *srccolor, *dstcolor;
  
-  if (image_bpp == 1 || image_bpp ==3) 
+  if (image_bpp == 1 || image_bpp == 3) 
     {
       memcpy (dstimage, srcimage, preview_width * preview_height * preview_bpp);
     }
@@ -842,25 +842,32 @@ iwarp_init (void)
   gdouble    dx, dy;
  
   gimp_drawable_mask_bounds (drawable->id, &xl, &yl, &xh, &yh);
-  sel_width = xh-xl;
-  sel_height = yh-yl;
+  sel_width = xh - xl;
+  sel_height = yh - yl;
+  
   image_bpp = gimp_drawable_bpp (drawable->id);
+  
   if (gimp_drawable_is_layer (drawable->id))
     preserve_trans = (gimp_layer_get_preserve_transparency (drawable->id));
   else
     preserve_trans = FALSE;
+  
   if (image_bpp < 3)
     preview_bpp = 1;
   else
     preview_bpp = 3;
+  
   dx = (gdouble) sel_width / MAX_PREVIEW_WIDTH;
   dy = (gdouble) sel_height / MAX_PREVIEW_HEIGHT;
+  
   if (dx >dy)
     pre2img = dx;
   else
     pre2img = dy;
+  
   if (dx <=1.0 && dy <= 1.0)
     pre2img = 1.0;  
+  
   img2pre = 1.0 / pre2img;
   preview_width = (gint) (sel_width / pre2img);
   preview_height = (gint) (sel_height / pre2img);
@@ -869,14 +876,11 @@ iwarp_init (void)
 
   srcimage = g_new (guchar, preview_width * preview_height * image_bpp);
   dstimage = g_new (guchar, preview_width * preview_height * preview_bpp);
-  deform_vectors = g_new (GimpVector2, preview_width * preview_height);
+  deform_vectors = g_new0 (GimpVector2, preview_width * preview_height);
   deform_area_vectors = g_new (GimpVector2,
 			       (MAX_DEFORM_AREA_RADIUS * 2 + 1) *
 			       (MAX_DEFORM_AREA_RADIUS * 2 + 1));
   linebuffer = g_new (guchar, sel_width * image_bpp);
-
-  for (i = 0; i < preview_width * preview_height; i++) 
-    deform_vectors[i].x = deform_vectors[i].y = 0.0;
 
   gimp_pixel_rgn_init (&srcrgn, drawable,
 		       xl, yl, sel_width, sel_height, FALSE, FALSE);
@@ -895,13 +899,16 @@ iwarp_init (void)
 	    }
 	}
     }
+  
   iwarp_cpy_images ();
+  
   for (i = 0; i < MAX_DEFORM_AREA_RADIUS; i++)
     {
       filter[i] = 
 	pow ((cos (sqrt((gdouble) i / MAX_DEFORM_AREA_RADIUS) * G_PI) + 1) *
 	     0.5, 0.7); /*0.7*/
     }
+  
   g_free (linebuffer);
 }
 
@@ -1216,22 +1223,19 @@ iwarp_update_preview (gint x0,
   gint i;
   GdkRectangle rect;
  
-  if (x0 < 0)
-    x0 = 0;
-  if (y0 < 0)
-    y0 = 0;
-  if (x1 >= preview_width)
-    x1 = preview_width;
-  if (y1 >= preview_height)
-    y1 = preview_height;
+  x0 = MAX(x0, 0);
+  y0 = MAX(y0, 0);
+  x1 = MIN(x1, preview_width);
+  y1 = MIN(y1, preview_height);
+  
   for (i = y0; i < y1; i++)
     gtk_preview_draw_row (GTK_PREVIEW (preview),
 			  dstimage + (i * preview_width + x0) * preview_bpp,
 			  x0, i,x1-x0);
   rect.x = x0;
   rect.y = y0;
-  rect.width = x1-x0;
-  rect.height = y1-y0;  
+  rect.width = x1 - x0;
+  rect.height = y1 - y0;  
   gtk_widget_draw (preview, &rect);
   gdk_flush ();
 }
@@ -1248,6 +1252,7 @@ iwarp_preview_get_pixel (gint     x,
       *color = black;
       return;
     }
+  
   *color = srcimage + (y * preview_width + x) * image_bpp; 
 } 
 
@@ -1262,14 +1267,17 @@ iwarp_preview_get_point (gdouble  x,
 
   xi = (gint) x;
   yi = (gint) y;
+
   if (iwarp_vals.do_bilinear)
     {
       dx = x-xi;
       dy = y-yi; 
+      
       iwarp_preview_get_pixel (xi, yi, &p0);
       iwarp_preview_get_pixel (xi + 1, yi, &p1);
       iwarp_preview_get_pixel (xi, yi + 1, &p2);
       iwarp_preview_get_pixel (xi + 1, yi + 1, &p3);
+      
       for (j = 0; j < image_bpp; j++)
 	{
 	  m0 = p0[j] + dx * (p1[j] - p0[j]);
@@ -1295,27 +1303,19 @@ iwarp_deform (gint    x,
   gdouble deform_value, xn, yn, nvx=0, nvy=0, emh, em, edge_width, xv, yv, alpha;
   guchar  color[4];
  
-  if (x - iwarp_vals.deform_area_radius <0)
-    x0 = -x;
-  else
-    x0 = -iwarp_vals.deform_area_radius;
+  x0 = (x < iwarp_vals.deform_area_radius) ? 
+    -x : -iwarp_vals.deform_area_radius;
+    
+  x1 = (x + iwarp_vals.deform_area_radius >= preview_width) ?
+    preview_width - x - 1 : iwarp_vals.deform_area_radius;
 
-  if (x + iwarp_vals.deform_area_radius >= preview_width)
-    x1 = preview_width - x - 1;
-  else
-    x1 = iwarp_vals.deform_area_radius;
+  y0 = (y < iwarp_vals.deform_area_radius) ?
+    -y :  -iwarp_vals.deform_area_radius;
 
-  if (y - iwarp_vals.deform_area_radius < 0)
-    y0 = -y;
-  else
-    y0 = -iwarp_vals.deform_area_radius;
+  y1 = (y + iwarp_vals.deform_area_radius >= preview_height) ?
+    preview_height-y-1 : iwarp_vals.deform_area_radius;
 
-  if (y + iwarp_vals.deform_area_radius >= preview_height)
-    y1 = preview_height-y-1;
-  else
-    y1 = iwarp_vals.deform_area_radius;
-
-  radius2 = iwarp_vals.deform_area_radius * iwarp_vals.deform_area_radius;
+  radius2 = SQR (iwarp_vals.deform_area_radius); 
 
   for (yi = y0; yi <= y1; yi++)
     for (xi = x0; xi <= x1; xi++)
