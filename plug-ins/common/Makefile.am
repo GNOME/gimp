@@ -58,6 +58,7 @@ libexec_PROGRAMS = \
 	gif \
 	gifload \
 	glasstile \
+	gpb \
 	gqbist \
 	gradmap \
 	grid \
@@ -498,6 +499,14 @@ glasstile_SOURCES = \
 	glasstile.c
 
 glasstile_LDADD = \
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
+gpb_SOURCES = \
+	gpb.c
+
+gpb_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

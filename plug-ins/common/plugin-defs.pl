@@ -37,6 +37,7 @@
     'gauss_iir' => { libdep => 'gtk' },
     'gauss_rle' => { libdep => 'gtk' },
     'gbr' => { libdep => 'gtk' },
+    'gpb' => { libdep => 'gtk' },
     'gee' => { libdep => 'gtk' },
     'gicon' => { libdep => 'gtk' },
     'gif' => { libdep => 'gtk' },
