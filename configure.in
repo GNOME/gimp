@@ -7,7 +7,7 @@ GIMP_MAJOR_VERSION=1
 dnl $Format: "GIMP_MINOR_VERSION=$ReleaseMinorVersion$" $
 GIMP_MINOR_VERSION=0
 dnl $Format: "GIMP_MICRO_VERSION=$ReleaseMicroVersion$" $
-GIMP_MICRO_VERSION=1
+GIMP_MICRO_VERSION=2
 
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
 
@@ -65,6 +65,10 @@ AC_PROG_MAKE_SET
 AC_PROG_CPP
 
 AC_GIMP_CHECK
+
+if test "$gtk_config_major_version.$gtk_config_minor_version" != "1.0"; then
+  AC_MSG_ERROR(The GIMP requires GTK 1.0.x. See the file 'INSTALL' for help.)
+fi
 
 if eval "test x$GCC = xyes"; then
   if echo "$CFLAGS" | grep "\-Wall" > /dev/null 2> /dev/null; then

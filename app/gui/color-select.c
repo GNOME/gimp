@@ -1287,7 +1287,7 @@ color_select_draw_z_marker (ColorSelectP csp,
       if (y >= miny && y < height)
         {
 	  gdk_gc_set_function (csp->gc, GDK_INVERT);
-	  gdk_draw_line (csp->z_color->window, csp->gc, minx, y, width, y);
+	  gdk_draw_line (csp->z_color->window, csp->gc, minx, y, width - 1, y);
 	  gdk_gc_set_function (csp->gc, GDK_COPY);
 	}
     }
@@ -1324,10 +1324,10 @@ color_select_draw_xy_marker (ColorSelectP csp,
 	}
 
       if (y >= miny && y < height)
-	gdk_draw_line (csp->xy_color->window, csp->gc, minx, y, width, y);
+	gdk_draw_line (csp->xy_color->window, csp->gc, minx, y, width - 1, y);
 
       if (x >= minx && x < width)
-	gdk_draw_line (csp->xy_color->window, csp->gc, x, miny, x, height);
+	gdk_draw_line (csp->xy_color->window, csp->gc, x, miny, x, height - 1);
 
       gdk_gc_set_function (csp->gc, GDK_COPY);
     }

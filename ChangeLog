@@ -1,3 +1,12 @@
+Wed Oct 14 20:11:29 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* Made 1.0.2 release
+
+Wed Oct 14 22:58:04 BST 1998  Austin Donnelly  <austin@greenend.org.uk>
+
+	* app/color_select.c: fix silly bug with off-by-one error in
+	redraw of crosshair.
+
 Tue Oct 13 18:16:38 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/color_select.c: applied gimp-austin-981011-1, fixes color

@@ -1,3 +1,10 @@
+What's new in GIMP 1.0.2
+
+* Evil GIF infinite file bug introduced in 1.0.1 fixed
+* GIMP_DATADIR environment var can override precompiled DATADIR spec
+* Nicer write error handling
+* A couple small bugfixes
+
 What's new in GIMP 1.0.1
 
 * Redid the way batch mode works: it now uses script-fu instead of a thin
