@@ -578,10 +578,6 @@ gint noisevariance;      /* global so that pixel processing code can get at it q
 #define SCTOCSC(x) ((x) >> (SCALEB - CSCALEB))  /* convert from scaled to coarse scaled */
 #define CSCTOSC(x) ((x) << (SCALEB - CSCALEB))  /* convert from course scaled to scaled */
 
-#ifndef MAXINT
-# define MAXINT 0x7fffffff      /* assume this is a 32 bit machine */
-#endif
-
 /* round and scale floating point to scaled integer */
 #define SROUND(x) ((gint)(((x) * (gdouble)SCALE) + 0.5))
 /* round and un-scale scaled integer value */
@@ -848,7 +844,7 @@ atfilt2(gint32 *p) {
    h6 = V0[p[0]] + V1[p[7]] + V2[p[8]] + V3[p[1]];
        /* sum values and also discover the 2 largest and 2 smallest */
    big0 = small0 = h0;
-   small1 = MAXINT;
+   small1 = G_MAXINT;
    big1 = 0;
 #define CHECK(xx) \
         h0 += xx; \
@@ -903,7 +899,7 @@ atfilt3(gint32 *p) {
    h6 = V0[p[0]] + V1[p[7]] + V2[p[8]] + V3[p[1]];
        /* sum values and also discover the 3 largest and 3 smallest */
    big0 = small0 = h0;
-   small1 = small2 = MAXINT;
+   small1 = small2 = G_MAXINT;
    big1 = big2 = 0;
 #define CHECK(xx) \
         h0 += xx; \
