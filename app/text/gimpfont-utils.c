@@ -30,26 +30,52 @@
 
 /* Workaround pango bug #166540 */
 
-gchar *
-gimp_font_util_pango_font_description_to_string (PangoFontDescription *desc)
+static const char *
+getword (const char *str, const char *last, size_t *wordlen)
 {
-  gchar *name;
-  gchar  last_char;
+  const char *result;
+
+  while (last > str && g_ascii_isspace (*(last - 1)))
+    last--;
+
+  result = last;
+  while (result > str && !g_ascii_isspace (*(result - 1)))
+    result--;
+
+  *wordlen = last - result;
+
+  return result;
+}
+
+gchar *
+gimp_font_util_pango_font_description_to_string (const PangoFontDescription *desc)
+{
+  gchar       *name;
+  size_t       wordlen;
+  const gchar *p;
 
   g_return_val_if_fail (desc != NULL, NULL);
 
   name = pango_font_description_to_string (desc);
 
-  last_char = name[strlen (name) - 1];
+  p = getword (name, name + strlen (name), &wordlen);
 
-  if (g_ascii_isdigit (last_char) || last_char == '.')
+  if (wordlen)
     {
-      gchar *new_name;
+      gchar   *end;
+      gdouble  size;
 
-      new_name = g_strconcat (name, ",", NULL);
-      g_free (name);
+      size = g_ascii_strtod (p, &end);
 
-      name = new_name;
+      if (end - p == wordlen)
+        {
+          gchar *new_name;
+
+          new_name = g_strconcat (name, ",", NULL);
+          g_free (name);
+
+          name = new_name;
+        }
     }
 
   return name;

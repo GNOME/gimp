@@ -1,3 +1,13 @@
+2005-02-21  Manish Singh  <yosh@gimp.org>
+
+	Merged from HEAD:
+
+	* app/text/gimpfont-utils.[ch]: be smarter about finding trailing
+	numbers that look like sizes, so we don't have spurious commas.
+
+	* app/text/gimpfontlist.c: As an optimization, figure out if
+	pango needs a workaround, and if not, just call it directly.
+
 2005-02-21  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD:

@@ -49,6 +49,9 @@
 #endif
 
 
+typedef char * (* GimpFontDescToStringFunc) (const PangoFontDescription *desc);
+
+
 static void   gimp_font_list_class_init   (GimpFontListClass    *klass);
 static void   gimp_font_list_init         (GimpFontList         *list);
 
@@ -62,6 +65,8 @@ static void   gimp_font_list_load_names   (GimpFontList         *list,
 
 
 static GimpListClass *parent_class = NULL;
+
+static GimpFontDescToStringFunc font_desc_to_string = NULL;
 
 
 GType
@@ -126,10 +131,31 @@ gimp_font_list_new (gdouble xresolution,
 void
 gimp_font_list_restore (GimpFontList *list)
 {
-  PangoFontMap     *fontmap;
-  PangoContext     *context;
+  PangoFontMap *fontmap;
+  PangoContext *context;
 
   g_return_if_fail (GIMP_IS_FONT_LIST (list));
+
+  if (font_desc_to_string == NULL)
+    {
+      PangoFontDescription *desc;
+      gchar                *name;
+      gchar                 last_char;
+
+      desc = pango_font_description_new ();
+      pango_font_description_set_family (desc, "Wilber 12");
+
+      name = pango_font_description_to_string (desc);
+      last_char = name[strlen (name) - 1];
+
+      g_free (name);
+      pango_font_description_free (desc);
+
+      if (last_char != ',')
+        font_desc_to_string = &gimp_font_util_pango_font_description_to_string;
+      else
+        font_desc_to_string = &pango_font_description_to_string;
+    }
 
   fontmap = pango_ft2_font_map_new ();
   pango_ft2_font_map_set_resolution (PANGO_FT2_FONT_MAP (fontmap),
@@ -159,7 +185,7 @@ gimp_font_list_add_font (GimpFontList         *list,
   if (! desc)
     return;
 
-  name = gimp_font_util_pango_font_description_to_string (desc);
+  name = font_desc_to_string (desc);
 
   if (! g_utf8_validate (name, -1, NULL))
     {
@@ -261,7 +287,7 @@ gimp_font_list_load_names (GimpFontList *list,
   FcFontSetDestroy (fontset);
 }
 
-#else  /* ! USE_FONTCONFIG_DIRECTLY  */
+#else  /* ! USE_FONTCONFIG_DIRECTLY */
 
 static void
 gimp_font_list_load_names (GimpFontList *list,
@@ -293,4 +319,4 @@ gimp_font_list_load_names (GimpFontList *list,
   g_free (families);
 }
 
-#endif
+#endif /* USE_FONTCONFIG_DIRECTLY */

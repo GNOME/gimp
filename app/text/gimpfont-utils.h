@@ -25,9 +25,12 @@
 
 /* This is solely to workaround pango bug #166540, by tacking on a ',' to
  * font names that end in numbers, so pango_font_description_from_string
- * doesn't interpret it as a size
+ * doesn't interpret it as a size. Note that this doesn't fully workaround
+ * problems pango has with font name serialization, just only the bad size
+ * interpretation. Family names that end with style names are still
+ * processed wrongly.
  */
-gchar * gimp_font_util_pango_font_description_to_string (PangoFontDescription *desc);
+gchar * gimp_font_util_pango_font_description_to_string (const PangoFontDescription *desc);
 
 
 #endif  /*  __GIMP_FONT_UTILS_H__  */
