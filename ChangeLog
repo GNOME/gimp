@@ -1,3 +1,7 @@
+2003-12-27  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdasheditor.c: some minor cleanups.
+
 2003-12-27  Simon Budig  <simon@gimp.org>
 
 	Dashed stroking is here...  :-)

@@ -34,8 +34,8 @@
 #include "gimpdasheditor.h"
 
 
-#define MIN_WIDTH  64
-#define MIN_HEIGHT 20
+#define MIN_WIDTH          64
+#define MIN_HEIGHT         20
 
 #define DEFAULT_N_SEGMENTS 24
 
@@ -50,7 +50,7 @@ enum
 
 static void gimp_dash_editor_class_init    (GimpDashEditorClass *klass);
 static void gimp_dash_editor_init          (GimpDashEditor      *editor);
-                                           
+
 static void gimp_dash_editor_set_property       (GObject        *object,
                                                  guint           property_id,
                                                  const GValue   *value,
@@ -74,9 +74,6 @@ static gboolean gimp_dash_editor_motion_notify  (GtkWidget      *widget,
 /* helper function */
 static void update_segments_from_options        (GimpDashEditor    *editor);
 static void update_options_from_segments        (GimpDashEditor    *editor);
-static void update_segments_from_options_cb     (GimpStrokeOptions *options,
-                                                 gpointer           stuff,
-                                                 GimpDashEditor    *editor);
 static void update_blocksize                    (GimpDashEditor    *editor);
 static gint dash_x_to_index                     (GimpDashEditor    *editor,
                                                  gint               x);
@@ -157,10 +154,14 @@ gimp_dash_editor_class_init (GimpDashEditorClass *klass)
 static void
 gimp_dash_editor_init (GimpDashEditor *editor)
 {
-  editor->segments   = NULL;
-
-  editor->block_width = 6;
+  editor->segments     = NULL;
+  editor->block_width  = 6;
   editor->block_height = 6;
+
+  gtk_widget_add_events (GTK_WIDGET (editor),
+                         GDK_BUTTON_PRESS_MASK   |
+                         GDK_BUTTON_RELEASE_MASK |
+                         GDK_BUTTON1_MOTION_MASK);
 }
 
 static void
@@ -174,21 +175,22 @@ gimp_dash_editor_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_STROKE_OPTIONS:
+      g_return_if_fail (editor->stroke_options == NULL);
+
       editor->stroke_options = GIMP_STROKE_OPTIONS (g_value_dup_object (value));
-      g_object_ref (editor->stroke_options);
       g_signal_connect_object (editor->stroke_options, "notify::dash-info",
-                               (GCallback) update_segments_from_options_cb,
-                               editor, 0);
+                               G_CALLBACK (update_segments_from_options),
+                               editor, G_CONNECT_SWAPPED);
       break;
+
     case PROP_N_SEGMENTS:
       editor->n_segments = g_value_get_int (value);
+
       if (editor->segments)
         g_free (editor->segments);
       editor->segments = g_new0 (gboolean, editor->n_segments);
-      update_segments_from_options (editor);
-
-      gtk_widget_queue_draw (GTK_WIDGET (editor));
       break;
+
     case PROP_LENGTH:
       editor->dash_length = g_value_get_double (value);
       break;
@@ -197,6 +199,8 @@ gimp_dash_editor_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+
+  update_segments_from_options (editor);
 }
 
 static void
@@ -272,7 +276,7 @@ gimp_dash_editor_expose (GtkWidget      *widget,
 
   editor->x0 = (widget->allocation.width - w * editor->n_segments) / 2;
   editor->y0 = (widget->allocation.height - h) / 2;
-  
+
   x = editor->x0 % w;
 
   if (x > 0)
@@ -303,7 +307,7 @@ gimp_dash_editor_expose (GtkWidget      *widget,
                                   x, editor->y0,
                                   w, h);
             }
-          
+
           if (editor->n_segments % 4 == 0 &&
               (index + 1) % (editor->n_segments / 4) == 0)
             {
@@ -401,7 +405,7 @@ gimp_dash_editor_motion_notify (GtkWidget      *widget,
       for (x = edit_button_x0; x < mevent->x; x += editor->block_width)
         {
           index = dash_x_to_index (editor, x);
-          editor->segments [index] = edit_mode;
+          editor->segments[index] = edit_mode;
         }
     }
 
@@ -410,7 +414,7 @@ gimp_dash_editor_motion_notify (GtkWidget      *widget,
       for (x = edit_button_x0; x > mevent->x; x -= editor->block_width)
         {
           index = dash_x_to_index (editor, x);
-          editor->segments [index] = edit_mode;
+          editor->segments[index] = edit_mode;
         }
     }
 
@@ -422,24 +426,11 @@ gimp_dash_editor_motion_notify (GtkWidget      *widget,
 GtkWidget *
 gimp_dash_editor_new (GimpStrokeOptions *stroke_options)
 {
-  GimpDashEditor *editor;
-  
   g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (stroke_options), NULL);
 
-  editor = g_object_new (GIMP_TYPE_DASH_EDITOR,
-                         "stroke-options", stroke_options,
-                         "n-segments", DEFAULT_N_SEGMENTS,
-                         "dash-length", 0.5 * DEFAULT_N_SEGMENTS,
-                         NULL);
-
-  update_segments_from_options (editor);
-
-  gtk_widget_add_events (GTK_WIDGET (editor),
-                         GDK_BUTTON_PRESS_MASK   |
-                         GDK_BUTTON_RELEASE_MASK |
-                         GDK_BUTTON1_MOTION_MASK);
-
-  return GTK_WIDGET (editor);
+  return GTK_WIDGET (g_object_new (GIMP_TYPE_DASH_EDITOR,
+                                   "stroke-options", stroke_options,
+                                   NULL));
 }
 
 
@@ -450,9 +441,13 @@ update_segments_from_options (GimpDashEditor *editor)
   gint     i, j;
   gboolean paint;
   GArray   *dash_info;
-  
+
+  if (editor->stroke_options == NULL || editor->segments == NULL)
+    return;
+
   g_return_if_fail (GIMP_IS_STROKE_OPTIONS (editor->stroke_options));
-  g_return_if_fail (editor->segments != NULL);
+
+  gtk_widget_queue_draw (GTK_WIDGET (editor));
 
   dash_info = editor->stroke_options->dash_info;
 
@@ -468,7 +463,7 @@ update_segments_from_options (GimpDashEditor *editor)
     {
       sum += g_array_index (dash_info, gdouble, i);
     }
-  
+
   factor = ((gdouble) editor->n_segments) / sum;
 
   j = 0;
@@ -489,30 +484,11 @@ update_segments_from_options (GimpDashEditor *editor)
 }
 
 static void
-update_segments_from_options_cb (GimpStrokeOptions *options,
-                                 gpointer           stuff,
-                                 GimpDashEditor    *editor)
-{
-  g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
-  g_return_if_fail (GIMP_IS_DASH_EDITOR (editor));
-
-  update_segments_from_options (editor);
-  gtk_widget_queue_draw (GTK_WIDGET (editor));
-}
-
-static void
 update_options_from_segments (GimpDashEditor *editor)
 {
-  gint        i, count = 0;
-  gboolean    state;
-  GArray     *dash_array;
-
-  GValueArray *val_array;
-  GValue       item = { 0, };
-  GValue       value = { 0, };
-
-  g_value_init (&item, G_TYPE_DOUBLE);
-  g_value_init (&value, G_TYPE_VALUE_ARRAY);
+  gint      i, count = 0;
+  gboolean  state;
+  GArray   *dash_array;
 
   dash_array = g_array_new (FALSE, FALSE, sizeof (gdouble));
 
@@ -536,30 +512,31 @@ update_options_from_segments (GimpDashEditor *editor)
 
   if (dash_array->len > 1)
     {
+      GValueArray *val_array;
+      GValue       item = { 0, };
+
       val_array = g_value_array_new (dash_array->len);
 
-      for (i=0; i < dash_array->len; i++)
+      g_value_init (&item, G_TYPE_DOUBLE);
+
+      for (i = 0; i < dash_array->len; i++)
         {
-          g_value_set_double (&item, g_array_index (dash_array,
-                                                    gdouble,
-                                                    i));
+          g_value_set_double (&item,
+                              g_array_index (dash_array, gdouble, i));
           g_value_array_append (val_array, &item);
         }
 
-      g_value_set_boxed (&value, val_array);
+      g_object_set (editor->stroke_options,
+                    "dash-info", val_array,
+                    NULL);
 
-      g_object_set_property (G_OBJECT (editor->stroke_options),
-                             "dash-info",
-                             &value);
-      
       g_value_array_free (val_array);
     }
   else
     {
-      g_value_set_boxed (&value, NULL);
-      g_object_set_property (G_OBJECT (editor->stroke_options),
-                             "dash-info",
-                             &value);
+      g_object_set (editor->stroke_options,
+                    "dash-info", NULL,
+                    NULL);
     }
 
   g_array_free (dash_array, TRUE);
@@ -570,9 +547,7 @@ update_options_from_segments (GimpDashEditor *editor)
 static void
 update_blocksize (GimpDashEditor *editor)
 {
-  GtkWidget *widget;
-
-  widget = GTK_WIDGET (editor);
+  GtkWidget *widget = GTK_WIDGET (editor);
 
   editor->block_height = 6;
 
@@ -588,9 +563,8 @@ static gint
 dash_x_to_index (GimpDashEditor *editor,
                  gint            x)
 {
-  gint index;
+  gint index = x - editor->x0;
 
-  index = x - editor->x0;
   while (index < 0)
     index += editor->n_segments * editor->block_width;
 
