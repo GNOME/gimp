@@ -92,9 +92,6 @@
 #define SMOOTH       0
 #define GFREE        1
 
-#define RANGE_MASK  GDK_EXPOSURE_MASK | \
-                    GDK_ENTER_NOTIFY_MASK
-
 #define GRAPH_MASK  GDK_EXPOSURE_MASK | \
                     GDK_POINTER_MOTION_MASK | \
                     GDK_POINTER_MOTION_HINT_MASK | \
@@ -267,8 +264,6 @@ static void            bender_preview_update_once     (GtkWidget *, gpointer);
 static void            bender_load_callback           (GtkWidget *,
                                                        BenderDialog *);
 static void            bender_save_callback           (GtkWidget *,
-                                                       BenderDialog *);
-static gint            bender_pv_widget_events        (GtkWidget *, GdkEvent *,
                                                        BenderDialog *);
 static gint            bender_graph_events            (GtkWidget *, GdkEvent *,
                                                        BenderDialog *);
@@ -1162,7 +1157,7 @@ do_dialog (GimpDrawable *drawable)
   if (!GTK_WIDGET_VISIBLE (cd->shell))
     gtk_widget_show (cd->shell);
 
-  bender_update (cd, UP_GRAPH | UP_DRAW);
+  bender_update (cd, UP_GRAPH | UP_DRAW | UP_PREVIEW_EXPOSE);
 
   gtk_main ();
   gdk_flush ();
@@ -1291,13 +1286,8 @@ bender_new_dialog (GimpDrawable *drawable)
   cd->pv_widget = gimp_preview_area_new ();
   gtk_widget_set_size_request (cd->pv_widget,
                                PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
-  gtk_widget_set_events (cd->pv_widget, RANGE_MASK);
   gtk_container_add (GTK_CONTAINER (frame), cd->pv_widget);
   gtk_widget_show (cd->pv_widget);
-
-  g_signal_connect (cd->pv_widget, "event",
-                    G_CALLBACK (bender_pv_widget_events),
-                    cd);
 
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_end (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
@@ -2316,24 +2306,6 @@ bender_graph_events (GtkWidget    *widget,
           cursor_type = new_type;
           /* change_win_cursor (cd->graph->window, cursor_type); */
         }
-      break;
-
-    default:
-      break;
-    }
-
-  return FALSE;
-}
-
-static gboolean
-bender_pv_widget_events (GtkWidget    *widget,
-                         GdkEvent     *event,
-                         BenderDialog *cd)
-{
-  switch (event->type)
-    {
-    case GDK_EXPOSE:
-      bender_update (cd, UP_PREVIEW_EXPOSE);
       break;
 
     default:
