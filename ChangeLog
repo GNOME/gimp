@@ -1,5 +1,10 @@
 2001-11-19  Daniel Egger  <degger@fhm.edu>
 	
+	* app/paint-funcs/paint-funcs.h: Added magic comment to prevent
+	enums from being exported.
+
+2001-11-19  Daniel Egger  <degger@fhm.edu>
+	
 	* app/paint-funcs/paint-funcs-mmx.h 
 	* app/paint-funcs/paint-funcs.c: Fixed typoes and brought the
 	code back to compileland.

@@ -343,7 +343,7 @@ void  copy_gray_to_region                 (PixelRegion *, PixelRegion *);
  *  images, floating selections, selective display of intensity
  *  channels, and display of arbitrary mask channels
  */
-typedef enum
+typedef enum /*< skip >*/
 {
 INITIAL_CHANNEL_MASK = 0,
 INITIAL_CHANNEL_SELECTION,
@@ -357,7 +357,7 @@ INITIAL_INTENSITY_ALPHA,
  *  region into a destination region.  This is used for constructing
  *  layer projections, and for applying image patches to an image
  */
-typedef enum
+typedef enum /*< skip >*/ 
 {
   NO_COMBINATION = 0,
   COMBINE_INDEXED_INDEXED,
