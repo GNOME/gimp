@@ -26,10 +26,17 @@ Overview of Changes in GIMP 2.1.6
 - Added multi-line text entries for Script-Fu and Gimp-Python.
 
 - Cleaned up PDB API for brushes, gradients, palettes and patterns.
-  Deprecated lots of functions and added saner replacements.
+  Deprecated lots of functions and added saner replacements. Added
+  gimp-context-* PDB namespace with replacements for some of the 
+  deprecated stuff.
 
 - Let GimpView handle pixbuf previews. Added a (themable) drop shadow
   to image-file previews.
+
+- Cleaned up the dbbrowser and plugindetails code and GUI and factored
+  out common code. Renamed both executables and menu entries.
+
+- Made tools cancelable with <Escape>.
 
 
 Contributors:
