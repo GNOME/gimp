@@ -1,3 +1,19 @@
+2004-05-02  Sven Neumann  <sven@gimp.org>
+
+	* menus/Makefile.am
+	* menus/dialogs-menuitems.xml: new file that holds menuitems that
+	appear in several places.
+
+	* menus/dockable-menu.xml.in: new file used to generate
+	dockable-menu.xml.
+
+	* menus/toolbox-menu.xml.in: new file used to generate
+	toolbox-menu.xml.
+
+	* menus/image-menu.xml.in: include dialogs-menuitems.xml.
+
+	* menus/menus.xsl: allow inclusion of menuitems using XInclude.
+
 2004-05-02  Michael Natterer  <mitch@convergence.de>
 
 	* app/actions/Makefile.am

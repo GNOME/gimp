@@ -2,7 +2,10 @@
 
 menudatadir = $(gimpdatadir)/menus
 
-menudata_in_files = image-menu.xml.in
+menudata_in_files = \
+	dockable-menu.xml.in	\
+	image-menu.xml.in	\
+	toolbox-menu.xml.in
 
 menudata_built_files = $(menudata_in_files:.xml.in=.xml)
 
@@ -12,7 +15,6 @@ menudata_DATA = \
 	buffers-menu.xml		\
 	channels-menu.xml		\
 	colormap-editor-menu.xml	\
-	dockable-menu.xml		\
 	documents-menu.xml		\
 	error-console-menu.xml		\
 	file-open-menu.xml		\
@@ -28,20 +30,21 @@ menudata_DATA = \
 	qmask-menu.xml			\
 	templates-menu.xml		\
 	tool-options-menu.xml		\
-	toolbox-menu.xml		\
 	vectors-menu.xml
 
 EXTRA_DIST = \
 	$(menudata_DATA)		\
+	$(menudata_in_files)		\
+	dialogs-menuitems.xml		\
 	gtkuimanager.dtd		\
 	menus.xsl
 
 MAINTAINERCLEAN_FILES = $(menudata_built_files)
 
 
-%.xml: %.xml.in menus.xsl
+%.xml: %.xml.in menus.xsl dialogs-menuitems.xml
 if HAVE_XSLTPROC
-	$(XSLTPROC) menus.xsl $< > $(@) || rm -f $(@)
+	$(XSLTPROC) --xinclude menus.xsl $< > $(@) || rm -f $(@)
 else
 	@echo "xsltproc is needed to build the menus XML files"; exit 1;
 endif

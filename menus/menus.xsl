@@ -31,6 +31,17 @@
     </popup>
   </xsl:template>
 
+  <xsl:template match="menuitems">
+    <xsl:apply-templates />
+  </xsl:template>
+
+  <!-- need to strip the XInclude namespace declaration from the ui element -->
+  <xsl:template match="ui">
+    <ui>
+      <xsl:apply-templates />
+    </ui>
+  </xsl:template>
+
   <xsl:template match="@*|node()" name="identity">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()" />
