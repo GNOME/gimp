@@ -268,7 +268,7 @@ query (void)
 				    "0,string,P1,0,string,P2,0,string,P3,0,"
 				    "string,P4,0,string,P5,0,string,P6");
   gimp_register_save_handler       ("file_pnm_save",
-				    "pnm,ppm,pgm,pbm",
+				    "pnm,ppm,pgm",
 				    "");
 }
 
