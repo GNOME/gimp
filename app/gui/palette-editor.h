@@ -25,18 +25,15 @@
 #define COLOR_UPDATE_NEW  1
 #define COLOR_UPDATE      2
 
-void   palettes_init            (gint  no_data);
-void   palette_init_palettes    (gint  no_data);
-
+void   palettes_init            (gboolean no_data);
 void   palettes_free            (void);
-void   palette_free_palettes    (void);
 
 void   palette_dialog_create    (void);
 void   palette_dialog_free      (void);
 
-void   palette_set_active_color (gint  r,
-				 gint  g,
-				 gint  b,
-				 gint  state);
+void   palette_set_active_color (gint     r,
+				 gint     g,
+				 gint     b,
+				 gint     state);
 
 #endif /* __PALETTE_H__ */

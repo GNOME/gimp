@@ -361,75 +361,72 @@ destroy_initialization_status_window (void)
 static void
 make_initialization_status_window (void)
 {
-  if (!no_interface && !no_splash)
+  GtkWidget *vbox;
+  GtkWidget *logo_hbox;
+  GtkStyle  *style;
+
+  if (no_interface || no_splash)
+    return;
+
+  win_initstatus = gtk_window_new (GTK_WINDOW_DIALOG);
+
+  gtk_window_set_title (GTK_WINDOW (win_initstatus), _("GIMP Startup"));
+  gtk_window_set_wmclass (GTK_WINDOW (win_initstatus), "gimp_startup", "Gimp");
+  gtk_window_set_position (GTK_WINDOW (win_initstatus), GTK_WIN_POS_CENTER);
+  gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, FALSE, FALSE);
+
+  gimp_dialog_set_icon (GTK_WINDOW (win_initstatus));
+
+  if (no_splash_image == FALSE &&
+      splash_logo_load_size (win_initstatus))
     {
-      GtkWidget *vbox;
-      GtkWidget *logo_hbox;
-      GtkStyle  *style;
-
-      win_initstatus = gtk_window_new (GTK_WINDOW_DIALOG);
-
-      gtk_window_set_title (GTK_WINDOW (win_initstatus),                      
-			    _("GIMP Startup"));
-      gtk_window_set_wmclass (GTK_WINDOW (win_initstatus),
-			      "gimp_startup", "Gimp");
-      gtk_window_set_position (GTK_WINDOW (win_initstatus), GTK_WIN_POS_CENTER);
-      gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, FALSE, FALSE);
-
-      gimp_dialog_set_icon (GTK_WINDOW (win_initstatus));
-
-      if (no_splash_image == FALSE &&
-	  splash_logo_load_size (win_initstatus))
-	{
-	  show_logo = SHOW_LATER;
-	}
-
-      vbox = gtk_vbox_new (FALSE, 4);
-      gtk_container_add (GTK_CONTAINER (win_initstatus), vbox);
-
-      logo_hbox = gtk_hbox_new (FALSE, 0);
-      gtk_box_pack_start (GTK_BOX(vbox), logo_hbox, FALSE, TRUE, 0);
-
-      logo_area = gtk_drawing_area_new ();
-
-      gtk_signal_connect (GTK_OBJECT (logo_area), "expose_event",
-			  GTK_SIGNAL_FUNC (splash_logo_expose),
-			  NULL);
-
-      logo_area_width  = MAX (logo_width, LOGO_WIDTH_MIN);
-      logo_area_height = MAX (logo_height, LOGO_HEIGHT_MIN);
-
-      gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area),
-			     logo_area_width, logo_area_height);
-      gtk_box_pack_start (GTK_BOX(logo_hbox), logo_area, TRUE, FALSE, 0);
-
-      label1 = gtk_label_new ("");
-      gtk_box_pack_start_defaults (GTK_BOX (vbox), label1);
-      label2 = gtk_label_new ("");
-      gtk_box_pack_start_defaults (GTK_BOX (vbox), label2);
-
-      pbar = gtk_progress_bar_new ();
-      gtk_box_pack_start_defaults (GTK_BOX (vbox), pbar);
-
-      gtk_widget_show (vbox);
-      gtk_widget_show (logo_hbox);
-      gtk_widget_show (logo_area);
-      gtk_widget_show (label1);
-      gtk_widget_show (label2);
-      gtk_widget_show (pbar);
-
-      gtk_widget_show (win_initstatus);
-
-      /*  This is a hack: we try to compute a good guess for the maximum 
-       *  number of charcters that will fit into the splash-screen using 
-       *  the default_font
-       */
-      style = gtk_widget_get_style (win_initstatus);
-      max_label_length =
-	0.8 * (float)strlen (AUTHORS) *
-	((float)logo_area_width /
-	 (float)gdk_string_width (style->font, AUTHORS));
+      show_logo = SHOW_LATER;
     }
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_add (GTK_CONTAINER (win_initstatus), vbox);
+
+  logo_hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), logo_hbox, FALSE, TRUE, 0);
+
+  logo_area = gtk_drawing_area_new ();
+
+  gtk_signal_connect (GTK_OBJECT (logo_area), "expose_event",
+		      GTK_SIGNAL_FUNC (splash_logo_expose),
+		      NULL);
+
+  logo_area_width  = MAX (logo_width, LOGO_WIDTH_MIN);
+  logo_area_height = MAX (logo_height, LOGO_HEIGHT_MIN);
+
+  gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area),
+			 logo_area_width, logo_area_height);
+  gtk_box_pack_start (GTK_BOX(logo_hbox), logo_area, TRUE, FALSE, 0);
+
+  label1 = gtk_label_new ("");
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), label1);
+  label2 = gtk_label_new ("");
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), label2);
+
+  pbar = gtk_progress_bar_new ();
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), pbar);
+
+  gtk_widget_show (vbox);
+  gtk_widget_show (logo_hbox);
+  gtk_widget_show (logo_area);
+  gtk_widget_show (label1);
+  gtk_widget_show (label2);
+  gtk_widget_show (pbar);
+
+  gtk_widget_show (win_initstatus);
+
+  /*  This is a hack: we try to compute a good guess for the maximum 
+   *  number of charcters that will fit into the splash-screen using 
+   *  the default_font
+   */
+  style = gtk_widget_get_style (win_initstatus);
+  max_label_length = (0.8 * (gfloat) strlen (AUTHORS) *
+		      ((gfloat) logo_area_width /
+		       (gfloat) gdk_string_width (style->font, AUTHORS)));
 }
 
 void

@@ -99,7 +99,7 @@ gimp_procedural_db_get_data (gchar    *identifier,
 
   if (hack)
     {
-      memcpy (data, hack, size * sizeof (guint8));
+      memcpy (data, (gpointer) hack, size * sizeof (guint8));
       g_free (hack);
     }
 }

@@ -27,13 +27,6 @@
 #include "gimppixmap.h"
 
 
-struct _GimpPixmap
-{
-  GtkPixmap   pixmap;
-
-  gchar     **xpm_data;
-};
-
 static void gimp_pixmap_destroy           (GtkObject  *object);
 static void gimp_pixmap_realize           (GtkWidget  *widget);
 static void gimp_pixmap_create_from_xpm_d (GimpPixmap *pixmap);
@@ -57,7 +50,7 @@ gimp_pixmap_class_init (GimpPixmapClass *class)
   GtkObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = (GtkObjectClass*) class;
+  object_class = (GtkObjectClass *) class;
   widget_class = (GtkWidgetClass *) class;
 
   parent_class = gtk_type_class (gtk_pixmap_get_type ());

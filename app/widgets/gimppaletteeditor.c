@@ -172,7 +172,7 @@ static guint n_color_palette_targets = (sizeof (color_palette_target_table) /
 /*  public functions  ********************************************************/
 
 void
-palettes_init (gint no_data)
+palettes_init (gboolean no_data)
 {
   if (!no_data)
     datafiles_read_directories (palette_path, palette_entries_load, 0);

@@ -39,6 +39,13 @@ extern "C" {
 typedef struct _GimpPixmap       GimpPixmap;
 typedef struct _GimpPixmapClass  GimpPixmapClass;
 
+struct _GimpPixmap
+{
+  GtkPixmap   pixmap;
+
+  gchar     **xpm_data;
+};
+
 struct _GimpPixmapClass
 {
   GtkPixmapClass parent_class;

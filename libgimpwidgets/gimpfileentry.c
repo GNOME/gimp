@@ -332,7 +332,7 @@ gimp_file_selection_entry_callback (GtkWidget *widget,
 		   gimp_file_selection_signals[FILENAME_CHANGED]);
 }
 
-static int
+static gboolean
 gimp_file_selection_entry_focus_out_callback (GtkWidget *widget,
 					      GdkEvent  *event,
 					      gpointer   data)

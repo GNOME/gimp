@@ -66,7 +66,6 @@ struct _GimpFileSelectionClass
   void (* filename_changed) (GimpFileSelection *gfs);
 };
 
-/* For information look into the C source or the html documentation */
 
 GtkType     gimp_file_selection_get_type    (void);
 
