@@ -21,7 +21,7 @@
 
 
 /*  Called initially to setup accelerated rendering features  */
-void  paint_funcs_setup     (void);
+void  paint_funcs_setup     (gboolean  use_mmx);
 void  paint_funcs_free      (void);
 
 

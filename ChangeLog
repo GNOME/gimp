@@ -1,5 +1,12 @@
 2002-11-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint-funcs/paint-funcs.[ch]: added "gboolean use_mmx"
+	parameter to paint_funcs_setup(). Don't #include "appenv.h".
+
+	* app/base/base.c: pass "use_mmx" to paint_funcs_setup().
+
+2002-11-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/base/base-types.h: removed the global "base_config" variable.
 
 	* app/base/base.[ch]: added "gboolean use_mmx" to base_init().

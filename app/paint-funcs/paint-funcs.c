@@ -38,8 +38,6 @@
 #include "paint-funcs-generic.h"
 #include "paint-funcs-mmx.h"
 
-#include "appenv.h"
-
 #define RANDOM_SEED        314159265
 #define EPSILON            0.0001
 
@@ -432,7 +430,7 @@ cubic (gdouble dx,
 /*********************/
 
 void
-paint_funcs_setup (void)
+paint_funcs_setup (gboolean use_mmx)
 {
   guint i;
   GRand *gr;
@@ -456,20 +454,20 @@ paint_funcs_setup (void)
 #ifdef HAVE_ASM_MMX
 #if GIMP_ENABLE_MMX
   if (use_mmx)
-   {
-     layer_mode_funcs[GIMP_DIFFERENCE_MODE] = layer_difference_mode_mmx;
-     layer_mode_funcs[GIMP_ADDITION_MODE] = layer_addition_mode_mmx;
-     layer_mode_funcs[GIMP_SUBTRACT_MODE] = layer_subtract_mode_mmx;
-     layer_mode_funcs[GIMP_OVERLAY_MODE] = layer_overlay_mode_mmx;
-     layer_mode_funcs[GIMP_SCREEN_MODE] = layer_screen_mode_mmx;
-     layer_mode_funcs[GIMP_MULTIPLY_MODE] = layer_multiply_mode_mmx;
-     layer_mode_funcs[GIMP_DARKEN_ONLY_MODE] = layer_darken_only_mode_mmx;
-     layer_mode_funcs[GIMP_LIGHTEN_ONLY_MODE] = layer_lighten_only_mode_mmx;
-   }
+    {
+      layer_mode_funcs[GIMP_DIFFERENCE_MODE] = layer_difference_mode_mmx;
+      layer_mode_funcs[GIMP_ADDITION_MODE] = layer_addition_mode_mmx;
+      layer_mode_funcs[GIMP_SUBTRACT_MODE] = layer_subtract_mode_mmx;
+      layer_mode_funcs[GIMP_OVERLAY_MODE] = layer_overlay_mode_mmx;
+      layer_mode_funcs[GIMP_SCREEN_MODE] = layer_screen_mode_mmx;
+      layer_mode_funcs[GIMP_MULTIPLY_MODE] = layer_multiply_mode_mmx;
+      layer_mode_funcs[GIMP_DARKEN_ONLY_MODE] = layer_darken_only_mode_mmx;
+      layer_mode_funcs[GIMP_LIGHTEN_ONLY_MODE] = layer_lighten_only_mode_mmx;
+    }
 #endif /* GIMP_ENABLE_MMX */
 #endif /* HAVE_ASM_MMX */
 
-  g_rand_free(gr);
+  g_rand_free (gr);
 }
 
 void
