@@ -54,10 +54,14 @@
  *                          analyzer programs (Stanislav Brabec)
  *                          Add BeginData/EndData comments
  *                          Save PS: Set default rotation to 0
+ * V 1.11, PK, 20-Aug-2000: Fix problem with BoundingBox recognition
+ *                          for Mac files.
+ *                          Fix problem with loop when reading not all
+ *                          images of a multi page file.
  */
-#define VERSIO 1.10
-static char dversio[] = "v1.10  15-Mar-2000";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.10  15-Mar-2000";
+#define VERSIO 1.11
+static char dversio[] = "v1.11  20-Aug-2000";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.11  20-Aug-2000";
 
 #include "config.h"
 
@@ -934,7 +938,6 @@ load_image (gchar *filename)
 	  if (image_ID == -1) break;
 	}
     }
-
   ps_close (ifp);
 
   /* Display images in reverse order. The last will be displayed by GIMP itself*/
@@ -1168,6 +1171,59 @@ page_in_list (gchar *list,
 }
 
 
+/* A function like fgets, but treats single CR-character as line break. */
+/* As a line break the newline-character is returned. */
+static char *psfgets (char *s, int size, FILE *stream)
+
+{int c;
+ char *sptr = s;
+
+ if (size <= 0) return NULL;
+ if (size == 1)
+ {
+   *s = '\0';
+   return NULL;
+ }
+ c = getc (stream);
+ if (c == EOF) return NULL;
+
+ for (;;)
+ {
+   /* At this point we have space in sptr for at least two characters */
+   if (c == '\n')    /* Got end of line (UNIX line end) ? */
+   {
+     *(sptr++) = '\n';
+     break;
+   }
+   else if (c == '\r')  /* Got a carriage return. Check next charcater */
+   {
+     c = getc (stream);
+     if ((c == EOF) || (c == '\n')) /* EOF or DOS line end ? */
+     {
+       *(sptr++) = '\n';  /* Return UNIX line end */
+       break;
+     }
+     else  /* Single carriage return. Return UNIX line end. */
+     {
+       ungetc (c, stream);  /* Save the extra character */
+       *(sptr++) = '\n';
+       break;
+     }
+   }
+   else   /* no line end character */
+   {
+     *(sptr++) = (char)c;
+     size--;
+   }
+   if (size == 1) break;  /* Only space for the nul-character ? */
+   c = getc (stream);
+   if (c == EOF) break;
+ }
+ *sptr = '\0';
+ return s;
+}
+
+
 /* Get the BoundingBox of a PostScript file. On success, 0 is returned. */
 /* On failure, -1 is returned. */
 static gint
@@ -1186,7 +1242,7 @@ get_bbox (gchar *filename,
 
   for (;;)
     {
-      if (fgets (line, sizeof (line)-1, ifp) == NULL) break;
+      if (psfgets (line, sizeof (line)-1, ifp) == NULL) break;
       if ((line[0] != '%') || (line[1] != '%')) continue;
       src = &(line[2]);
       while ((*src == ' ') || (*src == '\t')) src++;
@@ -1393,6 +1449,11 @@ static void
 ps_close (FILE *ifp)
 {
 #ifndef USE_REAL_OUTPUTFILE
+
+  /* Even if we dont want all images, we have to read the pipe until EOF. */
+  /* Otherwise the subprocess and therefore pclose() may not finish. */
+  while (getc (ifp) != EOF) ;
+
   /* Finish reading from pipe. */
   pclose (ifp);
 #else

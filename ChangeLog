@@ -1,3 +1,11 @@
+2000-08-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/ps.c: applied gimp-kirchgessner-000820-0,
+	a patch by Peter Kirchgessner which fixes a problem with the 
+	calculation of extent for Mac files (bug report #10547) and
+	a problem with the loop when not reading all images of a 
+	multipage file.
+
 Sun Aug 20 21:02:22 BST 2000  Austin Donnelly  <austin@gimp.org>
 
 	* emboss.c
