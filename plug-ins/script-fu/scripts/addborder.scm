@@ -101,7 +101,10 @@
 	 (oheight (car (gimp-image-height img)))
 	 (width (+ owidth (* 2 xsize)))
 	 (height (+ oheight (* 2 ysize)))
-	 (layer (car (gimp-layer-new img width height RGBA-IMAGE "Border-Layer" 100 NORMAL-MODE))))
+	 (layer (car (gimp-layer-new img
+				     width height
+				     (car (gimp-drawable-type-with-alpha adraw))
+				     "Border-Layer" 100 NORMAL-MODE))))
 
 ;Add this for debugging    (verbose 4)
 
@@ -165,11 +168,10 @@
 		    "Andy Thomas <alt@picnic.demon.co.uk>"
 		    "Andy Thomas"
 		    "6/10/97"
-		    "RGB*"
-		    SF-IMAGE "Input image" 0
-		    SF-DRAWABLE "Input drawable" 0
-		    SF-ADJUSTMENT _"Border X size" '(12 1 250 1 10 0 1)
-		    SF-ADJUSTMENT _"Border Y size" '(12 1 250 1 10 0 1)
-		    SF-COLOR _"Border color" '(38 31 207)
-		    SF-ADJUSTMENT _"Delta value on color" '(25 1 255 1 10 0 1)
-		    )
+		    "*"
+		    SF-IMAGE       "Input image"          0
+		    SF-DRAWABLE    "Input drawable"       0
+		    SF-ADJUSTMENT _"Border X size"        '(12 1 250 1 10 0 1)
+		    SF-ADJUSTMENT _"Border Y size"        '(12 1 250 1 10 0 1)
+		    SF-COLOR      _"Border color"         '(38 31 207)
+		    SF-ADJUSTMENT _"Delta value on color" '(25 1 255 1 10 0 1))
