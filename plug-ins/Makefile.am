@@ -51,6 +51,7 @@ SUBDIRS = 			\
         gflare			\
 	gfli			\
 	gimpressionist		\
+	$(HELPBROWSER)		\
 	ifscompose		\
 	imagemap		\
 	maze			\

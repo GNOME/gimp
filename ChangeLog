@@ -1,3 +1,9 @@
+Sun Oct  3 19:21:00 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* configure.in
+	* plug-ins/Makefile.am
+	* plug-ins/helpbrowser/Makefile.am: auto* stuff for helpbrowser
+
 1999-10-04 Olof S Kylander <olof@gimp.org>
 
 	* app/color_cmds.c

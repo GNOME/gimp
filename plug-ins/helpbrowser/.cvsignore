@@ -3,5 +3,4 @@ Makefile
 .deps
 _libs
 .libs
-*.o
 helpbrowser
