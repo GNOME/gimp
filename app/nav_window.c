@@ -29,6 +29,7 @@
 #include "info_window.h"
 #include "gdisplay.h"
 #include "gimpcontext.h"
+#include "gimppreviewcache.h"
 #include "gimpset.h"
 #include "gimprc.h"
 #include "gimpui.h"
@@ -315,13 +316,15 @@ set_size_data (NavWinData *iwd)
     {
       pwidth  = iwd->nav_preview_width;
       /*     pheight  = sel_height * pwidth / sel_width; */
-      iwd->ratio = MIN (1.0, (gdouble) pwidth / (gdouble) sel_width);
+      /*iwd->ratio = MIN (1.0, (gdouble) pwidth / (gdouble) sel_width);*/
+      iwd->ratio = (gdouble) pwidth / (gdouble) sel_width;
     } 
   else 
     {
       pheight = iwd->nav_preview_height;
       /*     pwidth  = sel_width * pheight / sel_height; */
-      iwd->ratio = MIN (1.0, (gdouble) pheight / (gdouble) sel_height);
+      /*iwd->ratio = MIN (1.0, (gdouble) pheight / (gdouble) sel_height);*/
+      iwd->ratio = (gdouble) pheight / (gdouble) sel_height;
     }
 
   pwidth  = sel_width  * iwd->ratio + 0.5;
@@ -461,29 +464,44 @@ nav_window_update_preview (NavWinData *iwd)
    */
   if (!gdisp->dot_for_dot) /* ALT */ 
     {
-      gint sel_width  = gimage->width;
-      gint sel_height = gimage->height;
+      gint    sel_width  = gimage->width;
+      gint    sel_height = gimage->height;
       gdouble tratio;
       
       if (sel_width > sel_height) 
-	tratio = 
-	  MIN (1.0, (gdouble) iwd->nav_preview_width / ((gdouble) sel_width));
+	tratio = (gdouble) iwd->nav_preview_width / ((gdouble) sel_width);
       else
-	tratio = 
-	  MIN (1.0, (gdouble) iwd->nav_preview_height / ((gdouble) sel_height));
+	tratio = (gdouble) iwd->nav_preview_height / ((gdouble) sel_height);
 
       pwidth  = sel_width  * tratio + 0.5;
       pheight = sel_height * tratio + 0.5;
     }
 
-  preview_buf = gimp_image_construct_composite_preview (gimage,
-							MAX (pwidth, 2),
-							MAX (pheight, 2));
+  if (iwd->ratio > 1.0)    /*  Preview is scaling up!  */
+    {
+      TempBuf *tmp;
+
+      tmp = gimp_image_construct_composite_preview (gimage,
+						    gimage->width,
+						    gimage->height);
+      preview_buf = gimp_preview_scale (tmp, 
+					pwidth, 
+					pheight);
+      temp_buf_free (tmp);
+    } 
+  else 
+    {
+      preview_buf = gimp_image_construct_composite_preview (gimage,
+							    MAX (pwidth, 2),
+							    MAX (pheight, 2));
+    }
+
   /* reset & get new preview */
+  /*  FIXME: should use gimp_preview_scale()  */
   if (!gdisp->dot_for_dot)
     {
-      gint     loop1,loop2;
-      gdouble  x_ratio,y_ratio;
+      gint     loop1, loop2;
+      gdouble  x_ratio, y_ratio;
       guchar  *src_data;
       guchar  *dest_data;
 
@@ -492,8 +510,8 @@ nav_window_update_preview (NavWinData *iwd)
 					 preview_buf->bytes, 
 					 0, 0, NULL);
 
-      x_ratio   = (gdouble) pwidth  / (gdouble) iwd->pwidth;
-      y_ratio   = (gdouble) pheight / (gdouble) iwd->pheight;
+      x_ratio = (gdouble) pwidth  / (gdouble) iwd->pwidth;
+      y_ratio = (gdouble) pheight / (gdouble) iwd->pheight;
 
       src_data  = temp_buf_data (preview_buf);
       dest_data = temp_buf_data (preview_buf_notdot);
@@ -501,7 +519,7 @@ nav_window_update_preview (NavWinData *iwd)
       for (loop1 = 0 ; loop1 < iwd->pheight ; loop1++)
 	for (loop2 = 0 ; loop2 < iwd->pwidth ; loop2++)
 	  {
-	    gint i;
+	    gint    i;
 	    guchar *src_pixel;
 	    guchar *dest_pixel;
 
@@ -511,7 +529,7 @@ nav_window_update_preview (NavWinData *iwd)
 	    dest_pixel = dest_data +
 	      (loop2 + loop1 * iwd->pwidth) * preview_buf->bytes;
 
-	    for(i = 0 ; i < preview_buf->bytes; i++)
+	    for (i = 0 ; i < preview_buf->bytes; i++)
 	      *dest_pixel++ = *src_pixel++;
 	  }
 
@@ -571,8 +589,8 @@ nav_window_update_preview (NavWinData *iwd)
     }
 
   g_free (buf);
-  temp_buf_free (preview_buf);
 
+  temp_buf_free (preview_buf);
   if (preview_buf_notdot)
     temp_buf_free (preview_buf_notdot);
 
@@ -666,8 +684,8 @@ update_zoom_adjustment (NavWinData *iwd)
   adj = GTK_ADJUSTMENT (iwd->zoom_adjustment);
 
   f = 
-    ((gdouble) SCALEDEST (((GDisplay *)iwd->gdisp_ptr))) / 
-    ((gdouble)SCALESRC (((GDisplay *)iwd->gdisp_ptr)));
+    ((gdouble) SCALEDEST (((GDisplay *) iwd->gdisp_ptr))) / 
+    ((gdouble) SCALESRC (((GDisplay *) iwd->gdisp_ptr)));
   
   if (f < 1.0)
     {
@@ -721,18 +739,19 @@ nav_window_grab_pointer (NavWinData *iwd,
 			 GtkWidget  *widget)
 {
   GdkCursor *cursor;
-  int ret;
 
   iwd->sq_grabbed = TRUE;
   gtk_grab_add (widget);
-  cursor = gdk_cursor_new (GDK_CROSSHAIR); 
-  ret = gdk_pointer_grab (widget->window, TRUE,
-			  GDK_BUTTON_RELEASE_MASK |
-			  GDK_POINTER_MOTION_HINT_MASK |
-			  GDK_BUTTON_MOTION_MASK |
-			  GDK_EXTENSION_EVENTS_ALL,
-			  widget->window, cursor, 0);
 
+  cursor = gdk_cursor_new (GDK_CROSSHAIR); 
+
+  gdk_pointer_grab (widget->window, TRUE,
+		    GDK_BUTTON_RELEASE_MASK |
+		    GDK_POINTER_MOTION_HINT_MASK |
+		    GDK_BUTTON_MOTION_MASK |
+		    GDK_EXTENSION_EVENTS_ALL,
+		    widget->window, cursor, 0);
+  
   gdk_cursor_destroy (cursor); 
 }
 
@@ -1633,10 +1652,9 @@ nav_popup_click_handler (GtkWidget      *widget,
       GtkWidget *frame;
       GtkWidget *vbox;
 
-      iwp = create_dummy_iwd(gdisp,NAV_POPUP); 
+      iwp = create_dummy_iwd (gdisp, NAV_POPUP); 
       gdisp->nav_popup = gtk_window_new (GTK_WINDOW_POPUP);
-      gtk_widget_set_events (gdisp->nav_popup, 
-			     PREVIEW_MASK);
+      gtk_widget_set_events (gdisp->nav_popup, PREVIEW_MASK);
 
       gtk_window_set_policy (GTK_WINDOW (gdisp->nav_popup),
 			     FALSE, FALSE, TRUE);
@@ -1691,7 +1709,7 @@ nav_popup_click_handler (GtkWidget      *widget,
   gdk_flush();
 
   /* fill in then set up handlers for mouse motion etc */
-  iwp->motion_offsetx = (iwp->dispwidth - BORDER_PEN_WIDTH + 1) * 0.5;
+  iwp->motion_offsetx = (iwp->dispwidth  - BORDER_PEN_WIDTH + 1) * 0.5;
   iwp->motion_offsety = (iwp->dispheight - BORDER_PEN_WIDTH + 1) * 0.5;
 
   if(GTK_WIDGET_VISIBLE(iwp->preview))

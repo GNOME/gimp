@@ -22,6 +22,7 @@
 #include "dialog_handler.h"
 #include "gimage.h"
 #include "gimpcontext.h"
+#include "gimppreviewcache.h"
 #include "gimprc.h"
 #include "gimpset.h"
 #include "gimpui.h"
@@ -36,8 +37,7 @@
 #include "libgimp/gimpmath.h"
 
 
-#define MENU_THUMBNAIL_WIDTH  24
-#define MENU_THUMBNAIL_HEIGHT 24
+#define MENU_THUMBNAIL_SIZE  24
 
 
 /*  local function prototypes  */
@@ -350,8 +350,8 @@ lc_dialog_image_menu_preview_update_callback (GtkWidget *widget,
       /* Must update the preview? */
       lc_dialog_fill_preview_with_thumb (menu_preview,
 					 gimage,
-					 MENU_THUMBNAIL_WIDTH,
-					 MENU_THUMBNAIL_HEIGHT);
+					 MENU_THUMBNAIL_SIZE,
+					 MENU_THUMBNAIL_SIZE);
       gtk_widget_queue_draw (GTK_WIDGET (menu_preview));
     }
 }
@@ -431,9 +431,7 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
   guchar    *drawable_data;
   TempBuf   *buf;
   gint       bpp;
-  gint       dwidth;
-  gint       dheight;
-  gint       x,y;
+  gint       x, y;
   guchar    *src;
   gdouble    r, g, b, a;
   gdouble    c0, c1;
@@ -442,30 +440,42 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
   
   bpp = 0; /* Only returned */
 
-  dwidth  = gimage->width;
-  dheight = gimage->height;
-  
   /* Get right aspect ratio */  
-  if (dwidth > dheight)
+  if (gimage->width > gimage->height)
     {
-      ratio = MIN (1.0, (gdouble) width / (gdouble) dwidth);
+      ratio = (gdouble) width / (gdouble) gimage->width;
     }
   else
     {
-      ratio = MIN (1.0, (gdouble) height / (gdouble) dheight);
+      ratio = (gdouble) height / (gdouble) gimage->height;
     }
 
-  width  = RINT (ratio * (gdouble) dwidth);
-  height = RINT (ratio * (gdouble) dheight);
+  width  = RINT (ratio * (gdouble) gimage->width);
+  height = RINT (ratio * (gdouble) gimage->height);
 
   if (width  < 1) width  = 1;
   if (height < 1) height = 1;
 
-  buf = gimp_image_construct_composite_preview (gimage, width, height);
-  drawable_data = temp_buf_data (buf);
-  bpp = buf->bytes;
+  if (ratio > 1.0)   /*  Preview is scaling up!  */
+    {
+      TempBuf *tmp;
+
+      tmp = gimp_image_construct_composite_preview (gimage, 
+						    gimage->width, 
+						    gimage->height);
+      buf = gimp_preview_scale (tmp, width, height);
+      temp_buf_free (tmp);
+    }
+  else
+    {
+      buf = gimp_image_construct_composite_preview (gimage, 
+						    width, 
+						    height);
+    }
 
   gtk_preview_size (GTK_PREVIEW (widget), width, height);
+  drawable_data = temp_buf_data (buf);
+  bpp = buf->bytes;
 
   /*  Draw the thumbnail with checks  */
   src = drawable_data;
@@ -508,7 +518,7 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
 	  *p0++ = (c0 + (r - c0) * a) * 255.0;
 	  *p0++ = (c0 + (g - c0) * a) * 255.0;
 	  *p0++ = (c0 + (b - c0) * a) * 255.0;
-
+	  
 	  *p1++ = (c1 + (r - c1) * a) * 255.0;
 	  *p1++ = (c1 + (g - c1) * a) * 255.0;
 	  *p1++ = (c1 + (b - c1) * a) * 255.0;
@@ -524,6 +534,7 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
 	  gtk_preview_draw_row (GTK_PREVIEW (widget),
 				(guchar *) even, 0, y, width);
 	}
+
       src += width * bpp;
     }
 
@@ -578,14 +589,13 @@ lc_dialog_create_image_menu_callback (gpointer im,
 
       wcolor_box = gtk_preview_new (GTK_PREVIEW_COLOR);
       gtk_preview_set_dither (GTK_PREVIEW (wcolor_box), GDK_RGB_DITHER_MAX);
-      gtk_widget_set_usize (GTK_WIDGET (wcolor_box) , 
-			    MENU_THUMBNAIL_WIDTH , 
-			    MENU_THUMBNAIL_HEIGHT);
+      gtk_widget_set_usize (GTK_WIDGET (wcolor_box), 
+			    MENU_THUMBNAIL_SIZE, MENU_THUMBNAIL_SIZE);
 
       lc_dialog_fill_preview_with_thumb (wcolor_box,
 					 gimage,
-					 MENU_THUMBNAIL_WIDTH,
-					 MENU_THUMBNAIL_HEIGHT);
+					 MENU_THUMBNAIL_SIZE,
+					 MENU_THUMBNAIL_SIZE);
 
       gtk_container_add (GTK_CONTAINER (vbox), wcolor_box);
       gtk_widget_show (wcolor_box);

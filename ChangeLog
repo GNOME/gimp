@@ -1,3 +1,20 @@
+2000-12-15  Sven Neumann  <sven@gimp.org>
+
+	* app/gimppreviewcache.[ch]: added new function gimp_preview_scale().
+
+	* app/channel.c
+	* app/channels_dialog.c
+	* app/gimpimage.c
+	* app/layer.c
+	* app/layers_dialog.c
+	* app/lc_dialog.c
+	* app/nav_window.c: unified preview drawing code. Previews are never
+	generated larger than the canvas size. Image and channel previews are
+	scaled up to the desired size, so does the navigation window. The 
+	layer previews are not yet scaled up again since we can not use
+	gimp_preview_scale here. I have removed the preview_cache priming 
+	code since we don't need it any longer and it caused bad results.
+
 2000-12-15  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/helpbrowser/helpbrowser.c: added support for the

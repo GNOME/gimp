@@ -1319,10 +1319,10 @@ layer_linked (Layer *layer)
   return layer->linked;
 }
 
-static TempBuf *
-layer_preview_private (Layer *layer,
-		       gint   w,
-		       gint   h)
+TempBuf *
+layer_preview (Layer *layer,
+	       gint   width,
+	       gint   height)
 {
   GImage            *gimage;
   TempBuf           *preview_buf;
@@ -1332,13 +1332,17 @@ layer_preview_private (Layer *layer,
   gint               subsample;
   TempBuf           *ret_buf;
 
+  g_return_val_if_fail (layer != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+
   type  = RGB;
   bytes = 0;
 
   /*  The easy way  */
   if (GIMP_DRAWABLE (layer)->preview_valid &&
       (ret_buf = 
-       gimp_preview_cache_get (&(GIMP_DRAWABLE (layer)->preview_cache), w, h)))
+       gimp_preview_cache_get (&(GIMP_DRAWABLE (layer)->preview_cache), 
+			       width, height)))
     return ret_buf;
   /*  The hard way  */
   else
@@ -1348,25 +1352,26 @@ layer_preview_private (Layer *layer,
 	{
 	case RGB_GIMAGE: case RGBA_GIMAGE:
 	  type  = RGB;
-	  bytes = GIMP_DRAWABLE(layer)->bytes;
+	  bytes = GIMP_DRAWABLE (layer)->bytes;
 	  break;
 	case GRAY_GIMAGE: case GRAYA_GIMAGE:
 	  type  = GRAY;
-	  bytes = GIMP_DRAWABLE(layer)->bytes;
+	  bytes = GIMP_DRAWABLE (layer)->bytes;
 	  break;
 	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
 	  type  = INDEXED;
-	  bytes = (GIMP_DRAWABLE(layer)->type == INDEXED_GIMAGE) ? 3 : 4;
+	  bytes = (GIMP_DRAWABLE (layer)->type == INDEXED_GIMAGE) ? 3 : 4;
 	  break;
 	}
 
       /*  calculate 'acceptable' subsample  */
       subsample = 1;
       /* handle some truncation errors */
-      if (w < 1) w = 1;
-      if (h < 1) h = 1;
-      while ((w * (subsample + 1) * 2 < GIMP_DRAWABLE(layer)->width) &&
-	     (h * (subsample + 1) * 2 < GIMP_DRAWABLE(layer)->height)) 
+      if (width < 1) width = 1;
+      if (height < 1) height = 1;
+
+      while ((width * (subsample + 1) * 2 < GIMP_DRAWABLE (layer)->width) &&
+	     (height * (subsample + 1) * 2 < GIMP_DRAWABLE (layer)->height)) 
 	subsample = subsample + 1;
 
       pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles, 
@@ -1375,12 +1380,12 @@ layer_preview_private (Layer *layer,
 			 GIMP_DRAWABLE (layer)->height, 
 			 FALSE);
 
-      preview_buf = temp_buf_new (w, h, bytes, 0, 0, NULL);
+      preview_buf = temp_buf_new (width, height, bytes, 0, 0, NULL);
 
       destPR.bytes     = preview_buf->bytes;
-      destPR.w         = w;
-      destPR.h         = h;
-      destPR.rowstride = w * destPR.bytes;
+      destPR.w         = width;
+      destPR.h         = height;
+      destPR.rowstride = width * destPR.bytes;
       destPR.data      = temp_buf_data (preview_buf);
 
       layer_preview_scale (type, gimage->cmap, &srcPR, &destPR, subsample);
@@ -1398,39 +1403,18 @@ layer_preview_private (Layer *layer,
 }
 
 TempBuf *
-layer_preview (Layer *layer,
-	       gint   width,
-	       gint   height)
-{
-  /* Ok prime the cache with a large preview if the cache is invalid */
-  if (! GIMP_DRAWABLE (layer)->preview_valid && 
-      width  <= PREVIEW_CACHE_PRIME_WIDTH &&
-      height <= PREVIEW_CACHE_PRIME_HEIGHT)
-    {
-      TempBuf * tb = layer_preview_private (layer,
-					    PREVIEW_CACHE_PRIME_WIDTH,
-					    PREVIEW_CACHE_PRIME_HEIGHT);
-      
-      /* Save the 2nd call */
-      if (width  == PREVIEW_CACHE_PRIME_WIDTH &&
-	  height == PREVIEW_CACHE_PRIME_HEIGHT)
-	return tb;
-    }
-
-  /* Second call - should NOT visit the tile cache...*/
-  return layer_preview_private (layer, width, height);
-}
-
-static TempBuf *
-layer_mask_preview_private (Layer *layer,
-			    gint   w,
-			    gint   h)
+layer_mask_preview (Layer *layer,
+		    gint   width,
+		    gint   height)
 {
   TempBuf     *preview_buf;
   LayerMask   *mask;
   PixelRegion  srcPR, destPR;
   gint         subsample;
   TempBuf     *ret_buf;
+
+  g_return_val_if_fail (layer != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
 
   mask = layer->mask;
   if (!mask)
@@ -1439,17 +1423,17 @@ layer_mask_preview_private (Layer *layer,
   /*  The easy way  */
   if (GIMP_DRAWABLE(mask)->preview_valid &&
       (ret_buf = gimp_preview_cache_get (&(GIMP_DRAWABLE(mask)->preview_cache),
-					 w, h)))
+					 width, height)))
     return ret_buf;
   /*  The hard way  */
   else
     {
       /*  calculate 'acceptable' subsample  */
       subsample = 1;
-      if (w < 1) w = 1;
-      if (h < 1) h = 1;
-      while ((w * (subsample + 1) * 2 < GIMP_DRAWABLE(layer)->width) &&
-	     (h * (subsample + 1) * 2 < GIMP_DRAWABLE(layer)->height))
+      if (width < 1) width = 1;
+      if (height < 1) height = 1;
+      while ((width * (subsample + 1) * 2 < GIMP_DRAWABLE(layer)->width) &&
+	     (height * (subsample + 1) * 2 < GIMP_DRAWABLE(layer)->height))
 	subsample = subsample + 1;
 
       pixel_region_init (&srcPR, GIMP_DRAWABLE(mask)->tiles, 
@@ -1458,12 +1442,12 @@ layer_mask_preview_private (Layer *layer,
 			 GIMP_DRAWABLE(mask)->height, 
 			 FALSE);
 
-      preview_buf = temp_buf_new (w, h, 1, 0, 0, NULL);
+      preview_buf = temp_buf_new (width, height, 1, 0, 0, NULL);
 
       destPR.bytes     = preview_buf->bytes;
-      destPR.w         = w;
-      destPR.h         = h;
-      destPR.rowstride = w * destPR.bytes;
+      destPR.w         = width;
+      destPR.h         = height;
+      destPR.rowstride = width * destPR.bytes;
       destPR.data      = temp_buf_data (preview_buf);
 
       layer_preview_scale (GRAY, NULL, &srcPR, &destPR, subsample);
@@ -1478,31 +1462,6 @@ layer_mask_preview_private (Layer *layer,
       return preview_buf;
     }
 }
-
-TempBuf *
-layer_mask_preview (Layer *layer,
-		    gint   width,
-		    gint   height)
-{
-  /* Ok prime the cache with a large preview if the cache is invalid */
-  if(!GIMP_DRAWABLE(layer->mask)->preview_valid && 
-     width  <= PREVIEW_CACHE_PRIME_WIDTH &&
-     height <= PREVIEW_CACHE_PRIME_HEIGHT)
-    {
-      TempBuf * tb = layer_mask_preview_private (layer,
-						 PREVIEW_CACHE_PRIME_WIDTH,
-						 PREVIEW_CACHE_PRIME_HEIGHT);
-      
-      /* Save the 2nd call */
-      if (width  == PREVIEW_CACHE_PRIME_WIDTH &&
-	  height == PREVIEW_CACHE_PRIME_HEIGHT)
-	return tb;
-    }
-  
-  /* Second call - should NOT visit the tile cache...*/
-  return layer_mask_preview_private (layer, width, height);
-}
-
 
 Tattoo
 layer_get_tattoo (const Layer *layer)

@@ -995,13 +995,11 @@ layers_dialog_preview_extents (void)
 
   if (preview_size)
     {
-      layersD->image_width  = (gint) (layersD->ratio * gimage->width);
-      layersD->image_height = (gint) (layersD->ratio * gimage->height);
-
-      if (layersD->image_width < 1)
-	layersD->image_width = 1;
-      if (layersD->image_height < 1)
-	layersD->image_height = 1;
+      layersD->image_width  = RINT (layersD->ratio * (gdouble) gimage->width);
+      layersD->image_height = RINT (layersD->ratio * (gdouble) gimage->height);
+      
+      if (layersD->image_width  < 1) layersD->image_width  = 1;
+      if (layersD->image_height < 1) layersD->image_height = 1;
     }
   else
     {
@@ -3011,19 +3009,19 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
     {
       /*  determine width and height  */
       layer_widget->width  = 
-	(gint) (layersD->ratio * GIMP_DRAWABLE (layer_widget->layer)->width);
+	RINT (layersD->ratio * GIMP_DRAWABLE (layer_widget->layer)->width);
       layer_widget->height = 
-      (gint) (layersD->ratio * GIMP_DRAWABLE (layer_widget->layer)->height);
+	RINT (layersD->ratio * GIMP_DRAWABLE (layer_widget->layer)->height);
 
       if (layer_widget->width < 1)  
 	layer_widget->width = 1;
       if (layer_widget->height < 1)  
 	layer_widget->height = 1;
 
-      offx = (gint) (layersD->ratio *
-		     GIMP_DRAWABLE (layer_widget->layer)->offset_x);
-      offy = (gint) (layersD->ratio *
-		     GIMP_DRAWABLE (layer_widget->layer)->offset_y);
+      offx = RINT (layersD->ratio *
+		   GIMP_DRAWABLE (layer_widget->layer)->offset_x);
+      offy = RINT (layersD->ratio *
+		   GIMP_DRAWABLE (layer_widget->layer)->offset_y);
 
       switch (preview_type)
 	{
@@ -3031,9 +3029,10 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
 	  preview_buf = layer_preview (layer_widget->layer,
 				       layer_widget->width,
 				       layer_widget->height);
-
+	  
 	  layer_widget->layer_pixmap_valid = TRUE;
 	  break;
+
 	case MASK_PREVIEW:
 	  preview_buf = layer_mask_preview (layer_widget->layer,
 					    layer_widget->width,

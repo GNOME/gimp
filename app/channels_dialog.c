@@ -39,6 +39,7 @@
 #include "channel_pvt.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 #include "pixmaps/eye.xbm"
 #include "pixmaps/channel.xbm"
@@ -624,14 +625,15 @@ channels_dialog_preview_extents (void)
 
   /*  Get the image width and height variables, based on the gimage  */
   if (gimage->width > gimage->height)
-    channelsD->ratio = (double) preview_size / (double) gimage->width;
-  else
-    channelsD->ratio = (double) preview_size / (double) gimage->height;
+    channelsD->ratio = (gdouble) preview_size / (gdouble) gimage->width;
+  else  
+    channelsD->ratio = (gdouble) preview_size / (gdouble) gimage->height;
 
   if (preview_size)
     {
-      channelsD->image_width  = (gint) (channelsD->ratio * gimage->width);
-      channelsD->image_height = (gint) (channelsD->ratio * gimage->height);
+      channelsD->image_width  = RINT (channelsD->ratio * gimage->width);
+      channelsD->image_height = RINT (channelsD->ratio * gimage->height);
+
       if (channelsD->image_width < 1)  channelsD->image_width  = 1;
       if (channelsD->image_height < 1) channelsD->image_height = 1;
     }
@@ -2088,21 +2090,49 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
     case AUXILLARY_CHANNEL:
       width  = GIMP_DRAWABLE (channel_widget->channel)->width;
       height = GIMP_DRAWABLE (channel_widget->channel)->height;
-      channel_widget->width  = (gint) (channelsD->ratio * width);
-      channel_widget->height = (gint) (channelsD->ratio * height);
-      preview_buf = channel_preview (channel_widget->channel,
-				     channel_widget->width,
-				     channel_widget->height);
+      channel_widget->width  = RINT (channelsD->ratio * width);
+      channel_widget->height = RINT (channelsD->ratio * height);
+
+      if (channelsD->ratio > 1.0) /*  Preview is scaling up!  */
+	{
+	  preview_buf = channel_preview (channel_widget->channel,
+					 channelsD->gimage_width,
+					 channelsD->gimage_height);
+	  preview_buf = gimp_preview_scale (preview_buf,
+					    channel_widget->width,
+					    channel_widget->height);
+	}
+      else
+	{
+	  preview_buf = channel_preview (channel_widget->channel,
+					 channel_widget->width,
+					 channel_widget->height);
+	}
       break;
+
     default:
-      width = channel_widget->gimage->width;
+      width  = channel_widget->gimage->width;
       height = channel_widget->gimage->height;
-      channel_widget->width  = (gint) (channelsD->ratio * width);
-      channel_widget->height = (gint) (channelsD->ratio * height);
-      preview_buf = gimp_image_composite_preview (channel_widget->gimage,
-						  channel_widget->type,
-						  channel_widget->width,
-						  channel_widget->height);
+      channel_widget->width  = RINT (channelsD->ratio * width);
+      channel_widget->height = RINT (channelsD->ratio * height);
+
+      if (channelsD->ratio > 1.0) /*  Preview is scaling up!  */
+	{
+	  preview_buf = gimp_image_composite_preview (channel_widget->gimage,
+						      channel_widget->type,
+						      width,
+						      height);
+	  preview_buf = gimp_preview_scale (preview_buf,
+					    channel_widget->width,
+					    channel_widget->height);
+	}
+      else
+	{
+	  preview_buf = gimp_image_composite_preview (channel_widget->gimage,
+						      channel_widget->type,
+						      channel_widget->width,
+						      channel_widget->height);
+	}
       break;
     }
 
@@ -2126,12 +2156,16 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
   gtk_preview_put (GTK_PREVIEW (channelsD->preview),
 		   channel_widget->channel_pixmap,
 		   channel_widget->channel_preview->style->black_gc,
-		   0, 0, 0, 0, channelsD->image_width, channelsD->image_height);
+		   0, 0, 0, 0, 
+		   channelsD->image_width, channelsD->image_height);
 
   /*  make sure the image has been transfered completely to the pixmap before
    *  we use it again...
    */
   gdk_flush ();
+
+  if (channelsD->ratio > 1.0)
+    temp_buf_free (preview_buf);
 }
 
 static void

@@ -42,6 +42,7 @@
 
 #include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimplimits.h"
+#include "libgimp/gimpmath.h"
 #include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
@@ -3752,10 +3753,10 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
 
       drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
-      x = (gint) (ratio * off_x + 0.5); 
-      y = (gint) (ratio * off_y + 0.5); 
-      w = (gint) (ratio * drawable_width (GIMP_DRAWABLE(layer)) + 0.5); 
-      h = (gint) (ratio * drawable_height (GIMP_DRAWABLE(layer)) + 0.5); 
+      x = (gint) RINT (ratio * off_x);
+      y = (gint) RINT (ratio * off_y); 
+      w = (gint) RINT (ratio * drawable_width (GIMP_DRAWABLE (layer))); 
+      h = (gint) RINT (ratio * drawable_height (GIMP_DRAWABLE (layer))); 
       
       x1 = CLAMP (x, 0, width);
       y1 = CLAMP (y, 0, height);

@@ -25,7 +25,7 @@
 
 #define MAX_CACHE_PREVIEWS 5
 
-#undef  PREVIEW_CACHE_DEBUG
+#undef PREVIEW_CACHE_DEBUG
 
 
 typedef struct _PreviewCache 
@@ -318,4 +318,57 @@ gimp_preview_cache_get (GSList **plist,
 
 /*   g_print ("gimp_preview_cache_get returning NULL\n");  */
   return NULL;
+}
+
+TempBuf *
+gimp_preview_scale (TempBuf  *src,
+		    gint      new_width, 
+		    gint      new_height)
+{
+  gint     loop1;
+  gint     loop2;
+  gdouble  x_ratio;
+  gdouble  y_ratio;
+  guchar  *src_data;
+  guchar  *dest_data;
+  TempBuf *dest;
+
+  /*
+  g_print ("gimp_preview_scale: %d x %d -> %d x %d\n",
+	   src->width, src->height, new_width, new_height);
+
+   */
+
+  dest = temp_buf_new (new_width,
+		       new_height,
+		       src->bytes, 
+		       0, 0, NULL);
+
+  src_data  = temp_buf_data (src);
+  dest_data = temp_buf_data (dest);
+
+  x_ratio = (gdouble) src->width  / (gdouble) new_width;
+  y_ratio = (gdouble) src->height / (gdouble) new_height;
+  
+  for (loop1 = 0 ; loop1 < new_height ; loop1++)
+    {
+      for (loop2 = 0 ; loop2 < new_width ; loop2++)
+	{
+	  gint    i;
+	  guchar *src_pixel;
+	  guchar *dest_pixel;
+	  
+	  src_pixel = src_data +
+	    (gint) (loop2 * x_ratio) * src->bytes +
+	    (gint) (loop1 * y_ratio) * src->bytes * src->width;
+
+	  dest_pixel = dest_data +
+	    (loop2 + loop1 * new_width) * src->bytes;
+	  
+	  for (i = 0 ; i < src->bytes; i++)
+	    *dest_pixel++ = *src_pixel++;
+	}
+    }
+
+  return dest;
 }
