@@ -45,6 +45,7 @@ enum
   COLUMN_EXTENSIONS,
   COLUMN_STOCK_ID,
   COLUMN_PIXBUF,
+  COLUMN_HELP_ID,
   NUM_COLUMNS
 };
 
@@ -111,7 +112,8 @@ gimp_file_proc_view_class_init (GimpFileProcViewClass *klass)
 GtkWidget *
 gimp_file_proc_view_new (Gimp        *gimp,
                          GSList      *procedures,
-                         const gchar *automatic)
+                         const gchar *automatic,
+                         const gchar *automatic_help_id)
 {
   GtkTreeView       *view;
   GtkTreeViewColumn *column;
@@ -127,7 +129,8 @@ gimp_file_proc_view_new (Gimp        *gimp,
                               G_TYPE_STRING,     /* COLUMN_LABEL      */
                               G_TYPE_STRING,     /* COLUMN_EXTENSIONS */
                               G_TYPE_STRING,     /* COLUMN_STOCK_ID   */
-                              GDK_TYPE_PIXBUF);  /* COLUMN_PIXBUF     */
+                              GDK_TYPE_PIXBUF,   /* COLUMN_PIXBUF     */
+                              G_TYPE_STRING);    /* COLUMN_HELP_ID    */
 
   for (list = procedures; list; list = g_slist_next (list))
     {
@@ -135,11 +138,19 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
       if (! proc->prefixes_list) /*  skip URL loaders  */
         {
-          const gchar   *domain   = plug_ins_locale_domain (gimp,
-                                                            proc->prog, NULL);
-          gchar         *label    = plug_in_proc_def_get_label (proc, domain);
-          const gchar   *stock_id = plug_in_proc_def_get_stock_id (proc);
-          GdkPixbuf     *pixbuf   = plug_in_proc_def_get_pixbuf (proc);
+          const gchar *locale_domain;
+          const gchar *help_domain;
+          gchar       *label;
+          gchar       *help_id;
+          const gchar *stock_id;
+          GdkPixbuf   *pixbuf;
+
+          locale_domain = plug_ins_locale_domain (gimp, proc->prog, NULL);
+          help_domain   = plug_ins_help_domain   (gimp, proc->prog, NULL);
+          label         = plug_in_proc_def_get_label    (proc, locale_domain);
+          help_id       = plug_in_proc_def_get_help_id  (proc, help_domain);
+          stock_id      = plug_in_proc_def_get_stock_id (proc);
+          pixbuf        = plug_in_proc_def_get_pixbuf   (proc);
 
           if (label)
             {
@@ -150,10 +161,13 @@ gimp_file_proc_view_new (Gimp        *gimp,
                                   COLUMN_EXTENSIONS, proc->extensions,
                                   COLUMN_STOCK_ID,   stock_id,
                                   COLUMN_PIXBUF,     pixbuf,
+                                  COLUMN_HELP_ID,    help_id,
                                   -1);
 
               g_free (label);
             }
+
+          g_free (help_id);
 
           if (pixbuf)
             g_object_unref (pixbuf);
@@ -165,8 +179,9 @@ gimp_file_proc_view_new (Gimp        *gimp,
       gtk_list_store_prepend (store, &iter);
 
       gtk_list_store_set (store, &iter,
-                          COLUMN_PROC,  NULL,
-                          COLUMN_LABEL, automatic,
+                          COLUMN_PROC,    NULL,
+                          COLUMN_LABEL,   automatic,
+                          COLUMN_HELP_ID, automatic_help_id,
                           -1);
     }
 
@@ -249,7 +264,6 @@ gimp_file_proc_view_get_proc (GimpFileProcView  *view,
   return NULL;
 }
 
-
 gboolean
 gimp_file_proc_view_set_proc (GimpFileProcView *view,
                               PlugInProcDef    *proc)
@@ -285,6 +299,31 @@ gimp_file_proc_view_set_proc (GimpFileProcView *view,
     }
 
   return iter_valid;
+}
+
+gchar *
+gimp_file_proc_view_get_help_id (GimpFileProcView *view)
+{
+  GtkTreeModel     *model;
+  GtkTreeSelection *selection;
+  GtkTreeIter       iter;
+
+  g_return_val_if_fail (GIMP_IS_FILE_PROC_VIEW (view), NULL);
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      gchar *help_id;
+
+      gtk_tree_model_get (model, &iter,
+                          COLUMN_HELP_ID, &help_id,
+                          -1);
+
+      return help_id;
+    }
+
+  return NULL;
 }
 
 static void

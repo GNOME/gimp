@@ -1,3 +1,15 @@
+2004-07-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimphelp-ids.h: added the removed help IDs back.
+
+	* app/widgets/gimpfileprocview.[ch]: cache all file_procs' help
+	IDs and added gimp_file_proc_view_get_help_id() which returns the
+	selected item's help ID.
+
+	* app/widgets/gimpfiledialog.c: added a custom help func which
+	shows the help for the selected file_proc if the proc_view has the
+	focus.
+
 2004-07-17  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/file-actions.c (file_actions): use GIMP_STOCK_WEB

@@ -41,10 +41,10 @@
 
 #include "gimpfiledialog.h"
 #include "gimpfileprocview.h"
-#include "gimpthumbbox.h"
-
-#include "gimppreviewrendererimagefile.h"
+#include "gimphelp-ids.h"
 #include "gimppreview.h"
+#include "gimppreviewrendererimagefile.h"
+#include "gimpthumbbox.h"
 
 #include "gimp-intl.h"
 
@@ -62,7 +62,8 @@ static void  gimp_file_dialog_add_filters        (GimpFileDialog   *dialog,
 static void  gimp_file_dialog_add_proc_selection (GimpFileDialog   *dialog,
                                                   Gimp             *gimp,
                                                   GSList           *file_procs,
-                                                  const gchar      *automatic);
+                                                  const gchar      *automatic,
+                                                  const gchar      *automatic_help_id);
 
 static void  gimp_file_dialog_selection_changed  (GtkFileChooser   *chooser,
                                                   GimpFileDialog   *dialog);
@@ -71,6 +72,9 @@ static void  gimp_file_dialog_update_preview     (GtkFileChooser   *chooser,
 
 static void  gimp_file_dialog_proc_changed       (GimpFileProcView *view,
                                                   GimpFileDialog   *dialog);
+
+static void  gimp_file_dialog_help_func          (const gchar      *help_id,
+                                                  gpointer          help_data);
 
 
 
@@ -131,6 +135,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
   GimpFileDialog *dialog;
   GSList         *file_procs;
   const gchar    *automatic;
+  const gchar    *automatic_help_id;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (title != NULL, NULL);
@@ -143,11 +148,13 @@ gimp_file_dialog_new (Gimp                 *gimp,
     case GTK_FILE_CHOOSER_ACTION_OPEN:
       file_procs = gimp->load_procs;
       automatic  = _("Automatic");
+      automatic_help_id = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
       break;
 
     case GTK_FILE_CHOOSER_ACTION_SAVE:
       file_procs = gimp->save_procs;
       automatic  = _("By Extension");
+      automatic_help_id = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
       break;
 
     default:
@@ -169,13 +176,14 @@ gimp_file_dialog_new (Gimp                 *gimp,
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
   gimp_help_connect (GTK_WIDGET (dialog),
-                     gimp_standard_help_func, help_id, NULL);
+                     gimp_file_dialog_help_func, help_id, dialog);
 
   gimp_file_dialog_add_preview (dialog, gimp);
 
   gimp_file_dialog_add_filters (dialog, gimp, file_procs);
 
-  gimp_file_dialog_add_proc_selection (dialog, gimp, file_procs, automatic);
+  gimp_file_dialog_add_proc_selection (dialog, gimp, file_procs, automatic,
+                                       automatic_help_id);
 
   return GTK_WIDGET (dialog);
 }
@@ -346,7 +354,8 @@ static void
 gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog,
                                      Gimp           *gimp,
                                      GSList         *file_procs,
-                                     const gchar    *automatic)
+                                     const gchar    *automatic,
+                                     const gchar    *automatic_help_id)
 {
   GtkWidget *scrolled_window;
 
@@ -365,7 +374,8 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog,
 
   gtk_widget_set_size_request (scrolled_window, -1, 200);
 
-  dialog->proc_view = gimp_file_proc_view_new (gimp, file_procs, automatic);
+  dialog->proc_view = gimp_file_proc_view_new (gimp, file_procs, automatic,
+                                               automatic_help_id);
   gtk_container_add (GTK_CONTAINER (scrolled_window), dialog->proc_view);
   gtk_widget_show (dialog->proc_view);
 
@@ -447,5 +457,31 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
 
           g_free (uri);
         }
+    }
+}
+
+static void
+gimp_file_dialog_help_func (const gchar *help_id,
+                            gpointer     help_data)
+{
+  GimpFileDialog *dialog = GIMP_FILE_DIALOG (help_data);
+  GtkWidget      *focus;
+
+  focus = gtk_window_get_focus (GTK_WINDOW (dialog));
+
+  if (focus == dialog->proc_view)
+    {
+      gchar *proc_help_id;
+
+      proc_help_id =
+        gimp_file_proc_view_get_help_id (GIMP_FILE_PROC_VIEW (dialog->proc_view));
+
+      gimp_standard_help_func (proc_help_id, NULL);
+
+      g_free (proc_help_id);
+    }
+  else
+    {
+      gimp_standard_help_func (help_id, NULL);
     }
 }
