@@ -154,13 +154,13 @@ main (int    argc,
   for (i = 1; i < argc; i++)
     {
       if ((strcmp (argv[i], "--no-interface") == 0) ||
-	      (strcmp (argv[i], "-i") == 0))
+	  (strcmp (argv[i], "-i") == 0))
 	{
 	  no_interface = TRUE;
  	  argv[i] = NULL;
 	}
       else if ((strcmp (argv[i], "--batch") == 0) ||
-	           (strcmp (argv[i], "-b") == 0))
+	       (strcmp (argv[i], "-b") == 0))
 	{
 	  argv[i] = NULL;
 	  for (j = 0, i++ ; i < argc; j++, i++)
@@ -189,6 +189,7 @@ main (int    argc,
       else if ((strcmp (argv[i], "--gimprc") == 0) || 
                (strcmp (argv[i], "-g") == 0))
 	{
+	  argv[i] = NULL;
 	  if (argc <= ++i) 
             {
 	      show_help = TRUE;
@@ -200,7 +201,7 @@ main (int    argc,
             }
 	}
       else if ((strcmp (argv[i], "--help") == 0) ||
-	           (strcmp (argv[i], "-h") == 0))
+	       (strcmp (argv[i], "-h") == 0))
 	{
 	  show_help = TRUE;
  	  argv[i] = NULL;
@@ -212,19 +213,19 @@ main (int    argc,
  	  argv[i] = NULL;
 	}
       else if ((strcmp (argv[i], "--no-data") == 0) ||
-		       (strcmp (argv[i], "-d") == 0))
+	       (strcmp (argv[i], "-d") == 0))
 	{
 	  no_data = TRUE;
  	  argv[i] = NULL;
 	}
       else if ((strcmp (argv[i], "--no-splash") == 0) ||
-		       (strcmp (argv[i], "-s") == 0))
+	       (strcmp (argv[i], "-s") == 0))
 	{
 	  no_splash = TRUE;
  	  argv[i] = NULL;
 	}
       else if ((strcmp (argv[i], "--no-splash-image") == 0) ||
-	           (strcmp (argv[i], "-S") == 0))
+	       (strcmp (argv[i], "-S") == 0))
 	{
 	  no_splash_image = TRUE;
  	  argv[i] = NULL;
@@ -245,13 +246,13 @@ main (int    argc,
  	  argv[i] = NULL;
 	}
       else if ((strcmp (argv[i], "--console-messages") == 0) ||
-		       (strcmp (argv[i], "-c") == 0))
+	       (strcmp (argv[i], "-c") == 0))
 	{
 	  console_messages = TRUE;
  	  argv[i] = NULL;
 	}
       else if ((strcmp (argv[i], "--restore-session") == 0) ||
-	           (strcmp (argv[i], "-r") == 0))
+	       (strcmp (argv[i], "-r") == 0))
 	{
 	  restore_session = TRUE;
  	  argv[i] = NULL;
@@ -273,10 +274,10 @@ main (int    argc,
 		stack_trace_mode = STACK_TRACE_ALWAYS;
 	      else
 		show_help = TRUE;
-		  
+
 	      argv[i] = NULL;
             }
-	} 
+	}
       /*
        *    ANYTHING ELSE starting with a '-' is an error.
        */
@@ -305,23 +306,23 @@ main (int    argc,
       g_print (_("\nUsage: %s [option ... ] [file ... ]\n\n"), argv[0]);
       g_print (_("Options:\n"));
       g_print (_("  -b, --batch <commands>   Run in batch mode.\n"));
-	  g_print (_("  -c, --console-messages   Display warnings to console instead of a dialog box.\n"));
-	  g_print (_("  -d, --no-data            Do not load brushes, gradients, palettes, patterns.\n"));
+      g_print (_("  -c, --console-messages   Display warnings to console instead of a dialog box.\n"));
+      g_print (_("  -d, --no-data            Do not load brushes, gradients, palettes, patterns.\n"));
       g_print (_("  -i, --no-interface       Run without a user interface.\n"));
-	  g_print (_("  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"));
+      g_print (_("  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"));
       g_print (_("  -h, --help               Output this help.\n"));
       g_print (_("  -r, --restore-session    Try to restore saved session.\n"));
-	  g_print (_("  -s, --no-splash          Do not show the startup window.\n"));
-	  g_print (_("  -S, --no-splash-image    Do not add an image to the startup window.\n"));
+      g_print (_("  -s, --no-splash          Do not show the startup window.\n"));
+      g_print (_("  -S, --no-splash-image    Do not add an image to the startup window.\n"));
       g_print (_("  -v, --version            Output version information.\n"));
       g_print (_("  --verbose                Show startup messages.\n"));	  
       g_print (_("  --no-shm                 Do not use shared memory between GIMP and plugins.\n"));
-	  g_print (_("  --no-xshm                Do not use the X Shared Memory extension.\n"));
-	  g_print (_("  --debug-handlers         Enable non-fatal debugging signal handlers.\n"));
+      g_print (_("  --no-xshm                Do not use the X Shared Memory extension.\n"));
+      g_print (_("  --debug-handlers         Enable non-fatal debugging signal handlers.\n"));
       g_print (_("  --display <display>      Use the designated X display.\n"));
       g_print (_("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"));
-	  g_print ("  --enable-stack-trace <never | query | always>\n");
-	  g_print (_("                           Debugging mode for fatal signals.\n\n"));
+      g_print ("  --enable-stack-trace <never | query | always>\n");
+      g_print (_("                           Debugging mode for fatal signals.\n\n"));
     }
 
   if (show_version || show_help)

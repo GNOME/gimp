@@ -1,5 +1,10 @@
 2000-10-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/main.c: the argv[] element containing "-g" or "--gimprc"
+	was not set to NULL, fixed broken (tabsize != 8) indentation.
+
+2000-10-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/menus.c: after getting confused again by the boolean
 	"initialize" variable, I finally decided to reverse it's
 	logic and changed it to "menus_initialized".
