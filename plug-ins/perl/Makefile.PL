@@ -172,6 +172,7 @@ WriteMakefile(
     'LIBS'	=> [''],
     'INC'	=> "$CPPFLAGS $CFLAGS $GIMP_INC_NOUI $DEFS",
     'DEFINE'	=> ($IN_GIMP ? " -DIN_GIMP" : ""),
+    'EXE_FILES'	=> ['scm2perl','scm2scm'],
     'realclean'	=> { FILES => "config.status config.cache config.log config.pl config.h" },
     'clean'	=> { FILES => "Makefile.old stamp-h" },
 );

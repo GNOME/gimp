@@ -37,7 +37,7 @@ register "xach_blocks",
           building block creation",
          "Seth Burgess",
          "Seth Burgess",
-         "1.3",
+         "1.4",
          "<Image>/Filters/Misc/Xach Blocks",
          "*",
          [

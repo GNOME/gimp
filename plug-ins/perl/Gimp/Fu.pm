@@ -679,20 +679,11 @@ which will open a colour selection box when clicked.
 
 =item PF_IMAGE
 
-A gimp image. Not yet supported in dialogs :(
+A gimp image.
 
 =item PF_DRAWABLE
 
-A gimp drawable (image, channel or layer). Not yet supported in dialogs :(
-
-=item PF_FONT
-
-An experimental value used to denote fonts. At the moment, this is just
-a C<PF_STRING>. It might be replaced by a font selection dialog in the future.
-
-Please note that the Gimp has no value describing a font, so the format of
-this string is undefined (and will usually contain only the family name of
-the selected font, but in the future it will contain a XLFD).
+A gimp drawable (image, channel or layer).
 
 =item PF_TOGGLE, PF_BOOL
 
@@ -719,6 +710,8 @@ The default argument, if specified, must be a full XLFD specification, or a
 warning will be printed. Please note that the gimp text functions using
 these fontnames (gimp_text_..._fontname) ignore the size. You can extract
 the size and dimension by using the C<xlfd_size> function.
+
+In older Gimp-Versions a user-supplied string is returned.
 
 =item PF_BRUSH, PF_PATTERN, PF_GRADIENT
 

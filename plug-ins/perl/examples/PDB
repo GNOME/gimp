@@ -116,7 +116,7 @@ sub complete_function {
       $synopsis->set(scalar@matches." matching functions");
    } else {
       set_clist @matches,@matches;
-      $synopsis->set($matches[0]." (press F1 to complete)");
+      $synopsis->set($matches[0]." (press F2 to complete)");
    }
 }
 
@@ -235,7 +235,7 @@ sub inputline {
 #         do_completion;
 print "ztab\n";
          return 1;
-      } elsif ($_[1]->{keyval} == 0xFFBE) {
+      } elsif ($_[1]->{keyval} == 0xFFBF) {
          do_completion;
          ();
       } else {
