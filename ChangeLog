@@ -1,3 +1,7 @@
+2003-11-26  Tor Lillqvist  <tml@iki.fi>
+
+	* Makefile.am (SUBDIRS): Drop "build".
+
 2003-10-30  Sven Neumann  <sven@gimp.org>
 
 	* tips/Makefile.am (tipsdata_DATA): added a number of missing files.

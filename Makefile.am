@@ -16,8 +16,7 @@ SUBDIRS = \
 	tips		\
 	help		\
 	$(GIMPDOCS)	\
-	devel-docs	\
-	build
+	devel-docs
 
 bin_SCRIPTS = gimptool-1.2 @GIMPINSTALL@
 
