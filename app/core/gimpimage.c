@@ -1550,17 +1550,18 @@ gimp_image_transform_color (const GimpImage    *gimage,
 			    guchar             *dest, 
 			    GimpImageBaseType   type)
 {
-  GimpImageType d_type;
+  GimpImageType drawable_type;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  d_type = (drawable != NULL) ? gimp_drawable_type (drawable) :
-    gimp_image_base_type_with_alpha (gimage);
+  drawable_type = (drawable ?
+                   gimp_drawable_type (drawable) :
+                   gimp_image_base_type_with_alpha (gimage));
 
   switch (type)
     {
     case GIMP_RGB:
-      switch (d_type)
+      switch (drawable_type)
 	{
 	case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
 	  /*  Straight copy  */
@@ -1585,7 +1586,7 @@ gimp_image_transform_color (const GimpImage    *gimage,
       break;
 
     case GIMP_GRAY:
-      switch (d_type)
+      switch (drawable_type)
 	{
 	case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
 	  /*  Gray to RG&B */

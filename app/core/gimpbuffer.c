@@ -162,7 +162,8 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
 
 GimpBuffer *
 gimp_buffer_new (TileManager *tiles,
-		 const gchar *name)
+		 const gchar *name,
+                 gboolean     copy_pixels)
 {
   GimpBuffer  *buffer;
   PixelRegion  srcPR, destPR;
@@ -178,11 +179,34 @@ gimp_buffer_new (TileManager *tiles,
 
   gimp_object_set_name (GIMP_OBJECT (buffer), name);
 
-  buffer->tiles = tile_manager_new (width, height, tile_manager_bpp (tiles));
+  if (copy_pixels)
+    {
+      buffer->tiles = tile_manager_new (width, height, tile_manager_bpp (tiles));
 
-  pixel_region_init (&srcPR, tiles, 0, 0, width, height, FALSE); 
-  pixel_region_init (&destPR, buffer->tiles, 0, 0, width, height, TRUE);
-  copy_region (&srcPR, &destPR);
+      pixel_region_init (&srcPR, tiles, 0, 0, width, height, FALSE); 
+      pixel_region_init (&destPR, buffer->tiles, 0, 0, width, height, TRUE);
+      copy_region (&srcPR, &destPR);
+    }
+  else
+    {
+      buffer->tiles = tiles;
+    }
 
   return GIMP_BUFFER (buffer);
+}
+
+gint
+gimp_buffer_get_width (GimpBuffer *buffer)
+{
+  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), 0);
+
+  return tile_manager_width (buffer->tiles);
+}
+
+gint
+gimp_buffer_get_height (GimpBuffer *buffer)
+{
+  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), 0);
+
+  return tile_manager_height (buffer->tiles);
 }

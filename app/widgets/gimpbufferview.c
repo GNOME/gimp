@@ -218,7 +218,7 @@ gimp_buffer_view_paste_clicked (GtkWidget      *widget,
 	{
 	  gimp_edit_paste (gimage,
 			   gimp_image_active_drawable (gimage),
-			   buffer->tiles,
+			   buffer,
 			   FALSE);
 
 	  gdisplays_flush ();
@@ -248,7 +248,7 @@ gimp_buffer_view_paste_into_clicked (GtkWidget      *widget,
 	{
 	  gimp_edit_paste (gimage,
 			   gimp_image_active_drawable (gimage),
-			   buffer->tiles,
+			   buffer,
 			   TRUE);
 
 	  gdisplays_flush ();
@@ -276,7 +276,7 @@ gimp_buffer_view_paste_as_new_clicked (GtkWidget      *widget,
 
       if (gimage)
 	{
-	  gimp_edit_paste_as_new (gimage->gimp, gimage, buffer->tiles);
+	  gimp_edit_paste_as_new (gimage->gimp, gimage, buffer);
 	}
     }
 }

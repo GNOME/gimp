@@ -23,17 +23,24 @@
 #define MAXNUMCOLORS 256
 
 
-void   gimp_image_convert (GimpImage          *gimage,
-			   GimpImageBaseType   new_type,
-			   /* The following params used only for
-			    * new_type == INDEXED
-			    */
-			   gint                num_cols,
-			   ConvertDitherType   dither,
-			   gint                alpha_dither,
-			   gint                remdups,
-			   ConvertPaletteType  palette_type,
-			   GimpPalette        *custom_palette);
+void   gimp_image_convert              (GimpImage          *gimage,
+                                        GimpImageBaseType   new_type,
+                                        /* The following params used only for
+                                         * new_type == INDEXED
+                                         */
+                                        gint                num_cols,
+                                        ConvertDitherType   dither,
+                                        gint                alpha_dither,
+                                        gint                remdups,
+                                        ConvertPaletteType  palette_type,
+                                        GimpPalette        *custom_palette);
+
+void   gimp_drawable_convert_rgb       (GimpDrawable       *drawable,
+                                        TileManager        *new_tiles,
+                                        GimpImageBaseType   old_base_type);
+void   gimp_drawable_convert_grayscale (GimpDrawable       *drawable,
+                                        TileManager        *new_tiles,
+                                        GimpImageBaseType   old_base_type);
 
 
 #endif  /*  __GIMP_IMAGE_CONVERT_H__  */

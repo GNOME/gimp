@@ -302,7 +302,9 @@ gimp_channel_list_view_to_selection (GimpChannelListView *view,
 	}
       else
 	{
-	  new_channel = gimp_channel_copy (gimp_image_get_mask (gimage), TRUE);
+	  new_channel = gimp_channel_copy (gimp_image_get_mask (gimage),
+                                           G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
+                                           TRUE);
 
 	  gimp_channel_combine_mask (new_channel,
 				     channel,

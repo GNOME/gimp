@@ -22,9 +22,6 @@
 
 #include "display-types.h"
 
-#include "base/pixel-region.h"
-#include "base/tile-manager.h"
-
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
@@ -36,8 +33,6 @@
 #include "core/gimplayer.h"
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
-
-#include "paint-funcs/paint-funcs.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -54,19 +49,10 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
                                   GimpViewable *viewable,
                                   gpointer      data)
 {
-  GimpDrawable     *drawable;
-  GimpDisplay      *gdisp;
-  GimpImage        *src_gimage;
-  GimpLayer        *new_layer;
-  GimpImage        *dest_gimage;
-  gint              src_width, src_height;
-  gint              dest_width, dest_height;
-  gint              off_x, off_y;
-  TileManager      *tiles;
-  PixelRegion       srcPR, destPR;
-  guchar            bg[MAX_CHANNELS];
-  gint              bytes; 
-  GimpImageBaseType type;
+  GimpDrawable *drawable;
+  GimpDisplay  *gdisp;
+  GimpLayer    *new_layer;
+  gint          off_x, off_y;
 
   gdisp = GIMP_DISPLAY_SHELL (data)->gdisp;
 
@@ -75,86 +61,22 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 
   drawable = GIMP_DRAWABLE (viewable);
 
-  src_gimage = gimp_drawable_gimage (drawable);
-  src_width  = gimp_drawable_width  (drawable);
-  src_height = gimp_drawable_height (drawable);
+  undo_push_group_start (gdisp->gimage, EDIT_PASTE_UNDO);
 
-  switch (gimp_drawable_type (drawable))
-    {
-    case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
-      bytes = 4; type = GIMP_RGB;
-      break;
-    case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
-      bytes = 2; type = GIMP_GRAY;
-      break;
-    case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
-      bytes = 4; type = GIMP_INDEXED;
-      break;
-    default:
-      bytes = 3; type = GIMP_RGB;
-      break;
-    }
+  new_layer = gimp_layer_new_from_drawable (gdisp->gimage, drawable);
 
-  gimp_image_get_background (src_gimage, drawable, bg);
+  off_x = (gdisp->gimage->width  - gimp_drawable_width (drawable))  / 2;
+  off_y = (gdisp->gimage->height - gimp_drawable_height (drawable)) / 2;
 
-  tiles = tile_manager_new (src_width, src_height, bytes);
+  gimp_layer_translate (new_layer, off_x, off_y);
 
-  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-		     0, 0, src_width, src_height, FALSE);
-  pixel_region_init (&destPR, tiles,
-		     0, 0, src_width, src_height, TRUE);
+  gimp_image_add_layer (gdisp->gimage, new_layer, -1);
 
-  if (type == GIMP_INDEXED)
-    {
-      /*  If the layer is indexed...we need to extract pixels  */
-      extract_from_region (&srcPR, &destPR, NULL,
-			   gimp_drawable_cmap (drawable), bg, type,
-			   gimp_drawable_has_alpha (drawable), FALSE);
-    }
-  else if (bytes > srcPR.bytes)
-    {
-      /*  If the layer doesn't have an alpha channel, add one  */
-      add_alpha_region (&srcPR, &destPR);
-    }
-  else
-    {
-      /*  Otherwise, do a straight copy  */
-      copy_region (&srcPR, &destPR);
-    }
+  undo_push_group_end (gdisp->gimage);
 
-  dest_gimage = gdisp->gimage;
-  dest_width  = dest_gimage->width;
-  dest_height = dest_gimage->height;
+  gdisplays_flush ();
 
-  undo_push_group_start (dest_gimage, EDIT_PASTE_UNDO);
-
-  new_layer =
-    gimp_layer_new_from_tiles (dest_gimage,
-			       gimp_image_base_type_with_alpha (dest_gimage),
-			       tiles, 
-			       _("Pasted Layer"),
-			       OPAQUE_OPACITY, GIMP_NORMAL_MODE);
-
-  tile_manager_destroy (tiles);
-
-  if (new_layer)
-    {
-      gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), dest_gimage);
-
-      off_x = (dest_gimage->width - src_width) / 2;
-      off_y = (dest_gimage->height - src_height) / 2;
-
-      gimp_layer_translate (new_layer, off_x, off_y);
-
-      gimp_image_add_layer (dest_gimage, new_layer, -1);
-
-      undo_push_group_end (dest_gimage);
-
-      gdisplays_flush ();
-
-      gimp_context_set_display (gimp_get_user_context (gdisp->gimage->gimp),
-				gdisp);
-    }
+  gimp_context_set_display (gimp_get_user_context (gdisp->gimage->gimp), gdisp);
 }
 
 static void
@@ -252,7 +174,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 
   gimp_edit_paste (gdisp->gimage,
 		   gimp_image_active_drawable (gdisp->gimage),
-		   buffer->tiles,
+		   buffer,
 		   FALSE);
 
   gdisplays_flush ();

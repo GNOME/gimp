@@ -27,10 +27,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
-
-#include "paint-funcs/paint-funcs.h"
-
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
 
@@ -142,69 +138,32 @@ gimp_layer_mask_new (GimpImage     *gimage,
 			   gimage, width, height, GIMP_GRAY_IMAGE, name);
 
   /*  set the layer_mask color and opacity  */
-  GIMP_CHANNEL (layer_mask)->color          = *color;
+  GIMP_CHANNEL (layer_mask)->color       = *color;
 
-  GIMP_CHANNEL (layer_mask)->show_masked    = TRUE;
+  GIMP_CHANNEL (layer_mask)->show_masked = TRUE;
 
   /*  selection mask variables  */
-  GIMP_CHANNEL (layer_mask)->empty          = TRUE;
-  GIMP_CHANNEL (layer_mask)->segs_in        = NULL;
-  GIMP_CHANNEL (layer_mask)->segs_out       = NULL;
-  GIMP_CHANNEL (layer_mask)->num_segs_in    = 0;
-  GIMP_CHANNEL (layer_mask)->num_segs_out   = 0;
-  GIMP_CHANNEL (layer_mask)->bounds_known   = TRUE;
-  GIMP_CHANNEL (layer_mask)->boundary_known = TRUE;
-  GIMP_CHANNEL (layer_mask)->x1             = 0;
-  GIMP_CHANNEL (layer_mask)->y1             = 0;
-  GIMP_CHANNEL (layer_mask)->x2             = width;
-  GIMP_CHANNEL (layer_mask)->y2             = height;
+  GIMP_CHANNEL (layer_mask)->x2          = width;
+  GIMP_CHANNEL (layer_mask)->y2          = height;
 
   return layer_mask;
 }
 
 GimpLayerMask *
-gimp_layer_mask_copy (GimpLayerMask *layer_mask)
+gimp_layer_mask_copy (const GimpLayerMask *layer_mask)
 {
-  gchar         *layer_mask_name;
   GimpLayerMask *new_layer_mask;
-  PixelRegion    srcPR, destPR;
 
-  /*  formulate the new layer_mask name  */
-  layer_mask_name =
-    g_strdup_printf (_("%s copy"), 
-		     gimp_object_get_name (GIMP_OBJECT (layer_mask)));
+  g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), NULL);
 
-  /*  allocate a new layer_mask object  */
-  new_layer_mask = gimp_layer_mask_new (GIMP_DRAWABLE (layer_mask)->gimage, 
-					GIMP_DRAWABLE (layer_mask)->width, 
-					GIMP_DRAWABLE (layer_mask)->height, 
-					layer_mask_name,
-					&GIMP_CHANNEL (layer_mask)->color);
-
-  GIMP_DRAWABLE (new_layer_mask)->visible   = GIMP_DRAWABLE (layer_mask)->visible;
-  GIMP_DRAWABLE (new_layer_mask)->offset_x  = GIMP_DRAWABLE (layer_mask)->offset_x;
-  GIMP_DRAWABLE (new_layer_mask)->offset_y  = GIMP_DRAWABLE (layer_mask)->offset_y;
-  GIMP_CHANNEL (new_layer_mask)->show_masked = GIMP_CHANNEL (layer_mask)->show_masked;
+  new_layer_mask =
+    GIMP_LAYER_MASK (gimp_channel_copy (GIMP_CHANNEL (layer_mask),
+                                        GIMP_TYPE_LAYER_MASK,
+                                        FALSE));
 
   new_layer_mask->apply_mask = layer_mask->apply_mask;
   new_layer_mask->edit_mask  = layer_mask->edit_mask;
   new_layer_mask->show_mask  = layer_mask->show_mask;
-
-  /*  copy the contents across layer masks  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer_mask)->tiles, 
-		     0, 0, 
-		     GIMP_DRAWABLE (layer_mask)->width, 
-		     GIMP_DRAWABLE (layer_mask)->height, 
-		     FALSE);
-  pixel_region_init (&destPR, GIMP_DRAWABLE (new_layer_mask)->tiles, 
-		     0, 0, 
-		     GIMP_DRAWABLE (layer_mask)->width, 
-		     GIMP_DRAWABLE (layer_mask)->height, 
-		     TRUE);
-  copy_region (&srcPR, &destPR);
-
-  /*  free up the layer_mask_name memory  */
-  g_free (layer_mask_name);
 
   return new_layer_mask;
 }
@@ -217,7 +176,7 @@ gimp_layer_mask_set_layer (GimpLayerMask *mask,
 }
 
 GimpLayer *
-gimp_layer_mask_get_layer (GimpLayerMask *mask)
+gimp_layer_mask_get_layer (const GimpLayerMask *mask)
 {
   return mask->layer;
 }
@@ -250,7 +209,7 @@ gimp_layer_mask_set_apply (GimpLayerMask *layer_mask,
 }
 
 gboolean
-gimp_layer_mask_get_apply (GimpLayerMask *layer_mask)
+gimp_layer_mask_get_apply (const GimpLayerMask *layer_mask)
 {
   g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), FALSE);
 
@@ -273,7 +232,7 @@ gimp_layer_mask_set_edit (GimpLayerMask *layer_mask,
 }
 
 gboolean
-gimp_layer_mask_get_edit (GimpLayerMask *layer_mask)
+gimp_layer_mask_get_edit (const GimpLayerMask *layer_mask)
 {
   g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), FALSE);
 
@@ -308,7 +267,7 @@ gimp_layer_mask_set_show (GimpLayerMask *layer_mask,
 }
 
 gboolean
-gimp_layer_mask_get_show (GimpLayerMask *layer_mask)
+gimp_layer_mask_get_show (const GimpLayerMask *layer_mask)
 {
   g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), FALSE);
 

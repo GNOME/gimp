@@ -28,8 +28,6 @@
 
 #include "gui-types.h"
 
-#include "paint-funcs/paint-funcs.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-desaturate.h"
@@ -190,7 +188,9 @@ layers_duplicate_cmd_callback (GtkWidget *widget,
   return_if_no_image (gimage);
 
   active_layer = gimp_image_get_active_layer (gimage);
-  new_layer = gimp_layer_copy (active_layer, TRUE);
+  new_layer = gimp_layer_copy (active_layer,
+                               G_TYPE_FROM_INSTANCE (active_layer),
+                               TRUE);
   gimp_image_add_layer (gimage, new_layer, -1);
 
   gdisplays_flush ();

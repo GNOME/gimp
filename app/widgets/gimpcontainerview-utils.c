@@ -23,7 +23,6 @@
 #include "widgets-types.h"
 
 #include "base/temp-buf.h"
-#include "base/tile-manager.h"
 
 #include "core/gimpbrush.h"
 #include "core/gimpbuffer.h"
@@ -339,8 +338,8 @@ gimp_container_view_buffer_name_func (GtkWidget  *widget,
 
 	  return g_strdup_printf ("%s (%d x %d)",
 				  GIMP_OBJECT (buffer)->name,
-				  tile_manager_width (buffer->tiles),
-				  tile_manager_height (buffer->tiles));
+				  gimp_buffer_get_width (buffer),
+				  gimp_buffer_get_height (buffer));
 	}
     }
 

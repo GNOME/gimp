@@ -26,11 +26,10 @@
 
 #include "core-types.h"
 
-#include "base/tile-manager.h"
-
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimp.h"
+#include "gimpbuffer.h"
 #include "gimpcoreconfig.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
@@ -157,8 +156,8 @@ gimp_image_new_values_new (Gimp      *gimp,
 
   if (gimp->global_buffer && gimp->have_current_cut_buffer)
     {
-      values->width  = tile_manager_width (gimp->global_buffer);
-      values->height = tile_manager_height (gimp->global_buffer);
+      values->width  = gimp_buffer_get_width (gimp->global_buffer);
+      values->height = gimp_buffer_get_height (gimp->global_buffer);
     }
 
   return values;

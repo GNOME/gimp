@@ -47,7 +47,7 @@
 #include "libgimp/gimpintl.h"
 
 
-TileManager *
+GimpBuffer *
 gimp_edit_cut (GimpImage    *gimage,
 	       GimpDrawable *drawable)
 {
@@ -93,16 +93,18 @@ gimp_edit_cut (GimpImage    *gimage,
     {
       /*  Free the old global edit buffer  */
       if (gimage->gimp->global_buffer)
-	tile_manager_destroy (gimage->gimp->global_buffer);
+	g_object_unref (G_OBJECT (gimage->gimp->global_buffer));
 
       /*  Set the global edit buffer  */
-      gimage->gimp->global_buffer = cropped_cut;
+      gimage->gimp->global_buffer = gimp_buffer_new (cropped_cut,
+                                                     "Global Buffer",
+                                                     TRUE);
     }
 
-  return cropped_cut;
+  return gimp_buffer_new (cropped_cut, "Cut Pixels", FALSE);
 }
 
-TileManager *
+GimpBuffer *
 gimp_edit_copy (GimpImage    *gimage,
 		GimpDrawable *drawable)
 {
@@ -142,19 +144,21 @@ gimp_edit_copy (GimpImage    *gimage,
     {
       /*  Free the old global edit buffer  */
       if (gimage->gimp->global_buffer)
-	tile_manager_destroy (gimage->gimp->global_buffer);
+	g_object_unref (G_OBJECT (gimage->gimp->global_buffer));
 
       /*  Set the global edit buffer  */
-      gimage->gimp->global_buffer = cropped_copy;
+      gimage->gimp->global_buffer = gimp_buffer_new (cropped_copy,
+                                                     "Global Buffer",
+                                                     TRUE);
     }
 
-  return cropped_copy;
+  return gimp_buffer_new (cropped_copy, "Copied Pixels", FALSE);
 }
 
 GimpLayer *
 gimp_edit_paste (GimpImage    *gimage,
 		 GimpDrawable *drawable,
-		 TileManager  *paste,
+		 GimpBuffer   *paste,
 		 gboolean      paste_into)
 {
   GimpLayer *layer;
@@ -170,14 +174,12 @@ gimp_edit_paste (GimpImage    *gimage,
 
   if (drawable != NULL)
     layer = gimp_layer_new_from_tiles (gimage,
-				       gimp_drawable_type_with_alpha (drawable),
-				       paste, 
+				       paste->tiles, 
 				       _("Pasted Layer"),
 				       OPAQUE_OPACITY, GIMP_NORMAL_MODE);
   else
     layer = gimp_layer_new_from_tiles (gimage,
-				       gimp_image_base_type_with_alpha (gimage),
-				       paste, 
+				       paste->tiles,
 				       _("Pasted Layer"),
 				       OPAQUE_OPACITY, GIMP_NORMAL_MODE);
 
@@ -188,7 +190,7 @@ gimp_edit_paste (GimpImage    *gimage,
   undo_push_group_start (gimage, EDIT_PASTE_UNDO);
 
   /*  Set the offsets to the center of the image  */
-  if (drawable != NULL)
+  if (drawable)
     {
       gimp_drawable_offsets (drawable, &cx, &cy);
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -229,17 +231,17 @@ gimp_edit_paste (GimpImage    *gimage,
 }
 
 GimpImage *
-gimp_edit_paste_as_new (Gimp        *gimp,
-			GimpImage   *invoke,
-			TileManager *paste)
+gimp_edit_paste_as_new (Gimp       *gimp,
+			GimpImage  *invoke,
+			GimpBuffer *paste)
 {
   GimpImage    *gimage;
   GimpLayer    *layer;
 
   /*  create a new image  (always of type GIMP_RGB)  */
   gimage = gimp_create_image (gimp,
-			      tile_manager_width (paste), 
-			      tile_manager_height (paste), 
+			      gimp_buffer_get_width (paste), 
+                              gimp_buffer_get_height (paste), 
 			      GIMP_RGB,
 			      TRUE);
   gimp_image_undo_disable (gimage);
@@ -252,8 +254,7 @@ gimp_edit_paste_as_new (Gimp        *gimp,
     }
 
   layer = gimp_layer_new_from_tiles (gimage,
-				     gimp_image_base_type_with_alpha (gimage),
-				     paste, 
+				     paste->tiles,
 				     _("Pasted Layer"),
 				     OPAQUE_OPACITY, GIMP_NORMAL_MODE);
 

@@ -118,7 +118,6 @@ gimp_channel_init (GimpChannel *channel)
   channel->y1             = 0;
   channel->x2             = 0;
   channel->y2             = 0;
-  
 }
 
 static void
@@ -171,19 +170,20 @@ gimp_channel_new (GimpImage     *gimage,
 			   gimage, width, height, GIMP_GRAY_IMAGE, name);
 
   /*  set the channel color and opacity  */
-  channel->color = *color;
+  channel->color       = *color;
 
   channel->show_masked = TRUE;
 
   /*  selection mask variables  */
-  channel->x2 = width;
-  channel->y2 = height;
+  channel->x2          = width;
+  channel->y2          = height;
 
   return channel;
 }
 
 GimpChannel *
 gimp_channel_copy (const GimpChannel *channel,
+                   GType              new_type,
                    gboolean           dummy) /*  the dummy is for symmetry with
                                               *  gimp_layer_copy() because
                                               *  both functions are used as
@@ -191,55 +191,23 @@ gimp_channel_copy (const GimpChannel *channel,
                                               *  GimpDrawableListView --Mitch
                                               */
 {
-  gchar       *channel_name;
   GimpChannel *new_channel;
-  PixelRegion  srcPR, destPR;
-  gchar       *ext;
-  gint         number;
-  const gchar *name;
-  gint         len;
 
-  /*  formulate the new channel name  */
-  name = gimp_object_get_name (GIMP_OBJECT (channel));
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), NULL);
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_CHANNEL), NULL);
 
-  ext = strrchr (name, '#');
-  len = strlen (_("copy"));
-  if ((strlen (name) >= len &&
-       strcmp (&name[strlen (name) - len], _("copy")) == 0) ||
-      (ext && (number = atoi (ext + 1)) > 0 && 
-       ((int)(log10 (number) + 1)) == strlen (ext + 1)))
-    /* don't have redundant "copy"s */
-    channel_name = g_strdup (name);
-  else
-    channel_name = g_strdup_printf (_("%s copy"), name);
+  new_channel = GIMP_CHANNEL (gimp_drawable_copy (GIMP_DRAWABLE (channel),
+                                                  new_type,
+                                                  FALSE));
 
-  /*  allocate a new channel object  */
-  new_channel = gimp_channel_new (GIMP_DRAWABLE (channel)->gimage, 
-				  GIMP_DRAWABLE (channel)->width, 
-				  GIMP_DRAWABLE (channel)->height, 
-				  channel_name,
-				  &channel->color);
-
-  GIMP_DRAWABLE (new_channel)->visible = GIMP_DRAWABLE (channel)->visible;
+  /*  set the channel color and opacity  */
+  new_channel->color       = channel->color;
 
   new_channel->show_masked = channel->show_masked;
 
-  /*  copy the contents across channels  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles, 0, 0, 
-		     GIMP_DRAWABLE (channel)->width, 
-		     GIMP_DRAWABLE (channel)->height, FALSE);
-  pixel_region_init (&destPR, GIMP_DRAWABLE (new_channel)->tiles,
-		     0, 0,
-		     GIMP_DRAWABLE (channel)->width,
-		     GIMP_DRAWABLE (channel)->height, TRUE);
-  copy_region (&srcPR, &destPR);
-
-  /* copy the parasites */
-  GIMP_DRAWABLE (new_channel)->parasites =
-    gimp_parasite_list_copy (GIMP_DRAWABLE (channel)->parasites);
-
-  /*  free up the channel_name memory  */
-  g_free (channel_name);
+  /*  selection mask variables  */
+  new_channel->x2          = gimp_drawable_width (GIMP_DRAWABLE (new_channel));
+  new_channel->y2          = gimp_drawable_height (GIMP_DRAWABLE (new_channel));
 
   return new_channel;
 }

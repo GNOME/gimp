@@ -277,20 +277,22 @@ cut_named_buffer_callback (GtkWidget *widget,
 			   gchar     *name,
 			   gpointer   data)
 {
-  TileManager *new_tiles;
-  GimpImage   *gimage;
+  GimpBuffer *cut_buffer;
+  GimpImage  *gimage;
 
   gimage = (GimpImage *) data;
-  
-  new_tiles = gimp_edit_cut (gimage,
-			     gimp_image_active_drawable (gimage));
 
-  if (new_tiles)
+  cut_buffer = gimp_edit_cut (gimage,
+                              gimp_image_active_drawable (gimage));
+
+  if (cut_buffer)
     {
-      GimpBuffer *buffer;
+      GimpBuffer *new_buffer;
 
-      buffer = gimp_buffer_new (new_tiles, name);
-      gimp_container_add (gimage->gimp->named_buffers, GIMP_OBJECT (buffer));
+      new_buffer = gimp_buffer_new (cut_buffer->tiles, name, TRUE);
+
+      gimp_container_add (gimage->gimp->named_buffers,
+                          GIMP_OBJECT (new_buffer));
     }
 
   gdisplays_flush ();
@@ -301,19 +303,21 @@ copy_named_buffer_callback (GtkWidget *widget,
 			    gchar     *name,
 			    gpointer   data)
 {
-  TileManager *new_tiles;
-  GimpImage   *gimage;
+  GimpBuffer *copy_buffer;
+  GimpImage  *gimage;
 
   gimage = (GimpImage *) data;
 
-  new_tiles = gimp_edit_copy (gimage,
-			      gimp_image_active_drawable (gimage));
+  copy_buffer = gimp_edit_copy (gimage,
+                                gimp_image_active_drawable (gimage));
 
-  if (new_tiles)
+  if (copy_buffer)
     {
-      GimpBuffer *buffer;
+      GimpBuffer *new_buffer;
 
-      buffer = gimp_buffer_new (new_tiles, name);
-      gimp_container_add (gimage->gimp->named_buffers, GIMP_OBJECT (buffer));
+      new_buffer = gimp_buffer_new (copy_buffer->tiles, name, TRUE);
+
+      gimp_container_add (gimage->gimp->named_buffers,
+                          GIMP_OBJECT (new_buffer));
     }
 }

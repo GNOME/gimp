@@ -467,9 +467,6 @@ typedef struct
 } Options;
 
 
-static void rgb_converter           (GimpLayer *, TileManager *, int);
-static void grayscale_converter     (GimpLayer *, TileManager *, int);
-
 static void zero_histogram_gray     (CFHistogram);
 static void zero_histogram_rgb      (CFHistogram);
 static void generate_histogram_gray (CFHistogram, GimpLayer *, int alpha_dither);
@@ -674,22 +671,15 @@ gimp_image_convert (GimpImage          *gimage,
 		    ConvertPaletteType  palette_type,
 		    GimpPalette        *custom_palette)
 {
-  QuantizeObj       *quantobj;
+  QuantizeObj       *quantobj = NULL;
   GimpLayer         *layer;
   GimpLayer         *floating_layer;
   GimpImageBaseType  old_type;
   GList             *list;
   GimpImageType      new_layer_type;
-  gint               new_layer_bytes;
-  gboolean           has_alpha;
   TileManager       *new_tiles;
 
-  g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  quantobj        = NULL;
-  new_layer_type  = GIMP_RGBA_IMAGE;
-  new_layer_bytes = 4;
 
   theCustomPalette = custom_palette;
 
@@ -812,39 +802,31 @@ gimp_image_convert (GimpImage          *gimage,
     {
       layer = (GimpLayer *) list->data;
 
-      has_alpha = gimp_layer_has_alpha (layer);
-      switch (new_type)
-	{
-	case GIMP_RGB:
-	  new_layer_type = (has_alpha) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
-	  new_layer_bytes = (has_alpha) ? 4 : 3;
-	  break;
-	case GIMP_GRAY:
-	  new_layer_type = (has_alpha) ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
-	  new_layer_bytes = (has_alpha) ? 2 : 1;
-	  break;
-	case GIMP_INDEXED:
-	  new_layer_type = (has_alpha) ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
-	  new_layer_bytes = (has_alpha) ? 2 : 1;
-	  break;
-	default:
-	  break;
-	}
+      new_layer_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_type);
 
-      new_tiles = tile_manager_new (GIMP_DRAWABLE(layer)->width,
-				    GIMP_DRAWABLE(layer)->height,
-				    new_layer_bytes);
+      if (gimp_layer_has_alpha (layer))
+        new_layer_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_layer_type);
+
+      new_tiles = tile_manager_new (GIMP_DRAWABLE (layer)->width,
+				    GIMP_DRAWABLE (layer)->height,
+				    GIMP_IMAGE_TYPE_BYTES (new_layer_type));
 
       switch (new_type)
 	{
 	case GIMP_RGB:
-	  rgb_converter (layer, new_tiles, old_type);
+	  gimp_drawable_convert_rgb (GIMP_DRAWABLE (layer),
+                                     new_tiles,
+                                     old_type);
 	  break;
 	case GIMP_GRAY:
-	  grayscale_converter (layer, new_tiles, old_type);
+	  gimp_drawable_convert_grayscale (GIMP_DRAWABLE (layer),
+                                           new_tiles,
+                                           old_type);
 	  break;
 	case GIMP_INDEXED:
-	  (* quantobj->second_pass) (quantobj, layer, new_tiles);
+	  (* quantobj->second_pass) (quantobj,
+                                     layer,
+                                     new_tiles);
 	  break;
 	default:
 	  break;
@@ -854,8 +836,8 @@ gimp_image_convert (GimpImage          *gimage,
       undo_push_layer_mod (gimage, layer);
 
       GIMP_DRAWABLE (layer)->tiles     = new_tiles;
-      GIMP_DRAWABLE (layer)->bytes     = new_layer_bytes;
       GIMP_DRAWABLE (layer)->type      = new_layer_type;
+      GIMP_DRAWABLE (layer)->bytes     = GIMP_IMAGE_TYPE_BYTES (new_layer_type);
       GIMP_DRAWABLE (layer)->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (new_layer_type);
     }
 
@@ -944,30 +926,44 @@ gimp_image_convert (GimpImage          *gimage,
   gimp_unset_busy (gimage->gimp);
 }
 
-static void
-rgb_converter (GimpLayer   *layer,
-	       TileManager *new_tiles,
-	       int          old_type)
+void
+gimp_drawable_convert_rgb (GimpDrawable      *drawable,
+                           TileManager       *new_tiles,
+                           GimpImageBaseType  old_base_type)
 {
-  PixelRegion srcPR, destPR;
-  int row, col;
-  int offset;
-  int has_alpha;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  unsigned char *cmap;
-  void *pr;
+  PixelRegion  srcPR, destPR;
+  gint         row, col;
+  gint         offset;
+  gint         has_alpha;
+  guchar      *src, *s;
+  guchar      *dest, *d;
+  guchar      *cmap;
+  gpointer     pr;
 
-  has_alpha = gimp_layer_has_alpha (layer);
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (new_tiles != NULL);
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
+  has_alpha = gimp_drawable_has_alpha (drawable);
+
+  pixel_region_init (&srcPR, drawable->tiles,
+                     0, 0,
+                     drawable->width,
+                     drawable->height,
+                     FALSE);
+  pixel_region_init (&destPR, new_tiles,
+                     0, 0,
+                     drawable->width,
+                     drawable->height,
+                     TRUE);
+
+  for (pr = pixel_regions_register (2, &srcPR, &destPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       src = srcPR.data;
       dest = destPR.data;
 
-      switch (old_type)
+      switch (old_base_type)
 	{
 	case GIMP_GRAY:
 	  for (row = 0; row < srcPR.h; row++)
@@ -991,7 +987,7 @@ rgb_converter (GimpLayer   *layer,
 	    }
 	  break;
 	case GIMP_INDEXED:
-	  cmap = gimp_drawable_cmap (GIMP_DRAWABLE(layer));
+	  cmap = gimp_drawable_cmap (drawable);
 	  for (row = 0; row < srcPR.h; row++)
 	    {
 	      s = src;
@@ -1018,30 +1014,44 @@ rgb_converter (GimpLayer   *layer,
     }
 }
 
-static void
-grayscale_converter (GimpLayer   *layer,
-		     TileManager *new_tiles,
-		     int          old_type)
+void
+gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
+                                 TileManager       *new_tiles,
+                                 GimpImageBaseType  old_base_type)
 {
-  PixelRegion srcPR, destPR;
-  int row, col;
-  int offset, val;
-  int has_alpha;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  unsigned char *cmap;
-  void *pr;
+  PixelRegion  srcPR, destPR;
+  gint         row, col;
+  gint         offset, val;
+  gboolean     has_alpha;
+  guchar      *src, *s;
+  guchar      *dest, *d;
+  guchar      *cmap;
+  gpointer     pr;
 
-  has_alpha = gimp_layer_has_alpha (layer);
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (new_tiles != NULL);
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
+  has_alpha = gimp_drawable_has_alpha (drawable);
+
+  pixel_region_init (&srcPR, drawable->tiles,
+                     0, 0,
+                     drawable->width,
+                     drawable->height,
+                     FALSE);
+  pixel_region_init (&destPR, new_tiles,
+                     0, 0,
+                     drawable->width,
+                     drawable->height,
+                     TRUE);
+
+  for (pr = pixel_regions_register (2, &srcPR, &destPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       src = srcPR.data;
       dest = destPR.data;
 
-      switch (old_type)
+      switch (old_base_type)
 	{
 	case GIMP_RGB:
 	  for (row = 0; row < srcPR.h; row++)
@@ -1051,7 +1061,7 @@ grayscale_converter (GimpLayer   *layer,
 	      for (col = 0; col < srcPR.w; col++)
 		{
 		  val = INTENSITY (s[RED_PIX], s[GREEN_PIX], s[BLUE_PIX]);
-		  *d++ = (unsigned char) val;
+		  *d++ = (guchar) val;
 		  s += 3;
 		  if (has_alpha)
 		    *d++ = *s++;
@@ -1062,7 +1072,7 @@ grayscale_converter (GimpLayer   *layer,
 	    }
 	  break;
 	case GIMP_INDEXED:
-	  cmap = gimp_drawable_cmap (GIMP_DRAWABLE(layer));
+	  cmap = gimp_drawable_cmap (drawable);
 	  for (row = 0; row < srcPR.h; row++)
 	    {
 	      s = src;
@@ -1071,7 +1081,7 @@ grayscale_converter (GimpLayer   *layer,
 		{
 		  offset = *s++ * 3;
 		  val = INTENSITY (cmap[offset+0], cmap[offset+1], cmap[offset+2]);
-		  *d++ = (unsigned char) val;
+		  *d++ = (guchar) val;
 		  if (has_alpha)
 		    *d++ = *s++;
 		}

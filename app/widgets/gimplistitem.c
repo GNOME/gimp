@@ -132,6 +132,7 @@ gimp_list_item_init (GimpListItem *list_item)
   list_item->preview_size  = 0;
 
   list_item->reorderable   = FALSE;
+  list_item->convertable   = FALSE;
   list_item->drop_type     = GIMP_DROP_NONE;
   list_item->container     = NULL;
   list_item->get_name_func = NULL;
@@ -356,13 +357,12 @@ gimp_list_item_set_reorderable (GimpListItem  *list_item,
                                 gboolean       reorderable,
                                 GimpContainer *container)
 {
-  g_return_if_fail (list_item != NULL);
   g_return_if_fail (GIMP_IS_LIST_ITEM (list_item));
 
   g_return_if_fail (! reorderable || container != NULL);
   g_return_if_fail (! container || GIMP_IS_CONTAINER (container));
 
-  list_item->reorderable = reorderable;
+  list_item->reorderable = reorderable ? TRUE : FALSE;;
 
   if (reorderable)
     {
@@ -382,10 +382,18 @@ gimp_list_item_set_reorderable (GimpListItem  *list_item,
 }
 
 void
+gimp_list_item_set_convertable  (GimpListItem *list_item,
+                                 gboolean      convertable)
+{
+  g_return_if_fail (GIMP_IS_LIST_ITEM (list_item));
+
+  list_item->convertable = convertable ? TRUE : FALSE;;
+}
+
+void
 gimp_list_item_set_name_func (GimpListItem        *list_item,
 			      GimpItemGetNameFunc  get_name_func)
 {
-  g_return_if_fail (list_item != NULL);
   g_return_if_fail (GIMP_IS_LIST_ITEM (list_item));
 
   if (list_item->get_name_func != get_name_func)
@@ -412,6 +420,7 @@ gimp_list_item_check_drag (GimpListItem   *list_item,
                            GimpDropType   *drop_type)
 {
   GtkWidget     *src_widget;
+  GimpListItem  *src_list_item;
   GimpViewable  *my_src_viewable  = NULL;
   GimpViewable  *my_dest_viewable = NULL;
   gint           my_src_index     = -1;
@@ -420,18 +429,25 @@ gimp_list_item_check_drag (GimpListItem   *list_item,
   GimpDropType   my_drop_type     = GIMP_DROP_NONE;
   gboolean       return_val       = FALSE;
 
-  if (list_item->reorderable                              &&
-      list_item->container                                &&
-      (src_widget = gtk_drag_get_source_widget (context)) &&
+  src_widget = gtk_drag_get_source_widget (context);
+
+  if (list_item->reorderable &&
+      list_item->container   &&
+      src_widget             &&
       src_widget != GTK_WIDGET (list_item))
     {
+      src_list_item = GIMP_LIST_ITEM (src_widget);
+
       my_src_viewable  = gimp_dnd_get_drag_data (src_widget);
       my_dest_viewable = GIMP_PREVIEW (list_item->preview)->viewable;
 
-      if (my_src_viewable && my_dest_viewable)
+      if (my_src_viewable          &&
+          my_dest_viewable         &&
+          src_list_item->container &&
+          list_item->container)
         {
           my_src_index =
-            gimp_container_get_child_index (list_item->container,
+            gimp_container_get_child_index (src_list_item->container,
                                             GIMP_OBJECT (my_src_viewable));
           my_dest_index =
             gimp_container_get_child_index (list_item->container,
@@ -440,32 +456,52 @@ gimp_list_item_check_drag (GimpListItem   *list_item,
           if (my_src_viewable  && my_src_index  != -1 &&
               my_dest_viewable && my_dest_index != -1)
             {
-              gint difference;
-
-              difference = my_dest_index - my_src_index;
-
-              if (y < GTK_WIDGET (list_item)->allocation.height / 2)
-                my_drop_type = GIMP_DROP_ABOVE;
-              else
-                my_drop_type = GIMP_DROP_BELOW;
-
-              if (difference < 0 && my_drop_type == GIMP_DROP_BELOW)
+              if (src_list_item->container == list_item->container)
                 {
-                  my_dest_index++;
+                  gint difference;
+
+                  difference = my_dest_index - my_src_index;
+
+                  if (y < GTK_WIDGET (list_item)->allocation.height / 2)
+                    my_drop_type = GIMP_DROP_ABOVE;
+                  else
+                    my_drop_type = GIMP_DROP_BELOW;
+
+                  if (difference < 0 && my_drop_type == GIMP_DROP_BELOW)
+                    {
+                      my_dest_index++;
+                    }
+                  else if (difference > 0 && my_drop_type == GIMP_DROP_ABOVE)
+                    {
+                      my_dest_index--;
+                    }
+
+                  if (my_src_index != my_dest_index)
+                    {
+                      my_drag_action = GDK_ACTION_MOVE;
+                      return_val  = TRUE;
+                    }
+                  else
+                    {
+                      my_drop_type = GIMP_DROP_NONE;
+                    }
                 }
-              else if (difference > 0 && my_drop_type == GIMP_DROP_ABOVE)
+              else if (src_list_item->convertable &&
+                       src_list_item->container->children_type ==
+                       list_item->container->children_type)
                 {
-                  my_dest_index--;
-                }
+                  if (y < GTK_WIDGET (list_item)->allocation.height / 2)
+                    {
+                      my_drop_type = GIMP_DROP_ABOVE;
+                    }
+                  else
+                    {
+                      my_drop_type = GIMP_DROP_BELOW;
+                      my_dest_index++;
+                    }
 
-              if (my_src_index != my_dest_index)
-                {
-                  my_drag_action = GDK_ACTION_MOVE;
+                  my_drag_action = GDK_ACTION_COPY;
                   return_val  = TRUE;
-                }
-              else
-                {
-                  my_drop_type = GIMP_DROP_NONE;
                 }
             }
         }

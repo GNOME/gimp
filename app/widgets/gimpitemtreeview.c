@@ -279,6 +279,7 @@ gimp_drawable_list_view_new (gint                     preview_size,
 			     GimpAddDrawableFunc      add_drawable_func,
 			     GimpRemoveDrawableFunc   remove_drawable_func,
 			     GimpCopyDrawableFunc     copy_drawable_func,
+                             GimpConvertDrawableFunc  convert_drawable_func,
 			     GimpNewDrawableFunc      new_drawable_func,
 			     GimpEditDrawableFunc     edit_drawable_func,
 			     const gchar             *item_factory)
@@ -296,6 +297,7 @@ gimp_drawable_list_view_new (gint                     preview_size,
   g_return_val_if_fail (add_drawable_func != NULL, NULL);
   g_return_val_if_fail (remove_drawable_func != NULL, NULL);
   g_return_val_if_fail (copy_drawable_func != NULL, NULL);
+  /*  convert_drawable_func may be NULL  */
   g_return_val_if_fail (new_drawable_func != NULL, NULL);
   g_return_val_if_fail (edit_drawable_func != NULL, NULL);
   g_return_val_if_fail (item_factory != NULL, NULL);
@@ -327,6 +329,7 @@ gimp_drawable_list_view_new (gint                     preview_size,
   list_view->add_drawable_func     = add_drawable_func;
   list_view->remove_drawable_func  = remove_drawable_func;
   list_view->copy_drawable_func    = copy_drawable_func;
+  list_view->convert_drawable_func = convert_drawable_func;
   list_view->new_drawable_func     = new_drawable_func;
   list_view->edit_drawable_func    = edit_drawable_func;
 
@@ -572,7 +575,9 @@ gimp_drawable_list_view_duplicate_clicked (GtkWidget            *widget,
 
   drawable = view->get_drawable_func (view->gimage);
 
-  new_drawable = view->copy_drawable_func (drawable, TRUE);
+  new_drawable = view->copy_drawable_func (drawable,
+                                           G_TYPE_FROM_INSTANCE (drawable),
+                                           TRUE);
   view->add_drawable_func (view->gimage, new_drawable, -1);
 
   gdisplays_flush ();

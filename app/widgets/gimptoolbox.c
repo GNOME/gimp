@@ -26,11 +26,6 @@
 
 #include "gui-types.h"
 
-#include "base/pixel-region.h"
-#include "base/tile-manager.h"
-
-#include "paint-funcs/paint-funcs.h"
-
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontext.h"
@@ -564,31 +559,15 @@ toolbox_drop_drawable (GtkWidget    *widget,
 
   if (GIMP_IS_LAYER (drawable))
     {
-      new_layer = gimp_layer_copy (GIMP_LAYER (drawable), FALSE);
+      new_layer = gimp_layer_copy (GIMP_LAYER (drawable),
+                                   G_TYPE_FROM_INSTANCE (drawable),
+                                   FALSE);
     }
   else
     {
-      /*  a non-layer drawable can't have an alpha channel so add one  */
-
-      PixelRegion  srcPR, destPR;
-      TileManager *tiles;
-
-      tiles = tile_manager_new (width, height, bytes + 1);
-
-      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-			 0, 0, width, height, FALSE);
-      pixel_region_init (&destPR, tiles,
-			 0, 0, width, height, TRUE);
-
-      add_alpha_region (&srcPR, &destPR);
-
-      new_layer =
-	gimp_layer_new_from_tiles (new_gimage, 
-				   gimp_image_base_type_with_alpha (new_gimage), 
-				   tiles,
-				   "", OPAQUE_OPACITY, GIMP_NORMAL_MODE);
-
-      tile_manager_destroy (tiles);
+      new_layer = GIMP_LAYER (gimp_drawable_copy (drawable,
+                                                  GIMP_TYPE_LAYER,
+                                                  TRUE));
     }
 
   gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), new_gimage);
@@ -632,5 +611,5 @@ toolbox_drop_buffer (GtkWidget    *widget,
   if (context->gimp->busy)
     return;
 
-  gimp_edit_paste_as_new (context->gimp, NULL, GIMP_BUFFER (viewable)->tiles);
+  gimp_edit_paste_as_new (context->gimp, NULL, GIMP_BUFFER (viewable));
 }

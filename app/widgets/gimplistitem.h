@@ -49,6 +49,7 @@ struct _GimpListItem
 
   /*< private >*/
   gboolean             reorderable;
+  gboolean             convertable;
   GimpContainer       *container;
   GimpDropType         drop_type;
   GimpItemGetNameFunc  get_name_func;
@@ -77,6 +78,8 @@ void        gimp_list_item_set_preview_size (GimpListItem        *list_item,
 void        gimp_list_item_set_reorderable  (GimpListItem        *list_item,
 					     gboolean             reorderable,
 					     GimpContainer       *container);
+void        gimp_list_item_set_convertable  (GimpListItem        *list_item,
+					     gboolean             convertable);
 void        gimp_list_item_set_name_func    (GimpListItem        *list_item,
 					     GimpItemGetNameFunc  get_name_func);
 

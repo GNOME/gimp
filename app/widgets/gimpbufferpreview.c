@@ -26,7 +26,6 @@
 #include "widgets-types.h"
 
 #include "base/temp-buf.h"
-#include "base/tile-manager.h"
 
 #include "core/gimpbuffer.h"
 
@@ -108,8 +107,8 @@ gimp_buffer_preview_get_size (GimpPreview *preview,
   buffer = GIMP_BUFFER (preview->viewable);
 
   gimp_preview_calc_size (preview,
-			  tile_manager_width (buffer->tiles),
-			  tile_manager_height (buffer->tiles),
+			  gimp_buffer_get_width (buffer),
+                          gimp_buffer_get_height (buffer),
 			  size,
 			  size,
 			  1.0,
@@ -132,9 +131,10 @@ gimp_buffer_preview_render (GimpPreview *preview)
   gboolean    scaling_up;
   TempBuf    *render_buf;
 
-  buffer        = GIMP_BUFFER (preview->viewable);
-  buffer_width  = tile_manager_width (buffer->tiles);
-  buffer_height = tile_manager_height (buffer->tiles);
+  buffer = GIMP_BUFFER (preview->viewable);
+
+  buffer_width  = gimp_buffer_get_width (buffer);
+  buffer_height = gimp_buffer_get_height (buffer);
 
   width  = preview->width;
   height = preview->height;
@@ -219,9 +219,10 @@ gimp_buffer_preview_create_popup (GimpPreview *preview)
   gint        popup_height;
   gboolean    scaling_up;
 
-  buffer        = GIMP_BUFFER (preview->viewable);
-  buffer_width  = tile_manager_width (buffer->tiles);
-  buffer_height = tile_manager_height (buffer->tiles);
+  buffer = GIMP_BUFFER (preview->viewable);
+
+  buffer_width  = gimp_buffer_get_width (buffer);
+  buffer_height = gimp_buffer_get_height (buffer);
 
   gimp_preview_calc_size (preview,
 			  buffer_width,
@@ -259,9 +260,10 @@ gimp_buffer_preview_needs_popup (GimpPreview *preview)
   gint        buffer_width;
   gint        buffer_height;
 
-  buffer        = GIMP_BUFFER (preview->viewable);
-  buffer_width  = tile_manager_width (buffer->tiles);
-  buffer_height = tile_manager_height (buffer->tiles);
+  buffer = GIMP_BUFFER (preview->viewable);
+
+  buffer_width  = gimp_buffer_get_width (buffer);
+  buffer_height = gimp_buffer_get_height (buffer);
 
   if (buffer_width > preview->width || buffer_height > preview->height)
     return TRUE;

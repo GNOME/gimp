@@ -27,8 +27,6 @@
 #include "core-types.h"
 #include "pdb/pdb-types.h"
 
-#include "base/tile-manager.h"
-
 #include "pdb/procedural_db.h"
 #include "pdb/internal_procs.h"
 
@@ -285,7 +283,7 @@ gimp_finalize (GObject *object)
 
   if (gimp->global_buffer)
     {
-      tile_manager_destroy (gimp->global_buffer);
+      g_object_unref (G_OBJECT (gimp->global_buffer));
       gimp->global_buffer = NULL;
     }
 

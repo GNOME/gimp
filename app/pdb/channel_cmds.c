@@ -199,7 +199,7 @@ channel_copy_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    success = (copy = gimp_channel_copy (channel, TRUE)) != NULL;
+    success = (copy = gimp_channel_copy (channel, G_TYPE_FROM_INSTANCE (channel), TRUE)) != NULL;
 
   return_args = procedural_db_return_args (&channel_copy_proc, success);
 

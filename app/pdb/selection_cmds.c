@@ -1024,7 +1024,9 @@ selection_combine_invoker (Gimp     *gimp,
       if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
 	  gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
 	{
-	  new_channel = gimp_channel_copy (gimp_image_get_mask (gimage), TRUE);
+	  new_channel = gimp_channel_copy (gimp_image_get_mask (gimage),
+					   G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
+					   TRUE);
 	  gimp_channel_combine_mask (new_channel,
 				     channel,
 				     operation, 

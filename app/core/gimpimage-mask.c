@@ -387,7 +387,6 @@ gimp_image_mask_float (GimpImage    *gimage,
 
   /*  Create a new layer from the buffer  */
   layer = gimp_layer_new_from_tiles (gimage,
-				     gimp_drawable_type_with_alpha (drawable),
 				     tiles, 
 				     _("Floating Selection"),
 				     OPAQUE_OPACITY, GIMP_NORMAL_MODE);
@@ -557,7 +556,9 @@ gimp_image_mask_save (GimpImage *gimage)
 {
   GimpChannel *new_channel;
 
-  new_channel = gimp_channel_copy (gimp_image_get_mask (gimage), TRUE);
+  new_channel = gimp_channel_copy (gimp_image_get_mask (gimage),
+                                   G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
+                                   TRUE);
 
   /*  saved selections are not visible by default  */
   gimp_drawable_set_visible (GIMP_DRAWABLE (new_channel), FALSE);

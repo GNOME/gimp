@@ -1,3 +1,73 @@
+2001-12-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.[ch]: made gimp->global_buffer a GimpBuffer,
+	not TileManager.
+
+	* app/core/gimpbuffer.[ch]: added a "gboolean copy_pixels" to
+	gimp_buffer_new().
+
+	* app/core/gimpimage-new.c
+	* app/core/gimpedit.[ch]
+	* app/core/gimpimage-qmask.c
+	* app/widgets/gimpbufferpreview.c
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpcontainerview-utils.c: chaned accordingly, don't
+	include "base/tile-manager.h".
+
+	* app/core/gimpdrawable.[ch]: added gimp_drawable_copy().
+
+	* app/core/gimpchannel.[ch]
+	* app/core/gimplayer.[ch]
+	* app/core/gimplayermask.[ch]: use it in
+	gimp_[channel|layer|layer_mask]_copy(), added "GType new_type" as
+	paramater to all of them.
+
+	* app/core/gimpimage-duplicate.c
+	* app/gui/channels-commands.c
+	* app/gui/edit-commands.c
+	* app/gui/layers-commands.c
+	* app/widgets/gimpchannellistview.c
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/selection.pdb: changed accordingly.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/selection_cmds.c: regenerated.
+
+	* app/core/gimplayer.[ch]: removed the "layer_type" parameter from
+	gimp_layer_new_from_tiles() because it always needed to be equal
+	to gimp_image_base_type_with_alpha() of the passed image.
+
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-mask.c: cahanged accordingly.
+
+	* app/core/gimpimage.[ch]: added some new GIMP_IMAGE_TYPE_FOO()
+	marcos to get rid of magic values like "pixels = 3" all over the
+	place.
+
+	* app/core/gimplayer.[ch]: added gimp_layer_new_from_drawable()
+	which creates a layer from an other image's drawable.
+
+	* app/core/gimpimage-convert.[ch]: made the RGB and GRAY converters
+	public to use them above, use the new GIMP_IMAGE_TYPE() macros.
+
+	* app/display/gimpdisplayshell-dnd.c
+	* app/gui/toolbox.c: removed tile manager stuff and use the new
+	functions.
+
+	* app/widgets/gimpdrawablelistview.[ch]: added a
+	"convert_drawable_func" which is used to handle drops from other
+	images.
+
+	* app/widgets/gimpdrawablelistitem.c
+	* app/widgets/gimplayerlistitem.c
+	* app/widgets/gimplistitem.[ch]: implemented DND of layers between
+	images using gimp_layer_new_from_drawable().
+
+	* app/gui/dialogs-constructors.c: changed accordingly.
+
 2001-12-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am

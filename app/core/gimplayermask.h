@@ -68,28 +68,28 @@ struct _LayerMaskUndo
 
 GType           gimp_layer_mask_get_type    (void) G_GNUC_CONST;
 
-GimpLayerMask * gimp_layer_mask_new	    (GimpImage       *gimage,
-					     gint             width,
-					     gint             height,
-					     const gchar     *name,
-					     const GimpRGB   *color);
-GimpLayerMask * gimp_layer_mask_copy	    (GimpLayerMask       *layer_mask);
+GimpLayerMask * gimp_layer_mask_new	    (GimpImage           *gimage,
+					     gint                 width,
+					     gint                 height,
+					     const gchar         *name,
+					     const GimpRGB       *color);
+GimpLayerMask * gimp_layer_mask_copy	    (const GimpLayerMask *layer_mask);
 
 void            gimp_layer_mask_set_layer   (GimpLayerMask       *layer_mask, 
 				             GimpLayer           *layer);
-GimpLayer     * gimp_layer_mask_get_layer   (GimpLayerMask       *layer_mask);
+GimpLayer     * gimp_layer_mask_get_layer   (const GimpLayerMask *layer_mask);
 
 void            gimp_layer_mask_set_apply   (GimpLayerMask       *layer_mask,
                                              gboolean             apply);
-gboolean        gimp_layer_mask_get_apply   (GimpLayerMask       *layer_mask);
+gboolean        gimp_layer_mask_get_apply   (const GimpLayerMask *layer_mask);
 
 void            gimp_layer_mask_set_edit    (GimpLayerMask       *layer_mask,
                                              gboolean             apply);
-gboolean        gimp_layer_mask_get_edit    (GimpLayerMask       *layer_mask);
+gboolean        gimp_layer_mask_get_edit    (const GimpLayerMask *layer_mask);
 
 void            gimp_layer_mask_set_show    (GimpLayerMask       *layer_mask,
                                              gboolean             show);
-gboolean        gimp_layer_mask_get_show    (GimpLayerMask       *layer_mask);
+gboolean        gimp_layer_mask_get_show    (const GimpLayerMask *layer_mask);
 
 
 #endif /* __GIMP_LAYER_MASK_H__ */

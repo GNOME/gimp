@@ -40,7 +40,10 @@ typedef void            (* GimpAddDrawableFunc)     (GimpImage       *gimage,
 typedef void            (* GimpRemoveDrawableFunc)  (GimpImage       *gimage,
 						     GimpDrawable    *drawable);
 typedef GimpDrawable  * (* GimpCopyDrawableFunc)    (GimpDrawable    *drawable,
+                                                     GType            new_type,
 						     gboolean         add_alpha);
+typedef GimpDrawable  * (* GimpConvertDrawableFunc) (GimpImage       *dest_gimage,
+						     GimpDrawable    *drawable);
 
 typedef void            (* GimpNewDrawableFunc)     (GimpImage       *gimage);
 typedef void            (* GimpEditDrawableFunc)    (GimpDrawable    *drawable);
@@ -72,6 +75,7 @@ struct _GimpDrawableListView
   GimpAddDrawableFunc      add_drawable_func;
   GimpRemoveDrawableFunc   remove_drawable_func;
   GimpCopyDrawableFunc     copy_drawable_func;
+  GimpConvertDrawableFunc  convert_drawable_func;
 
   GimpNewDrawableFunc      new_drawable_func;
   GimpEditDrawableFunc     edit_drawable_func;
@@ -108,6 +112,7 @@ GtkWidget * gimp_drawable_list_view_new      (gint                     preview_s
 					      GimpAddDrawableFunc      add_drawable_func,
 					      GimpRemoveDrawableFunc   remove_drawable_func,
 					      GimpCopyDrawableFunc     copy_drawable_func,
+                                              GimpConvertDrawableFunc  convert_drawable_func,
 					      GimpNewDrawableFunc      new_drawable_func,
 					      GimpEditDrawableFunc     edit_drawable_func,
 					      const gchar             *item_factory);

@@ -82,7 +82,7 @@ struct _Gimp
   gint                   next_drawable_ID;
   GHashTable            *drawable_table;
 
-  TileManager           *global_buffer;
+  GimpBuffer            *global_buffer;
   GimpContainer         *named_buffers;
 
   GimpDataFactory       *brush_factory;

@@ -331,53 +331,29 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 			 GimpImageType  type,
 			 const gchar   *name)
 {
-  gint     bpp;
-  gboolean alpha;
-
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (name != NULL);
 
   drawable->ID = gimage->gimp->next_drawable_ID++;
 
   g_hash_table_insert (gimage->gimp->drawable_table,
 		       GINT_TO_POINTER (drawable->ID),
-		       (gpointer) drawable);
-
-  if (!name)
-    name = _("Unnamed");
-
-  switch (type)
-    {
-    case GIMP_RGB_IMAGE:
-      bpp = 3; alpha = FALSE; break;
-    case GIMP_GRAY_IMAGE:
-      bpp = 1; alpha = FALSE; break;
-    case GIMP_RGBA_IMAGE:
-      bpp = 4; alpha = TRUE; break;
-    case GIMP_GRAYA_IMAGE:
-      bpp = 2; alpha = TRUE; break;
-    case GIMP_INDEXED_IMAGE:
-      bpp = 1; alpha = FALSE; break;
-    case GIMP_INDEXEDA_IMAGE:
-      bpp = 2; alpha = TRUE; break;
-    default:
-      g_warning ("%s: Layer type %d not supported.", 
-		 G_GNUC_PRETTY_FUNCTION, type);
-      return;
-    }
+		       drawable);
 
   drawable->width     = width;
   drawable->height    = height;
-  drawable->bytes     = bpp;
   drawable->type      = type;
-  drawable->has_alpha = alpha;
+  drawable->bytes     = GIMP_IMAGE_TYPE_BYTES (type);
+  drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
   drawable->offset_x  = 0;
   drawable->offset_y  = 0;
 
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
 
-  drawable->tiles = tile_manager_new (width, height, bpp);
+  drawable->tiles = tile_manager_new (width, height,
+                                      drawable->bytes);
 
   drawable->visible = TRUE;
 
@@ -388,6 +364,94 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   /*  preview variables  */
   drawable->preview_cache = NULL;
   drawable->preview_valid = FALSE;
+}
+
+GimpDrawable *
+gimp_drawable_copy (GimpDrawable *drawable,
+                    GType         new_type,
+                    gboolean      add_alpha)
+{
+  GimpDrawable  *new_drawable;
+  GimpImageType  new_image_type;
+  PixelRegion    srcPR;
+  PixelRegion    destPR;
+  gchar         *new_name;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
+
+  /*  formulate the new name  */
+  {
+    const gchar *name;
+    gchar       *ext;
+    gint         number;
+    gint         len;
+
+    name = gimp_object_get_name (GIMP_OBJECT (drawable));
+
+    ext = strrchr (name, '#');
+    len = strlen (_("copy"));
+
+    if ((strlen (name) >= len &&
+         strcmp (&name[strlen (name) - len], _("copy")) == 0) ||
+        (ext && (number = atoi (ext + 1)) > 0 && 
+         ((int)(log10 (number) + 1)) == strlen (ext + 1)))
+      {
+        /* don't have redundant "copy"s */
+        new_name = g_strdup (name);
+      }
+    else
+      {
+        new_name = g_strdup_printf (_("%s copy"), name);
+      }
+  }
+
+  if (add_alpha)
+    {
+      new_image_type = gimp_drawable_type_with_alpha (drawable);
+    }
+  else
+    {
+      new_image_type = drawable->type;
+    }
+
+  new_drawable = g_object_new (new_type, NULL);
+
+  gimp_drawable_configure (new_drawable,
+                           gimp_drawable_gimage (drawable),
+                           gimp_drawable_width (drawable),
+                           gimp_drawable_height (drawable),
+                           new_image_type,
+                           new_name);
+
+  new_drawable->offset_x = drawable->offset_x;
+  new_drawable->offset_y = drawable->offset_y;
+  new_drawable->visible  = drawable->visible;
+
+  pixel_region_init (&srcPR, drawable->tiles, 
+                     0, 0, 
+                     drawable->width, 
+                     drawable->height, 
+                     FALSE);
+  pixel_region_init (&destPR, new_drawable->tiles,
+                     0, 0, 
+                     drawable->width, 
+                     drawable->height, 
+                     TRUE);
+
+  if (new_image_type == drawable->type)
+    {
+      copy_region (&srcPR, &destPR);
+    }
+  else
+    {
+      add_alpha_region (&srcPR, &destPR);
+    }
+
+  g_object_unref (G_OBJECT (new_drawable->parasites));
+  new_drawable->parasites = gimp_parasite_list_copy (drawable->parasites);
+
+  return new_drawable;
 }
 
 gint
@@ -683,19 +747,15 @@ gimp_drawable_type (const GimpDrawable *drawable)
 GimpImageType
 gimp_drawable_type_with_alpha (const GimpDrawable *drawable)
 {
-  GimpImageType type;
-
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
-
-  type = gimp_drawable_type (drawable);
 
   if (gimp_drawable_has_alpha (drawable))
     {
-      return type;
+      return gimp_drawable_type (drawable);
     }
   else
     {
-      switch (type)
+      switch (gimp_drawable_type (drawable))
 	{
 	case GIMP_RGB_IMAGE:
 	  return GIMP_RGBA_IMAGE;
@@ -712,7 +772,120 @@ gimp_drawable_type_with_alpha (const GimpDrawable *drawable)
 	}
     }
 
-  return 0;
+  return -1;
+}
+
+gboolean
+gimp_drawable_is_rgb (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  if (gimp_drawable_type (drawable) == GIMP_RGBA_IMAGE ||
+      gimp_drawable_type (drawable) == GIMP_RGB_IMAGE)
+    return TRUE;
+  else
+    return FALSE;
+}
+
+gboolean
+gimp_drawable_is_gray (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  if (gimp_drawable_type (drawable) == GIMP_GRAYA_IMAGE ||
+      gimp_drawable_type (drawable) == GIMP_GRAY_IMAGE)
+    return TRUE;
+  else
+    return FALSE;
+}
+
+gboolean
+gimp_drawable_is_indexed (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  if (gimp_drawable_type (drawable) == GIMP_INDEXEDA_IMAGE ||
+      gimp_drawable_type (drawable) == GIMP_INDEXED_IMAGE)
+    return TRUE;
+  else
+    return FALSE;
+}
+
+TileManager *
+gimp_drawable_data (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  return drawable->tiles;
+}
+
+TileManager *
+gimp_drawable_shadow (GimpDrawable *drawable)
+{
+  GimpImage *gimage;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  if (! (gimage = gimp_drawable_gimage (drawable)))
+    return NULL;
+
+  return gimp_image_shadow (gimage, drawable->width, drawable->height, 
+			    drawable->bytes);
+}
+
+gint
+gimp_drawable_bytes (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
+
+  return drawable->bytes;
+}
+
+gint
+gimp_drawable_bytes_with_alpha (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
+
+  if (gimp_drawable_has_alpha (drawable))
+    {
+      return drawable->bytes;
+    }
+  else
+    {
+      switch (gimp_drawable_type (drawable))
+	{
+	case GIMP_RGB_IMAGE:
+	  return 4;
+	  break;
+	case GIMP_GRAY_IMAGE:
+	  return 2;
+	  break;
+	case GIMP_INDEXED_IMAGE:
+	  return 2;
+	  break;
+	default:
+	  g_assert_not_reached ();
+	  break;
+	}
+    }
+
+  return -1;
+}
+
+gint
+gimp_drawable_width (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
+
+  return drawable->width;
+}
+
+gint
+gimp_drawable_height (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
+
+  return drawable->height;
 }
 
 gboolean
@@ -743,6 +916,30 @@ gimp_drawable_set_visible (GimpDrawable *drawable,
 			    drawable->width,
 			    drawable->height);
     }
+}
+
+void
+gimp_drawable_offsets (const GimpDrawable *drawable,
+		       gint               *off_x,
+		       gint               *off_y)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  *off_x = drawable->offset_x;
+  *off_y = drawable->offset_y;
+}
+
+guchar *
+gimp_drawable_cmap (const GimpDrawable *drawable)
+{
+  GimpImage *gimage;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  if (! (gimage = gimp_drawable_gimage (drawable)))
+    return NULL;
+
+  return gimage->cmap;
 }
 
 guchar *
@@ -784,43 +981,6 @@ gimp_drawable_get_color_at (GimpDrawable *drawable,
   tile_release (tile, FALSE);
 
   return dest;
-}
-
-GimpParasite *
-gimp_drawable_parasite_find (const GimpDrawable *drawable,
-			     const gchar        *name)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  return gimp_parasite_list_find (drawable->parasites, name);
-}
-
-static void
-gimp_drawable_parasite_list_foreach_func (gchar          *key,
-					  GimpParasite   *p,
-					  gchar        ***cur)
-{
-  *(*cur)++ = (gchar *) g_strdup (key);
-}
-
-gchar **
-gimp_drawable_parasite_list (const GimpDrawable *drawable,
-			     gint               *count)
-{
-  gchar **list;
-  gchar **cur;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (count != NULL, NULL);
-
-  *count = gimp_parasite_list_length (drawable->parasites);
-  cur = list = g_new (gchar *, *count);
-
-  gimp_parasite_list_foreach (drawable->parasites,
-			      (GHFunc) gimp_drawable_parasite_list_foreach_func,
-			      &cur);
-
-  return list;
 }
 
 void
@@ -886,6 +1046,43 @@ gimp_drawable_parasite_detach (GimpDrawable *drawable,
   gimp_parasite_list_remove (drawable->parasites, parasite);
 }
 
+GimpParasite *
+gimp_drawable_parasite_find (const GimpDrawable *drawable,
+			     const gchar        *name)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  return gimp_parasite_list_find (drawable->parasites, name);
+}
+
+static void
+gimp_drawable_parasite_list_foreach_func (gchar          *key,
+					  GimpParasite   *p,
+					  gchar        ***cur)
+{
+  *(*cur)++ = (gchar *) g_strdup (key);
+}
+
+gchar **
+gimp_drawable_parasite_list (const GimpDrawable *drawable,
+			     gint               *count)
+{
+  gchar **list;
+  gchar **cur;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (count != NULL, NULL);
+
+  *count = gimp_parasite_list_length (drawable->parasites);
+  cur = list = g_new (gchar *, *count);
+
+  gimp_parasite_list_foreach (drawable->parasites,
+			      (GHFunc) gimp_drawable_parasite_list_foreach_func,
+			      &cur);
+
+  return list;
+}
+
 GimpTattoo
 gimp_drawable_get_tattoo (const GimpDrawable *drawable)
 {
@@ -901,110 +1098,4 @@ gimp_drawable_set_tattoo (GimpDrawable *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   drawable->tattoo = tattoo;
-}
-
-gboolean
-gimp_drawable_is_rgb (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-
-  if (gimp_drawable_type (drawable) == GIMP_RGBA_IMAGE ||
-      gimp_drawable_type (drawable) == GIMP_RGB_IMAGE)
-    return TRUE;
-  else
-    return FALSE;
-}
-
-gboolean
-gimp_drawable_is_gray (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-
-  if (gimp_drawable_type (drawable) == GIMP_GRAYA_IMAGE ||
-      gimp_drawable_type (drawable) == GIMP_GRAY_IMAGE)
-    return TRUE;
-  else
-    return FALSE;
-}
-
-gboolean
-gimp_drawable_is_indexed (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-
-  if (gimp_drawable_type (drawable) == GIMP_INDEXEDA_IMAGE ||
-      gimp_drawable_type (drawable) == GIMP_INDEXED_IMAGE)
-    return TRUE;
-  else
-    return FALSE;
-}
-
-TileManager *
-gimp_drawable_data (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  return drawable->tiles;
-}
-
-TileManager *
-gimp_drawable_shadow (GimpDrawable *drawable)
-{
-  GimpImage *gimage;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  if (! (gimage = gimp_drawable_gimage (drawable)))
-    return NULL;
-
-  return gimp_image_shadow (gimage, drawable->width, drawable->height, 
-			    drawable->bytes);
-}
-
-int
-gimp_drawable_bytes (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
-
-  return drawable->bytes;
-}
-
-gint
-gimp_drawable_width (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
-
-  return drawable->width;
-}
-
-gint
-gimp_drawable_height (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
-
-  return drawable->height;
-}
-
-void
-gimp_drawable_offsets (const GimpDrawable *drawable,
-		       gint               *off_x,
-		       gint               *off_y)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-
-  *off_x = drawable->offset_x;
-  *off_y = drawable->offset_y;
-}
-
-guchar *
-gimp_drawable_cmap (const GimpDrawable *drawable)
-{
-  GimpImage *gimage;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  if (! (gimage = gimp_drawable_gimage (drawable)))
-    return NULL;
-
-  return gimage->cmap;
 }

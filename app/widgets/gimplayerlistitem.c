@@ -145,6 +145,8 @@ gimp_layer_list_item_init (GimpLayerListItem *list_item)
   GtkWidget *abox;
   GtkWidget *image;
 
+  GIMP_LIST_ITEM (list_item)->convertable = TRUE;
+
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (GIMP_LIST_ITEM (list_item)->hbox), abox,
                       FALSE, FALSE, 0);
@@ -327,20 +329,16 @@ gimp_layer_list_item_drag_drop (GtkWidget      *widget,
       drag_action = GDK_ACTION_DEFAULT;
       drop_type   = GIMP_DROP_NONE;
       return_val  = FALSE;
+
+      gtk_drag_finish (context, return_val, FALSE, time);
+
+      list_item->drop_type = GIMP_DROP_NONE;
+
+      return return_val;
     }
 
-  gtk_drag_finish (context, return_val, FALSE, time);
-
-  list_item->drop_type = GIMP_DROP_NONE;
-
-  if (return_val)
-    {
-      gimp_image_position_layer (gimp_drawable_gimage (GIMP_DRAWABLE (src_viewable)),
-                                 GIMP_LAYER (src_viewable),
-                                 dest_index,
-                                 TRUE);
-      gdisplays_flush ();
-    }
+  return GTK_WIDGET_CLASS (parent_class)->drag_drop (widget, context,
+                                                     x, y, time);
 
   return return_val;
 }

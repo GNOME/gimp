@@ -273,7 +273,7 @@ HELP
     );
 
     %invoke = (
-	code => 'success = (copy = gimp_layer_copy (layer, add_alpha)) != NULL;'
+	code => 'success = (copy = gimp_layer_copy (layer, G_TYPE_FROM_INSTANCE (layer), add_alpha)) != NULL;'
     );
 }
 

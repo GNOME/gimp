@@ -109,7 +109,9 @@ channels_duplicate_channel_cmd_callback (GtkWidget *widget,
 
   if ((active_channel = gimp_image_get_active_channel (gimage)))
     {
-      new_channel = gimp_channel_copy (active_channel, TRUE);
+      new_channel = gimp_channel_copy (active_channel,
+                                       G_TYPE_FROM_INSTANCE (active_channel),
+                                       TRUE);
       gimp_image_add_channel (gimage, new_channel, -1);
       gdisplays_flush ();
     }
@@ -168,7 +170,9 @@ channels_add_channel_to_sel_cmd_callback (GtkWidget *widget,
 
   if ((active_channel = gimp_image_get_active_channel (gimage)))
     {
-      new_channel = gimp_channel_copy (gimp_image_get_mask (gimage), TRUE);
+      new_channel = gimp_channel_copy (gimp_image_get_mask (gimage),
+                                       G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
+                                       TRUE);
       gimp_channel_combine_mask (new_channel,
 				 active_channel,
 				 CHANNEL_OP_ADD, 
@@ -194,7 +198,9 @@ channels_sub_channel_from_sel_cmd_callback (GtkWidget *widget,
 
   if ((active_channel = gimp_image_get_active_channel (gimage)))
     {
-       new_channel = gimp_channel_copy (gimp_image_get_mask (gimage), TRUE);
+       new_channel = gimp_channel_copy (gimp_image_get_mask (gimage),
+                                        G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
+                                        TRUE);
        gimp_channel_combine_mask (new_channel,
 				  active_channel,
 				  CHANNEL_OP_SUB, 
@@ -220,7 +226,9 @@ channels_intersect_channel_with_sel_cmd_callback (GtkWidget *widget,
 
   if ((active_channel = gimp_image_get_active_channel (gimage)))
     {
-      new_channel = gimp_channel_copy (gimp_image_get_mask (gimage), TRUE);
+      new_channel = gimp_channel_copy (gimp_image_get_mask (gimage),
+                                       G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
+                                       TRUE);
       gimp_channel_combine_mask (new_channel,
 				 active_channel,
 				 CHANNEL_OP_INTERSECT, 

@@ -92,6 +92,7 @@ GimpChannel   * gimp_channel_new               (GimpImage         *gimage,
 						const gchar       *name,
 						const GimpRGB     *color);
 GimpChannel   * gimp_channel_copy              (const GimpChannel *channel,
+                                                GType              new_type,
                                                 gboolean           dummy);
 
 gint            gimp_channel_get_opacity       (const GimpChannel *channel);
