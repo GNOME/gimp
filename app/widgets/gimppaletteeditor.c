@@ -1005,7 +1005,6 @@ palette_add_entries_callback (GtkWidget *w,
       palette_entries_list = palette_entries_insert_list (palette_entries_list, entries);
 
       gtk_option_menu_remove_menu (GTK_OPTION_MENU (palette->option_menu));
-      gtk_widget_destroy (palette->menu);
       palette_create_palette_menu (palette, entries);
     }
 }
@@ -1034,7 +1033,6 @@ palette_delete_entries_callback (GtkWidget *w,
 	}
 
       gtk_option_menu_remove_menu (GTK_OPTION_MENU (palette->option_menu));
-      gtk_widget_destroy (palette->menu);
 
       entries = palette->entries;
       if (entries && entries->filename)
