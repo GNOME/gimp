@@ -936,7 +936,7 @@ msgstr "Automaattinen pienennys"
 #. The shell and main vbox
 #: app/curves.c:390 app/curves.c:550 app/tools.c:741
 msgid "Curves"
-msgstr "Käyrät"
+msgstr "Värintoistokäyrät"
 
 #: app/curves.c:431
 msgid "Curves for indexed drawables cannot be adjusted."
@@ -2384,13 +2384,13 @@ msgstr "Muoto"
 
 #: app/install.c:97
 msgid "The GIMP is not properly installed for the current user\n"
-msgstr "GIMP ei ole asennettu oikein sinulle\n"
+msgstr "GIMP ei ole asennettu sinulle oikealla tavalla\n"
 
 #: app/install.c:98
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
-msgstr "Käyttäjälle asennus ohitettiin --nointerface -vivun takia\n"
+msgstr "Henkilökohtainen asennus ohitettiin --nointerface -vivun takia\n"
 
 #: app/install.c:99
 msgid ""
@@ -2416,6 +2416,8 @@ msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
 msgstr ""
+"GIMP käyttää lisäksi gtkrc-nimistä tiedostoa jotta\n"
+"voit säätää sen ulkonäköä erikseen muista GTK-sovelluksista."
 
 #: app/install.c:157
 msgid ""
@@ -2426,9 +2428,9 @@ msgid ""
 "is cached in this file.  This file is intended to\n"
 "be GIMP-readable only, and should not be edited."
 msgstr ""
-"Liitännäiset ja laajennukset ovat erillisiä ohjelmia joita GIMP suorittaa\n"
+"Liitännäiset ja laajennukset ovat GIMPin suorittamia erillisiä ohjelmia\n"
 "jotka laajentavat sen toiminnallisuutta.\n"
-"Näitä ohjelmia etsitään ajonaikana ja tietoa niiden toiminnoista\n"
+"Näitä ohjelmia etsitään ajonaikaisesti ja tietoa niiden toiminnoista\n"
 "sekä niitten aikaleimat säilötään tässä tiedostossa.\n"
 "Tätä tiedostoa ei pidä muokata käsin."
 
@@ -2592,12 +2594,14 @@ msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
 msgstr ""
+"Tämä on kansio jonne GIMP tallentaa väritoistokäyrätyökalun parametritiedostoja."
 
 #: app/install.c:267
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
 msgstr ""
+"Tämä on kansio jonne GIMP tallentaa väritasotyökalun parametritiedostoja."
 
 #: app/install.c:272
 msgid ""
@@ -2653,7 +2657,7 @@ msgstr ""
 
 #: app/install.c:525
 msgid "GIMP User Installation"
-msgstr "GIMPin käyttäjäkohtainen asennus"
+msgstr "Henkilökohtainen GIMP-asennus"
 
 #: app/install.c:530
 msgid "Continue"
@@ -2668,7 +2672,9 @@ msgstr ""
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
-msgstr "Tervetualoa GIMPin käyttäjäkohtaiseen asennukseen"
+msgstr ""
+"Tervetuloa\n"
+"Henkilökohtainen GIMP-asennus"
 
 #: app/install.c:584
 msgid ""
@@ -2676,6 +2682,9 @@ msgid ""
 "Copyright (C) 1995-2000\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
+"GIMP - GNU kuvankäsittelyohjelma\n"
+"Copyright (C) 1995-2000\n"
+"Spencer Kimball, Peter Mattis ja GIMP-kehitystiimi."
 
 #: app/install.c:593
 msgid ""
@@ -2708,25 +2717,25 @@ msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA."
 msgstr ""
-"Sinun olisi pitänyt saada kopion GNU:n yleisestä julkisesta lisenssistä\n"
+"Sinun olisi pitänyt saada kopio GNU:n yleisestä julkisesta lisenssistä\n"
 "tämän ohjelman mukana; jos et sitä saanut, niin lähetä kirje osoitteella\n"
 "Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA."
 
 #: app/install.c:609
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr ""
+msgstr "Napsauta \"Jatka\" aloittaaksesi henkilökohtaista GIMP-asennusta."
 
 #: app/install.c:636
 msgid "Personal GIMP Directory"
-msgstr "Henkilökohtainen GIMP-hakemisto"
+msgstr "Henkilökohtainen GIMP-kansio"
 
 #: app/install.c:652
 #, c-format
 msgid ""
 "For a proper GIMP installation, a subdirectory named\n"
 "%s needs to be created."
-msgstr "Kunnollista GIMP-asennusta varten kansio nimeltä %s pitää luoda."
+msgstr "Kunnollista GIMP-asennusta varten pitää luoda kansio nimeltä %s."
 
 #: app/install.c:658
 msgid ""
@@ -2734,13 +2743,13 @@ msgid ""
 "Click on one of the files or subdirectories in the tree\n"
 "to get more information about the selected item."
 msgstr ""
-"Tässä kansiossa tulee olemaa joukko tärkeitä tiedostoja.\n"
-"Napsauta yhtä tiedostoa tai kansiota puussa niin\n"
+"Tässä kansiossa tulee olemaan joukko tärkeitä tiedostoja ja alikansioita.\n"
+"Napsauta yhtä tiedostoa tai kansiota vasemmalla niin\n"
 "saat lisää tietoa siitä."
 
 #: app/install.c:662
 msgid "Click \"Continue\" to create your personal GIMP directory."
-msgstr "Napsauta \"Jakta\" luodaksesi henkilökohtaisen GIMP-kansion."
+msgstr "Napsauta \"Jatka\" luodaksesi henkilökohtaisen GIMP-kansiosi."
 
 #: app/install.c:742
 msgid "User Installation Log"
@@ -2760,17 +2769,19 @@ msgstr "Napsauta \"Jatka\" jos hyväksyt ylläolevat asetukset."
 
 #: app/install.c:766
 msgid "Monitor Resolution"
-msgstr "Näytön resoluutio"
+msgstr "Näytön tarkkuus"
 
 #: app/install.c:769
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
 msgstr ""
+"Näyttääkseen kuvat luonnollisessa koossa, GIMPin pitää tiedää näyttösi "
+"tarkkuus."
 
 #: app/install.c:777
 msgid "Click \"Continue\" to start The GIMP."
-msgstr ""
+msgstr "Napsauta \"Jatka\" käynnistääksesi GIMPin."
 
 #: app/install.c:785
 msgid "Aborting Installation..."
@@ -2790,10 +2801,8 @@ msgid ""
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
-"Huomasitko mitään virheilmoituksia\n"
-"konsoli-ikkunassa? Jos et, niin asennus\n"
-"onnistui! Muuten, poistu ja tutki mistä\n"
-"virheet mahtoivat johtua..."
+"Huomasitko mitään virheilmoituksia konsoli-ikkunassa? Jos et, niin asennus\n"
+"onnistui! Muuten, poistu ja tutki mistä virheet mahtoivat johtua..."
 
 #: app/install.c:969
 msgid ""
@@ -2853,15 +2862,17 @@ msgid ""
 "GIMP can obtain this information from your X-server.\n"
 "However, most X-servers do not return useful values."
 msgstr ""
+"GIMP voi hakea tätä tietoa ikkunointijärjestelmästä.\n"
+"Kuitenkin, useimmat X-palvelinohjelmat eivät kerro todenmukaisia arvoja."
 
 #: app/install.c:1092
 #, c-format
 msgid "Get Resolution from X-server (Currently %d x %d dpi)"
-msgstr "Hae tarkkuus X-palvelinohjelmasta (Nyt %d x %d dpi)"
+msgstr "Ikkunointijärjestelmän tieto (%d x %d dpi)"
 
 #: app/install.c:1109
 msgid "Alternatively, you can set the monitor resolution manually."
-msgstr "Vaihtoehtoisesti voit asettaa näytön resoluution käsin."
+msgstr "Vaihtoehtoisesti voit asettaa näytön tarkkuuden itse."
 
 #: app/install.c:1124
 msgid "Monitor Resolution X:"
@@ -6125,424 +6136,3 @@ msgstr "Vesiväri"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Värihistoria"
-
-#, fuzzy
-#~ msgid ""
-#~ "For a proper GIMP installation, a subdirectory needs to be created.\n"
-#~ "This subdirectory will contain a number of important files."
-#~ msgstr ""
-#~ "täytyy luoda. Tämä kansio tulee sisältämään joukon\n"
-#~ "tärkeitä tiedostoja:\n"
-
-#~ msgid "Custom from Editor"
-#~ msgstr "Räärälöity muokkaimesta"
-
-#~ msgid "Install"
-#~ msgstr "Asenna"
-
-#~ msgid "Ignore"
-#~ msgstr "Ohita"
-
-#~ msgid "Installation Log"
-#~ msgstr "Asennusloki"
-
-#~ msgid ""
-#~ "\n"
-#~ "Installation successful!\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Käyttäjäkohtainen asennus onnistui!\n"
-
-#~ msgid "/File/Dialogs"
-#~ msgstr "/Tiedosto/Dialogit"
-
-#~ msgid "/File"
-#~ msgstr "/Tiedosto"
-
-#~ msgid "/Edit"
-#~ msgstr "/Muokkaa"
-
-#~ msgid "/Edit/Buffer"
-#~ msgstr "/Muokkaa/Leikepöytä"
-
-#~ msgid "/Select"
-#~ msgstr "/Valitse"
-
-#~ msgid "/View"
-#~ msgstr "/Näytä"
-
-#~ msgid "/View/Zoom"
-#~ msgstr "/Näytä/Zoomaa sisään"
-
-#~ msgid "/Image"
-#~ msgstr "/Kuva"
-
-#~ msgid "/Image/Mode"
-#~ msgstr "/Kuva/Muoto"
-
-#~ msgid "/Image/Colors"
-#~ msgstr "/Kuva/Värit"
-
-#~ msgid "/Image/Colors/Auto"
-#~ msgstr "/Kuva/Värit/Automaattinen"
-
-#~ msgid "/Image/Alpha"
-#~ msgstr "/Kuva/Alfakanava"
-
-#~ msgid "/Image/Transforms"
-#~ msgstr "/Kuva/Muunnokset"
-
-#~ msgid "/Layers"
-#~ msgstr "/Tasot"
-
-#~ msgid "/Layers/Stack"
-#~ msgstr "/Tasot/Pino"
-
-#~ msgid "/Tools"
-#~ msgstr "/Työkalut"
-
-#~ msgid "/Tools/Select Tools"
-#~ msgstr "/Työkalut/Valinnat"
-
-#~ msgid "/Tools/Transform Tools"
-#~ msgstr "/Työkalut/Muunnokset"
-
-#~ msgid "/Tools/Paint Tools"
-#~ msgstr "/Työkalut/Piirtotyökalut"
-
-#~ msgid "/Dialogs"
-#~ msgstr "/Dialogit"
-
-#~ msgid "/Filters"
-#~ msgstr "/Suotimet"
-
-#~ msgid "/Script-Fu"
-#~ msgstr "/Script-Fu"
-
-#~ msgid "/Stack"
-#~ msgstr "/Pino"
-
-#~ msgid "Bytes"
-#~ msgstr "Tavuja"
-
-#~ msgid "KiloBytes"
-#~ msgstr "Kilotavujan"
-
-#~ msgid "MegaBytes"
-#~ msgstr "megatavua"
-
-#~ msgid "Fill Options"
-#~ msgstr "Täyttöasetukset"
-
-#~ msgid "Operations"
-#~ msgstr "Toiminnot"
-
-#~ msgid "Layer Mask Options"
-#~ msgstr "Tason maskin asetukset"
-
-#~ msgid "Apply"
-#~ msgstr "Sovella"
-
-#~ msgid "Discard"
-#~ msgstr "Hylkää"
-
-#~ msgid "Apply layer mask?"
-#~ msgstr "Sovella tason maskia?"
-
-#~ msgid "/Xtns/Animation"
-#~ msgstr "/Lisäykset/Animaatio"
-
-#~ msgid "/Xtns/Script-Fu"
-#~ msgstr "/Lisäykset/Script-Fu"
-
-#~ msgid "/Xtns/Script-Fu/Logos"
-#~ msgstr "/Lisäykset/Script-Fu/Logot"
-
-#~ msgid "/Xtns/Script-Fu/Patterns"
-#~ msgstr "/Lisäykset/Script-Fu/Kuviot"
-
-#~ msgid "/Xtns/Script-Fu/Web Page Themes"
-#~ msgstr "/Lisäykset/Script-Fu/Webbisivuaiheet"
-
-#~ msgid "/Xtns/Script-Fu/Utils"
-#~ msgstr "/Lisäykset/Script-Fu/Hyödyllistä"
-
-#~ msgid "/Xtns/Script-Fu/Buttons"
-#~ msgstr "/Lisäykset/Script-Fu/Painikkeet"
-
-#~ msgid "/Xtns/Script-Fu/Make Brush"
-#~ msgstr "/Lisäykset/Script-Fu/Tee sivellin"
-
-#~ msgid "/Xtns/Script-Fu/Misc"
-#~ msgstr "/Lisäykset/Script-Fu/Sekalaiset"
-
-#~ msgid "/Xtns/Script-Fu/Test"
-#~ msgstr "/Lisäykset/Script-Fu/Testit"
-
-#~ msgid "/Xtns/Web Browser"
-#~ msgstr "/Lisäykset/Webbiselain"
-
-#~ msgid "/Filters/Colors/Map"
-#~ msgstr "/Suotimet/Värit/Kuvaukset"
-
-#~ msgid "/Filters/Render/Clouds"
-#~ msgstr "/Suotimet/Tee kuva/Pilvet"
-
-#~ msgid "/Filters/Render/Nature"
-#~ msgstr "/Suotimet/Tee kuva/Luonto"
-
-#~ msgid "/Filters/Render/Pattern"
-#~ msgstr "/Suotimet/Tee kuva/Kuviot"
-
-#~ msgid "/Filters/Misc"
-#~ msgstr "/Suotimet/Sekalaiset"
-
-#~ msgid "/Script-Fu/Decor"
-#~ msgstr "/Script-Fu/Koristelu"
-
-#~ msgid "/Script-Fu/Utils"
-#~ msgstr "/Script-Fu/Hyödyllistä"
-
-#~ msgid "/Script-Fu/Animators"
-#~ msgstr "/Script-Fu/Animaatio"
-
-#~ msgid "/Script-Fu/Stencil Ops"
-#~ msgstr "/Script-Fu/Stensiili"
-
-#~ msgid "/Script-Fu/Selection"
-#~ msgstr "/Script-Fu/Valinnat"
-
-#~ msgid "/Script-Fu/Shadow"
-#~ msgstr "/Script-Fu/Varjo"
-
-#~ msgid "/Script-Fu/Render"
-#~ msgstr "/Script-Fu/Muodosta kuva"
-
-#~ msgid "/Guides"
-#~ msgstr "/Apuviivat"
-
-#~ msgid "Path Tool"
-#~ msgstr "Polkutyökalu"
-
-#~ msgid "Xinput Airbrush"
-#~ msgstr "Xinput-ruisku"
-
-#~ msgid "/Tools/Transform Tools/Magnify"
-#~ msgstr "/Työkalut/Muunnokset/Suurennuslasi"
-
-#~ msgid "/Tools/Paint Tools/XinputAirbrush"
-#~ msgstr "/Työkalut/Piirtotyökalut/Xinput-ruisku"
-
-#~ msgid "Natural Airbrush"
-#~ msgstr "Luonnollinen ruisku"
-
-#~ msgid "Path"
-#~ msgstr "Polku"
-
-#~ msgid "/Tools/Path"
-#~ msgstr "/Työkalut/Polku"
-
-#~ msgid "Manipulate paths"
-#~ msgstr "Muokkaa polkuja"
-
-#~ msgid "Flow Relation:"
-#~ msgstr "Mustevirran suhde:"
-
-#~ msgid "Flow Sensitivity:"
-#~ msgstr "Mustevirran herkkyys"
-
-#~ msgid "Base Tilt:"
-#~ msgstr "Kallistus::"
-
-#~ msgid "Tilt Sensitivity:"
-#~ msgstr "Kallistusherkkyys"
-
-#~ msgid "Speed Sensitivity:"
-#~ msgstr "Nopeusherkkyys"
-
-#~ msgid "Min Height:"
-#~ msgstr "Vähimmäiskorkeus:"
-
-#~ msgid "Max Height:"
-#~ msgstr "Enimmäiskorkeus:"
-
-#~ msgid "Delete gradient"
-#~ msgstr "Poista väriliukuma"
-
-#~ msgid "Shades of Color:"
-#~ msgstr "Värisävyjen lukumäärä:"
-
-#~ msgid "Shades:"
-#~ msgstr "Sävyt:"
-
-#~ msgid "Shades of Gray:"
-#~ msgstr "Harmaan sävyt:"
-
-#~ msgid "Brightness-Contrast Options"
-#~ msgstr "Kirkkaus- ja kontrastisäädön asetukset"
-
-#~ msgid ""
-#~ "We are all fresh out of brush editors today,\n"
-#~ "please write your own or try back tomorrow\n"
-#~ msgstr ""
-#~ "Kaikki siveltimet ovat loppu tältä päivältä,\n"
-#~ "tee itse omasi, tai palataan asiaan huomenna\n"
-
-#~ msgid "Wilber says: \"I don't know how to delete that brush.\""
-#~ msgstr "Wilber sanoo: \"En osaa poistaa tuota sivellintä.\""
-
-#~ msgid "Color Balance Options"
-#~ msgstr "Väritasapainosäädön asetukset"
-
-#~ msgid "Color Picker Options"
-#~ msgstr "Väripoiminnan asetukset"
-
-#~ msgid "Crop & Resize Options"
-#~ msgstr "Rajaa & muokkaa kokoa -asetukset"
-
-#~ msgid "Curves Options"
-#~ msgstr "Käyrien asetukset"
-
-#~ msgid "Histogram Options"
-#~ msgstr "Histogrammiasetukset"
-
-#~ msgid "Levels Options"
-#~ msgstr "Väritasoasetukset"
-
-#~ msgid "Magnify Options"
-#~ msgstr "Suurennusasetukset"
-
-#~ msgid "Measure Options"
-#~ msgstr "Mittanauha-asetukset"
-
-#~ msgid "Rename path"
-#~ msgstr "Nimeä polku uudelleen"
-
-#~ msgid "New File Settings"
-#~ msgstr "Uusi Tiedosto -toiminnon asetukset"
-
-#~ msgid "Display Settings"
-#~ msgstr "Näyttöasetukset"
-
-#~ msgid "Interface Settings"
-#~ msgstr "Käyttöliittymäasetukset"
-
-#~ msgid "Help System Settings"
-#~ msgstr "Avustusasetukset"
-
-#~ msgid "Image Windows Settings"
-#~ msgstr "Kuvaikkunan asetukset"
-
-#~ msgid "Tool Options Settings"
-#~ msgstr "Työkalujen asetukset"
-
-#~ msgid "Environment Settings"
-#~ msgstr "Ympäristön asetukset"
-
-#~ msgid "Monitor Information"
-#~ msgstr "Näytön tiedot"
-
-#~ msgid "Directories Settings"
-#~ msgstr "Kansioasetukset"
-
-#~ msgid "Text Tool Options"
-#~ msgstr "Tekstityökalun asetukset"
-
-#~ msgid "Fuzzy Selection Options"
-#~ msgstr "Epäterävän valinnan asetukset"
-
-#~ msgid "Bezier Selection Options"
-#~ msgstr "Bezier-valinnan asetukset"
-
-#~ msgid "By-Color Select Options"
-#~ msgstr "Värinmukaisen valinnen asetukset"
-
-#~ msgid "Bucket Fill Options"
-#~ msgstr "Maalipurkin asetukset"
-
-#~ msgid "Blend Options"
-#~ msgstr "Sekoitusasetukset"
-
-#~ msgid "Pencil Options"
-#~ msgstr "Kynäasetukset"
-
-#~ msgid "Paintbrush Options"
-#~ msgstr "Siveltimen asetukset"
-
-#~ msgid "Eraser Options"
-#~ msgstr "Pyyhekumin asetukset"
-
-#~ msgid "Convolver Options"
-#~ msgstr "Convolver-asetukset"
-
-#~ msgid "Ink Options"
-#~ msgstr "Mustekynäasetukset"
-
-#~ msgid "Dodge or Burn Options"
-#~ msgstr "Dodge/Burn-asetukset"
-
-#~ msgid "Smudge Options"
-#~ msgstr "Sormi-työkalun asetukset"
-
-#~ msgid "/Tools/Move"
-#~ msgstr "/Työkalut/Siirrä"
-
-#~ msgid "/Tools/Flip"
-#~ msgstr "/Työkalut/Peilikuva"
-
-#~ msgid "/Tools/Airbrush"
-#~ msgstr "/Työkalut/Ruisku"
-
-#~ msgid "/Tools/Ink"
-#~ msgstr "/Työkalut/Mustekynä"
-
-#~ msgid "Open Options"
-#~ msgstr "Kuvan avauksen asetukset"
-
-#~ msgid "generated_brushes\n"
-#~ msgstr "generoidut siveltimet\n"
-
-#~ msgid "sighup caught"
-#~ msgstr "sighup napattu"
-
-#~ msgid "sigint caught"
-#~ msgstr "sigint napattu"
-
-#~ msgid "sigquit caught"
-#~ msgstr "sigquit napattu"
-
-#~ msgid "sigabrt caught"
-#~ msgstr "sigabrt napattu"
-
-#~ msgid "sigbus caught"
-#~ msgstr "sigbus napattu"
-
-#~ msgid "sigsegv caught"
-#~ msgstr "sigsegv napattu"
-
-#~ msgid "sigpipe caught"
-#~ msgstr "sigpipe napattu"
-
-#~ msgid "sigterm caught"
-#~ msgstr "sigterm napattu"
-
-#~ msgid "sigfpe caught"
-#~ msgstr "sigfpe napattu"
-
-#~ msgid "unknown signal"
-#~ msgstr "tuntematon signaali"
-
-#~ msgid "/Script-Fu/Modify"
-#~ msgstr "/Script-Fu/Muokkaa"
-
-#~ msgid "/Stack/Previous Layer"
-#~ msgstr "/Pino/Edellinen taso"
-
-#~ msgid "/Stack/Next Layer"
-#~ msgstr "/Pino/Seuraava taso"
-
-#~ msgid "%s: Window Info"
-#~ msgstr "Ikkunan %s tiedot"
-
-#~ msgid "No image: Window Navigation"
-#~ msgstr "Ikkuna-navigointi: Ei kuvaa"
