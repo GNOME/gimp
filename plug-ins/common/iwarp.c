@@ -929,7 +929,7 @@ iwarp_animate_dialog (GtkWidget *dlg,
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 
-  button = gtk_check_button_new_with_label (_("Animate"));
+  button = gtk_check_button_new_with_mnemonic (_("A_nimate"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_animate);
   gtk_widget_show (button);
@@ -953,16 +953,16 @@ iwarp_animate_dialog (GtkWidget *dlg,
   gtk_widget_show (table);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("Number of Frames:"), SCALE_WIDTH, 0,
+				     _("Number of _Frames:"), SCALE_WIDTH, 0,
 				     animate_num_frames,
-				     2, MAX_NUM_FRAMES, 1.0, 10.0, 1,
+				     2, MAX_NUM_FRAMES, 1, 10, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
   g_signal_connect (G_OBJECT (scale_data), "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &animate_num_frames);
 
-  button = gtk_check_button_new_with_label (_("Reverse"));
+  button = gtk_check_button_new_with_mnemonic (_("R_everse"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 3, 1, 2,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0); 
   gtk_widget_show (button);
@@ -971,7 +971,7 @@ iwarp_animate_dialog (GtkWidget *dlg,
                     G_CALLBACK (gimp_toggle_button_update),
                     &do_animate_reverse);
  
-  button = gtk_check_button_new_with_label (_("Ping Pong"));
+  button = gtk_check_button_new_with_mnemonic (_("_Ping Pong"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 3, 2, 3,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0); 
   gtk_widget_show (button);
@@ -984,7 +984,7 @@ iwarp_animate_dialog (GtkWidget *dlg,
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
 			    vbox,
-			    gtk_label_new (_("Animate")));
+			    gtk_label_new_with_mnemonic (_("_Animate")));
 }
 
 static void
@@ -1012,7 +1012,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_widget_show (table);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("Deform Radius:"), SCALE_WIDTH, 0,
+				     _("_Deform Radius:"), SCALE_WIDTH, 0,
 				     iwarp_vals.deform_area_radius,
 				     5.0, MAX_DEFORM_AREA_RADIUS, 1.0, 10.0, 0,
 				     TRUE, 0, 0,
@@ -1022,7 +1022,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
                     &iwarp_vals.deform_area_radius);
  
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("Deform Amount:"), SCALE_WIDTH, 0,
+				     _("D_eform Amount:"), SCALE_WIDTH, 0,
 				     iwarp_vals.deform_amount,
 				     0.0, 1.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,
@@ -1045,22 +1045,22 @@ iwarp_settings_dialog (GtkWidget *dlg,
 				 &iwarp_vals.deform_mode,
 				 GINT_TO_POINTER (iwarp_vals.deform_mode),
 
-				 _("Move"),
+				 _("_Move"),
                                  GINT_TO_POINTER (MOVE), NULL,
 
-				 _("Grow"),
+				 _("_Grow"),
                                  GINT_TO_POINTER (GROW), NULL,
 
-				 _("Swirl CCW"),
+				 _("S_wirl CCW"),
                                  GINT_TO_POINTER (SWIRL_CCW), NULL,
 
-				 _("Remove"),
+				 _("Remo_ve"),
                                  GINT_TO_POINTER (REMOVE), &widget[0],
 
-				 _("Shrink"),
+				 _("S_hrink"),
                                  GINT_TO_POINTER (SHRINK), &widget[1],
 
-				 _("Swirl CW"),
+				 _("Sw_irl CW"),
                                  GINT_TO_POINTER (SWIRL_CW), &widget[2],
 
 				 NULL);
@@ -1083,7 +1083,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
       g_object_unref (G_OBJECT (widget[i]));
     }
 
-  button = gtk_check_button_new_with_label (_("Bilinear"));
+  button = gtk_check_button_new_with_mnemonic (_("_Bilinear"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				iwarp_vals.do_bilinear);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -1102,7 +1102,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
-  button = gtk_check_button_new_with_label (_("Adaptive Supersample"));
+  button = gtk_check_button_new_with_mnemonic (_("Adaptive S_upersample"));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				iwarp_vals.do_supersample);
@@ -1122,7 +1122,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_widget_set_sensitive (table, iwarp_vals.do_supersample);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("Max Depth:"), SCALE_WIDTH, 0,
+				     _("Ma_x Depth:"), SCALE_WIDTH, 0,
 				     iwarp_vals.max_supersample_depth,
 				     1.0, 5.0, 1.1, 1.0, 0,
 				     TRUE, 0, 0,
@@ -1132,7 +1132,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
                     &iwarp_vals.max_supersample_depth);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("Threshold:"), SCALE_WIDTH, 0,
+				     _("Thresho_ld:"), SCALE_WIDTH, 0,
 				     iwarp_vals.supersample_threshold,
 				     1.0, 10.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,
@@ -1145,7 +1145,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
 			    vbox,
-			    gtk_label_new (_("Settings")));
+			    gtk_label_new_with_mnemonic (_("_Settings")));
 }
 
 static gboolean
@@ -1167,7 +1167,7 @@ iwarp_dialog (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("Reset"), iwarp_reset_callback,
+			 _("_Reset"), iwarp_reset_callback,
 			 NULL, NULL, NULL, FALSE, FALSE,
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
