@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-09-07 22:52+0200\n"
-"PO-Revision-Date: 2003-09-04 21:45+0200\n"
+"PO-Revision-Date: 2003-09-09 20:39+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1378,12 +1378,11 @@ msgstr "Sposta canale"
 
 #: app/core/gimpchannel.c:234
 msgid "Feather Channel"
-msgstr ""
+msgstr "Sfuma canale"
 
 #: app/core/gimpchannel.c:235
-#, fuzzy
 msgid "Sharpen Channel"
-msgstr "Nuovo canale"
+msgstr "Affila canale"
 
 #: app/core/gimpchannel.c:236
 msgid "Clear Channel"
@@ -1943,9 +1942,8 @@ msgid "Move Layer"
 msgstr "Sposta livello"
 
 #: app/core/gimplayer.c:621 app/gui/drawable-commands.c:157
-#, fuzzy
 msgid "Flip Layer"
-msgstr "Livello"
+msgstr "Riflessione livello"
 
 #: app/core/gimplayer.c:650 app/gui/drawable-commands.c:191
 msgid "Rotate Layer"
@@ -1959,21 +1957,14 @@ msgstr ""
 "ad un livello senza canale alpha."
 
 #: app/core/gimplayer.c:924
-#, fuzzy
 msgid "Unable to add a layer mask since the layer already has one."
-msgstr ""
-"Impossibile aggiungere una maschera livello finchè\n"
-"un livello non ne ha una."
+msgstr "Impossibile aggiungere una maschera di livello dato che il livello ne ha già una."
 
 #: app/core/gimplayer.c:931
-#, fuzzy
 msgid "Cannot add layer mask to a layer with no alpha channel."
-msgstr ""
-"Impossibile aggiungere una maschera livello\n"
-"ad un livello senza canale alpha."
+msgstr "Impossibile aggiungere una maschera livello ad un livello senza canale alpha."
 
 #: app/core/gimplayer.c:941
-#, fuzzy
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Impossibile aggiungere maschera livello con dimensioni diverse dal livello "
@@ -2015,13 +2006,13 @@ msgstr ""
 
 #: app/core/gimppalette.c:422 app/core/gimppalette.c:447
 #: app/core/gimppalette.c:475 app/core/gimppalette.c:545
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Read error in line %d."
 msgstr ""
-"Caricamento palette %s (linea %d):\n"
-"Errore di lettura"
+"Caricamento palette '%s':\n"
+"errore di lettura alla riga %d."
 
 #: app/core/gimppalette.c:440
 #, c-format
@@ -2029,13 +2020,13 @@ msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Stringa UTF-8 non valida nel file palette '%s'"
 
 #: app/core/gimppalette.c:464
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Invalid number of columns in line %d."
 msgstr ""
-"Caricamento palette %s (linea %d):\n"
-"Errore di lettura"
+"Caricamento palette '%s':\n"
+"numero di colonne non valido alla riga %d."
 
 #. maybe we should just abort?
 #: app/core/gimppalette.c:504
@@ -2877,184 +2868,149 @@ msgid "/Add Tab/_Device Status..."
 msgstr "/Finestre/Stato dei dispositivi..."
 
 #: app/gui/dialogs-menu.c:73
-#, fuzzy
 msgid "/Add Tab/_Layers..."
-msgstr "/Aggiungi livello maschera..."
+msgstr "/Aggiungi scheda/_Livelli..."
 
 #: app/gui/dialogs-menu.c:75
-#, fuzzy
 msgid "/Add Tab/_Channels..."
-msgstr "/Modifica attributi canale..."
+msgstr "/Aggiungi scheda/_Canali..."
 
 #: app/gui/dialogs-menu.c:77
-#, fuzzy
 msgid "/Add Tab/_Paths..."
-msgstr "/Finestre/Pattern..."
+msgstr "/Aggiungi scheda/_Percorsi..."
 
 #: app/gui/dialogs-menu.c:79
 #, fuzzy
 msgid "/Add Tab/_Indexed Palette..."
-msgstr "/Finestre/Palette in scala di colore..."
+msgstr "/Aggiungi scheda/Palette _indicizzata..."
 
 #: app/gui/dialogs-menu.c:81
-#, fuzzy
 msgid "/Add Tab/_Selection Editor..."
-msgstr "/Finestre/Palette..."
+msgstr "/Aggiungi scheda/Editor _selezione..."
 
 #: app/gui/dialogs-menu.c:83
-#, fuzzy
 msgid "/Add Tab/Na_vigation..."
-msgstr "/Finestre/Pattern..."
+msgstr "/Aggiungi scheda/Na_vigazione..."
 
 #: app/gui/dialogs-menu.c:85
-#, fuzzy
 msgid "/Add Tab/_Undo History..."
-msgstr "/Finestre/Storico operazioni..."
+msgstr "/Aggiungi scheda/Cronologia undo..."
 
 #: app/gui/dialogs-menu.c:90
-#, fuzzy
 msgid "/Add Tab/Colo_rs..."
-msgstr "/File/Finestre/Console degli errori..."
+msgstr "/Aggiungi scheda/Colo_ri..."
 
 #: app/gui/dialogs-menu.c:92
-#, fuzzy
 msgid "/Add Tab/Brus_hes..."
-msgstr "/Aggiungi livello maschera..."
+msgstr "/Aggiungi scheda/Pennelli..."
 
 #: app/gui/dialogs-menu.c:94
-#, fuzzy
 msgid "/Add Tab/P_atterns..."
-msgstr "/Finestre/Pattern..."
+msgstr "/Aggiungi scheda/P_attern..."
 
 #: app/gui/dialogs-menu.c:96
-#, fuzzy
 msgid "/Add Tab/_Gradients..."
-msgstr "/Finestre/Gradienti..."
+msgstr "/Aggiungi scheda/_Gradienti..."
 
 #: app/gui/dialogs-menu.c:98
-#, fuzzy
 msgid "/Add Tab/Pal_ettes..."
-msgstr "/Finestre/Palette..."
+msgstr "/Aggiungi scheda/Pal_ette..."
 
 #: app/gui/dialogs-menu.c:100
-#, fuzzy
 msgid "/Add Tab/_Fonts..."
-msgstr "/File/Finestre/Console degli errori..."
+msgstr "/Aggiungi scheda/Caratteri..."
 
 #: app/gui/dialogs-menu.c:102
-#, fuzzy
 msgid "/Add Tab/_Buffers..."
-msgstr "/Aggiungi livello maschera..."
+msgstr "/Aggiungi scheda/_Buffer..."
 
 #: app/gui/dialogs-menu.c:107
-#, fuzzy
 msgid "/Add Tab/I_mages..."
-msgstr "/Aggiungi livello maschera..."
+msgstr "/Aggiungi scheda/I_maschera..."
 
 #: app/gui/dialogs-menu.c:109
-#, fuzzy
 msgid "/Add Tab/Document Histor_y..."
-msgstr "/Finestre/Storico operazioni..."
+msgstr "/Aggiungi scheda/Cronologia..."
 
 #: app/gui/dialogs-menu.c:111
-#, fuzzy
 msgid "/Add Tab/_Templates..."
-msgstr "/Aggiungi livello maschera..."
+msgstr "/Aggiungi scheda/_Template..."
 
 #: app/gui/dialogs-menu.c:113
-#, fuzzy
 msgid "/Add Tab/Error Co_nsole..."
-msgstr "/File/Finestre/Console degli errori..."
+msgstr "/Aggiungi scheda/Co_nsole degli errori..."
 
 #: app/gui/dialogs-menu.c:118
-#, fuzzy
 msgid "/Add Tab/Tools..."
-msgstr "/File/Finestre/Console degli errori..."
+msgstr "/Aggiungi scheda/Strumenti..."
 
 #: app/gui/dialogs-menu.c:121
-#, fuzzy
 msgid "/_Remove Tab"
-msgstr "Rimuovi"
+msgstr "_Rimuovi scheda"
 
 #: app/gui/dialogs-menu.c:131
-#, fuzzy
 msgid "/Preview Size/_Tiny"
-msgstr "Dimensione anteprima:"
+msgstr "/Dimensione anteprima/Piccolis_sima"
 
 #: app/gui/dialogs-menu.c:137
-#, fuzzy
 msgid "/Preview Size/E_xtra Small"
-msgstr "Dimensione anteprima:"
+msgstr "/Dimensione anteprima/M_olto piccola"
 
 #: app/gui/dialogs-menu.c:138
-#, fuzzy
 msgid "/Preview Size/_Small"
-msgstr "Dimensione anteprima:"
+msgstr "/Dimensione anteprima/_Piccola"
 
 #: app/gui/dialogs-menu.c:139
-#, fuzzy
 msgid "/Preview Size/_Medium"
-msgstr "Dimensione anteprima:"
+msgstr "/Dimensione anteprima/_Media"
 
 #: app/gui/dialogs-menu.c:140
-#, fuzzy
 msgid "/Preview Size/_Large"
-msgstr "Dimensione anteprima:"
+msgstr "/Dimensione anteprima/_Grande"
 
 #: app/gui/dialogs-menu.c:141
-#, fuzzy
 msgid "/Preview Size/Ex_tra Large"
-msgstr "Dimensione anteprima:"
+msgstr "/Dimensione anteprima/Mol_to grande"
 
 #: app/gui/dialogs-menu.c:142
-#, fuzzy
 msgid "/Preview Size/_Huge"
-msgstr "Dimensione anteprima:"
+msgstr "/Dimensione anteprima/Gran_dissima"
 
 #: app/gui/dialogs-menu.c:143
-#, fuzzy
 msgid "/Preview Size/_Enormous"
-msgstr "Dimensione anteprima:"
+msgstr "/Dimensione anteprima/_Enorme"
 
 #: app/gui/dialogs-menu.c:144
-#, fuzzy
 msgid "/Preview Size/_Gigantic"
-msgstr "Dimensione anteprima:"
+msgstr "/Dimensione anteprima/Gig_ante"
 
 #: app/gui/dialogs-menu.c:148
-#, fuzzy
 msgid "/Tab Style/_Icon"
-msgstr "/Strumenti/Testo"
+msgstr "/Stile scheda/_Icone"
 
 #: app/gui/dialogs-menu.c:154
-#, fuzzy
 msgid "/Tab Style/Current _Status"
-msgstr "/Strumenti/Testo"
+msgstr "/Stile scheda/_Stato corrente"
 
 #: app/gui/dialogs-menu.c:155
-#, fuzzy
 msgid "/Tab Style/_Text"
-msgstr "/Strumenti/Testo"
+msgstr "/Stile scheda/_Testo"
 
 #: app/gui/dialogs-menu.c:156
-#, fuzzy
 msgid "/Tab Style/I_con & Text"
-msgstr "/Strumenti/Testo"
+msgstr "/Stile scheda/Testo e I_cone"
 
 #: app/gui/dialogs-menu.c:157
-#, fuzzy
 msgid "/Tab Style/St_atus & Text"
-msgstr "/Strumenti/Testo"
+msgstr "/Stile scheda/St_ato e testo"
 
 #: app/gui/dialogs-menu.c:159
-#, fuzzy
 msgid "/View as _List"
-msgstr "Visualizza istogramma immagine"
+msgstr "/Vista come e_lenco"
 
 #: app/gui/dialogs-menu.c:163
-#, fuzzy
 msgid "/View as _Grid"
-msgstr "/Visualizza/Punti a griglia"
+msgstr "/Vissta come _griglia"
 
 #: app/gui/dialogs-menu.c:170
 #, fuzzy
@@ -10112,7 +10068,7 @@ msgstr "Messaggio GIMP"
 #: app/widgets/gimpwidgets-utils.c:386
 #, c-format
 msgid "<%s>"
-msgstr ""
+msgstr "<%s>"
 
 #: app/xcf/xcf-load.c:280
 msgid ""
@@ -10126,14 +10082,14 @@ msgstr ""
 
 #: app/xcf/xcf-save.c:147 app/xcf/xcf-save.c:157 app/xcf/xcf-save.c:167
 #: app/xcf/xcf-save.c:177 app/xcf/xcf-save.c:191 app/xcf/xcf.c:318
-#, fuzzy, c-format
+#, c-format
 msgid "Error saving XCF file: %s"
-msgstr "Errore aprendo il file: %s\n"
+msgstr "Errore durante il salvataggio del file XCF: %s"
 
 #: app/xcf/xcf-write.c:86
-#, fuzzy, c-format
+#, c-format
 msgid "Error writing XCF: %s"
-msgstr "Errore aprendo il file: %s\n"
+msgstr "Errore durante la scrittura del file XCF: %s"
 
 #: app/xcf/xcf-seek.c:44 app/xcf/xcf-seek.c:61 app/xcf/xcf-seek.c:72
 #, fuzzy, c-format
@@ -10156,20 +10112,5 @@ msgstr ""
 
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
-msgstr ""
+msgstr "Gimp (instabile)"
 
-#~ msgid "Channel Load"
-#~ msgstr "Carico canale"
-
-#~ msgid "Sharpen Selection"
-#~ msgstr "Affila selezione"
-
-#~ msgid "Selection from Channel"
-#~ msgstr "Selezione dal canale"
-
-#, fuzzy
-#~ msgid "No selection to stroke."
-#~ msgstr "Nessuna selezione da sbarrare."
-
-#~ msgid "Paint operation failed."
-#~ msgstr "Operazione pittura fallita."
