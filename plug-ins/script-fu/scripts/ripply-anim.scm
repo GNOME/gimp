@@ -92,7 +92,7 @@
       (gimp-display-new out-imagestack))))
 
 (script-fu-register "script-fu-ripply-anim"
-		    "<Image>/Script-Fu/Animators/Rippling..."
+		    _"<Image>/Script-Fu/Animators/Rippling..."
 		    "Ripple any image by creating animation frames as layers"
 		    "Adam D. Moss (adam@foxbox.org)"
 		    "Adam D. Moss"
@@ -100,5 +100,5 @@
 		    "RGB* GRAY*"
 		    SF-IMAGE "Image to Animage" 0
 		    SF-DRAWABLE "Drawable to Animate" 0
-		    SF-ADJUSTMENT "Rippling Strentgh" '(3 0 256 1 10 3 0)
-		    SF-ADJUSTMENT "Number of Frames" '(15 0 256 1 10 0 1))
+		    SF-ADJUSTMENT _"Rippling Strength" '(3 0 256 1 10 3 0)
+		    SF-ADJUSTMENT _"Number of Frames" '(15 0 256 1 10 0 1))

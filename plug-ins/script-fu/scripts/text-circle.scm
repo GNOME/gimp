@@ -164,19 +164,19 @@
 
 (script-fu-register
  "script-fu-text-circle"
- "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
+ _"<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
  "Render the specified text along the perimeter of a circle"
  "Shuji Narazaki <narazaki@gimp.org>"
  "Shuji Narazaki"
  "1997-1998"
  ""
- SF-STRING "Text" "The GNU Image Manipulation Program Version 1.1 "
- SF-ADJUSTMENT "Radius" '(80 1 8000 1 1 0 1)
- SF-ADJUSTMENT "Start-angle[-180:180]" '(0 -180 180 1 1 0 1)
- SF-ADJUSTMENT "Fill-angle [-360:360]" '(360 -360 360 1 1 0 1)
- SF-ADJUSTMENT "Font Size (pixel)" '(18 1 1000 1 1 0 1)
- SF-TOGGLE "Antialias" TRUE
- SF-FONT "Font name" "-adobe-helvetica-bold-r-normal-*-30-*-*-*-p-*-*-*"
+ SF-STRING     _"Text" "The GNU Image Manipulation Program Version 1.1 "
+ SF-ADJUSTMENT _"Radius" '(80 1 8000 1 1 0 1)
+ SF-ADJUSTMENT _"Start Angle" '(0 -180 180 1 1 0 1)
+ SF-ADJUSTMENT _"Fill Angle" '(360 -360 360 1 1 0 1)
+ SF-ADJUSTMENT _"Font Size (pixels)" '(18 1 1000 1 1 0 1)
+ SF-TOGGLE     _"Antialias" TRUE
+ SF-FONT       _"Font" "-adobe-helvetica-bold-r-normal-*-30-*-*-*-p-*-*-*"
 )
 
 ;; text-circle.scm ends here

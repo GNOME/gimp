@@ -92,7 +92,7 @@
 (script-fu-register "script-fu-selection-to-brush"
  ; I like this script under the main selection menu, but that doesnt seem quite kosher
 ;		    "<Image>/Select/Selection To Brush"
-		    "<Image>/Script-Fu/Selection/To Brush..."
+		    _"<Image>/Script-Fu/Selection/To Brush..."
 		    "Convert a selection to a greyscale brush"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
@@ -101,9 +101,9 @@
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
 ;		    SF-STRING "Home directory" "/home/aklikins/"
-		    SF-STRING "Description" "Brush"
-		    SF-STRING "Filename" "SlothBrush"
+		    SF-STRING _"Description" "Brush"
+		    SF-STRING _"Filename" "SlothBrush"
 ;		    SF-VALUE "Spacing" "25")
-		    SF-ADJUSTMENT "Spacing" '(25 0 1000 1 1 1 0))
+		    SF-ADJUSTMENT _"Spacing" '(25 0 1000 1 1 1 0))
 
 

@@ -59,7 +59,7 @@
 
 (script-fu-register
  "script-fu-unsharp-mask"
- "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
+ _"<Image>/Script-Fu/Alchemy/Unsharp Mask..."
  "Make a sharp image of IMAGE's DRAWABLE by applying unsharp mask method"
  "Shuji Narazaki <narazaki@gimp.org>"
  "Shuji Narazaki"
@@ -67,8 +67,13 @@
  ""
  SF-IMAGE "Image" 0
  SF-DRAWABLE "Drawable to apply" 0
- SF-ADJUSTMENT "Mask size" '(5 1 100 1 1 0 1)
- SF-ADJUSTMENT "Mask opacity" '(50 0 100 1 1 0 1)
+ SF-ADJUSTMENT _"Mask Size" '(5 1 100 1 1 0 1)
+ SF-ADJUSTMENT _"Mask Opacity" '(50 0 100 1 1 0 1)
 )
 
 ;;; unsharp-mask.scm ends here
+
+
+
+
+

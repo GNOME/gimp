@@ -78,19 +78,19 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-t-o-p-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
 		    "Trace of Particles Effect"
 		    "Shuji Narazaki (narazaki@InetQ.or.jp)"
 		    "Shuji Narazaki"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "The GIMP"
-		    SF-ADJUSTMENT "Font size (in pixels)" '(100 1 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-becker-*-r-*-*-24-*-*-*-p-*-*-*"
-                    SF-ADJUSTMENT  "Hit Rate [0.0,1.0]" '(0.2 0 1 .01 .01 2 0)
-                    SF-ADJUSTMENT "Edge Width" '(2 0 128 1 1 0 0)
-		    SF-TOGGLE "Edge Only?" FALSE
-		    SF-COLOR "Base Color" '(0 40 0)
-		    SF-COLOR "Background Color" '(255 255 255))
+		    SF-STRING     _"Text" "The GIMP"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 1 1000 1 10 0 1)
+		    SF-FONT       _"Font" "-*-becker-*-r-*-*-24-*-*-*-p-*-*-*"
+                    SF-ADJUSTMENT _"Hit Rate" '(0.2 0 1 .01 .01 2 0)
+                    SF-ADJUSTMENT _"Edge Width" '(2 0 128 1 1 0 0)
+		    SF-TOGGLE     _"Edge Only" FALSE
+		    SF-COLOR      _"Base Color" '(0 40 0)
+		    SF-COLOR      _"Background Color" '(255 255 255))
 
 ; end of t-o-p.scm

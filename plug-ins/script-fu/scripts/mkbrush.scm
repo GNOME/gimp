@@ -77,16 +77,16 @@
 ; Register with the PDB
 
 (script-fu-register "script-fu-make-brush-rectangular"
-            "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
+            _"<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
             "Create size of brush"
             "Seth Burgess <sjburges@ou.edu>"
             "Seth Burgess"
             "1997"
             ""
-            SF-STRING "Description" "Rectangle"
-            SF-VALUE "Width" "20"
-            SF-VALUE "Height" "20"
-            SF-VALUE "Spacing" "20"
+            SF-STRING _"Description" "Rectangle"
+            SF-VALUE  _"Width" "20"
+            SF-VALUE  _"Height" "20"
+            SF-VALUE  _"Spacing" "20"
             )
 
 
@@ -155,17 +155,17 @@
 ; Register with the PDB
 
 (script-fu-register "script-fu-make-brush-rectangular-feathered"
-            "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
+            _"<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
             "Create size of brush"
             "Seth Burgess <sjburges@ou.edu>"
             "Seth Burgess"
             "1997"
             ""
-            SF-STRING "Description" "Rectangle"
-            SF-VALUE "Width" "20"
-            SF-VALUE "Height" "20"
-            SF-VALUE "Feathering" "4"
-            SF-VALUE "Spacing" "25"
+            SF-STRING _"Description" "Rectangle"
+            SF-VALUE  _"Width" "20"
+            SF-VALUE  _"Height" "20"
+            SF-VALUE  _"Feathering" "4"
+            SF-VALUE  _"Spacing" "25"
             )
 
 (define (script-fu-make-brush-elliptical description width height spacing)
@@ -226,16 +226,16 @@
 ; Register with the PDB
 
 (script-fu-register "script-fu-make-brush-elliptical"
-            "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
+            _"<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
             "Create size of brush"
             "Seth Burgess <sjburges@ou.edu>"
             "Seth Burgess"
             "1997"
             ""
-            SF-STRING "Description" "Ellipse"
-            SF-VALUE "Width" "20"
-            SF-VALUE "Height" "20"
-            SF-VALUE "Spacing" "25"
+            SF-STRING _"Description" "Ellipse"
+            SF-VALUE  _"Width" "20"
+            SF-VALUE  _"Height" "20"
+            SF-VALUE  _"Spacing" "25"
             )
 
 
@@ -306,15 +306,15 @@
 ; Register with the PDB
 
 (script-fu-register "script-fu-make-brush-elliptical-feathered"
-            "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
+            _"<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
             "Makes a feathered elliptical brush of specified size"
             "Seth Burgess <sjburges@ou.edu>"
             "Seth Burgess"
             "1997"
             ""
-            SF-STRING "Description" "Ellipse"
-            SF-VALUE "Width" "20"
-            SF-VALUE "Height" "20"
-            SF-VALUE "Feathering" "4"
-            SF-VALUE "Spacing" "25"
+            SF-STRING _"Description" "Ellipse"
+            SF-VALUE  _"Width" "20"
+            SF-VALUE  _"Height" "20"
+            SF-VALUE  _"Feathering" "4"
+            SF-VALUE  _"Spacing" "25"
             )

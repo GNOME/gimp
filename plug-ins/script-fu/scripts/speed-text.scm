@@ -78,15 +78,15 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-speed-text"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
 		    "give text a speedy effect"
 		    "Austin Donnelly"
 		    "Austin Donnelly"
 		    "1998"
 		    ""
-		    SF-STRING "Text String" "Speed!"
-		    SF-FONT "Font" "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-ADJUSTMENT "Density (%)" '(80 0 100 1 10 0 0)
-                    SF-COLOR "Text Color" '(0 0 0)
-		    SF-COLOR "Background Color" '(255 255 255))
+		    SF-STRING     _"Text" "Speed!"
+		    SF-FONT       _"Font" "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Density (%)" '(80 0 100 1 10 0 0)
+                    SF-COLOR      _"Text Color" '(0 0 0)
+		    SF-COLOR      _"Background Color" '(255 255 255))

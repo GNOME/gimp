@@ -61,16 +61,16 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-newsprint-text"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
 		    "Apply a screen to text"
 		    "Austin Donnelly"
 		    "Austin Donnelly"
 		    "1998"
 		    ""
-		    SF-STRING "Text String" "Newsprint"
-		    SF-FONT "Font" "-*-Helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-VALUE "Cell size (in pixels)" "7"
-		    SF-ADJUSTMENT "Density (%)" '(60 0 100 1 10 0 0)
-                    SF-COLOR "Text Color" '(0 0 0)
-		    SF-COLOR "Background Color" '(255 255 255))
+		    SF-STRING     _"Text" "Newsprint"
+		    SF-FONT       _"Font" "-*-Helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-VALUE      _"Cell Size (pixels)" "7"
+		    SF-ADJUSTMENT _"Density (%)" '(60 0 100 1 10 0 0)
+                    SF-COLOR      _"Text Color" '(0 0 0)
+		    SF-COLOR      _"Background Color" '(255 255 255))

@@ -178,7 +178,7 @@
   (gimp-displays-flush)))
 
 (script-fu-register "script-fu-perspective-shadow"
-		    "<Image>/Script-Fu/Shadow/Perspective..."
+		    _"<Image>/Script-Fu/Shadow/Perspective..."
 		    "Add a perspective shadow"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
@@ -186,11 +186,11 @@
 		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-ADJUSTMENT "Angle" '(45 0 180 1 10 1 0)
-		    SF-ADJUSTMENT "Relative horizon distance" '(5 0 24 .1 1 1 1)
-		    SF-ADJUSTMENT "Relative shadow length" '(1 0 24 .1 1 1 1)
-		    SF-ADJUSTMENT "Blur Radius" '(3 0 1024 1 10 0 0)
-		    SF-COLOR "Color" '(0 0 0)
-		    SF-ADJUSTMENT "Opacity" '(80 0 100 1 10 0 0)
-		    SF-TOGGLE "Interpolate?" TRUE
-		    SF-TOGGLE "Allow Resizing?" FALSE)
+		    SF-ADJUSTMENT _"Angle" '(45 0 180 1 10 1 0)
+		    SF-ADJUSTMENT _"Relative Distance of Horizon" '(5 0 24 .1 1 1 1)
+		    SF-ADJUSTMENT _"Relative Length of Shadow" '(1 0 24 .1 1 1 1)
+		    SF-ADJUSTMENT _"Blur Radius" '(3 0 1024 1 10 0 0)
+		    SF-COLOR      _"Color" '(0 0 0)
+		    SF-ADJUSTMENT _"Opacity" '(80 0 100 1 10 0 0)
+		    SF-TOGGLE     _"Interpolate" TRUE
+		    SF-TOGGLE     _"Allow Resizing" FALSE)

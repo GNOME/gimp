@@ -67,14 +67,14 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-chalk-logo"
-                    "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
+                    _"<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
                     "Chalk scribbled logos"
                     "Manish Singh <msingh@uclink4.berkeley.edu>"
                     "Manish Singh"
                     "October 1997"
                     ""
-                    SF-STRING "Text String" "CHALK"
-                    SF-ADJUSTMENT "Font Size (pixels)" '(150 2 1000 1 10 0 1)
-                    SF-FONT "Font" "-*-Cooper-*-r-*-*-24-*-*-*-p-*-*-*"
-                    SF-COLOR "Background Color" '(0 0 0)
-                    SF-COLOR "Chalk Color" '(255 255 255))
+                    SF-STRING     _"Text" "CHALK"
+                    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
+                    SF-FONT       _"Font" "-*-Cooper-*-r-*-*-24-*-*-*-p-*-*-*"
+                    SF-COLOR      _"Background Color" '(0 0 0)
+                    SF-COLOR      _"Chalk Color" '(255 255 255))

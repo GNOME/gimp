@@ -156,7 +156,7 @@
   (gimp-displays-flush)))
 
 (script-fu-register "script-fu-drop-shadow"
-		    "<Image>/Script-Fu/Shadow/Drop-Shadow..."
+		    _"<Image>/Script-Fu/Shadow/Drop-Shadow..."
 		    "Add a drop-shadow of the current selection or alpha-channel"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
@@ -164,9 +164,9 @@
 		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-ADJUSTMENT "X Offset" '(8 -4096 4096 1 10 0 1)
-		    SF-ADJUSTMENT "Y Offset" '(8 -4096 4096 1 10 0 1)
-		    SF-ADJUSTMENT "Blur Radius" '(15 0 1024 1 10 0 1)
-		    SF-COLOR "Color" '(0 0 0)
-		    SF-ADJUSTMENT "Opacity" '(80 0 100 1 10 0 0)
-		    SF-TOGGLE "Allow Resizing" TRUE)
+		    SF-ADJUSTMENT _"Offset X" '(8 -4096 4096 1 10 0 1)
+		    SF-ADJUSTMENT _"Offset Y" '(8 -4096 4096 1 10 0 1)
+		    SF-ADJUSTMENT _"Blur Radius" '(15 0 1024 1 10 0 1)
+		    SF-COLOR      _"Color" '(0 0 0)
+		    SF-ADJUSTMENT _"Opacity" '(80 0 100 1 10 0 0)
+		    SF-TOGGLE     _"Allow Resizing" TRUE)

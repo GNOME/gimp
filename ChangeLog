@@ -1,3 +1,23 @@
+2000-03-28  Sven Neumann  <sven@gimp.org>
+
+        * plugins/script-fu/Makefile.am: don't install test-sphere.scm
+	
+        * plugins/script-fu/interp_slib.c: accept _"foo" as a normal
+	string. This allows us to mark strings in scripts for translation
+	similar to how it is done in C. Please not that this does not mean
+	that gettext is automatically called on those strings. The 
+	Script-Fu interface code takes care of calling gettext on all
+	strings that are displayed in the GUI.
+
+	* plug-ins/gap/sel-to-anim-img.scm
+	* plug-ins/script-fu/scripts/*.scm
+	* plug-ins/webbrowser/web-browser.scm: marked strings for 
+	translation. Hopefully I didn't break anything. Please test!
+
+	I noted that there are still some scripts that should be updated
+	to use the new features like SF-ADJUSTMENTs. Help is very much
+	appreciated here.
+
 Tue Mar 28 22:47:17 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* plug-ins/gap/*: "Frame Range" typo fix.

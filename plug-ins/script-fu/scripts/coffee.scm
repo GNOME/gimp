@@ -58,7 +58,7 @@
 
 (script-fu-register
     "script-fu-coffee-stain"
-    "<Image>/Script-Fu/Decor/Coffee Stain..."
+    _"<Image>/Script-Fu/Decor/Coffee Stain..."
     "Draws realistic looking coffee stains"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
@@ -66,6 +66,6 @@
     "RGB*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
-    SF-VALUE "Stains" "3"
-    SF-TOGGLE "Darken Only? (better but only for images with alot of white)" TRUE
+    SF-VALUE _"Stains" "3"
+    SF-TOGGLE _"Darken Only\n(Better, but only for Images with alot of White)" TRUE
 )

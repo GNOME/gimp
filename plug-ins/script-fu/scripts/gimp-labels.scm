@@ -105,56 +105,56 @@
 
 
 (script-fu-register "script-fu-tube-button-label-gimp-org"
-		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
 		    "Tube Button Label Header for gimp.org"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "?"
-		    SF-TOGGLE "Remove Background" TRUE
-		    SF-TOGGLE "Index Image" TRUE)
+		    SF-STRING _"Text" "?"
+		    SF-TOGGLE _"Remove Background" TRUE
+		    SF-TOGGLE _"Index Image" TRUE)
 
 (script-fu-register "script-fu-tube-subbutton-label-gimp-org"
-		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 		    "Tube Button Label Header for gimp.org"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "?"
-		    SF-TOGGLE "Remove Background" TRUE
-		    SF-TOGGLE "Index Image" TRUE)
+		    SF-STRING _"Text" "?"
+		    SF-TOGGLE _"Remove Background" TRUE
+		    SF-TOGGLE _"Index Image" TRUE)
 
 (script-fu-register "script-fu-tube-subsubbutton-label-gimp-org"
-		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button Label..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button Label..."
 		    "Tube Button Label Header for gimp.org"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "?"
-		    SF-TOGGLE "Remove Background" TRUE
-		    SF-TOGGLE "Index Image" TRUE)
+		    SF-STRING _"Text" "?"
+		    SF-TOGGLE _"Remove Background" TRUE
+		    SF-TOGGLE _"Index Image" TRUE)
 
 
 (script-fu-register "script-fu-labels-gimp-org"
-		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
 		    "Tube Button Label Header for gimp.org"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "Gimp.Org"
-		    SF-FONT "Font" "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(18 2 1000 1 10 0 1)
- 		    SF-COLOR "Text Color" '(130 165 235)
-	 	    SF-COLOR "Shadow Color" '(0 0 0)
-		    SF-COLOR "Background Color" '(255 255 255)
-		    SF-TOGGLE "Remove Background" TRUE
-		    SF-TOGGLE "Index Image" TRUE
-		    SF-VALUE "# of colors" "15"
-		    SF-VALUE "select-by-color threshold" "1"
-		    SF-VALUE "Y-Offset" "8"
-		    SF-VALUE "X-Offset" "0"
-		    SF-VALUE "Height"   "30")
+		    SF-STRING _"Text" "Gimp.Org"
+		    SF-FONT   _"Font" "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(18 2 1000 1 10 0 1)
+ 		    SF-COLOR  _"Text Color" '(130 165 235)
+	 	    SF-COLOR  _"Shadow Color" '(0 0 0)
+		    SF-COLOR  _"Background Color" '(255 255 255)
+		    SF-TOGGLE _"Remove Background" TRUE
+		    SF-TOGGLE _"Index Image" TRUE
+		    SF-VALUE  _"Number of Colors" "15"
+		    SF-VALUE  _"Select-By-Color Threshold" "1"
+		    SF-VALUE  _"Offset X" "8"
+		    SF-VALUE  _"Offset Y" "0"
+		    SF-VALUE  _"Height"   "30")

@@ -165,15 +165,15 @@
 
 
 (script-fu-register "script-fu-neon-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
 		    "Neon logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "NEON"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-Blippo-*-*-*-*-24-*-*-*-*-*-*-*"
-		    SF-COLOR "Background Color" '(0 0 0)
-		    SF-COLOR "Glow Color" '(38 211 255)
-		    SF-TOGGLE "Create Shadow?" FALSE)
+		    SF-STRING     _"Text" "NEON"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-FONT       _"Font" "-*-Blippo-*-*-*-*-24-*-*-*-*-*-*-*"
+		    SF-COLOR      _"Background Color" '(0 0 0)
+		    SF-COLOR      _"Glow Color" '(38 211 255)
+		    SF-TOGGLE     _"Create Shadow" FALSE)

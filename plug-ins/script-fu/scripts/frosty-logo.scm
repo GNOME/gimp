@@ -76,13 +76,13 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-frosty-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
 		    "Frozen logos with drop shadows"
 		    "Spencer Kimball & Ed Mackey"
 		    "Spencer Kimball & Ed Mackey"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "The GIMP"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-Becker-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR "Background Color" '(255 255 255))
+		    SF-STRING _"Text" "The GIMP"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-FONT   _"Font" "-*-Becker-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR  _"Background Color" '(255 255 255))

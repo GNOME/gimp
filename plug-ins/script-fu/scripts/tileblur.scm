@@ -62,7 +62,7 @@
 
 (script-fu-register
     "script-fu-tile-blur"
-    "<Image>/Filters/Blur/Tileable Blur..."
+    _"<Image>/Filters/Blur/Tileable Blur..."
     "Blurs image edges so that the final result tiles seamlessly"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
@@ -70,8 +70,10 @@
     "RGB*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
-    SF-ADJUSTMENT "Radius" '(5 0 128 1 1 0 0)
-    SF-TOGGLE "Blur Vertically?" TRUE
-    SF-TOGGLE "Blur Horizontally?" TRUE
-    SF-TOGGLE "Blur Type: TRUE=RLE, FALSE=IIR" FALSE
+    SF-ADJUSTMENT _"Radius" '(5 0 128 1 1 0 0)
+    SF-TOGGLE _"Blur Vertically" TRUE
+    SF-TOGGLE _"Blur Horizontally" TRUE
+    SF-TOGGLE _"Blur Type: TRUE=RLE, FALSE=IIR" FALSE
 )
+
+

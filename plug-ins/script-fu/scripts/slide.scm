@@ -225,7 +225,7 @@
   (gimp-displays-flush)))
 
 (script-fu-register "script-fu-slide"
-		    "<Image>/Script-Fu/Decor/Slide..."
+		    _"<Image>/Script-Fu/Decor/Slide..."
 		    "Gives the image the look of a slide"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
@@ -233,8 +233,8 @@
 		    "RGB GRAY"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-STRING "Text" "The GIMP"
-		    SF-STRING "Number" "32"
-		    SF-FONT "Font" "-*-utopia-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR "Font Color" '(255 180 0)
-		    SF-TOGGLE "Work on copy" TRUE)
+		    SF-STRING _"Text" "The GIMP"
+		    SF-STRING _"Number" "32"
+		    SF-FONT   _"Font" "-*-utopia-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR  _"Font Color" '(255 180 0)
+		    SF-TOGGLE _"Work on Copy" TRUE)

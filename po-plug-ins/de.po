@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-03-27 16:39+0200\n"
-"PO-Revision-Date: 2000-03-27 16:41+02:00\n"
+"POT-Creation-Date: 2000-03-28 20:03+0200\n"
+"PO-Revision-Date: 2000-03-28 22:46+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2242,7 +2242,7 @@ msgstr "Animation abspielen: "
 #: plug-ins/helpbrowser/helpbrowser.c:790
 #: plug-ins/ifscompose/ifscompose.c:1249 plug-ins/imagemap/imap_menu.c:227
 msgid "Close"
-msgstr "Schliessen"
+msgstr "Schließen"
 
 #. The 'playback' half of the dialog
 #: plug-ins/common/animationplay.c:723 plug-ins/common/animationplay.c:726
@@ -10295,12 +10295,12 @@ msgid ""
 "No gflare-path in gimprc:\n"
 "\n"
 "You need to add an entry like\n"
-"(gfig-path \"${gimp_dir}/gfig:${gimp_data_dir}/gfig\n"
+"(gflare-path \"${gimp_dir}/gflare:${gimp_data_dir}/gflare\")\n"
 "to your %s/gimprc file."
 msgstr ""
 "Kein gflare-path in der gimprc:\n"
 "Sie sollten einen Eintrag wie\n"
-"(gfig-path \"${gimp_dir}/gfig:${gimp_data_dir}/gfig\")\n"
+"(gflare-path \"${gimp_dir}/gflare:${gimp_data_dir}/gflare\")\n"
 "in Ihre %s/gimprc Datei einfügen."
 
 #: plug-ins/gflare/gflare.c:1010
@@ -12829,7 +12829,7 @@ msgstr "Übertrage TWAIN Daten"
 
 #: plug-ins/webbrowser/webbrowser.c:124
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
-msgstr "<Toolbox>/Xtns/Web Browser/Öffne URL..."
+msgstr "<Toolbox>/Xtns/Web-Browser/Öffne URL..."
 
 #: plug-ins/webbrowser/webbrowser.c:260
 msgid "Open URL"

@@ -208,24 +208,24 @@
 
 (script-fu-register
  "script-fu-asc-2-img"
- "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
+ _"<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
  "Create a new image containing text from a simple text file"
  "Chris Gutteridge: cjg@ecs.soton.ac.uk"
  "8th April 1998"
  "Chris Gutteridge / ECS @ University of Southampton, England"
  "bar"
- SF-FILENAME "File Name"       "afile"
- SF-FONT "Font"       "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
- SF-ADJUSTMENT "Font Size (pixels)" '(45 2 1000 1 10 0 1)
- SF-COLOR "Text Color"      '(0 0 0)
- SF-TOGGLE "Transparent BG?" FALSE
- SF-COLOR "Background Color"      '(255 255 255)
- SF-ADJUSTMENT "Buffer amount (% height of text)" '(35 0 100 1 10 0 0)
+ SF-FILENAME _"File Name"       "afile"
+ SF-FONT     _"Font"       "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
+ SF-ADJUSTMENT _"Font Size (pixels)" '(45 2 1000 1 10 0 1)
+ SF-COLOR    _"Text Color"      '(0 0 0)
+ SF-TOGGLE   _"Transparent Background" FALSE
+ SF-COLOR    _"Background Color"      '(255 255 255)
+ SF-ADJUSTMENT _"Buffer Amount (% Height of Text)" '(35 0 100 1 10 0 0)
 )
 
 (script-fu-register
  "script-fu-asc-2-img-layer"
- "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
+ _"<Image>/Script-Fu/Utils/ASCII to Image Layer..."
  "Create a new layer of text from a simple text file"
  "Chris Gutteridge: cjg@ecs.soton.ac.uk"
  "30th April 1998"
@@ -233,8 +233,8 @@
  "*"
  SF-IMAGE "Image" 0
  SF-DRAWABLE "Layer" 0
- SF-FILENAME "File Name"       "afile"
- SF-FONT "Font"       "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
- SF-ADJUSTMENT "Font Size (pixels)" '(45 2 1000 1 10 0 1)
- SF-COLOR "Text Color"      '(0 0 0)
+ SF-FILENAME _"File Name"       "afile"
+ SF-FONT     _"Font"       "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
+ SF-ADJUSTMENT _"Font Size (pixels)" '(45 2 1000 1 10 0 1)
+ SF-COLOR _"Text Color"      '(0 0 0)
 )

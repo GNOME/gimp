@@ -108,21 +108,21 @@
   )
 
 (script-fu-register "script-fu-alien-neon-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
 		    "Creates a psychedelic effect with outlines of the specified color around the letters"
 		    "Raphael Quinet (quinet@gamers.org)"
 		    "Raphael Quinet"
 		    "1999-2000"
 		    ""
-		    SF-STRING "Text String" "The GIMP"
-		    SF-ADJUSTMENT "Font size (in pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-blippo-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR "Glow color" '(0 255 0)
-		    SF-COLOR "Background color" '(0 0 0)
-                    SF-ADJUSTMENT "Width of bands" '(2 1 60 1 10 0 0)
-                    SF-ADJUSTMENT "Width of gaps" '(2 1 60 1 10 0 0)
-                    SF-ADJUSTMENT "Number of bands" '(7 1 100 1 10 0 1)
-		    SF-TOGGLE "Fade away?" TRUE
+		    SF-STRING     _"Text" "The GIMP"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-FONT       _"Font" "-*-blippo-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR      _"Glow Color" '(0 255 0)
+		    SF-COLOR      _"Background Color" '(0 0 0)
+                    SF-ADJUSTMENT _"Width of Bands" '(2 1 60 1 10 0 0)
+                    SF-ADJUSTMENT _"Width of Gaps" '(2 1 60 1 10 0 0)
+                    SF-ADJUSTMENT _"Number of Bands" '(7 1 100 1 10 0 1)
+		    SF-TOGGLE     _"Fade Away" TRUE
 		    )
 ; end
 

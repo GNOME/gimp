@@ -72,7 +72,7 @@
     (set! brush-image (car (gimp-image-new selection-width selection-height image-type)))
 
     (while (< idx copies)
-       (set! draw-name (string-append "frame_" (number->string idx)))
+       (set! draw-name (string-append "frame_0" (number->string idx)))
        (set! brush-draw (car (gimp-layer-new brush-image selection-width selection-height draw-type draw-name 100 NORMAL)))
        (gimp-image-add-layer brush-image brush-draw 0)
        (if (= bgfill TRUE)
@@ -105,7 +105,7 @@
 )
 
 (script-fu-register "script-fu-selection-to-anim-image"
-		    "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+		    _"<Image>/Script-Fu/Animators/Selection to AnimImage..."
 		    "Create a multilayer image from current selection and apply any PDB Filter to all layer-copies"
 		    "Wolfgang Hofer <hof@hotbot.com>"
 		    "Wolfgang Hofer"
@@ -113,9 +113,9 @@
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-                    SF-VALUE "Number of copies" "10"
-                    SF-TOGGLE "Fill with BG Color?" TRUE
-                    SF-TOGGLE "Anim-Filter for all copies?" TRUE
+                    SF-VALUE  _"Number of Copies" "10"
+                    SF-TOGGLE _"Fill with BG Color" TRUE
+                    SF-TOGGLE _"Anim-Filter for all Copies" TRUE
 		    )
 
 

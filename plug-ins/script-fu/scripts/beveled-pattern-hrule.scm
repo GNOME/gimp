@@ -63,12 +63,12 @@
 
 
 (script-fu-register "script-fu-beveled-pattern-hrule"
-		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
 		    "Beveled pattern hrule"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "July 1997"
 		    ""
-		    SF-VALUE "Width"   "480"
-		    SF-VALUE "Height"  "16"
-		    SF-PATTERN "Pattern" "Wood")
+		    SF-VALUE _"Width"   "480"
+		    SF-VALUE _"Height"  "16"
+		    SF-PATTERN _"Pattern" "Wood")

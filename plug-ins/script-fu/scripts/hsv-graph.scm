@@ -337,7 +337,7 @@
 
 (script-fu-register
  "script-fu-hsv-graph"
- "<Image>/Script-Fu/Utils/Draw HSV Graph..."
+ _"<Image>/Script-Fu/Utils/Draw HSV Graph..."
  "Draph the graph of H/S/V values on the drawable"
  "Shuji Narazaki <narazaki@InetQ.or.jp>"
  "Shuji Narazaki"
@@ -345,14 +345,14 @@
  "RGB*"
  SF-IMAGE "Image to analyze" 0
  SF-DRAWABLE "Drawable to analyze" 0
- SF-VALUE "Graph Scale" (number->string script-fu-hsv-graph-scale)
- SF-VALUE "BG Opacity" (number->string script-fu-hsv-graph-opacity)
- SF-TOGGLE "Use Selection Bounds instead of belows" script-fu-hsv-graph-bounds?
- SF-TOGGLE "from Top-Left to Bottom-Right" script-fu-hsv-graph-left2right?
- SF-VALUE "Start X" (number->string script-fu-hsv-graph-beg-x)
- SF-VALUE "Start Y" (number->string script-fu-hsv-graph-beg-y)
- SF-VALUE "End X" (number->string script-fu-hsv-graph-end-x)
- SF-VALUE "End Y" (number->string script-fu-hsv-graph-end-y)
+ SF-VALUE  _"Graph Scale" (number->string script-fu-hsv-graph-scale)
+ SF-VALUE  _"BG Opacity" (number->string script-fu-hsv-graph-opacity)
+ SF-TOGGLE _"Use Selection Bounds Instead of Belows" script-fu-hsv-graph-bounds?
+ SF-TOGGLE _"From Top-Left to Bottom-Right" script-fu-hsv-graph-left2right?
+ SF-VALUE  _"Start X" (number->string script-fu-hsv-graph-beg-x)
+ SF-VALUE  _"Start Y" (number->string script-fu-hsv-graph-beg-y)
+ SF-VALUE  _"End X" (number->string script-fu-hsv-graph-end-x)
+ SF-VALUE  _"End Y" (number->string script-fu-hsv-graph-end-y)
 )
 
 ;;; hsv-graph.scm ends here

@@ -79,7 +79,7 @@
 
 (script-fu-register
     "script-fu-old-photo"
-    "<Image>/Script-Fu/Decor/Old Photo..."
+    _"<Image>/Script-Fu/Decor/Old Photo..."
     "Makes the image look like an old photo"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
@@ -87,9 +87,9 @@
     "RGB* GRAY*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
-    SF-TOGGLE "Defocus?" TRUE
-    SF-TOGGLE "Border?" TRUE
-    SF-TOGGLE "Sepia?" TRUE
-    SF-TOGGLE "Mottle?" FALSE
-    SF-TOGGLE "Work on Copy?" TRUE
+    SF-TOGGLE _"Defocus" TRUE
+    SF-TOGGLE _"Border" TRUE
+    SF-TOGGLE _"Sepia" TRUE
+    SF-TOGGLE _"Mottle" FALSE
+    SF-TOGGLE _"Work on Copy" TRUE
 )

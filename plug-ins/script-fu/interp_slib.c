@@ -2909,6 +2909,13 @@ lreadr (struct gen_readio *f)
 	  UNGETC_FCN (c, f);
 	}
       return (cons (cintern (p), lreadr (f)));
+    case '_':  /*  might be a string marked for translation using _(...)  */
+      c = GETC_FCN (f);
+      if (c == '"')
+	return (lreadstring (f));
+      else
+	UNGETC_FCN (c, f);
+      break;
     case '"':
       return (lreadstring (f));
     case '#':

@@ -111,7 +111,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-xach-effect"
-		    "<Image>/Script-Fu/Shadow/Xach-Effect..."
+		    _"<Image>/Script-Fu/Shadow/Xach-Effect..."
 		    "Add a subtle translucent 3-d effect to the current selection or alpha channel"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
@@ -119,16 +119,16 @@
 		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-ADJUSTMENT "highlight X offset" '(-1 -100 100 1 10 0 1)
-		    SF-ADJUSTMENT "highlight Y offset" '(-1 -100 100 1 10 0 1)
-		    SF-COLOR "Highlight Color" '(255 255 255)
-		    SF-ADJUSTMENT "Opacity" '(66 0 255 1 10 0 0)
-		    SF-COLOR "Drop Shadow Color" '(0 0 0)
-		    SF-ADJUSTMENT "Drop Shadow Opacity" '(100 0 100 1 10 0 0)
-		    SF-ADJUSTMENT "Drop Shadow Blur Radius" '(12 0 255 1 10 0 1)
-		    SF-ADJUSTMENT "Drop shadow X offset" '(5 0 255 1 10 0 1)
-		    SF-ADJUSTMENT "Drop shadow Y offset" '(5 0 255 1 10 0 1)
-		    SF-TOGGLE "Keep Selection?" TRUE)
+		    SF-ADJUSTMENT _"Highlight X Offset" '(-1 -100 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Highlight Y Offset" '(-1 -100 100 1 10 0 1)
+		    SF-COLOR      _"Highlight Color" '(255 255 255)
+		    SF-ADJUSTMENT _"Opacity" '(66 0 255 1 10 0 0)
+		    SF-COLOR      _"Drop Shadow Color" '(0 0 0)
+		    SF-ADJUSTMENT _"Drop Shadow Opacity" '(100 0 100 1 10 0 0)
+		    SF-ADJUSTMENT _"Drop Shadow Blur Radius" '(12 0 255 1 10 0 1)
+		    SF-ADJUSTMENT _"Drop Shadow X Offset" '(5 0 255 1 10 0 1)
+		    SF-ADJUSTMENT _"Drop Shadow Y Offset" '(5 0 255 1 10 0 1)
+		    SF-TOGGLE     _"Keep Selection" TRUE)
 
 
 

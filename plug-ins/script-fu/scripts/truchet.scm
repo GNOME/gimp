@@ -144,17 +144,17 @@
   )
 
 (script-fu-register "script-fu-truchet"
-		    "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
+		    _"<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
 		    "Create a Truchet pattern \n\nWorks best with even sized thicknesses"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"
 		    "1997"
 		    ""
 
-		    SF-ADJUSTMENT "Block Size" '(32 2 512 1 10 1 1)
-		    SF-ADJUSTMENT "Thickness" '(2 1 512 1 10 1 1)
-		    SF-COLOR "Background Color" '(255 255 255)
-		    SF-COLOR "Foreground Color" '(0 0 0)
-		    SF-ADJUSTMENT "Number of Xtiles" '(5 1 512 1 10 1 1)
-		    SF-ADJUSTMENT "Number of Ytile" '(5 1 512 1 10 1 1)
+		    SF-ADJUSTMENT _"Block Size" '(32 2 512 1 10 1 1)
+		    SF-ADJUSTMENT _"Thickness" '(2 1 512 1 10 1 1)
+		    SF-COLOR _"Background Color" '(255 255 255)
+		    SF-COLOR _"Foreground Color" '(0 0 0)
+		    SF-ADJUSTMENT _"Number of Xtiles" '(5 1 512 1 10 1 1)
+		    SF-ADJUSTMENT _"Number of Ytile" '(5 1 512 1 10 1 1)
 		    )

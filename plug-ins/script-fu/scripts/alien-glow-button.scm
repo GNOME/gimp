@@ -129,18 +129,18 @@
 ; Register!
 
 (script-fu-register "script-fu-alien-glow-button"
-		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
 		    "Button with an eerie glow"
 		    "Adrian Likins"
 		    "Adrian Likins"
 		    "July 1997"
 		    ""
-		    SF-STRING "Text" "Hello world!"
-		    SF-FONT "Font" "-*-futura_poster-*-*-*-*-22-*-*-*-*-*-*-*"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(22 2 100 1 1 0 1)
-		    SF-COLOR "Text color" '(0 0 0)
-		    SF-COLOR "Glow Color" '(63 252 0)
-		    SF-COLOR "Background Color" '(0 0 0)
-		    SF-VALUE "Padding" "6"
-		    SF-VALUE "Glow Radius" "10"
-		    SF-TOGGLE "Flatten Image?" TRUE)
+		    SF-STRING _"Text" "Hello world!"
+		    SF-FONT   _ "Font" "-*-futura_poster-*-*-*-*-22-*-*-*-*-*-*-*"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(22 2 100 1 1 0 1)
+		    SF-COLOR  _"Text Color" '(0 0 0)
+		    SF-COLOR  _"Glow Color" '(63 252 0)
+		    SF-COLOR  _"Background Color" '(0 0 0)
+		    SF-VALUE  _"Padding" "6"
+		    SF-VALUE  _"Glow Radius" "10"
+		    SF-TOGGLE _"Flatten Image" TRUE)

@@ -135,7 +135,7 @@
 
 (script-fu-register
  "script-fu-show-image-structure"
- "<Image>/Script-Fu/Utils/Show Image Structure..."
+ _"<Image>/Script-Fu/Utils/Show Image Structure..."
  "Show the layer structure of the image"
  "Shuji Narazaki <narazaki@InetQ.or.jp>"
  "Shuji Narazaki"
@@ -143,17 +143,17 @@
  "RGB*, GRAY*"
  SF-IMAGE "image" 0
  SF-DRAWABLE "Drawable (unused)" 0
- SF-TOGGLE "Make new image" script-fu-show-image-structure-new-image?
- SF-VALUE "Space between layers" (number->string script-fu-show-image-structure-space)
- SF-VALUE "Shear length (> 0)" (number->string script-fu-show-image-structure-shear-length)
- SF-VALUE "Outer Border (>= 0)" (number->string script-fu-show-image-structure-border)
- SF-TOGGLE "Apply layer mask (or discard)" script-fu-show-image-structure-apply-layer-mask?
- SF-TOGGLE "Insert layer names" script-fu-show-image-structure-with-layer-name?
- SF-TOGGLE "Padding for transparent regions" script-fu-show-image-structure-with-pad?
- SF-COLOR "Pad Color" script-fu-show-image-structure-padding-color
- SF-VALUE "Pad Opacity [0:100]" (number->string script-fu-show-image-structure-padding-opacity)
- SF-TOGGLE "Make New Background" script-fu-show-image-structure-with-background?
- SF-COLOR "Background Color" script-fu-show-image-structure-background-color
+ SF-TOGGLE _"Create New Image" script-fu-show-image-structure-new-image?
+ SF-VALUE  _"Space Between Layers" (number->string script-fu-show-image-structure-space)
+ SF-VALUE  _"Shear Length (> 0)" (number->string script-fu-show-image-structure-shear-length)
+ SF-VALUE  _"Outer Border (>= 0)" (number->string script-fu-show-image-structure-border)
+ SF-TOGGLE _"Apply Layer Mask (or discard)" script-fu-show-image-structure-apply-layer-mask?
+ SF-TOGGLE _"Insert Layer Names" script-fu-show-image-structure-with-layer-name?
+ SF-TOGGLE _"Padding for Transparent Regions" script-fu-show-image-structure-with-pad?
+ SF-COLOR  _"Pad Color" script-fu-show-image-structure-padding-color
+ SF-VALUE  _"Pad Opacity [0:100]" (number->string script-fu-show-image-structure-padding-opacity)
+ SF-TOGGLE _"Make New Background" script-fu-show-image-structure-with-background?
+ SF-COLOR  _"Background Color" script-fu-show-image-structure-background-color
 )
 
 ;;; image-structure.scm ends here

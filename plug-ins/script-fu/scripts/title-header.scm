@@ -167,12 +167,12 @@ verted to use the *-fontname form.
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-title-header"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 		    "Web title header"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "June 1997"
 		    ""
-		    SF-STRING "Text" "Hello world!"
-		    SF-ADJUSTMENT  "Text size" '(32 2 256 1 10 0 0)
-		    SF-FONT "Font" "-adobe-helvetica-bold-r-normal-*-30-*-*-*-p-*-*-*")
+		    SF-STRING     _"Text" "Hello world!"
+		    SF-ADJUSTMENT _"Text Size" '(32 2 256 1 10 0 0)
+		    SF-FONT       _"Font" "-adobe-helvetica-bold-r-normal-*-30-*-*-*-p-*-*-*")

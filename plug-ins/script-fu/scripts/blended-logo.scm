@@ -74,17 +74,17 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-blended-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
 		    "Creates logos with blended backgrounds, highlights, and shadows"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1996"
 		    ""
-		    SF-VALUE "Blend Mode" "FG-BG-RGB"
-		    SF-STRING "Text String" "The GIMP"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-Crillee-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR "Background Color" '(255 255 255)
-		    SF-COLOR "Text Color" '(124 174 255)
-		    SF-COLOR "Starting Blend" '(22 9 129)
-		    SF-COLOR "Ending Blend" '(129 9 82))
+		    SF-VALUE      _"Blend Mode" "FG-BG-RGB"
+		    SF-STRING     _"Text" "The GIMP"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-FONT       _"Font" "-*-Crillee-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR      _"Background Color" '(255 255 255)
+		    SF-COLOR      _"Text Color" '(124 174 255)
+		    SF-COLOR      _"Start Blend" '(22 9 129)
+		    SF-COLOR      _"End Blend" '(129 9 82))

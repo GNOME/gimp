@@ -384,18 +384,18 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-trochoid"
-		    "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+		    _"<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
 		    "Draw Trochoid Curve"
 		    "Shuji Narazaki <narazaki@InetQ.or.jp>"
 		    "Shuji Narazaki"
 		    "1997"
 		    ""
-		    SF-ADJUSTMENT "Base radius (pixel)" '(40 0 512 1 1 0 0)
-		    SF-ADJUSTMENT "Wheel Radius (hypo < 0 < epi)" '(60 0 512 1 1 0 0)
-		    SF-ADJUSTMENT "Pen rad./wheel rad. [0.0:1.0]" '(0.8 0 1 .01 .01 2 0)
-		    SF-ADJUSTMENT "Hue Rate" '(1.0 0 1 .01 .01 2 0)
-		    SF-VALUE "Erase before draw? [0/1]" "0"
-	            SF-BRUSH "Use brush" '("Circle (05)" 1.0 44 2)
+		    SF-ADJUSTMENT _"Base Radius (pixel)" '(40 0 512 1 1 0 0)
+		    SF-ADJUSTMENT _"Wheel Radius (hypo < 0 < epi)" '(60 0 512 1 1 0 0)
+		    SF-ADJUSTMENT _"Pen Rad. / Wheel Rad. [0.0:1.0]" '(0.8 0 1 .01 .01 2 0)
+		    SF-ADJUSTMENT _"Hue Rate" '(1.0 0 1 .01 .01 2 0)
+		    SF-VALUE      _"Erase before Draw" "0"
+	            SF-BRUSH      _"Use Brush" '("Circle (05)" 1.0 44 2)
 )
 
 ;;; trochoid.scm ends here

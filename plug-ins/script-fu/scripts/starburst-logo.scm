@@ -66,16 +66,14 @@
 
 
 (script-fu-register "script-fu-starburst-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
 		    "Starburst as inspired by GIMP News"
 		    "Spencer Kimball & Xach Beane"
 		    "Spencer Kimball & Xach Beane"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "GIMP"
-;		    SF-ADJUSTMENT "Font Size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-ADJUSTMENT "Font Size (pixels)" '(150 0 512 1 10 0 1)
-;		    SF-FONT "Font" "-*-Blippo-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-FONT "Font" "-*-blippo-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR "Burst Color" '(60 196 33)
-		    SF-COLOR "BG Color" '(255 255 255))
+		    SF-STRING     _"Text" "GIMP"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 0 512 1 10 0 1)
+		    SF-FONT       _"Font" "-*-blippo-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR      _"Burst Color" '(60 196 33)
+		    SF-COLOR      _"Background Color" '(255 255 255))

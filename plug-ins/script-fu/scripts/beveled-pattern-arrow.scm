@@ -134,12 +134,12 @@
 
 
 (script-fu-register "script-fu-beveled-pattern-arrow"
-		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
 		    "Beveled pattern arrow"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "July 1997"
 		    ""
-		    SF-VALUE "Size"        "32"
-		    SF-VALUE "Orientation" "'right"
-		    SF-PATTERN "Pattern"     "Wood")
+		    SF-VALUE   _"Size"        "32"
+		    SF-VALUE   _"Orientation" "'right"
+		    SF-PATTERN _"Pattern"     "Wood")

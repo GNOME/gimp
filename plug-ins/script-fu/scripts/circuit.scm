@@ -121,7 +121,7 @@
     (gimp-displays-flush))))
 
 (script-fu-register "script-fu-circuit"
-		    "<Image>/Script-Fu/Render/Circuit..."
+		    _"<Image>/Script-Fu/Render/Circuit..."
 		    "Fills the current selection with something that looks 
                      vaguely like a circuit board."
 		    "Adrian Likins <adrian@gimp.org>"
@@ -130,8 +130,8 @@
 		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE "Oilify mask size" "17"
-		    SF-VALUE "Circuit seed" "3"
-		    SF-TOGGLE "No background? (only for seperate layer)" FALSE
-		    SF-TOGGLE "Keep Selection?" TRUE
-		    SF-TOGGLE "Seperate Layer?" TRUE)
+		    SF-VALUE _"Oilify Mask Size" "17"
+		    SF-VALUE _"Circuit Seed" "3"
+		    SF-TOGGLE _"No Background (only for separate layer)" FALSE
+		    SF-TOGGLE _"Keep Selection" TRUE
+		    SF-TOGGLE _"Separate Layer" TRUE)

@@ -106,13 +106,13 @@
 
 
 (script-fu-register "script-fu-starscape-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
 		    "Starscape using the Nova plug-in"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "Nova"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(150 1 1000 1 10 0 1)
-                    SF-FONT "Font" "-*-engraver-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR "Glow Color" '(28 65 188))
+		    SF-STRING     _"Text" "Nova"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 1 1000 1 10 0 1)
+                    SF-FONT       _"Font" "-*-engraver-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR      _"Glow Color" '(28 65 188))

@@ -98,14 +98,14 @@
 
 
 (script-fu-register "script-fu-cool-metal-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
 		    "Metallic logos with reflections and perspective shadows"
 		    "Spencer Kimball & Rob Malda"
 		    "Spencer Kimball & Rob Malda"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "Cool Metal"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-Crillee-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR "Background Color" '(255 255 255)
-		    SF-GRADIENT "Gradient" "Horizon_1")
+		    SF-STRING     _"Text" "Cool Metal"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-FONT       _"Font" "-*-Crillee-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR      _"Background Color" '(255 255 255)
+		    SF-GRADIENT   _"Gradient" "Horizon_1")

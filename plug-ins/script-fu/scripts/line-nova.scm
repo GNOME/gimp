@@ -71,7 +71,7 @@
 
 (script-fu-register
  "script-fu-line-nova"
- "<Image>/Script-Fu/Render/Line Nova..."
+ _"<Image>/Script-Fu/Render/Line Nova..."
  "Line Nova. Draw lines with Foreground color from the center of image to the edges. 1st undo cancels bucket-fill. 2nd undo gets orignal selection."
  "Shuji Narazaki <narazaki@gimp.org>"
  "Shuji Narazaki"
@@ -79,9 +79,9 @@
  ""
  SF-IMAGE "Image to use" 0
  SF-DRAWABLE "Drawable to draw line" 0
- SF-ADJUSTMENT "Number of lines" '(200 40 1000 1 1 0 1)
- SF-ADJUSTMENT "Sharpness (deg.)" '(1.0 0.0 10.0 0.1 1 1 1)
- SF-ADJUSTMENT "Offset radius" '(100 0 2000 1 1 0 1)
- SF-ADJUSTMENT "- randomness" '(30 0 2000 1 1 0 1)
+ SF-ADJUSTMENT _"Number of Lines" '(200 40 1000 1 1 0 1)
+ SF-ADJUSTMENT _"Sharpness (degrees)" '(1.0 0.0 10.0 0.1 1 1 1)
+ SF-ADJUSTMENT _"Offset radius" '(100 0 2000 1 1 0 1)
+ SF-ADJUSTMENT _"Randomness" '(30 0 2000 1 1 0 1)
 )
 ;;; line-nova.scm ends here

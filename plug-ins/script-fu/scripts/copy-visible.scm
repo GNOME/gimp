@@ -71,7 +71,7 @@
   (gimp-displays-flush)))
 
 (script-fu-register "script-fu-copy-visible"
-		    "<Image>/Edit/Copy Visible"
+		    _"<Image>/Edit/Copy Visible"
 		    "Copy the visible selction"
 		    "Sven Neumann <sven@gimp.org>, Adrian Likins <adrian@gimp.org>"
 		    "Sven Neumann, Adrian Likins"

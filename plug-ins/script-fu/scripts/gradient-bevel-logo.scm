@@ -72,15 +72,15 @@
 
 
 (script-fu-register "script-fu-gradient-bevel-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
 		    "Makes Shiny Bevelly text"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
 		    "April 1998"
 		    ""
-		    SF-STRING "Text String" "Moo"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(90 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-futura_poster-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-VALUE "Bevel Height (sharpness)" "40"
-		    SF-VALUE "Bevel Width" "2.5"
-		    SF-COLOR "Background Color" '(255 255 255))
+		    SF-STRING     _"Text" "Moo"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(90 2 1000 1 10 0 1)
+		    SF-FONT       _"Font" "-*-futura_poster-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-VALUE      _"Bevel Height (Sharpness)" "40"
+		    SF-VALUE      _"Bevel Width" "2.5"
+		    SF-COLOR      _"Background Color" '(255 255 255))

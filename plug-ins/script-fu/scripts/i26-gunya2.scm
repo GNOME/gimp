@@ -86,17 +86,17 @@
 
 
 (script-fu-register "script-fu-i26-gunya2"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
 		    "Two-colored text by hand"
 		    "Shuji Narazaki"
 		    "Shuji Narazaki"
 		    "1997"
 		    ""
-		    SF-STRING "Text" "The GIMP"
-		    SF-COLOR "Text Color" '(255 0 0)
-		    SF-COLOR "Frame Color" '(0 34 255)
-		    SF-FONT "Font" "-*-Becker-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-VALUE "Frame Size" "2")
+		    SF-STRING _"Text" "The GIMP"
+		    SF-COLOR  _"Text Color" '(255 0 0)
+		    SF-COLOR  _"Frame Color" '(0 34 255)
+		    SF-FONT   _"Font" "-*-Becker-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-VALUE  _"Frame Size" "2")
 
 ;;; i26-gunya2.scm ends here

@@ -50,14 +50,14 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-sphere"
-		    "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
+		    _"<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
 		    "Simple sphere with a drop shadow"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1996"
 		    ""
-		    SF-VALUE "Radius (in pixels)" "100"
-		    SF-VALUE "Lighting (degrees)" "45"
-		    SF-TOGGLE "Shadow?" TRUE
-		    SF-COLOR "Background Color" '(255 255 255)
-		    SF-COLOR "Sphere Color" '(255 0 0))
+		    SF-VALUE  _"Radius (pixels)" "100"
+		    SF-VALUE  _"Lighting (degrees)" "45"
+		    SF-TOGGLE _"Shadow" TRUE
+		    SF-COLOR  _"Background Color" '(255 255 255)
+		    SF-COLOR  _"Sphere Color" '(255 0 0))

@@ -210,7 +210,7 @@
   (gimp-display-new image)))
 
 (script-fu-register "script-fu-colorcycling-anim"
-		    "<Image>/Script-Fu/Animators/Color Cycling..."
+		    _"<Image>/Script-Fu/Animators/Color Cycling..."
 		    "Creates an animation with the help of the alienmap plug-in"
 		    "Daniel Cotting (cotting@mygale.org)"
 		    "Daniel Cotting"
@@ -218,32 +218,32 @@
 		    "RGB*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE  "Number of frames" "10"
-                    SF-VALUE  "Start: red intensity factor (max. 128)" "128"
-                    SF-VALUE  "Start: green intensity factor (max. 128)" "128"
-                    SF-VALUE  "Start: blue intensity factor (max. 128)" "128"
-                    SF-VALUE  "End: red intensity factor (max. 128)" "128"
-                    SF-VALUE  "End: green intensity factor (max. 128)" "128"
-                    SF-VALUE  "End: blue intensity factor (max. 128)" "128"
-                    SF-VALUE  "Red color mode (sin:0/cos:1/none:2)" "0"
-                    SF-VALUE  "Green color mode (sin:0/cos:1/none:2)" "0"
-                    SF-VALUE  "Blue color mode (sin:0/cos:1/none:2)" "0"
-                    SF-TOGGLE "Red inversion before transformation" FALSE
-                    SF-TOGGLE "Green inversion before transformation" FALSE
-                    SF-TOGGLE "Blue inversion before transformation" FALSE
-                    SF-VALUE  "Start: red phase displacement (RAD)" "0"
-                    SF-VALUE  "Start: green phase displacement (RAD)" "0"
-                    SF-VALUE  "Start: blue phase displacement (RAD)" "0"
-                    SF-VALUE  "End: red phase displacement (RAD)" "0"
-                    SF-VALUE  "End: green phase displacement (RAD)" "0"
-                    SF-VALUE  "End: blue phase displacement (RAD)" "0"
-                    SF-VALUE  "Start: red frequency (> 0)" "1"
-                    SF-VALUE  "Start: green frequency (> 0)" "1"
-                    SF-VALUE  "Start: blue frequency (> 0)" "1"
-                    SF-VALUE  "End: red frequency (> 0)" "1"
-                    SF-VALUE  "End: green frequency (> 0)" "1"
-                    SF-VALUE  "End: blue frequency (> 0)" "1"
-                    SF-TOGGLE "Red inversion after transformation" FALSE
-                    SF-TOGGLE "Green inversion after transformation" FALSE
-                    SF-TOGGLE "Blue inversion after transformation" FALSE)
+		    SF-VALUE  _"Number of Frames" "10"
+                    SF-VALUE  _"Start: Red Intensity Factor (max. 128)" "128"
+                    SF-VALUE  _"Start: Green Intensity Factor (max. 128)" "128"
+                    SF-VALUE  _"Start: Blue Intensity Factor (max. 128)" "128"
+                    SF-VALUE  _"End: Red Intensity Factor (max. 128)" "128"
+                    SF-VALUE  _"End: Green Intensity Factor (max. 128)" "128"
+                    SF-VALUE  _"End: Blue Intensity Factor (max. 128)" "128"
+                    SF-VALUE  _"Red Color Mode (sin:0/cos:1/none:2)" "0"
+                    SF-VALUE  _"Green Color Mode (sin:0/cos:1/none:2)" "0"
+                    SF-VALUE  _"Blue Color Mode (sin:0/cos:1/none:2)" "0"
+                    SF-TOGGLE _"Red Inversion before Transformation" FALSE
+                    SF-TOGGLE _"Green Inversion before Transformation" FALSE
+                    SF-TOGGLE _"Blue Inversion before Transformation" FALSE
+                    SF-VALUE  _"Start: Red Phase Displacement (RAD)" "0"
+                    SF-VALUE  _"Start: Green Phase Displacement (RAD)" "0"
+                    SF-VALUE  _"Start: Blue Phase Displacement (RAD)" "0"
+                    SF-VALUE  _"End: Red Phase Displacement (RAD)" "0"
+                    SF-VALUE  _"End: Green Phase Displacement (RAD)" "0"
+                    SF-VALUE  _"End: Blue Phase Displacement (RAD)" "0"
+                    SF-VALUE  _"Start: Red Frequency (> 0)" "1"
+                    SF-VALUE  _"Start: Green Frequency (> 0)" "1"
+                    SF-VALUE  _"Start: Blue Frequency (> 0)" "1"
+                    SF-VALUE  _"End: Red Frequency (> 0)" "1"
+                    SF-VALUE  _"End: Green Frequency (> 0)" "1"
+                    SF-VALUE  _"End: Blue Frequency (> 0)" "1"
+                    SF-TOGGLE _"Red Inversion after Transformation" FALSE
+                    SF-TOGGLE _"Green Inversion after Transformation" FALSE
+                    SF-TOGGLE _"Blue Inversion after Transformation" FALSE)
 

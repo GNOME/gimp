@@ -190,27 +190,27 @@
 ; Register!
 
 (script-fu-register "script-fu-round-button"
-		    "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
+		    _"<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
 		    "Round button"
 		    "Arturo Espinosa (stolen from quartic's beveled button)"
 		    "Arturo Espinosa & Federico Mena Quintero"
 		    "June 1998"
 		    ""
-		    SF-STRING "Text" ""
-		    SF-ADJUSTMENT "Font Size (pixels)" '(16 2 100 1 1 0 1)
-		    SF-FONT  "Font" "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR "Upper color" '(192 192 0)
-		    SF-COLOR "Lower color" '(128 108 0)
-		    SF-COLOR "Text color" '(0 0 0)
-		    SF-COLOR "Upper color (active)" '(255 255 0)
-		    SF-COLOR "Lower color (active)" '(128 108 0)
-		    SF-COLOR "Text color (active)" '(0 0 192)
-		    SF-VALUE "xPadding" "4"
-		    SF-VALUE "yPadding" "4"
-		    SF-VALUE "Bevel width" "2"
-		    SF-VALUE "Round ratio" "1"
-		    SF-TOGGLE "Not-pressed         " TRUE
-		    SF-TOGGLE "Not-pressed (active)" TRUE
-		    SF-TOGGLE "Pressed             " TRUE)
+		    SF-STRING     _"Text" "The GIMP"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(16 2 100 1 1 0 1)
+		    SF-FONT       _"Font" "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR      _"Upper Color" '(192 192 0)
+		    SF-COLOR      _"Lower Color" '(128 108 0)
+		    SF-COLOR      _"Text Color" '(0 0 0)
+		    SF-COLOR      _"Upper Color (Active)" '(255 255 0)
+		    SF-COLOR      _"Lower Color (Active)" '(128 108 0)
+		    SF-COLOR      _"Text Color (Active)" '(0 0 192)
+		    SF-VALUE      _"Padding X" "4"
+		    SF-VALUE      _"Padding Y" "4"
+		    SF-VALUE      _"Bevel Width" "2"
+		    SF-VALUE      _"Round Ratio" "1"
+		    SF-TOGGLE     _"Not-Pressed         " TRUE
+		    SF-TOGGLE     _"Not-Pressed (Active)" TRUE
+		    SF-TOGGLE     _"Pressed             " TRUE)
 
 

@@ -182,7 +182,7 @@
     (gimp-image-undo-enable img)))
 
 (script-fu-register "script-fu-sota-chrome-it"
-		    "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
+		    _"<Image>/Script-Fu/Stencil Ops/Chrome-It..."
 		    "Use the specified [GRAY] drawable as a stencil to run the chrome effect on."
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -190,11 +190,10 @@
 		    "GRAY"
 		    SF-IMAGE "Chrome Image" 0
 		    SF-DRAWABLE "Chrome Mask" 0
-		    SF-VALUE "Chrome Saturation" "-80"
-		    SF-VALUE "Chrome Lightness" "-47"
-		    SF-VALUE "Chrome Factor" "0.75"
-;		    SF-STRING "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
-		    SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
-		    SF-COLOR "Highlight Balance" '(211 95 0)
-		    SF-COLOR "Chrome Balance" '(0 0 0)
-		    SF-TOGGLE "Chrome White Areas" TRUE)
+		    SF-VALUE _"Chrome Saturation" "-80"
+		    SF-VALUE _"Chrome Lightness" "-47"
+		    SF-VALUE _"Chrome Factor" "0.75"
+		    SF-FILENAME _"Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
+		    SF-COLOR _"Highlight Balance" '(211 95 0)
+		    SF-COLOR _"Chrome Balance" '(0 0 0)
+		    SF-TOGGLE _"Chrome White Areas" TRUE)

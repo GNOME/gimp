@@ -82,16 +82,16 @@
 
 
 (script-fu-register "script-fu-comic-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
 		    "Comic-book Style Logos"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
 		    "April 1998"
 		    ""
-		    SF-STRING "Text String" "Moo"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(85 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-tribeca-*-i-*-*-24-*-*-*-p-*-*-*"
-		    SF-GRADIENT "Gradient" "Incandescent"
-		    SF-VALUE "Outline width" "5"
-		    SF-COLOR "Outline color" '(255 255 255)
-		    SF-COLOR "Background color" '(255 255 255))
+		    SF-STRING     _"Text" "Moo"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(85 2 1000 1 10 0 1)
+		    SF-FONT       _"Font" "-*-tribeca-*-i-*-*-24-*-*-*-p-*-*-*"
+		    SF-GRADIENT   _"Gradient" "Incandescent"
+		    SF-VALUE      _"Outline Width" "5"
+		    SF-COLOR      _"Outline Color" '(255 255 255)
+		    SF-COLOR      _"Background Color" '(255 255 255))

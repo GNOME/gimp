@@ -40,7 +40,7 @@
 
 
 (script-fu-register "script-fu-clothify"
-		    "<Image>/Script-Fu/Alchemy/Clothify..."
+		    _"<Image>/Script-Fu/Alchemy/Clothify..."
 		    "Render the specified text along the perimeter of a circle"
 		    "Tim Newsome <drz@froody.bloke.com>"
 		    "Tim Newsome"
@@ -48,8 +48,8 @@
 		    "RGB* GRAY*"
 		    SF-IMAGE "Input Image" 0
 		    SF-DRAWABLE "Input Drawable" 0
-		    SF-VALUE "X Blur" "9"
-		    SF-VALUE "Y Blur" "9"
-		    SF-VALUE "Azimuth" "135"
-		    SF-VALUE "Elevation" "45"
-		    SF-VALUE "Depth" "3")
+		    SF-VALUE _"Blur X" "9"
+		    SF-VALUE _"Blur Y" "9"
+		    SF-VALUE _"Azimuth" "135"
+		    SF-VALUE _"Elevation" "45"
+		    SF-VALUE _"Depth" "3")

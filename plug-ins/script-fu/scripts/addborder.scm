@@ -162,7 +162,7 @@
 
 
 (script-fu-register "script-fu-addborder"
-		    "<Image>/Script-Fu/Decor/Add Border..."
+		    _"<Image>/Script-Fu/Decor/Add Border..."
 		    "Add a border around an image"
 		    "Andy Thomas <alt@picnic.demon.co.uk>"
 		    "Andy Thomas"
@@ -170,7 +170,7 @@
 		    "RGB*"
 		    SF-IMAGE "Input Image" 0
 		    SF-DRAWABLE "Input Drawable" 0
-		    SF-VALUE "Border x size" "12"
-		    SF-VALUE "Border y size" "12"
-		    SF-COLOR "Border Colour" '(38 31 207)
-		    SF-VALUE "Delta value on colour" "25")
+		    SF-VALUE _"Border X Size" "12"
+		    SF-VALUE _"Border Y Size" "12"
+		    SF-COLOR _"Border Color" '(38 31 207)
+		    SF-VALUE _"Delta Value on Color" "25")

@@ -99,7 +99,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-lava"
-		    "<Image>/Script-Fu/Render/Lava..."
+		    _"<Image>/Script-Fu/Render/Lava..."
 		    "Fills the current selection with lava."
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
@@ -107,10 +107,10 @@
 		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE "Seed" "2"
-		    SF-VALUE "Size" "10"
-		    SF-VALUE "Roughness" "7"
-		    SF-GRADIENT "Gradient" "German_flag_smooth"
-		    SF-TOGGLE "Keep Selection?" TRUE
-		    SF-TOGGLE "Seperate Layer?" TRUE
-		    SF-TOGGLE "Use current Gradient?" FALSE)
+		    SF-VALUE    _"Seed" "2"
+		    SF-VALUE    _"Size" "10"
+		    SF-VALUE    _"Roughness" "7"
+		    SF-GRADIENT _"Gradient" "German_flag_smooth"
+		    SF-TOGGLE   _"Keep Selection" TRUE
+		    SF-TOGGLE   _"Seperate Layer" TRUE
+		    SF-TOGGLE   _"Use Current Gradient" FALSE)

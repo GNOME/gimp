@@ -148,7 +148,7 @@
 
 (script-fu-register
     "script-fu-fuzzy-border"
-    "<Image>/Script-Fu/Decor/Fuzzy Border..."
+    _"<Image>/Script-Fu/Decor/Fuzzy Border..."
     "Fade border to chosen color"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
@@ -156,12 +156,12 @@
     "RGB* GRAY*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
-    SF-COLOR "Color"      '(255 255 255)
-    SF-VALUE "Border Size" "16"
-    SF-TOGGLE "Blur Border?" TRUE
-    SF-VALUE "Granularity (1 is low)" "4"
-    SF-TOGGLE "Add Shadow?" FALSE
-    SF-ADJUSTMENT "Shadow-Weight (%)" '(100 0 100 1 10 0 0)
-    SF-TOGGLE "Work on Copy?" TRUE
-    SF-TOGGLE "Flatten Layers?" TRUE
+    SF-COLOR  _"Color"      '(255 255 255)
+    SF-VALUE  _"Border Size" "16"
+    SF-TOGGLE _"Blur Border" TRUE
+    SF-VALUE  _"Granularity (1 is Low)" "4"
+    SF-TOGGLE _"Add Shadow" FALSE
+    SF-ADJUSTMENT _"Shadow Weight (%)" '(100 0 100 1 10 0 0)
+    SF-TOGGLE _"Work on Copy" TRUE
+    SF-TOGGLE _"Flatten Image" TRUE
 )

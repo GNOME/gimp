@@ -61,13 +61,13 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-font-map"
-		    "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
+		    _"<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
 		    "Generate a listing of the specified fonts"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-VALUE "Fonts" "'(\"Agate\" \"AlfredDrake\" \"Becker\" \"Blippo\" \"Bodoni\" \"Dragonwick\" \"Engraver\" \"Futura_Poster\" \"RoostHeavy\")"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(32 2 1000 1 10 0 1)
-		    SF-VALUE "Border" "10"
+		    SF-VALUE _"Fonts" "'(\"Agate\" \"AlfredDrake\" \"Becker\" \"Blippo\" \"Bodoni\" \"Dragonwick\" \"Engraver\" \"Futura_Poster\" \"RoostHeavy\")"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(32 2 1000 1 10 0 1)
+		    SF-VALUE _"Border" "10"
 )

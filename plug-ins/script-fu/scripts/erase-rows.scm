@@ -21,7 +21,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-erase-rows"
-		    "<Image>/Script-Fu/Alchemy/Erase every other Row..."
+		    _"<Image>/Script-Fu/Alchemy/Erase every other Row..."
 		    "Erase every other row/column with the background color"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
@@ -29,5 +29,5 @@
 		    "RGB* GRAY* INDEXED*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE "Rows/cols" "'rows"
-		    SF-VALUE "Even/odd" "'even")
+		    SF-VALUE _"Rows/Cols" "'rows"
+		    SF-VALUE _"Even/Odd" "'even")

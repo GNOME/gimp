@@ -35,14 +35,14 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-basic1-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
 		    "Creates a simple logo with a drop shadow"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1996"
 		    ""
-		    SF-STRING "Text String" "The Gimp"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-Dragonwick-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR "Background Color" '(255 255 255)
-		    SF-COLOR "Text Color" '(6 6 206))
+		    SF-STRING     _"Text" "The Gimp"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-FONT       _"Font" "-*-Dragonwick-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR      _"Background Color" '(255 255 255)
+		    SF-COLOR      _"Text Color" '(6 6 206))

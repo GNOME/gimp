@@ -134,41 +134,41 @@
 
 
 (script-fu-register "script-fu-big-header-gimp-org"
-		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
 		    "Big Gimp.org Header"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "gimp.org"
-		    SF-FONT "Font" "-*-times-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(50 2 1000 1 10 0 1)
-		    SF-COLOR "Text Color" '(82 108 159)
-		    SF-COLOR "Higlight Color" '(190 220 250)
-		    SF-COLOR "Dark Color" '(46 74 92)
-		    SF-COLOR "Shadow Color" '(0 0 0)
-		    SF-TOGGLE "AutoCrop?" TRUE
-		    SF-TOGGLE "Remove Background" TRUE
-		    SF-TOGGLE "Index image?" TRUE
-		    SF-VALUE "# of colors" "15")
+		    SF-STRING _"Text" "gimp.org"
+		    SF-FONT   _"Font" "-*-times-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(50 2 1000 1 10 0 1)
+		    SF-COLOR  _"Text Color" '(82 108 159)
+		    SF-COLOR  _"Higlight Color" '(190 220 250)
+		    SF-COLOR  _"Dark Color" '(46 74 92)
+		    SF-COLOR  _"Shadow Color" '(0 0 0)
+		    SF-TOGGLE _"AutoCrop" TRUE
+		    SF-TOGGLE _"Remove Background" TRUE
+		    SF-TOGGLE _"Index Image" TRUE
+		    SF-VALUE "Number of Colors" "15")
 
 (script-fu-register "script-fu-small-header-gimp-org"
-		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
 		    "Small Gimp.org Header"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "gimp.org"
-		    SF-FONT "Font" "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(24 2 1000 1 10 0 1)
-		    SF-COLOR "Text Color" '(135 220 220)
-		    SF-COLOR "Higlight Color" '(210 240 245)
-		    SF-COLOR "Dark Color" '(46 74 92)
-		    SF-COLOR "Shadow Color" '(0 0 0)
-		    SF-TOGGLE "AutoCrop?" TRUE
-		    SF-TOGGLE "Remove Background" TRUE
-		    SF-TOGGLE "Index image?" TRUE
-		    SF-VALUE "# of colors" "15"
-		    SF-VALUE "select-by-color threshold" "1")
+		    SF-STRING _"Text" "gimp.org"
+		    SF-FONT   _"Font" "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(24 2 1000 1 10 0 1)
+		    SF-COLOR  _"Text Color" '(135 220 220)
+		    SF-COLOR  _"Higlight Color" '(210 240 245)
+		    SF-COLOR  _"Dark Color" '(46 74 92)
+		    SF-COLOR  _"Shadow Color" '(0 0 0)
+		    SF-TOGGLE _"AutoCrop" TRUE
+		    SF-TOGGLE _"Remove Background" TRUE
+		    SF-TOGGLE _"Index Image" TRUE
+		    SF-VALUE  _"Number of Colors" "15"
+		    SF-VALUE  _"Select-By-Color Threshold" "1")
 

@@ -58,13 +58,13 @@
 
 
 (script-fu-register "script-fu-glowing-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
 		    "Glowing hot logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "GLOWING"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-Slogan-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR "Background Color" '(7 0 20))
+		    SF-STRING     _"Text" "GLOWING"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-FONT       _"Font" "-*-Slogan-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR      _"Background Color" '(7 0 20))

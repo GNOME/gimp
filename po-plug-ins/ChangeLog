@@ -1,3 +1,10 @@
+2000-03-28  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.in.in: 
+	* script-fu-xgettext: adapted to the new script-fu i18n scheme
+
+	* de.po: updated german translation
+
 2000-03-28  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* ja.po: updated Japanese translation.

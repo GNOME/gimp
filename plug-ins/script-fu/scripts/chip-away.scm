@@ -113,22 +113,22 @@
 
 
 (script-fu-register "script-fu-logo-chip-away"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
 		    "Chip away effect"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "Sloth"
-		    SF-FONT "Font" "-*-roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(200 2 1000 1 10 0 1)
-		    SF-VALUE "Chip Amount" "30"
-		    SF-VALUE "Blur Amount" "3"
-		    SF-TOGGLE "Invert?" FALSE
-		    SF-TOGGLE "Drop Shadow?" TRUE
-		    SF-TOGGLE "Keep Bump layer?" FALSE
-		    SF-TOGGLE "Fill bg with pattern?" TRUE
-		    SF-TOGGLE "Keep Background?" TRUE
-		    SF-PATTERN "Pattern" "Burlwood")
+		    SF-STRING _"Text" "Sloth"
+		    SF-FONT   _"Font" "-*-roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(200 2 1000 1 10 0 1)
+		    SF-VALUE  _"Chip Amount" "30"
+		    SF-VALUE  _"Blur Amount" "3"
+		    SF-TOGGLE _"Invert" FALSE
+		    SF-TOGGLE _"Drop Shadow" TRUE
+		    SF-TOGGLE _"Keep Bump Layer" FALSE
+		    SF-TOGGLE _"Fill BG with Pattern" TRUE
+		    SF-TOGGLE _"Keep Background" TRUE
+		    SF-PATTERN _"Pattern" "Burlwood")
 
 

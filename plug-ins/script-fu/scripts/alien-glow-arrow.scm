@@ -121,14 +121,14 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-alien-glow-right-arrow"
-		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
 		    "Create an X-file deal"
 		    "Adrian Likins"
 		    "Adrian Likins"
 		    "1997"
 		    ""
-		    SF-VALUE "Size" "32"
-		    SF-VALUE "Orientation" "'right"
-		    SF-COLOR "Glow Color" '(63 252 0)
-		    SF-COLOR "Background Color" '(0 0 0)
-		    SF-TOGGLE "Flatten Image" TRUE)
+		    SF-VALUE  _"Size" "32"
+		    SF-VALUE  _"Orientation" "'right"
+		    SF-COLOR  _"Glow Color" '(63 252 0)
+		    SF-COLOR  _"Background Color" '(0 0 0)
+		    SF-TOGGLE _"Flatten Image" TRUE)

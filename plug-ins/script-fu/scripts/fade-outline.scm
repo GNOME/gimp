@@ -186,7 +186,7 @@
 
 (script-fu-register
     "script-fu-fade-outline"
-    "<Image>/Script-Fu/Selection/Fade Outline..."
+    _"<Image>/Script-Fu/Selection/Fade Outline..."
     "Blend the Layers outline border from one alpha value (opaque) to another (transparent) by generating a Layermask"
     "Wolfgang Hofer <hof@hotbot.com>"
     "Wolfgang Hofer"
@@ -194,10 +194,10 @@
     "RGB* GRAY*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
-    SF-VALUE "Border Size" "10"
-    SF-VALUE "Fade From (100%-0%)" "100"
-    SF-VALUE "Fade To   (0%-100%)" "0"
-    SF-TOGGLE "Use Growing Selection?" FALSE
-    SF-TOGGLE "Apply generated Layermask?" FALSE
-    SF-TOGGLE "Clear unselected Maskarea?" TRUE
+    SF-VALUE _"Border Size" "10"
+    SF-VALUE _"Fade From (100%-0%)" "100"
+    SF-VALUE _"Fade To   (0%-100%)" "0"
+    SF-TOGGLE _"Use Growing Selection" FALSE
+    SF-TOGGLE _"Apply Generated Layermask" FALSE
+    SF-TOGGLE _"Clear Unselected Maskarea" TRUE
 )

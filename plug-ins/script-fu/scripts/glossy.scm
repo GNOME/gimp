@@ -118,29 +118,29 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-glossy-logo"
-                    "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
+                    _"<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
                     "Creates anything you can create with it :)"
 
                     "Hrvoje Horvat (hhorvat@open.hr)"
                     "Hrvoje Horvat"
                     "14/04/1998"
                     ""
-                    SF-STRING "Text String" "Galaxy"
-                    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
-                    SF-FONT "Font" "-*-Eras-*-r-*-*-24-*-*-*-p-*-*-*"
-                    SF-GRADIENT "Blend Gradient (text)" "Shadows_2"
-                    SF-GRADIENT "Blend Gradient (outline)" "Shadows_2"
-                    SF-VALUE "How big outline?" "5"
-		    SF-COLOR "Background Color" '(255 255 255)
-		    SF-TOGGLE "Use pattern for text instead of gradient" FALSE
-		    SF-PATTERN "Pattern (text)" "Electric Blue"
-		    SF-TOGGLE "Use pattern for outline instead of gradient" FALSE
-		    SF-PATTERN "Pattern (outline)" "Electric Blue"
-		    SF-TOGGLE "Use pattern overlay" FALSE
-		    SF-PATTERN "Pattern (overlay)" "Parque #1"
-		    SF-TOGGLE "Default bump-map settings" TRUE
-		    SF-TOGGLE "Shadow?" TRUE
-		    SF-VALUE "Shadow X offset" "8"
-                    SF-VALUE "Shadow Y offset" "8"
-		    SF-TOGGLE "Flatten image?" FALSE)
+                    SF-STRING     _"Text" "Galaxy"
+                    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+                    SF-FONT       _"Font" "-*-Eras-*-r-*-*-24-*-*-*-p-*-*-*"
+                    SF-GRADIENT   _"Blend Gradient (Text)" "Shadows_2"
+                    SF-GRADIENT   _"Blend Gradient (Outline)" "Shadows_2"
+                    SF-VALUE      _"Outline Size" "5"
+		    SF-COLOR      _"Background Color" '(255 255 255)
+		    SF-TOGGLE     _"Use Pattern for Text instead of Gradient" FALSE
+		    SF-PATTERN    _"Pattern (Text)" "Electric Blue"
+		    SF-TOGGLE     _"Use Pattern for Outline instead of Gradient" FALSE
+		    SF-PATTERN    _"Pattern (Outline)" "Electric Blue"
+		    SF-TOGGLE     _"Use Pattern Overlay" FALSE
+		    SF-PATTERN    _"Pattern (Overlay)" "Parque #1"
+		    SF-TOGGLE     _"Default Bumpmap Settings" TRUE
+		    SF-TOGGLE     _"Shadow" TRUE
+		    SF-VALUE      _"Shadow X Offset" "8"
+                    SF-VALUE      _"Shadow Y Offset" "8"
+		    SF-TOGGLE     _"Flatten Image" FALSE)
 

@@ -51,14 +51,14 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-basic2-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
 		    "Creates a simple logo with a shadow and a highlight"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1996"
 		    ""
-		    SF-STRING "Text String" "SCRIPT-FU"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-futura_poster-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR "Background Color" '(255 255 255)
-		    SF-COLOR "Text Color" '(206 6 50))
+		    SF-STRING     _"Text" "SCRIPT-FU"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-FONT       _"Font" "-*-futura_poster-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR      _"Background Color" '(255 255 255)
+		    SF-COLOR      _"Text Color" '(206 6 50))

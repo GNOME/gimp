@@ -79,19 +79,19 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-3d-outline-logo"
-                    "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
+                    _"<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
                     "Creates outlined texts with drop shadow"
                     "Hrvoje Horvat (hhorvat@open.hr)"
                     "Hrvoje Horvat"
                     "07 April, 1998"
                     ""
-		    SF-PATTERN "Pattern" "Parque #1"
-                    SF-STRING "Text String" "The Gimp"
-                    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
-                    SF-FONT "Font" "-*-Roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
-                    SF-VALUE "Outline blur radius" "5"
-                    SF-VALUE "Shadow blur radius" "10"
-                    SF-VALUE "Bump-map (alpha layer) blur radius" "5"
-		    SF-TOGGLE "Default bump-map settings" TRUE
-		    SF-VALUE "Shadow X offset" "0"
-                    SF-VALUE "Shadow Y offset" "0")
+		    SF-PATTERN _"Pattern" "Parque #1"
+                    SF-STRING  _"Text" "The Gimp"
+                    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+                    SF-FONT    _"Font" "-*-Roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
+                    SF-VALUE   _"Outline Blur Radius" "5"
+                    SF-VALUE   _"Shadow Blur Radius" "10"
+                    SF-VALUE   _"Bumpmap (Alpha Layer) Blur Radius" "5"
+		    SF-TOGGLE  _"Default Bumpmap Settings" TRUE
+		    SF-VALUE   _"Shadow X Offset" "0"
+                    SF-VALUE   _"Shadow Y Offset" "0")

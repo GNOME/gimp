@@ -151,16 +151,15 @@
     (gimp-image-undo-enable img)))
 
 (script-fu-register "script-fu-carved-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
 		    "Carve the text from the specified image.  The image will be automatically tiled to accomodate the rendered text string.  The \"Carve Raised Text\" parameter determines whether to carve the text itself, or around the text."
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "Marble"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-Engraver-*-r-*-*-24-*-*-*-p-*-*-*"
-;		    SF-STRING "Background Img" (string-append "" gimp-data-dir "/scripts/texture3.jpg")
-		    SF-FILENAME "Background Img" (string-append "" gimp-data-dir "/scripts/texture3.jpg")
-		    SF-TOGGLE "Carve Raised Text" FALSE
-		    SF-ADJUSTMENT "Padding Around Text" '(10 0 1000 1 10 0 1))
+		    SF-STRING     _"Text" "Marble"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-FONT       _"Font" "-*-Engraver-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-FILENAME   _"Background Image" (string-append "" gimp-data-dir "/scripts/texture3.jpg")
+		    SF-TOGGLE     _"Carve Raised Text" FALSE
+		    SF-ADJUSTMENT _"Padding Around Text" '(10 0 1000 1 10 0 1))

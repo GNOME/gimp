@@ -70,13 +70,13 @@
 
 
 (script-fu-register "script-fu-bovinated-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
 		    "Makes Cow-spotted logos"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
 		    "April 1998"
 		    ""
-		    SF-STRING "Text String" "Fear the Cow"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(80 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR "Background Color" '(255 255 255))
+		    SF-STRING     _"Text" "Fear the Cow"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(80 2 1000 1 10 0 1)
+		    SF-FONT       _"Font" "-*-roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR      _"Background Color" '(255 255 255))

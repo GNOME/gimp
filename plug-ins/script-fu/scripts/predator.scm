@@ -96,7 +96,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-predator"
-		    "<Image>/Script-Fu/Alchemy/Predator..."
+		    _"<Image>/Script-Fu/Alchemy/Predator..."
 		    "Looks like images from the movie Predator"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
@@ -104,8 +104,8 @@
 		    "RGB*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-ADJUSTMENT "edge-amount" '(2 0 24 1 1 0 0)
-		    SF-TOGGLE "pixelize?" TRUE
-		    SF-ADJUSTMENT "Pixel Amount" '(3 1 16 1 1 0 0)
-		    SF-TOGGLE "Keep Selection?" TRUE
-		    SF-TOGGLE "Seperate Layer?" TRUE)
+		    SF-ADJUSTMENT _"Edge Amount" '(2 0 24 1 1 0 0)
+		    SF-TOGGLE     _"Pixelize" TRUE
+		    SF-ADJUSTMENT _"Pixel Amount" '(3 1 16 1 1 0 0)
+		    SF-TOGGLE     _"Keep Selection" TRUE
+		    SF-TOGGLE     _"Seperate Layer" TRUE)

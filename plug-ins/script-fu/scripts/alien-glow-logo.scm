@@ -38,13 +38,13 @@
 
 
 (script-fu-register "script-fu-alien-glow-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
 		    "Create an X-Files-esque logo with the specified glow color"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "ALIEN"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-futura_poster-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR "Glow Color" '(63 252 0))
+		    SF-STRING     _"Text" "ALIEN"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
+		    SF-FONT       _"Font" "-*-futura_poster-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR      _"Glow Color" '(63 252 0))

@@ -177,7 +177,7 @@
     (gimp-image-undo-enable img)))
 
 (script-fu-register "script-fu-carve-it"
-		    "<Image>/Script-Fu/Stencil Ops/Carve-It..."
+		    _"<Image>/Script-Fu/Stencil Ops/Carve-It..."
 		    "Use the specified [GRAY] drawable as a stencil to carve from the specified image. The specified image must be either RGB colour or grayscale, not indexed."
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -185,5 +185,5 @@
 		    "GRAY"
 		    SF-IMAGE "Mask Image" 0
 		    SF-DRAWABLE "Mask Drawable" 0
-		    SF-DRAWABLE "Image to Carve" 0
-		    SF-TOGGLE "Carve White Areas" TRUE)
+		    SF-DRAWABLE _"Image to Carve" 0
+		    SF-TOGGLE   _"Carve White Areas" TRUE)

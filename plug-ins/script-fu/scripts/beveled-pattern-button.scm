@@ -115,15 +115,15 @@
 
 
 (script-fu-register "script-fu-beveled-pattern-button"
-		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
 		    "Beveled pattern button"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "July 1997"
 		    ""
-		    SF-STRING  "Text"       "Hello world!"
-		    SF-VALUE  "Text size"  "32"
-		    SF-FONT   "Font" "-*-helvetica-*-r-*-*-32-*-*-*-p-*-*-*"
-		    SF-COLOR   "Text color" '(0 0 0)
-		    SF-PATTERN "Pattern"    "Wood"
-		    SF-TOGGLE "Pressed?"   FALSE)
+		    SF-STRING  _"Text"       "Hello world!"
+		    SF-VALUE   _"Font Size (pixels)"  "32"
+		    SF-FONT    _"Font" "-*-helvetica-*-r-*-*-32-*-*-*-p-*-*-*"
+		    SF-COLOR   _"Text Color" '(0 0 0)
+		    SF-PATTERN _"Pattern"    "Wood"
+		    SF-TOGGLE  _"Pressed"   FALSE)

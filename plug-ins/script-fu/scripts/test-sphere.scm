@@ -174,7 +174,7 @@
 		    SF-PATTERN "Pattern" "Maple Leaves"
 		    SF-GRADIENT "Gradient" "Deep_Sea"
 		    SF-FONT "Font" "-freefont-agate-normal-r-normal-*-24-*-*-*-p-*-*-*"
-                    SF-ADJUSTMENT "Font size (in pixels)" '(50 1 1000 1 10 0 1)
+                    SF-ADJUSTMENT "Font Size (pixels)" '(50 1 1000 1 10 0 1)
 		    SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg"))
 
 

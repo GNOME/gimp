@@ -66,18 +66,18 @@
 ))
 
 (script-fu-register "script-fu-land"
-		    "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
+		    _"<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
 		    "A Topgraphic map pattern"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"
 		    "1997"
 		    ""
-		    SF-VALUE "Image Width" "256"
-		    SF-VALUE "Image Height" "256"
-		    SF-VALUE "Random Seed" "32"
-		    SF-VALUE "Detail Level" "4"
-		    SF-VALUE "Land height" "60"
-		    SF-VALUE "Sea depth" "4"
-		    SF-VALUE "X Scale" "4.0"
-		    SF-VALUE "Y Scale" "4.0"
-		    SF-GRADIENT "gradient" "Land_1")
+		    SF-VALUE _"Image Width" "256"
+		    SF-VALUE _"Image Height" "256"
+		    SF-VALUE _"Random Seed" "32"
+		    SF-VALUE _"Detail Level" "4"
+		    SF-VALUE _"Land Height" "60"
+		    SF-VALUE _"Sea Septh" "4"
+		    SF-VALUE _"Scale X" "4.0"
+		    SF-VALUE _"Scale Y" "4.0"
+		    SF-GRADIENT _"Gradient" "Land_1")

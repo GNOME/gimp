@@ -157,18 +157,18 @@
   )
 
 (script-fu-register "script-fu-3dtruchet"
-		    "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
+		    _"<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
 		    "3D Truchet pattern"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"
 		    "1997"
 		    ""
-		    SF-VALUE "Block Size" "64"
-		    SF-VALUE "Thickness" "12"
-		    SF-COLOR "Background Color" '(255 255 255)
-		    SF-COLOR "Begin Blend" '(0 0 0)
-		    SF-COLOR "End Blend" '(255 255 255)
-		    SF-TOGGLE "Supersample?" TRUE
-		    SF-VALUE "Number of Xtiles" "5"
-		    SF-VALUE "Number of Ytiles" "5"
+		    SF-VALUE  _"Block Size" "64"
+		    SF-VALUE  _"Thickness" "12"
+		    SF-COLOR  _"Background Color" '(255 255 255)
+		    SF-COLOR  _"Start Blend" '(0 0 0)
+		    SF-COLOR  _"End Blend" '(255 255 255)
+		    SF-TOGGLE _"Supersample" TRUE
+		    SF-VALUE  _"Number of Xtiles" "5"
+		    SF-VALUE  _"Number of Ytiles" "5"
 		    )

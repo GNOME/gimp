@@ -67,13 +67,13 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-chrome-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
 		    "Somewhat simplistic, but cool chromed logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball & Peter Mattis"
 		    "1997"
 		    ""
-		    SF-STRING "Text String" "The GIMP"
-		    SF-ADJUSTMENT "Font Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-FONT "Font" "-*-Bodoni-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR "Background Color" '(191 191 191))
+		    SF-STRING     _"Text" "The GIMP"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-FONT       _"Font" "-*-Bodoni-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-COLOR      _"Background Color" '(191 191 191))

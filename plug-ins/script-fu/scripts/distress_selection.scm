@@ -88,7 +88,7 @@
 
 (script-fu-register
     "script-fu-distress-selection"
-    "<Image>/Script-Fu/Selection/Distress Selection..."
+    _"<Image>/Script-Fu/Selection/Distress Selection..."
     "No description"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
@@ -96,10 +96,10 @@
     "RGB*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
-    SF-VALUE "Threshold (bigger 1<-->255 smaller)" "127"
-    SF-VALUE "Spread" "8"
-    SF-VALUE "Granularity (1 is low)" "4"
-    SF-VALUE "Smooth" "2"
-    SF-TOGGLE "Smooth Horizontally?" TRUE
-    SF-TOGGLE "Smooth Vertically?" TRUE
+    SF-VALUE _"Threshold (Bigger 1<-->255 Smaller)" "127"
+    SF-VALUE _"Spread" "8"
+    SF-VALUE _"Granularity (1 is Low)" "4"
+    SF-VALUE _"Smooth" "2"
+    SF-TOGGLE _"Smooth Horizontally" TRUE
+    SF-TOGGLE _"Smooth Vertically" TRUE
 )
