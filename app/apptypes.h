@@ -79,6 +79,7 @@ typedef struct _GimpToolInfo        GimpToolInfo;
 typedef struct _GimpTool            GimpTool;
 typedef struct _GimpPaintTool       GimpPaintTool;
 typedef struct _GimpDrawTool        GimpDrawTool;
+typedef struct _GimpTransformTool   GimpTransformTool;
 
 
 /*  undo objects  */
@@ -176,8 +177,6 @@ typedef struct _ScanConvertPoint    ScanConvertPoint;
 typedef struct _Selection           Selection;
 
 typedef struct _SelectionOptions    SelectionOptions;
-
-typedef struct _GimpTransformTool   GimpTransformTool;
 
 
 /*  some undo stuff  */

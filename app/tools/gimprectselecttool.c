@@ -238,19 +238,11 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
 
   rect_select->x = rect_select->y = 0;
   rect_select->w = rect_select->h = 0;
-
 }
 
 static void
 gimp_rect_select_tool_destroy (GtkObject *object)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (object);
-
-  if (tool->state == ACTIVE)
-    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
-
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
@@ -381,6 +373,7 @@ gimp_rect_select_tool_button_release (GimpTool       *tool,
   gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
   tool->state = INACTIVE;
 
   /*  First take care of the case where the user "cancels" the action  */

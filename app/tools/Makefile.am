@@ -7,40 +7,40 @@ libapptools_la_SOURCES = \
 ##	gimpairbrushtool.h	\
 ##	gimpblendtool.c		\
 ##	gimpblendtool.h		\
+	gimpbucketfilltool.c	\
+	gimpbucketfilltool.h	\
 ##	gimpbycolorselecttool.c	\
 ##	gimpbycolorselecttool.h	\
 ##	gimpclonetool.c		\
 ##	gimpclonetool.h		\
+	gimpcolorpickertool.c	\
+	gimpcolorpickertool.h	\
 ##	gimpconvolvetool.c	\
 ##	gimpconvolvetool.h	\
+	gimpcroptool.c		\
+	gimpcroptool.h		\
 ##	gimpdodgeburntool.c	\
 ##	gimpdodgeburntool.h	\
+	gimpdrawtool.c		\
+	gimpdrawtool.h		\
+	gimpeditselectiontool.c	\
+	gimpeditselectiontool.h	\
 	gimpellipseselecttool.c	\
 	gimpellipseselecttool.h	\
 ##	gimperasertool.c	\
 ##	gimperasertool.h	\
 ##	gimpfliptool.c		\
 ##	gimpfliptool.h		\
-##	gimpfreeselecttool.c	\
-##	gimpfreeselecttool.h	\
+	gimpfreeselecttool.c	\
+	gimpfreeselecttool.h	\
+	gimpfuzzyselecttool.c	\
+	gimpfuzzyselecttool.h	\
 	gimpinktool.c		\
 	gimpinktool.h		\
 	gimpinktool-blob.c	\
 	gimpinktool-blob.h	\
 ##	gimpiscissorstool.c	\
 ##	gimpiscissorstool.h	\
-	gimpbucketfilltool.c	\
-	gimpbucketfilltool.h	\
-	gimpcolorpickertool.c	\
-	gimpcolorpickertool.h	\
-	gimpcroptool.c		\
-	gimpcroptool.h		\
-	gimpdrawtool.c		\
-	gimpdrawtool.h		\
-	gimpeditselectiontool.c	\
-	gimpeditselectiontool.h	\
-	gimpfuzzyselecttool.c	\
-	gimpfuzzyselecttool.h	\
 	gimpmagnifytool.c	\
 	gimpmagnifytool.h	\
 	gimpmeasuretool.c	\
@@ -58,7 +58,6 @@ libapptools_la_SOURCES = \
 ##	gimpperspectivetool.h	\
 	gimprectselecttool.c	\
 	gimprectselecttool.h	\
-##	rect_selectP.h		\
 ##	gimprotatetool.c	\
 ##	gimprotatetool.h	\
 ##	gimpscaletool.c		\

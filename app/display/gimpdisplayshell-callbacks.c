@@ -28,6 +28,7 @@
 #include "apptypes.h"
 
 #include "tools/gimpbucketfilltool.h"
+#include "tools/gimpfuzzyselecttool.h"
 #include "tools/gimpmovetool.h"
 #include "tools/tool_manager.h"
 
@@ -386,7 +387,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
        *
        *  ugly: fuzzy_select sets busy cursors while ACTIVE.
        */
-      if (gimp_busy && ! (GIMP_IS_FUZZY_SELECT(active_tool)  &&
+      if (gimp_busy && ! (GIMP_IS_FUZZY_SELECT_TOOL (active_tool)  &&
 	                  active_tool->state == ACTIVE))
 	return TRUE;
 
@@ -405,7 +406,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  gtk_grab_remove (canvas);
 	  gdk_pointer_ungrab (bevent->time);  /* fixes pointer grab bug */
 
-	  if (active_tool && (GIMP_IS_MOVE_TOOL(active_tool) ||
+	  if (active_tool && (GIMP_IS_MOVE_TOOL (active_tool) ||
 			      ! gimp_image_is_empty (gdisp->gimage)))
 	    {
 	      if (active_tool->state == ACTIVE)
@@ -459,13 +460,13 @@ gdisplay_canvas_events (GtkWidget *canvas,
        *
        *  ugly: fuzzy_select sets busy cursors while ACTIVE.
        */
-      if (gimp_busy && !(GIMP_IS_FUZZY_SELECT(active_tool) &&
-	                  active_tool->state == ACTIVE))
+      if (gimp_busy && ! (GIMP_IS_FUZZY_SELECT_TOOL (active_tool) &&
+			  active_tool->state == ACTIVE))
 	return TRUE;
-     /* Ask for the pointer position, but ignore it except for cursor
-      * handling, so motion events sync with the button press/release events 
-      */
 
+      /* Ask for the pointer position, but ignore it except for cursor
+       * handling, so motion events sync with the button press/release events 
+       */
       if (mevent->is_hint)
 	{
 	  gdk_input_window_get_pointer (canvas->window, current_device, &tx, &ty,

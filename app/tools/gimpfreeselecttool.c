@@ -27,7 +27,6 @@
 
 #include "apptypes.h"
 
-#include "draw_core.h"
 #include "errors.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
@@ -36,107 +35,98 @@
 #include "gimpimage.h"
 #include "scan_convert.h"
 
-#include "edit_selection.h"
-#include "free_select.h"
-#include "rect_select.h"
+#include "gimpeditselectiontool.h"
+#include "gimpfreeselecttool.h"
 #include "selection_options.h"
 #include "tool_options.h"
-#include "tools.h"
+#include "tool_manager.h"
+
+#include "libgimp/gimpintl.h"
+
+#include "pixmaps2.h"
 
 
 #define DEFAULT_MAX_INC  1024
 #define SUPERSAMPLE      3
 #define SUPERSAMPLE2     9
 
-/*  the free selection structures  */
 
-typedef struct _FreeSelect FreeSelect;
+static void   gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass);
+static void   gimp_free_select_tool_init       (GimpFreeSelectTool      *free_select);
+static void   gimp_free_select_tool_destroy        (GtkObject      *object);
 
-struct _FreeSelect
-{
-  DrawCore  *core;      /*  Core select object                      */
+static void   gimp_free_select_tool_button_press   (GimpTool       *tool,
+                                                    GdkEventButton *bevent,
+                                                    GDisplay       *gdisp);
+static void   gimp_free_select_tool_button_release (GimpTool       *tool,
+                                                    GdkEventButton *bevent,
+                                                    GDisplay       *gdisp);
+static void   gimp_free_select_tool_motion         (GimpTool       *tool,
+                                                    GdkEventMotion *mevent,
+                                                    GDisplay       *gdisp);
 
-  SelectOps  op;        /*  selection operation (ADD, SUB, etc)     */
+static void   gimp_free_select_tool_draw           (GimpDrawTool   *draw_tool);
 
-  gint      current_x;  /*  these values are updated on every motion event  */
-  gint      current_y;  /*  (enables immediate cursor updating on modifier
-			 *   key events).  */
+static void   gimp_free_select_tool_options_reset  (void);
 
-  gint      num_pts;    /*  Number of points in the polygon         */
-};
+static void   gimp_free_select_tool_add_point      (GimpFreeSelectTool *free_sel,
+                                                    gint                x,
+                                                    gint                y);
 
-
-/*  local function prototypes  */
-
-static void   free_select_button_press   (Tool           *tool,
-					  GdkEventButton *bevent,
-					  GDisplay       *gdisp);
-static void   free_select_button_release (Tool           *tool,
-					  GdkEventButton *bevent,
-					  GDisplay       *gdisp);
-static void   free_select_motion         (Tool           *tool,
-					  GdkEventMotion *mevent,
-					  GDisplay       *gdisp);
+static GimpChannel * scan_convert (GimpImage        *gimage,
+                                   gint              num_pts,
+                                   ScanConvertPoint *pts,
+                                   gint              width,
+                                   gint              height,
+                                   gboolean          antialias);
 
 
-/*  the free selection tool options  */
+static GimpSelectionToolClass *parent_class = NULL;
+
 static SelectionOptions * free_options = NULL;
 
-/*  The global array of XPoints for drawing the polygon...  */
-static GdkPoint *global_pts = NULL;
-static gint      max_segs = 0;
 
-
-/*  functions  */
-
-static gint
-add_point (gint num_pts,
-	   gint x,
-	   gint y)
-{
-  if (num_pts >= max_segs)
-    {
-      max_segs += DEFAULT_MAX_INC;
-
-      global_pts = (GdkPoint *) g_realloc ((void *) global_pts, sizeof (GdkPoint) * max_segs);
-
-      if (!global_pts)
-	gimp_fatal_error ("add_point(): Unable to reallocate points array in free_select.");
-    }
-
-  global_pts[num_pts].x = x;
-  global_pts[num_pts].y = y;
-
-  return 1;
-}
-
-
-static GimpChannel *
-scan_convert (GimpImage        *gimage,
-	      gint              num_pts,
-	      ScanConvertPoint *pts,
-	      gint              width,
-	      gint              height,
-	      gboolean          antialias)
-{
-  GimpChannel   *mask;
-  ScanConverter *sc;
-
-  sc = scan_converter_new (width, height, antialias ? SUPERSAMPLE : 1);
-  scan_converter_add_points (sc, num_pts, pts);
-
-  mask = scan_converter_to_channel (sc, gimage);
-  scan_converter_free (sc);
-
-  return mask;
-}
-
-
-/*************************************/
-/*  Polygonal selection apparatus    */
+/*  public functions  */
 
 void
-free_select (GImage           *gimage,
+gimp_free_select_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_FREE_SELECT_TOOL, FALSE,
+                              "gimp:free_select_tool",
+                              _("Free Select"),
+                              _("Select hand-drawn regions"),
+                              _("/Tools/Selection Tools/Free Select"), "F",
+                              NULL, "tools/free_select.html",
+                              (const gchar **) free_bits);
+}
+
+GtkType
+gimp_free_select_tool_get_type (void)
+{
+  static GtkType free_select_type = 0;
+
+  if (! free_select_type)
+    {
+      GtkTypeInfo free_select_info =
+      {
+        "GimpFreeSelectTool",
+        sizeof (GimpFreeSelectTool),
+        sizeof (GimpFreeSelectToolClass),
+        (GtkClassInitFunc) gimp_free_select_tool_class_init,
+        (GtkObjectInitFunc) gimp_free_select_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL
+      };
+
+      free_select_type = gtk_type_unique (GIMP_TYPE_SELECTION_TOOL,
+                                          &free_select_info);
+    }
+
+  return free_select_type;
+}
+
+void
+free_select (GimpImage        *gimage,
 	     gint              num_pts,
 	     ScanConvertPoint *pts,
 	     SelectOps         op,
@@ -171,14 +161,78 @@ free_select (GImage           *gimage,
     }
 }
 
-static void
-free_select_button_press (Tool           *tool,
-			  GdkEventButton *bevent,
-			  GDisplay       *gdisp)
-{
-  FreeSelect *free_sel;
 
-  free_sel = (FreeSelect *) tool->private;
+/*  private functions  */
+
+static void
+gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
+{
+  GtkObjectClass    *object_class;
+  GimpToolClass     *tool_class;
+  GimpDrawToolClass *draw_tool_class;
+
+  object_class    = (GtkObjectClass *) klass;
+  tool_class      = (GimpToolClass *) klass;
+  draw_tool_class = (GimpDrawToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_SELECTION_TOOL);
+
+  object_class->destroy      = gimp_free_select_tool_destroy;
+
+  tool_class->button_press   = gimp_free_select_tool_button_press;
+  tool_class->button_release = gimp_free_select_tool_button_release;
+  tool_class->motion         = gimp_free_select_tool_motion;
+
+  draw_tool_class->draw      = gimp_free_select_tool_draw;
+}
+
+static void
+gimp_free_select_tool_init (GimpFreeSelectTool *free_select)
+{
+  GimpTool          *tool;
+  GimpSelectionTool *select_tool;
+
+  tool        = GIMP_TOOL (free_select);
+  select_tool = GIMP_SELECTION_TOOL (free_select);
+
+  if (! free_options)
+    {
+      free_options = selection_options_new (GIMP_TYPE_FREE_SELECT_TOOL,
+                                            gimp_free_select_tool_options_reset);
+
+      tool_manager_register_tool_options (GIMP_TYPE_FREE_SELECT_TOOL,
+                                          (ToolOptions *) free_options);
+    }
+
+  tool->tool_cursor = GIMP_FREE_SELECT_TOOL_CURSOR;
+  tool->scroll_lock = TRUE;   /*  Do not allow scrolling  */
+
+  free_select->points     = NULL;
+  free_select->num_points = 0;
+  free_select->max_segs   = 0;
+}
+
+static void
+gimp_free_select_tool_destroy (GtkObject *object)
+{
+  GimpFreeSelectTool *free_sel;
+
+  free_sel = GIMP_FREE_SELECT_TOOL (object);
+
+  g_free (free_sel->points);
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_free_select_tool_button_press (GimpTool       *tool,
+                                    GdkEventButton *bevent,
+                                    GDisplay       *gdisp)
+{
+  GimpFreeSelectTool *free_sel;
+
+  free_sel = GIMP_FREE_SELECT_TOOL (tool);
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK |
@@ -189,7 +243,7 @@ free_select_button_press (Tool           *tool,
   tool->state = ACTIVE;
   tool->gdisp = gdisp;
 
-  switch (free_sel->op)
+  switch (GIMP_SELECTION_TOOL (tool)->op)
     {
     case SELECTION_MOVE_MASK:
       init_edit_selection (tool, gdisp, bevent, EDIT_MASK_TRANSLATE);
@@ -201,36 +255,36 @@ free_select_button_press (Tool           *tool,
       break;
     }
 
-  add_point (0, bevent->x, bevent->y);
-  free_sel->num_pts = 1;
+  free_sel->num_points = 0;
 
-  draw_core_start (free_sel->core,
-		   gdisp->canvas->window,
-		   tool);
+  gimp_free_select_tool_add_point (free_sel, bevent->x, bevent->y);
+
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
+                        gdisp->canvas->window);
 }
 
 static void
-free_select_button_release (Tool           *tool,
-			    GdkEventButton *bevent,
-			    GDisplay       *gdisp)
+gimp_free_select_tool_button_release (GimpTool       *tool,
+                                      GdkEventButton *bevent,
+                                      GDisplay       *gdisp)
 {
-  FreeSelect       *free_sel;
-  ScanConvertPoint *pts;
-  gint              i;
+  GimpFreeSelectTool *free_sel;
+  ScanConvertPoint   *pts;
+  gint                i;
 
-  free_sel = (FreeSelect *) tool->private;
+  free_sel = GIMP_FREE_SELECT_TOOL (tool);
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
 
-  draw_core_stop (free_sel->core, tool);
+  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
   tool->state = INACTIVE;
 
   /*  First take care of the case where the user "cancels" the action  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
-      if (free_sel->op == SELECTION_ANCHOR)
+      if (free_sel->num_points == 1)
 	{
 	  /*  If there is a floating selection, anchor it  */
 	  if (gimp_image_floating_sel (gdisp->gimage))
@@ -238,21 +292,28 @@ free_select_button_release (Tool           *tool,
 	  /*  Otherwise, clear the selection mask  */
 	  else
 	    gimage_mask_clear (gdisp->gimage);
-	  
+
 	  gdisplays_flush ();
 	  return;
 	}
 
-      pts = g_new (ScanConvertPoint, free_sel->num_pts);
+      pts = g_new (ScanConvertPoint, free_sel->num_points);
 
-      for (i = 0; i < free_sel->num_pts; i++)
+      for (i = 0; i < free_sel->num_points; i++)
 	{
-	  gdisplay_untransform_coords_f (gdisp, global_pts[i].x, global_pts[i].y,
-					 &pts[i].x, &pts[i].y, FALSE);
+	  gdisplay_untransform_coords_f (gdisp,
+                                         free_sel->points[i].x,
+                                         free_sel->points[i].y,
+					 &pts[i].x,
+                                         &pts[i].y,
+                                         FALSE);
 	}
 
-      free_select (gdisp->gimage, free_sel->num_pts, pts, free_sel->op,
-		   free_options->antialias, free_options->feather,
+      free_select (gdisp->gimage,
+                   free_sel->num_points, pts,
+                   GIMP_SELECTION_TOOL (tool)->op,
+		   free_options->antialias,
+                   free_options->feather,
 		   free_options->feather_radius);
 
       g_free (pts);
@@ -262,133 +323,107 @@ free_select_button_release (Tool           *tool,
 }
 
 static void
-free_select_motion (Tool           *tool,
-		    GdkEventMotion *mevent,
-		    GDisplay       *gdisp)
+gimp_free_select_tool_motion (GimpTool       *tool,
+                              GdkEventMotion *mevent,
+                              GDisplay       *gdisp)
 {
-  FreeSelect *free_sel;
+  GimpFreeSelectTool *free_sel;
+  GimpSelectionTool  *sel_tool;
+  GimpDrawTool       *draw_tool;
 
-  free_sel = (FreeSelect *) tool->private;
+  free_sel  = GIMP_FREE_SELECT_TOOL (tool);
+  sel_tool  = GIMP_SELECTION_TOOL (tool);
+  draw_tool = GIMP_DRAW_TOOL (tool);
 
   /*  needed for immediate cursor update on modifier event  */
-  free_sel->current_x = mevent->x;
-  free_sel->current_y = mevent->y;
+  sel_tool->current_x = mevent->x;
+  sel_tool->current_y = mevent->y;
 
   if (tool->state != ACTIVE)
     return;
 
-  if (free_sel->op == SELECTION_ANCHOR)
+  if (sel_tool->op == SELECTION_ANCHOR)
     {
-      free_sel->op = SELECTION_REPLACE;
+      sel_tool->op = SELECTION_REPLACE;
 
-      rect_select_cursor_update (tool, mevent, gdisp);
+      gimp_tool_cursor_update (tool, mevent, gdisp);
     }
 
-  if (add_point (free_sel->num_pts, mevent->x, mevent->y))
-    {
-      gdk_draw_line (free_sel->core->win, free_sel->core->gc,
-		     global_pts[free_sel->num_pts - 1].x,
-		     global_pts[free_sel->num_pts - 1].y,
-		     global_pts[free_sel->num_pts].x,
-		     global_pts[free_sel->num_pts].y);
+  gimp_free_select_tool_add_point (free_sel, mevent->x, mevent->y);
 
-      free_sel->num_pts ++;
+  gdk_draw_line (draw_tool->win,
+                 draw_tool->gc,
+                 free_sel->points[free_sel->num_points - 2].x,
+                 free_sel->points[free_sel->num_points - 2].y,
+                 free_sel->points[free_sel->num_points - 1].x,
+                 free_sel->points[free_sel->num_points - 1].y);
+}
+
+static void
+gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
+{
+  GimpFreeSelectTool *free_sel;
+  gint                i;
+
+  free_sel  = GIMP_FREE_SELECT_TOOL (draw_tool);
+
+  for (i = 1; i < free_sel->num_points; i++)
+    {
+      gdk_draw_line (draw_tool->win,
+                     draw_tool->gc,
+                     free_sel->points[i - 1].x,
+                     free_sel->points[i - 1].y,
+                     free_sel->points[i].x,
+                     free_sel->points[i].y);
     }
 }
 
 static void
-free_select_control (Tool       *tool,
-		     ToolAction  action,
-		     GDisplay   *gdisp)
-{
-  FreeSelect *free_sel;
-
-  free_sel = (FreeSelect *) tool->private;
-
-  switch (action)
-    {
-    case PAUSE:
-      draw_core_pause (free_sel->core, tool);
-      break;
-
-    case RESUME:
-      draw_core_resume (free_sel->core, tool);
-      break;
-
-    case HALT:
-      draw_core_stop (free_sel->core, tool);
-      break;
-
-    default:
-      break;
-    }
-}
-
-void
-free_select_draw (Tool *tool)
-{
-  FreeSelect *free_sel;
-  gint        i;
-
-  free_sel = (FreeSelect *) tool->private;
-
-  for (i = 1; i < free_sel->num_pts; i++)
-    gdk_draw_line (free_sel->core->win, free_sel->core->gc,
-		   global_pts[i - 1].x, global_pts[i - 1].y,
-		   global_pts[i].x, global_pts[i].y);
-}
-
-static void
-free_select_options_reset (void)
+gimp_free_select_tool_options_reset (void)
 {
   selection_options_reset (free_options);
 }
 
-Tool *
-tools_new_free_select (void)
+static void
+gimp_free_select_tool_add_point (GimpFreeSelectTool *free_sel,
+                                 gint                x,
+                                 gint                y)
 {
-  Tool       *tool;
-  FreeSelect *private;
-
-  /*  The tool options  */
-  if (!free_options)
+  if (free_sel->num_points >= free_sel->max_segs)
     {
-      free_options =
-	selection_options_new (FREE_SELECT, free_select_options_reset);
-      tools_register (FREE_SELECT, (ToolOptions *) free_options);
+      free_sel->max_segs += DEFAULT_MAX_INC;
+
+      free_sel->points = (GdkPoint *)
+        g_realloc ((void *) free_sel->points,
+                   sizeof (GdkPoint) * free_sel->max_segs);
+
+      if (! free_sel->points)
+	gimp_fatal_error ("%s(): Unable to reallocate points array",
+                          G_GNUC_FUNCTION);
     }
 
-  tool = tools_new_tool (FREE_SELECT);
-  private = g_new0 (FreeSelect, 1);
+  free_sel->points[free_sel->num_points].x = x;
+  free_sel->points[free_sel->num_points].y = y;
 
-  private->core    = draw_core_new (free_select_draw);
-  private->num_pts = 0;
-  private->op      = SELECTION_REPLACE;
-
-  tool->scroll_lock = TRUE;   /*  Do not allow scrolling  */
-
-  tool->private = (void *) private;
-
-  tool->tool_cursor = GIMP_FREE_SELECT_TOOL_CURSOR;
-
-  tool->button_press_func   = free_select_button_press;
-  tool->button_release_func = free_select_button_release;
-  tool->motion_func         = free_select_motion;
-  tool->modifier_key_func   = rect_select_modifier_update;
-  tool->cursor_update_func  = rect_select_cursor_update;
-  tool->oper_update_func    = rect_select_oper_update;
-  tool->control_func        = free_select_control;
-
-  return tool;
+  free_sel->num_points++;
 }
 
-void
-tools_free_free_select (Tool *tool)
+static GimpChannel *
+scan_convert (GimpImage        *gimage,
+	      gint              num_pts,
+	      ScanConvertPoint *pts,
+	      gint              width,
+	      gint              height,
+	      gboolean          antialias)
 {
-  FreeSelect *free_sel;
+  GimpChannel   *mask;
+  ScanConverter *sc;
 
-  free_sel = (FreeSelect *) tool->private;
+  sc = scan_converter_new (width, height, antialias ? SUPERSAMPLE : 1);
+  scan_converter_add_points (sc, num_pts, pts);
 
-  draw_core_free (free_sel->core);
-  g_free (free_sel);
+  mask = scan_converter_to_channel (sc, gimage);
+  scan_converter_free (sc);
+
+  return mask;
 }

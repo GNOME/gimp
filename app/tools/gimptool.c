@@ -531,7 +531,6 @@ STUB(paths_dialog_paste_path_callback)
 STUB(paths_dialog_import_path_callback)
 STUB(paths_dialog_export_path_callback)
 STUB(paths_dialog_edit_path_attributes_callback)
-QUIET_STUB(GIMP_IS_FUZZY_SELECT)
 STUB(dodgeburn_non_gui)
 STUB(dodgeburn_non_gui_default)
 STUB(eraser_non_gui)
@@ -539,9 +538,6 @@ STUB(eraser_non_gui_default)
 STUB(transform_core_cut)
 STUB(flip_tool_flip)
 STUB(transform_core_paste)
-STUB(free_select)
-STUB(fuzzy_mask)
-STUB(fuzzy_select)
 STUB(pencil_non_gui)
 STUB(perspective_find_transform)
 STUB(perspective_tool_perspective)
@@ -565,62 +561,6 @@ STUB(path_transform_xy)
 #ifdef STONE_AGE
 ToolInfo tool_info[] =
 {
-  {
-    NULL,
-    N_("Free Select"),
-    N_("/Tools/Select Tools/Free Select"),
-    "F",
-    (char **) free_bits,
-    NULL,
-    NULL,
-    N_("Select hand-drawn regions"),
-    "tools/free_select.html",
-    FREE_SELECT,
-    tools_new_free_select,
-    tools_free_free_select,
-    NULL,
-    NULL,
-    NULL,
-    {
-      free_select_small_bits, free_select_small_mask_bits,
-      free_select_small_width, free_select_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
-  {
-    NULL,
-    N_("Fuzzy Select"),
-    N_("/Tools/Select Tools/Fuzzy Select"),
-    "Z",
-    (char **) fuzzy_bits,
-    NULL,
-    NULL,
-    N_("Select contiguous regions"),
-    "tools/fuzzy_select.html",
-    FUZZY_SELECT,
-    tools_new_fuzzy_select,
-    tools_free_fuzzy_select,
-    NULL,
-    NULL,
-    NULL,
-    {
-      fuzzy_select_small_bits, fuzzy_select_small_mask_bits,
-      fuzzy_select_small_width, fuzzy_select_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
   {
     NULL,
     N_("Bezier Select"),

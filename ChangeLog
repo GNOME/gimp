@@ -1,3 +1,21 @@
+2001-03-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/Makefile.am
+	* app/tools/rect_selectP.h: removed.
+
+	* app/tools/gimpfreeselecttool.[ch]
+	* app/tools/gimpfuzzyselecttool.[ch]: reactivated.
+
+	* app/tools/gimptool.[ch]: removed STUB()s and old crap.
+
+	* app/tools/tools.c: register the new tools.
+
+	* app/disp_callbacks.c
+	* app/tools/selection_options.c: changed accordingly.
+
+	* app/apptypes.h
+	* app/tools/gimprectselecttool.c: cleanup.
+
 2001-03-09  Nathan Summers <rock@gimp.org>
 
 	* app/tools/gimptransformtool.[ch]: More work on the transform tool.

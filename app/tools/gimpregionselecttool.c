@@ -1,6 +1,3 @@
-#warning (everything commented out)
-#if 0
-
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -18,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#endif
+
 #include "config.h"
 
 #include <stdlib.h>
@@ -50,48 +47,33 @@
 
 #include "libgimp/gimpintl.h"
 
-#if 0
-/*  the fuzzy selection structures  */
-
-typedef struct _FuzzySelect FuzzySelect;
-
-struct _FuzzySelect
-{
-  DrawCore *core;       /*  Core select object                      */
-
-  gint      op;         /*  selection operation (ADD, SUB, etc)     */
-
-  gint      current_x;  /*  these values are updated on every motion event  */
-  gint      current_y;  /*  (enables immediate cursor updating on modifier
-			 *   key events).  */
-
-  gint      x, y;             /*  Point from which to execute seed fill  */
-  gint      first_x;          /*                                         */
-  gint      first_y;          /*  variables to keep track of sensitivity */
-  gdouble   first_threshold;  /* initial value of threshold slider   */
-};
+#include "pixmaps2.h"
 
 
-/*  fuzzy select action functions  */
-static void         fuzzy_select_button_press    (Tool           *tool,
-						  GdkEventButton *bevent,
-						  GDisplay       *gdisp);
-static void         fuzzy_select_button_release  (Tool           *tool,
-						  GdkEventButton *bevent,
-						  GDisplay       *gdisp);
-static void         fuzzy_select_motion          (Tool           *tool,
-						  GdkEventMotion *mevent,
-						  GDisplay       *gdisp);
-static void         fuzzy_select_control         (Tool           *tool,
-						  ToolAction      tool_action,
-						  GDisplay       *gdisp);
+static void   gimp_fuzzy_select_tool_class_init (GimpFuzzySelectToolClass *klass);
+static void   gimp_fuzzy_select_tool_init       (GimpFuzzySelectTool      *fuzzy_select);
+static void   gimp_fuzzy_select_tool_destroy        (GtkObject      *object);
 
-static void         fuzzy_select_draw            (Tool           *tool);
+static void   gimp_fuzzy_select_tool_button_press   (GimpTool       *tool,
+                                                     GdkEventButton *bevent,
+                                                     GDisplay       *gdisp);
+static void   gimp_fuzzy_select_tool_button_release (GimpTool       *tool,
+                                                     GdkEventButton *bevent,
+                                                     GDisplay       *gdisp);
+static void   gimp_fuzzy_select_tool_motion         (GimpTool       *tool,
+                                                     GdkEventMotion *mevent,
+                                                     GDisplay       *gdisp);
 
-static GdkSegment * fuzzy_select_calculate       (Tool           *tool,
-						  GDisplay       *gdisp,
-						  gint           *nsegs);
+static void   gimp_fuzzy_select_tool_draw           (GimpDrawTool   *draw_tool);
 
+static void   gimp_fuzzy_select_tool_options_reset  (void);
+
+static GdkSegment * fuzzy_select_calculate     (GimpFuzzySelectTool *fuzzy_sel,
+                                                GDisplay            *gdisp,
+                                                gint                *nsegs);
+
+
+static GimpSelectionToolClass *parent_class = NULL;
 
 /*  the fuzzy selection tool options  */
 static SelectionOptions  *fuzzy_options = NULL;
@@ -102,8 +84,47 @@ static gint        num_segs = 0;
 
 GimpChannel * fuzzy_mask = NULL;
 
-#endif
-/*************************************/
+
+/*  public functions  */
+
+void
+gimp_fuzzy_select_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_FUZZY_SELECT_TOOL, FALSE,
+                              "gimp:fuzzy_select_tool",
+                              _("Fuzzy Select"),
+                              _("Select contiguous regions"),
+                              _("/Tools/Selection Tools/Fuzzy Select"), "Z",
+                              NULL, "tools/fuzzy_select.html",
+                              (const gchar **) fuzzy_bits);
+}
+
+GtkType
+gimp_fuzzy_select_tool_get_type (void)
+{
+  static GtkType fuzzy_select_type = 0;
+
+  if (! fuzzy_select_type)
+    {
+      GtkTypeInfo fuzzy_select_info =
+      {
+        "GimpFuzzySelectTool",
+        sizeof (GimpFuzzySelectTool),
+        sizeof (GimpFuzzySelectToolClass),
+        (GtkClassInitFunc) gimp_fuzzy_select_tool_class_init,
+        (GtkObjectInitFunc) gimp_fuzzy_select_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL
+      };
+
+      fuzzy_select_type = gtk_type_unique (GIMP_TYPE_SELECTION_TOOL,
+                                           &fuzzy_select_info);
+    }
+
+  return fuzzy_select_type;
+}
+
+/*******************************/
 /*  Fuzzy selection apparatus  */
 
 static gint
@@ -363,9 +384,9 @@ find_contiguous_region (GimpImage    *gimage,
 
   return mask;
 }
-#if 0
+
 void
-fuzzy_select (GImage       *gimage, 
+fuzzy_select (GimpImage    *gimage, 
 	      GimpDrawable *drawable, 
 	      gint          op, 
 	      gboolean      feather,
@@ -400,19 +421,71 @@ fuzzy_select (GImage       *gimage,
 /*  fuzzy select action functions  */
 
 static void
-fuzzy_select_button_press (Tool           *tool, 
-			   GdkEventButton *bevent,
-			   GDisplay       *gdisp)
+gimp_fuzzy_select_tool_class_init (GimpFuzzySelectToolClass *klass)
 {
-  FuzzySelect *fuzzy_sel;
+  GtkObjectClass    *object_class;
+  GimpToolClass     *tool_class;
+  GimpDrawToolClass *draw_tool_class;
 
-  fuzzy_sel = (FuzzySelect *) tool->private;
+  object_class    = (GtkObjectClass *) klass;
+  tool_class      = (GimpToolClass *) klass;
+  draw_tool_class = (GimpDrawToolClass *) klass;
 
-  fuzzy_sel->x = bevent->x;
-  fuzzy_sel->y = bevent->y;
-  fuzzy_sel->first_x = fuzzy_sel->x;
-  fuzzy_sel->first_y = fuzzy_sel->y;
-  fuzzy_sel->first_threshold = fuzzy_options->threshold;
+  parent_class = gtk_type_class (GIMP_TYPE_SELECTION_TOOL);
+
+  object_class->destroy      = gimp_fuzzy_select_tool_destroy;
+
+  tool_class->button_press   = gimp_fuzzy_select_tool_button_press;
+  tool_class->button_release = gimp_fuzzy_select_tool_button_release;
+  tool_class->motion         = gimp_fuzzy_select_tool_motion;
+
+  draw_tool_class->draw      = gimp_fuzzy_select_tool_draw;
+}
+
+static void
+gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
+{
+  GimpTool          *tool;
+  GimpSelectionTool *select_tool;
+
+  tool        = GIMP_TOOL (fuzzy_select);
+  select_tool = GIMP_SELECTION_TOOL (fuzzy_select);
+
+  if (! fuzzy_options)
+    {
+      fuzzy_options =
+        selection_options_new (GIMP_TYPE_FUZZY_SELECT_TOOL,
+                               gimp_fuzzy_select_tool_options_reset);
+
+      tool_manager_register_tool_options (GIMP_TYPE_FUZZY_SELECT_TOOL,
+                                          (ToolOptions *) fuzzy_options);
+    }
+
+  tool->tool_cursor = GIMP_FUZZY_SELECT_TOOL_CURSOR;
+  tool->scroll_lock = TRUE;   /*  Do not allow scrolling  */
+
+  fuzzy_select->x               = 0;
+  fuzzy_select->y               = 0;
+  fuzzy_select->first_x         = 0;
+  fuzzy_select->first_y         = 0;
+  fuzzy_select->first_threshold = 0.0;
+}
+
+static void
+gimp_fuzzy_select_tool_destroy (GtkObject *object)
+{
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_fuzzy_select_tool_button_press (GimpTool       *tool, 
+                                     GdkEventButton *bevent,
+                                     GDisplay       *gdisp)
+{
+  GimpFuzzySelectTool *fuzzy_sel;
+
+  fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK |
@@ -423,39 +496,45 @@ fuzzy_select_button_press (Tool           *tool,
   tool->state = ACTIVE;
   tool->gdisp = gdisp;
 
-  if (fuzzy_sel->op == SELECTION_MOVE_MASK)
+  fuzzy_sel->x               = bevent->x;
+  fuzzy_sel->y               = bevent->y;
+  fuzzy_sel->first_x         = fuzzy_sel->x;
+  fuzzy_sel->first_y         = fuzzy_sel->y;
+  fuzzy_sel->first_threshold = fuzzy_options->threshold;
+
+  switch (GIMP_SELECTION_TOOL (tool)->op)
     {
+    case SELECTION_MOVE_MASK:
       init_edit_selection (tool, gdisp, bevent, EDIT_MASK_TRANSLATE);
       return;
-    }
-  else if (fuzzy_sel->op == SELECTION_MOVE)
-    {
+    case SELECTION_MOVE:
       init_edit_selection (tool, gdisp, bevent, EDIT_MASK_TO_LAYER_TRANSLATE);
       return;
+    default:
+      break;
     }
 
   /*  calculate the region boundary  */
-  segs = fuzzy_select_calculate (tool, gdisp, &num_segs);
+  segs = fuzzy_select_calculate (fuzzy_sel, gdisp, &num_segs);
 
-  draw_core_start (fuzzy_sel->core,
-		   gdisp->canvas->window,
-		   tool);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
+                        gdisp->canvas->window);
 }
 
 static void
-fuzzy_select_button_release (Tool           *tool, 
-			     GdkEventButton *bevent,
-			     GDisplay       *gdisp)
+gimp_fuzzy_select_tool_button_release (GimpTool       *tool, 
+                                       GdkEventButton *bevent,
+                                       GDisplay       *gdisp)
 {
-  FuzzySelect  *fuzzy_sel;
-  GimpDrawable *drawable;
+  GimpFuzzySelectTool *fuzzy_sel;
+  GimpDrawable        *drawable;
 
-  fuzzy_sel = (FuzzySelect *) tool->private;
+  fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
 
-  draw_core_stop (fuzzy_sel->core, tool);
+  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
   tool->state = INACTIVE;
 
   /*  First take care of the case where the user "cancels" the action  */
@@ -464,9 +543,12 @@ fuzzy_select_button_release (Tool           *tool,
       drawable = (fuzzy_options->sample_merged ?
 		  NULL : gimp_image_active_drawable (gdisp->gimage));
 
-      fuzzy_select (gdisp->gimage, drawable, fuzzy_sel->op,
-		    fuzzy_options->feather, 
+      fuzzy_select (gdisp->gimage,
+                    drawable,
+                    GIMP_SELECTION_TOOL (tool)->op,
+		    fuzzy_options->feather,
 		    fuzzy_options->feather_radius);
+
       gdisplays_flush ();
     }
 
@@ -477,23 +559,25 @@ fuzzy_select_button_release (Tool           *tool,
 }
 
 static void
-fuzzy_select_motion (Tool           *tool, 
-		     GdkEventMotion *mevent, 
-		     GDisplay       *gdisp)
+gimp_fuzzy_select_tool_motion (GimpTool       *tool, 
+                               GdkEventMotion *mevent, 
+                               GDisplay       *gdisp)
 {
-  FuzzySelect *fuzzy_sel;
-  GdkSegment  *new_segs;
-  gint         num_new_segs;
-  gint         diff_x, diff_y;
-  gdouble      diff;
+  GimpFuzzySelectTool *fuzzy_sel;
+  GimpSelectionTool   *sel_tool;
+  GdkSegment          *new_segs;
+  gint                 num_new_segs;
+  gint                 diff_x, diff_y;
+  gdouble              diff;
 
   static guint last_time = 0;
 
-  fuzzy_sel = (FuzzySelect *) tool->private;
+  fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
+  sel_tool  = GIMP_SELECTION_TOOL (tool);
 
   /*  needed for immediate cursor update on modifier event  */
-  fuzzy_sel->current_x = mevent->x;
-  fuzzy_sel->current_y = mevent->y;
+  sel_tool->current_x = mevent->x;
+  sel_tool->current_y = mevent->y;
 
   if (tool->state != ACTIVE)
     return;
@@ -501,7 +585,7 @@ fuzzy_select_motion (Tool           *tool,
   /* don't let the events come in too fast, ignore below a delay of 100 ms */
   if (ABS (mevent->time - last_time) < 100)
     return;
-  
+
   last_time = mevent->time;
 
   diff_x = mevent->x - fuzzy_sel->first_x;
@@ -511,12 +595,12 @@ fuzzy_select_motion (Tool           *tool,
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (fuzzy_options->threshold_w), 
 			    fuzzy_sel->first_threshold + diff);
-      
+
   /*  calculate the new fuzzy boundary  */
-  new_segs = fuzzy_select_calculate (tool, gdisp, &num_new_segs);
+  new_segs = fuzzy_select_calculate (fuzzy_sel, gdisp, &num_new_segs);
 
   /*  stop the current boundary  */
-  draw_core_pause (fuzzy_sel->core, tool);
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   /*  make sure the XSegment array is freed before we assign the new one  */
   if (segs)
@@ -525,17 +609,16 @@ fuzzy_select_motion (Tool           *tool,
   num_segs = num_new_segs;
 
   /*  start the new boundary  */
-  draw_core_resume (fuzzy_sel->core, tool);
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 
 static GdkSegment *
-fuzzy_select_calculate (Tool     *tool, 
-			GDisplay *gdisp,
-			gint     *nsegs)
+fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
+			GDisplay            *gdisp,
+			gint                *nsegs)
 {
   PixelRegion   maskPR;
-  FuzzySelect  *fuzzy_sel;
   GimpChannel  *new;
   GdkSegment   *segs;
   BoundSeg     *bsegs;
@@ -544,7 +627,6 @@ fuzzy_select_calculate (Tool     *tool,
   gint          x, y;
   gboolean      use_offsets;
 
-  fuzzy_sel = (FuzzySelect *) tool->private;
   drawable  = gimp_image_active_drawable (gdisp->gimage);
 
   gimp_add_busy_cursors ();
@@ -599,93 +681,20 @@ fuzzy_select_calculate (Tool     *tool,
 }
 
 static void
-fuzzy_select_draw (Tool *tool)
+gimp_fuzzy_select_tool_draw (GimpDrawTool *draw_tool)
 {
-  FuzzySelect *fuzzy_sel;
+  GimpFuzzySelectTool *fuzzy_sel;
 
-  fuzzy_sel = (FuzzySelect *) tool->private;
+  fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (draw_tool);
 
   if (segs)
-    gdk_draw_segments (fuzzy_sel->core->win, fuzzy_sel->core->gc, segs, num_segs);
+    gdk_draw_segments (draw_tool->win,
+                       draw_tool->gc,
+                       segs, num_segs);
 }
 
 static void
-fuzzy_select_control (Tool       *tool,
-		      ToolAction  action,
-		      GDisplay   *gdisp)
-{
-  FuzzySelect *fuzzy_sel;
-
-  fuzzy_sel = (FuzzySelect *) tool->private;
-
-  switch (action)
-    {
-    case PAUSE :
-      draw_core_pause (fuzzy_sel->core, tool);
-      break;
-
-    case RESUME :
-      draw_core_resume (fuzzy_sel->core, tool);
-      break;
-
-    case HALT :
-      draw_core_stop (fuzzy_sel->core, tool);
-      break;
-
-    default:
-      break;
-    }
-}
-
-static void
-fuzzy_select_options_reset (void)
+gimp_fuzzy_select_tool_options_reset (void)
 {
   selection_options_reset (fuzzy_options);
 }
-
-Tool *
-tools_new_fuzzy_select (void)
-{
-  Tool        *tool;
-  FuzzySelect *private;
-
-  /*  The tool options  */
-  if (! fuzzy_options)
-    {
-      fuzzy_options = selection_options_new (FUZZY_SELECT,
-					     fuzzy_select_options_reset);
-      tools_register (FUZZY_SELECT, (ToolOptions *) fuzzy_options);
-    }
-
-  tool = tools_new_tool (FUZZY_SELECT);
-  private = g_new0 (FuzzySelect, 1);
-
-  private->core = draw_core_new (fuzzy_select_draw);
-
-  tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
-
-  tool->private = (void *) private;
-
-  tool->tool_cursor = GIMP_FUZZY_SELECT_TOOL_CURSOR;
-
-  tool->button_press_func   = fuzzy_select_button_press;
-  tool->button_release_func = fuzzy_select_button_release;
-  tool->motion_func         = fuzzy_select_motion;
-  tool->modifier_key_func   = rect_select_modifier_update;
-  tool->cursor_update_func  = rect_select_cursor_update;
-  tool->oper_update_func    = rect_select_oper_update;
-  tool->control_func        = fuzzy_select_control;
-
-  return tool;
-}
-
-void
-tools_free_fuzzy_select (Tool *tool)
-{
-  FuzzySelect *fuzzy_sel;
-
-  fuzzy_sel = (FuzzySelect *) tool->private;
-  draw_core_free (fuzzy_sel->core);
-  g_free (fuzzy_sel);
-}
-#endif

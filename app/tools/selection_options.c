@@ -27,6 +27,7 @@
 #include "gimprc.h"
 
 #include "gimpellipseselecttool.h"
+#include "gimpfuzzyselecttool.h"
 #include "gimprectselecttool.h"
 #include "gimptool.h"
 #include "gimptoolinfo.h"

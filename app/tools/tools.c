@@ -66,6 +66,8 @@ register_tools (void)
   gimp_color_picker_tool_register ();
   gimp_text_tool_register ();
   gimp_move_tool_register ();
+  gimp_fuzzy_select_tool_register ();
+  gimp_free_select_tool_register ();
   gimp_ellipse_select_tool_register ();
   gimp_rect_select_tool_register ();
 
@@ -85,15 +87,12 @@ register_tools (void)
   procedural_db_register (&crop_proc);
   procedural_db_register (&dodgeburn_proc);
   procedural_db_register (&dodgeburn_default_proc);
-  procedural_db_register (&ellipse_select_proc);
   procedural_db_register (&eraser_proc);
   procedural_db_register (&eraser_default_proc);
   procedural_db_register (&flip_proc);
-  procedural_db_register (&free_select_proc);
   procedural_db_register (&fuzzy_select_proc);
   procedural_db_register (&pencil_proc);
   procedural_db_register (&perspective_proc);
-  procedural_db_register (&rect_select_proc);
   procedural_db_register (&rotate_proc);
   procedural_db_register (&scale_proc);
   procedural_db_register (&shear_proc);
