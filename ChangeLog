@@ -1,3 +1,10 @@
+1999-09-29  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/iwarp.c: Back out my change of 1999-09-14. It
+	changed the semantics of the code, the deform_area_vectors array,
+	and the two sequential loops in iwarp_deform() are really needed.
+	Sorry. Thanks to Garry R. Osgood for analysing this.
+
 Wed Sep 29 18:40:17 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/gimpimage.c

@@ -198,6 +198,7 @@ static guchar *dstimage = NULL;
 static gint preview_width, preview_height,sel_width,sel_height;
 static gint image_bpp;
 static vector_2d* deform_vectors = NULL;
+static vector_2d* deform_area_vectors = NULL;
 static int lastx, lasty;
 static gfloat filter[MAX_DEFORM_AREA_RADIUS];
 static int do_animate = FALSE;
@@ -295,6 +296,7 @@ run (char    *name,
   if (srcimage != NULL) g_free(srcimage);
   if (dstimage != NULL) g_free(dstimage);  
   if (deform_vectors != NULL) g_free(deform_vectors);
+  if (deform_area_vectors != NULL) g_free(deform_area_vectors);
 }
 
 
@@ -716,6 +718,7 @@ iwarp_init()
  srcimage = g_malloc(preview_width * preview_height * image_bpp * sizeof(guchar));
  dstimage = g_malloc(preview_width * preview_height * preview_bpp * sizeof(guchar));
  deform_vectors = g_malloc(preview_width * preview_height*sizeof(gfloat)*2);
+ deform_area_vectors = g_malloc((MAX_DEFORM_AREA_RADIUS*2+1)*(MAX_DEFORM_AREA_RADIUS*2+1)*sizeof(gfloat)*2);
  linebuffer = g_malloc(sel_width* image_bpp *sizeof(guchar));
 
  for (i=0; i<preview_width*preview_height; i++) 
@@ -1197,10 +1200,9 @@ iwarp_preview_get_point( gfloat x, gfloat y,guchar* color)
 static void 
 iwarp_deform(int x, int y, gfloat vx, gfloat vy)
 {
- int xi,yi,ptr,x0,x1,y0,y1,radius2,length2;
+ int xi,yi,ptr,fptr,x0,x1,y0,y1,radius2,length2;
  gfloat deform_value,xn,yn,nvx=0,nvy=0,emh,em,edge_width,xv,yv,alpha;
  guchar color[4];
- vector_2d deform_area_element;
  
  if (x - iwarp_vals.deform_area_radius <0) x0 = -x; else x0 = -iwarp_vals.deform_area_radius;
  if (x + iwarp_vals.deform_area_radius >= preview_width) x1 = preview_width-x-1; else x1 = iwarp_vals.deform_area_radius;
@@ -1213,7 +1215,8 @@ iwarp_deform(int x, int y, gfloat vx, gfloat vy)
    length2 = (xi*xi+yi*yi)*MAX_DEFORM_AREA_RADIUS / radius2;
    if (length2 < MAX_DEFORM_AREA_RADIUS) {
     ptr = (y + yi) * preview_width + x + xi;   
-
+    fptr = (yi+iwarp_vals.deform_area_radius) * (iwarp_vals.deform_area_radius*2+1) + xi+iwarp_vals.deform_area_radius;
+   
     if (iwarp_vals.do_grow) { 
       deform_value = filter[length2] *  0.1* iwarp_vals.deform_amount; 
       nvx = -deform_value * xi; 
@@ -1241,8 +1244,8 @@ iwarp_deform(int x, int y, gfloat vx, gfloat vy)
     } 
     if (iwarp_vals.do_remove) {
      deform_value = 1.0-0.5*iwarp_vals.deform_amount*filter[length2];
-     deform_area_element.x = deform_value * deform_vectors[ptr].x ;
-     deform_area_element.y = deform_value * deform_vectors[ptr].y ;
+     deform_area_vectors[fptr].x = deform_value * deform_vectors[ptr].x ;
+     deform_area_vectors[fptr].y = deform_value * deform_vectors[ptr].y ;
     } 
     else {
      edge_width = 0.2 *  iwarp_vals.deform_area_radius;
@@ -1264,12 +1267,12 @@ iwarp_deform(int x, int y, gfloat vx, gfloat vy)
      yv = nvy +yv;   
      if (yv +y+yi <0.0) yv = -y-yi;
      else if (yv + y +yi > (preview_height-1)) yv = preview_height - y -yi-1;
-     deform_area_element.x =xv;
-     deform_area_element.y = yv; 
+     deform_area_vectors[fptr].x =xv;
+     deform_area_vectors[fptr].y = yv; 
     } 
 
-    xn = deform_area_element.x + x + xi;
-    yn = deform_area_element.y + y + yi;
+    xn = deform_area_vectors[fptr].x + x + xi;
+    yn = deform_area_vectors[fptr].y + y + yi;
     iwarp_preview_get_point(xn,yn,color);
 
     if (preview_bpp == 3) { 
@@ -1293,7 +1296,17 @@ iwarp_deform(int x, int y, gfloat vx, gfloat vy)
      else
       dstimage[ptr] = color[0];
     }
-    deform_vectors[ptr] = deform_area_element;
+   }
+  } 
+   
+ for (yi= y0; yi <= y1; yi++)
+  for (xi = x0; xi <= x1; xi++) {
+   length2 = (xi*xi+yi*yi)*MAX_DEFORM_AREA_RADIUS / radius2;
+   if (length2 <MAX_DEFORM_AREA_RADIUS) {
+    ptr = (yi +y) * preview_width + xi +x;
+    fptr = (yi+iwarp_vals.deform_area_radius) * (iwarp_vals.deform_area_radius*2+1) + xi + iwarp_vals.deform_area_radius;
+    deform_vectors[ptr].x = deform_area_vectors[fptr].x;
+    deform_vectors[ptr].y = deform_area_vectors[fptr].y;
    }
   }  
  iwarp_update_preview(x+x0,y+y0,x+x1+1,y+y1+1);   
