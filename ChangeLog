@@ -1,3 +1,9 @@
+2002-01-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/xbm.c: corrected logic for saving images without an
+	additional mask file. The plug-in used to return an execution error
+	even though it saved the xbm successfully.
+
 2002-01-01  Tor Lillqvist  <tml@iki.fi>
 
 	* gimptool-win32.c.in (do_build_2): Pass also a flag to build
