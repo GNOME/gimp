@@ -40,6 +40,7 @@
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
@@ -823,7 +824,8 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
   gimp_tool_control_set_preserve (tool->control, TRUE);
 
   /*  Start a transform undo group  */
-  undo_push_group_start (gdisp->gimage, TRANSFORM_UNDO_GROUP);
+  gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_TRANSFORM,
+                               _("Transform"));
 
   /* With the old UI, if original is NULL, then this is the
    * first transformation. In the new UI, it is always so, right?
@@ -873,7 +875,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
     }
 
   /*  push the undo group end  */
-  undo_push_group_end (gdisp->gimage);
+  gimp_image_undo_group_end (gdisp->gimage);
 
   /*  We're done dirtying the image, and would like to be restarted
    *  if the image gets dirty while the tool exists

@@ -30,6 +30,7 @@
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpedit.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
@@ -60,7 +61,8 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 
   drawable = GIMP_DRAWABLE (viewable);
 
-  undo_push_group_start (gdisp->gimage, EDIT_PASTE_UNDO_GROUP);
+  gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+                               _("Drop New Layer"));
 
   new_layer = gimp_layer_new_from_drawable (drawable, gdisp->gimage);
 
@@ -71,7 +73,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 
   gimp_image_add_layer (gdisp->gimage, new_layer, -1);
 
-  undo_push_group_end (gdisp->gimage);
+  gimp_image_undo_group_end (gdisp->gimage);
 
   gimp_image_flush (gdisp->gimage);
 

@@ -38,7 +38,7 @@ HELP
 
     &inargs;
 
-    %invoke = ( code => 'undo_push_group_start (gimage, MISC_UNDO_GROUP);' );
+    %invoke = ( code => 'gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_MISC, _("Plug-In"));' );
 }
 
 sub undo_push_group_end {
@@ -54,10 +54,10 @@ HELP
 
     &inargs;
 
-    %invoke = ( code => 'undo_push_group_end (gimage);' );
+    %invoke = ( code => 'gimp_image_undo_group_end (gimage);' );
 }
 
-@headers = qw("undo.h");
+@headers = qw("core/gimpimage-undo.h" "libgimp/gimpintl.h");
 
 @procs = qw(undo_push_group_start undo_push_group_end);
 %exports = (app => [@procs], lib => [@procs]);

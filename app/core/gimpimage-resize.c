@@ -29,11 +29,14 @@
 #include "gimpimage-mask.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-resize.h"
+#include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 
 #include "undo.h"
+
+#include "libgimp/gimpintl.h"
 
 
 void
@@ -57,7 +60,8 @@ gimp_image_resize (GimpImage *gimage,
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
 
-  undo_push_group_start (gimage, IMAGE_RESIZE_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_RESIZE,
+                               _("Resize Image"));
 
   /*  Relax the floating selection  */
   if (floating_layer)
@@ -132,7 +136,7 @@ gimp_image_resize (GimpImage *gimage,
   if (floating_layer)
     floating_sel_rigor (floating_layer, TRUE);
 
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 

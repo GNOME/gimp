@@ -32,6 +32,7 @@
 #include "gimp-parasites.h"
 #include "gimpchannel.h"
 #include "gimpimage.h"
+#include "gimpimage-undo.h"
 #include "gimpitem.h"
 #include "gimplayer.h"
 #include "gimplist.h"
@@ -446,7 +447,8 @@ gimp_item_parasite_attach (GimpItem     *item,
   if (gimp_parasite_is_undoable (parasite))
     {
       /* do a group in case we have attach_parent set */
-      undo_push_group_start (item->gimage, PARASITE_ATTACH_UNDO_GROUP);
+      gimp_image_undo_group_start (item->gimage, GIMP_UNDO_GROUP_PARASITE_ATTACH,
+                                   _("Attach Parasite"));
 
       undo_push_item_parasite (item->gimage, item, parasite);
     }
@@ -474,7 +476,7 @@ gimp_item_parasite_attach (GimpItem     *item,
 
   if (gimp_parasite_is_undoable (parasite))
     {
-      undo_push_group_end (item->gimage);
+      gimp_image_undo_group_end (item->gimage);
     }
 }
 

@@ -479,7 +479,7 @@ gimp_image_init (GimpImage *gimage)
   gimage->undo_stack            = gimp_undo_stack_new (gimage);
   gimage->redo_stack            = gimp_undo_stack_new (gimage);
   gimage->group_count           = 0;
-  gimage->pushing_undo_group    = NO_UNDO_GROUP;
+  gimage->pushing_undo_group    = GIMP_UNDO_GROUP_NONE;
 
 
   gimage->comp_preview          = NULL;

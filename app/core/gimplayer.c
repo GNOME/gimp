@@ -38,6 +38,7 @@
 #include "gimpcontainer.h"
 #include "gimpimage.h"
 #include "gimpimage-convert.h"
+#include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
@@ -787,7 +788,8 @@ gimp_layer_apply_mask (GimpLayer         *layer,
 
   if (push_undo)
     {
-      undo_push_group_start (gimage, LAYER_APPLY_MASK_UNDO_GROUP);
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_APPLY_MASK,
+                                   _("Apply Layer Mask"));
 
       undo_push_layer_mask_remove (gimage, layer, layer->mask);
     }
@@ -832,7 +834,7 @@ gimp_layer_apply_mask (GimpLayer         *layer,
 
   if (push_undo)
     {
-      undo_push_group_end (gimage);
+      gimp_image_undo_group_end (gimage);
     }
 
   /*  If applying actually changed the view  */
@@ -1323,7 +1325,8 @@ gimp_layer_resize_to_image (GimpLayer *layer)
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     return;
 
-  undo_push_group_start (gimage, LAYER_RESIZE_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
+                               _("Layer to Image Size"));
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_relax (layer, TRUE);
@@ -1334,7 +1337,7 @@ gimp_layer_resize_to_image (GimpLayer *layer)
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_rigor (layer, TRUE);
 
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 }
 
 BoundSeg *

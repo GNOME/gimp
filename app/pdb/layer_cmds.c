@@ -33,6 +33,7 @@
 #include "core/core-enums.h"
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayer.h"
@@ -40,6 +41,8 @@
 #include "core/gimplist.h"
 #include "pdb_glue.h"
 #include "undo.h"
+
+#include "libgimp/gimpintl.h"
 
 static ProcRecord layer_new_proc;
 static ProcRecord layer_copy_proc;
@@ -400,7 +403,8 @@ layer_scale_invoker (Gimp     *gimp,
 	{
 	  floating_layer = gimp_image_floating_sel (gimage);
     
-	  undo_push_group_start (gimage, LAYER_SCALE_UNDO_GROUP);
+	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_SCALE,
+				       _("Scale Layer"));
     
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
@@ -410,7 +414,7 @@ layer_scale_invoker (Gimp     *gimp,
 	  if (floating_layer)
 	    floating_sel_rigor (floating_layer, TRUE);
     
-	  undo_push_group_end (gimage);
+	  gimp_image_undo_group_end (gimage);
 	}
       else
 	success = FALSE;
@@ -494,7 +498,8 @@ layer_resize_invoker (Gimp     *gimp,
 	{
 	  floating_layer = gimp_image_floating_sel (gimage);
     
-	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO_GROUP);
+	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
+				       _("Resize Layer"));
     
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
@@ -504,7 +509,7 @@ layer_resize_invoker (Gimp     *gimp,
 	  if (floating_layer)
 	    floating_sel_rigor (floating_layer, TRUE);
     
-	  undo_push_group_end (gimage);
+	  gimp_image_undo_group_end (gimage);
 	}
       else
 	success = FALSE;
@@ -633,7 +638,8 @@ layer_translate_invoker (Gimp     *gimp,
 	{
 	  floating_layer = gimp_image_floating_sel (gimage);
     
-	  undo_push_group_start (gimage, LAYER_LINKED_UNDO_GROUP);
+	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_LINKED,
+				       _("Move Layer"));
     
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
@@ -651,7 +657,7 @@ layer_translate_invoker (Gimp     *gimp,
 	  if (floating_layer)
 	    floating_sel_rigor (floating_layer, TRUE);
     
-	  undo_push_group_end (gimage);
+	  gimp_image_undo_group_end (gimage);
 	}
       else
 	success = FALSE;
@@ -764,7 +770,8 @@ layer_set_offsets_invoker (Gimp     *gimp,
 	{
 	  floating_layer = gimp_image_floating_sel (gimage);
     
-	  undo_push_group_start (gimage, LAYER_LINKED_UNDO_GROUP);
+	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_LINKED,
+				       _("Move Layer"));
     
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
@@ -784,7 +791,7 @@ layer_set_offsets_invoker (Gimp     *gimp,
 	  if (floating_layer)
 	    floating_sel_rigor (floating_layer, TRUE);
     
-	  undo_push_group_end (gimage);
+	  gimp_image_undo_group_end (gimage);
 	}
       else
 	success = FALSE;

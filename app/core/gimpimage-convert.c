@@ -139,6 +139,7 @@
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-projection.h"
+#include "gimpimage-undo.h"
 #include "gimplist.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
@@ -150,6 +151,8 @@
 #include "gimpimage-convert-fsdither.h"
 #include "gimpimage-convert-data.h"
 #include "gimpimage-convert.h"
+
+#include "libgimp/gimpintl.h"
 
 
 /* basic memory/quality tradeoff */
@@ -744,7 +747,8 @@ gimp_image_convert (GimpImage              *gimage,
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
 
-  undo_push_group_start (gimage, IMAGE_CONVERT_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_CONVERT,
+                               _("Convert"));
 
   /*  Relax the floating selection  */
   if (floating_layer)
@@ -1010,7 +1014,7 @@ gimp_image_convert (GimpImage              *gimage,
   if (floating_layer)
     floating_sel_rigor (floating_layer, TRUE);
 
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 
 #if 0 /* gone in cvs */
   /*  shrink wrap and update all views  */

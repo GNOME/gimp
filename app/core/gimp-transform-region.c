@@ -38,6 +38,7 @@
 #include "gimpdrawable-transform.h"
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
+#include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 
@@ -611,7 +612,8 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   /* Start a transform undo group */
-  undo_push_group_start (gimage, TRANSFORM_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+                               _("Transform"));
 
   /* Cut/Copy from the specified drawable */
   float_tiles = gimp_drawable_transform_cut (drawable, &new_layer);
@@ -637,7 +639,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
     }
 
   /*  push the undo group end  */
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 
   return success;
 }
@@ -658,7 +660,8 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   /* Start a transform undo group */
-  undo_push_group_start (gimage, TRANSFORM_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+                               _("Flip"));
 
   /* Cut/Copy from the specified drawable */
   float_tiles = gimp_drawable_transform_cut (drawable, &new_layer);
@@ -680,7 +683,7 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
     }
 
   /*  push the undo group end  */
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 
   return success;
 }
@@ -761,12 +764,13 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
 				&(GIMP_DRAWABLE (layer)->offset_y));
 
       /*  Start a group undo  */
-      undo_push_group_start (gimage, EDIT_PASTE_UNDO_GROUP);
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+                                   _("Paste Transform"));
 
       floating_sel_attach (layer, drawable);
 
       /*  End the group undo  */
-      undo_push_group_end (gimage);
+      gimp_image_undo_group_end (gimage);
 
       /*  Free the tiles  */
       tile_manager_destroy (tiles);

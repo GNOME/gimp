@@ -33,6 +33,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-merge.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
@@ -302,7 +303,8 @@ layers_crop_cmd_callback (GtkWidget *widget,
   off_x -= x1;
   off_y -= y1;
 
-  undo_push_group_start (gimage, LAYER_RESIZE_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
+                               _("Crop Layer"));
 
   if (gimp_layer_is_floating_sel (active_layer))
     floating_sel_relax (active_layer, TRUE);
@@ -312,7 +314,7 @@ layers_crop_cmd_callback (GtkWidget *widget,
   if (gimp_layer_is_floating_sel (active_layer))
     floating_sel_rigor (active_layer, TRUE);
 
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 
   gimp_image_flush (gimage);
 }
@@ -573,7 +575,8 @@ layers_new_layer_query (GimpImage *gimage,
           mode    = GIMP_NORMAL_MODE;
         }
 
-      undo_push_group_start (gimage, EDIT_PASTE_UNDO_GROUP);
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+                                   _("New Layer"));
 
       new_layer = gimp_layer_new (gimage,
                                   width,
@@ -593,7 +596,7 @@ layers_new_layer_query (GimpImage *gimage,
 
       gimp_image_add_layer (gimage, new_layer, -1);
 
-      undo_push_group_end (gimage);
+      gimp_image_undo_group_end (gimage);
       return;
     }
 
@@ -754,7 +757,9 @@ edit_layer_query_ok_callback (GtkWidget *widget,
 
       if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (layer))))
         {
-          undo_push_group_start (options->gimage, LAYER_PROPERTIES_UNDO_GROUP);
+          gimp_image_undo_group_start (options->gimage,
+                                       GIMP_UNDO_GROUP_LAYER_PROPERTIES,
+                                       _("Rename Layer"));
 
           if (gimp_layer_is_floating_sel (layer))
             {
@@ -767,7 +772,7 @@ edit_layer_query_ok_callback (GtkWidget *widget,
 
           gimp_object_set_name (GIMP_OBJECT (layer), new_name);
 
-          undo_push_group_end (options->gimage);
+          gimp_image_undo_group_end (options->gimage);
         }
     }
 
@@ -1004,7 +1009,8 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 
       if (gimage)
 	{
-	  undo_push_group_start (gimage, LAYER_SCALE_UNDO_GROUP);
+	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_SCALE,
+                                       _("Scale Layer"));
 
 	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_relax (layer, TRUE);
@@ -1018,7 +1024,7 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_rigor (layer, TRUE);
 
-	  undo_push_group_end (gimage);
+	  gimp_image_undo_group_end (gimage);
 
           gimp_image_flush (gimage);
 	}
@@ -1093,7 +1099,8 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 
       if (gimage)
 	{
-	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO_GROUP);
+	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
+                                       _("Resize Layer"));
 
 	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_relax (layer, TRUE);
@@ -1107,7 +1114,7 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_rigor (layer, TRUE);
 
-	  undo_push_group_end (gimage);
+	  gimp_image_undo_group_end (gimage);
 
           gimp_image_flush (gimage);
 	}

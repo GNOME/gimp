@@ -37,6 +37,7 @@
 #include "gimpedit.h"
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
+#include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
@@ -58,7 +59,8 @@ gimp_edit_cut (GimpImage    *gimage,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   /*  Start a group undo  */
-  undo_push_group_start (gimage, EDIT_CUT_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_CUT,
+                               _("Cut"));
 
   /*  See if the gimage mask is empty  */
   empty = gimp_image_mask_is_empty (gimage);
@@ -86,7 +88,7 @@ gimp_edit_cut (GimpImage    *gimage,
     cropped_cut = NULL;
 
   /*  end the group undo  */
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 
   if (cropped_cut)
     {
@@ -115,7 +117,8 @@ gimp_edit_copy (GimpImage    *gimage,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   /*  Start a group undo  */
-  undo_push_group_start (gimage, EDIT_COPY_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_COPY,
+                               _("Copy"));
 
   /*  See if the gimage mask is empty  */
   empty = gimp_image_mask_is_empty (gimage);
@@ -143,7 +146,7 @@ gimp_edit_copy (GimpImage    *gimage,
     cropped_copy = NULL;
 
   /*  end the group undo  */
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 
   if (cropped_copy)
     {
@@ -194,7 +197,8 @@ gimp_edit_paste (GimpImage    *gimage,
     return NULL;
 
   /*  Start a group undo  */
-  undo_push_group_start (gimage, EDIT_PASTE_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+                               _("Paste"));
 
   /*  Set the offsets to the center of the image  */
   if (drawable)
@@ -232,7 +236,7 @@ gimp_edit_paste (GimpImage    *gimage,
     }
 
   /*  end the group undo  */
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 
   return layer;
 }

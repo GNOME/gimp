@@ -24,7 +24,7 @@ sub layer_arg () {{
 }}
 
 sub layer_change_invoke {
-    my ($undo, $code) = @_;
+    my ($undo, $undo_name, $code) = @_;
     my $indent = 6;
 
     chomp $code;
@@ -49,7 +49,8 @@ sub layer_change_invoke {
     {
       floating_layer = gimp_image_floating_sel (gimage);
 
-      undo_push_group_start (gimage, ${undo}_UNDO_GROUP);
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_${undo},
+                                   _("${undo_name}"));
 
       if (floating_layer)
 	floating_sel_relax (floating_layer, TRUE);
@@ -59,7 +60,7 @@ sub layer_change_invoke {
       if (floating_layer)
 	floating_sel_rigor (floating_layer, TRUE);
 
-      undo_push_group_end (gimage);
+      gimp_image_undo_group_end (gimage);
     }
   else
     success = FALSE;
@@ -98,10 +99,10 @@ HELP
     }
 
     if ($op eq 'scale') {
-        &layer_change_invoke("LAYER_\U$op\E",
+        &layer_change_invoke("LAYER_\U$op\E", 'Scale Layer',
 			     "gimp_layer_$op (layer, new_width, new_height, gimp->config->interpolation_type, $args);");
     } else {
-        &layer_change_invoke("LAYER_\U$op\E",
+        &layer_change_invoke("LAYER_\U$op\E", 'Resize Layer',
 			     "gimp_layer_$op (layer, new_width, new_height, $args);");
     }
 }
@@ -398,7 +399,7 @@ HELP
 			desc => "Offset in $_ direction" }
     }
 
-    &layer_change_invoke('LAYER_LINKED', <<'CODE');
+    &layer_change_invoke('LAYER_LINKED', 'Move Layer', <<'CODE');
 {
   for (layer_list = GIMP_LIST (gimage->layers)->list;
        layer_list;
@@ -602,8 +603,8 @@ HELP
 CODE
 
 @headers = qw( "config/gimpcoreconfig.h"
-               "core/gimplist.h" "core/gimp.h"
-               "pdb_glue.h");
+               "core/gimplist.h" "core/gimp.h" "core/gimpimage-undo.h"
+               "pdb_glue.h" "libgimp/gimpintl.h");
 
 unshift @procs, qw(layer_new layer_copy layer_create_mask layer_scale
 		   layer_resize layer_delete layer_translate layer_add_alpha

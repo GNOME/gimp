@@ -69,23 +69,6 @@
 #include "libgimp/gimpintl.h"
 
 
-/**********************/
-/*  group Undo funcs  */
-
-gboolean
-undo_push_group_start (GimpImage    *gimage,
-		       GimpUndoType  type)
-{
-  return gimp_image_undo_group_start (gimage, type, NULL);
-}
-
-gboolean
-undo_push_group_end (GimpImage *gimage)
-{
-  return gimp_image_undo_group_end (gimage);
-}
-
-
 /****************/
 /*  Image Undo  */
 /****************/
@@ -129,7 +112,7 @@ undo_push_image (GimpImage    *gimage,
 
   if ((new = gimp_image_undo_push (gimage,
                                    size, sizeof (ImageUndo),
-                                   IMAGE_UNDO, NULL,
+                                   GIMP_UNDO_IMAGE, NULL,
                                    TRUE,
                                    undo_pop_image,
                                    undo_free_image)))
@@ -195,7 +178,7 @@ undo_push_image_mod (GimpImage    *gimage,
 
   if ((new = gimp_image_undo_push (gimage,
                                    size, sizeof (ImageUndo),
-                                   IMAGE_MOD_UNDO, NULL,
+                                   GIMP_UNDO_IMAGE_MOD, NULL,
                                    TRUE,
                                    undo_pop_image,
                                    undo_free_image)))
@@ -335,7 +318,7 @@ undo_push_image_type (GimpImage *gimage)
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (ImageTypeUndo),
                                    sizeof (ImageTypeUndo),
-                                   IMAGE_TYPE_UNDO, NULL,
+                                   GIMP_UNDO_IMAGE_TYPE, NULL,
                                    TRUE,
                                    undo_pop_image_type,
                                    undo_free_image_type)))
@@ -414,7 +397,7 @@ undo_push_image_size (GimpImage *gimage)
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (ImageSizeUndo),
                                    sizeof (ImageSizeUndo),
-                                   IMAGE_SIZE_UNDO, NULL,
+                                   GIMP_UNDO_IMAGE_SIZE, NULL,
                                    TRUE,
                                    undo_pop_image_size,
                                    undo_free_image_size)))
@@ -503,7 +486,7 @@ undo_push_image_resolution (GimpImage *gimage)
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (ResolutionUndo),
                                    sizeof (ResolutionUndo),
-                                   IMAGE_RESOLUTION_UNDO, NULL,
+                                   GIMP_UNDO_IMAGE_RESOLUTION, NULL,
                                    TRUE,
                                    undo_pop_image_resolution,
                                    undo_free_image_resolution)))
@@ -601,7 +584,7 @@ undo_push_image_qmask (GimpImage *gimage)
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (QmaskUndo),
                                    sizeof (QmaskUndo),
-                                   IMAGE_QMASK_UNDO, NULL,
+                                   GIMP_UNDO_IMAGE_QMASK, NULL,
                                    TRUE,
                                    undo_pop_image_qmask,
                                    undo_free_image_qmask)))
@@ -678,7 +661,7 @@ undo_push_image_guide (GimpImage *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (GuideUndo),
                                    sizeof (GuideUndo),
-                                   IMAGE_GUIDE_UNDO, NULL,
+                                   GIMP_UNDO_IMAGE_GUIDE, NULL,
                                    TRUE,
                                    undo_pop_image_guide,
                                    undo_free_image_guide)))
@@ -796,7 +779,7 @@ undo_push_mask (GimpImage   *gimage,
 
   if ((new = gimp_image_undo_push (gimage,
                                    size, sizeof (MaskUndo),
-                                   MASK_UNDO, NULL,
+                                   GIMP_UNDO_MASK, NULL,
                                    FALSE,
                                    undo_pop_mask,
                                    undo_free_mask)))
@@ -965,7 +948,7 @@ undo_push_item_rename (GimpImage *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (ItemRenameUndo),
                                    sizeof (ItemRenameUndo),
-                                   ITEM_RENAME_UNDO, NULL,
+                                   GIMP_UNDO_ITEM_RENAME, NULL,
                                    TRUE,
                                    undo_pop_item_rename,
                                    undo_free_item_rename)))
@@ -1050,7 +1033,7 @@ undo_push_layer_add (GimpImage *gimage,
                      gint       prev_position,
                      GimpLayer *prev_layer)
 {
-  return undo_push_layer (gimage, LAYER_ADD_UNDO,
+  return undo_push_layer (gimage, GIMP_UNDO_LAYER_ADD,
                           layer, prev_position, prev_layer);
 }
 
@@ -1060,7 +1043,7 @@ undo_push_layer_remove (GimpImage *gimage,
                         gint       prev_position,
                         GimpLayer *prev_layer)
 {
-  return undo_push_layer (gimage, LAYER_REMOVE_UNDO,
+  return undo_push_layer (gimage, GIMP_UNDO_LAYER_REMOVE,
                           layer, prev_position, prev_layer);
 }
 
@@ -1074,8 +1057,8 @@ undo_push_layer (GimpImage    *gimage,
   GimpUndo *new;
   gsize     size;
 
-  g_return_val_if_fail (type == LAYER_ADD_UNDO ||
-			type == LAYER_REMOVE_UNDO,
+  g_return_val_if_fail (type == GIMP_UNDO_LAYER_ADD ||
+			type == GIMP_UNDO_LAYER_REMOVE,
 			FALSE);
 
   size = sizeof (LayerUndo) + gimp_object_get_memsize (GIMP_OBJECT (layer));
@@ -1111,8 +1094,10 @@ undo_pop_layer (GimpUndo            *undo,
 
   lu = (LayerUndo *) undo->data;
 
-  if ((undo_mode == GIMP_UNDO_MODE_UNDO && undo->undo_type == LAYER_ADD_UNDO) ||
-      (undo_mode == GIMP_UNDO_MODE_REDO && undo->undo_type == LAYER_REMOVE_UNDO))
+  if ((undo_mode       == GIMP_UNDO_MODE_UNDO &&
+       undo->undo_type == GIMP_UNDO_LAYER_ADD) ||
+      (undo_mode       == GIMP_UNDO_MODE_REDO &&
+       undo->undo_type == GIMP_UNDO_LAYER_REMOVE))
     {
       /*  remove layer  */
 
@@ -1237,7 +1222,7 @@ undo_push_layer_mod (GimpImage *gimage,
 
   if ((new = gimp_image_undo_push (gimage,
                                    size, sizeof (LayerModUndo),
-                                   LAYER_MOD_UNDO, NULL,
+                                   GIMP_UNDO_LAYER_MOD, NULL,
                                    TRUE,
                                    undo_pop_layer_mod,
                                    undo_free_layer_mod)))
@@ -1373,7 +1358,7 @@ undo_push_layer_mask_add (GimpImage     *gimage,
                           GimpLayer     *layer,
                           GimpLayerMask *mask)
 {
-  return undo_push_layer_mask (gimage, LAYER_MASK_ADD_UNDO,
+  return undo_push_layer_mask (gimage, GIMP_UNDO_LAYER_MASK_ADD,
                                layer, mask);
 }
 
@@ -1382,7 +1367,7 @@ undo_push_layer_mask_remove (GimpImage     *gimage,
                              GimpLayer     *layer,
                              GimpLayerMask *mask)
 {
-  return undo_push_layer_mask (gimage, LAYER_MASK_REMOVE_UNDO,
+  return undo_push_layer_mask (gimage, GIMP_UNDO_LAYER_MASK_REMOVE,
                                layer, mask);
 }
 
@@ -1395,8 +1380,8 @@ undo_push_layer_mask (GimpImage     *gimage,
   GimpUndo *new;
   gsize     size;
 
-  g_return_val_if_fail (type == LAYER_MASK_ADD_UNDO ||
-			type == LAYER_MASK_REMOVE_UNDO,
+  g_return_val_if_fail (type == GIMP_UNDO_LAYER_MASK_ADD ||
+			type == GIMP_UNDO_LAYER_MASK_REMOVE,
 			FALSE);
 
   size = sizeof (LayerMaskUndo) + gimp_object_get_memsize (GIMP_OBJECT (mask));
@@ -1432,8 +1417,10 @@ undo_pop_layer_mask (GimpUndo            *undo,
 
   lmu = (LayerMaskUndo *) undo->data;
 
-  if ((undo_mode == GIMP_UNDO_MODE_UNDO && undo->undo_type == LAYER_MASK_ADD_UNDO) ||
-      (undo_mode == GIMP_UNDO_MODE_REDO && undo->undo_type == LAYER_MASK_REMOVE_UNDO))
+  if ((undo_mode       == GIMP_UNDO_MODE_UNDO &&
+       undo->undo_type == GIMP_UNDO_LAYER_MASK_ADD) ||
+      (undo_mode       == GIMP_UNDO_MODE_REDO &&
+       undo->undo_type == GIMP_UNDO_LAYER_MASK_REMOVE))
     {
       /*  remove layer mask  */
 
@@ -1492,7 +1479,7 @@ undo_push_layer_reposition (GimpImage *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (LayerRepositionUndo),
                                    sizeof (LayerRepositionUndo), 
-                                   LAYER_REPOSITION_UNDO, NULL,
+                                   GIMP_UNDO_LAYER_REPOSITION, NULL,
                                    TRUE,
                                    undo_pop_layer_reposition,
                                    undo_free_layer_reposition)))
@@ -1570,7 +1557,7 @@ undo_push_layer_displace (GimpImage *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (LayerDisplaceUndo),
                                    sizeof (LayerDisplaceUndo),
-                                   LAYER_DISPLACE_UNDO, NULL,
+                                   GIMP_UNDO_LAYER_DISPLACE, NULL,
                                    TRUE,
                                    undo_pop_layer_displace,
                                    undo_free_layer_displace)))
@@ -1692,7 +1679,7 @@ undo_push_channel_add (GimpImage   *gimage,
                        gint         prev_position,
                        GimpChannel *prev_channel)
 {
-  return undo_push_channel (gimage, CHANNEL_ADD_UNDO,
+  return undo_push_channel (gimage, GIMP_UNDO_CHANNEL_ADD,
                             channel, prev_position, prev_channel);
 }
 
@@ -1702,7 +1689,7 @@ undo_push_channel_remove (GimpImage   *gimage,
                           gint         prev_position,
                           GimpChannel *prev_channel)
 {
-  return undo_push_channel (gimage, CHANNEL_REMOVE_UNDO,
+  return undo_push_channel (gimage, GIMP_UNDO_CHANNEL_REMOVE,
                             channel, prev_position, prev_channel);
 }
 
@@ -1716,8 +1703,8 @@ undo_push_channel (GimpImage   *gimage,
   GimpUndo *new;
   gsize     size;
 
-  g_return_val_if_fail (type == CHANNEL_ADD_UNDO ||
-			type == CHANNEL_REMOVE_UNDO,
+  g_return_val_if_fail (type == GIMP_UNDO_CHANNEL_ADD ||
+			type == GIMP_UNDO_CHANNEL_REMOVE,
 			FALSE);
 
   size = sizeof (ChannelUndo) + gimp_object_get_memsize (GIMP_OBJECT (channel));
@@ -1754,8 +1741,10 @@ undo_pop_channel (GimpUndo            *undo,
 
   cu = (ChannelUndo *) undo->data;
 
-  if ((undo_mode == GIMP_UNDO_MODE_UNDO && undo->undo_type == CHANNEL_ADD_UNDO) ||
-      (undo_mode == GIMP_UNDO_MODE_REDO && undo->undo_type == CHANNEL_REMOVE_UNDO))
+  if ((undo_mode       == GIMP_UNDO_MODE_UNDO &&
+       undo->undo_type == GIMP_UNDO_CHANNEL_ADD) ||
+      (undo_mode       == GIMP_UNDO_MODE_REDO &&
+       undo->undo_type == GIMP_UNDO_CHANNEL_REMOVE))
     {
       /*  remove channel  */
 
@@ -1849,7 +1838,7 @@ undo_push_channel_mod (GimpImage   *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    size,
                                    sizeof (ChannelModUndo),
-                                   CHANNEL_MOD_UNDO, NULL,
+                                   GIMP_UNDO_CHANNEL_MOD, NULL,
                                    TRUE,
                                    undo_pop_channel_mod,
                                    undo_free_channel_mod)))
@@ -1957,7 +1946,7 @@ undo_push_channel_reposition (GimpImage   *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (ChannelRepositionUndo),
                                    sizeof (ChannelRepositionUndo),
-                                   CHANNEL_REPOSITION_UNDO, NULL,
+                                   GIMP_UNDO_CHANNEL_REPOSITION, NULL,
                                    TRUE,
                                    undo_pop_channel_reposition,
                                    undo_free_channel_reposition)))
@@ -2036,7 +2025,7 @@ undo_push_vectors_add (GimpImage   *gimage,
                        gint         prev_position,
                        GimpVectors *prev_vectors)
 {
-  return undo_push_vectors (gimage, VECTORS_ADD_UNDO,
+  return undo_push_vectors (gimage, GIMP_UNDO_VECTORS_ADD,
                             vectors, prev_position, prev_vectors);
 }
 
@@ -2046,7 +2035,7 @@ undo_push_vectors_remove (GimpImage   *gimage,
                           gint         prev_position,
                           GimpVectors *prev_vectors)
 {
-  return undo_push_vectors (gimage, VECTORS_REMOVE_UNDO,
+  return undo_push_vectors (gimage, GIMP_UNDO_VECTORS_REMOVE,
                             vectors, prev_position, prev_vectors);
 }
 
@@ -2060,8 +2049,8 @@ undo_push_vectors (GimpImage   *gimage,
   GimpUndo *new;
   gsize     size;
 
-  g_return_val_if_fail (type == VECTORS_ADD_UNDO ||
-			type == VECTORS_REMOVE_UNDO,
+  g_return_val_if_fail (type == GIMP_UNDO_VECTORS_ADD ||
+			type == GIMP_UNDO_VECTORS_REMOVE,
 			FALSE);
 
   size = sizeof (VectorsUndo) + gimp_object_get_memsize (GIMP_OBJECT (vectors));
@@ -2098,8 +2087,10 @@ undo_pop_vectors (GimpUndo            *undo,
 
   vu = (VectorsUndo *) undo->data;
 
-  if ((undo_mode == GIMP_UNDO_MODE_UNDO && undo->undo_type == VECTORS_ADD_UNDO) ||
-      (undo_mode == GIMP_UNDO_MODE_REDO && undo->undo_type == VECTORS_REMOVE_UNDO))
+  if ((undo_mode       == GIMP_UNDO_MODE_UNDO &&
+       undo->undo_type == GIMP_UNDO_VECTORS_ADD) ||
+      (undo_mode       == GIMP_UNDO_MODE_REDO &&
+       undo->undo_type == GIMP_UNDO_VECTORS_REMOVE))
     {
       /*  remove vectors  */
 
@@ -2179,7 +2170,7 @@ undo_push_vectors_mod (GimpImage   *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    size,
                                    sizeof (VectorsModUndo),
-                                   VECTORS_MOD_UNDO, NULL,
+                                   GIMP_UNDO_VECTORS_MOD, NULL,
                                    TRUE,
                                    undo_pop_vectors_mod,
                                    undo_free_vectors_mod)))
@@ -2268,7 +2259,7 @@ undo_push_vectors_reposition (GimpImage   *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (VectorsRepositionUndo),
                                    sizeof (VectorsRepositionUndo),
-                                   VECTORS_REPOSITION_UNDO, NULL,
+                                   GIMP_UNDO_VECTORS_REPOSITION, NULL,
                                    TRUE,
                                    undo_pop_vectors_reposition,
                                    undo_free_vectors_reposition)))
@@ -2345,7 +2336,7 @@ undo_push_fs_to_layer (GimpImage    *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (FStoLayerUndo),
                                    sizeof (FStoLayerUndo),
-                                   FS_TO_LAYER_UNDO, NULL,
+                                   GIMP_UNDO_FS_TO_LAYER, NULL,
                                    TRUE,
                                    undo_pop_fs_to_layer,
                                    undo_free_fs_to_layer)))
@@ -2469,7 +2460,7 @@ undo_push_fs_rigor (GimpImage *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (gint32),
                                    sizeof (gint32),
-                                   FS_RIGOR_UNDO, NULL,
+                                   GIMP_UNDO_FS_RIGOR, NULL,
                                    FALSE,
                                    undo_pop_fs_rigor,
                                    undo_free_fs_rigor)))
@@ -2562,7 +2553,7 @@ undo_push_fs_relax (GimpImage *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (gint32),
                                    sizeof (gint32),
-                                   FS_RELAX_UNDO, NULL,
+                                   GIMP_UNDO_FS_RELAX, NULL,
                                    FALSE,
                                    undo_pop_fs_relax,
                                    undo_free_fs_relax)))
@@ -2671,7 +2662,7 @@ undo_push_transform (GimpImage   *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (TransformUndo),
                                    sizeof (TransformUndo),
-                                   TRANSFORM_UNDO, NULL,
+                                   GIMP_UNDO_TRANSFORM, NULL,
                                    FALSE,
                                    undo_pop_transform,
                                    undo_free_transform)))
@@ -2799,7 +2790,7 @@ undo_push_paint (GimpImage  *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (PaintUndo),
                                    sizeof (PaintUndo),
-                                   PAINT_UNDO, NULL,
+                                   GIMP_UNDO_PAINT, NULL,
                                    FALSE,
                                    undo_pop_paint,
                                    undo_free_paint)))
@@ -2895,7 +2886,7 @@ undo_push_image_parasite (GimpImage *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (ParasiteUndo),
                                    sizeof (ParasiteUndo),
-                                   PARASITE_ATTACH_UNDO, NULL,
+                                   GIMP_UNDO_PARASITE_ATTACH, NULL,
                                    TRUE,
                                    undo_pop_parasite,
                                    undo_free_parasite)))
@@ -2925,7 +2916,7 @@ undo_push_image_parasite_remove (GimpImage   *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (ParasiteUndo),
                                    sizeof (ParasiteUndo),
-                                   PARASITE_REMOVE_UNDO, NULL,
+                                   GIMP_UNDO_PARASITE_REMOVE, NULL,
                                    TRUE,
                                    undo_pop_parasite,
                                    undo_free_parasite)))
@@ -2956,7 +2947,7 @@ undo_push_item_parasite (GimpImage *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (ParasiteUndo),
                                    sizeof (ParasiteUndo),
-                                   PARASITE_ATTACH_UNDO, NULL,
+                                   GIMP_UNDO_PARASITE_ATTACH, NULL,
                                    TRUE,
                                    undo_pop_parasite,
                                    undo_free_parasite)))
@@ -2986,7 +2977,7 @@ undo_push_item_parasite_remove (GimpImage   *gimage,
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (ParasiteUndo),
                                    sizeof (ParasiteUndo),
-                                   PARASITE_REMOVE_UNDO, NULL,
+                                   GIMP_UNDO_PARASITE_REMOVE, NULL,
                                    TRUE,
                                    undo_pop_parasite,
                                    undo_free_parasite)))
@@ -3097,7 +3088,7 @@ undo_push_cantundo (GimpImage   *gimage,
 
   if ((new = gimp_image_undo_push (gimage,
                                    0, 0,
-                                   CANT_UNDO, NULL,
+                                   GIMP_UNDO_CANT, NULL,
                                    TRUE,
                                    undo_pop_cantundo,
                                    NULL)))

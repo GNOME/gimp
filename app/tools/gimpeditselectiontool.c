@@ -243,7 +243,8 @@ init_edit_selection (GimpTool    *tool,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  undo_push_group_start (gdisp->gimage, LAYER_DISPLACE_UNDO_GROUP);
+  gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_LAYER_DISPLACE,
+                               _("Move Layer"));
 
   gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
                          &off_x, &off_y);
@@ -383,7 +384,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
     }
 
-  undo_push_group_end (gdisp->gimage);
+  gimp_image_undo_group_end (gdisp->gimage);
 
   if (state & GDK_BUTTON3_MASK) /* OPERATION CANCELLED */
     {
@@ -886,7 +887,8 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
   if (inc_x == 0 && inc_y == 0  &&  mask_inc_x == 0 && mask_inc_y == 0)
     return;
 
-  undo_push_group_start (gdisp->gimage, LAYER_DISPLACE_UNDO_GROUP);
+  gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_LAYER_DISPLACE,
+                               _("Move Layer"));
 
   if (mask_inc_x != 0 || mask_inc_y != 0)
     gimp_image_mask_translate (gdisp->gimage, mask_inc_x, mask_inc_y);
@@ -943,6 +945,6 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 	}
     }
 
-  undo_push_group_end (gdisp->gimage);
+  gimp_image_undo_group_end (gdisp->gimage);
   gimp_image_flush (gdisp->gimage);
 }

@@ -32,6 +32,7 @@
 
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
+#include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
@@ -127,7 +128,8 @@ floating_sel_anchor (GimpLayer *layer)
     }
 
   /*  Start a floating selection anchoring undo  */
-  undo_push_group_start (gimage, FS_ANCHOR_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_FS_ANCHOR,
+                               _("Anchor Floating Selection"));
 
   /* Invalidate the previews of the layer that will be composited
    * with the floating section.
@@ -148,7 +150,7 @@ floating_sel_anchor (GimpLayer *layer)
   gimp_image_remove_layer (gimage, layer);
 
   /*  end the group undo  */
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 
   /*  invalidate the boundaries  */
   gimp_image_mask_invalidate (gimage);

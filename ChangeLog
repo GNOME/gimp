@@ -1,3 +1,43 @@
+2003-02-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.[ch]: changed FOO_UNDO enum values to
+	GIMP_UNDO_FOO.
+
+	* app/undo.[ch]: removed the undo group wrappers.
+
+	* app/undo_history.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-qmask.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-undo.c
+	* app/core/gimpimage.c
+	* app/core/gimpitem.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimplayer.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/gui/channels-commands.c
+	* app/gui/image-commands.c
+	* app/gui/layers-commands.c
+	* app/paint/gimppaintcore.c
+	* app/text/gimptext-compat.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/undo.pdb: changed accordingly. Pass meaningful
+	undo names to gimp_image_undo_group_start().
+
+	* app/pdb/layer_cmds.c
+	* app/pdb/undo_cmds.c: regenerated.
+
 2003-02-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.h: fixed use of proxy-resume and proxy-skip

@@ -38,6 +38,7 @@
 
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpviewabledialog.h"
@@ -280,8 +281,9 @@ gimp_measure_tool_button_press (GimpTool        *tool,
                                            gdisp->gimage->width)));
 
 		  if (create_hguide && create_vguide)
-		    undo_push_group_start (gdisp->gimage,
-                                           IMAGE_GUIDE_UNDO_GROUP);
+		    gimp_image_undo_group_start (gdisp->gimage,
+                                                 GIMP_UNDO_GROUP_IMAGE_GUIDE,
+                                                 _("Add Guides"));
 
 		  if (create_hguide)
 		    {
@@ -302,7 +304,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 		    }
 
 		  if (create_hguide && create_vguide)
-		    undo_push_group_end (gdisp->gimage);
+		    gimp_image_undo_group_end (gdisp->gimage);
 
 		  if (create_hguide || create_vguide)
                     gimp_image_flush (gdisp->gimage);

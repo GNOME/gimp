@@ -296,7 +296,8 @@ gimp_image_merge_layers (GimpImage     *gimage,
 
   /*  Start a merge undo group. */
 
-  undo_push_group_start (gimage, IMAGE_LAYERS_MERGE_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
+                               _("Merge Layers"));
 
   name = g_strdup (gimp_object_get_name (GIMP_OBJECT (layer)));
 
@@ -484,7 +485,7 @@ gimp_image_merge_layers (GimpImage     *gimage,
   g_free (name);
 
   /*  End the merge undo group  */
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 
   gimp_drawable_set_visible (GIMP_DRAWABLE (merge_layer), TRUE);
 

@@ -47,7 +47,8 @@ gboolean
 gimp_image_undo (GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (gimage->pushing_undo_group == NO_UNDO_GROUP, FALSE);
+  g_return_val_if_fail (gimage->pushing_undo_group == GIMP_UNDO_GROUP_NONE,
+                        FALSE);
 
   gimp_image_undo_pop_stack (gimage,
                              gimage->undo_stack,
@@ -61,7 +62,8 @@ gboolean
 gimp_image_redo (GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (gimage->pushing_undo_group == NO_UNDO_GROUP, FALSE);
+  g_return_val_if_fail (gimage->pushing_undo_group == GIMP_UNDO_GROUP_NONE,
+                        FALSE);
 
   gimp_image_undo_pop_stack (gimage,
                              gimage->redo_stack,
@@ -103,8 +105,8 @@ gimp_image_undo_group_start (GimpImage    *gimage,
   GimpUndoStack *undo_group;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (type >  FIRST_UNDO_GROUP &&
-                        type <= LAST_UNDO_GROUP, FALSE);
+  g_return_val_if_fail (type >  GIMP_UNDO_GROUP_FIRST &&
+                        type <= GIMP_UNDO_GROUP_LAST, FALSE);
 
   if (! name)
     name = gimp_image_undo_type_to_name (type);
@@ -160,7 +162,7 @@ gimp_image_undo_group_end (GimpImage *gimage)
 
   if (gimage->group_count == 0)
     {
-      gimage->pushing_undo_group = NO_UNDO_GROUP;
+      gimage->pushing_undo_group = GIMP_UNDO_GROUP_NONE;
 
       gimp_image_undo_free_space (gimage);
 
@@ -187,7 +189,7 @@ gimp_image_undo_push (GimpImage        *gimage,
   gpointer  undo_struct = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (type > LAST_UNDO_GROUP, NULL);
+  g_return_val_if_fail (type > GIMP_UNDO_GROUP_LAST, NULL);
 
   if (! name)
     name = gimp_image_undo_type_to_name (type);
@@ -223,7 +225,7 @@ gimp_image_undo_push (GimpImage        *gimage,
                        dirties_image,
                        pop_func, free_func);
 
-  if (gimage->pushing_undo_group == NO_UNDO_GROUP)
+  if (gimage->pushing_undo_group == GIMP_UNDO_GROUP_NONE)
     {
       gimp_undo_stack_push_undo (gimage->undo_stack, new);
 

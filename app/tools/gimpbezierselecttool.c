@@ -37,6 +37,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimptoolinfo.h"
 
@@ -3431,7 +3432,8 @@ bezier_stroke (GimpBezierSelectTool *bezier_sel,
   rpnts = g_new0 (BezierRenderPnts, 1);
 
   /*  Start an undo group  */
-  undo_push_group_start (gdisp->gimage, PAINT_UNDO_GROUP);
+  gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_PAINT,
+                               _("Stroke Path"));
 
   bezier_gen_points (bezier_sel,open_path,rpnts);
 
@@ -3483,7 +3485,7 @@ bezier_stroke (GimpBezierSelectTool *bezier_sel,
   while (rpnts);
 
   /*  End an undo group  */
-  undo_push_group_end (gdisp->gimage);
+  gimp_image_undo_group_end (gdisp->gimage);
   gimp_image_flush (gdisp->gimage);
 }
 

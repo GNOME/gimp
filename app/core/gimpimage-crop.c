@@ -33,11 +33,14 @@
 #include "gimpimage-crop.h"
 #include "gimpimage-mask.h"
 #include "gimpimage-projection.h"
+#include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 
 #include "undo.h"
+
+#include "libgimp/gimpintl.h"
 
 
 typedef enum
@@ -123,7 +126,8 @@ gimp_image_crop (GimpImage *gimage,
 	  off_x = (doff_x - x1);
 	  off_y = (doff_y - y1);
 
-          undo_push_group_start (gimage, LAYER_RESIZE_UNDO_GROUP);
+          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
+                                       _("Resize Layer"));
 
 	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_relax (layer, TRUE);
@@ -133,13 +137,14 @@ gimp_image_crop (GimpImage *gimage,
 	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_rigor (layer, TRUE);
 
-	  undo_push_group_end (gimage);
+	  gimp_image_undo_group_end (gimage);
 	}
       else
 	{
 	  floating_layer = gimp_image_floating_sel (gimage);
 
-	  undo_push_group_start (gimage, IMAGE_CROP_UNDO_GROUP);
+	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_CROP,
+                                       _("Crop Image"));
 
 	  /*  relax the floating layer  */
 	  if (floating_layer)
@@ -218,7 +223,7 @@ gimp_image_crop (GimpImage *gimage,
 	      undo_push_image_guide (gimage, (GimpGuide *) guide_list_ptr->data);
 	      guide_list_ptr = guide_list_ptr->next;
 	    }
-	  undo_push_group_end (gimage);
+	  gimp_image_undo_group_end (gimage);
   
 	  /* Adjust any guides we might have laying about */
 	  gimp_image_crop_adjust_guides (gimage, x1, y1, x2, y2);

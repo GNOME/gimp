@@ -34,6 +34,7 @@
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
+#include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
@@ -376,7 +377,8 @@ gimp_image_mask_float (GimpImage    *gimage,
     }
 
   /*  Start an undo group  */
-  undo_push_group_start (gimage, FS_FLOAT_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_FS_FLOAT,
+                               _("Float Selection"));
 
   /*  Cut the selected region  */
   tiles = gimp_image_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
@@ -403,7 +405,7 @@ gimp_image_mask_float (GimpImage    *gimage,
   floating_sel_attach (layer, drawable);
 
   /*  End an undo group  */
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 
   /*  invalidate the gimage's boundary variables  */
   mask->boundary_known = FALSE;
@@ -686,7 +688,8 @@ gimp_image_mask_stroke (GimpImage    *gimage,
   gimp_image_mask_stroking = TRUE;
 
   /*  Start an undo group  */
-  undo_push_group_start (gimage, PAINT_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
+                               _("Stroke Selection"));
 
   seg = 0;
   cpnt = 0;
@@ -741,7 +744,7 @@ gimp_image_mask_stroke (GimpImage    *gimage,
   g_free (stroke_segs);
 
   /*  End an undo group  */
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 
   return TRUE;
 }

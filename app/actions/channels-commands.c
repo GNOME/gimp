@@ -32,6 +32,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimpimage-mask-select.h"
 
 #include "widgets/gimpcolorpanel.h"
@@ -285,7 +286,8 @@ channels_new_channel_query (GimpImage   *gimage,
           gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.5);
         }
 
-      undo_push_group_start (gimage, EDIT_PASTE_UNDO_GROUP);
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+                                   _("New Channel"));
 
       new_channel = gimp_channel_new (gimage,
                                       width, height,
@@ -302,7 +304,7 @@ channels_new_channel_query (GimpImage   *gimage,
 
       gimp_image_add_channel (gimage, new_channel, -1);
 
-      undo_push_group_end (gimage);
+      gimp_image_undo_group_end (gimage);
       return;
     }
 

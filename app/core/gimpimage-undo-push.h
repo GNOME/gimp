@@ -20,13 +20,6 @@
 #define __UNDO_H__
 
 
-/*  undo groups  */
-
-gboolean      undo_push_group_start        (GimpImage     *gimage,
-                                            GimpUndoType   undo_type);
-gboolean      undo_push_group_end          (GimpImage     *gimage);
-
-
 /*  image undos  */
 
 gboolean      undo_push_image                 (GimpImage     *gimage,

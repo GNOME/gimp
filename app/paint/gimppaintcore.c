@@ -42,6 +42,7 @@
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimpmarshal.h"
 
 #include "gimppaintcore.h"
@@ -435,7 +436,8 @@ gimp_paint_core_finish (GimpPaintCore *core,
       (core->y2 == core->y1))
     return;
 
-  undo_push_group_start (gimage, PAINT_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
+                               _("Paint"));
 
   undo_push_paint (gimage,
                    core->ID,
@@ -449,7 +451,7 @@ gimp_paint_core_finish (GimpPaintCore *core,
                            TRUE);
   core->undo_tiles = NULL;
 
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 
   /*  invalidate the drawable--have to do it here, because
    *  it is not done during the actual painting.

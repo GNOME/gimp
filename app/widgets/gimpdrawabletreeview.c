@@ -35,6 +35,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
 #include "core/gimppattern.h"
@@ -203,7 +204,8 @@ gimp_drawable_list_view_new_dropped (GimpItemListView   *view,
   GimpToolInfo *tool_info;
   GimpContext  *context;
 
-  undo_push_group_start (view->gimage, EDIT_PASTE_UNDO_GROUP);
+  gimp_image_undo_group_start (view->gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+                               _("New Layer"));
 
   view->new_item_func (view->gimage, NULL, FALSE);
 
@@ -231,7 +233,7 @@ gimp_drawable_list_view_new_dropped (GimpItemListView   *view,
                                   FALSE /* no seed fill */,
                                   FALSE, 0.0, FALSE, 0.0, 0.0 /* fill params */);
 
-  undo_push_group_end (view->gimage);
+  gimp_image_undo_group_end (view->gimage);
 
   gimp_image_flush (view->gimage);
 }

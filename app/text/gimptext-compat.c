@@ -35,6 +35,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimplayer-floating-sel.h"
 
 #include "gimptext.h"
@@ -42,6 +43,8 @@
 #include "gimptextlayer.h"
 
 #include "undo.h"
+
+#include "libgimp/gimpintl.h"
 
 
 GimpLayer *
@@ -85,7 +88,8 @@ text_render (GimpImage    *gimage,
     return NULL;
 
   /*  Start a group undo  */
-  undo_push_group_start (gimage, TEXT_UNDO_GROUP);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TEXT,
+                               _("Text"));
 
   /*  Set the layer offsets  */
   GIMP_DRAWABLE (layer)->offset_x = text_x;
@@ -106,7 +110,7 @@ text_render (GimpImage    *gimage,
     floating_sel_attach (layer, drawable);
 
   /*  end the group undo  */
-  undo_push_group_end (gimage);
+  gimp_image_undo_group_end (gimage);
 
   return layer;
 }
