@@ -101,8 +101,9 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
           gdouble dy [4];
           gint    x [4];
           gint    y [4];
-          gfloat  u [4] = {0, 1, 0, 1};
-          gfloat  v [4] = {0, 0, 1, 1};
+          gfloat  u [4];
+          gfloat  v [4];
+          gint    mask_x1, mask_y1, mask_x2, mask_y2;
           gint    i;
 
           gimp_display_shell_transform_xy_f (shell, tr_tool->tx1, tr_tool->ty1,
@@ -120,6 +121,13 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
               y [i] = (gint) dy [i];
             }
 
+          gimp_drawable_mask_bounds (tool->drawable, &mask_x1, &mask_y1,
+                                                     &mask_x2, &mask_y2);
+          u [0] = mask_x1;  v [0] = mask_y1;
+          u [1] = mask_x2;  v [1] = mask_y1;
+          u [2] = mask_x1;  v [2] = mask_y2;
+          u [3] = mask_x2;  v [3] = mask_y2;
+          
           gimp_display_shell_draw_quad (tool->drawable,
                               GDK_DRAWABLE (GTK_WIDGET (shell->canvas)->window),
                               x, y, u, v);
@@ -136,7 +144,7 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
                               gint         *x,
                               gint         *y,
                               gfloat       *u, /* texture coords */
-                              gfloat       *v) /* 0.0 ... 1.0 */
+                              gfloat       *v) /* 0.0 ... tex width, height */
 {
   GdkPixbuf   *row;
   gint         dwidth, dheight;    /* clip boundary */
@@ -188,16 +196,8 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
 
   row = gdk_pixbuf_new (GDK_COLORSPACE_RGB, gimp_drawable_has_alpha (texture),
                         8, dwidth, 1);
-  if (row == NULL) return;
+  g_return_if_fail (row != NULL);
 
-  /* scale texture coords to fit the source drawable */
-  
-  for (j = 0; j < 4; j++)
-    {
-      u [j] *= tile_manager_width (texture->tiles);
-      v [j] *= tile_manager_height (texture->tiles);
-    }
-  
   /* sort vertices in order of y-coordinate */
 
   for (j = 0; j < 4; j++)

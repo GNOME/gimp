@@ -1,3 +1,8 @@
+2004-06-13  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/display/gimpdisplayshell-preview.c: use drawable_mask_bounds()
+	for texture coordinates instead of the drawable's width and height.
+
 2004-06-13  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c (shapeburst_region): don't call
