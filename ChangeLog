@@ -1,3 +1,8 @@
+2003-02-22  Dave Neary  <bolsh@gimp.org>
+
+        * plug-ins/common/png.c: Merged fix for bug #105360 from
+        HEAD.
+
 2003-02-18  Tor Lillqvist  <tml@iki.fi>
 
 	* Makefile.am (EXTRA_DIST): Don't dist gimptool-win32.c, only 

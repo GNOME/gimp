@@ -145,26 +145,34 @@ MAIN()
   
 static int find_unused_ia_colour (guchar *pixels,
                                   int numpixels,
-                                  int* colors)
+                                  int *colors)
 {
   int i;
   gboolean ix_used[256];
+  gboolean trans_used = FALSE;
 
-  for (i = 0; i < 256; i++)
+  for (i = 0; i < *colors; i++)
     {
-      ix_used[i] = (gboolean)FALSE;
+      ix_used[i] = FALSE;
     }
 
   for (i = 0; i < numpixels; i++)
     {
       /* If there is no alpha, then the index associated with 
        * this pixel is taken */
-      if (pixels[i*2+1]) ix_used[pixels[i*2]] = (gboolean)TRUE;
+      if (pixels[i*2+1]) 
+        ix_used[pixels[i*2]] = TRUE;
+      else
+        trans_used = TRUE;
     }
   
-  for (i = 255; i >= 0; i--)
+  // If there is no transparency, ignore alpha.
+  if (trans_used == FALSE)
+    return -1;
+
+  for (i = 0; i < *colors; i++)
     {
-      if (ix_used[i] == (gboolean)FALSE)
+      if (ix_used[i] == FALSE)
         {
           return i;
         }
