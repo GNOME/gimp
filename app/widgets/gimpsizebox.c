@@ -435,7 +435,7 @@ gimp_size_box_get_property (GObject    *object,
       break;
 
     case PROP_RESOLUTION_UNIT:
-      g_value_set_int (value, box->unit);
+      g_value_set_int (value, box->resolution_unit);
       break;
 
     case PROP_KEEP_ASPECT:

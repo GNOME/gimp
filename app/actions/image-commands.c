@@ -20,12 +20,9 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
-
-#include "config/gimpguiconfig.h"
 
 #include "core/core-enums.h"
 #include "core/gimp.h"
@@ -45,9 +42,6 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpmessagedialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -57,6 +51,7 @@
 #include "dialogs/grid-dialog.h"
 #include "dialogs/image-merge-layers-dialog.h"
 #include "dialogs/image-new-dialog.h"
+#include "dialogs/image-scale-dialog.h"
 #include "dialogs/resize-dialog.h"
 
 #include "actions.h"
@@ -81,16 +76,7 @@ struct _ImageResizeOptions
 
 static void   image_resize_callback        (GtkWidget              *widget,
                                             gpointer                data);
-static void   image_scale_callback         (GtkWidget              *widget,
-                                            gpointer                data);
-static void   image_scale_confirm_large    (ImageResizeOptions     *options,
-                                            gint64                  new_memsize,
-                                            gint64                  max_memsize);
-static void   image_scale_confirm_small    (ImageResizeOptions     *options);
-static void   image_scale_confirm_response (GtkWidget              *widget,
-                                            gint                    response_id,
-                                            ImageResizeOptions     *options);
-static void   image_scale_implement        (ImageResizeOptions     *options);
+static void   image_scale_callback         (ImageScaleDialog       *dialog);
 static void   image_merge_layers_response  (GtkWidget              *widget,
                                             gint                    response_id,
                                             ImageMergeLayersDialog *dialog);
@@ -240,40 +226,18 @@ void
 image_scale_cmd_callback (GtkAction *action,
 			  gpointer   data)
 {
-  ImageResizeOptions *options;
-  GimpDisplay        *gdisp;
-  GimpImage          *gimage;
+  ImageScaleDialog *dialog;
+  GimpDisplay      *gdisp;
+  GtkWidget        *widget;
   return_if_no_display (gdisp, data);
+  return_if_no_widget (widget, data);
 
-  gimage = gdisp->gimage;
+  dialog = image_scale_dialog_new (gdisp->gimage, gdisp,
+                                   action_data_get_context (data),
+                                   widget,
+                                   image_scale_callback);
 
-  options = g_new0 (ImageResizeOptions, 1);
-
-  options->context = action_data_get_context (data);
-  options->gdisp   = gdisp;
-  options->gimage  = gimage;
-
-  options->dialog =
-    resize_dialog_new (GIMP_VIEWABLE (gimage), gdisp->shell,
-                       SCALE_DIALOG,
-                       gimage->width,
-                       gimage->height,
-                       gimage->xresolution,
-                       gimage->yresolution,
-                       GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
-                       G_CALLBACK (image_scale_callback),
-                       options);
-
-  g_signal_connect_object (gdisp, "disconnect",
-                           G_CALLBACK (gtk_widget_destroy),
-                           options->dialog->shell,
-                           G_CONNECT_SWAPPED);
-
-  g_object_weak_ref (G_OBJECT (options->dialog->shell),
-		     (GWeakNotify) g_free,
-		     options);
-
-  gtk_widget_show (options->dialog->shell);
+  gtk_widget_show (dialog->dialog);
 }
 
 void
@@ -461,175 +425,52 @@ image_resize_callback (GtkWidget *widget,
 }
 
 static void
-image_scale_callback (GtkWidget *widget,
-		      gpointer   data)
+image_scale_callback (ImageScaleDialog  *dialog)
 {
-  ImageResizeOptions      *options = data;
-  GimpImageScaleCheckType  scale_check;
-  gint64                   max_memsize;
-  gint64                   new_memsize;
+  GimpImage *image = dialog->gimage;
 
-  gtk_widget_set_sensitive (options->dialog->shell, FALSE);
-
-  max_memsize =
-    GIMP_GUI_CONFIG (options->gimage->gimp->config)->max_new_image_size;
-
-  scale_check = gimp_image_scale_check (options->gimage,
-                                        options->dialog->width,
-                                        options->dialog->height,
-                                        max_memsize,
-                                        &new_memsize);
-  switch (scale_check)
-    {
-    case GIMP_IMAGE_SCALE_TOO_BIG:
-      image_scale_confirm_large (options, new_memsize, max_memsize);
-      break;
-
-    case GIMP_IMAGE_SCALE_TOO_SMALL:
-      image_scale_confirm_small (options);
-      break;
-
-    case GIMP_IMAGE_SCALE_OK:
-      /* If all is well, return directly after scaling image. */
-      image_scale_implement (options);
-      gtk_widget_destroy (options->dialog->shell);
-      break;
-    }
-}
-
-static GtkWidget *
-image_scale_confirm_dialog (ImageResizeOptions *options)
-{
-  GtkWidget *dialog;
-
-  dialog = gimp_message_dialog_new (_("Confirm Scaling"),
-                                    GIMP_STOCK_WARNING,
-                                    options->dialog->shell,
-                                    GTK_DIALOG_DESTROY_WITH_PARENT,
-                                    gimp_standard_help_func,
-                                    GIMP_HELP_IMAGE_SCALE_WARNING,
-
-                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                    GIMP_STOCK_SCALE, GTK_RESPONSE_OK,
-
-                                    NULL);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (image_scale_confirm_response),
-                    options);
-
-  return dialog;
-}
-
-static void
-image_scale_confirm_large (ImageResizeOptions *options,
-                           gint64              new_memsize,
-                           gint64              max_memsize)
-{
-  GtkWidget *dialog = image_scale_confirm_dialog (options);
-  gchar     *size;
-
-  size = gimp_memsize_to_string (new_memsize);
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                     _("You are trying to create an image "
-                                       "with a size of %s."), size);
-  g_free (size);
-
-  size = gimp_memsize_to_string (max_memsize);
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                             _("Scaling the image to the choosen size will "
-                               "make it use more memory than what is "
-                               "configured as \"Maximum Image Size\" in the "
-                               "Preferences dialog (currently %s)."), size);
-  g_free (size);
-
-  gtk_widget_show (dialog);
-}
-
-static void
-image_scale_confirm_small (ImageResizeOptions *options)
-{
-  GtkWidget *dialog = image_scale_confirm_dialog (options);
-
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                     _("Scaling the image to the choosen size "
-                                       "will shrink some layers completely "
-                                       "away."));
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                             _("Is this what you want to do?"));
-
-  gtk_widget_show (dialog);
-}
-
-static void
-image_scale_confirm_response (GtkWidget          *dialog,
-                              gint                response_id,
-                              ImageResizeOptions *options)
-{
-  gtk_widget_destroy (dialog);
-
-  if (response_id == GTK_RESPONSE_OK)
-    {
-      image_scale_implement (options);
-      gtk_widget_destroy (options->dialog->shell);
-    }
-  else
-    {
-      gtk_widget_set_sensitive (options->dialog->shell, TRUE);
-    }
-}
-
-static void
-image_scale_implement (ImageResizeOptions *options)
-{
-  GimpImage *gimage = options->gimage;
-
-  if (options->dialog->resolution_x == gimage->xresolution     &&
-      options->dialog->resolution_y == gimage->yresolution     &&
-      options->dialog->unit         == gimage->resolution_unit &&
-      options->dialog->width        == gimage->width           &&
-      options->dialog->height       == gimage->height)
+  if (dialog->width           == image->width           &&
+      dialog->height          == image->height          &&
+      dialog->xresolution     == image->xresolution     &&
+      dialog->yresolution     == image->yresolution     &&
+      dialog->resolution_unit == image->resolution_unit)
     return;
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_SCALE,
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_SCALE,
                                _("Scale Image"));
 
-  gimp_image_set_resolution (gimage,
-                             options->dialog->resolution_x,
-                             options->dialog->resolution_y);
-  gimp_image_set_unit (gimage, options->dialog->unit);
+  gimp_image_set_resolution (image,
+                             dialog->xresolution, dialog->yresolution);
+  gimp_image_set_unit (image, dialog->resolution_unit);
 
-  if (options->dialog->width  != gimage->width ||
-      options->dialog->height != gimage->height)
+  if (dialog->width != image->width || dialog->height != image->height)
     {
-      if (options->dialog->width  > 0 &&
-	  options->dialog->height > 0)
-	{
+      if (dialog->width  > 0 && dialog->height > 0)
+        {
           GimpProgress *progress;
 
-          progress = gimp_progress_start (GIMP_PROGRESS (options->gdisp),
+          progress = gimp_progress_start (GIMP_PROGRESS (dialog->gdisp),
                                           _("Scaling..."), FALSE);
 
-	  gimp_image_scale (gimage,
-			    options->dialog->width,
-			    options->dialog->height,
-                            options->dialog->interpolation,
+          gimp_image_scale (image,
+                            dialog->width,
+                            dialog->height,
+                            dialog->interpolation,
                             progress);
 
           if (progress)
             gimp_progress_end (progress);
-	}
+        }
       else
-	{
-	  g_message (_("Scale Error: Both width and height must be "
-		       "greater than zero."));
-	  return;
-	}
+        {
+          g_message (_("Scale Error: "
+                       "Both width and height must be greater than zero."));
+        }
     }
 
-  gimp_image_undo_group_end (gimage);
+  gimp_image_undo_group_end (image);
 
-  gimp_image_flush (gimage);
+  gimp_image_flush (image);
 }
 
 static void
@@ -647,5 +488,5 @@ image_merge_layers_response (GtkWidget              *widget,
       gimp_image_flush (dialog->gimage);
     }
 
-  gtk_widget_destroy (dialog->dialog);
+  gtk_widget_destroy (widget);
 }

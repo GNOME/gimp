@@ -111,8 +111,6 @@ scale_dialog_new (GimpViewable          *viewable,
       g_return_val_if_reached (NULL);
     }
 
-  gimp_image_get_resolution (image, &xres, &yres);
-
   dialog = gimp_viewable_dialog_new (viewable,
                                      title, role, GIMP_STOCK_SCALE, title,
                                      parent,
@@ -123,6 +121,8 @@ scale_dialog_new (GimpViewable          *viewable,
                                      GIMP_STOCK_SCALE, GTK_RESPONSE_OK,
 
                                      NULL);
+
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
   private = g_new0 (ScaleDialog, 1);
 
@@ -135,6 +135,8 @@ scale_dialog_new (GimpViewable          *viewable,
   private->unit          = unit;
   private->callback      = callback;
   private->user_data     = user_data;
+
+  gimp_image_get_resolution (image, &xres, &yres);
 
   private->box = g_object_new (GIMP_TYPE_SIZE_BOX,
                                "width",           width,
@@ -232,12 +234,13 @@ scale_dialog_response (GtkWidget   *dialog,
 static void
 scale_dialog_reset (ScaleDialog *private)
 {
-  gint  width;
-  gint  height;
+  GimpImage *image;
+  gint       width, height;
+  gdouble    xres, yres;
 
   if (GIMP_IS_IMAGE (private->viewable))
     {
-      GimpImage *image = GIMP_IMAGE (private->viewable);
+      image = GIMP_IMAGE (private->viewable);
 
       width  = gimp_image_get_width (image);
       height = gimp_image_get_height (image);
@@ -245,6 +248,8 @@ scale_dialog_reset (ScaleDialog *private)
   else if (GIMP_IS_ITEM (private->viewable))
     {
       GimpItem *item = GIMP_ITEM (private->viewable);
+
+      image = gimp_item_get_image (item);
 
       width  = gimp_item_width (item);
       height = gimp_item_height (item);
@@ -254,11 +259,16 @@ scale_dialog_reset (ScaleDialog *private)
       g_return_if_reached ();
     }
 
+  gimp_image_get_resolution (image, &xres, &yres);
+
   g_object_set (private->box,
-                "width",       width,
-                "height",      height,
-                "unit",        private->unit,
-                "keep-aspect", TRUE,
+                "width",           width,
+                "height",          height,
+                "unit",            private->unit,
+                "keep-aspect",     TRUE,
+                "xresolution",     xres,
+                "yresolution",     yres,
+                "resolution-unit", gimp_image_get_unit (image),
                 NULL);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->combo),

@@ -945,7 +945,7 @@ layers_scale_layer_callback (GtkWidget             *dialog,
                              GimpUnit               resolution_unit,/* unused */
                              gpointer               data)
 {
-  GimpDisplay *gdisp = data ? GIMP_DISPLAY (data) : NULL;
+  GimpDisplay *gdisp = GIMP_DISPLAY (data);
 
   if (width > 0 && height > 0)
     {

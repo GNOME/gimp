@@ -1,5 +1,23 @@
 2004-10-27  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/Makefile.am
+	* app/dialogs/image-scale-dialog.[ch]: a wrapper around the scale
+	dialog that takes care verifying the user input and optionally
+	asking for confirmation. Most of this moved out of image-commands.c.
+
+	* app/actions/image-commands.c: use the new image scale dialog
+	even though it doesn't allow to edit the resolution yet. That's a
+	temporary regression that will get fixed soon.
+
+	* app/actions/layers-commands.c: cosmetics.
+
+	* app/dialogs/scale-dialog.c (scale_dialog_reset): also reset the
+	resolution.
+
+	* app/widgets/gimpsizebox.c: fixed cut'n'paste error.
+
+2004-10-27  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpsizebox.[ch]: added a resolution label similar
 	to one in the template editor. Prepared for editable resolution,
 	work in progress...
