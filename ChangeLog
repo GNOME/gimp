@@ -1,7 +1,7 @@
 2005-02-20  Jay Cox  <jaycox@gimp.org>
 
-	* plug-ins/common/psd.c: Fix layer mask support.  Addresses bugs
-	#166976 and #109841.
+	* plug-ins/common/psd.c: Fix layer mask support.  Addresses bug
+	#166976
 
 2005-02-21  Sven Neumann  <sven@gimp.org>
 
