@@ -21,9 +21,13 @@ void pr_flags_decl(File* s, FlagsDef* e){
 	pr(s,
 	   "typedef enum {\n"
 	   "%3"
-	   "} %1;\n",
+	   "} %1;\n"
+	   "const %1 %3 = %3;\n",
 	   pr_list_foreach, e->flags, pr_flags_member, &d,
-	   pr_primtype, d.t);
+	   pr_primtype, d.t,
+	   pr_primtype, d.t,
+	   pr_macro_name, d.t, NULL, "LAST",
+	   pr_macro_name, d.t, NULL, g_slist_last(e->flags)->data);
 }
 
 void pr_flags_value(File* s, Id i, PrimType* t){

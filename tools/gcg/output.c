@@ -3,11 +3,11 @@
 #include <stdarg.h>
 
 void pr_param(File* s, Param* p, ParamOptions* opt){
-	pr(s, "%?s%?1%?s%?s",
+	pr(s, "%?s%?1%?s%?1",
 	   !(*opt & PARAMS_FIRST), ", ",
 	   !!(*opt & PARAMS_TYPES), pr_type, &p->type,
 	   (*opt & PARAMS_TYPES) && (*opt & PARAMS_NAMES), " ",
-	   !!(*opt & PARAMS_NAMES), p->name);
+	   !!(*opt & PARAMS_NAMES), pr_low, p->name);
 }
 
 void pr_params(File* s, GSList* args, ParamOptions* opt){
@@ -74,30 +74,21 @@ void pr_prototype(File* s, PrimType* type, Id funcname,
 	   pr_params, params, &o);
 }
 
-void pr_gtype(File* s, Type* t){
-	if((t->indirection==0 && t->prim->kind==TYPE_TRANSPARENT)
-	   || (t->indirection==1 && t->prim->kind==TYPE_CLASS))
-		pr_macro_name(s, t->prim, "TYPE", NULL);
-	else if(t->indirection)
-		pr(s, "GTK_TYPE_POINTER");
-	else
-		g_error("Illegal non-pointer type %s%s\n",
-			t->prim->name.module,
-			t->prim->name.type);
-}
-
 void pr_type_guard(File* s, Param* p){
 	Type* t=&p->type;
+	if(t->indirection && t->notnull)
+		pr(s, "\tg_assert (%s);\n", p->name);
 	if(t->indirection==1 && t->prim->kind == TYPE_CLASS)
 		/* A direct object pointer is checked for its type */
-		pr(s, "\tg_assert(%?2%3(%s));\n",
-		   !t->notnull, pr, "!%s || ", p->name,
-		   pr_macro_name, t->prim, "IS", NULL,
-		   p->name);
-	else if(t->indirection && t->notnull)
-		/* Other pointers are just possibly checked for nullness */
-		pr(s, "\tg_assert(%s);\n",
-		   p->name);
+		if(t->notnull)
+			pr(s, "\tg_assert (%3(%s));\n",
+			   pr_macro_name, t->prim, "IS", NULL,
+			   p->name);
+		else
+			pr(s, "\tg_assert (!%s || %3(%s));\n",
+			   p->name,
+			   pr_macro_name, t->prim, "IS", NULL,
+			   p->name);
 	/* todo (low priority): range checks for enums */
 }
 	
@@ -125,7 +116,7 @@ void output_func(PrimType* type, Id funcname, GSList* params, Type* rettype,
 	   "%?s%5{\n"
 	   "%3"
 	   "%v"
-	   "}\n",
+	   "}\n\n",
 	   !hdr, "static ",
 	   pr_prototype, type, funcname, params, rettype, internal,
 	   pr_list_foreach, params, pr_type_guard, no_data,

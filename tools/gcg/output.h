@@ -59,9 +59,13 @@ void pr_class_body(File* s, ObjectDef* c);
 void pr_class_decl(File* s, ObjectDef* c);
 void pr_prototype(File* s, PrimType* type, Id funcname,
 		  GSList* params, Type* rettype, gboolean internal);
+void output_func(PrimType* type, Id funcname, GSList* params, Type* rettype,
+		 File* hdr, ObjectDef* self, gboolean self_const,
+		 gboolean internal, const gchar* body, ...);
+void output_var(Def* d, Type* t, Id varname, File* hdr, gboolean internal);
 
-void pr_func(ObjectDef* self, Id funcname, GSList* params, Type* rettype,
-	     VarProt prot, gboolean with_self, const gchar* body, ...);
+void output_def(Def* d);
+     
 
 void pr_macro_name(File* s, PrimType* t, Id mid, Id post);
 void pr_class_macros(File* s, ObjectDef* c );

@@ -14,24 +14,43 @@ module Gtk {
 };
 
 module Gimp{
-	header <gimp/gimpobject.h> {
+	header <gimpobject.h> {
 		class Object;
 	};
-	header <gimp/gimpimage.h> {
+	header <gimplayer.h> {
+		class Layer;
+	};
+	
+	header <gimpdrawable.h> {
+		class Drawable;
+	};
+	
+	header <gimpimage.h> {
 		class Image;
 		type ImageType;
-		type Thingy;
+		type ChannelType;
+		type BaseType;
 	};
 	enum ImageType{
-          rgb, gray, indexed, rgb-alpha };
-	flags Thingy{
-	  foo, bar, baz, quux
+		rgb, rgba, gray, graya, indexed, indexeda
 	};
-	class Image : Gimp.Object{
-		read-write g.int x;
-		read-only g.int y;
-		public abstract g.int foo(g.int bar);
-		abstract g.int name;
-		public abstract g.int baz(Object* o, Image*& i) const;
+	enum ChannelType{
+		red, green, blue, gray, indexed, auxillary
+	};
+	enum BaseType{
+		rgb, gray, indexed
+	};
+
+	class Image : Object{
+		read-only g.int width;
+		read-only g.int height;
+		g.int num-cols;
+		read-only BaseType base-type;
+		Layer* active-layer;
+		Layer* floating-sel;
+		
+		public static Image* new(g.int width,
+					 g.int height,
+					 BaseType base-type);
 	};
 };

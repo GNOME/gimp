@@ -18,12 +18,15 @@ Id type_hdr_name;
 Id prot_hdr_name;
 Id source_name;
 Id impl_name;
+extern int yydebug;
+extern FILE* yyin;
 
+extern int yyparse(void);
 
 void get_options(int argc, char* argv[]){
 	gint x=0;
 	do{
-		x=getopt(argc, argv, "f:t:p:s:i:");
+		x=getopt(argc, argv, "f:t:p:s:i:d");
 		switch(x){
 		case 'f':
 			func_hdr_name=optarg;
@@ -39,6 +42,9 @@ void get_options(int argc, char* argv[]){
 			break;
 		case 'i':
 			impl_name=optarg;
+			break;
+		case 'd':
+			yydebug=1;
 			break;
 		case '?':
 		case ':':
@@ -63,8 +69,6 @@ void output_type(TypeName* t, Def* def, gpointer foo){
 }
 
 int main(int argc, char* argv[]){
-	extern int yydebug;
-	extern FILE* yyin;
 	/*	target=stdout;*/
 	
 	decl_hash=g_hash_table_new(type_name_hash, type_name_cmp);

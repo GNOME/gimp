@@ -54,9 +54,6 @@ void pr_class_member(File* s, Member* m){
 	}
 }
 
-
-
-
 void pr_class_name(File* s, PrimType* o){
 	pr(s, "%1Class",
 	   pr_primtype, o);
@@ -86,23 +83,35 @@ void pr_class_decl(File* s, ObjectDef* o){
 	   pr_class_name, DEF(o)->type);
 }
 
-void output_abstract_method(Method* m){
+void pr_abstract_member(File* s, PrimType* t, Id name){
+	pr(s, "%3(GTK_OBJECT(self)->klass)->%s",
+	   pr_macro_name, t, NULL, "CLASS",
+	   name);
+}
+
+void pr_real_varname(File* s, PrimType* t, Id name){
+	pr(s, "%2_real",
+	   pr_varname, t, name);
+}	
+
+void output_method(Method* m){
 	PrimType* t=DEF(MEMBER(m)->my_class)->type;
 	Id name=MEMBER(m)->name;
-	ParamOptions o=PARAMS_NAMES;
+	MemberKind k=MEMBER(m)->kind;
+	ParamOptions o=PARAMS_NAMES | ((k==KIND_STATIC)?PARAMS_FIRST : 0);
 	output_func
 	(t,
 	 name,
 	 m->params,
 	 &m->ret_type,
 	 m->prot==METH_PUBLIC?func_hdr:prot_hdr,
-	 MEMBER(m)->my_class,
+	 k==KIND_STATIC?NULL:MEMBER(m)->my_class,
 	 m->self_const,
 	 FALSE,
-	 "\t%?s%3(GTK_OBJECT(self)->klass)->%s(self%2);\n",
+	 "\t%?s%2(%?s%2);\n",
 	 !!m->ret_type.prim, "return ",
-	 pr_macro_name, t, NULL, "CLASS",
-	 name,
+	 (k==KIND_ABSTRACT?pr_abstract_member:pr_real_varname), t, name,
+	 MEMBER(m)->kind!=KIND_STATIC, "self",
 	 pr_params, m->params, &o);
 }
 
@@ -115,7 +124,7 @@ void output_data_member(DataMember* m){
 		Param p;
 		GSList l;
 		p.type=m->type;
-		p.name="value";
+		p.name=name;
 		l.data=&p;
 		l.next=NULL;
 		output_func(t,
@@ -126,7 +135,8 @@ void output_data_member(DataMember* m){
 			    MEMBER(m)->my_class,
 			    FALSE,
 			    FALSE,
-			    "\tself->%s=value;\n",
+			    "\tself->%s = 1%s;\n",
+			    name,
 			    name);
 		g_free(set_name);
 	}
@@ -149,8 +159,7 @@ void output_data_member(DataMember* m){
 void output_member(Member* m, gpointer dummy){
 	switch(m->membertype){
 	case MEMBER_METHOD:
-		if(m->kind==KIND_ABSTRACT)
-			output_abstract_method((Method*)m);
+		output_method((Method*)m);
 		break;
 	case MEMBER_DATA:
 		if(m->kind==KIND_DIRECT)
@@ -207,7 +216,17 @@ void output_object(ObjectDef* o){
 	g_slist_foreach(o->members, output_member, NULL);
 }
 
-
+void pr_gtype(File* s, Type* t){
+	if((t->indirection==0 && t->prim->kind==TYPE_TRANSPARENT)
+	   || (t->indirection==1 && t->prim->kind==TYPE_CLASS))
+		pr_macro_name(s, t->prim, "TYPE", NULL);
+	else if(t->indirection)
+		pr(s, "GTK_TYPE_POINTER");
+	else
+		g_error("Illegal non-pointer type %s%s\n",
+			t->prim->name.module,
+			t->prim->name.type);
+}
 
 DefClass object_class={
 	output_object

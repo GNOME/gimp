@@ -1,3 +1,7 @@
+1998-10-22  Lauri Alanko  <la@iki.fi>
+
+	* A bit more method generation
+
 1998-10-21  Lauri Alanko  <la@iki.fi>
 
 	* Added vfunc wrappers and accessors

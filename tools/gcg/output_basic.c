@@ -83,7 +83,7 @@ void write_dep(gpointer key, gpointer value, gpointer user_data){
 void file_flush(File* f){
 	File* root;
 	File* old;
-	static const gint bufsize=1024;
+	static const size_t bufsize=1024;
 	FILE* real;
 	guint8 buf[bufsize];
 	size_t i;

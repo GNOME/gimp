@@ -7,12 +7,17 @@ void pr_enum_member(File* s, Id id, PrimType* t){
 }
 
 void pr_enum_decl(File* s, EnumDef* e){
+	PrimType* t=DEF(e)->type;
 	pr(s,
 	   "typedef enum {\n"
 	   "%3"
-	   "} %1;\n",
-	   pr_list_foreach, e->alternatives, pr_enum_member, DEF(e)->type,
-	   pr_primtype, DEF(e)->type);
+	   "} %1;\n"
+	   "const %1 %3 = %3;\n",
+	   pr_list_foreach, e->alternatives, pr_enum_member, t,
+	   pr_primtype, t,
+	   pr_primtype, t,
+	   pr_macro_name, t, NULL, "LAST",
+	   pr_macro_name, t, NULL, g_slist_last(e->alternatives)->data);
 }
 
 void pr_enum_value(File* s, Id i, PrimType* t){

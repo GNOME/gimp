@@ -3,6 +3,11 @@
 void output_def(Def* d){
 	TypeName* t=&d->type->name;
 	/* GTK_TYPE_FOO macro */
+	pr(type_hdr, "\n\n");
+	pr(source, "\n");
+	pr(prot_hdr, "\n\n");
+	pr(source_head, "\n");
+	
 	pr(type_hdr,
 	   "#define %3 \\\n"
 	   " (%2 ? %2 : %2())\n",
