@@ -1,55 +1,52 @@
-#  Finnish translation of GIMP 1.1.0
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# Ville Hautamäki <villeh@cs.joensuu.fi>, 1998.
+# Frodansket gimp
+# Copyright (C) 1999 Free Software Foundation, Inc.
+# Henrik Hansen <hh@mailserver.dk>, 1999.
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 1999-08-01 20:03-0700\n"
-"Language-Team: fi <fi@li.org>\n"
-"Project-Id-Version: gimp 1.1.9\n"
-"PO-Revision-Date: 1999-03-18 19:00+0100\n"
-"Last-Translator: Ville Hautamäki <villeh@cs.joensuu.fi>\n"
+"Project-Id-Version: gimp 1.1.8\n"
+"POT-Creation-Date: 1999-09-01 14:09+0200\n"
+"PO-Revision-Date: 1999-08-19 21:10+0100\n"
+"Last-Translator: Henrik Hansen <hh@mailserver.dk>\n"
+"Language-Team: Danish <dltp@lists.wiktor.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-
 #: app/about_dialog.c:156
 msgid "About the GIMP"
-msgstr "Tietoja GIMPstä"
+msgstr "Om GIMP"
 
 #: app/about_dialog.c:198
 msgid "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
-msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr ""
 
 #: app/about_dialog.c:201
 msgid "Version "
-msgstr "Versio"
+msgstr ""
 
 #: app/about_dialog.c:202
 msgid " brought to you by"
-msgstr " Julkaisi teille"
+msgstr " Bragt til dig af"
 
 #: app/about_dialog.c:208
-#, fuzzy
 msgid "Spencer Kimball & Peter Mattis"
-msgstr "Spencer Kimball ja Peter Mattis"
+msgstr ""
 
 #: app/about_dialog.c:240
 msgid "Please visit http://www.gimp.org/ for more info"
-msgstr "Käy hakemassa http://www.gimp.org/ :sta lisää tietoa"
+msgstr "Besøg http://www.gimp.org/ for mere information"
 
-#: app/airbrush.c:127
-#, fuzzy
+#: app/airbrush.c:129
 msgid "Rate:"
-msgstr "/Muokkaa/Liimaa"
+msgstr ""
 
 #. the pressure scale
-#: app/airbrush.c:145 app/convolve.c:153
+#: app/airbrush.c:147 app/convolve.c:153 app/smudge.c:114
 msgid "Pressure:"
 msgstr ""
 
-#: app/airbrush.c:206
+#: app/airbrush.c:209
 msgid "killing stray timer, please report to lewing@gimp.org"
 msgstr ""
 
@@ -57,7 +54,7 @@ msgstr ""
 msgid "GIMP Startup"
 msgstr ""
 
-#: app/app_procs.c:472 app/gimprc.c:394
+#: app/app_procs.c:472 app/gimprc.c:403
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr ""
@@ -65,62 +62,60 @@ msgstr ""
 #. initialize the xcf file format routines
 #: app/app_procs.c:529
 msgid "Looking for data files"
-msgstr ""
+msgstr "Leder efter data filer"
 
 #: app/app_procs.c:529
-#, fuzzy
 msgid "Parasites"
-msgstr "/Muokkaa/Liimaa"
-
-#. initialize  the global parasite table
-#: app/app_procs.c:531 app/internal_procs.c:70 app/preferences_dialog.c:2395
-msgid "Brushes"
 msgstr ""
 
+#. initialize  the global parasite table
+#: app/app_procs.c:531 app/internal_procs.c:70 app/preferences_dialog.c:2413
+msgid "Brushes"
+msgstr "Børster"
+
 #. initialize the list of gimp brushes
-#: app/app_procs.c:533 app/internal_procs.c:139 app/preferences_dialog.c:2397
+#: app/app_procs.c:533 app/internal_procs.c:139 app/preferences_dialog.c:2417
 msgid "Patterns"
 msgstr ""
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:535 app/preferences_dialog.c:2399
+#: app/app_procs.c:535 app/preferences_dialog.c:2419
 msgid "Palettes"
-msgstr ""
+msgstr "Paletter"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:537 app/gradient_select.c:557 app/internal_procs.c:109
-#: app/preferences_dialog.c:2401
+#: app/app_procs.c:537 app/gradient_select.c:559 app/internal_procs.c:109
+#: app/preferences_dialog.c:2421
 msgid "Gradients"
 msgstr ""
 
 #: app/app_procs.c:705 app/app_procs.c:706 app/app_procs.c:731
-#: app/app_procs.c:732 app/menus.c:82 app/menus.c:97
-#, fuzzy
+#: app/app_procs.c:732 app/menus.c:94 app/menus.c:109
 msgid "/File/Quit"
-msgstr "/Tiedosto/Poistu"
+msgstr "/Filer/Afslut"
 
 #: app/app_procs.c:736
 msgid "Really Quit?"
-msgstr ""
+msgstr "Afslut for alvor?"
 
 #: app/app_procs.c:744 app/install.c:107 app/install.c:392
 msgid "Quit"
-msgstr ""
+msgstr "Afslut"
 
 #: app/app_procs.c:753 app/brightness_contrast.c:214 app/channel_ops.c:83
-#: app/channels_dialog.c:1841 app/channels_dialog.c:2030
+#: app/channels_dialog.c:2397 app/channels_dialog.c:2586
 #: app/color_balance.c:274 app/color_notebook.c:50 app/color_notebook.c:193
-#: app/color_select.c:156 app/color_select.c:211 app/convert.c:294
-#: app/curves.c:518 app/file_new_dialog.c:294 app/file_new_dialog.c:484
+#: app/color_select.c:196 app/color_select.c:241 app/convert.c:456
+#: app/curves.c:516 app/file_new_dialog.c:209 app/file_new_dialog.c:398
 #: app/gdisplay_ops.c:352 app/gimpprogress.c:135 app/global_edit.c:712
-#: app/gradient.c:1557 app/gradient.c:4603 app/gradient.c:5182
-#: app/hue_saturation.c:362 app/interface.c:917 app/interface.c:1014
-#: app/layers_dialog.c:3053 app/layers_dialog.c:3282 app/layers_dialog.c:3417
-#: app/layers_dialog.c:3554 app/layers_dialog.c:3870 app/levels.c:336
-#: app/posterize.c:200 app/preferences_dialog.c:1473 app/resize.c:116
+#: app/gradient.c:1553 app/gradient.c:4599 app/gradient.c:5178
+#: app/hue_saturation.c:362 app/interface.c:910 app/interface.c:1007
+#: app/layers_dialog.c:3297 app/layers_dialog.c:3528 app/layers_dialog.c:3663
+#: app/layers_dialog.c:3800 app/layers_dialog.c:4116 app/levels.c:351
+#: app/posterize.c:196 app/preferences_dialog.c:1485 app/resize.c:116
 #: app/threshold.c:279
 msgid "Cancel"
-msgstr ""
+msgstr "Anuller"
 
 #: app/app_procs.c:779
 msgid ""
@@ -165,192 +160,192 @@ msgstr ""
 msgid "perl server: executed successfully.\n"
 msgstr ""
 
-#: app/bezier_select.c:473
+#: app/bezier_select.c:467
 msgid "Bezier path already closed."
 msgstr ""
 
-#: app/bezier_select.c:494
+#: app/bezier_select.c:488
 msgid "Corrupt curve"
 msgstr ""
 
-#: app/bezier_select.c:1008
+#: app/bezier_select.c:1002
 msgid ""
 "bezier_select_button_press(): Tried to edit on open bezier curve in edit "
 "selection"
 msgstr ""
 
-#: app/bezier_select.c:1288
+#: app/bezier_select.c:1282
 msgid "bezier_select_motion(): Encountered orphaned bezier control point"
 msgstr ""
 
-#: app/bezier_select.c:1971
+#: app/bezier_select.c:1963
 msgid "bezier_draw_segment(): Bad bezier segment"
 msgstr ""
 
-#: app/bezier_select.c:1988
+#: app/bezier_select.c:1980
 #, c-format
 msgid "bezier_draw_segment(): Unknown coordinate space: %d"
 msgstr ""
 
-#: app/bezier_select.c:2131
+#: app/bezier_select.c:2123
 msgid "bezier_convert(): tried to convert an open bezier curve"
 msgstr ""
 
-#: app/bezier_select.c:2632
+#: app/bezier_select.c:2624
 #, c-format
 msgid "test_add_point_on_segment(): Unknown coordinate space: %d"
 msgstr ""
 
-#: app/bezier_select.c:3171
-#, fuzzy
+#: app/bezier_select.c:3163
 msgid "Paintbrush operation failed."
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
-#: app/bezier_select.c:3215
+#: app/bezier_select.c:3207
 msgid "bezier_draw_segment_for_distance(): Bad bezier segment"
 msgstr ""
 
-#: app/blend.c:261
+#: app/blend.c:255
 msgid "FG to BG (RGB)"
 msgstr ""
 
-#: app/blend.c:263
+#: app/blend.c:257
 msgid "FG to BG (HSV)"
 msgstr ""
 
-#: app/blend.c:265
+#: app/blend.c:259
 msgid "FG to Transparent"
 msgstr ""
 
-#: app/blend.c:267
+#: app/blend.c:261
 msgid "Custom from editor"
 msgstr ""
 
-#: app/blend.c:273 app/gradient.c:472
+#: app/blend.c:267 app/gradient.c:468 app/preferences_dialog.c:1725
 msgid "Linear"
-msgstr ""
+msgstr "Linært"
 
-#: app/blend.c:275
+#: app/blend.c:269
 msgid "Bi-Linear"
-msgstr ""
+msgstr "Bi-Linært"
 
-#: app/blend.c:277
+#: app/blend.c:271
 msgid "Radial"
 msgstr ""
 
-#: app/blend.c:279
+#: app/blend.c:273
 msgid "Square"
-msgstr ""
+msgstr "Kvadrat"
 
-#: app/blend.c:281
+#: app/blend.c:275
 msgid "Conical (symmetric)"
-msgstr ""
+msgstr "Konisk (symmetrisk)"
 
-#: app/blend.c:283
+#: app/blend.c:277
 msgid "Conical (asymmetric)"
-msgstr ""
+msgstr "Konisk (asymmetrisk)"
 
-#: app/blend.c:285
+#: app/blend.c:279
 msgid "Shapeburst (angular)"
 msgstr ""
 
-#: app/blend.c:287
+#: app/blend.c:281
 msgid "Shapeburst (spherical)"
 msgstr ""
 
-#: app/blend.c:289
+#: app/blend.c:283
 msgid "Shapeburst (dimpled)"
 msgstr ""
 
-#: app/blend.c:291
+#: app/blend.c:285
 msgid "Spiral (clockwise)"
 msgstr ""
 
-#: app/blend.c:293
+#: app/blend.c:287
 msgid "Spiral (anticlockwise)"
 msgstr ""
 
-#: app/blend.c:299 app/preferences_dialog.c:1759
+#: app/blend.c:293 app/preferences_dialog.c:1777
 msgid "None"
-msgstr ""
+msgstr "Ingen"
 
-#: app/blend.c:301
+#: app/blend.c:295
 msgid "Sawtooth wave"
 msgstr ""
 
-#: app/blend.c:303
+#: app/blend.c:297
 msgid "Triangular wave"
 msgstr ""
 
-#: app/blend.c:331
+#: app/blend.c:325
 msgid "Offset:"
 msgstr ""
 
 #. the blend mode menu
-#: app/blend.c:349
+#: app/blend.c:343
 msgid "Blend:"
 msgstr ""
 
 #. the gradient type menu
-#: app/blend.c:367
+#: app/blend.c:361
 msgid "Gradient:"
-msgstr ""
+msgstr "Fraveovergang:"
 
 #. the repeat option
-#: app/blend.c:385
+#: app/blend.c:379
 msgid "Repeat:"
-msgstr ""
+msgstr "Gentag:"
 
-#: app/blend.c:418
+#: app/blend.c:412
 msgid "Adaptive supersampling"
 msgstr ""
 
 #. max depth scale
-#: app/blend.c:440
+#: app/blend.c:434
 msgid "Max depth:"
-msgstr ""
+msgstr "Maks dybde:"
 
 #. threshold scale
-#: app/blend.c:458 app/bucket_fill.c:136 app/iscissors.c:356
+#: app/blend.c:452 app/bucket_fill.c:133 app/fuzzy_select.c:641
+#: app/iscissors.c:383
 msgid "Threshold:"
 msgstr ""
 
-#: app/blend.c:496
+#: app/blend.c:490
 msgid "Blend: Invalid for indexed images."
 msgstr ""
 
-#: app/blend.c:521
+#: app/blend.c:515
 msgid "Blend: 0, 0"
-msgstr ""
+msgstr "Bland: 0, 0"
+
+#: app/blend.c:578
+msgid "Blend operation failed."
+msgstr "Blandning mislykkedes"
 
 #: app/blend.c:584
-msgid "Blend operation failed."
-msgstr ""
-
-#: app/blend.c:590
 msgid "Blending..."
-msgstr ""
+msgstr "Blander..."
 
-#: app/blend.c:661 app/blend.c:671
+#: app/blend.c:654 app/blend.c:664
 msgid "Blend: "
-msgstr ""
+msgstr "Bland: "
 
-#: app/blend.c:1326
+#: app/blend.c:1319
 #, c-format
 msgid "gradient_render_pixel(): Unknown gradient type %d"
 msgstr ""
 
-#: app/blend.c:1464
+#: app/blend.c:1457
 #, c-format
 msgid "gradient_fill_region(): Unknown blend mode %d"
 msgstr ""
 
-#: app/blend.c:1505
+#: app/blend.c:1498
 #, c-format
 msgid "gradient_fill_region(): Unknown gradient type %d"
 msgstr ""
 
-#: app/blend.c:1527
+#: app/blend.c:1520
 #, c-format
 msgid "gradient_fill_region(): Unknown repeat mode %d"
 msgstr ""
@@ -374,145 +369,143 @@ msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr ""
 
 #: app/brightness_contrast.c:213 app/channel_ops.c:82
-#: app/channels_dialog.c:1840 app/channels_dialog.c:2029
+#: app/channels_dialog.c:2396 app/channels_dialog.c:2585
 #: app/color_balance.c:273 app/color_notebook.c:49 app/color_notebook.c:192
-#: app/color_select.c:155 app/color_select.c:210 app/convert.c:293
-#: app/curves.c:517 app/file_new_dialog.c:292 app/file_new_dialog.c:482
-#: app/hue_saturation.c:361 app/interface.c:1013 app/interface.c:1391
-#: app/layers_dialog.c:3052 app/layers_dialog.c:3281 app/layers_dialog.c:3416
-#: app/layers_dialog.c:3869 app/levels.c:335 app/module_db.c:263
-#: app/posterize.c:199 app/preferences_dialog.c:1469 app/resize.c:115
+#: app/color_select.c:195 app/color_select.c:240 app/convert.c:455
+#: app/curves.c:515 app/file_new_dialog.c:207 app/file_new_dialog.c:396
+#: app/hue_saturation.c:361 app/interface.c:1006 app/interface.c:1384
+#: app/layers_dialog.c:3296 app/layers_dialog.c:3527 app/layers_dialog.c:3662
+#: app/layers_dialog.c:4115 app/levels.c:350 app/module_db.c:263
+#: app/posterize.c:195 app/preferences_dialog.c:1481 app/resize.c:115
 #: app/threshold.c:278
 msgid "OK"
 msgstr ""
 
-#: app/brightness_contrast.c:225 app/tools.c:517
+#: app/brightness_contrast.c:225 app/tools.c:533
 msgid "Brightness-Contrast"
-msgstr ""
+msgstr "Lysstyrke-Kontrast"
 
 #. Create the brightness scale widget
 #: app/brightness_contrast.c:241
 msgid "Brightness"
-msgstr ""
+msgstr "Lysstyrke"
 
 #. Create the contrast scale widget
 #: app/brightness_contrast.c:274
 msgid "Contrast"
-msgstr ""
+msgstr "Kontrast"
 
 #. The preview toggle
-#: app/brightness_contrast.c:312 app/color_balance.c:438 app/curves.c:651
-#: app/fileops.c:395 app/hue_saturation.c:572 app/levels.c:531
-#: app/palette.c:2838 app/posterize.c:246 app/threshold.c:354
+#: app/brightness_contrast.c:312 app/color_balance.c:438 app/curves.c:649
+#: app/fileops.c:395 app/hue_saturation.c:572 app/levels.c:548
+#: app/palette.c:2946 app/posterize.c:242 app/threshold.c:354
 msgid "Preview"
-msgstr ""
+msgstr "Vis"
 
 #. The close push button
-#: app/brush_edit.c:37 app/brush_select.c:136 app/by_color_select.c:664
-#: app/color_notebook.c:187 app/color_picker.c:206 app/color_select.c:205
+#: app/brush_edit.c:37 app/brush_select.c:139 app/by_color_select.c:664
+#: app/color_notebook.c:187 app/color_picker.c:235 app/color_select.c:235
 #: app/colormap_dialog.i.c:94 app/colormap_dialog.i.c:103 app/crop.c:1027
-#: app/devices.c:124 app/docindexif.c:100 app/errorconsole.c:260
-#: app/gdisplay_ops.c:351 app/gradient.c:679 app/gradient_select.c:76
-#: app/histogram_tool.c:262 app/info_window.c:120 app/lc_dialog.c:196
-#: app/palette.c:1984 app/palette.c:1990 app/palette.c:2725
+#: app/devices.c:111 app/docindexif.c:103 app/errorconsole.c:269
+#: app/gdisplay_ops.c:351 app/gradient.c:675 app/gradient_select.c:77
+#: app/histogram_tool.c:262 app/info_window.c:267 app/lc_dialog.c:196
+#: app/measure.c:179 app/palette.c:2006 app/palette.c:2012 app/palette.c:2833
 #: app/palette_select.c:55 app/pattern_select.c:87 app/tips_dialog.c:146
-#: app/tools.c:874 libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
-#, fuzzy
+#: app/tools.c:890 libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
 msgid "Close"
-msgstr "/Tiedosto/Sulje"
+msgstr "Luk"
 
-#: app/brush_edit.c:199
+#: app/brush_edit.c:221
 msgid "Brush Editor"
 msgstr ""
 
 #. brush radius scale
-#: app/brush_edit.c:239 app/color_picker.c:161 app/tool_options.c:284
+#: app/brush_edit.c:277 app/color_picker.c:179 app/tool_options.c:285
 msgid "Radius:"
 msgstr ""
 
 #. brush hardness scale
-#: app/brush_edit.c:256
+#: app/brush_edit.c:294
 msgid "Hardness:"
-msgstr ""
+msgstr "Hårdhed:"
 
 #. brush aspect ratio scale
-#: app/brush_edit.c:272
+#: app/brush_edit.c:310
 msgid "Aspect Ratio:"
 msgstr ""
 
 #. brush angle scale
-#: app/brush_edit.c:288 app/rotate_tool.c:91
+#: app/brush_edit.c:326 app/measure.c:268 app/rotate_tool.c:87
 msgid "Angle:"
-msgstr ""
+msgstr "Vinkel:"
 
-#: app/brush_select.c:135 app/gradient.c:678 app/module_db.c:307
-#: app/palette.c:1989 app/pattern_select.c:86
+#: app/brush_select.c:138 app/gradient.c:674 app/module_db.c:303
+#: app/palette.c:2011 app/pattern_select.c:86
 msgid "Refresh"
 msgstr ""
 
-#: app/brush_select.c:156
-#, fuzzy
+#: app/brush_select.c:159
 msgid "Brush Selection"
-msgstr "/Tasot/Alpha valinnaksi"
+msgstr ""
 
-#: app/brush_select.c:245 app/pattern_select.c:144
+#: app/brush_select.c:248 app/pattern_select.c:144
 msgid "Active"
 msgstr ""
 
 #. Create the opacity scale widget
-#: app/brush_select.c:275 app/layers_dialog.c:370 app/tool_options.c:593
+#: app/brush_select.c:278 app/layers_dialog.c:386 app/tool_options.c:597
 msgid "Opacity:"
 msgstr ""
 
 #. Create the paint mode option menu
-#: app/brush_select.c:293 app/layers_dialog.c:344 app/tool_options.c:623
+#: app/brush_select.c:296 app/layers_dialog.c:360 app/tool_options.c:627
 msgid "Mode:"
 msgstr ""
 
-#: app/brush_select.c:316
+#: app/brush_select.c:319
 msgid "Edit Brush"
-msgstr ""
+msgstr "Rediger børste"
 
-#: app/brush_select.c:322
+#: app/brush_select.c:325
 msgid "New Brush"
-msgstr ""
+msgstr "Ny børste"
 
-#: app/brush_select.c:344
+#: app/brush_select.c:347
 msgid "Spacing:"
-msgstr ""
+msgstr "Mellemrum:"
 
-#: app/brush_select.c:537
+#: app/brush_select.c:540
 msgid "failed to run brush callback function"
 msgstr ""
 
-#: app/brush_select.c:1104
+#: app/brush_select.c:1181
 msgid ""
 "We are all fresh out of brush editors today,\n"
 "please write your own or try back tomorrow\n"
 msgstr ""
 
-#: app/bucket_fill.c:113
+#: app/bucket_fill.c:110
 msgid "FG Color Fill"
 msgstr ""
 
-#: app/bucket_fill.c:114
+#: app/bucket_fill.c:111
 msgid "BG Color Fill"
 msgstr ""
 
-#: app/bucket_fill.c:115
+#: app/bucket_fill.c:112
 msgid "Pattern Fill"
 msgstr ""
 
-#: app/bucket_fill.c:156 app/color_picker.c:136 app/tool_options.c:358
+#: app/bucket_fill.c:153 app/color_picker.c:154 app/tool_options.c:359
 msgid "Sample Merged"
 msgstr ""
 
 #. fill type
-#: app/bucket_fill.c:164 app/file_new_dialog.c:842
+#: app/bucket_fill.c:161 app/file_new_dialog.c:686
 msgid "Fill Type"
 msgstr ""
 
-#: app/bucket_fill.c:242
+#: app/bucket_fill.c:241
 msgid "Bucket Fill operation failed."
 msgstr ""
 
@@ -520,15 +513,15 @@ msgstr ""
 msgid "No available patterns for this operation."
 msgstr ""
 
-#: app/by_color_select.c:542 app/paint_funcs.c:100
+#: app/by_color_select.c:542 app/paint_funcs.c:99
 msgid "Replace"
-msgstr ""
+msgstr "Udskift"
 
 #: app/by_color_select.c:543 app/colormap_dialog.i.c:99
 msgid "Add"
-msgstr ""
+msgstr "Tilføj"
 
-#: app/by_color_select.c:544 app/layers_dialog.c:235 app/tool_options.c:784
+#: app/by_color_select.c:544 app/layers_dialog.c:243 app/tool_options.c:837
 msgid "Subtract"
 msgstr ""
 
@@ -537,9 +530,8 @@ msgid "Intersect"
 msgstr ""
 
 #: app/by_color_select.c:564
-#, fuzzy
 msgid "By Color Selection"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
 #: app/by_color_select.c:607
 msgid "Inactive"
@@ -547,35 +539,32 @@ msgstr ""
 
 #. Create the selection mode radio box
 #: app/by_color_select.c:614
-#, fuzzy
 msgid "Selection Mode"
-msgstr "/Valitse/Ei mitään"
+msgstr ""
 
 #: app/by_color_select.c:638
 msgid "Fuzziness Threshold"
 msgstr ""
 
 #. The reset push button
-#: app/by_color_select.c:654 app/curves.c:516 app/file_new_dialog.c:483
-#: app/tools.c:873 app/transform_core.c:116
+#: app/by_color_select.c:654 app/curves.c:514 app/file_new_dialog.c:397
+#: app/tools.c:889 app/transform_core.c:231
 msgid "Reset"
 msgstr ""
 
-#: app/channel.c:191 app/channel.c:193 app/layer.c:316 app/layer.c:318
+#: app/channel.c:190 app/channel.c:192 app/layer.c:310 app/layer.c:312
 msgid "copy"
-msgstr ""
+msgstr "kopier"
 
 #. formulate the new layer_mask name
-#: app/channel.c:199 app/gradient.c:1391 app/layer.c:324 app/layer.c:1486
+#: app/channel.c:198 app/gradient.c:1387 app/layer.c:318 app/layer.c:1521
 #, c-format
 msgid "%s copy"
-msgstr ""
+msgstr "%s kopi"
 
-#. Create the new channel
-#: app/channel.c:521
-#, fuzzy
+#: app/channel.c:594
 msgid "Selection Mask"
-msgstr "/Valitse/Pienennä"
+msgstr ""
 
 #: app/channel_ops.c:95 app/resize.c:397
 msgid "Offset"
@@ -586,8 +575,8 @@ msgstr ""
 msgid "Offset X:"
 msgstr ""
 
-#: app/channel_ops.c:119 app/crop.c:1039 app/file_new_dialog.c:753
-#: app/resize.c:335 app/resize.c:420 app/resize.c:578 app/rotate_tool.c:109
+#: app/channel_ops.c:119 app/crop.c:1039 app/file_new_dialog.c:590
+#: app/resize.c:335 app/resize.c:420 app/resize.c:578 app/rotate_tool.c:105
 #: app/scale_tool.c:99 app/shear_tool.c:83
 msgid "Y:"
 msgstr ""
@@ -599,149 +588,143 @@ msgstr ""
 
 #. The fill options
 #: app/channel_ops.c:173
-#, fuzzy
 msgid "Fill Options"
-msgstr "/Tiedosto/Dialogit/Työkalujen Asetukset..."
+msgstr ""
 
-#: app/channel_ops.c:180 app/file_new_dialog.c:135 app/file_new_dialog.c:497
-#: app/layers_dialog.c:3058
+#: app/channel_ops.c:180 app/layers_dialog.c:3302
 msgid "Background"
-msgstr ""
+msgstr "Baggrund"
 
-#: app/channel_ops.c:192 app/file_new_dialog.c:499 app/layers_dialog.c:3060
+#: app/channel_ops.c:192 app/layers_dialog.c:3304
 msgid "Transparent"
-msgstr ""
+msgstr "Transperent"
 
 #. The by half height and half width option
 #: app/channel_ops.c:205
 msgid "Offset by (x/2),(y/2)"
 msgstr ""
 
-#: app/channels_dialog.c:162 app/channels_dialog.c:1890
+#: app/channels_dialog.c:200 app/channels_dialog.c:2446
 msgid "New Channel"
-msgstr ""
+msgstr "Ny kanal"
 
-#: app/channels_dialog.c:164
+#: app/channels_dialog.c:202
 msgid "Raise Channel"
-msgstr ""
+msgstr "Løft kanal"
 
-#: app/channels_dialog.c:166
+#: app/channels_dialog.c:204
 msgid "Lower Channel"
 msgstr ""
 
-#: app/channels_dialog.c:168
-#, fuzzy
+#: app/channels_dialog.c:206
 msgid "Duplicate Channel"
-msgstr "/Valitse/Talleta kanavalle"
+msgstr "Dupliker kanal"
 
-#: app/channels_dialog.c:170
+#: app/channels_dialog.c:209
 msgid ""
 "Channel to Selection \n"
 "<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
 msgstr ""
 
-#: app/channels_dialog.c:175
-#, fuzzy
+#: app/channels_dialog.c:214
 msgid "Delete Channel"
-msgstr "/Valitse/Talleta kanavalle"
+msgstr "Slet kanal"
 
-#: app/channels_dialog.c:535 app/menus.c:274
-#, fuzzy
+#: app/channels_dialog.c:625 app/menus.c:288
 msgid "/New Channel"
-msgstr "/Valitse/Talleta kanavalle"
+msgstr "/Ny kanal"
 
-#: app/channels_dialog.c:538 app/menus.c:275
-#, fuzzy
+#: app/channels_dialog.c:628 app/menus.c:289
 msgid "/Raise Channel"
-msgstr "/Valitse/Talleta kanavalle"
+msgstr "/Løft kanal"
 
-#: app/channels_dialog.c:541 app/menus.c:276
-#, fuzzy
+#: app/channels_dialog.c:631 app/menus.c:290
 msgid "/Lower Channel"
-msgstr "/Tasot/Tasot & Kanavat..."
+msgstr "/Sænk kanal"
 
-#: app/channels_dialog.c:544 app/menus.c:277
-#, fuzzy
+#: app/channels_dialog.c:634 app/menus.c:291
 msgid "/Duplicate Channel"
-msgstr "/Valitse/Talleta kanavalle"
+msgstr ""
 
-#: app/channels_dialog.c:547 app/menus.c:279
-#, fuzzy
+#: app/channels_dialog.c:637 app/menus.c:293
 msgid "/Channel to Selection"
-msgstr "/Tasot/Alpha valinnaksi"
+msgstr ""
 
-#: app/channels_dialog.c:550 app/menus.c:280
-#, fuzzy
+#: app/channels_dialog.c:640 app/menus.c:294
 msgid "/Add to Selection"
-msgstr "/Tasot/Alpha valinnaksi"
+msgstr "/Tilføj til markering"
 
-#: app/channels_dialog.c:551 app/menus.c:281
-#, fuzzy
+#: app/channels_dialog.c:641 app/menus.c:295
 msgid "/Subtract From Selection"
-msgstr "/Tasot/Alpha valinnaksi"
+msgstr ""
 
-#: app/channels_dialog.c:552 app/menus.c:282
-#, fuzzy
+#: app/channels_dialog.c:642 app/menus.c:296
 msgid "/Intersect With Selection"
-msgstr "/Tasot/Alpha valinnaksi"
+msgstr ""
 
-#: app/channels_dialog.c:554 app/menus.c:284
-#, fuzzy
+#: app/channels_dialog.c:644 app/menus.c:298
 msgid "/Delete Channel"
-msgstr "/Valitse/Talleta kanavalle"
+msgstr "/Slet kanal"
 
-#: app/channels_dialog.c:605 app/channels_dialog.c:659
+#: app/channels_dialog.c:695 app/channels_dialog.c:749
 #, c-format
 msgid "error in %s at %d: this shouldn't happen."
 msgstr ""
 
-#: app/channels_dialog.c:1103 app/color_balance.c:370 app/curves.c:405
-#: app/histogram_tool.c:279 app/levels.c:231
+#: app/channels_dialog.c:1126
+msgid "Empty Channel Copy"
+msgstr ""
+
+#: app/channels_dialog.c:1142
+msgid ""
+"channels_dialog_drop_new_channel_callback():\n"
+"could not allocate new channel"
+msgstr ""
+
+#: app/channels_dialog.c:1356 app/color_balance.c:370 app/curves.c:403
+#: app/histogram_tool.c:279 app/levels.c:244
 msgid "Red"
-msgstr ""
+msgstr "Rød"
 
-#: app/channels_dialog.c:1107 app/color_balance.c:397 app/curves.c:406
-#: app/histogram_tool.c:280 app/levels.c:232
+#: app/channels_dialog.c:1360 app/color_balance.c:397 app/curves.c:404
+#: app/histogram_tool.c:280 app/levels.c:245
 msgid "Green"
-msgstr ""
+msgstr "Grøn"
 
-#: app/channels_dialog.c:1111 app/color_balance.c:424 app/curves.c:407
-#: app/histogram_tool.c:281 app/levels.c:233
+#: app/channels_dialog.c:1364 app/color_balance.c:424 app/curves.c:405
+#: app/histogram_tool.c:281 app/levels.c:246
 msgid "Blue"
-msgstr ""
+msgstr "Blå"
 
-#: app/channels_dialog.c:1115
+#: app/channels_dialog.c:1368
 msgid "Gray"
-msgstr ""
+msgstr "Grå"
 
-#: app/channels_dialog.c:1119
-#, fuzzy
+#: app/channels_dialog.c:1372
 msgid "Indexed"
-msgstr "/Kuva/Indeksoitu"
+msgstr "Indekseret"
 
-#: app/channels_dialog.c:1855
+#: app/channels_dialog.c:2411
 msgid "New Channel Options"
 msgstr ""
 
 #. The name entry hbox, label and entry
-#: app/channels_dialog.c:1879 app/channels_dialog.c:2072
+#: app/channels_dialog.c:2435 app/channels_dialog.c:2628
 msgid "Channel name:"
-msgstr ""
+msgstr "Kanal navn:"
 
 #. The opacity scale
-#: app/channels_dialog.c:1894 app/channels_dialog.c:2087
-#, fuzzy
+#: app/channels_dialog.c:2450 app/channels_dialog.c:2643
 msgid "Fill Opacity:"
-msgstr "/Tiedosto/Dialogit/Työkalujen Asetukset..."
+msgstr ""
 
-#: app/channels_dialog.c:2048
+#: app/channels_dialog.c:2604
 msgid "Edit Channel Attributes"
 msgstr ""
 
 #: app/clone.c:142
-#, fuzzy
 msgid "Image Source"
-msgstr "/Kuva/Skaalaa"
+msgstr ""
 
 #: app/clone.c:143
 msgid "Pattern Source"
@@ -757,20 +740,19 @@ msgstr ""
 
 #: app/clone.c:151
 msgid "Registered"
-msgstr ""
+msgstr "Registeret"
 
 #. the radio frame and box
 #: app/clone.c:167
-#, fuzzy
 msgid "Source"
-msgstr "Onnistui"
+msgstr "Kilde"
 
 #. the radio frame and box
 #: app/clone.c:192
 msgid "Alignment"
 msgstr ""
 
-#: app/clone.c:319
+#: app/clone.c:320
 msgid "No patterns available for this operation."
 msgstr ""
 
@@ -782,19 +764,19 @@ msgstr ""
 msgid "Color balance operates only on RGB color drawables."
 msgstr ""
 
-#: app/color_balance.c:279
+#: app/color_balance.c:279 app/dodgeburn.c:122
 msgid "Shadows"
-msgstr ""
+msgstr "Skygger"
 
-#: app/color_balance.c:280
+#: app/color_balance.c:280 app/dodgeburn.c:121
 msgid "Midtones"
 msgstr ""
 
-#: app/color_balance.c:281
+#: app/color_balance.c:281 app/dodgeburn.c:120
 msgid "Highlights"
 msgstr ""
 
-#: app/color_balance.c:299 app/tools.c:502
+#: app/color_balance.c:299 app/tools.c:518
 msgid "Color Balance"
 msgstr ""
 
@@ -815,184 +797,210 @@ msgstr ""
 #. Create the yellow-blue scale widget
 #: app/color_balance.c:407
 msgid "Yellow"
-msgstr ""
+msgstr "Gul"
 
 #. The preserve luminosity toggle
 #: app/color_balance.c:447
 msgid "Preserve Luminosity"
 msgstr ""
 
-#: app/color_notebook.c:117 app/color_select.c:187
+#: app/color_notebook.c:117 app/color_select.c:216
 msgid "Color Selection"
-msgstr ""
+msgstr "Farvevalg"
 
-#: app/color_notebook.c:188 app/color_select.c:206
+#: app/color_notebook.c:188 app/color_select.c:236
 msgid "Revert to Old Color"
 msgstr ""
 
-#: app/color_picker.c:125
+#: app/color_picker.c:142
 msgid "Color Picker Options"
 msgstr ""
 
-#: app/color_picker.c:151
+#: app/color_picker.c:169
 msgid "Sample Average"
 msgstr ""
 
-#: app/color_picker.c:220 app/tools.c:306
+#: app/color_picker.c:212
+msgid "Update Active Color"
+msgstr ""
+
+#: app/color_picker.c:251 app/tools.c:307
 msgid "Color Picker"
-msgstr ""
+msgstr "Farvevælger"
 
-#: app/color_picker.c:226 app/color_picker.c:236
+#: app/color_picker.c:257 app/color_picker.c:267
 msgid "Red:"
-msgstr ""
+msgstr "Rød:"
 
-#: app/color_picker.c:227 app/color_picker.c:237
+#: app/color_picker.c:258 app/color_picker.c:268
 msgid "Green:"
-msgstr ""
+msgstr "Grøn:"
 
-#: app/color_picker.c:228 app/color_picker.c:238
+#: app/color_picker.c:259 app/color_picker.c:269
 msgid "Blue:"
-msgstr ""
+msgstr "Blå:"
 
-#: app/color_picker.c:229 app/color_picker.c:235 app/color_picker.c:244
+#: app/color_picker.c:260 app/color_picker.c:266 app/color_picker.c:275
 msgid "Alpha:"
-msgstr ""
+msgstr "Alfa:"
 
-#: app/color_picker.c:230 app/color_picker.c:245 app/color_select.c:387
+#: app/color_picker.c:261 app/color_picker.c:276 app/color_select.c:459
 #: app/colormap_dialog.i.c:201
 msgid "Hex Triplet:"
 msgstr ""
 
-#: app/color_picker.c:234 app/colormap_dialog.i.c:194
-#, fuzzy
+#: app/color_picker.c:265 app/colormap_dialog.i.c:194
 msgid "Index:"
-msgstr "/Kuva/Indeksoitu"
+msgstr "Indeks:"
 
-#: app/color_picker.c:239
+#: app/color_picker.c:270
 msgid "Hex Triplet"
 msgstr ""
 
-#: app/color_picker.c:243 app/histogram_tool.c:271
+#: app/color_picker.c:274 app/histogram_tool.c:271
 msgid "Intensity:"
-msgstr ""
+msgstr "Intensitet:"
 
-#: app/color_picker.c:548 app/color_picker.c:549 app/color_picker.c:550
-#: app/color_picker.c:551 app/color_picker.c:552 app/color_picker.c:553
-#: app/color_picker.c:554 app/color_picker.c:567 app/color_picker.c:579
-#: app/color_picker.c:594
+#: app/color_picker.c:620 app/color_picker.c:621 app/color_picker.c:622
+#: app/color_picker.c:623 app/color_picker.c:624 app/color_picker.c:625
+#: app/color_picker.c:626 app/color_picker.c:644 app/color_picker.c:659
+#: app/color_picker.c:677
 msgid "N/A"
 msgstr ""
 
-#: app/colormap_dialog.i.c:101 app/gradient_select.c:75 app/palette.c:1433
-#: app/palette.c:1983 app/palette_select.c:54
-#, fuzzy
+#: app/colormap_dialog.i.c:101 app/gradient_select.c:76 app/palette.c:1445
+#: app/palette.c:2005 app/palette_select.c:54
 msgid "Edit"
-msgstr "/Muokkaa/Leikkaa"
+msgstr "Rediger"
 
 #: app/colormap_dialog.i.c:121
-#, fuzzy
 msgid "Indexed Color Palette"
-msgstr "/Dialogit/Indeksoitu paletti..."
+msgstr ""
 
 #. The GIMP image option menu
 #: app/colormap_dialog.i.c:136 app/lc_dialog.c:131
-#, fuzzy
 msgid "Image:"
-msgstr "/Kuva/---"
+msgstr "Billede:"
 
 #: app/colormap_dialog.i.c:155
-#, fuzzy
 msgid "Operations"
-msgstr "/Dialogit/Työkalujen asetukset"
+msgstr ""
 
 #: app/colormap_dialog.i.c:833 app/lc_dialog.c:613
 msgid "none"
-msgstr ""
+msgstr "ingen"
 
-#: app/commands.c:330
+#: app/commands.c:332
 msgid "Border Selection"
 msgstr ""
 
-#: app/commands.c:331
+#: app/commands.c:333
 msgid "Border selection by:"
 msgstr ""
 
-#: app/commands.c:348
-#, fuzzy
+#: app/commands.c:350
 msgid "Feather Selection"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
-#: app/commands.c:349
+#: app/commands.c:351
 msgid "Feather selection by:"
 msgstr ""
 
-#: app/commands.c:366
-#, fuzzy
+#: app/commands.c:368
 msgid "Grow Selection"
-msgstr "/Valitse/Ei mitään"
+msgstr ""
 
-#: app/commands.c:367
+#: app/commands.c:369
 msgid "Grow selection by:"
 msgstr ""
 
-#: app/commands.c:387
+#: app/commands.c:389
 msgid "Shrink Selection"
 msgstr ""
 
-#: app/commands.c:388
+#: app/commands.c:390
 msgid "Shrink selection by:"
 msgstr ""
 
-#: app/commands.c:397
+#: app/commands.c:399
 msgid "Shrink from image border"
 msgstr ""
 
-#: app/commands.c:1182
+#: app/commands.c:1204
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 
-#: app/commands.c:1232
+#: app/commands.c:1254
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
 
-#: app/convert.c:336
+#: app/convert.c:492
 msgid "Indexed Color Conversion"
 msgstr ""
 
-#: app/convert.c:341
-msgid "Palette Options"
-msgstr ""
+#: app/convert.c:497
+#, fuzzy
+msgid "General Palette Options"
+msgstr "Nyt lag instillinger"
 
-#: app/convert.c:358
+#: app/convert.c:514
 msgid "Generate optimal palette: "
 msgstr ""
 
-#: app/convert.c:366
+#: app/convert.c:522
 msgid "# of colors: "
-msgstr ""
+msgstr "# af farver"
 
-#: app/convert.c:419
+#: app/convert.c:572
 msgid "Use custom palette"
 msgstr ""
 
-#: app/convert.c:451
+#: app/convert.c:607
 msgid "Use WWW-optimised palette"
 msgstr ""
 
-#: app/convert.c:469
+#: app/convert.c:625
 msgid "Use black/white (1-bit) palette"
 msgstr ""
 
-#: app/convert.c:479
+#: app/convert.c:635
 msgid "Dither Options"
 msgstr ""
 
-#: app/convert.c:493
-msgid "Enable Floyd-Steinberg dithering"
+#: app/convert.c:651
+msgid "No colour dithering"
 msgstr ""
 
-#: app/convert.c:517
+#: app/convert.c:668
+msgid "Positioned colour dithering"
+msgstr ""
+
+#: app/convert.c:685
+msgid "Floyd-Steinberg colour dithering"
+msgstr ""
+
+#: app/convert.c:706
+msgid "Enable dithering of transparency"
+msgstr ""
+
+#: app/convert.c:720
+msgid "Custom Palette Options"
+msgstr ""
+
+#: app/convert.c:754
+msgid "Remove unused colours from final palette"
+msgstr ""
+
+#: app/convert.c:781
 msgid " [ Warning ] "
+msgstr " [ Advarsel ] "
+
+#: app/convert.c:788
+msgid ""
+"You are attempting to convert an image with alpha/layers from RGB/GRAY to "
+"INDEXED.\n"
+"You should not generate a palette of more than 255 colors if you intend to "
+"create a transparent or animated GIF file from this image."
 msgstr ""
 
 #: app/convolve.c:135
@@ -1000,9 +1008,8 @@ msgid "Blur"
 msgstr ""
 
 #: app/convolve.c:135
-#, fuzzy
 msgid "Sharpen"
-msgstr "/Valitse/Terävöitä"
+msgstr ""
 
 #: app/convolve.c:170
 msgid "Convolve Type"
@@ -1013,14 +1020,12 @@ msgid "Crop"
 msgstr ""
 
 #: app/crop.c:170 app/crop.c:1026
-#, fuzzy
 msgid "Resize"
-msgstr "/Kuva/Muokkaa kokoa"
+msgstr ""
 
 #: app/crop.c:176
-#, fuzzy
 msgid "Crop & Resize Options"
-msgstr "/Dialogit/Työkalujen asetukset"
+msgstr ""
 
 #: app/crop.c:187
 msgid "Current layer only"
@@ -1029,10 +1034,10 @@ msgstr ""
 #. enlarge toggle
 #: app/crop.c:198
 msgid "Allow Enlarging"
-msgstr ""
+msgstr "Tillad forstørrelse"
 
 #. tool toggle
-#: app/crop.c:209 app/flip_tool.c:85
+#: app/crop.c:209 app/flip_tool.c:88
 msgid "Tool Toggle"
 msgstr ""
 
@@ -1046,9 +1051,8 @@ msgstr ""
 
 #. create the info dialog
 #: app/crop.c:1033
-#, fuzzy
 msgid "Crop & Resize Information"
-msgstr "/Dialogit/Työkalujen asetukset"
+msgstr ""
 
 #. add the information fields
 #: app/crop.c:1036
@@ -1056,61 +1060,60 @@ msgid "Origin X:"
 msgstr ""
 
 #. the pixel size labels
-#: app/crop.c:1052 app/file_new_dialog.c:614 app/file_new_dialog.c:632
-#: app/tool_options.c:405
+#: app/crop.c:1052 app/file_new_dialog.c:451 app/file_new_dialog.c:469
+#: app/tool_options.c:406
 msgid "Width:"
-msgstr ""
+msgstr "Bredde:"
 
-#: app/crop.c:1055 app/file_new_dialog.c:620 app/file_new_dialog.c:638
-#: app/layers_dialog.c:3113 app/resize.c:246 app/resize.c:271 app/resize.c:515
-#: app/scale_tool.c:78 app/scale_tool.c:85 app/tool_options.c:427
+#: app/crop.c:1055 app/file_new_dialog.c:457 app/file_new_dialog.c:475
+#: app/layers_dialog.c:3357 app/resize.c:246 app/resize.c:271 app/resize.c:515
+#: app/scale_tool.c:78 app/scale_tool.c:85 app/tool_options.c:428
 msgid "Height:"
-msgstr ""
+msgstr "Højde:"
 
 #: app/crop.c:1077
-#, fuzzy
 msgid "From Selection"
-msgstr "/Valitse/Ei mitään"
+msgstr ""
 
 #: app/crop.c:1083
 msgid "Auto Shrink"
 msgstr ""
 
-#: app/curves.c:368
+#: app/curves.c:366
 msgid "Curves Options"
 msgstr ""
 
-#: app/curves.c:404 app/histogram_tool.c:278 app/layers_dialog.c:247
-#: app/levels.c:230 app/paint_funcs.c:97 app/tool_options.c:790
+#: app/curves.c:402 app/histogram_tool.c:278 app/layers_dialog.c:255
+#: app/levels.c:243 app/paint_funcs.c:96 app/tool_options.c:843
 msgid "Value"
-msgstr ""
+msgstr "Værdi"
 
-#: app/curves.c:408 app/levels.c:234
+#: app/curves.c:406 app/levels.c:247
 msgid "Alpha"
-msgstr ""
+msgstr "Alfa"
 
-#: app/curves.c:419
+#: app/curves.c:417
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr ""
 
-#: app/curves.c:523
+#: app/curves.c:521
 msgid "Smooth"
 msgstr ""
 
-#: app/curves.c:524
+#: app/curves.c:522
 msgid "Free"
-msgstr ""
+msgstr "Fri"
 
-#: app/curves.c:550 app/tools.c:577
+#: app/curves.c:548 app/tools.c:593
 msgid "Curves"
-msgstr ""
+msgstr "Kurver"
 
-#: app/curves.c:564
+#: app/curves.c:562
 msgid "Modify Curves for Channel: "
 msgstr ""
 
 #. The option menu for selecting the drawing method
-#: app/curves.c:638
+#: app/curves.c:636
 msgid "Curve Type: "
 msgstr ""
 
@@ -1118,149 +1121,173 @@ msgstr ""
 msgid "Desaturate operates only on RGB color drawables."
 msgstr ""
 
-#: app/devices.c:123 app/gradient.c:677 app/palette.c:1988
-#: app/preferences_dialog.c:1471
+#: app/devices.c:110 app/gradient.c:673 app/levels.c:564 app/palette.c:2010
+#: app/preferences_dialog.c:1483
 msgid "Save"
-msgstr ""
+msgstr "Gem"
 
-#: app/devices.c:378
+#: app/devices.c:373
 msgid "devices_rc_update called multiple times for not present device\n"
 msgstr ""
 
-#: app/devices.c:677
-#, fuzzy
+#: app/devices.c:673
 msgid "Device Status"
-msgstr "/Dialogit/Laitteiden tila..."
-
-#: app/devices.c:1053
-msgid "Failed to find device_info\n"
 msgstr ""
 
-#: app/docindex.c:545
+#: app/docindex.c:574
 msgid "This file cannot be moved up."
 msgstr ""
 
-#: app/docindex.c:548
+#: app/docindex.c:578
 msgid "There's no selection to move up."
 msgstr ""
 
-#: app/docindex.c:558
+#: app/docindex.c:592
 msgid "This file cannot be moved down."
 msgstr ""
 
-#: app/docindex.c:561
+#: app/docindex.c:596
 msgid "There's no selection to move down."
 msgstr ""
 
-#: app/docindex.c:573
+#: app/docindex.c:612
 msgid "There's no selection to remove."
 msgstr ""
 
-#: app/docindexif.c:80
+#: app/docindexif.c:83
 msgid "Open"
-msgstr ""
+msgstr "Åben"
 
-#: app/docindexif.c:80
+#: app/docindexif.c:83
 msgid "Open a file"
-msgstr ""
+msgstr "Åben en fil"
 
-#: app/docindexif.c:85
-msgid "Up"
-msgstr ""
-
-#: app/docindexif.c:85
+#: app/docindexif.c:88
 msgid "Move the selected entry up in the index"
 msgstr ""
 
-#: app/docindexif.c:90
-msgid "Down"
-msgstr ""
+#: app/docindexif.c:88
+msgid "Up"
+msgstr "Op"
 
-#: app/docindexif.c:90
+#: app/docindexif.c:93
+msgid "Down"
+msgstr "Ned"
+
+#: app/docindexif.c:93
 msgid "Move the selected entry down in the index"
 msgstr ""
 
-#: app/docindexif.c:95
+#: app/docindexif.c:98
 msgid "Remove"
-msgstr ""
+msgstr "Fjern"
 
-#: app/docindexif.c:95
+#: app/docindexif.c:98
 msgid "Remove the selected entry from the index"
 msgstr ""
 
-#: app/docindexif.c:100
-#, fuzzy
+#: app/docindexif.c:103
 msgid "Close the Document Index"
-msgstr "/Tiedosto/Dialogit/Dokumenttien indexi..."
+msgstr ""
 
 #. Set the GOWindow title
-#: app/docindexif.c:218
-#, fuzzy
+#: app/docindexif.c:236
 msgid "Document Index"
-msgstr "/Tiedosto/Dialogit/Dokumenttien indexi..."
+msgstr "Dokument indeks"
 
-#. Set the initial status message
-#: app/docindexif.c:224
+#: app/docindexif.c:243
 msgid "GTK successfully started"
 msgstr ""
 
-#: app/drawable.c:64
+#: app/dodgeburn.c:117
+msgid "Burn"
+msgstr ""
+
+#: app/dodgeburn.c:117
+msgid "Dodge"
+msgstr ""
+
+#: app/dodgeburn.c:145
+msgid "Exposure:"
+msgstr ""
+
+#. the type (dodge or burn)
+#: app/dodgeburn.c:165 app/ink.c:415
+msgid "Type"
+msgstr ""
+
+#. mode (highlights, midtones, or shadows)
+#: app/dodgeburn.c:176
+#, fuzzy
+msgid "Mode"
+msgstr "Flyt: "
+
+#: app/drawable.c:68
 msgid "drawable_fill called with unknown fill type"
 msgstr ""
 
 #: app/edit_selection.c:163
 msgid "Move: 0, 0"
-msgstr ""
+msgstr "Flyt: 0, 0"
 
 #: app/edit_selection.c:442 app/edit_selection.c:452
 msgid "Move: "
-msgstr ""
+msgstr "Flyt: "
 
 #: app/equalize.c:36
 msgid "Equalize does not operate on indexed drawables."
 msgstr ""
 
 #. the hard toggle
-#: app/eraser.c:102
+#: app/eraser.c:106
 msgid "Hard edge"
 msgstr ""
 
-#. the incremental toggle
-#: app/eraser.c:112 app/paintbrush.c:269
-msgid "Incremental"
+#. the anti_erase toggle
+#: app/eraser.c:116
+msgid "Anti erase"
 msgstr ""
 
-#: app/errorconsole.c:174
-#, fuzzy, c-format
+#: app/errorconsole.c:182
+#, c-format
 msgid "Error opening file %s: %s"
-msgstr "Virhe tiedoston avauksessa: %s\n"
+msgstr ""
 
-#: app/errorconsole.c:189
+#: app/errorconsole.c:197
 msgid "Can't save, nothing selected!"
-msgstr ""
+msgstr "Kan ikke gemme, intet valgt!"
 
-#: app/errorconsole.c:193
+#: app/errorconsole.c:201
 msgid "Save error log to file..."
-msgstr ""
+msgstr "Gem fejl logfil..."
 
-#: app/errorconsole.c:277
-msgid "GIMP Error console"
-msgstr ""
-
-#: app/errorconsole.c:292
-msgid "Write all errors to file..."
-msgstr ""
-
-#: app/errorconsole.c:299
-msgid "Write selection to file..."
-msgstr ""
-
-#: app/file_new_dialog.c:303
+#: app/errorconsole.c:268
 #, fuzzy
-msgid "Confirm Image Size"
-msgstr "/Kuva/Muokkaa kokoa"
+msgid "Clear"
+msgstr "/Rediger/Ryd"
 
-#: app/file_new_dialog.c:317
+#: app/errorconsole.c:286
+msgid "GIMP Error console"
+msgstr "GIMP fejl konsol"
+
+#: app/errorconsole.c:297
+msgid "Write all errors to file..."
+msgstr "Skriv alle fejl til en fil..."
+
+#: app/errorconsole.c:304
+msgid "Write selection to file..."
+msgstr "Skriv det valgte til en fil..."
+
+#: app/errors.c:75 app/errors.c:77
+#, c-format
+msgid "%s: fatal error: %s\n"
+msgstr ""
+
+#: app/file_new_dialog.c:218
+msgid "Confirm Image Size"
+msgstr "Bekræft billedstørrelse"
+
+#: app/file_new_dialog.c:235
 #, c-format
 msgid ""
 "You are trying to create an image which\n"
@@ -1276,87 +1303,36 @@ msgid ""
 "preferences dialog."
 msgstr ""
 
-#: app/file_new_dialog.c:411
+#: app/file_new_dialog.c:342
 #, c-format
-msgid "%d Bytes"
-msgstr ""
-
-#: app/file_new_dialog.c:413
-#, c-format
-msgid "%.2f KB"
-msgstr ""
-
-#: app/file_new_dialog.c:415
-#, c-format
-msgid "%.1f KB"
-msgstr ""
-
-#: app/file_new_dialog.c:417
-#, c-format
-msgid "%d KB"
-msgstr ""
-
-#: app/file_new_dialog.c:419
-#, c-format
-msgid "%.2f MB"
-msgstr ""
-
-#: app/file_new_dialog.c:421
-#, c-format
-msgid "%.1f MB"
-msgstr ""
-
-#. bytes per pixel
-#. alpha channel
-#: app/file_new_dialog.c:446
-#, fuzzy, c-format
 msgid "Image Size: %s"
-msgstr "/Kuva/Muokkaa kokoa"
+msgstr "Billedstørrelse: %s"
 
-#: app/file_new_dialog.c:489 app/gdisplay.c:199 app/preferences_dialog.c:1633
-msgid "RGB"
-msgstr ""
-
-#: app/file_new_dialog.c:490 app/info_window.c:49 app/info_window.c:241
-#: app/preferences_dialog.c:1634
-#, fuzzy
-msgid "Grayscale"
-msgstr "/Kuva/Harmaasävy"
-
-#: app/file_new_dialog.c:496 app/layers_dialog.c:3057
-msgid "Foreground"
-msgstr ""
-
-#: app/file_new_dialog.c:498 app/layers_dialog.c:3059
-msgid "White"
-msgstr ""
-
-#: app/file_new_dialog.c:572
+#: app/file_new_dialog.c:409
 msgid "New Image"
-msgstr ""
+msgstr "Nyt billede"
 
-#: app/file_new_dialog.c:678 app/preferences_dialog.c:1542
+#: app/file_new_dialog.c:515 app/preferences_dialog.c:1554
 msgid "Pixels"
 msgstr ""
 
 #. the resolution labels
-#: app/file_new_dialog.c:747 app/resize.c:572
-#, fuzzy
+#: app/file_new_dialog.c:584 app/resize.c:572
 msgid "Resolution X:"
-msgstr "/Valitse/Ei mitään"
+msgstr "Opløsning X:"
 
-#: app/file_new_dialog.c:768 app/resize.c:593
+#: app/file_new_dialog.c:605 app/resize.c:593
 msgid "pixels/%a"
 msgstr ""
 
 #. frame for Image Type
-#: app/file_new_dialog.c:812
+#: app/file_new_dialog.c:649
 msgid "Image Type"
-msgstr ""
+msgstr "Billedtype"
 
 #: app/fileops.c:224 app/fileops.c:253
 msgid "Load Image"
-msgstr ""
+msgstr "Hent billede"
 
 #. format-chooser frame
 #: app/fileops.c:263
@@ -1365,417 +1341,360 @@ msgstr ""
 
 #: app/fileops.c:278 app/fileops.c:482
 msgid "Determine file type:"
-msgstr ""
+msgstr "Bestem filtype:"
 
 #: app/fileops.c:443 app/fileops.c:465
 msgid "Save Image"
-msgstr ""
+msgstr "Gem billede"
 
 #: app/fileops.c:474
 msgid "Save Options"
-msgstr ""
+msgstr "Gem instillinger"
 
 #: app/fileops.c:526
 msgid "Can't revert. No filename associated with this image"
 msgstr ""
 
-#: app/fileops.c:540
+#: app/fileops.c:541
 msgid "Revert failed."
 msgstr ""
 
-#: app/fileops.c:1364 app/fileops.c:1454
+#: app/fileops.c:1365 app/fileops.c:1455
 msgid "Open failed: "
 msgstr ""
 
-#: app/fileops.c:1520
+#: app/fileops.c:1521
 #, c-format
 msgid "%s is an irregular file (%s)"
-msgstr ""
+msgstr "%s er en unormal fil (%s)"
 
-#: app/fileops.c:1534 app/fileops.c:1641
+#: app/fileops.c:1535 app/fileops.c:1642
 msgid "Save failed: "
-msgstr ""
+msgstr "Gem fejlede: "
 
-#: app/fileops.c:1546 app/fileops.c:1547 app/fileops.c:1559 app/fileops.c:1560
-#: app/menus.c:57 app/menus.c:89
-#, fuzzy
+#: app/fileops.c:1547 app/fileops.c:1548 app/fileops.c:1560 app/fileops.c:1561
+#: app/menus.c:67 app/menus.c:101
 msgid "/File/Open"
-msgstr "/Tiedosto/Avaa"
+msgstr "/Filer/Åbn"
 
-#: app/fileops.c:1548 app/fileops.c:1564 app/gdisplay.c:1586 app/menus.c:90
-#, fuzzy
+#: app/fileops.c:1549 app/fileops.c:1565 app/gdisplay.c:1624 app/menus.c:102
 msgid "/File/Save"
-msgstr "/Tiedosto/Talleta"
+msgstr "/Filer/Gem"
 
-#: app/fileops.c:1549 app/fileops.c:1565 app/gdisplay.c:1587 app/menus.c:91
-#, fuzzy
+#: app/fileops.c:1550 app/fileops.c:1566 app/gdisplay.c:1625 app/menus.c:103
 msgid "/File/Save as"
-msgstr "/Tiedosto/Talleta nimellä"
-
-#: app/fileops.c:1576
-msgid "Yes"
-msgstr ""
+msgstr "/Filer/Gem som"
 
 #: app/fileops.c:1577
-msgid "No"
-msgstr ""
+msgid "Yes"
+msgstr "Ja"
 
-#: app/fileops.c:1586
+#: app/fileops.c:1578
+msgid "No"
+msgstr "Nej"
+
+#: app/fileops.c:1587
 #, c-format
 msgid "%s exists, overwrite?"
-msgstr ""
+msgstr "%s eksisterer, overskriv?"
 
-#: app/fileops.c:1592
+#: app/fileops.c:1593
 msgid "File Exists!"
-msgstr ""
+msgstr "Fil eksisterer!"
 
-#: app/flip_tool.c:71 app/preferences_dialog.c:1588
-#: app/preferences_dialog.c:2290
+#: app/flip_tool.c:74 app/preferences_dialog.c:1600
+#: app/preferences_dialog.c:2308
 msgid "Horizontal"
-msgstr ""
+msgstr "Vandret"
 
-#: app/flip_tool.c:71 app/preferences_dialog.c:1590
-#: app/preferences_dialog.c:2292
+#: app/flip_tool.c:74 app/preferences_dialog.c:1602
+#: app/preferences_dialog.c:2310
 msgid "Vertical"
+msgstr "Lodret"
+
+#: app/flip_tool.c:80
+msgid "Flip Tool Options"
 msgstr ""
 
-#: app/flip_tool.c:77
-#, fuzzy
-msgid "Flip Tool Options"
-msgstr "/Tiedosto/Dialogit/Työkalujen Asetukset..."
-
-#: app/floating_sel.c:107
+#: app/floating_sel.c:109
 msgid ""
 "Cannot anchor this layer because\n"
 "it is not a floating selection."
 msgstr ""
 
-#: app/floating_sel.c:173
+#: app/floating_sel.c:175
 msgid ""
 "Cannot create a new layer from the floating\n"
 "selection because it belongs to a\n"
 "layer mask or channel."
 msgstr ""
 
-#: app/free_select.c:76
+#: app/free_select.c:75
 msgid "add_point(): Unable to reallocate points array in free_select."
 msgstr ""
 
-#: app/free_select.c:231
+#: app/free_select.c:230
 msgid "Cannot properly scanline convert polygon!\n"
 msgstr ""
 
-#: app/gdisplay.c:199
+#: app/gdisplay.c:210 app/preferences_dialog.c:1645
+msgid "RGB"
+msgstr ""
+
+#: app/gdisplay.c:210
 msgid "RGB-empty"
 msgstr ""
 
-#: app/gdisplay.c:202
+#: app/gdisplay.c:213
+msgid "grayscale"
+msgstr "gråtone"
+
+#: app/gdisplay.c:213
 msgid "grayscale-empty"
 msgstr ""
 
-#: app/gdisplay.c:202
-#, fuzzy
-msgid "grayscale"
-msgstr "/Kuva/Harmaasävy"
+#: app/gdisplay.c:216
+msgid "indexed"
+msgstr "indekseret"
 
-#: app/gdisplay.c:205
+#: app/gdisplay.c:216
 msgid "indexed-empty"
 msgstr ""
 
-#: app/gdisplay.c:205
-msgid "indexed"
+#: app/gdisplay.c:1626 app/menus.c:104
+msgid "/File/Revert"
+msgstr "/Filer/Forkast"
+
+#: app/gdisplay.c:1627 app/gdisplay_ops.c:303 app/gdisplay_ops.c:318
+#: app/gdisplay_ops.c:365 app/menus.c:108
+msgid "/File/Close"
+msgstr "/Filer/Luk"
+
+#: app/gdisplay.c:1629
+msgid "/Edit"
+msgstr "/Rediger"
+
+#: app/gdisplay.c:1632 app/menus.c:113
+msgid "/Edit/Cut"
+msgstr "/Rediger/Klip"
+
+#: app/gdisplay.c:1633 app/menus.c:114
+msgid "/Edit/Copy"
+msgstr "/Rediger/Kopier"
+
+#: app/gdisplay.c:1634 app/menus.c:115
+msgid "/Edit/Paste"
+msgstr "/Rediger/Indsæt"
+
+#: app/gdisplay.c:1635 app/menus.c:116
+msgid "/Edit/Paste Into"
+msgstr "/Rediger/Indsæt i"
+
+#: app/gdisplay.c:1636 app/menus.c:117
+msgid "/Edit/Paste As New"
+msgstr "/Rediger/Indsæt som ny"
+
+#: app/gdisplay.c:1637 app/menus.c:119
+msgid "/Edit/Clear"
+msgstr "/Rediger/Ryd"
+
+#: app/gdisplay.c:1638 app/menus.c:120
+msgid "/Edit/Fill"
+msgstr "/Rediger/Fyld"
+
+#: app/gdisplay.c:1639 app/menus.c:121
+msgid "/Edit/Stroke"
 msgstr ""
 
-#: app/gdisplay.c:1588 app/menus.c:92
-#, fuzzy
-msgid "/File/Revert"
-msgstr "/Tiedosto/Talleta"
-
-#: app/gdisplay.c:1589 app/gdisplay_ops.c:303 app/gdisplay_ops.c:318
-#: app/gdisplay_ops.c:365 app/menus.c:96
-#, fuzzy
-msgid "/File/Close"
-msgstr "/Tiedosto/Sulje"
-
-#: app/gdisplay.c:1591
-#, fuzzy
-msgid "/Edit"
-msgstr "/Muokkaa/Leikkaa"
-
-#: app/gdisplay.c:1594 app/menus.c:101
-#, fuzzy
-msgid "/Edit/Cut"
-msgstr "/Muokkaa/Leikkaa"
-
-#: app/gdisplay.c:1595 app/menus.c:102
-#, fuzzy
-msgid "/Edit/Copy"
-msgstr "/Muokkaa/Kopioi"
-
-#: app/gdisplay.c:1596 app/menus.c:103
-#, fuzzy
-msgid "/Edit/Paste"
-msgstr "/Muokkaa/Liimaa"
-
-#: app/gdisplay.c:1597 app/menus.c:104
-#, fuzzy
-msgid "/Edit/Paste Into"
-msgstr "/Muokkaa/Liimaa johonkin"
-
-#: app/gdisplay.c:1598 app/menus.c:105
-#, fuzzy
-msgid "/Edit/Paste As New"
-msgstr "/Muokkaa/Liimaa nimetty"
-
-#: app/gdisplay.c:1599 app/menus.c:107
-#, fuzzy
-msgid "/Edit/Clear"
-msgstr "/Muokkaa/Tyhjennä"
-
-#: app/gdisplay.c:1600 app/menus.c:108
-#, fuzzy
-msgid "/Edit/Fill"
-msgstr "/Muokkaa/Täytä"
-
-#: app/gdisplay.c:1601 app/menus.c:109
-#, fuzzy
-msgid "/Edit/Stroke"
-msgstr "/Muokkaa/Piirrä"
-
-#: app/gdisplay.c:1602 app/menus.c:113
-#, fuzzy
+#: app/gdisplay.c:1640 app/menus.c:125
 msgid "/Edit/Cut Named"
-msgstr "/Muokkaa/Leikkaa nimetty"
+msgstr "/Rediger/Klip navngivet"
 
-#: app/gdisplay.c:1603 app/menus.c:114
-#, fuzzy
+#: app/gdisplay.c:1641 app/menus.c:126
 msgid "/Edit/Copy Named"
-msgstr "/Muokkaa/Kopioi nimetty"
+msgstr "/Rediger/Kopier navngivet"
 
-#: app/gdisplay.c:1604 app/menus.c:115
-#, fuzzy
+#: app/gdisplay.c:1642 app/menus.c:127
 msgid "/Edit/Paste Named"
-msgstr "/Muokkaa/Liimaa nimetty"
+msgstr "/Rediger/Indsæt navngivet"
 
-#: app/gdisplay.c:1607
-#, fuzzy
+#: app/gdisplay.c:1645
 msgid "/Select"
-msgstr "/Valitse/Kaikki"
+msgstr ""
 
-#: app/gdisplay.c:1608 app/menus.c:130
-#, fuzzy
+#: app/gdisplay.c:1646 app/menus.c:142
 msgid "/Select/Save To Channel"
-msgstr "/Valitse/Talleta kanavalle"
+msgstr ""
 
-#: app/gdisplay.c:1610
-#, fuzzy
+#: app/gdisplay.c:1648
 msgid "/View"
-msgstr "/Näytä/---"
+msgstr ""
 
-#: app/gdisplay.c:1613 app/menus.c:148
-#, fuzzy
+#: app/gdisplay.c:1651 app/menus.c:161
 msgid "/View/Toggle Selection"
-msgstr "/Näytä/Vaihda viivottimet"
+msgstr ""
 
-#: app/gdisplay.c:1614 app/menus.c:149
-#, fuzzy
+#: app/gdisplay.c:1652 app/menus.c:162
 msgid "/View/Toggle Rulers"
-msgstr "/Näytä/Vaihda viivottimet"
+msgstr ""
 
-#: app/gdisplay.c:1616 app/menus.c:151
-#, fuzzy
+#: app/gdisplay.c:1654 app/menus.c:164
 msgid "/View/Toggle Guides"
-msgstr "/Näytä/Vaihda apuviivat"
+msgstr ""
 
-#: app/gdisplay.c:1617 app/menus.c:152
-#, fuzzy
+#: app/gdisplay.c:1655 app/menus.c:165
 msgid "/View/Snap To Guides"
-msgstr "/Näytä/Nappaa apuviivoihin"
+msgstr ""
 
-#: app/gdisplay.c:1618 app/menus.c:150
-#, fuzzy
+#: app/gdisplay.c:1656 app/menus.c:163
 msgid "/View/Toggle Statusbar"
-msgstr "/Näytä/Vaihda infopalkki"
+msgstr ""
 
-#: app/gdisplay.c:1620 app/menus.c:144
-#, fuzzy
+#: app/gdisplay.c:1658 app/menus.c:156
 msgid "/View/Dot for dot"
-msgstr "/Näytä/Zoomaa ulos"
+msgstr ""
 
-#: app/gdisplay.c:1623
-#, fuzzy
+#: app/gdisplay.c:1661
 msgid "/Image"
-msgstr "/Kuva/---"
+msgstr "/Billede"
 
-#: app/gdisplay.c:1624 app/gdisplay.c:1634
-#, fuzzy
+#: app/gdisplay.c:1662 app/gdisplay.c:1672
 msgid "/Image/Colors"
-msgstr "/Kuva/Värit/---"
+msgstr "/Billede/Farver"
 
-#: app/gdisplay.c:1625
-#, fuzzy
+#: app/gdisplay.c:1663
 msgid "/Image/Channel Ops"
-msgstr "/Kuva/Kanava operaatiot/Offset"
+msgstr ""
 
-#: app/gdisplay.c:1626
-#, fuzzy
+#: app/gdisplay.c:1664
 msgid "/Image/Alpha"
-msgstr "/Kuva/Skaalaa"
+msgstr ""
 
-#: app/gdisplay.c:1629 app/menus.c:171
-#, fuzzy
+#: app/gdisplay.c:1667 app/menus.c:184
 msgid "/Image/RGB"
-msgstr "/Kuva/RGB"
+msgstr ""
 
-#: app/gdisplay.c:1630 app/menus.c:172
-#, fuzzy
+#: app/gdisplay.c:1668 app/menus.c:185
 msgid "/Image/Grayscale"
-msgstr "/Kuva/Harmaasävy"
+msgstr ""
 
-#: app/gdisplay.c:1631 app/menus.c:173
-#, fuzzy
+#: app/gdisplay.c:1669 app/menus.c:186
 msgid "/Image/Indexed"
-msgstr "/Kuva/Indeksoitu"
+msgstr ""
 
-#: app/gdisplay.c:1632 app/tools.c:609
+#: app/gdisplay.c:1670 app/tools.c:625
 msgid "/Image/Histogram"
 msgstr ""
 
-#: app/gdisplay.c:1635 app/tools.c:564
-#, fuzzy
+#: app/gdisplay.c:1673 app/tools.c:580
 msgid "/Image/Colors/Threshold"
-msgstr "/Kuva/Värit/---"
+msgstr ""
 
-#: app/gdisplay.c:1636 app/tools.c:549
-#, fuzzy
+#: app/gdisplay.c:1674 app/tools.c:565
 msgid "/Image/Colors/Posterize"
-msgstr "/Kuva/Värit/Desaturate"
+msgstr ""
 
-#: app/gdisplay.c:1637 app/menus.c:160
-#, fuzzy
+#: app/gdisplay.c:1675 app/menus.c:173
 msgid "/Image/Colors/Equalize"
-msgstr "/Kuva/Värit/Equalize"
+msgstr ""
 
-#: app/gdisplay.c:1638 app/menus.c:161
-#, fuzzy
+#: app/gdisplay.c:1676 app/menus.c:174
 msgid "/Image/Colors/Invert"
-msgstr "/Kuva/Värit/Invertoi"
+msgstr ""
 
-#: app/gdisplay.c:1639 app/tools.c:504
-#, fuzzy
+#: app/gdisplay.c:1677 app/tools.c:520
 msgid "/Image/Colors/Color Balance"
-msgstr "/Kuva/Värit/Equalize"
+msgstr ""
 
-#: app/gdisplay.c:1640 app/tools.c:519
-#, fuzzy
+#: app/gdisplay.c:1678 app/tools.c:535
 msgid "/Image/Colors/Brightness-Contrast"
-msgstr "/Kuva/Värit/Desaturate"
+msgstr ""
 
-#: app/gdisplay.c:1642 app/tools.c:534
-#, fuzzy
+#: app/gdisplay.c:1680 app/tools.c:550
 msgid "/Image/Colors/Hue-Saturation"
-msgstr "/Kuva/Värit/Desaturate"
+msgstr ""
 
-#: app/gdisplay.c:1643 app/tools.c:579
-#, fuzzy
+#: app/gdisplay.c:1681 app/tools.c:595
 msgid "/Image/Colors/Curves"
-msgstr "/Kuva/Värit/Invertoi"
+msgstr ""
 
-#: app/gdisplay.c:1644 app/tools.c:594
-#, fuzzy
+#: app/gdisplay.c:1682 app/tools.c:610
 msgid "/Image/Colors/Levels"
-msgstr "/Kuva/Värit/Invertoi"
+msgstr ""
 
-#: app/gdisplay.c:1645 app/menus.c:163
-#, fuzzy
+#: app/gdisplay.c:1683 app/menus.c:176
 msgid "/Image/Colors/Desaturate"
-msgstr "/Kuva/Värit/Desaturate"
+msgstr ""
 
-#: app/gdisplay.c:1647 app/menus.c:168
-#, fuzzy
+#: app/gdisplay.c:1685 app/menus.c:181
 msgid "/Image/Alpha/Add Alpha Channel"
-msgstr "/Kuva/Alpha/Lisää alpha kanava"
+msgstr ""
 
-#: app/gdisplay.c:1650 app/menus.c:166
-#, fuzzy
+#: app/gdisplay.c:1688 app/menus.c:179
 msgid "/Image/Channel Ops/Offset"
-msgstr "/Kuva/Kanava operaatiot/Offset"
+msgstr ""
 
-#: app/gdisplay.c:1653
-#, fuzzy
+#: app/gdisplay.c:1691
 msgid "/Layers/Stack"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/gdisplay.c:1656 app/menus.c:182
-#, fuzzy
+#: app/gdisplay.c:1694 app/menus.c:195
 msgid "/Layers/Stack/Previous Layer"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/gdisplay.c:1658 app/menus.c:183
-#, fuzzy
+#: app/gdisplay.c:1696 app/menus.c:196
 msgid "/Layers/Stack/Next Layer"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/gdisplay.c:1660 app/menus.c:184
-#, fuzzy
+#: app/gdisplay.c:1698 app/menus.c:197
 msgid "/Layers/Stack/Raise Layer"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/gdisplay.c:1662 app/menus.c:185
-#, fuzzy
+#: app/gdisplay.c:1700 app/menus.c:198
 msgid "/Layers/Stack/Lower Layer"
-msgstr "/Tasot/Alenna taso"
+msgstr ""
 
-#: app/gdisplay.c:1664 app/menus.c:186
-#, fuzzy
+#: app/gdisplay.c:1702 app/menus.c:199
 msgid "/Layers/Stack/Layer to Top"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/gdisplay.c:1666 app/menus.c:187
+#: app/gdisplay.c:1704 app/menus.c:200
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr ""
 
-#: app/gdisplay.c:1670 app/menus.c:189
-#, fuzzy
+#: app/gdisplay.c:1708 app/menus.c:202
 msgid "/Layers/Anchor Layer"
-msgstr "/Tasot/Ankkuroi taso"
+msgstr ""
 
-#: app/gdisplay.c:1671 app/menus.c:190
-#, fuzzy
+#: app/gdisplay.c:1709 app/menus.c:203
 msgid "/Layers/Merge Visible Layers"
-msgstr "/Tasot/Yhdistä näkyvät tasot"
+msgstr ""
 
-#: app/gdisplay.c:1672 app/menus.c:191
-#, fuzzy
+#: app/gdisplay.c:1710 app/menus.c:204
 msgid "/Layers/Flatten Image"
-msgstr "/Tasot/Yhdistä kuva"
+msgstr ""
 
-#: app/gdisplay.c:1673 app/menus.c:192
-#, fuzzy
+#: app/gdisplay.c:1711 app/menus.c:205
 msgid "/Layers/Alpha To Selection"
-msgstr "/Tasot/Alpha valinnaksi"
+msgstr ""
 
-#: app/gdisplay.c:1674 app/menus.c:193
-#, fuzzy
+#: app/gdisplay.c:1712 app/menus.c:206
 msgid "/Layers/Mask To Selection"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
-#: app/gdisplay.c:1675 app/menus.c:194
-#, fuzzy
+#: app/gdisplay.c:1713 app/menus.c:207
 msgid "/Layers/Add Alpha Channel"
-msgstr "/Tasot/Lisää alpha kanava"
+msgstr ""
 
-#: app/gdisplay.c:1678
-#, fuzzy
+#: app/gdisplay.c:1716
 msgid "/Filters"
-msgstr "/Suotimet/---"
+msgstr ""
 
-#: app/gdisplay.c:1680
-#, fuzzy
+#: app/gdisplay.c:1718
 msgid "/Script-Fu"
-msgstr "/Script-Fu/"
+msgstr ""
 
-#: app/gdisplay.c:2100
+#: app/gdisplay.c:2138
 msgid "gdisplays_flush() called recursively."
 msgstr ""
 
@@ -1786,125 +1705,164 @@ msgid ""
 "Close anyway?"
 msgstr ""
 
-#: app/gimage_mask.c:213
+#: app/gimage_mask.c:212
 msgid ""
 "Unable to cut/copy because the selected\n"
 "region is empty."
 msgstr ""
 
-#: app/gimage_mask.c:343
+#: app/gimage_mask.c:342
 msgid "Float Selection: No selection to float."
 msgstr ""
 
 #. Create a new layer from the buffer
-#: app/gimage_mask.c:354
-#, fuzzy
+#: app/gimage_mask.c:353
 msgid "Floated Layer"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/gimage_mask.c:491
+#: app/gimage_mask.c:490
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
 msgstr ""
 
-#: app/gimage_mask.c:510
+#: app/gimage_mask.c:509
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
 msgstr ""
 
-#: app/gimage_mask.c:557
+#: app/gimage_mask.c:556
 msgid "No selection to stroke!"
 msgstr ""
 
-#: app/gimpbrush.c:219
+#: app/gimpbrush.c:258
 msgid "Error in GIMP brush file...aborting."
 msgstr ""
 
-#: app/gimpbrush.c:226 app/patterns.c:238
+#: app/gimpbrush.c:265 app/patterns.c:266
 msgid "Unnamed"
 msgstr ""
 
-#: app/gimpbrush.c:244
+#: app/gimpbrush.c:283
 msgid "GIMP brush file appears to be truncated."
 msgstr ""
 
-#: app/gimpbrush.c:247
+#: app/gimpbrush.c:286
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"\n"
 msgstr ""
 
-#: app/gimpbrushlist.c:213
+#: app/gimpbrushlist.c:290
 msgid "get_active_brush(): Specified default brush not found!"
 msgstr ""
 
-#: app/gimpdrawable.c:168
+#: app/gimpdrawable.c:167
 msgid "Can't fill unknown image type."
 msgstr ""
 
-#: app/gimpdrawable.c:701
+#: app/gimpdrawable.c:493
+msgid "parasite attach to drawable"
+msgstr ""
+
+#: app/gimpdrawable.c:526
+msgid "detach parasite from drawable"
+msgstr ""
+
+#: app/gimpdrawable.c:719
 msgid "unnamed"
 msgstr ""
 
-#: app/gimpdrawable.c:718
+#: app/gimpdrawable.c:736
 #, c-format
 msgid "Layer type %d not supported."
 msgstr ""
 
-#: app/gimpimage.c:649 app/gimpimage.c:747
+#: app/gimpimage.c:665 app/gimpimage.c:761
 msgid "gimp_image_apply_image sent illegal parameters"
 msgstr ""
 
-#: app/gimpimage.c:1178
+#: app/gimpimage.c:1089
+msgid "attach parasite to image"
+msgstr ""
+
+#: app/gimpimage.c:1112
+msgid "detach parasite from image"
+msgstr ""
+
+#: app/gimpimage.c:1194
 msgid "Unable to project indexed image."
 msgstr ""
 
-#: app/gimpimage.c:2109
+#. Dirty the image, but we're too lazy to provide a
+#. * proper undo.
+#: app/gimpimage.c:2111
+#, fuzzy
+msgid "raise layer"
+msgstr "Nyt lag"
+
+#: app/gimpimage.c:2117
 msgid "Layer cannot be raised any further"
 msgstr ""
 
-#: app/gimpimage.c:2184
+#: app/gimpimage.c:2185
+#, fuzzy
+msgid "lower layer"
+msgstr "Slet lag"
+
+#: app/gimpimage.c:2191
 msgid "Layer cannot be lowered any further"
 msgstr ""
 
 #. layer_arg is already the top_layer
-#: app/gimpimage.c:2215
+#: app/gimpimage.c:2222
 msgid "Layer is already on top"
 msgstr ""
 
-#: app/gimpimage.c:2220
+#: app/gimpimage.c:2227
 msgid "Can't raise Layer without alpha"
 msgstr ""
 
+#: app/gimpimage.c:2268
+msgid "raise layer to top"
+msgstr ""
+
 #. there is no next layer below layer_arg
-#: app/gimpimage.c:2315
+#: app/gimpimage.c:2321
 msgid "Layer is already on bottom"
 msgstr ""
 
-#: app/gimpimage.c:2328 app/gimpimage.c:2417
+#: app/gimpimage.c:2334 app/gimpimage.c:2422
 msgid "BG has no alpha, layer was placed above"
 msgstr ""
 
-#: app/gimpimage.c:2470
+#: app/gimpimage.c:2363
+msgid "lower layer to bottom"
+msgstr ""
+
+#: app/gimpimage.c:2442
+msgid "re-position layer"
+msgstr ""
+
+#: app/gimpimage.c:2475
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
 msgstr ""
 
-#: app/gimpimage.c:2548
+#: app/gimpimage.c:2551
 msgid "There are not enough visible layers for a merge down."
 msgstr ""
 
-#: app/gimpimage.c:2661 app/gimpimage.c:2694
+#: app/gimpimage.c:2665 app/gimpimage.c:2696
 msgid "gimp_image_merge_layers: could not allocate merge layer"
 msgstr ""
 
-#: app/gimpimage.c:2733
+#: app/gimpimage.c:2735
 msgid "gimp_image_merge_layers attempting to merge incompatible layers\n"
 msgstr ""
 
-#: app/gimpimage.c:2815
+#: app/gimpimage.c:2818
 msgid "gimp_image_add_layer: attempt to add layer to wrong image"
 msgstr ""
 
@@ -1912,562 +1870,614 @@ msgstr ""
 msgid "gimp_image_add_layer: trying to add layer to image twice"
 msgstr ""
 
-#: app/gimpimage.c:2944
+#: app/gimpimage.c:2954
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
 msgstr ""
 
-#: app/gimpimage.c:2948
+#: app/gimpimage.c:2958
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
 msgstr ""
 
-#: app/gimpimage.c:2952
+#: app/gimpimage.c:2962
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
 msgstr ""
 
-#: app/gimpimage.c:2956
+#: app/gimpimage.c:2969
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 
-#: app/gimpimage.c:3063
+#: app/gimpimage.c:3074
 msgid "Channel cannot be raised any further"
 msgstr ""
 
-#: app/gimpimage.c:3111
+#: app/gimpimage.c:3123
 msgid "Channel cannot be lowered any further"
 msgstr ""
 
-#: app/gimpimage.c:3133
+#: app/gimpimage.c:3200
 msgid "gimp_image_add_channel: attempt to add channel to wrong image"
 msgstr ""
 
-#: app/gimpimage.c:3143
+#: app/gimpimage.c:3207
 msgid "gimp_image_add_channel: trying to add channel to image twice"
 msgstr ""
 
-#: app/gimpimage.c:3270 app/palette.c:530 app/palette.c:557 app/palette.c:919
-#: app/palette.c:923 app/palette.c:2275 app/palette.c:2969
+#: app/gimpimage.c:3328 app/palette.c:542 app/palette.c:569 app/palette.c:931
+#: app/palette.c:935 app/palette.c:2383 app/palette.c:3077
 msgid "Untitled"
+msgstr "Unavngivet"
+
+#: app/gimpparasite.c:130
+msgid ""
+"# GIMP parasiterc\n"
+"# This file will be entirely rewritten every time you quit the gimp.\n"
+"\n"
 msgstr ""
 
 #: app/gimpprogress.c:115
 msgid "Progress"
 msgstr ""
 
-#: app/gimprc.c:358 app/plug_in.c:305
+#: app/gimprc.c:363 app/plug_in.c:305
 msgid "Resource configuration"
 msgstr ""
 
-#: app/gimprc.c:413
-#, fuzzy, c-format
+#: app/gimprc.c:422
+#, c-format
 msgid "error parsing: \"%s\"\n"
-msgstr "Virhe tiedoston avauksessa: %s\n"
+msgstr ""
 
-#: app/gimprc.c:414
+#: app/gimprc.c:423
 #, c-format
 msgid "  at line %d column %d\n"
 msgstr ""
 
-#: app/gimprc.c:415
+#: app/gimprc.c:424
 #, c-format
 msgid "  unexpected token: %s\n"
 msgstr ""
 
-#: app/gimprc.c:1305
+#: app/gimprc.c:1348
 msgid "error parsing pluginrc"
 msgstr ""
 
-#: app/gimprc.c:1640
+#: app/gimprc.c:1683
 #, c-format
 msgid "transform_path(): gimprc token referenced but not defined: %s"
 msgstr ""
 
-#: app/gimprc.c:2522
+#: app/gimprc.c:2591
 #, c-format
 msgid "Can't open %s; %s"
-msgstr ""
+msgstr "Kan ikke åbne %s; %s"
 
-#: app/gimprc.c:2541
+#: app/gimprc.c:2610
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
-msgstr ""
+msgstr "Kan ikke omdøbe %s til %s; %s"
 
-#: app/gimprc.c:2547
+#: app/gimprc.c:2616
 #, c-format
 msgid "Couldn't reopen %s\n"
-msgstr ""
+msgstr "Kunne ikke genåbne %s\n"
 
-#: app/gimprc.c:2559
+#: app/gimprc.c:2628
 #, c-format
 msgid "Can't write to %s; %s"
+msgstr "Kan ikke skrive til %s; %s"
+
+#. pseudo unit
+#: app/gimpunit.c:58 libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr ""
+
+#: app/gimpunit.c:58 app/measure.c:428 app/measure.c:432 libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr ""
+
+#. standard units
+#: app/gimpunit.c:61 libgimp/gimpunit.c:47
+msgid "inch"
+msgstr ""
+
+#: app/gimpunit.c:61 libgimp/gimpunit.c:47
+msgid "inches"
+msgstr ""
+
+#: app/gimpunit.c:62 libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr ""
+
+#: app/gimpunit.c:62 libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr ""
+
+#. professional units
+#: app/gimpunit.c:65 libgimp/gimpunit.c:51
+msgid "point"
+msgstr ""
+
+#: app/gimpunit.c:65 libgimp/gimpunit.c:51
+msgid "points"
+msgstr ""
+
+#: app/gimpunit.c:66 libgimp/gimpunit.c:52
+msgid "pica"
+msgstr ""
+
+#: app/gimpunit.c:66 libgimp/gimpunit.c:52
+msgid "picas"
+msgstr ""
+
+#: app/gimpunit.c:73 libgimp/gimpunit.c:59
+msgid "percent"
+msgstr ""
+
+#: app/gimpunit.c:299
+msgid ""
+"# GIMP unitrc\n"
+"# This file contains your user unit database. You can\n"
+"# modify this list with the unit editor. You are not\n"
+"# supposed to edit it manually, but of course you can do.\n"
+"# This file will be entirely rewritten every time you\n"
+"# quit the gimp.\n"
+"\n"
 msgstr ""
 
 #. Make a new floating layer
 #: app/global_edit.c:288 app/global_edit.c:343 app/global_edit.c:353
-#, fuzzy
 msgid "Pasted Layer"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
 #: app/global_edit.c:705
-#, fuzzy
 msgid "Paste"
-msgstr "/Muokkaa/Liimaa"
+msgstr "Indsæt"
 
 #: app/global_edit.c:706
-#, fuzzy
 msgid "Paste Into"
-msgstr "/Muokkaa/Liimaa johonkin"
+msgstr "Indsæt info"
 
 #: app/global_edit.c:707
 msgid "Paste As New"
-msgstr ""
+msgstr "Indsæt som ny"
 
-#: app/global_edit.c:711 app/gradient.c:1556 app/palette.c:1448
-#: app/palette.c:2181
+#: app/global_edit.c:711 app/gradient.c:1552 app/palette.c:1460
+#: app/palette.c:2218
 msgid "Delete"
-msgstr ""
+msgstr "Slet"
 
 #: app/global_edit.c:720
-#, fuzzy
 msgid "Paste Named Buffer"
-msgstr "/Muokkaa/Liimaa nimetty"
+msgstr ""
 
 #: app/global_edit.c:732
 msgid "Select a buffer to paste:"
 msgstr ""
 
 #: app/global_edit.c:820
-#, fuzzy
 msgid "Cut Named"
-msgstr "/Muokkaa/Leikkaa nimetty"
+msgstr ""
 
 #: app/global_edit.c:821 app/global_edit.c:853
 msgid "Enter a name for this buffer"
 msgstr ""
 
 #: app/global_edit.c:852
-#, fuzzy
 msgid "Copy Named"
-msgstr "/Muokkaa/Kopioi nimetty"
+msgstr ""
 
-#: app/gradient.c:473
+#: app/gradient.c:469
 msgid "Curved"
 msgstr ""
 
-#: app/gradient.c:474
+#: app/gradient.c:470
 msgid "Sinusoidal"
 msgstr ""
 
-#: app/gradient.c:475
+#: app/gradient.c:471
 msgid "Spherical (increasing)"
 msgstr ""
 
-#: app/gradient.c:476
+#: app/gradient.c:472
 msgid "Spherical (decreasing)"
 msgstr ""
 
-#: app/gradient.c:481
+#: app/gradient.c:477
 msgid "Plain RGB"
 msgstr ""
 
-#: app/gradient.c:482
+#: app/gradient.c:478
 msgid "HSV (counter-clockwise hue)"
 msgstr ""
 
-#: app/gradient.c:483
+#: app/gradient.c:479
 msgid "HSV (clockwise hue)"
 msgstr ""
 
-#: app/gradient.c:504
+#: app/gradient.c:500
 msgid "Default"
 msgstr ""
 
-#: app/gradient.c:584
+#: app/gradient.c:580
 #, c-format
 msgid "grad_get_color_at(): Unknown gradient type %d"
 msgstr ""
 
-#: app/gradient.c:641
+#: app/gradient.c:637
 #, c-format
 msgid "grad_get_color_at(): Unknown coloring mode %d"
 msgstr ""
 
-#: app/gradient.c:708
-#, fuzzy
+#: app/gradient.c:704
 msgid "Gradient Editor"
-msgstr "/Dialogit/Liukuvärien muokkain..."
+msgstr ""
 
-#: app/gradient.c:734 app/gradient_select.c:475 app/paintbrush.c:216
-#: app/palette.c:2787
+#: app/gradient.c:730 app/gradient_select.c:477 app/paintbrush.c:211
+#: app/palette.c:2895
 msgid "Gradient"
 msgstr ""
 
-#: app/gradient.c:735 app/gradient_select.c:476 app/palette.c:2143
+#: app/gradient.c:731 app/gradient_select.c:478 app/palette.c:2180
 #: app/palette_select.c:276
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #. Frame & vbox for gradient functions
-#: app/gradient.c:756
-#, fuzzy
+#: app/gradient.c:752
 msgid "Gradient Ops"
-msgstr "/Valitse/Ei mitään"
+msgstr ""
 
 #. Buttons for gradient functions
-#: app/gradient.c:764
-#, fuzzy
+#: app/gradient.c:760
 msgid "New Gradient"
-msgstr "/Valitse/Ei mitään"
+msgstr ""
 
-#: app/gradient.c:770
-#, fuzzy
+#: app/gradient.c:766
 msgid "Copy Gradient"
-msgstr "/Valitse/Ei mitään"
+msgstr ""
 
-#: app/gradient.c:776
-#, fuzzy
+#: app/gradient.c:772
 msgid "Delete Gradient"
-msgstr "/Dialogit/Liukuvärien muokkain..."
+msgstr ""
 
-#: app/gradient.c:782
+#: app/gradient.c:778
 msgid "Rename Gradient"
 msgstr ""
 
-#: app/gradient.c:788 app/gradient.c:1688
+#: app/gradient.c:784 app/gradient.c:1684
 msgid "Save as POV-Ray"
 msgstr ""
 
 #. Zoom all button
-#: app/gradient.c:804
+#: app/gradient.c:800
 msgid "Zoom all"
 msgstr ""
 
-#: app/gradient.c:869
+#: app/gradient.c:865
 msgid "Instant update"
 msgstr ""
 
-#: app/gradient.c:1332
+#: app/gradient.c:1328
 msgid "New gradient"
 msgstr ""
 
-#: app/gradient.c:1333
+#: app/gradient.c:1329
 msgid "Enter a name for the new gradient"
 msgstr ""
 
-#: app/gradient.c:1334
+#: app/gradient.c:1330
 msgid "untitled"
-msgstr ""
+msgstr "unavngivet"
 
-#: app/gradient.c:1352
+#: app/gradient.c:1348
 msgid "ed_do_new_gradient_callback(): oops, received NULL in call_data"
 msgstr ""
 
-#: app/gradient.c:1393
+#: app/gradient.c:1389
 msgid "Copy gradient"
 msgstr ""
 
-#: app/gradient.c:1394
+#: app/gradient.c:1390
 msgid "Enter a name for the copied gradient"
 msgstr ""
 
-#: app/gradient.c:1416
+#: app/gradient.c:1412
 msgid "ed_do_copy_gradient_callback(): oops, received NULL in call_data"
 msgstr ""
 
-#: app/gradient.c:1476
+#: app/gradient.c:1472
 msgid "Rename gradient"
 msgstr ""
 
-#: app/gradient.c:1477
+#: app/gradient.c:1473
 msgid "Enter a new name for the gradient"
 msgstr ""
 
-#: app/gradient.c:1499
+#: app/gradient.c:1495
 msgid "ed_do_rename_gradient_callback(): oops, received NULL in call_data"
 msgstr ""
 
-#: app/gradient.c:1520
+#: app/gradient.c:1516
 msgid "ed_do_rename_gradient_callback(): oops, can't find gradient to rename"
 msgstr ""
 
-#: app/gradient.c:1565
+#: app/gradient.c:1561
 msgid "Delete gradient"
 msgstr ""
 
-#: app/gradient.c:1579
+#: app/gradient.c:1575
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
 msgstr ""
 
-#: app/gradient.c:1633
+#: app/gradient.c:1629
 msgid "ed_do_delete_gradient_callback(): Could not find gradient to delete!"
 msgstr ""
 
-#: app/gradient.c:1720
+#: app/gradient.c:1716
 #, c-format
 msgid "ed_do_save_pov_callback(): oops, could not open \"%s\""
 msgstr ""
 
-#: app/gradient.c:1843
+#: app/gradient.c:1839
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
 msgstr ""
 
-#: app/gradient.c:2087
+#: app/gradient.c:2083
 #, c-format
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Opacity: %0.3f"
 msgstr ""
 
-#: app/gradient.c:2111
+#: app/gradient.c:2107
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr ""
 
-#: app/gradient.c:2134
+#: app/gradient.c:2130
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr ""
 
-#: app/gradient.c:2423
+#: app/gradient.c:2419
 msgid "Drag: move    Shift+drag: move & compress"
 msgstr ""
 
-#: app/gradient.c:2425 app/gradient.c:2427
+#: app/gradient.c:2421 app/gradient.c:2423
 msgid "Click: select    Shift+click: extend selection"
 msgstr ""
 
-#: app/gradient.c:2432
+#: app/gradient.c:2428
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr ""
 
-#: app/gradient.c:2443
+#: app/gradient.c:2439
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
 msgstr ""
 
-#: app/gradient.c:2682 app/gradient.c:2691
+#: app/gradient.c:2678 app/gradient.c:2687
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr ""
 
-#: app/gradient.c:2708
+#: app/gradient.c:2704
 #, c-format
 msgid "Distance: %0.6f"
 msgstr ""
 
-#: app/gradient.c:2715
+#: app/gradient.c:2711
 #, c-format
 msgid "control_motion(): Attempt to move bogus handle %d"
 msgstr ""
 
-#: app/gradient.c:3167 app/gradient.c:4218
+#: app/gradient.c:3163 app/gradient.c:4214
 msgid "Left endpoint's color"
 msgstr ""
 
-#: app/gradient.c:3178 app/gradient.c:3220
+#: app/gradient.c:3174 app/gradient.c:3216
 msgid "Load from"
 msgstr ""
 
-#: app/gradient.c:3182
+#: app/gradient.c:3178
 msgid "Left neighbor's right endpoint"
 msgstr ""
 
-#: app/gradient.c:3183
+#: app/gradient.c:3179
 msgid "Right endpoint"
 msgstr ""
 
-#: app/gradient.c:3193 app/gradient.c:3235
+#: app/gradient.c:3189 app/gradient.c:3231
 msgid "Save to"
 msgstr ""
 
-#: app/gradient.c:3209 app/gradient.c:4296
+#: app/gradient.c:3205 app/gradient.c:4292
 msgid "Right endpoint's color"
 msgstr ""
 
-#: app/gradient.c:3224
+#: app/gradient.c:3220
 msgid "Right neighbor's left endpoint"
 msgstr ""
 
-#: app/gradient.c:3225
+#: app/gradient.c:3221
 msgid "Left endpoint"
 msgstr ""
 
-#: app/gradient.c:3336
+#: app/gradient.c:3332
 msgid "Selection operations"
 msgstr ""
 
-#: app/gradient.c:3512
+#: app/gradient.c:3508
 msgid "Blending function for segment"
 msgstr ""
 
-#: app/gradient.c:3514
+#: app/gradient.c:3510
 msgid "Coloring type for segment"
 msgstr ""
 
-#: app/gradient.c:3516
+#: app/gradient.c:3512
 msgid "Split segment at midpoint"
 msgstr ""
 
-#: app/gradient.c:3518 app/gradient.c:4612
+#: app/gradient.c:3514 app/gradient.c:4608
 msgid "Split segment uniformly"
 msgstr ""
 
-#: app/gradient.c:3520
+#: app/gradient.c:3516
 msgid "Delete segment"
 msgstr ""
 
-#: app/gradient.c:3522
+#: app/gradient.c:3518
 msgid "Re-center segment's midpoint"
 msgstr ""
 
-#: app/gradient.c:3524
+#: app/gradient.c:3520
 msgid "Re-distribute handles in segment"
 msgstr ""
 
-#: app/gradient.c:3526
+#: app/gradient.c:3522
 msgid "Flip segment"
 msgstr ""
 
-#: app/gradient.c:3528 app/gradient.c:5191
+#: app/gradient.c:3524 app/gradient.c:5187
 msgid "Replicate segment"
 msgstr ""
 
-#: app/gradient.c:3533
+#: app/gradient.c:3529
 msgid "Blending function for selection"
 msgstr ""
 
-#: app/gradient.c:3535
+#: app/gradient.c:3531
 msgid "Coloring type for selection"
 msgstr ""
 
-#: app/gradient.c:3537
+#: app/gradient.c:3533
 msgid "Split segments at midpoints"
 msgstr ""
 
-#: app/gradient.c:3539 app/gradient.c:4613
+#: app/gradient.c:3535 app/gradient.c:4609
 msgid "Split segments uniformly"
 msgstr ""
 
-#: app/gradient.c:3541
+#: app/gradient.c:3537
 msgid "Delete selection"
 msgstr ""
 
-#: app/gradient.c:3543
+#: app/gradient.c:3539
 msgid "Re-center midpoints in selection"
 msgstr ""
 
-#: app/gradient.c:3545
+#: app/gradient.c:3541
 msgid "Re-distribute handles in selection"
 msgstr ""
 
-#: app/gradient.c:3547
+#: app/gradient.c:3543
 msgid "Flip selection"
 msgstr ""
 
-#: app/gradient.c:3549 app/gradient.c:5192
+#: app/gradient.c:3545 app/gradient.c:5188
 msgid "Replicate selection"
 msgstr ""
 
-#: app/gradient.c:3825
+#: app/gradient.c:3821
 msgid "FG color"
 msgstr ""
 
-#: app/gradient.c:3870
+#: app/gradient.c:3866
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr ""
 
-#: app/gradient.c:4387 app/gradient.c:4459
+#: app/gradient.c:4383 app/gradient.c:4455
 msgid "(Varies)"
 msgstr ""
 
-#: app/gradient.c:4602
+#: app/gradient.c:4598
 msgid "Split"
 msgstr ""
 
 #. Instructions
-#: app/gradient.c:4628
+#: app/gradient.c:4624
 msgid "Please select the number of uniform parts"
 msgstr ""
 
-#: app/gradient.c:4634
+#: app/gradient.c:4630
 msgid "in which you want to split the selected segment"
 msgstr ""
 
-#: app/gradient.c:4635
+#: app/gradient.c:4631
 msgid "in which you want to split the segments in the selection"
 msgstr ""
 
-#: app/gradient.c:5010
+#: app/gradient.c:5006
 msgid "Blend endpoints' colors"
 msgstr ""
 
-#: app/gradient.c:5022
+#: app/gradient.c:5018
 msgid "Blend endpoints' opacity"
 msgstr ""
 
-#: app/gradient.c:5181
+#: app/gradient.c:5177
 msgid "Replicate"
 msgstr ""
 
 #. Instructions
-#: app/gradient.c:5206
+#: app/gradient.c:5202
 msgid "Please select the number of times"
 msgstr ""
 
-#: app/gradient.c:5211
+#: app/gradient.c:5207
 msgid "you want to replicate the selected segment"
 msgstr ""
 
-#: app/gradient.c:5212
+#: app/gradient.c:5208
 msgid "you want to replicate the selection"
 msgstr ""
 
-#: app/gradient.c:5588
+#: app/gradient.c:5584
 #, c-format
 msgid "grad_load_gradient(): invalid number of segments in \"%s\""
 msgstr ""
 
-#: app/gradient.c:5611
+#: app/gradient.c:5607
 #, c-format
 msgid ""
 "grad_load_gradient(): badly formatted gradient segment %d in \"%s\" --- bad "
 "things may happen soon"
 msgstr ""
 
-#: app/gradient.c:5645
+#: app/gradient.c:5641
 msgid "grad_save_gradient(): can not save gradient with NULL filename"
 msgstr ""
 
-#: app/gradient.c:5651
+#: app/gradient.c:5647
 #, c-format
 msgid "grad_save_gradient(): can't open \"%s\""
 msgstr ""
 
-#: app/gradient.c:5853
+#: app/gradient.c:5849
 #, c-format
 msgid "seg_get_segment_at(): No matching segment for position %0.15f"
 msgstr ""
 
-#: app/gradient_select.c:508
-#, fuzzy
+#: app/gradient_select.c:510
 msgid "Gradient Selection"
-msgstr "/Valitse/Ei mitään"
+msgstr ""
 
 #: app/histogram_tool.c:172
-#, fuzzy
 msgid "Histogram Options"
-msgstr "/Dialogit/Työkalujen asetukset"
+msgstr ""
 
 #: app/histogram_tool.c:210
 msgid "Histogram does not operate on indexed drawables."
@@ -2497,7 +2507,7 @@ msgstr ""
 msgid "Percentile:"
 msgstr ""
 
-#: app/histogram_tool.c:296 app/tools.c:607
+#: app/histogram_tool.c:296 app/tools.c:623
 msgid "Histogram"
 msgstr ""
 
@@ -2514,9 +2524,8 @@ msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr ""
 
 #: app/hue_saturation.c:367
-#, fuzzy
 msgid "Master"
-msgstr "/Muokkaa/Liimaa"
+msgstr ""
 
 #: app/hue_saturation.c:368
 msgid "R"
@@ -2542,7 +2551,7 @@ msgstr ""
 msgid "M"
 msgstr ""
 
-#: app/hue_saturation.c:394 app/tools.c:532
+#: app/hue_saturation.c:394 app/tools.c:548
 msgid "Hue-Saturation"
 msgstr ""
 
@@ -2551,8 +2560,8 @@ msgid "Hue / Lightness / Saturation Adjustments"
 msgstr ""
 
 #. Create the hue scale widget
-#: app/hue_saturation.c:466 app/layers_dialog.c:241 app/paint_funcs.c:94
-#: app/tool_options.c:787
+#: app/hue_saturation.c:466 app/layers_dialog.c:249 app/paint_funcs.c:93
+#: app/tool_options.c:840
 msgid "Hue"
 msgstr ""
 
@@ -2562,8 +2571,8 @@ msgid "Lightness"
 msgstr ""
 
 #. Create the saturation scale widget
-#: app/hue_saturation.c:534 app/layers_dialog.c:243 app/paint_funcs.c:95
-#: app/tool_options.c:788
+#: app/hue_saturation.c:534 app/layers_dialog.c:251 app/paint_funcs.c:94
+#: app/tool_options.c:841
 msgid "Saturation"
 msgstr ""
 
@@ -2571,128 +2580,126 @@ msgstr ""
 msgid "image depth change, unable to restore original image"
 msgstr ""
 
-#: app/info_window.c:48
+#: app/info_window.c:59
 msgid "Static Gray"
 msgstr ""
 
-#: app/info_window.c:50
+#: app/info_window.c:60 app/info_window.c:447 app/preferences_dialog.c:1646
+msgid "Grayscale"
+msgstr "Gråtoner"
+
+#: app/info_window.c:61
 msgid "Static Color"
 msgstr ""
 
-#: app/info_window.c:51
+#: app/info_window.c:62
 msgid "Pseudo Color"
 msgstr ""
 
-#: app/info_window.c:52
+#: app/info_window.c:63
 msgid "True Color"
 msgstr ""
 
-#: app/info_window.c:53
+#: app/info_window.c:64
 msgid "Direct Color"
 msgstr ""
 
-#. create the info dialog
-#: app/info_window.c:138
-#, fuzzy, c-format
-msgid "%s: Window Info"
-msgstr "/Näytä/Ikkunan tiedot..."
-
-#. add the information fields
-#: app/info_window.c:154
-msgid "Dimensions (w x h):"
+#: app/info_window.c:236
+msgid "Extended"
 msgstr ""
 
-#: app/info_window.c:156 app/iscissors.c:327
-#, fuzzy
-msgid "Resolution:"
-msgstr "/Valitse/Ei mitään"
+#. create the info dialog
+#: app/info_window.c:285
+#, c-format
+msgid "%s: Window Info"
+msgstr ""
 
-#: app/info_window.c:158 app/tool_options.c:449
+#. add the information fields
+#: app/info_window.c:302
+msgid "Dimensions (w x h):"
+msgstr "Dimentioner (w x h):"
+
+#: app/info_window.c:304 app/iscissors.c:354
+msgid "Resolution:"
+msgstr "Opløsning:"
+
+#: app/info_window.c:306 app/tool_options.c:450
 msgid "Unit:"
 msgstr ""
 
-#: app/info_window.c:160
-#, fuzzy
+#: app/info_window.c:308
 msgid "Scale Ratio:"
-msgstr "/Valitse/Ei mitään"
+msgstr ""
 
-#: app/info_window.c:162
+#: app/info_window.c:310
 msgid "Display Type:"
 msgstr ""
 
-#: app/info_window.c:164
+#: app/info_window.c:312
 msgid "Visual Class:"
 msgstr ""
 
-#: app/info_window.c:166
+#: app/info_window.c:314
 msgid "Visual Depth:"
 msgstr ""
 
-#: app/info_window.c:169
+#: app/info_window.c:317
 msgid "Shades of Color:"
 msgstr ""
 
-#: app/info_window.c:172
-#, fuzzy
+#: app/info_window.c:320
 msgid "Shades:"
-msgstr "/Valitse/Terävöitä"
+msgstr "Skygger"
 
-#: app/info_window.c:175
+#: app/info_window.c:323
 msgid "Shades of Gray:"
-msgstr ""
+msgstr "Skygger af grå:"
 
-#: app/info_window.c:239
+#: app/info_window.c:445
 msgid "RGB Color"
 msgstr ""
 
-#: app/info_window.c:243
-#, fuzzy
+#: app/info_window.c:449
 msgid "Indexed Color"
-msgstr "/Kuva/Indeksoitu"
-
-#. size slider
-#: app/ink.c:294
-msgid "Size:"
 msgstr ""
 
+#. size slider
+#: app/ink.c:290
+msgid "Size:"
+msgstr "Størrelse:"
+
 #. sens slider
-#: app/ink.c:312 app/ink.c:336 app/ink.c:366
+#: app/ink.c:308 app/ink.c:332 app/ink.c:362
 msgid "Sensitivity:"
 msgstr ""
 
 #. tilt sens slider
-#: app/ink.c:330
+#: app/ink.c:326
 msgid "Tilt"
 msgstr ""
 
 #. velocity sens slider
-#: app/ink.c:360
+#: app/ink.c:356
 msgid "Speed"
 msgstr ""
 
 #. angle adjust slider
-#: app/ink.c:390
+#: app/ink.c:386
 msgid "Angle"
 msgstr ""
 
-#: app/ink.c:396
+#: app/ink.c:392
 msgid "Adjust:"
 msgstr ""
 
-#. Brush type radiobuttons
-#: app/ink.c:419
-msgid "Type"
-msgstr ""
-
 #. Brush shape widget
-#: app/ink.c:483
-#, fuzzy
+#: app/ink.c:479
 msgid "Shape"
-msgstr "/Valitse/Terävöitä"
+msgstr ""
 
 #: app/install.c:84
 msgid "The GIMP is not properly installed for the current user\n"
-msgstr ""
+msgstr "GIMP er sikkert ikke installeret korrekt for denne bruger\n"
 
 #: app/install.c:85
 msgid ""
@@ -2707,11 +2714,11 @@ msgstr ""
 
 #: app/install.c:105
 msgid "Install"
-msgstr ""
+msgstr "Installer"
 
 #: app/install.c:106
 msgid "Ignore"
-msgstr ""
+msgstr "Ignorer"
 
 #: app/install.c:120
 msgid ""
@@ -2720,9 +2727,8 @@ msgid ""
 msgstr ""
 
 #: app/install.c:121
-#, fuzzy
 msgid "Copyright (C) 1995 Spencer Kimball and Peter Mattis\n"
-msgstr "Spencer Kimball ja Peter Mattis"
+msgstr ""
 
 #: app/install.c:125
 msgid ""
@@ -2952,13 +2958,12 @@ msgid ""
 msgstr ""
 
 #: app/install.c:256
-#, fuzzy
 msgid "GIMP Installation"
-msgstr "GIMP:n versio"
+msgstr ""
 
 #: app/install.c:391
 msgid "Continue"
-msgstr ""
+msgstr "Forsæt"
 
 #: app/install.c:411
 msgid "Installation Log"
@@ -2972,7 +2977,7 @@ msgstr ""
 
 #: app/install.c:453
 msgid " does not exist.  Cannot install.\n"
-msgstr ""
+msgstr " eksisterer ikke. Kan ikke installere.\n"
 
 #: app/install.c:461
 msgid ""
@@ -2992,130 +2997,114 @@ msgid ""
 "Installation failed.  Contact system administrator.\n"
 msgstr ""
 
-#: app/interface.c:322
+#: app/interface.c:304
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
 msgstr ""
 
-#: app/interface.c:545
-#, fuzzy
+#: app/interface.c:527
 msgid "The GIMP"
-msgstr "Tietoja GIMPstä"
+msgstr ""
 
-#: app/interface.c:1383
+#: app/interface.c:1376
 msgid "GIMP Message"
+msgstr "GIMP besked"
+
+#: app/internal_procs.c:67
+msgid "Brush UI"
 msgstr ""
 
 #: app/internal_procs.c:67
 msgid "Internal Procedures"
 msgstr ""
 
-#: app/internal_procs.c:67
-msgid "Brush UI"
-msgstr ""
-
 #: app/internal_procs.c:73
-#, fuzzy
 msgid "Channel"
-msgstr "/Valitse/Talleta kanavalle"
+msgstr "Kanal"
 
 #: app/internal_procs.c:76
-#, fuzzy
 msgid "Channel Ops"
-msgstr "/Kuva/Kanava operaatiot/Offset"
-
-#: app/internal_procs.c:79 app/layers_dialog.c:245 app/paint_funcs.c:96
-#: app/tool_options.c:789
-msgid "Color"
 msgstr ""
+
+#: app/internal_procs.c:79 app/layers_dialog.c:253 app/paint_funcs.c:95
+#: app/tool_options.c:842
+msgid "Color"
+msgstr "Farve"
 
 #: app/internal_procs.c:82
 msgid "Convert"
-msgstr ""
+msgstr "Konverter"
 
 #: app/internal_procs.c:85
 msgid "Drawable procedures"
 msgstr ""
 
 #: app/internal_procs.c:88
-#, fuzzy
 msgid "Edit procedures"
-msgstr "/Muokkaa/Leikkaa"
+msgstr ""
 
 #: app/internal_procs.c:91
-#, fuzzy
 msgid "File Operations"
-msgstr "/Tiedosto/Dialogit/Työkalujen Asetukset..."
+msgstr ""
 
 #: app/internal_procs.c:94
-#, fuzzy
 msgid "Floating selections"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
 #: app/internal_procs.c:97
 msgid "GDisplay procedures"
 msgstr ""
 
 #: app/internal_procs.c:100
-#, fuzzy
 msgid "Image"
-msgstr "/Kuva/---"
+msgstr "Billede"
 
 #: app/internal_procs.c:103
-#, fuzzy
 msgid "Image mask"
-msgstr "/Kuva/Skaalaa"
+msgstr "Billede maske"
 
 #: app/internal_procs.c:106
-#, fuzzy
 msgid "Gimprc procedures"
-msgstr "/Kuva/Skaalaa"
+msgstr ""
 
 #: app/internal_procs.c:112
-#, fuzzy
 msgid "Gradient UI"
-msgstr "/Valitse/Ei mitään"
+msgstr ""
 
 #: app/internal_procs.c:115
-#, fuzzy
 msgid "Guide procedures"
-msgstr "/Kuva/Skaalaa"
+msgstr ""
 
-#: app/internal_procs.c:118 app/preferences_dialog.c:1721
+#: app/internal_procs.c:118 app/preferences_dialog.c:1739
 msgid "Interface"
 msgstr ""
 
 #. the layer name label
 #: app/internal_procs.c:121 app/layer_select.c:137
-#, fuzzy
 msgid "Layer"
-msgstr "/Tasot/Nosta taso"
+msgstr "Lag"
 
 #: app/internal_procs.c:124
 msgid "Miscellaneous"
+msgstr "Diverse"
+
+#: app/internal_procs.c:127 app/palette.c:2166 app/palette.c:2178
+#: app/palette_select.c:274
+msgid "Palette"
 msgstr ""
 
-#: app/internal_procs.c:127 app/palette.c:2129 app/palette.c:2141
-#: app/palette_select.c:274
-#, fuzzy
-msgid "Palette"
-msgstr "/Muokkaa/Liimaa"
-
 #: app/internal_procs.c:130
-#, fuzzy
 msgid "Parasite procedures"
-msgstr "/Muokkaa/Leikkaa"
+msgstr ""
 
 #: app/internal_procs.c:133 app/lc_dialog.c:180
-#, fuzzy
 msgid "Paths"
-msgstr "/Muokkaa/Liimaa"
+msgstr "Stier"
 
 #: app/internal_procs.c:136
-#, fuzzy
 msgid "Pattern UI"
-msgstr "/Tasot/Yhdistä kuva"
+msgstr ""
 
 #: app/internal_procs.c:142
 msgid "Plug-in"
@@ -3126,9 +3115,8 @@ msgid "Procedural database"
 msgstr ""
 
 #: app/internal_procs.c:148
-#, fuzzy
 msgid "Text procedures"
-msgstr "/Muokkaa/Leikkaa"
+msgstr ""
 
 #: app/internal_procs.c:151
 msgid "Tool procedures"
@@ -3136,7 +3124,7 @@ msgstr ""
 
 #: app/internal_procs.c:154
 msgid "Undo"
-msgstr ""
+msgstr "Fortryd"
 
 #: app/internal_procs.c:157
 msgid "Units"
@@ -3150,1167 +3138,1138 @@ msgstr ""
 msgid "Invert operation failed."
 msgstr ""
 
-#: app/iscissors.c:321
-#, fuzzy
+#: app/iscissors.c:348
 msgid "Curve"
-msgstr "/Muokkaa/Leikkaa"
+msgstr ""
 
 #. the threshold scale
-#: app/iscissors.c:350
+#: app/iscissors.c:377
 msgid "Edge Detect "
 msgstr ""
 
 #. the elasticity scale
-#: app/iscissors.c:379
+#: app/iscissors.c:406
 msgid "Elasticity:"
-msgstr ""
-
-#. the convert to bezier button
-#: app/iscissors.c:399
-msgid "Convert to Bezier Curve"
-msgstr ""
-
-#: app/iscissors.c:933
-msgid "add_segment(): Unable to reallocate segment array in iscissors."
-msgstr ""
-
-#: app/iscissors.c:976
-msgid "add_point(): Unable to reallocate points array in iscissors."
-msgstr ""
-
-#: app/iscissors.c:1780
-msgid "Boundary contains < 4 points!  Cannot bezierify."
 msgstr ""
 
 #: app/layer.c:248
 msgid "Zero width or height layers not allowed."
 msgstr ""
 
-#: app/layer.c:354
+#: app/layer.c:349
 msgid "layer_copy: could not allocate new layer"
 msgstr ""
 
-#: app/layer.c:431
+#: app/layer.c:426
 msgid "layer_from_tiles: could not allocate new layer"
 msgstr ""
 
-#: app/layer.c:486
+#: app/layer.c:479
 #, c-format
 msgid "%s mask"
 msgstr ""
 
 #: app/layer_select.c:101
-#, fuzzy
 msgid "Layer Select"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
-#: app/layers_dialog.c:219 app/paint_funcs.c:83 app/tool_options.c:775
+#: app/layers_dialog.c:227 app/paint_funcs.c:82 app/tool_options.c:828
 msgid "Normal"
 msgstr ""
 
-#: app/layers_dialog.c:221 app/paint_funcs.c:84 app/tool_options.c:776
+#: app/layers_dialog.c:229 app/paint_funcs.c:83 app/tool_options.c:829
 msgid "Dissolve"
 msgstr ""
 
-#: app/layers_dialog.c:223 app/paint_funcs.c:86 app/tool_options.c:778
+#: app/layers_dialog.c:231 app/paint_funcs.c:85 app/tool_options.c:831
 msgid "Multiply (Burn)"
 msgstr ""
 
-#: app/layers_dialog.c:225 app/paint_funcs.c:98 app/tool_options.c:779
+#: app/layers_dialog.c:233 app/paint_funcs.c:97 app/tool_options.c:832
 msgid "Divide (Dodge)"
 msgstr ""
 
-#: app/layers_dialog.c:227 app/paint_funcs.c:87 app/tool_options.c:780
+#: app/layers_dialog.c:235 app/paint_funcs.c:86 app/tool_options.c:833
 msgid "Screen"
 msgstr ""
 
-#: app/layers_dialog.c:229 app/paint_funcs.c:88 app/tool_options.c:781
+#: app/layers_dialog.c:237 app/paint_funcs.c:87 app/tool_options.c:834
 msgid "Overlay"
 msgstr ""
 
-#: app/layers_dialog.c:231 app/paint_funcs.c:89 app/tool_options.c:782
+#: app/layers_dialog.c:239 app/paint_funcs.c:88 app/tool_options.c:835
 msgid "Difference"
 msgstr ""
 
-#: app/layers_dialog.c:233 app/paint_funcs.c:90 app/tool_options.c:783
+#: app/layers_dialog.c:241 app/paint_funcs.c:89 app/tool_options.c:836
 msgid "Addition"
 msgstr ""
 
-#: app/layers_dialog.c:237 app/paint_funcs.c:92 app/tool_options.c:785
+#: app/layers_dialog.c:245 app/paint_funcs.c:91 app/tool_options.c:838
 msgid "Darken Only"
 msgstr ""
 
-#: app/layers_dialog.c:239 app/paint_funcs.c:93 app/tool_options.c:786
+#: app/layers_dialog.c:247 app/paint_funcs.c:92 app/tool_options.c:839
 msgid "Lighten Only"
 msgstr ""
 
-#: app/layers_dialog.c:266 app/layers_dialog.c:3103
+#: app/layers_dialog.c:274 app/layers_dialog.c:3347
 msgid "New Layer"
-msgstr ""
+msgstr "Nyt lag"
 
-#: app/layers_dialog.c:268
+#: app/layers_dialog.c:276
 msgid ""
 "Raise Layer    \n"
 "<Shift> To Top"
 msgstr ""
 
-#: app/layers_dialog.c:271
+#: app/layers_dialog.c:279
 msgid ""
 "Lower Layer       \n"
 "<Shift> To Bottom"
 msgstr ""
 
-#: app/layers_dialog.c:274
+#: app/layers_dialog.c:282
 msgid "Duplicate Layer"
-msgstr ""
+msgstr "Dupliker lag"
 
-#: app/layers_dialog.c:276
-#, fuzzy
+#: app/layers_dialog.c:284
 msgid "Anchor Layer"
-msgstr "/Tasot/Ankkuroi taso"
-
-#: app/layers_dialog.c:278
-msgid "Delete Layer"
 msgstr ""
 
-#: app/layers_dialog.c:357
+#: app/layers_dialog.c:286
+msgid "Delete Layer"
+msgstr "Slet lag"
+
+#: app/layers_dialog.c:373
 msgid "Keep Trans."
 msgstr ""
 
-#: app/layers_dialog.c:507
+#: app/layers_dialog.c:550
 msgid "layers_dialog_update(): layersD->layer_widgets not empty!"
 msgstr ""
 
-#: app/layers_dialog.c:964 app/menus.c:246
-#, fuzzy
+#: app/layers_dialog.c:1007 app/menus.c:260
 msgid "/Stack/Previous Layer"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/layers_dialog.c:965 app/menus.c:247
-#, fuzzy
+#: app/layers_dialog.c:1008 app/menus.c:261
 msgid "/Stack/Next Layer"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/layers_dialog.c:967 app/menus.c:248
-#, fuzzy
+#: app/layers_dialog.c:1010 app/menus.c:262
 msgid "/Stack/Raise Layer"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/layers_dialog.c:971 app/menus.c:249
-#, fuzzy
+#: app/layers_dialog.c:1014 app/menus.c:263
 msgid "/Stack/Lower Layer"
-msgstr "/Tasot/Alenna taso"
+msgstr ""
 
-#: app/layers_dialog.c:975 app/menus.c:250
-#, fuzzy
+#: app/layers_dialog.c:1018 app/menus.c:264
 msgid "/Stack/Layer to Top"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/layers_dialog.c:977 app/menus.c:251
-#, fuzzy
+#: app/layers_dialog.c:1020 app/menus.c:265
 msgid "/Stack/Layer to Bottom"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/layers_dialog.c:980 app/menus.c:245
-#, fuzzy
+#: app/layers_dialog.c:1023 app/menus.c:259
 msgid "/New Layer"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/layers_dialog.c:983 app/menus.c:252
-#, fuzzy
+#: app/layers_dialog.c:1026 app/menus.c:266
 msgid "/Duplicate Layer"
-msgstr "/Valitse/Talleta kanavalle"
+msgstr ""
 
-#: app/layers_dialog.c:986 app/menus.c:253
-#, fuzzy
+#: app/layers_dialog.c:1029 app/menus.c:267
 msgid "/Anchor Layer"
-msgstr "/Tasot/Ankkuroi taso"
+msgstr ""
 
-#: app/layers_dialog.c:989 app/menus.c:254
-#, fuzzy
+#: app/layers_dialog.c:1032 app/menus.c:268
 msgid "/Delete Layer"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/layers_dialog.c:992 app/menus.c:256
-#, fuzzy
+#: app/layers_dialog.c:1035 app/menus.c:270
 msgid "/Scale Layer"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/layers_dialog.c:993 app/menus.c:257
-#, fuzzy
+#: app/layers_dialog.c:1036 app/menus.c:271
 msgid "/Resize Layer"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/layers_dialog.c:995 app/menus.c:259
-#, fuzzy
+#: app/layers_dialog.c:1038 app/menus.c:273
 msgid "/Merge Visible Layers"
-msgstr "/Tasot/Yhdistä näkyvät tasot"
+msgstr ""
 
-#: app/layers_dialog.c:996 app/menus.c:260
+#: app/layers_dialog.c:1039 app/menus.c:274
 msgid "/Merge Down"
 msgstr ""
 
-#: app/layers_dialog.c:997 app/menus.c:261
-#, fuzzy
+#: app/layers_dialog.c:1040 app/menus.c:275
 msgid "/Flatten Image"
-msgstr "/Tasot/Yhdistä kuva"
+msgstr ""
 
-#: app/layers_dialog.c:999 app/menus.c:263
-#, fuzzy
+#: app/layers_dialog.c:1042 app/menus.c:277
 msgid "/Add Layer Mask"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
-#: app/layers_dialog.c:1000 app/menus.c:264
+#: app/layers_dialog.c:1043 app/menus.c:278
 msgid "/Apply Layer Mask"
 msgstr ""
 
-#: app/layers_dialog.c:1001 app/menus.c:265
-#, fuzzy
+#: app/layers_dialog.c:1044 app/menus.c:279
 msgid "/Alpha to Selection"
-msgstr "/Tasot/Alpha valinnaksi"
+msgstr ""
 
-#: app/layers_dialog.c:1002 app/menus.c:266
-#, fuzzy
+#: app/layers_dialog.c:1045 app/menus.c:280
 msgid "/Mask to Selection"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
-#: app/layers_dialog.c:1003 app/menus.c:267
-#, fuzzy
+#: app/layers_dialog.c:1046 app/menus.c:281
 msgid "/Add Alpha Channel"
-msgstr "/Tasot/Lisää alpha kanava"
+msgstr ""
 
-#: app/layers_dialog.c:1193
+#: app/layers_dialog.c:1244
 msgid "Unknown layer mode"
 msgstr ""
 
-#: app/layers_dialog.c:1819 app/layers_dialog.c:2870 app/layers_dialog.c:3321
+#: app/layers_dialog.c:1768
+msgid "Empty Layer Copy"
+msgstr ""
+
+#: app/layers_dialog.c:1784
+msgid ""
+"layers_dialog_drop_new_layer_callback():\n"
+"could not allocate new layer"
+msgstr ""
+
+#: app/layers_dialog.c:2029 app/layers_dialog.c:3114 app/layers_dialog.c:3567
 msgid "Floating Selection"
 msgstr ""
 
-#: app/layers_dialog.c:2992
+#: app/layers_dialog.c:3236
 msgid ""
 "new_layer_query_ok_callback():\n"
 "could not allocate new layer"
 msgstr ""
 
-#: app/layers_dialog.c:3073
+#: app/layers_dialog.c:3301
+msgid "Foreground"
+msgstr "Forgrund"
+
+#: app/layers_dialog.c:3303
+msgid "White"
+msgstr "Hvid"
+
+#: app/layers_dialog.c:3317
 msgid "New Layer Options"
-msgstr ""
+msgstr "Nyt lag instillinger"
 
 #. The name label and entry
-#: app/layers_dialog.c:3093
-#, fuzzy
+#: app/layers_dialog.c:3337
 msgid "Layer Name:"
-msgstr "/Tasot/Nosta taso"
+msgstr "Lag navn:"
 
 #. The size labels
-#: app/layers_dialog.c:3107
+#: app/layers_dialog.c:3351
 msgid "Layer Width:"
-msgstr ""
+msgstr "Lag bredde"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3166
+#: app/layers_dialog.c:3410
 msgid "Layer Fill Type"
 msgstr ""
 
-#: app/layers_dialog.c:3295
+#: app/layers_dialog.c:3541
 msgid "Edit Layer Attributes"
 msgstr ""
 
-#: app/layers_dialog.c:3313
-#, fuzzy
+#: app/layers_dialog.c:3559
 msgid "Layer name:"
-msgstr "/Tasot/Nosta taso"
+msgstr "Lag navn:"
 
-#: app/layers_dialog.c:3421
+#: app/layers_dialog.c:3667
 msgid "White (Full Opacity)"
 msgstr ""
 
-#: app/layers_dialog.c:3422
+#: app/layers_dialog.c:3668
 msgid "Black (Full Transparency)"
 msgstr ""
 
-#: app/layers_dialog.c:3423
-#, fuzzy
+#: app/layers_dialog.c:3669
 msgid "Layer's Alpha Channel"
-msgstr "/Tasot/Lisää alpha kanava"
+msgstr ""
 
-#: app/layers_dialog.c:3435
+#: app/layers_dialog.c:3681
 msgid "Add Mask Options"
 msgstr ""
 
 #. The radio frame and box
-#: app/layers_dialog.c:3450
-#, fuzzy
+#: app/layers_dialog.c:3696
 msgid "Initialize Layer Mask to:"
-msgstr "/Tasot/Maski valinnaksi"
-
-#: app/layers_dialog.c:3552
-msgid "Apply"
 msgstr ""
 
-#: app/layers_dialog.c:3553
+#: app/layers_dialog.c:3798
+msgid "Apply"
+msgstr "Tilføj"
+
+#: app/layers_dialog.c:3799
 msgid "Discard"
 msgstr ""
 
-#: app/layers_dialog.c:3564
-#, fuzzy
+#: app/layers_dialog.c:3810
 msgid "Layer Mask Options"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
 #. The name entry hbox, label and entry
-#: app/layers_dialog.c:3579
+#: app/layers_dialog.c:3825
 msgid "Apply layer mask?"
 msgstr ""
 
-#: app/layers_dialog.c:3638 app/layers_dialog.c:3737
+#: app/layers_dialog.c:3884 app/layers_dialog.c:3983
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
 msgstr ""
 
-#: app/layers_dialog.c:3874
+#: app/layers_dialog.c:4120
 msgid "Expanded as necessary"
 msgstr ""
 
-#: app/layers_dialog.c:3875
+#: app/layers_dialog.c:4121
 msgid "Clipped to image"
 msgstr ""
 
-#: app/layers_dialog.c:3876
+#: app/layers_dialog.c:4122
 msgid "Clipped to bottom layer"
 msgstr ""
 
-#: app/layers_dialog.c:3889
+#: app/layers_dialog.c:4135
 msgid "Layer Merge Options"
 msgstr ""
 
-#: app/layers_dialog.c:3905
+#: app/layers_dialog.c:4151
 msgid "Final, Merged Layer should be:"
 msgstr ""
 
-#: app/layers_dialog.c:3907
+#: app/layers_dialog.c:4153
 msgid "Final, Anchored Layer should be:"
 msgstr ""
 
 #: app/lc_dialog.c:111
-#, fuzzy
 msgid "Layers & Channels"
-msgstr "/Tasot/Tasot & Kanavat..."
+msgstr ""
 
 #. The Auto-button
 #: app/lc_dialog.c:150
-#, fuzzy
 msgid "Auto"
-msgstr "/Automaattinen"
+msgstr ""
 
 #: app/lc_dialog.c:170
 msgid "Layers"
-msgstr ""
+msgstr "Lag"
 
 #: app/lc_dialog.c:175
 msgid "Channels"
+msgstr "Kanaler"
+
+#: app/levels.c:210
+msgid "Levels Options"
 msgstr ""
 
-#: app/levels.c:197
-#, fuzzy
-msgid "Levels Options"
-msgstr "/Dialogit/Työkalujen asetukset"
-
-#: app/levels.c:245
+#: app/levels.c:258
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr ""
 
-#: app/levels.c:334
+#: app/levels.c:349
 msgid "Auto Levels"
 msgstr ""
 
-#: app/levels.c:351 app/tools.c:592
+#: app/levels.c:366 app/tools.c:608
 msgid "Levels"
 msgstr ""
 
-#: app/levels.c:366
+#: app/levels.c:381
 msgid "Modify Levels for Channel: "
 msgstr ""
 
-#: app/levels.c:382
+#: app/levels.c:397
 msgid "Input Levels: "
 msgstr ""
 
-#: app/levels.c:470
+#: app/levels.c:485
 msgid "Output Levels: "
 msgstr ""
 
+#: app/levels.c:556 app/module_db.c:808
+msgid "Load"
+msgstr ""
+
+#: app/levels.c:1063
+msgid "Load Levels"
+msgstr ""
+
+#: app/levels.c:1078
+msgid "Save Levels"
+msgstr ""
+
+#: app/levels.c:1395
+msgid "Load/Save Levels"
+msgstr ""
+
+#: app/levels.c:1424 app/levels.c:1442 app/paths_dialog.c:2183
+#, c-format
+msgid "Unable to open file %s"
+msgstr ""
+
 #: app/magnify.c:95
-#, fuzzy
 msgid "Magnify Options"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
 #: app/magnify.c:104
 msgid "Allow Window Resizing"
 msgstr ""
 
-#: app/main.c:287
+#: app/main.c:288
 msgid "GIMP version"
-msgstr "GIMP:n versio"
-
-#: app/main.c:291
-#, fuzzy, c-format
-msgid "Usage: %s [option ...] [files ...]\n"
-msgstr "Käyttö: %s [asetus ...] [tiedostot ...]\n"
+msgstr ""
 
 #: app/main.c:292
-msgid "Valid options are:\n"
-msgstr "Oikeat asetukset ovat:\n"
+#, c-format
+msgid "Usage: %s [option ...] [files ...]\n"
+msgstr ""
 
 #: app/main.c:293
-msgid "  -h --help                Output this help.\n"
-msgstr "  -h --help               Tulostaa tämän avun.\n"
+msgid "Valid options are:\n"
+msgstr ""
 
 #: app/main.c:294
-msgid "  -v --version             Output version info.\n"
-msgstr "  -v --version            Tulostaa versio tiedot.\n"
+msgid "  -h --help                Output this help.\n"
+msgstr "  -h --help\t\t  Vis denne hjælp.\n"
 
 #: app/main.c:295
-msgid "  -b --batch <commands>    Run in batch mode.\n"
-msgstr "  -b --batch <komennot>   Aja batch moodissa*.\n"
+msgid "  -v --version             Output version info.\n"
+msgstr "  -v --version            Vis versions info.\n"
 
 #: app/main.c:296
-msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
-msgstr "  -g --gimprc <gimprc>    Käytä toista gimprc tiedostoa.\n"
+msgid "  -b --batch <commands>    Run in batch mode.\n"
+msgstr ""
 
 #: app/main.c:297
-msgid "  -n --no-interface        Run without a user interface.\n"
-msgstr "  -n --no-interface       Aja ilman käyttöliittymää.\n"
+msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
+msgstr "  -g --gimprc <gimprc>    Brug en alternativ gimprc fil.\n"
 
 #: app/main.c:298
-msgid "  -r --restore-session     Try to restore saved session.\n"
-msgstr "  -r --restore-session    Yritä palauttaa talletettua istunto.\n"
+msgid "  -n --no-interface        Run without a user interface.\n"
+msgstr ""
 
 #: app/main.c:299
+msgid "  -r --restore-session     Try to restore saved session.\n"
+msgstr ""
+
+#: app/main.c:300
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
 msgstr ""
-"  --no-data\t\t    Älä lataa kuvioita, murrettujasävyjä, paletteja "
-"jasiveltimiä.\n"
-
-#: app/main.c:300
-msgid "  --verbose                Show startup messages.\n"
-msgstr "  --verbose               Näytä käynnistys tiedot.\n"
 
 #: app/main.c:301
-msgid "  --no-splash              Do not show the startup window.\n"
-msgstr "  --no-splash             Älä näytä alkuikkunaa.\n"
+msgid "  --verbose                Show startup messages.\n"
+msgstr ""
 
 #: app/main.c:302
-msgid "  --no-splash-image        Do not add an image to the startup window.\n"
-msgstr "  --no-splash-image       Älä lisää kuvaa alkuikkunaan.\n"
+msgid "  --no-splash              Do not show the startup window.\n"
+msgstr ""
 
 #: app/main.c:303
+msgid "  --no-splash-image        Do not add an image to the startup window.\n"
+msgstr ""
+
+#: app/main.c:304
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
 msgstr ""
-"  --no-shm                 Älä käytä jaettua muistia GIMP:in ja sen "
-"lisäosien välillä.\n"
-
-#: app/main.c:304
-msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
-msgstr "  --no-xshm               Älä käytä X Shared Memory lisäystä.\n"
 
 #: app/main.c:305
+msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
+msgstr ""
+
+#: app/main.c:306
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
 msgstr ""
-"  --console-messages       Tulosta varoitukset konsoliin graafisten "
-"dialogiensijasta.\n"
-
-#: app/main.c:306
-msgid "  --debug-handlers         Enable debugging signal handlers.\n"
-msgstr "  --debug-handlers        \n"
 
 #: app/main.c:307
+msgid "  --debug-handlers         Enable debugging signal handlers.\n"
+msgstr ""
+
+#: app/main.c:308
 msgid ""
 "  --display <display>      Use the designated X display.\n"
 "\n"
 msgstr ""
-"  --display <näyttö>       Käytä osoitettua X näyttöä.\n"
-"\n"
 
-#: app/main.c:308
+#: app/main.c:309
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
-"  --system-gimprc <gimprc> Käytä alternatiivista järjestelmän gimprc "
-"tiedostoa.\n"
 
-#: app/main.c:418
+#: app/main.c:419
 msgid "sighup caught"
-msgstr "sighup napattu"
+msgstr ""
 
-#: app/main.c:423
+#: app/main.c:424
 msgid "sigint caught"
-msgstr "sigint napattu"
+msgstr ""
 
-#: app/main.c:428
+#: app/main.c:429
 msgid "sigquit caught"
-msgstr "sigquit napattu"
+msgstr ""
 
-#: app/main.c:433
+#: app/main.c:434
 msgid "sigabrt caught"
-msgstr "sigabrt napattu"
+msgstr ""
 
-#: app/main.c:438
+#: app/main.c:439
 msgid "sigbus caught"
-msgstr "sigbus napattu"
+msgstr ""
 
-#: app/main.c:443
+#: app/main.c:444
 msgid "sigsegv caught"
-msgstr "sigsegv napattu"
+msgstr ""
 
-#: app/main.c:448
+#: app/main.c:449
 msgid "sigpipe caught"
-msgstr "sigpipe napattu"
+msgstr ""
 
-#: app/main.c:453
+#: app/main.c:454
 msgid "sigterm caught"
-msgstr "sigterm napattu"
+msgstr ""
 
-#: app/main.c:458
+#: app/main.c:459
 msgid "sigfpe caught"
-msgstr "sigfpe napattu"
+msgstr ""
 
-#: app/main.c:462
+#: app/main.c:463
 msgid "unknown signal"
-msgstr "tuntematon signaali"
+msgstr ""
 
-#: app/menus.c:45
+#: app/measure.c:117
 #, fuzzy
+msgid "Measure Options"
+msgstr "Gem instillinger"
+
+#: app/measure.c:126
+msgid "Use Info Window"
+msgstr ""
+
+#: app/measure.c:266
+msgid "Measure Tool"
+msgstr ""
+
+#: app/measure.c:267
+msgid "Distance:"
+msgstr ""
+
+#: app/measure.c:428 app/measure.c:433 app/measure.c:441 app/measure.c:466
+msgid "degrees"
+msgstr ""
+
+#: app/menus.c:46
 msgid "/File/MRU00 "
-msgstr "/Tiedosto/MRU%02d"
+msgstr ""
 
-#: app/menus.c:55 app/menus.c:87
+#: app/menus.c:47
 #, fuzzy
+msgid "/File"
+msgstr "/Filer/Afslut"
+
+#: app/menus.c:48
+#, fuzzy
+msgid "/File/Dialogs"
+msgstr "/Filer/Luk"
+
+#: app/menus.c:49
+#, fuzzy
+msgid "/Layers"
+msgstr "Lag"
+
+#: app/menus.c:50
+msgid "/Tools"
+msgstr ""
+
+#: app/menus.c:51
+msgid "/Dialogs"
+msgstr ""
+
+#: app/menus.c:52
+msgid "/View/Zoom"
+msgstr ""
+
+#: app/menus.c:65 app/menus.c:99
 msgid "/File/tearoff1"
-msgstr "/Tiedosto/Talleta"
+msgstr ""
 
-#: app/menus.c:56 app/menus.c:88
-#, fuzzy
+#: app/menus.c:66 app/menus.c:100
 msgid "/File/New"
-msgstr "/Tiedosto/Uusi"
-
-#: app/menus.c:58
-#, fuzzy
-msgid "/File/About..."
-msgstr "/Tiedosto/Tietoja..."
-
-#: app/menus.c:59 app/menus.c:93
-#, fuzzy
-msgid "/File/Preferences..."
-msgstr "/Tiedosto/Asetukset..."
-
-#: app/menus.c:60
-#, fuzzy
-msgid "/File/Tip of the day"
-msgstr "/Tiedosto/Päivän vihje"
-
-#: app/menus.c:62
-#, fuzzy
-msgid "/File/Dialogs/Brushes..."
-msgstr "/Tiedosto/Dialogit/Siveltimet..."
-
-#: app/menus.c:63
-#, fuzzy
-msgid "/File/Dialogs/Patterns..."
-msgstr "/Tiedosto/Dialogit/Kuviot..."
-
-#: app/menus.c:64
-#, fuzzy
-msgid "/File/Dialogs/Palette..."
-msgstr "/Tiedosto/Dialogit/Paletit..."
-
-#: app/menus.c:65
-#, fuzzy
-msgid "/File/Dialogs/Gradient..."
-msgstr "/Tiedosto/Dialogit/Liukuvärien muokkain..."
-
-#: app/menus.c:66
-#, fuzzy
-msgid "/File/Dialogs/Layers & Channels..."
-msgstr "/Tiedosto/Dialogit/Tasot & Kanavat..."
-
-#: app/menus.c:67
-#, fuzzy
-msgid "/File/Dialogs/Tool Options..."
-msgstr "/Tiedosto/Dialogit/Työkalujen Asetukset..."
+msgstr ""
 
 #: app/menus.c:68
 #, fuzzy
-msgid "/File/Dialogs/Input Devices..."
-msgstr "/Tiedosto/Dialogs/Piirtolaitteet..."
+msgid "/File/Acquire"
+msgstr "/Filer/Afslut"
 
 #: app/menus.c:69
-#, fuzzy
-msgid "/File/Dialogs/Device Status..."
-msgstr "/Tiedosto/Dialogit/Laitteiden tila..."
+msgid "/File/About..."
+msgstr ""
 
-#: app/menus.c:70
-#, fuzzy
-msgid "/File/Dialogs/Document Index..."
-msgstr "/Tiedosto/Dialogit/Dokumenttien indexi..."
+#: app/menus.c:70 app/menus.c:105
+msgid "/File/Preferences..."
+msgstr ""
 
 #: app/menus.c:71
-#, fuzzy
-msgid "/File/Dialogs/Error Console..."
-msgstr "/Tiedosto/Dialogit/Konsoli virheilmoituksille..."
+msgid "/File/Tip of the day"
+msgstr ""
 
 #: app/menus.c:73
-msgid "/Xtns/tearoff1"
+msgid "/File/Dialogs/Brushes..."
 msgstr ""
 
 #: app/menus.c:74
-#, fuzzy
-msgid "/Xtns/Module Browser"
-msgstr "/Tiedosto/Dialogit/Siveltimet..."
+msgid "/File/Dialogs/Patterns..."
+msgstr ""
 
-#: app/menus.c:75 app/menus.c:76 app/menus.c:81 app/menus.c:94
-msgid "/File/---"
-msgstr "/Tiedosto/---"
+#: app/menus.c:75
+msgid "/File/Dialogs/Palette..."
+msgstr ""
+
+#: app/menus.c:76
+msgid "/File/Dialogs/Gradient..."
+msgstr ""
+
+#: app/menus.c:77
+msgid "/File/Dialogs/Layers & Channels..."
+msgstr ""
+
+#: app/menus.c:78
+msgid "/File/Dialogs/Tool Options..."
+msgstr ""
+
+#: app/menus.c:79
+msgid "/File/Dialogs/Input Devices..."
+msgstr ""
+
+#: app/menus.c:80
+msgid "/File/Dialogs/Device Status..."
+msgstr ""
+
+#: app/menus.c:81
+msgid "/File/Dialogs/Document Index..."
+msgstr ""
+
+#: app/menus.c:82
+msgid "/File/Dialogs/Error Console..."
+msgstr ""
+
+#: app/menus.c:83
+msgid "/File/Dialogs/Display Filters..."
+msgstr ""
+
+#: app/menus.c:85
+msgid "/Xtns/tearoff1"
+msgstr ""
 
 #: app/menus.c:86
-msgid "/tearoff1"
+msgid "/Xtns/Module Browser"
+msgstr ""
+
+#: app/menus.c:87 app/menus.c:88 app/menus.c:93 app/menus.c:106
+msgid "/File/---"
 msgstr ""
 
 #: app/menus.c:98
-#, fuzzy
-msgid "/File/---moved"
-msgstr "/Tiedosto/---"
-
-#: app/menus.c:100
-#, fuzzy
-msgid "/Edit/tearoff1"
-msgstr "/Muokkaa/Tyhjennä"
-
-#: app/menus.c:106 app/menus.c:112 app/menus.c:116
-msgid "/Edit/---"
-msgstr "/Muokkaa/---"
+msgid "/tearoff1"
+msgstr ""
 
 #: app/menus.c:110
-#, fuzzy
-msgid "/Edit/Undo"
-msgstr "/Tiedosto/Kumoa"
+msgid "/File/---moved"
+msgstr ""
 
-#: app/menus.c:111
-#, fuzzy
-msgid "/Edit/Redo"
-msgstr "/Muokkaa/Uudelleen"
+#: app/menus.c:112
+msgid "/Edit/tearoff1"
+msgstr ""
 
-#: app/menus.c:118
-#, fuzzy
-msgid "/Select/tearoff1"
-msgstr "/Valitse/Kasvata"
-
-#: app/menus.c:119
-#, fuzzy
-msgid "/Select/Invert"
-msgstr "/Valitse/Invertoi"
-
-#: app/menus.c:120
-#, fuzzy
-msgid "/Select/All"
-msgstr "/Valitse/Kaikki"
-
-#: app/menus.c:121
-#, fuzzy
-msgid "/Select/None"
-msgstr "/Valitse/Ei mitään"
+#: app/menus.c:118 app/menus.c:124 app/menus.c:128
+msgid "/Edit/---"
+msgstr ""
 
 #: app/menus.c:122
-#, fuzzy
-msgid "/Select/Float"
-msgstr "/Valitse/Leijuva"
+msgid "/Edit/Undo"
+msgstr ""
 
-#: app/menus.c:123 app/menus.c:129
-#, fuzzy
-msgid "/Select/---"
-msgstr "/Valitse/Kaikki"
+#: app/menus.c:123
+msgid "/Edit/Redo"
+msgstr ""
 
-#: app/menus.c:124
-#, fuzzy
-msgid "/Select/Feather"
-msgstr "/Valitse/Höyhen"
+#: app/menus.c:130
+msgid "/Select/tearoff1"
+msgstr ""
 
-#: app/menus.c:125
-#, fuzzy
-msgid "/Select/Sharpen"
-msgstr "/Valitse/Terävöitä"
-
-#: app/menus.c:126
-#, fuzzy
-msgid "/Select/Shrink"
-msgstr "/Valitse/Pienennä"
-
-#: app/menus.c:127
-#, fuzzy
-msgid "/Select/Grow"
-msgstr "/Valitse/Kasvata"
-
-#: app/menus.c:128
-#, fuzzy
-msgid "/Select/Border"
-msgstr "/Valitse/Reuna"
+#: app/menus.c:131
+msgid "/Select/Invert"
+msgstr ""
 
 #: app/menus.c:132
-msgid "/View/tearoff1"
+msgid "/Select/All"
 msgstr ""
 
 #: app/menus.c:133
-#, fuzzy
-msgid "/View/Zoom In"
-msgstr "/Näytä/Zoomaa sisään"
+msgid "/Select/None"
+msgstr ""
 
 #: app/menus.c:134
-#, fuzzy
-msgid "/View/Zoom Out"
-msgstr "/Näytä/Zoomaa ulos"
+msgid "/Select/Float"
+msgstr ""
 
-#: app/menus.c:135
-#, fuzzy
-msgid "/View/Zoom/16:1"
-msgstr "/Näytä/Zoom/16:1"
+#: app/menus.c:135 app/menus.c:141
+msgid "/Select/---"
+msgstr ""
 
 #: app/menus.c:136
-#, fuzzy
-msgid "/View/Zoom/8:1"
-msgstr "/Näytä/Zoom/8:1"
+msgid "/Select/Feather"
+msgstr ""
 
 #: app/menus.c:137
-#, fuzzy
-msgid "/View/Zoom/4:1"
-msgstr "/Näytä/Zoom/4:1"
+msgid "/Select/Sharpen"
+msgstr ""
 
 #: app/menus.c:138
-#, fuzzy
-msgid "/View/Zoom/2:1"
-msgstr "/Näytä/Zoom/2:1"
+msgid "/Select/Shrink"
+msgstr ""
 
 #: app/menus.c:139
-#, fuzzy
-msgid "/View/Zoom/1:1"
-msgstr "/Näytä/Zoom/1:1"
+msgid "/Select/Grow"
+msgstr ""
 
 #: app/menus.c:140
-msgid "/View/Zoom/1:2"
-msgstr "/Näytä/Zoom/1:2"
+msgid "/Select/Border"
+msgstr ""
 
-#: app/menus.c:141
-msgid "/View/Zoom/1:4"
-msgstr "/Näytä/Zoom/1:4"
-
-#: app/menus.c:142
-msgid "/View/Zoom/1:8"
-msgstr "/Näytä/Zoom/1:8"
-
-#: app/menus.c:143
-msgid "/View/Zoom/1:16"
-msgstr "/Näytä/Zoom/1:16"
+#: app/menus.c:144
+msgid "/View/tearoff1"
+msgstr ""
 
 #: app/menus.c:145
-#, fuzzy
-msgid "/View/Window Info..."
-msgstr "/Näytä/Ikkunan tiedot..."
+msgid "/View/Zoom In"
+msgstr ""
 
-#: app/menus.c:147 app/menus.c:153
-msgid "/View/---"
-msgstr "/Näytä/---"
+#: app/menus.c:146
+msgid "/View/Zoom Out"
+msgstr ""
+
+#: app/menus.c:147
+msgid "/View/Zoom/16:1"
+msgstr ""
+
+#: app/menus.c:148
+msgid "/View/Zoom/8:1"
+msgstr ""
+
+#: app/menus.c:149
+msgid "/View/Zoom/4:1"
+msgstr ""
+
+#: app/menus.c:150
+msgid "/View/Zoom/2:1"
+msgstr ""
+
+#: app/menus.c:151
+msgid "/View/Zoom/1:1"
+msgstr ""
+
+#: app/menus.c:152
+msgid "/View/Zoom/1:2"
+msgstr ""
+
+#: app/menus.c:153
+msgid "/View/Zoom/1:4"
+msgstr ""
+
+#: app/menus.c:154
+msgid "/View/Zoom/1:8"
+msgstr ""
 
 #: app/menus.c:155
-#, fuzzy
-msgid "/View/New View"
-msgstr "/Näytä/Uusi näkymä"
+msgid "/View/Zoom/1:16"
+msgstr ""
 
-#: app/menus.c:156
-#, fuzzy
-msgid "/View/Shrink Wrap"
-msgstr "/Näytä/Koko kuva"
+#: app/menus.c:157
+msgid "/View/Window Info..."
+msgstr ""
 
 #: app/menus.c:158
-#, fuzzy
+msgid "/View/Window Nav..."
+msgstr ""
+
+#: app/menus.c:160 app/menus.c:166
+msgid "/View/---"
+msgstr ""
+
+#: app/menus.c:168
+msgid "/View/New View"
+msgstr ""
+
+#: app/menus.c:169
+msgid "/View/Shrink Wrap"
+msgstr ""
+
+#: app/menus.c:171
 msgid "/Image/tearoff1"
-msgstr "/Muokkaa/Tyhjennä"
+msgstr ""
 
-#: app/menus.c:159
-#, fuzzy
+#: app/menus.c:172
 msgid "/Image/Colors/tearoff1"
-msgstr "/Kuva/Värit/Invertoi"
-
-#: app/menus.c:162
-msgid "/Image/Colors/---"
-msgstr "/Kuva/Värit/---"
-
-#: app/menus.c:164
-#, fuzzy
-msgid "/Image/Channel Ops/tearoff1"
-msgstr "/Kuva/Kanava operaatiot/Offset"
-
-#: app/menus.c:165
-#, fuzzy
-msgid "/Image/Channel Ops/Duplicate"
-msgstr "/Kuva/Kanava operaatiot/Duplicate"
-
-#: app/menus.c:167
-#, fuzzy
-msgid "/Image/Alpha/tearoff1"
-msgstr "/Kuva/Skaalaa"
-
-#: app/menus.c:170 app/menus.c:174 app/menus.c:177
-msgid "/Image/---"
-msgstr "/Kuva/---"
+msgstr ""
 
 #: app/menus.c:175
-#, fuzzy
-msgid "/Image/Resize"
-msgstr "/Kuva/Muokkaa kokoa"
+msgid "/Image/Colors/---"
+msgstr ""
 
-#: app/menus.c:176
-#, fuzzy
-msgid "/Image/Scale"
-msgstr "/Kuva/Skaalaa"
+#: app/menus.c:177
+msgid "/Image/Channel Ops/tearoff1"
+msgstr ""
 
-#: app/menus.c:179
-#, fuzzy
-msgid "/Layers/tearoff1"
-msgstr "/Tasot/Nosta taso"
+#: app/menus.c:178
+msgid "/Image/Channel Ops/Duplicate"
+msgstr ""
 
 #: app/menus.c:180
-#, fuzzy
+msgid "/Image/Alpha/tearoff1"
+msgstr ""
+
+#: app/menus.c:183 app/menus.c:187 app/menus.c:190
+msgid "/Image/---"
+msgstr ""
+
+#: app/menus.c:188
+msgid "/Image/Resize"
+msgstr ""
+
+#: app/menus.c:189
+msgid "/Image/Scale"
+msgstr ""
+
+#: app/menus.c:192
+msgid "/Layers/tearoff1"
+msgstr ""
+
+#: app/menus.c:193
 msgid "/Layers/Layers & Channels..."
-msgstr "/Tasot/Tasot & Kanavat..."
+msgstr ""
 
-#: app/menus.c:181
-#, fuzzy
+#: app/menus.c:194
 msgid "/Layers/Stack/tearoff1"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
-#: app/menus.c:188 app/menus.c:195
-#, fuzzy
+#: app/menus.c:201 app/menus.c:208
 msgid "/Layers/---"
-msgstr "/Tasot/Nosta taso"
-
-#: app/menus.c:197
-#, fuzzy
-msgid "/Tools/tearoff1"
-msgstr "/Työkalut/---"
-
-#: app/menus.c:198
-#, fuzzy
-msgid "/Tools/Toolbox"
-msgstr "/Työkalut/Työkalulaatikko"
-
-#: app/menus.c:199
-#, fuzzy
-msgid "/Tools/Default Colors"
-msgstr "/Työkalut/Oletus värit"
-
-#: app/menus.c:200
-#, fuzzy
-msgid "/Tools/Swap Colors"
-msgstr "/Työkalut/Vaihda Värit"
-
-#: app/menus.c:201
-msgid "/Tools/---"
-msgstr "/Työkalut/---"
-
-#. the tool entries themselves are built on the fly
-#: app/menus.c:205
-#, fuzzy
-msgid "/Filters/tearoff1"
-msgstr "/Suotimet/---"
-
-#: app/menus.c:206 app/plug_in.c:1285
-#, fuzzy
-msgid "/Filters/Repeat last"
-msgstr "/Suotimet/Toista edellinen"
-
-#: app/menus.c:207 app/plug_in.c:1286
-#, fuzzy
-msgid "/Filters/Re-show last"
-msgstr "/Suotimet/Näytä uudelleen edellinen"
-
-#: app/menus.c:208
-msgid "/Filters/---"
-msgstr "/Suotimet/---"
+msgstr ""
 
 #: app/menus.c:210
-#, fuzzy
-msgid "/Script-Fu/tearoff1"
-msgstr "/Script-Fu/"
+msgid "/Tools/tearoff1"
+msgstr ""
 
 #: app/menus.c:211
-msgid "/Script-Fu/"
-msgstr "/Script-Fu/"
+msgid "/Tools/Toolbox"
+msgstr ""
+
+#: app/menus.c:212
+msgid "/Tools/Default Colors"
+msgstr ""
 
 #: app/menus.c:213
-#, fuzzy
-msgid "/Dialogs/tearoff1"
-msgstr "/Dialogit/Kuviot..."
+msgid "/Tools/Swap Colors"
+msgstr ""
 
 #: app/menus.c:214
-#, fuzzy
-msgid "/Dialogs/Brushes..."
-msgstr "/Dialogit/Siveltimet..."
+msgid "/Tools/---"
+msgstr ""
 
-#: app/menus.c:215
-#, fuzzy
-msgid "/Dialogs/Patterns..."
-msgstr "/Dialogit/Kuviot..."
-
-#: app/menus.c:216
-#, fuzzy
-msgid "/Dialogs/Palette..."
-msgstr "/Dialogit/Paletit..."
-
-#: app/menus.c:217
-#, fuzzy
-msgid "/Dialogs/Gradient..."
-msgstr "/Dialogit/Liukuvärien muokkain..."
-
+#. the tool entries themselves are built on the fly
 #: app/menus.c:218
-#, fuzzy
-msgid "/Dialogs/Layers & Channels..."
-msgstr "/Dialogit/Tasot & Kanavat..."
+msgid "/Filters/tearoff1"
+msgstr ""
 
-#: app/menus.c:219
-#, fuzzy
-msgid "/Dialogs/Indexed Palette..."
-msgstr "/Dialogit/Indeksoitu paletti..."
+#: app/menus.c:219 app/plug_in.c:1285
+msgid "/Filters/Repeat last"
+msgstr ""
 
-#: app/menus.c:220
-#, fuzzy
-msgid "/Dialogs/Tool Options..."
-msgstr "/Dialogit/Työkalujen asetukset"
+#: app/menus.c:220 app/plug_in.c:1286
+msgid "/Filters/Re-show last"
+msgstr ""
 
 #: app/menus.c:221
-#, fuzzy
-msgid "/Dialogs/Input Devices..."
-msgstr "/Dialogit/Piirtolaitteet..."
+msgid "/Filters/---"
+msgstr ""
 
-#: app/menus.c:222
-#, fuzzy
-msgid "/Dialogs/Device Status..."
-msgstr "/Dialogit/Laitteiden tila..."
+#: app/menus.c:223
+msgid "/Script-Fu/tearoff1"
+msgstr ""
+
+#: app/menus.c:224
+msgid "/Script-Fu/"
+msgstr ""
+
+#: app/menus.c:226
+msgid "/Dialogs/tearoff1"
+msgstr ""
+
+#: app/menus.c:227
+msgid "/Dialogs/Brushes..."
+msgstr ""
+
+#: app/menus.c:228
+msgid "/Dialogs/Patterns..."
+msgstr ""
 
 #: app/menus.c:229
+msgid "/Dialogs/Palette..."
+msgstr ""
+
+#: app/menus.c:230
+msgid "/Dialogs/Gradient..."
+msgstr ""
+
+#: app/menus.c:231
+msgid "/Dialogs/Layers & Channels..."
+msgstr ""
+
+#: app/menus.c:232
+msgid "/Dialogs/Indexed Palette..."
+msgstr ""
+
+#: app/menus.c:233
+msgid "/Dialogs/Tool Options..."
+msgstr ""
+
+#: app/menus.c:234
+msgid "/Dialogs/Input Devices..."
+msgstr ""
+
+#: app/menus.c:235
+msgid "/Dialogs/Device Status..."
+msgstr ""
+
+#: app/menus.c:236
+msgid "/Dialogs/Display Filters..."
+msgstr ""
+
+#: app/menus.c:243
 msgid "/Automatic"
-msgstr "/Automaattinen"
+msgstr ""
 
-#: app/menus.c:237
+#: app/menus.c:251
 msgid "/By extension"
-msgstr "/Laajennus"
+msgstr ""
 
-#: app/menus.c:291
+#: app/menus.c:305 app/paths_dialog.c:202
 msgid "/New Path"
 msgstr ""
 
-#: app/menus.c:292
-#, fuzzy
+#: app/menus.c:306 app/paths_dialog.c:206
 msgid "/Duplicate Path"
-msgstr "/Valitse/Talleta kanavalle"
+msgstr ""
 
-#: app/menus.c:293
-#, fuzzy
+#: app/menus.c:307 app/paths_dialog.c:210
 msgid "/Path to Selection"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
-#: app/menus.c:294
+#: app/menus.c:308 app/paths_dialog.c:214
 msgid "/Stroke Path"
 msgstr ""
 
-#: app/menus.c:295
-#, fuzzy
+#: app/menus.c:309 app/paths_dialog.c:218
 msgid "/Delete Path"
-msgstr "/Valitse/Höyhen"
+msgstr ""
 
-#: app/menus.c:297
-#, fuzzy
+#: app/menus.c:311 app/paths_dialog.c:222
 msgid "/Copy Path"
-msgstr "/Muokkaa/Kopioi nimetty"
+msgstr ""
 
-#: app/menus.c:298
-#, fuzzy
+#: app/menus.c:312 app/paths_dialog.c:225
 msgid "/Paste Path"
-msgstr "/Muokkaa/Liimaa"
+msgstr ""
 
-#: app/menus.c:299
+#: app/menus.c:313
 msgid "/Import Path"
 msgstr ""
 
-#: app/menus.c:300
+#: app/menus.c:314
 msgid "/Export Path"
 msgstr ""
 
-#: app/menus.c:597
+#: app/menus.c:612
 #, c-format
 msgid "Error opening file: %s\n"
-msgstr "Virhe tiedoston avauksessa: %s\n"
+msgstr ""
 
-#: app/menus.c:619 app/menus.c:700
+#: app/menus.c:634 app/menus.c:716
 #, c-format
 msgid "/File/MRU%02d"
-msgstr "/Tiedosto/MRU%02d"
+msgstr ""
+
+#: app/menus.c:885
+msgid "tearoff menu not in top level window"
+msgstr ""
+
+#: app/menus.c:903
+msgid "can't unregister tearoff menu top level window"
+msgstr ""
 
 #: app/module_db.c:269
 msgid "Module DB"
 msgstr ""
 
-#: app/module_db.c:555
+#: app/module_db.c:551
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr ""
 
-#: app/module_db.c:562
+#: app/module_db.c:558
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr ""
 
-#: app/module_db.c:586
+#: app/module_db.c:582
 #, c-format
 msgid "module load error: %s: %s"
 msgstr ""
 
-#: app/module_db.c:604
+#: app/module_db.c:600
 msgid "missing module_init() symbol"
 msgstr ""
 
-#: app/module_db.c:607
+#: app/module_db.c:603
 #, c-format
 msgid "%s: module_init() symbol not found"
 msgstr ""
 
-#: app/module_db.c:760
+#: app/module_db.c:756
 msgid "<No modules>"
 msgstr ""
 
-#: app/module_db.c:773 app/module_db.c:782
+#: app/module_db.c:769 app/module_db.c:778
 msgid "on disk"
 msgstr ""
 
-#: app/module_db.c:773
+#: app/module_db.c:769
 msgid "only in memory"
 msgstr ""
 
-#: app/module_db.c:782
+#: app/module_db.c:778
 msgid "nowhere (click 'refresh')"
 msgstr ""
 
-#: app/module_db.c:812
-msgid "Load"
-msgstr ""
-
-#: app/module_db.c:821
+#: app/module_db.c:817
 msgid "Unload"
 msgstr ""
 
-#: app/module_db.c:834
+#: app/module_db.c:830
 msgid "Purpose: "
 msgstr ""
 
-#: app/module_db.c:835
-#, fuzzy
+#: app/module_db.c:831
 msgid "Author: "
-msgstr "/Automaattinen"
+msgstr ""
 
-#: app/module_db.c:836
-#, fuzzy
+#: app/module_db.c:832
 msgid "Version: "
-msgstr "Versio"
+msgstr ""
 
-#: app/module_db.c:837
+#: app/module_db.c:833
 msgid "Copyright: "
 msgstr ""
 
-#: app/module_db.c:838
-#, fuzzy
+#: app/module_db.c:834
 msgid "Date: "
-msgstr "/Muokkaa/Liimaa"
+msgstr ""
 
-#: app/module_db.c:839
-#, fuzzy
+#: app/module_db.c:835
 msgid "Location: "
-msgstr "/Valitse/Ei mitään"
+msgstr ""
 
-#: app/module_db.c:840
-#, fuzzy
+#: app/module_db.c:836
 msgid "State: "
-msgstr "/Muokkaa/Liimaa"
+msgstr ""
 
-#: app/module_db.c:859
+#: app/module_db.c:855
 msgid "Autoload during startup"
 msgstr ""
 
 #: app/move.c:444
-#, fuzzy
 msgid "Move Tool Options"
-msgstr "/Dialogit/Työkalujen asetukset"
+msgstr ""
 
-#: app/paint_core.c:587
+#: app/paint_core.c:608
 msgid "No brushes available for use with this tool."
 msgstr ""
 
-#: app/paint_core.c:1574
+#: app/paint_core.c:1599
 msgid "set_undo_tiles: undo_tiles is null"
 msgstr ""
 
-#: app/paint_funcs.c:85 app/tool_options.c:777
+#: app/paint_funcs.c:84 app/tool_options.c:830
 msgid "Behind"
 msgstr ""
 
-#: app/paint_funcs.c:91
-#, fuzzy
+#: app/paint_funcs.c:90
 msgid "Subtraction"
-msgstr "/Valitse/Ei mitään"
+msgstr ""
 
-#: app/paint_funcs.c:99
-#, fuzzy
+#: app/paint_funcs.c:98
 msgid "Erase"
-msgstr "/Muokkaa/Liimaa"
+msgstr ""
 
-#: app/paintbrush.c:160
+#: app/paint_funcs.c:100
+msgid "Anti Erase"
+msgstr ""
+
+#: app/paintbrush.c:157
 msgid "Once Forward"
 msgstr ""
 
-#: app/paintbrush.c:162
+#: app/paintbrush.c:159
 msgid "Once Backward"
 msgstr ""
 
-#: app/paintbrush.c:164
+#: app/paintbrush.c:161
 msgid "Loop Sawtooth"
 msgstr ""
 
-#: app/paintbrush.c:166
+#: app/paintbrush.c:163
 msgid "Loop Triangle"
 msgstr ""
 
-#: app/paintbrush.c:197
+#: app/paintbrush.c:192
 msgid "Fade Out:"
 msgstr ""
 
-#: app/paintbrush.c:224
+#: app/paintbrush.c:219
 msgid "Length:"
 msgstr ""
 
 #. the gradient type
-#: app/paintbrush.c:249
+#: app/paintbrush.c:244
 msgid "Type:"
 msgstr ""
 
-#: app/palette.c:491
+#: app/palette.c:503
 #, c-format
 msgid "can't save palette \"%s\"\n"
 msgstr ""
 
-#: app/palette.c:631
+#: app/palette.c:643
 #, c-format
 msgid ""
 "Loading palette %s:\n"
@@ -4319,162 +4278,302 @@ msgid ""
 "Does this file need converting from DOS?"
 msgstr ""
 
-#: app/palette.c:636
+#: app/palette.c:648
 #, c-format
 msgid ""
 "Loading palette %s:\n"
 "Corrupt palette: missing magic header"
 msgstr ""
 
-#: app/palette.c:649
+#: app/palette.c:661
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
 "Read error"
 msgstr ""
 
-#: app/palette.c:664
+#: app/palette.c:676
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
 "Missing RED component"
 msgstr ""
 
-#: app/palette.c:672
+#: app/palette.c:684
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
 "Missing GREEN component"
 msgstr ""
 
-#: app/palette.c:679
+#: app/palette.c:691
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
 "Missing BLUE component"
 msgstr ""
 
-#: app/palette.c:688
+#: app/palette.c:700
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
 "RGB value out of range"
 msgstr ""
 
-#: app/palette.c:896
+#: app/palette.c:908
 msgid "Black"
 msgstr ""
 
-#: app/palette.c:1065
+#: app/palette.c:1077
 msgid "New Palette"
 msgstr ""
 
-#: app/palette.c:1066
+#: app/palette.c:1078
 msgid "Enter a name for new palette"
 msgstr ""
 
-#: app/palette.c:1441 app/palette.c:1462 app/palette.c:2172
+#: app/palette.c:1453 app/palette.c:1474 app/palette.c:2209
 msgid "New"
 msgstr ""
 
-#: app/palette.c:1926 app/palette.c:2079
-#, fuzzy
+#: app/palette.c:1948 app/palette.c:2116
 msgid "Undefined"
-msgstr "/Kuva/Indeksoitu"
+msgstr ""
 
-#: app/palette.c:2010
+#: app/palette.c:2032
 msgid "Color Palette Edit"
 msgstr ""
 
-#: app/palette.c:2016
+#: app/palette.c:2038
 msgid "Color Palette"
 msgstr ""
 
-#: app/palette.c:2131 app/palette.c:2855 libgimp/gimpfileselection.c:355
+#: app/palette.c:2168 app/palette.c:2963 libgimp/gimpfileselection.c:355
 #: libgimp/gimpunitmenu.c:510
-#, fuzzy
 msgid "Select"
-msgstr "/Valitse/Kaikki"
+msgstr ""
 
-#: app/palette.c:2142 app/palette_select.c:275
+#: app/palette.c:2179 app/palette_select.c:275
 msgid "Ncols"
 msgstr ""
 
-#: app/palette.c:2163
+#: app/palette.c:2200
 msgid "Palette Ops"
 msgstr ""
 
 #. The "Import" frame
-#: app/palette.c:2190 app/palette.c:2724 app/palette.c:2748
+#: app/palette.c:2227 app/palette.c:2832 app/palette.c:2856
 msgid "Import"
 msgstr ""
 
-#: app/palette.c:2199
+#: app/palette.c:2236
 msgid "Merge"
 msgstr ""
 
-#: app/palette.c:2385
+#: app/palette.c:2493
 msgid "Merge Palette"
 msgstr ""
 
-#: app/palette.c:2386
+#: app/palette.c:2494
 msgid "Enter a name for merged palette"
 msgstr ""
 
-#: app/palette.c:2734
+#: app/palette.c:2842
 msgid "Import Palette"
 msgstr ""
 
 #. The source's name
-#: app/palette.c:2764
+#: app/palette.c:2872
 msgid "Name:"
 msgstr ""
 
-#: app/palette.c:2773
+#: app/palette.c:2881
 msgid "new_import"
 msgstr ""
 
 #. The source type
-#: app/palette.c:2777
-#, fuzzy
+#: app/palette.c:2885
 msgid "Source:"
-msgstr "Onnistui"
+msgstr ""
 
 #. The sample size
-#: app/palette.c:2807
+#: app/palette.c:2915
 msgid "Sample Size:"
 msgstr ""
 
 #. The interval
-#: app/palette.c:2820
+#: app/palette.c:2928
 msgid "Interval:"
 msgstr ""
 
 #: app/palette_select.c:304
-#, fuzzy
 msgid "Palette Selection"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
+
+#: app/paths_dialog.c:172
+#, fuzzy
+msgid "New Path"
+msgstr "Stier"
+
+#: app/paths_dialog.c:173
+#, fuzzy
+msgid "Duplicate Path"
+msgstr "Dupliker lag"
+
+#: app/paths_dialog.c:174
+#, fuzzy
+msgid "Path to Selection"
+msgstr "/Tilføj til markering"
+
+#: app/paths_dialog.c:175
+msgid "Selection to Path"
+msgstr ""
+
+#: app/paths_dialog.c:176
+msgid "Stroke Path"
+msgstr ""
+
+#: app/paths_dialog.c:177
+#, fuzzy
+msgid "Delete Path"
+msgstr "Slet"
+
+#: app/paths_dialog.c:188
+msgid "New Point"
+msgstr ""
+
+#: app/paths_dialog.c:189
+msgid "Add Point"
+msgstr ""
+
+#: app/paths_dialog.c:190
+#, fuzzy
+msgid "Delete Point"
+msgstr "Slet"
+
+#: app/paths_dialog.c:191
+msgid "Edit Point"
+msgstr ""
+
+#: app/paths_dialog.c:228
+msgid "paths_ops_button_set_sensitive:: invalid button specified"
+msgstr ""
+
+#: app/paths_dialog.c:251
+msgid "point_ops_button_set_sensitive:: invalid button specified"
+msgstr ""
+
+#: app/paths_dialog.c:417
+#, fuzzy, c-format
+msgid "Path %d"
+msgstr "Stier"
+
+#: app/paths_dialog.c:1121
+msgid "paths list: internal list error"
+msgstr ""
+
+#: app/paths_dialog.c:1231
+msgid "Rename path"
+msgstr ""
+
+#: app/paths_dialog.c:1232
+msgid "Enter a new name for the path"
+msgstr ""
+
+#: app/paths_dialog.c:1543
+msgid "Selection to path (advanced) procedure lookup failed"
+msgstr ""
+
+#: app/paths_dialog.c:1581
+msgid "Selection to path procedure lookup failed"
+msgstr ""
+
+#: app/paths_dialog.c:2197
+#, c-format
+msgid "Failed to read from %s"
+msgstr ""
+
+#: app/paths_dialog.c:2212
+#, c-format
+msgid "Failed to read path from %s"
+msgstr ""
+
+#: app/paths_dialog.c:2219
+#, c-format
+msgid "No points specified in path file %s"
+msgstr ""
+
+#: app/paths_dialog.c:2230
+#, c-format
+msgid "Failed to read path points from %s"
+msgstr ""
+
+#: app/paths_dialog.c:2243 app/paths_dialog.c:2773
+msgid "Invalid single point in path\n"
+msgstr ""
+
+#: app/paths_dialog.c:2250 app/paths_dialog.c:2779
+msgid "Invalid point type passed\n"
+msgstr ""
+
+#: app/paths_dialog.c:2309 app/xcf.c:418
+#, c-format
+msgid "open failed on %s: %s\n"
+msgstr ""
+
+#: app/paths_dialog.c:2330
+msgid "Load/Store Bezier Curves"
+msgstr ""
+
+#: app/paths_dialog.c:2351
+#, fuzzy
+msgid "Load Path"
+msgstr "Hent billede"
+
+#: app/paths_dialog.c:2369
+msgid "Store Path"
+msgstr ""
+
+#: app/paths_dialog.c:2736
+msgid "wrong number of points\n"
+msgstr ""
+
+#: app/paths_dialog.c:2898
+msgid "paths_get_tattoo: invalid path"
+msgstr ""
+
+#: app/paths_dialog.c:2946
+msgid "paths_delete_path: invalid path"
+msgstr ""
 
 #: app/pattern_select.c:105
-#, fuzzy
 msgid "Pattern Selection"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
 #: app/patterns.c:143
 msgid "get_active_pattern(): Specified default pattern not found!"
 msgstr ""
 
-#: app/patterns.c:214
+#: app/patterns.c:183
+#, fuzzy
+msgid "Pattern load failed"
+msgstr "Åben en fil"
+
+#: app/patterns.c:242
 #, c-format
 msgid "Unknown GIMP version #%d in \"%s\"\n"
 msgstr ""
 
-#: app/patterns.c:231
+#: app/patterns.c:259
 msgid "Error in GIMP pattern file...aborting."
 msgstr ""
 
-#: app/patterns.c:245
+#: app/patterns.c:273
 msgid "GIMP pattern file appears to be truncated."
+msgstr ""
+
+#: app/pencil.c:112
+msgid "Use Pressure"
 msgstr ""
 
 #: app/perspective_tool.c:60
@@ -4512,9 +4611,8 @@ msgid "Starting extensions: "
 msgstr ""
 
 #: app/plug_in.c:378
-#, fuzzy
 msgid "Extensions"
-msgstr "/Laajennus"
+msgstr ""
 
 #: app/plug_in.c:693
 #, c-format
@@ -4574,507 +4672,502 @@ msgstr ""
 msgid "the \"region\" arg type is not currently supported"
 msgstr ""
 
-#: app/posterize.c:164
+#: app/posterize.c:160
 msgid "Posterize does not operate on indexed drawables."
 msgstr ""
 
-#: app/posterize.c:211 app/tools.c:547
+#: app/posterize.c:207 app/tools.c:563
 msgid "Posterize"
 msgstr ""
 
-#: app/posterize.c:225
+#: app/posterize.c:221
 msgid "Posterize Levels: "
 msgstr ""
 
-#: app/preferences_dialog.c:205
+#: app/preferences_dialog.c:207
 msgid "Error: Levels of undo must be zero or greater."
 msgstr ""
 
-#: app/preferences_dialog.c:211
+#: app/preferences_dialog.c:213
 msgid "Error: Number of processors must be between 1 and 30."
 msgstr ""
 
-#: app/preferences_dialog.c:217
+#: app/preferences_dialog.c:219
 msgid "Error: Marching speed must be 50 or greater."
 msgstr ""
 
-#: app/preferences_dialog.c:223
+#: app/preferences_dialog.c:225
 msgid "Error: Default width must be one or greater."
 msgstr ""
 
-#: app/preferences_dialog.c:229
+#: app/preferences_dialog.c:231
 msgid "Error: Default height must be one or greater."
 msgstr ""
 
-#: app/preferences_dialog.c:236
+#: app/preferences_dialog.c:238
 msgid "Error: Default unit must be within unit range."
 msgstr ""
 
-#: app/preferences_dialog.c:243
+#: app/preferences_dialog.c:245
 msgid "Error: default resolution must not be zero."
 msgstr ""
 
-#: app/preferences_dialog.c:251
+#: app/preferences_dialog.c:253
 msgid "Error: Default resolution unit must be within unit range."
 msgstr ""
 
-#: app/preferences_dialog.c:258
+#: app/preferences_dialog.c:260
 msgid "Error: Monitor resolution must not be zero."
 msgstr ""
 
-#: app/preferences_dialog.c:265
+#: app/preferences_dialog.c:267
 msgid "Error: Image title format must not be NULL."
 msgstr ""
 
-#: app/preferences_dialog.c:536
+#: app/preferences_dialog.c:547
 msgid "You will need to restart GIMP for these changes to take effect."
 msgstr ""
 
-#: app/preferences_dialog.c:1467
-#, fuzzy
+#: app/preferences_dialog.c:1479
 msgid "Preferences"
-msgstr "/Tiedosto/Asetukset..."
+msgstr ""
 
 #. The categories tree
-#: app/preferences_dialog.c:1485
+#: app/preferences_dialog.c:1497
 msgid "Categories"
 msgstr ""
 
-#: app/preferences_dialog.c:1512
+#: app/preferences_dialog.c:1524
 msgid "New File Settings"
 msgstr ""
 
-#: app/preferences_dialog.c:1514
-#, fuzzy
+#: app/preferences_dialog.c:1526
 msgid "New File"
-msgstr "/Tiedosto/Uusi"
+msgstr ""
 
-#: app/preferences_dialog.c:1524
+#: app/preferences_dialog.c:1536
 msgid "Default Image Size and Unit"
 msgstr ""
 
-#: app/preferences_dialog.c:1538
+#: app/preferences_dialog.c:1550
 msgid "Width"
 msgstr ""
 
-#: app/preferences_dialog.c:1540
+#: app/preferences_dialog.c:1552
 msgid "Height"
 msgstr ""
 
-#: app/preferences_dialog.c:1567
+#: app/preferences_dialog.c:1579
 msgid "Default Image Resolution and Resolution Unit"
 msgstr ""
 
-#: app/preferences_dialog.c:1592 app/preferences_dialog.c:2294
+#: app/preferences_dialog.c:1604 app/preferences_dialog.c:2312
 msgid "dpi"
 msgstr ""
 
-#: app/preferences_dialog.c:1637
+#: app/preferences_dialog.c:1649
 msgid "Default Image Type:"
 msgstr ""
 
-#: app/preferences_dialog.c:1642
+#: app/preferences_dialog.c:1654
 msgid "Display Settings"
 msgstr ""
 
-#: app/preferences_dialog.c:1644
+#: app/preferences_dialog.c:1656
 msgid "Display"
 msgstr ""
 
-#: app/preferences_dialog.c:1651
+#: app/preferences_dialog.c:1663
 msgid "Transparency"
 msgstr ""
 
-#: app/preferences_dialog.c:1669
+#: app/preferences_dialog.c:1681
 msgid "Light Checks"
 msgstr ""
 
-#: app/preferences_dialog.c:1671
+#: app/preferences_dialog.c:1683
 msgid "Mid-Tone Checks"
 msgstr ""
 
-#: app/preferences_dialog.c:1673
+#: app/preferences_dialog.c:1685
 msgid "Dark Checks"
 msgstr ""
 
-#: app/preferences_dialog.c:1675
+#: app/preferences_dialog.c:1687
 msgid "White Only"
 msgstr ""
 
-#: app/preferences_dialog.c:1677
+#: app/preferences_dialog.c:1689
 msgid "Gray Only"
 msgstr ""
 
-#: app/preferences_dialog.c:1679
+#: app/preferences_dialog.c:1691
 msgid "Black Only"
 msgstr ""
 
-#: app/preferences_dialog.c:1683
+#: app/preferences_dialog.c:1695
 msgid "Transparency Type:"
 msgstr ""
 
-#: app/preferences_dialog.c:1689 app/preferences_dialog.c:1760
+#: app/preferences_dialog.c:1701 app/preferences_dialog.c:1778
 msgid "Small"
 msgstr ""
 
-#: app/preferences_dialog.c:1691 app/preferences_dialog.c:1761
+#: app/preferences_dialog.c:1703 app/preferences_dialog.c:1779
 msgid "Medium"
 msgstr ""
 
-#: app/preferences_dialog.c:1693 app/preferences_dialog.c:1762
+#: app/preferences_dialog.c:1705 app/preferences_dialog.c:1780
 msgid "Large"
 msgstr ""
 
-#: app/preferences_dialog.c:1697
+#: app/preferences_dialog.c:1709
 msgid "Check Size:"
 msgstr ""
 
-#: app/preferences_dialog.c:1699 app/transform_tool.c:190
+#: app/preferences_dialog.c:1711 app/transform_tool.c:190
 msgid "Scaling"
 msgstr ""
 
-#: app/preferences_dialog.c:1708
-#, fuzzy
-msgid "Cubic Interpolation"
-msgstr "/Valitse/Ei mitään"
+#: app/preferences_dialog.c:1723
+msgid "Nearest Neighbor"
+msgstr ""
 
-#: app/preferences_dialog.c:1719
+#: app/preferences_dialog.c:1727
+msgid "Cubic"
+msgstr ""
+
+#: app/preferences_dialog.c:1737
 msgid "Interface Settings"
 msgstr ""
 
-#: app/preferences_dialog.c:1728
+#: app/preferences_dialog.c:1746
 msgid "General"
 msgstr ""
 
-#: app/preferences_dialog.c:1765
+#: app/preferences_dialog.c:1783
 msgid "Preview Size:"
 msgstr ""
 
-#: app/preferences_dialog.c:1774
-#, fuzzy
+#: app/preferences_dialog.c:1792
 msgid "Levels of Undo:"
-msgstr "/Dialogit/Työkalujen asetukset"
+msgstr ""
 
-#: app/preferences_dialog.c:1783
+#: app/preferences_dialog.c:1801
 msgid "Recent Documents List Size:"
 msgstr ""
 
-#: app/preferences_dialog.c:1786
+#: app/preferences_dialog.c:1804
 msgid "Help System"
 msgstr ""
 
-#: app/preferences_dialog.c:1795
+#: app/preferences_dialog.c:1813
 msgid "Show Tool Tips"
 msgstr ""
 
-#: app/preferences_dialog.c:1806
+#: app/preferences_dialog.c:1824
 msgid "Image Windows Settings"
 msgstr ""
 
-#: app/preferences_dialog.c:1808
+#: app/preferences_dialog.c:1826
 msgid "Image Windows"
 msgstr ""
 
-#: app/preferences_dialog.c:1815
+#: app/preferences_dialog.c:1833
 msgid "Appearance"
 msgstr ""
 
-#: app/preferences_dialog.c:1824
-#, fuzzy
+#: app/preferences_dialog.c:1842
 msgid "Resize Window on Zoom"
-msgstr "/Näytä/Ikkunan tiedot..."
+msgstr ""
 
-#: app/preferences_dialog.c:1833
+#: app/preferences_dialog.c:1851
 msgid "Show Rulers"
 msgstr ""
 
-#: app/preferences_dialog.c:1842
-#, fuzzy
+#: app/preferences_dialog.c:1860
 msgid "Show Statusbar"
-msgstr "/Näytä/Vaihda infopalkki"
+msgstr ""
 
-#: app/preferences_dialog.c:1866
+#: app/preferences_dialog.c:1884
 msgid "Marching Ants Speed:"
 msgstr ""
 
 #. Set the currently used string as "Custom"
-#: app/preferences_dialog.c:1874
+#: app/preferences_dialog.c:1892
 msgid "Custom"
 msgstr ""
 
 #. set some commonly used format strings
-#: app/preferences_dialog.c:1880
+#: app/preferences_dialog.c:1898
 msgid "Standard"
 msgstr ""
 
-#: app/preferences_dialog.c:1885
+#: app/preferences_dialog.c:1903
 msgid "Show zoom percentage"
 msgstr ""
 
-#: app/preferences_dialog.c:1890
+#: app/preferences_dialog.c:1908
 msgid "Show zoom ratio"
 msgstr ""
 
-#: app/preferences_dialog.c:1895
+#: app/preferences_dialog.c:1913
 msgid "Show reversed zoom ratio"
 msgstr ""
 
-#: app/preferences_dialog.c:1906
+#: app/preferences_dialog.c:1924
 msgid "Image Title Format:"
 msgstr ""
 
 #. End of the title format string
-#: app/preferences_dialog.c:1909
+#: app/preferences_dialog.c:1927
 msgid "Pointer Movement Feedback"
 msgstr ""
 
-#: app/preferences_dialog.c:1919
+#: app/preferences_dialog.c:1937
 msgid "Perfect-but-slow Pointer Tracking"
 msgstr ""
 
-#: app/preferences_dialog.c:1928
+#: app/preferences_dialog.c:1946
 msgid "Disable Cursor Updating"
 msgstr ""
 
-#: app/preferences_dialog.c:1939
-#, fuzzy
+#: app/preferences_dialog.c:1957
 msgid "Tool Options Settings"
-msgstr "/Dialogit/Työkalujen asetukset"
+msgstr ""
 
-#: app/preferences_dialog.c:1941 app/tools.c:884
-#, fuzzy
+#: app/preferences_dialog.c:1959 app/tools.c:900
 msgid "Tool Options"
-msgstr "/Dialogit/Työkalujen asetukset"
+msgstr ""
 
-#: app/preferences_dialog.c:1948
-#, fuzzy
+#: app/preferences_dialog.c:1966
 msgid "Paint Options"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
-#: app/preferences_dialog.c:1958
-#, fuzzy
+#: app/preferences_dialog.c:1976
 msgid "Use Global Paint Options"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
-#: app/preferences_dialog.c:1974
+#: app/preferences_dialog.c:1992
 msgid "Display brush and pattern indicators on Toolbar"
 msgstr ""
 
-#: app/preferences_dialog.c:1988
+#: app/preferences_dialog.c:2006
 msgid "Environment Settings"
 msgstr ""
 
-#: app/preferences_dialog.c:1990
+#: app/preferences_dialog.c:2008
 msgid "Environment"
 msgstr ""
 
-#: app/preferences_dialog.c:1997
+#: app/preferences_dialog.c:2015
 msgid "Resource Consumption"
 msgstr ""
 
-#: app/preferences_dialog.c:2006
+#: app/preferences_dialog.c:2024
 msgid "Conservative Memory Usage"
 msgstr ""
 
-#: app/preferences_dialog.c:2057 app/preferences_dialog.c:2098
+#: app/preferences_dialog.c:2075 app/preferences_dialog.c:2116
 msgid "Bytes"
 msgstr ""
 
-#: app/preferences_dialog.c:2058 app/preferences_dialog.c:2099
+#: app/preferences_dialog.c:2076 app/preferences_dialog.c:2117
 msgid "KiloBytes"
 msgstr ""
 
-#: app/preferences_dialog.c:2059 app/preferences_dialog.c:2100
+#: app/preferences_dialog.c:2077 app/preferences_dialog.c:2118
 msgid "MegaBytes"
 msgstr ""
 
-#: app/preferences_dialog.c:2064
+#: app/preferences_dialog.c:2082
 msgid "Tile Cache Size:"
 msgstr ""
 
-#: app/preferences_dialog.c:2105
+#: app/preferences_dialog.c:2123
 msgid "Maximum Image Size:"
 msgstr ""
 
-#: app/preferences_dialog.c:2115
+#: app/preferences_dialog.c:2133
 msgid "Number of Processors to Use:"
 msgstr ""
 
-#: app/preferences_dialog.c:2119
+#: app/preferences_dialog.c:2137
 msgid "8-Bit Displays"
 msgstr ""
 
-#: app/preferences_dialog.c:2130
+#: app/preferences_dialog.c:2148
 msgid "Install Colormap"
 msgstr ""
 
-#: app/preferences_dialog.c:2139
+#: app/preferences_dialog.c:2157
 msgid "Colormap Cycling"
 msgstr ""
 
-#: app/preferences_dialog.c:2148
+#: app/preferences_dialog.c:2166
 msgid "File Previews / Thumbnails"
 msgstr ""
 
-#: app/preferences_dialog.c:2171
+#: app/preferences_dialog.c:2189
 msgid "Always"
 msgstr ""
 
-#: app/preferences_dialog.c:2172
+#: app/preferences_dialog.c:2190
 msgid "Never"
 msgstr ""
 
-#: app/preferences_dialog.c:2175
+#: app/preferences_dialog.c:2193
 msgid "Try to Write a Thumbnail File:"
 msgstr ""
 
-#: app/preferences_dialog.c:2180
+#: app/preferences_dialog.c:2198
 msgid "Session Management"
 msgstr ""
 
-#: app/preferences_dialog.c:2182
-#, fuzzy
+#: app/preferences_dialog.c:2200
 msgid "Session"
-msgstr "Versio"
+msgstr ""
 
-#: app/preferences_dialog.c:2189
+#: app/preferences_dialog.c:2207
 msgid "Window Positions"
 msgstr ""
 
-#: app/preferences_dialog.c:2198
+#: app/preferences_dialog.c:2216
 msgid "Save Window Positions on Exit"
 msgstr ""
 
-#: app/preferences_dialog.c:2212
+#: app/preferences_dialog.c:2230
 msgid "Clear Saved Window Positions"
 msgstr ""
 
-#: app/preferences_dialog.c:2219
+#: app/preferences_dialog.c:2237
 msgid "Always Try to Restore Session"
 msgstr ""
 
-#: app/preferences_dialog.c:2228
-#, fuzzy
+#: app/preferences_dialog.c:2246
 msgid "Devices"
-msgstr "/Dialogit/Laitteiden tila..."
+msgstr ""
 
-#: app/preferences_dialog.c:2237
-#, fuzzy
+#: app/preferences_dialog.c:2255
 msgid "Save Device Status on Exit"
-msgstr "/Dialogit/Laitteiden tila..."
+msgstr ""
 
-#: app/preferences_dialog.c:2248
-#, fuzzy
+#: app/preferences_dialog.c:2266
 msgid "Monitor Information"
-msgstr "/Dialogit/Työkalujen asetukset"
+msgstr ""
 
-#: app/preferences_dialog.c:2250
+#: app/preferences_dialog.c:2268
 msgid "Monitor"
 msgstr ""
 
-#: app/preferences_dialog.c:2257
+#: app/preferences_dialog.c:2275
 msgid "Get Monitor Resolution"
 msgstr ""
 
-#: app/preferences_dialog.c:2272
+#: app/preferences_dialog.c:2290
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr ""
 
-#: app/preferences_dialog.c:2319
+#: app/preferences_dialog.c:2337
 msgid "From X Server"
 msgstr ""
 
-#: app/preferences_dialog.c:2334
+#: app/preferences_dialog.c:2352
 msgid "Manually:"
 msgstr ""
 
-#: app/preferences_dialog.c:2347
+#: app/preferences_dialog.c:2365
 msgid "Directories Settings"
 msgstr ""
 
-#: app/preferences_dialog.c:2349
+#: app/preferences_dialog.c:2367
 msgid "Directories"
 msgstr ""
 
-#: app/preferences_dialog.c:2362
-msgid "Temp Dir:"
-msgstr ""
-
-#: app/preferences_dialog.c:2362
+#: app/preferences_dialog.c:2380
 msgid "Select Temp Dir"
 msgstr ""
 
-#: app/preferences_dialog.c:2363
+#: app/preferences_dialog.c:2380
+msgid "Temp Dir:"
+msgstr ""
+
+#: app/preferences_dialog.c:2381
+msgid "Select Swap Dir"
+msgstr ""
+
+#: app/preferences_dialog.c:2381
 msgid "Swap Dir:"
 msgstr ""
 
-#: app/preferences_dialog.c:2363
-#, fuzzy
-msgid "Select Swap Dir"
-msgstr "/Valitse/Terävöitä"
-
-#: app/preferences_dialog.c:2395
+#: app/preferences_dialog.c:2413
 msgid "Brushes Directories"
 msgstr ""
 
-#: app/preferences_dialog.c:2395
-#, fuzzy
+#: app/preferences_dialog.c:2413
 msgid "Select Brushes Dir"
-msgstr "/Valitse/Reuna"
+msgstr ""
 
-#: app/preferences_dialog.c:2397
-#, fuzzy
+#: app/preferences_dialog.c:2415
+msgid "Generated Brushes"
+msgstr ""
+
+#: app/preferences_dialog.c:2415
+msgid "Generated Brushes Directories"
+msgstr ""
+
+#: app/preferences_dialog.c:2415
+msgid "Select Generated Brushes Dir"
+msgstr ""
+
+#: app/preferences_dialog.c:2417
 msgid "Patterns Directories"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
-#: app/preferences_dialog.c:2397
+#: app/preferences_dialog.c:2417
 msgid "Select Patterns Dir"
 msgstr ""
 
-#: app/preferences_dialog.c:2399
-#, fuzzy
+#: app/preferences_dialog.c:2419
 msgid "Palettes Directories"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
-#: app/preferences_dialog.c:2399
+#: app/preferences_dialog.c:2419
 msgid "Select Palettes Dir"
 msgstr ""
 
-#: app/preferences_dialog.c:2401
-#, fuzzy
+#: app/preferences_dialog.c:2421
 msgid "Gradients Directories"
-msgstr "/Dialogit/Liukuvärien muokkain..."
+msgstr ""
 
-#: app/preferences_dialog.c:2401
-#, fuzzy
+#: app/preferences_dialog.c:2421
 msgid "Select Gradients Dir"
-msgstr "/Dialogit/Liukuvärien muokkain..."
+msgstr ""
 
-#: app/preferences_dialog.c:2403
+#: app/preferences_dialog.c:2423
 msgid "Plug-Ins"
 msgstr ""
 
-#: app/preferences_dialog.c:2403
+#: app/preferences_dialog.c:2423
 msgid "Plug-Ins Directories"
 msgstr ""
 
-#: app/preferences_dialog.c:2403
+#: app/preferences_dialog.c:2423
 msgid "Select Plug-Ins Dir"
 msgstr ""
 
-#: app/preferences_dialog.c:2405
+#: app/preferences_dialog.c:2425
 msgid "Modules"
 msgstr ""
 
-#: app/preferences_dialog.c:2405
+#: app/preferences_dialog.c:2425
 msgid "Modules Directories"
 msgstr ""
 
-#: app/preferences_dialog.c:2405
-#, fuzzy
+#: app/preferences_dialog.c:2425
 msgid "Select Modules Dir"
-msgstr "/Valitse/Ei mitään"
+msgstr ""
 
 #: app/procedural_db.c:44
 msgid "Procedural Database"
@@ -5092,10 +5185,25 @@ msgid ""
 "Argument %d to '%s' should be a %s, but got passed a %s"
 msgstr ""
 
+#: app/procedural_db_cmds.c:64
+msgid "Internal GIMP procedure"
+msgstr ""
+
+#: app/procedural_db_cmds.c:65
+msgid "GIMP Plug-In"
+msgstr ""
+
+#: app/procedural_db_cmds.c:66
+msgid "GIMP Extension"
+msgstr ""
+
+#: app/procedural_db_cmds.c:67
+msgid "Temporary Procedure"
+msgstr ""
+
 #: app/rect_select.c:180
-#, fuzzy
 msgid "Selection: ADD"
-msgstr "/Valitse/Ei mitään"
+msgstr ""
 
 #: app/rect_select.c:183
 msgid "Selection: SUBTRACT"
@@ -5110,38 +5218,120 @@ msgid "Selection: REPLACE"
 msgstr ""
 
 #: app/rect_select.c:405 app/rect_select.c:412
-#, fuzzy
 msgid "Selection: "
-msgstr "/Valitse/Ei mitään"
+msgstr ""
+
+#: app/regex.c:976
+msgid "Success"
+msgstr ""
+
+#. REG_NOERROR
+#: app/regex.c:977
+msgid "No match"
+msgstr ""
+
+#. REG_NOMATCH
+#: app/regex.c:978
+msgid "Invalid regular expression"
+msgstr ""
+
+#. REG_BADPAT
+#: app/regex.c:979
+msgid "Invalid collation character"
+msgstr ""
+
+#. REG_ECOLLATE
+#: app/regex.c:980
+msgid "Invalid character class name"
+msgstr ""
+
+#. REG_ECTYPE
+#: app/regex.c:981
+msgid "Trailing backslash"
+msgstr ""
+
+#. REG_EESCAPE
+#: app/regex.c:982
+msgid "Invalid back reference"
+msgstr ""
+
+#. REG_ESUBREG
+#: app/regex.c:983
+msgid "Unmatched [ or [^"
+msgstr ""
+
+#. REG_EBRACK
+#: app/regex.c:984
+msgid "Unmatched ( or \\("
+msgstr ""
+
+#. REG_EPAREN
+#: app/regex.c:985
+msgid "Unmatched \\{"
+msgstr ""
+
+#. REG_EBRACE
+#: app/regex.c:986
+msgid "Invalid content of \\{\\}"
+msgstr ""
+
+#. REG_BADBR
+#: app/regex.c:987
+msgid "Invalid range end"
+msgstr ""
+
+#. REG_ERANGE
+#: app/regex.c:988
+msgid "Memory exhausted"
+msgstr ""
+
+#. REG_ESPACE
+#: app/regex.c:989
+msgid "Invalid preceding regular expression"
+msgstr ""
+
+#. REG_BADRPT
+#: app/regex.c:990
+msgid "Premature end of regular expression"
+msgstr ""
+
+#. REG_EEND
+#: app/regex.c:991
+msgid "Regular expression too big"
+msgstr ""
+
+#. REG_ESIZE
+#: app/regex.c:992
+msgid "Unmatched ) or \\)"
+msgstr ""
+
+#: app/regex.c:5442
+msgid "No previous regular expression"
+msgstr ""
 
 #: app/resize.c:160
 msgid "Scale Layer"
 msgstr ""
 
 #: app/resize.c:161 app/resize.c:182
-#, fuzzy
 msgid "Size"
-msgstr "/Kuva/Muokkaa kokoa"
+msgstr ""
 
 #: app/resize.c:165
-#, fuzzy
 msgid "Image Scale"
-msgstr "/Kuva/Skaalaa"
+msgstr ""
 
 #: app/resize.c:166
-#, fuzzy
 msgid "Pixel Dimensions"
-msgstr "/Laajennus"
+msgstr ""
 
 #: app/resize.c:175
-#, fuzzy
 msgid "Resize Layer"
-msgstr "/Tasot/Nosta taso"
+msgstr ""
 
 #: app/resize.c:179
-#, fuzzy
 msgid "Image Resize"
-msgstr "/Kuva/Muokkaa kokoa"
+msgstr ""
 
 #. the original width & height labels
 #: app/resize.c:240 app/scale_tool.c:76
@@ -5167,15 +5357,15 @@ msgstr ""
 msgid "Print Size & Display Unit"
 msgstr ""
 
-#: app/rotate_tool.c:88
+#: app/rotate_tool.c:84
 msgid "Rotation Information"
 msgstr ""
 
-#: app/rotate_tool.c:106
+#: app/rotate_tool.c:102
 msgid "Center X:"
 msgstr ""
 
-#: app/rotate_tool.c:401
+#: app/rotate_tool.c:397
 msgid "Rotating..."
 msgstr ""
 
@@ -5220,11 +5410,10 @@ msgid "Shearing..."
 msgstr ""
 
 #: app/text_tool.c:157
-#, fuzzy
 msgid "Text Tool Options"
-msgstr "/Dialogit/Työkalujen asetukset"
+msgstr ""
 
-#: app/text_tool.c:168 app/tool_options.c:317
+#: app/text_tool.c:168 app/tool_options.c:318
 msgid "Antialiasing"
 msgstr ""
 
@@ -5273,7 +5462,7 @@ msgstr ""
 msgid "Threshold does not operate on indexed drawables."
 msgstr ""
 
-#: app/threshold.c:291 app/tools.c:562
+#: app/threshold.c:291 app/tools.c:578
 msgid "Threshold"
 msgstr ""
 
@@ -5285,21 +5474,21 @@ msgstr ""
 msgid "starting tile preswapper\n"
 msgstr ""
 
-#: app/tile_swap.c:381
+#: app/tile_swap.c:387
 msgid "unable to open swap file...BAD THINGS WILL HAPPEN SOON"
 msgstr ""
 
-#: app/tile_swap.c:501 app/tile_swap.c:562
+#: app/tile_swap.c:507 app/tile_swap.c:568
 #, c-format
 msgid "unable to seek to tile location on disk: %d"
 msgstr ""
 
-#: app/tile_swap.c:520
+#: app/tile_swap.c:526
 #, c-format
 msgid "unable to read tile data from disk: %d/%d ( %d ) bytes read"
 msgstr ""
 
-#: app/tile_swap.c:575
+#: app/tile_swap.c:581
 #, c-format
 msgid "unable to write tile data to disk: %d ( %d ) bytes written"
 msgstr ""
@@ -5309,9 +5498,8 @@ msgid "gimp_tips.txt"
 msgstr ""
 
 #: app/tips_dialog.c:69
-#, fuzzy
 msgid "GIMP Tip of the day"
-msgstr "/Tiedosto/Päivän vihje"
+msgstr ""
 
 #: app/tips_dialog.c:130
 msgid "Previous Tip"
@@ -5332,443 +5520,425 @@ msgid ""
 "GIMP data directory.  Please check your installation."
 msgstr ""
 
-#: app/tools.c:81
+#: app/tool_options.c:207
+msgid "This tool has no options."
+msgstr ""
+
+#: app/tool_options.c:231
+msgid "Rectangular Select Options"
+msgstr ""
+
+#: app/tool_options.c:233
+msgid "Elliptical Selection Options"
+msgstr ""
+
+#: app/tool_options.c:235
+msgid "Free-hand Selection Options"
+msgstr ""
+
+#: app/tool_options.c:237
+msgid "Fuzzy Selection Options"
+msgstr ""
+
+#: app/tool_options.c:239
+msgid "Bezier Selection Options"
+msgstr ""
+
+#: app/tool_options.c:241
+msgid "Intelligent Scissors Options"
+msgstr ""
+
+#: app/tool_options.c:243
+msgid "By-Color Select Options"
+msgstr ""
+
+#: app/tool_options.c:244
+msgid "ERROR: Unknown Selection Type"
+msgstr ""
+
+#: app/tool_options.c:274
+msgid "Feather"
+msgstr ""
+
+#: app/tool_options.c:382
+msgid "Fixed size / aspect ratio"
+msgstr ""
+
+#: app/tool_options.c:553
+msgid "Bucket Fill Options"
+msgstr ""
+
+#: app/tool_options.c:555
+msgid "Blend Options"
+msgstr ""
+
+#: app/tool_options.c:557
+msgid "Pencil Options"
+msgstr ""
+
+#: app/tool_options.c:559
+msgid "Paintbrush Options"
+msgstr ""
+
+#: app/tool_options.c:561
+msgid "Erazer Options"
+msgstr ""
+
+#: app/tool_options.c:563
+msgid "Airbrush Options"
+msgstr ""
+
+#: app/tool_options.c:565
+msgid "Clone Tool Options"
+msgstr ""
+
+#: app/tool_options.c:567
+msgid "Convolver Options"
+msgstr ""
+
+#: app/tool_options.c:569
+msgid "Ink Options"
+msgstr ""
+
+#: app/tool_options.c:571
+msgid "Dodge or Burn Options"
+msgstr ""
+
+#: app/tool_options.c:573
+msgid "Smudge Options"
+msgstr ""
+
+#: app/tool_options.c:574
+msgid "ERROR: Unknown Paint Type"
+msgstr ""
+
+#: app/tool_options.c:697
+msgid "Incremental"
+msgstr "Trinvis"
+
+#: app/tools.c:82
 msgid "Rect Select"
 msgstr ""
 
-#: app/tools.c:83
+#: app/tools.c:84
 msgid "/Tools/Rect Select"
 msgstr ""
 
-#: app/tools.c:86
+#: app/tools.c:87
 msgid "Select rectangular regions"
 msgstr ""
 
-#: app/tools.c:96
+#: app/tools.c:97
 msgid "Ellipse Select"
 msgstr ""
 
-#: app/tools.c:98
+#: app/tools.c:99
 msgid "/Tools/Ellipse Select"
 msgstr ""
 
-#: app/tools.c:101
+#: app/tools.c:102
 msgid "Select elliptical regions"
 msgstr ""
 
-#: app/tools.c:111
+#: app/tools.c:112
 msgid "Free Select"
 msgstr ""
 
-#: app/tools.c:113
+#: app/tools.c:114
 msgid "/Tools/Free Select"
 msgstr ""
 
-#: app/tools.c:116
+#: app/tools.c:117
 msgid "Select hand-drawn regions"
 msgstr ""
 
-#: app/tools.c:126
+#: app/tools.c:127
 msgid "Fuzzy Select"
 msgstr ""
 
-#: app/tools.c:128
+#: app/tools.c:129
 msgid "/Tools/Fuzzy Select"
 msgstr ""
 
-#: app/tools.c:131
+#: app/tools.c:132
 msgid "Select contiguous regions"
 msgstr ""
 
-#: app/tools.c:141
+#: app/tools.c:142
 msgid "Bezier Select"
 msgstr ""
 
-#: app/tools.c:143
+#: app/tools.c:144
 msgid "/Tools/Bezier Select"
 msgstr ""
 
-#: app/tools.c:146
+#: app/tools.c:147
 msgid "Select regions using Bezier curves"
 msgstr ""
 
-#: app/tools.c:156
+#: app/tools.c:157
 msgid "Intelligent Scissors"
 msgstr ""
 
-#: app/tools.c:158
+#: app/tools.c:159
 msgid "/Tools/Intelligent Scissors"
 msgstr ""
 
-#: app/tools.c:161
+#: app/tools.c:162
 msgid "Select shapes from image"
 msgstr ""
 
-#: app/tools.c:171
+#: app/tools.c:172
 msgid "Move"
 msgstr ""
 
-#: app/tools.c:173
-#, fuzzy
+#: app/tools.c:174
 msgid "/Tools/Move"
-msgstr "/Työkalut/---"
+msgstr ""
 
-#: app/tools.c:176
-#, fuzzy
+#: app/tools.c:177
 msgid "Move layers & selections"
-msgstr "/Tasot/Maski valinnaksi"
+msgstr ""
 
-#: app/tools.c:186
+#: app/tools.c:187
 msgid "Magnify"
 msgstr ""
 
-#: app/tools.c:188
+#: app/tools.c:189
 msgid "/Tools/Magnify"
 msgstr ""
 
-#: app/tools.c:191
+#: app/tools.c:192
 msgid "Zoom in & out"
 msgstr ""
 
-#: app/tools.c:201
-#, fuzzy
+#: app/tools.c:202
 msgid "Crop & Resize"
-msgstr "/Kuva/Muokkaa kokoa"
+msgstr ""
 
-#: app/tools.c:203
-#, fuzzy
+#: app/tools.c:204
 msgid "/Tools/Crop & Resize"
-msgstr "/Työkalut/---"
+msgstr ""
 
-#: app/tools.c:206
+#: app/tools.c:207
 msgid "Crop or resize the image"
 msgstr ""
 
 #. the first radio frame and box, for transform type
-#: app/tools.c:216 app/tools.c:231 app/tools.c:246 app/tools.c:261
-#: app/transform_core.c:125 app/transform_tool.c:224
+#: app/tools.c:217 app/tools.c:232 app/tools.c:247 app/tools.c:262
+#: app/transform_core.c:240 app/transform_tool.c:224
 msgid "Transform"
 msgstr ""
 
-#: app/tools.c:218
-#, fuzzy
+#: app/tools.c:219
 msgid "/Tools/Transform"
-msgstr "/Työkalut/Työkalulaatikko"
+msgstr ""
 
-#: app/tools.c:221
+#: app/tools.c:222
 msgid "Transform the layer or selection"
 msgstr ""
 
-#: app/tools.c:276
+#: app/tools.c:277
 msgid "Flip"
 msgstr ""
 
-#: app/tools.c:278
-#, fuzzy
+#: app/tools.c:279
 msgid "/Tools/Flip"
-msgstr "/Työkalut/---"
+msgstr ""
 
-#: app/tools.c:281
+#: app/tools.c:282
 msgid "Flip the layer or selection"
 msgstr ""
 
-#: app/tools.c:291
+#: app/tools.c:292
 msgid "Text"
 msgstr ""
 
-#: app/tools.c:293
-#, fuzzy
+#: app/tools.c:294
 msgid "/Tools/Text"
-msgstr "/Työkalut/Työkalulaatikko"
+msgstr ""
 
-#: app/tools.c:296
+#: app/tools.c:297
 msgid "Add text to the image"
 msgstr ""
 
-#: app/tools.c:308
-#, fuzzy
+#: app/tools.c:309
 msgid "/Tools/Color Picker"
-msgstr "/Työkalut/Vaihda Värit"
+msgstr ""
 
-#: app/tools.c:311
+#: app/tools.c:312
 msgid "Pick colors from the image"
 msgstr ""
 
-#: app/tools.c:321
+#: app/tools.c:322
 msgid "Bucket Fill"
 msgstr ""
 
-#: app/tools.c:323
+#: app/tools.c:324
 msgid "/Tools/Bucket Fill"
 msgstr ""
 
-#: app/tools.c:326
+#: app/tools.c:327
 msgid "Fill with a color or pattern"
 msgstr ""
 
-#: app/tools.c:336
+#: app/tools.c:337
 msgid "Blend"
 msgstr ""
 
-#: app/tools.c:338
-#, fuzzy
+#: app/tools.c:339
 msgid "/Tools/Blend"
-msgstr "/Työkalut/---"
+msgstr ""
 
-#: app/tools.c:341
+#: app/tools.c:342
 msgid "Fill with a color gradient"
 msgstr ""
 
-#: app/tools.c:351
+#: app/tools.c:352
 msgid "Pencil"
 msgstr ""
 
-#: app/tools.c:353
-#, fuzzy
+#: app/tools.c:354
 msgid "/Tools/Pencil"
-msgstr "/Työkalut/---"
+msgstr ""
 
-#: app/tools.c:356
+#: app/tools.c:357
 msgid "Draw sharp pencil strokes"
 msgstr ""
 
-#: app/tools.c:366
+#: app/tools.c:367
 msgid "Paintbrush"
 msgstr ""
 
-#: app/tools.c:368
+#: app/tools.c:369
 msgid "/Tools/Paintbrush"
 msgstr ""
 
-#: app/tools.c:371
+#: app/tools.c:372
 msgid "Paint fuzzy brush strokes"
 msgstr ""
 
-#: app/tools.c:381
+#: app/tools.c:382
 msgid "Eraser"
 msgstr ""
 
-#: app/tools.c:383
-#, fuzzy
+#: app/tools.c:384
 msgid "/Tools/Eraser"
-msgstr "/Työkalut/---"
+msgstr ""
 
-#: app/tools.c:386
+#: app/tools.c:387
 msgid "Erase to background or transparency"
 msgstr ""
 
-#: app/tools.c:396
+#: app/tools.c:397
 msgid "Airbrush"
 msgstr ""
 
-#: app/tools.c:398
+#: app/tools.c:399
 msgid "/Tools/Airbrush"
 msgstr ""
 
-#: app/tools.c:401
+#: app/tools.c:402
 msgid "Airbrush with variable pressure"
 msgstr ""
 
-#: app/tools.c:411
+#: app/tools.c:412
 msgid "Clone"
 msgstr ""
 
-#: app/tools.c:413
-#, fuzzy
+#: app/tools.c:414
 msgid "/Tools/Clone"
-msgstr "/Työkalut/Työkalulaatikko"
+msgstr ""
 
-#: app/tools.c:416
+#: app/tools.c:417
 msgid "Paint using patterns or image regions"
 msgstr ""
 
-#: app/tools.c:426
+#: app/tools.c:427
 msgid "Convolve"
 msgstr ""
 
-#: app/tools.c:428
-#, fuzzy
+#: app/tools.c:429
 msgid "/Tools/Convolve"
-msgstr "/Työkalut/Työkalulaatikko"
+msgstr ""
 
-#: app/tools.c:431
+#: app/tools.c:432
 msgid "Blur or sharpen"
 msgstr ""
 
-#: app/tools.c:441
+#: app/tools.c:442
 msgid "Ink"
 msgstr ""
 
-#: app/tools.c:443
-#, fuzzy
+#: app/tools.c:444
 msgid "/Tools/Ink"
-msgstr "/Työkalut/---"
+msgstr ""
 
-#: app/tools.c:446
+#: app/tools.c:447
 msgid "Draw in ink"
 msgstr ""
 
-#: app/tools.c:456 app/tools.c:461
+#: app/tools.c:457 app/tools.c:462
 msgid "Dodge or Burn"
 msgstr ""
 
-#: app/tools.c:458
-#, fuzzy
+#: app/tools.c:459
 msgid "/Tools/DodgeBurn"
-msgstr "/Työkalut/---"
+msgstr ""
 
-#: app/tools.c:471 app/tools.c:476
+#: app/tools.c:472 app/tools.c:477
 msgid "Smudge"
 msgstr ""
 
-#: app/tools.c:473
-#, fuzzy
+#: app/tools.c:474
 msgid "/Tools/Smudge"
-msgstr "/Työkalut/---"
+msgstr ""
 
 #: app/tools.c:487
-msgid "By Color Select"
+msgid "Measure"
 msgstr ""
 
 #: app/tools.c:489
-#, fuzzy
+msgid "/Tools/Measure"
+msgstr ""
+
+#: app/tools.c:492
+msgid "Measure distances and angles"
+msgstr ""
+
+#: app/tools.c:503
+msgid "By Color Select"
+msgstr ""
+
+#: app/tools.c:505
 msgid "/Select/By Color..."
-msgstr "/Valitse/Reuna"
-
-#: app/tool_options.c:206 app/tool_options.c:688
-msgid "This tool has no options."
 msgstr ""
 
-#: app/tool_options.c:230
-#, fuzzy
-msgid "Rectangular Select Options"
-msgstr "/Tasot/Maski valinnaksi"
-
-#: app/tool_options.c:232
-msgid "Elliptical Selection Options"
-msgstr ""
-
-#: app/tool_options.c:234
-msgid "Free-hand Selection Options"
-msgstr ""
-
-#: app/tool_options.c:236
-#, fuzzy
-msgid "Fuzzy Selection Options"
-msgstr "/Tiedosto/Dialogit/Työkalujen Asetukset..."
-
-#: app/tool_options.c:238
-#, fuzzy
-msgid "Bezier Selection Options"
-msgstr "/Tasot/Maski valinnaksi"
-
-#: app/tool_options.c:240
-msgid "Intelligent Scissors Options"
-msgstr ""
-
-#: app/tool_options.c:242
-#, fuzzy
-msgid "By-Color Select Options"
-msgstr "/Tasot/Maski valinnaksi"
-
-#: app/tool_options.c:243
-msgid "ERROR: Unknown Selection Type"
-msgstr ""
-
-#: app/tool_options.c:273
-#, fuzzy
-msgid "Feather"
-msgstr "/Valitse/Höyhen"
-
-#: app/tool_options.c:381
-msgid "Fixed size / aspect ratio"
-msgstr ""
-
-#: app/tool_options.c:552
-#, fuzzy
-msgid "Bucket Fill Options"
-msgstr "/Tiedosto/Dialogit/Työkalujen Asetukset..."
-
-#: app/tool_options.c:554
-#, fuzzy
-msgid "Blend Options"
-msgstr "/Dialogit/Työkalujen asetukset"
-
-#: app/tool_options.c:556
-#, fuzzy
-msgid "Pencil Options"
-msgstr "/Dialogit/Työkalujen asetukset"
-
-#: app/tool_options.c:558
-#, fuzzy
-msgid "Paintbrush Options"
-msgstr "/Tasot/Maski valinnaksi"
-
-#: app/tool_options.c:560
-#, fuzzy
-msgid "Erazer Options"
-msgstr "/Tasot/Maski valinnaksi"
-
-#: app/tool_options.c:562
-#, fuzzy
-msgid "Airbrush Options"
-msgstr "/Tiedosto/Dialogit/Työkalujen Asetukset..."
-
-#: app/tool_options.c:564
-#, fuzzy
-msgid "Clone Tool Options"
-msgstr "/Dialogit/Työkalujen asetukset"
-
-#: app/tool_options.c:566
-#, fuzzy
-msgid "Convolver Options"
-msgstr "/Dialogit/Työkalujen asetukset"
-
-#: app/tool_options.c:568
-#, fuzzy
-msgid "Ink Options"
-msgstr "/Dialogit/Työkalujen asetukset"
-
-#: app/tool_options.c:570
-#, fuzzy
-msgid "Dodge or Burn Options"
-msgstr "/Dialogit/Työkalujen asetukset"
-
-#: app/tool_options.c:572
-#, fuzzy
-msgid "Smudge Options"
-msgstr "/Dialogit/Työkalujen asetukset"
-
-#: app/tool_options.c:573
-msgid "ERROR: Unknown Paint Type"
-msgstr ""
-
-#: app/transform_core.c:122
+#: app/transform_core.c:237
 msgid "Rotate"
 msgstr ""
 
-#: app/transform_core.c:123
+#: app/transform_core.c:238
 msgid "Scale"
 msgstr ""
 
-#: app/transform_core.c:124
+#: app/transform_core.c:239
 msgid "Shear"
 msgstr ""
 
-#: app/transform_core.c:229
+#: app/transform_core.c:345
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
 msgstr ""
 
-#: app/transform_core.c:1140
+#: app/transform_core.c:1267
 msgid "homogeneous coordinate = 0...\n"
 msgstr ""
 
-#: app/transform_core.c:1395
-#, fuzzy
+#: app/transform_core.c:1520
 msgid "Transformation"
-msgstr "/Dialogit/Työkalujen asetukset"
+msgstr ""
 
 #: app/transform_tool.c:189
 msgid "Rotation"
@@ -5791,9 +5961,8 @@ msgid "Corrective"
 msgstr ""
 
 #: app/transform_tool.c:204
-#, fuzzy
 msgid "Transform Tool Options"
-msgstr "/Dialogit/Työkalujen asetukset"
+msgstr ""
 
 #. the smoothing toggle button
 #: app/transform_tool.c:251
@@ -5801,9 +5970,8 @@ msgid "Smoothing"
 msgstr ""
 
 #: app/transform_tool.c:258
-#, fuzzy
 msgid "Show path"
-msgstr "/Näytä/Vaihda infopalkki"
+msgstr ""
 
 #. the second radio frame and box, for transform direction
 #: app/transform_tool.c:272
@@ -5824,138 +5992,83 @@ msgstr ""
 msgid "Clip result"
 msgstr ""
 
-#: app/xcf.c:365
+#: app/xcf.c:364
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr ""
 
-#: app/xcf.c:419
-#, fuzzy, c-format
-msgid "open failed on %s: %s\n"
-msgstr "Virhe tiedoston avauksessa: %s\n"
-
-#: app/xcf.c:1486 app/xcf.c:2492
+#: app/xcf.c:1477 app/xcf.c:2474
 msgid "xcf: zlib compression unimplemented"
 msgstr ""
 
-#: app/xcf.c:1635
+#: app/xcf.c:1480 app/xcf.c:2478
+msgid "xcf: fractal compression unimplemented"
+msgstr ""
+
+#: app/xcf.c:1626
 #, c-format
 msgid "xcf: uh oh! xcf rle tile saving error: %d"
 msgstr ""
 
-#: app/xcf.c:1777
+#: app/xcf.c:1762
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
 
-#: app/xcf.c:1808
+#: app/xcf.c:1793
 #, c-format
 msgid "unknown compression type: %d"
 msgstr ""
 
-#: app/xcf.c:1848
+#: app/xcf.c:1833
 msgid "Warning, resolution out of range in XCF file"
 msgstr ""
 
-#: app/xcf.c:1871
+#: app/xcf.c:1856
 msgid "Error detected while loading an image's parasites"
 msgstr ""
 
-#: app/xcf.c:1882
+#: app/xcf.c:1867
 msgid "Warning, unit out of range in XCF file, falling back to inches"
 msgstr ""
 
-#: app/xcf.c:1946
+#: app/xcf.c:1931
 #, c-format
 msgid "unexpected/unknown image property: %d (skipping)"
 msgstr ""
 
-#: app/xcf.c:2038
+#: app/xcf.c:2023
 #, c-format
 msgid "unexpected/unknown layer property: %d (skipping)"
 msgstr ""
 
-#: app/xcf.c:2115
+#: app/xcf.c:2100
 #, c-format
 msgid "unexpected/unknown channel property: %d (skipping)"
 msgstr ""
 
-#: app/xcf.c:2455
+#: app/xcf.c:2437
 msgid "not enough tiles found in level"
 msgstr ""
 
-#: app/xcf.c:2496
-msgid "xcf: fractal compression unimplemented"
-msgstr ""
-
-#: app/xcf.c:2636
+#: app/xcf.c:2618
 #, c-format
 msgid "xcf: uh oh! xcf rle tile loading error: %d"
 msgstr ""
 
-#: app/xcf.c:2683
+#: app/xcf.c:2665
 #, c-format
 msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 msgstr ""
 
-#. pseudo unit
-#: libgimp/gimpunit.c:44
-msgid "pixel"
-msgstr ""
-
-#: libgimp/gimpunit.c:44
-msgid "pixels"
-msgstr ""
-
-#. standard units
-#: libgimp/gimpunit.c:47
-msgid "inch"
-msgstr ""
-
-#: libgimp/gimpunit.c:47
-#, fuzzy
-msgid "inches"
-msgstr "/Dialogit/Laitteiden tila..."
-
-#: libgimp/gimpunit.c:48
-msgid "millimeter"
-msgstr ""
-
-#: libgimp/gimpunit.c:48
-#, fuzzy
-msgid "millimeters"
-msgstr "/Suotimet/"
-
-#. professional units
-#: libgimp/gimpunit.c:51
-msgid "point"
-msgstr ""
-
-#: libgimp/gimpunit.c:51
-msgid "points"
-msgstr ""
-
-#: libgimp/gimpunit.c:52
-msgid "pica"
-msgstr ""
-
-#: libgimp/gimpunit.c:52
-msgid "picas"
-msgstr ""
-
-#: libgimp/gimpunit.c:59
-msgid "percent"
+#: libgimp/gimpenv.c:86
+msgid "warning: no home directory."
 msgstr ""
 
 #: libgimp/gimpfileselection.c:352
-#, fuzzy
 msgid "Select File"
-msgstr "/Valitse/Ei mitään"
-
-#: libgimp/gimpenv.c:82
-msgid "warning: no home directory."
 msgstr ""
 
 #: libgimp/gimpunitmenu.c:207
@@ -5971,398 +6084,13 @@ msgid "unit-menu-format contains unknown format sequence '%%%c'"
 msgstr ""
 
 #: libgimp/gimpunitmenu.c:453
-#, fuzzy
 msgid "Unit Selection"
-msgstr "/Valitse/Ei mitään"
+msgstr ""
 
 #: libgimp/gimpunitmenu.c:479
 msgid "Unit "
 msgstr ""
 
 #: libgimp/gimpunitmenu.c:481
-#, fuzzy
 msgid "Factor"
-msgstr "/Valitse/Höyhen"
-
-#: app/regex.c:976
-msgid "Success"
-msgstr "Onnistui"
-
-#. REG_NOERROR
-#: app/regex.c:977
-msgid "No match"
-msgstr "Ei löytynyt"
-
-#. REG_NOMATCH
-#: app/regex.c:978
-msgid "Invalid regular expression"
-msgstr "Väärä säännöllinen lauseke"
-
-#. REG_BADPAT
-#: app/regex.c:979
-msgid "Invalid collation character"
-msgstr "Väärä vertailu merkki"
-
-#. REG_ECOLLATE
-#: app/regex.c:980
-msgid "Invalid character class name"
-msgstr "Väärä merkin luokan nimi"
-
-#. REG_ECTYPE
-#: app/regex.c:981
-msgid "Trailing backslash"
-msgstr "Lopussa oleva kenoviiva"
-
-#. REG_EESCAPE
-#: app/regex.c:982
-msgid "Invalid back reference"
-msgstr "Väärä referenssi"
-
-#. REG_ESUBREG
-#: app/regex.c:983
-msgid "Unmatched [ or [^"
-msgstr "Ei löytynyt [ tai [^"
-
-#. REG_EBRACK
-#: app/regex.c:984
-msgid "Unmatched ( or \\("
-msgstr "Ei löytynyt ( tai \\("
-
-#. REG_EPAREN
-#: app/regex.c:985
-msgid "Unmatched \\{"
-msgstr "Ei löytynyt \\{"
-
-#. REG_EBRACE
-#: app/regex.c:986
-msgid "Invalid content of \\{\\}"
-msgstr "Väärä sisältö \\{\\}"
-
-#. REG_BADBR
-#: app/regex.c:987
-msgid "Invalid range end"
-msgstr "Väärä jakson pää"
-
-#. REG_ERANGE
-#: app/regex.c:988
-msgid "Memory exhausted"
-msgstr "Muisti käytetty"
-
-#. REG_ESPACE
-#: app/regex.c:989
-msgid "Invalid preceding regular expression"
-msgstr "Väärä edeltävä säännöllinen lauseke"
-
-#. REG_BADRPT
-#: app/regex.c:990
-msgid "Premature end of regular expression"
-msgstr "Ennenaikainen säännöllisen lausekkeen loppu"
-
-#. REG_EEND
-#: app/regex.c:991
-msgid "Regular expression too big"
-msgstr "Säännöllinen lauseke on liian suuri"
-
-#. REG_ESIZE
-#: app/regex.c:992
-msgid "Unmatched ) or \\)"
-msgstr "Ei löytynyt ) tai \\)"
-
-#: app/regex.c:5442
-msgid "No previous regular expression"
-msgstr "Ei ole edellistä säännöllistä lauseketta"
-
-#, fuzzy
-#~ msgid "select"
-#~ msgstr "/Valitse/Ei mitään"
-
-#, fuzzy
-#~ msgid "close"
-#~ msgstr "/Tiedosto/Sulje"
-
-#, fuzzy
-#~ msgid "<Toolbox>/File/Quit"
-#~ msgstr "/Tiedosto/Poistu"
-
-#, fuzzy
-#~ msgid "<Image>/File/Quit"
-#~ msgstr "/Tiedosto/Poistu"
-
-#, fuzzy
-#~ msgid "Automatic"
-#~ msgstr "/Automaattinen"
-
-#, fuzzy
-#~ msgid "<Toolbox>/File/Open"
-#~ msgstr "/Tiedosto/Avaa"
-
-#, fuzzy
-#~ msgid "<Image>/File/Open"
-#~ msgstr "/Tiedosto/Avaa"
-
-#, fuzzy
-#~ msgid "<Image>/File/Save"
-#~ msgstr "/Tiedosto/Talleta"
-
-#, fuzzy
-#~ msgid "<Image>/File/Save as"
-#~ msgstr "/Tiedosto/Talleta nimellä"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Stack/Previous Layer"
-#~ msgstr "/Tasot/Nosta taso"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Stack/Next Layer"
-#~ msgstr "/Tasot/Nosta taso"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Stack/Raise Layer"
-#~ msgstr "/Tasot/Nosta taso"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Stack/Lower Layer"
-#~ msgstr "/Tasot/Alenna taso"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Stack/Layer to Top"
-#~ msgstr "/Tasot/Nosta taso"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Anchor Layer"
-#~ msgstr "/Tasot/Ankkuroi taso"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Merge Visible Layers"
-#~ msgstr "/Tasot/Yhdistä näkyvät tasot"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Flatten Image"
-#~ msgstr "/Tasot/Yhdistä kuva"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Alpha To Selection"
-#~ msgstr "/Tasot/Alpha valinnaksi"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Mask To Selection"
-#~ msgstr "/Tasot/Maski valinnaksi"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Add Alpha Channel"
-#~ msgstr "/Tasot/Lisää alpha kanava"
-
-#, fuzzy
-#~ msgid "<Image>/Image/RGB"
-#~ msgstr "/Kuva/RGB"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Grayscale"
-#~ msgstr "/Kuva/Harmaasävy"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Indexed"
-#~ msgstr "/Kuva/Indeksoitu"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Threshold"
-#~ msgstr "/Kuva/Värit/Invertoi"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Posterize"
-#~ msgstr "/Kuva/Värit/Desaturate"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Equalize"
-#~ msgstr "/Kuva/Värit/Equalize"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Invert"
-#~ msgstr "/Kuva/Värit/Invertoi"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Color Balance"
-#~ msgstr "/Kuva/Värit/Equalize"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Brightness-Contrast"
-#~ msgstr "/Kuva/Värit/Desaturate"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Hue-Saturation"
-#~ msgstr "/Kuva/Värit/Desaturate"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Curves"
-#~ msgstr "/Kuva/Värit/Invertoi"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Levels"
-#~ msgstr "/Kuva/Värit/Invertoi"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Desaturate"
-#~ msgstr "/Kuva/Värit/Desaturate"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Alpha/Add Alpha Channel"
-#~ msgstr "/Kuva/Alpha/Lisää alpha kanava"
-
-#, fuzzy
-#~ msgid "<Image>/Select"
-#~ msgstr "/Kuva/Skaalaa"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Cut"
-#~ msgstr "/Muokkaa/Leikkaa"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Copy"
-#~ msgstr "/Muokkaa/Kopioi"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Paste"
-#~ msgstr "/Muokkaa/Liimaa"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Paste Into"
-#~ msgstr "/Muokkaa/Liimaa johonkin"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Fill"
-#~ msgstr "/Muokkaa/Täytä"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Stroke"
-#~ msgstr "/Muokkaa/Piirrä"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Cut Named"
-#~ msgstr "/Muokkaa/Leikkaa nimetty"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Copy Named"
-#~ msgstr "/Muokkaa/Kopioi nimetty"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Paste Named"
-#~ msgstr "/Muokkaa/Liimaa nimetty"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors"
-#~ msgstr "/Kuva/Värit/---"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Channel Ops/Offset"
-#~ msgstr "/Kuva/Kanava operaatiot/Offset"
-
-#, fuzzy
-#~ msgid "<Image>/Filters"
-#~ msgstr "/Suotimet/"
-
-#, fuzzy
-#~ msgid "<Image>/Select/Save To Channel"
-#~ msgstr "/Valitse/Talleta kanavalle"
-
-#, fuzzy
-#~ msgid "<Image>/View/Toggle Rulers"
-#~ msgstr "/Näytä/Vaihda viivottimet"
-
-#, fuzzy
-#~ msgid "<Image>/View/Toggle Guides"
-#~ msgstr "/Näytä/Vaihda apuviivat"
-
-#, fuzzy
-#~ msgid "<Image>/View/Snap To Guides"
-#~ msgstr "/Näytä/Nappaa apuviivoihin"
-
-#, fuzzy
-#~ msgid "<Image>/View/Toggle Statusbar"
-#~ msgstr "/Näytä/Vaihda infopalkki"
-
-#, fuzzy
-#~ msgid "<Image>/File/Close"
-#~ msgstr "/Tiedosto/Sulje"
-
-#, fuzzy
-#~ msgid "Replace Current Selection"
-#~ msgstr "/Tasot/Maski valinnaksi"
-
-#, fuzzy
-#~ msgid "Lower Layer"
-#~ msgstr "/Tasot/Alenna taso"
-
-#, fuzzy
-#~ msgid "/Select/Toggle"
-#~ msgstr "/Valitse/Vaihda"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Repeat last"
-#~ msgstr "/Suotimet/Toista edellinen"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Re-show last"
-#~ msgstr "/Suotimet/Näytä uudelleen edellinen"
-
-#, fuzzy
-#~ msgid "Add Channel To Selection"
-#~ msgstr "/Tasot/Alpha valinnaksi"
-
-#, fuzzy
-#~ msgid "\t\tyou quit the GIMP.\n"
-#~ msgstr "Tietoja GIMPstä"
-
-#~ msgid ""
-#~ "Unable to set sensitivity for menu which doesn't exist:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Ei voi asettaa herkkyyttä menulle, jota ei ole:\n"
-#~ "%s"
-
-#, fuzzy
-#~ msgid ""
-#~ "Unable to set state for menu which doesn't exist:\n"
-#~ "%s\n"
-#~ msgstr ""
-#~ "Ei voi asettaa tilaa menulle, jota ei ole:\n"
-#~ "%s"
-
-#, fuzzy
-#~ msgid "PDB lookup failed on %s"
-#~ msgstr "Virhe tiedoston avauksessa: %s\n"
-
-#, fuzzy
-#~ msgid "# GIMP sessionrc\n"
-#~ msgstr "GIMP:n versio"
-
-#, fuzzy
-#~ msgid "Image procedures"
-#~ msgstr "/Kuva/Skaalaa"
-
-#, fuzzy
-#~ msgid "/_File"
-#~ msgstr "/Tiedosto/Uusi"
-
-#, fuzzy
-#~ msgid "/File/_Dialogs"
-#~ msgstr "/Tiedosto/Sulje"
-
-#, fuzzy
-#~ msgid "/_Tools"
-#~ msgstr "/Työkalut/---"
-
-#, fuzzy
-#~ msgid "Gradient Length"
-#~ msgstr "/Dialogit/Liukuvärien muokkain..."
-
-#, fuzzy
-#~ msgid "GIMP Extension"
-#~ msgstr "GIMP:n versio"
-
-#, fuzzy
-#~ msgid "refresh"
-#~ msgstr "/Tiedosto/Asetukset..."
-
-#, fuzzy
-#~ msgid "Delete a channel"
-#~ msgstr "/Valitse/Talleta kanavalle"
+msgstr ""

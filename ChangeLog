@@ -1,3 +1,7 @@
+Wed Sep  1 14:12:17 CEST 1999  Pablo Saratxaga <pablo@mandrakesoft.com>
+        * po/da.po, configure.in: added danish file from
+        Henrik Hansen <hh@mailserver.dk>
+
 Wed Sep  1 13:29:09 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/gimpcontextpreview.[ch]: added gradient preview.

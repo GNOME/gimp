@@ -2,10 +2,9 @@
 # Copyright (C) 1998 Free Software Foundation, Inc.
 # Wing Tung Leung <tg@skynet.be>, 1998.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Gimp 1.1.0\n"
+"Project-Id-Version: gimp 1.1.0\n"
 "POT-Creation-Date: 1999-08-01 20:03-0700\n"
 "PO-Revision-Date: 1998-12-30 03:50+0100\n"
 "Last-Translator: Wing Tung Leung <tg@skynet.be>\n"
