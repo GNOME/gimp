@@ -47,7 +47,7 @@ the GIMP's native file format (use the file extension ".xcf").
 This preserves the layers and every aspect of your work-in-progress.
 Once a project is completed, you can save it as JPEG, PNG, GIF, ...
 
-The layer named "Background" it special because it lacks transparency.
+The layer named "Background" is special because it lacks transparency.
 This prevents you from adding a layer mask or moving the layer up in
 the stack.  You may add transparency to it by right-clicking in the
 "Layers, Channels and Paths" dialog and selecting "Add Alpha Channel".

@@ -937,8 +937,8 @@ crop_image (GImage   *gimage,
 	  /*  Make sure the projection matches the gimage size  */
 	  gimage_projection_realloc (gimage);
 
-	  /*  rigor the floating layer  */
-	  if (floating_layer)
+	  /*  rigor the floating layer if it has not been culled in crop  */
+	  if (NULL != (floating_layer = gimage_floating_sel (gimage)))
 	    floating_sel_rigor (floating_layer, TRUE);
 
 	  guide_list_ptr = gimage->guides;

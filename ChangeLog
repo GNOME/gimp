@@ -1,3 +1,15 @@
+2001-06-02  Garry R. Osgood <grosgood@rcn.com>
+	
+	* tips/gimp_tips.txt: English language typo at line 50: it -> is.
+	* app/crop.c Fix for bugs #9350 and #54838 which prevents Gimp
+	crash on floating selections; issue of bad cropping raised by
+	#9350 reporter dyfa@addict.de still extant because a scheme
+	script cannot select to crop on a layer, and a crop with respect
+	to the entire image may be completely disjoint with respect to
+	the layer on which a user is applying an effect. Such
+	condition leads to the reported script-fu error, which is less
+	severe than an application crash.
+
 2001-06-02  Sven Neumann  <sven@gimp.org>
 
 	* tips/gimp_conseils.fr.txt
