@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 02:50+0100\n"
-"PO-Revision-Date: 2004-01-22 18:50+0100\n"
+"POT-Creation-Date: 2004-02-10 21:39+0100\n"
+"PO-Revision-Date: 2004-02-10 21:40+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -2476,11 +2476,6 @@ msgstr "Højlysafstand x"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Højlysafstand y"
-
-# genererer sådan nogle krummelureagtige tingester
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-#~ msgstr "<Toolbox>/Udvidelser/Script-Fu/Mønstre/Krummelureflise..."
 
 #~ msgid "Border"
 #~ msgstr "Kant"
