@@ -360,8 +360,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
           if (interpolation_type == GIMP_INTERPOLATION_NONE)
             {
               guchar color[MAX_CHANNELS];
-              gint   iu = RINT (u[0]);
-              gint   iv = RINT (v[0]);
+              gint   iu = (gint) u [0];
+              gint   iv = (gint) v [0];
               gint   b;
 
               if (iu >= u1 && iu < u2 &&
