@@ -23,6 +23,7 @@
 #include "temp_buf.h"
 
 #include "tag.h"
+#include "canvas.h"
 
 
 #define GIMP_DRAWABLE(obj)         GTK_CHECK_CAST (obj, gimp_drawable_get_type (), GimpDrawable)
@@ -57,6 +58,7 @@ int              drawable_color              (GimpDrawable *);
 int              drawable_gray               (GimpDrawable *);
 int              drawable_indexed            (GimpDrawable *);
 TileManager *    drawable_data               (GimpDrawable *);
+Canvas *         drawable_data_canvas        (GimpDrawable *);
 TileManager *    drawable_shadow             (GimpDrawable *);
 int              drawable_bytes              (GimpDrawable *);
 int              drawable_width              (GimpDrawable *);

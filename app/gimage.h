@@ -125,6 +125,8 @@ struct _GImage
   int proj_level;                     /*  projection level             */
   TileManager *projection;            /*  The projection--layers &     */
                                       /*  channels                     */
+  struct _Canvas *projection_canvas;  /*  The projection--layers &     */
+                                      /*  channels                     */
 
   GList *guides;                      /*  guides                       */
 
@@ -256,6 +258,7 @@ unsigned char * gimage_cmap                   (GImage *);
 /*  projection access functions  */
 
 TileManager *   gimage_projection             (GImage *);
+Canvas *        gimage_projection_canvas      (GImage *);
 int             gimage_projection_type        (GImage *);
 int             gimage_projection_bytes       (GImage *);
 int             gimage_projection_opacity     (GImage *);

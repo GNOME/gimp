@@ -140,8 +140,12 @@ gimp16_palette_get_foreground (
                                Paint * p
                                )
 {
+  gfloat fg[3];
   Tag t = tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO);
-  return paint_load (p, t, foreground);
+  fg[0] = foreground[0] / 255.0;
+  fg[1] = foreground[1] / 255.0;
+  fg[2] = foreground[2] / 255.0;
+  return paint_load (p, t, fg);
 }
 
 int
@@ -149,8 +153,12 @@ gimp16_palette_get_background (
                                Paint * p
                                )
 {
+  gfloat bg[3];
   Tag t = tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO);
-  return paint_load (p, t, background);
+  bg[0] = background[0] / 255.0;
+  bg[1] = background[1] / 255.0;
+  bg[2] = background[2] / 255.0;
+  return paint_load (p, t, bg);
 }
 
 

@@ -28,7 +28,10 @@
 #include "gimage_mask.h"
 #include "gdisplay.h"
 #include "layer.h"
+#include "paint.h"
+#include "paint_funcs_area.h"
 #include "palette.h"
+#include "pixelarea.h"
 #include "undo.h"
 
 #include "drawable_pvt.h"
@@ -176,14 +179,14 @@ drawable_merge_shadow (GimpDrawable *drawable, int undo)
 		      REPLACE_MODE, NULL, x1, y1);
 }
 
-
 void
 drawable_fill (GimpDrawable *drawable, int fill_type)
 {
   GImage *gimage;
-  PixelRegion destPR;
-  unsigned char c[MAX_CHANNELS];
-  unsigned char i, r, g, b, a;
+  Tag draw_tag = drawable_tag (drawable);
+  Paint * color = paint_new (draw_tag, NULL);
+  gfloat  color_data[MAX_CHANNELS]; 
+  gfloat  d[4];
 
   if (! drawable)
     return;
@@ -191,62 +194,73 @@ drawable_fill (GimpDrawable *drawable, int fill_type)
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
-  a = 255;
-
+  d[3] = 1.0;
+ 
   /*  a gimage_fill affects the active layer  */
   switch (fill_type)
     {
     case BACKGROUND_FILL:
-      palette_get_background (&r, &g, &b);
-      a = 255;
+      {
+	Paint *bg = paint_new (tag_new(PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO), NULL);
+        gfloat *bg_data; 
+        gimp16_palette_get_background (bg);
+        bg_data = (gfloat*)paint_data (bg);
+	 
+	d[0] = bg_data[0]; 
+	d[1] = bg_data[1];
+	d[2] = bg_data[2]; 
+	d[3] = 1.0;
+        paint_delete (bg);
+      }
       break;
     case WHITE_FILL:
-      a = r = g = b = 255;
+      d[0] = d[1] = d[2] = d[3] = 1.0;
       break;
     case TRANSPARENT_FILL:
-      r = g = b = a = 0;
+      d[0] = d[1] = d[2] = d[3] = 0.0;
       break;
     case NO_FILL:
       return;
       break;
     }
-
-  switch (drawable_type (drawable))
+  
+  switch (tag_format (draw_tag))
     {
-    case RGB_GIMAGE: case RGBA_GIMAGE:
-      c[RED_PIX] = r;
-      c[GREEN_PIX] = g;
-      c[BLUE_PIX] = b;
-      if (drawable_type (drawable) == RGBA_GIMAGE)
-	c[ALPHA_PIX] = a;
+    case FORMAT_RGB: 
+      color_data[0] = d[0];
+      color_data[1] = d[1];
+      color_data[2] = d[2];
+      if (tag_alpha (draw_tag) == ALPHA_YES)
+        color_data[3] = d[3];
       break;
-    case GRAY_GIMAGE: case GRAYA_GIMAGE:
-      c[GRAY_PIX] = r;
-      if (drawable_type (drawable) == GRAYA_GIMAGE)
-	c[ALPHA_G_PIX] = a;
+    case FORMAT_GRAY: 
+      color_data[0] = d[0];
+      if (tag_alpha (draw_tag) == ALPHA_YES)
+        color_data[1] = d[1];
       break;
-    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-      c[RED_PIX] = r;
-      c[GREEN_PIX] = g;
-      c[BLUE_PIX] = b;
-      gimage_transform_color (gimage, drawable, c, &i, RGB);
-      c[INDEXED_PIX] = i;
-      if (drawable_type (drawable) == INDEXEDA_GIMAGE)
-	  c[ALPHA_I_PIX] = a;
-      break;
+    case FORMAT_INDEXED: 
+      /* Fill this in -- uses transform_color */
+    case FORMAT_NONE: 
     default:
-      warning ("Can't fill unknown image type.");
+      warning ("Unknown format.");
+      return;
       break;
     }
+    
+    paint_load (color, tag_new (PRECISION_FLOAT, tag_format (draw_tag), tag_alpha(draw_tag)), 
+			(void *) &color_data);
 
-  pixel_region_init (&destPR,
-		     drawable_data (drawable),
+  {
+    PixelArea dest_area;
+    pixelarea_init (&dest_area, drawable_data_canvas(drawable), NULL,
 		     0, 0,
 		     drawable_width (drawable),
 		     drawable_height (drawable),
 		     TRUE);
-  color_region (&destPR, c);
-
+    color_area (&dest_area, color);
+    paint_delete (color);
+  }
+  
   /*  Update the filled area  */
   drawable_update (drawable, 0, 0,
 		   drawable_width (drawable),
@@ -454,6 +468,14 @@ drawable_data (GimpDrawable *drawable)
     return NULL;
 }
 
+Canvas *
+drawable_data_canvas (GimpDrawable *drawable)
+{
+  if (drawable) 
+    return drawable->canvas;
+  else
+    return NULL;
+}
 
 TileManager *
 drawable_shadow (GimpDrawable *drawable)
@@ -566,6 +588,7 @@ gimp_drawable_init (GimpDrawable *drawable)
 {
   drawable->name = NULL;
   drawable->tiles = NULL;
+  drawable->canvas = NULL;
   drawable->visible = FALSE;
   drawable->width = drawable->height = 0;
   drawable->offset_x = drawable->offset_y = 0;
@@ -602,6 +625,9 @@ gimp_drawable_destroy (GtkObject *object)
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
 
+  if (drawable->canvas)
+    canvas_delete (drawable->canvas);
+
   if (drawable->preview)
     temp_buf_free (drawable->preview);
 
@@ -614,8 +640,8 @@ gimp_drawable_configure (GimpDrawable *drawable,
 			 int gimage_ID, int width, int height, 
 			 int type, char *name)
 {
-  int bpp;
-  int alpha;
+  Format format;
+  Alpha alpha;
 
   if (!name)
     name = "unnamed";
@@ -623,37 +649,55 @@ gimp_drawable_configure (GimpDrawable *drawable,
   switch (type)
     {
     case RGB_GIMAGE:
-      bpp = 3; alpha = 0; break;
+      format = FORMAT_RGB; 
+      alpha = ALPHA_NO;
+      break;
     case GRAY_GIMAGE:
-      bpp = 1; alpha = 0; break;
+      format = FORMAT_GRAY; 
+      alpha = ALPHA_NO;
+      break;
     case RGBA_GIMAGE:
-      bpp = 4; alpha = 1; break;
+      format = FORMAT_RGB; 
+      alpha = ALPHA_YES;
+      break;
     case GRAYA_GIMAGE:
-      bpp = 2; alpha = 1; break;
+      format = FORMAT_GRAY; 
+      alpha = ALPHA_YES;
+      break;
     case INDEXED_GIMAGE:
-      bpp = 1; alpha = 0; break;
+      format = FORMAT_INDEXED; 
+      alpha = ALPHA_NO;
+      break;
     case INDEXEDA_GIMAGE:
-      bpp = 2; alpha = 1; break;
+      format = FORMAT_INDEXED; 
+      alpha = ALPHA_YES;
+      break;
     default:
       warning ("Layer type %d not supported.", type);
       return;
     }
-
+  
+  drawable->tag = tag_new (PRECISION_U8, format, alpha);
+  
   if (drawable->name) 
     g_free (drawable->name);
   drawable->name = g_strdup(name);
   drawable->width = width;
   drawable->height = height;
-  drawable->bytes = bpp;
+  drawable->bytes = tag_bytes (drawable->tag);
   drawable->type = type;
-  drawable->has_alpha = alpha;
+  drawable->has_alpha = (tag_alpha (drawable->tag) == ALPHA_YES) ? TRUE : FALSE;
   drawable->offset_x = 0;
   drawable->offset_y = 0;
-  drawable->tag = tag_by_bytes (bpp);
   
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
-  drawable->tiles = tile_manager_new (width, height, bpp);
+  drawable->tiles = tile_manager_new (width, height, tag_bytes (drawable->tag));
+  
+  if (drawable->canvas)
+    canvas_delete (drawable->canvas);
+  drawable->canvas = canvas_new (drawable->tag, width, height, TILING_NEVER);
+  
   drawable->dirty = FALSE;
   drawable->visible = TRUE;
 

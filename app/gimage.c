@@ -33,6 +33,7 @@
 #include "interface.h"
 #include "layers_dialog.h"
 #include "paint_funcs.h"
+#include "paint_funcs_area.h"
 #include "palette.h"
 #include "plug_in.h"
 #include "undo.h"
@@ -112,6 +113,7 @@ gimage_create (void)
   gimage->flat = TRUE;
   gimage->construct_flag = -1;
   gimage->projection = NULL;
+  gimage->projection_canvas = NULL;
   gimage->guides = NULL;
   gimage->layers = NULL;
   gimage->channels = NULL;
@@ -134,9 +136,9 @@ gimage_create (void)
 static void
 gimage_allocate_projection (GImage *gimage)
 {
+  trace_enter ("gimage_allocate_projection");
   if (gimage->projection)
     gimage_free_projection (gimage);
-
   /*  Find the number of bytes required for the projection.
    *  This includes the intensity channels and an alpha channel
    *  if one doesn't exist.
@@ -156,20 +158,28 @@ gimage_allocate_projection (GImage *gimage)
       warning ("gimage type unsupported.\n");
       break;
     }
-
-  /*  allocate the new projection  */
+  
+  /*  allocate the new projection */
   gimage->projection = tile_manager_new (gimage->width, gimage->height, gimage->proj_bytes);
   gimage->projection->user_data = (void *) gimage;
   tile_manager_set_validate_proc (gimage->projection, gimage_validate);
+  trace_exit();
 }
 
 static void
 gimage_free_projection (GImage *gimage)
 {
+  trace_enter ("gimage_free_projection");
   if (gimage->projection)
     tile_manager_destroy (gimage->projection);
 
   gimage->projection = NULL;
+
+  if (gimage->projection_canvas)
+    canvas_delete (gimage->projection_canvas);
+
+  gimage->projection_canvas = NULL;
+  trace_exit();
 }
 
 static void
@@ -178,7 +188,6 @@ gimage_allocate_shadow (GImage *gimage, int width, int height, int bpp)
   /*  allocate the new projection  */
   gimage->shadow = tile_manager_new (width, height, bpp);
 }
-
 
 /* function definitions */
 
@@ -654,7 +663,8 @@ gimage_apply_painthit  (
 
       /* set up the pixel regions */
       {
-        d = canvas_from_tm (drawable_data (drawable));
+       /* d = canvas_from_tm (drawable_data (drawable)); */
+        d = drawable_data_canvas (drawable); 
         
         if (src1_tiles)
           pixelarea_init (&src1PR, src1_tiles, NULL,
@@ -694,11 +704,12 @@ gimage_apply_painthit  (
         combine_areas (&src1PR, src2PR, &destPR, NULL, NULL,
                        opacity, mode, active, operation);
     }
-
+#if 0
     canvas_init_tm (d, drawable_data (drawable));
     
     canvas_delete (d);
     canvas_delete (m);
+#endif
   }
 }
 
@@ -2930,6 +2941,31 @@ gimage_projection (GImage *gimage)
     }
 }
 
+Canvas *
+gimage_projection_canvas (GImage *gimage)
+{
+  Layer * layer;
+
+  /*  If the gimage is flat, we simply want the data of the
+   *  first layer...Otherwise, we'll pass back the projection
+   */
+  if (gimage_is_flat (gimage))
+    {
+      if ((layer = gimage->active_layer))
+	return drawable_data_canvas (GIMP_DRAWABLE(layer));
+      else
+	return NULL;
+    }
+  else
+    {
+      if ((gimage->projection->levels[0].width != gimage->width) ||
+	  (gimage->projection->levels[0].height != gimage->height))
+	gimage_allocate_projection (gimage);
+
+      return gimage->projection_canvas;
+    }
+}
+
 int
 gimage_projection_type (GImage *gimage)
 {
@@ -3155,6 +3191,7 @@ gimage_composite_preview (GImage *gimage, ChannelType type,
 			  int width, int height)
 {
   int channel;
+  printf( "In gimage_composite_preview\n");
 
   switch (type)
     {
