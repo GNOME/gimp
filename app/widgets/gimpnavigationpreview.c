@@ -42,6 +42,8 @@
 enum
 {
   MARKER_CHANGED,
+  ZOOM,
+  SCROLL,
   LAST_SIGNAL
 };
 
@@ -57,6 +59,8 @@ static gboolean   gimp_navigation_preview_button_press   (GtkWidget          *wi
 							  GdkEventButton     *bevent);
 static gboolean   gimp_navigation_preview_button_release (GtkWidget          *widget, 
 							  GdkEventButton     *bevent);
+static gboolean   gimp_navigation_preview_scroll         (GtkWidget          *widget, 
+							  GdkEventScroll     *sevent);
 static gboolean   gimp_navigation_preview_motion_notify  (GtkWidget          *widget, 
 							  GdkEventMotion     *mevent);
 static gboolean   gimp_navigation_preview_key_press      (GtkWidget          *widget, 
@@ -71,10 +75,10 @@ static guint preview_signals[LAST_SIGNAL] = { 0 };
 static GimpImagePreviewClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_navigation_preview_get_type (void)
 {
-  static GtkType preview_type = 0;
+  static GType preview_type = 0;
 
   if (! preview_type)
     {
@@ -120,12 +124,33 @@ gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass)
 		  G_TYPE_INT,
 		  G_TYPE_INT);
 
+  preview_signals[ZOOM] =
+    g_signal_new ("zoom",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpNavigationPreviewClass, zoom),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__INT,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_INT);
+
+  preview_signals[SCROLL] =
+    g_signal_new ("scroll",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpNavigationPreviewClass, scroll),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__ENUM,
+		  G_TYPE_NONE, 1,
+		  GDK_TYPE_SCROLL_DIRECTION);
+
   object_class->destroy              = gimp_navigation_preview_destroy;
 
   widget_class->realize              = gimp_navigation_preview_realize;
   widget_class->expose_event         = gimp_navigation_preview_expose;
   widget_class->button_press_event   = gimp_navigation_preview_button_press;
   widget_class->button_release_event = gimp_navigation_preview_button_release;
+  widget_class->scroll_event         = gimp_navigation_preview_scroll;
   widget_class->motion_notify_event  = gimp_navigation_preview_motion_notify;
   widget_class->key_press_event      = gimp_navigation_preview_key_press;
 
@@ -307,45 +332,6 @@ gimp_navigation_preview_button_press (GtkWidget      *widget,
       gimp_navigation_preview_grab_pointer (nav_preview);
       break;
 
-      /*  wheelmouse support  */
-    case 4:
-      if (bevent->state & GDK_SHIFT_MASK)
-	{
-	  // change_scale (gdisp, GIMP_ZOOM_IN);
-	}
-      else
-	{
-	  /*
-	  GtkAdjustment *adj =
-	    (bevent->state & GDK_CONTROL_MASK) ?
-	    gdisp->hsbdata : gdisp->vsbdata;
-	  gfloat new_value = adj->value - adj->page_increment / 2;
-	  new_value =
-	    CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
-	  gtk_adjustment_set_value (adj, new_value);
-	  */
-	}
-      break;
-
-    case 5:
-      if (bevent->state & GDK_SHIFT_MASK)
-	{
-	  // change_scale (gdisp, GIMP_ZOOM_OUT);
-	}
-      else
-	{
-	  /*
-	  GtkAdjustment *adj =
-	    (bevent->state & GDK_CONTROL_MASK) ?
-	    gdisp->hsbdata : gdisp->vsbdata;
-	  gfloat new_value = adj->value + adj->page_increment / 2;
-	  new_value = CLAMP (new_value,
-			     adj->lower, adj->upper - adj->page_size);
-	  gtk_adjustment_set_value (adj, new_value);
-	  */
-	}
-      break;
-
     default:
       break;
     }
@@ -372,6 +358,52 @@ gimp_navigation_preview_button_release (GtkWidget      *widget,
 
     default:
       break;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_navigation_preview_scroll (GtkWidget      *widget, 
+				GdkEventScroll *sevent)
+{
+  GimpNavigationPreview *nav_preview;
+
+  nav_preview = GIMP_NAVIGATION_PREVIEW (widget);
+
+  g_print ("gimp_navigation_preview_scroll(%d)\n", sevent->direction);
+
+  if (sevent->state & GDK_SHIFT_MASK)
+    {
+      if (sevent->direction == GDK_SCROLL_UP)
+	{
+	  g_signal_emit (G_OBJECT (widget), preview_signals[ZOOM], 0,
+			 GIMP_ZOOM_IN);
+	}
+      else
+	{
+	  g_signal_emit (G_OBJECT (widget), preview_signals[ZOOM], 0,
+			 GIMP_ZOOM_OUT);
+	}
+    }
+  else
+    {
+      GdkScrollDirection direction;
+
+      if (sevent->state & GDK_CONTROL_MASK)
+	{
+	  if (sevent->direction == GDK_SCROLL_UP)
+	    direction = GDK_SCROLL_LEFT;
+	  else
+	    direction = GDK_SCROLL_RIGHT;
+	}
+      else
+	{
+	  direction = sevent->direction;
+	}
+
+      g_signal_emit (G_OBJECT (widget), preview_signals[SCROLL], 0,
+		     direction);
     }
 
   return TRUE;

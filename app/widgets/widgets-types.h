@@ -36,6 +36,12 @@ typedef enum
 
 typedef enum
 {
+  GIMP_ZOOM_IN,
+  GIMP_ZOOM_OUT
+} GimpZoomType;
+
+typedef enum
+{
   GIMP_MOUSE_CURSOR = (GDK_LAST_CURSOR + 2),
   GIMP_CROSSHAIR_CURSOR,
   GIMP_CROSSHAIR_SMALL_CURSOR,

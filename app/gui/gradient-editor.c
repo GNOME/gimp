@@ -80,9 +80,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/zoom_in.xpm"
-#include "pixmaps/zoom_out.xpm"
-
 
 #define EPSILON 1e-10
 
@@ -524,6 +521,7 @@ gradient_editor_new (Gimp *gimp)
   GtkWidget      *vbox;
   GtkWidget      *vbox2;
   GtkWidget      *button;
+  GtkWidget      *image;
   GtkWidget      *frame;
   gint            i;
 
@@ -694,27 +692,33 @@ gradient_editor_new (Gimp *gimp)
 		      FALSE, FALSE, 0);
   gtk_widget_show (gradient_editor->scrollbar);
 
-  /*  Horizontal box for name, zoom controls and instant update toggle  */
+  /*  Horizontal box for zoom controls and instant update toggle  */
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /*  + and - buttons  */
-  gtk_widget_realize (gradient_editor->shell);
-
-  button = gimp_pixmap_button_new (zoom_out_xpm, NULL);
+  button = gtk_button_new ();
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_OUT, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
 
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (ed_zoom_out_callback),
 		      gradient_editor);
 
-  button = gimp_pixmap_button_new (zoom_in_xpm, NULL);
+  button = gtk_button_new ();
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_IN, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
 
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (ed_zoom_in_callback),
@@ -1096,15 +1100,18 @@ preview_events (GtkWidget      *widget,
   gint            x, y;
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
+  GdkEventScroll *sevent;
 
   switch (event->type)
     {
     case GDK_EXPOSE:
       preview_update (gradient_editor, FALSE);
-      break;
+
+      return FALSE;
 
     case GDK_LEAVE_NOTIFY:
       ed_set_hint (gradient_editor, "");
+
       break;
 
     case GDK_MOTION_NOTIFY:
@@ -1128,6 +1135,7 @@ preview_events (GtkWidget      *widget,
 	      preview_set_hint (gradient_editor, x);
 	    }
 	}
+
       break;
 
     case GDK_BUTTON_PRESS:
@@ -1150,29 +1158,33 @@ preview_events (GtkWidget      *widget,
 	  cpopup_do_popup (gradient_editor);
 	  break;
 
-	  /*  wheelmouse support  */
-	case 4:
-	  {
-	    GtkAdjustment *adj = GTK_ADJUSTMENT (gradient_editor->scroll_data);
-	    gfloat new_value = adj->value - adj->page_increment / 2;
-	    new_value =
-	      CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
-	    gtk_adjustment_set_value (adj, new_value);
-	  }
-	  break;
-
-	case 5:
-	  {
-	    GtkAdjustment *adj = GTK_ADJUSTMENT (gradient_editor->scroll_data);
-	    gfloat new_value = adj->value + adj->page_increment / 2;
-	    new_value =
-	      CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
-	    gtk_adjustment_set_value (adj, new_value);
-	  }
-	  break;
-
 	default:
 	  break;
+	}
+
+      break;
+
+    case GDK_SCROLL:
+      sevent = (GdkEventScroll *) event;
+
+      if (sevent->state & GDK_SHIFT_MASK)
+	{
+	  if (sevent->direction == GDK_SCROLL_UP)
+	    ed_zoom_in_callback (NULL, gradient_editor);
+	  else
+	    ed_zoom_out_callback (NULL, gradient_editor);
+	}
+      else
+	{
+	  GtkAdjustment *adj = GTK_ADJUSTMENT (gradient_editor->scroll_data);
+
+	  gfloat new_value = adj->value + ((sevent->direction == GDK_SCROLL_UP) ?
+					   -adj->page_increment / 2 :
+					   adj->page_increment / 2);
+
+	  new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+
+	  gtk_adjustment_set_value (adj, new_value);
 	}
 
       break;
@@ -1199,7 +1211,7 @@ preview_events (GtkWidget      *widget,
       break;
     }
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

@@ -41,8 +41,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/refresh.xpm"
-
 
 #define COLOR_AREA_SIZE    20
 #define COLOR_HISTORY_SIZE 16
@@ -198,7 +196,7 @@ color_notebook_new (const gchar           *title,
   GtkWidget             *table;
   GtkWidget             *label;
   GtkWidget             *button;
-  GtkWidget             *pixmap;
+  GtkWidget             *image;
   GtkWidget             *arrow;
   GtkWidget             *color_area;
   GimpRGB                bw;
@@ -393,9 +391,9 @@ color_notebook_new (const gchar           *title,
   gtk_container_add (GTK_CONTAINER (color_frame), cnp->new_color);
   gtk_widget_show (cnp->new_color);
 
-  gtk_signal_connect (GTK_OBJECT (cnp->new_color), "color_changed",
-                      GTK_SIGNAL_FUNC (color_notebook_color_changed),
-                      cnp);
+  g_signal_connect (G_OBJECT (cnp->new_color), "color_changed",
+		    G_CALLBACK (color_notebook_color_changed),
+		    cnp);
 
   /*  The old color area  */
   color_frame = gtk_frame_new (NULL);
@@ -420,17 +418,17 @@ color_notebook_new (const gchar           *title,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
 
-  pixmap = gimp_pixmap_new (refresh_xpm);
-  gtk_container_add (GTK_CONTAINER (button), pixmap);
-  gtk_widget_show (pixmap);
+  image = gtk_image_new_from_stock (GTK_STOCK_UNDO, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
 
   gimp_help_set_help_data (button,
 			   _("Revert to old color"),
 			   NULL);
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (color_notebook_reset_callback),
-		      cnp);
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (color_notebook_reset_callback),
+		    cnp);
 
   /*  The white color button  */
   button = gtk_button_new ();
@@ -447,9 +445,9 @@ color_notebook_new (const gchar           *title,
   gtk_container_add (GTK_CONTAINER (button), color_area);
   gtk_widget_show (color_area);
 
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked", 
-			     GTK_SIGNAL_FUNC (color_notebook_set_white),
-			     (GtkObject *) cnp);
+  g_signal_connect_swapped (G_OBJECT (button), "clicked", 
+			    G_CALLBACK (color_notebook_set_white),
+			    cnp);
 
   /*  The black color button  */
   button = gtk_button_new ();
@@ -466,9 +464,9 @@ color_notebook_new (const gchar           *title,
   gtk_container_add (GTK_CONTAINER (button), color_area);
   gtk_widget_show (color_area);
 
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked", 
-			     GTK_SIGNAL_FUNC (color_notebook_set_black),
-			     (GtkObject *) cnp);
+  g_signal_connect_swapped (G_OBJECT (button), "clicked", 
+			    G_CALLBACK (color_notebook_set_black),
+			    cnp);
 
   /*  The color space sliders, toggle buttons and entries  */
   table = gtk_table_new (7, 4, FALSE);
@@ -495,10 +493,11 @@ color_notebook_new (const gchar           *title,
 	  gtk_table_attach (GTK_TABLE (table), cnp->toggles[i],
 			    0, 1, i, i + 1,
 			    GTK_SHRINK, GTK_EXPAND, 0, 0);
-	  gtk_signal_connect (GTK_OBJECT (cnp->toggles[i]), "toggled",
-			      GTK_SIGNAL_FUNC (color_notebook_toggle_update),
-			      cnp);
 	  gtk_widget_show (cnp->toggles[i]);
+
+	  g_signal_connect (G_OBJECT (cnp->toggles[i]), "toggled",
+			    G_CALLBACK (color_notebook_toggle_update),
+			    cnp);
 	}
 
       cnp->slider_data[i] = gimp_scale_entry_new (GTK_TABLE (table), 1, i,
@@ -510,9 +509,10 @@ color_notebook_new (const gchar           *title,
                                                   0, TRUE, 0.0, 0.0,
                                                   gettext (slider_tips[i]),
                                                   NULL);
-      gtk_signal_connect (GTK_OBJECT (cnp->slider_data[i]), "value_changed",
-                          GTK_SIGNAL_FUNC (color_notebook_scale_update),
-                          cnp);
+
+      g_signal_connect (G_OBJECT (cnp->slider_data[i]), "value_changed",
+			G_CALLBACK (color_notebook_scale_update),
+			cnp);
     }
 
   /* The color history */
@@ -531,9 +531,9 @@ color_notebook_new (const gchar           *title,
 			   NULL);
   gtk_widget_show (button);
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (color_history_add_clicked),
-		      cnp);
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (color_history_add_clicked),
+		    cnp);
 
   arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
   gtk_container_add (GTK_CONTAINER (button), arrow);
@@ -556,13 +556,13 @@ color_notebook_new (const gchar           *title,
       gtk_widget_show (cnp->history[i]);
       gtk_widget_show (button);
 
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  GTK_SIGNAL_FUNC (color_history_color_clicked),
-			  cnp);
+      g_signal_connect (G_OBJECT (button), "clicked",
+			G_CALLBACK (color_history_color_clicked),
+			cnp);
 
-      gtk_signal_connect (GTK_OBJECT (cnp->history[i]), "color_changed",
-			  GTK_SIGNAL_FUNC (color_history_color_changed),
-			  &color_history[i]);
+      g_signal_connect (G_OBJECT (cnp->history[i]), "color_changed",
+			G_CALLBACK (color_history_color_changed),
+			&color_history[i]);
     }
 
   /* The hex triplet entry */
@@ -576,13 +576,14 @@ color_notebook_new (const gchar           *title,
   gtk_entry_set_text (GTK_ENTRY (cnp->hex_entry), buffer);
   gtk_widget_set_usize (GTK_WIDGET (cnp->hex_entry), 60, 0);
   gtk_box_pack_end (GTK_BOX (hbox), cnp->hex_entry, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (cnp->hex_entry), "focus_out_event",
-                      GTK_SIGNAL_FUNC (color_notebook_hex_entry_events),
-                      cnp);
-  gtk_signal_connect (GTK_OBJECT (cnp->hex_entry), "key_press_event",
-                      GTK_SIGNAL_FUNC (color_notebook_hex_entry_events),
-                      cnp);
   gtk_widget_show (cnp->hex_entry);
+
+  g_signal_connect (G_OBJECT (cnp->hex_entry), "focus_out_event",
+		    G_CALLBACK (color_notebook_hex_entry_events),
+		    cnp);
+  g_signal_connect (G_OBJECT (cnp->hex_entry), "key_press_event",
+		    G_CALLBACK (color_notebook_hex_entry_events),
+		    cnp);
 
   label = gtk_label_new (_("Hex Triplet:"));
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -598,9 +599,9 @@ color_notebook_new (const gchar           *title,
    */
   if (cnp->notebook)
     {
-      gtk_signal_connect (GTK_OBJECT (cnp->notebook), "switch_page",
-			  GTK_SIGNAL_FUNC (color_notebook_page_switch),
-			  cnp);
+      g_signal_connect (G_OBJECT (cnp->notebook), "switch_page",
+			G_CALLBACK (color_notebook_page_switch),
+			cnp);
     }
 
   color_notebooks = g_list_prepend (color_notebooks, cnp);
@@ -1033,10 +1034,16 @@ color_notebook_update_colors (ColorNotebook           *cnp,
       break;
       
     case UPDATE_NEW_COLOR:
-      gtk_signal_handler_block_by_data (GTK_OBJECT (cnp->new_color), cnp);
+      g_signal_handlers_block_by_func (G_OBJECT (cnp->new_color),
+				       color_notebook_color_changed,
+				       cnp);
+
       gimp_color_area_set_color (GIMP_COLOR_AREA (cnp->new_color), 
 				 &cnp->rgb);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (cnp->new_color), cnp);
+
+      g_signal_handlers_unblock_by_func (G_OBJECT (cnp->new_color),
+					 color_notebook_color_changed,
+					 cnp);
       break;
       
     default:
@@ -1084,12 +1091,16 @@ color_notebook_update_scales (ColorNotebook *cnp,
   for (i = 0; i < (cnp->show_alpha ? 7 : 6); i++)
     if (i != skip)
       {
-	gtk_signal_handler_block_by_data (GTK_OBJECT (cnp->slider_data[i]),
-					  cnp);
+	g_signal_handlers_block_by_func (G_OBJECT (cnp->slider_data[i]),
+					 color_notebook_scale_update,
+					 cnp);
+
 	gtk_adjustment_set_value (GTK_ADJUSTMENT (cnp->slider_data[i]),
 				  values[i]);
-	gtk_signal_handler_unblock_by_data (GTK_OBJECT (cnp->slider_data[i]),
-					    cnp);
+
+	g_signal_handlers_unblock_by_func (G_OBJECT (cnp->slider_data[i]),
+					   color_notebook_scale_update,
+					   cnp);
       }
 
   g_print ("RGB: %d %d %d HSV: %d %d %d ALPHA: %d\n", 
@@ -1352,14 +1363,16 @@ color_history_color_changed (GtkWidget *widget,
 	      if (notebook->history[i] == widget)
 		continue;
 
-	      gtk_signal_handler_block_by_data
-		(GTK_OBJECT (notebook->history[i]), data);
+	      g_signal_handlers_block_by_func (G_OBJECT (notebook->history[i]),
+					       color_history_color_changed,
+					       data);
 
 	      gimp_color_area_set_color
 		(GIMP_COLOR_AREA (notebook->history[i]), &changed_color);
 
-	      gtk_signal_handler_unblock_by_data 
-		(GTK_OBJECT (notebook->history[i]), data);
+	      g_signal_handlers_unblock_by_func (G_OBJECT (notebook->history[i]),
+						 color_history_color_changed,
+						 data);
 	    }
 	}
     }

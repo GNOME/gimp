@@ -87,9 +87,6 @@ static void   toolbox_drop_drawable      (GtkWidget      *widget,
 static void   toolbox_drop_tool          (GtkWidget      *widget,
 					  GimpViewable   *viewable,
 					  gpointer        data);
-static void   toolbox_drop_tool          (GtkWidget      *widget,
-					  GimpViewable   *viewable,
-					  gpointer        data);
 static void   toolbox_drop_buffer        (GtkWidget      *widget,
 					  GimpViewable   *viewable,
 					  gpointer        data);
@@ -323,11 +320,14 @@ create_tools (GtkWidget   *wbox,
 GtkWidget *
 toolbox_create (void)
 {
+  GimpContext    *context;
   GtkItemFactory *toolbox_factory;
   GtkWidget      *window;
   GtkWidget      *main_vbox;
   GtkWidget      *wbox;
   GList          *list;
+
+  context = gimp_get_user_context (the_gimp);
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
@@ -395,10 +395,9 @@ toolbox_create (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), wbox, TRUE, TRUE, 0);
   gtk_widget_show (wbox);
 
-  create_tools (wbox, gimp_get_user_context (the_gimp));
+  create_tools (wbox, context);
 
-  g_signal_connect_object (G_OBJECT (gimp_get_user_context (the_gimp)),
-			   "tool_changed",
+  g_signal_connect_object (G_OBJECT (context), "tool_changed",
 			   G_CALLBACK (toolbox_tool_changed),
 			   G_OBJECT (wbox),
 			   0);
@@ -406,7 +405,7 @@ toolbox_create (void)
   create_color_area (wbox);
 
   if (gimprc.show_indicators)
-    create_indicator_area (wbox, gimp_get_user_context (the_gimp));
+    create_indicator_area (wbox, context);
 
   gtk_drag_dest_set (window,
 		     GTK_DEST_DEFAULT_ALL,
@@ -416,15 +415,20 @@ toolbox_create (void)
   gimp_dnd_file_dest_set (window, gimp_dnd_open_files, NULL);
 
   gimp_dnd_viewable_dest_set (window, GIMP_TYPE_LAYER,
-			      toolbox_drop_drawable, NULL);
+			      toolbox_drop_drawable,
+			      context);
   gimp_dnd_viewable_dest_set (window, GIMP_TYPE_LAYER_MASK,
-			      toolbox_drop_drawable, NULL);
+			      toolbox_drop_drawable,
+			      context);
   gimp_dnd_viewable_dest_set (window, GIMP_TYPE_CHANNEL,
-			      toolbox_drop_drawable, NULL);
+			      toolbox_drop_drawable,
+			      context);
   gimp_dnd_viewable_dest_set (window, GIMP_TYPE_TOOL_INFO,
-			      toolbox_drop_tool, NULL);
+			      toolbox_drop_tool,
+			      context);
   gimp_dnd_viewable_dest_set (window, GIMP_TYPE_BUFFER,
-			      toolbox_drop_buffer, NULL);
+			      toolbox_drop_buffer,
+			      context);
 
   gtk_widget_show (window);
 
@@ -559,8 +563,11 @@ toolbox_drop_tool (GtkWidget    *widget,
 		   GimpViewable *viewable,
 		   gpointer      data)
 {
-  gimp_context_set_tool (gimp_get_user_context (the_gimp),
-			 GIMP_TOOL_INFO (viewable));
+  GimpContext *context;
+
+  context = (GimpContext *) data;
+
+  gimp_context_set_tool (context, GIMP_TOOL_INFO (viewable));
 }
 
 static void
@@ -568,8 +575,12 @@ toolbox_drop_buffer (GtkWidget    *widget,
 		     GimpViewable *viewable,
 		     gpointer      data)
 {
-  if (the_gimp->busy)
+  GimpContext *context;
+
+  context = (GimpContext *) data;
+
+  if (context->gimp->busy)
     return;
 
-  gimp_edit_paste_as_new (the_gimp, NULL, GIMP_BUFFER (viewable)->tiles);
+  gimp_edit_paste_as_new (context->gimp, NULL, GIMP_BUFFER (viewable)->tiles);
 }

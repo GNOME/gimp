@@ -82,12 +82,6 @@ typedef enum
   UNKNOWN
 } OrientationType;
 
-typedef enum /*< skip >*/
-{
-  GIMP_ZOOM_IN,
-  GIMP_ZOOM_OUT
-} GimpZoomType;
-
 /*  Selection Boolean operations  */
 typedef enum /*< chop=CHANNEL_OP_ >*/
 {

@@ -70,6 +70,10 @@ struct _GimpNavigationPreviewClass
   void (* marker_changed) (GimpNavigationPreview *preview,
 			   gint                   x,
 			   gint                   y);
+  void (* zoom)           (GimpNavigationPreview *preview,
+			   GimpZoomType           direction);
+  void (* scroll)         (GimpNavigationPreview *preview,
+			   GdkScrollDirection     direction);
 };
 
 

@@ -120,12 +120,11 @@ indicator_area_create (GimpContext *context)
 {
   GtkWidget *indicator_table;
 
-  g_return_val_if_fail (context != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   indicator_table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_row_spacing (GTK_TABLE (indicator_table), 0, CELL_PADDING);
-  gtk_table_set_col_spacing (GTK_TABLE (indicator_table), 0, CELL_PADDING);
+  gtk_table_set_row_spacings (GTK_TABLE (indicator_table), CELL_PADDING);
+  gtk_table_set_col_spacings (GTK_TABLE (indicator_table), CELL_PADDING);
 
   /*  brush preview  */
 
@@ -133,19 +132,23 @@ indicator_area_create (GimpContext *context)
     gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_brush (context)),
                            CELL_SIZE, CELL_SIZE, 0,
                            FALSE, TRUE, TRUE);
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (context),
-     "brush_changed",
-     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-     GTK_OBJECT (brush_preview));
+  gtk_table_attach_defaults (GTK_TABLE (indicator_table), brush_preview,
+			     0, 1, 0, 1);
+  gtk_widget_show (brush_preview);
 
   gimp_help_set_help_data (brush_preview, 
 			   _("The active brush.\n"
 			     "Click to open the Brushes Dialog."), NULL);
 
-  gtk_signal_connect (GTK_OBJECT (brush_preview), "clicked",
-		      GTK_SIGNAL_FUNC (brush_preview_clicked),
-		      NULL);
+  g_signal_connect_object (G_OBJECT (context), "brush_changed",
+			   G_CALLBACK (gimp_preview_set_viewable),
+			   G_OBJECT (brush_preview),
+			   G_CONNECT_SWAPPED);
+
+  g_signal_connect (G_OBJECT (brush_preview), "clicked",
+		    G_CALLBACK (brush_preview_clicked),
+		    NULL);
+
   gimp_gtk_drag_dest_set_by_type (brush_preview,
                                   GTK_DEST_DEFAULT_ALL,
                                   GIMP_TYPE_BRUSH,
@@ -155,29 +158,29 @@ indicator_area_create (GimpContext *context)
                               brush_preview_drop_brush,
                               context);
 
-  gtk_table_attach_defaults (GTK_TABLE (indicator_table), brush_preview,
-			     0, 1, 0, 1);
-
-
   /*  pattern preview  */
 
   pattern_preview =
     gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_pattern (context)),
                            CELL_SIZE, CELL_SIZE, 0,
                            FALSE, TRUE, TRUE);
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (context),
-     "pattern_changed",
-     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-     GTK_OBJECT (pattern_preview));
+  gtk_table_attach_defaults (GTK_TABLE (indicator_table), pattern_preview,
+			     1, 2, 0, 1);
+  gtk_widget_show (pattern_preview);
 
-  gimp_help_set_help_data (pattern_preview, 
+  gimp_help_set_help_data (pattern_preview,
 			   _("The active pattern.\n"
 			     "Click to open the Patterns Dialog."), NULL);
 
-  gtk_signal_connect (GTK_OBJECT (pattern_preview), "clicked",
-		      GTK_SIGNAL_FUNC (pattern_preview_clicked),
-		      NULL);
+  g_signal_connect_object (G_OBJECT (context), "pattern_changed",
+			   G_CALLBACK (gimp_preview_set_viewable),
+			   G_OBJECT (pattern_preview),
+			   G_CONNECT_SWAPPED);
+
+  g_signal_connect (G_OBJECT (pattern_preview), "clicked",
+		    G_CALLBACK (pattern_preview_clicked),
+		    NULL);
+
   gimp_gtk_drag_dest_set_by_type (pattern_preview,
                                   GTK_DEST_DEFAULT_ALL,
                                   GIMP_TYPE_PATTERN,
@@ -187,29 +190,29 @@ indicator_area_create (GimpContext *context)
                               pattern_preview_drop_pattern,
                               context);
 
-  gtk_table_attach_defaults (GTK_TABLE (indicator_table), pattern_preview,
-			     1, 2, 0, 1);
-
-
   /*  gradient preview  */
 
   gradient_preview =
     gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_gradient (context)),
                            GRAD_CELL_WIDTH, GRAD_CELL_HEIGHT, 0,
                            FALSE, TRUE, TRUE);
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (context),
-     "gradient_changed",
-     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-     GTK_OBJECT (gradient_preview));
+  gtk_table_attach_defaults (GTK_TABLE (indicator_table), gradient_preview,
+			     0, 2, 1, 2);
+  gtk_widget_show (gradient_preview);
 
   gimp_help_set_help_data (gradient_preview, 
 			   _("The active gradient.\n"
 			     "Click to open the Gradients Dialog."), NULL);
 
-  gtk_signal_connect (GTK_OBJECT (gradient_preview), "clicked",
-		      GTK_SIGNAL_FUNC (gradient_preview_clicked),
-		      NULL);
+  g_signal_connect_object (G_OBJECT (context), "gradient_changed",
+			   G_CALLBACK (gimp_preview_set_viewable),
+			   G_OBJECT (gradient_preview),
+			   G_CONNECT_SWAPPED);
+
+  g_signal_connect (G_OBJECT (gradient_preview), "clicked",
+		    G_CALLBACK (gradient_preview_clicked),
+		    NULL);
+
   gimp_gtk_drag_dest_set_by_type (gradient_preview,
                                   GTK_DEST_DEFAULT_ALL,
                                   GIMP_TYPE_GRADIENT,
@@ -219,12 +222,6 @@ indicator_area_create (GimpContext *context)
                               gradient_preview_drop_gradient,
                               context);
 
-  gtk_table_attach_defaults (GTK_TABLE (indicator_table), gradient_preview,
-			     0, 2, 1, 2);
-
-  gtk_widget_show (brush_preview);
-  gtk_widget_show (pattern_preview);
-  gtk_widget_show (gradient_preview);
   gtk_widget_show (indicator_table);
 
   return indicator_table;

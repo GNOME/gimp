@@ -231,25 +231,6 @@ text_clicked_callback (GtkWidget      *widget,
     case 3:
       gtk_menu_popup (menu, NULL, NULL, NULL, NULL, event->button, event->time);
 
-      /*  wheelmouse support  */
-    case 4:
-      {
-	GtkAdjustment *adj = GTK_TEXT_VIEW (widget)->vadjustment;
-	gdouble new_value = adj->value - adj->page_increment / 2;
-	new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
-	gtk_adjustment_set_value (adj, new_value);
-      }
-      break;
-
-    case 5:
-      {
-	GtkAdjustment *adj = GTK_TEXT_VIEW (widget)->vadjustment;
-	gdouble new_value = adj->value + adj->page_increment / 2;
-	new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
-	gtk_adjustment_set_value (adj, new_value);
-      }
-      break;
-
     default:
       break;
     }

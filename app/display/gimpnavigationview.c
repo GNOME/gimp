@@ -178,6 +178,57 @@ nav_dialog_marker_changed (GimpNavigationPreview *nav_preview,
   scroll_display (gdisp, xoffset, yoffset);
 }
 
+static void
+nav_dialog_zoom (GimpNavigationPreview *nav_preview,
+		 GimpZoomType           direction,
+		 NavigationDialog      *nav_dialog)
+{
+  change_scale (nav_dialog->gdisp, direction);
+}
+
+static void
+nav_dialog_scroll (GimpNavigationPreview *nav_preview,
+		   GdkScrollDirection     direction,
+		   NavigationDialog      *nav_dialog)
+{
+  GtkAdjustment *adj;
+  gdouble        value;
+
+  g_print ("nav_dialog_scroll(%d)\n", direction);
+
+  switch (direction)
+    {
+    case GDK_SCROLL_LEFT:
+    case GDK_SCROLL_RIGHT:
+      adj = nav_dialog->gdisp->hsbdata;
+      break;
+
+    case GDK_SCROLL_UP:
+    case GDK_SCROLL_DOWN:
+      adj = nav_dialog->gdisp->vsbdata;
+      break;
+    }
+
+  value = adj->value;
+
+  switch (direction)
+    {
+    case GDK_SCROLL_LEFT:
+    case GDK_SCROLL_UP:
+      value -= adj->page_increment / 2;
+      break;
+
+    case GDK_SCROLL_RIGHT:
+    case GDK_SCROLL_DOWN:
+      value += adj->page_increment / 2;
+      break;
+    }
+
+  value = CLAMP (value, adj->lower, adj->upper - adj->page_size);
+
+  gtk_adjustment_set_value (adj, value);
+}
+
 NavigationDialog *
 nav_dialog_create (GDisplay *gdisp)
 {
@@ -245,6 +296,12 @@ nav_dialog_create (GDisplay *gdisp)
 
     g_signal_connect (G_OBJECT (preview), "marker_changed",
                       G_CALLBACK (nav_dialog_marker_changed),
+                      nav_dialog);
+    g_signal_connect (G_OBJECT (preview), "zoom",
+                      G_CALLBACK (nav_dialog_zoom),
+                      nav_dialog);
+    g_signal_connect (G_OBJECT (preview), "scroll",
+                      G_CALLBACK (nav_dialog_scroll),
                       nav_dialog);
 
     nav_dialog->new_preview = preview;

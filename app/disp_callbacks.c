@@ -178,6 +178,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
   GdkEventExpose  *eevent;
   GdkEventMotion  *mevent;
   GdkEventButton  *bevent;
+  GdkEventScroll  *sevent;
   GdkEventKey     *kevent;
   gdouble          tx            = 0;
   gdouble          ty            = 0;
@@ -344,43 +345,6 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  return_val = TRUE;
 	  break;
 
-	  /*  wheelmouse support  */
-	case 4:
-	  state |= GDK_BUTTON4_MASK;
-	  if (state & GDK_SHIFT_MASK)
-	    {
-	      change_scale (gdisp, GIMP_ZOOM_IN);
-	    }
-	  else
-	    {
-	      GtkAdjustment *adj =
-		(state & GDK_CONTROL_MASK) ? gdisp->hsbdata : gdisp->vsbdata;
-	      gfloat new_value = adj->value - adj->page_increment / 2;
-	      new_value =
-		CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
-	      gtk_adjustment_set_value (adj, new_value);
-	    }
-	  return_val = TRUE;
-	  break;
-
-	case 5:
-	  state |= GDK_BUTTON5_MASK;
-	  if (state & GDK_SHIFT_MASK)
-	    {
-	      change_scale (gdisp, GIMP_ZOOM_OUT);
-	    }
-	  else
-	    {
-	      GtkAdjustment *adj =
-		(state & GDK_CONTROL_MASK) ? gdisp->hsbdata : gdisp->vsbdata;
-	      gfloat new_value = adj->value + adj->page_increment / 2;
-	      new_value = CLAMP (new_value,
-				 adj->lower, adj->upper - adj->page_size);
-	      gtk_adjustment_set_value (adj, new_value);
-	    }
-	  return_val = TRUE;
-	  break;
-
 	default:
 	  break;
 	}
@@ -445,20 +409,41 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  state &= ~GDK_BUTTON3_MASK;
 	  break;
 
-	  /*  wheelmouse support  */
-	case 4:
-	  state &= ~GDK_BUTTON4_MASK;
-	  return_val = TRUE;
-	  break;
-
-	case 5:
-	  state &= ~GDK_BUTTON5_MASK;
-	  return_val = TRUE;
-	  break;
-
 	default:
 	  break;
 	}
+      break;
+
+    case GDK_SCROLL:
+      sevent = (GdkEventScroll *) event;
+      state = sevent->state;
+
+      if (state & GDK_SHIFT_MASK)
+	{
+	  if (sevent->direction == GDK_SCROLL_UP)
+	    change_scale (gdisp, GIMP_ZOOM_IN);
+	  else
+	    change_scale (gdisp, GIMP_ZOOM_OUT);
+	}
+      else
+	{
+	  GtkAdjustment *adj;
+	  gdouble        value;
+
+	  if (state & GDK_CONTROL_MASK)
+	    adj = gdisp->hsbdata;
+	  else
+	    adj = gdisp->vsbdata;
+
+	  value = adj->value + ((sevent->direction == GDK_SCROLL_UP) ?
+				-adj->page_increment / 2 :
+				adj->page_increment / 2);
+	  value = CLAMP (value, adj->lower, adj->upper - adj->page_size);
+
+	  gtk_adjustment_set_value (adj, value);
+	}
+
+      return_val = TRUE;
       break;
 
     case GDK_MOTION_NOTIFY:
