@@ -55,10 +55,10 @@ gimp_paint_core_stroke (GimpPaintCore    *core,
       core->last_coords  = strokes[0];
 
       gimp_paint_core_paint (core, drawable, paint_options,
-                             INIT_PAINT, 0);
+                             GIMP_PAINT_STATE_INIT, 0);
 
       gimp_paint_core_paint (core, drawable, paint_options,
-                             MOTION_PAINT, 0);
+                             GIMP_PAINT_STATE_MOTION, 0);
 
       for (i = 1; i < n_strokes; i++)
         {
@@ -68,7 +68,7 @@ gimp_paint_core_stroke (GimpPaintCore    *core,
 	}
 
       gimp_paint_core_paint (core, drawable, paint_options,
-                             FINISH_PAINT, 0);
+                             GIMP_PAINT_STATE_FINISH, 0);
 
       gimp_paint_core_finish (core, drawable);
 
@@ -169,10 +169,10 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
           core->last_coords  = coords[0];
 
           gimp_paint_core_paint (core, drawable, paint_options,
-                                 INIT_PAINT, 0);
+                                 GIMP_PAINT_STATE_INIT, 0);
 
           gimp_paint_core_paint (core, drawable, paint_options,
-                                 MOTION_PAINT, 0);
+                                 GIMP_PAINT_STATE_MOTION, 0);
 
           for (i = 1; i < n_coords; i++)
             {
@@ -182,7 +182,7 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
             }
 
           gimp_paint_core_paint (core, drawable, paint_options,
-                                 FINISH_PAINT, 0);
+                                 GIMP_PAINT_STATE_FINISH, 0);
         }
 
       n_coords = 0;
@@ -260,10 +260,10 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
               core->last_coords  = g_array_index (coords, GimpCoords, 0);
 
               gimp_paint_core_paint (core, drawable, paint_options,
-                                     INIT_PAINT, 0);
+                                     GIMP_PAINT_STATE_INIT, 0);
 
               gimp_paint_core_paint (core, drawable, paint_options,
-                                     MOTION_PAINT, 0);
+                                     GIMP_PAINT_STATE_MOTION, 0);
 
               for (i = 1; i < coords->len; i++)
                 {
@@ -273,7 +273,7 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
                 }
 
               gimp_paint_core_paint (core, drawable, paint_options,
-                                     FINISH_PAINT, 0);
+                                     GIMP_PAINT_STATE_FINISH, 0);
             }
         }
 

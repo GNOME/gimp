@@ -265,7 +265,6 @@ gimp_paint_tool_finalize (GObject *object)
  * set here is used to decide what cursor modifier to draw and if the
  * picked color goes to the foreground or background color.
  **/
-
 void
 gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
                                      GimpColorPickMode  mode)
@@ -294,7 +293,7 @@ gimp_paint_tool_control (GimpTool       *tool,
       gimp_paint_core_paint (paint_tool->core,
                              drawable,
                              GIMP_PAINT_OPTIONS (tool->tool_info->tool_options),
-                             FINISH_PAINT, 0);
+                             GIMP_PAINT_STATE_FINISH, 0);
       gimp_paint_core_cleanup (paint_tool->core);
 
 #if 0
@@ -450,7 +449,8 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
 
   /*  Let the specific painting function initialize itself  */
-  gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT, time);
+  gimp_paint_core_paint (core, drawable, paint_options,
+                         GIMP_PAINT_STATE_INIT, time);
 
   /*  Paint to the image  */
   if (paint_tool->draw_line)
@@ -459,7 +459,8 @@ gimp_paint_tool_button_press (GimpTool        *tool,
     }
   else
     {
-      gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT, time);
+      gimp_paint_core_paint (core, drawable, paint_options,
+                             GIMP_PAINT_STATE_MOTION, time);
     }
 
   gimp_projection_flush_now (gdisp->gimage->projection);
@@ -489,7 +490,8 @@ gimp_paint_tool_button_release (GimpTool        *tool,
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   /*  Let the specific painting function finish up  */
-  gimp_paint_core_paint (core, drawable, paint_options, FINISH_PAINT, time);
+  gimp_paint_core_paint (core, drawable, paint_options,
+                         GIMP_PAINT_STATE_FINISH, time);
 
   /*  resume the current selection  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);

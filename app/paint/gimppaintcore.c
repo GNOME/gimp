@@ -46,6 +46,7 @@
 
 #include "gimp-intl.h"
 
+
 /*  local function prototypes  */
 
 static void      gimp_paint_core_class_init        (GimpPaintCoreClass *klass);
@@ -60,17 +61,17 @@ static gboolean  gimp_paint_core_real_start          (GimpPaintCore    *core,
 static gboolean  gimp_paint_core_real_pre_paint      (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *options,
-                                                      GimpPaintCoreState paint_state,
+                                                      GimpPaintState    paint_state,
                                                       guint32           time);
 static void      gimp_paint_core_real_paint          (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *options,
-                                                      GimpPaintCoreState paint_state,
+                                                      GimpPaintState    paint_state,
                                                       guint32           time);
 static void      gimp_paint_core_real_post_paint     (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *options,
-                                                      GimpPaintCoreState paint_state,
+                                                      GimpPaintState    paint_state,
                                                       guint32           time);
 static void      gimp_paint_core_real_interpolate    (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
@@ -180,30 +181,30 @@ gimp_paint_core_real_start (GimpPaintCore    *core,
 }
 
 static gboolean
-gimp_paint_core_real_pre_paint (GimpPaintCore      *core,
-                                GimpDrawable       *drawable,
-                                GimpPaintOptions   *paint_options,
-                                GimpPaintCoreState  paint_state,
-                                guint32             time)
+gimp_paint_core_real_pre_paint (GimpPaintCore    *core,
+                                GimpDrawable     *drawable,
+                                GimpPaintOptions *paint_options,
+                                GimpPaintState    paint_state,
+                                guint32           time)
 {
   return TRUE;
 }
 
 static void
-gimp_paint_core_real_paint (GimpPaintCore      *core,
-                            GimpDrawable       *drawable,
-                            GimpPaintOptions   *paint_options,
-                            GimpPaintCoreState  paint_state,
-                            guint32             time)
+gimp_paint_core_real_paint (GimpPaintCore    *core,
+                            GimpDrawable     *drawable,
+                            GimpPaintOptions *paint_options,
+                            GimpPaintState    paint_state,
+                            guint32           time)
 {
 }
 
 static void
-gimp_paint_core_real_post_paint (GimpPaintCore      *core,
-                                 GimpDrawable       *drawable,
-                                 GimpPaintOptions   *paint_options,
-                                 GimpPaintCoreState  paint_state,
-                                 guint32             time)
+gimp_paint_core_real_post_paint (GimpPaintCore    *core,
+                                 GimpDrawable     *drawable,
+                                 GimpPaintOptions *paint_options,
+                                 GimpPaintState    paint_state,
+                                 guint32           time)
 {
 }
 
@@ -214,7 +215,7 @@ gimp_paint_core_real_interpolate (GimpPaintCore    *core,
                                   guint32           time)
 {
   gimp_paint_core_paint (core, drawable, paint_options,
-                         MOTION_PAINT, time);
+                         GIMP_PAINT_STATE_MOTION, time);
 
   core->last_coords = core->cur_coords;
 }
@@ -228,11 +229,11 @@ gimp_paint_core_real_get_paint_area (GimpPaintCore    *core,
 }
 
 void
-gimp_paint_core_paint (GimpPaintCore      *core,
-                       GimpDrawable       *drawable,
-                       GimpPaintOptions   *paint_options,
-                       GimpPaintCoreState  paint_state,
-                       guint32             time)
+gimp_paint_core_paint (GimpPaintCore    *core,
+                       GimpDrawable     *drawable,
+                       GimpPaintOptions *paint_options,
+                       GimpPaintState    paint_state,
+                       guint32           time)
 {
   GimpPaintCoreClass *core_class;
 
@@ -247,7 +248,7 @@ gimp_paint_core_paint (GimpPaintCore      *core,
                              paint_options,
                              paint_state, time))
     {
-      if (paint_state == MOTION_PAINT)
+      if (paint_state == GIMP_PAINT_STATE_MOTION)
         {
           /* Save coordinates for gimp_paint_core_interpolate() */
           core->last_paint.x = core->cur_coords.x;

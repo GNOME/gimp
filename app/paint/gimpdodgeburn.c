@@ -48,7 +48,7 @@ static void   gimp_dodge_burn_finalize   (GObject            *object);
 static void   gimp_dodge_burn_paint      (GimpPaintCore      *paint_core,
                                           GimpDrawable       *drawable,
                                           GimpPaintOptions   *paint_options,
-                                          GimpPaintCoreState  paint_state,
+                                          GimpPaintState      paint_state,
                                           guint32             time);
 static void   gimp_dodge_burn_motion     (GimpPaintCore      *paint_core,
                                           GimpDrawable       *drawable,
@@ -151,18 +151,18 @@ gimp_dodge_burn_finalize (GObject *object)
 }
 
 static void
-gimp_dodge_burn_paint (GimpPaintCore      *paint_core,
-                       GimpDrawable       *drawable,
-                       GimpPaintOptions   *paint_options,
-                       GimpPaintCoreState  paint_state,
-                       guint32             time)
+gimp_dodge_burn_paint (GimpPaintCore    *paint_core,
+                       GimpDrawable     *drawable,
+                       GimpPaintOptions *paint_options,
+                       GimpPaintState    paint_state,
+                       guint32           time)
 {
   GimpDodgeBurn        *dodgeburn = GIMP_DODGE_BURN (paint_core);
   GimpDodgeBurnOptions *options   = GIMP_DODGE_BURN_OPTIONS (paint_options);
 
   switch (paint_state)
     {
-    case INIT_PAINT:
+    case GIMP_PAINT_STATE_INIT:
       dodgeburn->lut = gimp_lut_new ();
 
       gimp_dodge_burn_make_luts (dodgeburn,
@@ -172,19 +172,16 @@ gimp_dodge_burn_paint (GimpPaintCore      *paint_core,
                                  drawable);
       break;
 
-    case MOTION_PAINT:
+    case GIMP_PAINT_STATE_MOTION:
       gimp_dodge_burn_motion (paint_core, drawable, paint_options);
       break;
 
-    case FINISH_PAINT:
+    case GIMP_PAINT_STATE_FINISH:
       if (dodgeburn->lut)
 	{
 	  gimp_lut_free (dodgeburn->lut);
 	  dodgeburn->lut = NULL;
 	}
-      break;
-
-    default:
       break;
     }
 }

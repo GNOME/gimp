@@ -46,46 +46,46 @@
 
 /*  local function prototypes  */
 
-static void      gimp_ink_class_init     (GimpInkClass       *klass);
-static void      gimp_ink_init           (GimpInk            *ink);
+static void      gimp_ink_class_init     (GimpInkClass     *klass);
+static void      gimp_ink_init           (GimpInk          *ink);
 
-static void      gimp_ink_finalize       (GObject            *object);
+static void      gimp_ink_finalize       (GObject          *object);
 
-static void      gimp_ink_paint          (GimpPaintCore      *paint_core,
-                                          GimpDrawable       *drawable,
-                                          GimpPaintOptions   *paint_options,
-                                          GimpPaintCoreState  paint_state,
-                                          guint32             time);
-static TempBuf * gimp_ink_get_paint_area (GimpPaintCore      *paint_core,
-                                          GimpDrawable       *drawable,
-                                          GimpPaintOptions   *paint_options);
+static void      gimp_ink_paint          (GimpPaintCore    *paint_core,
+                                          GimpDrawable     *drawable,
+                                          GimpPaintOptions *paint_options,
+                                          GimpPaintState    paint_state,
+                                          guint32           time);
+static TempBuf * gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
+                                          GimpDrawable     *drawable,
+                                          GimpPaintOptions *paint_options);
 
-static void      gimp_ink_motion         (GimpPaintCore      *paint_core,
-                                          GimpDrawable       *drawable,
-                                          GimpPaintOptions   *paint_options,
-                                          guint32             time);
+static void      gimp_ink_motion         (GimpPaintCore    *paint_core,
+                                          GimpDrawable     *drawable,
+                                          GimpPaintOptions *paint_options,
+                                          guint32           time);
 
-static Blob    * ink_pen_ellipse         (GimpInkOptions     *options,
-                                          gdouble             x_center,
-                                          gdouble             y_center,
-                                          gdouble             pressure,
-                                          gdouble             xtilt,
-                                          gdouble             ytilt,
-                                          gdouble             velocity);
+static Blob    * ink_pen_ellipse         (GimpInkOptions   *options,
+                                          gdouble           x_center,
+                                          gdouble           y_center,
+                                          gdouble           pressure,
+                                          gdouble           xtilt,
+                                          gdouble           ytilt,
+                                          gdouble           velocity);
 
-static void      time_smoother_add       (GimpInk            *ink,
-                                          guint32             value);
-static gdouble   time_smoother_result    (GimpInk            *ink);
-static void      time_smoother_init      (GimpInk            *ink,
-                                          guint32             initval);
-static void      dist_smoother_add       (GimpInk            *ink,
-                                          gdouble             value);
-static gdouble   dist_smoother_result    (GimpInk            *ink);
-static void      dist_smoother_init      (GimpInk            *ink,
-                                          gdouble             initval);
+static void      time_smoother_add       (GimpInk          *ink,
+                                          guint32           value);
+static gdouble   time_smoother_result    (GimpInk          *ink);
+static void      time_smoother_init      (GimpInk          *ink,
+                                          guint32           initval);
+static void      dist_smoother_add       (GimpInk          *ink,
+                                          gdouble           value);
+static gdouble   dist_smoother_result    (GimpInk          *ink);
+static void      dist_smoother_init      (GimpInk          *ink,
+                                          gdouble           initval);
 
-static void      render_blob             (Blob               *blob,
-                                          PixelRegion        *dest);
+static void      render_blob             (Blob             *blob,
+                                          PixelRegion      *dest);
 
 
 static GimpPaintCoreClass *parent_class = NULL;
@@ -163,17 +163,17 @@ gimp_ink_finalize (GObject *object)
 }
 
 static void
-gimp_ink_paint (GimpPaintCore      *paint_core,
-                GimpDrawable       *drawable,
-                GimpPaintOptions   *paint_options,
-                GimpPaintCoreState  paint_state,
-                guint32             time)
+gimp_ink_paint (GimpPaintCore    *paint_core,
+                GimpDrawable     *drawable,
+                GimpPaintOptions *paint_options,
+                GimpPaintState    paint_state,
+                guint32           time)
 {
   GimpInk *ink = GIMP_INK (paint_core);
 
   switch (paint_state)
     {
-    case INIT_PAINT:
+    case GIMP_PAINT_STATE_INIT:
       if (ink->last_blob                                        &&
           paint_core->cur_coords.x == paint_core->last_coords.x &&
           paint_core->cur_coords.y == paint_core->last_coords.y)
@@ -184,14 +184,11 @@ gimp_ink_paint (GimpPaintCore      *paint_core,
         }
       break;
 
-    case MOTION_PAINT:
+    case GIMP_PAINT_STATE_MOTION:
       gimp_ink_motion (paint_core, drawable, paint_options, time);
       break;
 
-    case FINISH_PAINT:
-      break;
-
-    default:
+    case GIMP_PAINT_STATE_FINISH:
       break;
     }
 }

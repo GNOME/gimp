@@ -64,12 +64,12 @@ static gboolean gimp_brush_core_start             (GimpPaintCore      *core,
 static gboolean gimp_brush_core_pre_paint         (GimpPaintCore      *core,
                                                    GimpDrawable       *drawable,
                                                    GimpPaintOptions   *paint_options,
-                                                   GimpPaintCoreState  paint_state,
+                                                   GimpPaintState      paint_state,
                                                    guint32             time);
 static void     gimp_brush_core_post_paint        (GimpPaintCore      *core,
                                                    GimpDrawable       *drawable,
                                                    GimpPaintOptions   *paint_options,
-                                                   GimpPaintCoreState  paint_state,
+                                                   GimpPaintState      paint_state,
                                                    guint32             time);
 static void     gimp_brush_core_interpolate       (GimpPaintCore      *core,
                                                    GimpDrawable       *drawable,
@@ -300,15 +300,15 @@ gimp_brush_core_finalize (GObject *object)
 }
 
 static gboolean
-gimp_brush_core_pre_paint (GimpPaintCore      *paint_core,
-                           GimpDrawable       *drawable,
-                           GimpPaintOptions   *paint_options,
-                           GimpPaintCoreState  paint_state,
-                           guint32             time)
+gimp_brush_core_pre_paint (GimpPaintCore    *paint_core,
+                           GimpDrawable     *drawable,
+                           GimpPaintOptions *paint_options,
+                           GimpPaintState    paint_state,
+                           guint32           time)
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
 
-  if (paint_state == MOTION_PAINT)
+  if (paint_state == GIMP_PAINT_STATE_MOTION)
     {
       /* If we current point == last point, check if the brush
        * wants to be painted in that case. (Direction dependent
@@ -336,15 +336,15 @@ gimp_brush_core_pre_paint (GimpPaintCore      *paint_core,
 }
 
 static void
-gimp_brush_core_post_paint (GimpPaintCore      *paint_core,
-                            GimpDrawable       *drawable,
-                            GimpPaintOptions   *paint_options,
-                            GimpPaintCoreState  paint_state,
-                            guint32             time)
+gimp_brush_core_post_paint (GimpPaintCore    *paint_core,
+                            GimpDrawable     *drawable,
+                            GimpPaintOptions *paint_options,
+                            GimpPaintState    paint_state,
+                            guint32           time)
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
 
-  if (paint_state == MOTION_PAINT)
+  if (paint_state == GIMP_PAINT_STATE_MOTION)
     {
       core->brush = core->main_brush;
     }
@@ -628,7 +628,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
       paint_core->pixel_dist          = pixel_initial              + t * pixel_dist;
 
       gimp_paint_core_paint (paint_core, drawable, paint_options,
-                             MOTION_PAINT, time);
+                             GIMP_PAINT_STATE_MOTION, time);
     }
 
   paint_core->cur_coords.x        = paint_core->last_coords.x        + delta_vec.x;

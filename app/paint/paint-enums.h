@@ -115,5 +115,12 @@ typedef enum  /*< skip >*/
   GIMP_BRUSH_PRESSURE  /*< pdb-skip, skip >*/
 } GimpBrushApplicationMode;
 
+typedef enum  /*< skip, pdb-skip >*/
+{
+  GIMP_PAINT_STATE_INIT,    /*  Setup PaintFunc internals                    */
+  GIMP_PAINT_STATE_MOTION,  /*  PaintFunc performs motion-related rendering  */
+  GIMP_PAINT_STATE_FINISH   /*  Cleanup and/or reset PaintFunc operation     */
+} GimpPaintState;
+
 
 #endif /* __PAINT_ENUMS_H__ */

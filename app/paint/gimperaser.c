@@ -38,17 +38,17 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_eraser_class_init (GimpEraserClass    *klass);
-static void   gimp_eraser_init       (GimpEraser         *eraser);
+static void   gimp_eraser_class_init (GimpEraserClass  *klass);
+static void   gimp_eraser_init       (GimpEraser       *eraser);
 
-static void   gimp_eraser_paint      (GimpPaintCore      *paint_core,
-                                      GimpDrawable       *drawable,
-                                      GimpPaintOptions   *paint_options,
-                                      GimpPaintCoreState  paint_state,
-                                      guint32             time);
-static void   gimp_eraser_motion     (GimpPaintCore      *paint_core,
-                                      GimpDrawable       *drawable,
-                                      GimpPaintOptions   *paint_options);
+static void   gimp_eraser_paint      (GimpPaintCore    *paint_core,
+                                      GimpDrawable     *drawable,
+                                      GimpPaintOptions *paint_options,
+                                      GimpPaintState    paint_state,
+                                      guint32           time);
+static void   gimp_eraser_motion     (GimpPaintCore    *paint_core,
+                                      GimpDrawable     *drawable,
+                                      GimpPaintOptions *paint_options);
 
 
 static GimpBrushCoreClass *parent_class = NULL;
@@ -111,15 +111,15 @@ gimp_eraser_init (GimpEraser *eraser)
 }
 
 static void
-gimp_eraser_paint (GimpPaintCore      *paint_core,
-                   GimpDrawable       *drawable,
-                   GimpPaintOptions   *paint_options,
-                   GimpPaintCoreState  paint_state,
-                   guint32             time)
+gimp_eraser_paint (GimpPaintCore    *paint_core,
+                   GimpDrawable     *drawable,
+                   GimpPaintOptions *paint_options,
+                   GimpPaintState    paint_state,
+                   guint32           time)
 {
   switch (paint_state)
     {
-    case MOTION_PAINT:
+    case GIMP_PAINT_STATE_MOTION:
       gimp_eraser_motion (paint_core, drawable, paint_options);
       break;
 

@@ -40,20 +40,20 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_airbrush_class_init (GimpAirbrushClass  *klass);
-static void       gimp_airbrush_init       (GimpAirbrush       *airbrush);
+static void       gimp_airbrush_class_init (GimpAirbrushClass *klass);
+static void       gimp_airbrush_init       (GimpAirbrush      *airbrush);
 
-static void       gimp_airbrush_finalize   (GObject            *object);
+static void       gimp_airbrush_finalize   (GObject           *object);
 
-static void       gimp_airbrush_paint      (GimpPaintCore      *paint_core,
-                                            GimpDrawable       *drawable,
-                                            GimpPaintOptions   *paint_options,
-                                            GimpPaintCoreState  paint_state,
-                                            guint32             time);
-static void       gimp_airbrush_motion     (GimpPaintCore      *paint_core,
-                                            GimpDrawable       *drawable,
-                                            GimpPaintOptions   *paint_options);
-static gboolean   gimp_airbrush_timeout    (gpointer            data);
+static void       gimp_airbrush_paint      (GimpPaintCore     *paint_core,
+                                            GimpDrawable      *drawable,
+                                            GimpPaintOptions  *paint_options,
+                                            GimpPaintState     paint_state,
+                                            guint32            time);
+static void       gimp_airbrush_motion     (GimpPaintCore     *paint_core,
+                                            GimpDrawable      *drawable,
+                                            GimpPaintOptions  *paint_options);
+static gboolean   gimp_airbrush_timeout    (gpointer           data);
 
 
 static GimpPaintbrushClass *parent_class = NULL;
@@ -131,18 +131,18 @@ gimp_airbrush_finalize (GObject *object)
 }
 
 static void
-gimp_airbrush_paint (GimpPaintCore      *paint_core,
-                     GimpDrawable       *drawable,
-                     GimpPaintOptions   *paint_options,
-                     GimpPaintCoreState  paint_state,
-                     guint32             time)
+gimp_airbrush_paint (GimpPaintCore    *paint_core,
+                     GimpDrawable     *drawable,
+                     GimpPaintOptions *paint_options,
+                     GimpPaintState    paint_state,
+                     guint32           time)
 {
   GimpAirbrush        *airbrush = GIMP_AIRBRUSH (paint_core);
   GimpAirbrushOptions *options  = GIMP_AIRBRUSH_OPTIONS (paint_options);
 
   switch (paint_state)
     {
-    case INIT_PAINT:
+    case GIMP_PAINT_STATE_INIT:
       if (airbrush->timeout_id)
 	{
 	  g_source_remove (airbrush->timeout_id);
@@ -154,7 +154,7 @@ gimp_airbrush_paint (GimpPaintCore      *paint_core,
                                                    paint_state, time);
       break;
 
-    case MOTION_PAINT:
+    case GIMP_PAINT_STATE_MOTION:
       if (airbrush->timeout_id)
 	{
 	  g_source_remove (airbrush->timeout_id);
@@ -180,19 +180,13 @@ gimp_airbrush_paint (GimpPaintCore      *paint_core,
 	}
       break;
 
-    case FINISH_PAINT:
+    case GIMP_PAINT_STATE_FINISH:
       if (airbrush->timeout_id)
 	{
 	  g_source_remove (airbrush->timeout_id);
 	  airbrush->timeout_id = 0;
 	}
 
-      GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawable,
-                                                   paint_options,
-                                                   paint_state, time);
-      break;
-
-    default:
       GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawable,
                                                    paint_options,
                                                    paint_state, time);
@@ -229,7 +223,7 @@ gimp_airbrush_timeout (gpointer data)
   gimp_airbrush_paint (GIMP_PAINT_CORE (airbrush),
                        airbrush->drawable,
                        airbrush->paint_options,
-                       MOTION_PAINT, 0);
+                       GIMP_PAINT_STATE_MOTION, 0);
 
   gimp_image_flush (gimp_item_get_image (GIMP_ITEM (airbrush->drawable)));
 

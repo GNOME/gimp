@@ -23,16 +23,6 @@
 #include "core/gimpobject.h"
 
 
-/* the different states that the painting function can be called with  */
-
-typedef enum
-{
-  INIT_PAINT,    /*  Setup PaintFunc internals                    */
-  MOTION_PAINT,  /*  PaintFunc performs motion-related rendering  */
-  FINISH_PAINT   /*  Cleanup and/or reset PaintFunc operation     */
-} GimpPaintCoreState;
-
-
 #define GIMP_TYPE_PAINT_CORE            (gimp_paint_core_get_type ())
 #define GIMP_PAINT_CORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PAINT_CORE, GimpPaintCore))
 #define GIMP_PAINT_CORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAINT_CORE, GimpPaintCoreClass))
@@ -77,35 +67,35 @@ struct _GimpPaintCoreClass
   GimpObjectClass  parent_class;
 
   /*  virtual functions  */
-  gboolean  (* start)          (GimpPaintCore      *core,
-                                GimpDrawable       *drawable,
-                                GimpPaintOptions   *paint_options,
-                                GimpCoords         *coords);
+  gboolean  (* start)          (GimpPaintCore    *core,
+                                GimpDrawable     *drawable,
+                                GimpPaintOptions *paint_options,
+                                GimpCoords       *coords);
 
-  gboolean  (* pre_paint)      (GimpPaintCore      *core,
-                                GimpDrawable       *drawable,
-                                GimpPaintOptions   *paint_options,
-                                GimpPaintCoreState  paint_state,
-                                guint32             time);
-  void      (* paint)          (GimpPaintCore      *core,
-                                GimpDrawable       *drawable,
-                                GimpPaintOptions   *paint_options,
-                                GimpPaintCoreState  paint_state,
-                                guint32             time);
-  void      (* post_paint)     (GimpPaintCore      *core,
-                                GimpDrawable       *drawable,
-                                GimpPaintOptions   *paint_options,
-                                GimpPaintCoreState  paint_state,
-                                guint32             time);
+  gboolean  (* pre_paint)      (GimpPaintCore    *core,
+                                GimpDrawable     *drawable,
+                                GimpPaintOptions *paint_options,
+                                GimpPaintState    paint_state,
+                                guint32           time);
+  void      (* paint)          (GimpPaintCore    *core,
+                                GimpDrawable     *drawable,
+                                GimpPaintOptions *paint_options,
+                                GimpPaintState    paint_state,
+                                guint32           time);
+  void      (* post_paint)     (GimpPaintCore    *core,
+                                GimpDrawable     *drawable,
+                                GimpPaintOptions *paint_options,
+                                GimpPaintState    paint_state,
+                                guint32           time);
 
-  void      (* interpolate)    (GimpPaintCore      *core,
-                                GimpDrawable       *drawable,
-                                GimpPaintOptions   *paint_options,
-                                guint32             time);
+  void      (* interpolate)    (GimpPaintCore    *core,
+                                GimpDrawable     *drawable,
+                                GimpPaintOptions *paint_options,
+                                guint32           time);
 
-  TempBuf * (* get_paint_area) (GimpPaintCore      *core,
-                                GimpDrawable       *drawable,
-                                GimpPaintOptions   *paint_options);
+  TempBuf * (* get_paint_area) (GimpPaintCore    *core,
+                                GimpDrawable     *drawable,
+                                GimpPaintOptions *paint_options);
 };
 
 
@@ -114,7 +104,7 @@ GType     gimp_paint_core_get_type       (void) G_GNUC_CONST;
 void      gimp_paint_core_paint          (GimpPaintCore      *core,
                                           GimpDrawable       *drawable,
                                           GimpPaintOptions   *paint_options,
-                                          GimpPaintCoreState  state,
+                                          GimpPaintState      state,
                                           guint32             time);
 
 gboolean  gimp_paint_core_start          (GimpPaintCore      *core,

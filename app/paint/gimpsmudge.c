@@ -41,22 +41,22 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_smudge_class_init (GimpSmudgeClass     *klass);
-static void       gimp_smudge_init       (GimpSmudge          *smudge);
+static void       gimp_smudge_class_init (GimpSmudgeClass  *klass);
+static void       gimp_smudge_init       (GimpSmudge       *smudge);
 
-static void       gimp_smudge_finalize   (GObject             *object);
+static void       gimp_smudge_finalize   (GObject          *object);
 
-static void       gimp_smudge_paint      (GimpPaintCore       *paint_core,
-                                          GimpDrawable        *drawable,
-                                          GimpPaintOptions    *paint_options,
-                                          GimpPaintCoreState   paint_state,
-                                          guint32              time);
-static gboolean   gimp_smudge_start      (GimpPaintCore       *paint_core,
-                                          GimpDrawable        *drawable,
-                                          GimpPaintOptions    *paint_options);
-static void       gimp_smudge_motion     (GimpPaintCore       *paint_core,
-                                          GimpDrawable        *drawable,
-                                          GimpPaintOptions    *paint_options);
+static void       gimp_smudge_paint      (GimpPaintCore    *paint_core,
+                                          GimpDrawable     *drawable,
+                                          GimpPaintOptions *paint_options,
+                                          GimpPaintState    paint_state,
+                                          guint32           time);
+static gboolean   gimp_smudge_start      (GimpPaintCore    *paint_core,
+                                          GimpDrawable     *drawable,
+                                          GimpPaintOptions *paint_options);
+static void       gimp_smudge_motion     (GimpPaintCore    *paint_core,
+                                          GimpDrawable     *drawable,
+                                          GimpPaintOptions *paint_options);
 
 static void  gimp_smudge_nonclipped_painthit_coords (GimpPaintCore *paint_core,
                                                      gint          *x,
@@ -144,17 +144,17 @@ gimp_smudge_finalize (GObject *object)
 }
 
 static void
-gimp_smudge_paint (GimpPaintCore      *paint_core,
-                   GimpDrawable       *drawable,
-                   GimpPaintOptions   *paint_options,
-                   GimpPaintCoreState  paint_state,
-                   guint32             time)
+gimp_smudge_paint (GimpPaintCore    *paint_core,
+                   GimpDrawable     *drawable,
+                   GimpPaintOptions *paint_options,
+                   GimpPaintState    paint_state,
+                   guint32           time)
 {
   GimpSmudge *smudge = GIMP_SMUDGE (paint_core);
 
   switch (paint_state)
     {
-    case MOTION_PAINT:
+    case GIMP_PAINT_STATE_MOTION:
       /* initialization fails if the user starts outside the drawable */
       if (! smudge->initialized)
 	smudge->initialized = gimp_smudge_start (paint_core, drawable,
@@ -164,7 +164,7 @@ gimp_smudge_paint (GimpPaintCore      *paint_core,
 	gimp_smudge_motion (paint_core, drawable, paint_options);
       break;
 
-    case FINISH_PAINT:
+    case GIMP_PAINT_STATE_FINISH:
       if (smudge->accum_data)
         {
           g_free (smudge->accum_data);

@@ -48,7 +48,7 @@ static void   gimp_paintbrush_init       (GimpPaintbrush      *paintbrush);
 static void   gimp_paintbrush_paint      (GimpPaintCore       *paint_core,
                                           GimpDrawable        *drawable,
                                           GimpPaintOptions    *paint_options,
-                                          GimpPaintCoreState   paint_state,
+                                          GimpPaintState       paint_state,
                                           guint32              time);
 
 
@@ -112,15 +112,15 @@ gimp_paintbrush_init (GimpPaintbrush *paintbrush)
 }
 
 static void
-gimp_paintbrush_paint (GimpPaintCore      *paint_core,
-                       GimpDrawable       *drawable,
-                       GimpPaintOptions   *paint_options,
-                       GimpPaintCoreState  paint_state,
-                       guint32             time)
+gimp_paintbrush_paint (GimpPaintCore    *paint_core,
+                       GimpDrawable     *drawable,
+                       GimpPaintOptions *paint_options,
+                       GimpPaintState    paint_state,
+                       guint32           time)
 {
   switch (paint_state)
     {
-    case MOTION_PAINT:
+    case GIMP_PAINT_STATE_MOTION:
       _gimp_paintbrush_motion (paint_core, drawable, paint_options,
                                GIMP_OPACITY_OPAQUE);
       break;

@@ -1,3 +1,25 @@
+2004-07-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintcore.h: removed enum GimpPaintCoreState.
+
+	* app/paint/paint-enums.h: added enum GimpPaintState (with values
+	that have a name space).
+
+	* app/paint/gimppaintcore.[ch]
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimpink.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppaintcore-stroke.c
+	* app/paint/gimpsmudge.c
+	* app/tools/gimppainttool.c: changed accordingly.
+
+	* app/tools/gimpinktool.c: removed unused #include.
+
 2004-07-19  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpchannel-combine.c (gimp_channel_combine_ellipse):
