@@ -198,8 +198,8 @@ install-po:
       my($po)=m!/(.*)\.po$!; #/# for brainy vim
       print " $po";
       $postamble .= "	\$(MKPATH) \$(datadir)/locale/$po/LC_MESSAGES\n";
-      $postamble .= "	-msgfmt -o \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo po/$po.po\n";
-      $postamble .= "	\$(CHMOD) 644 \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
+      $postamble .= "	-\$(MSGFMT) -o \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo po/$po.po\n";
+      $postamble .= "	-\$(CHMOD) 644 \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
    }
    print "\n";
    
@@ -288,7 +288,7 @@ WriteMakefile(
     		    'Gimp/Module.pm'	=> '$(INST_LIBDIR)/Gimp/Module.pm',
     		    'Gimp/Config.pm'	=> '$(INST_LIBDIR)/Gimp/Config.pm',
     		   },
-    'LIBS'	=> ['-lintl'],
+    'LIBS'	=> [$INTLLIBS],
     'INC'	=> "$INC1 $GIMP_INC_NOUI $CPPFLAGS $CFLAGS",
     'DEFINE'	=> "$DEFINE1 $DEFS",
     'EXE_FILES'	=> [qw(scm2perl scm2scm gimpdoc xcftopnm embedxpm)],
