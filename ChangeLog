@@ -1,3 +1,8 @@
+2002-01-24  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/tga.c: variant of Russell Valentine's patch
+	for optionally saving image rows in reverse order (bug #53278).
+
 2002-01-20  Sven Neumann  <sven@gimp.org>
 
 	* acinclude.m4: added macros defined in pkg.m4 and glib-gettext.m4
