@@ -12,6 +12,23 @@ FILE=plug-ins
 
 DIE=0
 
+have_libtool=false
+if libtool --version < /dev/null > /dev/null 2>&1 ; then
+        libtool_version=`libtoolize --version |  libtoolize --version | sed 's/^[^0-9]*\([0-9.][0-9.]*\).*/\1/'`
+        case $libtool_version in
+            1.4*)
+                have_libtool=true
+                ;;
+        esac
+fi
+if $have_libtool ; then : ; else
+        echo
+        echo "You must have libtool 1.4 installed to compile $PROJECT."
+        echo "Install the appropriate package for your distribution,"
+        echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
+        DIE=1
+fi
+
 (autoconf --version) < /dev/null > /dev/null 2>&1 || {
 	echo
 	echo "You must have autoconf installed to compile $PROJECT."
@@ -23,7 +40,7 @@ DIE=0
 (automake --version) < /dev/null > /dev/null 2>&1 || {
 	echo
 	echo "You must have automake installed to compile $PROJECT."
-	echo "Get ftp://ftp.cygnus.com/pub/home/tromey/automake-1.2d.tar.gz"
+	echo "Get ftp://ftp.cygnus.com/pub/home/tromey/automake-1.4p1.tar.gz"
 	echo "(or a newer version if it is available)"
 	DIE=1
 }
@@ -105,22 +122,13 @@ echo "Running gettextize...  Ignore non-fatal messages."
 # while making dist.
 echo "no" | gettextize --copy --force
 
-autogen_dirs="."
+aclocal $ACLOCAL_FLAGS
 
-for i in $autogen_dirs; do
-	echo "Processing $i..."
+# optionally feature autoheader
+(autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader
 
-	cd $i
-	aclocal $ACLOCAL_FLAGS
-
-	# optionally feature autoheader
-	if grep AM_CONFIG_HEADER configure.in >/dev/null ; then
-		(autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader
-	fi
-
-	automake --add-missing $am_opt
-	autoconf
-done
+automake --add-missing $am_opt
+autoconf
 
 cd $ORIGDIR
 

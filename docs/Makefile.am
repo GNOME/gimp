@@ -1,5 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
+man_MANS = gimp.1 gimptool-1.4.1 gimp-remote.1 gimprc.5
+
 EXTRA_DIST = \
 	Wilber.svg			\
 	Wilber.xcf.gz			\

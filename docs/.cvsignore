@@ -1,6 +1,10 @@
 Makefile
 Makefile.in
 .xvpics
+gimp.1
+gimprc.5
+gimptool-1.4.1
+gimp-remote.1
 Wilber.xcf
 Wilber_Construction_Kit.xcf
 quick_reference

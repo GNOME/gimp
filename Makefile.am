@@ -1,6 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 SUBDIRS = \
+	m4macros		\
 	tools			\
 	intl			\
 	regexrepl		\
@@ -47,7 +48,6 @@ EXTRA_DIST = \
 	user_install		\
 	user_install.bat	\
 	ps-menurc		\
-	gimp-1.4.m4		\
 	gimprc.win32		\
 	config.h.win32
 
@@ -63,11 +63,6 @@ gimpsysconf_DATA = \
 	ps-menurc
 
 gimpdata_SCRIPTS = user_install
-
-man_MANS = gimp.1 gimptool.1 gimp-remote.1 gimprc.5
-
-m4datadir = $(datadir)/aclocal
-m4data_DATA = gimp-1.4.m4
 
 scriptdata =
 

@@ -1,3 +1,32 @@
+2001-08-28  Sven Neumann  <sven@gimp.org>
+
+	* acinclude.m4: removed redefinitions of libtool macros. We use the
+	installed libtool now. If this breaks the build for your system, 
+	upgrade libtool. If that does not help, let us know.
+	
+	* ltconfig
+	* ltmain.sh: removed these files. Newer versions of libtool don't use
+	ltconfig and ltmain.sh is taken from your libtool installation.
+
+	* autogen.sh: check for presence of libtool.
+	
+	* Makefile.am
+	* configure.in
+	* gimp-remote.1.in
+	* gimp.1.in
+	* gimprc.5.in: removed man-pages from toplevel dir ...
+	
+	* docs/Makefile.am
+	* docs/gimp-remote.1.in
+	* docs/gimp.1.in
+	* docs/gimprc.5.in
+	* docs/gimptool-1.4.1.in: ... and added them back here.
+	
+	* gimp-1.4.m4: removed from toplevel dir ...
+	
+	* m4macros/Makefile.am
+	* m4macros/gimp-1.4.m4: ... and added it back here.
+
 2001-08-19  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/Makefile.am: added PANGOFT2_CFLAGS to INCLUDES.
