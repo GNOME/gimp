@@ -3,11 +3,6 @@
 ## Makefile for building the GIMP DLLs and LIBs with Microsoft C.
 ## Use: nmake -f makefile.msc
 
-# Change this to wherever you want to install the DLLs. This directory
-# should be in your PATH. As these DLLs are for the GIMP and its plug-ins
-# only, it probably is best to keep them in the GIMP's bin directory.
-BIN = C:\install\gimp\bin
-
 GIMP_VER = 1.2
 
 # The name of the directory in your %HOME% where the GIMP's personal settings
@@ -76,8 +71,10 @@ PDB_WRAPPERS_O = \
 	gimpimage_pdb.obj \
 	gimplayer_pdb.obj \
 	gimpmessage_pdb.obj \
+	gimpmisc_pdb.obj \
 	gimppalette_pdb.obj \
 	gimpparasite_pdb.obj \
+	gimppaths_pdb.obj \
 	gimppatterns_pdb.obj \
 	gimppatternselect_pdb.obj \
 	gimpplugin_pdb.obj \
@@ -105,7 +102,7 @@ gimpi_OBJECTS = \
 	gimpquerybox.obj \
 	gimpsizeentry.obj \
 	gimpunitmenu.obj \
-	gimputils.c \
+	gimputils.obj \
 	gimpvector.obj \
 	gimpwidgets.obj \
 	gimpwire.obj
@@ -137,7 +134,7 @@ gimp_OBJECTS = \
 	gimpwire.obj
 
 gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
-	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) user32.lib /def:gimp.def
+	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(INTL)\intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) user32.lib /def:gimp.def
 
 # Pass -DLIBGIMP_COMPILATION when compiling gimp.c
 
@@ -164,7 +161,7 @@ gimpui_OBJECTS = \
 	gimpwidgets.obj
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
-	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) gimp-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) /def:gimpui.def
+	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) gimp-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) /def:gimpui.def
 
 gimpmenu.obj : gimpmenu.c
 	$(CC) $(CFLAGS) -GD -c gimpmenu.c

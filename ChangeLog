@@ -1,5 +1,18 @@
 2001-03-12  Tor Lillqvist  <tml@iki.fi>
 
+	* libgimp/makefile.msc: Add missing object files. The import
+	library for the intl library is now called just intl.
+
+	* libgimp/makefile.msc (gimpi_OBJECTS): Typo.
+
+	* app/makefile.msc (gimp_OBJECTS): Remove objects corresponding to
+	removed source files. Update name of import library for the intl
+	library. Add missing objects.
+
+	* app/gimpbrush.c
+	* app/gimpbrushpipe.c
+	* app/patterns.c: Include <glib.h> early for G_OS_WIN32.
+
 	* app/dialog_handler.h: Change the #ifdef logic: Declare
 	dialog_register and dialog_unregister always, but mark for export
 	only when compiling dialog_handler.c. That way MSVC won't complain

@@ -61,7 +61,7 @@ gimpim_OBJECTS = \
 
 gimpim.lib : $(gimpim_OBJECTS)
 	lib /out:gimpim.lib $(gimpim_OBJECTS)
-	
+
 gimp_OBJECTS = \
 	about_dialog.obj	\
 	airbrush.obj		\
@@ -110,6 +110,7 @@ gimp_OBJECTS = \
 	devices.obj		\
 	dialog_handler.obj	\
 	disp_callbacks.obj	\
+	display_cmds.obj	\
 	docindex.obj		\
 	dodgeburn.obj		\
 	draw_core.obj		\
@@ -131,13 +132,10 @@ gimp_OBJECTS = \
 	free_select.obj		\
 	fuzzy_select.obj	\
 	gdisplay.obj		\
-	gdisplay_cmds.obj	\
 	gdisplay_ops.obj	\
 	general.obj		\
 	gimage.obj		\
-	gimage_cmds.obj		\
 	gimage_mask.obj		\
-	gimage_mask_cmds.obj	\
 	gimpbrush.obj		\
 	gimpbrushgenerated.obj	\
 	gimpbrushlist.obj	\
@@ -146,7 +144,6 @@ gimp_OBJECTS = \
 	gimpcontextpreview.obj	\
 	gimpdnd.obj		\
 	gimphelp.obj		\
-	gimphelp_cmds.obj	\
 	gimphistogram.obj	\
 	gimplist.obj		\
 	gimplut.obj		\
@@ -161,14 +158,17 @@ gimp_OBJECTS = \
 	gradient_cmds.obj	\
 	gradient_select.obj	\
 	gradient_select_cmds.obj\
+	gradients_cmds.obj	\
 	guides_cmds.obj		\
 	gtkwrapbox.obj		\
 	gtkhwrapbox.obj		\
 	gtkvwrapbox.obj		\
 	gximage.obj		\
+	help_cmds.obj		\
 	histogramwidget.obj 	\
 	histogram_tool.obj	\
 	hue_saturation.obj	\
+	image_cmds.obj		\
 	image_map.obj		\
 	image_new.obj		\
 	image_render.obj	\
@@ -177,7 +177,6 @@ gimp_OBJECTS = \
 	info_window.obj		\
 	ink.obj         	\
 	interface.obj		\
-	interface_cmds.obj	\
 	internal_procs.obj	\
 	invert.obj		\
 	iscissors.obj		\
@@ -192,6 +191,7 @@ gimp_OBJECTS = \
 	main.obj		\
 	measure.obj		\
 	menus.obj		\
+	message_cmds.obj	\
 	misc_cmds.obj		\
 	module_db.obj		\
 	move.obj		\
@@ -226,12 +226,14 @@ gimp_OBJECTS = \
 	rect_select.obj		\
 	regex.obj		\
 	resize.obj		\
+	resolution_calibrate.obj\
 	rotate_tool.obj		\
 	scale.obj		\
 	scale_tool.obj		\
 	scan_convert.obj	\
 	scroll.obj		\
 	selection.obj		\
+	selection_cmds.obj	\
 	session.obj		\
 	shear_tool.obj		\
 	smudge.obj		\
@@ -264,7 +266,7 @@ gimp.def: gimp.sym
 	copy /y $@+gimp.sym $@
 
 gimp.exe : ..\config.h $(gimp_OBJECTS) gimpim.lib gimp.def gimp.res ..\libgimp\gimpi.lib
-	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(LDFLAGS) gimp.res gdi32.lib user32.lib shell32.lib /def:gimp.def
+	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(GLIB)\gmodule\gmodule-$(GLIB_VER).lib $(LDFLAGS) gimp.res gdi32.lib user32.lib shell32.lib /def:gimp.def
 
 # General rule for building $(gimp_OBJECTS)
 .c.obj:
