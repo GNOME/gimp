@@ -1982,10 +1982,14 @@ file_check_single_magic (char   *offset,
       }
       if (!isdigit (value[0])) return (0);
 
+      /* 
+       * to anybody reading this: is strtol's parsing behaviour (e.g. "0x" prefix)
+       * broken on some systems or why do we do the base detection ourselves?
+       * */
       if (value[0] != '0')      /* decimal */
         num_testval = strtol(value, NULL, 10);
       else if (value[1] == 'x') /* hexadecimal */
-        num_testval = strtol(value+2, NULL, 16);
+        num_testval = (unsigned long)strtoul(value+2, NULL, 16);
       else                      /* octal */
         num_testval = strtol(value+1, NULL, 8);
 
