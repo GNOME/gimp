@@ -167,13 +167,14 @@ tile_lock (Tile *tile)
 }
 
 void
-tile_release (Tile *tile, int dirty)
+tile_release (Tile     *tile, 
+	      gboolean  dirty)
 {
   /* Decrement the global reference count.
    */
   tile_ref_count--;
 
-  TILE_MUTEX_LOCK(tile);
+  TILE_MUTEX_LOCK (tile);
 
   /* Decrement this tile's reference count.
    */

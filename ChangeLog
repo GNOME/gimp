@@ -1,5 +1,17 @@
 2001-01-24  Sven Neumann  <sven@gimp.org>
 
+	* app/paint_funcs.c: brought the array used for optimization back in
+	sync with the LayerModeEffects enum. This was causing really strange
+	rendering errors. Started to clean up the file up and removed the 
+	unused layer_mode names.
+	
+	* app/tile.[ch]
+	* plug-ins/common/colortoalpha.c: small cleanups
+
+	* po/POTFILES.in: removed app/paint_funcs.c
+
+2001-01-24  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/airbrush.c
 	* app/tools/by_color_select.c
 	* app/tools/color_picker.c: include gimpcolor/gimpcolor.h

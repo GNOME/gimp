@@ -62,7 +62,7 @@ void          tile_init              (Tile        *tile,
 
 void          tile_lock              (Tile        *tile);
 void          tile_release           (Tile        *tile,
-				      gint);
+				      gboolean     dirty);
 
 /* Allocate the data for the tile.
  */

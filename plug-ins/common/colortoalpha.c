@@ -61,17 +61,17 @@ static void      run    (gchar       *name,
 			 gint        *nreturn_vals,
 			 GimpParam  **return_vals);
 
-static void      colortoalpha             (GimpRGB      *src,
-					   GimpRGB      *color);
-static void      toalpha                  (GimpDrawable *drawable);
-static void      toalpha_render_row       (const guchar *src_row,
-					   guchar       *dest_row,
-					   gint          row_width,
-					   const gint    bytes);
+static void      colortoalpha             (GimpRGB       *src,
+					   const GimpRGB *color);
+static void      toalpha                  (GimpDrawable  *drawable);
+static void      toalpha_render_row       (const guchar  *src_row,
+					   guchar        *dest_row,
+					   gint           row_width,
+					   const gint     bytes);
 /* UI stuff */
-static gboolean  colortoalpha_dialog      (GimpDrawable *drawable);
-static void      colortoalpha_ok_callback (GtkWidget    *widget,
-					   gpointer      data);
+static gboolean  colortoalpha_dialog      (GimpDrawable  *drawable);
+static void      colortoalpha_ok_callback (GtkWidget     *widget,
+					   gpointer       data);
 
 
 static GimpRunModeType run_mode;
@@ -211,8 +211,8 @@ run (gchar      *name,
 }
 
 static void
-colortoalpha (GimpRGB *src,
-	      GimpRGB *color)
+colortoalpha (GimpRGB       *src,
+	      const GimpRGB *color)
 {
   GimpRGB alpha;
   
@@ -273,23 +273,30 @@ colortoalpha (GimpRGB *src,
 }
 
 /*
-<clahey> so if a1 > c1, a2 > c2, and a3 > c2 and a1 - c1 > a2-c2, a3-c3, then a1 = b1 * alpha + c1 * (1-alpha) So, maximizing alpha without taking b1 above 1 gives a1 = alpha + c1(1-alpha) and therefore alpha = (a1-c1)/(1-c1).
-<AmJur2d> eek!  math!
-> AmJur2d runs and hides behind a library carrel
-<sjburges> clahey: btw, the ordering of that a2, a3 in the white->alpha didn't matter
-<clahey> sjburges: You mean that it could be either a1, a2, a3 or a1, a3, a2?
-<sjburges> yeah
-<sjburges> because neither one uses the other
-<clahey> sjburges: That's exactly as it should be.  They are both just getting reduced to the same amount, limited by the the darkest color.
-<clahey> Then a2 = b2 * alpha + c2 * ( 1- alpha).  Solving for b2 gives b2 = (a1-c2)/alpha + c2.
-<sjburges> yeah
-<jlb> xachbot, url holy wars
-<jlb> xachbot, url wars
-<clahey> That gives us are formula for if the background is darker than the foreground? Yep.
-<clahey> Next if a1 < c1, a2 < c2, a3 < c3, and c1-a1 > c2-a2, c3-a3, and by our desired result a1 = b1 * alpha + c1 * (1-alpha), we maximize alpha without taking b1 negative gives alpha = 1-a1/c1.
-<clahey> And then again, b2 = (a2-c2)/alpha + c2 by the same formula.  (Actually, I think we can use that formula for all cases, though it may possibly introduce rounding error.
-<clahey> sjburges: I like the idea of using floats to avoid rounding error.  Good call.
-<clahey> It's cool to be able to replace all the black in an image with another color.  It'
+  <clahey>   so if a1 > c1, a2 > c2, and a3 > c2 and a1 - c1 > a2-c2, a3-c3, 
+             then a1 = b1 * alpha + c1 * (1-alpha) 
+             So, maximizing alpha without taking b1 above 1 gives 
+	     a1 = alpha + c1(1-alpha) and therefore alpha = (a1-c1) / (1-c1).
+  <sjburges> clahey: btw, the ordering of that a2, a3 in the white->alpha didn't 
+             matter
+  <clahey>   sjburges: You mean that it could be either a1, a2, a3 or a1, a3, a2?
+  <sjburges> yeah
+  <sjburges> because neither one uses the other
+  <clahey>   sjburges: That's exactly as it should be.  They are both just getting 
+             reduced to the same amount, limited by the the darkest color.
+  <clahey>   Then a2 = b2 * alpha + c2 * ( 1- alpha).  Solving for b2 gives 
+             b2 = (a1-c2)/alpha + c2.
+  <sjburges> yeah
+  <clahey>   That gives us are formula for if the background is darker than the 
+             foreground? Yep.
+  <clahey>   Next if a1 < c1, a2 < c2, a3 < c3, and c1-a1 > c2-a2, c3-a3, and by our 
+             desired result a1 = b1 * alpha + c1 * (1-alpha), we maximize alpha 
+             without taking b1 negative gives alpha = 1 - a1 / c1.
+  <clahey>   And then again, b2 = (a2-c2) / alpha + c2 by the same formula.  
+             (Actually, I think we can use that formula for all cases, though it 
+             may possibly introduce rounding error.
+  <clahey>   sjburges: I like the idea of using floats to avoid rounding error.  
+             Good call.
 */
 
 static void
@@ -298,28 +305,23 @@ toalpha_render_row (const guchar *src_data,
 		    gint          col,               /* row width in pixels */
 		    const gint    bytes)
 {
-  GimpRGB  src;
+  GimpRGB color;
 
   while (col--)
     {
-      gimp_rgba_set (&src, 
-		     (gdouble) src_data[col * bytes    ] / 255.0,
-		     (gdouble) src_data[col * bytes + 1] / 255.0,
-		     (gdouble) src_data[col * bytes + 2] / 255.0,
-		     (gdouble) src_data[col * bytes + 3] / 255.0);
+      gimp_rgba_set_uchar (&color, 
+			   src_data[col * bytes    ],
+			   src_data[col * bytes + 1],
+			   src_data[col * bytes + 2],
+			   src_data[col * bytes + 3]);
 
-     /* For brighter than the background the rule is to send the
-	 farthest above the background as the first address.
-	 However, since v1 < COLOR_RED, for example, all of these
-	 are negative so we have to invert the operator to reduce
-	 the amount of typing to fix the problem.  :) */
+      colortoalpha (&color, &pvals.color);
 
-      colortoalpha (&src, &pvals.color);
-
-      dest_data[col * bytes    ] = src.r * 255.999;
-      dest_data[col * bytes + 1] = src.g * 255.999;
-      dest_data[col * bytes + 2] = src.b * 255.999;
-      dest_data[col * bytes + 3] = src.a * 255.999;
+      gimp_rgba_get_uchar (&color, 
+			   &dest_data[col * bytes],
+			   &dest_data[col * bytes + 1],
+			   &dest_data[col * bytes + 2],
+			   &dest_data[col * bytes + 3]);
     }
 }
 
@@ -364,9 +366,12 @@ toalpha (GimpDrawable *drawable)
    */
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
-  total_area = (x2 - x1) * (y2 - y1);
-  area_so_far = 0;
+  total_area    = (x2 - x1) * (y2 - y1);
+  area_so_far   = 0;
   progress_skip = 0;
+
+  if (total_area < 1)
+    return;
 
   /* Initialize the pixel regions. */
   gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
@@ -384,8 +389,7 @@ toalpha (GimpDrawable *drawable)
 	{
 	  area_so_far += srcPR.w * srcPR.h;
 	  if (++progress_skip % 10 == 0)
-	    gimp_progress_update ((gdouble) area_so_far / 
-				  (gdouble) total_area);
+	    gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
 	}
     }
 
