@@ -56,6 +56,8 @@ static void         info_dialog_field_new       (InfoDialog    *idialog,
                                                  GCallback      callback,
                                                  gpointer       callback_data);
 static void         info_dialog_update_field    (InfoField     *info_field);
+static void         info_dialog_field_free      (gpointer       data,
+                                                 gpointer       user_data);
 
 
 /*  public functions  */
@@ -92,12 +94,24 @@ info_dialog_notebook_new (GimpViewable *viewable,
                                    help_func, help_data, TRUE);
 }
 
+static void
+info_dialog_field_free (gpointer data,
+                        gpointer user_data)
+{
+  InfoField *field = data;
+
+  g_signal_handlers_disconnect_by_func (field->obj,
+                                        field->callback,
+                                        field->callback_data);
+  g_free (field);
+}
+
 void
 info_dialog_free (InfoDialog *idialog)
 {
   g_return_if_fail (idialog != NULL);
 
-  g_slist_foreach (idialog->field_list, (GFunc) g_free, NULL);
+  g_slist_foreach (idialog->field_list, (GFunc) info_dialog_field_free, NULL);
   g_slist_free (idialog->field_list);
 
   gtk_widget_destroy (idialog->shell);
