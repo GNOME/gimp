@@ -1,5 +1,11 @@
 2004-06-04  Sven Neumann  <sven@gimp.org>
 
+	* app/menus/plug-in-menus.c (plug_in_menus_setup): populate the
+	tree with collation keys and use strcmp() instead of
+	g_utf8_collate() as the tree's sort function.
+
+2004-06-04  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimppaintoptions.c (DEFAULT_PRESSURE_PRESSURE):
 	applied a patch by Philip Lafleur that changes the default to
 	FALSE. Fixes bug #143626.

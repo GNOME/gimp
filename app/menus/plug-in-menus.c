@@ -122,7 +122,7 @@ plug_in_menus_setup (GimpUIManager *manager,
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
-  menu_entries = g_tree_new_full ((GCompareDataFunc) g_utf8_collate, NULL,
+  menu_entries = g_tree_new_full ((GCompareDataFunc) strcmp, NULL,
                                   g_free, g_free);
 
   for (list = manager->gimp->plug_in_proc_defs;
@@ -165,10 +165,19 @@ plug_in_menus_setup (GimpUIManager *manager,
                                                          path->data));
 
                   if (proc_def->menu_label)
-                    key = g_strdup_printf ("%s/%s",
-                                           stripped, proc_def->menu_label);
+                    {
+                      gchar *label = g_strdup_printf ("%s/%s",
+                                                      stripped,
+                                                      proc_def->menu_label);
+
+                      key = g_utf8_collate_key (label, -1);
+
+                      g_free (label);
+                    }
                   else
-                    key = g_strdup (stripped);
+                    {
+                      key = g_utf8_collate_key (stripped, -1);
+                    }
 
                   g_free (stripped);
 
