@@ -1,3 +1,10 @@
+2004-06-03  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/file-open-location-dialog.c
+	(file_open_location_completion): check for NULL pointer before
+	passing it to g_utf8_normalize(). Just a workaround for a problem
+	in GimpContainerView.
+
 2004-06-02  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: more updates.

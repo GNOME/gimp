@@ -183,6 +183,9 @@ file_open_location_completion (GtkEntryCompletion *completion,
                       1, &name,
                       -1);
 
+  if (! name)
+    return FALSE;
+
   normalized = g_utf8_normalize (name, -1, G_NORMALIZE_ALL);
   case_normalized = g_utf8_casefold (normalized, -1);
 
