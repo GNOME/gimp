@@ -1,0 +1,388 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-tips 1.3\n"
+"POT-Creation-Date: 2003-08-31 14:32+0200\n"
+"PO-Revision-Date: 2003-05-22 17:01+0200\n"
+"Last-Translator: Александар Урошевић <urke@users.sourceforge.net>\n"
+"Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: tips/gimp-tips.xml.in.h:1
+msgid "<big>Welcome to The GIMP !</big>"
+msgstr "<big>Добродошли у ГИМП !</big>"
+
+#: tips/gimp-tips.xml.in.h:2
+msgid ""
+"<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
+"viewing the mask directly."
+msgstr ""
+"<tt>Alt</tt>-клик на приказ маске слоја у дијалогу Слојева одређује директно "
+"виђење маске."
+
+#: tips/gimp-tips.xml.in.h:3
+msgid ""
+"<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
+"the effect of the layer mask."
+msgstr ""
+"<tt>Ctrl</tt>-клик на приказ маске слоја у дијалогу Слојева одређује ефекат "
+"на масци слоја."
+
+#: tips/gimp-tips.xml.in.h:4
+#, fuzzy
+msgid ""
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color."
+msgstr ""
+"<tt>Shift</tt>-клик са алатом „Кантица са бојом‟ за употребу боје позадине "
+"уместо боје лица за бојење површине."
+
+#: tips/gimp-tips.xml.in.h:5
+msgid ""
+"<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
+"the rotation to 15 degree angles."
+msgstr ""
+"<tt>Ctrl</tt>-превлачење са алатом за Трансформацију у моду ротирања форсира "
+"ротацију за угао од 15 степени."
+
+#: tips/gimp-tips.xml.in.h:6
+msgid ""
+"<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
+"but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr ""
+"<tt>Shift</tt>-клик на иконицу ока у дијалогу Слојева одређује видљивост "
+"свих слојева изузев предметног. <tt>Shift</tt>-клик враћа претходно стање "
+"видљивости слоја."
+
+#: tips/gimp-tips.xml.in.h:7
+#, fuzzy
+msgid ""
+"A Floating Selection must be anchored to a new layer or to the last active "
+"layer before doing other operations on the image. Click on the \"New Layer\" "
+"or \"Anchor Layer buttons\" in the Layers dialog, or use the menus to do the "
+"same."
+msgstr ""
+"Плутајућа селекција моја бити припојена новом или последњем активном слоју "
+"пре извршавања било које друге акције над сликом. Кликните на дугме „Нови "
+"слој‟ или „Припој на слој‟ у дијалогу „Слојеви, Канали и Путање‟, или "
+"користите мени за обављање ових акција."
+
+#: tips/gimp-tips.xml.in.h:8
+#, fuzzy
+msgid ""
+"After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
+"you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
+"menu item, and pressing the desired key combination. This is saved when you "
+"exit GIMP."
+msgstr ""
+"Можете поново дефинисати рпечице са тастатуре на сваком менију ако опставите "
+"курсор изнад ставке менија и притиснете нову тастерску комбинацију. Овај "
+"поступак је динамичан и итзмене ће бити сачуване приликом затварања Гимпа."
+
+#: tips/gimp-tips.xml.in.h:9
+msgid ""
+"Click and drag on a ruler to place a Guide on an image. All dragged "
+"selections will snap to the guides. You can remove guides by dragging them "
+"off the image with the Move tool."
+msgstr ""
+"Кликните и повуците на лењир како би поставили водећу линију на слику. Све "
+"селекције ће налећи на водеће линије. Можете уклонити водећу линију "
+"одвлачећи је са слике помоћу „Алата за померање‟."
+
+#: tips/gimp-tips.xml.in.h:10
+#, fuzzy
+msgid ""
+"If some of your scanned photos do not look colorful enough, you can easily "
+"improve their tonal range with the \"Auto\" button in the Levels tool (Layer-"
+"&gt;Colors-&gt;Levels). If there are any color casts, you can correct them "
+"with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
+msgstr ""
+"Уколико нека од Ваших скенираних фотографија није довољно засићена бојама, "
+"можете једноставно освежити тоналитет помоћу дугмета „Аутоматски‟ у дијалогу "
+"за подешавања Слојева (Слика-&gt;Боје-&gt;Слојеви). Уколико је нека боја "
+"прескочена можете је поправити са алатом „Кривуље‟ (Слика-&gt;Боје-&gt;"
+"Кривуље)."
+
+#: tips/gimp-tips.xml.in.h:11
+msgid ""
+"If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
+"settings are used. You can use the Paintbrush in gradient mode, the Clone "
+"tool with a pattern or even the Eraser or the Smudge tool."
+msgstr ""
+"Уколико исцртате оквир (Уреди-&gt;Оквир), подешавања тренутно одабраног "
+"алата ће бити примењена на исцртани оквир. Можете користити Четкицу у моду "
+"претапања, алат за Клонирање са шаблоном, или чак Гумицу за брисање или алат "
+"за размазивање."
+
+#: tips/gimp-tips.xml.in.h:12
+msgid ""
+"If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
+"in an image window to hide or show the toolbox and other dialogs."
+msgstr ""
+"Ако Вам се чини да је распоред дијалога на екрану неуредан, можете "
+"притиснути тастер <tt>Tab</tt> неколико пута у оквиру прозора неке слике "
+"како би омогућили сакривање или приказивање палете алата и осталих дијалога."
+
+#: tips/gimp-tips.xml.in.h:13
+msgid ""
+"Most plug-ins work on the current layer of the current image. In some cases, "
+"you will have to merge all layers (Layers-&gt;Flatten Image) if you want the "
+"plug-in to work on the whole image."
+msgstr ""
+"Већина додатака врши измене на активном слоју слике која се уређује. У неким "
+"случајевима ћете морати да спојите све слојеве (Слојеви-&gt;Изравњај слику) "
+"уколико желите да се додатак примени на нивоу комплетне слике."
+
+#: tips/gimp-tips.xml.in.h:14
+msgid ""
+"Nearly all image operations are performed by right-clicking on the image. "
+"And don't worry, you can undo most mistakes..."
+msgstr ""
+"Скоро све операције се могу извршити одабиром из менија који се добија "
+"десним кликом на слику. Уколико погрешите,И немојте бити забринути, свака "
+"грешка се може опозвати..."
+
+#: tips/gimp-tips.xml.in.h:15
+msgid ""
+"Not all effects can be applied to all kinds of images. This is indicated by "
+"a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Add Alpha Channel) or "
+"flatten it (Layers-&gt;Flatten Image)."
+msgstr ""
+"Не могу се сви ефекти применити на све моделе слика. Ово стање се означава "
+"онемогућеном опцијом ставке менија. Вероватно је потребно променити врсту "
+"слике на РГБ (Слика-&gt;Модел-&gt;РГБ), и алфа канал (Слојеви-&gt;Додај Алфа "
+"канал) или равнањем слике (Слојеви-&gt;Изравњај слику)."
+
+#: tips/gimp-tips.xml.in.h:16
+msgid ""
+"Pressing and holding the <tt>Shift</tt> key before making a selection allows "
+"you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
+"tt> before making a selection subtracts from the current one."
+msgstr ""
+"Притисните и држите тастер <tt>Shift</tt> пре прављења селекције како би "
+"стемогли да додате нову већ постојећој селекцији, уместо да је замените "
+"новом. Користите <tt>Ctrl</tt> пре прављења селекције да би нову издвојили "
+"из већ постојеће селекције."
+
+#: tips/gimp-tips.xml.in.h:17
+msgid ""
+"The GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
+"<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image "
+"will be saved compressed. Of course loading compressed images works too."
+msgstr ""
+"ГИМП подржава gzip компресију у лету. Једноставно додајте наставак <tt>.gz</"
+"tt> (или <tt>.bz2</tt>, ако имате инстаирану подршку за bzip2) називу фајла "
+"и Ваша слика ће бити сачувана и компресована. Наравно, учитавање "
+"компресованих слика у лету такође функционише као и снимање."
+
+#: tips/gimp-tips.xml.in.h:18
+msgid ""
+"The GIMP uses layers to let you organize your image. Think of them as a "
+"stack of slides or filters, such that looking through them you see a "
+"composite of their contents."
+msgstr ""
+"ГИМП користи слојеве да би организовао слике. Гледајте на слојеве као на "
+"гомилу слајдова или филтера, као да гледате кроз њих и видите мешавину "
+"њихових садржаја."
+
+#: tips/gimp-tips.xml.in.h:19
+#, fuzzy
+msgid ""
+"The file selection dialog box has command-line completion with <tt>Tab</tt>, "
+"just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voila, "
+"it's completed."
+msgstr ""
+"Дијалог за избор фајла подржава опцију аутоматског довршавања започетог "
+"уноса помоћу тастера <tt>Tab</tt>, као што је то могуће чинити у љуштури. "
+"унесите део назива фајла, притисните <tt>Tab</tt>, и гле чуда! Комплетан је."
+
+#: tips/gimp-tips.xml.in.h:20
+#, fuzzy
+msgid ""
+"The layer named \"Background\" is special because it lacks transparency. "
+"This prevents you from adding a layer mask or moving the layer up in the "
+"stack. You may add transparency to it by right-clicking in the Layers dialog "
+"and selecting \"Add Alpha Channel\"."
+msgstr ""
+"Слој назван „Позадина‟ је посебан јер није провидан. Ово вас спречава да "
+"додате маску слоја или померите слој на горе у гомили. Можете му додати "
+"провидност ако кликнете десним тастером миша у дијалогу „Слојеви, Канали и "
+"путање‟ и одаберете опцију „Додај Алфа канал‟."
+
+#: tips/gimp-tips.xml.in.h:21
+msgid ""
+"To create a perfect circle, hold <tt>Shift</tt> while doing an ellipse "
+"select. To place a circle precisely, drag horizontal and vertical guides "
+"tangent to the circle you want to select, place your cursor at the "
+"intersection of the guides, and the resulting selection will just touch the "
+"guides."
+msgstr ""
+"Да би исцртали савршени круг, држите притиснут тастер <tt>Shift</tt> када "
+"исцртавате елипсу алатом за елипсасту селекцију. За прецисно позиционирање "
+"крута, направите хоризонталне и вертикалне вођице као тангенте круга чију "
+"селекцију желите да исцртате, поставите курсор на пресек вођица, и потом ће "
+"добијена селекција аутоматски додирнути вођице."
+
+#: tips/gimp-tips.xml.in.h:22
+msgid ""
+"Using Edit-&gt;Stroke allows you to draw simple squares or circles by "
+"painting the edge of your current selection with the active brush. More "
+"complex shapes can be drawn with Filters-&gt;Render-&gt;Gfig."
+msgstr ""
+"Употребом опције Уреди-&gt;Оквир можете исцртати једноставне квадрате или "
+"кругове бојећи ивицу постојеће селекције активном четкицом. Комплексније "
+"облике можете исцртавати помоћу опције Додатци-&gt;Рендер-&gt;Gfig."
+
+#: tips/gimp-tips.xml.in.h:23
+msgid ""
+"When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
+"click will draw a straight line from your last drawing point to your current "
+"cursor position. If you also press <tt>Ctrl</tt>, the line will be "
+"constrained to 15 degree angles."
+msgstr ""
+"Када користите алат за цртање (Четкица, Млазницу или Оловку), <tt>Shift</tt>-"
+"клик ће исцртати праву линију од последње исцртане тачке до тренутне "
+"позиције курсора. Ако притиснете <tt>Ctrl</tt>, моћи ћете да линију ротирате "
+"под углом од 15°."
+
+#: tips/gimp-tips.xml.in.h:24
+msgid ""
+"When you save an image to work on it again later, try using XCF, the GIMP's "
+"native file format (use the file extension <tt>.xcf</tt>). This preserves "
+"the layers and every aspect of your work-in-progress. Once a project is "
+"completed, you can save it as JPEG, PNG, GIF, ..."
+msgstr ""
+"Када снимите неку слику да би касније наставили њену обрату, одаберите "
+"формат XCF, особени формат фајла за ГИМП (користите наставак <tt>.xcf</tt>). "
+"На овај начин ће слојеви и сви аспекти Ваше „обраде у току‟ бити сачувани. "
+"Једном када завршите пројекат, можете га сачувати као JPEG, PNG, GIF, ..."
+
+#: tips/gimp-tips.xml.in.h:25
+msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+msgstr ""
+"Можете прилагодити и заменити селекцију употребом комбинације <tt>Alt</tt>-"
+"повлачење."
+
+#: tips/gimp-tips.xml.in.h:26
+msgid ""
+"You can adjust the selection range for fuzzy select by clicking and dragging "
+"left and right."
+msgstr ""
+"Можете прилагодити област селекције за нејасну селекцију ако кликнете и "
+"превлачите курсор лево и десно."
+
+#: tips/gimp-tips.xml.in.h:27
+#, fuzzy
+msgid ""
+"You can create and edit complex selections using the Bezier tool. The Paths "
+"dialog allows you to work on multiple paths and to convert them to "
+"selections."
+msgstr ""
+"Можете креирати и уређивати комплексне селекције користећи алат за Безиерове "
+"криве. Картица „Путања‟ у на дијалогу „Слојеви, Канали и Путање‟ дозвољава "
+"Вам да радите са неколико путања и да их конвертујете у селекције."
+
+#: tips/gimp-tips.xml.in.h:28
+#, fuzzy
+msgid ""
+"You can drag a layer from the Layers dialog and drop it onto the toolbox. "
+"This will create a new image containing only that layer."
+msgstr ""
+"Можете превући слој са дијалога „Слојеви, Канали и Путање‟ и спустити га на "
+"палету алата. На тај начин ће се креирати нова слика која садржи само тај "
+"слој."
+
+#: tips/gimp-tips.xml.in.h:29
+msgid ""
+"You can drag and drop many things in the GIMP. For example, dragging a color "
+"from the toolbox or from a color palette and dropping it into an image will "
+"fill the current image or selection with that color."
+msgstr ""
+"Можете превући и пустити пуно ствари у Гимпу. На пример, превлачењем боје са "
+"палете алата или са палете боја и пуштањем на слику, учинићете да се слика "
+"или селекција обоје одабраном бојом."
+
+#: tips/gimp-tips.xml.in.h:30
+msgid ""
+"You can get context-sensitive help for most of the GIMP's features by "
+"pressing the F1 key at any time. This also works inside the menus."
+msgstr ""
+"У сваком тренутку можете добити тренутну помоћ за већину особина у Гимпу ако "
+"притиснете тастер F1. Ова опција такође функционише и унутар менија."
+
+#: tips/gimp-tips.xml.in.h:31
+#, fuzzy
+msgid ""
+"You can perform many layer operations by right-clicking on the text label of "
+"a layer in the Layers dialog."
+msgstr ""
+"Можете предузети пуно операција над слојевима десним кликом на текстуалну "
+"ознаку слоја у дијалогу „Слојеви, Канали и Путање‟."
+
+#: tips/gimp-tips.xml.in.h:32
+msgid ""
+"You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
+"are making a selection in order to constrain it to a perfect square or "
+"circle, or to have it centered on its starting point."
+msgstr ""
+"Можете притиснути и отпустити тастере <tt>Shift</tt> и <tt>Ctrl</tt> када "
+"креирате селекцију у циљу исцртавања савршеног квадрате или круга, или ради "
+"њиховог центрирања у односу на почетну њихову тачку."
+
+#: tips/gimp-tips.xml.in.h:33
+#, fuzzy
+msgid ""
+"You can save a selection to a channel (Select-&gt;Save to Channel) and then "
+"modify this channel with any paint tools. Using the buttons in the Channels "
+"dialog, you can toggle the visibility of this new channel or convert it to a "
+"selection."
+msgstr ""
+"Можете сачувати селекцију у канал (Селекција-&gt;Сачувај у Канал) и потом "
+"модификовати тај канал било којим алатом за бојење. Употребом дугмади на "
+"картици „Канали‟ на дијалогу „Слојеви, Канали и Путање‟, можете одредити "
+"видљивост тог новог канала или га конвертовати у селекцију."
+
+#: tips/gimp-tips.xml.in.h:34
+msgid ""
+"You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
+"image (if your window manager doesn't trap those keys...)."
+msgstr ""
+"Можете користити <tt>Alt</tt>-<tt>Tab</tt> за кружење кроз све слојеве у "
+"слици која се уређује (ако менаџер прозора који користите не преузме акције "
+"тих тастера...)."
+
+#: tips/gimp-tips.xml.in.h:35
+msgid ""
+"You can use the middle mouse button to pan around the image, if it's larger "
+"than its display window."
+msgstr ""
+"Можете користити средњи тастер миша за померање видљивог дела слике, ако је "
+"већа од прозора у коме је приказана."
+
+#: tips/gimp-tips.xml.in.h:36
+#, fuzzy
+msgid ""
+"You can use the paint tools to change the selection. Click on the \"Quick "
+"Mask\" button at the bottom left of an image window. Change your selection "
+"by painting in the image and click on the button again to convert it back to "
+"a normal selection."
+msgstr ""
+"Можете користити алате за бојење у циљу модификације селекције. Кликните на "
+"дугме „Брза Маска‟ на доњем левом делу прозора тза приказ слике. Модификујте "
+"селекцију по жељи бојење на слици и поново кликните на ово дугме да би се "
+"маска конвертовала назад у нормалну селекцију."
+
+#~ msgid ""
+#~ "If your fonts turn out blocky, that's because they're not scalable fonts. "
+#~ "Most X servers support scalable Type 1 Postscript fonts. Download and "
+#~ "install them. Some font servers allow you to use TrueType (<tt>.ttf</tt>) "
+#~ "fonts, which are also scalable."
+#~ msgstr ""
+#~ "Уколико приметите да слова имају искрзане ивице, разлог томе је тај што "
+#~ "нисте користили скалабилни фонт. Већина ИКС сервера подржава скалабилне "
+#~ "Type 1 Postscript фонтове. Преузмите их и инсталирајте. Неки сервери за "
+#~ "фонтове дозвољавају коришћење TrueType (<tt>.ttf</tt>) фонтова, који су "
+#~ "такође скалабилни."
