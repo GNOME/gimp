@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
-"PO-Revision-Date: 2004-03-19 13:48+0100\n"
+"POT-Creation-Date: 2004-04-15 14:51+0200\n"
+"PO-Revision-Date: 2004-04-15 16:18+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3650,9 +3650,8 @@ msgstr "_Nahoře"
 msgid "Image Selection"
 msgstr "Výběr obrázku"
 
-# FIXME: heigh
 #: plug-ins/common/film.c:1352
-msgid "All Values are Fractions of the Film Heigh"
+msgid "All Values are Fractions of the Film Height"
 msgstr "Všechny hodnoty jsou zlomky výšky filmu"
 
 #: plug-ins/common/film.c:1355
