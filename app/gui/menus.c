@@ -43,7 +43,13 @@
 #define MRU_MENU_ENTRY_SIZE (strlen (_("/File/MRU00 ")) + 1)
 #define MRU_MENU_ACCEL_SIZE sizeof ("<control>0")
 
-static char* G_GNUC_UNUSED dummyMRU = N_("/File/MRU00 ");
+static char* G_GNUC_UNUSED dummyMenus[] = { N_("/File/MRU00 "),
+                                            N_("/File"),
+                                            N_("/File/Dialogs"),
+                                            N_("/Layers"),
+                                            N_("/Tools"),
+                                            N_("/Dialogs"),
+                                            N_("/View/Zoom") };
 
 static void   menus_init        (void);
 static gchar* menu_translate    (const gchar *path,
@@ -512,7 +518,7 @@ menus_set_sensitive_locale (gchar *prepath,
 {
   gchar *menupath;
 
-  menupath = g_strdup_printf ("%s%s", prepath, _(path));
+  menupath = g_strdup_printf ("%s%s", prepath, path);
   menus_set_sensitive (menupath, sensitive);
   g_free (menupath); 
 }
@@ -549,7 +555,7 @@ menus_set_state_locale (gchar *prepath,
 {
   gchar *menupath;
 
-  menupath = g_strdup_printf ("%s%s", prepath, _(path));
+  menupath = g_strdup_printf ("%s%s", prepath, path);
   menus_set_state (menupath, state);
   g_free (menupath); 
 }
@@ -622,13 +628,14 @@ menus_last_opened_update_labels (void)
     {
       g_string_sprintf (entry_filename, "%d. %s", i, g_basename (((GString *) filename_slist->data)->str));
 
-      g_string_sprintf (path, _("/File/MRU%02d"), i);
+      g_string_sprintf (path, N_("/File/MRU%02d"), i);
 
       widget = gtk_item_factory_get_widget (toolbox_factory, path->str);
-      gtk_widget_show (widget);
+      if (widget != NULL) {
+	gtk_widget_show (widget);
 
-      gtk_label_set (GTK_LABEL (GTK_BIN (widget)->child), entry_filename->str);
-      
+	gtk_label_set (GTK_LABEL (GTK_BIN (widget)->child), entry_filename->str);
+      }
       filename_slist = filename_slist->next;
     }
 
@@ -667,7 +674,7 @@ menus_last_opened_add (gchar *filename)
 
   if (num_entries == 0)
     {
-      widget = gtk_item_factory_get_widget (toolbox_factory, gettext(file_menu_separator.path));
+      widget = gtk_item_factory_get_widget (toolbox_factory, file_menu_separator.path);
       gtk_widget_show (widget);
     }
 
@@ -703,7 +710,7 @@ menus_init_mru (void)
       last_opened_entries[i].callback_action = i;
       last_opened_entries[i].item_type = NULL;
 
-      g_snprintf (path, MRU_MENU_ENTRY_SIZE, _("/File/MRU%02d"), i + 1);
+      g_snprintf (path, MRU_MENU_ENTRY_SIZE, N_("/File/MRU%02d"), i + 1);
       if (accelerator != NULL)
 	g_snprintf (accelerator, MRU_MENU_ACCEL_SIZE, "<control>%d", i + 1);
     }
@@ -718,7 +725,7 @@ menus_init_mru (void)
       gtk_widget_hide (widget);
     }
 
-  widget = gtk_item_factory_get_widget (toolbox_factory, gettext(file_menu_separator.path));
+  widget = gtk_item_factory_get_widget (toolbox_factory, file_menu_separator.path);
   gtk_widget_hide (widget);
   
   g_free (paths);

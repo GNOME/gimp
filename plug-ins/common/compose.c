@@ -231,7 +231,7 @@ query ()
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1997",
-			  _("<Image>/Image/Channel Ops/Compose"),
+			  N_("<Image>/Image/Channel Ops/Compose"),
 			  "GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

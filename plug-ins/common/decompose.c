@@ -219,7 +219,7 @@ query ()
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1997",
-			  _("<Image>/Image/Channel Ops/Decompose"),
+			  N_("<Image>/Image/Channel Ops/Decompose"),
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

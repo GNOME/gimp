@@ -1,3 +1,17 @@
+Tue Aug 24 12:49:35 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/channels_dialog.c
+	* app/layers_dialog.c
+	* app/menus.c
+	* plug-ins/common/autostretch_hsv.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/decompose.c
+	* plug-ins/common/mail.c
+	* plug-ins/print/print.c
+	* plug-ins/script-fu/script-fu-scripts.c: big i18n fix patch
+	from SHIRASAKI Yasuhiro <yasuhiro@awa.tohoku.ac.jp>. Fixes those
+	pesky menu problems
+
 Tue Aug 24 20:32:39 MEST 1999  Sven Neumann <sven.gimp.org>
 
 	* plug-ins/common/Makefile.am

@@ -1105,7 +1105,8 @@ script_fu_interface (SFScript *script)
       argc = 1;
       argv = g_new (gchar *, 1);
       argv[0] = g_strdup ("script-fu");
-      
+
+      gtk_set_locale();
       gtk_init (&argc, &argv);
       gtk_rc_parse (gimp_gtkrc ());
       

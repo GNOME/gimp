@@ -622,26 +622,26 @@ channels_dialog_set_menu_sensitivity ()
         gtk_widget_set_sensitive (channels_ops_buttons[(button)].widget, \
                                  (condition) != 0)
 
-  SET_SENSITIVE (_("/New Channel"), !fs_sens);
+  SET_SENSITIVE (N_("/New Channel"), !fs_sens);
   SET_OPS_SENSITIVE (0, !fs_sens);
 
-  SET_SENSITIVE (_("/Raise Channel"), !fs_sens && aux_sens);
+  SET_SENSITIVE (N_("/Raise Channel"), !fs_sens && aux_sens);
   SET_OPS_SENSITIVE (1, !fs_sens && aux_sens);
 
-  SET_SENSITIVE (_("/Lower Channel"), !fs_sens && aux_sens);
+  SET_SENSITIVE (N_("/Lower Channel"), !fs_sens && aux_sens);
   SET_OPS_SENSITIVE (2, !fs_sens && aux_sens);
 
-  SET_SENSITIVE (_("/Duplicate Channel"), !fs_sens && aux_sens);
+  SET_SENSITIVE (N_("/Duplicate Channel"), !fs_sens && aux_sens);
   SET_OPS_SENSITIVE (3, !fs_sens && aux_sens);
 
-  SET_SENSITIVE (_("/Channel to Selection"), aux_sens);
+  SET_SENSITIVE (N_("/Channel to Selection"), aux_sens);
   SET_OPS_SENSITIVE (4, aux_sens);
 
-  SET_SENSITIVE (_("/Add to Selection"), aux_sens);
-  SET_SENSITIVE (_("/Subtract From Selection"), aux_sens);
-  SET_SENSITIVE (_("/Intersect With Selection"), aux_sens);
+  SET_SENSITIVE (N_("/Add to Selection"), aux_sens);
+  SET_SENSITIVE (N_("/Subtract From Selection"), aux_sens);
+  SET_SENSITIVE (N_("/Intersect With Selection"), aux_sens);
 
-  SET_SENSITIVE (_("/Delete Channel"), !fs_sens && aux_sens);
+  SET_SENSITIVE (N_("/Delete Channel"), !fs_sens && aux_sens);
   SET_OPS_SENSITIVE (5, !fs_sens && aux_sens);
 
 #undef SET_OPS_SENSITIVE

@@ -1004,46 +1004,46 @@ layers_dialog_set_menu_sensitivity ()
         gtk_widget_set_sensitive (layers_ops_buttons[(button)].widget, \
                                  (condition) != 0)
 
-  SET_SENSITIVE (_("/Stack/Previous Layer"), fs && ac && gimage && lp && prev);
-  SET_SENSITIVE (_("/Stack/Next Layer"), fs && ac && gimage && lp && next);
+  SET_SENSITIVE (N_("/Stack/Previous Layer"), fs && ac && gimage && lp && prev);
+  SET_SENSITIVE (N_("/Stack/Next Layer"), fs && ac && gimage && lp && next);
 
-  SET_SENSITIVE (_("/Stack/Raise Layer"),
+  SET_SENSITIVE (N_("/Stack/Raise Layer"),
 		 fs && ac && gimage && lp && alpha && prev);
   SET_OPS_SENSITIVE (1, fs && ac && gimage && lp && alpha && prev);
 
-  SET_SENSITIVE (_("/Stack/Lower Layer"),
+  SET_SENSITIVE (N_("/Stack/Lower Layer"),
 		 fs && ac && gimage && lp && next && next_alpha);
   SET_OPS_SENSITIVE (2, fs && ac && gimage && lp && next && next_alpha);
 
-  SET_SENSITIVE (_("/Stack/Layer to Top"),
+  SET_SENSITIVE (N_("/Stack/Layer to Top"),
 		 fs && ac && gimage && lp && alpha && prev);
-  SET_SENSITIVE (_("/Stack/Layer to Bottom"),
+  SET_SENSITIVE (N_("/Stack/Layer to Bottom"),
 		 fs && ac && gimage && lp && next && next_alpha);
 
-  SET_SENSITIVE (_("/New Layer"), gimage);
+  SET_SENSITIVE (N_("/New Layer"), gimage);
   SET_OPS_SENSITIVE (0, gimage);
 
-  SET_SENSITIVE (_("/Duplicate Layer"), fs && ac && gimage && lp);
+  SET_SENSITIVE (N_("/Duplicate Layer"), fs && ac && gimage && lp);
   SET_OPS_SENSITIVE (3, fs && ac && gimage && lp);
 
-  SET_SENSITIVE (_("/Anchor Layer"), !fs && ac && gimage && lp);
+  SET_SENSITIVE (N_("/Anchor Layer"), !fs && ac && gimage && lp);
   SET_OPS_SENSITIVE (4, !fs && ac && gimage && lp);
 
-  SET_SENSITIVE (_("/Delete Layer"), ac && gimage && lp);
+  SET_SENSITIVE (N_("/Delete Layer"), ac && gimage && lp);
   SET_OPS_SENSITIVE (5, ac && gimage && lp);
 
-  SET_SENSITIVE (_("/Scale Layer"), ac && gimage && lp);
-  SET_SENSITIVE (_("/Resize Layer"), ac && gimage && lp);
+  SET_SENSITIVE (N_("/Scale Layer"), ac && gimage && lp);
+  SET_SENSITIVE (N_("/Resize Layer"), ac && gimage && lp);
 
-  SET_SENSITIVE (_("/Merge Visible Layers"), fs && ac && gimage && lp);
-  SET_SENSITIVE (_("/Merge Down"), fs && ac && gimage && lp);
-  SET_SENSITIVE (_("/Flatten Image"), fs && ac && gimage && lp);
+  SET_SENSITIVE (N_("/Merge Visible Layers"), fs && ac && gimage && lp);
+  SET_SENSITIVE (N_("/Merge Down"), fs && ac && gimage && lp);
+  SET_SENSITIVE (N_("/Flatten Image"), fs && ac && gimage && lp);
 
-  SET_SENSITIVE (_("/Add Layer Mask"), fs && ac && gimage && !lm && lp && alpha);
-  SET_SENSITIVE (_("/Apply Layer Mask"), fs && ac && gimage && lm && lp);
-  SET_SENSITIVE (_("/Alpha to Selection"), fs && ac && gimage && lp && alpha);
-  SET_SENSITIVE (_("/Mask to Selection"), fs && ac && gimage && lm && lp);
-  SET_SENSITIVE (_("/Add Alpha Channel"), !alpha);
+  SET_SENSITIVE (N_("/Add Layer Mask"), fs && ac && gimage && !lm && lp && alpha);
+  SET_SENSITIVE (N_("/Apply Layer Mask"), fs && ac && gimage && lm && lp);
+  SET_SENSITIVE (N_("/Alpha to Selection"), fs && ac && gimage && lp && alpha);
+  SET_SENSITIVE (N_("/Mask to Selection"), fs && ac && gimage && lm && lp);
+  SET_SENSITIVE (N_("/Add Alpha Channel"), !alpha);
 
 #undef SET_OPS_SENSITIVE
 #undef SET_SENSITIVE
