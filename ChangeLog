@@ -1,3 +1,8 @@
+2003-11-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdataeditor.c (gimp_data_editor_save_dirty):
+	return early if the GimpData is not dirty.
+
 2003-11-11  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpcanvas.c: added API docs for the less obvious

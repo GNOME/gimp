@@ -378,44 +378,44 @@ gimp_data_editor_revert_clicked (GtkWidget      *widget,
 static void
 gimp_data_editor_save_dirty (GimpDataEditor *editor)
 {
-  gchar *path = NULL;
   GimpData *data;
-  
+  gchar    *path = NULL;
+
+  data = editor->data;
+
+  if (! data || ! data->dirty)
+    return;
+
   g_object_get (editor->data_factory->gimp->config,
                 editor->data_factory->path_property_name, &path,
                 NULL);
 
   if (path && strlen (path))
     {
-      gchar    *tmp;
+      gchar  *tmp;
+      GError *error = NULL;
 
       tmp = gimp_config_path_expand (path, TRUE, NULL);
       g_free (path);
       path = tmp;
 
-      data = editor->data;
-
       if (! data->filename)
         gimp_data_create_filename (data, GIMP_OBJECT (data)->name, path);
 
-      if (data->dirty)
+      if (! gimp_data_save (data, &error))
         {
-          GError *error = NULL;
-
-          if (! gimp_data_save (data, &error))
+          /*  check if there actually was an error (no error
+           *  means the data class does not implement save)
+           */
+          if (error)
             {
-              /*  check if there actually was an error (no error
-               *  means the data class does not implement save)
-               */
-              if (error)
-                {
-                  g_message (_("Warning: Failed to save data:\n%s"),
-                             error->message);
-                  g_clear_error (&error);
-                }
+              g_message (_("Warning: Failed to save data:\n%s"),
+                         error->message);
+              g_clear_error (&error);
             }
         }
     }
+
   g_free (path);
 }
 
