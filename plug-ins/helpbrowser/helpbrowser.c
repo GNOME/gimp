@@ -578,7 +578,9 @@ open_browser_dialog (const gchar *help_path,
 
   gimp_ui_init ("helpbrowser", TRUE);
 
-  eek_png_path = g_build_filename (gimp_help_root, "images", "eek.png", NULL);
+  eek_png_path = g_build_filename (gimp_data_directory (),
+                                   "themes", "Default", "images",
+                                   "stock-wilber-eek-64.png", NULL);
 
   if (g_file_test (eek_png_path, G_FILE_TEST_EXISTS))
     eek_png_tag = g_strdup_printf ("<img src=\"%s\">", eek_png_path);
@@ -595,7 +597,7 @@ open_browser_dialog (const gchar *help_path,
                     NULL);
 
   gimp_help_connect (window, gimp_standard_help_func,
-                     "dialogs/help.html", NULL);
+                     "gimp-help", NULL);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (window), vbox);

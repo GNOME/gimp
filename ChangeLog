@@ -1,5 +1,12 @@
 2003-08-26  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/helpbrowser/helpbrowser.c (open_browser_dialog): we
+	can't rely on "eek.png" from the help system being installed.
+	Use "stock-wilber-eek-64.png" from the default theme instead
+	because it is always available.
+
+2003-08-26  Michael Natterer  <mitch@gimp.org>
+
 	Bye bye, "crappy/foo.html":
 
 	* app/widgets/gimphelp-ids.h: replaced "crappy/foo.html" by
