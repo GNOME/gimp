@@ -3,14 +3,14 @@
 # Vincent Renardias <vincent@ldsol.com>, 1998, 1999.
 # David Monniaux <monniaux@ens.fr>, 1999, 2000.
 # Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
-# Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000.
+# Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000, 2001.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.0\n"
-"POT-Creation-Date: 2000-12-28 21:58+0100\n"
-"PO-Revision-Date: 2000-12-28 21:56+0100\n"
+"POT-Creation-Date: 2001-01-02 17:29+0100\n"
+"PO-Revision-Date: 2001-01-02 15:25+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -2225,15 +2225,15 @@ msgstr "Remplir (de droite à gauche)"
 #: plug-ins/common/align_layers.c:460 plug-ins/common/align_layers.c:493
 #: plug-ins/gfig/gfig.c:3407
 msgid "Snap to Grid"
-msgstr "Coller à la Grille"
+msgstr "Coller à la grille"
 
 #: plug-ins/common/align_layers.c:465
 msgid "Horizontal Style:"
-msgstr "Style Horizontal :"
+msgstr "Style horizontal :"
 
 #: plug-ins/common/align_layers.c:472
 msgid "Left Edge"
-msgstr "Bordure Gauche"
+msgstr "Bordure gauche"
 
 #: plug-ins/common/align_layers.c:473 plug-ins/common/align_layers.c:506
 #: plug-ins/gap/gap_mov_dialog.c:286 plug-ins/gflare/gflare.c:2864
@@ -2242,11 +2242,11 @@ msgstr "Centrer"
 
 #: plug-ins/common/align_layers.c:474
 msgid "Right Edge"
-msgstr "Bordure Droite"
+msgstr "Bordure droite"
 
 #: plug-ins/common/align_layers.c:478
 msgid "Horizontal Base:"
-msgstr "Base Horizontale :"
+msgstr "Base borizontale :"
 
 #: plug-ins/common/align_layers.c:489
 msgid "Fill (top to bottom)"
@@ -2262,11 +2262,11 @@ msgstr "Style vertical :"
 
 #: plug-ins/common/align_layers.c:505
 msgid "Top Edge"
-msgstr "Bordure Haute"
+msgstr "Bordure haute"
 
 #: plug-ins/common/align_layers.c:507
 msgid "Bottom Edge"
-msgstr "Bordure Basse"
+msgstr "Bordure basse"
 
 #: plug-ins/common/align_layers.c:511
 msgid "Vertical Base:"
@@ -2688,12 +2688,12 @@ msgstr "Teinte :"
 #: plug-ins/common/compose.c:129 plug-ins/common/scatter_hsv.c:459
 #: plug-ins/print/gimp_color_window.c:253 plug-ins/rcm/rcm_dialog.c:457
 msgid "Saturation:"
-msgstr "Saturation:"
+msgstr "Saturation :"
 
 #: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:468
 #: plug-ins/gap/gap_arr_dialog.c:813
 msgid "Value:"
-msgstr "Valeur:"
+msgstr "Valeur :"
 
 #: plug-ins/common/compose.c:131
 msgid "hsv-compose"
@@ -2729,7 +2729,7 @@ msgstr "Quadrichromie"
 
 #: plug-ins/common/compose.c:139
 msgid "Black:"
-msgstr "Noir:"
+msgstr "Noir :"
 
 #: plug-ins/common/compose.c:139
 msgid "cmyk-compose"
@@ -2742,7 +2742,7 @@ msgstr "<Image>/Image/Mode/Composer..."
 #: plug-ins/common/compose.c:297
 #, c-format
 msgid "compose: Could not get layers for image %d"
-msgstr "compose: Impossible d'obtenir les calques de l'image %d"
+msgstr "compose : Impossible d'obtenir les calques de l'image %d"
 
 #: plug-ins/common/compose.c:346
 msgid "Composing..."
@@ -2750,20 +2750,20 @@ msgstr "Composition..."
 
 #: plug-ins/common/compose.c:414
 msgid "Compose: Drawables have different size"
-msgstr "compose: les images sont de taille différentes"
+msgstr "compose : les images sont de taille différentes"
 
 #: plug-ins/common/compose.c:431
 msgid "Compose: Images have different size"
-msgstr "compose: les images sont de taille différentes"
+msgstr "compose : les images sont de taille différentes"
 
 #: plug-ins/common/compose.c:445
 msgid "Compose: Error in getting layer IDs"
-msgstr "compose: impossible d'obtenir l'ID des calques"
+msgstr "compose : impossible d'obtenir l'ID des calques"
 
 #: plug-ins/common/compose.c:462
 #, c-format
 msgid "Compose: Image is not a gray image (bpp=%d)"
-msgstr "compose: l'image n'est pas une image en tons de gris (bpp=%d)"
+msgstr "compose : l'image n'est pas une image en tons de gris (bpp=%d)"
 
 #: plug-ins/common/compose.c:771
 msgid "Compose"
@@ -2883,7 +2883,7 @@ msgstr "Utiliser les types GLib (guint8*)"
 #.
 #: plug-ins/common/csource.c:718
 msgid "Use Macros instead of Struct"
-msgstr "Utiliser des Macros à la place des Struct"
+msgstr "Utiliser des macros à la place des struct"
 
 #. Use RLE
 #.
@@ -3677,22 +3677,22 @@ msgstr "Verticalement"
 #: plug-ins/common/gauss_iir.c:406 plug-ins/common/gauss_rle.c:401
 #: plug-ins/common/sel_gauss.c:270
 msgid "Blur Radius:"
-msgstr "Rayon :"
+msgstr "Rayon du flou :"
 
 #. parameter settings
 #: plug-ins/common/gauss_iir.c:461 plug-ins/common/gauss_rle.c:456
 msgid "Blur Radius"
-msgstr "Rayon du Flou :"
+msgstr "Rayon du flou"
 
 #: plug-ins/common/gauss_iir.c:476 plug-ins/common/gauss_rle.c:471
 #: plug-ins/common/jigsaw.c:2545 plug-ins/common/spread.c:410
 msgid "Horizontal:"
-msgstr "Horizontalement :"
+msgstr "Horizontal :"
 
 #: plug-ins/common/gauss_iir.c:480 plug-ins/common/gauss_rle.c:475
 #: plug-ins/common/jigsaw.c:2558 plug-ins/common/spread.c:414
 msgid "Vertical:"
-msgstr "Verticalement :"
+msgstr "Vertical :"
 
 #: plug-ins/common/gauss_rle.c:179
 msgid "<Image>/Filters/Blur/Gaussian Blur (RLE)..."
@@ -4710,15 +4710,15 @@ msgstr "Max RVB"
 
 #: plug-ins/common/max_rgb.c:385
 msgid "Hold the Maximal Channels"
-msgstr "Porte le Canal Maximum"
+msgstr "Porte le canal maximum"
 
 #: plug-ins/common/max_rgb.c:387
 msgid "Hold the Minimal Channels"
-msgstr "Porte le Canal Minimum"
+msgstr "Porte le canal minimum"
 
 #: plug-ins/common/mblur.c:167
 msgid "<Image>/Filters/Blur/Motion Blur..."
-msgstr "<Image>/Filtres/Flou/Flou de Déplacement..."
+msgstr "<Image>/Filtres/Flou/Flou cinétique..."
 
 #: plug-ins/common/mblur.c:622 plug-ins/common/unsharp.c:290
 msgid "Blurring..."
@@ -4726,7 +4726,7 @@ msgstr "Flou en cours..."
 
 #: plug-ins/common/mblur.c:758
 msgid "Motion Blur"
-msgstr "Flou de Déplacement"
+msgstr "Flou cinétique"
 
 #: plug-ins/common/mblur.c:780
 msgid "Blur Type"
@@ -5975,23 +5975,23 @@ msgstr "<Image>/Filtres/Détection de bord/Sobel..."
 
 #: plug-ins/common/sobel.c:246
 msgid "Sobel Edge Detection"
-msgstr "Détection du Bord Sobel"
+msgstr "Détection de bord Sobel"
 
 #: plug-ins/common/sobel.c:272
 msgid "Sobel Horizontally"
-msgstr "Sobel Horizontal"
+msgstr "Sobel horizontal"
 
 #: plug-ins/common/sobel.c:280
 msgid "Sobel Vertically"
-msgstr "Sobel Vertical"
+msgstr "Sobel vertical"
 
 #: plug-ins/common/sobel.c:288
 msgid "Keep Sign of Result (one Direction only)"
-msgstr "Garder le Signe du Résultat (une direction seulement)"
+msgstr "Garder le signe du résultat (une direction seulement)"
 
 #: plug-ins/common/sobel.c:361
 msgid "Sobel Edge Detecting..."
-msgstr "Détection du Bord Sobel en cours..."
+msgstr "Détection de bord Sobel en cours..."
 
 #: plug-ins/common/sparkle.c:191
 msgid "<Image>/Filters/Light Effects/Sparkle..."
@@ -6007,11 +6007,11 @@ msgstr "Étinceller"
 
 #: plug-ins/common/sparkle.c:382
 msgid "Luminosity Threshold:"
-msgstr "Seuil de Lumière :"
+msgstr "Seuil de lumière :"
 
 #: plug-ins/common/sparkle.c:385
 msgid "Adjust the Luminosity Threshold"
-msgstr "Ajuster le Seuil de Luminosité"
+msgstr "Ajuster le seuil de luminosité"
 
 #: plug-ins/common/sparkle.c:392
 msgid "Flare Intensity:"
@@ -6534,7 +6534,7 @@ msgstr "Enregistre l'unité actuellement sélectionnée avant de quitter GIMP."
 
 #: plug-ins/common/unsharp.c:186
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
-msgstr "<Image>/Filtres/Amélioration/Enlever le Relief..."
+msgstr "<Image>/Filtres/Amélioration/Enlever le relief..."
 
 #: plug-ins/common/unsharp.c:396
 msgid "Merging..."
@@ -6542,7 +6542,7 @@ msgstr "Fusion en cours..."
 
 #: plug-ins/common/unsharp.c:782
 msgid "Unsharp Mask"
-msgstr "Enlever le Relief"
+msgstr "Enlever le relief"
 
 #: plug-ins/common/video.c:44
 msgid "Staggered"
@@ -13633,7 +13633,7 @@ msgstr "Erreur : le fichier de propriétés XJT %s est vide"
 #~ msgstr "produire illusion"
 
 #~ msgid "Motion blur of image"
-#~ msgstr "Flou dynamique de l'image"
+#~ msgstr "Flou cinétique de l'image"
 
 #~ msgid ""
 #~ "This plug-in simulates the effect seen when photographing a moving object at "

@@ -1,14 +1,14 @@
 # gimp-perl fr.po
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # David Monniaux <monniaux@arbouse.ens.fr>, 2000.
-# Christophe Merlet (RedFox) <christophe@merlet.net>, 2000.
+# Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000, 2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-perl 1.1.26\n"
+"Project-Id-Version: gimp-perl 1.2.0\n"
 "POT-Creation-Date: Tue Jan  2 13:48:44 2001\n"
-"PO-Revision-Date: 2000-10-09 12:40+02:00\n"
-"Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
+"PO-Revision-Date: 2001-01-02 16:55+0100\n"
+"Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -1133,11 +1133,11 @@ msgstr ""
 
 #: examples/PDB:0
 msgid "too many arguments"
-msgstr ""
+msgstr "beaucoup trop d'arguments"
 
 #: Gimp/Lib.xs:0
 msgid "too many"
-msgstr ""
+msgstr "beaucoup trop"
 
 #: Net/Net.pm:0
 msgid "trying to start gimp with options \"$opt\"\n"
@@ -1193,19 +1193,19 @@ msgstr "incapable de lire '$fn' : $!"
 
 #: UI/UI.pm:0
 msgid "unable to read temporary file $tmp: $!"
-msgstr ""
+msgstr "incapable de lire le fichier temporaire $tmp : $!"
 
 #: Perl-Server:0
 msgid "unauthorized command received, aborting connection"
-msgstr ""
+msgstr "commande non autorise recu, connexion interrompu"
 
 #: examples/dataurl:0
 msgid "url size is too large ($max > 1024)\n"
-msgstr ""
+msgstr "taille de l'URL trop grande ($max > 1024)\n"
 
 #: Perl-Server:0
 msgid "wrong authorization, aborting connection"
-msgstr ""
+msgstr "mauvaise identification, connexion interrompue"
 
 #: Gimp/Compat.pm:0
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"

@@ -6,14 +6,14 @@
 # Vincent Renardias <vincent@ldsol.com>, 1998, 1999, 2000.
 # David Monniaux <monniaux@brick.ens.fr>, 1999, 2000.
 # Daniel Egger <Daniel.Egger@rz.fh-muenchen.de>, 1999.
-# Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000.
+# Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000, 2001.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2000-12-28 21:39+0100\n"
-"PO-Revision-Date: 2000-12-28 21:42+0100\n"
+"POT-Creation-Date: 2001-01-02 17:52+0100\n"
+"PO-Revision-Date: 2001-01-02 16:50+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -104,7 +104,7 @@ msgstr "Dégradés"
 
 #: app/app_procs.c:767
 msgid "Really Quit?"
-msgstr "Vraiment Quitter ?"
+msgstr "Vraiment quitter ?"
 
 #: app/app_procs.c:771
 msgid ""
@@ -3207,7 +3207,7 @@ msgstr "/Sélection/Flottante"
 
 #: app/menus.c:288
 msgid "/Select/Feather..."
-msgstr "/Sélection/Plume..."
+msgstr "/Sélection/Adoucir..."
 
 #: app/menus.c:290
 msgid "/Select/Sharpen"
@@ -4478,7 +4478,7 @@ msgstr "Comportement du dialogue"
 
 #: app/preferences_dialog.c:1890
 msgid "Navigation Window per Display"
-msgstr "Fenêtre de navigation par Affichage"
+msgstr "Fenêtre de navigation par affichage"
 
 #: app/preferences_dialog.c:1899
 msgid "Info Window Follows Mouse"
@@ -4622,7 +4622,7 @@ msgstr "Environnement"
 
 #: app/preferences_dialog.c:2176
 msgid "Resource Consumption"
-msgstr "Configuration des Ressources"
+msgstr "Configuration des ressources"
 
 #: app/preferences_dialog.c:2178
 msgid "Conservative Memory Usage"
@@ -5140,7 +5140,7 @@ msgstr "Adoucir"
 
 #: app/tool_options.c:316
 msgid "Fixed Size / Aspect Ratio"
-msgstr "Taille fixe / Ratio aspect"
+msgstr "Taille / Proportion fixe"
 
 #: app/tool_options.c:382
 msgid "Unit:"
@@ -5220,7 +5220,7 @@ msgstr "/Outils/Sélectionner/Rectangle"
 
 #: app/tools.c:159
 msgid "Select rectangular regions"
-msgstr "Sélectionne des régions rectangulaires"
+msgstr "Sélectionne des régions rectangulaires ou carrées"
 
 #: app/tools.c:181
 msgid "Ellipse Select"
@@ -5470,11 +5470,11 @@ msgstr "Mesure les distances et les angles"
 
 #: app/tools.c:998
 msgid "By Color Select"
-msgstr "Sélection par Couleur"
+msgstr "Sélection par couleur"
 
 #: app/tools.c:999
 msgid "/Select/By Color..."
-msgstr "/Sélection/Par Couleur..."
+msgstr "/Sélection/Par couleur..."
 
 #: app/tools.c:1004
 msgid "Select regions by color"
