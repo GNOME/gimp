@@ -240,7 +240,7 @@ gimp_context_help (GtkWidget *widget)
  * gimp_help_id_quark:
  *
  * This function returns the #GQuark which should be used as key when
- * attachind help IDs to widgets and objects.
+ * attaching help IDs to widgets and objects.
  *
  * Return value: The #GQuark.
  *
