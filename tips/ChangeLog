@@ -1,3 +1,8 @@
+2004-01-25  Sven Neumann  <sven@gimp.org>
+
+	* gimp-tips.xml.in: applied patch from Shlomi Fish that fixes a
+	wrong menu path (bug #132028).
+
 2004-01-23  Danilo Šegan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation.

@@ -181,7 +181,7 @@
   </tip>
   <tip level="intermediate">
     <_thetip>
-    If you stroke a path (Edit-&gt;Stroke Selection), the paint tools can
+    If you stroke a path (Edit-&gt;Stroke Path), the paint tools can
     be used with their current settings.  You can use the Paintbrush in
     gradient mode or even the Eraser or the Smudge tool.
     </_thetip>
