@@ -2,7 +2,7 @@
 gimpmath
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Mathematical definitions and macros.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
@@ -13,6 +13,14 @@ gimpmath
 <para>
 
 </para>
+
+<!-- ##### MACRO FINITE ##### -->
+<para>
+
+</para>
+
+@x: 
+
 
 <!-- ##### MACRO G_PI ##### -->
 <para>
