@@ -16,9 +16,11 @@ EXTRA_DIST = \
 
 lib_LTLIBRARIES = \
 	libcolorsel_triangle.la		\
+	libcolorsel_water.la		\
+	\
+	libcdisplay_colorblind.la	\
 	libcdisplay_gamma.la		\
-	libcdisplay_highcontrast.la	\
-	libcolorsel_water.la
+	libcdisplay_highcontrast.la
 
 EXTRA_LTLIBRARIES =
 
@@ -29,6 +31,10 @@ libcolorsel_triangle_la_LIBADD = $(GTK_LIBS)
 libcolorsel_water_la_SOURCES = colorsel_water.c
 libcolorsel_water_la_LDFLAGS = -avoid-version -module
 libcolorsel_water_la_LIBADD = $(GTK_LIBS)
+
+libcdisplay_colorblind_la_SOURCES = cdisplay_colorblind.c
+libcdisplay_colorblind_la_LDFLAGS = -avoid-version -module
+libcdisplay_colorblind_la_LIBADD = $(GTK_LIBS)
 
 libcdisplay_gamma_la_SOURCES = cdisplay_gamma.c
 libcdisplay_gamma_la_LDFLAGS = -avoid-version -module

@@ -1,3 +1,12 @@
+2002-12-16  Michael Natterer  <mitch@gimp.org>
+
+	* modules/Makefile.am
+	* modules/cdisplay_colorblind.c: added a display filter which will
+	simulate the vision of people with color-deficiency to address
+	bug #101256. Didn't know any scientific name or any correct formula,
+	so I just added the framework plus the approximation formula from
+	the bug report. Will need some more work to become usable.
+
 2002-12-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/noisify.c (noisify_func): sorry, you can only
