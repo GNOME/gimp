@@ -120,7 +120,7 @@ display_delete_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gtk_widget_destroy (gdisp->shell);
+    gimp_display_delete (gdisp);
 
   return procedural_db_return_args (&display_delete_proc, success);
 }

@@ -52,6 +52,7 @@
 #include "gradients-commands.h"
 #include "help-commands.h"
 #include "image-commands.h"
+#include "images-commands.h"
 #include "layers-commands.h"
 #include "menus.h"
 #include "palette-editor-commands.h"
@@ -1860,6 +1861,25 @@ static GimpItemFactoryEntry colormap_editor_entries[] =
 };
 
 
+/*****  <Images>  *****/
+
+static GimpItemFactoryEntry images_entries[] =
+{
+  { { N_("/Raise Displays"), NULL,
+      images_raise_displays_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_GOTO_TOP },
+    NULL, NULL, NULL },
+  { { N_("/New Display"), NULL,
+      images_new_display_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_NEW },
+    NULL, NULL, NULL },
+  { { N_("/Delete Image"), NULL,
+      images_delete_image_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_DELETE },
+    NULL, NULL, NULL }
+};
+
+
 /*****  <Documents>  *****/
 
 static GimpItemFactoryEntry documents_entries[] =
@@ -2082,6 +2102,14 @@ menus_init (Gimp *gimp)
                                       documents_menu_update,
                                       G_N_ELEMENTS (documents_entries),
                                       documents_entries,
+                                      gimp,
+                                      FALSE));
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
+                                      "<Images>", "images",
+                                      images_menu_update,
+                                      G_N_ELEMENTS (images_entries),
+                                      images_entries,
                                       gimp,
                                       FALSE));
   ADD_FACTORY (gimp_item_factory_new (gimp,

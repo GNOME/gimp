@@ -63,6 +63,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	help-commands.h			\
 	image-commands.c		\
 	image-commands.h		\
+	images-commands.c		\
+	images-commands.h		\
 	info-dialog.c			\
 	info-dialog.h			\
 	info-window.c			\

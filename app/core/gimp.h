@@ -166,12 +166,6 @@ GimpObject  * gimp_create_display       (Gimp               *gimp,
 					 GimpImage          *gimage,
                                          guint               scale);
 
-/*
-void          gimp_open_file            (Gimp               *gimp,
-					 const gchar        *filename,
-					 gboolean            with_display);
-*/
-
 GimpContext * gimp_get_standard_context (Gimp               *gimp);
 
 void          gimp_set_default_context  (Gimp               *gimp,

@@ -230,8 +230,14 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
   gimp_context_set_parent (context, dialog_factory->context);
 
   if (image_dock->auto_follow_active)
-    gimp_context_copy_property (dialog_factory->context, context,
-				GIMP_CONTEXT_PROP_IMAGE);
+    {
+      if (gimp_context_get_display (dialog_factory->context))
+        gimp_context_copy_property (dialog_factory->context, context,
+                                    GIMP_CONTEXT_PROP_DISPLAY);
+      else
+        gimp_context_copy_property (dialog_factory->context, context,
+                                    GIMP_CONTEXT_PROP_IMAGE);
+    }
 
   g_signal_connect_object (G_OBJECT (dialog_factory->context), "display_changed",
 			   G_CALLBACK (gimp_image_dock_factory_display_changed),
@@ -274,13 +280,9 @@ gimp_image_dock_set_show_image_menu (GimpImageDock *image_dock,
   g_return_if_fail (GIMP_IS_IMAGE_DOCK (image_dock));
 
   if (show)
-    {
-      gtk_widget_show (image_dock->option_menu->parent);
-    }
+    gtk_widget_show (image_dock->option_menu->parent);
   else
-    {
-      gtk_widget_hide (image_dock->option_menu->parent);
-    }
+    gtk_widget_hide (image_dock->option_menu->parent);
 
   image_dock->show_image_menu = show ? TRUE : FALSE;
 }
@@ -357,22 +359,11 @@ gimp_image_dock_auto_clicked (GtkWidget *widget,
 
   if (image_dock->auto_follow_active)
     {
-      GimpObject *gdisp;
-
-      gdisp = gimp_context_get_display (dock->dialog_factory->context);
-
-      if (gdisp)
-        {
-          gimp_context_set_display (dock->context, gdisp);
-        }
+      if (gimp_context_get_display (dock->dialog_factory->context))
+        gimp_context_copy_property (dock->dialog_factory->context, dock->context,
+                                    GIMP_CONTEXT_PROP_DISPLAY);
       else
-        {
-          GimpImage *gimage;
-
-          gimage = gimp_context_get_image (dock->dialog_factory->context);
-
-          if (gimage)
-            gimp_context_set_image (dock->context, gimage);
-        }
+        gimp_context_copy_property (dock->dialog_factory->context, dock->context,
+                                    GIMP_CONTEXT_PROP_IMAGE);
     }
 }

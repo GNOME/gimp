@@ -1,3 +1,38 @@
+2002-05-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.h: removed unused commented out prototype.
+
+	* app/core/gimpimage.c (gimp_image_set_tattoo_state): fixed it
+	again after I have b0rked it when using vectors instead of paths.
+
+	* app/display/gimpdisplay.c: some comments and one more
+	g_return_val_if_fail().
+
+	* app/widgets/gimpimagedock.c: more fixes for the subtle
+	active_image <-> active_display difference.
+
+	* tools/pdbgen/pdb/display.pdb (gimp_display_delete): call
+	gimp_display_delete() instead of just destroying it's shell (eek).
+
+	* app/pdb/display_cmds.c: regenerated.
+
+	Added a special view type for the image list so we can implement
+	stuff like deleting images which are left over from crashed
+	plug-ins:
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpimageview.[ch]: new widget: a view on the image
+	container.
+
+	* app/gui/Makefile.am
+	* app/gui/images-commands.[ch]: new callbacks for it's context menu.
+
+	* app/gui/dialogs-constructors.c: use the new widget instead of
+	plain GimpContainerViews.
+
+	* app/gui/menus.c: added an item_factory for it.
+
 2002-05-08  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.c (gimp_scale_entry_new)

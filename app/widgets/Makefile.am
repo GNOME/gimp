@@ -105,6 +105,8 @@ libappwidgets_a_sources = @STRIP_BEGIN@ \
 	gimpimagefilepreview.h		\
 	gimpimagepreview.c		\
 	gimpimagepreview.h		\
+	gimpimageview.c			\
+	gimpimageview.h			\
 	gimpitemfactory.c		\
 	gimpitemfactory.h		\
 	gimpitemlistitem.c		\

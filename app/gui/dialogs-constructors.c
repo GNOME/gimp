@@ -47,6 +47,7 @@
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpimagedock.h"
+#include "widgets/gimpimageview.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpitemlistview.h"
 #include "widgets/gimpdockable.h"
@@ -323,16 +324,17 @@ dialogs_image_list_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_list_view_new (context->gimp->images,
-				       context,
-				       preview_size,
-                                       FALSE,
-				       5, 3);
+  view = gimp_image_view_new (GIMP_VIEW_TYPE_LIST,
+                              context->gimp->images,
+                              context,
+                              preview_size,
+                              5, 3,
+                              gimp_item_factory_from_path ("<Images>"));
 
   return dialogs_dockable_new (view,
 			       _("Image List"), _("Images"),
 			       NULL,
-			       dialogs_set_view_context_func);
+			       dialogs_set_editor_context_func);
 }
 
 GtkWidget *
@@ -469,16 +471,17 @@ dialogs_image_grid_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_grid_view_new (context->gimp->images,
-				       context,
-				       preview_size,
-                                       FALSE,
-				       5, 3);
+  view = gimp_image_view_new (GIMP_VIEW_TYPE_GRID,
+                              context->gimp->images,
+                              context,
+                              preview_size,
+                              5, 3,
+                              gimp_item_factory_from_path ("<Images>"));
 
   return dialogs_dockable_new (view,
 			       _("Image Grid"), _("Images"),
 			       NULL,
-			       dialogs_set_view_context_func);
+			       dialogs_set_editor_context_func);
 }
 
 GtkWidget *

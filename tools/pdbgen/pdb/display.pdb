@@ -65,7 +65,7 @@ HELP
 	  desc => 'The display to delete', alias => 'gdisp' }
     );
 
-    %invoke = ( code => 'gtk_widget_destroy (gdisp->shell);' );
+    %invoke = ( code => 'gimp_display_delete (gdisp);' );
 }
 
 sub displays_flush {

@@ -2165,49 +2165,44 @@ gimp_image_set_tattoo_state (GimpImage  *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
-  for (list = GIMP_LIST (gimage->layers)->list; 
-       list; 
+  /* Check that the layer tatoos don't overlap with channel or vector ones */
+  for (list = GIMP_LIST (gimage->layers)->list;
+       list;
        list = g_list_next (list))
     {
       GimpTattoo ltattoo;
-      
+
       ltattoo = gimp_item_get_tattoo (GIMP_ITEM (list->data));
       if (ltattoo > maxval)
 	maxval = ltattoo;
 
-      if (gimp_image_get_channel_by_tattoo (gimage, ltattoo) != NULL)
-	{
-	  retval = FALSE; /* Oopps duplicated tattoo in channel */
-	}
+      if (gimp_image_get_channel_by_tattoo (gimage, ltattoo))
+        retval = FALSE; /* Oopps duplicated tattoo in channel */
 
-      if (gimp_image_get_vectors_by_tattoo (gimage, ltattoo) != NULL)
-	{
-	  retval = FALSE; /* Oopps duplicated tattoo in layer */
-	}
+      if (gimp_image_get_vectors_by_tattoo (gimage, ltattoo))
+        retval = FALSE; /* Oopps duplicated tattoo in vectors */
     }
 
-  /* Now check that the paths channel tattoos don't overlap */
-  for (list = GIMP_LIST (gimage->channels)->list; 
-       list; 
+  /* Now check that the channel and vectors tattoos don't overlap */
+  for (list = GIMP_LIST (gimage->channels)->list;
+       list;
        list = g_list_next (list))
     {
       GimpTattoo ctattoo;
 
       channel = (GimpChannel *) list->data;
-      
+
       ctattoo = gimp_item_get_tattoo (GIMP_ITEM (channel));
       if (ctattoo > maxval)
 	maxval = ctattoo;
 
-      if (gimp_image_get_vectors_by_tattoo (gimage, ctattoo) != NULL)
-	{
-	  retval = FALSE; /* Oopps duplicated tattoo in layer */
-	}
+      if (gimp_image_get_vectors_by_tattoo (gimage, ctattoo))
+        retval = FALSE; /* Oopps duplicated tattoo in vectors */
     }
 
   /* Find the max tatto value in the vectors */
-  for (list = GIMP_LIST (gimage->channels)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->vectors)->list;
+       list;
        list = g_list_next (list))
     {
       GimpTattoo vtattoo;
@@ -2219,7 +2214,8 @@ gimp_image_set_tattoo_state (GimpImage  *gimage,
 
   if (val < maxval)
     retval = FALSE;
-  /* Must check the state is valid */
+
+  /* Must check if the state is valid */
   if (retval == TRUE)
     gimage->tattoo_state = val;
 

@@ -155,16 +155,15 @@ gimp_display_new (GimpImage *gimage,
   if (gimage->gimp->no_interface)
     return NULL;
 
-  /*
-   *  Set all GimpDisplay parameters...
-   */
   gdisp = g_object_new (GIMP_TYPE_DISPLAY, NULL);
 
   /*  add the new display to the list so that it isn't lost  */
   display_list = g_slist_append (display_list, gdisp);
 
+  /*  refs the image  */
   gimp_display_connect (gdisp, gimage);
 
+  /*  FIXME: this needs to go to GimpDisplayShell  */
   gdisp->scale = scale;
 
   /*  create the shell for the image  */
@@ -216,7 +215,7 @@ gimp_display_delete (GimpDisplay *gdisp)
       gdisp->shell = NULL;
     }
 
-  /*  free the gimage  */
+  /*  unrefs the gimage  */
   gimp_display_disconnect (gdisp);
 
   g_object_unref (G_OBJECT (gdisp));
@@ -236,6 +235,8 @@ gimp_display_get_by_ID (Gimp *gimp,
 {
   GimpDisplay *gdisp;
   GSList      *list;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   /*  Traverse the list of displays, returning the one that matches the ID
    *  If no display in the list is a match, return NULL.
