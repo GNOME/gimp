@@ -81,6 +81,6 @@ HELP
 @procs = qw(message message_get_handler message_set_handler);
 %exports = (app => [@procs], lib => [@procs]);
 
-$desc = 'Interface';
+$desc = 'Message procedures';
 
 1;

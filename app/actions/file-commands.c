@@ -324,7 +324,7 @@ file_revert_confirm_callback (GtkWidget *widget,
 	{
 	  undo_free (new_gimage);
 
-	  gdisplays_reconnect (old_gimage, new_gimage);
+	  gimp_displays_reconnect (old_gimage->gimp, old_gimage, new_gimage);
 
 	  gimp_image_clean_all (new_gimage);
 

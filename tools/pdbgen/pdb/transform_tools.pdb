@@ -436,6 +436,6 @@ CODE
 
 %exports = (app => [@procs], lib => [@procs]);
 
-$desc = 'Tool procedures';
+$desc = 'Transform Tool procedures';
 
 1;

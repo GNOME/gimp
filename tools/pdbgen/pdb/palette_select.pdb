@@ -130,8 +130,8 @@ CODE
     );
 }
 
-@headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h"
-              "core/gimpdatafactory.h" "core/gimpcontainer.h"
+@headers = qw("core/gimp.h" "core/gimpcontext.h"
+              "core/gimpcontainer.h" "core/gimpdatafactory.h"
               "gui/gui-types.h" "gui/palette-select.h");
 
 @procs = qw(palettes_popup palettes_close_popup palettes_set_popup);

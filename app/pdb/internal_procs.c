@@ -91,7 +91,7 @@ internal_procs_init (Gimp               *gimp,
   (* status_callback) (NULL, _("Convert"), 0.124);
   register_convert_procs (gimp);
 
-  (* status_callback) (NULL, _("GimpDisplay procedures"), 0.133);
+  (* status_callback) (NULL, _("Display procedures"), 0.133);
   register_display_procs (gimp);
 
   (* status_callback) (NULL, _("Drawable procedures"), 0.145);
@@ -127,7 +127,7 @@ internal_procs_init (Gimp               *gimp,
   (* status_callback) (NULL, _("Layer"), 0.518);
   register_layer_procs (gimp);
 
-  (* status_callback) (NULL, _("Interface"), 0.612);
+  (* status_callback) (NULL, _("Message procedures"), 0.612);
   register_message_procs (gimp);
 
   (* status_callback) (NULL, _("Miscellaneous"), 0.621);
@@ -175,7 +175,7 @@ internal_procs_init (Gimp               *gimp,
   (* status_callback) (NULL, _("Text procedures"), 0.929);
   register_text_tool_procs (gimp);
 
-  (* status_callback) (NULL, _("Tool procedures"), 0.941);
+  (* status_callback) (NULL, _("Transform Tool procedures"), 0.941);
   register_transform_tools_procs (gimp);
 
   (* status_callback) (NULL, _("Undo"), 0.959);

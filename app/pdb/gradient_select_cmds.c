@@ -20,7 +20,6 @@
 
 #include "config.h"
 
-#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -212,19 +211,14 @@ gradients_set_popup_invoker (Gimp     *gimp,
 	  (prec = procedural_db_lookup (gimp, gradient_callback)) &&
 	  (gsp = gradient_select_get_by_callback (gradient_callback)))
 	{
-	  GimpGradient *active = NULL;
-    
-	  active = (GimpGradient *)
+	  GimpGradient *active = (GimpGradient *)
 	    gimp_container_get_child_by_name (gimp->gradient_factory->container,
 					      gradient_name);
     
-	  if (active)
-	    {
-	      gimp_context_set_gradient (gsp->context, active);
-	      success = TRUE;
-	    }
-	  else
-	    success = FALSE;
+	  success = (active != NULL);
+    
+	  if (success)
+	    gimp_context_set_gradient (gsp->context, active);
 	}
       else
 	success = FALSE;

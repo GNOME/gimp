@@ -22,13 +22,14 @@
 
 GimpDisplay * gdisplays_check_valid             (GimpDisplay *gdisp,
                                                  GimpImage   *gimage);
-void          gdisplays_reconnect               (GimpImage   *old,
-                                                 GimpImage   *new);
 
 gboolean      gimp_displays_dirty               (Gimp        *gimp);
 void          gimp_displays_delete              (Gimp        *gimp);
 void          gimp_displays_flush               (Gimp        *gimp);
 void          gimp_displays_finish_draw         (Gimp        *gimp);
+void          gimp_displays_reconnect           (Gimp        *gimp,
+                                                 GimpImage   *old,
+                                                 GimpImage   *new);
 
 void          gimp_displays_set_busy            (Gimp        *gimp);
 void          gimp_displays_unset_busy          (Gimp        *gimp);

@@ -197,7 +197,7 @@ displays_reconnect_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gdisplays_reconnect(gimage_old, gimage_new);
+    gimp_displays_reconnect (gimp, gimage_old, gimage_new);
 
   return procedural_db_return_args (&displays_reconnect_proc, success);
 }

@@ -149,16 +149,18 @@ gimp_displays_finish_draw (Gimp *gimp)
 }
 
 void
-gdisplays_reconnect (GimpImage *old,
-		     GimpImage *new)
+gimp_displays_reconnect (Gimp      *gimp,
+                         GimpImage *old,
+                         GimpImage *new)
 {
   GList       *list;
   GimpDisplay *gdisp;
 
-  g_return_if_fail (old != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_IMAGE (old));
   g_return_if_fail (GIMP_IS_IMAGE (new));
   
-  for (list = GIMP_LIST (new->gimp->displays)->list;
+  for (list = GIMP_LIST (gimp->displays)->list;
        list;
        list = g_list_next (list))
     {

@@ -123,9 +123,7 @@ sub brushes_set_popup {
     );
 
     %invoke = (
-	headers => [ qw("core/gimpbrush.h" "core/gimplist.h"
-	                "widgets/widgets-types.h"
-                        "widgets/gimpbrushfactoryview.h") ],
+	headers => [ qw("widgets/gimpbrushfactoryview.h") ],
 	vars => [ 'ProcRecord *proc', 'BrushSelect *bsp' ],
 	code => <<'CODE'
 {
@@ -145,8 +143,6 @@ sub brushes_set_popup {
 
           spacing_adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;
 
-	  /* Updating the context updates the widgets as well */
-
 	  gimp_context_set_brush (bsp->context, active);
 	  gimp_context_set_opacity (bsp->context, opacity / 100.0);
 	  gimp_context_set_paint_mode (bsp->context, paint_mode);
@@ -161,8 +157,9 @@ CODE
     );
 }
 
-@headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h"
-	      "core/gimpdatafactory.h" "gui/brush-select.h");
+@headers = qw("core/gimp.h" "core/gimpcontext.h"
+	      "core/gimpcontainer.h" "core/gimpdatafactory.h"
+              "gui/gui-types.h" "gui/brush-select.h");
 
 @procs = qw(brushes_popup brushes_close_popup brushes_set_popup);
 %exports = (app => [@procs], lib => [@procs]);

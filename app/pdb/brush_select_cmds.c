@@ -20,22 +20,20 @@
 
 #include "config.h"
 
-#include <string.h>
 
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbasetypes.h"
 
 #include "pdb-types.h"
-#include "widgets/widgets-types.h"
+#include "gui/gui-types.h"
 #include "procedural_db.h"
 
 #include "base/base-enums.h"
 #include "core/gimp.h"
-#include "core/gimpbrush.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
-#include "core/gimplist.h"
 #include "gui/brush-select.h"
 #include "widgets/gimpbrushfactoryview.h"
 
@@ -262,8 +260,6 @@ brushes_set_popup_invoker (Gimp     *gimp,
 	      GtkAdjustment *spacing_adj;
     
 	      spacing_adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;
-    
-	      /* Updating the context updates the widgets as well */
     
 	      gimp_context_set_brush (bsp->context, active);
 	      gimp_context_set_opacity (bsp->context, opacity / 100.0);
