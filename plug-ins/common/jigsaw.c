@@ -29,8 +29,8 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -38,19 +38,18 @@ typedef enum {BEZIER_1, BEZIER_2} style_t;
 typedef enum {LEFT, RIGHT, UP, DOWN} bump_t;
 
 
-static void query(void);
-static void run(gchar *name, gint nparams, GParam *param,
-		gint *nreturn_vals, GParam **return_vals);
-static gint jigsaw(void);
-static void run_callback(GtkWidget *widget, gpointer data);
-static void dialog_box(void);
-static void entry_callback(GtkWidget *widget, gpointer data);
-static void entry_double_callback(GtkWidget *widget, gpointer data);
-static void radio_button_primitive_callback(GtkWidget *widget, gpointer data);
-static void adjustment_callback(GtkAdjustment *adjustment, gpointer data);
-static void adjustment_double_callback(GtkAdjustment *adjustment,
-				       gpointer data);
-static void check_button_callback(GtkWidget *widget, gpointer data);
+static void query (void);
+static void run   (gchar   *name,
+		   gint     nparams,
+		   GParam  *param,
+		   gint    *nreturn_vals,
+		   GParam **return_vals);
+
+static gint jigsaw     (void);
+static void dialog_box (void);
+
+static void run_callback          (GtkWidget *widget, gpointer data);
+static void check_button_callback (GtkWidget *widget, gpointer data);
 
 static void draw_jigsaw(guchar *buffer, gint width, gint height, gint bytes);
 static void draw_vertical_border(guchar *buffer, gint width, gint height,
@@ -241,10 +240,10 @@ GPlugInInfo PLUG_IN_INFO =
 
 struct config_tag
 {
-  gint x;
-  gint y;
+  gint    x;
+  gint    y;
   style_t style;
-  gint blend_lines;
+  gint    blend_lines;
   gdouble blend_amount;
 };
 
@@ -263,13 +262,13 @@ static config_t config =
 struct globals_tag
 {
   GDrawable *drawable;
-  gint *cachex1[4];
-  gint *cachex2[4];
-  gint *cachey1[4];
-  gint *cachey2[4];
-  gint steps[4];
-  gint *gridx;
-  gint *gridy;
+  gint  *cachex1[4];
+  gint  *cachex2[4];
+  gint  *cachey1[4];
+  gint  *cachey2[4];
+  gint  steps[4];
+  gint  *gridx;
+  gint  *gridy;
   gint **blend_outer_cachex1[4];
   gint **blend_outer_cachex2[4];
   gint **blend_outer_cachey1[4];
@@ -278,8 +277,8 @@ struct globals_tag
   gint **blend_inner_cachex2[4];
   gint **blend_inner_cachey1[4];
   gint **blend_inner_cachey2[4];
-  gint dialog_result;
-  gint tooltips;
+  gint   dialog_result;
+  gint   tooltips;
 };
 
 typedef struct globals_tag globals_t;
@@ -306,10 +305,10 @@ static globals_t globals =
   1
 };
 
-MAIN()
+MAIN ()
 
 static void
-query(void)
+query (void)
 {
   static GParamDef args[] =
   {
@@ -328,26 +327,25 @@ query(void)
 
   INIT_I18N();
 
-  gimp_install_procedure("plug_in_jigsaw",
-			 _("Renders a jigsaw puzzle look"),
-			 _("Jigsaw puzzle look"),
-			 "Nigel Wetten",
-			 "Nigel Wetten",
-			 "1998",
-			 N_("<Image>/Filters/Render/Pattern/Jigsaw..."),
-			 "RGB*",
-			 PROC_PLUG_IN,
-			 nargs, nreturn_vals,
-			 args, return_vals);
-
-  return;
-}  /* query */
-
-/*****/
+  gimp_install_procedure ("plug_in_jigsaw",
+			  _("Renders a jigsaw puzzle look"),
+			  _("Jigsaw puzzle look"),
+			  "Nigel Wetten",
+			  "Nigel Wetten",
+			  "1998",
+			  N_("<Image>/Filters/Render/Pattern/Jigsaw..."),
+			  "RGB*",
+			  PROC_PLUG_IN,
+			  nargs, nreturn_vals,
+			  args, return_vals);
+}
 
 static void
-run(gchar *name, gint nparams, GParam *param, gint *nreturn_vals,
-    GParam **return_vals)
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam values[1];
   GDrawable *drawable;
@@ -358,6 +356,7 @@ run(gchar *name, gint nparams, GParam *param, gint *nreturn_vals,
   drawable = gimp_drawable_get(param[2].data.d_drawable);
   globals.drawable = drawable;
   gimp_tile_cache_ntiles(drawable->width / gimp_tile_width() + 1);
+
   switch (run_mode)
     {
     case RUN_NONINTERACTIVE:
@@ -425,12 +424,10 @@ run(gchar *name, gint nparams, GParam *param, gint *nreturn_vals,
   values[0].data.d_status = status;
 
   return;
-}  /* run */
-
-/*****/
+}
 
 static gint
-jigsaw(void)
+jigsaw (void)
 {
   GPixelRgn src_pr, dest_pr;
   guchar *buffer;
@@ -441,7 +438,6 @@ jigsaw(void)
   gint buffer_size = bytes * width * height;
 
   srand((gint)NULL);
-  
 
   /* setup image buffer */
   gimp_pixel_rgn_init(&src_pr, drawable, 0, 0, width, height, FALSE, FALSE);
@@ -465,13 +461,14 @@ jigsaw(void)
   g_free(buffer);
 
   return 0;
-}  /* jigsaw */
-
-/*****/
+}
 
 static void
-generate_bezier(gint px[4], gint py[4], gint steps,
-		gint *cachex, gint *cachey)
+generate_bezier (gint  px[4],
+		 gint  py[4],
+		 gint  steps,
+		 gint *cachex,
+		 gint *cachey)
 {
   gdouble t = 0.0;
   gdouble sigma = 1.0 / steps;
@@ -497,12 +494,13 @@ generate_bezier(gint px[4], gint py[4], gint steps,
       cachey[i] = (gint) (y + 0.2);
     }  /* for */
   return;
-}  /* generate_bezier */
-
-/*****/
+}
 
 static void
-draw_jigsaw(guchar *buffer, gint width, gint height, gint bytes)
+draw_jigsaw (guchar *buffer,
+	     gint    width,
+	     gint    height,
+	     gint    bytes)
 {
   gint i;
   gint *x, *y;
@@ -571,14 +569,17 @@ draw_jigsaw(guchar *buffer, gint width, gint height, gint bytes)
   g_free(globals.gridy);
   
   return;
-}  /* draw_jigsaw */
-
-/*****/
+}
 
 static void
-draw_vertical_border(guchar *buffer, gint width, gint height, gint bytes,
-		     gint x_offset, gint ytiles, gint blend_lines,
-		     gdouble blend_amount)
+draw_vertical_border (guchar *buffer,
+		      gint    width,
+		      gint    height,
+		      gint    bytes,
+		      gint    x_offset,
+		      gint    ytiles,
+		      gint    blend_lines,
+		      gdouble blend_amount)
 {
   gint i, j;
   gint tile_height = height / ytiles;
@@ -689,15 +690,17 @@ draw_vertical_border(guchar *buffer, gint width, gint height, gint bytes,
     }  /* for */
   
   return;
-}  /* draw_vertical_border */
-
-/*****/
+}
 
 /* assumes RGB* */
 static void
-draw_horizontal_border(guchar *buffer, gint width, gint bytes,
-		       gint y_offset, gint xtiles, gint blend_lines,
-		       gdouble blend_amount)
+draw_horizontal_border (guchar *buffer,
+			gint    width,
+			gint    bytes,
+			gint    y_offset,
+			gint    xtiles,
+			gint    blend_lines,
+			gdouble blend_amount)
 {
   gint i, j;
   gint tile_width = width / xtiles;
@@ -794,16 +797,15 @@ draw_horizontal_border(guchar *buffer, gint width, gint bytes,
 	}
       x_offset = globals.gridx[i];
     }  /* for */
-
-    return;
-}  /* draw_horizontal_border */
-
-/*****/
+}
 
 /* assumes going top to bottom */
 static void
-draw_vertical_line(guchar *buffer, gint width, gint bytes,
-		   gint px[2], gint py[2])
+draw_vertical_line (guchar *buffer,
+		    gint    width,
+		    gint    bytes,
+		    gint    px[2],
+		    gint    py[2])
 {
   gint i;
   gint rowstride = bytes * width;
@@ -815,15 +817,15 @@ draw_vertical_line(guchar *buffer, gint width, gint bytes,
       DRAW_POINT(buffer, index);
       index += rowstride;
     }
-  return;
-}  /* draw_vertical_line */
-
-/*****/
+}
 
 /* assumes going left to right */
 static void
-draw_horizontal_line(guchar *buffer, gint width, gint bytes,
-		     gint px[2], gint py[2])
+draw_horizontal_line (guchar *buffer,
+		      gint    width,
+		      gint    bytes,
+		      gint    px[2],
+		      gint    py[2])
 {
   gint i;
   gint rowstride = bytes * width;
@@ -835,14 +837,15 @@ draw_horizontal_line(guchar *buffer, gint width, gint bytes,
       DRAW_POINT(buffer, index);
       index += bytes;
     }
-  return;
-}  /* draw_horizontal_line */
-
-/*****/
+}
 
 static void
-draw_right_bump(guchar *buffer, gint width, gint bytes, gint x_offset,
-		gint curve_start_offset, gint steps)
+draw_right_bump (guchar *buffer,
+		 gint    width,
+		 gint    bytes,
+		 gint    x_offset,
+		 gint    curve_start_offset,
+		 gint    steps)
 {
   gint i;
   gint x, y;
@@ -861,14 +864,15 @@ draw_right_bump(guchar *buffer, gint width, gint bytes, gint x_offset,
       index = y * rowstride + x * bytes;
       DRAW_POINT(buffer, index);
     }
-  return;
-}  /* draw_right_bump */
-
-/*****/
+}
 
 static void
-draw_left_bump(guchar *buffer, gint width, gint bytes, gint x_offset,
-	       gint curve_start_offset, gint steps)
+draw_left_bump (guchar *buffer,
+		gint    width,
+		gint    bytes,
+		gint    x_offset,
+		gint    curve_start_offset,
+		gint    steps)
 {
   gint i;
   gint x, y;
@@ -887,14 +891,15 @@ draw_left_bump(guchar *buffer, gint width, gint bytes, gint x_offset,
       index = y * rowstride + x * bytes;
       DRAW_POINT(buffer, index);
     }
-  return;
-}  /* draw_left_bump */
-
-/*****/
+}
 
 static void
-draw_up_bump(guchar *buffer, gint width, gint bytes, gint y_offset,
-	     gint curve_start_offset, gint steps)
+draw_up_bump (guchar *buffer,
+	      gint    width,
+	      gint    bytes,
+	      gint    y_offset,
+	      gint    curve_start_offset,
+	      gint    steps)
 {
   gint i;
   gint x, y;
@@ -913,14 +918,15 @@ draw_up_bump(guchar *buffer, gint width, gint bytes, gint y_offset,
       index = y * rowstride + x * bytes;
       DRAW_POINT(buffer, index);
     }
-  return;
-}  /* draw_up_bump */
-
-/*****/
+}
 
 static void
-draw_down_bump(guchar *buffer, gint width, gint bytes, gint y_offset,
-	       gint curve_start_offset, gint steps)
+draw_down_bump (guchar *buffer,
+		gint    width,
+		gint    bytes,
+		gint    y_offset,
+		gint    curve_start_offset,
+		gint    steps)
 {
   gint i;
   gint x, y;
@@ -939,13 +945,10 @@ draw_down_bump(guchar *buffer, gint width, gint bytes, gint y_offset,
       index = y * rowstride + x * bytes;
       DRAW_POINT(buffer, index);
     }
-  return;
-}  /* draw_down_bump */
-
-/*****/
+}
 
 static void
-malloc_cache(void)
+malloc_cache (void)
 {
   gint i, j;
   gint blend_lines = config.blend_lines;
@@ -954,75 +957,70 @@ malloc_cache(void)
   for (i = 0; i < 4; i++)
     {
       gint steps_length = globals.steps[i] * sizeof(gint);
-      
-      globals.cachex1[i] = g_malloc(steps_length);
-      globals.cachex2[i] = g_malloc(steps_length);
-      globals.cachey1[i] = g_malloc(steps_length);
-      globals.cachey2[i] = g_malloc(steps_length);
-      globals.blend_outer_cachex1[i] = g_malloc(length);
-      globals.blend_outer_cachex2[i] = g_malloc(length);
-      globals.blend_outer_cachey1[i] = g_malloc(length);
-      globals.blend_outer_cachey2[i] = g_malloc(length);
-      globals.blend_inner_cachex1[i] = g_malloc(length);
-      globals.blend_inner_cachex2[i] = g_malloc(length);
-      globals.blend_inner_cachey1[i] = g_malloc(length);
-      globals.blend_inner_cachey2[i] = g_malloc(length);
+
+      globals.cachex1[i] = g_malloc (steps_length);
+      globals.cachex2[i] = g_malloc (steps_length);
+      globals.cachey1[i] = g_malloc (steps_length);
+      globals.cachey2[i] = g_malloc (steps_length);
+      globals.blend_outer_cachex1[i] = g_malloc (length);
+      globals.blend_outer_cachex2[i] = g_malloc (length);
+      globals.blend_outer_cachey1[i] = g_malloc (length);
+      globals.blend_outer_cachey2[i] = g_malloc (length);
+      globals.blend_inner_cachex1[i] = g_malloc (length);
+      globals.blend_inner_cachex2[i] = g_malloc (length);
+      globals.blend_inner_cachey1[i] = g_malloc (length);
+      globals.blend_inner_cachey2[i] = g_malloc (length);
       for (j = 0; j < blend_lines; j++)
 	{
-	  *(globals.blend_outer_cachex1[i] + j) = g_malloc(steps_length);
-	  *(globals.blend_outer_cachex2[i] + j) = g_malloc(steps_length);
-	  *(globals.blend_outer_cachey1[i] + j) = g_malloc(steps_length);
-	  *(globals.blend_outer_cachey2[i] + j) = g_malloc(steps_length);
-	  *(globals.blend_inner_cachex1[i] + j) = g_malloc(steps_length);
-	  *(globals.blend_inner_cachex2[i] + j) = g_malloc(steps_length);
-	  *(globals.blend_inner_cachey1[i] + j) = g_malloc(steps_length);
-	  *(globals.blend_inner_cachey2[i] + j) = g_malloc(steps_length);
+	  *(globals.blend_outer_cachex1[i] + j) = g_malloc (steps_length);
+	  *(globals.blend_outer_cachex2[i] + j) = g_malloc (steps_length);
+	  *(globals.blend_outer_cachey1[i] + j) = g_malloc (steps_length);
+	  *(globals.blend_outer_cachey2[i] + j) = g_malloc (steps_length);
+	  *(globals.blend_inner_cachex1[i] + j) = g_malloc (steps_length);
+	  *(globals.blend_inner_cachex2[i] + j) = g_malloc (steps_length);
+	  *(globals.blend_inner_cachey1[i] + j) = g_malloc (steps_length);
+	  *(globals.blend_inner_cachey2[i] + j) = g_malloc (steps_length);
 	}
-    } /* for */
-  return;
-}  /* malloc_cache() */
-
-/*****/
+    }
+}
 
 static void
-free_cache(void)
+free_cache (void)
 {
   gint i, j;
   gint blend_lines = config.blend_lines;
 
   for (i = 0; i < 4; i ++)
     {
-      g_free(globals.cachex1[i]);
-      g_free(globals.cachex2[i]);
-      g_free(globals.cachey1[i]);
-      g_free(globals.cachey2[i]);
+      g_free (globals.cachex1[i]);
+      g_free (globals.cachex2[i]);
+      g_free (globals.cachey1[i]);
+      g_free (globals.cachey2[i]);
       for (j = 0; j < blend_lines; j++)
 	{
-	  g_free(*(globals.blend_outer_cachex1[i] + j));
-	  g_free(*(globals.blend_outer_cachex2[i] + j));
-	  g_free(*(globals.blend_outer_cachey1[i] + j));
-	  g_free(*(globals.blend_outer_cachey2[i] + j));
-	  g_free(*(globals.blend_inner_cachex1[i] + j));
-	  g_free(*(globals.blend_inner_cachex2[i] + j));
-	  g_free(*(globals.blend_inner_cachey1[i] + j));
-	  g_free(*(globals.blend_inner_cachey2[i] + j));
+	  g_free (*(globals.blend_outer_cachex1[i] + j));
+	  g_free (*(globals.blend_outer_cachex2[i] + j));
+	  g_free (*(globals.blend_outer_cachey1[i] + j));
+	  g_free (*(globals.blend_outer_cachey2[i] + j));
+	  g_free (*(globals.blend_inner_cachex1[i] + j));
+	  g_free (*(globals.blend_inner_cachex2[i] + j));
+	  g_free (*(globals.blend_inner_cachey1[i] + j));
+	  g_free (*(globals.blend_inner_cachey2[i] + j));
 	}
-      g_free(globals.blend_outer_cachex1[i]);
-      g_free(globals.blend_outer_cachex2[i]);
-      g_free(globals.blend_outer_cachey1[i]);
-      g_free(globals.blend_outer_cachey2[i]);
-      g_free(globals.blend_inner_cachex1[i]);
-      g_free(globals.blend_inner_cachex2[i]);
-      g_free(globals.blend_inner_cachey1[i]);
-      g_free(globals.blend_inner_cachey2[i]);
-    }  /* for */
-  return;
-}  /* free_cache */
-
-/*****/
+      g_free (globals.blend_outer_cachex1[i]);
+      g_free (globals.blend_outer_cachex2[i]);
+      g_free (globals.blend_outer_cachey1[i]);
+      g_free (globals.blend_outer_cachey2[i]);
+      g_free (globals.blend_inner_cachex1[i]);
+      g_free (globals.blend_inner_cachex2[i]);
+      g_free (globals.blend_inner_cachey1[i]);
+      g_free (globals.blend_inner_cachey2[i]);
+    }
+}
 
 static void
-init_right_bump(gint width, gint height)
+init_right_bump (gint width,
+		 gint height)
 {
   gint i;
   gint xtiles = config.x;
@@ -1096,12 +1094,11 @@ init_right_bump(gint width, gint height)
 		      *(globals.blend_inner_cachey2[RIGHT] + i));
     }
   return;
-}  /* init_right_bump */
-
-/*****/
+}
 
 static void
-init_left_bump(gint width, gint height)
+init_left_bump (gint width,
+		gint height)
 {
   gint i;
   gint xtiles = config.x;
@@ -1174,13 +1171,11 @@ init_left_bump(gint width, gint height)
 		      *(globals.blend_inner_cachex2[LEFT] + i),
 		      *(globals.blend_inner_cachey2[LEFT] + i));
     }
-  return;
-}  /* init_left_bump */
-
-/*****/
+}
 
 static void
-init_up_bump(gint width, gint height)
+init_up_bump (gint width,
+	      gint height)
 {
   gint i;
   gint xtiles = config.x;
@@ -1254,12 +1249,11 @@ init_up_bump(gint width, gint height)
 		      *(globals.blend_inner_cachey2[UP] + i));
     }
   return;
-}  /* init_top_bump */
-
-/*****/
+}
 
 static void
-init_down_bump(gint width, gint height)
+init_down_bump (gint width,
+		gint height)
 {
   gint i;
   gint xtiles = config.x;
@@ -1333,13 +1327,15 @@ init_down_bump(gint width, gint height)
 		      *(globals.blend_inner_cachey2[DOWN] + i));
     }
   return;
-}  /* init_down_bump */
-
-/*****/
+}
   
 static void
-generate_grid(gint width, gint height, gint xtiles, gint ytiles,
-	      gint *x, gint *y)
+generate_grid (gint  width,
+	       gint  height,
+	       gint  xtiles,
+	       gint  ytiles,
+	       gint *x,
+	       gint *y)
 {
   gint i;
   gint xlines = xtiles - 1;
@@ -1385,16 +1381,17 @@ generate_grid(gint width, gint height, gint xtiles, gint ytiles,
       carry++;
     }
   y[ylines] = height - 1;   /* padding for draw_vertical_border */
-  return;
-}  /* generate_grid */
-
-/*****/
+}
 
 /* assumes RGB* */
 /* assumes py[1] > py[0] and px[0] = px[1] */
 static void
-darken_vertical_line(guchar *buffer, gint width, gint bytes,
-		     gint px[2], gint py[2], gdouble delta )
+darken_vertical_line (guchar *buffer,
+		      gint    width,
+		      gint    bytes,
+		      gint    px[2],
+		      gint    py[2],
+		      gdouble delta)
 {
   gint i;
   gint rowstride = width * bytes;
@@ -1407,16 +1404,17 @@ darken_vertical_line(guchar *buffer, gint width, gint bytes,
       DARKEN_POINT(buffer, index, delta, temp);
       index += rowstride;
     }
-  return;
-}  /* darken_vertical_line */
-
-/*****/
+}
 
 /* assumes RGB* */
 /* assumes py[1] > py[0] and px[0] = px[1] */
 static void
-lighten_vertical_line(guchar *buffer, gint width, gint bytes,
-		      gint px[2], gint py[2], gdouble delta)
+lighten_vertical_line (guchar *buffer,
+		       gint    width,
+		       gint    bytes,
+		       gint    px[2],
+		       gint    py[2],
+		       gdouble delta)
 {
   gint i;
   gint rowstride = width * bytes;
@@ -1429,16 +1427,17 @@ lighten_vertical_line(guchar *buffer, gint width, gint bytes,
       LIGHTEN_POINT(buffer, index, delta, temp);
       index += rowstride;
     }
-  return;
-}  /* lighten_vertical_line */
-
-/*****/
+}
 
 /* assumes RGB* */
 /* assumes px[1] > px[0] and py[0] = py[1] */
 static void
-darken_horizontal_line(guchar *buffer, gint width, gint bytes,
-		       gint px[2], gint py[2], gdouble delta)
+darken_horizontal_line (guchar *buffer,
+			gint    width,
+			gint    bytes,
+			gint    px[2],
+			gint    py[2],
+			gdouble delta)
 {
   gint i;
   gint rowstride = width * bytes;
@@ -1451,16 +1450,17 @@ darken_horizontal_line(guchar *buffer, gint width, gint bytes,
       DARKEN_POINT(buffer, index, delta, temp);
       index += bytes;
     }
-  return;
-}  /* darken_horizontal_line */
-
-/*****/
+}
 
 /* assumes RGB* */
 /* assumes px[1] > px[0] and py[0] = py[1] */
 static void
-lighten_horizontal_line(guchar *buffer, gint width, gint bytes,
-			gint px[2], gint py[2], gdouble delta)
+lighten_horizontal_line (guchar *buffer,
+			 gint    width,
+			 gint    bytes,
+			 gint    px[2],
+			 gint    py[2],
+			 gdouble delta)
 {
   gint i;
   gint rowstride = width * bytes;
@@ -1473,15 +1473,17 @@ lighten_horizontal_line(guchar *buffer, gint width, gint bytes,
       LIGHTEN_POINT(buffer, index, delta, temp);
       index += bytes;
     }
-  return;
-}  /* lighten_horizontal_line */
-
-/*****/
+}
 
 static void
-darken_right_bump(guchar *buffer, gint width, gint bytes, gint x_offset,
-		  gint curve_start_offset, gint steps, gdouble delta,
-		  gint counter)
+darken_right_bump (guchar *buffer,
+		   gint    width,
+		   gint    bytes,
+		   gint    x_offset,
+		   gint    curve_start_offset,
+		   gint    steps,
+		   gdouble delta,
+		   gint    counter)
 {
   gint i;
   gint x, y;
@@ -1523,15 +1525,17 @@ darken_right_bump(guchar *buffer, gint width, gint bytes, gint x_offset,
 	  last_index2 = index;
 	}
     }
-  return;
-}  /* darken_right_bump */
-
-/*****/
+}
 
 static void
-lighten_right_bump(guchar *buffer, gint width, gint bytes, gint x_offset,
-		   gint curve_start_offset, gint steps, gdouble delta,
-		   gint counter)
+lighten_right_bump (guchar *buffer,
+		    gint    width,
+		    gint    bytes,
+		    gint    x_offset,
+		    gint    curve_start_offset,
+		    gint    steps,
+		    gdouble delta,
+		    gint    counter)
 {
   gint i;
   gint x, y;
@@ -1573,15 +1577,17 @@ lighten_right_bump(guchar *buffer, gint width, gint bytes, gint x_offset,
 	  last_index2 = index;
 	}
     }
-  return;
-}  /* lighten_right_bump */
-
-/*****/
+}
 
 static void
-darken_left_bump(guchar *buffer, gint width, gint bytes, gint x_offset,
-		 gint curve_start_offset, gint steps, gdouble delta,
-		 gint counter)
+darken_left_bump (guchar *buffer,
+		  gint    width,
+		  gint    bytes,
+		  gint    x_offset,
+		  gint    curve_start_offset,
+		  gint    steps,
+		  gdouble delta,
+		  gint    counter)
 {
   gint i;
   gint x, y;
@@ -1623,15 +1629,17 @@ darken_left_bump(guchar *buffer, gint width, gint bytes, gint x_offset,
 	  last_index2 = index;
 	}
     }
-  return;
-}  /* darken_left_bump */
-
-/*****/
+}
 
 static void
-lighten_left_bump(guchar *buffer, gint width, gint bytes, gint x_offset,
-		  gint curve_start_offset, gint steps, gdouble delta,
-		  gint counter)
+lighten_left_bump (guchar *buffer,
+		   gint    width,
+		   gint    bytes,
+		   gint    x_offset,
+		   gint    curve_start_offset,
+		   gint    steps,
+		   gdouble delta,
+		   gint    counter)
 {
   gint i;
   gint x, y;
@@ -1673,15 +1681,17 @@ lighten_left_bump(guchar *buffer, gint width, gint bytes, gint x_offset,
 	  last_index2 = index;
 	}
     }
-  return;
-}  /* lighten_left_bump */
-
-/*****/
+}
 
 static void
-darken_up_bump(guchar *buffer, gint width, gint bytes, gint y_offset,
-	       gint curve_start_offset, gint steps, gdouble delta,
-	       gint counter)
+darken_up_bump (guchar *buffer,
+		gint    width,
+		gint    bytes,
+		gint    y_offset,
+		gint    curve_start_offset,
+		gint    steps,
+		gdouble delta,
+		gint    counter)
 {
   gint i;
   gint x, y;
@@ -1723,15 +1733,17 @@ darken_up_bump(guchar *buffer, gint width, gint bytes, gint y_offset,
 	  last_index2 = index;
 	}
     }
-  return;
-}  /* darken_up_bump */
-
-/*****/
+}
 
 static void
-lighten_up_bump(guchar *buffer, gint width, gint bytes, gint y_offset,
-		gint curve_start_offset, gint steps, gdouble delta,
-		gint counter)
+lighten_up_bump (guchar *buffer,
+		 gint    width,
+		 gint    bytes,
+		 gint    y_offset,
+		 gint    curve_start_offset,
+		 gint    steps,
+		 gdouble delta,
+		 gint    counter)
 {
   gint i;
   gint x, y;
@@ -1773,15 +1785,17 @@ lighten_up_bump(guchar *buffer, gint width, gint bytes, gint y_offset,
 	  last_index2 = index;
 	}
     }
-  return;
-}  /* lighten_up_bump */
-
-/*****/
+}
 
 static void
-darken_down_bump(guchar *buffer, gint width, gint bytes, gint y_offset,
-		 gint curve_start_offset, gint steps, gdouble delta,
-		 gint counter)
+darken_down_bump (guchar *buffer,
+		  gint    width,
+		  gint    bytes,
+		  gint    y_offset,
+		  gint    curve_start_offset,
+		  gint    steps,
+		  gdouble delta,
+		  gint    counter)
 {
   gint i;
   gint x, y;
@@ -1823,15 +1837,17 @@ darken_down_bump(guchar *buffer, gint width, gint bytes, gint y_offset,
 	  last_index2 = index;
 	}
     }
-  return;
-}  /* darken_down_bump */
-
-/*****/
+}
 
 static void
-lighten_down_bump(guchar *buffer, gint width, gint bytes, gint y_offset,
-		  gint curve_start_offset, gint steps, gdouble delta,
-		  gint counter)
+lighten_down_bump (guchar *buffer,
+		   gint    width,
+		   gint    bytes,
+		   gint    y_offset,
+		   gint    curve_start_offset,
+		   gint    steps,
+		   gdouble delta,
+		   gint    counter)
 {
   gint i;
   gint x, y;
@@ -1873,14 +1889,15 @@ lighten_down_bump(guchar *buffer, gint width, gint bytes, gint y_offset,
 	  last_index2 = index;
 	}
     }
-  return;
-}  /* lighten_down_bump */
-
-/*****/
+}
 
 static void
-draw_bezier_line(guchar *buffer, gint width, gint bytes,
-		 gint steps, gint *cx, gint *cy)
+draw_bezier_line (guchar *buffer,
+		  gint    width,
+		  gint    bytes,
+		  gint    steps,
+		  gint   *cx,
+		  gint   *cy)
 {
   gint i;
   gint x, y;
@@ -1894,15 +1911,18 @@ draw_bezier_line(guchar *buffer, gint width, gint bytes,
       index = y * rowstride + x * bytes;
       DRAW_POINT(buffer, index);
     }
-  return;
-}  /* draw_bezier_line */
-
-/*****/
+}
 
 static void
-darken_bezier_line(guchar *buffer, gint width, gint bytes,
-		   gint x_offset, gint y_offset, gint steps,
-		   gint *cx, gint *cy, gdouble delta)
+darken_bezier_line (guchar *buffer,
+		    gint    width,
+		    gint    bytes,
+		    gint    x_offset,
+		    gint    y_offset,
+		    gint    steps,
+		    gint   *cx,
+		    gint   *cy,
+		    gdouble delta)
 {
   gint i;
   gint x, y;
@@ -1922,15 +1942,18 @@ darken_bezier_line(guchar *buffer, gint width, gint bytes,
 	  last_index = index;
 	}
     }
-  return;
-}  /* darken_bezier_line */
-
-/*****/
+}
 
 static void
-lighten_bezier_line(guchar *buffer, gint width, gint bytes,
-		    gint x_offset, gint y_offset, gint steps,
-		    gint *cx, gint *cy, gdouble delta)
+lighten_bezier_line (guchar *buffer,
+		     gint    width,
+		     gint    bytes,
+		     gint    x_offset,
+		     gint    y_offset,
+		     gint    steps,
+		     gint   *cx,
+		     gint   *cy,
+		     gdouble delta)
 {
   gint i;
   gint x, y;
@@ -1950,16 +1973,19 @@ lighten_bezier_line(guchar *buffer, gint width, gint bytes,
 	  last_index = index;
 	}
     }
-  return;
-}  /* lighten_bezier_line */
-
-/*****/
+}
 
 static void
-draw_bezier_vertical_border(guchar *buffer, gint width, gint height,
-			    gint bytes, gint x_offset, gint xtiles,
-			    gint ytiles, gint blend_lines,
-			    gdouble blend_amount, gint steps)
+draw_bezier_vertical_border (guchar *buffer,
+			     gint    width,
+			     gint    height,
+			     gint    bytes,
+			     gint    x_offset,
+			     gint    xtiles,
+			     gint    ytiles,
+			     gint    blend_lines,
+			     gdouble blend_amount,
+			     gint    steps)
 {
   gint i, j;
   gint tile_width = width / xtiles;
@@ -2082,17 +2108,19 @@ draw_bezier_vertical_border(guchar *buffer, gint width, gint height,
     }  /* for */
   g_free(cachex);
   g_free(cachey);
-  
-  return;
-}  /* draw_bezier_vertical_border */
-
-/*****/
+}
 
 static void
-draw_bezier_horizontal_border(guchar *buffer, gint width, gint height,
-			      gint bytes, gint y_offset, gint xtiles,
-			      gint ytiles, gint blend_lines,
-			      gdouble blend_amount, gint steps)
+draw_bezier_horizontal_border (guchar *buffer,
+			       gint    width,
+			       gint    height,
+			       gint    bytes,
+			       gint    y_offset,
+			       gint    xtiles,
+			       gint    ytiles,
+			       gint    blend_lines,
+			       gdouble blend_amount,
+			       gint    steps)
 {
   gint i, j;
   gint tile_width = width / xtiles;
@@ -2216,14 +2244,11 @@ draw_bezier_horizontal_border(guchar *buffer, gint width, gint height,
     }  /* for */
   g_free(cachex);
   g_free(cachey);
-  
-  return;
-}  /* draw_bezier_horizontal_border */
-
-/*****/
+}
 
 static void
-check_config(gint width, gint height)
+check_config (gint width,
+	      gint height)
 {
   gint tile_width, tile_height;
   gint tile_width_limit, tile_height_limit;
@@ -2253,8 +2278,7 @@ check_config(gint width, gint height)
     {
       config.blend_lines = MIN(tile_width_limit, tile_height_limit);
     }
-  return;
-}  /*check_config */
+}
   
 /********************************************************
   GUI
@@ -2264,19 +2288,14 @@ static void
 dialog_box (void)
 {
   GtkWidget *dlg;
-  GtkWidget *rbutton;
-  GtkWidget *cbutton;
-  GSList *list;
-  GtkWidget *hbox;
+  GtkWidget *main_vbox;
   GtkWidget *frame;
-  GtkWidget *label;
-  GtkWidget *entry;
+  GtkWidget *rbutton1;
+  GtkWidget *rbutton2;
+  GtkWidget *cbutton;
+  GtkWidget *hbox;
   GtkWidget *table;
-  GtkWidget *scale;
-  GtkObject *adjustment;
-
-  gchar buffer[12];
-
+  GtkObject *adj;
   gchar **argv;
   gint    argc;
 
@@ -2313,210 +2332,102 @@ dialog_box (void)
       gimp_help_disable_tooltips ();
     }
 
-  /* paramters frame */
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
+
   frame = gtk_frame_new (_("Number of Tiles"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   /* xtiles */
-  label = gtk_label_new (_("Horizontal:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
-  gtk_widget_show (label);
-
-  adjustment = gtk_adjustment_new (config.x, MIN_XTILES, MAX_XTILES,
-				   1.0, 1.0, 0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (adjustment_callback),
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Horizontal:"), SCALE_WIDTH, 0,
+			      config.x, MIN_XTILES, MAX_XTILES, 1.0, 4.0, 0,
+			      _("Number of pieces going across"), NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &config.x);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale, _("Number of pieces going across"), NULL);
-  
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), adjustment);
-  gtk_object_set_user_data (GTK_OBJECT (adjustment), entry);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%i", config.x);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (entry_callback),
-		      (gpointer) &config.x);
-  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_widget_show (entry);
-  gimp_help_set_help_data (entry, _("Number of pieces going across"), NULL);
 
   /* ytiles */
-  label = gtk_label_new (_("Vertical:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
-  gtk_widget_show (label);
-
-  adjustment = gtk_adjustment_new (config.y, MIN_YTILES, MAX_YTILES,
-				   1.0, 1.0, 0 );
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (adjustment_callback),
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Vertical:"), SCALE_WIDTH, 0,
+			      config.y, MIN_YTILES, MAX_YTILES, 1.0, 4.0, 0,
+			      _("Number of pieces going down"), NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &config.y);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale, _("Number of pieces going down"), NULL);
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), adjustment);
-  gtk_object_set_user_data (GTK_OBJECT (adjustment), entry);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%i", config.y);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (entry_callback),
-		      (gpointer) &config.y);
-  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_widget_show (entry);
-  gimp_help_set_help_data (entry, _("Number of pieces going down"), NULL);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
 
-  /* frame for bevel blending */
-
   frame = gtk_frame_new (_("Bevel Edges"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 10);
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   /* number of blending lines */
-  label = gtk_label_new (_("Bevel width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
-  gtk_widget_show (label);
-
-  adjustment = gtk_adjustment_new (config.blend_lines, MIN_BLEND_LINES,
-				   MAX_BLEND_LINES, 1.0, 1.0, 0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (adjustment_callback),
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Bevel Width:"), SCALE_WIDTH, 0,
+			      config.blend_lines,
+			      MIN_BLEND_LINES, MAX_BLEND_LINES, 1.0, 2.0, 0,
+			      _("Degree of slope of each piece's edge"), NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &config.blend_lines);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale, _("Degree of slope of each piece's edge"),
-			   NULL);
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), adjustment);
-  gtk_object_set_user_data (GTK_OBJECT (adjustment), entry);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%i", config.blend_lines);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (entry_callback),
-		      (gpointer) &config.blend_lines);
-  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_widget_show (entry);
-  gimp_help_set_help_data (entry, _("Degree of slope of each piece's edge"),
-			   NULL);
 
   /* blending amount */
-  label = gtk_label_new (_("Highlight:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
-  gtk_widget_show (label);
-
-  adjustment = gtk_adjustment_new (config.blend_amount, MIN_BLEND_AMOUNT,
-				   MAX_BLEND_AMOUNT, 1.0, 0.05, 0.0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (adjustment_double_callback),
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Highlight:"), SCALE_WIDTH, 0,
+			      config.blend_amount,
+			      MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 0.05, 0.1, 2,
+			      _("The amount of highlighting on the edges "
+				"of each piece"), NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &config.blend_amount);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale, _("The amount of highlighting on the edges "
-				    "of each piece"), NULL);
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), adjustment);
-  gtk_object_set_user_data (GTK_OBJECT (adjustment), entry);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%0.2f", config.blend_amount);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (entry_double_callback),
-		      (gpointer) &config.blend_amount);
-  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_widget_show (entry);
-  gimp_help_set_help_data (entry, _("The amount of highlighting on the edges "
-				    "of each piece"), NULL);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
   
   /* frame for primitive radio buttons */
 
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
 
-  frame = gtk_frame_new (_("Jigsaw Style"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
+  frame = gimp_radio_group_new2 (TRUE, _("Jigsaw Style"),
+				 gimp_radio_button_update,
+				 &config.style, (gpointer) config.style,
+
+				 _("Square"), (gpointer) BEZIER_1, &rbutton1,
+				 _("Curved"), (gpointer) BEZIER_2, &rbutton2,
+
+				 NULL);
+
+  gimp_help_set_help_data (rbutton1, _("Each piece has straight sides"), NULL);
+  gimp_help_set_help_data (rbutton2, _("Each piece has curved sides"), NULL);
+
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-
-  table = gtk_table_new (2, 1, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 5);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-
-  rbutton = gtk_radio_button_new_with_label (NULL, _("Square"));
-  list = gtk_radio_button_group ((GtkRadioButton *) rbutton);
-  gtk_toggle_button_set_active ((GtkToggleButton *) rbutton,
-				config.style == BEZIER_1 ? TRUE : FALSE);
-  gtk_signal_connect (GTK_OBJECT (rbutton), "toggled",
-		      GTK_SIGNAL_FUNC (radio_button_primitive_callback),
-		      (gpointer) BEZIER_1);
-  gtk_table_attach (GTK_TABLE (table), rbutton, 0, 1, 0, 1, GTK_FILL, 0, 10, 0);
-  gtk_widget_show (rbutton);
-  gimp_help_set_help_data (rbutton, _("Each piece has straight sides"), NULL);
-
-  rbutton = gtk_radio_button_new_with_label (list, _("Curved"));
-  list = gtk_radio_button_group ((GtkRadioButton *) rbutton);
-  gtk_toggle_button_set_active ((GtkToggleButton *) rbutton,
-				config.style == BEZIER_2 ? TRUE : FALSE);
-  gtk_signal_connect (GTK_OBJECT (rbutton), "toggled",
-		      GTK_SIGNAL_FUNC (radio_button_primitive_callback),
-		      (gpointer) BEZIER_2);
-  gtk_table_attach (GTK_TABLE (table), rbutton, 1, 2, 0, 1, GTK_FILL, 0, 10, 0);
-  gtk_widget_show (rbutton);
-  gimp_help_set_help_data (rbutton, _("Each piece has curved sides"), NULL);
-
-  gtk_widget_show (table);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 3);
+  table = gtk_table_new (1, 2, FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), table, TRUE, TRUE, 0);
 
   cbutton = gtk_check_button_new_with_label (_("Disable Tooltips"));
-  gtk_toggle_button_set_active ((GtkToggleButton *) cbutton,
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cbutton),
 				globals.tooltips ? FALSE : TRUE);
   gtk_signal_connect (GTK_OBJECT (cbutton), "toggled",
 		      GTK_SIGNAL_FUNC (check_button_callback),
@@ -2530,6 +2441,7 @@ dialog_box (void)
   gtk_widget_show (dlg);
 
   gtk_main ();
+  gimp_help_free ();
   gdk_flush ();
 
   return;
@@ -2549,51 +2461,6 @@ run_callback (GtkWidget *widget,
 }
 
 static void
-entry_callback (GtkWidget *widget,
-		gpointer   data)
-{
-  GtkAdjustment *adjustment;
-  gint new_value;
-
-  new_value = atoi(gtk_entry_get_text(GTK_ENTRY(widget)));
-  
-  if (*(gint *)data != new_value)
-    {
-      *(gint *)data = new_value;
-      adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
-      if ((new_value >= adjustment->lower)
-	  && (new_value <= adjustment->upper))
-	{
-	  adjustment->value = new_value;
-	  gtk_signal_handler_block_by_data(GTK_OBJECT(adjustment), data);
-	  gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
-	  gtk_signal_handler_unblock_by_data(GTK_OBJECT(adjustment), data);
-	}
-    }
-}
-
-static void
-radio_button_primitive_callback (GtkWidget *widget,
-				 gpointer   data)
-{
-  if (GTK_TOGGLE_BUTTON (widget)->active) /* button just got checked */
-    {
-      if (data == (gpointer) BEZIER_1)
-	{
-	  config.style = BEZIER_1;
-	}
-      else if (data == (gpointer) BEZIER_2)
-	{
-	  config.style = BEZIER_2;
-	}
-      else
-	{
-	  printf("radio_button_callback: bad data\n");
-	}
-    }
-}
-
-static void
 check_button_callback (GtkWidget *widget,
 		       gpointer   data)
 {
@@ -2606,67 +2473,5 @@ check_button_callback (GtkWidget *widget,
     {
       gimp_help_enable_tooltips ();
       globals.tooltips = 1;
-    }
-}
-
-static void
-adjustment_callback (GtkAdjustment *adjustment,
-		     gpointer       data)
-{
-  GtkWidget *entry;
-  gchar buffer[50];
-
-  if (*(gint *)data != adjustment->value)
-    {
-      *(gint *)data = adjustment->value;
-      entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-      g_snprintf (buffer, sizeof (buffer), "%d", *(gint *)data);
-
-      gtk_signal_handler_block_by_data(GTK_OBJECT(entry), data);
-      gtk_entry_set_text(GTK_ENTRY(entry), buffer);
-      gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), data);
-    }
-}
-
-static void
-adjustment_double_callback (GtkAdjustment *adjustment,
-			    gpointer       data)
-{
-  GtkWidget *entry;
-  gchar buffer[50];
-
-  if (*(gdouble *)data != adjustment->value)
-    {
-      *(gdouble *)data = adjustment->value;
-      entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-      g_snprintf (buffer, sizeof (buffer), "%0.2f", *(gdouble *)data);
-
-      gtk_signal_handler_block_by_data(GTK_OBJECT(entry), data);
-      gtk_entry_set_text(GTK_ENTRY(entry), buffer);
-      gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), data);
-    }
-}
-
-static void
-entry_double_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  GtkAdjustment *adjustment;
-  gdouble new_value;
-
-  new_value = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
-
-  if (*(gdouble *)data != new_value)
-    {
-      *(gdouble *)data = new_value;
-      adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
-      if ((new_value >= adjustment->lower)
-	  && (new_value <= adjustment->upper))
-	{
-	  adjustment->value = new_value;
-	  gtk_signal_handler_block_by_data(GTK_OBJECT(adjustment), data);
-	  gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
-	  gtk_signal_handler_unblock_by_data(GTK_OBJECT(adjustment), data);
-	}
     }
 }

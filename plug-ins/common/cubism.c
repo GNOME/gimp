@@ -114,10 +114,6 @@ static void      polygon_reset        (Polygon *  poly);
 static gint      cubism_dialog        (void);
 static void      cubism_ok_callback   (GtkWidget     *widget,
 				       gpointer       data);
-static void      cubism_toggle_update (GtkWidget     *widget,
-				       gpointer       data);
-static void      cubism_scale_update  (GtkAdjustment *adjustment,
-				       double        *scale_val);
 
 /*
  *  Local variables
@@ -152,7 +148,7 @@ GPlugInInfo PLUG_IN_INFO =
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -302,9 +298,7 @@ static gint
 cubism_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *label;
   GtkWidget *toggle;
-  GtkWidget *scale;
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *scale_data;
@@ -340,60 +334,39 @@ cubism_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new (3, 2, FALSE);
+  table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 4);
   gtk_container_border_width (GTK_CONTAINER (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   toggle = gtk_check_button_new_with_label (_("Use Background Color"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1,
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (cubism_toggle_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &cvals.bg_color);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				(cvals.bg_color == BG));
   gtk_widget_show (toggle);
 
-  label = gtk_label_new (_("Tile Size:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (cvals.tile_size, 0.0, 100.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, -1);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2,
-		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 1);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+				     _("Tile Size:"), SCALE_WIDTH, 0,
+				     cvals.tile_size, 0.0, 100.0, 1.0, 10.0, 1,
+				     NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (cubism_scale_update),
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &cvals.tile_size);
-  gtk_widget_show (scale);
 
-  label = gtk_label_new (_("Tile Saturation:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (cvals.tile_saturation, 0.0, 10.0,
-				   0.1, 0.1, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, -1);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 2, 3,
-		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 1);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  scale_data =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			  _("Tile Saturation:"), SCALE_WIDTH, 0,
+			  cvals.tile_saturation, 0.0, 10.0, 0.1, 1, 1,
+			  NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (cubism_scale_update),
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &cvals.tile_saturation);
-  gtk_widget_show (scale);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -404,6 +377,15 @@ cubism_dialog (void)
   gdk_flush ();
 
   return cint.run;
+}
+
+static void
+cubism_ok_callback (GtkWidget *widget,
+		    gpointer   data)
+{
+  cint.run = TRUE;
+
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static void
@@ -859,36 +841,4 @@ static void
 polygon_reset (Polygon *poly)
 {
   poly->npts = 0;
-}
-
-/*  Cubism interface functions  */
-
-static void
-cubism_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  cint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-cubism_toggle_update (GtkWidget *widget,
-		      gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-cubism_scale_update (GtkAdjustment *adjustment,
-		     double        *scale_val)
-{
-  *scale_val = adjustment->value;
 }

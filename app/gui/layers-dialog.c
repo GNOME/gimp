@@ -3596,7 +3596,6 @@ static void
 layers_dialog_add_mask_query (Layer *layer)
 {
   AddMaskOptions *options;
-  GtkWidget *vbox;
   GtkWidget *frame;
 
   /*  The new options structure  */
@@ -3619,11 +3618,6 @@ layers_dialog_add_mask_query (Layer *layer)
 
 		     NULL);
 
-  /*  The main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
-		     vbox);
 
   /*  The radio frame and box  */
   frame = gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
@@ -3639,7 +3633,11 @@ layers_dialog_add_mask_query (Layer *layer)
 				 (gpointer) ADD_ALPHA_MASK, NULL,
 				 NULL);
 
-  gtk_widget_show (vbox);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
+		     frame);
+  gtk_widget_show (frame);
+
   gtk_widget_show (options->query_box);
 }
 

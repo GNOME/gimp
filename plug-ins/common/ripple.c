@@ -34,97 +34,88 @@
 #include "libgimp/stdplugins-intl.h"
 
 /* Some useful macros */
-#define SCALE_WIDTH 200
-#define TILE_CACHE_SIZE 16
-#define ENTRY_WIDTH 35
+#define SCALE_WIDTH     200
+#define TILE_CACHE_SIZE  16
 
 #define HORIZONTAL 0
-#define VERTICAL 1
+#define VERTICAL   1
 
 #define SMEAR 0
-#define WRAP 1
+#define WRAP  1
 #define BLACK 2
 
 #define SAWTOOTH 0
-#define SINE 1
+#define SINE     1
 
-typedef struct {
-    gint period;
-    gint amplitude;
-    gint orientation;
-    gint edges;
-    gint waveform;
-    gint antialias;
-    gint tile;
+typedef struct
+{
+  gint period;
+  gint amplitude;
+  gint orientation;
+  gint edges;
+  gint waveform;
+  gint antialias;
+  gint tile;
 } RippleValues;
 
-typedef struct {
+typedef struct
+{
   gint run;
 } RippleInterface;
 
 
 /* Declare local functions.
  */
-static void      query  (void);
-static void      run    (gchar    *name,
-			 gint      nparams,
-			 GParam   *param,
-			 gint     *nreturn_vals,
-			 GParam  **return_vals);
-static void      ripple  (GDrawable * drawable);
+static void    query  (void);
+static void    run    (gchar    *name,
+		       gint      nparams,
+		       GParam   *param,
+		       gint     *nreturn_vals,
+		       GParam  **return_vals);
+static void    ripple  (GDrawable * drawable);
 
-static gint      ripple_dialog (void);
-static GTile *   ripple_pixel  (GDrawable * drawable,
-			       GTile *     tile,
-			       gint        x1,
-			       gint        y1,
-			       gint        x2,
-			       gint        y2,
-			       gint        x,
-			       gint        y,
-			       gint *      row,
-			       gint *      col,
-			       guchar *    pixel);
+static gint    ripple_dialog      (void);
+static void    ripple_ok_callback (GtkWidget *widget,
+				   gpointer   data);
 
-static void      ripple_ok_callback     (GtkWidget *widget,
-					gpointer   data);
-
-static void      ripple_toggle_update    (GtkWidget *widget,
-					    gpointer   data);
-
-static void      ripple_ientry_callback   (GtkWidget     *widget,
-					     gpointer       data);
-
-static void      ripple_iscale_callback   (GtkAdjustment *adjustment,
-					     gpointer       data);
-
-static gdouble displace_amount (gint location);
-
-static guchar    averagetwo (gdouble location, guchar * v);
-
-static guchar    averagefour  (gdouble location,  guchar *v);
+static GTile * ripple_pixel (GDrawable *drawable,
+			     GTile     *tile,
+			     gint        x1,
+			     gint        y1,
+			     gint        x2,
+			     gint        y2,
+			     gint        x,
+			     gint        y,
+			     gint       *row,
+			     gint       *col,
+			     guchar     *pixel);
 
 
+static gdouble displace_amount (gint     location);
+static guchar  averagetwo      (gdouble  location,
+				guchar  *v);
+static guchar  averagefour     (gdouble  location,
+				guchar  *v);
 
 /***** Local vars *****/
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static RippleValues rvals =
 {
-  20,   /* period  */
-  5,    /* amplitude */
+  20,         /* period      */
+  5,          /* amplitude   */
   HORIZONTAL, /* orientation */
-  WRAP, /* edges */
-  SINE, /* waveform */
-  TRUE, /* antialias */
-  TRUE  /* tile */
+  WRAP,       /* edges       */
+  SINE,       /* waveform    */
+  TRUE,       /* antialias   */
+  TRUE        /* tile        */
 };
 
 static RippleInterface rpint =
@@ -137,7 +128,7 @@ static RippleInterface rpint =
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -267,8 +258,6 @@ run (gchar  *name,
 
   gimp_drawable_detach (drawable);
 }
-
-/*****/
 
 static void
 ripple (GDrawable *drawable)
@@ -521,9 +510,9 @@ ripple (GDrawable *drawable)
   }  /* for  */
 
   if (tile)
-      gimp_tile_unref (tile, FALSE);
+    gimp_tile_unref (tile, FALSE);
 
-      /*  update the region  */
+  /*  update the region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
@@ -534,33 +523,15 @@ static gint
 ripple_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *label;
   GtkWidget *toggle;
-  GtkWidget *scale;
-  GtkWidget *hbox;
-  GtkWidget *entry;
   GtkWidget *toggle_vbox;
   GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *scale_data;
-  GSList *orientation_group = NULL;
-  GSList *edges_group = NULL;
-  GSList *waveform_group = NULL;
   guchar  *color_cube;
   gchar  **argv;
-  gchar   buffer[32];
-  gint    argc;
-
-  gint do_horizontal = (rvals.orientation == HORIZONTAL);
-  gint do_vertical   = (rvals.orientation == VERTICAL);
-
-  gint do_smear = (rvals.edges == SMEAR);
-  gint do_wrap  = (rvals.edges == WRAP);
-  gint do_black = (rvals.edges == BLACK);
-
-  gint do_sawtooth = (rvals.waveform == SAWTOOTH);
-  gint do_sine     = (rvals.waveform == SINE);
+  gint     argc;
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -606,21 +577,20 @@ ripple_dialog (void)
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
 
-  /* Options section */
-  /*  the vertical box and its toggle buttons  */
+  /*  Options section  */
   frame = gtk_frame_new ( _("Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-  toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
+  toggle_vbox = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
   toggle = gtk_check_button_new_with_label (_("Antialiasing"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) ripple_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &rvals.antialias);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), rvals.antialias);
   gtk_widget_show (toggle);
@@ -628,7 +598,7 @@ ripple_dialog (void)
   toggle = gtk_check_button_new_with_label ( _("Retain Tilability"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) ripple_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &rvals.tile);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (rvals.tile));
   gtk_widget_show (toggle);
@@ -637,223 +607,88 @@ ripple_dialog (void)
   gtk_widget_show (frame);
 
   /*  Orientation toggle box  */
-  frame = gtk_frame_new ( _("Orientation"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Orientation"),
+			   gimp_radio_button_update,
+			   &rvals.orientation, (gpointer) rvals.orientation,
+
+			   _("Horizontal"), (gpointer) HORIZONTAL, NULL,
+			   _("Vertical"),   (gpointer) VERTICAL, NULL,
+
+			   NULL);
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-
-  toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-
-  toggle = gtk_radio_button_new_with_label (orientation_group, _("Horizontal"));
-  orientation_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) ripple_toggle_update,
-		      &do_horizontal);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_horizontal);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (orientation_group, _("Vertical"));
-  orientation_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) ripple_toggle_update,
-		      &do_vertical);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_vertical);
-  gtk_widget_show (toggle);
-
-  gtk_widget_show (toggle_vbox);
   gtk_widget_show (frame);
 
   /*  Edges toggle box  */
-  frame = gtk_frame_new ( _("Edges"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  frame = gimp_radio_group_new2 (TRUE, _("Edges"),
+				 gimp_radio_button_update,
+				 &rvals.edges, (gpointer) rvals.edges,
+
+				 _("Wrap"),  (gpointer) WRAP, NULL,
+				 _("Smear"), (gpointer) SMEAR, NULL,
+				 _("Black"), (gpointer) BLACK, NULL,
+
+				 NULL);
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 1, 2,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
-
-  toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-
-  toggle = gtk_radio_button_new_with_label (edges_group, _("Wrap"));
-  edges_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) ripple_toggle_update,
-		      &do_wrap);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_wrap);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (edges_group, _("Smear"));
-  edges_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) ripple_toggle_update,
-		      &do_smear);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_smear);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (edges_group, _("Black"));
-  edges_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) ripple_toggle_update,
-		      &do_black);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_black);
-  gtk_widget_show (toggle);
-
-  gtk_widget_show (toggle_vbox);
   gtk_widget_show (frame);
 
   /*  Wave toggle box  */
-  frame = gtk_frame_new ( _("Wave Type"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  frame = gimp_radio_group_new2 (TRUE, _("Wave Type"),
+				 gimp_radio_button_update,
+				 &rvals.waveform, (gpointer) rvals.waveform,
+
+				 _("Sawtooth"), (gpointer) SAWTOOTH, NULL,
+				 _("Sine"),     (gpointer) SINE, NULL,
+
+				 NULL);
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 1, 2,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
-
-  toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-
-  toggle = gtk_radio_button_new_with_label (waveform_group, _("Sawtooth"));
-  waveform_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) ripple_toggle_update,
-		      &do_sawtooth);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_sawtooth);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (waveform_group, _("Sine"));
-  waveform_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) ripple_toggle_update,
-		      &do_sine);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_sine);
-  gtk_widget_show (toggle);
-
-  gtk_widget_show (toggle_vbox);
   gtk_widget_show (frame);
+
   gtk_widget_show (table);
 
-  /*  parameter settings  */
+  /*  Parameter Settings  */
   frame = gtk_frame_new ( _("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  table = gtk_table_new (2, 2, FALSE);
+  table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  /* Period */
-  label = gtk_label_new (_("Period:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (hbox);
-
-  scale_data = gtk_adjustment_new (rvals.period, 0, 200, 1, 1, 0.0);
+  /*  Period  */
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+				     _("Period:"), SCALE_WIDTH, 0,
+				     rvals.period, 0, 200, 1, 10, 0,
+				     NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) ripple_iscale_callback,
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &rvals.period);
 
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_widget_show (scale);
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), scale_data);
-  gtk_object_set_user_data (scale_data, entry);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, TRUE, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%d", rvals.period);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) ripple_ientry_callback,
-		      &rvals.period);
-  gtk_widget_show (entry);
-
-  /* Amplitude */
-  label = gtk_label_new (_("Amplitude:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (hbox);
-
-  scale_data = gtk_adjustment_new (rvals.amplitude, 0, 200, 1, 1, 0.0);
+  /*  Amplitude  */
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+				     _("Amplitude:"), SCALE_WIDTH, 0,
+				     rvals.amplitude, 0, 200, 1, 10, 0,
+				     NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) ripple_iscale_callback,
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &rvals.amplitude);
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_widget_show (scale);
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), scale_data);
-  gtk_object_set_user_data (scale_data, entry);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, TRUE, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%d", rvals.amplitude);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) ripple_ientry_callback,
-		      &rvals.amplitude);
-  gtk_widget_show (entry);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
+
   gtk_widget_show (main_vbox);
   gtk_widget_show (dlg);
 
   gtk_main ();
   gdk_flush ();
 
- /*  determine orientation  */
-  if (do_horizontal)
-    rvals.orientation = HORIZONTAL;
-  else
-    rvals.orientation = VERTICAL;
-
-  /*  determine edges  */
-  if (do_smear)
-    rvals.edges = SMEAR;
-  else if (do_wrap)
-    rvals.edges = WRAP;
-  else if (do_black)
-    rvals.edges = BLACK;
-
-  /*  determine wave form  */
-  if (do_sawtooth)
-    rvals.waveform = SAWTOOTH;
-  else if (do_sine)
-    rvals.waveform = SINE;
-
   return rpint.run;
 }
-
-/*****/
 
 static GTile *
 ripple_pixel (GDrawable * drawable,
@@ -905,63 +740,6 @@ ripple_ok_callback (GtkWidget *widget,
   rpint.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-ripple_toggle_update (GtkWidget *widget,
-		      gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-ripple_ientry_callback (GtkWidget *widget,
-			gpointer   data)
-{
-  GtkAdjustment *adjustment;
-  int new_val;
-  int *val;
-
-  val = data;
-  new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (*val != new_val)
-    {
-      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
-
-      if ((new_val >= adjustment->lower) &&
-	  (new_val <= adjustment->upper))
-	{
-	  *val = new_val;
-	  adjustment->value = new_val;
-	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-	}
-    }
-}
-
-static void
-ripple_iscale_callback (GtkAdjustment *adjustment,
-			gpointer       data)
-{
-  GtkWidget *entry;
-  gchar buffer[32];
-  int *val;
-
-  val = data;
-  if (*val != (int) adjustment->value)
-    {
-      *val = adjustment->value;
-      entry = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-      sprintf (buffer, "%d", (int) adjustment->value);
-      gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-    }
 }
 
 static guchar

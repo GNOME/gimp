@@ -1,4 +1,32 @@
+2000-01-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/layers_dialog.c: oops, the "Add Layer Mask" dialog contained
+	nothing after my last change.
+
+	* libgimp/gimpwidgets.c: gimp_table_attach_aligned() sets the
+	yalign of the widget to 0.5 instead of 1.0.
+
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/blur.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/decompose.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/ripple.c
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/shift.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/spread.c: even more spinbuttons and other ui
+	updates.
+
 2000-01-16 Garry R. Osgood <gosgood@idt.net>
+
 	* app/global_edit.c
 	global_edit.c  Uncovered buglet spawned by #5045 fix.
 	edit_paste() now properly supplies a GimpImageType
@@ -233,7 +261,7 @@ Thu Jan 13 20:41:37 GMT 2000  Adam D. Moss <adam@gimp.org>
 	gimpui.[ch] (see below).
 
 	* libgimp/Makefile.am
-	* libgimp/gimpwidgets.[ch]; new files. Functions moved from
+	* libgimp/gimpwidgets.[ch]: new files. Functions moved from
 	app/gimpui.[ch]. Added a constructor for the label + hscale +
 	entry combination used in many plugins (now hscale + spinbutton).
 

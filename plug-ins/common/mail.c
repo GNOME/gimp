@@ -18,78 +18,77 @@
  */
 
 /*
-   *   GUMP - Gimp Useless Mail Plugin (or Gump Useless Mail Plugin if you prefer)
-   *          version about .85 I would say... give or take a few decimal points
-   *
-   *
-   *   by Adrian Likins <adrian@gimp.org>
-   *      MIME encapsulation by Reagan Blundell <reagan@emails.net>
-   *
-   *
-   *
-   *   Based heavily on gz.c by Daniel Risacher
-   *
-   *     Lets you choose to send a image to the mail from the file save as dialog.
-   *      images are piped to uuencode and then to mail...
-   *
-   *
-   *   This works fine for .99.10. I havent actually tried it in combination with
-   *   the gz plugin, but it works with all other file types. I will eventually get
-   *   around to making sure it works with gz.
-   *
-   *  To use: 1) image->File->mail image
-   *          2) when the mail dialog popups up, fill it out. Only to: and filename are required
-   *             note: the filename needs to a type that the image can be saved as. otherwise
-   *                   you will just send an empty message.
-   *          3) click ok and it should be on its way
-   *
-   
-   *
-   * NOTE: You probabaly need sendmail installed. If your sendmail is in an odd spot
-   *       you can change the #define below. If you use qmail or other MTA's, and this
-   *       works after changing the MAILER, let me know how well or what changes were
-   *       needed.
-   *
-   * NOTE: Uuencode is needed. If it is in the path, it should work fine as is. Other-
-   *       wise just change the UUENCODE.
-   *
-   *
-   * TODO: 1) the aforementioned abilty to specify the 
-   *           uuencode filename                         *done*
-   *       2) someway to do this without tmp files
-   *              * wont happen anytime soon*
-   *       3) MIME? *done*
-   *       4) a pointlessly snazzier dialog
-   *       5) make sure it works with gz     
-   *               * works for .xcfgz but not .xcf.gz *
-   *       6) add an option to choose if mail get 
-   *          uuencode or not (or MIME'ed for that matter)
-   *       7) realtime preview
-   *       8) better entry for comments    *done*
-   *       9) list of frequently used addreses     
-   *      10) openGL compliance
-   *      11) better handling of filesave errors
-   *     
-   *
-   *  Version history
-   *       .5  - 6/30/97 - inital relese
-   *       .51 - 7/3/97  - fixed a few spelling errors and the like
-   *       .65 - 7/4/97  - a fairly significant revision. changed it from a file
-   *                       plugin to an image plugin.
-   *                     - Changed some strcats into strcpy to be a bit more robust.
-   *                     - added the abilty to specify the filename you want it sent as
-   *                     - no more annoying hassles with the file saves as dialog
-   *                     - plugin now registers itself as <image>/File/Mail image
-   *       .7  - 9/12/97 - (RB) added support for MIME encapsulation
-   *       .71 - 9/17/97 - (RB) included Base64 encoding functions from mpack
-   *                       instead of using external program.
-   *                     - General cleanup of the MIME handling code.
-   *       .80 - 6/23/98 - Added a text box so you can compose real messages.
-   *       .85 - 3/19/99 - Added a "From:" field. Made it check gimprc for a
-   *                       "gump-from" token and use it. Also made "run with last 
-   *                        values" work.
-   * As always: The utility of this plugin is left as an exercise for the reader
-   *
+ *   GUMP - Gimp Useless Mail Plugin (or Gump Useless Mail Plugin if you prefer)
+ *          version about .85 I would say... give or take a few decimal points
+ *
+ *
+ *   by Adrian Likins <adrian@gimp.org>
+ *      MIME encapsulation by Reagan Blundell <reagan@emails.net>
+ *
+ *
+ *
+ *   Based heavily on gz.c by Daniel Risacher
+ *
+ *     Lets you choose to send a image to the mail from the file save as dialog.
+ *      images are piped to uuencode and then to mail...
+ *
+ *
+ *   This works fine for .99.10. I havent actually tried it in combination with
+ *   the gz plugin, but it works with all other file types. I will eventually get
+ *   around to making sure it works with gz.
+ *
+ *  To use: 1) image->File->mail image
+ *          2) when the mail dialog popups up, fill it out. Only to: and filename are required
+ *             note: the filename needs to a type that the image can be saved as. otherwise
+ *                   you will just send an empty message.
+ *          3) click ok and it should be on its way
+ *
+ *
+ * NOTE: You probabaly need sendmail installed. If your sendmail is in an odd spot
+ *       you can change the #define below. If you use qmail or other MTA's, and this
+ *       works after changing the MAILER, let me know how well or what changes were
+ *       needed.
+ *
+ * NOTE: Uuencode is needed. If it is in the path, it should work fine as is. Other-
+ *       wise just change the UUENCODE.
+ *
+ *
+ * TODO: 1) the aforementioned abilty to specify the 
+ *           uuencode filename                         *done*
+ *       2) someway to do this without tmp files
+ *              * wont happen anytime soon*
+ *       3) MIME? *done*
+ *       4) a pointlessly snazzier dialog
+ *       5) make sure it works with gz     
+ *               * works for .xcfgz but not .xcf.gz *
+ *       6) add an option to choose if mail get 
+ *          uuencode or not (or MIME'ed for that matter)
+ *       7) realtime preview
+ *       8) better entry for comments    *done*
+ *       9) list of frequently used addreses     
+ *      10) openGL compliance
+ *      11) better handling of filesave errors
+ *     
+ *
+ *  Version history
+ *       .5  - 6/30/97 - inital relese
+ *       .51 - 7/3/97  - fixed a few spelling errors and the like
+ *       .65 - 7/4/97  - a fairly significant revision. changed it from a file
+ *                       plugin to an image plugin.
+ *                     - Changed some strcats into strcpy to be a bit more robust.
+ *                     - added the abilty to specify the filename you want it sent as
+ *                     - no more annoying hassles with the file saves as dialog
+ *                     - plugin now registers itself as <image>/File/Mail image
+ *       .7  - 9/12/97 - (RB) added support for MIME encapsulation
+ *       .71 - 9/17/97 - (RB) included Base64 encoding functions from mpack
+ *                       instead of using external program.
+ *                     - General cleanup of the MIME handling code.
+ *       .80 - 6/23/98 - Added a text box so you can compose real messages.
+ *       .85 - 3/19/99 - Added a "From:" field. Made it check gimprc for a
+ *                       "gump-from" token and use it. Also made "run with last 
+ *                        values" work.
+ * As always: The utility of this plugin is left as an exercise for the reader
+ *
  */
 #ifndef MAILER
 #define MAILER "/usr/lib/sendmail"
@@ -125,55 +124,56 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static void query (void);
-static void run (char *name,
-		 int nparams,
-		 GParam * param,
-		 int *nreturn_vals,
-		 GParam ** return_vals);
+static void   query (void);
+static void   run   (gchar   *name,
+		     gint     nparams,
+		     GParam  *param,
+		     gint    *nreturn_vals,
+		     GParam **return_vals);
 
+static gint   save_image (gchar  *filename,
+			  gint32  image_ID,
+			  gint32  drawable_ID,
+			  gint32  run_mode);
 
-static gint save_image (char *filename,
-			gint32 image_ID,
-			gint32 drawable_ID,
-			gint32 run_mode);
+static gint   save_dialog        (void);
+static void   ok_callback        (GtkWidget *widget, gpointer data);
+static void   encap_callback     (GtkWidget *widget, gpointer data);
+static void   receipt_callback   (GtkWidget *widget, gpointer data);
+static void   from_callback      (GtkWidget *widget, gpointer data);
+static void   subject_callback   (GtkWidget *widget, gpointer data);
+static void   comment_callback   (GtkWidget *widget, gpointer data);
+static void   filename_callback  (GtkWidget *widget, gpointer data);
+static void   mesg_body_callback (GtkWidget *widget, gpointer data);
 
-static gint save_dialog ();
-static void ok_callback (GtkWidget * widget, gpointer data);
-static void encap_callback (GtkWidget * widget, gpointer data);
-static void receipt_callback (GtkWidget * widget, gpointer data);
-static void from_callback (GtkWidget * widget, gpointer data);
-static void subject_callback (GtkWidget * widget, gpointer data);
-static void comment_callback (GtkWidget * widget, gpointer data);
-static void filename_callback (GtkWidget * widget, gpointer data);
-static void mesg_body_callback (GtkWidget * widget, gpointer data);
-static int valid_file (char *filename);
-static void create_headers (FILE * mailpipe);
-static char *find_extension (char *filename);
-static int to64(FILE *infile, FILE *outfile);
-static void output64chunk(int c1, int c2, int c3, int pads, FILE *outfile);
+static gint   valid_file     (gchar *filename);
+static void   create_headers (FILE * mailpipe);
+static char * find_extension (gchar *filename);
+static gint   to64           (FILE *infile, FILE *outfile);
+static void   output64chunk  (gint c1, gint c2, gint c3, gint pads,
+			      FILE *outfile);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,				/* init_proc */
-  NULL,				/* quit_proc */
-  query,			/* query_proc */
-  run,				/* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
-
 typedef struct
-  {
-    char receipt[256];
-    char subject[256];
-    char comment[256];
-    char from[256];
-    char filename[256];
-    int  encapsulation;
-  }
+{
+  gchar receipt[256];
+  gchar subject[256];
+  gchar comment[256];
+  gchar from[256];
+  gchar filename[256];
+  gint  encapsulation;
+}
 m_info;
 
-static m_info mail_info = {
+static m_info mail_info =
+{
   /* I would a assume there is a better way to do this, but this works for now */
   "\0",
   "\0",
@@ -185,25 +185,24 @@ static m_info mail_info = {
 };
 
 static gchar * mesg_body = "\0";
-static int run_flag = 0;
+static gint    run_flag  = 0;
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
-
   static GParamDef args[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image"},
-    {PARAM_DRAWABLE, "drawable", "Drawable to save"},
-    {PARAM_STRING, "filename", "The name of the file to save the image in"},
-    {PARAM_STRING, "receipt", "The email address to send to"},
-    {PARAM_STRING, "from", "The email address for the From: field"},
-    {PARAM_STRING, "subject", "The subject"},
-    {PARAM_STRING, "comment", "The Comment"},
-    {PARAM_INT32,  "encapsulation", "Uuencode, MIME"},
+    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE, "image", "Input image" },
+    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
+    { PARAM_STRING, "filename", "The name of the file to save the image in" },
+    { PARAM_STRING, "receipt", "The email address to send to" },
+    { PARAM_STRING, "from", "The email address for the From: field" },
+    { PARAM_STRING, "subject", "The subject" },
+    { PARAM_STRING, "comment", "The Comment" },
+    { PARAM_INT32,  "encapsulation", "Uuencode, MIME" },
   };
   static int nargs = sizeof (args) / sizeof (args[0]);
   static GParamDef *return_vals = NULL;
@@ -222,16 +221,14 @@ query ()
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
-
 }
 
-
 static void
-run (char *name,
-     int nparams,
-     GParam * param,
-     int *nreturn_vals,
-     GParam ** return_vals)
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam values[2];
   GRunModeType run_mode;
@@ -301,12 +298,11 @@ run (char *name,
 }
 
 static gint
-save_image (char *filename,
-	    gint32 image_ID,
-	    gint32 drawable_ID,
-	    gint32 run_mode)
+save_image (gchar  *filename,
+	    gint32  image_ID,
+	    gint32  drawable_ID,
+	    gint32  run_mode)
 {
-
   GParam *params;
   gint retvals;
   char *ext;
@@ -670,22 +666,22 @@ save_dialog (void)
   /* Encapsulation label */
   label = gtk_label_new (_("Encapsulation:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach( GTK_TABLE (table), label ,
-		    0, 1, 6, 7,
-		    GTK_SHRINK | GTK_FILL,
-		    GTK_SHRINK | GTK_FILL,
-		    0, 0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   /* Encapsulation radiobutton */
   button1 = gtk_radio_button_new_with_label( NULL, _("Uuencode"));
   group = gtk_radio_button_group( GTK_RADIO_BUTTON( button1 ) );
   button2 = gtk_radio_button_new_with_label( group, _("MIME" ));
-  if( mail_info.encapsulation == ENCAPSULATION_UUENCODE ) {
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button1),TRUE);
-  } else {
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button2),TRUE);
-  }
+  if (mail_info.encapsulation == ENCAPSULATION_UUENCODE)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button1), TRUE);
+    }
+  else
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button2), TRUE);
+    }
   gtk_signal_connect (GTK_OBJECT (button1), "toggled",
 		      (GtkSignalFunc) encap_callback,
 		      (gpointer) "uuencode" );
@@ -693,29 +689,24 @@ save_dialog (void)
 		      (GtkSignalFunc) encap_callback,
 		      (gpointer) "mime" );
 
-  gtk_table_attach( GTK_TABLE (table), button1,
-		    1, 2, 6, 7,
-		    GTK_SHRINK | GTK_FILL,
-		    GTK_SHRINK | GTK_FILL,
-		    0, 0 );
+  gtk_table_attach (GTK_TABLE (table), button1, 1, 2, 6, 7,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show  (button1);
 
-  gtk_table_attach (GTK_TABLE (table), button2,
-		    1, 2, 7, 8,
-		    GTK_SHRINK | GTK_FILL,
-		    GTK_SHRINK | GTK_FILL,
-		    0, 0);
+  gtk_table_attach (GTK_TABLE (table), button2, 1, 2, 7, 8,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button2);
 
   gtk_widget_show (dlg);
+
   gtk_main ();
   gdk_flush ();
-  return run_flag;
 
+  return run_flag;
 }
 
-static int 
-valid_file (char *filename)
+static gint 
+valid_file (gchar *filename)
 {
   int stat_res;
   struct stat buf;
@@ -728,63 +719,68 @@ valid_file (char *filename)
     return 0;
 }
 
-char *
-find_content_type (char *filename)
+gchar *
+find_content_type (gchar *filename)
 {
-    /* This function returns a MIME Content-type: value based on the
-       filename it is given.  */
-    char *type_mappings[20] = {"gif" , "image/gif",
-			       "jpg" , "image/jpeg",
-			       "jpeg", "image/jpeg",
-			       "tif" , "image/tiff",
-			       "tiff", "image/tiff",
-			       "png" , "image/png",
-			       "g3"  , "image/g3fax",
-			       "ps", "application/postscript",
-			       "eps", "application/postscript",
-			       NULL, NULL
-    };
+  /* This function returns a MIME Content-type: value based on the
+     filename it is given.  */
+  gchar *type_mappings[20] =
+  {
+    "gif" , "image/gif",
+    "jpg" , "image/jpeg",
+    "jpeg", "image/jpeg",
+    "tif" , "image/tiff",
+    "tiff", "image/tiff",
+    "png" , "image/png",
+    "g3"  , "image/g3fax",
+    "ps", "application/postscript",
+    "eps", "application/postscript",
+    NULL, NULL
+  };
 
-    char *ext;
-    char *mimetype = malloc(100);
-    int i=0;
-    ext = find_extension(filename);
-    if(!ext) {
-	strcpy( mimetype, "application/octet-stream");
-	return mimetype;
+  gchar *ext;
+  gchar *mimetype = malloc(100);
+  gint i=0;
+
+  ext = find_extension (filename);
+  if (!ext)
+    {
+      strcpy (mimetype, "application/octet-stream");
+      return mimetype;
     }
-    
-    while( type_mappings[i] ) {
-	if( strcmp( ext+1, type_mappings[i] ) == 0 ) {
-	    strcpy(mimetype,type_mappings[i+1]);
-	    return mimetype;
+
+  while (type_mappings[i])
+    {
+      if (strcmp (ext+1, type_mappings[i]) == 0)
+	{
+	  strcpy (mimetype, type_mappings[i + 1]);
+	  return mimetype;
 	}
-	i += 2;
+      i += 2;
     }
-    strcpy(mimetype,"image/x-");
-    strncat(mimetype,ext+1,91);
-    mimetype[99]='\0';
-    return mimetype;
+  strcpy (mimetype, "image/x-");
+  strncat (mimetype, ext + 1, 91);
+  mimetype[99] = '\0';
 
+  return mimetype;
 }
 
-static char *
-find_extension (char *filename)
+static gchar *
+find_extension (gchar *filename)
 {
-  char *filename_copy;
-  char *ext;
+  gchar *filename_copy;
+  gchar *ext;
 
-  /* this whole routine needs to be redone so it works for xccfgz and .gz files */
-  /* not real sure where to start......                                         */
-  /* right now saving for .xcfgz works but not .xcf.gz                          */
-  /* this is all pretty close to straight from gz. It needs to be changed to    */
-  /* work better for this plugin                                                */
+  /* this whole routine needs to be redone so it works for xccfgz and gz files*/
+  /* not real sure where to start......                                       */
+  /* right now saving for .xcfgz works but not .xcf.gz                        */
+  /* this is all pretty close to straight from gz. It needs to be changed to  */
+  /* work better for this plugin                                              */
   /* ie, FIXME */
 
   /* we never free this copy - aren't we evil! */
   filename_copy = malloc (strlen (filename) + 1);
   strcpy (filename_copy, filename);
-
 
   /* find the extension, boy! */
   ext = strrchr (filename_copy, '.');
@@ -812,67 +808,75 @@ find_extension (char *filename)
 }
 
 static void
-ok_callback (GtkWidget * widget, gpointer data)
+ok_callback (GtkWidget *widget,
+	     gpointer   data)
 {
-  run_flag = 1;
+  run_flag = TRUE;
   
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static void
-encap_callback (GtkWidget * widget, gpointer data)
+encap_callback (GtkWidget *widget,
+		gpointer   data)
 {
-    /* Ignore the toggle-off signal, we are only interested in
-       what is being set */
-    if( ! GTK_TOGGLE_BUTTON( widget )->active ) {
-	return;
+  /* Ignore the toggle-off signal, we are only interested in
+     what is being set */
+  if (! GTK_TOGGLE_BUTTON (widget)->active)
+    {
+      return;
     }
-    if(strcmp(data,"uuencode")==0)
-	mail_info.encapsulation = ENCAPSULATION_UUENCODE;
-    if(strcmp(data,"mime")==0)
-	mail_info.encapsulation = ENCAPSULATION_MIME;
+  if (strcmp (data, "uuencode") == 0)
+    mail_info.encapsulation = ENCAPSULATION_UUENCODE;
+  if (strcmp (data, "mime") == 0)
+    mail_info.encapsulation = ENCAPSULATION_MIME;
 }
 
 static void
-receipt_callback (GtkWidget * widget, gpointer data)
+receipt_callback (GtkWidget *widget,
+		  gpointer   data)
 {
   strncpy (mail_info.receipt, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
 }
 
 static void
-from_callback (GtkWidget *widget, gpointer data)
+from_callback (GtkWidget *widget,
+	       gpointer   data)
 {
   strncpy (mail_info.from, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
 }
 
 static void
-subject_callback (GtkWidget * widget, gpointer data)
+subject_callback (GtkWidget *widget,
+		  gpointer   data)
 {
   strncpy (mail_info.subject, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
 }
 
-
 static void
-comment_callback (GtkWidget * widget, gpointer data)
+comment_callback (GtkWidget *widget,
+		  gpointer   data)
 {
   strncpy (mail_info.comment, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
 }
 
-
 static void
-filename_callback (GtkWidget * widget, gpointer data)
+filename_callback (GtkWidget *widget,
+		   gpointer   data)
 {
   strncpy (mail_info.filename, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
 }
 
 static void 
-mesg_body_callback (GtkWidget * widget, gpointer data)
+mesg_body_callback (GtkWidget *widget,
+		    gpointer   data)
 {
-  mesg_body = gtk_editable_get_chars(GTK_EDITABLE(widget), 0, gtk_text_get_length(GTK_TEXT(widget)));
+  mesg_body = gtk_editable_get_chars (GTK_EDITABLE (widget), 0,
+				      gtk_text_get_length (GTK_TEXT (widget)));
 } 
 
 static void
-create_headers (FILE * mailpipe)
+create_headers (FILE *mailpipe)
 {
   /* create all the mail header stuff. Feel free to add your own */
   /* It is advisable to leave the X-Mailer header though, as     */
@@ -884,30 +888,32 @@ create_headers (FILE * mailpipe)
   fprintf (mailpipe, "From: %s \n", mail_info.from);
   fprintf (mailpipe, "X-Mailer: GIMP Useless Mail Program v.85\n");
 
-
-  if(mail_info.encapsulation == ENCAPSULATION_MIME ){
+  if (mail_info.encapsulation == ENCAPSULATION_MIME )
+    {
       fprintf (mailpipe, "MIME-Version: 1.0\n");
       fprintf (mailpipe, "Content-type: multipart/mixed; boundary=GUMP-MIME-boundary\n");
-  }
+    }
   fprintf (mailpipe, "\n\n");
-  if(mail_info.encapsulation == ENCAPSULATION_MIME ) {
+  if (mail_info.encapsulation == ENCAPSULATION_MIME )
+    {
       fprintf (mailpipe, "--GUMP-MIME-boundary\n");
       fprintf (mailpipe, "Content-type: text/plain; charset=US-ASCII\n\n");
-  }
+    }
   fprintf (mailpipe, mail_info.comment);
   fprintf (mailpipe, "\n\n");
   fprintf (mailpipe, mesg_body); 
   fprintf (mailpipe, "\n\n");
-  if(mail_info.encapsulation == ENCAPSULATION_MIME ) {
+  if (mail_info.encapsulation == ENCAPSULATION_MIME )
+    {
       char *content;
-      content=find_content_type(mail_info.filename);
+      content = find_content_type (mail_info.filename);
       fprintf (mailpipe, "--GUMP-MIME-boundary\n");
       fprintf (mailpipe, "Content-type: %s\n",content);
       fprintf (mailpipe, "Content-transfer-encoding: base64\n");
       fprintf (mailpipe, "Content-disposition: attachment; filename=\"%s\"\n",mail_info.filename);
       fprintf (mailpipe, "Content-description: %s\n\n",mail_info.filename);
       free(content);
-  }
+    }
 }
 
 /*
@@ -954,64 +960,73 @@ OF THIS MATERIAL FOR ANY PURPOSE.  IT IS PROVIDED "AS IS",
 WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES.  */
 
 
-static char basis_64[] =
-   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+static gchar basis_64[] =
+"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-static int to64(infile, outfile) 
-FILE *infile, *outfile;
+static gint
+to64 (FILE *infile,
+      FILE *outfile) 
 {
-    int c1, c2, c3, ct=0, written=0;
+  int c1, c2, c3, ct=0, written=0;
 
-    while ((c1 = getc(infile)) != EOF) {
-        c2 = getc(infile);
-        if (c2 == EOF) {
-            output64chunk(c1, 0, 0, 2, outfile);
-        } else {
-            c3 = getc(infile);
-            if (c3 == EOF) {
-                output64chunk(c1, c2, 0, 1, outfile);
-            } else {
-                output64chunk(c1, c2, c3, 0, outfile);
+  while ((c1 = getc (infile)) != EOF)
+    {
+      c2 = getc (infile);
+      if (c2 == EOF)
+	{
+	  output64chunk (c1, 0, 0, 2, outfile);
+        }
+      else
+	{
+	  c3 = getc (infile);
+	  if (c3 == EOF)
+	    {
+	      output64chunk (c1, c2, 0, 1, outfile);
+            }
+	  else
+	    {
+	      output64chunk (c1, c2, c3, 0, outfile);
             }
         }
-        ct += 4;
-        if (ct > 71) {
-            putc('\n', outfile);
-	    written += 73;
-            ct = 0;
+      ct += 4;
+      if (ct > 71)
+	{
+	  putc ('\n', outfile);
+	  written += 73;
+	  ct = 0;
         }
     }
-    if (ct) {
-	putc('\n', outfile);
-	ct++;
+  if (ct)
+    {
+      putc ('\n', outfile);
+      ct++;
     }
-    return written + ct;
+
+  return written + ct;
 }
 
 static void
-output64chunk(c1, c2, c3, pads, outfile)
-FILE *outfile;
+output64chunk (gint  c1,
+	       gint  c2,
+	       gint  c3,
+	       gint  pads,
+	       FILE *outfile)
 {
-    putc(basis_64[c1>>2], outfile);
-    putc(basis_64[((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4)], outfile);
-    if (pads == 2) {
-        putc('=', outfile);
-        putc('=', outfile);
-    } else if (pads) {
-        putc(basis_64[((c2 & 0xF) << 2) | ((c3 & 0xC0) >>6)], outfile);
-        putc('=', outfile);
-    } else {
-        putc(basis_64[((c2 & 0xF) << 2) | ((c3 & 0xC0) >>6)], outfile);
-        putc(basis_64[c3 & 0x3F], outfile);
+  putc (basis_64[c1>>2], outfile);
+  putc (basis_64[((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4)], outfile);
+  if (pads == 2)
+    {
+      putc ('=', outfile);
+      putc ('=', outfile);
+    }
+  else if (pads)
+    {
+      putc (basis_64[((c2 & 0xF) << 2) | ((c3 & 0xC0) >>6)], outfile);
+      putc ('=', outfile);
+    }
+  else
+    {
+      putc (basis_64[((c2 & 0xF) << 2) | ((c3 & 0xC0) >>6)], outfile);
+      putc (basis_64[c3 & 0x3F], outfile);
     }
 }
-
-
-
-
-
-
-
-
-
-

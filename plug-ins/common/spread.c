@@ -59,43 +59,40 @@ static void      run    (gchar    *name,
 			 GParam   *param,
 			 gint     *nreturn_vals,
 			 GParam  **return_vals);
+
 static void      spread  (GDrawable * drawable);
 
-static gint      spread_dialog (void);
-static GTile *   spread_pixel  (GDrawable * drawable,
-			       GTile *     tile,
-			       gint        x1,
-			       gint        y1,
-			       gint        x2,
-			       gint        y2,
-			       gint        x,
-			       gint        y,
-			       gint *      row,
-			       gint *      col,
-			       guchar *    pixel);
+static gint      spread_dialog      (void);
+static void      spread_ok_callback (GtkWidget *widget,
+				     gpointer   data);
 
-static void      spread_ok_callback     (GtkWidget *widget,
-					 gpointer   data);
-static void      spread_fentry_callback (GtkWidget     *widget,
-					 gpointer       data);
+static GTile *   spread_pixel (GDrawable *drawable,
+			       GTile     *tile,
+			       gint       x1,
+			       gint       y1,
+			       gint       x2,
+			       gint       y2,
+			       gint       x,
+			       gint       y,
+			       gint      *row,
+			       gint      *col,
+			       guchar    *pixel);
 
-static void      spread_fscale_callback (GtkAdjustment *adjustment,
-					 gpointer       data);
 
 /***** Local vars *****/
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static SpreadValues spvals =
 {
-  5,   /*  horizontal spread amount  */
-  5   /*  vertical spread amount */
+  5,  /*  horizontal spread amount  */
+  5   /*  vertical spread amount    */
 };
 
 static SpreadInterface pint =
@@ -355,16 +352,10 @@ static gint
 spread_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *label;
-  GtkWidget *scale;
   GtkWidget *frame;
-  GtkWidget *hbox;
-  GtkWidget *entry;
   GtkWidget *table;
-  GtkObject *x_scale_data;
-  GtkObject *y_scale_data;
+  GtkObject *adj;
   gchar **argv;
-  gchar   buffer[32];
   gint    argc;
 
   argc    = 1;
@@ -396,85 +387,33 @@ spread_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new (2, 2, FALSE);
+  table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   /* Horizontal Amount */
-  label = gtk_label_new (_("Horizontal Spread Amount:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL , GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (hbox);
-
-  x_scale_data = gtk_adjustment_new (spvals.spread_amount_x, 0, 200, 1, 1, 0.0);
-  gtk_signal_connect (GTK_OBJECT (x_scale_data), "value_changed",
-		      (GtkSignalFunc) spread_fscale_callback,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Horizontal Spread Amount:"), SCALE_WIDTH, 0,
+			      spvals.spread_amount_x, 0, 200, 1, 10, 2,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &spvals.spread_amount_x);
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (x_scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_widget_show (scale);
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), x_scale_data);
-  gtk_object_set_user_data (x_scale_data, entry);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%0.2f", spvals.spread_amount_x);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) spread_fentry_callback,
-		      &spvals.spread_amount_x);
-  gtk_widget_show (entry);
 
   /* Vertical Amount */
-  label = gtk_label_new (_("Vertical Spread Amount:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (hbox);
-
-  y_scale_data = gtk_adjustment_new (spvals.spread_amount_y, 0, 200, 1, 1, 0.0);
-  gtk_signal_connect (GTK_OBJECT (y_scale_data), "value_changed",
-		      (GtkSignalFunc) spread_fscale_callback,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Vertical Spread Amount:"), SCALE_WIDTH, 0,
+			      spvals.spread_amount_y, 0, 200, 1, 10, 2,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &spvals.spread_amount_y);
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (y_scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_widget_show (scale);
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), y_scale_data);
-  gtk_object_set_user_data (y_scale_data, entry);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%0.2f", spvals.spread_amount_y);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) spread_fentry_callback,
-		      &spvals.spread_amount_y);
-  gtk_widget_show (entry);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
+
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -523,9 +462,6 @@ spread_pixel (GDrawable * drawable,
   return tile;
 }
 
-
-
-
 /*  Spread interface functions  */
 
 static void
@@ -533,51 +469,6 @@ spread_ok_callback (GtkWidget *widget,
 		    gpointer   data)
 {
   pint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-spread_fscale_callback (GtkAdjustment *adjustment,
-			gpointer       data)
-{
-  GtkWidget *entry;
-  gchar buffer[32];
-  double *val;
-
-  val = data;
-  if (*val != adjustment->value)
-    {
-      *val = adjustment->value;
-      entry = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-      g_snprintf (buffer, sizeof (buffer), "%0.2f", adjustment->value);
-
-      gtk_signal_handler_block_by_data (GTK_OBJECT (entry), data);
-      gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (entry), data);
-    }
-}
-
-static void
-spread_fentry_callback (GtkWidget *widget,
-			gpointer   data)
-{
-  GtkAdjustment *adjustment;
-  double new_val;
-  double *val;
-
-  val = data;
-  new_val = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (*val != new_val)
-    {
-      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
-
-      if ((new_val >= adjustment->lower) &&
-	  (new_val <= adjustment->upper))
-	{
-	  *val = new_val;
-	  adjustment->value = new_val;
-	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-	}
-    }
 }

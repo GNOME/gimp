@@ -83,7 +83,9 @@ GPlugInInfo PLUG_IN_INFO =
 typedef struct
 {
   gdouble refraction;
-  gint keep_surr, use_bkgr, set_transparent;
+  gint    keep_surr;
+  gint    use_bkgr;
+  gint    set_transparent;
 } LensValues;
 
 static LensValues lvals =
@@ -368,42 +370,17 @@ lens_ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-static void
-lens_toggle_update (GtkWidget *widget,
-		    gpointer   data)
-{
-  gint *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-lens_entry_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  lvals.refraction = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (lvals.refraction < 1.0)
-    lvals.refraction = 1.0;
-}
-
-
 static gint
 lens_dialog (GDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *label;
-  GtkWidget *entry;
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  gchar buffer[12];
+  GtkWidget *spinbutton;
+  GtkObject *adj;
   gchar **argv;
   gint argc;
   GSList *group = NULL;
@@ -448,7 +425,7 @@ lens_dialog (GDrawable *drawable)
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (lens_toggle_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &lvals.keep_surr);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), lvals.keep_surr);
   gtk_widget_show (toggle);
@@ -462,7 +439,7 @@ lens_dialog (GDrawable *drawable)
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start(GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (lens_toggle_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &lvals.use_bkgr);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), lvals.use_bkgr);
   gtk_widget_show (toggle);
@@ -477,7 +454,7 @@ lens_dialog (GDrawable *drawable)
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  GTK_SIGNAL_FUNC (lens_toggle_update),
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &lvals.set_transparent);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				    lvals.set_transparent);
@@ -491,15 +468,13 @@ lens_dialog (GDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  entry = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buffer, sizeof (buffer), "%.2f", lvals.refraction);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (lens_entry_callback),
-		      NULL);
-  gtk_widget_show (entry);
+  spinbutton = gimp_spin_button_new (&adj, lvals.refraction,
+				     1.0, 100.0, 0.1, 1.0, 0, 1, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &lvals.refraction);
+  gtk_widget_show (spinbutton);
 
   gtk_widget_show (hbox);
   gtk_widget_show (vbox);

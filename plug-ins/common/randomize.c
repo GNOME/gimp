@@ -115,7 +115,6 @@ gchar *RNDM_VERSION[] =
 #define SEED_TIME 10
 #define SEED_USER 11
 
-#define ENTRY_WIDTH 75
 #define SCALE_WIDTH 100
 
 gint rndm_type = RNDM_HURL;  /* hurl, pick, etc. */
@@ -186,16 +185,10 @@ static gint randomize_dialog        (void);
 
 static void randomize_ok_callback   (GtkWidget     *widget,
 				     gpointer       data);
-static void randomize_text_update   (GtkWidget     *widget,
-				     gpointer       data);
-static void randomize_toggle_update (GtkWidget     *widget,
-				     gpointer       data);
-static void randomize_scale_update  (GtkAdjustment *adjustment,
-				     gdouble       *scale_val);
 
 /************************************ Guts ***********************************/
 
-MAIN()
+MAIN ()
 
 /*********************************
  *
@@ -700,19 +693,17 @@ static gint
 randomize_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *entry;
   GtkWidget *frame;
   GtkWidget *seed_hbox;
   GtkWidget *seed_vbox;
   GtkWidget *table;
   GtkWidget *label;
-  GtkWidget *scale;
-  GtkObject *scale_data;
+  GtkWidget *spinbutton;
+  GtkObject *adj;
   GtkWidget *radio_button;
   GSList *group = NULL;
   gchar **argv;
   gint    argc;
-  gchar   buffer[10];
 
   /*
    *  various initializations
@@ -753,7 +744,7 @@ randomize_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new (4, 2, FALSE);
+  table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
@@ -769,6 +760,7 @@ randomize_dialog (void)
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
   gtk_widget_show (label);
+
   /*
    *  Box to hold seed initialization radio buttons
    */
@@ -776,6 +768,7 @@ randomize_dialog (void)
   gtk_table_attach (GTK_TABLE (table), seed_vbox, 1, 2, 1, 2,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
   gtk_widget_show (seed_vbox);
+
   /*
    *  Time button
    */
@@ -783,7 +776,7 @@ randomize_dialog (void)
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
   gtk_box_pack_start (GTK_BOX (seed_vbox), radio_button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-		      GTK_SIGNAL_FUNC (randomize_toggle_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &do_time);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), do_time);
   gtk_widget_show (radio_button);
@@ -797,6 +790,7 @@ randomize_dialog (void)
   seed_hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (seed_vbox), seed_hbox, FALSE, FALSE, 0);
   gtk_widget_show (seed_hbox);
+
   /*
    *  User button
    */
@@ -804,7 +798,7 @@ randomize_dialog (void)
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
   gtk_box_pack_start (GTK_BOX (seed_hbox), radio_button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-		      GTK_SIGNAL_FUNC (randomize_toggle_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &do_user);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), do_user);
   gtk_widget_show (radio_button);
@@ -812,75 +806,52 @@ randomize_dialog (void)
 			   _("Enable user-entered value for random number "
 			     "generator seed - this allows you to repeat a "
 			     "given \"random\" operation"), NULL);
+
   /*
    *  Randomization seed number (text)
    */
-  entry = gtk_entry_new();
-  gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-  gtk_box_pack_start (GTK_BOX (seed_hbox), entry, FALSE, FALSE, 0);
-  g_snprintf (buffer, sizeof (buffer), "%d", pivals.rndm_seed);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (randomize_text_update),
+  spinbutton = gimp_spin_button_new (&adj, pivals.rndm_seed,
+				     G_MININT, G_MAXINT, 1, 10, 0, 1, 0);
+  gtk_box_pack_start (GTK_BOX (seed_hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &pivals.rndm_seed);
-  gtk_widget_show (entry);
-  gimp_help_set_help_data (entry,
+  gtk_widget_show (spinbutton);
+  gimp_help_set_help_data (spinbutton,
 			   _("Value for seeding the random number generator"),
 			   NULL);
   gtk_widget_show (seed_hbox);
+
   /*
    *  Randomization percentage label & scale (1 to 100)
    */
-  label = gtk_label_new (_("Randomization %:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 2, 3);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (pivals.rndm_pct, 1.0, 100.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, -1);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 2, 3,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-                      GTK_SIGNAL_FUNC (randomize_scale_update),
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			      _("Randomization %:"), SCALE_WIDTH, 0,
+			      pivals.rndm_pct, 1.0, 100.0, 1.0, 10.0, 0,
+			      _("Percentage of pixels to be filtered"), NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+                      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
                       &pivals.rndm_pct);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale,
-                           _("Percentage of pixels to be filtered"), NULL);
+
   /*
    *  Repeat count label & scale (1 to 100)
    */
-  label = gtk_label_new (_("Repeat:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 3, 4);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (pivals.rndm_rcount, 1.0, 100.0,
-                                   1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, -1);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 3, 4,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-                      GTK_SIGNAL_FUNC (randomize_scale_update),
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+			      _("Repeat:"), SCALE_WIDTH, 0,
+			      pivals.rndm_rcount, 1.0, 100.0, 1.0, 10.0, 0,
+			      _("Number of times to apply filter"), NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+                      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
                       &pivals.rndm_rcount);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale, _("Number of times to apply filter"), NULL);
-  /*
-   *  Display everything.
-   */
+
   gtk_widget_show (frame);
+
   gtk_widget_show (dlg);
 
   gtk_main ();
   gimp_help_free ();
   gdk_flush ();
+
   /*
    *  Figure out which type of seed initialization to apply.
    */
@@ -903,36 +874,4 @@ randomize_ok_callback (GtkWidget *widget,
   rndm_int.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-void
-randomize_text_update (GtkWidget *widget,
-		       gpointer   data)
-{
-  gint *text_val;
-
-  text_val = (gint *) data;
-
-  *text_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-}
-
-static void
-randomize_toggle_update (GtkWidget *widget,
-			 gpointer   data)
-{
-  gint *toggle_val;
-
-  toggle_val = (gint *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-randomize_scale_update (GtkAdjustment *adjustment,
-			gdouble       *scale_val)
-{
-  *scale_val = adjustment->value;
 }

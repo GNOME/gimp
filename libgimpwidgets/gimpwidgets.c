@@ -481,7 +481,7 @@ gimp_table_attach_aligned (GtkTable  *table,
     {
       GtkWidget *alignment;
 
-      alignment = gtk_alignment_new (0.0, 1.0, 0.0, 0.0);
+      alignment = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
       gtk_table_attach_defaults (table, alignment, 1, 2, row, row + 1);
       gtk_widget_show (alignment);
       gtk_container_add (GTK_CONTAINER (alignment), widget);

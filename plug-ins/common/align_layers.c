@@ -52,27 +52,15 @@
 #define GTKW_PREVIEW_HEIGHT	256
 #define	GTKW_BORDER_WIDTH	5
 #define GTKW_FLOAT_MIN_ERROR	0.000001
+
 static gint	**gtkW_gint_wrapper_new (gint index, gint *pointer);
 static void	gtkW_toggle_update (GtkWidget *widget, gpointer data);
-static void	gtkW_iscale_update (GtkAdjustment *adjustment, gpointer data);
-static void	gtkW_ientry_update (GtkWidget *widget, gpointer data);
 static void     gtkW_table_add_toggle (GtkWidget	*table,
 				       gchar	*name,
 				       gint	x,
 				       gint	y,
 				       GtkSignalFunc update,
 				       gint	*value);
-static void     gtkW_table_add_iscale_entry (GtkWidget	*table,
-					     gchar	*name,
-					     gint	x,
-					     gint	y,
-					     GtkSignalFunc	scale_update,
-					     GtkSignalFunc	entry_update,
-					     gint	*value,
-					     gdouble	min,
-					     gdouble	max,
-					     gdouble	step,
-					     gchar	*buffer);
 GtkWidget *gtkW_table_add_button (GtkWidget	*table,
 				  gchar	*name,
 				  gint	x0,
@@ -290,7 +278,7 @@ run (gchar   *name,
 static GStatusType
 align_layers (gint32 image_id)
 {
- gint	layer_num = 0;
+  gint	layer_num = 0;
   gint	visible_layer_num = 1;
   gint	*layers = NULL;
   gint	index, vindex;
@@ -429,8 +417,8 @@ align_layers (gint32 image_id)
 
 static void
 align_layers_get_align_offsets (gint32	drawable_id,
-			       gint	*x,
-			       gint	*y)
+				gint   *x,
+				gint   *y)
 {
   GDrawable	*layer = gimp_drawable_get (drawable_id);
   
@@ -470,23 +458,18 @@ align_layers_get_align_offsets (gint32	drawable_id,
 static int
 DIALOG (void)
 {
-  GtkWidget	*dlg;
-  GtkWidget	*frame;
-  GtkWidget	*table;
-#ifdef OLD
-  GtkWidget	*hbox, *vbox;
-  GtkWidget	*sep;
-  GtkWidget	*toggle_vbox;
-  GSList	*group = NULL;
-#endif
-  int		index = 0;
-  gchar	buffer[10];
+  GtkWidget *dlg;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkObject *adj;
   gchar	**argv;
-  gint	argc;
+  gint	  argc;
+  gint    index = 0;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup (PLUG_IN_NAME);
+
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
   
@@ -506,85 +489,8 @@ DIALOG (void)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
   
-#ifdef OLD
-  hbox = gtkW_hbox_new ((GTK_DIALOG (dlg)->vbox));
-  frame = gtkW_frame_new (hbox, "Horizontal Settings");
-  
-  toggle_vbox = gtkW_vbox_new (frame);
-
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "None", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[H_NONE]);
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "Collect", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[H_COLLECT]);
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "Fill (left to right)", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[LEFT2RIGHT]);
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "Fill (right to left)", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[RIGHT2LEFT]);
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "Snap to grid", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[SNAP2HGRID]);
-  /* h base */
-  sep = gtk_hseparator_new ();
-  gtk_container_add (GTK_CONTAINER (toggle_vbox), sep);
-  gtk_widget_show (sep);
-  group = NULL;
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "Left edge", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[H_BASE_LEFT]);
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "Center", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[H_BASE_CENTER]);
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "Right edge", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[H_BASE_RIGHT]);
-
-  gtk_widget_show (toggle_vbox);
-  gtk_widget_show (frame);
-  frame = gtkW_frame_new (hbox, "Vetical Settings");
-  toggle_vbox = gtkW_vbox_new (frame);
-
-  /* v style */
-  group = NULL;
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "None", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[V_NONE]);
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "Collect", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[V_COLLECT]);
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "Fill (top to bottom)", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[TOP2BOTTOM]);
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "Fill (bottom to top)", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[BOTTOM2TOP]);
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "Snap to grid", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[SNAP2VGRID]);
-  /* v base */
-  sep = gtk_hseparator_new ();
-  gtk_container_add (GTK_CONTAINER (toggle_vbox), sep);
-  gtk_widget_show (sep);
-  group = NULL;
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "Top edge", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[V_BASE_TOP]);
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "Center", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[V_BASE_CENTER]);
-  group = gtkW_vbox_add_radio_button (toggle_vbox, "Bottom edge", group,
-				      (GtkSignalFunc) gtkW_toggle_update,
-				      &d_var[V_BASE_BOTTOM]);
-
-  gtk_widget_show (toggle_vbox);
-  gtk_widget_show (frame);
-  gtk_widget_show (hbox);
-#else
   frame = gtkW_frame_new (GTK_DIALOG (dlg)->vbox, _("Parameter Settings"));
-  table = gtkW_table_new (frame, 7, 2);
+  table = gtkW_table_new (frame, 7, 3);
   gtkW_table_add_menu (table, _("Horizontal Style:"), 0, index++,
 		       (GtkSignalFunc) gtkW_menu_update,
 		       &VALS.h_style,
@@ -605,7 +511,6 @@ DIALOG (void)
 		       &VALS.v_base,
 		       v_base_menu,
 		       sizeof (v_base_menu) / sizeof (v_base_menu[0]));
-#endif
 
   gtkW_table_add_toggle (table, _("Ignore the Bottom Layer even if Visible"),
 			 0, index++,
@@ -616,11 +521,14 @@ DIALOG (void)
 			 0, index++,
 			 (GtkSignalFunc) gtkW_toggle_update,
 			 &VALS.base_is_bottom_layer);
-  gtkW_table_add_iscale_entry (table, _("Grid Size:"),
-			       0, index++,
-			       (GtkSignalFunc) gtkW_iscale_update,
-			       (GtkSignalFunc) gtkW_ientry_update,
-			       &VALS.grid_size, 0, 200, 1, buffer);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index++,
+			      _("Grid Size:"), GTKW_SCALE_WIDTH, 0,
+			      VALS.grid_size, 0, 200, 1, 10, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &VALS.grid_size);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -634,7 +542,7 @@ DIALOG (void)
 
 static void
 OK_CALLBACK (GtkWidget *widget,
-	      gpointer   data)
+	     gpointer   data)
 {
 #ifdef OLD
   int	index;
@@ -796,103 +704,6 @@ gtkW_table_add_toggle (GtkWidget	*table,
 		      value);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
   gtk_widget_show (toggle);
-}
-
-static void
-gtkW_table_add_iscale_entry (GtkWidget	*table,
-			     gchar	*name,
-			     gint	x,
-			     gint	y,
-			     GtkSignalFunc	scale_update,
-			     GtkSignalFunc	entry_update,
-			     gint	*value,
-			     gdouble	min,
-			     gdouble	max,
-			     gdouble	step,
-			     gchar	*buffer)
-{
-  GtkObject *adjustment;
-  GtkWidget *label, *hbox, *scale, *entry;
-  
-  label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE(table), label, x, x+1, y, y+1,
-		    GTK_FILL|GTK_EXPAND, 0 & GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_table_attach (GTK_TABLE (table), hbox, x+1, x+2, y, y+1,
-		    GTK_EXPAND | GTK_FILL, 0 &  GTK_FILL, 0, 0);
-
-  adjustment = gtk_adjustment_new (*value, min, max, step, step, 0.0);
-  gtk_widget_show (hbox);
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (scale, GTKW_SCALE_WIDTH, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) scale_update, value);
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), adjustment);
-  gtk_object_set_user_data (adjustment, entry);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_set_usize (entry, GTKW_ENTRY_WIDTH, 0);
-  sprintf (buffer, "%d", *value);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entry_update, value);
-
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-  gtk_widget_show (entry);
-}
-
-static void
-gtkW_iscale_update (GtkAdjustment *adjustment,
-		    gpointer       data)
-{
-  GtkWidget *entry;
-  gchar buffer[32];
-  int *val;
-
-  val = data;
-  if (*val != (int) adjustment->value)
-    {
-      *val = adjustment->value;
-      entry = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-      sprintf (buffer, "%d", (int) adjustment->value);
-      gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-      PREVIEW_UPDATE ();
-    }
-}
-
-static void
-gtkW_ientry_update (GtkWidget *widget,
-		    gpointer   data)
-{
-  GtkAdjustment *adjustment;
-  int new_val;
-  int *val;
-
-  val = data;
-  new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (*val != new_val)
-    {
-      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
-
-      if ((new_val >= adjustment->lower) &&
-	  (new_val <= adjustment->upper))
-	{
-	  *val = new_val;
-	  adjustment->value = new_val;
-	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-	  PREVIEW_UPDATE ();
-	}
-    }
 }
 
 GtkWidget *

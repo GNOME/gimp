@@ -37,30 +37,35 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
 /* --- Typedefs --- */
-typedef struct {
+typedef struct
+{
   gint xblock;
   gint yblock;
 } GlassValues;
-typedef struct {
+
+typedef struct
+{
     gint run;
 } GlassInterface;
 
 /* --- Declare local functions --- */
 static void query (void);
-static void run (char    *name,
-	         int      nparams,
-       	         GParam  *param,
-		 int     *nreturn_vals,
-	         GParam **return_vals);
-static gint glass_dialog (void);
-static void glass_ok_callback (GtkWidget *widget, gpointer data);
-static void glass_scale_update (GtkAdjustment *adjustment, gpointer data);
+static void run   (gchar   *name,
+		   gint     nparams,
+		   GParam  *param,
+		   gint    *nreturn_vals,
+		   GParam **return_vals);
+
+static gint glass_dialog      (void);
+static void glass_ok_callback (GtkWidget *widget,
+			       gpointer   data);
+
 static void glasstile (GDrawable *drawable);
 
 /* --- Variables --- */
@@ -211,11 +216,9 @@ static gint
 glass_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *label;
-  GtkWidget *scale;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkObject *adjustment;
+  GtkObject *adj;
   gchar **argv;
   gint    argc;
 
@@ -248,55 +251,33 @@ glass_dialog (void)
   gtk_container_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new (2, 2, FALSE);
+  table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   /* Horizontal scale - Width */
-  label = gtk_label_new (_("Tile Width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  /* xStart, xEnd, yStart, yEnd */
-
-  adjustment = gtk_adjustment_new (gtvals.xblock, 10, 50, 1, 1, 0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) glass_scale_update,
-		      &(gtvals.xblock));
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (scale, 150, 30);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Tile Width:"), 150, 0,
+			      gtvals.xblock, 10, 50, 1, 5, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &gtvals.xblock);
 
   /* Horizontal scale - Height */
-  label = gtk_label_new (_("Tile Height:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_FILL, GTK_FILL, 0, 0);
-
-  adjustment = gtk_adjustment_new (gtvals.yblock, 10, 50, 1, 1, 0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) glass_scale_update,
-		      &(gtvals.yblock));
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (scale, 150, 30);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Tile Height:"), 150, 0,
+			      gtvals.yblock, 10, 50, 1, 5, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &gtvals.yblock);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
+
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -305,22 +286,13 @@ glass_dialog (void)
   return gt_int.run;
 }
 
-/*  -  Interface functions  -  */
-
 static void
 glass_ok_callback (GtkWidget *widget,
 		   gpointer   data)
 {
   gt_int.run = TRUE;
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
 
-static void
-glass_scale_update (GtkAdjustment *adjustment,
-		    gpointer       data)
-{
-  gint *dptr = (gint*) data;
-  *dptr = (gint) adjustment->value;
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 /*  -  Filter function  -  */

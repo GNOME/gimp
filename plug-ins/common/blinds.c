@@ -67,12 +67,11 @@
 /* Don't make preview >255!!! It won't work for horizontal blinds */
 #define PREVIEW_SIZE 128 
 #define SCALE_WIDTH  150
-#define ENTRY_WIDTH  30
 
-#define MAX_FANS   10
+#define MAX_FANS      10
 
-#define HORIZONTAL 0
-#define VERTICAL   1
+#define HORIZONTAL     0
+#define VERTICAL       1
 
 /* Variables set in dialog box */
 typedef struct data
@@ -87,9 +86,9 @@ typedef struct
 {
   GtkWidget *preview;
   guchar     preview_row[PREVIEW_SIZE * 4];
-  gint run;
-  guchar * pv_cache;
-  gint img_bpp;
+  gint       run;
+  guchar    *pv_cache;
+  gint       img_bpp;
 } BlindsInterface;
 
 static BlindsInterface bint =
@@ -122,9 +121,7 @@ static void      blinds_ok_callback    (GtkWidget     *widget,
 					gpointer       data);
 static void      blinds_scale_update   (GtkAdjustment *adjustment,
 					gint          *size_val);
-static void      blinds_entry_update   (GtkWidget     *widget,
-					gint          *value);
-static void      blinds_toggle_update  (GtkWidget     *widget,
+static void      blinds_radio_update   (GtkWidget     *widget,
 					gpointer       data);
 static void      blinds_button_update  (GtkWidget     *widget,
 					gpointer       data);
@@ -154,9 +151,6 @@ static BlindVals bvals =
 static gint   sel_x1, sel_y1, sel_x2, sel_y2;
 static gint   sel_width, sel_height;
 static gint   preview_width, preview_height;
-static gint   do_horizontal;
-static gint   do_vertical;
-static gint   do_trans;
 static gint   has_alpha;
 
 
@@ -311,27 +305,18 @@ blinds_dialog (void)
   GtkWidget *dlg;
   GtkWidget *main_vbox;
   GtkWidget *frame;
+  GtkWidget *toggle_vbox;
   GtkWidget *xframe;
   GtkWidget *table;
-  GtkWidget *label;
-  GtkWidget *entry;
-  GtkWidget *slider;
   GtkObject *size_data;
-  GtkWidget *toggle_vbox;
   GtkWidget *toggle;
-  GSList *orientation_group = NULL;
   guchar *color_cube;
   gchar **argv;
   gint    argc;
-  gchar   buf[256];
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("blinds");
-
-  do_horizontal = (bvals.orientation == HORIZONTAL);
-  do_vertical = (bvals.orientation == VERTICAL);
-  do_trans = (bvals.bg_trans == TRUE);
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
@@ -390,34 +375,18 @@ blinds_dialog (void)
   gtk_container_add (GTK_CONTAINER (xframe), bint.preview);
   gtk_widget_show(bint.preview);
 
-  frame = gtk_frame_new (_("Orientation"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Orientation"),
+			   blinds_radio_update,
+			   &bvals.orientation, (gpointer) bvals.orientation,
+
+			   _("Horizontal"), (gpointer) HORIZONTAL, NULL,
+			   _("Vertical"),   (gpointer) VERTICAL, NULL,
+
+			   NULL);
+
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-
-  toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-  
-  toggle = gtk_radio_button_new_with_label (orientation_group, _("Horizontal"));
-  orientation_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) blinds_toggle_update,
-		      &do_horizontal);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_horizontal);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (orientation_group, _("Vertical"));
-  orientation_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) blinds_toggle_update,
-		      &do_vertical);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_vertical);
-  gtk_widget_show (toggle);
-
-  gtk_widget_show (toggle_vbox);
   gtk_widget_show (frame);
   
   frame = gtk_frame_new (_("Background"));
@@ -426,15 +395,15 @@ blinds_dialog (void)
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
   toggle = gtk_check_button_new_with_label (_("Transparent"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) blinds_button_update,
-		      &do_trans);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_trans);
+		      GTK_SIGNAL_FUNC (blinds_button_update),
+		      &bvals.bg_trans);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.bg_trans);
 
   if (!has_alpha)
     {
@@ -457,69 +426,21 @@ blinds_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new (_("Displacement:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  size_data = gtk_adjustment_new (bvals.angledsp, 1, 90, 1, 1, 0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (size_data));
-  gtk_widget_set_usize (slider, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), slider, 1, 2, 0, 1,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (slider), FALSE);
-  gtk_scale_set_digits (GTK_SCALE (slider), 0);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_CONTINUOUS);
+  size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+				    _("Displacement:"), SCALE_WIDTH, 0,
+				    bvals.angledsp, 1, 90, 1, 15, 0,
+				    NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (size_data), "value_changed",
-		      (GtkSignalFunc) blinds_scale_update,
+		      GTK_SIGNAL_FUNC (blinds_scale_update),
 		      &bvals.angledsp);
-  gtk_widget_show (slider);
 
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), size_data);
-  gtk_object_set_user_data (size_data, entry);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buf, sizeof (buf), "%.2d", bvals.angledsp);
-  gtk_entry_set_text (GTK_ENTRY (entry), buf);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) blinds_entry_update,
-		      &bvals.angledsp);
-  gtk_table_attach (GTK_TABLE(table), entry, 2, 3, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (entry);
-
-  label = gtk_label_new (_("Num Segments:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  size_data = gtk_adjustment_new (bvals.numsegs, 1, MAX_FANS, 2, 1, 0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (size_data));
-  gtk_widget_set_usize (slider, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), slider, 1, 2, 1, 2,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (slider), FALSE);
-  gtk_scale_set_digits (GTK_SCALE (slider), 0);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_CONTINUOUS);
+  size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+				    _("Num Segments:"), SCALE_WIDTH, 0,
+				    bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
+				    NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (size_data), "value_changed",
-		      (GtkSignalFunc) blinds_scale_update,
+		      GTK_SIGNAL_FUNC (blinds_scale_update),
 		      &bvals.numsegs);
-  gtk_widget_show (slider);
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), size_data);
-  gtk_object_set_user_data (size_data, entry);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buf, sizeof (buf), "%d", bvals.numsegs);
-  gtk_entry_set_text (GTK_ENTRY (entry), buf);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) blinds_entry_update,
-		      &bvals.numsegs);
-  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, 1, 2,
-		   GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show(entry);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
@@ -530,15 +451,6 @@ blinds_dialog (void)
 
   gtk_main ();
   gdk_flush ();
-
-  /*  determine orientation  */
-  if (do_horizontal)
-    bvals.orientation = HORIZONTAL;
-  else
-    bvals.orientation = VERTICAL;
-
-  /* Use trans bg ? */
-  bvals.bg_trans = do_trans;
 
   return bint.run;
 }
@@ -552,91 +464,31 @@ blinds_ok_callback (GtkWidget *widget,
 }
 
 static void
-blinds_toggle_update (GtkWidget *widget,
-		      gpointer   data)
+blinds_radio_update (GtkWidget *widget,
+		     gpointer   data)
 {
-  gint *toggle_val;
-
-  toggle_val = (gint *) data;
+  gimp_radio_button_update (widget, data);
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
-    {
-      /* Only do for event that sets a toggle button to true */
-      /* This will break if any more toggles are added? */
-      *toggle_val = TRUE;
-      dialog_update_preview ();
-    }
-  else
-    *toggle_val = FALSE;
+    dialog_update_preview ();
 }                  
 
 static void
 blinds_button_update (GtkWidget *widget,
 		      gpointer   data)
 {
-  gint *toggle_val;
+  gimp_toggle_button_update (widget, data);
 
-  toggle_val = (gint *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    {
-      /* Only do for event that sets a toggle button to true */
-      /* This will break if any more toggles are added? */
-      *toggle_val = TRUE;
-    }
-  else
-    *toggle_val = FALSE;
-  
   dialog_update_preview ();
-
 }                  
 
 static void
 blinds_scale_update (GtkAdjustment *adjustment,
 		     gint          *value)
 {
-  GtkWidget *entry;
-  gchar      buf[256];
-	
-  if (*value != adjustment->value)
-    {
-      *value = adjustment->value;
-		
-      entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-      g_snprintf (buf, sizeof (buf), "%d", *value);
-		
-      gtk_signal_handler_block_by_data (GTK_OBJECT (entry), value);
-      gtk_entry_set_text (GTK_ENTRY (entry), buf);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (entry), value);
+  gimp_int_adjustment_update (adjustment, value);
 
-      dialog_update_preview ();
-    }
-} 
-
-static void
-blinds_entry_update (GtkWidget *widget,
-		     gint      *value)
-{
-  GtkAdjustment *adjustment;
-  gdouble        new_value;
-
-  new_value = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (*value != new_value)
-    {
-      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
-
-      if ((new_value >= adjustment->lower) &&
-	  (new_value <= adjustment->upper))
-	{
-	  *value            = new_value;
-	  adjustment->value = new_value;
-
-	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-
-	  dialog_update_preview ();
-	} 
-    } 
+  dialog_update_preview ();
 } 
 
 /* Cache the preview image - updates are a lot faster. */
@@ -815,7 +667,7 @@ blinds_get_bg (guchar *bg)
   switch (gimp_drawable_type (blindsdrawable->id))
     {
     case RGBA_IMAGE:
-      bg[3] = (do_trans == TRUE) ? 0 : 255;
+      bg[3] = bvals.bg_trans ? 0 : 255;
       break;
 
     case RGB_IMAGE :
@@ -824,7 +676,7 @@ blinds_get_bg (guchar *bg)
 
     case GRAYA_IMAGE:
       retval = TRUE;
-      bg[3] = (do_trans == TRUE)?0:255;
+      bg[3] = bvals.bg_trans ? 0 : 255;
       break;
 
     case GRAY_IMAGE:
@@ -852,7 +704,7 @@ dialog_update_preview (void)
 
   blinds_get_bg (bg);
 
-  if (do_vertical)
+  if (bvals.orientation)
     {
       for (y = 0; y < preview_height; y++)
 	{
@@ -1017,8 +869,8 @@ apply_blinds (void)
   guchar bg[4];
 
   /* Adjust aplha channel if GREYA */
-  if(blinds_get_bg(bg) == TRUE)
-    bg[1] = (do_trans == TRUE) ? 0 : 255;
+  if (blinds_get_bg (bg) == TRUE)
+    bg[1] = bvals.bg_trans  ? 0 : 255;
 
   gimp_pixel_rgn_init (&src_rgn, blindsdrawable,
 		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
@@ -1028,7 +880,7 @@ apply_blinds (void)
   src_rows = g_new (guchar, MAX (sel_width, sel_height) * 4 * STEP); 
   des_rows = g_new (guchar, MAX (sel_width, sel_height) * 4 * STEP); 
 
-  if (do_vertical)
+  if (bvals.orientation)
     {
       for (y = 0; y < sel_height; y += STEP) 
 	{

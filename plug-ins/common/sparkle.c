@@ -41,13 +41,13 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define SCALE_WIDTH 175
-#define MAX_CHANNELS 4
-#define PSV 2  /* point spread value */
-#define EPSILON 0.001
-#define SQR(a) ((a) * (a))
+#define SCALE_WIDTH  175
+#define MAX_CHANNELS   4
+#define PSV            2  /* point spread value */
+#define EPSILON        0.001
+#define SQR(a)         ((a) * (a))
 
-#define  NATURAL  0
+#define  NATURAL    0
 #define  FOREGROUND 1
 #define  BACKGROUND 2
 
@@ -82,9 +82,11 @@ static void      run    (char      *name,
 			 GParam    *param,
 			 int       *nreturn_vals,
 			 GParam   **return_vals);
-static void      sparkle_toggle_update (GtkWidget  *widget,
-				        gpointer   data);
+
 static gint      sparkle_dialog        (void);
+static void      sparkle_ok_callback   (GtkWidget *widget,
+					gpointer   data);
+
 static gint      compute_luminosity    (guchar *   pixel,
 					gint       gray,
 					gint       has_alpha);
@@ -120,10 +122,6 @@ static GTile*    rpnt                  (GDrawable * drawable,
 					gint       bytes,
 					gdouble    inten,
 					guchar color[MAX_CHANNELS]);
-static void      sparkle_ok_callback   (GtkWidget *widget,
-					gpointer   data);
-static void      sparkle_scale_update  (GtkAdjustment *adjustment,
-					double        *scale_val);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -343,8 +341,6 @@ sparkle_dialog (void)
   GtkWidget *dlg;
   GtkWidget *main_vbox;
   GtkWidget *vbox;
-  GtkWidget *label;
-  GtkWidget *scale;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *toggle;
@@ -395,182 +391,95 @@ sparkle_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), main_vbox);
   gtk_widget_show (main_vbox);
 
-  table = gtk_table_new (9, 2, FALSE);
+  table = gtk_table_new (9, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  label = gtk_label_new (_("Luminosity Threshold:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  scale_data = gtk_adjustment_new (svals.lum_threshold, 0.0, 0.1, 0.001, 0.001, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 3);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  scale_data =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			  _("Luminosity Threshold:"), SCALE_WIDTH, 0,
+			  svals.lum_threshold, 0.0, 0.1, 0.001, 0.01, 3,
+			  _("Adjust the Luminosity Threshold"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) sparkle_scale_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &svals.lum_threshold);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale, _("Adjust the Luminosity Threshold"), NULL);
 
-  label = gtk_label_new (_("Flare Intensity:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  scale_data = gtk_adjustment_new (svals.flare_inten, 0.0, 1.0, 0.01, 0.01, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  scale_data =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			  _("Flare Intensity:"), SCALE_WIDTH, 0,
+			  svals.flare_inten, 0.0, 1.0, 0.01, 0.1, 2,
+			  _("Adjust the Flare Intensity"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) sparkle_scale_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &svals.flare_inten);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale, _("Adjust the Flare Intensity"), NULL);
 
-  label = gtk_label_new (_("Spike Length:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  scale_data = gtk_adjustment_new (svals.spike_len, 1, 100, 1, 1, 0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 2, 3, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  scale_data =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			  _("Spike Length:"), SCALE_WIDTH, 0,
+			  svals.spike_len, 1, 100, 1, 10, 0,
+			  _("Adjust the Spike Length"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) sparkle_scale_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &svals.spike_len);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale, _("Adjust the Spike Length"), NULL);
 
-  label = gtk_label_new (_("Spike Points:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  scale_data = gtk_adjustment_new (svals.spike_pts, 0, 16, 1, 1, 0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 3, 4, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  scale_data =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+			  _("Spike Points:"), SCALE_WIDTH, 0,
+			  svals.spike_pts, 0, 16, 1, 4, 0,
+			  _("Adjust the Number of Spikes"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) sparkle_scale_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &svals.spike_pts);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale, _("Adjust the Number of Spike Points"), NULL);
 
-  label = gtk_label_new (_("Spike Angle (-1: Random):"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  scale_data = gtk_adjustment_new (svals.spike_angle, -1, 360, 5, 5, 0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 4, 5, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  scale_data =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+			  _("Spike Angle (-1: Random):"), SCALE_WIDTH, 0,
+			  svals.spike_angle, -1, 360, 1, 15, 0,
+			  _("Adjust the Spike Angle "
+			    "(-1 means a Random Angle is choosen)"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) sparkle_scale_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &svals.spike_angle);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale,
-			   _("Adjust the Spike Angle "
-			     "(-1 means a Random Angle is choosen)"),
-			   NULL);
 
-  label = gtk_label_new ( _("Spike Density:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  scale_data = gtk_adjustment_new (svals.density, 0.0, 1.0, 0.01, 0.01, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 5, 6, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  scale_data =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
+			  _("Spike Density:"), SCALE_WIDTH, 0,
+			  svals.density, 0.0, 1.0, 0.01, 0.1, 2,
+			  _("Adjust the Spike Density"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) sparkle_scale_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &svals.density);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale, _("Adjust the Spike Density"), NULL);
 
-  label = gtk_label_new (_("Opacity:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  scale_data = gtk_adjustment_new (svals.opacity, 0.0, 1.0, 0.01, 0.01, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 6, 7, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  scale_data =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
+			  _("Opacity:"), SCALE_WIDTH, 0,
+			  svals.opacity, 0.0, 1.0, 0.01, 0.1, 2,
+			  _("Adjust the Opacity of the Spikes"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) sparkle_scale_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &svals.opacity);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale, _("Adjust the Opacity of the Spikes"), NULL);
 
-  label = gtk_label_new (_("Random Hue:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 7, 8,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  scale_data = gtk_adjustment_new (svals.random_hue, 0.0, 1.0, 0.01, 0.01, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 7, 8, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  scale_data =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 7,
+			  _("Random Hue:"), SCALE_WIDTH, 0,
+			  svals.random_hue, 0.0, 1.0, 0.01, 0.1, 2,
+			  _("Adjust the Value how much the Hue should "
+			    "be changed randomly"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) sparkle_scale_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &svals.random_hue);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale,
-			   _("Adjust the Value how much the Hue should "
-			     "be changed randomly"),
-			   NULL);
 
-  label = gtk_label_new (_("Random Saturation:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 8, 9,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  scale_data = gtk_adjustment_new (svals.random_saturation, 0.0, 1.0, 0.01, 0.01, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 8, 9, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  scale_data =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 8,
+			  _("Random Saturation:"), SCALE_WIDTH, 0,
+			  svals.random_saturation, 0.0, 1.0, 0.01, 0.1, 2,
+			  _("Adjust the Value how much the Saturation should "
+			    "be changed randomly"), NULL);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) sparkle_scale_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &svals.random_saturation);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-  gimp_help_set_help_data (scale,
-			   _("Adjust the Value how much the Saturation "
-			     "should be changed randomly"),
-			   NULL);
 
   sep = gtk_hseparator_new ();
   gtk_box_pack_start (GTK_BOX (main_vbox), sep, FALSE, FALSE, 0);
@@ -582,9 +491,10 @@ sparkle_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("Preserve Luminosity"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), svals.preserve_luminosity);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+			       svals.preserve_luminosity);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) sparkle_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &svals.preserve_luminosity);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle, _("Should the Luminosity be preserved?"),
@@ -594,7 +504,7 @@ sparkle_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), svals.invers);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) sparkle_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &svals.invers);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle, _("Should an Inverse Effect be done?"), NULL);
@@ -603,7 +513,7 @@ sparkle_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), svals.border);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) sparkle_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &svals.border);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle,
@@ -620,7 +530,7 @@ sparkle_dialog (void)
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_natural);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) sparkle_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &use_natural);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle, _("Use the Color of the Image"), NULL);
@@ -630,7 +540,7 @@ sparkle_dialog (void)
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_foreground);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) sparkle_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &use_foreground);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle, _("Use the Foreground Color"), NULL);
@@ -640,7 +550,7 @@ sparkle_dialog (void)
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_background);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) sparkle_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &use_background);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle, _("Use the Background Color"), NULL);
@@ -1081,31 +991,11 @@ fspike (GPixelRgn *dest_rgn,
     gimp_tile_unref (tile, TRUE);
 }
 
-/*  Sparkle interface functions  */
-
 static void
 sparkle_ok_callback (GtkWidget *widget,
 		     gpointer   data)
 {
   sint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-sparkle_scale_update (GtkAdjustment *adjustment,
-		     double        *scale_val)
-{
-  *scale_val = adjustment->value;
-}
-
-static void
-sparkle_toggle_update (GtkWidget *widget,
-		     gpointer	   data)
-{
-  int *toggle_val;
-  toggle_val = (int *) data;
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
 }

@@ -45,16 +45,16 @@
 #define	MAIN_FUNCTION	scatter_hsv
 #define INTERFACE	scatter_hsv_interface
 #define	DIALOG		scatter_hsv_dialog
-#define ERROR_DIALOG	scatter_hsv_error_dialog
 #define VALS		scatter_hsv_vals
 #define OK_CALLBACK	scatter_hsv_ok_callback
 
-static void	query	(void);
-static void	run	(char	*name,
-			 int	nparams,
-			 GParam	*param,
-			 int	*nreturn_vals,
-			 GParam **return_vals);
+static void   query (void);
+static void   run   (gchar   *name,
+		     gint     nparams,
+		     GParam  *param,
+		     gint    *nreturn_vals,
+		     GParam **return_vals);
+
 static GStatusType	MAIN_FUNCTION (gint32 drawable_id);
 void scatter_hsv_scatter (guchar *r, guchar *g, guchar *b);
 static int randomize_value (int	now,
@@ -63,49 +63,28 @@ static int randomize_value (int	now,
 			    int mod_p,
 			    int	rand_max);
 
-static gint	DIALOG ();
-static void	ERROR_DIALOG (gint gtk_was_not_initialized, guchar *message);
-static void	OK_CALLBACK (GtkWidget *widget, gpointer   data);
-static gint	preview_event_handler (GtkWidget *widget, GdkEvent *event);
-static void	scatter_hsv_preview_update ();
+static gint	DIALOG                     (void);
+static void	OK_CALLBACK                (GtkWidget     *widget,
+					    gpointer       data);
+static gint	preview_event_handler      (GtkWidget     *widget,
+					    GdkEvent      *event);
+static void	scatter_hsv_preview_update (void);
+static void     scatter_hsv_iscale_update  (GtkAdjustment *adjustment,
+					    gpointer       data);
 /* gtkWrapper functions */ 
 #define PROGRESS_UPDATE_NUM	100
 #define PREVIEW_WIDTH	128
 gint	preview_width = PREVIEW_WIDTH;
 #define PREVIEW_HEIGHT	128
 gint	preview_height = PREVIEW_HEIGHT;
-#define ENTRY_WIDTH	100
 #define SCALE_WIDTH	100
-
-static void
-gtkW_table_add_scale_entry (GtkWidget	*table,
-			    gchar	*name,
-			    gint	x,
-			    gint	y,
-			    GtkSignalFunc	scale_update,
-			    GtkSignalFunc	entry_update,
-			    gint	*value,
-			    gdouble	min,
-			    gdouble	max,
-			    gdouble	step,
-			    gchar	*buffer);
-
-GtkWidget *gtkW_check_button_new (GtkWidget	*parent,
-				  gchar	*name,
-				  GtkSignalFunc update,
-				  gint	*value);
-static void scatter_hsv_iscale_update (GtkAdjustment *adjustment,
-				       gpointer       data);
-static void scatter_hsv_ientry_update (GtkWidget *widget,
-				       gpointer   data);
-
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,				/* init_proc  */
-  NULL,				/* quit_proc */
-  query,			/* query_proc */
-  run,				/* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 typedef struct
@@ -129,22 +108,22 @@ typedef struct
 static Interface INTERFACE = { FALSE };
 gint	drawable_id;
 
-GtkWidget	*preview;
-gint	preview_start_x = 0;
-gint	preview_end_x = 0;
-gint	preview_start_y = 0;
-gint	preview_end_y = 0;
-guchar	*preview_buffer = NULL;
-gint	preview_offset_x = 0;
-gint	preview_offset_y = 0;
-gint	preview_dragging = FALSE;
-gint	preview_drag_start_x = 0;
-gint	preview_drag_start_y = 0;
+GtkWidget *preview;
+gint	   preview_start_x = 0;
+gint	   preview_end_x = 0;
+gint	   preview_start_y = 0;
+gint	   preview_end_y = 0;
+guchar	  *preview_buffer = NULL;
+gint	   preview_offset_x = 0;
+gint	   preview_offset_y = 0;
+gint	   preview_dragging = FALSE;
+gint	   preview_drag_start_x = 0;
+gint	   preview_drag_start_y = 0;
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args [] =
   {
@@ -176,11 +155,11 @@ query ()
 }
 
 static void
-run (char	*name,
-     int	nparams,
-     GParam	*param,
-     int	*nreturn_vals,
-     GParam	**return_vals)
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam	 values[1];
   GStatusType	status = STATUS_EXECUTION_ERROR;
@@ -195,14 +174,14 @@ run (char	*name,
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
 
-  switch ( run_mode )
+  switch (run_mode)
     {
     case RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &VALS);
-      if (!gimp_drawable_is_rgb(drawable_id))
+      if (!gimp_drawable_is_rgb (drawable_id))
 	{
-	  scatter_hsv_error_dialog (1, (guchar *)"RGB drawable is not selected.");
+	  g_message ("Scatter HSV: RGB drawable is not selected.");
 	  return;
 	}
       if (! DIALOG ())
@@ -337,7 +316,9 @@ static int randomize_value (int	now,
   return new;
 }
 
-void scatter_hsv_scatter (guchar *r, guchar *g, guchar *b)
+void scatter_hsv_scatter (guchar *r,
+			  guchar *g,
+			  guchar *b)
 {
   int	h, s, v;
   int	h1, s1, v1;
@@ -374,16 +355,15 @@ void scatter_hsv_scatter (guchar *r, guchar *g, guchar *b)
 
 /* dialog stuff */
 static int
-DIALOG ()
+DIALOG (void)
 {
   GtkWidget *dlg;
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *table;
+  GtkObject *adj;
   gchar	**argv;
   gint	  argc;
-  gint	  index = 0;
-  static  gchar	buffer[4][10];
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -417,41 +397,49 @@ DIALOG ()
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (4, 2, FALSE);
+  table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  gtkW_table_add_scale_entry (table, _("Holdness:"), 0, index,
-			      (GtkSignalFunc) scatter_hsv_iscale_update,
-			      (GtkSignalFunc) scatter_hsv_ientry_update,
-			      &VALS.holdness,
-			      1, 8, 1, buffer[index]);
-  index++;
-  gtkW_table_add_scale_entry (table, _("Hue:"), 0, index,
-			      (GtkSignalFunc) scatter_hsv_iscale_update,
-			      (GtkSignalFunc) scatter_hsv_ientry_update,
-			      &VALS.hue_distance, 
-			      0, 255, 1, buffer[index]);
-  index++;
-  gtkW_table_add_scale_entry (table, _("Saturation:"), 0, index,
-			      (GtkSignalFunc) scatter_hsv_iscale_update,
-			      (GtkSignalFunc) scatter_hsv_ientry_update,
-			      &VALS.saturation_distance,
-			      0, 255, 1, buffer[index]);
-  index++;
-  gtkW_table_add_scale_entry (table, _("Value:"), 0, index,
-			      (GtkSignalFunc) scatter_hsv_iscale_update,
-			      (GtkSignalFunc) scatter_hsv_ientry_update,
-			      &VALS.value_distance,
-			      0, 255, 1, buffer[index]);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Holdness:"), SCALE_WIDTH, 0,
+			      VALS.holdness, 1, 8, 1, 2, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (scatter_hsv_iscale_update),
+		      &VALS.holdness);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Hue:"), SCALE_WIDTH, 0,
+			      VALS.hue_distance, 0, 255, 1, 8, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (scatter_hsv_iscale_update),
+		      &VALS.hue_distance);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			      _("Saturation:"), SCALE_WIDTH, 0,
+			      VALS.saturation_distance, 0, 255, 1, 8, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (scatter_hsv_iscale_update),
+		      &VALS.saturation_distance);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+			      _("Value:"), SCALE_WIDTH, 0,
+			      VALS.value_distance, 0, 255, 1, 8, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (scatter_hsv_iscale_update),
+		      &VALS.value_distance);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
 
-  frame = gtk_frame_new (_("Preview (1:4) - right click to jump"));
+  frame = gtk_frame_new (_("Preview (1:4) - Right Click to Jump"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -501,56 +489,9 @@ DIALOG ()
   return INTERFACE.run;
 }
 
-static void
-ERROR_DIALOG (gint gtk_was_not_initialized, guchar *message)
-{
-  GtkWidget *dlg;
-  GtkWidget *table;
-  GtkWidget *label;
-  gchar	**argv;
-  gint	argc;
-
-  if (gtk_was_not_initialized)
-    {
-      argc = 1;
-      argv = g_new (gchar *, 1);
-      argv[0] = g_strdup (PLUG_IN_NAME);
-      gtk_init (&argc, &argv);
-      gtk_rc_parse (gimp_gtkrc ());
-    }
-  
-  dlg = gimp_dialog_new (_("Scatter HSV"), "scatter_hsv",
-			 gimp_plugin_help_func, "filters/scatter_hsv.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
-
-			 _("OK"), gtk_widget_destroy,
-			 NULL, 1, NULL, TRUE, TRUE,
-
-			 NULL);
-
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
-
-  table = gtk_table_new (1, 1, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
-
-  label = gtk_label_new ((char *)message);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
-
-  gtk_widget_show (label);
-  gtk_widget_show (table);
-  gtk_widget_show (dlg);
-  
-  gtk_main ();
-  gdk_flush ();
-}
-
 static gint
-preview_event_handler (GtkWidget *widget, GdkEvent *event)
+preview_event_handler (GtkWidget *widget,
+		       GdkEvent  *event)
 {
   gint            x, y;
   gint            dx, dy;
@@ -612,7 +553,7 @@ preview_event_handler (GtkWidget *widget, GdkEvent *event)
 }
 
 static void
-scatter_hsv_preview_update ()
+scatter_hsv_preview_update (void)
 {
   GDrawable	*drawable;
   GPixelRgn	src_rgn;
@@ -700,126 +641,17 @@ scatter_hsv_preview_update ()
 
 static void
 OK_CALLBACK (GtkWidget *widget,
-	      gpointer   data)
+	     gpointer   data)
 {
   INTERFACE.run = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-GtkWidget *
-gtkW_check_button_new (GtkWidget	*parent,
-		       gchar	*name,
-		       GtkSignalFunc update,
-		       gint	*value)
-{
-  GtkWidget *toggle;
-  
-  toggle = gtk_check_button_new_with_label (name);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) update,
-		      value);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
-  gtk_container_add (GTK_CONTAINER (parent), toggle);
-  gtk_widget_show (toggle);
-  return toggle;
-}
-
-static void
-gtkW_table_add_scale_entry (GtkWidget     *table,
-			    gchar         *name,
-			    gint           x,
-			    gint           y,
-			    GtkSignalFunc  scale_update,
-			    GtkSignalFunc  entry_update,
-			    gint          *value,
-			    gdouble        min,
-			    gdouble        max,
-			    gdouble       step,
-			    gchar         *buffer)
-{
-  GtkObject *adjustment;
-  GtkWidget *label, *hbox, *scale, *entry;
-
-  label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, x, x+1, y, y+1,
-		    GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_table_attach (GTK_TABLE (table), hbox, x+1, x+2, y, y+1,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-
-  adjustment = gtk_adjustment_new (*value, min, max, step, step, 0.0);
-  gtk_widget_show (hbox);
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) scale_update, value);
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), adjustment);
-  gtk_object_set_user_data (adjustment, entry);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH/3, 0);
-  sprintf (buffer, "%d", *value);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entry_update, value);
-
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-  gtk_widget_show (entry);
 }
 
 static void
 scatter_hsv_iscale_update (GtkAdjustment *adjustment,
 			   gpointer       data)
 {
-  GtkWidget *entry;
-  gchar buffer[32];
-  int *val;
+  gimp_int_adjustment_update (adjustment, data);
 
-  val = data;
-  if (*val != (int) adjustment->value)
-    {
-      *val = adjustment->value;
-      entry = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-      sprintf (buffer, "%d", (int) adjustment->value);
-      gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-      scatter_hsv_preview_update ();
-    }
+  scatter_hsv_preview_update ();
 }
-
-static void
-scatter_hsv_ientry_update (GtkWidget *widget,
-			   gpointer   data)
-{
-  GtkAdjustment *adjustment;
-  int new_val;
-  int *val;
-
-  val = data;
-  new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (*val != new_val)
-    {
-      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
-
-      if ((new_val >= adjustment->lower) &&
-	  (new_val <= adjustment->upper))
-	{
-	  *val = new_val;
-	  adjustment->value = new_val;
-	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-	  scatter_hsv_preview_update ();
-	}
-    }
-}
-
-/* end of scatter_hsv.c */
