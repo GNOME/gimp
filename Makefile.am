@@ -73,15 +73,3 @@ DISTCLEANFILES = \
 
 gimpinstall-@GIMP_TOOL_VERSION@:
 	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-@GIMP_TOOL_VERSION@
-
-install-exec-hook:
-if DEFAULT_BINARY
-	cd $(DESTDIR)$(bindir) \
-	&& rm -f gimptool \
-	&& $(LN_S) gimptool-@GIMP_TOOL_VERSION@ gimptool
-endif
-
-uninstall-local:
-if DEFAULT_BINARY
-	rm -f $(DESTDIR)$(bindir)/gimptool
-endif

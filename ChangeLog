@@ -1,9 +1,16 @@
 2004-04-04  Sven Neumann  <sven@gimp.org>
 
+	* Makefile.am
+	* docs/Makefile.am: don't install gimptool symlinks to
+	gimptool-2.0 and its manpage. gimp.m4 as installed with gimp-1.2
+	looks for gimptool (bug #139024).
+
+2004-04-04  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	* app/display/gimpdisplayshell-draw.[ch] pass the bounding box of
 	the exposed area to gimp_display_shell_draw_grid() and draw only
-	the relevant part of the grid. Fixes bug #138606.
+	the relevant part of the grid. Fixes bug #138081.
 
 2004-04-04  Sven Neumann  <sven@gimp.org>
 

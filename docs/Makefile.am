@@ -1,10 +1,13 @@
 ## Process this file with automake to produce Makefile.in
 
-man_MANS = \
+default_binary_mans = \
 	gimp-$(GIMP_APP_VERSION).1		\
-	gimptool-$(GIMP_TOOL_VERSION).1		\
 	gimprc-$(GIMP_APP_VERSION).5		\
 	gimp-remote-$(GIMP_APP_VERSION).1
+
+man_MANS = \
+	$(default_binary_mans)			\
+	gimptool-$(GIMP_TOOL_VERSION).1
 
 EXTRA_DIST = \
 	Wilber.svg				\
@@ -17,7 +20,7 @@ EXTRA_DIST = \
 
 install-data-hook:
 if DEFAULT_BINARY
-	@list='$(man_MANS)'; \
+	@list='$(default_binary_mans)'; \
 	for i in $$list; do \
 	  s=`echo $$i | sed -e 's/.*\\(.\\)$$/\1/'`; \
 	  n=`echo $$i | sed -e 's/-[^-]*$$//'`; \
@@ -33,7 +36,7 @@ endif
 
 uninstall-local:
 if DEFAULT_BINARY
-	@list='$(man_MANS)'; \
+	@list='$(default_binary_mans)'; \
 	for i in $$list; do \
 	  s=`echo $$i | sed -e 's/.*\\(.\\)$$/\1/'`; \
 	  n=`echo $$i | sed -e 's/-[^-]*$$//'`; \
