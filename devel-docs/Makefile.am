@@ -5,6 +5,7 @@ SUBDIRS = \
 	libgimpcolor	\
 	libgimpmath	\
 	libgimpmodule	\
+	libgimpthumb	\
 	libgimpwidgets	\
 	libgimp
 

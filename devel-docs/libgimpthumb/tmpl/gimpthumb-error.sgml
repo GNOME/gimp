@@ -1,0 +1,40 @@
+<!-- ##### SECTION Title ##### -->
+gimpthumb-error
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### ENUM GimpThumbError ##### -->
+<para>
+
+</para>
+
+@GIMP_THUMB_ERROR_OPEN: 
+@GIMP_THUMB_ERROR_OPEN_ENOENT: 
+@GIMP_THUMB_ERROR_MKDIR: 
+
+<!-- ##### MACRO GIMP_THUMB_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gimp_thumb_error_quark ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

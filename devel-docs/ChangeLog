@@ -1,3 +1,17 @@
+2003-12-08  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
+	* libgimpthumb/Makefile.am
+	* libgimpthumb/libgimpthumb-docs.sgml
+	* libgimpthumb/libgimpthumb-sections.txt
+	* libgimpthumb/libgimpthumb.types
+	* libgimpthumb/version.in
+	* libgimpthumb/tmpl/gimpthumb-enums.sgml
+	* libgimpthumb/tmpl/gimpthumb-error.sgml
+	* libgimpthumb/tmpl/gimpthumb-utils.sgml
+	* libgimpthumb/tmpl/gimpthumbnail.sgml: added framework for
+	libgimpthumb documentation.
+
 2003-12-05  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt

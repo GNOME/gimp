@@ -1,0 +1,68 @@
+<!-- ##### SECTION Title ##### -->
+gimpthumb-enums
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### MACRO GIMP_TYPE_THUMB_SIZE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gimp_thumb_size_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### ENUM GimpThumbSize ##### -->
+<para>
+
+</para>
+
+@GIMP_THUMB_SIZE_FAIL: 
+@GIMP_THUMB_SIZE_NORMAL: 
+@GIMP_THUMB_SIZE_LARGE: 
+
+<!-- ##### MACRO GIMP_TYPE_THUMB_STATE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gimp_thumb_state_get_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### ENUM GimpThumbState ##### -->
+<para>
+
+</para>
+
+@GIMP_THUMB_STATE_UNKNOWN: 
+@GIMP_THUMB_STATE_REMOTE: 
+@GIMP_THUMB_STATE_NOT_FOUND: 
+@GIMP_THUMB_STATE_EXISTS: 
+@GIMP_THUMB_STATE_OLD: 
+@GIMP_THUMB_STATE_FAILED: 
+@GIMP_THUMB_STATE_OK: 
+

@@ -1,0 +1,66 @@
+<!-- ##### SECTION Title ##### -->
+gimpthumb-utils
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_thumb_init ##### -->
+<para>
+
+</para>
+
+@creator: 
+@thumb_basedir: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_thumb_name_from_uri ##### -->
+<para>
+
+</para>
+
+@uri: 
+@size: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_thumb_find_thumb ##### -->
+<para>
+
+</para>
+
+@uri: 
+@size: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_thumb_file_test ##### -->
+<para>
+
+</para>
+
+@filename: 
+@mtime: 
+@size: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_thumb_ensure_thumb_dirs ##### -->
+<para>
+
+</para>
+
+@error: 
+@Returns: 
+
+

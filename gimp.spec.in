@@ -171,10 +171,12 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 %{prefix}/lib/libgimpcolor-%{subver}.so.%{microver}
 %{prefix}/lib/libgimpmath-%{subver}.so.%{microver}.0.0
 %{prefix}/lib/libgimpmath-%{subver}.so.%{microver}
-%{prefix}/lib/libgimpwidgets-%{subver}.so.%{microver}.0.0
-%{prefix}/lib/libgimpwidgets-%{subver}.so.%{microver}
 %{prefix}/lib/libgimpmodule-%{subver}.so.%{microver}.0.0
 %{prefix}/lib/libgimpmodule-%{subver}.so.%{microver}
+%{prefix}/lib/libgimpthumb-%{subver}.so.%{microver}.0.0
+%{prefix}/lib/libgimpthumb-%{subver}.so.%{microver}
+%{prefix}/lib/libgimpwidgets-%{subver}.so.%{microver}.0.0
+%{prefix}/lib/libgimpwidgets-%{subver}.so.%{microver}
 
 %{prefix}/share/gimp/%{subver}/images
 %{prefix}/share/gimp/%{subver}/misc
@@ -204,6 +206,7 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 #new stuff 1.3
 %{prefix}/lib/pkgconfig/gimp-1.3.pc
 %{prefix}/lib/pkgconfig/gimpui-1.3.pc
+%{prefix}/lib/pkgconfig/gimpthumb-1.3.pc
 
 %dir %{prefix}/include/gimp-%{subver}/libgimpbase
 %{prefix}/include/gimp-%{subver}/libgimpbase/*
@@ -213,6 +216,9 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 
 %dir %{prefix}/include/gimp-%{subver}/libgimpmodule
 %{prefix}/include/gimp-%{subver}/libgimpmodule/*
+
+%dir %{prefix}/include/gimp-%{subver}/libgimpthumb
+%{prefix}/include/gimp-%{subver}/libgimpthumb/*
 
 %dir %{prefix}/include/gimp-%{subver}/libgimpwidgets
 %{prefix}/include/gimp-%{subver}/libgimpwidgets/*
@@ -233,6 +239,7 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 %{prefix}/share/gtk-doc/html/libgimpcolor
 %{prefix}/share/gtk-doc/html/libgimpmath
 %{prefix}/share/gtk-doc/html/libgimpmodule
+%{prefix}/share/gtk-doc/html/libgimpthumb
 %{prefix}/share/gtk-doc/html/libgimpwidgets
 
 %changelog

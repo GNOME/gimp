@@ -1,0 +1,4 @@
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <libgimpthumb/gimpthumb.h>
+
+gimp_thumbnail_get_type

@@ -47,7 +47,7 @@ AC_SUBST(WMF_REQUIRED_VERSION)
 #
 GIMP_MAJOR_VERSION=1
 GIMP_MINOR_VERSION=3
-GIMP_MICRO_VERSION=23
+GIMP_MICRO_VERSION=24
 GIMP_INTERFACE_AGE=0
 GIMP_BINARY_AGE=0
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
@@ -1452,6 +1452,8 @@ devel-docs/libgimpmath/Makefile
 devel-docs/libgimpmath/version
 devel-docs/libgimpmodule/Makefile
 devel-docs/libgimpmodule/version
+devel-docs/libgimpthumb/Makefile
+devel-docs/libgimpthumb/version
 devel-docs/libgimpwidgets/Makefile
 devel-docs/libgimpwidgets/version
 docs/Makefile

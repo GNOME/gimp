@@ -1,5 +1,12 @@
 2003-12-08  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped version number to 1.3.24.
+        (AC_CONFIG_FILES): added files in devel-docs/libgimpthumb.
+
+	* gimp.spec.in: added files from libgimpthumb.
+
+2003-12-08  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcroptool.c (gimp_crop_tool_draw): an XOR line was
 	being drawn twice; spotted by Marco Munari.
 
