@@ -31,8 +31,8 @@
 #define GIMP_HISTOGRAM_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HISTOGRAM_OPTIONS, GimpHistogramOptionsClass))
 
 
-typedef struct _GimpHistogramOptions   GimpHistogramOptions;
-typedef struct _GimpToolOptionsClass   GimpHistogramOptionsClass;
+typedef struct _GimpHistogramOptions  GimpHistogramOptions;
+typedef         GimpColorOptionsClass GimpHistogramOptionsClass;
 
 struct _GimpHistogramOptions
 {

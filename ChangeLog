@@ -1,5 +1,13 @@
 2004-02-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-convert.c (gimp_image_convert): call
+	gimp_image_colormap_changed() after installing the colormap.
+
+	* app/tools/gimphistogramoptions.h: fixed typedef of
+	GimpHistogramOptionsClass.
+
+2004-02-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimphistogramview.c (gimp_histogram_view_button_press):
 	ignore double clicks so we don't grab the pointer away from the
 	curves dialog. Fixes bug #132356.

@@ -1024,6 +1024,8 @@ gimp_image_convert (GimpImage              *gimage,
 
           gimage->num_cols = quantobj->actual_number_of_colors;
         }
+
+      gimp_image_colormap_changed (gimage, -1);
       break;
     }
 
