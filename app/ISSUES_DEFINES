@@ -24,3 +24,8 @@ Not sure what to do with the subsample parameter here. scale_area
 does use this value. 
 PIXELAREA_C_2_cw
 Same as above .. subsample not used.
+
+
+PAINT_CORE_16_C_1_cw
+Commented out the grab pointer for debuggging
+
