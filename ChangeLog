@@ -1,5 +1,11 @@
 2005-02-19  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/gtkcons.py
+	* plug-ins/pygimp/plug-ins/gimpcons.py: Use newer gtkcons widget
+	from pygtk. Some cosmetic additions.
+
+2005-02-19  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/plug-ins/py-slice.py: Ignore guides at or beyond
 	image bounds, since those aren't valid slicing bounds. Fixes bug
 	#167843.

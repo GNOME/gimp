@@ -23,7 +23,7 @@ def plug_in_python_fu_console():
     import pygtk
     pygtk.require('2.0')
 
-    import gtk, gimpenums, gimpshelf
+    import gobject, gtk, gimpenums, gimpshelf
 
     gtk.rc_parse(gimp.gtkrc())
 
@@ -39,58 +39,58 @@ def plug_in_python_fu_console():
     def bye(*args):
         gtk.main_quit()
 
-    win = gtk.Window()
-    win.connect("destroy", bye)
-    win.set_title("Gimp-Python Console")
+    dialog = gtk.Dialog(title="Python Console",
+                        buttons=(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE))
+    dialog.set_has_separator(False)
+    dialog.connect("response", bye)
 
     import gtkcons
-    cons = gtkcons.Console(namespace=namespace, quit_cb=bye)
+    cons = gtkcons.Console(namespace=namespace, quit_cb=bye, closer=False)
+
+    def on_apply(proc): 
+        cmd = ''
+
+        if len(proc.return_vals) > 0:
+            cmd = ', '.join([x[1] for x in proc.return_vals]) + ' = '
+
+        if '-' in proc.proc_name:
+            cmd = cmd + "pdb['%s']" % proc.proc_name
+        else:
+            cmd = cmd + "pdb.%s" % proc.proc_name
+
+        if len(proc.params) > 0 and proc.params[0][1] == 'run_mode':
+            params = proc.params[1:]
+        else:
+            params = proc.params
+
+        cmd = cmd + "(%s)" % ', '.join([x[1] for x in params])
+
+        cons.line.set_text(cmd)
 
     def browse(button, cons):
         import gimpprocbrowser
+        gimpprocbrowser.dialog_new(on_apply)
 
-        def on_apply(proc): 
-            cmd = ''
-
-            if len(proc.return_vals) > 0:
-                cmd = ', '.join([x[1] for x in proc.return_vals]) + ' = '
-
-            if '-' in proc.proc_name:
-                cmd = cmd + "pdb['%s']" % proc.proc_name
-            else:
-                cmd = cmd + "pdb.%s" % proc.proc_name
-
-            if len(proc.params) > 0 and proc.params[0][1] == 'run_mode':
-                params = proc.params[1:]
-            else:
-                params = proc.params
-
-            cmd = cmd + "(%s)" % ', '.join([x[1] for x in params])
-
-            cons.line.set_text(cmd)
-    
-        dlg = gimpprocbrowser.dialog_new(on_apply)
-
-    button = gtk.Button("Browse")
+    button = gtk.Button("_Browse...")
     button.connect("clicked", browse, cons)
 
-    cons.inputbox.pack_end(button, expand=FALSE)
+    cons.inputbox.pack_end(button, fill=False, expand=False, padding=2)
     button.show()
 
-    win.add(cons)
+    dialog.vbox.pack_start(cons)
     cons.show()
 
-    win.set_default_size(475, 300)
-    win.show()
+    dialog.set_default_size(500, 500)
+    dialog.show()
 
     cons.init()
 
     # flush the displays every half second
     def timeout():
         gimp.displays_flush()
-        return TRUE
+        return True
 
-    gtk.timeout_add(500, timeout)
+    gobject.timeout_add(500, timeout)
     gtk.main()
 
 register(
