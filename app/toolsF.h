@@ -65,7 +65,8 @@ typedef enum
   DODGEBURN,
   SMUDGE,
   PIXMAPBRUSH,
-  LAST_TOOLBOX_TOOL = PIXMAPBRUSH,
+  MEASURE,
+  LAST_TOOLBOX_TOOL = MEASURE,
 
   /*  Non-toolbox tools  */
   BY_COLOR_SELECT,

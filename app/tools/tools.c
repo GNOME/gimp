@@ -45,6 +45,7 @@
 #include "iscissors.h"
 #include "levels.h"
 #include "magnify.h"
+#include "measure.h"
 #include "move.h"
 #include "paintbrush.h"
 #include "pencil.h"
@@ -487,13 +488,28 @@ ToolInfo tool_info[] =
     N_("Pixmap brush"),
     16,
     N_("/Tools/Pixmap Brush"),
-    "P",
+    "",
     (char **) paint_bits,
     N_("Paint fuzzy brush strokes"),
     "ContextHelp/paintbrush",
     PIXMAPBRUSH,
     tools_new_pixmapbrush,
     tools_free_pixmapbrush, 
+    NULL
+  },
+
+  {
+    NULL,
+    N_("Measure"),
+    16,
+    N_("/Tools/Measure"),
+    "",
+    (char **) measure_bits,
+    N_("Measure distances and angles"),
+    "ContextHelp/measure",
+    MEASURE,
+    tools_new_measure_tool,
+    tools_free_measure_tool, 
     NULL
   },
 
