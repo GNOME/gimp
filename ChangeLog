@@ -1,5 +1,10 @@
 2003-06-13  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/file-save-dialog.c (file_save_ok_callback): removed
+	code for the slimy-easter-egg that was unveiled some time ago.
+
+2003-06-13  Sven Neumann  <sven@gimp.org>
+
         Attempt to finally fix Smudge tool problems (bug #115057):
 
 	* app/paint-funcs/paint-funcs-generic.h (blend_pixels): added an

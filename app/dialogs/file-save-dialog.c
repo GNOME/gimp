@@ -226,50 +226,6 @@ file_save_ok_callback (GtkWidget *widget,
 
   uri = g_filename_to_uri (filename, NULL, NULL);
 
-  {
-    gchar *dot;
-    gint   x;
-
-    for (dot = strrchr (filename, '.'), x = 0; dot && *(++dot);)
-      {
-        if (*dot != 'e' || ++x < 0)
-          {
-            break;
-          }
-        else if (x > 3 && !strcmp (dot + 1, "k"))
-          { 
-            ProcRecord   *proc_rec;
-            Argument     *args;
-            GimpDrawable *drawable;
-
-            file_dialog_hide (save_dialog);
-
-            drawable = gimp_image_active_drawable (the_gimage);
-            if (! drawable)
-              return;
-
-            proc_rec = procedural_db_lookup (the_gimage->gimp,
-                                             "plug_in_the_slimy_egg");
-            if (! proc_rec)
-              return;
-
-            args = g_new (Argument, 3);
-            args[0].arg_type      = GIMP_PDB_INT32;
-            args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
-            args[1].arg_type      = GIMP_PDB_IMAGE;
-            args[1].value.pdb_int = gimp_image_get_ID (the_gimage);
-            args[2].arg_type      = GIMP_PDB_DRAWABLE;
-            args[2].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
-
-            plug_in_run (the_gimage->gimp, proc_rec, args, 3, FALSE, TRUE, -1);
-
-            g_free (args);
-
-            return;
-          }
-      }
-  }
-
   if (g_file_test (filename, G_FILE_TEST_EXISTS))
     {
       if (g_file_test (filename, G_FILE_TEST_IS_DIR))
