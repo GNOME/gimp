@@ -9,6 +9,9 @@
 
 #include <sys/types.h>
 #include <glib.h>
+
+#include "config.h"
+
 #ifdef USE_PTHREADS
 #include <pthread.h>
 #endif

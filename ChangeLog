@@ -1,5 +1,8 @@
 Sat Jun 20 12:04:41 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
+	* app/tile.h: #include config.h so we can tell if we're doing
+	threads.  (GIMP's includes are f*ck*d.)
+
 	* app/tile_cache.c app/tile.c app/tile.h app/tile_swap.c: modified
 	tile swapping to preswap dirty tiles, using a thread if threads
 	are enabled in configure or a gtk_timeout if they're not.  The
