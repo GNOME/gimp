@@ -297,7 +297,7 @@
     (gimp-layer-set-mode v-layer MULTIPLY)
 
     ; Uncomment this if you want to keep the weaving mask image
-    ; (gimp-display-new (car (gimp-channel-ops-duplicate w-img)))
+    ; (gimp-display-new (car (gimp-image-duplicate w-img)))
 
     (list w-img
 	  (car (gimp-image-flatten w-img)))))

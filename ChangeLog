@@ -1,3 +1,21 @@
+2001-06-12  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scripts/add-bevel.scm
+	* plug-ins/script-fu/scripts/blend-anim.scm
+	* plug-ins/script-fu/scripts/fuzzyborder.scm
+	* plug-ins/script-fu/scripts/image-structure.scm
+	* plug-ins/script-fu/scripts/old_photo.scm
+	* plug-ins/script-fu/scripts/ripply-anim.scm
+	* plug-ins/script-fu/scripts/round-corners.scm
+	* plug-ins/script-fu/scripts/slide.scm
+	* plug-ins/script-fu/scripts/spinning_globe.scm
+	* plug-ins/script-fu/scripts/swirltile.scm
+	* plug-ins/script-fu/scripts/waves-anim.scm
+	* plug-ins/script-fu/scripts/weave.scm: follow API cleanup:
+
+	s/gimp-channel-ops-duplicate/gimp-image-duplicate/
+	s/gimp-channel-ops-offset/gimp-drawable-offset/
+
 2001-06-08  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: don't build devel-docs/pdb/Makefile.am

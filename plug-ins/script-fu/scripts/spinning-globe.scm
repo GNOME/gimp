@@ -29,7 +29,7 @@
 				  inIndex 
 				  inCopy)
   (set! theImage (if (= inCopy TRUE)
-		     (car (gimp-channel-ops-duplicate inImage))
+		     (car (gimp-image-duplicate inImage))
 		     inImage))
   (set! theLayer (car (gimp-image-get-active-layer theImage)))
   (gimp-layer-add-alpha theLayer)

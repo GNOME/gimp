@@ -37,7 +37,7 @@
          
 	(gimp-selection-all inImage)
 	(set! theImage (if (= inCopy TRUE)
-		       (car (gimp-channel-ops-duplicate inImage))
+		       (car (gimp-image-duplicate inImage))
                        inImage)
         )
 	(if 	(> 	(car (gimp-drawable-type inLayer))

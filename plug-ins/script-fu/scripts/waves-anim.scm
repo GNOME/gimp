@@ -41,7 +41,7 @@
 	 (remaining-frames num-frames)
 	 (phase 0)
 	 (phaseshift (/ 360 num-frames))
-         (image (car (gimp-channel-ops-duplicate img)))
+         (image (car (gimp-image-duplicate img)))
 	 (source-layer (car (gimp-image-get-active-layer image))))
    
   (gimp-image-undo-disable image)

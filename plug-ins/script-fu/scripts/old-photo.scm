@@ -24,7 +24,7 @@
 (define (script-fu-old-photo inImage inLayer inDefocus inBorder inSepia inMottle inCopy)
         (gimp-selection-all inImage)
         (set! theImage (if (= inCopy TRUE)
-                       (car (gimp-channel-ops-duplicate inImage))
+                       (car (gimp-image-duplicate inImage))
                        inImage)
         )
 

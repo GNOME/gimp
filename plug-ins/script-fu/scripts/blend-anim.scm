@@ -44,7 +44,7 @@
 			      looped)
   (let* ((max-blur (max max-blur 0))
 	 (frames (max frames 0))
-	 (image (car (gimp-channel-ops-duplicate img)))
+	 (image (car (gimp-image-duplicate img)))
 	 (width (car (gimp-image-width image)))
 	 (height (car (gimp-image-height image)))
 	 (layers (gimp-image-get-layers image))

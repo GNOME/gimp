@@ -24,7 +24,7 @@
     (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)
     (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)
 
-    (gimp-channel-ops-offset layer-one TRUE 0 cx cy)
+    (gimp-drawable-offset layer-one TRUE 0 cx cy)
 
     (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)
     (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)

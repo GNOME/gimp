@@ -56,7 +56,7 @@
 			 work-on-copy)
   (let* ((type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image (cond ((= work-on-copy TRUE)
-		       (car (gimp-channel-ops-duplicate img)))
+		       (car (gimp-image-duplicate img)))
 		      ((= work-on-copy FALSE)
 		       img)))
 	 (owidth (car (gimp-image-width image)))

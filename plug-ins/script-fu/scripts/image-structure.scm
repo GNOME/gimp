@@ -50,7 +50,7 @@
 					padding-opacity with-background?
 					background-color)
   (if (eq? new-image? TRUE)
-      (begin (set! img (car (gimp-channel-ops-duplicate img)))
+      (begin (set! img (car (gimp-image-duplicate img)))
 	     (gimp-display-new img)))
   (let* ((layers (gimp-image-get-layers img))
 	 (num-of-layers (car layers))
