@@ -22,18 +22,20 @@
 #include <signal.h>
 #include <string.h>
 #include <sys/types.h>
+
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
 #endif
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include "libgimp/gserialize.h"
-
 #ifndef  WAIT_ANY
 #define  WAIT_ANY -1
 #endif   /*  WAIT_ANY  */
+
+#include <glib.h>
 
 #include "libgimp/gimpfeatures.h"
 #include "libgimp/gimpenv.h"
@@ -54,7 +56,6 @@ static RETSIGTYPE on_sig_child (gint);
 #endif
 #endif
 static void       init            (void);
-static void       test_gserialize (void);
 static void	  on_error        (const gchar    *domain,
 				   GLogLevelFlags  flags,
 				   const gchar    *msg,
@@ -154,8 +155,6 @@ main (int    argc,
 
   batch_cmds    = g_new (char *, argc);
   batch_cmds[0] = NULL;
-
-  test_gserialize ();
 
   for (i = 1; i < argc; i++)
     {
@@ -422,7 +421,7 @@ on_error (const gchar    *domain,
   gimp_fatal_error ("%s", msg);
 }
 
-static int caught_fatal_sig = 0;
+static gboolean caught_fatal_sig = FALSE;
 
 #ifndef G_OS_WIN32
 
@@ -431,7 +430,7 @@ on_signal (gint sig_num)
 {
   if (caught_fatal_sig)
     kill (getpid (), sig_num);
-  caught_fatal_sig = 1;
+  caught_fatal_sig = TRUE;
 
   switch (sig_num)
     {
@@ -488,7 +487,7 @@ on_signal (gint sig_num)
 
 #ifdef SIGCHLD
 static RETSIGTYPE
-on_sig_child (int sig_num)
+on_sig_child (gint sig_num)
 {
   gint pid;
   gint status;
@@ -503,73 +502,3 @@ on_sig_child (int sig_num)
 #endif /* SIGCHLD */
 
 #endif /* !G_OS_WIN32 */
-
-typedef struct 
-{
-  gint32 test_gint32;
-  float test_float;
-  char *test_string;
-  guint32  test_length;
-  guint16 *test_array;
-} test_struct;
-
-static void
-test_gserialize (void)
-{
-  GSerialDescription *test_struct_descript;
-  test_struct *ts, *to;
-  char ser_1[] = {3, 1, 2, 3, 4, 4, 64, 83, 51, 51, 101, 0, 0, 0, 4, 102, 111, 111, 0, 103, 0, 0, 0, 2, 5, 6, 7, 8 };
-  ts = g_new (test_struct, 1);
-  to = g_new (test_struct, 1);
-  test_struct_descript 
-    = g_new_serial_description("test_struct",
-			       g_serial_item(GSERIAL_INT32,
-					     test_struct,
-					     test_gint32),
-			       g_serial_item(GSERIAL_FLOAT,
-					     test_struct,
-					     test_float),
-			       g_serial_item(GSERIAL_STRING,
-					     test_struct,
-					     test_string),
-			       g_serial_vlen_array(GSERIAL_INT16ARRAY,
-						   test_struct,
-						   test_array,
-						   test_length),
-			       NULL);
-
-
-  ts->test_gint32 = 0x01020304;
-  ts->test_float = 3.3f;
-  ts->test_string = "foo";
-  ts->test_length = 2;
-  ts->test_array  = g_new (guint16, 2);
-  ts->test_array[0] = 0x0506;
-  ts->test_array[1] = 0x0708;
-
-  g_deserialize (test_struct_descript, (char *)(void*)to, ser_1);
-
-#define EPSILON .0001
-
-  if (to->test_gint32 != ts->test_gint32)
-    g_message("gint32 test failed (please email your system configuration to jaycox@earthlink.net): %d\n", to->test_gint32);
-  if (to->test_float + EPSILON < ts->test_float || to->test_float - EPSILON > ts->test_float)
-    g_message("float test failed (please email your system configuration to jaycox@earthlink.net): %f\n", to->test_float);
-  if (strcmp(to->test_string, ts->test_string) != 0)
-    g_message("string test failed (please email your system configuration to jaycox@earthlink.net): %s\n", to->test_string);
-  if (to->test_length != ts->test_length)
-    g_message("array length test failed(please email your system configuration to jaycox@earthlink.net): %d\n", to->test_length);
-  if (to->test_array[0] != ts->test_array[0])
-    g_message("int16array value 0 test failed(please email your system configuration to jaycox@earthlink.net): %d\n", to->test_array[0]);
-  g_return_if_fail (to->test_array[1] == ts->test_array[1]);
-  if (to->test_array[1] != ts->test_array[1])
-    g_message("int16array value 1 test failed(please email your system configuration to jaycox@earthlink.net): %d\n", to->test_array[1]);
-
-  /*  free the memory  */
-  g_free (ts->test_array);
-  g_free (ts);
-  g_free (to->test_array);
-  g_free (to->test_string);
-  g_free (to);
-  g_free_serial_description (test_struct_descript);
-}

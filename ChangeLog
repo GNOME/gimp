@@ -1,3 +1,7 @@
+Thu Feb 10 20:47:51 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/main.c: removed test_function for gserialize.
+
 2000-02-10  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpquerybox.[ch]: as all boolean query boxes are
