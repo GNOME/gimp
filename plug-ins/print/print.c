@@ -989,7 +989,7 @@ get_system_printers (void)
   char defname[17];
 #if defined(LPC_COMMAND) || defined(LPSTAT_COMMAND)
   FILE	*pfile;
-  char	line[129];
+  char	line[129], name[17];
 #endif
 #ifdef __EMX__
   BYTE  pnum;

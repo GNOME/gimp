@@ -1,3 +1,9 @@
+Sun Apr  2 04:39:10 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* configure.in: minor portability nit with gtkxmhtml tests
+
+	* plug-ins/print/print.c: fix missing variable name from the merge
+
 2000-04-02  Sven Neumann  <sven@gimp.org>
 	
 	* plug-ins/script-fu/scripts/add-bevel.scm

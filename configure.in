@@ -559,7 +559,7 @@ fi
 
 dnl Sanity check to make sure the headers are there too and that gnome-config
 dnl didn't lie to us
-if test -n $HELPBROWSER; then
+if test -n "$HELPBROWSER"; then
   gimp_save_CPPFLAGS="$CPPFLAGS"
   gimp_save_LDFLAGS="$LDFLAGS"
   gimp_save_LIBS="$LIBS"
