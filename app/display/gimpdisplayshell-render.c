@@ -398,8 +398,6 @@ render_image (GDisplay *gdisp,
        case PRECISION_NONE:
         break;
     }
-
- /*canvas_delete (info.src_canvas);*/
 }
 
 
@@ -5000,8 +4998,7 @@ render_image_init_info (RenderInfo *info,
   info->byte_order = gximage_get_byte_order ();
 
 #define IMAGE_RENDER_C_5_cw
-  info->src_tiles = gimage_projection (gdisp->gimage);
-  /*info->src_canvas = canvas_from_tm (info->src_tiles);*/
+  /* info->src_tiles = gimage_projection (gdisp->gimage);*/
   info->src_canvas = gimage_projection_canvas (gdisp->gimage);
   info->scale = render_image_accelerate_scaling (w, info->x, info->src_bpp, info->scalesrc, info->scaledest);
   info->alpha = NULL;

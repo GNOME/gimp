@@ -70,7 +70,7 @@ static Gap*  tile_swap_gap_new        (long         start,
 static void  tile_swap_gap_destroy    (Gap         *gap);
 
 
-static initialize = TRUE;
+static int initialize = TRUE;
 static GHashTable *swap_files = NULL;
 static GList *open_swap_files = NULL;
 static int nopen_swap_files = 0;

@@ -177,6 +177,8 @@ static GtkMenuEntry menu_items[] =
   { "<Image>/Tools/Airbrush", "A", tools_select_cmd_callback, (gpointer) AIRBRUSH },
   { "<Image>/Tools/Clone", "C", tools_select_cmd_callback, (gpointer) CLONE },
   { "<Image>/Tools/Convolve", "V", tools_select_cmd_callback, (gpointer) CONVOLVE },
+  { "<Image>/Tools/Default Colors", "D", tools_default_colors_cmd_callback, NULL},
+  { "<Image>/Tools/Swap Colors", "X", tools_swap_colors_cmd_callback, NULL},  
   { "<Image>/Tools/<separator>", NULL, NULL, NULL },
   { "<Image>/Tools/Toolbox", NULL, toolbox_raise_callback, NULL },
 

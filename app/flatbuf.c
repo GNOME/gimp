@@ -26,11 +26,11 @@ struct _FlatBuf
   Tag      tag;
   int      width;
   int      height;
-  void *   data;
 
-  int      refcount;
-  int      swapped;
-  char *   filename;
+
+  int      valid;
+  int      ref_count;
+  void *   data;
 };
 
 
@@ -43,25 +43,16 @@ flatbuf_new (
              )
 {
   FlatBuf *f;
-  guint   bytes;
-  
-  bytes = tag_bytes (tag);
-  if (bytes == 0)
-    return NULL;
   
   f = (FlatBuf *) g_malloc (sizeof (FlatBuf));
 
   f->tag = tag;
   f->width = w;
   f->height = h;
-  f->data = g_malloc (w * h * bytes);
-  memset (f->data, 0, w * h * bytes);
 
-  /* for now, ref counts don;t mean anything, but could be used to
-     control swapping */
-  f->refcount = 1;
-  f->swapped = FALSE;
-  f->filename = NULL;
+  f->valid = FALSE;
+  f->ref_count = 0;
+  f->data = NULL;
 
   return f;
 }
@@ -76,9 +67,6 @@ flatbuf_delete (
     {
       if (f->data)
         g_free (f->data);
-
-      if (f->swapped)
-        /* flatbuf_swap_free (f) */ ;
 
       g_free (f);
     }
@@ -100,14 +88,18 @@ flatbuf_clone (
       newf->width = f->width;
       newf->height = f->height;
 
-      newf->data = g_malloc (f->width * f->height * tag_bytes(f->tag));
-      flatbuf_ref (f, 0, 0);
-      memcpy (newf->data, f->data, f->width * f->height * tag_bytes(f->tag));
-      flatbuf_unref (f, 0, 0);
+      newf->valid = FALSE;
+      newf->ref_count = 0;
+      newf->data = NULL;
 
-      newf->refcount = 1;
-      newf->swapped = FALSE;
-      newf->filename = NULL;
+      if (f->valid == TRUE)
+        {
+          flatbuf_ref (newf, 0, 0);
+          flatbuf_ref (f, 0, 0);
+          memcpy (newf->data, f->data, f->width * f->height * tag_bytes(f->tag));
+          flatbuf_unref (f, 0, 0);
+          flatbuf_unref (newf, 0, 0);
+        }
     }
   
   return newf;
@@ -127,7 +119,7 @@ flatbuf_info (
                     tag_string_precision (tag_precision (flatbuf_tag (f))),
                     tag_string_format (tag_format (flatbuf_tag (f))),
                     tag_string_alpha (tag_alpha (flatbuf_tag (f))));
-      trace_printf ("ref %d for 0x%x", f->refcount, f->data);
+      trace_printf ("ref %d for 0x%x", f->ref_count, f->data);
       trace_end ();
     }
 }
@@ -177,7 +169,6 @@ flatbuf_set_precision (
                        Precision x
                        )
 {
-  /* WRITEME */
   g_warning ("finish writing flatbuf_set_precision()");
   return flatbuf_precision (f);
 }
@@ -189,7 +180,6 @@ flatbuf_set_format (
                     Format    x
                     )
 {
-  /* WRITEME */
   g_warning ("finish writing flatbuf_set_format()");
   return flatbuf_format (f);
 }
@@ -201,7 +191,6 @@ flatbuf_set_alpha (
                    Alpha     x
                    )
 {
-  /* WRITEME */
   g_warning ("finish writing flatbuf_set_alpha()");
   return flatbuf_alpha (f);
 }
@@ -236,15 +225,29 @@ flatbuf_ref  (
               int y
               )
 {
+  guint rc = FALSE;
+  
   if (f)
     {
-      f->refcount++;
-      if (f->refcount == 1)
+      f->ref_count++;
+      if ((f->ref_count == 1) && (f->data == NULL))
         {
-          /* swap in */
+          if (f->valid == TRUE)
+            {
+              /* swap buffer in */
+            }
+          else
+            {
+              /* alloc buffer */
+              int n = tag_bytes (flatbuf_tag (f)) * f->width * f->height;
+              f->valid = TRUE;
+              f->data = g_malloc (n);
+              memset (f->data, 0, n);
+              rc = TRUE;
+            }
         }
     }
-  return FALSE;
+  return rc;
 }
 
 
@@ -257,8 +260,8 @@ flatbuf_unref  (
 {
   if (f)
     {
-      f->refcount--;
-      if (f->refcount == 0)
+      f->ref_count--;
+      if (f->ref_count == 0)
         {
           /* swap out */
         }
@@ -274,8 +277,18 @@ flatbuf_init  (
                int y
                )
 {
-  /* the only time new store is allocated is in flatbuf_new(), and it
-     is init'ed there, so we have nothing to do */
+  if (f
+      && src
+      && (f->width == src->width)
+      && (f->height == src->height)
+      && tag_equal (f->tag, src->tag))
+    {
+      flatbuf_ref (f, 0, 0);
+      flatbuf_ref (src, 0, 0);
+      memcpy (f->data, src->data, f->width * f->height * tag_bytes (f->tag));
+      flatbuf_unref (src, 0, 0);
+      flatbuf_unref (f, 0, 0);
+    }
 }
 
 
@@ -373,10 +386,13 @@ flatbuf_from_tb (
       fb->tag       = tag_by_bytes (tb->bytes);
       fb->width     = tb->width;
       fb->height    = tb->height;
-      fb->refcount  = 1;
-      fb->swapped   = FALSE;
-      fb->filename  = NULL;
-      fb->data      = g_malloc (tb->bytes * tb->width * tb->height);
-      memcpy (fb->data, tb->data, tb->bytes * tb->width * tb->height);
+      fb->valid     = FALSE;
+      fb->ref_count = 0;
+      fb->data      = NULL;
+      {
+        flatbuf_ref (fb, 0, 0);
+        memcpy (fb->data, tb->data, tb->bytes * tb->width * tb->height);
+        flatbuf_unref (fb, 0, 0);
+      }
     }
 }

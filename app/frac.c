@@ -389,8 +389,7 @@ xcf_save_frac_compressed_tile (XcfInfo *info, Tile *tile)
   for (i = 0; i < num_channels; i++)
     {
       fractal_compress (channelTilesData[i], tile->ewidth, tile->eheight);
-
-      /*      compress_cleanup (tile->eheight); */
+      compress_cleanup (tile->eheight);
     }
 
   CloseOutputBitFile (frac_file);
@@ -581,7 +580,7 @@ find_class(gint x, gint y, gint size) {
     gint class = 0;               /* the result class */
     gint i,j;                     /* quadrant indices */
     uns_long sum[4];             /* sums for each quadrant */
-    static delta[3] = {6, 2, 1}; /* table used to compute the class number */
+    static gint delta[3] = {6, 2, 1}; /* table used to compute the class number */
     gint size1 = size >> 1;
 
     /* Get the cumulative values of each quadrant. By the IN assertion,

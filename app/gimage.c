@@ -605,7 +605,7 @@ gimage_apply_painthit  (
                         GimpDrawable * drawable,
                         PixelArea * src2PR,
                         int undo,
-                        Paint * opacity,
+                        gfloat opacity,
                         int mode,
                         Canvas * src1_tiles,
                         int x,
@@ -663,8 +663,7 @@ gimage_apply_painthit  (
 
       /* set up the pixel regions */
       {
-       /* d = canvas_from_tm (drawable_data (drawable)); */
-        d = drawable_data_canvas (drawable); 
+        d = drawable_data_canvas (drawable);
         
         if (src1_tiles)
           pixelarea_init (&src1PR, src1_tiles, NULL,
@@ -684,7 +683,7 @@ gimage_apply_painthit  (
         
         if (mask)
           {
-            m = canvas_from_tm (drawable_data (GIMP_DRAWABLE(mask)));
+            m = drawable_data_canvas (GIMP_DRAWABLE(mask));
             pixelarea_init (&maskPR, m, NULL,
                             x1 + offset_x, y1 + offset_y, (x2 - x1), (y2 - y1), FALSE);
           }
@@ -697,19 +696,24 @@ gimage_apply_painthit  (
       
       gimage_get_active_channels (gimage, drawable, active);
 
-      if (mask)
-        combine_areas (&src1PR, src2PR, &destPR, &maskPR, NULL,
-                       opacity, mode, active, operation);
-      else
-        combine_areas (&src1PR, src2PR, &destPR, NULL, NULL,
-                       opacity, mode, active, operation);
+      {
+        static Paint * p;
+        if (p == NULL)
+          {
+            p = paint_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
+                           NULL);
+          }
+        paint_load (p,
+                    tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
+                    &opacity);
+        if (mask)
+          combine_areas (&src1PR, src2PR, &destPR, &maskPR, NULL,
+                         p, mode, active, operation);
+        else
+          combine_areas (&src1PR, src2PR, &destPR, NULL, NULL,
+                         p, mode, active, operation);
+      }
     }
-#if 0
-    canvas_init_tm (d, drawable_data (drawable));
-    
-    canvas_delete (d);
-    canvas_delete (m);
-#endif
   }
 }
 
@@ -843,7 +847,7 @@ gimage_replace_painthit  (
                           GimpDrawable * drawable,
                           PixelArea * src2PR,
                           int undo,
-                          Paint * opacity,
+                          gfloat opacity,
                           PixelArea * maskPR,
                           int x,
                           int y

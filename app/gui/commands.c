@@ -66,7 +66,7 @@
 #include "undo.h"
 
 /*  external functions  */
-extern layers_dialog_layer_merge_query (GImage *, int);
+extern void layers_dialog_layer_merge_query (GImage *, int);
 
 typedef struct {
   GtkWidget *dlg;
@@ -2276,6 +2276,20 @@ layers_mask_select_cmd_callback (GtkWidget *widget,
 
   gimage_mask_layer_mask (gdisp->gimage, gdisp->gimage->active_layer);
   gdisplays_flush ();
+}
+
+void
+tools_default_colors_cmd_callback (GtkWidget *widget,
+				   gpointer   client_data)
+{
+  palette_set_default_colors ();
+}
+
+void
+tools_swap_colors_cmd_callback (GtkWidget *widget,
+				gpointer   client_data)
+{
+  palette_swap_colors ();
 }
 
 void

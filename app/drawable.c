@@ -697,7 +697,7 @@ gimp_drawable_configure (GimpDrawable *drawable,
   if (drawable->canvas)
     canvas_delete (drawable->canvas);
   drawable->canvas = canvas_new (drawable->tag, width, height, TILING_NEVER);
-  
+
   drawable->dirty = FALSE;
   drawable->visible = TRUE;
 

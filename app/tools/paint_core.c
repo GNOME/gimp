@@ -32,8 +32,6 @@
 #include "tools.h"
 #include "undo.h"
 
-#include "canvas.h"
-
 #define    SQR(x) ((x) * (x))
 #define    EPSILON  0.00001
 
@@ -70,18 +68,11 @@ static TempBuf *  canvas_buf = NULL;
 
 /*  brush buffers  */
 static MaskBuf *  solid_brush;
-#if 0
 static MaskBuf *  kernel_brushes[4][4] = { {NULL, NULL, NULL, NULL},
 					   {NULL, NULL, NULL, NULL},
 					   {NULL, NULL, NULL, NULL},
 					   {NULL, NULL, NULL, NULL}};
-#else
-#include "flatbuf.h"
-static FlatBuf *  kernel_brushes[4][4] = { {NULL, NULL, NULL, NULL},
-					   {NULL, NULL, NULL, NULL},
-					   {NULL, NULL, NULL, NULL},
-					   {NULL, NULL, NULL, NULL}};
-#endif
+
 
 /*  paint buffers utility functions  */
 static void        free_paint_buffers     (void);
@@ -685,9 +676,7 @@ paint_core_subsample_mask (mask, x, y)
      double x, y;
 {
   static MaskBuf *last_brush = NULL;
-  static MaskBuf *dest = NULL;
-  /* MaskBuf * dest; */
-  FlatBuf * xxxx;
+  MaskBuf * dest;
   double left;
   unsigned char * m, * d;
   int * k;
@@ -710,26 +699,19 @@ paint_core_subsample_mask (mask, x, y)
   kernel = subsample[index2][index1];
 
   if ((mask == last_brush) && kernel_brushes[index2][index1])
-    {
-      xxxx = kernel_brushes[index2][index1];
-      goto gotit;
-    }
+    return kernel_brushes[index2][index1];
   else if (mask != last_brush)
     for (i = 0; i < 4; i++)
       for (j = 0; j < 4; j++)
 	{
 	  if (kernel_brushes[i][j])
-            /* mask_buf_free (kernel_brushes[i][j]); */
-            flatbuf_delete (kernel_brushes[i][j]);
+	    mask_buf_free (kernel_brushes[i][j]);
 	  kernel_brushes[i][j] = NULL;
 	}
 
   last_brush = mask;
-  /* kernel_brushes[index2][index1] = mask_buf_new (mask->width + 2, mask->height + 2); */
-  kernel_brushes[index2][index1] = flatbuf_new (tag_by_bytes (1),
-                                                mask->width + 2,
-                                                mask->height + 2);
-  xxxx = kernel_brushes[index2][index1];
+  kernel_brushes[index2][index1] = mask_buf_new (mask->width + 2, mask->height + 2);
+  dest = kernel_brushes[index2][index1];
 
   m = mask_buf_data (mask);
   for (i = 0; i < mask->height; i++)
@@ -739,8 +721,7 @@ paint_core_subsample_mask (mask, x, y)
 	  k = kernel;
 	  for (r = 0; r < KERNEL_HEIGHT; r++)
 	    {
-	      /* d = mask_buf_data (dest) + (i+r) * dest->width + j; */
-	      d = flatbuf_data (xxxx, j, i+r);
+	      d = mask_buf_data (dest) + (i+r) * dest->width + j;
 	      s = KERNEL_WIDTH;
 	      while (s--)
 		{
@@ -752,11 +733,6 @@ paint_core_subsample_mask (mask, x, y)
 	}
     }
 
- gotit:
-  if (dest)
-    mask_buf_free (dest);
-  dest = mask_buf_new (mask->width + 2, mask->height + 2);
-  flatbuf_to_tb (xxxx, dest);
   return dest;
 }
 
@@ -849,13 +825,6 @@ paint_core_paste (paint_core, brush_mask, drawable, brush_opacity, image_opacity
 			canvas_buf->width, canvas_buf->height);
 
       paint_to_canvas_tiles (paint_core, brush_mask, brush_opacity);
-      {
-        Canvas *c = canvas_from_tm (undo_tiles);
-        TileManager *tm = canvas_to_tm (c);
-        canvas_delete (c);
-        tile_manager_destroy (undo_tiles);
-        undo_tiles = tm;
-      }
       alt = undo_tiles;
     }
   /*  Otherwise:

@@ -25,5 +25,6 @@ struct _tool *  tools_new_paintbrush   (void);
 void            tools_free_paintbrush  (struct _tool *);
 
 extern struct _ProcRecord paintbrush_proc;
+extern struct _ProcRecord paintbrush_extended_proc;
 
 #endif  /*  __PAINTBRUSH_H__  */

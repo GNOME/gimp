@@ -1218,13 +1218,55 @@ text_insert_field (GSList  *list,
 		   char    *fontname,
 		   int      field_num)
 {
+  GSList *tmp_list = list;
+  GSList *prev_list = NULL;
+  GSList *new_list;
+  gint cmp;
   char *field;
 
   field = text_get_field (fontname, field_num);
   if (!field)
     return list;
 
-  return g_slist_insert_sorted (list, field, font_compare_func);
+  if (!list)
+    {
+      new_list = g_slist_alloc();
+      new_list->data = field;
+      return new_list;
+    }
+
+  cmp = font_compare_func (field, tmp_list->data);
+ 
+  while ((tmp_list->next) && (cmp > 0))
+    {
+      prev_list = tmp_list;
+      tmp_list = tmp_list->next;
+      cmp = font_compare_func (field, tmp_list->data);
+    }
+
+  if (cmp == 0)
+    return list;
+
+  new_list = g_slist_alloc();
+  new_list->data = field;
+
+  if ((!tmp_list->next) && (cmp > 0))
+    {
+      tmp_list->next = new_list;
+      return list;
+    }
+
+  if (prev_list)
+    {
+      prev_list->next = new_list;
+      new_list->next = tmp_list;
+      return list;
+    }
+  else
+    {
+      new_list->next = list;
+      return new_list;
+    }
 }
 
 static char*

@@ -45,8 +45,10 @@ static char *scroll_text[] =
   "Roberto Boyd",
   "Seth Burgess",
   "Brent Burton",
+  "Francisco Bustamente",
   "Ed Connel",
   "Andreas Dilger",
+  "Misha Dynin",
   "Larry Ewing",
   "David Forsyth",
   "Jim Geuther",
@@ -244,6 +246,7 @@ static int
 about_dialog_load_logo (GtkWidget *window)
 {
   GtkWidget *preview;
+  GdkGC *gc;
   char buf[1024];
   unsigned char *pixelrow;
   FILE *fp;
@@ -296,12 +299,15 @@ about_dialog_load_logo (GtkWidget *window)
     }
 
   gtk_widget_realize (window);
-  logo_pixmap = gdk_pixmap_new (window->window, logo_width, logo_height, -1);
+  logo_pixmap = gdk_pixmap_new (window->window, logo_width, logo_height, 
+				gtk_preview_get_visual ()->depth);
+  gc = gdk_gc_new (logo_pixmap);
   gtk_preview_put (GTK_PREVIEW (preview),
-		   logo_pixmap, window->style->black_gc,
+		   logo_pixmap, gc,
 		   0, 0, 0, 0, logo_width, logo_height);
+  gdk_gc_destroy (gc);
 
-  gtk_widget_destroy (preview);
+  gtk_widget_unref (preview);
   g_free (pixelrow);
 
   fclose (fp);

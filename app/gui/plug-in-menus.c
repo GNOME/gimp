@@ -1539,7 +1539,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
       break;
 
     case PDB_TEMPORARY:
-      prog = g_strdup ("none");
+      prog = "none";
 
       tmp = current_plug_in->temp_proc_defs;
       break;
@@ -1631,7 +1631,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
       /*  If there is a menu path specified, create a menu entry  */
       if (proc_install->menu_path)
 	{
-	  entry.path = g_strdup (proc_install->menu_path);
+	  entry.path = proc_install->menu_path;
 	  entry.accelerator = NULL;
 	  entry.callback = plug_in_callback;
 	  entry.callback_data = proc;

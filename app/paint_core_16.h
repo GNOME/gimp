@@ -137,8 +137,8 @@ struct _Canvas *   paint_core_16_area_original   (PaintCore16 *,
 
 void               paint_core_16_area_paste      (PaintCore16 *,
                                                   struct _GimpDrawable *,
-                                                  Paint * brush_opacity,
-                                                  Paint * image_opacity,
+                                                  gfloat brush_opacity,
+                                                  gfloat image_opacity,
                                                   BrushHardness brush_hardness,
                                                   ApplyMode apply_mode,
                                                   int paint_mode
@@ -146,8 +146,8 @@ void               paint_core_16_area_paste      (PaintCore16 *,
 
 void               paint_core_16_area_replace    (PaintCore16 *,
                                                   struct _GimpDrawable *,
-                                                  Paint * brush_opacity,
-                                                  Paint * image_opacity,
+                                                  gfloat brush_opacity,
+                                                  gfloat image_opacity,
                                                   BrushHardness brush_hardness,
                                                   ApplyMode apply_mode);
 

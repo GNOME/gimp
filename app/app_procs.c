@@ -164,6 +164,7 @@ static int
 splash_logo_load (GtkWidget *window)
 {
   GtkWidget *preview;
+  GdkGC *gc;
   char buf[1024];
   unsigned char *pixelrow;
   FILE *fp;
@@ -215,10 +216,13 @@ splash_logo_load (GtkWidget *window)
     }
 
   gtk_widget_realize (window);
-  logo_pixmap = gdk_pixmap_new (window->window, logo_width, logo_height, -1);
+  logo_pixmap = gdk_pixmap_new (window->window, logo_width, logo_height,
+				gtk_preview_get_visual ()->depth);
+  gc = gdk_gc_new (logo_pixmap);
   gtk_preview_put (GTK_PREVIEW (preview),
-		   logo_pixmap, window->style->black_gc,
+		   logo_pixmap, gc,
 		   0, 0, 0, 0, logo_width, logo_height);
+  gdk_gc_destroy (gc);
 
   gtk_widget_unref (preview);
   g_free (pixelrow);
@@ -307,51 +311,62 @@ my_idle_proc(void)
 static void
 make_initialization_status_window(void)
 {
-  if (no_interface == FALSE && no_splash == FALSE)
+  if (no_interface == FALSE)
     {
-      GtkWidget *vbox;
-
-      win_initstatus = gtk_window_new(GTK_WINDOW_DIALOG);
-      gtk_window_set_wmclass (GTK_WINDOW(win_initstatus), "gimp_startup", "Gimp");
-      gtk_window_set_title(GTK_WINDOW(win_initstatus),
-			   "GIMP Startup");
-
-      if (no_splash_image == FALSE && splash_logo_load_size (win_initstatus)) 
+      get_standard_colormaps ();
+      if (no_splash == FALSE)
 	{
-	  show_logo = SHOW_LATER;
+	  GtkWidget *vbox;
+
+	  win_initstatus = gtk_window_new(GTK_WINDOW_DIALOG);
+	  gtk_window_set_wmclass (GTK_WINDOW(win_initstatus), "gimp_startup", "Gimp");
+	  gtk_window_set_title(GTK_WINDOW(win_initstatus),
+		               "GIMP Startup");
+
+	  if (no_splash_image == FALSE && splash_logo_load_size (win_initstatus)) 
+	    {
+	      show_logo = SHOW_LATER;
+	    }
+
+	  vbox = gtk_vbox_new(FALSE, 4);
+	  gtk_container_add(GTK_CONTAINER(win_initstatus), vbox);
+
+	  gtk_widget_push_visual (gtk_preview_get_visual ());
+	  gtk_widget_push_colormap  (gtk_preview_get_cmap ());
+
+	  logo_area = gtk_drawing_area_new ();
+
+	  gtk_widget_pop_colormap ();
+	  gtk_widget_pop_visual ();
+
+	  gtk_signal_connect (GTK_OBJECT (logo_area), "expose_event",
+			      (GtkSignalFunc) splash_logo_expose, NULL);
+	  logo_area_width = ( logo_width > LOGO_WIDTH_MIN ) ? logo_width : LOGO_WIDTH_MIN;
+	  logo_area_height = ( logo_height > LOGO_HEIGHT_MIN ) ? logo_height : LOGO_HEIGHT_MIN;
+	  gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area), logo_area_width, logo_area_height);
+	  gtk_box_pack_start_defaults(GTK_BOX(vbox), logo_area);
+
+	  label1 = gtk_label_new("");
+	  gtk_box_pack_start_defaults(GTK_BOX(vbox), label1);
+	  label2 = gtk_label_new("");
+	  gtk_box_pack_start_defaults(GTK_BOX(vbox), label2);
+      
+	  pbar = gtk_progress_bar_new();
+	  gtk_box_pack_start_defaults(GTK_BOX(vbox), pbar);
+      
+	  gtk_widget_show(vbox);
+	  gtk_widget_show (logo_area);
+	  gtk_widget_show(label1);
+	  gtk_widget_show(label2);
+	  gtk_widget_show(pbar);
+      
+	  gtk_window_position(GTK_WINDOW(win_initstatus),
+			      GTK_WIN_POS_CENTER);
+      
+	  gtk_widget_show(win_initstatus);
+
+	  gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, TRUE, FALSE);
 	}
-
-      vbox = gtk_vbox_new(FALSE, 4);
-      gtk_container_add(GTK_CONTAINER(win_initstatus), vbox);
-      
-      logo_area = gtk_drawing_area_new ();
-      gtk_signal_connect (GTK_OBJECT (logo_area), "expose_event",
-			  (GtkSignalFunc) splash_logo_expose, NULL);
-      logo_area_width = ( logo_width > LOGO_WIDTH_MIN ) ? logo_width : LOGO_WIDTH_MIN;
-      logo_area_height = ( logo_height > LOGO_HEIGHT_MIN ) ? logo_height : LOGO_HEIGHT_MIN;
-      gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area), logo_area_width, logo_area_height);
-      gtk_box_pack_start_defaults(GTK_BOX(vbox), logo_area);
-
-      label1 = gtk_label_new("");
-      gtk_box_pack_start_defaults(GTK_BOX(vbox), label1);
-      label2 = gtk_label_new("");
-      gtk_box_pack_start_defaults(GTK_BOX(vbox), label2);
-      
-      pbar = gtk_progress_bar_new();
-      gtk_box_pack_start_defaults(GTK_BOX(vbox), pbar);
-      
-      gtk_widget_show(vbox);
-      gtk_widget_show (logo_area);
-      gtk_widget_show(label1);
-      gtk_widget_show(label2);
-      gtk_widget_show(pbar);
-      
-      gtk_window_position(GTK_WINDOW(win_initstatus),
-			  GTK_WIN_POS_CENTER);
-      
-      gtk_widget_show(win_initstatus);
-
-      gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, TRUE, FALSE);
     }
 }
 
@@ -429,7 +444,6 @@ app_init ()
   /* Now we are ready to draw the splash-screen-image to the start-up window */
   if (no_interface == FALSE)
     {
-      get_standard_colormaps ();
       if (no_splash_image == FALSE && show_logo && splash_logo_load (win_initstatus)) {
 	show_logo = SHOW_NOW;
 	splash_logo_draw (logo_area);
@@ -485,7 +499,7 @@ app_init ()
 
 }
 
-gint
+int
 app_exit_finish_done (void)
 {
   return is_app_exit_finish_done;

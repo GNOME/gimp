@@ -27,7 +27,6 @@
 #include "tile_manager.h"
 
 struct _PixelArea;
-struct _Paint;
 struct _Canvas;
 
 
@@ -176,14 +175,14 @@ void            gimage_apply_image            (GImage *, GimpDrawable *,
 					       TileManager *, int, int);
 void            gimage_apply_painthit         (GImage *, GimpDrawable *,
                                                struct _PixelArea *, int undo,
-                                               struct _Paint *, int mode,
+                                               gfloat, int mode,
                                                struct _Canvas *, int x, int y);
 void            gimage_replace_image          (GImage *, GimpDrawable *,
                                                PixelRegion *, int, int,
 					       PixelRegion *, int, int);
 void            gimage_replace_painthit       (GImage *, GimpDrawable *,
                                                struct _PixelArea *, int undo,
-                                               struct _Paint *, struct _PixelArea *,
+                                               gfloat, struct _PixelArea *,
                                                int x, int y);
 
 void            gimage_get_foreground         (GImage *, GimpDrawable *, unsigned char *);

@@ -65,7 +65,7 @@ adaptive_supersample_area(int x1, int y1, int x2, int y2, int max_depth, double 
 			  progress_func_t progress_func, void *progress_data)
 {
 	int          	x, y, width;                 /* Counters, width of region */
-	int          	xt, xtt, yt;                 /* Temporary counters */
+	int          	xt, yt;                      /* Temporary counters */
 	int          	sub_pixel_size;              /* Numbe of samples per pixel (1D) */
 	size_t       	row_size;                    /* Memory needed for one row */
  	color_t      	color;                       /* Rendered pixel's color */

@@ -28,5 +28,6 @@ void          tools_free_eraser  (Tool *);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord eraser_proc;
+extern ProcRecord eraser_extended_proc;
 
 #endif  /*  __ERASER_H__  */

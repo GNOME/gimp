@@ -35,43 +35,7 @@ struct _Paint
 
 
 
-/*
-  Paint Initializers: routines to load a Paint from various sorts of
-  buffers.  called from paint_load().
-
-  the idea is that you take raw data and stuff it into a Paint as soon
-  as possible.  then you pass the Paint around, and it is hopefully
-  smart enough to adapt itself to whatever format the eventual end
-  user requires
-
-  it would be good to have a paint_dump() family as well.  you could
-  then do arbitrary format conversions by loading each pixel in one
-  format, converting format/precision/whatever inside the Paint, and
-  dumping in the new format.
-
-*/
-
 #define INTENSITY(r,g,b) (r * 0.30 + g * 0.59 + b * 0.11 + 0.001)
-
-static int load_u8            (Paint *, Tag, guint8 *);
-static int load_u16           (Paint *, Tag, guint16 *);
-
-#if 0
-static int load_u8_rgb        (Paint *, Tag, guint8 *);
-static int load_u8_gray       (Paint *, Tag, guint8 *);
-static int load_u8_indexed    (Paint *, Tag, guint8 *);
-
-static int load_u16_rgb       (Paint *, Tag, guint16 *);
-static int load_u16_gray      (Paint *, Tag, guint16 *);
-static int load_u16_indexed   (Paint *, Tag, guint16 *);
-#endif
-
-static int load_float         (Paint *, Tag, gfloat *);
-static int load_float_rgb     (Paint *, Tag, gfloat *);
-static int load_float_gray    (Paint *, Tag, gfloat *);
-static int load_float_indexed (Paint *, Tag, gfloat *);
-
-
 
 
 Paint *
@@ -133,23 +97,6 @@ paint_info (
                     tag_string_precision (tag_precision (paint_tag (p))),
                     tag_string_format (tag_format (paint_tag (p))),
                     tag_string_alpha (tag_alpha (paint_tag (p))));
-      trace_printf ("%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x",
-                    p->data[0],
-                    p->data[1],
-                    p->data[2],
-                    p->data[3],
-                    p->data[4],
-                    p->data[5],
-                    p->data[6],
-                    p->data[7],
-                    p->data[8],
-                    p->data[9],
-                    p->data[10],
-                    p->data[11],
-                    p->data[12],
-                    p->data[13],
-                    p->data[14],
-                    p->data[15]);
       trace_end ();
     }
 }
@@ -249,28 +196,6 @@ paint_set_component (
 }
 
 
-int
-paint_load (
-            Paint *  paint,
-            Tag      tag,
-            void *   data
-            )
-{
-  switch (tag_precision (tag))
-    {
-    case PRECISION_U8:
-      return load_u8 (paint, tag, (guint8 *) data);
-    case PRECISION_U16:
-      return load_u16 (paint, tag, (guint16 *) data);
-    case PRECISION_FLOAT:
-      return load_float (paint, tag, (gfloat *) data);      
-    case PRECISION_NONE:
-      break;
-    }
-  return FALSE;
-}
-
-
 GimpDrawable *
 paint_drawable (
                 Paint * p
@@ -321,7 +246,283 @@ paint_bytes (
 
 
 
-/* paint initializers */
+/* --------------------------------------------------------------------
+
+                       PAINT OBJECT INITIALIZERS
+
+  routines to load a Paint from various sorts of buffers.  called from
+  paint_load().
+
+  the idea is that you take raw data and stuff it into a Paint as soon
+  as possible.  then you pass the Paint around, and it is hopefully
+  smart enough to adapt itself to whatever format the eventual end
+  user requires
+
+  it would be good to have a paint_dump() family as well.  you could
+  then do arbitrary format conversions by loading each pixel in one
+  format, converting format/precision/whatever inside the Paint, and
+  dumping in the new format.
+
+*/
+
+
+/* --------------------------------------------------------------------
+
+                LOAD 8 BIT DATA INTO A PAINT OBJECT
+
+*/
+
+static int
+load_u8_rgb_into_u8 (
+                     Paint *  paint,
+                     Tag      tag,
+                     guint8 * data
+                     )
+{
+  guint8 *d = (guint8 *) paint_data (paint);
+  guint8  a;
+  
+  if (tag_alpha (tag) == ALPHA_YES)
+    a = data[3];
+  else
+    a = 255;
+        
+  switch (paint_format (paint))
+    {
+    case FORMAT_RGB:
+      d[0] = data[0];
+      d[1] = data[1];
+      d[2] = data[2];
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[3] = a;
+      return TRUE;
+            
+    case FORMAT_GRAY:
+      d[0] = INTENSITY (data[0],
+                        data[1],
+                        data[2]);
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[1] = a;
+      return TRUE;
+
+    case FORMAT_INDEXED:
+      {
+        GImage *g;
+        if ((g = drawable_gimage (paint_drawable (paint))) == NULL)
+          return FALSE;
+        d[0] = map_rgb_to_indexed (g->cmap,
+                                   g->num_cols,
+                                   g->ID,
+                                   (int) (data[0]),
+                                   (int) (data[1]),
+                                   (int) (data[2]));
+        if (paint_alpha (paint) == ALPHA_YES)
+          d[1] = a;
+      }
+      return TRUE;
+
+    case FORMAT_NONE:
+      break;
+    }
+  
+  return FALSE;        
+}
+      
+
+static int
+load_u8_rgb_into_u16 (
+                      Paint *  paint,
+                      Tag      tag,
+                      guint8 * data
+                      )
+{
+  g_warning ("finish writing load_u8_rgb_into_u16()");
+  return FALSE;
+}
+
+
+static int
+load_u8_rgb_into_float (
+                        Paint *  paint,
+                        Tag      tag,
+                        guint8 * data
+                        )
+{
+  gfloat *d = (gfloat *) paint_data (paint);
+  gfloat  a;
+  
+  if (tag_alpha (tag) == ALPHA_YES)
+    a = (gfloat) data[3] / 255;
+  else
+    a = 1.0;
+        
+  switch (paint_format (paint))
+    {
+    case FORMAT_RGB:
+      d[0] = (gfloat) data[0] / 255;
+      d[1] = (gfloat) data[1] / 255;
+      d[2] = (gfloat) data[2] / 255;
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[3] = a;
+      return TRUE;
+            
+    case FORMAT_GRAY:
+      d[0] = INTENSITY ((gfloat) data[0] / 255,
+                        (gfloat) data[1] / 255,
+                        (gfloat) data[2] / 255);
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[1] = a;
+      return TRUE;
+
+    case FORMAT_INDEXED:
+      g_warning ("finish writing load_u8_rgb_into_float() indexed");
+      break;
+
+    case FORMAT_NONE:
+      break;
+    }
+  
+  return FALSE;        
+}
+
+
+static int 
+load_u8_gray_into_u8  (
+                       Paint * paint,
+                       Tag tag,
+                       guint8 * data
+                       )
+{
+  g_warning ("finish writing load_u8_gray_into_u8()");
+  return FALSE;
+}
+      
+
+static int 
+load_u8_gray_into_u16  (
+                        Paint * paint,
+                        Tag tag,
+                        guint8 * data
+                        )
+{
+  g_warning ("finish writing load_u8_gray_into_u16()");
+  return FALSE;
+}
+
+
+static int 
+load_u8_gray_into_float  (
+                          Paint * paint,
+                          Tag tag,
+                          guint8 * data
+                          )
+{
+  g_warning ("finish writing load_u8_gray_into_float()");
+  return FALSE;
+}
+
+
+static int 
+load_u8_indexed_into_u8  (
+                          Paint * paint,
+                          Tag tag,
+                          guint8 * data
+                          )
+{
+  g_warning ("finish writing load_u8_indexed_into_u8()");
+  return FALSE;
+}
+      
+
+static int 
+load_u8_indexed_into_u16  (
+                           Paint * paint,
+                           Tag tag,
+                           guint8 * data
+                           )
+{
+  g_warning ("finish writing load_u8_indexed_into_u16()");
+  return FALSE;
+}
+
+
+static int 
+load_u8_indexed_into_float  (
+                             Paint * paint,
+                             Tag tag,
+                             guint8 * data
+                             )
+{
+  g_warning ("finish writing load_u8_indexed_into_float()");
+  return FALSE;
+}
+
+
+static int
+load_u8_rgb (
+             Paint *  paint,
+             Tag      tag,
+             guint8 * data
+             )
+{
+  switch (paint_precision (paint))
+    {
+    case PRECISION_U8:
+      return load_u8_rgb_into_u8 (paint, tag, data);
+    case PRECISION_U16:
+      return load_u8_rgb_into_u16 (paint, tag, data);
+    case PRECISION_FLOAT:
+      return load_u8_rgb_into_float (paint, tag, data);
+    case PRECISION_NONE:
+      break;
+    }
+  return FALSE;
+}
+     
+
+static int 
+load_u8_gray  (
+               Paint * paint,
+               Tag tag,
+               guint8 * data
+               )
+{
+  switch (paint_precision (paint))
+    {
+    case PRECISION_U8:
+      return load_u8_gray_into_u8 (paint, tag, data);
+    case PRECISION_U16:
+      return load_u8_gray_into_u16 (paint, tag, data);
+    case PRECISION_FLOAT:
+      return load_u8_gray_into_float (paint, tag, data);
+    case PRECISION_NONE:
+      break;
+    }
+  return FALSE;
+}
+
+
+static int 
+load_u8_indexed  (
+                  Paint * paint,
+                  Tag tag,
+                  guint8 * data
+                  )
+{
+  switch (paint_precision (paint))
+    {
+    case PRECISION_U8:
+      return load_u8_indexed_into_u8 (paint, tag, data);
+    case PRECISION_U16:
+      return load_u8_indexed_into_u16 (paint, tag, data);
+    case PRECISION_FLOAT:
+      return load_u8_indexed_into_float (paint, tag, data);
+    case PRECISION_NONE:
+      break;
+    }
+  return FALSE;
+}
+
 
 static int
 load_u8 (
@@ -330,10 +531,28 @@ load_u8 (
          guint8 * data
          )
 {
-  g_warning ("finish writing load_u8()");
+  switch (tag_format (tag))
+    {
+    case FORMAT_RGB:
+      return load_u8_rgb (paint, tag, data);
+    case FORMAT_GRAY:
+      return load_u8_gray (paint, tag, data);
+    case FORMAT_INDEXED:
+      return load_u8_indexed (paint, tag, data);
+    case FORMAT_NONE:
+      break;
+    }
   return FALSE;
 }
+
+
      
+
+/* --------------------------------------------------------------------
+
+                LOAD 16 BIT DATA INTO A PAINT OBJECT
+
+*/
 
 static int
 load_u16 (
@@ -346,6 +565,353 @@ load_u16 (
   return FALSE;
 }
      
+
+/* --------------------------------------------------------------------
+
+                LOAD FLOATING POINT DATA INTO A PAINT OBJECT
+
+*/
+
+static int
+load_float_rgb_into_u8 (
+                        Paint *  paint,
+                        Tag      tag,
+                        gfloat * data
+                        )
+{
+  guint8 *d = (guint8 *) paint_data (paint);
+  guint8  a;
+
+  if (tag_alpha (tag) == ALPHA_YES)
+    a = data[3] * 255;
+  else
+    a = 255;
+        
+  switch (paint_format (paint))
+    {
+    case FORMAT_RGB:
+      d[0] = data[0] * 255;
+      d[1] = data[1] * 255;
+      d[2] = data[2] * 255;
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[3] = a;
+      return TRUE;
+            
+    case FORMAT_GRAY:
+      d[0] = INTENSITY (data[0] * 255,
+                        data[1] * 255,
+                        data[2] * 255);
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[1] = a;
+      return TRUE;
+
+    case FORMAT_INDEXED:
+      {
+        GImage *g;
+        if ((g = drawable_gimage (paint_drawable (paint))) == NULL)
+          return FALSE;
+        d[0] = map_rgb_to_indexed (g->cmap,
+                                   g->num_cols,
+                                   g->ID,
+                                   (int) (data[0] * 255),
+                                   (int) (data[1] * 255),
+                                   (int) (data[2] * 255));
+        if (paint_alpha (paint) == ALPHA_YES)
+          d[1] = a;
+      }
+      return TRUE;
+
+    case FORMAT_NONE:
+      break;
+    }
+  
+  return FALSE;        
+}
+      
+
+static int
+load_float_rgb_into_u16 (
+                         Paint *  paint,
+                         Tag      tag,
+                         gfloat * data
+                         )
+{
+  guint16 *d = (guint16 *) paint_data (paint);
+  guint16  a;
+
+  if (tag_alpha (tag) == ALPHA_YES)
+    a = data[3] * 65535;
+  else
+    a = 65535;
+        
+  switch (paint_format (paint))
+    {
+    case FORMAT_RGB:
+      d[0] = data[0] * 65535;
+      d[1] = data[1] * 65535;
+      d[2] = data[2] * 65535;
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[3] = a;
+      return TRUE;
+            
+    case FORMAT_GRAY:
+      d[0] = INTENSITY (data[0] * 65535,
+                        data[1] * 65535,
+                        data[2] * 65535);
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[1] = a;
+      return TRUE;
+
+    case FORMAT_INDEXED:
+      g_warning ("finish writing load_float_rgb_into_u16() indexed");
+
+    case FORMAT_NONE:
+      break;
+    }
+
+  return FALSE;        
+}
+
+
+static int
+load_float_rgb_into_float (
+                           Paint *  paint,
+                           Tag      tag,
+                           gfloat * data
+                           )
+{
+  gfloat *d = (gfloat *) paint_data (paint);
+  gfloat  a;
+
+  if (tag_alpha (tag) == ALPHA_YES)
+    a = data[3];
+  else
+    a = 1.0;
+
+  switch (paint_format (paint))
+    {
+    case FORMAT_RGB:
+      d[0] = data[0];
+      d[1] = data[1];
+      d[2] = data[2];
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[3] = a;
+      return TRUE;
+            
+    case FORMAT_GRAY:
+      d[0] = INTENSITY (data[0],
+                        data[1],
+                        data[2]);
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[1] = a;
+      return TRUE;
+
+    case FORMAT_INDEXED:
+      g_warning ("finish writing load_float_rgb_into_float() indexed");
+
+    case FORMAT_NONE:
+      break;
+    }
+
+  return FALSE;        
+}
+
+
+static int
+load_float_gray_into_u8 (
+                         Paint *  paint,
+                         Tag      tag,
+                         gfloat * data
+                        )
+{
+  guint8 *d = (guint8 *) paint_data (paint);
+  guint8  a;
+  
+  if (tag_alpha (tag) == ALPHA_YES)
+    a = data[1] * 255;
+  else
+    a = 255;
+        
+  switch (paint_format (paint))
+    {
+    case FORMAT_RGB:
+      d[0] = data[0] * 255;
+      d[1] = data[0] * 255;
+      d[2] = data[0] * 255;
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[3] = a;
+      return TRUE;
+            
+    case FORMAT_GRAY:
+      d[0] = data[0] * 255;
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[1] = a;
+      return TRUE;
+
+    case FORMAT_INDEXED:
+      {
+        GImage *g;
+        if ((g = drawable_gimage (paint_drawable (paint))) == NULL)
+          return FALSE;
+        d[0] = map_rgb_to_indexed (g->cmap,
+                                   g->num_cols,
+                                   g->ID,
+                                   (int) (data[0] * 255),
+                                   (int) (data[0] * 255),
+                                   (int) (data[0] * 255));
+        if (paint_alpha (paint) == ALPHA_YES)
+          d[1] = a;
+      }
+      return TRUE;
+
+    case FORMAT_NONE:
+      break;
+    }
+  
+  return FALSE;
+}
+      
+
+static int
+load_float_gray_into_u16 (
+                         Paint *  paint,
+                         Tag      tag,
+                         gfloat * data
+                         )
+{
+  guint16 *d = (guint16 *) paint_data (paint);
+  guint16  a;
+
+  if (tag_alpha (tag) == ALPHA_YES)
+    a = data[1] * 65535;
+  else
+    a = 65535;
+        
+  switch (paint_format (paint))
+    {
+    case FORMAT_RGB:
+      d[0] = data[0] * 65535;
+      d[1] = data[0] * 65535;
+      d[2] = data[0] * 65535;
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[3] = a;
+      return TRUE;
+            
+    case FORMAT_GRAY:
+      d[0] = data[0] * 65535;
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[1] = a;
+      return TRUE;
+
+    case FORMAT_INDEXED:
+      g_warning ("finish writing load_float_gray_into_u16() indexed");
+
+    case FORMAT_NONE:
+      break;
+    }
+
+  return FALSE;        
+}
+
+
+static int
+load_float_gray_into_float (
+                            Paint *  paint,
+                            Tag      tag,
+                            gfloat * data
+                            )
+{
+  gfloat *d = (gfloat *) paint_data (paint);
+  gfloat  a;
+
+  if (tag_alpha (tag) == ALPHA_YES)
+    a = data[1];
+  else
+    a = 1.0;
+
+  switch (paint_format (paint))
+    {
+    case FORMAT_RGB:
+      d[0] = data[0];
+      d[1] = data[0];
+      d[2] = data[0];
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[3] = a;
+      return TRUE;
+            
+    case FORMAT_GRAY:
+      d[0] = data[0];
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[1] = a;
+      return TRUE;
+
+    case FORMAT_INDEXED:
+      g_warning ("finish writing load_float_gray_into_float() indexed");
+
+    case FORMAT_NONE:
+      break;
+    }
+
+  return FALSE;        
+}
+
+
+static int
+load_float_rgb (
+                Paint *  paint,
+                Tag      tag,
+                gfloat * data
+                )
+{
+  switch (paint_precision (paint))
+    {
+    case PRECISION_U8:
+      return load_float_rgb_into_u8 (paint, tag, data);
+    case PRECISION_U16:
+      return load_float_rgb_into_u16 (paint, tag, data);
+    case PRECISION_FLOAT:
+      return load_float_rgb_into_float (paint, tag, data);
+    case PRECISION_NONE:
+      break;
+    }
+  return FALSE;
+}
+     
+
+static int
+load_float_gray (
+                 Paint *  paint,
+                 Tag      tag,
+                 gfloat * data
+                 )
+{
+  switch (paint_precision (paint))
+    {
+    case PRECISION_U8:
+      return load_float_gray_into_u8 (paint, tag, data);
+    case PRECISION_U16:
+      return load_float_gray_into_u16 (paint, tag, data);
+    case PRECISION_FLOAT:
+      return load_float_gray_into_float (paint, tag, data);
+    case PRECISION_NONE:
+      break;
+    }
+  return FALSE;
+}
+
+
+static int
+load_float_indexed (
+                    Paint *  paint,
+                    Tag      tag,
+                    gfloat * data
+                    )
+{
+  g_warning ("finish writing load_float_indexed()");
+  return FALSE;
+}
+
+
 
 static int
 load_float (
@@ -369,262 +935,27 @@ load_float (
 }
 
 
-static int
-load_float_rgb (
-                Paint *  paint,
-                Tag      tag,
-                gfloat * data
-                )
+int
+paint_load (
+            Paint *  paint,
+            Tag      tag,
+            void *   data
+            )
 {
-  switch (paint_precision (paint))
+  switch (tag_precision (tag))
     {
-    case PRECISION_U8:  /*----------------------------------------*/
-      {
-        guint8 *d = (guint8 *) paint_data (paint);
-        guint8  a;
-
-        if (tag_alpha (tag) == ALPHA_YES)
-            a = data[3] * 255;
-        else
-            a = 255;
-        
-        switch (paint_format (paint))
-          {
-          case FORMAT_RGB:
-            d[0] = data[0] * 255;
-            d[1] = data[1] * 255;
-            d[2] = data[2] * 255;
-            if (paint_alpha (paint) == ALPHA_YES)
-              d[3] = a;
-            break;
-            
-          case FORMAT_GRAY:
-            d[0] = INTENSITY (data[0] * 255,
-                              data[1] * 255,
-                              data[2] * 255);
-            if (paint_alpha (paint) == ALPHA_YES)
-              d[1] = a;
-            break;
-
-          case FORMAT_INDEXED:
-            {
-              GImage *g;
-              if ((g = drawable_gimage (paint_drawable (paint))) == NULL)
-                return FALSE;
-              d[0] = map_rgb_to_indexed (g->cmap,
-                                         g->num_cols,
-                                         g->ID,
-                                         (int) (data[0] * 255),
-                                         (int) (data[1] * 255),
-                                         (int) (data[2] * 255));
-              if (paint_alpha (paint) == ALPHA_YES)
-                d[1] = a;
-            }
-            break;
-          default:
-            return FALSE;        
-          }
-      }
+    case PRECISION_U8:
+      return load_u8 (paint, tag, (guint8 *) data);
+    case PRECISION_U16:
+      return load_u16 (paint, tag, (guint16 *) data);
+    case PRECISION_FLOAT:
+      return load_float (paint, tag, (gfloat *) data);      
+    case PRECISION_NONE:
       break;
-
-      
-    case PRECISION_U16:    /*----------------------------------------*/
-      {
-        guint16 *d = (guint16 *) paint_data (paint);
-        switch (paint_format (paint))
-          {
-          case FORMAT_RGB:
-            d[0] = data[0] * 65535;
-            d[1] = data[1] * 65535;
-            d[2] = data[2] * 65535;
-            if (paint_alpha (paint) == ALPHA_YES)
-              d[3] = 65535;
-            break;
-            
-          case FORMAT_GRAY:
-            d[0] = INTENSITY (data[0] * 65535,
-                              data[1] * 65535,
-                              data[2] * 65535);
-            if (paint_alpha (paint) == ALPHA_YES)
-              d[1] = 65535;
-            break;
-
-          case FORMAT_INDEXED:
-            g_warning ("finish writing load_float_rgb() u16 indexed");
-          default:
-            return FALSE;        
-          }
-
-      }
-      break;
-
-      
-    case PRECISION_FLOAT: /*----------------------------------------*/
-      {
-        gfloat *d = (gfloat *) paint_data (paint);
-
-        switch (paint_format (paint))
-          {
-          case FORMAT_RGB:
-            d[0] = data[0];
-            d[1] = data[1];
-            d[2] = data[2];
-            if (paint_alpha (paint) == ALPHA_YES)
-              d[3] = 1;
-            break;
-            
-          case FORMAT_GRAY:
-            d[0] = INTENSITY (data[0],
-                              data[1],
-                              data[2]);
-            if (paint_alpha (paint) == ALPHA_YES)
-              d[1] = 1;
-            break;
-
-          case FORMAT_INDEXED:
-            g_warning ("finish writing load_float_rgb() float indexed");
-          default:
-            return FALSE;        
-          }
-      }
-
-    default:
-      return FALSE;
     }
-  return TRUE;
-}
-     
-
-static int
-load_float_gray (
-                 Paint *  paint,
-                 Tag      tag,
-                 gfloat * data
-                 )
-{
-  switch (paint_precision (paint))
-    {
-    case PRECISION_U8:  /*----------------------------------------*/
-      {
-        guint8 *d = (guint8 *) paint_data (paint);
-        guint8  a;
-
-        if (tag_alpha (tag) == ALPHA_YES)
-            a = data[1] * 255;
-        else
-            a = 255;
-        
-        switch (paint_format (paint))
-          {
-          case FORMAT_RGB:
-            d[0] = data[0] * 255;
-            d[1] = data[0] * 255;
-            d[2] = data[0] * 255;
-            if (paint_alpha (paint) == ALPHA_YES)
-              d[3] = a;
-            break;
-            
-          case FORMAT_GRAY:
-            d[0] = data[0] * 255;
-            if (paint_alpha (paint) == ALPHA_YES)
-              d[1] = a;
-            break;
-
-          case FORMAT_INDEXED:
-            {
-              GImage *g;
-              if ((g = drawable_gimage (paint_drawable (paint))) == NULL)
-                return FALSE;
-              d[0] = map_rgb_to_indexed (g->cmap,
-                                         g->num_cols,
-                                         g->ID,
-                                         (int) (data[0] * 255),
-                                         (int) (data[0] * 255),
-                                         (int) (data[0] * 255));
-              if (paint_alpha (paint) == ALPHA_YES)
-                d[1] = a;
-            }
-            break;
-          default:
-            return FALSE;        
-          }
-      }
-      break;
-
-      
-    case PRECISION_U16:    /*----------------------------------------*/
-      {
-        guint16 *d = (guint16 *) paint_data (paint);
-        switch (paint_format (paint))
-          {
-          case FORMAT_RGB:
-            d[0] = data[0] * 65535;
-            d[1] = data[0] * 65535;
-            d[2] = data[0] * 65535;
-            if (paint_alpha (paint) == ALPHA_YES)
-              d[3] = 65535;
-            break;
-            
-          case FORMAT_GRAY:
-            d[0] = data[0] * 65535;
-            if (paint_alpha (paint) == ALPHA_YES)
-              d[1] = 65535;
-            break;
-
-          case FORMAT_INDEXED:
-            g_warning ("finish writing load_float_rgb() u16 indexed");
-          default:
-            return FALSE;        
-          }
-
-      }
-      break;
-
-      
-    case PRECISION_FLOAT: /*----------------------------------------*/
-      {
-        gfloat *d = (gfloat *) paint_data (paint);
-
-        switch (paint_format (paint))
-          {
-          case FORMAT_RGB:
-            d[0] = data[0];
-            d[1] = data[0];
-            d[2] = data[0];
-            if (paint_alpha (paint) == ALPHA_YES)
-              d[3] = 1;
-            break;
-            
-          case FORMAT_GRAY:
-            d[0] = data[0];
-            if (paint_alpha (paint) == ALPHA_YES)
-              d[1] = 1;
-            break;
-
-          case FORMAT_INDEXED:
-            g_warning ("finish writing load_float_rgb() float indexed");
-          default:
-            return FALSE;        
-          }
-      }
-
-    default:
-      return FALSE;
-    }
-  return TRUE;
-}
-
-
-static int
-load_float_indexed (
-                    Paint *  paint,
-                    Tag      tag,
-                    gfloat * data
-                    )
-{
-  g_warning ("finish writing load_float_indexed()");
   return FALSE;
 }
+
 
 
 

@@ -77,6 +77,8 @@ void layers_merge_cmd_callback (GtkWidget *, gpointer);
 void layers_flatten_cmd_callback (GtkWidget *, gpointer);
 void layers_alpha_select_cmd_callback (GtkWidget *, gpointer);
 void layers_mask_select_cmd_callback (GtkWidget *, gpointer);
+void tools_default_colors_cmd_callback (GtkWidget *, gpointer);
+void tools_swap_colors_cmd_callback (GtkWidget *, gpointer);
 void tools_select_cmd_callback (GtkWidget *, gpointer);
 void filters_repeat_cmd_callback (GtkWidget *, gpointer);
 void dialogs_brushes_cmd_callback (GtkWidget *, gpointer);

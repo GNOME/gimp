@@ -259,14 +259,12 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	}
       else if (mevent->state & GDK_BUTTON2_MASK)
 	{
-	  GdkEvent tmp_event;
-	  long x1, y1, x2, y2;
-	  int flush;
+	  /* int flush; */
 
 	  grab_and_scroll (gdisp, mevent);
 
-	  if (flush)
-	    gdisplays_flush ();
+	  /* if (flush)
+	    gdisplays_flush (); */
 	}
       break;
 

@@ -95,7 +95,7 @@ pattern_select_new ()
   gtk_window_set_title (GTK_WINDOW (psp->shell), "Pattern Selection");
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_border_width (GTK_CONTAINER (vbox), 1);
-  gtk_window_set_policy(GTK_WINDOW(psp->shell), TRUE, TRUE, FALSE);
+  gtk_window_set_policy(GTK_WINDOW(psp->shell), FALSE, TRUE, FALSE);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (psp->shell)->vbox), vbox, TRUE, TRUE, 0);
 
   /* handle the wm close event */

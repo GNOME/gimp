@@ -481,12 +481,3 @@ canvas_to_tm (
 }
 
 
-void
-canvas_init_tm (
-                Canvas *c,
-                TileManager * tm
-                )
-{
-  if (c)
-    tilebuf_to_tm (c->tile_data, tm);
-}
