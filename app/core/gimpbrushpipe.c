@@ -363,7 +363,7 @@ gimp_brush_pipe_load (const gchar  *filename,
 
   if (buffer->len > 0 && buffer->len < 1024)
     {
-      pipe = GIMP_BRUSH_PIPE (g_object_new (GIMP_TYPE_BRUSH_PIPE, NULL));
+      pipe = g_object_new (GIMP_TYPE_BRUSH_PIPE, NULL);
 
       if (g_utf8_validate (buffer->str, buffer->len, NULL))
         {

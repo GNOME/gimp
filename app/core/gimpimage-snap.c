@@ -91,7 +91,7 @@ gimp_image_snap_x (GimpImage *gimage,
     {
       grid = gimp_image_get_grid (gimage);
       
-      g_object_get (G_OBJECT (grid),
+      g_object_get (grid,
                     "xspacing", &xspacing,
                     "xoffset",  &xoffset,
                     NULL);
@@ -170,7 +170,7 @@ gimp_image_snap_y (GimpImage *gimage,
     {
       grid = gimp_image_get_grid (gimage);
   
-      g_object_get (G_OBJECT (grid),
+      g_object_get (grid,
                     "yspacing", &yspacing,
                     "yoffset",  &yoffset,
                     NULL);
@@ -275,7 +275,7 @@ gimp_image_snap_point (GimpImage *gimage,
     {
       grid = gimp_image_get_grid (gimage);
       
-      g_object_get (G_OBJECT (grid),
+      g_object_get (grid,
                     "xspacing", &xspacing,
                     "yspacing", &yspacing,
                     "xoffset",  &xoffset,

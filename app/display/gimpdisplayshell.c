@@ -1401,7 +1401,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
 
   if (gimp_display_shell_get_show_grid (shell))
     {
-      g_object_get (G_OBJECT (grid),
+      g_object_get (grid,
                     "xspacing", &xspacing,
                     "yspacing", &yspacing,
                     "xoffset",  &xoffset,

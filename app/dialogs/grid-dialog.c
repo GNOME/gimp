@@ -101,7 +101,7 @@ grid_dialog_new (GimpDisplay *gdisp)
       grid_backup = g_object_new (GIMP_TYPE_GRID, NULL);
       gimp_config_copy_properties (G_OBJECT (grid),
                                    G_OBJECT (grid_backup));
-      g_object_ref (G_OBJECT (grid_backup));
+      g_object_ref (grid_backup);
     }
   else
     {
@@ -295,10 +295,10 @@ grid_dialog_new (GimpDisplay *gdisp)
     {
       gimp_config_reset_properties (G_OBJECT (grid));
 
-      g_object_set (G_OBJECT (grid),
+      g_object_set (grid,
                     "spacing-unit", gimage->unit,
                     NULL);
-      g_object_set (G_OBJECT (grid),
+      g_object_set (grid,
                     "offset-unit", gimage->unit,
                     NULL);
     }
@@ -353,10 +353,10 @@ reset_callback (GtkWidget  *widget,
       g_object_freeze_notify (G_OBJECT (grid));
       gimp_config_reset_properties (G_OBJECT (grid));
 
-      g_object_set (G_OBJECT (grid),
+      g_object_set (grid,
                     "spacing-unit", unit,
                     NULL);
-      g_object_set (G_OBJECT (grid),
+      g_object_set (grid,
                     "offset-unit", unit,
                     NULL);
 

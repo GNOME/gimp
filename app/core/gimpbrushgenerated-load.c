@@ -338,7 +338,7 @@ gimp_brush_generated_new (gfloat   radius,
   GimpBrushGenerated *brush;
 
   /* set up normal brush data */
-  brush = GIMP_BRUSH_GENERATED (g_object_new (GIMP_TYPE_BRUSH_GENERATED, NULL));
+  brush = g_object_new (GIMP_TYPE_BRUSH_GENERATED, NULL);
 
   gimp_object_set_name (GIMP_OBJECT (brush), "Untitled");
 
@@ -401,7 +401,7 @@ gimp_brush_generated_load (const gchar  *filename,
     }
 
   /* create new brush */
-  brush = GIMP_BRUSH_GENERATED (g_object_new (GIMP_TYPE_BRUSH_GENERATED, NULL));
+  brush = g_object_new (GIMP_TYPE_BRUSH_GENERATED, NULL);
 
   gimp_data_set_filename (GIMP_DATA (brush), filename);
 

@@ -2092,9 +2092,9 @@ CML_save_to_file_callback (GtkWidget *widget,
 			G_CALLBACK (CML_execute_save_to_file),
 			filesel);
 
-      g_signal_connect_swapped(G_OBJECT(filesel), "delete_event",
-			       G_CALLBACK (gtk_widget_hide),
-			       filesel);
+      g_signal_connect_swapped (filesel, "delete_event",
+				G_CALLBACK (gtk_widget_hide),
+				filesel);
 
       g_signal_connect_swapped (GTK_FILE_SELECTION (filesel)->cancel_button,
 				"clicked",
@@ -2300,9 +2300,9 @@ CML_load_from_file_callback (GtkWidget *widget,
 			G_CALLBACK (CML_execute_load_from_file),
 			filesel);
 
-      g_signal_connect_swapped(G_OBJECT(filesel), "delete_event",
-			       G_CALLBACK (gtk_widget_hide),
-			       filesel);
+      g_signal_connect_swapped (filesel, "delete_event",
+				G_CALLBACK (gtk_widget_hide),
+				filesel);
 
       g_signal_connect_swapped (GTK_FILE_SELECTION (filesel)->cancel_button,
 				"clicked",
