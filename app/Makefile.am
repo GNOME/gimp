@@ -222,6 +222,8 @@ gimp_SOURCES = \
 	image_map.h		\
 	image_render.c		\
 	image_render.h		\
+	indicator_area.c	\
+	indicator_area.h	\
 	info_dialog.c		\
 	info_dialog.h		\
 	info_window.c		\

@@ -32,6 +32,7 @@
 #include "session.h"
 #include "tools.h"
 #include "dialog_handler.h"
+#include "indicator_area.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
@@ -689,7 +690,7 @@ create_device_status (void)
 	    deviceD->num_devices++;
 	  tmp_list = tmp_list->next;
 	}
-
+/* devices table */
       deviceD->table = gtk_table_new (deviceD->num_devices, 5, FALSE);
       gtk_container_border_width (GTK_CONTAINER(deviceD->table), 3);
       gtk_container_add (GTK_CONTAINER(GTK_DIALOG(deviceD->shell)->vbox),
@@ -1359,6 +1360,7 @@ device_status_update (guint32 deviceid)
 	  gtk_widget_show (deviceD->patterns[i]);
 	}
     }
+  brush_area_update();
 }
 
 

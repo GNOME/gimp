@@ -35,6 +35,7 @@
 #include "gimage.h"
 #include "gimprc.h"
 #include "general.h"
+#include "indicator_area.h"
 #include "interface.h"
 #include "menus.h"
 #include "dialog_handler.h"
@@ -204,6 +205,38 @@ allocate_colors (GtkWidget *parent)
   gdk_color_alloc (colormap, &colors[11]);
 }
 
+
+static void
+create_indicator_area (GtkWidget *parent)
+{
+  GtkWidget *frame;
+  GtkWidget *alignment;
+  GtkWidget *ind_area;
+  GdkPixmap *default_pixmap;
+  GdkPixmap *swap_pixmap;
+
+  gtk_widget_realize (parent);
+
+  default_pixmap = create_pixmap (parent->window, NULL, default_bits,
+				  default_width, default_height);
+  swap_pixmap    = create_pixmap (parent->window, NULL, swap_bits,
+				  swap_width, swap_height);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+  gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
+  gtk_widget_realize (frame);
+
+  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_set_border_width (GTK_CONTAINER (alignment), 3);
+  gtk_container_add (GTK_CONTAINER (frame), alignment);
+
+  ind_area = indicator_area_create (54, 42);
+  gtk_container_add (GTK_CONTAINER (alignment), ind_area);
+  gtk_widget_show (ind_area);
+  gtk_widget_show (alignment);
+  gtk_widget_show (frame);
+}
 
 static void
 create_color_area (GtkWidget *parent)
@@ -517,6 +550,7 @@ create_toolbox ()
   /*create_tool_label (vbox);*/
   /*create_progress_area (vbox);*/
   create_color_area (vbox);
+  create_indicator_area (vbox);
   gtk_widget_show (window);
 
 

@@ -1,3 +1,17 @@
+1999-06-02  Seth Burgess <sjburges@gimp.org>
+
+	* app/Makefile.am : Added new Files, indicator_area.[ch]
+
+	* app/devices.c
+	* app/interface.c
+	* app/indicator_area.[ch] : Added a brush preview in the toolbar.  
+	Still needs a full size preview, and could use a patterns and a 
+	gradient next to it :)  These will happen, relatively soon.
+
+	Thanks to the KDE guy (Torsten Rahn) on the gimp-devel mailing list 
+	that gave the idea for this by pointing out that it wasn't easy 
+	to find the size of the brush.  It seems obvious now.
+
 1999-06-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/disp_callbacks.c
