@@ -1,5 +1,7 @@
 2003-07-08  Helvetix Victorinox  <helvetix@gimp.org>
 
+	* Modified configure.in to build app/composite/Makefile
+
 	* Added app/composite to app/Makefile.am
 
 	* Added app/composite for the new compositing mechanism.
