@@ -1,3 +1,8 @@
+2004-04-29  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/py-slice.py: Quick fix to make uppercase
+	tags work properly.
+
 2004-04-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimp*tool.c (gimp_*_tool_register): stripped the menu
