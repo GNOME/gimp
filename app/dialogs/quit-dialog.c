@@ -42,9 +42,12 @@
 #include "gimp-intl.h"
 
 
-static void  quit_dialog_response (GtkWidget *dialog,
-                                   gint       response_id,
-                                   Gimp      *gimp);
+static void  quit_dialog_response          (GtkWidget     *dialog,
+                                            gint           response_id,
+                                            Gimp          *gimp);
+static void  quit_dialog_container_changed (GimpContainer *images,
+                                            GimpObject    *image,
+                                            GtkWidget     *label);
 
 
 GtkWidget *
@@ -56,17 +59,14 @@ quit_dialog_new (Gimp *gimp)
   GtkWidget     *vbox;
   GtkWidget     *image;
   GtkWidget     *label;
-  GtkWidget     *scrolled_window;
   GtkWidget     *view;
   GList         *list;
-  gchar         *msg;
-  gint           num_images;
+  gint           rows;
   gint           preview_size;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   images = gimp_displays_get_dirty_images (gimp);
-  num_images = gimp_container_num_children (images);
 
   g_return_val_if_fail (images != NULL, NULL);
 
@@ -106,19 +106,7 @@ quit_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  if (num_images == 1)
-    {
-      msg = g_strdup_printf (_("There is one image with unsaved changes:"));
-    }
-  else
-    {
-      msg = g_strdup_printf (_("There are %d images with unsaved changes:"),
-                             num_images);
-    }
-
-  label = gtk_label_new (msg);
-  g_free (msg);
-
+  label = gtk_label_new ("");
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gimp_label_set_attributes (GTK_LABEL (label),
@@ -128,29 +116,21 @@ quit_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
+  g_signal_connect_object (images, "remove",
+                           G_CALLBACK (quit_dialog_container_changed),
+                           label, 0);
+  quit_dialog_container_changed (images, NULL, label);
+
   preview_size = gimp->config->layer_preview_size;
 
-  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-				  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_AUTOMATIC);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
-                                       GTK_SHADOW_NONE);
-  gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
-
-  /* FIXME */
-  gtk_widget_set_size_request (scrolled_window,
-                               -1,
-                               CLAMP (num_images, 3, 6) * (preview_size + 6));
-
-  view = gimp_container_tree_view_new (images,
-                                       gimp_get_user_context (gimp),
-                                       preview_size, 1);
-
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window),
-                                         view);
+  view = gimp_container_tree_view_new (images, NULL, preview_size, 1);
+  gtk_box_pack_start (GTK_BOX (vbox), view, TRUE, TRUE, 0);
   gtk_widget_show (view);
+
+  rows = CLAMP (gimp_container_num_children (images), 3, 6);
+  gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (view),
+                                       -1,
+                                       rows * (preview_size + 2));
 
   label = gtk_label_new (_("If you quit GIMP now, "
                            "these changes will be lost."));
@@ -181,3 +161,26 @@ quit_dialog_response (GtkWidget *dialog,
   if (response_id == GTK_RESPONSE_OK)
     gimp_exit (gimp, TRUE);
 }
+
+static void
+quit_dialog_container_changed (GimpContainer *images,
+                               GimpObject    *image,
+                               GtkWidget     *label)
+{
+  gint   num_images = gimp_container_num_children (images);
+  gchar *text;
+
+  if (num_images == 1)
+    {
+      text = g_strdup_printf (_("There is one image with unsaved changes:"));
+    }
+  else
+    {
+      text = g_strdup_printf (_("There are %d images with unsaved changes:"),
+                              num_images);
+    }
+
+  gtk_label_set_text (GTK_LABEL (label), text);
+  g_free (text);
+}
+

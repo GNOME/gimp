@@ -71,6 +71,10 @@ gimp_displays_get_dirty_images (Gimp *gimp)
               ! gimp_container_have (container, GIMP_OBJECT (image)))
             {
               gimp_container_add (container, GIMP_OBJECT (image));
+
+              g_signal_connect_object (image, "clean",
+                                       G_CALLBACK (gimp_container_remove),
+                                       container, G_CONNECT_SWAPPED);
             }
         }
 

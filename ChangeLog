@@ -1,5 +1,13 @@
 2004-07-12  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplay-foreach.c
+	(gimp_displays_get_dirty_images): removed images from the
+	container when they become clean. Should move to the Gimp object.
+
+	* app/gui/quit-dialog.c: some cosmetic changes.
+
+2004-07-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/tiff.c: applied a patch from Brion Vibber that
 	sets the 'Save color values from transparent pixels' insensitive
 	when there's no alpha channel.
