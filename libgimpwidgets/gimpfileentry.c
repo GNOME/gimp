@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
  * gimpfileselection.c
- * Copyright (C) 1999 Michael Natterer <mitschel@cs.tu-berlin.de>
+ * Copyright (C) 1999 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -81,6 +81,16 @@ gimp_file_selection_destroy (GtkObject *object)
 
   if (gfs->title)
     g_free (gfs->title);
+
+  if (gfs->yes_pixmap)
+    gdk_pixmap_unref (gfs->yes_pixmap);
+  if (gfs->yes_mask)
+    gdk_bitmap_unref (gfs->yes_mask);
+
+  if (gfs->no_pixmap)
+    gdk_pixmap_unref (gfs->no_pixmap);
+  if (gfs->no_mask)
+    gdk_bitmap_unref (gfs->no_mask);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);

@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
  * gimppatheditor.c
- * Copyright (C) 1999 Michael Natterer <mitschel@cs.tu-berlin.de>
+ * Copyright (C) 1999 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -40,11 +40,6 @@ static void gimp_path_editor_new_callback     (GtkWidget *widget, gpointer data)
 static void gimp_path_editor_move_callback    (GtkWidget *widget, gpointer data);
 static void gimp_path_editor_filesel_callback (GtkWidget *widget, gpointer data);
 static void gimp_path_editor_delete_callback  (GtkWidget *widget, gpointer data);
-
-/*
-static void gimp_path_editor_check_path (GimpPathEditor *gpe,
-					 GtkWidget      *list_item);
-*/
 
 enum
 {
@@ -260,6 +255,9 @@ gimp_path_editor_realize (GtkWidget *widget)
   gtk_widget_show (gtk_pixmap);
   gtk_widget_show (gpe->new_button);
 
+  gdk_pixmap_unref (pixmap);
+  gdk_bitmap_unref (mask);
+
   pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
 					 &mask,
 					 &style->bg[GTK_STATE_NORMAL],
@@ -268,6 +266,9 @@ gimp_path_editor_realize (GtkWidget *widget)
   gtk_container_add (GTK_CONTAINER (gpe->up_button), gtk_pixmap);
   gtk_widget_show (gtk_pixmap);
   gtk_widget_show (gpe->up_button);
+
+  gdk_pixmap_unref (pixmap);
+  gdk_bitmap_unref (mask);
 
   pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
 					 &mask,
@@ -278,6 +279,9 @@ gimp_path_editor_realize (GtkWidget *widget)
   gtk_widget_show (gtk_pixmap);
   gtk_widget_show (gpe->down_button);
 
+  gdk_pixmap_unref (pixmap);
+  gdk_bitmap_unref (mask);
+
   pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
 					 &mask,
 					 &style->bg[GTK_STATE_NORMAL],
@@ -287,12 +291,8 @@ gimp_path_editor_realize (GtkWidget *widget)
   gtk_widget_show (gtk_pixmap);
   gtk_widget_show (gpe->delete_button);
 
-  /*
-  for (list = GTK_LIST (gpe->dir_list)->children; list; list = list->next)
-    {
-      gimp_path_editor_check_path (gpe, GTK_WIDGET (list->data));
-    }
-  */
+  gdk_pixmap_unref (pixmap);
+  gdk_bitmap_unref (mask);
 }
 
 gchar *
@@ -505,15 +505,5 @@ gimp_path_editor_filesel_callback (GtkWidget *widget,
 				(GtkDestroyNotify) g_free);
     }
 
-  /* gimp_path_editor_check_path (gpe, gpe->selected_item); */
-
   gtk_signal_emit (GTK_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED]);
 }
-
-/*
-static void gimp_path_editor_check_path (GimpPathEditor *gpe,
-					 GtkWidget      *list_item)
-{
-  g_print ("check path\n");
-}
-*/
