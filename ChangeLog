@@ -1,3 +1,9 @@
+2003-05-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug_in.c (plug_in_init): applied a (modified) patch
+	from Raphael Quinet which updates the splash before querying
+	the plug-in. Fixes bug #112156.
+
 2003-04-30  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/gradient.c (control_compress_range): Don't try to compress

@@ -349,6 +349,8 @@ plug_in_init (void)
       plug_in_def = tmp->data;
       tmp = tmp->next;
 
+      app_init_update_status (NULL, plug_in_def->prog, nth / nplugins);
+
       if (plug_in_def->query)
 	{
 	  write_pluginrc = TRUE;
@@ -359,9 +361,10 @@ plug_in_init (void)
 	  plug_in_query (plug_in_def);
 	}
 
-      app_init_update_status (NULL, plug_in_def->prog, nth / nplugins);
       nth++;
     }
+
+  app_init_update_status (NULL, NULL, 1.0);
 
 #ifdef HACK_FOR_BUG_66859
   /* run the plug-in init functions */
@@ -450,6 +453,8 @@ plug_in_init (void)
 	  plug_in_run (&proc_def->db_info, NULL, 0, FALSE, TRUE, -1);
 	}
     }
+
+  app_init_update_status (NULL, NULL, 1.0);
 
   if (be_verbose)
     g_print ("\n");
