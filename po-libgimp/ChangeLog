@@ -1,3 +1,8 @@
+2000-04-04  Nick Lamb <njl195@zepler.org.uk>
+
+	* nl.po: revert un-remarked and broken change
+	Please test things BEFORE commiting them, and write logs
+
 2000-04-03  Fellmann Joaquim <joaquim@hrnet.fr>
 
 	* fr.po : Updated French translation
