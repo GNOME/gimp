@@ -365,9 +365,7 @@ gimp_display_shell_destroy (GtkObject *object)
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
 
   if (shell->gdisp)
-    {
-      gimp_display_shell_disconnect (shell);
-    }
+    gimp_display_shell_disconnect (shell);
 
   if (shell->menubar_factory)
     {
@@ -1016,7 +1014,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                 gint              snap_height)
 {
   gboolean snap_to_guides = FALSE;
-  gboolean snap_to_grid = FALSE;
+  gboolean snap_to_grid   = FALSE;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (coords != NULL);
@@ -1024,7 +1022,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
 
   *snapped_coords = *coords;
 
-  if (shell->snap_to_guides                      &&
+  if (shell->snap_to_guides &&
       shell->gdisp->gimage->guides)
     {
       snap_to_guides = TRUE;

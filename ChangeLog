@@ -1,5 +1,10 @@
 2004-01-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.c: some cosmetics while reviewing
+	the code.
+
+2004-01-03  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimp.def: updated. Patch from Michael Schumacher.
 
 2004-01-02  Michael Natterer  <mitch@gimp.org>
