@@ -1,5 +1,10 @@
 2004-06-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainergridview.c:
+	#include "libgimpwidgets/gimpwidgets.h"
+
+2004-06-28  Michael Natterer  <mitch@gimp.org>
+
 	Fixed bug #141930 while keeping bug #132322 fixed:
 
 	* app/base/curves.c (curves_lut_func)
