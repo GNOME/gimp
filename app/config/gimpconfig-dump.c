@@ -137,7 +137,7 @@ dump_system_gimprc (void)
 
       g_string_append (str, "# ");
 
-      if (! gimp_config_serialize_property (rc, prop_spec, str, TRUE))
+      if (gimp_config_serialize_property (rc, prop_spec, str, TRUE))
 	{
 	  g_string_append (str, "\n");
 
