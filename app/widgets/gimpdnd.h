@@ -95,23 +95,23 @@
 void  gimp_dnd_init (Gimp *gimp);
 
 
-/*  file / url dnd functions  */
+/*  uri list  dnd functions  */
 
-typedef GList * (* GimpDndDragFileFunc) (GtkWidget *widget,
-                                         gpointer   data);
-typedef void    (* GimpDndDropFileFunc) (GtkWidget *widget,
-                                         GList     *files,
-                                         gpointer   data);
+typedef GList * (* GimpDndDragUriListFunc) (GtkWidget *widget,
+                                            gpointer   data);
+typedef void    (* GimpDndDropUriListFunc) (GtkWidget *widget,
+                                            GList     *uri_list,
+                                            gpointer   data);
 
-void  gimp_dnd_file_source_add    (GtkWidget           *widget,
-                                   GimpDndDragFileFunc  get_file_func,
-                                   gpointer             data);
-void  gimp_dnd_file_source_remove (GtkWidget           *widget);
+void  gimp_dnd_uri_list_source_add    (GtkWidget              *widget,
+                                       GimpDndDragUriListFunc  get_uri_list_func,
+                                       gpointer                data);
+void  gimp_dnd_uri_list_source_remove (GtkWidget              *widget);
 
-void  gimp_dnd_file_dest_add      (GtkWidget           *widget,
-                                   GimpDndDropFileFunc  set_file_func,
-                                   gpointer             data);
-void  gimp_dnd_file_dest_remove   (GtkWidget           *widget);
+void  gimp_dnd_uri_list_dest_add      (GtkWidget              *widget,
+                                       GimpDndDropUriListFunc  set_uri_list_func,
+                                       gpointer                data);
+void  gimp_dnd_uri_list_dest_remove   (GtkWidget              *widget);
 
 
 /*  color dnd functions  */

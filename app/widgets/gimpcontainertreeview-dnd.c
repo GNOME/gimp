@@ -307,10 +307,8 @@ gimp_container_tree_view_drag_drop (GtkWidget             *widget,
       tree_view_class = GIMP_CONTAINER_TREE_VIEW_GET_CLASS (tree_view);
 
       if (src_viewable)
-        tree_view_class->drop_viewable (tree_view,
-                                        src_viewable,
-                                        dest_viewable,
-                                        drop_pos);
+        tree_view_class->drop_viewable (tree_view, src_viewable,
+                                        dest_viewable, drop_pos);
       else
         gtk_drag_get_data (widget, context, target, time);
 
@@ -348,16 +346,16 @@ gimp_container_tree_view_drag_data_received (GtkWidget             *widget,
         case GIMP_DND_TYPE_URI_LIST:
         case GIMP_DND_TYPE_TEXT_PLAIN:
         case GIMP_DND_TYPE_NETSCAPE_URL:
-          if (tree_view_class->drop_files)
+          if (tree_view_class->drop_uri_list)
             {
               GList *uri_list;
 
-              uri_list = gimp_selection_data_get_uris (selection_data);
+              uri_list = gimp_selection_data_get_uri_list (selection_data);
 
               if (uri_list)
                 {
-                  tree_view_class->drop_files (tree_view, uri_list,
-                                               dest_viewable, drop_pos);
+                  tree_view_class->drop_uri_list (tree_view, uri_list,
+                                                  dest_viewable, drop_pos);
 
                   g_list_foreach (uri_list, (GFunc) g_free, NULL);
                   g_list_free (uri_list);

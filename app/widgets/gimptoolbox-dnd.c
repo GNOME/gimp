@@ -46,8 +46,8 @@
 
 /*  local function prototypes  */
 
-static void   gimp_toolbox_drop_files    (GtkWidget    *widget,
-                                          GList        *files,
+static void   gimp_toolbox_drop_uri_list (GtkWidget    *widget,
+                                          GList        *uri_list,
                                           gpointer      data);
 static void   gimp_toolbox_drop_drawable (GtkWidget    *widget,
                                           GimpViewable *viewable,
@@ -71,12 +71,12 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox)
 
   dock = GIMP_DOCK (toolbox);
 
-  gimp_dnd_file_dest_add (GTK_WIDGET (toolbox),
-                          gimp_toolbox_drop_files,
-                          dock->context);
-  gimp_dnd_file_dest_add (toolbox->tool_wbox,
-                          gimp_toolbox_drop_files,
-                          dock->context);
+  gimp_dnd_uri_list_dest_add (GTK_WIDGET (toolbox),
+                              gimp_toolbox_drop_uri_list,
+                              dock->context);
+  gimp_dnd_uri_list_dest_add (toolbox->tool_wbox,
+                              gimp_toolbox_drop_uri_list,
+                              dock->context);
 
   gimp_dnd_viewable_dest_add (toolbox->tool_wbox, GIMP_TYPE_LAYER,
 			      gimp_toolbox_drop_drawable,
@@ -99,14 +99,14 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox)
 /*  private functions  */
 
 static void
-gimp_toolbox_drop_files (GtkWidget *widget,
-                         GList     *files,
-                         gpointer   data)
+gimp_toolbox_drop_uri_list (GtkWidget *widget,
+                            GList     *uri_list,
+                            gpointer   data)
 {
   GimpContext *context = GIMP_CONTEXT (data);
   GList       *list;
 
-  for (list = files; list; list = g_list_next (list))
+  for (list = uri_list; list; list = g_list_next (list))
     {
       const gchar       *uri   = list->data;
       GimpImage         *gimage;

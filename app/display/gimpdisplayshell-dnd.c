@@ -279,20 +279,20 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 }
 
 void
-gimp_display_shell_drop_files (GtkWidget *widget,
-                               GList     *files,
-                               gpointer   data)
+gimp_display_shell_drop_uri_list (GtkWidget *widget,
+                                  GList     *uri_list,
+                                  gpointer   data)
 {
   GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (data);
   GimpImage        *gimage = shell->gdisp->gimage;;
   GimpContext      *context;
   GList            *list;
 
-  D (g_print ("drop files on canvas\n"));
+  D (g_print ("drop uri list on canvas\n"));
 
   context = gimp_get_user_context (gimage->gimp);
 
-  for (list = files; list; list = g_list_next (list))
+  for (list = uri_list; list; list = g_list_next (list))
     {
       const gchar       *uri   = list->data;
       GimpLayer         *new_layer;

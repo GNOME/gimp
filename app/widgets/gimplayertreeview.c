@@ -97,8 +97,8 @@ static void    gimp_layer_tree_view_drop_color    (GimpContainerTreeView *view,
                                                    const GimpRGB       *color,
                                                    GimpViewable        *dest_viewable,
                                                    GtkTreeViewDropPosition  drop_pos);
-static void    gimp_layer_tree_view_drop_files    (GimpContainerTreeView *view,
-                                                   GList               *files,
+static void    gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView *view,
+                                                   GList               *uri_list,
                                                    GimpViewable        *dest_viewable,
                                                    GtkTreeViewDropPosition  drop_pos);
 
@@ -221,7 +221,7 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   tree_view_class->drop_possible   = gimp_layer_tree_view_drop_possible;
   tree_view_class->drop_viewable   = gimp_layer_tree_view_drop_viewable;
   tree_view_class->drop_color      = gimp_layer_tree_view_drop_color;
-  tree_view_class->drop_files      = gimp_layer_tree_view_drop_files;
+  tree_view_class->drop_uri_list   = gimp_layer_tree_view_drop_uri_list;
 
   item_view_class->set_image       = gimp_layer_tree_view_set_image;
   item_view_class->get_container   = gimp_image_get_layers;
@@ -408,8 +408,8 @@ gimp_layer_tree_view_constructor (GType                  type,
                     G_CALLBACK (gimp_layer_tree_view_mask_clicked),
                     layer_view);
 
-  gimp_dnd_file_dest_add (GTK_WIDGET (tree_view->view),
-                          NULL, tree_view);
+  gimp_dnd_uri_list_dest_add (GTK_WIDGET (tree_view->view),
+                              NULL, tree_view);
   gimp_dnd_color_dest_add (GTK_WIDGET (tree_view->view),
                            NULL, tree_view);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (tree_view->view), GIMP_TYPE_PATTERN,
@@ -769,10 +769,10 @@ gimp_layer_tree_view_drop_color (GimpContainerTreeView   *view,
 }
 
 static void
-gimp_layer_tree_view_drop_files (GimpContainerTreeView   *view,
-                                 GList                   *files,
-                                 GimpViewable            *dest_viewable,
-                                 GtkTreeViewDropPosition  drop_pos)
+gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
+                                    GList                   *uri_list,
+                                    GimpViewable            *dest_viewable,
+                                    GtkTreeViewDropPosition  drop_pos)
 {
   GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
   GimpImage        *gimage    = item_view->gimage;
@@ -784,7 +784,7 @@ gimp_layer_tree_view_drop_files (GimpContainerTreeView   *view,
   if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
     index++;
 
-  for (list = files; list; list = g_list_next (list))
+  for (list = uri_list; list; list = g_list_next (list))
     {
       const gchar       *uri   = list->data;
       GimpLayer         *new_layer;

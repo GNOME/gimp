@@ -56,18 +56,18 @@
 
 
 void
-gimp_selection_data_set_uris (GtkSelectionData *selection,
-                              GdkAtom           atom,
-                              GList            *uris)
+gimp_selection_data_set_uri_list (GtkSelectionData *selection,
+                                  GdkAtom           atom,
+                                  GList            *uri_list)
 {
   GList *list;
   gchar *vals = NULL;
 
   g_return_if_fail (selection != NULL);
   g_return_if_fail (atom != GDK_NONE);
-  g_return_if_fail (uris != NULL);
+  g_return_if_fail (uri_list != NULL);
 
-  for (list = uris; list; list = g_list_next (list))
+  for (list = uri_list; list; list = g_list_next (list))
     {
       if (vals)
         {
@@ -175,7 +175,7 @@ gimp_unescape_uri_string (const char *escaped,
 }
 
 GList *
-gimp_selection_data_get_uris (GtkSelectionData *selection)
+gimp_selection_data_get_uri_list (GtkSelectionData *selection)
 {
   GList *crap_list = NULL;
   GList *uri_list  = NULL;

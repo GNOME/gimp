@@ -350,8 +350,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                     shell);
 
   /*  dnd stuff  */
-  gimp_dnd_file_dest_add     (GTK_WIDGET (shell),
-                              gimp_display_shell_drop_files,
+  gimp_dnd_uri_list_dest_add (GTK_WIDGET (shell),
+                              gimp_display_shell_drop_uri_list,
                               shell);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_LAYER,
                               gimp_display_shell_drop_drawable,

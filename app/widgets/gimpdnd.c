@@ -103,14 +103,14 @@ static GtkWidget * gimp_dnd_get_color_icon     (GtkWidget        *widget,
                                                 GCallback         get_color_func,
                                                 gpointer          get_color_data);
 
-static void        gimp_dnd_get_file_data      (GtkWidget        *widget,
-                                                GCallback         get_file_func,
-                                                gpointer          get_file_data,
+static void        gimp_dnd_get_uri_list_data  (GtkWidget        *widget,
+                                                GCallback         get_uri_list_func,
+                                                gpointer          get_uri_list_data,
                                                 GtkSelectionData *selection,
                                                 GdkAtom           atom);
-static gboolean    gimp_dnd_set_file_data      (GtkWidget        *widget,
-                                                GCallback         set_file_func,
-                                                gpointer          set_file_data,
+static gboolean    gimp_dnd_set_uri_list_data  (GtkWidget        *widget,
+                                                GCallback         set_uri_list_func,
+                                                gpointer          set_uri_list_data,
                                                 GtkSelectionData *selection);
 
 static void        gimp_dnd_get_color_data     (GtkWidget        *widget,
@@ -214,15 +214,15 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_URI_LIST,
 
-    "gimp-dnd-get-file-func",
-    "gimp-dnd-get-file-data",
+    "gimp-dnd-get-uri-list-func",
+    "gimp-dnd-get-uri-list-data",
 
-    "gimp-dnd-set-file-func",
-    "gimp-dnd-set-file-data",
+    "gimp-dnd-set-uri-list-func",
+    "gimp-dnd-set-uri-list-data",
 
     NULL,
-    gimp_dnd_get_file_data,
-    gimp_dnd_set_file_data
+    gimp_dnd_get_uri_list_data,
+    gimp_dnd_set_uri_list_data
   },
 
   {
@@ -231,12 +231,12 @@ static GimpDndDataDef dnd_data_defs[] =
     NULL,
     NULL,
 
-    "gimp-dnd-set-file-func",
-    "gimp-dnd-set-file-data",
+    "gimp-dnd-set-uri-list-func",
+    "gimp-dnd-set-uri-list-data",
 
     NULL,
     NULL,
-    gimp_dnd_set_file_data
+    gimp_dnd_set_uri_list_data
   },
 
   {
@@ -245,12 +245,12 @@ static GimpDndDataDef dnd_data_defs[] =
     NULL,
     NULL,
 
-    "gimp-dnd-set-file-func",
-    "gimp-dnd-set-file-data",
+    "gimp-dnd-set-uri-list-func",
+    "gimp-dnd-set-uri-list-data",
 
     NULL,
     NULL,
-    gimp_dnd_set_file_data
+    gimp_dnd_set_uri_list_data
   },
 
   {
@@ -911,40 +911,44 @@ gimp_dnd_data_dest_remove (GimpDndType  data_type,
 }
 
 
-/************************/
-/*  file dnd functions  */
-/************************/
+/****************************/
+/*  uri list dnd functions  */
+/****************************/
 
 static void
-gimp_dnd_get_file_data (GtkWidget        *widget,
-                        GCallback         get_file_func,
-                        gpointer          get_file_data,
-                        GtkSelectionData *selection,
-                        GdkAtom           atom)
+gimp_dnd_get_uri_list_data (GtkWidget        *widget,
+                            GCallback         get_uri_list_func,
+                            gpointer          get_uri_list_data,
+                            GtkSelectionData *selection,
+                            GdkAtom           atom)
 {
   GList *uri_list;
 
-  uri_list = (* (GimpDndDragFileFunc) get_file_func) (widget, get_file_data);
+  uri_list = (* (GimpDndDragUriListFunc) get_uri_list_func) (widget,
+                                                             get_uri_list_data);
 
   if (uri_list)
     {
-      gimp_selection_data_set_uris (selection, atom, uri_list);
+      gimp_selection_data_set_uri_list (selection, atom, uri_list);
+
+      g_list_foreach (uri_list, (GFunc) g_free, NULL);
       g_list_free (uri_list);
     }
 }
 
 static gboolean
-gimp_dnd_set_file_data (GtkWidget        *widget,
-                        GCallback         set_file_func,
-                        gpointer          set_file_data,
-                        GtkSelectionData *selection)
+gimp_dnd_set_uri_list_data (GtkWidget        *widget,
+                            GCallback         set_uri_list_func,
+                            gpointer          set_uri_list_data,
+                            GtkSelectionData *selection)
 {
-  GList *uri_list = gimp_selection_data_get_uris (selection);
+  GList *uri_list = gimp_selection_data_get_uri_list (selection);
 
   if (! uri_list)
     return FALSE;
 
-  (* (GimpDndDropFileFunc) set_file_func) (widget, uri_list, set_file_data);
+  (* (GimpDndDropUriListFunc) set_uri_list_func) (widget, uri_list,
+                                                  set_uri_list_data);
 
   g_list_foreach (uri_list, (GFunc) g_free, NULL);
   g_list_free (uri_list);
@@ -953,19 +957,19 @@ gimp_dnd_set_file_data (GtkWidget        *widget,
 }
 
 void
-gimp_dnd_file_source_add (GtkWidget           *widget,
-                          GimpDndDragFileFunc  get_file_func,
-                          gpointer             data)
+gimp_dnd_uri_list_source_add (GtkWidget              *widget,
+                              GimpDndDragUriListFunc  get_uri_list_func,
+                              gpointer                data)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   gimp_dnd_data_source_add (GIMP_DND_TYPE_URI_LIST, widget,
-                            G_CALLBACK (get_file_func),
+                            G_CALLBACK (get_uri_list_func),
                             data);
 }
 
 void
-gimp_dnd_file_source_remove (GtkWidget *widget)
+gimp_dnd_uri_list_source_remove (GtkWidget *widget)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
@@ -973,9 +977,9 @@ gimp_dnd_file_source_remove (GtkWidget *widget)
 }
 
 void
-gimp_dnd_file_dest_add (GtkWidget           *widget,
-                        GimpDndDropFileFunc  set_file_func,
-                        gpointer             data)
+gimp_dnd_uri_list_dest_add (GtkWidget              *widget,
+                            GimpDndDropUriListFunc  set_uri_list_func,
+                            gpointer                data)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
@@ -989,18 +993,18 @@ gimp_dnd_file_dest_add (GtkWidget           *widget,
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
 
   gimp_dnd_data_dest_add (GIMP_DND_TYPE_NETSCAPE_URL, widget,
-                          G_CALLBACK (set_file_func),
+                          G_CALLBACK (set_uri_list_func),
                           data);
   gimp_dnd_data_dest_add (GIMP_DND_TYPE_TEXT_PLAIN, widget,
-                          G_CALLBACK (set_file_func),
+                          G_CALLBACK (set_uri_list_func),
                           data);
   gimp_dnd_data_dest_add (GIMP_DND_TYPE_URI_LIST, widget,
-                          G_CALLBACK (set_file_func),
+                          G_CALLBACK (set_uri_list_func),
                           data);
 }
 
 void
-gimp_dnd_file_dest_remove (GtkWidget *widget)
+gimp_dnd_uri_list_dest_remove (GtkWidget *widget)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 

@@ -47,7 +47,7 @@ static void    gimp_document_view_init          (GimpDocumentView      *view);
 
 static void    gimp_document_view_activate_item (GimpContainerEditor *editor,
                                                  GimpViewable        *viewable);
-static GList * gimp_document_view_drag_file     (GtkWidget           *widget,
+static GList * gimp_document_view_drag_uri_list (GtkWidget           *widget,
                                                  gpointer             data);
 
 
@@ -181,9 +181,9 @@ gimp_document_view_new (GimpViewType     view_type,
 
       dnd_widget = gimp_container_view_get_dnd_widget (editor->view);
 
-      gimp_dnd_file_source_add (dnd_widget,
-                                gimp_document_view_drag_file,
-                                editor);
+      gimp_dnd_uri_list_source_add (dnd_widget,
+                                    gimp_document_view_drag_uri_list,
+                                    editor);
     }
 
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
@@ -210,8 +210,8 @@ gimp_document_view_activate_item (GimpContainerEditor *editor,
 }
 
 static GList *
-gimp_document_view_drag_file (GtkWidget *widget,
-                              gpointer   data)
+gimp_document_view_drag_uri_list (GtkWidget *widget,
+                                  gpointer   data)
 {
   GimpViewable *viewable = gimp_dnd_get_drag_data (widget);
 

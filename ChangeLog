@@ -1,3 +1,17 @@
+2004-06-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdnd.[ch]
+	* app/widgets/gimpselectiondata.[ch]
+	* app/widgets/gimpcontainertreeview.[ch]: changed "files" and "uris"
+	to "uri_list" in all function names, parameters and typedefs.
+
+	* app/widgets/gimpcontainertreeview-dnd.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimptoolbox-dnd.c
+	* app/display/gimpdisplayshell-dnd.[ch]
+	* app/display/gimpdisplayshell.c: changed accordingly.
+
 2004-06-30  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/maze/maze_face.c: made the dialog look a little less

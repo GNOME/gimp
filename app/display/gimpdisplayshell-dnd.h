@@ -39,8 +39,8 @@ void   gimp_display_shell_drop_color    (GtkWidget     *widget,
 void   gimp_display_shell_drop_buffer   (GtkWidget     *widget,
                                          GimpViewable  *viewable,
                                          gpointer       data);
-void   gimp_display_shell_drop_files    (GtkWidget     *widget,
-                                         GList         *files,
+void   gimp_display_shell_drop_uri_list (GtkWidget     *widget,
+                                         GList         *uri_list,
                                          gpointer       data);
 
 

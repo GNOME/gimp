@@ -22,10 +22,10 @@
 
 /*  uri list  */
 
-void            gimp_selection_data_set_uris      (GtkSelectionData *selection,
+void            gimp_selection_data_set_uri_list  (GtkSelectionData *selection,
                                                    GdkAtom           atom,
                                                    GList            *uris);
-GList         * gimp_selection_data_get_uris      (GtkSelectionData *selection);
+GList         * gimp_selection_data_get_uri_list  (GtkSelectionData *selection);
 
 
 /*  color  */

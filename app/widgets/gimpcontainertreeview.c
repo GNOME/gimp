@@ -157,7 +157,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
   klass->drop_possible      = gimp_container_tree_view_real_drop_possible;
   klass->drop_viewable      = gimp_container_tree_view_real_drop_viewable;
   klass->drop_color         = NULL;
-  klass->drop_files         = NULL;
+  klass->drop_uri_list      = NULL;
   klass->drop_svg           = NULL;
 }
 
