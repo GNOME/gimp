@@ -1,3 +1,8 @@
+2003-01-01  Tor Lillqvist  <tml@iki.fi>
+
+	* modules/Makefile.am: On Win32, use -no-undefined, and add
+	dependent libraries to the LIBADDs.
+
 2002-12-31  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/vectors-types.h: New Type: GimpVectorExtendMode

@@ -1,5 +1,12 @@
 ## Process this file with automake to produce Makefile.in
 
+if OS_WIN32
+no_undefined = -no-undefined
+conditional_libgimpbase_la = ../libgimpbase/libgimpbase-1.3.la
+conditional_libgimpcolor_la = ../libgimpcolor/libgimpcolor-1.3.la
+conditional_libgimpwidgets_la = ../libgimpwidgets/libgimpwidgets-1.3.la
+endif
+
 libdir = $(gimpplugindir)/modules
 
 INCLUDES = \
@@ -23,21 +30,21 @@ lib_LTLIBRARIES = \
 EXTRA_LTLIBRARIES =
 
 libcolorsel_triangle_la_SOURCES = colorsel_triangle.c
-libcolorsel_triangle_la_LDFLAGS = -avoid-version -module
-libcolorsel_triangle_la_LIBADD = $(GTK_LIBS)
+libcolorsel_triangle_la_LDFLAGS = -avoid-version -module $(no_undefined)
+libcolorsel_triangle_la_LIBADD = $(conditional_libgimpcolor_la) $(conditional_libgimpwidgets_la) $(GTK_LIBS)
 
 libcolorsel_water_la_SOURCES = colorsel_water.c
-libcolorsel_water_la_LDFLAGS = -avoid-version -module
-libcolorsel_water_la_LIBADD = $(GTK_LIBS)
+libcolorsel_water_la_LDFLAGS = -avoid-version -module $(no_undefined)
+libcolorsel_water_la_LIBADD = $(conditional_libgimpcolor_la) $(conditional_libgimpwidgets_la) $(GTK_LIBS)
 
 libcdisplay_colorblind_la_SOURCES = cdisplay_colorblind.c
-libcdisplay_colorblind_la_LDFLAGS = -avoid-version -module
-libcdisplay_colorblind_la_LIBADD = $(GTK_LIBS)
+libcdisplay_colorblind_la_LDFLAGS = -avoid-version -module $(no_undefined)
+libcdisplay_colorblind_la_LIBADD = $(conditional_libgimpbase_la) $(conditional_libgimpwidgets_la) $(GTK_LIBS)
 
 libcdisplay_gamma_la_SOURCES = cdisplay_gamma.c
-libcdisplay_gamma_la_LDFLAGS = -avoid-version -module
-libcdisplay_gamma_la_LIBADD = $(GTK_LIBS)
+libcdisplay_gamma_la_LDFLAGS = -avoid-version -module $(no_undefined)
+libcdisplay_gamma_la_LIBADD = $(conditional_libgimpbase_la) $(conditional_libgimpwidgets_la) $(GTK_LIBS)
 
 libcdisplay_highcontrast_la_SOURCES = cdisplay_highcontrast.c
-libcdisplay_highcontrast_la_LDFLAGS = -avoid-version -module
-libcdisplay_highcontrast_la_LIBADD = $(GTK_LIBS)
+libcdisplay_highcontrast_la_LDFLAGS = -avoid-version -module $(no_undefined)
+libcdisplay_highcontrast_la_LIBADD = $(conditional_libgimpbase_la) $(conditional_libgimpwidgets_la) $(GTK_LIBS)
