@@ -160,6 +160,11 @@ checks for the presence of the Gnome-Perl module.
 
 checks for the presence of the Gtk::XmHTML module.
 
+=item C<unix>
+
+checks wether the script runs on a unix-like operating system. At the
+moment, this is every system except windows, macos, os2 and vms.
+
 =back
 
 The following features can only be checked B<after> C<Gimp->main> has been

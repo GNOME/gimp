@@ -11,6 +11,8 @@ Gtk->init;
 
 $gtk_10 = Gtk->major_version==1 && Gtk->minor_version==0;
 
+$VERSION=0.2;
+
 #Gimp::set_trace(TRACE_ALL);
 
 my $window;	# the main window
@@ -80,7 +82,7 @@ sub create_main {
    $window = $w;
    $w->set_usize (500,220);
    
-   $w->set_title('Parasite Editor');
+   $w->set_title("Parasite Editor - version $VERSION alpha");
    $w->signal_connect("destroy",sub {main_quit Gtk});
    
    $b = new Gtk::Button "Close";
@@ -182,7 +184,7 @@ register "extension_parasite_editor",
          "This plug-in can be used to view (and in a future version edit) existing parasites",
          "Marc Lehmann",
          "Marc Lehmann",
-         "0.1.1",
+         $VERSION,
          "<Toolbox>/Xtns/Parasite Editor",
          "",
          [],
