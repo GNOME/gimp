@@ -160,10 +160,9 @@ levels_input_from_color (GimpHistogramChannel  channel,
       return color[BLUE_PIX];
     case GIMP_HISTOGRAM_ALPHA:
       return color[ALPHA_PIX];
-    default:
-      g_assert_not_reached ();
-      return 0;
     }
+
+  return 0;  /* just to please the compiler */
 }
 
 void

@@ -69,6 +69,7 @@
 #define INPUT_SLIDERS    (1 << 7)
 #define OUTPUT_SLIDERS   (1 << 8)
 #define DRAW             (1 << 9)
+#define ALL_CHANNELS     (1 << 10)
 #define ALL              0xFFF
 
 #define DA_WIDTH         GIMP_HISTOGRAM_VIEW_WIDTH
@@ -110,7 +111,6 @@ static void   gimp_levels_tool_cursor_update  (GimpTool         *tool,
 static void   gimp_levels_tool_map        (GimpImageMapTool *image_map_tool);
 static void   gimp_levels_tool_dialog     (GimpImageMapTool *image_map_tool);
 static void   gimp_levels_tool_reset      (GimpImageMapTool *image_map_tool);
-
 static void   levels_update                        (GimpLevelsTool *l_tool,
 						    gint            update);
 static void   levels_channel_callback              (GtkWidget      *widget,
@@ -308,6 +308,10 @@ gimp_levels_tool_initialize (GimpTool    *tool,
   l_tool->channel = GIMP_HISTOGRAM_VALUE;
   l_tool->color   = gimp_drawable_is_rgb (drawable);
 
+  if (l_tool->active_picker)
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (l_tool->active_picker),
+				  FALSE);
+
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
 
   /* set the sensitivity of the channel menu based on the drawable type */
@@ -388,6 +392,49 @@ gimp_levels_tool_map (GimpImageMapTool *image_map_tool)
 /*******************/
 /*  Levels dialog  */
 /*******************/
+
+
+static GtkWidget *
+gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
+				   guint           value)
+{
+  GtkWidget   *button;
+  const gchar *stock_id;
+  const gchar *help;
+
+  switch (value & 0xF)
+    {
+    case LOW_INPUT:
+      stock_id = GIMP_STOCK_COLOR_PICKER_BLACK;
+      help     = _("Pick Black Point");
+      break;
+    case GAMMA:
+      stock_id = GIMP_STOCK_COLOR_PICKER_GRAY;
+      help     = _("Pick Gray Point");
+      break;
+    case HIGH_INPUT:
+      stock_id = GIMP_STOCK_COLOR_PICKER_WHITE;
+      help     = _("Pick White Point");
+      break;
+    default:
+      return NULL;
+    }
+
+  button = g_object_new (GTK_TYPE_TOGGLE_BUTTON,
+                         "label",          stock_id,
+                         "use_stock",      TRUE,
+                         "draw_indicator", FALSE,
+                         NULL);
+
+  gimp_help_set_help_data (button, help, NULL);
+
+  g_object_set_data (G_OBJECT (button), "pick_value", GUINT_TO_POINTER (value));
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (levels_input_picker_toggled),
+                    tool);
+
+  return button;
+}
 
 static void
 gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
@@ -517,20 +564,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
 
-  button = g_object_new (GTK_TYPE_TOGGLE_BUTTON,
-                         "label",          GIMP_STOCK_COLOR_PICKER_BLACK,
-                         "use_stock",      TRUE,
-                         "draw_indicator", FALSE,
-                         NULL);
-  gimp_help_set_help_data (button, _("Pick Black Point"), NULL);
+  button = gimp_levels_tool_color_picker_new (l_tool, LOW_INPUT);
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-
-  g_object_set_data (G_OBJECT (button), "pick_value",
-                     GUINT_TO_POINTER (LOW_INPUT));
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (levels_input_picker_toggled),
-                    l_tool);
 
   data = gtk_adjustment_new (0, 0, 255, 1, 10, 10);
   l_tool->low_input_data = GTK_ADJUSTMENT (data);
@@ -549,20 +585,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox), hbox2, TRUE, FALSE, 0);
   gtk_widget_show (hbox2);
 
-  button = g_object_new (GTK_TYPE_TOGGLE_BUTTON,
-                         "label",          GIMP_STOCK_COLOR_PICKER_GRAY,
-                         "use_stock",      TRUE,
-                         "draw_indicator", FALSE,
-                         NULL);
-  gimp_help_set_help_data (button, _("Pick Gray Point"), NULL);
+  button = gimp_levels_tool_color_picker_new (l_tool, GAMMA);
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-
-  g_object_set_data (G_OBJECT (button), "pick_value",
-                     GUINT_TO_POINTER (GAMMA));
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (levels_input_picker_toggled),
-                    l_tool);
 
   data = gtk_adjustment_new (1, 0.1, 10, 0.1, 1, 1);
   l_tool->gamma_data = GTK_ADJUSTMENT (data);
@@ -582,20 +607,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
 
-  button = g_object_new (GTK_TYPE_TOGGLE_BUTTON,
-                         "label",          GIMP_STOCK_COLOR_PICKER_WHITE,
-                         "use_stock",      TRUE,
-                         "draw_indicator", FALSE,
-                         NULL);
-  gimp_help_set_help_data (button, _("Pick White Point"), NULL);
+  button = gimp_levels_tool_color_picker_new (l_tool, HIGH_INPUT);
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-
-  g_object_set_data (G_OBJECT (button), "pick_value",
-                     GUINT_TO_POINTER (HIGH_INPUT));
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (levels_input_picker_toggled),
-                    l_tool);
 
   data = gtk_adjustment_new (255, 0, 255, 1, 10, 10);
   l_tool->high_input_data = GTK_ADJUSTMENT (data);
@@ -689,27 +703,21 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     l_tool);
 
 
-  /*  Horizontal button box for auto / load / save  */
   frame = gtk_frame_new (_("All Channels"));
   gtk_box_pack_end (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
 
   hbbox = gtk_hbutton_box_new ();
   gtk_container_set_border_width (GTK_CONTAINER (hbbox), 2);
   gtk_box_set_spacing (GTK_BOX (hbbox), 4);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbbox), GTK_BUTTONBOX_SPREAD);
-  gtk_container_add (GTK_CONTAINER (frame), hbbox);
+  gtk_box_pack_end (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
-
-  button = gtk_button_new_with_mnemonic (_("_Auto"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gimp_help_set_help_data (button, _("Adjust levels automatically"), NULL);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (levels_auto_callback),
-                    l_tool);
 
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
@@ -730,17 +738,40 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   g_signal_connect (button, "clicked",
                     G_CALLBACK (levels_save_callback),
                     l_tool);
+
+  hbbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+  gtk_box_pack_start (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+
+  button = gimp_levels_tool_color_picker_new (l_tool, LOW_INPUT | ALL_CHANNELS);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gimp_levels_tool_color_picker_new (l_tool, GAMMA | ALL_CHANNELS);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gimp_levels_tool_color_picker_new (l_tool, HIGH_INPUT | ALL_CHANNELS);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_mnemonic (_("_Auto"));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 2);
+  gimp_help_set_help_data (button, _("Adjust levels automatically"), NULL);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (levels_auto_callback),
+                    l_tool);
 }
 
 static void
 gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
 {
-  GimpLevelsTool *l_tool;
-
-  l_tool = GIMP_LEVELS_TOOL (image_map_tool);
+  GimpLevelsTool *l_tool = GIMP_LEVELS_TOOL (image_map_tool);
 
   levels_init (l_tool->levels);
-
   levels_update (l_tool, ALL);
 }
 
@@ -911,7 +942,7 @@ levels_update (GimpLevelsTool *l_tool,
 
   if (update & INPUT_SLIDERS)
     {
-      double width, mid, tmp;
+      gdouble width, mid, tmp;
 
       levels_erase_slider (l_tool->input_levels_da[1]->window,
                            l_tool->slider_pos[0]);
@@ -926,7 +957,7 @@ levels_update (GimpLevelsTool *l_tool,
       l_tool->slider_pos[2] =
         DA_WIDTH * ((gdouble) l_tool->levels->high_input[l_tool->channel] / 255.0);
 
-      width = (double) (l_tool->slider_pos[2] - l_tool->slider_pos[0]) / 2.0;
+      width = (gdouble) (l_tool->slider_pos[2] - l_tool->slider_pos[0]) / 2.0;
       mid   = l_tool->slider_pos[0] + width;
       tmp   = log10 (1.0 / l_tool->levels->gamma[l_tool->channel]);
 
@@ -1269,7 +1300,6 @@ levels_output_da_events (GtkWidget      *widget,
 	levels_update (l_tool, OUTPUT_SLIDERS);
       break;
 
-
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
 
@@ -1337,6 +1367,28 @@ levels_output_da_events (GtkWidget      *widget,
 }
 
 static void
+levels_input_adjust_by_color (Levels               *levels,
+			      guint                 value,
+			      GimpHistogramChannel  channel,
+			      guchar               *color)
+{
+  switch (value & 0xF)
+    {
+    case LOW_INPUT:
+      levels_adjust_by_colors (levels, channel, color, NULL, NULL);
+      break;
+    case GAMMA:
+      levels_adjust_by_colors (levels, channel, NULL, color, NULL);
+      break;
+    case HIGH_INPUT:
+      levels_adjust_by_colors (levels, channel, NULL, NULL, color);
+      break;
+    default:
+      break;
+    }
+}
+
+static void
 levels_input_color_pick (GimpTool     *tool,
 			 GimpDrawable *drawable,
 			 GimpCoords   *coords)
@@ -1344,8 +1396,7 @@ levels_input_color_pick (GimpTool     *tool,
   GimpLevelsTool *l_tool;
   guchar         *color;
   guint           value;
-  gint            x;
-  gint            y;
+  gint            x, y;
 
   l_tool = GIMP_LEVELS_TOOL (tool);
 
@@ -1365,22 +1416,38 @@ levels_input_color_pick (GimpTool     *tool,
   value = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (l_tool->active_picker),
 					       "pick_value"));
 
-  switch (value)
+  if (value & ALL_CHANNELS && GIMP_IMAGE_TYPE_IS_RGB (drawable->type))
     {
-    case LOW_INPUT:
-      levels_adjust_by_colors (l_tool->levels,
-			       l_tool->channel, color, NULL, NULL);
-      break;
-    case GAMMA:
-      levels_adjust_by_colors (l_tool->levels,
-			       l_tool->channel, NULL, color, NULL);
-      break;
-    case HIGH_INPUT:
-      levels_adjust_by_colors (l_tool->levels,
-			       l_tool->channel, NULL, NULL, color);
-      break;
-    default:
-      break;
+      GimpHistogramChannel  channel;
+      
+      /*  first reset the value channel  */
+      switch (value & 0xF)
+	{
+	case LOW_INPUT:
+	  l_tool->levels->low_input[GIMP_HISTOGRAM_VALUE] = 0;
+	  break;
+	case GAMMA:
+	  l_tool->levels->gamma[GIMP_HISTOGRAM_VALUE] = 1.0;
+	  break;
+	case HIGH_INPUT:
+	  l_tool->levels->high_input[GIMP_HISTOGRAM_VALUE] = 255;
+	  break;
+	default:
+	  break;
+	}
+
+      /*  then adjust all color channels  */
+      for (channel = GIMP_HISTOGRAM_RED;
+	   channel <= GIMP_HISTOGRAM_BLUE;
+	   channel++)
+	{
+	  levels_input_adjust_by_color (l_tool->levels, value, channel, color);
+	}
+    }
+  else
+    {
+      levels_input_adjust_by_color (l_tool->levels,
+				    value, l_tool->channel, color);
     }
 
   levels_update (l_tool, ALL);

@@ -283,6 +283,11 @@ AC_PATH_XTRA
 AM_PATH_GTK_2_0($GTK_REQUIRED_VERSION,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
 
+AC_PATH_PROG(GDK_PIXBUF_CSOURCE, gdk-pixbuf-csource, no)
+if test x$GDK_PIXBUF_CSOURCE = xno; then
+  AC_MSG_ERROR(Could not find gdk-pixbuf-csource in your PATH)
+fi
+
 PKG_CHECK_MODULES(PANGOFT2, pangoft2 >= $PANGOFT2_REQUIRED_VERSION,,
   AC_MSG_ERROR([Test for PangoFT2 failed.
 *** We require Pango with the optional support for FreeType2 compiled in.
@@ -293,8 +298,6 @@ AC_SUBST(PANGOFT2_LIBS)
 PKG_CHECK_MODULES(LIBART, libart-2.0)
 AC_SUBST(LIBART_CFLAGS)
 AC_SUBST(LIBART_LIBS)
-
-AC_SUBST(PKG_CONFIG)
 
 
 ##########################################

@@ -117,6 +117,7 @@
 	 (Xindex 0)
 	 (Yindex 0)
 	 (old-bg (car (gimp-palette-get-background)))
+	 (old-fg (car (gimp-palette-get-foreground)))
 	 )
 
     (gimp-image-undo-disable img)
@@ -151,6 +152,7 @@
     
     (gimp-image-delete tile)
     (gimp-palette-set-background old-bg)
+    (gimp-palette-set-foreground old-fg)
     (gimp-image-undo-enable img)
     (gimp-display-new img)
     )

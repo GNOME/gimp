@@ -170,8 +170,8 @@ stock-icons.list: $(STOCK_IMAGES) Makefile.am
 	  done )
 
 $(srcdir)/gimp-stock-pixbufs.h: stock-icons.list
-	gdk-pixbuf-csource --raw --build-list `cat stock-icons.list` > $(@F)
+	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat stock-icons.list` > $(@F)
 
 
 $(srcdir)/gimp-wilber-pixbufs.h: $(WILBER_IMAGES)
-	gdk-pixbuf-csource --raw --build-list $(WILBER_VARIABLES) > $(@F)
+	$(GDK_PIXBUF_CSOURCE) --raw --build-list $(WILBER_VARIABLES) > $(@F)

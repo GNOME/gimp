@@ -1,3 +1,19 @@
+2003-03-16  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: check for gdk-pixbuf-csource and allow to override
+	it by setting the GDK_PIXBUF_CSOURCE environment variable.
+
+	* themes/Default/images/Makefile.am: use the gdk-pixbuf-csource
+	executable that was found at configure time.
+
+	* app/base/levels.c: cosmetic change.
+
+	* app/tools/gimplevelstool.c: allow to pick white, gray and black
+	point for all channels. Allows for easy white-point balancing.
+
+	* plug-ins/script-fu/scripts/3dTruchet.scm: restore the foreground
+	color when the script is done (see bug #108473).
+
 2003-03-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainertreeview.[ch]: added utility function
