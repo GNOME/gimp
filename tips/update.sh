@@ -23,13 +23,11 @@ echo ./update.sh da    created new pot file and updated the da.po file
 
 elif [ "x$1" = "x" ]; then 
 
-intltool-extract --type=gettext/xml gimp-tips.xml.in
 echo "Building the $PACKAGE.pot ..."
 intltool-update --gettext-package $PACKAGE --pot
 
 else
 
-intltool-extract --type=gettext/xml gimp-tips.xml.in
 echo "Building the $PACKAGE.pot, merging and updating ..."
 intltool-update --gettext-package $PACKAGE $1
 

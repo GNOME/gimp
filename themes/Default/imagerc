@@ -97,8 +97,8 @@ style "gimp-icons"
     }
   stock["gimp-selection-subtract"] =
     {
-      { "images/stock-button-selection-substract.png", *, *, "gtk-button" },
-      { "images/stock-button-selection-substract.png", *, *, * }
+      { "images/stock-button-selection-subtract.png", *, *, "gtk-button" },
+      { "images/stock-button-selection-subtract.png", *, *, * }
     }
   stock["gimp-selection-intersect"] =
     {
