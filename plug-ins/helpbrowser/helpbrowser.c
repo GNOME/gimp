@@ -690,6 +690,9 @@ wheel_callback (GtkWidget      *widget,
   GtkAdjustment *adj;
   gfloat new_value;
 
+  if (! GTK_XMHTML (html)->html.needs_vsb)
+    return FALSE;
+
   adj = GTK_ADJUSTMENT (GTK_XMHTML (html)->vsba);
 
   switch (bevent->button)

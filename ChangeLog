@@ -1,5 +1,10 @@
 1999-12-19  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/helpbrowser/helpbrowser.c: immediately return from
+	the wheel mouse callback if no vertical scrollbar is visible.
+
+1999-12-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/palette.c: Added a confirmation dialog for "delete palette".
 
 	* app/gradient.c
