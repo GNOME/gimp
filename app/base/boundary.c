@@ -580,13 +580,14 @@ sort_boundary (const BoundSeg *segs,
 /* sorted.                       */
 
 BoundSeg *
-simplify_boundary (const BoundSeg *stroke_segs,
-                   gint            num_groups,
-                   gint           *num_segs)
+simplify_boundary (BoundSeg *stroke_segs,
+                   gint      num_groups,
+                   gint     *num_segs)
 {
   GArray   *new_bounds;
   GArray   *points;
   BoundSeg *ret_bounds;
+  BoundSeg  tmp_seg;
   gint      i, j, seg, start, n_points;
 
   g_return_val_if_fail (num_segs != NULL, NULL);
@@ -613,16 +614,16 @@ simplify_boundary (const BoundSeg *stroke_segs,
         {
           points = g_array_new (FALSE, FALSE, sizeof (gint));
 
-          simplify_subdivide (stroke_segs, start, start + n_points - 1,
+          /* temporarily use the delimiter to close the polygon */
+          tmp_seg = stroke_segs[seg];
+          stroke_segs[seg] = stroke_segs[start];
+          simplify_subdivide (stroke_segs, start, start + n_points,
                               &points);
+          stroke_segs[seg] = tmp_seg;
 
           for (j = 0; j < points->len; j++)
             g_array_append_val (new_bounds,
                                 stroke_segs [g_array_index (points, gint, j)]);
-
-          if (n_points > 1)
-            g_array_append_val (new_bounds,
-                                stroke_segs [start + n_points - 1]);
 
           g_array_append_val (new_bounds, stroke_segs[seg]);
 
