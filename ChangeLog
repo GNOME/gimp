@@ -1,5 +1,12 @@
 2003-08-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/image-menu.c: added "Select->To Path" menu entry, using
+	the right stock_id and help_id.
+
+	* plug-ins/sel2path/sel2path.c: don't install a menu_path.
+
+2003-08-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/text/gimptext.[ch]: derive it from GimpObject and added
 	GimpObject::get_memsize() implementation.
 

@@ -320,6 +320,11 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GIMP_STOCK_SELECTION_TO_CHANNEL },
     NULL,
     GIMP_HELP_SELECTION_TO_CHANNEL, NULL },
+  { { N_("/Select/To _Path"), NULL,
+      vectors_selection_to_vectors_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_SELECTION_TO_PATH },
+    NULL,
+    GIMP_HELP_SELECTION_TO_PATH, NULL },
 
   /*  <Image>/View  */
 
@@ -1452,11 +1457,12 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Select/Border...",        lp && sel);
 
   SET_SENSITIVE ("/Select/Toggle QuickMask", gdisp);
-  SET_SENSITIVE ("/Select/Save to Channel",  lp && sel && !fs);
+  SET_SENSITIVE ("/Select/Save to Channel",  sel && !fs);
+  SET_SENSITIVE ("/Select/To Path",          sel && !fs);
 
   /*  View  */
 
-  SET_SENSITIVE ("/View/New View",   gdisp);
+  SET_SENSITIVE ("/View/New View", gdisp);
 
   SET_SENSITIVE ("/View/Dot for Dot", gdisp);
   SET_ACTIVE    ("/View/Dot for Dot", gdisp && shell->dot_for_dot);
@@ -1465,16 +1471,15 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/View/Zoom/Zoom In",            gdisp);
   SET_SENSITIVE ("/View/Zoom/Zoom to Fit Window", gdisp);
 
-  SET_SENSITIVE ("/View/Zoom/16:1", gdisp);
-  SET_SENSITIVE ("/View/Zoom/8:1",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/4:1",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/2:1",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:1",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:2",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:4",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:8",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:16", gdisp);
-
+  SET_SENSITIVE ("/View/Zoom/16:1",     gdisp);
+  SET_SENSITIVE ("/View/Zoom/8:1",      gdisp);
+  SET_SENSITIVE ("/View/Zoom/4:1",      gdisp);
+  SET_SENSITIVE ("/View/Zoom/2:1",      gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:1",      gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:2",      gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:4",      gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:8",      gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:16",     gdisp);
   SET_SENSITIVE ("/View/Zoom/Other...", gdisp);
 
   if (gdisp)

@@ -130,7 +130,7 @@ query (void)
 			  "Andy Thomas",
 			  "Andy Thomas",
 			  "1999",
-			  N_("<Image>/Select/To _Path"),
+			  NULL,
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
