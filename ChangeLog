@@ -1,3 +1,9 @@
+Sat Aug 21 21:03:00 CST 1999  Seth J. Burgess <sjburges@gimp.org>
+	
+	* plug-ins/common/jpeg.c: committed patch by Steinar Gunderson
+        <sgunderson@bigfoot.com> that has previews, subsampling, choice
+        of dct, and the kitchen sink.  Very cool.
+
 Sat Aug 21 01:06:53 BST 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/nav_window.c: Navigation window shows checkmarked alpha,
