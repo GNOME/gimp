@@ -21,8 +21,8 @@ import math
 from gimpfu import *
 
 def python_sphere(radius, light, shadow, bg_colour, sphere_colour):
-    width = radius * 3.75
-    height = radius * 2.5;
+    width = int(radius * 3.75)
+    height = int(radius * 2.5)
     img = gimp.Image(width, height, RGB)
     drawable = gimp.Layer(img, "Sphere Layer", width, height,
 			  RGB_IMAGE, 100, NORMAL_MODE)

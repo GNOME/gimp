@@ -1,3 +1,16 @@
+2003-08-13  Manish Singh  <yosh@gimp.org>
+
+	* pygimp/Makefile.am: slight include file ordering tweak
+
+	* plug-ins/pygimp/plug-ins/colorhtml.py: add a sanity check
+
+	* plug-ins/pygimp/plug-ins/sphere.py
+	* plug-ins/pygimp/plug-ins/whirlpinch.py: minor cleanups for
+	Python 2.3
+
+	* plug-ins/webbrowser/web-browser.scm: change script to reflect
+	new pdb name of the web-browser.
+
 2003-08-13  Gil "Dolfin" Osher  <dolfin@rpg.org.il>
 
 	* configure.in: Added "he" (Hebrew) to ALL_LINGUAS.

@@ -42,6 +42,9 @@ def python_colorhtml(img, drawable, filename, raw_filename,
     height = drawable.height
     bpp = drawable.bpp
 
+    if not drawable.is_rgb or drawable.has_alpha:
+        return
+
     gimp.tile_cache_ntiles(width / gimp.tile_width() + 1)
 
     html = file(filename, 'w')

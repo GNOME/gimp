@@ -193,7 +193,7 @@ def bilinear(x, y, values):
 	y = y % 1.0
 	m0 = values[0] + x * (values[1] - values[0])
 	m1 = values[2] + x * (values[3] - values[2])
-	return chr(m0 + y * (m1 - m0))
+	return chr(int(m0 + y * (m1 - m0)))
 
 
 register(

@@ -23,7 +23,7 @@
 (set! web-browser-new-window 0)
 
 (define (script-fu-bookmark url)
-  (extension-web-browser 1 url web-browser-new-window))
+  (plug-in-web-browser 1 url web-browser-new-window))
 
 (define (bookmark-register proc menu help)
   (script-fu-register proc menu help

@@ -1,6 +1,6 @@
 SUBDIRS = doc plug-ins
 
-INCLUDES = $(PYTHON_INCLUDES) $(GLIB_CFLAGS) -I$(top_srcdir)
+INCLUDES = -I$(top_srcdir) $(PYTHON_INCLUDES) $(GLIB_CFLAGS)
 
 pygimpdir = $(gimpplugindir)/python
 
