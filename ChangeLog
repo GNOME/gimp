@@ -1,3 +1,7 @@
+Mon Mar 16 00:28:16 CST 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/undo.c: added back in the "extra" update I removed earlier.
+
 Sun Mar 15 20:39:12 CST 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/undo.c (undo_pop_layer_displace): removed what seemed to be
