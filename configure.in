@@ -672,7 +672,19 @@ if test -n "$DISTMAKE"; then
 fi
 
 dnl eek, what a hack...
-GIMP_CONTRIBUTORS=`cat tools/authorsgen/contributors | sed -e '/^#/d' -e 's/\.*\[.*\]//' -e 's/^ *//' -e 's/ *$//' -e '/^$/d' | awk '{ ORS = ", "; print; }' | sed -e 's/, $/./'`
+rm -f confauthorsgen
+
+IFS="${IFS=         }"; gimp_save_IFS="$IFS"; IFS='
+'
+
+for i in `sed -e '/^#/d' -e 's/\.*\[.*\]//' -e 's/^ *//' -e 's/ *$//' -e '/^$/d' < tools/authorsgen/contributors`; do
+  echo $ac_n "$i, $ac_c" >> confauthorsgen
+done
+
+IFS="$gimp_save_IFS"
+
+GIMP_CONTRIBUTORS=`sed -e 's/, $/./' < confauthorsgen`
+rm -f confauthorsgen
 
 AM_CONDITIONAL(STATICLIBS, test x$enable_static = xyes)
 

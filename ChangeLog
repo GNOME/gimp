@@ -1,4 +1,9 @@
+Wed Aug 16 18:39:44 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* configure.in: removed awk dependency for authors list
+
 2000-08-16  Garry R. Osgood <gosgood@idt.net>
+
 	* app/gdisplay.c
 	* app/image_map.c
 	Addresses Bug Report #14704, and an undisclosed undo system bug.
