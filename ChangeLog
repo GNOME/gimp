@@ -1,3 +1,14 @@
+2004-02-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig-serialize.c
+	(gimp_config_serialize_property)
+	* app/config/gimpconfig-deserialize.c
+	(gimp_config_deserialize_property): Reverted my last "cleanup" and
+	put the "obsolete" check for the exact owner class of the property
+	back. It appears that if a subclass does *not* implement
+	GimpConfigInterface *itself*, it still inherits
+	serialize_property()/deserialize_property().
+
 2004-02-19  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimplevelstool.c: more dialog tweaking, fixed

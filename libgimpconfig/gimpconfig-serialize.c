@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -197,6 +195,7 @@ gimp_config_serialize_property (GimpConfig       *config,
 {
   GTypeClass          *owner_class;
   GimpConfigInterface *config_iface;
+  GimpConfigInterface *parent_iface = NULL;
   GValue               value   = { 0, };
   gboolean             success = FALSE;
 
@@ -220,7 +219,28 @@ gimp_config_serialize_property (GimpConfig       *config,
 
   config_iface = g_type_interface_peek (owner_class, GIMP_TYPE_CONFIG);
 
+  /*  We must call serialize_property() *only* if the *exact* class
+   *  which implements it is param_spec->owner_type's class.
+   *
+   *  Therefore, we ask param_spec->owner_type's immediate parent class
+   *  for it's GimpConfigInterface and check if we get a different pointer.
+   *
+   *  (if the pointers are the same, param_spec->owner_type's
+   *   GimpConfigInterface is inherited from one of it's parent classes
+   *   and thus not able to handle param_spec->owner_type's properties).
+   */
+  if (config_iface)
+    {
+      GTypeClass *owner_parent_class;
+
+      owner_parent_class = g_type_class_peek_parent (owner_class),
+
+      parent_iface = g_type_interface_peek (owner_parent_class,
+                                            GIMP_TYPE_CONFIG);
+    }
+
   if (config_iface                     &&
+      config_iface != parent_iface     && /* see comment above */
       config_iface->serialize_property &&
       config_iface->serialize_property (config,
                                         param_spec->param_id,
