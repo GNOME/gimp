@@ -1,4 +1,4 @@
-2004-07-29  Shlomi Fish  <shlomif@iglu.org.il>
+2004-07-30  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* libgimpwidgets/gimppreviewarea.c (gimp_preview_area_draw):
 	corrected a typo causing mayhem in previews of non-alpha grayscale
