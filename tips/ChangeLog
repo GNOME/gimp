@@ -1,3 +1,7 @@
+2003-02-26  Sven Neumann  <sven@gimp.org>
+
+	* gimp_tips.cs.txt: removed.
+
 2003-02-26  Miloslav Trmac  <mitr@volny.cz>
 
 	* Makefile.am (tips_POFILES): Added cs (Czech)
@@ -10,11 +14,11 @@
 
 2003-02-20  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-    * es.po: Fixed a couple of strings in Spanish translation.
+	* es.po: Fixed a couple of strings in Spanish translation.
 
 2003-02-11  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-    * es.po: Fixed a couple of strings in Spanish translation.
+	* es.po: Fixed a couple of strings in Spanish translation.
 
 2003-02-11  Sven Neumann  <sven@gimp.org>
 
