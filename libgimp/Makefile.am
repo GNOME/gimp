@@ -183,6 +183,8 @@ libgimp_la_SOURCES = \
 	gimplimits.h			\
 	gimpmatrix.c			\
 	gimpmatrix.h			\
+	gimppalette.c			\
+	gimppalette.h			\
 	gimpparasite.c			\
 	gimpparasite.h			\
 	gimpparasiteio.c		\
@@ -261,6 +263,7 @@ gimpinclude_HEADERS = \
 	gimpmatrix.h			\
 	gimpmenu.h			\
 	gimpmodule.h			\
+	gimppalette.h			\
 	gimpparasite.h			\
 	gimpparasiteio.h		\
 	gimppatheditor.h		\

@@ -218,11 +218,6 @@ void               gimp_context_tool_changed       (GimpContext     *context);
 /*  foreground color  */
 void               gimp_context_get_foreground     (GimpContext     *context,
 						    GimpRGB         *color);
-
-/*  FIXME: this let's the core link against gimp_color_button  */
-void               gimp_palette_get_foreground     (guchar          *r,
-						    guchar          *g,
-						    guchar          *b);
 void               gimp_context_set_foreground     (GimpContext     *context,
 						    const GimpRGB   *color);
 void               gimp_context_foreground_changed (GimpContext     *context);
@@ -230,10 +225,6 @@ void               gimp_context_foreground_changed (GimpContext     *context);
 /*  background color  */
 void               gimp_context_get_background     (GimpContext     *context,
 						    GimpRGB         *color);
-/*  FIXME: this let's the core link against gimp_color_button  */
-void               gimp_palette_get_background     (guchar          *r,
-						    guchar          *g,
-						    guchar          *b);
 void               gimp_context_set_background     (GimpContext     *context,
 						    const GimpRGB   *color);
 void               gimp_context_background_changed (GimpContext     *context);

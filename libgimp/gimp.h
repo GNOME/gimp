@@ -40,6 +40,7 @@
 #include <libgimp/gimplayer.h>
 #include <libgimp/gimplimits.h>
 #include <libgimp/gimpmath.h>
+#include <libgimp/gimppalette.h>
 #include <libgimp/gimpparasite.h>
 #include <libgimp/gimppixelrgn.h>
 #include <libgimp/gimpproceduraldb.h>

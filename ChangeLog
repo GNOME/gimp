@@ -1,3 +1,19 @@
+2001-01-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/libgimp_glue.[ch]: new files containing stuff needed for
+	linking libgimp stuff against the app. This file is not needed
+	at all for the app itself and should never be included.
+
+	* app/gimpcontext.[ch]: removed from here.
+
+	* libgimp/Makefile.am
+	* libgimp/gimp.h
+	* libgimp/gimppalette.[ch]: new files for the PDB wrapping
+	gimp_palette_*_rgb() stuff.
+
+	* libgimp/gimpcolor.[ch]: removed the PDB dependency from here.
+
 2001-01-23  Sven Neumann  <sven@gimp.org>
 
 	* app/paint_funcs.c

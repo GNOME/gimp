@@ -192,6 +192,8 @@ gimp_SOURCES = \
 	lc_dialog.c		\
 	lc_dialog.h		\
 	lc_dialogP.h		\
+	libgimp_glue.c		\
+	libgimp_glue.h		\
 	lut_funcs.c		\
 	lut_funcs.h		\
 	main.c			\

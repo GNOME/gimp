@@ -123,13 +123,6 @@ void      gimp_hsva_set       (GimpHSV       *hsva,
 			       gdouble        v,
 			       gdouble        a);
 
-/*  These will become the default one day  */
-
-gboolean  gimp_palette_set_foreground_rgb (const GimpRGB *rgb);
-gboolean  gimp_palette_get_foreground_rgb (GimpRGB       *rgb);
-gboolean  gimp_palette_set_background_rgb (const GimpRGB *rgb);
-gboolean  gimp_palette_get_background_rgb (GimpRGB       *rgb);
-
 
 #ifdef __cplusplus
 }
