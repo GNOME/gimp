@@ -274,7 +274,6 @@ load_idea_manager( idea_manager *ideas )
       if( fp )
 	{
 	  gchar *title;
-	  gint length;
 	  clear_white( fp );
 	  
 	  while ((title = idea_manager_parse_line (fp)))

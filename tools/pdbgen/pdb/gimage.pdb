@@ -185,7 +185,7 @@ sub image_accessors {
     ref($extra) ? (@extra = @$extra) : (@extra = ($extra, $extra));
     %extra = map { $once++ ? 'set' : 'get', $_ ? $_ : "" } @extra;
 
-    foreach (keys %extra) {
+    foreach (sort keys %extra) {
 	my $proc = "image_${_}_$prop";
 
 	push @procs, $proc;

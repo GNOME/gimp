@@ -1,3 +1,14 @@
+Wed Jun  2 16:53:30 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/docindex.c: remove unused var
+
+	* app/gimprc_cmds.c
+	* tools/pdbgen/pdb/gimprc.pdb: propagate the May 21 change to the
+	pdb file
+
+	* tools/pdbgen/pdb/{channel,gimage,layer}.pdb: don't be sloppy in
+	the face of fickle perls
+
 1999-06-03  Tor Lillqvist  <tml@iki.fi>
 
 	* app/about_dialog.c (about_dialog_load_logo): As we open the ppm

@@ -97,7 +97,7 @@ sub channel_accessors {
     ref($extra) ? (@extra = @$extra) : (@extra = ($extra, $extra));
     %extra = map { $once++ ? 'set' : 'get', $_ ? $_ : "" } @extra;
 
-    foreach (keys %extra) {
+    foreach (sort keys %extra) {
 	my $proc = "channel_${_}_$prop";
 
 	push @procs, $proc;
