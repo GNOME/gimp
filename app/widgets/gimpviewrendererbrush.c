@@ -29,6 +29,7 @@
 
 #include "core/gimpbrush.h"
 #include "core/gimpbrushpipe.h"
+#include "core/gimpbrushgenerated.h"
 
 #include "gimpviewrendererbrush.h"
 
@@ -172,14 +173,16 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
 #define INDICATOR_HEIGHT 7
 
   if (renderer->width  >= INDICATOR_WIDTH  * 2 &&
-      renderer->height >= INDICATOR_HEIGHT * 2&&
+      renderer->height >= INDICATOR_HEIGHT * 2 &&
       (renderer->width  < brush_width  ||
        renderer->height < brush_height ||
-       GIMP_IS_BRUSH_PIPE (brush)))
+       GIMP_IS_BRUSH_PIPE (brush) ||
+       GIMP_IS_BRUSH_GENERATED (brush)))
     {
 #define WHT { 255, 255, 255 }
 #define BLK {   0,   0,   0 }
 #define RED { 255, 127, 127 }
+#define BLU { 127, 150, 255 }
 
       static const guchar scale_indicator_bits[7][7][3] =
       {
@@ -214,9 +217,32 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
         { WHT, RED, RED, RED, RED, RED, RED }
       };
 
+      static const guchar scale_genbrush_indicator_bits[7][7][3] =
+      {
+        { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
+        { WHT, WHT, WHT, BLK, WHT, WHT, BLU },
+        { WHT, WHT, WHT, BLK, WHT, BLU, BLU },
+        { WHT, BLK, BLK, BLK, BLK, BLK, BLU },
+        { WHT, WHT, WHT, BLK, WHT, BLU, BLU },
+        { WHT, WHT, BLU, BLK, BLU, BLU, BLU },
+        { WHT, WHT, BLU, BLU, BLU, BLU, BLU }
+      };
+
+      static const guchar genbrush_indicator_bits[7][7][3] =
+      {
+        { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
+        { WHT, WHT, WHT, WHT, WHT, WHT, BLU },
+        { WHT, WHT, WHT, WHT, WHT, BLU, BLU },
+        { WHT, WHT, WHT, WHT, BLU, BLU, BLU },
+        { WHT, WHT, WHT, BLU, BLU, BLU, BLU },
+        { WHT, WHT, BLU, BLU, BLU, BLU, BLU },
+        { WHT, BLU, BLU, BLU, BLU, BLU, BLU }
+      };
+
 #undef WHT
 #undef BLK
 #undef RED
+#undef BLU
 
       guchar   *buf;
       guchar   *b;
@@ -225,6 +251,7 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
       gint      offset_y;
       gboolean  alpha;
       gboolean  pipe;
+      gboolean  genbrush;
       gboolean  scale;
 
       offset_x = renderer->width  - INDICATOR_WIDTH;
@@ -233,10 +260,11 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
       buf = renderer->buffer + (offset_y * renderer->rowstride +
                                 offset_x * renderer->bytes);
 
-      pipe  = GIMP_IS_BRUSH_PIPE (brush);
-      scale = (renderer->width  < brush_width ||
-               renderer->height < brush_height);
-      alpha = (renderer->bytes == 4);
+      pipe     = GIMP_IS_BRUSH_PIPE (brush);
+      genbrush = GIMP_IS_BRUSH_GENERATED (brush);
+      scale    = (renderer->width  < brush_width ||
+                  renderer->height < brush_height);
+      alpha    = (renderer->bytes == 4);
 
       for (y = 0; y < INDICATOR_HEIGHT; y++)
         {
@@ -252,6 +280,12 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
                       *b++ = scale_pipe_indicator_bits[y][x][1];
                       *b++ = scale_pipe_indicator_bits[y][x][2];
                     }
+                  else if (genbrush)
+                    {
+                      *b++ = scale_genbrush_indicator_bits[y][x][0];
+                      *b++ = scale_genbrush_indicator_bits[y][x][1];
+                      *b++ = scale_genbrush_indicator_bits[y][x][2];
+                    }
                   else
                     {
                       *b++ = scale_indicator_bits[y][x][0];
@@ -264,6 +298,12 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
                   *b++ = pipe_indicator_bits[y][x][0];
                   *b++ = pipe_indicator_bits[y][x][1];
                   *b++ = pipe_indicator_bits[y][x][2];
+                }
+              else if (genbrush)
+                {
+                  *b++ = genbrush_indicator_bits[y][x][0];
+                  *b++ = genbrush_indicator_bits[y][x][1];
+                  *b++ = genbrush_indicator_bits[y][x][2];
                 }
 
               if (alpha)

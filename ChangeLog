@@ -1,3 +1,9 @@
+2004-09-07  Simon Budig  <simon@gimp.org>
+
+	* app/widgets/gimpviewrendererbrush.c: Added an indicator for
+	generated brushes. Pretty straightforward, suggestions for
+	improvements are welcome.
+
 2004-09-06  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/struc.c: added a preview.
