@@ -18,7 +18,7 @@ msgid "<Image>/Filters/Logulator/Starburst"
 msgstr "<Image>/Filter/"
 
 msgid "expected perl-server at other end of socket, got @r\n"
-msgstr ""
+msgstr "Perl-Server auf der Gegenseite erwartet, Antwort war jedoch @r\n"
 
 msgid "too many"
 msgstr "zu viele"
@@ -26,9 +26,8 @@ msgstr "zu viele"
 msgid "$s: not an integer\n"
 msgstr "$s: kein integer\n"
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Blended"
-msgstr "<Image>/Filter/"
+msgstr "<Image>/Filter/Logulator/Blended"
 
 msgid "Help for "
 msgstr "Hilfe für "
@@ -54,9 +53,8 @@ msgstr "Konnte '$fn' nicht lesen: $!"
 msgid "<Toolbox>/Xtns/Render/Povray/Texture"
 msgstr "<Toolbox>/Xtn/Render/Povray/Textur"
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Cool Metal"
-msgstr "<Image>/Filter/"
+msgstr "<Image>/Filter/Logulator/Cool Metal"
 
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences"
 msgstr "<Toolbox>/Xtn/Erzeuge/Povray/Einstellungen"
@@ -64,13 +62,11 @@ msgstr "<Toolbox>/Xtn/Erzeuge/Povray/Einstellungen"
 msgid "Unable to read temporary image tile $tmp: $!"
 msgstr "Konnte temporäre Bilddatei '$tmp' nicht lesen: $!"
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Crystal"
-msgstr "<Image>/Filter/"
+msgstr "<Image>/Filter/Logulator/Crystal"
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Alien Glow"
-msgstr "<Image>/Filter/"
+msgstr "<Image>/Filter/Logulator/Alien Glow"
 
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
 msgstr ""
@@ -85,9 +81,8 @@ msgstr "<Toolbox>/Xtn/Erzeuge/Pixelgenerator"
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr ""
 
-#, fuzzy
 msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr "<Image>/Filter/"
+msgstr "<Image>/Filter/Rauschen/Xach`s Sicht..."
 
 msgid ""
 "$function: function name contains unusual characters, good style is to use only "
@@ -111,24 +106,22 @@ msgid "/Filters/Logulator"
 msgstr "<Image>/Filter/"
 
 msgid "<Image>/Guides/Guide Grid"
-msgstr ""
+msgstr "<Image>/Hilfslinien/Raster"
 
 msgid "dunno how to return param type %d"
-msgstr ""
+msgstr "Parametertyp %d kann nicht zurueckgegeben werden"
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Chip Away"
-msgstr "<Image>/Filter/"
+msgstr "<Image>/Filter/Logulator/Chip Away"
 
 msgid "<Image>/Filters/Colors/Colour To Alpha"
-msgstr ""
+msgstr "<Image>/Filter/Farben/Farbe zu Alpha"
 
 msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr ""
+msgstr "<Image>/Bild/Alpha/Alpha zu Farbe..."
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Bovination"
-msgstr "<Image>/Filter/"
+msgstr "<Image>/Filter/Logulator/Bovination"
 
 msgid "Image Types"
 msgstr "Bildtypen"
@@ -147,13 +140,13 @@ msgid "<Image>/Filters/Logulator/Particle Trace"
 msgstr "<Image>/Filter/"
 
 msgid "interface=... tag is no longer supported\n"
-msgstr ""
+msgstr "Das interface=...-Tag wird nicht mehr unterstuetzt\n"
 
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 msgid "Synopsis"
-msgstr ""
+msgstr "Synopsis"
 
 msgid "Plug-In Path"
 msgstr "Plug-In-Pfad"
@@ -165,39 +158,39 @@ msgid "Restore values to the previous ones"
 msgstr "Parameter auf vorherige Werte zurücksetzen"
 
 msgid "<Image>/Select/Triangle"
-msgstr ""
+msgstr "<Image>/Auswahl/Dreieck"
 
 msgid "<Toolbox>/Xtns/Render/Stamps"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Zeichnen/Briefmarke"
 
 msgid "Illegal default font description for $function: $val\n"
 msgstr "Illegale Schriftart angegeben für $function: $val\n"
 
 msgid "parameter '$entry->[1]' is not optional\n"
-msgstr ""
+msgstr "Parameter '$entry->[1]' ist nicht optional\n"
 
 msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
-msgstr ""
+msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 
 msgid "<Toolbox>/Xtns/Render/Random Art #1"
 msgstr ""
 
 msgid "WARNING: client tried to unlock without holding a lock"
-msgstr ""
+msgstr "WARNUNG: Client hat versucht, eine nichtexistente Sperre aufzuheben"
 
 msgid "register called with too many or wrong arguments\n"
 msgstr "'register' mit zu vielen oder falschen Argumenten aufgerufen\n"
 
 msgid "Spin Layer SRC (250ms)"
-msgstr ""
+msgstr "Spinebene QUELLE (250ms)"
 
 #, fuzzy
 msgid "<Image>/Filters/Web/Webify"
-msgstr "<Image>/Filter/"
+msgstr "<Image>/Filter/Web/VerWEBben"
 
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
-msgstr ""
+msgstr "Ungueltige Parameterdefinition, [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] oder PARAM_TYPE wird erwartet"
 
 msgid ""
 "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 "
@@ -205,7 +198,7 @@ msgid ""
 msgstr ""
 
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
-msgstr ""
+msgstr "Das letze Argument von gimp_pattern_select_widget muss eine Referenz auf einen Skalar sein"
 
 msgid ""
 "\n"
@@ -213,6 +206,10 @@ msgid ""
 "EMBEDDED POD DOCUMENTATION:\n"
 "\n"
 msgstr ""
+"\n"
+"\n"
+"EINGEBETTETE POD-DOKUMENTATION:\n"
+"\n"
 
 #, fuzzy
 msgid "<Image>/Filters/Render/TeX String"
@@ -240,12 +237,13 @@ msgid "unable to open $rgb_db_path"
 msgstr "Konnte $rgb_db_path nicht öffnen"
 
 msgid "You can't run this script with an INDEXED image!!"
-msgstr ""
+msgstr "Dieses Program arbeitet nicht mit dem indizierten Format!!"
 
 msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
-msgstr ""
+msgstr "Eine gerade Anzahl von Szenen ist notwendig, um rueckwaerts zu drehen.\n"
+"Die Anzahl der Szenen wurde auf $frames erhoeht"
 
 msgid "<Image>/Filters/Colors/Map To Gradient"
 msgstr ""
@@ -258,13 +256,13 @@ msgid "<Image>/Filters/Logulator/Basic I"
 msgstr "<Image>/Filter/"
 
 msgid "required callback 'run' not found\n"
-msgstr ""
+msgstr "Benoetigte Callback-Funktion 'run' wurde nicht gefunden\n"
 
 msgid "function name contains dashes instead of underscores"
 msgstr "Funktionsname enthält Minuszeichen anstatt Unterstrichen"
 
 msgid "required callback 'query' not found\n"
-msgstr ""
+msgstr "Benoetigte Callback-Funktion 'query' wurde nicht gefunden\n"
 
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
@@ -278,13 +276,13 @@ msgstr ""
 "String stehen soll bitte ein *1 anhängen"
 
 msgid "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
-msgstr ""
+msgstr "uengueltige GIMP_HOST-Angabe: 'spawn' ist keine gueltige Verbindungsart fuer den Server"
 
 msgid "unable to open Gimp::Net communications socket\n"
-msgstr ""
+msgstr "Konnte den Gimp::Net Kommunikationskanal nicht oeffnen\n"
 
 msgid "wrong authorization, aborting connection"
-msgstr ""
+msgstr "Falscher Autorisierungscode, Verbindung wird abgebrochen"
 
 #, fuzzy
 msgid "<Image>/Filters/Map/Image Tile"
@@ -315,13 +313,13 @@ msgid "[undefined]"
 msgstr "[undefiniert]"
 
 msgid "<Image>/Guides/Remove Guides"
-msgstr ""
+msgstr "<Image>/Hilfslinien/Hilfslinien entfernen"
 
 msgid "WARNING: shared locking requested but not implemented"
-msgstr ""
+msgstr "WARNUNG: gemeinsames Locking wurde versucht, ist aber noch nicht implementiert"
 
 msgid "You can't run this script without an ALPHA CHANNEL!!"
-msgstr ""
+msgstr "Dieses Program kann nicht ohne Alpha-Kanal arbeiten!!"
 
 #, fuzzy
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
@@ -344,7 +342,7 @@ msgid ", authorization required"
 msgstr ", Autorisierung notwendig"
 
 msgid "unable to create socketpair for gimp communications: $!"
-msgstr ""
+msgstr "Konnte kein Socketpaar fuer die Kommunikation mit dem Gimp erzeugen: $!"
 
 msgid "trying to start gimp with options \"$opt\"\n"
 msgstr "Ich versuche, gimp mit den Schaltern \"$opt\" zu starten\n"
@@ -364,10 +362,10 @@ msgid "<Image>/Filters/Logulator/Imigre-26"
 msgstr "<Image>/Filter/"
 
 msgid "gimp_tile_get_data is not yet implemented\n"
-msgstr ""
+msgstr "gimp_tile_get_data ist noch nicht implementiert\n"
 
 msgid "dunno how to pass arg type %d"
-msgstr ""
+msgstr "Kann Argumenttyp %d nicht uebergeben"
 
 msgid "Browse"
 msgstr "Suchen"
@@ -385,7 +383,7 @@ msgid "unable to create listening tcp socket: $!\n"
 msgstr "Konnte TCP-Socket nicht erzeugene: $!\n"
 
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
-msgstr ""
+msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
 
 msgid ""
 "BLURB:\n"
@@ -396,12 +394,19 @@ msgid ""
 "\n"
 "$help"
 msgstr ""
+"BLURB:\n"
+"\n"
+"$blurb\n"
+"\n"
+"HILFE:\n"
+"\n"
+"$help"
 
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 msgid "gimp_tile_set_data is not yet implemented\n"
-msgstr ""
+msgstr "gimp_tile_set_data wurde noch nicht implementiert\n"
 
 msgid "argument incompatible with type IMAGE"
 msgstr "Argument inkompatibel mit Typ IMAGE"
@@ -419,7 +424,7 @@ msgid "Description"
 msgstr "Beschreibung"
 
 msgid "params and return_vals must be array refs (even if empty)!"
-msgstr ""
+msgstr "'params' und 'return_vals' muessen Arrayreferenzen sein (auch, wenn sie leer sind!)"
 
 #, fuzzy
 msgid "<Image>/Filters/Logulator/Newsprint text"
@@ -463,19 +468,19 @@ msgid "gimp procedure '%s' not found"
 msgstr "Gimp-Funktion '%s' nicht gefunden"
 
 msgid "Visual Scriptor"
-msgstr ""
+msgstr "Visual Scriptor"
 
 msgid "server going down..."
 msgstr "Server beendet sich..."
 
 msgid "unable to read temporary file $tmp: $!"
-msgstr ""
+msgstr "Konnte temporaere Datei $tmp nicht lesen: $!"
 
 msgid "Saving '$filename' as COLORHTML..."
-msgstr ""
+msgstr "Speichere '$filename' als COLORHTML..."
 
 msgid "being called as '%s', but '%s' not registered in the pdb"
-msgstr ""
+msgstr "Wurde als '%s' aufgerufen, '%s' ist aber nicht in der PDB registriert"
 
 msgid "Shortcuts"
 msgstr "Abkürzungen"
@@ -494,7 +499,7 @@ msgid "<Toolbox>/Xtns/Create_Images"
 msgstr "<Toolbox>/Xtns/Create_Images"
 
 msgid "9x15bold"
-msgstr ""
+msgstr "9x15bold"
 
 msgid "unauthorized command received, aborting connection"
 msgstr "Anfrage ohne Autorisierung empfangen, Verbindung abgebrochen"
@@ -503,10 +508,10 @@ msgid "%s: procedural database execution failed on invalid input arguments"
 msgstr "%s: PDB-Aufruf fehlgeschlagen wegen ungültiger Argumente"
 
 msgid "NAME"
-msgstr ""
+msgstr "NAME"
 
 msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
-msgstr ""
+msgstr "WARNING: $function gab kein Bild, sondern etwas anderes zurueck: \"$img\"\n"
 
 #, fuzzy
 msgid "<Image>/Filters/Map/Xach Blocks"
@@ -521,10 +526,10 @@ msgid "<Image>/Filters/Logulator/Web title header"
 msgstr "<Image>/Filter/"
 
 msgid "FATAL: canonicalize_colour did not return a value!"
-msgstr ""
+msgstr "FATAL: canonicalize_colour lieferte keinen Wert zurueck!"
 
 msgid "export failed"
-msgstr ""
+msgstr "Export fehlgeschlagen"
 
 msgid ""
 "       interface-arguments are\n"
@@ -633,7 +638,7 @@ msgid "illegal type for colour specification"
 msgstr "Die Farbangabe hat einen falschen Typ"
 
 msgid "Seth Spin..."
-msgstr ""
+msgstr "Seth`s Spin..."
 
 msgid "get current background colour from the gimp"
 msgstr "Übernehme die aktuelle Hintergrundfarbe von Gimp"
@@ -717,7 +722,7 @@ msgstr ""
 "Eine Farbe muß aus drei Komponenten bestehen (einem Feld mit drei Elementen)"
 
 msgid "Copyright"
-msgstr ""
+msgstr "Copyright"
 
 #, fuzzy
 msgid "<Toolbox>/Xtns/Render/Bricks"

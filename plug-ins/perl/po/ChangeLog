@@ -1,3 +1,7 @@
+Mon Feb 21 02:05:14 CET 2000  Marc Lehmann <pcg@goof.com>
+
+	* de.po: Updated translation.
+
 Sat Feb 19 23:39:03 CET 2000  Marc Lehmann <pcg@goof.com>
 
 	* update.sh: changed to _not_ update the .po files anymore
