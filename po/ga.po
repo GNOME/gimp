@@ -11,7 +11,7 @@ msgstr ""
 "Language-Team: Irish <ga@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8-bit\n"
 
 #: app/about_dialog.c:137
 msgid "About the GIMP"
@@ -51,7 +51,7 @@ msgstr "An GIMP"
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/app_procs.c:290
 msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
-msgstr ""
+msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 
 #: app/app_procs.c:307 app/app_procs.c:309
 msgid "brought to you by"
@@ -64,7 +64,7 @@ msgstr "Socrú GIMP"
 #: app/app_procs.c:495 app/app_procs.c:503 app/gimprc.c:456
 #, c-format
 msgid "parsing \"%s\"\n"
-msgstr ""
+msgstr "ag parsáil \"%s\"\n"
 
 #. initialize the xcf file format routines
 #: app/app_procs.c:569
@@ -108,7 +108,7 @@ msgstr ""
 
 #: app/app_procs.c:772
 msgid "Quit"
-msgstr "Ealu"
+msgstr "Éirigh"
 
 #. the cancel button
 #: app/app_procs.c:772 app/brightness_contrast.c:230 app/channel_ops.c:99
@@ -725,7 +725,7 @@ msgstr ""
 #: app/info_window.c:428 app/info_window.c:429 app/info_window.c:430
 #: app/info_window.c:431 app/info_window.c:453
 msgid "N/A"
-msgstr ""
+msgstr "G/A"
 
 #: app/color_select.c:242
 msgid "H"
@@ -778,7 +778,7 @@ msgstr "Íomhá:"
 
 #: app/colormap_dialog.i.c:979 app/lc_dialog.c:658
 msgid "none"
-msgstr "tada"
+msgstr "ar bith"
 
 #: app/commands.c:340
 msgid "Feather Selection"
@@ -2918,73 +2918,74 @@ msgstr ""
 #. the underscore installs an accelerator using the character that follows
 #: app/menus.c:182
 msgid "/_Help"
-msgstr "/C_únamh"
+msgstr "/C_abhair"
 
 #: app/menus.c:184
 msgid "/Help/Help..."
-msgstr "/Cúnamh/Cúnamh..."
+msgstr "/Cúidiú/Cúidiú..."
 
 #: app/menus.c:186
 #, fuzzy
 msgid "/Help/Context Help..."
-msgstr "/Cúnamh/Conext Help..."
+msgstr "/Cúidiú/Conext Help..."
 
 #: app/menus.c:188
 #, fuzzy
 msgid "/Help/Tip of the Day..."
-msgstr "/Cúnamh/Tip of the Day..."
+msgstr "/Cúidiú/Tip of the Day..."
 
 #: app/menus.c:190
-#, fuzzy
 msgid "/Help/About..."
-msgstr "/Cúnamh/Faoi..."
+msgstr "/Cúidiú/Faoi..."
 
 #: app/menus.c:193
 #, fuzzy
 msgid "/Help/Dump Items (Debug)"
-msgstr "/Cúnamh/Dump Items (Debug)"
+msgstr "/Cúidiú/Dump Items (Debug)"
 
 #: app/menus.c:215
 msgid "/File/Save"
-msgstr ""
+msgstr "/Comhad/Sábháil"
 
 #: app/menus.c:217
 msgid "/File/Save As..."
-msgstr ""
+msgstr "/Comhad/Sábháil Le..."
 
 #: app/menus.c:219
 #, fuzzy
 msgid "/File/Revert..."
-msgstr "/Comhad/Nua..."
+msgstr "/Comhad/Revert"
 
 #: app/menus.c:224
 msgid "/File/Close"
-msgstr ""
+msgstr "/Comhad/Dún"
 
 #. <Image>/Edit
 #: app/menus.c:234
 msgid "/Edit/Undo"
-msgstr ""
+msgstr "/Eagar/Leasú"
 
 #: app/menus.c:236
+#, fuzzy
 msgid "/Edit/Redo"
-msgstr ""
+msgstr "/Eagar/Redo"
 
 #: app/menus.c:241
 msgid "/Edit/Cut"
-msgstr ""
+msgstr "/Eagar/Gearr"
 
 #: app/menus.c:243
 msgid "/Edit/Copy"
-msgstr ""
+msgstr "/Eagar/Cóip"
 
 #: app/menus.c:245
 msgid "/Edit/Paste"
-msgstr ""
+msgstr "/Eagar/Greamaigh"
 
 #: app/menus.c:247
+#, fuzzy
 msgid "/Edit/Paste Into"
-msgstr ""
+msgstr "/Eagar/Paste Into"
 
 #: app/menus.c:249
 msgid "/Edit/Paste as New"
@@ -3149,15 +3150,16 @@ msgstr ""
 #. <Image>/Image/Mode
 #: app/menus.c:364
 msgid "/Image/Mode/RGB"
-msgstr ""
+msgstr "/Íomha/Mód/RGB"
 
 #: app/menus.c:366
+#, fuzzy
 msgid "/Image/Mode/Grayscale"
-msgstr ""
+msgstr "Íomha/Mód/Grayscale"
 
 #: app/menus.c:368
 msgid "/Image/Mode/Indexed..."
-msgstr ""
+msgstr "/Íomha/Mód/Indexed..."
 
 #. <Image>/Image/Colors
 #: app/menus.c:376
@@ -4018,7 +4020,7 @@ msgstr ""
 
 #: app/plug_in.c:339
 msgid "Plug-ins"
-msgstr ""
+msgstr "Plogálí"
 
 #: app/plug_in.c:352
 #, c-format
@@ -4181,7 +4183,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:1705 app/preferences_dialog.c:1707
 msgid "Display"
-msgstr ""
+msgstr "Taispeán"
 
 #: app/preferences_dialog.c:1715
 msgid "Transparency"
@@ -4201,15 +4203,15 @@ msgstr ""
 
 #: app/preferences_dialog.c:1737
 msgid "White Only"
-msgstr ""
+msgstr "Bán Amhain"
 
 #: app/preferences_dialog.c:1738
 msgid "Gray Only"
-msgstr ""
+msgstr "Liath Amhain"
 
 #: app/preferences_dialog.c:1739
 msgid "Black Only"
-msgstr ""
+msgstr "Dubh Amháin"
 
 #: app/preferences_dialog.c:1743
 msgid "Transparency Type:"
@@ -4546,7 +4548,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:2479 app/preferences_dialog.c:2481
 msgid "Directories"
-msgstr "Fillteáin"
+msgstr "Eolairí"
 
 #: app/preferences_dialog.c:2498
 msgid "Temp Dir:"
@@ -4554,7 +4556,7 @@ msgstr "Fil.  Seal.:"
 
 #: app/preferences_dialog.c:2498
 msgid "Select Temp Dir"
-msgstr "Tóg Fillteán Sealadach"
+msgstr "Tóg Eolaire Sealadach"
 
 #: app/preferences_dialog.c:2499
 msgid "Swap Dir:"
@@ -5098,7 +5100,7 @@ msgstr ""
 #: app/tools.c:350
 #, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Uirlisí/Transform Tools/Bóg"
+msgstr "/Uirlisí/Transform Tools/Flip"
 
 #: app/tools.c:355
 msgid "Zoom in & out"
@@ -5643,7 +5645,7 @@ msgstr ""
 
 #: app/undo_history.c:854
 msgid "Redo"
-msgstr ""
+msgstr "Leasú"
 
 #: app/user_install.c:104
 msgid "The GIMP is not properly installed for the current user\n"
@@ -6007,7 +6009,7 @@ msgstr ""
 #: app/user_install.c:1136
 #, fuzzy
 msgid "Swap Directory:"
-msgstr "Fillteáin"
+msgstr "Eolairí"
 
 #: app/user_install.c:1171
 msgid ""
@@ -6070,11 +6072,8 @@ msgstr ""
 msgid "Color History"
 msgstr "Stair Dath"
 
-#~ msgid "Clear"
-#~ msgstr "Glan"
-
-#~ msgid "Remove"
-#~ msgstr "Scríos"
+#~ msgid "Open a file"
+#~ msgstr "Oscáil an comhad"
 
 #~ msgid "Up"
 #~ msgstr "Suas"
@@ -6082,14 +6081,11 @@ msgstr "Stair Dath"
 #~ msgid "Down"
 #~ msgstr "Síos"
 
-#~ msgid "Gamma"
-#~ msgstr "Gamma"
+#~ msgid "Remove"
+#~ msgstr "Scríos"
 
-#~ msgid "Gamma:"
-#~ msgstr "Gamma:"
-
-#~ msgid "Open a file"
-#~ msgstr "Oscáil an comhad"
+#~ msgid "Clear"
+#~ msgstr "Glan"
 
 #~ msgid "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
 #~ msgstr "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
@@ -6103,3 +6099,9 @@ msgstr "Stair Dath"
 #, fuzzy
 #~ msgid "/Tools/Magnify"
 #~ msgstr "/Uirlisí/Magnify"
+
+#~ msgid "Gamma"
+#~ msgstr "Gamma"
+
+#~ msgid "Gamma:"
+#~ msgstr "Gamma:"
