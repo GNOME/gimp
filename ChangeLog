@@ -1,5 +1,31 @@
 2001-07-27  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-types.h: 
+	defined convenience macro g_signal_handlers_disconnect_by_data().
+	Will try to persuade Tim to accept it for GLib.
+
+	* app/module_db.c
+	* app/undo_history.c
+	* app/core/gimp.c
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpcontext.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpparasite.c
+	* app/gui/brush-editor.c
+	* app/gui/brush-select.c
+	* app/gui/dialogs.c
+	* app/gui/file-open-dialog.c
+	* app/gui/gradient-select.c
+	* app/gui/gradients-commands.c
+	* app/gui/menus.c
+	* app/gui/pattern-select.c: GObject porting. 
+	Replaced all gtk_object_[unref|ref] calls by their g_object_ 
+	counterparts, expect refs that are used with gtk_object_sink().
+
+2001-07-27  Sven Neumann  <sven@gimp.org>
+
 	* app/module_db.c
 	* app/gui/color-area.c
 	* app/widgets/gimpbrushfactoryview.c

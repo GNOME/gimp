@@ -117,12 +117,12 @@ brush_editor_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), brush_editor->name, FALSE, FALSE, 0);
   gtk_widget_show (brush_editor->name);
 
-  gtk_signal_connect (GTK_OBJECT (brush_editor->name), "activate",
-		      GTK_SIGNAL_FUNC (brush_editor_name_activate),
-		      brush_editor);
-  gtk_signal_connect (GTK_OBJECT (brush_editor->name), "focus_out_event",
-		      GTK_SIGNAL_FUNC (brush_editor_name_focus_out),
-		      brush_editor);
+  g_signal_connect (G_OBJECT (brush_editor->name), "activate",
+                    G_CALLBACK (brush_editor_name_activate),
+                    brush_editor);
+  g_signal_connect (G_OBJECT (brush_editor->name), "focus_out_event",
+                    G_CALLBACK (brush_editor_name_focus_out),
+                    brush_editor);
 
   /* brush's preview widget w/frame  */
   brush_editor->frame = gtk_frame_new (NULL);
@@ -137,7 +137,7 @@ brush_editor_new (Gimp *gimp)
   gtk_preview_set_expand (GTK_PREVIEW (brush_editor->preview), TRUE);
 
   gtk_signal_connect_after (GTK_OBJECT (brush_editor->frame), "size_allocate",
-			    GTK_SIGNAL_FUNC (brush_editor_preview_resize),
+			    G_CALLBACK (brush_editor_preview_resize),
 			    brush_editor);
   gtk_container_add (GTK_CONTAINER (brush_editor->frame), brush_editor->preview);
 
@@ -162,9 +162,9 @@ brush_editor_new (Gimp *gimp)
   slider = gtk_hscale_new (brush_editor->radius_data);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (brush_editor->radius_data), "value_changed",
-		      GTK_SIGNAL_FUNC (brush_editor_update_brush),
-		      brush_editor);
+  g_signal_connect (G_OBJECT (brush_editor->radius_data), "value_changed",
+                    G_CALLBACK (brush_editor_update_brush),
+                    brush_editor);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Radius:"), 1.0, 1.0,
 			     slider, 1, FALSE);
@@ -175,9 +175,9 @@ brush_editor_new (Gimp *gimp)
   slider = gtk_hscale_new (brush_editor->hardness_data);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (brush_editor->hardness_data), "value_changed",
-		      GTK_SIGNAL_FUNC (brush_editor_update_brush),
-		      brush_editor);
+  g_signal_connect (G_OBJECT (brush_editor->hardness_data), "value_changed",
+                    G_CALLBACK (brush_editor_update_brush),
+                    brush_editor);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Hardness:"), 1.0, 1.0,
 			     slider, 1, FALSE);
@@ -188,10 +188,9 @@ brush_editor_new (Gimp *gimp)
   slider = gtk_hscale_new (brush_editor->aspect_ratio_data);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (brush_editor->aspect_ratio_data),
-		      "value_changed",
-		      GTK_SIGNAL_FUNC (brush_editor_update_brush),
-		      brush_editor);
+  g_signal_connect (G_OBJECT (brush_editor->aspect_ratio_data),"value_changed",
+                    G_CALLBACK (brush_editor_update_brush),
+                    brush_editor);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Aspect Ratio:"), 1.0, 1.0,
 			     slider, 1, FALSE);
@@ -202,9 +201,9 @@ brush_editor_new (Gimp *gimp)
   slider = gtk_hscale_new (brush_editor->angle_data);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (brush_editor->angle_data), "value_changed",
-		      GTK_SIGNAL_FUNC (brush_editor_update_brush),
-		      brush_editor);
+  g_signal_connect (G_OBJECT (brush_editor->angle_data), "value_changed",
+                    G_CALLBACK (brush_editor_update_brush),
+                    brush_editor);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Angle:"), 1.0, 1.0,
 			     slider, 1, FALSE);
@@ -232,10 +231,9 @@ brush_editor_set_brush (BrushEditor *brush_editor,
 
   if (brush_editor->brush)
     {
-      gtk_signal_disconnect_by_data (GTK_OBJECT (brush_editor->brush),
-				     brush_editor);
-
-      gtk_object_unref (GTK_OBJECT (brush_editor->brush));
+      g_signal_handlers_disconnect_by_data (G_OBJECT (brush_editor->brush),
+                                            brush_editor);
+      g_object_unref (G_OBJECT (brush_editor->brush));
       brush_editor->brush = NULL;
     }
 
@@ -249,12 +247,12 @@ brush_editor_set_brush (BrushEditor *brush_editor,
 
   brush = GIMP_BRUSH_GENERATED (gbrush);
 
-  gtk_signal_connect (GTK_OBJECT (brush), "invalidate_preview",
-		      GTK_SIGNAL_FUNC (brush_editor_brush_dirty),
-		      brush_editor);
-  gtk_signal_connect (GTK_OBJECT (brush), "name_changed",
-		      GTK_SIGNAL_FUNC (brush_editor_brush_name_changed),
-		      brush_editor);
+  g_signal_connect (G_OBJECT (brush), "invalidate_preview",
+                    G_CALLBACK (brush_editor_brush_dirty),
+                    brush_editor);
+  g_signal_connect (G_OBJECT (brush), "name_changed",
+                    G_CALLBACK (brush_editor_brush_name_changed),
+                    brush_editor);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (brush_editor->radius_data),
 			    gimp_brush_generated_get_radius (brush));
@@ -268,7 +266,7 @@ brush_editor_set_brush (BrushEditor *brush_editor,
 		      gimp_object_get_name (GIMP_OBJECT (gbrush)));
 
   brush_editor->brush = brush;
-  gtk_object_ref (GTK_OBJECT (brush_editor->brush));
+  g_object_ref (G_OBJECT (brush_editor->brush));
 
   brush_editor_brush_dirty (GIMP_BRUSH (brush), brush_editor);
 

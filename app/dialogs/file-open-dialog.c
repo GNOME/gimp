@@ -667,7 +667,7 @@ file_open_genbutton_callback (GtkWidget *widget,
 		  }
 		set_preview (full_filename, RGBbuf, RGBbuf_w, RGBbuf_h);
 
-		gtk_object_unref (GTK_OBJECT (gimage_to_be_thumbed));
+		g_object_unref (G_OBJECT (gimage_to_be_thumbed));
 
 		if (RGBbuf)
 		  g_free (RGBbuf);

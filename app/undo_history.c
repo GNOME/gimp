@@ -466,9 +466,8 @@ undo_history_shell_destroy_callback (GtkWidget *widget,
   undo_history_st *st = data;
 
   if (st->gimage)
-    g_signal_handlers_disconnect_matched (G_OBJECT (st->gimage), 
-                                          G_SIGNAL_MATCH_DATA,
-                                          0, 0, NULL, NULL, st);
+    g_signal_handlers_disconnect_by_data (G_OBJECT (st->gimage), st);
+
   g_free (st);
 }
 

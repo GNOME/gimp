@@ -56,7 +56,7 @@ gimp_parasites_exit (Gimp *gimp)
 
   if (gimp->parasites)
     {
-      gtk_object_unref (GTK_OBJECT (gimp->parasites));
+      g_object_unref (G_OBJECT (gimp->parasites));
       gimp->parasites = NULL;
     }
 }

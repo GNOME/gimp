@@ -132,23 +132,24 @@ gradients_save_as_pov_query (GimpContainerEditor *editor)
   gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
   gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 2);
 
-  gtk_signal_connect (GTK_OBJECT (filesel->ok_button), "clicked",
-		      GTK_SIGNAL_FUNC (gradients_save_as_pov_ok_callback),
-		      gradient);
+  g_signal_connect (G_OBJECT (filesel->ok_button), "clicked",
+                    G_CALLBACK (gradients_save_as_pov_ok_callback),
+                    gradient);
 
-  gtk_signal_connect_object (GTK_OBJECT (filesel->cancel_button), "clicked",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			     GTK_OBJECT (filesel));
+  g_signal_connect_swapped (G_OBJECT (filesel->cancel_button), "clicked",
+                            GTK_SIGNAL_FUNC (gtk_widget_destroy),
+                            filesel);
 
-  gtk_signal_connect_object (GTK_OBJECT (filesel), "delete_event",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			     GTK_OBJECT (filesel));
+  g_signal_connect_swapped (G_OBJECT (filesel), "delete_event",
+                            G_CALLBACK (gtk_widget_destroy),
+                            filesel);
 
-  gtk_object_ref (GTK_OBJECT (gradient));
+  g_object_ref (G_OBJECT (gradient));
 
-  gtk_signal_connect_object (GTK_OBJECT (filesel), "destroy",
-			     GTK_SIGNAL_FUNC (gtk_object_unref),
-			     GTK_OBJECT (gradient));
+  g_signal_connect_object (G_OBJECT (filesel), "destroy",
+                           G_CALLBACK (g_object_unref),
+                           G_OBJECT (gradient), 
+                           G_CONNECT_SWAPPED);
 
   /*  Connect the "F1" help key  */
   gimp_help_connect_help_accel (GTK_WIDGET (filesel), gimp_standard_help_func,

@@ -364,12 +364,12 @@ gimp_container_remove (GimpContainer *container,
 	}
     }
 
-  gtk_object_ref (GTK_OBJECT (object));
+  g_object_ref (G_OBJECT (object));
 
   switch (container->policy)
     {
     case GIMP_CONTAINER_POLICY_STRONG:
-      gtk_object_unref (GTK_OBJECT (object));
+      g_object_unref (G_OBJECT (object));
       break;
 
     case GIMP_CONTAINER_POLICY_WEAK:
@@ -382,10 +382,10 @@ gimp_container_remove (GimpContainer *container,
 
   container->num_children--;
 
-  g_signal_emit (GTK_OBJECT (container), container_signals[REMOVE], 0,
+  g_signal_emit (G_OBJECT (container), container_signals[REMOVE], 0,
 		 object);
 
-  gtk_object_unref (GTK_OBJECT (object));
+  g_object_unref (G_OBJECT (object));
 
   return TRUE;
 }

@@ -132,8 +132,8 @@ dialogs_init (Gimp *gimp)
 void
 dialogs_exit (Gimp *gimp)
 {
-  gtk_object_unref (GTK_OBJECT (global_dialog_factory));
-  gtk_object_unref (GTK_OBJECT (global_dock_factory));
+  g_object_unref (G_OBJECT (global_dialog_factory));
+  g_object_unref (G_OBJECT (global_dock_factory));
 
   global_dialog_factory     = NULL;
   global_dock_factory       = NULL;

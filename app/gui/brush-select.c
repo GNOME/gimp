@@ -302,12 +302,12 @@ brush_select_free (BrushSelect *bsp)
   /* remove from active list */
   brush_active_dialogs = g_slist_remove (brush_active_dialogs, bsp);
 
-  gtk_signal_disconnect_by_data (GTK_OBJECT (bsp->context), bsp);
+  g_signal_handlers_disconnect_by_data (G_OBJECT (bsp->context), bsp);
 
   if (bsp->callback_name)
     {
       g_free (bsp->callback_name);
-      gtk_object_unref (GTK_OBJECT (bsp->context));
+      g_object_unref (G_OBJECT (bsp->context));
     }
 
   g_free (bsp);

@@ -173,7 +173,7 @@ gimp_destroy (GtkObject *object)
 
   if (gimp->standard_context)
     {
-      gtk_object_unref (GTK_OBJECT (gimp->standard_context));
+      g_object_unref (G_OBJECT (gimp->standard_context));
       gimp->standard_context = NULL;
     }
 
@@ -181,7 +181,7 @@ gimp_destroy (GtkObject *object)
 
   if (gimp->tool_info_list)
     {
-      gtk_object_unref (GTK_OBJECT (gimp->tool_info_list));
+      g_object_unref (G_OBJECT (gimp->tool_info_list));
       gimp->tool_info_list = NULL;
     }
 
@@ -190,34 +190,34 @@ gimp_destroy (GtkObject *object)
   if (gimp->brush_factory)
     {
       gimp_data_factory_data_free (gimp->brush_factory);
-      gtk_object_unref (GTK_OBJECT (gimp->brush_factory));
+      g_object_unref (G_OBJECT (gimp->brush_factory));
       gimp->brush_factory = NULL;
     }
 
   if (gimp->pattern_factory)
     {
       gimp_data_factory_data_free (gimp->pattern_factory);
-      gtk_object_unref (GTK_OBJECT (gimp->pattern_factory));
+      g_object_unref (G_OBJECT (gimp->pattern_factory));
       gimp->pattern_factory = NULL;
     }
 
   if (gimp->gradient_factory)
     {
       gimp_data_factory_data_free (gimp->gradient_factory);
-      gtk_object_unref (GTK_OBJECT (gimp->gradient_factory));
+      g_object_unref (G_OBJECT (gimp->gradient_factory));
       gimp->gradient_factory = NULL;
     }
 
   if (gimp->palette_factory)
     {
       gimp_data_factory_data_free (gimp->palette_factory);
-      gtk_object_unref (GTK_OBJECT (gimp->palette_factory));
+      g_object_unref (G_OBJECT (gimp->palette_factory));
       gimp->palette_factory = NULL;
     }
 
   if (gimp->named_buffers)
     {
-      gtk_object_unref (GTK_OBJECT (gimp->named_buffers));
+      g_object_unref (G_OBJECT (gimp->named_buffers));
       gimp->named_buffers = NULL;
     }
 
@@ -241,7 +241,7 @@ gimp_destroy (GtkObject *object)
 
   if (gimp->images)
     {
-      gtk_object_unref (GTK_OBJECT (gimp->images));
+      g_object_unref (G_OBJECT (gimp->images));
       gimp->images = NULL;
     }
 
@@ -603,7 +603,7 @@ gimp_set_default_context (Gimp        *gimp,
 
   if (gimp->default_context)
     {
-      gtk_object_unref (GTK_OBJECT (gimp->default_context));
+      g_object_unref (G_OBJECT (gimp->default_context));
     }
 
   gimp->default_context = context;
@@ -634,7 +634,7 @@ gimp_set_user_context (Gimp        *gimp,
 
   if (gimp->user_context)
     {
-      gtk_object_unref (GTK_OBJECT (gimp->user_context));
+      g_object_unref (G_OBJECT (gimp->user_context));
     }
 
   gimp->user_context = context;
@@ -665,14 +665,14 @@ gimp_set_current_context (Gimp        *gimp,
 
   if (gimp->current_context)
     {
-      gtk_object_unref (GTK_OBJECT (gimp->current_context));
+      g_object_unref (G_OBJECT (gimp->current_context));
     }
 
   gimp->current_context = context;
 
   if (gimp->current_context)
     {
-      gtk_object_ref (GTK_OBJECT (gimp->current_context));
+      g_object_ref (G_OBJECT (gimp->current_context));
     }
 }
 

@@ -202,7 +202,7 @@ pattern_select_free (PatternSelect *psp)
   if (psp->callback_name)
     {
       g_free (psp->callback_name);
-      gtk_object_unref (GTK_OBJECT (psp->context));
+      g_object_unref (G_OBJECT (psp->context));
     }
 
   g_free (psp);

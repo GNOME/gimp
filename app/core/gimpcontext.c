@@ -554,7 +554,7 @@ gimp_context_destroy (GtkObject *object)
 
   if (context->tool_info)
     {
-      gtk_object_unref (GTK_OBJECT (context->tool_info));
+      g_object_unref (G_OBJECT (context->tool_info));
       context->tool_info = NULL;
     }
 
@@ -566,7 +566,7 @@ gimp_context_destroy (GtkObject *object)
 
   if (context->brush)
     {
-      gtk_object_unref (GTK_OBJECT (context->brush));
+      g_object_unref (G_OBJECT (context->brush));
       context->brush = NULL;
     }
 
@@ -578,7 +578,7 @@ gimp_context_destroy (GtkObject *object)
 
   if (context->pattern)
     {
-      gtk_object_unref (GTK_OBJECT (context->pattern));
+      g_object_unref (G_OBJECT (context->pattern));
       context->pattern = NULL;
     }
 
@@ -590,7 +590,7 @@ gimp_context_destroy (GtkObject *object)
 
   if (context->gradient)
     {
-      gtk_object_unref (GTK_OBJECT (context->gradient));
+      g_object_unref (G_OBJECT (context->gradient));
       context->gradient = NULL;
     }
 
@@ -602,7 +602,7 @@ gimp_context_destroy (GtkObject *object)
 
   if (context->palette)
     {
-      gtk_object_unref (GTK_OBJECT (context->palette));
+      g_object_unref (G_OBJECT (context->palette));
       context->palette = NULL;
     }
 
@@ -614,7 +614,7 @@ gimp_context_destroy (GtkObject *object)
 
   if (context->buffer)
     {
-      gtk_object_unref (GTK_OBJECT (context->buffer));
+      g_object_unref (G_OBJECT (context->buffer));
       context->buffer = NULL;
     }
 

@@ -310,7 +310,7 @@ gimp_brush_get_standard (void)
       gimp_object_set_name (GIMP_OBJECT (standard_brush), "Standard");
 
       /*  set ref_count to 2 --> never swap the standard brush  */
-      gtk_object_ref (GTK_OBJECT (standard_brush));
+      g_object_ref (G_OBJECT (standard_brush));
       gtk_object_ref (GTK_OBJECT (standard_brush));
       gtk_object_sink (GTK_OBJECT (standard_brush));
     }

@@ -167,7 +167,7 @@ gimp_brush_pipe_destroy (GtkObject *object)
 
   for (i = 0; i < pipe->nbrushes; i++)
     if (pipe->brushes[i])
-      gtk_object_unref (GTK_OBJECT (pipe->brushes[i]));
+      g_object_unref (G_OBJECT (pipe->brushes[i]));
 
   g_free (pipe->brushes);
   g_free (pipe->select);

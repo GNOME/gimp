@@ -1523,7 +1523,7 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
       return;
     }
 
-  gtk_object_set_data (GTK_OBJECT (item_factory), "textdomain", domain_name);
+  g_object_set_data (G_OBJECT (item_factory), "textdomain", domain_name);
 
   while (*path != '>')
     path++;
@@ -1571,9 +1571,9 @@ menus_create_branches (GtkItemFactory       *item_factory,
 	  };
 
 	  branch_entry.entry.path = tearoff_path->str;
-	  gtk_object_set_data (GTK_OBJECT (item_factory), "complete", path);
+	  g_object_set_data (G_OBJECT (item_factory), "complete", path);
 	  menus_create_item (item_factory, &branch_entry, NULL, 2, TRUE, FALSE);
-	  gtk_object_remove_data (GTK_OBJECT (item_factory), "complete");
+	  g_object_set_data (G_OBJECT (item_factory), "complete", NULL);
 	}
 
       g_string_append (tearoff_path, "/tearoff1");
@@ -1932,18 +1932,18 @@ menus_quit (void)
 
   if (menus_initialized)
     {
-      gtk_object_unref (GTK_OBJECT (toolbox_factory));
-      gtk_object_unref (GTK_OBJECT (image_factory));
-      gtk_object_unref (GTK_OBJECT (load_factory));
-      gtk_object_unref (GTK_OBJECT (save_factory));
-      gtk_object_unref (GTK_OBJECT (layers_factory));
-      gtk_object_unref (GTK_OBJECT (channels_factory));
-      gtk_object_unref (GTK_OBJECT (paths_factory));
-      gtk_object_unref (GTK_OBJECT (dialogs_factory));
-      gtk_object_unref (GTK_OBJECT (brushes_factory));
-      gtk_object_unref (GTK_OBJECT (patterns_factory));
-      gtk_object_unref (GTK_OBJECT (gradients_factory));
-      gtk_object_unref (GTK_OBJECT (palettes_factory));
+      g_object_unref (G_OBJECT (toolbox_factory));
+      g_object_unref (G_OBJECT (image_factory));
+      g_object_unref (G_OBJECT (load_factory));
+      g_object_unref (G_OBJECT (save_factory));
+      g_object_unref (G_OBJECT (layers_factory));
+      g_object_unref (G_OBJECT (channels_factory));
+      g_object_unref (G_OBJECT (paths_factory));
+      g_object_unref (G_OBJECT (dialogs_factory));
+      g_object_unref (G_OBJECT (brushes_factory));
+      g_object_unref (G_OBJECT (patterns_factory));
+      g_object_unref (G_OBJECT (gradients_factory));
+      g_object_unref (G_OBJECT (palettes_factory));
     }
 }
 
@@ -2129,8 +2129,8 @@ menus_item_key_press (GtkWidget   *widget,
    */
   if (active_menu_item)
     {
-      help_page = (gchar *) gtk_object_get_data (GTK_OBJECT (active_menu_item),
-						 "help_page");
+      help_page = (gchar *) g_object_get_data (G_OBJECT (active_menu_item),
+                                               "help_page");
     }
 
   /*  For any key except F1, continue with the standard
@@ -2159,8 +2159,8 @@ menus_item_key_press (GtkWidget   *widget,
    */
   gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
 
-  factory_path = (gchar *) gtk_object_get_data (GTK_OBJECT (item_factory),
-						"factory_path");
+  factory_path = (gchar *) g_object_get_data (G_OBJECT (item_factory),
+                                              "factory_path");
 
   if (! help_page ||
       ! *help_page)
@@ -2206,16 +2206,16 @@ menus_item_realize (GtkWidget *widget,
 {
   if (GTK_IS_MENU_SHELL (widget->parent))
     {
-      if (! gtk_object_get_data (GTK_OBJECT (widget->parent),
-				 "menus_key_press_connected"))
+      if (! g_object_get_data (G_OBJECT (widget->parent),
+                               "menus_key_press_connected"))
 	{
-	  gtk_signal_connect (GTK_OBJECT (widget->parent), "key_press_event",
-			      GTK_SIGNAL_FUNC (menus_item_key_press),
-			      (gpointer) data);
+	  g_signal_connect (G_OBJECT (widget->parent), "key_press_event",
+                            GTK_SIGNAL_FUNC (menus_item_key_press),
+                            data);
 
-	  gtk_object_set_data (GTK_OBJECT (widget->parent),
-			       "menus_key_press_connected",
-			       (gpointer) TRUE);
+	  g_object_set_data (G_OBJECT (widget->parent),
+                             "menus_key_press_connected",
+                             (gpointer) TRUE);
 	}
     }
 }
@@ -2268,8 +2268,7 @@ menus_create_item (GtkItemFactory       *item_factory,
 				GTK_SIGNAL_FUNC (menus_item_realize),
 				(gpointer) item_factory);
 
-      gtk_object_set_data (GTK_OBJECT (menu_item), "help_page",
-			   (gpointer) entry->help_page);
+      g_object_set_data (G_OBJECT (menu_item), "help_page", entry->help_page);
     }
 }
 
@@ -2313,8 +2312,7 @@ menus_item_factory_new (GtkType               container_type,
 				       (gpointer) path,
 				       NULL);
 
-  gtk_object_set_data (GTK_OBJECT (item_factory), "factory_path",
-		       (gpointer) factory_path);
+  g_object_set_data (G_OBJECT (item_factory), "factory_path", factory_path);
 
   menus_create_items (item_factory,
 		      n_entries,
@@ -2515,8 +2513,8 @@ menus_menu_translate_func (const gchar *path,
     item_factory = gtk_item_factory_from_path (factory);
   if (item_factory)
     {
-      domain = gtk_object_get_data (GTK_OBJECT (item_factory), "textdomain");
-      complete = gtk_object_get_data (GTK_OBJECT (item_factory), "complete");
+      domain   = g_object_get_data (G_OBJECT (item_factory), "textdomain");
+      complete = g_object_get_data (G_OBJECT (item_factory), "complete");
     }
   
   if (domain)   /*  use the plugin textdomain  */
@@ -2650,8 +2648,8 @@ menus_tearoff_cmd_callback (GtkWidget *widget,
 #ifdef __GNUC__
 #warning FIXME: register tearoffs
 #endif
-	      gtk_object_set_data (GTK_OBJECT (widget), "tearoff-menu-toplevel",
-				   toplevel);
+	      g_object_set_data (G_OBJECT (widget), "tearoff-menu-toplevel",
+                                 toplevel);
 
 	      gimp_dialog_set_icon (GTK_WINDOW (toplevel));
 	    }
@@ -2660,8 +2658,8 @@ menus_tearoff_cmd_callback (GtkWidget *widget,
 	{
 	  GtkWidget *toplevel;
 
-	  toplevel = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (widget),
-							"tearoff-menu-toplevel");
+	  toplevel = (GtkWidget *) g_object_get_data (G_OBJECT (widget),
+                                                      "tearoff-menu-toplevel");
 
 	  if (! toplevel)
 	    {
@@ -2724,26 +2722,30 @@ menus_debug_recurse_menu (GtkWidget *menu,
 	  item_factory = gtk_item_factory_from_path (path);
 	  if (item_factory)
 	    {
-	      factory_path = (gchar *) gtk_object_get_data (GTK_OBJECT (item_factory),
-							    "factory_path");
-	      help_page = g_strconcat (factory_path ? factory_path : "",
-				       factory_path ? G_DIR_SEPARATOR_S : "",
-				       (gchar *) gtk_object_get_data (GTK_OBJECT (menu_item), 
-								      "help_page"),
-				       NULL);
+	      factory_path = 
+                (gchar *) g_object_get_data (G_OBJECT (item_factory),
+                                             "factory_path");
+	      help_page = 
+                g_strconcat (factory_path ? factory_path : "",
+                             factory_path ? G_DIR_SEPARATOR_S : "",
+                             (gchar*) g_object_get_data (G_OBJECT (menu_item), 
+                                                         "help_page"),
+                             NULL);
 	    }
 	  else
 	    {
-	      help_page = g_strdup ((gchar *) gtk_object_get_data (GTK_OBJECT (menu_item), 
-								   "help_page"));
+	      help_page = 
+                g_strdup ((gchar *) g_object_get_data (G_OBJECT (menu_item), 
+                                                                 "help_page"));
 	    } 
 
 	  if (help_page)
 	    {
-	      help_path = g_strconcat (gimp_data_directory (), G_DIR_SEPARATOR_S, 
-				       "help", G_DIR_SEPARATOR_S, 
-				       "C", G_DIR_SEPARATOR_S,
-				       help_page, NULL);
+	      help_path = 
+                g_strconcat (gimp_data_directory (), G_DIR_SEPARATOR_S, 
+                             "help", G_DIR_SEPARATOR_S, 
+                             "C", G_DIR_SEPARATOR_S,
+                             help_page, NULL);
 
 	      if ((hash = strchr (help_path, '#')) != NULL)
 		*hash = '\0';

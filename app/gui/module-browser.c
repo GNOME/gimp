@@ -800,9 +800,7 @@ static void
 browser_destroy_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  g_signal_handlers_disconnect_matched (G_OBJECT (modules), 
-                                        G_SIGNAL_MATCH_DATA,
-                                        0, 0, 0, NULL, data);
+  g_signal_handlers_disconnect_by_data (G_OBJECT (modules), data);
   gimp_container_remove_handler (modules, modules_handler_id);
   g_free (data);
 }

@@ -23,6 +23,13 @@
 #include "apptypes.h"
 
 
+/* EEEK, we will submit this a patch for glib */
+
+#define g_signal_handlers_disconnect_by_data(instance,data) \
+  g_signal_handlers_disconnect_matched (instance,\
+  G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data);
+
+
 /*  enums  */
 
 /* Base image types */

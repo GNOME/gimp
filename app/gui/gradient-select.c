@@ -185,12 +185,12 @@ gradient_select_free (GradientSelect *gsp)
   /* remove from active list */
   gradient_active_dialogs = g_slist_remove (gradient_active_dialogs, gsp);
 
-  gtk_signal_disconnect_by_data (GTK_OBJECT (gsp->context), gsp);
+  g_signal_handlers_disconnect_by_data (G_OBJECT (gsp->context), gsp);
 
   if (gsp->callback_name)
     { 
       g_free (gsp->callback_name);
-      gtk_object_unref (GTK_OBJECT (gsp->context));
+      g_object_unref (G_OBJECT (gsp->context));
     }
  
    g_free (gsp);

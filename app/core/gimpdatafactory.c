@@ -103,7 +103,7 @@ gimp_data_factory_destroy (GtkObject *object)
 
   if (factory->container)
     {
-      gtk_object_unref (GTK_OBJECT (factory->container));
+      g_object_unref (G_OBJECT (factory->container));
       factory->container = NULL;
     }
 
