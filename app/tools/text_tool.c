@@ -33,6 +33,7 @@
 #include "global_edit.h"
 #include "interface.h"
 #include "palette.h"
+#include "procedural_db.h"
 #include "selection.h"
 #include "text_tool.h"
 #include "tools.h"
@@ -53,6 +54,8 @@
 #define SLANT     3
 #define SET_WIDTH 4
 #define SPACING   10
+#define REGISTRY  12
+#define ENCODING  13
 
 #define SUPERSAMPLE 3
 
@@ -67,13 +70,15 @@ struct _TextTool
   GtkWidget *border_text;
   GtkWidget *text_frame;
   GtkWidget *the_text;
-  GtkWidget *menus[5];
-  GtkWidget *option_menus[5];
+  GtkWidget *menus[7];
+  GtkWidget *option_menus[7];
   GtkWidget **foundry_items;
   GtkWidget **weight_items;
   GtkWidget **slant_items;
   GtkWidget **set_width_items;
   GtkWidget **spacing_items;
+  GtkWidget **registry_items;
+  GtkWidget **encoding_items;
   GtkWidget *antialias_toggle;
   GdkFont *font;
   int click_x;
@@ -86,6 +91,8 @@ struct _TextTool
   int slant;
   int set_width;
   int spacing;
+  int registry;
+  int encoding;
   void *gdisp_ptr;
 };
 
@@ -98,7 +105,9 @@ struct _FontInfo
   int *slants;          /* An array of valid slants. */
   int *set_widths;      /* An array of valid set widths. */
   int *spacings;        /* An array of valid spacings */
-  int **combos;         /* An array of valid combinations of the above 5 items */
+  int *registries;      /* An array of valid registries */
+  int *encodings;       /* An array of valid encodings */
+  int **combos;         /* An array of valid combinations of the above 7 items */
   int ncombos;          /* The number of elements in the "combos" array */
   GSList *fontnames;    /* An list of valid fontnames.
 			 * This is used to make sure a family/foundry/weight/slant/set_width
@@ -124,6 +133,8 @@ static void       text_weight_callback    (GtkWidget *, gpointer);
 static void       text_slant_callback     (GtkWidget *, gpointer);
 static void       text_set_width_callback (GtkWidget *, gpointer);
 static void       text_spacing_callback   (GtkWidget *, gpointer);
+static void       text_registry_callback  (GtkWidget *, gpointer);
+static void       text_encoding_callback  (GtkWidget *, gpointer);
 static gint       text_size_key_function  (GtkWidget *, GdkEventKey *, gpointer);
 static void       text_antialias_update   (GtkWidget *, gpointer);
 static void       text_font_item_update   (GtkWidget *, gpointer);
@@ -137,7 +148,8 @@ static int        text_field_to_index     (char **, int, char *);
 static int        text_is_xlfd_font_name  (char *);
 
 static int        text_get_xlfd           (double, int, char *, char *, char *,
-					   char *, char *, char *, char *);
+					   char *, char *, char *, char *,
+					   char *, char *);
 static int        text_load_font          (TextTool *);
 static void       text_init_render        (TextTool *);
 static void       text_gdk_image_to_region (GdkImage *, int, PixelRegion *);
@@ -146,8 +158,10 @@ static Layer *    text_render             (GImage *, GimpDrawable *, int, int, c
 
 static int        font_compare_func (gpointer, gpointer);
 
-static Argument * text_tool_invoker              (Argument *);
-static Argument * text_tool_get_extents_invoker  (Argument *);
+static Argument * text_tool_invoker                  (Argument *);
+static Argument * text_tool_invoker_ext              (Argument *);
+static Argument * text_tool_get_extents_invoker      (Argument *);
+static Argument * text_tool_get_extents_invoker_ext  (Argument *);
 
 static ActionAreaItem action_items[] =
 {
@@ -171,18 +185,24 @@ static GSList *weights = NULL;
 static GSList *slants = NULL;
 static GSList *set_widths = NULL;
 static GSList *spacings = NULL;
+static GSList *registries = NULL;
+static GSList *encodings = NULL;
 
 static char **foundry_array = NULL;
 static char **weight_array = NULL;
 static char **slant_array = NULL;
 static char **set_width_array = NULL;
 static char **spacing_array = NULL;
+static char **registry_array = NULL;
+static char **encoding_array = NULL;
 
 static int nfoundries = 0;
 static int nweights = 0;
 static int nslants = 0;
 static int nset_widths = 0;
 static int nspacings = 0;
+static int nregistries = 0;
+static int nencodings = 0;
 
 static void *text_options = NULL;
 
@@ -214,6 +234,8 @@ tools_new_text ()
       the_text_tool->slant = 0;
       the_text_tool->set_width = 0;
       the_text_tool->spacing = 0;
+      the_text_tool->registry = 0;
+      the_text_tool->encoding = 0;
     }
 
   tool->type = TEXT;
@@ -385,13 +407,13 @@ text_create_dialog (TextTool *text_tool)
   GtkWidget *border_label;
   GtkWidget *menu_table;
   GtkWidget *menu_label;
-  GtkWidget **menu_items[5];
+  GtkWidget **menu_items[7];
   GtkWidget *alignment;
-  int nmenu_items[5];
-  char *menu_strs[5];
-  char **menu_item_strs[5];
-  int *font_infos[5];
-  MenuItemCallback menu_callbacks[5];
+  int nmenu_items[7];
+  char *menu_strs[7];
+  char **menu_item_strs[7];
+  int *font_infos[7];
+  MenuItemCallback menu_callbacks[7];
   int i, j;
 
   /* Create the shell and vertical & horizontal boxes */
@@ -475,48 +497,62 @@ text_create_dialog (TextTool *text_tool)
   text_tool->slant_items = (GtkWidget **) g_malloc (sizeof (GtkWidget *) * nslants);
   text_tool->set_width_items = (GtkWidget **) g_malloc (sizeof (GtkWidget *) * nset_widths);
   text_tool->spacing_items = (GtkWidget **) g_malloc (sizeof (GtkWidget *) * nspacings);
+  text_tool->registry_items = (GtkWidget **) g_malloc (sizeof (GtkWidget *) * nregistries);
+  text_tool->encoding_items = (GtkWidget **) g_malloc (sizeof (GtkWidget *) * nencodings);
 
   menu_items[0] = text_tool->foundry_items;
   menu_items[1] = text_tool->weight_items;
   menu_items[2] = text_tool->slant_items;
   menu_items[3] = text_tool->set_width_items;
   menu_items[4] = text_tool->spacing_items;
+  menu_items[5] = text_tool->registry_items;
+  menu_items[6] = text_tool->encoding_items;
 
   nmenu_items[0] = nfoundries;
   nmenu_items[1] = nweights;
   nmenu_items[2] = nslants;
   nmenu_items[3] = nset_widths;
   nmenu_items[4] = nspacings;
+  nmenu_items[5] = nregistries;
+  nmenu_items[6] = nencodings;
 
   menu_strs[0] = "Foundry";
   menu_strs[1] = "Weight";
   menu_strs[2] = "Slant";
   menu_strs[3] = "Set width";
   menu_strs[4] = "Spacing";
+  menu_strs[5] = "Registry";
+  menu_strs[6] = "Encoding";
 
   menu_item_strs[0] = foundry_array;
   menu_item_strs[1] = weight_array;
   menu_item_strs[2] = slant_array;
   menu_item_strs[3] = set_width_array;
   menu_item_strs[4] = spacing_array;
+  menu_item_strs[5] = registry_array;
+  menu_item_strs[6] = encoding_array;
 
   menu_callbacks[0] = text_foundry_callback;
   menu_callbacks[1] = text_weight_callback;
   menu_callbacks[2] = text_slant_callback;
   menu_callbacks[3] = text_set_width_callback;
   menu_callbacks[4] = text_spacing_callback;
+  menu_callbacks[5] = text_registry_callback;
+  menu_callbacks[6] = text_encoding_callback;
 
   font_infos[0] = font_info[0]->foundries;
   font_infos[1] = font_info[0]->weights;
   font_infos[2] = font_info[0]->slants;
   font_infos[3] = font_info[0]->set_widths;
   font_infos[4] = font_info[0]->spacings;
+  font_infos[5] = font_info[0]->registries;
+  font_infos[6] = font_info[0]->encodings;
 
-  menu_table = gtk_table_new (6, 2, FALSE);
+  menu_table = gtk_table_new (8, 2, FALSE);
   gtk_box_pack_start (GTK_BOX (right_vbox), menu_table, TRUE, TRUE, 0);
 
   /* Create the other menus */
-  for (i = 0; i < 5; i++)
+  for (i = 0; i < 7; i++)
     {
       menu_label = gtk_label_new (menu_strs[i]);
       gtk_misc_set_alignment (GTK_MISC (menu_label), 0.0, 0.5);
@@ -674,6 +710,16 @@ text_font_item_update (GtkWidget *w,
       the_text_tool->spacing = 0;
       gtk_option_menu_set_history (GTK_OPTION_MENU (the_text_tool->option_menus[4]), 0);
     }
+  if (the_text_tool->registry && !font->registries[the_text_tool->registry])
+    {
+      the_text_tool->registry = 0;
+      gtk_option_menu_set_history (GTK_OPTION_MENU (the_text_tool->option_menus[5]), 0);
+    }
+  if (the_text_tool->encoding && !font->encodings[the_text_tool->encoding])
+    {
+      the_text_tool->encoding = 0;
+      gtk_option_menu_set_history (GTK_OPTION_MENU (the_text_tool->option_menus[6]), 0);
+    }
 
   for (i = 0; i < nfoundries; i++)
     gtk_widget_set_sensitive (the_text_tool->foundry_items[i], font->foundries[i]);
@@ -685,6 +731,10 @@ text_font_item_update (GtkWidget *w,
     gtk_widget_set_sensitive (the_text_tool->set_width_items[i], font->set_widths[i]);
   for (i = 0; i < nspacings; i++)
     gtk_widget_set_sensitive (the_text_tool->spacing_items[i], font->spacings[i]);
+  for (i = 0; i < nregistries; i++)
+    gtk_widget_set_sensitive (the_text_tool->registry_items[i], font->registries[i]);
+  for (i = 0; i < nencodings; i++)
+    gtk_widget_set_sensitive (the_text_tool->encoding_items[i], font->encodings[i]);
 
   if (!text_load_font (the_text_tool))
     {
@@ -795,6 +845,34 @@ text_spacing_callback (GtkWidget *w,
     the_text_tool->spacing = old_value;
 }
 
+static void
+text_registry_callback (GtkWidget *w,
+		       gpointer   client_data)
+{
+  int old_value;
+
+  old_value = the_text_tool->registry;
+  the_text_tool->registry = (long) client_data;
+  text_validate_combo (the_text_tool, 5);
+
+  if (!text_load_font (the_text_tool))
+    the_text_tool->registry = old_value;
+}
+
+static void
+text_encoding_callback (GtkWidget *w,
+		       gpointer   client_data)
+{
+  int old_value;
+
+  old_value = the_text_tool->encoding;
+  the_text_tool->encoding = (long) client_data;
+  text_validate_combo (the_text_tool, 6);
+
+  if (!text_load_font (the_text_tool))
+    the_text_tool->encoding = old_value;
+}
+
 static gint
 text_size_key_function (GtkWidget   *w,
 			GdkEventKey *event,
@@ -842,8 +920,8 @@ text_validate_combo (TextTool *text_tool,
 {
   FontInfo *font;
   int which_val;
-  int new_combo[5];
-  int best_combo[5];
+  int new_combo[7];
+  int best_combo[7];
   int best_matches;
   int matches;
   int i;
@@ -867,6 +945,12 @@ text_validate_combo (TextTool *text_tool,
     case 4:
       which_val = text_tool->spacing;
       break;
+    case 5:
+      which_val = text_tool->registry;
+      break;
+    case 6:
+      which_val = text_tool->encoding;
+      break;
     default:
       which_val = 0;
       break;
@@ -878,6 +962,8 @@ text_validate_combo (TextTool *text_tool,
   best_combo[2] = 0;
   best_combo[3] = 0;
   best_combo[4] = 0;
+  best_combo[5] = 0;
+  best_combo[6] = 0;
 
   for (i = 0; i < font->ncombos; i++)
     {
@@ -890,6 +976,8 @@ text_validate_combo (TextTool *text_tool,
 	  new_combo[2] = 0;
 	  new_combo[3] = 0;
 	  new_combo[4] = 0;
+	  new_combo[5] = 0;
+	  new_combo[6] = 0;
 
 	  if ((text_tool->foundry == 0) || (text_tool->foundry == font->combos[i][0]))
 	    {
@@ -921,9 +1009,21 @@ text_validate_combo (TextTool *text_tool,
 	      if (text_tool->spacing)
 		new_combo[4] = font->combos[i][4];
 	    }
+	  if ((text_tool->registry == 0) || (text_tool->registry == font->combos[i][5]))
+	    {
+	      matches++;
+	      if (text_tool->registry)
+		new_combo[5] = font->combos[i][5];
+	    }
+	  if ((text_tool->encoding == 0) || (text_tool->encoding == font->combos[i][6]))
+	    {
+	      matches++;
+	      if (text_tool->encoding)
+		new_combo[6] = font->combos[i][6];
+	    }
 
-	  /* if we get all 5 matches simply return */
-	  if (matches == 5)
+	  /* if we get all 7 matches simply return */
+	  if (matches == 7)
 	    return;
 
 	  if (matches > best_matches)
@@ -934,6 +1034,8 @@ text_validate_combo (TextTool *text_tool,
 	      best_combo[2] = new_combo[2];
 	      best_combo[3] = new_combo[3];
 	      best_combo[4] = new_combo[4];
+	      best_combo[5] = new_combo[5];
+	      best_combo[6] = new_combo[6];
 	    }
 	}
     }
@@ -970,6 +1072,18 @@ text_validate_combo (TextTool *text_tool,
 	  if (which != 4)
 	    gtk_option_menu_set_history (GTK_OPTION_MENU (text_tool->option_menus[4]), text_tool->spacing);
 	}
+      if (text_tool->registry != best_combo[5])
+	{
+	  text_tool->registry = best_combo[5];
+	  if (which != 5)
+	    gtk_option_menu_set_history (GTK_OPTION_MENU (text_tool->option_menus[5]), text_tool->registry);
+	}
+      if (text_tool->encoding != best_combo[6])
+	{
+	  text_tool->encoding = best_combo[6];
+	  if (which != 6)
+	    gtk_option_menu_set_history (GTK_OPTION_MENU (text_tool->option_menus[6]), text_tool->encoding);
+	}
     }
 }
 
@@ -1003,6 +1117,8 @@ text_get_fonts ()
 	slants = text_insert_field (slants, fontnames[i], SLANT);
 	set_widths = text_insert_field (set_widths, fontnames[i], SET_WIDTH);
 	spacings = text_insert_field (spacings, fontnames[i], SPACING);
+	registries = text_insert_field (registries, fontnames[i], REGISTRY);
+	encodings = text_insert_field (encodings, fontnames[i], ENCODING);
       }
 
   XFreeFontNames (fontnames);
@@ -1012,12 +1128,16 @@ text_get_fonts ()
   nslants = g_slist_length (slants) + 1;
   nset_widths = g_slist_length (set_widths) + 1;
   nspacings = g_slist_length (spacings) + 1;
+  nregistries = g_slist_length (registries) + 1;
+  nencodings = g_slist_length (encodings) + 1;
 
   foundry_array = g_malloc (sizeof (char*) * nfoundries);
   weight_array = g_malloc (sizeof (char*) * nweights);
   slant_array = g_malloc (sizeof (char*) * nslants);
   set_width_array = g_malloc (sizeof (char*) * nset_widths);
   spacing_array = g_malloc (sizeof (char*) * nspacings);
+  registry_array = g_malloc (sizeof (char*) * nregistries);
+  encoding_array = g_malloc (sizeof (char*) * nencodings);
 
   i = 1;
   temp_list = foundries;
@@ -1059,11 +1179,29 @@ text_get_fonts ()
       temp_list = temp_list->next;
     }
 
+  i = 1;
+  temp_list = registries;
+  while (temp_list)
+    {
+      registry_array[i++] = temp_list->data;
+      temp_list = temp_list->next;
+    }
+
+  i = 1;
+  temp_list = encodings;
+  while (temp_list)
+    {
+      encoding_array[i++] = temp_list->data;
+      temp_list = temp_list->next;
+    }
+
   foundry_array[0] = "*";
   weight_array[0] = "*";
   slant_array[0] = "*";
   set_width_array[0] = "*";
   spacing_array[0] = "*";
+  registry_array[0] = "*";
+  encoding_array[0] = "*";
 
   for (i = 0; i < nfonts; i++)
     {
@@ -1072,6 +1210,8 @@ text_get_fonts ()
       font_info[i]->slants = g_malloc (sizeof (int) * nslants);
       font_info[i]->set_widths = g_malloc (sizeof (int) * nset_widths);
       font_info[i]->spacings = g_malloc (sizeof (int) * nspacings);
+      font_info[i]->registries = g_malloc (sizeof (int) * nregistries);
+      font_info[i]->encodings = g_malloc (sizeof (int) * nencodings);
       font_info[i]->ncombos = g_slist_length (font_info[i]->fontnames);
       font_info[i]->combos = g_malloc (sizeof (int*) * font_info[i]->ncombos);
 
@@ -1085,12 +1225,18 @@ text_get_fonts ()
 	font_info[i]->set_widths[j] = 0;
       for (j = 0; j < nspacings; j++)
 	font_info[i]->spacings[j] = 0;
+      for (j = 0; j < nregistries; j++)
+	font_info[i]->registries[j] = 0;
+      for (j = 0; j < nencodings; j++)
+	font_info[i]->encodings[j] = 0;
 
       font_info[i]->foundries[0] = 1;
       font_info[i]->weights[0] = 1;
       font_info[i]->slants[0] = 1;
       font_info[i]->set_widths[0] = 1;
       font_info[i]->spacings[0] = 1;
+      font_info[i]->registries[0] = 1;
+      font_info[i]->encodings[0] = 1;
 
       j = 0;
       temp_list = font_info[i]->fontnames;
@@ -1099,7 +1245,7 @@ text_get_fonts ()
 	  fontname = temp_list->data;
 	  temp_list = temp_list->next;
 
-	  font_info[i]->combos[j] = g_malloc (sizeof (int) * 5);
+	  font_info[i]->combos[j] = g_malloc (sizeof (int) * 7);
 
 	  field = text_get_field (fontname, FOUNDRY);
 	  index = text_field_to_index (foundry_array, nfoundries, field);
@@ -1129,6 +1275,18 @@ text_get_fonts ()
 	  index = text_field_to_index (spacing_array, nspacings, field);
 	  font_info[i]->spacings[index] = 1;
 	  font_info[i]->combos[j][4] = index;
+	  free (field);
+
+	  field = text_get_field (fontname, REGISTRY);
+	  index = text_field_to_index (registry_array, nregistries, field);
+	  font_info[i]->registries[index] = 1;
+	  font_info[i]->combos[j][5] = index;
+	  free (field);
+
+	  field = text_get_field (fontname, ENCODING);
+	  index = text_field_to_index (encoding_array, nencodings, field);
+	  font_info[i]->encodings[index] = 1;
+	  font_info[i]->combos[j][6] = index;
 	  free (field);
 
 	  j += 1;
@@ -1182,6 +1340,9 @@ text_insert_font (FontInfo **table,
   table[*ntable]->weights = NULL;
   table[*ntable]->slants = NULL;
   table[*ntable]->set_widths = NULL;
+  table[*ntable]->spacings = NULL;
+  table[*ntable]->registries = NULL;
+  table[*ntable]->encodings = NULL;
   table[*ntable]->fontnames = NULL;
   table[*ntable]->fontnames = g_slist_prepend (table[*ntable]->fontnames, g_strdup (fontname));
   (*ntable)++;
@@ -1334,6 +1495,8 @@ text_get_xlfd (double  size,
 	       char   *slant,
 	       char   *set_width,
 	       char   *spacing,
+	       char   *registry,
+	       char   *encoding,
 	       char   *fontname)
 {
   char pixel_size[12], point_size[12];
@@ -1353,14 +1516,15 @@ text_get_xlfd (double  size,
 	}
 
       /* create the fontname */
-      sprintf (fontname, "-%s-%s-%s-%s-%s-*-%s-%s-75-75-%s-*-*-*",
+      sprintf (fontname, "-%s-%s-%s-%s-%s-*-%s-%s-75-75-%s-*-%s-%s",
 	       foundry,
 	       family,
 	       weight,
 	       slant,
 	       set_width,
 	       pixel_size, point_size,
-	       spacing);
+	       spacing,
+	       registry, encoding);
       return TRUE;
     }
   else
@@ -1380,6 +1544,8 @@ text_load_font (TextTool *text_tool)
   char *slant_str;
   char *set_width_str;
   char *spacing_str;
+  char *registry_str;
+  char *encoding_str;
 
   size_text = gtk_entry_get_text (GTK_ENTRY (text_tool->size_text));
   size = atof (size_text);
@@ -1400,9 +1566,16 @@ text_load_font (TextTool *text_tool)
   spacing_str = spacing_array[text_tool->spacing];
   if (strcmp (spacing_str, "(nil)") == 0)
     spacing_str = "";
+  registry_str = registry_array[text_tool->registry];
+  if (strcmp (registry_str, "(nil)") == 0)
+    registry_str = "";
+  encoding_str = encoding_array[text_tool->encoding];
+  if (strcmp (encoding_str, "(nil)") == 0)
+    encoding_str = "";
 
   if (text_get_xlfd (size, text_tool->size_type, foundry_str, family_str,
-		     weight_str, slant_str, set_width_str, spacing_str, fontname))
+		     weight_str, slant_str, set_width_str, spacing_str,
+		     registry_str, encoding_str, fontname))
     {
       font = gdk_font_load (fontname);
       if (font)
@@ -1435,6 +1608,8 @@ text_init_render (TextTool *text_tool)
   char *slant_str;
   char *set_width_str;
   char *spacing_str;
+  char *registry_str;
+  char *encoding_str;
 
   size_text = gtk_entry_get_text (GTK_ENTRY (text_tool->size_text));
   size = atof (size_text);
@@ -1457,9 +1632,16 @@ text_init_render (TextTool *text_tool)
   spacing_str = spacing_array[text_tool->spacing];
   if (strcmp (spacing_str, "(nil)") == 0)
     spacing_str = "";
+  registry_str = registry_array[text_tool->registry];
+  if (strcmp (registry_str, "(nil)") == 0)
+    registry_str = "";
+  encoding_str = encoding_array[text_tool->encoding];
+  if (strcmp (encoding_str, "(nil)") == 0)
+    encoding_str = "";
 
   if (text_get_xlfd (size, text_tool->size_type, foundry_str, family_str,
-		     weight_str, slant_str, set_width_str, spacing_str, fontname))
+		     weight_str, slant_str, set_width_str, spacing_str,
+		     registry_str, encoding_str, fontname))
     {
       /* get the text */
       text = gtk_entry_get_text (GTK_ENTRY (text_tool->the_text));
@@ -1774,7 +1956,7 @@ text_get_extents (char *fontname,
     return TRUE;
 }
 
-
+/****************************************/
 /*  The text_tool procedure definition  */
 ProcArg text_tool_args[] =
 {
@@ -1873,6 +2055,113 @@ ProcRecord text_tool_proc =
   { { text_tool_invoker } },
 };
 
+/********************************************/
+/*  The text_tool_ext procedure definition  */
+ProcArg text_tool_args_ext[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  { PDB_DRAWABLE,
+    "drawable",
+    "The affected drawable: (-1 for a new text layer)"
+  },
+  { PDB_FLOAT,
+    "x",
+    "the x coordinate for the left side of text bounding box"
+  },
+  { PDB_FLOAT,
+    "y",
+    "the y coordinate for the top of text bounding box"
+  },
+  { PDB_STRING,
+    "text",
+    "the text to generate"
+  },
+  { PDB_INT32,
+    "border",
+    "the size of the border: border >= 0"
+  },
+  { PDB_INT32,
+    "antialias",
+    "generate antialiased text"
+  },
+  { PDB_FLOAT,
+    "size",
+    "the size of text in either pixels or points"
+  },
+  { PDB_INT32,
+    "size_type",
+    "the units of the specified size: { PIXELS (0), POINTS (1) }"
+  },
+  { PDB_STRING,
+    "foundry",
+    "the font foundry, \"*\" for any"
+  },
+  { PDB_STRING,
+    "family",
+    "the font family, \"*\" for any"
+  },
+  { PDB_STRING,
+    "weight",
+    "the font weight, \"*\" for any"
+  },
+  { PDB_STRING,
+    "slant",
+    "the font slant, \"*\" for any"
+  },
+  { PDB_STRING,
+    "set_width",
+    "the font set-width parameter, \"*\" for any"
+  },
+  { PDB_STRING,
+    "spacing",
+    "the font spacing, \"*\" for any"
+  },
+  { PDB_STRING,
+    "registry",
+    "the font registry, \"*\" for any"
+  },
+  { PDB_STRING,
+    "encoding",
+    "the font encoding, \"*\" for any"
+  }
+};
+
+ProcArg text_tool_out_args_ext[] =
+{
+  { PDB_LAYER,
+    "text_layer",
+    "the new text layer"
+  }
+};
+
+ProcRecord text_tool_proc_ext =
+{
+  "gimp_text_ext",
+  "Add text at the specified location as a floating selection or a new layer.",
+  "This tool requires font information in the form of nine parameters: {size, foundry, family, weight, slant, set_width, spacing, registry, encoding}.  The font size can either be specified in units of pixels or points, and the appropriate metric is specified using the size_type "
+  "argument.  The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box.  If the antialias parameter is non-zero, the generated text will blend more smoothly with underlying layers.  "
+  "This option requires more time and memory to compute than non-antialiased text; the resulting floating selection or layer, however, will require the same amount of memory with or without antialiasing.  If the specified drawable parameter is valid, the "
+  "text will be created as a floating selection attached to the drawable.  If the drawable parameter is not valid (-1), the text will appear as a new layer.  Finally, a border can be specified around the final rendered text.  The border is measured in pixels.",
+  "Martin Edlman",
+  "Spencer Kimball & Peter Mattis",
+  "1998",
+  PDB_INTERNAL,
+    
+  /*  Input arguments  */
+  17,
+  text_tool_args_ext,
+
+  /*  Output arguments  */
+  1,
+  text_tool_out_args_ext,
+
+  /*  Exec method  */
+  { { text_tool_invoker_ext } },
+};
+
 
 /**********************/
 /*  TEXT_GET_EXTENTS  */
@@ -1959,9 +2248,116 @@ ProcRecord text_tool_get_extents_proc =
   { { text_tool_get_extents_invoker } },
 };
 
+/**************************/
+/*  TEXT_GET_EXTENTS_EXT  */
+ProcArg text_tool_get_extents_args_ext[] =
+{
+  { PDB_STRING,
+    "text",
+    "the text to generate"
+  },
+  { PDB_FLOAT,
+    "size",
+    "the size of text in either pixels or points"
+  },
+  { PDB_INT32,
+    "size_type",
+    "the units of the specified size: { PIXELS (0), POINTS (1) }"
+  },
+  { PDB_STRING,
+    "foundry",
+    "the font foundry, \"*\" for any"
+  },
+  { PDB_STRING,
+    "family",
+    "the font family, \"*\" for any"
+  },
+  { PDB_STRING,
+    "weight",
+    "the font weight, \"*\" for any"
+  },
+  { PDB_STRING,
+    "slant",
+    "the font slant, \"*\" for any"
+  },
+  { PDB_STRING,
+    "set_width",
+    "the font set-width parameter, \"*\" for any"
+  },
+  { PDB_STRING,
+    "spacing",
+    "the font spacing, \"*\" for any"
+  },
+  { PDB_STRING,
+    "registry",
+    "the font registry, \"*\" for any"
+  },
+  { PDB_STRING,
+    "encoding",
+    "the font encoding, \"*\" for any"
+  }
+};
+
+ProcArg text_tool_get_extents_out_args_ext[] =
+{
+  { PDB_INT32,
+    "width",
+    "the width of the specified text"
+  },
+  { PDB_INT32,
+    "height",
+    "the height of the specified text"
+  },
+  { PDB_INT32,
+    "ascent",
+    "the ascent of the specified font"
+  },
+  { PDB_INT32,
+    "descent",
+    "the descent of the specified font"
+  }
+};
+
+ProcRecord text_tool_get_extents_proc_ext =
+{
+  "gimp_text_get_extents_ext",
+  "Get extents of the bounding box for the specified text",
+  "This tool returns the width and height of a bounding box for the specified text string with the specified font information.  Ascent and descent for the specified font are returned as well.",
+  "Martin Edlman",
+  "Spencer Kimball & Peter Mattis",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  11,
+  text_tool_get_extents_args_ext,
+
+  /*  Output arguments  */
+  4,
+  text_tool_get_extents_out_args_ext,
+
+  /*  Exec method  */
+  { { text_tool_get_extents_invoker_ext } },
+};
+
 
 static Argument *
 text_tool_invoker (Argument *args)
+{
+  int i;
+  Argument argv[17];
+ 
+  for (i=0; i<15; i++)
+    argv[i] = args[i];
+  argv[15].arg_type = PDB_STRING;
+  argv[15].value.pdb_pointer = (gpointer)"*";
+  argv[16].arg_type = PDB_STRING;
+  argv[16].value.pdb_pointer = (gpointer)"*";
+  return text_tool_invoker_ext (argv);
+}
+
+static Argument *
+text_tool_invoker_ext (Argument *args)
 {
   int success = TRUE;
   GImage *gimage;
@@ -1979,6 +2375,8 @@ text_tool_invoker (Argument *args)
   char *slant;
   char *set_width;
   char *spacing;
+  char *registry;
+  char *encoding;
   int int_value;
   double fp_value;
   char fontname[2048];
@@ -1999,6 +2397,8 @@ text_tool_invoker (Argument *args)
   slant       = NULL;
   set_width   = NULL;
   spacing     = NULL;
+  registry    = NULL;
+  encoding    = NULL;
 
   /*  the gimage  */
   if (success)
@@ -2059,7 +2459,7 @@ text_tool_invoker (Argument *args)
 	default: success = FALSE;
 	}
     }
-  /*  foundry, family, weight, slant, set_width, spacing  */
+  /*  foundry, family, weight, slant, set_width, spacing, registry, encoding  */
   if (success)
     {
       foundry = (char *) args[9].value.pdb_pointer;
@@ -2068,6 +2468,8 @@ text_tool_invoker (Argument *args)
       slant = (char *) args[12].value.pdb_pointer;
       set_width = (char *) args[13].value.pdb_pointer;
       spacing = (char *) args[14].value.pdb_pointer;
+      registry = (char *) args[15].value.pdb_pointer;
+      encoding = (char *) args[16].value.pdb_pointer;
     }
 
   /*  increase the size by SUPERSAMPLE if we're antialiasing  */
@@ -2077,7 +2479,7 @@ text_tool_invoker (Argument *args)
   /*  attempt to get the xlfd for the font  */
   if (success)
     success = text_get_xlfd (size, size_type, foundry, family, weight,
-			     slant, set_width, spacing, fontname);
+			     slant, set_width, spacing, registry, encoding, fontname);
 
   /*  call the text render procedure  */
   if (success)
@@ -2096,6 +2498,21 @@ text_tool_invoker (Argument *args)
 static Argument *
 text_tool_get_extents_invoker (Argument *args)
 {
+  int i;
+  Argument argv[11];
+
+  for (i=0; i<9; i++)
+    argv[i] = args[i];
+  argv[9].arg_type = PDB_STRING;
+  argv[9].value.pdb_pointer = (gpointer)"*";
+  argv[10].arg_type = PDB_STRING;
+  argv[10].value.pdb_pointer = (gpointer)"*";
+  return text_tool_get_extents_invoker_ext (argv);
+}
+
+static Argument *
+text_tool_get_extents_invoker_ext (Argument *args)
+{
   int success = TRUE;
   char *text;
   double size;
@@ -2106,6 +2523,8 @@ text_tool_get_extents_invoker (Argument *args)
   char *slant;
   char *set_width;
   char *spacing;
+  char *registry;
+  char *encoding;
   int width, height;
   int ascent, descent;
   int int_value;
@@ -2139,7 +2558,7 @@ text_tool_get_extents_invoker (Argument *args)
 	default: success = FALSE;
 	}
     }
-  /*  foundry, family, weight, slant, set_width, spacing  */
+  /*  foundry, family, weight, slant, set_width, spacing, registry, encoding  */
   if (success)
     {
       foundry = (char *) args[3].value.pdb_pointer;
@@ -2148,12 +2567,14 @@ text_tool_get_extents_invoker (Argument *args)
       slant = (char *) args[6].value.pdb_pointer;
       set_width = (char *) args[7].value.pdb_pointer;
       spacing = (char *) args[8].value.pdb_pointer;
+      registry = (char *) args[9].value.pdb_pointer;
+      encoding = (char *) args[10].value.pdb_pointer;
     }
 
   /*  attempt to get the xlfd for the font  */
   if (success)
     success = text_get_xlfd (size, size_type, foundry, family, weight,
-			     slant, set_width, spacing, fontname);
+			     slant, set_width, spacing, registry, encoding, fontname);
 
   /*  call the text render procedure  */
   if (success)
@@ -2171,3 +2592,4 @@ text_tool_get_extents_invoker (Argument *args)
 
   return return_args;
 }
+

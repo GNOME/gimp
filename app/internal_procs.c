@@ -105,8 +105,10 @@ internal_procs_init ()
   procedural_db_register (&scale_proc); pcount++;
   procedural_db_register (&shear_proc); pcount++;
   procedural_db_register (&text_tool_proc); pcount++;
+  procedural_db_register (&text_tool_proc_ext); pcount++;
   procedural_db_register (&text_tool_get_extents_proc); pcount++;
-
+  procedural_db_register (&text_tool_get_extents_proc_ext); pcount++;
+  
   app_init_update_status(NULL, "GDisplay procedures",
 			 pcount/total_pcount);
 

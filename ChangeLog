@@ -1,3 +1,14 @@
+Sat Mar 14 17:17:31 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/internal_procs.c
+	* app/text_tool.c
+	* app/text_tool.h: applied gimp-edas-980305-0.patch (after a small
+          fix). Now registry and encoding can be choosen in the text tool 
+          and two new pdb-functions are available to access this
+	  functionality.
+	* plugins/script-fu/scripts/i26-gunya2.scm: changed to make it
+	  follow the naming-convention
+
 Fri Mar 13 21:11:59 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: use gtk-config now
