@@ -110,4 +110,12 @@ stamp-enum-code: $(srcdir)/enumcode.pl enums.pl util.pl
 	  $(PERL) enumcode.pl \
 	 && echo timestamp > $$rootme/stamp-enum-code
 
-all-local: stamp-pdbgen stamp-enum-code
+stamp-enum-code-py: $(srcdir)/enumcode-py.pl enums.pl util.pl
+	rootme=`pwd`; \
+	destdir=`cd $(top_srcdir) && pwd`; export destdir; \
+	cd $(srcdir) && \
+	  PDBGEN_BACKUP=$(PDBGEN_BACKUP) \
+	  $(PERL) enumcode-py.pl \
+	 && echo timestamp > $$rootme/stamp-enum-code-py
+
+all-local: stamp-pdbgen stamp-enum-code stamp-enum-code-py

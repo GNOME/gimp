@@ -1,3 +1,12 @@
+2003-02-08  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/enumcode-py.pl: use True and False if available.
+	Ditch GIMP_ prefixes since we have real namespaces in python.
+
+	* tools/pdbgen/Makefile.am: generate python enums too
+
+	* tools/pdbgen/enumcode.pl: cosmetic cleanup
+
 2003-02-08  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpmiscui.c (gimp_fixme_preview_fill): fixed

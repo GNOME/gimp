@@ -4,3 +4,4 @@ stamp-enums
 stamp-groups
 stamp-pdbgen
 stamp-enum-code
+stamp-enum-code-py

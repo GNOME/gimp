@@ -67,8 +67,15 @@ print ENUMFILE <<'GPL';
 GPL
 
 print ENUMFILE <<'CODE';
-TRUE = 1
-FALSE = 0
+# TRUE and FALSE constants ...
+import __builtin__
+if not hasattr(__builtin__, 'True'):
+    __builtin__.True = (1 == 1)
+    __builtin__.False = (1 != 1)
+del __builtin__
+
+FALSE = False
+TRUE = True
 CODE
 
 foreach (sort keys %enums) {
@@ -80,6 +87,7 @@ foreach (sort keys %enums) {
 	my $sym = $symbol; 
 	# Maybe Python has nice enough namespace handling that we don't
 	# need to prefix all constants with GIMP_
+	$sym =~ s/^GIMP\_//;
 	$body .= "$sym";
 	if (!$enum->{contig}) {
 	  $i = $enum->{mapping}->{$symbol};

@@ -124,6 +124,7 @@ HEADER
 foreach (sort keys %enums) {
     if (! ($enums{$_}->{header} =~ /libgimp/)) {
 	print ENUMFILE "typedef enum\n{\n";
+
 	my $enum = $enums{$_}; my $body = "";
 	foreach $symbol (@{$enum->{symbols}}) {
 	    my $sym = $symbol;
@@ -153,5 +154,3 @@ HEADER
 
 close ENUMFILE;
 &write_file($enumfile);
-
-
