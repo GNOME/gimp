@@ -45,6 +45,7 @@ void file_save_by_extension_callback (GtkWidget *w,
 				      gpointer   client_data);
 int  file_open                       (char      *filename,
 				      char      *raw_filename);
+GimpImage *file_open_new_image       (char *filename, char *raw_filename);
 int  file_save                       (GimpImage*  gimage,
 				      char      *filename,
 				      char      *raw_filename,

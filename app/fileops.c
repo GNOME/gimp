@@ -603,7 +603,7 @@ file_save_type_callback (GtkWidget *w,
   save_file_proc = proc;
 }
 
-static GimpImage*
+GimpImage*
 file_open_image (char *filename, char *raw_filename, RunModeType runmode)
 {
   PlugInProcDef *file_proc;
@@ -649,20 +649,33 @@ file_open_image (char *filename, char *raw_filename, RunModeType runmode)
     return NULL;
 }
 
+GimpImage *
+file_open_new_image (char *filename, char *raw_filename)
+{
+  GimpImage *gimage;
+  
+  gimage = file_open_image (filename, raw_filename, RUN_INTERACTIVE);
+
+  if(!gimage)
+    return NULL;
+
+  /* enable & clear all undo steps */
+  gimage_enable_undo (gimage);
+
+  /* set the image to clean  */
+  gimage_clean_all (gimage);
+
+  return gimage;
+}
+
 int
 file_open (char *filename, char *raw_filename)
 {
   GimpImage *gimage;
   GDisplay  *gdisplay;
 
-  if ((gimage = file_open_image (filename, raw_filename, RUN_INTERACTIVE)) != NULL)
+  if ((gimage = file_open_new_image (filename, raw_filename)) != NULL)
     {
-      /* enable & clear all undo steps */
-      gimage_enable_undo (gimage);
-
-      /* set the image to clean  */
-      gimage_clean_all (gimage);
-
       /* display the image */
       gdisplay = gdisplay_new (gimage, 0x0101);
 

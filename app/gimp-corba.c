@@ -23,6 +23,9 @@
 
 #include "config.h"
 #include "gimp-corba.h"
+#ifdef HAVE_BONOBO
+#include "gimp-bonobo.h"
+#endif
 
 void
 gimp_corba_init(void)
@@ -33,6 +36,7 @@ gimp_corba_init(void)
 
   /* Check for various functionality requests in the goad_id here... */
 
+#ifdef HAVE_BONOBO
   gimp_bonobo_init();
-				
+#endif
 }
