@@ -19,7 +19,7 @@ There are some basic steps to building and installing the GIMP:
 
   4. We use libart2. Grab the module libart_lgpl out of GNOME CVS or
      fetch the tarball from
-     ftp://ftp.gnome.org/pub/gnome/pre-gnome2/sources/libart_lgpl/
+     ftp://ftp.gnome.org/pub/gnome/sources/libart_lgpl/
 
   5. You may want to install other third party libraries or programs that
      are needed for some of the available plugins: tiff, png, jpeg,

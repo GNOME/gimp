@@ -1,5 +1,9 @@
 2003-02-21  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL: fixed URL of libart package, spotted by Michael J. Hammel.
+
+2003-02-21  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpwidgets-utils.[ch] (gimp_table_attach_stock):
 	added a colspan parameter and fixed packing of the stock icon.
 
