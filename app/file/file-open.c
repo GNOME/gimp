@@ -207,6 +207,10 @@ file_open_with_proc_and_display (Gimp               *gimp,
       /* clear all undo steps */
       gimp_image_undo_free (gimage);
 
+      /* make sure that undo is enabled */
+      while (gimage->undo_freeze_count)
+        gimp_image_undo_thaw (gimage);
+
       /* set the image to clean  */
       gimp_image_clean_all (gimage);
 

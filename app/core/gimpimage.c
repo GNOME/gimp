@@ -473,7 +473,7 @@ gimp_image_init (GimpImage *gimage)
   gimage->num_cols              = 0;
 
   gimage->dirty                 = 1;
-  gimage->freeze_count          = 0;
+  gimage->undo_freeze_count     = 0;
 
   gimage->instance_count        = 0;
   gimage->disp_count            = 0;
@@ -1520,7 +1520,7 @@ gimp_image_undo_is_enabled (const GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
-  return (gimage->freeze_count == 0);
+  return (gimage->undo_freeze_count == 0);
 }
 
 gboolean
@@ -1547,7 +1547,7 @@ gimp_image_undo_freeze (GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
-  gimage->freeze_count++;
+  gimage->undo_freeze_count++;
 
   gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_FREEZE, NULL);
 
@@ -1558,9 +1558,9 @@ gboolean
 gimp_image_undo_thaw (GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (gimage->freeze_count > 0, FALSE);
+  g_return_val_if_fail (gimage->undo_freeze_count > 0, FALSE);
 
-  gimage->freeze_count--;
+  gimage->undo_freeze_count--;
 
   gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_THAW, NULL);
 
