@@ -52,13 +52,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
 #include <string.h>
-#include <ctype.h>
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -865,7 +864,7 @@ gfig_name_encode (gchar *dest,
 
   while (*src && cnt--)
     {
-      if (iscntrl (*src) || isspace (*src) || *src == '\\')
+      if (g_ascii_iscntrl (*src) || g_ascii_isspace (*src) || *src == '\\')
 	{
 	  sprintf (dest, "\\%03o", *src++);
 	  dest += 4;
@@ -1006,8 +1005,6 @@ gfig_list_load_all (GList *plist)
   gchar	        *filename;
   GDir	        *dir;
   const gchar	  *dir_ent;
-  struct stat    filestat;
-  gint           err;
 
   /*  Make sure to clear any existing gfigs  */
   current_obj = pic_obj = NULL;
@@ -1031,9 +1028,7 @@ gfig_list_load_all (GList *plist)
 	      filename = g_build_filename (path, dir_ent, NULL);
 
 	      /* Check the file and see that it is not a sub-directory */
-	      err = stat (filename, &filestat);
-
-	      if (!err && S_ISREG (filestat.st_mode))
+              if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
 		{
 		  gfig = gfig_load (filename, dir_ent);
 		  
@@ -1517,8 +1512,6 @@ file_selection_ok (GtkWidget        *w,
 		   gpointer data)
 {
   const gchar *filenamebuf;
-  struct stat filestat;
-  gint	err;
   GFigObj *obj = (GFigObj *)gtk_object_get_user_data (GTK_OBJECT (fs));
   GFigObj *real_current;
 
@@ -1534,10 +1527,7 @@ file_selection_ok (GtkWidget        *w,
       return;
     }
 
-  /* Check if directory exists */
-  err = stat (filenamebuf, &filestat);
-  
-  if (!err && S_ISDIR (filestat.st_mode))
+  if (g_file_test (filenamebuf, G_FILE_TEST_IS_DIR))
     {
       g_message ("Save: Can't save to a folder.");
       return;
@@ -4570,8 +4560,6 @@ gfig_load_file_selection_ok (GtkWidget        *widget,
 		             gpointer          data)
 {
   const gchar *filename;
-  struct stat  filestat;
-  gint         err;
   GFigObj     *gfig;
   GFigObj     *current_saved;
 
@@ -4581,9 +4569,7 @@ gfig_load_file_selection_ok (GtkWidget        *widget,
   printf ("Loading file '%s'\n", filename);
 #endif /* DEBUG */
 
-  err = stat (filename, &filestat);
-
-  if (!err && S_ISREG (filestat.st_mode))
+  if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
     {
       /* Hack - current object MUST be NULL to prevent setup_undo ()
        * from kicking in.

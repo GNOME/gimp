@@ -21,11 +21,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
 #endif
-#include <sys/types.h>
-#include <sys/stat.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -83,7 +83,6 @@ app_init (gint    gimp_argc,
 	  gchar **gimp_argv)
 {
   const gchar *gimp_dir;
-  struct stat  stat_buf;
 
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
@@ -99,7 +98,7 @@ app_init (gint    gimp_argc,
    */
   gimp_dir = gimp_directory ();
 
-  if (stat (gimp_dir, &stat_buf) != 0)
+  if (!g_file_test (gimp_dir, G_FILE_TEST_IS_DIR))
     {
       /*  not properly installed  */
 

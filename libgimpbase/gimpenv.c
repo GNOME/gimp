@@ -23,9 +23,11 @@
 #include "config.h"
 
 #include <glib.h>
+
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -287,9 +289,7 @@ gimp_path_parse (const gchar  *path,
   GList        *list      = NULL;
   GList        *fail_list = NULL;
   gint          i;
-
-  struct stat filestat;
-  gint        err = FALSE;
+  gboolean      exists    = TRUE;
 
   if (!path || !*path || max_paths < 1 || max_paths > 256)
     return NULL;
@@ -321,11 +321,10 @@ gimp_path_parse (const gchar  *path,
       _fnslashify (dir);
 #endif
 
-      /*  check if directory exists  */
       if (check)
-        err = stat (dir->str, &filestat);
+        exists = g_file_test (dir->str, G_FILE_TEST_IS_DIR);
 
-      if (!err)
+      if (exists)
 	list = g_list_prepend (list, g_strdup (dir->str));
       else if (check_failed)
 	fail_list = g_list_prepend (fail_list, g_strdup (dir->str));

@@ -3,8 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -1612,8 +1610,6 @@ file_selection_ok (GtkWidget        *w,
 		   gpointer          data)
 {
   const gchar *filenamebuf;
-  struct stat  filestat;
-  gint         err;
 
   filenamebuf = gtk_file_selection_get_filename (GTK_FILE_SELECTION(fs));
 
@@ -1624,10 +1620,7 @@ file_selection_ok (GtkWidget        *w,
       return;
     }
 
-  /* Check if directory exists */
-  err = stat (filenamebuf, &filestat);
-
-  if (!err && S_ISDIR (filestat.st_mode))
+  if (g_file_test (filenamebuf, G_FILE_TEST_IS_DIR))
     {
       /* Can't save to directory */
       g_message (_("Save: Can't save to a folder."));
@@ -1648,14 +1641,10 @@ load_file_selection_ok (GtkWidget        *w,
 			GtkFileSelection *fs,
 			gpointer          data)
 {
-  struct stat filestat;
-  gint        err;
+  filename = 
+    g_strdup (gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs)));
 
-  filename = g_strdup (gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs)));
-
-  err = stat (filename, &filestat);
-
-  if (!err && S_ISREG (filestat.st_mode))
+  if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
     {
       explorer_load ();
     }

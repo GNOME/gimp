@@ -8,8 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -45,7 +43,6 @@ GList * parsepath (void)
 {
   static GList *lastpath = NULL;
   gchar *gimpdatasubdir, *defaultpath, *tmps;
-  struct stat st;
 
   if (lastpath)
     return lastpath;
@@ -66,18 +63,25 @@ GList * parsepath (void)
 
       if (!tmps)
 	{
-	  if (stat (gimpdatasubdir, &st) != 0
-	      || !S_ISDIR(st.st_mode))
+          if (!g_file_test (gimpdatasubdir, G_FILE_TEST_IS_DIR))
 	    {
 	      /* No gimpressionist-path parameter,
-	       * and the default doesn't exist */
-	      g_message( "*** Warning ***\n"
-			 "It is highly recommended to add\n"
-			 " (gimpressionist-path \"${gimp_dir}" G_DIR_SEPARATOR_S "gimpressionist"
-			 G_SEARCHPATH_SEPARATOR_S
-			 "${gimp_data_dir}" G_DIR_SEPARATOR_S "gimpressionist\")\n"
-			 "(or similar) to your gimprc file.\n");
-	    }
+                 and the default doesn't exist */
+              gchar *path = g_strconcat ("${gimp_dir}", 
+                                         G_DIR_SEPARATOR_S,
+                                         "gimpressionist",
+                                         G_SEARCHPATH_SEPARATOR_S,
+                                         "${gimp_data_dir}",
+                                         G_DIR_SEPARATOR_S,
+                                         "gimpressionist", 
+                                         NULL);
+
+              /* don't translate the gimprc entry */
+	      g_message (_("It is highly recommended to add\n"
+                           " (gimpressionist-path \"%s\")\n"
+                           "(or similar) to your gimprc file."), path);
+              g_free (path);
+            }
 	  tmps = g_strdup (defaultpath);
 	}
     }
@@ -89,21 +93,22 @@ GList * parsepath (void)
   return lastpath;
 }
 
-gchar *findfile(char *fn)
+gchar *
+findfile (const gchar *fn)
 {
   static GList *rcpath = NULL;
   GList        *thispath;
   gchar        *filename;
-  struct stat   st;
 
-  if(!rcpath) rcpath = parsepath ();
+  if (!rcpath) 
+    rcpath = parsepath ();
 
   thispath = rcpath;
 
   while (rcpath && thispath)
     {
       filename = g_build_filename (thispath->data, fn, NULL);
-      if(!stat(filename, &st))
+      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
         return filename;
       g_free (filename);
       thispath = thispath->next;
@@ -254,9 +259,8 @@ void reselect(GtkWidget *list, char *fname)
 
 void readdirintolist_real(char *subdir, GtkWidget *list, char *selected)
 {
-  char *fpath;
+  gchar *fpath;
   const gchar *de;
-  struct stat st;
   GtkWidget *selectedw = NULL, *tmpw;
   GDir *dir;
   GList *flist = NULL;
@@ -271,19 +275,28 @@ void readdirintolist_real(char *subdir, GtkWidget *list, char *selected)
     }
   }
 
-  dir = g_dir_open(subdir, 0, NULL);
+  dir = g_dir_open (subdir, 0, NULL);
 
-  if(!dir)
+  if (!dir)
     return;
 
-  for(;;) {
-    if(!(de = g_dir_read_name(dir))) break;
-    fpath = g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s", subdir, de);
-    stat(fpath, &st);
-    g_free(fpath);
-    if(!S_ISREG(st.st_mode)) continue;
-    flist = g_list_insert_sorted(flist, g_strdup(de), (GCompareFunc)g_ascii_strcasecmp);
-  }
+  for(;;) 
+    {
+      gboolean file_exists;
+
+      de = g_dir_read_name (dir);
+      if (!de)
+        break;
+
+      fpath = g_build_filename (subdir, de, NULL);
+      file_exists = g_file_test (fpath, G_FILE_TEST_IS_REGULAR);
+      g_free (fpath);
+
+      if (!file_exists)
+        continue;
+      
+      flist = g_list_insert_sorted(flist, g_strdup(de), (GCompareFunc)g_ascii_strcasecmp);
+    }
   g_dir_close(dir);
 
   while(flist) {
@@ -307,12 +320,13 @@ void readdirintolist(char *subdir, GtkWidget *list, char *selected)
   char *tmpdir;
   GList *thispath = parsepath();
 
-  while(thispath) {
-    tmpdir = g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s", (char *)thispath->data, subdir);
-    readdirintolist_real(tmpdir, list, selected);
-    g_free(tmpdir);
-    thispath = thispath->next;
-  }
+  while(thispath) 
+    {
+      tmpdir = g_build_filename ((gchar *) thispath->data, subdir, NULL);
+      readdirintolist_real (tmpdir, list, selected);
+      g_free (tmpdir);
+      thispath = thispath->next;
+    }
 }
 
 

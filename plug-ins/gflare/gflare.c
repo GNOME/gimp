@@ -1806,8 +1806,6 @@ gflares_list_load_all (void)
   gchar		*filename;
   GDir		*dir;
   const gchar 	*dir_ent;
-  struct stat	filestat;
-  gint		err;
 
 #if 0	/* @@@ */
   printf("Waiting... (pid %d)\n", getpid());
@@ -1835,9 +1833,7 @@ gflares_list_load_all (void)
 	      filename = g_build_filename (path, dir_ent, NULL);
 
 	      /* Check the file and see that it is not a sub-directory */
-	      err = stat (filename, &filestat);
-
-	      if (!err && S_ISREG (filestat.st_mode))
+	      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
 		{
 		  gflare = gflare_load (filename, dir_ent);
 		  if (gflare)

@@ -54,12 +54,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <ctype.h>
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -151,13 +148,13 @@ static void        build_list_items (GtkWidget *list);
 static void        fractalexplorer_free              (fractalexplorerOBJ *feOBJ);
 static void        fractalexplorer_free_everything   (fractalexplorerOBJ *feOBJ);
 static void        fractalexplorer_list_free_all             (void);
-static fractalexplorerOBJ * fractalexplorer_load       (gchar     *filename,
-							gchar     *name);
+static fractalexplorerOBJ * fractalexplorer_load      (const gchar *filename,
+                                                       const gchar *name);
 
-static void        fractalexplorer_list_load_all             (GList     *plist);
-static void        fractalexplorer_rescan_ok_callback        (GtkWidget *widget,
-							      gpointer   data);
-static void        fractalexplorer_rescan_list               (void);
+static void        fractalexplorer_list_load_all      (GList       *plist);
+static void        fractalexplorer_rescan_ok_callback (GtkWidget   *widget,
+                                                       gpointer     data);
+static void        fractalexplorer_rescan_list        (void);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -1228,8 +1225,8 @@ fractalexplorer_list_free_all (void)
 }
 
 fractalexplorerOBJ *
-fractalexplorer_load (gchar *filename,
-		      gchar *name)
+fractalexplorer_load (const gchar *filename,
+		      const gchar *name)
 {
   fractalexplorerOBJ * fractalexplorer;
   FILE * fp;
@@ -1292,8 +1289,6 @@ fractalexplorer_list_load_all (GList *plist)
   gchar	             *filename;
   GDir	             *dir;
   const gchar        *dir_ent;
-  struct stat	      filestat;
-  gint		      err;
 
   /*  Make sure to clear any existing fractalexplorers  */
   current_obj = pic_obj = NULL;
@@ -1317,18 +1312,14 @@ fractalexplorer_list_load_all (GList *plist)
 	    {
 	      filename = g_build_filename (path, dir_ent, NULL);
 
-	      /* Check the file and see that it is not a sub-directory */
-	      err = stat (filename, &filestat);
-
-	      if (!err && S_ISREG (filestat.st_mode))
+              if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
 		{
-
 		  fractalexplorer = fractalexplorer_load (filename, dir_ent);
 		  
 		  if (fractalexplorer)
 		    {
 		      /* Read only ?*/
-		      if(access(filename,W_OK))
+		      if (access (filename, W_OK))
 			fractalexplorer->obj_status |= fractalexplorer_READONLY;
 
 		      fractalexplorer_list_insert (fractalexplorer);

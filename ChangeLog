@@ -1,5 +1,21 @@
 2002-02-18  Sven Neumann  <sven@gimp.org>
 
+	* app/app_procs.c
+	* app/base/temp-buf.c
+	* app/core/gimpmodules.c
+	* app/plug-in/plug-in.c
+	* libgimpbase/gimpenv.c
+	* libgimpwidgets/gimpfileselection.c
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/flame/flame.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gimpressionist/gimpressionist.[ch]: use g_file_test()
+	instead of stat() whereever possible. Improves code readability.
+
+2002-02-18  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: require latest glib and gtk+ releases (1.3.14).
 	Bumped our version number to 1.3.4.
 

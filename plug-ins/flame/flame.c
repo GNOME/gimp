@@ -24,11 +24,11 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
 #include <errno.h>
 #include <string.h>
 #include <time.h>
@@ -409,7 +409,6 @@ file_ok_callback (GtkWidget *widget,
 {
   GtkFileSelection *fs;
   const gchar      *filename;
-  struct stat       filestat;
 
   fs = GTK_FILE_SELECTION (data);
   filename = gtk_file_selection_get_filename (fs);
@@ -420,15 +419,9 @@ file_ok_callback (GtkWidget *widget,
       gint   i, c;
       gchar *ss;
 
-      if (stat (filename, &filestat))
+      if (!g_file_test (filename, G_FILE_TEST_IS_REGULAR))
 	{
-	  g_message ("%s: %s", filename, g_strerror (errno));
-	  return;
-	}
-
-      if (! S_ISREG (filestat.st_mode))
-	{
-	  g_message (_("%s: Is not a regular file"), filename);
+	  g_message (_("'%s' is not a regular file"), filename);
 	  return;
 	}
 
@@ -436,7 +429,7 @@ file_ok_callback (GtkWidget *widget,
 
       if (f == NULL)
 	{
-	  g_message ("%s: %s", filename, g_strerror (errno));
+	  g_message (_("Can't open '%s': %s"), filename, g_strerror (errno));
 	  return;
 	}
 

@@ -182,7 +182,7 @@ void updatepreviewprev(GtkWidget *wg, void *d);
 void grabarea(void);
 void storevals(void);
 void restorevals(void);
-char *findfile(char *);
+gchar *findfile(const gchar *);
 
 void unselectall(GtkWidget *list);
 void reselect(GtkWidget *list, char *fname);

@@ -25,8 +25,6 @@
 #include <unistd.h>
 #endif
 #include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 #include <glib-object.h>
 
@@ -622,11 +620,9 @@ generate_unique_filename (void)
 void
 temp_buf_swap (TempBuf *buf)
 {
-  TempBuf     *swap;
-  gchar       *filename;
-  struct stat  stat_buf;
-  gint         err;
-  FILE        *fp;
+  TempBuf *swap;
+  gchar   *filename;
+  FILE    *fp;
 
   if (!buf || buf->swapped)
     return;
@@ -654,15 +650,11 @@ temp_buf_swap (TempBuf *buf)
   filename = generate_unique_filename ();
 
   /*  Check if generated filename is valid  */
-  err = stat (filename, &stat_buf);
-  if (!err)
+  if (g_file_test (filename, G_FILE_TEST_IS_DIR))
     {
-      if (stat_buf.st_mode & S_IFDIR)
-	{
-	  g_message ("Error in temp buf caching: \"%s\" is a directory (cannot overwrite)", filename);
-	  g_free (filename);
-	  return;
-	}
+      g_message ("Error in temp buf caching: \"%s\" is a directory (cannot overwrite)", filename);
+      g_free (filename);
+      return;
     }
 
   /*  Open file for overwrite  */
@@ -698,9 +690,8 @@ temp_buf_swap (TempBuf *buf)
 void
 temp_buf_unswap (TempBuf *buf)
 {
-  struct stat  stat_buf;
-  FILE        *fp;
-  gboolean     succ = FALSE;
+  FILE     *fp;
+  gboolean  succ = FALSE;
 
   if (!buf || !buf->swapped)
     return;
@@ -718,9 +709,7 @@ temp_buf_unswap (TempBuf *buf)
   /*  Allocate memory for the buffer's data  */
   buf->data   = temp_buf_allocate (buf->width * buf->height * buf->bytes);
 
-  /*  Find out if the filename of the swapped data is an existing file... */
-  /*  (buf->filname HAS to be != 0 */
-  if (!stat (buf->filename, &stat_buf))
+  if (g_file_test (buf->filename, G_FILE_TEST_IS_REGULAR))
     {
       if ((fp = fopen (buf->filename, "rb")))
 	{
@@ -748,8 +737,6 @@ temp_buf_unswap (TempBuf *buf)
 void
 temp_buf_swap_free (TempBuf *buf)
 {
-  struct stat stat_buf;
-
   if (!buf->swapped)
     return;
 
@@ -764,7 +751,7 @@ temp_buf_swap_free (TempBuf *buf)
     }
 
   /*  Find out if the filename of the swapped data is an existing file... */
-  if (!stat (buf->filename, &stat_buf))
+  if (g_file_test (buf->filename, G_FILE_TEST_IS_REGULAR))
     {
       /*  Delete the swap file  */
       unlink (buf->filename);

@@ -23,8 +23,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -359,19 +358,14 @@ gimp_modules_module_on_disk_func (gpointer data,
   GimpModuleInfoObj  *module_info;
   GList             **kill_list;
   gint                old_on_disk;
-  struct stat         statbuf;
-  gint                ret;
 
   module_info = (GimpModuleInfoObj *) data;
   kill_list   = (GList **) user_data;
 
   old_on_disk = module_info->on_disk;
 
-  ret = stat (module_info->fullpath, &statbuf);
-  if (ret != 0)
-    module_info->on_disk = FALSE;
-  else
-    module_info->on_disk = TRUE;
+  module_info->on_disk = g_file_test (module_info->fullpath, 
+                                      G_FILE_TEST_IS_REGULAR);
 
   /* if it's not on the disk, and it isn't in memory, mark it to be
    * removed later.

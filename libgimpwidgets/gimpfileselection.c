@@ -411,8 +411,8 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
 static void
 gimp_file_selection_check_filename (GimpFileSelection *gfs)
 {
-  static struct stat  statbuf;
-  gchar              *filename;
+  gchar    *filename;
+  gboolean  exists;
 
   if (! gfs->check_valid)
     return;
@@ -422,17 +422,14 @@ gimp_file_selection_check_filename (GimpFileSelection *gfs)
 
   filename = gtk_editable_get_chars (GTK_EDITABLE (gfs->entry), 0, -1);
 
-  if ((stat (filename, &statbuf) == 0) &&
-      (gfs->dir_only ? S_ISDIR (statbuf.st_mode) : S_ISREG (statbuf.st_mode)))
-    {
-      gtk_image_set_from_stock (GTK_IMAGE (gfs->file_exists),
-				GTK_STOCK_YES, GTK_ICON_SIZE_BUTTON);
-    }
+  if (gfs->dir_only)
+    exists = g_file_test (filename, G_FILE_TEST_IS_DIR);
   else
-    {
-      gtk_image_set_from_stock (GTK_IMAGE (gfs->file_exists),
-				GTK_STOCK_NO, GTK_ICON_SIZE_BUTTON);
-    }
+    exists = g_file_test (filename, G_FILE_TEST_IS_REGULAR);
 
   g_free (filename);
+
+  gtk_image_set_from_stock (GTK_IMAGE (gfs->file_exists),
+                            exists ? GTK_STOCK_YES : GTK_STOCK_NO, 
+                            GTK_ICON_SIZE_BUTTON);
 }

@@ -33,8 +33,7 @@
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
-#include <sys/types.h>
-#include <sys/stat.h>
+
 #include <time.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -3517,12 +3516,10 @@ static gchar *
 plug_in_search_in_path (gchar *search_path,
 			gchar *filename)
 {
-  gchar       *local_path;
-  gchar       *token;
-  gchar       *next_token;
-  gchar       *path;
-  struct stat  buf;
-  gint         err;
+  gchar *local_path;
+  gchar *token;
+  gchar *next_token;
+  gchar *path;
 
   local_path = g_strdup (search_path);
   next_token = local_path;
@@ -3532,8 +3529,7 @@ plug_in_search_in_path (gchar *search_path,
     {
       path = g_build_filename (token, filename, NULL);
 
-      err = stat (path, &buf);
-      if (!err && S_ISREG (buf.st_mode))
+      if (g_file_test (path, G_FILE_TEST_IS_REGULAR))
 	{
 	  token = path;
 	  break;
