@@ -795,7 +795,7 @@ static void save_resources (FILE *fd, gint32 image_id)
     fseek(fd, posNombres, SEEK_SET);
     write_glong(fd, posActual - posNombres - sizeof(glong), "0x03EE resource size");
     IFDBG printf ("\n      Longitud total de 0x03EE resource: %d\n",
-                  posActual - posNombres - sizeof(glong) );
+                  (int) (posActual - posNombres - sizeof(glong)) );
 
     /* Vuelve al final de fichero para continuar con la grabacion */
 
@@ -822,7 +822,7 @@ static void save_resources (FILE *fd, gint32 image_id)
 
     write_gshort(fd, nActiveLayer, "active layer");
 
-    IFDBG printf ("      Longitud total de 0x0400 resource: %d\n", sizeof(gshort) );
+    IFDBG printf ("      Longitud total de 0x0400 resource: %d\n", (int) sizeof(gshort) );
   }
 
 
@@ -833,7 +833,7 @@ static void save_resources (FILE *fd, gint32 image_id)
   fseek(fd, posTotal, SEEK_SET);
   write_glong(fd, posActual - posTotal - sizeof(glong), "image resources length");
   IFDBG printf ("      Longitud total de la seccion de recursos: %d\n",
-                posActual - posTotal - sizeof(glong) );
+                (int) (posActual - posTotal - sizeof(glong)) );
 
   /* Vuelve al final de fichero para continuar con la grabacion */
 
@@ -1125,7 +1125,7 @@ static void save_layerAndMask (FILE *fd, gint32 image_id)
     fseek(fd, posExtraData, SEEK_SET);
     write_glong(fd, posActual - posExtraData - sizeof(glong), "Extra data size");
     IFDBG printf ("      Longitud total de ExtraData: %d\n",
-                  posActual - posExtraData - sizeof(glong) );
+                  (int) (posActual - posExtraData - sizeof(glong)) );
 
     /* Vuelve al final de fichero para continuar con la grabacion */
 
@@ -1255,14 +1255,14 @@ static void save_layerAndMask (FILE *fd, gint32 image_id)
   fseek(fd, posLayerInfo, SEEK_SET);
   write_glong(fd, posActual - posLayerInfo - sizeof(glong), "layers info section length");
   IFDBG printf ("\n      Longitud total de layers info section: %d\n",
-                posActual - posLayerInfo - sizeof(glong));
+                (int) (posActual - posLayerInfo - sizeof(glong)));
 
   /* Graba la longitud real de: Seccion Layer and mask information  */
 
   fseek(fd, posLayerMask, SEEK_SET);
   write_glong(fd, posActual - posLayerMask - sizeof(glong), "layers & mask information length");
   IFDBG printf ("      Longitud total de layers & mask information: %d\n",
-                posActual - posLayerMask - sizeof(glong));
+                (int) (posActual - posLayerMask - sizeof(glong)));
 
   /* Vuelve al final de fichero para continuar con la grabacion */
 

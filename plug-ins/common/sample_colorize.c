@@ -3055,7 +3055,7 @@ p_remap_pixel(guchar *pixel, guchar *original, gint bpp2)
 static void
 colorize_func(guchar *src, guchar *dest, gint bpp, gpointer data)
 {
-  gboolean has_alpha = (gboolean) data;
+  gboolean has_alpha = GPOINTER_TO_INT (data);
 
   if (has_alpha)
     {

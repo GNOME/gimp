@@ -1020,7 +1020,7 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 	  if (length >= sizeof(int))
 	    {
 	      /* HEAD */
-	      i =  (((int)m) & (sizeof(int)-1));
+	      i =  (GPOINTER_TO_INT(m) & (sizeof(int)-1));
 	      if (i != 0)
 		{
 		  i = sizeof(int) - i;
@@ -1138,7 +1138,7 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 	  if (length >= sizeof(int))
 	    {
 	      /* HEAD */
-	      i = (((int)m) & (sizeof(int)-1));
+	      i = (GPOINTER_TO_INT(m) & (sizeof(int)-1));
 	      if (i != 0)
 		{
 		  i = sizeof(int) - i;
