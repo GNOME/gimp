@@ -362,7 +362,7 @@ load_image (char *filename)
  fp = fopen (filename, "rb");
  if (!fp)
  {
-   show_message (_("can't open file for reading"));
+   show_message (_("Can't open file for reading"));
    return (-1);
  }
  fclose (fp);
@@ -370,7 +370,7 @@ load_image (char *filename)
  ifp = fits_open (filename, "r");
  if (ifp == NULL)
  {
-   show_message (_("error during open of FITS file"));
+   show_message (_("Error during open of FITS file"));
    return (-1);
  }
  if (ifp->n_pic <= 0)
@@ -381,11 +381,6 @@ load_image (char *filename)
  }
 
  image_list = (gint32 *)g_malloc (10 * sizeof (gint32));
- if (image_list == NULL)
- {
-   show_message (_("out of memory"));
-   return (-1);
- }
  n_images = 0;
  max_images = 10;
 
@@ -471,7 +466,7 @@ save_image (char *filename,
     case RGB_IMAGE:     case RGBA_IMAGE:
       break;
     default:
-      show_message (_("cannot operate on unknown image types"));
+      show_message (_("Cannot operate on unknown image types"));
       return (FALSE);
       break;
   }
@@ -480,7 +475,7 @@ save_image (char *filename,
   ofp = fits_open (filename, "w");
   if (!ofp)
   {
-    show_message (_("cant open file for writing"));
+    show_message (_("Can't open file for writing"));
     return (FALSE);
   }
 
@@ -852,7 +847,7 @@ save_direct  (FITS_FILE *ofp,
 
   if (ferror (ofp->fp))
   {
-    show_message (_("write error occured"));
+    show_message (_("Write error occured"));
     return (FALSE);
   }
   return (TRUE);
@@ -973,7 +968,7 @@ save_index (FITS_FILE *ofp,
 
   if (ferror (ofp->fp))
   {
-    show_message (_("write error occured"));
+    show_message (_("Write error occured"));
     return (FALSE);
   }
   return (TRUE);

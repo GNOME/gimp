@@ -172,7 +172,7 @@ p_split_image(t_anim_info *ainfo_ptr,
           l_rc = p_save_named_image(l_new_image_id, l_sav_name, l_run_mode);
           if(l_rc < 0)
           {
-            p_msg_win(ainfo_ptr->run_mode, _("Split Frames: SAVE operation FAILED\n- desired save plugin cant handle type\n- or desired save plugin not available\n"));
+            p_msg_win(ainfo_ptr->run_mode, _("Split Frames: SAVE operation FAILED\n- desired save plugin can't handle type\n- or desired save plugin not available\n"));
             break;
           }
 

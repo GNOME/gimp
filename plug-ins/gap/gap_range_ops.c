@@ -451,7 +451,7 @@ p_convert_dialog(t_anim_info *ainfo_ptr,
 
   p_init_arr_arg(&argv[5], WGT_OPTIONMENU);
   argv[5].label_txt = _("Imagetype :");
-  argv[5].help_txt  = _("Convert to, or keep imagetype           \n(most fileformats cant handle all types)");
+  argv[5].help_txt  = _("Convert to, or keep imagetype           \n(most fileformats can't handle all types)");
   argv[5].radio_argc  = 4;
   argv[5].radio_argv = radio_args;
   argv[5].radio_ret  = 0;
@@ -1187,7 +1187,7 @@ p_frames_convert(t_anim_info *ainfo_ptr,
              l_rc = p_save_named_image(l_tmp_image_id, l_sav_name, l_run_mode);
              if(l_rc < 0)
              {
-               p_msg_win(ainfo_ptr->run_mode, _("Convert Frames: SAVE operation FAILED\n- desired save plugin cant handle type\n- or desired save plugin not available\n"));
+               p_msg_win(ainfo_ptr->run_mode, _("Convert Frames: SAVE operation FAILED\n- desired save plugin can't handle type\n- or desired save plugin not available\n"));
              }
           }
           if(l_run_mode == RUN_INTERACTIVE)

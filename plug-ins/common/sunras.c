@@ -379,7 +379,7 @@ load_image (char *filename)
   ifp = fopen (filename, "rb");
   if (!ifp)
   {
-    show_message (_("cant open file for reading"));
+    show_message (_("Can't open file for reading"));
     return (-1);
   }
 
@@ -388,14 +388,14 @@ load_image (char *filename)
   read_sun_header (ifp, &sunhdr);
   if (sunhdr.l_ras_magic != RAS_MAGIC)
   {
-    show_message(_("cant open file as SUN-raster-file"));
+    show_message(_("Can't open file as SUN-raster-file"));
     fclose (ifp);
     return (-1);
   }
 
   if ((sunhdr.l_ras_type < 0) || (sunhdr.l_ras_type > 5))
   {
-    show_message (_("the type of this SUN-rasterfile is not supported"));
+    show_message (_("The type of this SUN-rasterfile is not supported"));
     fclose (ifp);
     return (-1);
   }
@@ -406,7 +406,7 @@ load_image (char *filename)
     suncolmap = (unsigned char *)malloc (sunhdr.l_ras_maplength);
     if (suncolmap == NULL)
     {
-      show_message ("cant get memory for colour map");
+      show_message ("Can't get memory for colour map");
       fclose (ifp);
       return (-1);
     }
@@ -423,14 +423,14 @@ load_image (char *filename)
 #endif
     if (sunhdr.l_ras_magic != RAS_MAGIC)
     {
-      show_message ("cant read colour entries");
+      show_message ("Can't read colour entries");
       fclose (ifp);
       return (-1);
     }
   }
   else if (sunhdr.l_ras_maplength > 0)
   {
-    show_message (_("type of colourmap not supported"));
+    show_message (_("Type of colourmap not supported"));
     fseek (ifp, (sizeof (L_SUNFILEHEADER)/sizeof (L_CARD32))
                *4 + sunhdr.l_ras_maplength, SEEK_SET);
   }
@@ -471,7 +471,7 @@ load_image (char *filename)
 
   if (image_ID == -1)
   {
-    show_message (_("this image depth is not supported"));
+    show_message (_("This image depth is not supported"));
     return (-1);
   }
 
@@ -506,7 +506,7 @@ save_image (char *filename,
     case RGB_IMAGE:
       break;
     default:
-      show_message (_("cant operate on unknown image types"));
+      show_message (_("Can't operate on unknown image types"));
       return (FALSE);
       break;
   }
@@ -515,7 +515,7 @@ save_image (char *filename,
   ofp = fopen (filename, "wb");
   if (!ofp)
   {
-    show_message (_("cant open file for writing"));
+    show_message (_("Can't open file for writing"));
     return (FALSE);
   }
 
@@ -1461,7 +1461,7 @@ save_index (FILE    *ofp,
 
   if (ferror (ofp))
     {
-      show_message (_("write error occured"));
+      show_message (_("Write error occured"));
       return (FALSE);
     }
   return (TRUE);
@@ -1570,7 +1570,7 @@ save_rgb (FILE   *ofp,
   
   if (ferror (ofp))
     {
-      show_message (_("write error occured"));
+      show_message (_("Write error occured"));
       return (FALSE);
     }
   return (TRUE);
@@ -1725,7 +1725,7 @@ static void
 show_message (char *message)
 {
   if (l_run_mode == RUN_INTERACTIVE)
-    gimp_message (message);
+    g_message (message);
   else
     fprintf (stderr, "sunras: %s\n", message);
 }
