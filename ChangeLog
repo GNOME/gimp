@@ -1,5 +1,11 @@
 2004-04-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/siod-wrapper.c: applied a patch from Kevin
+	Cozens that makes the Script-Fu PDB marshaller handle NULL
+	strings. Some minor code cleanup. Fixes bug #139386.
+
+2004-04-08  Sven Neumann  <sven@gimp.org>
+
 	* tools/gimp-remote.c (start_new_gimp): applied a patch from
 	Michael Matz that calls fork() before starting gimp. This is to
 	avoid X server authentification problems (bug #139158).
