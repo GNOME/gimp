@@ -97,13 +97,12 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
   dialog = g_object_new (GIMP_TYPE_TOOL_DIALOG,
                          "title",       tool_info->blurb,
                          "role",        GIMP_OBJECT (tool_info)->name,
-                         "stock_id",    stock_id,
+                         "help-func",   gimp_standard_help_func,
+                         "help-id",     tool_info->help_id,
+                         "stock-id",    stock_id,
                          "description", desc ? desc : tool_info->help,
                          "parent",      parent,
                          NULL);
-
-  gimp_help_connect (GTK_WIDGET (dialog),
-                     gimp_standard_help_func, tool_info->help_id, dialog);
 
   va_start (args, desc);
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);

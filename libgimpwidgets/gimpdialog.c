@@ -33,13 +33,17 @@
 enum
 {
   PROP_0,
-  PROP_ROLE
+  PROP_HELP_FUNC,
+  PROP_HELP_ID
 };
 
 
 static void       gimp_dialog_class_init   (GimpDialogClass *klass);
 static void       gimp_dialog_init         (GimpDialog      *dialog);
 
+static GObject  * gimp_dialog_constructor  (GType            type,
+                                            guint            n_params,
+                                            GObjectConstructParam *params);
 static void       gimp_dialog_set_property (GObject         *object,
                                             guint            property_id,
                                             const GValue    *value,
@@ -78,8 +82,8 @@ gimp_dialog_get_type (void)
       };
 
       dialog_type = g_type_register_static (GTK_TYPE_DIALOG,
-					    "GimpDialog",
-					    &dialog_info, 0);
+                                            "GimpDialog",
+                                            &dialog_info, 0);
     }
 
   return dialog_type;
@@ -88,16 +92,13 @@ gimp_dialog_get_type (void)
 static void
 gimp_dialog_class_init (GimpDialogClass *klass)
 {
-  GObjectClass   *object_class;
-  GtkWidgetClass *widget_class;
-  GtkDialogClass *dialog_class;
-
-  object_class = G_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
-  dialog_class = GTK_DIALOG_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class->constructor  = gimp_dialog_constructor;
   object_class->set_property = gimp_dialog_set_property;
   object_class->get_property = gimp_dialog_get_property;
 
@@ -105,10 +106,36 @@ gimp_dialog_class_init (GimpDialogClass *klass)
 
   dialog_class->close        = gimp_dialog_close;
 
-  g_object_class_install_property (object_class, PROP_ROLE,
-                                   g_param_spec_string ("role", NULL, NULL,
+  g_object_class_install_property (object_class, PROP_HELP_FUNC,
+                                   g_param_spec_pointer ("help-func", NULL, NULL,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_HELP_ID,
+                                   g_param_spec_string ("help-id", NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_READWRITE));
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+}
+
+static GObject *
+gimp_dialog_constructor (GType                  type,
+                         guint                  n_params,
+                         GObjectConstructParam *params)
+{
+  GObject      *object;
+  GimpHelpFunc  help_func;
+  const gchar  *help_id;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  help_func = g_object_get_data (object, "gimp-dialog-help-func");
+  help_id   = g_object_get_data (object, "gimp-dialog-help-id");
+
+  if (help_func)
+    gimp_help_connect (GTK_WIDGET (object), help_func, help_id, object);
+
+  return object;
 }
 
 static void
@@ -119,8 +146,14 @@ gimp_dialog_set_property (GObject      *object,
 {
   switch (property_id)
     {
-    case PROP_ROLE:
-      gtk_window_set_role (GTK_WINDOW (object), g_value_get_string (value));
+    case PROP_HELP_FUNC:
+      g_object_set_data (object, "gimp-dialog-help-func",
+                         g_value_get_pointer (value));
+      break;
+    case PROP_HELP_ID:
+      g_object_set_data_full (object, "gimp-dialog-help-id",
+                              g_value_dup_string (value),
+                              (GDestroyNotify) g_free);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -136,8 +169,13 @@ gimp_dialog_get_property (GObject    *object,
 {
   switch (property_id)
     {
-    case PROP_ROLE:
-      g_value_set_string (value, gtk_window_get_role (GTK_WINDOW (object)));
+    case PROP_HELP_FUNC:
+      g_value_set_pointer (value, g_object_get_data (object,
+                                                     "gimp-dialog-help-func"));
+      break;
+    case PROP_HELP_ID:
+      g_value_set_string (value, g_object_get_data (object,
+                                                    "gimp-dialog-help-id"));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -267,9 +305,11 @@ gimp_dialog_new_valist (const gchar    *title,
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
   dialog = g_object_new (GIMP_TYPE_DIALOG,
-                         "title", title,
-                         "role",  role,
-                         "modal", (flags & GTK_DIALOG_MODAL),
+                         "title",     title,
+                         "role",      role,
+                         "modal",     (flags & GTK_DIALOG_MODAL),
+                         "help-func", help_func,
+                         "help-id",   help_id,
                          NULL);
 
   if (parent)
@@ -290,9 +330,6 @@ gimp_dialog_new_valist (const gchar    *title,
                                  G_CALLBACK (gimp_dialog_close),
                                  dialog, G_CONNECT_SWAPPED);
     }
-
-  if (help_func)
-    gimp_help_connect (dialog, help_func, help_id, dialog);
 
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
 

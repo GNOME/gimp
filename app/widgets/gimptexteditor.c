@@ -161,12 +161,11 @@ gimp_text_editor_new (const gchar *title)
   g_return_val_if_fail (title != NULL, NULL);
 
   editor = g_object_new (GIMP_TYPE_TEXT_EDITOR,
-                         "title", title,
-                         "role",  "gimp-text-editor",
+                         "title",     title,
+                         "role",      "gimp-text-editor",
+                         "help-func", gimp_standard_help_func,
+                         "help-id",   GIMP_HELP_TEXT_EDITOR_DIALOG,
                          NULL);
-
-  gimp_help_connect (GTK_WIDGET (editor), gimp_standard_help_func,
-                     GIMP_HELP_TEXT_EDITOR_DIALOG, NULL);
 
   gtk_dialog_add_button (GTK_DIALOG (editor),
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);

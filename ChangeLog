@@ -1,5 +1,17 @@
 2004-07-08  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpdialog.c: removed "role" property because
+	GtkWindow has an equivalent property now. Added "help-func" and
+	"help-id" construct properties.
+
+	* app/widgets/gimptexteditor.c
+	* app/widgets/gimptooldialog.c
+	* app/widgets/gimpviewabledialog.c: removed calls to
+	gimp_help_connect() and pass help_func and help_id to
+	g_object_new().
+
+2004-07-08  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimphelpui.c (gimp_context_help): fixed typo in
 	API docs.
 

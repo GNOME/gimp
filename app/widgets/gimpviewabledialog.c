@@ -249,14 +249,12 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
   dialog = g_object_new (GIMP_TYPE_VIEWABLE_DIALOG,
                          "title",       title,
                          "role",        role,
-                         "stock_id",    stock_id,
+                         "help-func",   help_func,
+                         "help-id",     help_id,
+                         "stock-id",    stock_id,
                          "description", desc,
                          "parent",      parent,
                          NULL);
-
-
-  if (help_func)
-    gimp_help_connect (GTK_WIDGET (dialog), help_func, help_id, dialog);
 
   va_start (args, help_id);
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
