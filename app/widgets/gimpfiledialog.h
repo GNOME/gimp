@@ -77,9 +77,6 @@ void        gimp_file_dialog_set_sensitive (GimpFileDialog       *dialog,
 void        gimp_file_dialog_set_file_proc (GimpFileDialog       *dialog,
                                             PlugInProcDef        *file_proc);
 
-void        gimp_file_dialog_set_uri       (GimpFileDialog       *dialog,
-                                            GimpImage            *gimage,
-                                            const gchar          *uri);
 void        gimp_file_dialog_set_image     (GimpFileDialog       *dialog,
                                             GimpImage            *gimage,
                                             gboolean              save_a_copy);

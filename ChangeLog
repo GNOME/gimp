@@ -1,3 +1,28 @@
+2005-01-13  Michael Natterer  <mitch@gimp.org>
+
+	Made the file open and save dialogs use the last used folder
+	instead of defaulting to current directory. Fixes bug #162385.
+
+	* app/widgets/gimpfiledialog.[ch] (gimp_file_dialog_set_uri):
+	removed this function because it had no functionality except
+	creating usability problems.
+
+	* app/actions/file-commands.c: use gtk_file_chooser_set_uri()
+	instead but *only* if we already have an uri from an alread open
+	image or the document hinstory.
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image): set
+	the file chooser's uri only if we have an uri from the image
+	itself. Leave the current folder untouched otherwise and just set
+	the current name (e.g. "Untitled").
+
+	* app/dialogs/file-save-dialog.c (file_save_dialog_save_image): on
+	successful save, remember the used uri by attaching it to the
+	"gimp" instance.
+
+	(file_save_dialog_new): set the last saved uri's folder on the
+	newly created file save dialog.
+
 2005-01-13  Sven Neumann  <sven@gimp.org>
 
 	* app/units.c

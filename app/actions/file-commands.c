@@ -94,10 +94,17 @@ void
 file_open_from_image_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
-  GtkWidget *widget;
+  GimpImage   *image;
+  GtkWidget   *widget;
+  const gchar *uri = NULL;
   return_if_no_widget (widget, data);
 
-  file_open_dialog_show (widget, action_data_get_image (data), NULL, FALSE);
+  image = action_data_get_image (data);
+
+  if (image)
+    uri = gimp_object_get_name (GIMP_OBJECT (image));
+
+  file_open_dialog_show (widget, NULL, uri, FALSE);
 }
 
 void
@@ -365,7 +372,8 @@ file_open_dialog_show (GtkWidget   *parent,
 
   if (dialog)
     {
-      gimp_file_dialog_set_uri (GIMP_FILE_DIALOG (dialog), gimage, uri);
+      if (uri)
+        gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
 
       if (open_as_layer)
         {
@@ -409,7 +417,6 @@ file_save_dialog_show (GimpImage   *gimage,
                             gimage);
         }
     }
-
 
   if (dialog)
     {
