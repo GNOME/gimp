@@ -495,6 +495,8 @@ gimp_display_shell_new (GimpDisplay *gdisp,
    *
    *  main_vbox
    *     |
+   *     +-- menubar
+   *     |
    *     +-- disp_vbox
    *     |      |
    *     |      +-- upper_hbox

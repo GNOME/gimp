@@ -1,5 +1,15 @@
 2002-12-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): fixed
+	ascii-art to match current widget hierarchy.
+
+	* app/display/gimpdisplayshell-handlers.c: fixed typos so we
+	actually connect to notify::monitor-[xy]resolution. Expose and
+	flush the display in the handler so the resolution change becomes
+	visible.
+
+2002-12-18  Michael Natterer  <mitch@gimp.org>
+
 	* modules/cdisplay_colorblind.c (cdisplay_colorblind_get_type)
 	* modules/cdisplay_gamma.c (cdisplay_gamma_get_type)
 	* modules/cdisplay_highcontrast.c (cdisplay_contrast_get_type):
