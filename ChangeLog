@@ -1,3 +1,8 @@
+2004-06-04  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptexttool.c (gimp_text_tool_class_init): allow to
+	move a text layer using the cursor keys.
+
 2004-06-04  Michael Natterer  <mitch@gimp.org>
 
 	* cursors/*.xbm: removed...
