@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 03:08+0100\n"
-"PO-Revision-Date: 2004-01-09 13:29+0100\n"
+"POT-Creation-Date: 2004-01-20 08:31+0100\n"
+"PO-Revision-Date: 2004-01-19 13:57+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -195,14 +195,13 @@ msgstr ""
 "poważnego sygnału (nigdy | pytanie |zawsze).\n"
 
 #: app/main.c:527
-#, fuzzy
 msgid ""
 "  --pdb-compat-mode <off | on | warn>\n"
 "                           Procedural Database compatibility mode.\n"
 msgstr ""
 "  --pdb-compat-mode <off | on | warn>\n"
-"                           Tryb zgodności bazy danych procedur (włączony | "
-"wyłączony | ostrzeżenia).\n"
+"                           Tryb zgodności bazy danych procedur (wyłączony | "
+"włączony | ostrzeżenia).\n"
 
 #: app/main.c:529
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
@@ -1342,7 +1341,7 @@ msgid "Cut"
 msgstr "Wycięcie"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:638
-#: app/tools/gimptexttool.c:112 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:113 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Tekst"
 
@@ -2038,9 +2037,8 @@ msgid "Change Image Unit"
 msgstr "Zmiana jednostki obrazu"
 
 #: app/core/gimpimage.c:1940
-#, fuzzy
 msgid "Attach Parasite to Image"
-msgstr "Dołączenie do obrazudanych pasożytniczych"
+msgstr "Dołączenie do obrazu danych pasożytniczych"
 
 #: app/core/gimpimage.c:1973
 msgid "Remove Parasite from Image"
@@ -2316,7 +2314,6 @@ msgstr ""
 "Odczytywanie pliku \"%s\" z paletą: niepoprawna liczba kolumn w wierszu %d, "
 "użyto wartości domyślnej."
 
-#. maybe we should just abort?
 #: app/core/gimppalette.c:505
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
@@ -3904,6 +3901,7 @@ msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Błąd przy skalowaniu: Szerokość i wysokość muszą być dodatnie."
 
 #. <Image>/File
+#. <Toolbox>/File
 #: app/gui/image-menu.c:88 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_Plik"
@@ -3917,6 +3915,7 @@ msgid "/File/_Open..."
 msgstr "/Plik/_Otwórz..."
 
 #. <Image>/File/Open Recent
+#. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:103 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/Plik/Os_tatnio otwierane"
@@ -5004,9 +5003,8 @@ msgid "Invalid width or height. Both must be positive."
 msgstr "Niepoprawna szerokość lub wysokość. Obie wartości muszą być dodatnie."
 
 #: app/gui/layers-menu.c:46
-#, fuzzy
 msgid "/Te_xt Tool"
-msgstr "Narzędzie tekstowe"
+msgstr "/Narzędzie _tekstowe"
 
 #: app/gui/layers-menu.c:51
 msgid "/_Edit Layer Attributes..."
@@ -5157,7 +5155,6 @@ msgid "Documents Menu"
 msgstr "Menu dokumentów"
 
 #: app/gui/menus.c:219
-#, fuzzy
 msgid "Templates Menu"
 msgstr "Menu szablonów"
 
@@ -5465,21 +5462,21 @@ msgstr "/_Usuń deseń..."
 msgid "/_Refresh Patterns"
 msgstr "/_Odśwież desenie"
 
-#: app/gui/plug-in-menus.c:343
+#: app/gui/plug-in-menus.c:342
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Powtórz \"%s\""
 
-#: app/gui/plug-in-menus.c:344
+#: app/gui/plug-in-menus.c:343
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "_Wyświetl ponownie \"%s\""
 
-#: app/gui/plug-in-menus.c:370
+#: app/gui/plug-in-menus.c:369
 msgid "Repeat Last"
 msgstr "Powtórz ostatni"
 
-#: app/gui/plug-in-menus.c:373
+#: app/gui/plug-in-menus.c:372
 msgid "Re-Show Last"
 msgstr "Wyświetl ponownie ostatni"
 
@@ -6179,6 +6176,7 @@ msgid "Original Width:"
 msgstr "Pierwotna szerokość:"
 
 #. the new size labels
+#. the print size labels
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:564
 msgid "New Width:"
 msgstr "Nowa szerokość: "
@@ -7015,6 +7013,7 @@ msgid "New Path Options"
 msgstr "Opcje nowej ścieżki"
 
 #. The name entry hbox, label and entry
+#. The name entry
 #: app/gui/vectors-commands.c:492 app/gui/vectors-commands.c:610
 msgid "Path name:"
 msgstr "Nazwa ścieżki:"
@@ -7363,7 +7362,7 @@ msgstr "Procedura tymczasowa"
 msgid "Free Select"
 msgstr "Zaznaczenie odręczne"
 
-#: app/plug-in/plug-in.c:687
+#: app/plug-in/plug-in.c:688
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -7453,7 +7452,7 @@ msgstr ""
 "pchnąć w tę łódź jeża\n"
 "lub ośm skrzyń fig"
 
-#: app/text/gimptext-compat.c:104 app/tools/gimptexttool.c:327
+#: app/text/gimptext-compat.c:104 app/tools/gimptexttool.c:335
 msgid "Add Text Layer"
 msgstr "Dodanie warstwy tekstowej"
 
@@ -7921,6 +7920,7 @@ msgid "Origin X:"
 msgstr "Początkowy X: "
 
 #. the pixel size labels
+#. the unit size labels
 #: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
@@ -8014,9 +8014,8 @@ msgstr "Przesunięcie ścieżki"
 
 #: app/tools/gimpeditselectiontool.c:255
 #: app/tools/gimpeditselectiontool.c:1210
-#, fuzzy
 msgid "Move Layer Mask"
-msgstr "Przesunięcie warstwy"
+msgstr "Przesunięcie maski warstwy"
 
 #: app/tools/gimpeditselectiontool.c:267
 #: app/tools/gimpeditselectiontool.c:1220
@@ -8650,15 +8649,15 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Utwórz z tekstu ścieżkę"
 
-#: app/tools/gimptexttool.c:113
+#: app/tools/gimptexttool.c:114
 msgid "Add text to the image"
 msgstr "Umieszczanie tekstu na obrazie"
 
-#: app/tools/gimptexttool.c:114
+#: app/tools/gimptexttool.c:115
 msgid "/Tools/Te_xt"
 msgstr "/Narzędzia/_Tekst"
 
-#: app/tools/gimptexttool.c:415
+#: app/tools/gimptexttool.c:433
 msgid "GIMP Text Editor"
 msgstr "Edytor tekstowy programu GIMP"
 
@@ -9971,14 +9970,12 @@ msgid "View as Grid"
 msgstr "Wyświetlanie w postaci siatki"
 
 #: app/widgets/widgets-enums.c:136
-#, fuzzy
 msgid "Normal Window"
-msgstr "Okna z obrazami"
+msgstr "Zwykłe okno"
 
 #: app/widgets/widgets-enums.c:137
-#, fuzzy
 msgid "Utility Window"
-msgstr "Narzędzie"
+msgstr "Okno narzędziowe"
 
 #: app/xcf/xcf-load.c:291
 msgid ""
