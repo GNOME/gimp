@@ -1,6 +1,6 @@
 2002-06-23  Marco Wessel  <marco@phoenix.uzaynet.nl> 
-	* plug-ins/script-fu/scripts/tileblur.scm: switch horizontal and vertical
-	blurring. They were reversed. (Tuomas noticed this.)
+	* plug-ins/script-fu/scripts/tileblur.scm: switch horizontal and
+	vertical blurring. They were reversed. (Tuomas noticed this.)
 	
 2002-06-21  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
