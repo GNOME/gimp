@@ -824,13 +824,13 @@ gimp_vector_tool_modifier_key (GimpTool        *tool,
             }
         }
 
-      if (state & INSDEL_MASK)
-        {
-          button_mode = GIMP_VECTOR_MODE_EDIT;
-        }
-      else if (state & MOVE_MASK)
+      if (state & MOVE_MASK)
         {
           button_mode = GIMP_VECTOR_MODE_MOVE;
+        }
+      else if (state & INSDEL_MASK)
+        {
+          button_mode = GIMP_VECTOR_MODE_EDIT;
         }
 
       if (button_mode != options->edit_mode)

@@ -1,3 +1,10 @@
+2003-10-22 Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.c: Changed the priority
+	of ALT vs. CTRL. Resolves an small issue with (broken)
+	window managers that grab ALT. Implements the suggestion
+	from Raymond Ostertag in bug #124971.
+
 2003-10-22  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/gfig/gfig.c: Bumped version number to 2.0. Closes 
