@@ -95,11 +95,15 @@ void          paint_options_init   (PaintOptions         *options,
 /*  functions for the global paint options  */
 
 /*  switch between global and per-tool paint options  */
-void    paint_options_set_global     (gboolean  global);
+void        paint_options_set_global       (gboolean          global);
 
 
 /*  a utility function which returns a paint mode menu  */
-GtkWidget *paint_mode_menu_new (MenuItemCallback  callback,
-				gpointer          user_data);
+GtkWidget * paint_mode_menu_new            (MenuItemCallback  callback,
+					    gpointer          data,
+					    LayerModeEffects  initial);
+
+void        paint_mode_menu_set_paint_mode (GtkOptionMenu    *paint_mode_menu,
+					    LayerModeEffects  paint_mode);
 
 #endif  /*  __PAINT_OPTIONS_H__  */

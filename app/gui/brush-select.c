@@ -244,8 +244,6 @@ brush_select_new (gchar   *title,
   GtkWidget *sep;
   GtkWidget *table;
   GtkWidget *util_box;
-  GtkWidget *option_menu;
-  GtkWidget *menu;
   GtkWidget *slider;
   GtkWidget *button;
 
@@ -448,14 +446,12 @@ brush_select_new (gchar   *title,
 			     slider, 1, FALSE);
 
   /*  Create the paint mode option menu  */
-  menu = paint_mode_menu_new (paint_mode_menu_callback, (gpointer) bsp);
-  bsp->option_menu = option_menu = gtk_option_menu_new ();
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (option_menu),
-			       gimp_context_get_paint_mode (bsp->context));
+  bsp->option_menu =
+    paint_mode_menu_new (paint_mode_menu_callback, (gpointer) bsp,
+			 gimp_context_get_paint_mode (bsp->context));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Mode:"), 1.0, 0.5,
-			     option_menu, 1, TRUE);
+			     bsp->option_menu, 1, TRUE);
 
   gtk_widget_show (table);
   gtk_widget_show (bsp->paint_options_box);
@@ -804,7 +800,8 @@ brush_select_paint_mode_changed (GimpContext      *context,
 				 LayerModeEffects  paint_mode,
 				 BrushSelect      *bsp)
 {
-  gtk_option_menu_set_history (GTK_OPTION_MENU (bsp->option_menu), paint_mode);
+  paint_mode_menu_set_paint_mode (GTK_OPTION_MENU (bsp->option_menu),
+				  paint_mode);
 
   if (bsp->callback_name)
     brush_change_callbacks (bsp, FALSE);
@@ -1680,11 +1677,11 @@ static void
 paint_mode_menu_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  BrushSelect *bsp;
-  
-  bsp = (BrushSelect *) gtk_object_get_user_data (GTK_OBJECT (widget));
+  LayerModeEffects paint_mode;
 
-  gimp_context_set_paint_mode (bsp->context, (LayerModeEffects) data);
+  paint_mode = (LayerModeEffects) gtk_object_get_user_data (GTK_OBJECT (widget));
+
+  gimp_context_set_paint_mode (((BrushSelect *) data)->context, paint_mode);
 }
 
 static void

@@ -51,23 +51,40 @@ static void                   paint_pressure_options_reset (PaintPressureOptions
 /*  ui helper functions  ******************************************************/
 
 static void
-tool_options_opacity_adjustment_update (GtkWidget *widget,
-					gpointer   data)
+tool_options_opacity_adjustment_update (GtkAdjustment *adjustment,
+					gpointer       data)
 {
   gimp_context_set_opacity (GIMP_CONTEXT (data),
-			    GTK_ADJUSTMENT (widget)->value / 100);
+			    adjustment->value / 100);
+}
+
+static void
+tool_options_opacity_changed (GimpContext *context,
+			      gdouble      opacity,
+			      gpointer     data)
+{
+  gtk_signal_handler_block_by_data (GTK_OBJECT (data), context);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (data), opacity * 100);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (data), context);
 }
 
 static void
 tool_options_paint_mode_update (GtkWidget *widget,
 				gpointer   data)
 {
-  GimpContext *context;
+  LayerModeEffects paint_mode;
 
-  context = (GimpContext *) gtk_object_get_user_data (GTK_OBJECT (widget));
+  paint_mode = (LayerModeEffects) gtk_object_get_user_data (GTK_OBJECT (widget));
 
-  gimp_context_set_paint_mode (GIMP_CONTEXT (context),
-			       (LayerModeEffects) data);
+  gimp_context_set_paint_mode (GIMP_CONTEXT (data), paint_mode);
+}
+
+static void
+tool_options_paint_mode_changed (GimpContext      *context,
+				 LayerModeEffects  paint_mode,
+				 gpointer          data)
+{
+  paint_mode_menu_set_paint_mode (GTK_OPTION_MENU (data), paint_mode);
 }
 
 /*  tool options functions  ***************************************************/
@@ -411,7 +428,6 @@ paint_options_init (PaintOptions         *options,
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *scale;
-  GtkWidget *menu;
   GtkWidget *separator;
 
   GimpContext *tool_context = tool_info[tool_type].tool_context;
@@ -479,6 +495,10 @@ paint_options_init (PaintOptions         *options,
 			     _("Opacity:"), 1.0, 1.0,
 			     scale, 1, FALSE);
 
+  gtk_signal_connect (GTK_OBJECT (tool_context), "opacity_changed",
+		      GTK_SIGNAL_FUNC (tool_options_opacity_changed),
+		      options->opacity_w);
+
   /*  the paint mode menu  */
   switch (tool_type)
     {
@@ -492,19 +512,20 @@ paint_options_init (PaintOptions         *options,
     case XINPUT_AIRBRUSH:
       gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
 
-      options->paint_mode_w = gtk_option_menu_new ();
-      menu =
-	paint_mode_menu_new (tool_options_paint_mode_update, tool_context);
-      gtk_option_menu_set_menu (GTK_OPTION_MENU (options->paint_mode_w), menu);
-      gtk_option_menu_set_history (GTK_OPTION_MENU (options->paint_mode_w),
-				   gimp_context_get_paint_mode (tool_context));
+      options->paint_mode_w =
+	paint_mode_menu_new (tool_options_paint_mode_update, tool_context,
+			     gimp_context_get_paint_mode (tool_context));
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Mode:"), 1.0, 0.5,
 				 options->paint_mode_w, 1, TRUE);
 
+      gtk_signal_connect (GTK_OBJECT (tool_context), "paint_mode_changed",
+			  GTK_SIGNAL_FUNC (tool_options_paint_mode_changed),
+			  options->paint_mode_w);
+
       /* eek */
       gtk_object_set_data (GTK_OBJECT (options->paint_mode_w), "tool_context",
-			   tool_info[tool_type].tool_context);
+			   tool_context);
       break;
     case CONVOLVE:
     case ERASER:
@@ -862,39 +883,62 @@ paint_options_set_global (gboolean global)
 
 GtkWidget *
 paint_mode_menu_new (MenuItemCallback callback,
-		     gpointer         user_data)
+		     gpointer         data,
+		     LayerModeEffects initial)
 {
   GtkWidget *menu;
-  gint i;
 
-  static MenuItem option_items[] =
-  {
-    { N_("Normal"), 0, 0, NULL, (gpointer) NORMAL_MODE, NULL, NULL },
-    { N_("Dissolve"), 0, 0, NULL, (gpointer) DISSOLVE_MODE, NULL, NULL },
-    { N_("Behind"), 0, 0, NULL, (gpointer) BEHIND_MODE, NULL, NULL },
-    { N_("Multiply (Burn)"), 0, 0, NULL, (gpointer) MULTIPLY_MODE, NULL, NULL },
-    { N_("Divide (Dodge)"), 0, 0, NULL, (gpointer) DIVIDE_MODE, NULL, NULL },
-    { N_("Screen"), 0, 0, NULL, (gpointer) SCREEN_MODE, NULL, NULL },
-    { N_("Overlay"), 0, 0, NULL, (gpointer) OVERLAY_MODE, NULL, NULL },
-    { N_("Difference"), 0, 0, NULL, (gpointer) DIFFERENCE_MODE, NULL, NULL },
-    { N_("Addition"), 0, 0, NULL, (gpointer) ADDITION_MODE, NULL, NULL },
-    { N_("Subtract"), 0, 0, NULL, (gpointer) SUBTRACT_MODE, NULL, NULL },
-    { N_("Darken Only"), 0, 0, NULL, (gpointer) DARKEN_ONLY_MODE, NULL, NULL },
-    { N_("Lighten Only"), 0, 0, NULL, (gpointer) LIGHTEN_ONLY_MODE, NULL, NULL },
-    { N_("Hue"), 0, 0, NULL, (gpointer) HUE_MODE, NULL, NULL },
-    { N_("Saturation"), 0, 0, NULL, (gpointer) SATURATION_MODE, NULL, NULL },
-    { N_("Color"), 0, 0, NULL, (gpointer) COLOR_MODE, NULL, NULL },
-    { N_("Value"), 0, 0, NULL, (gpointer) VALUE_MODE, NULL, NULL },
-    { NULL, 0, 0, NULL, NULL, NULL, NULL }
-  };
+  menu = gimp_option_menu_new2
+    (FALSE, callback, data, (gpointer) initial,
 
-  for (i = 0; i <= VALUE_MODE; i++)
-    option_items[i].callback = callback;
+     _("Normal"),          (gpointer) NORMAL_MODE, NULL,
+     _("Dissolve"),        (gpointer) DISSOLVE_MODE, NULL,
+     _("Behind"),          (gpointer) BEHIND_MODE, NULL,
+     _("Multiply (Burn)"), (gpointer) MULTIPLY_MODE, NULL,
+     _("Divide (Dodge)"),  (gpointer) DIVIDE_MODE, NULL,
+     _("Screen"),          (gpointer) SCREEN_MODE, NULL,
+     _("Overlay"),         (gpointer) OVERLAY_MODE, NULL,
+     _("Difference"),      (gpointer) DIFFERENCE_MODE, NULL,
+     _("Addition"),        (gpointer) ADDITION_MODE, NULL,
+     _("Subtract"),        (gpointer) SUBTRACT_MODE, NULL,
+     _("Darken Only"),     (gpointer) DARKEN_ONLY_MODE, NULL,
+     _("Lighten Only"),    (gpointer) LIGHTEN_ONLY_MODE, NULL,
+     _("Hue"),             (gpointer) HUE_MODE, NULL,
+     _("Saturation"),      (gpointer) SATURATION_MODE, NULL,
+     _("Color"),           (gpointer) COLOR_MODE, NULL,
+     _("Value"),           (gpointer) VALUE_MODE, NULL,
 
-  menu = build_menu (option_items, NULL);
-
-  for (i = 0; i <= VALUE_MODE; i++)
-    gtk_object_set_user_data (GTK_OBJECT (option_items[i].widget), user_data);
+     NULL);
 
   return menu;
+}
+
+void
+paint_mode_menu_set_paint_mode (GtkOptionMenu    *paint_mode_menu,
+				LayerModeEffects  paint_mode)
+{
+  gint history = 0;
+
+  switch (paint_mode)
+    {
+    case NORMAL_MODE:       history =  0; break;
+    case DISSOLVE_MODE:     history =  1; break;
+    case BEHIND_MODE:       history =  2; break;
+    case MULTIPLY_MODE:     history =  3; break;
+    case DIVIDE_MODE:       history =  4; break;
+    case SCREEN_MODE:       history =  5; break;
+    case OVERLAY_MODE:      history =  6; break;
+    case DIFFERENCE_MODE:   history =  7; break;
+    case ADDITION_MODE:     history =  8; break;
+    case SUBTRACT_MODE:     history =  9; break;
+    case DARKEN_ONLY_MODE:  history = 10; break;
+    case LIGHTEN_ONLY_MODE: history = 11; break;
+    case HUE_MODE:          history = 12; break;
+    case SATURATION_MODE:   history = 13; break;
+    case COLOR_MODE:        history = 14; break;
+    case VALUE_MODE:        history = 15; break;
+    default: break;
+    }
+
+  gtk_option_menu_set_history (paint_mode_menu, history);
 }
