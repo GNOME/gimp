@@ -248,7 +248,7 @@ image, after filling it with gimp_drawable_fill $fill_type (default
 BG_IMAGE_FILL). If $alpha is non-zero (default 1), the new layer has
 alpha.
 
-=item C<gimp_image_set_visible @layers>, C<gimp_image_set_invisible @layers>
+=item C<gimp_image_set_visible $image,@layers>, C<gimp_image_set_invisible $image,@layers>
 
 mark the given layers visible (invisible) and all others invisible (visible).
 
