@@ -55,10 +55,6 @@ all other GIMP Library headers.
 
 </para>
 
-<!-- # Unused Parameters # -->
-@id: 
-@data: 
-
 
 <!-- ##### MACRO gimp_get_data_size ##### -->
 <para>
@@ -66,19 +62,12 @@ all other GIMP Library headers.
 </para>
 
 @Returns: 
-<!-- # Unused Parameters # -->
-@id: 
 
 
 <!-- ##### MACRO gimp_set_data ##### -->
 <para>
 
 </para>
-
-<!-- # Unused Parameters # -->
-@id: 
-@data: 
-@length: 
 
 
 <!-- ##### USER_FUNCTION GimpInitProc ##### -->
@@ -199,9 +188,6 @@ all other GIMP Library headers.
 @n_return_vals: 
 @params: 
 @return_vals: 
-<!-- # Unused Parameters # -->
-@nparams: 
-@nreturn_vals: 
 
 
 <!-- ##### FUNCTION gimp_install_temp_proc ##### -->
@@ -223,9 +209,6 @@ all other GIMP Library headers.
 @params: 
 @return_vals: 
 @run_proc: 
-<!-- # Unused Parameters # -->
-@nparams: 
-@nreturn_vals: 
 
 
 <!-- ##### FUNCTION gimp_uninstall_temp_proc ##### -->
@@ -242,7 +225,7 @@ all other GIMP Library headers.
 </para>
 
 @name: 
-@nreturn_vals: 
+@n_return_vals: 
 @Varargs: 
 @Returns: 
 
@@ -257,9 +240,6 @@ all other GIMP Library headers.
 @n_params: 
 @params: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@nreturn_vals: 
-@nparams: 
 
 
 <!-- ##### FUNCTION gimp_destroy_params ##### -->
@@ -269,8 +249,6 @@ all other GIMP Library headers.
 
 @params: 
 @n_params: 
-<!-- # Unused Parameters # -->
-@nparams: 
 
 
 <!-- ##### FUNCTION gimp_destroy_paramdefs ##### -->
@@ -280,8 +258,6 @@ all other GIMP Library headers.
 
 @paramdefs: 
 @n_params: 
-<!-- # Unused Parameters # -->
-@nparams: 
 
 
 <!-- ##### FUNCTION gimp_tile_width ##### -->

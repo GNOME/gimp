@@ -265,7 +265,7 @@ void          gimp_extension_process   (guint            timeout);
  *  values are returned in the 'GimpParam*' array.
  */
 GimpParam   * gimp_run_procedure       (const gchar     *name,
-                                        gint            *nreturn_vals,
+                                        gint            *n_return_vals,
                                         ...);
 
 /* Run a procedure in the procedure database. The parameters are

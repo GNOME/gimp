@@ -635,10 +635,11 @@ gimp_uninstall_temp_proc (const gchar *name)
  * gimp_run_procedure:
  * @name:          the name of the procedure to run
  * @n_return_vals: return location for the number of return values
+ * @Varargs:       list of procedure parameters  
  *
  * This function calls a GIMP procedure and returns its return values.
  *
- * The procedues parameters are given by a va_list in the format
+ * The procedure's parameters are given by a va_list in the format
  * (type, value, type, value) and must be terminated by #GIMP_PDB_END.
  *
  * This function converts the va_list of parameters into an array

@@ -1,3 +1,7 @@
+2003-06-19  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimp.[ch]: documentation fixes.
+
 2003-06-19  Michael Natterer  <mitch@gimp.org>
 
 	Changed the semantics of GIMP_EXTENSION and (to some extent)
