@@ -56,8 +56,8 @@ recognizes. These are:
      is intended primarily as a convenience for developers.
 
   4. --enable-gimpdir=DIR. This option changes the default directory
-     the gimp uses to search for its configuration files from ~/.gimp (the
-     directory .gimp in the users home directory) to DIR.
+     the gimp uses to search for its configuration files from ~/.gimp-1.2 
+     (the directory .gimp-1.2 in the users home directory) to DIR.
   
   5. --enable-perl and --disable-perl. The perl extension does not build
      on all systems. If you experience problems use --disable-perl
