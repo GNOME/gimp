@@ -1,3 +1,11 @@
+2002-08-05  Dave Neary  <bolsh@gimp.org>
+
+        * app/tools/gimpmagnifytool.[ch]: Require a minimum
+        movement in the X and Y direction before we zoom in
+        on/out to the dragged square. Limit rather arbitrarily
+        set to 5. This fixes bug #86939, reported by
+        philipj@telia.com.
+
 2002-08-04  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gauss_iir.c

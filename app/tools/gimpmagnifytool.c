@@ -311,6 +311,7 @@ gimp_magnify_tool_motion (GimpTool        *tool,
 			  GimpDisplay     *gdisp)
 {
   GimpMagnifyTool *magnify;
+  gint w, h;
 
   if (!gimp_tool_control_is_active (tool->control))
     return;
@@ -319,9 +320,16 @@ gimp_magnify_tool_motion (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  magnify->w = (coords->x - magnify->x);
-  magnify->h = (coords->y - magnify->y);
+  w = (coords->x - magnify->x);
+  h = (coords->y - magnify->y);
 
+  if((THRESHOLD <= (w > 0 ? w : -w)) && 
+      (THRESHOLD <= (h > 0 ? h : -h)))
+  {
+    magnify->w = w;
+    magnify->h = h;
+  }
+  
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
