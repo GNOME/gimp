@@ -70,6 +70,9 @@ gimp_fonts_load (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_FONT_LIST (gimp->fonts));
 
+  if (gimp->no_fonts)
+    return;
+
   gimp_set_busy (gimp);
 
   gimp_container_freeze (GIMP_CONTAINER (gimp->fonts));
@@ -142,14 +145,15 @@ gimp_fonts_add_directories (FcConfig    *config,
 {
   GList *path;
   GList *list;
- 
+
   g_return_if_fail (config != NULL);
   g_return_if_fail (path_str != NULL);
 
   path = gimp_path_parse (path_str, 256, TRUE, NULL);
- 
+
   for (list = path; list; list = list->next)
     FcConfigAppFontAddDir (config, (gchar *) list->data);
- 
+
   gimp_path_free (path);
 }
+\

@@ -1,11 +1,11 @@
-.TH GIMP 1 "23 October 2003" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMP 1 "5 November 2003" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
 gimp - an image manipulation and paint program.
 .SH SYNOPSIS
 .B gimp
 [\-h] [\-\-help] [-v] [\-\-version] [\-\-verbose] [\-\-no\-shm]
 [\-\-no\-mmx] [\-\-display \fIdisplay\fP] [\-d] [\-\-no\-data]
-[\-i] [\-\-no\-interface] [\-s] [\-\-no\-splash]
+[\-f] [\-\-no\-fonts] [\-i] [\-\-no\-interface] [\-s] [\-\-no\-splash]
 [\-S] [\-\-no\-splash\-image] [\-r] [\-\-restore\-session]
 [\-g] [\-\-gimprc \fI<gimprc>\fP] [\-\-system\-gimprc \fI<gimprc>\fP]
 [\-\-dump\-gimprc\fP] [\-\-console\-messages] [\-\-debug\-handlers]
@@ -56,6 +56,10 @@ Do not use MMX routines even if GIMP detects the availability of MMX.
 .B \-d, \-\-no\-data
 Do not load patterns, gradients, palettes, or brushes. Often useful
 in non-interactive situations where startup time is to be minimized.
+.TP 8
+.B \-f, \-\-no\-fonts
+Do not load any fonts. No text functionality will be available if this
+option is used.
 .TP 8
 .B \-i, \-\-no-interface
 Run without a user interface.
@@ -122,26 +126,26 @@ first and the user gimprc can override the system settings.
 @sysconfdir@/gimprc_user is the default gimprc
 placed in users' home directories the first time GIMP is run.
 
-\fB$HOME\fP/.gimp-1.3/devicerc - holds settings for input devices
+\fB$HOME\fP/@gimpdir@/devicerc - holds settings for input devices
 together with the tool, colors, brush, pattern and gradient 
 associated to that device.
 
 \fB$HOME\fP/@gimpdir@/documents - lists all images that have been 
 opened or saved using GIMP.
 
-\fB$HOME\fP/@gimpdir@/gtkrc - users set of gimp-specific GTK 
-config settings. Options such as widget color and fonts sizes 
-can be set here.
+\fB$HOME\fP/@gimpdir@/gtkrc - users set of gimp-specific GTK config
+settings. Options such as widget color and fonts sizes can be set
+here.
 
-@gimpsysconfdir@/gtkrc - sytem wide default set of gimp-specific 
-GTK config settings.
+@gimpsysconfdir@/gtkrc - sytem wide default set of gimp-specific GTK+
+config settings.
 
 \fB$HOME\fP/@gimpdir@/menurc - user's set of keybindings.
 
 @gimpsysconfdir@/menurc - system wide set of keybindings.
 
-\fB$HOME\fP/@gimpdir@/parasiterc - Description of all available 
-GIMP parasites. This is file is recreated everytime GIMP starts up.
+\fB$HOME\fP/@gimpdir@/parasiterc - Description of all available GIMP
+parasites. This is file is recreated everytime GIMP starts up.
 
 \fB$HOME\fP/@gimpdir@/sessionrc - This file takes session-specific
 info (that is info, you want to keep between two gimp-sessions). You
@@ -149,16 +153,20 @@ are not supposed to edit it manually, but of course you can do. This
 file will be entirely rewritten every time you quit the GIMP. If this
 file isn't found, defaults are used.
 
+\fB$HOME\fP/@gimpdir@/templaterc - Image templates are kept in this
+file. New images can conveniently created from these templates. If
+this file isn't found, defaults are used.
+
 @gimpsysconfdir@/unitrc - default user unit database. It contains the
 unit definitions for centimeters, meters, feet, yards, typographic
 points and typographic picas and is placed in users home directories
-the first time the GIMP is ran.
+the first time the GIMP is ran. If this file isn't found, defaults are
+used.
 
-\fB$HOME\fP/@gimpdir@/unitrc - This file contains your user unit 
-database. You can modify this list with the unit editor. You are 
-not supposed to edit it manually, but of course you can do.
-This file will be entirely rewritten every time you
-quit the GIMP.
+\fB$HOME\fP/@gimpdir@/unitrc - This file contains your user unit
+database. You can modify this list with the unit editor. You are not
+supposed to edit it manually, but of course you can do.  This file
+will be entirely rewritten every time you quit the GIMP.
 
 \fB$HOME\fP/@gimpdir@/plug-ins - location of user installed plugins.
 
@@ -174,11 +182,7 @@ temporary space.
 @gimpdatadir@/brushes - system wide brush files.
 
 \fB$HOME\fP/@gimpdir@/brushes - user created and installed brush
-files. These files are in the .gbr (gimp brush) format.
-
-\fB$HOME\fP/@gimpdir@/generated_brushes - Brushes generated and saved
-from the brush dialog. These files are in the .vbr (gimp vector brush) 
-format.
+files. These files are in the .gbr, .gih or .vbr file formats.
 
 \fB$HOME\fP/@gimpdir@/curves - Curve profiles and presets as saved from 
 the Curves tool.
@@ -189,21 +193,17 @@ and papers are stored here.
 \fB$HOME\fP/@gimpdir@/levels - Level profiles and presets as saved from 
 the Levels tool.
 
-@gimpdatadir@/palettes - the system wide palette files. The 
-files are copied to the user palettes directory when GIMP is first ran
-to allow the user to modify the palettes. This directory is not searched 
-for palettes by default.
+@gimpdatadir@/palettes - the system wide palette files.
 
-\fB$HOME\fP/@gimpdir@/palettes - copies of the system palette files as
-well as user created and modified palette files.
+\fB$HOME\fP/@gimpdir@/palettes - user created and modified palette
+files. This files are in the .gpl format.
 
 @gimpdatadir@/patterns - basic set of patterns for use in GIMP.
 
 \fB$HOME\fP/@gimpdir@/patterns - user created and installed gimp
 pattern files. This files are in the .pat format.
 
-@gimpdatadir@/gradients - standard system wide set of
-gradient files.
+@gimpdatadir@/gradients - standard system wide set of gradient files.
 
 \fB$HOME\fP/@gimpdir@/gradients - user created and installed gradient
 files.
@@ -216,21 +216,21 @@ used in Script-Fu and other scripting extensions.
 @gimpdatadir@/gflares - system wide directory used by the gflare
 plug-in.
 
-\fB$HOME\fP/@gimpdir@/gflares - user created and installed gflare files.
+\fB$HOME\fP/@gimpdir@/gflares - user created and installed gflare
+files.
 
 @gimpdatadir@/gfig - system wide directory used by the gfig plug-in.
 
 \fB$HOME\fP/@gimpdir@/gfig - user created and installed gfig files.
 
-@gimpdatadir@/gimp_splash.ppm - graphic file used for 
-the GIMP splash screen.
+@gimpdatadir@/images/gimp_splash.png - image used for the GIMP splash
+screen.
 
-@gimpdatadir@/gimp_logo.ppm - graphic file used in the GIMP about
+@gimpdatadir@/images/gimp_logo.png - image used in the GIMP about
 dialog.
 
-@gimpdatadir@/tips/gimp_tips.txt - list of tips displayed in the "Tip
-of the Day" dialog box. At the same place you will find files with
-tips in other languages.
+@gimpdatadir@/tips/gimp-tips.xml - tips as displayed in the "Tip of
+the Day" dialog box.
 
 .SH SUGGESTIONS AND BUG REPORTS
 Any bugs found should be reported to the online bug-tracking system

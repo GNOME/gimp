@@ -710,6 +710,7 @@ Gimp *
 gimp_new (const gchar       *name,
           gboolean           be_verbose,
           gboolean           no_data,
+          gboolean           no_fonts,
           gboolean           no_interface,
           gboolean           use_shm,
           gboolean           console_messages,
@@ -723,6 +724,7 @@ gimp_new (const gchar       *name,
 
   gimp->be_verbose       = be_verbose       ? TRUE : FALSE;
   gimp->no_data          = no_data          ? TRUE : FALSE;
+  gimp->no_fonts         = no_fonts         ? TRUE : FALSE;
   gimp->no_interface     = no_interface     ? TRUE : FALSE;
   gimp->use_shm          = use_shm          ? TRUE : FALSE;
   gimp->console_messages = console_messages ? TRUE : FALSE;

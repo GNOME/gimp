@@ -97,6 +97,7 @@ main (int    argc,
   gboolean            show_help               = FALSE;
   gboolean            no_interface            = FALSE;
   gboolean            no_data                 = FALSE;
+  gboolean            no_fonts                = FALSE;
   gboolean            no_splash               = FALSE;
   gboolean            no_splash_image         = FALSE;
   gboolean            be_verbose              = FALSE;
@@ -277,6 +278,12 @@ main (int    argc,
 	  no_data = TRUE;
  	  argv[i] = NULL;
 	}
+      else if ((strcmp (argv[i], "--no-fonts") == 0) ||
+	       (strcmp (argv[i], "-f") == 0))
+	{
+	  no_fonts = TRUE;
+ 	  argv[i] = NULL;
+	}
       else if ((strcmp (argv[i], "--no-splash") == 0) ||
 	       (strcmp (argv[i], "-s") == 0))
 	{
@@ -424,6 +431,7 @@ main (int    argc,
             (const gchar **) batch_cmds,
             no_interface,
             no_data,
+            no_fonts,
             no_splash,
             no_splash_image,
             be_verbose,
@@ -458,6 +466,7 @@ gimp_show_help (const gchar *progname)
   g_print (_("  --no-shm                 Do not use shared memory between GIMP and plugins.\n"));
   g_print (_("  --no-mmx                 Do not use MMX routines.\n"));
   g_print (_("  -d, --no-data            Do not load brushes, gradients, palettes, patterns.\n"));
+  g_print (_("  -f, --no-fonts           Do not load any fonts.\n"));
   g_print (_("  -i, --no-interface       Run without a user interface.\n"));
   g_print (_("  --display <display>      Use the designated X display.\n"));
   g_print (_("  -s, --no-splash          Do not show the startup window.\n"));

@@ -275,8 +275,6 @@ app/widgets/gimpdockable.c
 app/widgets/gimpdocumentview.c
 app/widgets/gimpdrawabletreeview.c
 app/widgets/gimperrorconsole.c
-app/widgets/gimpfontselection-dialog.c
-app/widgets/gimpfontselection.c
 app/widgets/gimpfontview.c
 app/widgets/gimpgradienteditor.c
 app/widgets/gimpgrideditor.c

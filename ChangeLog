@@ -1,5 +1,20 @@
 2003-11-05  Sven Neumann  <sven@gimp.org>
 
+	* app/main.c: added new command-line option --no-fonts. Might be
+	useful to reduce startup time or if there are problems with the
+	font configuration.
+
+	* app/app_procs.[ch]
+	* app/main.c
+	* app/core/gimp.[ch]
+	* app/text/gimp-fonts.c: don't load any fonts when gimp is started
+	with --no-fonts.
+
+	* docs/gimp-1.3.1.in: documented the new command-line option and
+	updated outdated information.
+
+2003-11-05  Sven Neumann  <sven@gimp.org>
+
 	* app/app_procs.c: register a log handler for the Gimp-Text domain.
 
 	* app/text/gimpfont.c: code cosmetics.

@@ -79,6 +79,7 @@ struct _Gimp
 
   gboolean                be_verbose;
   gboolean                no_data;
+  gboolean                no_fonts;
   gboolean                no_interface;
   gboolean                use_shm;
   GimpMessageHandlerType  message_handler;
@@ -202,6 +203,7 @@ GType         gimp_get_type             (void) G_GNUC_CONST;
 Gimp        * gimp_new                  (const gchar        *name,
                                          gboolean            be_verbose,
                                          gboolean            no_data,
+                                         gboolean            no_fonts,
                                          gboolean            no_interface,
                                          gboolean            use_shm,
                                          gboolean            console_messages,
