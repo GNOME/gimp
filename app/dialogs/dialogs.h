@@ -17,7 +17,7 @@
  */
 
 #ifndef __DIALOGS_H__
-#define __DISLOGS_H__
+#define __DIALOGS_H__
 
 
 extern GimpDialogFactory *global_dialog_factory;

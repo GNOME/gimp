@@ -1,3 +1,7 @@
+2004-10-09  DindinX  <dindinx@gimp.org>
+
+	* app/dialogs/dialogs.h: fixed a typo in the double-inclusion guard.
+
 2004-10-09  Sven Neumann  <sven@gimp.org>
 
 	* AUTHORS
@@ -628,7 +632,7 @@
 
 2004-10-03  DindinX  <dindinx@gimp.org>
 
-	* plug-ins/common/destripe.c: ported to GimpAspectPreview.
+	* plug-ins/common/destripe.c: ported to GimpDrawablePreview.
 
 2004-10-03  DindinX  <dindinx@gimp.org>
 
