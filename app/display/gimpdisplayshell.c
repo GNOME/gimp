@@ -50,11 +50,11 @@
 
 
 /*  local functions  */
-static void   gdisplay_destroy (GtkWidget *widget,
-				GDisplay  *display);
-static gint   gdisplay_delete  (GtkWidget *widget,
-				GdkEvent  *event,
-				GDisplay  *display);
+static void     gdisplay_destroy (GtkWidget *widget,
+                                  GDisplay  *display);
+static gboolean gdisplay_delete  (GtkWidget *widget,
+                                  GdkEvent  *event,
+                                  GDisplay  *display);
 
 
 static GtkTargetEntry display_target_table[] =

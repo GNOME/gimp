@@ -148,7 +148,7 @@ gdisplay_hscrollbar_update (GtkAdjustment *adjustment,
   scroll_display (gdisp, (adjustment->value - gdisp->offset_x), 0);
 }
 
-gint
+gboolean
 gdisplay_shell_events (GtkWidget *widget,
 		       GdkEvent  *event,
 		       GDisplay  *gdisp)
@@ -169,7 +169,7 @@ gdisplay_shell_events (GtkWidget *widget,
   return FALSE;
 }
 
-gint
+gboolean
 gdisplay_canvas_events (GtkWidget *canvas,
 			GdkEvent  *event,
 			GDisplay  *gdisp)
@@ -659,7 +659,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
   return return_val;
 }
 
-gint
+gboolean
 gdisplay_hruler_button_press (GtkWidget      *widget,
 			      GdkEventButton *event,
 			      gpointer        data)
@@ -697,7 +697,7 @@ gdisplay_hruler_button_press (GtkWidget      *widget,
   return FALSE;
 }
 
-gint
+gboolean
 gdisplay_vruler_button_press (GtkWidget      *widget,
 			      GdkEventButton *event,
 			      gpointer        data)
@@ -759,7 +759,7 @@ gdisplay_origin_menu_position (GtkMenu  *menu,
     *y -= (GTK_WIDGET (menu)->allocation.height);
 }
 
-gint
+gboolean
 gdisplay_origin_button_press (GtkWidget      *widget,
 			      GdkEventButton *event,
 			      gpointer        data)

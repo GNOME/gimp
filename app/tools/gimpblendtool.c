@@ -1566,7 +1566,7 @@ gradient_fill_region (GimpImage        *gimage,
   PutPixelData     ppd;
   gint             x, y;
   gint             endx, endy;
-  gpointer        *pr;
+  gpointer         pr;
   guchar          *data;
   GimpRGB          color;
   GimpContext     *context;

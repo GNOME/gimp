@@ -1,3 +1,13 @@
+2001-08-19  Sven Neumann  <sven@gimp.org>
+
+	* app/devices.h
+	* app/disp_callbacks.c
+	* app/interface.c: applied a patch from <David.Odin@bigfoot.com> that
+	changes some function prototype to return gboolean instead of gint.
+	
+	* app/tools/gimpblendtool.c: pixel_regions_register() and 
+	pixel_regions_process() return a gpointer, not (gpointer *).
+
 2001-08-17  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: added app/display/ and app/plug-in/. Empty for

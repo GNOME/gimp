@@ -48,7 +48,7 @@ GtkWidget * device_status_create (void);
 /*  Returns TRUE, and makes necessary global changes
  *  if event is not for current_device
  */
-gint   devices_check_change (GdkEvent     *event);
+gboolean devices_check_change (GdkEvent     *event);
 
 /*  Loads stored device settings (tool, cursor, ...)  */
 void   select_device        (GdkDevice    *device);
