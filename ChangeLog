@@ -1,5 +1,32 @@
 2003-09-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpscanconvert.[ch]: removed "width", "height" and
+	"antialias" from the GimpScanConvert struct and from
+	gimp_scan_convert_new(). Removed gimp_scan_convert_to_channel().
+	Added "gboolean antialias" to gimp_scan_convert_render().
+	Some general cleanup.
+
+	* app/core/gimpdrawable-stroke.c
+	* app/core/gimpimage-mask-select.c
+	* app/tools/gimpiscissorstool.c: changed accordingly.
+
+	* app/core/gimpdrawable-stroke.c: renamed
+	gimp_drawable_stroke_scanconvert_stroke() to
+	gimp_drawable_stroke_scan_convert() and removed the "gboolean
+	use_mask_bounds" parameter since we can't decide if it's the
+	selection's boundary which is stroked. Instead use
+	gimp_channel_is_empty() on the selection which will return FALSE
+	while the selection is being stroked.
+
+	* app/paint/gimppaintcore-stroke.c: cleanup.
+
+	(gimp_paint_core_stroke_boundary): don't use "gint i" twice.
+
+	(gimp_paint_core_stroke_vectors): no need to manually close a
+	closed stroke.
+
+2003-09-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpchannel.c (gimp_channel_stroke): pass the channel's
 	offsets to gimp_paint_core_stroke_boundary().
 

@@ -98,7 +98,7 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
   gboolean    initialized = FALSE;
   gint        n_coords;
   gint        seg;
-  gint        i;
+  gint        s;
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -133,10 +133,9 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
 
   n_coords++;
 
-  for (i = 0; i < n_stroke_segs; i++)
+  for (s = 0; s < n_stroke_segs; s++)
     {
       GimpBrush *current_brush;
-      gint       i;
 
       while (stroke_segs[seg].x1 != -1 ||
              stroke_segs[seg].x2 != -1 ||
@@ -162,9 +161,10 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
       n_coords++;
 
       if (initialized ||
-          gimp_paint_core_start (core, drawable, paint_options,
-                                 &coords[0]))
+          gimp_paint_core_start (core, drawable, paint_options, &coords[0]))
         {
+          gint i;
+
           initialized = TRUE;
 
           core->start_coords = coords[0];
@@ -254,8 +254,7 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
 
           if (initialized ||
               gimp_paint_core_start (core, drawable, paint_options,
-                                     &g_array_index (coords,
-                                                     GimpCoords, 0)))
+                                     &g_array_index (coords, GimpCoords, 0)))
             {
               initialized = TRUE;
 
@@ -272,13 +271,6 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
               for (i = 1; i < coords->len; i++)
                 {
                   core->cur_coords = g_array_index (coords, GimpCoords, i);
-
-                  gimp_paint_core_interpolate (core, drawable, paint_options);
-                }
-
-              if (closed)
-                {
-                  core->cur_coords = g_array_index (coords, GimpCoords, 0);
 
                   gimp_paint_core_interpolate (core, drawable, paint_options);
                 }

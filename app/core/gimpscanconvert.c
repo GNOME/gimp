@@ -31,19 +31,12 @@
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
 
-#include "gimpchannel.h"
-#include "gimpimage.h"
 #include "gimpscanconvert.h"
 
 
 struct _GimpScanConvert
 {
-  guint        width;
-  guint        height;
-
   gdouble      ratio_xy;
-  
-  gboolean     antialias;   /* do we want antialiasing? */
 
   /* stuff necessary for the _add_polygons API...  :-/  */
   gboolean     got_first;
@@ -59,27 +52,23 @@ struct _GimpScanConvert
                                (extension no longer possible)          */
 };
 
-/* Private functions */
-static void gimp_scan_convert_finish           (GimpScanConvert *sc);
-static void gimp_scan_convert_close_add_points (GimpScanConvert *sc);
+
+/* private functions */
+
+static void   gimp_scan_convert_finish           (GimpScanConvert *sc);
+static void   gimp_scan_convert_close_add_points (GimpScanConvert *sc);
+
 
 /*  public functions  */
+
 GimpScanConvert *
-gimp_scan_convert_new (guint    width,
-                       guint    height,
-                       gboolean antialias)
+gimp_scan_convert_new (void)
 {
   GimpScanConvert *sc;
 
-  g_return_val_if_fail (width > 0, NULL);
-  g_return_val_if_fail (height > 0, NULL);
-
   sc = g_new0 (GimpScanConvert, 1);
 
-  sc->width     = width;
-  sc->height    = height;
   sc->ratio_xy  = 1.0;
-  sc->antialias = antialias;
 
   return sc;
 }
@@ -249,7 +238,7 @@ gimp_scan_convert_add_polyline (GimpScanConvert *sc,
 
 
 /* Stroke the content of a GimpScanConvert. The next
- * gimp_scan_convert_to_channel will result in the outline of the polygon
+ * gimp_scan_convert_render() will result in the outline of the polygon
  * defined with the commands above.
  *
  * You cannot add additional polygons after this command.
@@ -275,36 +264,35 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
   switch (join)
     {
     case GIMP_JOIN_MITER:
-        artjoin = ART_PATH_STROKE_JOIN_MITER;
-        break;
+      artjoin = ART_PATH_STROKE_JOIN_MITER;
+      break;
     case GIMP_JOIN_ROUND:
-        artjoin = ART_PATH_STROKE_JOIN_ROUND;
-        break;
+      artjoin = ART_PATH_STROKE_JOIN_ROUND;
+      break;
     case GIMP_JOIN_BEVEL:
-        artjoin = ART_PATH_STROKE_JOIN_BEVEL;
-        break;
+      artjoin = ART_PATH_STROKE_JOIN_BEVEL;
+      break;
     }
 
   switch (cap)
     {
     case GIMP_CAP_BUTT:
-        artcap = ART_PATH_STROKE_CAP_BUTT;
-        break;
+      artcap = ART_PATH_STROKE_CAP_BUTT;
+      break;
     case GIMP_CAP_ROUND:
-        artcap = ART_PATH_STROKE_CAP_ROUND;
-        break;
+      artcap = ART_PATH_STROKE_CAP_ROUND;
+      break;
     case GIMP_CAP_SQUARE:
-        artcap = ART_PATH_STROKE_CAP_SQUARE;
-        break;
+      artcap = ART_PATH_STROKE_CAP_SQUARE;
+      break;
     }
 
   if (sc->ratio_xy != 1.0)
     {
       gint i;
+
       for (i = 0; i < sc->num_nodes; i++)
-        {
-          sc->vpath[i].x *= sc->ratio_xy;
-        }
+        sc->vpath[i].x *= sc->ratio_xy;
     }
 
   if (dash_info)
@@ -337,9 +325,9 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
   if (sc->ratio_xy != 1.0)
     {
       ArtSVPSeg *segment;
-      ArtPoint *point;
-      gint i, j;
-      
+      ArtPoint  *point;
+      gint       i, j;
+
       for (i = 0; i < stroke->n_segs; i++)
         {
           segment = stroke->segs + i;
@@ -357,26 +345,6 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
   sc->svp = stroke;
 }
 
-/* Return a new Channel according to the polygonal shapes defined with
- * the commands above.
- *
- * You cannot add additional polygons after this command.
- */
-GimpChannel *
-gimp_scan_convert_to_channel (GimpScanConvert *sc,
-                              GimpImage       *gimage)
-{
-  GimpChannel *mask;
-
-  mask = gimp_channel_new_mask (gimage, sc->width, sc->height);
-
-  gimp_scan_convert_render (sc, gimp_drawable_data (GIMP_DRAWABLE (mask)));
-
-  mask->bounds_known = FALSE;
-
-  return mask;
-}
-
 
 /* This is a more low level version. Expects a tile manager of depth 1.
  *
@@ -384,7 +352,8 @@ gimp_scan_convert_to_channel (GimpScanConvert *sc,
  */
 void
 gimp_scan_convert_render (GimpScanConvert *sc,
-                          TileManager     *tile_manager)
+                          TileManager     *tile_manager,
+                          gboolean         antialias)
 {
   PixelRegion  maskPR;
   gpointer     pr;
@@ -410,14 +379,16 @@ gimp_scan_convert_render (GimpScanConvert *sc,
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      art_gray_svp_aa (sc->svp, x0 + maskPR.x, y0 + maskPR.y,
+      art_gray_svp_aa (sc->svp,
+                       x0 + maskPR.x,
+                       y0 + maskPR.y,
                        x0 + maskPR.x + maskPR.w,
                        y0 + maskPR.y + maskPR.h,
                        maskPR.data, maskPR.rowstride);
-      if (sc->antialias == FALSE)
+
+      if (! antialias)
         {
-          /*
-           * Ok, the user didn't want to have antialiasing, so just
+          /* Ok, the user didn't want to have antialiasing, so just
            * remove the results from lots of CPU-Power...
            */
           dest = maskPR.data;
@@ -443,8 +414,8 @@ gimp_scan_convert_render (GimpScanConvert *sc,
 static void
 gimp_scan_convert_finish (GimpScanConvert *sc)
 {
-  ArtVpath    *pert_vpath;
-  ArtSVP      *svp, *svp2;
+  ArtVpath *pert_vpath;
+  ArtSVP   *svp, *svp2;
 
   g_return_if_fail (sc->vpath != NULL);
 
@@ -469,6 +440,7 @@ gimp_scan_convert_finish (GimpScanConvert *sc)
   if (sc->have_open)
     {
       gint i;
+
       for (i = 0; i < sc->num_nodes; i++)
         if (sc->vpath[i].code == ART_MOVETO_OPEN)
           {
@@ -498,4 +470,3 @@ gimp_scan_convert_finish (GimpScanConvert *sc)
 
   sc->svp = svp;
 }
-

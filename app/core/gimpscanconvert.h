@@ -23,12 +23,9 @@
 typedef struct _GimpScanConvert GimpScanConvert;
 
 
-/* Create a new scan conversion context.  Set "antialias" to 1 for no
- * supersampling, or the amount to supersample by otherwise.
+/* Create a new scan conversion context.
  */
-GimpScanConvert * gimp_scan_convert_new        (guint            width,
-                                                guint            height,
-                                                gboolean         antialias);
+GimpScanConvert * gimp_scan_convert_new        (void);
 
 void              gimp_scan_convert_free       (GimpScanConvert *scan_converter);
 
@@ -77,20 +74,14 @@ void              gimp_scan_convert_stroke     (GimpScanConvert *sc,
                                                 gdouble          dash_offset,
                                                 GArray          *dash_info);
 
-/* Return a new Channel according to the polygonal shapes defined with
- * the commands above.
- *
- * You cannot add additional polygons after this command.
- */
-GimpChannel     * gimp_scan_convert_to_channel (GimpScanConvert *scan_converter,
-                                                GimpImage       *gimage);
-
 
 /* This is a more low level version. Expects a tile manager of depth 1.
  *
  * You cannot add additional polygons after this command.
  */
-
 void              gimp_scan_convert_render     (GimpScanConvert *scan_converter,
-                                                TileManager     *tile_manager);
+                                                TileManager     *tile_manager,
+                                                gboolean         antialias);
+
+
 #endif /* __GIMP_SCAN_CONVERT_H__ */

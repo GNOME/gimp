@@ -167,13 +167,13 @@ gimp_image_mask_select_polygon (GimpImage      *gimage,
   else
     gimp_channel_push_undo (selection, undo_desc);
 
-  scan_convert = gimp_scan_convert_new (gimage->width,
-                                        gimage->height,
-                                        antialias);
+  scan_convert = gimp_scan_convert_new ();
 
   gimp_scan_convert_add_polyline (scan_convert, n_points, points, TRUE);
 
-  mask = gimp_scan_convert_to_channel (scan_convert, gimage);
+  mask = gimp_channel_new_mask (gimage, gimage->width, gimage->height);
+  gimp_scan_convert_render (scan_convert, GIMP_DRAWABLE (mask)->tiles,
+                            antialias);
 
   gimp_scan_convert_free (scan_convert);
 
@@ -223,9 +223,7 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
   else
     gimp_channel_push_undo (selection, undo_desc);
 
-  scan_convert = gimp_scan_convert_new (gimage->width,
-                                        gimage->height,
-                                        antialias);
+  scan_convert = gimp_scan_convert_new ();
 
   for (stroke = vectors->strokes; stroke; stroke = stroke->next)
     {
@@ -257,7 +255,11 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
     }
 
   if (num_coords)
-    mask = gimp_scan_convert_to_channel (scan_convert, gimage);
+    {
+      mask = gimp_channel_new_mask (gimage, gimage->width, gimage->height);
+      gimp_scan_convert_render (scan_convert, GIMP_DRAWABLE (mask)->tiles,
+                                antialias);
+    }
 
   gimp_scan_convert_free (scan_convert);
 
@@ -282,7 +284,7 @@ gimp_image_mask_select_channel (GimpImage      *gimage,
                                 GimpChannel    *channel,
                                 gint            offset_x,
                                 gint            offset_y,
-                                GimpChannelOps  op, 
+                                GimpChannelOps  op,
                                 gboolean        feather,
                                 gdouble         feather_radius_x,
                                 gdouble         feather_radius_y)

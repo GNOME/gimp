@@ -539,9 +539,7 @@ iscissors_convert (GimpIscissorsTool *iscissors,
   gint             i;
   gint             index;
 
-  sc = gimp_scan_convert_new (gdisp->gimage->width,
-                              gdisp->gimage->height,
-                              TRUE);
+  sc = gimp_scan_convert_new ();
 
   /* go over the curves in reverse order, adding the points we have */
   list = iscissors->curves;
@@ -568,7 +566,10 @@ iscissors_convert (GimpIscissorsTool *iscissors,
   if (iscissors->mask)
     g_object_unref (iscissors->mask);
 
-  iscissors->mask = gimp_scan_convert_to_channel (sc, gdisp->gimage);
+  iscissors->mask = gimp_channel_new_mask (gdisp->gimage,
+                                           gdisp->gimage->width,
+                                           gdisp->gimage->height);
+  gimp_scan_convert_render (sc, GIMP_DRAWABLE (iscissors)->tiles, TRUE);
   gimp_scan_convert_free (sc);
 }
 

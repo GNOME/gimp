@@ -35,8 +35,8 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimp.h"
+#include "gimpchannel.h"
 #include "gimpcontext.h"
-#include "gimpdrawable.h"
 #include "gimpdrawable-stroke.h"
 #include "gimpimage.h"
 #include "gimppattern.h"
@@ -50,11 +50,12 @@
 #include "gimp-intl.h"
 
 
-static void gimp_drawable_stroke_scanconvert_stroke
-                                           (GimpDrawable     *drawable,
-                                            GimpStrokeOptions *options,
-                                            GimpScanConvert   *scan_convert,
-                                            gboolean           use_mask_bounds);
+/*  local function prototypes  */
+
+static void gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
+                                               GimpStrokeOptions *options,
+                                               GimpScanConvert   *scan_convert);
+
 
 /*  public functions  */
 
@@ -72,20 +73,19 @@ gimp_drawable_stroke_boundary (GimpDrawable      *drawable,
   GimpVector2     *points;
   gint             n_points;
   gint             seg;
-  gint             i, x1, x2, y1, y2;
+  gint             i;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
   g_return_if_fail (bound_segs != NULL);
   g_return_if_fail (n_bound_segs > 0);
 
-  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-  scan_convert = gimp_scan_convert_new (x2-x1, y2-y1, options->antialias);
-
   stroke_segs = sort_boundary (bound_segs, n_bound_segs, &n_stroke_segs);
+
   if (n_stroke_segs == 0)
     return;
+
+  scan_convert = gimp_scan_convert_new ();
 
   points = g_new0 (GimpVector2, n_bound_segs + 4);
 
@@ -132,8 +132,7 @@ gimp_drawable_stroke_boundary (GimpDrawable      *drawable,
   g_free (points);
   g_free (stroke_segs);
 
-  gimp_drawable_stroke_scanconvert_stroke (drawable, options,
-                                           scan_convert, FALSE);
+  gimp_drawable_stroke_scan_convert (drawable, options, scan_convert);
 
   gimp_scan_convert_free (scan_convert);
 }
@@ -143,18 +142,15 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
                               GimpStrokeOptions *options,
                               GimpVectors       *vectors)
 {
-  gint             num_coords = 0;
-  GimpStroke      *stroke;
   GimpScanConvert *scan_convert;
-  gint             x1, x2, y1, y2;
+  GimpStroke      *stroke;
+  gint             num_coords = 0;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
 
-  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-  scan_convert = gimp_scan_convert_new (x2-x1, y2-y1, options->antialias);
+  scan_convert = gimp_scan_convert_new ();
 
   /* For each Stroke in the vector, interpolate it, and add it to the
    * ScanConvert
@@ -189,25 +185,24 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
 
           g_free (points);
         }
+
+      if (coords)
+        g_array_free (coords, TRUE);
     }
 
-  if (num_coords == 0)
-    {
-      gimp_scan_convert_free (scan_convert);
-      return;
-    }
-
-  gimp_drawable_stroke_scanconvert_stroke (drawable, options,
-                                           scan_convert, TRUE);
+  if (num_coords > 0)
+    gimp_drawable_stroke_scan_convert (drawable, options, scan_convert);
 
   gimp_scan_convert_free (scan_convert);
 }
 
+
+/*  private functions  */
+
 static void
-gimp_drawable_stroke_scanconvert_stroke (GimpDrawable      *drawable,
-                                         GimpStrokeOptions *options,
-                                         GimpScanConvert   *scan_convert,
-                                         gboolean           use_mask_bounds)
+gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
+                                   GimpStrokeOptions *options,
+                                   GimpScanConvert   *scan_convert)
 {
   /* Stroke options */
   gdouble      width;
@@ -217,14 +212,15 @@ gimp_drawable_stroke_scanconvert_stroke (GimpDrawable      *drawable,
   gint         x1, x2, y1, y2, bytes, w, h;
   guchar       bg[1] = { 0, };
   PixelRegion  maskPR, basePR;
-  GimpImage   *gimage;
   GimpContext *context;
+  GimpImage   *gimage;
 
   context = GIMP_CONTEXT (options);
+
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /* what area do we operate on? */
-  if (use_mask_bounds)
+  if (! gimp_channel_is_empty (gimp_image_get_mask (gimage)))
     {
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
@@ -262,12 +258,12 @@ gimp_drawable_stroke_scanconvert_stroke (GimpDrawable      *drawable,
    * of the stroke.
    */
   mask = tile_manager_new (w, h, 1);
-  tile_manager_set_offsets (mask, x1+x2, y1+y2);
+  tile_manager_set_offsets (mask, x1 + x2, y1 + y2);
   pixel_region_init (&maskPR, mask, 0, 0, w, h, TRUE);
   color_region (&maskPR, bg);
 
   /* render the stroke into it */
-  gimp_scan_convert_render (scan_convert, mask);
+  gimp_scan_convert_render (scan_convert, mask, options->antialias);
 
   bytes = drawable->bytes;
   if (!gimp_drawable_has_alpha (drawable))
@@ -331,5 +327,3 @@ gimp_drawable_stroke_scanconvert_stroke (GimpDrawable      *drawable,
 
   gimp_drawable_update (drawable, x1, y1, w, h);
 }
-
-
