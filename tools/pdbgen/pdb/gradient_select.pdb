@@ -40,7 +40,7 @@ HELP
 	{ name => 'sample_size', type => '0 < int32 < 10000',
 	  desc => 'The size of the sample to return when the gradient is
 		   changed $desc',
-	  on_fail => 'G_SAMPLE' }
+	  on_fail => 'sample_size = G_SAMPLE;' }
     );
 
     @outargs = (

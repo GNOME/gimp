@@ -33,49 +33,36 @@ package Gimp::CodeGen::pdb;
 
     color  => { name => 'COLOR' , type => 'guchar *' },
 
-    display   => {
-		     name => 'DISPLAY',
-		     type => 'GDisplay *',
-		     id_func => 'gdisplay_get_ID',
-		     id_ret_func => '$var->ID',
-		     id_headers => [ qw("gdisplay.h") ]
-		 },
-    image     => {
-		     name => 'IMAGE',
-		     type => 'GimpImage *', 
-		     id_func => 'pdb_id_to_image',
-		     id_ret_func => 'pdb_image_to_id ($var)',
-		     id_headers => [ qw("procedural_db.h") ]
-		 },
-    layer     => {
-		     name => 'LAYER',
-		     type => 'GimpLayer *', 
-		     id_func => 'layer_get_ID',
-		     id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))',
-		     id_headers => [ qw("drawable.h" "layer.h") ]
-		 },
-    channel   => {
-		     name => 'CHANNEL',
-		     type => 'Channel *',
-		     id_func => 'channel_get_ID',
-		     id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))',
-		     id_headers => [ qw("drawable.h" "channel.h") ]
-		 },
-    drawable  => {
-		     name => 'DRAWABLE',
-		     type => 'GimpDrawable *',
-		     id_func => 'gimp_drawable_get_ID',
-		     id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))',
-		     id_headers => [ qw("drawable.h") ],
-		     image => 'drawable_gimage (GIMP_DRAWABLE ($var))'
-		 },
-    selection => {
-		     name => 'SELECTION',
-		     type => 'Channel *',
-		     id_func => 'channel_get_ID',
-		     id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))',
-		     id_headers => [ qw("drawable.h" "channel.h") ]
-		 },
+    display   => { name => 'DISPLAY',
+		   type => 'GDisplay *',
+		   id_func => 'gdisplay_get_ID',
+		   id_ret_func => '$var->ID',
+		   id_headers => [ qw("gdisplay.h") ] },
+    image     => { name => 'IMAGE',
+		   type => 'GimpImage *', 
+		   id_func => 'pdb_id_to_image',
+		   id_ret_func => 'pdb_image_to_id ($var)',
+		   id_headers => [ qw("procedural_db.h") ] },
+    layer     => { name => 'LAYER',
+		   type => 'GimpLayer *', 
+		   id_func => 'layer_get_ID',
+		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))',
+		   id_headers => [ qw("drawable.h" "layer.h") ] },
+    channel   => { name => 'CHANNEL',
+		   type => 'Channel *',
+		   id_func => 'channel_get_ID',
+		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))',
+		   id_headers => [ qw("drawable.h" "channel.h") ] },
+    drawable  => { name => 'DRAWABLE',
+		   type => 'GimpDrawable *',
+		   id_func => 'gimp_drawable_get_ID',
+		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))',
+		   id_headers => [ qw("drawable.h") ] },
+    selection => { name => 'SELECTION',
+		   type => 'Channel *',
+		   id_func => 'channel_get_ID',
+		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))',
+		   id_headers => [ qw("drawable.h" "channel.h") ] },
 
     boundary => { name => 'BOUNDARY', type => 'gpointer ' }, # ??? FIXME
     path     => { name => 'PATH'    , type => 'gpointer ' }, # ??? FIXME
@@ -90,12 +77,28 @@ package Gimp::CodeGen::pdb;
 
 # Split out the parts of an arg constraint
 sub arg_parse {
+    my %testmap = (
+	'<'  => '>',
+	'>'  => '<',
+	'<=' => '>=',
+	'>=' => '<='
+    );
+
     my $arg = shift;
-    if ($arg =~ /^enum (\w+)/) {
-	return ('enum', $1);
+
+    if ($arg =~ /^enum (\w+)(.*)/) {
+	my ($name, $remove) = ($1, $2);
+	my @retvals = ('enum', $name);
+
+	if ($remove && $remove =~ / \(no /) {
+	    $remove =~ s/ \(no (.*?)\)$/$1/;
+	    push @retvals, split(/,\s*/, $remove);
+	}
+
+	return @retvals;
     }
-    if ($arg =~ /^([\d\.-].*?)? *(<=|<)? *(\w+) *(<=|<)? *([\d\.-].*?)?/) {
-	return ($3, $1, $2, $5, $4);
+    elsif ($arg =~ /^([\d\.-].*?)? *(<=|<)? *(\w+) *(<=|<)? *([\d\.-].*?)?/) {
+	return ($3, $1, $2 ? $testmap{$2} : $2, $5, $4 ? $testmap{$4} : $4);
     }
 }
 

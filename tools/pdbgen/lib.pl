@@ -36,7 +36,7 @@ sub generate {
 	$type;
     }
 
-    foreach my $name (@procs) {
+    foreach $name (@procs) {
 	my $proc = $main::pdb{$name};
 	my $out = \%{$out{$proc->{group}}};
 

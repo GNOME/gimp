@@ -35,12 +35,12 @@ HELP
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable to offset', get => &std_image_arg },
+	  desc => 'The drawable to offset' },
 	{ name => 'wrap_around', type => 'boolean',
 	  desc => 'wrap image around or fill vacated regions' },
 	{ name => 'fill_type', type => 'enum GimpOffsetType',
 	  desc => 'fill vacated regions of drawable with background or
-		   transparent: $desc' },
+		   transparent: %%desc%%' },
 	{ name => 'offset_x', type => 'int32',
 	  desc => 'offset by this amount in X direction' },
 	{ name => 'offset_y', type => 'int32',
@@ -49,8 +49,12 @@ HELP
 
     %invoke = (
 	headers => [ qw(channel_ops.h) ],
+	vars => ['GimpImage *gimage'],
 	code => <<'CODE'
-offset (gimage, drawable, wrap_around, fill_type, offset_x, offset_y);
+{
+  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  offset (gimage, drawable, wrap_around, fill_type, offset_x, offset_y);
+}
 CODE
     );
 }

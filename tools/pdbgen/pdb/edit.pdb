@@ -21,8 +21,7 @@
 sub inargs {
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
-	  desc => "The drawable to @{[shift]}",
-	  get => &std_image_arg }
+	  desc => "The drawable to @{[shift]}" }
     );
 }
 
@@ -30,7 +29,13 @@ sub inargs {
 sub invoke {
     %invoke = (
 	headers => [ qw("global_edit.h") ],
-	code => "success = @{[shift]};"
+	vars => ['GimpImage *gimage'],
+	code => <<CODE
+{
+  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  success = @{[shift]};
+}
+CODE
     );
 }
 
@@ -102,7 +107,7 @@ HELP
 
     &invoke('layer != NULL');
     $cmd = "layer = edit_paste (gimage, drawable, global_buf, paste_into);\n";
-    $invoke{code} = "{\n" . ' ' x 2 . $cmd . ' ' x 2 . $invoke{code} . "\n}\n";
+    $invoke{code} =~ s/(success.*$)/"$cmd  $1"/me;
 }
 
 sub edit_clear {

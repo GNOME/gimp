@@ -64,7 +64,7 @@ HELP
     @inargs = (
 	&drawable_arg,
 	{ name => 'fill_type', type => 'enum GimpFillType',
-	  desc => 'The type of fill: $desc' }
+	  desc => 'The type of fill: %%desc%%' }
     );
 
     %invoke = (

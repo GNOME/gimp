@@ -115,14 +115,14 @@ HELP
 	&std_image_arg,
 	{ name => 'dither', type => 'boolean',
 	  desc => 'Floyd-Steinberg dithering' },
-	{ name => 'palette_type', type => 'enum GimpDitherPaletteType',
-	  desc => 'The type of palette to use: $desc' },
+	{ name => 'palette_type', type => 'enum ConvertPaletteType',
+	  desc => 'The type of palette to use: %%desc%%' },
 	{ name => 'num_cols', type => 'int32',
 	  desc => 'the number of colors to quantize to, ignored unless
-		   (palette_type == 0)' },
+		   (palette_type == MAKE_PALETTE)' },
 	{ name => 'palette', type => 'string',
 	  desc => 'The name of the custom palette to use, ignored unless
-		   (palette_type == 4)' }
+		   (palette_type == CUSTOM_PALETTE)' }
     );
 
     %invoke = (

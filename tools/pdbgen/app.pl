@@ -24,21 +24,16 @@ $destdir = "$main::destdir/app";
 *arg_ptype = \&Gimp::CodeGen::pdb::arg_ptype;
 *arg_vname = \&Gimp::CodeGen::pdb::arg_vname;
 
+*enums = \%Gimp::CodeGen::enums::enums;
+
 *write_file = \&Gimp::CodeGen::util::write_file;
 *FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
-
-%testmap = (
-    '<'  => '>',
-    '>'  => '<',
-    '<=' => '>=',
-    '>=' => '<='
-);
 
 sub declare_args {
     my $proc = shift;
     my $out = shift;
 
-    my $result = "";
+    local $result = "";
 
     foreach (@_) {
 	my @args = @{$proc->{$_}} if exists $proc->{$_};
@@ -51,22 +46,16 @@ sub declare_args {
 	    }
 
 	    unless (exists $_->{no_declare}) {
-		my $type = $arg->{type};
-		$result .= ' ' x 2 . $type . &arg_vname($_);
-		$result .= ' = NULL' if exists $_->{init} && $type =~ /\*$/;
+		$result .= ' ' x 2 . $arg->{type} . &arg_vname($_);
+		if (!exists $_->{no_init} && exists $_->{init}) {
+		    $result .= $arg->{type} =~ /\*$/ ? ' = NULL' : '0'
+		}
 		$result .= ";\n";
 
 		if (exists $arg->{id_headers}) {
 		    foreach (@{$arg->{id_headers}}) {
 			$out->{headers}->{$_}++;
 		    }
-		}
-
-		if (exists $_->{get}) {
-		    my $type = $arg_types{$_->{get}->{type}}->{type};
-		    $result .= ' ' x 2 . $type . &arg_vname($_->{get});
-		    $result .= ' = NULL' if $type =~ /\*$/;
-		    $result .= ";\n";
 		}
 	    }
 	}
@@ -88,17 +77,28 @@ sub make_args {
 	    $result .= "\nstatic ProcArg $proc->{name}_${_}[] =";
 	    $result .= "\n{\n";
 
-	    foreach my $arg (@{$proc->{$_}}) {
-		my ($type) = &arg_parse($arg->{type});
-		local ($desc) = "";
-		
-		$desc = 'TRUE or FALSE' if $type eq 'boolean';
+	    foreach $arg (@{$proc->{$_}}) {
+		my ($type, $name, @remove) = &arg_parse($arg->{type});
+		my $desc = $arg->{desc};
+		my $info = $arg->{type};
+
+		for ($type) {
+		    /array/     && do { 				 last };
+		    /boolean/   && do { $info = 'TRUE or FALSE';	 last };
+		    /int|float/ && do { $info =~ s/$type/$arg->{name}/e; last };
+		    /enum/      && do { $info = $enums{$name}->{info};
+					foreach (@remove) {
+					    $info =~ s/$_ \(.*?\)(, )?//
+					}				 last };
+		}
+
+		$desc =~ s/%%desc%%/$info/eg;
 
 		$result .= <<CODE;
   {
     PDB_$arg_types{$type}->{name},
     "$arg->{name}",
-    "@{[ eval qq/"$arg->{desc}"/ ]}"
+    "$desc"
   },
 CODE
 	    }
@@ -125,61 +125,81 @@ sub marshal_inargs {
 	my $arg = $arg_types{$pdbtype};
 	my $type = &arg_ptype($arg);
 	my $var = &arg_vname($_);
-
+	
 	if (exists $arg->{id_func}) {
+	    my $test = exists $_->{on_success} ? '!=' : '==';
+
 	    $result .= <<CODE;
-  if (($var = $arg->{id_func} (args[$argc].value.pdb_$type)) == NULL)
-    success = FALSE;
+  if (($var = $arg->{id_func} (args[$argc].value.pdb_$type)) $test NULL)
 CODE
 
-	    $result .= <<CODE if exists $_->{get};
+	    $result .= <<CODE if exists $_->{on_success};
+    $_->{on_success}
   else
-    @{[ &arg_vname($_->{get}) ]} = @{[ eval qq/"$arg->{$_->{get}->{type}}"/ ]};
 CODE
+	    $result .= ' ' x 4 . "success = FALSE;\n";
 
 	    $success = 1;
 	}
 	else {
-	    if ($pdbtype eq 'enum') {
-		# FIXME: implement this
+	    my $code = ' ' x 2 . "$var =";
+
+	    my $cast = "";
+	    if ($type eq 'pointer' || $arg->{type} =~ /int(16|8)$/) {
+		$cast = " ($arg->{type})";
 	    }
-	    elsif ($pdbtype eq 'boolean') {
-		$result .= ' ' x 2 . "$var = ";
-		$result .= "args[$argc].value.pdb_$type ? TRUE : FALSE;\n";
+	    $code .= "$cast args[$argc].value.pdb_$type";
+	    $code .= ' ? TRUE : FALSE' if $pdbtype eq 'boolean';
+	    $code .= ";\n";
+
+	    if ($pdbtype eq 'string') {
+		$code .= ' ' x 2 . "success = $var != NULL;\n";
 	    }
-	    else {
-		my $cast = "";
+	    elsif (defined $typeinfo[0] || defined $typeinfo[2]) {
+		my $tests = 0; my $extra = "";
 
-		$cast = " ($arg->{type})" if $type eq "pointer";
-	        $cast = " ($arg->{type})" if $arg->{type} =~ /int(16|8)$/;
+		if ($pdbtype eq 'enum') {
+		    my $name = pop @typeinfo;
 
-		$result .= ' ' x 2 . "$var =";
-		$result .= "$cast args[$argc].value.pdb_$type;\n";
+		    foreach (@typeinfo) { $extra .= " && $var != $_" }
 
-		if ($pdbtype eq 'string') {
-		    $result .= ' ' x 2 . "success = $var != NULL;\n";
-		    $success = 1;
+		    $typeinfo[0] = $enums{$name}->{start};
+		    $typeinfo[1] = '>=';
+		    $typeinfo[2] = $enums{$name}->{end};
+		    $typeinfo[3] = '<=';
 		}
-		elsif (defined $typeinfo[0] || defined $typeinfo[2]) {
-		    my $tests = 0;
 
-		    $result .= ' ' x 2 . "success = ";
+		$code .= ' ' x 2 . "success = ";
 
-		    if (defined $typeinfo[0]) {
-			$result .= "$var $testmap{$typeinfo[1]} $typeinfo[0]";
-			$tests++;
-		    }
-
-		    if (defined $typeinfo[2]) {
-			$result .= '|| ' if $tests;
-			$result .= "$var $testmap{$typeinfo[2]} $typeinfo[3]";
-		    }
-
-		    $result .= ";\n";
-
-		    $success = 1;
+		if (defined $typeinfo[0]) {
+		    $code .= "$var $typeinfo[1] $typeinfo[0]";
+		    $tests++;
 		}
+
+		if (defined $typeinfo[2]) {
+		    $code .= ' && ' if $tests;
+		    $code .= "$var $typeinfo[3] $typeinfo[2]";
+		}
+
+		$code .= "$extra;\n";
 	    }
+
+	    if ($code =~ /success/) {
+		if ($success) {
+		    $code =~ s/^/' ' x 4/meg;
+		    $code =~ s/^ {8}/\t/mg;
+
+		    $code .= ' '  x 4 . "}\n";
+		    $result .= ' ' x 2 . "if (success)\n" . ' ' x 4 . "{\n";
+		}
+		else {
+		    $success_init = 0;
+		}
+
+		$success = 1;
+	    }
+
+	    $result .= $code;
 	}
 
 	$argc++; $result .= "\n";
@@ -240,7 +260,7 @@ sub generate {
     my %out;
     my $total = 0.0;
 
-    foreach my $name (@procs) {
+    foreach $name (@procs) {
 	my $proc = $main::pdb{$name};
 	my $out = \%{$out{$proc->{group}}};
 
@@ -248,6 +268,7 @@ sub generate {
 	my @outargs = @{$proc->{outargs}} if exists $proc->{outargs};
 	
 	local $success = 0;
+	local $success_init = 1;
 
 	$out->{pcount}++; $total++;
 
@@ -258,7 +279,7 @@ sub generate {
 CODE
 
 	if (exists $proc->{invoke}->{headers}) {
-	    foreach my $header (@{$proc->{invoke}->{headers}}) {
+	    foreach $header (@{$proc->{invoke}->{headers}}) {
 		$out->{headers}->{$header}++;
 	    }
 	}
@@ -300,8 +321,11 @@ CODE
 	$success = ($code =~ /success =/) unless $success;
 
 	if ($success) {
-	    $out->{code} .= ' ' x 2;
-	    $out->{code} .= "int success = $proc->{invoke}->{success};\n";
+	    $success_init = 0 if $proc->{invoke}->{success} eq 'NONE';
+
+	    $out->{code} .= ' ' x 2 . "gboolean success";
+	    $out->{code} .= " = $proc->{invoke}->{success}" if $success_init;
+	    $out->{code} .= ";\n";
 	}
 
 	$out->{code} .= $invoker . $code . "\n";
@@ -376,7 +400,7 @@ HEADER
 	my $cfile = "$destdir/${group}_cmds.c$FILE_EXT";
 	open CFILE, "> $cfile" or die "Can't open $cmdfile: $!\n";
 	print CFILE $gpl;
-	foreach my $header (sort keys %{$out->{headers}}) {
+	foreach $header (sort keys %{$out->{headers}}) {
 	    print CFILE "#include $header\n";
 	}
 	print CFILE "\n";

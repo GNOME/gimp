@@ -67,7 +67,7 @@ HELP
 
     @outargs = (
 	{ name => "${type}_type", type => 'enum PDBArgType',
-	  desc => "The type of $long_type \$desc",
+	  desc => "The type of $long_type %%desc%%",
 	  alias => "${type}->arg_type" },
 	{ name => "${type}_name", type => 'string',
 	  desc => "The name of the $long_type",
@@ -205,7 +205,7 @@ HELP
 	{ name => 'date', type => 'string',
 	  desc => 'Copyright date' },
         { name => 'proc_type', type => 'enum PDBProcType',
-	  desc => 'The procedure type: $desc' },
+	  desc => 'The procedure type: %%desc%%' },
         { name => 'num_args', type => 'int32',
 	  desc => 'The number of input arguments' },
         { name => 'num_values', type => 'int32',

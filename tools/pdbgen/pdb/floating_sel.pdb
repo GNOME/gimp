@@ -31,10 +31,10 @@ sub invoke {
 	headers => [ qw("layer.h" "floating_sel.h") ],
 	code => <<CODE
 {
-  if (!layer_is_floating_sel (floating_sel))
-    success = FALSE;
-  else
+  if (layer_is_floating_sel (floating_sel))
     $cmd (floating_sel);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -123,7 +123,7 @@ HELP
     &std_pdb_misc;
 
     &inargs;
-    push @inargs, { name => 'undo', type => 'boolean', desc => '$desc' };
+    push @inargs, { name => 'undo', type => 'boolean', desc => '%%desc%%' };
 
     &invoke;
     $invoke{code} =~ s/\(floating_sel\);/(floating_sel, undo);/;
@@ -139,7 +139,7 @@ HELP
     &std_pdb_misc;
 
     &inargs;
-    push @inargs, { name => 'undo', type => 'boolean', desc => '$desc' };
+    push @inargs, { name => 'undo', type => 'boolean', desc => '%%desc%%' };
 
     &invoke;
     $invoke{code} =~ s/\(floating_sel\);/(floating_sel, undo);/;

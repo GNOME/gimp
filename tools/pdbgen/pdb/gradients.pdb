@@ -44,6 +44,7 @@ HELP
     %invoke = (
 	headers => [ qw("gradient.h") ],
 	vars => ['gradient_t *grad', 'GSList *list', 'int i = 0'],
+	success => 'NONE',
 	code => <<'CODE'
 {
   gradients = g_new (gchar *, num_gradients);
@@ -101,7 +102,6 @@ HELP
     );
 
     %invoke = (
-	success => 'FALSE',
 	headers => [ qw("gradient.h") ],
 	code => 'success = grad_set_grad_to_name (name);'
     );

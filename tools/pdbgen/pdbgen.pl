@@ -65,7 +65,7 @@ $evalcode = <<'CODE';
     $grp{$file}->{desc} = $desc if defined $desc;
     $grp{$file}->{code} = $code if defined $code;
 
-    foreach my $proc (@procs) {
+    foreach $proc (@procs) {
 	# Reset all our PDB vars so previous defs don't interfere
 	foreach (@procvars) { eval "undef $_" }
 
@@ -108,6 +108,7 @@ foreach $file (@groups) {
 
 # Some important stuff
 require 'pdb.pl';
+require 'enums.pl';
 require 'util.pl';
 
 # Squash whitespace into just single spaces between words

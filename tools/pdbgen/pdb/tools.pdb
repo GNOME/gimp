@@ -25,8 +25,14 @@ sub drawable_arg () {{
     name => 'drawable',
     type => 'drawable',
     desc => 'The affected drawable',
-    get  => &std_image_arg
 }}
+
+sub drawable_out_arg {
+    my $type = shift;
+    my $arg = &drawable_arg;
+    $arg->{desc} = "The $type drawable";
+    $arg;
+}
 
 sub sample_merged_arg () {{
     name => 'sample_merged',
@@ -34,10 +40,22 @@ sub sample_merged_arg () {{
     desc => 'Use the composite image, not the drawable'
 }}
 
+sub operation_arg () {{
+    name => 'operation',
+    type => 'enum Selection',
+    desc => 'The selection operation: %%desc%%'
+}}
+
+sub threshold_arg () {{
+    name => 'threshold',
+    type => '0 <= int32 <= 255',
+    desc => 'Threshold in intensity levels %%desc%%'
+}}
+
 sub antialias_arg () {{
     name => 'antialias',
     type => 'boolean',
-    desc => 'Antialiasing $desc'
+    desc => 'Antialiasing (%%desc%%)'
 }}
 
 sub feather_select_args () {(
@@ -74,10 +92,9 @@ HELP;
     @inargs = (
 	&drawable_arg,
 	 { name => 'pressure', type => '0 <= float <= 100',
-	   desc => 'The pressure of the airbrush strokes $desc' },
+	   desc => 'The pressure of the airbrush strokes (%%desc%%)' },
 	&stroke_arg
     );
-    delete $inargs[0]->{get};
 
     %invoke = (
 	headers => [ qw("airbrush.h") ],
@@ -102,19 +119,19 @@ HELP
     @inargs = (
 	&drawable_arg,
         { name => 'blend_mode', type => 'enum BlendMode',
-	  desc => 'The type of blend: $desc' },
+	  desc => 'The type of blend: %%desc%%' },
 	{ name => 'gradient_type',  type => 'enum PaintMode',
-	  desc => 'The paint application mode: $desc' },
+	  desc => 'The paint application mode: %%desc%%' },
 	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The opacity of the final blend $desc' },
+	  desc => 'The opacity of the final blend %%desc%%' },
 	{ name => 'offset', type => '0 <= float',
 	  desc => 'Offset relates to the starting and ending coordinates
 		   specified for the blend. This parameter is mode dependent
-		   $desc' },
+		   %%desc%%' },
 	{ name => 'repeat', type => 'enum RepeatMode',
-	  desc => 'Repeat mode: $desc' },
+	  desc => 'Repeat mode: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
-	  desc => 'Do adaptive supersampling $desc' },
+	  desc => 'Do adaptive supersampling (%%desc%%)' },
 	{ name => 'max_depth', type => '1 <= int32 <= 9',
 	  desc => 'Maximum recursion levels for supersampling',
 	  cond => 'supersample' },
@@ -133,9 +150,13 @@ HELP
 
     %invoke = (
         headers => [ qw("blend.h") ],
+	vars => ['GimpImage *gimage'],
 	code => <<'CODE'
-blend (gimage, drawable, blend_mode, paint_mode, gradient_type, opacity,
-       offset, repeat, supersample, max_depth, threshold, x1, y1, x2, y2);
+{
+  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  blend (gimage, drawable, blend_mode, paint_mode, gradient_type, opacity,
+	 offset, repeat, supersample, max_depth, threshold, x1, y1, x2, y2);
+}
 CODE
     );
 }
@@ -169,15 +190,15 @@ HELP;
     %inargs = (
 	&drawable_arg,
 	{ name => 'fill_mode', type => 'enum FillMode',
-	  desc => 'The type of fill: $desc' },
+	  desc => 'The type of fill: %%desc%%' },
 	{ name => paint_mode, type => 'enum PaintMode',
-	  desc => 'The paint application mode: $desc' },
+	  desc => 'The paint application mode: %%desc%%' },
 	{ name => opacity, type => '0 <= float <= 100',
-	  desc => 'The opacity of the final bucket fill $desc' },
+	  desc => 'The opacity of the final bucket fill %%desc%%' },
 	{ name => threshold, type => '0 <= float <= 255',
 	  desc => "The threshold determines how extensive the seed fill will
 		   be. It's value is specified in terms of intensity levels
-		   \$desc. $validity" },
+		   %%desc%%. $validity" },
 	&sample_merged_arg,
 	{ name => x, type => 'float',
 	  desc => eval qq/{\$a = 'x'; "$coord";}/ },
@@ -187,9 +208,13 @@ HELP;
 
     %invoke = (
         headers => [ qw ("bucket_fill.h") ],
+	vars => ['GimpImage *gimage'],
 	code => <<'CODE'
-bucket_fill (gimage, drawable, fill_mode, paint_mode, opacity, threshold,
-             sample_merged, x, y);
+{
+  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  bucket_fill (gimage, drawable, fill_mode, paint_mode, opacity,
+	       threshold, sample_merged, x, y);
+}
 CODE
     );
 }
@@ -220,10 +245,8 @@ HELP
 	&drawable_arg,
 	{ name => 'color', type => 'color',
 	  desc => 'The color to select' },
-	{ name => 'threshold', type => '0 <= int32 <= 255',
-	  desc => 'Threshold in intensity levels $desc' },
-	{ name => 'operation', type => 'enum Operation',
-	  desc => 'The selection operation: $desc' },
+	&threshold_arg,
+	&operation_arg,
 	&antialias_arg,
 	&feather_select_args,
 	&sample_merged_arg
@@ -231,9 +254,13 @@ HELP
 
     %invoke = (
         headers => [ qw("by_color_select.h") ],
+	vars => ['GimpImage *gimage'],
 	code => <<'CODE'
-by_color_select (gimage, drawable, color, threshold, operation, antialias,
-		 feather, feather_radius, sample_merged);
+{
+  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  by_color_select (gimage, drawable, color, threshold, operation,
+		   antialias, feather, feather_radius, sample_merged);
+}
 CODE
     );
 }
@@ -263,20 +290,19 @@ HELP
 	{ name => 'src_drawable', type => 'drawable',
 	  desc => 'The source drawable' },
 	{ name => 'clone_type', type => 'enum CloneType',
-	  desc => 'The type of clone: $desc' },
+	  desc => 'The type of clone: %%desc%%' },
 	{ name => 'src_x', type => 'float',
 	  desc => 'The x coordinate in the source image' },
 	{ name => 'src_y', type => 'float',
 	  desc => 'The y coordinate in the source image' },
 	&stroke_arg
     );
-    delete $inargs[0]->{get};
 
     %invoke = (
 	headers => [ qw("clone.h") ],
 	code => <<'CODE'
-clone_non_gui (drawable, src_drawable, clone_type, src_x, src_y, num_strokes,
-	       strokes);
+clone_non_gui (drawable, src_drawable, clone_type, src_x, src_y,
+	       num_strokes, strokes);
 CODE
     );
 }
@@ -314,14 +340,18 @@ HELP
 
     @outargs = (
 	{ name => 'color', type => 'color',
-	  desc => 'The return color' }
+	  desc => 'The return color', init => 1 }
     );
 
     %invoke = (
 	headers => [ qw("color_picker.h") ],
+	vars => ['GimpImage *gimage'],
 	code => <<'CODE'
 {
-  if (success = get_color (gimage, drawable, (int) x, (int) y, sample_merged, save_color)
+  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+
+  if (success = get_color (gimage, drawable, (int) x, (int) y,
+			   sample_merged, save_color)
     {
       color = g_new (guchar, 3);
       color[RED_PIX] = col_value[RED_PIX];
@@ -348,9 +378,9 @@ HELP
     @inargs = (
 	&drawable_arg,
 	{ name => 'pressure', type => '0 <= float <= 100',
-	  desc => 'The pressure: $desc' },
+	  desc => 'The pressure: %%desc%%' },
 	{ name => 'convolve_type', type 'enum Convolve (no CUSTOM)',
-	  desc => 'Convolve type: $desc' },
+	  desc => 'Convolve type: %%desc%%' },
 	&stroke_arg
     );
 
@@ -389,8 +419,7 @@ HELP
 	headers => [ qw("crop.h") ],
 	code => <<'CODE'
 {
-  if (new_width > gimage->width ||
-      new_height > gimage->height ||
+  if (new_width > gimage->width || new_height > gimage->height ||
       offx > (gimage->width - new_width) ||
       offy > (gimage->height - new_height)
     success = FALSE;
@@ -422,11 +451,10 @@ HELP
 	{ name => 'y', type => 'float',
 	  desc => 'y coordinate of upper-left corner of ellipse bounding box' },
 	{ name => 'width', type => '0 < float',
-	  desc => 'The width of the ellipse: $desc' },
+	  desc => 'The width of the ellipse: %%desc%%' },
 	{ name => 'height', type => '0 < float',
-	  desc => 'The height of the ellipse: $desc' },
-	{ name => 'operation', 'enum Selection',
-	  desc => 'The selection operation: $desc' },
+	  desc => 'The height of the ellipse: %%desc%%' },
+	&operation_arg,
 	&antialias_arg,
 	&feather_args
     );
@@ -434,8 +462,8 @@ HELP
     %invoke = (
 	headers => [ qw("ellipse_select.h") ],
 	code => <<'CODE'
-ellipse_select (gimage, (int) x, (int) y, (int) w, (int) h, op, antialias,
-		feather, feather_radius);
+ellipse_select (gimage, (int) x, (int) y, (int) width, (int) height,
+		operation, antialias, feather, feather_radius);
 CODE
     );
 }
@@ -457,9 +485,9 @@ HELP
 	&drawable_arg,
 	&stroke_arg,
 	{ name => 'hardness', type => 'enum EraserHardness',
-	  desc => '$desc' }
+	  desc => '%%desc%%' }
 	{ name => 'method', type => 'enum EraserMethod',
-	  desc => '$desc' }
+	  desc => '%%desc%%' }
     );
 
     %invoke = (
@@ -492,20 +520,18 @@ HELP
     @inargs = (
 	&drawable_arg,
 	{ name => 'flip_type', type => 'enum FlipType',
-	  desc => 'Type of flip: $desc' }
+	  desc => 'Type of flip: %%desc%%' }
     );
 
-    @outargs = ( &drawable_arg );
-    $outargs[0]->{alias} = layer;
-    $outargs[0]->{desc} = 'The flipped drawable';
-    $outargs[0]->{no_declare} = 1;
-    delete $outargs[0]->{get};
+    @outargs = ( &drawable_out_arg('flipped') );
 
     %invoke = (
 	headers => [ qw("flip_tool.h" "tranform_core.h") ],
-	vars => ['TileManger *float_tiles, *new_tiles', 'Layer *layer']
+	vars => ['GimpImage *gimage', 'TileManger *float_tiles, *new_tiles'],
 	code => <<'CODE'
 {
+  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+
   /* Start a transform undo group */
   undo_push_group_start (gimage, TRANSFORM_CORE_UNDO); 
 
@@ -541,4 +567,626 @@ CODE
     );
 }
 
+sub free_select {
+    $blurb = 'Create a polygonal selection over the specified image.';
 
+    $help = <<'HELP';
+This tool creates a polygonal selection over the specified image. The polygonal
+region can be either added to, subtracted from, or replace the contents of the
+previous selection mask. The polygon is specified through an array of floating
+point numbers and its length. The length of array must be 2n, where n is the
+number of points. Each point is defined by 2 floating point values which
+correspond to the x and y coordinates. If the final point does not connect to
+the starting point, a connecting segment is automatically added. If the feather
+option is enabled, the resulting selection is blurred before combining. The
+blur is a gaussian blur with the specified feather radius.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'segs', type => 'floatarray',
+	  desc => 'Array of points: { p1.x, p1.y, p2.x, p2.y, ...,
+	  	   pn.x, pn.y}',
+	  array => { desc => 'Number of points (count 1 coordinate as two
+		     	      points)' } },
+	&operation_arg,
+	&antialias_arg,
+	&feather_select_args
+    );
+
+    %invoke = (
+	headers => qw("free_select.h"),
+	code => <<'CODE'
+free_select (gimage, num_segs, segs, operation, antialias, feather,
+	     feather_radius);
+CODE
+    );
+}
+
+sub fuzzy_select {
+    $blurb = <<'BLURB';
+Create a fuzzy selection starting at the specified coordinates on the specified
+drawable.
+BLURB
+
+    $help = <<'HELP';
+This tool creates a fuzzy selection over the specified image. A fuzzy selection
+is determined by a seed fill under the constraints of the specified threshold.
+Essentially, the color at the specified coordinates (in the drawable) is
+measured and the selection expands outwards from that point to any adjacent
+pixels which are not significantly different (as determined by the threshold
+value). This process continues until no more expansion is possible. The
+antialiasing parameter allows the final selection mask to contain intermediate
+values based on close misses to the threshold bar at pixels along the seed fill
+boundary. Feathering can be enabled optionally and is controlled with the
+"feather_radius" paramter. If the sample_merged parameter is non-zero, the data
+of the composite image will be used instead of that for the specified drawable.
+This is equivalent to sampling for colors after merging all visible layers. In
+the case of a merged sampling, the supplied drawable is ignored. If the sample
+is merged, the specified coordinates are relative to the image origin;
+otherwise, they are relative to the drawable's origin.'
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'x', type => 'float',
+	  desc => 'x coordinate of initial seed fill point: (image
+	  	   coordinates)' },
+	{ name => 'y', type => 'float',
+	  desc => 'y coordinate of initial seed fill point: (image
+	  	   coordinates)' },
+	&threshold_arg,
+	&operation_arg,
+	&antialias_arg,
+	&feather_select_args,
+	&sample_merged_arg
+    );
+
+    %invoke = (
+	headers => qw("fuzzy_select.h"),
+	vars => ['GimpImage *gimage', 'Channel *new, *old_fuzzy_mask'],
+	code => <<'CODE'
+{
+  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+
+  new = find_contiguous_region (gimage, drawable, antialias, threshold,
+  				x, y, sample_merged);
+  old_fuzzy_mask = fuzzy_mask;
+  fuzzy_mask = new;
+
+  drawable = sample_merged ? NULL : drawable;
+  fuzzy_select (gimage, drawbale, operation, feather, feather_radius);
+
+  fuzzy_mask = old_fuzzy_mask;
+}
+CODE
+    );
+}
+
+sub paintbrush {
+    $blurb = 'Paint in the current brush with optional fade out parameter.';
+
+    $help = <<'HELP';
+This tool is the standard paintbrush. It draws linearly interpolated lines
+through the specified stroke coordinates. It operates on the specified drawable
+in the foreground color with the active brush. The "fade_out" parameter is
+measured in pixels and allows the brush stroke to linearly fall off. The
+pressure is set to the maximum at the beginning of the stroke. As the distance
+of the stroke nears the fade_out value, the pressure will approach zero.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'fade_out', type => '0 < float',
+	  desc => 'Fade out parameter: %%desc%%' },
+	&stroke_arg,
+	{ name => 'method', type => 'enum PaintMethod',
+	  desc => '%%desc%%' }
+    );
+
+    %invoke = (
+	headers => [ qw("paintbrush.h") ],
+	code => <<'CODE'
+paintbrush_non_gui (drawable, num_strokes, strokes, fade_out, method);
+CODE
+    );
+}
+
+sub pencil {
+    $blurb = 'Paint in the current brush without sub-pixel sampling.';
+
+    $help = <<'HELP';
+This tool is the standard pencil. It draws linearly interpolated lines through
+the specified stroke coordinates. It operates on the specified drawable in the
+foreground color with the active brush. The brush mask is treated as though it
+contains only black and white values. Any value below half is treated as black;
+any above half, as white.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	&stroke_arg
+    );
+
+    %invoke = (
+	headers => qw("fuzzy_select.h"),
+	code => 'pencil_non_gui (drawable, num_strokes, strokes);'
+    );
+}
+
+sub perspective {
+    $blurb = <<'BLURB';
+Perform a possibly non-affine transformation on the specified drawable.
+BLURB
+
+    $help = <<'HELP';
+This tool performs a possibly non-affine transformation on the specified
+drawable by allowing the corners of the original bounding box to be arbitrarily
+remapped to any values. The specified drawable is remapped if no selection
+exists. However, if a selection exists, the portion of the drawable which lies
+under the selection is cut from the drawable and made into a floating selection
+which is then remapped as specified. The interpolation parameter can be set to
+TRUE to indicate that either linear or cubic interpolation should be used to
+smooth the resulting remapped drawable. The return value is the ID of the
+remapped drawable. If there was no selection, this will be equal to the
+drawable ID supplied as input. Otherwise, this will be the newly created and
+remapped drawable. The 4 coordinates specify the new locations of each corner
+of the original bounding box. By specifying these values, any affine
+transformation (rotation, scaling, translation) can be affected. Additionally,
+these values can be specified such that the resulting transformed drawable will
+appear to have been projected via a perspective transform.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'interpolation', type => 'boolean',
+	  desc => 'Whether to use interpolation' }
+    );
+
+    my $pos = 0;
+    foreach $where (qw(upper-left upper-right lower-left lower-right)) {
+	foreach (qw(x y)) {
+	    push @inargs,
+	    	 { name => "$_$pos", type => 'float',
+		   desc => "The new $_ coordinate of $where corner of original
+			    bounding box",
+		   alias => "trans_info[@{[ uc $_ ]}$pos]}", no_declare => 1 }
+	}
+	$pos++;
+    }
+
+    @outargs = ( &drawable_out_arg('newly mapped') );
+
+    %invoke = (
+	headers => [ qw("perspective_tool.h" "tranform_core.h") ],
+	vars => ['GimpImage *gimage', 'TileManger *float_tiles, *new_tiles',
+		 'int new_layer', 'double cx, cy', 'double scalex, scaley',
+		 'double trans_info[8]', 'GimpMatrix matrix'],
+	code => <<'CODE'
+{
+  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+
+  /* Start a transform undo group */
+  undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
+
+  /* Cut/Copy from the specified drawable */
+  float_tiles = transform_core_cut (gimage, drawable, &new_layer);
+
+  /* Determine the perspective transform that maps from
+   * the unit cube to the trans_info coordinates
+   */
+  perspective_find_transform (trans_info, m);
+
+  cx     = float_tiles->x;
+  cy     = float_tiles->y;
+  scalex = 1.0;
+  scaley = 1.0;
+  if (float_tiles->width)
+    scalex = 1.0 / float_tiles->width;
+  if (float_tiles->height)
+    scaley = 1.0 / float_tiles->height;
+
+  /* Assemble the transformation matrix */
+  gimp_matrix_identity  (matrix);
+  gimp_matrix_translate (matrix, -cx, -cy);
+  gimp_matrix_scale     (matrix, scalex, scaley);
+  gimp_matrix_mult      (m, matrix);
+
+  /* Perspective the buffer */
+  new_tiles = perspective_tool_perspective (gimage, drawable, NULL,
+					    float_tiles, interpolation,
+					    matrix);
+
+  /* Free the cut/copied buffer */
+  tile_manager_destroy (float_tiles);
+
+  if (new_tiles)
+    {
+      layer = transform_core_paste (gimage, drawable, new_tiles, new_layer);
+      success = layer != NULL;
+    }
+  else
+    success = FALSE;
+
+  /*  push the undo group end  */
+  undo_push_group_end (gimage);
+}
+CODE
+    );
+}
+
+sub rect_select {
+    $blurb = 'Create a rectangular selection over the specified image;';
+
+    $help = <<'HELP';
+This tool creates a rectangular selection over the specified image. The
+rectangular region can be either added to, subtracted from, or replace the
+contents of the previous selection mask. If the feather option is enabled, the
+resulting selection is blurred before combining. The blur is a gaussian blur
+with the specified feather radius.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'x', type => 'float',
+	  desc => 'x coordinate of upper-left corner of rectangle' },
+	{ name => 'y', type => 'float',
+	  desc => 'y coordinate of upper-left corner of rectangle' },
+	{ name => 'width', type => '0 < float',
+	  desc => 'The width of the rectangle: %%desc%%' }
+	{ name => 'height', type => '0 < float',
+	  desc => 'The height of the rectangle: %%desc%%' }
+	&operation_arg,
+	&feather_select_args,
+    );
+
+    %invoke = (
+	headers => [ qw("rect_select.h") ],
+	code => <<'CODE'
+rect_select (gimage, (int) x, (int) y, (int) width, (int) height,
+	     operation, feather, feather_radius);
+CODE
+    );
+}
+
+sub rotate_invoker {
+    $blurb = <<'BLURB';
+Rotate the specified drawable about its center through the specified angle.
+BLURB
+
+    $help = <<'HELP';
+This tool rotates the specified drawable if no selection exists. If a selection
+exists, the portion of the drawable which lies under the selection is cut from
+the drawable and made into a floating selection which is then rotated by the
+specified amount. The interpolation parameter can be set to TRUE to indicate
+that either linear or cubic interpolation should be used to smooth the
+resulting rotated drawable. The return value is the ID of the rotated drawable.
+If there was no selection, this will be equal to the drawable ID supplied as
+input. Otherwise, this will be the newly created and rotated drawable.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'interpolation', type => 'boolean',
+	  desc => 'Whether to use interpolation' }
+	{ name => 'angle', type => 'float',
+	  desc => 'The angle of rotation (radians)' }
+    );
+
+    @outargs = ( &drawable_arg('rotated') );
+
+    %invoke = (
+	headers => [ qw("rotate_tool.h" "tranform_core.h") ],
+	vars => ['GimpImage *gimage', 'TileManger *float_tiles, *new_tiles',
+		 'Layer *layer', 'int new_layer', 'double cx, cy',
+		 'GimpMatrix matrix'],
+	code => <<'CODE'
+{
+  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+
+  /* Start a transform undo group */
+  undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
+
+  /* Cut/Copy from the specified drawable */
+  float_tiles = transform_core_cut (gimage, drawable, &new_layer);
+
+  cx = float_tiles->x + float_tiles->width / 2.0;
+  cy = float_tiles->y + float_tiles->height / 2.0;
+
+  /* Assemble the transformation matrix */
+  gimp_matrix_identity  (matrix);
+  gimp_matrix_translate (matrix, -cx, -cy);
+  gimp_matrix_rotate    (matrix, angle);
+  gimp_matrix_translate (matrix, +cx, +cy);
+
+  /* Rotate the buffer */
+  new_tiles = rotate_tool_rotate (gimage, drawable, NULL, angle,
+				  float_tiles, interpolation, matrix);
+
+  /* Free the cut/copied buffer */
+  tile_manager_destroy (float_tiles);
+
+  if (new_tiles)
+    {
+      layer = transform_core_paste (gimage, drawable, new_tiles, new_layer);
+      success = layer != NULL;
+    }
+  else
+    success = FALSE;
+
+  /* Push the undo group end */
+  undo_push_group_end (gimage);
+}
+CODE
+    );
+}
+
+sub scale {
+    $blurb = 'Scale the specified drawable.';
+
+    $help = <<'HELP';
+This tool scales the specified drawable if no selection exists. If a selection
+exists, the portion of the drawable which lies under the selection is cut from
+the drawable and made into a floating selection which is then scaled by the
+specified amount. The interpolation parameter can be set to TRUE to indicate
+that either linear or cubic interpolation should be used to smooth the
+resulting scaled drawable. The return value is the ID of the scaled drawable.
+If there was no selection, this will be equal to the drawable ID supplied as
+input.  Otherwise, this will be the newly created and scaled drawable.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'interpolation', type => 'boolean',
+	  desc => 'Whether to use interpolation' }
+    );
+
+    my $pos = 1;
+    foreach $where (qw(upper-left lower-right)) {
+	foreach (qw(x y)) {
+	    push @inargs,
+	    	 { name => "$_$pos", type => 'float',
+		   desc => "The new $_ coordinate of $where corner of newly
+			    scaled region",
+		   alias => "trans_info[@{[ uc $_ ]}$pos]}", no_declare => 1 }
+	}
+	$pos++;
+    }
+
+    @outargs = ( &drawable_out_arg('scaled') );
+
+    %invoke = (
+	headers => [ qw("scale_tool.h" "tranform_core.h") ],
+	vars => ['GimpImage *gimage', 'TileManger *float_tiles, *new_tiles',
+		 'int new_layer', 'double scalex, scaley',
+		 'double trans_info[4]', 'GimpMatrix matrix'],
+	code => <<'CODE'
+{
+  if (trans_info[X1] < trans_info[X2] &&
+      trans_info[Y1] < trans_info[X2])
+    {
+      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+
+      /* Start a transform undo group */
+      undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
+
+      /* Cut/Copy from the specified drawable */
+      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
+
+      scalex = scaley = 1.0;
+      if (float_tiles->width)
+        scalex = (trans_info[X2] - trans_info[X1]) / (double) float_tiles->width
+;
+      if (float_tiles->height)
+        scaley = (trans_info[Y2] - trans_info[Y1]) / (double) float_tiles->heigh
+t;
+
+      /* Assemble the transformation matrix */
+      gimp_matrix_identity  (matrix);
+      gimp_matrix_translate (matrix, float_tiles->x, float_tiles->y);
+      gimp_matrix_scale     (matrix, scalex, scaley);
+      gimp_matrix_translate (matrix, trans_info[X1], trans_info[Y1]);
+
+      /* Scale the buffer */
+      new_tiles = scale_tool_scale (gimage, drawable, NULL, trans_info,
+				    float_tiles, interpolation, matrix);
+
+      /* Free the cut/copied buffer */
+      tile_manager_destroy (float_tiles);
+
+      if (new_tiles)
+	{
+          layer = transform_core_paste (gimage, drawable, new_tiles, new_layer);
+	  success = layer != NULL;
+	}
+      else
+        success = FALSE;
+
+      /*  push the undo group end  */
+      undo_push_group_end (gimage);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub shear {
+    $blurb = <<'BLURB';
+Shear the specified drawable about its center by the specified magnitude.
+BLURB
+
+    $help = <<'HELP';
+This tool shears the specified drawable if no selection exists. If a selection
+exists, the portion of the drawable which lies under the selection is cut from
+the drawable and made into a floating selection which is then sheard by the
+specified amount. The interpolation parameter can be set to TRUE to indicate
+that either linear or cubic interpolation should be used to smooth the
+resulting sheared drawable. The return value is the ID of the sheard drawable.
+If there was no selection, this will be equal to the drawable ID supplied as
+input. Otherwise, this will be the newly created and sheard drawable. The shear
+type parameter indicates whether the shear will be applied horizontally or
+vertically. The magnitude can be either positive or negative and indicates the
+extent (in pixels) to shear by.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'interpolation', type => 'boolean',
+	  desc => 'Whether to use interpolation' }
+	{ name => 'shear_type', type => 'enum ShearType',
+	  desc => 'Type of shear: %%desc%%' },
+	{ name => 'magnitude', type => 'float',
+	  desc => 'The magnitude of the shear' }
+    );
+
+    @outargs = ( &drawable_arg('sheared') );
+
+    %invoke = (
+	headers => [ qw("perspective_tool.h" "tranform_core.h") ],
+	vars => ['GimpImage *gimage', 'TileManger *float_tiles, *new_tiles',
+		 'Layer *layer', 'int new_layer', 'double cx, cy',
+		 'GimpMatrix matrix'],
+	code => <<'CODE'
+{
+  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+
+  /* Start a transform undo group */
+  undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
+
+  /* Cut/Copy from the specified drawable */
+  float_tiles = transform_core_cut (gimage, drawable, &new_layer);
+
+  cx = float_tiles->x + float_tiles->width  / 2.0;
+  cy = float_tiles->y + float_tiles->height / 2.0;
+
+  gimp_matrix_identity  (matrix);
+  gimp_matrix_translate (matrix, -cx, -cy);
+  /* Shear matrix */
+  if (shear_type == HORZ)
+    gimp_matrix_xshear (matrix, shear_magnitude / float_tiles->height);
+  else if (shear_type == VERT)
+    gimp_matrix_yshear (matrix, shear_magnitude / float_tiles->width);
+  gimp_matrix_translate (matrix, +cx, +cy);
+
+  /* Shear the buffer */
+  new_tiles = shear_tool_shear (gimage, drawable, NULL, float_tiles,
+				interpolation, matrix);
+
+  /* Free the cut/copied buffer */
+  tile_manager_destroy (float_tiles);
+
+  if (new_tiles)
+    {
+      layer = transform_core_paste (gimage, drawable, new_tiles, new_layer);
+      success = layer != NULL;
+    }
+  else
+    success = FALSE;
+
+  /* Push the undo group end */
+  undo_push_group_end (gimage);
+}
+CODE
+    );
+}
+
+sub text {
+    $blurb = <<'BLURB';
+Add text at the specified location as a floating selection or a new layer.
+BLURB
+
+    $help = <<'HELP';
+This tool requires font information in the form of nine parameters: size,
+foundry, family, weight, slant, set_width, spacing, registry, encoding. The
+font size can either be specified in units of pixels or points, and the
+appropriate metric is specified using the size_type argument. The x and y
+parameters together control the placement of the new text by specifying the
+upper left corner of the text bounding box. If the antialias parameter is
+non-zero, the generated text will blend more smoothly with underlying layers.
+This option requires more time and memory to compute than non-antialiased text;
+the resulting floating selection or layer, however, will require the same
+amount of memory with or without antialiasing. If the specified drawable
+parameter is valid, the text will be created as a floating selection attached
+to the drawable. If the drawable parameter is not valid (-1), the text will
+appear as a new layer. Finally, a border can be specified around the final
+rendered text. The border is measured in pixels.
+HELP
+
+   &std_pdb_misc;
+   $author = 'Martin Edlman';
+   $date = '1998';
+
+   @inargs = (
+	&drawable_arg,
+	{ name => 'x', type => 'float',
+	  desc => 'The x coordinate for the left of the text bounding box' },
+	{ name => 'y', type => 'float',
+	  desc => 'The y coordinate for the top of the text bounding box' },
+	{ name => 'text', type => 'string',
+	  desc => 'The text to generate',
+	{ name => 'border', type => '-1 <= int32',
+	  desc => 'The size of the border: %%desc%%' }
+	&antialias_arg,
+	{ name => 'size', type => '0 < float',
+	  desc => 'The size of text in either pixels or points' },
+	{ name => 'size_type', type => 'enum SizeType',
+	  desc => 'The units of specified size: %%desc%%' }
+   );
+
+   foreach (qw(foundry family weight slant set-width spacing registry
+   	       encoding)) {
+	my $var = $_;
+	$var =~ s/-/_/g;
+
+	push @inargs, { name => $var, type => 'string',
+			desc => qq/The font $_, "*" for any/ }
+   }
+
+   @outargs = (
+	{ name => 'text_layer', type => 'layer',
+	  desc => 'The new text layer' }
+   );
+
+   %invoke = (
+	headers => [ qw("text_tool.h") ],
+	vars => ['GimpImage *gimage', 'gchar *fontname[2048]'],
+	code => <<'CODE'
+{
+  if (antialias)
+    size *= SUPERSAMPLE;
+
+  success = text_get_xlfd (size, size_type, foundry, family, weight,
+  			   slant, set_width, spacing, registry, encoding,
+			   fontname);
+
+  if (success)
+    {
+      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      text_layer = text_render (gimage, drawable, x, y, fontname, text,
+      				border, antialias);
+      success = text_layer != NULL;
+    }
+}
+CODE
+   );
+}
