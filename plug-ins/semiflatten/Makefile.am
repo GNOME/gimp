@@ -2,9 +2,9 @@
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = semiflatten.c
+pluginlib_PROGRAMS = semiflatten
 
-c_astretch_SOURCES = \
+semiflatten_SOURCES = \
 	semiflatten.c   
 
 INCLUDES = \
@@ -23,7 +23,7 @@ DEPS = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la
 
-c_astretch_DEPENDENCIES = $(DEPS)
+semiflatten_DEPENDENCIES = $(DEPS)
 
 .PHONY: files
 

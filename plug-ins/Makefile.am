@@ -90,8 +90,8 @@ SUBDIRS = 			\
 	ripple			\
 	rotate			\
 	rotators		\
-	semiflatten		\	
 	scatter_hsv		\
+	semiflatten		\
 	sgi			\
 	shift			\
 	sinus			\

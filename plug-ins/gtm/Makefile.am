@@ -4,7 +4,7 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 
 pluginlib_PROGRAMS = gtm
 
-c_astretch_SOURCES = \
+gtm_SOURCES = \
 	gtm.c 
 
 INCLUDES = \
@@ -23,7 +23,7 @@ DEPS = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la
 
-c_astretch_DEPENDENCIES = $(DEPS)
+gtm_DEPENDENCIES = $(DEPS)
 
 .PHONY: files
 
