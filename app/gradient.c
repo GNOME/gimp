@@ -1625,7 +1625,7 @@ ed_do_save_pov_callback(GtkWidget *widget, gpointer client_data)
 		warning("ed_do_save_pov_callback(): oops, could not open \"%s\"", filename);
 	else {
 		fprintf(file, "/* color_map file created by the GIMP */\n");
-		fprintf(file, "/* http://www.xcf.berkeley.edu/~gimp  */\n");
+		fprintf(file, "/* http://www.gimp.org/               */\n");
 
 		fprintf(file, "color_map {\n");
 
