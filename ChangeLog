@@ -1,5 +1,9 @@
 2004-09-16  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL: updated.
+
+2004-09-16  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.c (gimp_scale_entry_set_logarithmic):
 	applied a patch by Joao S. O. Bueno that fixes bug #152820.
 
