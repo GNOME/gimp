@@ -1,3 +1,8 @@
+2004-11-22  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/file-open-location-dialog.c: changed border-size of
+	GimpContainerEntry to 0.
+
 2004-11-21  Sven Neumann  <sven@gimp.org>
 
 	* tools/gimp-remote.c: added --no-splash command-line option that
