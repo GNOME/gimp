@@ -1,5 +1,11 @@
 2004-06-05  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpgradienteditor.c: applied a patch from David
+	Gowers that makes the gradient editor display the perceptual
+	intensity of the color under the cursor (bug #135037).
+
+2004-06-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/snoise.c: applied a modifed patch from Yeti that
 	adds a preview to the Solid Noise plug-in (bug #142587).
 

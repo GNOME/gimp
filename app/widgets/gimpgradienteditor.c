@@ -133,7 +133,8 @@ static void   gradient_editor_instant_update_update (GtkWidget          *widget,
 static void   gradient_editor_set_hint              (GimpGradientEditor *editor,
                                                      const gchar        *str1,
                                                      const gchar        *str2,
-                                                     const gchar        *str3);
+	                                             const gchar        *str3,
+                                                     const gchar        *str4);
 
 
 /* Gradient preview functions */
@@ -393,20 +394,25 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
 		    editor);
 
   /* Hint bar */
-  editor->hint_label1 = gtk_label_new ("");
+  editor->hint_label1 = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (editor->hint_label1), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (editor), editor->hint_label1, FALSE, FALSE, 0);
   gtk_widget_show (editor->hint_label1);
 
-  editor->hint_label2 = gtk_label_new ("");
+  editor->hint_label2 = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (editor->hint_label2), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (editor), editor->hint_label2, FALSE, FALSE, 0);
   gtk_widget_show (editor->hint_label2);
 
-  editor->hint_label3 = gtk_label_new ("");
+  editor->hint_label3 = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (editor->hint_label3), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (editor), editor->hint_label3, FALSE, FALSE, 0);
   gtk_widget_show (editor->hint_label3);
+
+  editor->hint_label4= gtk_label_new (NULL);
+  gtk_misc_set_alignment (GTK_MISC (editor->hint_label4), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (editor), editor->hint_label4, FALSE, FALSE, 0);
+  gtk_widget_show (editor->hint_label4);
 
   /* Initialize other data */
   editor->left_saved_segments = NULL;
@@ -561,7 +567,7 @@ gradient_editor_scrollbar_update (GtkAdjustment      *adjustment,
                           adjustment->value,
                           adjustment->value + adjustment->page_size);
 
-  gradient_editor_set_hint (editor, str1, str2, "");
+  gradient_editor_set_hint (editor, str1, str2, NULL, NULL);
 
   g_free (str1);
   g_free (str2);
@@ -678,11 +684,14 @@ static void
 gradient_editor_set_hint (GimpGradientEditor *editor,
                           const gchar        *str1,
                           const gchar        *str2,
-                          const gchar        *str3)
+                          const gchar        *str3,
+			  const gchar	     *str4)
 {
   gtk_label_set_text (GTK_LABEL (editor->hint_label1), str1);
   gtk_label_set_text (GTK_LABEL (editor->hint_label2), str2);
   gtk_label_set_text (GTK_LABEL (editor->hint_label3), str3);
+  gtk_label_set_text (GTK_LABEL (editor->hint_label4), str4);
+
 }
 
 
@@ -704,7 +713,7 @@ preview_events (GtkWidget          *widget,
   switch (event->type)
     {
     case GDK_LEAVE_NOTIFY:
-      gradient_editor_set_hint (editor, "", "", "");
+      gradient_editor_set_hint (editor, NULL, NULL, NULL, NULL);
       break;
 
     case GDK_MOTION_NOTIFY:
@@ -815,6 +824,7 @@ preview_set_hint (GimpGradientEditor *editor,
   gchar          *str1;
   gchar          *str2;
   gchar          *str3;
+  gchar          *str4;
 
   data_editor = GIMP_DATA_EDITOR (editor);
 
@@ -827,17 +837,21 @@ preview_set_hint (GimpGradientEditor *editor,
 
   str1 = g_strdup_printf (_("Position: %0.6f"), xpos);
 
-  str2 = g_strdup_printf (_("RGB (%0.3f, %0.3f, %0.3f)    Opacity: %0.3f"),
-                          rgb.r, rgb.g, rgb.b, rgb.a);
+  str2 = g_strdup_printf (_("RGB (%0.3f, %0.3f, %0.3f)"),
+                          rgb.r, rgb.g, rgb.b);
 
   str3 = g_strdup_printf (_("HSV (%0.3f, %0.3f, %0.3f)"),
                           hsv.h * 360.0, hsv.s, hsv.v);
+  str4 = g_strdup_printf (_("Intensity: %0.3f    Opacity: %0.3f"),
+                          GIMP_RGB_INTENSITY (rgb.r, rgb.g, rgb.b), rgb.a);
 
-  gradient_editor_set_hint (editor, str1, str2, str3);
+
+  gradient_editor_set_hint (editor, str1, str2, str3, str4);
 
   g_free (str1);
   g_free (str2);
   g_free (str3);
+  g_free (str4);
 }
 
 static void
@@ -868,7 +882,8 @@ preview_set_foreground (GimpGradientEditor *editor,
 
   str3 = g_strdup_printf ("(%0.3f, %0.3f, %0.3f)", color.r, color.g, color.b);
 
-  gradient_editor_set_hint (editor, _("Foreground color set to:"), str2, str3);
+  gradient_editor_set_hint (editor,
+                            _("Foreground color set to:"), str2, str3, NULL);
 
   g_free (str2);
   g_free (str3);
@@ -903,7 +918,8 @@ preview_set_background (GimpGradientEditor *editor,
   str3 = g_strdup_printf (_("(%0.3f, %0.3f, %0.3f)"),
                           color.r, color.g, color.b);
 
-  gradient_editor_set_hint (editor, _("Background color set to:"), str2, str3);
+  gradient_editor_set_hint (editor,
+                            _("Background color set to:"), str2, str3, NULL);
 
   g_free (str2);
   g_free (str3);
@@ -943,7 +959,7 @@ control_events (GtkWidget          *widget,
       break;
 
     case GDK_LEAVE_NOTIFY:
-      gradient_editor_set_hint (editor, "", "", "");
+      gradient_editor_set_hint (editor, NULL, NULL, NULL, NULL);
       break;
 
     case GDK_BUTTON_PRESS:
@@ -999,7 +1015,7 @@ control_events (GtkWidget          *widget,
       break;
 
     case GDK_BUTTON_RELEASE:
-      gradient_editor_set_hint (editor, "", "", "");
+      gradient_editor_set_hint (editor, NULL, NULL, NULL, NULL);
 
       if (editor->control_drag_mode != GRAD_DRAG_NONE)
 	{
@@ -1111,9 +1127,10 @@ control_do_hint (GimpGradientEditor *editor,
                                          gimp_get_mod_separator ());
 
                   gradient_editor_set_hint (editor,
-                                            "",
+                                            NULL,
                                             _("Drag: move"),
-                                            str);
+                                            str,
+					    NULL);
                   g_free (str);
                 }
 	      else
@@ -1123,9 +1140,10 @@ control_do_hint (GimpGradientEditor *editor,
                                          gimp_get_mod_separator ());
 
                   gradient_editor_set_hint (editor,
-                                            "",
+                                            NULL,
                                             _("Click: select"),
-                                            str);
+                                            str,
+					    NULL);
                   g_free (str);
                 }
 	    }
@@ -1136,9 +1154,10 @@ control_do_hint (GimpGradientEditor *editor,
                                      gimp_get_mod_separator ());
 
 	      gradient_editor_set_hint (editor,
-                                        "",
+                                        NULL,
                                         _("Click: select"),
-                                        str);
+                                        str,
+					NULL);
               g_free (str);
 	    }
 	  break;
@@ -1149,9 +1168,10 @@ control_do_hint (GimpGradientEditor *editor,
                                  gimp_get_mod_separator ());
 
 	  gradient_editor_set_hint (editor,
-                                    "",
+                                    NULL,
                                     _("Click: select    Drag: move"),
-                                    str);
+                                    str,
+				    NULL);
           g_free (str);
 	  break;
 
@@ -1175,7 +1195,8 @@ control_do_hint (GimpGradientEditor *editor,
       gradient_editor_set_hint (editor,
                                 _("Click: select    Drag: move"),
                                 str,
-                                str2);
+                                str2,
+				NULL);
       g_free (str);
       g_free (str2);
     }
@@ -1376,12 +1397,10 @@ control_motion (GimpGradientEditor *editor,
 		GimpGradient       *gradient,
 		gint                x)
 {
-  GimpGradientSegment *seg;
+  GimpGradientSegment *seg = editor->control_drag_segment;
   gdouble              pos;
   gdouble              delta;
   gchar               *str = NULL;
-
-  seg = editor->control_drag_segment;
 
   switch (editor->control_drag_mode)
     {
@@ -1397,7 +1416,6 @@ control_motion (GimpGradientEditor *editor,
 			       seg, pos);
 
       str = g_strdup_printf (_("Handle position: %0.6f"), seg->left);
-      gradient_editor_set_hint (editor, str, "", "");
       break;
 
     case GRAD_DRAG_MIDDLE:
@@ -1406,7 +1424,6 @@ control_motion (GimpGradientEditor *editor,
       gimp_gradient_segment_set_middle_pos (gradient, seg, pos);
 
       str = g_strdup_printf (_("Handle position: %0.6f"), seg->middle);
-      gradient_editor_set_hint (editor, str, "", "");
       break;
 
     case GRAD_DRAG_ALL:
@@ -1426,8 +1443,6 @@ control_motion (GimpGradientEditor *editor,
       str = g_strdup_printf (_("Distance: %0.6f"),
 			     editor->control_last_gx -
 			     editor->control_orig_pos);
-      gradient_editor_set_hint (editor, str, "", "");
-
       break;
 
     default:
@@ -1436,8 +1451,8 @@ control_motion (GimpGradientEditor *editor,
       break;
     }
 
-  if (str)
-    g_free (str);
+  gradient_editor_set_hint (editor, str, NULL, NULL, NULL);
+  g_free (str);
 
   gimp_gradient_editor_update (editor);
 }
@@ -1542,10 +1557,8 @@ control_move (GimpGradientEditor  *editor,
 	      GimpGradientSegment *range_r,
 	      gdouble              delta)
 {
-  GimpGradient *gradient;
+  GimpGradient *gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
   gdouble       ret;
-
-  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
   ret = gimp_gradient_segment_range_move (gradient,
                                           range_l,
