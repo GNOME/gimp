@@ -30,7 +30,6 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpenumcombobox.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 

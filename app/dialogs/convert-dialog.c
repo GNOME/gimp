@@ -36,7 +36,6 @@
 
 #include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpenumcombobox.h"
 #include "widgets/gimpviewablebox.h"
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"

@@ -94,6 +94,16 @@ EXPORTS
 	gimp_dialog_run
 	gimp_dialogs_show_help_button
 	gimp_double_adjustment_update
+	gimp_enum_combo_box_get_type
+	gimp_enum_combo_box_new
+	gimp_enum_combo_box_set_stock_prefix
+	gimp_enum_combo_box_set_visible
+	gimp_enum_store_get_type
+	gimp_enum_store_new_with_range
+	gimp_enum_store_new
+	gimp_enum_store_new_with_values_valist
+	gimp_enum_store_new_with_values
+	gimp_enum_store_set_stock_prefix
 	gimp_file_entry_get_filename
 	gimp_file_entry_get_type
 	gimp_file_entry_new

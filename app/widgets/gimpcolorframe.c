@@ -28,7 +28,6 @@
 #include "core/gimpimage.h"
 
 #include "gimpcolorframe.h"
-#include "gimpenumcombobox.h"
 
 #include "gimp-intl.h"
 

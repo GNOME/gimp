@@ -96,6 +96,10 @@ libgimpwidgets_2_0_la_sources = \
 	gimpcontroller.h	\
 	gimpdialog.c		\
 	gimpdialog.h		\
+	gimpenumstore.c		\
+	gimpenumstore.h		\
+	gimpenumcombobox.c	\
+	gimpenumcombobox.h	\
 	gimpfileentry.c		\
 	gimpfileentry.h		\
 	gimpframe.c		\

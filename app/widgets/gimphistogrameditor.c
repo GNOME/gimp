@@ -35,8 +35,6 @@
 #include "core/gimpimage.h"
 
 #include "gimpdocked.h"
-#include "gimpenumcombobox.h"
-#include "gimpenumstore.h"
 #include "gimphelp-ids.h"
 #include "gimphistogrambox.h"
 #include "gimphistogrameditor.h"

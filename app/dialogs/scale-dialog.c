@@ -27,7 +27,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 
-#include "widgets/gimpenumcombobox.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpsizebox.h"

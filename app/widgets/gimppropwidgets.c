@@ -40,8 +40,6 @@
 
 #include "gimpcolorpanel.h"
 #include "gimpdnd.h"
-#include "gimpenumcombobox.h"
-#include "gimpenumstore.h"
 #include "gimpenumwidgets.h"
 #include "gimpview.h"
 #include "gimppropwidgets.h"

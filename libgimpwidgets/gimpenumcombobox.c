@@ -1,36 +1,35 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpenumcombobox.c
+ * gimpenumcombobox.h
  * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 
 #include "config.h"
 
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
-
-#include "widgets-types.h"
+#include "gimpwidgetstypes.h"
 
 #include "gimpenumcombobox.h"
 #include "gimpenumstore.h"
 
-#include "gimp-intl.h"
+#include "libgimp/libgimp-intl.h"
 
 
 GType
@@ -74,6 +73,8 @@ gimp_enum_combo_box_get_type (void)
  * own #GimpEnumStore and use gimp_enum_combo_box_new_with_model().
  *
  * Return value: a new #GimpEnumComboBox.
+ *
+ * Since: GIMP 2.4
  **/
 GtkWidget *
 gimp_enum_combo_box_new (GType enum_type)
@@ -101,6 +102,8 @@ gimp_enum_combo_box_new (GType enum_type)
  *
  * Attempts to create and set icons for all items in the
  * @combo_box. See gimp_enum_store_set_icons() for more info.
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
@@ -135,6 +138,9 @@ gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
  * #GtkComboBox to set the sensitivity of it's items (bug #135875).
  * It should be removed as soon as this bug is fixed (probably with
  * GTK+-2.6).
+ *
+ * This function is only temporarily in GIMP 2.3, it will not become
+ * part of the GIMP 2.0 API!!
  **/
 void
 gimp_enum_combo_box_set_visible (GimpEnumComboBox              *combo_box,

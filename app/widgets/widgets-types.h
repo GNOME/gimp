@@ -193,8 +193,6 @@ typedef struct _GimpCellRendererViewable     GimpCellRendererViewable;
 /*  misc utilities & constructors  */
 
 typedef struct _GimpDialogFactory            GimpDialogFactory;
-typedef struct _GimpEnumStore                GimpEnumStore;
-typedef struct _GimpEnumComboBox             GimpEnumComboBox;
 typedef struct _GimpUnitStore                GimpUnitStore;
 typedef struct _GimpUnitComboBox             GimpUnitComboBox;
 

@@ -45,8 +45,6 @@
 
 #include "widgets/gimpcolorbar.h"
 #include "widgets/gimpcursor.h"
-#include "widgets/gimpenumcombobox.h"
-#include "widgets/gimpenumstore.h"
 #include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogramview.h"

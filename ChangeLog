@@ -1,3 +1,29 @@
+2005-01-21  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpenumcombobox.[ch]
+	* app/widgets/gimpenumstore.[ch]: moved GimpEnumStore and
+	GimpEnumComboBox from here ...
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.def
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimpenumcombobox.[ch]
+	* libgimpwidgets/gimpenumstore.[ch]: ... to libgimpwidgets.
+
+	* app/dialogs/convert-dialog.c
+	* app/dialogs/scale-dialog.c
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/widgets/gimpcolorframe.c
+	* app/widgets/gimphistogrameditor.c
+	* app/widgets/gimppropwidgets.c
+	* app/widgets/gimpstrokeeditor.c
+	* data/images/gimp-splash.png: changed includes accordingly.
+
 2005-01-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpwidgets-utils.[ch] (gimp_action_get_accel_closure):
