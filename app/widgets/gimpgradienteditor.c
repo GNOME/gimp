@@ -75,6 +75,8 @@
 #include "gimpgradienteditor.h"
 #include "gimpitemfactory.h"
 
+#include "gui/color-notebook.h"
+
 #include "libgimp/gimpintl.h"
 
 
@@ -497,6 +499,16 @@ gimp_gradient_editor_set_data (GimpDataEditor *editor,
   gradient_editor = GIMP_GRADIENT_EDITOR (editor);
 
   GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
+
+  if (editor->data)
+    {
+      if (gradient_editor->color_notebook)
+        {
+          color_notebook_free (gradient_editor->color_notebook);
+          gradient_editor->color_notebook = NULL;
+          gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
+        }
+    }
 
   if (data && ! data->internal)
     gtk_widget_set_sensitive (gradient_editor->control, TRUE);

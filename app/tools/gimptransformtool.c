@@ -353,11 +353,14 @@ gimp_transform_tool_button_press (GimpTool        *tool,
 
               /*  find which handle we're dragging  */
               gimp_transform_tool_oper_update (tool, coords, state, gdisp);
+
+              tr_tool->function = TRANSFORM_CREATING;
             }
         }
     }
 
-  if (tr_tool->function == TRANSFORM_CREATING && gimp_tool_control_is_active (tool->control))
+  if (tr_tool->function == TRANSFORM_CREATING &&
+      gimp_tool_control_is_active (tool->control))
     {
       gint i;
 

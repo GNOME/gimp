@@ -104,13 +104,19 @@ colormap_editor_edit_color_cmd_callback (GtkWidget *widget,
   if (! editor->color_notebook)
     {
       editor->color_notebook =
-	color_notebook_new (_("Edit Indexed Color"),
-                            (const GimpRGB *) &color,
-                            colormap_editor_color_notebook_callback, editor,
-                            FALSE, FALSE);
+	color_notebook_viewable_new (GIMP_VIEWABLE (gimage),
+                                     _("Edit Indexed Color"),
+                                     GIMP_STOCK_CONVERT_INDEXED,
+                                     _("Edit Indexed Image Palette Color"),
+                                     (const GimpRGB *) &color,
+                                     colormap_editor_color_notebook_callback,
+                                     editor,
+                                     FALSE, FALSE);
     }
   else
     {
+      color_notebook_set_viewable (editor->color_notebook,
+                                   GIMP_VIEWABLE (gimage));
       color_notebook_show (editor->color_notebook);
       color_notebook_set_color (editor->color_notebook, &color);
     }

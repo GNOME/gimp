@@ -32,6 +32,7 @@
 #include "core/gimpimage-new.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimpviewabledialog.h"
 
 #include "file-new-dialog.h"
 
@@ -105,29 +106,29 @@ file_new_dialog_create (Gimp      *gimp,
 
   info = g_new0 (NewImageInfo, 1);
 
-  info->gimp           = gimp;
+  info->gimp   = gimp;
+  info->values = gimp_image_new_values_new (gimp, gimage);
 
-  info->values         = gimp_image_new_values_new (gimp, gimage);
+  info->dialog =
+    gimp_viewable_dialog_new (NULL,
+                              _("New Image"), "new_image",
+                              GTK_STOCK_NEW,
+                              _("Create a New Image"),
+                              gimp_standard_help_func,
+                              "dialogs/file_new.html",
 
-  info->confirm_dialog = NULL;
-  info->size           = 0.0;
+                              GTK_STOCK_CANCEL, file_new_cancel_callback,
+                              info, NULL, NULL, FALSE, TRUE,
 
-  info->dialog = gimp_dialog_new (_("New Image"), "new_image",
-				  gimp_standard_help_func,
-				  "dialogs/file_new.html",
-				  GTK_WIN_POS_MOUSE,
-				  FALSE, FALSE, TRUE,
+                              GIMP_STOCK_RESET, file_new_reset_callback,
+                              info, NULL, NULL, FALSE, FALSE,
 
-				  GTK_STOCK_CANCEL, file_new_cancel_callback,
-				  info, NULL, NULL, FALSE, TRUE,
+                              GTK_STOCK_OK, file_new_ok_callback,
+                              info, NULL, NULL, TRUE, FALSE,
 
-				  GIMP_STOCK_RESET, file_new_reset_callback,
-				  info, NULL, NULL, FALSE, FALSE,
+                              NULL);
 
-				  GTK_STOCK_OK, file_new_ok_callback,
-				  info, NULL, NULL, TRUE, FALSE,
-
-				  NULL);
+  gtk_window_set_resizable (GTK_WINDOW (info->dialog), FALSE);
 
   /*  vbox holding the rest of the dialog  */
   top_vbox = gtk_vbox_new (FALSE, 4);

@@ -189,7 +189,7 @@ info_dialog_new_extended (GimpViewable *viewable,
 		    G_CALLBACK (info_dialog_delete_callback),
 		    idialog);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), vbox);
 
@@ -278,8 +278,7 @@ info_dialog_free (InfoDialog *idialog)
 void
 info_dialog_popup (InfoDialog *idialog)
 {
-  if (! idialog)
-    return;
+  g_return_if_fail (idialog != NULL);
 
   if (! GTK_WIDGET_VISIBLE (idialog->shell))
     gtk_widget_show (idialog->shell);
@@ -289,8 +288,7 @@ info_dialog_popup (InfoDialog *idialog)
 void
 info_dialog_popdown (InfoDialog *idialog)
 {
-  if (! idialog)
-    return;
+  g_return_if_fail (idialog != NULL);
   
   if (GTK_WIDGET_VISIBLE (idialog->shell))
     gtk_widget_hide (idialog->shell);

@@ -30,6 +30,7 @@
 
 #include "widgets/gimpgradienteditor.h"
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "color-notebook.h"
@@ -82,12 +83,16 @@ gradient_editor_left_color_cmd_callback (GtkWidget *widget,
   editor->left_saved_dirty    = GIMP_DATA (gradient)->dirty;
   editor->left_saved_segments = gradient_editor_save_selection (editor);
 
-  color_notebook_new (_("Left Endpoint Color"),
-		      &editor->control_sel_l->left_color,
-		      gradient_editor_left_color_changed,
-		      editor,
-		      editor->instant_update,
-		      TRUE);
+  editor->color_notebook =
+    color_notebook_viewable_new (GIMP_VIEWABLE (gradient),
+                                 _("Left Endpoint Color"),
+                                 GIMP_STOCK_TOOL_BLEND,
+                                 _("Gradient Segment's Left Endpoint Color"),
+                                 &editor->control_sel_l->left_color,
+                                 gradient_editor_left_color_changed,
+                                 editor,
+                                 editor->instant_update,
+                                 TRUE);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
 }
@@ -205,12 +210,16 @@ gradient_editor_right_color_cmd_callback (GtkWidget *widget,
   editor->right_saved_dirty    = GIMP_DATA (gradient)->dirty;
   editor->right_saved_segments = gradient_editor_save_selection (editor);
 
-  color_notebook_new (_("Right Endpoint Color"),
-		      &editor->control_sel_l->right_color,
-		      gradient_editor_right_color_changed,
-		      editor,
-		      editor->instant_update,
-		      TRUE);
+  editor->color_notebook =
+    color_notebook_viewable_new (GIMP_VIEWABLE (gradient),
+                                 _("Right Endpoint Color"),
+                                 GIMP_STOCK_TOOL_BLEND,
+                                 _("Gradient Segment's Right Endpoint Color"),
+                                 &editor->control_sel_l->right_color,
+                                 gradient_editor_right_color_changed,
+                                 editor,
+                                 editor->instant_update,
+                                 TRUE);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
 }
@@ -529,29 +538,41 @@ gradient_editor_replicate_cmd_callback (GtkWidget *widget,
   GtkWidget          *label;
   GtkWidget          *scale;
   GtkObject          *scale_data;
+  const gchar        *title;
+  const gchar        *desc;
 
   editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
 
   if (! editor)
     return;
 
+  if (editor->control_sel_l == editor->control_sel_r)
+    {
+      title = _("Replicate Segment");
+      desc  = _("Replicate Gradient Segment");
+    }
+  else
+    {
+      title = _("Replicate Selection");
+      desc  = _("Replicate Gradient Selection");
+    }
+
   dialog =
-    gimp_dialog_new ((editor->control_sel_l == editor->control_sel_r) ?
-		     _("Replicate segment") :
-		     _("Replicate selection"),
-		     "gradient_segment_replicate",
-		     gimp_standard_help_func,
-		     "dialogs/gradient_editor/replicate_segment.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (GIMP_DATA_EDITOR (editor)->data),
+                              title, "gradient_segment_replicate",
+                              GIMP_STOCK_TOOL_BLEND, desc,
+                              gimp_standard_help_func,
+                              "dialogs/gradient_editor/replicate_segment.html",
 
-		     GTK_STOCK_CANCEL, gradient_editor_dialog_cancel_callback,
-		     editor, NULL, NULL, TRUE, TRUE,
+                              GTK_STOCK_CANCEL,
+                              gradient_editor_dialog_cancel_callback,
+                              editor, NULL, NULL, TRUE, TRUE,
 
-		     _("Replicate"), gradient_editor_replicate_callback,
-		     editor, NULL, NULL, FALSE, FALSE,
+                              _("Replicate"),
+                              gradient_editor_replicate_callback,
+                              editor, NULL, NULL, FALSE, FALSE,
 
-		     NULL);
+                              NULL);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -592,7 +613,7 @@ gradient_editor_split_midpoint_cmd_callback (GtkWidget *widget,
                                              gpointer   data,
                                              guint      action)
 {
-  GimpGradientEditor      *editor;
+  GimpGradientEditor  *editor;
   GimpGradient        *gradient;
   GimpGradientSegment *seg, *lseg, *rseg;
 
@@ -631,30 +652,42 @@ gradient_editor_split_uniformly_cmd_callback (GtkWidget *widget,
   GtkWidget          *label;
   GtkWidget          *scale;
   GtkObject          *scale_data;
+  const gchar        *title;
+  const gchar        *desc;
 
   editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
 
   if (! editor)
     return;
 
+  if (editor->control_sel_l == editor->control_sel_r)
+    {
+      title = _("Split Segment Uniformly");
+      desc  = _("Split Gradient Segment Uniformly");
+    }
+  else
+    {
+      title = _("Split Segments Uniformly");
+      desc  = _("Split Gradient Segments Uniformly");
+    }
+
   /*  Create dialog window  */
   dialog =
-    gimp_dialog_new ((editor->control_sel_l == editor->control_sel_r) ?
-		     _("Split Segment Uniformly") :
-		     _("Split Segments Uniformly"),
-		     "gradient_segment_split_uniformly",
-		     gimp_standard_help_func,
-		     "dialogs/gradient_editor/split_segments_uniformly.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (GIMP_DATA_EDITOR (editor)->data),
+                              title, "gradient_segment_split_uniformly",
+                              GIMP_STOCK_TOOL_BLEND, desc,
+                              gimp_standard_help_func,
+                              "dialogs/gradient_editor/split_segments_uniformly.html",
 
-		     GTK_STOCK_CANCEL, gradient_editor_dialog_cancel_callback,
-		     editor, NULL, NULL, FALSE, TRUE,
+                              GTK_STOCK_CANCEL,
+                              gradient_editor_dialog_cancel_callback,
+                              editor, NULL, NULL, FALSE, TRUE,
 
-		     _("Split"), gradient_editor_split_uniform_callback,
-		     editor, NULL, NULL, TRUE, FALSE,
+                              _("Split"),
+                              gradient_editor_split_uniform_callback,
+                              editor, NULL, NULL, TRUE, FALSE,
 
-		     NULL);
+                              NULL);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 0);
@@ -1059,24 +1092,26 @@ gradient_editor_menu_update (GtkItemFactory *factory,
 
   if (! selection)
     {
-      SET_LABEL ("/flip",             _("Flip Segment"));
-      SET_LABEL ("/replicate",        _("Replicate Segment"));
       SET_LABEL ("/blendingfunction", _("Blending Function for Segment"));
       SET_LABEL ("/coloringtype",     _("Coloring Type for Segment"));
+
+      SET_LABEL ("/flip",             _("Flip Segment"));
+      SET_LABEL ("/replicate",        _("Replicate Segment..."));
       SET_LABEL ("/splitmidpoint",    _("Split Segment at Midpoint"));
-      SET_LABEL ("/splituniformly",   _("Split Segment Uniformly"));
+      SET_LABEL ("/splituniformly",   _("Split Segment Uniformly..."));
       SET_LABEL ("/delete",           _("Delete Segment"));
       SET_LABEL ("/recenter",         _("Re-center Segment's Midpoint"));
       SET_LABEL ("/redistribute",     _("Re-distribute Handles in Segment"));
     }
   else
     {
-      SET_LABEL ("/flip",             _("Flip Selection"));
-      SET_LABEL ("/replicate",        _("Replicate Selection"));
       SET_LABEL ("/blendingfunction", _("Blending Function for Selection"));
       SET_LABEL ("/coloringtype",     _("Coloring Type for Selection"));
+
+      SET_LABEL ("/flip",             _("Flip Selection"));
+      SET_LABEL ("/replicate",        _("Replicate Selection..."));
       SET_LABEL ("/splitmidpoint",    _("Split Segments at Midpoints"));
-      SET_LABEL ("/splituniformly",   _("Split Segments Uniformly"));
+      SET_LABEL ("/splituniformly",   _("Split Segments Uniformly..."));
       SET_LABEL ("/delete",           _("Delete Selection"));
       SET_LABEL ("/recenter",         _("Re-center Midpoints in Selection"));
       SET_LABEL ("/redistribute",     _("Re-distribute Handles in Selection"));
@@ -1163,18 +1198,6 @@ gradient_editor_left_color_changed (ColorNotebook      *cnb,
 
   switch (state)
     {
-    case COLOR_NOTEBOOK_OK:
-      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
-                                              editor->control_sel_r,
-                                              (GimpRGB *) color,
-                                              &editor->control_sel_r->right_color,
-                                              TRUE, TRUE);
-      gimp_gradient_segments_free (editor->left_saved_segments);
-      gimp_data_dirty (GIMP_DATA (gradient));
-      color_notebook_free (cnb);
-      gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
-      break;
-
     case COLOR_NOTEBOOK_UPDATE:
       gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
                                               editor->control_sel_r,
@@ -1184,11 +1207,25 @@ gradient_editor_left_color_changed (ColorNotebook      *cnb,
       gimp_data_dirty (GIMP_DATA (gradient));
       break;
 
+    case COLOR_NOTEBOOK_OK:
+      gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
+                                              editor->control_sel_r,
+                                              (GimpRGB *) color,
+                                              &editor->control_sel_r->right_color,
+                                              TRUE, TRUE);
+      gimp_gradient_segments_free (editor->left_saved_segments);
+      gimp_data_dirty (GIMP_DATA (gradient));
+      color_notebook_free (cnb);
+      editor->color_notebook = NULL;
+      gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
+      break;
+
     case COLOR_NOTEBOOK_CANCEL:
       gradient_editor_replace_selection (editor, editor->left_saved_segments);
       GIMP_DATA (gradient)->dirty = editor->left_saved_dirty;
       gimp_gradient_editor_update (editor, GRAD_UPDATE_GRADIENT);
       color_notebook_free (cnb);
+      editor->color_notebook = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
       break;
     }
@@ -1229,6 +1266,7 @@ gradient_editor_right_color_changed (ColorNotebook      *cnb,
       gimp_gradient_segments_free (editor->right_saved_segments);
       gimp_data_dirty (GIMP_DATA (gradient));
       color_notebook_free (cnb);
+      editor->color_notebook = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
       break;
 
@@ -1236,6 +1274,7 @@ gradient_editor_right_color_changed (ColorNotebook      *cnb,
       gradient_editor_replace_selection (editor, editor->right_saved_segments);
       GIMP_DATA (gradient)->dirty = editor->right_saved_dirty;
       color_notebook_free (cnb);
+      editor->color_notebook = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
       break;
     }

@@ -1,3 +1,69 @@
+2002-09-01  Michael Natterer  <mitch@gimp.org>
+
+	GimpViewableDialogs everywhere, cleanup:
+
+	* libgimpwidgets/gimpstock.c: added texts for the RESIZE, SCALE
+	and CROP stock items.
+
+	* app/widgets/gimpviewabledialog.c: update the title when the
+	viewable's name changes.
+
+	* app/gui/color-notebook.[ch]: added color_notebook_viewable_new()
+	which creates a GimpViewableDialog.
+
+	* app/widgets/gimpgradienteditor.[ch]
+	* app/gui/colormap-editor-commands.c
+	* app/gui/file-new-dialog.c
+	* app/gui/gradient-editor-commands.c
+	* app/gui/palette-editor-commands.c
+	* app/undo_history.c: use GimpViewableDialogs and the new
+	color_notebook constructor.
+
+	* app/gui/convert-dialog.c: #include "widgets/gimpviewabledialog.h"
+
+	* app/gui/image-commands.c
+	* app/gui/info-dialog.c
+	* app/gui/resize-dialog.c: minor cleanups.
+
+	* app/gui/info-window.c: cleaned up the whole thing, esp. the
+	"Extended" page. Added HSV color display to the color picker
+	frame.  Set the icons as frame titles, stuff...
+
+	* app/tools/gimpimagemaptool.[ch]: removed "shell_title",
+	"shell_name" and "stock_id" from the GimpImageMapTool struct
+	because they can be obtained from the tool's GimpToolInfo object.
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: changed accordingly.
+
+	* app/tools/gimphistogramtool.c: same here: take values from
+	tool->tool_info instead of hardcoding them.
+
+	* app/tools/gimpcroptool.[ch]: removed the static crop dialog
+	variables and added them to the GimpCropTool struct. Feels safer
+	and makes the callback code much simpler. Use stock items for the
+	dialog's "Resize" and "Crop" buttons.
+
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimprotatetool.c: for consistency don't name the tools
+	"Blah Tool", also the dialog titles need to match the menu
+	entries.
+
+	Unrelated:
+
+	* libgimpwidgets/gimpwidgets.c: the recently changed, gtk-doc
+	comment was correct, as gtk-doc takes the parameter names from
+	the header, not the .c file.
+
+	* app/tools/gimptransformtool.c: set the transform tool's state to
+	TRANSFORM_CREATING after changing displays, so the initial matrix
+	components are saved correctly for the "Reset" function.
+
 2002-09-01  Manish Singh  <yosh@gimp.org>
 
 	* modules/Makefile.am: use AM_CPPFLAGS instead of CPPFLAGS

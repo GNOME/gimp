@@ -100,18 +100,22 @@ palette_editor_edit_color_cmd_callback (GtkWidget *widget,
   if (! editor->color_notebook)
     {
       editor->color_notebook =
-	color_notebook_new (_("Edit Palette Color"),
-			    (const GimpRGB *) &editor->color->color,
-			    palette_editor_color_notebook_callback,
-			    editor,
-			    FALSE,
-			    FALSE);
+	color_notebook_viewable_new (GIMP_VIEWABLE (palette),
+                                     _("Edit Palette Color"),
+                                     GTK_STOCK_SELECT_COLOR,
+                                     _("Edit Color Palette Entry"),
+                                     (const GimpRGB *) &editor->color->color,
+                                     palette_editor_color_notebook_callback,
+                                     editor,
+                                     FALSE, FALSE);
       editor->color_notebook_active = TRUE;
     }
   else
     {
       if (! editor->color_notebook_active)
 	{
+          color_notebook_set_viewable (editor->color_notebook,
+                                       GIMP_VIEWABLE (palette));
 	  color_notebook_show (editor->color_notebook);
 	  editor->color_notebook_active = TRUE;
 	}

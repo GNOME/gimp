@@ -35,6 +35,7 @@
 #include "tools/tool_manager.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimpviewabledialog.h"
 
 #include "palette-select.h"
 

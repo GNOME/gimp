@@ -138,13 +138,10 @@ gimp_posterize_tool_init (GimpPosterizeTool *posterize_tool)
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (posterize_tool);
 
-  image_map_tool->shell_title = _("Posterize");
-  image_map_tool->shell_name  = "posterize";
   image_map_tool->shell_desc  = _("Posterize (Reduce Number of Colors)");
-  image_map_tool->stock_id    = GIMP_STOCK_TOOL_POSTERIZE;
 
-  posterize_tool->levels = POSTERIZE_DEFAULT_LEVELS;
-  posterize_tool->lut    = gimp_lut_new ();
+  posterize_tool->levels      = POSTERIZE_DEFAULT_LEVELS;
+  posterize_tool->lut         = gimp_lut_new ();
 }
 
 static void

@@ -31,27 +31,40 @@ typedef enum
 } ColorNotebookState;
 
 
-typedef void (* ColorNotebookCallback) (ColorNotebook           *cnb,
-					const GimpRGB           *color,
-					ColorNotebookState       state,
-					gpointer                 data);
+typedef void (* ColorNotebookCallback) (ColorNotebook      *cnb,
+					const GimpRGB      *color,
+					ColorNotebookState  state,
+					gpointer            callback_data);
 
 
-ColorNotebook * color_notebook_new       (const gchar           *title,
-					  const GimpRGB         *color,
-					  ColorNotebookCallback  callback,
-					  gpointer               data,
-				          gboolean               wants_update,
-					  gboolean               show_aplha);
+ColorNotebook * color_notebook_new          (const gchar           *title,
+                                             const GimpRGB         *color,
+                                             ColorNotebookCallback  callback,
+                                             gpointer               callback_data,
+                                             gboolean               wants_update,
+                                             gboolean               show_aplha);
 
-void            color_notebook_show      (ColorNotebook         *cnb);
-void            color_notebook_hide      (ColorNotebook         *cnb);
-void            color_notebook_free      (ColorNotebook         *cnb);
+ColorNotebook * color_notebook_viewable_new (GimpViewable          *viewable,
+                                             const gchar           *title,
+                                             const gchar           *stock_id,
+                                             const gchar           *desc,
+                                             const GimpRGB         *color,
+                                             ColorNotebookCallback  callback,
+                                             gpointer               callback_data,
+                                             gboolean               wants_update,
+                                             gboolean               show_alpha);
 
-void            color_notebook_set_color (ColorNotebook         *cnb,
-					  const GimpRGB         *color);
-void            color_notebook_get_color (ColorNotebook         *cnb,
-					  GimpRGB               *color);
+void            color_notebook_set_viewable (ColorNotebook         *cnb,
+                                             GimpViewable          *viewable);
+
+void            color_notebook_show         (ColorNotebook         *cnb);
+void            color_notebook_hide         (ColorNotebook         *cnb);
+void            color_notebook_free         (ColorNotebook         *cnb);
+
+void            color_notebook_set_color    (ColorNotebook         *cnb,
+                                             const GimpRGB         *color);
+void            color_notebook_get_color    (ColorNotebook         *cnb,
+                                             GimpRGB               *color);
 
 
 /*  color history functions  */

@@ -35,6 +35,7 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimphistogramview.h"
@@ -90,7 +91,7 @@ static void   gimp_histogram_tool_control    (GimpTool             *tool,
 					      GimpToolAction        action,
 					      GimpDisplay          *gdisp);
 
-static HistogramToolDialog *  histogram_tool_dialog_new (void);
+static HistogramToolDialog *  histogram_tool_dialog_new (GimpToolInfo *tool_info);
 
 static void   histogram_tool_close_callback   (GtkWidget            *widget,
 					       gpointer              data);
@@ -196,7 +197,7 @@ gimp_histogram_tool_initialize (GimpTool    *tool,
 
   /*  The histogram_tool dialog  */
   if (! histogram_dialog)
-    histogram_dialog = histogram_tool_dialog_new ();
+    histogram_dialog = histogram_tool_dialog_new (tool->tool_info);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -332,7 +333,7 @@ histogram_tool_dialog_update (HistogramToolDialog *htd,
 /***************************/
 
 static HistogramToolDialog *
-histogram_tool_dialog_new (void)
+histogram_tool_dialog_new (GimpToolInfo *tool_info)
 {
   HistogramToolDialog *htd;
   GtkWidget *hbox;
@@ -361,9 +362,9 @@ histogram_tool_dialog_new (void)
   /*  The shell and main vbox  */
   htd->shell =
     gimp_viewable_dialog_new (NULL,
-                              _("Histogram"),
-                              "histogram",
-                              GIMP_STOCK_TOOL_HISTOGRAM,
+                              tool_info->blurb,
+                              GIMP_OBJECT (tool_info)->name,
+                              tool_info->stock_id,
                               _("View Image Histogram"),
                               tool_manager_help_func, NULL,
 

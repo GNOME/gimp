@@ -240,14 +240,11 @@ gimp_curves_tool_init (GimpCurvesTool *c_tool)
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (c_tool);
 
-  image_map_tool->shell_title = _("Curves");
-  image_map_tool->shell_name  = "curves";
   image_map_tool->shell_desc  = _("Adjust Color Curves");
-  image_map_tool->stock_id    = GIMP_STOCK_TOOL_CURVES;
 
-  c_tool->curves  = g_new0 (Curves, 1);
-  c_tool->lut     = gimp_lut_new ();
-  c_tool->channel = GIMP_HISTOGRAM_VALUE;
+  c_tool->curves              = g_new0 (Curves, 1);
+  c_tool->lut                 = gimp_lut_new ();
+  c_tool->channel             = GIMP_HISTOGRAM_VALUE;
 
   curves_init (c_tool->curves);
 

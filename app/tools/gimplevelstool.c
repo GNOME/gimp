@@ -220,14 +220,11 @@ gimp_levels_tool_init (GimpLevelsTool *l_tool)
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (l_tool);
 
-  image_map_tool->shell_title = _("Levels");
-  image_map_tool->shell_name  = "levels";
   image_map_tool->shell_desc  = _("Adjust Color Levels");
-  image_map_tool->stock_id    = GIMP_STOCK_TOOL_LEVELS;
 
-  l_tool->lut     = gimp_lut_new ();
-  l_tool->hist    = gimp_histogram_new ();
-  l_tool->channel = GIMP_HISTOGRAM_VALUE;
+  l_tool->lut                 = gimp_lut_new ();
+  l_tool->hist                = gimp_histogram_new ();
+  l_tool->channel             = GIMP_HISTOGRAM_VALUE;
 }
 
 static void

@@ -138,7 +138,7 @@ gimp_measure_tool_register (GimpToolRegisterCallback  callback,
                 measure_tool_options_new,
                 FALSE,
                 "gimp-measure-tool",
-                _("Measure Tool"),
+                _("Measure"),
                 _("Measure angles and lengths"),
                 N_("/Tools/Measure"), NULL,
                 NULL, "tools/measure.html",
@@ -391,9 +391,10 @@ gimp_measure_tool_button_press (GimpTool        *tool,
                               ! GTK_WIDGET_VISIBLE (shell->statusbar)))
     {
       measure_tool_info = info_dialog_new (NULL,
-                                           _("Measure Tool"), "measure",
-                                           GIMP_STOCK_TOOL_MEASURE,
-                                           _("Measure Tool Information"),
+                                           tool->tool_info->blurb,
+                                           GIMP_OBJECT (tool->tool_info)->name,
+                                           tool->tool_info->stock_id,
+                                           _("Measure Distances and Angles"),
 					   tool_manager_help_func, NULL);
       info_dialog_add_label (measure_tool_info, _("Distance:"), distance_buf);
       info_dialog_add_label (measure_tool_info, _("Angle:"), angle_buf);

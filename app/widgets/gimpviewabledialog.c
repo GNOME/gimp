@@ -39,6 +39,9 @@
 static void   gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass);
 static void   gimp_viewable_dialog_init       (GimpViewableDialog      *dialog);
 
+static void   gimp_viewable_dialog_name_changed (GimpObject         *object,
+                                                 GimpViewableDialog *dialog);
+
 
 static GimpDialogClass *parent_class = NULL;
 
@@ -150,15 +153,17 @@ gimp_viewable_dialog_new (GimpViewable       *viewable,
 {
   GimpViewableDialog *dialog;
   va_list             args;
+  gchar              *escaped;
   gchar              *str;
 
   g_return_val_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (wmclass_name != NULL, NULL);
 
-  dialog = g_object_new (GIMP_TYPE_VIEWABLE_DIALOG, NULL);
+  dialog = g_object_new (GIMP_TYPE_VIEWABLE_DIALOG,
+                         "title", title,
+                         NULL);
 
-  gtk_window_set_title (GTK_WINDOW (dialog), title);
   gtk_window_set_wmclass (GTK_WINDOW (dialog), wmclass_name, "Gimp");
 
   if (help_func)
@@ -171,7 +176,10 @@ gimp_viewable_dialog_new (GimpViewable       *viewable,
   gtk_image_set_from_stock (GTK_IMAGE (dialog->icon), stock_id,
                             GTK_ICON_SIZE_LARGE_TOOLBAR);
 
-  str = g_strdup_printf ("<b><big>%s</big></b>", desc);
+  escaped = g_markup_escape_text (desc, -1);
+  str = g_strdup_printf ("<b><big>%s</big></b>", escaped);
+  g_free (escaped);
+
   gtk_label_set_markup (GTK_LABEL (dialog->desc_label), str);
   g_free (str);
 
@@ -185,33 +193,71 @@ void
 gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
                                    GimpViewable       *viewable)
 {
+  g_return_if_fail (GIMP_IS_VIEWABLE_DIALOG (dialog));
+  g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
+
+  if (dialog->preview)
+    {
+      GimpViewable *old_viewable;
+
+      old_viewable = GIMP_PREVIEW (dialog->preview)->viewable;
+
+      if (viewable == old_viewable)
+        return;
+
+      g_signal_handlers_disconnect_by_func (G_OBJECT (old_viewable),
+                                            gimp_viewable_dialog_name_changed,
+                                            dialog);
+
+      gtk_widget_destroy (dialog->preview);
+      dialog->preview = NULL;
+    }
+
+  if (viewable)
+    {
+      g_signal_connect_object (G_OBJECT (viewable),
+                               GIMP_VIEWABLE_GET_CLASS (viewable)->name_changed_signal,
+                               G_CALLBACK (gimp_viewable_dialog_name_changed),
+                               G_OBJECT (dialog),
+                               0);
+
+      gimp_viewable_dialog_name_changed (GIMP_OBJECT (viewable), dialog);
+
+      dialog->preview = gimp_preview_new (viewable, 32, 1, TRUE);
+      gtk_box_pack_end (GTK_BOX (dialog->icon->parent), dialog->preview,
+                        FALSE, FALSE, 2);
+      gtk_widget_show (dialog->preview);
+    }
+}
+
+
+/*  private functions  */
+
+static void
+gimp_viewable_dialog_name_changed (GimpObject         *object,
+                                   GimpViewableDialog *dialog)
+{
   const gchar *name;
   gchar       *str;
 
-  g_return_if_fail (GIMP_IS_VIEWABLE_DIALOG (dialog));
-  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+  name = gimp_object_get_name (object);
 
-  if (dialog->preview)
-    gtk_widget_destroy (dialog->preview);
-
-  name = gimp_object_get_name (GIMP_OBJECT (viewable));
-
-  if (GIMP_IS_ITEM (viewable))
+  if (GIMP_IS_ITEM (object))
     {
       const gchar *uri;
       gchar       *basename;
 
-      uri = gimp_image_get_uri (gimp_item_get_image (GIMP_ITEM (viewable)));
+      uri = gimp_image_get_uri (gimp_item_get_image (GIMP_ITEM (object)));
 
       basename = file_utils_uri_to_utf8_basename (uri);
       str = g_strdup_printf ("%s (%s)", name, basename);
       g_free (basename);
     }
-  else if (GIMP_IS_IMAGE (viewable))
+  else if (GIMP_IS_IMAGE (object))
     {
       const gchar *uri;
 
-      uri = gimp_image_get_uri (GIMP_IMAGE (viewable));
+      uri = gimp_image_get_uri (GIMP_IMAGE (object));
 
       str = file_utils_uri_to_utf8_basename (uri);
     }
@@ -222,9 +268,4 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
 
   gtk_label_set_text (GTK_LABEL (dialog->viewable_label), str);
   g_free (str);
-
-  dialog->preview = gimp_preview_new (viewable, 32, 1, TRUE);
-  gtk_box_pack_end (GTK_BOX (dialog->icon->parent), dialog->preview,
-                    FALSE, FALSE, 2);
-  gtk_widget_show (dialog->preview);
 }

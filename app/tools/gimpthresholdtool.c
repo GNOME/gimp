@@ -158,13 +158,10 @@ gimp_threshold_tool_init (GimpThresholdTool *t_tool)
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (t_tool);
 
-  image_map_tool->shell_title = _("Threshold");
-  image_map_tool->shell_name  = "threshold";
   image_map_tool->shell_desc  = _("Apply Threshold");
-  image_map_tool->stock_id    = GIMP_STOCK_TOOL_THRESHOLD;
 
-  t_tool->threshold = g_new0 (Threshold, 1);
-  t_tool->hist      = gimp_histogram_new ();
+  t_tool->threshold           = g_new0 (Threshold, 1);
+  t_tool->hist                = gimp_histogram_new ();
 
   t_tool->threshold->low_threshold  = 127;
   t_tool->threshold->high_threshold = 255;

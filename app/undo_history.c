@@ -66,6 +66,8 @@
 
 #include "file/file-utils.h"
 
+#include "widgets/gimpviewabledialog.h"
+
 #include "gimprc.h"
 #include "undo.h"
 #include "undo_types.h"
@@ -814,28 +816,18 @@ undo_history_new (GimpImage *gimage)
                     st);
 
   /*  The shell and main vbox  */
-  {
-    gchar *basename;
-    gchar *title;
+  st->shell =
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
+                              _("Undo History"), "undo_history",
+                              GTK_STOCK_UNDO,
+                              _("Image Undo History"),
+                              gimp_standard_help_func,
+                              "dialogs/undo_history.html",
 
-    basename = file_utils_uri_to_utf8_basename (gimp_image_get_uri (gimage));
+                              GTK_STOCK_CLOSE, undo_history_close_callback,
+                              st, NULL, NULL, TRUE, TRUE,
 
-    title = g_strdup_printf (_("Undo History: %s"), basename);
-
-    g_free (basename);
-
-    st->shell = gimp_dialog_new (title, "undo_history",
-				 gimp_standard_help_func,
-				 "dialogs/undo_history.html",
-				 GTK_WIN_POS_NONE,
-				 FALSE, TRUE, FALSE,
-
-				 GTK_STOCK_CLOSE, undo_history_close_callback,
-				 st, NULL, NULL, TRUE, TRUE,
-
-				 NULL);
-    g_free (title);
-  }
+                              NULL);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);

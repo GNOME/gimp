@@ -27,8 +27,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
-
-#include "file/file-utils.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpviewabledialog.h"
 
@@ -137,8 +136,7 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
   image_map_tool->image_map   = NULL;
   image_map_tool->preview     = TRUE;
 
-  image_map_tool->shell_title = NULL;
-  image_map_tool->shell_name  = NULL;
+  image_map_tool->shell_desc  = NULL;
   image_map_tool->shell       = NULL;
   image_map_tool->main_vbox   = NULL;
 }
@@ -198,16 +196,19 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
 
   if (! image_map_tool->shell)
     {
-      GtkWidget *shell;
-      GtkWidget *vbox;
-      GtkWidget *hbox;
-      GtkWidget *toggle;
+      GimpToolInfo *tool_info;
+      GtkWidget    *shell;
+      GtkWidget    *vbox;
+      GtkWidget    *hbox;
+      GtkWidget    *toggle;
+
+      tool_info = tool->tool_info;
 
       image_map_tool->shell = shell =
         gimp_viewable_dialog_new (NULL,
-                                  image_map_tool->shell_title,
-                                  image_map_tool->shell_name,
-                                  image_map_tool->stock_id,
+                                  tool_info->blurb,
+                                  GIMP_OBJECT (tool_info)->name,
+                                  tool_info->stock_id,
                                   image_map_tool->shell_desc,
                                   tool_manager_help_func, NULL,
 

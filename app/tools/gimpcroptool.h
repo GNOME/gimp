@@ -20,6 +20,11 @@
 #define  __GIMP_CROP_TOOL_H__
 
 
+#ifdef __GNUC__
+#warning FIXME #include "gui/gui-types.h"
+#endif
+#include "gui/gui-types.h"
+
 #include "gimpdrawtool.h"
 
 
@@ -52,6 +57,15 @@ struct _GimpCropTool
   gint          dx2, dy2;   /*                              */
 
   gint          dcw, dch;   /*  width and height of corners */
+
+  /* the crop dialog */
+  InfoDialog   *crop_info;
+
+  gdouble       orig_vals[2];
+  gdouble       size_vals[2];
+
+  GtkWidget    *origin_sizeentry;
+  GtkWidget    *size_sizeentry;
 };
 
 struct _GimpCropToolClass

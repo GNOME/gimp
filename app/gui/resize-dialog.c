@@ -169,6 +169,7 @@ resize_widget_new (GimpImage    *gimage,
     const gchar *wmclass      = NULL;
     const gchar *window_title = NULL;
     const gchar *stock_id     = NULL;
+    const gchar *window_desc  = NULL;
     gchar *help_page          = NULL;
 
     switch (type)
@@ -181,12 +182,15 @@ resize_widget_new (GimpImage    *gimage,
 	  case ResizeLayer:
 	    wmclass      = "scale_layer";
 	    window_title = _("Scale Layer");
+            window_desc  = _("Scale Layer Options");
 	    help_page    = "layers/dialogs/scale_layer.html";
 	    frame        = gtk_frame_new (_("Size"));
 	    break;
+
 	  case ResizeImage:
 	    wmclass      = "scale_image";
 	    window_title = _("Scale Image");
+            window_desc  = _("Scale Image Options");
 	    help_page    = "dialogs/scale_image.html";
 	    frame        = gtk_frame_new (_("Pixel Dimensions"));
 	    break;
@@ -200,12 +204,15 @@ resize_widget_new (GimpImage    *gimage,
 	  {
 	  case ResizeLayer:
 	    wmclass      = "resize_layer";
-	    window_title = _("Set Layer Boundary Size");
+	    window_title = _("Layer Boundary Size");
+            window_desc  = _("Set Layer Boundary Size");
 	    help_page    = "layers/dialogs/layer_boundary_size.html";
 	    break;
+
 	  case ResizeImage:
 	    wmclass      = "resize_image";
-	    window_title = _("Set Canvas Size");
+	    window_title = _("Canvas Size");
+            window_desc  = _("Set Image Canvas Size");
 	    help_page    = "dialogs/set_canvas_size.html";
 	    break;
 	  }
@@ -217,7 +224,7 @@ resize_widget_new (GimpImage    *gimage,
       gimp_viewable_dialog_new (GIMP_IS_VIEWABLE (object) ?
                                 GIMP_VIEWABLE (object) : GIMP_VIEWABLE (gimage),
                                 window_title, wmclass,
-                                stock_id, window_title,
+                                stock_id, window_desc,
                                 gimp_standard_help_func, help_page,
 
                                 GTK_STOCK_CANCEL, 
@@ -425,6 +432,9 @@ resize_widget_new (GimpImage    *gimage,
   gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (private->constrain), TRUE);
   gtk_table_attach_defaults (GTK_TABLE (table2), private->constrain, 1, 2, 0, 2);
   gtk_widget_show (private->constrain);
+
+  gimp_help_set_help_data (GIMP_CHAIN_BUTTON (private->constrain)->button,
+                           _("Constrain aspect ratio"), NULL);
 
   gtk_widget_show (table2);
   gtk_widget_show (table);
