@@ -163,6 +163,7 @@ EXPORTS
 	gimp_preview_area_set_max_size
 	gimp_preview_area_set_offsets
 	gimp_preview_draw
+	gimp_preview_get_position
 	gimp_preview_get_size
 	gimp_preview_get_type
 	gimp_preview_get_update
@@ -183,7 +184,6 @@ EXPORTS
 	gimp_scale_entry_new
 	gimp_scale_entry_set_logarithmic
 	gimp_scale_entry_set_sensitive
-	gimp_scrolled_preview_get_position
 	gimp_scrolled_preview_get_type
 	gimp_size_entry_add_field
 	gimp_size_entry_attach_label

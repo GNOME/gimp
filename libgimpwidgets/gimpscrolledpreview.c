@@ -31,8 +31,10 @@
 
 #include "libgimp/libgimp-intl.h"
 
+
 #define POPUP_SIZE       100
 #define PEN_WIDTH          3
+
 
 static void      gimp_scrolled_preview_class_init          (GimpScrolledPreviewClass *klass);
 static void      gimp_scrolled_preview_init                (GimpScrolledPreview      *preview);
@@ -50,9 +52,9 @@ static gboolean  gimp_scrolled_preview_area_event          (GtkWidget           
                                                             GimpScrolledPreview      *preview);
 
 static void      gimp_scrolled_preview_h_scroll            (GtkAdjustment            *hadj,
-                                                            GimpScrolledPreview      *preview);
+                                                            GimpPreview              *preview);
 static void      gimp_scrolled_preview_v_scroll            (GtkAdjustment            *vadj,
-                                                            GimpScrolledPreview      *preview);
+                                                            GimpPreview              *preview);
 
 static gboolean  gimp_scrolled_preview_nav_button_press    (GtkWidget                *widget,
                                                             GdkEventButton           *event,
@@ -70,7 +72,9 @@ static gboolean  gimp_scrolled_preview_nav_popup_expose    (GtkWidget           
                                                             GimpScrolledPreview      *preview);
 static void      gimp_scrolled_preview_set_cursor          (GimpPreview              *preview);
 
+
 static GimpPreviewClass *parent_class = NULL;
+
 
 GType
 gimp_scrolled_preview_get_type (void)
@@ -111,8 +115,6 @@ gimp_scrolled_preview_class_init (GimpScrolledPreviewClass *klass)
 
   object_class->dispose      = gimp_scrolled_preview_dispose;
 
-  klass->draw_thumb          = NULL;
-
   preview_class->set_cursor  = gimp_scrolled_preview_set_cursor;
 }
 
@@ -122,11 +124,8 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
   GtkWidget *image;
   GtkObject *adj;
 
-  preview->xoff       = 0;
-  preview->yoff       = 0;
-  preview->in_drag    = FALSE;
-
-  preview->nav_popup  = NULL;
+  preview->in_drag   = FALSE;
+  preview->nav_popup = NULL;
 
   /*  scrollbars  */
   adj = gtk_adjustment_new (0, 0, GIMP_PREVIEW (preview)->width - 1, 1.0,
@@ -283,7 +282,7 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
 
   if (GTK_WIDGET_VISIBLE (preview->vscr) &&
       GTK_WIDGET_VISIBLE (preview->hscr) &&
-      GIMP_SCROLLED_PREVIEW_GET_CLASS (preview)->draw_thumb)
+      GIMP_PREVIEW_GET_CLASS (preview)->draw_thumb)
     {
       gtk_widget_show (preview->nav_icon);
     }
@@ -314,8 +313,8 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
         case 1:
           gtk_widget_get_pointer (area, &preview->drag_x, &preview->drag_y);
 
-          preview->drag_xoff = preview->xoff;
-          preview->drag_yoff = preview->yoff;
+          preview->drag_xoff = GIMP_PREVIEW (preview)->xoff;
+          preview->drag_yoff = GIMP_PREVIEW (preview)->yoff;
 
           preview->in_drag = TRUE;
           gtk_grab_add (area);
@@ -350,11 +349,18 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
           dy = y - preview->drag_y;
 
           xoff = CLAMP (preview->drag_xoff - dx,
-                        0, GIMP_PREVIEW (preview)->xmax - GIMP_PREVIEW (preview)->xmin - GIMP_PREVIEW (preview)->width);
+                        0,
+                        GIMP_PREVIEW (preview)->xmax -
+                        GIMP_PREVIEW (preview)->xmin -
+                        GIMP_PREVIEW (preview)->width);
           yoff = CLAMP (preview->drag_yoff - dy,
-                        0, GIMP_PREVIEW (preview)->ymax - GIMP_PREVIEW (preview)->ymin - GIMP_PREVIEW (preview)->height);
+                        0,
+                        GIMP_PREVIEW (preview)->ymax -
+                        GIMP_PREVIEW (preview)->ymin -
+                        GIMP_PREVIEW (preview)->height);
 
-          if (preview->xoff != xoff || preview->yoff != yoff)
+          if (GIMP_PREVIEW (preview)->xoff != xoff ||
+              GIMP_PREVIEW (preview)->yoff != yoff)
             {
               gtk_range_set_value (GTK_RANGE (preview->hscr), xoff);
               gtk_range_set_value (GTK_RANGE (preview->vscr), yoff);
@@ -373,34 +379,34 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
 }
 
 static void
-gimp_scrolled_preview_h_scroll (GtkAdjustment       *hadj,
-                                GimpScrolledPreview *preview)
+gimp_scrolled_preview_h_scroll (GtkAdjustment *hadj,
+                                GimpPreview   *preview)
 {
   preview->xoff = hadj->value;
 
-  gimp_preview_area_set_offsets (GIMP_PREVIEW_AREA (GIMP_PREVIEW (preview)->area),
+  gimp_preview_area_set_offsets (GIMP_PREVIEW_AREA (preview->area),
                                  preview->xoff, preview->yoff);
 
-  if (! preview->in_drag)
+  if (! GIMP_SCROLLED_PREVIEW (preview)->in_drag)
     {
-      gimp_preview_draw (GIMP_PREVIEW (preview));
-      gimp_preview_invalidate (GIMP_PREVIEW (preview));
+      gimp_preview_draw (preview);
+      gimp_preview_invalidate (preview);
     }
 }
 
 static void
-gimp_scrolled_preview_v_scroll (GtkAdjustment        *vadj,
-                                GimpScrolledPreview  *preview)
+gimp_scrolled_preview_v_scroll (GtkAdjustment *vadj,
+                                GimpPreview   *preview)
 {
   preview->yoff = vadj->value;
 
-  gimp_preview_area_set_offsets (GIMP_PREVIEW_AREA (GIMP_PREVIEW (preview)->area),
+  gimp_preview_area_set_offsets (GIMP_PREVIEW_AREA (preview->area),
                                  preview->xoff, preview->yoff);
 
-  if (! preview->in_drag)
+  if (! GIMP_SCROLLED_PREVIEW (preview)->in_drag)
     {
-      gimp_preview_draw (GIMP_PREVIEW (preview));
-      gimp_preview_invalidate (GIMP_PREVIEW (preview));
+      gimp_preview_draw (preview);
+      gimp_preview_invalidate (preview);
     }
 }
 
@@ -409,6 +415,8 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
                                         GdkEventButton      *event,
                                         GimpScrolledPreview *preview)
 {
+  GimpPreview *gimp_preview = GIMP_PREVIEW (preview);
+
   if (preview->nav_popup)
     return TRUE;
 
@@ -452,18 +460,18 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
                               G_CALLBACK (gimp_scrolled_preview_nav_popup_expose),
                               preview);
 
-      GIMP_SCROLLED_PREVIEW_GET_CLASS (preview)->draw_thumb (preview,
-                                                             GIMP_PREVIEW_AREA (area),
-                                                             POPUP_SIZE, POPUP_SIZE);
+      GIMP_PREVIEW_GET_CLASS (preview)->draw_thumb (gimp_preview,
+                                                    GIMP_PREVIEW_AREA (area),
+                                                    POPUP_SIZE, POPUP_SIZE);
       gtk_widget_realize (area);
       gtk_widget_show (area);
 
       gdk_window_get_origin (widget->window, &x, &y);
 
-      h = ((gdouble) (preview->xoff + GIMP_PREVIEW (preview)->width  / 2) /
-           (gdouble) (GIMP_PREVIEW (preview)->xmax - GIMP_PREVIEW (preview)->xmin));
-      v = ((gdouble) (preview->yoff + GIMP_PREVIEW (preview)->height / 2) /
-           (gdouble) (GIMP_PREVIEW (preview)->ymax - GIMP_PREVIEW (preview)->ymin));
+      h = ((gdouble) (gimp_preview->xoff + gimp_preview->width  / 2) /
+           (gdouble) (gimp_preview->xmax - gimp_preview->xmin));
+      v = ((gdouble) (gimp_preview->yoff + gimp_preview->height / 2) /
+           (gdouble) (gimp_preview->ymax - gimp_preview->ymin));
 
       x += event->x - h * (gdouble) GIMP_PREVIEW_AREA (area)->width;
       y += event->y - v * (gdouble) GIMP_PREVIEW_AREA (area)->height;
@@ -580,14 +588,19 @@ gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
                                         GdkEventExpose      *event,
                                         GimpScrolledPreview *preview)
 {
-  gdouble  x, y;
-  gdouble  w, h;
+  GimpPreview *gimp_preview = GIMP_PREVIEW (preview);
+  gdouble      x, y;
+  gdouble      w, h;
 
-  x = (gdouble) preview->xoff / (gdouble) (GIMP_PREVIEW (preview)->xmax - GIMP_PREVIEW (preview)->xmin);
-  y = (gdouble) preview->yoff / (gdouble) (GIMP_PREVIEW (preview)->ymax - GIMP_PREVIEW (preview)->ymin);
+  x = ((gdouble) gimp_preview->xoff /
+       (gdouble) (gimp_preview->xmax - gimp_preview->xmin));
+  y = ((gdouble) gimp_preview->yoff /
+       (gdouble) (gimp_preview->ymax - gimp_preview->ymin));
 
-  w = (gdouble) GIMP_PREVIEW (preview)->width  / (gdouble) (GIMP_PREVIEW (preview)->xmax - GIMP_PREVIEW (preview)->xmin);
-  h = (gdouble) GIMP_PREVIEW (preview)->height / (gdouble) (GIMP_PREVIEW (preview)->ymax - GIMP_PREVIEW (preview)->ymin);
+  w = ((gdouble) gimp_preview->width  /
+       (gdouble) (gimp_preview->xmax - gimp_preview->xmin));
+  h = ((gdouble) gimp_preview->height /
+       (gdouble) (gimp_preview->ymax - gimp_preview->ymin));
 
   gdk_gc_set_clip_rectangle (preview->nav_gc, &event->area);
 
@@ -617,26 +630,3 @@ gimp_scrolled_preview_set_cursor (GimpPreview *preview)
       gdk_window_set_cursor (preview->area->window, NULL);
     }
 }
-
-/**
- * gimp_preview_get_position:
- * @preview: a #GimpPreview widget
- * @x:       return location for the horizontal offset
- * @y:       return location for the vertical offset
- *
- * Since: GIMP 2.2
- **/
-void
-gimp_scrolled_preview_get_position (GimpScrolledPreview *preview,
-                                    gint                *x,
-                                    gint                *y)
-{
-  g_return_if_fail (GIMP_IS_SCROLLED_PREVIEW (preview));
-
-  if (x)
-    *x = preview->xoff + GIMP_PREVIEW (preview)->xmin;
-
-  if (y)
-    *y = preview->yoff + GIMP_PREVIEW (preview)->ymin;
-}
-

@@ -144,6 +144,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   widget_class->popup_menu        = gimp_preview_popup_menu;
 
   klass->draw                     = NULL;
+  klass->draw_thumb               = NULL;
   klass->set_cursor               = gimp_preview_set_cursor;
 
   g_object_class_install_property (object_class,
@@ -189,6 +190,9 @@ gimp_preview_init (GimpPreview *preview)
   preview->xmax       = preview->ymax = 1;
   preview->width      = preview->xmax - preview->xmin;
   preview->height     = preview->ymax - preview->ymin;
+
+  preview->xoff       = 0;
+  preview->yoff       = 0;
 
   /*  preview area  */
   frame = gtk_frame_new (NULL);
@@ -543,6 +547,28 @@ gimp_preview_get_size (GimpPreview *preview,
 
   if (height)
     *height = preview->height;
+}
+
+/**
+ * gimp_preview_get_position:
+ * @preview: a #GimpPreview widget
+ * @x:       return location for the horizontal offset
+ * @y:       return location for the vertical offset
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_preview_get_position (GimpPreview *preview,
+                           gint        *x,
+                           gint        *y)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+
+  if (x)
+    *x = preview->xoff + GIMP_PREVIEW (preview)->xmin;
+
+  if (y)
+    *y = preview->yoff + GIMP_PREVIEW (preview)->ymin;
 }
 
 /*

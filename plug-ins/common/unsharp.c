@@ -771,8 +771,7 @@ preview_update (GimpPreview *preview)
   /*
    * Setup for filter...
    */
-  gimp_scrolled_preview_get_position (GIMP_SCROLLED_PREVIEW (preview),
-                                      &preview_x1, &preview_y1);
+  gimp_preview_get_position (preview, &preview_x1, &preview_y1);
   gimp_preview_get_size (preview, &preview_x2, &preview_y2);
   preview_x2 += preview_x1;
   preview_y2 += preview_y1;

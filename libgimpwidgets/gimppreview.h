@@ -54,6 +54,7 @@ struct _GimpPreview
   GdkCursor    *cursor_busy;
 
   /*< private >*/
+  gint          xoff, yoff;
   gint          xmin, xmax, ymin, ymax;
   gint          width, height;
 
@@ -66,6 +67,10 @@ struct _GimpPreviewClass
 
   /* virtuals */
   void   (* draw)        (GimpPreview     *preview);
+  void   (* draw_thumb)  (GimpPreview     *preview,
+                          GimpPreviewArea *area,
+                          gint             width,
+                          gint             height);
   void   (* set_cursor)  (GimpPreview     *preview);
 
   /* signal */
@@ -85,6 +90,9 @@ void      gimp_preview_set_bounds   (GimpPreview *preview,
                                      gint         xmax,
                                      gint         ymax);
 
+void      gimp_preview_get_position (GimpPreview *preview,
+                                     gint        *x,
+                                     gint        *y);
 void      gimp_preview_get_size     (GimpPreview *preview,
                                      gint        *width,
                                      gint        *height);

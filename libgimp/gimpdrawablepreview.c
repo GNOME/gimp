@@ -42,12 +42,13 @@ static void  gimp_drawable_preview_style_set     (GtkWidget           *widget,
                                                   GtkStyle            *prev_style);
 
 static void  gimp_drawable_preview_draw_original (GimpPreview         *preview);
-static void  gimp_drawable_preview_draw_thumb    (GimpScrolledPreview *preview,
+static void  gimp_drawable_preview_draw_thumb    (GimpPreview         *preview,
                                                   GimpPreviewArea     *area,
                                                   gint                 width,
                                                   gint                 height);
 
 static GimpScrolledPreviewClass *parent_class = NULL;
+
 
 GType
 gimp_drawable_preview_get_type (void)
@@ -82,14 +83,13 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
 {
   GtkWidgetClass   *widget_class  = GTK_WIDGET_CLASS (klass);
   GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
-  GimpScrolledPreviewClass *scrolled_preview_class = GIMP_SCROLLED_PREVIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  widget_class->style_set            = gimp_drawable_preview_style_set;
+  widget_class->style_set   = gimp_drawable_preview_style_set;
 
-  preview_class->draw                = gimp_drawable_preview_draw_original;
-  scrolled_preview_class->draw_thumb = gimp_drawable_preview_draw_thumb;
+  preview_class->draw       = gimp_drawable_preview_draw_original;
+  preview_class->draw_thumb = gimp_drawable_preview_draw_thumb;
 }
 
 static void
@@ -125,7 +125,6 @@ static void
 gimp_drawable_preview_draw_original (GimpPreview *preview)
 {
   GimpDrawablePreview *drawable_preview = GIMP_DRAWABLE_PREVIEW (preview);
-  GimpScrolledPreview *scrolled_preview = GIMP_SCROLLED_PREVIEW (preview);
   GimpDrawable        *drawable         = drawable_preview->drawable;
   guchar              *buffer;
   GimpPixelRgn         srcPR;
@@ -137,20 +136,20 @@ gimp_drawable_preview_draw_original (GimpPreview *preview)
   rowstride = preview->width * drawable->bpp;
   buffer    = g_new (guchar, rowstride * preview->height);
 
-  scrolled_preview->xoff = CLAMP (scrolled_preview->xoff,
-                                  0, preview->xmax - preview->xmin - preview->width);
-  scrolled_preview->yoff = CLAMP (scrolled_preview->yoff,
-                                  0, preview->ymax - preview->ymin - preview->height);
+  preview->xoff = CLAMP (preview->xoff,
+                         0, preview->xmax - preview->xmin - preview->width);
+  preview->yoff = CLAMP (preview->yoff,
+                         0, preview->ymax - preview->ymin - preview->height);
 
   gimp_pixel_rgn_init (&srcPR, drawable,
-                       scrolled_preview->xoff + preview->xmin,
-                       scrolled_preview->yoff + preview->ymin,
+                       preview->xoff + preview->xmin,
+                       preview->yoff + preview->ymin,
                        preview->width, preview->height,
                        FALSE, FALSE);
 
   gimp_pixel_rgn_get_rect (&srcPR, buffer,
-                           scrolled_preview->xoff + preview->xmin,
-                           scrolled_preview->yoff + preview->ymin,
+                           preview->xoff + preview->xmin,
+                           preview->yoff + preview->ymin,
                            preview->width, preview->height);
 
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
@@ -162,10 +161,10 @@ gimp_drawable_preview_draw_original (GimpPreview *preview)
 }
 
 static void
-gimp_drawable_preview_draw_thumb (GimpScrolledPreview *preview,
-                                  GimpPreviewArea     *area,
-                                  gint                 width,
-                                  gint                 height)
+gimp_drawable_preview_draw_thumb (GimpPreview     *preview,
+                                  GimpPreviewArea *area,
+                                  gint             width,
+                                  gint             height)
 {
   GimpDrawablePreview *drawable_preview = GIMP_DRAWABLE_PREVIEW (preview);
   GimpDrawable        *drawable         = drawable_preview->drawable;
@@ -214,18 +213,17 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
                                  const guchar        *buf,
                                  gint                 rowstride)
 {
-  GimpPreview         *gimp_preview     = GIMP_PREVIEW (preview);
-  GimpScrolledPreview *scrolled_preview = GIMP_SCROLLED_PREVIEW (preview);
-  GimpDrawable        *drawable         = preview->drawable;
-  gint32               image_id;
+  GimpPreview  *gimp_preview = GIMP_PREVIEW (preview);
+  GimpDrawable *drawable     = preview->drawable;
+  gint32        image_id;
 
   image_id = gimp_drawable_get_image (drawable->drawable_id);
 
   if (gimp_selection_is_empty (image_id))
     {
       gimp_preview_area_draw (GIMP_PREVIEW_AREA (gimp_preview->area),
-                              x - scrolled_preview->xoff - gimp_preview->xmin,
-                              y - scrolled_preview->yoff - gimp_preview->ymin,
+                              x - gimp_preview->xoff - gimp_preview->xmin,
+                              y - gimp_preview->yoff - gimp_preview->ymin,
                               width,
                               height,
                               gimp_drawable_type (drawable->drawable_id),
@@ -255,8 +253,8 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
       gimp_pixel_rgn_get_rect (&selection_rgn, sel, x, y, width, height);
 
       gimp_preview_area_mask (GIMP_PREVIEW_AREA (gimp_preview->area),
-                              x - scrolled_preview->xoff - gimp_preview->xmin,
-                              y - scrolled_preview->yoff - gimp_preview->ymin,
+                              x - gimp_preview->xoff - gimp_preview->xmin,
+                              y - gimp_preview->yoff - gimp_preview->ymin,
                               width,
                               height,
                               gimp_drawable_type (drawable->drawable_id),
@@ -381,19 +379,17 @@ gimp_drawable_preview_draw_buffer (GimpDrawablePreview *preview,
                                    const guchar        *buffer,
                                    gint                 rowstride)
 {
-  GimpPreview         *gimp_preview;
-  GimpScrolledPreview *scrolled_preview;
+  GimpPreview *gimp_preview;
 
   g_return_if_fail (GIMP_IS_DRAWABLE_PREVIEW (preview));
   g_return_if_fail (preview->drawable != NULL);
   g_return_if_fail (buffer != NULL);
 
-  gimp_preview     = GIMP_PREVIEW (preview);
-  scrolled_preview = GIMP_SCROLLED_PREVIEW (preview);
+  gimp_preview = GIMP_PREVIEW (preview);
 
   gimp_drawable_preview_draw_area (preview,
-                                   gimp_preview->xmin + scrolled_preview->xoff,
-                                   gimp_preview->ymin + scrolled_preview->yoff,
+                                   gimp_preview->xmin + gimp_preview->xoff,
+                                   gimp_preview->ymin + gimp_preview->yoff,
                                    gimp_preview->width,
                                    gimp_preview->height,
                                    buffer, rowstride);

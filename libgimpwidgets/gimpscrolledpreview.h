@@ -53,7 +53,6 @@ struct _GimpScrolledPreview
   GdkGC        *nav_gc;
 
   /*< private >*/
-  gint          xoff, yoff;
   gint          drag_x, drag_y;
   gint          drag_xoff, drag_yoff;
 
@@ -62,21 +61,12 @@ struct _GimpScrolledPreview
 
 struct _GimpScrolledPreviewClass
 {
-  GimpPreviewClass parent_class;
-
-  /* virtuals */
-  void   (* draw_thumb)  (GimpScrolledPreview *preview,
-                          GimpPreviewArea     *area,
-                          gint                 width,
-                          gint                 height);
+  GimpPreviewClass  parent_class;
 };
 
 
-GType gimp_scrolled_preview_get_type     (void) G_GNUC_CONST;
+GType  gimp_scrolled_preview_get_type  (void) G_GNUC_CONST;
 
-void  gimp_scrolled_preview_get_position (GimpScrolledPreview *preview,
-                                          gint                *x,
-                                          gint                *y);
 
 G_END_DECLS
 
