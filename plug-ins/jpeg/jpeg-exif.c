@@ -84,14 +84,13 @@ jpeg_apply_exif_data_to_image (const gchar   *filename,
     {
       gint orient = exif_get_short (entry->data, byte_order);
 
-      if (load_interactive && orient != 1)
+      if (load_interactive && orient > 1 && orient <= 8)
         if (jpeg_query (_("According to the EXIF data, this image is rotated. "
                           "Would you like GIMP to rotate it into the standard "
                           "orientation?")))
           {
             switch (orient)
               {
-              case 0: /* invalid, so ignore */
               case 1: /* standard orientation, do nothing */
                 break;
               case 2: /* flipped right-left */
@@ -116,7 +115,7 @@ jpeg_apply_exif_data_to_image (const gchar   *filename,
               case 8: /* 90 CCW */
                 gimp_image_rotate (image_ID, GIMP_ROTATE_270);
                 break;
-              default: /* invalid, ignore */
+              default: /* can't happen */
                 break;
               }
         }
