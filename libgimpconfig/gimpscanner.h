@@ -24,21 +24,24 @@
 #define __GIMP_SCANNER_H__
 
 
-GScanner * gimp_scanner_new                      (const gchar *filename);
-void       gimp_scanner_destroy                  (GScanner    *scanner);
+GScanner * gimp_scanner_new                      (const gchar  *filename,
+                                                  GError      **error);
+void       gimp_scanner_destroy                  (GScanner     *scanner);
 
-gboolean   gimp_scanner_parse_token              (GScanner    *scanner,
-                                                  GTokenType   token);
-gboolean   gimp_scanner_parse_identifier         (GScanner    *scanner,
-                                                  const gchar *identifier);
-gboolean   gimp_scanner_parse_string             (GScanner    *scanner,
-                                                  gchar      **dest);
-gboolean   gimp_scanner_parse_string_no_validate (GScanner    *scanner,
-                                                  gchar      **dest);
-gboolean   gimp_scanner_parse_int                (GScanner    *scanner,
-                                                  gint        *dest);
-gboolean   gimp_scanner_parse_float              (GScanner    *scanner,
-                                                  gdouble     *dest);
+gboolean   gimp_scanner_parse_token              (GScanner     *scanner,
+                                                  GTokenType    token);
+gboolean   gimp_scanner_parse_identifier         (GScanner     *scanner,
+                                                  const gchar  *identifier);
+gboolean   gimp_scanner_parse_string             (GScanner     *scanner,
+                                                  gchar       **dest);
+gboolean   gimp_scanner_parse_string_no_validate (GScanner     *scanner,
+                                                  gchar       **dest);
+gboolean   gimp_scanner_parse_int                (GScanner     *scanner,
+                                                  gint         *dest);
+gboolean   gimp_scanner_parse_float              (GScanner     *scanner,
+                                                  gdouble      *dest);
+gboolean   gimp_scanner_parse_color              (GScanner     *scanner,
+                                                  GimpRGB      *dest);
 
 
 #endif /* __GIMP_SCANNER_H__ */

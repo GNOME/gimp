@@ -22,6 +22,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
 #ifdef HAVE_UNISTD_H
@@ -35,13 +36,26 @@
 #include <io.h>
 #endif
 
+#include "libgimpcolor/gimpcolor.h"
+
+#include "gimpconfig.h"
 #include "gimpscanner.h"
 
 #include "libgimp/gimpintl.h"
 
 
+/*  local function prototypes  */
+
+static void   gimp_scanner_message (GScanner *scanner,
+                                    gchar    *message,
+                                    gboolean  is_error);
+
+
+/*  public functions  */
+
 GScanner *
-gimp_scanner_new (const gchar *filename)
+gimp_scanner_new (const gchar  *filename,
+                  GError      **error)
 {
   gint        fd;
   GScanner   *scanner;
@@ -51,15 +65,28 @@ gimp_scanner_new (const gchar *filename)
   fd = open (filename, O_RDONLY);
 
   if (fd == -1)
-    return NULL;
+    {
+      g_set_error (error,
+                   GIMP_CONFIG_ERROR, 
+                   (errno == ENOENT ?
+                    GIMP_CONFIG_ERROR_OPEN_ENOENT : GIMP_CONFIG_ERROR_OPEN),
+                   _("Failed to open file: '%s': %s"),
+                   filename, g_strerror (errno));
+      return NULL;
+    }
 
   scanner = g_scanner_new (NULL);
 
-  scanner->config->cset_identifier_first = ( G_CSET_a_2_z );
-  scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z "-_" );
-
   g_scanner_input_file (scanner, fd);
-  scanner->input_name = g_strdup (filename);
+
+  scanner->user_data   = error;
+  scanner->msg_handler = gimp_scanner_message;
+  scanner->input_name  = g_strdup (filename);
+
+  scanner->config->cset_identifier_first = ( G_CSET_a_2_z G_CSET_A_2_Z );
+  scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z G_CSET_A_2_Z "-_" );
+
+  scanner->config->scan_identifier_1char = TRUE;
 
   return scanner;
 }
@@ -166,4 +193,140 @@ gimp_scanner_parse_float (GScanner *scanner,
   *dest = scanner->value.v_float;
 
   return TRUE;
+}
+
+enum
+{
+  COLOR_RGB  = 1,
+  COLOR_RGBA,
+  COLOR_HSV,
+  COLOR_HSVA
+};
+
+gboolean
+gimp_scanner_parse_color (GScanner *scanner,
+                          GimpRGB  *dest)
+{
+  guint      scope_id;
+  guint      old_scope_id;
+  GTokenType token;
+
+  scope_id = g_quark_from_static_string ("gimp_scanner_parse_color");
+  old_scope_id = g_scanner_set_scope (scanner, scope_id);
+
+  if (! g_scanner_scope_lookup_symbol (scanner, scope_id, "color-rgb"))
+    {
+      g_scanner_scope_add_symbol (scanner, scope_id, 
+                                  "color-rgb", GINT_TO_POINTER (COLOR_RGB));
+      g_scanner_scope_add_symbol (scanner, scope_id, 
+                                  "color-rgba", GINT_TO_POINTER (COLOR_RGBA));
+      g_scanner_scope_add_symbol (scanner, scope_id, 
+                                  "color-hsv", GINT_TO_POINTER (COLOR_HSV));
+      g_scanner_scope_add_symbol (scanner, scope_id, 
+                                  "color-hsva", GINT_TO_POINTER (COLOR_HSVA));
+    }
+
+  token = G_TOKEN_LEFT_PAREN;
+
+  while (g_scanner_peek_next_token (scanner) == token)
+    {
+      token = g_scanner_get_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_LEFT_PAREN:
+          token = G_TOKEN_SYMBOL;
+          break;
+
+        case G_TOKEN_SYMBOL:
+          {
+            gdouble  col[4] = { 0.0, 0.0, 0.0, 1.0 };
+            GimpRGB  color;
+            gint     n_channels = 4;
+            gboolean is_hsv     = FALSE;
+            gint     i;
+
+            switch (GPOINTER_TO_INT (scanner->value.v_symbol))
+              {
+              case COLOR_RGB:
+                n_channels = 3;
+                /* fallthrough */
+              case COLOR_RGBA:
+                break;
+
+              case COLOR_HSV:
+                n_channels = 3;
+                /* fallthrough */
+              case COLOR_HSVA:
+                is_hsv = TRUE;
+                break;
+              }
+
+            token = G_TOKEN_FLOAT;
+
+            for (i = 0; i < n_channels; i++)
+              {
+                if (! gimp_scanner_parse_float (scanner, &col[i]))
+                  goto finish;
+              }
+
+            if (is_hsv)
+              {
+                GimpHSV hsv;
+
+                gimp_hsva_set (&hsv, col[0], col[1], col[2], col[3]);
+                gimp_hsv_clamp (&hsv);
+
+                gimp_hsv_to_rgb (&hsv, &color);
+              }
+            else
+              {
+                gimp_rgba_set (&color, col[0], col[1], col[2], col[3]);
+                gimp_rgb_clamp (&color);
+              }
+
+            *dest = color;
+          }
+          token = G_TOKEN_RIGHT_PAREN;
+          break;
+
+        case G_TOKEN_RIGHT_PAREN:
+          goto finish;
+
+        default: /* do nothing */
+          break;
+        }
+    }
+
+ finish:
+
+  if (token != G_TOKEN_RIGHT_PAREN)
+    {
+      g_scanner_get_next_token (scanner);
+      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
+                             _("fatal parse error"), TRUE);
+    }
+
+  g_scanner_set_scope (scanner, old_scope_id);
+
+  return (token == G_TOKEN_RIGHT_PAREN);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_scanner_message (GScanner *scanner,
+                      gchar    *message,
+                      gboolean  is_error)
+{
+  GError **error = scanner->user_data;
+
+  /* we don't expect warnings */
+  g_return_if_fail (is_error);
+
+  g_set_error (error,
+               GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+               _("Error while parsing '%s' in line %d:\n%s"), 
+               scanner->input_name, scanner->line, message);
 }

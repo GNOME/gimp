@@ -33,10 +33,13 @@
 
 #include <glib-object.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-deserialize.h"
 #include "gimpconfig-utils.h"
+#include "gimpscanner.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -58,9 +61,6 @@ static gboolean  gimp_config_iface_deserialize  (GObject  *object,
 static GObject  *gimp_config_iface_duplicate    (GObject  *object);
 static gboolean  gimp_config_iface_equal        (GObject  *a,
                                                  GObject  *b);
-static void      gimp_config_scanner_message    (GScanner *scanner,
-                                                 gchar    *message,
-                                                 gboolean  is_error);
 
 
 GType
@@ -293,7 +293,6 @@ gimp_config_deserialize (GObject      *object,
                          GError      **error)
 {
   GimpConfigInterface *gimp_config_iface;
-  gint                 fd;
   GScanner            *scanner;
   gboolean             success;
 
@@ -305,36 +304,14 @@ gimp_config_deserialize (GObject      *object,
 
   g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
 
-  fd = open (filename, O_RDONLY);
+  scanner = gimp_scanner_new (filename, error);
 
-  if (fd == -1)
-    {
-      g_set_error (error,
-                   GIMP_CONFIG_ERROR, 
-                   (errno == ENOENT ?
-                    GIMP_CONFIG_ERROR_OPEN_ENOENT : GIMP_CONFIG_ERROR_OPEN),
-                   _("Failed to open file: '%s': %s"),
-                   filename, g_strerror (errno));
-      return FALSE;
-    }
-
-  scanner = g_scanner_new (NULL);
-
-  g_scanner_input_file (scanner, fd);
-
-  scanner->user_data   = error;
-  scanner->msg_handler = gimp_config_scanner_message;
-  scanner->input_name  = filename;
-
-  scanner->config->cset_identifier_first = ( G_CSET_a_2_z G_CSET_A_2_Z );
-  scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z G_CSET_A_2_Z "-_" );
-
-  scanner->config->scan_identifier_1char = TRUE;
+  if (! scanner)
+    return FALSE;
 
   success = gimp_config_iface->deserialize (object, scanner, 0, data);
 
-  g_scanner_destroy (scanner);
-  close (fd);
+  gimp_scanner_destroy (scanner);
 
   if (! success)
     g_assert (error == NULL || *error != NULL);
@@ -402,22 +379,6 @@ gimp_config_string_indent (GString *string,
 
   for (i = 0; i < indent_level; i++)
     g_string_append_len (string, "    ", 4);
-}
-
-static void
-gimp_config_scanner_message (GScanner *scanner,
-                             gchar    *message,
-                             gboolean  is_error)
-{
-  GError **error = scanner->user_data;
-
-  /* we don't expect warnings */
-  g_return_if_fail (is_error);
-
-  g_set_error (error,
-               GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-               _("Error while parsing '%s' in line %d:\n%s"), 
-               scanner->input_name, scanner->line, message);
 }
 
 /**

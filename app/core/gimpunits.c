@@ -93,11 +93,12 @@ gimp_unitrc_load (Gimp *gimp)
   gchar      *filename;
   GScanner   *scanner;
   GTokenType  token;
+  GError     *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("unitrc");
-  scanner = gimp_scanner_new (filename);
+  scanner = gimp_scanner_new (filename, &error);
   g_free (filename);
 
   if (! scanner)
@@ -156,6 +157,9 @@ gimp_unitrc_load (Gimp *gimp)
       g_scanner_unexp_token (scanner, token, NULL, NULL,
                              scanner->scope_id == 0 ? "unit-info" : NULL,
                              _("fatal parse error"), TRUE);
+
+      g_message (error->message);
+      g_clear_error (&error);
     }
 
   gimp_scanner_destroy (scanner);

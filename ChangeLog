@@ -1,3 +1,20 @@
+2002-05-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpscanner.[ch]: configure the scanner the same
+	way GimpConfig did (scanner->user_data is, if set, a GError).
+	Added gimp_scanner_parse_color(). Added "GError **error" to
+	gimp_scanner_new().
+
+	* app/config/gimpconfig.c: use gimp_scanner_new().
+
+	* app/config/gimpconfig-deserialize.c: use gimp_scanner_parse_color().
+
+	* app/core/gimpunits.c
+	* app/plug-in/plug-in-rc.c: changed accordingly.
+
+	* app/plug-in/plug-in-rc.c: made the main parse loops consistent
+	with the other places using GScanner.
+
 2002-05-31  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/checkerboard.c: applied patch from Jeroen Lamain

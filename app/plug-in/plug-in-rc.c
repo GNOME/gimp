@@ -72,10 +72,11 @@ plug_in_rc_parse (const gchar *filename)
 {
   GScanner   *scanner;
   GTokenType  token;
+  GError     *error = NULL;
 
   g_return_val_if_fail (filename != NULL, FALSE);
 
-  scanner = gimp_scanner_new (filename);
+  scanner = gimp_scanner_new (filename, &error);
 
   if (! scanner)
     return TRUE;
@@ -94,12 +95,9 @@ plug_in_rc_parse (const gchar *filename)
                               "proc-arg", GINT_TO_POINTER (PROC_ARG));
 
   token = G_TOKEN_LEFT_PAREN;
-  
-  do
-    {
-      if (g_scanner_get_next_token (scanner) != token)
-        break;
 
+  while (g_scanner_peek_next_token (scanner) == token)
+    {
       token = g_scanner_get_next_token (scanner);
       
       switch (token)
@@ -125,13 +123,15 @@ plug_in_rc_parse (const gchar *filename)
           break;
         }
     }
-  while (token != G_TOKEN_EOF);
   
   if (token != G_TOKEN_LEFT_PAREN)
     {
       g_scanner_get_next_token (scanner);
       g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
                              _("fatal parse error"), TRUE);
+
+      g_message (error->message);
+      g_clear_error (&error);
     }
 
   gimp_scanner_destroy (scanner);
@@ -161,11 +161,8 @@ plug_in_def_deserialize (GScanner *scanner)
 
   token = G_TOKEN_LEFT_PAREN;
 
-  do
+  while (g_scanner_peek_next_token (scanner) == token)
     {
-      if (g_scanner_peek_next_token (scanner) != token)
-        break;
-      
       token = g_scanner_get_next_token (scanner);
 
       switch (token)
@@ -216,7 +213,6 @@ plug_in_def_deserialize (GScanner *scanner)
           break;
         }
     }
-  while (token != G_TOKEN_EOF);
 
   if (token == G_TOKEN_LEFT_PAREN)
     {
