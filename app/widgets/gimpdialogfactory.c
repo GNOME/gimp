@@ -380,7 +380,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 
   if (! entry)
     {
-      g_warning ("%s: no entry entry registered for \"%s\"",
+      g_warning ("%s: no entry registered for \"%s\"",
 		 G_GNUC_FUNCTION, identifier);
       return NULL;
     }
@@ -471,8 +471,10 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 			     G_GNUC_FUNCTION, identifier);
 
 		  gtk_widget_destroy (dialog);
+                  gtk_widget_destroy (dock);
 
 		  dialog = NULL;
+                  dock   = NULL;
 		}
 	    }
 	}
@@ -809,7 +811,8 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
   g_signal_connect_object (G_OBJECT (dialog), "destroy",
                            G_CALLBACK (gimp_dialog_factory_remove_dialog),
-                           factory, G_CONNECT_SWAPPED);
+                           factory,
+                           G_CONNECT_SWAPPED);
 }
 
 void
