@@ -86,7 +86,7 @@ static const GtkItemFactoryEntry image_entries[] =
   
   { N_("/File/Close"), "<control>W", file_close_cmd_callback, 0 },
   { N_("/File/Quit"), "<control>Q", file_quit_cmd_callback, 0 },
-  { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
+  { N_("/File/---moved"), NULL, NULL, 0, "<Separator>" },
   
   { N_("/Edit/Cut"), "<control>X", edit_cut_cmd_callback, 0 },
   { N_("/Edit/Copy"), "<control>C", edit_copy_cmd_callback, 0 },
@@ -294,10 +294,34 @@ void
 menus_create (GtkMenuEntry *entries,
 	      int           nmenu_entries)
 {
+  GtkItemFactory *ifactory;
+  GtkWidget *menu_item;
+  int i;
+  int redo_image_menu = FALSE;
+
   if (initialize)
     menus_init ();
 
   gtk_item_factory_create_menu_entries (nmenu_entries, entries);
+
+  for (i = 0; i < nmenu_entries; i++)
+      if (!strncmp(entries[i].path, "<Image>", 7))
+        redo_image_menu = TRUE;
+
+  if (redo_image_menu)
+    {
+        ifactory = gtk_item_factory_from_path ("<Image>/File/Quit"); 
+        menu_item = gtk_item_factory_get_widget (ifactory, "<Image>/File/---moved");
+        if (menu_item && menu_item->parent)
+            gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
+        menu_item = gtk_item_factory_get_widget (ifactory, "<Image>/File/Close");
+        if (menu_item && menu_item->parent)
+            gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
+        menu_item = gtk_item_factory_get_widget (ifactory, "<Image>/File/Quit");
+        if (menu_item && menu_item->parent)
+            gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
+
+    }
 }
 
 void
