@@ -1,5 +1,10 @@
 2001-01-25  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.c (gimp_mem_size_entry_new): merged fix 
+	from gimp-1-2 branch 
+
+2001-01-25  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/lib.pl
 	* tools/pdbgen/pdb.pl
 	* tools/pdbgen/pdb/channel.pdb

@@ -995,7 +995,8 @@ gimp_mem_size_unit_callback (GtkWidget *widget,
       divided_mem_size = gmsed->adjustment->value / new_unit;
       gmsed->mem_size_unit = new_unit;
 
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (gmsed->divided_adj), divided_mem_size);
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (gmsed->divided_adj), 
+				divided_mem_size);
     }
 }
 
@@ -1020,7 +1021,7 @@ gimp_mem_size_entry_new (GtkAdjustment *adjustment)
 
   gmsed = g_new (GimpMemSizeEntryData, 1);
 
-  for (i = 0; i < 3; i++)
+  for (i = 0; i < 2; i++)
     {
       if ( (gint) adjustment->value % (mem_size_unit * 1024) != 0 )
 	break;
