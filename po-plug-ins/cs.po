@@ -1,12 +1,12 @@
-# Czech translation of GIMP plugins 1.1.15.
+# Czech translation of GIMP plugins 1.1.16.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 1999.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.1.15\n"
-"POT-Creation-Date: 2000-02-02 17:39-0800\n"
-"PO-Revision-Date: 2000-01-29 23:10+01:00\n"
+"Project-Id-Version: gimp-std-plugins 1.1.16\n"
+"POT-Creation-Date: 2000-02-04 16:26+0100\n"
+"PO-Revision-Date: 2000-02-04 17:21+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "O programu"
 #: plug-ins/common/CML_explorer.c:2254 plug-ins/common/aa.c:363
 #: plug-ins/common/align_layers.c:420 plug-ins/common/apply_lens.c:404
 #: plug-ins/common/blinds.c:342 plug-ins/common/blur.c:626
-#: plug-ins/common/bumpmap.c:803 plug-ins/common/checkerboard.c:359
+#: plug-ins/common/bumpmap.c:804 plug-ins/common/checkerboard.c:359
 #: plug-ins/common/colorify.c:333 plug-ins/common/colortoalpha.c:418
 #: plug-ins/common/compose.c:806 plug-ins/common/convmatrix.c:810
 #: plug-ins/common/csource.c:670 plug-ins/common/cubism.c:316
@@ -57,9 +57,9 @@ msgstr "O programu"
 #: plug-ins/common/edge.c:657 plug-ins/common/emboss.c:535
 #: plug-ins/common/engrave.c:234 plug-ins/common/exchange.c:302
 #: plug-ins/common/film.c:1225 plug-ins/common/flarefx.c:338
-#: plug-ins/common/fractaltrace.c:740 plug-ins/common/gauss_iir.c:354
-#: plug-ins/common/gauss_iir.c:444 plug-ins/common/gauss_rle.c:348
-#: plug-ins/common/gauss_rle.c:438 plug-ins/common/gbr.c:473
+#: plug-ins/common/fractaltrace.c:740 plug-ins/common/gauss_iir.c:352
+#: plug-ins/common/gauss_iir.c:442 plug-ins/common/gauss_rle.c:349
+#: plug-ins/common/gauss_rle.c:439 plug-ins/common/gbr.c:473
 #: plug-ins/common/gicon.c:455 plug-ins/common/gif.c:1155
 #: plug-ins/common/gif.c:1226 plug-ins/common/glasstile.c:237
 #: plug-ins/common/gpb.c:286 plug-ins/common/gqbist.c:661
@@ -81,10 +81,10 @@ msgstr "O programu"
 #: plug-ins/common/sel_gauss.c:246 plug-ins/common/sharpen.c:541
 #: plug-ins/common/shift.c:382 plug-ins/common/smooth_palette.c:404
 #: plug-ins/common/snoise.c:527 plug-ins/common/sobel.c:262
-#: plug-ins/common/sparkle.c:364 plug-ins/common/spheredesigner.c:2236
-#: plug-ins/common/spread.c:377 plug-ins/common/sunras.c:1593
+#: plug-ins/common/sparkle.c:355 plug-ins/common/spheredesigner.c:2236
+#: plug-ins/common/spread.c:378 plug-ins/common/sunras.c:1593
 #: plug-ins/common/tga.c:1463 plug-ins/common/threshold_alpha.c:268
-#: plug-ins/common/tiff.c:1448 plug-ins/common/tile.c:394
+#: plug-ins/common/tiff.c:1448 plug-ins/common/tile.c:397
 #: plug-ins/common/tileit.c:402 plug-ins/common/unsharp.c:798
 #: plug-ins/common/video.c:2175 plug-ins/common/vpropagate.c:942
 #: plug-ins/common/warp.c:443 plug-ins/common/waves.c:357
@@ -129,7 +129,7 @@ msgstr "OK"
 #: plug-ins/common/CML_explorer.c:1192 plug-ins/common/CML_explorer.c:2256
 #: plug-ins/common/aa.c:365 plug-ins/common/align_layers.c:422
 #: plug-ins/common/apply_lens.c:406 plug-ins/common/blinds.c:344
-#: plug-ins/common/blur.c:628 plug-ins/common/bumpmap.c:805
+#: plug-ins/common/blur.c:628 plug-ins/common/bumpmap.c:806
 #: plug-ins/common/checkerboard.c:361 plug-ins/common/colorify.c:335
 #: plug-ins/common/colortoalpha.c:420 plug-ins/common/compose.c:808
 #: plug-ins/common/convmatrix.c:814 plug-ins/common/csource.c:672
@@ -141,8 +141,8 @@ msgstr "OK"
 #: plug-ins/common/emboss.c:537 plug-ins/common/engrave.c:236
 #: plug-ins/common/exchange.c:304 plug-ins/common/film.c:1227
 #: plug-ins/common/flarefx.c:340 plug-ins/common/fractaltrace.c:742
-#: plug-ins/common/gauss_iir.c:356 plug-ins/common/gauss_iir.c:446
-#: plug-ins/common/gauss_rle.c:350 plug-ins/common/gauss_rle.c:440
+#: plug-ins/common/gauss_iir.c:354 plug-ins/common/gauss_iir.c:444
+#: plug-ins/common/gauss_rle.c:351 plug-ins/common/gauss_rle.c:441
 #: plug-ins/common/gbr.c:475 plug-ins/common/gicon.c:457
 #: plug-ins/common/gif.c:1157 plug-ins/common/gif.c:1228
 #: plug-ins/common/glasstile.c:239 plug-ins/common/gpb.c:288
@@ -165,10 +165,10 @@ msgstr "OK"
 #: plug-ins/common/sel_gauss.c:248 plug-ins/common/sharpen.c:543
 #: plug-ins/common/shift.c:384 plug-ins/common/smooth_palette.c:406
 #: plug-ins/common/snoise.c:529 plug-ins/common/sobel.c:264
-#: plug-ins/common/sparkle.c:366 plug-ins/common/spheredesigner.c:2240
-#: plug-ins/common/spread.c:379 plug-ins/common/sunras.c:1595
+#: plug-ins/common/sparkle.c:357 plug-ins/common/spheredesigner.c:2240
+#: plug-ins/common/spread.c:380 plug-ins/common/sunras.c:1595
 #: plug-ins/common/tga.c:1465 plug-ins/common/threshold_alpha.c:270
-#: plug-ins/common/tiff.c:1450 plug-ins/common/tile.c:396
+#: plug-ins/common/tiff.c:1450 plug-ins/common/tile.c:399
 #: plug-ins/common/tileit.c:404 plug-ins/common/unsharp.c:800
 #: plug-ins/common/video.c:2177 plug-ins/common/vpropagate.c:944
 #: plug-ins/common/warp.c:445 plug-ins/common/waves.c:359
@@ -445,7 +445,7 @@ msgstr "O cizím mapování 2"
 
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:324 plug-ins/common/CML_explorer.c:1216
-#: plug-ins/common/blinds.c:362 plug-ins/common/bumpmap.c:825
+#: plug-ins/common/blinds.c:362 plug-ins/common/bumpmap.c:826
 #: plug-ins/common/curve_bend.c:1466 plug-ins/common/emboss.c:759
 #: plug-ins/common/exchange.c:319 plug-ins/common/fractaltrace.c:761
 #: plug-ins/common/nlfilt.c:584 plug-ins/common/polar.c:968
@@ -463,7 +463,6 @@ msgid "Preview"
 msgstr "Náhled"
 
 #: plug-ins/FractalExplorer/Dialogs.c:368
-#, fuzzy
 msgid "Realtime Preview"
 msgstr "Náhled v reálném èase"
 
@@ -481,12 +480,10 @@ msgstr "Pøekreslit náhled"
 
 #. Zoom Options
 #: plug-ins/FractalExplorer/Dialogs.c:387
-#, fuzzy
 msgid "Zoom Options"
 msgstr "Volby pøiblí¾ení"
 
 #: plug-ins/FractalExplorer/Dialogs.c:397
-#, fuzzy
 msgid "Undo Zoom"
 msgstr "Zru¹it pøiblí¾ení"
 
@@ -495,7 +492,6 @@ msgid "Undo last zoom"
 msgstr "Zru¹it poslední pøiblí¾ení"
 
 #: plug-ins/FractalExplorer/Dialogs.c:405
-#, fuzzy
 msgid "Redo Zoom"
 msgstr "Vrátit pøiblí¾ení"
 
@@ -518,13 +514,12 @@ msgid "Parameters"
 msgstr "Parametry"
 
 #: plug-ins/FractalExplorer/Dialogs.c:440
-#, fuzzy
 msgid "Fractal Parameters"
-msgstr "Naèíst parametry fraktálu"
+msgstr "Parametry fraktálu"
 
 #: plug-ins/FractalExplorer/Dialogs.c:454
 msgid "XMIN:"
-msgstr ""
+msgstr "XMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:456
 msgid "Change the first (minimal) x-coordinate delimitation"
@@ -532,7 +527,7 @@ msgstr "Zmìna omezení první (nejmen¹í) x souøadnice"
 
 #: plug-ins/FractalExplorer/Dialogs.c:464
 msgid "XMAX:"
-msgstr ""
+msgstr "XMAX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:466
 msgid "Change the second (maximal) x-coordinate delimitation"
@@ -540,7 +535,7 @@ msgstr "Zmìna omezení druhé (nejvìt¹í) x souøadnice"
 
 #: plug-ins/FractalExplorer/Dialogs.c:474
 msgid "YMIN:"
-msgstr ""
+msgstr "YMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:476
 msgid "Change the first (minimal) y-coordinate delimitation"
@@ -548,7 +543,7 @@ msgstr "Zmìna omezení první (nejmen¹í) y souøadnice"
 
 #: plug-ins/FractalExplorer/Dialogs.c:484
 msgid "YMAX:"
-msgstr ""
+msgstr "YMAX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:486
 msgid "Change the second (maximal) y-coordinate delimitation"
@@ -556,7 +551,7 @@ msgstr "Zmìna omezení druhé (nejvìt¹í) y souøadnice"
 
 #: plug-ins/FractalExplorer/Dialogs.c:494
 msgid "ITER:"
-msgstr ""
+msgstr "ITER:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:496
 msgid ""
@@ -567,9 +562,8 @@ msgstr ""
 "del¹ího èasu"
 
 #: plug-ins/FractalExplorer/Dialogs.c:505
-#, fuzzy
 msgid "CX:"
-msgstr "X:"
+msgstr "CX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:507
 msgid ""
@@ -580,9 +574,8 @@ msgstr ""
 "Mandelbrotova a Sierpinského)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:516
-#, fuzzy
 msgid "CY:"
-msgstr "Y:"
+msgstr "CY:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:518
 msgid ""
@@ -626,49 +619,44 @@ msgstr "Zapsat aktivní fraktál do souboru"
 
 #. Fractal type toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:555
-#, fuzzy
 msgid "Fractal Type"
 msgstr "Typ fraktálu"
 
 #: plug-ins/FractalExplorer/Dialogs.c:568
-#, fuzzy
 msgid "Mandelbrot"
-msgstr "Mandelbrotovy parametry"
+msgstr "Mandelbrot"
 
 #: plug-ins/FractalExplorer/Dialogs.c:570
 msgid "Julia"
-msgstr ""
+msgstr "Julia"
 
 #: plug-ins/FractalExplorer/Dialogs.c:572
 msgid "Barnsley 1"
-msgstr ""
+msgstr "Barnsley 1"
 
 #: plug-ins/FractalExplorer/Dialogs.c:574
 msgid "Barnsley 2"
-msgstr ""
+msgstr "Barnsley 2"
 
 #: plug-ins/FractalExplorer/Dialogs.c:576
 msgid "Barnsley 3"
-msgstr ""
+msgstr "Barnsley 3"
 
 #: plug-ins/FractalExplorer/Dialogs.c:578
-#, fuzzy
 msgid "Spider"
-msgstr "Spirála"
+msgstr "Spider"
 
 #: plug-ins/FractalExplorer/Dialogs.c:580
 msgid "Man'o'war"
-msgstr ""
+msgstr "Man'o'war"
 
 #: plug-ins/FractalExplorer/Dialogs.c:582
-#, fuzzy
 msgid "Lambda"
-msgstr "Naèíst"
+msgstr "Lambda"
 
 #: plug-ins/FractalExplorer/Dialogs.c:584
-#, fuzzy
 msgid "Sierpinski"
-msgstr "Zmen¹ení"
+msgstr "Sierpinski"
 
 #: plug-ins/FractalExplorer/Dialogs.c:630 plug-ins/common/mapcolor.c:344
 #: plug-ins/sinus/sinus.c:908 plug-ins/sinus/sinus.c:926
@@ -683,16 +671,14 @@ msgid "Number of Colors"
 msgstr "Poèet barev"
 
 #: plug-ins/FractalExplorer/Dialogs.c:647
-#, fuzzy
 msgid "Number of Colors:"
-msgstr "Poèet barev"
+msgstr "Poèet barev:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:649
 msgid "Change the number of colors in the mapping"
 msgstr "Zmìna poètu barev v mapování"
 
 #: plug-ins/FractalExplorer/Dialogs.c:656
-#, fuzzy
 msgid "Use loglog Smoothing"
 msgstr "Pou¾ít spojitého vyhlazení"
 
@@ -702,7 +688,6 @@ msgstr "U¾ití spojitého vyhlazení zabrání \"pruhování\" výsledku"
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:667
-#, fuzzy
 msgid "Color Density"
 msgstr "Hustota barvy"
 
@@ -720,7 +705,6 @@ msgstr "Zmìna intenzity modrého kanálu"
 
 #. Color Function frame
 #: plug-ins/FractalExplorer/Dialogs.c:707
-#, fuzzy
 msgid "Color Function"
 msgstr "Barevná funkce"
 
@@ -763,12 +747,10 @@ msgstr ""
 
 #. Colormode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:841
-#, fuzzy
 msgid "Color Mode"
 msgstr "Barevný re¾im"
 
 #: plug-ins/FractalExplorer/Dialogs.c:852
-#, fuzzy
 msgid "As Specified above"
 msgstr "Viz vý¹e"
 
@@ -781,7 +763,6 @@ msgstr ""
 "Výsledek je viditelný v náhledovém obrázku"
 
 #: plug-ins/FractalExplorer/Dialogs.c:873
-#, fuzzy
 msgid "Apply Active Gradient to Final Image"
 msgstr "Pou¾ít aktivního pøechodu na koneèný obrázek"
 
@@ -790,9 +771,8 @@ msgid "Create a color-map using a gradient from the gradient editor"
 msgstr "Vytvoøí barevnou mapu s pou¾itím pøechodu z editoru pøechodù"
 
 #: plug-ins/FractalExplorer/Dialogs.c:889
-#, fuzzy
 msgid "FractalExplorer Gradient"
-msgstr "Pridat cestu pro badatelr fraktálù"
+msgstr "Pøechod badatele fraktálù"
 
 #: plug-ins/FractalExplorer/Dialogs.c:921
 msgid "Fractals"
@@ -817,7 +797,6 @@ msgid "Save: Can't save to a directory"
 msgstr "Zápis: Do adresáøe nelze zapisovat"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1664
-#, fuzzy
 msgid "Load Fractal Parameters"
 msgstr "Naèíst parametry fraktálu"
 
@@ -830,7 +809,6 @@ msgid "Click here to cancel load procedure"
 msgstr "Klepnutím zde lze zru¹it proceduru ètení"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1699
-#, fuzzy
 msgid "Save Fractal Parameters"
 msgstr "Zapsat parametry fraktálu"
 
@@ -863,9 +841,8 @@ msgid "<Image>/Filters/Render/Pattern/Fractal Explorer..."
 msgstr "<Image>/Filtry/Vyobrazení/Vzorky/Badatel fraktálù..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:359
-#, fuzzy
 msgid "Rendering Fractal..."
-msgstr "Poèítá se výbuch..."
+msgstr "Poèítá se fraktál..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:681
 msgid "Delete fractal"
@@ -898,7 +875,6 @@ msgid "Fractal name:"
 msgstr "Jméno fraktálu:"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:862
-#, fuzzy
 msgid "New Fractal"
 msgstr "Nový fraktál"
 
@@ -930,7 +906,6 @@ msgid "My first fractal"
 msgstr "Mùj první fraktál"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1401
-#, fuzzy
 msgid "Choose Fractal by double-clicking on it"
 msgstr "Dvojitým poklepem lze zvolit fraktál"
 
@@ -950,7 +925,7 @@ msgstr "Smazat právì zvolený fraktál"
 #. Call up the file sel dialogue
 #: plug-ins/FractalExplorer/FractalExplorer.c:1487
 msgid "Add FractalExplorer path"
-msgstr "Pridat cestu pro badatelr fraktálù"
+msgstr "Pøidat cestu pro badatele fraktálù"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1521
 msgid "Rescan for fractals"
@@ -1307,9 +1282,8 @@ msgid "Zoom out (make image smaller)"
 msgstr "Vzdálit (obrázek bude men¹í)"
 
 #: plug-ins/MapObject/mapobject_main.c:189
-#, fuzzy
 msgid "<Image>/Filters/Map/Map Object..."
-msgstr "<Image>/Filtry/Mapování/Ohnout..."
+msgstr "<Image>/Filtry/Mapování/Mapování objektu..."
 
 #. memory mapped file data
 #. must check file size
@@ -1324,7 +1298,7 @@ msgstr "<Image>/Filtry/Mapování/Ohnout..."
 #: plug-ins/common/xbm.c:553 plug-ins/common/xpm.c:326
 #: plug-ins/common/xwd.c:457 plug-ins/faxg3/faxg3.c:191
 #: plug-ins/gfli/gfli.c:469 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
-#: plug-ins/xjt/xjt.c:3160
+#: plug-ins/xjt/xjt.c:3167
 #, c-format
 msgid "Loading %s:"
 msgstr "Ète se %s:"
@@ -1368,7 +1342,7 @@ msgstr "%s: ¹patná barevná mapa\n"
 #: plug-ins/common/png.c:545 plug-ins/common/pnm.c:500
 #: plug-ins/common/psd.c:2089 plug-ins/common/smooth_palette.c:237
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
-#: plug-ins/common/tiff.c:633 plug-ins/common/tile.c:268
+#: plug-ins/common/tiff.c:633 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:513 plug-ins/common/wmf.c:2359
 #: plug-ins/common/xbm.c:642 plug-ins/faxg3/faxg3.c:443
 #: plug-ins/fits/fits.c:522 plug-ins/sgi/sgi.c:379 plug-ins/twain/twain.c:724
@@ -1398,7 +1372,7 @@ msgstr "nelze otevøít %s\n"
 #: plug-ins/common/tiff.c:1204 plug-ins/common/xbm.c:790
 #: plug-ins/common/xpm.c:643 plug-ins/common/xwd.c:561
 #: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:667 plug-ins/sgi/sgi.c:549
-#: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1562
+#: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1569
 #, c-format
 msgid "Saving %s:"
 msgstr "Zapisuje se %s:"
@@ -1467,7 +1441,7 @@ msgid "CEL Can't create a new image"
 msgstr "CEL: Nelze vytvoøit nový obrázek"
 
 #: plug-ins/common/CEL.c:372
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported number of colors (%d)"
 msgstr "Nepodporovaný poèet barev (%d)"
 
@@ -2008,7 +1982,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/blinds.c:424 plug-ins/common/blur.c:644
 #: plug-ins/common/checkerboard.c:371 plug-ins/common/cubism.c:328
 #: plug-ins/common/edge.c:669 plug-ins/common/engrave.c:246
-#: plug-ins/common/gauss_iir.c:366 plug-ins/common/gauss_rle.c:360
+#: plug-ins/common/gauss_iir.c:364 plug-ins/common/gauss_rle.c:361
 #: plug-ins/common/glasstile.c:249 plug-ins/common/illusion.c:329
 #: plug-ins/common/jpeg.c:1656 plug-ins/common/max_rgb.c:275
 #: plug-ins/common/noisify.c:339 plug-ins/common/nova.c:376
@@ -2018,7 +1992,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/ripple.c:653 plug-ins/common/scatter_hsv.c:445
 #: plug-ins/common/sel_gauss.c:258 plug-ins/common/shift.c:395
 #: plug-ins/common/smooth_palette.c:415 plug-ins/common/snoise.c:540
-#: plug-ins/common/sobel.c:274 plug-ins/common/sparkle.c:378
+#: plug-ins/common/sobel.c:274 plug-ins/common/sparkle.c:369
 #: plug-ins/common/threshold_alpha.c:279 plug-ins/common/unsharp.c:809
 #: plug-ins/common/video.c:2187 plug-ins/common/vpropagate.c:984
 #: plug-ins/common/whirlpinch.c:867 plug-ins/common/wind.c:775
@@ -2277,52 +2251,36 @@ msgstr "Opakování:"
 msgid "Number of times to apply filter"
 msgstr "Poèet pou¾ití filtru"
 
-#: plug-ins/common/bumpmap.c:327
-msgid "Create an embossing effect using an image as a bump map"
-msgstr "Vytváøí reliéfní efekt s pou¾itím obrázku jako nárazové mapy"
-
-#: plug-ins/common/bumpmap.c:328
-msgid ""
-"This plug-in uses the algorithm described by John Schlag, \"Fast Embossing "
-"Effects on Raster Image Data\" in Graphics GEMS IV (ISBN 0-12-336155-9). It "
-"takes a grayscale image to be applied as a bump map to another image and "
-"produces a nice embossing effect."
-msgstr ""
-"Tento modul pou¾ívá algoritmu popsaného Johnem Schlagem v knize \"Fast "
-"Embossing Effects on Raster Image Data\" v Graphics GEMS IV (ISBN "
-"0-12-336155-9). Pøijímá obrázky v ¹edích, které jsou pou¾ity jako nárazová "
-"mapa jiného obrázku a vytváøí hezký efekt ra¾by."
-
-#: plug-ins/common/bumpmap.c:335
+#: plug-ins/common/bumpmap.c:339
 msgid "<Image>/Filters/Map/Bump Map..."
 msgstr "<Image>/Filtry/Mapování/Mapa vyvý¹ení..."
 
-#: plug-ins/common/bumpmap.c:472
+#: plug-ins/common/bumpmap.c:474
 msgid "Bump-mapping..."
 msgstr "Mapuje se vyvý¹ení..."
 
-#: plug-ins/common/bumpmap.c:798
+#: plug-ins/common/bumpmap.c:799
 msgid "Bump Map"
 msgstr "Mapa vyvý¹ení"
 
-#: plug-ins/common/bumpmap.c:861
+#: plug-ins/common/bumpmap.c:862
 msgid "Map Type"
 msgstr "Druh mapy"
 
-#: plug-ins/common/bumpmap.c:865
+#: plug-ins/common/bumpmap.c:866
 msgid "Linear Map"
 msgstr "Lineární mapování"
 
-#: plug-ins/common/bumpmap.c:866
+#: plug-ins/common/bumpmap.c:867
 msgid "Spherical Map"
 msgstr "Sférické mapování"
 
-#: plug-ins/common/bumpmap.c:867
+#: plug-ins/common/bumpmap.c:868
 msgid "Sinuosidal Map"
 msgstr "Sinusoidní mapování"
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:881
+#: plug-ins/common/bumpmap.c:882
 msgid "Compensate for Darkening"
 msgstr "Kompenzovat tmavnutí"
 
@@ -2682,7 +2640,7 @@ msgstr "Pou¾ít 1bytovéhu run-length kódování"
 msgid "Save Alpha Channel (RGBA/RGB)"
 msgstr "Zapsat alfa kanál (RGBA/RGB)"
 
-#: plug-ins/common/csource.c:774 plug-ins/common/sparkle.c:452
+#: plug-ins/common/csource.c:774 plug-ins/common/sparkle.c:443
 #: plug-ins/common/tileit.c:603
 msgid "Opacity:"
 msgstr "Krytí:"
@@ -2931,13 +2889,12 @@ msgstr ""
 "Kompinuje dva obrázky s pou¾itím odpovídající hloubkové mapy (z-buffery)"
 
 #: plug-ins/common/depthmerge.c:191
-#, fuzzy
 msgid ""
 "Taking as input two full-color, full-alpha images and two corresponding "
 "grayscale depth maps, this plug-in combines the images based on which is "
 "closer (has a lower depth map value) at each point."
 msgstr ""
-"Pøijímá za vstup dvì plnobarevné obrázky s alfou a dvì odpovídající "
+"Pøijímá za vstup dva plnobarevné obrázky s úplnou alfou a dvì odpovídající "
 "hloubkové mapy v ¹edích; tento modul kombinuje ka¾dý bod obrázkù na základì "
 "toho, který je ní¾ (má ni¾¹í hodnotu v hloubkové mapì)."
 
@@ -3250,7 +3207,7 @@ msgstr "Omezení ¹íøky øádku"
 #: plug-ins/common/engrave.c:266 plug-ins/common/film.c:1278
 #: plug-ins/common/gtm.c:545 plug-ins/common/ps.c:2331
 #: plug-ins/common/ps.c:2506 plug-ins/common/smooth_palette.c:440
-#: plug-ins/common/tile.c:429 plug-ins/imagemap/imap_rectangle.c:392
+#: plug-ins/common/tile.c:424 plug-ins/imagemap/imap_rectangle.c:392
 msgid "Height:"
 msgstr "Vý¹ka:"
 
@@ -3429,57 +3386,57 @@ msgstr "Bílá"
 msgid "Mandelbrot Parameters"
 msgstr "Mandelbrotovy parametry"
 
-#: plug-ins/common/gauss_iir.c:165
+#: plug-ins/common/gauss_iir.c:163
 msgid "<Image>/Filters/Blur/Gaussian Blur (IIR)..."
 msgstr "<Image>/Filtry/Rozostøení/Gaussovo rozostøení (IIR)..."
 
-#: plug-ins/common/gauss_iir.c:238
+#: plug-ins/common/gauss_iir.c:236
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
 msgstr "gauss_iir: je nutné zadat vodorovnì nebo svisle (nebo obojí)"
 
-#: plug-ins/common/gauss_iir.c:288 plug-ins/common/gauss_iir.c:349
-#: plug-ins/common/gauss_iir.c:439
+#: plug-ins/common/gauss_iir.c:286 plug-ins/common/gauss_iir.c:347
+#: plug-ins/common/gauss_iir.c:437
 msgid "IIR Gaussian Blur"
 msgstr "Gaussovo rozostøení IIR"
 
-#: plug-ins/common/gauss_iir.c:375 plug-ins/common/gauss_rle.c:369
+#: plug-ins/common/gauss_iir.c:373 plug-ins/common/gauss_rle.c:370
 msgid "Blur Horizontally"
 msgstr "Rozostøit vodorovnì"
 
-#: plug-ins/common/gauss_iir.c:383 plug-ins/common/gauss_rle.c:377
+#: plug-ins/common/gauss_iir.c:381 plug-ins/common/gauss_rle.c:378
 msgid "Blur Vertically"
 msgstr "Rozostøit svisle"
 
-#: plug-ins/common/gauss_iir.c:394 plug-ins/common/gauss_rle.c:388
+#: plug-ins/common/gauss_iir.c:392 plug-ins/common/gauss_rle.c:389
 #: plug-ins/common/sel_gauss.c:274
 msgid "Blur Radius:"
 msgstr "Prùmìr rozostøení:"
 
 #. parameter settings
-#: plug-ins/common/gauss_iir.c:456 plug-ins/common/gauss_rle.c:450
+#: plug-ins/common/gauss_iir.c:454 plug-ins/common/gauss_rle.c:451
 msgid "Blur Radius"
 msgstr "Prùmìr rozostøení"
 
-#: plug-ins/common/gauss_iir.c:468 plug-ins/common/gauss_rle.c:462
-#: plug-ins/common/jigsaw.c:2353 plug-ins/common/spread.c:402
+#: plug-ins/common/gauss_iir.c:469 plug-ins/common/gauss_rle.c:466
+#: plug-ins/common/jigsaw.c:2353 plug-ins/common/spread.c:406
 msgid "Horizontal:"
 msgstr "Vodorovnì:"
 
-#: plug-ins/common/gauss_iir.c:471 plug-ins/common/gauss_rle.c:465
-#: plug-ins/common/jigsaw.c:2362 plug-ins/common/spread.c:405
+#: plug-ins/common/gauss_iir.c:473 plug-ins/common/gauss_rle.c:470
+#: plug-ins/common/jigsaw.c:2362 plug-ins/common/spread.c:410
 msgid "Vertical:"
 msgstr "Svisle:"
 
-#: plug-ins/common/gauss_rle.c:159
+#: plug-ins/common/gauss_rle.c:160
 msgid "<Image>/Filters/Blur/Gaussian Blur (RLE)..."
 msgstr "<Image>/Filtry/Rozostøení/Gaussovo rozostøení (RLE)..."
 
-#: plug-ins/common/gauss_rle.c:231
+#: plug-ins/common/gauss_rle.c:232
 msgid "gauss_rle: you must specify either horizontal or vertical (or both)"
 msgstr "gauss_rle: je nutné zadat vodorovnì nebo svisle (nebo obojí)"
 
-#: plug-ins/common/gauss_rle.c:282 plug-ins/common/gauss_rle.c:343
-#: plug-ins/common/gauss_rle.c:433
+#: plug-ins/common/gauss_rle.c:283 plug-ins/common/gauss_rle.c:344
+#: plug-ins/common/gauss_rle.c:434
 msgid "RLE Gaussian Blur"
 msgstr "Gaussovo rozostøení RLE"
 
@@ -3524,11 +3481,12 @@ msgid "Icon Name:"
 msgstr "Jméno ikony:"
 
 #: plug-ins/common/gif.c:673
-#, fuzzy
 msgid ""
 "GIF: Couldn't simply reduce colors further.\n"
 "Saving as opaque.\n"
-msgstr "GIF: Nelze jednodu¹e dále sní¾it barvy. Zapsáno jako neprùhledné.\n"
+msgstr ""
+"GIF: Nelze jednodu¹e dále sní¾it barvy.\n"
+"Zapisuje se jako neprùhledné.\n"
 
 #: plug-ins/common/gif.c:929
 msgid ""
@@ -3840,7 +3798,7 @@ msgstr ""
 
 #: plug-ins/common/gtm.c:450
 msgid "Compress TD tags"
-msgstr "Komprinovat TD visaèky"
+msgstr "Komprimovat TD visaèky"
 
 #: plug-ins/common/gtm.c:458
 msgid ""
@@ -4450,9 +4408,8 @@ msgid "Zoom"
 msgstr "Pøiblí¾ení"
 
 #: plug-ins/common/mblur.c:812
-#, fuzzy
 msgid "Blur Parameters"
-msgstr "Parametry"
+msgstr "Parametry rozostøení"
 
 #: plug-ins/common/mblur.c:824
 msgid "Length:"
@@ -4631,7 +4588,7 @@ msgstr "SuperNova: Barevná pipeta"
 msgid "Spokes:"
 msgstr "Paprsky:"
 
-#: plug-ins/common/nova.c:415 plug-ins/common/sparkle.c:461
+#: plug-ins/common/nova.c:415 plug-ins/common/sparkle.c:452
 msgid "Random Hue:"
 msgstr "Náhodný odstín:"
 
@@ -4713,12 +4670,12 @@ msgstr "Invertovaný obrázek"
 msgid "Image"
 msgstr "Obrázek"
 
-#: plug-ins/common/papertile.c:384 plug-ins/common/sparkle.c:533
+#: plug-ins/common/papertile.c:384 plug-ins/common/sparkle.c:524
 msgid "Foreground Color"
 msgstr "Barva pozadí"
 
 #: plug-ins/common/papertile.c:386 plug-ins/common/papertile.c:395
-#: plug-ins/common/sparkle.c:534
+#: plug-ins/common/sparkle.c:525
 msgid "Background Color"
 msgstr "Barva pozadí"
 
@@ -5556,119 +5513,119 @@ msgstr "Zachovat znaménko výsledku (pouze heden smìr)"
 msgid "Sobel Edge Detecting..."
 msgstr "Sobelova detekce hran..."
 
-#: plug-ins/common/sparkle.c:192
+#: plug-ins/common/sparkle.c:191
 msgid "<Image>/Filters/Light Effects/Sparkle..."
 msgstr "<Image>/Filtry/Efekty se svìtlem/Jiskøení..."
 
-#: plug-ins/common/sparkle.c:302
+#: plug-ins/common/sparkle.c:294
 msgid "Sparkling..."
 msgstr "Jiskøí se..."
 
-#: plug-ins/common/sparkle.c:359
+#: plug-ins/common/sparkle.c:350
 msgid "Sparkle"
 msgstr "Jiskøení"
 
-#: plug-ins/common/sparkle.c:397
+#: plug-ins/common/sparkle.c:388
 msgid "Luminosity Threshold:"
 msgstr "Práh jasu:"
 
-#: plug-ins/common/sparkle.c:399
+#: plug-ins/common/sparkle.c:390
 msgid "Adjust the Luminosity Threshold"
 msgstr "Úprava prahu jasu"
 
-#: plug-ins/common/sparkle.c:406
+#: plug-ins/common/sparkle.c:397
 msgid "Flare Intensity:"
 msgstr "Intenzita záøe:"
 
-#: plug-ins/common/sparkle.c:408
+#: plug-ins/common/sparkle.c:399
 msgid "Adjust the Flare Intensity"
 msgstr "Nastavení intenzity záøe"
 
-#: plug-ins/common/sparkle.c:415
+#: plug-ins/common/sparkle.c:406
 msgid "Spike Length:"
 msgstr "Délka hrotù:"
 
-#: plug-ins/common/sparkle.c:417
+#: plug-ins/common/sparkle.c:408
 msgid "Adjust the Spike Length"
 msgstr "Nastavení délky hrotù"
 
-#: plug-ins/common/sparkle.c:424
+#: plug-ins/common/sparkle.c:415
 msgid "Spike Points:"
 msgstr "Poèet hrotù:"
 
-#: plug-ins/common/sparkle.c:426
+#: plug-ins/common/sparkle.c:417
 msgid "Adjust the Number of Spikes"
 msgstr "Nastavení poètu hrotù"
 
-#: plug-ins/common/sparkle.c:433
+#: plug-ins/common/sparkle.c:424
 msgid "Spike Angle (-1: Random):"
 msgstr "Úhel hrotu (-1: náhodný):"
 
-#: plug-ins/common/sparkle.c:435
+#: plug-ins/common/sparkle.c:426
 msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
 msgstr "Nastavení úhlu hrotu (-1 znamená, ¾e bude zvolen náhodný úhel)"
 
-#: plug-ins/common/sparkle.c:443
+#: plug-ins/common/sparkle.c:434
 msgid "Spike Density:"
 msgstr "Hustota hrotù:"
 
-#: plug-ins/common/sparkle.c:445
+#: plug-ins/common/sparkle.c:436
 msgid "Adjust the Spike Density"
 msgstr "Nastavení hustoty hrotù"
 
-#: plug-ins/common/sparkle.c:454
+#: plug-ins/common/sparkle.c:445
 msgid "Adjust the Opacity of the Spikes"
 msgstr "Nastavení krytí hrotù"
 
-#: plug-ins/common/sparkle.c:463
+#: plug-ins/common/sparkle.c:454
 msgid "Adjust the Value how much the Hue should be changed randomly"
 msgstr "Úprava hodnoty, o kterou se mù¾e odstín náhodnì mìnit"
 
-#: plug-ins/common/sparkle.c:471
+#: plug-ins/common/sparkle.c:462
 msgid "Random Saturation:"
 msgstr "Náhodná sytost:"
 
-#: plug-ins/common/sparkle.c:473
+#: plug-ins/common/sparkle.c:464
 msgid "Adjust the Value how much the Saturation should be changed randomly"
 msgstr "Úprava hodnoty, o kterou se mù¾e sytost náhodnì mìnit"
 
-#: plug-ins/common/sparkle.c:491
+#: plug-ins/common/sparkle.c:482
 msgid "Preserve Luminosity"
 msgstr "Zachovat jas"
 
-#: plug-ins/common/sparkle.c:499
+#: plug-ins/common/sparkle.c:490
 msgid "Should the Luminosity be preserved?"
 msgstr "Má být zachován jas?"
 
-#: plug-ins/common/sparkle.c:502
+#: plug-ins/common/sparkle.c:493
 msgid "Inverse"
 msgstr "Inverze"
 
-#: plug-ins/common/sparkle.c:509
+#: plug-ins/common/sparkle.c:500
 msgid "Should an Inverse Effect be done?"
 msgstr "Má být proveden inverzní efekt?"
 
-#: plug-ins/common/sparkle.c:511
+#: plug-ins/common/sparkle.c:502
 msgid "Add Border"
 msgstr "Pøidat obvod"
 
-#: plug-ins/common/sparkle.c:519
+#: plug-ins/common/sparkle.c:510
 msgid "Draw a Border of Spikes around the Image"
 msgstr "Kreslit okolo obrázku hranici hrotù"
 
-#: plug-ins/common/sparkle.c:532
+#: plug-ins/common/sparkle.c:523
 msgid "Natural Color"
 msgstr "Pøirozená barva"
 
-#: plug-ins/common/sparkle.c:541
+#: plug-ins/common/sparkle.c:532
 msgid "Use the Color of the Image"
 msgstr "Pou¾ít první øady obrázku"
 
-#: plug-ins/common/sparkle.c:542
+#: plug-ins/common/sparkle.c:533
 msgid "Use the Foreground Color"
 msgstr "Pou¾ít barvy popøedí"
 
-#: plug-ins/common/sparkle.c:543
+#: plug-ins/common/sparkle.c:534
 msgid "Use the Background Color"
 msgstr "Pou¾ít barvy pozadí"
 
@@ -5836,20 +5793,20 @@ msgstr "Výpoèty..."
 msgid "<Image>/Filters/Render/Sphere Designer..."
 msgstr "<Image>/Filtry/Vyobrazení/Tvorba koulí..."
 
-#: plug-ins/common/spread.c:130
+#: plug-ins/common/spread.c:131
 msgid "<Image>/Filters/Noise/Spread..."
 msgstr "<Image>/Filtry/©um/Roprostøení..."
 
-#: plug-ins/common/spread.c:205
+#: plug-ins/common/spread.c:206
 msgid "Spreading..."
 msgstr "Roprostírá se..."
 
-#: plug-ins/common/spread.c:372
+#: plug-ins/common/spread.c:373
 msgid "Spread"
 msgstr "Rozprostøení"
 
 #. parameter settings
-#: plug-ins/common/spread.c:389
+#: plug-ins/common/spread.c:390
 msgid "Spread Amount"
 msgstr "Míra rozprostøení"
 
@@ -5866,12 +5823,10 @@ msgid "The type of this SUN-rasterfile is not supported"
 msgstr "Tento typ SUN-raster souboru není podporován"
 
 #: plug-ins/common/sunras.c:429
-#, fuzzy
 msgid "Can't read color entries"
-msgstr "nelze èíst barevné polo¾ky"
+msgstr "Nelze èíst barevné polo¾ky"
 
 #: plug-ins/common/sunras.c:436
-#, fuzzy
 msgid "Type of colormap not supported"
 msgstr "Typ barevné mapy není podporován"
 
@@ -5966,26 +5921,26 @@ msgstr "LZW"
 msgid "Pack Bits"
 msgstr "Pakování bitù"
 
-#: plug-ins/common/tile.c:131
+#: plug-ins/common/tile.c:121
 msgid "<Image>/Filters/Map/Tile..."
 msgstr "<Image>/Filtry/Mapování/Dla¾dice..."
 
-#: plug-ins/common/tile.c:204 plug-ins/common/tileit.c:331
+#: plug-ins/common/tile.c:198 plug-ins/common/tileit.c:331
 msgid "Tiling..."
 msgstr "Dla¾dicuje se..."
 
-#: plug-ins/common/tile.c:389
+#: plug-ins/common/tile.c:392
 msgid "Tile"
 msgstr "Dla¾dice"
 
 #. parameter settings
-#: plug-ins/common/tile.c:406
+#: plug-ins/common/tile.c:409
 msgid "Tile to New Size"
 msgstr "Dla¾dice nové velikosti"
 
-#: plug-ins/common/tile.c:444
-msgid "New Image"
-msgstr "Nový obrázek"
+#: plug-ins/common/tile.c:434
+msgid "Create New Image"
+msgstr "Vytvoøit nový obrázek"
 
 #: plug-ins/common/tileit.c:235
 msgid "<Image>/Filters/Map/Small Tiles..."
@@ -6738,15 +6693,15 @@ msgstr "Ètení FITS souboru"
 
 #: plug-ins/fits/fits.c:1020
 msgid "BLANK/NaN Pixel Replacement"
-msgstr ""
+msgstr "Náhrada PRÁZDNÝCH/NaN pixelù"
 
 #: plug-ins/fits/fits.c:1032
 msgid "Pixel Value Scaling"
-msgstr ""
+msgstr "Rozsah hodnot pixelù"
 
 #: plug-ins/fits/fits.c:1037
 msgid "By DATAMIN/DATAMAX"
-msgstr ""
+msgstr "Z DATAMIN/DATAMAX"
 
 #: plug-ins/fits/fits.c:1044
 msgid "Image Composing"
@@ -7044,15 +6999,15 @@ msgstr "Výbìr"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:65
 msgid "GAP Animated Filter apply"
-msgstr ""
+msgstr "Pou¾ít GAP animovaného filtru"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:86
 msgid "Animated Filter apply (init)"
-msgstr ""
+msgstr "Pou¾ít animovaného filtru (inicializovat)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:166
 msgid "Gen Code by name"
-msgstr ""
+msgstr "Generovat kód podle jména"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:410
 msgid "Out :"
@@ -7060,20 +7015,20 @@ msgstr "Výstup:"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:666
 msgid "Animated Filter apply (by name - please wait)"
-msgstr ""
+msgstr "Pou¾ít animovaného filtru (podle jména - prosím èekejte)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:690
 msgid "Animated Filter apply (by blurb - please wait)"
-msgstr ""
+msgstr "Pou¾ít animovaného filtru (podle popisu - prosím èekejte)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:698
 msgid "Animated Filter apply (please wait)"
-msgstr ""
+msgstr "Pou¾ít animovaného filtru (prosím èekejte)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:745
 #: plug-ins/gap/gap_filter_foreach.c:161 plug-ins/gap/gap_mod_layer.c:284
 msgid "Animated Filter apply"
-msgstr ""
+msgstr "Pou¾ít animovaného filtru"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:100
 msgid "<Image>/Video/Split Video to Frames"
@@ -7179,16 +7134,15 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:120
 msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
-msgstr ""
+msgstr "1.) xanim 2.80.0 exportující edice (loki verze)"
 
 #: plug-ins/gap/gap_decode_xanim.c:124
 msgid "    must be installed somewhere in your PATH"
-msgstr ""
+msgstr "    musí být nainstalováno nìkde v CESTÌ"
 
 #: plug-ins/gap/gap_decode_xanim.c:128
-#, fuzzy
 msgid "    you can get xanim exporting edition at"
-msgstr "    mpeg2encode lze získat na"
+msgstr "    exportující vydání xanim lze získat na"
 
 #: plug-ins/gap/gap_decode_xanim.c:144
 msgid ""
@@ -7208,27 +7162,24 @@ msgid "An ERROR occured while trying to call xanim:"
 msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:179
-#, fuzzy
 msgid "XANIM Information"
-msgstr "Informace o MPEG_ENCODE"
+msgstr "Informace o XANIM"
 
 #: plug-ins/gap/gap_decode_xanim.c:209
 msgid "XCF"
-msgstr ""
+msgstr "XCF"
 
 #: plug-ins/gap/gap_decode_xanim.c:209
-#, fuzzy
 msgid "PPM"
-msgstr "PPI"
+msgstr "PPM"
 
 #: plug-ins/gap/gap_decode_xanim.c:209
 msgid "JPEG"
-msgstr ""
+msgstr "JPEG"
 
 #: plug-ins/gap/gap_decode_xanim.c:212
-#, fuzzy
 msgid "Video:"
-msgstr "Video"
+msgstr "Video:"
 
 #: plug-ins/gap/gap_decode_xanim.c:213
 msgid ""
@@ -7251,9 +7202,8 @@ msgid "To :"
 msgstr "Do:"
 
 #: plug-ins/gap/gap_decode_xanim.c:238
-#, fuzzy
 msgid "Framenames:"
-msgstr "Jména políèek"
+msgstr "Jména políèek:"
 
 #: plug-ins/gap/gap_decode_xanim.c:239
 msgid ""
@@ -7262,9 +7212,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:246
-#, fuzzy
 msgid "Format"
-msgstr "Normální"
+msgstr "Formát"
 
 #: plug-ins/gap/gap_decode_xanim.c:247
 msgid ""
@@ -7273,18 +7222,16 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:254
-#, fuzzy
 msgid "Extract Frames"
-msgstr "Získat kanály:"
+msgstr "Získat kanály"
 
 #: plug-ins/gap/gap_decode_xanim.c:255
-#, fuzzy
 msgid "Enable extraction of Frames"
-msgstr "Povolit rozptyl prùhlednosti"
+msgstr "Povolit získání políèek"
 
 #: plug-ins/gap/gap_decode_xanim.c:259
 msgid "Extract Audio"
-msgstr ""
+msgstr "Získat zvuk"
 
 #: plug-ins/gap/gap_decode_xanim.c:260
 msgid ""
@@ -7293,9 +7240,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:265
-#, fuzzy
 msgid "Jpeg Quality:"
-msgstr "Kvalita:"
+msgstr "Kvalita jpeg:"
 
 #: plug-ins/gap/gap_decode_xanim.c:266
 msgid ""
@@ -7321,12 +7267,10 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:288
-#, fuzzy
 msgid "Split any Xanim readable Video to Frames"
-msgstr "Rozdìlit obrázek do políèek"
+msgstr "Rozdìlit video èitelné Xanim do políèek"
 
 #: plug-ins/gap/gap_decode_xanim.c:289
-#, fuzzy
 msgid "Select Framerange"
 msgstr "Výbìr rozsahu políèek"
 
@@ -7390,9 +7334,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:1078
-#, fuzzy
 msgid "extracting frames..."
-msgstr "Pøevádìjí se políèka..."
+msgstr "získávají se políèka..."
 
 #: plug-ins/gap/gap_decode_xanim.c:1103
 #, c-format
@@ -7408,14 +7351,12 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:1143
-#, fuzzy
 msgid "renaming frames..."
-msgstr "Kreslí se plamen..."
+msgstr "pøejmenovávají se políèka..."
 
 #: plug-ins/gap/gap_decode_xanim.c:1148
-#, fuzzy
 msgid "converting frames..."
-msgstr "Pøevádìjí se políèka..."
+msgstr "pøevádìjí se políèka..."
 
 #: plug-ins/gap/gap_filter_foreach.c:124
 msgid "backup to file"
@@ -8605,42 +8546,34 @@ msgid "Layerstack :"
 msgstr "Zásobník vrstev:"
 
 #: plug-ins/gap/gap_range_ops.c:295
-#, fuzzy
 msgid "Generate Optimal Palette"
 msgstr "Generovat optimální paletu"
 
 #: plug-ins/gap/gap_range_ops.c:296
-#, fuzzy
 msgid "WEB Palette"
 msgstr "Webová paleta"
 
 #: plug-ins/gap/gap_range_ops.c:297
-#, fuzzy
 msgid "Use Custom Palette"
 msgstr "Pou¾ít vlastní palety"
 
 #: plug-ins/gap/gap_range_ops.c:298
-#, fuzzy
 msgid "Use Black/White (1-Bit) Palette"
 msgstr "Pou¾ít èernobílé (1bitové) palety"
 
 #: plug-ins/gap/gap_range_ops.c:300
-#, fuzzy
 msgid "Floyd-Steinberg Color Dithering (Normal)"
 msgstr "Floydùv-Steinbergùv barevný rozptyl (normální)"
 
 #: plug-ins/gap/gap_range_ops.c:301
-#, fuzzy
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
 msgstr "Floydùv-Steinbergùv barevný rozptyl (sní¾ený odbìr barvy)"
 
 #: plug-ins/gap/gap_range_ops.c:302
-#, fuzzy
 msgid "Positioned Color Dithering"
 msgstr "Polohový barevný rozptyl"
 
 #: plug-ins/gap/gap_range_ops.c:303
-#, fuzzy
 msgid "No Color Dithering"
 msgstr "®ádný barevný rozptyl"
 
@@ -8659,7 +8592,6 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:327
-#, fuzzy
 msgid "Remove Unused"
 msgstr "Odstranit nepou¾ité"
 
@@ -9073,28 +9005,24 @@ msgstr "GIMP dynamický text"
 #: plug-ins/gdyntext/gdyntext_ui.c:121 plug-ins/gdyntext/gdyntext_ui.c:146
 #: plug-ins/gdyntext/gdyntext_ui.c:206 plug-ins/gdyntext/gdyntext_ui.c:835
 #: plug-ins/gdyntext/gdyntext_ui.c:886
-#, fuzzy
 msgid "GDynText "
-msgstr "Vrstva GDynText "
+msgstr "GDynText "
 
 #: plug-ins/gdyntext/gdyntext_ui.c:174
-#, fuzzy
 msgid "GIMP Dynamic Text "
-msgstr "GIMP dynamický text"
+msgstr "GIMP dynamický text "
 
 #: plug-ins/gdyntext/gdyntext_ui.c:294
 msgid "Toggle creation of a new layer"
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:305
-#, fuzzy
 msgid "Load text from file"
-msgstr "Ètení bodù cesty ze souboru"
+msgstr "Ètení textu ze souboru"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:319
-#, fuzzy
 msgid "Text color"
-msgstr "Na barvu"
+msgstr "Barva textu"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:328
 msgid "Toggle anti-aliased text"
@@ -9105,9 +9033,8 @@ msgid "Left aligned text"
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:348
-#, fuzzy
 msgid "Centered text"
-msgstr "Støed x:"
+msgstr "Text na støed"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:357
 msgid "Right aligned text"
@@ -9126,23 +9053,20 @@ msgid "Set text rotation (degrees)"
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:398
-#, fuzzy
 msgid "Set line spacing"
-msgstr "Svislý rozestup"
+msgstr "Nastavení prokladu øádkù"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:402
-#, fuzzy
 msgid "Line spacing"
-msgstr "Rozestup dla¾dic:"
+msgstr "Proklad øádkù"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:431
 msgid "Editable text sample"
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:446
-#, fuzzy
 msgid "Clear preview"
-msgstr "Pøekreslit náhled"
+msgstr "Vymazat náhled"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:452
 msgid "Preview default text sample"
@@ -9161,9 +9085,9 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:928
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening \"%s\"!\n"
-msgstr "Chyba pøi otvírání souboru"
+msgstr "Chyba pøi otvírání  \"%s\"!\n"
 
 #: plug-ins/gdyntext/message_window.c:110
 msgid "Dismiss"
@@ -9338,11 +9262,9 @@ msgid "not valid GFlare file: %s"
 msgstr "neplatný soubor P-záøe: %s"
 
 #: plug-ins/gflare/gflare.c:1349
-#, fuzzy, c-format
+#, c-format
 msgid "invalid formatted GFlare file: %s\n"
-msgstr ""
-"neplatnì formátovaný soubor P-záøe: %s\n"
-")"
+msgstr "neplatnì formátovaný soubor P-záøe: %s\n"
 
 #: plug-ins/gflare/gflare.c:1451
 #, c-format
@@ -9602,19 +9524,18 @@ msgid "More..."
 msgstr "Více..."
 
 #: plug-ins/gfli/gfli.c:437 plug-ins/gfli/gfli.c:476 plug-ins/gfli/gfli.c:699
-#, fuzzy, c-format
+#, c-format
 msgid "FLI: can't open \"%s\"\n"
-msgstr "%s: nelze otevøít \"%s\"\n"
+msgstr "FLI: nelze otevøít \"%s\"\n"
 
 #: plug-ins/gfli/gfli.c:536
-#, fuzzy, c-format
+#, c-format
 msgid "Frame (%i)"
-msgstr "Políèko %d"
+msgstr "Políèko (%i)"
 
 #: plug-ins/gfli/gfli.c:633
-#, fuzzy
 msgid "FLI: Sorry, can't save images with Alpha.\n"
-msgstr "Nelze zapsat obrázek s alfou\n"
+msgstr "FLI: Bohu¾el nelze zapsat obrázek s alfou.\n"
 
 #: plug-ins/gfli/gfli.c:663
 msgid "FLI: Sorry, I can save only INDEXED and GRAY images.\n"
@@ -10966,14 +10887,12 @@ msgid "Move To Front"
 msgstr ""
 
 #: plug-ins/imagemap/imap_tools.c:127
-#, fuzzy
 msgid "Select existing area"
-msgstr "Vybrat následující"
+msgstr "Výbìr existující oblasti"
 
 #: plug-ins/imagemap/imap_tools.c:131
-#, fuzzy
 msgid "Define Rectangle area"
-msgstr "Obdélník"
+msgstr "Definovat obdélníkovou oblast"
 
 #: plug-ins/imagemap/imap_tools.c:135
 msgid "Define Circle/Oval area"
@@ -10984,14 +10903,12 @@ msgid "Define Polygon area"
 msgstr ""
 
 #: plug-ins/imagemap/imap_tools.c:143
-#, fuzzy
 msgid "Edit selected area info"
-msgstr "Ète zvolenou pøedvolbu do pamìti"
+msgstr "Upravit informaci o vybrané oblasti"
 
 #: plug-ins/imagemap/imap_tools.c:147
-#, fuzzy
 msgid "Delete selected area"
-msgstr "Smazat vybraná políèka"
+msgstr "Smazat vybranou oblast"
 
 #: plug-ins/maze/algorithms.c:282
 msgid "Constructing maze using Prim's Algorithm..."
@@ -11629,19 +11546,16 @@ msgid ""
 msgstr ""
 
 #: plug-ins/script-fu/script-fu-scripts.c:1933
-#, fuzzy
 msgid "Copyright:"
 msgstr "Copyright:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1939
-#, fuzzy
 msgid "Date:"
 msgstr "Datum:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1947
-#, fuzzy
 msgid "Image Types:"
-msgstr "Typy obrázku"
+msgstr "Typy obrázku:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2096
 msgid "Script-Fu Font Selection"
@@ -11920,984 +11834,41 @@ msgstr "Zapsat jako XJT"
 msgid "Clear Transparent"
 msgstr "Vymazat prùhledné"
 
-#: plug-ins/xjt/xjt.c:1165
+#: plug-ins/xjt/xjt.c:1172
 #, c-format
 msgid "Can't open (write): %s"
 msgstr "Nelze otevøít (zápis): %s"
 
-#: plug-ins/xjt/xjt.c:1553
+#: plug-ins/xjt/xjt.c:1560
 msgid "xjt: cannot operate on indexed color images"
 msgstr "xjt: neumí pracovat s indexovanými barevnými obrázky"
 
-#: plug-ins/xjt/xjt.c:1557
+#: plug-ins/xjt/xjt.c:1564
 msgid "xjt: cannot operate on unknown image types"
 msgstr "xjt: neumí pracovat s neznámými typy obrázku"
 
-#: plug-ins/xjt/xjt.c:1572 plug-ins/xjt/xjt.c:3170
+#: plug-ins/xjt/xjt.c:1579 plug-ins/xjt/xjt.c:3177
 #, c-format
 msgid "Can't create working dir: %s"
 msgstr "Nelze vytvoøit pracovní adresáø: %s"
 
-#: plug-ins/xjt/xjt.c:1581
+#: plug-ins/xjt/xjt.c:1588
 #, c-format
 msgid "Can't open : %s"
 msgstr "Nelze otevøít: %s"
 
 #. stat error (file does not exist)
-#: plug-ins/xjt/xjt.c:2399 plug-ins/xjt/xjt.c:2406
+#: plug-ins/xjt/xjt.c:2406 plug-ins/xjt/xjt.c:2413
 #, c-format
 msgid "Can't open (read): %s"
 msgstr "Nelze otevøít (ètení): %s"
 
-#: plug-ins/xjt/xjt.c:3033
+#: plug-ins/xjt/xjt.c:3040
 #, c-format
 msgid "Error: Cant read XJT propertyfile %s"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:3038
+#: plug-ins/xjt/xjt.c:3045
 #, c-format
 msgid "Error,XJT propertyfile %s is empty"
 msgstr ""
-
-#~ msgid "AlienMap Color Transformation Plug-In"
-#~ msgstr "Modul barevných transformací \"Cizí mapování\""
-
-#~ msgid "No help yet. Just try it and you'll see!"
-#~ msgstr "Zatím není nápovìda. Vyzkou¹ejte a uvidíte!"
-
-#~ msgid "1th May 1997"
-#~ msgstr "1. kvìtna 1997"
-
-#~ msgid "AlienMap2 Color Transformation Plug-In"
-#~ msgstr "Modul barevných transformací \\\"Cizí mapování 2\\\""
-
-#~ msgid "24th April 1998"
-#~ msgstr "24. dubna 1998"
-
-#~ msgid "Preview options"
-#~ msgstr "Volby náhledu"
-
-#~ msgid "Gradients"
-#~ msgstr "Pøechody"
-
-#~ msgid "Accept settings and start the calculation of the fractal"
-#~ msgstr "Pøijme nastavení a zapoène s výpoètem fraktálu"
-
-#~ msgid "Discard any changes and close dialog box"
-#~ msgstr "Zahodí zmìny a zavøe dialogové okno"
-
-#~ msgid "Show information about the plug-in and the author"
-#~ msgstr "Zobrazí informace o modulu a autorovi"
-
-#~ msgid "Loading..."
-#~ msgstr "Ète se..."
-
-#~ msgid "Chaos Fractal Explorer Plug-In"
-#~ msgstr "Modul Badatel chaotických fraktálù"
-
-#~ msgid "Choose gradient by double-clicking on it"
-#~ msgstr "Dvojitým poklepem lze vybrat pøechod"
-
-#~ msgid "Apply various lighting effects to an image"
-#~ msgstr "Vytváøí do obrázku rùzné svìtelné efekty"
-
-#~ msgid "No help yet"
-#~ msgstr "Nápovìda zatím není"
-
-#~ msgid "Loads files of Windows BMP file format"
-#~ msgstr "Ète soubory ve formátu Windows BMP"
-
-#~ msgid "Saves files in Windows BMP file format"
-#~ msgstr "Zapisuje soubory ve formátu Windows BMP"
-
-#~ msgid "Loads files in KISS CEL file format"
-#~ msgstr "Ète soubory ve formátu KISS CEL"
-
-#~ msgid "This plug-in loads individual KISS cell files."
-#~ msgstr "Tento modul ète soubory jednotlivých bunìk ve formátu KISS."
-
-#~ msgid "Saves files in KISS CEL file format"
-#~ msgstr "Zapisuje soubory ve formátu KISS CEL"
-
-#~ msgid "This plug-in saves individual KISS cell files."
-#~ msgstr "Tento modul zapisuje soubory jednotlivých bunìk ve formátu KISS."
-
-#~ msgid "Saves files in various text formats"
-#~ msgstr "Zapisuje v rùzných textových formátech"
-
-#~ msgid "This plugin allows you to preview a GIMP layer-based animation."
-#~ msgstr "Tento modul umo¾òuje náhled GIMP animace zalo¾ené na vrstvách."
-
-#~ msgid ""
-#~ "This plugin applies various optimizations to a GIMP layer-based animation."
-#~ msgstr ""
-#~ "Tento modul provádí rùzné optimalizace v GIMP animacích zalo¾ených na "
-#~ "vrstvách."
-
-#~ msgid ""
-#~ "This plugin 'simplifies' a GIMP layer-based animation that has been "
-#~ "AnimationOptimized.  This makes the animation much easier to work with if, "
-#~ "for example, the optimized version is all you have."
-#~ msgstr ""
-#~ "Tento modul 'zjednodu¹uje' GIMP animace zalo¾ené na vrstvách tak, aby byly "
-#~ "animaènì optimalizované. To èiní práci s animací mnohem jednodu¹¹í, "
-#~ "napøíklad optimalizovaná verze je v¹e, co je nutné."
-
-#~ msgid "Apply a lens effect"
-#~ msgstr "Efekt u¾ití èoèek"
-
-#~ msgid ""
-#~ "This plug-in uses Snell's law to draw an ellipsoid lens over the image"
-#~ msgstr "Tento modul ú¾ívá Snellova zákona ke kreslení èoèek nad obrázkem"
-
-#~ msgid "Automagically crops a picture."
-#~ msgstr "\"Automagicky\" oøezává obrázek..."
-
-#~ msgid ""
-#~ "Automatically stretch the contrast of the specified drawable to cover all "
-#~ "possible ranges."
-#~ msgstr ""
-#~ "Automaticky roztahuje kontrast v urèené obrazovce tak, aby pokryl v¹echny "
-#~ "mo¾né rozsahy."
-
-#~ msgid ""
-#~ "This simple plug-in does an automatic contrast stretch.  For each channel in "
-#~ "the image, it finds the minimum and maximum values... it uses those values "
-#~ "to stretch the individual histograms to the full contrast range.  For some "
-#~ "images it may do just what you want; for others it may be total crap :).  "
-#~ "This version differs from Contrast Autostretch in that it works in HSV "
-#~ "space, and preserves hue."
-#~ msgstr ""
-#~ "Tento jednoduchý modul provádí automatické rozta¾ení kontrastu. Pro ka¾dý "
-#~ "kanál obrázku najde nejmen¹í a nejvy¹¹í hodnotu... a pou¾ije tyto hodnoty "
-#~ "k rozta¾ení jednotlivých histogramù na plný rozsah. Pro nìkteré obrázky je "
-#~ "výsledek pøesnì takový, jaký oèekáváme, jiné zcela rozhodí :). Tato verze se "
-#~ "li¹í od Automatického rozta¾ení kontrastu tím, ¾e pracuje v prostoru HSV a "
-#~ "zachovává odstín."
-
-#~ msgid ""
-#~ "Adds a blinds effect to the image. Rather like putting the image on a set of "
-#~ "window blinds and the closing or opening the blinds"
-#~ msgstr ""
-#~ "Pøidává do obrázku pruhy. Podobné pokládání sady pruhù na okno a zakrývání a "
-#~ "odkrývání pruhù"
-
-#~ msgid "More here later"
-#~ msgstr "Více zde bude pozdìji"
-
-#~ msgid "Apply a 3x3 blurring convolution kernel to the specified drawable."
-#~ msgstr "Rozostøuje v urèené obrazovce s pou¾itím konvoluèní matice 3×3."
-
-#~ msgid ""
-#~ "This plug-in randomly blurs the specified drawable, using a 3x3 blur.  You "
-#~ "control the percentage of the pixels that are blurred and the number of "
-#~ "times blurring is applied.  Indexed images are not supported."
-#~ msgstr ""
-#~ "Tento modul náhodnì rozostøuje urèenou obrazovku s pou¾itím rozostøení 3×3. "
-#~ "Je mo¾né øídit procento rozostøených pixelù a poèet opakování rozostøování. "
-#~ "Indexované obrázky nejsou podporovány."
-
-#~ msgid ""
-#~ "This simple plug-in does an automatic contrast stretch.  For each channel in "
-#~ "the image, it finds the minimum and maximum values... it uses those values "
-#~ "to stretch the individual histograms to the full contrast range.  For some "
-#~ "images it may do just what you want; for others it may be total crap :)"
-#~ msgstr ""
-#~ "Tento jednoduchý modul provádí automatické rozta¾ení kontrastu. Pro ka¾dý "
-#~ "kanál obrázku najde nejmen¹í a nejvy¹¹í hodnotu... a pou¾ije tyto hodnoty "
-#~ "k rozta¾ení jednotlivých histogramù na plný rozsah. Pro nìkteré obrázky je "
-#~ "výsledek pøesnì takový, jaký oèekáváme, jiné zcela rozhodí :)"
-
-#~ msgid "Adds a checkerboard pattern to an image"
-#~ msgstr "Pøidává do obrázku ¹achovnicový vzorek"
-
-#~ msgid ""
-#~ "Automatically stretch the saturation of the specified drawable to cover all "
-#~ "possible ranges."
-#~ msgstr ""
-#~ "Automaticky roztahuje sytost v urèené obrazovce tak, aby pokryla v¹echny "
-#~ "mo¾né rozsahy."
-
-#~ msgid "Similar to the \"Color\" mode for layers."
-#~ msgstr "Podobné re¾imu \"Barva\" pro vrstvy."
-
-#~ msgid "Makes an average of the RGB channels and uses it to set the color"
-#~ msgstr "Vytvoøí prùmìr z RGB kanálù a pou¾ije jej k nastavení barvy"
-
-#~ msgid "Convert the color in an image to alpha"
-#~ msgstr "Pøevede barvu v obrázku do alfy"
-
-#~ msgid ""
-#~ "This replaces as much of a given color as possible in each pixel with a "
-#~ "corresponding amount of alpha, then readjusts the color accordingly."
-#~ msgstr ""
-#~ "Tento nahrazuje takové mno¾ství dané barvy, jaké je mo¾né, odpovídající "
-#~ "mírou alfy, a poté pøíslu¹nì doupraví barvu."
-
-#~ msgid "7th Aug 1999"
-#~ msgstr "7. srpna 1999"
-
-#~ msgid "Compose an image from multiple gray images"
-#~ msgstr "Zkomponuje obrázek z nìkolika obrázkù v ¹edích"
-
-#~ msgid "This function creates a new image from multiple gray images"
-#~ msgstr "Tato funkce vytváøí nový obrázek z nìkolika obrázkù v ¹edích"
-
-#~ msgid "Compose an image from multiple drawables of gray images"
-#~ msgstr "Zkomponuje obrázek z nìkolika obrazovek v ¹edích"
-
-#~ msgid ""
-#~ "This function creates a new image from multiple drawables of gray images"
-#~ msgstr "Tato funkce vytváøí nový obrázek z nìkolika obrazovek v ¹edích"
-
-#~ msgid "A generic 5x5 convolution matrix"
-#~ msgstr "Obecná konvoluèní matice 5×5"
-
-#~ msgid "Dump image data in RGB(A) format for C source"
-#~ msgstr "Vypí¹e obrázková data ve formátu RGB(A) pro zdrojový kód C"
-
-#~ msgid "Convert the input drawable into a collection of rotated squares"
-#~ msgstr "Pøevádí vstupní obrazovku do mno¾ství natoèených ètvercù"
-
-#~ msgid "Help not yet written for this plug-in"
-#~ msgstr "Nápovìda pro tento modul není doposud napsaná"
-
-#~ msgid "Decompose an image into different types of channels"
-#~ msgstr "Dekompozice obrázku do rùzných typù kanálù"
-
-#~ msgid ""
-#~ "This function creates new gray images with different channel information in "
-#~ "each of them"
-#~ msgstr ""
-#~ "Tato funkce vytváøí nové obrázky v ¹edích s rùznými informacemi v kaødém "
-#~ "z kanálù"
-
-#~ msgid ""
-#~ "Deinterlace is useful for processing images from video capture cards. When "
-#~ "only the odd or even fields get captured, deinterlace can be used to "
-#~ "interpolate between the existing fields to correct this."
-#~ msgstr ""
-#~ "Odstranìní prokladu je u¾iteèné pro zpracování obrázkù z videosníkových "
-#~ "karet. Pokud jsou sejmuty jen liché nebo sudé øádky, odstranìní prokladu to "
-#~ "mù¾e opravit interpolací mezi existujícími polemi."
-
-#~ msgid "Generate diffraction patterns"
-#~ msgstr "Generuje difrakèní obrazce"
-
-#~ msgid "Help?  What help?  Real men do not need help :-)"
-#~ msgstr ""
-#~ "Nápovìda?  Jaká nápovìda?  Skuteèní odborníci nepotøebují nápovìdu :-)"
-
-#~ msgid "Displace the contents of the specified drawable"
-#~ msgstr "Vytlaèuje obsah urèené obrazovky"
-
-#~ msgid ""
-#~ "Displaces the contents of the specified drawable by the amounts specified by "
-#~ "'amount_x' and 'amount_y' multiplied by the intensity of corresponding "
-#~ "pixels in the 'displace_map' drawables.  Both 'displace_map' drawables must "
-#~ "be of type GRAY_IMAGE for this operation to succeed."
-#~ msgstr ""
-#~ "Posouvá obsah urèené obrazovky o stupeò urèený hodnotami 'stupeò_x' a "
-#~ "'stupeò_y' násobené intenzitou odpovídajícího v obrazovce 'mapy_vytlaèení'. "
-#~ "Pro úspìch práce musí být obì mapy vytlaèení V_©EDÍCH."
-
-#~ msgid "Perform edge detection on the contents of the specified drawable"
-#~ msgstr "Provádí detekci hran v obsahu urèené obrazovky"
-
-#~ msgid "Emboss filter"
-#~ msgstr "Filtr reliéfu"
-
-#~ msgid ""
-#~ "Emboss or Bumpmap the given drawable, specifying the angle and elevation for "
-#~ "the light source."
-#~ msgstr ""
-#~ "Vytvoøí po zadání úhlu a vý¹ky svìtelného zdroje reliéf nebo vyvý¹ení na "
-#~ "urèené obrazovce"
-
-#~ msgid "Engrave the contents of the specified drawable"
-#~ msgstr "Vytvoøí rytinu ze zadané obrazovky"
-
-#~ msgid ""
-#~ "Creates a black-and-white 'engraved' version of an image as seen in old "
-#~ "illustrations"
-#~ msgstr ""
-#~ "Vytváøí èernobílou verzi s 'rytinou' obrázku, jakou mù¾eme vidìt na starých "
-#~ "ilustracích"
-
-#~ msgid ""
-#~ "Exchange one color with another, optionally setting a threshold to convert "
-#~ "from one shade to another"
-#~ msgstr ""
-#~ "Zamìní jednu barvu s jinou, volitelnì s nastavením prahu pøevodu mezi "
-#~ "odstíny."
-
-#~ msgid "Compose several images to a roll film"
-#~ msgstr "Spojení nìkolika obrázkù do fimového pásu"
-
-#~ msgid "Add lens flare effects"
-#~ msgstr "Pøidá dojem odleskù èoèek"
-
-#~ msgid "Applies a gaussian blur to the specified drawable."
-#~ msgstr "Gaussovsky rozostøuje v urèené obrazovce."
-
-#~ msgid ""
-#~ "Applies a gaussian blur to the drawable, with specified radius of affect.  "
-#~ "The standard deviation of the normal distribution used to modify pixel "
-#~ "values is calculated based on the supplied radius.  Horizontal and vertical "
-#~ "blurring can be independently invoked by specifying only one to run.  The "
-#~ "IIR gaussian blurring works best for large radius values and for images "
-#~ "which are not computer-generated.  Values for radius less than 1.0 are "
-#~ "invalid as they will generate spurious results."
-#~ msgstr ""
-#~ "Provádí v obrazovce Gaussovo rozostøení s urèeným prùmìrem vlivu. Ke zmìnì "
-#~ "pixelù je pou¾ito standardní odchylky normální distribuce vypoètené na "
-#~ "základì zadaného prùmìru. Vodorovné a svislé rozostøení mù¾e být voleno "
-#~ "nezávisle. Rozostøení IIR pracuje nejlépe s vysokými hodnotami prùmìru a "
-#~ "s obrázky, které nejsou strojovì generované. Hodnoty prùmìru men¹í ne¾ 1,0 "
-#~ "jsou neplatné a vytváøejí ru¹ivé efekty."
-
-#~ msgid ""
-#~ "Applies a gaussian blur to the drawable, with specified radius of affect.  "
-#~ "The standard deviation of the normal distribution used to modify pixel "
-#~ "values is calculated based on the supplied radius.  This radius can be "
-#~ "specified indepently on for the horizontal and the vertical direction. The "
-#~ "IIR gaussian blurring works best for large radius values and for images "
-#~ "which are not computer-generated.  Values for radii less than 1.0 would "
-#~ "generate spurious results. Therefore they are interpreted as 0.0, which "
-#~ "means that the computation for this orientation is skipped."
-#~ msgstr ""
-#~ "Provádí v obrazovce Gaussovo rozostøení s urèeným prùmìrem vlivu. Ke zmìnì "
-#~ "pixelù je pou¾ito standardní odchylky normální distribuce vypoètené na "
-#~ "základì zadaného prùmìru. Vodorovné a svislé rozostøení mù¾e být voleno "
-#~ "nezávisle. Rozostøení IIR pracuje nejlépe s vysokými hodnotami prùmìru a "
-#~ "s obrázky, které nejsou strojovì generované. Hodnoty prùmìru men¹í ne¾ 1,0 "
-#~ "jsou neplatné a mohou vytváøet ru¹ivé efekty. Proto jsou interpretovány jako "
-#~ "0,0, co¾ znamená, ¾e výpoèet v této orientaci je pøeskoèen."
-
-#~ msgid ""
-#~ "Applies a gaussian blur to the drawable, with specified radius of affect.  "
-#~ "The standard deviation of the normal distribution used to modify pixel "
-#~ "values is calculated based on the supplied radius.  Horizontal and vertical "
-#~ "blurring can be independently invoked by specifying only one to run.  The "
-#~ "RLE gaussian blurring performs most efficiently on computer-generated images "
-#~ "or images with large areas of constant intensity.  Values for radii less "
-#~ "than 1.0 are invalid as they would generate spurious results."
-#~ msgstr ""
-#~ "Provádí v obrazovce Gaussovo rozostøení s urèeným prùmìrem vlivu. Ke zmìnì "
-#~ "pixelù je pou¾ito standardní odchylky normální distribuce vypoètené na "
-#~ "základì zadaného prùmìru. Vodorovné a svislé rozostøení mù¾e být voleno "
-#~ "nezávisle. Rozostøení RLE pracuje nejlépe se strojovì generovanými obrázky "
-#~ "s rozsáhlými plochami stejné intenzity. Hodnoty prùmìru men¹í ne¾ 1,0 jsou "
-#~ "neplatné a mohou vytváøet ru¹ivé efekty."
-
-#~ msgid ""
-#~ "Applies a gaussian blur to the drawable, with specified radius of affect.  "
-#~ "The standard deviation of the normal distribution used to modify pixel "
-#~ "values is calculated based on the supplied radius.  This radius can be "
-#~ "specified indepently on for the horizontal and the vertical direction. The "
-#~ "RLE gaussian blurring performs most efficiently on computer-generated images "
-#~ "or images with large areas of constant intensity.  Values for radii less "
-#~ "than 1.0 would generate spurious results. Therefore they are interpreted as "
-#~ "0.0, which means that the computation for this orientation is skipped."
-#~ msgstr ""
-#~ "Provádí v obrazovce Gaussovo rozostøení s urèeným prùmìrem vlivu. Ke zmìnì "
-#~ "pixelù je pou¾ito standardní odchylky normální distribuce vypoètené na "
-#~ "základì zadaného prùmìru. Vodorovné a svislé rozostøení mù¾e být voleno "
-#~ "nezávisle. Rozostøení RLE pracuje nejlépe se strojovì generovanými obrázky "
-#~ "s rozsáhlými plochami stejné intenzity. Hodnoty prùmìru men¹í ne¾ 1,0 jsou "
-#~ "neplatné a mohou vytváøet ru¹ivé efekty. Proto jsou interpretovány jako 0,0, "
-#~ "co¾ znamená, ¾e výpoèet v této orientaci je pøeskoèen."
-
-#~ msgid "loads files of the .gbr file format"
-#~ msgstr "ète soubory ve formátu .gbr"
-
-#~ msgid "FIXME: write help"
-#~ msgstr "K NÁPRAVÌ: napsat nápovìdu"
-
-#~ msgid "saves files in the .gbr file format"
-#~ msgstr "zapisuje soubory ve formátu .gbr"
-
-#~ msgid "Yeah!"
-#~ msgstr "Jù!"
-
-#~ msgid "A big hello from the GIMP team!"
-#~ msgstr "Velký pozdrav od lidí od GIMPu!"
-
-#~ msgid "loads files of the .ico file format"
-#~ msgstr "ète soubory ve formátu .ico"
-
-#~ msgid "saves files in the .ico file format"
-#~ msgstr "Zapisuje soubory ve formátu .ico"
-
-#~ msgid "saves files in Compuserve GIF file format"
-#~ msgstr "zapisuje soubory ve formátu Compuserve GIF"
-
-#~ msgid ""
-#~ "Transparent colour *might* be incorrect on viewers which don't support "
-#~ "transparency."
-#~ msgstr ""
-#~ "Prùhledné barvy *mohou* být nesprávné v prohlí¾eèích, které nepodporují "
-#~ "prùhlednost."
-
-#~ msgid "loads files of Compuserve GIF file format"
-#~ msgstr "ète soubory ve formátu Compuserve GIF"
-
-#~ msgid "Divide the image into square glassblocks"
-#~ msgstr "Rozdìlí obrázek do ètvercových sklenných dla¾dic"
-
-#~ msgid "saves images in GIMP pixmap brush format"
-#~ msgstr "zapisuje soubory ve formátu GIMP pixelovì mapované stopy"
-
-#~ msgid ""
-#~ "This plug-in saves a layer of an image in the GIMP pixmap brush format. The "
-#~ "image must have an alpha channel."
-#~ msgstr ""
-#~ "Tento modul zapisuje vrstvu obrázku jako obrázek ve formátu GIMP pixelovì "
-#~ "mapované stopy. Obrázek musí mít alfa kanál."
-
-#~ msgid "saves images in GIMP pixmap brush pipe format"
-#~ msgstr "zapisuje soubory ve formátu GIMP pixelovì mapované kolony stop"
-
-#~ msgid ""
-#~ "This plug-in saves an image in the GIMP pixmap brush pipe format. The image "
-#~ "must have an alpha channel. The image can be multi-layered, and additionally "
-#~ "the layers can be divided into a rectangular array of brushes."
-#~ msgstr ""
-#~ "Tento modul zapisuje vrstvu obrázku jako obrázek ve formátu GIMP pixelovì "
-#~ "mapované kolony stop. Obrázek musí mít alfa kanál. Obrázek mù¾e bý "
-#~ "vícevrstevný a navíc mohou být vrstvy rozdìleny do obdélníkových polí stop."
-
-#~ msgid "Map the contents of the specified drawable with active gradient"
-#~ msgstr "Mapuje obsah urèené obrazovky z aktivního pøechodu"
-
-#~ msgid "Draws a grid."
-#~ msgstr "Kreslí møí¾."
-
-#~ msgid "no help available"
-#~ msgstr "nápoveda není k dispozici"
-
-#~ msgid "Allows you to draw an HTML table in GIMP. See help for more info."
-#~ msgstr ""
-#~ "Umo¾òuje kreslit HTML tabulku v programu GIMP. Dal¹í informace viz nápovìda."
-
-#~ msgid ""
-#~ "Slice up the image into subimages, cutting along the image's Guides.  Fooey "
-#~ "to you and your broccoli, Pokey."
-#~ msgstr ""
-#~ "Naøe¾e obrázek podél vodítek na podobrázky. Stejnì jako vy brokolici. ®e ano."
-
-#~ msgid "This function takes an image and blah blah.  Hooray!"
-#~ msgstr "Tato funkce vezme obrázek a bla bla. Hurá!"
-
-#~ msgid "loads files compressed with gzip"
-#~ msgstr "ète obrázky v gzip kompresi"
-
-#~ msgid "You need to have gzip installed."
-#~ msgstr "Je nutné mít nainstalován gzip."
-
-#~ msgid "saves files compressed with gzip"
-#~ msgstr "zapisuje obrázky v gzip kompresi"
-
-#~ msgid "saves files as C unsigned character array"
-#~ msgstr "zapisuje soubory jako C znaky bez znaménky"
-
-#~ msgid "Look for hot NTSC or PAL pixels "
-#~ msgstr "Hledá nezobrazitelné NTSC nebo PAL pixely"
-
-#~ msgid "loads files of the hrz file format"
-#~ msgstr "ète soubory ve formátu hrz"
-
-#~ msgid "FIXME: write help for hrz_load"
-#~ msgstr "K NÁPRAVÌ: napsat nápovìdu k hrz_load"
-
-#~ msgid "saves files in the hrz file format"
-#~ msgstr "zapisuje soubory ve formátu hrz"
-
-#~ msgid "HRZ saving handles all image types except those with alpha channels."
-#~ msgstr ""
-#~ "HRZ zápis umí zpracovat v¹echny typy obrázkù kromì tìch s alfa kanálem."
-
-#~ msgid "Interactive warping of the specified drawable"
-#~ msgstr "Interaktivní ohýbání urèené obrazovky"
-
-#~ msgid "Renders a jigsaw puzzle look"
-#~ msgstr "Vytváøí vzhled skládaèky puzzle"
-
-#~ msgid "Jigsaw puzzle look"
-#~ msgstr "Vzhled skládaèky puzzle"
-
-#~ msgid "loads files in the JPEG file format"
-#~ msgstr "ète soubory ve formátu JPEG"
-
-#~ msgid "saves files in the JPEG file format"
-#~ msgstr "zapisuje soubory ve formátu JPEG"
-
-#~ msgid "saves files in the lossy, widely supported JPEG format"
-#~ msgstr "zapisuje soubory ve ztrátovém, ¹iroce podporovaném formátu JPEG"
-
-#~ msgid "Edge Detection with Laplace Operation"
-#~ msgstr "Detekce hran Laplaceovým operátorem"
-
-#~ msgid "Creates a Van Gogh effect (Line Integral Convolution)"
-#~ msgstr "Vytváøí Van Gogh efekt (øádková integrální konvoluce)"
-
-#~ msgid "pipe files to uuencode then mail them"
-#~ msgstr "po¹le soubory rourou do uuencode a ode¹le je"
-
-#~ msgid "You need to have uuencode and mail installed"
-#~ msgstr "Je nutné mít nainstalovány uuencode a po¹tu"
-
-#~ msgid ""
-#~ "Adjust current foreground/background color in the drawable to black/white"
-#~ msgstr "Nastavuje aktuální barvu popøedí/pozadí v obrazovce na èernou/bílou"
-
-#~ msgid ""
-#~ "Map two source colors to two destination colors. Other colors are mapped by "
-#~ "interpolation."
-#~ msgstr ""
-#~ "Mapuje dvì zdrojové barvy do dvou cílových barev. Ostatní barvy jsou "
-#~ "mapované interpolací."
-
-#~ msgid "Loads MPEG movies"
-#~ msgstr "Ète MPEG animace"
-
-#~ msgid "Re-sample the image to give a newspaper-like effect"
-#~ msgstr "Pøevzorkuje obrázek k dosa¾ení efektu novinového vzhledu"
-
-#~ msgid "Nonlinear swiss army knife filter"
-#~ msgstr "Univerzální nelineární filtr"
-
-#~ msgid ""
-#~ "This is the pnmnlfilt, in gimp's clothing.  See the pnmnlfilt manpage for "
-#~ "details."
-#~ msgstr ""
-#~ "Je to pnmnlfilt v pøestrojení pro GIMP. Detaily naleznete v manuálové "
-#~ "stránce pnmnlfilt."
-
-#~ msgid "Adds random noise to a drawable's channels"
-#~ msgstr "Pøidává náhodný ¹um do kanálù obrazovek"
-
-#~ msgid ""
-#~ "Normalize the contrast of the specified drawable to cover all possible "
-#~ "ranges."
-#~ msgstr ""
-#~ "Normalizuje kontrast v urèené obrazovce tak, aby pokryla v¹echny mo¾né "
-#~ "rozsahy."
-
-#~ msgid "Produce Supernova effect to the specified drawable"
-#~ msgstr "Vytváøí v urèené obrazovce efekt supernovy"
-
-#~ msgid "Modify the specified drawable to resemble an oil painting"
-#~ msgstr "Mìní urèenou obrazovku tak, aby napodobila olejomalbu"
-
-#~ msgid "loads files of the .pat file format"
-#~ msgstr "ète soubory ve formátu .pat"
-
-#~ msgid "saves files in the .pat file format"
-#~ msgstr "zapisuje soubory ve formátu .pat"
-
-#~ msgid "Loads files in Zsoft PCX file format"
-#~ msgstr "Ète soubory ve formátu ZSoft PCX"
-
-#~ msgid "Saves files in ZSoft PCX file format"
-#~ msgstr "Zapisuje soubory ve formátu ZSoft PCX"
-
-#~ msgid "loads files of the PIX file format"
-#~ msgstr "ète soubory ve formátu PIX"
-
-#~ msgid "save file in the Alias|Wavefront pix/matte file format"
-#~ msgstr "zápis souboru ve formátu Alias|Wavefront pix/matte"
-
-#~ msgid "Pixelize the contents of the specified drawable"
-#~ msgstr "Pixelizuje obsah urèené obrazovky"
-
-#~ msgid ""
-#~ "Pixelize the contents of the specified drawable with speficied pixelizing "
-#~ "width."
-#~ msgstr "Pixelizuje obsah urèené obrazovky na zadanou ¹íøku pixelù."
-
-#~ msgid "Create a plasma cloud like image to the specified drawable"
-#~ msgstr "Vytváøí v urèené obrazovce vzhled plazmového mraku"
-
-#~ msgid "Displays plugin details"
-#~ msgstr "Zobrazuje podrobnosti o modulech"
-
-#~ msgid "Loads files in PNG file format"
-#~ msgstr "Ète soubory ve formátu PNG"
-
-#~ msgid "This plug-in loads Portable Network Graphics (PNG) files."
-#~ msgstr ""
-#~ "Tento module ète soubory s pøenositelnou sí»ovou grafikou (Portable Network "
-#~ "Graphics - PNG)"
-
-#~ msgid "loads files of the pnm file format"
-#~ msgstr "ète soubory ve formátu pnm"
-
-#~ msgid "saves files in the pnm file format"
-#~ msgstr "zapisuje soubory ve formátu pnm"
-
-#~ msgid "PNM saving handles all image types except those with alpha channels."
-#~ msgstr ""
-#~ "PNM zápis umí zpracovat v¹echny typy obrázkù kromì tìch s alfa kanálem."
-
-#~ msgid "load file of PostScript/PDF file format"
-#~ msgstr "naèíst soubor ve formátu PostScript"
-
-#~ msgid "save file in PostScript file format"
-#~ msgstr "zapsat soubor ve formátu PostScript"
-
-#~ msgid ""
-#~ "PostScript saving handles all image types except those with alpha channels."
-#~ msgstr ""
-#~ "PostScript zápis umí zpracovat v¹echny typy obrázkù kromì tìch s alfa "
-#~ "kanálem."
-
-#~ msgid "loads files of the Photoshop(tm) PSD file format"
-#~ msgstr "ète soubory ve formátu Photoshop(tm) PSD"
-
-#~ msgid "Add a random factor to the image by hurling random data at it."
-#~ msgstr "Pøidává do obrázku náhodný èinitel posypáním náhodnými daty."
-
-#~ msgid "Add a random factor to the image by picking a random adjacent pixel."
-#~ msgstr ""
-#~ "Pøidává do obrázku náhodný èinitel výbìrem z náhodného pøilehlého pixelu."
-
-#~ msgid "Add a random factor to the image by slurring (similar to melting)."
-#~ msgstr "Pøidává do obrázku náhodný èinitel posunem stranou (podobné tání)."
-
-#~ msgid ""
-#~ "This plug-in ``hurls'' randomly-valued pixels onto the selection or image.  "
-#~ "You may select the percentage of pixels to modify and the number of times to "
-#~ "repeat the process."
-#~ msgstr ""
-#~ "Tento modul ,,posype'' obrázek náhodnì vybranými pixely. Lze zvolit procento "
-#~ "zmìnìných pixelù a poèet opakování procesu."
-
-#~ msgid ""
-#~ "This plug-in replaces a pixel with a random adjacent pixel.  You may select "
-#~ "the percentage of pixels to modify and the number of times to repeat the "
-#~ "process."
-#~ msgstr ""
-#~ "Tento modul zamìní pixel za náhodný pøilehlý pixelem. Lze zvolit procento "
-#~ "zmìnìných pixelù a poèet opakování procesu."
-
-#~ msgid ""
-#~ "This plug-in slurs (melts like a bunch of icicles) an image.  You may select "
-#~ "the percentage of pixels to modify and the number of times to repeat the "
-#~ "process."
-#~ msgstr ""
-#~ "Tento modul roztøepává obrázek (rozpou¹tí do chomáèù èi rampouchù). Lze "
-#~ "zvolit procento zmìnìných pixelù a poèet opakování procesu."
-
-#~ msgid "Ripple the contents of the specified drawable"
-#~ msgstr "Rozvlní obsah urèené obrazovky"
-
-#~ msgid "Rotates a layer or the whole image by 90, 180 or 270 degrees"
-#~ msgstr "Rotuje vrstvu nebo celý obrázek o 90, 180 nebo 270 stupòù"
-
-#~ msgid "Rotates the given layer 90 degrees clockwise."
-#~ msgstr "Rotuje zadanou vrstvu o 90 stupòù ve smìru hodinových ruèièek."
-
-#~ msgid "Rotates the given layer 180 degrees."
-#~ msgstr "Rotuje zadanou vrstvu o 180 stupòù."
-
-#~ msgid "Rotates the given layer 270 degrees clockwise."
-#~ msgstr "Rotuje zadanou vrstvu o 270 stupòù ve smìru hodinových ruèièek."
-
-#~ msgid "Rotates the given image 90 degrees clockwise."
-#~ msgstr "Rotuje zadaný obrázek o 90 stupòù ve smìru hodinových ruèièek."
-
-#~ msgid "Rotates the given image 180 degrees."
-#~ msgstr "Rotuje zadaný obrázek o 180 stupòù."
-
-#~ msgid "Rotates the given image 270 degrees clockwise."
-#~ msgstr "Rotuje zadaný obrázek o 270 stupòù ve smìru hodinových ruèièek."
-
-#~ msgid "Applies a selective gaussian blur to the specified drawable."
-#~ msgstr ""
-#~ "Rozostøuje v urèené obrazovce s pou¾itím selektivního Gaussova rozostøení."
-
-#~ msgid ""
-#~ "This filter functions similar to the regular gaussian blur filter except "
-#~ "that neighbouring pixels that differ more than the given maxdelta parameter "
-#~ "will not be blended with. This way with the correct parameters, an image can "
-#~ "be smoothed out without losing details. However, this filter can be rather "
-#~ "slow."
-#~ msgstr ""
-#~ "Tento filtr je podobný bì¾nému Gaussovu rozostøení s tou výjimkou, ¾e "
-#~ "sousedící pixely, které se li¹í o více ne¾ zadaná maximální delta, nebudou "
-#~ "rozostøeny. Tím lze se správnýmí parametry dosáhnout hladké obrázky beze "
-#~ "ztráty detailù. Nevýhodou je, ¾e tento filter je dosti pomalý."
-
-#~ msgid "Shift the contents of the specified drawable"
-#~ msgstr "Posouvá obsah urèené obrazovky"
-
-#~ msgid ""
-#~ "Shifts the pixels of the specified drawable. Each row will be displaced a "
-#~ "random value of pixels."
-#~ msgstr ""
-#~ "Posouvá pixely obsah urèené obrazovky. Ka¾dá øada bude vytlaèena o náhodné "
-#~ "mno¾ství pixelù."
-
-#~ msgid "derive smooth palette from image"
-#~ msgstr "odvodí z obrázku plynulou paletu"
-
-#~ msgid "Creates a grayscale noise texture"
-#~ msgstr "Vytváøí ¹umové textury v ¹edích"
-
-#~ msgid "Generates 2D textures using Perlin's classic solid noise function."
-#~ msgstr ""
-#~ "Generuje 2D textury pou¾itím Perlinovy funkce klasického pevného ¹umu."
-
-#~ msgid "Edge Detection with Sobel Operation"
-#~ msgstr "Detekce hran Sobelovým operátorem"
-
-#~ msgid "Simulates pixel bloom and diffraction effects"
-#~ msgstr "Simuluje rùst pixelu a difrakèní efekty"
-
-#~ msgid "Renders textures spheres"
-#~ msgstr "Vyobrazuje texturované koule"
-
-#~ msgid "Spread the contents of the specified drawable"
-#~ msgstr "Rozprostøe obsah urèené obrazovky"
-
-#~ msgid "load file of the SunRaster file format"
-#~ msgstr "ètení souboru ve formátu SunRaster"
-
-#~ msgid "save file in the SunRaster file format"
-#~ msgstr "zápis souboru ve formátu SunRaster"
-
-#~ msgid ""
-#~ "SUNRAS saving handles all image types except those with alpha channels."
-#~ msgstr ""
-#~ "SUNRAS zápis umí zpracovat v¹echny typy obrázkù kromì tìch s alfa kanálem."
-
-#~ msgid "Loads files of Targa file format"
-#~ msgstr "Ète soubory ve formátu Targa"
-
-#~ msgid "saves files in the Targa file format"
-#~ msgstr "zapisuje soubory ve formátu Targa"
-
-#~ msgid "loads files of the tiff file format"
-#~ msgstr "ète soubory ve formátu tiff"
-
-#~ msgid "saves files in the tiff file format"
-#~ msgstr "zapisuje soubory ve formátu tiff"
-
-#~ msgid "Create a new image which is a tiled version of the input drawable"
-#~ msgstr ""
-#~ "Vytvoøit nový obrázek, který je dla¾dicovanou verzí vstupní obrazovky"
-
-#~ msgid "Tiles image into smaller versions of the orginal"
-#~ msgstr "Dla¾dicuje obrázek ze zmen¹ených verzí pùvodního"
-
-#~ msgid "Seamless tile creation"
-#~ msgstr "Tvorba beze¹vých dla¾dic"
-
-#~ msgid "This plugin creates a seamless tileable from the input image"
-#~ msgstr "Tato funkce vytváøí ze vstupního obrázku beze¹vé dla¾dice"
-
-#~ msgid "An unsharp mask filter"
-#~ msgstr "Filtr maskující rozostøení"
-
-#~ msgid "loads files given a URL"
-#~ msgstr "ète zadané URL"
-
-#~ msgid "You need to have GNU Wget installed."
-#~ msgstr "Je tøeba mít nainstalovaný GNU Wget."
-
-#~ msgid "Apply low-dotpitch RGB simulation to the specified drawable"
-#~ msgstr "Pou¾ije v urèené obrazovce simulace nízkého RGB rozli¹ení"
-
-#~ msgid ""
-#~ "Invert the 'value' component of an indexed/RGB image in HSV colourspace"
-#~ msgstr ""
-#~ "Invertuje 'hodnotu' komponenty indexovaného/RGB obrázku v prostoru HSV"
-
-#~ msgid "Twist or smear an image. (only first six arguments are required)"
-#~ msgstr ""
-#~ "Pokøiví a u¹piní obrázek. (pouze prvních ¹est argumentù je povinných)"
-
-#~ msgid "Distort the image with waves"
-#~ msgstr "Zkresluje obrázek vlnami"
-
-#~ msgid "Distort an image by whirling and pinching"
-#~ msgstr "Deformuje obrázky víøením a za¹krcením"
-
-#~ msgid "copy image to clipboard"
-#~ msgstr "kopíruje obrázek do schránky"
-
-#~ msgid "Copies the active drawable to the clipboard."
-#~ msgstr "Kopíruje aktivní obrazovku do schránky."
-
-#~ msgid "paste image from clipboard"
-#~ msgstr "vlo¾í obrázek ze schránky"
-
-#~ msgid "Paste image from clipboard into active image."
-#~ msgstr "Vlo¾í obrázek ze schránky do aktivního obrázku."
-
-#~ msgid "Get image from clipboard"
-#~ msgstr "Získá obrázek ze schránky"
-
-#~ msgid "Get an image from the Windows clipboard, creating a new image"
-#~ msgstr "Získá obrázek z Windows schránky a vytvoøí nový obrázek"
-
-#~ msgid "Renders a wind effect."
-#~ msgstr "Vyobrazuje efekt vìtru."
-
-#~ msgid "This plug-in prints images from the GIMP."
-#~ msgstr "Tento modul tiskne obrázky z programu GIMP."
-
-#~ msgid "Prints images to any printer recognized by Windows."
-#~ msgstr "Tiskne obrázky na jakoukoliv tiskárnu, kterou Windows rozpoznají."
-
-#~ msgid "This plug-in sets up the page for printing from the GIMP."
-#~ msgstr "Tento modul nastavuje stránku pro tisk z programu GIMP."
-
-#~ msgid "Sets up the page parameters for printing to any Windows printer."
-#~ msgstr "Nastavuje parametry stránky pro tisk na libovolné Windows tiskárnì."
-
-#~ msgid "loads files of the Windows(tm) metafile file format"
-#~ msgstr "ète soubory ve formátu Windows(tm) metafile"
-
-#~ msgid "set additional parameters for the procedure file_wmf_load"
-#~ msgstr "nastavuje doplòkové parametry pro proceduru soubor_wmf_ètení"
-
-#~ msgid "Load a file in X10 or X11 bitmap (XBM) file format"
-#~ msgstr "Ète soubor ve formátu bitové mapy X10 nebo X11 (XBM)"
-
-#~ msgid "loads files of the xpm file format"
-#~ msgstr "ète soubory ve formátu xpm"
-
-#~ msgid ""
-#~ "saves files in the xpm file format (if you're on a 16 bit display...)"
-#~ msgstr ""
-#~ "zapisuje soubory ve formátu xpm (pracuje-li s 16bitovým displejem...)"
-
-#~ msgid "load file of the XWD file format"
-#~ msgstr "ète soubory z formátu XWD"
-
-#~ msgid "saves files in the XWD file format"
-#~ msgstr "zapisuje soubory ve formátu XWD"
-
-#~ msgid "XWD saving handles all image types except those with alpha channels."
-#~ msgstr ""
-#~ "XWD zápis umí zpracovat v¹echny typy obrázkù kromì tìch s alfa kanálem."
-
-#~ msgid ""
-#~ "Automagically crops unused space from the edges and middle of a picture."
-#~ msgstr "Automagicky oøezává nevyu¾itý prostor z okrajù a støedu obrázku."
-
-#~ msgid "List available procedures in the PDB"
-#~ msgstr "Seznam dostupných procedur v PDB"
-
-#~ msgid "loads g3 fax files"
-#~ msgstr "ète g3 faxové soubory"
-
-#~ msgid "This plug-in loads Fax G3 Image files."
-#~ msgstr "Tento modul ète obrázkové soubory ve formátu Fax G3"
-
-#~ msgid "load file of the FITS file format"
-#~ msgstr "ète soubory ve formátu FITS"
-
-#~ msgid "load file of the FITS file format (Flexible Image Transport System)"
-#~ msgstr ""
-#~ "ète soubory ve formátu FITS (systém pru¾ného pøenosu obrázkù - Flexible "
-#~ "Image Transport System)"
-
-#~ msgid "save file in the FITS file format"
-#~ msgstr "zapisuje soubor ve formátu FITS"
-
-#~ msgid ""
-#~ "FITS saving handles all image types except those with alpha channels."
-#~ msgstr ""
-#~ "FITS zápis umí zpracovat v¹echny typy obrázkù kromì tìch s alfa kanálem."
-
-#~ msgid "Creates cosmic recursive fractal flames"
-#~ msgstr "Vytváøí kosmické rekurzivní fraktální plameny"
-
-#~ msgid "Allows the user to change H, S, or C with many previews"
-#~ msgstr "Umo¾òuje u¾ivateli mìnit H, S nebo V s mnoha náhledy"
-
-#~ msgid "No help available"
-#~ msgstr "Nápovìda není dostupná"
-
-#~ msgid "Eiichi Takamori"
-#~ msgstr "Ejèi Takamori"
-
-#~ msgid "Eiichi Takamori, and a lot of GIMP people"
-#~ msgstr "Ejèi Takamori a mnoho lidí od GIMPu"
-
-#~ msgid "Browse the GIMP help pages"
-#~ msgstr "Procházet stránky s nápovìdou pro GIMP"
-
-#~ msgid "Creates a clickable imagemap."
-#~ msgstr "Vytváøí klikací obrázkovou mapu."
-
-#~ msgid "This plug-in prints images from The GIMP."
-#~ msgstr "Tento pøípojný modul tiskne obrázky z programu GIMP."
-
-#~ msgid "Prints images to PostScript, PCL, or ESC/P2 printers."
-#~ msgstr "Tiskne obrázky na tiskárnách typu PostScript, PCL nebo ESC/P2."
-
-#~ msgid "Colormap rotation as in xv"
-#~ msgstr "Rotace barevné mapy jako v xv"
-
-#~ msgid ""
-#~ "Exchanges two color ranges. Based on code from Pavel Grinfeld "
-#~ "(pavel@ml.com). This version written by Sven Anders "
-#~ "(anderss@fmi.uni-passau.de)."
-#~ msgstr ""
-#~ "Prohodí dva barevné rozsahy. Zalo¾eno na kódu Pavla Grinfelda "
-#~ "(pavel@ml.com). Tuto verzi napsal Sven Anders (anderss@fmi.uni-passau.de)."
-
-#~ msgid "Author: "
-#~ msgstr "Autor: "
-
-#~ msgid "Copyright: "
-#~ msgstr "Copyright: "
-
-#~ msgid "Date: "
-#~ msgstr "Datum: "
-
-#~ msgid "Image types: "
-#~ msgstr "Typy obrázku: "
-
-#~ msgid "A scheme interpreter for scripting GIMP operations"
-#~ msgstr "Interpreter schémat pro skriptování operací GIMPu"
-
-#~ msgid "Provides a console mode for script-fu development"
-#~ msgstr "Nabízí konzolový re¾im pro vývoj skript-fu"
-
-#~ msgid "Provides an interface which allows interactive scheme development."
-#~ msgstr "Nabízí rozhraní, které umo¾òuje vývoj schémat."
-
-#~ msgid "Converts a selection to a path"
-#~ msgstr "Pøevádí výbìr do cesty"
-
-#~ msgid "Loads files in SGI image file format"
-#~ msgstr "Ète soubory ve formátu SGI"
-
-#~ msgid "This plug-in loads SGI image files."
-#~ msgstr "Tento modul ète obrázkové soubory ve formátu SGI."
-
-#~ msgid "Saves files in SGI image file format"
-#~ msgstr "Zapisuje soubory ve formátu SGI"
-
-#~ msgid "This plug-in saves SGI image files."
-#~ msgstr "Tento modul zapisuje obrázkové soubory ve formátu SGI."
-
-#~ msgid "Generates a texture with sinus functions"
-#~ msgstr "Sinusovými funkcemi generuje textury"
-
-#~ msgid "open URL in Netscape"
-#~ msgstr "otevøe URL v Netscape"
-
-#~ msgid "You need to have Netscape installed"
-#~ msgstr "Je tøeba mít nainstalovaný Netscape"
-
-#~ msgid "loads files of the jpeg-tar file format"
-#~ msgstr "ète soubory ve formátu jpeg-tar"
-
-#~ msgid "saves files in the jpeg-tar file format"
-#~ msgstr "zapisuje soubory ve formátu jpeg-tar"

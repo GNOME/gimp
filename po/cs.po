@@ -1,12 +1,12 @@
-# Czech translation of GIMP 1.1.15.
+# Czech translation of GIMP 1.1.16.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 1999.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-02-02 17:39-0800\n"
-"PO-Revision-Date: 2000-01-31 15:28+01:00\n"
+"Project-Id-Version: GIMP 1.1.16\n"
+"POT-Creation-Date: 2000-02-04 16:25+0100\n"
+"PO-Revision-Date: 2000-02-04 17:13+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -367,12 +367,12 @@ msgstr "Rozestup:"
 #. this should never happen
 #: app/brush_select.c:1792
 msgid "Sorry, this brush can't be edited."
-msgstr "Bohu¾el, tento ¹tìtec nelze editovat."
+msgstr "Bohu¾el, tuto stopu nelze editovat."
 
 #. this should never happen
 #: app/brush_select.c:1821
 msgid "Sorry, this brush can't be deleted."
-msgstr "Bohu¾el, tento ¹tìtec nelze smazat."
+msgstr "Bohu¾el, tuto stopu nelze smazat."
 
 #: app/bucket_fill.c:147 app/color_picker.c:156 app/tool_options.c:247
 msgid "Sample Merged"
@@ -865,7 +865,7 @@ msgstr "Pouze aktuální vrstva"
 #. enlarge toggle
 #: app/crop.c:200
 msgid "Allow Enlarging"
-msgstr "Povolit zvìt¹ení"
+msgstr "Povolit roz¹íøení"
 
 #. tool toggle
 #: app/crop.c:211 app/flip_tool.c:91
@@ -1290,9 +1290,8 @@ msgid "No"
 msgstr "Ne"
 
 #: app/flip_tool.c:82
-#, fuzzy
 msgid "Flip Tool"
-msgstr "Volby pøevrácení"
+msgstr "Pøeklopení"
 
 #: app/flip_tool.c:95 app/preferences_dialog.c:1588
 #: app/preferences_dialog.c:2347
@@ -1421,22 +1420,23 @@ msgstr "Soubor GIMP stopy je zøejmì useknutý."
 #: app/gimpbrush.c:291
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"\n"
-msgstr "Neznámý formát ¹tìtce verze #%d v \"%s\"\n"
+msgstr "Neznámý formát stopy verze #%d v \"%s\"\n"
 
 #: app/gimpbrushpipe.c:300
 msgid "Brush pipes should have at least one brush."
-msgstr ""
+msgstr "Kolony stop by mìly mít alespoò jednu stopu."
 
 #: app/gimpbrushpipe.c:396
 msgid ""
 "Failed to load one of the\n"
 "brushes in the brush pipe."
 msgstr ""
+"Nepodaøilo se naèíst jednu\n"
+"ze stop v obrázkové kolonì."
 
 #: app/gimpbrushpipe.c:457
-#, fuzzy
 msgid "Failed to load pixmap brush."
-msgstr "Nepodaøilo se naèíst cestu z %s"
+msgstr "Nepodaøilo se naèíst pixelovì mapovanou stopu."
 
 #: app/gimpdrawable.c:168
 msgid "Can't fill unknown image type."
@@ -1465,6 +1465,9 @@ msgid ""
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
+"Nepodaøilo se nalézt proceduru prohlí¾eèe GIMP nápovìdy.\n"
+"Pravdìpodobnì nebyla zkompilovaná, proto¾e\n"
+"GtkXmHTML není nainstalován."
 
 #: app/gimpimage.c:1135
 msgid "attach parasite to image"
@@ -1611,11 +1614,11 @@ msgstr "Nelze zapisovat do %s; %s"
 #: app/gimpui.c:449
 #, c-format
 msgid "Message repeated %d times"
-msgstr ""
+msgstr "Zpráva se opakuje %dkrát"
 
 #: app/gimpui.c:462
 msgid "Message repeated once"
-msgstr ""
+msgstr "Zpráva se opakuje jednou"
 
 #: app/gimpui.c:476
 msgid ""
@@ -1623,6 +1626,9 @@ msgid ""
 "Too many open message dialogs.\n"
 "Messages are redirected to stderr.\n"
 msgstr ""
+"VAROVÁNÍ:\n"
+"Pøíli¹ mnoho otevøených dialogù.\n"
+"Zprávy pøesmìrovány na stderr.\n"
 
 #: app/gimpui.c:483
 msgid "GIMP Message"
@@ -1950,7 +1956,7 @@ msgstr "Pøerozdìlit øídící body v segmentu"
 
 #: app/gradient.c:3781
 msgid "Flip segment"
-msgstr "Pøevrátit segment"
+msgstr "Pøeklopit segment"
 
 #: app/gradient.c:3783 app/gradient.c:5426
 msgid "Replicate segment"
@@ -1986,7 +1992,7 @@ msgstr "Pøerozdìlit øídící body ve výbìru"
 
 #: app/gradient.c:3802
 msgid "Flip selection"
-msgstr "Pøevrátit výbìr"
+msgstr "Pøeklopit výbìr"
 
 #: app/gradient.c:3804 app/gradient.c:5427
 msgid "Replicate selection"
@@ -2196,7 +2202,7 @@ msgid ""
 "Click to open the Brushes Dialog."
 msgstr ""
 "Aktivní stopa.\n"
-"Dialog ¹tìtcù otevøete klepnutím."
+"Dialog stop otevøete klepnutím."
 
 #: app/indicator_area.c:156
 msgid ""
@@ -2447,7 +2453,7 @@ msgid ""
 msgstr ""
 "\t\tgimprc uchovává u¾ivatelské pøedvolby, které ovlivòují\n"
 "\t\timplicitní chování programu GIMP.\n"
-"\t\tLze zde té¾ nakonfigurovat cesty pro hledání ¹tìtcù, palety,\n"
+"\t\tLze zde té¾ nakonfigurovat cesty pro hledání stop, palety,\n"
 "\t\tpøechody, vzorky, zásuvné moduly a moduly.\n"
 
 #: app/install.c:147
@@ -2514,10 +2520,10 @@ msgid ""
 "\t\tbrushes.\n"
 msgstr ""
 "\t\tToto je podadresáø, kam je mo¾né ukládat\n"
-"\t\tu¾ivatelem definované ¹tìtce.\n"
+"\t\tu¾ivatelem definované stopy.\n"
 "\t\tDle implicitního gimprc souboru se pøi hledání\n"
-"\t\t¹tìtcù kontroluje tento podadresáø spolu\n"
-"\t\tse systémovou instalací gimp ¹tìtcù.\n"
+"\t\tstop kontroluje tento podadresáø spolu\n"
+"\t\tse systémovou instalací gimp stop.\n"
 
 #: app/install.c:182
 msgid ""
@@ -2527,9 +2533,9 @@ msgid ""
 "\t\tgenerated brushes.\n"
 msgstr ""
 "\t\tToto je podadresáø, kam je mo¾né ukládat\n"
-"\t\t¹tìtce vytvoøené editorem ¹tìtcù.\n"
+"\t\tstopy vytvoøené editorem stop.\n"
 "\t\tDle implicitního gimprc souboru se pøi hledání\n"
-"\t\tgenerovaných ¹tìtcù kontroluje tento\n"
+"\t\tgenerovaných stop kontroluje tento\n"
 "\t\tpodadresáø.\n"
 
 #: app/install.c:188
@@ -2776,7 +2782,7 @@ msgstr "Vnitøní procedury"
 
 #: app/internal_procs.c:68
 msgid "Brush UI"
-msgstr "Rozhraní ¹tìtcù"
+msgstr "Rozhraní stop"
 
 #: app/internal_procs.c:74
 msgid "Channel"
@@ -3146,7 +3152,6 @@ msgid "Load/Save Levels"
 msgstr "Naèíst/Zapsat úrovnì"
 
 #: app/magnify.c:99
-#, fuzzy
 msgid "Magnify Tool"
 msgstr "Lupa"
 
@@ -3195,7 +3200,7 @@ msgstr "  -r --restore-session     Pokusí se obnovit zapsané sezení.\n"
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
-msgstr "  --no-data                Neète vzorky, pøechody, palety, ¹tìtce.\n"
+msgstr "  --no-data                Neète vzorky, pøechody, palety, stopy.\n"
 
 #: app/main.c:294
 msgid "  --verbose                Show startup messages.\n"
@@ -3297,7 +3302,7 @@ msgstr "/Roz¹./Skript-fu/Tlaèítka"
 
 #: app/menus.c:90
 msgid "/Xtns/Script-Fu/Make Brush"
-msgstr "/Roz¹./Skript-fu/Vytvoøení ¹tìtce"
+msgstr "/Roz¹./Skript-fu/Vytvoøit stopu"
 
 #: app/menus.c:91
 msgid "/Xtns/Script-Fu/Misc"
@@ -3411,7 +3416,7 @@ msgstr "/Soubor/Dialogy/Volby nástrojù..."
 
 #: app/menus.c:156
 msgid "/File/Dialogs/Brushes..."
-msgstr "/Soubor/Dialogy/©tìtce..."
+msgstr "/Soubor/Dialogy/Stopy..."
 
 #: app/menus.c:158
 msgid "/File/Dialogs/Patterns..."
@@ -3682,19 +3687,19 @@ msgstr "/Zobrazení/Historie vracení..."
 
 #: app/menus.c:376
 msgid "/View/Toggle Selection"
-msgstr "/Zobrazení/Pøepnout výbìr"
+msgstr "/Zobrazení/Zobrazovat výbìr"
 
 #: app/menus.c:378
 msgid "/View/Toggle Rulers"
-msgstr "/Zobrazení/Pøepnout pravítka"
+msgstr "/Zobrazení/Zobrazovat pravítka"
 
 #: app/menus.c:380
 msgid "/View/Toggle Statusbar"
-msgstr "/Zobrazení/Pøepnout stavovou li¹tu"
+msgstr "/Zobrazení/Zobrazovat stavovou li¹tu"
 
 #: app/menus.c:382
 msgid "/View/Toggle Guides"
-msgstr "/Zobrazení/Pøepnout vodítka"
+msgstr "/Zobrazení/Zobrazovat vodítka"
 
 #: app/menus.c:384
 msgid "/View/Snap to Guides"
@@ -3706,7 +3711,7 @@ msgstr "/Zobrazení/Nový pohled"
 
 #: app/menus.c:391
 msgid "/View/Shrink Wrap"
-msgstr "/Zobrazení/Zmen¹it obalení"
+msgstr "/Zobrazení/Stáhnout okolí"
 
 #. <Image>/Image
 #: app/menus.c:399
@@ -3875,19 +3880,16 @@ msgid "/Tools/Swap Colors"
 msgstr "/Nástroje/Prohodit Barvy"
 
 #: app/menus.c:543
-#, fuzzy
 msgid "/Tools/Select Tools"
-msgstr "/Nástroje/Obdélníkový výbìr"
+msgstr "/Nástroje/Nástroje výbìru"
 
 #: app/menus.c:545
-#, fuzzy
 msgid "/Tools/Transform Tools"
-msgstr "/Nástroje/Transformace"
+msgstr "/Nástroje/Nástroje transformace"
 
 #: app/menus.c:547
-#, fuzzy
 msgid "/Tools/Paint Tools"
-msgstr "/Nástroje/©tìtec"
+msgstr "/Nástroje/Nástroje kreslení"
 
 #. <Image>/Dialogs
 #: app/menus.c:552
@@ -3904,7 +3906,7 @@ msgstr "/Dialogy/Volby nástrojù..."
 
 #: app/menus.c:561
 msgid "/Dialogs/Brushes..."
-msgstr "/Dialogy/©tìtce..."
+msgstr "/Dialogy/Stopy..."
 
 #: app/menus.c:563
 msgid "/Dialogs/Patterns..."
@@ -4114,9 +4116,8 @@ msgid "/Alpha to Selection"
 msgstr "/Alfa do výbìru"
 
 #: app/menus.c:749
-#, fuzzy
 msgid "/Edit Layer Attributes..."
-msgstr "Úpravy vlastností vrstvy"
+msgstr "/Úpravy vlastností vrstvy..."
 
 #: app/menus.c:760
 msgid "/New Channel..."
@@ -4155,9 +4156,8 @@ msgid "/Delete Channel"
 msgstr "/Smazat kanál"
 
 #: app/menus.c:787
-#, fuzzy
 msgid "/Edit Channel Attributes..."
-msgstr "Úpravy vlastností kanálu"
+msgstr "/Úpravy vlastností kanálu..."
 
 #: app/menus.c:798
 msgid "/New Path"
@@ -4200,9 +4200,8 @@ msgid "/Export Path..."
 msgstr "/Export cesty..."
 
 #: app/menus.c:824
-#, fuzzy
 msgid "/Edit Path Attributes..."
-msgstr "Úpravy vlastností vrstvy"
+msgstr "/Úpravy vlastností cesty..."
 
 #: app/menus.c:1333
 #, c-format
@@ -4301,9 +4300,8 @@ msgid "Autoload during startup"
 msgstr "Èíst automaticky bìhem spou¹tìní"
 
 #: app/move.c:454
-#, fuzzy
 msgid "Move Tool"
-msgstr "Volby pøesunu"
+msgstr "Pøesun"
 
 #. create the info dialog
 #: app/nav_window.c:1254
@@ -4317,7 +4315,7 @@ msgstr "Navigace: Bez obrázku"
 
 #: app/paint_core.c:707
 msgid "No brushes available for use with this tool."
-msgstr "Nejsou dostupné ¾ádné ¹tìtce pro pou¾ití s tímto nástrojem."
+msgstr "Nejsou dostupné ¾ádné stopy pro pou¾ití s tímto nástrojem."
 
 #: app/paint_funcs.c:85 app/tool_options.c:874
 msgid "Behind"
@@ -4524,9 +4522,8 @@ msgid "Palette Selection"
 msgstr "Výbìr palety"
 
 #: app/path_tool.c:1412
-#, fuzzy
 msgid "Path Tool"
-msgstr "Volby nástroje cesty"
+msgstr "Cesta"
 
 #: app/paths_dialog.c:169
 msgid "New Path"
@@ -4574,9 +4571,8 @@ msgid "Path %d"
 msgstr "Cesta %d"
 
 #: app/paths_dialog.c:1242
-#, fuzzy
 msgid "Edit Path Attributes"
-msgstr "Úpravy vlastností vrstvy"
+msgstr "Úpravy vlastností cesty"
 
 #: app/paths_dialog.c:1245
 msgid "Enter a new name for the path"
@@ -5169,23 +5165,23 @@ msgstr "Zvolte odkládací adresáø"
 
 #: app/preferences_dialog.c:2460
 msgid "Brushes Directories"
-msgstr "Adresáøe ¹tìtcù"
+msgstr "Adresáøe stop"
 
 #: app/preferences_dialog.c:2462
 msgid "Select Brushes Dir"
-msgstr "Zvolte adresáø ¹tìtcù"
+msgstr "Zvolte adresáø stop"
 
 #: app/preferences_dialog.c:2464
 msgid "Generated Brushes"
-msgstr "Generované ¹tìtce"
+msgstr "Generované stopy"
 
 #: app/preferences_dialog.c:2464
 msgid "Generated Brushes Directories"
-msgstr "Adresáøe generovaných ¹tìtcù"
+msgstr "Adresáøe generovaných stop"
 
 #: app/preferences_dialog.c:2466
 msgid "Select Generated Brushes Dir"
-msgstr "Zvolte adresáø generovaných ¹tìtcù"
+msgstr "Zvolte adresáø generovaných stop"
 
 #: app/preferences_dialog.c:2468
 msgid "Patterns Directories"
@@ -5317,7 +5313,7 @@ msgstr "Velikost obrázeku"
 
 #: app/resize.c:162
 msgid "Pixel Dimensions"
-msgstr "Velikosti pixelu"
+msgstr "Velikosti v pixelech"
 
 #: app/resize.c:172
 msgid "Set Layer Boundary Size"
@@ -5473,27 +5469,22 @@ msgid "This tool has no options."
 msgstr "Tento nástroj nemá volby."
 
 #: app/tool_options.c:119
-#, fuzzy
 msgid "Rectangular Selection"
-msgstr "Volby obdélníkového výbìru"
+msgstr "Obdélníkový výbìr"
 
 #: app/tool_options.c:121
-#, fuzzy
 msgid "Elliptical Selection"
-msgstr "Volby eliptického výbìru"
+msgstr "Eliptický výbìr"
 
 #: app/tool_options.c:123
-#, fuzzy
 msgid "Free-Hand Selection"
-msgstr "Volby volného výbìru"
+msgstr "Volný výbìr"
 
 #: app/tool_options.c:125
-#, fuzzy
 msgid "Fuzzy Selection"
-msgstr "Magická hùlka"
+msgstr "Magický výbìr"
 
 #: app/tool_options.c:127
-#, fuzzy
 msgid "Bezier Selection"
 msgstr "Bézierùv výbìr"
 
@@ -5502,7 +5493,6 @@ msgid "Intelligent Scissors"
 msgstr "Inteligentní nù¾ky"
 
 #: app/tool_options.c:131
-#, fuzzy
 msgid "By-Color Selection"
 msgstr "Výbìr dle barvy"
 
@@ -5519,9 +5509,8 @@ msgid "Bucket Fill"
 msgstr "Plechovka"
 
 #: app/tool_options.c:424
-#, fuzzy
 msgid "Blend Tool"
-msgstr "Mísení: "
+msgstr "Mísení"
 
 #: app/tool_options.c:426 app/tools.c:373
 msgid "Pencil"
@@ -5537,34 +5526,31 @@ msgstr "Guma"
 
 #: app/tool_options.c:432 app/tools.c:421
 msgid "Airbrush"
-msgstr "Americká retu¹"
+msgstr "Rozpra¹ovaè"
 
 #: app/tool_options.c:434
-#, fuzzy
 msgid "Clone Tool"
-msgstr "Volby razítka"
+msgstr "Razítko"
 
 #: app/tool_options.c:436
-#, fuzzy
 msgid "Convolver"
-msgstr "Ostrost"
+msgstr "Ostøení"
 
 #: app/tool_options.c:438
 msgid "Ink Tool"
-msgstr ""
+msgstr "Pero"
 
 #: app/tool_options.c:440 app/tools.c:485 app/tools.c:489
 msgid "Dodge or Burn"
 msgstr "Zesvìtlování nebo tmavnutí"
 
 #: app/tool_options.c:442
-#, fuzzy
 msgid "Smudge Tool"
 msgstr "Rozmazávání"
 
 #: app/tool_options.c:444 app/tools.c:517
 msgid "Xinput Airbrush"
-msgstr "Americké retu¹ Xinput"
+msgstr "Rozpra¹ovaè Xinput"
 
 #: app/tool_options.c:556
 msgid "Incremental"
@@ -5591,9 +5577,8 @@ msgid "Rect Select"
 msgstr "Obdélníkový výbìr"
 
 #: app/tools.c:86
-#, fuzzy
 msgid "/Tools/Select Tools/Rect Select"
-msgstr "/Nástroje/Obdélníkový výbìr"
+msgstr "/Nástroje/Nástroje výbìru/Obdélníkový výbìr"
 
 #: app/tools.c:89
 msgid "Select rectangular regions"
@@ -5604,9 +5589,8 @@ msgid "Ellipse Select"
 msgstr "Eliptický výbìr"
 
 #: app/tools.c:102
-#, fuzzy
 msgid "/Tools/Select Tools/Ellipse Select"
-msgstr "/Nástroje/Eliptický výbìr"
+msgstr "/Nástroje/Nástroje výbìru/Eliptický výbìr"
 
 #: app/tools.c:105
 msgid "Select elliptical regions"
@@ -5617,9 +5601,8 @@ msgid "Free Select"
 msgstr "Volný výbìr"
 
 #: app/tools.c:118
-#, fuzzy
 msgid "/Tools/Select Tools/Free Select"
-msgstr "/Nástroje/Volný výbìr"
+msgstr "/Nástroje/Nástroje výbìru/Volný výbìr"
 
 #: app/tools.c:121
 msgid "Select hand-drawn regions"
@@ -5630,9 +5613,8 @@ msgid "Fuzzy Select"
 msgstr "Magická hùlka"
 
 #: app/tools.c:134
-#, fuzzy
 msgid "/Tools/Select Tools/Fuzzy Select"
-msgstr "/Nástroje/Magická hùlka"
+msgstr "/Nástroje/Nástroje výbìru/Magická hùlka"
 
 #: app/tools.c:137
 msgid "Select contiguous regions"
@@ -5643,18 +5625,16 @@ msgid "Bezier Select"
 msgstr "Bézierùv výbìr"
 
 #: app/tools.c:150
-#, fuzzy
 msgid "/Tools/Select Tools/Bezier Select"
-msgstr "/Nástroje/Bézierùv výbìr"
+msgstr "/Nástroje/Nástroje výbìru/Bézierùv výbìr"
 
 #: app/tools.c:153
 msgid "Select regions using Bezier curves"
 msgstr "Výbìr oblastí ohranièených Bézierovou køivkou"
 
 #: app/tools.c:166
-#, fuzzy
 msgid "/Tools/Select Tools/Intelligent Scissors"
-msgstr "/Nástroje/Inteligentní nù¾ky"
+msgstr "/Nástroje/Nástroje výbìru/Inteligentní nù¾ky"
 
 #: app/tools.c:169
 msgid "Select shapes from image"
@@ -5665,9 +5645,8 @@ msgid "Move"
 msgstr "Pøesun"
 
 #: app/tools.c:182
-#, fuzzy
 msgid "/Tools/Transform Tools/Move"
-msgstr "/Nástroje/Transformace"
+msgstr "/Nástroje/Nástroje transformace/Pøesun"
 
 #: app/tools.c:185
 msgid "Move layers & selections"
@@ -5678,18 +5657,16 @@ msgid "Magnify"
 msgstr "Lupa"
 
 #: app/tools.c:198
-#, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Nástroje/Transformace"
+msgstr "/Nástroje/Nástroje transformace/Lupa"
 
 #: app/tools.c:201
 msgid "Zoom in & out"
 msgstr "Zvìt¹ení a zmen¹ení"
 
 #: app/tools.c:214
-#, fuzzy
 msgid "/Tools/Transform Tools/Crop & Resize"
-msgstr "/Nástroje/Oøez a rozmìry plátna"
+msgstr "/Nástroje/Nástroje transformace/Oøez a rozmìry plátna"
 
 #: app/tools.c:217
 msgid "Crop or resize the image"
@@ -5702,9 +5679,8 @@ msgid "Transform"
 msgstr "Transformace"
 
 #: app/tools.c:230
-#, fuzzy
 msgid "/Tools/Transform Tools/Transform"
-msgstr "/Nástroje/Transformace"
+msgstr "/Nástroje/Nástroje transformace/Transformace"
 
 #: app/tools.c:233 app/tools.c:249 app/tools.c:265 app/tools.c:281
 msgid "Rotation, scaling, shearing, perspective."
@@ -5712,16 +5688,15 @@ msgstr "Rotace, zmìna velikosti, naklánìní, perspektiva."
 
 #: app/tools.c:293
 msgid "Flip"
-msgstr "Pøevrátit"
+msgstr "Pøeklopit"
 
 #: app/tools.c:294
-#, fuzzy
 msgid "/Tools/Transform Tools/Flip"
-msgstr "/Nástroje/Transformace"
+msgstr "/Nástroje/Nástroje transformace/Pøeklopení"
 
 #: app/tools.c:297
 msgid "Flip the layer or selection"
-msgstr "Pøevrácení vrstvy nebo výbìru"
+msgstr "Pøeklopení vrstvy nebo výbìru"
 
 #: app/tools.c:309
 msgid "Text"
@@ -5744,9 +5719,8 @@ msgid "Pick colors from the image"
 msgstr "Nasátí barvy z obrázku"
 
 #: app/tools.c:342
-#, fuzzy
 msgid "/Tools/Paint Tools/Bucket Fill"
-msgstr "/Nástroje/Plechovka"
+msgstr "/Nástroje/Nástroje kreslení/Plechovka"
 
 #: app/tools.c:345
 msgid "Fill with a color or pattern"
@@ -5757,58 +5731,52 @@ msgid "Blend"
 msgstr "Mísení"
 
 #: app/tools.c:358
-#, fuzzy
 msgid "/Tools/Paint Tools/Blend"
-msgstr "/Nástroje/Mísení"
+msgstr "/Nástroje/Nástroje kreslení/Mísení"
 
 #: app/tools.c:361
 msgid "Fill with a color gradient"
 msgstr "Vyplòování barevným pøechodem"
 
 #: app/tools.c:374
-#, fuzzy
 msgid "/Tools/Paint Tools/Pencil"
-msgstr "/Nástroje/Tu¾ka"
+msgstr "/Nástroje/Nástroje kreslení/Tu¾ka"
 
 #: app/tools.c:377
 msgid "Draw sharp pencil strokes"
 msgstr "Kreslení ostrých tahy tu¾kou"
 
 #: app/tools.c:390
-#, fuzzy
 msgid "/Tools/Paint Tools/Paintbrush"
-msgstr "/Nástroje/©tìtec"
+msgstr "/Nástroje/Nástroje kreslení/©tìtec"
 
 #: app/tools.c:393
 msgid "Paint fuzzy brush strokes"
 msgstr "Kreslení neostrých tahù ¹tìtcem"
 
 #: app/tools.c:406
-#, fuzzy
 msgid "/Tools/Paint Tools/Eraser"
-msgstr "/Nástroje/Guma"
+msgstr "/Nástroje/Nástroje kreslení/Guma"
 
 #: app/tools.c:409
 msgid "Erase to background or transparency"
 msgstr "Mazání do barvy pozadí nebo prùhlednosti"
 
 #: app/tools.c:422
-#, fuzzy
 msgid "/Tools/Paint Tools/Airbrush"
-msgstr "/Nástroje/©tìtec"
+msgstr "/Nástroje/Nástroje kreslení/Rozpra¹ovaè"
 
 #: app/tools.c:425
 msgid "Airbrush with variable pressure"
-msgstr "Americká retu¹ s promìnným tlakem"
+msgstr "Rozpra¹ovaè s promìnným tlakem"
 
 #: app/tools.c:437
 msgid "Clone"
 msgstr "Razítko"
 
 #: app/tools.c:438
-#, fuzzy
 msgid "/Tools/Paint Tools/Clone"
-msgstr "/Nástroje/Razítko"
+msgstr "/Nástroje/Nástroje kreslení/Razítko"
 
 #: app/tools.c:441
 msgid "Paint using patterns or image regions"
@@ -5819,9 +5787,8 @@ msgid "Convolve"
 msgstr "Ostrost"
 
 #: app/tools.c:454
-#, fuzzy
 msgid "/Tools/Paint Tools/Convolve"
-msgstr "/Nástroje/Ostrost"
+msgstr "/Nástroje/Nástroje kreslení/Ostrost"
 
 #: app/tools.c:457
 msgid "Blur or sharpen"
@@ -5832,36 +5799,32 @@ msgid "Ink"
 msgstr "Pero"
 
 #: app/tools.c:470
-#, fuzzy
 msgid "/Tools/Paint Tools/Ink"
-msgstr "/Nástroje/©tìtec"
+msgstr "/Nástroje/Nástroje kreslení/Pero"
 
 #: app/tools.c:473
 msgid "Draw in ink"
 msgstr "Kreslení perem"
 
 #: app/tools.c:486
-#, fuzzy
 msgid "/Tools/Paint Tools/DodgeBurn"
-msgstr "/Nástroje/Zesvìtlování a tmavnutí"
+msgstr "/Nástroje/Nástroje kreslení/Zesvìtlování a tmavnutí"
 
 #: app/tools.c:501 app/tools.c:505
 msgid "Smudge"
 msgstr "Rozmazávání"
 
 #: app/tools.c:502
-#, fuzzy
 msgid "/Tools/Paint Tools/Smudge"
-msgstr "/Nástroje/Rozmazávání"
+msgstr "/Nástroje/Nástroje kreslení/Rozmazávání"
 
 #: app/tools.c:518
-#, fuzzy
 msgid "/Tools/Paint Tools/XinputAirbrush"
-msgstr "/Nástroje/Americká retu¹ Xinput"
+msgstr "/Nástroje/Nástroje kreslení/Rozpra¹ovaè Xinput"
 
 #: app/tools.c:521
 msgid "Natural Airbrush"
-msgstr "Pøirozená americká retu¹"
+msgstr "Pøirozený rozpra¹ovaè"
 
 #: app/tools.c:533
 msgid "Measure"
@@ -5988,7 +5951,6 @@ msgid "Transformation"
 msgstr "Transformace"
 
 #: app/transform_tool.c:190
-#, fuzzy
 msgid "Transform Tool"
 msgstr "Transformace"
 
@@ -6327,135 +6289,3 @@ msgstr "Vodové barvy"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Historie barev"
-
-#~ msgid "Brightness-Contrast Options"
-#~ msgstr "Volby jasu-kontrastu"
-
-#~ msgid "Color Balance Options"
-#~ msgstr "Volby vyvá¾ení barev"
-
-#~ msgid "Color Picker Options"
-#~ msgstr "Volby barevné pipety"
-
-#~ msgid "Crop & Resize Options"
-#~ msgstr "Volby oøezu a rozmìrù plátna"
-
-#~ msgid "Curves Options"
-#~ msgstr "Volby køivek"
-
-#~ msgid "Histogram Options"
-#~ msgstr "Volby histogramu"
-
-#~ msgid "Hue-Saturation Options"
-#~ msgstr "Volby odstínu-sytosti"
-
-#~ msgid "Levels Options"
-#~ msgstr "Volby úrovní"
-
-#~ msgid "Magnify Options"
-#~ msgstr "Volby lupy"
-
-#~ msgid "Measure Options"
-#~ msgstr "Volby mìøení"
-
-#~ msgid "Rename path"
-#~ msgstr "Pøejmenovat cestu"
-
-#~ msgid "New File Settings"
-#~ msgstr "Nastavení nového souboru"
-
-#~ msgid "Display Settings"
-#~ msgstr "Nastavení zobrazování"
-
-#~ msgid "Interface Settings"
-#~ msgstr "Nastavení rozhraní"
-
-#~ msgid "Help System Settings"
-#~ msgstr "Nastavení systém nápovìdy"
-
-#~ msgid "Image Windows Settings"
-#~ msgstr "Nastavení oken obrázku"
-
-#~ msgid "Tool Options Settings"
-#~ msgstr "Nastavení voleb nástrojù"
-
-#~ msgid "Environment Settings"
-#~ msgstr "Nastavení prostøedí"
-
-#~ msgid "Monitor Information"
-#~ msgstr "Informace o monitoru"
-
-#~ msgid "Directories Settings"
-#~ msgstr "Nastavení adresáøù"
-
-#~ msgid "Text Tool Options"
-#~ msgstr "Volby textového nástroje"
-
-#~ msgid "Threshold Options"
-#~ msgstr "Volby prahu"
-
-#~ msgid "Fuzzy Selection Options"
-#~ msgstr "Volby magické hùlky"
-
-#~ msgid "Bezier Selection Options"
-#~ msgstr "Volby Bézierova výbìru"
-
-#~ msgid "Intelligent Scissors Options"
-#~ msgstr "Volby inteligentních nù¾ek"
-
-#~ msgid "By-Color Select Options"
-#~ msgstr "Volby výbìru podle barvy"
-
-#~ msgid "Bucket Fill Options"
-#~ msgstr "Volby plechovky"
-
-#~ msgid "Blend Options"
-#~ msgstr "Volby mísení"
-
-#~ msgid "Pencil Options"
-#~ msgstr "Volby tu¾ky"
-
-#~ msgid "Paintbrush Options"
-#~ msgstr "Volby ¹tìtce"
-
-#~ msgid "Eraser Options"
-#~ msgstr "Volby gumy"
-
-#~ msgid "Airbrush Options"
-#~ msgstr "Volby americké retu¹e"
-
-#~ msgid "Convolver Options"
-#~ msgstr "Volby ostrosti"
-
-#~ msgid "Ink Options"
-#~ msgstr "Volby pera"
-
-#~ msgid "Dodge or Burn Options"
-#~ msgstr "Volby zesvìtlování nebo tmavnutí"
-
-#~ msgid "Smudge Options"
-#~ msgstr "Volby rozmazávání"
-
-#~ msgid "Xinput Airbrush Options"
-#~ msgstr "Americké retu¹ Xinput"
-
-#~ msgid "/Tools/Move"
-#~ msgstr "/Nástroje/Pøesun"
-
-#~ msgid "/Tools/Magnify"
-#~ msgstr "/Nástroje/Lupa"
-
-#~ msgid "Transform the layer or selection"
-#~ msgstr "Transformace vrstvy nebo výbìru"
-
-#~ msgid "/Tools/Flip"
-#~ msgstr "/Nástroje/Pøevrátit"
-
-#~ msgid "/Tools/Airbrush"
-#~ msgstr "/Nástroje/Americká retu¹"
-
-#~ msgid "/Tools/Ink"
-#~ msgstr "/Nástroje/Pero"
-
-#~ msgid "Transform Tool Options"
-#~ msgstr "Volby transformace"
