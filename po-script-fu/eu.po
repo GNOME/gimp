@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-02 14:09+0200\n"
+"POT-Creation-Date: 2004-06-24 01:36+0200\n"
 "PO-Revision-Date: 2004-04-06 19:42+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
@@ -109,26 +109,26 @@ msgstr "Script-Fu-ren gradiente-hautapena"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-ren brotxa-hautapena"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1927
+#: plug-ins/script-fu/script-fu-scripts.c:1937
 #: plug-ins/dbbrowser/dbbrowser_utils.c:488
 msgid "Author:"
 msgstr "Egilea:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1933
+#: plug-ins/script-fu/script-fu-scripts.c:1943
 #: plug-ins/dbbrowser/dbbrowser_utils.c:504
 msgid "Copyright:"
 msgstr "Copyright-a:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1939
+#: plug-ins/script-fu/script-fu-scripts.c:1949
 #: plug-ins/dbbrowser/dbbrowser_utils.c:496
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1947
+#: plug-ins/script-fu/script-fu-scripts.c:1957
 msgid "Image Types:"
 msgstr "Irudi-motak:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1972
+#: plug-ins/script-fu/script-fu-scripts.c:1982
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -237,37 +237,39 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/3D e_skema..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
-msgid "Bumpmap (Alpha Layer) Blur Radius"
+#, fuzzy
+msgid "Bumpmap (alpha layer) blur radius"
 msgstr "Erliebe-maparen (Alfa geruza) lausotze-erradioa"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:4
-#: plug-ins/script-fu/scripts/glossy.scm.h:6
-msgid "Default Bumpmap Settings"
+#: plug-ins/script-fu/scripts/glossy.scm.h:7
+#, fuzzy
+msgid "Default bumpmap settings"
 msgstr "Erliebe-maparen ezarpen lehenetsiak"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
-#: plug-ins/script-fu/scripts/asc2img.scm.h:7
+#: plug-ins/script-fu/scripts/asc2img.scm.h:8
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:10
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:4
 #: plug-ins/script-fu/scripts/chalk.scm.h:5
 #: plug-ins/script-fu/scripts/chip-away.scm.h:7
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:4
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:5
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:5
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:5
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:6
-#: plug-ins/script-fu/scripts/glossy.scm.h:7
+#: plug-ins/script-fu/scripts/glossy.scm.h:8
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:5
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
@@ -289,25 +291,25 @@ msgstr "Letra-tipoa"
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/asc2img.scm.h:8
+#: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:4
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:11
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:5
 #: plug-ins/script-fu/scripts/chalk.scm.h:6
 #: plug-ins/script-fu/scripts/chip-away.scm.h:8
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:5
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:6
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
-#: plug-ins/script-fu/scripts/glossy.scm.h:8
+#: plug-ins/script-fu/scripts/glossy.scm.h:9
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:6
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
@@ -322,11 +324,13 @@ msgstr "Letra-tipoa"
 #: plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:7
 #: plug-ins/script-fu/scripts/title-header.scm.h:3
-msgid "Font Size (pixels)"
+#, fuzzy
+msgid "Font size (pixels)"
 msgstr "Letra-tamaina (pixeletan)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:7
-msgid "Outline Blur Radius"
+#, fuzzy
+msgid "Outline blur radius"
 msgstr "Eskemaren lausotze-erradioa"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:8
@@ -341,20 +345,23 @@ msgid "Pattern"
 msgstr "Eredua"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:9
-msgid "Shadow Blur Radius"
-msgstr "Itzalaren lausotze-erradioa"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:10
-#: plug-ins/script-fu/scripts/glossy.scm.h:15
+#: plug-ins/script-fu/scripts/glossy.scm.h:16
 #: plug-ins/script-fu/scripts/round-corners.scm.h:6
-msgid "Shadow X Offset"
+#, fuzzy
+msgid "Shadow X offset"
 msgstr "Itzalaren X desplazamendua"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:11
-#: plug-ins/script-fu/scripts/glossy.scm.h:16
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: plug-ins/script-fu/scripts/glossy.scm.h:17
 #: plug-ins/script-fu/scripts/round-corners.scm.h:7
-msgid "Shadow Y Offset"
+#, fuzzy
+msgid "Shadow Y offset"
 msgstr "Itzalaren Y desplazamendua"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#, fuzzy
+msgid "Shadow blur radius"
+msgstr "Itzalaren lausotze-erradioa"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:12
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
@@ -366,18 +373,18 @@ msgstr "Itzalaren Y desplazamendua"
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:16
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:7
 #: plug-ins/script-fu/scripts/chalk.scm.h:7
 #: plug-ins/script-fu/scripts/chip-away.scm.h:13
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:10
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
-#: plug-ins/script-fu/scripts/glossy.scm.h:17
+#: plug-ins/script-fu/scripts/glossy.scm.h:18
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:11
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
@@ -406,13 +413,12 @@ msgstr "<Toolbox>/Luzp/Script-Fu/Ereduak/3D _truchet-a..."
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
-#: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:3
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 #: plug-ins/script-fu/scripts/chalk.scm.h:3
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:3
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:3
@@ -430,32 +436,38 @@ msgstr "<Toolbox>/Luzp/Script-Fu/Ereduak/3D _truchet-a..."
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:2
-msgid "Background Color"
+#, fuzzy
+msgid "Background color"
 msgstr "Atzeko planoaren kolorea"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:3
-msgid "Block Size"
+#, fuzzy
+msgid "Block size"
 msgstr "Bloke-tamaina"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:6
-msgid "End Blend"
+#, fuzzy
+msgid "End blend"
 msgstr "Amaierako nahastea"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: plug-ins/script-fu/scripts/truchet.scm.h:5
-msgid "Number of X Tiles"
+#, fuzzy
+msgid "Number of X tiles"
 msgstr "Xeko lauza-kopurua"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
 #: plug-ins/script-fu/scripts/truchet.scm.h:6
-msgid "Number of Y Tiles"
+#, fuzzy
+msgid "Number of Y tiles"
 msgstr "Yko lauza-kopurua"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:15
-msgid "Start Blend"
+#, fuzzy
+msgid "Start blend"
 msgstr "Hasierako nahastea"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:8
@@ -474,7 +486,8 @@ msgstr "<Image>/Script-Fu/Dekorazioa/Gehitu a_laka..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
-msgid "Keep Bump Layer"
+#, fuzzy
+msgid "Keep bump layer"
 msgstr "Mantendu erliebe-geruza"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:4
@@ -483,7 +496,8 @@ msgstr "Mantendu erliebe-geruza"
 #: plug-ins/script-fu/scripts/round-corners.scm.h:8
 #: plug-ins/script-fu/scripts/slide.scm.h:6
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
-msgid "Work on Copy"
+#, fuzzy
+msgid "Work on copy"
 msgstr "Kopian lan egin"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:1
@@ -491,19 +505,23 @@ msgid "<Image>/Script-Fu/Decor/Add _Border..."
 msgstr "<Image>/Script-Fu/Dekorazioa/Gehitu e_rtza..."
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:2
-msgid "Border Color"
-msgstr "Ertzaren kolorea"
-
-#: plug-ins/script-fu/scripts/addborder.scm.h:3
-msgid "Border X Size"
+#, fuzzy
+msgid "Border X size"
 msgstr "Ertzaren X tamaina"
 
-#: plug-ins/script-fu/scripts/addborder.scm.h:4
-msgid "Border Y Size"
+#: plug-ins/script-fu/scripts/addborder.scm.h:3
+#, fuzzy
+msgid "Border Y size"
 msgstr "Ertzaren Y tamaina"
 
+#: plug-ins/script-fu/scripts/addborder.scm.h:4
+#, fuzzy
+msgid "Border color"
+msgstr "Ertzaren kolorea"
+
 #: plug-ins/script-fu/scripts/addborder.scm.h:5
-msgid "Delta Value on Color"
+#, fuzzy
+msgid "Delta value on color"
 msgstr "Koloreko delta balioa "
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
@@ -522,7 +540,8 @@ msgstr "Behean"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 #: plug-ins/script-fu/scripts/camo.scm.h:5
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
-msgid "Flatten Image"
+#, fuzzy
+msgid "Flatten image"
 msgstr "Berdindu irudia"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
@@ -534,7 +553,8 @@ msgstr "Berdindu irudia"
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
-msgid "Glow Color"
+#, fuzzy
+msgid "Glow color"
 msgstr "Dirdiraren kolorea"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
@@ -570,11 +590,13 @@ msgstr ""
 "_horizontala..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
-msgid "Bar Height"
+#, fuzzy
+msgid "Bar height"
 msgstr "Barraren altuera"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
-msgid "Bar Length"
+#, fuzzy
+msgid "Bar length"
 msgstr "Barraren luzera"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
@@ -603,7 +625,8 @@ msgstr ""
 "<Toolbox>/Luzp/Script-Fu/Web orriko gaiak/Dirdira estralurtarra/Bo_toia..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
-msgid "Glow Radius"
+#, fuzzy
+msgid "Glow radius"
 msgstr "Dirdiraren erradioa"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
@@ -612,7 +635,7 @@ msgid "Padding"
 msgstr "Tarte betegarria"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-#: plug-ins/script-fu/scripts/asc2img.scm.h:9
+#: plug-ins/script-fu/scripts/asc2img.scm.h:12
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:9
@@ -624,7 +647,8 @@ msgstr "Tarte betegarria"
 #: plug-ins/script-fu/scripts/news-text.scm.h:10
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:14
 #: plug-ins/script-fu/scripts/speed-text.scm.h:8
-msgid "Text Color"
+#, fuzzy
+msgid "Text color"
 msgstr "Testuaren kolorea"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
@@ -645,7 +669,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Di_rdira estralurtarra..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
-msgid "Glow Size (pixels * 4)"
+#, fuzzy
+msgid "Glow size (pixels * 4)"
 msgstr "Dirdiraren tamaina (pixelak * 4)"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
@@ -657,19 +682,23 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Neon estralur_tarra..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
-msgid "Fade Away"
+#, fuzzy
+msgid "Fade away"
 msgstr "Iraungiz desagerrarazi"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
-msgid "Number of Bands"
+#, fuzzy
+msgid "Number of bands"
 msgstr "Zerrenda-kopurua"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
-msgid "Width of Bands"
+#, fuzzy
+msgid "Width of bands"
 msgstr "Zerrenda-zabalera"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
-msgid "Width of Gaps"
+#, fuzzy
+msgid "Width of gaps"
 msgstr "Hutsuneen zabalera"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
@@ -680,6 +709,12 @@ msgstr "<Image>/Script-Fu/Utilitateak/_ASCII geruzara..."
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Utilitateak/ASCII irudira..."
 
+#: plug-ins/script-fu/scripts/asc2img.scm.h:3
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+msgid "Background Color"
+msgstr "Atzeko planoaren kolorea"
+
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
 msgid "Buffer Amount (% Height of Text)"
@@ -687,14 +722,24 @@ msgstr "Bufferraren tamaina (testuaren altueraren %)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
+#, fuzzy
+msgid "File name"
+msgstr "Fitxategi-izena"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:7
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:5
 msgid "Filename"
 msgstr "Fitxategi-izena"
 
-#: plug-ins/script-fu/scripts/asc2img.scm.h:10
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#: plug-ins/script-fu/scripts/asc2img.scm.h:9
+msgid "Font Size (pixels)"
+msgstr "Letra-tamaina (pixeletan)"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:11
+msgid "Text Color"
+msgstr "Testuaren kolorea"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:13
 msgid "Transparent Background"
 msgstr "Atzeko plano gardena"
 
@@ -721,11 +766,13 @@ msgstr "<Toolbox>/Luzp/Script-Fu/Botoiak/Bo_toi soil alakatua..."
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:2
-msgid "Bevel Width"
+#, fuzzy
+msgid "Bevel width"
 msgstr "Alaka-zabalera"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:5
-msgid "Lower-Right color"
+#, fuzzy
+msgid "Lower-right color"
 msgstr "Beheko eskuineko kolorea"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:7
@@ -735,7 +782,8 @@ msgid "Pressed"
 msgstr "Sakatuta"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:10
-msgid "Upper-Left color"
+#, fuzzy
+msgid "Upper-left color"
 msgstr "Goiko ezkerreko kolorea"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
@@ -749,6 +797,13 @@ msgstr "<Toolbox>/Luzp/Script-Fu/Web orriko gaiak/Eredu alakatua/_Buleta..."
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
 msgstr "Diametroa"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#, fuzzy
+msgid "Transparent background"
+msgstr "Atzeko plano gardena"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
@@ -784,7 +839,8 @@ msgid "<Image>/Script-Fu/Animators/_Blend..."
 msgstr "<Image>/Script-Fu/Animazioa/_Nahastu..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
-msgid "Intermediate Frames"
+#, fuzzy
+msgid "Intermediate rrames"
 msgstr "Tarteko markoak"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
@@ -792,7 +848,8 @@ msgid "Looped"
 msgstr "Begiztatua"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:4
-msgid "Max. Blur Radius"
+#, fuzzy
+msgid "Max. blur radius"
 msgstr "Gehieneko lausotze-erradioa"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:1
@@ -804,7 +861,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/_Nahastuta..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:4
-msgid "Blend Mode"
+#, fuzzy
+msgid "Blend mode"
 msgstr "Nahaste-modua"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:5
@@ -839,7 +897,8 @@ msgstr "Gradientea"
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: plug-ins/script-fu/scripts/title-header.scm.h:4
-msgid "Gradient Reverse"
+#, fuzzy
+msgid "Gradient reverse"
 msgstr "Gradiente alderantzikatua"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:14
@@ -854,11 +913,11 @@ msgstr "<Image>/Script-Fu/Alfa logotipora/_Behi-kontuak..."
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Be_hi-kontuak..."
 
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 msgid "Spots density X"
 msgstr "Orbanen X dentsitatea"
 
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density Y"
 msgstr "Orbanen Y dentsitatea"
 
@@ -867,11 +926,13 @@ msgid "<Image>/Script-Fu/Animators/B_urn-In..."
 msgstr "<Image>/Script-Fu/Animazioa/_Erregailua..."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
-msgid "Add Glowing"
+#, fuzzy
+msgid "Add glowing"
 msgstr "Gehitu dirdira"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
-msgid "After Glow"
+#, fuzzy
+msgid "After glow"
 msgstr "Dirdiraren ondoren"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
@@ -885,7 +946,8 @@ msgstr ""
 "bezalakoa; V2.1"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
-msgid "Corona Width"
+#, fuzzy
+msgid "Corona width"
 msgstr "Koroaren zabalera"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
@@ -893,7 +955,8 @@ msgid "Fadeout"
 msgstr "Iraungitzea"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
-msgid "Fadeout Width"
+#, fuzzy
+msgid "Fadeout width"
 msgstr "Iraungitzearen zabalera"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
@@ -927,7 +990,8 @@ msgstr "Pikortatzea"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:7
 #: plug-ins/script-fu/scripts/rendermap.scm.h:7
-msgid "Image Size"
+#, fuzzy
+msgid "Image size"
 msgstr "Irudiaren tamaina"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:8
@@ -940,11 +1004,13 @@ msgid "<Image>/Script-Fu/Stencil Ops/C_arve-It..."
 msgstr "<Image>/Script-Fu/Eragiketak txantiloiekin/_Zizelkatu..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:2
-msgid "Carve White Areas"
+#, fuzzy
+msgid "Carve white areas"
 msgstr "Zizelkatu area zuriak"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:3
-msgid "Image to Carve"
+#, fuzzy
+msgid "Image to carve"
 msgstr "Zizelkatzeko irudia"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:1
@@ -952,16 +1018,17 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Zizelkatuta..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:2
-#: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 msgid "Background Image"
 msgstr "Atzeko planoko irudia"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:3
-msgid "Carve Raised Text"
+#, fuzzy
+msgid "Carve raised text"
 msgstr "Zizelkatu igotako testua"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:6
-msgid "Padding Around Text"
+#, fuzzy
+msgid "Padding around text"
 msgstr "Testu inguruko betegarria"
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:1
@@ -973,7 +1040,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/K_lera..."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:4
-msgid "Chalk Color"
+#, fuzzy
+msgid "Chalk color"
 msgstr "Klera-kolorea"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:1
@@ -985,19 +1053,23 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Xe_hatu..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:3
-msgid "Blur Amount"
+#, fuzzy
+msgid "Blur amount"
 msgstr "Lausotze-maila"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:4
-msgid "Chip Amount"
+#, fuzzy
+msgid "Chip amount"
 msgstr "Xehatze-maila"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:5
-msgid "Drop Shadow"
+#, fuzzy
+msgid "Drop shadow"
 msgstr "Egin itzala"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
-msgid "Fill BG with Pattern"
+#, fuzzy
+msgid "Fill BG with pattern"
 msgstr "Bete atzeko planoa ereduarekin"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:9
@@ -1005,7 +1077,8 @@ msgid "Invert"
 msgstr "Alderantzikatu"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:10
-msgid "Keep Background"
+#, fuzzy
+msgid "Keep background"
 msgstr "Mantendu atzeko planoa"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:1
@@ -1014,38 +1087,45 @@ msgstr "<Image>/Script-Fu/Eragiketak txantiloiekin/_Kromatu..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
-msgid "Chrome Balance"
+#, fuzzy
+msgid "Chrome balance"
 msgstr "Kromatze-balantzea"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
-msgid "Chrome Factor"
+#, fuzzy
+msgid "Chrome factor"
 msgstr "Kromatze-faktorea"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
-msgid "Chrome Lightness"
+#, fuzzy
+msgid "Chrome lightness"
 msgstr "Kromatze-argitasuna"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
-msgid "Chrome Saturation"
+#, fuzzy
+msgid "Chrome saturation"
 msgstr "Kromatze-saturazioa"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:6
-msgid "Chrome White Areas"
+#, fuzzy
+msgid "Chrome white areas"
 msgstr "Kromatu area zuriak"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
-msgid "Environment Map"
+#, fuzzy
+msgid "Environment map"
 msgstr "Ingurune-mapa"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
-msgid "Highlight Balance"
+#, fuzzy
+msgid "Highlight balance"
 msgstr "Nabarmentzearen balantzea"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
@@ -1056,7 +1136,7 @@ msgstr "<Image>/Script-Fu/Alfa logotipora/_Kromatu..."
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/K_romatu..."
 
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
 msgid "Offsets (pixels * 2)"
 msgstr "Desplazamenduak (pixelak * 2)"
 
@@ -1065,28 +1145,33 @@ msgid "<Image>/Script-Fu/Render/_Circuit..."
 msgstr "<Image>/Script-Fu/Errendatuak/_Zirkuitua..."
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:2
-msgid "Circuit Seed"
+#, fuzzy
+msgid "Circuit seed"
 msgstr "Zirkuitu-hazia"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:3
 #: plug-ins/script-fu/scripts/predator.scm.h:3
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:11
-msgid "Keep Selection"
+#, fuzzy
+msgid "Keep selection"
 msgstr "Mantendu hautapena"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:4
-msgid "No Background (only for separate layer)"
+#, fuzzy
+msgid "No background (only for separate layer)"
 msgstr "Atzeko planorik ez (bereizitako geruzetarako bakarrik)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:5
-msgid "Oilify Mask Size"
+#, fuzzy
+msgid "Oilify mask size"
 msgstr "Olio-maskararen tamaina"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:6
 #: plug-ins/script-fu/scripts/lava.scm.h:6
 #: plug-ins/script-fu/scripts/predator.scm.h:6
-msgid "Separate Layer"
+#, fuzzy
+msgid "Separate layer"
 msgstr "Geruza bereizia"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:1
@@ -1121,9 +1206,10 @@ msgid "<Image>/Script-Fu/Decor/_Coffee Stain..."
 msgstr "<Image>/Script-Fu/Dekorazioa/_Kafe-orbana..."
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:2
+#, fuzzy
 msgid ""
-"Darken Only\n"
-"(Better, but only for Images with alot of White)"
+"Darken only\n"
+"(Better, but only for images with alot of white)"
 msgstr ""
 "Ilundu bakarrik\n"
 "(hobeto, baina zuri asko duten irudietarako bakarrik)"
@@ -1141,12 +1227,14 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/K_omikia..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:8
-msgid "Outline Color"
+#, fuzzy
+msgid "Outline color"
 msgstr "Eskemaren kolorea"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:9
-#: plug-ins/script-fu/scripts/glossy.scm.h:10
-msgid "Outline Size"
+#: plug-ins/script-fu/scripts/glossy.scm.h:11
+#, fuzzy
+msgid "Outline size"
 msgstr "Eskemaren tamaina"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
@@ -1159,7 +1247,8 @@ msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Me_tal hotza..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
-msgid "Effect Size (pixels)"
+#, fuzzy
+msgid "Effect size (pixels)"
 msgstr "Efektuaren tamaina (pixeletan)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
@@ -1171,21 +1260,28 @@ msgstr "<Image>/Editatu/Kopiatu _ikusgai dagoena"
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/K_ristala..."
 
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
+#, fuzzy
+msgid "Background image"
+msgstr "Atzeko planoko irudia"
+
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Distress Selection..."
 msgstr "<Image>/Script-Fu/Hautapena/_Desitxuratu hautapena..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
-#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
-msgid "Granularity (1 is Low)"
+#, fuzzy
+msgid "Granularity (1 is low)"
 msgstr "Pikortzea (1 txikia da)"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:4
-msgid "Smooth Horizontally"
+#, fuzzy
+msgid "Smooth horizontally"
 msgstr "Leundu horizontalki"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:5
-msgid "Smooth Vertically"
+#, fuzzy
+msgid "Smooth vertically"
 msgstr "Leundu bertikalki"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:6
@@ -1193,7 +1289,8 @@ msgid "Spread"
 msgstr "Zabaldu"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:7
-msgid "Threshold (Bigger 1<-->255 Smaller)"
+#, fuzzy
+msgid "Threshold (bigger 1<-->255 smaller)"
 msgstr "Muga (Handiagoa 1<-->255 Txikiagoa)"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
@@ -1202,7 +1299,8 @@ msgstr "<Image>/Script-Fu/Itzala/Egin _itzala..."
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
-msgid "Allow Resizing"
+#, fuzzy
+msgid "Allow resizing"
 msgstr "Baimendu tamaina aldatzea"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:3
@@ -1210,7 +1308,8 @@ msgstr "Baimendu tamaina aldatzea"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/round-corners.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:4
-msgid "Blur Radius"
+#, fuzzy
+msgid "Blur radius"
 msgstr "Lausotze-erradioa"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
@@ -1248,7 +1347,8 @@ msgid "Erase"
 msgstr "Ezabatu"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:4
-msgid "Erase/Fill"
+#, fuzzy
+msgid "Erase/fill"
 msgstr "Ezabatu/Bete"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:5
@@ -1256,7 +1356,8 @@ msgid "Even"
 msgstr "Bikoitia"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:6
-msgid "Even/Odd"
+#, fuzzy
+msgid "Even/odd"
 msgstr "Bikoitia/Bakoitia"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:7
@@ -1272,7 +1373,8 @@ msgid "Rows"
 msgstr "Errenkadak"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:10
-msgid "Rows/Cols"
+#, fuzzy
+msgid "Rows/cols"
 msgstr "Errenkadak/Zutabeak"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
@@ -1280,31 +1382,35 @@ msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
 msgstr "<Image>/Script-Fu/Hautapena/_Iraungitze-eskema..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
-msgid "Apply Generated Layermask"
+#, fuzzy
+msgid "Apply generated layermask"
 msgstr "Aplikatu sortutako geruza-maskara"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:3
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
 #: plug-ins/script-fu/scripts/old-photo.scm.h:2
-msgid "Border Size"
+#, fuzzy
+msgid "Border size"
 msgstr "Ertzaren tamaina"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid "Clear Unselected Maskarea"
+#, fuzzy
+msgid "Clear unselected maskarea"
 msgstr "Garbitu hautatu gabeko maskara"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:6
-#, no-c-format
-msgid "Fade From %"
+#, fuzzy, no-c-format
+msgid "Fade from %"
 msgstr "Iraungi hemendik %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:8
-#, no-c-format
-msgid "Fade To   %"
+#, fuzzy, no-c-format
+msgid "Fade to   %"
 msgstr "Iraungi hona %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "Use Growing Selection"
+#, fuzzy
+msgid "Use growing selection"
 msgstr "Erabili hazten den hautapena"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:1
@@ -1313,22 +1419,26 @@ msgstr "<Toolbox>/Luzp/Script-Fu/_Ereduak/_Lur laua..."
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:2
 #: plug-ins/script-fu/scripts/land.scm.h:2
-msgid "Detail Level"
+#, fuzzy
+msgid "Detail level"
 msgstr "Xehetasun-maila"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:3
 #: plug-ins/script-fu/scripts/land.scm.h:4
-msgid "Image Height"
+#, fuzzy
+msgid "Image height"
 msgstr "Irudiaren altuera"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:4
 #: plug-ins/script-fu/scripts/land.scm.h:5
-msgid "Image Width"
+#, fuzzy
+msgid "Image width"
 msgstr "Irudiaren zabalera"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:5
 #: plug-ins/script-fu/scripts/land.scm.h:7
-msgid "Random Seed"
+#, fuzzy
+msgid "Random seed"
 msgstr "Ausazko hazia"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:6
@@ -1346,19 +1456,23 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Utilitateak/Letra-tipoen mapa..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-msgid "Active Colors"
+#, fuzzy
+msgid "Active colors"
 msgstr "Aktibatu koloreak"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid "Black on White"
+#, fuzzy
+msgid "Black on white"
 msgstr "Beltza zurian"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:4
-msgid "Font _Size (pixels)"
+#, fuzzy
+msgid "Font _size (pixels)"
 msgstr "Letra-_tamaina (pixeletan)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
-msgid "Use Font _Name as Text"
+#, fuzzy
+msgid "Use font _name as text"
 msgstr "Erabili letra-tipoaren _izena testu gisa"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:6
@@ -1366,7 +1480,8 @@ msgid "_Border (pixels)"
 msgstr "_Ertza (pixeletan)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
-msgid "_Color Scheme"
+#, fuzzy
+msgid "_Color scheme"
 msgstr "_Kolorearen eskema"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:8
@@ -1394,16 +1509,22 @@ msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
 msgstr "<Image>/Script-Fu/Dekorazioa/_Ertz lausoa..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
-msgid "Add Shadow"
+#, fuzzy
+msgid "Add shadow"
 msgstr "Gehitu itzala"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
-msgid "Blur Border"
+#, fuzzy
+msgid "Blur border"
 msgstr "Lausotu ertza"
 
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
+msgid "Granularity (1 is Low)"
+msgstr "Pikortzea (1 txikia da)"
+
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
-#, no-c-format
-msgid "Shadow Weight (%)"
+#, fuzzy, no-c-format
+msgid "Shadow weight (%)"
 msgstr "Itzalaren pisua (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
@@ -1419,41 +1540,49 @@ msgid ""
 msgstr "<Toolbox>/Luzp/Script-Fu/Web orriko gaiak/Gimp.Org/G_oiburu txikia..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-msgid "AutoCrop"
+#, fuzzy
+msgid "Autocrop"
 msgstr "Ebaki automatikoki"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
-msgid "Dark Color"
+#, fuzzy
+msgid "Dark color"
 msgstr "Kolore iluna"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:7
-msgid "Highlight Color"
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:9
+#, fuzzy
+msgid "Highlight color"
 msgstr "Nabarmentzearen kolorea"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
-msgid "Index Image"
+#, fuzzy
+msgid "Index image"
 msgstr "Indexatu irudia"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
-msgid "Number of Colors"
+#, fuzzy
+msgid "Number of colors"
 msgstr "Kolore-kopurua"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-msgid "Remove Background"
+#, fuzzy
+msgid "Remove background"
 msgstr "Kendu atzeko planoa"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
-msgid "Select-By-Color Threshold"
+#, fuzzy
+msgid "Select-by-color threshold"
 msgstr "Kolorearen araberako hautapenaren muga"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
-msgid "Shadow Color"
+#, fuzzy
+msgid "Shadow color"
 msgstr "Itzalaren kolorea"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
@@ -1501,49 +1630,69 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Dis_tiratsua..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
-msgid "Blend Gradient (Outline)"
+#, fuzzy
+msgid "Blend gradient (outline)"
 msgstr "Nahaste-gradientea (Eskema)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
-msgid "Blend Gradient (Text)"
+#, fuzzy
+msgid "Blend gradient (sext)"
 msgstr "Nahaste-gradientea (Testua)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:9
-msgid "Outline Gradient Reverse"
+#: plug-ins/script-fu/scripts/glossy.scm.h:6
+#, fuzzy
+msgid "Blend gradient (text)"
+msgstr "Nahaste-gradientea (Testua)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:10
+#, fuzzy
+msgid "Outline gradient reverse"
 msgstr "Eskemaren gradiente alderantzikatua"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:11
-msgid "Pattern (Outline)"
+#: plug-ins/script-fu/scripts/glossy.scm.h:12
+#, fuzzy
+msgid "Pattern (outline)"
 msgstr "Eredua (Eskema)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:12
-msgid "Pattern (Overlay)"
+#: plug-ins/script-fu/scripts/glossy.scm.h:13
+#, fuzzy
+msgid "Pattern (overlay)"
 msgstr "Eredua (Gainjarria)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:13
-msgid "Pattern (Text)"
+#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#, fuzzy
+msgid "Pattern (text)"
 msgstr "Eredua (Testua)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#: plug-ins/script-fu/scripts/glossy.scm.h:15
 #: plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "Itzala"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:18
-msgid "Text Gradient Reverse"
+#: plug-ins/script-fu/scripts/glossy.scm.h:19
+#, fuzzy
+msgid "Text gradient reverse"
 msgstr "Testu-gradiente alderantzikatua"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:19
-msgid "Use Pattern Overlay"
-msgstr "Erabili ereduen gainjartzea"
-
 #: plug-ins/script-fu/scripts/glossy.scm.h:20
-msgid "Use Pattern for Outline instead of Gradient"
+#, fuzzy
+msgid "Use pattern for outline instead of gradient"
 msgstr "Erabili eredua eskemarako gradientearen ordez "
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:21
-msgid "Use Pattern for Text instead of Gradient"
+#, fuzzy
+msgid "Use pattern for text instead of gradient"
 msgstr "Erabili eredua testurako gradientearen ordez "
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:22
+#, fuzzy
+msgid "Use pattern overlay"
+msgstr "Erabili ereduen gainjartzea"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:23
+#, fuzzy
+msgid "Use tattern for outline instead of gradient"
+msgstr "Erabili eredua eskemarako gradientearen ordez "
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
@@ -1554,7 +1703,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Be_ro dirdiratsua..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-msgid "Effect Size (pixels * 3)"
+#, fuzzy
+msgid "Effect size (pixels * 3)"
 msgstr "Efektuaren tamaina (pixelak * 3)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
@@ -1566,13 +1716,15 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Gradiente _alakatua..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
-msgid "Bevel Height (Sharpness)"
+#, fuzzy
+msgid "Bevel height (Sharpness)"
 msgstr "Alaka-altuera (Zorroztasuna)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:4
-msgid "Border Size (pixels)"
+#, fuzzy
+msgid "Border size (pixels)"
 msgstr "Ertzaren tamaina (pixeletan)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
@@ -1584,11 +1736,13 @@ msgid "<Image>/Script-Fu/Render/_Grid..."
 msgstr "<Image>/Script-Fu/Errendatuak/_Sareta..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
-msgid "X Divisions"
+#, fuzzy
+msgid "X divisions"
 msgstr "X zatiketak"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
-msgid "Y Divisions"
+#, fuzzy
+msgid "Y divisions"
 msgstr "Y zatiketak"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
@@ -1596,7 +1750,8 @@ msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
 msgstr "<Image>/Script-Fu/Utilitateak/Marraztu _HSV grafikoa..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid "BG Opacity"
+#, fuzzy
+msgid "BG opacity"
 msgstr "Atzeko planoaren opakutasuna"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
@@ -1608,11 +1763,13 @@ msgid "End Y"
 msgstr "Amaierako Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:5
-msgid "From Top-Left to Bottom-Right"
+#, fuzzy
+msgid "From top-left to bottom-right"
 msgstr "Goiko ezkerretik beheko eskuinera"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
-msgid "Graph Scale"
+#, fuzzy
+msgid "Graph scale"
 msgstr "Grafikoaren eskala"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
@@ -1624,7 +1781,8 @@ msgid "Start Y"
 msgstr "Hasierako Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-msgid "Use Selection Bounds Instead of Belows"
+#, fuzzy
+msgid "Use selection bounds instead of belows"
 msgstr "Erabili hautapen-mugak behekoen ordez"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
@@ -1632,11 +1790,13 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Imigre-26..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
-msgid "Frame Color"
+#, fuzzy
+msgid "Frame color"
 msgstr "Markoaren kolorea"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
-msgid "Frame Size"
+#, fuzzy
+msgid "Frame size"
 msgstr "Markoaren tamaina"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
@@ -1644,43 +1804,53 @@ msgid "<Image>/Script-Fu/Utils/Show Image _Structure..."
 msgstr "<Image>/Script-Fu/Utilitateak/Erakutsi _irudiaren egitura..."
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:2
-msgid "Apply Layer Mask (or discard)"
+#, fuzzy
+msgid "Apply layer mask (or discard)"
 msgstr "Aplikatu geruza-maskara (edo baztertu)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:4
-msgid "Create New Image"
+#, fuzzy
+msgid "Create new image"
 msgstr "Sortu irudi berria"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:5
-msgid "Insert Layer Names"
+#, fuzzy
+msgid "Insert layer names"
 msgstr "Sartu geruza-izenak"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:6
-msgid "Make New Background"
+#, fuzzy
+msgid "Make new background"
 msgstr "Egin atzeko plano berria"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:7
-msgid "Outer Border"
+#, fuzzy
+msgid "Outer border"
 msgstr "Kanpoko ertza"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:8
-msgid "Pad Color"
+#, fuzzy
+msgid "Pad color"
 msgstr "Betegarriaren kolorea"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:9
-msgid "Pad Opacity"
+#, fuzzy
+msgid "Pad opacity"
 msgstr "Betegarriaren opakutasuna"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:10
-msgid "Padding for Transparent Regions"
+#, fuzzy
+msgid "Padding for transparent regions"
 msgstr "Eskualde gardenen betegarria"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:11
-msgid "Shear Length"
+#, fuzzy
+msgid "Shear length"
 msgstr "Zizailamenduaren luzera"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:12
-msgid "Space Between Layers"
+#, fuzzy
+msgid "Space between layers"
 msgstr "Geruzen arteko tartea"
 
 #: plug-ins/script-fu/scripts/land.scm.h:1
@@ -1688,11 +1858,13 @@ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Land..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Ereduak/_Lurra..."
 
 #: plug-ins/script-fu/scripts/land.scm.h:6
-msgid "Land Height"
+#, fuzzy
+msgid "Land height"
 msgstr "Lurraren altuera"
 
 #: plug-ins/script-fu/scripts/land.scm.h:10
-msgid "Sea Depth"
+#, fuzzy
+msgid "Sea depth"
 msgstr "Itsasoaren sakonera"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:1
@@ -1709,7 +1881,8 @@ msgid "Seed"
 msgstr "Hazia"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:8
-msgid "Use Current Gradient"
+#, fuzzy
+msgid "Use current gradient"
 msgstr "Erabili uneko gradientea"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
@@ -1717,11 +1890,13 @@ msgid "<Image>/Script-Fu/Render/Line _Nova..."
 msgstr "<Image>/Script-Fu/Errendatuak/Line _Nova..."
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:2
-msgid "Number of Lines"
+#, fuzzy
+msgid "Number of lines"
 msgstr "Marra-kopurua"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:3
-msgid "Offset Radius"
+#, fuzzy
+msgid "Offset radius"
 msgstr "Desplazamendu-erradioa"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:4
@@ -1800,11 +1975,13 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Ne_on..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:4
-msgid "Create Shadow"
+#, fuzzy
+msgid "Create shadow"
 msgstr "Sortu itzala"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:5
-msgid "Effect Size (pixels * 5)"
+#, fuzzy
+msgid "Effect size (pixels * 5)"
 msgstr "Efektuaren tamaina (pixelak * 5)"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:1
@@ -1812,7 +1989,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/_Prentsa-paperaren testua..."
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:4
-msgid "Cell Size (pixels)"
+#, fuzzy
+msgid "Cell size (pixels)"
 msgstr "Gelaxkaren tamaina (pixeletan)"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:6
@@ -1850,11 +2028,13 @@ msgid "Interpolate"
 msgstr "Interpolatu"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
-msgid "Relative Distance of Horizon"
+#, fuzzy
+msgid "Relative distance of horizon"
 msgstr "Zerumugaren distantzia erlatiboa"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
-msgid "Relative Length of Shadow"
+#, fuzzy
+msgid "Relative length of shadow"
 msgstr "Itzalaren luzera erlatiboa"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:1
@@ -1862,11 +2042,13 @@ msgid "<Image>/Script-Fu/Alchemy/_Predator..."
 msgstr "<Image>/Script-Fu/Alkimia/_Harraparia..."
 
 #: plug-ins/script-fu/scripts/predator.scm.h:2
-msgid "Edge Amount"
+#, fuzzy
+msgid "Edge amount"
 msgstr "Ertzaren lodiera"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:4
-msgid "Pixel Amount"
+#, fuzzy
+msgid "Pixel amount"
 msgstr "Pixel-kopurua"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:5
@@ -1878,19 +2060,23 @@ msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Botoiak/Bo_toi biribila..."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:5
-msgid "Lower Color"
+#, fuzzy
+msgid "Lower color"
 msgstr "Behe-mailako kolorea"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:6
-msgid "Lower Color (Active)"
+#, fuzzy
+msgid "Lower color (active)"
 msgstr "Behe-mailako kolorea (Aktiboa)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:7
-msgid "Not Pressed"
+#, fuzzy
+msgid "Not pressed"
 msgstr "Sakatu gabe"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:8
-msgid "Not Pressed (Active)"
+#, fuzzy
+msgid "Not pressed (active)"
 msgstr "Sakatu gabe (Aktiboa)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:9
@@ -1902,19 +2088,23 @@ msgid "Padding Y"
 msgstr "Y betegarria"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:12
-msgid "Round Ratio"
+#, fuzzy
+msgid "Round ratio"
 msgstr "Biribilaren erlazioa"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:15
-msgid "Text Color (Active)"
+#, fuzzy
+msgid "Text color (active)"
 msgstr "Testuaren kolorea (Aktiboa)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:16
-msgid "Upper Color"
+#, fuzzy
+msgid "Upper color"
 msgstr "Goi-mailako kolorea"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:17
-msgid "Upper Color (Active)"
+#, fuzzy
+msgid "Upper color (active)"
 msgstr "Goi-mailako kolorea (Aktiboa)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
@@ -1942,16 +2132,19 @@ msgid "Black"
 msgstr "Beltza"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-msgid "Edge Behaviour"
+#, fuzzy
+msgid "Edge behaviour"
 msgstr "Ertzaren portaera"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
-msgid "Number of Frames"
+#, fuzzy
+msgid "Number of frames"
 msgstr "Marko-kopurua"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
-msgid "Rippling Strength"
+#, fuzzy
+msgid "Rippling strength"
 msgstr "Izurtze-indarra"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
@@ -1967,15 +2160,18 @@ msgid "<Image>/Script-Fu/Decor/_Round Corners..."
 msgstr "<Image>/Script-Fu/Dekorazioa/_Biribildu izkinak..."
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:2
-msgid "Add Background"
+#, fuzzy
+msgid "Add background"
 msgstr "Gehitu atzeko planoa"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:3
-msgid "Add Drop-Shadow"
+#, fuzzy
+msgid "Add drop-shadow"
 msgstr "Gehitu itzala"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:5
-msgid "Edge Radius"
+#, fuzzy
+msgid "Edge radius"
 msgstr "Ertzaren erradioa"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
@@ -1993,7 +2189,8 @@ msgid "<Image>/Script-Fu/Selection/To _Brush..."
 msgstr "<Image>/Script-Fu/Hautapena/_Brotxara..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
-msgid "Brush Name"
+#, fuzzy
+msgid "Brush name"
 msgstr "Brotxaren izena"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
@@ -2015,7 +2212,8 @@ msgid "<Image>/Script-Fu/Selection/To _Pattern..."
 msgstr "<Image>/Script-Fu/Hautapena/_Eredura..."
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
-msgid "Pattern Name"
+#, fuzzy
+msgid "Pattern name"
 msgstr "Eredu-izena"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
@@ -2023,7 +2221,8 @@ msgid "<Image>/Script-Fu/Selection/_Round..."
 msgstr "<Image>/Script-Fu/Hautapena/Bi_ribildu..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
-msgid "Relative Radius"
+#, fuzzy
+msgid "Relative radius"
 msgstr "Erradio erlatiboa"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:1
@@ -2031,7 +2230,8 @@ msgid "<Image>/Script-Fu/Decor/_Slide..."
 msgstr "<Image>/Script-Fu/Dekorazioa/_Diapositiba..."
 
 #: plug-ins/script-fu/scripts/slide.scm.h:3
-msgid "Font Color"
+#, fuzzy
+msgid "Font color"
 msgstr "Letra-tipoaren kolorea"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:4
@@ -2059,7 +2259,8 @@ msgid "Radius (pixels)"
 msgstr "Erradioa (pixeletan)"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:6
-msgid "Sphere Color"
+#, fuzzy
+msgid "Sphere color"
 msgstr "Esferaren kolorea"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
@@ -2071,11 +2272,13 @@ msgid "Frames"
 msgstr "Markoak"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
-msgid "Index to n Colors (0 = Remain RGB)"
+#, fuzzy
+msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indexatu n koloretan (0 = Mantendu RGB)"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
-msgid "Turn from Left to Right"
+#, fuzzy
+msgid "Turn from left to right"
 msgstr "Biratu ezkerretik eskuinera"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
@@ -2095,7 +2298,8 @@ msgid "Circle"
 msgstr "Zirkulua"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
-msgid "Color Method"
+#, fuzzy
+msgid "Color method"
 msgstr "Koloreztatze-metodoa"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
@@ -2125,11 +2329,13 @@ msgid "Hexagon"
 msgstr "Hexagonoa"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
-msgid "Hole Ratio"
+#, fuzzy
+msgid "Hole ratio"
 msgstr "Zuloaren erradioa"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
-msgid "Inner Teeth"
+#, fuzzy
+msgid "Inner teeth"
 msgstr "Barruko hortzak"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
@@ -2141,7 +2347,8 @@ msgid "Margin (pixels)"
 msgstr "Marjina (pixeletan)"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
-msgid "Outer Teeth"
+#, fuzzy
+msgid "Outer teeth"
 msgstr "Kanpoko hortzak"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
@@ -2186,7 +2393,8 @@ msgstr "Karratua"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
-msgid "Start Angle"
+#, fuzzy
+msgid "Start angle"
 msgstr "Hasierako angelua"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
@@ -2210,11 +2418,13 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/I_zar-eztanda..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
-msgid "Burst Color"
+#, fuzzy
+msgid "Burst color"
 msgstr "Eztandaren kolorea"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-msgid "Effect Size (pixels * 30)"
+#, fuzzy
+msgid "Effect size (pixels * 30)"
 msgstr "Efektuaren tamaina (pixelak * 30)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
@@ -2226,7 +2436,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Iz_arretakoa..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-msgid "Effect Size (pixels * 4)"
+#, fuzzy
+msgid "Effect size (pixels * 4)"
 msgstr "Efektuaren tamaina (pixelak * 4)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
@@ -2234,7 +2445,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Ereduak/Lauza moduan e_spiralean..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
-msgid "Whirl Amount"
+#, fuzzy
+msgid "Whirl amount"
 msgstr "Zurrunbiloaren indarra"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
@@ -2242,15 +2454,18 @@ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Ereduak/E_spiralean..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
-msgid "Number of Times to Whirl"
+#, fuzzy
+msgid "Number of times to whirl"
 msgstr "Biratu beharreko aldi-kopurua"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
-msgid "Quarter Size"
+#, fuzzy
+msgid "Quarter size"
 msgstr "Lauzen tamaina"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
-msgid "Whirl Angle"
+#, fuzzy
+msgid "Whirl angle"
 msgstr "Espiralaren angelua"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
@@ -2262,19 +2477,23 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Par_tikulen arrastoa..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
-msgid "Base Color"
+#, fuzzy
+msgid "Base color"
 msgstr "Oinarri-kolorea"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
-msgid "Edge Only"
+#, fuzzy
+msgid "Edge only"
 msgstr "Ertza bakarrik"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
-msgid "Edge Width"
+#, fuzzy
+msgid "Edge width"
 msgstr "Ertzaren zabalera"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
-msgid "Hit Rate"
+#, fuzzy
+msgid "Hit rate"
 msgstr "Talka-tasa"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:1
@@ -2286,7 +2505,8 @@ msgid "Antialias"
 msgstr "Antialiasing-a"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:3
-msgid "Fill Angle"
+#, fuzzy
+msgid "Fill angle"
 msgstr "Bete angelua"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
@@ -2298,7 +2518,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
 msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Te_sturaduna..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
-msgid "Ending Blend"
+#, fuzzy
+msgid "Ending blend"
 msgstr "Amaierako nahastea"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:8
@@ -2306,7 +2527,8 @@ msgid "Hexagons"
 msgstr "Hexagonoak"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:9
-msgid "Mosaic Tile Type"
+#, fuzzy
+msgid "Mosaic tile type"
 msgstr "Mosaikoko lauzen mota"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:10
@@ -2318,11 +2540,13 @@ msgid "Squares"
 msgstr "Karratuak"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:13
-msgid "Starting Blend"
+#, fuzzy
+msgid "Starting blend"
 msgstr "Hasierako nahastea"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:15
-msgid "Text Pattern"
+#, fuzzy
+msgid "Text pattern"
 msgstr "Testu-eredua"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
@@ -2330,15 +2554,18 @@ msgid "<Image>/Filters/Blur/_Tileable Blur..."
 msgstr "<Image>/Iragazkiak/Lausotuak/_Lausotze teilakagarria..."
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:2
-msgid "Blur Horizontally"
+#, fuzzy
+msgid "Blur horizontally"
 msgstr "Lausotu horizontalki"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:3
-msgid "Blur Type"
+#, fuzzy
+msgid "Blur type"
 msgstr "Lausotze-mota"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:4
-msgid "Blur Vertically"
+#, fuzzy
+msgid "Blur vertically"
 msgstr "Lausotu bertikalki"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:5
@@ -2358,7 +2585,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
 msgstr "<Toolbox>/Luzp/Script-Fu/_Ereduak/Truc_het..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
-msgid "Foreground Color"
+#, fuzzy
+msgid "Foreground color"
 msgstr "Aurreko planoaren kolorea"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
@@ -2366,11 +2594,13 @@ msgid "<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
 msgstr "<Image>/Script-Fu/Alkimia/_Lausotze-maskara..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
-msgid "Mask Opacity"
+#, fuzzy
+msgid "Mask opacity"
 msgstr "Maskararen opakutasuna"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
-msgid "Mask Size"
+#, fuzzy
+msgid "Mask size"
 msgstr "Maskararen tamaina"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:1
@@ -2394,31 +2624,38 @@ msgid "<Image>/Script-Fu/Alchemy/_Weave..."
 msgstr "<Image>/Script-Fu/Alkimia/_Ehun..."
 
 #: plug-ins/script-fu/scripts/weave.scm.h:2
-msgid "Ribbon Spacing"
+#, fuzzy
+msgid "Ribbon spacing"
 msgstr "Banda arteko tartea"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:3
-msgid "Ribbon Width"
+#, fuzzy
+msgid "Ribbon width"
 msgstr "Bandaren zabalera"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:4
-msgid "Shadow Darkness"
+#, fuzzy
+msgid "Shadow darkness"
 msgstr "Itzalaren iluntasuna"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:5
-msgid "Shadow Depth"
+#, fuzzy
+msgid "Shadow depth"
 msgstr "Itzalaren sakonera"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:6
-msgid "Thread Density"
+#, fuzzy
+msgid "Thread density"
 msgstr "Hariaren dentsitatea"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:7
-msgid "Thread Intensity"
+#, fuzzy
+msgid "Thread intensity"
 msgstr "Hariaren intentsitatea"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:8
-msgid "Thread Length"
+#, fuzzy
+msgid "Thread length"
 msgstr "Hariaren luzera"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:1
@@ -2438,36 +2675,44 @@ msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
 msgstr "<Image>/Script-Fu/Itzala/_Xach-en efektua..."
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:2
-msgid "Drop Shadow Blur Radius"
-msgstr "Itzalaren lausotze-erradioa"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:3
-msgid "Drop Shadow Color"
-msgstr "Itzalaren kolorea"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:4
-msgid "Drop Shadow Opacity"
-msgstr "Itzalaren opakutasuna"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:5
-msgid "Drop Shadow X Offset"
+#, fuzzy
+msgid "Drop shadow X offset"
 msgstr "Itzalaren X desplazamendua"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:6
-msgid "Drop Shadow Y Offset"
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:3
+#, fuzzy
+msgid "Drop shadow Y offset"
 msgstr "Itzalaren Y desplazamendua"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:8
-msgid "Highlight Opacity"
-msgstr "Nabarmentzearen opakutasuna"
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:4
+#, fuzzy
+msgid "Drop shadow blur radius"
+msgstr "Itzalaren lausotze-erradioa"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:9
-msgid "Highlight X Offset"
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:5
+#, fuzzy
+msgid "Drop shadow color"
+msgstr "Itzalaren kolorea"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:6
+#, fuzzy
+msgid "Drop shadow opacity"
+msgstr "Itzalaren opakutasuna"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:7
+#, fuzzy
+msgid "Highlight X offset"
 msgstr "Nabarmentzearen X desplazamendua"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:10
-msgid "Highlight Y Offset"
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:8
+#, fuzzy
+msgid "Highlight Y offset"
 msgstr "Nabarmentzearen Y desplazamendua"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:10
+#, fuzzy
+msgid "Highlight opacity"
+msgstr "Nabarmentzearen opakutasuna"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 #~ msgstr "<Toolbox>/Luzp/Script-Fu/Script-Fu _Kontsola"

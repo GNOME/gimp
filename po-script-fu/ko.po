@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-02 14:09+0200\n"
+"POT-Creation-Date: 2004-06-24 01:36+0200\n"
 "PO-Revision-Date: 2003-06-05 07:54+0800\n"
 "Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -102,26 +102,26 @@ msgstr "Script-Fu 그라디언트 선택"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 브러시 선택"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1927
+#: plug-ins/script-fu/script-fu-scripts.c:1937
 #: plug-ins/dbbrowser/dbbrowser_utils.c:488
 msgid "Author:"
 msgstr "작성자:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1933
+#: plug-ins/script-fu/script-fu-scripts.c:1943
 #: plug-ins/dbbrowser/dbbrowser_utils.c:504
 msgid "Copyright:"
 msgstr "저작권:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1939
+#: plug-ins/script-fu/script-fu-scripts.c:1949
 #: plug-ins/dbbrowser/dbbrowser_utils.c:496
 msgid "Date:"
 msgstr "날짜:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1947
+#: plug-ins/script-fu/script-fu-scripts.c:1957
 msgid "Image Types:"
 msgstr "이미지 유형:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1972
+#: plug-ins/script-fu/script-fu-scripts.c:1982
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -230,37 +230,39 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/3D 윤곽선(_O)..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
-msgid "Bumpmap (Alpha Layer) Blur Radius"
+#, fuzzy
+msgid "Bumpmap (alpha layer) blur radius"
 msgstr "범프맵(알파 레이어) 흐릿한 반지름"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:4
-#: plug-ins/script-fu/scripts/glossy.scm.h:6
-msgid "Default Bumpmap Settings"
+#: plug-ins/script-fu/scripts/glossy.scm.h:7
+#, fuzzy
+msgid "Default bumpmap settings"
 msgstr "기본 범프맵 설정"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
-#: plug-ins/script-fu/scripts/asc2img.scm.h:7
+#: plug-ins/script-fu/scripts/asc2img.scm.h:8
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:10
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:4
 #: plug-ins/script-fu/scripts/chalk.scm.h:5
 #: plug-ins/script-fu/scripts/chip-away.scm.h:7
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:4
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:5
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:5
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:5
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:6
-#: plug-ins/script-fu/scripts/glossy.scm.h:7
+#: plug-ins/script-fu/scripts/glossy.scm.h:8
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:5
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
@@ -282,25 +284,25 @@ msgstr "글꼴"
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/asc2img.scm.h:8
+#: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:4
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:11
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:5
 #: plug-ins/script-fu/scripts/chalk.scm.h:6
 #: plug-ins/script-fu/scripts/chip-away.scm.h:8
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:5
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:6
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
-#: plug-ins/script-fu/scripts/glossy.scm.h:8
+#: plug-ins/script-fu/scripts/glossy.scm.h:9
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:6
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
@@ -315,11 +317,13 @@ msgstr "글꼴"
 #: plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:7
 #: plug-ins/script-fu/scripts/title-header.scm.h:3
-msgid "Font Size (pixels)"
+#, fuzzy
+msgid "Font size (pixels)"
 msgstr "글꼴 크기 (픽셀)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:7
-msgid "Outline Blur Radius"
+#, fuzzy
+msgid "Outline blur radius"
 msgstr "윤곽선 흐릿한 반지름"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:8
@@ -334,20 +338,23 @@ msgid "Pattern"
 msgstr "무늬"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:9
-msgid "Shadow Blur Radius"
-msgstr "그림자 흐릿한 반지름"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:10
-#: plug-ins/script-fu/scripts/glossy.scm.h:15
+#: plug-ins/script-fu/scripts/glossy.scm.h:16
 #: plug-ins/script-fu/scripts/round-corners.scm.h:6
-msgid "Shadow X Offset"
+#, fuzzy
+msgid "Shadow X offset"
 msgstr "그림자 X 오프셋"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:11
-#: plug-ins/script-fu/scripts/glossy.scm.h:16
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: plug-ins/script-fu/scripts/glossy.scm.h:17
 #: plug-ins/script-fu/scripts/round-corners.scm.h:7
-msgid "Shadow Y Offset"
+#, fuzzy
+msgid "Shadow Y offset"
 msgstr "그림자 Y 오프셋"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#, fuzzy
+msgid "Shadow blur radius"
+msgstr "그림자 흐릿한 반지름"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:12
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
@@ -359,18 +366,18 @@ msgstr "그림자 Y 오프셋"
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:16
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:7
 #: plug-ins/script-fu/scripts/chalk.scm.h:7
 #: plug-ins/script-fu/scripts/chip-away.scm.h:13
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:10
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
-#: plug-ins/script-fu/scripts/glossy.scm.h:17
+#: plug-ins/script-fu/scripts/glossy.scm.h:18
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:11
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
@@ -399,13 +406,12 @@ msgstr "<Toolbox>/확장/Script-Fu/패턴/3D 트루쳇(_D)..."
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
-#: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:3
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 #: plug-ins/script-fu/scripts/chalk.scm.h:3
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:3
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:3
@@ -423,32 +429,38 @@ msgstr "<Toolbox>/확장/Script-Fu/패턴/3D 트루쳇(_D)..."
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:2
-msgid "Background Color"
+#, fuzzy
+msgid "Background color"
 msgstr "배경색"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:3
-msgid "Block Size"
+#, fuzzy
+msgid "Block size"
 msgstr "블럭 크기"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:6
-msgid "End Blend"
+#, fuzzy
+msgid "End blend"
 msgstr "끝 혼합 색상"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: plug-ins/script-fu/scripts/truchet.scm.h:5
-msgid "Number of X Tiles"
+#, fuzzy
+msgid "Number of X tiles"
 msgstr "X 타일 수"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
 #: plug-ins/script-fu/scripts/truchet.scm.h:6
-msgid "Number of Y Tiles"
+#, fuzzy
+msgid "Number of Y tiles"
 msgstr "Y 타일 수"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:15
-msgid "Start Blend"
+#, fuzzy
+msgid "Start blend"
 msgstr "시작 혼합 색상"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:8
@@ -467,7 +479,8 @@ msgstr "<Image>/Script-Fu/장식/베벨 더하기(_E)..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
-msgid "Keep Bump Layer"
+#, fuzzy
+msgid "Keep bump layer"
 msgstr "범프 레이어 유지"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:4
@@ -476,7 +489,8 @@ msgstr "범프 레이어 유지"
 #: plug-ins/script-fu/scripts/round-corners.scm.h:8
 #: plug-ins/script-fu/scripts/slide.scm.h:6
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
-msgid "Work on Copy"
+#, fuzzy
+msgid "Work on copy"
 msgstr "사본으로 작업하기"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:1
@@ -484,19 +498,23 @@ msgid "<Image>/Script-Fu/Decor/Add _Border..."
 msgstr "<Image>/Script-Fu/장식/테두리 더하기(_B)..."
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:2
-msgid "Border Color"
-msgstr "테두리 색상"
-
-#: plug-ins/script-fu/scripts/addborder.scm.h:3
-msgid "Border X Size"
+#, fuzzy
+msgid "Border X size"
 msgstr "테두리 X 크기"
 
-#: plug-ins/script-fu/scripts/addborder.scm.h:4
-msgid "Border Y Size"
+#: plug-ins/script-fu/scripts/addborder.scm.h:3
+#, fuzzy
+msgid "Border Y size"
 msgstr "테두리 Y 크기"
 
+#: plug-ins/script-fu/scripts/addborder.scm.h:4
+#, fuzzy
+msgid "Border color"
+msgstr "테두리 색상"
+
 #: plug-ins/script-fu/scripts/addborder.scm.h:5
-msgid "Delta Value on Color"
+#, fuzzy
+msgid "Delta value on color"
 msgstr "색상의 명도차"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
@@ -514,7 +532,8 @@ msgstr "하"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 #: plug-ins/script-fu/scripts/camo.scm.h:5
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
-msgid "Flatten Image"
+#, fuzzy
+msgid "Flatten image"
 msgstr "배경으로 이미지 합치기"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
@@ -526,7 +545,8 @@ msgstr "배경으로 이미지 합치기"
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
-msgid "Glow Color"
+#, fuzzy
+msgid "Glow color"
 msgstr "빛 색상"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
@@ -560,11 +580,13 @@ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
 msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/외계의 빛/수평선(_H)..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
-msgid "Bar Height"
+#, fuzzy
+msgid "Bar height"
 msgstr "막대 높이"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
-msgid "Bar Length"
+#, fuzzy
+msgid "Bar length"
 msgstr "막대 길이"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
@@ -589,7 +611,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
 msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/외계의 빛/단추(_U)..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
-msgid "Glow Radius"
+#, fuzzy
+msgid "Glow radius"
 msgstr "빛 반지름"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
@@ -598,7 +621,7 @@ msgid "Padding"
 msgstr "채움"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-#: plug-ins/script-fu/scripts/asc2img.scm.h:9
+#: plug-ins/script-fu/scripts/asc2img.scm.h:12
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:9
@@ -610,7 +633,8 @@ msgstr "채움"
 #: plug-ins/script-fu/scripts/news-text.scm.h:10
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:14
 #: plug-ins/script-fu/scripts/speed-text.scm.h:8
-msgid "Text Color"
+#, fuzzy
+msgid "Text color"
 msgstr "글자 색상"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
@@ -629,7 +653,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/외계의 빛(_G)..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
-msgid "Glow Size (pixels * 4)"
+#, fuzzy
+msgid "Glow size (pixels * 4)"
 msgstr "빛 크기 (픽셀 * 4)"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
@@ -641,19 +666,23 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/외계의 네온(_N)..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
-msgid "Fade Away"
+#, fuzzy
+msgid "Fade away"
 msgstr "점점 희미하게"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
-msgid "Number of Bands"
+#, fuzzy
+msgid "Number of bands"
 msgstr "띠의 갯수"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
-msgid "Width of Bands"
+#, fuzzy
+msgid "Width of bands"
 msgstr "띠의 너비"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
-msgid "Width of Gaps"
+#, fuzzy
+msgid "Width of gaps"
 msgstr "틈의 너비"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
@@ -664,6 +693,12 @@ msgstr "<Image>/Script-Fu/유틸리티/아스키를 레이어로(_A)..."
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
 msgstr "<Toolbox>/확장/Script-Fu/유틸리티/아스키를 이미지로(_A)..."
 
+#: plug-ins/script-fu/scripts/asc2img.scm.h:3
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+msgid "Background Color"
+msgstr "배경색"
+
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
 msgid "Buffer Amount (% Height of Text)"
@@ -671,14 +706,24 @@ msgstr "버퍼 량 (텍스트 높이의 %)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
+#, fuzzy
+msgid "File name"
+msgstr "파일이름"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:7
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:5
 msgid "Filename"
 msgstr "파일이름"
 
-#: plug-ins/script-fu/scripts/asc2img.scm.h:10
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#: plug-ins/script-fu/scripts/asc2img.scm.h:9
+msgid "Font Size (pixels)"
+msgstr "글꼴 크기 (픽셀)"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:11
+msgid "Text Color"
+msgstr "글자 색상"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:13
 msgid "Transparent Background"
 msgstr "투명 배경"
 
@@ -705,11 +750,13 @@ msgstr "<Toolbox>/확장/Script-Fu/버튼/단순 베벨 단추(_B)..."
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:2
-msgid "Bevel Width"
+#, fuzzy
+msgid "Bevel width"
 msgstr "베벨 너비"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:5
-msgid "Lower-Right color"
+#, fuzzy
+msgid "Lower-right color"
 msgstr "우하단 색상"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:7
@@ -719,7 +766,8 @@ msgid "Pressed"
 msgstr "눌려짐"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:10
-msgid "Upper-Left color"
+#, fuzzy
+msgid "Upper-left color"
 msgstr "좌상단 색상"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
@@ -733,6 +781,13 @@ msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/베벨 무늬/글머리�
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
 msgstr "지름"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#, fuzzy
+msgid "Transparent background"
+msgstr "투명 배경"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
@@ -766,7 +821,8 @@ msgid "<Image>/Script-Fu/Animators/_Blend..."
 msgstr "<Image>/Script-Fu/에니메이터/블렌드(_B)..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
-msgid "Intermediate Frames"
+#, fuzzy
+msgid "Intermediate rrames"
 msgstr "중간 프레임"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
@@ -774,7 +830,8 @@ msgid "Looped"
 msgstr "반복"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:4
-msgid "Max. Blur Radius"
+#, fuzzy
+msgid "Max. blur radius"
 msgstr "최대 흐릿한 반지름"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:1
@@ -786,7 +843,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
 msgstr "<Toolbox>/Xtns/Script-Fu/로고/블렌드(_D)..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:4
-msgid "Blend Mode"
+#, fuzzy
+msgid "Blend mode"
 msgstr "혼합 방법"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:5
@@ -821,7 +879,8 @@ msgstr "그라디언트"
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: plug-ins/script-fu/scripts/title-header.scm.h:4
-msgid "Gradient Reverse"
+#, fuzzy
+msgid "Gradient reverse"
 msgstr "그라디언트 거꾸로"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:14
@@ -836,11 +895,11 @@ msgstr "<Image>/Script-Fu/알파를 로고로/점박이(_V)..."
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/점박이(_V)..."
 
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 msgid "Spots density X"
 msgstr "X 점박이 밀도"
 
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density Y"
 msgstr "Y 점박이 밀도"
 
@@ -849,11 +908,13 @@ msgid "<Image>/Script-Fu/Animators/B_urn-In..."
 msgstr "<Image>/Script-Fu/에니메이터/태우기(_U)..."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
-msgid "Add Glowing"
+#, fuzzy
+msgid "Add glowing"
 msgstr "빛 더하기"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
-msgid "After Glow"
+#, fuzzy
+msgid "After glow"
 msgstr "후광"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
@@ -865,7 +926,8 @@ msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
 msgstr "전경(글자) 레이어와 배경 레이어대한 태우기 효과; V2.1"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
-msgid "Corona Width"
+#, fuzzy
+msgid "Corona width"
 msgstr "화염 너비"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
@@ -873,7 +935,8 @@ msgid "Fadeout"
 msgstr "점점 희미하게"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
-msgid "Fadeout Width"
+#, fuzzy
+msgid "Fadeout width"
 msgstr "점점 희미하게 너비"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
@@ -907,7 +970,8 @@ msgstr "입자 크기"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:7
 #: plug-ins/script-fu/scripts/rendermap.scm.h:7
-msgid "Image Size"
+#, fuzzy
+msgid "Image size"
 msgstr "이미지 크기"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:8
@@ -920,11 +984,13 @@ msgid "<Image>/Script-Fu/Stencil Ops/C_arve-It..."
 msgstr "<Image>/Script-Fu/스텐실 효과/조각(_A)..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:2
-msgid "Carve White Areas"
+#, fuzzy
+msgid "Carve white areas"
 msgstr "흰색 영역 조각"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:3
-msgid "Image to Carve"
+#, fuzzy
+msgid "Image to carve"
 msgstr "이미지를 조각으로"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:1
@@ -932,16 +998,17 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/조각..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:2
-#: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 msgid "Background Image"
 msgstr "배경 이미지"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:3
-msgid "Carve Raised Text"
+#, fuzzy
+msgid "Carve raised text"
 msgstr "튀어나온 글자 조각"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:6
-msgid "Padding Around Text"
+#, fuzzy
+msgid "Padding around text"
 msgstr "글자 주위 채우기"
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:1
@@ -953,7 +1020,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/분필(_C)..."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:4
-msgid "Chalk Color"
+#, fuzzy
+msgid "Chalk color"
 msgstr "분필 색상"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:1
@@ -965,19 +1033,23 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/부식(_Y)..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:3
-msgid "Blur Amount"
+#, fuzzy
+msgid "Blur amount"
 msgstr "흐릿한 정도"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:4
-msgid "Chip Amount"
+#, fuzzy
+msgid "Chip amount"
 msgstr "부식 정도"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:5
-msgid "Drop Shadow"
+#, fuzzy
+msgid "Drop shadow"
 msgstr "그림자 효과"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
-msgid "Fill BG with Pattern"
+#, fuzzy
+msgid "Fill BG with pattern"
 msgstr "배경을 무늬로 채우기"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:9
@@ -985,7 +1057,8 @@ msgid "Invert"
 msgstr "반전"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:10
-msgid "Keep Background"
+#, fuzzy
+msgid "Keep background"
 msgstr "배경 유지"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:1
@@ -994,38 +1067,45 @@ msgstr "<Image>/Script-Fu/스텐실 효과/크롬..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
-msgid "Chrome Balance"
+#, fuzzy
+msgid "Chrome balance"
 msgstr "크롬 균형"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
-msgid "Chrome Factor"
+#, fuzzy
+msgid "Chrome factor"
 msgstr "크롬 인수"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
-msgid "Chrome Lightness"
+#, fuzzy
+msgid "Chrome lightness"
 msgstr "크롬 명도"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
-msgid "Chrome Saturation"
+#, fuzzy
+msgid "Chrome saturation"
 msgstr "크롬 채도"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:6
-msgid "Chrome White Areas"
+#, fuzzy
+msgid "Chrome white areas"
 msgstr "크롬 백색 영역"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
-msgid "Environment Map"
+#, fuzzy
+msgid "Environment map"
 msgstr "환경 매핑"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
-msgid "Highlight Balance"
+#, fuzzy
+msgid "Highlight balance"
 msgstr "하일라이트 균형"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
@@ -1036,7 +1116,7 @@ msgstr "<Image>/Script-Fu/알파를 로고로/크롬(_H)..."
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/크롬(_H)..."
 
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
 msgid "Offsets (pixels * 2)"
 msgstr "오프셋 (픽셀수 * 2)"
 
@@ -1045,28 +1125,33 @@ msgid "<Image>/Script-Fu/Render/_Circuit..."
 msgstr "<Image>/Script-Fu/렌더/회로(_C)..."
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:2
-msgid "Circuit Seed"
+#, fuzzy
+msgid "Circuit seed"
 msgstr "회로 씨앗 값"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:3
 #: plug-ins/script-fu/scripts/predator.scm.h:3
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:11
-msgid "Keep Selection"
+#, fuzzy
+msgid "Keep selection"
 msgstr "선택 유지"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:4
-msgid "No Background (only for separate layer)"
+#, fuzzy
+msgid "No background (only for separate layer)"
 msgstr "배경 없음 (레이어 분리할때만)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:5
-msgid "Oilify Mask Size"
+#, fuzzy
+msgid "Oilify mask size"
 msgstr "유화 마스크 크기"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:6
 #: plug-ins/script-fu/scripts/lava.scm.h:6
 #: plug-ins/script-fu/scripts/predator.scm.h:6
-msgid "Separate Layer"
+#, fuzzy
+msgid "Separate layer"
 msgstr "레이어 분리"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:1
@@ -1101,9 +1186,10 @@ msgid "<Image>/Script-Fu/Decor/_Coffee Stain..."
 msgstr "<Image>/Script-Fu/장식/커피 얼룩(_C)..."
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:2
+#, fuzzy
 msgid ""
-"Darken Only\n"
-"(Better, but only for Images with alot of White)"
+"Darken only\n"
+"(Better, but only for images with alot of white)"
 msgstr ""
 "어둡게만\n"
 "(흰색이 많은 이미지에만 더 좋은 결과)"
@@ -1121,12 +1207,14 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/만화책(_K)..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:8
-msgid "Outline Color"
+#, fuzzy
+msgid "Outline color"
 msgstr "윤곽선 색상"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:9
-#: plug-ins/script-fu/scripts/glossy.scm.h:10
-msgid "Outline Size"
+#: plug-ins/script-fu/scripts/glossy.scm.h:11
+#, fuzzy
+msgid "Outline size"
 msgstr "윤곽선 크기"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
@@ -1139,7 +1227,8 @@ msgstr "<Toolbox>/확장/Script-Fu/로고/차가운 금속(_M)..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
-msgid "Effect Size (pixels)"
+#, fuzzy
+msgid "Effect size (pixels)"
 msgstr "효과 크기 (픽셀)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
@@ -1151,21 +1240,28 @@ msgstr "<Image>/편집/보이는 대로 복사(_V)"
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/크리스탈..."
 
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
+#, fuzzy
+msgid "Background image"
+msgstr "배경 이미지"
+
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Distress Selection..."
 msgstr "<Image>/Script-Fu/선택/삐뚤 빼뚤하게(_D)..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
-#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
-msgid "Granularity (1 is Low)"
+#, fuzzy
+msgid "Granularity (1 is low)"
 msgstr "입자 크기 (최저 1)"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:4
-msgid "Smooth Horizontally"
+#, fuzzy
+msgid "Smooth horizontally"
 msgstr "가로로 부드럽게"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:5
-msgid "Smooth Vertically"
+#, fuzzy
+msgid "Smooth vertically"
 msgstr "세로로 부드럽게"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:6
@@ -1173,7 +1269,8 @@ msgid "Spread"
 msgstr "범위"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:7
-msgid "Threshold (Bigger 1<-->255 Smaller)"
+#, fuzzy
+msgid "Threshold (bigger 1<-->255 smaller)"
 msgstr "임계값 (1이상 255이하)"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
@@ -1182,7 +1279,8 @@ msgstr "<Image>/Script-Fu/그림자/그림자 효과(_D)..."
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
-msgid "Allow Resizing"
+#, fuzzy
+msgid "Allow resizing"
 msgstr "크기 바꾸기 허용"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:3
@@ -1190,7 +1288,8 @@ msgstr "크기 바꾸기 허용"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/round-corners.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:4
-msgid "Blur Radius"
+#, fuzzy
+msgid "Blur radius"
 msgstr "흐릿한 반지름"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
@@ -1228,7 +1327,8 @@ msgid "Erase"
 msgstr "지우기"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:4
-msgid "Erase/Fill"
+#, fuzzy
+msgid "Erase/fill"
 msgstr "지우기/채우기"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:5
@@ -1236,7 +1336,8 @@ msgid "Even"
 msgstr "짝수"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:6
-msgid "Even/Odd"
+#, fuzzy
+msgid "Even/odd"
 msgstr "짝수/홀수"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:7
@@ -1252,7 +1353,8 @@ msgid "Rows"
 msgstr "행"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:10
-msgid "Rows/Cols"
+#, fuzzy
+msgid "Rows/cols"
 msgstr "행/열"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
@@ -1260,31 +1362,35 @@ msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
 msgstr "<Image>/Script-Fu/선택/윤곽선 희미하게(_F)..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
-msgid "Apply Generated Layermask"
+#, fuzzy
+msgid "Apply generated layermask"
 msgstr "생성된 레이어마스크 적용"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:3
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
 #: plug-ins/script-fu/scripts/old-photo.scm.h:2
-msgid "Border Size"
+#, fuzzy
+msgid "Border size"
 msgstr "경계선 크기"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid "Clear Unselected Maskarea"
+#, fuzzy
+msgid "Clear unselected maskarea"
 msgstr "선택안한 마스크영역 지우기"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:6
-#, no-c-format
-msgid "Fade From %"
+#, fuzzy, no-c-format
+msgid "Fade from %"
 msgstr "희미하게 시작 %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:8
-#, no-c-format
-msgid "Fade To   %"
+#, fuzzy, no-c-format
+msgid "Fade to   %"
 msgstr "희미하게 끝   %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "Use Growing Selection"
+#, fuzzy
+msgid "Use growing selection"
 msgstr "커지는 선택 사용"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:1
@@ -1293,22 +1399,26 @@ msgstr "<Toolbox>/확장/Script-Fu/무늬/평평한 땅(_F)..."
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:2
 #: plug-ins/script-fu/scripts/land.scm.h:2
-msgid "Detail Level"
+#, fuzzy
+msgid "Detail level"
 msgstr "정밀도"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:3
 #: plug-ins/script-fu/scripts/land.scm.h:4
-msgid "Image Height"
+#, fuzzy
+msgid "Image height"
 msgstr "이미지 높이"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:4
 #: plug-ins/script-fu/scripts/land.scm.h:5
-msgid "Image Width"
+#, fuzzy
+msgid "Image width"
 msgstr "이미지 너비"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:5
 #: plug-ins/script-fu/scripts/land.scm.h:7
-msgid "Random Seed"
+#, fuzzy
+msgid "Random seed"
 msgstr "난수 씨앗 값"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:6
@@ -1326,19 +1436,23 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
 msgstr "<Toolbox>/확장/Script-Fu/유틸리티/글꼴 목록(_F)..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-msgid "Active Colors"
+#, fuzzy
+msgid "Active colors"
 msgstr "활성 색상"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid "Black on White"
+#, fuzzy
+msgid "Black on white"
 msgstr "흰색위에 검정"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:4
-msgid "Font _Size (pixels)"
+#, fuzzy
+msgid "Font _size (pixels)"
 msgstr "글꼴 크기(_S) (픽셀)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
-msgid "Use Font _Name as Text"
+#, fuzzy
+msgid "Use font _name as text"
 msgstr "글꼴 이름을 텍스트로 사용(_N)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:6
@@ -1346,7 +1460,8 @@ msgid "_Border (pixels)"
 msgstr "경계선(_B) (픽셀)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
-msgid "_Color Scheme"
+#, fuzzy
+msgid "_Color scheme"
 msgstr "색상 스킴(_C)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:8
@@ -1374,16 +1489,22 @@ msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
 msgstr "<Image>/Script-Fu/장식/보풀있는 경계선(_F)..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
-msgid "Add Shadow"
+#, fuzzy
+msgid "Add shadow"
 msgstr "그림자 더하기"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
-msgid "Blur Border"
+#, fuzzy
+msgid "Blur border"
 msgstr "흐릿한 경계선"
 
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
+msgid "Granularity (1 is Low)"
+msgstr "입자 크기 (최저 1)"
+
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
-#, no-c-format
-msgid "Shadow Weight (%)"
+#, fuzzy, no-c-format
+msgid "Shadow weight (%)"
 msgstr "그림자 높이(%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
@@ -1399,41 +1520,49 @@ msgid ""
 msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/Gimp.Org/작은 제목(_S)..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-msgid "AutoCrop"
+#, fuzzy
+msgid "Autocrop"
 msgstr "자동 절단"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
-msgid "Dark Color"
+#, fuzzy
+msgid "Dark color"
 msgstr "어두운 색상"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:7
-msgid "Highlight Color"
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:9
+#, fuzzy
+msgid "Highlight color"
 msgstr "밝은 색상"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
-msgid "Index Image"
+#, fuzzy
+msgid "Index image"
 msgstr "인덱스 이미지"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
-msgid "Number of Colors"
+#, fuzzy
+msgid "Number of colors"
 msgstr "색상 수"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-msgid "Remove Background"
+#, fuzzy
+msgid "Remove background"
 msgstr "배경 지우기"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
-msgid "Select-By-Color Threshold"
+#, fuzzy
+msgid "Select-by-color threshold"
 msgstr "색으로 선택하기 임계값"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
-msgid "Shadow Color"
+#, fuzzy
+msgid "Shadow color"
 msgstr "그림자 색상"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
@@ -1478,49 +1607,69 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/광택(_S)..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
-msgid "Blend Gradient (Outline)"
+#, fuzzy
+msgid "Blend gradient (outline)"
 msgstr "혼합 그라디언트 (윤곽선)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
-msgid "Blend Gradient (Text)"
+#, fuzzy
+msgid "Blend gradient (sext)"
 msgstr "혼합 그라디언트 (글자)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:9
-msgid "Outline Gradient Reverse"
+#: plug-ins/script-fu/scripts/glossy.scm.h:6
+#, fuzzy
+msgid "Blend gradient (text)"
+msgstr "혼합 그라디언트 (글자)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:10
+#, fuzzy
+msgid "Outline gradient reverse"
 msgstr "윤곽선 그라디언트 거꾸로"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:11
-msgid "Pattern (Outline)"
+#: plug-ins/script-fu/scripts/glossy.scm.h:12
+#, fuzzy
+msgid "Pattern (outline)"
 msgstr "무늬 (윤곽선)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:12
-msgid "Pattern (Overlay)"
+#: plug-ins/script-fu/scripts/glossy.scm.h:13
+#, fuzzy
+msgid "Pattern (overlay)"
 msgstr "무늬 (겹치기)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:13
-msgid "Pattern (Text)"
+#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#, fuzzy
+msgid "Pattern (text)"
 msgstr "무늬 (글자)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#: plug-ins/script-fu/scripts/glossy.scm.h:15
 #: plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "그림자"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:18
-msgid "Text Gradient Reverse"
+#: plug-ins/script-fu/scripts/glossy.scm.h:19
+#, fuzzy
+msgid "Text gradient reverse"
 msgstr "글자 그라디언트 거꾸로"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:19
-msgid "Use Pattern Overlay"
-msgstr "무늬 겹치기 사용"
-
 #: plug-ins/script-fu/scripts/glossy.scm.h:20
-msgid "Use Pattern for Outline instead of Gradient"
+#, fuzzy
+msgid "Use pattern for outline instead of gradient"
 msgstr "윤곽선에 그라디언트 대신 무늬 사용"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:21
-msgid "Use Pattern for Text instead of Gradient"
+#, fuzzy
+msgid "Use pattern for text instead of gradient"
 msgstr "글자에 그라디언트 대신 무늬 사용"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:22
+#, fuzzy
+msgid "Use pattern overlay"
+msgstr "무늬 겹치기 사용"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:23
+#, fuzzy
+msgid "Use tattern for outline instead of gradient"
+msgstr "윤곽선에 그라디언트 대신 무늬 사용"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
@@ -1531,7 +1680,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/작열(_W)..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-msgid "Effect Size (pixels * 3)"
+#, fuzzy
+msgid "Effect size (pixels * 3)"
 msgstr "효과 크기 (픽셀 * 3)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
@@ -1543,13 +1693,15 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/그라디언트 베벨(_L)..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
-msgid "Bevel Height (Sharpness)"
+#, fuzzy
+msgid "Bevel height (Sharpness)"
 msgstr "베벨 높이 (날카로움)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:4
-msgid "Border Size (pixels)"
+#, fuzzy
+msgid "Border size (pixels)"
 msgstr "경계선 크기 (픽셀)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
@@ -1561,11 +1713,13 @@ msgid "<Image>/Script-Fu/Render/_Grid..."
 msgstr "<Image>/Script-Fu/렌더/모눈(_G)..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
-msgid "X Divisions"
+#, fuzzy
+msgid "X divisions"
 msgstr "가로 분할 수"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
-msgid "Y Divisions"
+#, fuzzy
+msgid "Y divisions"
 msgstr "세로 분할 수"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
@@ -1573,7 +1727,8 @@ msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
 msgstr "<Image>/Script-Fu/유틸리티/HSV 그래프 그리기(_H)..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid "BG Opacity"
+#, fuzzy
+msgid "BG opacity"
 msgstr "배경 투명도"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
@@ -1585,11 +1740,13 @@ msgid "End Y"
 msgstr "세로 끝"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:5
-msgid "From Top-Left to Bottom-Right"
+#, fuzzy
+msgid "From top-left to bottom-right"
 msgstr "좌상단에서 우하단으로"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
-msgid "Graph Scale"
+#, fuzzy
+msgid "Graph scale"
 msgstr "그래프 배율"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
@@ -1601,7 +1758,8 @@ msgid "Start Y"
 msgstr "세로 시작"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-msgid "Use Selection Bounds Instead of Belows"
+#, fuzzy
+msgid "Use selection bounds instead of belows"
 msgstr "아래 대신에 선택 경계 사용"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
@@ -1609,11 +1767,13 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/두 색 손 글씨(Imigre-26)..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
-msgid "Frame Color"
+#, fuzzy
+msgid "Frame color"
 msgstr "틀 색상"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
-msgid "Frame Size"
+#, fuzzy
+msgid "Frame size"
 msgstr "틀 크기"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
@@ -1621,43 +1781,53 @@ msgid "<Image>/Script-Fu/Utils/Show Image _Structure..."
 msgstr "<Image>/Script-Fu/유틸리티/이미지 구조 표시(_S)..."
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:2
-msgid "Apply Layer Mask (or discard)"
+#, fuzzy
+msgid "Apply layer mask (or discard)"
 msgstr "레이어 마스크 적용 (또는 취소)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:4
-msgid "Create New Image"
+#, fuzzy
+msgid "Create new image"
 msgstr "새 이미지 만들기"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:5
-msgid "Insert Layer Names"
+#, fuzzy
+msgid "Insert layer names"
 msgstr "레이어 이름 삽입"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:6
-msgid "Make New Background"
+#, fuzzy
+msgid "Make new background"
 msgstr "새 배경 만들기"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:7
-msgid "Outer Border"
+#, fuzzy
+msgid "Outer border"
 msgstr "바깥쪽 경계선"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:8
-msgid "Pad Color"
+#, fuzzy
+msgid "Pad color"
 msgstr "채움 색상"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:9
-msgid "Pad Opacity"
+#, fuzzy
+msgid "Pad opacity"
 msgstr "채움 투명도"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:10
-msgid "Padding for Transparent Regions"
+#, fuzzy
+msgid "Padding for transparent regions"
 msgstr "투명 영역 채우기"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:11
-msgid "Shear Length"
+#, fuzzy
+msgid "Shear length"
 msgstr "휘는 길이"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:12
-msgid "Space Between Layers"
+#, fuzzy
+msgid "Space between layers"
 msgstr "레이어 사이의 공간"
 
 #: plug-ins/script-fu/scripts/land.scm.h:1
@@ -1665,11 +1835,13 @@ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Land..."
 msgstr "<Toolbox>/확장/Script-Fu/무늬/땅(_L)..."
 
 #: plug-ins/script-fu/scripts/land.scm.h:6
-msgid "Land Height"
+#, fuzzy
+msgid "Land height"
 msgstr "땅 높이"
 
 #: plug-ins/script-fu/scripts/land.scm.h:10
-msgid "Sea Depth"
+#, fuzzy
+msgid "Sea depth"
 msgstr "바다 깊이"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:1
@@ -1686,7 +1858,8 @@ msgid "Seed"
 msgstr "씨앗 값"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:8
-msgid "Use Current Gradient"
+#, fuzzy
+msgid "Use current gradient"
 msgstr "현재 그라디언트 사용"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
@@ -1694,11 +1867,13 @@ msgid "<Image>/Script-Fu/Render/Line _Nova..."
 msgstr "<Image>/Script-Fu/렌더/선분으로 그린 별(_N)..."
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:2
-msgid "Number of Lines"
+#, fuzzy
+msgid "Number of lines"
 msgstr "선분 개수"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:3
-msgid "Offset Radius"
+#, fuzzy
+msgid "Offset radius"
 msgstr "오프셋 반지름"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:4
@@ -1768,11 +1943,13 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/네온(_E)..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:4
-msgid "Create Shadow"
+#, fuzzy
+msgid "Create shadow"
 msgstr "그림자 만들기"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:5
-msgid "Effect Size (pixels * 5)"
+#, fuzzy
+msgid "Effect size (pixels * 5)"
 msgstr "효과 크기 (픽셀 * 5)"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:1
@@ -1780,7 +1957,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/신문 인쇄 글자..."
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:4
-msgid "Cell Size (pixels)"
+#, fuzzy
+msgid "Cell size (pixels)"
 msgstr "셀 크기 (픽셀)"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:6
@@ -1818,11 +1996,13 @@ msgid "Interpolate"
 msgstr "보간"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
-msgid "Relative Distance of Horizon"
+#, fuzzy
+msgid "Relative distance of horizon"
 msgstr "수평선의 상대 거리"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
-msgid "Relative Length of Shadow"
+#, fuzzy
+msgid "Relative length of shadow"
 msgstr "그림자의 상대 길이"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:1
@@ -1830,11 +2010,13 @@ msgid "<Image>/Script-Fu/Alchemy/_Predator..."
 msgstr "<Image>/Script-Fu/연금술/프레데터(_P)..."
 
 #: plug-ins/script-fu/scripts/predator.scm.h:2
-msgid "Edge Amount"
+#, fuzzy
+msgid "Edge amount"
 msgstr "모서리 량"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:4
-msgid "Pixel Amount"
+#, fuzzy
+msgid "Pixel amount"
 msgstr "픽셀 량"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:5
@@ -1846,19 +2028,23 @@ msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
 msgstr "<Toolbox>/확장/Script-Fu/버튼/둥근 단추(_R)..."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:5
-msgid "Lower Color"
+#, fuzzy
+msgid "Lower color"
 msgstr "내려간 색상"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:6
-msgid "Lower Color (Active)"
+#, fuzzy
+msgid "Lower color (active)"
 msgstr "내려간 색상 (활성)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:7
-msgid "Not Pressed"
+#, fuzzy
+msgid "Not pressed"
 msgstr "누르지 않음"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:8
-msgid "Not Pressed (Active)"
+#, fuzzy
+msgid "Not pressed (active)"
 msgstr "누르지 않음 (활성)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:9
@@ -1870,19 +2056,23 @@ msgid "Padding Y"
 msgstr "세로 채움"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:12
-msgid "Round Ratio"
+#, fuzzy
+msgid "Round ratio"
 msgstr "둥근 비율"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:15
-msgid "Text Color (Active)"
+#, fuzzy
+msgid "Text color (active)"
 msgstr "글자 색상 (활성)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:16
-msgid "Upper Color"
+#, fuzzy
+msgid "Upper color"
 msgstr "올라온 색상"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:17
-msgid "Upper Color (Active)"
+#, fuzzy
+msgid "Upper color (active)"
 msgstr "올라온 색상 (활성)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
@@ -1910,16 +2100,19 @@ msgid "Black"
 msgstr "검정색"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-msgid "Edge Behaviour"
+#, fuzzy
+msgid "Edge behaviour"
 msgstr "모서리 행동"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
-msgid "Number of Frames"
+#, fuzzy
+msgid "Number of frames"
 msgstr "프레임 수"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
-msgid "Rippling Strength"
+#, fuzzy
+msgid "Rippling strength"
 msgstr "물결 강도"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
@@ -1935,15 +2128,18 @@ msgid "<Image>/Script-Fu/Decor/_Round Corners..."
 msgstr "<Image>/Script-Fu/장식/둥근 모서리(_R)..."
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:2
-msgid "Add Background"
+#, fuzzy
+msgid "Add background"
 msgstr "배경색 더하기"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:3
-msgid "Add Drop-Shadow"
+#, fuzzy
+msgid "Add drop-shadow"
 msgstr "그림자 효과 더하기"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:5
-msgid "Edge Radius"
+#, fuzzy
+msgid "Edge radius"
 msgstr "모서리 반지름"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
@@ -1958,7 +2154,8 @@ msgid "<Image>/Script-Fu/Selection/To _Brush..."
 msgstr "<Image>/Script-Fu/선택/브러시로(_B)..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
-msgid "Brush Name"
+#, fuzzy
+msgid "Brush name"
 msgstr "브러시 이름"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
@@ -1977,7 +2174,8 @@ msgid "<Image>/Script-Fu/Selection/To _Pattern..."
 msgstr "<Image>/Script-Fu/선택/무늬로(_P)..."
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
-msgid "Pattern Name"
+#, fuzzy
+msgid "Pattern name"
 msgstr "무늬 이름"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
@@ -1985,7 +2183,8 @@ msgid "<Image>/Script-Fu/Selection/_Round..."
 msgstr "<Image>/Script-Fu/선택/둥글게(_R)..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
-msgid "Relative Radius"
+#, fuzzy
+msgid "Relative radius"
 msgstr "상대 반지름"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:1
@@ -1993,7 +2192,8 @@ msgid "<Image>/Script-Fu/Decor/_Slide..."
 msgstr "<Image>/Script-Fu/장식/슬라이드(_S)..."
 
 #: plug-ins/script-fu/scripts/slide.scm.h:3
-msgid "Font Color"
+#, fuzzy
+msgid "Font color"
 msgstr "글꼴 색"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:4
@@ -2021,7 +2221,8 @@ msgid "Radius (pixels)"
 msgstr "반지름 (픽셀)"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:6
-msgid "Sphere Color"
+#, fuzzy
+msgid "Sphere color"
 msgstr "구 색"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
@@ -2033,11 +2234,13 @@ msgid "Frames"
 msgstr "프레임"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
-msgid "Index to n Colors (0 = Remain RGB)"
+#, fuzzy
+msgid "Index to n colors (0 = remain RGB)"
 msgstr "n 색상에 대한 인덱스 (0 = RGB로 남겨둠)"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
-msgid "Turn from Left to Right"
+#, fuzzy
+msgid "Turn from left to right"
 msgstr "왼쪽에서 오른쪽으로 돌기"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
@@ -2057,7 +2260,8 @@ msgid "Circle"
 msgstr "원"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
-msgid "Color Method"
+#, fuzzy
+msgid "Color method"
 msgstr "색상 방법"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
@@ -2089,11 +2293,13 @@ msgid "Hexagon"
 msgstr "6각형"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
-msgid "Hole Ratio"
+#, fuzzy
+msgid "Hole ratio"
 msgstr "공간 비율"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
-msgid "Inner Teeth"
+#, fuzzy
+msgid "Inner teeth"
 msgstr "내부 톱니"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
@@ -2105,7 +2311,8 @@ msgid "Margin (pixels)"
 msgstr "여유 공간 (픽셀): "
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
-msgid "Outer Teeth"
+#, fuzzy
+msgid "Outer teeth"
 msgstr "바깥쪽 톱니"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
@@ -2150,7 +2357,8 @@ msgstr "사각형"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
-msgid "Start Angle"
+#, fuzzy
+msgid "Start angle"
 msgstr "시작 각도"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
@@ -2174,11 +2382,13 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/별의 폭발(_U)..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
-msgid "Burst Color"
+#, fuzzy
+msgid "Burst color"
 msgstr "폭발 색상"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-msgid "Effect Size (pixels * 30)"
+#, fuzzy
+msgid "Effect size (pixels * 30)"
 msgstr "효과 크기 (픽셀 * 30)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
@@ -2190,7 +2400,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/우주공간(_R)..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-msgid "Effect Size (pixels * 4)"
+#, fuzzy
+msgid "Effect size (pixels * 4)"
 msgstr "효과 크기 (픽셀 * 4)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
@@ -2198,7 +2409,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
 msgstr "<Toolbox>/확장/Script-Fu/무늬/소용돌이-타일(_T)..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
-msgid "Whirl Amount"
+#, fuzzy
+msgid "Whirl amount"
 msgstr "소용돌이 량"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
@@ -2206,15 +2418,18 @@ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
 msgstr "<Toolbox>/확장/Script-Fu/무늬/소용돌이(_S)..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
-msgid "Number of Times to Whirl"
+#, fuzzy
+msgid "Number of times to whirl"
 msgstr "소용돌이 회수"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
-msgid "Quarter Size"
+#, fuzzy
+msgid "Quarter size"
 msgstr "쿼터 크기"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
-msgid "Whirl Angle"
+#, fuzzy
+msgid "Whirl angle"
 msgstr "소용돌이 각도"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
@@ -2226,19 +2441,23 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/입자 추적(_P)..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
-msgid "Base Color"
+#, fuzzy
+msgid "Base color"
 msgstr "기본 색상"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
-msgid "Edge Only"
+#, fuzzy
+msgid "Edge only"
 msgstr "모서리만"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
-msgid "Edge Width"
+#, fuzzy
+msgid "Edge width"
 msgstr "모서리 너비"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
-msgid "Hit Rate"
+#, fuzzy
+msgid "Hit rate"
 msgstr "히트율"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:1
@@ -2250,7 +2469,8 @@ msgid "Antialias"
 msgstr "부드럽게"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:3
-msgid "Fill Angle"
+#, fuzzy
+msgid "Fill angle"
 msgstr "채우기 각도"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
@@ -2262,7 +2482,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
 msgstr "<Toolbox>/확장/Script-Fu/로고/재질감 주기(_T)..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
-msgid "Ending Blend"
+#, fuzzy
+msgid "Ending blend"
 msgstr "혼합 끝"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:8
@@ -2270,7 +2491,8 @@ msgid "Hexagons"
 msgstr "6각형"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:9
-msgid "Mosaic Tile Type"
+#, fuzzy
+msgid "Mosaic tile type"
 msgstr "모자이크 타일 형태"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:10
@@ -2282,11 +2504,13 @@ msgid "Squares"
 msgstr "사각형"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:13
-msgid "Starting Blend"
+#, fuzzy
+msgid "Starting blend"
 msgstr "혼합 시작"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:15
-msgid "Text Pattern"
+#, fuzzy
+msgid "Text pattern"
 msgstr "글자 패턴"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
@@ -2294,15 +2518,18 @@ msgid "<Image>/Filters/Blur/_Tileable Blur..."
 msgstr "<Image>/필터/흐릿하게/타일 형태로 흐릿하게(_T)..."
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:2
-msgid "Blur Horizontally"
+#, fuzzy
+msgid "Blur horizontally"
 msgstr "가로로 흐릿하게"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:3
-msgid "Blur Type"
+#, fuzzy
+msgid "Blur type"
 msgstr "흐릿한 형태"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:4
-msgid "Blur Vertically"
+#, fuzzy
+msgid "Blur vertically"
 msgstr "세로로 흐릿하게"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:5
@@ -2322,7 +2549,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
 msgstr "<Toolbox>/확장/Script-Fu/패턴/트루쳇(_R)..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
-msgid "Foreground Color"
+#, fuzzy
+msgid "Foreground color"
 msgstr "전경색"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
@@ -2330,11 +2558,13 @@ msgid "<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
 msgstr "<Image>/Script-Fu/연금술/마스크 덜 선명하게(_U)..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
-msgid "Mask Opacity"
+#, fuzzy
+msgid "Mask opacity"
 msgstr "마스크 투명도"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
-msgid "Mask Size"
+#, fuzzy
+msgid "Mask size"
 msgstr "마스크 크기"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:1
@@ -2358,31 +2588,38 @@ msgid "<Image>/Script-Fu/Alchemy/_Weave..."
 msgstr "<Image>/Script-Fu/연금술/직물(_W)..."
 
 #: plug-ins/script-fu/scripts/weave.scm.h:2
-msgid "Ribbon Spacing"
+#, fuzzy
+msgid "Ribbon spacing"
 msgstr "섬유다발 간격"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:3
-msgid "Ribbon Width"
+#, fuzzy
+msgid "Ribbon width"
 msgstr "섬유다발 너비"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:4
-msgid "Shadow Darkness"
+#, fuzzy
+msgid "Shadow darkness"
 msgstr "그림자 어두운 정도"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:5
-msgid "Shadow Depth"
+#, fuzzy
+msgid "Shadow depth"
 msgstr "그림자 깊이"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:6
-msgid "Thread Density"
+#, fuzzy
+msgid "Thread density"
 msgstr "섬유 밀도"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:7
-msgid "Thread Intensity"
+#, fuzzy
+msgid "Thread intensity"
 msgstr "섬유 장력"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:8
-msgid "Thread Length"
+#, fuzzy
+msgid "Thread length"
 msgstr "섬유 길이"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:1
@@ -2402,36 +2639,44 @@ msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
 msgstr "<Image>/Script-Fu/그림자/입체적인 그림자 효과(_X)..."
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:2
-msgid "Drop Shadow Blur Radius"
-msgstr "그림자 효과 흐릿한 반지름"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:3
-msgid "Drop Shadow Color"
-msgstr "그림자 효과 색상"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:4
-msgid "Drop Shadow Opacity"
-msgstr "그림자 효과 투명도"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:5
-msgid "Drop Shadow X Offset"
+#, fuzzy
+msgid "Drop shadow X offset"
 msgstr "그림자 효과 X 오프셋"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:6
-msgid "Drop Shadow Y Offset"
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:3
+#, fuzzy
+msgid "Drop shadow Y offset"
 msgstr "그림자 효과 Y 오프셋"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:8
-msgid "Highlight Opacity"
-msgstr "하일라이트 투명도"
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:4
+#, fuzzy
+msgid "Drop shadow blur radius"
+msgstr "그림자 효과 흐릿한 반지름"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:9
-msgid "Highlight X Offset"
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:5
+#, fuzzy
+msgid "Drop shadow color"
+msgstr "그림자 효과 색상"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:6
+#, fuzzy
+msgid "Drop shadow opacity"
+msgstr "그림자 효과 투명도"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:7
+#, fuzzy
+msgid "Highlight X offset"
 msgstr "하일라이트 X 오프셋"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:10
-msgid "Highlight Y Offset"
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:8
+#, fuzzy
+msgid "Highlight Y offset"
 msgstr "하일라이트 Y 오프셋"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:10
+#, fuzzy
+msgid "Highlight opacity"
+msgstr "하일라이트 투명도"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 #~ msgstr "<Toolbox>/확장/Script-Fu/Script-Fu 콘솔(_C)"

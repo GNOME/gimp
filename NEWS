@@ -41,7 +41,7 @@ Overview of Changes in GIMP 2.1.1
   user-configurable mapping table.  Added controller modules for mouse
   wheel, midi and linux_input devices.
 
-- Applied HIG capitalization style to all plug-in and script dialogs.
+- Applied HIG capitalization style to all(?) dialogs.
 
 - Lots of bug fizes and other goodies. Check the ChangeLog for details.
 

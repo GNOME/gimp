@@ -297,6 +297,11 @@
 # 
 # (show-brush-outline yes)
 
+# When enabled, the cursor will be shown over the image while using a paint
+# tool.  Possible values are yes and no.
+# 
+# (show-paint-tool-cursor yes)
+
 # Sets the text to appear in image window titles.  This is a format string;
 # certain % character sequences are recognised and expanded as follows:
 # 
@@ -570,6 +575,11 @@
 # are normal, utility and keep-above.
 # 
 # (dock-window-hint normal)
+
+# Sets the pixel format of cursors the GIMP will use.  Possible values are
+# bitmap and pixbuf.
+# 
+# (cursor-format pixbuf)
 
 # Where to search for fractals used by the Fractal Explorer plug-in.  This is
 # a colon-separated list of folders to search.

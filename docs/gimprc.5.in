@@ -366,6 +366,12 @@ When enabled, all paint tools will show a preview of the current brush's
 outline.  Possible values are yes and no.
 
 .TP
+(show-paint-tool-cursor yes)
+
+When enabled, the cursor will be shown over the image while using a paint
+tool.  Possible values are yes and no.
+
+.TP
 (image-title-format "%D*%f-%p.%i (%t, %L) %wx%h")
 
 Sets the text to appear in image window titles.  This is a format string;
@@ -724,6 +730,12 @@ normal, utility and keep-above.
 The window type hint that is set on dock windows. This may affect the way your
 window manager decorates and handles dock windows.  Possible values are
 normal, utility and keep-above.
+
+.TP
+(cursor-format pixbuf)
+
+Sets the pixel format of cursors the GIMP will use.  Possible values are
+bitmap and pixbuf.
 
 .TP
 (fractalexplorer-path "${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer")
