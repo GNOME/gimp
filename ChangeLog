@@ -1,3 +1,7 @@
+2001-06-15  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/perl/Gimp/Lib.xs: forgot to s/id/drawable_id/ here.
+
 2001-06-15  Austin Donnelly  <austin@gimp.org>
 
 	* app/gdisplay.c: initialise gdisp->cursor_x and gdisp->cursor_y

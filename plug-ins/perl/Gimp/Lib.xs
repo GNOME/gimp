@@ -196,7 +196,7 @@ static int gdrawable_free (pTHX_ SV *obj, MAGIC *mg)
 {
   GimpDrawable *gdr = (GimpDrawable *)SvIV(obj);
 
-  g_hash_table_remove (gdrawable_cache, (gpointer)gdr->id);
+  g_hash_table_remove (gdrawable_cache, (gpointer)gdr->drawable_id);
   gimp_drawable_detach (gdr);
 
   return 0;
@@ -1844,7 +1844,7 @@ gint32
 gimp_gdrawable_id(gdrawable)
 	GimpDrawable *gdrawable
 	CODE:
-        RETVAL = gdrawable->id;
+        RETVAL = gdrawable->drawable_id;
 	OUTPUT:
 	RETVAL
 
@@ -1908,7 +1908,7 @@ gint32
 gimp_pixel_rgn_drawable(pr)
 	GimpPixelRgn *pr
 	CODE:
-        RETVAL = pr->drawable->id;
+        RETVAL = pr->drawable->drawable_id;
 	OUTPUT:
 	RETVAL
 
@@ -1956,7 +1956,7 @@ DRAWABLE
 gimp_tile_drawable(tile)
 	GimpTile *tile
 	CODE:
-        RETVAL = tile->drawable->id;
+        RETVAL = tile->drawable->drawable_id;
 	OUTPUT:
 	RETVAL
 
