@@ -1,3 +1,11 @@
+2004-06-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/preferences-dialog.c: more work on the controller page,
+	made integer controller properties editable.
+
+	* modules/controller_midi.c: allow to specify the MIDI channel to
+	generate events from. Default to -1 (all channels).
+
 2004-06-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/gfig/gfig.[ch]:

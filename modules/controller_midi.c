@@ -48,7 +48,8 @@ typedef struct
 enum
 {
   PROP_0,
-  PROP_DEVICE
+  PROP_DEVICE,
+  PROP_CHANNEL
 };
 
 
@@ -67,6 +68,8 @@ struct _ControllerMidi
   GimpController  parent_instance;
 
   gchar          *device;
+  gint            midi_channel;
+
   GIOChannel     *io;
   guint           io_id;
 
@@ -110,6 +113,7 @@ static const gchar * midi_get_event_blurb (GimpController *controller,
 static gboolean      midi_set_device      (ControllerMidi *controller,
                                            const gchar    *device);
 static void          midi_event           (ControllerMidi *midi,
+                                           gint            channel,
                                            gint            event_id,
                                            gdouble         value);
 
@@ -191,11 +195,20 @@ midi_class_init (ControllerMidiClass *klass)
 
   g_object_class_install_property (object_class, PROP_DEVICE,
                                    g_param_spec_string ("device",
-                                                        _("Device:"), NULL,
+                                                        _("Device:"),
+                                                        _("The name of the device to read MIDI events from."),
                                                         NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT |
                                                         GIMP_CONTROLLER_PARAM_SERIALIZE));
+  g_object_class_install_property (object_class, PROP_CHANNEL,
+                                   g_param_spec_int ("channel",
+                                                     _("Channel:"),
+                                                     _("The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."),
+                                                     -1, 15, -1,
+                                                     G_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT |
+                                                     GIMP_CONTROLLER_PARAM_SERIALIZE));
 
   controller_class->name            = _("Midi Events");
 
@@ -207,16 +220,18 @@ midi_class_init (ControllerMidiClass *klass)
 static void
 midi_init (ControllerMidi *midi)
 {
-  midi->device   = NULL;
-  midi->io       = NULL;
+  midi->device        = NULL;
+  midi->midi_channel  = -1;
+  midi->io            = NULL;
+  midi->io_id         = 0;
 
-  midi->swallow  = TRUE; /* get rid of data bytes at start of stream */
-  midi->command  = 0x0;
-  midi->channel  = 0x0;
-  midi->key      = -1;
-  midi->velocity = -1;
-  midi->msb      = -1;
-  midi->lsb      = -1;
+  midi->swallow       = TRUE; /* get rid of data bytes at start of stream */
+  midi->command       = 0x0;
+  midi->channel       = 0x0;
+  midi->key           = -1;
+  midi->velocity      = -1;
+  midi->msb           = -1;
+  midi->lsb           = -1;
 }
 
 static void
@@ -242,6 +257,9 @@ midi_set_property (GObject      *object,
     case PROP_DEVICE:
       midi_set_device (midi, g_value_get_string (value));
       break;
+    case PROP_CHANNEL:
+      midi->midi_channel = g_value_get_int (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -260,6 +278,9 @@ midi_get_property (GObject    *object,
     {
     case PROP_DEVICE:
       g_value_set_string (value, midi->device);
+      break;
+    case PROP_CHANNEL:
+      g_value_set_int (value, midi->midi_channel);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -393,21 +414,27 @@ midi_set_device (ControllerMidi *midi,
 
 static void
 midi_event (ControllerMidi *midi,
+            gint            channel,
             gint            event_id,
             gdouble         value)
 {
-  GimpControllerEvent event = { 0, };
+  if (channel == -1            ||
+      midi->midi_channel == -1 ||
+      channel == midi->midi_channel)
+    {
+      GimpControllerEvent event = { 0, };
 
-  event.any.type     = GIMP_CONTROLLER_EVENT_VALUE;
-  event.any.source   = GIMP_CONTROLLER (midi);
-  event.any.event_id = event_id;
+      event.any.type     = GIMP_CONTROLLER_EVENT_VALUE;
+      event.any.source   = GIMP_CONTROLLER (midi);
+      event.any.event_id = event_id;
 
-  g_value_init (&event.value.value, G_TYPE_DOUBLE);
-  g_value_set_double (&event.value.value, value);
+      g_value_init (&event.value.value, G_TYPE_DOUBLE);
+      g_value_set_double (&event.value.value, value);
 
-  gimp_controller_event (GIMP_CONTROLLER (midi), &event);
+      gimp_controller_event (GIMP_CONTROLLER (midi), &event);
 
-  g_value_unset (&event.value.value);
+      g_value_unset (&event.value.value);
+    }
 }
 
 
@@ -556,7 +583,7 @@ midi_read_event (GIOChannel   *io,
                               midi->channel,
                               midi->key, midi->velocity));
 
-                  midi_event (midi, midi->key,
+                  midi_event (midi, midi->channel, midi->key,
                               (gdouble) midi->velocity / 127.0);
                 }
               else if (midi->command == 0x8)
@@ -564,7 +591,7 @@ midi_read_event (GIOChannel   *io,
                   D (g_print ("MIDI (ch %02d): note off (%02x vel %02x)\n",
                               midi->channel, midi->key, midi->velocity));
 
-                  midi_event (midi, midi->key + 128,
+                  midi_event (midi, midi->channel, midi->key + 128,
                               (gdouble) midi->velocity / 127.0);
                 }
               else
@@ -591,7 +618,7 @@ midi_read_event (GIOChannel   *io,
               D (g_print ("MIDI (ch %02d): controller %d (value %d)\n",
                           midi->channel, midi->key, midi->velocity));
 
-              midi_event (midi, midi->key + 128 + 128,
+              midi_event (midi, midi->channel, midi->key + 128 + 128,
                           (gdouble) midi->velocity / 127.0);
 
               midi->key      = -1;

@@ -1875,7 +1875,7 @@ prefs_dialog_new (Gimp       *gimp,
                                                        "name"));
         gtk_widget_show (vbox3);
 
-        vbox4 = prefs_frame_new (controller_class->name,
+        vbox4 = prefs_frame_new (_("General"),
                                  GTK_CONTAINER (vbox3), FALSE);
 
         entry = gimp_prop_entry_new (G_OBJECT (info), "name", -1);
@@ -1889,7 +1889,7 @@ prefs_dialog_new (Gimp       *gimp,
                                 _("Enable this controller"),
                                 GTK_BOX (vbox4));
 
-        vbox4 = prefs_frame_new (_("Controller Specific Settings"),
+        vbox4 = prefs_frame_new (controller_class->name,
                                  GTK_CONTAINER (vbox3), TRUE);
 
         property_specs =
@@ -1921,14 +1921,28 @@ prefs_dialog_new (Gimp       *gimp,
                 else
                   widget = gimp_prop_label_new (G_OBJECT (controller),
                                                 prop_spec->name);
-              }
 
-            if (widget)
-              gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                         g_param_spec_get_nick (prop_spec),
-                                         0.0, 0.5,
-                                         widget,
-                                         1, FALSE);
+                gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                           g_param_spec_get_nick (prop_spec),
+                                           0.0, 0.5,
+                                           widget,
+                                           1, FALSE);
+              }
+            else if (G_IS_PARAM_SPEC_INT (prop_spec))
+              {
+                if (prop_spec->flags & G_PARAM_WRITABLE)
+                  {
+                    widget = gimp_prop_spin_button_new (G_OBJECT (controller),
+                                                        prop_spec->name,
+                                                        1, 8, 0);
+
+                    gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                               g_param_spec_get_nick (prop_spec),
+                                               0.0, 0.5,
+                                               widget,
+                                               1, TRUE);
+                  }
+              }
           }
 
         g_free (property_specs);
