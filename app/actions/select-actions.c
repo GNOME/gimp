@@ -149,7 +149,7 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-grow",    drawable && sel);
   SET_SENSITIVE ("select-border",  drawable && sel);
 
-  SET_SENSITIVE ("select-save",    drawable && sel && !fs);
+  SET_SENSITIVE ("select-save",    drawable && !fs);
   SET_SENSITIVE ("select-stroke",  drawable && sel);
 
 #undef SET_SENSITIVE

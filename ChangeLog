@@ -1,3 +1,9 @@
+2004-06-09  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/select-actions.c (select_actions_update): "Save to
+	Channel" makes sense without a selection also, so don't set it
+	insensitive.
+
 2004-06-07  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/glob.c: the glob(3) function is not available on
