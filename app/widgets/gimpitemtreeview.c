@@ -112,6 +112,8 @@ static void     gimp_item_tree_view_drop_viewable   (GimpContainerTreeView *view
                                                      GtkTreeViewDropPosition  drop_pos);
 
 static void   gimp_item_tree_view_new_dropped       (GtkWidget         *widget,
+                                                     gint               x,
+                                                     gint               y,
                                                      GimpViewable      *viewable,
                                                      gpointer           data);
 
@@ -792,6 +794,8 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
 
 static void
 gimp_item_tree_view_new_dropped (GtkWidget    *widget,
+                                 gint          x,
+                                 gint          y,
                                  GimpViewable *viewable,
                                  gpointer      data)
 {

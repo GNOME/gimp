@@ -55,6 +55,8 @@ image_preview_clicked (GtkWidget       *widget,
 
 static void
 image_preview_drop_image (GtkWidget    *widget,
+                          gint          x,
+                          gint          y,
                           GimpViewable *viewable,
                           gpointer      data)
 {

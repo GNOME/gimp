@@ -2914,6 +2914,8 @@ gimp_prop_unit_menu_notify (GObject    *config,
 /*************/
 
 static void   gimp_prop_preview_drop   (GtkWidget    *menu,
+                                        gint          x,
+                                        gint          y,
                                         GimpViewable *viewable,
                                         gpointer      data);
 static void   gimp_prop_preview_notify (GObject      *config,
@@ -2978,6 +2980,8 @@ gimp_prop_preview_new (GObject     *config,
 
 static void
 gimp_prop_preview_drop (GtkWidget    *preview,
+                        gint          x,
+                        gint          y,
                         GimpViewable *viewable,
                         gpointer      data)
 {

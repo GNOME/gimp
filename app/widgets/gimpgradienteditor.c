@@ -116,6 +116,8 @@ static void   gimp_gradient_editor_set_data         (GimpDataEditor     *editor,
 static void   gimp_gradient_editor_gradient_dirty   (GimpGradientEditor *editor,
                                                      GimpGradient       *gradient);
 static void   gradient_editor_drop_gradient         (GtkWidget          *widget,
+                                                     gint                x,
+                                                     gint                y,
                                                      GimpViewable       *viewable,
                                                      gpointer            data);
 static void   gradient_editor_scrollbar_update      (GtkAdjustment      *adj,
@@ -602,6 +604,8 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
 
 static void
 gradient_editor_drop_gradient (GtkWidget    *widget,
+                               gint          x,
+                               gint          y,
                                GimpViewable *viewable,
                                gpointer      data)
 {

@@ -100,6 +100,8 @@ static void   palette_import_image_changed        (GimpContext   *context,
 static void   palette_import_filename_changed     (GimpFileEntry *file_entry,
                                                    ImportDialog  *import_dialog);
 static void   import_dialog_drop_callback         (GtkWidget     *widget,
+                                                   gint           x,
+                                                   gint           y,
                                                    GimpViewable  *viewable,
                                                    gpointer       data);
 static void   palette_import_grad_callback        (GtkWidget     *widget,
@@ -509,6 +511,8 @@ palette_import_filename_changed (GimpFileEntry *file_entry,
 
 static void
 import_dialog_drop_callback (GtkWidget    *widget,
+                             gint          x,
+                             gint          y,
                              GimpViewable *viewable,
                              gpointer      data)
 {

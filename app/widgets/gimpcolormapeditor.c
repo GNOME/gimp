@@ -113,6 +113,8 @@ static void   gimp_colormap_preview_drag_color     (GtkWidget          *widget,
                                                     GimpRGB            *color,
                                                     gpointer            data);
 static void   gimp_colormap_preview_drop_color     (GtkWidget          *widget,
+                                                    gint                x,
+                                                    gint                y,
                                                     const GimpRGB      *color,
                                                     gpointer            data);
 
@@ -763,6 +765,8 @@ gimp_colormap_preview_drag_color (GtkWidget *widget,
 
 static void
 gimp_colormap_preview_drop_color (GtkWidget     *widget,
+                                  gint           x,
+                                  gint           y,
                                   const GimpRGB *color,
                                   gpointer       data)
 {

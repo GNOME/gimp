@@ -69,6 +69,8 @@ static void   gimp_tool_options_editor_restore_clicked (GtkWidget             *w
 static void   gimp_tool_options_editor_delete_clicked  (GtkWidget             *widget,
                                                         GimpToolOptionsEditor *editor);
 static void   gimp_tool_options_editor_drop_tool       (GtkWidget             *widget,
+                                                        gint                   x,
+                                                        gint                   y,
                                                         GimpViewable          *viewable,
                                                         gpointer               data);
 
@@ -380,6 +382,8 @@ gimp_tool_options_editor_delete_clicked (GtkWidget             *widget,
 
 static void
 gimp_tool_options_editor_drop_tool (GtkWidget    *widget,
+                                    gint          x,
+                                    gint          y,
                                     GimpViewable *viewable,
                                     gpointer      data)
 {

@@ -1,5 +1,39 @@
 2004-12-31  Michael Natterer  <mitch@gimp.org>
 
+	Applied modified patch from Ben Campbell which adds drop
+	coordinates to the color drop callback and uses it to insert
+	colors in the palette editor. Extended the patch to add drop
+	coordinates to all drop callbacks.
+
+	* app/core/gimppalette.[ch]: added gimp_palette_insert_entry().
+
+	* app/display/gimpdisplayshell-dnd.[ch]: added drop coordinates
+	to all drop callbacks.
+
+	* app/dialogs/palette-import-dialog.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpcontainerview.c
+	* app/widgets/gimpdnd.[ch]
+	* app/widgets/gimpdrawabletreeview.c
+	* app/widgets/gimpfgbgeditor.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimppropwidgets.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimptoolbox-dnd.c
+	* app/widgets/gimptoolbox-image-area.c
+	* app/widgets/gimptoolbox-indicator-area.c
+	* app/widgets/gimptooloptionseditor.c
+	* libgimpwidgets/gimpcolorselect.c: changed accordingly. The passed
+	drop coordiantes are so far unused.
+
+	* app/widgets/gimppaletteeditor.c: use the drop coordinates to
+	insert the new color into the palette at the right place instead
+	of always appending. Fixes bug #150030.
+
+2004-12-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/tools-actions.c
 	* app/actions/tools-commands.[ch]
 	* app/widgets/gimptoolview.[ch]: applied a (modified) patch from

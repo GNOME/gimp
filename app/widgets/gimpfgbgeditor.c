@@ -89,6 +89,8 @@ static void     gimp_fg_bg_editor_drag_color      (GtkWidget      *widget,
                                                    GimpRGB        *color,
                                                    gpointer        data);
 static void     gimp_fg_bg_editor_drop_color      (GtkWidget      *widget,
+                                                   gint            x,
+                                                   gint            y,
                                                    const GimpRGB  *color,
                                                    gpointer        data);
 
@@ -628,6 +630,8 @@ gimp_fg_bg_editor_drag_color (GtkWidget *widget,
 
 static void
 gimp_fg_bg_editor_drop_color (GtkWidget     *widget,
+                              gint           x,
+                              gint           y,
                               const GimpRGB *color,
                               gpointer       data)
 {

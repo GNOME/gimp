@@ -100,6 +100,8 @@ void  gimp_dnd_init (Gimp *gimp);
 typedef GList * (* GimpDndDragUriListFunc) (GtkWidget *widget,
                                             gpointer   data);
 typedef void    (* GimpDndDropUriListFunc) (GtkWidget *widget,
+                                            gint       x,
+                                            gint       y,
                                             GList     *uri_list,
                                             gpointer   data);
 
@@ -117,20 +119,22 @@ void  gimp_dnd_uri_list_dest_remove   (GtkWidget              *widget);
 /*  color dnd functions  */
 
 typedef void (* GimpDndDragColorFunc) (GtkWidget     *widget,
-				       GimpRGB       *color,
-				       gpointer       data);
+                                       GimpRGB       *color,
+                                       gpointer       data);
 typedef void (* GimpDndDropColorFunc) (GtkWidget     *widget,
-				       const GimpRGB *color,
-				       gpointer       data);
+                                       gint           x,
+                                       gint           y,
+                                       const GimpRGB *color,
+                                       gpointer       data);
 
 void  gimp_dnd_color_source_add    (GtkWidget            *widget,
-				    GimpDndDragColorFunc  get_color_func,
-				    gpointer              data);
+                                    GimpDndDragColorFunc  get_color_func,
+                                    gpointer              data);
 void  gimp_dnd_color_source_remove (GtkWidget            *widget);
 
 void  gimp_dnd_color_dest_add      (GtkWidget            *widget,
-				    GimpDndDropColorFunc  set_color_func,
-				    gpointer              data);
+                                    GimpDndDropColorFunc  set_color_func,
+                                    gpointer              data);
 void  gimp_dnd_color_dest_remove   (GtkWidget            *widget);
 
 
@@ -140,6 +144,8 @@ typedef guchar * (* GimpDndDragStreamFunc) (GtkWidget    *widget,
                                             gsize        *stream_len,
                                             gpointer      data);
 typedef void     (* GimpDndDropStreamFunc) (GtkWidget    *widget,
+                                            gint          x,
+                                            gint          y,
                                             const guchar *stream,
                                             gsize         stream_len,
                                             gpointer      data);
@@ -158,10 +164,12 @@ void  gimp_dnd_svg_dest_remove   (GtkWidget              *widget);
 /*  GimpViewable (by GType) dnd functions  */
 
 typedef GimpViewable * (* GimpDndDragViewableFunc) (GtkWidget     *widget,
-						    gpointer       data);
+                                                    gpointer       data);
 typedef void           (* GimpDndDropViewableFunc) (GtkWidget     *widget,
-						    GimpViewable  *viewable,
-						    gpointer       data);
+                                                    gint           x,
+                                                    gint           y,
+                                                    GimpViewable  *viewable,
+                                                    gpointer       data);
 
 
 gboolean gimp_dnd_drag_source_set_by_type (GtkWidget               *widget,

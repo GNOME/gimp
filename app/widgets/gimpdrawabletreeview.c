@@ -64,10 +64,14 @@ static void   gimp_drawable_tree_view_floating_selection_changed
 
 static void   gimp_drawable_tree_view_new_pattern_dropped
                                                  (GtkWidget            *widget,
+                                                  gint                  x,
+                                                  gint                  y,
                                                   GimpViewable         *viewable,
                                                   gpointer              data);
 static void   gimp_drawable_tree_view_new_color_dropped
                                                  (GtkWidget            *widget,
+                                                  gint                  x,
+                                                  gint                  y,
                                                   const GimpRGB        *color,
                                                   gpointer              data);
 
@@ -228,6 +232,8 @@ gimp_drawable_tree_view_floating_selection_changed (GimpImage            *gimage
 
 static void
 gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
+                                     gint                x,
+                                     gint                y,
                                      GimpBucketFillMode  fill_mode,
                                      const GimpRGB      *color,
                                      GimpPattern        *pattern)
@@ -271,10 +277,12 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
 
 static void
 gimp_drawable_tree_view_new_pattern_dropped (GtkWidget    *widget,
+                                             gint          x,
+                                             gint          y,
                                              GimpViewable *viewable,
                                              gpointer      data)
 {
-  gimp_drawable_tree_view_new_dropped (GIMP_ITEM_TREE_VIEW (data),
+  gimp_drawable_tree_view_new_dropped (GIMP_ITEM_TREE_VIEW (data), x, y,
                                        GIMP_PATTERN_BUCKET_FILL,
                                        NULL,
                                        GIMP_PATTERN (viewable));
@@ -282,10 +290,12 @@ gimp_drawable_tree_view_new_pattern_dropped (GtkWidget    *widget,
 
 static void
 gimp_drawable_tree_view_new_color_dropped (GtkWidget     *widget,
+                                           gint           x,
+                                           gint           y,
                                            const GimpRGB *color,
                                            gpointer       data)
 {
-  gimp_drawable_tree_view_new_dropped (GIMP_ITEM_TREE_VIEW (data),
+  gimp_drawable_tree_view_new_dropped (GIMP_ITEM_TREE_VIEW (data), x, y,
                                        GIMP_FG_BUCKET_FILL,
                                        color,
                                        NULL);

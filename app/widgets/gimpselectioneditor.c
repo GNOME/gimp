@@ -66,6 +66,8 @@ static gboolean gimp_selection_preview_button_press(GtkWidget           *widget,
                                                     GdkEventButton      *bevent,
                                                     GimpSelectionEditor *editor);
 static void   gimp_selection_editor_drop_color     (GtkWidget           *widget,
+                                                    gint                 x,
+                                                    gint                 y,
                                                     const GimpRGB       *color,
                                                     gpointer             data);
 
@@ -317,6 +319,8 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
 
 static void
 gimp_selection_editor_drop_color (GtkWidget     *widget,
+                                  gint           x,
+                                  gint           y,
                                   const GimpRGB *color,
                                   gpointer       data)
 {

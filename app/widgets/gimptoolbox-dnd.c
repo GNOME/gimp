@@ -49,15 +49,23 @@
 /*  local function prototypes  */
 
 static void   gimp_toolbox_drop_uri_list (GtkWidget    *widget,
+                                          gint          x,
+                                          gint          y,
                                           GList        *uri_list,
                                           gpointer      data);
 static void   gimp_toolbox_drop_drawable (GtkWidget    *widget,
+                                          gint          x,
+                                          gint          y,
                                           GimpViewable *viewable,
                                           gpointer      data);
 static void   gimp_toolbox_drop_tool     (GtkWidget    *widget,
+                                          gint          x,
+                                          gint          y,
                                           GimpViewable *viewable,
                                           gpointer      data);
 static void   gimp_toolbox_drop_buffer   (GtkWidget    *widget,
+                                          gint          x,
+                                          gint          y,
                                           GimpViewable *viewable,
                                           gpointer      data);
 
@@ -102,6 +110,8 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox)
 
 static void
 gimp_toolbox_drop_uri_list (GtkWidget *widget,
+                            gint       x,
+                            gint       y,
                             GList     *uri_list,
                             gpointer   data)
 {
@@ -133,6 +143,8 @@ gimp_toolbox_drop_uri_list (GtkWidget *widget,
 
 static void
 gimp_toolbox_drop_drawable (GtkWidget    *widget,
+                            gint          x,
+                            gint          y,
                             GimpViewable *viewable,
                             gpointer      data)
 {
@@ -195,6 +207,8 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
 
 static void
 gimp_toolbox_drop_tool (GtkWidget    *widget,
+                        gint          x,
+                        gint          y,
                         GimpViewable *viewable,
                         gpointer      data)
 {
@@ -205,6 +219,8 @@ gimp_toolbox_drop_tool (GtkWidget    *widget,
 
 static void
 gimp_toolbox_drop_buffer (GtkWidget    *widget,
+                          gint          x,
+                          gint          y,
                           GimpViewable *viewable,
                           gpointer      data)
 {

@@ -59,6 +59,8 @@ brush_preview_clicked (GtkWidget       *widget,
 
 static void
 brush_preview_drop_brush (GtkWidget    *widget,
+                          gint          x,
+                          gint          y,
                           GimpViewable *viewable,
                           gpointer      data)
 {
@@ -79,6 +81,8 @@ pattern_preview_clicked (GtkWidget       *widget,
 
 static void
 pattern_preview_drop_pattern (GtkWidget    *widget,
+                              gint          x,
+                              gint          y,
                               GimpViewable *viewable,
                               gpointer      data)
 {
@@ -99,6 +103,8 @@ gradient_preview_clicked (GtkWidget       *widget,
 
 static void
 gradient_preview_drop_gradient (GtkWidget    *widget,
+                                gint          x,
+                                gint          y,
                                 GimpViewable *viewable,
                                 gpointer      data)
 {

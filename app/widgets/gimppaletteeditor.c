@@ -91,6 +91,11 @@ static gint   palette_editor_eventbox_button_press (GtkWidget         *widget,
 static gint palette_editor_color_area_button_press (GtkWidget         *widget,
 						    GdkEventButton    *bevent,
 						    GimpPaletteEditor *editor);
+static void   palette_editor_color_area_drop_color (GtkWidget         *widget,
+                                                    gint               x,
+                                                    gint               y,
+                                                    const GimpRGB     *color,
+                                                    gpointer           data);
 static void   palette_editor_draw_entries          (GimpPaletteEditor *editor,
                                                     gint               row_start,
                                                     gint               column_highlight);
@@ -110,9 +115,13 @@ static void   palette_editor_drag_color            (GtkWidget         *widget,
                                                     GimpRGB           *color,
                                                     gpointer           data);
 static void   palette_editor_drop_color            (GtkWidget         *widget,
+                                                    gint               x,
+                                                    gint               y,
                                                     const GimpRGB     *color,
                                                     gpointer           data);
 static void   palette_editor_drop_palette          (GtkWidget         *widget,
+                                                    gint               x,
+                                                    gint               y,
                                                     GimpViewable      *viewable,
                                                     gpointer           data);
 static void   palette_editor_invalidate_preview    (GimpPalette       *palette,
@@ -244,6 +253,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                              palette_editor_drag_color,
 			     editor);
   gimp_dnd_color_dest_add (eventbox, palette_editor_drop_color, editor);
+  gimp_dnd_color_dest_add (editor->color_area, palette_editor_color_area_drop_color, editor);
   gimp_dnd_viewable_dest_add (eventbox, GIMP_TYPE_PALETTE,
 			      palette_editor_drop_palette,
                               editor);
@@ -654,6 +664,7 @@ palette_editor_color_area_button_press (GtkWidget         *widget,
 
   return FALSE; /* continue with eventbox_button_press */
 }
+
 
 /*  functions for drawing & updating the palette dialog color area  **********/
 
@@ -1068,8 +1079,10 @@ palette_editor_drag_color (GtkWidget *widget,
 
 static void
 palette_editor_drop_color (GtkWidget     *widget,
-			   const GimpRGB *color,
-			   gpointer       data)
+                           gint           x,
+                           gint           y,
+                           const GimpRGB *color,
+                           gpointer       data)
 {
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 
@@ -1083,7 +1096,53 @@ palette_editor_drop_color (GtkWidget     *widget,
 }
 
 static void
+palette_editor_color_area_drop_color (GtkWidget     *widget,
+                                      gint           x,
+                                      gint           y,
+                                      const GimpRGB *color,
+                                      gpointer       data)
+{
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
+  gint               entry_width;
+  gint               entry_height;
+  gint               row, col;
+  gint               pos;
+
+  /* calc drop pos */
+  entry_width  = editor->col_width + SPACING;
+  entry_height = (ENTRY_HEIGHT * editor->zoom_factor) +  SPACING;
+  col = (x - 1) / entry_width;
+  row = (y - 1) / entry_height;
+  pos = row * editor->columns + col;
+
+  if (GIMP_DATA_EDITOR (editor)->data_editable)
+    {
+      GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+
+      /* on an existing entry? */
+      if (pos >= 0 && pos < palette->n_colors)
+        {
+          /* yep - insert it */
+          editor->color = gimp_palette_insert_entry (palette,
+                                                     pos,
+                                                     NULL,
+                                                     color);
+        }
+      else
+        {
+          /* nope - add it on the end */
+          editor->color = gimp_palette_add_entry (palette,
+                                                  NULL,
+                                                  color);
+        }
+    }
+
+}
+
+static void
 palette_editor_drop_palette (GtkWidget    *widget,
+                             gint          x,
+                             gint          y,
 			     GimpViewable *viewable,
 			     gpointer      data)
 {

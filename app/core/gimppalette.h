@@ -72,10 +72,14 @@ GList            * gimp_palette_load           (const gchar      *filename,
                                                 GError          **error);
 
 GimpPaletteEntry * gimp_palette_add_entry      (GimpPalette      *palette,
-					        const gchar      *name,
-					        const GimpRGB    *color);
+                                                const gchar      *name,
+                                                const GimpRGB    *color);
+GimpPaletteEntry * gimp_palette_insert_entry   (GimpPalette      *palette,
+                                                gint              position,
+                                                const gchar      *name,
+                                                const GimpRGB    *color);
 void               gimp_palette_delete_entry   (GimpPalette      *palette,
-					        GimpPaletteEntry *entry);
+                                                GimpPaletteEntry *entry);
 
 void               gimp_palette_set_n_columns  (GimpPalette      *palette,
                                                 gint              n_columns);

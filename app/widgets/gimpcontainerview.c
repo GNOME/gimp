@@ -106,9 +106,13 @@ static void   gimp_container_view_context_changed  (GimpContext        *context,
                                                     GimpViewable       *viewable,
                                                     GimpContainerView  *view);
 static void   gimp_container_view_viewable_dropped (GtkWidget          *widget,
+                                                    gint                x,
+                                                    gint                y,
                                                     GimpViewable       *viewable,
                                                     gpointer            data);
 static void  gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
+                                                          gint          x,
+                                                          gint          y,
                                                           GimpViewable *viewable,
                                                           gpointer      data);
 
@@ -1038,6 +1042,8 @@ gimp_container_view_context_changed (GimpContext       *context,
 
 static void
 gimp_container_view_viewable_dropped (GtkWidget    *widget,
+                                      gint          x,
+                                      gint          y,
                                       GimpViewable *viewable,
                                       gpointer      data)
 {
@@ -1053,6 +1059,8 @@ gimp_container_view_viewable_dropped (GtkWidget    *widget,
 
 static void
 gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
+                                             gint          x,
+                                             gint          y,
                                              GimpViewable *viewable,
                                              gpointer      data)
 {
