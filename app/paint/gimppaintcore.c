@@ -73,8 +73,6 @@ static void   gimp_paint_core_calc_brush_size     (GimpPaintCore    *core,
                                                    gdouble           scale,
                                                    gint             *width,
                                                    gint             *height);
-static void   rotate_pointers                     (gpointer         *p,
-						   guint32           n);
 static MaskBuf * gimp_paint_core_subsample_mask   (GimpPaintCore    *core,
                                                    MaskBuf          *mask,
                                                    gdouble           x,
@@ -1086,12 +1084,12 @@ gimp_paint_core_calc_brush_size (GimpPaintCore *core,
     }
 }
 
-static void
-rotate_pointers (gpointer *p,
+static inline void
+rotate_pointers (gulong  **p,
 		 guint32   n)
 {
   guint32  i;
-  gpointer tmp;
+  gulong  *tmp;
 
   tmp = p[0];
   for (i = 0; i < n-1; i++)
