@@ -134,9 +134,9 @@ GPlugInInfo PLUG_IN_INFO =
  * The GIMP uses no alignment for its pixel regions. The GIMP image we
  * create is of type RGB, i.e. three bytes per pixel, too. Thus in
  * order to be able to quickly transfer all of the image at a time, we
- * must use a DIB section and pixel region the scanline width of which
- * is evenly divisible with both 3 and 4. I.e. it must be a multiple
- * of 12 bytes, or in pixels, a multiple of four pixels.
+ * must use a DIB section and pixel region the scanline width in
+ * bytesof which is evenly divisible with both 3 and 4. I.e. it must
+ * be a multiple of 12 bytes, or in pixels, a multiple of four pixels.
  */
 
 #define ROUND4(width) (((width-1)/4+1)*4)
@@ -189,7 +189,7 @@ primDoWindowCapture(HDC hdcWindow, HDC hdcCompat, RECT rect)
   BITMAPINFO	bmi;
 
   int width = (rect.right - rect.left);
-  int height = abs(rect.bottom - rect.top);
+  int height = (rect.bottom - rect.top);
 
   /* Create the bitmap info header */
   bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
@@ -490,8 +490,8 @@ dialogProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam)
      * we do this stuff.
      */
     if (mouseCaptured) {
-      HWND		selectedHwnd;
-      POINT		cursorPos;
+      HWND  selectedHwnd;
+      POINT cursorPos;
 
       /* Release the capture */
       mouseCaptured = 0;
@@ -516,7 +516,7 @@ dialogProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam)
      * under the mouse position.
      */
     if (mouseCaptured) {
-      HWND	currentHwnd;
+      HWND  currentHwnd;
       POINT cursorPos;
 
       /* Get the window */
@@ -557,8 +557,8 @@ dialogProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 
   case WM_PAINT:
     {
-      HDC             hDC;
-      PAINTSTRUCT			ps;
+      HDC          hDC;
+      PAINTSTRUCT  ps;
 
       /* If the mouse is not captured draw
        * the cursor image
@@ -1134,18 +1134,23 @@ run(gchar *name,		/* name of plugin */
  * GIMP.
  */
 static void
-flipRedAndBlueBytes(char *buffer, int width, int height)
+flipRedAndBlueBytes(int width, int height)
 {
-  int		npixels;
+  int		i, j;
+  guchar	*bufp;
   guchar	temp;
-  width = ROUND4(width);
-  npixels = width*height;
 
-  while (npixels--) {
-    temp = buffer[2];
-    buffer[2] = buffer[0];
-    buffer[0] = temp;
-    buffer += 3;
+  j = 0;
+  while (j < height) {
+    i = width;
+    bufp = capBytes + j*ROUND4(width)*3;
+    while (i--) {
+      temp = bufp[2];
+      bufp[2] = bufp[0];
+      bufp[0] = temp;
+      bufp += 3;
+    }
+    j++;
   }
 }
 
@@ -1170,7 +1175,7 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
 
   /* Our width and height */
   width = (rect.right - rect.left);
-  height = abs(rect.bottom - rect.top);
+  height = (rect.bottom - rect.top);
 
   /* Check that we got the memory */
   if (!capBytes) {
@@ -1179,7 +1184,7 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
   }
 
   /* Flip the red and blue bytes */
-  flipRedAndBlueBytes(capBytes, width, height);
+  flipRedAndBlueBytes(width, height);
 
   /* Set up the image and layer types */
   imageType = RGB;
@@ -1204,12 +1209,12 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
   gimp_pixel_rgn_set_rect(&pixel_rgn, (guchar *) capBytes,
 			  0, 0, ROUND4(width), height);
 
-  /* Now resize the image down to the correct size if necessary. */
+#if 0 /* The layer resizing causes image corruption along the right border! */
+  /* Now resize the layer down to the correct size if necessary. */
   if (width != ROUND4(width)) {
     gimp_layer_resize (layer_id, width, height, 0, 0);
-    gimp_image_resize (image_id, width, height, 0, 0);
   }
-
+#endif
   /* Finish up */
   gimp_drawable_flush(drawable);
   gimp_drawable_detach(drawable);

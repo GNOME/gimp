@@ -1,3 +1,8 @@
+1999-10-12  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/winsnap/winsnap.c: Don't resize layer, it causes image
+	corrruption! (bug in layer_resize?) Slight cosmetic changes.
+
 Mon Oct 11 02:45:06 BST 1999 Nick Lamb <njl195@zepler.org>
 
 	* app/preferences_dialog.c:
