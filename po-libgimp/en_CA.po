@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:04+0200\n"
-"PO-Revision-Date: 2004-09-06 20:02-0400\n"
+"POT-Creation-Date: 2004-10-22 23:00-0400\n"
+"PO-Revision-Date: 2004-10-22 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -153,7 +153,6 @@ msgstr "_Ignore"
 msgid "_Export"
 msgstr "_Export"
 
-#. the headline
 #: libgimp/gimpexport.c:485
 #, c-format
 msgid ""
@@ -364,6 +363,11 @@ msgstr "Not loaded"
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Failed to create thumbnail folder '%s'."
+
+#: libgimpthumb/gimpthumbnail.c:875
+#, c-format
+msgid "Could not create thumbnail for %s: %s"
+msgstr "Could not create thumbnail for %s: %s"
 
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-22 16:16-0400\n"
+"POT-Creation-Date: 2004-10-22 22:59-0400\n"
 "PO-Revision-Date: 2004-10-22 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
@@ -469,16 +469,16 @@ msgid "_New Channel..."
 msgstr "_New Channel..."
 
 #: app/actions/channels-actions.c:55
-msgid "New channel dialog"
-msgstr "New channel dialogue"
+msgid "New channel..."
+msgstr "New channel..."
 
 #: app/actions/channels-actions.c:60
 msgid "_New Channel"
 msgstr "_New Channel"
 
-#: app/actions/channels-actions.c:61 app/core/core-enums.c:652
-msgid "New channel"
-msgstr "New channel"
+#: app/actions/channels-actions.c:61
+msgid "New channel with last values"
+msgstr "New channel with last values"
 
 #: app/actions/channels-actions.c:66
 msgid "D_uplicate Channel"
@@ -537,35 +537,35 @@ msgid "Channel to selection"
 msgstr "Channel to selection"
 
 #: app/actions/channels-actions.c:111 app/actions/layers-actions.c:226
-#: app/actions/vectors-actions.c:172
+#: app/actions/vectors-actions.c:173
 msgid "_Add to Selection"
 msgstr "_Add to Selection"
 
-#: app/actions/channels-actions.c:112 app/actions/vectors-actions.c:173
+#: app/actions/channels-actions.c:112 app/actions/vectors-actions.c:174
 msgid "Add"
 msgstr "Add"
 
 #: app/actions/channels-actions.c:117 app/actions/layers-actions.c:231
-#: app/actions/layers-actions.c:254 app/actions/vectors-actions.c:178
+#: app/actions/layers-actions.c:254 app/actions/vectors-actions.c:179
 msgid "_Subtract from Selection"
 msgstr "_Subtract from Selection"
 
-#: app/actions/channels-actions.c:118 app/actions/vectors-actions.c:179
+#: app/actions/channels-actions.c:118 app/actions/vectors-actions.c:180
 #: app/widgets/gimpwidgets-constructors.c:69
 #: app/widgets/gimpwidgets-constructors.c:102
 msgid "Subtract"
 msgstr "Subtract"
 
 #: app/actions/channels-actions.c:123 app/actions/layers-actions.c:236
-#: app/actions/layers-actions.c:259 app/actions/vectors-actions.c:184
+#: app/actions/layers-actions.c:259 app/actions/vectors-actions.c:185
 msgid "_Intersect with Selection"
 msgstr "_Intersect with Selection"
 
-#: app/actions/channels-actions.c:124 app/actions/vectors-actions.c:185
+#: app/actions/channels-actions.c:124 app/actions/vectors-actions.c:186
 msgid "Intersect"
 msgstr "Intersect"
 
-#: app/actions/channels-commands.c:85 app/actions/channels-commands.c:384
+#: app/actions/channels-commands.c:85 app/actions/channels-commands.c:385
 msgid "Channel Attributes"
 msgstr "Channel Attributes"
 
@@ -582,7 +582,8 @@ msgid "Fill Opacity:"
 msgstr "Fill Opacity:"
 
 #: app/actions/channels-commands.c:116 app/actions/channels-commands.c:117
-#: app/actions/channels-commands.c:158 app/widgets/gimpchanneltreeview.c:232
+#: app/actions/channels-commands.c:158 app/actions/channels-commands.c:162
+#: app/widgets/gimpchanneltreeview.c:232
 msgid "New Channel"
 msgstr "New Channel"
 
@@ -594,16 +595,12 @@ msgstr "New Channel Options"
 msgid "New Channel Color"
 msgstr "New Channel Colour"
 
-#: app/actions/channels-commands.c:161 app/widgets/gimpchanneltreeview.c:237
-msgid "Empty Channel"
-msgstr "Empty Channel"
-
-#: app/actions/channels-commands.c:246
+#: app/actions/channels-commands.c:247
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s Channel Copy"
 
-#: app/actions/channels-commands.c:312 app/core/gimpselection.c:599
+#: app/actions/channels-commands.c:313 app/core/gimpselection.c:599
 #: app/pdb/selection_cmds.c:968 app/pdb/selection_cmds.c:1092
 msgid "Channel to Selection"
 msgstr "Channel to Selection"
@@ -1043,11 +1040,11 @@ msgstr "_Equalize"
 msgid "_Offset..."
 msgstr "_Offset..."
 
-#: app/actions/drawable-actions.c:68 app/actions/vectors-actions.c:146
+#: app/actions/drawable-actions.c:68 app/actions/vectors-actions.c:147
 msgid "_Visible"
 msgstr "_Visible"
 
-#: app/actions/drawable-actions.c:74 app/actions/vectors-actions.c:152
+#: app/actions/drawable-actions.c:74 app/actions/vectors-actions.c:153
 msgid "_Linked"
 msgstr "_Linked"
 
@@ -1763,7 +1760,7 @@ msgstr "Flipping..."
 msgid "Rotating..."
 msgstr "Rotating..."
 
-#: app/actions/image-commands.c:337 app/actions/layers-commands.c:562
+#: app/actions/image-commands.c:337 app/actions/layers-commands.c:558
 msgid "Cannot crop because the current selection is empty."
 msgstr "Cannot crop because the current selection is empty."
 
@@ -1832,7 +1829,7 @@ msgstr "Is this what you want to do?"
 msgid "Scale Image"
 msgstr "Scale Image"
 
-#: app/actions/image-commands.c:652 app/actions/layers-commands.c:1269
+#: app/actions/image-commands.c:652 app/actions/layers-commands.c:1026
 #: app/pdb/transform_tools_cmds.c:462 app/tools/gimpscaletool.c:153
 msgid "Scaling..."
 msgstr "Scaling..."
@@ -1918,16 +1915,16 @@ msgid "_New Layer..."
 msgstr "_New Layer..."
 
 #: app/actions/layers-actions.c:75
-msgid "New layer dialog"
-msgstr "New layer dialogue"
+msgid "New layer..."
+msgstr "New layer..."
 
 #: app/actions/layers-actions.c:80
 msgid "_New Layer"
 msgstr "_New Layer"
 
-#: app/actions/layers-actions.c:81 app/core/core-enums.c:642
-msgid "New layer"
-msgstr "New layer"
+#: app/actions/layers-actions.c:81
+msgid "New layer with last values"
+msgstr "New layer with last values"
 
 #: app/actions/layers-actions.c:86
 msgid "D_uplicate Layer"
@@ -2077,86 +2074,55 @@ msgstr "Select _Next Layer"
 msgid "Set Opacity"
 msgstr "Set Opacity"
 
-#: app/actions/layers-commands.c:307 app/actions/layers-commands.c:908
-#: app/actions/layers-commands.c:943 app/widgets/gimpdrawabletreeview.c:238
-#: app/widgets/gimplayertreeview.c:840
+#: app/actions/layers-commands.c:207
+msgid "Layer Attributes"
+msgstr "Layer Attributes"
+
+#: app/actions/layers-commands.c:210
+msgid "Edit Layer Attributes"
+msgstr "Edit Layer Attributes"
+
+#: app/actions/layers-commands.c:243 app/actions/layers-commands.c:245
+#: app/actions/layers-commands.c:302 app/actions/layers-commands.c:306
+#: app/widgets/gimpdrawabletreeview.c:238 app/widgets/gimplayertreeview.c:840
 msgid "New Layer"
 msgstr "New Layer"
 
-#: app/actions/layers-commands.c:311 app/widgets/gimplayertreeview.c:846
-msgid "Empty Layer"
-msgstr "Empty Layer"
+#: app/actions/layers-commands.c:248
+msgid "Create a New Layer"
+msgstr "Create a New Layer"
 
-#: app/actions/layers-commands.c:539 app/core/gimplayer.c:255
+#: app/actions/layers-commands.c:535 app/core/gimplayer.c:255
 #: app/dialogs/resize-dialog.c:204
 msgid "Scale Layer"
 msgstr "Scale Layer"
 
-#: app/actions/layers-commands.c:572
+#: app/actions/layers-commands.c:568
 msgid "Crop Layer"
 msgstr "Crop Layer"
 
-#: app/actions/layers-commands.c:604 app/actions/layers-commands.c:1219
+#: app/actions/layers-commands.c:600 app/actions/layers-commands.c:976
 #: app/core/gimplayer.c:1099
 msgid "Add Layer Mask"
 msgstr "Add Layer Mask"
 
-#: app/actions/layers-commands.c:606
+#: app/actions/layers-commands.c:602
 msgid "Add a Mask to the Layer"
 msgstr "Add a Mask to the Layer"
 
-#: app/actions/layers-commands.c:631
+#: app/actions/layers-commands.c:627
 msgid "Initialize Layer Mask to:"
 msgstr "Initialize Layer Mask to:"
 
-#: app/actions/layers-commands.c:641
+#: app/actions/layers-commands.c:637
 msgid "In_vert Mask"
 msgstr "In_vert Mask"
 
-#: app/actions/layers-commands.c:760
+#: app/actions/layers-commands.c:756
 msgid "Layer Mask to Selection"
 msgstr "Layer Mask to Selection"
 
-#: app/actions/layers-commands.c:910
-msgid "Create a New Layer"
-msgstr "Create a New Layer"
-
-#: app/actions/layers-commands.c:945
-msgid "Layer _Name:"
-msgstr "Layer _Name:"
-
-#. The size labels
-#: app/actions/layers-commands.c:949 app/tools/gimpcroptool.c:1017
-#: app/tools/gimpselectionoptions.c:524
-msgid "Width:"
-msgstr "Width:"
-
-#: app/actions/layers-commands.c:955 app/tools/gimpcroptool.c:1021
-#: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:532
-msgid "Height:"
-msgstr "Height:"
-
-#: app/actions/layers-commands.c:1012
-msgid "Layer Fill Type"
-msgstr "Layer Fill Type"
-
-#: app/actions/layers-commands.c:1113
-msgid "Layer Attributes"
-msgstr "Layer Attributes"
-
-#: app/actions/layers-commands.c:1115
-msgid "Edit Layer Attributes"
-msgstr "Edit Layer Attributes"
-
-#: app/actions/layers-commands.c:1150
-msgid "Layer _Name"
-msgstr "Layer _Name"
-
-#: app/actions/layers-commands.c:1157
-msgid "Set Name from _Text"
-msgstr "Set Name from _Text"
-
-#: app/actions/layers-commands.c:1285 app/actions/layers-commands.c:1314
+#: app/actions/layers-commands.c:1042 app/actions/layers-commands.c:1071
 msgid "Invalid width or height. Both must be positive."
 msgstr "Invalid width or height. Both must be positive."
 
@@ -2515,8 +2481,16 @@ msgid "_Stroke Selection..."
 msgstr "_Stroke Selection..."
 
 #: app/actions/select-actions.c:105
-msgid "Stroke selection"
-msgstr "Stroke selection"
+msgid "Stroke selection..."
+msgstr "Stroke selection..."
+
+#: app/actions/select-actions.c:110
+msgid "_Stroke Selection"
+msgstr "_Stroke Selection"
+
+#: app/actions/select-actions.c:111
+msgid "Stroke selection with last values"
+msgstr "Stroke selection with last values"
 
 #: app/actions/select-commands.c:134 app/core/gimpselection.c:201
 msgid "Feather Selection"
@@ -2555,7 +2529,7 @@ msgid "Border selection by"
 msgstr "Border selection by"
 
 #: app/actions/select-commands.c:273 app/actions/select-commands.c:298
-#: app/actions/vectors-commands.c:359 app/actions/vectors-commands.c:385
+#: app/actions/vectors-commands.c:360 app/actions/vectors-commands.c:386
 #: app/dialogs/stroke-dialog.c:276
 msgid "There is no active layer or channel to stroke to."
 msgstr "There is no active layer or channel to stroke to."
@@ -2762,16 +2736,16 @@ msgid "_New Path..."
 msgstr "_New Path..."
 
 #: app/actions/vectors-actions.c:60
-msgid "New path dialog"
-msgstr "New path dialogue"
+msgid "New path..."
+msgstr "New path..."
 
 #: app/actions/vectors-actions.c:65
 msgid "_New Path"
 msgstr "_New Path"
 
 #: app/actions/vectors-actions.c:66
-msgid "New path"
-msgstr "New path"
+msgid "New path with last values"
+msgstr "New path with last values"
 
 #: app/actions/vectors-actions.c:71
 msgid "D_uplicate Path"
@@ -2829,55 +2803,63 @@ msgstr "Lower path to bottom"
 msgid "Stro_ke Path..."
 msgstr "Stro_ke Path..."
 
-#: app/actions/vectors-actions.c:113 app/tools/gimpvectoroptions.c:207
-msgid "Stroke path"
-msgstr "Stroke path"
+#: app/actions/vectors-actions.c:113
+msgid "Stroke path..."
+msgstr "Stroke path..."
 
-#: app/actions/vectors-actions.c:123
+#: app/actions/vectors-actions.c:118
+msgid "Stro_ke Path"
+msgstr "Stro_ke Path"
+
+#: app/actions/vectors-actions.c:119
+msgid "Stroke path with last values"
+msgstr "Stroke path with last values"
+
+#: app/actions/vectors-actions.c:124
 msgid "Co_py Path"
 msgstr "Co_py Path"
 
-#: app/actions/vectors-actions.c:128
+#: app/actions/vectors-actions.c:129
 msgid "Paste Pat_h"
 msgstr "Paste Pat_h"
 
-#: app/actions/vectors-actions.c:133
+#: app/actions/vectors-actions.c:134
 msgid "I_mport Path..."
 msgstr "I_mport Path..."
 
-#: app/actions/vectors-actions.c:138
+#: app/actions/vectors-actions.c:139
 msgid "E_xport Path..."
 msgstr "E_xport Path..."
 
-#: app/actions/vectors-actions.c:161
+#: app/actions/vectors-actions.c:162
 msgid "Path to Sele_ction"
 msgstr "Path to Sele_ction"
 
-#: app/actions/vectors-actions.c:162 app/tools/gimpvectortool.c:1883
+#: app/actions/vectors-actions.c:163 app/tools/gimpvectortool.c:1883
 msgid "Path to selection"
 msgstr "Path to selection"
 
-#: app/actions/vectors-actions.c:167
+#: app/actions/vectors-actions.c:168
 msgid "Fr_om Path"
 msgstr "Fr_om Path"
 
-#: app/actions/vectors-actions.c:193
+#: app/actions/vectors-actions.c:194
 msgid "Selecti_on to Path"
 msgstr "Selecti_on to Path"
 
-#: app/actions/vectors-actions.c:194
+#: app/actions/vectors-actions.c:195
 msgid "Selection to path"
 msgstr "Selection to path"
 
-#: app/actions/vectors-actions.c:199
+#: app/actions/vectors-actions.c:200
 msgid "To _Path"
 msgstr "To _Path"
 
-#: app/actions/vectors-actions.c:204
+#: app/actions/vectors-actions.c:205
 msgid "Selection to Path (_Advanced)"
 msgstr "Selection to Path (_Advanced)"
 
-#: app/actions/vectors-actions.c:205
+#: app/actions/vectors-actions.c:206
 msgid "Advanced options"
 msgstr "Advanced options"
 
@@ -2890,6 +2872,7 @@ msgid "Edit Path Attributes"
 msgstr "Edit Path Attributes"
 
 #: app/actions/vectors-commands.c:162 app/actions/vectors-commands.c:163
+#: app/actions/vectors-commands.c:185
 msgid "New Path"
 msgstr "New Path"
 
@@ -2897,27 +2880,23 @@ msgstr "New Path"
 msgid "New Path Options"
 msgstr "New Path Options"
 
-#: app/actions/vectors-commands.c:184 app/widgets/gimpvectorstreeview.c:285
-msgid "Empty Path"
-msgstr "Empty Path"
-
-#: app/actions/vectors-commands.c:293 app/pdb/paths_cmds.c:1210
+#: app/actions/vectors-commands.c:294 app/pdb/paths_cmds.c:1210
 msgid "Path to Selection"
 msgstr "Path to Selection"
 
-#: app/actions/vectors-commands.c:441
+#: app/actions/vectors-commands.c:442
 msgid "Import Paths from SVG"
 msgstr "Import Paths from SVG"
 
-#: app/actions/vectors-commands.c:465
+#: app/actions/vectors-commands.c:466
 msgid "All Files (*.*)"
 msgstr "All Files (*.*)"
 
-#: app/actions/vectors-commands.c:470
+#: app/actions/vectors-commands.c:471
 msgid "Scalable SVG image (*.svg)"
 msgstr "Scalable SVG image (*.svg)"
 
-#: app/actions/vectors-commands.c:493
+#: app/actions/vectors-commands.c:494
 msgid "Export Path to SVG"
 msgstr "Export Path to SVG"
 
@@ -4354,6 +4333,10 @@ msgstr "Rename item"
 msgid "Set item linked"
 msgstr "Set item linked"
 
+#: app/core/core-enums.c:642
+msgid "New layer"
+msgstr "New layer"
+
 #: app/core/core-enums.c:645
 msgid "Delete layer mask"
 msgstr "Delete layer mask"
@@ -4377,6 +4360,10 @@ msgstr "Set preserve trans"
 #: app/core/core-enums.c:651
 msgid "Text modified"
 msgstr "Text modified"
+
+#: app/core/core-enums.c:652
+msgid "New channel"
+msgstr "New channel"
 
 #: app/core/core-enums.c:654
 msgid "Reposition channel"
@@ -5763,6 +5750,29 @@ msgstr "Indexed Colour"
 #: app/dialogs/info-window.c:602
 msgid "colors"
 msgstr "colours"
+
+#: app/dialogs/layer-options-dialog.c:116
+msgid "Layer _Name:"
+msgstr "Layer _Name:"
+
+#. The size labels
+#: app/dialogs/layer-options-dialog.c:127 app/tools/gimpcroptool.c:1017
+#: app/tools/gimpselectionoptions.c:524
+msgid "Width:"
+msgstr "Width:"
+
+#: app/dialogs/layer-options-dialog.c:133 app/tools/gimpcroptool.c:1021
+#: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:532
+msgid "Height:"
+msgstr "Height:"
+
+#: app/dialogs/layer-options-dialog.c:190
+msgid "Layer Fill Type"
+msgstr "Layer Fill Type"
+
+#: app/dialogs/layer-options-dialog.c:205
+msgid "Set Name from _Text"
+msgstr "Set Name from _Text"
 
 #: app/dialogs/module-dialog.c:122
 msgid "Module Manager"
@@ -9111,6 +9121,10 @@ msgstr ""
 msgid "Create selection from path"
 msgstr "Create selection from path"
 
+#: app/tools/gimpvectoroptions.c:207
+msgid "Stroke path"
+msgstr "Stroke path"
+
 #: app/tools/gimpvectortool.c:161
 msgid "Create and edit paths"
 msgstr "Create and edit paths"
@@ -9375,6 +9389,10 @@ msgstr "Type a new accelerator"
 #: app/widgets/gimpchanneltreeview.c:137
 msgid "Reorder Channel"
 msgstr "Reorder Channel"
+
+#: app/widgets/gimpchanneltreeview.c:237
+msgid "Empty Channel"
+msgstr "Empty Channel"
 
 #: app/widgets/gimpclipboard.c:281
 msgid "Clipboard"
@@ -10081,6 +10099,10 @@ msgstr "Reorder Layer"
 msgid "Keep transparency"
 msgstr "Keep transparency"
 
+#: app/widgets/gimplayertreeview.c:846
+msgid "Empty Layer"
+msgstr "Empty Layer"
+
 #: app/widgets/gimpmessagebox.c:458
 #, c-format
 msgid "Message repeated %d times."
@@ -10343,6 +10365,10 @@ msgstr "[ Base Image ]"
 #: app/widgets/gimpvectorstreeview.c:151
 msgid "Reorder path"
 msgstr "Reorder path"
+
+#: app/widgets/gimpvectorstreeview.c:288
+msgid "Empty Path"
+msgstr "Empty Path"
 
 #: app/widgets/gimpviewablebox.c:75
 msgid "Open the brush selection dialog"
