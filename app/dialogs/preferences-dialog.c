@@ -37,7 +37,8 @@
 #include "core/gimptemplate.h"
 
 #include "widgets/gimpcolorpanel.h"
-#include "widgets/gimpcontainermenuimpl.h"
+#include "widgets/gimpcontainercombobox.h"
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
@@ -337,7 +338,7 @@ prefs_response (GtkWidget *widget,
 }
 
 static void
-prefs_template_select_callback (GimpContainerMenu *menu,
+prefs_template_select_callback (GimpContainerView *view,
                                 GimpTemplate      *template,
                                 gpointer           insert_data,
                                 GimpTemplate      *edit_template)
@@ -1096,21 +1097,16 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (1, GTK_CONTAINER (vbox), TRUE);
 
   {
-    GtkWidget *optionmenu;
-    GtkWidget *menu;
+    GtkWidget *combo;
 
-    optionmenu = gtk_option_menu_new ();
+    combo = gimp_container_combo_box_new (gimp->templates, NULL, 16, 0);
     gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                                _("From _Template:"),  1.0, 0.5,
-                               optionmenu, 1, FALSE);
+                               combo, 1, FALSE);
 
-    menu = gimp_container_menu_new (gimp->templates, NULL, 16, 0);
-    gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
-    gtk_widget_show (menu);
+    gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo), NULL);
 
-    gimp_container_menu_select_item (GIMP_CONTAINER_MENU (menu), NULL);
-
-    g_signal_connect (menu, "select_item",
+    g_signal_connect (combo, "select_item",
                       G_CALLBACK (prefs_template_select_callback),
                       core_config->default_image);
   }

@@ -49,8 +49,7 @@ struct _GimpImageDock
   GimpUIManager   *ui_manager;
   GQuark           image_flush_handler_id;
 
-  GtkWidget       *option_menu;
-  GtkWidget       *menu;
+  GtkWidget       *image_combo;
   GtkWidget       *auto_button;
 
   guint            update_title_idle_id;

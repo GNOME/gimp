@@ -66,7 +66,7 @@ typedef struct
 static void   file_new_response        (GtkWidget         *widget,
                                         gint               response_id,
                                         FileNewDialog     *dialog);
-static void   file_new_template_select (GimpContainerMenu *menu,
+static void   file_new_template_select (GimpContainerView *view,
                                         GimpTemplate      *template,
                                         gpointer           insert_data,
                                         FileNewDialog     *dialog);
@@ -203,7 +203,7 @@ file_new_response (GtkWidget     *widget,
 }
 
 static void
-file_new_template_select (GimpContainerMenu *menu,
+file_new_template_select (GimpContainerView *view,
                           GimpTemplate      *template,
                           gpointer           insert_data,
                           FileNewDialog     *dialog)

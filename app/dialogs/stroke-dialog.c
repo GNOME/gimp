@@ -36,7 +36,8 @@
 #include "core/gimpstrokeoptions.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpcontainermenuimpl.h"
+#include "widgets/gimpcontainercombobox.h"
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpstrokeeditor.h"
 
@@ -50,13 +51,13 @@
 
 /*  local functions  */
 
-static void  stroke_dialog_response            (GtkWidget    *widget,
-                                                gint          response_id,
-                                                GtkWidget    *dialog);
-static void  stroke_dialog_paint_info_selected (GtkWidget    *menu,
-                                                GimpViewable *viewable,
-                                                gpointer      insert_data,
-                                                GtkWidget    *dialog);
+static void  stroke_dialog_response            (GtkWidget         *widget,
+                                                gint               response_id,
+                                                GtkWidget         *dialog);
+static void  stroke_dialog_paint_info_selected (GimpContainerView *view,
+                                                GimpViewable      *viewable,
+                                                gpointer           insert_data,
+                                                GtkWidget         *dialog);
 
 
 /*  public function  */
@@ -201,8 +202,7 @@ stroke_dialog_new (GimpItem    *item,
   {
     GtkWidget     *hbox;
     GtkWidget     *label;
-    GtkWidget     *optionmenu;
-    GtkWidget     *menu;
+    GtkWidget     *combo;
     GimpPaintInfo *paint_info;
 
     hbox = gtk_hbox_new (FALSE, 4);
@@ -217,25 +217,21 @@ stroke_dialog_new (GimpItem    *item,
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 
-    optionmenu = gtk_option_menu_new ();
-    gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
-    gtk_widget_show (optionmenu);
+    combo = gimp_container_combo_box_new (image->gimp->paint_info_list, NULL,
+                                          16, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+    gtk_widget_show (combo);
 
-    menu = gimp_container_menu_new (image->gimp->paint_info_list, NULL,
-                                    16, 0);
-    gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
-    gtk_widget_show (menu);
-
-    g_signal_connect (menu, "select_item",
+    g_signal_connect (combo, "select_item",
                       G_CALLBACK (stroke_dialog_paint_info_selected),
                       dialog);
 
     paint_info = GIMP_PAINT_INFO (g_object_get_data (G_OBJECT (options),
                                                      "gimp-paint-info"));
-    gimp_container_menu_select_item (GIMP_CONTAINER_MENU (menu),
+    gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo),
                                      GIMP_VIEWABLE (paint_info));
 
-    g_object_set_data (G_OBJECT (dialog), "gimp-tool-menu", menu);
+    g_object_set_data (G_OBJECT (dialog), "gimp-tool-menu",  combo);
     g_object_set_data (G_OBJECT (dialog), "gimp-paint-info", paint_info);
   }
 
@@ -268,16 +264,16 @@ stroke_dialog_response (GtkWidget  *widget,
     case RESPONSE_RESET:
       {
         GObject      *options;
-        GtkWidget    *menu;
+        GtkWidget    *combo;
         GimpToolInfo *tool_info;
 
         options = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-options");
-        menu    = g_object_get_data (G_OBJECT (dialog), "gimp-tool-menu");
+        combo   = g_object_get_data (G_OBJECT (dialog), "gimp-tool-menu");
 
         tool_info = gimp_context_get_tool (context);
 
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-        gimp_container_menu_select_item (GIMP_CONTAINER_MENU (menu),
+        gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo),
                                          GIMP_VIEWABLE (tool_info->paint_info));
 
         gimp_config_reset (GIMP_CONFIG (options));
@@ -345,10 +341,10 @@ stroke_dialog_response (GtkWidget  *widget,
 }
 
 static void
-stroke_dialog_paint_info_selected (GtkWidget    *menu,
-                                   GimpViewable *viewable,
-                                   gpointer      insert_data,
-                                   GtkWidget    *dialog)
+stroke_dialog_paint_info_selected (GimpContainerView *view,
+                                   GimpViewable      *viewable,
+                                   gpointer           insert_data,
+                                   GtkWidget         *dialog)
 {
   g_object_set_data (G_OBJECT (dialog), "gimp-paint-info", viewable);
 }

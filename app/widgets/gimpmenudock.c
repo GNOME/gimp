@@ -38,7 +38,8 @@
 
 #include "gimpdialogfactory.h"
 #include "gimpimagedock.h"
-#include "gimpcontainermenuimpl.h"
+#include "gimpcontainercombobox.h"
+#include "gimpcontainerview.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimphelp-ids.h"
@@ -189,16 +190,15 @@ gimp_image_dock_init (GimpImageDock *dock)
   if (dock->show_image_menu)
     gtk_widget_show (hbox);
 
-  dock->option_menu = gtk_option_menu_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), dock->option_menu, TRUE, TRUE, 0);
-  gtk_widget_show (dock->option_menu);
+  dock->image_combo = gimp_container_combo_box_new (NULL, NULL, 16, 1);
+  gtk_box_pack_start (GTK_BOX (hbox), dock->image_combo, TRUE, TRUE, 0);
+  gtk_widget_show (dock->image_combo);
 
-  g_signal_connect (dock->option_menu, "destroy",
+  g_signal_connect (dock->image_combo, "destroy",
 		    G_CALLBACK (gtk_widget_destroyed),
-		    &dock->option_menu);
+		    &dock->image_combo);
 
-  gimp_help_set_help_data (dock->option_menu, NULL,
-                           GIMP_HELP_DOCK_IMAGE_MENU);
+  gimp_help_set_help_data (dock->image_combo, NULL, GIMP_HELP_DOCK_IMAGE_MENU);
 
   dock->auto_button = gtk_toggle_button_new_with_label (_("Auto"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dock->auto_button),
@@ -294,11 +294,11 @@ gimp_image_dock_destroy (GtkObject *object)
    *  of weird cross-connections with GimpDock's context
    */
   if (GIMP_DOCK (dock)->main_vbox &&
-      dock->option_menu           &&
-      dock->option_menu->parent)
+      dock->image_combo           &&
+      dock->image_combo->parent)
     {
       gtk_container_remove (GTK_CONTAINER (GIMP_DOCK (dock)->main_vbox),
-			    dock->option_menu->parent);
+			    dock->image_combo->parent);
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -328,7 +328,7 @@ gimp_image_dock_style_set (GtkWidget *widget,
                         "menu_preview_size", &menu_preview_size,
 			NULL);
 
-  screen = gtk_widget_get_screen (image_dock->menu);
+  screen = gtk_widget_get_screen (image_dock->image_combo);
   gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
                                      menu_preview_size,
                                      &menu_preview_width,
@@ -343,7 +343,7 @@ gimp_image_dock_style_set (GtkWidget *widget,
 
   gtk_widget_set_size_request (widget, minimal_width, -1);
 
-  gimp_container_menu_set_preview_size (GIMP_CONTAINER_MENU (image_dock->menu),
+  gimp_container_view_set_preview_size (GIMP_CONTAINER_VIEW (image_dock->image_combo),
                                         menu_preview_height, 1);
 
   gtk_widget_set_size_request (image_dock->auto_button, -1,
@@ -533,13 +533,10 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
                                      &menu_preview_width,
                                      &menu_preview_height);
 
-  image_dock->menu = gimp_container_menu_new (image_container, context,
-                                              menu_preview_height, 1);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (image_dock->option_menu),
-			    image_dock->menu);
-  gtk_widget_show (image_dock->menu);
-
-  g_object_unref (context);
+  g_object_set (image_dock->image_combo,
+                "container", image_container,
+                "context",   context,
+                NULL);
 
   return GTK_WIDGET (image_dock);
 }
@@ -561,9 +558,9 @@ gimp_image_dock_set_show_image_menu (GimpImageDock *image_dock,
   g_return_if_fail (GIMP_IS_IMAGE_DOCK (image_dock));
 
   if (show)
-    gtk_widget_show (image_dock->option_menu->parent);
+    gtk_widget_show (image_dock->image_combo->parent);
   else
-    gtk_widget_hide (image_dock->option_menu->parent);
+    gtk_widget_hide (image_dock->image_combo->parent);
 
   image_dock->show_image_menu = show ? TRUE : FALSE;
 }
