@@ -3,366 +3,552 @@
 # 
 # This file is distributed under the same license as the gimp-libgimp package.
 # 
-# Maintainer: Дејан Матијевић <dejan@ns.sympatico.ca>
+# Maintainer: Dejan Matijević <dejan@ns.sympatico.ca>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgtcpsocket\n"
-"POT-Creation-Date: 2003-04-28 20:23+0200\n"
-"PO-Revision-Date: 2003-05-19 14:20-0400\n"
-"Last-Translator: Дејан Матијевић <dejan@ns.sympatico.ca>\n"
+"Project-Id-Version: gimp-libgimp\n"
+"POT-Creation-Date: 2003-07-14 09:01+0200\n"
+"PO-Revision-Date: 2003-07-14 01:15-0400\n"
+"Last-Translator: Dejan Matijević <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/libgtcpsocket.schemas.in.h:1
-msgid "Authenticate connections to the proxy server"
-msgstr "Ауторизуј конекцију до прокси сервера"
+#: libgimp/gimpbrushmenu.c:132
+msgid "Brush Selection"
+msgstr "Odabiranje četke"
 
-#: data/libgtcpsocket.schemas.in.h:2
-msgid "Enables the proxy settings when accessing http over the internet."
-msgstr "Одобри прокси подесавања када се приступа ХТТП преко интерета."
-
-#: data/libgtcpsocket.schemas.in.h:3
-msgid "If true, then connections to the proxy server require authentication. The username/password combo defined by /system/http_proxy/authentication_user and /system/http_proxy/authentication_password."
-msgstr "Ако је истинито, онда конекција до прокси сервера захтева ауторизацију. Комбинација корисничко име/лозинка одређена од /system/http_proxy/authentication_user и /system/http_proxy/authentication_password."
-
-#: data/libgtcpsocket.schemas.in.h:4
-msgid "Password to pass as authentication when doing http proxying"
-msgstr "Лозинка као пролаз за ауторизацију када ради ХТТП прокси"
-
-#: data/libgtcpsocket.schemas.in.h:5
-msgid "Proxy host name"
-msgstr "Име прокси домаћина"
-
-#: data/libgtcpsocket.schemas.in.h:6
-msgid "Proxy port"
-msgstr "Порт проксија"
-
-#: data/libgtcpsocket.schemas.in.h:7
-msgid "The machine defined by /system/proxy/socks_host is a SOCKS5 proxy"
-msgstr "Машина одређена од /system/proxy/socks_host је прокси СОЦК5"
-
-#: data/libgtcpsocket.schemas.in.h:8
-msgid "The machine name to proxy encrypted connections through."
-msgstr "Име машине директно до проксија шифрованом конекцијом."
-
-#: data/libgtcpsocket.schemas.in.h:9
-msgid "The machine name to proxy ftp through."
-msgstr "Име машине директно до ФТП проксија."
-
-#: data/libgtcpsocket.schemas.in.h:10
-msgid "The machine name to proxy http through."
-msgstr "Име машине директно до ХТТП проксија."
-
-#: data/libgtcpsocket.schemas.in.h:11
-msgid "The port on the machine defined by /system/http_proxy/host that you proxy through"
-msgstr "Порт од машине одређен од /system/http_proxy/host да прђе кроз прокси"
-
-#: data/libgtcpsocket.schemas.in.h:12
-msgid "The port on the machine defined by /system/proxy/ftp_host that you proxy through"
-msgstr "Порт од машине одређен од /system/http_proxy/tp_host да прђе кроз прокси"
-
-#: data/libgtcpsocket.schemas.in.h:13
-msgid "The port on the machine defined by /system/proxy/socks_host that you proxy through"
-msgstr "Порт од машине одређен од /system/proxy/socks_host да прђе кроз прокси"
-
-#: data/libgtcpsocket.schemas.in.h:14
-msgid "The port on the machine defined by /system/proxy/ssl_host that you proxy through"
-msgstr "Порт од машине одређен од /system/proxy/ssl_host да прђе кроз прокси"
-
-#: data/libgtcpsocket.schemas.in.h:15
-msgid "Use SOCKS5 proxy"
-msgstr "Користи прокси SOCKS5 "
-
-#: data/libgtcpsocket.schemas.in.h:16
-msgid "Use proxy settings when accessing http"
-msgstr "Користи прокси сетинг када се приступа ХТТП"
-
-#: data/libgtcpsocket.schemas.in.h:17
-msgid "User name to pass as authentication when doing http proxying"
-msgstr "Корисничко име као пролаз за ауторизацију када ради ХТТП прокси"
-
-#: data/libgtcpsocket.schemas.in.h:18
-msgid "http proxy password"
-msgstr "Лозинка ХТТП проксија"
-
-#: data/libgtcpsocket.schemas.in.h:19
-msgid "http proxy username"
-msgstr "Корисничко име ХТТП проксија"
-
-#: libgtcpsocket/gtcp-connection.c:1434
-msgid "Address"
-msgstr "Адреса"
-
-#: libgtcpsocket/gtcp-connection.c:1435
-msgid "The hostname or IP address to connect to."
-msgstr "Име домаћина или ИП адреса за конекцију."
-
-#: libgtcpsocket/gtcp-connection.c:1439
-msgid "Port Number"
-msgstr "Број порта"
-
-#: libgtcpsocket/gtcp-connection.c:1440
-msgid "The port number to connect to."
-msgstr "Број порта на који ће се повезати"
-
-#: libgtcpsocket/gtcp-connection.c:1445
-#: libgtcpsocket/gtcp-server.c:171
-msgid "Local Address"
-msgstr "Локална адреса"
-
-#: libgtcpsocket/gtcp-connection.c:1446
-msgid "The hostname or IP address of this computer."
-msgstr "Име домаћина или ИП адреса за овај компијутер."
-
-#: libgtcpsocket/gtcp-connection.c:1450
-msgid "Local Port Number"
-msgstr "Број локалног порта"
-
-#: libgtcpsocket/gtcp-connection.c:1451
-msgid "The local port number to connect through."
-msgstr "Број порта са којег се повезује."
-
-#: libgtcpsocket/gtcp-connection.c:1457
-msgid "Connection Style"
-msgstr "Врста конекције"
-
-#: libgtcpsocket/gtcp-connection.c:1458
-msgid "What style of connection this will be, used to determine proxy information."
-msgstr "Која врста конекције ће ово бити, користи се да одреди прокси информације."
-
-#: libgtcpsocket/gtcp-connection.c:1465
-msgid "Use SSL"
-msgstr "Kористити ССЛ"
-
-#: libgtcpsocket/gtcp-connection.c:1466
-msgid "Whether or not to use SSL in this connection."
-msgstr "Да ли користити ССЛ у овој конекцији."
-
-#: libgtcpsocket/gtcp-connection.c:1471
-#: libgtcpsocket/gtcp-server.c:218
-msgid "Buffer Size"
-msgstr "Величина бафера"
-
-#: libgtcpsocket/gtcp-connection.c:1472
-#: libgtcpsocket/gtcp-server.c:219
-msgid "The max incoming buffer size."
-msgstr "Највећа величина бафера за долажење."
-
-#: libgtcpsocket/gtcp-connection.c:1479
-msgid "IP Address"
-msgstr "ИП Адреса"
-
-#: libgtcpsocket/gtcp-connection.c:1480
-msgid "The IP address connected to."
-msgstr "ИП адреса конектовања."
-
-#: libgtcpsocket/gtcp-connection.c:1484
-msgid "Connection Status"
-msgstr "Стање везе"
-
-#: libgtcpsocket/gtcp-connection.c:1485
-msgid "The current status of the connection."
-msgstr "Тренутно стање конекције."
-
-#: libgtcpsocket/gtcp-connection.c:1491
-msgid "Connection is a Server"
-msgstr "Kонекција je сервеr"
-
-#: libgtcpsocket/gtcp-connection.c:1492
-msgid "Whether the connection was created from a server or not. For internal use by GTcpServer only."
-msgstr "Да ли је конекција направљена од сервера или не.  Само за потребе ГТцпСервера."
-
-#: libgtcpsocket/gtcp-connection.c:1499
-#: libgtcpsocket/gtcp-server.c:226
-msgid "Bytes Read"
-msgstr "Прочитано бајтова"
-
-#: libgtcpsocket/gtcp-connection.c:1500
-#: libgtcpsocket/gtcp-server.c:227
-msgid "The total bytes read."
-msgstr "Укупно прочитано бајтова"
-
-#: libgtcpsocket/gtcp-connection.c:1504
-#: libgtcpsocket/gtcp-server.c:231
-msgid "Bytes Written"
-msgstr "Написано бајтова"
-
-#: libgtcpsocket/gtcp-connection.c:1505
-#: libgtcpsocket/gtcp-server.c:232
-msgid "The total bytes written."
-msgstr "Укупно написано бајтова."
-
-#: libgtcpsocket/gtcp-connection.c:1509
-msgid "Socket File Descriptor"
-msgstr "Сокет дескриптор датотеке"
-
-#: libgtcpsocket/gtcp-connection.c:1510
-msgid "The socket file descriptor. For internal use by GTcpServer only."
-msgstr "Сокет дескриптор датотеке.  Само за потребе ГТцпСервера."
-
-#: libgtcpsocket/gtcp-errors.c:45
+#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
-msgid "Search for \"%s\" in progress..."
-msgstr "Трагање за \"%s\" напредује..."
+msgid "%s can't handle layers"
+msgstr "%s Nemože da rukuje nivoima"
 
-#: libgtcpsocket/gtcp-errors.c:47
+#: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
+msgid "Merge Visible Layers"
+msgstr "Spojiti uočljive nivoe"
+
+#: libgimp/gimpexport.c:192
 #, c-format
-msgid "%s found"
-msgstr "%s нађен"
+msgid "%s can't handle layer offsets, size or opacity"
+msgstr "%s Nemože da rukuje ofset, veličinom ili zatamnjenosti nivoa"
 
-#: libgtcpsocket/gtcp-errors.c:49
+#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 #, c-format
-msgid "\"%s\" could not be found. The name might be misspelled, or it may not exist."
-msgstr "\"%s\" није могуће наћи.  Можда је име погрешно написано или не постији."
+msgid "%s can only handle layers as animation frames"
+msgstr "%s Može samo da rukuje nivoem kao animacionim okvirima"
 
-#: libgtcpsocket/gtcp-errors.c:52
+#: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
+msgid "Save as Animation"
+msgstr "Sačuvaj kao animaciju"
+
+#: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
+msgid "Flatten Image"
+msgstr "Poravnan snimak"
+
+#: libgimp/gimpexport.c:228
 #, c-format
-msgid "The DNS lookup server could not be contacted to find %s. The network may be down, or the DNS server may be broken."
-msgstr "ДНС локап сервер није могао бити контактиран %s.  Можда је мрежа спустена или је ДНС покварен."
+msgid "%s can't handle transparency"
+msgstr "%s Nemože rukovati prozirnost"
 
-#: libgtcpsocket/gtcp-errors.c:55
-msgid "The DNS lookup server is temporarily unavailable, try connecting in a few minutes."
-msgstr "ДНС локап сервер је тренутно недоступан, пробајете се конектовати за пар минута."
-
-#: libgtcpsocket/gtcp-errors.c:58
+#: libgimp/gimpexport.c:237
 #, c-format
-msgid "The network is misconfigured, and \"%s\" cannot be connected to. Contact your network administrator or ISP for more information."
-msgstr "Мрежа је лоше подешена и \"%s\" неможе бити конектован.  Контактирајте свог администратора мрежа или ИСП за више информација."
+msgid "%s can only handle RGB images"
+msgstr "%s Može samo da rukuje RGB snimcima"
 
-# Fali mi prevod za: threads implementation
-#: libgtcpsocket/gtcp-errors.c:61
-#, fuzzy
-msgid "Your computer is unable to use a real application, install a threads implementation or upgrade. :-P"
-msgstr "Ваш компијутер није у могућности да користи прави програм, инсталирајте threads implementation или унапредите. :-P"
+#: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
+msgid "Convert to RGB"
+msgstr "Preokreni u RGB"
 
-#: libgtcpsocket/gtcp-errors.c:69
+#: libgimp/gimpexport.c:246
 #, c-format
-msgid "%s has will not allow you to connect to the requested service. The port number may be incorrect."
-msgstr "%s вам неће дозволити да се конектујете на тражени сервис.  Можда је број порта погрешан."
+msgid "%s can only handle grayscale images"
+msgstr "%s Može samo da rukuje sivo nijansirane snimke"
 
-#: libgtcpsocket/gtcp-errors.c:72
+#: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
+msgid "Convert to Grayscale"
+msgstr "Preokreni u sivo nijansirano"
+
+#: libgimp/gimpexport.c:255
 #, c-format
-msgid "The connection attempt took too long to complete. %s may be down, or you may have been disconnected from the network."
-msgstr "Сувише дуго покушава да се конектује. %s је можда спуштен или сте можда искључени са мреже."
+msgid "%s can only handle indexed images"
+msgstr "%s Može samo da rukuje indeksirane snimke"
 
-#: libgtcpsocket/gtcp-errors.c:75
+#: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Preokrenite u indeksirane koristeći uobičajeno podešavanje\n"
+"(Uradite to ručno da naštimujete rezultate)"
+
+#: libgimp/gimpexport.c:265
 #, c-format
-msgid "You cannot connect to %s, because it is on a network you cannot connect to. The address may be incorrect, or you may have been disconnected."
-msgstr "Неможете се конектовати на %s, зато што није на мрежи на коју се може конектовати.  Адреса је погрешна или сте можда одконектовани."
+msgid "%s can only handle RGB or grayscale images"
+msgstr "%s Može samo da rukuje  RGB ili sivo nijansirane snimke"
 
-# Фали ми превод за: firewall 
-#: libgtcpsocket/gtcp-errors.c:79
+#: libgimp/gimpexport.c:274
 #, c-format
-msgid "You cannot connect to %s, because your computer or firewall is configured to prevent it."
-msgstr "Неможете се конектовати на %s, зато што ваш је компијутер или ватрени зид подешен да то спречи."
+msgid "%s can only handle RGB or indexed images"
+msgstr "%s Može samo da rukuje RGB ili indeksirane snimke"
 
-# Фали ми превод за: threaded applications.
-#: libgtcpsocket/gtcp-errors.c:82
-#, fuzzy, c-format
-msgid "You cannot connect to %s, because your computer does not support threaded applications."
-msgstr "Неможете се конектовати на %s, зато што ваш компијутер не подржава threaded applications."
-
-#: libgtcpsocket/gtcp-errors.c:85
+#: libgimp/gimpexport.c:284
 #, c-format
-msgid "You cannot connect to %s, because your proxy server could not be found. Your computer may be misconfigured, or the proxy server may be down."
-msgstr "Неможете се конектовати на %s, зато што прохи сервер није могао бити нађен. Ваш компијутер није добро подешен или је прокси сервер спуштен."
+msgid "%s can only handle grayscale or indexed images"
+msgstr "%s Može samo da rukuje sive nijansirane ili indeksirane snimke"
 
-#: libgtcpsocket/gtcp-errors.c:94
+#: libgimp/gimpexport.c:295
 #, c-format
-msgid "Your computer is now accepting connections to port %u."
-msgstr "Ваш копијутер сада прихвата конекцију на порт %u."
+msgid "%s needs an alpha channel"
+msgstr "%s treba alfa kanal"
 
-#: libgtcpsocket/gtcp-errors.c:96
+#: libgimp/gimpexport.c:296
+msgid "Add Alpha Channel"
+msgstr "Dodati alfa kanal"
+
+#.
+#. *  Plug-ins must have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:370
+msgid "Confirm Save"
+msgstr "Potvrdi čuvanje"
+
+#: libgimp/gimpexport.c:378
+msgid "Confirm"
+msgstr "Potvrdi"
+
+#.
+#. *  Plug-ins must have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:431
+msgid "Export File"
+msgstr "Izvezi datoteku"
+
+#: libgimp/gimpexport.c:436
+msgid "Ignore"
+msgstr "Ignoriši"
+
+#: libgimp/gimpexport.c:442
+msgid "Export"
+msgstr "Izvoz"
+
+#: libgimp/gimpexport.c:468
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+"Vaš snimak bi trebalo izvesti pre nego što može biti sačuvan zbog sledečih "
+"razloga:"
+
+#. the footline
+#: libgimp/gimpexport.c:541
+msgid "The export conversion won't modify your original image."
+msgstr "Izvozno pretvaranje neće izmeniti vaš originalni snimak."
+
+#: libgimp/gimpexport.c:611
 #, c-format
-msgid "Your computer is preparing to accept connections to port %u."
-msgstr "Ваш копијутер се спрема да прихвати конекцију на порт %u."
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Vi ste u toku da sačuvate masku nivoa kao %s.\n"
+"Ovo neće sačuvati vidljive nivoe."
 
-#: libgtcpsocket/gtcp-errors.c:98
+#: libgimp/gimpexport.c:617
 #, c-format
-msgid "You cannot accept connections on port %u, because your computer does not have a local address."
-msgstr "Ви неможете прихватити конекцију на порт %u, зато што ваш компијутер нема локалну адресу."
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Vi ste u toku da sačuvate kanal kao (označeno sačuvano) kao %s.\n"
+"Ovo neće sačuvati vidljive nivoe."
 
-#: libgtcpsocket/gtcp-errors.c:101
+#: libgimp/gimpfontmenu.c:89
+msgid "Font Selection"
+msgstr "Izbor fonta"
+
+#: libgimp/gimpgradientmenu.c:102
+msgid "Gradient Selection"
+msgstr "Selekcija nagiba"
+
+#: libgimp/gimpmenu.c:93 libgimp/gimpmenu.c:217 libgimp/gimpmenu.c:334
+#: libgimp/gimpmenu.c:517
+msgid "None"
+msgstr "Nijedan"
+
+#: libgimp/gimpmiscui.c:50
+msgid "Preview"
+msgstr "Izgled"
+
+#: libgimp/gimpmiscui.c:537
 #, c-format
-msgid "You cannot accept connections on port %u, because you do not have permission to use TCP/IP connections."
-msgstr "Ви неможете прихватити конекцију на порт %u, зато што немате дозболу да користите ТЦП/ИП конекцију."
+msgid ""
+"No %s in gimprc:\n"
+"You need to add an entry like\n"
+"(%s \"%s\")\n"
+"to your %s file."
+msgstr ""
+"Nema %s u gimprc:\n"
+"Treba da dodate unos kao\n"
+"(%s \"%s\")\n"
+"u bašu %s datoteku."
 
-#: libgtcpsocket/gtcp-errors.c:104
+#: libgimp/gimppatternmenu.c:115
+msgid "Pattern Selection"
+msgstr "Selekcija obrasca"
+
+#: libgimp/gimpunit.c:56
+msgid "percent"
+msgstr "odsto"
+
+#: libgimpbase/gimputils.c:118
 #, c-format
-msgid "You cannot accept connections on port %u, because your computer is out of memory for networking purposes."
-msgstr "Ви неможете прихватити конекцију на порт %u, зато што је ваш компијутер без довоњно меморије за потребе мреже."
+msgid "%d Bytes"
+msgstr "%d Bajtova"
 
-#: libgtcpsocket/gtcp-errors.c:107
+#: libgimpbase/gimputils.c:122
 #, c-format
-msgid "You cannot accept connections on port %u, because your computer has too many running applications."
-msgstr "Ви неможете прихватити конекцију на порт %u, зато што ваш компијутер има сувише покренутих програма."
+msgid "%.2f KB"
+msgstr "%.2f KB"
 
-#: libgtcpsocket/gtcp-errors.c:110
+#: libgimpbase/gimputils.c:126
 #, c-format
-msgid "You cannot accept connections on port %u, because that port is already being used."
-msgstr "Ви неможете прихватити конекцију на порт %u, зато што је тај порт већ у употреби."
+msgid "%.1f KB"
+msgstr "%.1f KB"
 
-#: libgtcpsocket/gtcp-errors.c:113
+#: libgimpbase/gimputils.c:130
 #, c-format
-msgid "You cannot accept connections on port %u, because you do not have permission to accept connections on ports lower than 1024."
-msgstr "Ви неможете прихватити конекцију на порт %u, зато што ви немате дозволу да приступате конекцијама на портове ниже од 1024."
+msgid "%d KB"
+msgstr "%d KB"
 
-#: libgtcpsocket/gtcp-errors.c:116
+#: libgimpbase/gimputils.c:135
 #, c-format
-msgid "You cannot accept connections on port %u, because an error occurred inside the networking library."
-msgstr "Ви неможете прихватити конекцију на порт %u, зато што се догодила грешка у мрежној библиотеци."
+msgid "%.2f MB"
+msgstr "%.2f MB"
 
-#: libgtcpsocket/gtcp-errors.c:147
-#: libgtcpsocket/gtcp-errors.c:178
-#: libgtcpsocket/gtcp-errors.c:207
-#, fuzzy
-msgid "This application is doing some strange foo."
-msgstr "Овај програм ради нешто чудно."
+#: libgimpbase/gimputils.c:140
+#, c-format
+msgid "%.1f MB"
+msgstr "%.1f MB"
 
-#: libgtcpsocket/gtcp-server.c:172
-msgid "The hostname or IP address of this computer -- optional."
-msgstr "Име домаћина или ИП адреса за овај компијутер -- по избору."
+#: libgimpmodule/gimpmodule.c:174
+#, c-format
+msgid "Loading module: '%s'\n"
+msgstr "Natovar modula: '%s'\n"
 
-#: libgtcpsocket/gtcp-server.c:178
-msgid "The port number to allow connections to."
-msgstr "Број порта на који ће се одобрити повезивање."
+#: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
+#: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
+#: libgimpmodule/gimpmodule.c:434
+#, c-format
+msgid ""
+"Module '%s' load error:\n"
+"%s"
+msgstr ""
+"Modul '%s' greška prilikom natovara:\n"
+"%s"
 
-#: libgtcpsocket/gtcp-server.c:184
-msgid "Whether or not to use SSL connections to this server."
-msgstr "Да ли користити ССЛ конекцију на овом серверу."
+#: libgimpmodule/gimpmodule.c:271
+#, c-format
+msgid "Skipping module: '%s'\n"
+msgstr "Preskakanje modula: '%s'\n"
 
-#: libgtcpsocket/gtcp-server.c:191
-msgid "Maximum Simultaneous Connections"
-msgstr "Највечи дозвољен број истовремених конекција"
+#: libgimpmodule/gimpmodule.c:408
+msgid "Module error"
+msgstr "Greška modula"
 
-#: libgtcpsocket/gtcp-server.c:192
-msgid "The maximum number of connections to allow."
-msgstr "Максималан број конекција које ће бити одобрене."
+#: libgimpmodule/gimpmodule.c:409
+msgid "Loaded"
+msgstr "Natovareno"
 
-#: libgtcpsocket/gtcp-server.c:197
-msgid "Open Connections"
-msgstr "Успостављених конекција"
+#: libgimpmodule/gimpmodule.c:410
+msgid "Load failed"
+msgstr "Neuspeo natovar"
 
-#: libgtcpsocket/gtcp-server.c:198
-msgid "A GList of open connections."
-msgstr "Глист отворених конекција."
+#: libgimpmodule/gimpmodule.c:411
+msgid "Not loaded"
+msgstr "Nije natovareno"
 
-#: libgtcpsocket/gtcp-server.c:202
-msgid "Kill Open Connections Style"
-msgstr "Уби конекције отворене врсте"
+#: libgimpwidgets/gimpcolorbutton.c:84
+msgid "/Foreground Color"
+msgstr "/Boja iscrtavanja"
 
-#: libgtcpsocket/gtcp-server.c:203
-msgid "Whether to kill open GTcpConnections or not and when."
-msgstr "Да ли да убије отворену ГТцпКонекцију и када."
+#: libgimpwidgets/gimpcolorbutton.c:86
+msgid "/Background Color"
+msgstr "/Boja pozadine"
 
-#: libgtcpsocket/gtcp-server.c:211
-msgid "Performs Reverse Lookups"
-msgstr "Изврши обрнути локапс"
+#: libgimpwidgets/gimpcolorbutton.c:89
+msgid "/Black"
+msgstr "/Crna"
 
-#: libgtcpsocket/gtcp-server.c:212
-msgid "Whether or not to perform reverse lookups on incoming connections."
-msgstr "Да ли да примени обрнути локап на прилазне конекције."
+#: libgimpwidgets/gimpcolorbutton.c:91
+msgid "/White"
+msgstr "/Bela"
 
+#: libgimpwidgets/gimpcolorscales.c:142
+msgid "Scales"
+msgstr "Veličine"
+
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
+msgid "_H"
+msgstr "_H"
+
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
+msgid "_S"
+msgstr "_S"
+
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
+msgid "_V"
+msgstr "_V"
+
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
+msgid "_R"
+msgstr "_R"
+
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
+msgid "_G"
+msgstr "_G"
+
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
+msgid "_B"
+msgstr "_B"
+
+#: libgimpwidgets/gimpcolorscales.c:170
+msgid "_A"
+msgstr "_A"
+
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
+msgid "Hue"
+msgstr "Nijansa"
+
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
+msgid "Saturation"
+msgstr "Zasićenost"
+
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
+msgid "Value"
+msgstr "Vrednost"
+
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
+msgid "Red"
+msgstr "Crvena"
+
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
+msgid "Green"
+msgstr "Zelena"
+
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
+msgid "Blue"
+msgstr "Plava"
+
+#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
+msgid "Alpha"
+msgstr "Alfa"
+
+#: libgimpwidgets/gimpcolorscales.c:254
+msgid "Hexadecimal color notation as used in HTML"
+msgstr "Heksadecimalna obeležavanje boje kao korištenje u HTML"
+
+#: libgimpwidgets/gimpcolorscales.c:268
+msgid "He_x Triplet:"
+msgstr "He_x Trostruki bit:"
+
+#: libgimpwidgets/gimpfileselection.c:352
+msgid "Select Folder"
+msgstr "Odaberite direktorijum"
+
+#: libgimpwidgets/gimpfileselection.c:366
+msgid "Select File"
+msgstr "Odaberi datoteku"
+
+#: libgimpwidgets/gimpmemsizeentry.c:187
+msgid "KiloBytes"
+msgstr "Kilo bajta"
+
+#: libgimpwidgets/gimpmemsizeentry.c:188
+msgid "MegaBytes"
+msgstr "Mega bajta"
+
+#: libgimpwidgets/gimpmemsizeentry.c:189
+msgid "GigaBytes"
+msgstr "Giga bajta"
+
+#: libgimpwidgets/gimppickbutton.c:141
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+"Klikni te na kapaljku a onda kliknite na neku boju bilo gde na vašem ekranu "
+"da odaberete tu boju."
+
+#: libgimpwidgets/gimpstock.c:101
+msgid "Anchor"
+msgstr "Oznaka"
+
+#: libgimpwidgets/gimpstock.c:102
+msgid "_Duplicate"
+msgstr "_Duplikat"
+
+#: libgimpwidgets/gimpstock.c:103
+msgid "_Edit"
+msgstr "_Uredi"
+
+#: libgimpwidgets/gimpstock.c:104
+msgid "Linked"
+msgstr "Povezano"
+
+#: libgimpwidgets/gimpstock.c:105
+msgid "Paste as New"
+msgstr "Ubaci kao novu sliku"
+
+#: libgimpwidgets/gimpstock.c:106
+msgid "Paste Into"
+msgstr "Ubaci u to"
+
+#: libgimpwidgets/gimpstock.c:107
+msgid "_Reset"
+msgstr "_Ponovo postavi"
+
+#: libgimpwidgets/gimpstock.c:108
+msgid "Visible"
+msgstr "Vidljivo"
+
+#: libgimpwidgets/gimpstock.c:156
+msgid "L_etter Spacing"
+msgstr "Razmak između slova"
+
+#: libgimpwidgets/gimpstock.c:157
+msgid "L_ine Spacing"
+msgstr "Razmak redova"
+
+#: libgimpwidgets/gimpstock.c:172
+msgid "_Resize"
+msgstr "_Promeni veličinu"
+
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
+msgid "_Scale"
+msgstr "_Skala"
+
+#: libgimpwidgets/gimpstock.c:234
+msgid "Crop"
+msgstr "Iseci"
+
+#: libgimpwidgets/gimpstock.c:252
+msgid "_Transform"
+msgstr "_Transformiši"
+
+#: libgimpwidgets/gimpstock.c:255
+msgid "_Rotate"
+msgstr "_Rotiraj"
+
+#: libgimpwidgets/gimpstock.c:257
+msgid "_Shear"
+msgstr "_Deli"
+
+#: libgimpwidgets/gimpunitmenu.c:267
+msgid "More..."
+msgstr "Još..."
+
+#: libgimpwidgets/gimpunitmenu.c:527
+msgid "Unit Selection"
+msgstr "Izbor jedinice"
+
+#: libgimpwidgets/gimpunitmenu.c:573
+msgid "Unit"
+msgstr "Jedinica"
+
+#: libgimpwidgets/gimpunitmenu.c:577
+msgid "Factor"
+msgstr "Faktor"
+
+#: libgimpwidgets/gimpwidgets.c:943
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"Upotrebita ovu vrednost za seme slučajno generisanog broja -- ovo će vam "
+"omogućiti da ponovite datu \"slučajno\" operaciju"
+
+#: libgimpwidgets/gimpwidgets.c:947
+msgid "_Randomize"
+msgstr "_Slučajno"
+
+#: libgimpwidgets/gimpwidgets.c:958
+msgid "Seed random number generator with a generated random number"
+msgstr "Seme slučajno generisanog broja sa slučajno generisanim brojem"
+
+#: modules/cdisplay_colorblind.c:122
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr "Filter oponašanja oskudnosti boja (Brettel-Vienot-Mollon algoritam)"
+
+#: modules/cdisplay_colorblind.c:188
+msgid "Color Deficient Vision"
+msgstr "Pogled oskudnih boja"
+
+#: modules/cdisplay_colorblind.c:473
+msgid "Color Deficiency Type:"
+msgstr "Vrsta oskudnosti boje:"
+
+#: modules/cdisplay_colorblind.c:483
+msgid "None (normal vision)"
+msgstr "Ništa (normalan pregled)"
+
+#: modules/cdisplay_colorblind.c:487
+msgid "Protanopia (insensitivity to red)"
+msgstr "Protanopia (neosetnjivost na crveno)"
+
+#: modules/cdisplay_colorblind.c:491
+msgid "Deuteranopia (insensitivity to green)"
+msgstr "Deuteranopia (neosetnjivost na zeleno)"
+
+#: modules/cdisplay_colorblind.c:495
+msgid "Tritanopia (insensitivity to blue)"
+msgstr "Tiranopia (neosetnjivost na plavo)"
+
+#: modules/cdisplay_gamma.c:90
+msgid "Gamma color display filter"
+msgstr "Ekranski filter gama boja"
+
+#: modules/cdisplay_gamma.c:156
+msgid "Gamma"
+msgstr "Gama"
+
+#: modules/cdisplay_gamma.c:320
+msgid "Gamma:"
+msgstr "Gama:"
+
+#: modules/cdisplay_highcontrast.c:90
+msgid "High Contrast color display filter"
+msgstr "Ekranski filter boja visokog kontrasta"
+
+#: modules/cdisplay_highcontrast.c:156
+msgid "Contrast"
+msgstr "Kontrast"
+
+#: modules/cdisplay_highcontrast.c:318
+msgid "Contrast Cycles:"
+msgstr "Kontrast ciklus:"
+
+#: modules/colorsel_triangle.c:110
+msgid "Painter-style triangle color selector"
+msgstr "Odabirač trougla boja slikarskog stila"
+
+#: modules/colorsel_triangle.c:182
+msgid "_Triangle"
+msgstr "_Trougao"
+
+#: modules/colorsel_water.c:104
+msgid "Watercolor style color selector"
+msgstr "Izbor boje stila vodene boje"
+
+#: modules/colorsel_water.c:176
+msgid "_Watercolor"
+msgstr "_Vodena boja"
+
+#: modules/colorsel_water.c:251
+msgid "Pressure"
+msgstr "Pritisak"
