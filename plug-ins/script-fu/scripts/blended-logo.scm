@@ -90,9 +90,7 @@
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill dsl-layer-mask BACKGROUND-FILL)
     (gimp-layer-remove-mask drop-shadow-layer MASK-APPLY)
-    (gimp-selection-none img)
-
-    (gimp-context-pop)))
+    (gimp-selection-none img)))
 
 (define (script-fu-blended-logo-alpha img
 				      logo-layer
@@ -104,12 +102,16 @@
 				      blend-gradient
 				      blend-gradient-reverse)
   (begin
+    (gimp-context-push)
+
     (gimp-image-undo-group-start img)
     (apply-blended-logo-effect img logo-layer b-size bg-color
 			       blend-mode blend-fg blend-bg
 			       blend-gradient blend-gradient-reverse)
     (gimp-image-undo-group-end img)
-    (gimp-displays-flush)))
+    (gimp-displays-flush)
+
+    (gimp-context-pop)))
 
 
 (script-fu-register "script-fu-blended-logo-alpha"
