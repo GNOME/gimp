@@ -4,15 +4,15 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp_tips\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-21 00:18+0200\n"
-"PO-Revision-Date: 2002-10-17 22:00+0800\n"
-"Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
+"Project-Id-Version: gimp-tips\n"
+"POT-Creation-Date: 2003-09-17 02:36+0200\n"
+"PO-Revision-Date: 2003-09-12 17:47+0800\n"
+"Last-Translator: Xie Yuheng <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to The GIMP !</big>"
@@ -31,11 +31,10 @@ msgid ""
 msgstr "<tt>Ctrl</tt>+点击图层对话框中的图层蒙板的预览可以切换图层蒙板的效果。"
 
 #: tips/gimp-tips.xml.in.h:4
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color."
-msgstr "使用油漆桶填充工具时<tt>Shift</tt>+点击可以让它使用背景色而不是前景色"
+msgstr "使用油漆桶填充工具时<tt>Ctrl</tt>+点击可以让它使用背景色而不是前景色"
 
 #: tips/gimp-tips.xml.in.h:5
 msgid ""
@@ -54,26 +53,25 @@ msgstr ""
 "次<tt>Shift</tt>+点击显示所有的图层。"
 
 #: tips/gimp-tips.xml.in.h:7
-#, fuzzy
 msgid ""
 "A Floating Selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the \"New Layer\" "
 "or \"Anchor Layer buttons\" in the Layers dialog, or use the menus to do the "
 "same."
 msgstr ""
-"一个浮动选区必须在对图像进行其它操作之前先被固定。在“图层、通道和路径”对话框"
-"中点击新建图层或者固定图层的按钮，或者使用菜单也可以。"
+"在对图像进行其它操作之前，必须先把浮动选区固定到当前活动图层或者新的图层。点"
+"击图层对话框中的“新建图层”或者“固定浮动图层”，或者使用菜单也可以。"
 
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
 "menu item, and pressing the desired key combination. This is saved when you "
 "exit GIMP."
 msgstr ""
-"你可以给任意的菜单重新分配快捷键。只要弹出菜单，选择一个菜单项，然后按新的快"
-"捷键组合就行了。这是动态的并且退出 GIMP时会被保存下来。"
+"当你在首选项对话框中启用了“动态快捷键”以后，你就可以重新分配快捷键了。只要弹"
+"出菜单，选择一个菜单项，然后按新的快捷键组合就行了。退出 GIMP 时，这些将会被"
+"保存下来。"
 
 #: tips/gimp-tips.xml.in.h:9
 msgid ""
@@ -85,16 +83,15 @@ msgstr ""
 "可以用移动工具把参考线拖出图像外来删除它们。"
 
 #: tips/gimp-tips.xml.in.h:10
-#, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the \"Auto\" button in the Levels tool (Layer-"
 "&gt;Colors-&gt;Levels). If there are any color casts, you can correct them "
 "with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
 msgstr ""
-"如果一些你扫描的照片看起来色彩不足，你可以使用色阶工具(图像-&gt;颜色-&gt;色"
-"阶)中的“自动”按钮轻松改进它们色彩范围。如果有任何的颜色损失，你可以用曲线工具"
-"(图像-&gt;颜色-&gt;曲线)把它们纠正回来。"
+"如果你扫描的一些照片看起来色彩不足，你可以使用色阶工具(图层-&gt;颜色-&gt;色"
+"阶)中的“自动”按钮轻松改进它们的色彩效果。如果有什么颜色损失，你可以用曲线工具"
+"(图层-&gt;颜色-&gt;曲线)把它们纠正回来。"
 
 #: tips/gimp-tips.xml.in.h:11
 msgid ""
@@ -170,7 +167,6 @@ msgstr ""
 "朝下看，看到的是它们的内容的叠加。"
 
 #: tips/gimp-tips.xml.in.h:19
-#, fuzzy
 msgid ""
 "The file selection dialog box has command-line completion with <tt>Tab</tt>, "
 "just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voila, "
@@ -180,16 +176,15 @@ msgstr ""
 "部分，按<tt>Tab</tt>键，哇！它就补全了。"
 
 #: tips/gimp-tips.xml.in.h:20
-#, fuzzy
 msgid ""
 "The layer named \"Background\" is special because it lacks transparency. "
 "This prevents you from adding a layer mask or moving the layer up in the "
 "stack. You may add transparency to it by right-clicking in the Layers dialog "
 "and selecting \"Add Alpha Channel\"."
 msgstr ""
-"以“背景”命名的图层是特殊的，因为它不会有透明。这使你不能给它添加图层蒙板或者"
-"把这个图层沿堆栈上移。如果你想给它添加透明，可以在“图层、通道和路径”对话框中"
-"右点然后选择“添加Alpha 通道”。"
+"名叫“背景”的图层是特殊的，因为它不会有透明。这使你不能给它添加图层蒙板或者把"
+"这个图层沿堆栈上移。如果你想给它添加透明，可以在图层对话框中右点然后选择“添"
+"加 Alpha 通道”。"
 
 #: tips/gimp-tips.xml.in.h:21
 msgid ""
@@ -245,23 +240,21 @@ msgid ""
 msgstr "你可以点击并左右拖动鼠标来调整模糊选择的选区范围。"
 
 #: tips/gimp-tips.xml.in.h:27
-#, fuzzy
 msgid ""
 "You can create and edit complex selections using the Bezier tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
-"你可以用 Bezier 工具创建和编辑复杂的选区。“图层、通道和路径”对话框中的“路"
-"径”标签允许你同时操作多个路径以及把它们转换到选区。"
+"你可以用 Bezier 工具创建和编辑复杂的选区。路径对话框允许你同时操作多个路径以"
+"及把它们转换到选区。"
 
 #: tips/gimp-tips.xml.in.h:28
-#, fuzzy
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
 msgstr ""
-"你可以从“图层、通道和路径”对话框中拖动一个图层到工具箱中释放。这样会创建一幅"
-"只含有那个图层的新图像。"
+"你可以从图层对话框中拖动一个图层到工具箱中释放。这样会创建一幅只含有那个图层"
+"的新图像。"
 
 #: tips/gimp-tips.xml.in.h:29
 msgid ""
@@ -281,11 +274,10 @@ msgstr ""
 "单里面也可以。"
 
 #: tips/gimp-tips.xml.in.h:31
-#, fuzzy
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
-msgstr "你可以在“图层、通道和路径”对话框中右点图层的文本标签进行许多图层操作。"
+msgstr "你可以在图层对话框中右点图层的文本标签进行许多图层操作。"
 
 #: tips/gimp-tips.xml.in.h:32
 msgid ""
@@ -297,7 +289,6 @@ msgstr ""
 "的正方形或圆，或者使它以起始点为中心。"
 
 #: tips/gimp-tips.xml.in.h:33
-#, fuzzy
 msgid ""
 "You can save a selection to a channel (Select-&gt;Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -305,8 +296,8 @@ msgid ""
 "selection."
 msgstr ""
 "你可以将一个选区保存到一个通道(选择-&gt;保存到通道)然后用任何的画具修改这个通"
-"道。使用“图层、通道和路径”对话框中的“通道”标签，你可以切换这个新通道的可见状"
-"态或者把它转换成一个选区。"
+"道。使用通道对话框中的按钮，你可以切换这个新通道的可见状态或者把它转换成一个"
+"选区。"
 
 #: tips/gimp-tips.xml.in.h:34
 msgid ""
@@ -323,22 +314,21 @@ msgid ""
 msgstr "如果图像比它的显示窗口大的话，你可以使用鼠标中键来探照整幅图像。"
 
 #: tips/gimp-tips.xml.in.h:36
-#, fuzzy
 msgid ""
 "You can use the paint tools to change the selection. Click on the \"Quick "
 "Mask\" button at the bottom left of an image window. Change your selection "
 "by painting in the image and click on the button again to convert it back to "
 "a normal selection."
 msgstr ""
-"你可以使用画具来改变选区。点击图像窗口左下角的 Quick Mask按钮。在图像上涂画来"
+"你可以使用画具来改变选区。点击图像窗口左下角的“快速蒙板”按钮。在图像上涂画来"
 "改变你的选区，然后再次点击按钮把它转换回一个正常的选区。"
 
-#~ msgid ""
-#~ "If your fonts turn out blocky, that's because they're not scalable fonts. "
-#~ "Most X servers support scalable Type 1 Postscript fonts. Download and "
-#~ "install them. Some font servers allow you to use TrueType (<tt>.ttf</tt>) "
-#~ "fonts, which are also scalable."
-#~ msgstr ""
-#~ "如果你的字体呈现块状，那是因为它们不是可缩放字体。大多数的 X 服务都支持可"
-#~ "缩放的 Type 1 Postscript 字体。你可以下载并安装它们。有的字体服务器允许你"
-#~ "使用 TrueType (<tt>.ttf</tt>) 字体，这种字体也是可缩放的。"
+msgid ""
+"If your fonts turn out blocky, that's because they're not scalable fonts. "
+"Most X servers support scalable Type 1 Postscript fonts. Download and "
+"install them. Some font servers allow you to use TrueType (<tt>.ttf</tt>) "
+"fonts, which are also scalable."
+msgstr ""
+"如果你的字体呈现块状，那是因为它们不是可缩放字体。大多数的 X 服务都支持可缩放"
+"的 Type 1 Postscript 字体。你可以下载并安装它们。有的字体服务器允许你使用 "
+"TrueType (<tt>.ttf</tt>) 字体，这种字体也是可缩放的。"
