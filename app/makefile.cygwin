@@ -55,7 +55,6 @@ libgimpim.a : $(gimpim_OBJECTS)
 	
 gimp_OBJECTS = \
 	about_dialog.o		\
-	actionarea.o		\
 	airbrush.o		\
 	airbrush_blob.o		\
 	app_procs.o		\

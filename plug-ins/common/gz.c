@@ -559,7 +559,7 @@ load_image (char *filename, gint32 run_mode)
 		      &startupinfo, &processinfo))
     {
       g_message ("gz: CreateProcess failed: %d\n", GetLastError ());
-      g_free (tmp_name);
+      g_free (tmpname);
       _exit (127);
     }
   CloseHandle (f);

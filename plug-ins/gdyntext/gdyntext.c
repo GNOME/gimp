@@ -653,7 +653,7 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 #endif
 			PARAM_DRAWABLE, data->drawable_id,
 			PARAM_INT32, TRUE,
-			PARAM_FLOAT, (double)data->rotation * M_PI / 180.0,
+			PARAM_FLOAT, (double)data->rotation * G_PI / 180.0,
 #ifndef GIMP_HAVE_PARASITES
 			PARAM_COLOR, &old_color,
 #endif

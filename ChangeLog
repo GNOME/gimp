@@ -1,3 +1,42 @@
+1999-11-09  Tor Lillqvist  <tml@iki.fi>
+
+	* app/module_db.c (browser_destroy_callback): Must call
+	gimp_set_remove_handler() to remove the browser_info_update
+	handler from the GimpSet 'modules'.
+
+	Otherwise if we bring up the module browser, then close it, this
+	will call browser_destroy_callback(), which will free the
+	'browser_st' struct. Later when we exit the GIMP, the modules will
+	be unloaded, which will cause browser_info_update() to be called,
+	and passed the pointer to the already freed 'browser_st'. Whoopee.
+	Thanks to Electric Fence for pointing this out.
+
+	* app/makefile.{cygwin,msc}: Remove actionarea.
+
+	* libgimp/gimp.h: Change declaration of nonexistent function
+	gimp_layer_attach_new_parasite() to declaration of
+	gimp_drawable_attach_new_parasite(), which was missing.
+
+	* libgimp/gimpui.def
+	* libgimp/makefile.{cygwin,msc}: Add gimpcolorbutton.
+
+	* plug-ins/makefile.{cygwin,msc}: Add gap_filter and gap_plugins.
+
+	* plug-ins/common/gz.c: Fix renamed variable in Win32 part.
+
+	* plug-ins/gap/gap_lib.c: Use G_DIR_SEPARATOR_S.
+
+	* plug-ins/gdyntext/font_selection.c: When compiling with current
+	CVS GTk+ (i.e., on Win32 most likely) use the gdk_font_list_*
+	functions instead of Xlib's XListFonts() and XFreeFontNames().
+	
+	* plug-ins/gdyntext/gdyntext.c: Use G_PI.
+
+	* plug-ins/gdyntext/gdyntext_ui.c: Guard inclusion of
+	unistd.h. Don't unnecessarily include gdkx.h and Xlib.h
+
+	* plug-ins/winsnap/winsnap.c: Fix rectangle orientation.
+	
 Tue Nov  9 22:57:13 MET 1999  Sven Neumann <sven@gimp.org>
 	
 	* app/brush_select.c: take margin into account when deciding if 

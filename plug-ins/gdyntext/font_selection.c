@@ -22,9 +22,13 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <X11/Xlib.h>
-#include <gdk/gdkx.h>
 #include <gtk/gtk.h>
+#include <gtk/gtkfeatures.h>
+#if GTK_CHECK_VERSION(1,3,0)
+#include <gdk/gdkprivate.h>	/* For gdk_error_warnings, really needed? */
+#else
+#include <gdk/gdkx.h>		/* Need Xlib headers */
+#endif
 #include "libgimp/gimpintl.h"
 #include "font_selection.h"
 
@@ -104,7 +108,12 @@ static void font_selection_init(FontSelection *fs)
 	// FIXME: non '-*' fonts, disabled because GIMP can't use them!!!
 	xfontnames = XListFonts(GDK_DISPLAY(), "*", MAX_FONTS, &num_fonts);
 */
+#if GTK_CHECK_VERSION(1,3,0)
+	/* Have gdk_font_list_new() and gdk_font_list_free() */
+	xfontnames = gdk_font_list_new ("-*", &num_fonts);
+#else
 	xfontnames = XListFonts(GDK_DISPLAY(), "-*", MAX_FONTS, &num_fonts);
+#endif
 #else
 	{
 		FILE *f;
@@ -159,7 +168,11 @@ static void font_selection_init(FontSelection *fs)
 		}
 */
 	}
+#if GTK_CHECK_VERSION(1,3,0)
+	gdk_font_list_free (xfontnames);
+#else
 	XFreeFontNames(xfontnames);
+#endif
 #ifdef DEBUG_SPAM
 	puts("FontSelection: DONE");
 #endif

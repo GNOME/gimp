@@ -296,8 +296,8 @@ doCapture(HWND selectedHwnd)
     hdcSrc = CreateDC("DISPLAY", NULL, NULL, NULL);
 
     /* Get the screen's rectangle */
-    rect.bottom = 0;
-    rect.top = GetDeviceCaps(hdcSrc, VERTRES);
+    rect.top = 0;
+    rect.bottom = GetDeviceCaps(hdcSrc, VERTRES);
     rect.left = 0;
     rect.right = GetDeviceCaps(hdcSrc, HORZRES);
   }

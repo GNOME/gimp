@@ -611,7 +611,7 @@ int p_dir_ainfo(t_anim_info *ainfo_ptr)
    if(gap_debug) fprintf(stderr, "DEBUG p_dir_ainfo: BASENAME:%s\n", l_ptr);
    
    if      (l_ptr == l_dirname)   { l_dirname_ptr = ".";  l_dirflag = 0; }
-   else if (*l_dirname == '\0')   { l_dirname_ptr = "/" ; l_dirflag = 1; }
+   else if (*l_dirname == '\0')   { l_dirname_ptr = G_DIR_SEPARATOR_S ; l_dirflag = 1; }
    else                           { l_dirname_ptr = l_dirname; l_dirflag = 2; }
 
    if(gap_debug) fprintf(stderr, "DEBUG p_dir_ainfo: DIRNAME:%s\n", l_dirname_ptr);

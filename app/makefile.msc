@@ -62,7 +62,6 @@ gimpim.lib : $(gimpim_OBJECTS)
 	
 gimp_OBJECTS = \
 	about_dialog.obj	\
-	actionarea.obj		\
 	airbrush.obj		\
 	airbrush_blob.obj	\
 	app_procs.obj		\

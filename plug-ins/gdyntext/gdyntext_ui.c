@@ -19,16 +19,17 @@
  *
  * $Id$
  */
+#include "config.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <stdio.h>
 #include <string.h>
 #include <libgimp/gimp.h>
 #include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-#include <X11/Xlib.h>
 #include "gdyntext_ui.h"
 
 #include "graphics/antialias.xpm"

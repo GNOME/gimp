@@ -50,7 +50,8 @@ install : all
 
 gimpi_OBJECTS = \
 	gimpenv.o	\
-	gimpchainbutton.o\
+	gimpchainbutton.o \
+	gimpcolorbutton.o \
 	gimpfileselection.o\
 	gimpmatrix.o	\
 	gimppatheditor.o\
@@ -132,6 +133,7 @@ gimpui_OBJECTS = \
 	gimpmenu.o	\
 	gimpbrushmenu.o	\
 	gimpchainbutton.o \
+	gimpcolorbutton.o \
 	gimpexport.o \
 	gimpfileselection.o \
 	gimpgradientmenu.o \

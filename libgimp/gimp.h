@@ -727,9 +727,9 @@ Parasite  *gimp_drawable_parasite_find   (gint32      drawable,
 					  const char *name);
 void       gimp_drawable_parasite_attach (gint32      drawable,
 					  const Parasite *p);
-void       gimp_layer_attach_new_parasite(gint32      drawable,
-					  const char *name, int flags,
-					  int size, const void *data);
+void       gimp_drawable_attach_new_parasite(gint32      drawable,
+					     const char *name, int flags,
+					     int size, const void *data);
 void       gimp_drawable_parasite_detach (gint32      drawable,
 					  const char *name);
 guchar *   gimp_drawable_get_thumbnail_data (gint32 drawable_ID,
