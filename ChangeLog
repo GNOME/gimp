@@ -1,5 +1,12 @@
 2004-10-12  Sven Neumann  <sven@gimp.org>
 
+	* app/file/file-open.c: minor cleanup.
+
+	* app/file/file-save.c (file_save_as): no need to fiddle with the
+	image name, the URI is taken from the imagefile anyway.
+
+2004-10-12  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/layers-actions.c (layers_actions_update): set
 	"layers-crop" insensitive if the selection is empty.
 
