@@ -1,5 +1,14 @@
 2001-03-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/Makefile.am
+	* app/tools/gimpiscissorstool.[ch]: no. 15 is alive.
+
+	* app/tools/gimptool.[ch]
+	* app/tools/selection_options.c
+	* app/tools/tools.c: changed accordingly.
+
+2001-03-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimplayerlistview.c: minor cleanups.
 
 	* app/tools/Makefile.am

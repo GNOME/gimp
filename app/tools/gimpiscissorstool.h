@@ -16,12 +16,86 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __ISCISSORS_H__
-#define __ISCISSORS_H__
+#ifndef __GIMP_ISCISSORS_TOOL_H__
+#define __GIMP_ISCISSORS_TOOL_H__
 
 
-Tool * tools_new_iscissors  (void);
-void   tools_free_iscissors (Tool *tool);
+#include "gimpdrawtool.h"
 
 
-#endif  /*  __ISCISSORS_H__  */
+/*  The possible states...  */
+typedef enum
+{
+  NO_ACTION,
+  SEED_PLACEMENT,
+  SEED_ADJUSTMENT,
+  WAITING
+} Iscissors_state;
+
+/*  The possible drawing states...  */
+typedef enum
+{
+  DRAW_NOTHING      = 0x0,
+  DRAW_CURRENT_SEED = 0x1,
+  DRAW_CURVE        = 0x2,
+  DRAW_ACTIVE_CURVE = 0x4,
+  DRAW_LIVEWIRE     = 0x8,
+
+  DRAW_ALL          = (DRAW_CURRENT_SEED | DRAW_CURVE)
+} Iscissors_draw;
+
+typedef struct _ICurve ICurve;
+
+
+#define GIMP_TYPE_ISCISSORS_TOOL            (gimp_iscissors_tool_get_type ())
+#define GIMP_ISCISSORS_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_ISCISSORS_TOOL, GimpIscissorsTool))
+#define GIMP_IS_ISCISSORS_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_ISCISSORS_TOOL))
+#define GIMP_ISCISSORS_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ISCISSORS_TOOL, GimpIscissorsToolClass))
+#define GIMP_IS_ISCISSORS_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ISCISSORS_TOOL))
+
+
+typedef struct _GimpIscissorsTool      GimpIscissorsTool;
+typedef struct _GimpIscissorsToolClass GimpIscissorsToolClass;
+
+struct _GimpIscissorsTool
+{
+  GimpDrawTool    parent_instance;
+
+  SelectOps       op;
+
+  gint            x, y;         /*  upper left hand coordinate            */
+  gint            ix, iy;       /*  initial coordinates                   */
+  gint            nx, ny;       /*  new coordinates                       */
+
+  TempBuf        *dp_buf;       /*  dynamic programming buffer            */
+
+  ICurve         *livewire;     /*  livewire boundary curve               */
+
+  ICurve         *curve1;       /*  1st curve connected to current point  */
+  ICurve         *curve2;       /*  2nd curve connected to current point  */
+
+  GSList         *curves;       /*  the list of curves                    */
+
+  gboolean        first_point;  /*  is this the first point?              */
+  gboolean        connected;    /*  is the region closed?                 */
+
+  Iscissors_state state;        /*  state of iscissors                    */
+  Iscissors_draw  draw;         /*  items to draw on a draw request       */
+
+  /* XXX might be useful */
+  GimpChannel    *mask;         /*  selection mask                        */
+  TileManager    *gradient_map; /*  lazily filled gradient map            */
+};
+
+struct _GimpIscissorsToolClass
+{
+  GimpDrawToolClass parent_class;
+};
+
+
+void       gimp_iscissors_tool_register (void);
+
+GtkType    gimp_iscissors_tool_get_type (void);
+
+
+#endif  /*  __GIMP_ISCISSORS_TOOL_H__  */

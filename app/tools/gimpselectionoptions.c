@@ -28,6 +28,7 @@
 
 #include "gimpellipseselecttool.h"
 #include "gimpfuzzyselecttool.h"
+#include "gimpiscissorstool.h"
 #include "gimprectselecttool.h"
 #include "gimptool.h"
 #include "gimptoolinfo.h"

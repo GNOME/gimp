@@ -598,34 +598,6 @@ ToolInfo tool_info[] =
 
   {
     NULL,
-    N_("Intelligent Scissors"),
-    N_("/Tools/Select Tools/Intelligent Scissors"),
-    "I",
-    (char **) iscissors_bits,
-    NULL,
-    NULL,
-    N_("Select shapes from image"),
-    "tools/intelligent_scissors.html",
-    ISCISSORS,
-    tools_new_iscissors,
-    tools_free_iscissors,
-    NULL,
-    NULL,
-    NULL,
-    {
-      scissors_small_bits, scissors_small_mask_bits,
-      scissors_small_width, scissors_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
-  {
-    NULL,
     N_("Transform"),
     N_("/Tools/Transform Tools/Transform"),
     "<shift>T",

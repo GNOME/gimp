@@ -39,8 +39,8 @@ libapptools_la_SOURCES = \
 	gimpinktool.h		\
 	gimpinktool-blob.c	\
 	gimpinktool-blob.h	\
-##	gimpiscissorstool.c	\
-##	gimpiscissorstool.h	\
+	gimpiscissorstool.c	\
+	gimpiscissorstool.h	\
 	gimpmagnifytool.c	\
 	gimpmagnifytool.h	\
 	gimpmeasuretool.c	\

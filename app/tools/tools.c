@@ -40,6 +40,7 @@
 #include "gimpfreeselecttool.h"
 #include "gimpfuzzyselecttool.h"
 #include "gimpinktool.h"
+#include "gimpiscissorstool.h"
 #include "gimpmagnifytool.h"
 #include "gimpmeasuretool.h"
 #include "gimpmovetool.h"
@@ -90,9 +91,9 @@ register_tools (void)
   gimp_magnify_tool_register ();
   gimp_color_picker_tool_register ();
 
-  /*  selection tool */
+  /*  selection tools */
 
-  /* gimp_iscissors_tool_register (); */
+  gimp_iscissors_tool_register ();
   gimp_fuzzy_select_tool_register ();
   gimp_free_select_tool_register ();
   gimp_ellipse_select_tool_register ();
