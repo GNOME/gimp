@@ -294,11 +294,11 @@ sub _pseudoclass {
   push(@{"${class}::PREFIXES"}		, @prefixes); @prefixes=@{"${class}::PREFIXES"};
 }
 
-_pseudoclass qw(Layer		gimp_layer_ gimp_drawable_ gimp_floating_sel_ gimp_image_ gimp_);
-_pseudoclass qw(Image		gimp_image_ gimp_drawable_ gimp_);
-_pseudoclass qw(Drawable	gimp_drawable_ gimp_layer_ gimp_image_ gimp_);
+_pseudoclass qw(Layer		gimp_layer_ gimp_drawable_ gimp_floating_sel_ gimp_image_ gimp_ plug_in_);
+_pseudoclass qw(Image		gimp_image_ gimp_drawable_ gimp_ plug_in_);
+_pseudoclass qw(Drawable	gimp_drawable_ gimp_layer_ gimp_image_ gimp_ plug_in_);
 _pseudoclass qw(Selection 	gimp_selection_);
-_pseudoclass qw(Channel		gimp_channel_ gimp_drawable_ gimp_selection_ gimp_image_ gimp_);
+_pseudoclass qw(Channel		gimp_channel_ gimp_drawable_ gimp_selection_ gimp_image_ gimp_ plug_in_);
 _pseudoclass qw(Display		gimp_display_ gimp_);
 _pseudoclass qw(Plugin		plug_in_);
 _pseudoclass qw(Gradients	gimp_gradients_);

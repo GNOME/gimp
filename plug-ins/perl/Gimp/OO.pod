@@ -97,12 +97,14 @@ that are checked are shown as well (the null prefix "" is implicit).
  gimp_floating_sel_
  gimp_image_
  gimp_
+ plug_in_
 
 =item Image
 
  gimp_image_
  gimp_drawable_
  gimp_
+ plug_in_
 
 =item Drawable
 
@@ -110,6 +112,7 @@ that are checked are shown as well (the null prefix "" is implicit).
  gimp_layer_
  gimp_image_
  gimp_
+ plug_in_
 
 =item Selection
 
@@ -122,6 +125,7 @@ that are checked are shown as well (the null prefix "" is implicit).
  gimp_selection_
  gimp_image_
  gimp_
+ plug_in_
 
 =item Display
 

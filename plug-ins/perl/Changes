@@ -1,5 +1,12 @@
 Revision history for Gimp-Perl extension.
 
+	- the syntax really gets tricky - references to INT32 and similar
+	  types are no longer accepted (was buggy anyway).
+	- added plug_in_ prefix to layer, darwable, image and channel. We
+	  can now write $layer->sharpen(50), and gimp infers function name,
+	  run_mode and image
+	- enhanced the testuite, it now checks much more features
+
 1.045 Sun Nov  1 23:40:20 CET 1998
 	- more configuration cleanups
 	- fixed Gimp::Fu to respect RUN_WITH_LAST_VALS again

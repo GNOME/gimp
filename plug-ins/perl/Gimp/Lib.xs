@@ -616,6 +616,11 @@ push_gimp_sv (GParam *arg, int array_as_ref)
     } \
 }
 
+#define sv2gimp_extract_noref(fun,str) \
+	fun(sv); \
+        if (SvROK(sv)) \
+          sprintf (croak_str, "Unable to convert a reference to type '%s'\n", str); \
+      	break;
 /*
  * convert a perl scalar into a GParam, return true if
  * the argument has been consumed.
@@ -625,19 +630,19 @@ convert_sv2gimp (char *croak_str, GParam *arg, SV *sv)
 {
   switch (arg->type)
     {
-      case PARAM_INT32:		arg->data.d_int32	= SvIV(sv); break;
-      case PARAM_INT16:		arg->data.d_int16	= SvIV(sv); break;
-      case PARAM_INT8:		arg->data.d_int8	= SvIV(sv); break;
-      case PARAM_FLOAT:		arg->data.d_float	= SvNV(sv); break;
-      case PARAM_STRING:	arg->data.d_string	= SvPv(sv); break;
+      case PARAM_INT32:      	arg->data.d_int32	= sv2gimp_extract_noref (SvIV, "INT32");
+      case PARAM_INT16:		arg->data.d_int16	= sv2gimp_extract_noref (SvIV, "INT16");
+      case PARAM_INT8:		arg->data.d_int8	= sv2gimp_extract_noref (SvIV, "INT8");
+      case PARAM_FLOAT:		arg->data.d_float	= sv2gimp_extract_noref (SvNV, "FLOAT");;
+      case PARAM_STRING:	arg->data.d_string	= sv2gimp_extract_noref (SvPv, "STRING");;
       case PARAM_DISPLAY:	arg->data.d_display	= unbless(sv, PKG_DISPLAY  , croak_str); break;
       case PARAM_LAYER:		arg->data.d_layer	= unbless(sv, PKG_ANY      , croak_str); break;
       case PARAM_CHANNEL:	arg->data.d_channel	= unbless(sv, PKG_ANY      , croak_str); break;
       case PARAM_DRAWABLE:	arg->data.d_drawable	= unbless(sv, PKG_ANY      , croak_str); break;
       case PARAM_SELECTION:	arg->data.d_selection	= unbless(sv, PKG_SELECTION, croak_str); break;
-      case PARAM_BOUNDARY:	arg->data.d_boundary	= SvIV(sv); break;
-      case PARAM_PATH:		arg->data.d_path	= SvIV(sv); break;
-      case PARAM_STATUS:	arg->data.d_status	= SvIV(sv); break;
+      case PARAM_BOUNDARY:	arg->data.d_boundary	= sv2gimp_extract_noref (SvIV, "BOUNDARY");;
+      case PARAM_PATH:		arg->data.d_path	= sv2gimp_extract_noref (SvIV, "PATH");;
+      case PARAM_STATUS:	arg->data.d_status	= sv2gimp_extract_noref (SvIV, "STATUS");;
       case PARAM_IMAGE:
       	if (sv_derived_from (sv, PKG_DRAWABLE))
       	  arg->data.d_image = gimp_drawable_image_id    (unbless(sv, PKG_DRAWABLE, croak_str));
@@ -1053,7 +1058,7 @@ gimp_call_procedure (proc_name, ...)
     		          for (i = 0; i < nparams && j < items-1; i++)
 		            {
 		              args[i].type = params[i].type;
-		              if (i==0 && no_runmode == 2)
+		              if (i == 0 && no_runmode == 2)
 		                args->data.d_int32 = RUN_NONINTERACTIVE;
 		              else if ((!SvROK(ST(j+1)) || i >= nparams-1 || !is_array (params[i+1].type))
 		                       && convert_sv2gimp (croak_str, &args[i], ST(j+1)))
@@ -1063,7 +1068,7 @@ gimp_call_procedure (proc_name, ...)
 		                {
 		                  if (!no_runmode)
 		                    {
-		                      croak_str [0]=0;
+		                      croak_str [0] = 0;
 		                      break;
 		                    }
 		                  
