@@ -1,3 +1,8 @@
+2002-05-27  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig.c (gimp_config_serialize): fixed error code
+	and improved error messages.
+
 2002-05-27  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpsizeentry.c (gimp_size_entry_attach_label):

@@ -213,7 +213,7 @@ gimp_config_serialize (GObject      *object,
   if (fd == -1)
     {
       g_set_error (error, 
-                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_OPEN, 
+                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE, 
                    _("Failed to create temporary file for '%s': %s"),
                    filename, g_strerror (errno));
       g_free (tmpname);
@@ -234,10 +234,22 @@ gimp_config_serialize (GObject      *object,
 
   if (! success)
     {
-      g_set_error (error,
-                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
-                   _("Error when writing to file '%s': %s"),
-                   tmpname, g_strerror (errno));
+      gchar *msg;
+
+      if (g_file_test (filename, G_FILE_TEST_EXIST))
+        {
+          msg = g_strdup_printf (_("Error when writing to temporary file for '%s': %s\n"
+                                   "The original file has not been touched."),
+                                 filename, g_strerror (errno));
+        }
+      else
+        {
+          msg = g_strdup_printf (_("Error when writing to temporary file for '%s': %s\n"
+                                   "No file has been created."),
+                                 filename, g_strerror (errno));
+        }
+
+      g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE, msg);
 
       unlink (tmpname);
     }
@@ -247,7 +259,7 @@ gimp_config_serialize (GObject      *object,
   if (success && rename (tmpname, filename) == -1)
     {
       g_set_error (error, 
-                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_OPEN, 
+                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
                    _("Failed to create file '%s': %s"),
                    filename, g_strerror (errno));
 
