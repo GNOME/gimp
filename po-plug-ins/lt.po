@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plugins HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-11 00:09+0200\n"
+"POT-Creation-Date: 2005-02-22 23:04+0100\n"
 "PO-Revision-Date: 2005-02-10 21:27+0200\n"
 "Last-Translator: Giedrius Naudžiūnas <gimpng@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -373,7 +373,7 @@ msgstr "_Fraktalai"
 #: ../plug-ins/common/dicom.c:647 ../plug-ins/common/gbr.c:586
 #: ../plug-ins/common/gif.c:994 ../plug-ins/common/gih.c:1254
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/jpeg.c:1498
-#: ../plug-ins/common/mng.c:557 ../plug-ins/common/mng.c:941
+#: ../plug-ins/common/mng.c:558 ../plug-ins/common/mng.c:946
 #: ../plug-ins/common/pat.c:433 ../plug-ins/common/pcx.c:585
 #: ../plug-ins/common/pix.c:515 ../plug-ins/common/png.c:1178
 #: ../plug-ins/common/pnm.c:809 ../plug-ins/common/postscript.c:1123
@@ -412,7 +412,7 @@ msgstr ""
 #: ../plug-ins/common/dicom.c:290 ../plug-ins/common/gbr.c:327
 #: ../plug-ins/common/gifload.c:296 ../plug-ins/common/gih.c:648
 #: ../plug-ins/common/jpeg.c:946 ../plug-ins/common/jpeg.c:2607
-#: ../plug-ins/common/mng.c:1112 ../plug-ins/common/pat.c:300
+#: ../plug-ins/common/mng.c:1117 ../plug-ins/common/pat.c:300
 #: ../plug-ins/common/pcx.c:302 ../plug-ins/common/pix.c:332
 #: ../plug-ins/common/png.c:674 ../plug-ins/common/pnm.c:432
 #: ../plug-ins/common/postscript.c:990 ../plug-ins/common/psd.c:1759
@@ -424,7 +424,7 @@ msgstr ""
 #: ../plug-ins/common/xwd.c:422 ../plug-ins/faxg3/faxg3.c:220
 #: ../plug-ins/fits/fits.c:337 ../plug-ins/flame/flame.c:412
 #: ../plug-ins/gfig/gfig.c:431 ../plug-ins/gfli/gfli.c:424
-#: ../plug-ins/gfli/gfli.c:460 ../plug-ins/help/domain.c:421
+#: ../plug-ins/gfli/gfli.c:460 ../plug-ins/help/domain.c:423
 #: ../plug-ins/winicon/icoload.c:126 ../plug-ins/xjt/xjt.c:2526
 #: ../plug-ins/xjt/xjt.c:2534
 #, fuzzy, c-format
@@ -3561,7 +3561,7 @@ msgid "Composing Images..."
 msgstr ""
 
 #: ../plug-ins/common/film.c:438 ../plug-ins/common/guillotine.c:183
-#: ../plug-ins/helpbrowser/dialog.c:523
+#: ../plug-ins/helpbrowser/dialog.c:525
 msgid "Untitled"
 msgstr ""
 
@@ -4081,7 +4081,7 @@ msgstr "_Kartoti visada"
 msgid "_Delay between frames where unspecified:"
 msgstr ""
 
-#: ../plug-ins/common/gif.c:1380 ../plug-ins/common/mng.c:1522
+#: ../plug-ins/common/gif.c:1380 ../plug-ins/common/mng.c:1527
 msgid "milliseconds"
 msgstr ""
 
@@ -5047,114 +5047,114 @@ msgstr "Suliejimas centre"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/mng.c:494 ../plug-ins/common/png.c:1562
+#: ../plug-ins/common/mng.c:495 ../plug-ins/common/png.c:1562
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1309
+#: ../plug-ins/common/mng.c:1314
 msgid "Save as MNG"
 msgstr "Išsaugoti kaip MNG"
 
-#: ../plug-ins/common/mng.c:1322
+#: ../plug-ins/common/mng.c:1327
 #, fuzzy
 msgid "MNG Options"
 msgstr "GIF parinktys"
 
-#: ../plug-ins/common/mng.c:1328
+#: ../plug-ins/common/mng.c:1333
 msgid "Interlace"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1340
+#: ../plug-ins/common/mng.c:1345
 #, fuzzy
 msgid "Save background color"
 msgstr "Fonas"
 
-#: ../plug-ins/common/mng.c:1351
+#: ../plug-ins/common/mng.c:1356
 #, fuzzy
 msgid "Save gamma"
 msgstr "GIF komentaras:"
 
-#: ../plug-ins/common/mng.c:1361
+#: ../plug-ins/common/mng.c:1366
 #, fuzzy
 msgid "Save resolution"
 msgstr "Raiška"
 
-#: ../plug-ins/common/mng.c:1372
+#: ../plug-ins/common/mng.c:1377
 #, fuzzy
 msgid "Save creation time"
 msgstr "GIF komentaras:"
 
-#: ../plug-ins/common/mng.c:1391
+#: ../plug-ins/common/mng.c:1396
 msgid "PNG"
 msgstr "PNG"
 
-#: ../plug-ins/common/mng.c:1392
+#: ../plug-ins/common/mng.c:1397
 msgid "JNG"
 msgstr "JNG"
 
-#: ../plug-ins/common/mng.c:1395
+#: ../plug-ins/common/mng.c:1400
 msgid "PNG + delta PNG"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1396
+#: ../plug-ins/common/mng.c:1401
 msgid "JNG + delta PNG"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1397
+#: ../plug-ins/common/mng.c:1402
 msgid "All PNG"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1398
+#: ../plug-ins/common/mng.c:1403
 msgid "All JNG"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1410
+#: ../plug-ins/common/mng.c:1415
 msgid "Default chunks type:"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1413
+#: ../plug-ins/common/mng.c:1418
 msgid "Combine"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1414
+#: ../plug-ins/common/mng.c:1419
 msgid "Replace"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1425
+#: ../plug-ins/common/mng.c:1430
 msgid "Default frame disposal:"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1437
+#: ../plug-ins/common/mng.c:1442
 msgid "PNG compression level:"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1445 ../plug-ins/common/png.c:1703
+#: ../plug-ins/common/mng.c:1450 ../plug-ins/common/png.c:1703
 msgid "Choose a high compression level for small file size"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1459
+#: ../plug-ins/common/mng.c:1464
 #, fuzzy
 msgid "JPEG compression quality:"
 msgstr "Gimp-Print versija"
 
-#: ../plug-ins/common/mng.c:1476
+#: ../plug-ins/common/mng.c:1481
 msgid "JPEG smoothing factor:"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1486
+#: ../plug-ins/common/mng.c:1491
 #, fuzzy
 msgid "Animated MNG options"
 msgstr "GIF parinktys"
 
-#: ../plug-ins/common/mng.c:1492
+#: ../plug-ins/common/mng.c:1497
 msgid "Loop"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1506
+#: ../plug-ins/common/mng.c:1511
 msgid "Default frame delay:"
 msgstr ""
 
-#: ../plug-ins/common/mng.c:1584
+#: ../plug-ins/common/mng.c:1589
 #, fuzzy
 msgid "MNG animation"
 msgstr "GIF parinktys"
@@ -9913,39 +9913,39 @@ msgid ""
 "(or similar) to your gimprc file."
 msgstr ""
 
-#: ../plug-ins/help/domain.c:175
+#: ../plug-ins/help/domain.c:177
 msgid "The GIMP help files are not installed."
 msgstr ""
 
-#: ../plug-ins/help/domain.c:177
+#: ../plug-ins/help/domain.c:179
 msgid "There is a problem with the GIMP help files."
 msgstr ""
 
-#: ../plug-ins/help/domain.c:182
+#: ../plug-ins/help/domain.c:184
 msgid "Please check your installation."
 msgstr ""
 
-#: ../plug-ins/help/domain.c:190
+#: ../plug-ins/help/domain.c:192
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr ""
 
-#: ../plug-ins/help/domain.c:447
+#: ../plug-ins/help/domain.c:449
 #, fuzzy, c-format
 msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr "GIF: atidarymas nepavyko %s\n"
 
-#: ../plug-ins/helpbrowser/dialog.c:157
+#: ../plug-ins/helpbrowser/dialog.c:159
 msgid "GIMP Help browser"
 msgstr "GIMP pagalbos naršyklė"
 
-#: ../plug-ins/helpbrowser/dialog.c:409
+#: ../plug-ins/helpbrowser/dialog.c:411
 msgid "Document not found"
 msgstr ""
 
-#: ../plug-ins/helpbrowser/dialog.c:411
+#: ../plug-ins/helpbrowser/dialog.c:413
 msgid "The requested URL could not be loaded:"
 msgstr ""
 

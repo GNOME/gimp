@@ -26,6 +26,10 @@ Bugs fixed in GIMP 2.2.4
 - let the py-slice script ignore out-of-bounds guides (bug #167843)
 - store thumbnails in temporary folder if no valid home directory exists
   (bug #167973)
+- fixed Emboss plug-in for small images (bug #168022)
+- avoid crashes in toolbox size allocation code (bug #162500)
+- switch from display-wide grab to application-wide grab while tool
+  actions are being performed (bug #162823)
 
 
 Bugs fixed in GIMP 2.2.3

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-02 22:30+0200\n"
+"POT-Creation-Date: 2005-02-22 23:04+0100\n"
 "PO-Revision-Date: 2005-02-02 22:30+0200\n"
 "Last-Translator: Giedrius Naudžiūnas <gimpng@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -18,79 +18,84 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:129
+#: ../libgimp/gimpbrushmenu.c:129
 msgid "Brush Selection"
 msgstr "Teptuko pasirinkimas"
 
-#: libgimp/gimpbrushmenu.c:158 libgimp/gimppatternmenu.c:142
+#: ../libgimp/gimpbrushmenu.c:158 ../libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr "_Naršyti..."
 
-#: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
+#: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
 #, c-format
 msgid "%s can't handle layers"
 msgstr "%s negali suprasti sluoksnių"
 
-#: libgimp/gimpexport.c:216 libgimp/gimpexport.c:225 libgimp/gimpexport.c:234
+#: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
+#: ../libgimp/gimpexport.c:234
 msgid "Merge Visible Layers"
 msgstr "Sujungti matomus sluoksnius"
 
-#: libgimp/gimpexport.c:224
+#: ../libgimp/gimpexport.c:224
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr "%s negali suprasti sluoksnio poslinkių, dydžio ar nepermatomumo"
 
-#: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
+#: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
 #, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "%s gali suprasti sluoksnius tik kaip animacijos kadrus"
 
-#: libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
+#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
 msgid "Save as Animation"
 msgstr "Išsaugoti kaip animaciją"
 
-#: libgimp/gimpexport.c:243 libgimp/gimpexport.c:252 libgimp/gimpexport.c:261
+#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:261
 msgid "Flatten Image"
 msgstr "Suploti paveikslėlį"
 
-#: libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:260
 #, c-format
 msgid "%s can't handle transparency"
 msgstr "%s negali suprasti permatomumo"
 
-#: libgimp/gimpexport.c:269
+#: ../libgimp/gimpexport.c:269
 #, c-format
 msgid "%s can't handle layer masks"
 msgstr "%s negali suprasti sluoksnio kaukių"
 
-#: libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
 msgstr "Pritaikyti sluoksnio kaukę"
 
-#: libgimp/gimpexport.c:278
+#: ../libgimp/gimpexport.c:278
 #, c-format
 msgid "%s can only handle RGB images"
 msgstr "%s gali suprasti tik RGB paveikslėlius"
 
-#: libgimp/gimpexport.c:279 libgimp/gimpexport.c:317 libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
+#: ../libgimp/gimpexport.c:326
 msgid "Convert to RGB"
 msgstr "Konvertuoti į RGB"
 
-#: libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:287
 #, c-format
 msgid "%s can only handle grayscale images"
 msgstr "%s gali suprasti tik pilkumo atspalvių (grayscale) paveikslėlius"
 
-#: libgimp/gimpexport.c:288 libgimp/gimpexport.c:317 libgimp/gimpexport.c:338
+#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:317
+#: ../libgimp/gimpexport.c:338
 msgid "Convert to Grayscale"
 msgstr "Konvertuoti į pilkumo atspalvius (grayscale)"
 
-#: libgimp/gimpexport.c:296
+#: ../libgimp/gimpexport.c:296
 #, c-format
 msgid "%s can only handle indexed images"
 msgstr "%s gali suprasti tik indeksuotus paveikslėlius"
 
-#: libgimp/gimpexport.c:297 libgimp/gimpexport.c:326 libgimp/gimpexport.c:336
+#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:336
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -98,12 +103,12 @@ msgstr ""
 "Konvertuoti į indeksuotą naudojant įprastus nustatymus\n"
 "(Rezultatą galima paderinti rankiniu būdu)"
 
-#: libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:306
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
 msgstr "%s gali suprasti tik bitmap (dviejų spalvų) indeksuotus paveikslėlius"
 
-#: libgimp/gimpexport.c:307
+#: ../libgimp/gimpexport.c:307
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -111,53 +116,53 @@ msgstr ""
 "Konvertuoti į indeksuotą naudojant bitmap įprastus nustatymus\n"
 "(Rezultatą galima paderinti rankiniu būdu)"
 
-#: libgimp/gimpexport.c:316
+#: ../libgimp/gimpexport.c:316
 #, c-format
 msgid "%s can only handle RGB or grayscale images"
 msgstr ""
 "%s gali suprasti tik RGB ar pilkumo atspalvių (grayscale) paveikslėlius"
 
-#: libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:325
 #, c-format
 msgid "%s can only handle RGB or indexed images"
 msgstr "%s gali suprasti tik RGB ar indeksuotus paveikslėlius"
 
-#: libgimp/gimpexport.c:335
+#: ../libgimp/gimpexport.c:335
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
 msgstr "%s gali apdoroti tik pilkumo atspalvių ar indeksuotus·paveikslėlius"
 
-#: libgimp/gimpexport.c:346
+#: ../libgimp/gimpexport.c:346
 #, c-format
 msgid "%s needs an alpha channel"
 msgstr "%s reikia alfa kanalo"
 
-#: libgimp/gimpexport.c:347
+#: ../libgimp/gimpexport.c:347
 msgid "Add Alpha Channel"
 msgstr "Pridėti alfa kanalą"
 
-#: libgimp/gimpexport.c:381
+#: ../libgimp/gimpexport.c:381
 msgid "Confirm Save"
 msgstr "Patvirtinkit išsaugojimą"
 
-#: libgimp/gimpexport.c:387
+#: ../libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr "Patvirtinkit"
 
-#: libgimp/gimpexport.c:454
+#: ../libgimp/gimpexport.c:454
 msgid "Export File"
 msgstr "Eksportuoti bylą"
 
-#: libgimp/gimpexport.c:458
+#: ../libgimp/gimpexport.c:458
 msgid "_Ignore"
 msgstr "_Ignoruoti"
 
-#: libgimp/gimpexport.c:460
+#: ../libgimp/gimpexport.c:460
 msgid "_Export"
 msgstr "_Eksportuoti"
 
 #. the headline
-#: libgimp/gimpexport.c:482
+#: ../libgimp/gimpexport.c:482
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -167,442 +172,462 @@ msgstr ""
 "priežasčių:"
 
 #. the footline
-#: libgimp/gimpexport.c:553
+#: ../libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
 msgstr "Eksportavimas nepakeis Jūsų originalaus paveikslėlio."
 
-#: libgimp/gimpexport.c:653
+#: ../libgimp/gimpexport.c:653
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpexport.c:659
+#: ../libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpfontmenu.c:89
+#: ../libgimp/gimpfontmenu.c:89
 msgid "Font Selection"
 msgstr "Šriftų pasirinkimas"
 
-#: libgimp/gimpgradientmenu.c:104
+#: ../libgimp/gimpgradientmenu.c:104
 msgid "Gradient Selection"
 msgstr "Perėjimų pasirinkimas"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
+#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
 msgstr "(Tuščias)"
 
-#: libgimp/gimppalettemenu.c:91
+#: ../libgimp/gimppalettemenu.c:91
 msgid "Palette Selection"
 msgstr "Raštų pasirinkimas"
 
-#: libgimp/gimppatternmenu.c:113
+#: ../libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
 msgstr "Raštų pasirinkimas"
 
-#: libgimp/gimpunitcache.c:57
+#: ../libgimp/gimpunitcache.c:57
 msgid "percent"
 msgstr "procentų"
 
-#: libgimpbase/gimpbaseenums.c:23
+#: ../libgimpbase/gimpbaseenums.c:23
 msgid "Small"
 msgstr "Mažas"
 
-#: libgimpbase/gimpbaseenums.c:24
+#: ../libgimpbase/gimpbaseenums.c:24
 msgid "Medium"
 msgstr "Vidutinis"
 
-#: libgimpbase/gimpbaseenums.c:25
+#: ../libgimpbase/gimpbaseenums.c:25
 msgid "Large"
 msgstr "Didelis"
 
-#: libgimpbase/gimpbaseenums.c:57
+#: ../libgimpbase/gimpbaseenums.c:57
 msgid "Light Checks"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:58
+#: ../libgimpbase/gimpbaseenums.c:58
 msgid "Mid-Tone Checks"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:59
+#: ../libgimpbase/gimpbaseenums.c:59
 msgid "Dark Checks"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:60
+#: ../libgimpbase/gimpbaseenums.c:60
 msgid "White Only"
 msgstr "Tik baltas"
 
-#: libgimpbase/gimpbaseenums.c:61
+#: ../libgimpbase/gimpbaseenums.c:61
 msgid "Gray Only"
 msgstr "Tik pilkas"
 
-#: libgimpbase/gimpbaseenums.c:62
+#: ../libgimpbase/gimpbaseenums.c:62
 msgid "Black Only"
 msgstr "Tik juoda"
 
-#: libgimpbase/gimpbaseenums.c:91
+#: ../libgimpbase/gimpbaseenums.c:91
 msgid "RGB color"
 msgstr "RGB spalva"
 
-#: libgimpbase/gimpbaseenums.c:92 libgimpbase/gimpbaseenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:92 ../libgimpbase/gimpbaseenums.c:127
 msgid "Grayscale"
 msgstr "Pilkumo atspalviai"
 
-#: libgimpbase/gimpbaseenums.c:93
+#: ../libgimpbase/gimpbaseenums.c:93
 msgid "Indexed color"
 msgstr "Indeksuota spalva"
 
-#: libgimpbase/gimpbaseenums.c:125
+#: ../libgimpbase/gimpbaseenums.c:125
 msgid "RGB"
 msgstr "RGB"
 
-#: libgimpbase/gimpbaseenums.c:126
+#: ../libgimpbase/gimpbaseenums.c:126
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: libgimpbase/gimpbaseenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:129
+#: ../libgimpbase/gimpbaseenums.c:129
 msgid "Indexed"
 msgstr "Indeksuotas"
 
-#: libgimpbase/gimpbaseenums.c:130
+#: ../libgimpbase/gimpbaseenums.c:130
 msgid "Indexed-alpha"
 msgstr ""
 
-#: libgimpbase/gimpmemsize.c:177
+#: ../libgimpbase/gimpmemsize.c:177
 #, c-format
 msgid "%d Bytes"
 msgstr "%d Baitų"
 
-#: libgimpbase/gimpmemsize.c:182
+#: ../libgimpbase/gimpmemsize.c:182
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: libgimpbase/gimpmemsize.c:186
+#: ../libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: libgimpbase/gimpmemsize.c:190
+#: ../libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: libgimpbase/gimpmemsize.c:197
+#: ../libgimpbase/gimpmemsize.c:197
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: libgimpbase/gimpmemsize.c:201
+#: ../libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: libgimpbase/gimpmemsize.c:205
+#: ../libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: libgimpbase/gimpmemsize.c:212
+#: ../libgimpbase/gimpmemsize.c:212
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: libgimpbase/gimpmemsize.c:216
+#: ../libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: libgimpbase/gimpmemsize.c:220
+#: ../libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
 
-#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
+#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
 msgid "(invalid UTF-8 string)"
 msgstr "(nekorektiška UTF-8 eilutė)"
 
-#: libgimpmodule/gimpmodule.c:177
+#: ../libgimpmodule/gimpmodule.c:177
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Įkeliamas modulis: „%s“\n"
 
-#: libgimpmodule/gimpmodule.c:193 libgimpmodule/gimpmodule.c:212
-#: libgimpmodule/gimpmodule.c:326 libgimpmodule/gimpmodule.c:354
-#: libgimpmodule/gimpmodule.c:478
+#: ../libgimpmodule/gimpmodule.c:193 ../libgimpmodule/gimpmodule.c:212
+#: ../libgimpmodule/gimpmodule.c:326 ../libgimpmodule/gimpmodule.c:354
+#: ../libgimpmodule/gimpmodule.c:478
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Modulio „%s“ įkėlimo klaida: %s"
 
-#: libgimpmodule/gimpmodule.c:282
+#: ../libgimpmodule/gimpmodule.c:282
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Praleidžiamas modulis: „%s“\n"
 
-#: libgimpmodule/gimpmodule.c:422
+#: ../libgimpmodule/gimpmodule.c:422
 msgid "Module error"
 msgstr "Modulio klaida"
 
-#: libgimpmodule/gimpmodule.c:423
+#: ../libgimpmodule/gimpmodule.c:423
 msgid "Loaded"
 msgstr "Įkeltas"
 
-#: libgimpmodule/gimpmodule.c:424
+#: ../libgimpmodule/gimpmodule.c:424
 msgid "Load failed"
 msgstr "Įkėlimas nepavyko"
 
-#: libgimpmodule/gimpmodule.c:425
+#: ../libgimpmodule/gimpmodule.c:425
 msgid "Not loaded"
 msgstr "Neįkelta"
 
-#: libgimpthumb/gimpthumb-utils.c:227 libgimpthumb/gimpthumb-utils.c:295
+#: ../libgimpthumb/gimpthumb-utils.c:125
+#, c-format
+msgid ""
+"Cannot determine a valid home directory.\n"
+"Thumbnails will be stored in the folder for temporary files (%s) instead."
+msgstr ""
+
+#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Nepavyko sukurti mini vaizdų aplanko „%s“."
 
-#: libgimpthumb/gimpthumbnail.c:919
+#: ../libgimpthumb/gimpthumbnail.c:919
 #, fuzzy, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nepavyko sukurti mini vaizdų aplanko „%s“."
 
-#: libgimpwidgets/gimpcolorbutton.c:99
+#: ../libgimpwidgets/gimpcolorbutton.c:99
 msgid "_Foreground Color"
 msgstr "_Priekinio plano spalva"
 
-#: libgimpwidgets/gimpcolorbutton.c:103
+#: ../libgimpwidgets/gimpcolorbutton.c:103
 msgid "_Background Color"
 msgstr "_Fono spalva"
 
-#: libgimpwidgets/gimpcolorbutton.c:107
+#: ../libgimpwidgets/gimpcolorbutton.c:107
 msgid "Blac_k"
 msgstr "Juoda"
 
-#: libgimpwidgets/gimpcolorbutton.c:111
+#: ../libgimpwidgets/gimpcolorbutton.c:111
 msgid "_White"
 msgstr "_Balta"
 
-#: libgimpwidgets/gimpcolorscales.c:133
+#: ../libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:343
+#: ../libgimpwidgets/gimpcolorscales.c:155
+#: ../libgimpwidgets/gimpcolorselect.c:343
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:343
+#: ../libgimpwidgets/gimpcolorscales.c:156
+#: ../libgimpwidgets/gimpcolorselect.c:343
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:343
+#: ../libgimpwidgets/gimpcolorscales.c:157
+#: ../libgimpwidgets/gimpcolorselect.c:343
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:343
+#: ../libgimpwidgets/gimpcolorscales.c:158
+#: ../libgimpwidgets/gimpcolorselect.c:343
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:343
+#: ../libgimpwidgets/gimpcolorscales.c:159
+#: ../libgimpwidgets/gimpcolorselect.c:343
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:343
+#: ../libgimpwidgets/gimpcolorscales.c:160
+#: ../libgimpwidgets/gimpcolorselect.c:343
 msgid "_B"
 msgstr "_B"
 
-#: libgimpwidgets/gimpcolorscales.c:161
+#: ../libgimpwidgets/gimpcolorscales.c:161
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:347
+#: ../libgimpwidgets/gimpcolorscales.c:165
+#: ../libgimpwidgets/gimpcolorselect.c:347
 msgid "Hue"
 msgstr "Atspalvis"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:348
-#: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
+#: ../libgimpwidgets/gimpcolorscales.c:166
+#: ../libgimpwidgets/gimpcolorselect.c:348 ../modules/cdisplay_proof.c:49
+#: ../modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr "Sodrumas"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:349
+#: ../libgimpwidgets/gimpcolorscales.c:167
+#: ../libgimpwidgets/gimpcolorselect.c:349
 msgid "Value"
 msgstr "Reikšmė"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:350
+#: ../libgimpwidgets/gimpcolorscales.c:168
+#: ../libgimpwidgets/gimpcolorselect.c:350
 msgid "Red"
 msgstr "Raudona"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:351
+#: ../libgimpwidgets/gimpcolorscales.c:169
+#: ../libgimpwidgets/gimpcolorselect.c:351
 msgid "Green"
 msgstr "Žalia"
 
-#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:352
+#: ../libgimpwidgets/gimpcolorscales.c:170
+#: ../libgimpwidgets/gimpcolorselect.c:352
 msgid "Blue"
 msgstr "Mėlyna"
 
-#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:353
+#: ../libgimpwidgets/gimpcolorscales.c:171
+#: ../libgimpwidgets/gimpcolorselect.c:353
 msgid "Alpha"
 msgstr "Alfa"
 
-#: libgimpwidgets/gimpcolorscales.c:243
+#: ../libgimpwidgets/gimpcolorscales.c:243
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Šešioliktainis spalvos kodas, naudojamas HTML ir CSS"
 
-#: libgimpwidgets/gimpcolorscales.c:248
+#: ../libgimpwidgets/gimpcolorscales.c:248
 msgid "HTML _Notation:"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorselection.c:203
+#: ../libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
 msgstr "Dabartinė:"
 
-#: libgimpwidgets/gimpcolorselection.c:225
+#: ../libgimpwidgets/gimpcolorselection.c:225
 msgid "Old:"
 msgstr "Sena:"
 
-#: libgimpwidgets/gimpfileentry.c:351
+#: ../libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
 msgstr "Pasirinkite aplanką"
 
-#: libgimpwidgets/gimpfileentry.c:353
+#: ../libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "Pasirinkite bylą"
 
-#: libgimpwidgets/gimpmemsizeentry.c:232
+#: ../libgimpwidgets/gimpmemsizeentry.c:232
 msgid "Kilobytes"
 msgstr "Kilobaitų"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: ../libgimpwidgets/gimpmemsizeentry.c:233
 msgid "Megabytes"
 msgstr "Megabaitų"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: ../libgimpwidgets/gimpmemsizeentry.c:234
 msgid "Gigabytes"
 msgstr "Gigabaitų"
 
-#: libgimpwidgets/gimppatheditor.c:243
+#: ../libgimpwidgets/gimppatheditor.c:243
 msgid "Writable"
 msgstr "Rašomas"
 
-#: libgimpwidgets/gimppatheditor.c:252
+#: ../libgimpwidgets/gimppatheditor.c:252
 msgid "Folder"
 msgstr "Aplankas"
 
-#: libgimpwidgets/gimppickbutton.c:138
+#: ../libgimpwidgets/gimppickbutton.c:138
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
 
-#: libgimpwidgets/gimppreviewarea.c:126
+#: ../libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
 msgstr ""
 
-#: libgimpwidgets/gimppreviewarea.c:133
+#: ../libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
 msgstr ""
 
 #. toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:240
+#: ../libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
 msgstr "_Peržiūra"
 
-#: libgimpwidgets/gimpstock.c:113
+#: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:114
+#: ../libgimpwidgets/gimpstock.c:114
 msgid "C_enter"
 msgstr "Centras"
 
-#: libgimpwidgets/gimpstock.c:115
+#: ../libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
 msgstr "_Dublikuoti"
 
-#: libgimpwidgets/gimpstock.c:116
+#: ../libgimpwidgets/gimpstock.c:116
 msgid "_Edit"
 msgstr "K_eisti"
 
-#: libgimpwidgets/gimpstock.c:117
+#: ../libgimpwidgets/gimpstock.c:117
 msgid "Linked"
 msgstr "Sujungtas"
 
-#: libgimpwidgets/gimpstock.c:118
+#: ../libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
 msgstr "Įdėti kaip naują"
 
-#: libgimpwidgets/gimpstock.c:119
+#: ../libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
 msgstr "Įdėti į"
 
-#: libgimpwidgets/gimpstock.c:120
+#: ../libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
 msgstr "_Atstatyti"
 
-#: libgimpwidgets/gimpstock.c:121
+#: ../libgimpwidgets/gimpstock.c:121
 msgid "Visible"
 msgstr "Matomas"
 
-#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
+#: ../libgimpwidgets/gimpstock.c:154 ../libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:170
+#: ../libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
 msgstr "T_arpai tarp raidžių"
 
-#: libgimpwidgets/gimpstock.c:171
+#: ../libgimpwidgets/gimpstock.c:171
 msgid "L_ine Spacing"
 msgstr "Tarpai tarp e_ilučių"
 
-#: libgimpwidgets/gimpstock.c:187
+#: ../libgimpwidgets/gimpstock.c:187
 msgid "_Resize"
 msgstr "_Keisti dydį"
 
-#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:292
+#: ../libgimpwidgets/gimpstock.c:188 ../libgimpwidgets/gimpstock.c:292
 msgid "_Scale"
 msgstr "_Ištempti"
 
-#: libgimpwidgets/gimpstock.c:271
+#: ../libgimpwidgets/gimpstock.c:271
 msgid "Crop"
 msgstr "Apkarpyti"
 
-#: libgimpwidgets/gimpstock.c:288
+#: ../libgimpwidgets/gimpstock.c:288
 msgid "_Transform"
 msgstr "_Transformuoti"
 
-#: libgimpwidgets/gimpstock.c:291
+#: ../libgimpwidgets/gimpstock.c:291
 msgid "_Rotate"
 msgstr "_Pasukti"
 
-#: libgimpwidgets/gimpstock.c:293
+#: ../libgimpwidgets/gimpstock.c:293
 msgid "_Shear"
 msgstr "Tran_sformuoti"
 
-#: libgimpwidgets/gimpunitmenu.c:302
+#: ../libgimpwidgets/gimpunitmenu.c:302
 msgid "More..."
 msgstr "Daugiau..."
 
-#: libgimpwidgets/gimpunitmenu.c:612
+#: ../libgimpwidgets/gimpunitmenu.c:612
 msgid "Unit Selection"
 msgstr "Matavimo vienetų pasirinkimas"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: ../libgimpwidgets/gimpunitmenu.c:655
 msgid "Unit"
 msgstr "Matavimo vienetai"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: ../libgimpwidgets/gimpunitmenu.c:659
 msgid "Factor"
 msgstr "Koeficientas"
 
-#: libgimpwidgets/gimpwidgets.c:1001
+#: ../libgimpwidgets/gimpwidgets.c:1001
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -612,168 +637,168 @@ msgstr ""
 "inicializavimui naudokite šią reikšmę - tai leis jums pakartoti nurodytą "
 "\"atsitiktinę\" operaciją"
 
-#: libgimpwidgets/gimpwidgets.c:1005
+#: ../libgimpwidgets/gimpwidgets.c:1005
 msgid "_New Seed"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1018
+#: ../libgimpwidgets/gimpwidgets.c:1018
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Atsitiktinių skaičių generatorių inicializuoti pagal dabartinį laiką - tai "
 "garantuos jums patikimą atsitiktinumą"
 
-#: libgimpwidgets/gimpwidgets.c:1022
+#: ../libgimpwidgets/gimpwidgets.c:1022
 msgid "_Randomize"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:57 modules/cdisplay_colorblind.c:545
+#: ../modules/cdisplay_colorblind.c:57 ../modules/cdisplay_colorblind.c:545
 msgid "Protanopia (insensitivity to red)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:59 modules/cdisplay_colorblind.c:547
+#: ../modules/cdisplay_colorblind.c:59 ../modules/cdisplay_colorblind.c:547
 msgid "Deuteranopia (insensitivity to green)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:61 modules/cdisplay_colorblind.c:549
+#: ../modules/cdisplay_colorblind.c:61 ../modules/cdisplay_colorblind.c:549
 msgid "Tritanopia (insensitivity to blue)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:153
+#: ../modules/cdisplay_colorblind.c:153
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:242
+#: ../modules/cdisplay_colorblind.c:242
 msgid "Color Deficient Vision"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:540
+#: ../modules/cdisplay_colorblind.c:540
 msgid "Color _Deficiency Type:"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:105
+#: ../modules/cdisplay_gamma.c:105
 msgid "Gamma color display filter"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:178
+#: ../modules/cdisplay_gamma.c:178
 msgid "Gamma"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:352
+#: ../modules/cdisplay_gamma.c:352
 msgid "_Gamma:"
 msgstr ""
 
-#: modules/cdisplay_highcontrast.c:105
+#: ../modules/cdisplay_highcontrast.c:105
 msgid "High Contrast color display filter"
 msgstr ""
 
-#: modules/cdisplay_highcontrast.c:178
+#: ../modules/cdisplay_highcontrast.c:178
 msgid "Contrast"
 msgstr "Kontrastas"
 
-#: modules/cdisplay_highcontrast.c:352
+#: ../modules/cdisplay_highcontrast.c:352
 msgid "Contrast C_ycles:"
 msgstr ""
 
-#: modules/cdisplay_proof.c:45 modules/cdisplay_proof.c:440
+#: ../modules/cdisplay_proof.c:45 ../modules/cdisplay_proof.c:440
 msgid "Perceptual"
 msgstr ""
 
-#: modules/cdisplay_proof.c:47 modules/cdisplay_proof.c:442
+#: ../modules/cdisplay_proof.c:47 ../modules/cdisplay_proof.c:442
 msgid "Relative Colorimetric"
 msgstr ""
 
-#: modules/cdisplay_proof.c:51 modules/cdisplay_proof.c:446
+#: ../modules/cdisplay_proof.c:51 ../modules/cdisplay_proof.c:446
 msgid "Absolute Colorimetric"
 msgstr ""
 
-#: modules/cdisplay_proof.c:138
+#: ../modules/cdisplay_proof.c:138
 msgid "Color proof filter using ICC color profile"
 msgstr ""
 
-#: modules/cdisplay_proof.c:238
+#: ../modules/cdisplay_proof.c:238
 msgid "Color Proof"
 msgstr ""
 
-#: modules/cdisplay_proof.c:457
+#: ../modules/cdisplay_proof.c:457
 msgid "_Intent:"
 msgstr ""
 
-#: modules/cdisplay_proof.c:460
+#: ../modules/cdisplay_proof.c:460
 msgid "Choose an ICC Color Profile"
 msgstr "Pasirinkit ICC spalvų profilį"
 
-#: modules/cdisplay_proof.c:463
+#: ../modules/cdisplay_proof.c:463
 msgid "_Profile:"
 msgstr "_Profilis:"
 
-#: modules/cdisplay_proof.c:471
+#: ../modules/cdisplay_proof.c:471
 msgid "_Black Point Compensation"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:73
+#: ../modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
 msgstr "CMYK spalvų pasirinkimas"
 
-#: modules/colorsel_cmyk.c:130
+#: ../modules/colorsel_cmyk.c:130
 msgid "CMYK"
 msgstr "CMYK"
 
-#: modules/colorsel_cmyk.c:147
+#: ../modules/colorsel_cmyk.c:147
 msgid "_C"
 msgstr "_C"
 
-#: modules/colorsel_cmyk.c:148
+#: ../modules/colorsel_cmyk.c:148
 msgid "_M"
 msgstr "_M"
 
-#: modules/colorsel_cmyk.c:149
+#: ../modules/colorsel_cmyk.c:149
 msgid "_Y"
 msgstr "_Y"
 
-#: modules/colorsel_cmyk.c:150
+#: ../modules/colorsel_cmyk.c:150
 msgid "_K"
 msgstr "_K"
 
-#: modules/colorsel_cmyk.c:154
+#: ../modules/colorsel_cmyk.c:154
 msgid "Cyan"
 msgstr "Žydra"
 
-#: modules/colorsel_cmyk.c:155
+#: ../modules/colorsel_cmyk.c:155
 msgid "Magenta"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:156
+#: ../modules/colorsel_cmyk.c:156
 msgid "Yellow"
 msgstr "Geltona"
 
-#: modules/colorsel_cmyk.c:157
+#: ../modules/colorsel_cmyk.c:157
 msgid "Black"
 msgstr "Juoda"
 
-#: modules/colorsel_cmyk.c:191
+#: ../modules/colorsel_cmyk.c:191
 msgid "Black _Pullout:"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:208
+#: ../modules/colorsel_cmyk.c:208
 msgid "The percentage of black to pull out of the colored inks."
 msgstr ""
 
-#: modules/colorsel_triangle.c:104
+#: ../modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
 msgstr ""
 
-#: modules/colorsel_triangle.c:170
+#: ../modules/colorsel_triangle.c:170
 msgid "Triangle"
 msgstr "Trikampis"
 
-#: modules/colorsel_water.c:88
+#: ../modules/colorsel_water.c:88
 msgid "Watercolor style color selector"
 msgstr "Vandeninių dažų stiliaus spalvų pasirinkimas"
 
-#: modules/colorsel_water.c:154
+#: ../modules/colorsel_water.c:154
 msgid "Watercolor"
 msgstr "Vandeniniai dažai"
 
-#: modules/colorsel_water.c:220
+#: ../modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Spaudimas"

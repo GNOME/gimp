@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-28 21:11+0100\n"
+"POT-Creation-Date: 2005-02-22 23:04+0100\n"
 "PO-Revision-Date: 2005-01-23 19:32+0100\n"
 "Last-Translator: Xavier Beà <xbea@pie.xtec.es>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -399,7 +399,7 @@ msgstr "_Fractals"
 #: ../plug-ins/common/dicom.c:647 ../plug-ins/common/gbr.c:586
 #: ../plug-ins/common/gif.c:994 ../plug-ins/common/gih.c:1254
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/jpeg.c:1498
-#: ../plug-ins/common/mng.c:557 ../plug-ins/common/mng.c:941
+#: ../plug-ins/common/mng.c:558 ../plug-ins/common/mng.c:946
 #: ../plug-ins/common/pat.c:433 ../plug-ins/common/pcx.c:585
 #: ../plug-ins/common/pix.c:515 ../plug-ins/common/png.c:1178
 #: ../plug-ins/common/pnm.c:809 ../plug-ins/common/postscript.c:1123
@@ -441,7 +441,7 @@ msgstr "Desa els paràmetres dels fractals"
 #: ../plug-ins/common/dicom.c:290 ../plug-ins/common/gbr.c:327
 #: ../plug-ins/common/gifload.c:296 ../plug-ins/common/gih.c:648
 #: ../plug-ins/common/jpeg.c:946 ../plug-ins/common/jpeg.c:2607
-#: ../plug-ins/common/mng.c:1112 ../plug-ins/common/pat.c:300
+#: ../plug-ins/common/mng.c:1117 ../plug-ins/common/pat.c:300
 #: ../plug-ins/common/pcx.c:302 ../plug-ins/common/pix.c:332
 #: ../plug-ins/common/png.c:674 ../plug-ins/common/pnm.c:432
 #: ../plug-ins/common/postscript.c:990 ../plug-ins/common/psd.c:1759
@@ -453,7 +453,7 @@ msgstr "Desa els paràmetres dels fractals"
 #: ../plug-ins/common/xwd.c:422 ../plug-ins/faxg3/faxg3.c:220
 #: ../plug-ins/fits/fits.c:337 ../plug-ins/flame/flame.c:412
 #: ../plug-ins/gfig/gfig.c:431 ../plug-ins/gfli/gfli.c:424
-#: ../plug-ins/gfli/gfli.c:460 ../plug-ins/help/domain.c:421
+#: ../plug-ins/gfli/gfli.c:460 ../plug-ins/help/domain.c:423
 #: ../plug-ins/winicon/icoload.c:126 ../plug-ins/xjt/xjt.c:2526
 #: ../plug-ins/xjt/xjt.c:2534
 #, c-format
@@ -1348,7 +1348,7 @@ msgstr "No es pot operar en tipus d'imatges desconeguts."
 #: ../plug-ins/common/tiff.c:1815 ../plug-ins/common/xbm.c:1001
 #: ../plug-ins/common/xpm.c:628 ../plug-ins/common/xwd.c:582
 #: ../plug-ins/fits/fits.c:455 ../plug-ins/gfli/gfli.c:682
-#: ../plug-ins/sgi/sgi.c:545 ../plug-ins/winicon/icosave.c:954
+#: ../plug-ins/sgi/sgi.c:545 ../plug-ins/winicon/icosave.c:957
 #: ../plug-ins/xjt/xjt.c:1682
 #, c-format
 msgid "Saving '%s'..."
@@ -3648,7 +3648,7 @@ msgid "Composing Images..."
 msgstr "S'estan composant les imatges..."
 
 #: ../plug-ins/common/film.c:438 ../plug-ins/common/guillotine.c:183
-#: ../plug-ins/helpbrowser/dialog.c:523
+#: ../plug-ins/helpbrowser/dialog.c:525
 msgid "Untitled"
 msgstr "Sense títol"
 
@@ -4183,7 +4183,7 @@ msgstr "Buc_le infinit"
 msgid "_Delay between frames where unspecified:"
 msgstr "Retar_d entre marcs quan no estigui especificat:"
 
-#: ../plug-ins/common/gif.c:1380 ../plug-ins/common/mng.c:1522
+#: ../plug-ins/common/gif.c:1380 ../plug-ins/common/mng.c:1527
 msgid "milliseconds"
 msgstr "mil·lisegons"
 
@@ -5154,108 +5154,108 @@ msgstr "Difumina el centre"
 #  * transparency & just use the full palette
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/mng.c:494 ../plug-ins/common/png.c:1562
+#: ../plug-ins/common/mng.c:495 ../plug-ins/common/png.c:1562
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "No s'ha pogut desar la transparència sense pèrdues. Es desarà la opacitat."
 
-#: ../plug-ins/common/mng.c:1309
+#: ../plug-ins/common/mng.c:1314
 msgid "Save as MNG"
 msgstr "Desa com a MNG"
 
-#: ../plug-ins/common/mng.c:1322
+#: ../plug-ins/common/mng.c:1327
 msgid "MNG Options"
 msgstr "Opcions del MNG"
 
-#: ../plug-ins/common/mng.c:1328
+#: ../plug-ins/common/mng.c:1333
 msgid "Interlace"
 msgstr "Entrellaça"
 
-#: ../plug-ins/common/mng.c:1340
+#: ../plug-ins/common/mng.c:1345
 msgid "Save background color"
 msgstr "Desa el color de fons"
 
-#: ../plug-ins/common/mng.c:1351
+#: ../plug-ins/common/mng.c:1356
 msgid "Save gamma"
 msgstr "Desa la gamma"
 
-#: ../plug-ins/common/mng.c:1361
+#: ../plug-ins/common/mng.c:1366
 msgid "Save resolution"
 msgstr "Desa la resolució"
 
-#: ../plug-ins/common/mng.c:1372
+#: ../plug-ins/common/mng.c:1377
 msgid "Save creation time"
 msgstr "Desa el moment de creació"
 
-#: ../plug-ins/common/mng.c:1391
+#: ../plug-ins/common/mng.c:1396
 msgid "PNG"
 msgstr "PNG"
 
-#: ../plug-ins/common/mng.c:1392
+#: ../plug-ins/common/mng.c:1397
 msgid "JNG"
 msgstr "JNG"
 
-#: ../plug-ins/common/mng.c:1395
+#: ../plug-ins/common/mng.c:1400
 msgid "PNG + delta PNG"
 msgstr "PNG + Delta PNG"
 
-#: ../plug-ins/common/mng.c:1396
+#: ../plug-ins/common/mng.c:1401
 msgid "JNG + delta PNG"
 msgstr "JNG + Delta PNG"
 
-#: ../plug-ins/common/mng.c:1397
+#: ../plug-ins/common/mng.c:1402
 msgid "All PNG"
 msgstr "Tots els PNG"
 
-#: ../plug-ins/common/mng.c:1398
+#: ../plug-ins/common/mng.c:1403
 msgid "All JNG"
 msgstr "Tots els JNG"
 
-#: ../plug-ins/common/mng.c:1410
+#: ../plug-ins/common/mng.c:1415
 msgid "Default chunks type:"
 msgstr "Tipus de bocí per defecte:"
 
-#: ../plug-ins/common/mng.c:1413
+#: ../plug-ins/common/mng.c:1418
 msgid "Combine"
 msgstr "Combina"
 
-#: ../plug-ins/common/mng.c:1414
+#: ../plug-ins/common/mng.c:1419
 msgid "Replace"
 msgstr "Substitueix"
 
-#: ../plug-ins/common/mng.c:1425
+#: ../plug-ins/common/mng.c:1430
 msgid "Default frame disposal:"
 msgstr "Disposició del marc per defecte:"
 
-#: ../plug-ins/common/mng.c:1437
+#: ../plug-ins/common/mng.c:1442
 msgid "PNG compression level:"
 msgstr "Nivell de compressió PNG:"
 
-#: ../plug-ins/common/mng.c:1445 ../plug-ins/common/png.c:1703
+#: ../plug-ins/common/mng.c:1450 ../plug-ins/common/png.c:1703
 msgid "Choose a high compression level for small file size"
 msgstr "Escull un nivell de compressió alt per a una mida de fitxer petita"
 
-#: ../plug-ins/common/mng.c:1459
+#: ../plug-ins/common/mng.c:1464
 msgid "JPEG compression quality:"
 msgstr "Qualitat de compressió JPEG:"
 
-#: ../plug-ins/common/mng.c:1476
+#: ../plug-ins/common/mng.c:1481
 msgid "JPEG smoothing factor:"
 msgstr "Factor de suavitzat JPEG:"
 
-#: ../plug-ins/common/mng.c:1486
+#: ../plug-ins/common/mng.c:1491
 msgid "Animated MNG options"
 msgstr "Opcions del MNG animat"
 
-#: ../plug-ins/common/mng.c:1492
+#: ../plug-ins/common/mng.c:1497
 msgid "Loop"
 msgstr "Bucle"
 
-#: ../plug-ins/common/mng.c:1506
+#: ../plug-ins/common/mng.c:1511
 msgid "Default frame delay:"
 msgstr "Retard del marc per defecte:"
 
-#: ../plug-ins/common/mng.c:1584
+#: ../plug-ins/common/mng.c:1589
 msgid "MNG animation"
 msgstr "Animació MNG"
 
@@ -10005,24 +10005,24 @@ msgstr ""
 "  (gimpressionist-path \"%s\")\n"
 "(o semblant) al vostre fitxer gimprc."
 
-#: ../plug-ins/help/domain.c:175
+#: ../plug-ins/help/domain.c:177
 msgid "The GIMP help files are not installed."
 msgstr "No s'han instal·lat els fitxers d'ajuda del GIMP."
 
-#: ../plug-ins/help/domain.c:177
+#: ../plug-ins/help/domain.c:179
 msgid "There is a problem with the GIMP help files."
 msgstr "Hi ha un problema amb els fitxers d'ajuda del GIMP."
 
-#: ../plug-ins/help/domain.c:182
+#: ../plug-ins/help/domain.c:184
 msgid "Please check your installation."
 msgstr "Comproveu la vostra instal·lació."
 
-#: ../plug-ins/help/domain.c:190
+#: ../plug-ins/help/domain.c:192
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "L'identificador d'ajuda '%s' és desconegut"
 
-#: ../plug-ins/help/domain.c:447
+#: ../plug-ins/help/domain.c:449
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10031,15 +10031,15 @@ msgstr ""
 "S'ha produït un error en analitzar '%s':\n"
 "%s"
 
-#: ../plug-ins/helpbrowser/dialog.c:157
+#: ../plug-ins/helpbrowser/dialog.c:159
 msgid "GIMP Help browser"
 msgstr "Navegador de l'ajuda del GIMP"
 
-#: ../plug-ins/helpbrowser/dialog.c:409
+#: ../plug-ins/helpbrowser/dialog.c:411
 msgid "Document not found"
 msgstr "No s'ha trobat el document"
 
-#: ../plug-ins/helpbrowser/dialog.c:411
+#: ../plug-ins/helpbrowser/dialog.c:413
 msgid "The requested URL could not be loaded:"
 msgstr "No s'ha pogut carregar la URL demanada:"
 
@@ -11921,7 +11921,7 @@ msgstr "Detalls de la icona"
 msgid "Icon #%i"
 msgstr "Icona #%i"
 
-#: ../plug-ins/winicon/icosave.c:940
+#: ../plug-ins/winicon/icosave.c:943
 msgid "Windows icons cannot be higher or wider than 255 pixels."
 msgstr "Les icones de Windows no poden ser més altes o amples de 255 píxels."
 

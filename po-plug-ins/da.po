@@ -32,7 +32,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-15 22:56+0100\n"
+"POT-Creation-Date: 2005-02-22 23:04+0100\n"
 "PO-Revision-Date: 2005-02-15 22:58+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -409,7 +409,7 @@ msgstr "_Fraktaler"
 #: ../plug-ins/common/dicom.c:647 ../plug-ins/common/gbr.c:586
 #: ../plug-ins/common/gif.c:994 ../plug-ins/common/gih.c:1254
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/jpeg.c:1498
-#: ../plug-ins/common/mng.c:557 ../plug-ins/common/mng.c:941
+#: ../plug-ins/common/mng.c:558 ../plug-ins/common/mng.c:946
 #: ../plug-ins/common/pat.c:433 ../plug-ins/common/pcx.c:585
 #: ../plug-ins/common/pix.c:515 ../plug-ins/common/png.c:1178
 #: ../plug-ins/common/pnm.c:809 ../plug-ins/common/postscript.c:1123
@@ -448,7 +448,7 @@ msgstr "Gem fraktalparametre"
 #: ../plug-ins/common/dicom.c:290 ../plug-ins/common/gbr.c:327
 #: ../plug-ins/common/gifload.c:296 ../plug-ins/common/gih.c:648
 #: ../plug-ins/common/jpeg.c:946 ../plug-ins/common/jpeg.c:2607
-#: ../plug-ins/common/mng.c:1112 ../plug-ins/common/pat.c:300
+#: ../plug-ins/common/mng.c:1117 ../plug-ins/common/pat.c:300
 #: ../plug-ins/common/pcx.c:302 ../plug-ins/common/pix.c:332
 #: ../plug-ins/common/png.c:674 ../plug-ins/common/pnm.c:432
 #: ../plug-ins/common/postscript.c:990 ../plug-ins/common/psd.c:1759
@@ -4308,7 +4308,7 @@ msgstr "Evig løkke"
 msgid "_Delay between frames where unspecified:"
 msgstr "Pause mellem billeder hvis ikke angivet:"
 
-#: ../plug-ins/common/gif.c:1380 ../plug-ins/common/mng.c:1522
+#: ../plug-ins/common/gif.c:1380 ../plug-ins/common/mng.c:1527
 msgid "milliseconds"
 msgstr "millisekunder"
 
@@ -5317,121 +5317,121 @@ msgstr "Centrum"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/mng.c:494 ../plug-ins/common/png.c:1562
+#: ../plug-ins/common/mng.c:495 ../plug-ins/common/png.c:1562
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Kunne ikke gemme gennemsigtighed uden tab, gemmer uigennemsigtighed i stedet."
 
-#: ../plug-ins/common/mng.c:1309
+#: ../plug-ins/common/mng.c:1314
 msgid "Save as MNG"
 msgstr "Gem som MNG"
 
-#: ../plug-ins/common/mng.c:1322
+#: ../plug-ins/common/mng.c:1327
 msgid "MNG Options"
 msgstr "MNG-indstillinger"
 
-#: ../plug-ins/common/mng.c:1328
+#: ../plug-ins/common/mng.c:1333
 msgid "Interlace"
 msgstr "Understøt gradvis indlæsning"
 
-#: ../plug-ins/common/mng.c:1340
+#: ../plug-ins/common/mng.c:1345
 #, fuzzy
 msgid "Save background color"
 msgstr "Gem _baggrundsfarve"
 
-#: ../plug-ins/common/mng.c:1351
+#: ../plug-ins/common/mng.c:1356
 #, fuzzy
 msgid "Save gamma"
 msgstr "Gem gamma"
 
-#: ../plug-ins/common/mng.c:1361
+#: ../plug-ins/common/mng.c:1366
 #, fuzzy
 msgid "Save resolution"
 msgstr "Gem _opløsning"
 
-#: ../plug-ins/common/mng.c:1372
+#: ../plug-ins/common/mng.c:1377
 #, fuzzy
 msgid "Save creation time"
 msgstr "Gem oprettelses_dato"
 
-#: ../plug-ins/common/mng.c:1391
+#: ../plug-ins/common/mng.c:1396
 msgid "PNG"
 msgstr "PNG"
 
-#: ../plug-ins/common/mng.c:1392
+#: ../plug-ins/common/mng.c:1397
 msgid "JNG"
 msgstr "JNG"
 
-#: ../plug-ins/common/mng.c:1395
+#: ../plug-ins/common/mng.c:1400
 #, fuzzy
 msgid "PNG + delta PNG"
 msgstr "PNG + Delta PNG"
 
-#: ../plug-ins/common/mng.c:1396
+#: ../plug-ins/common/mng.c:1401
 #, fuzzy
 msgid "JNG + delta PNG"
 msgstr "JNG + Delta PNG"
 
-#: ../plug-ins/common/mng.c:1397
+#: ../plug-ins/common/mng.c:1402
 msgid "All PNG"
 msgstr "Alle PNG"
 
-#: ../plug-ins/common/mng.c:1398
+#: ../plug-ins/common/mng.c:1403
 msgid "All JNG"
 msgstr "Alle JNG"
 
-#: ../plug-ins/common/mng.c:1410
+#: ../plug-ins/common/mng.c:1415
 #, fuzzy
 msgid "Default chunks type:"
 msgstr "Standarddeltype:"
 
-#: ../plug-ins/common/mng.c:1413
+#: ../plug-ins/common/mng.c:1418
 msgid "Combine"
 msgstr "Kombinér"
 
-#: ../plug-ins/common/mng.c:1414
+#: ../plug-ins/common/mng.c:1419
 msgid "Replace"
 msgstr "Erstat"
 
-#: ../plug-ins/common/mng.c:1425
+#: ../plug-ins/common/mng.c:1430
 #, fuzzy
 msgid "Default frame disposal:"
 msgstr "Standardbilledovergang:"
 
-#: ../plug-ins/common/mng.c:1437
+#: ../plug-ins/common/mng.c:1442
 #, fuzzy
 msgid "PNG compression level:"
 msgstr "PNG-komprimeringsniveau:"
 
-#: ../plug-ins/common/mng.c:1445 ../plug-ins/common/png.c:1703
+#: ../plug-ins/common/mng.c:1450 ../plug-ins/common/png.c:1703
 msgid "Choose a high compression level for small file size"
 msgstr "Vælg et højt komprimeringsniveau for mindre filstørrelse"
 
-#: ../plug-ins/common/mng.c:1459
+#: ../plug-ins/common/mng.c:1464
 #, fuzzy
 msgid "JPEG compression quality:"
 msgstr "JPEG-komprimeringskvalitet:"
 
-#: ../plug-ins/common/mng.c:1476
+#: ../plug-ins/common/mng.c:1481
 #, fuzzy
 msgid "JPEG smoothing factor:"
 msgstr "JPEG-udjævningsfaktor:"
 
-#: ../plug-ins/common/mng.c:1486
+#: ../plug-ins/common/mng.c:1491
 #, fuzzy
 msgid "Animated MNG options"
 msgstr "Indstillinger for animeret MNG"
 
-#: ../plug-ins/common/mng.c:1492
+#: ../plug-ins/common/mng.c:1497
 msgid "Loop"
 msgstr "Sløjfe"
 
-#: ../plug-ins/common/mng.c:1506
+#: ../plug-ins/common/mng.c:1511
 #, fuzzy
 msgid "Default frame delay:"
 msgstr "Standardbilledtid:"
 
-#: ../plug-ins/common/mng.c:1584
+#: ../plug-ins/common/mng.c:1589
 #, fuzzy
 msgid "MNG animation"
 msgstr "MNG-indstillinger"
