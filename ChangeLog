@@ -1,3 +1,9 @@
+2004-05-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdatafactoryview.c
+	(gimp_data_factory_view_delete_callback): delete the data
+	only if "OK" was pressed.
+
 2004-05-19  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py: Actually return values from the run

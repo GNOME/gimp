@@ -360,8 +360,8 @@ gimp_data_factory_view_delete_callback (GtkWidget *widget,
 {
   GimpDataDeleteData *delete_data = data;
 
-  if (gimp_container_have (delete_data->factory->container,
-			   GIMP_OBJECT (delete_data->data)))
+  if (delete && gimp_container_have (delete_data->factory->container,
+                                     GIMP_OBJECT (delete_data->data)))
     {
       g_object_ref (delete_data->data);
 
