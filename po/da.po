@@ -79,8 +79,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2002-03-03 12:45+0100\n"
-"PO-Revision-Date: 2002-03-03 12:45+0100\n"
+"POT-Creation-Date: 2002-03-07 22:37+0100\n"
+"PO-Revision-Date: 2002-03-07 22:37+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -430,7 +430,7 @@ msgstr "Markeringsmaske"
 msgid "Rename Item"
 msgstr "Omdøbelse af element"
 
-#: app/gui/layers-commands.c:560 app/undo.c:3559
+#: app/gui/layers-commands.c:565 app/undo.c:3559
 msgid "New Layer"
 msgstr "Nyt lag"
 
@@ -615,7 +615,7 @@ msgstr ""
 "Fatal fortolkningsfejl:\n"
 "Penselfilen '%s' ser ud til at være afkortet."
 
-#: app/core/gimpbrush.c:539
+#: app/core/gimpbrush.c:539 app/core/gimpbrushpipe.c:329
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ugyldig UTF-8-streng i penselfilen '%s'."
@@ -630,11 +630,6 @@ msgstr "Unavngiven"
 #, c-format
 msgid "Could not open file '%s'"
 msgstr "Kunne ikke åbne filen '%s'"
-
-#: app/core/gimpbrushpipe.c:329
-#, c-format
-msgid "Invalid UTF-8 string in GIMP brush file '%s'."
-msgstr "Ugyldig UTF-8-streng i penselfilen '%s'."
 
 #: app/core/gimpbrushpipe.c:338 app/core/gimpbrushpipe.c:356
 #: app/core/gimpbrushpipe.c:444
@@ -720,7 +715,7 @@ msgstr ""
 msgid "Cannot float selection: No selection made."
 msgstr "Kan ikke flyde markering: ingen markering at flyde."
 
-#: app/core/gimpimage-mask.c:397 app/gui/layers-commands.c:751
+#: app/core/gimpimage-mask.c:397 app/gui/layers-commands.c:756
 msgid "Floating Selection"
 msgstr "Flydende markering"
 
@@ -770,20 +765,20 @@ msgstr "RGB"
 msgid "Grayscale"
 msgstr "Gråtoner"
 
-#: app/core/gimpimage-new.c:68 app/gui/layers-commands.c:628
+#: app/core/gimpimage-new.c:68 app/gui/layers-commands.c:633
 msgid "Foreground"
 msgstr "Forgrund"
 
 #: app/core/gimpimage-new.c:74 app/core/gimpimage-new.c:272
-#: app/gui/layers-commands.c:629 app/gui/offset-dialog.c:196
+#: app/gui/layers-commands.c:634 app/gui/offset-dialog.c:196
 msgid "Background"
 msgstr "Baggrund"
 
-#: app/core/gimpimage-new.c:80 app/gui/layers-commands.c:630
+#: app/core/gimpimage-new.c:80 app/gui/layers-commands.c:635
 msgid "White"
 msgstr "Hvid"
 
-#: app/core/gimpimage-new.c:86 app/gui/layers-commands.c:631
+#: app/core/gimpimage-new.c:86 app/gui/layers-commands.c:636
 #: app/gui/offset-dialog.c:198
 msgid "Transparent"
 msgstr "Gennemsigtig"
@@ -824,27 +819,27 @@ msgstr "%.1f Mb"
 msgid "Untitled"
 msgstr "Unavngiven"
 
-#: app/core/gimpimage.c:2726
+#: app/core/gimpimage.c:2737
 msgid "Layer cannot be raised higher."
 msgstr "Laget kan ikke hæves mere."
 
-#: app/core/gimpimage.c:2750
+#: app/core/gimpimage.c:2761
 msgid "Layer cannot be lowered more."
 msgstr "Laget kan ikke sænkes mere."
 
-#: app/core/gimpimage.c:2771
+#: app/core/gimpimage.c:2782
 msgid "Layer is already on top."
 msgstr "Laget er allerede øverst."
 
-#: app/core/gimpimage.c:2777
+#: app/core/gimpimage.c:2788
 msgid "Cannot raise a layer without alpha."
 msgstr "Kan ikke hæve lag uden alfa."
 
-#: app/core/gimpimage.c:2801
+#: app/core/gimpimage.c:2812
 msgid "Layer is already on the bottom."
 msgstr "Laget er allerede nederst."
 
-#: app/core/gimpimage.c:2848
+#: app/core/gimpimage.c:2859
 #, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
@@ -853,19 +848,19 @@ msgstr ""
 "Laget \"%s\" har ingen alfa.\n"
 "Laget blev placeret over det."
 
-#: app/core/gimpimage.c:2991
+#: app/core/gimpimage.c:3002
 msgid "Channel cannot be raised higher."
 msgstr "Kanalen kan ikke hæves mere."
 
-#: app/core/gimpimage.c:3011
+#: app/core/gimpimage.c:3022
 msgid "Channel cannot be lowered more."
 msgstr "Kanalen kan ikke sænkes mere."
 
-#: app/core/gimpimage.c:3172
+#: app/core/gimpimage.c:3183
 msgid "Path cannot be raised higher."
 msgstr "Banen kan ikke hæves mere."
 
-#: app/core/gimpimage.c:3192
+#: app/core/gimpimage.c:3203
 msgid "Path cannot be lowered more."
 msgstr "Banen kan ikke sænkes mere."
 
@@ -888,11 +883,7 @@ msgstr "parasit vedhæftet til element"
 msgid "parasite detached from item"
 msgstr "parasit fjernet fra element"
 
-#: app/core/gimplayer.c:320
-msgid "Zero width or height layers not allowed."
-msgstr "Lag uden højde eller bredde er ikke tilladt."
-
-#: app/core/gimplayer.c:545
+#: app/core/gimplayer.c:555
 msgid ""
 "Cannot add layer mask to layer\n"
 "which is not part of an image."
@@ -900,7 +891,7 @@ msgstr ""
 "Kan ikke tilføje lagmaske til et lag\n"
 "som ikke er en del af et billede."
 
-#: app/core/gimplayer.c:552
+#: app/core/gimplayer.c:562
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -908,7 +899,7 @@ msgstr ""
 "Kan ikke tilføje lagmaske da\n"
 "laget allerede har en."
 
-#: app/core/gimplayer.c:559
+#: app/core/gimplayer.c:569
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -916,7 +907,7 @@ msgstr ""
 "Kan ikke tilføje lagmaske til et\n"
 "lag i et indekseret billede."
 
-#: app/core/gimplayer.c:566
+#: app/core/gimplayer.c:576
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -924,7 +915,7 @@ msgstr ""
 "Kan ikke tilføje lagmaske til et lag\n"
 "uden en alfa-kanal."
 
-#: app/core/gimplayer.c:576
+#: app/core/gimplayer.c:586
 msgid ""
 "Cannot add layer mask of different\n"
 "dimensions than specified layer."
@@ -932,7 +923,7 @@ msgstr ""
 "Kan ikke tilføje lagmaske med andre\n"
 "dimensioner end det angivne lag."
 
-#: app/core/gimplayer.c:611
+#: app/core/gimplayer.c:621
 #, c-format
 msgid "%s mask"
 msgstr "%s-maske"
@@ -1022,9 +1013,9 @@ msgstr "Ugyldig UTF-8-streng i paletfil '%s'."
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
-"Invalid number or columns in line %d."
+"Invalid number of columns in line %d."
 msgstr ""
-"Indlæser paletten %s:\n"
+"Indlæser paletten '%s':\n"
 "Ugyldigt antal kolonner på linje %d."
 
 #. maybe we should just abort?
@@ -1744,7 +1735,7 @@ msgid "Width:"
 msgstr "Bredde:"
 
 #: app/gui/file-new-dialog.c:164 app/gui/file-new-dialog.c:182
-#: app/gui/layers-commands.c:570 app/gui/resize-dialog.c:277
+#: app/gui/layers-commands.c:575 app/gui/resize-dialog.c:277
 #: app/gui/resize-dialog.c:302 app/gui/resize-dialog.c:541
 #: app/tools/gimpcroptool.c:995 app/tools/gimpscaletool.c:182
 #: app/tools/gimpscaletool.c:191 app/tools/selection_options.c:442
@@ -2340,73 +2331,73 @@ msgstr "Indekserede farver"
 msgid "colors"
 msgstr "farver"
 
-#: app/gui/layers-commands.c:496
+#: app/gui/layers-commands.c:501
 msgid "Empty Layer Copy"
 msgstr "Kopiering af lag uden indhold"
 
-#: app/gui/layers-commands.c:519
+#: app/gui/layers-commands.c:524
 msgid "New Layer Options"
 msgstr "Indstillinger for nyt lag"
 
 #. The name label and entry
-#: app/gui/layers-commands.c:549
+#: app/gui/layers-commands.c:554
 msgid "Layer Name:"
 msgstr "Navn på lag:"
 
 #. The size labels
-#: app/gui/layers-commands.c:564
+#: app/gui/layers-commands.c:569
 msgid "Layer Width:"
 msgstr "Lagets bredde:"
 
-#: app/gui/layers-commands.c:623
+#: app/gui/layers-commands.c:628
 msgid "Layer Fill Type"
 msgstr "Fyldtype for lag"
 
-#: app/gui/layers-commands.c:710
+#: app/gui/layers-commands.c:715
 msgid "Edit Layer Attributes"
 msgstr "Redigér lagets egenskaber"
 
-#: app/gui/layers-commands.c:743
+#: app/gui/layers-commands.c:748
 msgid "Layer name:"
 msgstr "Navn på lag:"
 
-#: app/gui/layers-commands.c:815
+#: app/gui/layers-commands.c:820
 msgid "Add Mask Options"
 msgstr "Tilføj maskeindstillinger"
 
-#: app/gui/layers-commands.c:844 app/gui/layers-commands.c:871
+#: app/gui/layers-commands.c:849 app/gui/layers-commands.c:876
 msgid "Initialize Layer Mask to:"
 msgstr "Lagets maske starter som:"
 
-#: app/gui/layers-commands.c:849 app/tools/gimpbycolorselecttool.c:564
+#: app/gui/layers-commands.c:854 app/tools/gimpbycolorselecttool.c:564
 msgid "Selection"
 msgstr "Markering"
 
-#: app/gui/layers-commands.c:851
+#: app/gui/layers-commands.c:856
 msgid "Inverse Selection"
 msgstr "Omvendt markering"
 
-#: app/gui/layers-commands.c:854 app/gui/layers-commands.c:876
+#: app/gui/layers-commands.c:859 app/gui/layers-commands.c:881
 msgid "Grayscale Copy of Layer"
 msgstr "Gråtonekopi af laget"
 
-#: app/gui/layers-commands.c:856 app/gui/layers-commands.c:878
+#: app/gui/layers-commands.c:861 app/gui/layers-commands.c:883
 msgid "Inverse Grayscale Copy of Layer"
 msgstr "Omvendt gråtonekopi af laget"
 
-#: app/gui/layers-commands.c:859 app/gui/layers-commands.c:881
+#: app/gui/layers-commands.c:864 app/gui/layers-commands.c:886
 msgid "White (Full Opacity)"
 msgstr "Hvidt (helt ugennemsigtigt)"
 
-#: app/gui/layers-commands.c:861 app/gui/layers-commands.c:883
+#: app/gui/layers-commands.c:866 app/gui/layers-commands.c:888
 msgid "Black (Full Transparency)"
 msgstr "Sort (helt gennemsigtigt)"
 
-#: app/gui/layers-commands.c:863 app/gui/layers-commands.c:885
+#: app/gui/layers-commands.c:868 app/gui/layers-commands.c:890
 msgid "Layer's Alpha Channel"
 msgstr "Lagets alfakanal"
 
-#: app/gui/layers-commands.c:955 app/gui/layers-commands.c:1047
+#: app/gui/layers-commands.c:960 app/gui/layers-commands.c:1052
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -6323,15 +6314,15 @@ msgstr "Type"
 msgid "Shape"
 msgstr "Form"
 
-#: app/tools/gimpiscissorstool.c:267
+#: app/tools/gimpiscissorstool.c:268
 msgid "Intelligent Scissors"
 msgstr "Intelligent saks"
 
-#: app/tools/gimpiscissorstool.c:268
+#: app/tools/gimpiscissorstool.c:269
 msgid "Select shapes from image"
 msgstr "Markér former i billedet"
 
-#: app/tools/gimpiscissorstool.c:269
+#: app/tools/gimpiscissorstool.c:270
 msgid "/Tools/Selection Tools/Intelligent Scissors"
 msgstr "/Værktøjer/Markering/Intelligent saks"
 
@@ -6425,7 +6416,7 @@ msgstr "Afstand:"
 msgid "degrees"
 msgstr "grader"
 
-#: app/tools/gimpmeasuretool.c:866 app/tools/gimpvectortool.c:501
+#: app/tools/gimpmeasuretool.c:866
 msgid "Use Info Window"
 msgstr "Benyt infovindue"
 
@@ -6723,15 +6714,15 @@ msgstr ""
 "Omformning virker ikke på\n"
 "lag der indeholder lagmasker."
 
-#: app/tools/gimpvectortool.c:130
+#: app/tools/gimpvectortool.c:116
 msgid "Vector Tool"
 msgstr "Vektorværktøj"
 
-#: app/tools/gimpvectortool.c:131
+#: app/tools/gimpvectortool.c:117
 msgid "Vector angles and lengths"
 msgstr "Vektorvinkler og -længder"
 
-#: app/tools/gimpvectortool.c:132
+#: app/tools/gimpvectortool.c:118
 msgid "/Tools/Vector"
 msgstr "/Værktøjer/Vektor"
 
@@ -7182,6 +7173,12 @@ msgstr "Opret og redigér billeder eller fotografier"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "Gimp'en (udviklingsversion)"
+
+#~ msgid "Invalid UTF-8 string in GIMP brush file '%s'."
+#~ msgstr "Ugyldig UTF-8-streng i penselfilen '%s'."
+
+#~ msgid "Zero width or height layers not allowed."
+#~ msgstr "Lag uden højde eller bredde er ikke tilladt."
 
 #~ msgid "OK"
 #~ msgstr "O.k."
