@@ -1428,10 +1428,6 @@ prefs_dialog_new (Gimp       *gimp,
                          _("Marching _Ants Speed:"),
                          GTK_TABLE (table), 0);
 
-  prefs_check_button_add (object, "activate-on-focus",
-                          _("Activate the Focused Image"),
-                          GTK_BOX (vbox2));
-
   /*  Zoom & Resize Behavior  */
   vbox2 = prefs_frame_new (_("Zoom & Resize Behavior"),
                            GTK_CONTAINER (vbox), FALSE);
@@ -1780,6 +1776,41 @@ prefs_dialog_new (Gimp       *gimp,
 
   if (! display_config->monitor_res_from_gdk)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+
+
+  /********************/
+  /*  Window Manager  */
+  /********************/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("Window Manager"),
+                                     "window-manager.png",
+				     GTK_TREE_STORE (tree),
+				     _("Window Manager"),
+				     GIMP_HELP_PREFS_WINDOW_MANAGER,
+				     NULL,
+				     &top_iter,
+				     page_index++);
+
+  vbox2 = prefs_frame_new (_("Decorations"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
+
+  prefs_enum_option_menu_add (object, "toolbox-window-type", 0, 0,
+                              _("Window Type Hint for the _Toolbox:"),
+                              GTK_TABLE (table), 0);
+
+  prefs_enum_option_menu_add (object, "dock-window-type", 0, 0,
+                              _("Window Type Hint for the _Docks:"),
+                              GTK_TABLE (table), 1);
+
+  vbox2 = prefs_frame_new (_("Focus"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add (object, "activate-on-focus",
+                          _("Activate the _Focused Image"),
+                          GTK_BOX (vbox2));
 
 
   /*****************/

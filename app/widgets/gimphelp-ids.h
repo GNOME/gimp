@@ -363,6 +363,7 @@
 #define GIMP_HELP_PREFS_IMAGE_WINDOW_TITLE        "gimp-prefs-image-window-title"
 #define GIMP_HELP_PREFS_DISPLAY                   "gimp-prefs-display"
 #define GIMP_HELP_PREFS_MONITOR                   "gimp-prefs-monitor"
+#define GIMP_HELP_PREFS_WINDOW_MANAGER            "gimp-prefs-window-manager"
 #define GIMP_HELP_PREFS_ENVIRONMENT               "gimp-prefs-environment"
 #define GIMP_HELP_PREFS_SESSION                   "gimp-prefs-session"
 #define GIMP_HELP_PREFS_FOLDERS                   "gimp-prefs-folders"

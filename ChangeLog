@@ -1,3 +1,14 @@
+2003-11-20  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/gui/preferences-dialog.c
+	* app/widgets/gimphelp-ids.h: Added Window Manager tab exposing
+	the window manager hint settings to the user, moved the
+	activate-on-focus setting to this tab as well.
+
+	* themes/Default/images/preferences/window-manager.png
+	* themes/Default/images/preferences/Makefile.am: added empty
+	placeholder for Window Manager preferences icon.
+
 2003-11-20  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdock.c: reverted a small part of my last commit.
