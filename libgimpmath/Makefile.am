@@ -59,9 +59,9 @@ EXTRA_DIST = \
 	makefile.msc		\
 	gimpmath.def
 
-lib_LTLIBRARIES = libgimpmath-1.3.la
+lib_LTLIBRARIES = libgimpmath-2.0.la
 
-libgimpmath_1_3_la_SOURCES = \
+libgimpmath_2_0_la_SOURCES = \
 	gimpmath.h	\
 	gimpmathtypes.h	\
 	gimpmatrix.c	\
@@ -78,14 +78,14 @@ libgimpmathinclude_HEADERS = \
 	gimpmd5.h	\
 	gimpvector.h
 
-libgimpmath_1_3_la_LDFLAGS = \
+libgimpmath_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
 	$(libgimpmath_export_symbols)
 
-libgimpmath_1_3_la_DEPENDENCIES = $(gimpmath_def) $(libgimpbase)
+libgimpmath_2_0_la_DEPENDENCIES = $(gimpmath_def) $(libgimpbase)
 
-libgimpmath_1_3_la_LIBADD = $(GLIB_LIBS) $(libm)
+libgimpmath_2_0_la_LIBADD = $(GLIB_LIBS) $(libm)
 
 
 #

@@ -52,9 +52,9 @@ EXTRA_DIST = \
 	makefile.msc	\
 	gimpthumb.def
 
-lib_LTLIBRARIES = libgimpthumb-1.3.la
+lib_LTLIBRARIES = libgimpthumb-2.0.la
 
-libgimpthumb_1_3_la_SOURCES = \
+libgimpthumb_2_0_la_SOURCES = \
 	gimpthumb.h		\
 	gimpthumb-enums.c	\
 	gimpthumb-enums.h	\
@@ -74,12 +74,12 @@ libgimpthumbinclude_HEADERS = \
 	gimpthumb-utils.h	\
 	gimpthumbnail.h
 
-libgimpthumb_1_3_la_LDFLAGS = \
+libgimpthumb_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
 	$(libgimpthumb_export_symbols)
 
-libgimpthumb_1_3_la_LIBADD = $(libgimpmath) $(GDK_PIXBUF_LIBS)
+libgimpthumb_2_0_la_LIBADD = $(libgimpmath) $(GDK_PIXBUF_LIBS)
 
 
 install-data-local: install-ms-lib install-libtool-import-lib

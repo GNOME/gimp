@@ -28,12 +28,12 @@ SUBDIRS = \
 scriptdata =
 
 if ENABLE_GIMP_CONSOLE
-bin_PROGRAMS = gimp-1.3 gimp-console-1.3
+bin_PROGRAMS = gimp-2.0 gimp-console-2.0
 else
-bin_PROGRAMS = gimp-1.3
+bin_PROGRAMS = gimp-2.0
 endif
 
-gimp_1_3_SOURCES = \
+gimp_2_0_SOURCES = \
 	app_procs.c	\
 	app_procs.h	\
 	main.c		\
@@ -71,13 +71,13 @@ INCLUDES = \
 	$(GTK_CFLAGS)	\
 	-I$(includedir)
 
-gimp_1_3_LDFLAGS = \
+gimp_2_0_LDFLAGS = \
 	$(mwindows)				\
 	-u $(SYMPREFIX)gimp_container_filter	\
 	-u $(SYMPREFIX)gimp_xml_parser_new	\
 	-u $(SYMPREFIX)gimp_drawable_stroke_vectors
 
-gimp_1_3_LDADD = \
+gimp_2_0_LDADD = \
 	config/libappconfig.a		\
 	gui/libappgui.a			\
 	display/libappdisplay.a		\
@@ -112,10 +112,10 @@ gimp_1_3_LDADD = \
 	$(REGEXREPL)
 
 if ENABLE_GIMP_CONSOLE
-gimp_console_1_3_SOURCES = $(gimp_1_3_SOURCES)
-gimp_console_1_3_LDFLAGS = $(gimp_1_3_LDFLAGS)
+gimp_console_2_0_SOURCES = $(gimp_2_0_SOURCES)
+gimp_console_2_0_LDFLAGS = $(gimp_2_0_LDFLAGS)
 
-gimp_console_1_3_LDADD = \
+gimp_console_2_0_LDADD = \
 	config/libappconfig.a		\
 	pdb/libapppdb.a			\
 	core/libappcore.a		\

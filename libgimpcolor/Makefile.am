@@ -59,9 +59,9 @@ EXTRA_DIST = \
 	makefile.msc		\
 	gimpcolor.def
 
-lib_LTLIBRARIES = libgimpcolor-1.3.la
+lib_LTLIBRARIES = libgimpcolor-2.0.la
 
-libgimpcolor_1_3_la_SOURCES = \
+libgimpcolor_2_0_la_SOURCES = \
 	gimpcolor.h			\
 	gimpcolortypes.h		\
 	gimpadaptivesupersample.c	\
@@ -87,14 +87,14 @@ libgimpcolorinclude_HEADERS = \
 	gimphsv.h			\
 	gimprgb.h
 
-libgimpcolor_1_3_la_LDFLAGS = \
+libgimpcolor_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
 	$(libgimpcolor_export_symbols)
 
-libgimpcolor_1_3_la_DEPENDENCIES = $(gimpcolor_def) $(libgimpbase)
+libgimpcolor_2_0_la_DEPENDENCIES = $(gimpcolor_def) $(libgimpbase)
 
-libgimpcolor_1_3_la_LIBADD = $(GLIB_LIBS) $(libm)
+libgimpcolor_2_0_la_LIBADD = $(GLIB_LIBS) $(libm)
 
 install-data-local: install-ms-lib install-libtool-import-lib
 

@@ -56,9 +56,9 @@ INCLUDES = \
 	$(GTK_CFLAGS)	\
 	-I$(includedir)
 
-lib_LTLIBRARIES = libgimpwidgets-1.3.la
+lib_LTLIBRARIES = libgimpwidgets-2.0.la
 
-libgimpwidgets_1_3_la_sources = \
+libgimpwidgets_2_0_la_sources = \
 	gimpwidgets.c		\
 	gimpwidgets.h		\
 	gimpwidgetstypes.h	\
@@ -113,20 +113,20 @@ libgimpwidgets_1_3_la_sources = \
 	gimpwidgets-private.c	\
 	gimpwidgets-private.h
 
-libgimpwidgets_1_3_la_built_sources = \
+libgimpwidgets_2_0_la_built_sources = \
 	gimpwidgetsmarshal.c	\
 	gimpwidgetsmarshal.h
 
-libgimpwidgets_1_3_la_extra_sources = gimpwidgetsmarshal.list
+libgimpwidgets_2_0_la_extra_sources = gimpwidgetsmarshal.list
 
 EXTRA_DIST = \
 	makefile.msc				\
 	gimpwidgets.def				\
-	$(libgimpwidgets_1_3_la_extra_sources)
+	$(libgimpwidgets_2_0_la_extra_sources)
 
-libgimpwidgets_1_3_la_SOURCES = 		\
-	$(libgimpwidgets_1_3_la_built_sources)	\
-	$(libgimpwidgets_1_3_la_sources)
+libgimpwidgets_2_0_la_SOURCES = 		\
+	$(libgimpwidgets_2_0_la_built_sources)	\
+	$(libgimpwidgets_2_0_la_sources)
 
 libgimpwidgetsinclude_HEADERS = \
 	gimpwidgets.h		\
@@ -156,18 +156,18 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpstock.h		\
 	gimpunitmenu.h
 
-libgimpwidgets_1_3_la_LDFLAGS = \
+libgimpwidgets_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
 	$(libgimpwidgets_export_symbols)
 
-libgimpwidgets_1_3_la_LIBADD = \
+libgimpwidgets_2_0_la_LIBADD = \
 	$(libgimpbase)	\
 	$(libgimpcolor) \
 	$(GTK_LIBS) 	\
 	$(libm)
 
-libgimpwidgets_1_3_la_DEPENDENCIES = $(gimpwidgets_def)
+libgimpwidgets_2_0_la_DEPENDENCIES = $(gimpwidgets_def)
 
 #
 # rules to generate built sources

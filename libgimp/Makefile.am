@@ -71,7 +71,7 @@ EXTRA_DIST = \
 	gimp.def	\
 	gimpui.def
 
-lib_LTLIBRARIES = libgimp-1.3.la libgimpui-1.3.la
+lib_LTLIBRARIES = libgimp-2.0.la libgimpui-2.0.la
 
 PDB_WRAPPERS_C = \
 	gimpbrushes_pdb.c		\
@@ -152,7 +152,7 @@ PDB_WRAPPERS_H = \
 	gimpundo_pdb.h			\
 	gimpunit_pdb.h
 
-libgimp_1_3_la_SOURCES = \
+libgimp_2_0_la_SOURCES = \
 	gimp.c			\
 	gimp.h			\
 	gimpcompat.h		\
@@ -192,7 +192,7 @@ libgimp_1_3_la_SOURCES = \
 	stdplugins-intl.h	\
 	libgimp-intl.h
 
-libgimpui_1_3_la_SOURCES = \
+libgimpui_2_0_la_SOURCES = \
 	gimpui.c		\
 	gimpui.h		\
 	gimpuitypes.h		\
@@ -239,24 +239,24 @@ gimpinclude_HEADERS = \
 	gimpgradientmenu.h	\
 	gimppatternmenu.h
 
-libgimp_1_3_la_LDFLAGS = \
+libgimp_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
 	$(libgimp_export_symbols)
 
-libgimp_1_3_la_LIBADD = $(libgimpcolor) $(libgimpbase) $(GLIB_LIBS) $(RT_LIBS)
+libgimp_2_0_la_LIBADD = $(libgimpcolor) $(libgimpbase) $(GLIB_LIBS) $(RT_LIBS)
 
-libgimp_1_3_la_DEPENDENCIES = $(gimp_def) $(libgimpcolor) $(libgimpbase)
+libgimp_2_0_la_DEPENDENCIES = $(gimp_def) $(libgimpcolor) $(libgimpbase)
 
-libgimpui_1_3_la_LDFLAGS = \
+libgimpui_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
 	$(libgimpui_export_symbols)
 
-libgimpui_1_3_la_LIBADD = $(libgimp) $(libgimpwidgets) $(libgimpcolor) \
+libgimpui_2_0_la_LIBADD = $(libgimp) $(libgimpwidgets) $(libgimpcolor) \
 	 $(libgimpbase) $(libgimpmodule) $(GTK_LIBS) $(RT_LIBS)
 
-libgimpui_1_3_la_DEPENDENCIES = $(gimpui_def) $(libgimp) $(libgimpwidgets) $(libgimpbase)
+libgimpui_2_0_la_DEPENDENCIES = $(gimpui_def) $(libgimp) $(libgimpwidgets) $(libgimpbase)
 
 install-data-local: install-ms-lib install-libtool-import-lib
 

@@ -61,9 +61,9 @@ EXTRA_DIST = \
 	makefile.msc	\
 	gimpmodule.def
 
-lib_LTLIBRARIES = libgimpmodule-1.3.la
+lib_LTLIBRARIES = libgimpmodule-2.0.la
 
-libgimpmodule_1_3_la_SOURCES = \
+libgimpmodule_2_0_la_SOURCES = \
 	gimpmoduletypes.h	\
 	gimpmodule.c		\
 	gimpmodule.h		\
@@ -75,14 +75,14 @@ libgimpmoduleinclude_HEADERS = \
 	gimpmodule.h		\
 	gimpmoduledb.h
 
-libgimpmodule_1_3_la_LDFLAGS = \
+libgimpmodule_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
 	$(libgimpmodule_export_symbols)
 
-libgimpmodule_1_3_la_DEPENDENCIES = $(gimpmodule_def)
+libgimpmodule_2_0_la_DEPENDENCIES = $(gimpmodule_def)
 
-libgimpmodule_1_3_la_LIBADD = \
+libgimpmodule_2_0_la_LIBADD = \
 	$(libgimpbase)	\
 	$(GMODULE_LIBS)
 

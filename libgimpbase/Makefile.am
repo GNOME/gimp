@@ -58,14 +58,14 @@ EXTRA_DIST = \
 	makefile.msc	\
 	gimpbase.def
 
-lib_LTLIBRARIES = libgimpbase-1.3.la
+lib_LTLIBRARIES = libgimpbase-2.0.la
 
 # help `make' along by giving another name for the file, which it knows
 # how to build
 ../libgimpbase/gimpversion.h: gimpversion.h
 	@:
 
-libgimpbase_1_3_la_SOURCES = \
+libgimpbase_2_0_la_SOURCES = \
 	gimpbase.h		\
 	gimpbasetypes.h		\
 	gimplimits.h		\
@@ -107,14 +107,14 @@ libgimpbaseinclude_HEADERS = \
 	gimpunit.h		\
 	gimputils.h
 
-libgimpbase_1_3_la_LDFLAGS = \
+libgimpbase_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
 	$(libgimpbase_export_symbols)
 
-libgimpbase_1_3_la_DEPENDENCIES = $(gimpbase_def)
+libgimpbase_2_0_la_DEPENDENCIES = $(gimpbase_def)
 
-libgimpbase_1_3_la_LIBADD = $(GLIB_LIBS)
+libgimpbase_2_0_la_LIBADD = $(GLIB_LIBS)
 
 install-data-local: install-ms-lib install-libtool-import-lib
 

@@ -1,5 +1,23 @@
 2004-03-20  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: set version number to 2.0.0, version string to
+	"2.0rc1".
+
+	* app/Makefile.am
+	* libgimp/Makefile.am
+	* libgimpbase/Makefile.am
+	* libgimpcolor/Makefile.am
+	* libgimpmath/Makefile.am
+	* libgimpmodule/Makefile.am
+	* libgimpthumb/Makefile.am
+	* libgimpwidgets/Makefile.am
+	* tools/Makefile.am: changed 1.3 to 2.0 all over the place.
+
+	* README
+	* NEWS: updated for the 2.0rc1 release.
+
+2004-03-20  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayer.c: it wasn't such a good idea to let
 	GimpConfig take care of the text when duplicating a text layer; it
 	didn't create a copy. Do that manually again; fixes bug #137786.

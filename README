@@ -1,25 +1,24 @@
 The GIMP: The GNU Image Manipulation Program
 ============================================
 
-This is a pre-release of GIMP version 2.0. Actually it still is GIMP-1.3,
-the developers version of The GIMP. But we got pretty close to the final
-2.0 release, the plug-in API has settled and you are encouraged to try
-this software. Your feedback can help to make the 2.0 release a success.
-If you encounter any problems, please report them to our bug-tracker at
-bugzilla.gnome.org. There are still a number of known problems, so please
-check first if your problem has already been reported.
+This is a release candidate of GIMP version 2.0. Unless there are
+major problems, this will be released as GIMP 2.0 very soon. Your
+feedback can help to make the 2.0 release a success.  If you
+encounter any problems, please report them to our bug-tracker a
+bugzilla.gnome.org. There are still a number of known problems, so
+please check first if your problem has already been reported.
 
-GIMP-2.0 installs side-by-side with GIMP-1.2 so there's no need to
-uninstall GIMP-1.2 (but sooner or later you will not be using it any
+GIMP 2.0 installs side-by-side with GIMP 1.2 so there's no need to
+uninstall GIMP 1.2 (but sooner or later you will not be using it any
 longer...).
 
 Some features that were present in GIMP 1.2 are not included in this
 release. The perl bindings as well as all the perl scripts are not any
 longer included in this source tree. They have been moved into its own
 module called gimp-perl. Sooner or later there will be a gimp-perl
-release for GIMP-2.0. GAP, a set of plug-ins that used to live in the
+release for GIMP 2.0. GAP, a set of plug-ins that used to live in the
 Video submenu has also become a separate package. Expect a preview
-release of this software for GIMP-2.0 soon.
+release of this software for GIMP 2.0 soon.
 
 For detailed installation instructions, see the file INSTALL.
 
@@ -95,13 +94,13 @@ Many of the developers hang out there.  One of the Byxnet servers are:
 The look of GIMP's interface can be customized like any other GTK app
 by editing the ~/.gtkrc-2.0 file or by using "themes" (ready-made
 customizations).  For downloadable themes and further details, see
-http://gtk.themes.org.  Additionally GIMP reads ~/.gimp-1.3/gtkrc so
+http://gtk.themes.org.  Additionally GIMP reads ~/.gimp-2.0/gtkrc so
 you can have settings that only apply to The GIMP.
 
 Included is a set of keybindings similar to those in Adobe Photoshop.
 You can find them in the ps-menurc file.  To use them, copy this file
-to ~/.gimp-1.3/menurc. You can also manually change the keybindings to
-any of your choice by editing ~/.gimp-1.3/menurc.
+to ~/.gimp-2.0/menurc. You can also manually change the keybindings to
+any of your choice by editing ~/.gimp-2.0/menurc.
 
 
 Have fun,
