@@ -387,10 +387,10 @@ dialog (GimpDrawable *drawable)
 				 &pvals.max_p,
                                  GINT_TO_POINTER (pvals.max_p),
 
-				 _("Hold the Maximal Channels"),
+				 _("_Hold the Maximal Channels"),
 				 GINT_TO_POINTER (MAX_CHANNELS), &max,
 
-				 _("Hold the Minimal Channels"),
+				 _("Ho_ld the Minimal Channels"),
 				 GINT_TO_POINTER (MIN_CHANNELS), &min,
 
 				 NULL);

@@ -320,9 +320,9 @@ randomize_value (gint now,
   return new;
 }
 
-void scatter_hsv_scatter (guchar *r,
-			  guchar *g,
-			  guchar *b)
+static void scatter_hsv_scatter (guchar *r,
+				 guchar *g,
+				 guchar *b)
 {
   gint h, s, v;
   gint h1, s1, v1;
@@ -443,7 +443,7 @@ scatter_hsv_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Holdness:"), SCALE_WIDTH, 0,
+			      _("_Holdness:"), SCALE_WIDTH, 0,
 			      VALS.holdness, 1, 8, 1, 2, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -452,7 +452,7 @@ scatter_hsv_dialog (void)
                     &VALS.holdness);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Hue:"), SCALE_WIDTH, 0,
+			      _("H_ue:"), SCALE_WIDTH, 0,
 			      VALS.hue_distance, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -461,7 +461,7 @@ scatter_hsv_dialog (void)
                     &VALS.hue_distance);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Saturation:"), SCALE_WIDTH, 0,
+			      _("_Saturation:"), SCALE_WIDTH, 0,
 			      VALS.saturation_distance, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -470,7 +470,7 @@ scatter_hsv_dialog (void)
                     &VALS.saturation_distance);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("Value:"), SCALE_WIDTH, 0,
+			      _("_Value:"), SCALE_WIDTH, 0,
 			      VALS.value_distance, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);

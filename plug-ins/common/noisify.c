@@ -538,7 +538,7 @@ noisify_dialog (GimpDrawable *drawable,
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_label (_("Independent"));
+  toggle = gtk_check_button_new_with_label (_("_Independent"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), nvals.independent);
   gtk_widget_show (toggle);
@@ -552,7 +552,7 @@ noisify_dialog (GimpDrawable *drawable,
   if (channels == 1) 
     {
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				  _("Gray:"), SCALE_WIDTH, 0,
+				  _("_Gray:"), SCALE_WIDTH, 0,
 				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -568,7 +568,7 @@ noisify_dialog (GimpDrawable *drawable,
   else if (channels == 2)
     {
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				  _("Gray:"), SCALE_WIDTH, 0,
+				  _("_Gray:"), SCALE_WIDTH, 0,
 				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -582,7 +582,7 @@ noisify_dialog (GimpDrawable *drawable,
       noise_int.channel_adj[0] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				  _("Alpha:"), SCALE_WIDTH, 0,
+				  _("_Alpha:"), SCALE_WIDTH, 0,
 				  nvals.noise[1], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -599,7 +599,7 @@ noisify_dialog (GimpDrawable *drawable,
   else if (channels == 3)
     {
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				  _("Red:"), SCALE_WIDTH, 0,
+				  _("_Red:"), SCALE_WIDTH, 0,
 				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -613,7 +613,7 @@ noisify_dialog (GimpDrawable *drawable,
       noise_int.channel_adj[0] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				  _("Green:"), SCALE_WIDTH, 0,
+				  _("_Green:"), SCALE_WIDTH, 0,
 				  nvals.noise[1], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -627,7 +627,7 @@ noisify_dialog (GimpDrawable *drawable,
       noise_int.channel_adj[1] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-				  _("Blue:"), SCALE_WIDTH, 0,
+				  _("_Blue:"), SCALE_WIDTH, 0,
 				  nvals.noise[2], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -644,7 +644,7 @@ noisify_dialog (GimpDrawable *drawable,
   else if (channels == 4)
     {
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				  _("Red:"), SCALE_WIDTH, 0,
+				  _("_Red:"), SCALE_WIDTH, 0,
 				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -658,7 +658,7 @@ noisify_dialog (GimpDrawable *drawable,
       noise_int.channel_adj[0] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				  _("Green:"), SCALE_WIDTH, 0,
+				  _("_Green:"), SCALE_WIDTH, 0,
 				  nvals.noise[1], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -672,7 +672,7 @@ noisify_dialog (GimpDrawable *drawable,
       noise_int.channel_adj[1] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-				  _("Blue:"), SCALE_WIDTH, 0,
+				  _("_Blue:"), SCALE_WIDTH, 0,
 				  nvals.noise[2], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -686,7 +686,7 @@ noisify_dialog (GimpDrawable *drawable,
       noise_int.channel_adj[2] = adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-				  _("Alpha:"), SCALE_WIDTH, 0,
+				  _("_Alpha:"), SCALE_WIDTH, 0,
 				  nvals.noise[3], 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);

@@ -1,5 +1,20 @@
 2002-05-25  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
+	* plug-ins/common/scatter_hsv.c (scatter_hsv_dialog)
+	* plug-ins/common/noisify.c (noisify_dialog)
+	* plug-ins/common/spread.c (spread_dialog)
+	* plug-ins/common/edge.c (edge_dialog)
+	* plug-ins/common/sobel.c (sobel_dialog)
+	* plug-ins/common/sharpen.c (sharpen_dialog)
+	* plug-ins/common/unsharp.c (unsharp_mask_dialog)
+	* plug-ins/common/max_rgb.c (dialog): enable mnemonics.
+
+	* libgimpwidgets/gimpsizeentry.c (gimp_size_entry_attach_label): allow 
+	underscore to be embedded in text paramter so labels can have 
+	mnemonics. More work to do here.
+
+2002-05-25  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
 	* plug-ins/common/tileit.c: fix for #82498 (Opacity only seems to work 
 	when tile is flipped). Also added mnemonics to dialog.
 

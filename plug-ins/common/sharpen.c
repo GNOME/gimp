@@ -626,7 +626,7 @@ sharpen_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Sharpness:"), SCALE_WIDTH, 0,
+			      _("_Sharpness:"), SCALE_WIDTH, 0,
 			      sharpen_percent, 1, 99, 1, 10, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);

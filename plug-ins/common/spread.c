@@ -406,11 +406,11 @@ spread_dialog (gint32        image_ID,
 			       spvals.spread_amount_x == spvals.spread_amount_y,
 			       FALSE,
 
-			       _("Horizontal:"), spvals.spread_amount_x, xres,
+			       _("_Horizontal:"), spvals.spread_amount_x, xres,
 			       0, MAX (drawable->width, drawable->height),
 			       0, 0,
 
-			       _("Vertical:"), spvals.spread_amount_y, yres,
+			       _("_Vertical:"), spvals.spread_amount_y, yres,
 			       0, MAX (drawable->width, drawable->height),
 			       0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (size), 4);

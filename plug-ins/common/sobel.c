@@ -269,7 +269,7 @@ sobel_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Sobel Horizontally"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Sobel _Horizontally"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
   gtk_widget_show (toggle);
@@ -278,7 +278,7 @@ sobel_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &bvals.horizontal);
 
-  toggle = gtk_check_button_new_with_label (_("Sobel Vertically"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Sobel _Vertically"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
   gtk_widget_show (toggle);
@@ -287,7 +287,7 @@ sobel_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &bvals.vertical);
 
-  toggle = gtk_check_button_new_with_label (_("Keep Sign of Result (one Direction only)"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Keep Sign of Result (one Direction only)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.keep_sign);
   gtk_widget_show (toggle);

@@ -472,7 +472,7 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
   g_return_if_fail (text != NULL);
 
-  label = gtk_label_new (text);
+  label = gtk_label_new_with_mnemonic (text);
   gtk_misc_set_alignment (GTK_MISC (label), alignment, 0.5);
 
   gtk_table_attach (GTK_TABLE (gse), label, column, column+1, row, row+1,

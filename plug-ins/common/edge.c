@@ -671,7 +671,7 @@ edge_dialog (GimpDrawable *drawable)
 
   /*  Label, scale, entry for evals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("Amount:"), 100, 0,
+				     _("_Amount:"), 100, 0,
 				     evals.amount, 1.0, 10.0, 0.1, 1.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -687,7 +687,7 @@ edge_dialog (GimpDrawable *drawable)
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (hbox);
 
-  toggle = gtk_radio_button_new_with_label (group, _("Wrap"));
+  toggle = gtk_radio_button_new_with_mnemonic (group, _("_Wrap"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_wrap);
@@ -697,7 +697,7 @@ edge_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_toggle_button_update),
                     &use_wrap);
 
-  toggle = gtk_radio_button_new_with_label (group, _("Smear"));
+  toggle = gtk_radio_button_new_with_mnemonic (group, _("_Smear"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_smear);
@@ -707,7 +707,7 @@ edge_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_toggle_button_update),
                     &use_smear);
 
-  toggle = gtk_radio_button_new_with_label (group, _("Black"));
+  toggle = gtk_radio_button_new_with_mnemonic (group, _("_Black"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_black);

@@ -809,7 +809,7 @@ unsharp_mask_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Radius:"), SCALE_WIDTH, 0,
+			      _("_Radius:"), SCALE_WIDTH, 0,
 			      unsharp_params.radius, 1.0, 25.0, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -818,7 +818,7 @@ unsharp_mask_dialog (void)
                     &unsharp_params.radius);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Amount:"), SCALE_WIDTH, 0,
+			      _("_Amount:"), SCALE_WIDTH, 0,
 			      unsharp_params.amount, 0.0, 5.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -827,7 +827,7 @@ unsharp_mask_dialog (void)
                     &unsharp_params.amount);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Threshold:"), SCALE_WIDTH, 0,
+			      _("_Threshold:"), SCALE_WIDTH, 0,
 			      unsharp_params.threshold, 0.0, 255.0, 1.0, 10.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
