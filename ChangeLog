@@ -1,3 +1,9 @@
+2004-12-16  Sven Neumann  <neumann@jpk.com>
+
+	* app/dialogs/preferences-dialog.c (prefs_keyboard_shortcuts_dialog):
+	added a note on how to use the dialog, copied from the GNOME keyboard
+	shortcuts editor.
+
 2004-12-15  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/text_tool.pdb: let gimp_text() and

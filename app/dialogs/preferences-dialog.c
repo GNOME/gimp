@@ -482,8 +482,12 @@ prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
                                  Gimp      *gimp)
 {
   GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *scrolled_window;
   GtkWidget *view;
+  GtkWidget *image;
+  GtkWidget *label;
 
   dialog = g_object_get_data (G_OBJECT (gtk_widget_get_toplevel (widget)),
                               "gimp-keyboard-shortcuts-dialog");
@@ -518,11 +522,15 @@ prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
                            G_CALLBACK (prefs_keyboard_shortcuts_destroy),
                            gtk_widget_get_toplevel (widget), 0);
 
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+  gtk_widget_show (vbox);
+
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                        GTK_SHADOW_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), scrolled_window);
+  gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
   view = gimp_action_view_new (gimp_ui_managers_from_name ("<Image>")->data,
@@ -530,6 +538,27 @@ prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
   gtk_widget_set_size_request (view, 300, 400);
   gtk_container_add (GTK_CONTAINER (scrolled_window), view);
   gtk_widget_show (view);
+
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_INFO, GTK_ICON_SIZE_DIALOG);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  label = g_object_new (GTK_TYPE_LABEL,
+                        "label",   _("To edit a shortcut key, click on the "
+                                     "corresponding row and type a new "
+                                     "accelerator, or press backspace to "
+                                     "clear."),
+                        "wrap",    TRUE,
+                        "justify", GTK_JUSTIFY_LEFT,
+                        "xalign",  0.0,
+                        "yalign",  0.5,
+                        NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   gtk_widget_show (dialog);
 }
