@@ -30,7 +30,8 @@
 	 (height (car (gimp-drawable-height logo-layer)))
 	 (posx (- (car (gimp-drawable-offsets logo-layer))))
 	 (posy (- (cadr (gimp-drawable-offsets logo-layer))))
-	 (bg-layer (car (gimp-layer-new img width height RGBA_IMAGE "Background" 100 NORMAL)))
+	 (bg-layer (car (gimp-layer-new img width height RGBA_IMAGE
+					"Background" 100 NORMAL)))
 	 (white-layer (car (gimp-layer-copy logo-layer 1)))
 	 (black-layer (car (gimp-layer-copy logo-layer 1)))
 	 (old-gradient (car (gimp-gradients-get-gradient)))
@@ -74,7 +75,7 @@
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-selection-all img)
 
-    (gimp-blend logo-layer CUSTOM NORMAL
+    (gimp-blend logo-layer CUSTOM-MODE NORMAL-MODE
 		GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
 		FALSE 0 0 TRUE
 		0 (* height 0.33333) 0 (* height 0.83333))
@@ -92,13 +93,15 @@
 (define (script-fu-comic-logo-alpha img
 				    logo-layer
 				    gradient
+				    gradient-reverse
 				    ol-width
 				    ol-color
 				    bg-color)
   (begin
     (gimp-undo-push-group-start img)
-    (apply-comic-logo-effect img logo-layer gradient ol-width ol-color
-			     bg-color)
+    (apply-comic-logo-effect img logo-layer
+			     gradient gradient-reverse
+			     ol-width ol-color bg-color)
     (gimp-undo-push-group-end img)
     (gimp-displays-flush)))
 
@@ -128,12 +131,12 @@
 			      bg-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
          (border (/ size 4))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font))))
+	 (text-layer (car (gimp-text-fontname
+			   img -1 0 0 text border TRUE size PIXELS font))))
     (gimp-image-undo-disable img)
     (gimp-layer-set-name text-layer text)
     (apply-comic-logo-effect img text-layer gradient gradient-reverse
-			     ol-width ol-color
-			     bg-color)
+			     ol-width ol-color bg-color)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
