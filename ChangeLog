@@ -1,3 +1,11 @@
+Fri Dec 15 19:16:31 GMT 2000  Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/common/gee.c, plug-ins/common/Makefile.am,
+	plug-ins/common/plugin-defs.pl, plug-ins/common/gee_zoom.c,
+	plug-ins/common/.cvsignore:
+	Unhide 'gee' once more... come on Sven, we have nothing worth
+	hiding any longer.  =)
+
 2000-12-15  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/spheredesigner.c: re-added it to CVS.
