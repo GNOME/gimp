@@ -64,13 +64,46 @@
 #include "gimp-intl.h"
 
 
+typedef struct _VectorsOptions VectorsOptions;
+
+struct _VectorsOptions
+{
+  GtkWidget   *query_box;
+  GtkWidget   *name_entry;
+
+  GimpImage   *gimage;
+  GimpVectors *vectors;
+};
+
+
 /*  local function prototypes  */
 
-static void  vectors_import_query (GimpImage   *gimage,
-                                   GtkWidget   *parent);
-static void  vectors_export_query (GimpImage   *gimage,
-                                   GimpVectors *vectors,
-                                   GtkWidget   *parent);
+static VectorsOptions * vectors_query_new   (GimpImage      *gimage,
+                                             GimpContext    *context,
+                                             GimpVectors    *vectors,
+                                             GtkWidget      *parent);
+static void   vectors_new_vectors_response  (GtkWidget      *widget,
+                                             gint            response_id,
+                                             VectorsOptions *options);
+static void   vectors_edit_vectors_response (GtkWidget      *widget,
+                                             gint            response_id,
+                                             VectorsOptions *options);
+static void   vectors_import_query          (GimpImage      *gimage,
+                                             GtkWidget      *parent);
+static void   vectors_import_response       (GtkWidget      *dialog,
+                                             gint            response_id,
+                                             GimpImage      *gimage);
+static void   vectors_export_query          (GimpImage      *gimage,
+                                             GimpVectors    *vectors,
+                                             GtkWidget      *parent);
+static void   vectors_export_response       (GtkWidget      *dialog,
+                                             gint            response_id,
+                                             GimpImage      *gimage);
+
+
+/*  private variables  */
+
+static gchar *vectors_name = NULL;
 
 
 /*  public functions  */
@@ -434,27 +467,152 @@ vectors_vectors_tool (GimpVectors *vectors,
     gimp_vector_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool), vectors);
 }
 
-/**********************************/
-/*  The new vectors query dialog  */
-/**********************************/
-
-typedef struct _NewVectorsOptions NewVectorsOptions;
-
-struct _NewVectorsOptions
+void
+vectors_new_vectors_query (GimpImage   *gimage,
+                           GimpContext *context,
+                           GimpVectors *template,
+                           gboolean     interactive,
+                           GtkWidget   *parent)
 {
-  GtkWidget *query_box;
-  GtkWidget *name_entry;
+  VectorsOptions *options;
 
-  GimpImage *gimage;
-};
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (template == NULL || GIMP_IS_VECTORS (template));
 
-static gchar *vectors_name = NULL;
+  if (template || ! interactive)
+    {
+      GimpVectors *new_vectors;
 
+      new_vectors = gimp_vectors_new (gimage, _("Empty Path"));
+
+      gimp_image_add_vectors (gimage, new_vectors, -1);
+
+      return;
+    }
+
+  options = vectors_query_new (gimage, context, NULL, parent);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (vectors_new_vectors_response),
+                    options);
+
+  gtk_widget_show (options->query_box);
+}
+
+void
+vectors_edit_vectors_query (GimpVectors *vectors,
+                            GimpContext *context,
+                            GtkWidget   *parent)
+{
+  VectorsOptions *options;
+
+  g_return_if_fail (GIMP_IS_VECTORS (vectors));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  options = vectors_query_new (gimp_item_get_image (GIMP_ITEM (vectors)),
+                               context, vectors, parent);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (vectors_edit_vectors_response),
+                    options);
+
+  gtk_widget_show (options->query_box);
+}
+
+
+/*  private functions  */
+
+static VectorsOptions *
+vectors_query_new (GimpImage   *gimage,
+                   GimpContext *context,
+                   GimpVectors *vectors,
+                   GtkWidget   *parent)
+{
+  VectorsOptions *options;
+  GtkWidget      *hbox;
+  GtkWidget      *vbox;
+  GtkWidget      *table;
+
+  options = g_new0 (VectorsOptions, 1);
+
+  options->gimage  = gimage;
+  options->vectors = vectors;
+
+  if (vectors)
+    {
+      options->query_box =
+        gimp_viewable_dialog_new (GIMP_VIEWABLE (vectors),
+                                  _("Path Attributes"), "gimp-vectors-edit",
+                                  GIMP_STOCK_EDIT,
+                                  _("Edit Path Attributes"),
+                                  parent,
+                                  gimp_standard_help_func,
+                                  GIMP_HELP_PATH_EDIT,
+
+                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                  GTK_STOCK_OK,     GTK_RESPONSE_OK,
+
+                                  NULL);
+    }
+  else
+    {
+      options->query_box =
+        gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
+                                  _("New Path"), "gimp-vectors-new",
+                                  GIMP_STOCK_PATH,
+                                  _("New Path Options"),
+                                  parent,
+                                  gimp_standard_help_func,
+                                  GIMP_HELP_PATH_NEW,
+
+                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                  GTK_STOCK_OK,     GTK_RESPONSE_OK,
+
+                                  NULL);
+    }
+
+  g_object_weak_ref (G_OBJECT (options->query_box),
+		     (GWeakNotify) g_free,
+		     options);
+
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
+		     hbox);
+  gtk_widget_show (hbox);
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  options->name_entry = gtk_entry_new ();
+  gtk_widget_set_size_request (options->name_entry, 150, -1);
+  gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Path Name:"), 0.0, 0.5,
+                             options->name_entry, 1, FALSE);
+
+  if (vectors)
+    gtk_entry_set_text (GTK_ENTRY (options->name_entry),
+                        gimp_object_get_name (GIMP_OBJECT (vectors)));
+  else
+    gtk_entry_set_text (GTK_ENTRY (options->name_entry),
+                        vectors_name ? vectors_name : _("New Path"));
+
+  return options;
+}
 
 static void
-new_vectors_query_response (GtkWidget         *widget,
-                            gint               response_id,
-                            NewVectorsOptions *options)
+vectors_new_vectors_response (GtkWidget      *widget,
+                              gint            response_id,
+                              VectorsOptions *options)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -475,115 +633,10 @@ new_vectors_query_response (GtkWidget         *widget,
   gtk_widget_destroy (options->query_box);
 }
 
-void
-vectors_new_vectors_query (GimpImage   *gimage,
-                           GimpContext *context,
-                           GimpVectors *template,
-                           gboolean     interactive,
-                           GtkWidget   *parent)
-{
-  NewVectorsOptions *options;
-  GtkWidget         *hbox;
-  GtkWidget         *vbox;
-  GtkWidget         *table;
-  GtkWidget         *label;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (! template || GIMP_IS_VECTORS (template));
-
-  if (template || ! interactive)
-    {
-      GimpVectors *new_vectors;
-
-      new_vectors = gimp_vectors_new (gimage, _("Empty Path"));
-
-      gimp_image_add_vectors (gimage, new_vectors, -1);
-
-      return;
-    }
-
-  /*  the new options structure  */
-  options = g_new (NewVectorsOptions, 1);
-  options->gimage = gimage;
-
-  /*  The dialog  */
-  options->query_box =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
-                              _("New Path"), "gimp-vectors-new",
-                              GIMP_STOCK_TOOL_PATH,
-                              _("New Path Options"),
-                              parent,
-                              gimp_standard_help_func,
-                              GIMP_HELP_PATH_NEW,
-
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                              NULL);
-
-  g_signal_connect (options->query_box, "response",
-                    G_CALLBACK (new_vectors_query_response),
-                    options);
-
-  g_object_weak_ref (G_OBJECT (options->query_box),
-		     (GWeakNotify) g_free,
-		     options);
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
-		     hbox);
-  gtk_widget_show (hbox);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  /*  The name entry hbox, label and entry  */
-  label = gtk_label_new (_("Path name:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  options->name_entry = gtk_entry_new ();
-  gtk_widget_set_size_request (options->name_entry, 150, -1);
-  gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);
-  gtk_entry_set_text (GTK_ENTRY (options->name_entry),
-		      (vectors_name ? vectors_name : _("New Path")));
-  gtk_table_attach_defaults (GTK_TABLE (table), options->name_entry,
-			     1, 2, 0, 1);
-  gtk_widget_show (options->name_entry);
-
-  gtk_widget_show (options->query_box);
-}
-
-/****************************************/
-/*  The edit vectors attributes dialog  */
-/****************************************/
-
-typedef struct _EditVectorsOptions EditVectorsOptions;
-
-struct _EditVectorsOptions
-{
-  GtkWidget     *query_box;
-  GtkWidget     *name_entry;
-
-  GimpVectors   *vectors;
-  GimpImage     *gimage;
-};
-
 static void
-edit_vectors_query_response (GtkWidget          *widget,
-                             gint                response_id,
-                             EditVectorsOptions *options)
+vectors_edit_vectors_response (GtkWidget      *widget,
+                               gint            response_id,
+                               VectorsOptions *options)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -600,116 +653,6 @@ edit_vectors_query_response (GtkWidget          *widget,
     }
 
   gtk_widget_destroy (options->query_box);
-}
-
-void
-vectors_edit_vectors_query (GimpVectors *vectors,
-                            GimpContext *context,
-                            GtkWidget   *parent)
-{
-  EditVectorsOptions *options;
-  GtkWidget          *hbox;
-  GtkWidget          *vbox;
-  GtkWidget          *table;
-  GtkWidget          *label;
-
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-
-  options = g_new0 (EditVectorsOptions, 1);
-
-  options->vectors = vectors;
-  options->gimage  = gimp_item_get_image (GIMP_ITEM (vectors));
-
-  /*  The dialog  */
-  options->query_box =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (vectors),
-                              _("Path Attributes"), "gimp-vectors-edit",
-                              GIMP_STOCK_EDIT,
-                              _("Edit Path Attributes"),
-                              parent,
-                              gimp_standard_help_func,
-                              GIMP_HELP_PATH_EDIT,
-
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                              NULL);
-
-  g_signal_connect (options->query_box, "response",
-                    G_CALLBACK (edit_vectors_query_response),
-                    options);
-
-  g_object_weak_ref (G_OBJECT (options->query_box),
-		     (GWeakNotify) g_free,
-		     options);
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
-		     hbox);
-  gtk_widget_show (hbox);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  /*  The name entry  */
-  label = gtk_label_new (_("Path name:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  options->name_entry = gtk_entry_new ();
-  gtk_widget_set_size_request (options->name_entry, 150, -1);
-  gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);
-  gtk_entry_set_text (GTK_ENTRY (options->name_entry),
-		      gimp_object_get_name (GIMP_OBJECT (vectors)));
-  gtk_table_attach_defaults (GTK_TABLE (table), options->name_entry,
-			     1, 2, 0, 1);
-  gtk_widget_show (options->name_entry);
-
-  gtk_widget_show (options->query_box);
-}
-
-
-/*******************************/
-/*  The vectors import dialog  */
-/*******************************/
-
-static void
-vectors_import_response (GtkWidget *dialog,
-                         gint       response_id,
-                         GimpImage *gimage)
-{
-  if (response_id == GTK_RESPONSE_OK)
-    {
-      const gchar *filename;
-      GError      *error = NULL;
-
-      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-
-      if (gimp_vectors_import_file (gimage, filename, FALSE, FALSE, -1, &error))
-        {
-          gimp_image_flush (gimage);
-        }
-      else
-        {
-          g_message (error->message);
-          g_error_free (error);
-        }
-    }
-
-  g_object_weak_unref (G_OBJECT (gimage),
-                       (GWeakNotify) gtk_widget_destroy, dialog);
-  gtk_widget_destroy (dialog);
 }
 
 static void
@@ -749,13 +692,8 @@ vectors_import_query (GimpImage *gimage,
   gtk_widget_show (GTK_WIDGET (chooser));
 }
 
-
-/*******************************/
-/*  The vectors export dialog  */
-/*******************************/
-
 static void
-vectors_export_response (GtkWidget *dialog,
+vectors_import_response (GtkWidget *dialog,
                          gint       response_id,
                          GimpImage *gimage)
 {
@@ -766,7 +704,11 @@ vectors_export_response (GtkWidget *dialog,
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      if (! gimp_vectors_export_file (gimage, NULL, filename, &error))
+      if (gimp_vectors_import_file (gimage, filename, FALSE, FALSE, -1, &error))
+        {
+          gimp_image_flush (gimage);
+        }
+      else
         {
           g_message (error->message);
           g_error_free (error);
@@ -811,4 +753,28 @@ vectors_export_query (GimpImage   *gimage,
                     NULL);
 
   gtk_widget_show (GTK_WIDGET (chooser));
+}
+
+static void
+vectors_export_response (GtkWidget *dialog,
+                         gint       response_id,
+                         GimpImage *gimage)
+{
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      const gchar *filename;
+      GError      *error = NULL;
+
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+
+      if (! gimp_vectors_export_file (gimage, NULL, filename, &error))
+        {
+          g_message (error->message);
+          g_error_free (error);
+        }
+    }
+
+  g_object_weak_unref (G_OBJECT (gimage),
+                       (GWeakNotify) gtk_widget_destroy, dialog);
+  gtk_widget_destroy (dialog);
 }

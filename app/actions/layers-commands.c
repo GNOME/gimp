@@ -111,6 +111,12 @@ static void   layers_resize_layer_query (GimpDisplay          *gdisp,
 static gint   layers_mode_index         (GimpLayerModeEffects  layer_mode);
 
 
+/*  private variables  */
+
+static GimpFillType  fill_type  = GIMP_TRANSPARENT_FILL;
+static gchar        *layer_name = NULL;
+
+
 /*  public functions  */
 
 void
@@ -676,8 +682,6 @@ struct _NewLayerOptions
   GimpImage    *gimage;
 };
 
-static GimpFillType  fill_type  = GIMP_TRANSPARENT_FILL;
-static gchar        *layer_name = NULL;
 
 static void
 new_layer_query_response (GtkWidget       *widget,
@@ -837,8 +841,8 @@ layers_new_layer_query (GimpImage   *gimage,
   gtk_widget_show (vbox);
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 4);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -1042,8 +1046,8 @@ layers_edit_layer_query (GimpLayer   *layer,
   gtk_widget_show (vbox);
 
   table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -1213,12 +1217,10 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   ScaleLayerOptions *options = data;
-  GimpLayer         *layer;
 
-  if (options->dialog->width > 0 && options->dialog->height > 0 &&
-      (layer =  (options->layer)))
+  if (options->dialog->width > 0 && options->dialog->height > 0)
     {
-      GimpImage    *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+      GimpImage    *gimage = gimp_item_get_image (GIMP_ITEM (options->layer));
       GimpProgress *progress;
 
       gtk_widget_set_sensitive (options->dialog->shell, FALSE);
@@ -1226,7 +1228,7 @@ scale_layer_query_ok_callback (GtkWidget *widget,
       progress = gimp_progress_start (GIMP_PROGRESS (options->gdisp),
                                       _("Scaling..."), FALSE);
 
-      gimp_item_scale_by_origin (GIMP_ITEM (layer),
+      gimp_item_scale_by_origin (GIMP_ITEM (options->layer),
                                  options->dialog->width,
                                  options->dialog->height,
                                  options->dialog->interpolation,
@@ -1298,16 +1300,14 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 				gpointer   data)
 {
   ResizeLayerOptions *options = data;
-  GimpLayer          *layer;
 
-  if (options->dialog->width > 0 && options->dialog->height > 0 &&
-      (layer = (options->layer)))
+  if (options->dialog->width > 0 && options->dialog->height > 0)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (options->layer));
 
       gtk_widget_set_sensitive (options->dialog->shell, FALSE);
 
-      gimp_item_resize (GIMP_ITEM (layer),
+      gimp_item_resize (GIMP_ITEM (options->layer),
                         options->context,
                         options->dialog->width,
                         options->dialog->height,

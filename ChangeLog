@@ -1,3 +1,14 @@
+2004-09-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/channels-commands.c
+	* app/actions/vectors-commands.c: removed massive code duplication
+	by factoring out the code that creates the "New Channel/Path" and
+	"Edit Channel/Path Attributes" dialogs out to utility functions.
+	GUI spacing and Code cleanup.
+
+	* app/actions/layers-commands.c: minor GUI spacing and code
+	cleanup.
+
 2004-09-19  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile-manager.c (tile_manager_get_memsize): count valid
