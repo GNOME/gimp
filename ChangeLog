@@ -1,3 +1,8 @@
+Thu Jul 23 10:30:12 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/fileops.c: tell the PDB that gimp_register_magic_load_handler
+	takes 4 args
+
 Wed Jul 22 23:32:50 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* docs/quick_reference.ps
