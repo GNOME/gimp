@@ -1,3 +1,9 @@
+2003-06-29  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: fix --enable-default-binary
+
+	* plug-ins/common/screenshot.c: #include <string.h> for strlen.
+
 2003-06-16  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/psd.c: Avoid memory corruption when things

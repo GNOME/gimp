@@ -858,7 +858,7 @@ rm -f confauthorsgen
 
 AM_CONDITIONAL(STATICLIBS, test x$enable_static = xyes)
 
-AC_ARG_ENABLE(debug, [  --enable-default-binary install this as the default gimp binary [default=yes]], , enable_default_binary=yes)
+AC_ARG_ENABLE(default-binary, [  --enable-default-binary install this as the default gimp binary [default=yes]], , enable_default_binary=yes)
 
 AM_CONDITIONAL(DEFAULT_BINARY, test x$enable_default_binary = xyes)
 
