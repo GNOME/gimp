@@ -10,10 +10,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp_libgimp 2.0pre3\n"
+"Project-Id-Version: gimp_libgimp 2.0pre4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 02:49+0100\n"
-"PO-Revision-Date: 2004-01-20 00:18+0100\n"
+"POT-Creation-Date: 2004-02-16 00:38+0100\n"
+"PO-Revision-Date: 2004-02-16 00:37+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -158,7 +158,6 @@ msgstr "_Ignorer"
 msgid "_Export"
 msgstr "_Exporter"
 
-#. the headline
 #: libgimp/gimpexport.c:485
 #, c-format
 msgid ""
@@ -323,27 +322,27 @@ msgstr "/_Blanc"
 msgid "Scales"
 msgstr "Échelles"
 
-#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
 msgstr "_T"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
 msgid "_G"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:353
 msgid "_B"
 msgstr "_B"
 
@@ -351,32 +350,32 @@ msgstr "_B"
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
 msgstr "Teinte"
 
-#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
 #: modules/cdisplay_proof.c:323
 msgid "Saturation"
 msgstr "Saturation"
 
-#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
 msgstr "Valeur"
 
-#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:360
 msgid "Red"
 msgstr "Rouge"
 
-#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
 msgstr "Vert"
 
-#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
 msgstr "Bleu"
 
-#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
+#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
 msgstr "Alpha"
 
@@ -673,66 +672,3 @@ msgstr "Aquarelle"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pression"
-
-#~ msgid "Preview"
-#~ msgstr "Aperçu"
-
-#~ msgid ""
-#~ "No %s in gimprc:\n"
-#~ "You need to add an entry like\n"
-#~ "(%s \"%s\")\n"
-#~ "to your %s file."
-#~ msgstr ""
-#~ "Pas de %s dans gimprc :\n"
-#~ "Vous devez ajouter une entrée telle\n"
-#~ "(%s \"%s\")\n"
-#~ "à votre fichier %s."
-
-#, fuzzy
-#~ msgid "Parameter Settings"
-#~ msgstr "Sélection des motifs"
-
-#~ msgid "None (normal vision)"
-#~ msgstr "Aucune (vision normale)"
-
-#~ msgid "a channel (saved selection)"
-#~ msgstr "un canal (sélection enregistrée)"
-
-#~ msgid "_Time"
-#~ msgstr "_Heure"
-
-#~ msgid "OK"
-#~ msgstr "Valider"
-
-#~ msgid "pixel"
-#~ msgstr "pixel"
-
-#~ msgid "pixels"
-#~ msgstr "pixels"
-
-#~ msgid "inch"
-#~ msgstr "pouce"
-
-#~ msgid "inches"
-#~ msgstr "pouces"
-
-#~ msgid "millimeter"
-#~ msgstr "millimètre"
-
-#~ msgid "millimeters"
-#~ msgstr "millimètres"
-
-#~ msgid "point"
-#~ msgstr "point"
-
-#~ msgid "points"
-#~ msgstr "points"
-
-#~ msgid "picas"
-#~ msgstr "picas"
-
-#~ msgid "Select"
-#~ msgstr "Sélectionner"
-
-#~ msgid "Close"
-#~ msgstr "Fermer"

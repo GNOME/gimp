@@ -8,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp_script-fu 2.0pre3\n"
+"Project-Id-Version: gimp-script-fu 2.0pre4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 02:50+0100\n"
-"PO-Revision-Date: 2004-01-20 00:31+0100\n"
+"POT-Creation-Date: 2004-02-16 00:37+0100\n"
+"PO-Revision-Date: 2004-02-16 00:35+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -1976,7 +1976,6 @@ msgid "<Image>/Script-Fu/Selection/To _Image"
 msgstr "<Image>/Script-Fu/Sélection/Vers _Image..."
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-#, fuzzy
 msgid ""
 ")))\n"
 "  (set! filename2 (string-append data-dir\n"
@@ -1987,14 +1986,12 @@ msgstr ""
 "\t\t\t\t   "
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Pattern..."
-msgstr "<Image>/Script-Fu/Sélection/Vers _Brosse..."
+msgstr "<Image>/Script-Fu/Sélection/Vers _Motif..."
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
-#, fuzzy
 msgid "Pattern Name"
-msgstr "Motif"
+msgstr "Nom du motif"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Round..."
@@ -2448,136 +2445,3 @@ msgstr "Décalage X accentuation"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Décalage Y accentuation"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Motifs/_Swirly (tileable)..."
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/FAQ Développeur"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/Bugs GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/Manuel GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/Nouvelles GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/Tutoriaux GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Documentation"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Téléchargement"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Art GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/GTK"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Liens"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Listes de diffusions"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Ressources"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/The GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/Gimp-Savvy.com"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/Grokking the GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-#~ msgstr "<Toolbox>/Exts/Navigateur Web/FAQ utilisateur"
-
-#~ msgid "Border"
-#~ msgstr "Bordure"
-
-#~ msgid "Fonts"
-#~ msgstr "Polices"
-
-#~ msgid ""
-#~ "Burn-In: Need two layers in total!\n"
-#~ "        A foreground text layer with transparency\n"
-#~ "        and a background layer."
-#~ msgstr ""
-#~ "Brûler : a besoin de deux calques au total !\n"
-#~ "        Un texte d'avant-plan dans un calque avec trabsprence\n"
-#~ "        et un calque d'arrière-plan."
-
-#~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
-#~ msgstr "<Image>/Script-Fu/Rendu/Créer un système de grille..."
-
-#~ msgid "Grids X"
-#~ msgstr "Grille X"
-
-#~ msgid "Grids Y"
-#~ msgstr "Grille Y"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Trochoid..."
-
-#~ msgid "Base Radius (pixels)"
-#~ msgstr "Rayon de base (pixels)"
-
-#~ msgid "Erase before Draw"
-#~ msgstr "Effacer avant de dessiner"
-
-#~ msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-#~ msgstr "Rayon de crayon / roue [0.0:1.0]"
-
-#~ msgid "Wheel Radius (hypo < 0 < epi)"
-#~ msgstr "Rayon de rotation (hypo < 0 < epi)"
-
-#~ msgid ""
-#~ "At least one font you've choosen is invalid.\n"
-#~ "Please check your settings.\n"
-#~ msgstr ""
-#~ "Au moins une fonte que vous avez choisie est invalide.\n"
-#~ "Veuillez vérifier vos paramètres.\n"
-
-#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-#~ msgstr "<Image>/Script-Fu/Animators/Sélection vers AnimImage..."
-
-#~ msgid "Anim-Filter for all Copies"
-#~ msgstr "Filtre-Anim pour toutes les copies"
-
-#~ msgid "Fill with BG Color"
-#~ msgstr "Remplir avec la couleur d'AP"
-
-#~ msgid "Number of Copies"
-#~ msgstr "Nombre de copies"
-
-#~ msgid "Close"
-#~ msgstr "Fermer"
-
-#~ msgid "Reset to Defaults"
-#~ msgstr "Remettre aux valeurs par défaut"
-
-#~ msgid "OK"
-#~ msgstr "Valider"
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "NOT SET"
-#~ msgstr "NON DÉFINI"
-
-#~ msgid "DB Browser (init...)"
-#~ msgstr "Navigateur BD (init...)"
-
-#~ msgid "Apply"
-#~ msgstr "Appliquer"
-
-#~ msgid "DB Browser (please wait)"
-#~ msgstr "Navigateur BD (veuillez patienter)"
