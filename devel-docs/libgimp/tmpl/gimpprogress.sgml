@@ -68,6 +68,14 @@ Functions for embedding the progress bar into a plug-in's GUI.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_progress_pulse ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_progress_install ##### -->
 <para>
 

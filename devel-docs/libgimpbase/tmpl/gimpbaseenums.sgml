@@ -237,6 +237,7 @@ Basic GIMP enumeration data types.
 @GIMP_PROGRESS_COMMAND_END: 
 @GIMP_PROGRESS_COMMAND_SET_TEXT: 
 @GIMP_PROGRESS_COMMAND_SET_VALUE: 
+@GIMP_PROGRESS_COMMAND_PULSE: 
 
 <!-- ##### ENUM GimpRepeatMode ##### -->
 <para>

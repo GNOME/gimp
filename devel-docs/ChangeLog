@@ -1,3 +1,10 @@
+2005-02-12  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt: updated.
+
+	* libgimp/tmpl/gimpprogress.sgml
+	* libgimpbase/tmpl/gimpbaseenums.sgml: regenerated.
+
 2005-02-09  Sven Neumann  <sven@gimp.org>
 
 	* */Makefile.am: set AUTOMAKE_OPTIONS to 1.7.
