@@ -1,3 +1,8 @@
+2003-12-15  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/convmatrix.c (response_callback): destroy "widget",
+	not "data". Fixes bug #129364.
+
 2003-12-14  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-image.c: use get_name for the repr instead

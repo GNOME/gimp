@@ -758,7 +758,7 @@ response_callback (GtkWidget *widget,
       run_flag = TRUE;
 
     default:
-      gtk_widget_destroy (GTK_WIDGET (data));
+      gtk_widget_destroy (GTK_WIDGET (widget));
       break;
     }
 }
