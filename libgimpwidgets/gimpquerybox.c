@@ -2,15 +2,15 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpquerybox.c
- * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org> 
+ * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
@@ -531,13 +531,13 @@ static void
 string_query_box_ok_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  QueryBox *query_box;
-  gchar    *string;
+  QueryBox    *query_box;
+  const gchar *string;
 
   query_box = query_box_disconnect (data);
 
   /*  Get the entry data  */
-  string = g_strdup (gtk_entry_get_text (GTK_ENTRY (query_box->entry)));
+  string = gtk_entry_get_text (GTK_ENTRY (query_box->entry));
 
   /*  Call the user defined callback  */
   (* (GimpQueryStringCallback) query_box->callback) (query_box->qbox,

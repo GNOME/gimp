@@ -1,5 +1,26 @@
 2003-09-05  Sven Neumann  <sven@gimp.org>
 
+	* app/base/gimplut.[ch] (gimp_lut_free): free the memory allocated
+	for the GimpLut structure. Removed trailing whitespace.
+
+	* app/core/gimpbuffer.c: cosmetics.
+
+	* app/core/gimpedit.[ch]: let gimp_edit_cut() and gimp_edit_copy()
+	return a pointer to the global cut buffer instead of creating a
+	GimpBuffer which was leaked by most callers.
+
+	* app/gui/edit-commands.c: changed accordingly.
+
+	* libgimpwidgets/gimpquerybox.[ch] (string_query_box_ok_callback):
+	removed a superfluous g_strdup(); made GimpQueryStringCallback take
+	a const gchar* pointer.
+
+	* app/gui/edit-commands.c
+	* app/gui/file-commands.c
+	* app/gui/palettes-commands.c: changed accordingly.
+
+2003-09-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_interface):
 	don't fiddle with the spin-buttons, the defaults are fine.
 	Removed trailing whitespace.

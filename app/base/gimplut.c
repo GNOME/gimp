@@ -52,12 +52,13 @@ gimp_lut_free (GimpLut *lut)
     g_free (lut->luts[i]);
 
   g_free (lut->luts);
+  g_free (lut);
 }
 
 void
-gimp_lut_setup (GimpLut     *lut, 
+gimp_lut_setup (GimpLut     *lut,
 		GimpLutFunc  func,
-		void        *user_data, 
+		void        *user_data,
 		gint         nchannels)
 {
   guint   i, v;
@@ -88,10 +89,11 @@ gimp_lut_setup (GimpLut     *lut,
     }
 }
 
+/*  see comment in gimplut.h  */
 void
-gimp_lut_setup_exact (GimpLut     *lut, 
+gimp_lut_setup_exact (GimpLut     *lut,
 		      GimpLutFunc  func,
-		      void        *user_data, 
+		      void        *user_data,
 		      gint         nchannels)
 {
   gimp_lut_setup (lut, func, user_data, nchannels);

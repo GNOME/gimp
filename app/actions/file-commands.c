@@ -84,12 +84,12 @@
 
 /*  local function prototypes  */
 
-static void   file_new_template_callback   (GtkWidget *widget,
-                                            gchar     *name,
-                                            gpointer   data);
-static void   file_revert_confirm_callback (GtkWidget *widget,
-					    gboolean   revert,
-					    gpointer   data);
+static void   file_new_template_callback   (GtkWidget   *widget,
+                                            const gchar *name,
+                                            gpointer     data);
+static void   file_revert_confirm_callback (GtkWidget   *widget,
+					    gboolean     revert,
+					    gpointer     data);
 
 
 /*  public functions  */
@@ -391,9 +391,9 @@ file_file_open_dialog (Gimp        *gimp,
 /*  private functions  */
 
 static void
-file_new_template_callback (GtkWidget *widget,
-                            gchar     *name,
-                            gpointer   data)
+file_new_template_callback (GtkWidget   *widget,
+                            const gchar *name,
+                            gpointer     data)
 {
   GimpTemplate *template;
   GimpImage    *gimage;

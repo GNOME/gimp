@@ -43,7 +43,7 @@
 
 static void   palettes_merge_palettes_query    (GimpContainerEditor *editor);
 static void   palettes_merge_palettes_callback (GtkWidget           *widget,
-						gchar               *palette_name,
+						const gchar         *palette_name,
 						gpointer             data);
 
 
@@ -91,9 +91,9 @@ palettes_merge_palettes_query (GimpContainerEditor *editor)
 }
 
 static void
-palettes_merge_palettes_callback (GtkWidget *widget,
-				  gchar     *palette_name,
-				  gpointer   data)
+palettes_merge_palettes_callback (GtkWidget   *widget,
+				  const gchar *palette_name,
+				  gpointer     data)
 {
 #ifdef __GNUC__
 #warning FIXME: reimplement palettes_merge_palettes_callback()

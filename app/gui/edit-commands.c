@@ -71,12 +71,12 @@
 
 /*  local function prototypes  */
 
-static void   cut_named_buffer_callback  (GtkWidget *widget,
-					  gchar     *name,
-					  gpointer   data);
-static void   copy_named_buffer_callback (GtkWidget *widget,
-					  gchar     *name,
-					  gpointer   data);
+static void   cut_named_buffer_callback  (GtkWidget   *widget,
+					  const gchar *name,
+					  gpointer     data);
+static void   copy_named_buffer_callback (GtkWidget   *widget,
+					  const gchar *name,
+					  gpointer     data);
 
 
 /*  public functions  */
@@ -288,8 +288,8 @@ cut_named_buffer_callback (GtkWidget *widget,
 			   gchar     *name,
 			   gpointer   data)
 {
-  GimpBuffer *cut_buffer;
-  GimpImage  *gimage;
+  const GimpBuffer *cut_buffer;
+  GimpImage        *gimage;
 
   gimage = (GimpImage *) data;
 
@@ -313,12 +313,12 @@ cut_named_buffer_callback (GtkWidget *widget,
 }
 
 static void
-copy_named_buffer_callback (GtkWidget *widget,
-			    gchar     *name,
-			    gpointer   data)
+copy_named_buffer_callback (GtkWidget   *widget,
+			    const gchar *name,
+			    gpointer     data)
 {
-  GimpBuffer *copy_buffer;
-  GimpImage  *gimage;
+  const GimpBuffer *copy_buffer;
+  GimpImage        *gimage;
 
   gimage = (GimpImage *) data;
 

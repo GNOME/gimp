@@ -316,9 +316,10 @@ gimp_buffer_new (TileManager *tiles,
 
   if (copy_pixels)
     {
-      buffer->tiles = tile_manager_new (width, height, tile_manager_bpp (tiles));
+      buffer->tiles = tile_manager_new (width, height,
+                                        tile_manager_bpp (tiles));
 
-      pixel_region_init (&srcPR, tiles, 0, 0, width, height, FALSE); 
+      pixel_region_init (&srcPR, tiles, 0, 0, width, height, FALSE);
       pixel_region_init (&destPR, buffer->tiles, 0, 0, width, height, TRUE);
       copy_region (&srcPR, &destPR);
     }
@@ -327,7 +328,7 @@ gimp_buffer_new (TileManager *tiles,
       buffer->tiles = tiles;
     }
 
-  return GIMP_BUFFER (buffer);
+  return buffer;
 }
 
 gint

@@ -45,7 +45,7 @@
 #include "gimp-intl.h"
 
 
-GimpBuffer *
+const GimpBuffer *
 gimp_edit_cut (GimpImage    *gimage,
 	       GimpDrawable *drawable)
 {
@@ -97,13 +97,15 @@ gimp_edit_cut (GimpImage    *gimage,
       /*  Set the global edit buffer  */
       gimage->gimp->global_buffer = gimp_buffer_new (cropped_cut,
                                                      "Global Buffer",
-                                                     TRUE);
+                                                     FALSE);
+
+      return gimage->gimp->global_buffer;
     }
 
-  return gimp_buffer_new (cropped_cut, "Cut Pixels", FALSE);
+  return NULL;
 }
 
-GimpBuffer *
+const GimpBuffer *
 gimp_edit_copy (GimpImage    *gimage,
 		GimpDrawable *drawable)
 {
@@ -155,10 +157,12 @@ gimp_edit_copy (GimpImage    *gimage,
       /*  Set the global edit buffer  */
       gimage->gimp->global_buffer = gimp_buffer_new (cropped_copy,
                                                      "Global Buffer",
-                                                     TRUE);
+                                                     FALSE);
+
+      return gimage->gimp->global_buffer;
     }
 
-  return gimp_buffer_new (cropped_copy, "Copied Pixels", FALSE);
+  return NULL;
 }
 
 GimpLayer *
