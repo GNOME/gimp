@@ -48,6 +48,9 @@ AC_ARG_ENABLE(gimptest, [  --disable-gimptest       Do not try to compile and ru
        GIMP_LIBS_NOUI=`$GIMPTOOL $gimptool_args --libs-noui`
     fi
 
+    GIMP_DATA_DIR=`$GIMPTOOL $gimptool_args --gimpdatadir`
+    GIMP_PLUGIN_DIR=`$GIMPTOOL $gimptool_args --gimpplugindir`
+
     gimptool_major_version=`$GIMPTOOL $gimptool_args --version | \
            sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\1/'`
     gimptool_minor_version=`$GIMPTOOL $gimptool_args --version | \
@@ -170,5 +173,7 @@ GPlugInInfo PLUG_IN_INFO =
   AC_SUBST(GIMP_LIBS)
   AC_SUBST(GIMP_CFLAGS_NOUI)
   AC_SUBST(GIMP_LIBS_NOUI)
+  AC_SUBST(GIMP_DATA_DIR)
+  AC_SUBST(GIMP_PLUGIN_DIR)
   rm -f conf.gimptest
 ])
