@@ -1,3 +1,8 @@
+Wed Mar 18 19:11:01 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/app_procs.c: split the "Brought to you by S&P" line in 
+	two to avoid problems with 100dpi fonts 
+
 Wed Mar 18 00:06:50 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* gradient.c: fixed a problem in the gradient editor 

@@ -58,7 +58,8 @@
 #define LOGO_WIDTH_MIN 350
 #define LOGO_HEIGHT_MIN 110 
 #define NAME "The GIMP"
-#define AUTHORS "brought to you by Spencer Kimball and Peter Mattis" 
+#define BROUGHT "brought to you by"
+#define AUTHORS "Spencer Kimball and Peter Mattis" 
  
 #define SHOW_NEVER 0
 #define SHOW_LATER 1
@@ -241,7 +242,7 @@ splash_text_draw (GtkWidget *widget)
 		   font,
 		   widget->style->black_gc,
 		   ((logo_area_width - gdk_string_width (font, NAME)) / 2), 
-		   (0.3 * logo_area_height),
+		   (0.25 * logo_area_height),
 		   NAME);
 
   font = gdk_font_load ("-Adobe-Helvetica-Bold-R-Normal--*-120-*-*-*-*-*-*");
@@ -249,13 +250,19 @@ splash_text_draw (GtkWidget *widget)
 		   font,
 		   widget->style->black_gc,
 		   ((logo_area_width - gdk_string_width (font, VERSION)) / 2), 
-		   (0.5 * logo_area_height),
+		   (0.45 * logo_area_height),
 		   VERSION);
   gdk_draw_string (widget->window,
 		   font,
 		   widget->style->black_gc,
+		   ((logo_area_width - gdk_string_width (font, BROUGHT)) / 2), 
+		   (0.65 * logo_area_height),
+		   BROUGHT);
+  gdk_draw_string (widget->window,
+		   font,
+		   widget->style->black_gc,
 		   ((logo_area_width - gdk_string_width (font, AUTHORS)) / 2), 
-		   (0.7 * logo_area_height),
+		   (0.80 * logo_area_height),
 		   AUTHORS);
 }
 
