@@ -1,3 +1,8 @@
+2001-11-11  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb.pl: oops, this should have been checked in
+	with my last commit.
+
 2001-11-11  Manish Singh  <yosh@gimp.org>
 
 	* configure.in
