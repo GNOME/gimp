@@ -1,7 +1,7 @@
 2003-03-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimptool/Makefile.am
-	* gimptoolenums.c: include libgimp-intl.h here.
+	* libgimptool/gimptoolenums.c: include libgimp-intl.h here.
 
 2003-03-25  Sven Neumann  <sven@gimp.org>
 
@@ -20,13 +20,14 @@
 
 2003-03-25  Sven Neumann  <sven@gimp.org>
 
-	* Makefile.am
-	* gimpintl.h: removed this header file.
+	* libgimp/Makefile.am
+	* libgimp/gimpintl.h: removed this header file.
 
-	* gimpmiscui.c: include libgimp-intl.h.
+	* libgimp/gimpmiscui.c: include libgimp-intl.h.
 
-	* gimp.c (gimp_main): call setlocale() and bind to the libgimp
-	textdomain so that plug-ins don't need to do that explicitely.
+	* libgimp/gimp.c (gimp_main): call setlocale() and bind to the
+	libgimp textdomain so that plug-ins don't need to do that
+	explicitely.
 
 	* libgimp/stdplugins-intl.h: added the functionality that used to
 	live in gimpintl.h and removed the libgimp related stuff. Got rid
