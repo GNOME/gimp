@@ -167,23 +167,23 @@ typedef struct tga_info_struct
 
 /* Declare some local functions.
  */
-static void   query               (void);
-static void   run                 (const gchar      *name,
-				   gint              nparams,
-				   const GimpParam  *param,
-				   gint             *nreturn_vals,
-				   GimpParam       **return_vals);
+static void      query         (void);
+static void      run           (const gchar      *name,
+                                gint              nparams,
+                                const GimpParam  *param,
+                                gint             *nreturn_vals,
+                                GimpParam       **return_vals);
 
-static gint32 load_image           (const gchar     *filename);
-static gint   save_image           (const gchar     *filename,
-				    gint32           image_ID,
-				    gint32           drawable_ID);
+static gint32    load_image    (const gchar      *filename);
+static gint      save_image    (const gchar      *filename,
+                                gint32            image_ID,
+                                gint32            drawable_ID);
 
-static gint   save_dialog          (void);
+static gboolean  save_dialog   (void);
 
-static gint32 ReadImage            (FILE            *fp,
-				    tga_info        *info,
-				    const gchar     *filename);
+static gint32    ReadImage     (FILE             *fp,
+                                tga_info         *info,
+                                const gchar      *filename);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -1184,13 +1184,12 @@ save_image (const gchar *filename,
   return status;
 }
 
-static gint
+static gboolean
 save_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *toggle;
   GtkWidget *origin;
-  GtkWidget *frame;
   GtkWidget *vbox;
   gboolean   run;
 
@@ -1203,14 +1202,10 @@ save_dialog (void)
 
                          NULL);
 
-  /* regular tga parameter settings */
-  frame = gtk_frame_new (_("Targa Options"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   /*  rle  */
   toggle = gtk_check_button_new_with_mnemonic (_("_RLE compression"));
@@ -1231,9 +1226,6 @@ save_dialog (void)
   g_signal_connect (origin, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &tsvals.origin);
-
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
 

@@ -183,9 +183,9 @@ new_unit (GtkWidget *main_dialog,
                             NULL);
 
   table = gtk_table_new (7, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table,
 		      FALSE, FALSE, 0);
   gtk_widget_show (table);
@@ -197,7 +197,7 @@ new_unit (GtkWidget *main_dialog,
                           gimp_unit_get_identifier (template));
     }
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_ID:"), 1.0, 0.5,
+			     _("_ID:"), 0.0, 0.5,
 			     entry, 1, FALSE);
 
   gimp_help_set_help_data (entry, gettext (columns[IDENTIFIER].help), NULL);
@@ -208,7 +208,7 @@ new_unit (GtkWidget *main_dialog,
 				     GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
 				     0.01, 0.1, 0.0, 0.01, 5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Factor:"), 1.0, 0.5,
+			     _("_Factor:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton, gettext (columns[FACTOR].help), NULL);
@@ -218,7 +218,7 @@ new_unit (GtkWidget *main_dialog,
 				     gimp_unit_get_digits (template) : 2.0,
 				     0, 5, 1, 1, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("_Digits:"), 1.0, 0.5,
+			     _("_Digits:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton, gettext (columns[DIGITS].help), NULL);
@@ -230,7 +230,7 @@ new_unit (GtkWidget *main_dialog,
                           gimp_unit_get_symbol (template));
     }
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("_Symbol:"), 1.0, 0.5,
+			     _("_Symbol:"), 0.0, 0.5,
 			     entry, 1, FALSE);
 
   gimp_help_set_help_data (entry, gettext (columns[SYMBOL].help), NULL);
@@ -242,7 +242,7 @@ new_unit (GtkWidget *main_dialog,
                           gimp_unit_get_abbreviation (template));
     }
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-			     _("_Abbreviation:"), 1.0, 0.5,
+			     _("_Abbreviation:"), 0.0, 0.5,
 			     entry, 1, FALSE);
 
   gimp_help_set_help_data (entry, gettext (columns[ABBREVIATION].help), NULL);
@@ -254,7 +254,7 @@ new_unit (GtkWidget *main_dialog,
                           gimp_unit_get_singular (template));
     }
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
-			     _("Si_ngular:"), 1.0, 0.5,
+			     _("Si_ngular:"), 0.0, 0.5,
 			     entry, 1, FALSE);
 
   gimp_help_set_help_data (entry, gettext (columns[SINGULAR].help), NULL);
@@ -266,7 +266,7 @@ new_unit (GtkWidget *main_dialog,
                           gimp_unit_get_plural (template));
     }
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
-			     _("_Plural:"), 1.0, 0.5,
+			     _("_Plural:"), 0.0, 0.5,
 			     entry, 1, FALSE);
 
   gimp_help_set_help_data (entry, gettext (columns[PLURAL].help), NULL);
@@ -508,7 +508,6 @@ static void
 unit_editor_dialog (void)
 {
   GtkWidget         *main_dialog;
-  GtkWidget         *main_vbox;
   GtkWidget         *scrolled_win;
   GtkWidget         *toolbar;
   GtkListStore      *list_store;
@@ -570,19 +569,15 @@ unit_editor_dialog (void)
                             G_CALLBACK (duplicate_callback), tv,
                             1);
 
-  /*  the main vbox  */
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (main_dialog)->vbox), main_vbox);
-  gtk_widget_show (main_vbox);
-
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
 				       GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
                                   GTK_POLICY_NEVER,
                                   GTK_POLICY_ALWAYS);
-  gtk_container_add (GTK_CONTAINER (main_vbox), scrolled_win);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (main_dialog)->vbox),
+                     scrolled_win);
   gtk_widget_show (scrolled_win);
 
   gtk_widget_set_size_request (tv, -1, 220);

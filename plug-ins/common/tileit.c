@@ -101,7 +101,7 @@ static void      run    (const gchar      *name,
 			 gint             *nreturn_vals,
 			 GimpParam       **return_vals);
 
-static gint      tileit_dialog          (void);
+static gboolean  tileit_dialog          (void);
 
 static void      tileit_scale_update    (GtkAdjustment *adjustment,
 					 gpointer       data);
@@ -343,26 +343,21 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-/* Build the dialog up. This was the hard part! */
-static gint
+static gboolean
 tileit_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
   GtkWidget *hbox;
   GtkWidget *vbox;
-  GtkWidget *vbox2;
   GtkWidget *frame;
-  GtkWidget *xframe;
   GtkWidget *table;
-  GtkWidget *sep;
   GtkWidget *table2;
   GtkWidget *button;
   GtkWidget *label;
   GtkWidget *spinbutton;
   GtkObject *adj;
-  GtkObject *size_data;
-  GtkObject *op_data;
+  GtkObject *scale;
   GtkWidget *toggle;
   GSList    *orientation_group = NULL;
   gboolean   run;
@@ -380,34 +375,30 @@ tileit_dialog (void)
 
                          NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
 		      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  frame = gtk_frame_new ( _("Preview"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  vbox2 = gtk_vbox_new (TRUE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
-
-  xframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox2), xframe, TRUE, FALSE, 0);
-  gtk_widget_show (xframe);
 
   tint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (tint.preview), preview_width, preview_height);
   gtk_widget_set_events (GTK_WIDGET (tint.preview), PREVIEW_MASK);
-  gtk_container_add (GTK_CONTAINER (xframe), tint.preview);
+  gtk_container_add (GTK_CONTAINER (frame), tint.preview);
+  gtk_widget_show (tint.preview);
 
   g_signal_connect_after (tint.preview, "expose_event",
                           G_CALLBACK (tileit_preview_expose),
@@ -418,16 +409,15 @@ tileit_dialog (void)
 
   /* Area for buttons etc */
 
-  frame = gtk_frame_new (_("Flipping"));
+  frame = gimp_frame_new (_("Flip"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  hbox = gtk_hbox_new (TRUE, 4);
+  hbox = gtk_hbox_new (TRUE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -459,16 +449,11 @@ tileit_dialog (void)
                     G_CALLBACK (tileit_reset),
                     &res_call);
 
-  xframe = gtk_frame_new (_("Applied to Tile"));
-  gtk_box_pack_start (GTK_BOX (vbox), xframe, FALSE, FALSE, 0);
-  gtk_widget_show (xframe);
-
   /* Table for the inner widgets..*/
-  table = gtk_table_new (6, 4, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (xframe), table);
+  table = gtk_table_new (4, 4, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   toggle = gtk_radio_button_new_with_mnemonic (orientation_group,
@@ -575,50 +560,41 @@ tileit_dialog (void)
   g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", button);
 
   /* Widget for selecting the Opacity */
-  sep = gtk_hseparator_new ();
-  gtk_table_attach (GTK_TABLE (table), sep, 0, 4, 4, 5,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 1);
-  gtk_widget_show (sep);
 
   table2 = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table2), 4);
-  gtk_table_attach_defaults (GTK_TABLE (table), table2, 0, 4, 5, 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table2), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table2, FALSE, FALSE, 0);
   gtk_widget_show (table2);
 
-  op_data = gimp_scale_entry_new (GTK_TABLE (table2), 0, 0,
-				  _("O_pacity:"), SCALE_WIDTH, -1,
-				  opacity, 0, 100, 1, 10, 0,
-				  TRUE, 0, 0,
-				  NULL, NULL);
-  g_signal_connect (op_data, "value_changed",
+  scale = gimp_scale_entry_new (GTK_TABLE (table2), 0, 0,
+                                _("O_pacity:"), SCALE_WIDTH, -1,
+                                opacity, 0, 100, 1, 10, 0,
+                                TRUE, 0, 0,
+                                NULL, NULL);
+  g_signal_connect (scale, "value_changed",
                     G_CALLBACK (tileit_scale_update),
                     &opacity);
 
-  gtk_widget_show (frame);
-
   /* Lower frame saying howmany segments */
-  frame = gtk_frame_new (_("Segment Setting"));
+  frame = gimp_frame_new (_("Numer of Segments"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   gtk_widget_set_sensitive (table2, has_alpha);
 
-  size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				    "1 / (2 ** _n)", SCALE_WIDTH, -1,
-				    itvals.numtiles, 2, MAX_SEGS, 1, 1, 0,
-				    TRUE, 0, 0,
-				    NULL, NULL);
-  g_signal_connect (size_data, "value_changed",
+  scale = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                                "1 / (2 ** _n)", SCALE_WIDTH, -1,
+                                itvals.numtiles, 2, MAX_SEGS, 1, 1, 0,
+                                TRUE, 0, 0,
+                                NULL, NULL);
+  g_signal_connect (scale, "value_changed",
                     G_CALLBACK (tileit_scale_update),
                     &itvals.numtiles);
-
-  gtk_widget_show (tint.preview);
 
   gtk_widget_show (dlg);
   dialog_update_preview ();

@@ -44,19 +44,19 @@ typedef struct
 
 /* Declare local functions.
  */
-static void    query  (void);
-static void    run    (const gchar      *name,
-		       gint              nparams,
-		       const GimpParam  *param,
-		       gint             *nreturn_vals,
-		       GimpParam       **return_vals);
+static void      query  (void);
+static void      run    (const gchar      *name,
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
-static gint32  tile        (gint32     image_id,
-                            gint32     drawable_id,
-                            gint32    *layer_id);
+static gint32    tile          (gint32     image_id,
+                                gint32     drawable_id,
+                                gint32    *layer_id);
 
-static gint    tile_dialog (gint32     image_ID,
-                            gint32     drawable_ID);
+static gboolean  tile_dialog   (gint32     image_ID,
+                                gint32     drawable_ID);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -365,11 +365,12 @@ tile (gint32  image_id,
   return new_image_id;
 }
 
-static gint
+static gboolean
 tile_dialog (gint32 image_ID,
 	     gint32 drawable_ID)
 {
   GtkWidget *dlg;
+  GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *sizeentry;
   GtkWidget *chainbutton;
@@ -400,10 +401,13 @@ tile_dialog (gint32 image_ID,
 
                          NULL);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Tile to New Size"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  frame = gimp_frame_new (_("Tile to New Size"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   sizeentry = gimp_coordinates_new (unit, "%a", TRUE, TRUE, 8,
@@ -418,17 +422,15 @@ tile_dialog (gint32 image_ID,
 				    _("_Height:"), height, yres,
 				    1, GIMP_MAX_IMAGE_SIZE,
 				    0, height);
-  gtk_container_set_border_width (GTK_CONTAINER (sizeentry), 4);
   gtk_container_add (GTK_CONTAINER (frame), sizeentry);
-  gtk_table_set_row_spacing (GTK_TABLE (sizeentry), 1, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (sizeentry), 1, 6);
   gtk_widget_show (sizeentry);
 
   chainbutton = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (sizeentry));
 
   toggle = gtk_check_button_new_with_mnemonic (_("C_reate New Image"));
-  gtk_table_attach (GTK_TABLE (sizeentry), toggle, 0, 4, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tvals.new_image);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",

@@ -65,41 +65,41 @@ typedef struct
 } UnsharpMaskInterface;
 
 /* local function prototypes */
-static void query (void);
-static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+static void      query (void);
+static void      run   (const gchar      *name,
+                        gint              nparams,
+                        const GimpParam  *param,
+                        gint             *nreturn_vals,
+                        GimpParam       **return_vals);
 
-static inline void blur_line     (gdouble       *ctable,
-				  gdouble       *cmatrix,
-				  gint           cmatrix_length,
-				  guchar        *cur_col,
-				  guchar        *dest_col,
-				  gint           y,
-				  glong          bytes);
-static int gen_convolve_matrix   (gdouble        std_dev,
-				  gdouble      **cmatrix);
-static gdouble* gen_lookup_table (gdouble       *cmatrix,
-				  gint           cmatrix_length);
-static void unsharp_region       (GimpPixelRgn   srcPTR,
-				  GimpPixelRgn   dstPTR,
-				  gint           width,
-				  gint           height,
-				  gint           bytes,
-				  gdouble        radius,
-				  gdouble        amount,
-				  gint           x1,
-				  gint           x2,
-				  gint           y1,
-				  gint           y2);
+static inline void  blur_line         (gdouble       *ctable,
+                                       gdouble       *cmatrix,
+                                       gint           cmatrix_length,
+                                       guchar        *cur_col,
+                                       guchar        *dest_col,
+                                       gint           y,
+                                       glong          bytes);
+static gint      gen_convolve_matrix  (gdouble        std_dev,
+                                       gdouble      **cmatrix);
+static gdouble * gen_lookup_table     (gdouble       *cmatrix,
+                                       gint           cmatrix_length);
+static void      unsharp_region       (GimpPixelRgn   srcPTR,
+                                       GimpPixelRgn   dstPTR,
+                                       gint           width,
+                                       gint           height,
+                                       gint           bytes,
+                                       gdouble        radius,
+                                       gdouble        amount,
+                                       gint           x1,
+                                       gint           x2,
+                                       gint           y1,
+                                       gint           y2);
 
-static void unsharp_mask         (GimpDrawable  *drawable,
-				  gdouble        radius,
-				  gdouble        amount);
+static void      unsharp_mask         (GimpDrawable  *drawable,
+                                       gdouble        radius,
+                                       gdouble        amount);
 
-static gint unsharp_mask_dialog  (void);
+static gboolean  unsharp_mask_dialog  (void);
 
 
 /* create a few globals, set default values */
@@ -629,11 +629,10 @@ gen_lookup_table (gdouble *cmatrix,
   return lookup_table;
 }
 
-static gint
+static gboolean
 unsharp_mask_dialog (void)
 {
   GtkWidget *window;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkObject *adj;
   gboolean   run;
@@ -649,17 +648,12 @@ unsharp_mask_dialog (void)
 
                             NULL);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), frame,
-                     FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), table,
+		      FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,

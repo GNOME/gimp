@@ -68,7 +68,7 @@ static void	    run                        (const gchar       *name,
 
 static GimpPDBStatusType  value_propagate      (gint               drawable_id);
 static void         value_propagate_body       (gint               drawable_id);
-static int	    vpropagate_dialog          (GimpImageBaseType  image_type);
+static gboolean     vpropagate_dialog          (GimpImageBaseType  image_type);
 static void	    prepare_row                (GimpPixelRgn      *pixel_rgn,
 						guchar            *data,
 						gint               x,
@@ -1014,7 +1014,7 @@ propagate_transparent (GimpImageBaseType  image_type,
 
 /* dialog stuff */
 
-static int
+static gboolean
 vpropagate_dialog (GimpImageBaseType image_type)
 {
   GtkWidget *dlg;
@@ -1040,18 +1040,19 @@ vpropagate_dialog (GimpImageBaseType image_type)
 
                          NULL);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /* Propagate Mode */
-  frame = gtk_frame_new (_("Propagate Mode"));
+  frame = gimp_frame_new (_("Mode"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  toggle_vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 2);
+  toggle_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
+  gtk_widget_show (toggle_vbox);
 
   for (index = 0; index < num_mode; index++)
     {
@@ -1073,18 +1074,18 @@ vpropagate_dialog (GimpImageBaseType image_type)
 				    index == vpvals.propagate_mode);
     }
 
-  gtk_widget_show (toggle_vbox);
+  /* Parameter settings */
+  frame = gimp_frame_new (_("Propagate"));
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  /* Parameter settings */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-
-  table = gtk_table_new (10, 3, FALSE); /* 4 raw, 2 columns(name and value) */
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  table = gtk_table_new (8, 3, FALSE); /* 4 raw, 2 columns(name and value) */
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 12);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 5, 12);
   gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Lower T_hreshold:"), SCALE_WIDTH, 4,
@@ -1113,49 +1114,40 @@ vpropagate_dialog (GimpImageBaseType image_type)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &vpvals.propagating_rate);
 
-  sep = gtk_hseparator_new ();
-  gtk_table_attach (GTK_TABLE (table), sep, 0, 3, 3, 4, GTK_FILL, 0, 0, 0);
-  gtk_widget_show (sep);
-
-  gtk_table_add_toggle (table, _("To L_eft"), 0, 1, 5,
+  gtk_table_add_toggle (table, _("To L_eft"), 0, 1, 4,
 			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Right2Left]);
-  gtk_table_add_toggle (table, _("To _Right"), 2, 3, 5,
+  gtk_table_add_toggle (table, _("To _Right"), 2, 3, 4,
 			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Left2Right]);
-  gtk_table_add_toggle (table, _("To _Top"), 1, 2, 4,
+  gtk_table_add_toggle (table, _("To _Top"), 1, 2, 3,
 			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Bottom2Top]);
-  gtk_table_add_toggle (table, _("To _Bottom"), 1, 2, 6,
+  gtk_table_add_toggle (table, _("To _Bottom"), 1, 2, 5,
 			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Top2Bottom]);
+
   if ((image_type == GIMP_RGBA_IMAGE) | (image_type == GIMP_GRAYA_IMAGE))
     {
-      sep = gtk_hseparator_new ();
-      gtk_table_attach (GTK_TABLE (table), sep, 0, 3, 7, 8, GTK_FILL, 0, 0, 0);
-      gtk_widget_show (sep);
+      GtkWidget *toggle;
 
-      {
-	GtkWidget *toggle;
+      toggle =
+        gtk_table_add_toggle (table, _("Propagating _Alpha Channel"),
+                              0, 3, 6,
+                              G_CALLBACK (gimp_toggle_button_update),
+                              &propagate_alpha);
 
-	toggle =
-	  gtk_table_add_toggle (table, _("Propagating _Alpha Channel"),
-				0, 3, 8,
-				G_CALLBACK (gimp_toggle_button_update),
-				&propagate_alpha);
-	if (gimp_layer_get_preserve_trans (drawable_id))
-	  {
-	    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), 0);
-	    gtk_widget_set_sensitive (toggle, FALSE);
-	  }
-      }
-      gtk_table_add_toggle (table, _("Propagating Value Channel"), 0, 3, 9,
+      if (gimp_layer_get_preserve_trans (drawable_id))
+        {
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), 0);
+          gtk_widget_set_sensitive (toggle, FALSE);
+        }
+
+      gtk_table_add_toggle (table, _("Propagating Value Channel"), 0, 3, 7,
 			    G_CALLBACK (gimp_toggle_button_update),
 			    &propagate_value);
     }
-  gtk_widget_show (table);
-  gtk_widget_show (frame);
-  gtk_widget_show (hbox);
+
   gtk_widget_show (dlg);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
