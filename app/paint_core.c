@@ -1179,14 +1179,13 @@ paint_core_paste_canvas (PaintCore	      *paint_core,
 			 gdouble               brush_scale,
 			 PaintApplicationMode  mode)
 {
-  MaskBuf *brush_mask;
+  MaskBuf *brush_mask = paint_core_get_brush_mask (paint_core,
+                                                   brush_hardness,
+                                                   brush_scale);
 
-  /*  get the brush mask  */
-  brush_mask = paint_core_get_brush_mask (paint_core, brush_hardness, brush_scale);
-
-  /*  paste the canvas buf  */
-  paint_core_paste (paint_core, brush_mask, drawable,
-		    brush_opacity, image_opacity, paint_mode, mode);
+  if (brush_mask)
+    paint_core_paste (paint_core, brush_mask, drawable,
+                      brush_opacity, image_opacity, paint_mode, mode);
 }
 
 /* Similar to paint_core_paste_canvas, but replaces the alpha channel
@@ -1201,15 +1200,13 @@ paint_core_replace_canvas (PaintCore	        *paint_core,
 			   gdouble               brush_scale,
 			   PaintApplicationMode  mode)
 {
-  MaskBuf *brush_mask;
+  MaskBuf *brush_mask = paint_core_get_brush_mask (paint_core,
+                                                   brush_hardness,
+                                                   brush_scale);
 
-  /*  get the brush mask  */
-  brush_mask = 
-    paint_core_get_brush_mask (paint_core, brush_hardness, brush_scale);
-
-  /*  paste the canvas buf  */
-  paint_core_replace (paint_core, brush_mask, drawable,
-		      brush_opacity, image_opacity, mode);
+  if (brush_mask)
+    paint_core_replace (paint_core, brush_mask, drawable,
+                        brush_opacity, image_opacity, mode);
 }
 
 
@@ -1557,16 +1554,21 @@ paint_core_get_brush_mask (PaintCore	        *paint_core,
   else
     mask = paint_core_scale_mask (paint_core->brush->mask, scale);
 
+  if (!mask)
+    return NULL;
+
   switch (brush_hardness)
     {
     case SOFT:
-      mask = paint_core_subsample_mask (mask, paint_core->curx, paint_core->cury);
+      mask = paint_core_subsample_mask (mask,
+                                        paint_core->curx, paint_core->cury);
       break;
     case HARD:
       mask = paint_core_solidify_mask (mask);
       break;
     case PRESSURE:
-      mask = paint_core_pressurize_mask (mask, paint_core->curx, paint_core->cury, 
+      mask = paint_core_pressurize_mask (mask,
+                                         paint_core->curx, paint_core->cury, 
 					 paint_core->curpressure);
       break;
     default:
@@ -2036,6 +2038,9 @@ paint_core_color_area_with_pixmap (PaintCore            *paint_core,
   
   /*  scale the brushes  */
   pixmap_mask = paint_core_scale_pixmap (paint_core->brush->pixmap, scale);
+
+  if (!pixmap_mask)
+    return;
 
   if (mode == SOFT)
     brush_mask = paint_core_scale_mask (paint_core->brush->mask, scale);
