@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:29+0200\n"
-"PO-Revision-Date: 2004-03-12 19:00+0800\n"
+"POT-Creation-Date: 2004-06-01 03:30+0200\n"
+"PO-Revision-Date: 2004-06-01 20:04+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -274,6 +274,14 @@ msgstr "中等深浅"
 msgid "Highlights"
 msgstr "明亮"
 
+#: app/base/tile-swap.c:451
+msgid ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
+msgstr ""
+
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
 #: app/config/gimpscanner.c:470 app/core/gimp-modules.c:126
@@ -317,7 +325,7 @@ msgstr "无法扩展 ${%s}"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:420
+#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:423
 #: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -445,7 +453,7 @@ msgstr "这是参考线和网格产生吸附作用的像素距离。"
 #: app/config/gimprc-blurbs.h:74
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
-"algorithm.  The seed fill starts at the intially selected pixel and "
+"algorithm.  The seed fill starts at the initially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
@@ -527,6 +535,20 @@ msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
 msgstr "通常只对 8 位显示，此处设置分配给 GIMP 的系统颜色的最小数量。"
+
+#: app/config/gimprc-blurbs.h:193
+msgid ""
+"Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:198
+msgid ""
+"Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -1167,14 +1189,12 @@ msgid "Guide"
 msgstr "参考线"
 
 #: app/core/core-enums.c:594 app/core/core-enums.c:624
-#, fuzzy
 msgid "Drawable"
-msgstr "图层位移"
+msgstr "可绘"
 
 #: app/core/core-enums.c:595 app/core/core-enums.c:625
-#, fuzzy
 msgid "Drawable Mod"
-msgstr "图像过程"
+msgstr "可绘模"
 
 #: app/core/core-enums.c:596 app/core/core-enums.c:626
 #: app/core/gimpchannel.c:1617 app/core/gimpselection.c:570
@@ -1198,14 +1218,12 @@ msgid "Move Item"
 msgstr "移动项目"
 
 #: app/core/core-enums.c:601
-#, fuzzy
 msgid "Scale Item"
-msgstr "缩放图像"
+msgstr "缩放项目"
 
 #: app/core/core-enums.c:602
-#, fuzzy
 msgid "Resize Item"
-msgstr "图像改变大小"
+msgstr "更改项目大小"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
 #: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
@@ -1230,9 +1248,8 @@ msgid "Anchor Floating Selection"
 msgstr "固定浮动选区"
 
 #: app/core/core-enums.c:608 app/core/gimplayer-floating-sel.c:98
-#, fuzzy
 msgid "Remove Floating Selection"
-msgstr "浮动选区"
+msgstr "删除浮动选区"
 
 #: app/core/core-enums.c:609 app/core/gimp-edit.c:126
 #: app/widgets/gimpbufferview.c:154
@@ -1330,9 +1347,8 @@ msgid "Set Preserve Trans"
 msgstr "设置保持透明"
 
 #: app/core/core-enums.c:640
-#, fuzzy
 msgid "Text Modified"
-msgstr "只当已修改时"
+msgstr "文字已修改"
 
 #: app/core/core-enums.c:641 app/gui/channels-commands.c:318
 #: app/gui/channels-commands.c:348 app/gui/channels-commands.c:387
@@ -1713,13 +1729,12 @@ msgid "Invert"
 msgstr "反转"
 
 #: app/core/gimpdrawable-offset.c:316
-#, fuzzy
 msgid "Offset Drawable"
-msgstr "图层位移"
+msgstr "位移可绘"
 
 #: app/core/gimpdrawable-stroke.c:320
 msgid "Render Stroke"
-msgstr ""
+msgstr "渲染勾画"
 
 #. Start a transform undo group
 #: app/core/gimpdrawable-transform.c:911 app/tools/gimpfliptool.c:84
@@ -2284,20 +2299,20 @@ msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr "非点对点模式下坐标显示使用的单位。"
 
 #: app/core/gimptemplate.c:150
-msgid "The horizonal image resolution."
-msgstr "水平图像分辨率"
+msgid "The horizontal image resolution."
+msgstr "水平图像分辨率。"
 
 #: app/core/gimptemplate.c:155
 msgid "The vertical image resolution."
-msgstr "垂直图像分辨率"
+msgstr "垂直图像分辨率。"
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
 msgid "pixel"
 msgstr "像素"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:869
-#: app/tools/gimppainttool.c:707
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:780
+#: app/tools/gimpmeasuretool.c:872 app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "像素"
 
@@ -3459,7 +3474,7 @@ msgid "/blendingfunction/_Curved"
 msgstr "/混和函数/曲线(_C)"
 
 #: app/gui/gradient-editor-menu.c:178
-msgid "/blendingfunction/_Sinusodial"
+msgid "/blendingfunction/_Sinusoidal"
 msgstr "/混和函数/正弦(_S)"
 
 #: app/gui/gradient-editor-menu.c:183
@@ -5553,7 +5568,7 @@ msgid "Fit to Window"
 msgstr "匹配窗口"
 
 #: app/gui/preferences-dialog.c:1512
-msgid "Inital Zoom Ratio:"
+msgid "Initial Zoom Ratio:"
 msgstr "初始缩放比率："
 
 #. Pointer Movement Feedback
@@ -6150,7 +6165,7 @@ msgstr "/编辑模板(_E)..."
 msgid "/_Delete Template"
 msgstr "/删除模板(_D)"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:224
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:250
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "正在写入“%s”\n"
@@ -7109,7 +7124,7 @@ msgstr "文字过程"
 msgid "Transform Tool procedures"
 msgstr "变换工具过程"
 
-#: app/pdb/procedural_db.c:246
+#: app/pdb/procedural_db.c:248
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7118,7 +7133,7 @@ msgstr ""
 "PDB 调用错误：\n"
 "过程“%s”没有找到"
 
-#: app/pdb/procedural_db.c:284 app/pdb/procedural_db.c:387
+#: app/pdb/procedural_db.c:286 app/pdb/procedural_db.c:389
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7184,12 +7199,12 @@ msgstr "正在查询新的插件"
 msgid "Querying plug-in: '%s'\n"
 msgstr "正在查询插件：“%s”\n"
 
-#. initial the plug-ins
-#: app/plug-in/plug-ins.c:300
+#. initialize the plug-ins
+#: app/plug-in/plug-ins.c:174
 msgid "Initializing Plug-ins"
 msgstr "正在初始化插件"
 
-#: app/plug-in/plug-ins.c:316
+#: app/plug-in/plug-ins.c:190
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "正在初始化插件：“%s”\n"
@@ -7289,7 +7304,7 @@ msgstr "设为前景色"
 
 #: app/tools/tools-enums.c:16
 msgid "Set Background Color"
-msgstr "设为北京色"
+msgstr "设为背景色"
 
 #: app/tools/tools-enums.c:34
 msgid "Crop"
@@ -7872,8 +7887,8 @@ msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "只有 RGB 颜色的图层可以进行色调-饱和度操作。"
 
 #: app/tools/gimphuesaturationtool.c:263
-msgid "_Master"
-msgstr "主值(_M)"
+msgid "M_aster"
+msgstr "主值(_A)"
 
 #: app/tools/gimphuesaturationtool.c:264
 msgid "_R"
@@ -7928,7 +7943,7 @@ msgstr "调整"
 msgid "Size:"
 msgstr "大小："
 
-#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:885
+#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:888
 #: app/tools/gimprotatetool.c:175 app/widgets/gimpbrusheditor.c:169
 msgid "Angle:"
 msgstr "角度："
@@ -8082,11 +8097,11 @@ msgid "Add Guides"
 msgstr "添加参考线"
 
 #. tool->gdisp->shell
-#: app/tools/gimpmeasuretool.c:838
+#: app/tools/gimpmeasuretool.c:841
 msgid "Measure Distances and Angles"
 msgstr "测量距离和角度"
 
-#: app/tools/gimpmeasuretool.c:859
+#: app/tools/gimpmeasuretool.c:862
 msgid "Distance:"
 msgstr "距离："
 
@@ -9484,11 +9499,11 @@ msgstr "从文件中读取文本"
 msgid "Clear all Text"
 msgstr "清除所有文本"
 
-#: app/widgets/gimptexteditor.c:364
+#: app/widgets/gimptexteditor.c:367
 msgid "Open Text File (UTF-8)"
 msgstr "打开文本文件(UTF-8)"
 
-#: app/widgets/gimptexteditor.c:449
+#: app/widgets/gimptexteditor.c:452
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "文件“%s”中含有无效的 UTF-8 数据。"
@@ -9663,23 +9678,22 @@ msgstr "覆盖"
 #: app/widgets/gimpwidgets-constructors.c:57
 #: app/widgets/gimpwidgets-constructors.c:90
 msgid "Hard Light"
-msgstr ""
+msgstr "硬光"
 
 #: app/widgets/gimpwidgets-constructors.c:58
 #: app/widgets/gimpwidgets-constructors.c:91
 msgid "Soft Light"
-msgstr ""
+msgstr "柔光"
 
 #: app/widgets/gimpwidgets-constructors.c:59
 #: app/widgets/gimpwidgets-constructors.c:92
-#, fuzzy
 msgid "Grain Extract"
-msgstr "渐变编辑器"
+msgstr "增益提取"
 
 #: app/widgets/gimpwidgets-constructors.c:60
 #: app/widgets/gimpwidgets-constructors.c:93
 msgid "Grain Merge"
-msgstr ""
+msgstr "增益合并"
 
 #: app/widgets/gimpwidgets-constructors.c:62
 #: app/widgets/gimpwidgets-constructors.c:95
@@ -9858,27 +9872,3 @@ msgstr "XCF 错误：遇到不支持的 XCF 文件版本 %d"
 msgid "Create and edit images or photographs"
 msgstr "创建并编辑图像或照片"
 
-#~ msgid ""
-#~ "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-#~ msgstr "  -S, --no-splash-image    不在启动窗口中插入图像。\n"
-
-#~ msgid "Image Mod"
-#~ msgstr "图像模"
-
-#~ msgid "Layer Mod"
-#~ msgstr "图层模"
-
-#~ msgid "Channel Mod"
-#~ msgstr "通道 Mod"
-
-#~ msgid "Paste Transform"
-#~ msgstr "粘贴变换"
-
-#~ msgid "Empty Layer Copy"
-#~ msgstr "清空图层副本"
-
-#~ msgid "Empty Vectors Copy"
-#~ msgstr "清空向量副本"
-
-#~ msgid "Modify letter spacing"
-#~ msgstr "修改字距"
