@@ -126,6 +126,8 @@ gimp_SOURCES = \
 	docindex.h		\
 	docindexif.c		\
 	docindexif.h		\
+	dodgeburn.c		\
+	dodgeburn.h		\
 	draw_core.c		\
 	draw_core.h		\
 	drawable.c		\
@@ -349,6 +351,8 @@ gimp_SOURCES = \
 	session.c		\
 	shear_tool.c		\
 	shear_tool.h		\
+	smudge.c		\
+	smudge.h		\
 	temp_buf.c		\
 	temp_buf.h		\
 	text_tool.c		\

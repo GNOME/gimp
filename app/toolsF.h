@@ -62,7 +62,9 @@ typedef enum
   CLONE,
   CONVOLVE,
   INK,
-  LAST_TOOLBOX_TOOL = INK,
+  DODGEBURN,
+  SMUDGE,
+  LAST_TOOLBOX_TOOL = SMUDGE,
 
   /*  Non-toolbox tools  */
   BY_COLOR_SELECT,

@@ -1,3 +1,34 @@
+Thu Jul  1 09:42:40 PDT 1999 Calvin Williamson  <calvin@rhythm.com>
+
+	Added the files:
+
+	*app/smudge.[ch]
+	*app/dodgeburn.[ch]
+	
+	Changed:
+	
+	*app/Makefile.am
+	*app/paint_core.c
+	*app/paint_funcs.c
+	*app/pixmaps2.h
+	*app/tool_options.c
+	*app/tools.c
+	*app/toolsF.h
+	
+	This is the first version of the dodge and burn and smudge tools.
+	These both use the opacity and spacing from the brush dialog, but
+	they dont use the apply modes, since they both use a form of
+	paint_core_replace. This could be added though.
+	
+	Smudge affects alpha channels when present, dodgeburn doesnt.
+
+	Dodgeburn computes a gimp_lut based on the settings and uses that.
+
+	Smudge just drags along a version of the initial painthit and mixes
+	that in with subsequent painthits.
+	
+	I didnt added any pdb functionality yet.
+
 Thu Jul  1 10:29:44 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* tools/pdbgen/pdb/guides.pdb

@@ -672,14 +672,10 @@ blend_pixels (const unsigned char *src1,
   int alpha, b;
   unsigned char blend2 = (255 - blend);
 
-  alpha = (has_alpha) ? bytes - 1 : bytes;
   while (w --)
     {
-      for (b = 0; b < alpha; b++)
+      for (b = 0; b < bytes; b++)
 	dest[b] = (src1[b] * blend2 + src2[b] * blend) / 255;
-
-      if (has_alpha)
-	dest[alpha] = src1[alpha];  /*  alpha channel--assume src2 has none  */
 
       src1 += bytes;
       src2 += bytes;
@@ -3102,19 +3098,23 @@ blend_region (PixelRegion *src1,
 	      int          blend)
 {
   int h;
-  unsigned char * s1, * s2, * d;
+  unsigned char *s1, *s2, * d;
+  void * pr;
 
-  s1 = src1->data;
-  s2 = src2->data;
-  d = dest->data;
-  h = src1->h;
-
-  while (h --)
+  for (pr = pixel_regions_register (3, src1, src2, dest); pr != NULL; pr = pixel_regions_process (pr))
     {
-/*      blend_pixels (s1, s2, d, blend, src1->w, src1->bytes);*/
-      s1 += src1->rowstride;
-      s2 += src2->rowstride;
-      d += dest->rowstride;
+      s1 = src1->data;
+      s2 = src2->data;
+      d = dest->data;
+      h = src1->h;
+
+      while (h --)
+	{
+          blend_pixels (s1, s2, d, blend, src1->w, src1->bytes, FALSE);
+	  s1 += src1->rowstride;
+	  s2 += src2->rowstride;
+	  d += dest->rowstride;
+	}
     }
 }
 

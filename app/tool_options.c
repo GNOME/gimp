@@ -570,7 +570,11 @@ paint_options_init (PaintOptions         *options,
 			     N_("Convolver Options") :
 			     ((tool_type == INK) ?
 			      N_("Ink Options") :
-			      N_("ERROR: Unknown Paint Type")))))))))),
+			       ((tool_type == DODGEBURN) ?
+				N_("Dodge or Burn Options") :
+				 ((tool_type == SMUDGE) ?
+				  N_("Smudge Options") :
+			      N_("ERROR: Unknown Paint Type")))))))))))),
 		     reset_func);
 
   /*  initialize the paint options structure  */

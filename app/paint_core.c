@@ -58,8 +58,9 @@ static void      paint_core_paste           (PaintCore *, MaskBuf *,
 					     GimpDrawable *, int, int, int, int);
 static void      paint_core_replace         (PaintCore *, MaskBuf *,
 					     GimpDrawable *, int, int, int);
-static void      paint_to_canvas_tiles      (PaintCore *, MaskBuf *, int);
-static void      paint_to_canvas_buf        (PaintCore *, MaskBuf *, int);
+static void      brush_to_canvas_tiles      (PaintCore *, MaskBuf *, int);
+static void      canvas_tiles_to_canvas_buf (PaintCore *);
+static void      brush_to_canvas_buf        (PaintCore *, MaskBuf *, int);
 static void      set_undo_tiles             (GimpDrawable *, int, int, int, int);
 static void      set_canvas_tiles           (int, int, int, int);
 static int     paint_core_invalidate_cache  (GimpBrush *brush, gpointer *blah);
@@ -1193,6 +1194,7 @@ paint_core_solidify_mask (MaskBuf *brush_mask)
   last_brush = brush_mask;
   if (solid_brush)
     mask_buf_free (solid_brush);
+
   solid_brush = mask_buf_new (brush_mask->width + 2, brush_mask->height + 2);
 
   /*  get the data and advance one line into it  */
@@ -1268,14 +1270,15 @@ paint_core_paste (PaintCore    *paint_core,
       set_canvas_tiles (canvas_buf->x, canvas_buf->y,
 			canvas_buf->width, canvas_buf->height);
 
-      paint_to_canvas_tiles (paint_core, brush_mask, brush_opacity);
+      brush_to_canvas_tiles (paint_core, brush_mask, brush_opacity);
+      canvas_tiles_to_canvas_buf (paint_core);
       alt = undo_tiles;
     }
   /*  Otherwise:
    *   combine the canvas buf and the brush mask to the canvas buf
    */
   else  /*  mode != CONSTANT  */
-    paint_to_canvas_buf (paint_core, brush_mask, brush_opacity);
+    brush_to_canvas_buf (paint_core, brush_mask, brush_opacity);
 
   /*  intialize canvas buf source pixel regions  */
   srcPR.bytes = canvas_buf->bytes;
@@ -1324,6 +1327,7 @@ paint_core_replace (PaintCore    *paint_core,
 {
   GImage *gimage;
   PixelRegion srcPR, maskPR;
+  TileManager *alt = NULL;
   int offx, offy;
 
   if (!drawable_has_alpha (drawable))
@@ -1331,12 +1335,6 @@ paint_core_replace (PaintCore    *paint_core,
       paint_core_paste (paint_core, brush_mask, drawable,
 			brush_opacity, image_opacity, NORMAL_MODE,
 			mode);
-      return;
-    }
-
-  if (mode != INCREMENTAL)
-    {
-      g_message (_("paint_core_replace only works in INCREMENTAL mode"));
       return;
     }
 
@@ -1348,12 +1346,33 @@ paint_core_replace (PaintCore    *paint_core,
 		  canvas_buf->x, canvas_buf->y,
 		  canvas_buf->width, canvas_buf->height);
 
-  maskPR.bytes = 1;
-  maskPR.x = 0; maskPR.y = 0;
-  maskPR.w = canvas_buf->width;
-  maskPR.h = canvas_buf->height;
-  maskPR.rowstride = maskPR.bytes * brush_mask->width;
-  maskPR.data = mask_buf_data (brush_mask);
+  if (mode == CONSTANT) 
+  {
+    /*  initialize any invalid canvas tiles  */
+    set_canvas_tiles (canvas_buf->x, canvas_buf->y,
+		      canvas_buf->width, canvas_buf->height);
+
+    /* combine the brush mask and the canvas tiles */
+    brush_to_canvas_tiles (paint_core, brush_mask, brush_opacity);
+
+    /* set the alt source as the unaltered undo_tiles */ 
+    alt = undo_tiles;
+
+    /* initialize the maskPR from the canvas tiles */
+    pixel_region_init (&maskPR, canvas_tiles,
+		       canvas_buf->x, canvas_buf->y,
+		       canvas_buf->width, canvas_buf->height, FALSE);
+  }
+  else   
+  {
+    /* The mask is just the brush mask */
+    maskPR.bytes = 1;
+    maskPR.x = 0; maskPR.y = 0;
+    maskPR.w = canvas_buf->width;
+    maskPR.h = canvas_buf->height;
+    maskPR.rowstride = maskPR.bytes * brush_mask->width;
+    maskPR.data = mask_buf_data (brush_mask);
+  }
   
   /*  intialize canvas buf source pixel regions  */
   srcPR.bytes = canvas_buf->bytes;
@@ -1366,7 +1385,7 @@ paint_core_replace (PaintCore    *paint_core,
   /*  apply the paint area to the gimage  */
   gimage_replace_image (gimage, drawable, &srcPR,
 			FALSE, image_opacity,
-			&maskPR,
+			&maskPR, 
 			canvas_buf->x, canvas_buf->y);
 
   /*  Update the undo extents  */
@@ -1384,6 +1403,95 @@ paint_core_replace (PaintCore    *paint_core,
 			 canvas_buf->width, canvas_buf->height);
 }
 
+static void
+canvas_tiles_to_canvas_buf(PaintCore *paint_core)
+{
+  PixelRegion srcPR, maskPR;
+
+  /*  combine the canvas tiles and the canvas buf  */
+  srcPR.bytes = canvas_buf->bytes;
+  srcPR.x = 0; srcPR.y = 0;
+  srcPR.w = canvas_buf->width;
+  srcPR.h = canvas_buf->height;
+  srcPR.rowstride = canvas_buf->width * canvas_buf->bytes;
+  srcPR.data = temp_buf_data (canvas_buf);
+
+  pixel_region_init (&maskPR, canvas_tiles,
+		     canvas_buf->x, canvas_buf->y,
+		     canvas_buf->width, canvas_buf->height, FALSE);
+
+  /*  apply the canvas tiles to the canvas buf  */
+  apply_mask_to_region (&srcPR, &maskPR, OPAQUE_OPACITY);
+}
+
+static void
+brush_to_canvas_tiles ( 
+                        PaintCore *paint_core, 
+                        MaskBuf *brush_mask, 
+                        int brush_opacity
+                       )
+{
+  PixelRegion srcPR, maskPR;
+  int x, y;
+  int xoff, yoff;
+
+  /*   combine the brush mask and the canvas tiles  */
+  pixel_region_init (&srcPR, canvas_tiles,
+		     canvas_buf->x, canvas_buf->y,
+		     canvas_buf->width, canvas_buf->height, TRUE);
+
+  x = (int) paint_core->curx - (brush_mask->width >> 1);
+  y = (int) paint_core->cury - (brush_mask->height >> 1);
+  xoff = (x < 0) ? -x : 0;
+  yoff = (y < 0) ? -y : 0;
+
+  maskPR.bytes = 1;
+  maskPR.x = 0; maskPR.y = 0;
+  maskPR.w = srcPR.w;
+  maskPR.h = srcPR.h;
+  maskPR.rowstride = maskPR.bytes * brush_mask->width;
+  maskPR.data = mask_buf_data (brush_mask) + yoff * maskPR.rowstride + xoff * maskPR.bytes;
+
+  /*  combine the mask to the canvas tiles  */
+  combine_mask_and_region (&srcPR, &maskPR, brush_opacity);
+}
+
+static void
+brush_to_canvas_buf (
+                      PaintCore *paint_core,
+                      MaskBuf *brush_mask,
+                      int brush_opacity
+                     )
+{
+  PixelRegion srcPR, maskPR;
+  int x, y;
+  int xoff, yoff;
+
+  x = (int) paint_core->curx - (brush_mask->width >> 1);
+  y = (int) paint_core->cury - (brush_mask->height >> 1);
+  xoff = (x < 0) ? -x : 0;
+  yoff = (y < 0) ? -y : 0;
+
+  /*  combine the canvas buf and the brush mask to the canvas buf  */
+  srcPR.bytes = canvas_buf->bytes;
+  srcPR.x = 0; srcPR.y = 0;
+  srcPR.w = canvas_buf->width;
+  srcPR.h = canvas_buf->height;
+  srcPR.rowstride = canvas_buf->width * canvas_buf->bytes;
+  srcPR.data = temp_buf_data (canvas_buf);
+
+  maskPR.bytes = 1;
+  maskPR.x = 0; maskPR.y = 0;
+  maskPR.w = srcPR.w;
+  maskPR.h = srcPR.h;
+  maskPR.rowstride = maskPR.bytes * brush_mask->width;
+  maskPR.data = mask_buf_data (brush_mask) + yoff * maskPR.rowstride + xoff * maskPR.bytes;
+
+  /*  apply the mask  */
+  apply_mask_to_region (&srcPR, &maskPR, brush_opacity);
+}
+
+#if 0
 static void
 paint_to_canvas_tiles (PaintCore *paint_core, 
 		       MaskBuf   *brush_mask, 
@@ -1462,6 +1570,7 @@ paint_to_canvas_buf (PaintCore *paint_core,
   /*  apply the mask  */
   apply_mask_to_region (&srcPR, &maskPR, brush_opacity);
 }
+#endif
 
 static void
 set_undo_tiles (GimpDrawable *drawable, 

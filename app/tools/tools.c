@@ -31,6 +31,7 @@
 #include "crop.h"
 #include "curves.h"
 #include "devices.h"
+#include "dodgeburn.h"
 #include "eraser.h"
 #include "gdisplay.h"
 #include "hue_saturation.h"
@@ -49,6 +50,7 @@
 #include "posterize.h"
 #include "rect_select.h"
 #include "session.h"
+#include "smudge.h"
 #include "text_tool.h"
 #include "threshold.h"
 #include "tools.h"
@@ -448,11 +450,41 @@ ToolInfo tool_info[] =
     NULL
   },
 
+  {
+    NULL,
+    N_("Dodge or Burn"),
+    22,
+    N_("/Tools/DodgeBurn"),
+    "<shift>D",
+    (char **) dodge_bits,
+    N_("Dodge or Burn"),
+    "ContextHelp/dodgeburn",
+    DODGEBURN,
+    tools_new_dodgeburn,
+    tools_free_dodgeburn,
+    NULL
+  },
+
+  {
+    NULL,
+    N_("Smudge"),
+    23,
+    N_("/Tools/Smudge"),
+    "<shift>S",
+    (char **) smudge_bits,
+    N_("Smudge"),
+    "ContextHelp/smudge",
+    SMUDGE,
+    tools_new_smudge,
+    tools_free_smudge,
+    NULL
+  },
+
   /*  Non-toolbox tools  */
   { 
     NULL,
     N_("By Color Select"),
-    22,
+    24,
     N_("/Select/By Color..."),
     NULL,
     NULL,
@@ -467,7 +499,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Color Balance"),
-    23,
+    25,
     N_("/Image/Colors/Color Balance"),
     NULL,
     NULL,
@@ -482,7 +514,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Brightness-Contrast"),
-    24,
+    26,
     N_("/Image/Colors/Brightness-Contrast"),
     NULL,
     NULL,
@@ -497,7 +529,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Hue-Saturation"),
-    25,
+    27,
     N_("/Image/Colors/Hue-Saturation"),
     NULL,
     NULL,
@@ -512,7 +544,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Posterize"),
-    26,
+    28,
     N_("/Image/Colors/Posterize"),
     NULL,
     NULL,
@@ -527,7 +559,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Threshold"), 
-    27,
+    29,
     N_("/Image/Colors/Threshold"),
     NULL,
     NULL,
@@ -542,7 +574,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Curves"),
-    28,
+    30,
     N_("/Image/Colors/Curves"),
     NULL,
     NULL,
@@ -557,7 +589,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Levels"),
-    29,
+    31,
     N_("/Image/Colors/Levels"),
     NULL,
     NULL,
@@ -572,7 +604,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Histogram"),
-    30,
+    32,
     N_("/Image/Histogram"),
     NULL,
     NULL,
