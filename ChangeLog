@@ -22,7 +22,9 @@
 	* tools/pdbgen/pdb/text_tool.pdb: use it instead of duplicating
 	the same code and strings for all deprecated procedures.
 
-	* app/pdb/*_cmds.c: regenerated.
+	* app/pdb/*_cmds.c
+	* libgimp/gimppatterns_pdb.c
+	* libgimp/gimptexttool_pdb.c: regenerated.
 
 2004-10-06  Michael Natterer  <mitch@gimp.org>
 

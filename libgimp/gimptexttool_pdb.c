@@ -173,10 +173,9 @@ gimp_text_get_extents_fontname (const gchar  *text,
  * @registry: The font registry.
  * @encoding: The font encoding.
  *
- * Add text at the specified location as a floating selection or a new
- * layer.
+ * This procedure is deprecated! Use 'gimp_get_text_fontname' instead.
  *
- * This function is deprecated, use gimp_get_text_fontname() instead.
+ * This procedure is deprecated! Use 'gimp_get_text_fontname' instead.
  *
  * Returns: The new text layer.
  */
@@ -250,9 +249,10 @@ gimp_text (gint32        image_ID,
  * @ascent: The ascent of the specified font.
  * @descent: The descent of the specified font.
  *
- * Get extents of the bounding box for the specified text.
+ * This procedure is deprecated! Use 'gimp_get_text_extents_fontname'
+ * instead.
  *
- * This function is deprecated, use gimp_get_text_extents_fontname()
+ * This procedure is deprecated! Use 'gimp_get_text_extents_fontname'
  * instead.
  *
  * Returns: TRUE on success.
