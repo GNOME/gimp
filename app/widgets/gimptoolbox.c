@@ -802,9 +802,9 @@ toolbox_create_tools (GimpToolbox *toolbox,
               accel_group =
                 gtk_accel_group_from_accel_closure (accel_closure);
 
-              g_signal_connect (accel_group, "accel_changed",
-                                G_CALLBACK (gimp_toolbox_button_accel_changed),
-                                button);
+              g_signal_connect_object (accel_group, "accel_changed",
+                                       G_CALLBACK (gimp_toolbox_button_accel_changed),
+                                       button, 0);
 
               gimp_toolbox_button_accel_changed (accel_group,
                                                  0, 0,

@@ -1,3 +1,10 @@
+2004-07-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimptoolbox.c (toolbox_create_tools): connect to
+	"accel-changed" of the accel_group using connect_object(), not
+	just connect() so we don't crash when it's emitted after the
+	toolbox is destroyed.
+
 2004-07-21  Ray Strode  <rstrode@redhat.com>
 
 	* gimp/data/misc/gimp.desktop.in.in: Add MimeType line to desktop
