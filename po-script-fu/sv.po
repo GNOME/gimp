@@ -483,7 +483,7 @@ msgstr "Tjocklek"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Add Bevel..."
-msgstr "<Image>/Script-Fu/Animatörer/Lägg till avfasning..."
+msgstr "<Image>/Script-Fu/Dekor/Lägg till avfasning..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
