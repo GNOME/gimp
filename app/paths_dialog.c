@@ -359,7 +359,7 @@ paths_dialog_create (void)
   gtk_widget_show (scrolled_win);
   gtk_widget_show (paths_list);
 
-  gtk_signal_connect (GTK_OBJECT (vbox),"realize",
+  gtk_signal_connect (GTK_OBJECT (paths_dialog->vbox), "realize",
 		      GTK_SIGNAL_FUNC (paths_dialog_realized),
 		      NULL);
 
