@@ -26,9 +26,9 @@ static PyObject *
 img_add_channel(PyGimpImage *self, PyObject *args)
 {
     PyGimpChannel *chn;
-    int pos;
+    int pos = -1;
 	
-    if (!PyArg_ParseTuple(args, "O!i:add_channel", &PyGimpChannel_Type, &chn, &pos))
+    if (!PyArg_ParseTuple(args, "O!|i:add_channel", &PyGimpChannel_Type, &chn, &pos))
 	return NULL;
     return PyInt_FromLong(gimp_image_add_channel(self->ID, chn->ID, pos));
 }
@@ -38,9 +38,9 @@ static PyObject *
 img_add_layer(PyGimpImage *self, PyObject *args)
 {
     PyGimpLayer *lay;
-    int pos;
+    int pos = -1;
 	
-    if (!PyArg_ParseTuple(args, "O!i:add_layer", &PyGimpLayer_Type, &lay,
+    if (!PyArg_ParseTuple(args, "O!|i:add_layer", &PyGimpLayer_Type, &lay,
 			  &pos))
 	return NULL;
     return PyInt_FromLong(gimp_image_add_layer(self->ID, lay->ID, pos));

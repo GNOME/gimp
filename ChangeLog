@@ -1,3 +1,15 @@
+2004-09-01  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpfu.py
+	* plug-ins/pygimp/gimpmodule.c: Hacked up support for the new
+	progress interface. Emphasis on hacked.
+
+	* plug-ins/pygimp/gimpmodule.c: Wrapped gimp_extension_enable(). Minor
+	cleanups.
+
+	* plug-ins/pygimp/pygimp-image.c
+	* plug-ins/pygimp/pygimp-tile.c: Minor cleanups.
+
 2004-08-31  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/gimpcons.py

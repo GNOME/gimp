@@ -124,7 +124,7 @@ tile_repr(PyGimpTile *self)
 
     name = gimp_drawable_get_name(self->tile->drawable->drawable_id);
     if (self->tile->shadow)
-	s = PyString_FromFormat("<gimp.Tile for drawable '%s' (shadow)>",name);
+	s = PyString_FromFormat("<gimp.Tile for drawable '%s' (shadow)>", name);
     else
 	s = PyString_FromFormat("<gimp.Tile for drawable '%s'>", name);
     g_free(name);
@@ -147,7 +147,7 @@ tile_subscript(PyGimpTile *self, PyObject *sub)
     if (PyInt_Check(sub)) {
 	x = PyInt_AsLong(sub);
 	if (x < 0 || x >= tile->ewidth * tile->eheight) {
-	    PyErr_SetString(PyExc_IndexError,"index out of range");
+	    PyErr_SetString(PyExc_IndexError, "index out of range");
 	    return NULL;
 	}
 	return PyString_FromStringAndSize(tile->data + bpp * x, bpp);
@@ -156,7 +156,7 @@ tile_subscript(PyGimpTile *self, PyObject *sub)
 	if (!PyArg_ParseTuple(sub, "ll", &x, &y))
 	    return NULL;
 	if (x < 0 || y < 0 || x >= tile->ewidth || y>=tile->eheight) {
-	    PyErr_SetString(PyExc_IndexError,"index out of range");
+	    PyErr_SetString(PyExc_IndexError, "index out of range");
 	    return NULL;
 	}
 	return PyString_FromStringAndSize(tile->data + bpp * (x +
@@ -187,7 +187,7 @@ tile_ass_sub(PyGimpTile *self, PyObject *v, PyObject *w)
     if (PyInt_Check(v)) {
 	x = PyInt_AsLong(v);
 	if (x < 0 || x >= tile->ewidth * tile->eheight) {
-	    PyErr_SetString(PyExc_IndexError,"index out of range");
+	    PyErr_SetString(PyExc_IndexError, "index out of range");
 	    return -1;
 	}
 	data = tile->data + x * bpp;
@@ -200,7 +200,7 @@ tile_ass_sub(PyGimpTile *self, PyObject *v, PyObject *w)
 	if (!PyArg_ParseTuple(v, "ll", &x, &y))
 	    return -1;
 	if (x < 0 || y < 0 || x >= tile->ewidth || y>=tile->eheight) {
-	    PyErr_SetString(PyExc_IndexError,"index out of range");
+	    PyErr_SetString(PyExc_IndexError, "index out of range");
 	    return -1;
 	}
 	data = tile->data + bpp * (x + y * tile->ewidth);

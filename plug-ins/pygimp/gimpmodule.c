@@ -24,6 +24,12 @@
 #include "pygimp.h"
 #include <sysmodule.h>
 
+#if PY_VERSION_HEX >= 0x2030000
+#define ARG_UINT_FORMAT "I"
+#else
+#define ARG_UINT_FORMAT "i"
+#endif
+
 /* maximum bits per pixel ... */
 #define MAX_BPP 4
 
@@ -47,6 +53,15 @@ GimpPlugInInfo PLUG_IN_INFO = {
 static PyObject *callbacks[] = {
     NULL, NULL, NULL, NULL
 };
+
+typedef struct _ProgressData ProgressData;
+
+struct _ProgressData
+{
+  PyObject *start, *end, *text, *value;
+  PyObject *user_data;
+};
+
 
 static void
 pygimp_init_proc(void)
@@ -230,9 +245,14 @@ pygimp_set_data(PyObject *self, PyObject *args)
 
     if (!PyArg_ParseTuple(args, "ss#:set_data", &id, &data, &bytes))
 	return NULL;
+
     return_vals = gimp_run_procedure("gimp_procedural_db_set_data",
-				     &nreturn_vals, GIMP_PDB_STRING, id, GIMP_PDB_INT32, bytes,
-				     GIMP_PDB_INT8ARRAY, data, GIMP_PDB_END);
+				     &nreturn_vals,
+				     GIMP_PDB_STRING, id,
+				     GIMP_PDB_INT32, bytes,
+				     GIMP_PDB_INT8ARRAY, data,
+				     GIMP_PDB_END);
+
     if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS) {
 	PyErr_SetString(pygimp_error, "error occurred while storing");
 	return NULL;
@@ -254,7 +274,9 @@ pygimp_get_data(PyObject *self, PyObject *args)
 	return NULL;
 
     return_vals = gimp_run_procedure("gimp_procedural_db_get_data",
-				     &nreturn_vals, GIMP_PDB_STRING, id, GIMP_PDB_END);
+				     &nreturn_vals,
+				     GIMP_PDB_STRING, id,
+				     GIMP_PDB_END);
 
     if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS) {
 	PyErr_SetString(pygimp_error, "no data for id");
@@ -288,6 +310,178 @@ pygimp_progress_update(PyObject *self, PyObject *args)
     return Py_None;
 }
 
+static void
+pygimp_progress_start(const gchar *message, gboolean cancelable, gpointer data)
+{
+    ProgressData *pdata = data;
+    PyObject *r;
+
+    if (pdata->user_data) {
+	r = PyObject_CallFunction(pdata->start, "siO", message, cancelable,
+				  pdata->user_data);
+	Py_DECREF(pdata->user_data);
+    } else
+	r = PyObject_CallFunction(pdata->start, "si", message, cancelable);
+
+    if (!r) {
+	PyErr_Print();
+	PyErr_Clear();
+	return;
+    }
+
+    Py_DECREF(r);
+}
+
+static void
+pygimp_progress_end(gpointer data)
+{
+    ProgressData *pdata = data;
+    PyObject *r;
+
+    if (pdata->user_data) {
+	r = PyObject_CallFunction(pdata->end, "O", pdata->user_data);
+	Py_DECREF(pdata->user_data);
+    } else
+	r = PyObject_CallFunction(pdata->end, NULL);
+
+    if (!r) {
+	PyErr_Print();
+	PyErr_Clear();
+	return;
+    }
+
+    Py_DECREF(r);
+}
+
+static void
+pygimp_progress_text(const gchar *message, gpointer data)
+{
+    ProgressData *pdata = data;
+    PyObject *r;
+
+    if (pdata->user_data) {
+	r = PyObject_CallFunction(pdata->text, "sO", message, pdata->user_data);
+	Py_DECREF(pdata->user_data);
+    } else
+	r = PyObject_CallFunction(pdata->text, "s", message);
+
+    if (!r) {
+	PyErr_Print();
+	PyErr_Clear();
+	return;
+    }
+
+    Py_DECREF(r);
+}
+
+static void
+pygimp_progress_value(gdouble percentage, gpointer data)
+{
+    ProgressData *pdata = data;
+    PyObject *r;
+
+    if (pdata->user_data) {
+	r = PyObject_CallFunction(pdata->value, "dO", percentage,
+				  pdata->user_data);
+	Py_DECREF(pdata->user_data);
+    } else 
+	r = PyObject_CallFunction(pdata->value, "d", percentage);
+
+    if (!r) {
+	PyErr_Print();
+	PyErr_Clear();
+	return;
+    }
+
+    Py_DECREF(r);
+}
+
+static PyObject *
+pygimp_progress_install(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    const gchar *ret;
+    ProgressData *pdata;
+    static char *kwlist[] = { "start", "end", "text", "value", "data", NULL };
+
+    pdata = g_new0(ProgressData, 1);
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOOO|O:progress_install",
+				     kwlist,
+				     &pdata->start, &pdata->end,
+				     &pdata->text, &pdata->value,
+				     &pdata->user_data))
+	goto cleanup;
+
+#define PROCESS_FUNC(n) G_STMT_START {					\
+    if (!PyCallable_Check(pdata->n)) {					\
+	PyErr_SetString(pygimp_error, #n "must be a callable");		\
+	goto cleanup;							\
+    }									\
+    Py_INCREF(pdata->n);						\
+} G_STMT_END
+
+    PROCESS_FUNC(start);
+    PROCESS_FUNC(end);
+    PROCESS_FUNC(text);
+    PROCESS_FUNC(value);
+
+    Py_XINCREF(pdata->user_data);
+
+#undef PROCESS_FUNC
+
+    ret = gimp_progress_install(pygimp_progress_start,
+				pygimp_progress_end,
+				pygimp_progress_text,
+				pygimp_progress_value,
+				pdata);
+
+    if (!ret) {
+	PyErr_SetString(pygimp_error, "error occurred while installing progress functions");
+
+	Py_DECREF(pdata->start);
+	Py_DECREF(pdata->end);
+	Py_DECREF(pdata->text);
+	Py_DECREF(pdata->value);
+
+	goto cleanup;
+    }
+
+    return PyString_FromString(ret);
+
+cleanup:
+    g_free(pdata);
+    return NULL;
+}
+
+static PyObject *
+pygimp_progress_uninstall(PyObject *self, PyObject *args)
+{
+    ProgressData *pdata;
+    gchar *callback;
+
+    if (!PyArg_ParseTuple(args, "s:progress_uninstall", &callback))
+	return NULL;
+
+    pdata = gimp_progress_uninstall(callback);
+
+    if (!pdata) {
+	PyErr_SetString(pygimp_error, "error occurred while uninstalling progress functions");
+	return NULL;
+    }
+
+    Py_DECREF(pdata->start);
+    Py_DECREF(pdata->end);
+    Py_DECREF(pdata->text);
+    Py_DECREF(pdata->value);
+
+    Py_XDECREF(pdata->user_data);
+
+    g_free(pdata);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
 static PyObject *
 pygimp_image_list(PyObject *self)
 {
@@ -305,7 +499,7 @@ static PyObject *
 pygimp_install_procedure(PyObject *self, PyObject *args)
 {
     char *name, *blurb, *help, *author, *copyright, *date, *menu_path,
-	*image_types, *n, *d;
+	 *image_types, *n, *d;
     GimpParamDef *params, *return_vals;
     int type, nparams, nreturn_vals, i;
     PyObject *pars, *rets;
@@ -343,8 +537,8 @@ pygimp_install_procedure(PyObject *self, PyObject *args)
 	return_vals[i].description = g_strdup(d);
     }
     gimp_install_procedure(name, blurb, help, author, copyright, date,
-			   menu_path, image_types, type, nparams, nreturn_vals, params,
-			   return_vals);
+			   menu_path, image_types, type, nparams, nreturn_vals,
+			   params, return_vals);
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -679,11 +873,19 @@ pygimp_extension_ack(PyObject *self)
 }
 
 static PyObject *
+pygimp_extension_enable(PyObject *self)
+{
+    gimp_extension_enable();
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
 pygimp_extension_process(PyObject *self, PyObject *args)
 {
-    int timeout;
+    guint timeout;
 
-    if (!PyArg_ParseTuple(args, "i:extension_process", &timeout))
+    if (!PyArg_ParseTuple(args, ARG_UINT_FORMAT ":extension_process", &timeout))
 	return NULL;
     gimp_extension_process(timeout);
     Py_INCREF(Py_None);
@@ -809,6 +1011,8 @@ static struct PyMethodDef gimp_methods[] = {
     {"get_data",	(PyCFunction)pygimp_get_data,	METH_VARARGS},
     {"progress_init",	(PyCFunction)pygimp_progress_init,	METH_VARARGS},
     {"progress_update",	(PyCFunction)pygimp_progress_update,	METH_VARARGS},
+    {"progress_install",	(PyCFunction)pygimp_progress_install,	METH_VARARGS | METH_KEYWORDS},
+    {"progress_uninstall",	(PyCFunction)pygimp_progress_uninstall,	METH_VARARGS},
     {"image_list",	(PyCFunction)pygimp_image_list,	METH_NOARGS},
     {"install_procedure",	(PyCFunction)pygimp_install_procedure,	METH_VARARGS},
     {"install_temp_proc",	(PyCFunction)pygimp_install_temp_proc,	METH_VARARGS},
@@ -835,6 +1039,7 @@ static struct PyMethodDef gimp_methods[] = {
     {"tile_width", (PyCFunction)pygimp_tile_width, METH_NOARGS},
     {"tile_height", (PyCFunction)pygimp_tile_height, METH_NOARGS},
     {"extension_ack", (PyCFunction)pygimp_extension_ack, METH_NOARGS},
+    {"extension_enable", (PyCFunction)pygimp_extension_enable, METH_NOARGS},
     {"extension_process", (PyCFunction)pygimp_extension_process, METH_VARARGS},
     {"parasite_find",      (PyCFunction)pygimp_parasite_find,      METH_VARARGS},
     {"parasite_attach",    (PyCFunction)pygimp_parasite_attach,    METH_VARARGS},

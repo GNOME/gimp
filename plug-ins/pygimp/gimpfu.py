@@ -50,6 +50,7 @@ from gimpenums import *
 pdb = gimp.pdb
 
 class error(RuntimeError):pass
+class CancelError(RuntimeError):pass
 
 PF_INT8        = PDB_INT8
 PF_INT16       = PDB_INT16
@@ -223,14 +224,19 @@ def _set_defaults(func_name, defaults):
     key = "python-fu-save--" + func_name
     gimpshelf.shelf[key] = defaults
 
-def _interact(func_name):
+def _interact(func_name, start_params):
     (blurb, help, author, copyright, date,
      menupath, imagetypes, plugin_type,
      params, results, function,
      on_query, on_run) = _registered_plugins_[func_name]
 
+    def run_script(run_params):
+	params = start_params + tuple(run_params)
+	return apply(function, params)
+
     # short circuit for no parameters ...
-    if len(params) == 0: return []
+    if len(params) == 0:
+         return run_script([])
 
     import pygtk
     pygtk.require('2.0')
@@ -364,6 +370,8 @@ def _interact(func_name):
     if on_run:
 	on_run()
 
+    need_progress = menupath[:8] != '<Image>/'
+
     tooltips = gtk.Tooltips()
 
     dialog = gtk.Dialog(func_name, None, 0,
@@ -384,11 +392,33 @@ def _interact(func_name):
     pix.show()
 	
     label = gtk.Label(blurb)
-    label.set_line_wrap(TRUE)
+    label.set_line_wrap(gtk.TRUE)
     label.set_justify(gtk.JUSTIFY_LEFT)
     label.set_size_request(100, -1)
     vbox.pack_start(label, expand=gtk.FALSE)
     label.show()
+
+    progress_callback = None
+
+    def response(dlg, id):
+	if id == gtk.RESPONSE_OK:
+	    params = []
+
+	    try:
+		for wid in edit_wids:
+		    params.append(wid.get_value())
+	    except EntryValueError:
+		error_dialog(dialog, 'Invalid input for "%s"' % wid.desc)
+	    else:
+		_set_defaults(func_name, params)
+		dialog.res = run_script(params)
+
+	if progress_callback:
+	    gimp.progress_uninstall(progress_callback)
+
+	gtk.main_quit()
+
+    dialog.connect("response", response)
 
     edit_wids = []
     for i in range(len(params)):
@@ -414,33 +444,69 @@ def _interact(func_name):
 	wid.desc = desc
 	edit_wids.append(wid)
 
+    if need_progress:
+	frame = gtk.Frame("Script Progress")
+	frame.set_border_width(5)
+	dialog.vbox.pack_start(frame)
+	frame.show()
+
+	vbox = gtk.VBox(gtk.FALSE, 5)
+	vbox.set_border_width(5)
+	frame.add(vbox)
+	vbox.show()
+
+	progress_label = gtk.Label("(none)")
+	progress_label.set_alignment(0.0, 0.5)
+	vbox.pack_start(progress_label)
+	progress_label.show()
+
+	progress = gtk.ProgressBar()
+	progress.set_text(" ")
+	vbox.pack_start(progress)
+	progress.show()
+
+	def progress_update(message=-1, fraction=None):
+	    if message == -1:
+		pass
+	    elif message:
+		progress.set_text(message)
+	    else:
+		progress.set_text(" ")
+
+	    if fraction is not None:
+		progress.set_fraction(fraction)
+
+	    while gtk.events_pending():
+		gtk.main_iteration()
+
+	def progress_start(message, cancelable):
+	    progress_update(message, 0.0)
+
+	def progress_end():
+	    progress_update(None, 0.0)
+
+	def progress_text(message):
+	    progress_update(message)
+
+	def progress_value(percentage):
+	    progress_update(fraction=percentage)
+
+	progress_callback = gimp.progress_install(progress_start, progress_end,
+						  progress_text, progress_value)
+
     tooltips.enable()
     dialog.show()
 
-    ret = None
-    while 1:
-	ret = None
+    gtk.main()
 
-	response = dialog.run()
-	if response == gtk.RESPONSE_OK:
-    	    # OK was clicked
-	    ret = []
-	    msg = None
+    if hasattr(dialog, 'res'):
+        res = dialog.res
+	dialog.destroy()
+	return res
+    else:
+	dialog.destroy()
+        raise CancelError
 
-	    try:
-		for wid in edit_wids:
-		    ret.append(wid.get_value())
-	    except EntryValueError:
-		error_dialog(dialog, 'Invalid input for "%s"' % wid.desc)
-	    else:
-		_set_defaults(func_name, ret)
-		break
-	else:
-	    break
-
-    dialog.destroy()
-    return ret
-	
 def _run(func_name, params):
     run_mode = params[0]
     plugin_type = _registered_plugins_[func_name][7]
@@ -458,16 +524,18 @@ def _run(func_name, params):
     else:
 	start_params = ()
 	extra_params = params[1:]
-	
-    if run_mode == RUN_INTERACTIVE:
-	extra_params = _interact(func_name)
-	if extra_params == None:
-	    return
-    elif run_mode == RUN_WITH_LAST_VALS:
-	extra_params = _get_defaults(func_name)
 
-    params = start_params + tuple(extra_params)
-    res = apply(func, params)
+    if run_mode == RUN_INTERACTIVE:
+        try:
+	    res = _interact(func_name, start_params)
+        except CancelError:
+	    return
+    else:
+	if run_mode == RUN_WITH_LAST_VALS:
+	    extra_params = _get_defaults(func_name)
+
+	params = start_params + tuple(extra_params)
+	res = apply(func, params)
 
     if run_mode != RUN_NONINTERACTIVE:
         gimp.displays_flush()
