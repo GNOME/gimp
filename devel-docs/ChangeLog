@@ -1,3 +1,7 @@
+2002-12-01  Sven Neumann  <neo@wintermute>
+
+	* libgimp/Makefile.am (IGNORE_HFILES): ignore gimpmiscui.h.
+
 2002-11-24  Sven Neumann  <sven@gimp.org>
 
 	* README

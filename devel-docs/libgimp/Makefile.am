@@ -28,6 +28,7 @@ CFILE_GLOB = $(DOC_SOURCE_DIR)/*.c
 # Header files to ignore when scanning
 IGNORE_HFILES = \
 	gimpmisc.h		\
+	gimpmiscui.h		\
 	gimpintl.h 		\
 	libgimp-intl.h		\
 	stdplugins-intl.h
