@@ -823,8 +823,8 @@ gimp_layer_tree_view_mask_update (GimpLayerTreeView *layer_view,
                                 layer_view, NULL);
       g_object_watch_closure (G_OBJECT (renderer), closure);
       g_signal_connect_closure (mask, "apply_changed", closure, FALSE);
-      g_signal_connect_closure (mask, "edit_changed", closure, FALSE);
-      g_signal_connect_closure (mask, "show_changed", closure, FALSE);
+      g_signal_connect_closure (mask, "edit_changed",  closure, FALSE);
+      g_signal_connect_closure (mask, "show_changed",  closure, FALSE);
     }
 
   gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
@@ -891,17 +891,15 @@ gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
   GimpContainerTreeView *tree_view;
   GimpPreviewRenderer   *layer_renderer;
   GimpPreviewRenderer   *mask_renderer;
-  GimpLayerMask         *mask = NULL;
+  GimpLayerMask         *mask        = NULL;
   GimpRGB               *layer_color = &black_color;
   GimpRGB               *mask_color  = &black_color;
 
   tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
 
   gtk_tree_model_get (tree_view->model, iter,
-                      tree_view->model_column_renderer,
-                      &layer_renderer,
-                      layer_view->model_column_mask,
-                      &mask_renderer,
+                      tree_view->model_column_renderer, &layer_renderer,
+                      layer_view->model_column_mask,    &mask_renderer,
                       -1);
 
   if (mask_renderer)

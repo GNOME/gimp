@@ -148,8 +148,8 @@ grid_dialog_new (GimpDisplay *gdisp)
   gtk_widget_show (snap_button);
   gtk_widget_show (vbox);
 
-  /* the appearence frame */
-  frame = gtk_frame_new (_("Appearence"));
+  /* the appearance frame */
+  frame = gtk_frame_new (_("Appearance"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -167,7 +167,7 @@ grid_dialog_new (GimpDisplay *gdisp)
                              type, 1, TRUE);
 
   color_button = gimp_prop_color_button_new (G_OBJECT (grid), "fgcolor",
-                                             _("Grid Foreground Color"),
+                                             _("Change Grid Foreground Color"),
                                              GRID_COLOR_SIZE, GRID_COLOR_SIZE,
                                              GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -175,7 +175,7 @@ grid_dialog_new (GimpDisplay *gdisp)
                              color_button, 1, TRUE);
 
   color_button = gimp_prop_color_button_new (G_OBJECT (grid), "bgcolor",
-                                             _("Grid Background Color"),
+                                             _("Change Grid Background Color"),
                                              GRID_COLOR_SIZE, GRID_COLOR_SIZE,
                                              GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,

@@ -1,5 +1,13 @@
 2003-07-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/grid-dialog.c: s/Appearence/Appearance/g, changed
+	color_notebook titles to say "Change Foo Color" instead of
+	just "Foo Color".
+
+	* app/widgets/gimplayertreeview.c: irrelevant code review.
+
+2003-07-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/widgets-types.h: added GimpMenuPositionFunc typedef.
 
 	* app/widgets/gimpwidgets-utils.[ch]: made gimp_menu_position()
