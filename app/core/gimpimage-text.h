@@ -19,6 +19,12 @@
 #ifndef __GIMP_IMAGE_TEXT_H__
 #define __GIMP_IMAGE_TEXT_H__
 
+GimpLayer * gimp_image_text_render (GimpImage *image,
+                                    GimpText  *text);
+
+
+/* convenience functions using the old API */
+
 GimpLayer * text_render      (GimpImage    *gimage,
 			      GimpDrawable *drawable,
 			      gint          text_x,

@@ -24,14 +24,16 @@
 #include <gtk/gtk.h>
 #include <pango/pangoft2.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
 #include "core/gimpimage-text.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-floating-sel.h"
+#include "core/gimptext.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpfontselection.h"
@@ -44,6 +46,7 @@
 #include "tool_options.h"
 
 #include "gimprc.h"
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -314,58 +317,58 @@ text_tool_cursor_update (GimpTool        *tool,
 static void
 text_tool_render (GimpTextTool *text_tool)
 {
-  TextOptions          *options;
-  GimpDisplay          *gdisp;
-  PangoFontDescription *font_desc;
-  gchar                *fontname;
-  gchar                *text;
-  gdouble               border; 
-  gdouble               size;
-  gdouble               factor;
+  TextOptions  *options;
+  GimpImage    *gimage;
+  GimpText     *text;
+  GimpLayer    *layer;
+  const gchar  *font;
 
   options = (TextOptions *) GIMP_TOOL (text_tool)->tool_info->tool_options;
+  gimage  = text_tool->gdisp->gimage;
 
-  gdisp = text_tool->gdisp;
-  
-  font_desc = gimp_font_selection_get_font_desc 
-    (GIMP_FONT_SELECTION (options->font_selection));
+  font = gimp_font_selection_get_fontname (GIMP_FONT_SELECTION (options->font_selection));
 
-  if (!font_desc)
+  if (!font)
     {
       g_message (_("No font chosen or font invalid."));
       return;
     }
+
+  text = GIMP_TEXT (g_object_new (GIMP_TYPE_TEXT,
+                                  "text", ("No, you can't change this text.\n"
+                                           "Please DON'T report this bug."),
+                                  "font",           font,
+                                  "size",           options->size,
+                                  "border",         options->border,
+                                  "unit",           options->unit,
+                                  "letter-spacing", options->letter_spacing,
+                                  "line-spacing",   options->line_spacing,
+                                  NULL));
   
-  size   = options->size;
-  border = options->border;
+  layer = gimp_image_text_render (gimage, text);
 
-  switch (options->unit)
-    {
-    case GIMP_UNIT_PIXEL:
-      break;
-    default:
-      factor = (gdisp->gimage->xresolution /
-                gimp_unit_get_factor (options->unit));
-      size   *= factor;
-      border *= factor;
-      break;
-    }
+  g_object_unref (text);
 
-  pango_font_description_set_size (font_desc, PANGO_SCALE * MAX (1, size));
-  fontname = pango_font_description_to_string (font_desc);
-  pango_font_description_free (font_desc);
+  if (!layer)
+    return;
 
-  text = ("No, you can't change this text.\n"
-          "Please DON'T report this bug.");  /* FIXME */
+  undo_push_group_start (gimage, TEXT_UNDO_GROUP);
 
-  text_render (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage),
-	       text_tool->click_x, text_tool->click_y,
-	       fontname, text, border,
-               TRUE /* antialias */);
+  GIMP_DRAWABLE (layer)->offset_x = text_tool->click_x;
+  GIMP_DRAWABLE (layer)->offset_y = text_tool->click_y;
 
-  g_free (fontname);
+  /*  If there is a selection mask clear it--
+   *  this might not always be desired, but in general,
+   *  it seems like the correct behavior.
+   */
+  if (! gimp_image_mask_is_empty (gimage))
+    gimp_image_mask_clear (gimage);
 
-  gimp_image_flush (gdisp->gimage);
+  floating_sel_attach (layer, gimp_image_active_drawable (gimage));
+
+  undo_push_group_end (gimage);
+
+  gimp_image_flush (gimage);
 }
 
 /*  tool options stuff  */
@@ -513,8 +516,8 @@ text_tool_options_reset (GimpToolOptions *tool_options)
         g_object_get_data (G_OBJECT (spinbutton), "set_digits");
     }
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->line_spacing_w),
-                            options->line_spacing_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->letter_spacing_w),
                             options->letter_spacing_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->line_spacing_w),
+                            options->line_spacing_d);
 }

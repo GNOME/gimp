@@ -76,6 +76,7 @@ GType        gimp_param_unit_get_type     (void) G_GNUC_CONST;
 GParamSpec * gimp_param_spec_unit         (const gchar    *name,
                                            const gchar    *nick,
                                            const gchar    *blurb,
+                                           gboolean        allow_pixels,
                                            GimpUnit        default_value,
                                            GParamFlags     flags);
 
@@ -135,7 +136,7 @@ GParamSpec * gimp_param_spec_unit         (const gchar    *name,
 #define GIMP_CONFIG_INSTALL_PROP_UNIT(class, id, name, default)\
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_unit (name, NULL, NULL,\
-                                   default,\
+                                   FALSE, default,\
                                    GIMP_CONFIG_PARAM_FLAGS))
 
 

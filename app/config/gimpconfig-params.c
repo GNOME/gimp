@@ -337,6 +337,7 @@ GParamSpec *
 gimp_param_spec_unit (const gchar *name,
                       const gchar *nick,
                       const gchar *blurb,
+                      gboolean     allow_pixels,
                       GimpUnit     default_value,
                       GParamFlags  flags)
 {
@@ -346,7 +347,7 @@ gimp_param_spec_unit (const gchar *name,
                                  name, nick, blurb, flags);
 
   pspec->default_value = default_value;
-  pspec->minimum       = GIMP_UNIT_INCH;
+  pspec->minimum       = allow_pixels ? GIMP_UNIT_PIXEL : GIMP_UNIT_INCH;
   pspec->maximum       = G_MAXINT;
 
   return G_PARAM_SPEC (pspec);

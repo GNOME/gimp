@@ -36,7 +36,8 @@ struct _GimpText
   gchar        *str;
   gchar        *font;
   gdouble       size;
-  GimpUnit      size_unit;
+  gdouble       border;
+  GimpUnit      unit;
   gdouble       letter_spacing;
   gdouble       line_spacing;
 };

@@ -32,7 +32,8 @@ enum
   PROP_TEXT,
   PROP_FONT,
   PROP_SIZE,
-  PROP_SIZE_UNIT,
+  PROP_BORDER,
+  PROP_UNIT,
   PROP_LETTER_SPACING,
   PROP_LINE_SPACING
 };
@@ -98,23 +99,28 @@ gimp_text_class_init (GimpTextClass *klass)
   g_object_class_install_property (object_class, PROP_FONT, param_spec);
 
   param_spec = g_param_spec_double ("size", NULL, NULL,
-                                    18.0, 0.0, G_MAXFLOAT,
+                                    0.0, G_MAXFLOAT, 18.0,
                                     G_PARAM_CONSTRUCT | G_PARAM_WRITABLE);
   g_object_class_install_property (object_class, PROP_SIZE, param_spec);
 
-  param_spec = gimp_param_spec_unit ("size-unit", NULL, NULL,
-                                     GIMP_UNIT_PIXEL,
+  param_spec = g_param_spec_double ("border", NULL, NULL,
+                                    0.0, G_MAXFLOAT, 0.0,
+                                    G_PARAM_CONSTRUCT | G_PARAM_WRITABLE);
+  g_object_class_install_property (object_class, PROP_BORDER, param_spec);
+
+  param_spec = gimp_param_spec_unit ("unit", NULL, NULL,
+                                     TRUE, GIMP_UNIT_PIXEL,
                                      G_PARAM_CONSTRUCT | G_PARAM_WRITABLE);
-  g_object_class_install_property (object_class, PROP_SIZE_UNIT, param_spec);
+  g_object_class_install_property (object_class, PROP_UNIT, param_spec);
 
   param_spec = g_param_spec_double ("letter-spacing", NULL, NULL,
-                                    1.0, 0.0, 64.0,
+                                    0.0, 64.0, 1.0,
                                     G_PARAM_CONSTRUCT | G_PARAM_WRITABLE);
   g_object_class_install_property (object_class,
                                    PROP_LETTER_SPACING, param_spec);
 
   param_spec = g_param_spec_double ("line-spacing", NULL, NULL,
-                                    1.0, 0.0, 64.0,
+                                    0.0, 64.0, 1.0,
                                     G_PARAM_CONSTRUCT | G_PARAM_WRITABLE);
   g_object_class_install_property (object_class,
                                    PROP_LINE_SPACING, param_spec);
@@ -160,8 +166,11 @@ gimp_text_set_property (GObject      *object,
     case PROP_SIZE:
       text->size = g_value_get_double (value);
       break;
-    case PROP_SIZE_UNIT:
-      text->size_unit = g_value_get_enum (value);
+    case PROP_BORDER:
+      text->border = g_value_get_double (value);
+      break;
+    case PROP_UNIT:
+      text->unit = g_value_get_int (value);
       break;
     case PROP_LETTER_SPACING:
       text->letter_spacing = g_value_get_double (value);
