@@ -40,8 +40,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "gimpoldpreview.h"
-
 #define PLUG_IN_NAME "wind"
 
 #define COMPARE_WIDTH   3
@@ -147,9 +145,7 @@ struct config_tag
   direction_t direction;     /* of wind, LEFT or RIGHT */
   gint        strength;      /* how many pixels to bleed */
   algorithm_t alg;           /* which algorithm */
-  edge_t      edge;          /* controls abs, ne+ static guchar *preview_bits;
-+ static GtkWidget *preview;
-gation of derivative */
+  edge_t      edge;          /* controls abs, negation of derivative */
 };
 
 typedef struct config_tag config_t;
@@ -162,7 +158,9 @@ config_t config =
   LEADING      /* abs(derivative); */
 };
 
-static GimpOldPreview *preview;
+#define PREVIEW_SIZE (128)
+
+static GtkWidget *preview;
 
 MAIN ()
 
@@ -297,28 +295,26 @@ render_blast (GimpDrawable *drawable,
               edge_t        edge,
               gboolean      preview_mode)
 {
-  gint x1, x2, y1, y2;
-  gint width;
-  gint height;
-  gint bytes = drawable->bpp;
-  guchar *buffer;
-  GimpPixelRgn src_region, dest_region;
-  gint row;
-  gint row_stride;
-  gint marker = 0;
-  gint lpi;
+  gint          x1, x2, y1, y2;
+  gint          width;
+  gint          height;
+  gint          bytes = drawable->bpp;
+  guchar       *buffer, *preview_buffer = NULL;
+  GimpPixelRgn  src_region, dest_region;
+  gint          row;
+  gint          row_stride;
+  gint          marker = 0;
+  gint          lpi;
 
   if (preview_mode)
     {
-      width  = preview->width;
-      height = preview->height;
-      bytes  = preview->bpp;
+      width  = PREVIEW_SIZE;
+      height = PREVIEW_SIZE;
 
       x1 = y1 = 0;
       x2 = width;
       y2 = height;
-
-      row_stride = preview->rowstride;
+      preview_buffer = g_new (guchar, width * height * bytes);
     }
   else
     {
@@ -328,22 +324,18 @@ render_blast (GimpDrawable *drawable,
       width = x2 - x1;
       height = y2 - y1;
 
-      gimp_pixel_rgn_init (&src_region,  drawable, x1, y1, width, height, FALSE, FALSE);
       gimp_pixel_rgn_init (&dest_region, drawable, x1, y1, width, height, TRUE, TRUE);
+    }
 
-      row_stride = width * bytes;
-  }
-
+  gimp_pixel_rgn_init (&src_region,  drawable, x1, y1, width, height, FALSE, FALSE);
+  row_stride = width * bytes;
   lpi = row_stride - bytes;
 
-  buffer = (guchar *) g_malloc (row_stride);
+  buffer = g_new (guchar, row_stride);
 
   for (row = y1; row < y2; row++)
     {
-      if (preview_mode)
-        memcpy (buffer, preview->cache + (row * row_stride), row_stride);
-      else
-        gimp_pixel_rgn_get_row (&src_region, buffer, x1, row, width);
+      gimp_pixel_rgn_get_row (&src_region, buffer, x1, row, width);
 
       if (direction == RIGHT)
         {
@@ -359,7 +351,7 @@ render_blast (GimpDrawable *drawable,
 
       if (preview_mode)
         {
-          gimp_old_preview_do_row (preview, row, width, buffer);
+          memcpy (preview_buffer+row*row_stride, buffer, row_stride);
         }
       else
         {
@@ -377,16 +369,14 @@ render_blast (GimpDrawable *drawable,
               row++;
               if (row < y2)
                 {
+                  gimp_pixel_rgn_get_row (&src_region,
+                                          buffer, x1, row, width);
                   if (preview_mode)
                     {
-                      memcpy (buffer,
-                              preview->cache + (row * row_stride), row_stride);
-                      gimp_old_preview_do_row (preview, row, width, buffer);
+                      memcpy (preview_buffer+row*row_stride, buffer, row_stride);
                     }
                   else
                     {
-                      gimp_pixel_rgn_get_row (&src_region,
-                                              buffer, x1, row, width);
                       gimp_pixel_rgn_set_row (&dest_region,
                                               buffer, x1, row, width);
                     }
@@ -401,7 +391,13 @@ render_blast (GimpDrawable *drawable,
   /*  update the region  */
   if (preview_mode)
     {
-      gtk_widget_queue_draw (preview->widget);
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                              0, 0, PREVIEW_SIZE, PREVIEW_SIZE,
+                              gimp_drawable_type (drawable->drawable_id),
+                              preview_buffer,
+                              row_stride);
+
+      g_free (preview_buffer);
     }
   else
     {
@@ -419,55 +415,49 @@ render_wind (GimpDrawable *drawable,
              edge_t        edge,
              gboolean      preview_mode)
 {
-  GimpPixelRgn src_region, dest_region;
-  gint width;
-  gint height;
-  gint bytes;
-  gint row_stride;
-  gint comp_stride;
-  gint row;
-  guchar *sb;
-  gint lpi;
-  gint x1, y1, x2, y2;
+  GimpPixelRgn  src_region, dest_region;
+  gint          width;
+  gint          height;
+  gint          bytes;
+  gint          row_stride;
+  gint          comp_stride;
+  gint          row;
+  guchar       *sb, *preview_buffer = NULL;
+  gint          lpi;
+  gint          x1, y1, x2, y2;
 
+  bytes = drawable->bpp;
   if (preview_mode)
     {
-      width  = preview->width;
-      height = preview->height;
-      bytes  = preview->bpp;
+      width  = PREVIEW_SIZE;
+      height = PREVIEW_SIZE;
 
       x1 = y1 = 0;
       x2 = width;
       y2 = height;
-
-      row_stride = preview->rowstride;
+      preview_buffer = g_new (guchar, PREVIEW_SIZE * PREVIEW_SIZE * bytes);
     }
   else
     {
       gimp_progress_init (_("Rendering Wind..."));
       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-      bytes = drawable->bpp;
       width = x2 - x1;
       height = y2 - y1;
 
-      gimp_pixel_rgn_init (&src_region, drawable, x1, y1, width, height, FALSE, FALSE);
       gimp_pixel_rgn_init (&dest_region, drawable, x1, y1, width, height, TRUE, TRUE);
-
-      row_stride = width * bytes;
     }
 
+  gimp_pixel_rgn_init (&src_region, drawable, x1, y1, width, height, FALSE, FALSE);
+  row_stride = width * bytes;
   comp_stride = bytes * COMPARE_WIDTH;
   lpi = row_stride - comp_stride;
 
-  sb = g_malloc (row_stride);
+  sb = g_new (guchar, row_stride);
 
   for (row = y1; row < y2; row++)
     {
-      if (preview_mode)
-        memcpy (sb, preview->cache + (row * row_stride), row_stride);
-      else
-        gimp_pixel_rgn_get_row (&src_region, sb, x1, row, width);
+      gimp_pixel_rgn_get_row (&src_region, sb, x1, row, width);
 
       if (direction == RIGHT)
         reverse_buffer (sb, row_stride, bytes);
@@ -479,7 +469,7 @@ render_wind (GimpDrawable *drawable,
 
       if (preview_mode)
         {
-          gimp_old_preview_do_row (preview, row, width, sb);
+          memcpy (preview_buffer + row * row_stride, sb, row_stride);
         }
       else
         {
@@ -493,7 +483,13 @@ render_wind (GimpDrawable *drawable,
   /*  update the region  */
   if (preview_mode)
     {
-      gtk_widget_queue_draw (preview->widget);
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                              0, 0, PREVIEW_SIZE, PREVIEW_SIZE,
+                              gimp_drawable_type (drawable->drawable_id),
+                              preview_buffer,
+                              row_stride);
+
+      g_free (preview_buffer);
     }
   else
     {
@@ -893,12 +889,10 @@ dialog_box (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  preview = gimp_old_preview_new (NULL);
-  gimp_old_preview_fill (preview, drawable);
-  gtk_box_pack_start (GTK_BOX (hbox), preview->frame, FALSE, FALSE, 0);
-  gtk_widget_show (preview->frame);
-
-  render_effect (drawable, TRUE);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, PREVIEW_SIZE, PREVIEW_SIZE);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_widget_show (preview);
 
   /*****************************************************
     outer frame and table
@@ -1022,6 +1016,8 @@ dialog_box (GimpDrawable *drawable)
   gtk_widget_show (table);
 
   gtk_widget_show (dlg);
+
+  render_effect (drawable, TRUE);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 

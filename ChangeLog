@@ -1,3 +1,8 @@
+2004-08-05  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/wind.c: ported to GimpPreviewArea (from
+	GimpOldPreview)
+
 2004-08-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpiscissorstool.c: increased the handle size from 8
