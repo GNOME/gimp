@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.11\n"
-"POT-Creation-Date: 2000-02-02 17:39-0800\n"
+"POT-Creation-Date: 2000-02-03 17:00+0100\n"
 "PO-Revision-Date: 2000-01-08 03:32+0100\n"
-"Last-Translator: andreas.hyden <andreas.hyden@telia.com>\n"
+"Last-Translator: Andreas Hyden <ahyden@staffanstorp.net>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -367,12 +367,12 @@ msgstr "Mellanrum:"
 #. this should never happen
 #: app/brush_select.c:1792
 msgid "Sorry, this brush can't be edited."
-msgstr ""
+msgstr "Tyvärr, den här penslen kan inte redigeras."
 
 #. this should never happen
 #: app/brush_select.c:1821
 msgid "Sorry, this brush can't be deleted."
-msgstr ""
+msgstr "Tyvärr, den här penslen kan inte tas bort."
 
 #: app/bucket_fill.c:147 app/color_picker.c:156 app/tool_options.c:247
 msgid "Sample Merged"
@@ -772,12 +772,10 @@ msgid "General Palette Options"
 msgstr "Standard palett-inställningar"
 
 #: app/convert.c:530
-#, fuzzy
 msgid "Generate Optimal Palette:"
 msgstr "Generera optimal palett:"
 
 #: app/convert.c:563
-#, fuzzy
 msgid "# of Colors:"
 msgstr "# färger:"
 
@@ -787,22 +785,18 @@ msgid "Custom Palette Options"
 msgstr "Egen palett - inställningar"
 
 #: app/convert.c:585
-#, fuzzy
 msgid "Remove Unused Colors from Final Palette"
 msgstr "Ta bort oanvända färger från den slutgiltiga paletten"
 
 #: app/convert.c:597
-#, fuzzy
 msgid "Use Custom Palette:"
 msgstr "Använd egen palett"
 
 #: app/convert.c:631
-#, fuzzy
 msgid "Use WWW-Optimized Palette"
 msgstr "Använd WWW-optimerad palett"
 
 #: app/convert.c:647
-#, fuzzy
 msgid "Use Black/White (1-Bit) Palette"
 msgstr "Använd svart/vit (1-bit) palett"
 
@@ -811,27 +805,22 @@ msgid "Dither Options"
 msgstr "Dither val"
 
 #: app/convert.c:671
-#, fuzzy
 msgid "No Color Dithering"
 msgstr "Ingen färg-dithering"
 
 #: app/convert.c:685
-#, fuzzy
 msgid "Positioned Color Dithering"
 msgstr "Dithering per färgposition"
 
 #: app/convert.c:699
-#, fuzzy
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
 msgstr "Floyd-Steinberg färg-dithering (minskad färgblödning)"
 
 #: app/convert.c:712
-#, fuzzy
 msgid "Floyd-Steinberg Color Dithering (Normal)"
 msgstr "Floyd-Steinberg färg-dithering (normal)"
 
 #: app/convert.c:726
-#, fuzzy
 msgid "Enable Dithering of Transparency"
 msgstr "Använd dithering av transparens"
 
@@ -851,7 +840,6 @@ msgstr ""
 "transparent eller animerad GIF-fil från denna bild."
 
 #: app/convert.c:965
-#, fuzzy
 msgid "Select Custom Palette"
 msgstr "Använd egen palett"
 
@@ -977,19 +965,16 @@ msgid "Save"
 msgstr "Spara"
 
 #: app/curves.c:1359
-#, fuzzy
 msgid "Load Curves"
-msgstr "Ladda nivåer"
+msgstr ""
 
 #: app/curves.c:1374
-#, fuzzy
 msgid "Save Curves"
-msgstr "Spara nivåer"
+msgstr ""
 
 #: app/curves.c:1655
-#, fuzzy
 msgid "Load/Save Curves"
-msgstr "Ladda/Spara nivåer"
+msgstr ""
 
 #: app/curves.c:1693 app/curves.c:1711 app/levels.c:1497 app/levels.c:1515
 #: app/paths_dialog.c:2229
@@ -1210,28 +1195,24 @@ msgstr "Ladda bild"
 
 #. format-chooser frame
 #: app/fileops.c:283
-#, fuzzy
 msgid "Determine File Type"
-msgstr "Välj filtyp"
+msgstr "Bestäm filtyp"
 
 #: app/fileops.c:356
-#, fuzzy
 msgid ""
 "Generate\n"
 "Preview"
 msgstr ""
 "skapa\n"
-"tumnagel"
+"förhandsvisning"
 
 #: app/fileops.c:375
-#, fuzzy
 msgid "No Selection."
 msgstr "Ingen markering."
 
 #: app/fileops.c:418 app/fileops.c:1624 app/fileops.c:1731
-#, fuzzy, c-format
 msgid "Save failed: %s"
-msgstr "Spara misslyckades: "
+msgstr "Sparning misslyckades: %s"
 
 #: app/fileops.c:438 app/fileops.c:473
 msgid "Save Image"
@@ -1242,9 +1223,8 @@ msgid "Save Options"
 msgstr "Spara - inställningar"
 
 #: app/fileops.c:495
-#, fuzzy
 msgid "Determine File Type:"
-msgstr "Välj filtyp:"
+msgstr "Bestäm filtyp:"
 
 #: app/fileops.c:555
 msgid "Can't revert. No filename associated with this image"
@@ -1256,32 +1236,26 @@ msgid "Revert failed."
 msgstr "Återta bild misslyckades."
 
 #: app/fileops.c:1240
-#, fuzzy
 msgid "(This thumbnail may be out of date)"
 msgstr "(denna tumnagel är kanske gammal)"
 
 #: app/fileops.c:1241
-#, fuzzy
 msgid "(No Information)"
 msgstr "(ingen information)"
 
 #: app/fileops.c:1251
-#, fuzzy
 msgid "(Thumbnail saving is disabled)"
 msgstr "(tumnagels-sparning är avslaget)"
 
 #: app/fileops.c:1255
-#, fuzzy
 msgid "(Could not write thumbnail file)"
 msgstr "(kunde inte skriva tumnagelsfil)"
 
 #: app/fileops.c:1259
-#, fuzzy
 msgid "(Thumbnail file not written)"
 msgstr "(tumnagelsfil ej sparad)"
 
 #: app/fileops.c:1276
-#, fuzzy
 msgid "No preview available"
 msgstr "ingen förhandsvisning tillgänglig"
 
@@ -1290,9 +1264,8 @@ msgid "(could not make preview)"
 msgstr "(kunde ej skapa förhandsvisning)"
 
 #: app/fileops.c:1467 app/fileops.c:1546
-#, fuzzy, c-format
 msgid "Open failed: %s"
-msgstr "Ladda misslyckades: "
+msgstr "Öppning misslyckades: %s"
 
 #: app/fileops.c:1602
 #, c-format
@@ -1317,9 +1290,8 @@ msgid "No"
 msgstr "Nej"
 
 #: app/flip_tool.c:82
-#, fuzzy
 msgid "Flip Tool"
-msgstr "Vändaverktyget - inställningar"
+msgstr ""
 
 #: app/flip_tool.c:95 app/preferences_dialog.c:1588
 #: app/preferences_dialog.c:2347
@@ -1453,18 +1425,19 @@ msgstr "Okänd pensel-format version #%d i \"%s\"\n"
 
 #: app/gimpbrushpipe.c:300
 msgid "Brush pipes should have at least one brush."
-msgstr ""
+msgstr "Penselrör borde åtminstånde ha en pensel."
 
 #: app/gimpbrushpipe.c:396
 msgid ""
 "Failed to load one of the\n"
 "brushes in the brush pipe."
 msgstr ""
+"Misslyckades att ladda en av\n"
+"penslarna i penselröret."
 
 #: app/gimpbrushpipe.c:457
-#, fuzzy
 msgid "Failed to load pixmap brush."
-msgstr "Misslyckades att läsa slinga från %s"
+msgstr "Misslyckades att ladda pixmap-pensel."
 
 #: app/gimpdrawable.c:168
 msgid "Can't fill unknown image type."
@@ -1493,6 +1466,9 @@ msgid ""
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
+"Kunde inte hitta GIMP hjälpläsarproceduren.\n"
+"Den var förmodligen inte kompilerad eftersom\n"
+"du inte har GtkXmHTML installerat."
 
 #: app/gimpimage.c:1135
 msgid "attach parasite to image"
@@ -1642,11 +1618,11 @@ msgstr "Kan ej skriva till %s: %s"
 #: app/gimpui.c:449
 #, c-format
 msgid "Message repeated %d times"
-msgstr ""
+msgstr "Meddelande repeterat %d gånger"
 
 #: app/gimpui.c:462
 msgid "Message repeated once"
-msgstr ""
+msgstr "Meddelande repeterat en gång"
 
 #: app/gimpui.c:476
 msgid ""
@@ -3169,9 +3145,8 @@ msgid "Load/Save Levels"
 msgstr "Ladda/Spara nivåer"
 
 #: app/magnify.c:99
-#, fuzzy
 msgid "Magnify Tool"
-msgstr "Förstora"
+msgstr "Förstoringsverktyg"
 
 #: app/magnify.c:108
 msgid "Allow Window Resizing"
@@ -3899,19 +3874,16 @@ msgid "/Tools/Swap Colors"
 msgstr "/Verktyg/Byt färgplats"
 
 #: app/menus.c:543
-#, fuzzy
 msgid "/Tools/Select Tools"
-msgstr "/Verktyg/Rekt markering"
+msgstr "/Verktyg/Markera verktyg"
 
 #: app/menus.c:545
-#, fuzzy
 msgid "/Tools/Transform Tools"
-msgstr "/Verktyg/Transformera"
+msgstr "/Verktyg/Transformerings verktyg"
 
 #: app/menus.c:547
-#, fuzzy
 msgid "/Tools/Paint Tools"
-msgstr "/Verktyg/Pensel"
+msgstr "/Verktyg/Pensel verktyg"
 
 #. <Image>/Dialogs
 #: app/menus.c:552
@@ -4053,9 +4025,8 @@ msgid "/Automatic"
 msgstr "/Automatiskt"
 
 #: app/menus.c:676
-#, fuzzy
 msgid "/By Extension"
-msgstr "/Per filändelse"
+msgstr "/Av ändelse"
 
 #: app/menus.c:690
 msgid "/New Layer..."
@@ -4139,9 +4110,8 @@ msgid "/Alpha to Selection"
 msgstr "/Alfa-kanal till markering"
 
 #: app/menus.c:749
-#, fuzzy
 msgid "/Edit Layer Attributes..."
-msgstr "Modifiera lagerattribut"
+msgstr "/Redigera lagerattribut..."
 
 #: app/menus.c:760
 msgid "/New Channel..."
@@ -4180,9 +4150,8 @@ msgid "/Delete Channel"
 msgstr "/Ta bort kanal"
 
 #: app/menus.c:787
-#, fuzzy
 msgid "/Edit Channel Attributes..."
-msgstr "Redigera kanalattribut"
+msgstr "/Redigera kanalattribut..."
 
 #: app/menus.c:798
 msgid "/New Path"
@@ -4225,9 +4194,8 @@ msgid "/Export Path..."
 msgstr "/Exportera slinga..."
 
 #: app/menus.c:824
-#, fuzzy
 msgid "/Edit Path Attributes..."
-msgstr "Modifiera lagerattribut"
+msgstr "/Redigera sökvägsattribut"
 
 #: app/menus.c:1333
 #, c-format
@@ -4326,9 +4294,8 @@ msgid "Autoload during startup"
 msgstr "Ladda automatiskt vid start"
 
 #: app/move.c:454
-#, fuzzy
 msgid "Move Tool"
-msgstr "Flyttaverktyget - inställningar"
+msgstr "Flyttaverktyg"
 
 #. create the info dialog
 #: app/nav_window.c:1254
@@ -4549,9 +4516,8 @@ msgid "Palette Selection"
 msgstr "Färgkarteval"
 
 #: app/path_tool.c:1412
-#, fuzzy
 msgid "Path Tool"
-msgstr "Slingverktyget - inställningar"
+msgstr "Sökvägsverktyg"
 
 #: app/paths_dialog.c:169
 msgid "New Path"
@@ -4599,9 +4565,8 @@ msgid "Path %d"
 msgstr "Slinga %d"
 
 #: app/paths_dialog.c:1242
-#, fuzzy
 msgid "Edit Path Attributes"
-msgstr "Modifiera lagerattribut"
+msgstr "Modifiera sökvägsattribut"
 
 #: app/paths_dialog.c:1245
 msgid "Enter a new name for the path"
@@ -4928,14 +4893,12 @@ msgstr "Antal senast-använda dokument:"
 
 #. Indicators
 #: app/preferences_dialog.c:1841
-#, fuzzy
 msgid "Toolbox"
-msgstr "/Verktyg/Verktygslåda"
+msgstr "Verktygslåda"
 
 #: app/preferences_dialog.c:1844
-#, fuzzy
 msgid "Display Brush, Pattern and Gradient Indicators"
-msgstr "Visa pensel- och mönster-indikatorer på verktygsfältet"
+msgstr ""
 
 #: app/preferences_dialog.c:1853
 msgid "Dialog Behaviour"
@@ -5037,7 +5000,6 @@ msgid "Pointer Movement Feedback"
 msgstr "Markörförflyttning"
 
 #: app/preferences_dialog.c:2038
-#, fuzzy
 msgid "Perfect-but-Slow Pointer Tracking"
 msgstr "Följ pekaren perfekt men långsammare"
 
@@ -5114,14 +5076,12 @@ msgid "Try to Write a Thumbnail File:"
 msgstr "Försök skriva tumnagelsfil:"
 
 #: app/preferences_dialog.c:2245
-#, fuzzy
 msgid "Only when Modified"
 msgstr "Endast om ändrad"
 
 #: app/preferences_dialog.c:2250
-#, fuzzy
 msgid "\"File > Save\" Saves the Image:"
-msgstr "'Arkiv > Spara' spara bilden:"
+msgstr "\"Arkiv > Spara\" sparar bilden:"
 
 #: app/preferences_dialog.c:2256
 msgid "Session Management"
@@ -5503,27 +5463,22 @@ msgid "This tool has no options."
 msgstr "Det här verktyget har inga inställningar."
 
 #: app/tool_options.c:119
-#, fuzzy
 msgid "Rectangular Selection"
-msgstr "Rektangulär markering - inställningar"
+msgstr "Rektangulär markering"
 
 #: app/tool_options.c:121
-#, fuzzy
 msgid "Elliptical Selection"
-msgstr "Elliptisk markering - inställningar"
+msgstr "Elliptisk markering"
 
 #: app/tool_options.c:123
-#, fuzzy
 msgid "Free-Hand Selection"
-msgstr "Frihandsmarkering - inställningar"
+msgstr "Frihandsmarkering"
 
 #: app/tool_options.c:125
-#, fuzzy
 msgid "Fuzzy Selection"
 msgstr "Luddig markering"
 
 #: app/tool_options.c:127
-#, fuzzy
 msgid "Bezier Selection"
 msgstr "Bezier-markering"
 
@@ -5532,7 +5487,6 @@ msgid "Intelligent Scissors"
 msgstr "Intelligent sax"
 
 #: app/tool_options.c:131
-#, fuzzy
 msgid "By-Color Selection"
 msgstr "Markera per färg"
 
@@ -5549,9 +5503,8 @@ msgid "Bucket Fill"
 msgstr "Fyll"
 
 #: app/tool_options.c:424
-#, fuzzy
 msgid "Blend Tool"
-msgstr "Färgtoning: "
+msgstr ""
 
 #: app/tool_options.c:426 app/tools.c:373
 msgid "Pencil"
@@ -5570,12 +5523,10 @@ msgid "Airbrush"
 msgstr "Airbrush"
 
 #: app/tool_options.c:434
-#, fuzzy
 msgid "Clone Tool"
-msgstr "Klonverktyget - inställningar"
+msgstr "Klonverktyg"
 
 #: app/tool_options.c:436
-#, fuzzy
 msgid "Convolver"
 msgstr "Convolve"
 
@@ -5621,9 +5572,8 @@ msgid "Rect Select"
 msgstr "Rekt markering"
 
 #: app/tools.c:86
-#, fuzzy
 msgid "/Tools/Select Tools/Rect Select"
-msgstr "/Verktyg/Rekt markering"
+msgstr "/Verktyg/Markera Verktyg/Rekt markering"
 
 #: app/tools.c:89
 msgid "Select rectangular regions"
@@ -5634,9 +5584,8 @@ msgid "Ellipse Select"
 msgstr "Ellipsmarkering"
 
 #: app/tools.c:102
-#, fuzzy
 msgid "/Tools/Select Tools/Ellipse Select"
-msgstr "/Verktyg/Ellipsmarkering"
+msgstr "/Verktyg/Markera Verktyg/Ellips markering"
 
 #: app/tools.c:105
 msgid "Select elliptical regions"
@@ -5647,9 +5596,8 @@ msgid "Free Select"
 msgstr "Fri markering"
 
 #: app/tools.c:118
-#, fuzzy
 msgid "/Tools/Select Tools/Free Select"
-msgstr "/Verktyg/Fri markering"
+msgstr "/Verktyg/Markera Verktyg/Fri markering"
 
 #: app/tools.c:121
 msgid "Select hand-drawn regions"
@@ -5660,9 +5608,8 @@ msgid "Fuzzy Select"
 msgstr "Luddig markering"
 
 #: app/tools.c:134
-#, fuzzy
 msgid "/Tools/Select Tools/Fuzzy Select"
-msgstr "/Verktyg/Luddig markering"
+msgstr "/Verktyg/Markera Verktyg/Luddig markering"
 
 #: app/tools.c:137
 msgid "Select contiguous regions"
@@ -5673,18 +5620,16 @@ msgid "Bezier Select"
 msgstr "Bezier-markering"
 
 #: app/tools.c:150
-#, fuzzy
 msgid "/Tools/Select Tools/Bezier Select"
-msgstr "/Verktyg/Bezier-markering"
+msgstr "/Verktyg/Markera Verktyg/Bezier markering"
 
 #: app/tools.c:153
 msgid "Select regions using Bezier curves"
 msgstr "Markera med Bezier-kurvor"
 
 #: app/tools.c:166
-#, fuzzy
 msgid "/Tools/Select Tools/Intelligent Scissors"
-msgstr "/Verktyg/Intelligent sax"
+msgstr "/Verktyg/Markera Verktyg/Intelligent sax"
 
 #: app/tools.c:169
 msgid "Select shapes from image"
@@ -5695,9 +5640,8 @@ msgid "Move"
 msgstr "Flytta"
 
 #: app/tools.c:182
-#, fuzzy
 msgid "/Tools/Transform Tools/Move"
-msgstr "/Verktyg/Transformera"
+msgstr "/Verktyg/Transformera Verktyg/Flytta"
 
 #: app/tools.c:185
 msgid "Move layers & selections"
@@ -5708,18 +5652,16 @@ msgid "Magnify"
 msgstr "Förstora"
 
 #: app/tools.c:198
-#, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Verktyg/Transformera"
+msgstr "/Verktyg/Transformera Verktyg/Förstora"
 
 #: app/tools.c:201
 msgid "Zoom in & out"
 msgstr "Zooma in och ut"
 
 #: app/tools.c:214
-#, fuzzy
 msgid "/Tools/Transform Tools/Crop & Resize"
-msgstr "/Verktyg/Beskär & Ändra storlek"
+msgstr ""
 
 #: app/tools.c:217
 msgid "Crop or resize the image"
@@ -5732,9 +5674,8 @@ msgid "Transform"
 msgstr "Transformera"
 
 #: app/tools.c:230
-#, fuzzy
 msgid "/Tools/Transform Tools/Transform"
-msgstr "/Verktyg/Transformera"
+msgstr "/Verktyg/Transformera Verktyg/Transformera"
 
 #: app/tools.c:233 app/tools.c:249 app/tools.c:265 app/tools.c:281
 msgid "Rotation, scaling, shearing, perspective."
@@ -5796,27 +5737,24 @@ msgid "Fill with a color gradient"
 msgstr "Fyll med färgtoning"
 
 #: app/tools.c:374
-#, fuzzy
 msgid "/Tools/Paint Tools/Pencil"
-msgstr "/Verktyg/Penna"
+msgstr "/Verktyg/Målar-verktyg/Penna"
 
 #: app/tools.c:377
 msgid "Draw sharp pencil strokes"
 msgstr "Måla med skarpa penndrag"
 
 #: app/tools.c:390
-#, fuzzy
 msgid "/Tools/Paint Tools/Paintbrush"
-msgstr "/Verktyg/Pensel"
+msgstr "/Verktyg/Mål-verktyg Verktyg/Pensel"
 
 #: app/tools.c:393
 msgid "Paint fuzzy brush strokes"
 msgstr "Måla med penseldrag"
 
 #: app/tools.c:406
-#, fuzzy
 msgid "/Tools/Paint Tools/Eraser"
-msgstr "/Verktyg/Sudda"
+msgstr "/Verktyg/Målar-verktyg/Suddare"
 
 #: app/tools.c:409
 msgid "Erase to background or transparency"
@@ -5836,9 +5774,8 @@ msgid "Clone"
 msgstr "Klona"
 
 #: app/tools.c:438
-#, fuzzy
 msgid "/Tools/Paint Tools/Clone"
-msgstr "/Verktyg/Klona"
+msgstr "/Verktyg/Måla-verktyg/Klona"
 
 #: app/tools.c:441
 msgid "Paint using patterns or image regions"
@@ -5849,9 +5786,8 @@ msgid "Convolve"
 msgstr "Convolve"
 
 #: app/tools.c:454
-#, fuzzy
 msgid "/Tools/Paint Tools/Convolve"
-msgstr "/Verktyg/Convolve"
+msgstr "/Verktyg/Måla Verktyg/Convolve"
 
 #: app/tools.c:457
 msgid "Blur or sharpen"
@@ -6020,7 +5956,7 @@ msgstr "Transformation"
 #: app/transform_tool.c:190
 #, fuzzy
 msgid "Transform Tool"
-msgstr "Transformera"
+msgstr "Transformeraverktyg"
 
 #: app/transform_tool.c:213
 msgid "Rotation"
@@ -6353,14 +6289,12 @@ msgid "Watercolor style color selector as a pluggable module"
 msgstr ""
 
 #: modules/colorsel_water.c:97 modules/colorsel_water.c:100
-#, fuzzy
 msgid "Watercolor"
-msgstr "Statisk Färg"
+msgstr "Vattenfärg"
 
 #: modules/colorsel_water.c:640
-#, fuzzy
 msgid "Color History"
-msgstr "Färghämtaren"
+msgstr "Färghistoria"
 
 #~ msgid "Brightness-Contrast Options"
 #~ msgstr "Ljusstyrka-Kontrast - inställningar"
