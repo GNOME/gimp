@@ -1,3 +1,14 @@
+Sat Sep 11 12:20:26 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am: add cursors/badmsk and pixmaps/navbutton.xpm
+
+	* app/Makefile.am: add apptypes.h, gimpbrushpipeP.h, and
+	colormap_dialog.i.c
+
+	* libgimp/parasiteio.c: #include <stdlib.h>
+
+	* plug-ins/imagemap/Makefile.am: add *.h
+
 1999-09-11  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
 
 	* app/menus.c (menus_last_opened_cmd_callback): Applied patch

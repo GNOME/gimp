@@ -8,3 +8,6 @@ Gimp.bs
 config.log
 config.cache
 config.h
+.exists
+*.0
+so_locations

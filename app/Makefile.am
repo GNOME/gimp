@@ -39,6 +39,7 @@ gimp_SOURCES = \
 	app_procs.c		\
 	app_procs.h		\
 	appenv.h		\
+	apptypes.h		\
 	asupsample.c		\
 	asupsample.h		\
 	batch.c			\
@@ -195,6 +196,7 @@ gimp_SOURCES = \
 	gimpbrushlistP.h	\
 	gimpbrushpipe.c		\
 	gimpbrushpipe.h		\
+	gimpbrushpipeP.h	\
 	gimpcontext.c		\
 	gimpcontext.h		\
 	gimpcontextpreview.c	\
@@ -427,6 +429,10 @@ gimp_SOURCES = \
 	xinput_airbrush.h
 
 EXTRA_DIST = \
+	colormap_dialog.i.c	\
+	colormap_dialog.i.h	\
+	colormap_dialog.p.h	\
+	colormap_dialog.t.h	\
 	makefile.cygwin		\
 	makefile.msc		\
 	gimp.rc			\

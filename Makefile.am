@@ -8,6 +8,7 @@ EXTRA_SCRIPTS = gimpinstall
 
 EXTRA_DIST = \
 	cursors/bad		\
+	cursors/badmsk		\
 	cursors/bigcirc		\
 	cursors/bigcircmsk	\
 	cursors/dropper		\
@@ -45,6 +46,7 @@ EXTRA_DIST = \
 	pixmaps/locked.xbm	\
 	pixmaps/lower.xpm	\
 	pixmaps/mask.xbm	\
+	pixmaps/navbutton.xpm	\
 	pixmaps/new.xpm		\
 	pixmaps/no.xpm		\
 	pixmaps/raise.xpm	\
