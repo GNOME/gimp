@@ -2,7 +2,7 @@
 
 	* app/core/gimpdata.[ch]: added a boolean "internal" which
 	indicates that the data object is an automatically created
-	internal object. Changed the code to refuse saving to deleting
+	internal object. Changed the code to refuse saving or deleting
 	internal objects.
 
 	* app/core/Makefile.am
