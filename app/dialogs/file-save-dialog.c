@@ -134,17 +134,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
 
   if (uri && strlen (uri))
     {
-      gchar    *filename = file_utils_filename_from_uri (uri);
-      gboolean  exists   = FALSE;
-
-      if (filename)
-        {
-          exists = g_file_test (filename, G_FILE_TEST_EXISTS);
-
-          g_free (filename);
-        }
-
-      if (exists)
+      if (gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (save_dialog), uri))
         {
           file_save_overwrite (save_dialog, uri, uri);
         }
@@ -164,9 +154,9 @@ file_save_dialog_response (GtkWidget *save_dialog,
 
           gimp_file_dialog_set_sensitive (dialog, TRUE);
         }
-
-      g_free (uri);
     }
+
+  g_free (uri);
 }
 
 typedef struct _OverwriteData OverwriteData;
