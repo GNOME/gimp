@@ -21,6 +21,9 @@
  * 
  *
  * CHANGELOG:
+ * v0.13	15.12.2000
+ * 	Made the PDB interface actually work.   (Simon Budig <simon@gimp.org>)
+ *
  * v0.12	15.9.1997
  *	Got rid of the unportable snprintf. Also made some _tiny_ GUI fixes.
  *
@@ -170,15 +173,16 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
-    /*	{ GIMP_PDB_FLOATARRAY, "matrix", "The 5x5 convolution matrix" },
-	{ GIMP_PDB_INT32, "alpha_alg", "Enable weighting by alpha channel" },
-	{ GIMP_PDB_FLOAT, "divisor", "Divisor" },
-	{ GIMP_PDB_FLOAT, "offset", "Offset" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "argc_matrix", "The number of elements in the following array. Should be always 25." },
+    { GIMP_PDB_FLOATARRAY, "matrix", "The 5x5 convolution matrix" },
+    { GIMP_PDB_INT32, "alpha_alg", "Enable weighting by alpha channel" },
+    { GIMP_PDB_FLOAT, "divisor", "Divisor" },
+    { GIMP_PDB_FLOAT, "offset", "Offset" },
 
-	{ GIMP_PDB_INT32ARRAY, "channels", "Mask of the channels to be filtered" },
-	{ GIMP_PDB_INT32, "bmode", "Mode for treating image borders" }
-    */
+    { GIMP_PDB_INT32, "argc_channels", "The number of elements in following array. Should be always 5." },
+    { GIMP_PDB_INT32ARRAY, "channels", "Mask of the channels to be filtered" },
+    { GIMP_PDB_INT32, "bmode", "Mode for treating image borders" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -232,21 +236,31 @@ run (gchar      *name,
   my_config = default_config;
   if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
-      if (nparams != 9)
+      if (nparams != 11)
 	status = GIMP_PDB_CALLING_ERROR;
       else
 	{
-	  for (y = 0; y < 5; y++)
-	    for (x = 0; x < 5; x++)
-	      my_config.matrix[x][y]=param[3].data.d_floatarray[y*5+x];
+	  if (param[3].data.d_int32 != 25) {
+	    status = GIMP_PDB_CALLING_ERROR;
+	  } else {
+	    for (y = 0; y < 5; y++)
+	      for (x = 0; x < 5; x++)
+		my_config.matrix[x][y]=param[4].data.d_floatarray[y*5+x];
+	  }
 
-	  my_config.divisor   = param[4].data.d_float;
-	  my_config.offset    = param[5].data.d_float;
-	  my_config.alpha_alg = param[6].data.d_int32;
-	  my_config.bmode     = param[6].data.d_int32;
+	  my_config.alpha_alg = param[5].data.d_int32;
+	  my_config.divisor   = param[6].data.d_float;
+	  my_config.offset    = param[7].data.d_float;
 
-	  for (y = 0; y < 5; y++)
-	    my_config.channels[y] = param[7].data.d_int32array[y];
+
+	  if (param[8].data.d_int32 != 5) {
+	    status = GIMP_PDB_CALLING_ERROR;
+	  } else {
+	    for (y = 0; y < 5; y++)
+	      my_config.channels[y] = param[9].data.d_int32array[y];
+	  }
+
+	  my_config.bmode     = param[10].data.d_int32;
 
 	  check_config ();
 	}

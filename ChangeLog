@@ -1,3 +1,10 @@
+2000-12-15  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/convmatrix.c: Fixed the unuseable PDB-interface
+
+	* plug-ins/script-fu/scripts/erase-rows.scm: Changed the script
+	so that it actually does what it claims to do: *erase* the rows.
+
 2000-12-15  Sven Neumann  <sven@gimp.org>
 
 	* app/gimppreviewcache.[ch]: added new function gimp_preview_scale().
