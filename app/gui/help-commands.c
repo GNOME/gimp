@@ -24,6 +24,8 @@
 
 #include "core/core-types.h"
 
+#include "core/gimpobject.h"
+
 #include "plug-in/plug-in.h"
 
 #include "commands.h"
@@ -55,9 +57,11 @@ help_context_help_cmd_callback (GtkWidget *widget,
   gimp_context_help ();
 }
 
+/*****  Debug  *****/
+
 void
-mem_profile_cmd_callback (GtkWidget *widget,
-			  gpointer   data)
+debug_mem_profile_cmd_callback (GtkWidget *widget,
+                                gpointer   data)
 {
-  g_mem_profile ();
+  gimp_object_get_memsize (GIMP_OBJECT (data));
 }

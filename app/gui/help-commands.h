@@ -29,7 +29,7 @@ void   help_help_cmd_callback         (GtkWidget *widget,
 void   help_context_help_cmd_callback (GtkWidget *widget,
 				       gpointer   data);
 
-void   mem_profile_cmd_callback       (GtkWidget *widget,
+void   debug_mem_profile_cmd_callback (GtkWidget *widget,
 				       gpointer   data);
 
 

@@ -76,6 +76,9 @@
 #include "libgimp/gimpintl.h"
 
 
+/* #define ENABLE_DEBUG_ENTRY 1 */
+
+
 /*  local function prototypes  */
 
 static void    menus_filters_subdirs_to_top    (GtkMenu              *menu);
@@ -283,16 +286,16 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "gimp:about-dialog",
     "help/dialogs/about.html", NULL },
 
-  SEPARATOR ("/Help/---"),
+  BRANCH ("/_Debug"),
 
-  { { N_("/Help/Mem Profile"), NULL,
-      mem_profile_cmd_callback, 0 },
+  { { "/Debug/Mem Profile", NULL,
+      debug_mem_profile_cmd_callback, 0 },
     NULL, NULL, NULL }
 
 #ifdef ENABLE_DEBUG_ENTRY
-  , { { "/Help/Dump Items (Debug)", NULL,
-        menus_debug_cmd_callback, 0 },
-      NULL, NULL, NULL }
+  , { { "/Debug/Dump Items", NULL,
+      menus_debug_cmd_callback, 0 },
+    NULL, NULL, NULL }
 #endif
 };
 
