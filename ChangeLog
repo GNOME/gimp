@@ -1,3 +1,11 @@
+2004-03-07  Sven Neumann  <sven@gimp.org>
+
+	* tools/Makefile.am (AM_CPPFLAGS): define GIMP_APP_VERSION
+
+	* tools/gimp-remote.c: when starting a new gimp, make sure the
+	desktop-startup-id gets passed to it. Makes startup notification
+	work correctly again.
+
 2004-03-06  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/tiff.c (run): corrected check for number of PDB

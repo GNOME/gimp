@@ -28,6 +28,8 @@ gimp_remote_1_3_LDADD = \
 
 kernelgen_SOURCES = kernelgen.c
 
+AM_CPPFLAGS = -DGIMP_APP_VERSION=\"@GIMP_APP_VERSION@\"
+
 INCLUDES = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\

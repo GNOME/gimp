@@ -53,7 +53,8 @@
 #include "libgimpbase/gimpversion.h"
 
 
-#define GIMP_BINARY "gimp-1.3"
+#define GIMP_BINARY "gimp-" GIMP_APP_VERSION
+
 
 static gboolean  existing = FALSE;
 static gboolean  query    = FALSE;
@@ -177,6 +178,7 @@ usage (const gchar *name)
 static void
 start_new_gimp (GdkScreen   *screen,
                 const gchar *argv0,
+                const gchar *startup_id,
                 GString     *file_list)
 {
   gchar        *display_name;
@@ -184,6 +186,9 @@ start_new_gimp (GdkScreen   *screen,
   gchar        *gimp, *path, *name, *pwd;
   const gchar  *spath;
   gint          i;
+
+  if (startup_id)
+    setenv ("DESKTOP_STARTUP_ID", startup_id, TRUE);
 
   if (file_list->len > 0)
     file_list = g_string_prepend (file_list, "\n");
@@ -302,12 +307,23 @@ gint
 main (gint    argc,
       gchar **argv)
 {
-  GdkDisplay *display;
-  GdkScreen  *screen;
-  GdkWindow  *gimp_window;
-  GString    *file_list = g_string_new (NULL);
-  gchar      *cwd       = g_get_current_dir ();
-  gint        i;
+  GdkDisplay  *display;
+  GdkScreen   *screen;
+  GdkWindow   *gimp_window;
+  const gchar *startup_id;
+  gchar       *desktop_startup_id = NULL;
+  GString     *file_list          = g_string_new (NULL);
+  gchar       *cwd                = g_get_current_dir ();
+  gint         i;
+
+  /* we save the startup_id before calling gtk_init()
+     because GTK+ will unset it  */
+
+  startup_id = g_getenv ("DESKTOP_STARTUP_ID");
+  if (startup_id && *startup_id)
+    desktop_startup_id = g_strdup (startup_id);
+
+  g_print ("%s\n", desktop_startup_id);
 
   gtk_init (&argc, &argv);
 
@@ -371,7 +387,7 @@ main (gint    argc,
   /*  if called without any filenames, always start a new GIMP  */
   if (file_list->len == 0 && !query && !existing)
     {
-      start_new_gimp (screen, argv[0], file_list);
+      start_new_gimp (screen, argv[0], desktop_startup_id, file_list);
     }
 
   gimp_window = gimp_remote_find_window (display, screen);
@@ -447,10 +463,13 @@ main (gint    argc,
       if (existing)
         exit (EXIT_FAILURE);
 
-      start_new_gimp (screen, argv[0], file_list);
+      start_new_gimp (screen, argv[0], desktop_startup_id, file_list);
     }
 
   g_string_free (file_list, TRUE);
+  g_free (desktop_startup_id);
+
+  gdk_notify_startup_complete ();
 
   return EXIT_SUCCESS;
 }
