@@ -135,8 +135,10 @@ gimp_font_list_restore (GimpFontList *list)
 {
   PangoContext     *pango_context;
   PangoFontFamily **families;
+  PangoFontFace   **faces;
   gint              n_families;
-  gint              i;
+  gint              n_faces;
+  gint              i, j;
 
   g_return_if_fail (GIMP_IS_FONT_LIST (list));
 
@@ -146,17 +148,27 @@ gimp_font_list_restore (GimpFontList *list)
 
   for (i = 0; i < n_families; i++)
     {
-      GimpFont    *font;
-      const gchar *name;
+      pango_font_family_list_faces (families[i], &faces, &n_faces);
+      
+      for (j = 0; j < n_faces; j++)
+        {
+          PangoFontDescription *desc;
+          GimpFont             *font;
+          gchar                *name;
 
-      name = pango_font_family_get_name (families[i]);
+	  desc = pango_font_face_describe (faces[j]);
+          name = pango_font_description_to_string (desc);
+          pango_font_description_free (desc);
 
-      font = g_object_new (GIMP_TYPE_FONT,
-                           "name",          name,
-                           "pango-context", pango_context,
-                           NULL);
-      gimp_container_add (GIMP_CONTAINER (list), GIMP_OBJECT (font));
-      g_object_unref (font);
+          font = g_object_new (GIMP_TYPE_FONT,
+                               "name",          name,
+                               "pango-context", pango_context,
+                               NULL);
+          g_free (name);
+
+          gimp_container_add (GIMP_CONTAINER (list), GIMP_OBJECT (font));
+          g_object_unref (font);
+        }
     }
 
   g_free (families);

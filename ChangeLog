@@ -1,6 +1,6 @@
 2003-03-26  Sven Neumann  <sven@gimp.org>
 
-	* app/text/gimpfontlist.c: first draft of gimp_font_list_restore().
+	* app/text/gimpfontlist.c: implemented gimp_font_list_restore().
 
 2003-03-26  Sven Neumann  <sven@gimp.org>
 
