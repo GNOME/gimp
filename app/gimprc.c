@@ -352,11 +352,8 @@ parse_buffers_init ()
   parse_info.tokenbuf_size = 2048;
 }
 
-void
-parse_gimprc ()
+static GList *parse_add_directory_tokens (void)
 {
-  char libfilename[MAXPATHLEN];
-  char filename[MAXPATHLEN];
   char *gimp_dir;
 
   gimp_dir = gimp_directory ();
@@ -364,6 +361,17 @@ parse_gimprc ()
 #ifdef __EMX__
   add_x11root_token(getenv("X11ROOT"));
 #endif
+  /* the real output is unknown_tokens list !  */
+  return (unknown_tokens); 
+}
+
+void
+parse_gimprc ()
+{
+  char libfilename[MAXPATHLEN];
+  char filename[MAXPATHLEN];
+
+  parse_add_directory_tokens ();
 
   strcpy (libfilename, gimp_system_rc_file ());
   if (alternate_system_gimprc != NULL) 

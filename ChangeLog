@@ -1,3 +1,16 @@
+Mon Sep 27 17:13:48 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* app/unittest/gimpparse.c (global_parse_init): 
+	Use parse_add_directory_tokens().
+
+	* app/unittest/parse_gimprc.c: comment out 
+	parse_add_directory_tokens(). Test  parse_gimprc() with argc != 1.
+
+	* app/gimprc.c (parse_add_directory_tokens): Add this init function
+	to add directoy tokens. Code taken from parse_gimprc ().
+	No logic changed, but parse_gimprc () is cleaner.
+ 	Changes tested by unittest program parse_gimprc.
+
 1999-09-26  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
 
 	* plug-ins/common/mblur.c (mblur): fixed a stupid typo

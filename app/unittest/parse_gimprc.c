@@ -33,7 +33,7 @@ parse_show_tokens (GList *list)
       list = list->next;
     }
 }
-
+#if 0
 static GList *parse_add_directory_tokens (void)
 {
   char *gimp_dir;
@@ -45,14 +45,18 @@ static GList *parse_add_directory_tokens (void)
 #endif
   return (unknown_tokens);
 }
+#endif
 
-static void global_parse_init()
+static void global_parse_init(int showit)
 {
   GList *list;
   list = parse_add_directory_tokens();
-  printf("----- Directory Tokens:\n");
-  parse_show_tokens (list);
   
+  if (showit)
+  {
+      printf("----- Directory Tokens:\n");
+      parse_show_tokens (list);
+  }
   parse_buffers_init();
 /*  next_token = -1;*/
 }
@@ -92,7 +96,7 @@ static void parse_get_alt_personal_gimprc(char *alternate, char *filename)
 
 
 gboolean
-parse_gimprc_absolute_file (char *filename)
+parse_absolute_gimprc_file (char *filename)
 {
   int status;
 
@@ -136,27 +140,35 @@ main (int argc, char **argv)
     char libfilename[MAXPATHLEN];
     char filename[MAXPATHLEN];
     gboolean status;
+    int showit = 1;
     
-    global_parse_init();
+    if (argc > 1)
+	showit = 0;
 
-    parse_get_system_file (alternate_system_gimprc, libfilename);
-    parse_get_alt_personal_gimprc(alternate_gimprc, filename);
-    printf("\n----- Parse files: \n");
-    printf("libfilename= %s\n", libfilename);
-    printf("filename= %s\n\n", filename);
-#if 1
-    status = parse_gimprc_absolute_file (libfilename);
-    printf("----- Parse Result:%d,filename=%s\n", status,libfilename);
-    if (status)
-	parse_show_tokens (unknown_tokens);
+    global_parse_init(showit);
 
-    status = parse_gimprc_absolute_file (filename);
-    printf("----- Parse Result:%d,filename=%s\n", status,filename);
-    if (status)
+    if (argc == 1)
+    {
+	parse_get_system_file (alternate_system_gimprc, libfilename);
+	parse_get_alt_personal_gimprc(alternate_gimprc, filename);
+	printf("\n----- Parse files: \n");
+	printf("libfilename= %s\n", libfilename);
+	printf("filename= %s\n\n", filename);
+	
+	status = parse_absolute_gimprc_file (libfilename);
+	printf("----- Parse Result:%d,filename=%s\n", status,libfilename);
+	if (status)
+	    parse_show_tokens (unknown_tokens);
+	
+	status = parse_absolute_gimprc_file (filename);
+	printf("----- Parse Result:%d,filename=%s\n", status,filename);
+	if (status)
+	    parse_show_tokens (unknown_tokens);
+    }
+    else
+    {
+	parse_gimprc ();
 	parse_show_tokens (unknown_tokens);
-#else    
-    parse_gimprc ();
-#endif    
-    parse_show_tokens (unknown_tokens);
+    }
 }
 

@@ -305,12 +305,19 @@ printf("token=%d\n",token);
   return parse_unknown (token_sym);
 }
 
+static void global_parse_init()
+{
+  parse_add_directory_tokens();
+  
+  parse_buffers_init();
+/*  next_token = -1;*/
+}
 void
 parse_gimprc_file2 (char *filename)
 {
   int status;
   char rfilename[MAXPATHLEN];
-#if 1
+#if 0
   char *gimp_dir;
 
   gimp_dir = gimp_directory ();
@@ -322,6 +329,7 @@ parse_gimprc_file2 (char *filename)
   parse_buffers_init();
 /*  next_token = -1;*/
 #endif
+  global_parse_init();
   printf("parse_gimprc_file2 %s\n",filename);
   if (!g_path_is_absolute (filename))
     {
