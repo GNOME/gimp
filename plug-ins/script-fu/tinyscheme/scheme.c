@@ -866,6 +866,7 @@ static char *store_string(scheme *sc, int char_cnt,
      char utf8[7];
      gchar *q;
      gchar *q2;
+     gchar *q3;
      int  i;
 
      if(str!=0) {
@@ -886,8 +887,10 @@ static char *store_string(scheme *sc, int char_cnt,
        return sc->strbuff;
      }
      if(str!=0) {
-       memcpy(q, str, len);
+       q3 = g_utf8_normalize(str, len, G_NORMALIZE_DEFAULT_COMPOSE);
+       memcpy(q, q3, len);
        q[len]=0;
+       g_free (q3);
      } else {
        q2 = q;
        for (i = 0; i < char_cnt; ++i)
