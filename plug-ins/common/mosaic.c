@@ -86,6 +86,7 @@ typedef struct
   gint     tile_type;
   gint     tile_surface;
   gint     grout_color;
+  gboolean update_preview;
 } MosaicVals;
 
 
@@ -308,7 +309,8 @@ static MosaicVals mvals =
   1,           /* color_averaging  */
   HEXAGONS,    /* tile_type */
   SMOOTH,      /* tile_surface */
-  BW           /* grout_color */
+  BW,          /* grout_color */
+  FALSE        /* preview */
 };
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -570,6 +572,9 @@ mosaic_dialog (GimpDrawable *drawable)
   GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *table;
+  GtkWidget *square;
+  GtkWidget *hexagon;
+  GtkWidget *octogon;
   GtkObject *scale_data;
   gboolean   run;
 
@@ -590,7 +595,7 @@ mosaic_dialog (GimpDrawable *drawable)
   gtk_widget_show (main_vbox);
 
   /* A preview */
-  preview = gimp_drawable_preview_new (drawable, NULL);
+  preview = gimp_drawable_preview_new (drawable, &mvals.update_preview);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
@@ -621,6 +626,9 @@ mosaic_dialog (GimpDrawable *drawable)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mvals.antialiasing);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   toggle = gtk_check_button_new_with_mnemonic ( _("Co_lor averaging"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
@@ -631,6 +639,9 @@ mosaic_dialog (GimpDrawable *drawable)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mvals.color_averaging);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   toggle = gtk_check_button_new_with_mnemonic ( _("Allo_w tile splitting"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
@@ -641,6 +652,9 @@ mosaic_dialog (GimpDrawable *drawable)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mvals.tile_allow_split);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   toggle = gtk_check_button_new_with_mnemonic ( _("_Pitted surfaces"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
@@ -651,6 +665,9 @@ mosaic_dialog (GimpDrawable *drawable)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mvals.tile_surface);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   toggle = gtk_check_button_new_with_mnemonic ( _("_FG/BG lighting"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
@@ -661,6 +678,9 @@ mosaic_dialog (GimpDrawable *drawable)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mvals.grout_color);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (toggle_vbox);
   gtk_widget_show (frame);
@@ -670,13 +690,23 @@ mosaic_dialog (GimpDrawable *drawable)
                                     G_CALLBACK (gimp_radio_button_update),
                                     &mvals.tile_type, mvals.tile_type,
 
-                                    _("_Squares"),            SQUARES,  NULL,
-                                    _("He_xagons"),           HEXAGONS, NULL,
-                                    _("Oc_tagons & squares"), OCTAGONS, NULL,
+                                    _("_Squares"),            SQUARES,  &square,
+                                    _("He_xagons"),           HEXAGONS, &hexagon,
+                                    _("Oc_tagons & squares"), OCTAGONS, &octogon,
 
                                     NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  g_signal_connect_swapped (square, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (hexagon, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (octogon, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (vbox);
 
@@ -697,6 +727,9 @@ mosaic_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mvals.tile_size);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                                      _("Tile _height:"), SCALE_WIDTH, 5,
@@ -706,6 +739,9 @@ mosaic_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mvals.tile_height);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
                                      _("Til_e spacing:"), SCALE_WIDTH, 5,
@@ -715,6 +751,9 @@ mosaic_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mvals.tile_spacing);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
                                      _("Tile _neatness:"), SCALE_WIDTH, 5,
@@ -725,6 +764,9 @@ mosaic_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mvals.tile_neatness);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
                                      _("Light _direction:"), SCALE_WIDTH, 5,
@@ -734,6 +776,9 @@ mosaic_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mvals.light_dir);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
                                      _("Color _variation:"), SCALE_WIDTH, 5,
@@ -744,6 +789,9 @@ mosaic_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mvals.color_variation);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
@@ -1244,8 +1292,8 @@ grid_create_squares (gint x1,
       {
         pt = grid + (i * (cols + 2) + j);
 
-        pt->x = x1 + j * size + size/2;
-        pt->y = y1 + i * size + size/2;
+        pt->x = x1 + j * size + size / 2;
+        pt->y = y1 + i * size + size / 2;
       }
 
   grid_rows = rows;
@@ -2394,7 +2442,7 @@ fill_poly_image (Polygon      *poly,
                               pixel += vary;
                               pixel = CLAMP (pixel, 0, 255);
 
-                              buf[b] = ((pixel * val) + (back[b] * (255 - val))) / 255;
+                              buf[b] = ((back[b] << 8) + (pixel - back[b]) * val) >> 8;
                             }
 
                           gimp_pixel_rgn_set_pixel (&dest_rgn, buf, x, y);
