@@ -254,11 +254,6 @@ main (int    argc,
   /* set the application name */
   g_set_application_name (_("The GIMP"));
 
-  /* do some sanity checks */
-  abort_message = sanity_check ();
-  if (abort_message)
-    app_abort (no_interface, abort_message);
-
   /* Check argv[] for "--no-interface" before trying to initialize gtk+. */
   for (i = 1; i < argc; i++)
     {
@@ -289,6 +284,11 @@ main (int    argc,
 
       app_exit (EXIT_FAILURE);
     }
+
+  /* do some sanity checks */
+  abort_message = sanity_check ();
+  if (abort_message)
+    app_abort (no_interface, abort_message);
 
   /* parse the command-line options */
   context = g_option_context_new ("[FILE|URI...]");

@@ -1,3 +1,8 @@
+2005-02-06  Sven Neumann  <sven@gimp.org>
+
+	* app/main.c: moved call to sanity_check() after the
+	initialization of gtk+ so that the error message can be displayed.
+
 2005-02-05  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcontrollers.c (gimp_controllers_init): removed
