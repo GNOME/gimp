@@ -47,7 +47,7 @@ locales_parse (const gchar *help_locales)
     {
       gchar *new = g_strndup (s, p - s);
 
-      locales = g_list_prepend (locales, new);
+      locales = g_list_append (locales, new);
       s = p + 1;
     }
 

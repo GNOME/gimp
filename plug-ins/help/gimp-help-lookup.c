@@ -26,6 +26,8 @@
 
 #include <glib.h>
 
+#include "libgimpbase/gimpversion.h"
+
 #include "domain.h"
 #include "help.h"
 #include "locales.h"
@@ -35,15 +37,67 @@ static gchar * lookup (const gchar *help_domain,
                        const gchar *help_locales,
                        const gchar *help_id);
 
+static void
+usage (const gchar *name)
+{
+  g_print ("gimp-help-lookup version %s\n\n", GIMP_VERSION);
+  g_print ("Looks up a help-id in the GIMP user manual.\n"
+	   "Usage: %s [options] [help-id]\n\n", name);
+  g_print ("Valid options are:\n"
+	   "  -h, --help                  Output this help.\n"
+	   "  -v, --version               Output version info.\n"
+           "  -l, --lang <language-code>  Specifies help language.\n"
+           "\n");
+}
+
 
 gint
 main (gint   argc,
       gchar *argv[])
 {
   const gchar *help_root    = g_getenv (GIMP_HELP_ENV_URI);
-  const gchar *help_locales = NULL;
-  const gchar *help_id      = argc > 1 ? argv[1] : GIMP_HELP_DEFAULT_ID;
+  const gchar *help_locales = GIMP_HELP_DEFAULT_LOCALE;
+  const gchar *help_id      = GIMP_HELP_DEFAULT_ID;
   gchar       *uri;
+  gint         i;
+
+  for (i = 1; i < argc; i++)
+    {
+      if (! strlen (argv[i]))
+        continue;
+
+      if (*argv[i] == '-')
+        {
+          const gchar *opt = argv[i] + 1;
+
+          if (*opt == '-')
+            opt++;
+
+          switch (*opt)
+            {
+            case 'l':
+              if (i + i < argc)
+                {
+                  help_locales = argv[++i];
+                  break;
+                }
+              /* else fallthrough */
+
+            case 'v':
+              g_print ("gimp-help-lookup version %s\n", GIMP_VERSION);
+              exit (EXIT_SUCCESS);
+
+            case 'h':
+            default:
+              usage (argv[0]);
+              exit (EXIT_SUCCESS);
+            }
+        }
+      else
+        {
+          help_id = argv[i];
+        }
+    }
 
   if (help_root)
     uri = g_strdup (help_root);
@@ -74,8 +128,7 @@ lookup (const gchar *help_domain,
 
   if (domain)
     {
-      GList *locales  = locales_parse (help_locales ?
-                                       help_locales : GIMP_HELP_DEFAULT_LOCALE);
+      GList *locales  = locales_parse (help_locales);
       gchar *full_uri = domain_map (domain, locales, help_id);
 
       g_list_foreach (locales, (GFunc) g_free, NULL);

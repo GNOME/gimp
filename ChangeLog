@@ -1,5 +1,13 @@
 2004-08-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help/locales.c (locales_parse): don't mess up the order
+	of languages.
+
+	* plug-ins/help/gimp-help-lookup.c: parse command-line options,
+	added --help output.
+
+2004-08-14  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help/help.[ch]: moved some defines to the header file.
 
 	* plug-ins/help/domain.c: trivial change to remove the libgimpbase
