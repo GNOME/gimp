@@ -1,3 +1,7 @@
+2001-05-20  Michael Natterer  <mitch@gimp.org>
+
+	* hu.po: fixed invalid charset spec.
+
 2001-05-14  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added some missing files.
