@@ -1,3 +1,7 @@
+2004-01-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpchannel.c: converted tabs to spaces, cosmetics.
+
 2004-01-12  Sven Neumann  <sven@gimp.org>
 
 	* app/main.c (gimp_show_help): changed "compat" to "compatibility".
