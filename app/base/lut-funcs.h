@@ -22,6 +22,15 @@
 #include "gimplutF.h"
 #include "gimphistogramF.h"
 
+typedef enum /*< chop=_LUT >*/
+{
+  VALUE_LUT,    /*< nick=VALUE/GRAY >*/
+  RED_LUT,
+  GREEN_LUT,
+  BLUE_LUT,
+  GRAY_LUT = 0  /*< skip >*/
+} ChannelLutType;
+
 /* brightness contrast */
 void     brightness_contrast_lut_setup (GimpLut *lut,
 					double brightness, double contrast,

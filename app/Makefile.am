@@ -78,7 +78,6 @@ gimp_SOURCES = \
 	color_balance.c		\
 	color_balance.h		\
 	color_cmds.c		\
-	color_cmds.h		\
 	color_notebook.c	\
 	color_notebook.h	\
 	color_panel.c		\
@@ -199,6 +198,7 @@ gimp_SOURCES = \
 	gimphistogram.c		\
 	gimphistogram.h		\
 	gimphistogramP.h	\
+	gimphistogramF.h	\
 	gimpunit.c		\
 	global_edit.c		\
 	global_edit.h		\

@@ -1,35 +1,50 @@
+Sat Apr 10 14:43:24 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/text_tool_cmds.c: doh, XLFD stuff is in decipoints
+
+	* app/color_cmds.h: removed
+
+	* app/color_cmds.c: pdbgened file now
+
+	* app/lut_funcs.h: export ChannelLutType enum
+
+	* app/internal_procs.c: register pdbgened color procs
+
+	* app/menus.c: reverted keyboard underlines since they need more
+	discussion
+
 Sat Apr 10 15:48:46 BST 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/ink.c: Velocity-sensitivity added to ink tool.
 
 Fri Apr  9 21:45:10 PDT 1999 Manish Singh <yosh@gimp.org>
 
-	* text_tool_cmds.c: new file (from pdbgen)
+	* app/text_tool_cmds.c: new file (from pdbgen)
 
-	* Makefile.am: add new file, use AM_CPPFLAGS instead of CPPFLAGS
+	* app/Makefile.am: add new file, use AM_CPPFLAGS instead of CPPFLAGS
 
-	* internal_procs.c: register pdbgened text_tool procs
+	* app/internal_procs.c: register pdbgened text_tool procs
 
-	* text_tool.c: remove PDB stuff, export text_render and
+	* app/text_tool.c: remove PDB stuff, export text_render and
 	text_get_extents and SizeType and SUPERSAMPLE symbols
 
-	* text_tool.c: remove PDB stuff
+	* app/text_tool.c: remove PDB stuff
 
-	* blend.[ch]
-	* bucket_fill.[ch]
-	* clone.[ch]
-	* convolve.[ch]: export some enums
+	* app/blend.[ch]
+	* app/bucket_fill.[ch]
+	* app/clone.[ch]
+	* app/convolve.[ch]: export some enums
 
-	* channel.h
-	* paint_core.h: #define->enum
+	* app/channel.h
+	* app/paint_core.h: #define->enum
 
-	* channel.c
-	* gimpparasite.c
-	* parasitelist.c
-	* pixel_processor.c: warning cleanup
+	* app/channel.c
+	* app/gimpparasite.c
+	* app/parasitelist.c
+	* app/pixel_processor.c: warning cleanup
 
-	* convert_cmds.c
-	* paths_cmds.c: slight pdbgen changes
+	* app/convert_cmds.c
+	* app/paths_cmds.c: slight pdbgen changes
 
 1999-04-09  Jay Cox  <jaycox@earthlink.net>
 

@@ -30,7 +30,6 @@
 #include "channel_ops.h"
 #include "clone.h"
 #include "color_balance.h"
-#include "color_cmds.h"
 #include "color_picker.h"
 #include "convolve.h"
 #include "crop.h"
@@ -76,6 +75,7 @@ void register_paths_procs        (void);
 void register_palette_procs      (void);
 void register_unit_procs         (void);
 void register_text_tool_procs    (void);
+void register_color_procs        (void);
 
 void
 internal_procs_init ()
@@ -368,15 +368,15 @@ internal_procs_init ()
   procedural_db_register (&equalize_proc); pcount++;
   procedural_db_register (&invert_proc); pcount++;
 
-  procedural_db_register (&brightness_contrast_proc); pcount++;
   procedural_db_register (&curves_spline_proc); pcount++;
   procedural_db_register (&curves_explicit_proc); pcount++;
   procedural_db_register (&color_balance_proc); pcount++;
   procedural_db_register (&histogram_proc); pcount++;
   procedural_db_register (&hue_saturation_proc); pcount++;
-  procedural_db_register (&levels_proc); pcount++;
-  procedural_db_register (&posterize_proc); pcount++;
   procedural_db_register (&threshold_proc); pcount++;
+
+  register_color_procs ();
+  pcount += 3;
 
   register_convert_procs ();
   pcount += 4;
