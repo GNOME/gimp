@@ -1,3 +1,7 @@
+2001-10-18  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: module_db.c has moved.
+
 2001-10-09  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.in.in: forgot to add this file which is needed now that

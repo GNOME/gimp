@@ -31,8 +31,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 ##
 	image_map.c		\
 	image_map.h		\
-	module_db.c		\
-	module_db.h		\
 	user_install.c		\
 	user_install.h		\
 ##
@@ -130,10 +128,10 @@ gimp_LDADD = @STRIP_BEGIN@ \
 	tools/libapptools.a						\
 	display/libappdisplay.a						\
 	widgets/libappwidgets.a						\
-	xcf/libappxcf.a							\
 	plug-in/libappplug-in.a						\
 	pdb/libapppdb.a							\
 	core/libappcore.a						\
+	xcf/libappxcf.a							\
 	paint-funcs/libapppaint-funcs.a					\
 	base/libappbase.a						\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\

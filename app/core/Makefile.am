@@ -89,6 +89,10 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimplayermask.h			\
 	gimplist.c			\
 	gimplist.h			\
+	gimpmoduleinfo.c		\
+	gimpmoduleinfo.h		\
+	gimpmodules.c			\
+	gimpmodules.h			\
 	gimpobject.c			\
 	gimpobject.h			\
 	gimppattern.c			\

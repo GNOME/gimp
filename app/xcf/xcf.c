@@ -158,6 +158,8 @@ static gint n_xcf_loaders = sizeof (xcf_loaders) / sizeof (xcf_loaders[0]);
 void
 xcf_init (Gimp *gimp)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   /* So this is sort of a hack, but its better than it was before.  To do this
    * right there would be a file load-save handler type and the whole interface
    * would change but there isn't, and currently the plug-in structure contains
@@ -178,8 +180,9 @@ xcf_init (Gimp *gimp)
 }
 
 void
-xcf_exit (void)
+xcf_exit (Gimp *gimp)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 }
 
 static Argument*

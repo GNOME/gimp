@@ -71,6 +71,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	layers-commands.h		\
 	menus.c				\
 	menus.h				\
+	module-browser.c		\
+	module-browser.h		\
 	offset-dialog.c			\
 	offset-dialog.h			\
 	palette-editor.c		\

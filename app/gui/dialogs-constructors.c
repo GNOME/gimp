@@ -64,6 +64,7 @@
 #include "gradients-commands.h"
 #include "layers-commands.h"
 #include "menus.h"
+#include "module-browser.h"
 #include "palette-editor.h"
 #include "palette-select.h"
 #include "palettes-commands.h"
@@ -79,7 +80,6 @@
 #include "devices.h"
 #include "docindex.h"
 #include "gimprc.h"
-#include "module_db.h"
 #include "undo_history.h"
 
 #ifdef DISPLAY_FILTERS
@@ -230,7 +230,7 @@ GtkWidget *
 dialogs_module_browser_get (GimpDialogFactory *factory,
 			    GimpContext       *context)
 {
-  return module_db_browser_new ();
+  return module_browser_new ();
 }
 
 GtkWidget *

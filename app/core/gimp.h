@@ -44,6 +44,8 @@ struct _Gimp
 
   GimpCoreConfig        *config;
 
+  gboolean               be_verbose;
+
   GimpCreateDisplayFunc  create_display_func;
   GimpSetBusyFunc        gui_set_busy_func;
   GimpUnsetBusyFunc      gui_unset_busy_func;
@@ -55,6 +57,9 @@ struct _Gimp
   gint                   n_user_units;
 
   GimpParasiteList      *parasites;
+
+  GimpContainer         *modules;
+  gboolean               write_modulerc;
 
   GimpContainer         *images;
   gint                   next_image_ID;
@@ -110,7 +115,7 @@ struct _GimpClass
 
 GType         gimp_get_type             (void);
 
-Gimp        * gimp_new                  (void);
+Gimp        * gimp_new                  (gboolean           be_verbose);
 
 void          gimp_initialize           (Gimp              *gimp);
 

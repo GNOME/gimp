@@ -31,6 +31,8 @@
 
 #include "pdb/procedural_db.h"
 
+#include "xcf/xcf.h"
+
 #include "gimp.h"
 #include "gimpbrush.h"
 #include "gimpbrushgenerated.h"
@@ -45,6 +47,7 @@
 #include "gimpimage-new.h"
 #include "gimpimagefile.h"
 #include "gimplist.h"
+#include "gimpmodules.h"
 #include "gimppalette.h"
 #include "gimppattern.h"
 #include "gimpparasite.h"
@@ -115,6 +118,8 @@ gimp_init (Gimp *gimp)
 {
   gimp_core_config_init (gimp);
 
+  gimp->be_verbose          = FALSE;
+
   gimp->create_display_func = NULL;
   gimp->gui_set_busy_func   = NULL;
   gimp->gui_unset_busy_func = NULL;
@@ -125,6 +130,8 @@ gimp_init (Gimp *gimp)
   gimp_units_init (gimp);
 
   gimp_parasites_init (gimp);
+
+  gimp_modules_init (gimp);
 
   gimp->images              = gimp_list_new (GIMP_TYPE_IMAGE,
 					     GIMP_CONTAINER_POLICY_WEAK);
@@ -144,6 +151,8 @@ gimp_init (Gimp *gimp)
   gimp->palette_factory     = NULL;
 
   procedural_db_init (gimp);
+
+  xcf_init (gimp);
 
   gimp->tool_info_list      = gimp_list_new (GIMP_TYPE_TOOL_INFO,
 					     GIMP_CONTAINER_POLICY_STRONG);
@@ -220,6 +229,8 @@ gimp_finalize (GObject *object)
       gimp->tool_info_list = NULL;
     }
 
+  xcf_exit (gimp);
+
   if (gimp->procedural_ht)
     procedural_db_free (gimp);
 
@@ -277,6 +288,9 @@ gimp_finalize (GObject *object)
       gimp->images = NULL;
     }
 
+  if (gimp->modules)
+    gimp_modules_exit (gimp);
+
   if (gimp->parasites)
     gimp_parasites_exit (gimp);
 
@@ -287,11 +301,13 @@ gimp_finalize (GObject *object)
 }
 
 Gimp *
-gimp_new (void)
+gimp_new (gboolean be_verbose)
 {
   Gimp *gimp;
 
   gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
+
+  gimp->be_verbose = be_verbose ? TRUE : FALSE;
 
   return gimp;
 }
@@ -412,6 +428,8 @@ gimp_restore (Gimp     *gimp,
   gimp_documents_load (gimp);
 
   app_init_update_status (NULL, NULL, 1.00);
+
+  gimp_modules_load (gimp);
 }
 
 void
@@ -419,6 +437,7 @@ gimp_shutdown (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
+  gimp_modules_unload (gimp);
   gimp_data_factory_data_save (gimp->brush_factory);
   gimp_data_factory_data_save (gimp->pattern_factory);
   gimp_data_factory_data_save (gimp->gradient_factory);

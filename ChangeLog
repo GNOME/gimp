@@ -1,5 +1,27 @@
 2001-10-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/module_db.[ch]: removed.
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpmoduleinfo.[ch]
+	* app/core/gimpmodules.[ch]: new files containing the module info
+	object and the module list handling code.
+
+	* app/gui/Makefile.am
+	* app/gui/module-browser.[ch]: new files containing the GUI.
+
+	* app/xcf/xcf.[ch]: pass a "Gimp" pointer to xcf_exit().
+
+	* app/core/gimp.[ch]: handle modules and xcf init/exit here too.
+
+	* app/app_procs.c: don't touch the modules and xcf stuff any more.
+
+	* app/gui/dialogs-constructors.c: changed accordingly.
+
+2001-10-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcontainer.[ch]: added properties for "children_type"
 	and "policy". Ref/unref the "children_type" class so we can do
 	signal lookups and use other introspection features without an

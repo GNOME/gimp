@@ -43,8 +43,6 @@
 
 #include "pdb/internal_procs.h"
 
-#include "xcf/xcf.h"
-
 #include "display/gimpdisplay-foreach.h"
 
 #include "tools/tool_manager.h"
@@ -60,7 +58,6 @@
 #include "docindex.h"
 #include "errors.h"
 #include "gimprc.h"
-#include "module_db.h"
 #include "plug_in.h"
 #include "undo.h"
 #include "user_install.h"
@@ -99,7 +96,7 @@ app_init (gint    gimp_argc,
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
    */
-  the_gimp = gimp_new ();
+  the_gimp = gimp_new (be_verbose);
 
   /*  Check if the user's gimp_directory exists
    */
@@ -162,10 +159,6 @@ app_init (gint    gimp_argc,
   app_init_update_status (_("Procedural Database"), NULL, -1);
   internal_procs_init (the_gimp);
 
-  /*  Initialize the xcf file format routines
-   */
-  xcf_init (the_gimp);
-
   /*  Now we are ready to draw the splash-screen-image
    *  to the start-up window
    */
@@ -179,7 +172,6 @@ app_init (gint    gimp_argc,
   gimp_restore (the_gimp, no_data);
 
   plug_in_init ();           /*  initialize the plug in structures  */
-  module_db_init ();         /*  load any modules we need           */
 
   if (! no_interface)
     {
@@ -241,7 +233,6 @@ app_exit_finish (void)
       gui_shutdown (the_gimp);
     }
 
-  module_db_free ();
   plug_in_kill ();
 
   tool_manager_exit (the_gimp);
@@ -250,8 +241,6 @@ app_exit_finish (void)
     {
       gui_exit (the_gimp);
     }
-
-  xcf_exit ();
 
   gimp_shutdown (the_gimp);
 

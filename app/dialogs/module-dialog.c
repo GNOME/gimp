@@ -1,7 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * module_db.c (C) 1999 Austin Donnelly <austin@gimp.org>
+ * module-browser.c
+ * (C) 1999 Austin Donnelly <austin@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,421 +21,78 @@
 
 #include "config.h"
 
-#include <glib.h>
-
-#include <stdio.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-#include <time.h>
-
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "gui-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcoreconfig.h"
-#include "core/gimpdatafiles.h"
-#include "core/gimplist.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpmoduleinfo.h"
+#include "core/gimpmodules.h"
+
+#include "module-browser.h"
 
 #include "app_procs.h"
-#include "appenv.h"
-#include "module_db.h"
-#include "gimprc.h"
-
-#include "libgimp/gimpmodule.h"
 
 #include "libgimp/gimpintl.h"
-
-
-/* debug control: */
-
-/*#define DUMP_DB*/
-/*#define DEBUG*/
-
-#ifdef DEBUG
-#undef DUMP_DB
-#define DUMP_DB
-#define TRC(x) printf x
-#else
-#define TRC(x)
-#endif
-
-
-typedef enum
-{
-  ST_MODULE_ERROR,         /* missing module_load function or other error    */
-  ST_LOADED_OK,            /* happy and running (normal state of affairs)    */
-  ST_LOAD_FAILED,          /* module_load returned GIMP_MODULE_UNLOAD        */
-  ST_UNLOAD_REQUESTED,     /* sent unload request, waiting for callback      */
-  ST_UNLOADED_OK           /* callback arrived, module not in memory anymore */
-} module_state;
-
-enum
-{
-  MODIFIED,
-  LAST_SIGNAL
-};
-
-
-#define GIMP_TYPE_MODULE_INFO            (gimp_module_info_get_type ())
-#define GIMP_MODULE_INFO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MODULE_INFO, GimpModuleInfoObj))
-#define GIMP_MODULE_INFO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MODULE_INFO, GimpModuleInfoObjClass))
-#define GIMP_IS_MODULE_INFO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MODULE_INFO))
-#define GIMP_IS_MODULE_INFO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MODULE_INFO))
-#define GIMP_MODULE_INFO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MODULE_INFO, GimpModuleInfoObjClass))
-
-
-typedef struct _GimpModuleInfoObj      GimpModuleInfoObj;
-typedef struct _GimpModuleInfoObjClass GimpModuleInfoObjClass;
-
-struct _GimpModuleInfoObj
-{
-  GimpObject      parent_instance;
-
-  gchar          *fullpath;     /* path to the module                        */
-  module_state    state;        /* what's happened to the module             */
-  gboolean        ondisk;       /* TRUE if file still exists                 */
-  gboolean        load_inhibit; /* user requests not to load at boot time    */
-  gint            refs;         /* how many time we're running in the module */
-
-  /* stuff from now on may be NULL depending on the state the module is in   */
-  GimpModuleInfo *info;         /* returned values from module_init          */
-  GModule        *module;       /* handle on the module                      */
-  gchar          *last_module_error;
-
-  GimpModuleInitFunc   init;
-  GimpModuleUnloadFunc unload;
-};
-
-struct _GimpModuleInfoObjClass
-{
-  GimpObjectClass  parent_class;
-
-  void (* modified) (GimpModuleInfoObj *module_info);
-};
-
-
-static void   gimp_module_info_class_init (GimpModuleInfoObjClass *klass);
-static void   gimp_module_info_init       (GimpModuleInfoObj      *mod);
-
-static void   gimp_module_info_finalize   (GObject                *object);
-
-
-static guint module_info_signals[LAST_SIGNAL];
-
-static GimpObjectClass *parent_class = NULL;
-
-
-static GType
-gimp_module_info_get_type (void)
-{
-  static GType module_info_type = 0;
-
-  if (! module_info_type)
-    {
-      static const GTypeInfo module_info_info =
-      {
-        sizeof (GimpModuleInfoObjClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_module_info_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data */
-        sizeof (GimpModuleInfoObj),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_module_info_init,
-      };
-
-      module_info_type = g_type_register_static (GIMP_TYPE_OBJECT,
-						 "GimpModuleInfoObj",
-						 &module_info_info, 0);
-    }
-
-  return module_info_type;
-}
-
-static void
-gimp_module_info_class_init (GimpModuleInfoObjClass *klass)
-{
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  module_info_signals[MODIFIED] =
-    g_signal_new ("modified",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpModuleInfoObjClass, modified),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
-
-  object_class->finalize = gimp_module_info_finalize;
-
-  klass->modified        = NULL;
-}
-
-static void
-gimp_module_info_init (GimpModuleInfoObj *mod)
-{
-  /* don't need to do anything */
-}
-
-static void
-gimp_module_info_finalize (GObject *object)
-{
-  GimpModuleInfoObj *mod;
-
-  mod = GIMP_MODULE_INFO (object);
-
-  /* if this trips, then we're onto some serious lossage in a moment */
-  g_return_if_fail (mod->refs == 0);
-
-  if (mod->last_module_error)
-    {
-      g_free (mod->last_module_error);
-      mod->last_module_error = NULL;
-    }
-
-  if (mod->fullpath)
-    {
-      g_free (mod->fullpath);
-      mod->fullpath = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-/* exported API: */
-
-static void
-gimp_module_info_modified (GimpModuleInfoObj *mod)
-{
-  g_signal_emit (G_OBJECT (mod), module_info_signals[MODIFIED], 0);
-}
-
-static GimpModuleInfoObj *
-gimp_module_info_new (void)
-{
-  return GIMP_MODULE_INFO (g_object_new (GIMP_TYPE_MODULE_INFO, NULL));
-}
-
-
-/*  dialog stuff  */
-
-static const gchar * const statename[] =
-{
-  N_("Module error"),
-  N_("Loaded OK"),
-  N_("Load failed"),
-  N_("Unload requested"),
-  N_("Unloaded OK")
-};
-
-#ifdef __EMX__
-extern void gimp_color_selector_register   ();
-extern void gimp_color_selector_unregister ();
-extern void dialog_register                ();
-extern void dialog_unregister              ();
-
-static struct main_funcs_struc
-{
-  gchar *name;
-  void (*func) ();
-} 
-
-gimp_main_funcs[] =
-{
-  { "gimp_color_selector_register",   gimp_color_selector_register },
-  { "gimp_color_selector_unregister", gimp_color_selector_unregister },
-  { "dialog_register",                dialog_register },
-  { "dialog_unregister",              dialog_unregister },
-  { NULL, NULL }
-};
-#endif
 
 
 #define NUM_INFO_LINES 7
 
 typedef struct
 {
-  GtkWidget  *table;
-  GtkWidget  *label[NUM_INFO_LINES];
-  GtkWidget  *button_label;
+  GtkWidget         *table;
+  GtkWidget         *label[NUM_INFO_LINES];
+  GtkWidget         *button_label;
   GimpModuleInfoObj *last_update;
-  GtkWidget  *button;
-  GtkWidget  *list;
-  GtkWidget  *load_inhibit_check;
+  GtkWidget         *button;
+  GtkWidget         *list;
+  GtkWidget         *load_inhibit_check;
+
+  GQuark             modules_handler_id;
 } BrowserState;
 
 
-/* prototypes */
-static void         module_initialize      (const gchar   *filename,
-					    gpointer       loader_data);
-static void         mod_load               (GimpModuleInfoObj    *mod,
-					    gboolean       verbose);
-static void         mod_unload             (GimpModuleInfoObj    *mod,
-					    gboolean       verbose);
-static gboolean     mod_idle_unref         (GimpModuleInfoObj    *mod);
-static GimpModuleInfoObj * module_find_by_path    (const gchar   *fullpath);
+/*  local function prototypes  */
 
-#ifdef DUMP_DB
-static void   print_module_info            (gpointer       data,
-					    gpointer       user_data);
-#endif
-
-static void   browser_popdown_callback     (GtkWidget     *widget,
-					    gpointer       data);
-static void   browser_destroy_callback     (GtkWidget     *widget,
-					    gpointer       data);
-static void   browser_info_update          (GimpModuleInfoObj    *mod,
-					    BrowserState  *st);
-static void   browser_info_add             (GimpContainer *container,
-					    GimpModuleInfoObj    *mod,
-					    BrowserState  *st);
-static void   browser_info_remove          (GimpContainer *container,
-					    GimpModuleInfoObj    *mod,
-					    BrowserState  *st);
-static void   browser_info_init            (BrowserState  *st,
-					    GtkWidget     *table);
-static void   browser_select_callback      (GtkWidget     *widget,
-					    GtkWidget     *child);
-static void   browser_load_unload_callback (GtkWidget     *widget,
-					    gpointer       data);
-static void   browser_refresh_callback     (GtkWidget     *widget,
-					    gpointer       data);
-static void   make_list_item               (gpointer       data,
-					    gpointer       user_data);
-
-static void   gimp_module_ref              (GimpModuleInfoObj   *mod);
-static void   gimp_module_unref            (GimpModuleInfoObj   *mod);
+static void   browser_popdown_callback      (GtkWidget         *widget,
+                                             gpointer           data);
+static void   browser_destroy_callback      (GtkWidget         *widget,
+                                             gpointer           data);
+static void   browser_load_inhibit_callback (GtkWidget         *widget,
+                                             gpointer           data);
+static void   browser_select_callback       (GtkWidget         *widget,
+                                             GtkWidget         *child);
+static void   browser_load_unload_callback  (GtkWidget         *widget,
+                                             gpointer           data);
+static void   browser_refresh_callback      (GtkWidget         *widget,
+                                             gpointer           data);
+static void   make_list_item                (gpointer           data,
+                                             gpointer           user_data);
+static void   browser_info_add              (GimpContainer     *container,
+                                             GimpModuleInfoObj *mod,
+                                             BrowserState      *st);
+static void   browser_info_remove           (GimpContainer     *container,
+                                             GimpModuleInfoObj *mod,
+                                             BrowserState      *st);
+static void   browser_info_update           (GimpModuleInfoObj *mod,
+                                             BrowserState      *st);
+static void   browser_info_init             (BrowserState      *st,
+                                             GtkWidget         *table);
 
 
-
-/* global set of module_info pointers */
-static GimpContainer *modules;
-static GQuark         modules_handler_id;
-
-/* If the inhibit state of any modules changes, we might need to
- * re-write the modulerc.
- */
-static gboolean need_to_rewrite_modulerc = FALSE;
-
-
-/**************************************************************/
-/* Exported functions */
-
-void
-module_db_init (void)
-{
-  gchar *filename;
-
-  /* load the modulerc file */
-  filename = gimp_personal_rc_file ("modulerc");
-  gimprc_parse_file (filename);
-  g_free (filename);
-
-  /* Load and initialize gimp modules */
-
-  modules = gimp_list_new (GIMP_TYPE_MODULE_INFO, GIMP_CONTAINER_POLICY_WEAK);
-
-  if (g_module_supported ())
-    gimp_datafiles_read_directories (the_gimp->config->module_path, 0 /* no flags */,
-				     module_initialize, NULL);
-#ifdef DUMP_DB
-  gimp_container_foreach (modules, print_module_info, NULL);
-#endif
-}
-
-static void
-free_a_single_module (gpointer data, 
-		      gpointer user_data)
-{
-  GimpModuleInfoObj *mod = data;
-
-  if (mod->module && mod->unload && mod->state == ST_LOADED_OK)
-    {
-      mod_unload (mod, FALSE);
-    }
-}
-
-static void
-add_to_inhibit_string (gpointer data, 
-		       gpointer user_data)
-{
-  GimpModuleInfoObj *mod = data;
-  GString    *str = user_data;
-
-  if (mod->load_inhibit)
-    {
-      str = g_string_append_c (str, G_SEARCHPATH_SEPARATOR);
-      str = g_string_append (str, mod->fullpath);
-    }
-}
-
-
-static gboolean
-module_db_write_modulerc (void)
-{
-  GString  *str;
-  gchar    *p;
-  gchar    *filename;
-  FILE     *fp;
-  gboolean  saved = FALSE;
-
-  str = g_string_new (NULL);
-  gimp_container_foreach (modules, add_to_inhibit_string, str);
-  if (str->len > 0)
-    p = str->str + 1;
-  else
-    p = "";
-
-  filename = gimp_personal_rc_file ("modulerc");
-  fp = fopen (filename, "wt");
-  g_free (filename);
-  if (fp)
-    {
-      fprintf (fp, "(module-load-inhibit \"%s\")\n", p);
-      fclose (fp);
-      saved = TRUE;
-    }
-
-  g_string_free (str, TRUE);
-  return (saved);
-}
-
-
-void
-module_db_free (void)
-{
-  if (need_to_rewrite_modulerc)
-    {
-      if (module_db_write_modulerc ())
-	{
-	  need_to_rewrite_modulerc = FALSE;
-	}
-    }
-  gimp_container_foreach (modules, free_a_single_module, NULL);
-}
-
+/*  public functions  */
 
 GtkWidget *
-module_db_browser_new (void)
+module_browser_new (void)
 {
-  GtkWidget *shell;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *listbox;
-  GtkWidget *button;
+  GtkWidget    *shell;
+  GtkWidget    *hbox;
+  GtkWidget    *vbox;
+  GtkWidget    *listbox;
+  GtkWidget    *button;
   BrowserState *st;
 
   shell = gimp_dialog_new (_("Module DB"), "module_db_dialog",
@@ -468,7 +126,7 @@ module_db_browser_new (void)
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (listbox),
 					 st->list);
 
-  gimp_container_foreach (modules, make_list_item, st);
+  gimp_container_foreach (the_gimp->modules, make_list_item, st);
 
   gtk_widget_show (st->list);
 
@@ -507,14 +165,14 @@ module_db_browser_new (void)
   /* hook the GimpContainer signals so we can refresh the display
    * appropriately.
    */
-  modules_handler_id =
-    gimp_container_add_handler (modules, "modified", 
+  st->modules_handler_id =
+    gimp_container_add_handler (the_gimp->modules, "modified", 
                                 G_CALLBACK (browser_info_update), st);
 
-  g_signal_connect (G_OBJECT (modules), "add", 
+  g_signal_connect (G_OBJECT (the_gimp->modules), "add", 
                     G_CALLBACK (browser_info_add), 
                     st);
-  g_signal_connect (G_OBJECT (modules), "remove", 
+  g_signal_connect (G_OBJECT (the_gimp->modules), "remove", 
                     G_CALLBACK (browser_info_remove), 
                     st);
 
@@ -526,292 +184,7 @@ module_db_browser_new (void)
 }
 
 
-
-/**************************************************************/
-/* helper functions */
-
-
-/* name must be of the form lib*.so (Unix) or *.dll (Win32) */
-static gboolean
-valid_module_name (const gchar *filename)
-{
-  gchar *basename;
-  gint   len;
-
-  basename = g_path_get_basename (filename);
-
-  len = strlen (basename);
-
-#if !defined(G_OS_WIN32) && !defined(G_WITH_CYGWIN) && !defined(__EMX__)
-  if (len < 3 + 1 + 3)
-    goto no_module;
-
-  if (strncmp (basename, "lib", 3))
-    goto no_module;
-
-  if (strcmp (basename + len - 3, ".so"))
-    goto no_module;
-#else
-  if (len < 1 + 4)
-    goto no_module;
-
-  if (g_strcasecmp (basename + len - 4, ".dll"))
-    goto no_module;
-#endif
-
-  g_free (basename);
-
-  return TRUE;
-
- no_module:
-  g_free (basename);
-
-  return FALSE;
-}
-
-
-static gboolean
-module_inhibited (const gchar *fullpath, 
-		  const gchar *inhibit_list)
-{
-  gchar       *p;
-  gint         pathlen;
-  const gchar *start;
-  const gchar *end;
-
-  /* common case optimisation: the list is empty */
-  if (!inhibit_list || *inhibit_list == '\000')
-    return FALSE;
-
-  p = strstr (inhibit_list, fullpath);
-  if (!p)
-    return FALSE;
-
-  /* we have a substring, but check for colons either side */
-  start = p;
-  while (start != inhibit_list && *start != G_SEARCHPATH_SEPARATOR)
-      start--;
-  if (*start == G_SEARCHPATH_SEPARATOR)
-      start++;
-
-  end = strchr (p, G_SEARCHPATH_SEPARATOR);
-  if (!end)
-    end = inhibit_list + strlen (inhibit_list);
-
-  pathlen = strlen (fullpath);
-  if ((end - start) == pathlen)
-    return TRUE;
-  else
-    return FALSE;
-}
-
-
-static void
-module_initialize (const gchar *filename,
-		   gpointer     loader_data)
-{
-  GimpModuleInfoObj *mod;
-
-  if (!valid_module_name (filename))
-    return;
-
-  /* don't load if we already know about it */
-  if (module_find_by_path (filename))
-    return;
-
-  mod = gimp_module_info_new ();
-
-  mod->fullpath          = g_strdup (filename);
-  mod->ondisk            = TRUE;
-  mod->state             = ST_MODULE_ERROR;
-
-  mod->info              = NULL;
-  mod->module            = NULL;
-  mod->last_module_error = NULL;
-  mod->init              = NULL;
-  mod->unload            = NULL;
-
-  /* Count of times main gimp is within the module.  Normally, this
-   * will be 1, and we assume that the module won't call its
-   * unload callback until it is satisfied that it's not in use any
-   * more.  refs can be 2 temporarily while we're running the module's
-   * unload function, to stop the module attempting to unload
-   * itself.
-   */
-  mod->refs              = 0;
-
-  mod->load_inhibit = module_inhibited (mod->fullpath, 
-					the_gimp->config->module_db_load_inhibit);
-  if (!mod->load_inhibit)
-    {
-      if (be_verbose)
-	g_print (_("load module: \"%s\"\n"), filename);
-
-      mod_load (mod, TRUE);
-    }
-  else
-    {
-      if (be_verbose)
-	g_print (_("skipping module: \"%s\"\n"), filename);
-
-      mod->state = ST_UNLOADED_OK;
-    }
-
-  gimp_container_add (modules, GIMP_OBJECT (mod));
-}
-
-static void
-mod_load (GimpModuleInfoObj *mod, 
-	  gboolean    verbose)
-{
-  gpointer symbol;
-
-  g_return_if_fail (mod->module == NULL);
-
-  mod->module = g_module_open (mod->fullpath, G_MODULE_BIND_LAZY);
-  if (!mod->module)
-    {
-      mod->state = ST_MODULE_ERROR;
-
-      if (mod->last_module_error)
-	g_free (mod->last_module_error);
-      mod->last_module_error = g_strdup (g_module_error ());
-
-      if (verbose)
-	g_warning (_("module load error: %s: %s"),
-		   mod->fullpath, mod->last_module_error);
-      return;
-    }
-
-#ifdef __EMX__
-  if (g_module_symbol (mod->module, "gimp_main_funcs", &symbol))
-    {
-      *(struct main_funcs_struc **) symbol = gimp_main_funcs;
-    }
-#endif
-  /* find the module_init symbol */
-  if (!g_module_symbol (mod->module, "module_init", &symbol))
-    {
-      mod->state = ST_MODULE_ERROR;
-
-      if (mod->last_module_error)
-	g_free (mod->last_module_error);
-      mod->last_module_error = g_strdup ("missing module_init() symbol");
-
-      if (verbose)
-	g_warning ("%s: module_init() symbol not found", mod->fullpath);
-
-      g_module_close (mod->module);
-      mod->module = NULL;
-      mod->info   = NULL;
-      return;
-    }
-
-  /* run module's initialisation */
-  mod->init = symbol;
-  mod->info = NULL;
-  gimp_module_ref (mod); /* loaded modules are assumed to have a ref of 1 */
-  if (mod->init (&mod->info) == GIMP_MODULE_UNLOAD)
-    {
-      mod->state = ST_LOAD_FAILED;
-      gimp_module_unref (mod);
-      mod->info = NULL;
-      return;
-    }
-
-  /* module is now happy */
-  mod->state = ST_LOADED_OK;
-  TRC (("loaded module %s, state at %p\n", mod->fullpath, mod));
-
-  /* do we have an unload function? */
-  if (g_module_symbol (mod->module, "module_unload", &symbol))
-    mod->unload = symbol;
-  else
-    mod->unload = NULL;
-}
-
-
-static void
-mod_unload_completed_callback (gpointer data)
-{
-  GimpModuleInfoObj *mod = data;
-
-  g_return_if_fail (mod->state == ST_UNLOAD_REQUESTED);
-
-  /* lose the ref we gave this module when we loaded it,
-   * since the module's now happy to be unloaded. */
-  gimp_module_unref (mod);
-  mod->info = NULL;
-
-  mod->state = ST_UNLOADED_OK;
-
-  TRC (("module unload completed callback for %p\n", mod));
-
-  gimp_module_info_modified (mod);
-}
-
-static void
-mod_unload (GimpModuleInfoObj *mod, 
-	    gboolean    verbose)
-{
-  g_return_if_fail (mod->module != NULL);
-  g_return_if_fail (mod->unload != NULL);
-
-  if (mod->state == ST_UNLOAD_REQUESTED)
-    return;
-
-  mod->state = ST_UNLOAD_REQUESTED;
-
-  TRC (("module unload requested for %p\n", mod));
-
-  /* Send the unload request.  Need to ref the module so we don't
-   * accidentally unload it while this call is in progress (eg if the
-   * callback is called before the unload function returns). */
-  gimp_module_ref (mod);
-  mod->unload (mod->info->shutdown_data, mod_unload_completed_callback, mod);
-
-  gtk_idle_add ((GtkFunction) mod_idle_unref, (gpointer) mod);
-}
-
-static gboolean
-mod_idle_unref (GimpModuleInfoObj *mod)
-{
-  gimp_module_unref (mod);
-
-  return FALSE;
-}
-
-#ifdef DUMP_DB
-static void
-print_module_info (gpointer data, 
-		   gpointer user_data)
-{
-  GimpModuleInfoObj *i = data;
-
-  g_print ("\n%s: %s\n",
-	   i->fullpath, statename[i->state]);
-  g_print ("  module:%p  lasterr:%s  init:%p  unload:%p\n",
-	   i->module, i->last_module_error? i->last_module_error : "NONE",
-	   i->init, i->unload);
-  if (i->info)
-    {
-      g_print ("  shutdown_data: %p\n"
-	       "  purpose:   %s\n"
-	       "  author:    %s\n"
-	       "  version:   %s\n"
-	       "  copyright: %s\n"
-	       "  date:      %s\n",
-	       i->info->shutdown_data,
-	       i->info->purpose, i->info->author, i->info->version,
-	       i->info->copyright, i->info->date);
-    }
-}
-#endif
-
-
-
-/**************************************************************/
-/* UI functions */
+/*  private functions  */
 
 static void
 browser_popdown_callback (GtkWidget *widget,
@@ -824,13 +197,15 @@ static void
 browser_destroy_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  g_signal_handlers_disconnect_by_func (G_OBJECT (modules), 
+  BrowserState *st = data;
+
+  g_signal_handlers_disconnect_by_func (G_OBJECT (the_gimp->modules),
                                         browser_info_add,
                                         data);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (modules), 
+  g_signal_handlers_disconnect_by_func (G_OBJECT (the_gimp->modules), 
                                         browser_info_remove,
                                         data);
-  gimp_container_remove_handler (modules, modules_handler_id);
+  gimp_container_remove_handler (the_gimp->modules, st->modules_handler_id);
   g_free (data);
 }
 
@@ -839,7 +214,7 @@ browser_load_inhibit_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   BrowserState *st = data;
-  gboolean new_value;
+  gboolean      new_value;
 
   g_return_if_fail (st->last_update != NULL);
 
@@ -851,24 +226,133 @@ browser_load_inhibit_callback (GtkWidget *widget,
   st->last_update->load_inhibit = new_value;
   gimp_module_info_modified (st->last_update);
 
-  need_to_rewrite_modulerc = TRUE;
+  the_gimp->write_modulerc = TRUE;
 }
 
 static void
-browser_info_update (GimpModuleInfoObj   *mod, 
-		     BrowserState *st)
+browser_select_callback (GtkWidget *widget, 
+			 GtkWidget *child)
 {
-  gint i;
+  GimpModuleInfoObj *info;
+  BrowserState *st;
+
+  info = g_object_get_data (G_OBJECT (child), "module_info");
+  st = g_object_get_data (G_OBJECT (widget), "state");
+
+  if (st->last_update == info)
+    return;
+
+  st->last_update = info;
+
+  browser_info_update (st->last_update, st);
+}
+
+static void
+browser_load_unload_callback (GtkWidget *widget, 
+			      gpointer   data)
+{
+  BrowserState *st = data;
+
+  if (st->last_update->state == GIMP_MODULE_STATE_LOADED_OK)
+    gimp_module_info_module_unload (st->last_update, FALSE);
+  else
+    gimp_module_info_module_load (st->last_update, FALSE);
+
+  gimp_module_info_modified (st->last_update);
+}
+
+static void
+browser_refresh_callback (GtkWidget *widget, 
+			  gpointer   data)
+{
+  gimp_modules_refresh (the_gimp);
+}
+
+static void
+make_list_item (gpointer data, 
+		gpointer user_data)
+{
+  GimpModuleInfoObj   *info = data;
+  BrowserState *st = user_data;
+  GtkWidget    *list_item;
+
+  if (!st->last_update)
+    st->last_update = info;
+
+  list_item = gtk_list_item_new_with_label (info->fullpath);
+
+  gtk_widget_show (list_item);
+  g_object_set_data (G_OBJECT (list_item), "module_info", info);
+
+  gtk_container_add (GTK_CONTAINER (st->list), list_item);
+}
+
+static void
+browser_info_add (GimpContainer     *container,
+		  GimpModuleInfoObj *mod, 
+		  BrowserState      *st)
+{
+  make_list_item (mod, st);
+}
+
+static void
+browser_info_remove (GimpContainer     *container,
+		     GimpModuleInfoObj *mod, 
+		     BrowserState      *st)
+{
+  GList             *dlist;
+  GList             *free_list;
+  GtkWidget         *list_item;
+  GimpModuleInfoObj *info;
+
+  dlist = gtk_container_get_children (GTK_CONTAINER (st->list));
+  free_list = dlist;
+
+  while (dlist)
+    {
+      list_item = dlist->data;
+
+      info = g_object_get_data (G_OBJECT (list_item), "module_info");
+      g_return_if_fail (info != NULL);
+
+      if (info == mod)
+	{
+	  gtk_container_remove (GTK_CONTAINER (st->list), list_item);
+	  g_list_free (free_list);
+	  return;
+	}
+
+      dlist = dlist->next;
+    }
+
+  g_warning ("tried to remove module that wasn't in brower's list");
+  g_list_free (free_list);
+}
+
+static void
+browser_info_update (GimpModuleInfoObj *mod, 
+		     BrowserState      *st)
+{
+  gint         i;
   const gchar *text[NUM_INFO_LINES - 1];
-  gchar *status;
+  gchar       *status;
+
+  static const gchar * const statename[] =
+  {
+    N_("Module error"),
+    N_("Loaded OK"),
+    N_("Load failed"),
+    N_("Unload requested"),
+    N_("Unloaded OK")
+  };
 
   /* only update the info if we're actually showing it */
   if (mod != st->last_update)
     return;
 
-  if (!mod)
+  if (! mod)
     {
-      for (i=0; i < NUM_INFO_LINES; i++)
+      for (i = 0; i < NUM_INFO_LINES; i++)
 	gtk_label_set_text (GTK_LABEL (st->label[i]), "");
       gtk_label_set_text (GTK_LABEL(st->button_label), _("<No modules>"));
       gtk_widget_set_sensitive (GTK_WIDGET (st->button), FALSE);
@@ -883,7 +367,7 @@ browser_info_update (GimpModuleInfoObj   *mod,
       text[2] = mod->info->version;
       text[3] = mod->info->copyright;
       text[4] = mod->info->date;
-      text[5] = mod->ondisk? _("on disk") : _("only in memory");
+      text[5] = mod->on_disk? _("on disk") : _("only in memory");
     }
   else
     {
@@ -892,12 +376,14 @@ browser_info_update (GimpModuleInfoObj   *mod,
       text[2] = "--";
       text[3] = "--";
       text[4] = "--";
-      text[5] = mod->ondisk? _("on disk") : _("nowhere (click 'refresh')");
+      text[5] = mod->on_disk? _("on disk") : _("nowhere (click 'refresh')");
     }
 
-  if (mod->state == ST_MODULE_ERROR && mod->last_module_error)
-    status = g_strdup_printf ("%s (%s)", gettext (statename[mod->state]),
-			      mod->last_module_error);
+  if (mod->state == GIMP_MODULE_STATE_ERROR && mod->last_module_error)
+    {
+      status = g_strdup_printf ("%s (%s)", gettext (statename[mod->state]),
+                                mod->last_module_error);
+    }
   else
     {
       status = g_strdup (gettext (statename[mod->state]));
@@ -919,19 +405,19 @@ browser_info_update (GimpModuleInfoObj   *mod,
   /* work out what the button should do (if anything) */
   switch (mod->state)
     {
-    case ST_MODULE_ERROR:
-    case ST_LOAD_FAILED:
-    case ST_UNLOADED_OK:
+    case GIMP_MODULE_STATE_ERROR:
+    case GIMP_MODULE_STATE_LOAD_FAILED:
+    case GIMP_MODULE_STATE_UNLOADED_OK:
       gtk_label_set_text (GTK_LABEL(st->button_label), _("Load"));
-      gtk_widget_set_sensitive (GTK_WIDGET (st->button), mod->ondisk);
+      gtk_widget_set_sensitive (GTK_WIDGET (st->button), mod->on_disk);
       break;
 
-    case ST_UNLOAD_REQUESTED:
+    case GIMP_MODULE_STATE_UNLOAD_REQUESTED:
       gtk_label_set_text (GTK_LABEL(st->button_label), _("Unload"));
       gtk_widget_set_sensitive (GTK_WIDGET (st->button), FALSE);
       break;
 
-    case ST_LOADED_OK:
+    case GIMP_MODULE_STATE_LOADED_OK:
       gtk_label_set_text (GTK_LABEL(st->button_label), _("Unload"));
       gtk_widget_set_sensitive (GTK_WIDGET (st->button),
 				mod->unload? TRUE : FALSE);
@@ -980,219 +466,4 @@ browser_info_init (BrowserState *st,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
   g_signal_connect (G_OBJECT (st->load_inhibit_check), "toggled",
                     G_CALLBACK (browser_load_inhibit_callback), st);
-}
-
-static void
-browser_select_callback (GtkWidget *widget, 
-			 GtkWidget *child)
-{
-  GimpModuleInfoObj *info;
-  BrowserState *st;
-
-  info = g_object_get_data (G_OBJECT (child), "module_info");
-  st = g_object_get_data (G_OBJECT (widget), "state");
-
-  if (st->last_update == info)
-    return;
-
-  st->last_update = info;
-
-  browser_info_update (st->last_update, st);
-}
-
-
-static void
-browser_load_unload_callback (GtkWidget *widget, 
-			      gpointer   data)
-{
-  BrowserState *st = data;
-
-  if (st->last_update->state == ST_LOADED_OK)
-    mod_unload (st->last_update, FALSE);
-  else
-    mod_load (st->last_update, FALSE);
-
-  gimp_module_info_modified (st->last_update);
-}
-
-
-static void
-make_list_item (gpointer data, 
-		gpointer user_data)
-{
-  GimpModuleInfoObj   *info = data;
-  BrowserState *st = user_data;
-  GtkWidget    *list_item;
-
-  if (!st->last_update)
-    st->last_update = info;
-
-  list_item = gtk_list_item_new_with_label (info->fullpath);
-
-  gtk_widget_show (list_item);
-  g_object_set_data (G_OBJECT (list_item), "module_info", info);
-
-  gtk_container_add (GTK_CONTAINER (st->list), list_item);
-}
-
-
-static void
-browser_info_add (GimpContainer *container,
-		  GimpModuleInfoObj    *mod, 
-		  BrowserState  *st)
-{
-  make_list_item (mod, st);
-}
-
-
-static void
-browser_info_remove (GimpContainer     *container,
-		     GimpModuleInfoObj *mod, 
-		     BrowserState      *st)
-{
-  GList             *dlist;
-  GList             *free_list;
-  GtkWidget         *list_item;
-  GimpModuleInfoObj *info;
-
-  dlist = gtk_container_get_children (GTK_CONTAINER (st->list));
-  free_list = dlist;
-
-  while (dlist)
-    {
-      list_item = dlist->data;
-
-      info = g_object_get_data (G_OBJECT (list_item), "module_info");
-      g_return_if_fail (info != NULL);
-
-      if (info == mod)
-	{
-	  gtk_container_remove (GTK_CONTAINER (st->list), list_item);
-	  g_list_free (free_list);
-	  return;
-	}
-
-      dlist = dlist->next;
-    }
-
-  g_warning ("tried to remove module that wasn't in brower's list");
-  g_list_free (free_list);
-}
-
-
-
-static void
-module_db_module_ondisk (gpointer data, 
-			 gpointer user_data)
-{
-  GimpModuleInfoObj *mod = data;
-  struct stat statbuf;
-  gint ret;
-  gint old_ondisk = mod->ondisk;
-  GSList **kill_list = user_data;
-
-  ret = stat (mod->fullpath, &statbuf);
-  if (ret != 0)
-    mod->ondisk = FALSE;
-  else
-    mod->ondisk = TRUE;
-
-  /* if it's not on the disk, and it isn't in memory, mark it to be
-   * removed later. */
-  if (!mod->ondisk && !mod->module)
-    {
-      *kill_list = g_slist_append (*kill_list, mod);
-      mod = NULL;
-    }
-
-  if (mod && mod->ondisk != old_ondisk)
-    gimp_module_info_modified (mod);
-}
-
-
-static void
-module_db_module_remove (gpointer data, 
-			 gpointer user_data)
-{
-  GimpModuleInfoObj *mod = data;
-
-  gimp_container_remove (modules, GIMP_OBJECT (mod));
-
-  g_object_unref (G_OBJECT (mod));
-}
-
-
-
-typedef struct
-{
-  const gchar *search_key;
-  GimpModuleInfoObj  *found;
-} find_by_path_closure;
-
-static void
-module_db_path_cmp (gpointer data, 
-		    gpointer user_data)
-{
-  GimpModuleInfoObj *mod = data;
-  find_by_path_closure *cl = user_data;
-
-  if (!strcmp (mod->fullpath, cl->search_key))
-    cl->found = mod;
-}
-
-static GimpModuleInfoObj *
-module_find_by_path (const char *fullpath)
-{
-  find_by_path_closure cl;
-
-  cl.found = NULL;
-  cl.search_key = fullpath;
-
-  gimp_container_foreach (modules, module_db_path_cmp, &cl);
-
-  return cl.found;
-}
-
-
-
-static void
-browser_refresh_callback (GtkWidget *widget, 
-			  gpointer   data)
-{
-  GSList *kill_list = NULL;
-
-  /* remove modules we don't have on disk anymore */
-  gimp_container_foreach (modules, module_db_module_ondisk, &kill_list);
-  g_slist_foreach (kill_list, module_db_module_remove, NULL);
-  g_slist_free (kill_list);
-  kill_list = NULL;
-
-  /* walk filesystem and add new things we find */
-  gimp_datafiles_read_directories (the_gimp->config->module_path, 0 /* no flags */,
-				   module_initialize, NULL);
-}
-
-
-static void
-gimp_module_ref (GimpModuleInfoObj *mod)
-{
-  g_return_if_fail (mod->refs >= 0);
-  g_return_if_fail (mod->module != NULL);
-  mod->refs++;
-}
-
-static void
-gimp_module_unref (GimpModuleInfoObj *mod)
-{
-  g_return_if_fail (mod->refs > 0);
-  g_return_if_fail (mod->module != NULL);
-
-  mod->refs--;
-
-  if (mod->refs == 0)
-    {
-      TRC (("module %p refs hit 0, g_module_closing it\n", mod));
-      g_module_close (mod->module);
-      mod->module = NULL;
-    }
 }
