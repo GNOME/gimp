@@ -2852,6 +2852,9 @@ expand_line (gdouble               *dest,
 
   ratio = old_width / (gdouble) width;
 
+  /* we can overflow src's boundaries, so we expect our caller to have
+     allocated extra space for us to do so safely (see scale_region ()) */
+
   /* this could be optimized much more by precalculating the coefficients for
      each x */
   switch(interp)
@@ -2863,7 +2866,10 @@ expand_line (gdouble               *dest,
           /* +2, -2 is there because (int) rounds towards 0 and we need
              to round down */
           frac = (x * ratio - 0.5) - src_col;
-          s = &src[src_col * bytes];
+
+          /* cast bytes to signed int to make sure the result is signed */
+          s = &src[src_col * (int) bytes];
+
           for (b = 0; b < bytes; b++)
             dest[b] = cubic (frac, s[b - bytes], s[b], s[b + bytes],
                              s[b + bytes * 2]);
@@ -2879,7 +2885,10 @@ expand_line (gdouble               *dest,
           /* +2, -2 is there because (int) rounds towards 0 and we need
              to round down */
           frac = (x * ratio - 0.5) - src_col;
-          s = &src[src_col * bytes];
+
+          /* cast bytes to signed int to make sure the result is signed */
+          s = &src[src_col * (int) bytes];
+
           for (b = 0; b < bytes; b++)
             dest[b] = ((s[b + bytes] - s[b]) * frac + s[b]);
           dest += bytes;

@@ -1,3 +1,9 @@
+2004-01-05  Manish Singh  <yosh@gimp.org>
+
+	* app/paint-funcs/paint-funcs.c (expand_line): cast usage of unsigned
+	bytes variable in array subscripting to signed, so we really do get
+	a negative value when we need it. Fixes #130398.
+
 2004-01-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/CEL.c: fixed coding style issues, removed
