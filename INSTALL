@@ -5,22 +5,29 @@ There are some basic steps to building and installing this development
 version of The GIMP.
 
 Since the plug-in API of GIMP 2.2 will be compatible with GIMP 2.0,
-2.2 is supposed to install itself into the gimp-2.0 directories. It is
-thus not possible to install this development version into the same
-prefix with GIMP 2.0. A number of files will clash, so PLEASE USE A
-SEPARATE PREFIX to install this development version!!
+2.2 is supposed to install itself into the gimp-2.0 directories. It
+is thus not possible to install this development version into the
+same prefix with GIMP 2.0. A number of files will clash, so PLEASE
+USE A SEPARATE PREFIX to install this development version!!
 
 The most important part is to make sure the requirements for a build
 are fulfilled.  We depend on a number of tools and libraries which are
 listed below. For libraries this means you need to also have the
 header files installed.
 
+  ******************************************************************
+  * Unless you are experienced with building software from source, *
+  * you should not attempt to build all these libraries yourself!  *
+  * We suggest that you check if your distributor has development  *
+  * packages of them and use these instead.                        *
+  ******************************************************************
+
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
 
   2. You need to have installed GTK+ version 2.4.1 or better. Do not
      try to use an older GTK+ version (1.2.x), it will not work.
-     GTK+-2.2 itself needs recent versions of GLib, Pango and ATK.
+     GTK+ itself needs recent versions of GLib, Pango and ATK.
      Sources for these can be grabbed from ftp://ftp.gtk.org/.
      GTK+-2.x and friends can be installed side by side with GTK+-1.2.
 
@@ -51,13 +58,10 @@ header files installed.
      to start gimp-2.1. If you have the 1.2 version installed, you should
      still be able to run it using 'gimp-1.2'.
 
-Unless you are experienced with building software from source, you
-should not attempt to build all these libraries yourself. We suggest
-you check if your distributor has development packages of them.
-
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries 
 lying around on your system, otherwise configure may fail to find the 
 new ones.
+
 
 Generic instructions for configuring and compiling auto-configured
 packages are included below. Here is an illustration of commands that
@@ -69,6 +73,7 @@ compilation and installation output is not shown.
   % ./configure                  # run the `configure' script
   % make                         # build the GIMP
   % make install                 # install the GIMP
+
 
 The `configure' script examines your system, and adapts the GIMP to
 run on it. The script has many options, some of which are described in
@@ -160,6 +165,10 @@ recognizes. These are:
   --disable-default-binary. Use this option if you don't want to make
      gimp-2.1 the default gimp installation. Otherwise a link called
      gimp pointing to the gimp-2.1 executable will be installed.
+
+  --enable-gimp-console.  In addition to the standard gimp binary,
+     build a console-only binary which does not link GTK+ at all.
+
 
 The `make' command builds several things:
  - A bunch of public libraries in the directories starting with 'libgimp'.

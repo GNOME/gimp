@@ -1,5 +1,10 @@
 2004-07-12  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL: made the suggestion to use binary packages more
+	prominent, mention --enable-gimp-console.
+
+2004-07-12  Sven Neumann  <sven@gimp.org>
+
 	* app/sanity.[ch]: removed the gtk+ sanity check here ...
 
 	* app/gui/gui.c: ... and do it here from gui_libs_init().
