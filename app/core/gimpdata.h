@@ -89,7 +89,8 @@ const gchar * gimp_data_get_extension    (GimpData     *data);
 
 void          gimp_data_set_filename     (GimpData     *data,
                                           const gchar  *filename,
-                                          gboolean      writable);
+                                          gboolean      writable,
+                                          gboolean      deletable);
 void          gimp_data_create_filename  (GimpData     *data,
 					  const gchar  *dest_dir);
 

@@ -63,7 +63,7 @@ brush_new_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpBrush * brush = NULL;
+  GimpData *data = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -71,14 +71,16 @@ brush_new_invoker (Gimp         *gimp,
 
   if (success)
     {
-      brush = (GimpBrush *)
-        gimp_data_factory_data_new (gimp->brush_factory, name);
+      if (strlen (name))
+        data = gimp_data_factory_data_new (gimp->brush_factory, name);
+
+      success = (data != NULL);
     }
 
   return_args = procedural_db_return_args (&brush_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (brush)->name);
+    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (data)->name);
 
   return return_args;
 }
@@ -130,7 +132,7 @@ brush_duplicate_invoker (Gimp         *gimp,
   GimpBrush *brush_copy = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -171,7 +173,7 @@ static ProcArg brush_duplicate_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the brush to duplicate"
+    "The brush name (\"\" means currently active brush)"
   }
 };
 
@@ -213,7 +215,7 @@ brush_rename_invoker (Gimp         *gimp,
   GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   new_name = (gchar *) args[1].value.pdb_pointer;
@@ -252,7 +254,7 @@ static ProcArg brush_rename_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the brush to rename"
+    "The brush name (\"\" means currently active brush)"
   },
   {
     GIMP_PDB_STRING,
@@ -297,7 +299,7 @@ brush_delete_invoker (Gimp         *gimp,
   GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -339,7 +341,7 @@ static ProcArg brush_delete_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the brush to delete"
+    "The brush name (\"\" means currently active brush)"
   }
 };
 

@@ -72,7 +72,7 @@ palette_new_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpPalette * palette = NULL;
+  GimpData *data = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -80,14 +80,16 @@ palette_new_invoker (Gimp         *gimp,
 
   if (success)
     {
-      palette = (GimpPalette *)
-        gimp_data_factory_data_new (gimp->palette_factory, name);
+      if (strlen (name))
+        data = gimp_data_factory_data_new (gimp->palette_factory, name);
+
+      success = (data != NULL);
     }
 
   return_args = procedural_db_return_args (&palette_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (palette)->name);
+    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (data)->name);
 
   return return_args;
 }
@@ -139,7 +141,7 @@ palette_duplicate_invoker (Gimp         *gimp,
   GimpPalette *palette_copy = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -180,7 +182,7 @@ static ProcArg palette_duplicate_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the palette to duplicate"
+    "The palette name (\"\" means currently active palette)"
   }
 };
 
@@ -222,7 +224,7 @@ palette_rename_invoker (Gimp         *gimp,
   GimpPalette *palette = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   new_name = (gchar *) args[1].value.pdb_pointer;
@@ -261,7 +263,7 @@ static ProcArg palette_rename_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the palette to rename"
+    "The palette name (\"\" means currently active palette)"
   },
   {
     GIMP_PDB_STRING,
@@ -306,7 +308,7 @@ palette_delete_invoker (Gimp         *gimp,
   GimpPalette *palette = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -348,7 +350,7 @@ static ProcArg palette_delete_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the palette to delete"
+    "The palette name (\"\" means currently active palette)"
   }
 };
 

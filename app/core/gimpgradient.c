@@ -287,6 +287,7 @@ gimp_gradient_new (const gchar *name,
   GimpGradient *gradient;
 
   g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (*name != '\0', NULL);
 
   gradient = g_object_new (GIMP_TYPE_GRADIENT,
                            "name", name,

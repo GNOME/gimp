@@ -61,15 +61,17 @@ sub palette_new {
     @outargs = (
 	{ name => 'name', type => 'string',
 	  desc => 'The actual new palette name',
-	  alias => 'g_strdup (GIMP_OBJECT (palette)->name)', no_declare => 1 },
+	  alias => 'g_strdup (GIMP_OBJECT (data)->name)', no_declare => 1 },
     );
 
     %invoke = (
-        vars => [ 'GimpPalette * palette = NULL'],
+        vars => [ 'GimpData *data = NULL'],
         code => <<'CODE'
 {
-  palette = (GimpPalette *)
-    gimp_data_factory_data_new (gimp->palette_factory, name);
+  if (strlen (name))
+    data = gimp_data_factory_data_new (gimp->palette_factory, name);
+
+  success = (data != NULL);
 }
 CODE
     );
@@ -82,8 +84,7 @@ sub palette_duplicate {
     &mitch_misc;
 
     @inargs = (
-        { name => 'name', type => 'string',
-          desc => "The name of the palette to duplicate" }
+        &palette_arg
     );
 
     @outargs = (
@@ -122,8 +123,7 @@ sub palette_rename {
     &mitch_misc;
 
     @inargs = (
-        { name => 'name', type => 'string',
-          desc => "The name of the palette to rename" },
+        &palette_arg,
         { name => 'new_name', type => 'string',
           desc => "The new name of the palette" }
     );
@@ -156,8 +156,7 @@ sub palette_delete {
     &mitch_misc;
 
     @inargs = (
-        { name => 'name', type => 'string',
-          desc => "The name of the palette to delete" }
+        &palette_arg
     );
 
     %invoke = (

@@ -21,8 +21,15 @@ sub shlomi_misc {
     $since  = '2.2';
 }
 
+sub gradient_arg () {{
+    name => 'name',
+    type => 'string',
+    desc => 'The gradient name ("" means currently active gradient)',
+    null_ok => '1'
+}}
+
 my $get_gradient_from_name = <<'CODE';
-  if (strlen (name))
+  if (name && strlen (name))
     {
       gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -79,8 +86,7 @@ sub other_side
 sub _grad_and_seg_params
 {
     return
-        ( { name => 'name', type => 'string',
-            desc => 'The name of the gradient to operate on' },
+        ( &gradient_arg,
           { name => 'segment', type => '0 <= int32',
             desc => 'The index of the segment within the gradient' }
         );
@@ -262,15 +268,17 @@ sub gradient_new {
     @outargs = (
 	{ name => 'name', type => 'string',
 	  desc => 'The actual new gradient name',
-	  alias => 'g_strdup (GIMP_OBJECT (gradient)->name)', no_declare => 1 },
+	  alias => 'g_strdup (GIMP_OBJECT (data)->name)', no_declare => 1 },
     );
 
     %invoke = (
-        vars => [ 'GimpGradient * gradient = NULL'],
+        vars => [ 'GimpData *data = NULL'],
         code => <<'CODE'
 {
-  gradient = (GimpGradient *)
-    gimp_data_factory_data_new (gimp->gradient_factory, name);
+  if (strlen (name))
+    data = gimp_data_factory_data_new (gimp->gradient_factory, name);
+
+  success = (data != NULL);
 }
 CODE
     );
@@ -283,8 +291,7 @@ sub gradient_duplicate {
     &shlomi_misc;
 
     @inargs = (
-        { name => 'name', type => 'string',
-          desc => "The name of the gradient to duplicate" }
+        &gradient_arg
     );
 
     @outargs = (
@@ -323,8 +330,7 @@ sub gradient_rename {
     &shlomi_misc;
 
     @inargs = (
-        { name => 'name', type => 'string',
-          desc => "The name of the gradient to rename" },
+        &gradient_arg,
         { name => 'new_name', type => 'string',
           desc => "The new name of the gradient" }
     );
@@ -357,8 +363,7 @@ sub gradient_delete {
     &shlomi_misc;
 
     @inargs = (
-        { name => 'name', type => 'string',
-          desc => "The name of the gradient to delete" }
+        &gradient_arg
     );
 
     %invoke = (
@@ -505,8 +510,7 @@ sub _gen_gradient_operate_on_segments_range
     &shlomi_misc;
 
     @inargs = (
-        { name => 'name', type => 'string',
-          desc => 'The name of the gradient to operate on.' },
+        &gradient_arg,
         { name => 'start_segment', type => '0 <= int32',
           desc => 'The index of the first segment to operate on' },
         { name => 'end_segment', type => 'int32',

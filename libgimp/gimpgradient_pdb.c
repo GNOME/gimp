@@ -59,7 +59,7 @@ gimp_gradient_new (const gchar *name)
 
 /**
  * gimp_gradient_duplicate:
- * @name: The name of the gradient to duplicate.
+ * @name: The gradient name (\"\" means currently active gradient).
  *
  * Duplicates a gradient
  *
@@ -91,7 +91,7 @@ gimp_gradient_duplicate (const gchar *name)
 
 /**
  * gimp_gradient_rename:
- * @name: The name of the gradient to rename.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @new_name: The new name of the gradient.
  *
  * Rename a gradient
@@ -126,7 +126,7 @@ gimp_gradient_rename (const gchar *name,
 
 /**
  * gimp_gradient_delete:
- * @name: The name of the gradient to delete.
+ * @name: The gradient name (\"\" means currently active gradient).
  *
  * Deletes a gradient
  *
@@ -157,7 +157,7 @@ gimp_gradient_delete (const gchar *name)
 
 /**
  * gimp_gradient_segment_get_left_color:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @segment: The index of the segment within the gradient.
  * @color: The return color.
  * @opacity: The opacity of the endpoint.
@@ -205,7 +205,7 @@ gimp_gradient_segment_get_left_color (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_left_color:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @segment: The index of the segment within the gradient.
  * @color: The color to set.
  * @opacity: The opacity to set for the endpoint.
@@ -247,7 +247,7 @@ gimp_gradient_segment_set_left_color (const gchar   *name,
 
 /**
  * gimp_gradient_segment_get_right_color:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @segment: The index of the segment within the gradient.
  * @color: The return color.
  * @opacity: The opacity of the endpoint.
@@ -295,7 +295,7 @@ gimp_gradient_segment_get_right_color (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_right_color:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @segment: The index of the segment within the gradient.
  * @color: The color to set.
  * @opacity: The opacity to set for the endpoint.
@@ -337,7 +337,7 @@ gimp_gradient_segment_set_right_color (const gchar   *name,
 
 /**
  * gimp_gradient_segment_get_left_pos:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @segment: The index of the segment within the gradient.
  * @pos: The return position.
  *
@@ -380,7 +380,7 @@ gimp_gradient_segment_get_left_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_left_pos:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @segment: The index of the segment within the gradient.
  * @pos: The position to set the guidepoint in.
  * @final_pos: The return position.
@@ -429,7 +429,7 @@ gimp_gradient_segment_set_left_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_get_middle_pos:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @segment: The index of the segment within the gradient.
  * @pos: The return position.
  *
@@ -472,7 +472,7 @@ gimp_gradient_segment_get_middle_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_middle_pos:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @segment: The index of the segment within the gradient.
  * @pos: The position to set the guidepoint in.
  * @final_pos: The return position.
@@ -519,7 +519,7 @@ gimp_gradient_segment_set_middle_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_get_right_pos:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @segment: The index of the segment within the gradient.
  * @pos: The return position.
  *
@@ -562,7 +562,7 @@ gimp_gradient_segment_get_right_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_right_pos:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @segment: The index of the segment within the gradient.
  * @pos: The position to set the guidepoint in.
  * @final_pos: The return position.
@@ -611,7 +611,7 @@ gimp_gradient_segment_set_right_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_get_blending_function:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @segment: The index of the segment within the gradient.
  * @blend_func: The blending function of the segment.
  *
@@ -653,7 +653,7 @@ gimp_gradient_segment_get_blending_function (const gchar             *name,
 
 /**
  * gimp_gradient_segment_get_coloring_type:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @segment: The index of the segment within the gradient.
  * @coloring_type: The coloring type of the segment.
  *
@@ -695,7 +695,7 @@ gimp_gradient_segment_get_coloring_type (const gchar              *name,
 
 /**
  * gimp_gradient_segment_range_set_blending_function:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  * @blending_function: The Blending Function.
@@ -736,7 +736,7 @@ gimp_gradient_segment_range_set_blending_function (const gchar             *name
 
 /**
  * gimp_gradient_segment_range_set_coloring_type:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  * @coloring_type: The Coloring Type.
@@ -777,7 +777,7 @@ gimp_gradient_segment_range_set_coloring_type (const gchar              *name,
 
 /**
  * gimp_gradient_segment_range_flip:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  *
@@ -814,7 +814,7 @@ gimp_gradient_segment_range_flip (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_replicate:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  * @replicate_times: The number of times to replicate.
@@ -856,7 +856,7 @@ gimp_gradient_segment_range_replicate (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_split_midpoint:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  *
@@ -894,7 +894,7 @@ gimp_gradient_segment_range_split_midpoint (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_split_uniform:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  * @split_parts: The number of uniform divisions to split each segment to.
@@ -935,7 +935,7 @@ gimp_gradient_segment_range_split_uniform (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_delete:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  *
@@ -972,7 +972,7 @@ gimp_gradient_segment_range_delete (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_redistribute_handles:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  *
@@ -1010,7 +1010,7 @@ gimp_gradient_segment_range_redistribute_handles (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_blend_colors:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  *
@@ -1049,7 +1049,7 @@ gimp_gradient_segment_range_blend_colors (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_blend_opacity:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  *
@@ -1088,7 +1088,7 @@ gimp_gradient_segment_range_blend_opacity (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_move:
- * @name: The name of the gradient to operate on.
+ * @name: The gradient name (\"\" means currently active gradient).
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  * @delta: The delta to move the segment range.

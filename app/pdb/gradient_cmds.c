@@ -105,7 +105,7 @@ gradient_new_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpGradient * gradient = NULL;
+  GimpData *data = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))
@@ -113,14 +113,16 @@ gradient_new_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gradient = (GimpGradient *)
-        gimp_data_factory_data_new (gimp->gradient_factory, name);
+      if (strlen (name))
+        data = gimp_data_factory_data_new (gimp->gradient_factory, name);
+
+      success = (data != NULL);
     }
 
   return_args = procedural_db_return_args (&gradient_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (gradient)->name);
+    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (data)->name);
 
   return return_args;
 }
@@ -172,12 +174,12 @@ gradient_duplicate_invoker (Gimp         *gimp,
   GimpGradient *gradient_copy = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-        if (strlen (name))
+        if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -213,7 +215,7 @@ static ProcArg gradient_duplicate_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to duplicate"
+    "The gradient name (\"\" means currently active gradient)"
   }
 };
 
@@ -255,7 +257,7 @@ gradient_rename_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   new_name = (gchar *) args[1].value.pdb_pointer;
@@ -264,7 +266,7 @@ gradient_rename_invoker (Gimp         *gimp,
 
   if (success)
     {
-        if (strlen (name))
+        if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -294,7 +296,7 @@ static ProcArg gradient_rename_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to rename"
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_STRING,
@@ -339,12 +341,12 @@ gradient_delete_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-        if (strlen (name))
+        if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -381,7 +383,7 @@ static ProcArg gradient_delete_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to delete"
+    "The gradient name (\"\" means currently active gradient)"
   }
 };
 
@@ -416,7 +418,7 @@ gradient_segment_get_left_color_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   segment = args[1].value.pdb_int;
@@ -425,7 +427,7 @@ gradient_segment_get_left_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -470,7 +472,7 @@ static ProcArg gradient_segment_get_left_color_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on"
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -523,7 +525,7 @@ gradient_segment_set_left_color_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   segment = args[1].value.pdb_int;
@@ -538,7 +540,7 @@ gradient_segment_set_left_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -575,7 +577,7 @@ static ProcArg gradient_segment_set_left_color_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on"
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -625,7 +627,7 @@ gradient_segment_get_right_color_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   segment = args[1].value.pdb_int;
@@ -634,7 +636,7 @@ gradient_segment_get_right_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -679,7 +681,7 @@ static ProcArg gradient_segment_get_right_color_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on"
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -732,7 +734,7 @@ gradient_segment_set_right_color_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   segment = args[1].value.pdb_int;
@@ -747,7 +749,7 @@ gradient_segment_set_right_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -784,7 +786,7 @@ static ProcArg gradient_segment_set_right_color_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on"
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -833,7 +835,7 @@ gradient_segment_get_left_pos_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   segment = args[1].value.pdb_int;
@@ -842,7 +844,7 @@ gradient_segment_get_left_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -883,7 +885,7 @@ static ProcArg gradient_segment_get_left_pos_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on"
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -932,7 +934,7 @@ gradient_segment_set_left_pos_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   segment = args[1].value.pdb_int;
@@ -945,7 +947,7 @@ gradient_segment_set_left_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -987,7 +989,7 @@ static ProcArg gradient_segment_set_left_pos_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on"
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -1040,7 +1042,7 @@ gradient_segment_get_middle_pos_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   segment = args[1].value.pdb_int;
@@ -1049,7 +1051,7 @@ gradient_segment_get_middle_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -1090,7 +1092,7 @@ static ProcArg gradient_segment_get_middle_pos_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on"
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -1139,7 +1141,7 @@ gradient_segment_set_middle_pos_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   segment = args[1].value.pdb_int;
@@ -1152,7 +1154,7 @@ gradient_segment_set_middle_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -1194,7 +1196,7 @@ static ProcArg gradient_segment_set_middle_pos_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on"
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -1247,7 +1249,7 @@ gradient_segment_get_right_pos_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   segment = args[1].value.pdb_int;
@@ -1256,7 +1258,7 @@ gradient_segment_get_right_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -1297,7 +1299,7 @@ static ProcArg gradient_segment_get_right_pos_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on"
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -1346,7 +1348,7 @@ gradient_segment_set_right_pos_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   segment = args[1].value.pdb_int;
@@ -1359,7 +1361,7 @@ gradient_segment_set_right_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -1401,7 +1403,7 @@ static ProcArg gradient_segment_set_right_pos_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on"
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -1454,7 +1456,7 @@ gradient_segment_get_blending_function_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   segment = args[1].value.pdb_int;
@@ -1463,7 +1465,7 @@ gradient_segment_get_blending_function_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -1505,7 +1507,7 @@ static ProcArg gradient_segment_get_blending_function_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on"
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -1553,7 +1555,7 @@ gradient_segment_get_coloring_type_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   segment = args[1].value.pdb_int;
@@ -1562,7 +1564,7 @@ gradient_segment_get_coloring_type_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -1604,7 +1606,7 @@ static ProcArg gradient_segment_get_coloring_type_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on"
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -1652,7 +1654,7 @@ gradient_segment_range_set_blending_function_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   start_segment = args[1].value.pdb_int;
@@ -1667,7 +1669,7 @@ gradient_segment_range_set_blending_function_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -1725,7 +1727,7 @@ static ProcArg gradient_segment_range_set_blending_function_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on."
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -1774,7 +1776,7 @@ gradient_segment_range_set_coloring_type_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   start_segment = args[1].value.pdb_int;
@@ -1789,7 +1791,7 @@ gradient_segment_range_set_coloring_type_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -1847,7 +1849,7 @@ static ProcArg gradient_segment_range_set_coloring_type_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on."
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -1895,7 +1897,7 @@ gradient_segment_range_flip_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   start_segment = args[1].value.pdb_int;
@@ -1906,7 +1908,7 @@ gradient_segment_range_flip_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -1964,7 +1966,7 @@ static ProcArg gradient_segment_range_flip_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on."
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -2008,7 +2010,7 @@ gradient_segment_range_replicate_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   start_segment = args[1].value.pdb_int;
@@ -2023,7 +2025,7 @@ gradient_segment_range_replicate_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -2082,7 +2084,7 @@ static ProcArg gradient_segment_range_replicate_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on."
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -2130,7 +2132,7 @@ gradient_segment_range_split_midpoint_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   start_segment = args[1].value.pdb_int;
@@ -2141,7 +2143,7 @@ gradient_segment_range_split_midpoint_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -2199,7 +2201,7 @@ static ProcArg gradient_segment_range_split_midpoint_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on."
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -2243,7 +2245,7 @@ gradient_segment_range_split_uniform_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   start_segment = args[1].value.pdb_int;
@@ -2258,7 +2260,7 @@ gradient_segment_range_split_uniform_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -2317,7 +2319,7 @@ static ProcArg gradient_segment_range_split_uniform_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on."
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -2365,7 +2367,7 @@ gradient_segment_range_delete_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   start_segment = args[1].value.pdb_int;
@@ -2376,7 +2378,7 @@ gradient_segment_range_delete_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -2434,7 +2436,7 @@ static ProcArg gradient_segment_range_delete_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on."
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -2477,7 +2479,7 @@ gradient_segment_range_redistribute_handles_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   start_segment = args[1].value.pdb_int;
@@ -2488,7 +2490,7 @@ gradient_segment_range_redistribute_handles_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -2545,7 +2547,7 @@ static ProcArg gradient_segment_range_redistribute_handles_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on."
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -2588,7 +2590,7 @@ gradient_segment_range_blend_colors_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   start_segment = args[1].value.pdb_int;
@@ -2599,7 +2601,7 @@ gradient_segment_range_blend_colors_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -2658,7 +2660,7 @@ static ProcArg gradient_segment_range_blend_colors_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on."
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -2701,7 +2703,7 @@ gradient_segment_range_blend_opacity_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   start_segment = args[1].value.pdb_int;
@@ -2712,7 +2714,7 @@ gradient_segment_range_blend_opacity_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -2771,7 +2773,7 @@ static ProcArg gradient_segment_range_blend_opacity_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on."
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,
@@ -2818,7 +2820,7 @@ gradient_segment_range_move_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   start_segment = args[1].value.pdb_int;
@@ -2835,7 +2837,7 @@ gradient_segment_range_move_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -2900,7 +2902,7 @@ static ProcArg gradient_segment_range_move_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The name of the gradient to operate on."
+    "The gradient name (\"\" means currently active gradient)"
   },
   {
     GIMP_PDB_INT32,

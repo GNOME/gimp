@@ -548,10 +548,11 @@ gimp_brush_generated_new (const gchar             *name,
   GimpBrushGenerated *brush;
 
   g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (*name != '\0', NULL);
 
   brush = g_object_new (GIMP_TYPE_BRUSH_GENERATED,
-                        "shape",        shape,
                         "name",         name,
+                        "shape",        shape,
                         "radius",       radius,
                         "spikes",       spikes,
                         "hardness",     hardness,

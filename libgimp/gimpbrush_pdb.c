@@ -59,7 +59,7 @@ gimp_brush_new (const gchar *name)
 
 /**
  * gimp_brush_duplicate:
- * @name: The name of the brush to duplicate.
+ * @name: The brush name (\"\" means currently active brush).
  *
  * Duplicates a brush
  *
@@ -91,7 +91,7 @@ gimp_brush_duplicate (const gchar *name)
 
 /**
  * gimp_brush_rename:
- * @name: The name of the brush to rename.
+ * @name: The brush name (\"\" means currently active brush).
  * @new_name: The new name of the brush.
  *
  * Rename a brush
@@ -126,7 +126,7 @@ gimp_brush_rename (const gchar *name,
 
 /**
  * gimp_brush_delete:
- * @name: The name of the brush to delete.
+ * @name: The brush name (\"\" means currently active brush).
  *
  * Deletes a brush
  *

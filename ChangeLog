@@ -1,3 +1,33 @@
+2004-10-04  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/brush.pdb
+	* tools/pdbgen/pdb/gradient.pdb
+	* tools/pdbgen/pdb/palette.pdb: disallow the empty string for
+	new brushes, gradients and palettes and check the return value
+	of gimp_data_factory_data_new(). Cleanup.
+
+	* app/core/gimpbrushgenerated.c (gimp_brush_generated_new)
+	* app/core/gimpgradient.c (gimp_gradient_new)
+	* app/core/gimpdatafactory.c (gimp_data_factory_data_new): same
+	here. Fixes bug #154264.
+
+	* app/core/gimpdata.[ch] (gimp_data_set_filename): added boolean
+	"deletable" parameter because it's not derivable from "writable".
+
+	* app/core/gimpdatafactory.c (gimp_data_factory_load_data): need
+	to figure "deletable" separately from "writable" to be able to
+	delete unsavable stuff in the user-writable data directories.
+	Fixes bug #154410.
+
+	(gimp_data_factory_data_save_single): cleaned up.
+
+	* app/pdb/brush_cmds.c
+	* app/pdb/gradient_cmds.c
+	* app/pdb/palette_cmds.c
+	* libgimp/gimpbrush_pdb.c
+	* libgimp/gimpgradient_pdb.c
+	* libgimp/gimppalette_pdb.c: regenerated.
+
 2004-10-04  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/asc2img.scm: a cleaned up version of

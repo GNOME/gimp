@@ -335,6 +335,7 @@ gimp_data_get_extension (GimpData *data)
  * @data:     A #GimpData object
  * @filename: File name to assign to @data.
  * @writable: %TRUE if we want to be able to write to this file.
+ * @deletable: %TRUE if we want to be able to delete this file.
  *
  * This function assigns a file name to @data, and sets some flags
  * according to the properties of the file.  If @writable is %TRUE,
@@ -345,7 +346,8 @@ gimp_data_get_extension (GimpData *data)
 void
 gimp_data_set_filename (GimpData    *data,
                         const gchar *filename,
-                        gboolean     writable)
+                        gboolean     writable,
+                        gboolean     deletable)
 {
   g_return_if_fail (GIMP_IS_DATA (data));
   g_return_if_fail (filename != NULL);
@@ -361,8 +363,10 @@ gimp_data_set_filename (GimpData    *data,
   data->writable  = FALSE;
   data->deletable = FALSE;
 
-  /*  if the data is supposed to be writable, still check if it really is  */
-  if (writable)
+  /*  if the data is supposed to be writable or deletable,
+   *  still check if it really is
+   */
+  if (writable || deletable)
     {
       gchar *dirname = g_path_get_dirname (filename);
 
@@ -371,8 +375,8 @@ gimp_data_set_filename (GimpData    *data,
           (access (filename, F_OK) != 0 &&  /* OR doesn't exist            */
            access (dirname,  W_OK) == 0))   /* and we can write to its dir */
         {
-          data->writable  = TRUE;
-          data->deletable = TRUE;
+          data->writable  = writable  ? TRUE : FALSE;
+          data->deletable = deletable ? TRUE : FALSE;
         }
 
       g_free (dirname);
@@ -440,7 +444,7 @@ gimp_data_create_filename (GimpData    *data,
 
   g_free (safename);
 
-  gimp_data_set_filename (data, fullpath, TRUE);
+  gimp_data_set_filename (data, fullpath, TRUE, TRUE);
 
   g_free (fullpath);
 }

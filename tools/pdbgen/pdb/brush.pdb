@@ -67,15 +67,17 @@ sub brush_new {
     @outargs = (
 	{ name => 'name', type => 'string',
 	  desc => 'The actual new brush name',
-	  alias => 'g_strdup (GIMP_OBJECT (brush)->name)', no_declare => 1 },
+	  alias => 'g_strdup (GIMP_OBJECT (data)->name)', no_declare => 1 },
     );
 
     %invoke = (
-        vars => [ 'GimpBrush * brush = NULL'],
+        vars => [ 'GimpData *data = NULL'],
         code => <<'CODE'
 {
-  brush = (GimpBrush *)
-    gimp_data_factory_data_new (gimp->brush_factory, name);
+  if (strlen (name))
+    data = gimp_data_factory_data_new (gimp->brush_factory, name);
+
+  success = (data != NULL);
 }
 CODE
     );
@@ -88,8 +90,7 @@ sub brush_duplicate {
     &mitch_misc;
 
     @inargs = (
-        { name => 'name', type => 'string',
-          desc => "The name of the brush to duplicate" }
+        &brush_arg
     );
 
     @outargs = (
@@ -128,8 +129,7 @@ sub brush_rename {
     &mitch_misc;
 
     @inargs = (
-        { name => 'name', type => 'string',
-          desc => "The name of the brush to rename" },
+        &brush_arg,
         { name => 'new_name', type => 'string',
           desc => "The new name of the brush" }
     );
@@ -162,8 +162,7 @@ sub brush_delete {
     &mitch_misc;
 
     @inargs = (
-        { name => 'name', type => 'string',
-          desc => "The name of the brush to delete" }
+        &brush_arg
     );
 
     %invoke = (

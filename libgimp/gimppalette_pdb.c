@@ -59,7 +59,7 @@ gimp_palette_new (const gchar *name)
 
 /**
  * gimp_palette_duplicate:
- * @name: The name of the palette to duplicate.
+ * @name: The palette name (\"\" means currently active palette).
  *
  * Duplicates a palette
  *
@@ -91,7 +91,7 @@ gimp_palette_duplicate (const gchar *name)
 
 /**
  * gimp_palette_rename:
- * @name: The name of the palette to rename.
+ * @name: The palette name (\"\" means currently active palette).
  * @new_name: The new name of the palette.
  *
  * Rename a palette
@@ -126,7 +126,7 @@ gimp_palette_rename (const gchar *name,
 
 /**
  * gimp_palette_delete:
- * @name: The name of the palette to delete.
+ * @name: The palette name (\"\" means currently active palette).
  *
  * Deletes a palette
  *
