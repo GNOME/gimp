@@ -113,57 +113,56 @@ gimp_histogram_calculate (GimpHistogram *histogram,
 
   g_return_if_fail (histogram != NULL);
 
-  if (region)
-    {
-      gimp_histogram_alloc_values (histogram, region->bytes);
-
-#ifdef ENABLE_MP
-      for (i = 0; i < histogram->num_slots; i++)
-        {
-          histogram->tmp_values[i] = g_new0 (gdouble *, histogram->n_channels);
-          histogram->tmp_slots[i]  = 0;
-
-          for (j = 0; j < histogram->n_channels; j++)
-            {
-              gint k;
-
-              histogram->tmp_values[i][j] = g_new0 (gdouble, 256);
-
-              for (k = 0; k < 256; k++)
-                histogram->tmp_values[i][j][k] = 0.0;
-            }
-        }
-#endif
-
-      for (i = 0; i < histogram->n_channels; i++)
-        for (j = 0; j < 256; j++)
-          histogram->values[i][j] = 0.0;
-
-      pixel_regions_process_parallel ((p_func) gimp_histogram_calculate_sub_region,
-                                      histogram, 2, region, mask);
-
-#ifdef ENABLE_MP
-      /* add up all the tmp buffers and free their memmory */
-      for (i = 0; i < histogram->num_slots; i++)
-        {
-          for (j = 0; j < histogram->n_channels; j++)
-            {
-              gint k;
-
-              for (k = 0; k < 256; k++)
-                histogram->values[j][k] += histogram->tmp_values[i][j][k];
-
-              g_free (histogram->tmp_values[i][j]);
-            }
-
-          g_free (histogram->tmp_values[i]);
-        }
-#endif
-    }
-  else
+  if (! region)
     {
       gimp_histogram_free_values (histogram);
+      return;
     }
+
+  gimp_histogram_alloc_values (histogram, region->bytes);
+
+#ifdef ENABLE_MP
+  for (i = 0; i < histogram->num_slots; i++)
+    {
+      histogram->tmp_values[i] = g_new0 (gdouble *, histogram->n_channels);
+      histogram->tmp_slots[i]  = 0;
+
+      for (j = 0; j < histogram->n_channels; j++)
+        {
+          gint k;
+
+          histogram->tmp_values[i][j] = g_new0 (gdouble, 256);
+
+          for (k = 0; k < 256; k++)
+            histogram->tmp_values[i][j][k] = 0.0;
+        }
+    }
+#endif
+
+  for (i = 0; i < histogram->n_channels; i++)
+    for (j = 0; j < 256; j++)
+      histogram->values[i][j] = 0.0;
+
+  pixel_regions_process_parallel ((p_func) gimp_histogram_calculate_sub_region,
+                                  histogram, 2, region, mask);
+
+#ifdef ENABLE_MP
+  /* add up all the tmp buffers and free their memmory */
+  for (i = 0; i < histogram->num_slots; i++)
+    {
+      for (j = 0; j < histogram->n_channels; j++)
+        {
+          gint k;
+
+          for (k = 0; k < 256; k++)
+            histogram->values[j][k] += histogram->tmp_values[i][j][k];
+
+          g_free (histogram->tmp_values[i][j]);
+        }
+
+      g_free (histogram->tmp_values[i]);
+    }
+#endif
 }
 
 gdouble
@@ -174,6 +173,10 @@ gimp_histogram_get_maximum (GimpHistogram        *histogram,
   gint    x;
 
   g_return_val_if_fail (histogram != NULL, 0.0);
+
+  /*  the gray alpha channel is in slot 1  */
+  if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+    channel = 1;
 
   if (! histogram->values || channel >= histogram->n_channels)
     return 0.0;
@@ -191,6 +194,10 @@ gimp_histogram_get_value (GimpHistogram        *histogram,
 			  gint                  bin)
 {
   g_return_val_if_fail (histogram != NULL, 0.0);
+
+  /*  the gray alpha channel is in slot 1  */
+  if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+    channel = 1;
 
   if (histogram->values               &&
       channel < histogram->n_channels &&
@@ -232,6 +239,10 @@ gimp_histogram_get_count (GimpHistogram        *histogram,
 
   g_return_val_if_fail (histogram != NULL, 0.0);
 
+  /*  the gray alpha channel is in slot 1  */
+  if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+    channel = 1;
+
   if (! histogram->values || channel >= histogram->n_channels)
     return 0.0;
 
@@ -252,6 +263,10 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
   gdouble count;
 
   g_return_val_if_fail (histogram != NULL, 0.0);
+
+  /*  the gray alpha channel is in slot 1  */
+  if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+    channel = 1;
 
   if (! histogram->values || channel >= histogram->n_channels)
     return 0.0;
@@ -278,6 +293,10 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
   gdouble count;
 
   g_return_val_if_fail (histogram != NULL, -1);
+
+  /*  the gray alpha channel is in slot 1  */
+  if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+    channel = 1;
 
   if (! histogram->values || channel >= histogram->n_channels)
     return 0;
@@ -307,6 +326,10 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
   gdouble mean;
 
   g_return_val_if_fail (histogram != NULL, 0.0);
+
+  /*  the gray alpha channel is in slot 1  */
+  if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+    channel = 1;
 
   if (! histogram->values || channel >= histogram->n_channels)
     return 0.0;

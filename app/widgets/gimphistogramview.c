@@ -249,14 +249,13 @@ static gboolean
 gimp_histogram_view_expose (GtkWidget      *widget,
                             GdkEventExpose *event)
 {
-  GimpHistogramView    *view = GIMP_HISTOGRAM_VIEW (widget);
-  GimpHistogramChannel  channel;
-  gint                  x, y;
-  gint                  x1, x2;
-  gint                  border;
-  gint                  width, height;
-  gdouble               max;
-  gint                  xstop;
+  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
+  gint               x, y;
+  gint               x1, x2;
+  gint               border;
+  gint               width, height;
+  gdouble            max;
+  gint               xstop;
 
   if (! view->histogram)
     return FALSE;
@@ -265,14 +264,8 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   width  = widget->allocation.width  - 2 * border;
   height = widget->allocation.height - 2 * border;
 
-  channel = view->channel;
-
-  /* FIXME: hack */
-  if (gimp_histogram_n_channels (view->histogram) == 2)
-    channel = (channel > 0) ? 1 : 0;
-
   /*  find the maximum value  */
-  max = gimp_histogram_get_maximum (view->histogram, channel);
+  max = gimp_histogram_get_maximum (view->histogram, view->channel);
 
   switch (view->scale)
     {
@@ -322,7 +315,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
           if (! in_selection)
             in_selection = ((x1 != 0 || x2 != 255) && x1 <= i && i <= x2);
 
-          v = gimp_histogram_get_value (view->histogram, channel, i++);
+          v = gimp_histogram_get_value (view->histogram, view->channel, i++);
 
           if (v > value)
             value = v;

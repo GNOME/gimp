@@ -419,30 +419,26 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
 
   if (hist)
     {
-      GimpHistogramChannel channel = gimp_histogram_view_get_channel (view);
-      gdouble              pixels;
-      gdouble              count;
-      gchar                text[12];
+      gdouble pixels;
+      gdouble count;
+      gchar   text[12];
 
-      /* FIXME: hack */
-      if (gimp_histogram_n_channels (hist) == 2)
-        channel = (channel > 0) ? 1 : 0;
-
-      pixels = gimp_histogram_get_count (hist, channel, 0, 255);
-      count  = gimp_histogram_get_count (hist, channel, view->start, view->end);
+      pixels = gimp_histogram_get_count (hist, view->channel, 0, 255);
+      count  = gimp_histogram_get_count (hist, view->channel,
+                                         view->start, view->end);
 
       g_snprintf (text, sizeof (text), "%3.1f",
-                  gimp_histogram_get_mean (hist, channel,
+                  gimp_histogram_get_mean (hist, view->channel,
                                            view->start, view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[0]), text);
 
       g_snprintf (text, sizeof (text), "%3.1f",
-                  gimp_histogram_get_std_dev (hist, channel,
+                  gimp_histogram_get_std_dev (hist, view->channel,
                                               view->start, view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[1]), text);
 
       g_snprintf (text, sizeof (text), "%3.1f",
-                  (gdouble) gimp_histogram_get_median  (hist, channel,
+                  (gdouble) gimp_histogram_get_median  (hist, view->channel,
                                                         view->start,
                                                         view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[2]), text);

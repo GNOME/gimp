@@ -1054,9 +1054,6 @@ histogram_invoker (Gimp     *gimp,
 	{
 	  GimpHistogram *histogram;
     
-	  if (gimp_drawable_is_gray (drawable))
-	    channel = (channel > 0) ? 1 : 0;
-    
 	  histogram = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
     
 	  gimp_drawable_calculate_histogram (drawable, histogram);

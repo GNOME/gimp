@@ -1,5 +1,21 @@
 2004-01-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/gimphistogram.c: added GimpHistogramChannel index
+	fiddling hacks for GRAYA images to all gimp_histogram_get_*()
+	functions. The public API now does what their enum values pretend
+	to do.
+
+	(gimp_histogram_calculate): restructured to reduce indentation depth.
+
+	* app/widgets/gimphistogrameditor.c
+	* app/widgets/gimphistogramview.c
+	* tools/pdbgen/pdb/color.pdb: removed hacks here and always use
+	the unchanged enum values.
+
+	* app/pdb/color_cmds.c: regenerated.
+
+2004-01-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/base/gimphistogram.[ch]: renamed gimp_histogram_nchannels()
 	to gimp_histogram_n_channels().
 
