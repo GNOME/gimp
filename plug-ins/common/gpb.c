@@ -1061,6 +1061,12 @@ run (char    *name,
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = STATUS_CALLING_ERROR;
 
+  if (run_mode == RUN_INTERACTIVE) {
+    INIT_I18N_UI();
+  } else {
+    INIT_I18N();
+  }
+
   if (strcmp (name, "file_gpb_save") == 0)
     {
       image_ID    = param[1].data.d_int32;
@@ -1071,7 +1077,6 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-      INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GPB", 
 				      (CAN_HANDLE_RGB | CAN_HANDLE_ALPHA | 
@@ -1084,7 +1089,6 @@ run (char    *name,
 	    }
 	  break;
 	default:
-      INIT_I18N();
 	  break;
 	}
 

@@ -80,6 +80,11 @@ plug-ins/common/normalize.c
 plug-ins/common/nova.c
 plug-ins/common/oilify.c
 plug-ins/common/papertile.c
+plug-ins/common/pat.c
+plug-ins/common/pcx.c
+plug-ins/common/pix.c
+plug-ins/common/pixelize.c
+plug-ins/common/plasma.c
 plug-ins/common/png.c
 plug-ins/common/ps.c
 plug-ins/common/psp.c

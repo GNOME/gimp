@@ -6,9 +6,16 @@
 	* plug-ins/common/newsprint.c
 	* plug-ins/common/nlfilt.c
 	* plug-ins/common/noisify.c
-	* po-plug-ins/POTFILES.in: Added gettext support and replace
+	* plug-ins/common/pat.c
+	* plug-ins/common/pcx.c
+	* plug-ins/common/pix.c
+	* plug-ins/common/pixelize.c
+	* plug-ins/common/plasma.c
+	* po-plug-ins/POTFILES.in: added gettext support and replace
 	sprintf with g_strdup_printf().
 
+	* plug-ins/common/gpb.c: added INIT_I18N() for gih saver.
+	
 Fri Dec 31 14:30:10 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/gif.c: small i18n fix

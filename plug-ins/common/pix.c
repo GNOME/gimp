@@ -47,9 +47,11 @@ static char ident[] = "@(#) GIMP Alias|Wavefront pix image file-plugin v1.0  24-
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* #define PIX_DEBUG */
 
@@ -125,9 +127,11 @@ static void query ()
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_pix_load",
-			  "loads files of the PIX file format",
-			  "loads files of the PIX file format",
+			  _("loads files of the PIX file format"),
+			  _("loads files of the PIX file format"),
 			  "Michael Taylor",
 			  "Michael Taylor",
 			  "1997",
@@ -138,8 +142,8 @@ static void query ()
 			  load_args, load_return_vals);
   
   gimp_install_procedure ("file_pix_save",
-                          "save file in the Alias|Wavefront pix/matte file format",
-                          "save file in the Alias|Wavefront pix/matte file format",
+                          _("save file in the Alias|Wavefront pix/matte file format"),
+                          _("save file in the Alias|Wavefront pix/matte file format"),
                           "Michael Taylor",
                           "Michael Taylor",
                           "1997",
@@ -188,6 +192,7 @@ run (char    *name,
   
   if (strcmp (name, "file_pix_load") == 0) 
     {
+      INIT_I18N();
       /* Perform the image load */
       image_ID = load_image (param[1].data.d_string);
       if (image_ID != -1) 
@@ -214,6 +219,7 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
+      INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PIX", 
 				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY));
@@ -224,6 +230,7 @@ run (char    *name,
 	    }
 	  break;
 	default:
+      INIT_I18N();
 	  break;
 	}
 
@@ -306,10 +313,7 @@ load_image (char *filename)
   GDrawableType gdtype;
   
   /* Set up progress display */
-  progMessage = malloc (strlen (filename) + 12);
-  if (!progMessage) 
-    gimp_quit ();
-  sprintf (progMessage, "Loading %s:", filename);
+  progMessage = g_strdup_printf( _("Loading %s:"), filename);
   gimp_progress_init (progMessage);
   free (progMessage);
   
@@ -353,7 +357,7 @@ load_image (char *filename)
   
   image_ID = gimp_image_new ( width, height, imgtype );
   gimp_image_set_filename ( image_ID, filename );
-  layer_ID = gimp_layer_new ( image_ID, "Background",
+  layer_ID = gimp_layer_new ( image_ID, _("Background"),
 			      width,
 			      height,
 			      gdtype, 100, NORMAL_MODE );
@@ -517,10 +521,7 @@ save_image (char   *filename,
     }
   
   /* Set up progress display */
-  progMessage = malloc (strlen (filename) + 12);
-  if (!progMessage) 
-    gimp_quit ();
-  sprintf (progMessage, "Saving %s:", filename);
+  progMessage = g_strdup_printf( _("Saving %s:"), filename);
   gimp_progress_init (progMessage);
   free (progMessage);
   

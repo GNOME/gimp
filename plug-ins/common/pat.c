@@ -22,6 +22,7 @@
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include "libgimp/stdplugins-intl.h"
 
 #ifdef G_OS_WIN32
 #include <io.h>
@@ -96,8 +97,10 @@ query ()
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_pat_load",
-                          "loads files of the .pat file format",
+                          _("loads files of the .pat file format"),
                           "FIXME: write help",
                           "Tim Newsome",
                           "Tim Newsome",
@@ -109,7 +112,7 @@ query ()
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_pat_save",
-                          "saves files in the .pat file format",
+                          _("saves files in the .pat file format"),
                           "Yeah!",
                           "Tim Newsome",
                           "Tim Newsome",
@@ -148,6 +151,7 @@ run (char    *name,
 
   if (strcmp (name, "file_pat_load") == 0) 
     {
+      INIT_I18N();
       image_ID = load_image (param[1].data.d_string);
       
       if (image_ID != -1) 
@@ -171,6 +175,7 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
+      INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PAT", 
 				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_ALPHA));
@@ -181,6 +186,7 @@ run (char    *name,
 	    }
 	  break;
 	default:
+      INIT_I18N();
 	  break;
 	}
 
@@ -229,8 +235,7 @@ load_image (char *filename)
   gint line;
   GPixelRgn pixel_rgn;
 
-  temp = g_malloc (strlen (filename) + 11);
-  sprintf (temp, "Loading %s:", filename);
+  temp = g_strdup_printf( _("Loading %s:"), filename);
   gimp_progress_init (temp);
   g_free (temp);
   
@@ -273,7 +278,7 @@ load_image (char *filename)
   image_ID = gimp_image_new(ph.width, ph.height, (ph.bytes >= 3) ? RGB : GRAY);
   gimp_image_set_filename(image_ID, filename);
   
-  layer_ID = gimp_layer_new(image_ID, "Background", ph.width, ph.height,
+  layer_ID = gimp_layer_new(image_ID, _("Background"), ph.width, ph.height,
 			    (ph.bytes >= 3) ? RGB_IMAGE : GRAY_IMAGE, 100, NORMAL_MODE);
   gimp_image_add_layer(image_ID, layer_ID, 0);
   
@@ -312,8 +317,7 @@ save_image (char   *filename,
   GPixelRgn pixel_rgn;
   char *temp;
   
-  temp = g_malloc (strlen (filename) + 10);
-  sprintf(temp, "Saving %s:", filename);
+  temp = g_strdup_printf( _("Saving %s:"), filename);
   gimp_progress_init (temp);
   g_free (temp);
   
@@ -395,7 +399,7 @@ save_dialog ()
   GtkWidget *table;
 
   dlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dlg), "Save As Pattern");
+  gtk_window_set_title(GTK_WINDOW(dlg), _("Save As Pattern"));
   gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
 		     (GtkSignalFunc) close_callback, NULL);
@@ -408,7 +412,7 @@ save_dialog ()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback,
@@ -417,7 +421,7 @@ save_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -438,7 +442,7 @@ save_dialog ()
   /**********************
    * label
    **********************/
-  label = gtk_label_new("Description:");
+  label = gtk_label_new( _("Description:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);

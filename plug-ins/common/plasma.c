@@ -53,10 +53,11 @@
 #include <stdio.h>
 #include <math.h>
 #include <time.h>  /* For random seeding */
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
-
+#include "libgimp/stdplugins-intl.h"
 
 /* Some useful macros */
 
@@ -148,13 +149,15 @@ query()
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_plasma",
-			  "Create a plasma cloud like image to the specified drawable",
+			  _("Create a plasma cloud like image to the specified drawable"),
 			  "More help",
 			  "Stephen Norris & (ported to 1.0 by) Eiichi Takamori",
 			  "Stephen Norris",
 			  "1995",
-			  "<Image>/Filters/Render/Clouds/Plasma...",
+			  N_("<Image>/Filters/Render/Clouds/Plasma..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -187,6 +190,7 @@ run (gchar   *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_plasma", &pvals);
 
@@ -199,6 +203,7 @@ run (gchar   *name,
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
 	status = STATUS_CALLING_ERROR;
@@ -213,6 +218,7 @@ run (gchar   *name,
       break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_plasma", &pvals);
       break;
@@ -226,7 +232,7 @@ run (gchar   *name,
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init ("Plasma...");
+	  gimp_progress_init ( _("Plasma..."));
 	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
 	  plasma (drawable);
@@ -277,7 +283,7 @@ plasma_dialog()
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Plasma");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Plasma"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) plasma_close_callback,
@@ -291,7 +297,7 @@ plasma_dialog()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) plasma_ok_callback,
@@ -300,7 +306,7 @@ plasma_dialog()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -309,7 +315,7 @@ plasma_dialog()
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Plasma Options");
+  frame = gtk_frame_new ( _("Plasma Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -317,7 +323,7 @@ plasma_dialog()
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new ("Seed");
+  label = gtk_label_new ( _("Seed"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0 );
   gtk_widget_show (label);
@@ -337,7 +343,7 @@ plasma_dialog()
 		      &pvals.seed);
   gtk_widget_show (entry);
 
-  time_button = gtk_toggle_button_new_with_label ("Time");
+  time_button = gtk_toggle_button_new_with_label ( _("Time"));
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(time_button),pvals.timeseed);
   gtk_signal_connect (GTK_OBJECT (time_button), "clicked",
 		      (GtkSignalFunc) toggle_callback,
@@ -346,7 +352,7 @@ plasma_dialog()
   gtk_widget_show (time_button);
   gtk_widget_show (seed_hbox);
 
-  label = gtk_label_new ("Turbulence");
+  label = gtk_label_new ( _("Turbulence"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
   gtk_widget_show (label);

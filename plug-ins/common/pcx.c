@@ -17,9 +17,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Declare plug-in functions.  */
 
@@ -74,8 +76,10 @@ static void query () {
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_pcx_load",
-                          "Loads files in Zsoft PCX file format",
+                          _("Loads files in Zsoft PCX file format"),
                           "FIXME: write help for pcx_load",
                           "Francisco Bustamante & Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",
@@ -87,7 +91,7 @@ static void query () {
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_pcx_save",
-                          "Saves files in ZSoft PCX file format",
+                          _("Saves files in ZSoft PCX file format"),
                           "FIXME: write help for pcx_save",
                           "Francisco Bustamante & Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",
@@ -143,6 +147,7 @@ run (char    *name,
   values[0].data.d_status = STATUS_CALLING_ERROR;
 
   if (strcmp (name, "file_pcx_load") == 0) {
+      INIT_I18N();
       image_ID = load_image (param[1].data.d_string);
 
       if (image_ID != -1) {
@@ -164,6 +169,7 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
+      INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PCX", 
 				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED));
@@ -174,6 +180,7 @@ run (char    *name,
 	    }
 	  break;
 	default:
+      INIT_I18N();
 	  break;
 	}
 
@@ -253,8 +260,7 @@ load_image (char *filename)
   gint32 image, layer;
   guchar *dest, cmap[768];
 
-  message = g_malloc (strlen (filename) + 11);
-  sprintf (message, "Loading %s:", filename);
+  message = g_strdup_printf( _("Loading %s:"), filename);
   gimp_progress_init (message);
   g_free (message);
 
@@ -281,11 +287,11 @@ load_image (char *filename)
 
   if (pcx_header.planes == 3 && pcx_header.bpp == 8) {
     image= gimp_image_new (width, height, RGB);
-    layer= gimp_layer_new (image, "Background", width, height,
+    layer= gimp_layer_new (image, _("Background"), width, height,
                                   RGB_IMAGE, 100, NORMAL_MODE);
   } else {
     image= gimp_image_new (width, height, INDEXED);
-    layer= gimp_layer_new (image, "Background", width, height,
+    layer= gimp_layer_new (image, _("Background"), width, height,
                                   INDEXED_IMAGE, 100, NORMAL_MODE);
   }
   gimp_image_set_filename (image, filename);
@@ -485,8 +491,7 @@ save_image (char   *filename,
   height= drawable->height;
   gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
 
-  message = g_malloc (strlen (filename) + 11);
-  sprintf (message, "Saving %s:", filename);
+  message = g_strdup_printf( _( "Saving %s:"), filename);
   gimp_progress_init (message);
   g_free (message);
 
