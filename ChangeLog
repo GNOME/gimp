@@ -1,5 +1,9 @@
 2002-06-06  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpproxy/gimpchannel.h: forgot to commit this one.
+
+2002-06-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpconfig-deserialize.c: #include "gimpscanner.h"
 
 2002-06-06  Michael Natterer  <mitch@gimp.org>
