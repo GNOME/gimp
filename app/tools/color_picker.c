@@ -327,7 +327,7 @@ get_color (GImage *gimage,
   if (x >= 0 && y >= 0 && x < width && y < height)
     {
       tile = tile_manager_get_tile (tiles, x, y, 0);
-      tile_ref (tile);
+      tile_ref2 (tile, FALSE);
 
       src = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
     }

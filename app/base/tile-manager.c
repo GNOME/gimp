@@ -339,8 +339,8 @@ tile_manager_update_tile (TileManager *tm,
 
   tile = tile_manager_get (tm, num, level);
 
-  tile_ref (tile);
-  tile_ref (toplevel_tile);
+  tile_ref2 (tile, TRUE);
+  tile_ref2 (toplevel_tile, FALSE);
 
   tilew += tilex;
   tileh += tiley;

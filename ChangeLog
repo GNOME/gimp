@@ -1,3 +1,12 @@
+Thu Jul  2 18:10:43 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* blend.c boundary.c by_color_select.c channel.c color_picker.c
+	drawable_cmds.c frac.c fuzzy_select.c image_render.c invert.c
+	layer.c paint_core.c paint_funcs.c pixel_region.c plug_in.c tile.c
+	tile.h tile_cache.c tile_manager.c transform_core.c undo.c xcf.c:
+	incorporated Adam's copy-on-write patches.  Tested briefly:
+	nothing seems to be broken, but I guarantee nothing.
+
 Thu Jul  2 11:03:12 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* updated blur, randomize, and exchange plugins (not sure if
@@ -358,7 +367,6 @@ Sat Jun 20 11:36:16 PDT 1998 Manish Singh <yosh@gimp.org>
 	* configure.in
 	* app/Makefile.am: really add thread support
 
->>>>>>> 1.454
 Sat Jun 20 12:04:41 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/tile.h: #include config.h so we can tell if we're doing
@@ -393,7 +401,6 @@ Fri Jun 19 12:34:29 PDT 1998 Manish Singh <yosh@gimp.org>
 	* changes libgimp versioning to gtk-style. Bunch o' Makefile.am
 	changes for that
 
->>>>>>> 1.430
 Thu Jun 18 23:11:36 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* app/ink.c: Shift the range to smaller brushes.

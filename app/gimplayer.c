@@ -940,13 +940,13 @@ layer_pick_correlate (layer, x, y)
        *  the given point is non-zero
        */
       tile = tile_manager_get_tile (GIMP_DRAWABLE(layer)->tiles, x, y, 0);
-      tile_ref (tile);
+      tile_ref2 (tile, FALSE);
 
       val = tile->data[tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH) + 1) - 1];
       if (layer->mask)
 	{
 	  mask_tile = tile_manager_get_tile (GIMP_DRAWABLE(layer->mask)->tiles, x, y, 0);
-	  tile_ref (mask_tile);
+	  tile_ref2 (mask_tile, FALSE);
 	  val = (val * mask_tile->data[mask_tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)]) / 255;
 	  tile_unref (mask_tile, FALSE);
 	}

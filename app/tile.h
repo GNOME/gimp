@@ -4,7 +4,11 @@
 
 #define TILE_WIDTH   64
 #define TILE_HEIGHT  64
+
+/* Uncomment for verbose debugging on copy-on-write logic
 #define TILE_DEBUG
+*/
+
 
 
 #include <sys/types.h>
@@ -30,24 +34,38 @@ struct _Tile
   guint dirty : 1;    /* is the tile dirty? has it been modified? */
   guint valid : 1;    /* is the tile valid? */
 
-  int ewidth;         /* the effective width of the tile */
-  int eheight;        /* the effective height of the tile */
-                      /* a tiles effective width and height may be smaller
-		       *  (but not larger) than TILE_WIDTH and TILE_HEIGHT.
-		       * this is to handle edge tiles of a drawable.
-		       */
-  int bpp;            /* the bytes per pixel (1, 2, 3 or 4) */
-  int tile_num;       /* the number of this tile within the drawable */
-
   guchar *data;       /* the data for the tile. this may be NULL in which
 		       *  case the tile data is on disk.
 		       */
+
+  Tile *real_tile_ptr;/* if this tile's 'data' pointer is just a copy-on-write
+		       *  mirror of another's, this is that source tile.
+		       *  (real_tile itself can actually be a virtual tile
+		       *  too.)  This is NULL if this tile is not a virtual
+		       *  tile.
+		       */
+  Tile *mirrored_by;  /* If another tile is mirroring this one, this is
+		       *  a pointer to that tile, otherwise this is NULL.
+		       *  Note that only one tile may be _directly_ mirroring
+		       *  another given tile.  This ensures that the graph
+		       *  of mirrorings is no more complex than a linked
+		       *  list.
+		       */
+
+  int ewidth;         /* the effective width of the tile */
+  int eheight;        /* the effective height of the tile */
+                      /*  a tile's effective width and height may be smaller
+		       *  (but not larger) than TILE_WIDTH and TILE_HEIGHT.
+		       *  this is to handle edge tiles of a drawable.
+		       */
+  int bpp;            /* the bytes per pixel (1, 2, 3 or 4) */
+  int tile_num;       /* the number of this tile within the drawable */
 
   int swap_num;       /* the index into the file table of the file to be used
 		       *  for swapping. swap_num 1 is always the global swap file.
 		       */
   off_t swap_offset;  /* the offset within the swap file of the tile data.
-		       * if the tile data is in memory this will be set to -1.
+		       *  if the tile data is in memory this will be set to -1.
 		       */
 
   void *tm;           /* A pointer to the tile manager for this tile.
@@ -68,24 +86,37 @@ struct _Tile
 void tile_init (Tile *tile,
 		int   bpp);
 
+/*
+ * c-o-w
+ */
+void tile_mirror (Tile *dest_tile, Tile *src_tile);
+
+
 /* Referencing a tile causes the reference count to be incremented.
  *  If the reference count was previously 0 the tile will will be
  *  swapped into memory from disk.
+ *
+ * tile_ref2 is a new tile-referencing interface through which you
+ *  should register your intent to dirty the tile.  This will facilitate
+ *  copy-on-write tile semantics.
  */
 
 #if defined (TILE_DEBUG) && defined (__GNUC__)
 
 #define tile_ref(t) _tile_ref (t, __PRETTY_FUNCTION__)
 void _tile_ref (Tile *tile, char *func_name);
+#define tile_ref2(t,d) _tile_ref2 (t, d, __PRETTY_FUNCTION__)
+void _tile_ref2 (Tile *tile, int dirty, char *func_name);
 
 #else
 
 void tile_ref (Tile *tile);
+void tile_ref2 (Tile *tile, int dirty);
 
 #endif
 
 
-/* Unrefercing a tile causes the reference count to be decremented.
+/* Unreferencing a tile causes the reference count to be decremented.
  *  When the reference count reaches 0 the tile data will be swapped
  *  out to disk. Note that the tile may be in the tile cache which
  *  also references the tile causing the reference count not to

@@ -128,8 +128,8 @@ ref_tiles (TileManager *src, TileManager *mask, Tile **s_tile, Tile **m_tile,
 
   *s_tile = tile_manager_get_tile (src, x, y, 0);
   *m_tile = tile_manager_get_tile (mask, x, y, 0);
-  tile_ref (*s_tile);
-  tile_ref (*m_tile);
+  tile_ref2 (*s_tile, FALSE);
+  tile_ref2 (*m_tile, TRUE);
 
   *s = (*s_tile)->data + (*s_tile)->bpp * ((*s_tile)->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
   *m = (*m_tile)->data + (*m_tile)->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH);
@@ -215,7 +215,7 @@ find_contiguous_region_helper (PixelRegion *mask, PixelRegion *src,
   if (y < 0 || y >= src->h) return;
 
   tile = tile_manager_get_tile (mask->tiles, x, y, 0);
-  tile_ref (tile);
+  tile_ref2 (tile, FALSE);
   val = tile->data[tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)];
   tile_unref (tile, FALSE);
   if (val != 0)
@@ -284,7 +284,7 @@ find_contiguous_region (GImage *gimage, GimpDrawable *drawable, int antialias,
   tile = tile_manager_get_tile (srcPR.tiles, x, y, 0);
   if (tile)
     {
-      tile_ref (tile);
+      tile_ref2 (tile, FALSE);
 
       start = tile->data + tile->ewidth * tile->bpp * (y % TILE_HEIGHT) +
 	tile->bpp * (x % TILE_WIDTH);

@@ -640,7 +640,7 @@ paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
       undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y, 0);
       if (undo_tile->valid == TRUE)
 	{
-	  tile_ref (undo_tile);
+	  tile_ref2 (undo_tile, FALSE);
 	  s = undo_tile->data + srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
 	    srcPR.bytes * (srcPR.x % TILE_WIDTH);
 	  refd = TRUE;
@@ -1193,8 +1193,8 @@ set_undo_tiles (drawable, x, y, w, h)
 	  if (dest_tile->valid == FALSE)
 	    {
 	      src_tile = tile_manager_get_tile (drawable_data (drawable), j, i, 0);
-	      tile_ref (src_tile);
-	      tile_ref (dest_tile);
+	      tile_ref2 (src_tile, FALSE);
+	      tile_ref2 (dest_tile, TRUE);
 	      memcpy (dest_tile->data, src_tile->data,
 		      (src_tile->ewidth * src_tile->eheight * src_tile->bpp));
 	      tile_unref (src_tile, FALSE);
@@ -1219,7 +1219,7 @@ set_canvas_tiles (x, y, w, h)
 	  tile = tile_manager_get_tile (canvas_tiles, j, i, 0);
 	  if (tile->valid == FALSE)
 	    {
-	      tile_ref (tile);
+	      tile_ref2 (tile, TRUE);
 	      memset (tile->data, 0, (tile->ewidth * tile->eheight * tile->bpp));
 	      tile_unref (tile, TRUE);
 	    }

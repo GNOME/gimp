@@ -61,7 +61,7 @@ static double      cubic                  (double, int, int, int, int);
 
 #define REF_TILE(i,x,y) \
      tile[i] = tile_manager_get_tile (float_tiles, x, y, 0); \
-     tile_ref (tile[i]); \
+     tile_ref2 (tile[i], FALSE); \
      src[i] = tile[i]->data + tile[i]->bpp * (tile[i]->ewidth * ((y) % TILE_HEIGHT) + ((x) % TILE_WIDTH));
 
 

@@ -250,7 +250,7 @@ xcf_load_frac_compressed_tile (XcfInfo *info, Tile *tile)
 
   XCFFileInfo = info;
 
-  tile_ref (tile);
+  tile_ref2 (tile, TRUE);
 
   frac_file = OpenInputBitFile (info->fp, &info->cp);
   if (frac_file == NULL )
@@ -393,7 +393,7 @@ xcf_save_frac_compressed_tile (XcfInfo *info, Tile *tile)
   guchar *channelTilesData[MAX_CHANNELS];
   gint i, num_channels;
 
-  tile_ref (tile);
+  tile_ref2 (tile, FALSE);
 
   if (!save_initted)
     pete_warn ("Using default values for save variables");

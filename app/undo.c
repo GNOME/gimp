@@ -615,8 +615,8 @@ undo_pop_image (GImage *gimage,
 	      if (src_tile->valid == TRUE)
 		{
 		  dest_tile = tile_manager_get_tile (drawable_data (image_undo->drawable), j, i, 0);
-		  tile_ref (src_tile);
-		  tile_ref (dest_tile);
+		  tile_ref2 (src_tile, TRUE);
+		  tile_ref2 (dest_tile, TRUE);
 		  swap_pixels (src_tile->data, dest_tile->data,
 			       (src_tile->ewidth * src_tile->eheight * src_tile->bpp));
 		  tile_unref (src_tile, TRUE);

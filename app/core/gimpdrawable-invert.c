@@ -166,7 +166,10 @@ invert_invoker (args)
     {
       int_value = args[0].value.pdb_int;
       if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
+	{
+	  g_warning ("bleep1\n");
+	  success = FALSE;
+	}
     }
   /*  the drawable  */
   if (success)
@@ -174,7 +177,10 @@ invert_invoker (args)
       int_value = args[1].value.pdb_int;
       drawable = drawable_get_ID (int_value);
       if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+	{
+	  g_warning ("bleep2\n");
+	  success = FALSE;
+	}
     }
   /*  make sure the drawable is not indexed color  */
   if (success)

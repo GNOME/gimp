@@ -2437,7 +2437,7 @@ render_image_tile_fault (RenderInfo *info)
   if (!tile)
     return NULL;
 
-  tile_ref (tile);
+  tile_ref2 (tile, FALSE);
   data = (tile->data +
 	  ((info->src_y % TILE_HEIGHT) * tile->ewidth +
 	   (info->src_x % TILE_WIDTH)) * tile->bpp);
@@ -2468,7 +2468,7 @@ render_image_tile_fault (RenderInfo *info)
 	      if (!tile)
 		return tile_buf;
 
-	      tile_ref (tile);
+	      tile_ref2 (tile, FALSE);
 	      data = (tile->data +
 		      ((info->src_y % TILE_HEIGHT) * tile->ewidth +
 		       (x % TILE_WIDTH)) * tile->bpp);

@@ -1088,7 +1088,7 @@ static void
 xcf_save_tile (XcfInfo *info,
 	       Tile    *tile)
 {
-  tile_ref (tile);
+  tile_ref2 (tile, FALSE);
   info->cp += xcf_write_int8 (info->fp, tile->data, tile_size (tile));
   tile_unref (tile, FALSE);
 }
@@ -1107,7 +1107,7 @@ xcf_save_tile_rle (XcfInfo *info,
   int bpp;
   int i, j, k;
 
-  tile_ref (tile);
+  tile_ref2 (tile, FALSE);
 
   bpp = tile->bpp;
 
@@ -1850,6 +1850,40 @@ xcf_load_hierarchy (XcfInfo     *info,
   return TRUE;
 }
 
+static void
+tile_compare_and_maybe_mirror (Tile *new, Tile *old)
+{
+
+  if (
+      (old->ewidth == new->ewidth) &&
+      (old->eheight == new->eheight) &&
+      (old->bpp == new->bpp)
+      )
+    {
+      tile_ref2 (new, FALSE);
+      tile_ref2 (old, FALSE);
+
+      if (memcmp (new->data, old->data,
+                 old->ewidth * old->eheight * old->bpp) == 0)
+       {
+#if defined (TILE_DEBUG)
+         g_print ("M");
+#endif
+         tile_unref (new, FALSE);
+         tile_unref (old, FALSE);
+         tile_mirror (new, old);
+       }
+      else
+       {
+#if defined (TILE_DEBUG)
+         g_print (".");
+#endif
+         tile_unref (new, FALSE);
+         tile_unref (old, FALSE);
+       }
+    }
+}
+
 static gint
 xcf_load_level (XcfInfo     *info,
 		TileManager *tiles,
@@ -1862,6 +1896,7 @@ xcf_load_level (XcfInfo     *info,
   int width;
   int height;
   int i;
+  Tile *previous;
 
   info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32*) &height, 1);
@@ -1883,6 +1918,10 @@ xcf_load_level (XcfInfo     *info,
    *  we can load in the tiles.
    */
   tile_manager_get (tiles, 0, level_num);
+
+  /* Initialise the reference for the in-memory tile-compression
+   */
+  previous = NULL;
 
   ntiles = level->ntile_rows * level->ntile_cols;
   for (i = 0; i < ntiles; i++)
@@ -1920,6 +1959,16 @@ xcf_load_level (XcfInfo     *info,
 	  break;
 	}
 
+      /* To potentially save memory, we compare the
+       *  newly-fetched tile against the last one, and
+       *  if they're the same we copy-on-write mirror one against
+       *  the other.
+       */
+      if (previous != NULL)
+       tile_compare_and_maybe_mirror (&level->tiles[i], previous);
+
+      previous = &level->tiles[i];
+
       /* restore the saved position so we'll be ready to
        *  read the next offset.
        */
@@ -1956,7 +2005,7 @@ xcf_load_tile (XcfInfo *info,
 
 #else
 
-  tile_ref (tile);
+  tile_ref2 (tile, TRUE);
   info->cp += xcf_read_int8 (info->fp, tile->data, tile_size (tile));
   tile_unref (tile, TRUE);
 
@@ -1979,7 +2028,7 @@ xcf_load_tile_rle (XcfInfo *info,
   int bpp;
   int i, j;
 
-  tile_ref (tile);
+  tile_ref2 (tile, TRUE);
 
   data = tile->data;
   bpp = tile->bpp;

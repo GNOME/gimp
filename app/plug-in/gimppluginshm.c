@@ -1360,7 +1360,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 	  return;
 	}
 
-      tile_ref (tile);
+      tile_ref2 (tile, TRUE);
 
       if (tile_data.use_shm)
 	memcpy (tile->data, shm_addr, tile_size (tile));
@@ -1407,7 +1407,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile_data.height = tile->eheight;
       tile_data.use_shm = (shm_ID == -1) ? FALSE : TRUE;
 
-      tile_ref (tile);
+      tile_ref2 (tile, FALSE);
 
       if (tile_data.use_shm)
 	memcpy (shm_addr, tile->data, tile_size (tile));

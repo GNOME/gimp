@@ -1013,7 +1013,7 @@ gradient_calc_shapeburst_angular_factor (double x,
   ix = (int) BOUNDS (x, 0, distR.w);
   iy = (int) BOUNDS (y, 0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, 0);
-  tile_ref (tile);
+  tile_ref2 (tile, FALSE);
   value = 1.0 - *(((float *) tile->data) + ((iy % TILE_HEIGHT) * tile->ewidth + (ix % TILE_WIDTH)));
   tile_unref (tile, FALSE);
 
@@ -1032,7 +1032,7 @@ gradient_calc_shapeburst_spherical_factor (double x,
   ix = (int) BOUNDS (x, 0, distR.w);
   iy = (int) BOUNDS (y, 0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, 0);
-  tile_ref (tile);
+  tile_ref2 (tile, FALSE);
   value = *(((float *) tile->data) + ((iy % TILE_HEIGHT) * tile->ewidth + (ix % TILE_WIDTH)));
   value = 1.0 - sin (0.5 * M_PI * value);
   tile_unref (tile, FALSE);
@@ -1052,7 +1052,7 @@ gradient_calc_shapeburst_dimpled_factor (double x,
   ix = (int) BOUNDS (x, 0, distR.w);
   iy = (int) BOUNDS (y, 0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, 0);
-  tile_ref (tile);
+  tile_ref2 (tile, FALSE);
   value = *(((float *) tile->data) + ((iy % TILE_HEIGHT) * tile->ewidth + (ix % TILE_WIDTH)));
   value = cos (0.5 * M_PI * value);
   tile_unref (tile, FALSE);

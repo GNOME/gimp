@@ -22,6 +22,8 @@
 #include "gimprc.h"
 #include "paint_funcs.h"
 #include "boundary.h"
+#include "tile_manager.h"
+#include "tile_manager_pvt.h"  /* For copy-on-write */
 
 #define STD_BUF_SIZE       1021
 #define MAXDIFF            195076
@@ -2367,6 +2369,7 @@ shade_region (PixelRegion   *src,
 }
 
 
+
 void
 copy_region (PixelRegion *src,
 	     PixelRegion *dest)
@@ -2376,7 +2379,106 @@ copy_region (PixelRegion *src,
   unsigned char * s, * d;
   void * pr;
 
-  for (pr = pixel_regions_register (2, src, dest); pr != NULL; pr = pixel_regions_process (pr))
+  /*      g_print ("CR: %d,%d (%dx%d) -> %d,%d (%dx%d) :: [%d] [%d]\n",
+	       src->x,
+	       src->y,
+	       src->w,
+	       src->h,
+	       dest->x,
+	       dest->y,
+	       dest->w,
+	       dest->h,
+	       src->tiles->levels->width,
+	       dest->tiles->levels->width);fflush(stdout);*/
+
+
+  /* If we're copying from the same offset in each drawable,
+   *  and the PixelRegions are the same size, and the drawables are
+   *  the same size, we can do a quick'n'cheap Copy-On-Write.  Otherwise
+   *  we have to do the copy the old fashioned way.
+   *
+   * For COW the PixelRegions must also be of the same dimensions as the
+   *  tilemanager level, for reasons of simplicity.  Future work
+   *  may remove this restriction.
+   */
+
+#if 0
+  printf("SPR[ D%p T%p R%d O%d,%d S%d,%d B%d d%d P%d ]\n",
+	 src->data, src->tiles, src->rowstride, src->x,
+	 src->y, src->w, src->h, src->bytes, src->dirty,
+	 src->process_count);
+  printf("DPR[ D%p T%p R%d O%d,%d S%d,%d B%d d%d P%d ]\n",
+	 dest->data, dest->tiles, dest->rowstride, dest->x,
+	 dest->y, dest->w, dest->h, dest->bytes, dest->dirty,
+	 dest->process_count);
+  fflush(stdout);
+#endif
+
+  if ((src->x == dest->x) &&
+      (src->y == dest->y) &&
+      (src->w == dest->w) &&
+      (src->h == dest->h)
+      &&
+      (src->tiles) &&
+      (dest->tiles) 
+      &&
+      (src->tiles->levels) &&
+      (dest->tiles->levels) &&
+      (dest->tiles->levels->width == src->tiles->levels->width) &&
+      (dest->tiles->levels->height == src->tiles->levels->height)
+      &&
+      (src->w == src->tiles->levels->width) &&
+      (src->h == src->tiles->levels->height)
+      )
+    {
+      Tile *src_tile;
+      Tile *dest_tile;
+      gint xstepper,ystepper;
+
+#if defined (TILE_DEBUG)
+      g_print ("CR: c.o.w. \n");
+#endif
+      
+      /* c.o.w. */
+      
+      for (ystepper = src->y;
+	   ystepper < (src->y + src->h);
+	   ystepper += TILE_HEIGHT)
+	{
+	  for (xstepper = src->x;
+	       xstepper < (src->x + src->w);
+	       xstepper += TILE_WIDTH)
+	    {
+	      src_tile = tile_manager_get_tile (src->tiles,
+						xstepper, ystepper,
+						0);
+	      dest_tile = tile_manager_get_tile (dest->tiles,
+						 xstepper, ystepper,
+						 0);
+
+	      if (src_tile && dest_tile)
+		{
+		  /*		  printf(" @%p/%p@ ",
+			 tile_find_nonmirroring (src_tile),
+			 tile_find_nonmirroring (dest_tile));*/
+		  tile_mirror (dest_tile, src_tile);		  
+		}
+	    }	  
+	}
+#if defined (TILE_DEBUG)
+      g_print (src_tile ? "dest " : "src ");
+      g_print ("CR: END c.o.w. \n");
+#endif
+      return;
+    }
+
+
+  /* else 'The old-fashioned way.'
+   */
+
+  for (pr = pixel_regions_register (2, src, dest);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       pixelwidth = src->w * src->bytes;
       s = src->data;
@@ -3403,7 +3505,7 @@ shapeburst_region (PixelRegion *srcPR,
 	      while (y >= end)
 		{
 		  tile = tile_manager_get_tile (srcPR->tiles, x, y, 0);
-		  tile_ref (tile);
+		  tile_ref2 (tile, FALSE);
 		  tile_data = tile->data + (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
 		  boundary = MINIMUM ((y % TILE_HEIGHT), (tile->ewidth - (x % TILE_WIDTH) - 1));
 		  boundary = MINIMUM (boundary, (y - end)) + 1;

@@ -1,6 +1,7 @@
 #include <gtk/gtkmain.h>
 #include <glib.h>
 #include "gimprc.h"
+#include "tile.h"
 #include "tile_cache.h"
 #include "tile_swap.h"
 #ifdef USE_PTHREADS
