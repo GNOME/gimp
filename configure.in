@@ -91,7 +91,7 @@ fi
 
 
 dnl i18n stuff
-ALL_LINGUAS="ca cs da de en_GB es fi fr ga gl hu it ja ko nl no pl pt_BR ru sk sv uk"
+ALL_LINGUAS="ca cs da de en_GB es fi fr ga gl hu hr it ja ko nl no pl pt_BR ru sk sv uk"
 
 AM_GNU_GETTEXT
 

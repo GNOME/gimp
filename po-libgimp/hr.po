@@ -1,0 +1,235 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# ®eljan Rikalo <zeljko@linuxfreak.com>, 2000.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp 1.1.29\n"
+"POT-Creation-Date: 2000-11-03 21:56-0800\n"
+"PO-Revision-Date: 2000-11-03:33+0100\n"
+"Last-Translator: ®eljan Rikalo <zeljko@linuxfreak.com>\n"
+"Language-Team: Croatian <lokalizacija@linux.hr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: libgimp/gimpcolorbutton.c:118
+msgid "/Use Foreground Color"
+msgstr "/Uzmi Boju Prednjeg Plana"
+
+#: libgimp/gimpcolorbutton.c:119
+msgid "/Use Background Color"
+msgstr "/Uzmi Boju Pozadine"
+
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
+msgid "can't handle layers"
+msgstr "ne mogu obraðivati slojeve"
+
+#: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
+msgid "Merge Visible Layers"
+msgstr "Stopi Vidljive Slojeve"
+
+#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
+msgid "can only handle layers as animation frames"
+msgstr "Slojeve mogu obraðivati samo kao okvire animacije"
+
+#: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
+msgid "Save as Animation"
+msgstr "Spremi kao Animaciju"
+
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
+msgid "Flatten Image"
+msgstr "Ravna slika"
+
+#: libgimp/gimpexport.c:194
+msgid "can't handle transparency"
+msgstr "ne mogu obraðivati prozirnost"
+
+#: libgimp/gimpexport.c:203
+msgid "can only handle RGB images"
+msgstr "radim samo sa RGB slikama"
+
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:232 libgimp/gimpexport.c:241
+msgid "Convert to RGB"
+msgstr "Konverzija u RGB"
+
+#: libgimp/gimpexport.c:212
+msgid "can only handle grayscale images"
+msgstr "mogu raditi samo sa sivim slikama"
+
+#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
+msgid "Convert to Grayscale"
+msgstr "Konverzija u Skalu Sive"
+
+#: libgimp/gimpexport.c:221
+msgid "can only handle indexed images"
+msgstr "mogu obraðivati samo indeksiranie slike"
+
+#: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Konvertiraj u Indeksirano koristeæi standardne\n"
+"postavke.(Najbolje je ruèno pode¹avanje)"
+
+#: libgimp/gimpexport.c:231
+msgid "can only handle RGB or grayscale images"
+msgstr "mogu raditi samo s RGB i Sivim slikama"
+
+#: libgimp/gimpexport.c:240
+msgid "can only handle RGB or indexed images"
+msgstr "mogu raditi samo s RGB i indeksiranim slikama"
+
+#: libgimp/gimpexport.c:250
+msgid "can only handle grayscale or indexed images"
+msgstr "mogu obraðivati samo Sive ili Indeksirane Slike"
+
+#: libgimp/gimpexport.c:261
+msgid "needs an alpha channel"
+msgstr "trebam neki alfa kanal"
+
+#: libgimp/gimpexport.c:262
+msgid "Add Alpha Channel"
+msgstr "Dodaj Alfa Kanal"
+
+#.
+#. *  Plug-ins have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:331
+msgid "Export File"
+msgstr "Izvezi Datoteku"
+
+#: libgimp/gimpexport.c:336
+msgid "Export"
+msgstr "Izvezi"
+
+#: libgimp/gimpexport.c:338
+msgid "Ignore"
+msgstr "Ignoriraj"
+
+#: libgimp/gimpexport.c:340 libgimp/gimpquerybox.c:183
+#: libgimp/gimpquerybox.c:237 libgimp/gimpquerybox.c:293
+#: libgimp/gimpquerybox.c:356 libgimp/gimpunitmenu.c:501
+msgid "Cancel"
+msgstr "Odustani"
+
+#: libgimp/gimpexport.c:355
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr "Va¹a slika mora biti izve¾ena prije spremanja iz sljedeæihrazloga:"
+
+#. the footline
+#: libgimp/gimpexport.c:418
+msgid "The export conversion won't modify your original image."
+msgstr "Izvozna konverzija neæe modificirati originalnu sliku."
+
+#: libgimp/gimpfileselection.c:391
+msgid "Select File"
+msgstr "Odaberi Datoteku"
+
+#: libgimp/gimpquerybox.c:183 libgimp/gimpquerybox.c:237
+#: libgimp/gimpquerybox.c:293 libgimp/gimpquerybox.c:356
+#: libgimp/gimpunitmenu.c:499
+msgid "OK"
+msgstr "OK"
+
+#: libgimp/gimpunitmenu.c:238
+msgid "More..."
+msgstr "Vi¹e..."
+
+#: libgimp/gimpunitmenu.c:494
+msgid "Unit Selection"
+msgstr "Odabir Mjere"
+
+#: libgimp/gimpunitmenu.c:531
+msgid "Unit"
+msgstr "Mjera"
+
+#: libgimp/gimpunitmenu.c:532
+msgid "Factor"
+msgstr "Faktor"
+
+#. pseudo unit
+#: libgimp/gimpunit.c:49
+msgid "pixel"
+msgstr "piksel"
+
+#: libgimp/gimpunit.c:49
+msgid "pixels"
+msgstr "piksela"
+
+#. standard units
+#: libgimp/gimpunit.c:52
+msgid "inch"
+msgstr "palac"
+
+#: libgimp/gimpunit.c:52
+msgid "inches"
+msgstr "palaca"
+
+#: libgimp/gimpunit.c:53
+msgid "millimeter"
+msgstr "milimetar"
+
+#: libgimp/gimpunit.c:53
+msgid "millimeters"
+msgstr "milimetara"
+
+#. professional units
+#: libgimp/gimpunit.c:56
+msgid "point"
+msgstr "toèka"
+
+#: libgimp/gimpunit.c:56
+msgid "points"
+msgstr "toèaka"
+
+#: libgimp/gimpunit.c:57
+msgid "pica"
+msgstr "pica"
+
+#: libgimp/gimpunit.c:57
+msgid "picas"
+msgstr "pica"
+
+#: libgimp/gimpunit.c:64
+msgid "percent"
+msgstr "postotak"
+
+#: libgimp/gimpwidgets.c:709
+msgid ""
+"If the \"Time\" button is not pressed, use this value for random number "
+"generator seed - this allows you to repeat a given \"random\" operation"
+msgstr ""
+"Ako dugme\"Vrijeme\" nije stisnuto koristi ovu vrijednost za "
+"sluèajnibroj.Stvoreni generator dozvoljava ponavljanje ove \"sluèajne\" "
+"operacije"
+
+#: libgimp/gimpwidgets.c:714
+msgid "Time"
+msgstr "Vrijeme"
+
+#: libgimp/gimpwidgets.c:723
+msgid ""
+"Seed random number generator from the current time - this guarantees a "
+"reasonable randomization"
+msgstr ""
+"Napravi generator sluèajnih brojeva iz trenutnog vremena(sat) - ovo jamèi "
+"sigurnu sluèajnost"
+
+#: libgimp/gimpwidgets.c:1035
+msgid "Bytes"
+msgstr "Bajtova"
+
+#: libgimp/gimpwidgets.c:1036
+msgid "KiloBytes"
+msgstr "Kilobajta"
+
+#: libgimp/gimpwidgets.c:1037
+msgid "MegaBytes"
+msgstr "Megabajta"
+

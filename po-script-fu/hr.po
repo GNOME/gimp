@@ -1,0 +1,2167 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# ®eljan Rikalo <zeljko@linuxfreak.com>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp 1.1.29\n"
+"POT-Creation-Date: 2000-08-30 00:31-0700\n"
+"PO-Revision-Date: 2000-11-04 18:50+0100\n"
+"Last-Translator: ®eljan Rikalo <zeljko@linuxfreak.com>\n"
+"Language-Team: Croatian <lokalizacija@linux.hr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: plug-ins/script-fu/script-fu-console.c:156
+msgid "Script-Fu console mode allows only interactive invocation"
+msgstr "Script-Fu konzola dozvoljava samo interaktivno kori¹tenje"
+
+#: plug-ins/script-fu/script-fu-console.c:186
+msgid "Script-Fu Console"
+msgstr "Script-Fu Konzola"
+
+#. Action area
+#: plug-ins/script-fu/script-fu-console.c:199
+#: plug-ins/script-fu/script-fu-scripts.c:1962
+msgid "Close"
+msgstr "Zatvori"
+
+#. The info vbox
+#: plug-ins/script-fu/script-fu-console.c:207
+msgid "SIOD Output"
+msgstr "SIOD Izlaz"
+
+#. The current command
+#: plug-ins/script-fu/script-fu-console.c:286
+msgid "Current Command"
+msgstr "Trenutna Naredba"
+
+#: plug-ins/script-fu/script-fu-console.c:307
+msgid "Browse..."
+msgstr "Tra¾i..."
+
+#: plug-ins/script-fu/script-fu-console.c:579
+msgid "Unable to open SIOD output pipe"
+msgstr "Ne mogu otvoriti cjevovod SIOD izlaza"
+
+#: plug-ins/script-fu/script-fu-console.c:583
+msgid "Unable to open a stream on the SIOD output pipe"
+msgstr "Ne mogu otvoriti stream na cjevovodu SIOD izlaza"
+
+#: plug-ins/script-fu/script-fu-console.c:628
+msgid "Script-Fu evaluate mode allows only noninteractive invocation"
+msgstr "Script-Fu provjera je dozvoljena samo kao ne-interaktivni poziv"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1113
+#, c-format
+msgid ""
+"Script-Fu Error\n"
+"%s"
+msgstr ""
+"Script-Fu Gre¹ka\n"
+"%s"
+
+#. strip the first part of the menupath if it contains _("/Script-Fu/")
+#: plug-ins/script-fu/script-fu-scripts.c:1162
+#: plug-ins/script-fu/script-fu-scripts.c:1164
+msgid "/Script-Fu/"
+msgstr "/Script-Fu/"
+
+#
+#: plug-ins/script-fu/script-fu-scripts.c:1164
+#: plug-ins/script-fu/script-fu-scripts.c:1166
+#, c-format
+msgid "Script-Fu: %s"
+msgstr "Script-Fu: %s"
+
+#. the script arguments frame
+#: plug-ins/script-fu/script-fu-scripts.c:1191
+msgid "Script Arguments"
+msgstr "Argumenti Skripte"
+
+#
+#. we add a colon after the label; some languages want an extra space here
+#: plug-ins/script-fu/script-fu-scripts.c:1214
+#, c-format
+msgid "%s:"
+msgstr "%s:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1256
+msgid "Script-Fu Color Selection"
+msgstr "Script-Fu odabir boje"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1326
+msgid "Script-Fu File Selection"
+msgstr "Script-Fu Odabir Datoteke"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1358
+msgid "Script-fu Pattern Selection"
+msgstr "Script-Fu Odabir Uzorka"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1365
+msgid "Script-Fu Gradient Selection"
+msgstr "Script-Fu Odabir Gradijenta"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1373
+msgid "Script-Fu Brush Selection"
+msgstr "Script-Fu Odabir Kista"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1416
+msgid "Reset to Defaults"
+msgstr "Vrati na standardno"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1442
+msgid "About"
+msgstr "O..."
+
+#: plug-ins/script-fu/script-fu-scripts.c:1456
+#: plug-ins/script-fu/script-fu-server.c:544
+msgid "OK"
+msgstr "OK"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1465
+#: plug-ins/script-fu/script-fu-server.c:546
+msgid "Cancel"
+msgstr "Odustani"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1579
+msgid "NOT SET"
+msgstr "NIJE PODE©ENO"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1648
+msgid ""
+"At least one font you've choosen is invalid.\n"
+"Please check your settings.\n"
+msgstr ""
+"Najmanje jedan font koji ste izabrali je nepravilan.\n"
+"Molim provjerite postavke.\n"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1933
+msgid "Author:"
+msgstr "Autor:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1939
+msgid "Copyright:"
+msgstr "Autorska prava:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1945
+msgid "Date:"
+msgstr "Datum:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1953
+msgid "Image Types:"
+msgstr "Vrste Slika:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:2106
+msgid "Script-Fu Font Selection"
+msgstr "Script-Fu Odabir Fonta"
+
+#: plug-ins/script-fu/script-fu-server.c:539
+msgid "Script-Fu Server Options"
+msgstr "Script-Fu postavke Servera"
+
+#: plug-ins/script-fu/script-fu-server.c:566
+msgid "Server Port:"
+msgstr "Serverski Port:"
+
+#: plug-ins/script-fu/script-fu-server.c:572
+msgid "Server Logfile:"
+msgstr "Serverska Zabilje¹ka(log):"
+
+#: plug-ins/script-fu/script-fu.c:164
+msgid "<Toolbox>/Xtns/Script-Fu/Console..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Konzola..."
+
+#: plug-ins/script-fu/script-fu.c:177
+msgid "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
+
+#: plug-ins/script-fu/script-fu.c:1022 plug-ins/script-fu/script-fu.c:1023
+msgid "Re-read all available scripts"
+msgstr "Ponovno uèitaj sve dostupne skripte"
+
+#: plug-ins/script-fu/script-fu.c:1027
+msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
+msgstr "<Toolbox>/Xtns/Script-Fu/Osvje¾i"
+
+#: plug-ins/script-fu/scripts/copy-visible.scm:0
+msgid "<Image>/Edit/Copy Visible"
+msgstr "<Image>/Uredi/Kopiraj Vidljivo"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:0
+msgid "<Image>/Filters/Blur/Tileable Blur..."
+msgstr "<Image>/Filteri/Zamuæenje/Ploèasto Zamuæenje..."
+
+#: plug-ins/script-fu/scripts/clothify.scm:0
+msgid "<Image>/Script-Fu/Alchemy/Clothify..."
+msgstr "<Image>/Script-Fu/Alkemija/Prekrivanje..."
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
+msgstr "<Image>/Script-Fu/Alkemija/Izbri¹i sve ostale Retke..."
+
+#: plug-ins/script-fu/scripts/predator.scm:0
+msgid "<Image>/Script-Fu/Alchemy/Predator..."
+msgstr "<Image>/Script-Fu/Alkemija/Predator..."
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:0
+msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
+msgstr "<Image>/Script-Fu/Alkemija/Skini O¹trinu..."
+
+#: plug-ins/script-fu/scripts/weave.scm:0
+msgid "<Image>/Script-Fu/Alchemy/Weave..."
+msgstr "<Image>/Script-Fu/Alkemija/Pleter..."
+
+#: plug-ins/script-fu/scripts/3d-outline.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/3D Outline..."
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Alien Glow..."
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Alien Neon..."
+
+#: plug-ins/script-fu/scripts/basic1-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
+msgstr "<Image>/Script-Fu/Animatori/Waves..."
+
+#: plug-ins/script-fu/scripts/basic2-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Basic II..."
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Blended..."
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Bovination..."
+
+#: plug-ins/script-fu/scripts/chalk.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Chalk..."
+
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Chip Away..."
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Chrome..."
+
+#: plug-ins/script-fu/scripts/comic-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Comic Book..."
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Cool Metal..."
+
+#: plug-ins/script-fu/scripts/frosty-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Frosty..."
+
+#: plug-ins/script-fu/scripts/glossy.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Glossy..."
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Glowing Hot..."
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Gradient Bevel..."
+
+#: plug-ins/script-fu/scripts/neon-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Neon..."
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Particle Trace..."
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Starburst..."
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Starscape..."
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
+msgstr "<Image>/Script-Fu/Alfa u Logo/Teksture..."
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:0
+msgid "<Image>/Script-Fu/Animators/Blend..."
+msgstr "<Image>/Script-Fu/Animatori/Mije¹anje..."
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:0
+msgid "<Image>/Script-Fu/Animators/Rippling..."
+msgstr "<Image>/Script-Fu/Animatori/Umno¾avanje..."
+
+#: plug-ins/gap/sel-to-anim-img.scm:0
+msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+msgstr "<Image>/Script-Fu/Animatori/Odabir u Animiranu sliku..."
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm:0
+msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
+msgstr "<Image>/Script-Fu/Animatori/Oblik Globusa..."
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:0
+msgid "<Image>/Script-Fu/Animators/Waves..."
+msgstr "<Image>/Script-Fu/Animatori/Valovi..."
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:0
+msgid "<Image>/Script-Fu/Decor/Add Bevel..."
+msgstr "<Image>/Script-Fu/Dekor/Uko¹eno..."
+
+#: plug-ins/script-fu/scripts/addborder.scm:0
+msgid "<Image>/Script-Fu/Decor/Add Border..."
+msgstr "<Image>/Script-Fu/Dekor/Dodaj Rub..."
+
+#: plug-ins/script-fu/scripts/coffee.scm:0
+msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
+msgstr "<Image>/Script-Fu/Dekor/Proliveno Kavom..."
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
+msgstr "<Image>/Script-Fu/Dekor/Èarobni Rub..."
+
+#: plug-ins/script-fu/scripts/old_photo.scm:0
+msgid "<Image>/Script-Fu/Decor/Old Photo..."
+msgstr "<Image>/Script-Fu/Dekor/Stara Slika..."
+
+#: plug-ins/script-fu/scripts/round-corners.scm:0
+msgid "<Image>/Script-Fu/Decor/Round Corners..."
+msgstr "<Image>/Script-Fu/Dekor/Zaobljeni Kutevi..."
+
+#: plug-ins/script-fu/scripts/slide.scm:0
+msgid "<Image>/Script-Fu/Decor/Slide..."
+msgstr "<Image>/Script-Fu/Dekor/Slajd..."
+
+#: plug-ins/script-fu/scripts/circuit.scm:0
+msgid "<Image>/Script-Fu/Render/Circuit..."
+msgstr "<Image>/Script-Fu/Render/Spoj..."
+
+#: plug-ins/script-fu/scripts/lava.scm:0
+msgid "<Image>/Script-Fu/Render/Lava..."
+msgstr "<Image>/Script-Fu/Render/Lava..."
+
+#: plug-ins/script-fu/scripts/line-nova.scm:0
+msgid "<Image>/Script-Fu/Render/Line Nova..."
+msgstr "<Image>/Script-Fu/Render/Line Nova..."
+
+#: plug-ins/script-fu/scripts/grid-system.scm:0
+msgid "<Image>/Script-Fu/Render/Make Grid System..."
+msgstr "<Image>/Script-Fu/Render/Sistem mre¾e..."
+
+#: plug-ins/script-fu/scripts/distress_selection.scm:0
+msgid "<Image>/Script-Fu/Selection/Distress Selection..."
+msgstr "<Image>/Script-Fu/Odabir/Oskudni Odabir..."
+
+#: plug-ins/script-fu/scripts/fade-outline.scm:0
+msgid "<Image>/Script-Fu/Selection/Fade Outline..."
+msgstr "<Image>/Script-Fu/Odabir/I¹èezavanje..."
+
+#: plug-ins/script-fu/scripts/selection-round.scm:0
+msgid "<Image>/Script-Fu/Selection/Round..."
+msgstr "<Image>/Script-Fu/Odabir/Kru¾no..."
+
+#: plug-ins/script-fu/scripts/select_to_brush.scm:0
+msgid "<Image>/Script-Fu/Selection/To Brush..."
+msgstr "<Image>/Script-Fu/Odabir/U kist..."
+
+#: plug-ins/script-fu/scripts/select_to_image.scm:0
+msgid "<Image>/Script-Fu/Selection/To Image"
+msgstr "<Image>/Script-Fu/Odabir/U Sliku"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:0
+msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
+msgstr "<Image>/Script-Fu/Sjena/Kapljica sjene..."
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
+msgid "<Image>/Script-Fu/Shadow/Perspective..."
+msgstr "<Image>/Script-Fu/Sjena/Perspective..."
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:0
+msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
+msgstr "<Image>/Script-Fu/Sjena/Xach-Effect..."
+
+#: plug-ins/script-fu/scripts/carve-it.scm:0
+msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
+msgstr "<Image>/Script-Fu/Matrica/Carve-It..."
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:0
+msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
+msgstr "<Image>/Script-Fu/Matrica/Chrome-It..."
+
+#: plug-ins/script-fu/scripts/asc2img.scm:0
+msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
+msgstr "<Image>/Script-Fu/Uslu¾ni/ASCII u sloj slike..."
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm:0
+msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
+msgstr "<Image>/Script-Fu/Uslu¾ni/Crtaj HSV Graf..."
+
+#: plug-ins/script-fu/scripts/image-structure.scm:0
+msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
+msgstr "<Image>/Script-Fu/Uslu¾ni/Prika¾i Strukturu Slike..."
+
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Dugmad/Okruglo dugme..."
+
+#: plug-ins/script-fu/scripts/beveled-button.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Dugmad/Jednostavno Dugme..."
+
+#: plug-ins/script-fu/scripts/3d-outline.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/3D Prikaz..."
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Alien Glow..."
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Alien Neon..."
+
+#: plug-ins/script-fu/scripts/basic1-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Basic I..."
+
+#: plug-ins/script-fu/scripts/basic2-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Basic II..."
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Blended..."
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Bovination..."
+
+#: plug-ins/script-fu/scripts/carved-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Carved..."
+
+#: plug-ins/script-fu/scripts/chalk.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Chalk..."
+
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Chip Away..."
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Chrome..."
+
+#: plug-ins/script-fu/scripts/comic-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Comic Book..."
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Cool Metal..."
+
+#: plug-ins/script-fu/scripts/crystal-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Crystal..."
+
+#: plug-ins/script-fu/scripts/frosty-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Frosty..."
+
+#: plug-ins/script-fu/scripts/glossy.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Glossy..."
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Glowing Hot..."
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Gradient Bevel..."
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Imigre-26..."
+
+#: plug-ins/script-fu/scripts/neon-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Neon..."
+
+#: plug-ins/script-fu/scripts/news-text.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Newsprint Text..."
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Particle Trace..."
+
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/SOTA Chrome..."
+
+#: plug-ins/script-fu/scripts/speed-text.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Speed Text..."
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Starburst..."
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Starscape..."
+
+#: plug-ins/script-fu/scripts/text-circle.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Text Circle..."
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Textured..."
+
+#: plug-ins/script-fu/scripts/title-header.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Web Title Header..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Napravi Kist/Eliptièan, Ispunjen..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Napravi Kist/Eliptièan..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Napravi Kist/Pravokutan, Ispunjen..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Napravi Kist/Pravokutan..."
+
+#: plug-ins/script-fu/scripts/sphere.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Ostalo/Kugla..."
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Uzorci/3D Vijuge..."
+
+#: plug-ins/script-fu/scripts/camo.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Uzorci/Kamufla¾a..."
+
+#: plug-ins/script-fu/scripts/flatland.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Uzorci/Ravnica..."
+
+#: plug-ins/script-fu/scripts/land.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Uzorci/Zemlja..."
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Uzorci/Render. Mapa..."
+
+#: plug-ins/script-fu/scripts/swirltile.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Uzorci/Zavijutak..."
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Uzorci/Uvojci (rastavljivo)..."
+
+#: plug-ins/script-fu/scripts/trochoid.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Uzorci/Trochoid..."
+
+#: plug-ins/script-fu/scripts/truchet.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Uzorci/Vijuga..."
+
+#: plug-ins/script-fu/scripts/asc2img.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Uslu¾ni/ASCII u Sliku..."
+
+#: plug-ins/script-fu/scripts/gradient-example.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Uslu¾ni/Posebni Gradijent..."
+
+#: plug-ins/script-fu/scripts/font-map.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Uslu¾ni/Mapa Fontova..."
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Alien Glow/Strelica..."
+
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Alien Glow/Kuglica..."
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Alien Glow/Dugme..."
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Alien Glow/Hor. Crta..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Beveled Pattern/Strelica..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Beveled Pattern/Kuglica..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Beveled Pattern/Dugme..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Beveled Pattern/Zaglavlje..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Beveled Pattern/Hor. Crta..."
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Gimp.Org/Veliko Zaglavlje..."
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Gimp.Org/Valjci s oznakom..."
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Gimp.Org/Malo Zaglavlje..."
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Gimp.Org/Oznaka Valjk. Dugmeta..."
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Gimp.Org/Oznaka Drugog Dugmeta...."
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
+"Label..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Web Teme/Gimp.Org/Oznaka Treæeg Dugmeta..."
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+msgstr "<Toolbox>/Xtns/Web Browser/FAQ za programere"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
+msgstr "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+msgstr "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+msgstr "<Toolbox>/Xtns/Web Browser/GIMP Novosti"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+msgstr "<Toolbox>/Xtns/Web Browser/GIMP Uèitelji"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
+msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Dokumentacija"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
+msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
+msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
+msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
+msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Linkovi"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
+msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Liste"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
+msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Izvori Podataka"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
+msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+msgstr "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+msgstr "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
+msgstr "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+msgstr "<Toolbox>/Xtns/Web Browser/Korisnièki FAQ"
+
+#: plug-ins/script-fu/scripts/round-corners.scm:0
+msgid "Add Background"
+msgstr "Dodaj Pozadinu"
+
+#: plug-ins/script-fu/scripts/round-corners.scm:0
+msgid "Add Drop-Shadow"
+msgstr "Dodaj Kapljicu Sjene"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+msgid "Add Shadow"
+msgstr "Dodaj Sjenu"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:0
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
+msgid "Allow Resizing"
+msgstr "Dozvoli Promjenu Velièine"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:0
+msgid "Amplitude"
+msgstr "Amplituda"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
+msgid "Angle"
+msgstr "Kut"
+
+#: plug-ins/gap/sel-to-anim-img.scm:0
+msgid "Anim-Filter for all Copies"
+msgstr "Anim-Filter za sve Kopije"
+
+#: plug-ins/script-fu/scripts/text-circle.scm:0
+msgid "Antialias"
+msgstr "Antialias"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm:0
+msgid "Apply Generated Layermask"
+msgstr "Prihvati generiranu masku sloja"
+
+#: plug-ins/script-fu/scripts/image-structure.scm:0
+msgid "Apply Layer Mask (or discard)"
+msgstr "Prihvati Masku Sloja (ili nemoj)"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+msgid "AutoCrop"
+msgstr "AutoCrop"
+
+#: plug-ins/script-fu/scripts/clothify.scm:0
+#: plug-ins/script-fu/scripts/swirltile.scm:0
+msgid "Azimuth"
+msgstr "Azimut"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm:0
+msgid "BG Opacity"
+msgstr "Neprozirnost Pozadine"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+#: plug-ins/script-fu/scripts/asc2img.scm:0
+#: plug-ins/script-fu/scripts/basic1-logo.scm:0
+#: plug-ins/script-fu/scripts/basic2-logo.scm:0
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+#: plug-ins/script-fu/scripts/chalk.scm:0
+#: plug-ins/script-fu/scripts/chrome-logo.scm:0
+#: plug-ins/script-fu/scripts/comic-logo.scm:0
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+#: plug-ins/script-fu/scripts/frosty-logo.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/glowing-logo.scm:0
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+#: plug-ins/script-fu/scripts/image-structure.scm:0
+#: plug-ins/script-fu/scripts/neon-logo.scm:0
+#: plug-ins/script-fu/scripts/news-text.scm:0
+#: plug-ins/script-fu/scripts/speed-text.scm:0
+#: plug-ins/script-fu/scripts/sphere.scm:0
+#: plug-ins/script-fu/scripts/starburst-logo.scm:0
+#: plug-ins/script-fu/scripts/swirltile.scm:0
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+#: plug-ins/script-fu/scripts/truchet.scm:0
+msgid "Background Color"
+msgstr "Boja Pozadine"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm:0
+#: plug-ins/script-fu/scripts/crystal-logo.scm:0
+msgid "Background Image"
+msgstr "Slika Pozadine"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
+msgid "Bar Height"
+msgstr "Visina Linije"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
+msgid "Bar Length"
+msgstr "©irina Linije"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+msgid "Base Color"
+msgstr "Bazna Boja"
+
+#: plug-ins/script-fu/scripts/trochoid.scm:0
+msgid "Base Radius (pixel)"
+msgstr "Osnovni Polumjer (piksel)"
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Behaviour"
+msgstr "Pona¹anje"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+msgid "Bevel Height (Sharpness)"
+msgstr "Visina Kosine (O¹tro)"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm:0
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+msgid "Bevel Width"
+msgstr "Duljina Kosine"
+
+#: plug-ins/script-fu/scripts/glossy.scm:0
+msgid "Blend Gradient (Outline)"
+msgstr "Izmje¹aj Gradijent (Van crte)"
+
+#: plug-ins/script-fu/scripts/glossy.scm:0
+msgid "Blend Gradient (Text)"
+msgstr "Izmje¹aj Gradijent (Tekst)"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "Blend Mode"
+msgstr "Razina Mije¹anja"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm:0
+#: plug-ins/script-fu/scripts/truchet.scm:0
+msgid "Block Size"
+msgstr "Velièina Bloka"
+
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+msgid "Blur Amount"
+msgstr "Vrijednost Zamuæenja"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+msgid "Blur Border"
+msgstr "Rub Zamuæenja"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:0
+msgid "Blur Horizontally"
+msgstr "Horizontalno Zamuæenje"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:0
+#: plug-ins/script-fu/scripts/news-text.scm:0
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
+#: plug-ins/script-fu/scripts/round-corners.scm:0
+#: plug-ins/script-fu/scripts/swirltile.scm:0
+msgid "Blur Radius"
+msgstr "Polumjer Zamuæenja"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:0
+msgid "Blur Type"
+msgstr "Vrsta Zamuæenja"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:0
+msgid "Blur Vertically"
+msgstr "Vertikalno Zamuæenje"
+
+#: plug-ins/script-fu/scripts/clothify.scm:0
+msgid "Blur X"
+msgstr "Zamuæenje X"
+
+#: plug-ins/script-fu/scripts/clothify.scm:0
+msgid "Blur Y"
+msgstr "Zamuæenje Y"
+
+#: plug-ins/script-fu/scripts/addborder.scm:0
+msgid "Border Color"
+msgstr "Boja Ruba"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Border Size (pixels)"
+msgstr "Velièina Ruba (piksela)"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm:0
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+msgid "Border Size"
+msgstr "Velièina Ruba"
+
+#: plug-ins/script-fu/scripts/addborder.scm:0
+msgid "Border X Size"
+msgstr "Velièina Ruba X"
+
+#: plug-ins/script-fu/scripts/addborder.scm:0
+msgid "Border Y Size"
+msgstr "Velièina Ruba Y"
+
+#: plug-ins/script-fu/scripts/font-map.scm:0
+#: plug-ins/script-fu/scripts/old_photo.scm:0
+msgid "Border"
+msgstr "Rub"
+
+#: plug-ins/script-fu/scripts/asc2img.scm:0
+msgid "Buffer Amount (% Height of Text)"
+msgstr "Vrijednost Spremnika (%Visine Teksta)"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm:0
+msgid "Bumpmap (Alpha Layer) Blur Radius"
+msgstr "BumpMap (Alfa sloj) Polumjer Zamuæenja"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm:0
+msgid "Burst Color"
+msgstr "Pojaèanje Boje"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm:0
+msgid "Carve Raised Text"
+msgstr "Izrezbari Tekst"
+
+#: plug-ins/script-fu/scripts/carve-it.scm:0
+msgid "Carve White Areas"
+msgstr "Izrezbari Bijelo Podruèje"
+
+#: plug-ins/script-fu/scripts/news-text.scm:0
+msgid "Cell Size (pixels)"
+msgstr "Velièina æelije (piksela)"
+
+#: plug-ins/script-fu/scripts/chalk.scm:0
+msgid "Chalk Color"
+msgstr "Chalk Boja"
+
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+msgid "Chip Amount"
+msgstr "Vrijednost Chip"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:0
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+msgid "Chrome Balance"
+msgstr "Balans Chrome"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:0
+#: plug-ins/script-fu/scripts/crystal-logo.scm:0
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+msgid "Chrome Factor"
+msgstr "Faktor Chrome"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:0
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+msgid "Chrome Lightness"
+msgstr "Svjetlina Chrome"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:0
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+msgid "Chrome Saturation"
+msgstr "Zasiæenje Chrome"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:0
+msgid "Chrome White Areas"
+msgstr "Bijela podruèja Chrome"
+
+#: plug-ins/script-fu/scripts/circuit.scm:0
+msgid "Circuit Seed"
+msgstr "Stvori Krug"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm:0
+msgid "Clear Unselected Maskarea"
+msgstr "Oèisti neodabrano podruèje maske"
+
+#: plug-ins/script-fu/scripts/camo.scm:0
+msgid "Color 1"
+msgstr "Boja 1"
+
+#: plug-ins/script-fu/scripts/camo.scm:0
+msgid "Color 2"
+msgstr "Boja 2"
+
+#: plug-ins/script-fu/scripts/camo.scm:0
+msgid "Color 3"
+msgstr "Boja 3"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:0
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
+msgid "Color"
+msgstr "Boja"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Columns"
+msgstr "Stupaca"
+
+#: plug-ins/script-fu/scripts/image-structure.scm:0
+msgid "Create New Image"
+msgstr "Kreiraj Novu Sliku"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm:0
+msgid "Create Shadow"
+msgstr "Kreiraj Sjenu"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "Custom Gradient"
+msgstr "Posebni Gradijent"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+msgid "Dark Color"
+msgstr "Tamna Boja"
+
+#: plug-ins/script-fu/scripts/coffee.scm:0
+msgid ""
+"Darken Only\n"
+"(Better, but only for Images with alot of White)"
+msgstr ""
+"Samo Tamno\n"
+"(Bolje,ali samo za slike sa puno Bijelog)"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm:0
+msgid "Default Bumpmap Settings"
+msgstr "Standardne postavke Bumpmap"
+
+#: plug-ins/script-fu/scripts/old_photo.scm:0
+msgid "Defocus"
+msgstr "Defokusiraj"
+
+#: plug-ins/script-fu/scripts/addborder.scm:0
+msgid "Delta Value on Color"
+msgstr "Delta Vrijednost Boje"
+
+#: plug-ins/script-fu/scripts/news-text.scm:0
+#: plug-ins/script-fu/scripts/speed-text.scm:0
+msgid "Density (%)"
+msgstr "Osjetljivost (%)"
+
+#: plug-ins/script-fu/scripts/clothify.scm:0
+#: plug-ins/script-fu/scripts/swirltile.scm:0
+msgid "Depth"
+msgstr "Dubina"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:0
+#: plug-ins/script-fu/scripts/select_to_brush.scm:0
+msgid "Description"
+msgstr "Poja¹njenje"
+
+#: plug-ins/script-fu/scripts/flatland.scm:0
+#: plug-ins/script-fu/scripts/land.scm:0
+msgid "Detail Level"
+msgstr "Nivo Detalja"
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Detail in Middle"
+msgstr "Detalj u Sredini"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
+msgid "Diameter"
+msgstr "Promjer"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+msgid "Down"
+msgstr "Dolje"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:0
+msgid "Drop Shadow Blur Radius"
+msgstr "Daj Sjenu Polumjeru Zamuæenja"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:0
+msgid "Drop Shadow Color"
+msgstr "Daj Boju Sjene"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:0
+msgid "Drop Shadow Opacity"
+msgstr "Daj Sjeni Neprozirnost"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:0
+msgid "Drop Shadow X Offset"
+msgstr "Daj Sjeni X Ofset"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:0
+msgid "Drop Shadow Y Offset"
+msgstr "Daj Sjeni Y Ofset"
+
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+msgid "Drop Shadow"
+msgstr "Daj Sjenu"
+
+#: plug-ins/script-fu/scripts/predator.scm:0
+msgid "Edge Amount"
+msgstr "Vrijednost Ruba"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+msgid "Edge Only"
+msgstr "Samo Rub"
+
+#: plug-ins/script-fu/scripts/round-corners.scm:0
+msgid "Edge Radius"
+msgstr "Polumjer Ruba"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+msgid "Edge Width"
+msgstr "©irina Ruba"
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm:0
+msgid "Effect Size (pixels * 3)"
+msgstr "Efektivna Velièina (piksela * 3)"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm:0
+msgid "Effect Size (pixels * 30)"
+msgstr "Efektivna Velièina (piksela * 30)"
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm:0
+msgid "Effect Size (pixels * 4)"
+msgstr "Efektivna Velièina (piksela * 4)"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm:0
+msgid "Effect Size (pixels * 5)"
+msgstr "Efektivna Velièina (piksela * 5)"
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+#: plug-ins/script-fu/scripts/frosty-logo.scm:0
+msgid "Effect Size (pixels)"
+msgstr "Efektivna Velièina (piksela)"
+
+#: plug-ins/script-fu/scripts/clothify.scm:0
+#: plug-ins/script-fu/scripts/swirltile.scm:0
+msgid "Elevation"
+msgstr "Nagib"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm:0
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "End Blend"
+msgstr "Kraj Mije¹anja"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm:0
+msgid "End X"
+msgstr "Kraj X"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm:0
+msgid "End Y"
+msgstr "Kraj Y"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Ending Blend"
+msgstr "Zavr¹no Mije¹anje"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:0
+#: plug-ins/script-fu/scripts/crystal-logo.scm:0
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+msgid "Environment Map"
+msgstr "Mapa Suèelja"
+
+#: plug-ins/script-fu/scripts/trochoid.scm:0
+msgid "Erase before Draw"
+msgstr "Izbri¹i prije Crtanja"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Even"
+msgstr "Parni"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Even/Odd"
+msgstr "Parni/Neparni"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "FG-BG-HSV"
+msgstr "FG-BG-HSV"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "FG-BG-RGB"
+msgstr "FG-BG-RGB"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "FG-Transparent"
+msgstr "Prozirna Pozadina"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+msgid "Fade Away"
+msgstr "I¹èezavanje"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm:0
+msgid "Fade From %"
+msgstr "I¹ezavanje Iz %"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm:0
+msgid "Fade To   %"
+msgstr "I¹èezavanje U %"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:0
+msgid "Feathering"
+msgstr "Pokrivanje"
+
+#: plug-ins/script-fu/scripts/asc2img.scm:0
+#: plug-ins/script-fu/scripts/select_to_brush.scm:0
+msgid "Filename"
+msgstr "Naziv Datoteke"
+
+#: plug-ins/script-fu/scripts/text-circle.scm:0
+msgid "Fill Angle"
+msgstr "Ispuni Kut"
+
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+msgid "Fill BG with Pattern"
+msgstr "Ispuni Pozadinu Uzorkom"
+
+#: plug-ins/gap/sel-to-anim-img.scm:0
+msgid "Fill with BG Color"
+msgstr "Ispuni Bojom Pozadine"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
+#: plug-ins/script-fu/scripts/camo.scm:0
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+msgid "Flatten Image"
+msgstr "Ravna Slika"
+
+#: plug-ins/script-fu/scripts/slide.scm:0
+msgid "Font Color"
+msgstr "Boja Pisma"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+#: plug-ins/script-fu/scripts/asc2img.scm:0
+#: plug-ins/script-fu/scripts/basic1-logo.scm:0
+#: plug-ins/script-fu/scripts/basic2-logo.scm:0
+#: plug-ins/script-fu/scripts/beveled-button.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+#: plug-ins/script-fu/scripts/carved-logo.scm:0
+#: plug-ins/script-fu/scripts/chalk.scm:0
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+#: plug-ins/script-fu/scripts/chrome-logo.scm:0
+#: plug-ins/script-fu/scripts/comic-logo.scm:0
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+#: plug-ins/script-fu/scripts/crystal-logo.scm:0
+#: plug-ins/script-fu/scripts/font-map.scm:0
+#: plug-ins/script-fu/scripts/frosty-logo.scm:0
+#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/glowing-logo.scm:0
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
+#: plug-ins/script-fu/scripts/neon-logo.scm:0
+#: plug-ins/script-fu/scripts/news-text.scm:0
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+#: plug-ins/script-fu/scripts/speed-text.scm:0
+#: plug-ins/script-fu/scripts/starburst-logo.scm:0
+#: plug-ins/script-fu/scripts/starscape-logo.scm:0
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+#: plug-ins/script-fu/scripts/text-circle.scm:0
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+#: plug-ins/script-fu/scripts/title-header.scm:0
+msgid "Font Size (pixels)"
+msgstr "Velièina Pisma (pikseli)"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+#: plug-ins/script-fu/scripts/asc2img.scm:0
+#: plug-ins/script-fu/scripts/basic1-logo.scm:0
+#: plug-ins/script-fu/scripts/basic2-logo.scm:0
+#: plug-ins/script-fu/scripts/beveled-button.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+#: plug-ins/script-fu/scripts/carved-logo.scm:0
+#: plug-ins/script-fu/scripts/chalk.scm:0
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+#: plug-ins/script-fu/scripts/chrome-logo.scm:0
+#: plug-ins/script-fu/scripts/comic-logo.scm:0
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+#: plug-ins/script-fu/scripts/crystal-logo.scm:0
+#: plug-ins/script-fu/scripts/frosty-logo.scm:0
+#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/glowing-logo.scm:0
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
+#: plug-ins/script-fu/scripts/neon-logo.scm:0
+#: plug-ins/script-fu/scripts/news-text.scm:0
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+#: plug-ins/script-fu/scripts/slide.scm:0
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+#: plug-ins/script-fu/scripts/speed-text.scm:0
+#: plug-ins/script-fu/scripts/starburst-logo.scm:0
+#: plug-ins/script-fu/scripts/starscape-logo.scm:0
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+#: plug-ins/script-fu/scripts/text-circle.scm:0
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+#: plug-ins/script-fu/scripts/title-header.scm:0
+msgid "Font"
+msgstr "Pismo"
+
+#: plug-ins/script-fu/scripts/font-map.scm:0
+msgid "Fonts"
+msgstr "Pisma"
+
+#: plug-ins/script-fu/scripts/truchet.scm:0
+msgid "Foreground Color"
+msgstr "Boja Prednjeg Plana"
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
+msgid "Frame Color"
+msgstr "Boja Okvira"
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
+msgid "Frame Size"
+msgstr "Velièina Okvira"
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm:0
+msgid "Frames"
+msgstr "Okvira"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm:0
+msgid "From Top-Left to Bottom-Right"
+msgstr "Od Vrha-Lijevo do Dna-Desno"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+#: plug-ins/script-fu/scripts/neon-logo.scm:0
+#: plug-ins/script-fu/scripts/starscape-logo.scm:0
+msgid "Glow Color"
+msgstr "Boja Isijanja"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
+msgid "Glow Radius"
+msgstr "Polumjer Isijanja"
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+msgid "Glow Size (pixels * 4)"
+msgstr "Velièina Isijanja (pikseli * 4)"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+#: plug-ins/script-fu/scripts/comic-logo.scm:0
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+#: plug-ins/script-fu/scripts/land.scm:0 plug-ins/script-fu/scripts/lava.scm:0
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Gradient"
+msgstr "Gradijent"
+
+#: plug-ins/script-fu/scripts/distress_selection.scm:0
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+msgid "Granularity (1 is Low)"
+msgstr "Granulacija (1 je Mala)"
+
+#: plug-ins/script-fu/scripts/camo.scm:0
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Granularity"
+msgstr "Granulacija"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm:0
+msgid "Graph Scale"
+msgstr "Graph Skala"
+
+#: plug-ins/script-fu/scripts/grid-system.scm:0
+msgid "Grids X"
+msgstr "Mre¾e X"
+
+#: plug-ins/script-fu/scripts/grid-system.scm:0
+msgid "Grids Y"
+msgstr "Mre¾e Y"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#: plug-ins/script-fu/scripts/gradient-example.scm:0
+#: plug-ins/script-fu/scripts/mkbrush.scm:0
+#: plug-ins/script-fu/scripts/swirltile.scm:0
+msgid "Height"
+msgstr "Visina"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:0
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+msgid "Highlight Balance"
+msgstr "Balans Osvjetljenog"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#: plug-ins/script-fu/scripts/xach-effect.scm:0
+msgid "Highlight Color"
+msgstr "Boja Osvjetljenog"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:0
+msgid "Highlight Opacity"
+msgstr "Neprozirnost Osvjetljenog"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:0
+msgid "Highlight X Offset"
+msgstr "Osvijetli X ofset"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:0
+msgid "Highlight Y Offset"
+msgstr "Osvijetli Y ofset"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+msgid "Hit Rate"
+msgstr "Vrijednost Pogotka"
+
+#: plug-ins/script-fu/scripts/trochoid.scm:0
+msgid "Hue Rate"
+msgstr "Vrijednost Nijanse"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:0
+msgid "IIR"
+msgstr "IIR"
+
+#: plug-ins/script-fu/scripts/flatland.scm:0
+#: plug-ins/script-fu/scripts/land.scm:0
+msgid "Image Height"
+msgstr "Visina Slike"
+
+#: plug-ins/script-fu/scripts/camo.scm:0
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Image Size"
+msgstr "Velièina Slike"
+
+#: plug-ins/script-fu/scripts/flatland.scm:0
+#: plug-ins/script-fu/scripts/land.scm:0
+msgid "Image Width"
+msgstr "©irina Slike"
+
+#: plug-ins/script-fu/scripts/carve-it.scm:0
+msgid "Image to Carve"
+msgstr "Izrezbarena Slika"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+msgid "Index Image"
+msgstr "Indeksiraj Sliku"
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm:0
+msgid "Index to n Colors (0 = Remain RGB)"
+msgstr "Indeks u n Boja (0 = zahtijevam RGB)"
+
+#: plug-ins/script-fu/scripts/image-structure.scm:0
+msgid "Insert Layer Names"
+msgstr "Ubaci Imena Slojeva"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:0
+msgid "Intermediate Frames"
+msgstr "Centriraj Okvire"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
+msgid "Interpolate"
+msgstr "Interpolacija"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:0
+msgid "Invert direction"
+msgstr "Obratni Smjer"
+
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+msgid "Invert"
+msgstr "Obratno"
+
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+msgid "Keep Background"
+msgstr "Zadr¾i Pozadinu"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:0
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+msgid "Keep Bump Layer"
+msgstr "Zadr¾i Bump Sloj"
+
+#: plug-ins/script-fu/scripts/circuit.scm:0
+#: plug-ins/script-fu/scripts/lava.scm:0
+#: plug-ins/script-fu/scripts/predator.scm:0
+#: plug-ins/script-fu/scripts/xach-effect.scm:0
+msgid "Keep Selection"
+msgstr "Zadr¾i Odabir"
+
+#: plug-ins/script-fu/scripts/land.scm:0
+msgid "Land Height"
+msgstr "Visina Plohe"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+msgid "Left"
+msgstr "Lijevo"
+
+#: plug-ins/script-fu/scripts/sphere.scm:0
+msgid "Lighting (degrees)"
+msgstr "Osvjetljenje(stupnjevi)"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:0
+msgid "Looped"
+msgstr "Petlja"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+msgid "Lower Color (Active)"
+msgstr "Ni¾a Boja (Aktivna)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+msgid "Lower Color"
+msgstr "Ni¾a Boja"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm:0
+msgid "Lower-Right color"
+msgstr "Najmanja-Desna boja"
+
+#: plug-ins/script-fu/scripts/image-structure.scm:0
+msgid "Make New Background"
+msgstr "Napravi Novu Pozadinu"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:0
+msgid "Mask Opacity"
+msgstr "Neprozirna Maska"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:0
+msgid "Mask Size"
+msgstr "Velièina Maske"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:0
+msgid "Max. Blur Radius"
+msgstr "Maks. Polumjer Zamuæenja"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Mosaic Tile Type"
+msgstr "Djelovi Mozaika"
+
+#: plug-ins/script-fu/scripts/old_photo.scm:0
+msgid "Mottle"
+msgstr "I¹aran"
+
+#: plug-ins/script-fu/scripts/circuit.scm:0
+msgid "No Background (only for separate layer)"
+msgstr "Nema Pozadine (samo za odvojeni sloj)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+msgid "Not Pressed (Active)"
+msgstr "Nije Stisnuto (Aktivno)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+msgid "Not Pressed"
+msgstr "Nije Stisnuto"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+msgid "Number of Bands"
+msgstr "Broj Veza"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+msgid "Number of Colors"
+msgstr "Broj Boja"
+
+#: plug-ins/gap/sel-to-anim-img.scm:0
+msgid "Number of Copies"
+msgstr "Broj Kopija"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:0
+#: plug-ins/script-fu/scripts/waves-anim.scm:0
+msgid "Number of Frames"
+msgstr "Broj Okvira"
+
+#: plug-ins/script-fu/scripts/line-nova.scm:0
+msgid "Number of Lines"
+msgstr "Broj Linija"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
+msgid "Number of Times to Whirl"
+msgstr "Koliko Puta æu Zavrtiti"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm:0
+#: plug-ins/script-fu/scripts/truchet.scm:0
+msgid "Number of X Tiles"
+msgstr "Broj X djeliæa"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm:0
+#: plug-ins/script-fu/scripts/truchet.scm:0
+msgid "Number of Y Tiles"
+msgstr "Broj Y djeliæa"
+
+#: plug-ins/script-fu/scripts/slide.scm:0
+msgid "Number"
+msgstr "Broj"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Odd"
+msgstr "Neparni"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "Offset (pixels)"
+msgstr "Ofset (piksela)"
+
+#: plug-ins/script-fu/scripts/line-nova.scm:0
+msgid "Offset Radius"
+msgstr "Polumjer Ofseta"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+msgid "Offset X"
+msgstr "Ofset X"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+msgid "Offset Y"
+msgstr "Ofset Y"
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm:0
+msgid "Offsets (pixels * 2)"
+msgstr "Ofseti (pikseli * 2)"
+
+#: plug-ins/script-fu/scripts/circuit.scm:0
+msgid "Oilify Mask Size"
+msgstr "Velièina Uljene Maske"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:0
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
+msgid "Opacity"
+msgstr "Neprozirnost"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+msgid "Orientation"
+msgstr "Orijentacija"
+
+#: plug-ins/script-fu/scripts/image-structure.scm:0
+msgid "Outer Border"
+msgstr "Vanjski Rub"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm:0
+msgid "Outline Blur Radius"
+msgstr "Polumjer Zamuæenja na Slici"
+
+#: plug-ins/script-fu/scripts/comic-logo.scm:0
+msgid "Outline Color"
+msgstr "Vanjska Boja"
+
+#: plug-ins/script-fu/scripts/comic-logo.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm:0
+msgid "Outline Size"
+msgstr "Vanjska Velièina"
+
+#: plug-ins/script-fu/scripts/image-structure.scm:0
+msgid "Pad Color"
+msgstr "Boja Podloge"
+
+#: plug-ins/script-fu/scripts/image-structure.scm:0
+msgid "Pad Opacity"
+msgstr "Neprozirnost Podloge"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm:0
+msgid "Padding Around Text"
+msgstr "Podloga oko Teksta"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+msgid "Padding X"
+msgstr "Podloga X"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+msgid "Padding Y"
+msgstr "Podloga Y"
+
+#: plug-ins/script-fu/scripts/image-structure.scm:0
+msgid "Padding for Transparent Regions"
+msgstr "Podloga za Prozirne regije"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
+#: plug-ins/script-fu/scripts/beveled-button.scm:0
+msgid "Padding"
+msgstr "Podloga"
+
+#: plug-ins/script-fu/scripts/glossy.scm:0
+msgid "Pattern (Outline)"
+msgstr "Uzorak (Outline)"
+
+#: plug-ins/script-fu/scripts/glossy.scm:0
+msgid "Pattern (Overlay)"
+msgstr "Uzorak (Overlay)"
+
+#: plug-ins/script-fu/scripts/glossy.scm:0
+msgid "Pattern (Text)"
+msgstr "Uzorak (Tekst)"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Pattern"
+msgstr "Uzorak"
+
+#: plug-ins/script-fu/scripts/trochoid.scm:0
+msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
+msgstr "Pen Rad. / Wheel Rad. [0.0:1.0]"
+
+#: plug-ins/script-fu/scripts/predator.scm:0
+msgid "Pixel Amount"
+msgstr "Vrijednost Piksela"
+
+#: plug-ins/script-fu/scripts/predator.scm:0
+msgid "Pixelize"
+msgstr "Pikseliziraj"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+msgid "Pressed"
+msgstr "Stisnuto"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
+msgid "Quarter Size"
+msgstr "Velièina Èetvrtine"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:0
+msgid "RLE"
+msgstr "RLE"
+
+#: plug-ins/script-fu/scripts/sphere.scm:0
+msgid "Radius (pixels)"
+msgstr "Polumjer (pikseli)"
+
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
+#: plug-ins/script-fu/scripts/text-circle.scm:0
+#: plug-ins/script-fu/scripts/tileblur.scm:0
+msgid "Radius"
+msgstr "Polumjer"
+
+#: plug-ins/script-fu/scripts/flatland.scm:0
+#: plug-ins/script-fu/scripts/land.scm:0
+msgid "Random Seed"
+msgstr "Nasumièna Kreacija"
+
+#: plug-ins/script-fu/scripts/line-nova.scm:0
+msgid "Randomness"
+msgstr "Nasumiènost"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
+msgid "Relative Distance of Horizon"
+msgstr "Relativna Udaljenost od Horizonta"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
+msgid "Relative Length of Shadow"
+msgstr "Relativna Duljina Sjene"
+
+#: plug-ins/script-fu/scripts/selection-round.scm:0
+msgid "Relative Radius"
+msgstr "Relativni Polumjer"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+msgid "Remove Background"
+msgstr "Ukloni Pozadinu"
+
+#: plug-ins/script-fu/scripts/weave.scm:0
+msgid "Ribbon Spacing"
+msgstr "Razmak Vrpce"
+
+#: plug-ins/script-fu/scripts/weave.scm:0
+msgid "Ribbon Width"
+msgstr "©irina Vrpce"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+msgid "Right"
+msgstr "Desno"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:0
+msgid "Rippling Strength"
+msgstr "Jaèina Sme¾uravanja"
+
+#: plug-ins/script-fu/scripts/lava.scm:0
+#: plug-ins/script-fu/scripts/swirltile.scm:0
+msgid "Roughness"
+msgstr "Hrapavost"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+msgid "Round Ratio"
+msgstr "Zaokru¾ivanje"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Rows"
+msgstr "Redova"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Rows/Cols"
+msgstr "Redova/Stupaca"
+
+#: plug-ins/script-fu/scripts/flatland.scm:0
+#: plug-ins/script-fu/scripts/land.scm:0
+msgid "Scale X"
+msgstr "Omjer X"
+
+#: plug-ins/script-fu/scripts/flatland.scm:0
+#: plug-ins/script-fu/scripts/land.scm:0
+msgid "Scale Y"
+msgstr "Omjer Y"
+
+#: plug-ins/script-fu/scripts/lava.scm:0
+msgid "Seed"
+msgstr "Poèetak"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+msgid "Select-By-Color Threshold"
+msgstr "Odaberi po Pragu boje"
+
+#: plug-ins/script-fu/scripts/circuit.scm:0
+#: plug-ins/script-fu/scripts/lava.scm:0
+#: plug-ins/script-fu/scripts/predator.scm:0
+msgid "Separate Layer"
+msgstr "Odvoji Sloj"
+
+#: plug-ins/script-fu/scripts/old_photo.scm:0
+msgid "Sepia"
+msgstr "Sepia"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm:0
+msgid "Shadow Blur Radius"
+msgstr "Polumjer Sjene Zamuæenja"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+msgid "Shadow Color"
+msgstr "Boja Sjene"
+
+#: plug-ins/script-fu/scripts/weave.scm:0
+msgid "Shadow Darkness"
+msgstr "Zatamnjenje Sjene"
+
+#: plug-ins/script-fu/scripts/weave.scm:0
+msgid "Shadow Depth"
+msgstr "Dubina Sjene"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+msgid "Shadow Weight (%)"
+msgstr "Te¾ina Sjene (%)"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/round-corners.scm:0
+msgid "Shadow X Offset"
+msgstr "X Ofset Sjene"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/round-corners.scm:0
+msgid "Shadow Y Offset"
+msgstr "Y Ofset Sjene"
+
+#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/sphere.scm:0
+msgid "Shadow"
+msgstr "Sjena"
+
+#: plug-ins/script-fu/scripts/line-nova.scm:0
+msgid "Sharpness (degrees)"
+msgstr "Izo¹travanje (stupnjeva)"
+
+#: plug-ins/script-fu/scripts/image-structure.scm:0
+msgid "Shear Length"
+msgstr "Du¾ina Stri¾enja"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+#: plug-ins/script-fu/scripts/lava.scm:0
+msgid "Size"
+msgstr "Velièina"
+
+#: plug-ins/script-fu/scripts/distress_selection.scm:0
+msgid "Smooth Horizontally"
+msgstr "Ugladi Horizontalno"
+
+#: plug-ins/script-fu/scripts/distress_selection.scm:0
+msgid "Smooth Vertically"
+msgstr "Ugladi Vertikalno"
+
+#: plug-ins/script-fu/scripts/camo.scm:0
+#: plug-ins/script-fu/scripts/distress_selection.scm:0
+msgid "Smooth"
+msgstr "Ugladi"
+
+#: plug-ins/script-fu/scripts/image-structure.scm:0
+msgid "Space Between Layers"
+msgstr "Razmak Meðu Slojevima"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:0
+#: plug-ins/script-fu/scripts/select_to_brush.scm:0
+msgid "Spacing"
+msgstr "Razmak"
+
+#: plug-ins/script-fu/scripts/sphere.scm:0
+msgid "Sphere Color"
+msgstr "Boja Kugle"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+msgid "Spots density X"
+msgstr "Osjetljivost Spota X"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+msgid "Spots density Y"
+msgstr "Osjetljivost Spota Y"
+
+#: plug-ins/script-fu/scripts/distress_selection.scm:0
+msgid "Spread"
+msgstr "Rastezanje"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Squares"
+msgstr "Èetverokuti"
+
+#: plug-ins/script-fu/scripts/coffee.scm:0
+msgid "Stains"
+msgstr "Mrlje"
+
+#: plug-ins/script-fu/scripts/text-circle.scm:0
+msgid "Start Angle"
+msgstr "Poèetni Kut"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm:0
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "Start Blend"
+msgstr "Poèetna Blenda"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm:0
+msgid "Start X"
+msgstr "Poèetni X"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm:0
+msgid "Start Y"
+msgstr "Poèetni Y"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Starting Blend"
+msgstr "Poèinjem Mje¹anje"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm:0
+msgid "Supersample"
+msgstr "Super Sempliranje"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+msgid "Text Color (Active)"
+msgstr "Boja Teksta (Aktivni)"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
+#: plug-ins/script-fu/scripts/asc2img.scm:0
+#: plug-ins/script-fu/scripts/basic1-logo.scm:0
+#: plug-ins/script-fu/scripts/basic2-logo.scm:0
+#: plug-ins/script-fu/scripts/beveled-button.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
+#: plug-ins/script-fu/scripts/news-text.scm:0
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+#: plug-ins/script-fu/scripts/speed-text.scm:0
+msgid "Text Color"
+msgstr "Boja Teksta"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Text Pattern"
+msgstr "Uzorak Teksta"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+#: plug-ins/script-fu/scripts/basic1-logo.scm:0
+#: plug-ins/script-fu/scripts/basic2-logo.scm:0
+#: plug-ins/script-fu/scripts/beveled-button.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+#: plug-ins/script-fu/scripts/carved-logo.scm:0
+#: plug-ins/script-fu/scripts/chalk.scm:0
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+#: plug-ins/script-fu/scripts/chrome-logo.scm:0
+#: plug-ins/script-fu/scripts/comic-logo.scm:0
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+#: plug-ins/script-fu/scripts/crystal-logo.scm:0
+#: plug-ins/script-fu/scripts/frosty-logo.scm:0
+#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/glowing-logo.scm:0
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
+#: plug-ins/script-fu/scripts/neon-logo.scm:0
+#: plug-ins/script-fu/scripts/news-text.scm:0
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+#: plug-ins/script-fu/scripts/slide.scm:0
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+#: plug-ins/script-fu/scripts/speed-text.scm:0
+#: plug-ins/script-fu/scripts/starburst-logo.scm:0
+#: plug-ins/script-fu/scripts/starscape-logo.scm:0
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+#: plug-ins/script-fu/scripts/text-circle.scm:0
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+#: plug-ins/script-fu/scripts/title-header.scm:0
+msgid "Text"
+msgstr "Tekst"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm:0
+#: plug-ins/script-fu/scripts/add-bevel.scm:0
+#: plug-ins/script-fu/scripts/truchet.scm:0
+msgid "Thickness"
+msgstr "Gustoæa"
+
+#: plug-ins/script-fu/scripts/weave.scm:0
+msgid "Thread Density"
+msgstr "Osjetljivost Niti"
+
+#: plug-ins/script-fu/scripts/weave.scm:0
+msgid "Thread Intensity"
+msgstr "Intezitet Niti"
+
+#: plug-ins/script-fu/scripts/weave.scm:0
+msgid "Thread Length"
+msgstr "Duljina Niti"
+
+#: plug-ins/script-fu/scripts/distress_selection.scm:0
+msgid "Threshold (Bigger 1<-->255 Smaller)"
+msgstr "Prag (Veæi 1<-->255 Manji)"
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Tile"
+msgstr "Djeliæ"
+
+#: plug-ins/script-fu/scripts/asc2img.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
+#: plug-ins/script-fu/scripts/spinning_globe.scm:0
+msgid "Transparent Background"
+msgstr "Prozirna Pozadina"
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm:0
+msgid "Turn from Left to Right"
+msgstr "Ajde s lijeva na Desno"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+msgid "Up"
+msgstr "Gore"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+msgid "Upper Color (Active)"
+msgstr "Gornja Boja (Aktivna)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm:0
+msgid "Upper Color"
+msgstr "Gornja Boja"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm:0
+msgid "Upper-Left color"
+msgstr "Boja Gore-Lijevo"
+
+#: plug-ins/script-fu/scripts/trochoid.scm:0
+msgid "Use Brush"
+msgstr "Koristi Kist"
+
+#: plug-ins/script-fu/scripts/lava.scm:0
+msgid "Use Current Gradient"
+msgstr "Koristi Aktivni Gradijent"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm:0
+msgid "Use Growing Selection"
+msgstr "Koristi Rastuæi Odabir"
+
+#: plug-ins/script-fu/scripts/glossy.scm:0
+msgid "Use Pattern Overlay"
+msgstr "Koristi Prekrivanje Uzorkom"
+
+#: plug-ins/script-fu/scripts/glossy.scm:0
+msgid "Use Pattern for Outline instead of Gradient"
+msgstr "Koristi Uzorak za Crte¾ , a ne Gradijent"
+
+#: plug-ins/script-fu/scripts/glossy.scm:0
+msgid "Use Pattern for Text instead of Gradient"
+msgstr "Koristi Uzorak za Tekst ,a ne Gradijent"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm:0
+msgid "Use Selection Bounds Instead of Belows"
+msgstr "Koristi Odabrana Ogranièenja bez obzira..."
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:0
+msgid "Wavelength"
+msgstr "Valna Duljina"
+
+#: plug-ins/script-fu/scripts/trochoid.scm:0
+msgid "Wheel Radius (hypo < 0 < epi)"
+msgstr "Polumjer Kotaèa (hypo < 0 < epi)"
+
+#: plug-ins/script-fu/scripts/swirltile.scm:0
+msgid "Whirl Amount"
+msgstr "Vrijednost Vrtnje"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
+msgid "Whirl Angle"
+msgstr "Kut Vrtnje"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+msgid "Width of Bands"
+msgstr "©irina Pojasa"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+msgid "Width of Gaps"
+msgstr "©irina Pukotina"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
+#: plug-ins/script-fu/scripts/gradient-example.scm:0
+#: plug-ins/script-fu/scripts/mkbrush.scm:0
+#: plug-ins/script-fu/scripts/swirltile.scm:0
+msgid "Width"
+msgstr "©irina"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:0
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+#: plug-ins/script-fu/scripts/old_photo.scm:0
+#: plug-ins/script-fu/scripts/round-corners.scm:0
+#: plug-ins/script-fu/scripts/slide.scm:0
+#: plug-ins/script-fu/scripts/spinning_globe.scm:0
+msgid "Work on Copy"
+msgstr "Rad na kopiji"

@@ -7,6 +7,11 @@
 	* it.po: updates to the italian translation from
 	Daniele Medri <daniele.medri@libero.it>
 
+2000-11-05  Daniel Egger <egger@suse.de>
+
+	* hr.po: Added Croatian translation
+	by Zeljan Rikalo <zeljko@orebeach-club.com>.
+
 2000-11-04  Zbigniew Chyla  <cyba@gnome.pl>
 
 	* pl.po: Updated Polish translation
