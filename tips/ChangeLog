@@ -1,5 +1,8 @@
 2004-03-04  Sven Neumann  <sven@gimp.org>
 
+	* Makefile.am: added a missing dependency that caused the
+	gimp20-tips.pot not to be rebuild when gimp-tips.xml.in changes.
+
 	* update.sh: s/gimp14/gimp20/
 
 2004-02-28  Christophe Merlet  <redfox@redfoxcenter.org>
