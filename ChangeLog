@@ -1,3 +1,18 @@
+2002-05-27  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: restructured, added lots of comments. Reenabled
+	build of gimp-remote.
+
+	* app/main.c: output name and version with usage information.
+	
+	* docs/Makefile.am: install the gimp-remote-1.3 man-page.
+	
+	* tools/Makefile.am: link gimp-remote-1.3 to gimp-remote if
+	enable-default-binary was choosen at configure time.
+
+	* tools/gimp-remote.c: make it start gimp-1.3 if called with the
+	--new command-line option. Still the same bad hack as in 1.2 :-(
+
 2002-05-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpchannellistview.c

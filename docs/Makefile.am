@@ -3,7 +3,7 @@
 # Don't install any man-pages for now. They need to be updated and
 # would clash with older gimp installations.
 
-man_MANS = gimp-1.3.1 gimptool-1.3.1 gimprc-1.3.5
+man_MANS = gimp-1.3.1 gimptool-1.3.1 gimprc-1.3.5 gimp-remote-1.3.1
 
 EXTRA_DIST = \
 	gimp-1.3.1.in			\

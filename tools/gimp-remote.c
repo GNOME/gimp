@@ -166,17 +166,17 @@ toolbox_hidden (gpointer data)
 }
   
 static void
-usage (void)
+usage (const gchar *name)
 {
-  g_print ("gimp-remote version %s\n", GIMP_VERSION);
+  g_print ("gimp-remote version %s\n\n", GIMP_VERSION);
   g_print ("Tells a running Gimp to open a (local or remote) image file.\n\n"
-	   "Usage: gimp-remote [options] [FILE|URI]...\n"
-	   "Valid options are:\n" 
+	   "Usage: %s [options] [FILE|URI]...\n\n", name);
+  g_print ("Valid options are:\n" 
 	   "  -h --help       Output this help.\n"
 	   "  -v --version    Output version info.\n"
-	   "  -n --new        Start gimp if no active gimp window was found.\n\n"
-	   "Example:  gimp-remote http://www.gimp.org/icons/frontpage-small.gif\n"
-	   "     or:  gimp-remote localfile.png\n");
+	   "  -n --new        Start gimp if no active gimp window was found.\n\n");
+  g_print ("Example:  %s http://www.gimp.org/icons/frontpage-small.gif\n"
+	   "     or:  %s localfile.png\n\n", name, name);
 }
 
 static void
@@ -194,7 +194,7 @@ start_new_gimp (GString *file_list)
       if (g_ascii_strncasecmp ("file:", argv[i], 5) == 0)
 	argv[i] += 5;
     }
-  execvp ("gimp", argv);
+  execvp ("gimp-1.3", argv);
 	  
   /*  if execvp returns, there was an arror  */
   g_printerr ("Couldn't start gimp for the following reason: %s\n", g_strerror (errno));
@@ -202,7 +202,8 @@ start_new_gimp (GString *file_list)
 }
 
 static void
-parse_option (gchar *arg)
+parse_option (const gchar *progname,
+              const gchar *arg)
 {
   if (strcmp (arg, "-v") == 0 || 
       strcmp (arg, "--version") == 0)
@@ -215,7 +216,7 @@ parse_option (gchar *arg)
 	   strcmp (arg, "--help") == 0 || 
 	   strcmp (arg, "--usage") == 0)
     {
-      usage ();
+      usage (progname);
       exit (0);
     }
   else if (strcmp (arg, "-n") == 0 ||
@@ -262,7 +263,7 @@ main (gint    argc,
 	  {
 	    if (strcmp (argv[i], "--"))
 	      {
-		parse_option (argv[i]);
+		parse_option (argv[0], argv[i]);
 		continue;
 	      }
 	    else
@@ -295,7 +296,7 @@ main (gint    argc,
 
     if (file_list->len == 0) 
       {
-	usage ();
+	usage (argv[0]);
         exit (0);
       }
 
@@ -338,8 +339,8 @@ main (gint    argc,
 
     /*  set up an DND-source  */
     source = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_signal_connect (GTK_OBJECT (source), "selection_get",
-		        GTK_SIGNAL_FUNC (source_selection_get), file_list->str);
+    g_signal_connect (G_OBJECT (source), "selection_get",
+                      G_CALLBACK (source_selection_get), file_list->str);
     gtk_widget_realize (source);
 
 

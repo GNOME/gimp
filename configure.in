@@ -1,9 +1,18 @@
 dnl Process this file with autoconf to produce a configure script.
 
+###############
+# Sanity checks
+###############
+
 # require autoconf 2.52
 AC_PREREQ(2.52)
 
 AC_INIT(etc/gimprc.in)
+
+
+############
+# Versioning
+############
 
 GLIB_REQUIRED_VERSION=2.0.0
 GTK_REQUIRED_VERSION=$GLIB_REQUIRED_VERSION
@@ -28,12 +37,29 @@ GIMP_INTERFACE_AGE=0
 GIMP_BINARY_AGE=0
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
 
+AC_SUBST(GIMP_MAJOR_VERSION)
+AC_SUBST(GIMP_MINOR_VERSION)
+AC_SUBST(GIMP_MICRO_VERSION)
+AC_SUBST(GIMP_VERSION)
+
+
 dnl libtool versioning
 LT_RELEASE=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
 LT_CURRENT=`expr $GIMP_MICRO_VERSION - $GIMP_INTERFACE_AGE`
 LT_REVISION=$GIMP_INTERFACE_AGE
 LT_AGE=`expr $GIMP_BINARY_AGE - $GIMP_INTERFACE_AGE`
 LT_CURRENT_MINUS_AGE=`expr $LT_CURRENT - $LT_AGE`
+
+AC_SUBST(LT_RELEASE)
+AC_SUBST(LT_CURRENT)
+AC_SUBST(LT_REVISION)
+AC_SUBST(LT_AGE)
+AC_SUBST(LT_CURRENT_MINUS_AGE)
+
+
+#####################
+# Initialize automake
+#####################
 
 VERSION=$GIMP_VERSION
 PACKAGE=gimp
@@ -43,10 +69,11 @@ AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 dnl Specify a configuration file
 AM_CONFIG_HEADER(config.h)
 
-dnl Initialize libtool
-AC_PROG_CC
-AC_LIBTOOL_WIN32_DLL
-AM_PROG_LIBTOOL
+dnl Initialize maintainer mode
+AM_MAINTAINER_MODE
+
+# Honor aclocal flags
+ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
 
 dnl XXXX Hack: Set AS and ASFLAGS so that automake 1.5 will be happy
 AS="\${CC}"
@@ -59,11 +86,20 @@ CCASFLAGS="\${CFLAGS}"
 AC_SUBST(CCAS)
 AC_SUBST(CCASFLAGS)
 
-dnl Initialize maintainer mode
-AM_MAINTAINER_MODE
 
-# Honor aclocal flags
-ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
+####################
+# Initialize libtool
+####################
+
+dnl Initialize libtool
+AC_PROG_CC
+AC_LIBTOOL_WIN32_DLL
+AM_PROG_LIBTOOL
+
+
+#################
+# Check for Win32
+#################
 
 AC_MSG_CHECKING([for some Win32 platform])
 case "$host" in
@@ -97,6 +133,11 @@ if test "$os_win32" = "yes"; then
 fi
 AM_CONDITIONAL(MS_LIB_AVAILABLE, test x$ms_librarian = xyes)
 
+
+###############
+# Generic stuff
+###############
+
 dnl Checks for programs.
 AC_ISC_POSIX
 AM_PROG_CC_STDC
@@ -108,80 +149,19 @@ AC_PROG_CPP
 dnl Large file support for the swap file
 AC_SYS_LARGEFILE
 
-AC_ARG_ENABLE(debug, [  --enable-debug          turn on debugging [default=no]],
-if eval "test x$enable_debug = xyes"; then
-  DEBUGFLAG="-g"
-fi)
-
-
-dnl Why the heck isn't there already a macro for this?
-
-dnl AC_ARG_WITH(gnu-make, [  --with-gnu-make         assume 'make' understands gnu extensions],
-dnl,
-dnl if $ac_make -v 2>/dev/null | grep 'GNU Make' >/dev/null; then
-dnl   with_gnu_make=yes
-dnl fi)
-
-
-AC_ARG_ENABLE(ansi, [  --enable-ansi           turn on strict ansi [default=no]],
-		    , enable_ansi=no)
-
-
-dnl Possibly change default gimpdir from .gimp
-gimpdir=.$PACKAGE-$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
-AC_ARG_ENABLE(gimpdir, [  --enable-gimpdir=DIR    change default gimpdir from .gimp-1.3 to DIR],
-if eval "test x$enable_gimpdir != x"; then
-  if eval "test x$enable_gimpdir != xyes"; then
-    gimpdir=$enable_gimpdir
-  fi
-fi)
+AC_ARG_ENABLE(debug,
+              [  --enable-debug          turn on debugging [default=no]],
+              if eval "test x$enable_debug = xyes"; then
+                DEBUGFLAG="-g"
+              fi)
 
 if test -n "$DEBUGFLAG"; then
   CFLAGS="$DEBUGFLAG $CFLAGS"
 fi
 
-AC_MSG_CHECKING(whether make is GNU Make)
-STRIP_BEGIN=
-STRIP_END=
-if $ac_make --version 2>/dev/null | grep '^GNU Make ' >/dev/null ; then
-	STRIP_BEGIN='$(strip $(STRIP_DUMMY)'
-	STRIP_END=')'
-	AC_MSG_RESULT(yes)
-else
-	AC_MSG_RESULT(no)
-fi
-STRIP_DUMMY=
-AC_SUBST(STRIP_DUMMY)
-AC_SUBST(STRIP_BEGIN)
-AC_SUBST(STRIP_END)
-
-
-dnl i18n stuff
-
-GETTEXT_PACKAGE=gimp14
-AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
-                   [The prefix for our gettext translation domains.])
-
-ALL_LINGUAS="ca cs da de el en_GB es fi fr ga gl hu hr it ja ko nl no pl pt pt_BR ro ru sk sv tr uk zh_CN zh_TW"
-
-AC_PROG_INTLTOOL
-AM_GLIB_GNU_GETTEXT
-
-
-AC_PATH_XTRA
-
-
-AM_PATH_GLIB_2_0($GLIB_REQUIRED_VERSION,,
-  AC_MSG_ERROR(Test for GLIB failed. See the file 'INSTALL' for help.),
-  gobject)
-
-AM_PATH_GTK_2_0($GTK_REQUIRED_VERSION,,
-  AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
-
-PKG_CHECK_MODULES(PANGOFT2, pangoft2 >= $PANGOFT2_REQUIRED_VERSION)
-
-PKG_CHECK_MODULES(LIBART, libart-2.0)
+AC_ARG_ENABLE(ansi,
+              [  --enable-ansi           turn on strict ansi [default=no]],,
+              enable_ansi=no)
 
 if eval "test x$GCC = xyes"; then
   case " $CFLAGS " in
@@ -201,6 +181,103 @@ if eval "test x$GCC = xyes"; then
     esac
   fi
 fi
+
+AC_MSG_CHECKING(whether make is GNU Make)
+STRIP_BEGIN=
+STRIP_END=
+STRIP_DUMMY=
+if $ac_make --version 2>/dev/null | grep '^GNU Make ' >/dev/null ; then
+	STRIP_BEGIN='$(strip $(STRIP_DUMMY)'
+	STRIP_END=')'
+	AC_MSG_RESULT(yes)
+else
+	AC_MSG_RESULT(no)
+fi
+AC_SUBST(STRIP_DUMMY)
+AC_SUBST(STRIP_BEGIN)
+AC_SUBST(STRIP_END)
+
+
+AC_HEADER_DIRENT
+AC_HEADER_STDC
+AC_HEADER_SYS_WAIT
+AC_HEADER_TIME
+
+AC_CHECK_HEADERS(sys/param.h sys/time.h sys/times.h sys/wait.h unistd.h)
+
+AC_TYPE_PID_T
+AC_TYPE_SIGNAL
+AC_FUNC_VPRINTF
+
+AC_FUNC_ALLOCA
+
+dnl check some more funcs
+AC_CHECK_FUNCS(difftime putenv mmap)
+
+
+dnl check for inline
+AC_MSG_CHECKING([for inline definition in glibconfig.h])
+AC_EGREP_CPP(glib_defines_inline,
+[#include <glibconfig.h>
+#ifdef inline
+   glib_defines_inline
+#endif
+], have_glib_inline=yes, have_glib_inline=no)
+AC_MSG_RESULT($have_glib_inline)
+if test "$have_glib_inline" = "no"; then
+  AC_C_INLINE
+fi  
+
+
+######################
+# Internationalisation
+######################
+
+GETTEXT_PACKAGE=gimp14
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
+                   [The prefix for our gettext translation domains.])
+
+ALL_LINGUAS="ca cs da de el en_GB es fi fr ga gl hu hr it ja ko nl no pl pt pt_BR ro ru sk sv tr uk zh_CN zh_TW"
+
+AC_PROG_INTLTOOL
+AM_GLIB_GNU_GETTEXT
+
+
+###############################
+# Checks for required libraries
+###############################
+
+AM_PATH_GLIB_2_0($GLIB_REQUIRED_VERSION,,
+  AC_MSG_ERROR(Test for GLIB failed. See the file 'INSTALL' for help.),
+  gobject)
+
+dnl Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
+gimp_save_LIBS=$LIBS
+LIBS="$LIBS $GLIB_LIBS"
+AC_CHECK_FUNCS(bind_textdomain_codeset)
+LIBS=$gimp_save_LIBS
+
+
+AC_PATH_XTRA
+
+AM_PATH_GTK_2_0($GTK_REQUIRED_VERSION,,
+  AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
+
+PKG_CHECK_MODULES(PANGOFT2, pangoft2 >= $PANGOFT2_REQUIRED_VERSION)
+AC_SUBST(PANGOFT2_CFLAGS)
+AC_SUBST(PANGOFT2_LIBS)
+
+PKG_CHECK_MODULES(LIBART, libart-2.0)
+AC_SUBST(LIBART_CFLAGS)
+AC_SUBST(LIBART_LIBS)
+
+AC_SUBST(PKG_CONFIG)
+
+
+##########################################
+# Check for some special functions we need
+##########################################
 
 AC_CHECK_HEADERS(math.h ieeefp.h)
 
@@ -224,6 +301,7 @@ AC_TRY_RUN([#include <math.h>
 
 LIBS=$gimp_save_LIBS
 
+
 dnl NeXTStep cc seems to need this
 AC_MSG_CHECKING([for extra flags for POSIX compliance])
 AC_TRY_COMPILE([#include <dirent.h>], [DIR *dir;],
@@ -236,8 +314,32 @@ AC_TRY_COMPILE([#include <dirent.h>], [DIR *dir;],
     CFLAGS=$gimp_save_CFLAGS
     AC_MSG_WARN([Could not determine POSIX flag. (-posix didn't work.)])))
 
+dnl Check for finite or isfinite
+AC_CHECK_FUNCS(finite, , [
+  AC_MSG_CHECKING(for finite in <math.h>)
+  AC_TRY_LINK([#include <math.h>], [double f = 0.0; finite (f)], [
+    AC_DEFINE(HAVE_FINITE, 1)
+    AC_MSG_RESULT(yes)], [
+    AC_MSG_RESULT(no)
+    AC_MSG_CHECKING(for isfinite in <math.h>)
+    AC_TRY_LINK([#include <math.h>], [float f = 0.0; isfinite(f)], [
+      AC_DEFINE(HAVE_ISFINITE, 1,
+                [Define to 1 if you have the isfinite function.])
+      AC_MSG_RESULT(yes)], AC_MSG_RESULT(no))])])
+AC_SUBST(HAVE_FINITE)
+AC_SUBST(HAVE_ISFINITE)
 
-dnl Test for MMX stuff
+dnl check for rint
+AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT, 1,
+                              [Define to 1 if you have the rint function.]), [
+  AC_CHECK_LIB(m, rint, [
+    AC_DEFINE(HAVE_RINT)])])
+
+
+########################
+# Check for MMX assembly
+########################
+
 have_asm_mmx=false
 AC_MSG_CHECKING([for Intel Pentium architecture (IA32)])
 if test "$host_cpu" = "i386" -o "$host_cpu" = "i486"\
@@ -283,11 +385,10 @@ fi
 AM_CONDITIONAL(HAVE_ASM_MMX, test x$have_asm_mmx = xtrue)
 
 
-dnl build of gimp-remote is disabled for now
-dnl GIMP_REMOTE="gimp-remote-1.3"
+###################################
+# Checks for shared memory handling
+###################################
 
-
-dnl Check for shared memory
 AC_CHECK_HEADER(sys/ipc.h,
   [AC_DEFINE(HAVE_IPC_H, 1,
              [Define to 1 if you have the <sys/ipc.h> heacder file.])],
@@ -328,6 +429,11 @@ if test "$ac_cv_header_sys_shm_h" = "yes"; then
     AC_MSG_RESULT(assuming no))
 fi
 
+
+##################################
+# Check for regex support in glibc
+##################################
+
 AC_MSG_CHECKING(checking for regex in glibc)
 AC_TRY_RUN([
 #include <features.h>
@@ -348,35 +454,12 @@ int main()
     AC_MSG_RESULT(assuming no))
 AM_CONDITIONAL(HAVE_GLIBC_REGEX, test x$have_glibc_regex = xyes)
 
-AC_HEADER_DIRENT
-AC_HEADER_STDC
-AC_HEADER_SYS_WAIT
-AC_HEADER_TIME
+AC_SUBST(HAVE_GLIBC_REGEX)
 
-AC_CHECK_HEADERS(sys/param.h sys/time.h sys/times.h sys/wait.h unistd.h)
 
-AC_TYPE_PID_T
-AC_TYPE_SIGNAL
-AC_FUNC_VPRINTF
-
-AC_FUNC_ALLOCA
-
-dnl Check for finite or isfinite
-AC_CHECK_FUNCS(finite, , [
-  AC_MSG_CHECKING(for finite in <math.h>)
-  AC_TRY_LINK([#include <math.h>], [double f = 0.0; finite (f)], [
-    AC_DEFINE(HAVE_FINITE, 1)
-    AC_MSG_RESULT(yes)], [
-    AC_MSG_RESULT(no)
-    AC_MSG_CHECKING(for isfinite in <math.h>)
-    AC_TRY_LINK([#include <math.h>], [float f = 0.0; isfinite(f)], [
-      AC_DEFINE(HAVE_ISFINITE, 1,
-                [Define to 1 if you have the isfinite function.])
-      AC_MSG_RESULT(yes)], AC_MSG_RESULT(no))])])
-AC_SUBST(HAVE_FINITE)
-AC_SUBST(HAVE_ISFINITE)
-
-dnl Check for sys/select.h
+############################
+# Check for select and fdset
+############################
 
 AC_MSG_CHECKING([fd_set and sys/select])
 AC_TRY_COMPILE([#include <sys/types.h>],
@@ -394,6 +477,11 @@ if test $gimp_ok = no; then
               [Define to 1 if you don't have the fd_set function.])
 fi
 
+
+##############################################################
+# Check for random number functions (FIXME: should use g_rand)
+##############################################################
+
 dnl Check for random number functions
 LIBUCB=""
 AC_CHECK_FUNC(random, [
@@ -407,35 +495,13 @@ AC_CHECK_FUNC(random, [
       [AC_DEFINE(RAND_FUNC, lrand48) AC_DEFINE(SRAND_FUNC, srand48)],
       [AC_DEFINE(RAND_FUNC, rand) AC_DEFINE(SRAND_FUNC, srand)])])])
 
-dnl check some more funcs
-AC_CHECK_FUNCS(difftime putenv mmap)
+AC_SUBST(LIBUCB)
 
-dnl Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
-gimp_save_LIBS=$LIBS
-LIBS="$LIBS $GLIB_LIBS"
-AC_CHECK_FUNCS(bind_textdomain_codeset)
-LIBS=$gimp_save_LIBS
 
-dnl check for rint
-AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT, 1,
-                              [Define to 1 if you have the rint function.]), [
-  AC_CHECK_LIB(m, rint, [
-    AC_DEFINE(HAVE_RINT)])])
+#############################
+# Threads and multi processor 
+#############################
 
-dnl check for inline
-AC_MSG_CHECKING([for inline definition in glibconfig.h])
-AC_EGREP_CPP(glib_defines_inline,
-[#include <glibconfig.h>
-#ifdef inline
-   glib_defines_inline
-#endif
-], have_glib_inline=yes, have_glib_inline=no)
-AC_MSG_RESULT($have_glib_inline)
-if test "$have_glib_inline" = "no"; then
-  AC_C_INLINE
-fi  
-
-dnl Threads
 dnl AC_ARG_ENABLE(threads, [  --enable-threads    support POSIX threading [default=no]])
 dnl if test "x$enable_threads" = "xyes"; then
 dnl   AC_CHECK_LIB(pthread, pthread_attr_init, 
@@ -449,7 +515,10 @@ dnl       GIMP_THREAD_LIBS="-lpthreads"
 dnl       GIMP_THREAD_FLAGS="-D_REENTRANT -D_THREAD_SAFE"]))
 dnl fi
 
-dnl Multi-Processor Support
+AC_SUBST(GIMP_THREAD_FLAGS)
+AC_SUBST(GIMP_THREAD_LIBS)
+
+
 AC_ARG_ENABLE(mp, [  --enable-mp             support multiple processors [default=no]])
 if test "x$enable_mp" = "xyes"; then
   AC_CHECK_LIB(pthread, pthread_attr_init, 
@@ -464,6 +533,13 @@ if test "x$enable_mp" = "xyes"; then
       GIMP_MP_FLAGS="-D_REENTRANT -D_THREAD_SAFE"]))
 fi
 
+AC_SUBST(GIMP_MP_FLAGS)
+AC_SUBST(GIMP_MP_LIBS)
+
+
+################################
+# Some plug-ins are X11 specific
+################################
 
 dnl Check if building for GTK+-X11
 gdk_target=`$PKG_CONFIG --variable=target gtk+-2.0`
@@ -474,11 +550,15 @@ if test "$gdk_target" = x11; then
       LDFLAGS="$LDFLAGS $X_LIBS"
       AC_CHECK_LIB(Xmu, XmuClientWindow,
         [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-	  WEBBROWSER="webbrowser"; LIBXMU="$X_LIBS -lXmu -lXt -lSM -lICE",
+          GIMP_REMOTE='gimp-remote-1.3';
+	  WEBBROWSER='webbrowser';
+          LIBXMU="$X_LIBS -lXmu -lXt -lSM -lICE",
 	  [AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)])],
 	  [AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
 	    [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-	      WEBBROWSER="webbrowser"; LIBXMU="$X_LIBS -lXmu -lXt",
+              GIMP_REMOTE='gimp-remote-1.3';
+	      WEBBROWSER='webbrowser';
+	      LIBXMU="$X_LIBS -lXmu -lXt",
 	      [AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)])],
 	  AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU library not found) ***), -lXt)], -lXt -lSM -lICE)
       LDFLAGS="$gimp_save_LDFLAGS"
@@ -486,10 +566,18 @@ if test "$gdk_target" = x11; then
   else
      AC_MSG_WARN([ 
 *** Not building for GTK+-X11 (GDK backend is $gdk_target).
-*** Webbrowser plug-in will not be built.])
+*** Webbrowser plug-in and gimp-remote will not be built.])
   fi
 
-dnl Test for libtiff
+AC_SUBST(LIBXMU)
+AC_SUBST(WEBBROWSER)
+AC_SUBST(GIMP_REMOTE)
+
+
+###################
+# Check for libtiff
+###################
+
 AC_ARG_WITH(libtiff,  [  --without-libtiff       build without TIFF support])
   if test x$with_libtiff != xno && test -z "$LIBTIFF"; then
     AC_CHECK_LIB(tiff, TIFFReadScanline,
@@ -513,8 +601,14 @@ AC_ARG_WITH(libtiff,  [  --without-libtiff       build without TIFF support])
 *** --without-libtiff to configure but you won't be able to use TIFFs then.])
   fi
 
+AC_SUBST(TIFF)
+AC_SUBST(LIBTIFF)
 
-dnl Test for libjpeg
+
+###################
+# Check for libjpeg
+###################
+
 AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
   if test x$with_libjpeg != xno && test -z "$LIBJPEG"; then
     AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
@@ -553,17 +647,31 @@ AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
 *** --without-libjpeg to configure but you won't be able to use JPEGs then.])
   fi
 
+AC_SUBST(JPEG)
+AC_SUBST(XJT)
+AC_SUBST(LIBJPEG)
 
-dnl Test for libz
-  if test -z "$LIBZ"; then
-    AC_CHECK_LIB(z, gzsetparams,
-      [AC_CHECK_HEADER(zlib.h,
-	PSP='psp'; LIBZ='-lz',
-	[AC_MSG_WARN(*** PSP and PNG plug-ins will not be built (ZLIB header files not found) ***)])],
-      [AC_MSG_WARN(*** PSP and PNG plug-ins will not be built (ZLIB library not found) ***)])
-  fi
 
-dnl Test for libpng
+################
+# Check for libz
+################
+
+if test -z "$LIBZ"; then
+  AC_CHECK_LIB(z, gzsetparams,
+    [AC_CHECK_HEADER(zlib.h,
+      PSP='psp'; LIBZ='-lz',
+      [AC_MSG_WARN(*** PSP and PNG plug-ins will not be built (ZLIB header files not found) ***)])],
+    [AC_MSG_WARN(*** PSP and PNG plug-ins will not be built (ZLIB library not found) ***)])
+fi
+
+AC_SUBST(LIBZ)
+AC_SUBST(PSP)
+
+
+##################
+# Check for libpng
+##################
+
 AC_ARG_WITH(libpng,  [  --without-libpng        build without PNG support])
   if test x$with_libpng != xno && test -z "$LIBPNG" && test -n "$LIBZ"; then
     AC_CHECK_LIB(png, png_read_info,
@@ -594,108 +702,81 @@ AC_ARG_WITH(libpng,  [  --without-libpng        build without PNG support])
 *** --without-libpng to configure but you won't be able to use PNGs then.])
   fi
 
-
-dnl Test for libaa
-  if test -z "$LIBAA"; then
-    AC_CHECK_LIB(aa, aa_printf,
-      [AC_CHECK_HEADER(aalib.h,
-	AA='aa'; LIBAA='-laa',
-	[AC_MSG_WARN(*** AA plug-in will not be built (AA header file not found) ***)])],
-      [AC_MSG_WARN(*** AA plug-in will not be built (AA library not found) ***)])
-  fi
+AC_SUBST(PNG)
+AC_SUBST(LIBPNG)
 
 
-dnl Test for libmpeg
-  if test -z "$LIBMPEG"; then
-    AC_CHECK_LIB(mpeg, GetMPEGFrame,
-      [AC_CHECK_HEADER(mpeg.h,
-	MPEG='mpeg'; LIBMPEG='-lmpeg'; GAP_DECODE_MPEG='gap_decode_mpeg',
-	[AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG header file not found) ***)])],
-      [AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG library not found) ***)])
-  fi
+#################
+# Check for libaa
+#################
+
+if test -z "$LIBAA"; then
+  AC_CHECK_LIB(aa, aa_printf,
+    [AC_CHECK_HEADER(aalib.h,
+      AA='aa'; LIBAA='-laa',
+      [AC_MSG_WARN(*** AA plug-in will not be built (AA header file not found) ***)])],
+    [AC_MSG_WARN(*** AA plug-in will not be built (AA library not found) ***)])
+fi
+
+AC_SUBST(AA)
+AC_SUBST(LIBAA)
 
 
-dnl Test for libXpm
-  gimp_save_LDFLAGS="$LDFLAGS"
-  LDFLAGS="$LDFLAGS $X_LIBS"
-  if test "$gdk_target" = x11; then
-    lib_X11=-lX11
-  fi
-  if test -z "$LIBXPM"; then
-    AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
-      [AC_CHECK_HEADER(X11/xpm.h,
-	XPM='xpm'; LIBXPM="$X_LIBS $X_PRE_LIBS $lib_X11 -lXpm",
-	[AC_MSG_WARN(*** XPM plug-in will not be built (XPM header file not found) ***)])],
-      [AC_MSG_WARN(*** XPM plug-in will not be built (XPM library not found) ***)], $X_PRE_LIBS $lib_X11)
-  fi
-  LDFLAGS="$gimp_save_LDFLAGS"
+###################
+# Check for libmpeg
+###################
+
+if test -z "$LIBMPEG"; then
+  AC_CHECK_LIB(mpeg, GetMPEGFrame,
+    [AC_CHECK_HEADER(mpeg.h,
+       MPEG='mpeg'; LIBMPEG='-lmpeg'; GAP_DECODE_MPEG='gap_decode_mpeg',
+       [AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG header file not found) ***)])],
+    [AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG library not found) ***)])
+fi
+
+AC_SUBST(MPEG)
+AC_SUBST(LIBMPEG)
+AC_SUBST(GAP_DECODE_MPEG)
 
 
-dnl This is for the help browser
+##################
+# Check for libxpm
+##################
+
+gimp_save_LDFLAGS="$LDFLAGS"
+LDFLAGS="$LDFLAGS $X_LIBS"
+if test "$gdk_target" = x11; then
+  lib_X11=-lX11
+fi
+if test -z "$LIBXPM"; then
+  AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
+    [AC_CHECK_HEADER(X11/xpm.h,
+      XPM='xpm'; LIBXPM="$X_LIBS $X_PRE_LIBS $lib_X11 -lXpm",
+      [AC_MSG_WARN(*** XPM plug-in will not be built (XPM header file not found) ***)])],
+    [AC_MSG_WARN(*** XPM plug-in will not be built (XPM library not found) ***)], $X_PRE_LIBS $lib_X11)
+fi
+LDFLAGS="$gimp_save_LDFLAGS"
+
+AC_SUBST(XPM)
+AC_SUBST(LIBXPM)
+
+
+####################
+# Check for gtkhtml2
+####################
 
 PKG_CHECK_MODULES(GTKHTML2, libgtkhtml-2.0 >= $GTKHTML2_REQUIRED_VERSION,
   HELPBROWSER=helpbrowser,
   AC_MSG_WARN([*** Help browser plug-in will not be built (GtkHtml2 not found) ***]))
+AC_SUBST(GTKHTML2_CFLAGS)
+AC_SUBST(GTKHTML2_LIBS)
+AC_SUBST(HELPBROWSER)
 
 
-gimpdatadir=$datadir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
-gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
-gimpsysconfdir=$sysconfdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
+####################
+# Check for sendmail
+####################
 
-localedir='${prefix}/${DATADIRNAME}/locale'
-
-dnl This is for generating PDB docuemntation.
-AC_PATH_PROGS(EMACS, emacs xemacs, :)
-
-
-##################################################
-# Checks for gtk-doc and docbook-tools
-##################################################
-
-AC_ARG_WITH(html-dir, [  --with-html-dir=PATH    path to installed docs ])
-
-if test "x$with_html_dir" = "x" ; then
-  HTML_DIR='${datadir}/gtk-doc/html'
-else
-  HTML_DIR=$with_html_dir
-fi
-
-AC_SUBST(HTML_DIR)
-
-AC_CHECK_PROG(GTKDOC, gtkdoc-mkdb, true, false)
-
-if $GTKDOC ; then 
-    gtk_doc_version=`gtkdoc-mkdb --version`
-    AC_MSG_CHECKING([gtk-doc version ($gtk_doc_version) >= $GTKDOC_REQUIRED_VERSION])
-    if perl <<EOF ; then
-      exit (("$gtk_doc_version" =~ /^[[0-9]]+\.[[0-9]]+$/) &&
-            ("$gtk_doc_version" >= "$GTKDOC_REQUIRED_VERSION") ? 0 : 1);
-EOF
-      AC_MSG_RESULT(yes)
-   else
-      AC_MSG_RESULT(no)
-      GTKDOC=false
-   fi
-fi
-
-AC_CHECK_PROG(DB2HTML, db2html, true, false)
-AM_CONDITIONAL(HAVE_DOCBOOK, $DB2HTML)
-
-dnl Make people enable the gtk-doc stuff explicitely.
-AC_ARG_ENABLE(gtk-doc, [  --enable-gtk-doc        use gtk-doc to build documentation [default=no]], enable_gtk_doc="$enableval", enable_gtk_doc=auto)
-
-if test x$enable_gtk_doc = xyes ; then
-  if test x$GTKDOC != xtrue ; then
-    enable_gtk_doc=no 
-  fi
-fi
-
-dnl NOTE: We need to use a separate automake conditional for this
-dnl       to make this work with the tarballs.
-AM_CONDITIONAL(ENABLE_GTK_DOC, test x$enable_gtk_doc = xyes)
-
-
-dnl This is for the mail plug-in
 sendmail_path=":"
 AC_ARG_WITH(sendmail, [  --with-sendmail=DIR     set sendmail command location],
 if eval "test x$with_sendmail != x"; then
@@ -706,9 +787,13 @@ AC_PATH_PROG(SENDMAIL, "sendmail", $sendmail_path, $PATH:/usr/sbin:/usr/lib)
 if test $ac_cv_path_SENDMAIL != ":"; then
   MAILER="-DMAILER=\\\"$ac_cv_path_SENDMAIL\\\""
 fi
+AC_SUBST(MAILER)
 
 
-dnl This is for the print plug-in
+######################
+# Check for gimp-print
+######################
+
 AC_ARG_ENABLE(print, [  --disable-print         build without print support (requires libgimpprint)])
   if test "x$enable_print" != "xno"; then
   AC_PATH_PROG(PRINT_CONFIG, gimpprint-config, no)
@@ -735,6 +820,14 @@ if test x$enable_print != xno && test -z "$PRINT"; then
 *** --disable-print to configure (but you won't be able to print then).])
 fi
 
+AC_SUBST(PRINT)
+AC_SUBST(PRINT_LIBS)
+AC_SUBST(PRINT_CFLAGS)
+
+
+################
+# Check for perl
+################
 
 dnl This is for the gimp-perl plug-in
 AC_ARG_ENABLE(perl, [  --enable-perl           build perl extension [by default disabled]
@@ -750,6 +843,7 @@ fi
 
 AM_CONDITIONAL(WITH_PDBGEN, test x$with_pdbgen = xyes)
 AM_CONDITIONAL(WITH_AUTHORSGEN, test x$enable_maintainer_mode = xyes)
+
 
 rm -f plug-ins/perl/config.status
 
@@ -794,6 +888,14 @@ EOF
    fi
 fi
 
+AC_SUBST(GIMP_PERL)
+AC_SUBST(GIMP_PERL_PO)
+
+
+##################
+# Check for python
+##################
+
 dnl Pygimp configure stuff ...
 dnl AC_ARG_ENABLE(python,
 dnl [  --disable-python        do not build python extension],,[enable_python=no])
@@ -816,6 +918,10 @@ dnl AC_SUBST(PYGIMP_LIBS_NOUI)
 dnl AM_CONDITIONAL(BUILD_PYTHON, $build_python)
   
 
+####################################################
+# Determine where to install the GNOME2 desktop file
+####################################################
+
 AC_ARG_WITH(gnome-desktop, [  --with-gnome-desktop=PATH     install a gimp.desktop link here [default=auto]])
 
 if test "x$with_gnome_desktop" != x; then
@@ -825,100 +931,105 @@ else
 fi
 
 AM_CONDITIONAL(GNOME_DESKTOP_PATH, test "x$with_gnome_desktop" != xno)
+AC_SUBST(GNOME_DESKTOP_PATH)
 
 
-GIMPINSTALL=
-if test "$INSTALL" = "$ac_install_sh"; then
-  GIMPINSTALL="gimpinstall-1.3"
+######################################
+# Checks for gtk-doc and docbook-tools
+######################################
+
+AC_ARG_WITH(html-dir, [  --with-html-dir=PATH    path to installed docs ])
+
+if test "x$with_html_dir" = "x" ; then
+  HTML_DIR='${datadir}/gtk-doc/html'
+else
+  HTML_DIR=$with_html_dir
 fi
 
-if test -n "$DISTMAKE"; then
-  WEBBROWSER=webbrowser TIFF=tiff JPEG=jpeg PNG=png AA=aa MPEG=mpeg
-  XJT=xjt XPM=xpm
+AC_SUBST(HTML_DIR)
+
+AC_CHECK_PROG(GTKDOC, gtkdoc-mkdb, true, false)
+
+if $GTKDOC ; then 
+    gtk_doc_version=`gtkdoc-mkdb --version`
+    AC_MSG_CHECKING([gtk-doc version ($gtk_doc_version) >= $GTKDOC_REQUIRED_VERSION])
+    if perl <<EOF ; then
+      exit (("$gtk_doc_version" =~ /^[[0-9]]+\.[[0-9]]+$/) &&
+            ("$gtk_doc_version" >= "$GTKDOC_REQUIRED_VERSION") ? 0 : 1);
+EOF
+      AC_MSG_RESULT(yes)
+   else
+      AC_MSG_RESULT(no)
+      GTKDOC=false
+   fi
 fi
 
-AM_CONDITIONAL(STATICLIBS, test x$enable_static = xyes)
+AC_CHECK_PROG(DB2HTML, db2html, true, false)
+AM_CONDITIONAL(HAVE_DOCBOOK, $DB2HTML)
 
+dnl Make people enable the gtk-doc stuff explicitely.
+AC_ARG_ENABLE(gtk-doc, [  --enable-gtk-doc        use gtk-doc to build documentation [default=no]], enable_gtk_doc="$enableval", enable_gtk_doc=auto)
+
+if test x$enable_gtk_doc = xyes ; then
+  if test x$GTKDOC != xtrue ; then
+    enable_gtk_doc=no 
+  fi
+fi
+
+dnl NOTE: We need to use a separate automake conditional for this
+dnl       to make this work with the tarballs.
+AM_CONDITIONAL(ENABLE_GTK_DOC, test x$enable_gtk_doc = xyes)
+
+
+#########################################
+# Allow to configure the gimp environment
+#########################################
 
 AC_ARG_ENABLE(debug, [  --enable-default-binary install this as the default gimp binary [default=no]], , enable_default_binary=no)
 
 AM_CONDITIONAL(DEFAULT_BINARY, test x$enable_default_binary = xyes)
 
 
-CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
+dnl Possibly change default gimpdir from .gimp
+gimpdir=.$PACKAGE-$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
+AC_ARG_ENABLE(gimpdir, [  --enable-gimpdir=DIR    change default gimpdir from .gimp-1.3 to DIR],
+if eval "test x$enable_gimpdir != x"; then
+  if eval "test x$enable_gimpdir != xyes"; then
+    gimpdir=$enable_gimpdir
+  fi
+fi)
 
-AC_SUBST(GIMP_MAJOR_VERSION)
-AC_SUBST(GIMP_MINOR_VERSION)
-AC_SUBST(GIMP_MICRO_VERSION)
-AC_SUBST(GIMP_VERSION)
+gimpdatadir=$datadir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
+gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
+gimpsysconfdir=$sysconfdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
 
-AC_SUBST(LT_RELEASE)
-AC_SUBST(LT_CURRENT)
-AC_SUBST(LT_REVISION)
-AC_SUBST(LT_AGE)
-AC_SUBST(LT_CURRENT_MINUS_AGE)
-
-AC_SUBST(X_LIBS)
-
-AC_SUBST(PANGOFT2_CFLAGS)
-AC_SUBST(PANGOFT2_LIBS)
-
-AC_SUBST(LIBART_CFLAGS)
-AC_SUBST(LIBART_LIBS)
-
-AC_SUBST(GTKHTML2_CFLAGS)
-AC_SUBST(GTKHTML2_LIBS)
-
-AC_SUBST(PKG_CONFIG)
-
-AC_SUBST(HAVE_GLIBC_REGEX)
+localedir='${prefix}/${DATADIRNAME}/locale'
 
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)
 AC_SUBST(gimpplugindir)
 AC_SUBST(gimpsysconfdir)
 AC_SUBST(localedir)
-AC_SUBST(GIMP_REMOTE)	
-AC_SUBST(WEBBROWSER)
-AC_SUBST(LIBXMU)
-AC_SUBST(TIFF)
-AC_SUBST(LIBTIFF)
-AC_SUBST(JPEG)
-AC_SUBST(XJT)
-AC_SUBST(LIBJPEG)
-AC_SUBST(PSP)
-AC_SUBST(LIBZ)
-AC_SUBST(PNG)
-AC_SUBST(LIBPNG)
-AC_SUBST(AA)
-AC_SUBST(LIBAA)
-AC_SUBST(MPEG)
-AC_SUBST(LIBMPEG)
-AC_SUBST(GAP_DECODE_MPEG)
-AC_SUBST(XPM)
-AC_SUBST(LIBXPM)
-AC_SUBST(LIBUCB)
-AC_SUBST(MAILER)
-AC_SUBST(PRINT)
-AC_SUBST(PRINT_LIBS)
-AC_SUBST(PRINT_CFLAGS)
-AC_SUBST(GIMP_THREAD_FLAGS)
-AC_SUBST(GIMP_THREAD_LIBS)
-AC_SUBST(GIMP_MP_FLAGS)
-AC_SUBST(GIMP_MP_LIBS)
-AC_SUBST(GIMP_PERL)
-AC_SUBST(GIMP_PERL_PO)
+
+
+############################
+# Some defines for the build
+############################
+
+GIMPINSTALL=
+if test "$INSTALL" = "$ac_install_sh"; then
+  GIMPINSTALL="gimpinstall-1.3"
+fi
 AC_SUBST(GIMPINSTALL)
-AC_SUBST(HELPBROWSER)
-AC_SUBST(HTML_DIR)
-AC_SUBST(GNOME_DESKTOP_PATH)
 
-dnl easy way to skip the plug-in build
-GIMP_PLUGINS=plug-ins
-GIMP_MODULES=modules
-AC_SUBST(GIMP_PLUGINS)
-AC_SUBST(GIMP_MODULES)
+dnl FIXME: Do we need to do this?
+if test -n "$DISTMAKE"; then
+  TIFF=tiff JPEG=jpeg PNG=png AA=aa MPEG=mpeg PRINT=print
+  WEBBROWSER=webbrowser HELPBROWSER=helpbrowser 
+  XJT=xjt XPM=xpm
+fi
 
+AM_CONDITIONAL(STATICLIBS, test x$enable_static = xyes)
 
 dnl a tuned version of glib-mkenums
 GIMP_MKENUMS="\$(top_srcdir)/tools/gimp-mkenums"
@@ -928,7 +1039,23 @@ dnl autogenerator for proxy objects
 GIMP_MKPROXY="\$(top_srcdir)/tools/gimp-mkproxy"
 AC_SUBST(GIMP_MKPROXY)
 
-dnl Output the Makefiles
+
+##########################################
+# Default to disable deprecated GTK+ stuff
+##########################################
+
+CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
+
+
+##################
+# configure output
+##################
+
+dnl easy way to skip the plug-in build
+GIMP_PLUGINS=plug-ins
+GIMP_MODULES=modules
+AC_SUBST(GIMP_PLUGINS)
+AC_SUBST(GIMP_MODULES)
 
 dnl plug-ins/perl/config.pl
 dnl plug-ins/gap/Makefile
@@ -1070,5 +1197,4 @@ Makefile
       fi
       ;;
    esac
-]
-)
+])

@@ -324,7 +324,7 @@ main (int    argc,
     FreeConsole ();
 #endif
 
-  if (show_version)
+  if (show_version || show_help)
     {
       g_print ( "%s %s\n", _("GIMP version"), GIMP_VERSION);
     }
