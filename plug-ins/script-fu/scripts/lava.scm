@@ -110,7 +110,7 @@
 		    SF-VALUE "Seed" "2"
 		    SF-VALUE "Size" "10"
 		    SF-VALUE "Roughness" "7"
-		    SF-STRING "Gradient" "German_flag_smooth"
+		    SF-GRADIENT "Gradient" "German_flag_smooth"
 		    SF-TOGGLE "Keep Selection?" TRUE
 		    SF-TOGGLE "Seperate Layer?" TRUE
 		    SF-TOGGLE "Use current Gradient?" FALSE)

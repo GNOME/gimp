@@ -30,16 +30,14 @@
 
 
 
-(define (script-fu-land width height seed detail landheight seadepth xscale yscale)
+(define (script-fu-land width height seed detail landheight seadepth xscale yscale gradient)
   (let* (
 	 (img (car (gimp-image-new width height RGB)))
 	 (layer-one (car (gimp-layer-new img width height RGB "bottom" 100 NORMAL)))
 	)
-
+  (gimp-gradients-set-active gradient)    
   (gimp-image-disable-undo img)
   (gimp-image-add-layer img layer-one 0)
- 
-
 
   (plug-in-solid-noise 1 img layer-one TRUE FALSE seed detail xscale yscale)
   (plug-in-c-astretch 1 img layer-one)
@@ -81,7 +79,8 @@
 		    SF-VALUE "Land height" "60"
 		    SF-VALUE "Sea depth" "4"
 		    SF-VALUE "X Scale" "4.0"
-		    SF-VALUE "Y Scale" "4.0")
+		    SF-VALUE "Y Scale" "4.0"
+		    SF-GRADIENT "gradient" "Land_1")
 
 
 

@@ -88,5 +88,5 @@
 		    SF-STRING "Text String" "Moo"
 		    SF-VALUE "Font Size (in pixels)" "85"
 		    SF-STRING "Font" "tribeca"
-		    SF-STRING "Gradient" "Incandescent"
+		    SF-GRADIENT "Gradient" "Incandescent"
 		    SF-VALUE "Outline width" "5")

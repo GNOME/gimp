@@ -128,8 +128,8 @@
                     SF-STRING "Text String" "Galaxy"
                     SF-VALUE "Font Size (in pixels)" "100"
                     SF-STRING "Font" "Eras"
-                    SF-STRING "Blend Gradient (text)" "Shadows_2"
-                    SF-STRING "Blend Gradient (outline)" "Shadows_2"
+                    SF-GRADIENT "Blend Gradient (text)" "Shadows_2"
+                    SF-GRADIENT "Blend Gradient (outline)" "Shadows_2"
                     SF-VALUE "How big outline?" "5"
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-TOGGLE "Use pattern for text instead of gradient" FALSE
