@@ -11,18 +11,18 @@ GIMP version 2.0.
 Bugs fixed in GIMP 2.0pre4
 ==========================
 - 128825: Improved misleading debug output and hide it in the stable branch
-  (Raphael)
+          (Raphael)
 - 133467: Fixed autoshrink selection (Mitch)
 - 131634: Fixed text-circle script-fu (David Odin)
 - 133532: Quit the imagemap plug-in when it is finished (Sven)
 - 133456: Disallow editing of data objects which have no save functionality
-  (Mitch)
+          (Mitch)
 - 113142: Don't attempt to render the display out of bounds (Mitch)
-- 133763: Fix use of EXEEXT in tiff checks (Mitch)
+- 133763: Fix use of EXEEXT in tiff checks (Yosh)
 - 131044: Attempt to read layer names from TIFF files (Pablo d'Angelo)
 - 133490: Fixed handling of missing pluginrc file (Sven)
 - 121074: Suppress some harmless warnings in the stable branch (Sven)
-- 132351: Fixed harmless iscissor tool warnings (Sven)
+- 132351: Fixed harmless iscissors tool warnings (Sven)
 - 97999:  Indicate progress when scaling a drawable (Sven)
 - 133244: Fixed crash in Curve Bend plug-in (Wolfgang Hofer)
 - 133818: Added a runtime check for fontconfig >= 2.2.0 (Mitch)
@@ -64,7 +64,7 @@ Bugs fixed in GIMP 2.0pre3
 - 132969: Set help-id for tool on tool options dock (Mitch)
 - 132999: Make assembler code PIC safe (Yosh)
 - 119878: Use the same keyboard shortcuts in all GIMP windows
-  (except the toolbox window) (Mitch)
+          (except the toolbox window) (Mitch)
 - 131975 & 
 - 132297: Disable some warnings while loading TIFFs (Raphael)
 - 129529: Add a "randomize" toggle to random number widget (Dave Neary)
@@ -93,22 +93,22 @@ Bugs fixed in GIMP 2.0pre2
 - 120424: Add dirty flag to default image title (Brix)
 - 130912: Fix rounding errors in JPEG plug-in (keith@goatman.me.uk)
 - 131016: Add support for layer offsets in multipage tiff loading (Pablo
-  d'Angelo)
+          d'Angelo)
 - 124073: Modify behaviour of zoom tool to avoid funny fractions (Dave Neary, 
-  Simon)
+          Simon)
 - 131088: fix select-to-pattern script-fu (Mitch)
 - 82478:  Fix zoom handling in fractal explorer (Pedro Gimeno)
 - 115793: Make thumbnail preview of indexed images match display (Pedro Gimeno)
 - 130471: Handle RGBA images correctly in the CEL plug-in (Dov Grobgeld)
 - 131109: Remove EMX specific code (Sven)
 - 130118: Handle GIMP2_DIRECTORY with non-UTF-8 characters correctly (Tor 
-  Lillqvist, Sven)
+          Lillqvist, Sven)
 - 82465:  Make preview match image when image is greyscale (Sven)
 - 92586:  Force SF_IMAGE value to reflect the selected image (Sven)
 - 116765: Fix selection artifacts while moving selections (Pedro Gimeno, Mitch)
 - 131215: Only call bind_textdomain_codeset when available (Reinhard Geissler)
 - 125141: Resolve API issues with GimpPixelFetcher and GimpRegionIterator 
-  (David Odin, Maurits Rijk)
+          (David Odin, Maurits Rijk)
 - 109078: Fix histogram for graylevel images (Pedro Gimeno, Mitch)
 - 131146: Fix drag & drop of patterns to layer masks (Dave Neary, Mitch) 
 - 128112: Use a better error message if help files are not present (Mitch)
@@ -118,10 +118,10 @@ Bugs fixed in GIMP 2.0pre2
 - 82464:  Fix SuperNova preview for greyscale images (David Odin)
 - 121966: Fix SuperNova plug-in (David Odin)
 - 110610: Allow user to choose file formats even if the current image type is 
-  not supported by them (Pedro Gimeno)
+          not supported by them (Pedro Gimeno)
 - 131980: Fix crash in crop tool (David Odin, Sven)
 - 131030: Allow saving data without pre-multiplying by alpha channel in tiff 
-  plug-in (Pablo d'Angelo, Dave Neary)
+          plug-in (Pablo d'Angelo, Dave Neary)
 - 125864: Guides behave correctly when spacing is set to 1px (Brix)
 - 131721: Fix handling of alpha channels across undo steps (Mitch)
 - 128025: Fix behaviour when there is a floating selection (Mitch)
