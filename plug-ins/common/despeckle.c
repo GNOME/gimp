@@ -503,7 +503,7 @@ despeckle (void)
 		    else if (*sort_ptr >= white_level)
 		      hist255 ++;
 
-		    if (*sort_ptr < white_level)
+		    if (*sort_ptr < white_level && *sort_ptr > black_level)
 		      sort_ptr ++;
 		  };
 
@@ -930,7 +930,7 @@ preview_update (void)
 		    else if (*sort_ptr >= white_level)
 		      hist255 ++;
 
-		    if (*sort_ptr < white_level)
+		    if (*sort_ptr < white_level && *sort_ptr > black_level)
 		      sort_ptr ++;
 		  };
 

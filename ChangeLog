@@ -1,3 +1,10 @@
+2001-02-16  Stanislav Brabec  <utx@penguin.cz>
+
+        On request of Martin Weber <martweb@gmx.net>.
+        * plugins/common/despeckle.c: Fixed comparison *sort_ptr > black_level.
+        Only adopting white_level had a visual effect. This fix causes
+        that also adopting blck_level works also.
+
 2001-02-14  Michael Natterer  <mitch@gimp.org>
 
 	* HACKING: added a note about apptype.h and about not including
