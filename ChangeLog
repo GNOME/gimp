@@ -1,5 +1,16 @@
 2004-11-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): pass (gint)-truncated
+	coordinates instead of RINT()-rounded ones to
+	gimp_display_shell_update_cursor(). Restores correct coordinates
+	display for zoomed-in display and fixes bug #153534.
+
+	* app/tools/gimpmovetool.c: added statusbar messages including the
+	(rounded) guide coordinate. Keeps bug #141719 closed.
+
+2004-11-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_new): don't
 	connect to "event" and don't connect any canvas event to
 	gimp_display_shell_events(). Connect all tool events separately

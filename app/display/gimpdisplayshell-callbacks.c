@@ -1379,10 +1379,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
   if (update_cursor)
     gimp_display_shell_update_cursor (shell,
-                                      RINT (display_coords.x),
-                                      RINT (display_coords.y),
-                                      RINT (image_coords.x),
-                                      RINT (image_coords.y));
+                                      (gint) display_coords.x,
+                                      (gint) display_coords.y,
+                                      (gint) image_coords.x,
+                                      (gint) image_coords.y);
 
   return return_val;
 }
