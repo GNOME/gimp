@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2000-04-20 17:17-0700\n"
+"POT-Creation-Date: 2000-05-27 21:19-0700\n"
 "PO-Revision-Date: 2000-04-08 00:26+0300\n"
 "Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -138,53 +138,6 @@ msgstr "Valitse tiedosto"
 msgid "OK"
 msgstr ""
 
-#. pseudo unit
-#: libgimp/gimpunit.c:47
-msgid "pixel"
-msgstr "pikseli"
-
-#: libgimp/gimpunit.c:47
-msgid "pixels"
-msgstr "pikseliä"
-
-#. standard units
-#: libgimp/gimpunit.c:50
-msgid "inch"
-msgstr "tuuma"
-
-#: libgimp/gimpunit.c:50
-msgid "inches"
-msgstr "tuumaa"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeter"
-msgstr "millimetri"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeters"
-msgstr "millimetriä"
-
-#. professional units
-#: libgimp/gimpunit.c:54
-msgid "point"
-msgstr "piste"
-
-#: libgimp/gimpunit.c:54
-msgid "points"
-msgstr "pistettä"
-
-#: libgimp/gimpunit.c:55
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:55
-msgid "picas"
-msgstr "picaa"
-
-#: libgimp/gimpunit.c:62
-msgid "percent"
-msgstr "prosenttia"
-
 #: libgimp/gimpunitmenu.c:234
 msgid "More..."
 msgstr "Lisää..."
@@ -200,6 +153,53 @@ msgstr "Mittayksikkö"
 #: libgimp/gimpunitmenu.c:528
 msgid "Factor"
 msgstr "Kerroin"
+
+#. pseudo unit
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixel"
+msgstr "pikseli"
+
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixels"
+msgstr "pikseliä"
+
+#. standard units
+#: libgimp/gimpunit_pdb.c:50
+msgid "inch"
+msgstr "tuuma"
+
+#: libgimp/gimpunit_pdb.c:50
+msgid "inches"
+msgstr "tuumaa"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeter"
+msgstr "millimetri"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeters"
+msgstr "millimetriä"
+
+#. professional units
+#: libgimp/gimpunit_pdb.c:54
+msgid "point"
+msgstr "piste"
+
+#: libgimp/gimpunit_pdb.c:54
+msgid "points"
+msgstr "pistettä"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "pica"
+msgstr "pica"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "picas"
+msgstr "picaa"
+
+#: libgimp/gimpunit_pdb.c:62
+msgid "percent"
+msgstr "prosenttia"
 
 #: libgimp/gimpwidgets.c:706
 msgid ""

@@ -19,7 +19,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.20\n"
-"POT-Creation-Date: 2000-05-09 20:27-0700\n"
+"POT-Creation-Date: 2000-05-22 11:33-0700\n"
 "PO-Revision-Date: 2000-04-23 13:05+02:00\n"
 "Last-Translator: Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -650,6 +650,14 @@ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
 msgstr ""
 
 #: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm:0
+msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
 msgstr ""
 
@@ -780,6 +788,10 @@ msgstr "Color RGB"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Base Radius (pixel)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Behaviour"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
@@ -1030,6 +1042,10 @@ msgstr "Opciones de tramado"
 #, fuzzy
 msgid "Detail Level"
 msgstr "Cargar niveles"
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Detail in Middle"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 #, fuzzy
@@ -1318,15 +1334,12 @@ msgstr "Radio:"
 msgid "Gradient"
 msgstr "Gradiente"
 
-#: plug-ins/script-fu/scripts/camo.scm:0
-msgid "Granularity (0 - 15)"
-msgstr ""
-
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Granularity (1 is Low)"
 msgstr ""
 
+#: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 #, fuzzy
 msgid "Granularity"
@@ -1519,9 +1532,7 @@ msgid "Max. Blur Radius"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid ""
-"Mosaic Tile Type\n"
-"Squares 0, Hex 1, Oct 2"
+msgid "Mosaic Tile Type"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
@@ -1924,6 +1935,10 @@ msgstr "Color Verdadero"
 msgid "Spread"
 msgstr ""
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Squares"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/coffee.scm:0
 #, fuzzy
 msgid "Stains"
@@ -1959,10 +1974,6 @@ msgstr "Iniciando extensiones: "
 #, fuzzy
 msgid "Supersample"
 msgstr "Supermuestreo adaptativo"
-
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "TRUE = Detail in Middle, FALSE = Tile"
-msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Text Color (Active)"
@@ -2052,6 +2063,10 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Threshold (Bigger 1<-->255 Smaller)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Tile"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2000-04-20 17:17-0700\n"
+"POT-Creation-Date: 2000-05-27 21:19-0700\n"
 "PO-Revision-Date: 2000-04-08 13:25+0200\n"
 "Last-Translator: GNOME PL Team <gnomepl@pandora.info.bielsko.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -136,53 +136,6 @@ msgstr "Wybór pliku"
 msgid "OK"
 msgstr "OK"
 
-#. pseudo unit
-#: libgimp/gimpunit.c:47
-msgid "pixel"
-msgstr "piksel"
-
-#: libgimp/gimpunit.c:47
-msgid "pixels"
-msgstr "piksele"
-
-#. standard units
-#: libgimp/gimpunit.c:50
-msgid "inch"
-msgstr "cal"
-
-#: libgimp/gimpunit.c:50
-msgid "inches"
-msgstr "cale"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeter"
-msgstr "milimetr"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeters"
-msgstr "militetry"
-
-#. professional units
-#: libgimp/gimpunit.c:54
-msgid "point"
-msgstr "punkt"
-
-#: libgimp/gimpunit.c:54
-msgid "points"
-msgstr "punkty"
-
-#: libgimp/gimpunit.c:55
-msgid "pica"
-msgstr "cycero"
-
-#: libgimp/gimpunit.c:55
-msgid "picas"
-msgstr "cycero"
-
-#: libgimp/gimpunit.c:62
-msgid "percent"
-msgstr "procent"
-
 #: libgimp/gimpunitmenu.c:234
 msgid "More..."
 msgstr "Wiêcej..."
@@ -198,6 +151,53 @@ msgstr "Jednostka"
 #: libgimp/gimpunitmenu.c:528
 msgid "Factor"
 msgstr "Wspó³czynnik"
+
+#. pseudo unit
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixel"
+msgstr "piksel"
+
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixels"
+msgstr "piksele"
+
+#. standard units
+#: libgimp/gimpunit_pdb.c:50
+msgid "inch"
+msgstr "cal"
+
+#: libgimp/gimpunit_pdb.c:50
+msgid "inches"
+msgstr "cale"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeter"
+msgstr "milimetr"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeters"
+msgstr "militetry"
+
+#. professional units
+#: libgimp/gimpunit_pdb.c:54
+msgid "point"
+msgstr "punkt"
+
+#: libgimp/gimpunit_pdb.c:54
+msgid "points"
+msgstr "punkty"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "pica"
+msgstr "cycero"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "picas"
+msgstr "cycero"
+
+#: libgimp/gimpunit_pdb.c:62
+msgid "percent"
+msgstr "procent"
 
 #: libgimp/gimpwidgets.c:706
 msgid ""

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-04-20 17:17-0700\n"
+"POT-Creation-Date: 2000-05-27 21:19-0700\n"
 "PO-Revision-Date: 2000-02-08 15:45+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -139,53 +139,6 @@ msgstr "Виб╕р файлу"
 msgid "OK"
 msgstr "Гаразд"
 
-#. pseudo unit
-#: libgimp/gimpunit.c:47
-msgid "pixel"
-msgstr "п╕ксел"
-
-#: libgimp/gimpunit.c:47
-msgid "pixels"
-msgstr "п╕ксел╕"
-
-#. standard units
-#: libgimp/gimpunit.c:50
-msgid "inch"
-msgstr "дюйм"
-
-#: libgimp/gimpunit.c:50
-msgid "inches"
-msgstr "дюйми"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeter"
-msgstr "м╕л╕метр"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeters"
-msgstr "м╕л╕метри"
-
-#. professional units
-#: libgimp/gimpunit.c:54
-msgid "point"
-msgstr "пункт"
-
-#: libgimp/gimpunit.c:54
-msgid "points"
-msgstr "пункти"
-
-#: libgimp/gimpunit.c:55
-msgid "pica"
-msgstr "п╕ка"
-
-#: libgimp/gimpunit.c:55
-msgid "picas"
-msgstr "п╕ки"
-
-#: libgimp/gimpunit.c:62
-msgid "percent"
-msgstr "в╕дсток"
-
 #: libgimp/gimpunitmenu.c:234
 msgid "More..."
 msgstr "Ще..."
@@ -201,6 +154,53 @@ msgstr "Одиниц╕"
 #: libgimp/gimpunitmenu.c:528
 msgid "Factor"
 msgstr "Множник"
+
+#. pseudo unit
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixel"
+msgstr "п╕ксел"
+
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixels"
+msgstr "п╕ксел╕"
+
+#. standard units
+#: libgimp/gimpunit_pdb.c:50
+msgid "inch"
+msgstr "дюйм"
+
+#: libgimp/gimpunit_pdb.c:50
+msgid "inches"
+msgstr "дюйми"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeter"
+msgstr "м╕л╕метр"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeters"
+msgstr "м╕л╕метри"
+
+#. professional units
+#: libgimp/gimpunit_pdb.c:54
+msgid "point"
+msgstr "пункт"
+
+#: libgimp/gimpunit_pdb.c:54
+msgid "points"
+msgstr "пункти"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "pica"
+msgstr "п╕ка"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "picas"
+msgstr "п╕ки"
+
+#: libgimp/gimpunit_pdb.c:62
+msgid "percent"
+msgstr "в╕дсток"
 
 #: libgimp/gimpwidgets.c:706
 msgid ""

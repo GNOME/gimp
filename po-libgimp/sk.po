@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-04-20 17:17-0700\n"
+"POT-Creation-Date: 2000-05-27 21:19-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -152,53 +152,6 @@ msgstr "Výber súboru"
 msgid "OK"
 msgstr ""
 
-#. pseudo unit
-#: libgimp/gimpunit.c:47
-msgid "pixel"
-msgstr "pixlov"
-
-#: libgimp/gimpunit.c:47
-msgid "pixels"
-msgstr "pixlov"
-
-#. standard units
-#: libgimp/gimpunit.c:50
-msgid "inch"
-msgstr "palcov"
-
-#: libgimp/gimpunit.c:50
-msgid "inches"
-msgstr "palcov"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeter"
-msgstr "milimeter"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeters"
-msgstr "milimetre"
-
-#. professional units
-#: libgimp/gimpunit.c:54
-msgid "point"
-msgstr "bod"
-
-#: libgimp/gimpunit.c:54
-msgid "points"
-msgstr "body"
-
-#: libgimp/gimpunit.c:55
-msgid "pica"
-msgstr ""
-
-#: libgimp/gimpunit.c:55
-msgid "picas"
-msgstr ""
-
-#: libgimp/gimpunit.c:62
-msgid "percent"
-msgstr "percent"
-
 #: libgimp/gimpunitmenu.c:234
 msgid "More..."
 msgstr "Viac..."
@@ -215,6 +168,53 @@ msgstr "Jednotka:"
 #: libgimp/gimpunitmenu.c:528
 msgid "Factor"
 msgstr "Faktor"
+
+#. pseudo unit
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixel"
+msgstr "pixlov"
+
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixels"
+msgstr "pixlov"
+
+#. standard units
+#: libgimp/gimpunit_pdb.c:50
+msgid "inch"
+msgstr "palcov"
+
+#: libgimp/gimpunit_pdb.c:50
+msgid "inches"
+msgstr "palcov"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeter"
+msgstr "milimeter"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeters"
+msgstr "milimetre"
+
+#. professional units
+#: libgimp/gimpunit_pdb.c:54
+msgid "point"
+msgstr "bod"
+
+#: libgimp/gimpunit_pdb.c:54
+msgid "points"
+msgstr "body"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "pica"
+msgstr ""
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "picas"
+msgstr ""
+
+#: libgimp/gimpunit_pdb.c:62
+msgid "percent"
+msgstr "percent"
 
 #: libgimp/gimpwidgets.c:706
 msgid ""

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
-"POT-Creation-Date: 2000-04-20 17:17-0700\n"
+"POT-Creation-Date: 2000-05-27 21:19-0700\n"
 "PO-Revision-Date: 1999-10-13 05:33:05+0900\n"
 "Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -149,53 +149,6 @@ msgstr "파일 선택"
 msgid "OK"
 msgstr ""
 
-#. pseudo unit
-#: libgimp/gimpunit.c:47
-msgid "pixel"
-msgstr "픽셀"
-
-#: libgimp/gimpunit.c:47
-msgid "pixels"
-msgstr "픽셀"
-
-#. standard units
-#: libgimp/gimpunit.c:50
-msgid "inch"
-msgstr "인치"
-
-#: libgimp/gimpunit.c:50
-msgid "inches"
-msgstr "인치"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeter"
-msgstr "밀리미터"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeters"
-msgstr "밀리미터"
-
-#. professional units
-#: libgimp/gimpunit.c:54
-msgid "point"
-msgstr "포인트"
-
-#: libgimp/gimpunit.c:54
-msgid "points"
-msgstr "포인트"
-
-#: libgimp/gimpunit.c:55
-msgid "pica"
-msgstr "파이카"
-
-#: libgimp/gimpunit.c:55
-msgid "picas"
-msgstr "파이카"
-
-#: libgimp/gimpunit.c:62
-msgid "percent"
-msgstr "퍼센트"
-
 #: libgimp/gimpunitmenu.c:234
 msgid "More..."
 msgstr "좀 더..."
@@ -212,6 +165,53 @@ msgstr "단위 "
 #: libgimp/gimpunitmenu.c:528
 msgid "Factor"
 msgstr "프랙탈"
+
+#. pseudo unit
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixel"
+msgstr "픽셀"
+
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixels"
+msgstr "픽셀"
+
+#. standard units
+#: libgimp/gimpunit_pdb.c:50
+msgid "inch"
+msgstr "인치"
+
+#: libgimp/gimpunit_pdb.c:50
+msgid "inches"
+msgstr "인치"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeter"
+msgstr "밀리미터"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeters"
+msgstr "밀리미터"
+
+#. professional units
+#: libgimp/gimpunit_pdb.c:54
+msgid "point"
+msgstr "포인트"
+
+#: libgimp/gimpunit_pdb.c:54
+msgid "points"
+msgstr "포인트"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "pica"
+msgstr "파이카"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "picas"
+msgstr "파이카"
+
+#: libgimp/gimpunit_pdb.c:62
+msgid "percent"
+msgstr "퍼센트"
 
 #: libgimp/gimpwidgets.c:706
 msgid ""

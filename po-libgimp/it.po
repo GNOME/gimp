@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
-"POT-Creation-Date: 2000-04-20 17:17-0700\n"
+"POT-Creation-Date: 2000-05-27 21:19-0700\n"
 "PO-Revision-Date: dom feb  6 16:47:39 CET 2000\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -141,53 +141,6 @@ msgstr "Seleziona File"
 msgid "OK"
 msgstr "OK"
 
-#. pseudo unit
-#: libgimp/gimpunit.c:47
-msgid "pixel"
-msgstr "pixel"
-
-#: libgimp/gimpunit.c:47
-msgid "pixels"
-msgstr "pixel"
-
-#. standard units
-#: libgimp/gimpunit.c:50
-msgid "inch"
-msgstr "pollice"
-
-#: libgimp/gimpunit.c:50
-msgid "inches"
-msgstr "pollici"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeter"
-msgstr "millimetri"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeters"
-msgstr "millimetri"
-
-#. professional units
-#: libgimp/gimpunit.c:54
-msgid "point"
-msgstr "punto"
-
-#: libgimp/gimpunit.c:54
-msgid "points"
-msgstr "punti"
-
-#: libgimp/gimpunit.c:55
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:55
-msgid "picas"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:62
-msgid "percent"
-msgstr "percento"
-
 #: libgimp/gimpunitmenu.c:234
 msgid "More..."
 msgstr "Altri..."
@@ -203,6 +156,53 @@ msgstr "Unità"
 #: libgimp/gimpunitmenu.c:528
 msgid "Factor"
 msgstr "Fattore"
+
+#. pseudo unit
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixel"
+msgstr "pixel"
+
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixels"
+msgstr "pixel"
+
+#. standard units
+#: libgimp/gimpunit_pdb.c:50
+msgid "inch"
+msgstr "pollice"
+
+#: libgimp/gimpunit_pdb.c:50
+msgid "inches"
+msgstr "pollici"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeter"
+msgstr "millimetri"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeters"
+msgstr "millimetri"
+
+#. professional units
+#: libgimp/gimpunit_pdb.c:54
+msgid "point"
+msgstr "punto"
+
+#: libgimp/gimpunit_pdb.c:54
+msgid "points"
+msgstr "punti"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "pica"
+msgstr "pica"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "picas"
+msgstr "pica"
+
+#: libgimp/gimpunit_pdb.c:62
+msgid "percent"
+msgstr "percento"
 
 #: libgimp/gimpwidgets.c:706
 msgid ""

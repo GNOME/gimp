@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2000-05-15 22:38-0700\n"
+"POT-Creation-Date: 2000-05-27 21:18-0700\n"
 "PO-Revision-Date: 2000-05-27 23:31+02:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -281,7 +281,7 @@ msgstr "Lysstyrke-kontrast virker ikke på indekserede tegneobjekter."
 #: app/curves.c:558 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:370
 #: app/layers_dialog.c:3476 app/layers_dialog.c:3658 app/layers_dialog.c:3750
-#: app/layers_dialog.c:4010 app/levels.c:336 app/module_db.c:285
+#: app/layers_dialog.c:4010 app/levels.c:336 app/module_db.c:314
 #: app/posterize.c:198 app/preferences_dialog.c:1451 app/qmask.c:279
 #: app/resize.c:192 app/resize.c:1326 app/threshold.c:271
 #: app/user_install.c:1188 modules/cdisplay_gamma.c:330
@@ -353,7 +353,7 @@ msgstr "Vinkel:"
 msgid "Brush Selection"
 msgstr "Penselvalg"
 
-#: app/brush_select.c:279 app/gradient.c:798 app/module_db.c:325
+#: app/brush_select.c:279 app/gradient.c:798 app/module_db.c:354
 #: app/palette.c:2070 app/pattern_select.c:170
 msgid "Refresh"
 msgstr "Opdatér"
@@ -1016,7 +1016,7 @@ msgstr "Udtvær"
 msgid "Free"
 msgstr "Fri"
 
-#: app/curves.c:699 app/levels.c:597 app/module_db.c:834
+#: app/curves.c:699 app/levels.c:597 app/module_db.c:864
 msgid "Load"
 msgstr "Indlæs"
 
@@ -3710,94 +3710,94 @@ msgstr "/Redigér stiattributter"
 msgid "Error opening file: %s\n"
 msgstr "Fejl under åbning af fil: %s\n"
 
-#: app/module_db.c:58
+#: app/module_db.c:62
 msgid "Module error"
 msgstr "Modul fejl"
 
-#: app/module_db.c:59
+#: app/module_db.c:63
 msgid "Loaded OK"
 msgstr "Indlæsning OK"
 
-#: app/module_db.c:60
+#: app/module_db.c:64
 msgid "Load failed"
 msgstr "Indlæsning fejlede"
 
-#: app/module_db.c:61
+#: app/module_db.c:65
 msgid "Unload requested"
 msgstr "Frigivning forespurgt"
 
-#: app/module_db.c:62
+#: app/module_db.c:66
 msgid "Unloaded OK"
 msgstr "Frigav Ok"
 
-#: app/module_db.c:279
+#: app/module_db.c:308
 msgid "Module DB"
 msgstr "Modul-DB"
 
-#: app/module_db.c:569
+#: app/module_db.c:601
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "indlæs modul: \"%s\"\n"
 
-#: app/module_db.c:576
+#: app/module_db.c:608
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "springer over modul: \"%s\"\n"
 
-#: app/module_db.c:601
+#: app/module_db.c:633
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "fejl under indlæsning af modul: %s: %s"
 
-#: app/module_db.c:782
+#: app/module_db.c:812
 msgid "<No modules>"
 msgstr "<Ingen moduler>"
 
-#: app/module_db.c:795 app/module_db.c:804
+#: app/module_db.c:825 app/module_db.c:834
 msgid "on disk"
 msgstr "på disk"
 
-#: app/module_db.c:795
+#: app/module_db.c:825
 msgid "only in memory"
 msgstr "kun i hukommelse"
 
-#: app/module_db.c:804
+#: app/module_db.c:834
 msgid "nowhere (click 'refresh')"
 msgstr "ingensteder (klik 'genindlæs')"
 
-#: app/module_db.c:843
+#: app/module_db.c:873
 msgid "Unload"
 msgstr "Frigiv"
 
-#: app/module_db.c:857
+#: app/module_db.c:889
 msgid "Purpose:"
 msgstr "Mening:"
 
-#: app/module_db.c:858
+#: app/module_db.c:890
 msgid "Author:"
 msgstr "Forfatter:"
 
-#: app/module_db.c:859
+#: app/module_db.c:891
 msgid "Version:"
 msgstr "Version:"
 
-#: app/module_db.c:860
+#: app/module_db.c:892
 msgid "Copyright:"
 msgstr "Kopibeskyttelse:"
 
-#: app/module_db.c:861
+#: app/module_db.c:893
 msgid "Date:"
 msgstr "Dato:"
 
-#: app/module_db.c:862
+#: app/module_db.c:894
 msgid "Location:"
 msgstr "Pladsering:"
 
-#: app/module_db.c:863
+#: app/module_db.c:895
 msgid "State:"
 msgstr "Tilstand:"
 
-#: app/module_db.c:882
+#: app/module_db.c:914
 msgid "Autoload during startup"
 msgstr "Autolæsning under opstart"
 

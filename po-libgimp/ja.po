@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
-"POT-Creation-Date: 2000-04-20 17:17-0700\n"
+"POT-Creation-Date: 2000-05-27 21:19-0700\n"
 "PO-Revision-Date: 2000-03-16 16:24+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -137,53 +137,6 @@ msgstr "ファイル選択"
 msgid "OK"
 msgstr "了解"
 
-#. pseudo unit
-#: libgimp/gimpunit.c:47
-msgid "pixel"
-msgstr "ピクセル"
-
-#: libgimp/gimpunit.c:47
-msgid "pixels"
-msgstr "ピクセル"
-
-#. standard units
-#: libgimp/gimpunit.c:50
-msgid "inch"
-msgstr "インチ"
-
-#: libgimp/gimpunit.c:50
-msgid "inches"
-msgstr "インチ"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeter"
-msgstr "ミリメートル"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeters"
-msgstr "ミリメートル"
-
-#. professional units
-#: libgimp/gimpunit.c:54
-msgid "point"
-msgstr "ポイント"
-
-#: libgimp/gimpunit.c:54
-msgid "points"
-msgstr "ポイント"
-
-#: libgimp/gimpunit.c:55
-msgid "pica"
-msgstr "パイカ"
-
-#: libgimp/gimpunit.c:55
-msgid "picas"
-msgstr "パイカ"
-
-#: libgimp/gimpunit.c:62
-msgid "percent"
-msgstr "パーセント"
-
 #: libgimp/gimpunitmenu.c:234
 msgid "More..."
 msgstr "詳細設定..."
@@ -199,6 +152,53 @@ msgstr "単位"
 #: libgimp/gimpunitmenu.c:528
 msgid "Factor"
 msgstr "倍率"
+
+#. pseudo unit
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixel"
+msgstr "ピクセル"
+
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixels"
+msgstr "ピクセル"
+
+#. standard units
+#: libgimp/gimpunit_pdb.c:50
+msgid "inch"
+msgstr "インチ"
+
+#: libgimp/gimpunit_pdb.c:50
+msgid "inches"
+msgstr "インチ"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeter"
+msgstr "ミリメートル"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeters"
+msgstr "ミリメートル"
+
+#. professional units
+#: libgimp/gimpunit_pdb.c:54
+msgid "point"
+msgstr "ポイント"
+
+#: libgimp/gimpunit_pdb.c:54
+msgid "points"
+msgstr "ポイント"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "pica"
+msgstr "パイカ"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "picas"
+msgstr "パイカ"
+
+#: libgimp/gimpunit_pdb.c:62
+msgid "percent"
+msgstr "パーセント"
 
 #: libgimp/gimpwidgets.c:706
 msgid ""

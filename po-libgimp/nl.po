@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.19\n"
-"POT-Creation-Date: 2000-04-20 17:17-0700\n"
+"POT-Creation-Date: 2000-05-27 21:19-0700\n"
 "PO-Revision-Date: 2000-04-05 00:28+02:00\n"
 "Last-Translator: Gert Dewit <Gert.Dewit@sos.be>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -139,53 +139,6 @@ msgstr "Selecteer Bestand"
 msgid "OK"
 msgstr "OK"
 
-#. pseudo unit
-#: libgimp/gimpunit.c:47
-msgid "pixel"
-msgstr "pixel"
-
-#: libgimp/gimpunit.c:47
-msgid "pixels"
-msgstr "pixels"
-
-#. standard units
-#: libgimp/gimpunit.c:50
-msgid "inch"
-msgstr "duim"
-
-#: libgimp/gimpunit.c:50
-msgid "inches"
-msgstr "duim"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeter"
-msgstr "millimeter"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeters"
-msgstr "millimeter"
-
-#. professional units
-#: libgimp/gimpunit.c:54
-msgid "point"
-msgstr "punt"
-
-#: libgimp/gimpunit.c:54
-msgid "points"
-msgstr "punt"
-
-#: libgimp/gimpunit.c:55
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:55
-msgid "picas"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:62
-msgid "percent"
-msgstr "percent"
-
 #: libgimp/gimpunitmenu.c:234
 msgid "More..."
 msgstr "Meer..."
@@ -201,6 +154,53 @@ msgstr "Eenheid"
 #: libgimp/gimpunitmenu.c:528
 msgid "Factor"
 msgstr "Factor"
+
+#. pseudo unit
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixel"
+msgstr "pixel"
+
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixels"
+msgstr "pixels"
+
+#. standard units
+#: libgimp/gimpunit_pdb.c:50
+msgid "inch"
+msgstr "duim"
+
+#: libgimp/gimpunit_pdb.c:50
+msgid "inches"
+msgstr "duim"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeter"
+msgstr "millimeter"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeters"
+msgstr "millimeter"
+
+#. professional units
+#: libgimp/gimpunit_pdb.c:54
+msgid "point"
+msgstr "punt"
+
+#: libgimp/gimpunit_pdb.c:54
+msgid "points"
+msgstr "punt"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "pica"
+msgstr "pica"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "picas"
+msgstr "pica"
+
+#: libgimp/gimpunit_pdb.c:62
+msgid "percent"
+msgstr "percent"
 
 #: libgimp/gimpwidgets.c:706
 msgid ""

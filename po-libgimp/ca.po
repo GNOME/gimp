@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-04-20 17:17-0700\n"
+"POT-Creation-Date: 2000-05-27 21:19-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,53 +136,6 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#. pseudo unit
-#: libgimp/gimpunit.c:47
-msgid "pixel"
-msgstr ""
-
-#: libgimp/gimpunit.c:47
-msgid "pixels"
-msgstr ""
-
-#. standard units
-#: libgimp/gimpunit.c:50
-msgid "inch"
-msgstr ""
-
-#: libgimp/gimpunit.c:50
-msgid "inches"
-msgstr ""
-
-#: libgimp/gimpunit.c:51
-msgid "millimeter"
-msgstr ""
-
-#: libgimp/gimpunit.c:51
-msgid "millimeters"
-msgstr ""
-
-#. professional units
-#: libgimp/gimpunit.c:54
-msgid "point"
-msgstr ""
-
-#: libgimp/gimpunit.c:54
-msgid "points"
-msgstr ""
-
-#: libgimp/gimpunit.c:55
-msgid "pica"
-msgstr ""
-
-#: libgimp/gimpunit.c:55
-msgid "picas"
-msgstr ""
-
-#: libgimp/gimpunit.c:62
-msgid "percent"
-msgstr ""
-
 #: libgimp/gimpunitmenu.c:234
 msgid "More..."
 msgstr ""
@@ -197,6 +150,53 @@ msgstr ""
 
 #: libgimp/gimpunitmenu.c:528
 msgid "Factor"
+msgstr ""
+
+#. pseudo unit
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixel"
+msgstr ""
+
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixels"
+msgstr ""
+
+#. standard units
+#: libgimp/gimpunit_pdb.c:50
+msgid "inch"
+msgstr ""
+
+#: libgimp/gimpunit_pdb.c:50
+msgid "inches"
+msgstr ""
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeter"
+msgstr ""
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeters"
+msgstr ""
+
+#. professional units
+#: libgimp/gimpunit_pdb.c:54
+msgid "point"
+msgstr ""
+
+#: libgimp/gimpunit_pdb.c:54
+msgid "points"
+msgstr ""
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "pica"
+msgstr ""
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "picas"
+msgstr ""
+
+#: libgimp/gimpunit_pdb.c:62
+msgid "percent"
 msgstr ""
 
 #: libgimp/gimpwidgets.c:706

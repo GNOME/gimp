@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.18\n"
-"POT-Creation-Date: 2000-05-09 20:27-0700\n"
+"POT-Creation-Date: 2000-05-22 11:33-0700\n"
 "PO-Revision-Date: 2000-05-02 09:28+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -645,6 +645,16 @@ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
 msgstr "<Toolbox>/Расш./Web-браузер/GIMP.ORG/Gimp"
 
 #: plug-ins/webbrowser/web-browser.scm:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+msgstr "<Toolbox>/Расш./Web-браузер/Руководство GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+msgstr "<Toolbox>/Расш./Web-браузер/GIMP.ORG/Gimp"
+
+#: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
 msgstr "<Toolbox>/Расш./Web-браузер/Регистрация дополнений"
 
@@ -763,6 +773,10 @@ msgstr "Основной цвет"
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Base Radius (pixel)"
 msgstr "Основной радиус (точек)"
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Behaviour"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "Bevel Height (Sharpness)"
@@ -989,6 +1003,10 @@ msgstr "Описание"
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Detail Level"
 msgstr "Уровень деталей"
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Detail in Middle"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "Diameter"
@@ -1254,15 +1272,12 @@ msgstr "Радиус свечения"
 msgid "Gradient"
 msgstr "Градиент"
 
-#: plug-ins/script-fu/scripts/camo.scm:0
-msgid "Granularity (0 - 15)"
-msgstr "Зернистость (0-15)"
-
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Granularity (1 is Low)"
 msgstr "Зернистость (1 - низкая)"
 
+#: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Granularity"
 msgstr "Зернистость"
@@ -1432,12 +1447,8 @@ msgid "Max. Blur Radius"
 msgstr "Макс. радиус размывания"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid ""
-"Mosaic Tile Type\n"
-"Squares 0, Hex 1, Oct 2"
+msgid "Mosaic Tile Type"
 msgstr ""
-"Тип мозаики: квадраты 0,\n"
-"шестиугольники 1, восьмиуголькики 2"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Mottle"
@@ -1802,6 +1813,10 @@ msgstr "Цвет сферы"
 msgid "Spread"
 msgstr "Распространение"
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Squares"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid "Stains"
 msgstr "Пятна"
@@ -1830,10 +1845,6 @@ msgstr "Начало смешивания"
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "Supersample"
 msgstr "Интерполировать"
-
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "TRUE = Detail in Middle, FALSE = Tile"
-msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Text Color (Active)"
@@ -1920,6 +1931,10 @@ msgstr "Длина нити"
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Threshold (Bigger 1<-->255 Smaller)"
 msgstr "Порог (Больше 1<-->255 Меньше)"
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Tile"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
@@ -2016,6 +2031,16 @@ msgstr "Ширина"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Работать с копией"
+
+#~ msgid "Granularity (0 - 15)"
+#~ msgstr "Зернистость (0-15)"
+
+#~ msgid ""
+#~ "Mosaic Tile Type\n"
+#~ "Squares 0, Hex 1, Oct 2"
+#~ msgstr ""
+#~ "Тип мозаики: квадраты 0,\n"
+#~ "шестиугольники 1, восьмиуголькики 2"
 
 #~ msgid "Blur Type: TRUE=RLE, FALSE=IIR"
 #~ msgstr "Тип размывания: TRUE=RLE, FALSE=IIR"

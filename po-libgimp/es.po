@@ -19,7 +19,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.20\n"
-"POT-Creation-Date: 2000-04-20 17:17-0700\n"
+"POT-Creation-Date: 2000-05-27 21:19-0700\n"
 "PO-Revision-Date: 2000-04-23 12:56+02:00\n"
 "Last-Translator: Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -154,53 +154,6 @@ msgstr "Seleccione fichero"
 msgid "OK"
 msgstr "Aceptar"
 
-#. pseudo unit
-#: libgimp/gimpunit.c:47
-msgid "pixel"
-msgstr "píxel"
-
-#: libgimp/gimpunit.c:47
-msgid "pixels"
-msgstr "píxeles"
-
-#. standard units
-#: libgimp/gimpunit.c:50
-msgid "inch"
-msgstr "pulgada"
-
-#: libgimp/gimpunit.c:50
-msgid "inches"
-msgstr "pulgadas"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeter"
-msgstr "milímetro"
-
-#: libgimp/gimpunit.c:51
-msgid "millimeters"
-msgstr "milímetros"
-
-#. professional units
-#: libgimp/gimpunit.c:54
-msgid "point"
-msgstr "punto"
-
-#: libgimp/gimpunit.c:54
-msgid "points"
-msgstr "puntos"
-
-#: libgimp/gimpunit.c:55
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:55
-msgid "picas"
-msgstr "picas"
-
-#: libgimp/gimpunit.c:62
-msgid "percent"
-msgstr "por ciento"
-
 #: libgimp/gimpunitmenu.c:234
 msgid "More..."
 msgstr "Más..."
@@ -216,6 +169,53 @@ msgstr "Unidad"
 #: libgimp/gimpunitmenu.c:528
 msgid "Factor"
 msgstr "Factor"
+
+#. pseudo unit
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixel"
+msgstr "píxel"
+
+#: libgimp/gimpunit_pdb.c:47
+msgid "pixels"
+msgstr "píxeles"
+
+#. standard units
+#: libgimp/gimpunit_pdb.c:50
+msgid "inch"
+msgstr "pulgada"
+
+#: libgimp/gimpunit_pdb.c:50
+msgid "inches"
+msgstr "pulgadas"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeter"
+msgstr "milímetro"
+
+#: libgimp/gimpunit_pdb.c:51
+msgid "millimeters"
+msgstr "milímetros"
+
+#. professional units
+#: libgimp/gimpunit_pdb.c:54
+msgid "point"
+msgstr "punto"
+
+#: libgimp/gimpunit_pdb.c:54
+msgid "points"
+msgstr "puntos"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "pica"
+msgstr "pica"
+
+#: libgimp/gimpunit_pdb.c:55
+msgid "picas"
+msgstr "picas"
+
+#: libgimp/gimpunit_pdb.c:62
+msgid "percent"
+msgstr "por ciento"
 
 #: libgimp/gimpwidgets.c:706
 msgid ""

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.22\n"
-"POT-Creation-Date: 2000-05-22 19:32+0200\n"
+"POT-Creation-Date: 2000-05-27 21:18-0700\n"
 "PO-Revision-Date: 2000-05-22 19:54+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -118,7 +118,7 @@ msgstr "Beenden"
 #. the cancel button
 #: app/app_procs.c:757 app/brightness_contrast.c:218 app/channel_ops.c:93
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
-#: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
+#: app/color_balance.c:275 app/color_notebook.c:126 app/convert.c:506
 #: app/curves.c:562 app/file_new_dialog.c:207 app/file_new_dialog.c:357
 #: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimpprogress.c:112
 #: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
@@ -127,7 +127,7 @@ msgstr "Beenden"
 #: app/layers_dialog.c:4012 app/levels.c:340 app/palette.c:1826
 #: app/posterize.c:202 app/preferences_dialog.c:1455 app/qmask.c:281
 #: app/resize.c:194 app/resize.c:1326 app/threshold.c:275
-#: app/user_install.c:548 app/user_install.c:1190 modules/cdisplay_gamma.c:331
+#: app/user_install.c:548 app/user_install.c:1190 modules/cdisplay_gamma.c:332
 #: modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -278,14 +278,14 @@ msgstr "Helligkeit-Kontrast funktioniert nicht bei indizierten Bildern."
 
 #: app/brightness_contrast.c:214 app/channel_ops.c:91
 #: app/channels_dialog.c:2500 app/channels_dialog.c:2663
-#: app/color_balance.c:271 app/color_notebook.c:122 app/convert.c:504
+#: app/color_balance.c:271 app/color_notebook.c:123 app/convert.c:504
 #: app/curves.c:558 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:370
 #: app/layers_dialog.c:3476 app/layers_dialog.c:3658 app/layers_dialog.c:3750
-#: app/layers_dialog.c:4010 app/levels.c:336 app/module_db.c:285
+#: app/layers_dialog.c:4010 app/levels.c:336 app/module_db.c:314
 #: app/posterize.c:198 app/preferences_dialog.c:1451 app/qmask.c:279
 #: app/resize.c:192 app/resize.c:1326 app/threshold.c:271
-#: app/user_install.c:1188 modules/cdisplay_gamma.c:329
+#: app/user_install.c:1188 modules/cdisplay_gamma.c:330
 #: modules/cdisplay_highcontrast.c:323
 msgid "OK"
 msgstr "OK"
@@ -321,7 +321,7 @@ msgstr "Pinseleditor"
 
 #. The close button
 #: app/brush_edit.c:216 app/brush_select.c:281 app/by_color_select.c:696
-#: app/color_notebook.c:122 app/color_picker.c:297 app/colormap_dialog.i.c:173
+#: app/color_notebook.c:123 app/color_picker.c:297 app/colormap_dialog.i.c:173
 #: app/crop.c:1054 app/devices.c:755 app/docindex.c:773 app/errorconsole.c:281
 #: app/gdisplay_ops.c:305 app/gradient.c:800 app/gradient_select.c:153
 #: app/histogram_tool.c:276 app/info_window.c:255 app/lc_dialog.c:195
@@ -354,7 +354,7 @@ msgstr "Winkel:"
 msgid "Brush Selection"
 msgstr "Pinselauswahl"
 
-#: app/brush_select.c:279 app/gradient.c:798 app/module_db.c:325
+#: app/brush_select.c:279 app/gradient.c:798 app/module_db.c:354
 #: app/palette.c:2070 app/pattern_select.c:170
 msgid "Refresh"
 msgstr "Auffrischen"
@@ -476,12 +476,12 @@ msgstr "Invertieren"
 msgid "All"
 msgstr "Alles"
 
-#: app/channel.c:188 app/channel.c:190 app/layer.c:320 app/layer.c:322
+#: app/channel.c:188 app/channel.c:190 app/layer.c:321 app/layer.c:323
 msgid "copy"
 msgstr "Kopie"
 
 #. formulate the new layer_mask name
-#: app/channel.c:196 app/gradient.c:1599 app/layer.c:328 app/layer.c:1744
+#: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1745
 #, c-format
 msgid "%s copy"
 msgstr "%s Kopie"
@@ -510,12 +510,12 @@ msgstr "Y:"
 msgid "Wrap Around"
 msgstr "Herumwickeln"
 
-#: app/channel_ops.c:174 app/image_new.c:73 app/image_new.c:287
+#: app/channel_ops.c:174 app/image_new.c:76 app/image_new.c:291
 #: app/layers_dialog.c:3578
 msgid "Background"
 msgstr "Hintergrund"
 
-#: app/channel_ops.c:175 app/image_new.c:83 app/layers_dialog.c:3580
+#: app/channel_ops.c:175 app/image_new.c:86 app/layers_dialog.c:3580
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -556,18 +556,18 @@ msgstr "Kanal löschen"
 msgid "Empty Channel Copy"
 msgstr "Leerer Kanal Kopie"
 
-#: app/channels_dialog.c:1433 app/color_balance.c:343 app/curves.c:583
-#: app/histogram_tool.c:304 app/levels.c:369
+#: app/channels_dialog.c:1433 app/color_balance.c:343 app/color_select.c:250
+#: app/curves.c:583 app/histogram_tool.c:304 app/levels.c:369
 msgid "Red"
 msgstr "Rot"
 
-#: app/channels_dialog.c:1437 app/color_balance.c:368 app/curves.c:584
-#: app/histogram_tool.c:305 app/levels.c:370
+#: app/channels_dialog.c:1437 app/color_balance.c:368 app/color_select.c:251
+#: app/curves.c:584 app/histogram_tool.c:305 app/levels.c:370
 msgid "Green"
 msgstr "Grün"
 
-#: app/channels_dialog.c:1441 app/color_balance.c:393 app/curves.c:585
-#: app/histogram_tool.c:306 app/levels.c:371
+#: app/channels_dialog.c:1441 app/color_balance.c:393 app/color_select.c:252
+#: app/curves.c:585 app/histogram_tool.c:306 app/levels.c:371
 msgid "Blue"
 msgstr "Blau"
 
@@ -674,11 +674,11 @@ msgstr "Gelb"
 msgid "Preserve Luminosity"
 msgstr "Helligkeit erhalten"
 
-#: app/color_notebook.c:117
+#: app/color_notebook.c:118
 msgid "Color Selection"
 msgstr "Farbauswahl"
 
-#: app/color_notebook.c:125
+#: app/color_notebook.c:126
 msgid "Revert to Old Color"
 msgstr "Zurück zur alten Farbe"
 
@@ -710,7 +710,7 @@ msgstr "Blau:"
 msgid "Alpha:"
 msgstr "Alpha:"
 
-#: app/color_picker.c:259 app/color_picker.c:274 app/color_select.c:437
+#: app/color_picker.c:259 app/color_picker.c:274 app/color_select.c:441
 #: app/colormap_dialog.i.c:278
 msgid "Hex Triplet:"
 msgstr "Hex Triplet:"
@@ -736,6 +736,46 @@ msgstr "Intensität:"
 #: app/info_window.c:425 app/info_window.c:447
 msgid "N/A"
 msgstr "n.v."
+
+#: app/color_select.c:238
+msgid "H"
+msgstr ""
+
+#: app/color_select.c:239
+msgid "S"
+msgstr ""
+
+#: app/color_select.c:240
+msgid "V"
+msgstr ""
+
+#: app/color_select.c:241 app/hue_saturation.c:352
+msgid "R"
+msgstr "R"
+
+#: app/color_select.c:242 app/hue_saturation.c:354
+msgid "G"
+msgstr "G"
+
+#: app/color_select.c:243 app/hue_saturation.c:356
+msgid "B"
+msgstr "B"
+
+#: app/color_select.c:247 app/layers_dialog.c:383 app/paint_funcs.c:94
+#: app/tool_options.c:929
+msgid "Hue"
+msgstr "Farbton"
+
+#: app/color_select.c:248 app/layers_dialog.c:384 app/paint_funcs.c:95
+#: app/tool_options.c:930
+msgid "Saturation"
+msgstr "Sättigung"
+
+#: app/color_select.c:249 app/curves.c:582 app/histogram_tool.c:303
+#: app/layers_dialog.c:386 app/levels.c:368 app/paint_funcs.c:97
+#: app/tool_options.c:932
+msgid "Value"
+msgstr "Wert"
 
 #: app/colormap_dialog.i.c:191
 msgid "Indexed Color Palette"
@@ -963,11 +1003,6 @@ msgstr "Kurven können bei indizierten Bildern nicht angepaßt werden."
 msgid "Modify Curves for Channel:"
 msgstr "Verändere Kurven für Kanal:"
 
-#: app/curves.c:582 app/histogram_tool.c:303 app/layers_dialog.c:386
-#: app/levels.c:368 app/paint_funcs.c:97 app/tool_options.c:932
-msgid "Value"
-msgstr "Wert"
-
 #: app/curves.c:586 app/levels.c:372
 msgid "Alpha"
 msgstr "Alpha"
@@ -985,7 +1020,7 @@ msgstr "Weich"
 msgid "Free"
 msgstr "Frei"
 
-#: app/curves.c:699 app/levels.c:597 app/module_db.c:834
+#: app/curves.c:699 app/levels.c:597 app/module_db.c:864
 msgid "Load"
 msgstr "Öffnen"
 
@@ -1400,7 +1435,7 @@ msgstr ""
 msgid "RGB-empty"
 msgstr "RGB leer"
 
-#: app/gdisplay.c:220 app/image_new.c:57 app/preferences_dialog.c:1623
+#: app/gdisplay.c:220 app/image_new.c:60 app/preferences_dialog.c:1623
 msgid "RGB"
 msgstr "RGB"
 
@@ -1545,11 +1580,11 @@ msgstr ""
 "Warnung: Konnte animierten Pinsel\n"
 "\"%s\" nicht laden"
 
-#: app/gimpbrushpipe.c:308
+#: app/gimpbrushpipe.c:309
 msgid "Brush pipes should have at least one brush."
 msgstr "Pinselanimationen sollten wenigstens einen Pinsel haben."
 
-#: app/gimpbrushpipe.c:403
+#: app/gimpbrushpipe.c:404
 msgid ""
 "Failed to load one of the\n"
 "brushes in the brush pipe."
@@ -1557,27 +1592,27 @@ msgstr ""
 "Konnte einen Pinsel in der\n"
 "Pinselanimation nicht laden."
 
-#: app/gimpbrushpipe.c:465
+#: app/gimpbrushpipe.c:466
 msgid "Failed to load pixmap brush."
 msgstr "Konnte keinen bunten Pinsel laden"
 
-#: app/gimpdrawable.c:166
+#: app/gimpdrawable.c:171
 msgid "Can't fill unknown image type."
 msgstr "Kann Bild unbekannten Typs nicht füllen."
 
-#: app/gimpdrawable.c:496
+#: app/gimpdrawable.c:501
 msgid "parasite attach to drawable"
 msgstr "Parasit mit Ebene verknüpfen"
 
-#: app/gimpdrawable.c:531
+#: app/gimpdrawable.c:536
 msgid "detach parasite from drawable"
 msgstr "Parasit von Ebene lösen"
 
-#: app/gimpdrawable.c:738
+#: app/gimpdrawable.c:743
 msgid "unnamed"
 msgstr "Unbenannt"
 
-#: app/gimpdrawable.c:755
+#: app/gimpdrawable.c:760
 #, c-format
 msgid "Layer type %d not supported."
 msgstr "Ebenentyp %d nicht unterstützt."
@@ -1639,7 +1674,7 @@ msgstr ""
 "Es sind nicht genügend Ebenen unter dieser Ebene als \"Sichtbar\"\n"
 "markiert, um den Vorgang \"Nach unten vereinen\" auszuführen."
 
-#: app/gimpimage.c:3028
+#: app/gimpimage.c:3027
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1647,7 +1682,7 @@ msgstr ""
 "Kann keine Ebenenenmaske hinzufügen, da\n"
 "diese Ebene bereits eine Maske hat."
 
-#: app/gimpimage.c:3032
+#: app/gimpimage.c:3031
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1655,7 +1690,7 @@ msgstr ""
 "Kann keine Maske zu einer Ebene in\n"
 "einem indizierten Bild hinzufügen."
 
-#: app/gimpimage.c:3036
+#: app/gimpimage.c:3035
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1663,20 +1698,20 @@ msgstr ""
 "Kann keine Maske zu einer Ebene\n"
 "ohne Alphakanal hinzufügen."
 
-#: app/gimpimage.c:3043
+#: app/gimpimage.c:3042
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kann keine Ebenenmaske mit anderen Abmessungen als die Ebene hinzufügen."
 
-#: app/gimpimage.c:3150
+#: app/gimpimage.c:3149
 msgid "Channel cannot be raised any further"
 msgstr "Kanal kann nicht weiter angehoben werden"
 
-#: app/gimpimage.c:3201
+#: app/gimpimage.c:3200
 msgid "Channel cannot be lowered any further"
 msgstr "Kanal kann nicht weiter abgesenkt werden"
 
-#: app/gimpimage.c:3421 app/palette.c:364 app/palette.c:941 app/palette.c:1077
+#: app/gimpimage.c:3420 app/palette.c:364 app/palette.c:941 app/palette.c:1077
 #: app/palette.c:2022 app/palette.c:2749 app/palette.c:2881
 msgid "Untitled"
 msgstr "Unbenannt"
@@ -2220,25 +2255,13 @@ msgstr "Farbton-Sättigung funktioniert nur bei RGB Bildern."
 msgid "Master"
 msgstr "Gesamt"
 
-#: app/hue_saturation.c:352
-msgid "R"
-msgstr "R"
-
 #: app/hue_saturation.c:353
 msgid "Y"
 msgstr "Y"
 
-#: app/hue_saturation.c:354
-msgid "G"
-msgstr "G"
-
 #: app/hue_saturation.c:355
 msgid "C"
 msgstr "C"
-
-#: app/hue_saturation.c:356
-msgid "B"
-msgstr "B"
 
 #: app/hue_saturation.c:357
 msgid "M"
@@ -2263,45 +2286,45 @@ msgstr "Helligkeit:"
 msgid "Saturation:"
 msgstr "Sättigung:"
 
-#: app/image_new.c:62 app/info_window.c:65 app/info_window.c:534
+#: app/image_new.c:65 app/info_window.c:65 app/info_window.c:534
 #: app/preferences_dialog.c:1624
 msgid "Grayscale"
 msgstr "Graustufen"
 
-#: app/image_new.c:68 app/layers_dialog.c:3577
+#: app/image_new.c:71 app/layers_dialog.c:3577
 msgid "Foreground"
 msgstr "Vordergrund"
 
-#: app/image_new.c:78 app/layers_dialog.c:3579
+#: app/image_new.c:81 app/layers_dialog.c:3579
 msgid "White"
 msgstr "Weiß"
 
-#: app/image_new.c:330
+#: app/image_new.c:335
 #, c-format
 msgid "%d Bytes"
 msgstr "%d Byte"
 
-#: app/image_new.c:332
+#: app/image_new.c:337
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: app/image_new.c:334
+#: app/image_new.c:339
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: app/image_new.c:336
+#: app/image_new.c:341
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: app/image_new.c:338
+#: app/image_new.c:343
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: app/image_new.c:340
+#: app/image_new.c:345
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
@@ -2597,11 +2620,11 @@ msgstr "Invertieren funktioniert nicht mit indizierten Bildern."
 msgid "Invert operation failed."
 msgstr "Invertierung schlug fehl."
 
-#: app/layer.c:258
+#: app/layer.c:259
 msgid "Zero width or height layers not allowed."
 msgstr "Ebenen mit Höhe oder Breite gleich null sind nicht erlaubt."
 
-#: app/layer.c:506
+#: app/layer.c:507
 #, c-format
 msgid "%s mask"
 msgstr "%s Maske"
@@ -2683,14 +2706,6 @@ msgstr "Nur Abdunkeln"
 #: app/layers_dialog.c:382 app/paint_funcs.c:93 app/tool_options.c:928
 msgid "Lighten Only"
 msgstr "Nur Aufhellen"
-
-#: app/layers_dialog.c:383 app/paint_funcs.c:94 app/tool_options.c:929
-msgid "Hue"
-msgstr "Farbton"
-
-#: app/layers_dialog.c:384 app/paint_funcs.c:95 app/tool_options.c:930
-msgid "Saturation"
-msgstr "Sättigung"
 
 #: app/layers_dialog.c:396
 msgid "Keep Trans."
@@ -3709,94 +3724,94 @@ msgstr "/Pfadeigenschaften..."
 msgid "Error opening file: %s\n"
 msgstr "Kann Datei nicht öffnen: %s\n"
 
-#: app/module_db.c:58
+#: app/module_db.c:62
 msgid "Module error"
 msgstr "Modul-Fehler"
 
-#: app/module_db.c:59
+#: app/module_db.c:63
 msgid "Loaded OK"
 msgstr "Erfolgreich geladen"
 
-#: app/module_db.c:60
+#: app/module_db.c:64
 msgid "Load failed"
 msgstr "Fehler beim Laden"
 
-#: app/module_db.c:61
+#: app/module_db.c:65
 msgid "Unload requested"
 msgstr "Soll entladen werden"
 
-#: app/module_db.c:62
+#: app/module_db.c:66
 msgid "Unloaded OK"
 msgstr "Erfolgreich entladen"
 
-#: app/module_db.c:279
+#: app/module_db.c:308
 msgid "Module DB"
 msgstr "Modul-DB"
 
-#: app/module_db.c:569
+#: app/module_db.c:601
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "lade Modul: \"%s\"\n"
 
-#: app/module_db.c:576
+#: app/module_db.c:608
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "überspringe Modul: \"%s\"\n"
 
-#: app/module_db.c:601
+#: app/module_db.c:633
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "Fehler beim Laden von Modul %s: %s"
 
-#: app/module_db.c:782
+#: app/module_db.c:812
 msgid "<No modules>"
 msgstr "<Keine Module>"
 
-#: app/module_db.c:795 app/module_db.c:804
+#: app/module_db.c:825 app/module_db.c:834
 msgid "on disk"
 msgstr "auf Festplatte"
 
-#: app/module_db.c:795
+#: app/module_db.c:825
 msgid "only in memory"
 msgstr "nur im Speicher"
 
-#: app/module_db.c:804
+#: app/module_db.c:834
 msgid "nowhere (click 'refresh')"
 msgstr "nirgends ('Auffrischen' klicken)"
 
-#: app/module_db.c:843
+#: app/module_db.c:873
 msgid "Unload"
 msgstr "Entladen"
 
-#: app/module_db.c:857
+#: app/module_db.c:889
 msgid "Purpose:"
 msgstr "Zweck:"
 
-#: app/module_db.c:858
+#: app/module_db.c:890
 msgid "Author:"
 msgstr "Autor:"
 
-#: app/module_db.c:859
+#: app/module_db.c:891
 msgid "Version:"
 msgstr "Version:"
 
-#: app/module_db.c:860
+#: app/module_db.c:892
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: app/module_db.c:861
+#: app/module_db.c:893
 msgid "Date:"
 msgstr "Datum:"
 
-#: app/module_db.c:862
+#: app/module_db.c:894
 msgid "Location:"
 msgstr "Ort:"
 
-#: app/module_db.c:863
+#: app/module_db.c:895
 msgid "State:"
 msgstr "Status:"
 
-#: app/module_db.c:882
+#: app/module_db.c:914
 msgid "Autoload during startup"
 msgstr "Automatisch beim Start laden"
 
@@ -4095,7 +4110,7 @@ msgstr "Pfaddatei %s enthält keine Punkte"
 msgid "Failed to read path points from %s"
 msgstr "Konnte keine Pfadpunkte aus %s lesen"
 
-#: app/paths_dialog.c:2022 app/xcf.c:437
+#: app/paths_dialog.c:2022 app/xcf.c:436
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "Kann %s nicht öffnen: %s\n"
@@ -4150,38 +4165,38 @@ msgstr "Matrix:"
 msgid "Perspective..."
 msgstr "Perspektivisch..."
 
-#: app/plug_in.c:325
+#: app/plug_in.c:324
 msgid "Resource configuration"
 msgstr "Ressourcen Konfiguration"
 
-#: app/plug_in.c:332
+#: app/plug_in.c:331
 msgid "Plug-ins"
 msgstr "Plugins"
 
-#: app/plug_in.c:344
+#: app/plug_in.c:343
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "Frage Plugin: \"%s\" ab\n"
 
-#: app/plug_in.c:380
+#: app/plug_in.c:379
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "schreibe \"%s\"\n"
 
-#: app/plug_in.c:395
+#: app/plug_in.c:394
 msgid "Starting extensions: "
 msgstr "Starte Erweiterung: "
 
-#: app/plug_in.c:396
+#: app/plug_in.c:395
 msgid "Extensions"
 msgstr "Erweiterungen"
 
-#: app/plug_in.c:823
+#: app/plug_in.c:822
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Kann Plugin \"%s\" nicht finden"
 
-#: app/plug_in.c:1490
+#: app/plug_in.c:1489
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -5547,191 +5562,191 @@ msgstr "Pfad zeigen"
 msgid "Clip Result"
 msgstr "Ergebnis beschneiden"
 
-#: app/undo.c:2833
+#: app/undo.c:2889
 #, c-format
 msgid "Can't undo %s"
 msgstr "Kann %s nicht rückgängig machen"
 
-#: app/undo.c:2864
+#: app/undo.c:2920
 msgid "<<invalid>>"
 msgstr "<<ungültig>>"
 
-#: app/undo.c:2865
+#: app/undo.c:2921
 msgid "image"
 msgstr "Bild"
 
-#: app/undo.c:2866
+#: app/undo.c:2922
 msgid "image mod"
 msgstr "Bildveränderung"
 
-#: app/undo.c:2867
+#: app/undo.c:2923
 msgid "mask"
 msgstr "Maske"
 
-#: app/undo.c:2868
+#: app/undo.c:2924
 msgid "layer move"
 msgstr "Ebene verschieben"
 
 #. ok
-#: app/undo.c:2869
+#: app/undo.c:2925
 msgid "transform"
 msgstr "Transformation"
 
-#: app/undo.c:2870
+#: app/undo.c:2926
 msgid "paint"
 msgstr "Zeichnen"
 
-#: app/undo.c:2871
+#: app/undo.c:2927
 msgid "new layer"
 msgstr "Ebene anlegen"
 
-#: app/undo.c:2872
+#: app/undo.c:2928
 msgid "delete layer"
 msgstr "Ebene löschen"
 
-#: app/undo.c:2873
+#: app/undo.c:2929
 msgid "layer mod"
 msgstr "Ebenenveränderung"
 
-#: app/undo.c:2874
+#: app/undo.c:2930
 msgid "add layer mask"
 msgstr "Ebenenmaske hinzufügen"
 
 #. ok
-#: app/undo.c:2875
+#: app/undo.c:2931
 msgid "delete layer mask"
 msgstr "Ebenenmaske löschen"
 
 #. ok
-#: app/undo.c:2876
+#: app/undo.c:2932
 msgid "rename layer"
 msgstr "Ebene umbenennen"
 
-#: app/undo.c:2877
+#: app/undo.c:2933
 msgid "layer reposition"
 msgstr "Ebene repositionieren"
 
 #. ok
-#: app/undo.c:2878
+#: app/undo.c:2934
 msgid "new channel"
 msgstr "Neuer Kanal"
 
-#: app/undo.c:2879
+#: app/undo.c:2935
 msgid "delete channel"
 msgstr "Kanal löschen"
 
-#: app/undo.c:2880
+#: app/undo.c:2936
 msgid "channel mod"
 msgstr "Kanalveränderung"
 
-#: app/undo.c:2881
+#: app/undo.c:2937
 msgid "FS to layer"
 msgstr "Schwebende Auswahl -> Ebene"
 
 #. ok
-#: app/undo.c:2882
+#: app/undo.c:2938
 msgid "gimage"
 msgstr "Bild"
 
-#: app/undo.c:2883
+#: app/undo.c:2939
 msgid "FS rigor"
 msgstr "Schwebende Auswahl zeigen"
 
-#: app/undo.c:2884
+#: app/undo.c:2940
 msgid "FS relax"
 msgstr "Schwebende Auswahl verstecken"
 
-#: app/undo.c:2885
+#: app/undo.c:2941
 msgid "guide"
 msgstr "Hilfslinie"
 
-#: app/undo.c:2886
+#: app/undo.c:2942
 msgid "text"
 msgstr "Text"
 
-#: app/undo.c:2887
+#: app/undo.c:2943
 msgid "float selection"
 msgstr "Auswahl -> schwebend"
 
-#: app/undo.c:2888
+#: app/undo.c:2944
 msgid "paste"
 msgstr "Einfügen"
 
-#: app/undo.c:2889
+#: app/undo.c:2945
 msgid "cut"
 msgstr "Ausschneiden"
 
-#: app/undo.c:2890
+#: app/undo.c:2946
 msgid "transform core"
 msgstr "Transformation"
 
-#: app/undo.c:2891
+#: app/undo.c:2947
 msgid "paint core"
 msgstr "Zeichenwerkzeug"
 
-#: app/undo.c:2892
+#: app/undo.c:2948
 msgid "floating layer"
 msgstr "Schwebende Ebene"
 
 #. unused!
-#: app/undo.c:2893
+#: app/undo.c:2949
 msgid "linked layer"
 msgstr "Ebene verbinden"
 
-#: app/undo.c:2894
+#: app/undo.c:2950
 msgid "apply layer mask"
 msgstr "Ebenenmaske anwenden"
 
 #. ok
-#: app/undo.c:2895
+#: app/undo.c:2951
 msgid "layer merge"
 msgstr "Ebenen vereinen"
 
-#: app/undo.c:2896
+#: app/undo.c:2952
 msgid "FS anchor"
 msgstr "Schwebende Auswahl verankern"
 
-#: app/undo.c:2897
+#: app/undo.c:2953
 msgid "gimage mod"
 msgstr "Bildveränderung"
 
-#: app/undo.c:2898
+#: app/undo.c:2954
 msgid "crop"
 msgstr "Zuschneiden"
 
-#: app/undo.c:2899
+#: app/undo.c:2955
 msgid "layer scale"
 msgstr "Ebene skalieren"
 
-#: app/undo.c:2900
+#: app/undo.c:2956
 msgid "layer resize"
 msgstr "Ebenengröße verändern"
 
-#: app/undo.c:2901
+#: app/undo.c:2957
 msgid "quickmask"
 msgstr "QMask"
 
-#: app/undo.c:2902
+#: app/undo.c:2958
 msgid "attach parasite"
 msgstr "Parasit zuweisen"
 
-#: app/undo.c:2903
+#: app/undo.c:2959
 msgid "remove parasite"
 msgstr "Parasit entfernen"
 
-#: app/undo.c:2904
+#: app/undo.c:2960
 msgid "resolution change"
 msgstr "Auflösung verändern"
 
-#: app/undo.c:2905
+#: app/undo.c:2961
 msgid "image scale"
 msgstr "Bild skalieren"
 
-#: app/undo.c:2906
+#: app/undo.c:2962
 msgid "image resize"
 msgstr "Bildgröße verändern"
 
-#: app/undo.c:2907
+#: app/undo.c:2963
 msgid "misc"
 msgstr "Verschiedenes"
 
@@ -6321,7 +6336,7 @@ msgstr ""
 msgid "Calibrate"
 msgstr "Kalibrieren"
 
-#: app/xcf.c:383
+#: app/xcf.c:382
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF Fehler: nicht unterstützte XCF Dateiversion %d aufgetreten"
@@ -6340,11 +6355,11 @@ msgstr ""
 msgid "Gamma color display filter"
 msgstr "Gamma-Anzeigenfarbfilter"
 
-#: modules/cdisplay_gamma.c:324
+#: modules/cdisplay_gamma.c:325
 msgid "Gamma"
 msgstr "Gamma"
 
-#: modules/cdisplay_gamma.c:343
+#: modules/cdisplay_gamma.c:344
 msgid "Gamma:"
 msgstr "Gamma:"
 
@@ -6360,15 +6375,15 @@ msgstr "Hochkontrast"
 msgid "Contrast Cycles:"
 msgstr "Kontrastverstärkung:"
 
-#: modules/colorsel_gtk.c:48
+#: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
 msgstr "Standard GTK Farbauswahl als ladbares Modul"
 
-#: modules/colorsel_triangle.c:78
+#: modules/colorsel_triangle.c:79
 msgid "Painter-style color selector as a pluggable color selector"
 msgstr "Farbauswahl im Stil von Painter als ladbares Modul"
 
-#: modules/colorsel_triangle.c:147 modules/colorsel_triangle.c:149
+#: modules/colorsel_triangle.c:148 modules/colorsel_triangle.c:150
 msgid "Triangle"
 msgstr "Dreieck"
 

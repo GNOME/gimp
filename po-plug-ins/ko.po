@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
-"POT-Creation-Date: 2000-05-14 13:42-0700\n"
+"POT-Creation-Date: 2000-05-26 23:52-0700\n"
 "PO-Revision-Date: 1999-10-13 05:33:05+0900\n"
 "Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -26,8 +26,8 @@ msgid "AlienMap"
 msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:615 plug-ins/AlienMap2/AlienMap2.c:607
-#: plug-ins/FractalExplorer/Dialogs.c:281
-#: plug-ins/FractalExplorer/Dialogs.c:1371 plug-ins/gdyntext/gdyntext_ui.c:608
+#: plug-ins/FractalExplorer/Dialogs.c:282
+#: plug-ins/FractalExplorer/Dialogs.c:1372 plug-ins/gdyntext/gdyntext_ui.c:608
 #: plug-ins/gfig/gfig.c:3382 plug-ins/imagemap/imap_about.c:33
 #: plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
@@ -36,8 +36,8 @@ msgstr "대하여"
 #. the 3 Action Buttons
 #: plug-ins/AlienMap/AlienMap.c:617 plug-ins/AlienMap/AlienMap.c:881
 #: plug-ins/AlienMap2/AlienMap2.c:609 plug-ins/AlienMap2/AlienMap2.c:895
-#: plug-ins/FractalExplorer/Dialogs.c:283
-#: plug-ins/FractalExplorer/Dialogs.c:1376
+#: plug-ins/FractalExplorer/Dialogs.c:284
+#: plug-ins/FractalExplorer/Dialogs.c:1377
 #: plug-ins/FractalExplorer/FractalExplorer.c:850
 #: plug-ins/FractalExplorer/FractalExplorer.c:1476
 #: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1383
@@ -56,24 +56,24 @@ msgstr "대하여"
 #: plug-ins/common/diffraction.c:534 plug-ins/common/displace.c:298
 #: plug-ins/common/edge.c:650 plug-ins/common/emboss.c:525
 #: plug-ins/common/engrave.c:224 plug-ins/common/exchange.c:278
-#: plug-ins/common/film.c:1186 plug-ins/common/flarefx.c:313
+#: plug-ins/common/film.c:1186 plug-ins/common/flarefx.c:331
 #: plug-ins/common/fractaltrace.c:725 plug-ins/common/gauss_iir.c:365
 #: plug-ins/common/gauss_iir.c:448 plug-ins/common/gauss_rle.c:360
 #: plug-ins/common/gauss_rle.c:443 plug-ins/common/gbr.c:456
-#: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1140
-#: plug-ins/common/gif.c:1211 plug-ins/common/glasstile.c:228
+#: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1141
+#: plug-ins/common/gif.c:1212 plug-ins/common/glasstile.c:259
 #: plug-ins/common/gpb.c:269 plug-ins/common/gqbist.c:640
-#: plug-ins/common/grid.c:564 plug-ins/common/gtm.c:375
-#: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:305
-#: plug-ins/common/iwarp.c:1141 plug-ins/common/jigsaw.c:2304
-#: plug-ins/common/jpeg.c:1592 plug-ins/common/lic.c:1021
-#: plug-ins/common/mail.c:494 plug-ins/common/mapcolor.c:554
-#: plug-ins/common/max_rgb.c:258 plug-ins/common/mblur.c:763
+#: plug-ins/common/grid.c:658 plug-ins/common/gtm.c:375
+#: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:560
+#: plug-ins/common/iwarp.c:1141 plug-ins/common/jigsaw.c:2485
+#: plug-ins/common/jpeg.c:1595 plug-ins/common/lic.c:1021
+#: plug-ins/common/mail.c:494 plug-ins/common/mapcolor.c:558
+#: plug-ins/common/max_rgb.c:345 plug-ins/common/mblur.c:763
 #: plug-ins/common/newsprint.c:1211 plug-ins/common/nlfilt.c:348
-#: plug-ins/common/noisify.c:325 plug-ins/common/nova.c:339
+#: plug-ins/common/noisify.c:488 plug-ins/common/nova.c:465
 #: plug-ins/common/oilify.c:458 plug-ins/common/papertile.c:250
 #: plug-ins/common/pat.c:412 plug-ins/common/pixelize.c:280
-#: plug-ins/common/plasma.c:287 plug-ins/common/png.c:1021
+#: plug-ins/common/plasma.c:306 plug-ins/common/png.c:1021
 #: plug-ins/common/pnm.c:933 plug-ins/common/polar.c:914
 #: plug-ins/common/ps.c:2533 plug-ins/common/ps.c:2714
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
@@ -84,13 +84,13 @@ msgstr "대하여"
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2232
 #: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1577
 #: plug-ins/common/tga.c:1448 plug-ins/common/threshold_alpha.c:268
-#: plug-ins/common/tiff.c:1485 plug-ins/common/tile.c:398
+#: plug-ins/common/tiff.c:1487 plug-ins/common/tile.c:398
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:172
 #: plug-ins/common/unsharp.c:786 plug-ins/common/video.c:2155
 #: plug-ins/common/vpropagate.c:934 plug-ins/common/warp.c:437
 #: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
-#: plug-ins/common/wind.c:710 plug-ins/common/wmf.c:931
-#: plug-ins/common/xbm.c:1126 plug-ins/common/xpm.c:800
+#: plug-ins/common/wind.c:1007 plug-ins/common/wmf.c:931
+#: plug-ins/common/xbm.c:1128 plug-ins/common/xpm.c:800
 #: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:913 plug-ins/fp/fp_gtk.c:895
 #: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1010
@@ -106,11 +106,11 @@ msgstr "대하여"
 #: plug-ins/gimpressionist/gimpressionist.c:487
 #: plug-ins/gimpressionist/orientmap.c:626
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
-#: plug-ins/ifscompose/ifscompose.c:780
+#: plug-ins/ifscompose/ifscompose.c:781
 #: plug-ins/imagemap/imap_default_dialog.c:102 plug-ins/maze/maze_face.c:191
 #: plug-ins/mosaic/mosaic.c:531 plug-ins/pagecurl/pagecurl.c:518
 #: plug-ins/print/gimp_main_window.c:597 plug-ins/rcm/rcm_dialog.c:727
-#: plug-ins/sel2path/sel2path.c:340 plug-ins/sgi/sgi.c:640
+#: plug-ins/sel2path/sel2path.c:345 plug-ins/sgi/sgi.c:640
 #: plug-ins/sinus/sinus.c:746 plug-ins/struc/struc.c:255
 #: plug-ins/webbrowser/webbrowser.c:281 plug-ins/xjt/xjt.c:793
 msgid "OK"
@@ -118,7 +118,7 @@ msgstr "확인"
 
 #. the  Action Button
 #: plug-ins/AlienMap/AlienMap.c:619 plug-ins/AlienMap2/AlienMap2.c:611
-#: plug-ins/FractalExplorer/Dialogs.c:285
+#: plug-ins/FractalExplorer/Dialogs.c:286
 #: plug-ins/FractalExplorer/FractalExplorer.c:744
 #: plug-ins/FractalExplorer/FractalExplorer.c:859
 #: plug-ins/FractalExplorer/FractalExplorer.c:1478
@@ -138,23 +138,23 @@ msgstr "확인"
 #: plug-ins/common/displace.c:300 plug-ins/common/edge.c:652
 #: plug-ins/common/emboss.c:527 plug-ins/common/engrave.c:226
 #: plug-ins/common/exchange.c:280 plug-ins/common/film.c:1188
-#: plug-ins/common/flarefx.c:315 plug-ins/common/fractaltrace.c:727
+#: plug-ins/common/flarefx.c:333 plug-ins/common/fractaltrace.c:727
 #: plug-ins/common/gauss_iir.c:367 plug-ins/common/gauss_iir.c:450
 #: plug-ins/common/gauss_rle.c:362 plug-ins/common/gauss_rle.c:445
 #: plug-ins/common/gbr.c:458 plug-ins/common/gicon.c:443
-#: plug-ins/common/gif.c:1142 plug-ins/common/gif.c:1213
-#: plug-ins/common/glasstile.c:230 plug-ins/common/gpb.c:271
-#: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:566
+#: plug-ins/common/gif.c:1143 plug-ins/common/gif.c:1214
+#: plug-ins/common/glasstile.c:261 plug-ins/common/gpb.c:271
+#: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:660
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
-#: plug-ins/common/illusion.c:307 plug-ins/common/iwarp.c:1145
-#: plug-ins/common/jigsaw.c:2306 plug-ins/common/jpeg.c:1594
+#: plug-ins/common/illusion.c:562 plug-ins/common/iwarp.c:1145
+#: plug-ins/common/jigsaw.c:2487 plug-ins/common/jpeg.c:1597
 #: plug-ins/common/lic.c:1023 plug-ins/common/mail.c:496
-#: plug-ins/common/mapcolor.c:556 plug-ins/common/max_rgb.c:260
+#: plug-ins/common/mapcolor.c:560 plug-ins/common/max_rgb.c:347
 #: plug-ins/common/mblur.c:765 plug-ins/common/newsprint.c:1213
-#: plug-ins/common/nlfilt.c:350 plug-ins/common/noisify.c:327
-#: plug-ins/common/nova.c:341 plug-ins/common/oilify.c:460
+#: plug-ins/common/nlfilt.c:350 plug-ins/common/noisify.c:490
+#: plug-ins/common/nova.c:467 plug-ins/common/oilify.c:460
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:414
-#: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:289
+#: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:308
 #: plug-ins/common/png.c:1023 plug-ins/common/pnm.c:935
 #: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2535
 #: plug-ins/common/ps.c:2716 plug-ins/common/psp.c:430
@@ -166,13 +166,13 @@ msgstr "확인"
 #: plug-ins/common/sparkle.c:351 plug-ins/common/spheredesigner.c:2236
 #: plug-ins/common/spread.c:384 plug-ins/common/sunras.c:1579
 #: plug-ins/common/tga.c:1450 plug-ins/common/threshold_alpha.c:270
-#: plug-ins/common/tiff.c:1487 plug-ins/common/tile.c:400
+#: plug-ins/common/tiff.c:1489 plug-ins/common/tile.c:400
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:174
 #: plug-ins/common/unsharp.c:788 plug-ins/common/video.c:2157
 #: plug-ins/common/vpropagate.c:936 plug-ins/common/warp.c:439
 #: plug-ins/common/waves.c:351 plug-ins/common/whirlpinch.c:810
-#: plug-ins/common/wind.c:712 plug-ins/common/wmf.c:933
-#: plug-ins/common/xbm.c:893 plug-ins/common/xbm.c:1128
+#: plug-ins/common/wind.c:1009 plug-ins/common/wmf.c:933
+#: plug-ins/common/xbm.c:895 plug-ins/common/xbm.c:1130
 #: plug-ins/common/xpm.c:802 plug-ins/fits/fits.c:989
 #: plug-ins/flame/flame.c:626 plug-ins/flame/flame.c:915
 #: plug-ins/fp/fp_gtk.c:899 plug-ins/gap/gap_arr_dialog.c:1012
@@ -191,11 +191,11 @@ msgstr "확인"
 #: plug-ins/gfli/gfli.c:904 plug-ins/gimpressionist/gimpressionist.c:496
 #: plug-ins/gimpressionist/orientmap.c:640
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
-#: plug-ins/ifscompose/ifscompose.c:788
+#: plug-ins/ifscompose/ifscompose.c:789
 #: plug-ins/imagemap/imap_default_dialog.c:117 plug-ins/maze/maze_face.c:195
 #: plug-ins/mosaic/mosaic.c:533 plug-ins/pagecurl/pagecurl.c:520
 #: plug-ins/print/gimp_main_window.c:212 plug-ins/print/gimp_main_window.c:599
-#: plug-ins/rcm/rcm_dialog.c:729 plug-ins/sel2path/sel2path.c:349
+#: plug-ins/rcm/rcm_dialog.c:729 plug-ins/sel2path/sel2path.c:354
 #: plug-ins/sgi/sgi.c:642 plug-ins/sinus/sinus.c:748
 #: plug-ins/struc/struc.c:257 plug-ins/webbrowser/webbrowser.c:283
 #: plug-ins/winsnap/winsnap.c:912 plug-ins/xjt/xjt.c:795
@@ -205,11 +205,11 @@ msgstr "취소"
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: plug-ins/AlienMap/AlienMap.c:658 plug-ins/FractalExplorer/Dialogs.c:672
+#: plug-ins/AlienMap/AlienMap.c:658 plug-ins/FractalExplorer/Dialogs.c:673
 #: plug-ins/common/compose.c:120 plug-ins/common/compose.c:124
 #: plug-ins/common/diffraction.c:600 plug-ins/common/diffraction.c:639
 #: plug-ins/common/diffraction.c:678 plug-ins/common/exchange.c:353
-#: plug-ins/common/noisify.c:397 plug-ins/common/noisify.c:430
+#: plug-ins/common/noisify.c:587 plug-ins/common/noisify.c:623
 #: plug-ins/fp/fp_gtk.c:20 plug-ins/print/gimp_color_window.c:128
 msgid "Red:"
 msgstr "빨간색:"
@@ -219,11 +219,11 @@ msgstr "빨간색:"
 msgid "Change intensity of the red channel"
 msgstr "능력 설명자 변경"
 
-#: plug-ins/AlienMap/AlienMap.c:667 plug-ins/FractalExplorer/Dialogs.c:682
+#: plug-ins/AlienMap/AlienMap.c:667 plug-ins/FractalExplorer/Dialogs.c:683
 #: plug-ins/common/compose.c:121 plug-ins/common/compose.c:125
 #: plug-ins/common/diffraction.c:609 plug-ins/common/diffraction.c:648
 #: plug-ins/common/diffraction.c:687 plug-ins/common/exchange.c:381
-#: plug-ins/common/noisify.c:407 plug-ins/common/noisify.c:440
+#: plug-ins/common/noisify.c:598 plug-ins/common/noisify.c:634
 #: plug-ins/fp/fp_gtk.c:21 plug-ins/print/gimp_color_window.c:142
 #, fuzzy
 msgid "Green:"
@@ -234,11 +234,11 @@ msgstr "녹색"
 msgid "Change intensity of the green channel"
 msgstr "능력 설명자 변경"
 
-#: plug-ins/AlienMap/AlienMap.c:676 plug-ins/FractalExplorer/Dialogs.c:692
+#: plug-ins/AlienMap/AlienMap.c:676 plug-ins/FractalExplorer/Dialogs.c:693
 #: plug-ins/common/compose.c:122 plug-ins/common/compose.c:126
 #: plug-ins/common/diffraction.c:618 plug-ins/common/diffraction.c:657
 #: plug-ins/common/diffraction.c:696 plug-ins/common/exchange.c:410
-#: plug-ins/common/noisify.c:417 plug-ins/common/noisify.c:450
+#: plug-ins/common/noisify.c:609 plug-ins/common/noisify.c:645
 #: plug-ins/fp/fp_gtk.c:22 plug-ins/print/gimp_color_window.c:156
 msgid "Blue:"
 msgstr "파란색:"
@@ -248,35 +248,35 @@ msgid "Change intensity of the blue channel"
 msgstr ""
 
 #. Redmode toggle box
-#: plug-ins/AlienMap/AlienMap.c:685 plug-ins/FractalExplorer/Dialogs.c:712
+#: plug-ins/AlienMap/AlienMap.c:685 plug-ins/FractalExplorer/Dialogs.c:713
 #: plug-ins/common/convmatrix.c:83 plug-ins/common/decompose.c:116
 #: plug-ins/common/newsprint.c:396
 msgid "Red"
 msgstr "빨간색"
 
 #: plug-ins/AlienMap/AlienMap.c:689 plug-ins/AlienMap/AlienMap.c:712
-#: plug-ins/AlienMap/AlienMap.c:735 plug-ins/FractalExplorer/Dialogs.c:716
-#: plug-ins/FractalExplorer/Dialogs.c:757
-#: plug-ins/FractalExplorer/Dialogs.c:798 plug-ins/common/ripple.c:666
+#: plug-ins/AlienMap/AlienMap.c:735 plug-ins/FractalExplorer/Dialogs.c:717
+#: plug-ins/FractalExplorer/Dialogs.c:758
+#: plug-ins/FractalExplorer/Dialogs.c:799 plug-ins/common/ripple.c:666
 #, fuzzy
 msgid "Sine"
 msgstr "크기"
 
 #: plug-ins/AlienMap/AlienMap.c:690 plug-ins/AlienMap/AlienMap.c:713
-#: plug-ins/AlienMap/AlienMap.c:736 plug-ins/FractalExplorer/Dialogs.c:718
-#: plug-ins/FractalExplorer/Dialogs.c:759
-#: plug-ins/FractalExplorer/Dialogs.c:800
+#: plug-ins/AlienMap/AlienMap.c:736 plug-ins/FractalExplorer/Dialogs.c:719
+#: plug-ins/FractalExplorer/Dialogs.c:760
+#: plug-ins/FractalExplorer/Dialogs.c:801
 #, fuzzy
 msgid "Cosine"
 msgstr "닫기"
 
 #: plug-ins/AlienMap/AlienMap.c:691 plug-ins/AlienMap/AlienMap.c:714
-#: plug-ins/AlienMap/AlienMap.c:737 plug-ins/FractalExplorer/Dialogs.c:720
-#: plug-ins/FractalExplorer/Dialogs.c:761
-#: plug-ins/FractalExplorer/Dialogs.c:802 plug-ins/common/CML_explorer.c:167
+#: plug-ins/AlienMap/AlienMap.c:737 plug-ins/FractalExplorer/Dialogs.c:721
+#: plug-ins/FractalExplorer/Dialogs.c:762
+#: plug-ins/FractalExplorer/Dialogs.c:803 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2640 plug-ins/common/ps.c:2653
-#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1506
+#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1508
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:284
 msgid "None"
 msgstr "없음"
@@ -294,7 +294,7 @@ msgid "Red channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 
 #. Greenmode toggle box
-#: plug-ins/AlienMap/AlienMap.c:708 plug-ins/FractalExplorer/Dialogs.c:753
+#: plug-ins/AlienMap/AlienMap.c:708 plug-ins/FractalExplorer/Dialogs.c:754
 #: plug-ins/common/convmatrix.c:84 plug-ins/common/decompose.c:117
 #: plug-ins/common/newsprint.c:404
 msgid "Green"
@@ -314,7 +314,7 @@ msgid ""
 msgstr ""
 
 #. Bluemode toggle box
-#: plug-ins/AlienMap/AlienMap.c:731 plug-ins/FractalExplorer/Dialogs.c:794
+#: plug-ins/AlienMap/AlienMap.c:731 plug-ins/FractalExplorer/Dialogs.c:795
 #: plug-ins/common/convmatrix.c:85 plug-ins/common/decompose.c:118
 #: plug-ins/common/newsprint.c:412
 msgid "Blue"
@@ -447,21 +447,25 @@ msgid "About AlienMap2"
 msgstr ""
 
 #. Preview
-#: plug-ins/FractalExplorer/Dialogs.c:307 plug-ins/Lighting/lighting_ui.c:1094
+#: plug-ins/FractalExplorer/Dialogs.c:308 plug-ins/Lighting/lighting_ui.c:1094
 #: plug-ins/MapObject/mapobject_ui.c:1400 plug-ins/common/CML_explorer.c:1200
 #: plug-ins/common/blinds.c:343 plug-ins/common/curve_bend.c:1505
 #: plug-ins/common/destripe.c:575 plug-ins/common/emboss.c:742
 #: plug-ins/common/exchange.c:295 plug-ins/common/fractaltrace.c:746
-#: plug-ins/common/iwarp.c:1159 plug-ins/common/mapcolor.c:572
-#: plug-ins/common/nlfilt.c:575 plug-ins/common/polar.c:935
-#: plug-ins/common/ps.c:2852 plug-ins/common/sharpen.c:550
-#: plug-ins/common/spheredesigner.c:2254 plug-ins/common/tileit.c:407
-#: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
+#: plug-ins/common/glasstile.c:275 plug-ins/common/grid.c:679
+#: plug-ins/common/illusion.c:579 plug-ins/common/iwarp.c:1159
+#: plug-ins/common/jigsaw.c:2510 plug-ins/common/mapcolor.c:576
+#: plug-ins/common/max_rgb.c:361 plug-ins/common/nlfilt.c:575
+#: plug-ins/common/noisify.c:505 plug-ins/common/plasma.c:325
+#: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2852
+#: plug-ins/common/sharpen.c:550 plug-ins/common/spheredesigner.c:2254
+#: plug-ins/common/tileit.c:407 plug-ins/common/waves.c:576
+#: plug-ins/common/whirlpinch.c:826 plug-ins/common/wind.c:1026
 #: plug-ins/flame/flame.c:933 plug-ins/gfig/gfig.c:3964
 #: plug-ins/gflare/gflare.c:2492 plug-ins/gflare/gflare.c:3500
 #: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/ifscompose/ifscompose.c:895
+#: plug-ins/ifscompose/ifscompose.c:896
 #: plug-ins/imagemap/imap_edit_area_info.c:287
 #: plug-ins/imagemap/imap_grid.c:232 plug-ins/print/gimp_main_window.c:237
 #: plug-ins/rcm/rcm_dialog.c:115 plug-ins/rcm/rcm_dialog.c:627
@@ -469,53 +473,53 @@ msgstr ""
 msgid "Preview"
 msgstr "미리보기"
 
-#: plug-ins/FractalExplorer/Dialogs.c:351
+#: plug-ins/FractalExplorer/Dialogs.c:352
 #, fuzzy
 msgid "Realtime Preview"
 msgstr "이미지 미리보기"
 
-#: plug-ins/FractalExplorer/Dialogs.c:358
+#: plug-ins/FractalExplorer/Dialogs.c:359
 msgid "If you enable this option the preview will be redrawn automatically"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:361
+#: plug-ins/FractalExplorer/Dialogs.c:362
 #, fuzzy
 msgid "Redraw"
 msgstr "빨간색"
 
-#: plug-ins/FractalExplorer/Dialogs.c:367
+#: plug-ins/FractalExplorer/Dialogs.c:368
 #, fuzzy
 msgid "Redraw preview"
 msgstr "페이퍼 미리보기"
 
 #. Zoom Options
-#: plug-ins/FractalExplorer/Dialogs.c:370
+#: plug-ins/FractalExplorer/Dialogs.c:371
 #, fuzzy
 msgid "Zoom Options"
 msgstr "옵션"
 
-#: plug-ins/FractalExplorer/Dialogs.c:380
+#: plug-ins/FractalExplorer/Dialogs.c:381
 msgid "Undo Zoom"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:386
+#: plug-ins/FractalExplorer/Dialogs.c:387
 msgid "Undo last zoom"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:388
+#: plug-ins/FractalExplorer/Dialogs.c:389
 msgid "Redo Zoom"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:394
+#: plug-ins/FractalExplorer/Dialogs.c:395
 msgid "Redo last zoom"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:396
+#: plug-ins/FractalExplorer/Dialogs.c:397
 #, fuzzy
 msgid "Step In"
 msgstr "진행"
 
-#: plug-ins/FractalExplorer/Dialogs.c:403
+#: plug-ins/FractalExplorer/Dialogs.c:404
 #, fuzzy
 msgid "Step Out"
 msgstr "진행"
@@ -523,163 +527,163 @@ msgstr "진행"
 #.
 #. *  Scales
 #.
-#: plug-ins/FractalExplorer/Dialogs.c:420 plug-ins/gflare/gflare.c:2895
+#: plug-ins/FractalExplorer/Dialogs.c:421 plug-ins/gflare/gflare.c:2895
 #: plug-ins/gflare/gflare.c:3736 plug-ins/gflare/gflare.c:3846
 #: plug-ins/gflare/gflare.c:3988
 msgid "Parameters"
 msgstr "파라미터"
 
-#: plug-ins/FractalExplorer/Dialogs.c:423
+#: plug-ins/FractalExplorer/Dialogs.c:424
 #, fuzzy
 msgid "Fractal Parameters"
 msgstr "파라미터"
 
-#: plug-ins/FractalExplorer/Dialogs.c:437
+#: plug-ins/FractalExplorer/Dialogs.c:438
 msgid "XMIN:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:440
+#: plug-ins/FractalExplorer/Dialogs.c:441
 msgid "Change the first (minimal) x-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:448
+#: plug-ins/FractalExplorer/Dialogs.c:449
 msgid "XMAX:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:451
+#: plug-ins/FractalExplorer/Dialogs.c:452
 msgid "Change the second (maximal) x-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:459
+#: plug-ins/FractalExplorer/Dialogs.c:460
 msgid "YMIN:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:462
+#: plug-ins/FractalExplorer/Dialogs.c:463
 msgid "Change the first (minimal) y-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:470
+#: plug-ins/FractalExplorer/Dialogs.c:471
 msgid "YMAX:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:473
+#: plug-ins/FractalExplorer/Dialogs.c:474
 msgid "Change the second (maximal) y-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:481
+#: plug-ins/FractalExplorer/Dialogs.c:482
 msgid "ITER:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:484
+#: plug-ins/FractalExplorer/Dialogs.c:485
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:493
+#: plug-ins/FractalExplorer/Dialogs.c:494
 #, fuzzy
 msgid "CX:"
 msgstr "X:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:496
+#: plug-ins/FractalExplorer/Dialogs.c:497
 msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:505
+#: plug-ins/FractalExplorer/Dialogs.c:506
 #, fuzzy
 msgid "CY:"
 msgstr "Y:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:508
+#: plug-ins/FractalExplorer/Dialogs.c:509
 msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:519 plug-ins/common/CML_explorer.c:1227
+#: plug-ins/FractalExplorer/Dialogs.c:520 plug-ins/common/CML_explorer.c:1227
 #: plug-ins/common/gqbist.c:686 plug-ins/common/spheredesigner.c:2329
 #: plug-ins/gfig/gfig.c:3556
 msgid "Load"
 msgstr "읽기"
 
-#: plug-ins/FractalExplorer/Dialogs.c:525
+#: plug-ins/FractalExplorer/Dialogs.c:526
 #, fuzzy
 msgid "Load a fractal from file"
 msgstr "파일에서 포인트 경로 읽기"
 
-#: plug-ins/FractalExplorer/Dialogs.c:527 plug-ins/common/convmatrix.c:802
+#: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/convmatrix.c:802
 #: plug-ins/common/curve_bend.c:1363 plug-ins/common/iwarp.c:1143
 #: plug-ins/common/sample_colorize.c:1371
 #: plug-ins/common/spheredesigner.c:2234 plug-ins/common/tileit.c:467
 #: plug-ins/fp/fp_gtk.c:897 plug-ins/gimpressionist/preview.c:124
-#: plug-ins/ifscompose/ifscompose.c:786
+#: plug-ins/ifscompose/ifscompose.c:787
 #, fuzzy
 msgid "Reset"
 msgstr " 재설정 "
 
-#: plug-ins/FractalExplorer/Dialogs.c:533
+#: plug-ins/FractalExplorer/Dialogs.c:534
 #, fuzzy
 msgid "Reset parameters to default values"
 msgstr " 초기값으로 재설정"
 
-#: plug-ins/FractalExplorer/Dialogs.c:536 plug-ins/common/CML_explorer.c:1220
+#: plug-ins/FractalExplorer/Dialogs.c:537 plug-ins/common/CML_explorer.c:1220
 #: plug-ins/common/gqbist.c:694 plug-ins/common/spheredesigner.c:2336
 #: plug-ins/gfig/gfig.c:3935 plug-ins/gfig/gfig.c:5305
 #: plug-ins/imagemap/imap_menu.c:218 plug-ins/imagemap/imap_toolbar.c:112
 msgid "Save"
 msgstr "저장"
 
-#: plug-ins/FractalExplorer/Dialogs.c:542
+#: plug-ins/FractalExplorer/Dialogs.c:543
 #, fuzzy
 msgid "Save active fractal to file"
 msgstr "파일에서 포인트 경로 저장"
 
 #. Fractal type toggle box
-#: plug-ins/FractalExplorer/Dialogs.c:545
+#: plug-ins/FractalExplorer/Dialogs.c:546
 msgid "Fractal Type"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:558
+#: plug-ins/FractalExplorer/Dialogs.c:559
 msgid "Mandelbrot"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:560
+#: plug-ins/FractalExplorer/Dialogs.c:561
 msgid "Julia"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:562
+#: plug-ins/FractalExplorer/Dialogs.c:563
 msgid "Barnsley 1"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:564
+#: plug-ins/FractalExplorer/Dialogs.c:565
 msgid "Barnsley 2"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:566
+#: plug-ins/FractalExplorer/Dialogs.c:567
 msgid "Barnsley 3"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:568
+#: plug-ins/FractalExplorer/Dialogs.c:569
 #, fuzzy
 msgid "Spider"
 msgstr "크기"
 
-#: plug-ins/FractalExplorer/Dialogs.c:570
+#: plug-ins/FractalExplorer/Dialogs.c:571
 msgid "Man'o'war"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:572
+#: plug-ins/FractalExplorer/Dialogs.c:573
 #, fuzzy
 msgid "Lambda"
 msgstr "읽기"
 
-#: plug-ins/FractalExplorer/Dialogs.c:574
+#: plug-ins/FractalExplorer/Dialogs.c:575
 msgid "Sierpinski"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:620
+#: plug-ins/FractalExplorer/Dialogs.c:621
 #: plug-ins/imagemap/imap_preferences.c:542 plug-ins/sinus/sinus.c:903
 #: plug-ins/sinus/sinus.c:921 plug-ins/sinus/sinus.c:1007
 #, fuzzy
@@ -687,179 +691,179 @@ msgid "Colors"
 msgstr "색상"
 
 #. Number of Colors frame
-#: plug-ins/FractalExplorer/Dialogs.c:624 plug-ins/common/borderaverage.c:431
+#: plug-ins/FractalExplorer/Dialogs.c:625 plug-ins/common/borderaverage.c:431
 #: plug-ins/gap/gap_range_ops.c:344
 #, fuzzy
 msgid "Number of Colors"
 msgstr "색상 개수"
 
-#: plug-ins/FractalExplorer/Dialogs.c:637
+#: plug-ins/FractalExplorer/Dialogs.c:638
 #, fuzzy
 msgid "Number of Colors:"
 msgstr "색상 개수"
 
-#: plug-ins/FractalExplorer/Dialogs.c:640
+#: plug-ins/FractalExplorer/Dialogs.c:641
 msgid "Change the number of colors in the mapping"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:647
+#: plug-ins/FractalExplorer/Dialogs.c:648
 #, fuzzy
 msgid "Use loglog Smoothing"
 msgstr "부드럽게"
 
-#: plug-ins/FractalExplorer/Dialogs.c:654
+#: plug-ins/FractalExplorer/Dialogs.c:655
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
 
 #. Color Density frame
-#: plug-ins/FractalExplorer/Dialogs.c:658
+#: plug-ins/FractalExplorer/Dialogs.c:659
 #, fuzzy
 msgid "Color Density"
 msgstr "색상화"
 
-#: plug-ins/FractalExplorer/Dialogs.c:675
+#: plug-ins/FractalExplorer/Dialogs.c:676
 #, fuzzy
 msgid "Change the intensity of the red channel"
 msgstr "능력 설명자 변경"
 
-#: plug-ins/FractalExplorer/Dialogs.c:685
+#: plug-ins/FractalExplorer/Dialogs.c:686
 #, fuzzy
 msgid "Change the intensity of the green channel"
 msgstr "능력 설명자 변경"
 
-#: plug-ins/FractalExplorer/Dialogs.c:695
+#: plug-ins/FractalExplorer/Dialogs.c:696
 #, fuzzy
 msgid "Change the intensity of the blue channel"
 msgstr "능력 설명자 변경"
 
 #. Color Function frame
-#: plug-ins/FractalExplorer/Dialogs.c:701
+#: plug-ins/FractalExplorer/Dialogs.c:702
 #, fuzzy
 msgid "Color Function"
 msgstr "색상 변화"
 
-#: plug-ins/FractalExplorer/Dialogs.c:725
-#: plug-ins/FractalExplorer/Dialogs.c:766
-#: plug-ins/FractalExplorer/Dialogs.c:807
+#: plug-ins/FractalExplorer/Dialogs.c:726
+#: plug-ins/FractalExplorer/Dialogs.c:767
+#: plug-ins/FractalExplorer/Dialogs.c:808
 msgid "Use sine-function for this color component"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:728
-#: plug-ins/FractalExplorer/Dialogs.c:769
-#: plug-ins/FractalExplorer/Dialogs.c:810
+#: plug-ins/FractalExplorer/Dialogs.c:729
+#: plug-ins/FractalExplorer/Dialogs.c:770
+#: plug-ins/FractalExplorer/Dialogs.c:811
 msgid "Use cosine-function for this color component"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:731
-#: plug-ins/FractalExplorer/Dialogs.c:772
-#: plug-ins/FractalExplorer/Dialogs.c:813
+#: plug-ins/FractalExplorer/Dialogs.c:732
+#: plug-ins/FractalExplorer/Dialogs.c:773
+#: plug-ins/FractalExplorer/Dialogs.c:814
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:740
-#: plug-ins/FractalExplorer/Dialogs.c:781
-#: plug-ins/FractalExplorer/Dialogs.c:822
+#: plug-ins/FractalExplorer/Dialogs.c:741
+#: plug-ins/FractalExplorer/Dialogs.c:782
+#: plug-ins/FractalExplorer/Dialogs.c:823
 #, fuzzy
 msgid "Inversion"
 msgstr "반대로(invert)"
 
-#: plug-ins/FractalExplorer/Dialogs.c:748
-#: plug-ins/FractalExplorer/Dialogs.c:789
-#: plug-ins/FractalExplorer/Dialogs.c:830
+#: plug-ins/FractalExplorer/Dialogs.c:749
+#: plug-ins/FractalExplorer/Dialogs.c:790
+#: plug-ins/FractalExplorer/Dialogs.c:831
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
 
 #. Colormode toggle box
-#: plug-ins/FractalExplorer/Dialogs.c:835
+#: plug-ins/FractalExplorer/Dialogs.c:836
 #, fuzzy
 msgid "Color Mode"
 msgstr "색상 노이즈"
 
-#: plug-ins/FractalExplorer/Dialogs.c:846
+#: plug-ins/FractalExplorer/Dialogs.c:847
 msgid "As Specified above"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:857
+#: plug-ins/FractalExplorer/Dialogs.c:858
 msgid ""
 "Create a color-map with the options you specified above (color "
 "density/function). The result is visible in the preview image"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:867
+#: plug-ins/FractalExplorer/Dialogs.c:868
 msgid "Apply Active Gradient to Final Image"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:878
+#: plug-ins/FractalExplorer/Dialogs.c:879
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:883
+#: plug-ins/FractalExplorer/Dialogs.c:884
 msgid "FractalExplorer Gradient"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:915
+#: plug-ins/FractalExplorer/Dialogs.c:916
 msgid "Fractals"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1565 plug-ins/gfig/gfig.c:1492
+#: plug-ins/FractalExplorer/Dialogs.c:1566 plug-ins/gfig/gfig.c:1492
 #, fuzzy, c-format
 msgid "Error opening: %s"
 msgstr "읽기위해 \"%s\" 파일을 열수 없습니다!\n"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1567 plug-ins/gfig/gfig.c:1494
+#: plug-ins/FractalExplorer/Dialogs.c:1568 plug-ins/gfig/gfig.c:1494
 msgid "Could not save."
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1583
+#: plug-ins/FractalExplorer/Dialogs.c:1584
 msgid "Failed to write file\n"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1605
+#: plug-ins/FractalExplorer/Dialogs.c:1606
 msgid "Save: No filename given"
 msgstr ""
 
 #. Can't save to directory
-#: plug-ins/FractalExplorer/Dialogs.c:1615
+#: plug-ins/FractalExplorer/Dialogs.c:1616
 msgid "Save: Can't save to a directory"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1664
+#: plug-ins/FractalExplorer/Dialogs.c:1665
 #, fuzzy
 msgid "Load Fractal Parameters"
 msgstr "파라미터 읽기"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1675
+#: plug-ins/FractalExplorer/Dialogs.c:1676
 msgid "Click here to load your file"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1681
+#: plug-ins/FractalExplorer/Dialogs.c:1682
 msgid "Click here to cancel load procedure"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1699
+#: plug-ins/FractalExplorer/Dialogs.c:1700
 #, fuzzy
 msgid "Save Fractal Parameters"
 msgstr "파라미터 저장"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1711
+#: plug-ins/FractalExplorer/Dialogs.c:1712
 msgid "Click here to save your file"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1718
+#: plug-ins/FractalExplorer/Dialogs.c:1719
 msgid "Click here to cancel save procedure"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1981
+#: plug-ins/FractalExplorer/Dialogs.c:1982
 #: plug-ins/FractalExplorer/FractalExplorer.c:1264
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1986
+#: plug-ins/FractalExplorer/Dialogs.c:1987
 #: plug-ins/FractalExplorer/FractalExplorer.c:1272
 #, c-format
 msgid ""
@@ -894,7 +898,7 @@ msgstr " 삭제 "
 #: plug-ins/FractalExplorer/FractalExplorer.c:1411 plug-ins/gfig/gfig.c:3576
 #: plug-ins/gfig/gfig.c:5070 plug-ins/gflare/gflare.c:3100
 #: plug-ins/gflare/gflare.c:3376 plug-ins/gimpressionist/presets.c:648
-#: plug-ins/ifscompose/ifscompose.c:784 plug-ins/imagemap/imap_cmd_delete.c:53
+#: plug-ins/ifscompose/ifscompose.c:785 plug-ins/imagemap/imap_cmd_delete.c:53
 #: plug-ins/imagemap/imap_selection.c:175
 #, fuzzy
 msgid "Delete"
@@ -1128,11 +1132,11 @@ msgstr "위치"
 #: plug-ins/Lighting/lighting_ui.c:614 plug-ins/Lighting/lighting_ui.c:666
 #: plug-ins/MapObject/mapobject_ui.c:747 plug-ins/MapObject/mapobject_ui.c:799
 #: plug-ins/MapObject/mapobject_ui.c:1040
-#: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:720
-#: plug-ins/common/nova.c:469 plug-ins/common/papertile.c:285
+#: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:785
+#: plug-ins/common/nova.c:609 plug-ins/common/papertile.c:285
 #: plug-ins/flame/flame.c:1182 plug-ins/flame/flame.c:1195
 #: plug-ins/gap/gap_mov_dialog.c:1855 plug-ins/gflare/gflare.c:2874
-#: plug-ins/ifscompose/ifscompose.c:512
+#: plug-ins/ifscompose/ifscompose.c:513
 msgid "X:"
 msgstr "X:"
 
@@ -1146,10 +1150,10 @@ msgstr " XYZ 공간중 라이트 근원지 X위치"
 #: plug-ins/MapObject/mapobject_ui.c:760 plug-ins/MapObject/mapobject_ui.c:811
 #: plug-ins/MapObject/mapobject_ui.c:1051
 #: plug-ins/MapObject/mapobject_ui.c:1093
-#: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:738
-#: plug-ins/common/nova.c:487 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1219 plug-ins/gap/gap_mov_dialog.c:1873
-#: plug-ins/gflare/gflare.c:2878 plug-ins/ifscompose/ifscompose.c:526
+#: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:803
+#: plug-ins/common/nova.c:627 plug-ins/common/papertile.c:294
+#: plug-ins/common/xbm.c:1221 plug-ins/gap/gap_mov_dialog.c:1873
+#: plug-ins/gflare/gflare.c:2878 plug-ins/ifscompose/ifscompose.c:527
 msgid "Y:"
 msgstr "Y:"
 
@@ -1226,7 +1230,7 @@ msgid "Controls how intense the highlights will be"
 msgstr "하이라이트를 강하게 조정"
 
 #: plug-ins/Lighting/lighting_ui.c:854 plug-ins/MapObject/mapobject_ui.c:987
-#: plug-ins/common/jigsaw.c:2385
+#: plug-ins/common/jigsaw.c:2597
 #, fuzzy
 msgid "Highlight:"
 msgstr "하이라이트:"
@@ -1484,7 +1488,7 @@ msgid "Size"
 msgstr "크기"
 
 #: plug-ins/MapObject/mapobject_ui.c:1272 plug-ins/common/despeckle.c:744
-#: plug-ins/common/nlfilt.c:410 plug-ins/common/nova.c:374
+#: plug-ins/common/nlfilt.c:410 plug-ins/common/nova.c:503
 #: plug-ins/common/unsharp.c:811 plug-ins/common/whirlpinch.c:877
 #: plug-ins/gfig/gfig.c:3185 plug-ins/gflare/gflare.c:2909
 #: plug-ins/imagemap/imap_circle.c:273
@@ -1528,9 +1532,9 @@ msgstr ""
 
 #. memory mapped file data
 #. must check file size
-#: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:266
+#: plug-ins/bmp/bmpread.c:51 plug-ins/common/CEL.c:266
 #: plug-ins/common/gbr.c:281 plug-ins/common/gifload.c:306
-#: plug-ins/common/hrz.c:338 plug-ins/common/jpeg.c:745
+#: plug-ins/common/hrz.c:338 plug-ins/common/jpeg.c:746
 #: plug-ins/common/pat.c:261 plug-ins/common/pcx.c:301
 #: plug-ins/common/pix.c:326 plug-ins/common/png.c:415
 #: plug-ins/common/png.c:417 plug-ins/common/pnm.c:414
@@ -1544,45 +1548,45 @@ msgstr ""
 msgid "Loading %s:"
 msgstr "읽기 %s:"
 
-#: plug-ins/bmp/bmpread.c:64
+#: plug-ins/bmp/bmpread.c:63
 #, fuzzy, c-format
 msgid "%s: can't open \"%s\""
 msgstr "%s: \"%s\" 읽지 못함\n"
 
-#: plug-ins/bmp/bmpread.c:72
+#: plug-ins/bmp/bmpread.c:71
 #, fuzzy, c-format
 msgid "%s: %s is not a valid BMP file"
 msgstr "%s: BMP파일 %s가 정확치 않습니다.\n"
 
-#: plug-ins/bmp/bmpread.c:90 plug-ins/bmp/bmpread.c:108
-#: plug-ins/bmp/bmpread.c:128 plug-ins/bmp/bmpread.c:146
-#: plug-ins/bmp/bmpread.c:164 plug-ins/bmp/bmpread.c:169
-#: plug-ins/bmp/bmpread.c:174
+#: plug-ins/bmp/bmpread.c:89 plug-ins/bmp/bmpread.c:107
+#: plug-ins/bmp/bmpread.c:127 plug-ins/bmp/bmpread.c:145
+#: plug-ins/bmp/bmpread.c:163 plug-ins/bmp/bmpread.c:168
+#: plug-ins/bmp/bmpread.c:173
 #, fuzzy, c-format
 msgid "%s: error reading BMP file header"
 msgstr "%s: BMP 파일 해더 읽기 애러\n"
 
-#: plug-ins/bmp/bmpread.c:247
+#: plug-ins/bmp/bmpread.c:246
 #, fuzzy, c-format
 msgid "%s: bad colormap"
 msgstr "%s: 잘못된 컬러맵\n"
 
 #. Create an indexed-alpha layer to hold the image...
-#: plug-ins/bmp/bmpread.c:289 plug-ins/bmp/bmpread.c:296
-#: plug-ins/bmp/bmpread.c:303 plug-ins/common/CEL.c:304
+#: plug-ins/bmp/bmpread.c:288 plug-ins/bmp/bmpread.c:295
+#: plug-ins/bmp/bmpread.c:302 plug-ins/common/CEL.c:304
 #: plug-ins/common/blinds.c:380 plug-ins/common/compose.c:543
 #: plug-ins/common/decompose.c:445 plug-ins/common/film.c:1006
 #: plug-ins/common/gbr.c:343 plug-ins/common/gifload.c:850
-#: plug-ins/common/hrz.c:379 plug-ins/common/jpeg.c:898
+#: plug-ins/common/hrz.c:379 plug-ins/common/jpeg.c:901
 #: plug-ins/common/lic.c:904 plug-ins/common/papertile.c:316
 #: plug-ins/common/pat.c:304 plug-ins/common/pcx.c:332
 #: plug-ins/common/pcx.c:338 plug-ins/common/pix.c:370
 #: plug-ins/common/png.c:576 plug-ins/common/pnm.c:502
 #: plug-ins/common/psd.c:2094 plug-ins/common/smooth_palette.c:240
 #: plug-ins/common/sunras.c:919 plug-ins/common/tga.c:1014
-#: plug-ins/common/tiff.c:653 plug-ins/common/tile.c:269
+#: plug-ins/common/tiff.c:654 plug-ins/common/tile.c:269
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
-#: plug-ins/common/xbm.c:810 plug-ins/faxg3/faxg3.c:448
+#: plug-ins/common/xbm.c:812 plug-ins/faxg3/faxg3.c:448
 #: plug-ins/fits/fits.c:521 plug-ins/gfig/gfig.c:2867
 #: plug-ins/gfig/gfig.c:3195 plug-ins/sgi/sgi.c:378 plug-ins/twain/twain.c:722
 #: plug-ins/winsnap/winsnap.c:1234
@@ -1601,15 +1605,15 @@ msgstr "%s를 열수 없습니다.\n"
 
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
-#: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:936
+#: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:937
 #: plug-ins/common/gpb.c:768 plug-ins/common/gpb.c:808
 #: plug-ins/common/gtm.c:247 plug-ins/common/hrz.c:476
-#: plug-ins/common/jpeg.c:1193 plug-ins/common/pat.c:343
+#: plug-ins/common/jpeg.c:1196 plug-ins/common/pat.c:343
 #: plug-ins/common/pcx.c:547 plug-ins/common/pix.c:532
 #: plug-ins/common/png.c:756 plug-ins/common/png.c:758
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:999
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
-#: plug-ins/common/tiff.c:1259 plug-ins/common/xbm.c:958
+#: plug-ins/common/tiff.c:1260 plug-ins/common/xbm.c:960
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
 #: plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:548
 #: plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -2216,24 +2220,24 @@ msgstr "모든 나타난 계층 선택"
 #: plug-ins/common/destripe.c:636 plug-ins/common/edge.c:662
 #: plug-ins/common/emboss.c:562 plug-ins/common/engrave.c:236
 #: plug-ins/common/gauss_iir.c:377 plug-ins/common/gauss_rle.c:372
-#: plug-ins/common/glasstile.c:240 plug-ins/common/illusion.c:316
-#: plug-ins/common/jpeg.c:1640 plug-ins/common/lic.c:1090
-#: plug-ins/common/max_rgb.c:269 plug-ins/common/nlfilt.c:389
-#: plug-ins/common/noisify.c:337 plug-ins/common/nova.c:351
-#: plug-ins/common/oilify.c:470 plug-ins/common/pixelize.c:292
-#: plug-ins/common/plasma.c:301 plug-ins/common/png.c:1032
-#: plug-ins/common/polar.c:955 plug-ins/common/randomize.c:720
-#: plug-ins/common/ripple.c:676 plug-ins/common/scatter_hsv.c:426
-#: plug-ins/common/sel_gauss.c:254 plug-ins/common/sharpen.c:610
-#: plug-ins/common/shift.c:389 plug-ins/common/smooth_palette.c:413
-#: plug-ins/common/snoise.c:525 plug-ins/common/sobel.c:263
-#: plug-ins/common/sparkle.c:363 plug-ins/common/threshold_alpha.c:279
-#: plug-ins/common/unsharp.c:797 plug-ins/common/video.c:2167
-#: plug-ins/common/vpropagate.c:976 plug-ins/common/waves.c:399
-#: plug-ins/common/whirlpinch.c:847 plug-ins/common/wind.c:724
-#: plug-ins/common/xpm.c:812 plug-ins/maze/maze_face.c:204
-#: plug-ins/mosaic/mosaic.c:643 plug-ins/struc/struc.c:267
-#: plug-ins/xjt/xjt.c:805
+#: plug-ins/common/glasstile.c:293 plug-ins/common/grid.c:719
+#: plug-ins/common/illusion.c:596 plug-ins/common/jpeg.c:1643
+#: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:378
+#: plug-ins/common/nlfilt.c:389 plug-ins/common/noisify.c:523
+#: plug-ins/common/nova.c:477 plug-ins/common/oilify.c:470
+#: plug-ins/common/pixelize.c:292 plug-ins/common/plasma.c:343
+#: plug-ins/common/png.c:1032 plug-ins/common/polar.c:955
+#: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:676
+#: plug-ins/common/scatter_hsv.c:426 plug-ins/common/sel_gauss.c:254
+#: plug-ins/common/sharpen.c:610 plug-ins/common/shift.c:389
+#: plug-ins/common/smooth_palette.c:413 plug-ins/common/snoise.c:525
+#: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:363
+#: plug-ins/common/threshold_alpha.c:279 plug-ins/common/unsharp.c:797
+#: plug-ins/common/video.c:2167 plug-ins/common/vpropagate.c:976
+#: plug-ins/common/waves.c:399 plug-ins/common/whirlpinch.c:847
+#: plug-ins/common/wind.c:1043 plug-ins/common/xpm.c:812
+#: plug-ins/maze/maze_face.c:204 plug-ins/mosaic/mosaic.c:643
+#: plug-ins/struc/struc.c:267 plug-ins/xjt/xjt.c:805
 msgid "Parameter Settings"
 msgstr "파라미터 설정"
 
@@ -2328,8 +2332,8 @@ msgstr "에니메이션 되돌리기: "
 #: plug-ins/gap/gap_navigator_dialog.c:3158
 #: plug-ins/gdyntext/charmap_window.c:143 plug-ins/gdyntext/gdyntext_ui.c:636
 #: plug-ins/gfig/gfig.c:1986 plug-ins/gfig/gfig.c:2046
-#: plug-ins/helpbrowser/helpbrowser.c:787
-#: plug-ins/ifscompose/ifscompose.c:1232 plug-ins/imagemap/imap_menu.c:227
+#: plug-ins/helpbrowser/helpbrowser.c:803
+#: plug-ins/ifscompose/ifscompose.c:1233 plug-ins/imagemap/imap_menu.c:227
 #: plug-ins/print/gimp_color_window.c:81
 msgid "Close"
 msgstr "닫기"
@@ -2447,13 +2451,13 @@ msgid "Blinds"
 msgstr ""
 
 #. attach labels
-#: plug-ins/common/blinds.c:373 plug-ins/common/grid.c:620
+#: plug-ins/common/blinds.c:373 plug-ins/common/grid.c:769
 #: plug-ins/common/ripple.c:638 plug-ins/common/tileit.c:451
 #: plug-ins/pagecurl/pagecurl.c:647
 msgid "Horizontal"
 msgstr ""
 
-#: plug-ins/common/blinds.c:374 plug-ins/common/grid.c:621
+#: plug-ins/common/blinds.c:374 plug-ins/common/grid.c:770
 #: plug-ins/common/ripple.c:639 plug-ins/common/tileit.c:459
 #: plug-ins/pagecurl/pagecurl.c:648
 #, fuzzy
@@ -2480,7 +2484,7 @@ msgstr ""
 msgid "<Image>/Filters/Blur/Blur..."
 msgstr "<Image>/필터/흐릿하게/흐릿하게"
 
-#: plug-ins/common/blur.c:648 plug-ins/common/plasma.c:316
+#: plug-ins/common/blur.c:648 plug-ins/common/plasma.c:358
 #: plug-ins/common/randomize.c:737 plug-ins/common/snoise.c:542
 #: plug-ins/gflare/gflare.c:4100 plug-ins/sinus/sinus.c:855
 #, fuzzy
@@ -2702,7 +2706,7 @@ msgstr "<Image>/필터/색/색상화"
 msgid "Color to Alpha"
 msgstr "색상  :"
 
-#: plug-ins/common/colortoalpha.c:425 plug-ins/common/mapcolor.c:648
+#: plug-ins/common/colortoalpha.c:425 plug-ins/common/mapcolor.c:652
 #: plug-ins/gap/gap_decode_mpeg_main.c:652 plug-ins/gap/gap_decode_xanim.c:223
 #: plug-ins/gap/gap_lib.c:2103 plug-ins/gap/gap_lib.c:2282
 #: plug-ins/gap/gap_range_ops.c:251 plug-ins/gap/gap_range_ops.c:600
@@ -2735,7 +2739,7 @@ msgid "RGBA"
 msgstr ""
 
 #: plug-ins/common/compose.c:127 plug-ins/common/nlfilt.c:401
-#: plug-ins/common/noisify.c:384 plug-ins/common/noisify.c:460
+#: plug-ins/common/noisify.c:573 plug-ins/common/noisify.c:656
 msgid "Alpha:"
 msgstr "알파"
 
@@ -2936,7 +2940,7 @@ msgid "Prefixed Name:"
 msgstr "프레임 미리보기:"
 
 #: plug-ins/common/csource.c:689 plug-ins/common/mail.c:556
-#: plug-ins/common/tiff.c:1521 plug-ins/common/xbm.c:1178
+#: plug-ins/common/tiff.c:1523 plug-ins/common/xbm.c:1180
 #, fuzzy
 msgid "Comment:"
 msgstr "GIF 설명: "
@@ -3679,7 +3683,7 @@ msgid "Select Film Color"
 msgstr "선택"
 
 #: plug-ins/common/film.c:1259 plug-ins/common/film.c:1303
-#: plug-ins/common/nova.c:370 plug-ins/gimpressionist/color.c:76
+#: plug-ins/common/nova.c:499 plug-ins/gimpressionist/color.c:76
 msgid "Color:"
 msgstr "색상:"
 
@@ -3764,25 +3768,31 @@ msgstr "새로운 높이 :"
 msgid "Reset to Defaults"
 msgstr " 초기값으로 재설정"
 
-#: plug-ins/common/flarefx.c:203
+#: plug-ins/common/flarefx.c:217
 #, fuzzy
 msgid "<Image>/Filters/Light Effects/FlareFX..."
 msgstr "<Image>/필터/라이트 효과/조명 효과"
 
-#: plug-ins/common/flarefx.c:276
+#: plug-ins/common/flarefx.c:290
 #, fuzzy
 msgid "Render Flare..."
 msgstr "타일 랜더링..."
 
-#: plug-ins/common/flarefx.c:308
+#: plug-ins/common/flarefx.c:326
 msgid "FlareFX"
 msgstr ""
 
 #. to avoid side effects while initialization
-#: plug-ins/common/flarefx.c:706
+#: plug-ins/common/flarefx.c:771
 #, fuzzy
 msgid "Center of FlareFX"
 msgstr "브러쉬의 중앙"
+
+#. show / hide cursor
+#: plug-ins/common/flarefx.c:845 plug-ins/common/nova.c:668
+#, fuzzy
+msgid "Show Cursor"
+msgstr "색상"
 
 #: plug-ins/common/fractaltrace.c:126
 #, fuzzy
@@ -3849,12 +3859,12 @@ msgid "Blur Radius"
 msgstr "반경"
 
 #: plug-ins/common/gauss_iir.c:475 plug-ins/common/gauss_rle.c:470
-#: plug-ins/common/jigsaw.c:2341 plug-ins/common/spread.c:410
+#: plug-ins/common/jigsaw.c:2544 plug-ins/common/spread.c:410
 msgid "Horizontal:"
 msgstr ""
 
 #: plug-ins/common/gauss_iir.c:479 plug-ins/common/gauss_rle.c:474
-#: plug-ins/common/jigsaw.c:2351 plug-ins/common/spread.c:414
+#: plug-ins/common/jigsaw.c:2557 plug-ins/common/spread.c:414
 #, fuzzy
 msgid "Vertical:"
 msgstr "구"
@@ -3925,7 +3935,7 @@ msgid ""
 "Saving as opaque.\n"
 msgstr "GIF: 색상 그 이상을 간단히 줄일수 없습니다. 불투명하게 저장.\n"
 
-#: plug-ins/common/gif.c:928
+#: plug-ins/common/gif.c:929
 msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
@@ -3933,17 +3943,17 @@ msgstr ""
 "GIF: 죄송합니다, RGB 이미지들은 GIF로 저장할 수 없습니다. - 엔덱스된\n"
 "이미지나 그레이 이미지로 먼저 바꾸세요.\n"
 
-#: plug-ins/common/gif.c:946
+#: plug-ins/common/gif.c:947
 #, c-format
 msgid "GIF: can't open %s\n"
 msgstr "GIF: %s를 열수 없습니다.\n"
 
-#: plug-ins/common/gif.c:1135
+#: plug-ins/common/gif.c:1136
 #, fuzzy
 msgid "GIF Warning"
 msgstr "XBM 경고"
 
-#: plug-ins/common/gif.c:1161
+#: plug-ins/common/gif.c:1162
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -3960,69 +3970,69 @@ msgstr ""
 "당신은 아마 이미지 테두리에 모든 계층들을 잘라내든지\n"
 "저장을 취소 하던지 해야 합니다."
 
-#: plug-ins/common/gif.c:1206
+#: plug-ins/common/gif.c:1207
 msgid "Save as GIF"
 msgstr "GIF 로 저장"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1228
+#: plug-ins/common/gif.c:1229
 msgid "GIF Options"
 msgstr "GIF 옵션"
 
-#: plug-ins/common/gif.c:1236
+#: plug-ins/common/gif.c:1237
 msgid "Interlace"
 msgstr "인터레이스"
 
-#: plug-ins/common/gif.c:1247
+#: plug-ins/common/gif.c:1248
 #, fuzzy
 msgid "GIF Comment:"
 msgstr "GIF 설명: "
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1306
+#: plug-ins/common/gif.c:1307
 msgid "Animated GIF Options"
 msgstr "움직이는 GIF 옵션"
 
-#: plug-ins/common/gif.c:1314
+#: plug-ins/common/gif.c:1315
 msgid "Loop forever"
 msgstr "무한 루프"
 
-#: plug-ins/common/gif.c:1326
+#: plug-ins/common/gif.c:1327
 #, fuzzy
 msgid "Delay between Frames where Unspecified:"
 msgstr "지정되지 않은 프레임들 사이 지연: "
 
-#: plug-ins/common/gif.c:1338
+#: plug-ins/common/gif.c:1339
 #, fuzzy
 msgid "Milliseconds"
 msgstr " 밀리세컨드"
 
-#: plug-ins/common/gif.c:1348
+#: plug-ins/common/gif.c:1349
 #, fuzzy
 msgid "Frame Disposal where Unspecified: "
 msgstr "지정되지 않은 프레임 배치: "
 
-#: plug-ins/common/gif.c:1357
+#: plug-ins/common/gif.c:1358
 #, fuzzy
 msgid "I don't Care"
 msgstr "보호하지 않습니다."
 
-#: plug-ins/common/gif.c:1359
+#: plug-ins/common/gif.c:1360
 #, fuzzy
 msgid "Cumulative Layers (Combine)"
 msgstr "누적 계층 (결합)"
 
-#: plug-ins/common/gif.c:1361
+#: plug-ins/common/gif.c:1362
 #, fuzzy
 msgid "One Frame per Layer (Replace)"
 msgstr "계층 당 하나의 프레임 (고치기)"
 
-#: plug-ins/common/gif.c:2345
+#: plug-ins/common/gif.c:2346
 #, fuzzy
 msgid "GIF: error writing output file\n"
 msgstr "GIF: 데이터블럭 크기 읽기 애러\n"
 
-#: plug-ins/common/gif.c:2436
+#: plug-ins/common/gif.c:2437
 msgid "GIF save: Your comment string is too long.\n"
 msgstr ""
 
@@ -4042,25 +4052,25 @@ msgstr "프레임 %d"
 msgid "Frame %d (%dms)"
 msgstr "프레임 %d (%dms)"
 
-#: plug-ins/common/glasstile.c:113
+#: plug-ins/common/glasstile.c:137
 #, fuzzy
 msgid "<Image>/Filters/Glass Effects/Glass Tile..."
 msgstr "<Image>/필터/글레스 효과/렌즈 적용"
 
-#: plug-ins/common/glasstile.c:190
+#: plug-ins/common/glasstile.c:214
 msgid "Glass Tile..."
 msgstr ""
 
-#: plug-ins/common/glasstile.c:223
+#: plug-ins/common/glasstile.c:254
 msgid "Glass Tile"
 msgstr ""
 
-#: plug-ins/common/glasstile.c:253
+#: plug-ins/common/glasstile.c:306
 #, fuzzy
 msgid "Tile Width:"
 msgstr "새로운 넓이 :"
 
-#: plug-ins/common/glasstile.c:263 plug-ins/mosaic/mosaic.c:663
+#: plug-ins/common/glasstile.c:319 plug-ins/mosaic/mosaic.c:663
 #, fuzzy
 msgid "Tile Height:"
 msgstr "타일 높이:"
@@ -4164,53 +4174,58 @@ msgstr "<Image>/필터/색/테두리 평균"
 msgid "Gradient Map..."
 msgstr "색감변화도"
 
-#: plug-ins/common/grid.c:138
+#: plug-ins/common/grid.c:157
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/Grid..."
 msgstr "<Image>/필터/랜더/채커보드"
 
-#: plug-ins/common/grid.c:221
+#: plug-ins/common/grid.c:241
 msgid "Drawing Grid..."
 msgstr ""
 
-#: plug-ins/common/grid.c:559 plug-ins/gfig/gfig.c:3404
+#: plug-ins/common/grid.c:653 plug-ins/gfig/gfig.c:3404
 #: plug-ins/imagemap/imap_menu.c:400 plug-ins/imagemap/imap_popup.c:148
 #: plug-ins/imagemap/imap_toolbar.c:163
 msgid "Grid"
 msgstr ""
 
-#: plug-ins/common/grid.c:622
+#: plug-ins/common/grid.c:708 plug-ins/gap/gap_mov_dialog.c:478
+#, fuzzy
+msgid "Update Preview"
+msgstr "경로 이동 미리보기"
+
+#: plug-ins/common/grid.c:771
 #, fuzzy
 msgid "Intersection"
 msgstr "반복"
 
-#: plug-ins/common/grid.c:623
+#: plug-ins/common/grid.c:772
 #, fuzzy
 msgid "Width: "
 msgstr "넓이:"
 
 #. attach labels
-#: plug-ins/common/grid.c:681
+#: plug-ins/common/grid.c:829
 #, fuzzy
 msgid "Spacing: "
 msgstr "스케일링"
 
 #. attach labels
-#: plug-ins/common/grid.c:741
+#: plug-ins/common/grid.c:889
 #, fuzzy
 msgid "Offset: "
 msgstr "옵셋"
 
 #. attach color selectors
-#: plug-ins/common/grid.c:771
+#: plug-ins/common/grid.c:919
 msgid "Horizontal Color"
 msgstr ""
 
-#: plug-ins/common/grid.c:781
+#: plug-ins/common/grid.c:929
 msgid "Vertical Color"
 msgstr ""
 
-#: plug-ins/common/grid.c:791
+#: plug-ins/common/grid.c:939
 msgid "Intersection Color"
 msgstr ""
 
@@ -4385,16 +4400,21 @@ msgstr "타일 채도"
 msgid "Blacken"
 msgstr "검은색"
 
-#: plug-ins/common/illusion.c:111
+#: plug-ins/common/illusion.c:116
 #, fuzzy
 msgid "<Image>/Filters/Map/Illusion..."
 msgstr "<Image>/필터/맵/충돌(Bump) 맵"
 
-#: plug-ins/common/illusion.c:300
+#: plug-ins/common/illusion.c:180
+#, fuzzy
+msgid "Illusion..."
+msgstr "색상화 중..."
+
+#: plug-ins/common/illusion.c:555
 msgid "Illusion"
 msgstr ""
 
-#: plug-ins/common/illusion.c:332
+#: plug-ins/common/illusion.c:611
 #, fuzzy
 msgid "Division:"
 msgstr "나누기"
@@ -4448,8 +4468,8 @@ msgstr "환경:"
 msgid "Deform Mode"
 msgstr "색상 노이즈"
 
-#: plug-ins/common/iwarp.c:1033 plug-ins/ifscompose/ifscompose.c:850
-#: plug-ins/ifscompose/ifscompose.c:1117 plug-ins/imagemap/imap_cmd_move.c:80
+#: plug-ins/common/iwarp.c:1033 plug-ins/ifscompose/ifscompose.c:851
+#: plug-ins/ifscompose/ifscompose.c:1118 plug-ins/imagemap/imap_cmd_move.c:80
 #: plug-ins/imagemap/imap_cmd_object_move.c:53
 #, fuzzy
 msgid "Move"
@@ -4487,7 +4507,7 @@ msgid "Max Depth:"
 msgstr "깊이(depth)"
 
 #: plug-ins/common/iwarp.c:1106 plug-ins/common/threshold_alpha.c:291
-#: plug-ins/common/unsharp.c:829 plug-ins/common/wind.c:809
+#: plug-ins/common/unsharp.c:829 plug-ins/common/wind.c:1133
 #: plug-ins/gflare/gflare.c:3022
 msgid "Threshold:"
 msgstr "발단규모(Threshold):"
@@ -4504,79 +4524,79 @@ msgstr "설정"
 msgid "IWarp"
 msgstr "왜곡되게"
 
-#: plug-ins/common/jigsaw.c:333
+#: plug-ins/common/jigsaw.c:393
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/Jigsaw..."
 msgstr "<Image>/필터/랜더/채커보드"
 
-#: plug-ins/common/jigsaw.c:389
+#: plug-ins/common/jigsaw.c:449
 msgid "Assembling Jigsaw"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2299
+#: plug-ins/common/jigsaw.c:2480
 msgid "Jigsaw"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2329
+#: plug-ins/common/jigsaw.c:2532
 #, fuzzy
 msgid "Number of Tiles"
 msgstr "색상 개수"
 
-#: plug-ins/common/jigsaw.c:2344
+#: plug-ins/common/jigsaw.c:2547
 #, fuzzy
 msgid "Number of pieces going across"
 msgstr "색상 개수"
 
-#: plug-ins/common/jigsaw.c:2354
+#: plug-ins/common/jigsaw.c:2560
 #, fuzzy
 msgid "Number of pieces going down"
 msgstr "색상 개수"
 
-#: plug-ins/common/jigsaw.c:2362
+#: plug-ins/common/jigsaw.c:2571
 msgid "Bevel Edges"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2374
+#: plug-ins/common/jigsaw.c:2583
 #, fuzzy
 msgid "Bevel Width:"
 msgstr "새로운 넓이 :"
 
-#: plug-ins/common/jigsaw.c:2378
+#: plug-ins/common/jigsaw.c:2587
 msgid "Degree of slope of each piece's edge"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2389
+#: plug-ins/common/jigsaw.c:2601
 msgid "The amount of highlighting on the edges of each piece"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2403
+#: plug-ins/common/jigsaw.c:2618
 msgid "Jigsaw Style"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2407
+#: plug-ins/common/jigsaw.c:2622
 #, fuzzy
 msgid "Square"
 msgstr "정사각형"
 
-#: plug-ins/common/jigsaw.c:2408
+#: plug-ins/common/jigsaw.c:2623
 #, fuzzy
 msgid "Curved"
 msgstr "빨간색"
 
-#: plug-ins/common/jigsaw.c:2412
+#: plug-ins/common/jigsaw.c:2627
 msgid "Each piece has straight sides"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2413
+#: plug-ins/common/jigsaw.c:2628
 msgid "Each piece has curved sides"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2421
+#: plug-ins/common/jigsaw.c:2636
 #, fuzzy
 msgid "Disable Tooltips"
 msgstr "도구 팁 가능"
 
-#: plug-ins/common/jigsaw.c:2429
+#: plug-ins/common/jigsaw.c:2644
 msgid "Toggle Tooltips on/off"
 msgstr ""
 
@@ -4585,94 +4605,94 @@ msgstr ""
 msgid "Export Preview"
 msgstr "페이퍼 미리보기"
 
-#: plug-ins/common/jpeg.c:739
+#: plug-ins/common/jpeg.c:740
 #, c-format
 msgid "can't open \"%s\"\n"
 msgstr "\"%s\"를 열수 없습니다.\n"
 
-#: plug-ins/common/jpeg.c:891
+#: plug-ins/common/jpeg.c:894
 msgid "JPEG preview"
 msgstr "JPEG 미리보기"
 
-#: plug-ins/common/jpeg.c:1112
+#: plug-ins/common/jpeg.c:1115
 #, c-format
 msgid "Size: %lu bytes (%02.01f kB)"
 msgstr "크기: %lu 바이트 (%02.01f kB)"
 
-#: plug-ins/common/jpeg.c:1510 plug-ins/common/jpeg.c:1630
+#: plug-ins/common/jpeg.c:1513 plug-ins/common/jpeg.c:1633
 msgid "Size: unknown"
 msgstr "크기: 알수없음"
 
-#: plug-ins/common/jpeg.c:1587
+#: plug-ins/common/jpeg.c:1590
 msgid "Save as Jpeg"
 msgstr "Jpeg 으로 저장"
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1610
+#: plug-ins/common/jpeg.c:1613
 msgid "Image Preview"
 msgstr "이미지 미리보기"
 
-#: plug-ins/common/jpeg.c:1619
+#: plug-ins/common/jpeg.c:1622
 #, fuzzy
 msgid "Preview (in Image Window)"
 msgstr "미리보기 (이미지 창에서)"
 
-#: plug-ins/common/jpeg.c:1650 plug-ins/xjt/xjt.c:836
+#: plug-ins/common/jpeg.c:1653 plug-ins/xjt/xjt.c:836
 #, fuzzy
 msgid "Quality:"
 msgstr "특성"
 
-#: plug-ins/common/jpeg.c:1672 plug-ins/xjt/xjt.c:845
+#: plug-ins/common/jpeg.c:1675 plug-ins/xjt/xjt.c:845
 #, fuzzy
 msgid "Smoothing:"
 msgstr "부드럽게"
 
-#: plug-ins/common/jpeg.c:1699
+#: plug-ins/common/jpeg.c:1702
 #, fuzzy
 msgid "Restart Markers"
 msgstr "메이커 재시작"
 
-#: plug-ins/common/jpeg.c:1707
+#: plug-ins/common/jpeg.c:1710
 #, fuzzy
 msgid "Restart Frequency (Rows):"
 msgstr "빈도 재시작 (열)"
 
-#: plug-ins/common/jpeg.c:1736 plug-ins/xjt/xjt.c:816
+#: plug-ins/common/jpeg.c:1739 plug-ins/xjt/xjt.c:816
 msgid "Optimize"
 msgstr "최적화"
 
-#: plug-ins/common/jpeg.c:1748
+#: plug-ins/common/jpeg.c:1751
 msgid "Progressive"
 msgstr "진보적"
 
-#: plug-ins/common/jpeg.c:1765
+#: plug-ins/common/jpeg.c:1768
 #, fuzzy
 msgid "Force Baseline JPEG (Readable by all Decoders)"
 msgstr "강제 베이스라인 JPEG (모든 디코더들에서 읽혀지도록)"
 
-#: plug-ins/common/jpeg.c:1787
+#: plug-ins/common/jpeg.c:1790
 #, fuzzy
 msgid "Subsampling:"
 msgstr "슈퍼샘플링"
 
-#: plug-ins/common/jpeg.c:1800
+#: plug-ins/common/jpeg.c:1803
 msgid "Fast integer"
 msgstr "빠른 정수"
 
-#: plug-ins/common/jpeg.c:1801
+#: plug-ins/common/jpeg.c:1804
 msgid "Integer"
 msgstr "정수"
 
-#: plug-ins/common/jpeg.c:1802
+#: plug-ins/common/jpeg.c:1805
 msgid "Floating-point"
 msgstr "유동적-포인트"
 
-#: plug-ins/common/jpeg.c:1806
+#: plug-ins/common/jpeg.c:1809
 #, fuzzy
 msgid "DCT Method (Speed/Quality Tradeoff):"
 msgstr "DCT 방법 (속도/특성 평균)"
 
-#: plug-ins/common/jpeg.c:1823
+#: plug-ins/common/jpeg.c:1826
 msgid "Image Comments"
 msgstr "이미지 설명"
 
@@ -4818,68 +4838,68 @@ msgstr ""
 msgid "mail: some sort of error with the file extension or lack thereof \n"
 msgstr "mail: 몇몇 파일 확장자 혹은 부족한 것을 가진 정렬 \n"
 
-#: plug-ins/common/mapcolor.c:138
+#: plug-ins/common/mapcolor.c:139
 #, fuzzy
 msgid "First Source Color"
 msgstr "라이트 근원지 색깔"
 
-#: plug-ins/common/mapcolor.c:139
+#: plug-ins/common/mapcolor.c:140
 #, fuzzy
 msgid "Second Source Color"
 msgstr "라이트 근원지 색깔"
 
-#: plug-ins/common/mapcolor.c:140
+#: plug-ins/common/mapcolor.c:141
 #, fuzzy
 msgid "First Destination Color"
 msgstr "목적 채널"
 
-#: plug-ins/common/mapcolor.c:141
+#: plug-ins/common/mapcolor.c:142
 #, fuzzy
 msgid "Second Destination Color"
 msgstr "목적 채널"
 
-#: plug-ins/common/mapcolor.c:342
+#: plug-ins/common/mapcolor.c:346
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
 msgstr "<Image>/필터/색/테두리 평균"
 
-#: plug-ins/common/mapcolor.c:357
+#: plug-ins/common/mapcolor.c:361
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
 msgstr "<Image>/필터/색/색상화"
 
-#: plug-ins/common/mapcolor.c:402 plug-ins/common/mapcolor.c:742
+#: plug-ins/common/mapcolor.c:406 plug-ins/common/mapcolor.c:746
 #, fuzzy
 msgid ""
 "Color Mapping / Adjust FG/BG:\n"
 "Cannot operate on gray/indexed images"
 msgstr "PS: 알수 없는 이미지 유형은 작동되지 않습니다."
 
-#: plug-ins/common/mapcolor.c:430
+#: plug-ins/common/mapcolor.c:434
 msgid "Adjusting Foreground/Background"
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:478
+#: plug-ins/common/mapcolor.c:482
 #, fuzzy
 msgid "Mapping colors"
 msgstr "색을 맵핑하기 위한 메모리가 없습니다"
 
-#: plug-ins/common/mapcolor.c:549
+#: plug-ins/common/mapcolor.c:553
 #, fuzzy
 msgid "Map Color Range"
 msgstr "색상"
 
-#: plug-ins/common/mapcolor.c:600
+#: plug-ins/common/mapcolor.c:604
 #, fuzzy
 msgid "Source color range"
 msgstr "라이트 근원지 색깔"
 
-#: plug-ins/common/mapcolor.c:601
+#: plug-ins/common/mapcolor.c:605
 #, fuzzy
 msgid "Destination color range"
 msgstr "목적 채널"
 
-#: plug-ins/common/mapcolor.c:648 plug-ins/gap/gap_decode_mpeg_main.c:662
+#: plug-ins/common/mapcolor.c:652 plug-ins/gap/gap_decode_mpeg_main.c:662
 #: plug-ins/gap/gap_decode_xanim.c:233 plug-ins/gap/gap_lib.c:2111
 #: plug-ins/gap/gap_lib.c:2290 plug-ins/gap/gap_range_ops.c:258
 #: plug-ins/gap/gap_range_ops.c:608 plug-ins/gfli/gfli.c:868
@@ -4888,28 +4908,28 @@ msgstr "목적 채널"
 msgid "To:"
 msgstr "어디로 :"
 
-#: plug-ins/common/max_rgb.c:113
+#: plug-ins/common/max_rgb.c:128
 #, fuzzy
 msgid "<Image>/Filters/Colors/Max RGB..."
 msgstr "<Image>/필터/색/색상화"
 
-#: plug-ins/common/max_rgb.c:149
+#: plug-ins/common/max_rgb.c:164
 msgid "Max RGB: Can only operate on RGB drawables."
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:202
+#: plug-ins/common/max_rgb.c:225
 msgid "Max RGB: Scanning..."
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:253
+#: plug-ins/common/max_rgb.c:340
 msgid "Max RGB"
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:273
+#: plug-ins/common/max_rgb.c:382
 msgid "Hold the Maximal Channels"
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:275
+#: plug-ins/common/max_rgb.c:384
 msgid "Hold the Minimal Channels"
 msgstr ""
 
@@ -4949,7 +4969,7 @@ msgstr "파라미터"
 #. Angle
 #: plug-ins/common/mblur.c:813 plug-ins/common/newsprint.c:1028
 #: plug-ins/common/warp.c:687 plug-ins/gimpressionist/orientmap.c:551
-#: plug-ins/ifscompose/ifscompose.c:554
+#: plug-ins/ifscompose/ifscompose.c:555
 msgid "Angle:"
 msgstr "각도:"
 
@@ -5076,31 +5096,31 @@ msgstr "에니메이션 최적화..."
 msgid "Edge Enhancement"
 msgstr ""
 
-#: plug-ins/common/noisify.c:124
+#: plug-ins/common/noisify.c:140
 #, fuzzy
 msgid "<Image>/Filters/Noise/Noisify..."
 msgstr "<Image>/필터/색/색상화"
 
-#: plug-ins/common/noisify.c:200
+#: plug-ins/common/noisify.c:216
 #, fuzzy
 msgid "Adding Noise..."
 msgstr "타일 랜더링..."
 
-#: plug-ins/common/noisify.c:320
+#: plug-ins/common/noisify.c:483
 #, fuzzy
 msgid "Noisify"
 msgstr "오일화"
 
-#: plug-ins/common/noisify.c:349
+#: plug-ins/common/noisify.c:535
 msgid "Independent"
 msgstr ""
 
-#: plug-ins/common/noisify.c:362 plug-ins/common/noisify.c:374
+#: plug-ins/common/noisify.c:548 plug-ins/common/noisify.c:562
 #, fuzzy
 msgid "Gray:"
 msgstr "그레이"
 
-#: plug-ins/common/noisify.c:473
+#: plug-ins/common/noisify.c:670
 #, fuzzy, c-format
 msgid "Channel #%d:"
 msgstr "채널"
@@ -5114,37 +5134,37 @@ msgstr "<Image>/이미지/색/통일화"
 msgid "Normalizing..."
 msgstr "통일화 중..."
 
-#: plug-ins/common/nova.c:213
+#: plug-ins/common/nova.c:226
 #, fuzzy
 msgid "<Image>/Filters/Light Effects/SuperNova..."
 msgstr "<Image>/필터/라이트 효과/조명 효과"
 
-#: plug-ins/common/nova.c:294
+#: plug-ins/common/nova.c:307
 #, fuzzy
 msgid "Rendering SuperNova..."
 msgstr "타일 랜더링..."
 
-#: plug-ins/common/nova.c:334
+#: plug-ins/common/nova.c:460
 msgid "SuperNova"
 msgstr ""
 
-#: plug-ins/common/nova.c:366
+#: plug-ins/common/nova.c:492
 #, fuzzy
 msgid "SuperNova Color Picker"
 msgstr "Script-Fu 색상 채취"
 
-#: plug-ins/common/nova.c:383
+#: plug-ins/common/nova.c:515
 #, fuzzy
 msgid "Spokes:"
 msgstr "단계모드:"
 
-#: plug-ins/common/nova.c:392 plug-ins/common/sparkle.c:453
+#: plug-ins/common/nova.c:527 plug-ins/common/sparkle.c:453
 #, fuzzy
 msgid "Random Hue:"
 msgstr "씨앗(seed) 랜덤"
 
 #. to avoid side effects while initialization
-#: plug-ins/common/nova.c:455
+#: plug-ins/common/nova.c:595
 #, fuzzy
 msgid "Center of SuperNova"
 msgstr "브러쉬의 중앙"
@@ -5279,20 +5299,20 @@ msgstr "미리보기 크기"
 msgid "Pixel Width:"
 msgstr "새로운 넓이 :"
 
-#: plug-ins/common/plasma.c:169
+#: plug-ins/common/plasma.c:187
 #, fuzzy
 msgid "<Image>/Filters/Render/Clouds/Plasma..."
 msgstr "<Image>/필터/랜더/채커보드"
 
-#: plug-ins/common/plasma.c:246
+#: plug-ins/common/plasma.c:264
 msgid "Plasma..."
 msgstr ""
 
-#: plug-ins/common/plasma.c:282
+#: plug-ins/common/plasma.c:301
 msgid "Plasma"
 msgstr ""
 
-#: plug-ins/common/plasma.c:320 plug-ins/common/spheredesigner.c:2425
+#: plug-ins/common/plasma.c:370 plug-ins/common/spheredesigner.c:2425
 msgid "Turbulence:"
 msgstr ""
 
@@ -6431,7 +6451,7 @@ msgstr "색상:"
 
 #. Scale
 #: plug-ins/common/spheredesigner.c:2408 plug-ins/gimpressionist/paper.c:169
-#: plug-ins/ifscompose/ifscompose.c:540
+#: plug-ins/ifscompose/ifscompose.c:541
 msgid "Scale:"
 msgstr "스케일:"
 
@@ -6623,35 +6643,35 @@ msgstr "발단규모(Threshold)_알파 (0.13): 투명하게 컬러링..."
 msgid "Threshold Alpha"
 msgstr "발단규모(Threshold)"
 
-#: plug-ins/common/tiff.c:662
+#: plug-ins/common/tiff.c:663
 #, fuzzy
 msgid "TIFF Channel"
 msgstr "채널"
 
-#: plug-ins/common/tiff.c:1480
+#: plug-ins/common/tiff.c:1482
 #, fuzzy
 msgid "Save as TIFF"
 msgstr "GIF 로 저장"
 
-#: plug-ins/common/tiff.c:1502
+#: plug-ins/common/tiff.c:1504
 #, fuzzy
 msgid "Compression"
 msgstr "압축 레벨"
 
-#: plug-ins/common/tiff.c:1507
+#: plug-ins/common/tiff.c:1509
 msgid "LZW"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1508
+#: plug-ins/common/tiff.c:1510
 msgid "Pack Bits"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1509
+#: plug-ins/common/tiff.c:1511
 #, fuzzy
 msgid "Deflate"
 msgstr " 삭제 "
 
-#: plug-ins/common/tiff.c:1510
+#: plug-ins/common/tiff.c:1512
 msgid "JPEG"
 msgstr ""
 
@@ -7101,7 +7121,7 @@ msgstr "주 옵션"
 msgid "Step Size:"
 msgstr "단계 크기"
 
-#: plug-ins/common/warp.c:479 plug-ins/ifscompose/ifscompose.c:1260
+#: plug-ins/common/warp.c:479 plug-ins/ifscompose/ifscompose.c:1261
 #, fuzzy
 msgid "Iterations:"
 msgstr "반복"
@@ -7274,26 +7294,26 @@ msgstr ""
 msgid "Pasting..."
 msgstr "프린팅..."
 
-#: plug-ins/common/wind.c:158
+#: plug-ins/common/wind.c:204
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Wind..."
 msgstr "<Image>/필터/미술적/모자이크"
 
-#: plug-ins/common/wind.c:248
-#, fuzzy
-msgid "Rendering Wind..."
-msgstr "타일 랜더링..."
-
-#: plug-ins/common/wind.c:254
+#: plug-ins/common/wind.c:416
 #, fuzzy
 msgid "Rendering Blast..."
 msgstr "타일 랜더링..."
 
-#: plug-ins/common/wind.c:685
+#: plug-ins/common/wind.c:547
+#, fuzzy
+msgid "Rendering Wind..."
+msgstr "타일 랜더링..."
+
+#: plug-ins/common/wind.c:961
 msgid "Wind Strength must be greater than 0."
 msgstr ""
 
-#: plug-ins/common/wind.c:705 plug-ins/common/wind.c:750
+#: plug-ins/common/wind.c:1002 plug-ins/common/wind.c:1069
 #, fuzzy
 msgid "Wind"
 msgstr "넓이"
@@ -7301,12 +7321,12 @@ msgstr "넓이"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: plug-ins/common/wind.c:746 plug-ins/maze/maze_face.c:302
+#: plug-ins/common/wind.c:1066 plug-ins/maze/maze_face.c:302
 #, fuzzy
 msgid "Style"
 msgstr "진행"
 
-#: plug-ins/common/wind.c:751
+#: plug-ins/common/wind.c:1070
 #, fuzzy
 msgid "Blast"
 msgstr "검은색"
@@ -7314,16 +7334,16 @@ msgstr "검은색"
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
-#: plug-ins/common/wind.c:763 plug-ins/struc/struc.c:278
+#: plug-ins/common/wind.c:1084 plug-ins/struc/struc.c:278
 msgid "Direction"
 msgstr "방향"
 
-#: plug-ins/common/wind.c:767
+#: plug-ins/common/wind.c:1087
 #, fuzzy
 msgid "Left"
 msgstr "왼쪽  위"
 
-#: plug-ins/common/wind.c:768
+#: plug-ins/common/wind.c:1088
 #, fuzzy
 msgid "Right"
 msgstr "빛"
@@ -7331,34 +7351,34 @@ msgstr "빛"
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
-#: plug-ins/common/wind.c:780
+#: plug-ins/common/wind.c:1101
 msgid "Edge Affected"
 msgstr ""
 
-#: plug-ins/common/wind.c:784
+#: plug-ins/common/wind.c:1105
 #, fuzzy
 msgid "Leading"
 msgstr "읽기 %s:"
 
-#: plug-ins/common/wind.c:785
+#: plug-ins/common/wind.c:1106
 #, fuzzy
 msgid "Trailing"
 msgstr "스케일링"
 
-#: plug-ins/common/wind.c:786
+#: plug-ins/common/wind.c:1107
 msgid "Both"
 msgstr ""
 
-#: plug-ins/common/wind.c:813
+#: plug-ins/common/wind.c:1137
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 
-#: plug-ins/common/wind.c:823 plug-ins/gimpressionist/orientmap.c:565
+#: plug-ins/common/wind.c:1150 plug-ins/gimpressionist/orientmap.c:565
 #: plug-ins/gimpressionist/sizemap.c:465
 msgid "Strength:"
 msgstr "능력:"
 
-#: plug-ins/common/wind.c:827
+#: plug-ins/common/wind.c:1154
 #, fuzzy
 msgid "Higher values increase the magnitude of the effect"
 msgstr "높은 값은 하이라이트에 많이 집중되게 합니다."
@@ -7465,11 +7485,11 @@ msgstr "XBM: 지정된 이미지 높이 없음\n"
 msgid "XBM: no image data type specified\n"
 msgstr "XBM: 지정된 이미지 데이터 유형 없음\n"
 
-#: plug-ins/common/xbm.c:888
+#: plug-ins/common/xbm.c:890
 msgid "XBM Warning"
 msgstr "XBM 경고"
 
-#: plug-ins/common/xbm.c:909
+#: plug-ins/common/xbm.c:911
 msgid ""
 "The image which you are trying to save as\n"
 "an XBM contains more than two colors.\n"
@@ -7483,37 +7503,37 @@ msgstr ""
 "그것을 블랙-엔-화이트(1-bit) 인덱스 이미지로\n"
 "변환하고 다시 시도해 주세요."
 
-#: plug-ins/common/xbm.c:980
+#: plug-ins/common/xbm.c:982
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
 msgstr "XBM: \"%s\"을 생성할 수 없습니다\n"
 
-#: plug-ins/common/xbm.c:1121
+#: plug-ins/common/xbm.c:1123
 msgid "Save as XBM"
 msgstr "XBM으로 저장"
 
 #. parameter settings
-#: plug-ins/common/xbm.c:1138
+#: plug-ins/common/xbm.c:1140
 msgid "XBM Options"
 msgstr "XBM 옵션"
 
 #. X10 format
-#: plug-ins/common/xbm.c:1149
+#: plug-ins/common/xbm.c:1151
 #, fuzzy
 msgid "X10 Format Bitmap"
 msgstr "X10 형식 비트맵"
 
-#: plug-ins/common/xbm.c:1167
+#: plug-ins/common/xbm.c:1169
 #, fuzzy
 msgid "Identifier Prefix:"
 msgstr "식별 접두사: "
 
 #. hotspot toggle
-#: plug-ins/common/xbm.c:1185
+#: plug-ins/common/xbm.c:1187
 msgid "Write Hot Spot Values"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1209
+#: plug-ins/common/xbm.c:1211
 #, fuzzy
 msgid "Hot Spot X:"
 msgstr "회전하기"
@@ -9041,11 +9061,6 @@ msgstr "핑퐁"
 msgid "Move Path"
 msgstr "경로 이동"
 
-#: plug-ins/gap/gap_mov_dialog.c:478
-#, fuzzy
-msgid "Update Preview"
-msgstr "경로 이동 미리보기"
-
 #: plug-ins/gap/gap_mov_dialog.c:485
 #, fuzzy
 msgid ""
@@ -9213,8 +9228,9 @@ msgid "Move Path Animated Preview"
 msgstr "경로 이동 미리보기"
 
 #: plug-ins/gap/gap_mov_dialog.c:886
-msgid "Generate Animate Preview failed\n"
-msgstr ""
+#, fuzzy
+msgid "Generate Animated Preview failed\n"
+msgstr "계층-움직임(animate) 이미지 생성 중 .."
 
 #. filesel is already open
 #: plug-ins/gap/gap_mov_dialog.c:1098
@@ -10586,7 +10602,7 @@ msgstr ""
 msgid ""
 "WARNING: GDynText is too old!\n"
 "  You may loose some data by changing this text.\n"
-"  A newer version is reqired to handle this layer.\n"
+"  A newer version is required to handle this layer.\n"
 "  Get it from %s\n"
 msgstr ""
 
@@ -10906,7 +10922,7 @@ msgid "Original"
 msgstr "원래 환경 유지"
 
 #: plug-ins/gfig/gfig.c:2807 plug-ins/gfig/gfig.c:3566
-#: plug-ins/gflare/gflare.c:3097 plug-ins/ifscompose/ifscompose.c:782
+#: plug-ins/gflare/gflare.c:3097 plug-ins/ifscompose/ifscompose.c:783
 #: plug-ins/webbrowser/webbrowser.c:319
 msgid "New"
 msgstr ""
@@ -11212,7 +11228,7 @@ msgstr "플레인"
 msgid "Clear"
 msgstr "닫기"
 
-#: plug-ins/gfig/gfig.c:3939 plug-ins/ifscompose/ifscompose.c:1182
+#: plug-ins/gfig/gfig.c:3939 plug-ins/ifscompose/ifscompose.c:1183
 #: plug-ins/imagemap/imap_toolbar.c:120
 #, fuzzy
 msgid "Undo"
@@ -12277,28 +12293,31 @@ msgstr "계속"
 msgid "Index"
 msgstr ""
 
-#: plug-ins/helpbrowser/helpbrowser.c:401 plug-ins/imagemap/imap_main.c:511
+#: plug-ins/helpbrowser/helpbrowser.c:407 plug-ins/imagemap/imap_main.c:511
 #: plug-ins/imagemap/imap_settings.c:149
 msgid "<Untitled>"
 msgstr ""
 
-#: plug-ins/helpbrowser/helpbrowser.c:726
+#: plug-ins/helpbrowser/helpbrowser.c:733
+#: plug-ins/helpbrowser/helpbrowser.c:749
+#, c-format
 msgid ""
 "GIMP Help Browser Error.\n"
 "\n"
-"Couldn't find my root html directory."
+"Couldn't find my root html directory.\n"
+"(%s)"
 msgstr ""
 
-#: plug-ins/helpbrowser/helpbrowser.c:749
+#: plug-ins/helpbrowser/helpbrowser.c:765
 msgid "GIMP Help Browser"
 msgstr ""
 
-#: plug-ins/helpbrowser/helpbrowser.c:764
+#: plug-ins/helpbrowser/helpbrowser.c:780
 #, fuzzy
 msgid "Back"
 msgstr "검은색"
 
-#: plug-ins/helpbrowser/helpbrowser.c:773
+#: plug-ins/helpbrowser/helpbrowser.c:789
 msgid "Forward"
 msgstr ""
 
@@ -12308,143 +12327,143 @@ msgid "<Image>/Filters/Render/Nature/IfsCompose..."
 msgstr "<Image>/필터/랜더/채커보드"
 
 #. Asym
-#: plug-ins/ifscompose/ifscompose.c:568
+#: plug-ins/ifscompose/ifscompose.c:569
 msgid "Asymmetry:"
 msgstr ""
 
 #. Shear
-#: plug-ins/ifscompose/ifscompose.c:582
+#: plug-ins/ifscompose/ifscompose.c:583
 #, fuzzy
 msgid "Shear:"
 msgstr "번지기(Smear)"
 
 #. Flip
-#: plug-ins/ifscompose/ifscompose.c:596
+#: plug-ins/ifscompose/ifscompose.c:597
 msgid "Flip"
 msgstr ""
 
 #. Simple color control section
-#: plug-ins/ifscompose/ifscompose.c:627
+#: plug-ins/ifscompose/ifscompose.c:628
 #, fuzzy
 msgid "Simple"
 msgstr "크기"
 
-#: plug-ins/ifscompose/ifscompose.c:639
+#: plug-ins/ifscompose/ifscompose.c:640
 msgid "IfsCompose: Target"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:645
+#: plug-ins/ifscompose/ifscompose.c:646
 #, fuzzy
 msgid "Scale Hue by:"
 msgstr "스케일:"
 
-#: plug-ins/ifscompose/ifscompose.c:660
+#: plug-ins/ifscompose/ifscompose.c:661
 msgid "Scale Value by:"
 msgstr ""
 
 #. Full color control section
-#: plug-ins/ifscompose/ifscompose.c:677
+#: plug-ins/ifscompose/ifscompose.c:678
 msgid "Full"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:686
+#: plug-ins/ifscompose/ifscompose.c:687
 #, fuzzy
 msgid "IfsCompose: Red"
 msgstr "작성"
 
-#: plug-ins/ifscompose/ifscompose.c:695
+#: plug-ins/ifscompose/ifscompose.c:696
 msgid "IfsCompose: Green"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:704
+#: plug-ins/ifscompose/ifscompose.c:705
 #, fuzzy
 msgid "IfsCompose: Blue"
 msgstr "작성"
 
-#: plug-ins/ifscompose/ifscompose.c:713
+#: plug-ins/ifscompose/ifscompose.c:714
 msgid "IfsCompose: Black"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:775
+#: plug-ins/ifscompose/ifscompose.c:776
 #, fuzzy
 msgid "IfsCompose"
 msgstr "작성"
 
-#: plug-ins/ifscompose/ifscompose.c:859 plug-ins/ifscompose/ifscompose.c:1129
+#: plug-ins/ifscompose/ifscompose.c:860 plug-ins/ifscompose/ifscompose.c:1130
 #, fuzzy
 msgid "Rotate/Scale"
 msgstr "회전하기"
 
-#: plug-ins/ifscompose/ifscompose.c:868 plug-ins/ifscompose/ifscompose.c:1141
+#: plug-ins/ifscompose/ifscompose.c:869 plug-ins/ifscompose/ifscompose.c:1142
 #, fuzzy
 msgid "Stretch"
 msgstr "능력:"
 
-#: plug-ins/ifscompose/ifscompose.c:888
+#: plug-ins/ifscompose/ifscompose.c:889
 #, fuzzy
 msgid "Render Options"
 msgstr "두번째 옵션"
 
-#: plug-ins/ifscompose/ifscompose.c:902 plug-ins/print/gimp_main_window.c:385
+#: plug-ins/ifscompose/ifscompose.c:903 plug-ins/print/gimp_main_window.c:385
 msgid "Auto"
 msgstr "자동"
 
-#: plug-ins/ifscompose/ifscompose.c:935
+#: plug-ins/ifscompose/ifscompose.c:936
 #, fuzzy
 msgid "Spatial Transformation"
 msgstr "입체적 변환"
 
-#: plug-ins/ifscompose/ifscompose.c:941
+#: plug-ins/ifscompose/ifscompose.c:942
 #, fuzzy
 msgid "Color Transformation"
 msgstr "입체적 변환"
 
-#: plug-ins/ifscompose/ifscompose.c:951
+#: plug-ins/ifscompose/ifscompose.c:952
 msgid "Relative Probability:"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:1158
+#: plug-ins/ifscompose/ifscompose.c:1159
 #: plug-ins/imagemap/imap_cmd_select_all.c:50
 #: plug-ins/imagemap/imap_menu.c:294
 #, fuzzy
 msgid "Select All"
 msgstr "선택"
 
-#: plug-ins/ifscompose/ifscompose.c:1170
+#: plug-ins/ifscompose/ifscompose.c:1171
 #, fuzzy
 msgid "Recompute Center"
 msgstr "미리보기 이미지 재계산"
 
-#: plug-ins/ifscompose/ifscompose.c:1194 plug-ins/imagemap/imap_toolbar.c:123
+#: plug-ins/ifscompose/ifscompose.c:1195 plug-ins/imagemap/imap_toolbar.c:123
 #, fuzzy
 msgid "Redo"
 msgstr "빨간색"
 
-#: plug-ins/ifscompose/ifscompose.c:1227
+#: plug-ins/ifscompose/ifscompose.c:1228
 #, fuzzy
 msgid "IfsCompose Options"
 msgstr "구성"
 
-#: plug-ins/ifscompose/ifscompose.c:1247
+#: plug-ins/ifscompose/ifscompose.c:1248
 msgid "Max. Memory:"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:1274
+#: plug-ins/ifscompose/ifscompose.c:1275
 msgid "Subdivide:"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:1287
+#: plug-ins/ifscompose/ifscompose.c:1288
 #, fuzzy
 msgid "Spot Radius:"
 msgstr "반경"
 
-#: plug-ins/ifscompose/ifscompose.c:1357
+#: plug-ins/ifscompose/ifscompose.c:1358
 #, fuzzy, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr "타일 랜더링..."
 
 #. transfer the image to the drawable
-#: plug-ins/ifscompose/ifscompose.c:1376
+#: plug-ins/ifscompose/ifscompose.c:1377
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr ""
@@ -13720,32 +13739,32 @@ msgstr "플레인"
 msgid "Misc"
 msgstr "기타 동작"
 
-#: plug-ins/sel2path/sel2path.c:155
+#: plug-ins/sel2path/sel2path.c:160
 msgid "<Image>/Select/To Path"
 msgstr "<Image>/선택/경로로"
 
-#: plug-ins/sel2path/sel2path.c:200
+#: plug-ins/sel2path/sel2path.c:205
 msgid "No selection to convert"
 msgstr "변환할 셀렉션이 없습니다."
 
-#: plug-ins/sel2path/sel2path.c:357
+#: plug-ins/sel2path/sel2path.c:362
 msgid "Default Values"
 msgstr "초기 값"
 
-#: plug-ins/sel2path/sel2path.c:546
+#: plug-ins/sel2path/sel2path.c:551
 #, c-format
 msgid "print_spline: strange degree (%d)"
 msgstr "print_spline: 각도가 벗어남 (%d)"
 
-#: plug-ins/sel2path/sel2path.c:554
+#: plug-ins/sel2path/sel2path.c:559
 msgid "selection_to_path"
 msgstr ""
 
-#: plug-ins/sel2path/sel2path.c:580
+#: plug-ins/sel2path/sel2path.c:585
 msgid "gimp_image_get_selection failed"
 msgstr "gimp_image_get_selection 실패"
 
-#: plug-ins/sel2path/sel2path.c:588
+#: plug-ins/sel2path/sel2path.c:593
 msgid "Internal error. Selection bpp > 1"
 msgstr "내부 애러. 셀렉션 bpp > 1"
 
