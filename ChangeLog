@@ -1,3 +1,16 @@
+2004-03-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplist.c (gimp_list_dispose): removed this function.
+	It was removing all items without freezing the container first,
+	which caused excessive signal handler activity in GimpContext.
+
+	Cleaned up the whole file a bit.
+
+	* app/core/gimpcontainer.c (gimp_container_dispose): call
+	gimp_container_clear() which does the right thing and e.g. speeds
+	up quitting significantly when gimp->documents is huge.
+	Reported by Jimmac.
+
 2004-03-16  Simon Budig  <simon@gimp.org>
 
 	* app/gui/plug-in-commands.c: Update the Plugin Menu immediately

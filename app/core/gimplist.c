@@ -34,30 +34,28 @@
 static void         gimp_list_class_init         (GimpListClass       *klass);
 static void         gimp_list_init               (GimpList            *list);
 
-static void         gimp_list_dispose            (GObject             *object);
-
 static gint64       gimp_list_get_memsize        (GimpObject          *object,
                                                   gint64              *gui_size);
 
 static void         gimp_list_add                (GimpContainer       *container,
-						  GimpObject          *object);
+                                                  GimpObject          *object);
 static void         gimp_list_remove             (GimpContainer       *container,
-						  GimpObject          *object);
+                                                  GimpObject          *object);
 static void         gimp_list_reorder            (GimpContainer       *container,
-						  GimpObject          *object,
-						  gint                 new_index);
+                                                  GimpObject          *object,
+                                                  gint                 new_index);
 static void         gimp_list_clear              (GimpContainer       *container);
 static gboolean     gimp_list_have               (const GimpContainer *container,
-						  const GimpObject    *object);
+                                                  const GimpObject    *object);
 static void         gimp_list_foreach            (const GimpContainer *container,
-						  GFunc                func,
-						  gpointer             user_data);
+                                                  GFunc                func,
+                                                  gpointer             user_data);
 static GimpObject * gimp_list_get_child_by_name  (const GimpContainer *container,
-						  const gchar         *name);
+                                                  const gchar         *name);
 static GimpObject * gimp_list_get_child_by_index (const GimpContainer *container,
-						  gint                 index);
+                                                  gint                 index);
 static gint         gimp_list_get_child_index    (const GimpContainer *container,
-						  const GimpObject    *object);
+                                                  const GimpObject    *object);
 
 
 static GimpContainerClass *parent_class = NULL;
@@ -73,19 +71,19 @@ gimp_list_get_type (void)
       static const GTypeInfo list_info =
       {
         sizeof (GimpListClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_list_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpList),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_list_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_list_class_init,
+        NULL,		/* class_finalize */
+        NULL,		/* class_data     */
+        sizeof (GimpList),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_list_init,
       };
 
       list_type = g_type_register_static (GIMP_TYPE_CONTAINER,
-					  "GimpList",
-					  &list_info, 0);
+                                          "GimpList",
+                                          &list_info, 0);
     }
 
   return list_type;
@@ -94,17 +92,10 @@ gimp_list_get_type (void)
 static void
 gimp_list_class_init (GimpListClass *klass)
 {
-  GObjectClass       *object_class;
-  GimpObjectClass    *gimp_object_class;
-  GimpContainerClass *container_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  container_class   = GIMP_CONTAINER_CLASS (klass);
+  GimpObjectClass    *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpContainerClass *container_class   = GIMP_CONTAINER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->dispose               = gimp_list_dispose;
 
   gimp_object_class->get_memsize      = gimp_list_get_memsize;
 
@@ -125,36 +116,23 @@ gimp_list_init (GimpList *list)
   list->list = NULL;
 }
 
-static void
-gimp_list_dispose (GObject *object)
-{
-  GimpList *list = GIMP_LIST (object);
-
-  while (list->list)
-    gimp_container_remove (GIMP_CONTAINER (list), list->list->data);
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
 static gint64
 gimp_list_get_memsize (GimpObject *object,
                        gint64     *gui_size)
 {
-  GimpList *gimp_list;
+  GimpList *list    = GIMP_LIST (object);
   gint64    memsize = 0;
 
-  gimp_list = GIMP_LIST (object);
-
-  memsize += (gimp_container_num_children (GIMP_CONTAINER (gimp_list)) *
+  memsize += (gimp_container_num_children (GIMP_CONTAINER (list)) *
               sizeof (GList));
 
-  if (gimp_container_policy (GIMP_CONTAINER (gimp_list)) ==
+  if (gimp_container_policy (GIMP_CONTAINER (list)) ==
       GIMP_CONTAINER_POLICY_STRONG)
     {
-      GList *list;
+      GList *glist;
 
-      for (list = gimp_list->list; list; list = g_list_next (list))
-        memsize += gimp_object_get_memsize (GIMP_OBJECT (list->data), gui_size);
+      for (glist = list->list; glist; glist = g_list_next (glist))
+        memsize += gimp_object_get_memsize (GIMP_OBJECT (glist->data), gui_size);
     }
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
@@ -184,9 +162,7 @@ gimp_list_reorder (GimpContainer *container,
 		   GimpObject    *object,
 		   gint           new_index)
 {
-  GimpList *list;
-
-  list = GIMP_LIST (container);
+  GimpList *list = GIMP_LIST (container);
 
   list->list = g_list_remove (list->list, object);
 
@@ -228,15 +204,12 @@ static GimpObject *
 gimp_list_get_child_by_name (const GimpContainer *container,
 			     const gchar         *name)
 {
-  GimpList   *list;
-  GimpObject *object;
-  GList      *glist;
-
-  list = GIMP_LIST (container);
+  GimpList *list = GIMP_LIST (container);
+  GList    *glist;
 
   for (glist = list->list; glist; glist = g_list_next (glist))
     {
-      object = (GimpObject *) glist->data;
+      GimpObject *object = glist->data;
 
       if (! strcmp (object->name, name))
 	return object;
@@ -249,10 +222,8 @@ static GimpObject *
 gimp_list_get_child_by_index (const GimpContainer *container,
 			      gint                 index)
 {
-  GimpList *list;
+  GimpList *list = GIMP_LIST (container);
   GList    *glist;
-
-  list = GIMP_LIST (container);
 
   glist = g_list_nth (list->list, index);
 

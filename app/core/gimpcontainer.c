@@ -265,6 +265,8 @@ gimp_container_dispose (GObject *object)
 {
   GimpContainer *container = GIMP_CONTAINER (object);
 
+  gimp_container_clear (container);
+
   while (container->handlers)
     gimp_container_remove_handler (container,
                                    ((GimpContainerHandler *)
