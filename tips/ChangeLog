@@ -1,3 +1,9 @@
+2003-02-09  Abel Cheung  <maddog@linux.org.hk>
+
+	* Makefile.am, zh_TW.po: Convert old traditional
+	  Chinese tips file to po file.
+	* gimp_tips.zh_TW.txt: Removed.
+
 2003-02-01  Abel Cheung  <maddog@linux.org.hk>
 
 	* sk.po: Fix header.
