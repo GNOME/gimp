@@ -74,8 +74,6 @@
 	 (hole-height (/ width 12))
 	 (hole-radius (/ hole-width 4))
 	 (hole-start (- (/ (rand 1000) 1000) 0.5))
-	 (old-bg (car (gimp-context-get-background)))
-	 (old-fg (car (gimp-context-get-foreground)))
 	 (film-layer (car (gimp-layer-new image
 					  width
 					  height
@@ -93,138 +91,140 @@
 	 (pic-layer (car (gimp-image-get-active-drawable image)))
 	 (numbera (string-append number "A")))
 
+    (gimp-context-push)
 
-  (gimp-image-undo-disable image)
+    (gimp-image-undo-disable image)
 
 ; add an alpha channel to the image
-  (gimp-layer-add-alpha pic-layer)
+    (gimp-layer-add-alpha pic-layer)
 
 ; crop, resize and eventually rotate the image 
-  (gimp-image-crop image
-		   crop-width
-		   crop-height
-		   (/ (- owidth crop-width) 2)
-		   (/ (- oheight crop-height) 2))
-  (gimp-image-resize image
-		     width
-		     height
-		     (/ (- width crop-width) 2)
-		     (/ (- height crop-height) 2))
-  (if (< ratio 1) (plug-in-rotate 1
-				  image
-				  pic-layer
-				  1
-				  FALSE))
+    (gimp-image-crop image
+		     crop-width
+		     crop-height
+		     (/ (- owidth crop-width) 2)
+		     (/ (- oheight crop-height) 2))
+    (gimp-image-resize image
+		       width
+		       height
+		       (/ (- width crop-width) 2)
+		       (/ (- height crop-height) 2))
+    (if (< ratio 1) (plug-in-rotate 1
+				    image
+				    pic-layer
+				    1
+				    FALSE))
 
 ; add the background layer
-  (gimp-drawable-fill bg-layer BACKGROUND-FILL)
-  (gimp-image-add-layer image bg-layer -1)
+    (gimp-drawable-fill bg-layer BACKGROUND-FILL)
+    (gimp-image-add-layer image bg-layer -1)
 
 ; add the film layer
-  (gimp-context-set-background '(0 0 0))
-  (gimp-drawable-fill film-layer BACKGROUND-FILL)
-  (gimp-image-add-layer image film-layer -1)
+    (gimp-context-set-background '(0 0 0))
+    (gimp-drawable-fill film-layer BACKGROUND-FILL)
+    (gimp-image-add-layer image film-layer -1)
 
 ; add the text
-  (gimp-context-set-foreground font-color)
-  (gimp-floating-sel-anchor (car (gimp-text-fontname image
-					    film-layer
-					    (+ hole-start (* -0.25 width))
-					    (* 0.01 height)
-					    text
-					    0
-					    TRUE
-					    (* 0.040 height) PIXELS fontname)))
-  (gimp-floating-sel-anchor (car (gimp-text-fontname image
-					    film-layer
-					    (+ hole-start (* 0.75 width))
-					    (* 0.01 height)
-					    text
-					    0
-					    TRUE
-					    (* 0.040 height) PIXELS
-					    fontname )))
-  (gimp-floating-sel-anchor (car (gimp-text-fontname image
-					    film-layer
-					    (+ hole-start (* 0.35 width))
-					    0.0
-					    number
-					    0
-					    TRUE
-					    (* 0.050 height) PIXELS
-					    fontname )))
-  (gimp-floating-sel-anchor (car (gimp-text-fontname image
-					    film-layer
-					    (+ hole-start (* 0.35 width))
-					    (* 0.94 height)
-					    number
-					    0
-					    TRUE
-					    (* 0.050 height) PIXELS
-					    fontname )))
-  (gimp-floating-sel-anchor (car (gimp-text-fontname image
-					      film-layer
-					      (+ hole-start (* 0.85 width))
-					      (* 0.945 height)
-					      numbera
-					      0
-					      TRUE
-					      (* 0.045 height) PIXELS
-					      fontname )))
-
+    (gimp-context-set-foreground font-color)
+    (gimp-floating-sel-anchor (car (gimp-text-fontname image
+						       film-layer
+						       (+ hole-start (* -0.25 width))
+						       (* 0.01 height)
+						       text
+						       0
+						       TRUE
+						       (* 0.040 height) PIXELS fontname)))
+    (gimp-floating-sel-anchor (car (gimp-text-fontname image
+						       film-layer
+						       (+ hole-start (* 0.75 width))
+						       (* 0.01 height)
+						       text
+						       0
+						       TRUE
+						       (* 0.040 height) PIXELS
+						       fontname )))
+    (gimp-floating-sel-anchor (car (gimp-text-fontname image
+						       film-layer
+						       (+ hole-start (* 0.35 width))
+						       0.0
+						       number
+						       0
+						       TRUE
+						       (* 0.050 height) PIXELS
+						       fontname )))
+    (gimp-floating-sel-anchor (car (gimp-text-fontname image
+						       film-layer
+						       (+ hole-start (* 0.35 width))
+						       (* 0.94 height)
+						       number
+						       0
+						       TRUE
+						       (* 0.050 height) PIXELS
+						       fontname )))
+    (gimp-floating-sel-anchor (car (gimp-text-fontname image
+						       film-layer
+						       (+ hole-start (* 0.85 width))
+						       (* 0.945 height)
+						       numbera
+						       0
+						       TRUE
+						       (* 0.045 height) PIXELS
+						       fontname )))
+    
 ; create a mask for the holes and cut them out
-  (let* ((film-mask (car (gimp-layer-create-mask film-layer ADD-WHITE-MASK)))
-	 (hole hole-start)
-	 (top-y (* height 0.06))
-	 (bottom-y(* height 0.855)))
-    (gimp-selection-none image)
-    (while (< hole 8)
-	   (gimp-rect-select image
-			     (* hole-space hole)
-			     top-y
-			     hole-width
-			     hole-height
-			     CHANNEL-OP-ADD
-			     FALSE
-			     0)
-	   (gimp-rect-select image
-			     (* hole-space hole)
-			     bottom-y
-			     hole-width
-			     hole-height
-			     CHANNEL-OP-ADD
-			     FALSE
-			     0)
-	   (set! hole (+ hole 1)))
+    (let* ((film-mask (car (gimp-layer-create-mask film-layer ADD-WHITE-MASK)))
+	   (hole hole-start)
+	   (top-y (* height 0.06))
+	   (bottom-y(* height 0.855)))
+      (gimp-selection-none image)
+      (while (< hole 8)
+	     (gimp-rect-select image
+			       (* hole-space hole)
+			       top-y
+			       hole-width
+			       hole-height
+			       CHANNEL-OP-ADD
+			       FALSE
+			       0)
+	     (gimp-rect-select image
+			       (* hole-space hole)
+			       bottom-y
+			       hole-width
+			       hole-height
+			       CHANNEL-OP-ADD
+			       FALSE
+			       0)
+	     (set! hole (+ hole 1)))
 
-    (gimp-context-set-foreground '(0 0 0))
-    (gimp-edit-fill film-mask BACKGROUND-FILL)
-    (gimp-selection-none image)
-    (plug-in-gauss-rle 1 image film-mask hole-radius TRUE TRUE)
-    (gimp-threshold film-mask 127 255)
+      (gimp-context-set-foreground '(0 0 0))
+      (gimp-edit-fill film-mask BACKGROUND-FILL)
+      (gimp-selection-none image)
+      (plug-in-gauss-rle 1 image film-mask hole-radius TRUE TRUE)
+      (gimp-threshold film-mask 127 255)
 
-    (gimp-layer-add-mask film-layer film-mask)
-    (gimp-layer-remove-mask film-layer MASK-APPLY))
+      (gimp-layer-add-mask film-layer film-mask)
+      (gimp-layer-remove-mask film-layer MASK-APPLY))
 
 ; reorder the layers
-  (gimp-image-raise-layer image pic-layer)
-  (gimp-image-raise-layer image pic-layer)
+    (gimp-image-raise-layer image pic-layer)
+    (gimp-image-raise-layer image pic-layer)
 
 ; eventually rotate the whole thing back
-  (if (< ratio 1) 
-      (plug-in-rotate 1
-		      image
-		      pic-layer
-		      3
-		      TRUE))
+    (if (< ratio 1) 
+	(plug-in-rotate 1
+			image
+			pic-layer
+			3
+			TRUE))
 
 ; clean up after the script
-  (gimp-selection-none image)
-  (gimp-context-set-background old-bg)
-  (gimp-context-set-foreground old-fg)
-  (gimp-image-undo-enable image)
-  (if (= work-on-copy TRUE) (gimp-display-new image))
-  (gimp-displays-flush)))
+    (gimp-selection-none image)
+    (gimp-image-undo-enable image)
+    (if (= work-on-copy TRUE)
+	(gimp-display-new image))
+    (gimp-displays-flush)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-slide"
 		    _"<Image>/Script-Fu/Decor/_Slide..."

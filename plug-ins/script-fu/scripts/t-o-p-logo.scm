@@ -18,11 +18,10 @@
 	 (shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Shadow" 90 ADDITION-MODE)))
 	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
 	 (selection 0)
-	 (white '(255 255 255))
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background)))
-	 (old-brush (car (gimp-brushes-get-brush)))
-	 (old-paint-mode (car (gimp-brushes-get-paint-mode))))
+	 (white '(255 255 255)))
+
+    (gimp-context-push)
+
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img sparkle-layer 2)
     (gimp-image-add-layer img shadow-layer 3)
@@ -71,12 +70,10 @@
     (gimp-brushes-set-brush "Circle Fuzzy (07)")
     (gimp-context-set-foreground '(255 255 255))
     (gimp-selection-none img)
-    (gimp-context-set-foreground old-fg)
-    (gimp-context-set-background old-bg)
-    (gimp-brushes-set-brush old-brush)
-    (gimp-brushes-set-paint-mode old-paint-mode)
     (gimp-drawable-set-visible logo-layer 0)
-    (gimp-image-set-active-layer img sparkle-layer)))
+    (gimp-image-set-active-layer img sparkle-layer)
+
+    (gimp-context-pop)))
 
 
 (define (script-fu-t-o-p-logo-alpha img

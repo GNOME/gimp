@@ -351,10 +351,7 @@
 			 thread-length
 			 thread-density
 			 thread-intensity)
-  (let* ((old-fg-color (car (gimp-context-get-foreground)))
-	 (old-bg-color (car (gimp-context-get-background)))
-
-	 (d-img (car (gimp-drawable-get-image drawable)))
+  (let* ((d-img (car (gimp-drawable-get-image drawable)))
 	 (d-width (car (gimp-drawable-width drawable)))
 	 (d-height (car (gimp-drawable-height drawable)))
 	 (d-offsets (gimp-drawable-offsets drawable))
@@ -371,6 +368,8 @@
 	 (w-img (car weaving))
 	 (w-layer (cadr weaving)))
 
+    (gimp-context-push)
+
     (gimp-selection-all w-img)
     (gimp-edit-copy w-layer)
     (gimp-image-delete w-img)
@@ -381,9 +380,9 @@
       (gimp-layer-set-mode floating-sel MULTIPLY-MODE)
       (gimp-floating-sel-to-layer floating-sel))
 
-    (gimp-context-set-foreground old-fg-color)
-    (gimp-context-set-background old-bg-color)
-    (gimp-displays-flush)))
+    (gimp-displays-flush)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-weave"
 		    _"<Image>/Script-Fu/Alchemy/_Weave..."

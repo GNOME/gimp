@@ -18,10 +18,9 @@
 	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
 	 (shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Shadow" 100 NORMAL-MODE)))
 	 (burst-layer (car (gimp-layer-new img width height RGBA-IMAGE "Burst" 100 NORMAL-MODE)))
-	 (layer-mask (car (gimp-layer-create-mask burst-layer ADD-BLACK-MASK)))
-	 (old-pattern (car (gimp-patterns-get-pattern)))
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background))))
+	 (layer-mask (car (gimp-layer-create-mask burst-layer ADD-BLACK-MASK))))
+
+    (gimp-context-push)
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
@@ -59,9 +58,7 @@
 	   (set! count (+ count 1)))
     (gimp-selection-none img)
 
-    (gimp-patterns-set-pattern old-pattern)
-    (gimp-context-set-background old-bg)
-    (gimp-context-set-foreground old-fg)))
+    (gimp-context-pop)))
 
 
 (define (script-fu-starburst-logo-alpha img

@@ -43,13 +43,13 @@
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-width (car (gimp-image-width image)))
 	 (hl-opacity (list hl-opacity-comp hl-opacity-comp hl-opacity-comp))
-	 (image-height (car (gimp-image-height image)))
-	 (old-bg (car (gimp-context-get-background))))
+	 (image-height (car (gimp-image-height image))))
+
+    (gimp-context-push)
 
     (gimp-image-undo-group-start image)
     (gimp-layer-add-alpha drawable)
-    
-    
+
     (if (= (car (gimp-selection-is-empty image)) TRUE)
 	(begin
 	  (gimp-selection-layer-alpha drawable)
@@ -99,16 +99,16 @@
     (gimp-edit-clear shadow-layer)
     (gimp-image-lower-layer image shadow-layer)
 
-
-    (gimp-context-set-background old-bg)
-
     (if (= keep-selection FALSE)
 	(gimp-selection-none image))
 
     (gimp-image-set-active-layer image drawable)
     (gimp-image-remove-channel image active-selection)
     (gimp-image-undo-group-end image)
-    (gimp-displays-flush)))
+    (gimp-displays-flush)
+
+    (gimp-context-pop)))
+
 
 (script-fu-register "script-fu-xach-effect"
 		    _"<Image>/Script-Fu/Shadow/_Xach-Effect..."

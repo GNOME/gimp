@@ -59,10 +59,9 @@
 	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
 	 (glow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Glow" 100 NORMAL-MODE)))
 	 (shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Drop Shadow" 100 NORMAL-MODE)))
-	 (bump-channel (car (gimp-channel-new img width height "Bump Map" 50 '(0 0 0))))
-	 (old-pattern (car (gimp-patterns-get-pattern)))
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background))))
+	 (bump-channel (car (gimp-channel-new img width height "Bump Map" 50 '(0 0 0)))))
+
+    (gimp-context-push)
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
@@ -109,9 +108,8 @@
     (gimp-image-remove-channel img bump-channel)
     (gimp-selection-none img)
 
-    (gimp-patterns-set-pattern old-pattern)
-    (gimp-context-set-background old-bg)
-    (gimp-context-set-foreground old-fg)))
+    (gimp-context-pop)))
+
 
 (define (script-fu-starscape-logo-alpha img
 					logo-layer

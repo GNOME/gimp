@@ -32,12 +32,9 @@
 	 (img (car (gimp-image-new img-size img-size RGB)))
 	 (drawable (car (gimp-layer-new img img-size img-size
 					RGB-IMAGE "Swirly pattern"
-					100 NORMAL-MODE)))
+					100 NORMAL-MODE))))
 
-	 ; Save old foregound and background colors
-
-	 (old-fg-color (car (gimp-context-get-foreground)))
-	 (old-bg-color (car (gimp-context-get-background))))
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
@@ -74,10 +71,10 @@
     ; Terminate
 
     (gimp-selection-none img)
-    (gimp-context-set-foreground old-fg-color)
-    (gimp-context-set-background old-bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-swirly-pattern"
 		    _"<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."

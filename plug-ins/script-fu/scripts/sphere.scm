@@ -24,9 +24,9 @@
 	 (light-y (- cy (* radius (* 0.6 (sin radians)))))
 	 (light-end-x (+ cx (* radius (cos (+ *pi* radians)))))
 	 (light-end-y (- cy (* radius (sin (+ *pi* radians)))))
-	 (offset (* radius 0.1))
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background))))
+	 (offset (* radius 0.1)))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
@@ -59,10 +59,10 @@
 		     light-x light-y light-end-x light-end-y)
 
     (gimp-selection-none img)
-    (gimp-context-set-background old-bg)
-    (gimp-context-set-foreground old-fg)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-sphere"
 		    _"<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."

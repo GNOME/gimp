@@ -105,9 +105,9 @@
 	 (tiledraw2 (car (gimp-layer-new tile size size
 					 RGB-IMAGE "Cooper" 100 NORMAL-MODE)))
 	 (Xindex 0)
-	 (Yindex 0)
-	 (old-bg (car (gimp-context-get-background)))
-	 )
+	 (Yindex 0))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-undo-disable tile)
@@ -140,11 +140,10 @@
     
     
     (gimp-image-delete tile)
-    (gimp-context-set-background old-bg)
     (gimp-image-undo-enable img)
     (gimp-display-new img)
-    )
-  )
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-truchet"
 		    _"<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."

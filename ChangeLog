@@ -1,5 +1,11 @@
 2004-09-23  Sven Neumann  <sven@gimp.org>
 
+	Converted the last bunch of scripts to the new context API:
+
+	* plug-ins/script-fu/scripts/[s-z]*.scm
+
+2004-09-23  Sven Neumann  <sven@gimp.org>
+
 	Converted more scripts to the new context API:
 
 	* plug-ins/script-fu/scripts/glossy.scm

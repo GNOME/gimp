@@ -116,12 +116,6 @@
          (cx 0)                         ; Current x,y
          (cy 0)
 
-         ; Save old foreground color, brush, opacity and paint mode
-         (old-fg-color (car (gimp-context-get-foreground)))
-         (old-brush (car (gimp-brushes-get-brush)))
-         (old-opacity (car (gimp-brushes-get-opacity)))
-         (old-paint-mode (car (gimp-brushes-get-paint-mode)))
-
          ; If its a polygon or frame, how many sides does it have.
          (poly (if (= shape 1) 4   ; A frame has four sides.
                               (if (> shape 1) (+ shape 1) 0)))
@@ -242,6 +236,8 @@
  ;; Execution starts here.
  ;;
 
+    (gimp-context-push)
+
     (gimp-image-undo-group-start img)
 
     ; Set new color, brush, opacity, paint mode.
@@ -285,16 +281,10 @@
     ; Draw remaining points.
     (flush-points point-index)   
 
-    ; Restore foreground color, brush and opacity
-    (gimp-context-set-foreground old-fg-color)
-    (gimp-brushes-set-brush old-brush)
-    (gimp-brushes-set-opacity old-opacity)
-    (gimp-brushes-set-paint-mode old-paint-mode)
-
     (gimp-image-undo-group-end img)
     (gimp-displays-flush)
-  )
-)
+
+    (gimp-context-pop)))
 
 
 ; This routine is invoked by a dialog.

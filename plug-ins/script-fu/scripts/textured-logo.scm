@@ -32,10 +32,9 @@
 	 (drop-shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE
 						 "Drop Shadow" 100 MULTIPLY-MODE)))
 	 (dsl-layer-mask (car (gimp-layer-create-mask drop-shadow-layer
-						      ADD-BLACK-MASK)))
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background)))
-	 (old-pattern (car (gimp-patterns-get-pattern))))
+						      ADD-BLACK-MASK))))
+
+    (gimp-context-push)
 
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img shadow-layer 1)
@@ -93,9 +92,8 @@
     (gimp-edit-fill dsl-layer-mask BACKGROUND-FILL)
     (gimp-layer-remove-mask drop-shadow-layer MASK-APPLY)
     (gimp-selection-none img)
-    (gimp-patterns-set-pattern old-pattern)
-    (gimp-context-set-foreground old-fg)
-    (gimp-context-set-background old-bg)))
+
+    (gimp-context-pop)))
 
 (define (script-fu-textured-logo-alpha img
 				       logo-layer

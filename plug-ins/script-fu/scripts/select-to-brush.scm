@@ -28,17 +28,17 @@
 
 (define (script-fu-selection-to-brush image
                                       drawable
-                                      desc
+                                      name
                                       filename
                                       spacing)
   (let* ((type (car (gimp-drawable-type-with-alpha drawable)))
-	 (old-bg (car (gimp-context-get-background))))
-  
-    (set! selection-bounds (gimp-selection-bounds image))
-    (set! select-offset-x  (cadr selection-bounds))
-    (set! select-offset-y  (caddr selection-bounds))
-    (set! selection-width  (- (cadr (cddr selection-bounds))  select-offset-x))
-    (set! selection-height (- (caddr (cddr selection-bounds)) select-offset-y))
+	 (selection-bounds (gimp-selection-bounds image))
+	 (select-offset-x  (cadr selection-bounds))
+	 (select-offset-y  (caddr selection-bounds))
+	 (selection-width  (- (cadr (cddr selection-bounds))  select-offset-x))
+	 (selection-height (- (caddr (cddr selection-bounds)) select-offset-y)))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable image)
     
@@ -94,21 +94,22 @@
 				   (number->string image)
 				   ".gbr"))
 
-    (file-gbr-save 1 brush-image brush-draw filename2 "" spacing desc)
-    (gimp-brushes-refresh)
-    (gimp-brushes-set-brush desc)
+    (file-gbr-save 1 brush-image brush-draw filename2 "" spacing name)
 
     (if (= from-selection TRUE)
 	(begin
 	  (gimp-selection-load active-selection)
 	  (gimp-image-remove-channel image active-selection)))
 
-    (gimp-context-set-background old-bg)
-
     (gimp-image-undo-enable image)
     (gimp-image-set-active-layer image drawable)
     (gimp-image-delete brush-image)
-    (gimp-displays-flush)))
+    (gimp-displays-flush)
+
+    (gimp-context-pop)
+
+    (gimp-brushes-refresh)
+    (gimp-brushes-set-brush name)))
 
 (script-fu-register "script-fu-selection-to-brush"
 		    _"<Image>/Script-Fu/Selection/To _Brush..."

@@ -83,11 +83,9 @@
 	 (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 2" 100 DIFFERENCE-MODE)))
 	 (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 3" 100 NORMAL-MODE)))
 	 (shadow (car (gimp-layer-new img width height GRAYA-IMAGE "Drop Shadow" 100 NORMAL-MODE)))
-	 (layer-mask 0)
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background)))
-	 (old-brush (car (gimp-brushes-get-brush)))
-	 (old-pattern (car (gimp-patterns-get-pattern))))
+	 (layer-mask 0))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
@@ -174,12 +172,10 @@
     (gimp-layer-translate layer2 (/ b-size -4) (/ b-size -4))
     (gimp-layer-translate layer1 (/ b-size -4) (/ b-size -4))
 
-    (gimp-context-set-foreground old-fg)
-    (gimp-context-set-background old-bg)
-    (gimp-brushes-set-brush old-brush)
-    (gimp-patterns-set-pattern old-pattern)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-sota-chrome-logo"
 		    _"<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."

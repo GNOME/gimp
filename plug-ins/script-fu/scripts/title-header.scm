@@ -37,11 +37,6 @@
 	 (padding 8)
 	 (fade-width 64)
 
-	 ; Save foreground and background colors
-
-	 (old-fg-color (car (gimp-context-get-foreground)))
-	 (old-bg-color (car (gimp-context-get-background)))
-
 	 ; Image 
 
 	 (img (car (gimp-image-new 256 256 RGB)))
@@ -82,6 +77,8 @@
 					     NORMAL-MODE)))
 	 (fore-layer (car (gimp-layer-new img text-width text-height RGBA-IMAGE
 					  "fore-layer" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
 
     ; Create image
 
@@ -155,10 +152,10 @@
     ; Done
     
 ;    (gimp-image-flatten img)
-    (gimp-context-set-foreground old-fg-color)
-    (gimp-context-set-background old-bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-title-header"
 		    _"<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."

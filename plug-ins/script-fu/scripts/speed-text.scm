@@ -29,9 +29,9 @@
 	 (text-mask 0)
 	 (saved-select 0)
 	 (cell-size (/ font-size 8))
-	 (grey (/ (* density 255) 100))
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background))))
+	 (grey (/ (* density 255) 100)))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img bg-layer 1)
@@ -71,11 +71,10 @@
 
     (gimp-layer-remove-mask text-layer MASK-APPLY)
 
-    (gimp-context-set-foreground old-fg)
-    (gimp-context-set-background old-bg)
-
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-speed-text"
 		    _"<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
