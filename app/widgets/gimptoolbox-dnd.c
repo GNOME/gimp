@@ -95,8 +95,9 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
   GimpDrawable      *drawable;
   GimpItem          *item;
   GimpImage         *gimage;
-  GimpImage         *new_gimage;
+  GimpImage         *new_image;
   GimpLayer         *new_layer;
+  GType              new_type;
   gint               width, height;
   gint               off_x, off_y;
   gint               bytes;
@@ -112,36 +113,26 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
 
   type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
 
-  new_gimage = gimp_create_image (gimage->gimp,
-				  width, height,
-				  type,
-				  FALSE);
-  gimp_image_undo_disable (new_gimage);
+  new_image = gimp_create_image (gimage->gimp, width, height, type, FALSE);
+  gimp_image_undo_disable (new_image);
 
-  if (type == GIMP_INDEXED) /* copy the colormap */
-    gimp_image_set_colormap (new_gimage,
+  if (type == GIMP_INDEXED)
+    gimp_image_set_colormap (new_image,
                              gimp_image_get_colormap (gimage),
                              gimp_image_get_colormap_size (gimage),
                              FALSE);
 
-  gimp_image_set_resolution (new_gimage,
+  gimp_image_set_resolution (new_image,
 			     gimage->xresolution, gimage->yresolution);
-  gimp_image_set_unit (new_gimage, gimage->unit);
+  gimp_image_set_unit (new_image, gimage->unit);
 
   if (GIMP_IS_LAYER (drawable))
-    {
-      new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (drawable),
-                                                   G_TYPE_FROM_INSTANCE (drawable),
-                                                   FALSE));
-    }
+    new_type = G_TYPE_FROM_INSTANCE (drawable);
   else
-    {
-      new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (drawable),
-                                                   GIMP_TYPE_LAYER,
-                                                   TRUE));
-    }
+    new_type = GIMP_TYPE_LAYER;
 
-  gimp_item_set_image (GIMP_ITEM (new_layer), new_gimage);
+  new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (drawable), new_image,
+                                             new_type, FALSE));
 
   gimp_object_set_name (GIMP_OBJECT (new_layer),
 			gimp_object_get_name (GIMP_OBJECT (drawable)));
@@ -149,13 +140,12 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
   gimp_item_offsets (GIMP_ITEM (new_layer), &off_x, &off_y);
   gimp_item_translate (GIMP_ITEM (new_layer), -off_x, -off_y, FALSE);
 
-  gimp_image_add_layer (new_gimage, new_layer, 0);
+  gimp_image_add_layer (new_image, new_layer, 0);
 
-  gimp_image_undo_enable (new_gimage);
+  gimp_image_undo_enable (new_image);
 
-  gimp_create_display (gimage->gimp, new_gimage, 0x0101);
-
-  g_object_unref (new_gimage);
+  gimp_create_display (gimage->gimp, new_image, 0x0101);
+  g_object_unref (new_image);
 }
 
 static void
