@@ -1,12 +1,12 @@
-# Czech translation of GIMP 1.1.18.
+# Czech translation of GIMP 1.1.19.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-03-29 01:35-0800\n"
-"PO-Revision-Date: 2000-03-26 18:28+02:00\n"
+"Project-Id-Version: GIMP 1.1.19\n"
+"POT-Creation-Date: 2000-03-26 18:20+0200\n"
+"PO-Revision-Date: 2000-03-30 18:55+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -136,11 +136,11 @@ msgstr "Bézierova køivka je ji¾ uzavøená."
 msgid "Corrupt curve"
 msgstr "Poru¹ená køivka"
 
-#: app/bezier_select.c:2880
+#: app/bezier_select.c:2878
 msgid "Curve not closed!"
 msgstr "Køivka není uzavøená!"
 
-#: app/bezier_select.c:3167 app/gimage_mask.c:618
+#: app/bezier_select.c:3165 app/gimage_mask.c:611
 msgid "Paintbrush operation failed."
 msgstr "©tìtec selhal."
 
@@ -158,7 +158,7 @@ msgstr "Popøedí do pozadí (HSV)"
 
 #: app/blend.c:307
 msgid "FG to Transparent"
-msgstr "Pozadí do prùhlednosti"
+msgstr "Popøedí do prùhlednosti"
 
 #: app/blend.c:308
 msgid "Custom Gradient"
@@ -285,10 +285,10 @@ msgstr "Jas-kontrast nefunguje na indexovaných obrazovkách."
 msgid "OK"
 msgstr "OK"
 
-#: app/brightness_contrast.c:216 app/by_color_select.c:688
+#: app/brightness_contrast.c:216 app/by_color_select.c:687
 #: app/color_balance.c:273 app/curves.c:557 app/file_new_dialog.c:355
 #: app/hue_saturation.c:375 app/levels.c:339 app/posterize.c:199
-#: app/threshold.c:273 app/tools.c:1086 app/transform_core.c:409
+#: app/threshold.c:273 app/tools.c:1086 app/transform_core.c:412
 #: modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Obnovit"
@@ -315,7 +315,7 @@ msgid "Brush Editor"
 msgstr "Editor stop"
 
 #. The close button
-#: app/brush_edit.c:216 app/brush_select.c:278 app/by_color_select.c:690
+#: app/brush_edit.c:216 app/brush_select.c:278 app/by_color_select.c:689
 #: app/color_notebook.c:122 app/color_picker.c:297 app/colormap_dialog.i.c:170
 #: app/crop.c:1054 app/devices.c:755 app/docindexif.c:105
 #: app/errorconsole.c:281 app/gdisplay_ops.c:345 app/gradient.c:801
@@ -427,32 +427,32 @@ msgid "No available patterns for this operation."
 msgstr "K práci nejsou dostupné ¾ádné vzorky."
 
 #. The shell and main vbox
-#: app/by_color_select.c:683
+#: app/by_color_select.c:682
 msgid "By Color Selection"
 msgstr "Výbìr dle barvy"
 
-#: app/by_color_select.c:739
+#: app/by_color_select.c:738
 msgid "Inactive"
 msgstr "Neaktivní"
 
-#: app/by_color_select.c:747
+#: app/by_color_select.c:746
 msgid "Selection Mode"
 msgstr "Re¾im výbìru"
 
-#: app/by_color_select.c:752 app/paint_funcs.c:100
+#: app/by_color_select.c:748 app/paint_funcs.c:100
 msgid "Replace"
 msgstr "Pøepsat"
 
-#: app/by_color_select.c:753 app/colormap_dialog.i.c:127
+#: app/by_color_select.c:750 app/colormap_dialog.i.c:127
 #: app/gdisplay_color_ui.c:114
 msgid "Add"
 msgstr "Pøidat"
 
-#: app/by_color_select.c:754 app/layers_dialog.c:340 app/tool_options.c:904
+#: app/by_color_select.c:752 app/layers_dialog.c:340 app/tool_options.c:904
 msgid "Subtract"
 msgstr "Rozdíl"
 
-#: app/by_color_select.c:755
+#: app/by_color_select.c:754
 msgid "Intersect"
 msgstr "Prùnik"
 
@@ -975,19 +975,19 @@ msgstr "Naèíst"
 msgid "Save"
 msgstr "Zapsat"
 
-#: app/curves.c:1270
+#: app/curves.c:1272
 msgid "Load Curves"
 msgstr "Naèíst køivky"
 
-#: app/curves.c:1285
+#: app/curves.c:1287
 msgid "Save Curves"
 msgstr "Zapsat køivky"
 
-#: app/curves.c:1566
+#: app/curves.c:1568
 msgid "Load/Save Curves"
 msgstr "Naèíst/Zapsat køivky"
 
-#: app/curves.c:1611 app/curves.c:1629 app/levels.c:1430 app/levels.c:1448
+#: app/curves.c:1609 app/curves.c:1627 app/levels.c:1428 app/levels.c:1446
 #: app/paths_dialog.c:1903
 #, c-format
 msgid "Unable to open file %s"
@@ -1382,7 +1382,7 @@ msgstr ""
 "V %s byly provedeny zmìny.\n"
 "Pøesto zavøít?"
 
-#: app/gimage_mask.c:211
+#: app/gimage_mask.c:210
 msgid ""
 "Unable to cut/copy because the selected\n"
 "region is empty."
@@ -1390,15 +1390,15 @@ msgstr ""
 "Nelze vyøíznout/kopírovat, proto¾e zvolená oblast\n"
 "je prázdná."
 
-#: app/gimage_mask.c:349
+#: app/gimage_mask.c:342
 msgid "Float Selection: No selection to float."
 msgstr "Plovoucí výbìr: Není pro nìj výbìr."
 
-#: app/gimage_mask.c:361
+#: app/gimage_mask.c:354
 msgid "Floated Layer"
 msgstr "Plovoucí vrstva"
 
-#: app/gimage_mask.c:497
+#: app/gimage_mask.c:490
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
@@ -1406,7 +1406,7 @@ msgstr ""
 "Aktivní vrstva nemá alfa kanál\n"
 "pro pøevod do výbìru."
 
-#: app/gimage_mask.c:516
+#: app/gimage_mask.c:509
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
@@ -1414,7 +1414,7 @@ msgstr ""
 "Aktivní vrstva nemá masku\n"
 "pro pøevod do výbìru."
 
-#: app/gimage_mask.c:568
+#: app/gimage_mask.c:561
 msgid "No selection to stroke!"
 msgstr "Pro tah není výbìr!"
 
@@ -1725,7 +1725,7 @@ msgstr "Vlo¾it do"
 
 #: app/global_edit.c:750
 msgid "Paste as New"
-msgstr "Vlo¾it jako nové"
+msgstr "Vlo¾it do nového"
 
 #: app/global_edit.c:764
 msgid "Paste Named Buffer"
@@ -3294,15 +3294,15 @@ msgstr "Vstupní úrovnì:"
 msgid "Output Levels:"
 msgstr "Výstupní úrovnì:"
 
-#: app/levels.c:1051
+#: app/levels.c:1053
 msgid "Load Levels"
 msgstr "Naèíst úrovnì"
 
-#: app/levels.c:1066
+#: app/levels.c:1068
 msgid "Save Levels"
 msgstr "Zapsat úrovnì"
 
-#: app/levels.c:1385
+#: app/levels.c:1387
 msgid "Load/Save Levels"
 msgstr "Naèíst/Zapsat úrovnì"
 
@@ -4270,7 +4270,7 @@ msgstr "Stav: "
 msgid "Autoload during startup"
 msgstr "Èíst automaticky bìhem spou¹tìní"
 
-#: app/move.c:473
+#: app/move.c:458
 msgid "Move Tool"
 msgstr "Pøesun"
 
@@ -4989,7 +4989,7 @@ msgstr "Volby nástrojù"
 
 #: app/preferences_dialog.c:2033
 msgid "Paint Options"
-msgstr "Volby ¹tìtce"
+msgstr "Volby kreslení"
 
 #: app/preferences_dialog.c:2036
 msgid "Use Global Paint Options"
@@ -5240,23 +5240,23 @@ msgstr "Úpravy vlastností Qmask"
 msgid "Mask Opacity:"
 msgstr "Krytí masky:"
 
-#: app/rect_select.c:195
+#: app/rect_select.c:186
 msgid "Selection: ADD"
 msgstr "Výbìr: PØIDÁNÍ"
 
-#: app/rect_select.c:198
+#: app/rect_select.c:189
 msgid "Selection: SUBTRACT"
 msgstr "Výbìr: ODEBRÁNÍ"
 
-#: app/rect_select.c:201
+#: app/rect_select.c:192
 msgid "Selection: INTERSECT"
 msgstr "Výbìr: PRÙNIK"
 
-#: app/rect_select.c:204
+#: app/rect_select.c:195
 msgid "Selection: REPLACE"
 msgstr "Výbìr: PØEPSÁNÍ"
 
-#: app/rect_select.c:432 app/rect_select.c:439
+#: app/rect_select.c:421 app/rect_select.c:428
 msgid "Selection: "
 msgstr "Výbìr: "
 
@@ -5383,17 +5383,17 @@ msgstr "Obvod:"
 msgid "Use Dynamic Text"
 msgstr "Pou¾ít dynamického textu"
 
-#: app/text_tool.c:601
+#: app/text_tool.c:603
 #, c-format
 msgid "Font '%s' not found."
 msgstr "Znaková sada '%s' nebyla nalezena."
 
-#: app/text_tool.c:620
+#: app/text_tool.c:622
 #, c-format
 msgid "Font '%s' not found.%s"
 msgstr "Znaková sada '%s' nebyla nalezena.%s"
 
-#: app/text_tool.c:623
+#: app/text_tool.c:625
 msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
@@ -5402,7 +5402,7 @@ msgstr ""
 "\n"
 "Nemáte-li vektorová písma, zkuste vypnout vyhlazování ve volbách nástroje."
 
-#: app/text_tool.c:734
+#: app/text_tool.c:736
 msgid "Text Layer"
 msgstr "Textová vrstva"
 
@@ -5658,7 +5658,7 @@ msgstr "Oøez obrázku nebo nastavení rozmìrù plátna"
 
 #. the transform type radio buttons
 #: app/tools.c:250 app/tools.c:268 app/tools.c:286 app/tools.c:304
-#: app/transform_core.c:255 app/transform_tool.c:211
+#: app/transform_core.c:259 app/transform_tool.c:211
 msgid "Transform"
 msgstr "Transformace"
 
@@ -5890,19 +5890,19 @@ msgstr "/Obrázek/Histogram..."
 msgid "View image histogram"
 msgstr "Zobrazit histogram obrázku"
 
-#: app/transform_core.c:252
+#: app/transform_core.c:256
 msgid "Rotate"
 msgstr "Rotovat"
 
-#: app/transform_core.c:253
+#: app/transform_core.c:257
 msgid "Scale"
 msgstr "Velikost"
 
-#: app/transform_core.c:254
+#: app/transform_core.c:258
 msgid "Shear"
 msgstr "Naklonit"
 
-#: app/transform_core.c:363
+#: app/transform_core.c:367
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
@@ -5910,7 +5910,7 @@ msgstr ""
 "Transformace nefunguje na vrstvách,\n"
 "které obsahují masky."
 
-#: app/transform_core.c:1612
+#: app/transform_core.c:1581
 msgid "Transformation"
 msgstr "Transformace"
 
