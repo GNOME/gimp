@@ -1,5 +1,9 @@
 2003-05-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-scale.c: some more code cleanup.
+
+2003-05-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-scale.[ch]
 	(gimp_display_shell_scale_zoom_fraction): new utility function
 	which takes GimpZoomType and zooms "scalesrc" and "scaledest".
