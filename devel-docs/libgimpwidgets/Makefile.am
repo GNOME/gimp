@@ -28,8 +28,102 @@ CFILE_GLOB = $(DOC_SOURCE_DIR)/*.c
 # Header files to ignore when scanning
 IGNORE_HFILES =
 
+
 # Images to copy into HTML directory
-HTML_IMAGES=
+IMAGES_DIR = $(top_srcdir)/themes/Default/images/
+HTML_IMAGES = \
+	$(IMAGES_DIR)/stock-all-16.png				\
+	$(IMAGES_DIR)/stock-anchor-16.png			\
+	$(IMAGES_DIR)/stock-char-picker-22.png			\
+	$(IMAGES_DIR)/stock-color-picker-black-18.png		\
+	$(IMAGES_DIR)/stock-color-picker-gray-18.png		\
+	$(IMAGES_DIR)/stock-color-picker-white-18.png		\
+	$(IMAGES_DIR)/stock-color-triangle-16.png		\
+	$(IMAGES_DIR)/stock-convert-grayscale-16.png		\
+	$(IMAGES_DIR)/stock-convert-indexed-16.png		\
+	$(IMAGES_DIR)/stock-convert-rgb-16.png			\
+	$(IMAGES_DIR)/stock-default-colors-12.png		\
+	$(IMAGES_DIR)/stock-duplicate-16.png			\
+	$(IMAGES_DIR)/stock-edit-16.png				\
+	$(IMAGES_DIR)/stock-eye-20.png				\
+	$(IMAGES_DIR)/stock-grow-16.png				\
+	$(IMAGES_DIR)/stock-hchain-24.png			\
+	$(IMAGES_DIR)/stock-hchain-broken-24.png		\
+	$(IMAGES_DIR)/stock-info-24.png				\
+	$(IMAGES_DIR)/stock-invert-16.png			\
+	$(IMAGES_DIR)/stock-layer-to-imagesize-16.png		\
+	$(IMAGES_DIR)/stock-letter-spacing-22.png		\
+	$(IMAGES_DIR)/stock-line-spacing-22.png			\
+	$(IMAGES_DIR)/stock-linked-20.png			\
+	$(IMAGES_DIR)/stock-merge-down-16.png			\
+	$(IMAGES_DIR)/stock-navigation-16.png			\
+	$(IMAGES_DIR)/stock-none-16.png				\
+	$(IMAGES_DIR)/stock-paste-as-new-16.png			\
+	$(IMAGES_DIR)/stock-paste-into-16.png			\
+	$(IMAGES_DIR)/stock-path-stroke-16.png			\
+	$(IMAGES_DIR)/stock-plugin-16.png			\
+	$(IMAGES_DIR)/stock-qmask-off-16.png			\
+	$(IMAGES_DIR)/stock-qmask-on-16.png			\
+	$(IMAGES_DIR)/stock-reset-16.png			\
+	$(IMAGES_DIR)/stock-reshow-filter-16.png		\
+	$(IMAGES_DIR)/stock-resize-16.png			\
+	$(IMAGES_DIR)/stock-rotate-180-16.png			\
+	$(IMAGES_DIR)/stock-rotate-270-16.png			\
+	$(IMAGES_DIR)/stock-rotate-90-16.png			\
+	$(IMAGES_DIR)/stock-scale-16.png			\
+	$(IMAGES_DIR)/stock-selection-add-16.png		\
+	$(IMAGES_DIR)/stock-selection-intersect-16.png		\
+	$(IMAGES_DIR)/stock-selection-replace-16.png		\
+	$(IMAGES_DIR)/stock-selection-stroke-16.png		\
+	$(IMAGES_DIR)/stock-selection-subtract-16.png		\
+	$(IMAGES_DIR)/stock-selection-to-channel-16.png		\
+	$(IMAGES_DIR)/stock-selection-to-path-16.png		\
+	$(IMAGES_DIR)/stock-shrink-16.png			\
+	$(IMAGES_DIR)/stock-swap-colors-12.png			\
+	$(IMAGES_DIR)/stock-tool-options-16.png			\
+	$(IMAGES_DIR)/stock-vchain-24.png			\
+	$(IMAGES_DIR)/stock-vchain-broken-24.png		\
+	$(IMAGES_DIR)/stock-warning-24.png			\
+	$(IMAGES_DIR)/stock-wilber-16.png			\
+	$(IMAGES_DIR)/stock-wilber-eek-64.png			\
+	$(IMAGES_DIR)/tools/stock-tool-airbrush-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-bezier-select-22.png	\
+	$(IMAGES_DIR)/tools/stock-tool-blend-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-blur-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-brightness-contrast-22.png\
+	$(IMAGES_DIR)/tools/stock-tool-bucket-fill-22.png	\
+	$(IMAGES_DIR)/tools/stock-tool-by-color-select-22.png	\
+	$(IMAGES_DIR)/tools/stock-tool-clone-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-color-balance-22.png	\
+	$(IMAGES_DIR)/tools/stock-tool-color-picker-22.png	\
+	$(IMAGES_DIR)/tools/stock-tool-crop-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-curves-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-dodge-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-ellipse-select-22.png	\
+	$(IMAGES_DIR)/tools/stock-tool-eraser-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-flip-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-free-select-22.png	\
+	$(IMAGES_DIR)/tools/stock-tool-fuzzy-select-22.png	\
+	$(IMAGES_DIR)/tools/stock-tool-histogram-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-hue-saturation-22.png	\
+	$(IMAGES_DIR)/tools/stock-tool-ink-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-iscissors-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-levels-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-measure-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-move-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-paintbrush-22.png	\
+	$(IMAGES_DIR)/tools/stock-tool-path-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-pencil-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-perspective-22.png	\
+	$(IMAGES_DIR)/tools/stock-tool-posterize-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-rect-select-22.png	\
+	$(IMAGES_DIR)/tools/stock-tool-rotate-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-scale-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-shear-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-smudge-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-text-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-threshold-22.png		\
+	$(IMAGES_DIR)/tools/stock-tool-zoom-22.png
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)
 content_files =

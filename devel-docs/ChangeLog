@@ -1,5 +1,13 @@
 2003-01-05  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpstock.sgml: started to document the
+	stock items.
+
+2003-01-05  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/tmpl/gimpchainbutton.sgml
 	* libgimpwidgets/tmpl/gimpcolorbutton.sgml
 	* libgimpwidgets/tmpl/gimpfileselection.sgml

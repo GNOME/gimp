@@ -1,4 +1,8 @@
 <!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
+
+<!notation PNG system "PNG">
+<!entity % local.notation.class "| PNG">
+
 <!entity GimpButton SYSTEM "sgml/gimpbutton.sgml">
 <!entity GimpChainButton SYSTEM "sgml/gimpchainbutton.sgml">
 <!entity GimpColorArea SYSTEM "sgml/gimpcolorarea.sgml">

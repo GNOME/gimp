@@ -6,7 +6,10 @@ Prebuilt common menu/toolbar items and corresponding icons
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+GIMP registers a set of menu/toolbar items and corresponding icons in addition
+to the standard GTK+ stock items. These can be used just like GTK+ stock
+items. GIMP also overrides a few of the GTK+ icons (namely the ones in dialog
+size).
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -23,644 +26,644 @@ Prebuilt common menu/toolbar items and corresponding icons
 
 <!-- ##### MACRO GIMP_STOCK_ALL ##### -->
 <para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_ANCHOR ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_CHAR_PICKER ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_COLOR_PICKER_BLACK ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_COLOR_PICKER_GRAY ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_COLOR_PICKER_WHITE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_COLOR_TRIANGLE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_CONVERT_GRAYSCALE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_CONVERT_INDEXED ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_CONVERT_RGB ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_DEFAULT_COLORS ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_DUPLICATE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_EDIT ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_GROW ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_HCHAIN ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_HCHAIN_BROKEN ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_INFO ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_INVERT ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_LAYER_TO_IMAGESIZE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_LETTER_SPACING ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_LINE_SPACING ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_LINKED ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_MERGE_DOWN ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_NAVIGATION ##### -->
-<para>
-
+<inlinegraphic fileref="stock-all-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_NONE ##### -->
 <para>
-
+<inlinegraphic fileref="stock-none-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_PASTE_AS_NEW ##### -->
+<!-- ##### MACRO GIMP_STOCK_ANCHOR ##### -->
 <para>
-
+<inlinegraphic fileref="stock-anchor-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_PASTE_INTO ##### -->
+<!-- ##### MACRO GIMP_STOCK_DUPLICATE ##### -->
 <para>
-
+<inlinegraphic fileref="stock-duplicate-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_PATH_STROKE ##### -->
+<!-- ##### MACRO GIMP_STOCK_EDIT ##### -->
 <para>
-
+<inlinegraphic fileref="stock-edit-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_PLUGIN ##### -->
+<!-- ##### MACRO GIMP_STOCK_GROW ##### -->
 <para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_QMASK_OFF ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_QMASK_ON ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_RESET ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_RESHOW_FILTER ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_RESIZE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_ROTATE_180 ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_ROTATE_270 ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_ROTATE_90 ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_SCALE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_SELECTION_ADD ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_SELECTION_INTERSECT ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_SELECTION_REPLACE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_SELECTION_STROKE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_SELECTION_SUBTRACT ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_SELECTION_TO_CHANNEL ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_SELECTION_TO_PATH ##### -->
-<para>
-
+<inlinegraphic fileref="stock-grow-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SHRINK ##### -->
 <para>
-
+<inlinegraphic fileref="stock-shrink-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_SWAP_COLORS ##### -->
+<!-- ##### MACRO GIMP_STOCK_INVERT ##### -->
 <para>
-
+<inlinegraphic fileref="stock-invert-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_AIRBRUSH ##### -->
+<!-- ##### MACRO GIMP_STOCK_LAYER_TO_IMAGESIZE ##### -->
 <para>
-
+<inlinegraphic fileref="stock-layer-to-imagesize-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_BEZIER_SELECT ##### -->
+<!-- ##### MACRO GIMP_STOCK_MERGE_DOWN ##### -->
 <para>
-
+<inlinegraphic fileref="stock-merge-down-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_BLEND ##### -->
+<!-- ##### MACRO GIMP_STOCK_NAVIGATION ##### -->
 <para>
-
+<inlinegraphic fileref="stock-navigation-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_BLUR ##### -->
+<!-- ##### MACRO GIMP_STOCK_PASTE_AS_NEW ##### -->
 <para>
-
+<inlinegraphic fileref="stock-paste-as-new-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST ##### -->
+<!-- ##### MACRO GIMP_STOCK_PASTE_INTO ##### -->
 <para>
-
+<inlinegraphic fileref="stock-paste-into-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_BUCKET_FILL ##### -->
+<!-- ##### MACRO GIMP_STOCK_PATH_STROKE ##### -->
 <para>
-
+<inlinegraphic fileref="stock-path-stroke-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_BY_COLOR_SELECT ##### -->
+<!-- ##### MACRO GIMP_STOCK_PLUGIN ##### -->
 <para>
-
+<inlinegraphic fileref="stock-plugin-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_CLONE ##### -->
+<!-- ##### MACRO GIMP_STOCK_QMASK_OFF ##### -->
 <para>
-
+<inlinegraphic fileref="stock-qmask-off-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_COLOR_BALANCE ##### -->
+<!-- ##### MACRO GIMP_STOCK_QMASK_ON ##### -->
 <para>
-
+<inlinegraphic fileref="stock-qmask-on-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_COLOR_PICKER ##### -->
+<!-- ##### MACRO GIMP_STOCK_RESET ##### -->
 <para>
-
+<inlinegraphic fileref="stock-reset-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_CROP ##### -->
+<!-- ##### MACRO GIMP_STOCK_RESHOW_FILTER ##### -->
 <para>
-
+<inlinegraphic fileref="stock-reshow-filter-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_CURVES ##### -->
+<!-- ##### MACRO GIMP_STOCK_RESIZE ##### -->
 <para>
-
+<inlinegraphic fileref="stock-resize-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_DODGE ##### -->
+<!-- ##### MACRO GIMP_STOCK_ROTATE_180 ##### -->
 <para>
-
+<inlinegraphic fileref="stock-rotate-180-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_ELLIPSE_SELECT ##### -->
+<!-- ##### MACRO GIMP_STOCK_ROTATE_270 ##### -->
 <para>
-
+<inlinegraphic fileref="stock-rotate-270-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_ERASER ##### -->
+<!-- ##### MACRO GIMP_STOCK_ROTATE_90 ##### -->
 <para>
-
+<inlinegraphic fileref="stock-rotate-90-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_FLIP ##### -->
+<!-- ##### MACRO GIMP_STOCK_SCALE ##### -->
 <para>
-
+<inlinegraphic fileref="stock-scale-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_FREE_SELECT ##### -->
+<!-- ##### MACRO GIMP_STOCK_LINKED ##### -->
 <para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_FUZZY_SELECT ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_HISTOGRAM ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_HUE_SATURATION ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_INK ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_ISCISSORS ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_LEVELS ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_MEASURE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_MOVE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_OPTIONS ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_PAINTBRUSH ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_PATH ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_PENCIL ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_PERSPECTIVE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_POSTERIZE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_RECT_SELECT ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_ROTATE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_SCALE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_SHEAR ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_SMUDGE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_TEXT ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_THRESHOLD ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_ZOOM ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_VCHAIN ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_VCHAIN_BROKEN ##### -->
-<para>
-
+<inlinegraphic fileref="stock-linked-20.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_VISIBLE ##### -->
 <para>
+<inlinegraphic fileref="stock-eye-20.png" format="png"></inlinegraphic>
+</para>
 
+
+
+<!-- ##### MACRO GIMP_STOCK_SELECTION_ADD ##### -->
+<para>
+<inlinegraphic fileref="stock-selection-add-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_SELECTION_INTERSECT ##### -->
+<para>
+<inlinegraphic fileref="stock-selection-intersect-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_SELECTION_REPLACE ##### -->
+<para>
+<inlinegraphic fileref="stock-selection-replace-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_SELECTION_STROKE ##### -->
+<para>
+<inlinegraphic fileref="stock-selection-stroke-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_SELECTION_SUBTRACT ##### -->
+<para>
+<inlinegraphic fileref="stock-selection-subtract-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_SELECTION_TO_CHANNEL ##### -->
+<para>
+<inlinegraphic fileref="stock-selection-to-channel-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_SELECTION_TO_PATH ##### -->
+<para>
+<inlinegraphic fileref="stock-selection-to-path-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CHAR_PICKER ##### -->
+<para>
+<inlinegraphic fileref="stock-char-picker-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_LETTER_SPACING ##### -->
+<para>
+<inlinegraphic fileref="stock-letter-spacing-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_LINE_SPACING ##### -->
+<para>
+<inlinegraphic fileref="stock-line-spacing-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_OPTIONS ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-options-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_COLOR_PICKER_BLACK ##### -->
+<para>
+<inlinegraphic fileref="stock-color-picker-black-18.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_COLOR_PICKER_GRAY ##### -->
+<para>
+<inlinegraphic fileref="stock-color-picker-gray-18.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_COLOR_PICKER_WHITE ##### -->
+<para>
+<inlinegraphic fileref="stock-color-picker-white-18.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_COLOR_TRIANGLE ##### -->
+<para>
+<inlinegraphic fileref="stock-color-triangle-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CONVERT_GRAYSCALE ##### -->
+<para>
+<inlinegraphic fileref="stock-convert-grayscale-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CONVERT_INDEXED ##### -->
+<para>
+<inlinegraphic fileref="stock-convert-indexed-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CONVERT_RGB ##### -->
+<para>
+<inlinegraphic fileref="stock-convert-rgb-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_DEFAULT_COLORS ##### -->
+<para>
+<inlinegraphic fileref="stock-default-colors-12.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_SWAP_COLORS ##### -->
+<para>
+<inlinegraphic fileref="stock-swap-colors-12.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_AIRBRUSH ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-airbrush-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_BEZIER_SELECT ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-bezier-select-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_BLEND ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-blend-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_BLUR ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-blur-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-brightness-contrast-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_BUCKET_FILL ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-bucket-fill-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_BY_COLOR_SELECT ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-by-color-select-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_CLONE ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-clone-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_COLOR_BALANCE ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-color-balance-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_COLOR_PICKER ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-color-picker-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_CROP ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-crop-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_CURVES ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-curves-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_DODGE ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-dodge-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_ELLIPSE_SELECT ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-ellipse-select-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_ERASER ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-eraser-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_FLIP ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-flip-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_FREE_SELECT ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-free-select-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_FUZZY_SELECT ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-fuzzy-select-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_HISTOGRAM ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-histogram-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_HUE_SATURATION ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-hue-saturation-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_INK ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-ink-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_ISCISSORS ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-iscissors-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_LEVELS ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-levels-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_MEASURE ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-measure-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_MOVE ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-move-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_PAINTBRUSH ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-paintbrush-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_PATH ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-path-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_PENCIL ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-pencil-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_PERSPECTIVE ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-perspective-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_POSTERIZE ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-posterize-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_RECT_SELECT ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-rect-select-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_ROTATE ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-rotate-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_SCALE ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-scale-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_SHEAR ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-shear-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_SMUDGE ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-smudge-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_TEXT ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-text-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_THRESHOLD ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-threshold-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_ZOOM ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-zoom-22.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_HCHAIN ##### -->
+<para>
+<inlinegraphic fileref="stock-hchain-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_HCHAIN_BROKEN ##### -->
+<para>
+<inlinegraphic fileref="stock-hchain-broken-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_VCHAIN ##### -->
+<para>
+<inlinegraphic fileref="stock-vchain-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_VCHAIN_BROKEN ##### -->
+<para>
+<inlinegraphic fileref="stock-vchain-broken-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_INFO ##### -->
+<para>
+<inlinegraphic fileref="stock-info-24.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_WARNING ##### -->
 <para>
-
+<inlinegraphic fileref="stock-warning-24.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_WILBER ##### -->
 <para>
-
+<inlinegraphic fileref="stock-wilber-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_WILBER_EEK ##### -->
 <para>
-
+<inlinegraphic fileref="stock-wilber-eek-64.png" format="png"></inlinegraphic>
 </para>
 
 
