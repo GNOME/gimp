@@ -1,5 +1,13 @@
 2005-01-07  Sven Neumann  <sven@gimp.org>
 
+	Merged from HEAD branch:
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_button_press): handle RTL layouts (fixes
+	bug #162663).
+
+2005-01-07  Sven Neumann  <sven@gimp.org>
+
 	Merged from HEAD branch (fix by Shlomi Fish):
 
 	* plug-ins/script-fu/scripts/frosty-logo.scm: made sure the shadow

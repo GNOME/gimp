@@ -821,22 +821,20 @@ gimp_container_tree_view_find_click_cell (GList             *cells,
   for (list = cells; list; list = g_list_next (list))
     {
       GtkCellRenderer *renderer = list->data;
-      gint             start_pos;
+      gint             start;
       gint             width;
 
       if (renderer->visible &&
           gtk_tree_view_column_cell_get_position (column, renderer,
-                                                  &start_pos, &width)       &&
-          width > 0                                                         &&
-          column_area->x + start_pos + renderer->xpad             <= tree_x &&
-          column_area->x + start_pos + renderer->xpad + width - 1 >= tree_x)
+                                                  &start, &width))
         {
-#if 0
-          g_print ("click on cell at %d (%d width) (%d column->x) (%d tree_x)\n",
-                   start_pos, width, column_area->x, tree_x);
-#endif
+          gint x = start + column_area->x;
 
-          return renderer;
+          if (tree_x >= x + renderer->xpad &&
+              tree_x < x + width - renderer->xpad)
+            {
+              return renderer;
+            }
         }
     }
 
@@ -851,15 +849,20 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
   GimpContainerView *container_view = GIMP_CONTAINER_VIEW (tree_view);
   GtkTreeViewColumn *column;
   GtkTreePath       *path;
+  gint               x;
 
   tree_view->dnd_viewable = NULL;
 
   if (! GTK_WIDGET_HAS_FOCUS (widget))
     gtk_widget_grab_focus (widget);
 
+  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+    x = widget->allocation.width - bevent->x;
+  else
+    x = bevent->x;
+
   if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget),
-                                     bevent->x,
-                                     bevent->y,
+                                     x, bevent->y,
                                      &path, &column, NULL, NULL))
     {
       GimpViewRenderer         *renderer;
