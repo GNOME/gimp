@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 1999-10-06 13:09-0700\n"
-"PO-Revision-Date: 1999-10-04 19:46+0200\n"
+"Project-Id-Version: GIMP 1.1.10\n"
+"POT-Creation-Date: 1999-10-08 20:25+0200\n"
+"PO-Revision-Date: 1999-10-08 22:31+0200\n"
 "Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -296,7 +296,7 @@ msgstr "Kontrast"
 #. The preview toggle
 #: app/brightness_contrast.c:309 app/color_balance.c:436 app/curves.c:660
 #: app/fileops.c:411 app/hue_saturation.c:569 app/levels.c:544
-#: app/palette.c:2939 app/posterize.c:239 app/threshold.c:350
+#: app/palette.c:2943 app/posterize.c:239 app/threshold.c:350
 msgid "Preview"
 msgstr "Förhandsvisning"
 
@@ -311,10 +311,10 @@ msgstr "Penseleditor"
 #: app/devices.c:715 app/docindexif.c:104 app/errorconsole.c:277
 #: app/gdisplay_ops.c:354 app/gradient.c:697 app/gradient_select.c:456
 #: app/histogram_tool.c:292 app/info_window.c:267 app/lc_dialog.c:198
-#: app/measure.c:180 app/nav_window.c:1095 app/palette.c:2035
-#: app/palette.c:2052 app/palette.c:2837 app/palette_select.c:225
+#: app/measure.c:180 app/nav_window.c:1095 app/palette.c:2039
+#: app/palette.c:2056 app/palette.c:2841 app/palette_select.c:225
 #: app/pattern_select.c:102 app/pattern_select.c:123 app/tips_dialog.c:147
-#: app/tools.c:928 app/undo_history.c:452 libgimp/gimpfileselection.c:356
+#: app/tools.c:928 app/undo_history.c:614 libgimp/gimpfileselection.c:356
 #: libgimp/gimpunitmenu.c:518
 msgid "Close"
 msgstr "Stäng"
@@ -344,7 +344,7 @@ msgid "Brush Selection"
 msgstr "Penselmarkering"
 
 #: app/brush_select.c:225 app/gradient.c:695 app/module_db.c:305
-#: app/palette.c:2033 app/pattern_select.c:121
+#: app/palette.c:2037 app/pattern_select.c:121
 msgid "Refresh"
 msgstr "Uppdatera"
 
@@ -366,19 +366,19 @@ msgstr "Opacitet:"
 msgid "Mode:"
 msgstr "Läge:"
 
-#: app/brush_select.c:372 app/palette.c:1446 app/palette.c:1467
-#: app/palette.c:2222
+#: app/brush_select.c:372 app/palette.c:1448 app/palette.c:1469
+#: app/palette.c:2226
 msgid "New"
 msgstr "Ny"
 
 #: app/brush_select.c:378 app/colormap_dialog.i.c:150
-#: app/gradient_select.c:454 app/palette.c:1438 app/palette.c:2050
+#: app/gradient_select.c:454 app/palette.c:1440 app/palette.c:2054
 #: app/palette_select.c:223
 msgid "Edit"
 msgstr "Redigera"
 
 #: app/brush_select.c:384 app/global_edit.c:710 app/gradient.c:1564
-#: app/palette.c:1453 app/palette.c:2231
+#: app/palette.c:1455 app/palette.c:2235
 msgid "Delete"
 msgstr "Ta bort"
 
@@ -1047,7 +1047,7 @@ msgstr "devices_rc_update anropades flera ggr för icke närvarande enhet\n"
 msgid "Device Status"
 msgstr "Enhetsstatus"
 
-#: app/devices.c:713 app/gradient.c:693 app/levels.c:560 app/palette.c:2031
+#: app/devices.c:713 app/gradient.c:693 app/levels.c:560 app/palette.c:2035
 #: app/preferences_dialog.c:1172
 msgid "Save"
 msgstr "Spara"
@@ -1861,8 +1861,8 @@ msgstr "Kanalen kan ej höjas högre"
 msgid "Channel cannot be lowered any further"
 msgstr "Kanalen kan ej sänkas längre"
 
-#: app/gimpimage.c:3138 app/palette.c:541 app/palette.c:568 app/palette.c:930
-#: app/palette.c:934 app/palette.c:2383 app/palette.c:3065
+#: app/gimpimage.c:3138 app/palette.c:543 app/palette.c:570 app/palette.c:932
+#: app/palette.c:936 app/palette.c:2387 app/palette.c:3069
 msgid "Untitled"
 msgstr "Namnlös"
 
@@ -2077,11 +2077,11 @@ msgid "Gradient Editor"
 msgstr "Färgskale-editor"
 
 #: app/gradient.c:721 app/gradient_select.c:474 app/paintbrush.c:284
-#: app/palette.c:2888
+#: app/palette.c:2892
 msgid "Gradient"
 msgstr "Färgskala"
 
-#: app/gradient.c:722 app/gradient_select.c:475 app/palette.c:2193
+#: app/gradient.c:722 app/gradient_select.c:475 app/palette.c:2197
 #: app/palette_select.c:245
 msgid "Name"
 msgstr "Namn"
@@ -3249,7 +3249,7 @@ msgstr "Lager"
 msgid "Miscellaneous"
 msgstr "Diverse"
 
-#: app/internal_procs.c:127 app/palette.c:2179 app/palette.c:2191
+#: app/internal_procs.c:127 app/palette.c:2183 app/palette.c:2195
 #: app/palette_select.c:243
 msgid "Palette"
 msgstr "Palett"
@@ -3282,7 +3282,7 @@ msgstr "Textprocedurer"
 msgid "Tool procedures"
 msgstr "Verktygsprocedurer"
 
-#: app/internal_procs.c:154 app/undo_history.c:544
+#: app/internal_procs.c:154 app/undo_history.c:712
 msgid "Undo"
 msgstr "Ångra"
 
@@ -4398,12 +4398,12 @@ msgstr "Tona ut"
 msgid "Type:"
 msgstr "Typ:"
 
-#: app/palette.c:502
+#: app/palette.c:504
 #, c-format
 msgid "can't save palette \"%s\"\n"
 msgstr "kan inte spara palett \"%s\"\n"
 
-#: app/palette.c:642
+#: app/palette.c:644
 #, c-format
 msgid ""
 "Loading palette %s:\n"
@@ -4416,7 +4416,7 @@ msgstr ""
 "saknade huvud\n"
 "Behöver denna fil konverteras från DOS?"
 
-#: app/palette.c:647
+#: app/palette.c:649
 #, c-format
 msgid ""
 "Loading palette %s:\n"
@@ -4425,7 +4425,7 @@ msgstr ""
 "Laddar palett %s:\n"
 "Korrupt palett: saknade huvud"
 
-#: app/palette.c:660
+#: app/palette.c:662
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -4434,7 +4434,7 @@ msgstr ""
 "Laddar palett %s (rad %d):\n"
 "Läsfel"
 
-#: app/palette.c:675
+#: app/palette.c:677
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -4443,7 +4443,7 @@ msgstr ""
 "Laddar palett %s (rad %d):\n"
 "Saknar RÖD komponent"
 
-#: app/palette.c:683
+#: app/palette.c:685
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -4452,7 +4452,7 @@ msgstr ""
 "Laddar palett %s (rad %d):\n"
 "Saknar GRÖN komponent"
 
-#: app/palette.c:690
+#: app/palette.c:692
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -4461,7 +4461,7 @@ msgstr ""
 "Laddar palett %s (rad %d):\n"
 "Saknar BLÅ komponent"
 
-#: app/palette.c:699
+#: app/palette.c:701
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -4470,85 +4470,85 @@ msgstr ""
 "Laddar palett %s (rad %d):\n"
 "RGB-värdet utanför giltigt område"
 
-#: app/palette.c:907
+#: app/palette.c:909
 msgid "Black"
 msgstr "Svart"
 
-#: app/palette.c:1078
+#: app/palette.c:1080
 msgid "New Palette"
 msgstr "Ny palett"
 
-#: app/palette.c:1081
+#: app/palette.c:1083
 msgid "Enter a name for new palette"
 msgstr "Ange namn för ny palett"
 
-#: app/palette.c:1956 app/palette.c:2129
+#: app/palette.c:1958 app/palette.c:2133
 msgid "Undefined"
 msgstr "Odefinerad"
 
-#: app/palette.c:2025
+#: app/palette.c:2029
 msgid "Color Palette Edit"
 msgstr "Färgpalett editor"
 
-#: app/palette.c:2044
+#: app/palette.c:2048
 msgid "Color Palette"
 msgstr "Färgpalett"
 
-#: app/palette.c:2181 app/palette.c:2956 libgimp/gimpfileselection.c:355
+#: app/palette.c:2185 app/palette.c:2960 libgimp/gimpfileselection.c:355
 #: libgimp/gimpunitmenu.c:510
 msgid "Select"
 msgstr "Välj"
 
-#: app/palette.c:2192 app/palette_select.c:244
+#: app/palette.c:2196 app/palette_select.c:244
 msgid "Ncols"
 msgstr "Nfärger"
 
-#: app/palette.c:2213
+#: app/palette.c:2217
 msgid "Palette Ops"
 msgstr "Palett-operationer"
 
 #. The "Import" frame
-#: app/palette.c:2240 app/palette.c:2835 app/palette.c:2849
+#: app/palette.c:2244 app/palette.c:2839 app/palette.c:2853
 msgid "Import"
 msgstr "Importera"
 
-#: app/palette.c:2249
+#: app/palette.c:2253
 msgid "Merge"
 msgstr "Sammanfoga"
 
-#: app/palette.c:2484
+#: app/palette.c:2488
 msgid "Merge Palette"
 msgstr "Sammanfoga palett"
 
-#: app/palette.c:2487
+#: app/palette.c:2491
 msgid "Enter a name for merged palette"
 msgstr "Ange namn för sammanfogad palett"
 
-#: app/palette.c:2829
+#: app/palette.c:2833
 msgid "Import Palette"
 msgstr "Importera palett"
 
 #. The source's name
-#: app/palette.c:2865
+#: app/palette.c:2869
 msgid "Name:"
 msgstr "Namn:"
 
-#: app/palette.c:2874
+#: app/palette.c:2878
 msgid "new_import"
 msgstr "new_import"
 
 #. The source type
-#: app/palette.c:2878
+#: app/palette.c:2882
 msgid "Source:"
 msgstr "Källa:"
 
 #. The sample size
-#: app/palette.c:2908
+#: app/palette.c:2912
 msgid "Sample Size:"
 msgstr "Provstorlek:"
 
 #. The interval
-#: app/palette.c:2921
+#: app/palette.c:2925
 msgid "Interval:"
 msgstr "Intervall:"
 
@@ -6040,16 +6040,16 @@ msgstr "Rutnätsdensitet:"
 msgid "Clip result"
 msgstr "Klipp resultat"
 
-#: app/undo_history.c:198
+#: app/undo_history.c:352
 msgid "[ base image ]"
-msgstr "[ bas bild ]"
+msgstr "[ grundbild ]"
 
-#: app/undo_history.c:444
+#: app/undo_history.c:606
 #, c-format
 msgid "%s: undo history"
 msgstr "%s: ångra-historia"
 
-#: app/undo_history.c:568
+#: app/undo_history.c:736
 msgid "Redo"
 msgstr "Gör om"
 
