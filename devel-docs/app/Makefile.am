@@ -76,9 +76,6 @@ unused_symbols = \
 	-u $(SYMPREFIX)palette_import_dialog_show	\
 	-u $(SYMPREFIX)resize_dialog_new		\
 	-u $(SYMPREFIX)stroke_dialog_new		\
-	-u $(SYMPREFIX)file_open_dialog_new		\
-	-u $(SYMPREFIX)file_open_location_dialog_nw	\
-	-u $(SYMPREFIX)file_save_dialog_new		\
 	-u $(SYMPREFIX)color_dialog_new
 
 GTKDOC_LIBS = \

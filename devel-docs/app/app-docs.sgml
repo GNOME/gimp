@@ -773,6 +773,7 @@
       <xi:include href="xml/gimpviewrenderer.xml" />
       <xi:include href="xml/gimpviewrenderer-utils.xml" />
       <xi:include href="xml/gimpviewrendererbrush.xml" />
+      <xi:include href="xml/gimpviewrendererbuffer.xml" />
       <xi:include href="xml/gimpviewrendererdrawable.xml" />
       <xi:include href="xml/gimpviewrenderergradient.xml" />
       <xi:include href="xml/gimpviewrendererimage.xml" />

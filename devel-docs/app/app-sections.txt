@@ -5061,6 +5061,21 @@ GIMP_VIEW_RENDERER_BRUSH_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpviewrendererbuffer</FILE>
+<TITLE>GimpViewRendererBuffer</TITLE>
+GimpViewRendererBuffer
+<SUBSECTION Standard>
+GimpViewRendererBufferClass
+GIMP_VIEW_RENDERER_BUFFER
+GIMP_IS_VIEW_RENDERER_BUFFER
+GIMP_TYPE_VIEW_RENDERER_BUFFER
+gimp_view_renderer_buffer_get_type
+GIMP_VIEW_RENDERER_BUFFER_CLASS
+GIMP_IS_VIEW_RENDERER_BUFFER_CLASS
+GIMP_VIEW_RENDERER_BUFFER_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpviewrendererdrawable</FILE>
 <TITLE>GimpViewRendererDrawable</TITLE>
 GimpViewRendererDrawable
@@ -8006,6 +8021,8 @@ drawable_equalize_cmd_callback
 drawable_flip_cmd_callback
 drawable_rotate_cmd_callback
 drawable_offset_cmd_callback
+drawable_linked_cmd_callback
+drawable_visible_cmd_callback
 </SECTION>
 
 <SECTION>
@@ -8126,6 +8143,8 @@ layers_resize_cmd_callback
 layers_resize_to_image_cmd_callback
 layers_scale_cmd_callback
 layers_crop_cmd_callback
+layers_mode_cmd_callback
+layers_preserve_trans_cmd_callback
 layers_mask_edit_cmd_callback
 layers_mask_show_cmd_callback
 layers_mask_disable_cmd_callback
@@ -8240,6 +8259,8 @@ vectors_edit_attributes_cmd_callback
 vectors_vectors_tool
 vectors_new_vectors_query
 vectors_edit_vectors_query
+vectors_visible_cmd_callback
+vectors_linked_cmd_callback
 </SECTION>
 
 <SECTION>
