@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 11:37+0100\n"
-"PO-Revision-Date: 2004-11-17 11:42+0100\n"
+"POT-Creation-Date: 2004-11-17 11:46+0100\n"
+"PO-Revision-Date: 2004-11-17 11:46+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -772,7 +772,7 @@ msgid "Bumpm_ap image:"
 msgstr "Bumpm_ap Bild:"
 
 #. Map type menu
-#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:904
+#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:896
 #: plug-ins/flame/flame.c:733
 msgid "Linear"
 msgstr "Linear"
@@ -781,12 +781,12 @@ msgstr "Linear"
 msgid "Logarithmic"
 msgstr "Logarithmisch"
 
-#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:906
+#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:898
 #: plug-ins/flame/flame.c:734
 msgid "Sinusoidal"
 msgstr "Sinusförmig"
 
-#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:905
+#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:897
 #: plug-ins/flame/flame.c:735
 msgid "Spherical"
 msgstr "Sphärisch"
@@ -955,7 +955,7 @@ msgstr "_Kantenglättung verwenden"
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "De-/Aktiviere Entfernung von Treppeneffekten (Kantenglättung)"
 
-#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:988
+#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:980
 #: plug-ins/common/emboss.c:509 plug-ins/common/fractaltrace.c:791
 #: plug-ins/common/struc.c:1318
 msgid "_Depth:"
@@ -2155,42 +2155,42 @@ msgstr "Wende Bumpmap-Effekt an..."
 msgid "Bump Map"
 msgstr "Bumpmap"
 
-#: plug-ins/common/bumpmap.c:901
+#: plug-ins/common/bumpmap.c:893
 msgid "_Bump map:"
 msgstr "_Bumpmap:"
 
-#: plug-ins/common/bumpmap.c:916
+#: plug-ins/common/bumpmap.c:908
 msgid "_Map type:"
 msgstr "_Map-Typ"
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:921
+#: plug-ins/common/bumpmap.c:913
 msgid "Co_mpensate for darkening"
 msgstr "Verdunkelung ko_mpensieren"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:935
+#: plug-ins/common/bumpmap.c:927
 msgid "I_nvert bumpmap"
 msgstr "Bumpmap i_nvertieren"
 
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:949
+#: plug-ins/common/bumpmap.c:941
 msgid "_Tile bumpmap"
 msgstr "Bumpmap _kacheln"
 
-#: plug-ins/common/bumpmap.c:964 plug-ins/common/emboss.c:485
+#: plug-ins/common/bumpmap.c:956 plug-ins/common/emboss.c:485
 msgid "_Azimuth:"
 msgstr "_Längengrad (Azimuth):"
 
-#: plug-ins/common/bumpmap.c:976
+#: plug-ins/common/bumpmap.c:968
 msgid "_Elevation:"
 msgstr "_Breitengrad (Elevation):"
 
-#: plug-ins/common/bumpmap.c:1002 plug-ins/common/postscript.c:3017
+#: plug-ins/common/bumpmap.c:994 plug-ins/common/postscript.c:3017
 msgid "_X offset:"
 msgstr "_X-Versatz:"
 
-#: plug-ins/common/bumpmap.c:1005 plug-ins/common/bumpmap.c:1019
+#: plug-ins/common/bumpmap.c:997 plug-ins/common/bumpmap.c:1011
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
@@ -2198,15 +2198,15 @@ msgstr ""
 "Sie können den Versatz anpassen, indem Sie die Vorschau mit der mittleren "
 "Maustaste verschieben."
 
-#: plug-ins/common/bumpmap.c:1016 plug-ins/common/postscript.c:3026
+#: plug-ins/common/bumpmap.c:1008 plug-ins/common/postscript.c:3026
 msgid "_Y offset:"
 msgstr "_Y-Versatz:"
 
-#: plug-ins/common/bumpmap.c:1030
+#: plug-ins/common/bumpmap.c:1022
 msgid "_Waterlevel:"
 msgstr "_Wasserhöhe:"
 
-#: plug-ins/common/bumpmap.c:1042
+#: plug-ins/common/bumpmap.c:1034
 msgid "A_mbient:"
 msgstr "A_mbient:"
 
@@ -4649,9 +4649,8 @@ msgid "Save EXIF data"
 msgstr "EXIF Daten speichern"
 
 #: plug-ins/common/jpeg.c:2056
-#, fuzzy
 msgid "Save thumbnail"
-msgstr "Speichern fehlgeschlagen"
+msgstr "Vorschau speichern"
 
 #. Subsampling
 #: plug-ins/common/jpeg.c:2070
@@ -8472,13 +8471,12 @@ msgstr "Werkzeugoptionen"
 
 #. Stroke frame on right side
 #: plug-ins/gfig/gfig-dialog.c:363
-#, fuzzy
 msgid "Stroke"
-msgstr "Stark"
+msgstr "Umranden"
 
 #: plug-ins/gfig/gfig-dialog.c:376
 msgid "Stro_ke"
-msgstr "Umranden"
+msgstr "Um_randen"
 
 #. Fill frame on right side
 #: plug-ins/gfig/gfig-dialog.c:413
