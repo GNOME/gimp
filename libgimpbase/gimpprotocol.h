@@ -23,7 +23,7 @@
 
 /* Increment every time the protocol changes
  */
-#define GP_VERSION 0x0003
+#define GP_VERSION 0x0004
 
 
 enum
