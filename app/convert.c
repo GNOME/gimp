@@ -20,12 +20,16 @@
    * TODO for Convert:
    *
    *   Use palette of another open INDEXED image
-   *   Different dither types (deterministic colour dithering)
    *
    *   Do error-splitting trick for GREY->INDEXED
    */
 
 /*
+ * 99/08/29 - Deterministic colour dithering to arbitrary palettes.
+ *  Ideal for animations that are going to be delta-optimized or simply
+ *  don't want to look 'busy' in static areas.  Also a bunch of bugfixes
+ *  and tweaks.  [Adam]
+ *
  * 99/08/28 - Deterministic alpha dithering over layers, reduced bleeding
  *  of transparent values into opaque values, added optional stage to
  *  remove duplicate or unused colour entries from final colourmap. [Adam]
@@ -101,6 +105,7 @@
 #define NODITHER 0
 #define FSDITHER 1
 #define NODESTRUCTDITHER 2
+#define FIXEDDITHER 3
 
 #define PRECISION_R 6
 #define PRECISION_G 6
@@ -370,7 +375,9 @@ typedef struct
   GtkWidget*   shell;
   GtkWidget*   custom_frame;
   GimpImage*   gimage;
-  int          dither;      /* flag */
+  int          nodither_flag;
+  int          fsdither_flag;
+  int          fixeddither_flag;
   int          alphadither; /* flag */
   int          remdups;     /* flag */
   int          num_cols;
@@ -388,7 +395,6 @@ static gint indexed_delete_callback    (GtkWidget *, GdkEvent *, gpointer);
 static void indexed_num_cols_update    (GtkWidget *, gpointer);
 static void indexed_radio_update       (GtkWidget *, gpointer);
 static void frame_sensitivity_update   (GtkWidget *, gpointer);
-static void indexed_dither_update      (GtkWidget *, gpointer);
 static void indexed_alphadither_update (GtkWidget *, gpointer);
 static void indexed_remdups_update     (GtkWidget *, gpointer);
 
@@ -421,7 +427,9 @@ PaletteEntriesP theCustomPalette = NULL;
 
 /* Defaults */
 static int      snum_cols         = 256;
-static gboolean sdither           = TRUE;
+static gboolean sfsdither_flag    = TRUE;
+static gboolean snodither_flag    = FALSE;
+static gboolean sfixeddither_flag = FALSE;
 static gboolean smakepal_flag     = TRUE;
 static gboolean salphadither_flag = FALSE;
 static gboolean sremdups_flag     = TRUE;
@@ -472,7 +480,9 @@ convert_to_indexed (GimpImage *gimage)
   dialog->custom_frame = NULL;
 
   dialog->num_cols = snum_cols;
-  dialog->dither = sdither;
+  dialog->nodither_flag = snodither_flag;
+  dialog->fsdither_flag = sfsdither_flag;
+  dialog->fixeddither_flag = sfixeddither_flag;
   dialog->alphadither = salphadither_flag;
   dialog->remdups = sremdups_flag;
   dialog->makepal_flag = smakepal_flag;
@@ -505,7 +515,7 @@ convert_to_indexed (GimpImage *gimage)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  toggle = gtk_radio_button_new_with_label (group, _("Generate optimal palette: "));
+  toggle = gtk_radio_button_new_with_label (NULL, _("Generate optimal palette: "));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -637,21 +647,60 @@ convert_to_indexed (GimpImage *gimage)
     gtk_container_add (GTK_CONTAINER (frame), vbox);
     gtk_widget_show(vbox);
 
-    /*  The dither toggle  */
+    /*  The dither radio buttons  */
     hbox = gtk_hbox_new (FALSE, 1);
     {
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       
-      toggle = gtk_check_button_new_with_label (_("Enable Floyd-Steinberg dithering"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dialog->dither);
-      gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
+      toggle = gtk_radio_button_new_with_label (NULL, _("No colour dithering"));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  (GtkSignalFunc) indexed_dither_update,
-			  dialog);
-      gtk_widget_show (label);
+			  (GtkSignalFunc) indexed_radio_update,
+			  &(dialog->nodither_flag));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dialog->nodither_flag);
+
       gtk_widget_show (toggle);
     }
     gtk_widget_show (hbox);
+    hbox = gtk_hbox_new (FALSE, 1);
+    {
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      
+      toggle = gtk_radio_button_new_with_label (group, _("Positioned colour dithering"));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  (GtkSignalFunc) indexed_radio_update,
+			  &(dialog->fixeddither_flag));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dialog->fixeddither_flag);
+
+      gtk_widget_show (toggle);
+    }
+    gtk_widget_show (hbox);
+    hbox = gtk_hbox_new (FALSE, 1);
+    {
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      
+      toggle = gtk_radio_button_new_with_label (group, _("Floyd-Steinberg colour dithering"));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  (GtkSignalFunc) indexed_radio_update,
+			  &(dialog->fsdither_flag));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dialog->fsdither_flag);
+
+      gtk_widget_show (toggle);
+    }
+    gtk_widget_show (hbox);
+
+
 
     /*  The alpha-dither toggle  */
     hbox = gtk_hbox_new (FALSE, 1);
@@ -660,7 +709,7 @@ convert_to_indexed (GimpImage *gimage)
       
       toggle = gtk_check_button_new_with_label (_("Enable dithering of transparency"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dialog->alphadither);
-      gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			  (GtkSignalFunc) indexed_alphadither_update,
 			  dialog);
@@ -837,6 +886,7 @@ indexed_ok_callback (GtkWidget *widget,
 {
   IndexedDialog *dialog;
   int palette_type;
+  int dither_type;
 
   dialog = (IndexedDialog *) client_data;
 
@@ -849,16 +899,25 @@ indexed_ok_callback (GtkWidget *widget,
         if (dialog->makepal_flag) palette_type = MAKE_PALETTE;
         else
           palette_type = REUSE_PALETTE;
+
+  if (dialog->nodither_flag) dither_type = NODITHER;
+  else
+    if (dialog->fsdither_flag) dither_type = FSDITHER;
+    else
+      dither_type = FIXEDDITHER;
+
   /*  Convert the image to indexed color  */
   convert_image2 (dialog->gimage, INDEXED, dialog->num_cols,
-		  dialog->dither, dialog->alphadither,
+		  dither_type, dialog->alphadither,
 		  dialog->remdups, palette_type);
   gdisplays_flush ();
 
 
   /* Save defaults for next time */
   snum_cols = dialog->num_cols;
-  sdither = dialog->dither;
+  snodither_flag = dialog->nodither_flag;
+  sfsdither_flag = dialog->fsdither_flag;
+  sfixeddither_flag = dialog->fixeddither_flag;
   salphadither_flag = dialog->alphadither;
   sremdups_flag = dialog->remdups;
   smakepal_flag = dialog->makepal_flag;
@@ -923,20 +982,6 @@ frame_sensitivity_update (GtkWidget *widget,
   dialog = (IndexedDialog *) data;
   if (dialog && dialog->custom_frame)
     gtk_widget_set_sensitive (dialog->custom_frame, dialog->custompal_flag);
-}
-
-static void
-indexed_dither_update (GtkWidget *w,
-		       gpointer   data)
-{
-  IndexedDialog *dialog;
-
-  dialog = (IndexedDialog *) data;
-
-  if (GTK_TOGGLE_BUTTON (w)->active)
-    dialog->dither = TRUE;
-  else
-    dialog->dither = FALSE;
 }
 
 static void
@@ -1204,9 +1249,9 @@ convert_image2 (GImage		 *gimage,
 
       /* don't dither if the input is grayscale and we are simply mapping every color */
       if (old_type == GRAY && num_cols == 256 && palette_type == MAKE_PALETTE)
-	dither = FALSE;
+	dither = NODITHER;
 
-      quantobj = initialize_median_cut (old_type, num_cols, dither ? FSDITHER : NODITHER,
+      quantobj = initialize_median_cut (old_type, num_cols, dither,
 					palette_type, alpha_dither);
 
       if (palette_type == MAKE_PALETTE)
@@ -2981,13 +3026,12 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
   int row, col;
   int pixel;
   int has_alpha;
+  unsigned long* index_used_count = quantobj->index_used_count;
   int alpha_dither = quantobj->want_alpha_dither;
   int offsetx, offsety;
   void *pr;
 
   drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
-
-  zero_histogram_gray (histogram);
 
   has_alpha = layer_has_alpha (layer);
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
@@ -3007,14 +3051,99 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 	      /* and update the cache */
 	      if (*cachep == 0)
 		fill_inverse_cmap_gray (quantobj, histogram, pixel);
-	      /* Now emit the colormap index for this cell */
-	      dest[INDEXED_PIX] = *cachep - 1;
+	      
 	      if (has_alpha)
-		dest[ALPHA_I_PIX] =
-		  (alpha_dither ?
-		   ((src[ALPHA_G_PIX] << 6) > (255 * DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK][(row+offsety+srcPR.y)&DM_HEIGHTMASK])) :
-		   (src[ALPHA_G_PIX] > 127)
-		   ) ? 255 : 0;
+		{
+		  if ((dest[ALPHA_I_PIX] =
+		       (
+			(alpha_dither ?
+			 ((src[ALPHA_G_PIX] << 6) > (255 * DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK][(row+offsety+srcPR.y)&DM_HEIGHTMASK])) :
+			 (src[ALPHA_G_PIX] > 127)
+			 ) ? 255 : 0)))
+		    index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;	
+		}
+	      else
+		{
+		  /* Now emit the colormap index for this cell */
+		  index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;	
+		}
+
+	      src += srcPR.bytes;
+	      dest += destPR.bytes;
+	    }
+	}
+    }
+}
+
+static void
+median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
+				    Layer       *layer,
+				    TileManager *new_tiles)
+{
+  PixelRegion srcPR, destPR;
+  Histogram histogram = quantobj->histogram;
+  ColorFreq* cachep;
+  Color* color;
+  unsigned char *src, *dest;
+  int row, col;
+  int pixel;
+  int re, R;
+  unsigned long* index_used_count = quantobj->index_used_count;
+  int has_alpha;
+  int alpha_dither = quantobj->want_alpha_dither;
+  int offsetx, offsety;
+  void *pr;
+
+  drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
+
+  has_alpha = layer_has_alpha (layer);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
+  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
+    {
+      src = srcPR.data;
+      dest = destPR.data;
+      for (row = 0; row < srcPR.h; row++)
+	{
+	  for (col = 0; col < srcPR.w; col++)
+	    {
+	      int dmval =
+		DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK]
+		[(row+offsety+srcPR.y)&DM_HEIGHTMASK];
+
+	      /* get pixel value and index into the cache */
+	      pixel = src[GRAY_PIX];
+	      cachep = &histogram[pixel];
+	      /* If we have not seen this color before, find nearest colormap entry */
+	      /* and update the cache */
+	      if (*cachep == 0)
+		fill_inverse_cmap_gray (quantobj, histogram, pixel);
+
+	      color = &quantobj->cmap[*cachep - 1];
+	      re = src[GRAY_PIX] - color->red;
+	      re = (re * dmval * 2) / 63;
+	      R = (CLAMP0255(color->red + re));
+
+	      cachep = &histogram[R];
+	      /* If we have not seen this color before, find nearest
+		 colormap entry and update the cache */
+	      if (*cachep == 0)
+		fill_inverse_cmap_gray (quantobj, histogram, R);
+
+	      if (has_alpha)
+		{
+		  if ((dest[ALPHA_I_PIX] =
+		      ((alpha_dither ?
+			((src[ALPHA_G_PIX] << 6) > (255 * dmval)) :
+			(src[ALPHA_G_PIX] > 127)
+			) ? 255 : 0)))
+		    index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;
+		}
+	      else
+		{
+		  /* Now emit the colormap index for this cell, barfbarf */
+		  index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;
+		}
 
 	      src += srcPR.bytes;
 	      dest += destPR.bytes;
@@ -3080,6 +3209,112 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 	      R = (src[red_pix]) >> R_SHIFT;
 	      G = (src[green_pix]) >> G_SHIFT;
 	      B = (src[blue_pix]) >> B_SHIFT;
+	      cachep = &histogram[R*MR + G*MG + B];
+	      /* If we have not seen this color before, find nearest
+		 colormap entry and update the cache */
+	      if (*cachep == 0)
+		fill_inverse_cmap_rgb (quantobj, histogram, R, G, B);
+
+	      /* Now emit the colormap index for this cell, barfbarf */
+	      index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;
+
+	    next_pixel:
+	      
+	      src += srcPR.bytes;
+	      dest += destPR.bytes;
+	    }
+	}
+    }
+}
+
+static void
+median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
+				   Layer       *layer,
+				   TileManager *new_tiles)
+{
+  PixelRegion srcPR, destPR;
+  Histogram histogram = quantobj->histogram;
+  ColorFreq* cachep;
+  Color* color;
+  unsigned char *src, *dest;
+  int R, G, B;
+  int row, col;
+  int has_alpha;
+  int re, ge, be;
+  void* pr;
+  int red_pix = RED_PIX;
+  int green_pix = GREEN_PIX;
+  int blue_pix = BLUE_PIX;
+  int alpha_pix = ALPHA_PIX;
+  int alpha_dither = quantobj->want_alpha_dither;
+  int offsetx, offsety;
+  unsigned long* index_used_count = quantobj->index_used_count;
+
+  drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
+
+  /*  In the case of web/mono palettes, we actually force
+   *   grayscale drawables through the rgb pass2 functions
+   */
+  if (drawable_gray (GIMP_DRAWABLE(layer)))
+    red_pix = green_pix = blue_pix = GRAY_PIX;
+
+  has_alpha = layer_has_alpha (layer);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
+  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
+    {
+      src = srcPR.data;
+      dest = destPR.data;
+      for (row = 0; row < srcPR.h; row++)
+	{
+	  for (col = 0; col < srcPR.w; col++)
+	    {
+	      int dmval =
+		DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK]
+		[(row+offsety+srcPR.y)&DM_HEIGHTMASK];
+
+	      if (has_alpha)
+		{
+		  if ((dest[ALPHA_I_PIX] =
+		       (alpha_dither ?
+			((src[alpha_pix] << 6) > (255 * dmval)) :
+			(src[alpha_pix] > 127)
+			) ? 255 : 0)
+		      == 0)
+		    {
+		      goto next_pixel;
+		    }
+		}
+
+	      /* get pixel value and index into the cache */
+	      R = (src[red_pix]) >> R_SHIFT;
+	      G = (src[green_pix]) >> G_SHIFT;
+	      B = (src[blue_pix]) >> B_SHIFT;
+	      cachep = &histogram[R*MR + G*MG + B];
+	      /* If we have not seen this color before, find nearest
+		 colormap entry and update the cache */
+	      if (*cachep == 0)
+		fill_inverse_cmap_rgb (quantobj, histogram, R, G, B);
+
+	      /* Get the error and modulate it between 0x and 2x according
+		 to the fixed dither matrix, then add it back to the 0x colour
+		 and look up the new histogram entry.  To do better fixed
+		 dithering, I believe that we need to be able to find the
+		 closest colour match on the 'other side' of the desired colour,
+		 which is not information which we have cheap access to. */
+	      color = &quantobj->cmap[*cachep - 1];
+	      re = src[red_pix] - color->red;
+	      ge = src[green_pix] - color->green;
+	      be = src[blue_pix] - color->blue;
+
+	      re = (re * dmval * 2) / 63;
+	      ge = (ge * dmval * 2) / 63;
+	      be = (be * dmval * 2) / 63;
+
+	      R = (CLAMP0255(color->red + re)) >> R_SHIFT;
+	      G = (CLAMP0255(color->green + ge)) >> G_SHIFT;
+	      B = (CLAMP0255(color->blue + be)) >> B_SHIFT;
+
 	      cachep = &histogram[R*MR + G*MG + B];
 	      /* If we have not seen this color before, find nearest
 		 colormap entry and update the cache */
@@ -3291,10 +3526,9 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   int offsetx, offsety;
   int alpha_dither = quantobj->want_alpha_dither;
   int width, height;
+  unsigned long* index_used_count = quantobj->index_used_count;
 
   drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
-
-  zero_histogram_gray (histogram);
 
   has_alpha = layer_has_alpha (layer);
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
@@ -3364,15 +3598,42 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 	  if (*cachep == 0)
 	    fill_inverse_cmap_gray (quantobj, histogram, pixel);
 
-	  index = *cachep - 1;
-	  dest[INDEXED_PIX] = index;
-
 	  if (has_alpha)
-	    dest[ALPHA_I_PIX] =
-	      (alpha_dither ?
-	       ((src[ALPHA_G_PIX] << 6) > (255 * DM[(col+offsetx)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
-	       (src[ALPHA_G_PIX] > 127)
-	       ) ? 255 : 0;
+	    {
+	      if (odd_row)
+		{
+		  if ((dest[ALPHA_I_PIX] =
+		       (alpha_dither ?
+			((src[ALPHA_G_PIX] << 6) > (255 * DM[((width-col)+offsetx-1)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
+			(src[ALPHA_G_PIX] > 127)
+			) ? 255 : 0)
+		      == 0)
+		    {
+		      pr--;
+		      nr--;
+		      *(nr - 1) = 0;
+		      goto next_pixel;
+		    }
+		}
+	      else
+		{
+		  if ((dest[ALPHA_I_PIX] =
+		       (alpha_dither ?
+			((src[ALPHA_G_PIX] << 6) > (255 * DM[(col+offsetx)&DM_WIDTHMASK][(row+offsety)&DM_HEIGHTMASK])) :
+			(src[ALPHA_G_PIX] > 127)
+			) ? 255 : 0)
+		      == 0)
+		    {
+		      pr++;
+		      nr++;
+		      *(nr + 1) = 0;
+		      goto next_pixel;
+		    }
+		}
+	    }
+
+	  index = *cachep - 1;
+	  index_used_count[dest[INDEXED_PIX] = index]++;
 
 	  color = &quantobj->cmap[index];
 	  pixele = pixel - color->red;
@@ -3391,6 +3652,8 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 	      *nr += fs_err3[pixele];
 	      *(nr+1) = fs_err4[pixele];
 	    }
+
+	next_pixel:
 
 	  dest += step_dest;
 	  src += step_src;
@@ -3416,6 +3679,15 @@ static void
 median_cut_pass2_rgb_init (QuantizeObj *quantobj)
 {
   zero_histogram_rgb (quantobj->histogram);
+
+  /* Mark all indices as currently unused */
+  memset (quantobj->index_used_count, 0, 256 * sizeof(unsigned long));
+}
+
+static void
+median_cut_pass2_gray_init (QuantizeObj *quantobj)
+{
+  zero_histogram_gray (quantobj->histogram);
 
   /* Mark all indices as currently unused */
   memset (quantobj->index_used_count, 0, 256 * sizeof(unsigned long));
@@ -3739,17 +4011,25 @@ initialize_median_cut (int type,
 	    quantobj->second_pass_init = median_cut_pass2_rgb_init;
 	    quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
 	    break;
+	  case FIXEDDITHER:
+	    quantobj->second_pass_init = median_cut_pass2_rgb_init;
+	    quantobj->second_pass = median_cut_pass2_fixed_dither_rgb;
+	    break;
 	  }
       else
 	switch (dither_type)
 	  {
 	  case NODITHER:
-	    quantobj->second_pass_init = NULL;
+	    quantobj->second_pass_init = median_cut_pass2_gray_init;
 	    quantobj->second_pass = median_cut_pass2_no_dither_gray;
 	    break;
 	  case FSDITHER:
-	    quantobj->second_pass_init = NULL;
+	    quantobj->second_pass_init = median_cut_pass2_gray_init;
 	    quantobj->second_pass = median_cut_pass2_fs_dither_gray;
+	    break;
+	  case FIXEDDITHER:
+	    quantobj->second_pass_init = median_cut_pass2_gray_init;
+	    quantobj->second_pass = median_cut_pass2_fixed_dither_gray;
 	    break;
 	  }
       break;
@@ -3784,6 +4064,10 @@ initialize_median_cut (int type,
 	case NODESTRUCTDITHER:
 	  quantobj->second_pass_init = NULL;
 	  quantobj->second_pass = median_cut_pass2_nodestruct_dither_rgb;
+	  break;
+	case FIXEDDITHER:
+	  quantobj->second_pass_init = median_cut_pass2_rgb_init;
+	  quantobj->second_pass = median_cut_pass2_fixed_dither_rgb;
 	  break;
 	}
       break;
