@@ -40,10 +40,11 @@
  * V 1.05, PK, 21-Sep-98: Write b/w-images (indexed) using image-operator
  * V 1.06, PK, 22-Dec-98: Fix problem with writing color PS files.
  *                        Ghostview may hang when displaying the files.
+ * V 1.07, PK, 14-Sep-99: Add resolution to image
  */
-#define VERSIO                                               1.06
-static char dversio[] =                                    "v1.06  22-Dec-98";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.06  22-Dec-98";
+#define VERSIO                                               1.07
+static char dversio[] =                                    "v1.07  14-Sep-99";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.07  14-Sep-99";
 
 #include "config.h"
 #include <stdio.h>
@@ -302,8 +303,8 @@ query (void)
     { PARAM_STRING, "filename", "The name of the file to save the image in" },
     { PARAM_STRING, "raw_filename",
             "The name of the file to save the image in" },
-    { PARAM_FLOAT, "width", "Width of the image in PostScript file" },
-    { PARAM_FLOAT, "height", "Height of image in PostScript file" },
+    { PARAM_FLOAT, "width", "Width of the image in PostScript file (0: use input image size)" },
+    { PARAM_FLOAT, "height", "Height of image in PostScript file (0: use input image size)" },
     { PARAM_FLOAT, "x_offset", "X-offset to image from lower left corner" },
     { PARAM_FLOAT, "y_offset", "Y-offset to image from lower left corner" },
     { PARAM_INT32, "unit", "Unit for width/height/offset. 0: inches, 1: millimeters" },
@@ -319,7 +320,7 @@ query (void)
   gimp_install_procedure ("file_ps_load",
                           _("load file of PostScript/PDF file format"),
                           _("load file of PostScript/PDF file format"),
-                          "Peter Kirchgessner <pkirchg@aol.com>",
+                          "Peter Kirchgessner <peter@kirchgessner.net>",
                           "Peter Kirchgessner",
                           dversio,
                           "<Load>/PostScript",
@@ -331,7 +332,7 @@ query (void)
   gimp_install_procedure ("file_ps_load_setargs",
                           "set additional parameters for procedure file_ps_load",
                           "set additional parameters for procedure file_ps_load",
-                          "Peter Kirchgessner <pkirchg@aol.com>",
+                          "Peter Kirchgessner <peter@kirchgessner.net>",
                           "Peter Kirchgessner",
                           dversio,
                           NULL,
@@ -359,6 +360,36 @@ those with alpha channels."),
   gimp_register_save_handler ("file_ps_save", "ps,eps", "");
 }
 
+
+#ifdef GIMP_HAVE_RESOLUTION_INFO
+static void
+ps_set_save_size (PSSaveVals *vals,
+                  gint32 image_ID)
+
+{gdouble xres, yres, factor, iw, ih;
+ guint width, height;
+ GUnit unit;
+
+  gimp_image_get_resolution (image_ID, &xres, &yres);
+  unit = gimp_image_get_unit (image_ID);
+  factor = gimp_unit_get_factor (unit);
+  if ((factor < 1e-5) || (xres < 1e-5) || (yres < 1e-5))
+  {
+    factor = 1.0;  xres = yres = 72.0;
+  }
+  /* Calculate size of image in inches */
+  width = gimp_image_width (image_ID);
+  height = gimp_image_height (image_ID);
+  iw = width / xres / factor;
+  ih = height / yres / factor;
+  if (vals->unit_mm)
+  {
+    iw *= 25.4;   ih *= 25.4;
+  }
+  vals->width = iw;
+  vals->height = ih;
+}
+#endif
 
 static void
 run (char    *name,
@@ -443,6 +474,9 @@ run (char    *name,
           if ((k >= 4) && (strcmp (param[3].data.d_string+k-4, ".eps") == 0))
             psvals.eps = 1;
 
+#ifdef GIMP_HAVE_RESOLUTION_INFO
+          ps_set_save_size (&psvals, param[1].data.d_int32);
+#endif
           /*  First acquire information with a dialog  */
           if (! save_dialog ())
             return;
@@ -480,6 +514,10 @@ run (char    *name,
 
       if (status == STATUS_SUCCESS)
       {
+#ifdef GIMP_HAVE_RESOLUTION_INFO
+        if ((psvals.width == 0.0) || (psvals.height == 0.0))
+          ps_set_save_size (&psvals, param[1].data.d_int32);
+#endif
         check_save_vals ();
         if (save_image (param[3].data.d_string, param[1].data.d_int32,
                         param[2].data.d_int32))
@@ -530,7 +568,7 @@ load_image (char *filename)
  gint32 image_ID, *image_list, *nl;
  guint page_count;
  FILE *ifp;
- char *temp,*format;
+ char *temp;
  int  llx, lly, urx, ury;
  int  k, n_images, max_images, max_pagenum;
 
@@ -592,6 +630,11 @@ load_image (char *filename)
    {
      image_ID = load_ps (filename, page_count, ifp, llx, lly, urx, ury);
      if (image_ID == -1) break;
+#ifdef GIMP_HAVE_RESOLUTION_INFO
+      gimp_image_set_resolution (image_ID, (float)plvals.resolution,
+                                 (float)plvals.resolution);
+      gimp_image_set_unit (image_ID, UNIT_INCH);
+#endif
      if (n_images == max_images)
      {
        nl = (gint32 *)g_realloc (image_list, (max_images+10)*sizeof (gint32));

@@ -124,7 +124,7 @@ static void query ()
 	 * Load/save procedures
 	 */
 	gimp_install_procedure (
-		"file_fli_load",
+		"file_fli_load_frames",
                 "load FLI-movies",
                 "This is an experimantal plug-in to handle FLI movies",
                 "Jens Ch. Restemeier",
@@ -135,7 +135,19 @@ static void query ()
                 PROC_PLUG_IN,
                 nload_args, nload_return_vals,
                 load_args, load_return_vals);
-	gimp_register_magic_load_handler ("file_fli_load", "fli", "", "4,byte,0x11,4,byte,0x12,5,byte,0xAF");
+	gimp_install_procedure (
+		"file_fli_load",
+                "load FLI-movies",
+                "This is an experimantal plug-in to handle FLI movies",
+                "Jens Ch. Restemeier",
+                "Jens Ch. Restemeier",
+                "1997",
+                "<Load>/FLI",
+		NULL,
+                PROC_PLUG_IN,
+                nload_args - 2, nload_return_vals,
+                load_args, load_return_vals);
+	gimp_register_magic_load_handler ("file_fli_load", "fli", "", "");
 
 	gimp_install_procedure (
 		"file_fli_save",
@@ -181,29 +193,40 @@ static void run (gchar *name, gint nparams, GParam *param, gint *nreturn_vals, G
 	values[0].type = PARAM_STATUS;
 	values[0].data.d_status = STATUS_CALLING_ERROR;
 
-	if (strcmp (name, "file_fli_load") == 0) {
+	if (strncmp (name, "file_fli_load", strlen("file_fli_load")) == 0) {
 		switch (run_mode) {
 			case RUN_NONINTERACTIVE: {
 				gint32 image_id;
 				gint32 pc;
+				gint32 to_frame;
+				gint32 from_frame;
 				/*
 				 * check for valid parameters: 
 				 * (Or can I trust GIMP ?)
 				 */
-				if (nparams!=nload_args) {
+				if ((nparams < nload_args - 2) || (nload_args < nparams)) {
 					*nreturn_vals = 1;
 					values[0].data.d_status = STATUS_CALLING_ERROR;
 					return;
 				}
-				for (pc=0; pc<nload_args; pc++) {
+				for (pc=0; pc<nload_args -2; pc++) {
 					if (load_args[pc].type!=param[pc].type) {
 						*nreturn_vals = 1;
 						values[0].data.d_status = STATUS_CALLING_ERROR;
 						return;
 					}
 				}
-			
-				image_id = load_image (param[1].data.d_string, param[2].data.d_int32, param[3].data.d_int32);
+				for (pc=nload_args -2; pc<nparams; pc++) {
+					if (load_args[pc].type!=param[pc].type) {
+						*nreturn_vals = 1;
+						values[0].data.d_status = STATUS_CALLING_ERROR;
+						return;
+					}
+				}
+				to_frame = (nparams < nload_args - 1) ? 1 : param[3].data.d_int32;
+				from_frame = (nparams < nload_args) ? -1 : param[4].data.d_int32;				
+				  
+				image_id = load_image (param[1].data.d_string, to_frame, from_frame);
 	
 				if (image_id != -1) {
 					*nreturn_vals = 2;
@@ -374,7 +397,10 @@ gint32 load_image (gchar *filename, gint32 from_frame, gint32 to_frame)
 		return -1;
 	}
 	fli_read_header(f, &fli_header);
-	fseek(f,128,SEEK_SET);
+	if (fli_header.magic == NO_HEADER)
+	  return -1;
+	else
+	  fseek(f,128,SEEK_SET);
 
 	/*
 	 * Fix parameters

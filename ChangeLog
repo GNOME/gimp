@@ -1,3 +1,11 @@
+Tue Sep 14 13:51:45 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/gfli/fli.[ch]
+	* plug-ins/gfli/gfli.c: applied gimp-narazaki-990914-0, fixes bogus
+	magic settings and noninteractive pdb
+
+	* plug-ins/common/ps.c: resolution info patch
+
 Tue Sep 14 13:15:34 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/common/ps.c: don't use wacky binary modifiers to popen
