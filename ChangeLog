@@ -8,6 +8,8 @@
 
 	* app/Makefile.am: Link with compiled resource file on Windows.
 
+	* plug-ins/makefile.mingw.in: Make it work again.
+
 2001-11-09  Tor Lillqvist  <tml@iki.fi>
 
 	More changes for autoconfiscated build on Win32, and to use same

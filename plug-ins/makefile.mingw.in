@@ -9,7 +9,7 @@
 
 # This is what I use as installation target, from where the installer-builder
 # will pick it up.
-DEST = /install/gimp
+DEST = /target/lib/gimp/@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@
 
 ifndef GIMPTOP
 GIMPTOP = ..
@@ -790,11 +790,17 @@ RESOURCE = $(PLUGIN)res.o
 else
 # Use the Wilber icon otherwise. If gimp.exe eventually gets more resources,
 # this will have to be changed.
-RESOURCE = ../../app/gimpres.o
+RESOURCE = wilber.o
+
+wilber.o : ../app/wilber.ico
+	cp ../app/wilber.ico .
+	echo 'wilber ICON "wilber.ico"' >wilber.rc
+	$(GIMPTOP)/build/win32/compile-resource wilber.rc wilber.o
+	rm wilber.ico wilber.rc
 endif
 
 $(PLUGIN).exe : $(OBJECTS) $(RESOURCE)
-	$(CC) $(CFLAGS) -mwindows -o $(PLUGIN).exe $(OBJECTS) $(RESOURCE) -L $(PLUGINDIR)/libgck/gck -lgck -L ../../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) $(EXTRALIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -mwindows -o $(PLUGIN).exe $(OBJECTS) $(RESOURCE) -L $(PLUGINDIR)/libgck/gck -lgck -L ../../libgimp -lgimp -lgimpui $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) $(EXTRALIBS) $(LDFLAGS)
 
 # Kludge to get the path to the win32 headers
 WIN32APIHEADERS=$(shell echo "\#include <winver.h>" | $(CC) -M -E - | tail -1 | sed -e 's![\\/]winver.h!!' | tr -d '\015')
