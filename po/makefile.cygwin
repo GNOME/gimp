@@ -1,2 +1,0 @@
-PACKAGE = gimp
-include ../../gtk+/po/makefile.cygwin
