@@ -344,7 +344,7 @@ msgstr "<Image>/Скрипт-Фу/Декор/Слайд..."
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "<Image>/Script-Fu/Render/Circuit..."
-msgstr ""
+msgstr "<Image>/Скрипт-Фу/В╕зуал╕зац╕я/Плата..."
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "<Image>/Script-Fu/Render/Lava..."
@@ -392,23 +392,23 @@ msgstr "<Image>/Скрипт-Фу/Т╕нь/Xach-ефект..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
-msgstr ""
+msgstr "<Image>/Скрипт-Фу/Параметри трафарету/Вир╕зати..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
-msgstr ""
+msgstr "<Image>/Скрипт-Фу/Параметри трафарету/Хромувати..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
-msgstr ""
+msgstr "<Image>/Скрипт-Фу/Утил╕ти/ASCII у шар зображення..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
-msgstr ""
+msgstr "<Image>/Скрипт-Фу/Утил╕ти/Побудувати HSV-граф╕к..."
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
-msgstr ""
+msgstr "<Image>/Скрипт-Фу/Утил╕ти/Показати структуру зображення..."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."

@@ -70,21 +70,34 @@ GIMP використову╓ шари дозволяючи орган╕зувати ваше зображення. Уяв╕ть
 спочатку додати альфа-канал до шару клацнувши правою клав╕шою
 миш╕ в д╕алоз╕ "Шари" та вибравши "Додати альфа-канал".
 
-When using a drawing tool (Paintbrush, Airbrush, or Pencil), 
-Shift-click will draw a straight line from your last drawing 
-point to your current cursor position.
+#When using a drawing tool (Paintbrush, Airbrush, or Pencil), 
+#Shift-click will draw a straight line from your last drawing 
+#point to your current cursor position.
+При використанн╕ малюючого ╕струменту (пензель, аерограф чи ол╕вець),
+клацання при натиснут╕й клав╕ш╕ Shift дасть пряму л╕н╕ю в╕д останньо╖
+намальовано╖ точки до поточно╖ позиц╕╖ курсору.
 
-Most plug-ins work on the current layer of the current image.  In 
-some cases, you will have to merge all layers (Layers->Flatten Image) 
-if you want the plug-in to work on the whole image.
+#Most plug-ins work on the current layer of the current image.  In 
+#some cases, you will have to merge all layers (Layers->Flatten Image) 
+#if you want the plug-in to work on the whole image.
+Б╕льш╕сть доповнень працюють з поточним шаром у поточному зображенн╕.
+В деяких випадках, вам буде необх╕дно об'╓днати вс╕ шари
+(Шари->Звести зображення) якщо ви захочете щоб  доповнення працювало
+з ц╕лим зображенням.
 
-Most file-formats can't handle layers and for that reason only 
-the active layer is saved.  Use XCF, the GIMP's native file format 
-to keep layers, channels and guides when saving.
+#Most file-formats can't handle layers and for that reason only 
+#the active layer is saved.  Use XCF, the GIMP's native file format 
+#to keep layers, channels and guides when saving.
+Б╕льш╕сть формат╕в файл╕в не п╕дтримують шари ╕ тому збер╕га╓ться лише
+поточний шар. Використовуйте XCF -- власний формат GIMP для збереження
+шар╕в, канал╕в та направлячих.
 
-Not all effects can be applied to all kinds of images.  This 
-is indicated by a grayed-out menu-entry.  You may need to 
-change the image to RGB, add an alpha-channel or flatten it.
+#Not all effects can be applied to all kinds of images.  This 
+#is indicated by a grayed-out menu-entry.  You may need to 
+#change the image to RGB, add an alpha-channel or flatten it.
+Не вс╕ ефекти можна застосувати до вс╕х вид╕в зображень. Це
+в╕добража╓ться с╕рис рядком меню. Вам можливо доведеться зм╕нити
+зображення в RGB, додати альфа-канал чи звести його.
 
 # Tips for intermediate users start here
 #
