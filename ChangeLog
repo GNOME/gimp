@@ -1,3 +1,18 @@
+2004-07-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppreviewrenderer.c
+	(gimp_preview_renderer_set_viewable): queue an idle update when
+	setting the viewable to NULL so the view gets cleared correctly.
+
+	(gimp_preview_renderer_idle_update): call
+	gimp_preview_renderer_update() even if renderer->viewable is NULL
+	so clearing the viewable gets propagated to the GUI.
+
+	Moved clearing the viewable and removing the idle from
+	GObject::finalize() to GObject::dispose() because calling
+	set_viewable() with a NULL viewable triggers typechecking casts
+	and queuing idle functions, which is not nice in finalize().
+
 2004-07-06  Sven Neumann  <sven@gimp.org>
 
 	* modules/Makefile.am (libcdisplay_proof_la_LIBADD): added back

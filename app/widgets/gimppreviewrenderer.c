@@ -59,7 +59,8 @@ enum
 static void     gimp_preview_renderer_class_init   (GimpPreviewRendererClass *klass);
 static void     gimp_preview_renderer_init         (GimpPreviewRenderer      *renderer);
 
-static void     gimp_preview_renderer_finalize     (GObject        *object);
+static void     gimp_preview_renderer_dispose      (GObject             *object);
+static void     gimp_preview_renderer_finalize     (GObject             *object);
 
 static gboolean gimp_preview_renderer_idle_update  (GimpPreviewRenderer *renderer);
 static void     gimp_preview_renderer_real_draw    (GimpPreviewRenderer *renderer,
@@ -118,21 +119,20 @@ gimp_preview_renderer_get_type (void)
 static void
 gimp_preview_renderer_class_init (GimpPreviewRendererClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   renderer_signals[UPDATE] =
     g_signal_new ("update",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpPreviewRendererClass, update),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpPreviewRendererClass, update),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
+  object_class->dispose  = gimp_preview_renderer_dispose;
   object_class->finalize = gimp_preview_renderer_finalize;
 
   klass->draw            = gimp_preview_renderer_real_draw;
@@ -172,20 +172,22 @@ gimp_preview_renderer_init (GimpPreviewRenderer *renderer)
 }
 
 static void
-gimp_preview_renderer_finalize (GObject *object)
+gimp_preview_renderer_dispose (GObject *object)
 {
-  GimpPreviewRenderer *renderer;
-
-  renderer = GIMP_PREVIEW_RENDERER (object);
-
-  if (renderer->idle_id)
-    {
-      g_source_remove (renderer->idle_id);
-      renderer->idle_id = 0;
-    }
+  GimpPreviewRenderer *renderer = GIMP_PREVIEW_RENDERER (object);
 
   if (renderer->viewable)
     gimp_preview_renderer_set_viewable (renderer, NULL);
+
+  gimp_preview_renderer_remove_idle (renderer);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_preview_renderer_finalize (GObject *object)
+{
+  GimpPreviewRenderer *renderer = GIMP_PREVIEW_RENDERER (object);
 
   if (renderer->buffer)
     {
@@ -213,7 +215,6 @@ gimp_preview_renderer_finalize (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
-
 
 static GimpPreviewRenderer *
 gimp_preview_renderer_new_internal (GType     viewable_type,
@@ -309,7 +310,7 @@ gimp_preview_renderer_set_viewable (GimpPreviewRenderer *renderer,
   if (renderer->viewable)
     {
       g_object_remove_weak_pointer (G_OBJECT (renderer->viewable),
-				    (gpointer *) &renderer->viewable);
+                                    (gpointer *) &renderer->viewable);
 
       g_signal_handlers_disconnect_by_func (renderer->viewable,
                                             G_CALLBACK (gimp_preview_renderer_invalidate),
@@ -325,7 +326,7 @@ gimp_preview_renderer_set_viewable (GimpPreviewRenderer *renderer,
   if (renderer->viewable)
     {
       g_object_add_weak_pointer (G_OBJECT (renderer->viewable),
-				 (gpointer *) &renderer->viewable);
+                                 (gpointer *) &renderer->viewable);
 
       g_signal_connect_swapped (renderer->viewable,
                                 "invalidate_preview",
@@ -342,6 +343,10 @@ gimp_preview_renderer_set_viewable (GimpPreviewRenderer *renderer,
                                         renderer->border_width);
 
       gimp_preview_renderer_invalidate (renderer);
+    }
+  else
+    {
+      gimp_preview_renderer_update_idle (renderer);
     }
 }
 
@@ -640,8 +645,7 @@ gimp_preview_renderer_idle_update (GimpPreviewRenderer *renderer)
 {
   renderer->idle_id = 0;
 
-  if (renderer->viewable)
-    gimp_preview_renderer_update (renderer);
+  gimp_preview_renderer_update (renderer);
 
   return FALSE;
 }
@@ -737,8 +741,8 @@ gimp_preview_renderer_real_render (GimpPreviewRenderer *renderer,
   TempBuf *temp_buf;
 
   temp_buf = gimp_viewable_get_preview (renderer->viewable,
-					renderer->width,
-					renderer->height);
+                                        renderer->width,
+                                        renderer->height);
 
   if (temp_buf)
     {
@@ -813,7 +817,7 @@ gimp_preview_renderer_default_render_stock (GimpPreviewRenderer *renderer,
     }
 
   icon_size = gimp_get_icon_size (widget, stock_id, GTK_ICON_SIZE_INVALID,
-				  renderer->width, renderer->height);
+                                  renderer->width, renderer->height);
 
   if (icon_size)
     pixbuf = gtk_widget_render_icon (widget, stock_id, icon_size, NULL);
@@ -961,35 +965,35 @@ gimp_preview_render_to_buffer (TempBuf       *temp_buf,
   y2 = CLAMP (temp_buf->y + temp_buf->height, 0, dest_height);
 
   src = temp_buf_data (temp_buf) + ((y1 - temp_buf->y) * rowstride +
-				    (x1 - temp_buf->x) * temp_buf->bytes);
+                                    (x1 - temp_buf->x) * temp_buf->bytes);
 
   for (i = 0; i < dest_height; i++)
     {
       if (i & 0x4)
-	{
-	  offset = 4;
-	  cb = pad_buf + offset * 3;
-	}
+        {
+          offset = 4;
+          cb = pad_buf + offset * 3;
+        }
       else
-	{
-	  offset = 0;
-	  cb = pad_buf;
-	}
+        {
+          offset = 0;
+          cb = pad_buf;
+        }
 
       /*  The interesting stuff between leading & trailing
        *  vertical transparency
        */
       if (i >= y1 && i < y2)
-	{
-	  /*  Handle the leading transparency  */
-	  for (j = 0; j < x1; j++)
-	    for (b = 0; b < dest_bytes; b++)
-	      render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
+        {
+          /*  Handle the leading transparency  */
+          for (j = 0; j < x1; j++)
+            for (b = 0; b < dest_bytes; b++)
+              render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
 
-	  /*  The stuff in the middle  */
-	  s = src;
-	  for (j = x1; j < x2; j++)
-	    {
+          /*  The stuff in the middle  */
+          s = src;
+          for (j = x1; j < x2; j++)
+            {
               if (has_alpha && render_composite)
                 {
                   a = s[alpha_component] << 8;
@@ -1032,22 +1036,22 @@ gimp_preview_render_to_buffer (TempBuf       *temp_buf,
                   render_temp_buf[j * 3 + 2] = s[blue_component];
                 }
 
-	      s += temp_buf->bytes;
-	    }
+              s += temp_buf->bytes;
+            }
 
-	  /*  Handle the trailing transparency  */
-	  for (j = x2; j < dest_width; j++)
-	    for (b = 0; b < dest_bytes; b++)
-	      render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
+          /*  Handle the trailing transparency  */
+          for (j = x2; j < dest_width; j++)
+            for (b = 0; b < dest_bytes; b++)
+              render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
 
-	  src += rowstride;
-	}
+          src += rowstride;
+        }
       else
-	{
-	  for (j = 0; j < dest_width; j++)
-	    for (b = 0; b < dest_bytes; b++)
-	      render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
-	}
+        {
+          for (j = 0; j < dest_width; j++)
+            for (b = 0; b < dest_bytes; b++)
+              render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
+        }
 
       memcpy (dest_buffer + i * dest_rowstride,
               render_temp_buf,
