@@ -1,3 +1,24 @@
+2004-03-20  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	Fixed several off-by-one problems in display:
+
+	* app/display/gimpdisplayshell.h (PROJ_ROUND): New macro to apply
+	to a float the same rounding method as the one used when rendering.
+	(SCALEX, SCALEY): Use PROJ_ROUND instead of truncating.
+
+	* app/display/gimpdisplayshell-transform.c
+	(gimp_display_shell_transform_xy): Accept gdouble image coordinates
+	even if the returned screen coordinates are integer. Use PROJ_ROUND
+	instead of (gint) to apply proper rounding. Fixes bug #137566.
+
+	* app/display/gimpdisplayshell-transform.h
+	(gimp_display_shell_transform_xy): changed accordingly.
+
+	* app/display/gimpdisplayshell-draw.c
+	* app/tools/gimpdrawtool.c: make sure everywhere that PROJ_ROUND
+	is used either directly or through gimp_display_shell_transform_xy,
+	instead of using arbitrary rounding methods.
+
 2004-03-20  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: set version number to 2.0.0, version string to

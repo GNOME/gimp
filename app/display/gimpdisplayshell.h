@@ -27,6 +27,9 @@
 #include "gui/gui-types.h"
 
 
+/* Apply to a float the same rounding mode used in the renderer */
+#define PROJ_ROUND(coord) ((gint) ceil (coord))
+
 /* finding the effective screen resolution (double) */
 #define  SCREEN_XRES(s)   (s->dot_for_dot ? \
                            s->gdisp->gimage->xresolution : s->monitor_xres)
@@ -40,8 +43,8 @@
 			   s->gdisp->gimage->yresolution)
 
 /* scale values */
-#define  SCALEX(s,x)      ((gint) (x * SCALEFACTOR_X(s)))
-#define  SCALEY(s,y)      ((gint) (y * SCALEFACTOR_Y(s)))
+#define  SCALEX(s,x)      PROJ_ROUND (x * SCALEFACTOR_X(s))
+#define  SCALEY(s,y)      PROJ_ROUND (y * SCALEFACTOR_Y(s))
 
 /* unscale values */
 #define  UNSCALEX(s,x)    ((gint) (x / SCALEFACTOR_X(s)))

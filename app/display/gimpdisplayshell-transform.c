@@ -80,8 +80,8 @@ gimp_display_shell_untransform_coords (GimpDisplayShell *shell,
 
 void
 gimp_display_shell_transform_xy (GimpDisplayShell *shell,
-                                 gint              x,
-                                 gint              y,
+                                 gdouble           x,
+                                 gdouble           y,
                                  gint             *nx,
                                  gint             *ny,
                                  gboolean          use_offsets)
@@ -103,11 +103,16 @@ gimp_display_shell_transform_xy (GimpDisplayShell *shell,
     gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->gdisp->gimage)),
                        &offset_x, &offset_y);
 
-  *nx = (gint) (scalex * (x + offset_x) - shell->offset_x);
-  *ny = (gint) (scaley * (y + offset_y) - shell->offset_y);
+  x = (scalex * (x + offset_x) - shell->offset_x);
+  y = (scaley * (y + offset_y) - shell->offset_y);
 
-  *nx += shell->disp_xoffset;
-  *ny += shell->disp_yoffset;
+  /* The projected coordinates can easily overflow a gint in the case of big
+     images at high zoom levels, so we clamp them here to avoid problems.  */
+  x = CLAMP (x, G_MININT, G_MAXINT);
+  y = CLAMP (y, G_MININT, G_MAXINT);
+
+  *nx = PROJ_ROUND (x) + shell->disp_xoffset;
+  *ny = PROJ_ROUND (y) + shell->disp_yoffset;
 }
 
 void

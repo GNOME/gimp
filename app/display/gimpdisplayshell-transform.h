@@ -28,8 +28,8 @@ void  gimp_display_shell_untransform_coords   (GimpDisplayShell *shell,
                                                GimpCoords       *image_coords);
 
 void  gimp_display_shell_transform_xy         (GimpDisplayShell *shell,
-                                               gint              x,
-                                               gint              y,
+                                               gdouble           x,
+                                               gdouble           y,
                                                gint             *nx,
                                                gint             *ny,
                                                gboolean          use_offsets);

@@ -259,7 +259,7 @@ gimp_display_shell_draw_vector (GimpDisplayShell *shell,
           GimpCoords *coord;
           GdkPoint   *gdk_coords;
           gint        i;
-          gdouble     sx, sy;
+          gint        sx, sy;
 
           gdk_coords = g_new (GdkPoint, coords->len);
 
@@ -267,12 +267,12 @@ gimp_display_shell_draw_vector (GimpDisplayShell *shell,
             {
               coord = &g_array_index (coords, GimpCoords, i);
 
-              gimp_display_shell_transform_xy_f (shell,
-                                                 coord->x, coord->y,
-                                                 &sx, &sy,
-                                                 FALSE);
-              gdk_coords[i].x = ROUND (sx);
-              gdk_coords[i].y = ROUND (sy);
+              gimp_display_shell_transform_xy (shell,
+                                               coord->x, coord->y,
+                                               &sx, &sy,
+                                               FALSE);
+              gdk_coords[i].x = sx;
+              gdk_coords[i].y = sy;
             }
 
           gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
