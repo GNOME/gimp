@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2000-06-06 12:41-0700\n"
+"POT-Creation-Date: 2000-08-19 09:13-0700\n"
 "PO-Revision-Date: 2000-04-08 00:26+0300\n"
 "Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -22,8 +22,9 @@ msgstr "/K‰yt‰ edustav‰ri‰"
 msgid "/Use Background Color"
 msgstr "/K‰yt‰ taustav‰ri‰"
 
-#: libgimp/gimpexport.c:158
-msgid "can't Handle Layers"
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
+#, fuzzy
+msgid "can't handle layers"
 msgstr "ei pysty k‰sittelem‰‰n tasoja"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
@@ -31,66 +32,76 @@ msgid "Merge Visible Layers"
 msgstr "Yhdist‰ n‰kyv‰t tasot"
 
 #: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
-msgid "can only Handle Layers as Animation Frames"
+#, fuzzy
+msgid "can only handle layers as animation frames"
 msgstr "voi k‰ytt‰‰ tasoja ainoastaan animaation ruutuina"
 
 #: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
 msgid "Save as Animation"
 msgstr "Tallenna animaationa"
 
-#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
 msgid "Flatten Image"
 msgstr "Yhdist‰ kuva"
 
-#: libgimp/gimpexport.c:185
-msgid "can't Handle Transparency"
+#: libgimp/gimpexport.c:194
+#, fuzzy
+msgid "can't handle transparency"
 msgstr "ei pysty k‰sittelem‰‰n l‰pin‰kyvyytt‰"
 
-#: libgimp/gimpexport.c:194
-msgid "can only Handle RGB Images"
+#: libgimp/gimpexport.c:203
+#, fuzzy
+msgid "can only handle RGB images"
 msgstr "k‰sittelee ainoastaan t‰ysv‰rikuvia"
 
-#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:223 libgimp/gimpexport.c:232
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:232 libgimp/gimpexport.c:241
 msgid "Convert to RGB"
 msgstr "Muunna t‰ysv‰rikuvaksi"
 
-#: libgimp/gimpexport.c:203
-msgid "can only Handle Grayscale Images"
+#: libgimp/gimpexport.c:212
+#, fuzzy
+msgid "can only handle grayscale images"
 msgstr "k‰sittelee ainoastaan harmaas‰vykuvia"
 
-#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:244
+#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
 msgid "Convert to Grayscale"
 msgstr "Muunna harmaas‰vyksi"
 
-#: libgimp/gimpexport.c:212
-msgid "can only Handle Indexed Images"
+#: libgimp/gimpexport.c:221
+#, fuzzy
+msgid "can only handle indexed images"
 msgstr "k‰sittelee ainoastaan indeksoituja kuvia"
 
-#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
+#, fuzzy
 msgid ""
-"Convert to indexed using default settings\n"
+"Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
 "Muunna indeksoiduksi k‰ytt‰en oletusasetuksia\n"
 "(Tee se k‰sin jos haluat k‰ytt‰‰ muita kuin oletuksia)"
 
-#: libgimp/gimpexport.c:222
-msgid "can only Handle RGB or Grayscale Images"
+#: libgimp/gimpexport.c:231
+#, fuzzy
+msgid "can only handle RGB or grayscale images"
 msgstr "k‰sittelee ainoastaan t‰ysv‰ri- tai harmaas‰vykuvia"
 
-#: libgimp/gimpexport.c:231
-msgid "can only Handle RGB or Indexed Images"
+#: libgimp/gimpexport.c:240
+#, fuzzy
+msgid "can only handle RGB or indexed images"
 msgstr "k‰sittelee ainoastaan t‰ysv‰ri- tai indeksoituja kuvia"
 
-#: libgimp/gimpexport.c:241
-msgid "can only Handle Grayscale or Indexed Images"
+#: libgimp/gimpexport.c:250
+#, fuzzy
+msgid "can only handle grayscale or indexed images"
 msgstr "k‰sittelee ainoastaan harmaas‰vy- tai indeksoituja kuvia"
 
-#: libgimp/gimpexport.c:252
-msgid "needs an Alpha Channel"
+#: libgimp/gimpexport.c:261
+#, fuzzy
+msgid "needs an alpha channel"
 msgstr "vaatii ett‰ kuvassa on alfakanava"
 
-#: libgimp/gimpexport.c:253
+#: libgimp/gimpexport.c:262
 msgid "Add Alpha Channel"
 msgstr "Lis‰‰ alfakanava"
 
@@ -99,32 +110,32 @@ msgstr "Lis‰‰ alfakanava"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:322
+#: libgimp/gimpexport.c:331
 msgid "Export File"
 msgstr "Tiedoston ulosvienti"
 
-#: libgimp/gimpexport.c:327
+#: libgimp/gimpexport.c:336
 msgid "Export"
 msgstr "Vie"
 
-#: libgimp/gimpexport.c:329
+#: libgimp/gimpexport.c:338
 msgid "Ignore"
 msgstr "Ohita"
 
-#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:183
+#: libgimp/gimpexport.c:340 libgimp/gimpquerybox.c:183
 #: libgimp/gimpquerybox.c:237 libgimp/gimpquerybox.c:293
 #: libgimp/gimpquerybox.c:356 libgimp/gimpunitmenu.c:501
 msgid "Cancel"
 msgstr "Peru"
 
-#: libgimp/gimpexport.c:346
+#: libgimp/gimpexport.c:355
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "Kuvaasi pit‰‰ ennen tallennusta muokata ulosvienti‰ varten koska:"
 
 #. the footline
-#: libgimp/gimpexport.c:409
+#: libgimp/gimpexport.c:418
 msgid "The export conversion won't modify your original image."
 msgstr "Muokkaus ulosvienti‰ varten ei vaikuta alkuper‰iseen kuvaan."
 

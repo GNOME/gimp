@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
-"POT-Creation-Date: 2000-06-06 12:41-0700\n"
+"POT-Creation-Date: 2000-08-19 09:13-0700\n"
 "PO-Revision-Date: dom feb  6 16:47:39 CET 2000\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -22,8 +22,9 @@ msgstr "/Utilizza Colore Primo Piano"
 msgid "/Use Background Color"
 msgstr "/Utilizza Colore di Sfondo"
 
-#: libgimp/gimpexport.c:158
-msgid "can't Handle Layers"
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
+#, fuzzy
+msgid "can't handle layers"
 msgstr "impossibile agire sui Livelli"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
@@ -31,67 +32,77 @@ msgid "Merge Visible Layers"
 msgstr "Incolla Livelli Visibili"
 
 #: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
-msgid "can only Handle Layers as Animation Frames"
+#, fuzzy
+msgid "can only handle layers as animation frames"
 msgstr "è possibile manipolare i Livelli come Frame dell'Animazione"
 
 #: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
 msgid "Save as Animation"
 msgstr "Salva come Animazione"
 
-#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
 msgid "Flatten Image"
 msgstr "Immagine Appiattita"
 
-#: libgimp/gimpexport.c:185
-msgid "can't Handle Transparency"
+#: libgimp/gimpexport.c:194
+#, fuzzy
+msgid "can't handle transparency"
 msgstr "impossibile manipolare la trasparenza"
 
-#: libgimp/gimpexport.c:194
-msgid "can only Handle RGB Images"
+#: libgimp/gimpexport.c:203
+#, fuzzy
+msgid "can only handle RGB images"
 msgstr "è possibile manipolare solo Immagini RGB"
 
-#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:223 libgimp/gimpexport.c:232
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:232 libgimp/gimpexport.c:241
 msgid "Convert to RGB"
 msgstr "Conversione a RGB"
 
-#: libgimp/gimpexport.c:203
-msgid "can only Handle Grayscale Images"
+#: libgimp/gimpexport.c:212
+#, fuzzy
+msgid "can only handle grayscale images"
 msgstr "è possibile manipolare Immagini in Scala di Grigio"
 
-#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:244
+#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
 msgid "Convert to Grayscale"
 msgstr "Converti a Scala di Grigio"
 
-#: libgimp/gimpexport.c:212
-msgid "can only Handle Indexed Images"
+#: libgimp/gimpexport.c:221
+#, fuzzy
+msgid "can only handle indexed images"
 msgstr "è possibile manipolare solo Immagini in Scala di Colore"
 
-#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
+#, fuzzy
 msgid ""
-"Convert to indexed using default settings\n"
+"Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
 "Conversione a Scala di Colore utilizzando le configurazioni base\n"
 "(Fatelo manualmente per controllare il risultato)"
 
-#: libgimp/gimpexport.c:222
-msgid "can only Handle RGB or Grayscale Images"
+#: libgimp/gimpexport.c:231
+#, fuzzy
+msgid "can only handle RGB or grayscale images"
 msgstr "è possibile manipolare solo Immagini RGB o in Scala di Grigio"
 
-#: libgimp/gimpexport.c:231
-msgid "can only Handle RGB or Indexed Images"
+#: libgimp/gimpexport.c:240
+#, fuzzy
+msgid "can only handle RGB or indexed images"
 msgstr "è possibile manipolare solo Immagini RGB o in Scala di Colore"
 
-#: libgimp/gimpexport.c:241
-msgid "can only Handle Grayscale or Indexed Images"
+#: libgimp/gimpexport.c:250
+#, fuzzy
+msgid "can only handle grayscale or indexed images"
 msgstr ""
 "è possibile manipolare solo Immagini in Scala di Colore o Scala di Grigio"
 
-#: libgimp/gimpexport.c:252
-msgid "needs an Alpha Channel"
+#: libgimp/gimpexport.c:261
+#, fuzzy
+msgid "needs an alpha channel"
 msgstr "è necessario un Canale Alpha"
 
-#: libgimp/gimpexport.c:253
+#: libgimp/gimpexport.c:262
 msgid "Add Alpha Channel"
 msgstr "Aggiungi Canale Alpha"
 
@@ -100,25 +111,25 @@ msgstr "Aggiungi Canale Alpha"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:322
+#: libgimp/gimpexport.c:331
 msgid "Export File"
 msgstr "Esporta File"
 
-#: libgimp/gimpexport.c:327
+#: libgimp/gimpexport.c:336
 msgid "Export"
 msgstr "Esporta"
 
-#: libgimp/gimpexport.c:329
+#: libgimp/gimpexport.c:338
 msgid "Ignore"
 msgstr "Ignora"
 
-#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:183
+#: libgimp/gimpexport.c:340 libgimp/gimpquerybox.c:183
 #: libgimp/gimpquerybox.c:237 libgimp/gimpquerybox.c:293
 #: libgimp/gimpquerybox.c:356 libgimp/gimpunitmenu.c:501
 msgid "Cancel"
 msgstr "Cancella"
 
-#: libgimp/gimpexport.c:346
+#: libgimp/gimpexport.c:355
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
@@ -127,7 +138,7 @@ msgstr ""
 "seguenti ragioni:"
 
 #. the footline
-#: libgimp/gimpexport.c:409
+#: libgimp/gimpexport.c:418
 msgid "The export conversion won't modify your original image."
 msgstr "L'esportazione non modificherà l'immagine originale."
 

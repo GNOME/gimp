@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.24\n"
-"POT-Creation-Date: 2000-08-16 00:37+0200\n"
+"POT-Creation-Date: 2000-08-19 09:13-0700\n"
 "PO-Revision-Date: 2000-08-16 00:38+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -309,7 +309,7 @@ msgstr "Kontrast:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:300 app/color_balance.c:441 app/curves.c:682
-#: app/fileops.c:401 app/hue_saturation.c:562 app/levels.c:570
+#: app/fileops.c:404 app/hue_saturation.c:562 app/levels.c:570
 #: app/palette.c:3216 app/posterize.c:239 app/threshold.c:348
 msgid "Preview"
 msgstr "Forhåndsvis"
@@ -1221,16 +1221,16 @@ msgstr "Piksler/%a"
 msgid "Image Type"
 msgstr "Bildetype"
 
-#: app/fileops.c:249 app/fileops.c:295
+#: app/fileops.c:252 app/fileops.c:298
 msgid "Load Image"
 msgstr "Last bilde"
 
 #. format-chooser frame
-#: app/fileops.c:310
+#: app/fileops.c:313
 msgid "Determine File Type"
 msgstr "Bestem filtype"
 
-#: app/fileops.c:383
+#: app/fileops.c:386
 msgid ""
 "Generate\n"
 "Preview"
@@ -1238,11 +1238,11 @@ msgstr ""
 "Generer\n"
 "forhåndsvisning"
 
-#: app/fileops.c:402
+#: app/fileops.c:405
 msgid "No Selection."
 msgstr "Ingen utvalg."
 
-#: app/fileops.c:450 app/fileops.c:1772 app/fileops.c:1867
+#: app/fileops.c:453 app/fileops.c:1710
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1251,19 +1251,19 @@ msgstr ""
 "Feil under lagring.\n"
 "%s"
 
-#: app/fileops.c:475 app/fileops.c:507
+#: app/fileops.c:478 app/fileops.c:510
 msgid "Save Image"
 msgstr "Lagre bilde"
 
-#: app/fileops.c:524
+#: app/fileops.c:527
 msgid "Save Options"
 msgstr "Alternativer for lagring"
 
-#: app/fileops.c:533
+#: app/fileops.c:536
 msgid "Determine File Type:"
 msgstr "Bestem filtype:"
 
-#: app/fileops.c:593
+#: app/fileops.c:596
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
@@ -1271,11 +1271,11 @@ msgstr ""
 "Kan ikke forkaste.\n"
 "Ingen filnavn assosiert med dette bildet."
 
-#: app/fileops.c:600
+#: app/fileops.c:603
 msgid "Revert"
 msgstr "Forkast"
 
-#: app/fileops.c:611
+#: app/fileops.c:614
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1284,7 +1284,7 @@ msgstr ""
 "Forkast feilet.\n"
 "%s"
 
-#: app/fileops.c:708
+#: app/fileops.c:711
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1293,7 +1293,7 @@ msgstr ""
 "%s feilet.\n"
 "%s: Ukjent filtype."
 
-#: app/fileops.c:725
+#: app/fileops.c:728
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1302,7 +1302,7 @@ msgstr ""
 "%s feilet.\n"
 "%s er ikke en vanlig fil."
 
-#: app/fileops.c:746
+#: app/fileops.c:749
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1311,11 +1311,11 @@ msgstr ""
 "%s feilet.\n"
 "%s: Ikke tilgang."
 
-#: app/fileops.c:795
+#: app/fileops.c:798
 msgid "Open"
 msgstr "Åpne"
 
-#: app/fileops.c:1102
+#: app/fileops.c:1105
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1324,7 +1324,7 @@ msgstr ""
 "Lagring feilet.\n"
 "%s: Ukjent filtype."
 
-#: app/fileops.c:1117
+#: app/fileops.c:1120
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1333,7 +1333,7 @@ msgstr ""
 "Lagring feilet.\n"
 "%s er ikke en vanlig fil."
 
-#: app/fileops.c:1136
+#: app/fileops.c:1139
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1342,35 +1342,35 @@ msgstr ""
 "Lagring feilet.\n"
 "%s: Ikke tilgang."
 
-#: app/fileops.c:1386
+#: app/fileops.c:1389
 msgid "(This thumbnail may be out of date)"
 msgstr "(Denne miniatyren kan være gammel)"
 
-#: app/fileops.c:1387
+#: app/fileops.c:1390
 msgid "(No Information)"
 msgstr "(Ingen informasjon)"
 
-#: app/fileops.c:1397
+#: app/fileops.c:1400
 msgid "(Thumbnail saving is disabled)"
 msgstr "(Lagring av miniatyrer er slått av)"
 
-#: app/fileops.c:1401
+#: app/fileops.c:1404
 msgid "(Could not write thumbnail file)"
 msgstr "(Kunne ikke skrive miniatyrfil)"
 
-#: app/fileops.c:1405
+#: app/fileops.c:1408
 msgid "(Thumbnail file not written)"
 msgstr "(Miniatyr ikke skrevet)"
 
-#: app/fileops.c:1422
+#: app/fileops.c:1425
 msgid "No preview available"
 msgstr "Ingen forhåndsvisning tilgjengelig"
 
-#: app/fileops.c:1545
+#: app/fileops.c:1531
 msgid "(could not make preview)"
 msgstr "(kunne ikke lage forhåndsvisning)"
 
-#: app/fileops.c:1618 app/fileops.c:1698
+#: app/fileops.c:1594 app/fileops.c:1636
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -1379,20 +1379,20 @@ msgstr ""
 "Åpne feilet.\n"
 "%s"
 
-#: app/fileops.c:1820
+#: app/fileops.c:1800
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s eksisterer, overskriv?"
 
-#: app/fileops.c:1822
+#: app/fileops.c:1802
 msgid "File Exists!"
 msgstr "Filen eksisterer!"
 
-#: app/fileops.c:1827
+#: app/fileops.c:1807
 msgid "Yes"
 msgstr "Ja"
 
-#: app/fileops.c:1827
+#: app/fileops.c:1807
 msgid "No"
 msgstr "Nei"
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-06-06 12:41-0700\n"
+"POT-Creation-Date: 2000-08-19 09:13-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,9 +21,9 @@ msgstr ""
 msgid "/Use Background Color"
 msgstr ""
 
-#: libgimp/gimpexport.c:158
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
 #, fuzzy
-msgid "can't Handle Layers"
+msgid "can't handle layers"
 msgstr "Réteg skálázása"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
@@ -33,7 +33,7 @@ msgstr "Látható rétegek összefésülése"
 
 #: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
 #, fuzzy
-msgid "can only Handle Layers as Animation Frames"
+msgid "can only handle layers as animation frames"
 msgstr "Színátmenet: indexelt képeknél érvénytelen."
 
 #: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
@@ -41,68 +41,68 @@ msgstr "Színátmenet: indexelt képeknél érvénytelen."
 msgid "Save as Animation"
 msgstr "Kimentés beállítások"
 
-#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
 #, fuzzy
 msgid "Flatten Image"
 msgstr "Egy réteggé"
 
-#: libgimp/gimpexport.c:185
-#, fuzzy
-msgid "can't Handle Transparency"
-msgstr "Háttérszínig vagy átlátszóságig töröl"
-
 #: libgimp/gimpexport.c:194
 #, fuzzy
-msgid "can only Handle RGB Images"
+msgid "can't handle transparency"
+msgstr "Háttérszínig vagy átlátszóságig töröl"
+
+#: libgimp/gimpexport.c:203
+#, fuzzy
+msgid "can only handle RGB images"
 msgstr "Színátmenet: indexelt képeknél érvénytelen."
 
-#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:223 libgimp/gimpexport.c:232
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:232 libgimp/gimpexport.c:241
 #, fuzzy
 msgid "Convert to RGB"
 msgstr "Kontraszt"
 
-#: libgimp/gimpexport.c:203
+#: libgimp/gimpexport.c:212
 #, fuzzy
-msgid "can only Handle Grayscale Images"
+msgid "can only handle grayscale images"
 msgstr "Színátmenet: indexelt képeknél érvénytelen."
 
-#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:244
+#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
 #, fuzzy
 msgid "Convert to Grayscale"
 msgstr "fekete-fehér"
 
-#: libgimp/gimpexport.c:212
+#: libgimp/gimpexport.c:221
 #, fuzzy
-msgid "can only Handle Indexed Images"
+msgid "can only handle indexed images"
 msgstr "Színátmenet: indexelt képeknél érvénytelen."
 
-#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
 msgid ""
-"Convert to indexed using default settings\n"
+"Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
 
-#: libgimp/gimpexport.c:222
-#, fuzzy
-msgid "can only Handle RGB or Grayscale Images"
-msgstr "Színátmenet: indexelt képeknél érvénytelen."
-
 #: libgimp/gimpexport.c:231
 #, fuzzy
-msgid "can only Handle RGB or Indexed Images"
+msgid "can only handle RGB or grayscale images"
 msgstr "Színátmenet: indexelt képeknél érvénytelen."
 
-#: libgimp/gimpexport.c:241
+#: libgimp/gimpexport.c:240
 #, fuzzy
-msgid "can only Handle Grayscale or Indexed Images"
+msgid "can only handle RGB or indexed images"
 msgstr "Színátmenet: indexelt képeknél érvénytelen."
 
-#: libgimp/gimpexport.c:252
+#: libgimp/gimpexport.c:250
 #, fuzzy
-msgid "needs an Alpha Channel"
+msgid "can only handle grayscale or indexed images"
+msgstr "Színátmenet: indexelt képeknél érvénytelen."
+
+#: libgimp/gimpexport.c:261
+#, fuzzy
+msgid "needs an alpha channel"
 msgstr "Réteg alfa csatornája"
 
-#: libgimp/gimpexport.c:253
+#: libgimp/gimpexport.c:262
 #, fuzzy
 msgid "Add Alpha Channel"
 msgstr "Alfa csatorna létrehozás"
@@ -112,34 +112,34 @@ msgstr "Alfa csatorna létrehozás"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:322
+#: libgimp/gimpexport.c:331
 #, fuzzy
 msgid "Export File"
 msgstr "Színpaletta"
 
-#: libgimp/gimpexport.c:327
+#: libgimp/gimpexport.c:336
 #, fuzzy
 msgid "Export"
 msgstr "Forrás"
 
-#: libgimp/gimpexport.c:329
+#: libgimp/gimpexport.c:338
 msgid "Ignore"
 msgstr ""
 
-#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:183
+#: libgimp/gimpexport.c:340 libgimp/gimpquerybox.c:183
 #: libgimp/gimpquerybox.c:237 libgimp/gimpquerybox.c:293
 #: libgimp/gimpquerybox.c:356 libgimp/gimpunitmenu.c:501
 msgid "Cancel"
 msgstr "Mégsem"
 
-#: libgimp/gimpexport.c:346
+#: libgimp/gimpexport.c:355
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr ""
 
 #. the footline
-#: libgimp/gimpexport.c:409
+#: libgimp/gimpexport.c:418
 msgid "The export conversion won't modify your original image."
 msgstr ""
 

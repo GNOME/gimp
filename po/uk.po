@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.19\n"
-"POT-Creation-Date: 2000-08-09 10:38+0300\n"
+"POT-Creation-Date: 2000-08-19 09:13-0700\n"
 "PO-Revision-Date: 2000-01-11 12:44+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -61,45 +61,45 @@ msgstr "створено для вас"
 msgid "GIMP Startup"
 msgstr "Запуск GIMP"
 
-#: app/app_procs.c:492 app/gimprc.c:452
+#: app/app_procs.c:489 app/gimprc.c:452
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "анал╕з \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:554
+#: app/app_procs.c:551
 msgid "Looking for data files"
 msgstr "Пошук файл╕в даних"
 
-#: app/app_procs.c:554
+#: app/app_procs.c:551
 msgid "Parasites"
 msgstr "Паразити"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:556 app/internal_procs.c:71 app/preferences_dialog.c:2493
+#: app/app_procs.c:553 app/internal_procs.c:71 app/preferences_dialog.c:2493
 msgid "Brushes"
 msgstr "Пензл╕"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:558 app/internal_procs.c:140 app/preferences_dialog.c:2501
+#: app/app_procs.c:555 app/internal_procs.c:140 app/preferences_dialog.c:2501
 msgid "Patterns"
 msgstr "Шаблони"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:560 app/preferences_dialog.c:2505
+#: app/app_procs.c:557 app/preferences_dialog.c:2505
 msgid "Palettes"
 msgstr "Пал╕три"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:562 app/internal_procs.c:104 app/preferences_dialog.c:2509
+#: app/app_procs.c:559 app/internal_procs.c:104 app/preferences_dialog.c:2509
 msgid "Gradients"
 msgstr "Град╕╓нти"
 
-#: app/app_procs.c:752
+#: app/app_procs.c:749
 msgid "Really Quit?"
 msgstr "Справд╕ вийти?"
 
-#: app/app_procs.c:756
+#: app/app_procs.c:753
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -109,12 +109,12 @@ msgstr ""
 "\n"
 "Вийти з GIMP?"
 
-#: app/app_procs.c:757
+#: app/app_procs.c:754
 msgid "Quit"
 msgstr "Вих╕д"
 
 #. the cancel button
-#: app/app_procs.c:757 app/brightness_contrast.c:218 app/channel_ops.c:93
+#: app/app_procs.c:754 app/brightness_contrast.c:218 app/channel_ops.c:93
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
 #: app/color_balance.c:275 app/color_notebook.c:126 app/convert.c:506
 #: app/curves.c:562 app/file_new_dialog.c:207 app/file_new_dialog.c:357
@@ -122,7 +122,7 @@ msgstr "Вих╕д"
 #: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
 #: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1039
 #: app/layers_dialog.c:3484 app/layers_dialog.c:3666 app/layers_dialog.c:3761
-#: app/layers_dialog.c:4021 app/levels.c:341 app/palette.c:1830
+#: app/layers_dialog.c:4021 app/levels.c:341 app/palette.c:1818
 #: app/posterize.c:202 app/preferences_dialog.c:1465 app/qmask.c:278
 #: app/resize.c:194 app/resize.c:1324 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1191 modules/cdisplay_gamma.c:332
@@ -309,8 +309,8 @@ msgstr "Контрастн╕сть:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:300 app/color_balance.c:441 app/curves.c:682
-#: app/fileops.c:401 app/hue_saturation.c:562 app/levels.c:570
-#: app/palette.c:3228 app/posterize.c:239 app/threshold.c:348
+#: app/fileops.c:404 app/hue_saturation.c:562 app/levels.c:570
+#: app/palette.c:3216 app/posterize.c:239 app/threshold.c:348
 msgid "Preview"
 msgstr "Попередн╕й перегляд"
 
@@ -324,8 +324,8 @@ msgstr "Редактор пензл╕в"
 #: app/crop.c:1068 app/devices.c:755 app/docindex.c:773 app/errorconsole.c:281
 #: app/gdisplay_ops.c:305 app/gradient.c:800 app/gradient_select.c:153
 #: app/histogram_tool.c:275 app/info_window.c:255 app/lc_dialog.c:195
-#: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2063
-#: app/palette.c:2079 app/palette.c:3110 app/palette_select.c:66
+#: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2051
+#: app/palette.c:2067 app/palette.c:3098 app/palette_select.c:66
 #: app/pattern_select.c:172 app/preferences_dialog.c:367 app/tips_dialog.c:160
 #: app/tools.c:1544 app/undo_history.c:752
 msgid "Close"
@@ -354,7 +354,7 @@ msgid "Brush Selection"
 msgstr "Виб╕р пензля"
 
 #: app/brush_select.c:279 app/gradient.c:798 app/module_db.c:354
-#: app/palette.c:2061 app/pattern_select.c:170
+#: app/palette.c:2049 app/pattern_select.c:170
 msgid "Refresh"
 msgstr "Оновити"
 
@@ -370,19 +370,19 @@ msgstr "Непрозор╕сть:"
 msgid "Mode:"
 msgstr "Режим:"
 
-#: app/brush_select.c:467 app/palette.c:1176 app/palette.c:2231
+#: app/brush_select.c:467 app/palette.c:1164 app/palette.c:2219
 #: modules/colorsel_water.c:629
 msgid "New"
 msgstr "Новий"
 
 #: app/brush_select.c:473 app/colormap_dialog.i.c:139
-#: app/gradient_select.c:151 app/palette.c:1183 app/palette.c:2077
+#: app/gradient_select.c:151 app/palette.c:1171 app/palette.c:2065
 #: app/palette_select.c:64
 msgid "Edit"
 msgstr "Редагувати"
 
 #: app/brush_select.c:479 app/global_edit.c:770 app/gradient.c:1768
-#: app/palette.c:1193 app/palette.c:1830 app/palette.c:2242
+#: app/palette.c:1181 app/palette.c:1818 app/palette.c:2230
 msgid "Delete"
 msgstr "Видалити"
 
@@ -1016,11 +1016,11 @@ msgstr "Гладка"
 msgid "Free"
 msgstr "В╕льна"
 
-#: app/curves.c:699 app/levels.c:598 app/module_db.c:864
+#: app/curves.c:699 app/levels.c:598 app/module_db.c:865
 msgid "Load"
 msgstr "Завантажити"
 
-#: app/curves.c:707 app/devices.c:753 app/levels.c:608 app/palette.c:2059
+#: app/curves.c:707 app/devices.c:753 app/levels.c:608 app/palette.c:2047
 #: app/preferences_dialog.c:365 app/preferences_dialog.c:1463
 msgid "Save"
 msgstr "Зберегти"
@@ -1221,16 +1221,16 @@ msgstr "точок/%a"
 msgid "Image Type"
 msgstr "Тип зображення"
 
-#: app/fileops.c:249 app/fileops.c:295
+#: app/fileops.c:252 app/fileops.c:298
 msgid "Load Image"
 msgstr "Завантажити зображення"
 
 #. format-chooser frame
-#: app/fileops.c:310
+#: app/fileops.c:313
 msgid "Determine File Type"
 msgstr "Визначення типу файлу"
 
-#: app/fileops.c:383
+#: app/fileops.c:386
 msgid ""
 "Generate\n"
 "Preview"
@@ -1238,11 +1238,11 @@ msgstr ""
 "створити\n"
 "перегляд"
 
-#: app/fileops.c:402
+#: app/fileops.c:405
 msgid "No Selection."
 msgstr "Н╕чого не вибрано."
 
-#: app/fileops.c:450 app/fileops.c:1772 app/fileops.c:1867
+#: app/fileops.c:453 app/fileops.c:1710
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1251,19 +1251,19 @@ msgstr ""
 "Збереження не вдалось.\n"
 "%s"
 
-#: app/fileops.c:475 app/fileops.c:507
+#: app/fileops.c:478 app/fileops.c:510
 msgid "Save Image"
 msgstr "Зберегти зображення"
 
-#: app/fileops.c:524
+#: app/fileops.c:527
 msgid "Save Options"
 msgstr "Параметри збереження"
 
-#: app/fileops.c:533
+#: app/fileops.c:536
 msgid "Determine File Type:"
 msgstr "Визначити тип файлу:"
 
-#: app/fileops.c:593
+#: app/fileops.c:596
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
@@ -1271,11 +1271,11 @@ msgstr ""
 "Неможливо в╕дновити.\n"
 "Нема╓ пов'язано╖ з цим зображенням назви файлу."
 
-#: app/fileops.c:600
+#: app/fileops.c:603
 msgid "Revert"
 msgstr "В╕дновити"
 
-#: app/fileops.c:611
+#: app/fileops.c:614
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1284,7 +1284,7 @@ msgstr ""
 "В╕дновлення не вдалось.\n"
 "%s"
 
-#: app/fileops.c:708
+#: app/fileops.c:711
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1293,7 +1293,7 @@ msgstr ""
 "%s не вдалось.\n"
 "%s: нев╕домий тип файлу."
 
-#: app/fileops.c:725
+#: app/fileops.c:728
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1302,7 +1302,7 @@ msgstr ""
 "%s не вдалось.\n"
 "%s - незвичайний файл."
 
-#: app/fileops.c:746
+#: app/fileops.c:749
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1311,11 +1311,11 @@ msgstr ""
 "%s не вдалось.\n"
 "%s: не вистача╓ прав."
 
-#: app/fileops.c:795
+#: app/fileops.c:798
 msgid "Open"
 msgstr "В╕дкрити"
 
-#: app/fileops.c:1102
+#: app/fileops.c:1105
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1324,7 +1324,7 @@ msgstr ""
 "Запис не вдався.\n"
 "%s: нев╕домий тип файлу."
 
-#: app/fileops.c:1117
+#: app/fileops.c:1120
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1333,7 +1333,7 @@ msgstr ""
 "Запис не вдався.\n"
 "%s - незвичайний файл."
 
-#: app/fileops.c:1136
+#: app/fileops.c:1139
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1342,35 +1342,35 @@ msgstr ""
 "Збереження не вдалось.\n"
 "%s: не вистача╓ прав."
 
-#: app/fileops.c:1386
+#: app/fileops.c:1389
 msgid "(This thumbnail may be out of date)"
 msgstr "(Ця м╕н╕атюра напевно застар╕ла)"
 
-#: app/fileops.c:1387
+#: app/fileops.c:1390
 msgid "(No Information)"
 msgstr "(Нема╓ ╕нформац╕╖)"
 
-#: app/fileops.c:1397
+#: app/fileops.c:1400
 msgid "(Thumbnail saving is disabled)"
 msgstr "(Збереження м╕н╕атюр заборонено)"
 
-#: app/fileops.c:1401
+#: app/fileops.c:1404
 msgid "(Could not write thumbnail file)"
 msgstr "(Невдалося записати файл м╕н╕атюри)"
 
-#: app/fileops.c:1405
+#: app/fileops.c:1408
 msgid "(Thumbnail file not written)"
 msgstr "(Файл м╕н╕атюри не записано)"
 
-#: app/fileops.c:1422
+#: app/fileops.c:1425
 msgid "No preview available"
 msgstr "Попередн╕й перегляд не доступний"
 
-#: app/fileops.c:1545
+#: app/fileops.c:1531
 msgid "(could not make preview)"
 msgstr "(не вдалось виконати перегляд)"
 
-#: app/fileops.c:1618 app/fileops.c:1698
+#: app/fileops.c:1594 app/fileops.c:1636
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -1379,20 +1379,20 @@ msgstr ""
 "В╕дкривання не вдалось.\n"
 "%s"
 
-#: app/fileops.c:1820
+#: app/fileops.c:1800
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s ╕сну╓, переписати?"
 
-#: app/fileops.c:1822
+#: app/fileops.c:1802
 msgid "File Exists!"
 msgstr "Файл ╕сну╓!"
 
-#: app/fileops.c:1827
+#: app/fileops.c:1807
 msgid "Yes"
 msgstr "Так"
 
-#: app/fileops.c:1827
+#: app/fileops.c:1807
 msgid "No"
 msgstr "Н╕"
 
@@ -1697,8 +1697,8 @@ msgstr "Канал не можна п╕дняти ще вище"
 msgid "Channel cannot be lowered any further"
 msgstr "Канал не можна опустити ще нижче"
 
-#: app/gimpimage.c:3426 app/palette.c:364 app/palette.c:941 app/palette.c:1077
-#: app/palette.c:2019 app/palette.c:2741 app/palette.c:2873
+#: app/gimpimage.c:3426 app/palette.c:352 app/palette.c:929 app/palette.c:1065
+#: app/palette.c:2007 app/palette.c:2729 app/palette.c:2861
 msgid "Untitled"
 msgstr "Неназвано"
 
@@ -1884,11 +1884,11 @@ msgid "Gradient Editor"
 msgstr "Редактор град╕╓нт╕в"
 
 #: app/gradient.c:823 app/gradient_select.c:207 app/paintbrush.c:266
-#: app/palette.c:3166
+#: app/palette.c:3154
 msgid "Gradient"
 msgstr "Град╕╓нт"
 
-#: app/gradient.c:824 app/gradient_select.c:208 app/palette.c:2203
+#: app/gradient.c:824 app/gradient_select.c:208 app/palette.c:2191
 #: app/palette_select.c:89
 msgid "Name"
 msgstr "Назва"
@@ -1960,7 +1960,7 @@ msgstr "Перейменування град╕╓нту"
 msgid "Enter a new name for the gradient"
 msgstr "Введ╕ть нову назву град╕╓нту"
 
-#: app/gradient.c:1758 app/palette.c:1821
+#: app/gradient.c:1758 app/palette.c:1809
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -2548,7 +2548,7 @@ msgstr "Процедури направляючо╖"
 msgid "Help procedures"
 msgstr "Дов╕дков╕ процедури"
 
-#: app/internal_procs.c:116 app/palette.c:3174
+#: app/internal_procs.c:116 app/palette.c:3162
 msgid "Image"
 msgstr "Зображення"
 
@@ -2566,7 +2566,7 @@ msgstr "╤нтерфейс"
 msgid "Miscellaneous"
 msgstr "Р╕зне"
 
-#: app/internal_procs.c:128 app/palette.c:2189 app/palette.c:2201
+#: app/internal_procs.c:128 app/palette.c:2177 app/palette.c:2189
 #: app/palette_select.c:87
 msgid "Palette"
 msgstr "Пал╕тра"
@@ -2988,749 +2988,749 @@ msgstr "градуси"
 
 #. <Toolbox>/File
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:90
+#: app/menus.c:93
 msgid "/_File"
 msgstr "/Файл"
 
 #. <Image>/File
-#: app/menus.c:92 app/menus.c:198
+#: app/menus.c:95 app/menus.c:201
 msgid "/File/New..."
 msgstr "/Файл/Новий..."
 
-#: app/menus.c:94 app/menus.c:200
+#: app/menus.c:97 app/menus.c:203
 msgid "/File/Open..."
 msgstr "/Файл/В╕дкрити..."
 
-#: app/menus.c:101
+#: app/menus.c:104
 msgid "/File/Acquire"
 msgstr "/Файл/Захопити"
 
-#: app/menus.c:106
+#: app/menus.c:109
 msgid "/File/Preferences..."
 msgstr "/Файл/Установки..."
 
-#: app/menus.c:113
+#: app/menus.c:116
 msgid "/File/Dialogs/Layers, Channels & Paths..."
 msgstr "/Файл/Д╕алоги/Шари, канали та контури..."
 
-#: app/menus.c:115
+#: app/menus.c:118
 msgid "/File/Dialogs/Tool Options..."
 msgstr "/Файл/Д╕алоги/Параметри ╕нструменту..."
 
-#: app/menus.c:120
+#: app/menus.c:123
 msgid "/File/Dialogs/Brushes..."
 msgstr "/Файл/Д╕алоги/Пензл╕..."
 
-#: app/menus.c:122
+#: app/menus.c:125
 msgid "/File/Dialogs/Patterns..."
 msgstr "/Файл/Д╕алоги/Шаблони..."
 
-#: app/menus.c:124
+#: app/menus.c:127
 msgid "/File/Dialogs/Gradients..."
 msgstr "/Файл/Д╕алоги/Град╕╓нти..."
 
-#: app/menus.c:126
+#: app/menus.c:129
 msgid "/File/Dialogs/Palette..."
 msgstr "/Файл/Д╕алоги/Пал╕тра..."
 
-#: app/menus.c:128
+#: app/menus.c:131
 msgid "/File/Dialogs/Indexed Palette..."
 msgstr "/Файл/Д╕алоги/╤ндексована пал╕тра..."
 
-#: app/menus.c:133
+#: app/menus.c:136
 msgid "/File/Dialogs/Input Devices..."
 msgstr "/Файл/Д╕алоги/Пристро╖ вводу..."
 
-#: app/menus.c:135
+#: app/menus.c:138
 msgid "/File/Dialogs/Device Status..."
 msgstr "/Файл/Д╕алоги/Стан пристрою..."
 
-#: app/menus.c:140
+#: app/menus.c:143
 msgid "/File/Dialogs/Document Index..."
 msgstr "/Файл/Д╕алоги/Покажчик документ╕в..."
 
-#: app/menus.c:142
+#: app/menus.c:145
 msgid "/File/Dialogs/Error Console..."
 msgstr "/Файл/Д╕алоги/Консоль помилок..."
 
-#: app/menus.c:144
+#: app/menus.c:147
 msgid "/File/Dialogs/Display Filters..."
 msgstr "/Файл/Д╕алоги/Ф╕льтри в╕дображення..."
 
-#: app/menus.c:154 app/menus.c:213
+#: app/menus.c:157 app/menus.c:216
 msgid "/File/Quit"
 msgstr "/Файл/Вийти"
 
 #. <Toolbox>/Xtns
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:160
+#: app/menus.c:163
 msgid "/_Xtns"
 msgstr "/Розш."
 
-#: app/menus.c:162
+#: app/menus.c:165
 msgid "/Xtns/Module Browser..."
 msgstr "/Розш./Перегляд модул╕в..."
 
 #. <Toolbox>/Help
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:171
+#: app/menus.c:174
 msgid "/_Help"
 msgstr "/Дов╕дка"
 
-#: app/menus.c:173
+#: app/menus.c:176
 msgid "/Help/Help..."
 msgstr "/Дов╕дка/Допомога..."
 
-#: app/menus.c:175
+#: app/menus.c:178
 msgid "/Help/Context Help..."
 msgstr "/Дов╕дка/Контаксна допомога..."
 
-#: app/menus.c:177
+#: app/menus.c:180
 msgid "/Help/Tip of the Day..."
 msgstr "/Дов╕дка/П╕дказка дня..."
 
-#: app/menus.c:179
+#: app/menus.c:182
 msgid "/Help/About..."
 msgstr "/Дов╕дка/Про..."
 
-#: app/menus.c:181
+#: app/menus.c:184
 msgid "/Help/Dump Items (Debug)"
 msgstr "/Дов╕дка/Dump Items (Налагодження)"
 
-#: app/menus.c:202
+#: app/menus.c:205
 msgid "/File/Save"
 msgstr "/Файл/Зберегти"
 
-#: app/menus.c:204
+#: app/menus.c:207
 msgid "/File/Save As..."
 msgstr "/Файл/Зберегти як..."
 
-#: app/menus.c:206
+#: app/menus.c:209
 msgid "/File/Revert"
 msgstr "/Файл/В╕дновити"
 
-#: app/menus.c:211
+#: app/menus.c:214
 msgid "/File/Close"
 msgstr "/Файл/Закрити"
 
 #. <Image>/Edit
-#: app/menus.c:221
+#: app/menus.c:224
 msgid "/Edit/Undo"
 msgstr "/Редагування/В╕дм╕нити"
 
-#: app/menus.c:223
+#: app/menus.c:226
 msgid "/Edit/Redo"
 msgstr "/Редагування/Повернути"
 
-#: app/menus.c:228
+#: app/menus.c:231
 msgid "/Edit/Cut"
 msgstr "/Редагування/Вир╕зати"
 
-#: app/menus.c:230
+#: app/menus.c:233
 msgid "/Edit/Copy"
 msgstr "/Редагування/Скоп╕ювати"
 
-#: app/menus.c:232
+#: app/menus.c:235
 msgid "/Edit/Paste"
 msgstr "/Редагування/Вставити"
 
-#: app/menus.c:234
+#: app/menus.c:237
 msgid "/Edit/Paste Into"
 msgstr "/Редагування/Вставити в"
 
-#: app/menus.c:236
+#: app/menus.c:239
 msgid "/Edit/Paste as New"
 msgstr "/Редагування/Вставити як новий"
 
 #. <Image>/Edit/Buffer
-#: app/menus.c:241
+#: app/menus.c:244
 msgid "/Edit/Buffer/Cut Named..."
 msgstr "/Редагування/Буфер/Вир╕зати в буфер з назвою..."
 
-#: app/menus.c:243
+#: app/menus.c:246
 msgid "/Edit/Buffer/Copy Named..."
 msgstr "/Редагування/Буфер/Скоп╕ювати в буфер з назвою..."
 
-#: app/menus.c:245
+#: app/menus.c:248
 msgid "/Edit/Buffer/Paste Named..."
 msgstr "/Редагування/Буфер/Вставити буфер з назвою..."
 
-#: app/menus.c:250
+#: app/menus.c:253
 msgid "/Edit/Clear"
 msgstr "/Редагування/Очистити"
 
-#: app/menus.c:252
+#: app/menus.c:255
 msgid "/Edit/Fill with FG Color"
 msgstr "/Редагування/Заповнити кольором переднього плану"
 
-#: app/menus.c:254
+#: app/menus.c:257
 msgid "/Edit/Fill with BG Color"
 msgstr "/Редагування/Заповненити кольором тла"
 
-#: app/menus.c:256
+#: app/menus.c:259
 msgid "/Edit/Stroke"
 msgstr "/Редагування/Обвести"
 
 #. <Image>/Select
-#: app/menus.c:264
+#: app/menus.c:267
 msgid "/Select/Invert"
 msgstr "/Вид╕лення/╤нвертувати"
 
-#: app/menus.c:266
+#: app/menus.c:269
 msgid "/Select/All"
 msgstr "/Вид╕лення/Все"
 
-#: app/menus.c:268
+#: app/menus.c:271
 msgid "/Select/None"
 msgstr "/Вид╕лення/Н╕чого"
 
-#: app/menus.c:270
+#: app/menus.c:273
 msgid "/Select/Float"
 msgstr "/Вид╕лення/Плаваюче"
 
-#: app/menus.c:275
+#: app/menus.c:278
 msgid "/Select/Feather..."
 msgstr "/Вид╕лення/Перо..."
 
-#: app/menus.c:277
+#: app/menus.c:280
 msgid "/Select/Sharpen"
 msgstr "/Вид╕лення/Р╕зк╕сть"
 
-#: app/menus.c:279
+#: app/menus.c:282
 msgid "/Select/Shrink..."
 msgstr "/Вид╕лення/Зменшення..."
 
-#: app/menus.c:281
+#: app/menus.c:284
 msgid "/Select/Grow..."
 msgstr "/Вид╕лення/Зб╕льшення..."
 
-#: app/menus.c:283
+#: app/menus.c:286
 msgid "/Select/Border..."
 msgstr "/Вид╕лення/Границя..."
 
-#: app/menus.c:288
+#: app/menus.c:291
 msgid "/Select/Save to Channel"
 msgstr "/Вид╕лення/Зберегти в канал╕"
 
 #. <Image>/View
-#: app/menus.c:293
+#: app/menus.c:296
 msgid "/View/Zoom In"
 msgstr "/Вигляд/Зб╕льшити"
 
-#: app/menus.c:295
+#: app/menus.c:298
 msgid "/View/Zoom Out"
 msgstr "/Вигляд/Зменшити"
 
 #. <Image>/View/Zoom
-#: app/menus.c:300
+#: app/menus.c:303
 msgid "/View/Zoom/16:1"
 msgstr "/Вигляд/Масштаб/16:1"
 
-#: app/menus.c:302
+#: app/menus.c:305
 msgid "/View/Zoom/8:1"
 msgstr "/Вигляд/Масштаб/8:1"
 
-#: app/menus.c:304
+#: app/menus.c:307
 msgid "/View/Zoom/4:1"
 msgstr "/Вигляд/Масштаб/4:1"
 
-#: app/menus.c:306
+#: app/menus.c:309
 msgid "/View/Zoom/2:1"
 msgstr "/Вигляд/Масштаб/2:1"
 
-#: app/menus.c:308
+#: app/menus.c:311
 msgid "/View/Zoom/1:1"
 msgstr "/Вигляд/Масштаб/1:1"
 
-#: app/menus.c:310
+#: app/menus.c:313
 msgid "/View/Zoom/1:2"
 msgstr "/Вигляд/Масштаб/1:2"
 
-#: app/menus.c:312
+#: app/menus.c:315
 msgid "/View/Zoom/1:4"
 msgstr "/Вигляд/Масштаб/1:4"
 
-#: app/menus.c:314
+#: app/menus.c:317
 msgid "/View/Zoom/1:8"
 msgstr "/Вигляд/Масштаб/1:8"
 
-#: app/menus.c:316
+#: app/menus.c:319
 msgid "/View/Zoom/1:16"
 msgstr "/Вигляд/Масштаб/1:16"
 
-#: app/menus.c:319
+#: app/menus.c:322
 msgid "/View/Dot for Dot"
 msgstr "/Вигляд/Точка за точкою"
 
-#: app/menus.c:324
+#: app/menus.c:327
 msgid "/View/Info Window..."
 msgstr "/Вигляд/╤нформац╕йне в╕кно..."
 
-#: app/menus.c:326
+#: app/menus.c:329
 msgid "/View/Nav. Window..."
 msgstr "/Вигляд/Нав╕гац╕йне в╕кно..."
 
-#: app/menus.c:331
+#: app/menus.c:334
 msgid "/View/Toggle Selection"
 msgstr "/Вигляд/Вид╕лення"
 
-#: app/menus.c:333
+#: app/menus.c:336
 msgid "/View/Toggle Rulers"
 msgstr "/Вигляд/Л╕н╕йки"
 
-#: app/menus.c:335
+#: app/menus.c:338
 msgid "/View/Toggle Statusbar"
 msgstr "/Вигляд/Панель стану"
 
-#: app/menus.c:337
+#: app/menus.c:340
 msgid "/View/Toggle Guides"
 msgstr "/Вигляд/Направляюч╕"
 
-#: app/menus.c:339
+#: app/menus.c:342
 msgid "/View/Snap to Guides"
 msgstr "/Вигляд/При╓днання до направляючих"
 
-#: app/menus.c:344
+#: app/menus.c:347
 msgid "/View/New View"
 msgstr "/Вигляд/Новий вигляд"
 
-#: app/menus.c:346
+#: app/menus.c:349
 msgid "/View/Shrink Wrap"
 msgstr "/Вигляд/Нормал╕зувати розм╕ри вигляду"
 
 #. <Image>/Image/Mode
-#: app/menus.c:351
+#: app/menus.c:354
 msgid "/Image/Mode/RGB"
 msgstr "/Зображення/Режим/RGB"
 
-#: app/menus.c:353
+#: app/menus.c:356
 msgid "/Image/Mode/Grayscale"
 msgstr "/Зображення/Режим/Градац╕╖ с╕рого"
 
-#: app/menus.c:355
+#: app/menus.c:358
 msgid "/Image/Mode/Indexed..."
 msgstr "/Зображення/Режим/╤ндексований..."
 
 #. <Image>/Image/Colors
-#: app/menus.c:363
+#: app/menus.c:366
 msgid "/Image/Colors/Desaturate"
 msgstr "/Зображення/Кольори/Знебарвити"
 
-#: app/menus.c:365
+#: app/menus.c:368
 msgid "/Image/Colors/Invert"
 msgstr "/Зображення/Кольори/╤нвертувати"
 
 #. <Image>/Image/Colors/Auto
-#: app/menus.c:373
+#: app/menus.c:376
 msgid "/Image/Colors/Auto/Equalize"
 msgstr "/Зображення/Кольори/Авто/Вир╕внювання"
 
 #. <Image>/Image/Alpha
-#: app/menus.c:381
+#: app/menus.c:384
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "/Зображення/Альфа/Додати альфа-канал"
 
 #. <Image>/Image/Transforms
-#: app/menus.c:386
+#: app/menus.c:389
 msgid "/Image/Transforms/Offset..."
 msgstr "/Зображення/Перетворення/Зсув..."
 
-#: app/menus.c:388
+#: app/menus.c:391
 msgid "/Image/Transforms/Rotate"
 msgstr "/Зображення/Перетворення/Обернути"
 
-#: app/menus.c:395
+#: app/menus.c:398
 msgid "/Image/Canvas Size..."
 msgstr "/Зображення/Розм╕р полотна..."
 
-#: app/menus.c:397
+#: app/menus.c:400
 msgid "/Image/Scale Image..."
 msgstr "/Зображення/Масштабувати зображення..."
 
-#: app/menus.c:399
+#: app/menus.c:402
 msgid "/Image/Duplicate"
 msgstr "/Зображення/Дублювати"
 
 #. <Image>/Layers
-#: app/menus.c:407
+#: app/menus.c:410
 msgid "/Layers/Layers, Channels & Paths..."
 msgstr "/Шари/Шари, канали та контури..."
 
-#: app/menus.c:411
+#: app/menus.c:414
 msgid "/Layers/Layer to Imagesize"
 msgstr "/Шари/Розм╕р шару до зображення"
 
 #. <Image>/Layers/Stack
-#: app/menus.c:416
+#: app/menus.c:419
 msgid "/Layers/Stack/Previous Layer"
 msgstr "/Шари/Купка/Попередн╕й шар"
 
-#: app/menus.c:418
+#: app/menus.c:421
 msgid "/Layers/Stack/Next Layer"
 msgstr "/Шари/Купка/Наступний шар"
 
-#: app/menus.c:420
+#: app/menus.c:423
 msgid "/Layers/Stack/Raise Layer"
 msgstr "/Шари/Купка/П╕дняти шар"
 
-#: app/menus.c:422
+#: app/menus.c:425
 msgid "/Layers/Stack/Lower Layer"
 msgstr "/Шари/Купка/Опустити шар"
 
-#: app/menus.c:424
+#: app/menus.c:427
 msgid "/Layers/Stack/Layer to Top"
 msgstr "/Шари/Купка/Шар на гору"
 
-#: app/menus.c:426
+#: app/menus.c:429
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr "/Шари/Купка/Шар до низу"
 
 #. <Image>/Layers/Rotate
-#: app/menus.c:433
+#: app/menus.c:436
 msgid "/Layers/Rotate"
 msgstr "/Шари/Обернути"
 
-#: app/menus.c:438
+#: app/menus.c:441
 msgid "/Layers/Anchor Layer"
 msgstr "/Шари/Причепити шар"
 
-#: app/menus.c:440
+#: app/menus.c:443
 msgid "/Layers/Merge Visible Layers..."
 msgstr "/Шари/Об'╓днати видим╕ шари..."
 
-#: app/menus.c:442
+#: app/menus.c:445
 msgid "/Layers/Flatten Image"
 msgstr "/Шари/Звести зображення"
 
-#: app/menus.c:447
+#: app/menus.c:450
 msgid "/Layers/Mask to Selection"
 msgstr "/Шари/Маска у вид╕лення"
 
-#: app/menus.c:452
+#: app/menus.c:455
 msgid "/Layers/Add Alpha Channel"
 msgstr "/Шари/Новий альфа-канал"
 
-#: app/menus.c:454
+#: app/menus.c:457
 msgid "/Layers/Alpha to Selection"
 msgstr "/Шари/Альфа у вид╕лення"
 
 #. <Image>/Tools
-#: app/menus.c:462
+#: app/menus.c:465
 msgid "/Tools/Toolbox"
 msgstr "/╤нструменти/Панель ╕нструмент╕в"
 
-#: app/menus.c:464
+#: app/menus.c:467
 msgid "/Tools/Default Colors"
 msgstr "/╤нструменти/Типов╕ кольори"
 
-#: app/menus.c:466
+#: app/menus.c:469
 msgid "/Tools/Swap Colors"
 msgstr "/╤нструменти/Обм╕няти кольори"
 
 #. <Image>/Dialogs
-#: app/menus.c:473
+#: app/menus.c:476
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "/Д╕алоги/Шари, канали та контури..."
 
-#: app/menus.c:475
+#: app/menus.c:478
 msgid "/Dialogs/Tool Options..."
 msgstr "/Д╕алоги/Параметри ╕нструменту..."
 
-#: app/menus.c:480
+#: app/menus.c:483
 msgid "/Dialogs/Brushes..."
 msgstr "/Д╕алоги/Пензл╕..."
 
-#: app/menus.c:482
+#: app/menus.c:485
 msgid "/Dialogs/Patterns..."
 msgstr "/Д╕алоги/Шаблони..."
 
-#: app/menus.c:484
+#: app/menus.c:487
 msgid "/Dialogs/Gradients..."
 msgstr "/Д╕алоги/Град╕╓нти..."
 
-#: app/menus.c:486
+#: app/menus.c:489
 msgid "/Dialogs/Palette..."
 msgstr "/Д╕алоги/Пал╕тра..."
 
-#: app/menus.c:488
+#: app/menus.c:491
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Д╕алоги/╤ндексована пал╕тра..."
 
-#: app/menus.c:493
+#: app/menus.c:496
 msgid "/Dialogs/Input Devices..."
 msgstr "/Д╕алоги/Пристрою вводу..."
 
-#: app/menus.c:495
+#: app/menus.c:498
 msgid "/Dialogs/Device Status..."
 msgstr "/Д╕алоги/Стан пристрою..."
 
-#: app/menus.c:500
+#: app/menus.c:503
 msgid "/Dialogs/Document Index..."
 msgstr "/Д╕алоги/Покажчик документ╕в..."
 
-#: app/menus.c:502
+#: app/menus.c:505
 msgid "/Dialogs/Error Console..."
 msgstr "/Д╕алоги/Консоль помилок..."
 
-#: app/menus.c:504
+#: app/menus.c:507
 msgid "/Dialogs/Display Filters..."
 msgstr "/Д╕алоги/Ф╕льтри в╕дображення..."
 
-#: app/menus.c:506
+#: app/menus.c:509
 msgid "/Dialogs/Undo History..."
 msgstr "/Д╕алоги/╤сторя в╕дм╕н..."
 
 #. <Image>/Filters
-#: app/menus.c:515
+#: app/menus.c:518
 msgid "/Filters/Repeat Last"
 msgstr "/Ф╕льтри/Повторити останн╕й"
 
-#: app/menus.c:517
+#: app/menus.c:520
 msgid "/Filters/Re-Show Last"
 msgstr "/Ф╕льтри/Показати останн╕й"
 
-#: app/menus.c:522
+#: app/menus.c:525
 msgid "/Filters/Blur"
 msgstr "/Ф╕льтри/Розмивання"
 
-#: app/menus.c:524
+#: app/menus.c:527
 msgid "/Filters/Colors"
 msgstr "/Ф╕льтри/Кольори"
 
-#: app/menus.c:526
+#: app/menus.c:529
 msgid "/Filters/Noise"
 msgstr "/Ф╕льтри/Шум"
 
-#: app/menus.c:528
+#: app/menus.c:531
 msgid "/Filters/Edge-Detect"
 msgstr "/Ф╕льтри/Вид╕лен╕ кра╖"
 
-#: app/menus.c:530
+#: app/menus.c:533
 msgid "/Filters/Enhance"
 msgstr "/Ф╕льтри/Enhance"
 
-#: app/menus.c:532
+#: app/menus.c:535
 msgid "/Filters/Generic"
 msgstr "/Ф╕льтри/Загальн╕"
 
-#: app/menus.c:537
+#: app/menus.c:540
 msgid "/Filters/Glass Effects"
 msgstr "/Ф╕льтри/Ефекти скла"
 
-#: app/menus.c:539
+#: app/menus.c:542
 msgid "/Filters/Light Effects"
 msgstr "/Ф╕льтри/Св╕тлов╕ ефекти"
 
-#: app/menus.c:541
+#: app/menus.c:544
 msgid "/Filters/Distorts"
 msgstr "/Ф╕льтри/Спотворення"
 
-#: app/menus.c:543
+#: app/menus.c:546
 msgid "/Filters/Artistic"
 msgstr "/Ф╕льтри/╤н╕тац╕я"
 
-#: app/menus.c:545
+#: app/menus.c:548
 msgid "/Filters/Map"
 msgstr "/Ф╕льтри/Карта"
 
-#: app/menus.c:547
+#: app/menus.c:550
 msgid "/Filters/Render"
 msgstr "/Ф╕льтри/В╕зуал╕зац╕я"
 
-#: app/menus.c:549
+#: app/menus.c:552
 msgid "/Filters/Web"
 msgstr "/Ф╕льтри/WWW"
 
-#: app/menus.c:554
+#: app/menus.c:557
 msgid "/Filters/Animation"
 msgstr "/Ф╕льтри/Ан╕мац╕я"
 
-#: app/menus.c:556
+#: app/menus.c:559
 msgid "/Filters/Combine"
 msgstr "/Ф╕льтри/Об'╓днання"
 
-#: app/menus.c:561
+#: app/menus.c:564
 msgid "/Filters/Toys"
 msgstr "/Ф╕льтри/╤грашки"
 
-#: app/menus.c:572
+#: app/menus.c:575
 msgid "/Automatic"
 msgstr "/Автоматичне"
 
-#: app/menus.c:586
+#: app/menus.c:589
 msgid "/By Extension"
 msgstr "/За розширенням"
 
-#: app/menus.c:600
+#: app/menus.c:603
 msgid "/New Layer..."
 msgstr "/Новий шар..."
 
 #. <Layers>/Stack
-#: app/menus.c:605
+#: app/menus.c:608
 msgid "/Stack/Raise Layer"
 msgstr "/Купа/П╕дняти шар"
 
-#: app/menus.c:607
+#: app/menus.c:610
 msgid "/Stack/Lower Layer"
 msgstr "/Купа/Опустити шар"
 
-#: app/menus.c:609
+#: app/menus.c:612
 msgid "/Stack/Layer to Top"
 msgstr "/Купа/Шар на гору"
 
-#: app/menus.c:611
+#: app/menus.c:614
 msgid "/Stack/Layer to Bottom"
 msgstr "/Купа/Шар до низу"
 
-#: app/menus.c:614
+#: app/menus.c:617
 msgid "/Duplicate Layer"
 msgstr "/Дублювати шар"
 
-#: app/menus.c:616
+#: app/menus.c:619
 msgid "/Anchor Layer"
 msgstr "/Причепити шар"
 
-#: app/menus.c:618
+#: app/menus.c:621
 msgid "/Delete Layer"
 msgstr "/Видалити шар"
 
-#: app/menus.c:623
+#: app/menus.c:626
 msgid "/Layer Boundary Size..."
 msgstr "/Розм╕ри границь шару..."
 
-#: app/menus.c:625
+#: app/menus.c:628
 msgid "/Layer to Imagesize"
 msgstr "/Шар до розм╕ру зображення"
 
-#: app/menus.c:627
+#: app/menus.c:630
 msgid "/Scale Layer..."
 msgstr "/Маштабувати шар..."
 
-#: app/menus.c:632
+#: app/menus.c:635
 msgid "/Merge Visible Layers..."
 msgstr "/Об'╓днати видим╕ шари..."
 
-#: app/menus.c:634
+#: app/menus.c:637
 msgid "/Merge Down"
 msgstr "/Об'╓днати з попередн╕м"
 
-#: app/menus.c:636
+#: app/menus.c:639
 msgid "/Flatten Image"
 msgstr "/Звести зображення"
 
-#: app/menus.c:641
+#: app/menus.c:644
 msgid "/Add Layer Mask..."
 msgstr "/Додати маску шару"
 
-#: app/menus.c:643
+#: app/menus.c:646
 msgid "/Apply Layer Mask"
 msgstr "/Застосувати маску шару..."
 
-#: app/menus.c:645
+#: app/menus.c:648
 msgid "/Delete Layer Mask"
 msgstr "/Стерти маску шару"
 
-#: app/menus.c:647
+#: app/menus.c:650
 msgid "/Mask to Selection"
 msgstr "/Маска у вид╕лення"
 
-#: app/menus.c:652
+#: app/menus.c:655
 msgid "/Add Alpha Channel"
 msgstr "/Додати альфа-канал"
 
-#: app/menus.c:654
+#: app/menus.c:657
 msgid "/Alpha to Selection"
 msgstr "/Альфа у вид╕лення"
 
-#: app/menus.c:659
+#: app/menus.c:662
 msgid "/Edit Layer Attributes..."
 msgstr "/Зм╕на атрибут╕в шару..."
 
-#: app/menus.c:670
+#: app/menus.c:673
 msgid "/New Channel..."
 msgstr "/Новий канал..."
 
-#: app/menus.c:672
+#: app/menus.c:675
 msgid "/Raise Channel"
 msgstr "/П╕дняти канал"
 
-#: app/menus.c:674
+#: app/menus.c:677
 msgid "/Lower Channel"
 msgstr "/Опустити канал"
 
-#: app/menus.c:676
+#: app/menus.c:679
 msgid "/Duplicate Channel"
 msgstr "/Дублювати канал"
 
-#: app/menus.c:681
+#: app/menus.c:684
 msgid "/Channel to Selection"
 msgstr "/Канал у вид╕лення"
 
-#: app/menus.c:683
+#: app/menus.c:686
 msgid "/Add to Selection"
 msgstr "/Додати до вид╕лення"
 
-#: app/menus.c:685
+#: app/menus.c:688
 msgid "/Subtract from Selection"
 msgstr "/В╕дняти в╕д вид╕лення"
 
-#: app/menus.c:687
+#: app/menus.c:690
 msgid "/Intersect with Selection"
 msgstr "/Перетнути з вид╕ленням"
 
-#: app/menus.c:692
+#: app/menus.c:695
 msgid "/Delete Channel"
 msgstr "/Видалити канал"
 
-#: app/menus.c:697
+#: app/menus.c:700
 msgid "/Edit Channel Attributes..."
 msgstr "/Редагування атрибут╕в каналу"
 
-#: app/menus.c:708
+#: app/menus.c:711
 msgid "/New Path"
 msgstr "/Новий контур"
 
-#: app/menus.c:710
+#: app/menus.c:713
 msgid "/Duplicate Path"
 msgstr "/Дублювати контур"
 
-#: app/menus.c:712
+#: app/menus.c:715
 msgid "/Path to Selection"
 msgstr "/Контур у вид╕лення"
 
-#: app/menus.c:714
+#: app/menus.c:717
 msgid "/Selection to Path"
 msgstr "/Вид╕лення у контур"
 
-#: app/menus.c:716
+#: app/menus.c:719
 msgid "/Stroke Path"
 msgstr "/Обвести шлях"
 
-#: app/menus.c:718
+#: app/menus.c:721
 msgid "/Delete Path"
 msgstr "/Видалити контур"
 
-#: app/menus.c:723
+#: app/menus.c:726
 msgid "/Copy Path"
 msgstr "/Скоп╕ювати контур"
 
-#: app/menus.c:725
+#: app/menus.c:728
 msgid "/Paste Path"
 msgstr "/Вставити контур"
 
-#: app/menus.c:727
+#: app/menus.c:730
 msgid "/Import Path..."
 msgstr "/╤мпортувати контур..."
 
-#: app/menus.c:729
+#: app/menus.c:732
 msgid "/Export Path..."
 msgstr "/Експортувати контур..."
 
-#: app/menus.c:734
+#: app/menus.c:737
 msgid "/Edit Path Attributes..."
 msgstr "/Зм╕на атрибут╕в контуру..."
 
-#: app/menus.c:1287
+#: app/menus.c:1290
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Помилка в╕дкриття файлу: %s\n"
@@ -3769,60 +3769,60 @@ msgstr "завантаження модуля \"%s\"\n"
 msgid "skipping module: \"%s\"\n"
 msgstr "пропускання модуля: \"%s\"\n"
 
-#: app/module_db.c:633
+#: app/module_db.c:634
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "помилка завантаження модуля: %s: %s"
 
-#: app/module_db.c:812
+#: app/module_db.c:813
 msgid "<No modules>"
 msgstr "<Нема╓ модул╕в>"
 
-#: app/module_db.c:825 app/module_db.c:834
+#: app/module_db.c:826 app/module_db.c:835
 msgid "on disk"
 msgstr "на диску"
 
-#: app/module_db.c:825
+#: app/module_db.c:826
 msgid "only in memory"
 msgstr "лише в пам'ят╕"
 
-#: app/module_db.c:834
+#: app/module_db.c:835
 msgid "nowhere (click 'refresh')"
 msgstr "н╕де (клацн╕ть \"поновити\")"
 
-#: app/module_db.c:873
+#: app/module_db.c:874
 msgid "Unload"
 msgstr "Вивантажити"
 
-#: app/module_db.c:889
+#: app/module_db.c:890
 msgid "Purpose:"
 msgstr "Призначення:"
 
-#: app/module_db.c:890
+#: app/module_db.c:891
 msgid "Author:"
 msgstr "Автор:"
 
-#: app/module_db.c:891
+#: app/module_db.c:892
 msgid "Version:"
 msgstr "Верс╕я:"
 
-#: app/module_db.c:892
+#: app/module_db.c:893
 msgid "Copyright:"
 msgstr "Авторськ╕ права:"
 
-#: app/module_db.c:893
+#: app/module_db.c:894
 msgid "Date:"
 msgstr "Дата:"
 
-#: app/module_db.c:894
+#: app/module_db.c:895
 msgid "Location:"
 msgstr "Розташування:"
 
-#: app/module_db.c:895
+#: app/module_db.c:896
 msgid "State:"
 msgstr "Стан:"
 
-#: app/module_db.c:914
+#: app/module_db.c:915
 msgid "Autoload during startup"
 msgstr "Автозавантаження на старт╕"
 
@@ -3881,7 +3881,7 @@ msgstr "Пилопод╕бний цикл"
 msgid "Loop Triangle"
 msgstr "Трикутний цикл"
 
-#: app/palette.c:414
+#: app/palette.c:402
 #, c-format
 msgid ""
 "Loading palette %s:\n"
@@ -3894,7 +3894,7 @@ msgstr ""
 "в╕дсутн╕й маг╕чний заголовок\n"
 "Цей файл необх╕дно перетворити з DOS?"
 
-#: app/palette.c:419
+#: app/palette.c:407
 #, c-format
 msgid ""
 "Loading palette %s:\n"
@@ -3903,7 +3903,7 @@ msgstr ""
 "Завантаження пал╕три %s:\n"
 "З╕псована пал╕тра: в╕дсутн╕й маг╕чний заголовок"
 
-#: app/palette.c:432
+#: app/palette.c:420
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3913,7 +3913,7 @@ msgstr ""
 "Помилка зчитування"
 
 #. maybe we should just abort?
-#: app/palette.c:448
+#: app/palette.c:436
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3922,7 +3922,7 @@ msgstr ""
 "Зчитування пал╕три %s (рядок %d):\n"
 "В╕дсутня ЧЕРВОНА складова"
 
-#: app/palette.c:455
+#: app/palette.c:443
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3931,7 +3931,7 @@ msgstr ""
 "Зчитування пал╕три %s (рядок %d):\n"
 "В╕дсутня ЗЕЛЕНА складова"
 
-#: app/palette.c:462
+#: app/palette.c:450
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3940,7 +3940,7 @@ msgstr ""
 "Зчитування пал╕три %s (рядок %d):\n"
 "В╕дсутня СИНЯ складова"
 
-#: app/palette.c:471
+#: app/palette.c:459
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3949,97 +3949,97 @@ msgstr ""
 "Завантаження пал╕три %s (рядок %d):\n"
 "RGB-значення поза д╕апазоном"
 
-#: app/palette.c:519
+#: app/palette.c:507
 #, c-format
 msgid "Can't save palette \"%s\"\n"
 msgstr "Неможливо зберегти пал╕тру \"%s\"\n"
 
-#: app/palette.c:1162
+#: app/palette.c:1150
 msgid "Black"
 msgstr "Чорний"
 
-#: app/palette.c:1682 app/palette.c:2158
+#: app/palette.c:1670 app/palette.c:2146
 msgid "Undefined"
 msgstr "Невизначено"
 
-#: app/palette.c:1768
+#: app/palette.c:1756
 msgid "New Palette"
 msgstr "Нова пал╕тра"
 
-#: app/palette.c:1771
+#: app/palette.c:1759
 msgid "Enter a name for new palette"
 msgstr "Введ╕ть назву ново╖ пал╕три"
 
-#: app/palette.c:1825
+#: app/palette.c:1813
 msgid "Delete Palette"
 msgstr "Видалити пал╕тру"
 
-#: app/palette.c:1904
+#: app/palette.c:1892
 msgid "Merge Palette"
 msgstr "Об'╓днання пал╕тр"
 
-#: app/palette.c:1907
+#: app/palette.c:1895
 msgid "Enter a name for merged palette"
 msgstr "Введ╕ть назву об'╓днано╖ пал╕три"
 
-#: app/palette.c:2053
+#: app/palette.c:2041
 msgid "Color Palette Edit"
 msgstr "Редагування пал╕три кольор╕в"
 
-#: app/palette.c:2071
+#: app/palette.c:2059
 msgid "Color Palette"
 msgstr "Кольорова пал╕тра"
 
-#: app/palette.c:2191 app/palette.c:3245
+#: app/palette.c:2179 app/palette.c:3233
 msgid "Select"
 msgstr "Вид╕лити"
 
-#: app/palette.c:2202 app/palette_select.c:88
+#: app/palette.c:2190 app/palette_select.c:88
 msgid "Ncols"
 msgstr "К╕льк╕сть кольор╕в"
 
-#: app/palette.c:2222
+#: app/palette.c:2210
 msgid "Palette Ops"
 msgstr "Параметри пал╕три"
 
 #. The "Import" frame
-#: app/palette.c:2253 app/palette.c:3108 app/palette.c:3122
+#: app/palette.c:2241 app/palette.c:3096 app/palette.c:3110
 msgid "Import"
 msgstr "╤мпорт"
 
-#: app/palette.c:2264
+#: app/palette.c:2252
 msgid "Merge"
 msgstr "Об'╓днати"
 
-#: app/palette.c:3102
+#: app/palette.c:3090
 msgid "Import Palette"
 msgstr "╤мпортувати пал╕тру"
 
 #. The source's name
-#: app/palette.c:3138
+#: app/palette.c:3126
 msgid "Name:"
 msgstr "Назва:"
 
-#: app/palette.c:3151
+#: app/palette.c:3139
 msgid "new_import"
 msgstr "╕мпорт_ново╖"
 
 #. The source type
-#: app/palette.c:3156
+#: app/palette.c:3144
 msgid "Source:"
 msgstr "Джерело:"
 
-#: app/palette.c:3184
+#: app/palette.c:3172
 msgid "Indexed Palette"
 msgstr "╤ндексована пал╕тра"
 
 #. The sample size
-#: app/palette.c:3197
+#: app/palette.c:3185
 msgid "Sample Size:"
 msgstr "Розм╕р зразка:"
 
 #. The interval
-#: app/palette.c:3210
+#: app/palette.c:3198
 msgid "Interval:"
 msgstr "╤нтервал:"
 
@@ -4184,30 +4184,30 @@ msgstr "Конф╕гурування ресурс╕в"
 msgid "Plug-ins"
 msgstr "Доповнення"
 
-#: app/plug_in.c:349
+#: app/plug_in.c:350
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "запит доповнення: \"%s\"\n"
 
-#: app/plug_in.c:385
+#: app/plug_in.c:388
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "записування \"%s\"\n"
 
-#: app/plug_in.c:400
+#: app/plug_in.c:403
 msgid "Starting extensions: "
 msgstr "Запуск розширень: "
 
-#: app/plug_in.c:401
+#: app/plug_in.c:405
 msgid "Extensions"
 msgstr "Розширення"
 
-#: app/plug_in.c:832
+#: app/plug_in.c:840
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Не вдалося знайти доповнення: \"%s\""
 
-#: app/plug_in.c:1459
+#: app/plug_in.c:1467
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"

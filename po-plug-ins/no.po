@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-08-16 00:42+0200\n"
+"POT-Creation-Date: 2000-08-21 10:34-0700\n"
 "PO-Revision-Date: 2000-08-16 00:55+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -54,7 +54,7 @@ msgstr "Om"
 #: plug-ins/common/deinterlace.c:271 plug-ins/common/depthmerge.c:643
 #: plug-ins/common/despeckle.c:619 plug-ins/common/destripe.c:550
 #: plug-ins/common/diffraction.c:534 plug-ins/common/displace.c:298
-#: plug-ins/common/edge.c:650 plug-ins/common/emboss.c:525
+#: plug-ins/common/edge.c:650 plug-ins/common/emboss.c:522
 #: plug-ins/common/engrave.c:224 plug-ins/common/exchange.c:278
 #: plug-ins/common/film.c:1182 plug-ins/common/flarefx.c:331
 #: plug-ins/common/fractaltrace.c:725 plug-ins/common/gauss_iir.c:365
@@ -75,7 +75,7 @@ msgstr "Om"
 #: plug-ins/common/pat.c:412 plug-ins/common/pixelize.c:280
 #: plug-ins/common/plasma.c:307 plug-ins/common/png.c:1045
 #: plug-ins/common/pnm.c:933 plug-ins/common/polar.c:914
-#: plug-ins/common/ps.c:2533 plug-ins/common/ps.c:2715
+#: plug-ins/common/ps.c:2594 plug-ins/common/ps.c:2776
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
 #: plug-ins/common/ripple.c:580 plug-ins/common/scatter_hsv.c:373
 #: plug-ins/common/sel_gauss.c:242 plug-ins/common/sharpen.c:523
@@ -89,7 +89,7 @@ msgstr "Om"
 #: plug-ins/common/unsharp.c:786 plug-ins/common/video.c:2155
 #: plug-ins/common/vpropagate.c:934 plug-ins/common/warp.c:437
 #: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
-#: plug-ins/common/wind.c:1007 plug-ins/common/wmf.c:931
+#: plug-ins/common/wind.c:1011 plug-ins/common/wmf.c:931
 #: plug-ins/common/xbm.c:1151 plug-ins/common/xpm.c:800
 #: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:631
 #: plug-ins/flame/flame.c:920 plug-ins/fp/fp_gtk.c:895
@@ -97,7 +97,7 @@ msgstr "Om"
 #: plug-ins/gap/gap_decode_xanim.c:177 plug-ins/gap/gap_lib.c:221
 #: plug-ins/gap/gap_mod_layer.c:145 plug-ins/gap/gap_mov_dialog.c:487
 #: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
-#: plug-ins/gdyntext/gdyntext_ui.c:193 plug-ins/gdyntext/gdyntext_ui.c:565
+#: plug-ins/gdyntext/gdyntext_ui.c:194 plug-ins/gdyntext/gdyntext_ui.c:565
 #: plug-ins/gfig/gfig.c:4062 plug-ins/gfig/gfig.c:4407
 #: plug-ins/gfig/gfig.c:4490 plug-ins/gfig/gfig.c:4792
 #: plug-ins/gflare/gflare.c:2458 plug-ins/gflare/gflare.c:3468
@@ -107,7 +107,7 @@ msgstr "Om"
 #: plug-ins/gimpressionist/orientmap.c:626
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
 #: plug-ins/ifscompose/ifscompose.c:781
-#: plug-ins/imagemap/imap_default_dialog.c:114 plug-ins/maze/maze_face.c:191
+#: plug-ins/imagemap/imap_default_dialog.c:117 plug-ins/maze/maze_face.c:191
 #: plug-ins/mosaic/mosaic.c:531 plug-ins/pagecurl/pagecurl.c:518
 #: plug-ins/print/gimp_main_window.c:742 plug-ins/rcm/rcm_dialog.c:727
 #: plug-ins/sel2path/sel2path.c:336 plug-ins/sgi/sgi.c:640
@@ -136,7 +136,7 @@ msgstr "Ok"
 #: plug-ins/common/depthmerge.c:645 plug-ins/common/despeckle.c:621
 #: plug-ins/common/destripe.c:552 plug-ins/common/diffraction.c:536
 #: plug-ins/common/displace.c:300 plug-ins/common/edge.c:652
-#: plug-ins/common/emboss.c:527 plug-ins/common/engrave.c:226
+#: plug-ins/common/emboss.c:524 plug-ins/common/engrave.c:226
 #: plug-ins/common/exchange.c:280 plug-ins/common/film.c:1184
 #: plug-ins/common/flarefx.c:333 plug-ins/common/fractaltrace.c:727
 #: plug-ins/common/gauss_iir.c:367 plug-ins/common/gauss_iir.c:450
@@ -156,8 +156,8 @@ msgstr "Ok"
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:414
 #: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:309
 #: plug-ins/common/png.c:1047 plug-ins/common/pnm.c:935
-#: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2535
-#: plug-ins/common/ps.c:2717 plug-ins/common/psp.c:430
+#: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2596
+#: plug-ins/common/ps.c:2778 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
 #: plug-ins/common/scatter_hsv.c:375 plug-ins/common/screenshot.c:380
 #: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:525
@@ -171,7 +171,7 @@ msgstr "Ok"
 #: plug-ins/common/unsharp.c:788 plug-ins/common/video.c:2157
 #: plug-ins/common/vpropagate.c:936 plug-ins/common/warp.c:439
 #: plug-ins/common/waves.c:351 plug-ins/common/whirlpinch.c:810
-#: plug-ins/common/wind.c:1009 plug-ins/common/wmf.c:933
+#: plug-ins/common/wind.c:1013 plug-ins/common/wmf.c:933
 #: plug-ins/common/xbm.c:1153 plug-ins/common/xpm.c:802
 #: plug-ins/fits/fits.c:989 plug-ins/flame/flame.c:633
 #: plug-ins/flame/flame.c:922 plug-ins/fp/fp_gtk.c:899
@@ -191,7 +191,7 @@ msgstr "Ok"
 #: plug-ins/gimpressionist/orientmap.c:640
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/ifscompose/ifscompose.c:789
-#: plug-ins/imagemap/imap_default_dialog.c:129 plug-ins/maze/maze_face.c:195
+#: plug-ins/imagemap/imap_default_dialog.c:132 plug-ins/maze/maze_face.c:195
 #: plug-ins/mosaic/mosaic.c:533 plug-ins/pagecurl/pagecurl.c:520
 #: plug-ins/print/gimp_main_window.c:236 plug-ins/print/gimp_main_window.c:744
 #: plug-ins/rcm/rcm_dialog.c:729 plug-ins/sel2path/sel2path.c:342
@@ -269,7 +269,7 @@ msgstr "Kosinus"
 #: plug-ins/FractalExplorer/Dialogs.c:762
 #: plug-ins/FractalExplorer/Dialogs.c:803 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
-#: plug-ins/common/ps.c:2640 plug-ins/common/ps.c:2653
+#: plug-ins/common/ps.c:2701 plug-ins/common/ps.c:2714
 #: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1551
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:301
 msgid "None"
@@ -440,17 +440,17 @@ msgstr "Om AlienMap2"
 #: plug-ins/FractalExplorer/Dialogs.c:308 plug-ins/Lighting/lighting_ui.c:1094
 #: plug-ins/MapObject/mapobject_ui.c:1400 plug-ins/common/CML_explorer.c:1200
 #: plug-ins/common/blinds.c:343 plug-ins/common/curve_bend.c:1503
-#: plug-ins/common/destripe.c:575 plug-ins/common/emboss.c:742
+#: plug-ins/common/destripe.c:575 plug-ins/common/emboss.c:739
 #: plug-ins/common/exchange.c:295 plug-ins/common/fractaltrace.c:746
 #: plug-ins/common/glasstile.c:275 plug-ins/common/grid.c:679
 #: plug-ins/common/illusion.c:579 plug-ins/common/iwarp.c:1160
 #: plug-ins/common/jigsaw.c:2510 plug-ins/common/mapcolor.c:576
 #: plug-ins/common/max_rgb.c:361 plug-ins/common/nlfilt.c:575
 #: plug-ins/common/noisify.c:505 plug-ins/common/plasma.c:326
-#: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2856
+#: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2917
 #: plug-ins/common/sharpen.c:550 plug-ins/common/spheredesigner.c:2254
 #: plug-ins/common/tileit.c:407 plug-ins/common/waves.c:576
-#: plug-ins/common/whirlpinch.c:826 plug-ins/common/wind.c:1026
+#: plug-ins/common/whirlpinch.c:826 plug-ins/common/wind.c:1030
 #: plug-ins/flame/flame.c:940 plug-ins/gfig/gfig.c:3938
 #: plug-ins/gflare/gflare.c:2485 plug-ins/gflare/gflare.c:3493
 #: plug-ins/gimpressionist/orientmap.c:502
@@ -999,7 +999,7 @@ msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Slå på/av fjerning av taggete kanter (antialiasing)"
 
 #: plug-ins/Lighting/lighting_ui.c:511 plug-ins/MapObject/mapobject_ui.c:647
-#: plug-ins/common/bumpmap.c:1041 plug-ins/common/emboss.c:592
+#: plug-ins/common/bumpmap.c:1041 plug-ins/common/emboss.c:589
 #: plug-ins/struc/struc.c:298
 msgid "Depth:"
 msgstr "Dybde:"
@@ -1313,7 +1313,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Objektets Z-posisjon i XYZ-rommet"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2818
+#: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2879
 #: plug-ins/gdyntext/gdyntext_ui.c:462
 msgid "Rotation"
 msgstr "Rotasjon"
@@ -1508,7 +1508,7 @@ msgstr "Kan ikke åpne %s"
 #: plug-ins/common/jpeg.c:1196 plug-ins/common/pat.c:343
 #: plug-ins/common/pcx.c:547 plug-ins/common/pix.c:532
 #: plug-ins/common/png.c:775 plug-ins/common/png.c:777
-#: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:999
+#: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1002
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
 #: plug-ins/common/tiff.c:1282 plug-ins/common/xbm.c:983
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
@@ -2070,7 +2070,7 @@ msgstr "Justér synlige lag"
 #: plug-ins/common/bumpmap.c:982 plug-ins/common/checkerboard.c:361
 #: plug-ins/common/cubism.c:315 plug-ins/common/despeckle.c:728
 #: plug-ins/common/destripe.c:636 plug-ins/common/edge.c:662
-#: plug-ins/common/emboss.c:562 plug-ins/common/engrave.c:236
+#: plug-ins/common/emboss.c:559 plug-ins/common/engrave.c:236
 #: plug-ins/common/gauss_iir.c:377 plug-ins/common/gauss_rle.c:372
 #: plug-ins/common/glasstile.c:293 plug-ins/common/grid.c:719
 #: plug-ins/common/illusion.c:596 plug-ins/common/jpeg.c:1643
@@ -2087,7 +2087,7 @@ msgstr "Justér synlige lag"
 #: plug-ins/common/threshold_alpha.c:279 plug-ins/common/unsharp.c:797
 #: plug-ins/common/video.c:2167 plug-ins/common/vpropagate.c:976
 #: plug-ins/common/waves.c:399 plug-ins/common/whirlpinch.c:847
-#: plug-ins/common/wind.c:1043 plug-ins/common/xpm.c:812
+#: plug-ins/common/wind.c:1047 plug-ins/common/xpm.c:812
 #: plug-ins/maze/maze_face.c:204 plug-ins/mosaic/mosaic.c:643
 #: plug-ins/struc/struc.c:267 plug-ins/xjt/xjt.c:805
 msgid "Parameter Settings"
@@ -2172,7 +2172,7 @@ msgid "Animation Playback: "
 msgstr ""
 
 #. if no buttons are specified use one CLOSE button per default
-#: plug-ins/common/animationplay.c:673 plug-ins/common/plugindetails.c:1003
+#: plug-ins/common/animationplay.c:673 plug-ins/common/plugindetails.c:1009
 #: plug-ins/common/sample_colorize.c:1373 plug-ins/common/uniteditor.c:525
 #: plug-ins/dbbrowser/dbbrowser_utils.c:158
 #: plug-ins/dbbrowser/dbbrowser_utils.c:175 plug-ins/gap/gap_arr_dialog.c:783
@@ -2419,11 +2419,11 @@ msgstr "Flis-bumpmap"
 msgid "Bump Map:"
 msgstr "Bump map:"
 
-#: plug-ins/common/bumpmap.c:1023 plug-ins/common/emboss.c:574
+#: plug-ins/common/bumpmap.c:1023 plug-ins/common/emboss.c:571
 msgid "Azimuth:"
 msgstr "Azimuth:"
 
-#: plug-ins/common/bumpmap.c:1032 plug-ins/common/emboss.c:583
+#: plug-ins/common/bumpmap.c:1032 plug-ins/common/emboss.c:580
 msgid "Elevation:"
 msgstr "Forhøyelse:"
 
@@ -2492,7 +2492,7 @@ msgid "Colorify"
 msgstr "Colorify"
 
 #: plug-ins/common/colorify.c:338 plug-ins/common/colortoalpha.c:414
-#: plug-ins/common/ps.c:2625 plug-ins/common/xpm.c:439
+#: plug-ins/common/ps.c:2686 plug-ins/common/xpm.c:439
 #: plug-ins/gap/gap_mov_dialog.c:276 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
 #: plug-ins/print/gimp_main_window.c:504
@@ -2708,7 +2708,7 @@ msgstr "Divisor:"
 msgid "Offset:"
 msgstr "Avstand:"
 
-#: plug-ins/common/convmatrix.c:900 plug-ins/common/ps.c:2626
+#: plug-ins/common/convmatrix.c:900 plug-ins/common/ps.c:2687
 #: plug-ins/fits/fits.c:1020
 msgid "Automatic"
 msgstr "Automatisk"
@@ -3141,7 +3141,7 @@ msgstr "Lag histogram"
 #. Widht Scale
 #. table col, row
 #: plug-ins/common/destripe.c:670 plug-ins/common/gtm.c:551
-#: plug-ins/common/ps.c:2582 plug-ins/common/ps.c:2758
+#: plug-ins/common/ps.c:2643 plug-ins/common/ps.c:2819
 #: plug-ins/common/smooth_palette.c:429 plug-ins/common/tile.c:406
 #: plug-ins/gap/gap_mov_dialog.c:2136 plug-ins/imagemap/imap_rectangle.c:387
 #: plug-ins/print/gimp_main_window.c:387
@@ -3257,20 +3257,20 @@ msgstr "Mengde:"
 msgid "<Image>/Filters/Distorts/Emboss..."
 msgstr "<Image>/Filtre/Forvrengning/Emboss..."
 
-#: plug-ins/common/emboss.c:414 plug-ins/common/emboss.c:520
-#: plug-ins/common/emboss.c:555
+#: plug-ins/common/emboss.c:414 plug-ins/common/emboss.c:517
+#: plug-ins/common/emboss.c:552
 msgid "Emboss"
 msgstr "Emboss"
 
-#: plug-ins/common/emboss.c:550
+#: plug-ins/common/emboss.c:547
 msgid "Function"
 msgstr "Funksjon"
 
-#: plug-ins/common/emboss.c:554 plug-ins/common/spheredesigner.c:1574
+#: plug-ins/common/emboss.c:551 plug-ins/common/spheredesigner.c:1574
 msgid "Bumpmap"
 msgstr "Bumpmap"
 
-#: plug-ins/common/emboss.c:762 plug-ins/common/nlfilt.c:595
+#: plug-ins/common/emboss.c:759 plug-ins/common/nlfilt.c:595
 #: plug-ins/common/waves.c:596 plug-ins/sinus/sinus.c:1187
 msgid "Do Preview"
 msgstr "Forhåndsvis"
@@ -3294,8 +3294,8 @@ msgstr "Begrens linjebredde"
 #. Height Scale
 #. table col, row
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1239
-#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2591
-#: plug-ins/common/ps.c:2767 plug-ins/common/smooth_palette.c:438
+#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2652
+#: plug-ins/common/ps.c:2828 plug-ins/common/smooth_palette.c:438
 #: plug-ins/common/tile.c:410 plug-ins/gap/gap_mov_dialog.c:2153
 #: plug-ins/imagemap/imap_rectangle.c:393
 #: plug-ins/print/gimp_main_window.c:398
@@ -4137,7 +4137,7 @@ msgid "Max Depth:"
 msgstr "Maks dybde:"
 
 #: plug-ins/common/iwarp.c:1107 plug-ins/common/threshold_alpha.c:291
-#: plug-ins/common/unsharp.c:829 plug-ins/common/wind.c:1133
+#: plug-ins/common/unsharp.c:829 plug-ins/common/wind.c:1137
 #: plug-ins/gflare/gflare.c:3015
 msgid "Threshold:"
 msgstr "Terskel:"
@@ -4873,7 +4873,7 @@ msgstr ""
 msgid "Details <<"
 msgstr "Detaljer <<"
 
-#: plug-ins/common/plugindetails.c:230 plug-ins/common/plugindetails.c:1114
+#: plug-ins/common/plugindetails.c:230 plug-ins/common/plugindetails.c:1120
 msgid "Details >>"
 msgstr "Detaljer >>"
 
@@ -4914,11 +4914,11 @@ msgstr "Hjelp:"
 msgid "Type:"
 msgstr "Type:"
 
-#: plug-ins/common/plugindetails.c:996
+#: plug-ins/common/plugindetails.c:1002
 msgid "Plugin Descriptions"
 msgstr "Beskrivelse av tillegg"
 
-#: plug-ins/common/plugindetails.c:1001
+#: plug-ins/common/plugindetails.c:1007
 #: plug-ins/dbbrowser/dbbrowser_utils.c:152
 #: plug-ins/dbbrowser/dbbrowser_utils.c:171
 #: plug-ins/gap/gap_dbbrowser_utils.c:175
@@ -4926,36 +4926,36 @@ msgid "Search by Name"
 msgstr "Søk på navn"
 
 #. list : list in a scrolled_win
-#: plug-ins/common/plugindetails.c:1038
+#: plug-ins/common/plugindetails.c:1044
 msgid "Name"
 msgstr "Navn"
 
-#: plug-ins/common/plugindetails.c:1039 plug-ins/common/plugindetails.c:1067
+#: plug-ins/common/plugindetails.c:1045 plug-ins/common/plugindetails.c:1073
 msgid "Ins Date"
 msgstr "Ins. dato"
 
-#: plug-ins/common/plugindetails.c:1040
+#: plug-ins/common/plugindetails.c:1046
 msgid "Menu Path"
 msgstr "Menysti"
 
-#: plug-ins/common/plugindetails.c:1041 plug-ins/common/plugindetails.c:1068
+#: plug-ins/common/plugindetails.c:1047 plug-ins/common/plugindetails.c:1074
 msgid "Image Types"
 msgstr "Bildetyper"
 
-#: plug-ins/common/plugindetails.c:1059
+#: plug-ins/common/plugindetails.c:1065
 msgid "List View"
 msgstr "Listevisning"
 
 #. notebook->ctree
-#: plug-ins/common/plugindetails.c:1066
+#: plug-ins/common/plugindetails.c:1072
 msgid "Menu Path/Name"
 msgstr "Menysti/navn"
 
-#: plug-ins/common/plugindetails.c:1083
+#: plug-ins/common/plugindetails.c:1089
 msgid "Tree View"
 msgstr "Trevisning"
 
-#: plug-ins/common/plugindetails.c:1103
+#: plug-ins/common/plugindetails.c:1109
 #: plug-ins/dbbrowser/dbbrowser_utils.c:225
 #: plug-ins/gap/gap_dbbrowser_utils.c:137
 msgid "Search:"
@@ -5132,141 +5132,141 @@ msgid ""
 "checked the image will be mapped onto a circle."
 msgstr ""
 
-#: plug-ins/common/ps.c:870
+#: plug-ins/common/ps.c:874
 msgid "PS: can't open file for reading"
 msgstr ""
 
-#: plug-ins/common/ps.c:877
+#: plug-ins/common/ps.c:881
 #, c-format
 msgid "Interpreting and Loading %s:"
 msgstr ""
 
-#: plug-ins/common/ps.c:885
+#: plug-ins/common/ps.c:889
 msgid "PS: can't interprete file"
 msgstr ""
 
-#: plug-ins/common/ps.c:973
+#: plug-ins/common/ps.c:976
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr ""
 
-#: plug-ins/common/ps.c:984
+#: plug-ins/common/ps.c:987
 msgid "PS: cannot operate on unknown image types"
 msgstr ""
 
-#: plug-ins/common/ps.c:993
+#: plug-ins/common/ps.c:996
 msgid "PS: can't open file for writing"
 msgstr ""
 
-#: plug-ins/common/ps.c:2111 plug-ins/common/ps.c:2237
-#: plug-ins/common/ps.c:2381 plug-ins/common/ps.c:2503
+#: plug-ins/common/ps.c:2172 plug-ins/common/ps.c:2298
+#: plug-ins/common/ps.c:2442 plug-ins/common/ps.c:2564
 msgid "write error occured"
 msgstr "feil under skriving"
 
-#: plug-ins/common/ps.c:2528
+#: plug-ins/common/ps.c:2589
 msgid "Load PostScript"
 msgstr ""
 
 #. Rendering
-#: plug-ins/common/ps.c:2555 plug-ins/flame/flame.c:994
+#: plug-ins/common/ps.c:2616 plug-ins/flame/flame.c:994
 msgid "Rendering"
 msgstr ""
 
-#: plug-ins/common/ps.c:2573 plug-ins/print/gimp_main_window.c:482
+#: plug-ins/common/ps.c:2634 plug-ins/print/gimp_main_window.c:482
 msgid "Resolution:"
 msgstr "Oppløsning:"
 
-#: plug-ins/common/ps.c:2601
+#: plug-ins/common/ps.c:2662
 msgid "Pages:"
 msgstr "Sider:"
 
-#: plug-ins/common/ps.c:2607
+#: plug-ins/common/ps.c:2668
 msgid "Try Bounding Box"
 msgstr ""
 
 #. Colouring
-#: plug-ins/common/ps.c:2619
+#: plug-ins/common/ps.c:2680
 msgid "Coloring"
 msgstr "Farger"
 
-#: plug-ins/common/ps.c:2623
+#: plug-ins/common/ps.c:2684
 msgid "B/W"
 msgstr "S/HV"
 
 #. * Gray *
-#: plug-ins/common/ps.c:2624 plug-ins/rcm/rcm_dialog.c:394
+#: plug-ins/common/ps.c:2685 plug-ins/rcm/rcm_dialog.c:394
 msgid "Gray"
 msgstr "Grå"
 
-#: plug-ins/common/ps.c:2636
+#: plug-ins/common/ps.c:2697
 msgid "Text Antialiasing"
 msgstr "Antialiasing av tekst"
 
-#: plug-ins/common/ps.c:2641 plug-ins/common/ps.c:2654
+#: plug-ins/common/ps.c:2702 plug-ins/common/ps.c:2715
 msgid "Weak"
 msgstr "Svak"
 
-#: plug-ins/common/ps.c:2642 plug-ins/common/ps.c:2655
+#: plug-ins/common/ps.c:2703 plug-ins/common/ps.c:2716
 msgid "Strong"
 msgstr "Sterk"
 
-#: plug-ins/common/ps.c:2648
+#: plug-ins/common/ps.c:2709
 msgid "Graphic Antialiasing"
 msgstr "Antialiasing av grafikk"
 
-#: plug-ins/common/ps.c:2710
+#: plug-ins/common/ps.c:2771
 msgid "Save as PostScript"
 msgstr "Lagre som PostScript"
 
 #. Image Size
-#: plug-ins/common/ps.c:2740
+#: plug-ins/common/ps.c:2801
 msgid "Image Size"
 msgstr "Bildestørrelse"
 
-#: plug-ins/common/ps.c:2776
+#: plug-ins/common/ps.c:2837
 msgid "X-Offset:"
 msgstr "X-avstand:"
 
-#: plug-ins/common/ps.c:2785
+#: plug-ins/common/ps.c:2846
 msgid "Y-Offset:"
 msgstr "Y-avstand:"
 
-#: plug-ins/common/ps.c:2791
+#: plug-ins/common/ps.c:2852
 msgid "Keep Aspect Ratio"
 msgstr "Behold aspektrate"
 
-#: plug-ins/common/ps.c:2792
+#: plug-ins/common/ps.c:2853
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
 
 #. Unit
-#: plug-ins/common/ps.c:2803
+#: plug-ins/common/ps.c:2864
 msgid "Unit"
 msgstr "Enhet"
 
-#: plug-ins/common/ps.c:2807 plug-ins/print/gimp_main_window.c:317
+#: plug-ins/common/ps.c:2868 plug-ins/print/gimp_main_window.c:317
 msgid "Inch"
 msgstr "Tomme"
 
-#: plug-ins/common/ps.c:2808
+#: plug-ins/common/ps.c:2869
 msgid "Millimeter"
 msgstr "Millimeter"
 
 #. Format
-#: plug-ins/common/ps.c:2832
+#: plug-ins/common/ps.c:2893
 msgid "Output"
 msgstr "Utskrift"
 
-#: plug-ins/common/ps.c:2840
+#: plug-ins/common/ps.c:2901
 msgid "PostScript Level 2"
 msgstr ""
 
-#: plug-ins/common/ps.c:2848
+#: plug-ins/common/ps.c:2909
 msgid "Encapsulated PostScript"
 msgstr "Encapsulated PostScript"
 
-#: plug-ins/common/ps.c:2876
+#: plug-ins/common/ps.c:2937
 msgid "Preview Size:"
 msgstr "Størrelse på forhåndsvisning:"
 
@@ -5410,7 +5410,7 @@ msgstr "Colorize eksempel"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:156
 #: plug-ins/gdyntext/gdyntext_ui.c:578 plug-ins/gimpressionist/orientmap.c:633
 #: plug-ins/gimpressionist/presets.c:640 plug-ins/gimpressionist/sizemap.c:492
-#: plug-ins/imagemap/imap_default_dialog.c:122
+#: plug-ins/imagemap/imap_default_dialog.c:125
 msgid "Apply"
 msgstr "Bruk"
 
@@ -6658,65 +6658,65 @@ msgstr "Rendrer vind..."
 msgid "Wind Strength must be greater than 0."
 msgstr "Vindstyrken må være større enn 0."
 
-#: plug-ins/common/wind.c:1002 plug-ins/common/wind.c:1069
+#: plug-ins/common/wind.c:1006 plug-ins/common/wind.c:1073
 msgid "Wind"
 msgstr "Vind"
 
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: plug-ins/common/wind.c:1066 plug-ins/maze/maze_face.c:302
+#: plug-ins/common/wind.c:1070 plug-ins/maze/maze_face.c:302
 msgid "Style"
 msgstr "Stil"
 
-#: plug-ins/common/wind.c:1070
+#: plug-ins/common/wind.c:1074
 msgid "Blast"
 msgstr "Eksplosjon"
 
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
-#: plug-ins/common/wind.c:1084 plug-ins/struc/struc.c:278
+#: plug-ins/common/wind.c:1088 plug-ins/struc/struc.c:278
 msgid "Direction"
 msgstr "Retning"
 
-#: plug-ins/common/wind.c:1087
+#: plug-ins/common/wind.c:1091
 msgid "Left"
 msgstr "Venstre"
 
-#: plug-ins/common/wind.c:1088
+#: plug-ins/common/wind.c:1092
 msgid "Right"
 msgstr "Høyre"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
-#: plug-ins/common/wind.c:1101
+#: plug-ins/common/wind.c:1105
 msgid "Edge Affected"
 msgstr ""
 
-#: plug-ins/common/wind.c:1105
+#: plug-ins/common/wind.c:1109
 msgid "Leading"
 msgstr "Ledende..."
 
-#: plug-ins/common/wind.c:1106
+#: plug-ins/common/wind.c:1110
 msgid "Trailing"
 msgstr "Etterfølgende"
 
-#: plug-ins/common/wind.c:1107
+#: plug-ins/common/wind.c:1111
 msgid "Both"
 msgstr "Begge"
 
-#: plug-ins/common/wind.c:1137
+#: plug-ins/common/wind.c:1141
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 
-#: plug-ins/common/wind.c:1150 plug-ins/gimpressionist/orientmap.c:565
+#: plug-ins/common/wind.c:1154 plug-ins/gimpressionist/orientmap.c:565
 #: plug-ins/gimpressionist/sizemap.c:465
 msgid "Strength:"
 msgstr "Styrke:"
 
-#: plug-ins/common/wind.c:1154
+#: plug-ins/common/wind.c:1158
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Høyere verdier øker størrelsen på effekten"
 
@@ -9641,27 +9641,23 @@ msgstr ""
 msgid "points"
 msgstr "punkter"
 
-#: plug-ins/gdyntext/gdyntext.c:95
+#: plug-ins/gdyntext/gdyntext.c:94
 msgid "<Image>/Filters/Render/Dynamic Text..."
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext.c:221
+#: plug-ins/gdyntext/gdyntext.c:231
 msgid ""
 " Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
 "new layer creation."
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext.c:285
+#: plug-ins/gdyntext/gdyntext.c:313 plug-ins/gdyntext/gdyntext.c:448
 #, fuzzy
 msgid "GDynText Layer"
 msgstr "Velg fil"
 
-#: plug-ins/gdyntext/gdyntext.c:324
+#: plug-ins/gdyntext/gdyntext.c:353
 msgid "GIMP Dynamic Text"
-msgstr ""
-
-#: plug-ins/gdyntext/gdyntext.c:415
-msgid "GDynText Layer "
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:126
@@ -9717,79 +9713,74 @@ msgstr "Senter"
 msgid "top-right"
 msgstr "Ingen lys"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:265
+#: plug-ins/gdyntext/gdyntext_ui.c:263
 #, fuzzy
 msgid "GDynText"
 msgstr "Velg fil"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:298
+#: plug-ins/gdyntext/gdyntext_ui.c:299
 msgid "Toggle creation of a new layer"
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext_ui.c:311
+#: plug-ins/gdyntext/gdyntext_ui.c:312
 #, fuzzy
 msgid "Load text from file"
 msgstr "Last parametere fra"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:322
+#: plug-ins/gdyntext/gdyntext_ui.c:323
 #, fuzzy
 msgid "GDynText: Select Color"
 msgstr "Seed"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:328
+#: plug-ins/gdyntext/gdyntext_ui.c:329
 #, fuzzy
 msgid "Text color"
 msgstr "farge"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:338
+#: plug-ins/gdyntext/gdyntext_ui.c:339
 msgid "Toggle anti-aliased text"
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext_ui.c:351
+#: plug-ins/gdyntext/gdyntext_ui.c:352
 #, fuzzy
 msgid "Left aligned text"
 msgstr "Venstre kant"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:362
+#: plug-ins/gdyntext/gdyntext_ui.c:363
 #, fuzzy
 msgid "Centered text"
 msgstr "Heltall"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:373
+#: plug-ins/gdyntext/gdyntext_ui.c:374
 #, fuzzy
 msgid "Right aligned text"
 msgstr "Høyre kant"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:384
+#: plug-ins/gdyntext/gdyntext_ui.c:385
 msgid "Toggle text font preview"
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext_ui.c:396
+#: plug-ins/gdyntext/gdyntext_ui.c:397
 msgid "Toggle CharMap window"
 msgstr ""
 
 #. Layer Alignment
-#: plug-ins/gdyntext/gdyntext_ui.c:410
+#: plug-ins/gdyntext/gdyntext_ui.c:411
 msgid ""
 "Layer\n"
 "Alignment"
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext_ui.c:418
+#: plug-ins/gdyntext/gdyntext_ui.c:419
 #, fuzzy
 msgid "Set layer alignment"
 msgstr "Sett lag til lenket"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:448
+#: plug-ins/gdyntext/gdyntext_ui.c:449
 #, fuzzy
 msgid ""
 "Line\n"
 "Spacing"
-msgstr "Skalering"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:458
-#, fuzzy
-msgid "Set line spacing"
 msgstr "Skalering"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:471
@@ -9815,22 +9806,22 @@ msgid ""
 "changing the layer name as done in GIMP 1.0."
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext_ui.c:853
+#: plug-ins/gdyntext/gdyntext_ui.c:854
 msgid "GDynText: CharMap"
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext_ui.c:919
+#: plug-ins/gdyntext/gdyntext_ui.c:920
 #, fuzzy
 msgid "GDynText: Load text"
 msgstr "Velg fil"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:964
+#: plug-ins/gdyntext/gdyntext_ui.c:965
 #, c-format
 msgid ""
 "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext_ui.c:975
+#: plug-ins/gdyntext/gdyntext_ui.c:976
 #, fuzzy, c-format
 msgid "Error opening \"%s\"!\n"
 msgstr "kan ikke åpne filen for lesing"
@@ -9847,7 +9838,7 @@ msgstr ""
 msgid " Upgrading old GDynText layer to %s."
 msgstr ""
 
-#: plug-ins/gdyntext/message_window.c:110
+#: plug-ins/gdyntext/message_window.c:114
 msgid "Dismiss"
 msgstr ""
 
@@ -11730,7 +11721,7 @@ msgstr "Seed"
 msgid "Unselect All"
 msgstr ""
 
-#: plug-ins/imagemap/imap_default_dialog.c:136
+#: plug-ins/imagemap/imap_default_dialog.c:139
 #, fuzzy
 msgid "Help..."
 msgstr "Hjelp"
@@ -11827,31 +11818,31 @@ msgstr "Instillinger for glød"
 msgid "Area #%d Settings"
 msgstr "Avanserte instillinger"
 
-#: plug-ins/imagemap/imap_file.c:47 plug-ins/imagemap/imap_menu.c:66
+#: plug-ins/imagemap/imap_file.c:50 plug-ins/imagemap/imap_menu.c:66
 #, fuzzy
 msgid "Error opening file"
 msgstr "kan ikke åpne filen for lesing"
 
-#: plug-ins/imagemap/imap_file.c:56
+#: plug-ins/imagemap/imap_file.c:59
 msgid "Load Imagemap"
 msgstr ""
 
-#: plug-ins/imagemap/imap_file.c:79
+#: plug-ins/imagemap/imap_file.c:83
 #, fuzzy
 msgid "File exists!"
 msgstr "Høyde:"
 
-#: plug-ins/imagemap/imap_file.c:84
+#: plug-ins/imagemap/imap_file.c:88
 msgid ""
 "File already exists.\n"
 "  Do you really want to overwrite?  "
 msgstr ""
 
-#: plug-ins/imagemap/imap_file.c:116
+#: plug-ins/imagemap/imap_file.c:120
 msgid "Save Imagemap"
 msgstr ""
 
-#: plug-ins/imagemap/imap_file.c:139
+#: plug-ins/imagemap/imap_file.c:144
 msgid "Error"
 msgstr ""
 
@@ -13107,3 +13098,7 @@ msgstr "Feil: Kan ikke lese fil %s med egenskaper for XJT"
 #, fuzzy, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Feil, fil %s med egenskaper for XJT er tom"
+
+#, fuzzy
+#~ msgid "Set line spacing"
+#~ msgstr "Skalering"

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
-"POT-Creation-Date: 2000-08-12 20:35+0000\n"
+"POT-Creation-Date: 2000-08-19 09:13-0700\n"
 "PO-Revision-Date: 2000-08-12 20:41+00:00\n"
 "Last-Translator: Daniel Egger <egger@suse.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -311,7 +311,7 @@ msgstr "Kontrast:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:300 app/color_balance.c:441 app/curves.c:682
-#: app/fileops.c:401 app/hue_saturation.c:562 app/levels.c:570
+#: app/fileops.c:404 app/hue_saturation.c:562 app/levels.c:570
 #: app/palette.c:3216 app/posterize.c:239 app/threshold.c:348
 msgid "Preview"
 msgstr "Vorschau"
@@ -1021,7 +1021,7 @@ msgstr "Weich"
 msgid "Free"
 msgstr "Frei"
 
-#: app/curves.c:699 app/levels.c:598 app/module_db.c:864
+#: app/curves.c:699 app/levels.c:598 app/module_db.c:865
 msgid "Load"
 msgstr "Öffnen"
 
@@ -1225,16 +1225,16 @@ msgstr "Pixel/%a"
 msgid "Image Type"
 msgstr "Bildart"
 
-#: app/fileops.c:249 app/fileops.c:295
+#: app/fileops.c:252 app/fileops.c:298
 msgid "Load Image"
 msgstr "Bild öffnen"
 
 #. format-chooser frame
-#: app/fileops.c:310
+#: app/fileops.c:313
 msgid "Determine File Type"
 msgstr "Dateityp bestimmen"
 
-#: app/fileops.c:383
+#: app/fileops.c:386
 msgid ""
 "Generate\n"
 "Preview"
@@ -1242,11 +1242,11 @@ msgstr ""
 "Vorschau\n"
 "erzeugen"
 
-#: app/fileops.c:402
+#: app/fileops.c:405
 msgid "No Selection."
 msgstr "Keine Auswahl."
 
-#: app/fileops.c:450 app/fileops.c:1772 app/fileops.c:1867
+#: app/fileops.c:453 app/fileops.c:1710
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1255,19 +1255,19 @@ msgstr ""
 "Sichern schlug fehl.\n"
 "%s"
 
-#: app/fileops.c:475 app/fileops.c:507
+#: app/fileops.c:478 app/fileops.c:510
 msgid "Save Image"
 msgstr "Bild sichern"
 
-#: app/fileops.c:524
+#: app/fileops.c:527
 msgid "Save Options"
 msgstr "Einstellungen"
 
-#: app/fileops.c:533
+#: app/fileops.c:536
 msgid "Determine File Type:"
 msgstr "Dateityp bestimmen:"
 
-#: app/fileops.c:593
+#: app/fileops.c:596
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
@@ -1275,11 +1275,11 @@ msgstr ""
 "Kann Bild nicht zurücksetzen,\n"
 "da kein Dateiname mit dem Bild verknüpft ist"
 
-#: app/fileops.c:600
+#: app/fileops.c:603
 msgid "Revert"
 msgstr "Zurücksetzen"
 
-#: app/fileops.c:611
+#: app/fileops.c:614
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1288,7 +1288,7 @@ msgstr ""
 "Zurücksetzen schlug fehl.\n"
 "%s"
 
-#: app/fileops.c:708
+#: app/fileops.c:711
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1297,7 +1297,7 @@ msgstr ""
 "%s fehlgeschlagen.\n"
 "%s: Unbekannter Typ."
 
-#: app/fileops.c:725
+#: app/fileops.c:728
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1306,7 +1306,7 @@ msgstr ""
 "%s fehlgeschlagen.\n"
 "%s ist keine reguläre Datei."
 
-#: app/fileops.c:746
+#: app/fileops.c:749
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1315,11 +1315,11 @@ msgstr ""
 "%s fehlgeschlagen.\n"
 "%s: Zugriff verweigert."
 
-#: app/fileops.c:795
+#: app/fileops.c:798
 msgid "Open"
 msgstr "Öffnen"
 
-#: app/fileops.c:1102
+#: app/fileops.c:1105
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1328,7 +1328,7 @@ msgstr ""
 "Sichern fehlgeschlagen.\n"
 "%s: Unbekannter Dateityp."
 
-#: app/fileops.c:1117
+#: app/fileops.c:1120
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1337,7 +1337,7 @@ msgstr ""
 "Sichern fehlgeschlagen.\n"
 "%s ist keine reguläre Datei."
 
-#: app/fileops.c:1136
+#: app/fileops.c:1139
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1346,35 +1346,35 @@ msgstr ""
 "Sichern fehlgeschlagen.\n"
 "%s: Zugriff verweigert."
 
-#: app/fileops.c:1386
+#: app/fileops.c:1389
 msgid "(This thumbnail may be out of date)"
 msgstr "(Diese Vorschau könnte veraltet sein)"
 
-#: app/fileops.c:1387
+#: app/fileops.c:1390
 msgid "(No Information)"
 msgstr "(Keine Information)"
 
-#: app/fileops.c:1397
+#: app/fileops.c:1400
 msgid "(Thumbnail saving is disabled)"
 msgstr "(Vorschau-Sicherung ist abgeschaltet)"
 
-#: app/fileops.c:1401
+#: app/fileops.c:1404
 msgid "(Could not write thumbnail file)"
 msgstr "(Konnte Vorschau-Datei nicht schreiben)"
 
-#: app/fileops.c:1405
+#: app/fileops.c:1408
 msgid "(Thumbnail file not written)"
 msgstr "(Vorschau-Datei nicht geschrieben)"
 
-#: app/fileops.c:1422
+#: app/fileops.c:1425
 msgid "No preview available"
 msgstr "Keine Vorschau verfügbar"
 
-#: app/fileops.c:1545
+#: app/fileops.c:1531
 msgid "(could not make preview)"
 msgstr "(konnte keine Vorschau erstellen)"
 
-#: app/fileops.c:1618 app/fileops.c:1698
+#: app/fileops.c:1594 app/fileops.c:1636
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -1383,20 +1383,20 @@ msgstr ""
 "Öffnen fehlgeschlagen.\n"
 "%s"
 
-#: app/fileops.c:1820
+#: app/fileops.c:1800
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s existiert, überschreiben?"
 
-#: app/fileops.c:1822
+#: app/fileops.c:1802
 msgid "File Exists!"
 msgstr "Datei Existiert!"
 
-#: app/fileops.c:1827
+#: app/fileops.c:1807
 msgid "Yes"
 msgstr "Ja"
 
-#: app/fileops.c:1827
+#: app/fileops.c:1807
 msgid "No"
 msgstr "Nein"
 
@@ -2990,749 +2990,749 @@ msgstr "Grad"
 
 #. <Toolbox>/File
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:90
+#: app/menus.c:93
 msgid "/_File"
 msgstr "/_Datei"
 
 #. <Image>/File
-#: app/menus.c:92 app/menus.c:198
+#: app/menus.c:95 app/menus.c:201
 msgid "/File/New..."
 msgstr "/Datei/Neu..."
 
-#: app/menus.c:94 app/menus.c:200
+#: app/menus.c:97 app/menus.c:203
 msgid "/File/Open..."
 msgstr "/Datei/Öffnen..."
 
-#: app/menus.c:101
+#: app/menus.c:104
 msgid "/File/Acquire"
 msgstr "/Datei/Holen"
 
-#: app/menus.c:106
+#: app/menus.c:109
 msgid "/File/Preferences..."
 msgstr "/Datei/Einstellungen..."
 
-#: app/menus.c:113
+#: app/menus.c:116
 msgid "/File/Dialogs/Layers, Channels & Paths..."
 msgstr "/Datei/Dialoge/Ebenen, Kanäle und Pfade..."
 
-#: app/menus.c:115
+#: app/menus.c:118
 msgid "/File/Dialogs/Tool Options..."
 msgstr "/Datei/Dialoge/Werkzeugeinstellungen..."
 
-#: app/menus.c:120
+#: app/menus.c:123
 msgid "/File/Dialogs/Brushes..."
 msgstr "/Datei/Dialoge/Pinsel..."
 
-#: app/menus.c:122
+#: app/menus.c:125
 msgid "/File/Dialogs/Patterns..."
 msgstr "/Datei/Dialoge/Muster..."
 
-#: app/menus.c:124
+#: app/menus.c:127
 msgid "/File/Dialogs/Gradients..."
 msgstr "/Datei/Dialoge/Farbverläufe..."
 
-#: app/menus.c:126
+#: app/menus.c:129
 msgid "/File/Dialogs/Palette..."
 msgstr "/Datei/Dialoge/Farbpalette..."
 
-#: app/menus.c:128
+#: app/menus.c:131
 msgid "/File/Dialogs/Indexed Palette..."
 msgstr "/Datei/Dialoge/Indizierte Palette..."
 
-#: app/menus.c:133
+#: app/menus.c:136
 msgid "/File/Dialogs/Input Devices..."
 msgstr "/Datei/Dialoge/Eingabegeräte..."
 
-#: app/menus.c:135
+#: app/menus.c:138
 msgid "/File/Dialogs/Device Status..."
 msgstr "/Datei/Dialoge/Gerätestatus..."
 
-#: app/menus.c:140
+#: app/menus.c:143
 msgid "/File/Dialogs/Document Index..."
 msgstr "/Datei/Dialoge/Dokumentenindex..."
 
-#: app/menus.c:142
+#: app/menus.c:145
 msgid "/File/Dialogs/Error Console..."
 msgstr "/Datei/Dialoge/Fehlerkonsole..."
 
-#: app/menus.c:144
+#: app/menus.c:147
 msgid "/File/Dialogs/Display Filters..."
 msgstr "/Datei/Dialoge/Darstellungsfilter..."
 
-#: app/menus.c:154 app/menus.c:213
+#: app/menus.c:157 app/menus.c:216
 msgid "/File/Quit"
 msgstr "/Datei/Beenden"
 
 #. <Toolbox>/Xtns
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:160
+#: app/menus.c:163
 msgid "/_Xtns"
 msgstr "/_Xtns"
 
-#: app/menus.c:162
+#: app/menus.c:165
 msgid "/Xtns/Module Browser..."
 msgstr "/Xtns/Modul-Browser..."
 
 #. <Toolbox>/Help
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:171
+#: app/menus.c:174
 msgid "/_Help"
 msgstr "/_Hilfe"
 
-#: app/menus.c:173
+#: app/menus.c:176
 msgid "/Help/Help..."
 msgstr "/Hilfe/Hilfe..."
 
-#: app/menus.c:175
+#: app/menus.c:178
 msgid "/Help/Context Help..."
 msgstr "/Hilfe/Kontext Hilfe..."
 
-#: app/menus.c:177
+#: app/menus.c:180
 msgid "/Help/Tip of the Day..."
 msgstr "/Hilfe/Tip des Tages..."
 
-#: app/menus.c:179
+#: app/menus.c:182
 msgid "/Help/About..."
 msgstr "/Hilfe/Über..."
 
-#: app/menus.c:181
+#: app/menus.c:184
 msgid "/Help/Dump Items (Debug)"
 msgstr "/Hilfe/Dump Items (Debug)"
 
-#: app/menus.c:202
+#: app/menus.c:205
 msgid "/File/Save"
 msgstr "/Datei/Sichern"
 
-#: app/menus.c:204
+#: app/menus.c:207
 msgid "/File/Save As..."
 msgstr "/Datei/Sichern unter..."
 
-#: app/menus.c:206
+#: app/menus.c:209
 msgid "/File/Revert"
 msgstr "/Datei/Zurücksetzen"
 
-#: app/menus.c:211
+#: app/menus.c:214
 msgid "/File/Close"
 msgstr "/Datei/Schließen"
 
 #. <Image>/Edit
-#: app/menus.c:221
+#: app/menus.c:224
 msgid "/Edit/Undo"
 msgstr "/Bearbeiten/Rückgängig"
 
-#: app/menus.c:223
+#: app/menus.c:226
 msgid "/Edit/Redo"
 msgstr "/Bearbeiten/Wiederholen"
 
-#: app/menus.c:228
+#: app/menus.c:231
 msgid "/Edit/Cut"
 msgstr "/Bearbeiten/Ausschneiden"
 
-#: app/menus.c:230
+#: app/menus.c:233
 msgid "/Edit/Copy"
 msgstr "/Bearbeiten/Kopieren"
 
-#: app/menus.c:232
+#: app/menus.c:235
 msgid "/Edit/Paste"
 msgstr "/Bearbeiten/Einfügen"
 
-#: app/menus.c:234
+#: app/menus.c:237
 msgid "/Edit/Paste Into"
 msgstr "/Bearbeiten/Einfügen in Auswahl"
 
-#: app/menus.c:236
+#: app/menus.c:239
 msgid "/Edit/Paste as New"
 msgstr "/Bearbeiten/Einfügen als Neu"
 
 #. <Image>/Edit/Buffer
-#: app/menus.c:241
+#: app/menus.c:244
 msgid "/Edit/Buffer/Cut Named..."
 msgstr "/Bearbeiten/Ablage/Ausschneiden..."
 
-#: app/menus.c:243
+#: app/menus.c:246
 msgid "/Edit/Buffer/Copy Named..."
 msgstr "/Bearbeiten/Ablage/Kopieren..."
 
-#: app/menus.c:245
+#: app/menus.c:248
 msgid "/Edit/Buffer/Paste Named..."
 msgstr "/Bearbeiten/Ablage/Einfügen..."
 
-#: app/menus.c:250
+#: app/menus.c:253
 msgid "/Edit/Clear"
 msgstr "/Bearbeiten/Löschen"
 
-#: app/menus.c:252
+#: app/menus.c:255
 msgid "/Edit/Fill with FG Color"
 msgstr "/Bearbeiten/Füllen mit VG-Farbe"
 
-#: app/menus.c:254
+#: app/menus.c:257
 msgid "/Edit/Fill with BG Color"
 msgstr "/Bearbeiten/Füllen mit HG-Farbe"
 
-#: app/menus.c:256
+#: app/menus.c:259
 msgid "/Edit/Stroke"
 msgstr "/Bearbeiten/Nachfahren"
 
 #. <Image>/Select
-#: app/menus.c:264
+#: app/menus.c:267
 msgid "/Select/Invert"
 msgstr "/Auswahl/Invertieren"
 
-#: app/menus.c:266
+#: app/menus.c:269
 msgid "/Select/All"
 msgstr "/Auswahl/Alles"
 
-#: app/menus.c:268
+#: app/menus.c:271
 msgid "/Select/None"
 msgstr "/Auswahl/Nichts"
 
-#: app/menus.c:270
+#: app/menus.c:273
 msgid "/Select/Float"
 msgstr "/Auswahl/Schwebend"
 
-#: app/menus.c:275
+#: app/menus.c:278
 msgid "/Select/Feather..."
 msgstr "/Auswahl/Ausblenden..."
 
-#: app/menus.c:277
+#: app/menus.c:280
 msgid "/Select/Sharpen"
 msgstr "/Auswahl/Schärfen"
 
-#: app/menus.c:279
+#: app/menus.c:282
 msgid "/Select/Shrink..."
 msgstr "/Auswahl/Verkleinern..."
 
-#: app/menus.c:281
+#: app/menus.c:284
 msgid "/Select/Grow..."
 msgstr "/Auswahl/Vergrößern..."
 
-#: app/menus.c:283
+#: app/menus.c:286
 msgid "/Select/Border..."
 msgstr "/Auswahl/Rand..."
 
-#: app/menus.c:288
+#: app/menus.c:291
 msgid "/Select/Save to Channel"
 msgstr "/Auswahl/In Kanal sichern"
 
 #. <Image>/View
-#: app/menus.c:293
+#: app/menus.c:296
 msgid "/View/Zoom In"
 msgstr "/Ansicht/Hineinzoomen"
 
-#: app/menus.c:295
+#: app/menus.c:298
 msgid "/View/Zoom Out"
 msgstr "/Ansicht/Herauszoomen"
 
 #. <Image>/View/Zoom
-#: app/menus.c:300
+#: app/menus.c:303
 msgid "/View/Zoom/16:1"
 msgstr "/Ansicht/Zoom/16:1"
 
-#: app/menus.c:302
+#: app/menus.c:305
 msgid "/View/Zoom/8:1"
 msgstr "/Ansicht/Zoom/8:1"
 
-#: app/menus.c:304
+#: app/menus.c:307
 msgid "/View/Zoom/4:1"
 msgstr "/Ansicht/Zoom/4:1"
 
-#: app/menus.c:306
+#: app/menus.c:309
 msgid "/View/Zoom/2:1"
 msgstr "/Ansicht/Zoom/2:1"
 
-#: app/menus.c:308
+#: app/menus.c:311
 msgid "/View/Zoom/1:1"
 msgstr "/Ansicht/Zoom/1:1"
 
-#: app/menus.c:310
+#: app/menus.c:313
 msgid "/View/Zoom/1:2"
 msgstr "/Ansicht/Zoom/1:2"
 
-#: app/menus.c:312
+#: app/menus.c:315
 msgid "/View/Zoom/1:4"
 msgstr "/Ansicht/Zoom/1:4"
 
-#: app/menus.c:314
+#: app/menus.c:317
 msgid "/View/Zoom/1:8"
 msgstr "/Ansicht/Zoom/1:8"
 
-#: app/menus.c:316
+#: app/menus.c:319
 msgid "/View/Zoom/1:16"
 msgstr "/Ansicht/Zoom/1:16"
 
-#: app/menus.c:319
+#: app/menus.c:322
 msgid "/View/Dot for Dot"
 msgstr "/Ansicht/Punkt für Punkt"
 
-#: app/menus.c:324
+#: app/menus.c:327
 msgid "/View/Info Window..."
 msgstr "/Ansicht/Information..."
 
-#: app/menus.c:326
+#: app/menus.c:329
 msgid "/View/Nav. Window..."
 msgstr "/Ansicht/Navigation..."
 
-#: app/menus.c:331
+#: app/menus.c:334
 msgid "/View/Toggle Selection"
 msgstr "/Ansicht/Auswahl"
 
-#: app/menus.c:333
+#: app/menus.c:336
 msgid "/View/Toggle Rulers"
 msgstr "/Ansicht/Lineale"
 
-#: app/menus.c:335
+#: app/menus.c:338
 msgid "/View/Toggle Statusbar"
 msgstr "/Ansicht/Statusleiste"
 
-#: app/menus.c:337
+#: app/menus.c:340
 msgid "/View/Toggle Guides"
 msgstr "/Ansicht/Hilfslinien"
 
-#: app/menus.c:339
+#: app/menus.c:342
 msgid "/View/Snap to Guides"
 msgstr "/Ansicht/Magnetische Hilfslinien"
 
-#: app/menus.c:344
+#: app/menus.c:347
 msgid "/View/New View"
 msgstr "/Ansicht/Neues Fenster"
 
-#: app/menus.c:346
+#: app/menus.c:349
 msgid "/View/Shrink Wrap"
 msgstr "/Ansicht/Fenster anpassen"
 
 #. <Image>/Image/Mode
-#: app/menus.c:351
+#: app/menus.c:354
 msgid "/Image/Mode/RGB"
 msgstr "/Bild/Modus/RGB"
 
-#: app/menus.c:353
+#: app/menus.c:356
 msgid "/Image/Mode/Grayscale"
 msgstr "/Bild/Modus/Graustufen"
 
-#: app/menus.c:355
+#: app/menus.c:358
 msgid "/Image/Mode/Indexed..."
 msgstr "/Bild/Modus/Indiziert..."
 
 #. <Image>/Image/Colors
-#: app/menus.c:363
+#: app/menus.c:366
 msgid "/Image/Colors/Desaturate"
 msgstr "/Bild/Farben/Sättigung entfernen"
 
-#: app/menus.c:365
+#: app/menus.c:368
 msgid "/Image/Colors/Invert"
 msgstr "/Bild/Farben/Invertieren"
 
 #. <Image>/Image/Colors/Auto
-#: app/menus.c:373
+#: app/menus.c:376
 msgid "/Image/Colors/Auto/Equalize"
 msgstr "/Bild/Farben/Automatisch/Angleichen"
 
 #. <Image>/Image/Alpha
-#: app/menus.c:381
+#: app/menus.c:384
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "/Bild/Alpha/Alphakanal hinzufügen"
 
 #. <Image>/Image/Transforms
-#: app/menus.c:386
+#: app/menus.c:389
 msgid "/Image/Transforms/Offset..."
 msgstr "/Bild/Transformationen/Versatz..."
 
-#: app/menus.c:388
+#: app/menus.c:391
 msgid "/Image/Transforms/Rotate"
 msgstr "/Bild/Transformationen/Rotieren"
 
-#: app/menus.c:395
+#: app/menus.c:398
 msgid "/Image/Canvas Size..."
 msgstr "/Bild/Größe ändern..."
 
-#: app/menus.c:397
+#: app/menus.c:400
 msgid "/Image/Scale Image..."
 msgstr "/Bild/Skalieren..."
 
-#: app/menus.c:399
+#: app/menus.c:402
 msgid "/Image/Duplicate"
 msgstr "/Bild/Duplizieren"
 
 #. <Image>/Layers
-#: app/menus.c:407
+#: app/menus.c:410
 msgid "/Layers/Layers, Channels & Paths..."
 msgstr "/Ebenen/Ebenen, Kanäle und Pfade..."
 
-#: app/menus.c:411
+#: app/menus.c:414
 msgid "/Layers/Layer to Imagesize"
 msgstr "/Ebenen/Ebene auf Bildgröße"
 
 #. <Image>/Layers/Stack
-#: app/menus.c:416
+#: app/menus.c:419
 msgid "/Layers/Stack/Previous Layer"
 msgstr "/Ebenen/Stapel/Vorherige Ebene"
 
-#: app/menus.c:418
+#: app/menus.c:421
 msgid "/Layers/Stack/Next Layer"
 msgstr "/Ebenen/Stapel/Nächste Ebene"
 
-#: app/menus.c:420
+#: app/menus.c:423
 msgid "/Layers/Stack/Raise Layer"
 msgstr "/Ebenen/Stapel/Ebene anheben"
 
-#: app/menus.c:422
+#: app/menus.c:425
 msgid "/Layers/Stack/Lower Layer"
 msgstr "/Ebenen/Stapel/Ebene absenken"
 
-#: app/menus.c:424
+#: app/menus.c:427
 msgid "/Layers/Stack/Layer to Top"
 msgstr "/Ebenen/Stapel/Ebene nach ganz oben"
 
-#: app/menus.c:426
+#: app/menus.c:429
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr "/Ebenen/Stapel/Ebene nach ganz unten"
 
 #. <Image>/Layers/Rotate
-#: app/menus.c:433
+#: app/menus.c:436
 msgid "/Layers/Rotate"
 msgstr "/Ebenen/Rotieren"
 
-#: app/menus.c:438
+#: app/menus.c:441
 msgid "/Layers/Anchor Layer"
 msgstr "/Ebenen/Ebene verankern"
 
-#: app/menus.c:440
+#: app/menus.c:443
 msgid "/Layers/Merge Visible Layers..."
 msgstr "/Ebenen/Sichtbare Ebenen vereinen..."
 
-#: app/menus.c:442
+#: app/menus.c:445
 msgid "/Layers/Flatten Image"
 msgstr "/Ebenen/Bild zusammenfügen"
 
-#: app/menus.c:447
+#: app/menus.c:450
 msgid "/Layers/Mask to Selection"
 msgstr "/Ebenen/Auswahl aus Maske"
 
-#: app/menus.c:452
+#: app/menus.c:455
 msgid "/Layers/Add Alpha Channel"
 msgstr "/Ebenen/Alphakanal hinzufügen"
 
-#: app/menus.c:454
+#: app/menus.c:457
 msgid "/Layers/Alpha to Selection"
 msgstr "/Ebenen/Auswahl aus Alphakanal"
 
 #. <Image>/Tools
-#: app/menus.c:462
+#: app/menus.c:465
 msgid "/Tools/Toolbox"
 msgstr "/Werkzeuge/Werkzeugkasten"
 
-#: app/menus.c:464
+#: app/menus.c:467
 msgid "/Tools/Default Colors"
 msgstr "/Werkzeuge/Standardfarben"
 
-#: app/menus.c:466
+#: app/menus.c:469
 msgid "/Tools/Swap Colors"
 msgstr "/Werkzeuge/Farben tauschen"
 
 #. <Image>/Dialogs
-#: app/menus.c:473
+#: app/menus.c:476
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "/Dialoge/Ebenen, Kanäle und Pfade..."
 
-#: app/menus.c:475
+#: app/menus.c:478
 msgid "/Dialogs/Tool Options..."
 msgstr "/Dialoge/Werkzeugeinstellungen..."
 
-#: app/menus.c:480
+#: app/menus.c:483
 msgid "/Dialogs/Brushes..."
 msgstr "/Dialoge/Pinsel..."
 
-#: app/menus.c:482
+#: app/menus.c:485
 msgid "/Dialogs/Patterns..."
 msgstr "/Dialoge/Muster..."
 
-#: app/menus.c:484
+#: app/menus.c:487
 msgid "/Dialogs/Gradients..."
 msgstr "/Dialoge/Farbverläufe..."
 
-#: app/menus.c:486
+#: app/menus.c:489
 msgid "/Dialogs/Palette..."
 msgstr "/Dialoge/Farbpalette...."
 
-#: app/menus.c:488
+#: app/menus.c:491
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Dialoge/Indizierte Palette..."
 
-#: app/menus.c:493
+#: app/menus.c:496
 msgid "/Dialogs/Input Devices..."
 msgstr "/Dialoge/Eingabegeräte..."
 
-#: app/menus.c:495
+#: app/menus.c:498
 msgid "/Dialogs/Device Status..."
 msgstr "/Dialoge/Gerätestatus..."
 
-#: app/menus.c:500
+#: app/menus.c:503
 msgid "/Dialogs/Document Index..."
 msgstr "/Dialoge/Dokumentenindex..."
 
-#: app/menus.c:502
+#: app/menus.c:505
 msgid "/Dialogs/Error Console..."
 msgstr "/Dialoge/Fehlerkonsole..."
 
-#: app/menus.c:504
+#: app/menus.c:507
 msgid "/Dialogs/Display Filters..."
 msgstr "/Dialoge/Darstellungsfilter..."
 
-#: app/menus.c:506
+#: app/menus.c:509
 msgid "/Dialogs/Undo History..."
 msgstr "/Dialoge/Journal..."
 
 #. <Image>/Filters
-#: app/menus.c:515
+#: app/menus.c:518
 msgid "/Filters/Repeat Last"
 msgstr "/Filter/Wiederhole letzten Vorgang"
 
-#: app/menus.c:517
+#: app/menus.c:520
 msgid "/Filters/Re-Show Last"
 msgstr "/Filter/Zeige letzten Vorgang nochmal"
 
-#: app/menus.c:522
+#: app/menus.c:525
 msgid "/Filters/Blur"
 msgstr "/Filter/Weichzeichnen"
 
-#: app/menus.c:524
+#: app/menus.c:527
 msgid "/Filters/Colors"
 msgstr "/Filter/Farben"
 
-#: app/menus.c:526
+#: app/menus.c:529
 msgid "/Filters/Noise"
 msgstr "/Filter/Rauschen"
 
-#: app/menus.c:528
+#: app/menus.c:531
 msgid "/Filters/Edge-Detect"
 msgstr "/Filter/Kanten finden"
 
-#: app/menus.c:530
+#: app/menus.c:533
 msgid "/Filters/Enhance"
 msgstr "/Filter/Verbessern"
 
-#: app/menus.c:532
+#: app/menus.c:535
 msgid "/Filters/Generic"
 msgstr "/Filter/Allgemein"
 
-#: app/menus.c:537
+#: app/menus.c:540
 msgid "/Filters/Glass Effects"
 msgstr "/Filter/Glas-Effekte"
 
-#: app/menus.c:539
+#: app/menus.c:542
 msgid "/Filters/Light Effects"
 msgstr "/Filter/Licht-Effekte"
 
-#: app/menus.c:541
+#: app/menus.c:544
 msgid "/Filters/Distorts"
 msgstr "/Filter/Verzerren"
 
-#: app/menus.c:543
+#: app/menus.c:546
 msgid "/Filters/Artistic"
 msgstr "/Filter/Künstlerisch"
 
-#: app/menus.c:545
+#: app/menus.c:548
 msgid "/Filters/Map"
 msgstr "/Filter/Abbilden"
 
-#: app/menus.c:547
+#: app/menus.c:550
 msgid "/Filters/Render"
 msgstr "/Filter/Render"
 
-#: app/menus.c:549
+#: app/menus.c:552
 msgid "/Filters/Web"
 msgstr "/Filter/Web"
 
-#: app/menus.c:554
+#: app/menus.c:557
 msgid "/Filters/Animation"
 msgstr "/Filter/Animation"
 
-#: app/menus.c:556
+#: app/menus.c:559
 msgid "/Filters/Combine"
 msgstr "/Filter/Kombinieren"
 
-#: app/menus.c:561
+#: app/menus.c:564
 msgid "/Filters/Toys"
 msgstr "/Filter/Viel Spaß"
 
-#: app/menus.c:572
+#: app/menus.c:575
 msgid "/Automatic"
 msgstr "/Automatisch"
 
-#: app/menus.c:586
+#: app/menus.c:589
 msgid "/By Extension"
 msgstr "/Nach Endung"
 
-#: app/menus.c:600
+#: app/menus.c:603
 msgid "/New Layer..."
 msgstr "/Ebene anlegen..."
 
 #. <Layers>/Stack
-#: app/menus.c:605
+#: app/menus.c:608
 msgid "/Stack/Raise Layer"
 msgstr "/Stapel/Ebene anheben"
 
-#: app/menus.c:607
+#: app/menus.c:610
 msgid "/Stack/Lower Layer"
 msgstr "/Stapel/Ebene absenken"
 
-#: app/menus.c:609
+#: app/menus.c:612
 msgid "/Stack/Layer to Top"
 msgstr "/Stapel/Ebene nach ganz oben"
 
-#: app/menus.c:611
+#: app/menus.c:614
 msgid "/Stack/Layer to Bottom"
 msgstr "/Stapel/Ebene nach ganz unten"
 
-#: app/menus.c:614
+#: app/menus.c:617
 msgid "/Duplicate Layer"
 msgstr "/Ebene duplizieren"
 
-#: app/menus.c:616
+#: app/menus.c:619
 msgid "/Anchor Layer"
 msgstr "/Ebene verankern"
 
-#: app/menus.c:618
+#: app/menus.c:621
 msgid "/Delete Layer"
 msgstr "/Ebene löschen"
 
-#: app/menus.c:623
+#: app/menus.c:626
 msgid "/Layer Boundary Size..."
 msgstr "/Ebenengröße ändern... "
 
-#: app/menus.c:625
+#: app/menus.c:628
 msgid "/Layer to Imagesize"
 msgstr "/Ebene auf Bildgrösse"
 
-#: app/menus.c:627
+#: app/menus.c:630
 msgid "/Scale Layer..."
 msgstr "/Ebene skalieren..."
 
-#: app/menus.c:632
+#: app/menus.c:635
 msgid "/Merge Visible Layers..."
 msgstr "/Sichtbare Ebenen vereinen..."
 
-#: app/menus.c:634
+#: app/menus.c:637
 msgid "/Merge Down"
 msgstr "/Nach unten vereinen"
 
-#: app/menus.c:636
+#: app/menus.c:639
 msgid "/Flatten Image"
 msgstr "/Bild zusammenfügen"
 
-#: app/menus.c:641
+#: app/menus.c:644
 msgid "/Add Layer Mask..."
 msgstr "/Ebenenmaske hinzufügen..."
 
-#: app/menus.c:643
+#: app/menus.c:646
 msgid "/Apply Layer Mask"
 msgstr "/Ebenenmaske anwenden..."
 
-#: app/menus.c:645
+#: app/menus.c:648
 msgid "/Delete Layer Mask"
 msgstr "/Ebenenmaske löschen"
 
-#: app/menus.c:647
+#: app/menus.c:650
 msgid "/Mask to Selection"
 msgstr "/Auswahl aus Maske"
 
-#: app/menus.c:652
+#: app/menus.c:655
 msgid "/Add Alpha Channel"
 msgstr "/Alphakanal hinzufügen"
 
-#: app/menus.c:654
+#: app/menus.c:657
 msgid "/Alpha to Selection"
 msgstr "/Auswahl aus Alphakanal"
 
-#: app/menus.c:659
+#: app/menus.c:662
 msgid "/Edit Layer Attributes..."
 msgstr "/Ebeneneigenschaften..."
 
-#: app/menus.c:670
+#: app/menus.c:673
 msgid "/New Channel..."
 msgstr "/Kanal anlegen..."
 
-#: app/menus.c:672
+#: app/menus.c:675
 msgid "/Raise Channel"
 msgstr "/Kanal anheben"
 
-#: app/menus.c:674
+#: app/menus.c:677
 msgid "/Lower Channel"
 msgstr "/Kanal absenken"
 
-#: app/menus.c:676
+#: app/menus.c:679
 msgid "/Duplicate Channel"
 msgstr "/Kanal duplizieren"
 
-#: app/menus.c:681
+#: app/menus.c:684
 msgid "/Channel to Selection"
 msgstr "/Auswahl aus Kanal"
 
-#: app/menus.c:683
+#: app/menus.c:686
 msgid "/Add to Selection"
 msgstr "/Zur Auswahl hinzufügen"
 
-#: app/menus.c:685
+#: app/menus.c:688
 msgid "/Subtract from Selection"
 msgstr "/Von Auswahl abziehen"
 
-#: app/menus.c:687
+#: app/menus.c:690
 msgid "/Intersect with Selection"
 msgstr "/Mit Auswahl schneiden"
 
-#: app/menus.c:692
+#: app/menus.c:695
 msgid "/Delete Channel"
 msgstr "/Kanal löschen"
 
-#: app/menus.c:697
+#: app/menus.c:700
 msgid "/Edit Channel Attributes..."
 msgstr "/Kanaleigenschaften..."
 
-#: app/menus.c:708
+#: app/menus.c:711
 msgid "/New Path"
 msgstr "/Pfad anlegen"
 
-#: app/menus.c:710
+#: app/menus.c:713
 msgid "/Duplicate Path"
 msgstr "/Pfad duplizieren"
 
-#: app/menus.c:712
+#: app/menus.c:715
 msgid "/Path to Selection"
 msgstr "/Pfad zur Auswahl"
 
-#: app/menus.c:714
+#: app/menus.c:717
 msgid "/Selection to Path"
 msgstr "/Pfad aus Auswahl"
 
-#: app/menus.c:716
+#: app/menus.c:719
 msgid "/Stroke Path"
 msgstr "/Pfad nachziehen"
 
-#: app/menus.c:718
+#: app/menus.c:721
 msgid "/Delete Path"
 msgstr "/Pfad löschen"
 
-#: app/menus.c:723
+#: app/menus.c:726
 msgid "/Copy Path"
 msgstr "/Pfad kopieren"
 
-#: app/menus.c:725
+#: app/menus.c:728
 msgid "/Paste Path"
 msgstr "/Pfad einfügen"
 
-#: app/menus.c:727
+#: app/menus.c:730
 msgid "/Import Path..."
 msgstr "/Pfad importieren..."
 
-#: app/menus.c:729
+#: app/menus.c:732
 msgid "/Export Path..."
 msgstr "/Pfad exportieren..."
 
-#: app/menus.c:734
+#: app/menus.c:737
 msgid "/Edit Path Attributes..."
 msgstr "/Pfadeigenschaften..."
 
-#: app/menus.c:1287
+#: app/menus.c:1290
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Kann Datei nicht öffnen: %s\n"
@@ -3771,60 +3771,60 @@ msgstr "lade Modul: \"%s\"\n"
 msgid "skipping module: \"%s\"\n"
 msgstr "überspringe Modul: \"%s\"\n"
 
-#: app/module_db.c:633
+#: app/module_db.c:634
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "Fehler beim Laden von Modul %s: %s"
 
-#: app/module_db.c:812
+#: app/module_db.c:813
 msgid "<No modules>"
 msgstr "<Keine Module>"
 
-#: app/module_db.c:825 app/module_db.c:834
+#: app/module_db.c:826 app/module_db.c:835
 msgid "on disk"
 msgstr "auf Festplatte"
 
-#: app/module_db.c:825
+#: app/module_db.c:826
 msgid "only in memory"
 msgstr "nur im Speicher"
 
-#: app/module_db.c:834
+#: app/module_db.c:835
 msgid "nowhere (click 'refresh')"
 msgstr "nirgends ('Auffrischen' klicken)"
 
-#: app/module_db.c:873
+#: app/module_db.c:874
 msgid "Unload"
 msgstr "Entladen"
 
-#: app/module_db.c:889
+#: app/module_db.c:890
 msgid "Purpose:"
 msgstr "Zweck:"
 
-#: app/module_db.c:890
+#: app/module_db.c:891
 msgid "Author:"
 msgstr "Autor:"
 
-#: app/module_db.c:891
+#: app/module_db.c:892
 msgid "Version:"
 msgstr "Version:"
 
-#: app/module_db.c:892
+#: app/module_db.c:893
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: app/module_db.c:893
+#: app/module_db.c:894
 msgid "Date:"
 msgstr "Datum:"
 
-#: app/module_db.c:894
+#: app/module_db.c:895
 msgid "Location:"
 msgstr "Ort:"
 
-#: app/module_db.c:895
+#: app/module_db.c:896
 msgid "State:"
 msgstr "Status:"
 
-#: app/module_db.c:914
+#: app/module_db.c:915
 msgid "Autoload during startup"
 msgstr "Automatisch beim Start laden"
 
@@ -4186,30 +4186,30 @@ msgstr "Ressourcen Konfiguration"
 msgid "Plug-ins"
 msgstr "Plugins"
 
-#: app/plug_in.c:349
+#: app/plug_in.c:350
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "Frage Plugin: \"%s\" ab\n"
 
-#: app/plug_in.c:385
+#: app/plug_in.c:388
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "schreibe \"%s\"\n"
 
-#: app/plug_in.c:400
+#: app/plug_in.c:403
 msgid "Starting extensions: "
 msgstr "Starte Erweiterung: "
 
-#: app/plug_in.c:401
+#: app/plug_in.c:405
 msgid "Extensions"
 msgstr "Erweiterungen"
 
-#: app/plug_in.c:832
+#: app/plug_in.c:840
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Kann Plugin \"%s\" nicht finden"
 
-#: app/plug_in.c:1459
+#: app/plug_in.c:1467
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"

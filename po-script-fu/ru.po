@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.18\n"
-"POT-Creation-Date: 2000-07-20 17:43+0000\n"
+"POT-Creation-Date: 2000-08-19 09:14-0700\n"
 "PO-Revision-Date: 2000-07-20 17:47+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -12,47 +12,47 @@ msgstr ""
 "Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:158
+#: plug-ins/script-fu/script-fu-console.c:156
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Консольный режим Скрипт-Фу позволяет только интерактивную работу"
 
-#: plug-ins/script-fu/script-fu-console.c:187
+#: plug-ins/script-fu/script-fu-console.c:186
 msgid "Script-Fu Console"
 msgstr "Консоль Скрипт-Фу"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-console.c:200
-#: plug-ins/script-fu/script-fu-scripts.c:1973
+#: plug-ins/script-fu/script-fu-console.c:199
+#: plug-ins/script-fu/script-fu-scripts.c:1962
 msgid "Close"
 msgstr "Закрыть"
 
 #. The info vbox
-#: plug-ins/script-fu/script-fu-console.c:208
+#: plug-ins/script-fu/script-fu-console.c:207
 msgid "SIOD Output"
 msgstr "Вывод SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:287
+#: plug-ins/script-fu/script-fu-console.c:286
 msgid "Current Command"
 msgstr "Текущая команда"
 
-#: plug-ins/script-fu/script-fu-console.c:308
+#: plug-ins/script-fu/script-fu-console.c:307
 msgid "Browse..."
 msgstr "Просмотр..."
 
-#: plug-ins/script-fu/script-fu-console.c:571
+#: plug-ins/script-fu/script-fu-console.c:579
 msgid "Unable to open SIOD output pipe"
 msgstr "Не удалось открыть канал вывода SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:575
+#: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Не удалось открыть поток в канал вывода SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:622
+#: plug-ins/script-fu/script-fu-console.c:628
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Режим выполнения Скрипт-Фу допускает только неинтерактивную работу"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1124
+#: plug-ins/script-fu/script-fu-scripts.c:1113
 #, c-format
 msgid ""
 "Script-Fu Error\n"
@@ -62,71 +62,71 @@ msgstr ""
 "%s"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1173
-#: plug-ins/script-fu/script-fu-scripts.c:1175
+#: plug-ins/script-fu/script-fu-scripts.c:1162
+#: plug-ins/script-fu/script-fu-scripts.c:1164
 msgid "/Script-Fu/"
 msgstr "/Скрипт-Фу/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1175
-#: plug-ins/script-fu/script-fu-scripts.c:1177
+#: plug-ins/script-fu/script-fu-scripts.c:1164
+#: plug-ins/script-fu/script-fu-scripts.c:1166
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Скрипт-Фу: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1202
+#: plug-ins/script-fu/script-fu-scripts.c:1191
 msgid "Script Arguments"
 msgstr "Аргументы скрипта"
 
 #. we add a colon after the label; some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1225
+#: plug-ins/script-fu/script-fu-scripts.c:1214
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1267
+#: plug-ins/script-fu/script-fu-scripts.c:1256
 msgid "Script-Fu Color Selection"
 msgstr "Скрипт-Фу: Выбор цвета"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1337
+#: plug-ins/script-fu/script-fu-scripts.c:1326
 msgid "Script-Fu File Selection"
 msgstr "Скрипт-Фу: Выбор файла"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1369
+#: plug-ins/script-fu/script-fu-scripts.c:1358
 msgid "Script-fu Pattern Selection"
 msgstr "Скрипт-Фу: Выбор шаблона"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1376
+#: plug-ins/script-fu/script-fu-scripts.c:1365
 msgid "Script-Fu Gradient Selection"
 msgstr "Скрипт-Фу: Выбор градиента"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1384
+#: plug-ins/script-fu/script-fu-scripts.c:1373
 msgid "Script-Fu Brush Selection"
 msgstr "Скрипт-Фу: Выбор кисти"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1427
+#: plug-ins/script-fu/script-fu-scripts.c:1416
 msgid "Reset to Defaults"
 msgstr "Сбросить в исходное"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1453
+#: plug-ins/script-fu/script-fu-scripts.c:1442
 msgid "About"
 msgstr "О программе"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1467
+#: plug-ins/script-fu/script-fu-scripts.c:1456
 #: plug-ins/script-fu/script-fu-server.c:544
 msgid "OK"
 msgstr "Да"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1476
+#: plug-ins/script-fu/script-fu-scripts.c:1465
 #: plug-ins/script-fu/script-fu-server.c:546
 msgid "Cancel"
 msgstr "Отмена"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1590
+#: plug-ins/script-fu/script-fu-scripts.c:1579
 msgid "NOT SET"
 msgstr "НЕ УСТАНОВЛЕНО"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1659
+#: plug-ins/script-fu/script-fu-scripts.c:1648
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -134,23 +134,23 @@ msgstr ""
 "По крайней мере один из выбранных вами шрифтов неисправен.\n"
 "Пожалуйста проверьте ваши настройки.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1944
+#: plug-ins/script-fu/script-fu-scripts.c:1933
 msgid "Author:"
 msgstr "Автор:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1950
+#: plug-ins/script-fu/script-fu-scripts.c:1939
 msgid "Copyright:"
 msgstr "Авторское право:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1956
+#: plug-ins/script-fu/script-fu-scripts.c:1945
 msgid "Date:"
 msgstr "Дата:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1964
+#: plug-ins/script-fu/script-fu-scripts.c:1953
 msgid "Image Types:"
 msgstr "Типы изображений:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2117
+#: plug-ins/script-fu/script-fu-scripts.c:2106
 msgid "Script-Fu Font Selection"
 msgstr "Скрипт-Фу: Выбор шрифта"
 
@@ -166,7 +166,7 @@ msgstr "Порт сервера:"
 msgid "Server Logfile:"
 msgstr "Регистрационный файл сервера:"
 
-#: plug-ins/script-fu/script-fu.c:165
+#: plug-ins/script-fu/script-fu.c:164
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Консоль..."
 

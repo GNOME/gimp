@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
-"POT-Creation-Date: 2000-06-06 12:41-0700\n"
+"POT-Creation-Date: 2000-08-19 09:13-0700\n"
 "PO-Revision-Date: 1999-10-13 05:33:05+0900\n"
 "Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -20,9 +20,9 @@ msgstr ""
 msgid "/Use Background Color"
 msgstr ""
 
-#: libgimp/gimpexport.c:158
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
 #, fuzzy
-msgid "can't Handle Layers"
+msgid "can't handle layers"
 msgstr "계층을 조절할수 없습니다."
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
@@ -32,7 +32,7 @@ msgstr "보이는 계층 머지"
 
 #: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
 #, fuzzy
-msgid "can only Handle Layers as Animation Frames"
+msgid "can only handle layers as animation frames"
 msgstr "에니메이션 프래임인 계층만 조절할수 있습니다."
 
 #: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
@@ -40,67 +40,68 @@ msgstr "에니메이션 프래임인 계층만 조절할수 있습니다."
 msgid "Save as Animation"
 msgstr "에니메이션으로 저장"
 
-#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
 msgid "Flatten Image"
 msgstr "플래튼 이미지"
 
-#: libgimp/gimpexport.c:185
-#, fuzzy
-msgid "can't Handle Transparency"
-msgstr "투명하게를 조절할 수 없습니다."
-
 #: libgimp/gimpexport.c:194
 #, fuzzy
-msgid "can only Handle RGB Images"
-msgstr "오직 RGB 이미지만 조절할 수 있습니다"
-
-#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:223 libgimp/gimpexport.c:232
-msgid "Convert to RGB"
-msgstr "RGB로 바꾸기"
+msgid "can't handle transparency"
+msgstr "투명하게를 조절할 수 없습니다."
 
 #: libgimp/gimpexport.c:203
 #, fuzzy
-msgid "can only Handle Grayscale Images"
+msgid "can only handle RGB images"
+msgstr "오직 RGB 이미지만 조절할 수 있습니다"
+
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:232 libgimp/gimpexport.c:241
+msgid "Convert to RGB"
+msgstr "RGB로 바꾸기"
+
+#: libgimp/gimpexport.c:212
+#, fuzzy
+msgid "can only handle grayscale images"
 msgstr "오직 그레이스케일 이미지만 조절 할수 있습니다"
 
-#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:244
+#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
 #, fuzzy
 msgid "Convert to Grayscale"
 msgstr "그레이스케일로 바꾸기"
 
-#: libgimp/gimpexport.c:212
+#: libgimp/gimpexport.c:221
 #, fuzzy
-msgid "can only Handle Indexed Images"
+msgid "can only handle indexed images"
 msgstr "인덱스된 이미지들만 조절할 수 있습니다."
 
-#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
+#, fuzzy
 msgid ""
-"Convert to indexed using default settings\n"
+"Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
 "인덱스된 기본 새팅으로 바꾸기\n"
 "(그것의 결과를 직접 조정하세요.)"
 
-#: libgimp/gimpexport.c:222
-#, fuzzy
-msgid "can only Handle RGB or Grayscale Images"
-msgstr "RGB 혹은 그레이스케일 이미지만 조절할 수 있습니다"
-
 #: libgimp/gimpexport.c:231
 #, fuzzy
-msgid "can only Handle RGB or Indexed Images"
-msgstr "RGB 혹은 인덱스된 이미지만 조절할 수 있습니다"
+msgid "can only handle RGB or grayscale images"
+msgstr "RGB 혹은 그레이스케일 이미지만 조절할 수 있습니다"
 
-#: libgimp/gimpexport.c:241
+#: libgimp/gimpexport.c:240
 #, fuzzy
-msgid "can only Handle Grayscale or Indexed Images"
+msgid "can only handle RGB or indexed images"
 msgstr "RGB 혹은 인덱스된 이미지만 조절할 수 있습니다"
 
-#: libgimp/gimpexport.c:252
-msgid "needs an Alpha Channel"
+#: libgimp/gimpexport.c:250
+#, fuzzy
+msgid "can only handle grayscale or indexed images"
+msgstr "RGB 혹은 인덱스된 이미지만 조절할 수 있습니다"
+
+#: libgimp/gimpexport.c:261
+msgid "needs an alpha channel"
 msgstr ""
 
-#: libgimp/gimpexport.c:253
+#: libgimp/gimpexport.c:262
 msgid "Add Alpha Channel"
 msgstr ""
 
@@ -109,25 +110,25 @@ msgstr ""
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:322
+#: libgimp/gimpexport.c:331
 msgid "Export File"
 msgstr "경로 전하기(export)"
 
-#: libgimp/gimpexport.c:327
+#: libgimp/gimpexport.c:336
 msgid "Export"
 msgstr "전하기(export)"
 
-#: libgimp/gimpexport.c:329
+#: libgimp/gimpexport.c:338
 msgid "Ignore"
 msgstr "무시"
 
-#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:183
+#: libgimp/gimpexport.c:340 libgimp/gimpquerybox.c:183
 #: libgimp/gimpquerybox.c:237 libgimp/gimpquerybox.c:293
 #: libgimp/gimpquerybox.c:356 libgimp/gimpunitmenu.c:501
 msgid "Cancel"
 msgstr "취소"
 
-#: libgimp/gimpexport.c:346
+#: libgimp/gimpexport.c:355
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
@@ -135,7 +136,7 @@ msgstr ""
 "양식에 따라 그것을 저장하기 전에 당신의 이미지는 전해져야만(export) 합니다 : "
 
 #. the footline
-#: libgimp/gimpexport.c:409
+#: libgimp/gimpexport.c:418
 msgid "The export conversion won't modify your original image."
 msgstr "전하기(export) 전환은 당신의 원래 이미지를 바꾸기 않을 것입니다."
 
