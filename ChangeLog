@@ -14,8 +14,8 @@
 	applying the same fix to gdisplays_update_full() that has been
 	applied to gdisplays_update_area() ages ago.
 
-	* app/layers_dialog.c: no need to gdisplays_update_now() when
-	deleting the layer, gdisplays_update() works fine now.
+	* app/layers_dialog.c: no need to gdisplays_flush_now() when
+	deleting the layer, gdisplays_flush() works fine now.
 
 2001-06-20  Sven Neumann  <sven@gimp.org>
 
