@@ -446,7 +446,7 @@ rcm_expose_event (GtkWidget *widget,
 {
   switch (circle->action_flag)
   {
-    case DO_NOTHING: return FALSE;
+    case DO_NOTHING: return FALSE; break;
 
     case VIRGIN:     rcm_draw_arrows(widget->window, widget->style->black_gc,
 				     circle->angle);
@@ -564,14 +564,17 @@ rcm_motion_notify_event (GtkWidget *widget,
       circle->action_flag = DRAGING;
     }
       else
-        gtk_widget_queue_draw(circle->preview);
+    {
+      /* this should be erasing entire angle */
+      rcm_draw_arrows(widget->window, xor_gc, circle->angle); 
+    }
     if (circle->mode == EACH)
       *(circle->target)=clicked_angle;
     else {
       circle->angle->alpha=angle_mod_2PI(circle->angle->alpha + delta);
       circle->angle->beta =angle_mod_2PI(circle->angle->beta  + delta);
     }
-    
+    gdk_window_process_updates(widget->window, FALSE); 
     rcm_draw_arrows(widget->window, xor_gc, circle->angle); 
     
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(circle->alpha_entry),
@@ -579,7 +582,6 @@ rcm_motion_notify_event (GtkWidget *widget,
 
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(circle->beta_entry),
 			  circle->angle->beta * rcm_units_factor(Current.Units));
-    
     if (Current.RealTime)
       rcm_render_preview(Current.Bna->after, CURRENT);
   }

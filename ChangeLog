@@ -1,5 +1,12 @@
 2003-08-24  Seth Burgess <sjburges@gimp.org>
 
+	* plug-ins/rcm/rcm_callback.c: add in a call to 
+	gdk_window_process_updates to keep the screen 
+	updating properly.  Remove one redraw from 
+	previous commit.
+
+2003-08-24  Seth Burgess <sjburges@gimp.org>
+
 	* plug-ins/rcm/rcm_callback.c: do redraws instead
 	of trying to erase.  Also redraw upon release. Mostly
 	fixes bug #118177.
