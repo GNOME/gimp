@@ -1,3 +1,8 @@
+2003-01-13  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: Partially address #102058 with a --with-shm configure
+	options. Defaults to sysv except on OS X, where it is none.
+
 2003-01-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/brushes-menu.[ch]

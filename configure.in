@@ -433,17 +433,38 @@ AM_CONDITIONAL(HAVE_ASM_MMX, test x$have_asm_mmx = xtrue)
 # Checks for shared memory handling
 ###################################
 
-AC_CHECK_HEADER(sys/ipc.h,
-  [AC_DEFINE(HAVE_IPC_H, 1,
-             [Define to 1 if you have the <sys/ipc.h> heacder file.])],
-  no_sys_ipc=yes)
-AC_CHECK_HEADER(sys/shm.h,
-  [AC_DEFINE(HAVE_SHM_H, 1,
-             [Define to 1 if you have the <sys/shm.h> header file.])],
-  no_sys_shm=yes)
-if test "$ac_cv_header_sys_shm_h" = "yes"; then
-  AC_MSG_CHECKING(whether shmctl IPC_RMID allowes subsequent attaches)
-  AC_TRY_RUN([
+dnl MacOS X has broken SysV shm
+case "$host" in
+  *-apple-machten*)
+    # We can put something else here when something that works is implemented
+    shmdefault=none
+    ;;
+  *)
+    shmdefault=sysv
+    ;;
+esac
+
+shmtype=auto
+AC_ARG_WITH(shm, [  --with-shm=none/sysv/auto     shared memory transport type [default=auto]], shmtype=$with_shm)
+
+case $shmtype in
+  none|sysv) ;;
+  auto) shmtype=$shmdefault ;;
+  *) AC_MSG_ERROR([Invalid shared memory transport type: use none, sysv, or auto.]);;
+esac
+
+if test "x$shmtype" = "xsysv"; then
+  AC_CHECK_HEADER(sys/ipc.h,
+    [AC_DEFINE(HAVE_IPC_H, 1,
+               [Define to 1 if you have the <sys/ipc.h> heacder file.])],
+    no_sys_ipc=yes)
+  AC_CHECK_HEADER(sys/shm.h,
+    [AC_DEFINE(HAVE_SHM_H, 1,
+               [Define to 1 if you have the <sys/shm.h> header file.])],
+    no_sys_shm=yes)
+  if test "$ac_cv_header_sys_shm_h" = "yes"; then
+    AC_MSG_CHECKING(whether shmctl IPC_RMID allowes subsequent attaches)
+    AC_TRY_RUN([
 	#include <sys/types.h>
 	#include <sys/ipc.h>
 	#include <sys/shm.h>
@@ -465,12 +486,13 @@ if test "$ac_cv_header_sys_shm_h" = "yes"; then
 	  shmdt (shmaddr);
 	  exit (0);
 	}
-    ],
-    AC_DEFINE(IPC_RMID_DEFERRED_RELEASE, 1,
-	      [Define to 1 if shared memory segments are released deferred.])
-      AC_MSG_RESULT(yes),
-    AC_MSG_RESULT(no),
-    AC_MSG_RESULT(assuming no))
+      ],
+      AC_DEFINE(IPC_RMID_DEFERRED_RELEASE, 1,
+	        [Define to 1 if shared memory segments are released deferred.])
+        AC_MSG_RESULT(yes),
+      AC_MSG_RESULT(no),
+      AC_MSG_RESULT(assuming no))
+  fi
 fi
 
 
