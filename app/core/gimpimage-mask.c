@@ -380,10 +380,13 @@ gimp_image_mask_float (GimpImage    *gimage,
   /*  Cut the selected region  */
   tiles = gimp_image_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
 
-  /*  Create a new layer from the buffer  */
+  /* Create a new layer from the buffer, using the drawable's type
+   *  because it may be different from the image's type if we cut from
+   *  a channel or layer mask
+   */
   layer = gimp_layer_new_from_tiles (tiles,
                                      gimage,
-                                     gimp_image_base_type_with_alpha (gimage),
+                                     gimp_drawable_type_with_alpha (drawable),
 				     _("Floating Selection"),
 				     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
