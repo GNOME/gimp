@@ -214,7 +214,7 @@ p_xanim_dialog   (gint32 *first_frame,
   argv[0].label_txt = _("Video:");
   argv[0].help_txt  = _("Name of a videofile to READ by xanim.\n"
                         "Frames are extracted from the videofile\n"
-			"and written to seprate diskfiles.\n"
+			"and written to separate diskfiles.\n"
 			"xanim exporting edition is required.");
   argv[0].text_buf_len = len_filename;
   argv[0].text_buf_ret = filename;

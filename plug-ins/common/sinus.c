@@ -1976,7 +1976,7 @@ sinus_dialog (void)
 
 			   _("Linear"),     (gpointer) LINEAR, NULL,
 			   _("Bilinear"),   (gpointer) BILINEAR, NULL,
-			   _("Sinusodial"), (gpointer) SINUS, NULL,
+			   _("Sinusoidal"), (gpointer) SINUS, NULL,
 
 			   NULL);
 
