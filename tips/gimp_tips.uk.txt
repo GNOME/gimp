@@ -44,15 +44,22 @@ GIMP використову╓ шари дозволяючи орган╕зувати ваше зображення. Уяв╕ть
 Ви можете виконувати б╕льш╕сть операц╕й з шарами клацаючи правою кнопкою
 миш╕ на назв╕ шару в д╕алоз╕ "Шари, канали та контури"
 
-When trying to save files as GIF, XPM, or any other indexed 
-color format, you need to convert the image to indexed using 
-the Image menu.
+#When trying to save files as GIF, XPM, or any other indexed 
+#color format, you need to convert the image to indexed using 
+#the Image menu.
+Коли намага╓теся зберегти файл як GIF, XPM чи будь-який ╕нший
+з ╕дексованим форматом кольор╕в, то необх╕дно перетворити
+зображення в ╕ндексоване використовуючи меню "Зображення"
 
-You can get the Tool Options menu to open by double-clicking 
-any button in the toolbar.
+#You can get the Tool Options menu to open by double-clicking 
+#any button in the toolbar.
+Ви можете викликати д╕алог параметр╕в ╕нструмента подв╕йним
+клацанням на будь-як╕й кнопц╕ в панел╕ ╕нструмент╕в.
 
-You can change the name of a layer by double-clicking 
-on its name in the Layers dialog box.
+#You can change the name of a layer by double-clicking 
+#on its name in the Layers dialog box.
+Ви можете зм╕нити назву шару подв╕йним клацанням на його
+назв╕ в д╕алоз╕ шар╕в.
 
 The layer named "Background" is special.  You can't add 
 transparency or a layer mask to it.  To add transparency, you 

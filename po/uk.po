@@ -5268,7 +5268,7 @@ msgstr "Д╕апазон порогу:"
 
 #: app/tips_dialog.c:78
 msgid "gimp_tips.txt"
-msgstr ""
+msgstr "gimp_tips.uk.txt"
 
 #: app/tips_dialog.c:90
 msgid "GIMP Tip of the Day"
@@ -6065,4 +6065,4 @@ msgstr "Акварель"
 
 #: modules/colorsel_water.c:640
 msgid "Color History"
-msgstr ""
+msgstr "╤стор╕я кольор╕в"
