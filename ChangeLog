@@ -1,3 +1,21 @@
+2000-11-11 Garry R. Osgood <gosgood>@idt.net
+
+	* app/gimpbrushpipe.c
+	Apropos to #8150, double frees of RGB
+	mask and brush name strings belonging to the the 
+	last successfully constructed pixmap brush of a pipe 
+	occured due to dangling pointers to these regions left 
+	in the temporary GPattern [gimpbrushpipe.c CVS-1.27 Lines
+	396 ff]. Upon failure to load an n-th pixmap, the
+	GPattern would be released first, also releasing n-1
+	pixmap's name and RGB mask. These would again be freed
+	in pipe deconstruction. Heap memory would
+	remain corrupt for any type "2" variant of the bug, as 
+	defined by Raphael Quinet in his original #8150 report.
+ 	Examples: (1) the rank cited in the pipe header is 
+	inconsistent with actual pixmap content of pipe, or (2)
+	a component pixmap is missing or corrupt.
+
 2000-11-11  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/gimpressionist/gimpressionist.c (readdirintolist_real,

@@ -434,8 +434,10 @@ gimp_brush_pipe_load (gchar *filename)
 	}
 
       pipe->brushes[pipe->nbrushes]->pixmap_mask = pattern->mask;
+      pattern->mask = NULL;   /* #8150: mask now belongs to pixmap */
       g_free (pattern->name);
-
+      pattern->name = NULL;   /* #8150: name no longer exists      */
+                              
       pipe->nbrushes++;
     }
 
