@@ -1058,8 +1058,8 @@ bezier_select_button_press (Tool           *tool,
 	  bezier_add_point (bezier_sel, BEZIER_CONTROL, (gdouble)x, (gdouble)y);
 	  bezier_sel->last_point->next = curve_start;
 	  curve_start->prev = bezier_sel->last_point;
- 	  bezier_sel->cur_anchor = curve_start; 
- 	  bezier_sel->cur_control = curve_start->next; 
+ 	  bezier_sel->cur_anchor = curve_start;
+ 	  bezier_sel->cur_control = curve_start->next;
 
 	  bezier_sel->closed = 1;
 	  bezier_sel->state = BEZIER_EDIT;
@@ -2393,10 +2393,10 @@ bezier_convert_line (GSList ** scanlines,
 		     int       x2,
 		     int       y2)
 {
-  int dx, dy; 
-  int error, inc; 
-  int tmp;
-  int slope;
+  int    dx, dy; 
+  int    error, inc; 
+  int    tmp;
+  double slope;
 
   if (y1 == y2)
     return;
@@ -2419,7 +2419,7 @@ bezier_convert_line (GSList ** scanlines,
       else
 	{
 	  slope = (double) (y2 - y1) / (double) (x2 - x1); 
-	  x1 = x2 + (0 - y2) / slope;
+	  x1 = x2 + (int)(0.5 + (double)(0 - y2) / slope);
 	  y1 = 0;
 	}
     }
@@ -2436,7 +2436,7 @@ bezier_convert_line (GSList ** scanlines,
       else
 	{
 	  slope = (double) (y2 - y1) / (double) (x2 - x1); 
-	  x2 = x1 + (height - y1) / slope;
+	  x2 = x1 + (int)(0.5 + (double)(height - y1) / slope);
 	  y2 = height;
 	}
     }
