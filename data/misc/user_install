@@ -24,8 +24,6 @@ cp $3/gtkrc_user $2/gtkrc
 
 echo "mkdir $2/brushes"
 mkdir $2/brushes
-echo "mkdir $2/generated_brushes"
-mkdir $2/generated_brushes
 echo "mkdir $2/gradients"
 mkdir $2/gradients
 echo "mkdir $2/palettes"

@@ -36,10 +36,6 @@
 #  brushes at startup.
 (brush-path "${gimp_dir}/brushes:${gimp_data_dir}/brushes")
 
-# Set the generated brush search path...this path will be searched for valid
-#  generated brushes at startup.
-(brush-vbr-path "${gimp_dir}/generated_brushes")
-
 # Specify a default brush. If none is specified it defaults to the
 #  "1circle.gbr" brush which is just a single pixel sized brush.
 #  The brush is searched for in the brush path.
