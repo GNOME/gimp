@@ -52,6 +52,8 @@
 	 (old-brush (car (gimp-brushes-get-brush))))
     (gimp-image-undo-disable img)
 
+    (gimp-image-set-filename img "")
+
     (gimp-layer-set-preserve-trans mask-layer TRUE)
     (gimp-palette-set-background '(255 255 255))
     (gimp-edit-fill mask-layer BG-IMAGE-FILL)

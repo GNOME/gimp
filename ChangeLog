@@ -1,3 +1,8 @@
+2003-10-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/carved-logo.scm: unset the image
+	filename.
+
 2003-10-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.c (gimp_item_convert,gimp_item_real_convert):
