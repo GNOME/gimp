@@ -1,5 +1,10 @@
 2001-11-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/selection_options.c: added "reset" code for the new
+	auto_shrink tool options.
+
+2001-11-21  Michael Natterer  <mitch@gimp.org>
+
 	* pixmaps/Makefile.am
 	* pixmaps/anchor.xpm
 	* pixmaps/edit.xpm

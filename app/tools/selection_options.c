@@ -374,8 +374,10 @@ selection_options_reset (GimpToolOptions *tool_options)
     }
 
   if (options->antialias_w)
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
-				  options->antialias_d);
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
+                                    options->antialias_d);
+    }
 
   if (options->sample_merged_w)
     {
@@ -383,6 +385,14 @@ selection_options_reset (GimpToolOptions *tool_options)
 				    options->sample_merged_d);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
 				gimprc.default_threshold);
+    }
+
+  if (options->auto_shrink_w)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->auto_shrink_w),
+				    options->auto_shrink_d);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->shrink_merged_w),
+				    options->shrink_merged_d);
     }
 
   if (options->fixed_size_w)
