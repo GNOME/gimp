@@ -92,7 +92,7 @@ run (gchar   *name,
   values[0].type          = PARAM_STATUS;
   values[0].data.d_status = STATUS_CALLING_ERROR;
 
-  if (strcmp (name, "plug_in_unit_editor") == 0)
+  if (strcmp (name, "extension_gimp_unit_editor") == 0)
     {
       values[0].data.d_status = STATUS_SUCCESS;
 
