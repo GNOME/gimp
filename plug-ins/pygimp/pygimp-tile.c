@@ -71,43 +71,50 @@ tile_dealloc(PyGimpTile *self)
     PyObject_DEL(self);
 }
 
-#define OFF(x) offsetof(GimpTile, x)
+static PyObject *
+tile_get_uint_field(PyGimpTile *self, void *closure)
+{
+    gint offset = GPOINTER_TO_INT(closure);
+    guint value;
+    gchar *addr;
 
-static struct memberlist tile_memberlist[] = {
-    {"ewidth",	T_UINT,		OFF(ewidth),	RO},
-    {"eheight",	T_UINT,		OFF(eheight),	RO},
-    {"bpp",		T_UINT,		OFF(bpp),	RO},
-    {"ref_count",	T_USHORT,	OFF(ref_count),	RO},
-    {"dirty",	T_INT,		0,	RO},
-    {"shadow",	T_INT,		0,	RO},
-    {"drawable",	T_INT,		OFF(drawable),	RO},
-    {NULL} /* Sentinel */
-};
-
-#undef OFF
+    addr = (gchar *)self->tile;
+    addr += offset;
+    value = *(guint *)addr;
+    return PyInt_FromLong(value);
+}
 
 static PyObject *
-tile_getattr(PyGimpTile *self, char *attr)
+tile_get_dirty(PyGimpTile *self, void *closure)
 {
-    PyObject *rv;
-
-    if (!strcmp(attr, "dirty"))
-	return PyInt_FromLong(self->tile->dirty);
-    if (!strcmp(attr, "shadow"))
-	return PyInt_FromLong(self->tile->shadow);
-    if (!strcmp(attr, "drawable"))
-	return pygimp_drawable_new(self->tile->drawable, 0);
-    rv = PyMember_Get((char *)self->tile, tile_memberlist, attr);
-    if (rv)
-	return rv;
-    PyErr_Clear();
-    {
-	PyObject *name = PyString_FromString(attr);
-	PyObject *ret = PyObject_GenericGetAttr((PyObject *)self, name);
-	Py_DECREF(name);
-	return ret;
-    }
+    return PyInt_FromLong(self->tile->dirty);
 }
+
+static PyObject *
+tile_get_shadow(PyGimpTile *self, void *closure)
+{
+    return PyInt_FromLong(self->tile->shadow);
+}
+
+static PyObject *
+tile_get_drawable(PyGimpTile *self, void *closure)
+{
+    return pygimp_drawable_new(self->tile->drawable, 0);
+}
+
+
+#define OFF(x) GINT_TO_POINTER(offsetof(GimpTile, x))
+static PyGetSetDef tile_getsets[] = {
+    { "ewidth",   (getter)tile_get_uint_field, 0, NULL, OFF(ewidth) },
+    { "eheight",  (getter)tile_get_uint_field, 0, NULL, OFF(eheight) },
+    { "bpp",      (getter)tile_get_uint_field, 0, NULL, OFF(bpp) },
+    { "tile_num", (getter)tile_get_uint_field, 0, NULL, OFF(tile_num) },
+    { "dirty",    (getter)tile_get_dirty, 0, NULL },
+    { "shadow",   (getter)tile_get_shadow, 0, NULL },
+    { "drawable", (getter)tile_get_drawable, 0, NULL },
+    { NULL, (getter)0, (setter)0 }
+};
+#undef OFF
 
 static PyObject *
 tile_repr(PyGimpTile *self)
@@ -221,7 +228,7 @@ PyTypeObject PyGimpTile_Type = {
     /* methods */
     (destructor)tile_dealloc,           /* tp_dealloc */
     (printfunc)0,                       /* tp_print */
-    (getattrfunc)tile_getattr,          /* tp_getattr */
+    (getattrfunc)0,                     /* tp_getattr */
     (setattrfunc)0,                     /* tp_setattr */
     (cmpfunc)0,                         /* tp_compare */
     (reprfunc)tile_repr,                /* tp_repr */
@@ -244,7 +251,7 @@ PyTypeObject PyGimpTile_Type = {
     (iternextfunc)0,			/* tp_iternext */
     tile_methods,			/* tp_methods */
     0,					/* tp_members */
-    0,					/* tp_getset */
+    tile_getsets,			/* tp_getset */
     (PyTypeObject *)0,			/* tp_base */
     (PyObject *)0,			/* tp_dict */
     0,					/* tp_descr_get */
@@ -546,45 +553,51 @@ static PyMappingMethods pr_as_mapping = {
 
 /* -------------------------------------------------------- */
 
-#define OFF(x) offsetof(GimpPixelRgn, x)
-
-static struct memberlist pr_memberlist[] = {
-    {"drawable",  T_INT,  OFF(drawable),  RO},
-    {"bpp",       T_UINT, OFF(bpp),       RO},
-    {"rowstride", T_UINT, OFF(rowstride), RO},
-    {"x",         T_UINT, OFF(x),         RO},
-    {"y",         T_UINT, OFF(y),         RO},
-    {"w",         T_UINT, OFF(w),         RO},
-    {"h",         T_UINT, OFF(h),         RO},
-    {"dirty",     T_UINT, 0 /*bitfield*/, RO},
-    {"shadow",    T_UINT, 0 /*bitfield*/, RO}
-};
-
-#undef OFF
+static PyObject *
+pr_get_drawable(PyGimpPixelRgn *self, void *closure)
+{
+    return pygimp_drawable_new(self->pr.drawable, 0);
+}
 
 static PyObject *
-pr_getattr(PyGimpPixelRgn *self, char *attr)
+pr_get_uint_field(PyGimpPixelRgn *self, void *closure)
 {
-    PyObject *rv;
+    gint offset = GPOINTER_TO_INT(closure);
+    guint value;
+    gchar *addr;
 
-    if (!strcmp(attr, "drawable"))
-	return (PyObject *)pygimp_drawable_new(self->pr.drawable, 0);
-    if (!strcmp(attr, "dirty"))
-	return PyInt_FromLong(self->pr.dirty);
-    if (!strcmp(attr, "shadow"))
-	return PyInt_FromLong(self->pr.shadow);
-    rv = PyMember_Get((char *)&(self->pr), pr_memberlist, attr);
-    if (rv)
-	return rv;
-    PyErr_Clear();
-
-    {
-	PyObject *name = PyString_FromString(attr);
-	PyObject *ret = PyObject_GenericGetAttr((PyObject *)self, name);
-	Py_DECREF(name);
-	return ret;
-    }
+    addr = (gchar *)&self->pr;
+    addr += offset;
+    value = *(guint *)addr;
+    return PyInt_FromLong(value);
 }
+
+static PyObject *
+pr_get_dirty(PyGimpPixelRgn *self, void *closure)
+{
+    return PyInt_FromLong(self->pr.dirty);
+}
+
+static PyObject *
+pr_get_shadow(PyGimpPixelRgn *self, void *closure)
+{
+    return PyInt_FromLong(self->pr.shadow);
+}
+
+#define OFF(x) GINT_TO_POINTER(offsetof(GimpPixelRgn, x))
+static PyGetSetDef pr_getsets[] = {
+    { "drawable", (getter)pr_get_drawable, 0, NULL },
+    { "bpp", (getter)pr_get_uint_field, 0, NULL, OFF(bpp) },
+    { "rowstride", (getter)pr_get_uint_field, 0, NULL, OFF(rowstride) },
+    { "x", (getter)pr_get_uint_field, 0, NULL, OFF(x) },
+    { "y", (getter)pr_get_uint_field, 0, NULL, OFF(y) },
+    { "w", (getter)pr_get_uint_field, 0, NULL, OFF(w) },
+    { "h", (getter)pr_get_uint_field, 0, NULL, OFF(h) },
+    { "dirty", (getter)pr_get_dirty, 0, NULL },
+    { "shadow", (getter)pr_get_shadow, 0, NULL },
+    { NULL, (getter)0, (setter)0 },
+};
+#undef OFF
 
 static PyObject *
 pr_repr(PyGimpPixelRgn *self)
@@ -607,7 +620,7 @@ PyTypeObject PyGimpPixelRgn_Type = {
     /* methods */
     (destructor)pr_dealloc,             /* tp_dealloc */
     (printfunc)0,                       /* tp_print */
-    (getattrfunc)pr_getattr,            /* tp_getattr */
+    (getattrfunc)0,                     /* tp_getattr */
     (setattrfunc)0,                     /* tp_setattr */
     (cmpfunc)0,                         /* tp_compare */
     (reprfunc)pr_repr,                  /* tp_repr */
@@ -630,7 +643,7 @@ PyTypeObject PyGimpPixelRgn_Type = {
     (iternextfunc)0,			/* tp_iternext */
     pr_methods,				/* tp_methods */
     0,					/* tp_members */
-    0,					/* tp_getset */
+    pr_getsets,				/* tp_getset */
     (PyTypeObject *)0,			/* tp_base */
     (PyObject *)0,			/* tp_dict */
     0,					/* tp_descr_get */

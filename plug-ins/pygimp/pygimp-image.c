@@ -469,6 +469,261 @@ static struct PyMethodDef img_methods[] = {
     {NULL,		NULL}		/* sentinel */
 };
 
+static PyObject *
+img_get_ID(PyGimpImage *self, void *closure)
+{
+    return PyInt_FromLong(self->ID);
+}
+
+static PyObject *
+img_get_active_channel(PyGimpImage *self, void *closure)
+{
+    gint32 id = gimp_image_get_active_channel(self->ID);
+
+    if (id == -1) {
+	Py_INCREF(Py_None);
+	return Py_None;
+    }
+    return pygimp_channel_new(id);
+}
+
+static int
+img_set_active_channel(PyGimpImage *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+	PyErr_SetString(PyExc_TypeError, "can not delete active_channel.");
+	return -1;
+    }
+    if (!pygimp_channel_check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_image_set_active_channel(self->ID, ((PyGimpChannel *)value)->ID);
+    return 0;
+}
+
+static PyObject *
+img_get_active_layer(PyGimpImage *self, void *closure)
+{
+    gint32 id = gimp_image_get_active_layer(self->ID);
+
+    if (id == -1) {
+	Py_INCREF(Py_None);
+	return Py_None;
+    }
+    return pygimp_layer_new(id);
+}
+
+static int
+img_set_active_layer(PyGimpImage *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+	PyErr_SetString(PyExc_TypeError, "can not delete active_layer.");
+	return -1;
+    }
+    if (!pygimp_layer_check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_image_set_active_layer(self->ID, ((PyGimpLayer *)value)->ID);
+    return 0;
+}
+
+static PyObject *
+img_get_base_type(PyGimpImage *self, void *closure)
+{
+    return PyInt_FromLong(gimp_image_base_type(self->ID));
+}
+
+static PyObject *
+img_get_channels(PyGimpImage *self, void *closure)
+{
+    gint32 *channels;
+    gint n_channels, i;
+    PyObject *ret;
+    
+    channels = gimp_image_get_channels(self->ID, &n_channels);
+    ret = PyList_New(n_channels);
+    for (i = 0; i < n_channels; i++)
+	PyList_SetItem(ret, i, pygimp_channel_new(channels[i]));
+    g_free(channels);
+    return ret;
+}
+
+static PyObject *
+img_get_cmap(PyGimpImage *self, void *closure)
+{
+    guchar *cmap;
+    gint n_colours;
+    PyObject *ret;
+    
+    cmap = gimp_image_get_cmap(self->ID, &n_colours);
+    ret = PyString_FromStringAndSize(cmap, n_colours * 3);
+    g_free(cmap);
+    return ret;
+}
+
+static int
+img_set_cmap(PyGimpImage *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+	PyErr_SetString(PyExc_TypeError, "can not delete cmap.");
+	return -1;
+    }
+    if (!PyString_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_image_set_cmap(self->ID, PyString_AsString(value),
+			PyString_Size(value) / 3);
+    return 0;
+}
+
+static PyObject *
+img_get_filename(PyGimpImage *self, void *closure)
+{
+    gchar *filename;
+
+    filename = gimp_image_get_filename(self->ID);
+    if (filename) {
+	PyObject *ret = PyString_FromString(filename);
+	g_free(filename);
+	return ret;
+    }
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static int
+img_set_filename(PyGimpImage *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+	PyErr_SetString(PyExc_TypeError, "can not delete filename.");
+	return -1;
+    }
+    if (!PyString_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_image_set_filename(self->ID, PyString_AsString(value));
+    return 0;
+}
+
+static PyObject *
+img_get_floating_selection(PyGimpImage *self, void *closure)
+{
+    gint32 id;
+
+    id = gimp_image_floating_selection(self->ID);
+    if (id == -1) {
+	Py_INCREF(Py_None);
+	return Py_None;
+    }
+    return pygimp_layer_new(id);
+}
+
+static PyObject *
+img_get_layers(PyGimpImage *self, void *closure)
+{
+    gint32 *layers;
+    gint n_layers, i;
+    PyObject *ret;
+    
+    layers = gimp_image_get_layers(self->ID, &n_layers);
+    ret = PyList_New(n_layers);
+    for (i = 0; i < n_layers; i++)
+	PyList_SetItem(ret, i, pygimp_layer_new(layers[i]));
+    g_free(layers);
+    return ret;
+}
+
+static PyObject *
+img_get_selection(PyGimpImage *self, void *closure)
+{
+    return pygimp_channel_new(gimp_image_get_selection(self->ID));
+}
+
+static PyObject *
+img_get_height(PyGimpImage *self, void *closure)
+{
+    return PyInt_FromLong(gimp_image_height(self->ID));
+}
+
+static PyObject *
+img_get_width(PyGimpImage *self, void *closure)
+{
+    return PyInt_FromLong(gimp_image_width(self->ID));
+}
+
+static PyObject *
+img_get_resolution(PyGimpImage *self, void *closure)
+{
+    double xres, yres;
+
+    gimp_image_get_resolution(self->ID, &xres, &yres);
+    return Py_BuildValue("(dd)", xres, yres);
+}
+
+static int
+img_set_resolution(PyGimpImage *self, PyObject *value, void *closure)
+{
+    gdouble xres, yres;
+
+    if (value == NULL) {
+	PyErr_SetString(PyExc_TypeError, "can not delete filename.");
+	return -1;
+    }
+    if (!PySequence_Check(value) ||
+	!PyArg_ParseTuple(value, "dd", &xres, &yres)) {
+	PyErr_Clear();
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_image_set_resolution(self->ID, xres, yres);
+    return 0;
+}
+
+static PyObject *
+img_get_unit(PyGimpImage *self, void *closure)
+{
+    return PyInt_FromLong(gimp_image_get_unit(self->ID));
+}
+
+static int
+img_set_unit(PyGimpImage *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+	PyErr_SetString(PyExc_TypeError, "can not delete filename.");
+	return -1;
+    }
+    if (!PyInt_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_image_set_unit(self->ID, PyInt_AsLong(value));
+    return 0;
+}
+
+static struct PyGetSetDef img_getsets[] = {
+    { "ID", (getter)img_get_ID, (setter)0 },
+    { "active_channel", (getter)img_get_active_channel,
+      (setter)img_set_active_channel },
+    { "active_layer", (getter)img_get_active_layer,
+      (setter)img_set_active_layer },
+    { "base_type", (getter)img_get_base_type, (setter)0 },
+    { "channels", (getter)img_get_channels, (setter)0 },
+    { "cmap", (getter)img_get_cmap, (setter)img_set_cmap },
+    { "filename", (getter)img_get_filename, (setter)img_set_filename },
+    { "floating_selection", (getter)img_get_floating_selection, (setter)0 },
+    { "height", (getter)img_get_height, (setter)0 },
+    { "layers", (getter)img_get_layers, (setter)0 },
+    { "resolution", (getter)img_get_resolution, (setter)img_set_resolution },
+    { "selection", (getter)img_get_selection, (setter)0 },
+    { "unit", (getter)img_get_unit, (setter)img_set_unit },
+    { "width", (getter)img_get_width, (setter)0 },
+    { NULL, (getter)0, (setter)0 }
+};
+
 /* ---------- */
 
 
@@ -494,169 +749,6 @@ img_dealloc(PyGimpImage *self)
 {
     /* XXXX Add your own cleanup code here */
     PyObject_DEL(self);
-}
-
-static PyObject *
-img_getattr(PyGimpImage *self, char *attr)
-{
-    gint32 *a, id;
-    guchar *c;
-    int n, i;
-    PyObject *ret;
-    if (!strcmp(attr, "__members__"))
-	return Py_BuildValue(
-			     "[ssssssssssss]",
-			     "ID", "active_channel",
-			     "active_layer", "base_type", "channels", "cmap",
-			     "filename", "floating_selection",
-			     "height", "layers",
-			     "resolution",
-			     "selection",
-			     "unit",
-			     "width");
-    if (!strcmp(attr, "ID"))
-	return PyInt_FromLong(self->ID);
-    if (!strcmp(attr, "active_channel")) {
-	id = gimp_image_get_active_channel(self->ID);
-	if (id == -1) {
-	    Py_INCREF(Py_None);
-	    return Py_None;
-	}
-	return pygimp_channel_new(id);
-    }
-    if (!strcmp(attr, "active_layer")) {
-	id = gimp_image_get_active_layer(self->ID);
-	if (id == -1) {
-	    Py_INCREF(Py_None);
-	    return Py_None;
-	}
-	return pygimp_layer_new(id);
-    }
-    if (!strcmp(attr, "base_type"))
-	return PyInt_FromLong(gimp_image_base_type(self->ID));
-    if (!strcmp(attr, "channels")) {
-	a = gimp_image_get_channels(self->ID, &n);
-	ret = PyList_New(n);
-	for (i = 0; i < n; i++)
-	    PyList_SetItem(ret, i, pygimp_channel_new(a[i]));
-	return ret;
-    }
-    if (!strcmp(attr, "cmap")) {
-	c = gimp_image_get_cmap(self->ID, &n);
-	return PyString_FromStringAndSize(c, n * 3);
-    }
-    if (!strcmp(attr, "filename"))
-	return PyString_FromString(gimp_image_get_filename(self->ID));
-    if (!strcmp(attr, "floating_selection")) {
-	id = gimp_image_floating_selection(self->ID);
-	if (id == -1) {
-	    Py_INCREF(Py_None);
-	    return Py_None;
-	}
-	return pygimp_layer_new(id);
-    }
-    if (!strcmp(attr, "layers")) {
-	a = gimp_image_get_layers(self->ID, &n);
-	ret = PyList_New(n);
-	for (i = 0; i < n; i++)
-	    PyList_SetItem(ret, i, pygimp_layer_new(a[i]));
-	return ret;
-    }
-    if (!strcmp(attr, "selection"))
-	return pygimp_channel_new(gimp_image_get_selection(self->ID));
-    if (!strcmp(attr, "height"))
-	return PyInt_FromLong(gimp_image_height(self->ID));
-    if (!strcmp(attr, "width"))
-	return PyInt_FromLong(gimp_image_width(self->ID));
-
-    if (!strcmp(attr, "resolution")) {
-	double xres, yres;
-	gimp_image_get_resolution(self->ID, &xres, &yres);
-	return Py_BuildValue("(dd)", xres, yres);
-    }
-    if (!strcmp(attr, "unit"))
-	return PyInt_FromLong(gimp_image_get_unit(self->ID));
-
-    {
-	PyObject *name = PyString_FromString(attr);
-	PyObject *ret = PyObject_GenericGetAttr((PyObject *)self, name);
-	Py_DECREF(name);
-	return ret;
-    }
-}
-
-static int
-img_setattr(PyGimpImage *self, char *attr, PyObject *v)
-{
-    if (v == NULL) {
-	PyErr_SetString(PyExc_TypeError, "can not delete attributes.");
-	return -1;
-    }
-    if (!strcmp(attr, "active_channel")) {
-	if (!pygimp_channel_check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_image_set_active_channel(self->ID, ((PyGimpChannel *)v)->ID);
-	return 0;
-    }
-    if (!strcmp(attr, "active_layer")) {
-	if (!pygimp_layer_check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_image_set_active_layer(self->ID, ((PyGimpLayer *)v)->ID);
-	return 0;
-    }
-    if (!strcmp(attr, "cmap")) {
-	if (!PyString_Check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_image_set_cmap(self->ID, PyString_AsString(v),
-			    PyString_Size(v) / 3);
-	return 0;
-    }
-    if (!strcmp(attr, "filename")) {
-	if (!PyString_Check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_image_set_filename(self->ID, PyString_AsString(v));
-	return 0;
-    }
-    if (!strcmp(attr, "resolution")) {
-	PyObject *xo, *yo;
-	if (!PySequence_Check(v) ||
-	    !PyFloat_Check(xo = PySequence_GetItem(v, 0)) ||
-	    !PyFloat_Check(yo = PySequence_GetItem(v, 1))) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_image_set_resolution(self->ID, PyFloat_AsDouble(xo),
-				  PyFloat_AsDouble(yo));
-    }
-    if (!strcmp(attr, "unit")) {
-	if (!PyInt_Check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_image_set_unit(self->ID, PyInt_AsLong(v));
-    }
-    if (!strcmp(attr, "channels") || !strcmp(attr, "layers") ||
-	!strcmp(attr, "selection") || !strcmp(attr, "height") ||
-	!strcmp(attr, "base_type") || !strcmp(attr, "width") ||
-	!strcmp(attr, "floating_selection") || !strcmp(attr, "ID")) {
-	PyErr_SetString(PyExc_TypeError, "read-only attribute.");
-	return -1;
-    }
-		
-    {
-	PyObject *name = PyString_FromString(attr);
-	int ret = PyObject_GenericSetAttr((PyObject *)self, name, v);
-	Py_DECREF(name);
-	return ret;
-    }
 }
 
 static PyObject *
@@ -705,8 +797,8 @@ PyTypeObject PyGimpImage_Type = {
     /* methods */
     (destructor)img_dealloc,            /* tp_dealloc */
     (printfunc)0,                       /* tp_print */
-    (getattrfunc)img_getattr,           /* tp_getattr */
-    (setattrfunc)img_setattr,           /* tp_setattr */
+    (getattrfunc)0,                     /* tp_getattr */
+    (setattrfunc)0,                     /* tp_setattr */
     (cmpfunc)img_cmp,                   /* tp_compare */
     (reprfunc)img_repr,                 /* tp_repr */
     0,                                  /* tp_as_number */
@@ -728,7 +820,7 @@ PyTypeObject PyGimpImage_Type = {
     (iternextfunc)0,			/* tp_iternext */
     img_methods,			/* tp_methods */
     0,					/* tp_members */
-    0,					/* tp_getset */
+    img_getsets,			/* tp_getset */
     (PyTypeObject *)0,			/* tp_base */
     (PyObject *)0,			/* tp_dict */
     0,					/* tp_descr_get */
