@@ -1,3 +1,7 @@
+Sat May 30 02:03:19 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* plug-ins/grid/grid.c: fix by sjburges to fix grid on selections.
+
 Fri May 29 23:34:07 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* plug-ins/gaus_iir/gauss_iir.c: fix by sjburges to fix horiz

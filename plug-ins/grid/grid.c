@@ -191,7 +191,7 @@ doit (GDrawable * drawable)
   height = drawable->height;
   bytes = drawable->bpp;
 
-  if (gimp_drawable_has_alpha (drawable->id))
+  if (gimp_drawable_has_alpha (drawable->id)) 
     {
       color[bytes - 1] = 0xff;
     }
@@ -202,33 +202,34 @@ doit (GDrawable * drawable)
 
   /* First off, copy the old one to the new one. */
   copybuf = malloc (width * bytes);
+   
   for (h = sy1; h < sy2; h++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, copybuf, sx1, h, width);
+      gimp_pixel_rgn_get_row (&srcPR, copybuf, sx1, h, (sx2-sx1));
       if ((h - my_config.y_offset) % my_config.height == 0)
-	{
+	{ /* Draw row */
 	  for (w = sx1; w < sx2; w++)
 	    {
 	      for (b = 0; b < bytes; b++)
 		{
-		  copybuf[w * bytes + b] = color[b];
+		  copybuf[(w-sx1) * bytes + b] = color[b];
 		}
 	    }
 	}
       else
-	{
+	{ /* Just copy shit */
 	  for (w = sx1; w < sx2; w++)
 	    {
 	      if ((w - my_config.x_offset) % my_config.width == 0)
 		{
 		  for (b = 0; b < bytes; b++)
 		    {
-		      copybuf[w * bytes + b] = color[b];
+		      copybuf[(w-sx1) * bytes + b] = color[b];
 		    }
 		}
 	    }
 	}
-      gimp_pixel_rgn_set_row (&destPR, copybuf, sx1, h, width);
+      gimp_pixel_rgn_set_row (&destPR, copybuf, sx1, h , (sx2-sx1) );
       gimp_progress_update ((double) h / (double) (sy2 - sy1));
     }
   free (copybuf);
