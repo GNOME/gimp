@@ -1,3 +1,11 @@
+2004-11-26  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdocumentlist.c (gimp_document_list_deserialize):
+	don't add documents w/o a name to the list. Fixes bug #159510.
+
+	* app/core/gimpdrawable.c (gimp_drawable_resize): extended the
+	check to take the offsets into account as well.
+
 2004-11-25  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/dog.c: Add the temporary layers to the image, so

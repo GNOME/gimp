@@ -140,8 +140,7 @@ gimp_document_list_deserialize (GimpConfig *config,
           token = G_TOKEN_RIGHT_PAREN;
           if (scanner->value.v_symbol == document_symbol)
             {
-              gchar         *uri;
-              GimpImagefile *imagefile;
+              gchar *uri = NULL;
 
               if (! gimp_scanner_parse_string (scanner, &uri))
                 {
@@ -149,14 +148,19 @@ gimp_document_list_deserialize (GimpConfig *config,
                   break;
                 }
 
-              imagefile = gimp_imagefile_new (document_list->gimp, uri);
+              if (uri)
+                {
+                  GimpImagefile *imagefile;
 
-              g_free (uri);
+                  imagefile = gimp_imagefile_new (document_list->gimp, uri);
 
-              gimp_container_add (GIMP_CONTAINER (document_list),
-                                  GIMP_OBJECT (imagefile));
+                  g_free (uri);
 
-              g_object_unref (imagefile);
+                  gimp_container_add (GIMP_CONTAINER (document_list),
+                                      GIMP_OBJECT (imagefile));
+
+                  g_object_unref (imagefile);
+                }
             }
           break;
 
