@@ -60,7 +60,6 @@ static void      run    (const gchar       *name,
 static void      cartoon        (GimpDrawable        *drawable,
                                  GimpDrawablePreview *preview);
 static gboolean  cartoon_dialog (GimpDrawable        *drawable);
-static void      preview_update (GtkWidget           *widget);
 
 static gdouble   compute_ramp   (guchar              *dest1,
                                  guchar              *dest2,
@@ -847,7 +846,7 @@ cartoon_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &cvals.mask_radius);
   g_signal_connect_swapped (scale_data, "value_changed",
-                            G_CALLBACK (preview_update), preview);
+                            G_CALLBACK (gimp_preview_invalidate), preview);
 
   /*  Label, scale, entry for cvals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -860,7 +859,7 @@ cartoon_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &cvals.pct_black);
   g_signal_connect_swapped (scale_data, "value_changed",
-                            G_CALLBACK (preview_update), preview);
+                            G_CALLBACK (gimp_preview_invalidate), preview);
 
   gtk_widget_show (dlg);
 
@@ -869,12 +868,4 @@ cartoon_dialog (GimpDrawable *drawable)
   gtk_widget_destroy (dlg);
 
   return run;
-}
-
-static void
-preview_update (GtkWidget *widget)
-{
-  GimpDrawablePreview *preview = GIMP_DRAWABLE_PREVIEW (widget);
-
-  cartoon (preview->drawable, preview);
 }
