@@ -452,25 +452,28 @@ gimp_show_help (const gchar *progname)
 
   g_print (_("\nUsage: %s [option ... ] [file ... ]\n\n"), progname);
   g_print (_("Options:\n"));
-  g_print (_("  -b, --batch <commands>   Run in batch mode.\n"));
-  g_print (_("  -c, --console-messages   Display warnings to console instead of a dialog box.\n"));
-  g_print (_("  -d, --no-data            Do not load brushes, gradients, palettes, patterns.\n"));
-  g_print (_("  -i, --no-interface       Run without a user interface.\n"));
-  g_print (_("  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"));
   g_print (_("  -h, --help               Output this help.\n"));
-  g_print (_("  -r, --restore-session    Try to restore saved session.\n"));
-  g_print (_("  -s, --no-splash          Do not show the startup window.\n"));
-  g_print (_("  -S, --no-splash-image    Do not add an image to the startup window.\n"));
   g_print (_("  -v, --version            Output version information.\n"));
   g_print (_("  --verbose                Show startup messages.\n"));
   g_print (_("  --no-shm                 Do not use shared memory between GIMP and plugins.\n"));
   g_print (_("  --no-mmx                 Do not use MMX routines.\n"));
-  g_print (_("  --debug-handlers         Enable non-fatal debugging signal handlers.\n"));
+  g_print (_("  -d, --no-data            Do not load brushes, gradients, palettes, patterns.\n"));
+  g_print (_("  -i, --no-interface       Run without a user interface.\n"));
   g_print (_("  --display <display>      Use the designated X display.\n"));
+  g_print (_("  -s, --no-splash          Do not show the startup window.\n"));
+  g_print (_("  -S, --no-splash-image    Do not add an image to the startup window.\n"));
+  g_print (_("  -r, --restore-session    Try to restore saved session.\n"));
+  g_print (_("  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"));
   g_print (_("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"));
+  g_print (_("  --dump-gimprc            Output a gimprc file with default settings.\n"));
+  g_print (_("  -c, --console-messages   Display warnings to console instead of a dialog box.\n"));
+  g_print (_("  --debug-handlers         Enable non-fatal debugging signal handlers.\n"));
   g_print (_("  --enable-stack-trace <never | query | always>\n"
-             "                           Debugging mode for fatal signals.\n\n"));
-}
+             "                           Debugging mode for fatal signals.\n"));
+  g_print (_("  -b, --batch <commands>   Process commands in batch mode.\n"));
+  g_print ("\n");
+};
+
 
 static void
 gimp_text_console_exit (gint status)

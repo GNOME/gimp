@@ -1,14 +1,16 @@
-.TH GIMP 1 "23 June 2000" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMP 1 "23 October 2003" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
 gimp - an image manipulation and paint program.
 .SH SYNOPSIS
 .B gimp
-[\-h] [\-\-help] [-v] [\-\-version] [\-b] [\-\-batch \fI<commands>\fP]
-[\-g] [\-\-gimprc \fI<gimprc>\fP] [\-n] [\-\-no\-interface] [\-r] 
-[\-\-restore\-session] [\-\-no\-data] [\-\-verbose] [\-\-no\-shm]
-[\-\-no\-mmx] [\-\-display \fIdisplay\fP] [\-\-no\-splash]
-[\-\-no\-splash\-image] [\-\-debug\-handlers] [\-\-console\-messages] 
-[\-\-system\-gimprc \fI<gimprc>\fP] [\fIfilename\fP]...
+[\-h] [\-\-help] [-v] [\-\-version] [\-\-verbose] [\-\-no\-shm]
+[\-\-no\-mmx] [\-\-display \fIdisplay\fP] [\-d] [\-\-no\-data]
+[\-i] [\-\-no\-interface] [\-s] [\-\-no\-splash]
+[\-S] [\-\-no\-splash\-image] [\-r] [\-\-restore\-session]
+[\-g] [\-\-gimprc \fI<gimprc>\fP] [\-\-system\-gimprc \fI<gimprc>\fP]
+[\-\-dump\-gimprc\fP] [\-\-console\-messages] [\-\-debug\-handlers]
+[\-b] [\-\-batch \fI<commands>\fP]
+[\fIfilename\fP] ...
 
 .SH DESCRIPTION
 .PP
@@ -40,25 +42,6 @@ Display a list of all commandline options.
 .B \-v, \-\-version
 Output the version info.
 .TP 8
-.B \-b, \-\-batch \fI<commands>\fP
-Execute the set of \fI<commands>\fP non-interactively. The set
-of \fI<commands>\fP is typically in the form of a script that
-can be executed by one of the GIMP scripting extensions.
-.TP 8
-.B \-g, \-\-gimprc \fI<gimprc>\fP
-Use an alternative gimprc instead of the default one. Useful in
-cases where plugins paths or machine specs may be different.
-.TP 8
-.B \-i, \-\-no-interface
-Run without a user interface.
-.TP 8
-.B \-r, \-\-restore\-session
-Try to restore saved session.
-.TP 8
-.B \-d, \-\-no\-data
-Do not load patterns, gradients, palettes, or brushes. Often useful
-in non-interactive situations where startup time is to be minimized.
-.TP 8
 .B \-\-verbose
 Show startup messages.
 .TP 8 
@@ -70,6 +53,13 @@ will result in slower performance than using shared memory.
 .B \-\-no\-mmx
 Do not use MMX routines even if GIMP detects the availability of MMX.
 .TP 8
+.B \-d, \-\-no\-data
+Do not load patterns, gradients, palettes, or brushes. Often useful
+in non-interactive situations where startup time is to be minimized.
+.TP 8
+.B \-i, \-\-no-interface
+Run without a user interface.
+.TP 8
 .B \-\-display \fIdisplay\fP
 Use the designated X display.
 .TP 8
@@ -79,18 +69,37 @@ Do not show the splash screen.
 .B \-S, \-\-no\-splash\-image
 Do not show the splash screen image as part of the splash screen.
 .TP 8
+.B \-r, \-\-restore\-session
+Try to restore saved session.
+.TP 8
+.B \-g, \-\-gimprc \fI<gimprc>\fP
+Use an alternative gimprc instead of the default one. Useful in
+cases where plugins paths or machine specs may be different.
+.TP 8
+.B \-\-system\-gimprc \fI<gimprc>\fP
+Use an alternate system gimprc file.
+.TP 8
+.B \-\-dump\-gimprc
+Output a gimprc file with default settings.
+.TP 8
 .B \-\-debug\-handlers
 Enable debugging signal handlers.
 .TP 8
 .B \-c, \-\-console\-messages
 Do not popup dialog boxes on errors or warnings. Print the messages on
 the console instead.
+.B \-\-dump\-gimprc
 .TP 8
 .B \-\-enable\-stack\-trace \fI{never|query|always}\fP
 If a stack-trace should be generated in case of fatal signals.
 .TP 8
-.B \-\-system\-gimprc \fI<gimprc>\fP
-Use an alternate system gimprc file.
+.B \-b, \-\-batch \fI<commands>\fP
+Execute the set of \fI<commands>\fP non-interactively. The set
+of \fI<commands>\fP is typically in the form of a script that
+can be executed by one of the GIMP scripting extensions.
+.TP 8
+
+Output a gimprc file with default settings.
 
 .SH ENVIRONMENT
 .PP
