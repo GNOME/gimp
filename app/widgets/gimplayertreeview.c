@@ -66,6 +66,12 @@ static void   gimp_layer_tree_view_select_item    (GimpContainerView   *view,
 						   gpointer             insert_data);
 static void   gimp_layer_tree_view_set_preview_size (GimpContainerView *view);
 
+static gboolean gimp_layer_tree_view_drop_possible  (GimpContainerTreeView *view,
+                                                     GimpViewable      *src_viewable,
+                                                     GimpViewable      *dest_viewable,
+                                                     GtkTreeViewDropPosition  drop_pos,
+                                                     GdkDragAction     *drag_action);
+
 static void   gimp_layer_tree_view_remove_item    (GimpImage           *gimage,
                                                    GimpItem            *layer);
 
@@ -156,14 +162,16 @@ gimp_layer_tree_view_get_type (void)
 static void
 gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
 {
-  GObjectClass           *object_class;
-  GtkWidgetClass         *widget_class;
-  GimpContainerViewClass *container_view_class;
-  GimpItemTreeViewClass  *item_view_class;
+  GObjectClass               *object_class;
+  GtkWidgetClass             *widget_class;
+  GimpContainerViewClass     *container_view_class;
+  GimpContainerTreeViewClass *tree_view_class;
+  GimpItemTreeViewClass      *item_view_class;
 
   object_class         = G_OBJECT_CLASS (klass);
   widget_class         = GTK_WIDGET_CLASS (klass);
   container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
+  tree_view_class      = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
   item_view_class      = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
@@ -176,6 +184,8 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   container_view_class->insert_item      = gimp_layer_tree_view_insert_item;
   container_view_class->select_item      = gimp_layer_tree_view_select_item;
   container_view_class->set_preview_size = gimp_layer_tree_view_set_preview_size;
+
+  tree_view_class->drop_possible   = gimp_layer_tree_view_drop_possible;
 
   item_view_class->get_container   = gimp_image_get_layers;
   item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_layer;
@@ -543,6 +553,45 @@ gimp_layer_tree_view_set_preview_size (GimpContainerView *view)
     }
 
   GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_preview_size (view);
+}
+
+
+/*  GimpContainerTreeView methods  */
+
+static gboolean
+gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
+                                    GimpViewable            *src_viewable,
+                                    GimpViewable            *dest_viewable,
+                                    GtkTreeViewDropPosition  drop_pos,
+                                    GdkDragAction           *drag_action)
+{
+  GimpLayer *src_layer;
+  GimpLayer *dest_layer;
+  GimpImage *src_image;
+  GimpImage *dest_image;
+
+  src_layer  = GIMP_LAYER (src_viewable);
+  dest_layer = GIMP_LAYER (dest_viewable);
+
+  src_image  = gimp_item_get_image (GIMP_ITEM (src_layer));
+  dest_image = gimp_item_get_image (GIMP_ITEM (dest_layer));
+
+  if (gimp_image_floating_sel (dest_image))
+    return FALSE;
+
+  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (dest_layer)) &&
+      drop_pos == GTK_TREE_VIEW_DROP_AFTER)
+    return FALSE;
+
+  if (src_image == dest_image &&
+      ! gimp_drawable_has_alpha (GIMP_DRAWABLE (src_layer)))
+    return FALSE;
+
+  return GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_possible (tree_view,
+                                                                       src_viewable,
+                                                                       dest_viewable,
+                                                                       drop_pos,
+                                                                       drag_action);
 }
 
 

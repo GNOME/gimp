@@ -31,8 +31,10 @@
 #include "core/gimpcontext.h"
 #include "core/gimpviewable.h"
 
+#include "gimpcellrenderertoggle.h"
 #include "gimpcellrendererviewable.h"
 #include "gimpcontainertreeview.h"
+#include "gimpcontainertreeview-dnd.h"
 #include "gimpdnd.h"
 #include "gimppreview.h"
 #include "gimppreviewrenderer.h"
@@ -139,6 +141,9 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
   container_view_class->set_preview_size = gimp_container_tree_view_set_preview_size;
 
   container_view_class->insert_data_free = (GDestroyNotify) g_free;
+
+  klass->drop_possible = gimp_container_tree_view_real_drop_possible;
+  klass->drop          = gimp_container_tree_view_real_drop;
 }
 
 static void
@@ -227,6 +232,16 @@ gimp_container_tree_view_constructor (GType                  type,
 
   g_signal_connect (tree_view->selection, "changed",
                     G_CALLBACK (gimp_container_tree_view_selection_changed),
+                    tree_view);
+
+  g_signal_connect (tree_view->view, "drag_leave",
+                    G_CALLBACK (gimp_container_tree_view_drag_leave),
+                    tree_view);
+  g_signal_connect (tree_view->view, "drag_motion",
+                    G_CALLBACK (gimp_container_tree_view_drag_motion),
+                    tree_view);
+  g_signal_connect (tree_view->view, "drag_drop",
+                    G_CALLBACK (gimp_container_tree_view_drag_drop),
                     tree_view);
 
   return object;
@@ -697,13 +712,13 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                                      bevent->y,
                                      &path, &column, NULL, NULL))
     {
-      GimpPreviewRenderer *renderer;
-      GtkCellRenderer     *toggled_cell = NULL;
-      GtkCellRenderer     *clicked_cell = NULL;
-      GdkRectangle         column_area;
-      gint                 tree_x;
-      gint                 tree_y;
-      GtkTreeIter          iter;
+      GimpPreviewRenderer      *renderer;
+      GimpCellRendererToggle   *toggled_cell = NULL;
+      GimpCellRendererViewable *clicked_cell = NULL;
+      GdkRectangle              column_area;
+      gint                      tree_x;
+      gint                      tree_y;
+      GtkTreeIter               iter;
 
       gtk_tree_model_get_iter (tree_view->model, &iter, path);
 
@@ -724,13 +739,13 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                                                &iter,
                                                FALSE, FALSE);
 
-      toggled_cell =
+      toggled_cell = (GimpCellRendererToggle *)
         gimp_container_tree_view_find_click_cell (tree_view->toggle_cells,
                                                   column, &column_area,
                                                   tree_x, tree_y);
 
       if (! toggled_cell)
-        clicked_cell =
+        clicked_cell = (GimpCellRendererViewable *)
           gimp_container_tree_view_find_click_cell (tree_view->renderer_cells,
                                                     column, &column_area,
                                                     tree_x, tree_y);
@@ -749,15 +764,17 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                   if (toggled_cell)
                     {
                       /*  don't select path  */
-                      g_signal_emit_by_name (toggled_cell, "clicked",
-                                             path_str, bevent->state);
+                      gimp_cell_renderer_toggle_clicked (toggled_cell,
+                                                         path_str,
+                                                         bevent->state);
                     }
                   else if (clicked_cell)
                     {
                       gtk_tree_selection_select_path (tree_view->selection,
                                                       path);
-                      g_signal_emit_by_name (clicked_cell, "clicked",
-                                             path_str, bevent->state);
+                      gimp_cell_renderer_viewable_clicked (clicked_cell,
+                                                           path_str,
+                                                           bevent->state);
                     }
 
                   g_free (path_str);

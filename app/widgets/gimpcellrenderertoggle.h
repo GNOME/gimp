@@ -49,9 +49,9 @@ struct _GimpCellRendererToggleClass
 {
   GtkCellRendererToggleClass  parent_class;
 
-  void (* clicked) (GimpCellRendererViewable *cell,
-                    const gchar              *path,
-                    GdkModifierType           state);
+  void (* clicked) (GimpCellRendererToggle *cell,
+                    const gchar            *path,
+                    GdkModifierType         state);
 };
 
 
@@ -59,5 +59,9 @@ GType             gimp_cell_renderer_toggle_get_type (void) G_GNUC_CONST;
 
 GtkCellRenderer * gimp_cell_renderer_toggle_new      (const gchar *stock_id);
 
+void    gimp_cell_renderer_toggle_clicked (GimpCellRendererToggle *cell,
+                                           const gchar            *path,
+                                           GdkModifierType         state);
+                                          
 
 #endif /* __GIMP_CELL_RENDERER_TOGGLE_H__ */

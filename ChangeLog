@@ -1,5 +1,25 @@
 2003-03-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcellrenderertoggle.[ch]
+	* app/widgets/gimpcellrendererviewable.[ch]: added public
+	functions to emit the "clicked" signal.
+
+	* app/widgets/gimpcontainertreeview.c: use them instead of
+	g_signal_emit_by_name().
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpcontainertreeview-dnd.[ch]: new files
+	implementing DND for tree views.
+
+	* app/widgets/gimpcontainertreeview.[ch]: added virtual
+	functions drop_possible() and drop().
+
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c: implement drop_possible()
+	and drop().
+
+2003-03-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdatafactoryview.c: enable in-place name
 	editing for tree views.
 

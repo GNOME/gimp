@@ -341,3 +341,14 @@ gimp_cell_renderer_viewable_new (void)
 {
   return g_object_new (GIMP_TYPE_CELL_RENDERER_VIEWABLE, NULL);
 }
+
+void
+gimp_cell_renderer_viewable_clicked (GimpCellRendererViewable *cell,
+                                     const gchar              *path,
+                                     GdkModifierType           state)
+{
+  g_return_if_fail (GIMP_IS_CELL_RENDERER_VIEWABLE (cell));
+  g_return_if_fail (path != NULL);
+
+  g_signal_emit (cell, viewable_cell_signals[CLICKED], 0, path, state);
+}

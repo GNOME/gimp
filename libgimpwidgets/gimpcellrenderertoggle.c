@@ -145,6 +145,7 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
 
   cell_class->get_size       = gimp_cell_renderer_toggle_get_size;
   cell_class->render         = gimp_cell_renderer_toggle_render;
+  cell_class->activate       = gimp_cell_renderer_toggle_activate;
 
   g_object_class_install_property (object_class,
                                    PROP_STOCK_ID,
@@ -450,4 +451,15 @@ gimp_cell_renderer_toggle_new (const gchar *stock_id)
   return g_object_new (GIMP_TYPE_CELL_RENDERER_TOGGLE,
                        "stock_id", stock_id,
                        NULL);
+}
+
+void
+gimp_cell_renderer_toggle_clicked (GimpCellRendererToggle *cell,
+                                   const gchar            *path,
+                                   GdkModifierType         state)
+{
+  g_return_if_fail (GIMP_IS_CELL_RENDERER_TOGGLE (cell));
+  g_return_if_fail (path != NULL);
+
+  g_signal_emit (cell, toggle_cell_signals[CLICKED], 0, path, state);
 }

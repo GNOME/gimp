@@ -57,5 +57,8 @@ GType             gimp_cell_renderer_viewable_get_type (void) G_GNUC_CONST;
 
 GtkCellRenderer * gimp_cell_renderer_viewable_new      (void);
 
+void   gimp_cell_renderer_viewable_clicked (GimpCellRendererViewable *cell,
+                                            const gchar              *path,
+                                            GdkModifierType           state);
 
 #endif /* __GIMP_CELL_RENDERER_VIEWABLE_H__ */

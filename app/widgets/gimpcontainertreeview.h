@@ -70,6 +70,16 @@ struct _GimpContainerTreeView
 struct _GimpContainerTreeViewClass
 {
   GimpContainerViewClass  parent_class;
+
+  gboolean (* drop_possible) (GimpContainerTreeView   *tree_view,
+                              GimpViewable            *src_viewable,
+                              GimpViewable            *dest_viewable,
+                              GtkTreeViewDropPosition  drop_pos,
+                              GdkDragAction           *drag_action);
+  void     (* drop)          (GimpContainerTreeView   *tree_view,
+                              GimpViewable            *src_viewable,
+                              GimpViewable            *dest_viewable,
+                              GtkTreeViewDropPosition  drop_pos);
 };
 
 
