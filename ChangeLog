@@ -1,3 +1,11 @@
+2004-08-07  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version number to 2.0.5, interface_age 5,
+	binary_age 5.
+
+	* app/sanity.c: abort if the configured filename encoding can't be
+	converted to UTF-8. Fix for bug #149464, merged from HEAD branch.
+
 2004-08-05  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.0.4, the 'GIMP Tipsy' release.

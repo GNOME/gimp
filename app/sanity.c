@@ -25,6 +25,9 @@
 #include "sanity.h"
 
 
+static gchar *  sanity_check_filename_encoding (void);
+
+
 const gchar *
 sanity_check (gboolean no_interface)
 {
@@ -156,5 +159,39 @@ sanity_check (gboolean no_interface)
     }
 #endif
 
+  if (! abort_message)
+    abort_message = sanity_check_filename_encoding ();
+
   return abort_message;
+}
+
+
+static gchar *
+sanity_check_filename_encoding (void)
+{
+  gchar  *result;
+  GError *error = NULL;
+
+  result = g_filename_to_utf8 ("", -1, NULL, NULL, &error);
+
+  if (result)
+    {
+      g_free (result);
+
+      return NULL;
+    }
+  else
+    {
+      gchar *msg =
+        g_strdup_printf
+        ("The configured filename encoding cannot be converted to UTF-8: "
+         "%s\n\n"
+         "Please check the value of the environment variable "
+         "G_FILENAME_ENCODING.",
+         error->message);
+
+      g_error_free (error);
+
+      return msg;
+    }
 }
