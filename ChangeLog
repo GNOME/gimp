@@ -1,3 +1,8 @@
+Sun Aug 16 18:48:17 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/ink.c (ink_paste): Make sure we check that
+	ink_set_paint_area found a valid canvas_buf.
+
 1998-08-16  Chris Lahey  <clahey@umich.edu>
 
 	* app/docindexif.c: Fixed up the UI to make the document index

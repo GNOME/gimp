@@ -881,9 +881,13 @@ ink_paste (InkTool      *ink_tool,
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
-  
+
   /* Get the the buffer */
   ink_set_paint_area (ink_tool, drawable, blob);
+ 
+  /* check to make sure there is actually a canvas to draw on */
+  if (!canvas_buf)
+    return;
 
   gimage_get_foreground (gimage, drawable, col);
 
