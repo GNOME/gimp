@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -33,6 +35,8 @@
 #include "core/gimpimage.h"
 
 #include "vectors/gimpvectors.h"
+#include "vectors/gimpvectors-export.h"
+#include "vectors/gimpvectors-import.h"
 
 #include "gimpcontainerview.h"
 #include "gimpvectorstreeview.h"
@@ -46,12 +50,25 @@
 static void   gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass);
 static void   gimp_vectors_tree_view_init       (GimpVectorsTreeView      *view);
 
+static void   gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *view_iface);
+
 static GObject * gimp_vectors_tree_view_constructor (GType                  type,
                                                      guint                  n_params,
                                                      GObjectConstructParam *params);
+static void    gimp_vectors_tree_view_set_container (GimpContainerView *view,
+                                                     GimpContainer     *container);
+static void    gimp_vectors_tree_view_drop_svg      (GimpContainerTreeView *tree_view,
+                                                     const gchar           *svg_data,
+                                                     gint                   svg_data_len,
+                                                     GimpViewable          *dest_viewable,
+                                                     GtkTreeViewDropPosition  drop_pos);
+static gchar * gimp_vectors_tree_view_drag_svg      (GtkWidget           *widget,
+                                                     gint                *svg_data_len,
+                                                     gpointer             data);
 
 
-static GimpItemTreeViewClass *parent_class = NULL;
+static GimpItemTreeViewClass      *parent_class      = NULL;
+static GimpContainerViewInterface *parent_view_iface = NULL;
 
 
 GType
@@ -74,9 +91,19 @@ gimp_vectors_tree_view_get_type (void)
         (GInstanceInitFunc) gimp_vectors_tree_view_init,
       };
 
+      static const GInterfaceInfo view_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_vectors_tree_view_view_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
+
       view_type = g_type_register_static (GIMP_TYPE_ITEM_TREE_VIEW,
                                           "GimpVectorsTreeView",
                                           &view_info, 0);
+
+      g_type_add_interface_static (view_type, GIMP_TYPE_CONTAINER_VIEW,
+                                   &view_iface_info);
     }
 
   return view_type;
@@ -85,12 +112,19 @@ gimp_vectors_tree_view_get_type (void)
 static void
 gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
 {
-  GObjectClass          *object_class    = G_OBJECT_CLASS (klass);
-  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
+  GObjectClass               *object_class;
+  GimpContainerTreeViewClass *view_class;
+  GimpItemTreeViewClass      *item_view_class;
+
+  object_class    = G_OBJECT_CLASS (klass);
+  view_class      = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
+  item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor        = gimp_vectors_tree_view_constructor;
+
+  view_class->drop_svg             = gimp_vectors_tree_view_drop_svg;
 
   item_view_class->get_container   = gimp_image_get_vectors;
   item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_vectors;
@@ -123,20 +157,30 @@ gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
 {
 }
 
+static void
+gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
+{
+  parent_view_iface = g_type_interface_peek_parent (view_iface);
+
+  view_iface->set_container = gimp_vectors_tree_view_set_container;
+}
+
 static GObject *
 gimp_vectors_tree_view_constructor (GType                  type,
                                     guint                  n_params,
                                     GObjectConstructParam *params)
 {
-  GObject             *object;
-  GimpEditor          *editor;
-  GimpVectorsTreeView *view;
-  gchar               *str;
+  GObject               *object;
+  GimpEditor            *editor;
+  GimpContainerTreeView *tree_view;
+  GimpVectorsTreeView   *view;
+  gchar                 *str;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  editor = GIMP_EDITOR (object);
-  view   = GIMP_VECTORS_TREE_VIEW (object);
+  editor    = GIMP_EDITOR (object);
+  tree_view = GIMP_CONTAINER_TREE_VIEW (object);
+  view      = GIMP_VECTORS_TREE_VIEW (object);
 
   /*  Hide basically useless Edit button  */
 
@@ -194,6 +238,8 @@ gimp_vectors_tree_view_constructor (GType                  type,
   gtk_box_reorder_child (GTK_BOX (editor->button_box),
 			 view->stroke_button, 7);
 
+  gimp_dnd_svg_dest_add (GTK_WIDGET (tree_view->view), NULL, view);
+
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
 				  GTK_BUTTON (view->toselection_button),
 				  GIMP_TYPE_VECTORS);
@@ -202,4 +248,84 @@ gimp_vectors_tree_view_constructor (GType                  type,
 				  GIMP_TYPE_VECTORS);
 
   return object;
+}
+
+static void
+gimp_vectors_tree_view_set_container (GimpContainerView *view,
+                                      GimpContainer     *container)
+{
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  GimpContainer         *old_container;
+
+  old_container = gimp_container_view_get_container (GIMP_CONTAINER_VIEW (view));
+
+  if (old_container && ! container)
+    {
+      gimp_dnd_svg_source_remove (GTK_WIDGET (tree_view->view));
+    }
+
+  parent_view_iface->set_container (view, container);
+
+  if (! old_container && container)
+    {
+      gimp_dnd_svg_source_add (GTK_WIDGET (tree_view->view),
+                               gimp_vectors_tree_view_drag_svg,
+                               tree_view);
+    }
+}
+
+static void
+gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
+                                 const gchar             *svg_data,
+                                 gint                     svg_data_len,
+                                 GimpViewable            *dest_viewable,
+                                 GtkTreeViewDropPosition  drop_pos)
+{
+  GimpItemTreeView *view   = GIMP_ITEM_TREE_VIEW (tree_view);
+  GimpImage        *gimage = view->gimage;
+  GError           *error  = NULL;
+  gint              index;
+
+  g_print ("%s: SVG dropped (len = %d)\n", G_STRFUNC, svg_data_len);
+
+  index = gimp_image_get_vectors_index (gimage, GIMP_VECTORS (dest_viewable));
+
+  if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
+    index++;
+
+  if (! gimp_vectors_import_buffer (gimage, svg_data, svg_data_len,
+                                    TRUE, TRUE, index, &error))
+    {
+      g_message (error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      gimp_image_flush (gimage);
+    }
+}
+
+static gchar *
+gimp_vectors_tree_view_drag_svg (GtkWidget *widget,
+                                 gint      *svg_data_len,
+                                 gpointer   data)
+{
+  GimpItemTreeView *view   = GIMP_ITEM_TREE_VIEW (data);
+  GimpImage        *gimage = view->gimage;
+  GimpItem         *item;
+  gchar            *svg_data = NULL;
+
+  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
+
+  *svg_data_len = 0;
+
+  if (item)
+    {
+      svg_data = gimp_vectors_export_string (gimage, GIMP_VECTORS (item));
+
+      if (svg_data)
+        *svg_data_len = strlen (svg_data) + 1;
+    }
+
+  return svg_data;
 }

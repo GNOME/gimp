@@ -1,5 +1,24 @@
 2004-06-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.c: reordered drop destinations
+	so vectors are preferred over SVG.
+
+	* app/vectors/gimpvectors-import.[ch]: added "gint position"
+	parameter to all import functions so the imported vectors can be
+	added at any position in the vectors stack.
+
+	* app/actions/vectors-commands.c
+	* app/display/gimpdisplayshell-dnd.c
+	* tools/pdbgen/pdb/paths.pdb: changed accordingly (pass -1 as
+	position).
+
+	* app/pdb/paths_cmds.c: regenerated.
+
+	* app/widgets/gimpvectorstreeview.c: implemented SVG DND from and
+	to the paths dialog.
+
+2004-06-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainertreeview-dnd.c: don't free the SVG data
 	after dropping, it's owned by GtkSelectionData.
 

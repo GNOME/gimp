@@ -1237,7 +1237,7 @@ path_import_invoker (Gimp        *gimp,
   scale = args[3].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    success = gimp_vectors_import_file (gimage, filename, merge, scale, NULL);
+    success = gimp_vectors_import_file (gimage, filename, merge, scale, -1, NULL);
 
   return procedural_db_return_args (&path_import_proc, success);
 }

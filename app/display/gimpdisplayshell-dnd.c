@@ -51,6 +51,7 @@
 
 #include "gimp-intl.h"
 
+
 /* #define DEBUG_DND */
 
 #ifdef DEBUG_DND
@@ -69,6 +70,8 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
   GimpImage        *gimage = shell->gdisp->gimage;
   GType             new_type;
   GimpItem         *new_item;
+
+  D (g_print ("drop drawable on canvas\n"));
 
   if (gimage->gimp->busy)
     return;
@@ -120,6 +123,8 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
   GimpImage        *gimage = shell->gdisp->gimage;
   GimpItem         *new_item;
 
+  D (g_print ("drop vectors on canvas\n"));
+
   if (gimage->gimp->busy)
     return;
 
@@ -154,13 +159,13 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
   GimpImage        *gimage = shell->gdisp->gimage;
   GError           *error  = NULL;
 
+  D (g_print ("drop SVG on canvas\n"));
+
   if (gimage->gimp->busy)
     return;
 
-  D (g_print ("drop SVG on canvas\n"));
-
   if (! gimp_vectors_import_buffer (gimage, svg_data, svg_data_len,
-                                    TRUE, TRUE, &error))
+                                    TRUE, TRUE, -1, &error))
     {
       g_message (error->message);
       g_clear_error (&error);
@@ -222,6 +227,8 @@ gimp_display_shell_drop_pattern (GtkWidget    *widget,
                                  GimpViewable *viewable,
                                  gpointer      data)
 {
+  D (g_print ("drop pattern on canvas\n"));
+
   if (GIMP_IS_PATTERN (viewable))
     gimp_display_shell_bucket_fill (GIMP_DISPLAY_SHELL (data),
                                     GIMP_PATTERN_BUCKET_FILL,
@@ -233,6 +240,8 @@ gimp_display_shell_drop_color (GtkWidget     *widget,
                                const GimpRGB *color,
                                gpointer       data)
 {
+  D (g_print ("drop color on canvas\n"));
+
   gimp_display_shell_bucket_fill (GIMP_DISPLAY_SHELL (data),
                                   GIMP_FG_BUCKET_FILL,
                                   color, NULL);
@@ -247,6 +256,8 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
   GimpImage        *gimage = shell->gdisp->gimage;
   GimpBuffer       *buffer;
   gint              x, y, width, height;
+
+  D (g_print ("drop buffer on canvas\n"));
 
   if (gimage->gimp->busy)
     return;
@@ -276,6 +287,8 @@ gimp_display_shell_drop_files (GtkWidget *widget,
   GimpImage        *gimage = shell->gdisp->gimage;;
   GimpContext      *context;
   GList            *list;
+
+  D (g_print ("drop files on canvas\n"));
 
   context = gimp_get_user_context (gimage->gimp);
 

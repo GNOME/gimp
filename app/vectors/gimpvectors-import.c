@@ -93,6 +93,7 @@ static gboolean  gimp_vectors_import  (GimpImage            *image,
                                        gint                  len,
                                        gboolean              merge,
                                        gboolean              scale,
+                                       gint                  position,
                                        GError              **error);
 
 static void  svg_parser_start_element (GMarkupParseContext  *context,
@@ -169,13 +170,15 @@ gimp_vectors_import_file (GimpImage    *image,
                           const gchar  *filename,
                           gboolean      merge,
                           gboolean      scale,
+                          gint          position,
                           GError      **error)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  return gimp_vectors_import (image, filename, NULL, 0, merge, scale, error);
+  return gimp_vectors_import (image, filename, NULL, 0, merge, scale, position,
+                              error);
 }
 
 /**
@@ -197,13 +200,15 @@ gimp_vectors_import_buffer (GimpImage    *image,
                             gint          len,
                             gboolean      merge,
                             gboolean      scale,
+                            gint          position,
                             GError      **error)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (buffer != NULL || len == 0, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  return gimp_vectors_import (image, NULL, buffer, len, merge, scale, error);
+  return gimp_vectors_import (image, NULL, buffer, len, merge, scale, position,
+                              error);
 }
 
 static gboolean
@@ -213,6 +218,7 @@ gimp_vectors_import (GimpImage    *image,
                      gint          len,
                      gboolean      merge,
                      gboolean      scale,
+                     gint          position,
                      GError      **error)
 {
   GimpXmlParser *xml_parser;
@@ -266,8 +272,11 @@ gimp_vectors_import (GimpImage    *image,
                   vectors = gimp_vectors_new (image,
                                               ((merge || !path->id) ?
                                                _("Imported Path") : path->id));
-                  gimp_image_add_vectors (image, vectors, -1);
+                  gimp_image_add_vectors (image, vectors, position);
                   gimp_vectors_freeze (vectors);
+
+                  if (position != -1)
+                    position++;
                 }
 
               for (list = path->strokes; list; list = list->next)

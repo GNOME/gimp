@@ -635,7 +635,7 @@ vectors_import_response (GtkWidget *dialog,
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      if (gimp_vectors_import_file (gimage, filename, FALSE, FALSE, &error))
+      if (gimp_vectors_import_file (gimage, filename, FALSE, FALSE, -1, &error))
         {
           gimp_image_flush (gimage);
         }
