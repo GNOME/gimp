@@ -1,3 +1,10 @@
+Mon Oct 25 16:49:19 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/gimpimage.c: don't free the old filename pointer till we're
+	all done, since we might be passed our own filename as a param
+	and reference it after freeing. The code didn't heed it's own
+	warning ;) (TigerT, this should fix that filename corruption bug)
+
 1999-10-25  Tor Lillqvist  <tml@iki.fi>
 
 	* app/cursorutil.h: Uncomment the inclusion of gdkcursor.h that

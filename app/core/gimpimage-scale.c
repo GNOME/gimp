@@ -318,7 +318,8 @@ void
 gimp_image_set_filename (GimpImage *gimage, 
 			 gchar     *filename)
 {
-  gchar *new_filename;
+  gchar *new_filename, *old_filename;
+  gboolean free_old;
 
   /* 
    * WARNING: this function will free the current filename even if you are 
@@ -327,9 +328,8 @@ gimp_image_set_filename (GimpImage *gimage,
    */
 
   new_filename = g_strdup (filename);
-
-  if (gimage->has_filename)
-    g_free (gimage->filename);
+  old_filename = gimage->filename;
+  free_old = gimage->has_filename;
 
   if (filename && filename[0])
     {
@@ -341,6 +341,9 @@ gimp_image_set_filename (GimpImage *gimage,
       gimage->filename = NULL;
       gimage->has_filename = FALSE;
     }
+
+  if (free_old)
+    g_free (old_filename);
 
   gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[RENAME]);
 }
