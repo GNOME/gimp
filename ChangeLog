@@ -1,3 +1,19 @@
+Fri Jan 14 22:34:13 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimp.h
+	* libgimp/gimpselection.c: added a few new PDB wrappers 
+
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/checkerboard.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/guillotine.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/gdyntext/gdyntext.c
+	* plug-ins/sel2path/sel2path.c
+	* plug-ins/twain/twain.c
+	* plug-ins/winsnap/winsnap.c: replaced PDB calls with libgimp functions
+
 Fri Jan 14 20:54:31 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/module_db.c

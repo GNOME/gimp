@@ -809,8 +809,6 @@ blindsapply (guchar *srow,
 static int
 blinds_get_bg (guchar *bg)
 {
-  GParam *return_vals;
-  gint nreturn_vals;
   /* Get the background color */
   int retval = FALSE; /*Return TRUE if of GREYA type */
 
@@ -821,25 +819,7 @@ blinds_get_bg (guchar *bg)
       break;
 
     case RGB_IMAGE :
-      return_vals = gimp_run_procedure ("gimp_palette_get_foreground",
-					&nreturn_vals,
-					PARAM_END);
-      return_vals = gimp_run_procedure ("gimp_palette_get_background",
-					&nreturn_vals,
-					PARAM_END);
-
-      if (return_vals[0].data.d_status == STATUS_SUCCESS)
-	{
-	  bg[0] = return_vals[1].data.d_color.red;
-	  bg[1] = return_vals[1].data.d_color.green;
-	  bg[2] = return_vals[1].data.d_color.blue;
-	}
-      else
-	{
-	  bg[0] = 0;
-	  bg[1] = 0;
-	  bg[2] = 0;
-	}
+      gimp_palette_get_background (&bg[0], &bg[1], &bg[2]);
       break;
 
     case GRAYA_IMAGE:

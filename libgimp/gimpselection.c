@@ -20,24 +20,36 @@
 #include "gimp.h"
 
 gint32
-gimp_selection_is_empty (gint32 image_ID)
+gimp_selection_bounds (gint32  image_ID,
+		       gint   *non_empty,
+		       gint   *x1,
+		       gint   *y1,
+		       gint   *x2,
+		       gint   *y2)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  gint32 is_empty;
+  gint nreturn_vals;
+  gint result;
 
-  
-  return_vals = gimp_run_procedure ("gimp_selection_is_empty",
-				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_END);
-  is_empty = TRUE;
+  return_vals = gimp_run_procedure ("gimp_selection_bounds",
+                                    &nreturn_vals,
+                                    PARAM_IMAGE, image_ID,
+                                    PARAM_END);
+  result = FALSE;
+
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    is_empty = return_vals[1].data.d_int32;
-
+    {
+      result = TRUE;
+      *non_empty = return_vals[1].data.d_int32; 
+      *x1 = return_vals[2].data.d_int32;
+      *y1 = return_vals[3].data.d_int32;
+      *x2 = return_vals[4].data.d_int32;
+      *y2 = return_vals[5].data.d_int32;
+    }
+  
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return is_empty;
+  return result;
 }
 
 gint32
@@ -66,3 +78,39 @@ gimp_selection_float (gint32 image_ID,
 
   return layer_ID;
 }
+
+gint32
+gimp_selection_is_empty (gint32 image_ID)
+{
+  GParam *return_vals;
+  gint nreturn_vals;
+  gint32 is_empty;
+  
+  return_vals = gimp_run_procedure ("gimp_selection_is_empty",
+				    &nreturn_vals,
+				    PARAM_IMAGE, image_ID,
+				    PARAM_END);
+  is_empty = TRUE;
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    is_empty = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return is_empty;
+}
+
+void
+gimp_selection_none (gint32 image_ID)
+{
+  GParam *return_vals;
+  gint nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_selection_none",
+                                    &nreturn_vals,
+                                    PARAM_IMAGE, image_ID,
+                                    PARAM_END);
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return;
+}
+

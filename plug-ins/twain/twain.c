@@ -513,24 +513,6 @@ query(void)
 			   return_vals);
 }
 	
-/*
- * twainDisplayImage
- *
- * Display the image specified by the image id.
- */
-static gint
-twainDisplayImage(gint32 image)
-{
-  GParam *params;
-  gint retval;
-		
-  params = gimp_run_procedure ("gimp_display_new",
-			       &retval,
-			       PARAM_IMAGE, image,
-			       PARAM_END);
-		
-  return retval;
-}
 	
 /* Return values storage */
 static GParam values[3];
@@ -1109,7 +1091,7 @@ endTransferCallback(int completionState, int pendingCount, void *clientData)
 				
     /* Display the image */
     LogMessage("Displaying image %d\n", theClientData->image_id);
-    twainDisplayImage(theClientData->image_id);
+    gimp_display_new (theClientData->image_id);
   } else {
     /* The transfer did not complete successfully */
     LogMessage("Deleting image\n");

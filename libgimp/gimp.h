@@ -746,11 +746,18 @@ guchar*       gimp_drawable_get_thumbnail_data  (gint32          drawable_ID,
  *              Selections              *
  ****************************************/
 
-gint32        gimp_selection_is_empty    (gint32     image_ID);
+gint32        gimp_selection_bounds      (gint32     image_ID,
+					  gint32    *non_empty,
+					  gint32    *x1,
+					  gint32    *y1,
+					  gint32    *x2,
+					  gint32    *y2);
 gint32        gimp_selection_float       (gint32     image_ID, 
 					  gint32     drawable_ID,
 					  gint32     x_offset,
 					  gint32     y_offset);
+gint32        gimp_selection_is_empty    (gint32     image_ID);
+void          gimp_selection_none        (gint32     image_ID);
 
 
 /****************************************

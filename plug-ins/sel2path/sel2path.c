@@ -38,13 +38,13 @@
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 #include "global.h"
 #include "types.h"
 #include "pxl-outline.h"
 #include "fit.h"
 #include "spline.h"
 #include "sel2path.h"
-#include "libgimp/stdplugins-intl.h"
 
 #define MID_POINT 127
 
@@ -66,9 +66,6 @@ static void      sel2path_reset_callback (GtkWidget *,gpointer);
 static void      dialog_print_selVals(SELVALS *);
 
 gboolean         do_sel2path (gint32,gint32);
-static gint      gimp_selection_bounds (gint32,gint *,gint *,gint *,gint *,gint *);
-static gint      gimp_selection_is_empty (gint32);
-static gint      gimp_selection_none (gint32);
 static gint      gimp_path_set_points (gint32,gchar *,gint,gint,gdouble *);
 
 
@@ -617,39 +614,6 @@ do_sel2path(gint32 drawable_ID,gint32 image_ID )
 }
 
 static gint
-gimp_selection_bounds (gint32  image_ID,
-		       gint   *has_sel,
-		       gint   *x1,
-		       gint   *y1,
-		       gint   *x2,
-		       gint   *y2)
-{
-  GParam *return_vals;
-  int nreturn_vals;
-  int result;
-
-  return_vals = gimp_run_procedure ("gimp_selection_bounds",
-                                    &nreturn_vals,
-                                    PARAM_IMAGE, image_ID,
-                                    PARAM_END);
-  result = FALSE;
-
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    {
-      result = TRUE;
-      *has_sel = return_vals[1].data.d_int32; 
-      *x1 = return_vals[2].data.d_int32;
-      *y1 = return_vals[3].data.d_int32;
-      *x2 = return_vals[4].data.d_int32;
-      *y2 = return_vals[5].data.d_int32;
-    }
-  
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return result;
-}
-
-static gint
 gimp_path_set_points (gint32  image_ID,
 		      gchar  *name,
 		      gint    ptype,
@@ -682,52 +646,6 @@ gimp_path_set_points (gint32  image_ID,
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     {
       result = TRUE;
-    }
-  
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return result;
-}
-
-static gint
-gimp_selection_is_empty (gint32  image_ID)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-  gint result;
-
-  return_vals = gimp_run_procedure ("gimp_selection_is_empty",
-                                    &nreturn_vals,
-                                    PARAM_IMAGE, image_ID,
-                                    PARAM_END);
-  result = FALSE;
-
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    {
-      result = return_vals[1].data.d_int32; 
-    }
-  
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return result;
-}
-
-static gint
-gimp_selection_none (gint32  image_ID)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-  gint result;
-
-  return_vals = gimp_run_procedure ("gimp_selection_none",
-                                    &nreturn_vals,
-                                    PARAM_IMAGE, image_ID,
-                                    PARAM_END);
-  result = FALSE;
-
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    {
-      result = return_vals[1].data.d_int32; 
     }
   
   gimp_destroy_params (return_vals, nreturn_vals);

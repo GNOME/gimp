@@ -290,9 +290,7 @@ run (gchar   *name,
 static GStatusType
 align_layers (gint32 image_id)
 {
-  GParam*	return_vals;
-  gint	retvals;
-  gint	layer_num = 0;
+ gint	layer_num = 0;
   gint	visible_layer_num = 1;
   gint	*layers = NULL;
   gint	index, vindex;
@@ -369,11 +367,7 @@ align_layers (gint32 image_id)
 	base_y = min_y;
     }
 
-  return_vals = gimp_run_procedure ("gimp_undo_push_group_start",
-				    &retvals,
-				    PARAM_IMAGE, image_id,
-				    PARAM_END);
-  gimp_destroy_params (return_vals, retvals);
+  gimp_undo_push_group_start (image_id);
 
   for (vindex = -1, index = 0; index < layer_num; index++)
     {
@@ -427,11 +421,9 @@ align_layers (gint32 image_id)
 	}
       gimp_layer_set_offsets (layers[index], x, y);
     }
-  return_vals = gimp_run_procedure ("gimp_undo_push_group_end",
-				    &retvals,
-				    PARAM_IMAGE, image_id,
-				    PARAM_END);
-  gimp_destroy_params (return_vals, retvals);
+  
+  gimp_undo_push_group_end (image_id);
+
   return STATUS_SUCCESS;
 }
 

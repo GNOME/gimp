@@ -243,9 +243,7 @@ guillotine(gint32 image_ID)
 
 	  gimp_image_undo_disable (new_image);
 
-	  gimp_run_procedure ("gimp_undo_push_group_start", &nreturn_vals,
-			      PARAM_IMAGE, new_image,
-			      PARAM_END);
+/*  	  gimp_undo_push_group_start (new_image); */
 
 /* 	  printf("(%dx%d:%d,%d:%d,%d)\n", */
 /* 		 (vguides[x+1]-vguides[x]), */
@@ -261,9 +259,7 @@ guillotine(gint32 image_ID)
                        PARAM_INT32, hguides[y],
                        PARAM_END);
 
-	  gimp_run_procedure ("gimp_undo_push_group_end", &nreturn_vals,
-			      PARAM_IMAGE, new_image,
-			      PARAM_END);
+/*  	  gimp_undo_push_group_end (new_image); */
 
 	  gimp_image_undo_enable (new_image);
 

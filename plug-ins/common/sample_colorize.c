@@ -1694,35 +1694,6 @@ p_gimp_convert_rgb (gint32 image_id)
    return(FALSE);
 }	/* end p_gimp_convert_rgb */
 
-/* ============================================================================
- * p_get_gimp_selection_bounds
- *   
- * ============================================================================
- */
-gint
-p_get_gimp_selection_bounds (gint32 image_id, gint32 *x1, gint32 *y1, gint32 *x2, gint32 *y2)
-{
-   static char     *l_get_sel_bounds_proc = "gimp_selection_bounds";
-   GParam          *return_vals;
-   int              nreturn_vals;
-
-   return_vals = gimp_run_procedure (l_get_sel_bounds_proc,
-                                 &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_END);
-                                 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-   {
-      *x1 = return_vals[2].data.d_int32;
-      *y1 = return_vals[3].data.d_int32;
-      *x2 = return_vals[4].data.d_int32;
-      *y2 = return_vals[5].data.d_int32;
-      return(return_vals[1].data.d_int32);
-   }
-   printf("Error: PDB call of %s failed staus=%d\n", 
-          l_get_sel_bounds_proc, (int)return_vals[0].data.d_status);
-   return(FALSE);
-}	/* end p_get_gimp_selection_bounds */
 
 /* -----------------------------
  * DEBUG print procedures START
@@ -2575,6 +2546,7 @@ p_init_gdrw(t_GDRW *gdrw, GDrawable *drawable, int dirty, int shadow)
   gint    l_offsetx, l_offsety;
   gint    l_sel_offsetx, l_sel_offsety;
   t_GDRW  *l_sel_gdrw;
+  gint32   non_empty;
 
   if(g_Sdebug)  printf("\np_init_gdrw: drawable %x  ID: %d\n", (int)drawable, (int)drawable->id);
 
@@ -2623,8 +2595,8 @@ p_init_gdrw(t_GDRW *gdrw, GDrawable *drawable, int dirty, int shadow)
      printf("p_init_gdrw: OFFS       x: %d y: %d\n", (int)l_offsetx, (int)l_offsety );
   }
 
-  if((p_get_gimp_selection_bounds(l_image_id, &l_x1, &l_y1, &l_x2, &l_y2))
-  && (l_sel_channel_id >= 0))
+  if (gimp_selection_bounds (l_image_id, &non_empty, &l_x1, &l_y1, &l_x2, &l_y2)
+      && (l_sel_channel_id >= 0))
   {
       /* selection is TRUE */
       l_sel_gdrw = (t_GDRW *) calloc(1, sizeof(t_GDRW));

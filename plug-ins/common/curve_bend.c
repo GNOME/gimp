@@ -547,35 +547,6 @@ gint32  p_gimp_edit_paste(gint32 image_id, gint32 drawable_id, gint32 paste_into
    return(-1);
 }	/* end p_gimp_edit_paste */
 
-/* ============================================================================
- * p_get_gimp_selection_bounds
- *   
- * ============================================================================
- */
-gint
-p_get_gimp_selection_bounds (gint32 image_id, gint32 *x1, gint32 *y1, gint32 *x2, gint32 *y2)
-{
-   static char     *l_get_sel_bounds_proc = "gimp_selection_bounds";
-   GParam          *return_vals;
-   int              nreturn_vals;
-
-   return_vals = gimp_run_procedure (l_get_sel_bounds_proc,
-                                 &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_END);
-                                 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-   {
-      *x1 = return_vals[2].data.d_int32;
-      *y1 = return_vals[3].data.d_int32;
-      *x2 = return_vals[4].data.d_int32;
-      *y2 = return_vals[5].data.d_int32;
-      return(return_vals[1].data.d_int32);
-   }
-   printf("Error: PDB call of %s failed staus=%d\n", 
-          l_get_sel_bounds_proc, (int)return_vals[0].data.d_status);
-   return(FALSE);
-}	/* end p_get_gimp_selection_bounds */
 
 /* ============================================================================
  * p_if_selection_float_it
@@ -587,7 +558,8 @@ p_if_selection_float_it(gint32 image_id, gint32 layer_id)
 {
   gint32   l_sel_channel_id;
   gint32   l_layer_id;
-  gint32  l_x1, l_x2, l_y1, l_y2;
+  gint32   l_x1, l_x2, l_y1, l_y2;
+  gint32   non_empty;
 
   l_layer_id = layer_id;
   if(!gimp_layer_is_floating_selection (layer_id)  )
@@ -595,8 +567,8 @@ p_if_selection_float_it(gint32 image_id, gint32 layer_id)
     /* check and see if we have a selection mask */
     l_sel_channel_id  = gimp_image_get_selection(image_id);     
 
-    if((p_get_gimp_selection_bounds(image_id, &l_x1, &l_y1, &l_x2, &l_y2))
-    && (l_sel_channel_id >= 0))
+    if (gimp_selection_bounds (image_id, &non_empty, &l_x1, &l_y1, &l_x2, &l_y2)
+	&& (l_sel_channel_id >= 0))
     {
 	/* selection is TRUE, make a layer (floating selection) from the selection  */
         p_gimp_edit_copy(image_id, layer_id);
@@ -817,8 +789,7 @@ run (char *name,                /* name of plugin */
   l_image_id = param[1].data.d_int32;
   l_layer_id = param[2].data.d_drawable;
 
-  gimp_run_procedure ("gimp_undo_push_group_start", &l_nreturn_vals,
-                      PARAM_IMAGE, l_image_id, PARAM_END);
+  gimp_undo_push_group_start (l_image_id);
   
   if(!gimp_drawable_is_layer(l_layer_id))
   {
@@ -933,8 +904,7 @@ run (char *name,                /* name of plugin */
   values[0].data.d_status = status;
   values[1].data.d_int32 = l_bent_layer_id;   /* return the id of handled layer */
 
-  gimp_run_procedure ("gimp_undo_push_group_end", &l_nreturn_vals,
-                      PARAM_IMAGE, l_image_id, PARAM_END);
+  gimp_undo_push_group_end (l_image_id);
 
   if(gb_debug) printf("end run curve_bend plugin\n");
   

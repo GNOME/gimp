@@ -192,14 +192,12 @@ static void
 check (GDrawable *drawable)
 {
   GPixelRgn dest_rgn;
-  GParam *return_vals;
-  gint nreturn_vals;
   guchar *dest_row;
   guchar *dest;
   gint row, col;
   gint progress, max_progress;
   gint x1, y1, x2, y2, x, y;
-  guint8 fg[4],bg[4];
+  guchar fg[4],bg[4];
   gint bp;
   gpointer pr;
 
@@ -217,45 +215,14 @@ check (GDrawable *drawable)
     case RGBA_IMAGE:
       fg[3] = 255;
       bg[3] = 255;
-    case RGB_IMAGE :
-
-      return_vals = gimp_run_procedure ("gimp_palette_get_foreground",
-					&nreturn_vals,
-					PARAM_END);
-
-      if (return_vals[0].data.d_status == STATUS_SUCCESS)
-	{
-	  fg[0] = return_vals[1].data.d_color.red;
-	  fg[1] = return_vals[1].data.d_color.green;
-	  fg[2] = return_vals[1].data.d_color.blue;
-	}
-      else
-	{
-	  fg[0] = 255;
-	  fg[1] = 255;
-	  fg[2] = 255;
-	}
-      return_vals = gimp_run_procedure ("gimp_palette_get_background",
-					&nreturn_vals,
-					PARAM_END);
-
-      if (return_vals[0].data.d_status == STATUS_SUCCESS)
-	{
-	  bg[0] = return_vals[1].data.d_color.red;
-	  bg[1] = return_vals[1].data.d_color.green;
-	  bg[2] = return_vals[1].data.d_color.blue;
-	}
-      else
-	{
-	  bg[0] = 0;
-	  bg[1] = 0;
-	  bg[2] = 0;
-	}
+    case RGB_IMAGE:
+      gimp_palette_get_foreground (&fg[0], &fg[1], &fg[2]);
+      gimp_palette_get_background (&bg[0], &bg[1], &bg[2]);
       break;
     case GRAYA_IMAGE:
       fg[1] = 255;
       bg[1] = 255;
-    case GRAY_IMAGE :
+    case GRAY_IMAGE:
       fg[0] = 255;
       bg[0] = 0;
       break;

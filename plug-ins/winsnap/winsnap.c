@@ -83,7 +83,7 @@ static void init(void);
 static void quit(void);
 static void query(void);
 static void run(char *, int, GParam *, int *, GParam **);
-static gint sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect);
+static void sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect);
 
 BOOL CALLBACK dialogProc(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -1160,16 +1160,14 @@ flipRedAndBlueBytes(int width, int height)
  * Take the captured data and send it across
  * to the GIMP.
  */
-static gint
+static void
 sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
 {
   int		row;
   int		width, height;
   int		imageType, layerType;
-  gint		retval;
   gint32	image_id;
   gint32	layer_id;
-  GParam       *params;
   GPixelRgn	pixel_rgn;
   GDrawable    *drawable;
 
@@ -1218,8 +1216,7 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
   }
   /* Finish up */
   gimp_drawable_detach(drawable);
-  params = gimp_run_procedure ("gimp_display_new", &retval,
-			       PARAM_IMAGE, image_id, PARAM_END);
-
-  return retval;
+  gimp_display_new (image_id);
+  
+  return;
 }

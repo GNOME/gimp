@@ -413,7 +413,7 @@ void gdt_render_text(GdtVals *data)
 void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 {
 	gint layer_ox, layer_oy, i, nret_vals, xoffs;
-	gint32 layer_f, selection_empty, selection_channel;
+	gint32 layer_f, selection_channel;
 	gint32 text_width, text_height;
   gint32 text_ascent, text_descent;
   gint32 layer_width, layer_height;
@@ -422,26 +422,25 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 	gint32 *text_lines_w;
 	GParam *ret_vals;
 	GParamColor old_color, text_color;
+	gint32  selection_empty;
 
 	if (show_progress)
 		gimp_progress_init(_("GIMP Dynamic Text"));
 	gimp_undo_push_group_start (data->image_id);
 
 	/* save and remove current selection */
-	ret_vals = gimp_run_procedure("gimp_selection_is_empty", &nret_vals,
-		PARAM_IMAGE, data->image_id, PARAM_END);
-	selection_empty = ret_vals[1].data.d_int32;
-	gimp_destroy_params(ret_vals, nret_vals);
-	if (selection_empty == FALSE) {
-		/* there is an active selection to save */
-		ret_vals = gimp_run_procedure("gimp_selection_save", &nret_vals,
-			PARAM_IMAGE, data->image_id, PARAM_END);
-		selection_channel = ret_vals[1].data.d_int32;
-		gimp_destroy_params(ret_vals, nret_vals);
-		ret_vals = gimp_run_procedure("gimp_selection_none", &nret_vals,
-			PARAM_IMAGE, data->image_id, PARAM_END);
-		gimp_destroy_params(ret_vals, nret_vals);
-	}
+	selection_empty = gimp_selection_is_empty (data->image_id);
+	
+	if (!selection_empty) 
+	  {
+	    /* there is an active selection to save */
+	    ret_vals = gimp_run_procedure("gimp_selection_save", &nret_vals,
+					  PARAM_IMAGE, data->image_id, PARAM_END);
+	    selection_channel = ret_vals[1].data.d_int32;
+	    gimp_destroy_params(ret_vals, nret_vals);
+	    
+	    gimp_selection_none (data->image_id);
+	  }
 
 	text_style = g_strsplit(data->font_style, "-", 3);
 
