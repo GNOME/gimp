@@ -8,7 +8,7 @@
 	* tools/pdbgen/pdb/drawable_transform.pdb: removed abuse of init,
 	called pdb_misc in all procedures.
 
-	* app/pdb/transform_tools_cmds.c
+	* app/pdb/drawable_transform_cmds.c
 	* libgimp/gimpdrawabletransform_pdb.c: regenerated.
 
 2004-10-27  Sven Neumann  <sven@gimp.org>
@@ -20,7 +20,7 @@
 
 	* app/dialogs/Makefile.am
 	* app/dialogs/image-scale-dialog.[ch]: a wrapper around the scale
-	dialog that takes care verifying the user input and optionally
+	dialog that takes care of verifying the user input and optionally
 	asking for confirmation. Most of this moved out of image-commands.c.
 
 	* app/actions/image-commands.c: use the new image scale dialog
