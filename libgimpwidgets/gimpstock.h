@@ -191,6 +191,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_MOVE_TO_SCREEN           "gimp_move-to-screen"
 #define GIMP_STOCK_DEFAULT_COLORS           "gimp-default-colors"
 #define GIMP_STOCK_SWAP_COLORS              "gimp-swap-colors"
+#define GIMP_STOCK_ZOOM_FOLLOW_WINDOW       "gimp-zoom-follow-window"
 
 #define GIMP_STOCK_TOOLS                    "gimp-tools"
 #define GIMP_STOCK_TOOL_OPTIONS             "gimp-tool-options"

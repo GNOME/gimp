@@ -20,6 +20,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -32,11 +33,13 @@
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayoptions.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
+#include "display/gimpdisplayshell-render.h"
 #include "display/gimpdisplayshell-selection.h"
 
 #include "view-actions.h"
@@ -47,14 +50,18 @@
 
 /*  local function prototypes  */
 
-static void   view_actions_set_zoom (GimpActionGroup  *group,
-                                     GimpDisplayShell *shell);
+static void   view_actions_set_zoom          (GimpActionGroup   *group,
+                                              GimpDisplayShell  *shell);
+static void   view_actions_check_type_notify (GimpDisplayConfig *config,
+                                              GParamSpec        *pspec,
+                                              GimpActionGroup   *group);
 
 
 static GimpActionEntry view_actions[] =
 {
-  { "view-menu",      NULL, N_("_View") },
-  { "view-zoom-menu", NULL, N_("_Zoom") },
+  { "view-menu",               NULL, N_("_View")          },
+  { "view-zoom-menu",          NULL, N_("_Zoom")          },
+  { "view-padding-color-menu", NULL, N_("_Padding Color") },
 
   { "view-new", GTK_STOCK_NEW,
     N_("_New View"), "", NULL,
@@ -240,6 +247,34 @@ static GimpRadioActionEntry view_zoom_actions[] =
     GIMP_HELP_VIEW_ZOOM_OTHER }
 };
 
+static GimpEnumActionEntry view_padding_color_actions[] =
+{
+  { "view-padding-color-theme", NULL,
+    N_("From _Theme"), NULL, NULL,
+    GIMP_CANVAS_PADDING_MODE_DEFAULT,
+    GIMP_HELP_VIEW_PADDING_COLOR },
+
+  { "view-padding-color-light-check", NULL,
+    N_("_Light Check Color"), NULL, NULL,
+    GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK,
+    GIMP_HELP_VIEW_PADDING_COLOR },
+
+  { "view-padding-color-dark-check", NULL,
+    N_("_Dark Check Color"), NULL, NULL,
+    GIMP_CANVAS_PADDING_MODE_DARK_CHECK,
+    GIMP_HELP_VIEW_PADDING_COLOR },
+
+  { "view-padding-color-custom", GTK_STOCK_SELECT_COLOR,
+    N_("Select _Custom Color..."), NULL, NULL,
+    GIMP_CANVAS_PADDING_MODE_CUSTOM,
+    GIMP_HELP_VIEW_PADDING_COLOR },
+
+  { "view-padding-color-prefs", GIMP_STOCK_RESET,
+    N_("As in _Preferences"), NULL, NULL,
+    GIMP_CANVAS_PADDING_MODE_RESET,
+    GIMP_HELP_VIEW_PADDING_COLOR }
+};
+
 
 void
 view_actions_setup (GimpActionGroup *group)
@@ -260,6 +295,11 @@ view_actions_setup (GimpActionGroup *group)
                                        10000,
                                        G_CALLBACK (view_zoom_cmd_callback));
 
+  gimp_action_group_add_enum_actions (group,
+                                      view_padding_color_actions,
+                                      G_N_ELEMENTS (view_padding_color_actions),
+                                      G_CALLBACK (view_padding_color_cmd_callback));
+
   /*  connect "activate" of view-zoom-other manually so it can be
    *  selected even if it's the active item of the radio group
    */
@@ -268,6 +308,12 @@ view_actions_setup (GimpActionGroup *group)
   g_signal_connect (action, "activate",
                     G_CALLBACK (view_zoom_other_cmd_callback),
                     group->user_data);
+
+  g_signal_connect_object (group->gimp->config, "notify::check-type",
+                           G_CALLBACK (view_actions_check_type_notify),
+                           group, 0);
+  view_actions_check_type_notify (GIMP_DISPLAY_CONFIG (group->gimp->config),
+                                  NULL, group);
 }
 
 void
@@ -312,6 +358,8 @@ view_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_label (group, action, (label))
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+#define SET_COLOR(action,color) \
+        gimp_action_group_set_action_color (group, action, color, FALSE)
 
   SET_SENSITIVE ("view-new",   gdisp);
   SET_SENSITIVE ("view-close", gdisp);
@@ -351,6 +399,23 @@ view_actions_update (GimpActionGroup *group,
   SET_ACTIVE    ("view-show-grid",           gdisp && options->show_grid);
   SET_ACTIVE    ("view-snap-to-grid",        gdisp && shell->snap_to_grid);
 
+  if (gdisp)
+    {
+      SET_COLOR ("view-padding-color-menu", &options->padding_color);
+
+      if (shell->canvas)
+        {
+          GimpRGB color;
+
+          gtk_widget_ensure_style (shell->canvas);
+          gimp_rgb_set_gdk_color (&color,
+                                  shell->canvas->style->bg + GTK_STATE_NORMAL);
+          gimp_rgb_set_alpha (&color, GIMP_OPACITY_OPAQUE);
+
+          SET_COLOR ("view-padding-color-theme",  &color);
+        }
+    }
+
   SET_SENSITIVE ("view-show-menubar",    gdisp);
   SET_ACTIVE    ("view-show-menubar",    gdisp && options->show_menubar);
   SET_SENSITIVE ("view-show-rulers",     gdisp);
@@ -369,6 +434,7 @@ view_actions_update (GimpActionGroup *group,
 #undef SET_VISIBLE
 #undef SET_LABEL
 #undef SET_SENSITIVE
+#undef SET_COLOR
 }
 
 
@@ -422,4 +488,28 @@ view_actions_set_zoom (GimpActionGroup  *group,
 
   /* flag as dirty */
   shell->other_scale = - fabs (shell->other_scale);
+}
+
+static void
+view_actions_check_type_notify (GimpDisplayConfig *config,
+                                GParamSpec        *pspec,
+                                GimpActionGroup   *group)
+{
+  GimpRGB color;
+
+  gimp_rgba_set_uchar (&color,
+                       render_blend_light_check[0],
+                       render_blend_light_check[1],
+                       render_blend_light_check[2],
+                       255);
+  gimp_action_group_set_action_color (group, "view-padding-color-light-check",
+                                      &color, FALSE);
+
+  gimp_rgba_set_uchar (&color,
+                       render_blend_dark_check[0],
+                       render_blend_dark_check[1],
+                       render_blend_dark_check[2],
+                       255);
+  gimp_action_group_set_action_color (group, "view-padding-color-dark-check",
+                                      &color, FALSE);
 }

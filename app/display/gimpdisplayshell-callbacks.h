@@ -61,15 +61,6 @@ gboolean   gimp_display_shell_origin_button_press  (GtkWidget         *widget,
                                                     GdkEventButton    *bevent,
                                                     GimpDisplayShell  *shell);
 
-gboolean   gimp_display_shell_color_button_press   (GtkWidget         *widget,
-                                                    GdkEventButton    *bevent,
-                                                    GimpDisplayShell  *shell);
-void       gimp_display_shell_color_button_changed (GtkWidget         *widget,
-                                                    GimpDisplayShell  *shell);
-void gimp_display_shell_color_button_menu_callback (gpointer           data, 
-                                                    guint              action, 
-                                                    GtkWidget         *widget);
-
 gboolean   gimp_display_shell_qmask_button_press   (GtkWidget         *widget,
                                                     GdkEventButton    *bevent,
                                                     GimpDisplayShell  *shell);

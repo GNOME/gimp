@@ -55,7 +55,6 @@
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpstroke.h"
 
-#include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
@@ -147,14 +146,14 @@ gimp_display_shell_get_type (void)
       static const GTypeInfo shell_info =
       {
         sizeof (GimpDisplayShellClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_display_shell_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpDisplayShell),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_display_shell_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_display_shell_class_init,
+        NULL,		/* class_finalize */
+        NULL,		/* class_data     */
+        sizeof (GimpDisplayShell),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_display_shell_init,
       };
 
       shell_type = g_type_register_static (GTK_TYPE_WINDOW,
@@ -258,24 +257,30 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->select                 = NULL;
 
-  shell->hsbdata                = NULL;
-  shell->vsbdata                = NULL;
-
   shell->canvas                 = NULL;
   shell->grid_gc                = NULL;
 
+  shell->hsbdata                = NULL;
+  shell->vsbdata                = NULL;
   shell->hsb                    = NULL;
   shell->vsb                    = NULL;
-  shell->qmask                  = NULL;
+
   shell->hrule                  = NULL;
   shell->vrule                  = NULL;
-  shell->origin                 = NULL;
 
+  shell->origin_button          = NULL;
+  shell->qmask_button           = NULL;
+  shell->zoom_button            = NULL;
+  shell->nav_ebox               = NULL;
+
+  shell->menubar                = NULL;
   shell->statusbar              = NULL;
 
   shell->render_buf             = g_malloc (GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH  *
                                            GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT *
                                            3);
+
+  shell->title_idle_id          = 0;
 
   shell->icon_size              = 32;
   shell->icon_idle_id           = 0;
@@ -293,11 +298,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->cursor_x               = 0;
   shell->cursor_y               = 0;
 
-  shell->show_transform_preview = FALSE;
-
-  shell->padding_button         = NULL;
-  shell->nav_ebox               = NULL;
-
   shell->warning_dialog         = NULL;
   shell->info_dialog            = NULL;
   shell->scale_dialog           = NULL;
@@ -308,14 +308,14 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->filter_idle_id         = 0;
   shell->filters_dialog         = NULL;
 
-  shell->window_state           = 0;
-
   shell->paused_count           = 0;
 
-  shell->options                =
-    g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
-  shell->fullscreen_options     =
-    g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
+  shell->window_state           = 0;
+  shell->zoom_on_resize         = FALSE;
+  shell->show_transform_preview = FALSE;
+
+  shell->options                = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
+  shell->fullscreen_options     = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
 
   shell->space_pressed          = FALSE;
   shell->space_release_pending  = FALSE;
@@ -704,7 +704,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
    *     |      |      |
    *     |      |      +-- right_vbox
    *     |      |             |
-   *     |      |             +-- padding_button
+   *     |      |             +-- zoom_on_resize_button
    *     |      |             +-- vscrollbar
    *     |      |
    *     |      +-- lower_hbox
@@ -795,18 +795,18 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   /*  create the contents of the inner_table  ********************************/
 
   /*  the menu popup button  */
-  shell->origin = gtk_button_new ();
-  GTK_WIDGET_UNSET_FLAGS (shell->origin, GTK_CAN_FOCUS);
+  shell->origin_button = gtk_button_new ();
+  GTK_WIDGET_UNSET_FLAGS (shell->origin_button, GTK_CAN_FOCUS);
 
   image = gtk_image_new_from_stock (GIMP_STOCK_MENU_RIGHT, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (shell->origin), image);
+  gtk_container_add (GTK_CONTAINER (shell->origin_button), image);
   gtk_widget_show (image);
 
-  g_signal_connect (shell->origin, "button_press_event",
+  g_signal_connect (shell->origin_button, "button_press_event",
                     G_CALLBACK (gimp_display_shell_origin_button_press),
                     shell);
 
-  gimp_help_set_help_data (shell->origin, NULL,
+  gimp_help_set_help_data (shell->origin_button, NULL,
                            GIMP_HELP_IMAGE_WINDOW_ORIGIN_BUTTON);
 
   shell->canvas = gimp_canvas_new ();
@@ -867,80 +867,44 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 		    shell);
 
   /*  create the contents of the right_vbox  *********************************/
-  shell->padding_button = gimp_color_panel_new (_("Set Canvas Padding Color"),
-                                                &shell->options->padding_color,
-                                                GIMP_COLOR_AREA_FLAT,
-                                                15, 15);
-  GTK_WIDGET_UNSET_FLAGS (shell->padding_button, GTK_CAN_FOCUS);
-  gimp_color_panel_set_context (GIMP_COLOR_PANEL (shell->padding_button),
-                                gimp_get_user_context (gdisp->gimage->gimp));
+  shell->zoom_button = gtk_check_button_new ();
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->zoom_button), FALSE);
+  gtk_widget_set_size_request (GTK_WIDGET (shell->zoom_button), 16, 16);
+  GTK_WIDGET_UNSET_FLAGS (shell->zoom_button, GTK_CAN_FOCUS);
 
-  gimp_help_set_help_data (shell->padding_button,
-                           _("Set canvas padding color"),
-                           GIMP_HELP_IMAGE_WINDOW_PADDING_BUTTON);
+  image = gtk_image_new_from_stock (GIMP_STOCK_ZOOM_FOLLOW_WINDOW,
+                                    GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (shell->zoom_button), image);
+  gtk_widget_show (image);
 
-  g_signal_connect (shell->padding_button, "button_press_event",
-                    G_CALLBACK (gimp_display_shell_color_button_press),
-                    shell);
-  g_signal_connect (shell->padding_button, "color_changed",
-                    G_CALLBACK (gimp_display_shell_color_button_changed),
-                    shell);
+  gimp_help_set_help_data (shell->zoom_button,
+                           _("Zoom image when window size changes"),
+                           GIMP_HELP_IMAGE_WINDOW_ZOOM_FOLLOW_BUTTON);
 
-  {
-    static GtkItemFactoryEntry menu_items[] =
-    {
-      { N_("/From _Theme"), NULL,
-        gimp_display_shell_color_button_menu_callback,
-        GIMP_CANVAS_PADDING_MODE_DEFAULT, NULL },
-      { N_("/_Light Check Color"), NULL,
-        gimp_display_shell_color_button_menu_callback,
-        GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK, NULL },
-      { N_("/_Dark Check Color"), NULL,
-        gimp_display_shell_color_button_menu_callback,
-        GIMP_CANVAS_PADDING_MODE_DARK_CHECK, NULL },
-
-      { "/---", NULL, NULL, 0, "<Separator>"},
-
-      { N_("/Select _Custom Color..."), NULL,
-        gimp_display_shell_color_button_menu_callback,
-        GIMP_CANVAS_PADDING_MODE_CUSTOM, "<StockItem>",
-        GTK_STOCK_SELECT_COLOR },
-      { N_("/As in _Preferences"), NULL,
-        gimp_display_shell_color_button_menu_callback,
-        0xffff, "<StockItem>",
-        GIMP_STOCK_RESET }
-    };
-
-    GtkItemFactory *item_factory;
-
-    item_factory =
-      GTK_ITEM_FACTORY (GIMP_COLOR_BUTTON (shell->padding_button)->popup_menu);
-
-    gtk_item_factory_create_items (item_factory,
-                                   G_N_ELEMENTS (menu_items), menu_items,
-                                   shell);
-  }
+  g_signal_connect (shell->zoom_button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &shell->zoom_on_resize);
 
   /*  create the contents of the lower_hbox  *********************************/
 
   /*  the qmask button  */
-  shell->qmask = gtk_check_button_new ();
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->qmask), FALSE);
-  gtk_widget_set_size_request (GTK_WIDGET (shell->qmask), 16, 16);
-  GTK_WIDGET_UNSET_FLAGS (shell->qmask, GTK_CAN_FOCUS);
+  shell->qmask_button = gtk_check_button_new ();
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->qmask_button), FALSE);
+  gtk_widget_set_size_request (GTK_WIDGET (shell->qmask_button), 16, 16);
+  GTK_WIDGET_UNSET_FLAGS (shell->qmask_button, GTK_CAN_FOCUS);
 
   image = gtk_image_new_from_stock (GIMP_STOCK_QMASK_OFF, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (shell->qmask), image);
+  gtk_container_add (GTK_CONTAINER (shell->qmask_button), image);
   gtk_widget_show (image);
 
-  gimp_help_set_help_data (shell->qmask,
+  gimp_help_set_help_data (shell->qmask_button,
                            _("Toggle QuickMask"),
                            GIMP_HELP_IMAGE_WINDOW_QMASK_BUTTON);
 
-  g_signal_connect (shell->qmask, "toggled",
+  g_signal_connect (shell->qmask_button, "toggled",
 		    G_CALLBACK (gimp_display_shell_qmask_toggled),
 		    shell);
-  g_signal_connect (shell->qmask, "button_press_event",
+  g_signal_connect (shell->qmask_button, "button_press_event",
 		    G_CALLBACK (gimp_display_shell_qmask_button_press),
 		    shell);
 
@@ -968,7 +932,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   /*  pack all the widgets  **************************************************/
 
   /*  fill the inner_table  */
-  gtk_table_attach (GTK_TABLE (inner_table), shell->origin, 0, 1, 0, 1,
+  gtk_table_attach (GTK_TABLE (inner_table), shell->origin_button, 0, 1, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_table_attach (GTK_TABLE (inner_table), shell->hrule, 1, 2, 0, 1,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
@@ -979,12 +943,11 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
   /*  fill the right_vbox  */
-  gtk_box_pack_start (GTK_BOX (right_vbox), shell->padding_button,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (right_vbox), shell->zoom_button, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (right_vbox), shell->vsb, TRUE, TRUE, 0);
 
   /*  fill the lower_hbox  */
-  gtk_box_pack_start (GTK_BOX (lower_hbox), shell->qmask, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (lower_hbox), shell->qmask_button, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (lower_hbox), shell->hsb, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (lower_hbox), shell->nav_ebox, FALSE, FALSE, 0);
 
@@ -994,7 +957,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   if (shell->options->show_rulers)
     {
-      gtk_widget_show (shell->origin);
+      gtk_widget_show (shell->origin_button);
       gtk_widget_show (shell->hrule);
       gtk_widget_show (shell->vrule);
     }
@@ -1005,8 +968,8 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
     {
       gtk_widget_show (shell->vsb);
       gtk_widget_show (shell->hsb);
-      gtk_widget_show (shell->padding_button);
-      gtk_widget_show (shell->qmask);
+      gtk_widget_show (shell->zoom_button);
+      gtk_widget_show (shell->qmask_button);
       gtk_widget_show (shell->nav_ebox);
     }
 

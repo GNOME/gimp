@@ -47,10 +47,15 @@
   (gimp_display_shell_get_fullscreen (shell) ? \
    shell->fullscreen_options : shell->options)
 
-#define SET_ACTIVE(manager,group_name,action_name,active) \
+#define SET_ACTIVE(manager,action_name,active) \
   { GimpActionGroup *group = \
-      gimp_ui_manager_get_action_group (manager, group_name); \
+      gimp_ui_manager_get_action_group (manager, "view"); \
     gimp_action_group_set_action_active (group, action_name, active); }
+
+#define SET_COLOR(manager,action_name,color) \
+  { GimpActionGroup *group = \
+      gimp_ui_manager_get_action_group (manager, "view"); \
+    gimp_action_group_set_action_color (group, action_name, color, FALSE); }
 
 #define IS_ACTIVE_DISPLAY(shell) \
   ((shell)->gdisp == \
@@ -94,7 +99,7 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
 
   g_object_set (options, "show-menubar", show, NULL);
 
-  vbox = GTK_CONTAINER (shell->qmask->parent->parent);
+  vbox = GTK_CONTAINER (shell->qmask_button->parent->parent);
 
   if (show)
     gtk_widget_show (shell->menubar);
@@ -106,10 +111,10 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
   else
     gtk_container_set_border_width (vbox, 0);
 
-  SET_ACTIVE (shell->menubar_manager, "view", "view-show-menubar", show);
+  SET_ACTIVE (shell->menubar_manager, "view-show-menubar", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view", "view-show-menubar", show);
+    SET_ACTIVE (shell->popup_manager, "view-show-menubar", show);
 }
 
 gboolean
@@ -137,7 +142,7 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
 
   if (show)
     {
-      gtk_widget_show (shell->origin);
+      gtk_widget_show (shell->origin_button);
       gtk_widget_show (shell->hrule);
       gtk_widget_show (shell->vrule);
 
@@ -146,7 +151,7 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
     }
   else
     {
-      gtk_widget_hide (shell->origin);
+      gtk_widget_hide (shell->origin_button);
       gtk_widget_hide (shell->hrule);
       gtk_widget_hide (shell->vrule);
 
@@ -154,10 +159,10 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
       gtk_table_set_row_spacing (table, 0, 0);
     }
 
-  SET_ACTIVE (shell->menubar_manager, "view", "view-show-rulers", show);
+  SET_ACTIVE (shell->menubar_manager, "view-show-rulers", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view", "view-show-rulers", show);
+    SET_ACTIVE (shell->popup_manager, "view-show-rulers", show);
 }
 
 gboolean
@@ -190,8 +195,8 @@ gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
       gtk_widget_show (shell->nav_ebox);
       gtk_widget_show (shell->hsb);
       gtk_widget_show (shell->vsb);
-      gtk_widget_show (shell->qmask);
-      gtk_widget_show (shell->padding_button);
+      gtk_widget_show (shell->qmask_button);
+      gtk_widget_show (shell->zoom_button);
 
       gtk_box_set_spacing (hbox, 1);
       gtk_box_set_spacing (vbox, 1);
@@ -201,17 +206,17 @@ gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
       gtk_widget_hide (shell->nav_ebox);
       gtk_widget_hide (shell->hsb);
       gtk_widget_hide (shell->vsb);
-      gtk_widget_hide (shell->qmask);
-      gtk_widget_hide (shell->padding_button);
+      gtk_widget_hide (shell->qmask_button);
+      gtk_widget_hide (shell->zoom_button);
 
       gtk_box_set_spacing (hbox, 0);
       gtk_box_set_spacing (vbox, 0);
     }
 
-  SET_ACTIVE (shell->menubar_manager, "view", "view-show-scrollbars", show);
+  SET_ACTIVE (shell->menubar_manager, "view-show-scrollbars", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view", "view-show-scrollbars", show);
+    SET_ACTIVE (shell->popup_manager, "view-show-scrollbars", show);
 }
 
 gboolean
@@ -235,7 +240,7 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
 
   g_object_set (options, "show-statusbar", show, NULL);
 
-  vbox = GTK_CONTAINER (shell->qmask->parent->parent);
+  vbox = GTK_CONTAINER (shell->qmask_button->parent->parent);
 
   if (show)
     gtk_widget_show (shell->statusbar);
@@ -247,10 +252,10 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
   else
     gtk_container_set_border_width (vbox, 0);
 
-  SET_ACTIVE (shell->menubar_manager, "view", "view-show-statusbar", show);
+  SET_ACTIVE (shell->menubar_manager, "view-show-statusbar", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view", "view-show-statusbar", show);
+    SET_ACTIVE (shell->popup_manager, "view-show-statusbar", show);
 }
 
 gboolean
@@ -276,10 +281,10 @@ gimp_display_shell_set_show_selection (GimpDisplayShell *shell,
   if (shell->select)
     gimp_display_shell_selection_set_hidden (shell->select, ! show);
 
-  SET_ACTIVE (shell->menubar_manager, "view", "view-show-selection", show);
+  SET_ACTIVE (shell->menubar_manager, "view-show-selection", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view", "view-show-selection", show);
+    SET_ACTIVE (shell->popup_manager, "view-show-selection", show);
 }
 
 gboolean
@@ -305,10 +310,10 @@ gimp_display_shell_set_show_layer (GimpDisplayShell *shell,
   if (shell->select)
     gimp_display_shell_selection_layer_set_hidden (shell->select, ! show);
 
-  SET_ACTIVE (shell->menubar_manager, "view", "view-show-layer-boundary", show);
+  SET_ACTIVE (shell->menubar_manager, "view-show-layer-boundary", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view", "view-show-layer-boundary", show);
+    SET_ACTIVE (shell->popup_manager, "view-show-layer-boundary", show);
 }
 
 gboolean
@@ -351,10 +356,10 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
   if (shell->gdisp->gimage->grid)
     gimp_display_shell_expose_full (shell);
 
-  SET_ACTIVE (shell->menubar_manager, "view", "view-show-grid", show);
+  SET_ACTIVE (shell->menubar_manager, "view-show-grid", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view", "view-show-grid", show);
+    SET_ACTIVE (shell->popup_manager, "view-show-grid", show);
 }
 
 gboolean
@@ -375,10 +380,10 @@ gimp_display_shell_set_snap_to_grid (GimpDisplayShell *shell,
     {
       shell->snap_to_grid = snap ? TRUE : FALSE;
 
-      SET_ACTIVE (shell->menubar_manager, "view", "view-snap-to-grid", snap);
+      SET_ACTIVE (shell->menubar_manager, "view-snap-to-grid", snap);
 
       if (IS_ACTIVE_DISPLAY (shell))
-        SET_ACTIVE (shell->popup_manager, "view", "view-snap-to-grid", snap);
+        SET_ACTIVE (shell->popup_manager, "view-snap-to-grid", snap);
     }
 }
 
@@ -405,10 +410,10 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
   if (shell->gdisp->gimage->guides)
     gimp_display_shell_expose_full (shell);
 
-  SET_ACTIVE (shell->menubar_manager, "view", "view-show-guides", show);
+  SET_ACTIVE (shell->menubar_manager, "view-show-guides", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view", "view-show-guides", show);
+    SET_ACTIVE (shell->popup_manager, "view-show-guides", show);
 }
 
 gboolean
@@ -429,10 +434,10 @@ gimp_display_shell_set_snap_to_guides (GimpDisplayShell *shell,
     {
       shell->snap_to_guides = snap ? TRUE : FALSE;
 
-      SET_ACTIVE (shell->menubar_manager, "view", "view-snap-to-guides", snap);
+      SET_ACTIVE (shell->menubar_manager, "view-snap-to-guides", snap);
 
       if (IS_ACTIVE_DISPLAY (shell))
-        SET_ACTIVE (shell->popup_manager, "view", "view-snap-to-guides", snap);
+        SET_ACTIVE (shell->popup_manager, "view-snap-to-guides", snap);
     }
 }
 
@@ -484,6 +489,7 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
       break;
 
     case GIMP_CANVAS_PADDING_MODE_CUSTOM:
+    case GIMP_CANVAS_PADDING_MODE_RESET:
       break;
     }
 
@@ -494,19 +500,12 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
 
   gimp_canvas_set_bg_color (GIMP_CANVAS (shell->canvas), &color);
 
-  if (shell->padding_button)
-    {
-      g_signal_handlers_block_by_func (shell->padding_button,
-                                       gimp_display_shell_color_button_changed,
-                                       shell);
+  SET_COLOR (shell->menubar_manager, "view-padding-color-menu",
+             &options->padding_color);
 
-      gimp_color_button_set_color (GIMP_COLOR_BUTTON (shell->padding_button),
-                                   &color);
-
-      g_signal_handlers_unblock_by_func (shell->padding_button,
-                                         gimp_display_shell_color_button_changed,
-                                         shell);
-    }
+  if (IS_ACTIVE_DISPLAY (shell))
+    SET_COLOR (shell->popup_manager, "view-padding-color-menu",
+               &options->padding_color);
 
   gimp_display_shell_expose_full (shell);
 }

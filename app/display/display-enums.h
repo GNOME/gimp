@@ -41,7 +41,8 @@ typedef enum
   GIMP_CANVAS_PADDING_MODE_DEFAULT,      /*< desc="From Theme"        >*/
   GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK,  /*< desc="Light Check Color" >*/
   GIMP_CANVAS_PADDING_MODE_DARK_CHECK,   /*< desc="Dark Check Color"  >*/
-  GIMP_CANVAS_PADDING_MODE_CUSTOM        /*< desc="Custom Color"      >*/
+  GIMP_CANVAS_PADDING_MODE_CUSTOM,       /*< desc="Custom Color"      >*/
+  GIMP_CANVAS_PADDING_MODE_RESET = -1    /*< skip >*/
 } GimpCanvasPaddingMode;
 
 

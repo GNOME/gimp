@@ -32,6 +32,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayoptions.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-filter-dialog.h"
@@ -42,6 +43,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpuimanager.h"
 
+#include "gui/color-notebook.h"
 #include "gui/dialogs.h"
 #include "gui/info-dialog.h"
 #include "gui/info-window.h"
@@ -49,10 +51,12 @@
 #include "actions.h"
 #include "view-commands.h"
 
+#include "gimp-intl.h"
 
-#define SET_ACTIVE(manager,group_name,action_name,active) \
+
+#define SET_ACTIVE(manager,action_name,active) \
   { GimpActionGroup *group = \
-      gimp_ui_manager_get_action_group (manager, group_name); \
+      gimp_ui_manager_get_action_group (manager, "view"); \
     gimp_action_group_set_action_active (group, action_name, active); }
 
 #define IS_ACTIVE_DISPLAY(gdisp) \
@@ -187,11 +191,11 @@ view_dot_for_dot_cmd_callback (GtkAction *action,
     {
       gimp_display_shell_scale_set_dot_for_dot (shell, active);
 
-      SET_ACTIVE (shell->menubar_manager, "view", "view-dot-for-dot",
+      SET_ACTIVE (shell->menubar_manager, "view-dot-for-dot",
                   shell->dot_for_dot);
 
       if (IS_ACTIVE_DISPLAY (gdisp))
-        SET_ACTIVE (shell->popup_manager, "view", "view-dot-for-dot",
+        SET_ACTIVE (shell->popup_manager, "view-dot-for-dot",
                     shell->dot_for_dot);
     }
 }
@@ -422,6 +426,126 @@ view_snap_to_grid_cmd_callback (GtkAction *action,
   gimp_display_shell_set_snap_to_grid (shell, active);
 }
 
+static void
+view_padding_color_callback (ColorNotebook      *cnb,
+                             const GimpRGB      *color,
+                             ColorNotebookState  state,
+                             gpointer            data)
+{
+  GimpDisplayShell   *shell = GIMP_DISPLAY_SHELL (data);
+  GimpDisplayOptions *options;
+  gboolean            fullscreen;
+
+  fullscreen = gimp_display_shell_get_fullscreen (shell);
+
+  if (fullscreen)
+    options = shell->fullscreen_options;
+  else
+    options = shell->options;
+
+  switch (state)
+    {
+    case COLOR_NOTEBOOK_OK:
+      options->padding_mode_set = TRUE;
+
+      gimp_display_shell_set_padding (shell, GIMP_CANVAS_PADDING_MODE_CUSTOM,
+                                      color);
+      /* fallthru */
+
+    case COLOR_NOTEBOOK_CANCEL:
+      g_object_set_data (G_OBJECT (shell), "padding-color-notebook", NULL);
+      break;
+
+    default:
+      break;
+    }
+}
+
+void
+view_padding_color_cmd_callback (GtkAction *action,
+                                 gint       value,
+                                 gpointer   data)
+{
+  GimpDisplay        *gdisp;
+  GimpDisplayShell   *shell;
+  GimpDisplayOptions *options;
+  gboolean            fullscreen;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  fullscreen = gimp_display_shell_get_fullscreen (shell);
+
+  if (fullscreen)
+    options = shell->fullscreen_options;
+  else
+    options = shell->options;
+
+  switch ((GimpCanvasPaddingMode) value)
+    {
+    case GIMP_CANVAS_PADDING_MODE_DEFAULT:
+    case GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK:
+    case GIMP_CANVAS_PADDING_MODE_DARK_CHECK:
+      g_object_set_data (G_OBJECT (shell), "padding-color-notebook", NULL);
+
+      options->padding_mode_set = TRUE;
+
+      gimp_display_shell_set_padding (shell, (GimpCanvasPaddingMode) value,
+                                      &options->padding_color);
+      break;
+
+    case GIMP_CANVAS_PADDING_MODE_CUSTOM:
+      {
+        ColorNotebook *color_notebook;
+
+        color_notebook = g_object_get_data (G_OBJECT (shell),
+                                            "padding-color-notebook");
+
+        if (! color_notebook)
+          {
+            color_notebook = color_notebook_new (GIMP_VIEWABLE (gdisp->gimage),
+                                                 _("Set Canvas Padding Color"),
+                                                 GTK_STOCK_SELECT_COLOR,
+                                                 NULL,
+                                                 gdisp->shell,
+                                                 NULL, NULL,
+                                                 &options->padding_color,
+                                                 view_padding_color_callback,
+                                                 shell,
+                                                 FALSE, FALSE);
+            g_object_set_data_full (G_OBJECT (shell), "padding-color-notebook",
+                                    color_notebook,
+                                    (GDestroyNotify) color_notebook_free);
+          }
+
+        color_notebook_show (color_notebook);
+      }
+      break;
+
+    case GIMP_CANVAS_PADDING_MODE_RESET:
+      g_object_set_data (G_OBJECT (shell), "padding-color-notebook", NULL);
+
+      {
+        GimpDisplayConfig  *config;
+        GimpDisplayOptions *default_options;
+
+        config = GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config);
+
+        options->padding_mode_set = FALSE;
+
+        if (fullscreen)
+          default_options = config->default_fullscreen_view;
+        else
+          default_options = config->default_view;
+
+        gimp_display_shell_set_padding (shell,
+                                        default_options->padding_mode,
+                                        &default_options->padding_color);
+      }
+      break;
+    }
+}
+
 void
 view_shrink_wrap_cmd_callback (GtkAction *action,
 			       gpointer   data)
@@ -452,11 +576,11 @@ view_fullscreen_cmd_callback (GtkAction *action,
 
   if (active != fullscreen)
     {
-      SET_ACTIVE (shell->menubar_manager, "view", "view-fullscreen",
+      SET_ACTIVE (shell->menubar_manager, "view-fullscreen",
                   fullscreen);
 
       if (IS_ACTIVE_DISPLAY (gdisp))
-        SET_ACTIVE (shell->popup_manager, "view", "view-fullscreen",
+        SET_ACTIVE (shell->popup_manager, "view-fullscreen",
                     fullscreen);
     }
 }

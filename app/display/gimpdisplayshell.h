@@ -90,29 +90,33 @@ struct _GimpDisplayShell
   gint              disp_xoffset;
   gint              disp_yoffset;
 
-  gboolean          proximity;         /* is a device in proximity            */
+  gboolean          proximity;         /*  is a device in proximity           */
   gboolean          snap_to_guides;    /*  should the guides be snapped to?   */
   gboolean          snap_to_grid;      /*  should the grid be snapped to?     */
 
   Selection        *select;            /*  Selection object                   */
 
-  GtkAdjustment    *hsbdata;           /*  adjustments                        */
-  GtkAdjustment    *vsbdata;
-
   GtkWidget        *canvas;            /*  GimpCanvas widget                  */
   GdkGC            *grid_gc;           /*  GC for grid drawing                */
 
+  GtkAdjustment    *hsbdata;           /*  adjustments                        */
+  GtkAdjustment    *vsbdata;
   GtkWidget        *hsb;               /*  scroll bars                        */
   GtkWidget        *vsb;
-  GtkWidget        *qmask;             /*  qmask button                       */
+
   GtkWidget        *hrule;             /*  rulers                             */
   GtkWidget        *vrule;
-  GtkWidget        *origin;            /*  origin button                      */
+
+  GtkWidget        *origin_button;     /*  NW: origin button                  */
+  GtkWidget        *qmask_button;      /*  SW: qmask button                   */
+  GtkWidget        *zoom_button;       /*  NE: zoom toggle button             */
+  GtkWidget        *nav_ebox;          /*  SE: navigation event box           */
 
   GtkWidget        *menubar;           /*  menubar                            */
   GtkWidget        *statusbar;         /*  statusbar                          */
 
   guchar           *render_buf;        /*  buffer for rendering the image     */
+
   guint             title_idle_id;     /*  title update idle ID               */
 
   gint              icon_size;         /*  size of the icon pixmap            */
@@ -131,11 +135,6 @@ struct _GimpDisplayShell
   gint              cursor_x;          /* software cursor X value             */
   gint              cursor_y;          /* software cursor Y value             */
 
-  gboolean          show_transform_preview;
-
-  GtkWidget        *padding_button;    /* GimpColorPanel in the NE corner     */
-  GtkWidget        *nav_ebox;          /* GtkEventBox on the SE corner        */
-
   GtkWidget        *warning_dialog;    /*  close warning dialog               */
   InfoDialog       *info_dialog;       /*  image information dialog           */
   GtkWidget        *scale_dialog;      /*  scale (zoom) dialog                */
@@ -146,13 +145,15 @@ struct _GimpDisplayShell
   guint                  filter_idle_id;
   GtkWidget             *filters_dialog;/* color display filter dialog         */
 
-  GdkWindowState    window_state;      /* for fullscreen display              */
-
   gint              paused_count;
 
   GQuark            vectors_freeze_handler;
   GQuark            vectors_thaw_handler;
   GQuark            vectors_visible_handler;
+
+  GdkWindowState    window_state;      /* for fullscreen display              */
+  gboolean          zoom_on_resize;
+  gboolean          show_transform_preview;
 
   GimpDisplayOptions *options;
   GimpDisplayOptions *fullscreen_options;

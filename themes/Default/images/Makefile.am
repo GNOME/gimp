@@ -117,7 +117,8 @@ STOCK_MENU_IMAGES = \
 	stock-video-16.png				\
 	stock-warning-16.png				\
 	stock-wilber-16.png				\
-	stock-web-16.png
+	stock-web-16.png				\
+	stock-zoom-follow-window-12.png
 
 STOCK_BUTTON_IMAGES = \
 	stock-anchor-16.png			\

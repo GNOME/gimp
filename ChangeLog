@@ -1,5 +1,33 @@
 2004-06-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/view-actions.c
+	* app/actions/view-commands.[ch]: added actions & callbacks to
+	configure the canvas padding color.
+
+	* app/widgets/gimphelp-ids.h
+	* menus/image-menu.xml.in: added the actions' help IDs and menu entries.
+
+	* app/display/display-enums.h: added /*< skip >*/'ed enum value
+	GIMP_CANVAS_PADDING_MODE_RESET.
+
+	* app/display/gimpdisplayshell-appearance.c
+	* app/display/gimpdisplayshell-callbacks.[ch]
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell.[ch]: removed the canvas padding
+	button and its popup menu (fixes bug #142996). Instead, added a
+	toggle button which allows to zoom the image when the window is
+	resized (as known from sodipodi, except it doesn't work as nice
+	yet :-) improvements to the algorithm are welcome).
+	Cleaned up the GimpDisplayShell struct a bit and renamed some
+	of its members.
+
+	* libgimpwidgets/gimpstock.[ch]
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-zoom-follow-window-12.png: added new
+	icon for the new display toggle button.
+
+2004-06-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpclonetool.c (gimp_clone_tool_draw): chain up
 	unconditionally now that we draw the brush outline while
 	painting. Fixes brush outline artefacts on button_press and

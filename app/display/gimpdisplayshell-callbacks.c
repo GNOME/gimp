@@ -327,6 +327,34 @@ gimp_display_shell_canvas_configure (GtkWidget         *widget,
   if ((shell->disp_width  != shell->canvas->allocation.width) ||
       (shell->disp_height != shell->canvas->allocation.height))
     {
+      if (shell->zoom_on_resize                 &&
+          shell->disp_width  > 64               &&
+          shell->disp_height > 64               &&
+          shell->canvas->allocation.width  > 64 &&
+          shell->canvas->allocation.height > 64)
+        {
+          gdouble scale;
+          gint    offset_x;
+          gint    offset_y;
+
+          scale = shell->scale;
+
+          /*  multiply the zoom_factor with the ratio of the new and
+           *  old canvas diagonals
+           */
+          scale *= (sqrt (SQR (shell->canvas->allocation.width) +
+                          SQR (shell->canvas->allocation.height)) /
+                    sqrt (SQR (shell->disp_width) +
+                          SQR (shell->disp_height)));
+
+          offset_x = UNSCALEX (shell, shell->offset_x);
+          offset_y = UNSCALEX (shell, shell->offset_y);
+
+          shell->scale    = scale;
+          shell->offset_x = SCALEX (shell, offset_x);
+          shell->offset_y = SCALEY (shell, offset_y);
+        }
+
       shell->disp_width  = shell->canvas->allocation.width;
       shell->disp_height = shell->canvas->allocation.height;
 
@@ -438,7 +466,7 @@ gimp_display_shell_popup_menu (GtkWidget *widget)
   gimp_ui_manager_ui_popup (shell->popup_manager, "/dummy-menubar/image-popup",
                             GTK_WIDGET (shell),
                             gimp_display_shell_origin_menu_position,
-                            shell->origin,
+                            shell->origin_button,
                             NULL, NULL);
 
   return TRUE;
@@ -1417,115 +1445,6 @@ gimp_display_shell_origin_button_press (GtkWidget        *widget,
    * pointer away from us.
    */
   return TRUE;
-}
-
-gboolean
-gimp_display_shell_color_button_press (GtkWidget        *widget,
-                                       GdkEventButton   *bevent,
-                                       GimpDisplayShell *shell)
-{
-  if (bevent->button == 3)
-    {
-      GimpColorButton *color_button;
-      GtkItemFactory  *item_factory;
-      guchar           r, g, b;
-      GimpRGB          color;
-
-      color_button = GIMP_COLOR_BUTTON (widget);
-      item_factory = GTK_ITEM_FACTORY (color_button->popup_menu);
-
-      r = shell->canvas->style->bg[GTK_STATE_NORMAL].red   >> 8;
-      g = shell->canvas->style->bg[GTK_STATE_NORMAL].green >> 8;
-      b = shell->canvas->style->bg[GTK_STATE_NORMAL].blue  >> 8;
-
-      gimp_rgba_set_uchar (&color, r, g, b, 255);
-      gimp_item_factory_set_color (item_factory,
-                                   "/From Theme", &color, FALSE);
-
-      gimp_rgba_set_uchar (&color,
-                           render_blend_light_check[0],
-                           render_blend_light_check[1],
-                           render_blend_light_check[2],
-                           255);
-      gimp_item_factory_set_color (item_factory,
-                                   "/Light Check Color", &color, FALSE);
-
-      gimp_rgba_set_uchar (&color,
-                           render_blend_dark_check[0],
-                           render_blend_dark_check[1],
-                           render_blend_dark_check[2],
-                           255);
-      gimp_item_factory_set_color (item_factory,
-                                   "/Dark Check Color", &color, FALSE);
-    }
-
-  return FALSE;
-}
-
-void
-gimp_display_shell_color_button_changed (GtkWidget        *widget,
-                                         GimpDisplayShell *shell)
-{
-  GimpRGB color;
-
-  if (gimp_display_shell_get_fullscreen (shell))
-    shell->fullscreen_options->padding_mode_set = TRUE;
-  else
-    shell->options->padding_mode_set = TRUE;
-
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget), &color);
-
-  gimp_display_shell_set_padding (shell,
-                                  GIMP_CANVAS_PADDING_MODE_CUSTOM, &color);
-}
-
-void
-gimp_display_shell_color_button_menu_callback (gpointer   callback_data,
-                                               guint      callback_action,
-                                               GtkWidget *widget)
-{
-  GimpDisplayOptions *options;
-  GimpDisplayShell   *shell;
-  gboolean            fullscreen;
-
-  shell = GIMP_DISPLAY_SHELL (callback_data);
-
-  fullscreen = gimp_display_shell_get_fullscreen (shell);
-
-  if (fullscreen)
-    options = shell->fullscreen_options;
-  else
-    options = shell->options;
-
-  if (callback_action == GIMP_CANVAS_PADDING_MODE_CUSTOM)
-    {
-      gtk_button_clicked (GTK_BUTTON (shell->padding_button));
-    }
-  else if (callback_action == 0xffff)
-    {
-      GimpDisplayConfig  *config;
-      GimpDisplayOptions *default_options;
-
-      config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
-
-      options->padding_mode_set = FALSE;
-
-      if (fullscreen)
-        default_options = config->default_fullscreen_view;
-      else
-        default_options = config->default_view;
-
-      gimp_display_shell_set_padding (shell,
-                                      default_options->padding_mode,
-                                      &default_options->padding_color);
-    }
-  else
-    {
-      options->padding_mode_set = TRUE;
-
-      gimp_display_shell_set_padding (shell, callback_action,
-                                      &options->padding_color);
-    }
 }
 
 gboolean

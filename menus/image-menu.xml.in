@@ -203,6 +203,14 @@
       <menuitem action="view-snap-to-guides" />
       <menuitem action="view-show-grid" />
       <menuitem action="view-snap-to-grid" />
+      <menu action="view-padding-color-menu" name="Padding color">
+        <menuitem action="view-padding-color-theme" />
+        <menuitem action="view-padding-color-light-check" />
+        <menuitem action="view-padding-color-dark-check" />
+        <menuitem action="view-padding-color-custom" />
+        <separator />
+        <menuitem action="view-padding-color-prefs" />
+      </menu>
       <separator />
       <menuitem action="view-show-menubar" />
       <menuitem action="view-show-rulers" />

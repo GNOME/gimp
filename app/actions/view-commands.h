@@ -66,6 +66,9 @@ void   view_toggle_grid_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
 void   view_snap_to_grid_cmd_callback          (GtkAction *action,
                                                 gpointer   data);
+void   view_padding_color_cmd_callback         (GtkAction *action,
+                                                gint       value,
+                                                gpointer   data);
 
 void   view_shrink_wrap_cmd_callback           (GtkAction *action,
                                                 gpointer   data);

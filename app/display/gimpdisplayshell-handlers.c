@@ -408,13 +408,13 @@ gimp_display_shell_qmask_changed_handler (GimpImage        *gimage,
 {
   GtkImage *image;
 
-  image = GTK_IMAGE (GTK_BIN (shell->qmask)->child);
+  image = GTK_IMAGE (GTK_BIN (shell->qmask_button)->child);
 
-  g_signal_handlers_block_by_func (shell->qmask,
+  g_signal_handlers_block_by_func (shell->qmask_button,
                                    gimp_display_shell_qmask_toggled,
                                    shell);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmask),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmask_button),
                                 shell->gdisp->gimage->qmask_state);
 
   if (shell->gdisp->gimage->qmask_state)
@@ -422,7 +422,7 @@ gimp_display_shell_qmask_changed_handler (GimpImage        *gimage,
   else
     gtk_image_set_from_stock (image, GIMP_STOCK_QMASK_OFF, GTK_ICON_SIZE_MENU);
 
-  g_signal_handlers_unblock_by_func (shell->qmask,
+  g_signal_handlers_unblock_by_func (shell->qmask_button,
                                      gimp_display_shell_qmask_toggled,
                                      shell);
 }

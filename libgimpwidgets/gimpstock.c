@@ -496,6 +496,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_MOVE_TO_SCREEN,           stock_move_to_screen_16           },
   { GIMP_STOCK_DEFAULT_COLORS,           stock_default_colors_12           },
   { GIMP_STOCK_SWAP_COLORS,              stock_swap_colors_12              },
+  { GIMP_STOCK_ZOOM_FOLLOW_WINDOW,       stock_zoom_follow_window_12       },
 
   { GIMP_STOCK_GRADIENT_LINEAR,               stock_gradient_linear_16               },
   { GIMP_STOCK_GRADIENT_BILINEAR,             stock_gradient_bilinear_16             },
