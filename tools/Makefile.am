@@ -11,3 +11,5 @@ endif
 #endif
 
 SUBDIRS = $(D_pdbgen) #$(D_gcg)
+
+EXTRA_DIST = kernelgen.c

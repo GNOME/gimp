@@ -545,19 +545,19 @@ gboolean
 gimage_mask_stroke (GImage       *gimage,
 		    GimpDrawable *drawable)
 {
-  BoundSeg *bs_in;
-  BoundSeg *bs_out;
-  gint num_segs_in;
-  gint num_segs_out;
-  BoundSeg *stroke_segs;
-  gint num_strokes;
-  gint seg;
-  gint offx, offy;
-  gint i;
-  gdouble *stroke_points;
-  gint cpnt;
-  Argument *return_vals;
-  gint nreturn_vals;
+  BoundSeg  *bs_in;
+  BoundSeg  *bs_out;
+  gint       num_segs_in;
+  gint       num_segs_out;
+  BoundSeg  *stroke_segs;
+  gint       num_strokes;
+  gint       seg;
+  gint       offx, offy;
+  gint       i;
+  gdouble   *stroke_points;
+  gint       cpnt;
+  Argument  *return_vals;
+  gint       nreturn_vals;
 
   if (! gimage_mask_boundary (gimage, &bs_in, &bs_out,
 			      &num_segs_in, &num_segs_out))
@@ -582,8 +582,10 @@ gimage_mask_stroke (GImage       *gimage,
   /* Largest array required (may be used in segments!) */
   stroke_points = g_malloc (sizeof (gdouble) * 2 * (num_segs_in + 4));
 
-  stroke_points[cpnt++] = (gdouble)(stroke_segs[0].x1 - offx);
-  stroke_points[cpnt++] = (gdouble)(stroke_segs[0].y1 - offy);
+  /* we offset all coordinates by 0.5 to align the brush with the path */
+
+  stroke_points[cpnt++] = (gdouble)(stroke_segs[0].x1 - offx + 0.5);
+  stroke_points[cpnt++] = (gdouble)(stroke_segs[0].y1 - offy + 0.5);
 
   for (i = 0; i < num_strokes; i++)
     {
@@ -592,12 +594,12 @@ gimage_mask_stroke (GImage       *gimage,
 	      stroke_segs[seg].y1 != -1 ||
 	      stroke_segs[seg].y2 != -1))
 	{
-	  stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].x2 - offx);
-	  stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].y2 - offy);
+	  stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].x2 - offx + 0.5);
+	  stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].y2 - offy + 0.5);
 	  seg ++;
 	}
 
-      /* Close the stroke poitns up */
+      /* Close the stroke points up */
       stroke_points[cpnt++] = stroke_points[0];
       stroke_points[cpnt++] = stroke_points[1];
 
@@ -621,8 +623,8 @@ gimage_mask_stroke (GImage       *gimage,
       
       cpnt = 0;
       seg ++;
-      stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].x1 - offx);
-      stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].y1 - offy);
+      stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].x1 - offx + 0.5);
+      stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].y1 - offy + 0.5);
     }
 
   /*  cleanup  */
@@ -635,3 +637,9 @@ gimage_mask_stroke (GImage       *gimage,
 
   return TRUE;
 }
+
+
+
+
+
+

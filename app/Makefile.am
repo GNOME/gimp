@@ -312,6 +312,7 @@ gimp_SOURCES = \
 	paletteP.h		\
 	paint_core.c		\
 	paint_core.h		\
+	paint_core_kernels.h	\
 	paint_funcs.c		\
 	paint_funcs.h		\
 	paint_options.h		\

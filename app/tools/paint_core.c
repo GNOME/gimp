@@ -42,6 +42,8 @@
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimpintl.h"
 
+#include "paint_core_kernels.h"
+
 /*  target size  */
 #define  TARGET_HEIGHT  15
 #define  TARGET_WIDTH   15
@@ -96,7 +98,7 @@ static MaskBuf *  pressure_brush;
 static MaskBuf *  solid_brush;
 static MaskBuf *  scale_brush = NULL;
 static MaskBuf *  scale_pixmap = NULL;
-static MaskBuf *  kernel_brushes[5][5];
+static MaskBuf *  kernel_brushes[SUBSAMPLE + 1][SUBSAMPLE + 1];
 
 
 /*  paint buffers utility functions  */
@@ -110,47 +112,6 @@ static void        paint_line_pixmap_mask (GImage *, GimpDrawable *,
 /***********************************************************************/
 
 
-#define KERNEL_WIDTH   3
-#define KERNEL_HEIGHT  3
-
-/*  Brush pixel subsampling kernels  */
-static const int subsample[5][5][9] = {
-	{
-		{ 64, 64, 0, 64, 64, 0, 0, 0, 0, },
-		{ 32, 96, 0, 32, 96, 0, 0, 0, 0, },
-		{ 0, 128, 0, 0, 128, 0, 0, 0, 0, },
-		{ 0, 96, 32, 0, 96, 32, 0, 0, 0, },
-		{ 0, 64, 64, 0, 64, 64, 0, 0, 0, },
-	},
-	{
-		{ 32, 32, 0, 96, 96, 0, 0, 0, 0, },
-		{ 16, 48, 0, 48, 144, 0, 0, 0, 0, },
-		{ 0, 64, 0, 0, 192, 0, 0, 0, 0, },
-		{ 0, 48, 16, 0, 144, 48, 0, 0, 0, },
-		{ 0, 32, 32, 0, 96, 96, 0, 0, 0, },
-	},
-	{
-		{ 0, 0, 0, 128, 128, 0, 0, 0, 0, },
-		{ 0, 0, 0, 64, 192, 0, 0, 0, 0, },
-		{ 0, 0, 0, 0, 256, 0, 0, 0, 0, },
-		{ 0, 0, 0, 0, 192, 64, 0, 0, 0, },
-		{ 0, 0, 0, 0, 128, 128, 0, 0, 0, },
-	},
-	{
-		{ 0, 0, 0, 96, 96, 0, 32, 32, 0, },
-		{ 0, 0, 0, 48, 144, 0, 16, 48, 0, },
-		{ 0, 0, 0, 0, 192, 0, 0, 64, 0, },
-		{ 0, 0, 0, 0, 144, 48, 0, 48, 16, },
-		{ 0, 0, 0, 0, 96, 96, 0, 32, 32, },
-	},
-	{
-		{ 0, 0, 0, 64, 64, 0, 64, 64, 0, },
-		{ 0, 0, 0, 32, 96, 0, 32, 96, 0, },
-		{ 0, 0, 0, 0, 128, 0, 0, 128, 0, },
-		{ 0, 0, 0, 0, 96, 32, 0, 96, 32, },
-		{ 0, 0, 0, 0, 64, 64, 0, 64, 64, },
-	},
-};
 
 static void
 paint_core_sample_color (GimpDrawable *drawable, 
@@ -1196,12 +1157,12 @@ paint_core_subsample_mask (MaskBuf *mask,
   gint r, s;
 
   x += (x < 0) ? mask->width : 0;
-  left = x - floor(x) + 0.125;
-  index1 = (int) (left * 4);
+  left = x - floor(x);
+  index1 = (int) (left * (gdouble)(SUBSAMPLE + 1));
 
   y += (y < 0) ? mask->height : 0;
-  left = y - floor(y) + 0.125;
-  index2 = (int) (left * 4);
+  left = y - floor(y);
+  index2 = (int) (left * (gdouble)(SUBSAMPLE + 1));
 
   kernel = subsample[index2][index1];
 
@@ -1209,8 +1170,8 @@ paint_core_subsample_mask (MaskBuf *mask,
       !cache_invalid)
     return kernel_brushes[index2][index1];
   else if (mask != last_brush_mask || cache_invalid)
-    for (i = 0; i < 5; i++)
-      for (j = 0; j < 5; j++)
+    for (i = 0; i <= SUBSAMPLE; i++)
+      for (j = 0; j <= SUBSAMPLE; j++)
 	{
 	  if (kernel_brushes[i][j])
 	    mask_buf_free (kernel_brushes[i][j]);
@@ -1219,7 +1180,8 @@ paint_core_subsample_mask (MaskBuf *mask,
 
   last_brush_mask = mask;
   cache_invalid = FALSE;
-  kernel_brushes[index2][index1] = mask_buf_new (mask->width + 2, mask->height + 2);
+  kernel_brushes[index2][index1] = 
+    mask_buf_new (mask->width + 2, mask->height + 2);
   dest = kernel_brushes[index2][index1];
 
   m = mask_buf_data (mask);

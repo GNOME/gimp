@@ -1,0 +1,125 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * kernel_gen -- Copyright (C) 2000 Sven Neumann <sven@gimp.org> 
+ *    Simple hack to create subsampling kernels for the brushes
+ *    as used in app/paint_core.c.
+ *    If you want to play with it, change some of the #defines at the
+ *    top and copy the output to apps/paint_core_kernels.h.
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+#include <math.h>
+#include <stdio.h>
+
+
+#define STEPS          64
+#define KERNEL_WIDTH    3     /*  changing these makes no sense  */
+#define KERNEL_HEIGHT   3     /*  changing these makes no sense  */
+#define SUBSAMPLE       4
+#define THRESHOLD       0.25  /*  try to change this one         */
+
+#define SQR(x) ((x) * (x))
+
+static void
+create_kernel (double x,
+	       double y)
+{
+  double value[KERNEL_WIDTH][KERNEL_HEIGHT];
+  double dist_x;
+  double dist_y;
+  double sum;
+  double w;
+  int i, j;
+
+  memset (value, 0, KERNEL_WIDTH * KERNEL_HEIGHT * sizeof (double));
+  sum = 0.0;
+
+  x += 1.0;
+  y += 1.0;
+
+  for (j = 0; j < STEPS * KERNEL_HEIGHT; j++)
+    {
+      dist_y = y - (((double)j + 0.5) / (double)STEPS);
+
+      for (i = 0; i < STEPS * KERNEL_WIDTH; i++)
+	{
+	  dist_x = x - (((double)i + 0.5) / (double)STEPS);
+	  
+	  /*  I've tried to use a gauss function here instead of a
+	      threshold, but the result was not that impressive.    */
+	  w = (SQR (dist_x) + SQR (dist_y)) < THRESHOLD ? 1.0 : 0.0;
+
+	  value[i / STEPS][j / STEPS] += w;
+	  sum += w;
+	}
+    }
+
+  for (j = 0; j < KERNEL_HEIGHT; j++)
+    {
+      for (i = 0; i < KERNEL_WIDTH; i++)
+	{
+	  w = 256.0 * (value[i][j] / sum);
+	  printf (" %3d,", (int)w);
+	}
+    }    
+}
+
+int 
+main (int    argc,
+      char **argv)
+{
+  int    i, j;
+  double x, y;
+
+  printf ("/* paint_core_kernels.h\n"
+	  " *\n"
+	  " *   This file was generated using kernelgen as found in the tools dir.\n");
+  printf (" *   (threshold = %g)\n", THRESHOLD);
+  printf (" */\n\n");
+  printf ("#define KERNEL_WIDTH   %d\n", KERNEL_WIDTH);
+  printf ("#define KERNEL_HEIGHT  %d\n", KERNEL_HEIGHT);
+  printf ("#define SUBSAMPLE      %d\n", SUBSAMPLE);
+  printf ("\n\n");
+  printf ("/*  Brush pixel subsampling kernels  */\n");
+  printf ("static const int subsample[%d][%d][%d] = {\n",
+	  SUBSAMPLE + 1, SUBSAMPLE + 1, KERNEL_WIDTH * KERNEL_HEIGHT);
+  
+  for (j = 0; j <= SUBSAMPLE; j++)
+    {
+      y = (double)j / (double)(SUBSAMPLE);
+ 
+      printf ("  {\n");  
+
+      for (i = 0; i <= SUBSAMPLE; i++)
+	{
+	  x = (double)i / (double)(SUBSAMPLE);
+
+	  printf ("    {");
+	  create_kernel (x, y);
+	  printf (" }%c\n", i < SUBSAMPLE ? ',' : ' ');
+	}
+
+      printf ("  }%c\n", j < SUBSAMPLE ? ',' : ' ');
+    }
+
+  printf ("};\n");
+}
+
+
+
+
+
+
