@@ -1,9 +1,19 @@
 2002-11-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/mapcolor.c: fixed stupid bug that caused this
+	plug-in to map to undefined values. Spotted by David Necas (#97780).
+
+	* tools/authorsgen/contributors: added some names.
+
+	* AUTHORS
+	* app/gui/authors.h: regenerated.
+
+2002-11-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gflare/gflare.c: applied a couple of patches from
-	yeti@physics.muni.cz that fix various issues with the GFlare
-	plug-in. Most of these were introduced when doing the (still
-	unfinished) port to GTK+-2.0 (#97761, #97764, #97765).
+	David Necas <yeti@physics.muni.cz> that fix various issues with
+	the GFlare plug-in. Most of these were introduced when doing the
+	(still unfinished) port to GTK+-2.0 (#97761, #97764, #97765).
 
 	Did some more changes while I was on it...
 

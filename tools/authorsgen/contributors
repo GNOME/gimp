@@ -1,13 +1,13 @@
-# This file lists all GIMP authors and contributors. 
+# This file is supposed to list all GIMP authors and contributors. 
 #
 # Please do always modify this file, then run authorgen.pl
-# to create the files AUTHORS, gimp.1.in and app/authors.h.  
+# to create the files AUTHORS and app/authors.h.  
 #
 # The format is one name per line in alphabetical order. 
 # Names are 7bit ASCII. To include special characters, append
 # an UTF-8 encoded string in brackets on the same line. 
 #
-# Spencer Kimball and Peter Mattis are always listed separatly.
+# Spencer Kimball and Peter Mattis are always listed separately.
 #
 Lauri Alanko
 Shawn Amundson
@@ -62,7 +62,7 @@ Marcelo de Gomensoro Malheiros
 Pavel Grinfeld
 Michael Hammel
 Henrik Hansen
-Ville Hautamaki [Ville Hautamäki]
+Ville Hautamaki [Ville Hautam¤ki]
 James Henstridge
 Eric Hernes
 David Hodson
@@ -124,12 +124,15 @@ Stephen Robert Norris
 Tim Newsome
 Erik Nygren
 Miles O'Neal
+David Neary
+David Necas
 David Odin 
 Thom van Os
 Garry R. Osgood
 Alan Paeth
 Jay Painter
 Sergey Panov
+Ville Patsi [Ville Pätsi]
 Asbjorn Pettersen
 Mike Phillips
 Artur Polaczynski
@@ -140,6 +143,7 @@ Jens Restemeier
 Maurits Rijk
 Daniel Risacher
 James Robinson
+Guillermo S. Romero
 Tim Rowley
 Pablo Saratxaga
 Mike Schaeffer
@@ -153,6 +157,7 @@ Aaron Sherman
 Manish Singh
 Daniel Skarda
 Adam Spiers
+Jakub Steiner
 Nathan Summers
 Mike Sweet
 Yuri Syrota

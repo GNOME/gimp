@@ -721,7 +721,10 @@ get_mapping (GimpRGB *src_col1,
           if (b == a) 
 	    b = a + 1;
 	  for (i = 0; i < 256; i++)
-	    j = CLAMP (((i - a) * (bs - as)) / (b - a) + as, 0, 255);
+            {
+              j = CLAMP (((i - a) * (bs - as)) / (b - a) + as, 0, 255);
+              colormap[rgb][i] = j;
+            }
 	}
       break;
     }
