@@ -327,8 +327,7 @@ run (const gchar      *name,
     }
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_progress_init (_("Decomposing..."));
+      gimp_progress_init (_("Decomposing..."));
 
       num_images = decompose (param[1].data.d_image, param[2].data.d_drawable,
                               decovals.extract_type, image_ID_extract);
@@ -511,8 +510,7 @@ decompose (gint32  image_ID,
 				 scan_lines);
       i += scan_lines;
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_progress_update (((gdouble)i) / (gdouble)height);
+      gimp_progress_update ((gdouble) i / (gdouble) height);
     }
 
   g_free (src);

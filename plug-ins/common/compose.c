@@ -410,8 +410,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_progress_init (_("Composing..."));
+      gimp_progress_init (_("Composing..."));
 
       image_ID = compose (composevals.compose_type,
 			  composevals.compose_ID,
@@ -572,8 +571,7 @@ compose (const gchar *compose_type,
 
       i += scan_lines;
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_progress_update (((gdouble)i) / (gdouble)height);
+      gimp_progress_update ((gdouble) i / (gdouble) height);
     }
 
   for (j = 0; j < num_images; j++)

@@ -323,8 +323,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_progress_init (_("Composing Images..."));
+      gimp_progress_init (_("Composing Images..."));
 
       image_ID = film ();
 
@@ -537,9 +536,8 @@ film (void)
 
 	  picture_x0 += picture_width + (picture_space/2);
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_progress_update (((gdouble) (picture_count + 1)) /
-				  (gdouble) num_pictures);
+          gimp_progress_update (((gdouble) (picture_count + 1)) /
+                                (gdouble) num_pictures);
 
 	  picture_count++;
 	}

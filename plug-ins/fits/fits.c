@@ -456,15 +456,13 @@ save_image (const gchar *filename,
       return (FALSE);
     }
 
-  if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
-    {
-      temp = g_strdup_printf (_("Saving '%s'..."),
-                              gimp_filename_to_utf8 (filename));
-      gimp_progress_init (temp);
-      g_free (temp);
-    }
+  temp = g_strdup_printf (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
+  gimp_progress_init (temp);
+  g_free (temp);
 
-  if ((drawable_type == GIMP_INDEXED_IMAGE) || (drawable_type == GIMP_INDEXEDA_IMAGE))
+  if ((drawable_type == GIMP_INDEXED_IMAGE) ||
+      (drawable_type == GIMP_INDEXEDA_IMAGE))
     retval = save_index (ofp,image_ID, drawable_ID);
   else
     retval = save_direct (ofp,image_ID, drawable_ID);
@@ -604,8 +602,8 @@ load_fits (const gchar *filename,
 
 	  scan_lines++;
 
-	  if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
-	    gimp_progress_update ((double)(i+1) / (double)height);
+	  if ((i % 20) == 0)
+	    gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
 
 	  if ((scan_lines == tile_height) || ((i+1) == height))
 	    {
@@ -656,9 +654,9 @@ load_fits (const gchar *filename,
 	      dest -= width*ncompose;
 	      scan_lines++;
 
-	      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
-		gimp_progress_update (  (double)(channel*height+i+1)
-					/ (double)(height*ncompose));
+	      if ((i % 20) == 0)
+		gimp_progress_update ((gdouble) (channel * height + i + 1) /
+                                      (gdouble) (height * ncompose));
 
 	      if ((scan_lines == tile_height) || ((i+1) == height))
 		{
@@ -810,8 +808,9 @@ save_direct (FITS_FILE *ofp,
 	  nbytes += bpsl;
 	  src -= 2*bpsl;
 
-	  if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
-	    gimp_progress_update ((double)(i+channel*height)/(double)(height*bpp));
+	  if ((i % 20) == 0)
+	    gimp_progress_update ((gdouble) (i + channel * height) /
+                                  (gdouble) (height * bpp));
 	}
     }
 
@@ -909,9 +908,9 @@ save_index (FITS_FILE *ofp,
 	  src -= 2*bpsl;
 	}
 
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
-	gimp_progress_update ((double) (i+channel*height) /
-			      (double) (height*(bpp+2)));
+      if ((i % 20) == 0)
+	gimp_progress_update ((gdouble) (i + channel * height) /
+			      (gdouble) (height * (bpp + 2)));
     }
 
   /* Write the Alpha-channel */
@@ -934,9 +933,9 @@ save_index (FITS_FILE *ofp,
 	  src -= 2*bpsl;
 	}
 
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
-	gimp_progress_update ((double) (i+channel*height) /
-			      (double) (height*(bpp+2)));
+      if ((i % 20) == 0)
+	gimp_progress_update ((gdouble) (i + channel * height) /
+			      (gdouble) (height * (bpp + 2)));
     }
 
   nbytes = nbytes % FITS_RECORD_SIZE;

@@ -174,9 +174,7 @@ run (const gchar      *name,
       if (gimp_drawable_is_rgb (drawable->drawable_id) &&
 	  gimp_drawable_is_layer (drawable->drawable_id))
 	{
-          if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_progress_init (_("Removing color..."));
-
+          gimp_progress_init (_("Removing color..."));
 	  toalpha (drawable);
 	}
 
