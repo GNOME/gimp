@@ -57,6 +57,7 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #include "curl0.xpm"
@@ -553,16 +554,14 @@ do_dialog (void)
      to original drawable / Warp-curl (unsupported yet) */
 
   GtkWidget *dialog;
-  GtkWidget *orhbox1;
-  GtkWidget *orhbox2;
+  GtkWidget *hbox;
   GtkWidget *vbox;
-  GtkWidget *ivbox;
-  GtkWidget *corner_frame;
-  GtkWidget *orient_frame;
+  GtkWidget *vbox2;
+  GtkWidget *table;
+  GtkWidget *frame;
   GtkWidget *shade_button;
   GtkWidget *gradient_button;
   GtkWidget *button;
-  GtkWidget *label;
   GtkWidget *scale;
   GtkStyle  *style;
   GtkObject *adjustment;
@@ -602,8 +601,14 @@ do_dialog (void)
    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox, TRUE, TRUE, 0);
    gtk_widget_show (vbox);
 
-   orhbox1 = gtk_hbox_new (FALSE, 4);
-   gtk_box_pack_start (GTK_BOX (vbox), orhbox1, FALSE, FALSE, 0);
+   frame = gtk_frame_new (_("Curl Location"));
+   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+
+   table = gtk_table_new (3, 3, FALSE);
+   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+   gtk_container_add (GTK_CONTAINER (frame), table);
 
    style = gtk_widget_get_style (dialog);
    gdk_curl_pixmaps[0] =
@@ -653,22 +658,15 @@ do_dialog (void)
       pixmapindex = 0;
    curl_pixmap_widget = gtk_pixmap_new (gdk_curl_pixmaps[pixmapindex],
 					gdk_curl_masks[pixmapindex]);
-   gtk_box_pack_start (GTK_BOX (orhbox1), curl_pixmap_widget,
-		       FALSE, FALSE, 0);
+   gtk_table_attach (GTK_TABLE (table), curl_pixmap_widget, 1, 2, 1, 2,
+		     GTK_SHRINK, GTK_SHRINK, 0, 0);
    gtk_widget_show (curl_pixmap_widget);
-
-   corner_frame = gtk_frame_new ( _("Curl Location"));
-   gtk_frame_set_shadow_type (GTK_FRAME (corner_frame), GTK_SHADOW_ETCHED_IN);
-   gtk_box_pack_start (GTK_BOX (orhbox1), corner_frame, TRUE, TRUE, 0);
-
-   ivbox = gtk_vbox_new (FALSE, 1);
-   gtk_container_set_border_width (GTK_CONTAINER (ivbox), 2);
-   gtk_container_add (GTK_CONTAINER (corner_frame), ivbox);
 
    {
      gint i;
      gchar *name[] =
-     { N_("Upper Left"),
+     {
+       N_("Upper Left"),
        N_("Upper Right"),
        N_("Lower Left"),
        N_("Lower Right")
@@ -690,22 +688,25 @@ do_dialog (void)
 			     GTK_SIGNAL_FUNC (dialog_toggle_update),
 			     (gpointer) i);
 
-	 gtk_box_pack_start (GTK_BOX (ivbox), button, FALSE, FALSE, 0);
+	 gtk_table_attach (GTK_TABLE (table), button,
+			   (i % 2) ? 2 : 0, (i % 2) ? 3 : 1,
+			   (i < 2) ? 0 : 2, (i < 2) ? 1 : 3,
+			   GTK_SHRINK, GTK_SHRINK, 0, 0);
+
 	 gtk_widget_show (button);
        }
    }
 
-   gtk_widget_show (ivbox);
-   gtk_widget_show (corner_frame);
-   gtk_widget_show (orhbox1);
+   gtk_widget_show (table);
+   gtk_widget_show (frame);
 
-   orient_frame = gtk_frame_new ( _("Curl Orientation"));
-   gtk_frame_set_shadow_type (GTK_FRAME (orient_frame), GTK_SHADOW_ETCHED_IN);
-   gtk_box_pack_start (GTK_BOX (vbox), orient_frame, FALSE, FALSE, 0);
+   frame = gtk_frame_new ( _("Curl Orientation"));
+   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-   orhbox2 = gtk_hbox_new (FALSE, 4);
-   gtk_container_border_width (GTK_CONTAINER (orhbox2), 2);
-   gtk_container_add (GTK_CONTAINER (orient_frame), orhbox2);
+   hbox = gtk_hbox_new (FALSE, 4);
+   gtk_container_border_width (GTK_CONTAINER (hbox), 2);
+   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
    {
      gint i;
@@ -730,15 +731,15 @@ do_dialog (void)
 			     GTK_SIGNAL_FUNC (dialog_toggle_update),
 			     (gpointer) (i + 5));
 
-	 gtk_box_pack_start (GTK_BOX (orhbox2), button, TRUE, FALSE, 0);
+	 gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 	 gtk_widget_show (button);
        }
    }
 
-   gtk_widget_show (orhbox2);
-   gtk_widget_show (orient_frame);
+   gtk_widget_show (hbox);
+   gtk_widget_show (frame);
 
-   shade_button = gtk_check_button_new_with_label ( _("Shade under Curl"));
+   shade_button = gtk_check_button_new_with_label (_("Shade under Curl"));
    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shade_button),
 				 curl.do_shade_under ? TRUE : FALSE);
    gtk_signal_connect (GTK_OBJECT (shade_button), "toggled",
@@ -748,7 +749,10 @@ do_dialog (void)
    gtk_widget_show (shade_button);
 
    gradient_button =
-     gtk_check_button_new_with_label (_("Use Current Gradient\ninstead of FG/BG-Color"));
+     gtk_check_button_new_with_label (_("Use Current Gradient\n"
+					"instead of FG/BG-Color"));
+   gtk_label_set_justify (GTK_LABEL (GTK_BIN (gradient_button)->child),
+			  GTK_JUSTIFY_LEFT);
    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gradient_button),
 				 curl.do_curl_gradient ? TRUE : FALSE);
    gtk_signal_connect (GTK_OBJECT (gradient_button), "toggled",
@@ -757,10 +761,14 @@ do_dialog (void)
    gtk_box_pack_start (GTK_BOX (vbox), gradient_button, FALSE, FALSE, 0);
    gtk_widget_show (gradient_button);
 
-   label = gtk_label_new (_("Curl Opacity"));
-   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-   gtk_widget_show (label);
+   frame = gtk_frame_new (_("Curl Opacity"));
+   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+   gtk_widget_show (frame);
+
+   vbox2 = gtk_vbox_new (FALSE, 0);
+   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+   gtk_container_add (GTK_CONTAINER (frame), vbox2);
+   gtk_widget_show (vbox2);
 
    adjustment = gtk_adjustment_new (curl.do_curl_opacity * 100, 0.0, 100.0,
 				    1.0, 1.0, 0.0);
@@ -773,7 +781,7 @@ do_dialog (void)
    gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
    gtk_scale_set_digits (GTK_SCALE (scale), 0);
    gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
-   gtk_box_pack_start (GTK_BOX (vbox), scale, TRUE, FALSE, 0);
+   gtk_box_pack_start (GTK_BOX (vbox2), scale, TRUE, FALSE, 0);
    gtk_widget_show (scale);
 
    gtk_widget_show (dialog);
