@@ -1134,6 +1134,7 @@ channel_widget_button_events (GtkWidget *widget,
   static int exclusive;
   ChannelWidget *channel_widget;
   GtkWidget *event_widget;
+  GdkEventButton *bevent;
   gint return_val;
   int visible;
   int width, height;
@@ -1164,6 +1165,13 @@ channel_widget_button_events (GtkWidget *widget,
 
     case GDK_BUTTON_PRESS:
       return_val = TRUE;
+
+      bevent = (GdkEventButton *) event;
+
+      if (bevent->button == 3) {
+	gtk_menu_popup (GTK_MENU (channelsD->ops_menu), NULL, NULL, NULL, NULL, 3, bevent->time);
+	return TRUE;
+      }
 
       button_down = 1;
       click_widget = widget;
@@ -1249,6 +1257,7 @@ channel_widget_preview_events (GtkWidget *widget,
 			       GdkEvent  *event)
 {
   GdkEventExpose *eevent;
+  GdkEventButton *bevent;
   ChannelWidget *channel_widget;
   int valid;
 
@@ -1256,6 +1265,16 @@ channel_widget_preview_events (GtkWidget *widget,
 
   switch (event->type)
     {
+    case GDK_BUTTON_PRESS:
+
+      bevent = (GdkEventButton *) event;
+
+      if (bevent->button == 3) {
+	gtk_menu_popup (GTK_MENU (channelsD->ops_menu), NULL, NULL, NULL, NULL, 3, bevent->time);
+	return TRUE;
+      }
+      break;
+
     case GDK_EXPOSE:
       if (!preview_size)
 	channel_widget_no_preview_redraw (channel_widget);

@@ -2074,6 +2074,7 @@ layer_widget_button_events (GtkWidget *widget,
   static int exclusive;
   LayerWidget *layer_widget;
   GtkWidget *event_widget;
+  GdkEventButton *bevent;
   gint return_val;
 
   layer_widget = (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
@@ -2093,10 +2094,17 @@ layer_widget_button_events (GtkWidget *widget,
     case GDK_BUTTON_PRESS:
       return_val = TRUE;
 
+      bevent = (GdkEventButton *) event;
+
+      if (bevent->button == 3) {
+	gtk_menu_popup (GTK_MENU (layersD->ops_menu), NULL, NULL, NULL, NULL, 3, bevent->time);
+	return TRUE;
+      }
+
       button_down = 1;
       click_widget = widget;
       gtk_grab_add (click_widget);
-
+      
       if (widget == layer_widget->eye_widget)
 	{
 	  old_state = GIMP_DRAWABLE(layer_widget->layer)->visible;
@@ -2193,6 +2201,7 @@ layer_widget_preview_events (GtkWidget *widget,
 {
   GdkEventExpose *eevent;
   GdkPixmap **pixmap;
+  GdkEventButton *bevent;
   LayerWidget *layer_widget;
   int valid;
   int preview_type;
@@ -2229,6 +2238,13 @@ layer_widget_preview_events (GtkWidget *widget,
     {
     case GDK_BUTTON_PRESS:
       /*  Control-button press disables the application of the mask  */
+      bevent = (GdkEventButton *) event;
+      
+      if (bevent->button == 3) {
+	gtk_menu_popup (GTK_MENU (layersD->ops_menu), NULL, NULL, NULL, NULL, 3, bevent->time);
+	return TRUE;
+      }
+
       if (event->button.state & GDK_CONTROL_MASK)
 	{
 	  if (preview_type == MASK_PREVIEW)
