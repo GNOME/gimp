@@ -29,6 +29,8 @@
 #define  WAIT_ANY -1
 #endif   /*  WAIT_ANY  */
 
+#include "libgimp/gimpfeatures.h"
+
 #include "appenv.h"
 #include "app_procs.h"
 #include "errors.h"

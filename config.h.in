@@ -49,11 +49,6 @@
 /* Define if you can safely include both <sys/time.h> and <time.h>.  */
 #undef TIME_WITH_SYS_TIME
 
-#undef GIMP_MAJOR_VERSION
-#undef GIMP_MINOR_VERSION
-#undef GIMP_MICRO_VERSION
-#undef GIMP_VERSION
-
 #undef HAVE_DIRENT_H
 #undef HAVE_DOPRNT
 #undef HAVE_IPC_H
