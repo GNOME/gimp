@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2001-10-10 12:09+0200\n"
-"PO-Revision-Date: 2001-10-10 12:11+0200\n"
+"POT-Creation-Date: 2001-10-30 17:53+0100\n"
+"PO-Revision-Date: 2001-10-30 17:53+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,6 +25,8 @@ msgid "Script-Fu Console"
 msgstr "Script-Fu-konsoll"
 
 #. Action area
+#: plug-ins/dbbrowser/dbbrowser_utils.c:159
+#: plug-ins/dbbrowser/dbbrowser_utils.c:176
 #: plug-ins/script-fu/script-fu-console.c:199
 #: plug-ins/script-fu/script-fu-scripts.c:2033
 msgid "Close"
@@ -46,7 +48,7 @@ msgstr "Bläddra..."
 
 #: plug-ins/script-fu/script-fu-console.c:579
 msgid "Unable to open SIOD output pipe"
-msgstr "Kan inte öppna SIOD-utdatarör"
+msgstr "Kan inte öppna SIOD-utdataröret"
 
 #: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open a stream on the SIOD output pipe"
@@ -128,14 +130,18 @@ msgstr ""
 "Åtminstone en av typsnitten du angett är ogiltigt.\n"
 "Var vänlig och kontrollera dina inställningar.\n"
 
+#. show the author & the copyright
+#: plug-ins/dbbrowser/dbbrowser_utils.c:518
 #: plug-ins/script-fu/script-fu-scripts.c:2004
 msgid "Author:"
 msgstr "Författare:"
 
+#: plug-ins/dbbrowser/dbbrowser_utils.c:548
 #: plug-ins/script-fu/script-fu-scripts.c:2010
 msgid "Copyright:"
 msgstr "Copyright:"
 
+#: plug-ins/dbbrowser/dbbrowser_utils.c:533
 #: plug-ins/script-fu/script-fu-scripts.c:2016
 msgid "Date:"
 msgstr "Datum:"
@@ -186,6 +192,67 @@ msgstr "Läs om alla tillgängliga skript..."
 #: plug-ins/script-fu/script-fu.c:1110
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Utökningar/Script-Fu/Uppdatera"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:148
+#: plug-ins/dbbrowser/dbbrowser_utils.c:167
+msgid "DB Browser (init...)"
+msgstr "DB-bläddrare (init...)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:153
+#: plug-ins/dbbrowser/dbbrowser_utils.c:172
+msgid "Search by Name"
+msgstr "Sök efter namn"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:155
+#: plug-ins/dbbrowser/dbbrowser_utils.c:174
+msgid "Search by Blurb"
+msgstr "Sök efter blurb"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:157
+msgid "Apply"
+msgstr "Verkställ"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:226
+msgid "Search:"
+msgstr "Sök:"
+
+#. show the name
+#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+msgid "Name:"
+msgstr "Namn:"
+
+#. show the description
+#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+msgid "Blurb:"
+msgstr "Blurb:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:382
+msgid "In:"
+msgstr "In:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:429
+msgid "Out:"
+msgstr "Ut:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:479
+msgid "Help:"
+msgstr "Hjälp:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:643
+msgid "DB Browser (by name - please wait)"
+msgstr "DB-bläddrare (efter namn - var vänlig vänta)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:667
+msgid "DB Browser (by blurb - please wait)"
+msgstr "DB-bläddrare (efter blurb - var vänlig vänta)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:677
+msgid "DB Browser (please wait)"
+msgstr "DB-bläddrare (var vänlig vänta)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:743
+msgid "DB Browser"
+msgstr "DB-bläddrare"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
@@ -2202,11 +2269,35 @@ msgstr "Bredd"
 msgid "Work on Copy"
 msgstr "Arbeta på kopia"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documentation"
-#~ msgstr "<Toolbox>/Utökningar/Webbläsare/GIMP.ORG/Dokumentation"
+#~ msgid ""
+#~ "Burn-In: Need two layers in total!\n"
+#~ "        A foreground text layer with transparency\n"
+#~ "        and a background layer.\n"
+#~ msgstr ""
+#~ "Inbränning: Behöver totalt två lager!\n"
+#~ "        Ett förgrundstextlager med transparens\n"
+#~ "        och ett bakgrundslager.\n"
 
 #~ msgid "Add Glowing"
 #~ msgstr "Lägg till glöd"
 
 #~ msgid "After Glow"
 #~ msgstr "Efterglöd"
+
+#~ msgid "Corona Width"
+#~ msgstr "Koronabredd"
+
+#~ msgid "Fadeout Width"
+#~ msgstr "Utfasningsbredd"
+
+#~ msgid "Fadeout"
+#~ msgstr "Utfasning"
+
+#~ msgid "Prepare for GIF"
+#~ msgstr "Förbered för GIF"
+
+#~ msgid "Speed (pixels/frame)"
+#~ msgstr "Hastighet (bildpunkter/ram)"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documentation"
+#~ msgstr "<Toolbox>/Utökningar/Webbläsare/GIMP.ORG/Dokumentation"
