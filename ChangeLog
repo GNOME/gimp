@@ -1,3 +1,9 @@
+2000-12-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/color_cmds.c
+	* tools/pdbgen/pdb/color.pdb: my last s/rangechanged/range_changed/
+	somehow was not really "g" ;)
+
 2000-12-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/sunras.c: applied gimp-kirchgessner-001220-0

@@ -606,9 +606,9 @@ HELP
       htd.histogram = histogram_widget_new (HISTOGRAM_WIDTH,
 					    HISTOGRAM_HEIGHT);
 
-      gtk_signal_connect (GTK_OBJECT (htd.histogram), "rangechanged",
-                          (GtkSignalFunc) histogram_tool_histogram_range,
-                          (void*) &htd);
+      gtk_signal_connect (GTK_OBJECT (htd.histogram), "range_changed",
+                          GTK_SIGNAL_FUNC (histogram_tool_histogram_range),
+                          (gpointer) &htd);
 
       /* The information collection should occur only within selection bounds */
       no_mask = (gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
