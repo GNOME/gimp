@@ -860,9 +860,9 @@ void repaint(struct ppm *p, struct ppm *a)
     }
   } else {
 #if GTK_MINOR_VERSION == 0
-    gtk_label_set(GTK_LABEL(GTK_BUTTON(previewbutton)->child), _(" Update "));
+    gtk_label_set(GTK_LABEL(GTK_BUTTON(previewbutton)->child), _("Update"));
 #else
-    gtk_label_set_text(GTK_LABEL(GTK_BUTTON(previewbutton)->child), _(" Update "));
+    gtk_label_set_text(GTK_LABEL(GTK_BUTTON(previewbutton)->child), _("Update"));
 #endif
   }
   running = 0;

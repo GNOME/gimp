@@ -131,7 +131,7 @@ static gchar *scroll_text[] =
   "Sven Neumann",
   "Stephen Robert Norris",
   "Erik Nygren",
-  "Tomas Ogren",
+  "Tomas Ögren",
   "Balazs Nagy",
   "Miles O'Neal",
   "Jay Painter",

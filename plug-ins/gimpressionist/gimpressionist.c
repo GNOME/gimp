@@ -480,7 +480,7 @@ int create_dialog(void)
   gtk_box_pack_end (GTK_BOX (box2), box3, FALSE, FALSE, 0);
   gtk_widget_show (box3);
   
-  tmpw = gtk_button_new_with_label( _(" OK "));
+  tmpw = gtk_button_new_with_label( _("OK"));
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)dialog_ok_callback, window);
   gtk_box_pack_start (GTK_BOX (box3), tmpw, TRUE, TRUE, 0);
@@ -489,14 +489,14 @@ int create_dialog(void)
   gtk_widget_show(tmpw);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Run with the selected settings"), NULL);
 
-  tmpw = gtk_button_new_with_label( _(" Cancel "));
+  tmpw = gtk_button_new_with_label( _("Cancel"));
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)dialog_cancel_callback, window);
   gtk_box_pack_start (GTK_BOX (box3), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Quit the program"), NULL);
 
-  tmpw = gtk_button_new_with_label( _(" About... "));
+  tmpw = gtk_button_new_with_label( _("About..."));
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)showabout, window);
   gtk_box_pack_start (GTK_BOX (box3), tmpw, TRUE, TRUE, 0);

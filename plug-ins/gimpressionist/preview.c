@@ -114,14 +114,14 @@ GtkWidget* create_preview()
 
   box2 = gtk_hbox_new(TRUE, 0);
 
-  previewbutton = tmpw = gtk_button_new_with_label( _(" Update "));
+  previewbutton = tmpw = gtk_button_new_with_label( _("Update"));
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
                      (GtkSignalFunc)updatepreviewprev, (void *)1);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Refresh the Preview window"), NULL);
 
-  resetpreviewbutton = tmpw = gtk_button_new_with_label( _(" Reset "));
+  resetpreviewbutton = tmpw = gtk_button_new_with_label( _("Reset"));
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
                      (GtkSignalFunc)updatepreviewprev, (void *)2);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, TRUE, TRUE, 0);

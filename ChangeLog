@@ -1,3 +1,20 @@
+1999-10-17  Tomas Ogren  <stric@ing.umu.se>
+
+	* plug-ins/common/compose.c
+	* plug-ins/gimpressionist/gimpressionist.c
+	* plug-ins/gimpressionist/preview.c
+	* plug-ins/gimpressionist/presets.c
+	* plug-ins/gimpressionist/repaint.c: i18n de-lamerism
+	Using _(" OK ") etc gives the translators much extra work...
+
+	* app/about_dialog.c: Fix my name
+
+	* app/menus.c: Change order of resize and scale in L&C&P to match the
+	normal image menu
+
+	* po/sv.po: Update
+	* po-plug-ins/sv.po: Update
+
 Sun Oct 17 21:28:58 BST 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/iscissors.c: long overdue fix for problem with overrunning

@@ -597,7 +597,7 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_widget_set_usize(tmpw, 150, -1);
   gtk_widget_show(tmpw);
 
-  presetsavebutton = tmpw = gtk_button_new_with_label( _(" Save current "));
+  presetsavebutton = tmpw = gtk_button_new_with_label( _("Save current"));
   gtk_box_pack_start(GTK_BOX(box1), tmpw,FALSE,FALSE,5);
   gtk_widget_show (tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
@@ -641,7 +641,7 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_widget_show (box2);
   /* gtk_container_border_width (GTK_CONTAINER (box2), 5); */
 
-  tmpw = gtk_button_new_with_label( _(" Apply "));
+  tmpw = gtk_button_new_with_label( _("Apply"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
@@ -649,7 +649,7 @@ void create_presetpage(GtkNotebook *notebook)
 		      NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Reads the selected Preset into memory"), NULL);
 
-  tmpw = gtk_button_new_with_label( _(" Delete "));
+  tmpw = gtk_button_new_with_label( _("Delete"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
@@ -657,7 +657,7 @@ void create_presetpage(GtkNotebook *notebook)
 		      NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Deletes the selected Preset"), NULL);
 
-  tmpw = gtk_button_new_with_label( _(" Refresh "));
+  tmpw = gtk_button_new_with_label( _("Refresh"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",

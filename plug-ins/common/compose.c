@@ -122,15 +122,15 @@ typedef struct {
 #define CHNL_NA "-"
 
 static COMPOSE_DSC compose_dsc[] = {
- { N_("RGB"),  3, { N_("Red:"),   N_("Green:     "), N_("Blue:"),   CHNL_NA },
+ { N_("RGB"),  3, { N_("Red:"),   N_("Green:"), N_("Blue:"),   CHNL_NA },
               N_("rgb-compose"),  compose_rgb },
- { N_("RGBA"), 4, { N_("Red:"),   N_("Green:     "), N_("Blue:"),N_("Alpha:") },
+ { N_("RGBA"), 4, { N_("Red:"),   N_("Green:"), N_("Blue:"),N_("Alpha:") },
               N_("rgba-compose"),  compose_rgba },
  { N_("HSV"),  3, { N_("Hue:"),   N_("Saturation:"), N_("Value:"),  CHNL_NA },
               N_("hsv-compose"),  compose_hsv },
- { N_("CMY"),  3, { N_("Cyan:"),  N_("Magenta:   "), N_("Yellow:"), CHNL_NA },
+ { N_("CMY"),  3, { N_("Cyan:"),  N_("Magenta:"), N_("Yellow:"), CHNL_NA },
               N_("cmy-compose"),  compose_cmy },
- { N_("CMYK"), 4, { N_("Cyan:"),  N_("Magenta:   "),N_("Yellow:"),N_("Black:")},
+ { N_("CMYK"), 4, { N_("Cyan:"),  N_("Magenta:"),N_("Yellow:"),N_("Black:")},
               N_("cmyk-compose"), compose_cmyk }
 };
 
