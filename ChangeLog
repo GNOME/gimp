@@ -1,3 +1,8 @@
+Sun Mar  5 13:18:47 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* gimp.m4: need GPlugInInfo struct for the link test too
+	(patch by Robert Krawitz <rlk@alum.mit.edu>)
+
 Sun Mar  5 03:25:33 CET 2000  Marc Lehmann <pcg@goof.com>
 
 	* app/plug_in.c: Remove the two gimp-perl specific hacks that

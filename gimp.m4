@@ -134,6 +134,14 @@ int main ()
           AC_TRY_LINK([
 #include <stdio.h>
 #include <libgimp/gimp.h>
+
+GPlugInInfo PLUG_IN_INFO =
+{
+  NULL,  /* init_proc */
+  NULL,  /* quit_proc */
+  NULL,  /* query_proc */
+  NULL   /* run_proc */
+};
 ],      [ return 0; ],
         [ echo "*** The test program compiled, but did not run. This usually means"
           echo "*** that the run-time linker is not finding GIMP or finding the wrong"
