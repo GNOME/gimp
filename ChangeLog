@@ -1,3 +1,8 @@
+2002-11-19  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimppatheditor.[ch]: added new function
+	gimp_path_editor_set_path().
+
 2002-11-19  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-params.[ch]: derive GimpParamSpecMemsize

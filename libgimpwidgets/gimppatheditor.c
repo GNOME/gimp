@@ -230,12 +230,8 @@ gimp_path_editor_new (const gchar *filesel_title,
 		      const gchar *path)
 {
   GimpPathEditor *gpe;
-  gchar          *directory;
-  gchar          *mypath;
-  GtkTreeIter     iter;
 
-  g_return_val_if_fail ((filesel_title != NULL), NULL);
-  g_return_val_if_fail ((path != NULL), NULL);
+  g_return_val_if_fail (filesel_title != NULL, NULL);
 
   gpe = g_object_new (GIMP_TYPE_PATH_EDITOR, NULL);
 
@@ -243,34 +239,14 @@ gimp_path_editor_new (const gchar *filesel_title,
   gtk_widget_set_sensitive (gpe->file_selection, FALSE);
   gtk_box_pack_start (GTK_BOX (gpe->upper_hbox), gpe->file_selection,
 		      TRUE, TRUE, 0);
+  gtk_widget_show (gpe->file_selection);
+
   g_signal_connect (G_OBJECT (gpe->file_selection), "filename_changed",
                     G_CALLBACK (gimp_path_editor_filesel_callback),
 		    gpe);
-  gtk_widget_show (gpe->file_selection);
 
-  directory = mypath = g_strdup (path);
-
-  /*  split up the path  */
-  while (strlen (directory))
-    {
-      gchar *next_separator;
-
-      next_separator = strchr (directory, G_SEARCHPATH_SEPARATOR);
-      if (next_separator != NULL)
-	*next_separator = '\0';
-
-      gtk_list_store_append (gpe->dir_list, &iter);
-      gtk_list_store_set (gpe->dir_list, &iter, 0, directory, -1);
-
-      gpe->num_items++;
-
-      if (next_separator != NULL)
-	directory = next_separator + 1;
-      else
-	break;
-    }
-
-  g_free (mypath);
+  if (path)
+    gimp_path_editor_set_path (gpe, path);
 
   return GTK_WIDGET (gpe);
 }
@@ -312,7 +288,6 @@ gimp_path_editor_get_path (GimpPathEditor *gpe)
 {
   GString *path;
 
-  g_return_val_if_fail (gpe != NULL, g_strdup (""));
   g_return_val_if_fail (GIMP_IS_PATH_EDITOR (gpe), g_strdup (""));
 
   path = g_string_new ("");
@@ -320,6 +295,51 @@ gimp_path_editor_get_path (GimpPathEditor *gpe)
   gtk_tree_model_foreach (GTK_TREE_MODEL (gpe->dir_list), build_path, path);
 
   return g_string_free (path, FALSE);
+}
+
+/**
+ * gimp_path_editor_set_path:
+ * @gpe:  The path editor you want to set the search path from.
+ * @path: The new path to set.
+ *
+ * The elements of the initial search path must be separated with the
+ * #G_SEARCHPATH_SEPARATOR character.
+ **/
+void
+gimp_path_editor_set_path (GimpPathEditor *gpe,
+                           const gchar    *path)
+{
+  gchar       *directory;
+  gchar       *mypath;
+  GtkTreeIter  iter;
+
+  g_return_if_fail (GIMP_IS_PATH_EDITOR (gpe));
+
+  directory = mypath = g_strdup (path);
+
+  gtk_list_store_clear (gpe->dir_list);
+
+  /*  split up the path  */
+  while (strlen (directory))
+    {
+      gchar *next_separator;
+
+      next_separator = strchr (directory, G_SEARCHPATH_SEPARATOR);
+      if (next_separator != NULL)
+	*next_separator = '\0';
+
+      gtk_list_store_append (gpe->dir_list, &iter);
+      gtk_list_store_set (gpe->dir_list, &iter, 0, directory, -1);
+
+      gpe->num_items++;
+
+      if (next_separator != NULL)
+	directory = next_separator + 1;
+      else
+	break;
+    }
+
+  g_free (mypath);
 }
 
 static void

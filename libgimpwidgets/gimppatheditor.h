@@ -75,6 +75,8 @@ GtkWidget * gimp_path_editor_new      (const gchar    *filesel_title,
 				       const gchar    *path);
 
 gchar     * gimp_path_editor_get_path (GimpPathEditor *gpe);
+void        gimp_path_editor_set_path (GimpPathEditor *gpe,
+                                       const gchar    *path);
 
 
 G_END_DECLS
