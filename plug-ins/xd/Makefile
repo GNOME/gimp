@@ -16,7 +16,7 @@ SHELL = /bin/sh
 
 srcdir = .
 top_srcdir = ../..
-prefix = /usr/local
+prefix = /usr
 exec_prefix = ${prefix}
 
 bindir = ${exec_prefix}/bin
@@ -57,25 +57,28 @@ PRE_UNINSTALL = true
 POST_UNINSTALL = true
 host_alias = i486-pc-linux-gnu
 host_triplet = i486-pc-linux-gnu
-CC = /usr/bin/gcc
+CC = gcc
+CPP = gcc -E
 EMACS = /usr/bin/emacs
 GIMPTCL = gimptcl
 JPEG = jpeg
+LD = /usr/lib/gcc-lib/i386-linux/egcs-2.90.18/ld
 LIBJPEG_LIB = -ljpeg
 LIBMPEG_LIB = 
 LIBPNG_LIB = -lpng -lz
 LIBTCL_LIB = -ltcl -ltk
 LIBTIFF_LIB = -ltiff
-LIBTOOL = @LIBTOOL@
+LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIBXDELTA_LIB = 
 LIBXPM_LIB = -lXpm
 LN_S = ln -s
 MAINT = #M#
 MAKEINFO = makeinfo
 MPEG = 
+NM = /usr/bin/nm -B
 PACKAGE = gimp
 PNG = png
-RANLIB = @RANLIB@
+RANLIB = ranlib
 TIFF = tiff
 VERSION = 0.99.15
 XD = 
@@ -136,6 +139,7 @@ DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 
 TAR = tar
 GZIP = --best
+DEP_FILES =  .deps/xd.P
 SOURCES = $(xd_SOURCES)
 OBJECTS = $(xd_OBJECTS)
 
@@ -144,9 +148,9 @@ default: all
 .SUFFIXES:
 .SUFFIXES: .c .lo .o
 $(srcdir)/Makefile.in: #M# Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps plug-ins/xd/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu plug-ins/xd/Makefile
 
-Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(BUILT_SOURCES)
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
@@ -231,12 +235,43 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 subdir = plug-ins/xd
 
 distdir: $(DISTFILES)
+	here=`cd $(top_builddir) && pwd`; \
+	top_distdir=`cd $(top_distdir) && pwd`; \
+	distdir=`cd $(distdir) && pwd`; \
+	cd $(top_srcdir) \
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu plug-ins/xd/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  test -f $(distdir)/$$file \
 	  || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
 	  || cp -p $$d/$$file $(distdir)/$$file; \
 	done
+
+MKDEP = $(CC) -M $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS)
+
+DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
+-include .deps/.P
+.deps/.P: $(BUILT_SOURCES)
+	echo > $@
+
+-include $(DEP_FILES)
+
+mostlyclean-depend:
+
+clean-depend:
+
+distclean-depend:
+
+maintainer-clean-depend:
+	-rm -rf .deps
+
+.deps/%.P: %.c
+	@echo "Computing dependencies for $<..."
+	@o='o'; \
+	test -n "$o" && o='$$o'; \
+	$(MKDEP) $< >$@.tmp \
+	  && sed "s,^\(.*\)\.o:,\1.$$o \1.l$$o $@:," < $@.tmp > $@ \
+	  && rm -f $@.tmp
 info:
 dvi:
 check: all
@@ -276,22 +311,22 @@ maintainer-clean-generic:
 	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 mostlyclean:  mostlyclean-pluginlibPROGRAMS mostlyclean-compile \
-		mostlyclean-libtool mostlyclean-tags \
+		mostlyclean-libtool mostlyclean-tags mostlyclean-depend \
 		mostlyclean-generic
 
 clean:  clean-pluginlibPROGRAMS clean-compile clean-libtool clean-tags \
-		clean-generic mostlyclean
+		clean-depend clean-generic mostlyclean
 
 distclean:  distclean-pluginlibPROGRAMS distclean-compile \
-		distclean-libtool distclean-tags distclean-generic \
-		clean
+		distclean-libtool distclean-tags distclean-depend \
+		distclean-generic clean
 	-rm -f config.status
 	-rm -f libtool
 
 maintainer-clean:  maintainer-clean-pluginlibPROGRAMS \
 		maintainer-clean-compile maintainer-clean-libtool \
-		maintainer-clean-tags maintainer-clean-generic \
-		distclean
+		maintainer-clean-tags maintainer-clean-depend \
+		maintainer-clean-generic distclean
 	@echo "This command is intended for maintainers to use;"
 	@echo "it deletes files that may require special tools to rebuild."
 
@@ -302,8 +337,9 @@ install-pluginlibPROGRAMS mostlyclean-compile distclean-compile \
 clean-compile maintainer-clean-compile mostlyclean-libtool \
 distclean-libtool clean-libtool maintainer-clean-libtool tags \
 mostlyclean-tags distclean-tags clean-tags maintainer-clean-tags \
-distdir info dvi installcheck install-exec install-data install \
-uninstall all installdirs mostlyclean-generic distclean-generic \
+distdir mostlyclean-depend distclean-depend clean-depend \
+maintainer-clean-depend info dvi installcheck install-exec install-data \
+install uninstall all installdirs mostlyclean-generic distclean-generic \
 clean-generic maintainer-clean-generic clean mostlyclean distclean \
 maintainer-clean
 

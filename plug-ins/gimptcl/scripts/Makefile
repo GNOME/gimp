@@ -16,7 +16,7 @@ SHELL = /bin/sh
 
 srcdir = .
 top_srcdir = ../../..
-prefix = /usr/local
+prefix = /usr
 exec_prefix = ${prefix}
 
 bindir = ${exec_prefix}/bin
@@ -57,25 +57,28 @@ PRE_UNINSTALL = true
 POST_UNINSTALL = true
 host_alias = i486-pc-linux-gnu
 host_triplet = i486-pc-linux-gnu
-CC = /usr/bin/gcc
+CC = gcc
+CPP = gcc -E
 EMACS = /usr/bin/emacs
 GIMPTCL = gimptcl
 JPEG = jpeg
+LD = /usr/lib/gcc-lib/i386-linux/egcs-2.90.18/ld
 LIBJPEG_LIB = -ljpeg
 LIBMPEG_LIB = 
 LIBPNG_LIB = -lpng -lz
 LIBTCL_LIB = -ltcl -ltk
 LIBTIFF_LIB = -ltiff
-LIBTOOL = @LIBTOOL@
+LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIBXDELTA_LIB = 
 LIBXPM_LIB = -lXpm
 LN_S = ln -s
 MAINT = #M#
 MAKEINFO = makeinfo
 MPEG = 
+NM = /usr/bin/nm -B
 PACKAGE = gimp
 PNG = png
-RANLIB = @RANLIB@
+RANLIB = ranlib
 TIFF = tiff
 VERSION = 0.99.15
 XD = 
@@ -106,9 +109,9 @@ default: all
 .SUFFIXES:
 .SUFFIXES: .tcl
 $(srcdir)/Makefile.in: #M# Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps plug-ins/gimptcl/scripts/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu plug-ins/gimptcl/scripts/Makefile
 
-Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(BUILT_SOURCES)
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
@@ -140,6 +143,11 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 subdir = plug-ins/gimptcl/scripts
 
 distdir: $(DISTFILES)
+	here=`cd $(top_builddir) && pwd`; \
+	top_distdir=`cd $(top_distdir) && pwd`; \
+	distdir=`cd $(distdir) && pwd`; \
+	cd $(top_srcdir) \
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu plug-ins/gimptcl/scripts/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  test -f $(distdir)/$$file \

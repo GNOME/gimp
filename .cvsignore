@@ -1,0 +1,9 @@
+Makefile.in
+Makefile
+configure
+config.log
+config.h
+config.cache
+stamp-h
+gimprc
+config.status

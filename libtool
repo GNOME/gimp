@@ -6,9 +6,9 @@
 # This program was configured as follows,
 # on host bogus:
 #
-# CC="/usr/bin/gcc" CFLAGS="-g -O2" CPPFLAGS="" \
-# LD="" NM="" RANLIB="ranlib" LN_S="" \
-#   ./ltconfig --with-gcc --no-verify ./ltmain.sh i486-pc-linux-gnu
+# CC="gcc" CFLAGS="-g -O2" CPPFLAGS="" \
+# LD="/usr/lib/gcc-lib/i386-linux/egcs-2.90.18/ld" NM="/usr/bin/nm -B" RANLIB="ranlib" LN_S="ln -s" \
+#   ./ltconfig --with-gcc --with-gnu-ld --no-verify ./ltmain.sh i486-pc-linux-gnu
 #
 # Compiler and other test output produced by ltconfig, useful for
 # debugging ltconfig, is in ./config.log if it exists.
@@ -30,10 +30,10 @@ host="i486-pc-linux-gnu"
 AR="ar"
 
 # The default C compiler.
-CC="/usr/bin/gcc"
+CC="gcc"
 
 # The linker used to build libraries.
-LD="/usr/bin/ld"
+LD="/usr/lib/gcc-lib/i386-linux/egcs-2.90.18/ld"
 
 # Whether we need hard or soft links.
 LN_S="ln -s"
