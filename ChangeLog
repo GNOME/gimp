@@ -1,3 +1,11 @@
+2003-08-17  Sven Neumann  <sven@gimp.org>
+
+	* app/base/base.c (base_init): added some newlines.
+
+	* data/patterns/brick.pat	
+	* data/patterns/leopard.pat: replaced with retouched versions done
+	by Guillermo S. Romero (bug #118796).
+
 2003-08-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-layer-select.[ch]: made the layer

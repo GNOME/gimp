@@ -73,12 +73,12 @@ base_init (GimpBaseConfig *config,
 
   base_config = config;
 
-#if (GIMP_MINOR_VERSION%2)==1
+#if (GIMP_MINOR_VERSION % 2) == 1
   g_printerr ("This is a development version of the GIMP\n"
-	      "Debug messages may appear here.\n");
+	      "Debug messages may appear here.\n\n");
 
 #ifdef G_OS_WIN32
-  g_printerr ("You can minimize this window, but don't close it.\n");
+  g_printerr ("You can minimize this window, but don't close it.\n\n");
 #endif
 
   if (use_mmx)
