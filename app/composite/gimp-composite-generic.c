@@ -495,6 +495,15 @@ gimp_composite_color_only_any_any_any_generic (GimpCompositeContext * ctx)
 }
 
 void
+gimp_composite_behind_any_any_any_generic (GimpCompositeContext * ctx)
+{
+  ctx->D = ctx->B;
+  ctx->combine = gimp_composite_pixel_alphap[ctx->pixelformat_A]
+				? BEHIND_INTEN
+				: NO_COMBINATION;
+}
+
+void
 gimp_composite_multiply_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;

@@ -37,4 +37,5 @@ void gimp_composite_softlight_any_any_any_generic (GimpCompositeContext *);
 void gimp_composite_subtract_any_any_any_generic (GimpCompositeContext *);
 void gimp_composite_swap_any_any_any_generic (GimpCompositeContext *);
 void gimp_composite_value_any_any_any_generic (GimpCompositeContext *);
+void gimp_composite_behind_any_any_any_generic (GimpCompositeContext * );
 #endif

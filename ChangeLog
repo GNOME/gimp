@@ -1,3 +1,11 @@
+2003-09-12  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-generic.[ch]: Added a proper
+	implementation of the BEHIND drawing mode.  This should fix bug
+	#121889
+
+	* app/composite/gimp-composite-generic-installer.c: regenerated
+
 2003-09-12  Sven Neumann  <sven@gimp.org>
 
 	* app/vectors/gimpvectors-import.c (parse_svg_viewbox): return a
