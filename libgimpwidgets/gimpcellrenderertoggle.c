@@ -250,7 +250,7 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer *cell,
   gint                    pixbuf_width;
   gint                    pixbuf_height;
 
-  if (!toggle->stock_id)
+  if (! toggle->stock_id)
     {
       GTK_CELL_RENDERER_CLASS (parent_class)->get_size (cell,
                                                         widget,
@@ -260,7 +260,7 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer *cell,
       return;
     }
 
-  if (!toggle->pixbuf)
+  if (! toggle->pixbuf)
     gimp_cell_renderer_toggle_create_pixbuf (toggle, widget);
 
   pixbuf_width  = gdk_pixbuf_get_width  (toggle->pixbuf);
@@ -271,8 +271,11 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer *cell,
   calc_height = (pixbuf_height +
                  (gint) cell->ypad * 2 + widget->style->ythickness * 2);
 
-  if (x_offset) *x_offset = 0;
-  if (y_offset) *y_offset = 0;
+  if (width)
+    *width  = calc_width;
+
+  if (height)
+    *height = calc_height;
 
   if (cell_area)
     {
@@ -289,9 +292,6 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer *cell,
 	  *y_offset = MAX (*y_offset, 0);
 	}
     }
-
-  if (width)  *width  = calc_width;
-  if (height) *height = calc_height;
 }
 
 static void
@@ -309,7 +309,7 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
   GtkStateType            state;
   gboolean                active;
 
-  if (!toggle->stock_id)
+  if (! toggle->stock_id)
     {
       GTK_CELL_RENDERER_CLASS (parent_class)->render (cell, window, widget,
                                                       background_area,

@@ -1,3 +1,14 @@
+2005-01-03  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcellrenderertoggle.c
+	(gimp_cell_renderer_toggle_get_size): made the code look more
+	similar to GtkCellRendererToggle to allow for easy comparison.
+
+2005-01-03  Sven Neumann  <sven@gimp.org>
+
+	* app/menus/plug-in-menus.c: made the code a little more robust by
+	not relying on certain properties of the menu path.
+
 2005-01-03  Sven Neumann  <neumann@jpk.com>
 
 	* tools/pdbgen/pdb/gradient.pdb: do actually add the new procedure
