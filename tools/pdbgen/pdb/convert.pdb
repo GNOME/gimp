@@ -28,7 +28,7 @@ sub simple_invoke {
     %invoke = (
 	code => <<CODE
 if ((success = (gimage_base_type (gimage) != $type)))
-  convert_image ((void *) gimage, $type, 0, 0, 0);
+  convert_image ((void *) gimage, $type, 0, 0, 0, 1, 0);
 CODE
     );
 }
@@ -64,7 +64,7 @@ sub convert_indexed {
     $blurb = 'Convert specified image to indexed color';
 
     $help = <<'HELP';
-This procedure converts the specified image to indexed color. This process
+(Note: This procedure is deprecated in favour of convert_indexed2.)  This procedure converts the specified image to indexed color. This process
 requires an image of type GRAY or RGB. The 'num_cols' arguments specifies how
 many colors the resulting image should be quantized to (1-256).
 HELP
@@ -73,8 +73,8 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => 'dither', type => 'boolean',
-	  desc => 'Floyd-Steinberg dithering' },
+	{ name => 'dither', type => 'enum ConvertDitherType',
+	  desc => 'dither type (0=none, 1=fs, 3=fixed)' },
 	{ name => 'num_cols', type => 'int32',
 	  desc => 'the number of colors to quantize to' }
     );
@@ -82,13 +82,25 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimage_base_type (gimage) != INDEXED;
+    if ((success = gimage_base_type (gimage) != INDEXED))
+    {
+	switch (dither)
+	{
+	    case NODITHER:
+	    case FSDITHER:
+	    case FIXEDDITHER:
+	    break;
+	  default:
+	    success = FALSE;
+	    break;
+	}
+    }
 
   if (num_cols < 1 || num_cols > MAXNUMCOLORS)
     success = FALSE;
 
   if (success)
-    convert_image ((void *) gimage, INDEXED, num_cols, dither, 0);
+    convert_image ((void *) gimage, INDEXED, num_cols, dither, 0, 1, 0);
 }
 CODE
     );
@@ -98,11 +110,11 @@ sub convert_indexed_palette {
     $blurb = 'Convert specified image to indexed color';
 
     $help = <<'HELP';
-This procedure converts the specified image to indexed color. This process
+(Note: This procedure is deprecated in favour of convert_indexed2.)  This procedure converts the specified image to indexed color. This process
 requires an image of type GRAY or RGB. The 'palette_type' specifies what kind
 of palette to use, A type of '0' means to use an optimal palette of 'num_cols'
 generated from the colors in the image. A type of '1' means to re-use the
-previous palette. A type of '2' means to use the WWW-optimized palette. Type
+previous palette (not currently implemented). A type of '2' means to use the so-called WWW-optimized palette. Type
 '3' means to use only black and white colors. A type of '4' means to use a
 palette from the gimp palettes directories.
 HELP
@@ -111,8 +123,8 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => 'dither', type => 'boolean',
-	  desc => 'Floyd-Steinberg dithering' },
+	{ name => 'dither', type => 'enum ConvertDitherType',
+	  desc => 'dither type (0=none, 1=fs, 3=fixed)' },
 	{ name => 'palette_type', type => 'enum ConvertPaletteType',
 	  desc => 'The type of palette to use: { %%desc%% }', no_success => 1 },
 	{ name => 'num_cols', type => 'int32',
@@ -133,6 +145,17 @@ HELP
       PaletteEntriesP entries, the_palette = NULL;
       GSList *list;
 
+      switch (dither)
+      {
+	  case NODITHER:
+	  case FSDITHER:
+	  case FIXEDDITHER:
+	  break;
+	default:
+	  success = FALSE;
+	  break;
+      }
+      
       switch (palette_type)
 	{
 	case MAKE_PALETTE:
@@ -172,7 +195,109 @@ HELP
     }
 
   if (success)
-    convert_image ((void *) gimage, INDEXED, num_cols, dither, palette_type);
+    convert_image ((void *) gimage, INDEXED, num_cols, dither, 0, 1,
+		   palette_type);
+}
+CODE
+    );
+}
+
+sub convert_indexed2 {
+    $blurb = 'Convert specified image to indexed color';
+
+    $help = <<'HELP';
+This procedure converts the specified image to indexed color. This process
+requires an image of type GRAY or RGB. The 'palette_type' specifies what kind
+of palette to use, A type of '0' means to use an optimal palette of 'num_cols'
+generated from the colors in the image. A type of '1' means to re-use the
+previous palette (not currently implemented). A type of '2' means to use the so-called WWW-optimized palette. Type
+'3' means to use only black and white colors. A type of '4' means to use a
+palette from the gimp palettes directories.  The 'dither type' specifies
+what kind of dithering to use.  '0' means no dithering, '1' means standard Floyd-Steinberg error diffusion, '3' means dithering based on pixel location ('Fixed' dithering).
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'dither_type', type => 'enum ConvertDitherType',
+	  desc => 'dither type (0=none, 1=fs, 3=fixed)' },
+	{ name => 'palette_type', type => 'enum ConvertPaletteType',
+	  desc => 'The type of palette to use: { %%desc%% }', no_success => 1 },
+	{ name => 'num_cols', type => 'int32',
+	  desc => 'the number of colors to quantize to, ignored unless
+		   (palette_type == MAKE_PALETTE)' },
+	{ name => 'alpha_dither', type => 'boolean',
+	  desc => 'dither transparency to fake partial opacity' },
+	{ name => 'remove_unused', type => 'boolean',
+	  desc => 'remove unused or duplicate colour entries from final palette, ignored if (palette_type == MAKE_PALETTE)' },
+	{ name => 'palette', type => 'string',
+	  desc => 'The name of the custom palette to use, ignored unless
+		   (palette_type == CUSTOM_PALETTE)',
+	  alias => 'palette_name' }
+    );
+
+    %invoke = (
+	headers => [ qw(<string.h> "palette.h") ],
+	code => <<'CODE'
+{
+  if ((success = (gimage_base_type (gimage) != INDEXED)))
+    {
+      PaletteEntriesP entries, the_palette = NULL;
+      GSList *list;
+
+      switch (dither_type)
+      {
+	  case NODITHER:
+	  case FSDITHER:
+	  case FIXEDDITHER:
+	  break;
+	default:
+	  success = FALSE;
+	  break;
+      }
+      
+      switch (palette_type)
+	{
+	case MAKE_PALETTE:
+	  if (num_cols < 1 || num_cols > MAXNUMCOLORS)
+	    success = FALSE;
+	  break;
+
+	case REUSE_PALETTE:
+	case WEB_PALETTE:
+	case MONO_PALETTE:
+	  break;
+
+	case CUSTOM_PALETTE:
+	  if (!palette_entries_list)
+	    palette_init_palettes (FALSE);
+
+	  for (list = palette_entries_list; list; list = list->next)
+	    {
+	      entries = (PaletteEntriesP) list->data;
+	      if (!strcmp (palette_name, entries->name))
+		{
+		  the_palette = entries;
+		  break;
+		}
+	    }
+
+	  if (the_palette == NULL)
+	    success = FALSE;
+	  else
+	    theCustomPalette = the_palette;
+
+	  break;
+
+	default:
+	  success = FALSE;
+	}
+    }
+
+  if (success)
+    convert_image ((void *) gimage, INDEXED, num_cols, dither_type,
+		   alpha_dither, remove_unused, palette_type);
 }
 CODE
     );
@@ -181,7 +306,7 @@ CODE
 @headers = qw("gimage.h" "convert.h");
 
 @procs = qw(convert_rgb convert_grayscale convert_indexed
-	    convert_indexed_palette);
+	    convert_indexed_palette convert_indexed2);
 %exports = (app => [@procs]);
 
 $desc = 'Convert';

@@ -248,6 +248,15 @@ package Gimp::CodeGen::enums;
 		       MONO_PALETTE => '3',
 		       CUSTOM_PALETTE => '4' }
 	},
+    ConvertDitherType =>
+	{ contig => 0,
+	  header => 'convert.h',
+	  symbols => [ qw(NODITHER FSDITHER FIXEDDITHER NODESTRUCTDITHER) ],
+	  mapping => { NODITHER => '0',
+		       FSDITHER => '1',
+		       FIXEDDITHER => '3',
+		       NODESTRUCTDITHER => '2' }
+	},
     ConvolveType =>
 	{ contig => 1,
 	  header => 'convolve.h',

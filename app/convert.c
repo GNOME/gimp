@@ -102,11 +102,6 @@
 #include "drawable_pvt.h"		/* ick ick. */
 #include "tile_manager_pvt.h"		/* ick ick ick. */
 
-#define NODITHER 0
-#define FSDITHER 1
-#define NODESTRUCTDITHER 2
-#define FIXEDDITHER 3
-
 #define PRECISION_R 6
 #define PRECISION_G 6
 #define PRECISION_B 5
@@ -406,7 +401,8 @@ static void zero_histogram_rgb      (Histogram);
 static void generate_histogram_gray (Histogram, Layer *, int alpha_dither);
 static void generate_histogram_rgb  (Histogram, Layer *, int col_limit, int alpha_dither);
 
-static QuantizeObj* initialize_median_cut (int, int, int, int, int);
+static QuantizeObj* initialize_median_cut (int, int, ConvertDitherType,
+					   ConvertPaletteType, int);
 
 static void
 compute_color_rgb (QuantizeObj *quantobj,
@@ -442,14 +438,14 @@ static gboolean sreusepal_flag    = FALSE;
 void
 convert_to_rgb (GimpImage *gimage)
 {
-  convert_image (gimage, RGB, 0, 0, 0);
+  convert_image (gimage, RGB, 0, 0, 0, 0, 0);
   gdisplays_flush ();
 }
 
 void
 convert_to_grayscale (GimpImage* gimage)
 {
-  convert_image (gimage, GRAY, 0, 0, 0);
+  convert_image (gimage, GRAY, 0, 0, 0, 0, 0);
   gdisplays_flush ();
 }
 
@@ -885,8 +881,8 @@ indexed_ok_callback (GtkWidget *widget,
 		     gpointer   client_data)
 {
   IndexedDialog *dialog;
-  int palette_type;
-  int dither_type;
+  ConvertPaletteType palette_type;
+  ConvertDitherType dither_type;
 
   dialog = (IndexedDialog *) client_data;
 
@@ -907,9 +903,9 @@ indexed_ok_callback (GtkWidget *widget,
       dither_type = FIXEDDITHER;
 
   /*  Convert the image to indexed color  */
-  convert_image2 (dialog->gimage, INDEXED, dialog->num_cols,
-		  dither_type, dialog->alphadither,
-		  dialog->remdups, palette_type);
+  convert_image (dialog->gimage, INDEXED, dialog->num_cols,
+		 dither_type, dialog->alphadither,
+		 dialog->remdups, palette_type);
   gdisplays_flush ();
 
 
@@ -1012,20 +1008,6 @@ indexed_remdups_update (GtkWidget *w,
     dialog->remdups = FALSE;
 }
 
-void
-convert_image (GImage		 *gimage,
-	       GimpImageBaseType  new_type,
-	       /* The following three params used only for
-		* new_type == INDEXED
-		*/
-	       int		  num_cols,
-	       int		  dither,
-	       ConvertPaletteType palette_type)
-{
-  convert_image2 (gimage, new_type, num_cols, dither,
-		  0, 0,
-		  palette_type);
-}
 
 /**********************************************************/
 typedef struct
@@ -1199,13 +1181,13 @@ remap_indexed_layer (Layer* layer,
 }
 
 void
-convert_image2 (GImage		 *gimage,
+convert_image (GImage		 *gimage,
 	       GimpImageBaseType  new_type,
 	       /* The following three params used only for
 		* new_type == INDEXED
 		*/
 	       int		  num_cols,
-	       int		  dither,
+	       ConvertDitherType  dither,
 	       int                alpha_dither,
 	       int                remdups,
 	       ConvertPaletteType palette_type)
@@ -3960,8 +3942,8 @@ delete_median_cut (QuantizeObj *quantobj)
 static QuantizeObj*
 initialize_median_cut (int type,
 		       int num_colors,
-		       int dither_type,
-		       int palette_type,
+		       ConvertDitherType dither_type,
+		       ConvertPaletteType palette_type,
 		       int want_alpha_dither)
 {
   QuantizeObj * quantobj;

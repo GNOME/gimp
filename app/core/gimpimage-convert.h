@@ -25,12 +25,21 @@
 
 /* adam's extra palette stuff */
 typedef enum {
-  MAKE_PALETTE,
-  REUSE_PALETTE,
-  WEB_PALETTE,
-  MONO_PALETTE,
-  CUSTOM_PALETTE
+  MAKE_PALETTE   = 0,
+  REUSE_PALETTE  = 1,
+  WEB_PALETTE    = 2,
+  MONO_PALETTE   = 3,
+  CUSTOM_PALETTE = 4
 } ConvertPaletteType;
+
+/* adam's extra dither stuff */
+typedef enum {
+  NODITHER         = 0,
+  FSDITHER         = 1,
+  FIXEDDITHER      = 3,
+
+  NODESTRUCTDITHER = 2 /* NEVER USE NODESTRUCTDITHER EXPLICITLY */
+} ConvertDitherType;
 
 #define MAXNUMCOLORS 256
 
@@ -39,15 +48,13 @@ void convert_to_rgb        (GimpImage *);
 void convert_to_grayscale  (GimpImage *);
 void convert_to_indexed    (GimpImage *);
 
-void convert_image         (GimpImage *,
-			    GimpImageBaseType,
-			    int, int,
-			    ConvertPaletteType);
-
-void convert_image2        (GimpImage *,
-			    GimpImageBaseType,
-			    int, int, int, int,
-			    ConvertPaletteType);
+void convert_image        (GimpImage *,
+			   GimpImageBaseType,
+			   int num_cols,
+			   ConvertDitherType,
+			   int alpha_dither,
+			   int remdups,
+			   ConvertPaletteType);
 
 extern PaletteEntriesP theCustomPalette;
 

@@ -30,6 +30,7 @@ static ProcRecord convert_rgb_proc;
 static ProcRecord convert_grayscale_proc;
 static ProcRecord convert_indexed_proc;
 static ProcRecord convert_indexed_palette_proc;
+static ProcRecord convert_indexed2_proc;
 
 void
 register_convert_procs (void)
@@ -38,6 +39,7 @@ register_convert_procs (void)
   procedural_db_register (&convert_grayscale_proc);
   procedural_db_register (&convert_indexed_proc);
   procedural_db_register (&convert_indexed_palette_proc);
+  procedural_db_register (&convert_indexed2_proc);
 }
 
 static Argument *
@@ -52,7 +54,7 @@ convert_rgb_invoker (Argument *args)
 
   if (success)
     if ((success = (gimage_base_type (gimage) != RGB)))
-      convert_image ((void *) gimage, RGB, 0, 0, 0);
+      convert_image ((void *) gimage, RGB, 0, 0, 0, 1, 0);
 
   return procedural_db_return_args (&convert_rgb_proc, success);
 }
@@ -94,7 +96,7 @@ convert_grayscale_invoker (Argument *args)
 
   if (success)
     if ((success = (gimage_base_type (gimage) != GRAY)))
-      convert_image ((void *) gimage, GRAY, 0, 0, 0);
+      convert_image ((void *) gimage, GRAY, 0, 0, 0, 1, 0);
 
   return procedural_db_return_args (&convert_grayscale_proc, success);
 }
@@ -129,26 +131,50 @@ convert_indexed_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  gboolean dither;
+  gint32 dither;
   gint32 num_cols;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
-  dither = args[1].value.pdb_int ? TRUE : FALSE;
+  dither = args[1].value.pdb_int;
+  switch (dither)
+    {
+    case NODITHER:
+    case FSDITHER:
+    case FIXEDDITHER:
+    case NODESTRUCTDITHER:
+      break;
+
+    default:
+      success = FALSE;
+      break;
+    }
 
   num_cols = args[2].value.pdb_int;
 
   if (success)
     {
-      success = gimage_base_type (gimage) != INDEXED;
+	if ((success = gimage_base_type (gimage) != INDEXED))
+	{
+	    switch (dither)
+	    {
+		case NODITHER:
+		case FSDITHER:
+		case FIXEDDITHER:
+		break;
+	      default:
+		success = FALSE;
+		break;
+	    }
+	}
     
       if (num_cols < 1 || num_cols > MAXNUMCOLORS)
 	success = FALSE;
     
       if (success)
-	convert_image ((void *) gimage, INDEXED, num_cols, dither, 0);
+	convert_image ((void *) gimage, INDEXED, num_cols, dither, 0, 1, 0);
     }
 
   return procedural_db_return_args (&convert_indexed_proc, success);
@@ -164,7 +190,7 @@ static ProcArg convert_indexed_inargs[] =
   {
     PDB_INT32,
     "dither",
-    "Floyd-Steinberg dithering"
+    "dither type (0=none, 1=fs, 3=fixed)"
   },
   {
     PDB_INT32,
@@ -177,7 +203,7 @@ static ProcRecord convert_indexed_proc =
 {
   "gimp_convert_indexed",
   "Convert specified image to indexed color",
-  "This procedure converts the specified image to indexed color. This process requires an image of type GRAY or RGB. The 'num_cols' arguments specifies how many colors the resulting image should be quantized to (1-256).",
+  "(Note: This procedure is deprecated in favour of convert_indexed2.) This procedure converts the specified image to indexed color. This process requires an image of type GRAY or RGB. The 'num_cols' arguments specifies how many colors the resulting image should be quantized to (1-256).",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -194,7 +220,7 @@ convert_indexed_palette_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  gboolean dither;
+  gint32 dither;
   gint32 palette_type;
   gint32 num_cols;
   gchar *palette_name;
@@ -203,7 +229,19 @@ convert_indexed_palette_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  dither = args[1].value.pdb_int ? TRUE : FALSE;
+  dither = args[1].value.pdb_int;
+  switch (dither)
+    {
+    case NODITHER:
+    case FSDITHER:
+    case FIXEDDITHER:
+    case NODESTRUCTDITHER:
+      break;
+
+    default:
+      success = FALSE;
+      break;
+    }
 
   palette_type = args[2].value.pdb_int;
 
@@ -220,6 +258,17 @@ convert_indexed_palette_invoker (Argument *args)
 	  PaletteEntriesP entries, the_palette = NULL;
 	  GSList *list;
     
+	  switch (dither)
+	  {
+	      case NODITHER:
+	      case FSDITHER:
+	      case FIXEDDITHER:
+	      break;
+	    default:
+	      success = FALSE;
+	      break;
+	  }
+	  
 	  switch (palette_type)
 	    {
 	    case MAKE_PALETTE:
@@ -259,7 +308,8 @@ convert_indexed_palette_invoker (Argument *args)
 	}
     
       if (success)
-	convert_image ((void *) gimage, INDEXED, num_cols, dither, palette_type);
+	convert_image ((void *) gimage, INDEXED, num_cols, dither, 0, 1,
+		       palette_type);
     }
 
   return procedural_db_return_args (&convert_indexed_palette_proc, success);
@@ -275,7 +325,7 @@ static ProcArg convert_indexed_palette_inargs[] =
   {
     PDB_INT32,
     "dither",
-    "Floyd-Steinberg dithering"
+    "dither type (0=none, 1=fs, 3=fixed)"
   },
   {
     PDB_INT32,
@@ -298,7 +348,7 @@ static ProcRecord convert_indexed_palette_proc =
 {
   "gimp_convert_indexed_palette",
   "Convert specified image to indexed color",
-  "This procedure converts the specified image to indexed color. This process requires an image of type GRAY or RGB. The 'palette_type' specifies what kind of palette to use, A type of '0' means to use an optimal palette of 'num_cols' generated from the colors in the image. A type of '1' means to re-use the previous palette. A type of '2' means to use the WWW-optimized palette. Type '3' means to use only black and white colors. A type of '4' means to use a palette from the gimp palettes directories.",
+  "(Note: This procedure is deprecated in favour of convert_indexed2.) This procedure converts the specified image to indexed color. This process requires an image of type GRAY or RGB. The 'palette_type' specifies what kind of palette to use, A type of '0' means to use an optimal palette of 'num_cols' generated from the colors in the image. A type of '1' means to re-use the previous palette (not currently implemented). A type of '2' means to use the so-called WWW-optimized palette. Type '3' means to use only black and white colors. A type of '4' means to use a palette from the gimp palettes directories.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -308,4 +358,165 @@ static ProcRecord convert_indexed_palette_proc =
   0,
   NULL,
   { { convert_indexed_palette_invoker } }
+};
+
+static Argument *
+convert_indexed2_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gint32 dither_type;
+  gint32 palette_type;
+  gint32 num_cols;
+  gboolean alpha_dither;
+  gboolean remove_unused;
+  gchar *palette_name;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  dither_type = args[1].value.pdb_int;
+  switch (dither_type)
+    {
+    case NODITHER:
+    case FSDITHER:
+    case FIXEDDITHER:
+    case NODESTRUCTDITHER:
+      break;
+
+    default:
+      success = FALSE;
+      break;
+    }
+
+  palette_type = args[2].value.pdb_int;
+
+  num_cols = args[3].value.pdb_int;
+
+  alpha_dither = args[4].value.pdb_int ? TRUE : FALSE;
+
+  remove_unused = args[5].value.pdb_int ? TRUE : FALSE;
+
+  palette_name = (gchar *) args[6].value.pdb_pointer;
+  if (palette_name == NULL)
+    success = FALSE;
+
+  if (success)
+    {
+      if ((success = (gimage_base_type (gimage) != INDEXED)))
+	{
+	  PaletteEntriesP entries, the_palette = NULL;
+	  GSList *list;
+    
+	  switch (dither_type)
+	  {
+	      case NODITHER:
+	      case FSDITHER:
+	      case FIXEDDITHER:
+	      break;
+	    default:
+	      success = FALSE;
+	      break;
+	  }
+	  
+	  switch (palette_type)
+	    {
+	    case MAKE_PALETTE:
+	      if (num_cols < 1 || num_cols > MAXNUMCOLORS)
+		success = FALSE;
+	      break;
+    
+	    case REUSE_PALETTE:
+	    case WEB_PALETTE:
+	    case MONO_PALETTE:
+	      break;
+    
+	    case CUSTOM_PALETTE:
+	      if (!palette_entries_list)
+		palette_init_palettes (FALSE);
+    
+	      for (list = palette_entries_list; list; list = list->next)
+		{
+		  entries = (PaletteEntriesP) list->data;
+		  if (!strcmp (palette_name, entries->name))
+		    {
+		      the_palette = entries;
+		      break;
+		    }
+		}
+    
+	      if (the_palette == NULL)
+		success = FALSE;
+	      else
+		theCustomPalette = the_palette;
+    
+	      break;
+    
+	    default:
+	      success = FALSE;
+	    }
+	}
+    
+      if (success)
+	convert_image ((void *) gimage, INDEXED, num_cols, dither_type,
+		       alpha_dither, remove_unused, palette_type);
+    }
+
+  return procedural_db_return_args (&convert_indexed2_proc, success);
+}
+
+static ProcArg convert_indexed2_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    PDB_INT32,
+    "dither_type",
+    "dither type (0=none, 1=fs, 3=fixed)"
+  },
+  {
+    PDB_INT32,
+    "palette_type",
+    "The type of palette to use: { MAKE_PALETTE (0), REUSE_PALETTE (1), WEB_PALETTE (2), MONO_PALETTE (3), CUSTOM_PALETTE (4) }"
+  },
+  {
+    PDB_INT32,
+    "num_cols",
+    "the number of colors to quantize to, ignored unless (palette_type == MAKE_PALETTE)"
+  },
+  {
+    PDB_INT32,
+    "alpha_dither",
+    "dither transparency to fake partial opacity"
+  },
+  {
+    PDB_INT32,
+    "remove_unused",
+    "remove unused or duplicate colour entries from final palette, ignored if (palette_type == MAKE_PALETTE)"
+  },
+  {
+    PDB_STRING,
+    "palette",
+    "The name of the custom palette to use, ignored unless (palette_type == CUSTOM_PALETTE)"
+  }
+};
+
+static ProcRecord convert_indexed2_proc =
+{
+  "gimp_convert_indexed2",
+  "Convert specified image to indexed color",
+  "This procedure converts the specified image to indexed color. This process requires an image of type GRAY or RGB. The 'palette_type' specifies what kind of palette to use, A type of '0' means to use an optimal palette of 'num_cols' generated from the colors in the image. A type of '1' means to re-use the previous palette (not currently implemented). A type of '2' means to use the so-called WWW-optimized palette. Type '3' means to use only black and white colors. A type of '4' means to use a palette from the gimp palettes directories. The 'dither type' specifies what kind of dithering to use. '0' means no dithering, '1' means standard Floyd-Steinberg error diffusion, '3' means dithering based on pixel location ('Fixed' dithering).",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  7,
+  convert_indexed2_inargs,
+  0,
+  NULL,
+  { { convert_indexed2_invoker } }
 };

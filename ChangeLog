@@ -1,3 +1,12 @@
+Tue Aug 31 22:25:38 BST 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/convert.[ch]
+	* app/convert_cmds.c
+	* app/internal_procs.c
+	* tools/pdbgen/enums.pl
+	* tools/pdbgen/pdb/convert.pdb: Added convert_indexed2
+	procedure to expose new RGB/GREY->Indexed functionality.
+
 Tue Aug 31 10:53:34 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/common/Makefile.am
