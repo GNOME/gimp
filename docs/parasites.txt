@@ -43,6 +43,32 @@ Global data follows no strict rules.
 "jpeg-save-options" (IMAGE)
         The JpegSaveVals structure from the JPEG plugin.
 
+"gamma" (IMAGE, PERSISTENT)
+	The original gamma this image was created/saved. For JPEG; this is
+        always one, for PNG it's usually taken from the image data. The gimp
+        might use and modify this. The format is an ascii string with the
+        gamma exponent as a flotingpoint value.
+
+        Example: for sRGB images this might contain "0.45454545"
+
+"chromaticity" (IMAGE, PERSISTENT)
+	This parasite contains 8 floatingpoint values (ascii, seperated by
+        whitespace) specifying the x and y coordinates of the whitepoint, the
+        red, green and blue primaries, in this order.
+
+        Example: for sRGB images this might contain
+        "0.3127 0.329 0.64 0.33 0.3 0.6 0.15 0.06"
+         wx     wy    rx   ry   gx  gy  bx   by
+ 
+"rendering-intent" (IMAGE, PERSISTENT)
+	This specifies the rendering intent of the image. It's a value
+        between 0 and 3, again in ascii:
+
+        0 - perceptual			(e.g. for photographs)
+        1 - relative colorimetric	(e.g. for logos)
+        2 - saturation-preserving	(e.g. for business charts)
+        3 - absolute colorimetric
+
 "<plug-in>/_fu_data" (GLOBAL, IMAGE, DRAWABLE, PERSISTENT)
         The Gimp::Fu module might store the arguments of the last plug-in
         invocation. It is usually attached to images, but might also

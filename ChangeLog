@@ -1,3 +1,8 @@
+Fri Jul 30 02:34:43 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+        * app/gimpparasite.c: I escaped everything when writing out
+        parasites with \, everything except the \ itself. Argh.
+
 Fri Jul 30 02:01:16 CEST 1999  Marc Lehmann <pcg@goof.com>
 
         * docs/parasites.txt: add some suggested colour parasites (no icc

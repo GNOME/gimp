@@ -86,12 +86,20 @@ static void save_func(char *key, Parasite *p, FILE *fp)
 
       fprintf (fp, "(parasite \"%s\" %lu \"", parasite_name (p), parasite_flags (p));
 
+      /*
+       * the current methodology is: never move the parasiterc from one
+       * system to another. If you want to do this you should probably
+       * write out parasites which contain any non-alphanumeric(+some)
+       * characters as \xHH sequences altogether.
+       */
+
       for (s = (gchar *)parasite_data (p), l = parasite_data_size (p);
            l;
            l--, s++)
         {
           switch (*s)
             {
+              case '\\': fputs ("\\\\", fp); break;
               case '\0': fputs ("\\0", fp); break;
               case '"' : fputs ("\\\"", fp); break;
               /* disabled, not portable!  */
