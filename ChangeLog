@@ -1,5 +1,15 @@
 2004-04-20  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpwidgets-constructors.[ch]: added new function
+	gimp_paint_mode_menu_set_history().
+
+	* app/gui/brush-select.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimppropwidgets.c: use the new function instead of
+	the deprecated gimp_int_option_menu API.
+
+2004-04-20  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/align_layers.c
 	* plug-ins/common/borderaverage.c
 	* plug-ins/common/channel_mixer.c

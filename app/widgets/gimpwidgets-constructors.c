@@ -108,3 +108,10 @@ gimp_paint_mode_menu_new (GCallback            callback,
 
   return menu;
 }
+
+void
+gimp_paint_mode_menu_set_history (GtkOptionMenu        *menu,
+                                  GimpLayerModeEffects  value)
+{
+  gimp_int_option_menu_set_history (menu, value);
+}

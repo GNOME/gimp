@@ -25,5 +25,8 @@ GtkWidget * gimp_paint_mode_menu_new (GCallback             callback,
 				      gboolean              with_behind_mode,
 				      GimpLayerModeEffects  initial);
 
+void        gimp_paint_mode_menu_set_history (GtkOptionMenu        *menu,
+                                              GimpLayerModeEffects  value);
+
 
 #endif  /*  __GIMP_WIDGETS_CONSTRUCTORS_H__  */

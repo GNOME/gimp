@@ -927,7 +927,7 @@ static void
 gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
 				     GimpLayer         *layer)
 {
-  gimp_int_option_menu_set_history (GTK_OPTION_MENU (view->paint_mode_menu),
+  gimp_paint_mode_menu_set_history (GTK_OPTION_MENU (view->paint_mode_menu),
 				    layer->mode);
 
   if (layer->preserve_trans !=

@@ -545,7 +545,7 @@ gimp_prop_paint_menu_notify (GObject    *config,
                 param_spec->name, &value,
                 NULL);
 
-  gimp_int_option_menu_set_history (GTK_OPTION_MENU (menu), value);
+  gimp_paint_mode_menu_set_history (GTK_OPTION_MENU (menu), value);
 }
 
 
