@@ -1,3 +1,40 @@
+2000-02-18  Michael Natterer  <misch@gimp.org>
+
+	* libgimp/gimpcolorbutton.[ch]: new function
+	gimp_color_button_double_new() which uses an array of gdouble
+	instead uf guchar to store the color.
+
+	* libgimp/gimpwidgets.h: added macros for easier access of the
+	scale_entries widgets.
+
+	* plug-ins/common/film.c: use the scale_entry widget accessors.
+
+	* plug-ins/libgck/gck/Makefile.am
+	* plug-ins/libgck/gck/gckcolor.h
+	* plug-ins/libgck/gck/gcktypes.h
+	* plug-ins/libgck/gck/gckui.[ch]: removed.
+
+	* plug-ins/libgck/gck/gck.h
+	* plug-ins/libgck/gck/gckcolor.c: left only the color functions in
+	libgck.
+
+	* plug-ins/Lighting/lighting_pixmaps.h
+	* plug-ins/MapObject/mapobject_pixmaps.h: removed (include the
+	pixmaps directly).
+
+	* po-plug-ins/POTFILES.in: added mapobject_ui.c.
+
+	* plug-ins/Lighting/lighting_image.c
+	* plug-ins/Lighting/lighting_main.[ch]
+	* plug-ins/Lighting/lighting_preview.c
+	* plug-ins/Lighting/lighting_ui.[ch]
+	* plug-ins/MapObject/mapobject_image.[ch]
+	* plug-ins/MapObject/mapobject_main.[ch]
+	* plug-ins/MapObject/mapobject_preview.c
+	* plug-ins/MapObject/mapobject_ui.[ch]: use gtk+ and libgimp
+	functions instead of gck ones, cleanups, I18N. More stuff to
+	come...
+
 Thu Feb 17 03:30:40 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/*.pl: added 2000 to the copyrights

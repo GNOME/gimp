@@ -213,7 +213,7 @@ void compute_preview(gint x,gint y,gint w,gint h,gint pw,gint ph)
   /* Convert to visual type */
   /* ====================== */
 
-  gck_rgb_to_gdkimage(appwin->visinfo,preview_rgb_data,image,pw,ph);
+  gck_rgb_to_gdkimage(visinfo,preview_rgb_data,image,pw,ph);
 }
 
 /*************************************************/
@@ -245,8 +245,8 @@ gint check_light_hit(gint xpos,gint ypos)
 
 void draw_light_marker(gint xpos,gint ypos)
 {
-  gck_gc_set_foreground(appwin->visinfo,gc,0,50,255);
-  gck_gc_set_background(appwin->visinfo,gc,0,0,0);
+  gck_gc_set_foreground(visinfo,gc,0,50,255);
+  gck_gc_set_background(visinfo,gc,0,0,0);
 
   gdk_gc_set_function(gc,GDK_COPY);
 
@@ -288,8 +288,8 @@ void clear_light_marker()
   
   if (backbuf.image!=NULL)
     {
-      gck_gc_set_foreground(appwin->visinfo,gc,255,255,255);
-      gck_gc_set_background(appwin->visinfo,gc,0,0,0);
+      gck_gc_set_foreground(visinfo,gc,255,255,255);
+      gck_gc_set_background(visinfo,gc,0,0,0);
 
       gdk_gc_set_function(gc,GDK_COPY);
       gdk_draw_image(previewarea->window,gc,backbuf.image,0,0,backbuf.x,backbuf.y,
@@ -336,34 +336,46 @@ void update_light(gint xpos,gint ypos)
 /* Draw preview image. if DoCompute is TRUE then recompute image. */
 /******************************************************************/
 
-void draw_preview_image(gint docompute)
+void
+draw_preview_image (gint docompute)
 {
-  gint startx,starty,pw,ph;
-  
-  gck_gc_set_foreground(appwin->visinfo,gc,255,255,255);
-  gck_gc_set_background(appwin->visinfo,gc,0,0,0);
+  gint startx, starty, pw, ph;
 
-  gdk_gc_set_function(gc,GDK_COPY);
-  linetab[0].x1=-1;
+  gck_gc_set_foreground (visinfo, gc, 255, 255, 255);
+  gck_gc_set_background (visinfo, gc,   0,   0,   0);
 
-  pw=PREVIEW_WIDTH >> mapvals.preview_zoom_factor;
-  ph=PREVIEW_HEIGHT >> mapvals.preview_zoom_factor;
-  startx=(PREVIEW_WIDTH-pw)>>1;
-  starty=(PREVIEW_HEIGHT-ph)>>1;
+  gdk_gc_set_function (gc, GDK_COPY);
+  linetab[0].x1 = -1;
 
-  if (docompute==TRUE)
+  pw = PREVIEW_WIDTH >> mapvals.preview_zoom_factor;
+  ph = PREVIEW_HEIGHT >> mapvals.preview_zoom_factor;
+  startx = (PREVIEW_WIDTH - pw) >> 1;
+  starty = (PREVIEW_HEIGHT - ph) >> 1;
+
+  if (docompute == TRUE)
     {
-      gck_cursor_set(previewarea->window,GDK_WATCH);
-      compute_preview(0,0,width-1,height-1,pw,ph);
-      gck_cursor_set(previewarea->window,GDK_HAND2);
-      clear_light_marker();
+      GdkCursor *newcursor;
+
+      newcursor = gdk_cursor_new (GDK_WATCH);
+      gdk_window_set_cursor(previewarea->window, newcursor);
+      gdk_cursor_destroy (newcursor);
+      gdk_flush();
+
+      compute_preview (0, 0, width - 1, height - 1, pw, ph);
+
+      newcursor = gdk_cursor_new (GDK_HAND2);
+      gdk_window_set_cursor(previewarea->window, newcursor);
+      gdk_cursor_destroy (newcursor);
+      gdk_flush();
+
+      clear_light_marker ();
     }
 
-  if (pw!=PREVIEW_WIDTH)
-    gdk_window_clear(previewarea->window);
-  
-  gdk_draw_image(previewarea->window,gc,image,0,0,startx,starty,pw,ph);
-  draw_lights(startx,starty,pw,ph);
+  if (pw != PREVIEW_WIDTH)
+    gdk_window_clear (previewarea->window);
+
+  gdk_draw_image (previewarea->window, gc, image, 0, 0, startx, starty, pw, ph);
+  draw_lights (startx, starty, pw, ph);
 }
 
 /**************************/
@@ -374,8 +386,8 @@ void draw_preview_wireframe(void)
 {
   gint startx,starty,pw,ph;
 
-  gck_gc_set_foreground(appwin->visinfo,gc,255,255,255);
-  gck_gc_set_background(appwin->visinfo,gc,0,0,0);
+  gck_gc_set_foreground(visinfo,gc,255,255,255);
+  gck_gc_set_background(visinfo,gc,0,0,0);
 
   gdk_gc_set_function(gc,GDK_INVERT);
 

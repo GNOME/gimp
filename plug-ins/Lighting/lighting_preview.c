@@ -16,12 +16,11 @@ gint ypostab_size = -1;
 /* Protos */
 /* ====== */
 
-void draw_preview_image (gint recompute);
-void update_light       (gint xpos,gint ypos);
-void draw_light_marker  (gint xpos,gint ypos);
-void clear_light_marker (void);
-
-void compute_preview (gint startx,gint starty,gint w,gint h)
+void
+compute_preview (gint startx,
+		 gint starty,
+		 gint w,
+		 gint h)
 {
   gint xcnt,ycnt,f1,f2;
   gdouble imagex,imagey;
@@ -160,10 +159,11 @@ void compute_preview (gint startx,gint starty,gint w,gint h)
         }
     }
 
-  gck_rgb_to_gdkimage(appwin->visinfo, preview_rgb_data, image, PREVIEW_WIDTH, PREVIEW_HEIGHT);
+  gck_rgb_to_gdkimage(visinfo, preview_rgb_data, image, PREVIEW_WIDTH, PREVIEW_HEIGHT);
 }
 
-void blah()
+void
+blah (void)
 {
   /* First, compute the linear mapping (x,y,x+w,y+h) to (0,0,pw,ph) */
   /* ============================================================== */
@@ -249,7 +249,7 @@ void blah()
   /* Convert to visual type */
   /* ====================== */
 
-/*  gck_rgb_to_gdkimage(appwin->visinfo,preview_rgb_data,image,pw,ph); */
+/*  gck_rgb_to_gdkimage(visinfo,preview_rgb_data,image,pw,ph); */
 
 }
 
@@ -258,7 +258,9 @@ void blah()
 /* light marker. Return TRUE if so, FALSE if not */
 /*************************************************/
 
-gint check_light_hit(gint xpos,gint ypos)
+gint
+check_light_hit (gint xpos,
+		 gint ypos)
 {
 /*  gdouble dx,dy,r;
   
@@ -274,17 +276,19 @@ gint check_light_hit(gint xpos,gint ypos)
         return(TRUE);
     }
    */
-  return(FALSE);
+  return FALSE;
 }
 
 /****************************************/
 /* Draw a marker to show light position */
 /****************************************/
 
-void draw_light_marker(gint xpos,gint ypos)
+void
+draw_light_marker (gint xpos,
+		   gint ypos)
 {
-/*  gck_gc_set_foreground(appwin->visinfo,gc,0,50,255);
-  gck_gc_set_background(appwin->visinfo,gc,0,0,0);
+/*  gck_gc_set_foreground(visinfo,gc,0,50,255);
+  gck_gc_set_background(visinfo,gc,0,0,0);
 
   gdk_gc_set_function(gc,GDK_COPY);
 
@@ -320,15 +324,16 @@ void draw_light_marker(gint xpos,gint ypos)
     } */
 }
 
-void clear_light_marker(void)
+void
+clear_light_marker (void)
 {
   /* Restore background if it has been saved */
   /* ======================================= */
   
 /*  if (backbuf.image!=NULL)
     {
-      gck_gc_set_foreground(appwin->visinfo,gc,255,255,255);
-      gck_gc_set_background(appwin->visinfo,gc,0,0,0);
+      gck_gc_set_foreground(visinfo,gc,255,255,255);
+      gck_gc_set_background(visinfo,gc,0,0,0);
 
       gdk_gc_set_function(gc,GDK_COPY);
       gdk_draw_image(previewarea->window,gc,backbuf.image,0,0,backbuf.x,backbuf.y,
@@ -338,7 +343,8 @@ void clear_light_marker(void)
     } */
 }
 
-void draw_lights(void)
+void
+draw_lights (void)
 {
 /*  gdouble dxpos,dypos;
   gint xpos,ypos;
@@ -359,7 +365,9 @@ void draw_lights(void)
 /* Update light position given new screen coords */
 /*************************************************/
 
-void update_light(gint xpos,gint ypos)
+void
+update_light (gint xpos,
+	      gint ypos)
 {
 /*  gint startx,starty,pw,ph;
 
@@ -374,9 +382,13 @@ void update_light(gint xpos,gint ypos)
   draw_lights(startx,starty,pw,ph); */
 }
 
-void compute_preview_rectangle(gint *xp,gint *yp,gint *wid,gint *heig)
+void
+compute_preview_rectangle (gint *xp,
+			   gint *yp,
+			   gint *wid,
+			   gint *heig)
 {
-  gdouble x,y,w,h;
+  gdouble x, y, w, h;
 
   if (width>=height)
     {
@@ -405,30 +417,38 @@ void compute_preview_rectangle(gint *xp,gint *yp,gint *wid,gint *heig)
 /* Draw preview image. if DoCompute is TRUE then recompute image. */
 /******************************************************************/
 
-void draw_preview_image(gint recompute)
+void
+draw_preview_image (gint recompute)
 {
-  gint startx,starty,pw,ph;
+  gint startx, starty, pw, ph;
   
-  gck_gc_set_foreground(appwin->visinfo,gc,255,255,255);
-  gck_gc_set_background(appwin->visinfo,gc,0,0,0);
+  gck_gc_set_foreground (visinfo, gc, 255, 255, 255);
+  gck_gc_set_background (visinfo, gc,   0,   0,   0);
 
-  gdk_gc_set_function(gc,GDK_COPY);
+  gdk_gc_set_function (gc, GDK_COPY);
 
-  compute_preview_rectangle(&startx,&starty,&pw,&ph);
+  compute_preview_rectangle (&startx, &starty, &pw, &ph);
 
-  if (recompute==TRUE)
+  if (recompute == TRUE)
     {
-      gck_cursor_set(previewarea->window,GDK_WATCH);
-      compute_preview(startx,starty,pw,ph);
-      gck_cursor_set(previewarea->window,GDK_HAND2);
-      clear_light_marker();
+      GdkCursor *newcursor;
+
+      newcursor = gdk_cursor_new (GDK_WATCH);
+      gdk_window_set_cursor (previewarea->window, newcursor);
+      gdk_cursor_destroy (newcursor);
+      gdk_flush();
+
+      compute_preview (startx, starty, pw, ph);
+
+      newcursor = gdk_cursor_new (GDK_HAND2);
+      gdk_window_set_cursor (previewarea->window, newcursor);
+      gdk_cursor_destroy (newcursor);
+      gdk_flush();
+
+      clear_light_marker ();
     }
 
-/*  if (pw!=PREVIEW_WIDTH)
-    gdk_window_clear(previewarea->window); */
-
-  gdk_draw_image(previewarea->window,gc,image,0,0,0,0,PREVIEW_WIDTH,PREVIEW_HEIGHT);
-
-/*  draw_lights(); */
+  gdk_draw_image (previewarea->window, gc, image,
+		  0, 0, 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT);
 }
 

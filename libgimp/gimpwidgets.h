@@ -103,6 +103,21 @@ GtkWidget * gimp_spin_button_new   (/* return value: */
 				    gfloat              climb_rate,
 				    guint               digits);
 
+#define GIMP_SCALE_ENTRY_LABEL(adj) \
+        GTK_LABEL (gtk_object_get_data (GTK_OBJECT(adj), "label"))
+
+#define GIMP_SCALE_ENTRY_SCALE(adj) \
+        GTK_HSCALE (gtk_object_get_data (GTK_OBJECT(adj), "scale"))
+#define GIMP_SCALE_ENTRY_SCALE_ADJ(adj) \
+        gtk_range_get_adjustment \
+        (GTK_RANGE (gtk_object_get_data (GTK_OBJECT(adj), "scale")))
+
+#define GIMP_SCALE_ENTRY_SPINBUTTON(adj) \
+        GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT(adj), "spinbutton"))
+#define GIMP_SCALE_ENTRY_SPINBUTTON_ADJ(adj) \
+        gtk_spin_button_get_adjustment \
+        (GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT(adj), "spinbutton")))
+
 GtkObject * gimp_scale_entry_new   (GtkTable           *table,
 				    gint                column,
 				    gint                row,

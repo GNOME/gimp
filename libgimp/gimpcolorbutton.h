@@ -59,6 +59,11 @@ GtkWidget* gimp_color_button_new        (gchar   *title,
 					 gint     height,
 					 guchar  *color,
 					 gint     bpp);
+GtkWidget* gimp_color_button_double_new (gchar   *title,
+					 gint     width,
+					 gint     height,
+					 gdouble *color,
+					 gint     bpp);
 void       gimp_color_button_update     (GimpColorButton *gcb);
 
 #ifdef __cplusplus

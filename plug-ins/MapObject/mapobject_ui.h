@@ -1,31 +1,23 @@
-#ifndef MAPOBJECTUIH
-#define MAPOBJECTUIH
+#ifndef __MAPOBJECT_UI_H__
+#define __MAPOBJECT_UI_H__
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <gdk/gdk.h>
 #include <gtk/gtk.h>
-#include <gck/gck.h>
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
 
-#include "arcball.h"
-#include "mapobject_main.h"
-#include "mapobject_image.h"
-#include "mapobject_apply.h"
-#include "mapobject_preview.h"
+#include <libgimp/gimp.h>
+
+#include <gck/gck.h>
 
 /* Externally visible variables */
 /* ============================ */
 
-extern GckApplicationWindow *appwin;
+extern GckVisualInfo *visinfo;
 
-extern GdkGC *gc;
+extern GdkGC     *gc;
 extern GtkWidget *previewarea;
 
 /* Externally visible functions */
 /* ============================ */
 
-extern void create_main_dialog(void);
+gboolean main_dialog (GDrawable *drawable);
 
-#endif
+#endif  /* __MAPOBJECT_UI_H__ */

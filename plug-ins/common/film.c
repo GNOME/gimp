@@ -1383,11 +1383,8 @@ film_dialog (gint32 image_ID)
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &filmvals.picture_height);
 
-  spinbutton = gtk_object_get_data (GTK_OBJECT (adj), "spinbutton");
-  gtk_spin_button_configure
-    (GTK_SPIN_BUTTON (spinbutton),
-     gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton)),
-     0.01, 3);
+  gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
+			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
 
   filmint.advanced_adj[1] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
@@ -1400,11 +1397,8 @@ film_dialog (gint32 image_ID)
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &filmvals.picture_space);
 
-  spinbutton = gtk_object_get_data (GTK_OBJECT (adj), "spinbutton");
-  gtk_spin_button_configure
-    (GTK_SPIN_BUTTON (spinbutton),
-     gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton)),
-     0.01, 3);
+  gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
+			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
 
   sep = gtk_hseparator_new ();
   gtk_table_attach (GTK_TABLE (table), sep, 0, 3, row, row + 1,
@@ -1424,11 +1418,8 @@ film_dialog (gint32 image_ID)
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &filmvals.hole_offset);
 
-  spinbutton = gtk_object_get_data (GTK_OBJECT (adj), "spinbutton");
-  gtk_spin_button_configure
-    (GTK_SPIN_BUTTON (spinbutton),
-     gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton)),
-     0.01, 3);
+  gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
+			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
 
   filmint.advanced_adj[3] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
@@ -1441,11 +1432,8 @@ film_dialog (gint32 image_ID)
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &filmvals.hole_width);
 
-  spinbutton = gtk_object_get_data (GTK_OBJECT (adj), "spinbutton");
-  gtk_spin_button_configure
-    (GTK_SPIN_BUTTON (spinbutton),
-     gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton)),
-     0.01, 3);
+  gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
+			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
 
   filmint.advanced_adj[4] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
@@ -1458,11 +1446,8 @@ film_dialog (gint32 image_ID)
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &filmvals.hole_height);
 
-  spinbutton = gtk_object_get_data (GTK_OBJECT (adj), "spinbutton");
-  gtk_spin_button_configure
-    (GTK_SPIN_BUTTON (spinbutton),
-     gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton)),
-     0.01, 3);
+  gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
+			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
 
   filmint.advanced_adj[5] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
@@ -1475,11 +1460,8 @@ film_dialog (gint32 image_ID)
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &filmvals.hole_space);
 
-  spinbutton = gtk_object_get_data (GTK_OBJECT (adj), "spinbutton");
-  gtk_spin_button_configure
-    (GTK_SPIN_BUTTON (spinbutton),
-     gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton)),
-     0.01, 3);
+  gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
+			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
 
   sep = gtk_hseparator_new ();
   gtk_table_attach (GTK_TABLE (table), sep, 0, 3, row, row + 1,
@@ -1499,11 +1481,8 @@ film_dialog (gint32 image_ID)
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &filmvals.number_height);
 
-  spinbutton = gtk_object_get_data (GTK_OBJECT (adj), "spinbutton");
-  gtk_spin_button_configure
-    (GTK_SPIN_BUTTON (spinbutton),
-     gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton)),
-     0.01, 3);
+  gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
+			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 3);
 
   sep = gtk_hseparator_new ();
   gtk_table_attach (GTK_TABLE (table), sep, 0, 3, row, row + 1,

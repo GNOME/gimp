@@ -1,22 +1,10 @@
-#ifndef LIGHTINGMAINH
-#define LIGHTINGMAINH
+#ifndef __LIGHTING_MAIN_H__
+#define __LIGHTING_MAIN_H__
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <gck/gck.h>
+
 #include <libgimp/gimp.h>
-
-#include "lighting_ui.h"
-#include "lighting_image.h"
-#include "lighting_apply.h"
-#include "lighting_preview.h"
-
-#include "config.h"
-#include "libgimp/stdplugins-intl.h"
-
 
 /* Defines and stuff */
 /* ================= */
@@ -26,14 +14,24 @@
 /* Typedefs */
 /* ======== */
 
-typedef enum {
+typedef enum
+{
   POINT_LIGHT,
   DIRECTIONAL_LIGHT,
   SPOT_LIGHT, 
   NO_LIGHT
 } LightType;
 
-enum {
+enum
+{
+  LINEAR_MAP,
+  LOGARITHMIC_MAP,
+  SINUSOIDAL_MAP,
+  SPHERICAL_MAP
+};
+
+enum
+{
   IMAGE_BUMP,
   WAVES_BUMP
 };
@@ -50,15 +48,15 @@ typedef struct
 
 typedef struct
 {
-  LightType  type;
+  LightType   type;
   GimpVector3 position;
   GimpVector3 direction;
-  GckRGB     color;
-  gdouble    intensity;
+  GckRGB      color;
+  gdouble     intensity;
 } LightSettings;
 
-typedef struct {
-
+typedef struct
+{
   gint32 drawable_id;
   gint32 bumpmap_id;
   gint32 envmap_id;
@@ -66,8 +64,8 @@ typedef struct {
   /* Render variables */
   /* ================ */
 
-  GimpVector3       viewpoint;
-  GimpVector3       planenormal;
+  GimpVector3      viewpoint;
+  GimpVector3      planenormal;
   LightSettings    lightsource;
   MaterialSettings material;
   MaterialSettings ref_material;
@@ -83,7 +81,7 @@ typedef struct {
 
   /* Flags */
   /* ===== */
-  
+
   gint antialiasing;
   gint create_new_image;
   gint transparent_background;
@@ -98,7 +96,6 @@ typedef struct {
   /* ==== */
   
   gdouble preview_zoom_factor;
-
 } LightingValues;
 
 /* Externally visible variables */

@@ -67,9 +67,11 @@ static const GtkTargetEntry targets[] = { { "application/x-color", 0 } };
 struct _GimpColorButton
 {
   GtkButton   button;
+
+  gboolean        double_color;
   
   gchar          *title;
-  guchar         *color;
+  gpointer        color;
   gint            bpp;
   gint            width;
   gint            height;
@@ -87,18 +89,26 @@ struct _GimpColorButton
 static void  gimp_color_button_destroy         (GtkObject *object);
 static void  gimp_color_button_clicked         (GtkButton *button);
 static void  gimp_color_button_paint           (GimpColorButton *gcb);
-static void  gimp_color_button_state_changed   (GtkWidget *widget, GtkStateType previous_state);
+static void  gimp_color_button_state_changed   (GtkWidget *widget,
+						GtkStateType previous_state);
 
-static void  gimp_color_button_dialog_ok       (GtkWidget *widget, gpointer data);
-static void  gimp_color_button_dialog_cancel   (GtkWidget *widget, gpointer data);
+static void  gimp_color_button_dialog_ok       (GtkWidget *widget,
+						gpointer data);
+static void  gimp_color_button_dialog_cancel   (GtkWidget *widget,
+						gpointer data);
 
-static void  gimp_color_button_use_fg          (gpointer callback_data, guint callback_action, 
+static void  gimp_color_button_use_fg          (gpointer callback_data,
+						guint callback_action, 
 						GtkWidget *widget);
-static void  gimp_color_button_use_bg          (gpointer callback_data, guint callback_action, 
+static void  gimp_color_button_use_bg          (gpointer callback_data,
+						guint callback_action, 
 						GtkWidget *widget);
 
-static gint   gimp_color_button_menu_popup     (GtkWidget *widget, GdkEvent *event, gpointer data);
-static gchar* gimp_color_button_menu_translate (const gchar *path, gpointer func_data);
+static gint   gimp_color_button_menu_popup     (GtkWidget *widget,
+						GdkEvent *event,
+						gpointer data);
+static gchar* gimp_color_button_menu_translate (const gchar *path,
+						gpointer func_data);
 
 
 static GtkItemFactoryEntry menu_items[] = {
@@ -172,16 +182,18 @@ gimp_color_button_class_init (GimpColorButtonClass *class)
 static void
 gimp_color_button_init (GimpColorButton *gcb)
 {
-  gcb->title    = NULL;
-  gcb->bpp      = 0;
-  gcb->color    = NULL;
+  gcb->double_color = FALSE;
 
-  gcb->dcolor   = NULL;
-  gcb->preview  = NULL;
-  gcb->dialog   = NULL;
+  gcb->title        = NULL;
+  gcb->bpp          = 0;
+  gcb->color        = NULL;
 
-  gcb->even     = NULL;
-  gcb->odd      = NULL; 
+  gcb->dcolor       = NULL;
+  gcb->preview      = NULL;
+  gcb->dialog       = NULL;
+
+  gcb->even         = NULL;
+  gcb->odd          = NULL; 
 }
 
 GtkType
@@ -208,6 +220,7 @@ gimp_color_button_get_type (void)
   
   return gcb_type;
 }
+
 /**
  * gimp_color_button_new:
  * @title: String that wil be used as title for the color_selector.
@@ -224,13 +237,13 @@ gimp_color_button_get_type (void)
  * 
  * Returns: Pointer to the new GimpColorButton widget.
  */
-
-GtkWidget* 
-gimp_color_button_new (gchar   *title,
-		       gint     width,
-		       gint     height,
-		       guchar  *color,
-		       gint     bpp)
+static GtkWidget *
+_gimp_color_button_new (gboolean  double_color,
+			gchar    *title,
+			gint      width,
+			gint      height,
+			gpointer  color,
+			gint      bpp)
 {
   GimpColorButton *gcb;
   gint i;
@@ -240,18 +253,28 @@ gimp_color_button_new (gchar   *title,
 
   gcb = gtk_type_new (gimp_color_button_get_type ());
 
+  gcb->double_color = double_color;
+
   gcb->title  = g_strdup (title);
   gcb->width  = width;
   gcb->height = height;
   gcb->color  = color;
   gcb->bpp    = bpp;
-  
+
   gcb->dcolor = g_new (gdouble, 4);
   gcb->even   = g_new (guchar, 3 * width);
   gcb->odd    = g_new (guchar, 3 * width);
 
-  for (i = 0; i < bpp; i++)
-    gcb->dcolor[i] = (gdouble)color[i] / 255.0;
+  if (double_color)
+    {
+      for (i = 0; i < bpp; i++)
+	gcb->dcolor[i] = ((gdouble *) color)[i];
+    }
+  else
+    {
+      for (i = 0; i < bpp; i++)
+	gcb->dcolor[i] = (gdouble) ((guchar *) color)[i] / 255.0;
+    }
 
   if (bpp == 3)
     gcb->dcolor[3] = 1.0;
@@ -267,11 +290,11 @@ gimp_color_button_new (gchar   *title,
  
   /* right-click opens a popup */
   gcb->item_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<popup>", NULL);  
-  gtk_item_factory_set_translate_func (gcb->item_factory, gimp_color_button_menu_translate,
+  gtk_item_factory_set_translate_func (gcb->item_factory,
+				       gimp_color_button_menu_translate,
 	  			       NULL, NULL);
   gtk_item_factory_create_items (gcb->item_factory, nmenu_items, menu_items, gcb);
-  gtk_signal_connect (GTK_OBJECT (gcb),
-		      "button_press_event",
+  gtk_signal_connect (GTK_OBJECT (gcb), "button_press_event",
 		      GTK_SIGNAL_FUNC (gimp_color_button_menu_popup),
 		      gcb);
 
@@ -309,6 +332,60 @@ gimp_color_button_new (gchar   *title,
 }
 
 /**
+ * gimp_color_button_new:
+ * @title: String that wil be used as title for the color_selector.
+ * @width: Width of the colorpreview in pixels.
+ * @height: Height of the colorpreview in pixels.
+ * @color: An array of guchar holding the color (RGB or RGBA)
+ * @bpp: May be 3 for RGB or 4 for RGBA.
+ * 
+ * Creates a new GimpColorbutton widget. This returns a button with 
+ * a preview showing the color. When the button is clicked a 
+ * GtkColorSelectionDialog is opened. If the user changes the color
+ * the new color is written into the array that was used to pass
+ * the initial color and the "color_changed" signal is emitted.
+ * 
+ * Returns: Pointer to the new GimpColorButton widget.
+ */
+GtkWidget *
+gimp_color_button_new (gchar   *title,
+		       gint     width,
+		       gint     height,
+		       guchar  *color,
+		       gint     bpp)
+{
+  return _gimp_color_button_new (FALSE, title, width, height,
+				 (gpointer) color, bpp);
+}
+
+/**
+ * gimp_color_button_double_new:
+ * @title: String that wil be used as title for the color_selector.
+ * @width: Width of the colorpreview in pixels.
+ * @height: Height of the colorpreview in pixels.
+ * @color: An array of gdouble holding the color (RGB or RGBA)
+ * @bpp: May be 3 for RGB or 4 for RGBA.
+ * 
+ * Creates a new GimpColorbutton widget. This returns a button with 
+ * a preview showing the color. When the button is clicked a 
+ * GtkColorSelectionDialog is opened. If the user changes the color
+ * the new color is written into the array that was used to pass
+ * the initial color and the "color_changed" signal is emitted.
+ * 
+ * Returns: Pointer to the new GimpColorButton widget.
+ */
+GtkWidget *
+gimp_color_button_double_new (gchar   *title,
+			      gint     width,
+			      gint     height,
+			      gdouble *color,
+			      gint     bpp)
+{
+  return _gimp_color_button_new (TRUE, title, width, height,
+				 (gpointer) color, bpp);
+}
+
+/**
  * gimp_color_button_update:
  * @gcb: Pointer to a #GimpColorButton.
  * 
@@ -323,8 +400,16 @@ gimp_color_button_update (GimpColorButton *gcb)
 
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (gcb));
 
-  for (i = 0; i < gcb->bpp; i++)
-    gcb->dcolor[i] = (gdouble)gcb->color[i] / 255.0;
+  if (gcb->double_color)
+    {
+      for (i = 0; i < gcb->bpp; i++)
+	gcb->dcolor[i] = ((gdouble *) gcb->color)[i];
+    }
+  else
+    {
+      for (i = 0; i < gcb->bpp; i++)
+	gcb->dcolor[i] = (gdouble) ((guchar *) gcb->color)[i] / 255.0;
+    }
 
   gimp_color_button_paint (gcb);
 
@@ -465,7 +550,6 @@ gimp_color_button_dialog_ok (GtkWidget *widget,
 			     gpointer   data)
 {
   GimpColorButton *gcb;
-  guchar new_color[4];
   gboolean color_changed = FALSE;
   gint i;
   
@@ -474,12 +558,26 @@ gimp_color_button_dialog_ok (GtkWidget *widget,
 
   gtk_color_selection_get_color (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), gcb->dcolor);
 
-  for (i = 0; i < gcb->bpp; i++)
+  if (gcb->double_color)
     {
-      new_color[i] = gcb->dcolor[i] * 255.999;
-      if (new_color[i] != gcb->color[i])
-	color_changed = TRUE;
-      gcb->color[i] = new_color[i];
+      for (i = 0; i < gcb->bpp; i++)
+	{
+	  if (gcb->dcolor[i] != ((gdouble *) gcb->color)[i])
+	    color_changed = TRUE;
+	  ((gdouble *) gcb->color)[i] = gcb->dcolor[i];
+	}
+    }
+  else
+    {
+      guchar new_color[4];
+
+      for (i = 0; i < gcb->bpp; i++)
+	{
+	  new_color[i] = gcb->dcolor[i] * 255.999;
+	  if (new_color[i] != ((guchar *) gcb->color)[i])
+	    color_changed = TRUE;
+	  ((guchar *) gcb->color)[i] = new_color[i];
+	}
     }
   
   gtk_widget_hide (gcb->dialog);  
@@ -511,11 +609,24 @@ gimp_color_button_use_fg (gpointer   callback_data,
 			  GtkWidget *widget)
 {
   GimpColorButton *gcb;
+  guchar fg_color[3];
+  gint   i;
 
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (callback_data));
   gcb = GIMP_COLOR_BUTTON (callback_data);
 
-  gimp_palette_get_foreground (gcb->color, gcb->color+1, gcb->color+2);
+  gimp_palette_get_foreground (fg_color, &fg_color[1], &fg_color[2]);
+
+  if (gcb->double_color)
+    {
+      for (i = 0; i < 3; i++)
+	((gdouble *) gcb->color)[i] = fg_color[i] / 255.0;
+    }
+  else
+    {
+      for (i = 0; i < 3; i ++)
+	((guchar *) gcb->color)[i] = fg_color[i];
+    }
 
   gimp_color_button_update (gcb);
 
@@ -530,11 +641,24 @@ gimp_color_button_use_bg (gpointer   callback_data,
 			  GtkWidget *widget)
 {
   GimpColorButton *gcb;
+  guchar bg_color[3];
+  gint   i;
 
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (callback_data));
   gcb = GIMP_COLOR_BUTTON (callback_data);
 
-  gimp_palette_get_background (gcb->color, gcb->color+1, gcb->color+2);
+  gimp_palette_get_background (bg_color, &bg_color[1], &bg_color[2]);
+
+  if (gcb->double_color)
+    {
+      for (i = 0; i < 3; i++)
+	((gdouble *) gcb->color)[i] = bg_color[i] / 255.0;
+    }
+  else
+    {
+      for (i = 0; i < 3; i ++)
+	((guchar *) gcb->color)[i] = bg_color[i];
+    }
 
   gimp_color_button_update (gcb);
 
@@ -542,7 +666,7 @@ gimp_color_button_use_bg (gpointer   callback_data,
 		   gimp_color_button_signals[COLOR_CHANGED]);
 }
 
-static gchar* 
+static gchar * 
 gimp_color_button_menu_translate (const gchar *path, 
 				  gpointer     func_data)
 {
@@ -584,7 +708,8 @@ gimp_color_button_drag_end (GtkWidget      *widget,
 			    GdkDragContext *context,
 			    gpointer        data)
 {
-  gtk_object_set_data (GTK_OBJECT (widget), "gimp-color-button-drag-window", NULL);
+  gtk_object_set_data (GTK_OBJECT (widget),
+		       "gimp-color-button-drag-window", NULL);
 }
 
 static void
@@ -599,7 +724,6 @@ gimp_color_button_drop_handle (GtkWidget        *widget,
 {
   GimpColorButton *gcb = data;
   guint16 *vals;
-  guchar new_color[4];
   gboolean color_changed = FALSE;
   gint i;
 
@@ -615,15 +739,30 @@ gimp_color_button_drop_handle (GtkWidget        *widget,
   
   vals = (guint16 *)selection_data->data;
 
-  for (i = 0; i < gcb->bpp; i++)
+  if (gcb->double_color)
     {
-      gcb->dcolor[i] = (gdouble)vals[i] / 0xffff;
-      new_color[i] = gcb->dcolor[i] * 255.999;
-      if (new_color[i] != gcb->color[i])
-	color_changed = TRUE;
-      gcb->color[i] = new_color[i];
+      for (i = 0; i < gcb->bpp; i++)
+	{
+	  gcb->dcolor[i] = (gdouble) vals[i] / 0xffff;
+	  if (gcb->dcolor[i] != ((gdouble *) gcb->color)[i])
+	    color_changed = TRUE;
+	  ((gdouble *) gcb->color)[i] = gcb->dcolor[i];
+	}
     }
-  
+  else
+    {
+      guchar new_color[4];
+
+      for (i = 0; i < gcb->bpp; i++)
+	{
+	  gcb->dcolor[i] = (gdouble) vals[i] / 0xffff;
+	  new_color[i] = gcb->dcolor[i] * 255.999;
+	  if (new_color[i] != ((guchar *) gcb->color)[i])
+	    color_changed = TRUE;
+	  ((guchar *) gcb->color)[i] = new_color[i];
+	}
+    }
+
   if (color_changed)
     {
       gimp_color_button_paint (gcb);

@@ -5,14 +5,10 @@ gckincludedir = $(includedir)/gck
 lib_LTLIBRARIES = libgck.la
 
 libgck_la_SOURCES = \
-	gckcolor.c	\
-	gckui.c
+	gckcolor.c
 
 gckinclude_HEADERS = \
-	gck.h		\
-	gckcolor.h	\
-	gcktypes.h	\
-	gckui.h
+	gck.h
 
 libgck_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -release $(LT_RELEASE)

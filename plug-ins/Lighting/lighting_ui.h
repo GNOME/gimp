@@ -1,31 +1,23 @@
-#ifndef LIGHTINGUIH
-#define LIGHTINGUIH
+#ifndef __LIGHTING_UI_H__
+#define __LIGHTING_UI_H__
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <gdk/gdk.h>
 #include <gtk/gtk.h>
-#include <gck/gck.h>
-#include <libgimp/gimp.h>
-#include <libgimp/gimpmenu.h>
 
-#include "lighting_main.h"
-#include "lighting_image.h"
-#include "lighting_apply.h"
-#include "lighting_preview.h"
+#include <libgimp/gimp.h>
+
+#include <gck/gck.h>
 
 /* Externally visible variables */
 /* ============================ */
 
-extern GckApplicationWindow *appwin;
+extern GckVisualInfo *visinfo;
 
-extern GdkGC *gc;
+extern GdkGC     *gc;
 extern GtkWidget *previewarea;
 
 /* Externally visible functions */
 /* ============================ */
 
-extern void create_main_dialog (void);
+gboolean main_dialog (GDrawable *drawable);
 
 #endif

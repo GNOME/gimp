@@ -318,7 +318,7 @@ gint image_setup(GDrawable *drawable,gint interactive)
     
       numbytes=PREVIEW_HEIGHT*PREVIEW_WIDTH*3;
     
-      image=gdk_image_new(GDK_IMAGE_FASTEST,appwin->visinfo->visual,PREVIEW_WIDTH,PREVIEW_HEIGHT);
+      image=gdk_image_new(GDK_IMAGE_FASTEST,visinfo->visual,PREVIEW_WIDTH,PREVIEW_HEIGHT);
       if (image==NULL)
         return(FALSE);
 
@@ -330,7 +330,7 @@ gint image_setup(GDrawable *drawable,gint interactive)
       /* Convert from raw RGB to GdkImage */
       /* ================================ */
 
-      gck_rgb_to_gdkimage(appwin->visinfo,preview_rgb_data,image,PREVIEW_WIDTH,PREVIEW_HEIGHT);
+      gck_rgb_to_gdkimage(visinfo,preview_rgb_data,image,PREVIEW_WIDTH,PREVIEW_HEIGHT);
     }
 
   return(TRUE);

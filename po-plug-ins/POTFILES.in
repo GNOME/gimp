@@ -10,6 +10,7 @@ plug-ins/Lighting/lighting_main.c
 plug-ins/Lighting/lighting_ui.c
 plug-ins/MapObject/arcball.c
 plug-ins/MapObject/mapobject_main.c
+plug-ins/MapObject/mapobject_ui.c
 plug-ins/bmp/bmpread.c
 plug-ins/bmp/bmpwrite.c
 plug-ins/borderaverage/borderaverage.c

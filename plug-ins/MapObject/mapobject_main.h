@@ -1,20 +1,24 @@
-#ifndef MAPOBJECTMAINH
-#define MAPOBJECTMAINH
+#ifndef __MAPOBJECT_MAIN_H__
+#define __MAPOBJECT_MAIN_H__
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include <gdk/gdk.h>
+
 #include <gtk/gtk.h>
+
 #include <gck/gck.h>
+
 #include <libgimp/gimp.h>
-#include "libgimp/stdplugins-intl.h"
+#include <libgimp/gimpui.h>
 
 #include "arcball.h"
 #include "mapobject_ui.h"
 #include "mapobject_image.h"
 #include "mapobject_apply.h"
 #include "mapobject_preview.h"
+
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Defines and stuff */
 /* ================= */
@@ -24,13 +28,15 @@
 /* Typedefs */
 /* ======== */
 
-typedef enum {
+typedef enum
+{
   POINT_LIGHT,
   DIRECTIONAL_LIGHT,
   NO_LIGHT
 } LightType;
 
-typedef enum {
+typedef enum
+{
   MAP_PLANE,
   MAP_SPHERE,
   MAP_BOX,
@@ -52,15 +58,16 @@ typedef struct
 
 typedef struct
 {
-  LightType  type;
+  LightType   type;
   GimpVector3 position;
   GimpVector3 direction;
-  GckRGB     color;
-  gdouble    intensity;
+  GckRGB      color;
+  gdouble     intensity;
 } LightSettings;
 
-typedef struct {
-  GimpVector3    viewpoint,firstaxis,secondaxis,normal,position,scale;
+typedef struct
+{
+  GimpVector3   viewpoint,firstaxis,secondaxis,normal,position,scale;
   LightSettings lightsource;
 
   MaterialSettings material;
@@ -75,9 +82,9 @@ typedef struct {
   gint showgrid;
   gint tooltips_enabled;
   gint showcaps;
-  
+
   glong preview_zoom_factor;
-  
+
   gdouble alpha,beta,gamma;
   gdouble maxdepth;
   gdouble pixeltreshold;
@@ -96,4 +103,4 @@ typedef struct {
 extern MapObjectValues mapvals;
 extern GckRGB background;
 
-#endif
+#endif  /* __MAPOBJECT_MAIN_H__ */
