@@ -35,28 +35,30 @@
 
 #include "tile.h"
 
+
 #define TILES_PER_THREAD  8
 #define PROGRESS_TIMEOUT  64
+
 
 static GThreadPool *pool       = NULL;
 static GMutex      *pool_mutex = NULL;
 static GCond       *pool_cond  = NULL;
 
 
-typedef void (* p1_func) (gpointer     data,
-			  PixelRegion *region1);
-typedef void (* p2_func) (gpointer     data,
-			  PixelRegion *region1,
-			  PixelRegion *region2);
-typedef void (* p3_func) (gpointer     data,
-			  PixelRegion *region1,
-			  PixelRegion *region2,
-			  PixelRegion *region3);
-typedef void (* p4_func) (gpointer     data,
-			  PixelRegion *region1,
-			  PixelRegion *region2,
-			  PixelRegion *region3,
-			  PixelRegion *region4);
+typedef void  (* p1_func) (gpointer      data,
+                           PixelRegion  *region1);
+typedef void  (* p2_func) (gpointer      data,
+                           PixelRegion  *region1,
+                           PixelRegion  *region2);
+typedef void  (* p3_func) (gpointer      data,
+                           PixelRegion  *region1,
+                           PixelRegion  *region2,
+                           PixelRegion  *region3);
+typedef void  (* p4_func) (gpointer      data,
+                           PixelRegion  *region1,
+                           PixelRegion  *region2,
+                           PixelRegion  *region3,
+                           PixelRegion  *region4);
 
 
 typedef struct _PixelProcessor PixelProcessor;
@@ -67,7 +69,7 @@ struct _PixelProcessor
   gpointer             data;
 
 #ifdef ENABLE_MP
-  GMutex               *mutex;
+  GMutex              *mutex;
   gint                 threads;
   gboolean             first;
 #endif
@@ -154,25 +156,25 @@ do_parallel_regions (PixelProcessor *processor)
           }
 
       processor->progress += pixels;
+
       if (processor->PRI)
 	processor->PRI = pixel_regions_process (processor->PRI);
     }
 
-  g_mutex_lock   (pool_mutex);
   processor->threads--;
 
   if (processor->threads == 0)
     {
-      g_mutex_unlock (pool_mutex);
       g_mutex_unlock (processor->mutex);
+
+      g_mutex_lock (pool_mutex);
       g_cond_signal  (pool_cond);
+      g_mutex_unlock (pool_mutex);
     }
   else
     {
-      g_mutex_unlock (pool_mutex);
       g_mutex_unlock (processor->mutex);
     }
-
 }
 #endif
 
@@ -276,11 +278,11 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
        *             tasks, tiles);
        */
 
-      g_mutex_lock (pool_mutex);
-
       processor->first = TRUE;
       processor->threads = tasks;
       processor->mutex = g_mutex_new();
+
+      g_mutex_lock (pool_mutex);
 
       while (tasks--)
         {
@@ -383,9 +385,7 @@ pixel_regions_process_parallel_valist (PixelProcessorFunc         func,
     }
 
   if (! processor.PRI)
-    {
-      return;
-    }
+    return;
 
   processor.func        = func;
   processor.data        = data;
