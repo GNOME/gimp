@@ -248,7 +248,7 @@ libgimp_1_3_la_LDFLAGS = \
 
 libgimp_1_3_la_LIBADD = $(libgimpcolor) $(libgimpbase) $(GLIB_LIBS) 
 
-libgimp_1_3_la_DEPENDENCIES = $(gimp_def)
+libgimp_1_3_la_DEPENDENCIES = $(gimp_def) $(libgimpcolor) $(libgimpbase)
 
 libgimpui_1_3_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
@@ -258,7 +258,7 @@ libgimpui_1_3_la_LDFLAGS = \
 libgimpui_1_3_la_LIBADD = $(libgimp) $(libgimpwidgets) $(libgimpcolor) \
 	 $(libgimpbase) $(libgimpmodule) $(GTK_LIBS)
 
-libgimpui_1_3_la_DEPENDENCIES = $(gimpui_def) $(libgimp)
+libgimpui_1_3_la_DEPENDENCIES = $(gimpui_def) $(libgimp) $(libgimpwidgets) $(libgimpbase)
 
 install-data-local: install-ms-lib install-libtool-import-lib
 
