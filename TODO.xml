@@ -19,6 +19,38 @@
   <title>GIMP TODO List</title>
 
   <section>
+    <title>General Cleanup</title>
+
+    <entry size="medium" difficulty="easy" status="80%" target="1.4">
+      <title>Header cleanup</title>
+      <description>
+	<p>
+	  Headers should only include other headers if absolutely necessary
+	  (for derived objects for example).
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>    
+
+    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+      <title>Code reorganization</title>
+      <description>
+	<p>
+	  Split the core into several subdirectories and build libtool
+	  convenience libraries which are then linked together to form
+	  the gimp binary.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>    
+
+  </section>  <!-- General Cleanup -->
+
+  <section>
     <title>Objectification</title>
     
     <entry size="small" difficulty="easy" status="0%" target="1.4">
@@ -128,8 +160,54 @@
       </contact>
     </entry>
 
+    <entry size="small" difficulty="easy" status="0%" target="1.4">
+      <title>Optionally disable tearoff windows</title>
+      <description>
+	<p>
+	  Add an option to the Preferences to disable tearoff menus. Some
+	  people seem to be annoyed by it and it should be trivial to 
+	  make them optional.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
+    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+      <title>Better keyboard navigation</title>
+      <description>
+	<p>
+	  Think about a proper way to make all menus and dialogs accesible
+	  and navigationable without using a mouse.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
   </section> <!-- User Interface -->    
   
+  <section>
+    <title>LibGimp</title>
+
+    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+      <title>File plug-in library</title>
+      <description>
+	<p>
+	  Write a library with a bunch of common functions for file plug-ins
+	  to remove code duplication in these plug-ins.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+    
+
+  </section> <!-- LibGimp -->    
+
   <section>
     <title>Internationalization</title>
 
