@@ -22,18 +22,19 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "drawable.h"
 #include "gimage_mask.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimpui.h"
-#include "hue_saturation.h"
 #include "image_map.h"
 #include "pixel_region.h"
+
+#include "hue_saturation.h"
 #include "tools.h"
 #include "tool_options.h"
 

@@ -30,13 +30,13 @@
 #endif
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "gdisplay_ops.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "resolution_calibrate.h"
 #include "unitrc.h"
 #include "user_install.h"

@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -36,15 +38,12 @@
 #include "gimpdnd.h"
 #include "gimplist.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "session.h"
 #include "temp_buf.h"
 
 #include "tools/paint_options.h"
 
 #include "pdb/procedural_db.h"
-
-#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 

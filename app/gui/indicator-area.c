@@ -23,14 +23,14 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "brush_select.h"
 #include "gimpcontext.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
-#include "gimpui.h"
 #include "gradient_select.h"
 #include "indicator_area.h"
 #include "pattern_select.h"

@@ -23,26 +23,28 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
-#include "gimpui.h"
 #include "paint_funcs.h"
-#include "paint_core.h"
-#include "paint_options.h"
 #include "patterns.h"
 #include "pixel_region.h"
-#include "clone.h"
 #include "selection.h"
 #include "temp_buf.h"
+
+#include "clone.h"
+#include "paint_core.h"
+#include "paint_options.h"
 #include "tools.h"
-#include "cursorutil.h"
 
 #include "libgimp/gimpintl.h"
 

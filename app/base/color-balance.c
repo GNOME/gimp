@@ -22,11 +22,11 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "color_balance.h"
 #include "color_transfer.h"
 #include "drawable.h"
 #include "gdisplay.h"
@@ -34,8 +34,10 @@
 #include "gimpui.h"
 #include "image_map.h"
 #include "pixel_region.h"
-#include "tools.h"
+
+#include "color_balance.h"
 #include "tool_options.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -24,28 +24,28 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "drawable.h"
 #include "draw_core.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimprc.h"
-#include "gimpui.h"
-#include "ink.h"
-#include "paint_options.h"
-#include "tools.h"
 #include "undo.h"
-#include "blob.h"
 #include "gdisplay.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"
 #include "temp_buf.h"
 #include "tile.h"
 #include "tile_manager.h"
+
+#include "blob.h"
+#include "ink.h"
+#include "paint_options.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -21,13 +21,13 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "gdisplay.h"
 #include "gimpcontext.h"
-#include "gimpui.h"
+
 #include "perspective_tool.h"
 #include "rotate_tool.h"
 #include "scale_tool.h"

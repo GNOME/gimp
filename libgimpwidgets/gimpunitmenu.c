@@ -24,14 +24,15 @@
 
 #include <gtk/gtk.h>
 
-#include "gimptypes.h"
-#include "gimpuitypes.h"
+#include "libgimp/gimpunit.h"
+
+#include "gimpwidgetstypes.h"
 
 #include "gimpdialog.h"
 #include "gimphelpui.h"
 #include "gimpunitmenu.h"
 
-#include "libgimp-intl.h"
+#include "libgimp/libgimp-intl.h"
 
 
 /*  private functions  */

@@ -1,3 +1,67 @@
+2001-01-24  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am
+	* configure.in
+	* gimptool.in: added the new library below.
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpchainbutton.[ch]
+	* libgimpwidgets/gimpcolorarea.[ch]
+	* libgimpwidgets/gimpcolorbutton.[ch]
+	* libgimpwidgets/gimpdialog.[ch]
+	* libgimpwidgets/gimpfileselection.[ch]
+	* libgimpwidgets/gimphelpui.[ch]
+	* libgimpwidgets/gimppatheditor.[ch]
+	* libgimpwidgets/gimppixmap.[ch]
+	* libgimpwidgets/gimpquerybox.[ch]
+	* libgimpwidgets/gimpsizeentry.[ch]
+	* libgimpwidgets/gimpunitmenu.[ch]
+	* libgimpwidgets/gimpwidgets.[ch]
+	* libgimpwidgets/gimpwidgets.def
+	* libgimpwidgets/gimpwidgetstypes.h: new shared library.
+
+	Currently there are some ugly dependencies into libgimp. These
+	will be removed and go to a "libgimpglue" library which will be
+	a library for functions which share a common interface between
+	plug-ins and the app but have different implementations.
+
+	Include "libgimp/gimpunit.h" from "libgimpwidgets/gimpwidgetstypes.h"
+	to simulate this upcoming separation.
+
+	* libgimp/Makefile.am
+	* libgimp/gimpchainbutton.[ch]
+	* libgimp/gimpcolorarea.[ch]
+	* libgimp/gimpcolorbutton.[ch]
+	* libgimp/gimpdialog.[ch]
+	* libgimp/gimpfileselection.[ch]
+	* libgimp/gimphelpui.[ch]
+	* libgimp/gimppatheditor.[ch]
+	* libgimp/gimppixmap.[ch]
+	* libgimp/gimpquerybox.[ch]
+	* libgimp/gimpsizeentry.[ch]
+	* libgimp/gimpunitmenu.[ch]
+	* libgimp/gimpwidgets.[ch]: removed from here.
+
+	* libgimp/gimpui.h
+	* libgimp/gimpuitypes.h
+	* libgimp/makefile.mingw.in
+	* libgimp/makefile.msc: changed accordingly.
+
+	* app/[all ui files]
+	* app/pdb/palette_cmds.c
+	* app/pdb/tools_cmds.c
+	* tools/pdbgen/pdb/palette.pdb
+	* tools/pdbgen/pdb/tools.pdb: #include "libgimpwidgets/gimpwidgets.h"
+	and removed useless includes.
+
+	* app/apptypes.h: #include "libgimpwidgets/gimpwidgetstypes.h"
+
+	* app/Makefile.am
+	* plug-ins/[all makefiles which link against libgimpui]:
+	link against libgimpwidgets.la
+
+	* po-libgimp/POTFILES.in: changed file locations.
+
 2001-01-24  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/colortoalpha.c: wrapped some actions in a

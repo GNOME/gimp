@@ -23,6 +23,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -36,14 +38,11 @@
 #include "gimppreviewcache.h"
 #include "gimpset.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "nav_window.h"
 #include "scroll.h"
 #include "scale.h"
 
 #include "pdb/procedural_db.h"
-
-#include "libgimp/gimpunit.h"
 
 #include "libgimp/gimpintl.h"
 

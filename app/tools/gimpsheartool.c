@@ -21,16 +21,15 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
-#include "gimpui.h"
 #include "gimpprogress.h"
 #include "info_dialog.h"
 #include "shear_tool.h"

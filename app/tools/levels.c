@@ -26,10 +26,10 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimphistogram.h"
@@ -37,11 +37,12 @@
 #include "gimpui.h"
 #include "histogramwidget.h"
 #include "image_map.h"
-#include "levels.h"
 #include "gimplut.h"
 #include "lut_funcs.h"
-#include "tools.h"
+
+#include "levels.h"
 #include "tool_options.h"
+#include "tools.h"
 
 #include "libgimp/gimpenv.h"
 

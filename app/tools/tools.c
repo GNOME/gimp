@@ -20,7 +20,17 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
+
+#include "context_manager.h"
+#include "gdisplay.h"
+#include "gimpcontext.h"
+#include "gimpdnd.h"
+#include "gimpimage.h"
+#include "session.h"
+#include "dialog_handler.h"
 
 #include "airbrush.h"
 #include "bezier_select.h"
@@ -61,16 +71,6 @@
 #include "tool_options.h"
 #include "tool_options_dialog.h"
 #include "transform_tool.h"
-
-#include "appenv.h"
-#include "context_manager.h"
-#include "gdisplay.h"
-#include "gimpcontext.h"
-#include "gimpdnd.h"
-#include "gimpimage.h"
-#include "gimpui.h"
-#include "session.h"
-#include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
 

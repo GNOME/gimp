@@ -22,6 +22,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
@@ -34,7 +35,6 @@
 #include "gimage_mask.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "image_render.h"
 #include "layer.h"
 #include "layers_dialog.h"
@@ -48,7 +48,6 @@
 #include "undo.h"
 
 #include "libgimp/gimplimits.h"
-#include "libgimp/gimpsizeentry.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -27,11 +27,12 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "about_dialog.h"
 #include "appenv.h"
+#include "about_dialog.h"
 #include "authors.h"
 #include "gimpdnd.h"
 #include "gimphelp.h"
@@ -39,7 +40,6 @@
 #include "libgimp/gimpfeatures.h"
 
 #include "libgimp/gimpenv.h"
-#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 

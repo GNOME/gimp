@@ -62,10 +62,10 @@
 #endif
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "channel.h"
 #include "cursorutil.h"
 #include "dialog_handler.h"
@@ -84,8 +84,6 @@
 #include "plug_in.h"
 #include "temp_buf.h"
 #include "undo.h"
-
-#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 

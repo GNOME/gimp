@@ -23,6 +23,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
@@ -44,8 +45,6 @@
 #include "ops_buttons.h"
 #include "paint_funcs.h"
 #include "undo.h"
-
-#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 

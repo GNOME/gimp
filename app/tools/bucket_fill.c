@@ -21,29 +21,31 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "bucket_fill.h"
 #include "channel.h"
 #include "cursorutil.h"
 #include "drawable.h"
-#include "fuzzy_select.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "paint_funcs.h"
-#include "paint_options.h"
 #include "patterns.h"
 #include "pixel_region.h"
 #include "selection.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
-#include "tools.h"
 #include "undo.h"
+
+#include "bucket_fill.h"
+#include "fuzzy_select.h"
+#include "paint_options.h"
+#include "tools.h"
 
 #include "pdb/procedural_db.h"
 

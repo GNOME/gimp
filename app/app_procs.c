@@ -39,6 +39,8 @@
  
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -59,7 +61,6 @@
 #include "gimprc.h"
 #include "gimpparasite.h"
 #include "gimpset.h"
-#include "gimpui.h"
 #include "global_edit.h"
 #include "gradient_select.h"
 #include "gradient.h"
@@ -103,7 +104,6 @@
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpfeatures.h"
 #include "libgimp/gimpenv.h"
-#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 

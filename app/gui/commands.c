@@ -25,6 +25,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
@@ -79,8 +80,6 @@
 
 #include "tools/tool_options_dialog.h"
 #include "tools/tools.h"
-
-#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 

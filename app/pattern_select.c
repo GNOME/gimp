@@ -22,13 +22,14 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "dialog_handler.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
-#include "gimpui.h"
 #include "patterns.h"
 #include "pattern_select.h"
 #include "session.h"

@@ -24,12 +24,12 @@
 
 #include <gtk/gtk.h>
 
-#include "gimp.h"
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimp/gimplimits.h"
 
-#include "gimpuitypes.h"
+#include "gimpwidgetstypes.h"
 
 #include "gimpcolorarea.h"
-#include "gimplimits.h"
 
 
 #define DRAG_PREVIEW_SIZE   32
@@ -520,4 +520,3 @@ gimp_color_area_drag_data_get (GtkWidget        *widget,
 			  gdk_atom_intern ("application/x-color", FALSE),
 			  16, (guchar *)vals, 8);
 }
-

@@ -30,7 +30,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "color_area.h"
 #include "color_notebook.h"
 #include "gdisplay.h"

@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -32,7 +34,6 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
-#include "gimpui.h"
 #include "global_edit.h"
 #include "layer.h"
 #include "paint_funcs.h"

@@ -23,12 +23,12 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "cursorutil.h"
-#include "curves.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimphistogram.h"
@@ -36,11 +36,12 @@
 #include "gimpui.h"
 #include "gimplut.h"
 #include "image_map.h"
-#include "tools.h"
+
+#include "curves.h"
 #include "tool_options.h"
+#include "tools.h"
 
 #include "libgimp/gimpenv.h"
-#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -23,6 +23,22 @@
 #ifndef __GIMP_WIDGETS_H__
 #define __GIMP_WIDGETS_H__
 
+
+#include <libgimpwidgets/gimpwidgetstypes.h>
+
+#include <libgimpwidgets/gimpchainbutton.h>
+#include <libgimpwidgets/gimpcolorarea.h>
+#include <libgimpwidgets/gimpcolorbutton.h>
+#include <libgimpwidgets/gimpdialog.h>
+#include <libgimpwidgets/gimpfileselection.h>
+#include <libgimpwidgets/gimphelpui.h>
+#include <libgimpwidgets/gimppatheditor.h>
+#include <libgimpwidgets/gimppixmap.h>
+#include <libgimpwidgets/gimpquerybox.h>
+#include <libgimpwidgets/gimpsizeentry.h>
+#include <libgimpwidgets/gimpunitmenu.h>
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */

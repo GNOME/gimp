@@ -26,12 +26,12 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "libgimp/gimpuitypes.h"
 
 #include "libgimp/gimpcolorselector.h"
 #include "libgimp/gimpmodule.h"
-#include "libgimp/gimphelpui.h"
 
 #include "gimpmodregister.h"
 

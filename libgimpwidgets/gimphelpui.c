@@ -25,7 +25,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-#include "gimpuitypes.h"
+#include "gimpwidgetstypes.h"
 
 #include "gimpdialog.h"
 #include "gimphelpui.h"

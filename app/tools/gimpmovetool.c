@@ -23,23 +23,23 @@
 #include <gtk/gtk.h>
 
 #include "apptypes.h"
-#include "appenv.h"
+
 #include "cursorutil.h"
 #include "draw_core.h"
-#include "edit_selection.h"
 #include "floating_sel.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
 #include "gdisplay_ops.h"
 #include "gdisplay.h"
 #include "layer.h"
-#include "move.h"
 #include "selection.h"
-#include "tools.h"
-#include "tool_options.h"
 #include "undo.h"
 
-#include "config.h"
+#include "edit_selection.h"
+#include "move.h"
+#include "tools.h"
+#include "tool_options.h"
+
 #include "libgimp/gimpintl.h"
 
 /*  the move structures  */

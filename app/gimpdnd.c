@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
@@ -44,7 +45,6 @@
 #include "tools/tools.h"
 
 #include "libgimp/gimplimits.h"
-#include "libgimp/gimpcolorarea.h"
 
 
 #define DRAG_PREVIEW_SIZE 32

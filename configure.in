@@ -736,6 +736,8 @@ libgimpcolor/Makefile
 libgimpcolor/makefile.mingw
 libgimpmath/Makefile
 libgimpmath/makefile.mingw
+libgimpwidgets/Makefile
+libgimpwidgets/makefile.mingw
 app/Makefile
 app/makefile.mingw
 app/pdb/Makefile

@@ -20,17 +20,19 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
-#include "tool_options.h"
-#include "tool_options_dialog.h"
-#include "tools.h"
+#include "apptypes.h"
 
 #include "dialog_handler.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimpui.h"
 #include "session.h"
+
+#include "tool_options.h"
+#include "tool_options_dialog.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 

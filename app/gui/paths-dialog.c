@@ -28,10 +28,10 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "floating_sel.h"
@@ -42,7 +42,6 @@
 #include "gdisplay.h"
 #include "gimprc.h"
 #include "gimpset.h"
-#include "gimpui.h"
 #include "image_render.h"
 #include "lc_dialogP.h"
 #include "menus.h"

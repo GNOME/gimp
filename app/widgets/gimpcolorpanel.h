@@ -20,7 +20,7 @@
 #define __COLOR_PANEL_H__
 
 
-#include "libgimp/gimpcolorbutton.h"
+#include "libgimpwidgets/gimpcolorbutton.h"
 
 
 #define GIMP_TYPE_COLOR_PANEL            (gimp_color_panel_get_type ())

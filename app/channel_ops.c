@@ -24,10 +24,10 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "apptypes.h"
 #include "channel_ops.h"
 #include "cursorutil.h"
@@ -36,15 +36,12 @@
 #include "gdisplay.h"
 #include "gimpcontext.h"
 #include "gimage.h"
-#include "gimpui.h"
 #include "layer.h"
 #include "paint_funcs.h"
 #include "parasitelist.h"
 #include "path.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
-
-#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -59,10 +59,10 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "color_notebook.h"
 #include "cursorutil.h"
 #include "datafiles.h"
@@ -70,7 +70,6 @@
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "gradient.h"
 #include "gradientP.h"
 #include "gradient_header.h"

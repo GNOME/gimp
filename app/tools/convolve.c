@@ -21,23 +21,25 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "drawable.h"
-#include "convolve.h"
 #include "gdisplay.h"
+#include "gimage.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
-#include "gimpui.h"
 #include "paint_funcs.h"
-#include "paint_core.h"
-#include "paint_options.h"
 #include "pixel_region.h"
 #include "selection.h"
 #include "temp_buf.h"
+
+#include "convolve.h"
+#include "paint_core.h"
+#include "paint_options.h"
 #include "tools.h"
-#include "gimage.h"
 
 #include "libgimp/gimpintl.h"
 

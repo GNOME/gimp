@@ -93,10 +93,10 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "convert.h"
 #include "cursorutil.h"
 #include "drawable.h"
@@ -104,7 +104,6 @@
 #include "fsdither.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
-#include "gimpui.h"
 #include "layer.h"
 #include "undo.h"
 #include "palette.h"
@@ -120,8 +119,6 @@
 #include "tools/levels.h"
 #include "tools/posterize.h"
 #include "tools/threshold.h"
-
-#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 

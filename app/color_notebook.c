@@ -29,16 +29,14 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
 #include "color_area.h"
 #include "color_notebook.h"
 #include "colormaps.h"
-#include "gimpui.h"
 
-#include "libgimp/gimphelpui.h"
-#include "libgimp/gimpcolorarea.h"
 #include "libgimp/gimpcolorselector.h"
 
 #include "libgimp/gimpintl.h"

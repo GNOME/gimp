@@ -97,38 +97,14 @@ PDB_WRAPPERS_H = \
 	gimpunit_pdb.h
 
 libgimpi_a_SOURCES = \
-	gimpchainbutton.c	\
-	gimpchainbutton.h	\
-	gimpcolorarea.c		\
-	gimpcolorarea.h		\
-	gimpcolorbutton.c	\
-	gimpcolorbutton.h	\
-	gimpdialog.c		\
-	gimpdialog.h		\
 	gimpenv.c		\
 	gimpenv.h		\
-	gimpfileselection.c	\
-	gimpfileselection.h	\
-	gimphelpui.c		\
-	gimphelpui.h		\
-	gimppatheditor.c	\
-	gimppatheditor.h	\
-	gimppixmap.c		\
-	gimppixmap.h		\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
-	gimpquerybox.c		\
-	gimpquerybox.h		\
 	gimpsignal.c            \
 	gimpsignal.h            \
-	gimpsizeentry.c		\
-	gimpsizeentry.h		\
-	gimpunitmenu.c		\
-	gimpunitmenu.h		\
 	gimputils.c		\
 	gimputils.h		\
-	gimpwidgets.c		\
-	gimpwidgets.h		\
 	gimpwire.c		\
 	gimpwire.h		\
 	gimpparasite.c		\
@@ -149,6 +125,7 @@ endif
 libgimp_la_SOURCES = \
 	gimp.c				\
 	gimp.h				\
+	gimptypes.h			\
 	${PDB_WRAPPERS_C}		\
 	${PDB_WRAPPERS_H}		\
 	gimpadaptivesupersample.c	\
@@ -193,77 +170,67 @@ libgimp_la_SOURCES = \
 	gimputils.h			\
 	gimpwire.c			\
 	gimpwire.h			\
+	\
+	gimpintl.h			\
 	stdplugins-intl.h		\
 	libgimp-intl.h
 
 libgimpui_la_SOURCES = \
-	gimpmenu.c		\
-	gimpbrushmenu.c		\
-	gimpgradientmenu.c 	\
-	gimppatternmenu.c	\
-	gimpchainbutton.c	\
-	gimpcolorarea.c		\
-	gimpcolorbutton.c	\
-	gimpdialog.c		\
-	gimpexport.c		\
-	gimpfileselection.c	\
-	gimphelpui.c		\
-	gimppatheditor.c	\
-	gimppixmap.c		\
-	gimpquerybox.c		\
-	gimpsizeentry.c		\
 	gimpui.c		\
+	gimpui.h		\
 	gimpuitypes.h		\
-	gimpunitmenu.c		\
-	gimpwidgets.c
+	\
+	gimpmenu.c		\
+	gimpmenu.h		\
+	gimpbrushmenu.c		\
+	gimpbrushmenu.h		\
+	gimpgradientmenu.c 	\
+	gimpgradientmenu.h 	\
+	gimppatternmenu.c	\
+	gimppatternmenu.h	\
+	\
+	gimpexport.c		\
+	gimpexport.h
 
 gimpinclude_HEADERS = \
+	gimpcolordisplay.h		\
+	gimpcolorselector.h		\
+	\
 	gimp.h				\
+	gimptypes.h			\
 	${PDB_WRAPPERS_H}		\
 	gimpadaptivesupersample.h	\
 	gimpbilinear.h			\
-	gimpchainbutton.h		\
 	gimpchannel.h			\
-	gimpcolorarea.h			\
-	gimpcolorbutton.h		\
-	gimpcolordisplay.h		\
-	gimpcolorselector.h		\
         gimpcompat.h			\
 	gimpdrawable.h			\
-	gimpdialog.h			\
 	gimpenums.h			\
 	gimpenv.h			\
-	gimpexport.h			\
 	gimpfeatures.h			\
-	gimpfileselection.h		\
 	gimpgradientselect.h		\
-	gimphelpui.h			\
 	gimpimage.h			\
 	gimplayer.h			\
 	gimplimits.h			\
-	gimpmenu.h			\
 	gimpmodule.h			\
 	gimppalette.h			\
 	gimpparasite.h			\
 	gimpparasiteio.h		\
-	gimppatheditor.h		\
 	gimppixelrgn.h			\
-	gimppixmap.h			\
 	gimpproceduraldb.h		\
-	gimpquerybox.h			\
 	gimpselection.h			\
 	gimpsignal.h			\
-	gimpsizeentry.h			\
 	gimptile.h			\
-	gimptypes.h			\
+	gimpunit.h			\
+	gimputils.h			\
+	\
+	gimpexport.h			\
+	\
+	gimpintl.h			\
+	\
 	gimpui.h			\
 	gimpuitypes.h			\
-	gimpunit.h			\
-	gimpunitmenu.h			\
-	gimputils.h			\
-	gimpwidgets.h			\
-	gimpintl.h
-
+	\
+	gimpmenu.h
 
 libgimp_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \

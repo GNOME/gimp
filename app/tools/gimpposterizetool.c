@@ -20,9 +20,10 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
  
-#include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
@@ -30,9 +31,10 @@
 #include "gimpui.h"
 #include "image_map.h"
 #include "lut_funcs.h"
+
 #include "posterize.h"
-#include "tools.h"
 #include "tool_options.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 

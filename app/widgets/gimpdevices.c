@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
@@ -36,7 +37,6 @@
 #include "gimpbrushlist.h"
 #include "gimpcontext.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "gradient.h"
 #include "gradient_header.h"
 #include "patterns.h"
@@ -45,8 +45,6 @@
 #include "tools/tools.h"
 
 #include "libgimp/gimpenv.h"
-#include "libgimp/gimpcolorarea.h"
-#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 

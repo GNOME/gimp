@@ -45,12 +45,13 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "dialog_handler.h"
 #include "drawable.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
 #include "paint_funcs.h"
@@ -66,6 +67,7 @@
 #include "pixmaps/lower.xpm"
 #include "pixmaps/yes.xpm"
 #include "pixmaps/question.xpm"
+
 
 typedef struct
 {

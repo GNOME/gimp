@@ -25,6 +25,8 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "color_area.h"
@@ -36,7 +38,6 @@
 #include "gimpdnd.h"
 #include "gimppalette.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "palette.h"
 #include "paletteP.h"
 #include "palette_import.h"

@@ -30,6 +30,8 @@
 #include "gimpimage.h"
 #include "palette.h"
 
+#include "libgimpcolor/gimpcolor.h"
+
 static ProcRecord palette_get_foreground_proc;
 static ProcRecord palette_get_background_proc;
 static ProcRecord palette_set_foreground_proc;

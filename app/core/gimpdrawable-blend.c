@@ -24,6 +24,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
@@ -41,7 +42,6 @@
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimpprogress.h"
-#include "gimpui.h"
 #include "gradient.h"
 #include "paint_funcs.h"
 #include "paint_options.h"

@@ -24,15 +24,16 @@
 
 #include <gtk/gtk.h>
 
-#include "gimp.h"
+#include "libgimpcolor/gimpcolor.h"
 
-#include "gimpuitypes.h"
+#include "gimpwidgetstypes.h"
 
 #include "gimpcolorarea.h"
 #include "gimpcolorbutton.h"
-#include "gimplimits.h"
 
-#include "libgimp-intl.h"
+#include "libgimp/gimppalette.h"
+
+#include "libgimp/libgimp-intl.h"
 
 
 static void    gimp_color_button_class_init     (GimpColorButtonClass *klass);

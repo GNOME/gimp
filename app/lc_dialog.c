@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
@@ -32,7 +33,6 @@
 #include "gimppreviewcache.h"
 #include "gimprc.h"
 #include "gimpset.h"
-#include "gimpui.h"
 #include "image_render.h"
 #include "lc_dialog.h"
 #include "lc_dialogP.h"

@@ -25,9 +25,9 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimp/gimpunit.h"
 
-#include "gimptypes.h"
-#include "gimpuitypes.h"
+#include "gimpwidgetstypes.h"
 
 #include "gimpchainbutton.h"
 #include "gimphelpui.h"
@@ -36,7 +36,7 @@
 #include "gimpunitmenu.h"
 #include "gimpwidgets.h"
 
-#include "libgimp-intl.h"
+#include "libgimp/libgimp-intl.h"
 
 
 /*

@@ -64,23 +64,10 @@ PDB_WRAPPERS_O =				\
 
 gimpi_OBJECTS =					\
 	gimpenv.o				\
-	gimpchainbutton.o			\
-	gimpcolorbutton.o			\
-	gimpdialog.o				\
-	gimpfileselection.o			\
-	gimphelpui.o				\
-	gimpmatrix.o				\
 	gimpparasite.o				\
 	gimpparasiteio.o			\
-	gimppatheditor.o			\
-	gimppixmap.o				\
 	gimpprotocol.o				\
-	gimpquerybox.o				\
-	gimpsizeentry.o				\
-	gimpunitmenu.o				\
 	gimputils.o				\
-	gimpvector.o				\
-	gimpwidgets.o				\
 	gimpwire.o
 
 libgimpi.a : $(gimpi_OBJECTS)
@@ -96,7 +83,6 @@ gimp_OBJECTS =					\
 	gimphelp.o				\
 	gimpimage.o				\
 	gimplayer.o				\
-	gimpmatrix.o				\
 	gimpparasite.o				\
 	gimpparasiteio.o			\
 	gimppixelrgn.o				\
@@ -105,7 +91,6 @@ gimp_OBJECTS =					\
 	gimpselection.o				\
 	gimptile.o				\
 	gimpunit.o				\
-	gimpvector.o				\
 	gimpwire.o
 
 gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
@@ -122,19 +107,10 @@ gimpui_OBJECTS =				\
 	gimpbrushmenu.o				\
 	gimpchainbutton.o			\
 	gimpcolorbutton.o			\
-	gimpdialog.o				\
 	gimpexport.o				\
-	gimpfileselection.o			\
-	gimphelpui.o				\
 	gimpgradientmenu.o			\
-	gimppatheditor.o			\
 	gimppatternmenu.o			\
-	gimppixmap.o				\
-	gimpquerybox.o				\
-	gimpsizeentry.o				\
-	gimpui.o				\
-	gimpunitmenu.o				\
-	gimpwidgets.o
+	gimpui.o
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
 	$(GLIB)/build-dll gimpui $(GIMP_VER) gimpui.def -s $(gimpui_OBJECTS) -L . -lgimp-$(GIMP_VER) $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS)

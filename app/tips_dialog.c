@@ -25,11 +25,12 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
-#include "tips_dialog.h"
 #include "gimprc.h"
-#include "gimpui.h"
+#include "tips_dialog.h"
 
 #include "libgimp/gimpenv.h"
 
@@ -38,19 +39,26 @@
 #include "wilber.h"
 
 
-#define TIPS_DIR_NAME   "tips"
+#define TIPS_DIR_NAME "tips"
 
-static void   tips_dialog_destroy (GtkWidget *widget, gpointer data);
-static void   tips_show_previous  (GtkWidget *widget, gpointer data);
-static void   tips_show_next      (GtkWidget *widget, gpointer data);
-static void   tips_toggle_update  (GtkWidget *widget, gpointer data);
-static void   read_tips_file      (gchar *filename);
 
-static GtkWidget  *tips_dialog = NULL;
-static GtkWidget  *tips_label;
-static gchar     **tips_text = NULL;
-static gint        tips_count = 0;
-static gint        old_show_tips;
+static void   tips_dialog_destroy (GtkWidget *widget,
+				   gpointer   data);
+static void   tips_show_previous  (GtkWidget *widget,
+				   gpointer   data);
+static void   tips_show_next      (GtkWidget *widget,
+				   gpointer   data);
+static void   tips_toggle_update  (GtkWidget *widget,
+				   gpointer   data);
+static void   read_tips_file      (gchar     *filename);
+
+
+static GtkWidget  *tips_dialog   = NULL;
+static GtkWidget  *tips_label    = NULL;
+static gchar     **tips_text     = NULL;
+static gint        tips_count    = 0;
+static gint        old_show_tips = 0;
+
 
 void
 tips_dialog_create (void)

@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
@@ -29,7 +30,6 @@
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimppalette.h"
-#include "gimpui.h"
 #include "gradient.h"
 #include "gradient_header.h"
 #include "gradient_select.h"

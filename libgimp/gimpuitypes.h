@@ -29,24 +29,14 @@ extern "C" {
 /* For information look into the html documentation */
 
 
-typedef enum
-{
-  GIMP_SIZE_ENTRY_UPDATE_NONE       = 0,
-  GIMP_SIZE_ENTRY_UPDATE_SIZE       = 1,
-  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION = 2
-} GimpSizeEntryUpdatePolicy;
-
-typedef struct _GimpColorArea       GimpColorArea;
-typedef struct _GimpColorButton     GimpColorButton;
-typedef struct _GimpPathEditor      GimpPathEditor;
-typedef struct _GimpSizeEntry       GimpSizeEntry;
-typedef struct _GimpUnitMenu        GimpUnitMenu;
-
-typedef void (* GimpHelpFunc) (const gchar *help_data);
+/* empty at the moment because most stuff went to libgimpwidgets.
+ *
+ * left here because it will contain stuff again  --Mitch
+ */
 
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __GIMP_TYPES_H__ */
+#endif /* __GIMP_UI_TYPES_H__ */

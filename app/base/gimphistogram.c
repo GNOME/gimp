@@ -27,6 +27,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
@@ -38,8 +39,6 @@
 #include "gimpimage.h"
 #include "gimprc.h"
 #include "pixel_processor.h"
-
-#include <libgimp/gimphelpui.h>
 
 
 struct _GimpHistogram

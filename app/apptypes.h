@@ -22,11 +22,7 @@
 
 #include "libgimpcolor/gimpcolortypes.h"
 #include "libgimpmath/gimpmathtypes.h"
-#include "libgimp/gimpuitypes.h"
-
-
-/* stuff that will go to general-purpose libraries */
-#include "libgimp/gimpunit.h"
+#include "libgimpwidgets/gimpwidgetstypes.h"
 
 
 #include "undo_types.h"

@@ -1,5 +1,7 @@
-/* LIBGIMP - The GIMP Library 
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * gimpwidgetstypes.h
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -15,34 +17,45 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- */         
+ */
 
-#ifndef __GIMP_UI_H__
-#define __GIMP_UI_H__
+#ifndef __GIMP_WIDGETS_TYPES_H__
+#define __GIMP_WIDGETS_TYPES_H__
 
-#include <gtk/gtk.h>
 
-#include <libgimpwidgets/gimpwidgets.h>
+/* EEK */
+#include <libgimp/gimpunit.h>
 
-#include <libgimp/gimpuitypes.h>
-
-#include <libgimp/gimpexport.h>
-#include <libgimp/gimpmenu.h>
+#include <libgimpcolor/gimpcolortypes.h>
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-/* For information look into the C source or the html documentation */
+/* For information look into the html documentation */
 
 
-void gimp_ui_init (const gchar *prog_name,
-		   gboolean     preview);
+typedef enum
+{
+  GIMP_SIZE_ENTRY_UPDATE_NONE       = 0,
+  GIMP_SIZE_ENTRY_UPDATE_SIZE       = 1,
+  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION = 2
+} GimpSizeEntryUpdatePolicy;
+
+
+typedef struct _GimpColorArea   GimpColorArea;
+typedef struct _GimpColorButton GimpColorButton;
+typedef struct _GimpPathEditor  GimpPathEditor;
+typedef struct _GimpSizeEntry   GimpSizeEntry;
+typedef struct _GimpUnitMenu    GimpUnitMenu;
+
+
+typedef void (* GimpHelpFunc) (const gchar *help_data);
 
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __GIMP_UI_H__ */
+#endif /* __GIMP_WIDGETS_TYPES_H__ */

@@ -25,9 +25,10 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "brush_scale.h"
 #include "gimpbrush.h"
 #include "gimpbrushpipe.h"
@@ -38,7 +39,6 @@
 #include "patterns.h"
 #include "temp_buf.h"
 
-#include "libgimp/gimphelpui.h"
 #include "libgimp/gimplimits.h"
 
 

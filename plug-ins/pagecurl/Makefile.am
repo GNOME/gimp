@@ -24,11 +24,12 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la		\
-	$(top_builddir)/libgimp/libgimp.la		\
-	$(top_builddir)/libgimpcolor/libgimpcolor.la	\
-	$(top_builddir)/libgimpmath/libgimpmath.la	\
-	$(GTK_LIBS)					\
+	$(top_builddir)/libgimp/libgimpui.la			\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets.la	\
+	$(top_builddir)/libgimp/libgimp.la			\
+	$(top_builddir)/libgimpcolor/libgimpcolor.la		\
+	$(top_builddir)/libgimpmath/libgimpmath.la		\
+	$(GTK_LIBS)						\
 	$(INTLLIBS)
 
 .PHONY: files

@@ -21,22 +21,23 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
-#include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
-#include "paint_options.h"
-#include "eraser.h"
 #include "selection.h"
 #include "temp_buf.h"
+
+#include "eraser.h"
+#include "paint_options.h"
 #include "tools.h"
 
 #include "libgimp/gimpintl.h"

@@ -21,23 +21,24 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "airbrush.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gradient.h"
 #include "gimpimage.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
-#include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
-#include "paint_options.h"
 #include "selection.h"
 #include "temp_buf.h"
+
+#include "airbrush.h"
+#include "paint_options.h"
 #include "tools.h"
 
 #include "libgimp/gimpintl.h"

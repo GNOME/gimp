@@ -27,6 +27,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
@@ -40,11 +41,8 @@
 #include "gimpdnd.h"
 #include "gimpimage.h"
 #include "gimpset.h"
-#include "gimpui.h"
 
 #include "pdb/procedural_db.h"
-
-#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -65,8 +63,8 @@ enum
 };
 
 
-static void   gimp_colormap_dialog_class_init (GimpColormapDialogClass* klass);
-static void   gimp_colormap_dialog_init       (GimpColormapDialog* colormap_dialog);
+static void   gimp_colormap_dialog_class_init (GimpColormapDialogClass *klass);
+static void   gimp_colormap_dialog_init       (GimpColormapDialog      *colormap_dialog);
 
 static void   ipal_create_popup_menu (GimpColormapDialog *ipal);
 

@@ -21,24 +21,24 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "color_picker.h"
+#include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimpui.h"
 #include "gimprc.h"
-#include "cursorutil.h"
 #include "info_dialog.h"
 #include "palette.h"
-#include "tools.h"
-#include "tool_options.h"
 
-#include "libgimp/gimpcolorarea.h"
+#include "color_picker.h"
+#include "tool_options.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 

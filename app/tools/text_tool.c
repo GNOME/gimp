@@ -31,9 +31,10 @@
 
 #include <gdk/gdkprivate.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "drawable.h"
 #include "errors.h"
 #include "floating_sel.h"

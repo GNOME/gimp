@@ -27,21 +27,21 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "channel.h"
 #include "draw_core.h"
-#include "edit_selection.h"
 #include "errors.h"
 #include "floating_sel.h"
-#include "free_select.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
 #include "gdisplay.h"
+#include "scan_convert.h"
+
+#include "edit_selection.h"
+#include "free_select.h"
 #include "rect_select.h"
 #include "selection_options.h"
-#include "scan_convert.h"
-#include "tools.h"
 #include "tool_options.h"
+#include "tools.h"
 
 
 #define DEFAULT_MAX_INC  1024

@@ -23,15 +23,15 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
-#include "gimpui.h"
 #include "paint_funcs.h"
 #include "path_transform.h"
 #include "pixel_region.h"
@@ -39,8 +39,8 @@
 #include "tile_manager.h"
 
 #include "flip_tool.h"
-#include "tools.h"
 #include "tool_options.h"
+#include "tools.h"
 #include "transform_core.h"
 
 #include "libgimp/gimpintl.h"

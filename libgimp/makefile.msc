@@ -90,24 +90,10 @@ PDB_WRAPPERS_O = \
 
 gimpi_OBJECTS = \
 	gimpenv.obj \
-	gimpchainbutton.obj \
-	gimpcolorbutton.obj \
-	gimpcolorspace.obj \
-	gimpdialog.obj \
-	gimpfileselection.obj \
-	gimphelpui.obj \
-	gimpmatrix.obj \
 	gimpparasite.obj \
 	gimpparasiteio.obj \
-	gimppatheditor.obj \
-	gimppixmap.obj \
 	gimpprotocol.obj \
-	gimpquerybox.obj \
-	gimpsizeentry.obj \
-	gimpunitmenu.obj \
 	gimputils.c \
-	gimpvector.obj \
-	gimpwidgets.obj \
 	gimpwire.obj
 
 gimpi.lib : $(gimpi_OBJECTS)
@@ -124,7 +110,6 @@ gimp_OBJECTS = \
 	gimphelp.obj \
 	gimpimage.obj \
 	gimplayer.obj \
-	gimpmatrix.obj \
 	gimpparasite.obj \
 	gimpparasiteio.obj \
 	gimppixelrgn.obj \
@@ -133,7 +118,6 @@ gimp_OBJECTS = \
 	gimpselection.obj \
 	gimptile.obj \
 	gimpunit.obj \
-	gimpvector.obj \
 	gimpwire.obj
 
 gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
@@ -147,21 +131,11 @@ gimp.obj : gimp.c
 gimpui_OBJECTS = \
 	gimpmenu.obj \
 	gimpbrushmenu.obj \
-	gimpchainbutton.obj \
-	gimpcolorbutton.obj \
-	gimpdialog.obj \
 	gimpexport.obj \
-	gimpfileselection.obj \
-	gimphelpui.obj \
 	gimpgradientmenu.obj \
 	gimppatheditor.obj \
 	gimppatternmenu.obj \
-	gimppixmap.obj \
-	gimpquerybox.obj \
-	gimpsizeentry.obj \
-	gimpui.obj \
-	gimpunitmenu.obj \
-	gimpwidgets.obj
+	gimpui.obj
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
 	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) gimp-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) /def:gimpui.def

@@ -24,7 +24,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpbrush.h"
@@ -32,14 +31,15 @@
 #include "gimpimage.h"
 #include "gradient.h"
 #include "paint_funcs.h"
+#include "selection.h"
+#include "temp_buf.h"
+
 #include "paint_core.h"
 #include "paint_options.h"
 #include "paintbrush.h"
 #include "pencil.h"
-#include "selection.h"
-#include "temp_buf.h"
-#include "tools.h"
 #include "tool_options.h"
+#include "tools.h"
 
 
 #define PENCIL_INCREMENTAL_DEFAULT FALSE

@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "dialog_handler.h"
@@ -29,13 +31,11 @@
 #include "fileops.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
-#include "gimpui.h"
 #include "gimpdnd.h"
 #include "ops_buttons.h"
 #include "session.h"
 
 #include "libgimp/gimpenv.h"
-#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -25,10 +25,11 @@
 
 #include <gtk/gtk.h>
 
-#include "gimptypes.h"
-#include "gimpuitypes.h"
+#include "libgimp/gimplimits.h"
+#include "libgimp/gimpunit.h"
 
-#include "gimplimits.h"
+#include "gimpwidgetstypes.h"
+
 #include "gimpsizeentry.h"
 #include "gimpunitmenu.h"
 
@@ -104,23 +105,23 @@ gimp_size_entry_destroy (GtkObject *object)
 
   gse = GIMP_SIZE_ENTRY (object);
 
-  for (list = gse->fields; list; list = g_slist_next(list))
+  for (list = gse->fields; list; list = g_slist_next (list))
     g_free (list->data);
 
   g_slist_free (gse->fields);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
-gimp_size_entry_class_init (GimpSizeEntryClass *class)
+gimp_size_entry_class_init (GimpSizeEntryClass *klass)
 {
   GtkObjectClass *object_class;
 
-  object_class = (GtkObjectClass*) class;
+  object_class = (GtkObjectClass*) klass;
 
-  parent_class = gtk_type_class (gtk_table_get_type ());
+  parent_class = gtk_type_class (GTK_TYPE_TABLE);
 
   gimp_size_entry_signals[VALUE_CHANGED] = 
               gtk_signal_new ("value_changed",
@@ -149,11 +150,11 @@ gimp_size_entry_class_init (GimpSizeEntryClass *class)
   gtk_object_class_add_signals (object_class, gimp_size_entry_signals, 
 				LAST_SIGNAL);
 
-  class->value_changed = NULL;
-  class->refval_changed = NULL;
-  class->unit_changed = NULL;
-
   object_class->destroy = gimp_size_entry_destroy;
+
+  klass->value_changed = NULL;
+  klass->refval_changed = NULL;
+  klass->unit_changed = NULL;
 }
 
 static void
@@ -174,7 +175,7 @@ gimp_size_entry_get_type (void)
 {
   static guint gse_type = 0;
 
-  if (!gse_type)
+  if (! gse_type)
     {
       GtkTypeInfo gse_info =
       {
@@ -188,7 +189,7 @@ gimp_size_entry_get_type (void)
         (GtkClassInitFunc) NULL
       };
 
-      gse_type = gtk_type_unique (gtk_table_get_type (), &gse_info);
+      gse_type = gtk_type_unique (GTK_TYPE_TABLE, &gse_info);
     }
   
   return gse_type;

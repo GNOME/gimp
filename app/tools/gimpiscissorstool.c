@@ -45,7 +45,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "draw_core.h"
 #include "channel.h"
 #include "cursorutil.h"
@@ -53,17 +52,18 @@
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
-#include "iscissors.h"
-#include "edit_selection.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"
-#include "selection_options.h"
 #include "temp_buf.h"
-#include "tools.h"
-#include "bezier_selectP.h"
 #include "scan_convert.h"
 #include "tile.h"
 #include "tile_manager.h"
+
+#include "bezier_selectP.h"
+#include "iscissors.h"
+#include "edit_selection.h"
+#include "selection_options.h"
+#include "tools.h"
 
 
 /*  local structures  */

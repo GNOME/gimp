@@ -24,8 +24,9 @@
 
 #include <gtk/gtk.h>
 
-#include "gimptypes.h"
-#include "gimpuitypes.h"
+#include "libgimp/gimpunit.h"
+
+#include "gimpwidgetstypes.h"
 
 #include "gimpdialog.h"
 #include "gimppixmap.h"
@@ -33,7 +34,7 @@
 #include "gimpsizeentry.h"
 #include "gimpwidgets.h"
 
-#include "libgimp-intl.h"
+#include "libgimp/libgimp-intl.h"
 
 #include "pixmaps/eek.xpm"
 

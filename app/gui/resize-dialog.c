@@ -21,21 +21,18 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
-#include "layer.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
+#include "gimprc.h"
+#include "layer.h"
 #include "resize.h"
 #include "undo.h"
-#include "gimprc.h"
-#include "gimpui.h"
 
-#include "libgimp/gimpchainbutton.h"
 #include "libgimp/gimplimits.h"
-#include "libgimp/gimpsizeentry.h"
 
 #include "libgimp/gimpintl.h"
 

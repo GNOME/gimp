@@ -26,8 +26,9 @@
 
 #include <gtk/gtk.h>
 
-#include "gimptypes.h"
-#include "gimpuitypes.h"
+#include "libgimp/gimpunit.h"
+
+#include "gimpwidgetstypes.h"
 
 #include "gimppatheditor.h"
 #include "gimpfileselection.h"

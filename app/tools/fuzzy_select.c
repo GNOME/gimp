@@ -26,26 +26,25 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "boundary.h"
 #include "channel.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "edit_selection.h"
-#include "fuzzy_select.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "gdisplay.h"
 #include "pixel_region.h"
-#include "rect_select.h"
-#include "selection_options.h"
 #include "tile_manager.h"
 #include "tile.h"
-#include "tools.h"
+
+#include "fuzzy_select.h"
+#include "rect_select.h"
+#include "selection_options.h"
 #include "tool_options.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 

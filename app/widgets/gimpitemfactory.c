@@ -24,9 +24,10 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "channels_dialog.h"
 #include "commands.h"
 #include "dialog_handler.h"
@@ -34,7 +35,6 @@
 #include "gdisplay.h"
 #include "gimphelp.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "layers_dialog.h"
 #include "menus.h"
 #include "paths_dialog.h"

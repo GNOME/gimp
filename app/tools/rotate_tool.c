@@ -21,29 +21,26 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
 #include "gimpprogress.h"
-#include "gimpui.h"
 #include "info_dialog.h"
 #include "selection.h"
 #include "tile_manager.h"
 #include "undo.h"
 
 #include "rotate_tool.h"
-#include "tools.h"
 #include "tool_options.h"
+#include "tools.h"
 #include "transform_core.h"
 #include "transform_tool.h"
-
-#include "libgimp/gimpsizeentry.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "app_procs.h"
@@ -31,7 +33,6 @@
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "gtkhwrapbox.h"
 #include "indicator_area.h"
 #include "layer.h"

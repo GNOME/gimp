@@ -20,10 +20,11 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "brightness_contrast.h"
 #include "drawable.h"
 #include "gimpcontext.h"
 #include "gimplut.h"
@@ -32,10 +33,13 @@
 #include "gimpimage.h"
 #include "image_map.h"
 #include "lut_funcs.h"
+
+#include "brightness_contrast.h"
 #include "tool_options.h"
 #include "tools.h"
 
 #include "libgimp/gimpintl.h"
+
 
 #define SLIDER_WIDTH 200
 

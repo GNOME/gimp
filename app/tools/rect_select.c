@@ -23,24 +23,24 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "channel.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
-#include "edit_selection.h"
 #include "floating_sel.h"
+
+#include "edit_selection.h"
 #include "rect_select.h"
 #include "rect_selectP.h"
 #include "selection_options.h"
-#include "tools.h"
 #include "tool_options.h"
-
-#include "libgimp/gimpunitmenu.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -22,28 +22,26 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpbrushlist.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
-#include "gimpui.h"
 #include "gradient.h"
 #include "paint_funcs.h"
+#include "selection.h"
+#include "temp_buf.h"
+
 #include "paint_core.h"
 #include "paint_options.h"
 #include "paintbrush.h"
-#include "selection.h"
-#include "temp_buf.h"
-#include "tools.h"
 #include "tool_options.h"
-
-#include "libgimp/gimpunitmenu.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 

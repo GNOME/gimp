@@ -21,18 +21,19 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimphistogram.h"
 #include "gimpui.h"
-#include "histogram_tool.h"
 #include "histogramwidget.h"
 #include "pixel_region.h"
+
+#include "histogram_tool.h"
 #include "tool_options.h"
 #include "tools.h"
 

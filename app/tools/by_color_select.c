@@ -22,12 +22,12 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "boundary.h"
-#include "by_color_select.h"
 #include "channel.h"
 #include "cursorutil.h"
 #include "drawable.h"
@@ -41,12 +41,14 @@
 #include "gdisplay.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"
-#include "selection_options.h"
 #include "temp_buf.h"
 #include "tile.h"
 #include "tile_manager.h"
-#include "tools.h"
+
+#include "by_color_select.h"
+#include "selection_options.h"
 #include "tool_options.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 

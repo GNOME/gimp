@@ -309,14 +309,15 @@ INCLUDES = \
 	-I$(includedir)
 
 gimp_LDADD = \
-	pdb/libapppdb.la				\
-	tools/libapptools.la				\
-	$(top_builddir)/libgimpcolor/libgimpcolor.la	\
-	$(top_builddir)/libgimpmath/libgimpmath.la	\
-	$(top_builddir)/libgimp/libgimpi.a		\
-	$(GTK_LIBS)					\
-	$(GIMP_THREAD_LIBS)				\
-	$(GIMP_MP_LIBS)					\
+	pdb/libapppdb.la					\
+	tools/libapptools.la					\
+	$(top_builddir)/libgimpcolor/libgimpcolor.la		\
+	$(top_builddir)/libgimpmath/libgimpmath.la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets.la	\
+	$(top_builddir)/libgimp/libgimpi.a			\
+	$(GTK_LIBS)						\
+	$(GIMP_THREAD_LIBS)					\
+	$(GIMP_MP_LIBS)						\
 	$(INTLLIBS)
 
 .PHONY: files

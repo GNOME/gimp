@@ -21,10 +21,11 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "gimppalette.h"
-#include "gimpui.h"
 #include "palette_select.h"
 #include "palette.h"
 #include "paletteP.h"

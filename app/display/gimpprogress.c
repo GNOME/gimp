@@ -20,12 +20,12 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "gdisplay.h"
 #include "gimpprogress.h"
-#include "gimpui.h"
 
 #include "libgimp/gimpintl.h"
 

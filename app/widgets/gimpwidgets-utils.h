@@ -23,17 +23,6 @@
 #define __GIMP_UI_H__
 
 
-#include "libgimp/gimpchainbutton.h"
-#include "libgimp/gimpdialog.h"
-#include "libgimp/gimpfileselection.h"
-#include "libgimp/gimphelpui.h"
-#include "libgimp/gimppixmap.h"
-#include "libgimp/gimppatheditor.h"
-#include "libgimp/gimpquerybox.h"
-#include "libgimp/gimpsizeentry.h"
-#include "libgimp/gimpwidgets.h"
-
-
 /*  a simple message box  */
 
 void gimp_message_box   (gchar        *message,

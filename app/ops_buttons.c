@@ -20,10 +20,10 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
-#include "gimphelp.h"
-#include "gimpui.h"
 #include "ops_buttons.h"
 
 #include "libgimp/gimpintl.h"

@@ -33,6 +33,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -40,7 +42,6 @@
 #include "gimprc.h"
 #include "datafiles.h"
 #include "gimpset.h"
-#include "gimpui.h"
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimpmodule.h"

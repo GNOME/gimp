@@ -24,12 +24,13 @@
 
 #include <gtk/gtk.h>
 
-#include "gimpuitypes.h"
+#include "gimpwidgetstypes.h"
 
 #include "gimpdialog.h"
 #include "gimphelpui.h"
 
 #include "pixmaps/wilber.xpm"
+
 
 /*  local callbacks of gimp_dialog_new ()  */
 static gint

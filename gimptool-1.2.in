@@ -203,7 +203,7 @@ while test $# -gt 0; do
       done
       case $1 in
         --libs)
-          echo $libdirs -lgimpui -lgimp -lgimpcolor -lgimpmath $my_gtk_libs ;;
+          echo $libdirs -lgimpui -lgimpwidgets -lgimp -lgimpcolor -lgimpmath $my_gtk_libs ;;
         --libs-nogimpui)
           echo $libdirs -lgimp -lgimpcolor -lgimpmath $my_gtk_libs ;;
       esac
@@ -225,7 +225,7 @@ while test $# -gt 0; do
           fi
         fi
       done
-      echo -L@libdir@ -lgimp $my_glib_libs
+      echo -L@libdir@ -lgimp -lgimpcolor -lgimpmath $my_glib_libs
       ;;
     --install-bin | --install-admin-bin \
     | --install-bin-strip | --install-admin-bin-strip \

@@ -24,19 +24,19 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "channel.h"
 #include "draw_core.h"
 #include "edit_selection.h"
-#include "ellipse_select.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
 #include "rect_select.h"
 #include "rect_selectP.h"
+
+#include "ellipse_select.h"
 #include "selection_options.h"
-#include "tools.h"
 #include "tool_options.h"
+#include "tools.h"
 
 
 /*  the ellipse selection tool options  */

@@ -24,12 +24,12 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "channel.h"
-#include "crop.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
@@ -37,16 +37,14 @@
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimage_mask.h"
-#include "gimphelp.h"
-#include "gimpui.h"
 #include "info_dialog.h"
 #include "layer.h"
 #include "pixel_region.h"
-#include "tools.h"
-#include "tool_options.h"
 #include "undo.h"
 
-#include "libgimp/gimpsizeentry.h"
+#include "crop.h"
+#include "tool_options.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 

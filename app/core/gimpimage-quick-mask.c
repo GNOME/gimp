@@ -25,10 +25,10 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h" 
 #include "channel.h"
 #include "color_panel.h"
 #include "drawable.h"
@@ -37,7 +37,6 @@
 #include "gimage_mask.h"
 #include "gimpimage.h"
 #include "gimpcontext.h"
-#include "gimpui.h"
 #include "global_edit.h"
 #include "qmask.h"
 #include "undo.h"

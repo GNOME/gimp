@@ -23,19 +23,20 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "gdisplay.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "info_window.h"
-#include "magnify.h"
 #include "scale.h"
-#include "tools.h"
+
+#include "magnify.h"
 #include "tool_options.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 

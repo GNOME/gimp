@@ -28,10 +28,6 @@
 
 #include "apptypes.h"
 
-#include "edit_selection.h"
-#include "tools.h"
-
-#include "appenv.h"
 #include "boundary.h"
 #include "cursorutil.h"
 #include "draw_core.h"
@@ -45,6 +41,9 @@
 #include "path_transform.h"
 #include "selection.h"
 #include "undo.h"
+
+#include "edit_selection.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -24,19 +24,19 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "draw_core.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
-#include "gimpui.h"
 #include "info_dialog.h"
-#include "measure.h"
 #include "undo.h"
-#include "tools.h"
+
+#include "measure.h"
 #include "tool_options.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -54,6 +54,8 @@
 #include "tools/transform_core.h"
 #include "undo.h"
 
+#include "libgimpmath/gimpmath.h"
+
 static ProcRecord airbrush_proc;
 static ProcRecord airbrush_default_proc;
 static ProcRecord blend_proc;

@@ -15,18 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <string.h>
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "dialog_handler.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "info_dialog.h"
 #include "session.h"
 
@@ -34,10 +35,19 @@
 
 
 /*  static functions  */
-static void info_field_new (InfoDialog *, InfoFieldType, char *, GtkWidget *,
-			    GtkObject *, void *, GtkSignalFunc, gpointer);
-static void update_field   (InfoField *);
-static gint info_dialog_delete_callback (GtkWidget *, GdkEvent *, gpointer);
+static void info_field_new              (InfoDialog    *idialog,
+					 InfoFieldType  field_type,
+					 gchar         *title,
+					 GtkWidget     *widget,
+					 GtkObject     *object,
+					 gpointer       value_ptr,
+					 GtkSignalFunc  callback,
+					 gpointer       client_data);
+static void update_field                (InfoField     *info_field);
+static gint info_dialog_delete_callback (GtkWidget     *widget,
+					 GdkEvent      *event,
+					 gpointer       data);
+
 
 static void
 info_field_new (InfoDialog    *idialog,

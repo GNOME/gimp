@@ -20,15 +20,14 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
+
+#include "gimprc.h"
 
 #include "selection_options.h"
 #include "tools.h"
-
-#include "gimprc.h"
-#include "gimpui.h"
-
-#include "libgimp/gimpunitmenu.h"
 
 #include "libgimp/gimpintl.h"
 

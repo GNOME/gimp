@@ -182,7 +182,7 @@ CODE
     );
 }
 
-@headers = qw("gimpcontext.h" "palette.h");
+@headers = qw("libgimpcolor/gimpcolor.h" "gimpcontext.h" "palette.h");
 
 @procs = qw(palette_get_foreground palette_get_background
 	    palette_set_foreground palette_set_background

@@ -20,18 +20,17 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
-#include "paint_options.h"
-#include "tools.h"
+#include "apptypes.h"
 
 #include "brush_select.h"
 #include "gimpcontext.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "gtkhwrapbox.h"
 
-#include "libgimp/gimpunitmenu.h"
+#include "paint_options.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 

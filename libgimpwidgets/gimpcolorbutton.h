@@ -29,7 +29,8 @@
 #ifndef __GIMP_COLOR_BUTTON_H__
 #define __GIMP_COLOR_BUTTON_H__
 
-#include "libgimp/gimpcolorarea.h"
+
+#include "libgimpwidgets/gimpcolorarea.h"
 
 
 #ifdef __cplusplus

@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "disp_callbacks.h"
@@ -28,7 +30,6 @@
 #include "gimphelp.h"
 #include "gimpimage.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "interface.h"
 #include "menus.h"
 #include "nav_window.h"
