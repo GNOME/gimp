@@ -61,7 +61,6 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -86,7 +85,6 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -153,7 +151,6 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   blob_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (blob_vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), blob_vbox);
   gtk_widget_show (blob_vbox);
 

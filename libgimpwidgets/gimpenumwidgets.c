@@ -128,7 +128,6 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
  * gimp_enum_radio_frame_new:
  * @enum_type: the #GType of an enum.
  * @label_widget: a widget to put into the frame that will hold the radio box.
- * @border_width: the border_width of the vbox inside the frame.
  * @callback: a callback to connect to the "toggled" signal of each
  *            #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
@@ -142,7 +141,6 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
 GtkWidget *
 gimp_enum_radio_frame_new (GType        enum_type,
                            GtkWidget   *label_widget,
-                           gint         border_width,
                            GCallback    callback,
                            gpointer     callback_data,
                            GtkWidget  **first_button)
@@ -165,8 +163,6 @@ gimp_enum_radio_frame_new (GType        enum_type,
   radio_box = gimp_enum_radio_box_new (enum_type,
                                        callback, callback_data,
                                        first_button);
-
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), border_width);
   gtk_container_add (GTK_CONTAINER (frame), radio_box);
   gtk_widget_show (radio_box);
 
@@ -178,7 +174,6 @@ gimp_enum_radio_frame_new_with_range (GType        enum_type,
                                       gint         minimum,
                                       gint         maximum,
                                       GtkWidget   *label_widget,
-                                      gint         border_width,
                                       GCallback    callback,
                                       gpointer     callback_data,
                                       GtkWidget  **first_button)
@@ -203,8 +198,6 @@ gimp_enum_radio_frame_new_with_range (GType        enum_type,
                                                   maximum,
                                                   callback, callback_data,
                                                   first_button);
-
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), border_width);
   gtk_container_add (GTK_CONTAINER (frame), radio_box);
   gtk_widget_show (radio_box);
 

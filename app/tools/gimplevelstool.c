@@ -445,7 +445,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (frame);
 
   vbox2 = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
@@ -570,7 +569,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (frame);
 
   vbox2 = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
@@ -641,15 +639,12 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_end (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
   hbbox = gtk_hbutton_box_new ();
-  gtk_container_set_border_width (GTK_CONTAINER (hbbox), 2);
   gtk_box_set_spacing (GTK_BOX (hbbox), 4);
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (hbbox), GTK_BUTTONBOX_SPREAD);
   gtk_box_pack_start (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
 

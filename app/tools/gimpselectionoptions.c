@@ -395,7 +395,6 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     gtk_widget_show (frame);
 
     table = gtk_table_new (1, 3, FALSE);
-    gtk_container_set_border_width (GTK_CONTAINER (table), 2);
     gtk_table_set_col_spacings (GTK_TABLE (table), 2);
     gtk_container_add (GTK_CONTAINER (frame), table);
     gtk_widget_show (table);
@@ -438,7 +437,6 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (frame);
 
       vbox2 = gtk_vbox_new (FALSE, 0);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
       gtk_container_add (GTK_CONTAINER (frame), vbox2);
       gtk_widget_show (vbox2);
 
@@ -484,7 +482,6 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (frame);
 
       vbox2 = gtk_vbox_new (FALSE, 0);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
       gtk_container_add (GTK_CONTAINER (frame), vbox2);
       gtk_widget_show (vbox2);
 
@@ -510,7 +507,6 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (combo);
 
       table = gtk_table_new (2, 3, FALSE);
-      gtk_container_set_border_width (GTK_CONTAINER (table), 2);
       gtk_table_set_col_spacings (GTK_TABLE (table), 2);
       gtk_container_add (GTK_CONTAINER (frame), table);
 

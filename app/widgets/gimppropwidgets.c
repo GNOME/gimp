@@ -631,7 +631,6 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
       frame = gimp_enum_radio_frame_new_with_range (param_spec->value_type,
                                                     minimum, maximum,
                                                     gtk_label_new (label),
-                                                    2,
                                                     G_CALLBACK (gimp_prop_radio_button_callback),
                                                     config,
                                                     &button);
@@ -640,7 +639,6 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
     {
       frame = gimp_enum_radio_frame_new (param_spec->value_type,
                                          gtk_label_new (label),
-                                         2,
                                          G_CALLBACK (gimp_prop_radio_button_callback),
                                          config,
                                          &button);

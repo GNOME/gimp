@@ -262,13 +262,13 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  gtk_widget_set_sensitive (frame, ! GIMP_BUCKET_FILL_OPTIONS (config)->fill_selection);
+  gtk_widget_set_sensitive (frame,
+                            ! GIMP_BUCKET_FILL_OPTIONS (config)->fill_selection);
   g_signal_connect_object (config, "notify::fill-selection",
                            G_CALLBACK (gimp_bucket_fill_options_notify),
                            G_OBJECT (frame), 0);
 
   vbox2 = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 

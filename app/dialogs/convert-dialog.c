@@ -162,7 +162,7 @@ convert_dialog_new (GimpImage    *gimage,
   /*  palette  */
 
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_CONVERT_PALETTE_TYPE,
-                                     gtk_label_new (_("Palette")), 2,
+                                     gtk_label_new (_("Palette")),
                                      G_CALLBACK (gimp_radio_button_update),
                                      &dialog->palette_type,
                                      &toggle);

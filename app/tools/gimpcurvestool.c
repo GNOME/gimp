@@ -598,9 +598,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (frame);
 
   bbox = gtk_hbutton_box_new ();
-  gtk_container_set_border_width (GTK_CONTAINER (bbox), 2);
   gtk_box_set_spacing (GTK_BOX (bbox), 4);
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_SPREAD);
   gtk_container_add (GTK_CONTAINER (frame), bbox);
   gtk_widget_show (bbox);
 

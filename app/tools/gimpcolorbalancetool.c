@@ -274,7 +274,6 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
 
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_TRANSFER_MODE,
                                      gtk_label_new (_("Select Range to Modify")),
-                                     2,
                                      G_CALLBACK (color_balance_range_callback),
                                      cb_tool,
                                      &toggle);
@@ -288,7 +287,6 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 

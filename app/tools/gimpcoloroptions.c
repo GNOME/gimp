@@ -177,7 +177,6 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
 
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 

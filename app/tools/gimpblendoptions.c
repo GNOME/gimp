@@ -276,7 +276,6 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 
   /*  table for supersampling options  */
   table = gtk_table_new (2, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
   gtk_container_add (GTK_CONTAINER (frame), table);

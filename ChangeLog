@@ -1,3 +1,24 @@
+2004-10-14  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.c
+	* app/widgets/gimpenumwidgets.[ch]
+	* app/widgets/gimppropwidgets.c
+	* app/actions/layers-commands.c
+	* app/dialogs/convert-dialog.c
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcoloroptions.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpinkoptions-gui.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimpselectionoptions.c
+	* app/tools/gimptransformoptions.c: the child of a GimpFrame must
+	not have any border width. Fixes many subtle misalignments.
+
 2004-10-14  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpprogress.[ch]: added "message" function to the

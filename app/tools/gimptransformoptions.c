@@ -416,7 +416,6 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (frame);
 
       vbox2 = gtk_vbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
       gtk_container_add (GTK_CONTAINER (frame), vbox2);
       gtk_widget_show (vbox2);
 

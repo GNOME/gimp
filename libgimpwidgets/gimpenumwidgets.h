@@ -36,7 +36,6 @@ GtkWidget * gimp_enum_radio_box_new_with_range    (GType         enum_type,
 
 GtkWidget * gimp_enum_radio_frame_new             (GType         enum_type,
                                                    GtkWidget    *label_widget,
-                                                   gint          border_width,
                                                    GCallback     callback,
                                                    gpointer      callback_data,
                                                    GtkWidget   **first_button);
@@ -44,7 +43,6 @@ GtkWidget * gimp_enum_radio_frame_new_with_range  (GType         enum_type,
                                                    gint          minimum,
                                                    gint          maximum,
                                                    GtkWidget    *label_widget,
-                                                   gint          border_width,
                                                    GCallback     callback,
                                                    gpointer      callback_data,
                                                    GtkWidget   **first_button);

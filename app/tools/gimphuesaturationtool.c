@@ -275,7 +275,6 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (frame);
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (abox), 2);
   gtk_container_add (GTK_CONTAINER (frame), abox);
   gtk_widget_show (abox);
 
@@ -348,7 +347,6 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  The table containing sliders  */
   vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 

@@ -921,7 +921,6 @@ layers_new_layer_query (GimpImage   *gimage,
                                                 GIMP_FOREGROUND_FILL,
                                                 GIMP_TRANSPARENT_FILL,
                                                 gtk_label_new (_("Layer Fill Type")),
-                                                2,
                                                 G_CALLBACK (gimp_radio_button_update),
                                                 &options->fill_type,
                                                 &button);
@@ -1178,7 +1177,6 @@ layers_add_mask_query (GimpLayer *layer,
   frame =
     gimp_enum_radio_frame_new (GIMP_TYPE_ADD_MASK_TYPE,
                                gtk_label_new (_("Initialize Layer Mask to:")),
-                               6,
                                G_CALLBACK (gimp_radio_button_update),
                                &options->add_mask_type,
                                &button);
@@ -1190,12 +1188,12 @@ layers_add_mask_query (GimpLayer *layer,
 
   button = gtk_check_button_new_with_mnemonic (_("In_vert Mask"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), options->invert);
+  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->invert);
-
-  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   gtk_widget_show (options->query_box);
 }
