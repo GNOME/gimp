@@ -517,7 +517,6 @@ static int create_dialog(void)
 int create_gimpressionist(void)
 {
   pcvals.run = 0;
-  gr = g_rand_new();
 
   if(standalone) {
     pcvals = defaultpcvals;
@@ -528,7 +527,6 @@ int create_gimpressionist(void)
   }
 
   gtk_main ();
-  g_rand_free (gr);
   gdk_flush ();
 
   return pcvals.run;
@@ -565,11 +563,15 @@ int main(int argc, char **argv)
   img_has_alpha = 1;
   */
 
+  gr = g_rand_new();
+
   if(create_gimpressionist()) {
     fprintf(stderr, "Painting"); fflush(stderr);
     repaint(&infile, &inalpha);
     saveppm(&infile, argv[1]);
   }
+
+  g_rand_free (gr);
 
   return 0;
 }

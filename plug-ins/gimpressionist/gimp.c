@@ -145,6 +145,8 @@ run (gchar      *name,
   drawable = gimp_drawable_get(param[2].data.d_drawable);
   img_has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
 
+  gr = g_rand_new();
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
@@ -179,6 +181,8 @@ run (gchar      *name,
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
+
+  g_rand_free (gr);
 
   values[0].data.d_status = status;
   
