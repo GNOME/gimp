@@ -25,6 +25,7 @@
 
 #include "gimphelp.h"
 
+#include "libgimp/gimpdialog.h"
 #include "libgimp/gimpunit.h"
 
 /*  typedefs  */
@@ -32,55 +33,6 @@ typedef void (* GimpQueryFunc) (GtkWidget *, gpointer, gpointer);
 
 
 /*  widget constructors  */
-
-GtkWidget * gimp_dialog_new                 (const gchar        *title,
-					     const gchar        *wmclass_name,
-					     GimpHelpFunc        help_func,
-					     gchar              *help_data,
-					     GtkWindowPosition   position,
-					     gint                allow_shrink,
-					     gint                allow_grow,
-					     gint                auto_shrink,
-
-					     /* specify action area buttons
-					      * as va_list:
-					      *  gchar          *label,
-					      *  GtkSignalFunc   callback,
-					      *  gpointer        data,
-					      *  GtkWidget     **widget_ptr,
-					      *  gboolean        default_action,
-					      *  gboolean        connect_delete,
-					      */
-
-					     ...);
-
-GtkWidget * gimp_dialog_newv                (const gchar        *title,
-					     const gchar        *wmclass_name,
-					     GimpHelpFunc        help_func,
-					     gchar              *help_data,
-					     GtkWindowPosition   position,
-					     gint                allow_shrink,
-					     gint                allow_grow,
-					     gint                auto_shrink,
-					     va_list             args);
-
-void        gimp_dialog_create_action_area  (GtkDialog          *dialog,
-
-					     /* specify action area buttons
-					      * as va_list:
-					      *  gchar          *label,
-					      *  GtkSignalFunc   callback,
-					      *  gpointer        data,
-					      *  GtkWidget     **widget_ptr,
-					      *  gboolean        default_action,
-					      *  gboolean        connect_delete,
-					      */
-
-					     ...);
-
-void        gimp_dialog_create_action_areav (GtkDialog          *dialog,
-					     va_list             args);
-
 
 GtkWidget * gimp_option_menu_new (GtkSignalFunc       menu_item_callback,
 				  gpointer            initial,  /* user_data */

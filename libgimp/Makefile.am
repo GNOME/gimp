@@ -31,8 +31,12 @@ libgimpi_a_SOURCES = \
 	gimpchainbutton.h	\
 	gimpcolorbutton.c	\
 	gimpcolorspace.c	\
+	gimpdialog.c		\
+	gimpdialog.h		\
 	gimpfileselection.c	\
 	gimpfileselection.h	\
+	gimphelpui.c		\
+	gimphelpui.h		\
 	gimpmatrix.c		\
 	gimpmatrix.h		\
 	gimppatheditor.c	\
@@ -73,6 +77,7 @@ libgimp_la_SOURCES = \
 	gimpdrawable.c		\
 	gimpenv.c		\
 	gimpgradient.c		\
+	gimphelp.c		\
 	gimpimage.c		\
 	gimplayer.c		\
 	gimpmatrix.c		\
@@ -103,10 +108,12 @@ libgimpui_la_SOURCES = \
 	gimpbrushmenu.c		\
 	gimpgradientmenu.c 	\
 	gimppatternmenu.c	\
-	gimpexport.c		\
 	gimpchainbutton.c	\
 	gimpcolorbutton.c	\
+	gimpdialog.c		\
+	gimpexport.c		\
 	gimpfileselection.c	\
+	gimphelpui.c		\
 	gimppatheditor.c	\
 	gimpsizeentry.c		\
 	gimpunitmenu.c
@@ -119,11 +126,13 @@ gimpinclude_HEADERS = \
 	gimpcolorbutton.h	\
 	gimpcolorspace.h	\
         gimpcompat.h		\
+	gimpdialog.h		\
 	gimpenums.h		\
 	gimpenv.h		\
 	gimpexport.h		\
 	gimpfeatures.h		\
 	gimpfileselection.h	\
+	gimphelpui.h		\
 	gimplimits.h		\
 	gimpmath.h		\
 	gimpmatrix.h		\

@@ -1,5 +1,8 @@
 /* LIBGIMP - The GIMP Library                                                   
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimphelpui.h
+ * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -9,27 +12,38 @@
  * This library is distributed in the hope that it will be useful,              
  * but WITHOUT ANY WARRANTY; without even the implied warranty of               
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
- * Lesser General Public License for more details.
+ * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- */                                                                             
-#ifndef __GIMP_UI_H__
-#define __GIMP_UI_H__
+ */
+#ifndef __GIMP_HELP_UI_H__
+#define __GIMP_HELP_UI_H__
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimpchainbutton.h"
-#include "libgimp/gimpcolorbutton.h"
-#include "libgimp/gimpdialog.h"
-#include "libgimp/gimpexport.h"
-#include "libgimp/gimpfileselection.h"
-#include "libgimp/gimphelpui.h"
-#include "libgimp/gimpmenu.h"
-#include "libgimp/gimppatheditor.h"
-#include "libgimp/gimpsizeentry.h"
-#include "libgimp/gimpunitmenu.h"
+typedef void (* GimpHelpFunc) (gchar *);
 
-#endif /* __GIMP_UI_H__ */
+
+void  gimp_help_init               (void);
+void  gimp_help_free               (void);
+
+void  gimp_help_enable_tooltips    (void);
+void  gimp_help_disable_tooltips   (void);
+
+/*  connect the "F1" accelerator of a window  */
+void  gimp_help_connect_help_accel (GtkWidget    *widget,
+				    GimpHelpFunc  help_func,
+				    gchar        *help_data);
+
+/*  set help data for non-window widgets  */
+void  gimp_help_set_help_data      (GtkWidget    *widget,
+				    gchar        *tool_tip,
+				    gchar        *help_data);
+
+/*  activate the context help inspector  */
+void  gimp_context_help            (void);
+
+#endif /* __GIMP_HELP_UI_H__ */

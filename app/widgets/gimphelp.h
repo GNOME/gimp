@@ -23,38 +23,18 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimp/gimphelpui.h"
+
 enum
 {
   HELP_BROWSER_GIMP,
   HELP_BROWSER_NETSCAPE
 };
 
-typedef void (* GimpHelpFunc) (gchar *);
-
-
-void  gimp_help_init               (void);
-void  gimp_help_free               (void);
-
-void  gimp_help_enable_tooltips    (void);
-void  gimp_help_disable_tooltips   (void);
-
 /*  the standard help function  */
-void  gimp_standard_help_func      (gchar        *help_data);
-
-/*  connect the "F1" accelerator of a window  */
-void  gimp_help_connect_help_accel (GtkWidget    *widget,
-				    GimpHelpFunc  help_func,
-				    gchar        *help_data);
-
-/*  set help data for non-window widgets  */
-void  gimp_help_set_help_data      (GtkWidget    *widget,
-				    gchar        *tool_tip,
-				    gchar        *help_data);
+void  gimp_standard_help_func (gchar *help_data);
 
 /*  the main help function  */
-void  gimp_help                    (gchar        *help_data);
-
-/*  activate the context help inspector  */
-void  gimp_context_help            (void);
+void  gimp_help               (gchar *help_data);
 
 #endif /* __GIMP_HELP_H__ */

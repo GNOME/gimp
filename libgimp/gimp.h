@@ -872,6 +872,14 @@ void      gimp_attach_new_parasite (const char     *name,
 				    const void     *data);
 void      gimp_parasite_detach     (const char     *name);
 
+/****************************************
+ *                Help                  *
+ ****************************************/
+
+void      gimp_standard_help_func  (gchar *help_data);
+void      gimp_plugin_help_func    (gchar *help_data);
+void      gimp_help                (gchar *help_data);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

@@ -1,3 +1,26 @@
+2000-01-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimphelp.[ch]: removed most functions. Show the help page in
+	an idle function to avoid confusion with calling the temporary
+	help browser procedure in the middle of the "gimp_help" PDB call.
+	(I beleive this should work, so this is maybe a workaround for
+	some other bug).
+
+	* app/gimpui.[ch]: removed the dialog functions.
+
+	* libgimp/Makefile.am
+	* libgimp/gimpdialog.[ch]
+	* libgimp/gimphelp.c
+	* libgimp/gimphelpui.[ch]: new files. Moved most of the help
+	functions and the dialog constructors to libgimp and libgimpui.
+
+	* libgimp/gimp.h: declaration of the "gimp_help*" functions.
+
+	* libgimp/gimpui.h: include "gimpdialog.h" and "gimphelpui.h".
+
+	* plug-ins/common/grid.c: use the dialog constructor. It's now
+	possible to show the plugin's help with "F1".
+
 Wed Jan  5 13:51:19 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/main.c: removed i18n tags from error messages in the 
