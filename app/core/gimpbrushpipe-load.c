@@ -425,7 +425,7 @@ gimp_brush_pipe_load (const gchar  *filename,
 
       for (i = 0; i < pipe->dimension; i++)
 	{
-	  pipe->rank[i] = params.rank[i];
+	  pipe->rank[i] = MAX (1, params.rank[i]);
 	  if (strcmp (params.selection[i], "incremental") == 0)
 	    pipe->select[i] = PIPE_SELECT_INCREMENTAL;
 	  else if (strcmp (params.selection[i], "angular") == 0)
