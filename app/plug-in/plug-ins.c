@@ -70,12 +70,15 @@ struct _PlugInHelpDomainDef
 };
 
 
-static void            plug_ins_init_file (const GimpDatafileData *file_data,
-                                           gpointer                user_data);
-static void            plug_ins_add_to_db       (Gimp             *gimp,
-                                                 GimpContext      *context);
-static PlugInProcDef * plug_ins_proc_def_insert (Gimp             *gimp,
-                                                 PlugInProcDef    *proc_def);
+static void            plug_ins_init_file   (const GimpDatafileData *file_data,
+                                             gpointer                data);
+static void            plug_ins_add_to_db         (Gimp             *gimp,
+                                                   GimpContext      *context);
+static PlugInProcDef * plug_ins_proc_def_insert   (Gimp             *gimp,
+                                                   PlugInProcDef    *proc_def);
+static gint            plug_ins_file_proc_compare (gconstpointer     a,
+                                                   gconstpointer     b,
+                                                   gpointer          data);
 
 
 /*  public functions  */
@@ -311,7 +314,16 @@ plug_ins_init (Gimp               *gimp,
     }
 
   if (! gimp->no_interface)
-    gimp_menus_init (gimp, gimp->plug_in_defs, STD_PLUGINS_DOMAIN);
+    {
+      gimp->load_procs = g_slist_sort_with_data (gimp->load_procs,
+                                                 plug_ins_file_proc_compare,
+                                                 gimp);
+      gimp->save_procs = g_slist_sort_with_data (gimp->save_procs,
+                                                 plug_ins_file_proc_compare,
+                                                 gimp);
+
+      gimp_menus_init (gimp, gimp->plug_in_defs, STD_PLUGINS_DOMAIN);
+    }
 
   /* build list of automatically started extensions */
   for (list = gimp->plug_in_proc_defs, nth = 0; list; list = list->next, nth++)
@@ -871,13 +883,11 @@ plug_ins_image_types_parse (gchar *image_types)
 
 static void
 plug_ins_init_file (const GimpDatafileData *file_data,
-                    gpointer                user_data)
+                    gpointer                data)
 {
   PlugInDef  *plug_in_def;
-  GSList    **plug_in_defs;
+  GSList    **plug_in_defs = data;
   GSList     *list;
-
-  plug_in_defs = (GSList **) user_data;
 
   for (list = *plug_in_defs; list; list = list->next)
     {
@@ -977,4 +987,39 @@ plug_ins_proc_def_insert (Gimp          *gimp,
                                              proc_def);
 
   return NULL;
+}
+
+static gint
+plug_ins_file_proc_compare (gconstpointer a,
+                            gconstpointer b,
+                            gpointer      data)
+{
+  Gimp                *gimp   = data;
+  const PlugInProcDef *proc_a = a;
+  const PlugInProcDef *proc_b = b;
+  gchar               *label_a;
+  gchar               *label_b;
+  gint                 retval = 0;
+
+  if (strncmp (proc_a->prog, "gimp_xcf", 8) == 0)
+    return -1;
+  if (strncmp (proc_b->prog, "gimp_xcf", 8) == 0)
+    return 1;
+
+  label_a = plug_in_proc_def_get_label (proc_a,
+                                        plug_ins_locale_domain (gimp,
+                                                                proc_a->prog,
+                                                                NULL));
+  label_b = plug_in_proc_def_get_label (proc_b,
+                                        plug_ins_locale_domain (gimp,
+                                                                proc_b->prog,
+                                                                NULL));
+
+  if (label_a && label_b)
+    retval = g_utf8_collate (label_a, label_b);
+
+  g_free (label_a);
+  g_free (label_b);
+
+  return retval;
 }

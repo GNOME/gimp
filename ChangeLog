@@ -1,5 +1,12 @@
 2004-07-16  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/plug-ins.c (plug_ins_init): sort the file procedures
+	by their menu labels.
+
+	* app/widgets/gimpfileprocview.c: removed the sort function here.
+
+2004-07-16  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpfileprocview.[ch]: added new widget that offers

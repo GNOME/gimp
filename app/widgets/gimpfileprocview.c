@@ -59,10 +59,6 @@ static void  gimp_file_proc_view_class_init   (GimpFileProcViewClass *klass);
 
 static void  gimp_file_proc_view_selection_changed (GtkTreeSelection *selection,
                                                     GimpFileProcView *view);
-static gint  gimp_file_proc_view_iter_compare      (GtkTreeModel     *model,
-                                                    GtkTreeIter      *a,
-                                                    GtkTreeIter      *b,
-                                                    gpointer         data);
 
 
 static guint  view_signals[LAST_SIGNAL] = { 0 };
@@ -132,16 +128,6 @@ gimp_file_proc_view_new (Gimp        *gimp,
                               G_TYPE_STRING,     /* COLUMN_EXTENSIONS */
                               G_TYPE_STRING,     /* COLUMN_STOCK_ID   */
                               GDK_TYPE_PIXBUF);  /* COLUMN_PIXBUF     */
-
-
-  gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (store),
-                                   COLUMN_LABEL,
-                                   gimp_file_proc_view_iter_compare,
-                                   NULL, NULL);
-
-  gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (store),
-                                        COLUMN_LABEL,
-                                        GTK_SORT_ASCENDING);
 
   for (list = procedures; list; list = g_slist_next (list))
     {
@@ -302,47 +288,4 @@ gimp_file_proc_view_selection_changed (GtkTreeSelection *selection,
                                        GimpFileProcView *view)
 {
   g_signal_emit (view, view_signals[CHANGED], 0);
-}
-
-static gint
-gimp_file_proc_view_iter_compare (GtkTreeModel *model,
-                                  GtkTreeIter  *a,
-                                  GtkTreeIter  *b,
-                                  gpointer      data)
-{
-  PlugInProcDef *proc_a;
-  PlugInProcDef *proc_b;
-  gchar         *label_a;
-  gchar         *label_b;
-  gint           retval;
-
-  gtk_tree_model_get (model, a,
-                      COLUMN_PROC,  &proc_a,
-                      COLUMN_LABEL, &label_a,
-                      -1);
-  gtk_tree_model_get (model, b,
-                      COLUMN_PROC,  &proc_b,
-                      COLUMN_LABEL, &label_b,
-                      -1);
-
-  if (proc_a && proc_b)
-    {
-      if (strncmp (proc_a->prog, "gimp_xcf", 8) == 0)
-        retval = -1;
-      else if (strncmp (proc_b->prog, "gimp_xcf", 8) == 0)
-        retval = 1;
-      else
-        retval = g_utf8_collate (label_a, label_b);
-    }
-  else if (proc_a)
-    retval = 1;
-  else if (proc_b)
-    retval = -1;
-  else
-    retval = 0;
-
-  g_free (label_a);
-  g_free (label_b);
-
-  return retval;
 }
