@@ -1,3 +1,10 @@
+2004-08-07  DindinX  <david@dindinx.org>
+
+	* libgimpwidgets/gimppreviewarea.c: fixed the rendering for INDEXED
+	and INDEXEDA image types.
+
+	* plug-ins/common/grid.c: ported to GimpPreviewArea.
+
 2004-08-06  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/glasstile.c: ported to GimpPreviewArea.

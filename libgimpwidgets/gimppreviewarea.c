@@ -397,7 +397,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
           for (col = 0; col < width; col++, s++, d += 3)
             {
-              const guchar *cmap = area->cmap + s[0];
+              const guchar *cmap = area->cmap + 3 * s[0];
 
               d[0] = cmap[0];
               d[1] = cmap[1];
@@ -416,9 +416,9 @@ gimp_preview_area_draw (GimpPreviewArea *area,
           const guchar *s = src;
           guchar       *d = dest;
 
-          for (col = x; col < x + width; col++, s++, d += 3)
+          for (col = x; col < x + width; col++, s += 2, d += 3)
             {
-              const guchar *cmap  = area->cmap + s[0];
+              const guchar *cmap  = area->cmap + 3 * s[0];
 
               switch (s[1])
                 {

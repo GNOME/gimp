@@ -50,8 +50,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "gimpoldpreview.h"
-
 #define SPIN_BUTTON_WIDTH    8
 #define COLOR_BUTTON_WIDTH  55
 
@@ -86,7 +84,10 @@ static gint sx1, sy1, sx2, sy2;
 static GtkWidget *main_dialog    = NULL;
 static GtkWidget *hcolor_button  = NULL;
 static GtkWidget *vcolor_button  = NULL;
-static GimpOldPreview *preview   = NULL;
+
+#define PREVIEW_SIZE 128
+static GtkWidget *preview;
+static gint       preview_width, preview_height;
 
 typedef struct
 {
@@ -232,7 +233,6 @@ run (const gchar      *name,
           /* The dialog was closed, or something similarly evil happened. */
           status = GIMP_PDB_EXECUTION_ERROR;
         }
-      gimp_old_preview_free (preview);
     }
 
   if (grid_cfg.hspace <= 0 || grid_cfg.vspace <= 0)
@@ -334,66 +334,65 @@ doit (gint32        image_ID,
       GimpDrawable *drawable,
       gboolean      preview_mode)
 {
-  GimpPixelRgn srcPR, destPR;
-  gint width, height, bytes;
-  gint x_offset, y_offset;
-  guchar *dest;
-  gint x, y;
-  gboolean alpha;
-  gboolean blend;
-  guchar hcolor[4];
-  guchar vcolor[4];
-  guchar icolor[4];
-  guchar *cmap;
-  gint ncolors;
+  GimpPixelRgn  srcPR, destPR;
+  gint          width, height, bytes;
+  gint          x_offset, y_offset;
+  guchar       *dest, *buffer = NULL;
+  gint          x, y;
+  gboolean      alpha;
+  gboolean      blend;
+  guchar        hcolor[4];
+  guchar        vcolor[4];
+  guchar        icolor[4];
+  guchar       *cmap;
+  gint          ncolors;
 
   gimp_rgba_get_uchar (&grid_cfg.hcolor, hcolor, hcolor + 1, hcolor + 2, hcolor + 3);
   gimp_rgba_get_uchar (&grid_cfg.vcolor, vcolor, vcolor + 1, vcolor + 2, vcolor + 3);
   gimp_rgba_get_uchar (&grid_cfg.icolor, icolor, icolor + 1, icolor + 2, icolor + 3);
 
-  if (preview_mode)
+  switch (gimp_image_base_type (image_ID))
     {
+    case GIMP_RGB:
       blend = TRUE;
-    }
-  else
-    {
-      switch (gimp_image_base_type (image_ID))
-        {
-        case GIMP_RGB:
-          blend = TRUE;
-          break;
+      break;
 
-        case GIMP_GRAY:
-          hcolor[0] = gimp_rgb_intensity_uchar (&grid_cfg.hcolor);
-          vcolor[0] = gimp_rgb_intensity_uchar (&grid_cfg.vcolor);
-          vcolor[0] = gimp_rgb_intensity_uchar (&grid_cfg.vcolor);
-          blend = TRUE;
-          break;
+    case GIMP_GRAY:
+      hcolor[0] = gimp_rgb_intensity_uchar (&grid_cfg.hcolor);
+      vcolor[0] = gimp_rgb_intensity_uchar (&grid_cfg.vcolor);
+      vcolor[0] = gimp_rgb_intensity_uchar (&grid_cfg.vcolor);
+      blend = TRUE;
+      break;
 
-        case GIMP_INDEXED:
-          cmap = gimp_image_get_cmap (image_ID, &ncolors);
-          hcolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.hcolor);
-          vcolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.vcolor);
-          icolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.icolor);
-          g_free (cmap);
-          blend = FALSE;
-          break;
+    case GIMP_INDEXED:
+      cmap = gimp_image_get_cmap (image_ID, &ncolors);
+      hcolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.hcolor);
+      vcolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.vcolor);
+      icolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.icolor);
+      if (preview_mode)
+        gimp_preview_area_set_cmap (GIMP_PREVIEW_AREA (preview),
+                                    cmap,
+                                    ncolors);
+      g_free (cmap);
+      blend = FALSE;
+      break;
 
-        default:
-          g_assert_not_reached ();
-          blend = FALSE;
-        }
+    default:
+      g_assert_not_reached ();
+      blend = FALSE;
     }
 
+  bytes = drawable->bpp;
+  alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   if (preview_mode)
     {
       sx1 = sy1 = 0;
-      sx2 = preview->width;
-      sy2 = preview->height;
+      sx2 = preview_width;
+      sy2 = preview_height;
       width  = sx2;
       height = sy2;
-      alpha  = 0;
-      bytes  = preview->bpp;
+
+      buffer = g_new (guchar, bytes * width * height);
     }
   else
     {
@@ -403,22 +402,16 @@ doit (gint32        image_ID,
       gimp_drawable_mask_bounds (drawable->drawable_id, &sx1, &sy1, &sx2, &sy2);
       width  = gimp_drawable_width (drawable->drawable_id);
       height = gimp_drawable_height (drawable->drawable_id);
-      alpha  = gimp_drawable_has_alpha (drawable->drawable_id);
-      bytes  = drawable->bpp;
 
       /*  initialize the pixel regions  */
-      gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
       gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
     }
+  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
 
-  dest = g_malloc (width * bytes);
+  dest = g_new (guchar, width * bytes);
   for (y = sy1; y < sy2; y++)
     {
-      if (preview_mode)
-        memcpy (dest, preview->cache + preview->rowstride * y,
-                preview->rowstride);
-      else
-        gimp_pixel_rgn_get_row (&srcPR, dest, sx1, y, (sx2 - sx1));
+      gimp_pixel_rgn_get_row (&srcPR, dest, sx1, y, (sx2 - sx1));
 
       y_offset = y - grid_cfg.hoffset;
       while (y_offset < 0)
@@ -479,7 +472,7 @@ doit (gint32        image_ID,
         }
       if (preview_mode)
         {
-          gimp_old_preview_do_row (preview, y, width, dest);
+          memcpy (buffer + y * width * bytes, dest, width * bytes);
         }
       else
         {
@@ -492,7 +485,12 @@ doit (gint32        image_ID,
   /*  update the timred region  */
   if (preview_mode)
     {
-      gtk_widget_queue_draw (preview->widget);
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                              0, 0, width, height,
+                              gimp_drawable_type (drawable->drawable_id),
+                              buffer,
+                              width * bytes);
+      g_free (buffer);
     }
   else
     {
@@ -659,12 +657,12 @@ dialog (gint32        image_ID,
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  preview = gimp_old_preview_new (NULL);
-  gimp_old_preview_fill (preview, drawable);
-  gtk_box_pack_start (GTK_BOX (vbox), preview->frame, FALSE, FALSE, 0);
-  gtk_widget_show (preview->frame);
-
-  doit (image_ID, drawable, TRUE); /* render preview */
+  preview = gimp_preview_area_new ();
+  preview_width  = MIN (PREVIEW_SIZE, drawable->width);
+  preview_height = MIN (PREVIEW_SIZE, drawable->height);
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
+  gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
+  gtk_widget_show (preview);
 
   /* right side */
   vbox = gtk_vbox_new (FALSE, 6);
@@ -937,6 +935,8 @@ dialog (gint32        image_ID,
   g_object_set_data (G_OBJECT (dlg), "offset",   offset);
   g_object_set_data (G_OBJECT (dlg), "drawable", drawable);
 
+  doit (image_ID, drawable, TRUE); /* render preview */
+
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   if (run)
@@ -946,3 +946,4 @@ dialog (gint32        image_ID,
 
   return run;
 }
+
