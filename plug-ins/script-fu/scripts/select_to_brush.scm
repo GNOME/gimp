@@ -52,18 +52,36 @@
 
     (gimp-edit-copy drawable)
 
-    (set! brush-image (car (gimp-image-new selection-width selection-height 1)))
-    (set! brush-draw (car (gimp-layer-new brush-image selection-width selection-height GRAY_IMAGE "Sloth" 100 NORMAL)))
+    (set! brush_draw_type
+          (if (= type GRAYA_IMAGE)
+              GRAY_IMAGE
+              RGBA_IMAGE))
+
+    (set! brush_image_type
+          (if (= type GRAYA_IMAGE)
+              GRAY
+              RGB))
+
+    (set! brush-image (car (gimp-image-new selection-width selection-height brush_image_type)))
+    
+    (set! brush-draw
+          (car (gimp-layer-new brush-image
+                               selection-width
+                               selection-height brush_draw_type "Sloth" 100 NORMAL)))
+        
     (gimp-image-add-layer brush-image brush-draw 0)
     
     (gimp-selection-none brush-image)
-    (gimp-palette-set-background '(255 255 255))
-    (gimp-drawable-fill brush-draw BG-IMAGE-FILL)
+
+    (if (= type GRAYA_IMAGE)
+        (begin 
+          (gimp-palette-set-background '(255 255 255))
+          (gimp-drawable-fill brush-draw BG-IMAGE-FILL)))
 
     (let ((floating-sel (car (gimp-edit-paste brush-draw FALSE))))
-      (gimp-floating-sel-anchor floating-sel)
-      )
+      (gimp-floating-sel-anchor floating-sel))
 
+    
     (set! data-dir (car (gimp-gimprc-query "gimp_dir")))
     (set! filename2 (string-append data-dir
 					 "/brushes/"
@@ -71,7 +89,7 @@
 					 (number->string image)
 					 ".gbr"))
 
-    (gimp-invert brush-draw)
+    ; (gimp-invert brush-draw)
     (file-gbr-save 1 brush-image brush-draw filename2 "" spacing desc)
     (gimp-brushes-refresh) ; My own modification!  You'll need my diff.
     (gimp-brushes-set-brush desc)
