@@ -58,14 +58,16 @@ typedef struct
 {
   gboolean         root;
   guint            window_id;
-  guint            delay;
+  guint            select_delay;
+  guint            grab_delay;
 } ScreenShotValues;
 
 static ScreenShotValues shootvals =
 {
-  FALSE,     /* root window */
-  0,         /* window ID   */
-  0,         /* delay       */
+  FALSE,     /* root window  */
+  0,         /* window ID    */
+  0,         /* select delay */
+  0,         /* grab delay   */
 };
 
 
@@ -124,14 +126,15 @@ query (void)
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Creates a screenshot of a single window or the whole screen",
-                          "After specifying some options the user selects a window and "
-                          "a time out is started. At the end of the time out the window "
-                          "is grabbed and the image is loaded into The GIMP. Alternatively "
-                          "the whole screen can be grabbed. When called non-interactively "
-                          "it may grab the root window or use the window-id passed as a parameter.",
+                          "After a user specified time out the user selects a window and "
+                          "another time out is started. At the end of the second time out "
+                          "the window is grabbed and the image is loaded into The GIMP. "
+                          "Alternatively the whole screen can be grabbed. When called "
+                          "non-interactively it may grab the root window or use the "
+                          "window-id passed as a parameter.",
 			  "Sven Neumann <sven@gimp.org>, Henrik Brix Andersen <brix@gimp.org>",
 			  "1998 - 2003",
-			  "v0.9.6 (2003/08/28)",
+			  "v0.9.7 (2003/11/15)",
 			  N_("<Toolbox>/File/Acquire/_Screen Shot..."),
 			  NULL,
 			  GIMP_PLUGIN,
@@ -182,9 +185,10 @@ run (const gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams == 3)
 	{
-	  shootvals.root      = param[1].data.d_int32;
-	  shootvals.window_id = param[2].data.d_int32;
-	  shootvals.delay     = 0;
+	  shootvals.root         = param[1].data.d_int32;
+	  shootvals.window_id    = param[2].data.d_int32;
+          shootvals.select_delay = 0;
+	  shootvals.grab_delay   = 0;
 	}
       else
 	status = GIMP_PDB_CALLING_ERROR;
@@ -204,8 +208,8 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (shootvals.delay > 0)
-	shoot_delay (shootvals.delay);
+      if (shootvals.grab_delay > 0)
+	shoot_delay (shootvals.grab_delay);
       /* Run the main function */
       shoot ();
 
@@ -304,7 +308,7 @@ select_window (GdkScreen *screen)
   /* basically the code should grab the pointer using a crosshair
      cursor, allow the user to click on a window and return the
      obtained HWND (as a GdkNativeWindow) - for more details consult
-     the X11 specific code below */
+     the X11 specific code above */
 
   /* note to self: take a look at the winsnap plug-in for example
      code */
@@ -538,6 +542,28 @@ shoot_dialog (void)
                     G_CALLBACK (gimp_radio_button_update),
                     &shootvals.root);
 
+  /*  select window delay  */
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  label = gtk_label_new_with_mnemonic (_("S_elect Window After"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  adj = gtk_adjustment_new (shootvals.select_delay, 0.0, 100.0, 1.0, 5.0, 0.0);
+  spinner = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spinner, FALSE, FALSE, 0);
+  gtk_widget_show (spinner);
+
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &shootvals.select_delay);
+
+  label = gtk_label_new (_("Seconds Delay"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  gtk_widget_show (hbox);
+
   /*  root window  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
 					       _("the _Whole Screen"));
@@ -556,21 +582,21 @@ shoot_dialog (void)
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
 
-  /*  with delay  */
+  /*  grab delay  */
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  label = gtk_label_new_with_mnemonic (_("_after"));
+  label = gtk_label_new_with_mnemonic (_("Grab _After"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  adj = gtk_adjustment_new (shootvals.delay, 0.0, 100.0, 1.0, 5.0, 0.0);
+  adj = gtk_adjustment_new (shootvals.grab_delay, 0.0, 100.0, 1.0, 5.0, 0.0);
   spinner = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinner, FALSE, FALSE, 0);
   gtk_widget_show (spinner);
 
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
-                    &shootvals.delay);
+                    &shootvals.grab_delay);
 
   label = gtk_label_new (_("Seconds Delay"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -590,9 +616,14 @@ shoot_dialog (void)
   gtk_widget_destroy (dialog);
 
   if (run)
-    {
-      if (!shootvals.root && !shootvals.window_id)
-        selected_native = select_window (cur_screen);
+   {
+     if (!shootvals.root && !shootvals.window_id)
+       {
+         if (shootvals.select_delay > 0)
+           shoot_delay (shootvals.select_delay);
+
+         selected_native = select_window (cur_screen);
+       }
     }
 
   return run;

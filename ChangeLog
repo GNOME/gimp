@@ -1,3 +1,8 @@
+2003-11-15  Henrik Brix Andersen  <brix@gimp.org>
+
+	* plug-ins/common/screenshot.c: added an optional time out before
+	selecting the window to be grabbed. This fixes bug #121783.
+
 2003-11-14  Manish Singh  <yosh@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.[ch]: add
