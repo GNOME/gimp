@@ -39,8 +39,7 @@
 #define COLORTRIANGLERADIUS (COLORWHEELRADIUS - GIMP_COLOR_SELECTOR_BAR_SIZE)
 #define PREVIEWSIZE         (2 * COLORWHEELRADIUS + 1)
 #define BGCOLOR             180
-#define PREVIEW_MASK        (GDK_EXPOSURE_MASK       | \
-                             GDK_BUTTON_PRESS_MASK   | \
+#define PREVIEW_MASK        (GDK_BUTTON_PRESS_MASK   | \
                              GDK_BUTTON_RELEASE_MASK | \
                              GDK_BUTTON_MOTION_MASK )
 
@@ -75,8 +74,6 @@ static GType      colorsel_triangle_get_type   (GTypeModule           *module);
 static void       colorsel_triangle_class_init (ColorselTriangleClass *klass);
 static void       colorsel_triangle_init       (ColorselTriangle      *triangle);
 
-static void       colorsel_triangle_finalize        (GObject           *object);
-
 static void       colorsel_triangle_set_color       (GimpColorSelector *selector,
                                                      const GimpRGB     *rgb,
                                                      const GimpHSV     *hsv);
@@ -93,7 +90,7 @@ static void       colorsel_xy_to_triangle_buf       (gint              x,
                                                      gint              hy);
 
 static GtkWidget *colorsel_triangle_create_preview  (ColorselTriangle *triangle);
-static void       colorsel_triangle_update_previews (ColorselTriangle *triangle);
+static void       colorsel_triangle_update_preview  (ColorselTriangle *triangle);
 static gboolean   colorsel_triangle_event           (GtkWidget        *widget,
                                                      GdkEvent         *event,
                                                      ColorselTriangle *triangle);
@@ -164,15 +161,9 @@ colorsel_triangle_get_type (GTypeModule *module)
 static void
 colorsel_triangle_class_init (ColorselTriangleClass *klass)
 {
-  GObjectClass           *object_class;
-  GimpColorSelectorClass *selector_class;
-
-  object_class   = G_OBJECT_CLASS (klass);
-  selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
+  GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->finalize    = colorsel_triangle_finalize;
 
   selector_class->name      = _("Triangle");
   selector_class->help_id   = "gimp-colorselector-triangle";
@@ -203,17 +194,7 @@ colorsel_triangle_init (ColorselTriangle *triangle)
   gtk_container_add (GTK_CONTAINER (frame), triangle->preview);
   gtk_widget_show (triangle->preview);
 
-  colorsel_triangle_update_previews (triangle);
-}
-
-static void
-colorsel_triangle_finalize (GObject *object)
-{
-  ColorselTriangle *triangle;
-
-  triangle = COLORSEL_TRIANGLE (object);
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  colorsel_triangle_update_preview (triangle);
 }
 
 static void
@@ -221,20 +202,17 @@ colorsel_triangle_set_color (GimpColorSelector *selector,
                              const GimpRGB     *rgb,
                              const GimpHSV     *hsv)
 {
-  ColorselTriangle *triangle;
+  ColorselTriangle *triangle = COLORSEL_TRIANGLE (selector);
 
-  triangle = COLORSEL_TRIANGLE (selector);
-
-  colorsel_triangle_update_previews (triangle);
+  colorsel_triangle_update_preview (triangle);
 }
 
 static GtkWidget *
 colorsel_triangle_create_preview (ColorselTriangle *triangle)
 {
-  GtkWidget *preview;
+  GtkWidget *preview = gimp_preview_area_new ();
 
-  preview = gimp_preview_area_new ();
-  gtk_widget_set_events (GTK_WIDGET (preview), PREVIEW_MASK );
+  gtk_widget_add_events (GTK_WIDGET (preview), PREVIEW_MASK);
   gtk_widget_set_size_request (preview, PREVIEWSIZE, PREVIEWSIZE);
 
   g_signal_connect (preview, "motion_notify_event",
@@ -247,16 +225,16 @@ colorsel_triangle_create_preview (ColorselTriangle *triangle)
                     G_CALLBACK (colorsel_triangle_event),
                     triangle);
   g_signal_connect_swapped (preview, "size_allocate",
-                            G_CALLBACK (colorsel_triangle_update_previews),
+                            G_CALLBACK (colorsel_triangle_update_preview),
                             triangle);
 
   return preview;
 }
 
 static void
-colorsel_triangle_update_previews (ColorselTriangle *triangle)
+colorsel_triangle_update_preview (ColorselTriangle *triangle)
 {
-  GimpColorSelector *selector;
+  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (triangle);
   guchar             buf[3 * PREVIEWSIZE];
   guchar            *preview_buf;
   gint               x, y, k, r2, dx, col;
@@ -265,9 +243,7 @@ colorsel_triangle_update_previews (ColorselTriangle *triangle)
   gint               hx,hy, sx,sy, vx,vy;
 
   preview_buf = g_new (guchar, 3 * PREVIEWSIZE * PREVIEWSIZE);
-  memset (preview_buf, BGCOLOR, 3 * PREVIEWSIZE * PREVIEWSIZE); 
-
-  selector = GIMP_COLOR_SELECTOR (triangle);
+  memset (preview_buf, BGCOLOR, 3 * PREVIEWSIZE * PREVIEWSIZE);
 
   hue = (gdouble) selector->hsv.h * 2 * G_PI;
 
@@ -300,19 +276,20 @@ colorsel_triangle_update_previews (ColorselTriangle *triangle)
                   atn = atan2 (x, y);
                   if (atn < 0)
                     atn = atn + 2 * G_PI;
+
                   gimp_hsv_to_rgb4 (buf + k, atn / (2 * G_PI), 1, 1);
                 }
               else
                 {
-                  colorsel_xy_to_triangle_buf (x, y, hue, buf + k, hx, hy, sx, sy, vx, vy);
+                  colorsel_xy_to_triangle_buf (x, y, hue, buf + k,
+                                               hx, hy, sx, sy, vx, vy);
                 }
             }
 
           k += 3;
         }
-      memcpy (preview_buf + 
-                ( (COLORWHEELRADIUS - y) * PREVIEWSIZE +
-                  COLORWHEELRADIUS - dx ) * 3, 
+      memcpy (preview_buf + ((COLORWHEELRADIUS - y) * PREVIEWSIZE +
+                             COLORWHEELRADIUS - dx ) * 3,
               buf,
               3 * (2 * dx + 1));
     }
@@ -329,6 +306,7 @@ colorsel_triangle_update_previews (ColorselTriangle *triangle)
   atn = atan2 (x0, y0);
   if (atn < 0)
     atn = atn + 2 * G_PI;
+
   gimp_hsv_to_rgb4 (buf, atn / (2 * G_PI), 1, 1);
 
   col = GIMP_RGB_INTENSITY (buf[0], buf[1], buf[2]) > 127 ? 0 : 255;
@@ -354,9 +332,8 @@ colorsel_triangle_update_previews (ColorselTriangle *triangle)
           k += 3;
         }
 
-      memcpy (preview_buf + 
-                ( (COLORWHEELRADIUS - y) * PREVIEWSIZE +
-                  COLORWHEELRADIUS + x0 - 4) * 3,
+      memcpy (preview_buf + ((COLORWHEELRADIUS - y) * PREVIEWSIZE +
+                             COLORWHEELRADIUS + x0 - 4) * 3,
               buf,
               27);
     }
@@ -399,9 +376,9 @@ colorsel_triangle_update_previews (ColorselTriangle *triangle)
 
           k += 3;
         }
-      memcpy (preview_buf + 
-                ( (COLORWHEELRADIUS - y) * PREVIEWSIZE +
-                  COLORWHEELRADIUS + x0 - 4) * 3,
+
+      memcpy (preview_buf + ((COLORWHEELRADIUS - y) * PREVIEWSIZE +
+                             COLORWHEELRADIUS + x0 - 4) * 3,
               buf,
               27);
     }
@@ -459,13 +436,11 @@ colorsel_triangle_event (GtkWidget        *widget,
                          GdkEvent         *event,
                          ColorselTriangle *triangle)
 {
-  GimpColorSelector *selector;
+  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (triangle);
   gint               x,y, angle, mousex, mousey;
   gdouble            r;
   gdouble            hue, sat, val;
   gint               hx,hy, sx,sy, vx,vy;
-
-  selector = GIMP_COLOR_SELECTOR (triangle);
 
   switch (event->type)
     {
@@ -519,7 +494,7 @@ colorsel_triangle_event (GtkWidget        *widget,
     {
       selector->hsv.h = angle / 360.0;
       gimp_hsv_to_rgb (&selector->hsv, &selector->rgb);
-      colorsel_triangle_update_previews (triangle);
+      colorsel_triangle_update_preview (triangle);
     }
   else
     {
@@ -590,7 +565,7 @@ colorsel_triangle_event (GtkWidget        *widget,
       selector->hsv.s = sat;
       selector->hsv.v = val;
       gimp_hsv_to_rgb (&selector->hsv, &selector->rgb);
-      colorsel_triangle_update_previews (triangle);
+      colorsel_triangle_update_preview (triangle);
     }
 
   /* callback the user */
