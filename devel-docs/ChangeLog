@@ -1,3 +1,10 @@
+2004-08-30  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpplugin.sgml
+	* libgimp/tmpl/gimpprogress.sgml: moved remaining progress stuff
+	from "Plug-In" to "Progress".
+
 2004-08-30  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-docs.sgml

@@ -50,6 +50,24 @@ gimpprogress
 @user_data: 
 
 
+<!-- ##### FUNCTION gimp_progress_init ##### -->
+<para>
+
+</para>
+
+@message: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_progress_update ##### -->
+<para>
+
+</para>
+
+@percentage: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_progress_install ##### -->
 <para>
 
