@@ -12,6 +12,10 @@
 
 2005-03-05  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/*: Update or add missing copyright and GPL comments.
+
+2005-03-05  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/pygimp-drawable.c: default args for layer
 	constructor.
 
