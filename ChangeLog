@@ -1,3 +1,8 @@
+Fri Nov 26 12:25:42 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/gif.c: fixed a (harmless) cut'n'paste error 
+	I introduced during the "Change all plug-ins" commit
+
 1999-11-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/blend.c: accidentially replaced "Gradient:" with "Blend:" in
