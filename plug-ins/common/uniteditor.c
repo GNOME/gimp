@@ -21,7 +21,13 @@
  */
 
 #include "config.h"
+
 #include <string.h>
+
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
 
 #include <gtk/gtk.h>
 
@@ -377,7 +383,7 @@ list_init (GtkTreeView *tv)
                           -1);
     }
 
-  if (gtk_tree_model_get_iter_root (GTK_TREE_MODEL (list_store), &iter))
+  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter))
     gtk_tree_selection_select_iter (gtk_tree_view_get_selection (tv), &iter);
 }
 
@@ -398,7 +404,7 @@ new_callback (GtkWidget   *widget,
 
       model = gtk_tree_view_get_model (tv);
 
-      if (gtk_tree_model_get_iter_root (model, &iter) &&
+      if (gtk_tree_model_get_iter_first (model, &iter) &&
           gtk_tree_model_iter_nth_child (model, &iter,
                                          NULL, unit - GIMP_UNIT_INCH))
         {
@@ -440,7 +446,7 @@ duplicate_callback (GtkWidget   *widget,
 
           list_init (tv);
 
-          if (gtk_tree_model_get_iter_root (model, &iter) &&
+          if (gtk_tree_model_get_iter_first (model, &iter) &&
               gtk_tree_model_iter_nth_child (model, &iter,
                                              NULL, unit - GIMP_UNIT_INCH))
             {

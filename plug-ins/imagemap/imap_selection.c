@@ -25,6 +25,11 @@
 
 #include <stdio.h>
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -464,7 +469,7 @@ make_selection(ObjectList_t *object_list)
 
   /* Create scrollable window */
   swin = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_usize (swin, 16 + 80 + 2 * 64 + 16, -1);
+  gtk_widget_set_size_request (swin, 16 + 80 + 2 * 64 + 16, -1);
   gtk_container_add (GTK_CONTAINER(frame), swin);
   gtk_widget_show (swin);
 

@@ -91,8 +91,8 @@ make_preview (void)
                           G_CALLBACK (gfig_preview_expose),
                           NULL);
 
-  gtk_drawing_area_size (GTK_DRAWING_AREA (gfig_context->preview),
-                         preview_width, preview_height);
+  gtk_widget_set_size_request (gfig_context->preview,
+                               preview_width, preview_height);
 
   frame = gtk_frame_new (NULL);
 

@@ -1,3 +1,17 @@
+2004-11-04  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/ccanalyze.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-preview.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/imagemap/imap_misc.c
+	* plug-ins/imagemap/imap_selection.c
+	* plug-ins/imagemap/imap_toolbar.c
+	* plug-ins/imagemap/imap_tools.c
+	* plug-ins/print/gimp_color_window.c: stop using deprecated
+	functions, added some #undef GTK_DISABLE_DEPRECATED where needed.
+
 2004-11-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/module-dialog.c

@@ -355,7 +355,6 @@ doDialog (void)
 
   gimp_ui_init ("ccanalyze", TRUE);
 
-  /* set up the dialog */
   dialog = gimp_dialog_new (_("Colorcube Analysis"), "ccanalyze",
                             NULL, 0,
                             gimp_standard_help_func, "plug-in-ccanalyze",
@@ -365,7 +364,7 @@ doDialog (void)
                             NULL);
 
   vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
                       TRUE, TRUE, 0);
 
