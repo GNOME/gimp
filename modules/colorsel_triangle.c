@@ -148,7 +148,10 @@ static GtkWidget * colorsel_triangle_new (int r, int g, int b,
 					  void **selector_data)
 {
   ColorSelectP coldata;
+  GtkWidget *preview;
   GtkWidget *frame;
+  GtkWidget *hbox;
+  GtkWidget *vbox;
 
   coldata = g_malloc (sizeof (_ColorSelect));
   coldata->values[RED] = r;
@@ -164,13 +167,21 @@ static GtkWidget * colorsel_triangle_new (int r, int g, int b,
   coldata->callback = callback;
   coldata->data = callback_data;
 
-  /* gtk_rc_parse ("colorselrc"); */
-
-  frame = create_color_preview (coldata);
-  coldata->preview = frame;
+  preview = create_color_preview (coldata);
+  coldata->preview = preview;
 
   *selector_data = coldata;
-  return frame;
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0); 
+  gtk_widget_show_all (hbox);
+
+  return vbox;
 }
 
 

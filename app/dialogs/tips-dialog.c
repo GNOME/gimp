@@ -35,6 +35,7 @@ tips_dialog_create ()
   GtkWidget *bbox;
   GtkWidget *vbox_bbox2;
   GtkWidget *bbox2;
+  GtkWidget *frame;
   GtkWidget *preview;
   GtkWidget *button_close;
   GtkWidget *button_next;
@@ -111,8 +112,12 @@ tips_dialog_create ()
 				0, y, wilber_width); 
 	}
       g_free(temp);
-      gtk_box_pack_end (GTK_BOX (hbox1), preview, FALSE, TRUE, 3);
+      frame = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+      gtk_box_pack_end (GTK_BOX (hbox1), frame, FALSE, TRUE, 3);
+      gtk_container_add (GTK_CONTAINER (frame), preview);
       gtk_widget_show (preview);
+      gtk_widget_show (frame);
 
       tips_label = gtk_label_new (tips_text[last_tip]);
       gtk_label_set_justify (GTK_LABEL (tips_label), GTK_JUSTIFY_LEFT);

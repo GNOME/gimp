@@ -376,7 +376,7 @@ color_select_widget_new (ColorSelectP csp, int r, int g, int b)
   csp->hex_entry = gtk_entry_new ();
   sprintf(buffer, "#%.2x%.2x%.2x", r, g, b);
   gtk_entry_set_text (GTK_ENTRY (csp->hex_entry), buffer);
-  gtk_widget_set_usize (GTK_WIDGET (csp->hex_entry), 55, 0);
+  gtk_widget_set_usize (GTK_WIDGET (csp->hex_entry), 75, 0);
   gtk_box_pack_end (GTK_BOX (hex_hbox), csp->hex_entry, FALSE, FALSE, 2);
   gtk_signal_connect (GTK_OBJECT (csp->hex_entry), "focus_out_event",
 		      (GtkSignalFunc) color_select_hex_entry_leave,
