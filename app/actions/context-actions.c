@@ -43,21 +43,22 @@
 
 static GimpActionEntry context_actions[] =
 {
-  { "context-menu",          NULL,                      N_("_Context")  },
-  { "context-colors-menu",   GIMP_STOCK_DEFAULT_COLORS, N_("_Colors")   },
-  { "context-opacity-menu",  GIMP_STOCK_TRANSPARENCY,   N_("_Opacity")  },
-  { "context-brush-menu",    GIMP_STOCK_BRUSH,          N_("_Brush")    },
-  { "context-pattern-menu",  GIMP_STOCK_PATTERN,        N_("_Pattern")  },
-  { "context-palette-menu",  GIMP_STOCK_PALETTE,        N_("_Palette")  },
-  { "context-gradient-menu", GIMP_STOCK_GRADIENT,       N_("_Gradient") },
-  { "context-font-menu",     GIMP_STOCK_FONT,           N_("_Font")     },
+  { "context-menu",            NULL,                      N_("_Context")    },
+  { "context-colors-menu",     GIMP_STOCK_DEFAULT_COLORS, N_("_Colors")     },
+  { "context-opacity-menu",    GIMP_STOCK_TRANSPARENCY,   N_("_Opacity")    },
+  { "context-paint-mode-menu", GIMP_STOCK_TOOL_PENCIL,    N_("Paint _Mode") },
+  { "context-brush-menu",      GIMP_STOCK_BRUSH,          N_("_Brush")      },
+  { "context-pattern-menu",    GIMP_STOCK_PATTERN,        N_("_Pattern")    },
+  { "context-palette-menu",    GIMP_STOCK_PALETTE,        N_("_Palette")    },
+  { "context-gradient-menu",   GIMP_STOCK_GRADIENT,       N_("_Gradient")   },
+  { "context-font-menu",       GIMP_STOCK_FONT,           N_("_Font")       },
 
-  { "context-brush-shape-menu",    NULL,                N_("_Shape")    },
-  { "context-brush-radius-menu",   NULL,                N_("_Radius")   },
-  { "context-brush-spikes-menu",   NULL,                N_("S_pikes")   },
-  { "context-brush-hardness-menu", NULL,                N_("_Hardness") },
-  { "context-brush-aspect-menu",   NULL,                N_("_Aspect")   },
-  { "context-brush-angle-menu",    NULL,                N_("A_ngle")    },
+  { "context-brush-shape-menu",    NULL,                  N_("_Shape")      },
+  { "context-brush-radius-menu",   NULL,                  N_("_Radius")     },
+  { "context-brush-spikes-menu",   NULL,                  N_("S_pikes")     },
+  { "context-brush-hardness-menu", NULL,                  N_("_Hardness")   },
+  { "context-brush-aspect-menu",   NULL,                  N_("_Aspect")     },
+  { "context-brush-angle-menu",    NULL,                  N_("A_ngle")      },
 
   { "context-colors-default", GIMP_STOCK_DEFAULT_COLORS,
     N_("_Default Colors"), "D", NULL,
@@ -291,6 +292,26 @@ static GimpEnumActionEntry context_opacity_actions[] =
   { "context-opacity-increase-skip", GIMP_STOCK_TRANSPARENCY,
     "10% More Opaque", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT,
+    NULL }
+};
+
+static GimpEnumActionEntry context_paint_mode_actions[] =
+{
+  { "context-paint-mode-first", GIMP_STOCK_TOOL_PENCIL,
+    "First Paint Mode", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST,
+    NULL },
+  { "context-paint-mode-last", GIMP_STOCK_TOOL_PENCIL,
+    "Last Paint Mode", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST,
+    NULL },
+  { "context-paint-mode-previous", GIMP_STOCK_TOOL_PENCIL,
+    "Previous Paint Mode", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS,
+    NULL },
+  { "context-paint-mode-next", GIMP_STOCK_TOOL_PENCIL,
+    "Next Paint Mode", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT,
     NULL }
 };
 
@@ -628,6 +649,10 @@ context_actions_setup (GimpActionGroup *group)
                                       context_opacity_actions,
                                       G_N_ELEMENTS (context_opacity_actions),
                                       G_CALLBACK (context_opacity_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_paint_mode_actions,
+                                      G_N_ELEMENTS (context_paint_mode_actions),
+                                      G_CALLBACK (context_paint_mode_cmd_callback));
 
   gimp_action_group_add_enum_actions (group,
                                       context_tool_select_actions,

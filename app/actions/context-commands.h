@@ -48,6 +48,9 @@ void   context_background_blue_cmd_callback (GtkAction *action,
 void   context_opacity_cmd_callback         (GtkAction *action,
                                              gint       value,
                                              gpointer   data);
+void   context_paint_mode_cmd_callback      (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
 
 void   context_tool_select_cmd_callback     (GtkAction *action,
                                              gint       value,

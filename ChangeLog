@@ -1,5 +1,15 @@
 2004-09-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/context-actions.c
+	* app/actions/context-commands.[ch]: applied a heavily modified
+	patch from David Gowers which adds actions to modify the context's
+	paint_mode. Fixes bug #151471.
+
+	* menus/image-menu.xml.in: added them to the (commentd out)
+	"Context" submenu.
+
+2004-09-07  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/edge.c: indentation and whitespace cleanup.
 
 	* plug-ins/common/struc.c: minor coding style issues.

@@ -36,11 +36,39 @@
 #include "context-commands.h"
 
 
+static const GimpLayerModeEffects paint_modes[] =
+{
+  GIMP_NORMAL_MODE,
+  GIMP_DISSOLVE_MODE,
+  GIMP_BEHIND_MODE,
+  GIMP_COLOR_ERASE_MODE,
+  GIMP_MULTIPLY_MODE,
+  GIMP_DIVIDE_MODE,
+  GIMP_SCREEN_MODE,
+  GIMP_OVERLAY_MODE,
+  GIMP_DODGE_MODE,
+  GIMP_BURN_MODE,
+  GIMP_HARDLIGHT_MODE,
+  GIMP_SOFTLIGHT_MODE,
+  GIMP_GRAIN_EXTRACT_MODE,
+  GIMP_GRAIN_MERGE_MODE,
+  GIMP_DIFFERENCE_MODE,
+  GIMP_ADDITION_MODE,
+  GIMP_SUBTRACT_MODE,
+  GIMP_DARKEN_ONLY_MODE,
+  GIMP_LIGHTEN_ONLY_MODE,
+  GIMP_HUE_MODE,
+  GIMP_SATURATION_MODE,
+  GIMP_COLOR_MODE,
+  GIMP_VALUE_MODE
+};
+
 /*  local function prototypes  */
 
-static void   context_select_object (GimpActionSelectType  select_type,
-                                     GimpContext          *context,
-                                     GimpContainer        *container);
+static void   context_select_object    (GimpActionSelectType  select_type,
+                                        GimpContext          *context,
+                                        GimpContainer        *container);
+static gint   context_paint_mode_index (GimpLayerModeEffects  paint_mode);
 
 
 /*  public functions  */
@@ -182,6 +210,25 @@ context_opacity_cmd_callback (GtkAction *action,
                                  GIMP_OPACITY_OPAQUE,
                                  0.01, 0.1, FALSE);
   gimp_context_set_opacity (context, opacity);
+}
+
+void
+context_paint_mode_cmd_callback (GtkAction *action,
+                                 gint       value,
+                                 gpointer   data)
+{
+  GimpContext          *context;
+  GimpLayerModeEffects  paint_mode;
+  gint                  index;
+  return_if_no_context (context, data);
+
+  paint_mode = gimp_context_get_paint_mode (context);
+
+  index = action_select_value ((GimpActionSelectType) value,
+                               context_paint_mode_index (paint_mode),
+                               0, G_N_ELEMENTS (paint_modes) - 1,
+                               1.0, 1.0, FALSE);
+  gimp_context_set_paint_mode (context, paint_modes[index]);
 }
 
 void
@@ -428,4 +475,15 @@ context_select_object (GimpActionSelectType  select_type,
 
   if (current)
     gimp_context_set_by_type (context, container->children_type, current);
+}
+
+static gint
+context_paint_mode_index (GimpLayerModeEffects paint_mode)
+{
+  gint i = 0;
+
+  while (i < (G_N_ELEMENTS (paint_modes) - 1) && paint_modes[i] != paint_mode)
+    i++;
+
+  return i;
 }

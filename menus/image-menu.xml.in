@@ -46,6 +46,12 @@
         <menuitem action="context-opacity-decrease" />
         <menuitem action="context-opacity-increase" />
       </menu>
+      <menu action="context-paint-mode-menu" name="Paint Mode">
+        <menuitem action="context-paint-mode-first" />
+        <menuitem action="context-paint-mode-last" />
+        <menuitem action="context-paint-mode-previous" />
+        <menuitem action="context-paint-mode-next" />
+      </menu>
       <separator />
       <menu action="context-brush-menu" name="Brush">
         <menuitem action="context-brush-select-first" />
