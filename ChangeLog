@@ -1,3 +1,9 @@
+2001-03-11  Daniel Egger  <egger@suse.de>
+
+	* plug-ins/common/sobel.c: Applied patch from
+	Austin Donnelly to fix rendering of the topmost
+	scanline.
+
 2001-03-11  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/winclipboard.c: Enhance to also be able to paste
