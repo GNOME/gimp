@@ -23,6 +23,7 @@
 #include "draw_core.h"
 #include "drawable.h"
 #include "edit_selection.h"
+#include "float16.h"
 #include "fuzzy_select.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
@@ -206,6 +207,7 @@ static void  seed_fill_free   (SeedFillData * d);
 static guint seed_fill_u8     (PixelIter * p, SeedFillData * d);
 static guint seed_fill_u16    (PixelIter * p, SeedFillData * d);
 static guint seed_fill_float  (PixelIter * p, SeedFillData * d);
+static guint seed_fill_float16  (PixelIter * p, SeedFillData * d);
 
 
 /*************************************/
@@ -252,6 +254,9 @@ find_contiguous_region  (
           break;
         case PRECISION_FLOAT:
           data.kernel = seed_fill_float;
+          break;
+        case PRECISION_FLOAT16:
+          data.kernel = seed_fill_float16;
           break;
         case PRECISION_NONE:
         default:
@@ -651,6 +656,80 @@ seed_fill_float (
       
       /* save those pixels on x_mask */
       memcpy (&md[xmin_c], &dd[xmin_c], (xmax_c - xmin_c + 1) * sizeof (gfloat));
+      changed = TRUE;
+    }
+
+  return changed;
+}
+
+static guint
+seed_fill_float16 (
+                 PixelIter * p,
+                 SeedFillData * d
+                 )
+{
+  guint changed = FALSE;
+  guint x, y;
+  
+  /* get pixels in this chunk which need attention */
+  while (pixeliter_get_work (p, &x, &y))
+    {
+      guint16 * dd, * md;
+      int xmin_c, xmax_c;
+
+      /* see if this pixel should be done */
+      dd = (guint16*) canvas_portion_data (d->x_diff, 0, y - p->chunk.y);
+      if (dd[x - p->chunk.x] == ZERO_FLOAT16)
+        continue;
+
+      /* see if this pixel is already done */
+      md = (guint16*) canvas_portion_data (d->x_mask, 0, y - p->chunk.y);
+      if (md[x - p->chunk.x] != ZERO_FLOAT16)
+        continue;
+      
+      /* find contig segment endpoints */
+      for (xmin_c = x - p->chunk.x;
+           (xmin_c >= 0) && (dd[xmin_c] != ZERO_FLOAT16);
+           xmin_c--);
+
+      for (xmax_c = x - p->chunk.x;
+           (xmax_c < p->chunk.w) && (dd[xmax_c] != ZERO_FLOAT16);
+           xmax_c++);
+             
+      /* add work to adjacent chunks if segment reached the edges */
+      if (xmin_c < 0)
+        {
+          pixeliter_add_work (p,
+                              p->chunk.x - 1, y,
+                              1, 1);
+        }
+
+      if (xmax_c == p->chunk.w)
+        {
+          pixeliter_add_work (p,
+                              p->chunk.x + p->chunk.w, y,
+                              1, 1);
+        }
+      
+      xmin_c++;
+      xmax_c--;
+      
+      /* del work for those pixels */
+      pixeliter_del_work (p,
+                          p->chunk.x + xmin_c, y,
+                          xmax_c - xmin_c + 1, 1);
+
+      /* add work to next and prev rows */
+      pixeliter_add_work (p,
+                          p->chunk.x + xmin_c, y - 1,
+                          xmax_c - xmin_c + 1, 1);
+      
+      pixeliter_add_work (p,
+                          p->chunk.x + xmin_c, y + 1,
+                          xmax_c - xmin_c + 1, 1);
+      
+      /* save those pixels on x_mask */
+      memcpy (&md[xmin_c], &dd[xmin_c], (xmax_c - xmin_c + 1) * sizeof (guint16));
       changed = TRUE;
     }
 

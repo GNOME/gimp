@@ -22,6 +22,7 @@
 #include "canvas.h"
 #include "color_picker.h"
 #include "drawable.h"
+#include "float16.h"
 #include "gdisplay.h"
 #include "info_dialog.h"
 #include "palette.h"
@@ -483,6 +484,52 @@ color_picker_info_update_float  (
     }
 }
 
+static void 
+color_picker_info_update_float16  (
+                                 void
+                                 )
+{
+  guint16 * src = (guint16*) pixelrow_data (&color);
+  Tag sample_tag = pixelrow_tag (&color);
+  
+  switch (tag_format (sample_tag))
+    {
+    case FORMAT_RGB:
+      sprintf (red_buf, "%7.6f", FLT (src [0]));
+      sprintf (green_buf, "%7.6f", FLT (src [1]));
+      sprintf (blue_buf, "%7.6f", FLT (src [2]));
+      if (tag_alpha (sample_tag) == ALPHA_YES)
+        sprintf (alpha_buf, "%7.6f", FLT (src [3]));
+      else
+        sprintf (alpha_buf, "N/A");
+      sprintf (hex_buf, "N/A");
+      break;
+
+    case FORMAT_INDEXED:
+      sprintf (index_buf, "N/A");
+      sprintf (alpha_buf, "N/A");
+      sprintf (red_buf, "N/A");
+      sprintf (green_buf, "N/A");
+      sprintf (blue_buf, "N/A");
+      sprintf (hex_buf, "N/A");
+      break;
+
+    case FORMAT_GRAY:
+      sprintf (gray_buf, "%7.6f", FLT (src [0]));
+      if (tag_alpha (sample_tag) == ALPHA_YES)
+        sprintf (alpha_buf, "%7.6f", FLT (src [1]));
+      else
+        sprintf (alpha_buf, "N/A");
+      sprintf (hex_buf, "N/A");
+      break;
+          
+    case FORMAT_NONE:
+    default:
+      g_warning ("bad format");
+      break;
+    }
+}
+
 
 static void 
 color_picker_info_update  (
@@ -516,6 +563,10 @@ color_picker_info_update  (
 	  color_picker_info_update_float ();
           break;
 
+	case PRECISION_FLOAT16:
+	  color_picker_info_update_float16 ();
+          break;
+	
 	case PRECISION_NONE:
         default:
           g_warning ("bad precision");

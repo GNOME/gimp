@@ -1231,6 +1231,7 @@ color_select_entry_update (GtkWidget *w,
                 break;
               
 	      case PRECISION_FLOAT16:
+		val = FLT (FLT16 (val));
                 break;
                 
               case PRECISION_NONE:

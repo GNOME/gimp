@@ -25,6 +25,7 @@
 #include "channel.h"
 #include "drawable.h"
 #include "errors.h"
+#include "float16.h"
 #include "gimage_mask.h"
 #include "layer.h"
 #include "paint_funcs_area.h"
@@ -612,6 +613,13 @@ channel_value (Channel *mask, int x, int y)
         val = *data;
       }
       break;
+    
+     case PRECISION_FLOAT16:
+      {
+        guint16 * data = (guint16*) canvas_portion_data (canvas, x, y);
+        val = FLT (*data);
+      }
+      break;
     case PRECISION_NONE:
       g_warning ("bad precision");
       break;
@@ -746,6 +754,32 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
 		      }
 		  }
 		  break;
+		
+		case PRECISION_FLOAT16:
+		  {
+		    guint16 *d = (guint16*)data;
+		    found = FALSE;
+		    for (x = pixelarea_x (&maskPR); x < ex; x++ )
+		      {
+			if ( FLT (*d++) )
+			  {
+			    if (x < *x1)
+			      *x1 = x;
+			    if (x > *x2)
+			      *x2 = x;
+			    found = TRUE;
+			  }
+		      }
+		      
+		      if (found)
+		      {
+			if (y < *y1)
+			  *y1 = y;
+			if (y > *y2)
+			  *y2 = y;
+		      }
+		  }
+		  break;
 
 		default:
 		  g_warning ("channel_bounds: bad precision");
@@ -861,6 +895,18 @@ channel_is_empty (Channel *mask)
 	        }
 	}
 	break;
+      case PRECISION_FLOAT16:
+	{
+	  guint16* d = (guint16*) data;
+	  for (y = 0; y < pixelarea_height (&maskPR); y++)
+	    for (x = 0; x < pixelarea_width (&maskPR); x++)
+	      if ( FLT (*d++))
+	        {
+		  pixelarea_process_stop (pr);
+		  return FALSE;
+	        }
+	}
+	break;
       default:
 	g_warning ("channel_is_empty: bad precision");
 	break;
@@ -958,8 +1004,8 @@ channel_add_segment (Channel *mask, int x, int y, int width, gfloat value)
           }
       }
       break;
-
-    case PRECISION_FLOAT:
+    
+     case PRECISION_FLOAT:
       {
         gfloat * data;
         gfloat val;
@@ -980,6 +1026,29 @@ channel_add_segment (Channel *mask, int x, int y, int width, gfloat value)
           }
       }
       break;
+
+    case PRECISION_FLOAT16:
+      {
+        guint16 * data;
+        gfloat val;
+        
+        for (pr = pixelarea_register (1, &maskPR); 
+             pr != NULL; 
+             pr = pixelarea_process (pr))
+          {
+            data = (guint16*) pixelarea_data (&maskPR);
+            width = pixelarea_width (&maskPR);
+            while (width--)
+              {
+                val = FLT (*data) + value;
+                if (val > 1.0)
+                  val = 1.0;
+                *data++ = FLT16 (val);
+              }
+          }
+      }
+      break;
+
     default:
       g_warning ("channel_add_segment: bad precision");
       break;
@@ -1056,7 +1125,7 @@ channel_sub_segment (Channel *mask, int x, int y, int width, gfloat value)
           }
       }
       break;
-
+    
     case PRECISION_FLOAT:
       {
         gfloat * data;
@@ -1074,6 +1143,28 @@ channel_sub_segment (Channel *mask, int x, int y, int width, gfloat value)
                 if (val < 0)
                   val = 0;
                 *data++ = val;
+              }
+          }
+      }
+      break;
+
+    case PRECISION_FLOAT16:
+      {
+        guint16 * data;
+        gfloat val;
+        
+        for (pr = pixelarea_register (1, &maskPR); 
+             pr != NULL; 
+             pr = pixelarea_process (pr))
+          {
+            data = (guint16*) pixelarea_data (&maskPR);
+            width = pixelarea_width (&maskPR);
+            while (width--)
+              {
+                val = FLT (*data) - value;
+                if (val < 0)
+                  val = 0;
+                *data++ = FLT16 (val);
               }
           }
       }
@@ -1166,6 +1257,26 @@ channel_inter_segment (Channel *mask, int x, int y, int width, gfloat value)
               {
                 val = MINIMUM(*data, value);
                 *data++ = val;
+              }
+          }
+      }
+      break;
+    
+    case PRECISION_FLOAT16:
+      {
+        guint16 * data;
+        gfloat val;
+        
+        for (pr = pixelarea_register (1, &maskPR); 
+             pr != NULL; 
+             pr = pixelarea_process (pr))
+          {
+            data = (guint16*) pixelarea_data (&maskPR);
+            width = pixelarea_width (&maskPR);
+            while (width--)
+              {
+                val = MINIMUM( FLT (*data), value);
+                *data++ = FLT16 (val);
               }
           }
       }
@@ -1629,6 +1740,19 @@ channel_sharpen (Channel *mask)
 	  }
 	  break;
 
+	case PRECISION_FLOAT16:
+	  {
+	    gfloat *d = (gfloat*)data;
+	    while (size--)
+	      {
+		if ( FLT (*d) > .5 )
+		  *d++ = ONE_FLOAT16;
+		else
+		  *d++ = ZERO_FLOAT16;
+	      }
+	  }
+	  break;
+	
 	case PRECISION_NONE:
 	  g_warning ("bad precision");
 	  break;

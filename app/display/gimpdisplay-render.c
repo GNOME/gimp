@@ -5968,7 +5968,7 @@ render_image_rgb_a_float16_4 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[FLOAT_TO_8BIT(src[ALPHA_PIX])];
+	        a = alpha[FLOAT_TO_8BIT(FLT (src[ALPHA_PIX]))];
 		if (dark_light & 0x1)
 		  {
 		    r = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[RED_PIX])))];

@@ -19,6 +19,7 @@
 #include <string.h>
 #include "appenv.h"
 #include "errors.h"
+#include "float16.h"
 #include "boundary.h"
 #include "canvas.h"
 #include "pixelarea.h"
@@ -59,6 +60,7 @@ static FindEmptySegsLineFunc find_empty_segs_line_func (Tag);
 static void find_empty_segs_line_u8 (PixelArea *, gint, gint, gint *, gint *, gint, gint, gint);
 static void find_empty_segs_line_u16 (PixelArea *, gint, gint, gint *, gint *, gint, gint, gint);
 static void find_empty_segs_line_float (PixelArea *, gint, gint, gint *, gint *, gint, gint, gint);
+static void find_empty_segs_line_float16 (PixelArea *, gint, gint, gint *, gint *, gint, gint, gint);
 
 /*  local function prototypes  */
 static void print_boundary (BoundSeg * b, int num_segs);
@@ -96,6 +98,8 @@ find_empty_segs_line_func (Tag t)
     return find_empty_segs_line_u16; 
   case PRECISION_FLOAT:
     return find_empty_segs_line_float; 
+  case PRECISION_FLOAT16:
+    return find_empty_segs_line_float16; 
   default:
     return NULL;
   } 
@@ -331,6 +335,68 @@ void find_empty_segs_line_float(
       {
 	empty_segs[*num_empty] = x;
 	val = (d[chan] > .5)? 1: -1;  	
+
+	/*  The IgnoreBounds case  */
+	if (val == 1 && type == IgnoreBounds)
+	  if (x >= x1 && x < x2)
+	    val = -1;
+
+	if (last * val < 0)
+	  (*num_empty)++;
+	last = val;
+
+	d += num_channels;
+        x++;
+      } 	  
+    }
+
+  if (last > 0)
+    empty_segs[(*num_empty)++] = x;
+
+  empty_segs[(*num_empty)++] = G_MAXINT;
+
+}
+
+void find_empty_segs_line_float16( 
+			 PixelArea *area,
+			  int start,
+			  int end,
+			  int *num_empty,
+			  int *empty_segs,
+			  int type,
+			  int x1,
+			  int x2
+			)
+{
+  guchar *data;
+  guint16 *d;
+  int x;
+  int val, last;
+  gint width;
+  gint chan;
+  Tag tag = pixelarea_tag (area);
+  gint num_channels = tag_num_channels (tag);
+  void *pag;
+  empty_segs[(*num_empty)++] = 0;
+  last = -1;
+  x = start; 
+
+  /*If format has an alpha, chan is set to that, 
+    else its just the gray channel*/
+   
+  chan = num_channels - 1;
+	
+  for (pag = pixelarea_register (1, area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      data = pixelarea_data (area);
+      d = (guint16*)data;
+      width = pixelarea_width (area);
+      while( width --)
+      {
+	empty_segs[*num_empty] = x;
+	val = (FLT (d[chan]) > .5)? 1: -1;  	
 
 	/*  The IgnoreBounds case  */
 	if (val == 1 && type == IgnoreBounds)
