@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-10-06 00:16+0200\n"
-"PO-Revision-Date: 2003-10-05 23:24+0200\n"
+"PO-Revision-Date: 2003-10-06 12:39+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -971,16 +971,16 @@ msgstr "Principale"
 
 #: app/core/core-enums.c:279 app/core/core-enums.c:299
 msgid "Round"
-msgstr ""
+msgstr "Tondo"
 
 #: app/core/core-enums.c:280
 #, fuzzy
 msgid "Bevel"
-msgstr "Livelli"
+msgstr "Smussatura"
 
 #: app/core/core-enums.c:298
 msgid "Butt"
-msgstr ""
+msgstr "Estremità"
 
 #: app/core/core-enums.c:318 app/core/core-enums.c:338
 #: app/display/gimpdisplayshell-title.c:164
@@ -1099,7 +1099,7 @@ msgstr "Converte immagine"
 #: app/core/core-enums.c:556 app/core/gimpimage-crop.c:141
 #, fuzzy
 msgid "Crop Image"
-msgstr "Crop immagine"
+msgstr "Ritaglia immagine"
 
 #: app/core/core-enums.c:557 app/gui/image-commands.c:379
 msgid "Merge Layers"
@@ -1671,7 +1671,7 @@ msgstr "Offset disegnabile"
 #: app/core/gimpdrawable-stroke.c:324
 #, fuzzy
 msgid "Render Stroke"
-msgstr "Aggiungi tratto"
+msgstr "Disegna tratto"
 
 #. Start a transform undo group
 #: app/core/gimpdrawable-transform.c:880 app/tools/gimpfliptool.c:84
@@ -2607,7 +2607,6 @@ msgid "/D_uplicate Brush"
 msgstr "/D_uplica pennello"
 
 #: app/gui/brushes-menu.c:63
-#, fuzzy
 msgid "/_Delete Brush"
 msgstr "/_Cancella pennello"
 
@@ -2729,14 +2728,12 @@ msgid "/_Edit Color..."
 msgstr "/_Modifica colore..."
 
 #: app/gui/colormap-editor-menu.c:46
-#, fuzzy
 msgid "/_Add Color from FG"
-msgstr "/_Aggiungi colore"
+msgstr "/_Aggiungi colore dal PP"
 
 #: app/gui/colormap-editor-menu.c:51
-#, fuzzy
 msgid "/_Add Color from BG"
-msgstr "/_Aggiungi colore"
+msgstr "/_Aggiungi colore dallo SF"
 
 #: app/gui/convert-dialog.c:129
 msgid "Indexed Color Conversion"
@@ -2841,9 +2838,8 @@ msgid "History"
 msgstr "Storico"
 
 #: app/gui/dialogs-constructors.c:510 app/gui/dialogs-constructors.c:744
-#, fuzzy
 msgid "Document History"
-msgstr "Storico documenti"
+msgstr "Cronologia documenti"
 
 #: app/gui/dialogs-constructors.c:780
 msgid "Layers"
@@ -2920,119 +2916,97 @@ msgid "/_Add Tab"
 msgstr "/_Aggiungi scheda"
 
 #: app/gui/dialogs-menu.c:70
-#, fuzzy
 msgid "/Add Tab/Tool _Options"
-msgstr "/Aggiungi scheda/_Opzioni strumenti..."
+msgstr "/Aggiungi scheda/_Opzioni strumenti"
 
 #: app/gui/dialogs-menu.c:72
-#, fuzzy
 msgid "/Add Tab/_Device Status"
-msgstr "/Aggiungi scheda/Stato _dispositivo..."
+msgstr "/Aggiungi scheda/Stato _dispositivo"
 
 #: app/gui/dialogs-menu.c:77
-#, fuzzy
 msgid "/Add Tab/_Layers"
-msgstr "/Aggiungi scheda/_Livelli..."
+msgstr "/Aggiungi scheda/_Livelli"
 
 #: app/gui/dialogs-menu.c:79
-#, fuzzy
 msgid "/Add Tab/_Channels"
-msgstr "/Aggiungi scheda/_Canali..."
+msgstr "/Aggiungi scheda/_Canali"
 
 #: app/gui/dialogs-menu.c:81
-#, fuzzy
 msgid "/Add Tab/_Paths"
-msgstr "/Aggiungi scheda/_Tracciati..."
+msgstr "/Aggiungi scheda/_Tracciati"
 
 #: app/gui/dialogs-menu.c:83
-#, fuzzy
 msgid "/Add Tab/_Indexed Palette"
-msgstr "/Aggiungi scheda/Palette _indicizzata..."
+msgstr "/Aggiungi scheda/Palette _indicizzata"
 
 #: app/gui/dialogs-menu.c:85
-#, fuzzy
 msgid "/Add Tab/_Selection Editor"
-msgstr "/Aggiungi scheda/Modifica _selezione..."
+msgstr "/Aggiungi scheda/Modifica _selezione"
 
 #: app/gui/dialogs-menu.c:87
-#, fuzzy
 msgid "/Add Tab/Na_vigation"
-msgstr "/Aggiungi scheda/Na_vigazione..."
+msgstr "/Aggiungi scheda/Na_vigazione"
 
 #: app/gui/dialogs-menu.c:89
 #, fuzzy
 msgid "/Add Tab/_Undo History"
-msgstr "/Aggiungi scheda/Cronologia undo..."
+msgstr "/Aggiungi scheda/Cronologia undo"
 
 #: app/gui/dialogs-menu.c:94
-#, fuzzy
 msgid "/Add Tab/Colo_rs"
-msgstr "/Aggiungi scheda/Colo_ri..."
+msgstr "/Aggiungi scheda/Colo_ri"
 
 #: app/gui/dialogs-menu.c:96
-#, fuzzy
 msgid "/Add Tab/Brus_hes"
-msgstr "/Aggiungi scheda/Pennelli..."
+msgstr "/Aggiungi scheda/Pennelli"
 
 #: app/gui/dialogs-menu.c:98
-#, fuzzy
 msgid "/Add Tab/P_atterns"
-msgstr "/Aggiungi scheda/P_attern..."
+msgstr "/Aggiungi scheda/P_attern"
 
 #: app/gui/dialogs-menu.c:100
-#, fuzzy
 msgid "/Add Tab/_Gradients"
-msgstr "/Aggiungi scheda/_Gradienti..."
+msgstr "/Aggiungi scheda/_Gradienti"
 
 #: app/gui/dialogs-menu.c:102
-#, fuzzy
 msgid "/Add Tab/Pal_ettes"
 msgstr "/Aggiungi scheda/Pal_ette..."
 
 #: app/gui/dialogs-menu.c:104
-#, fuzzy
 msgid "/Add Tab/_Fonts"
-msgstr "/Aggiungi scheda/Caratteri..."
+msgstr "/Aggiungi scheda/Caratteri"
 
 #: app/gui/dialogs-menu.c:106
-#, fuzzy
 msgid "/Add Tab/_Buffers"
-msgstr "/Aggiungi scheda/_Buffer..."
+msgstr "/Aggiungi scheda/_Buffer"
 
 #: app/gui/dialogs-menu.c:111
-#, fuzzy
 msgid "/Add Tab/I_mages"
-msgstr "/Aggiungi scheda/I_maschera..."
+msgstr "/Aggiungi scheda/I_maschera"
 
 #: app/gui/dialogs-menu.c:113
-#, fuzzy
 msgid "/Add Tab/Document Histor_y"
-msgstr "/Aggiungi scheda/Cronologia..."
+msgstr "/Aggiungi scheda/Cronologia"
 
 #: app/gui/dialogs-menu.c:115
-#, fuzzy
 msgid "/Add Tab/_Templates"
-msgstr "/Aggiungi scheda/_Template..."
+msgstr "/Aggiungi scheda/_Modelli"
 
 #: app/gui/dialogs-menu.c:117
-#, fuzzy
 msgid "/Add Tab/Error Co_nsole"
-msgstr "/Aggiungi scheda/Co_nsole degli errori..."
+msgstr "/Aggiungi scheda/Co_nsole errori"
 
 #: app/gui/dialogs-menu.c:122
-#, fuzzy
 msgid "/Add Tab/Tools"
-msgstr "/Aggiungi scheda/Strumenti..."
+msgstr "/Aggiungi scheda/Strumenti"
 
 #: app/gui/dialogs-menu.c:125
-#, fuzzy
 msgid "/_Close Tab"
 msgstr "/_Rimuovi scheda"
 
 #: app/gui/dialogs-menu.c:130
-#, fuzzy
 msgid "/_Detach Tab"
-msgstr "/_Seleziona scheda"
+msgstr "/_Stacca scheda"
 
 #: app/gui/dialogs-menu.c:138
 msgid "/Preview Si_ze"
@@ -3075,9 +3049,8 @@ msgid "/Preview Size/_Gigantic"
 msgstr "/Dimensione anteprima/Gig_ante"
 
 #: app/gui/dialogs-menu.c:155
-#, fuzzy
 msgid "/_Tab Style"
-msgstr "/Stile scheda/_Testo"
+msgstr "/S_tile scheda"
 
 #: app/gui/dialogs-menu.c:157
 msgid "/Tab Style/_Icon"
@@ -3120,14 +3093,12 @@ msgid "/_Open Image"
 msgstr "/_Apri immagine"
 
 #: app/gui/documents-menu.c:48
-#, fuzzy
 msgid "/_Raise or Open Image"
-msgstr "/Ridimensiona all'immagine"
+msgstr "/Al_za o apri immagine"
 
 #: app/gui/documents-menu.c:53
-#, fuzzy
 msgid "/File Open _Dialog"
-msgstr "/File/Apri..."
+msgstr "/File/Apri"
 
 #: app/gui/documents-menu.c:58
 msgid "/Remove _Entry"
@@ -3142,9 +3113,8 @@ msgid "/Reload _all Previews"
 msgstr "/Ricarica _tutte le anteprime"
 
 #: app/gui/documents-menu.c:76
-#, fuzzy
 msgid "/Remove Dangling E_ntries"
-msgstr "Rimuovi"
+msgstr "/Rimuovi voci sco_nnesse"
 
 #: app/gui/drawable-commands.c:81
 msgid "Desaturate operates only on RGB color drawables."
@@ -3172,9 +3142,8 @@ msgstr "Copia con nome"
 
 #: app/gui/edit-commands.c:285 app/gui/stroke-dialog.c:257
 #: app/gui/vectors-commands.c:276
-#, fuzzy
 msgid "There is no active layer or channel to stroke to"
-msgstr "Non c'è un livello o un canale attivo da colpire."
+msgstr "Non c'è un livello o un canale attivo da disegnare"
 
 #: app/gui/edit-commands.c:315 app/gui/edit-commands.c:344
 msgid "(Unnamed Buffer)"
@@ -3216,22 +3185,19 @@ msgstr ""
 "%s"
 
 #: app/gui/file-commands.c:290
-#, fuzzy
 msgid "Create New Template"
-msgstr "Commento utilizzato per le nuove immagini"
+msgstr "Crea nuovo modello"
 
 #: app/gui/file-commands.c:293
-#, fuzzy
 msgid "Enter a name for this template"
-msgstr "Inserire un nome per questo buffer"
+msgstr "Inserire un nome per questo modello"
 
 #: app/gui/file-commands.c:316
-#, fuzzy
 msgid ""
 "Revert failed.\n"
 "No file name associated with this image."
 msgstr ""
-"Inversione fallita.\n"
+"Recupero fallito.\n"
 "Nessun nome file associato all'immagine"
 
 #: app/gui/file-commands.c:330
@@ -3256,13 +3222,14 @@ msgid "(Unnamed Template)"
 msgstr "(template senza nome)"
 
 #: app/gui/file-commands.c:478
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
 "\n"
 "%s"
 msgstr ""
-"Inversione fallita.\n"
+"Ripristino a '%s' fallito:\n"
+"\n"
 "%s"
 
 #: app/gui/file-dialog-utils.c:122
@@ -5264,7 +5231,7 @@ msgstr "Immagine Appiattita"
 
 #: app/gui/menus.c:112
 msgid "Toolbox Menu"
-msgstr ""
+msgstr "Menu strumenti"
 
 #: app/gui/menus.c:119
 #, fuzzy
@@ -7429,7 +7396,7 @@ msgstr "Arrotolamento"
 #: app/paint/gimpdodgeburn.c:86 app/tools/gimpdodgeburntool.c:70
 #, fuzzy
 msgid "Dodge/Burn"
-msgstr "Scherma / Brucia"
+msgstr "Scherma/Brucia"
 
 #: app/paint/gimperaser.c:64 app/tools/gimperasertool.c:70
 msgid "Eraser"
@@ -8371,18 +8338,18 @@ msgstr "Salva curve"
 #: app/tools/gimpdodgeburntool.c:71
 #, fuzzy
 msgid "Dodge or Burn strokes"
-msgstr "Opzioni Scherma / Brucia"
+msgstr "Scherma o Brucia disegno"
 
 #: app/tools/gimpdodgeburntool.c:72
 #, fuzzy
 msgid "/Tools/Paint Tools/Dod_geBurn"
-msgstr "/Strumenti/Strumenti di disegno/Scherma / Brucia"
+msgstr "/Strumenti/Strumenti di disegno/Sc_hermaBrucia"
 
 #. the type (dodge or burn)
 #: app/tools/gimpdodgeburntool.c:198
-#, fuzzy, c-format
+#, c-format
 msgid "Type  %s"
-msgstr "Tipo"
+msgstr "Tipo  %s"
 
 #: app/tools/gimpdodgeburntool.c:209
 msgid "Mode"
@@ -8394,43 +8361,39 @@ msgstr "Sorgente:"
 
 #: app/tools/gimpeditselectiontool.c:249
 #: app/tools/gimpeditselectiontool.c:1071 app/vectors/gimpvectors.c:349
-#, fuzzy
 msgid "Move Path"
-msgstr "Rinomina tracciato"
+msgstr "Sposta tracciato"
 
 #: app/tools/gimpeditselectiontool.c:253
 #: app/tools/gimpeditselectiontool.c:1115
-#, fuzzy
 msgid "Move Floating Layer"
-msgstr "Selezione fluttuante"
+msgstr "Sposta selezione fluttuante"
 
 #: app/tools/gimpeditselectiontool.c:429 app/tools/gimpeditselectiontool.c:709
 msgid "Move: "
-msgstr "Muovi: "
+msgstr "Sposta: "
 
 #: app/tools/gimpellipseselecttool.c:73
 msgid "Select elliptical regions"
 msgstr "Selezione ellittica"
 
 #: app/tools/gimpellipseselecttool.c:74
-#, fuzzy
 msgid "/Tools/Selection Tools/_Ellipse Select"
-msgstr "/Strumenti/Strumenti di selezione/Selezione ellittica"
+msgstr "/Strumenti/Strumenti di selezione/Selezione _ellittica"
 
 #: app/tools/gimperasertool.c:71
 msgid "Erase to background or transparency"
 msgstr "Cancella sullo sfondo o sulla trasparenza"
 
 #: app/tools/gimperasertool.c:72
-#, fuzzy
 msgid "/Tools/Paint Tools/_Eraser"
-msgstr "/Strumenti/Strumenti di disegno/Gomma"
+msgstr "/Strumenti/Strumenti di disegno/_Gomma"
 
 #. the anti_erase toggle
 #: app/tools/gimperasertool.c:189
-#, fuzzy, c-format
+#, c-format
 msgid "Anti Erase  %s"
-msgstr "Non cancella"
+msgstr "Anti gomma  %s"
 
 #: app/tools/gimpflipoptions.c:175 app/tools/gimpmoveoptions.c:186
 #: app/tools/gimptransformoptions.c:295
@@ -8440,36 +8403,33 @@ msgstr "Compensato:"
 
 #. tool toggle
 #: app/tools/gimpflipoptions.c:181
-#, fuzzy, c-format
+#, c-format
 msgid "Flip Type  %s"
-msgstr "Modalità di riempimento"
+msgstr "Modalità di riflessione %s"
 
 #: app/tools/gimpfliptool.c:85
 msgid "Flip the layer or selection"
 msgstr "Rifletti il livello o la selezione"
 
 #: app/tools/gimpfliptool.c:86
-#, fuzzy
 msgid "/Tools/Transform Tools/_Flip"
-msgstr "/Strumenti/Strumenti di trasformazione/Riflessione"
+msgstr "/Strumenti/Strumenti di trasformazione/Ri_flessione"
 
 #: app/tools/gimpfreeselecttool.c:98
 msgid "Select hand-drawn regions"
 msgstr "Selezione Lazo"
 
 #: app/tools/gimpfreeselecttool.c:99
-#, fuzzy
 msgid "/Tools/Selection Tools/_Free Select"
-msgstr "/Strumenti/Strumenti di selezione/Selezione libera"
+msgstr "/Strumenti/Strumenti di selezione/Selezione _libera"
 
 #: app/tools/gimpfuzzyselecttool.c:100
 msgid "Select contiguous regions"
 msgstr "Seleziona regioni contigue"
 
 #: app/tools/gimpfuzzyselecttool.c:101
-#, fuzzy
 msgid "/Tools/Selection Tools/Fu_zzy Select"
-msgstr "/Strumenti/Strumenti di selezione/Selezione Fuzzy"
+msgstr "/Strumenti/Strumenti di selezione/Selezione fu_zzy"
 
 #: app/tools/gimphistogramtool.c:122
 msgid "Histogram"
@@ -8480,13 +8440,12 @@ msgid "View image histogram"
 msgstr "Visualizza istogramma immagine"
 
 #: app/tools/gimphistogramtool.c:124
-#, fuzzy
 msgid "/Tools/Color Tools/_Histogram..."
-msgstr "/Immagine/Istogramma..."
+msgstr "/Strumenti/Strumenti di colore/Istogramma..."
 
 #: app/tools/gimphistogramtool.c:185
 msgid "Histogram does not operate on indexed drawables."
-msgstr "Gli istogrammi non operano su figure in scala di colore."
+msgstr "Gli istogrammi non operano su immagini indicizzate."
 
 #: app/tools/gimphistogramtool.c:332
 msgid "Mean:"
@@ -8513,35 +8472,30 @@ msgid "Percentile:"
 msgstr "Percentile:"
 
 #: app/tools/gimphistogramtool.c:351
-#, fuzzy
 msgid "View Image Histogram"
 msgstr "Visualizza istogramma immagine"
 
 #: app/tools/gimphistogramtool.c:366
-#, fuzzy
 msgid "Intensity Range:"
-msgstr "Intensità:"
+msgstr "Campo di intensità:"
 
 #: app/tools/gimphistogramtool.c:373
 msgid "Information on Channel:"
 msgstr "Informazioni sul canale:"
 
 #: app/tools/gimphistogramtool.c:399
-#, fuzzy
 msgid "Histogram Scale:"
-msgstr "Istogramma"
+msgstr "Scala dell'istogramma:"
 
 #: app/tools/gimphuesaturationtool.c:110
 msgid "Adjust hue and saturation"
 msgstr "Aggiusta Tonalità-Saturazione"
 
 #: app/tools/gimphuesaturationtool.c:111
-#, fuzzy
 msgid "/Tools/Color Tools/Hue-_Saturation..."
-msgstr "/Immagine/Colori/Tonalità-Saturazione..."
+msgstr "/Strumenti/Strumenti di colore/Tonalità-_Saturazione..."
 
 #: app/tools/gimphuesaturationtool.c:178
-#, fuzzy
 msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Aggiustamenti tonalità / luminosità / saturazione"
 
@@ -8550,58 +8504,48 @@ msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "Tonalità-saturazione operano solamente su figure RGB."
 
 #: app/tools/gimphuesaturationtool.c:265
-#, fuzzy
 msgid "_Master"
 msgstr "Principale"
 
 #: app/tools/gimphuesaturationtool.c:266
-#, fuzzy
 msgid "_R"
-msgstr "R"
+msgstr "_R"
 
 #: app/tools/gimphuesaturationtool.c:267
-#, fuzzy
 msgid "_Y"
-msgstr "Y"
+msgstr "_Y"
 
 #: app/tools/gimphuesaturationtool.c:268
-#, fuzzy
 msgid "_G"
-msgstr "G"
+msgstr "_G"
 
 #: app/tools/gimphuesaturationtool.c:269
-#, fuzzy
 msgid "_C"
-msgstr "C"
+msgstr "_C"
 
 #: app/tools/gimphuesaturationtool.c:270
-#, fuzzy
 msgid "_B"
-msgstr "B"
+msgstr "_B"
 
 #: app/tools/gimphuesaturationtool.c:271
-#, fuzzy
 msgid "_M"
-msgstr "M"
+msgstr "_M"
 
 #: app/tools/gimphuesaturationtool.c:276
-#, fuzzy
 msgid "Select Primary Color to Modify"
-msgstr "/Selezione/Per colore..."
+msgstr "Seleziona colore primario da modificare"
 
 #: app/tools/gimphuesaturationtool.c:305
 msgid "Modify all colors"
 msgstr "Modifica tutti i colori"
 
 #: app/tools/gimphuesaturationtool.c:348
-#, fuzzy
 msgid "Modify Selected Color"
-msgstr "/Selezione/Per colore..."
+msgstr "Modifica colore selezionato"
 
 #: app/tools/gimphuesaturationtool.c:411
-#, fuzzy
 msgid "R_eset Color"
-msgstr "/Strumenti/Colori base"
+msgstr "R_eimposta colore"
 
 #. adjust sliders
 #: app/tools/gimpinkoptions.c:259
@@ -8648,7 +8592,6 @@ msgid "Draw in ink"
 msgstr "Disegna con stilo"
 
 #: app/tools/gimpinktool.c:170
-#, fuzzy
 msgid "/Tools/Paint Tools/In_k"
 msgstr "/Strumenti/Strumenti di disegno/Stilo"
 
@@ -8661,21 +8604,18 @@ msgid "Select shapes from image"
 msgstr "Seleziona aree dall'immagine"
 
 #: app/tools/gimpiscissorstool.c:281
-#, fuzzy
 msgid "/Tools/Selection Tools/_Intelligent Scissors"
-msgstr "/Strumenti/Strumenti di selezione/Forbici intelligenti"
+msgstr "/Strumenti/Strumenti di selezione/Forbici _intelligenti"
 
 #: app/tools/gimplevelstool.c:164
 msgid "Adjust color levels"
 msgstr "Aggiusta livelli colore"
 
 #: app/tools/gimplevelstool.c:165
-#, fuzzy
 msgid "/Tools/Color Tools/_Levels..."
-msgstr "/Immagine/Colori/Livelli..."
+msgstr "/Strumenti/Strumenti di colore/_Livelli..."
 
 #: app/tools/gimplevelstool.c:236
-#, fuzzy
 msgid "Adjust Color Levels"
 msgstr "Aggiusta livelli colore"
 
@@ -8692,9 +8632,8 @@ msgid "Pick Gray Point"
 msgstr "Prendi il punto grigio"
 
 #: app/tools/gimplevelstool.c:366
-#, fuzzy
 msgid "Pick White Point"
-msgstr "Modifica punto"
+msgstr "Prendi punto bianco"
 
 #: app/tools/gimplevelstool.c:423
 msgid "Modify Levels for Channel:"
@@ -8702,9 +8641,8 @@ msgstr "Modifica livelli per canale: "
 
 #. Input levels frame
 #: app/tools/gimplevelstool.c:447
-#, fuzzy
 msgid "Input Levels"
-msgstr "Livelli di ingresso: "
+msgstr "Livelli di ingresso"
 
 #: app/tools/gimplevelstool.c:550
 msgid "Gamma"
@@ -8712,23 +8650,20 @@ msgstr "Gamma"
 
 #. Output levels frame
 #: app/tools/gimplevelstool.c:580
-#, fuzzy
 msgid "Output Levels"
-msgstr "Livelli di uscita: "
+msgstr "Livelli di uscita"
 
 #: app/tools/gimplevelstool.c:676
 msgid "Read levels settings from file"
 msgstr "Leggi i livelli da file"
 
 #: app/tools/gimplevelstool.c:686
-#, fuzzy
 msgid "Save levels settings to file"
-msgstr "Salva lo stato dei dispositivi all'uscita"
+msgstr "Salva i livelli all'uscita"
 
 #: app/tools/gimplevelstool.c:698
-#, fuzzy
 msgid "_Auto"
-msgstr "Auto"
+msgstr "_Auto"
 
 #: app/tools/gimplevelstool.c:700
 msgid "Adjust levels automatically"
@@ -8755,7 +8690,6 @@ msgid "Zoom in & out"
 msgstr "Zoom"
 
 #: app/tools/gimpmagnifytool.c:98
-#, fuzzy
 msgid "/Tools/M_agnify"
 msgstr "/Strumenti/Lente"
 
@@ -8768,22 +8702,18 @@ msgid "Measure"
 msgstr "Misurino"
 
 #: app/tools/gimpmeasuretool.c:130
-#, fuzzy
 msgid "Measure angles and lengths"
 msgstr "Misura distanze e angoli"
 
 #: app/tools/gimpmeasuretool.c:131
-#, fuzzy
 msgid "/Tools/_Measure"
-msgstr "/Strumenti/Misurino"
+msgstr "/Strumenti/_Misurino"
 
 #: app/tools/gimpmeasuretool.c:287
-#, fuzzy
 msgid "Add Guides"
-msgstr "/Guide"
+msgstr "Aggiungi righelli"
 
 #: app/tools/gimpmeasuretool.c:387
-#, fuzzy
 msgid "Measure Distances and Angles"
 msgstr "Misura distanze e angoli"
 
@@ -8794,7 +8724,7 @@ msgstr "Distanza:"
 #: app/tools/gimpmeasuretool.c:580 app/tools/gimpmeasuretool.c:585
 #: app/tools/gimpmeasuretool.c:593 app/tools/gimpmeasuretool.c:623
 msgid "degrees"
-msgstr "°"
+msgstr "gradi"
 
 #: app/tools/gimpmoveoptions.c:196
 #, fuzzy
@@ -9178,36 +9108,32 @@ msgid "/Tools/Te_xt"
 msgstr "/Strumenti/Testo"
 
 #: app/tools/gimptexttool.c:416
-#, fuzzy
 msgid "GIMP Text Editor"
-msgstr "Modifica palette del colore"
+msgstr "Editor di testi di GIMP"
 
 #: app/tools/gimpthresholdtool.c:90
 msgid "Reduce image to two colors using a threshold"
 msgstr "Riduci immagine a due colori utilizzando una soglia"
 
 #: app/tools/gimpthresholdtool.c:91
-#, fuzzy
 msgid "/Tools/Color Tools/_Threshold..."
-msgstr "/Immagine/Colori/Soglia..."
+msgstr "/Strumenti/Strumenti di colore/Soglia..."
 
 #: app/tools/gimpthresholdtool.c:158
-#, fuzzy
 msgid "Apply Threshold"
-msgstr "Soglia"
+msgstr "Applica soglia"
 
 #: app/tools/gimpthresholdtool.c:202
 msgid "Threshold does not operate on indexed drawables."
-msgstr "La soglia non opera su figure in scala di colore."
+msgstr "La soglia non opera su figure indicizzate."
 
 #: app/tools/gimpthresholdtool.c:261
 msgid "Threshold Range:"
 msgstr "Campo soglia: "
 
 #: app/tools/gimptransformoptions.c:301
-#, fuzzy
 msgid "Transform Direction"
-msgstr "Trasformazione"
+msgstr "Trasforma direzione"
 
 #. the clip resulting image toggle button
 #: app/tools/gimptransformoptions.c:319
@@ -9220,9 +9146,8 @@ msgstr "Densità:"
 
 #. the constraints frame
 #: app/tools/gimptransformoptions.c:357
-#, fuzzy
 msgid "Constraints"
-msgstr "Contrasto:"
+msgstr "Limiti"
 
 #: app/tools/gimptransformoptions.c:368
 #, c-format
@@ -9541,7 +9466,7 @@ msgid "Reorder Channel"
 msgstr "Ordina canale"
 
 #: app/widgets/gimpchanneltreeview.c:143
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Channel to Selection\n"
 "%s  Add\n"
@@ -9549,17 +9474,19 @@ msgid ""
 "%s%s%s  Intersect"
 msgstr ""
 "Canale a selezione\n"
-"<Shift> Aggiungi     <Ctrl> Sottrai\t   <Shift><Ctrl> Interseca"
+"%s  Aggiungi\n"
+"%s  Sottrai\n"
+"%s%s%s Interseca"
 
 #: app/widgets/gimpcoloreditor.c:215
 #, fuzzy
 msgid "FG"
-msgstr "FG"
+msgstr "PP"
 
 #: app/widgets/gimpcoloreditor.c:215
 #, fuzzy
 msgid "BG"
-msgstr "BG"
+msgstr "SF"
 
 #: app/widgets/gimpcoloreditor.c:219
 msgid "Edit Foreground Color"
@@ -9656,7 +9583,7 @@ msgid "Foreground: %d, %d, %d"
 msgstr "Primo piano: %d, %d, %d"
 
 #: app/widgets/gimpdevicestatus.c:406
-#, fuzzy, c-format
+#, c-format
 msgid "Background: %d, %d, %d"
 msgstr "Sfondo: %d, %d, %d"
 
@@ -9708,9 +9635,9 @@ msgid "GIMP"
 msgstr "GIMP"
 
 #: app/widgets/gimperrorconsole.c:268 app/widgets/gimpwidgets-utils.c:190
-#, fuzzy, c-format
+#, c-format
 msgid "%s Message"
-msgstr "Messaggio GIMP"
+msgstr "Messaggio %s"
 
 #: app/widgets/gimperrorconsole.c:337
 msgid "Cannot save. Nothing is selected."
@@ -9730,11 +9657,8 @@ msgstr ""
 "%s"
 
 #: app/widgets/gimpfontselection.c:172
-#, fuzzy
 msgid "Click to open the Font Selection Dialog"
-msgstr ""
-"Pattern attivo.\n"
-"Cliccare per la finestra di dialogo."
+msgstr "Fare clic per aprire la finestra di selezione caratteri"
 
 #: app/widgets/gimpfontselection-dialog.c:133
 msgid "GIMP Font Selection"
@@ -9776,14 +9700,14 @@ msgid "Zoom factor: %d:1"
 msgstr "Fattore di zoom: %d:1"
 
 #: app/widgets/gimpgradienteditor.c:521
-#, fuzzy, c-format
+#, c-format
 msgid "Displaying [%0.6f, %0.6f]"
-msgstr "Fattore Zoom: %d:1    Visualizzazione [%0.6f, %0.6f]"
+msgstr "Visualizzazione [%0.6f, %0.6f]"
 
 #: app/widgets/gimpgradienteditor.c:795
-#, fuzzy, c-format
+#, c-format
 msgid "Position: %0.6f"
-msgstr "Posizione attiva: %0.6f"
+msgstr "Posizione: %0.6f"
 
 #: app/widgets/gimpgradienteditor.c:797
 #, c-format
@@ -9814,9 +9738,9 @@ msgid "Background color set to:"
 msgstr "Colore di sfondo impostato a:"
 
 #: app/widgets/gimpgradienteditor.c:1060 app/widgets/gimpgradienteditor.c:1122
-#, fuzzy, c-format
+#, c-format
 msgid "%s%sDrag: move & compress"
-msgstr "Prendi: muove   Shift+Prendi: muove e comprime"
+msgstr "%s%sTrascina: sposta e comprime"
 
 #: app/widgets/gimpgradienteditor.c:1066
 msgid "Drag: move"
@@ -9824,19 +9748,17 @@ msgstr "Trascina: sposta"
 
 #: app/widgets/gimpgradienteditor.c:1072 app/widgets/gimpgradienteditor.c:1085
 #: app/widgets/gimpgradienteditor.c:1098 app/widgets/gimpgradienteditor.c:1119
-#, fuzzy, c-format
+#, c-format
 msgid "%s%sClick: extend selection"
-msgstr "Click: seleziona  Shift+click: estende la selezione"
+msgstr "%s%sClic: estende la selezione"
 
 #: app/widgets/gimpgradienteditor.c:1078 app/widgets/gimpgradienteditor.c:1091
-#, fuzzy
 msgid "Click: select"
-msgstr "selezione"
+msgstr "Clic: selezione"
 
 #: app/widgets/gimpgradienteditor.c:1104 app/widgets/gimpgradienteditor.c:1127
-#, fuzzy
 msgid "Click: select    Drag: move"
-msgstr "Click: selezione   Shift+click: estende la selezione   Prendi: muove"
+msgstr "Clic: selezione   Trascina: sposta"
 
 #: app/widgets/gimpgradienteditor.c:1355 app/widgets/gimpgradienteditor.c:1364
 #, c-format
@@ -9863,9 +9785,8 @@ msgstr ""
 "perchè non era installato GtkXmHTML."
 
 #: app/widgets/gimphelp.c:214 app/widgets/gimphelp.c:256
-#, fuzzy
 msgid "Use web browser instead"
-msgstr "Usare Netscape"
+msgstr "Usa il navigatore Internet"
 
 #: app/widgets/gimphelp.c:253
 msgid "Could not start GIMP Help Browser"
@@ -9983,31 +9904,29 @@ msgstr ""
 #: app/widgets/gimpstrokeeditor.c:192
 #, fuzzy
 msgid "Stroke _Width:"
-msgstr "Disegna tracciato"
+msgstr "Ampiezza _disegno:"
 
 #: app/widgets/gimpstrokeeditor.c:198
 #, fuzzy
 msgid "_Cap Style:"
-msgstr "_Stile:"
+msgstr "Stile _pennino:"
 
 #: app/widgets/gimpstrokeeditor.c:204
 #, fuzzy
 msgid "_Join Style:"
-msgstr "Stato:"
+msgstr "_Unisci stile:"
 
 #: app/widgets/gimpstrokeeditor.c:209
 msgid "_Miter Limit:"
 msgstr ""
 
 #: app/widgets/gimpstrokeeditor.c:214
-#, fuzzy
 msgid "_Antialiasing"
-msgstr "Antialiasing"
+msgstr "_Antialiasing"
 
 #: app/widgets/gimpstrokeeditor.c:221
-#, fuzzy
 msgid "Style"
-msgstr "_Stile:"
+msgstr "Stile:"
 
 #: app/widgets/gimptemplateeditor.c:463
 msgid "_Name:"
@@ -10149,6 +10068,8 @@ msgid ""
 "Do you really want to reset all\n"
 "tool options to default values?"
 msgstr ""
+"Sicuri di voler reimpostare tutte\n"
+"le opzioni strumenti ai valori predefiniti?"
 
 #: app/widgets/gimpundoeditor.c:130
 msgid "Redo"
@@ -10375,92 +10296,3 @@ msgstr "Crea e modifica immagini o fotografie"
 msgid "The GIMP (unstable)"
 msgstr "Gimp (instabile)"
 
-#~ msgid "Stroke Channel"
-#~ msgstr "Disegna canale"
-
-#~ msgid "Image List"
-#~ msgstr "Elenco immagini"
-
-#~ msgid "Brush List"
-#~ msgstr "Elenco pennelli"
-
-#~ msgid "Pattern List"
-#~ msgstr "Elenco pattern"
-
-#~ msgid "Gradient List"
-#~ msgstr "Elenco gradienti"
-
-#~ msgid "Palette List"
-#~ msgstr "Elenco palette"
-
-#~ msgid "Font List"
-#~ msgstr "Elenco caratteri"
-
-#~ msgid "Tool List"
-#~ msgstr "Elenco strumenti"
-
-#~ msgid "Buffer List"
-#~ msgstr "Elenco buffer"
-
-#~ msgid "List of Templates"
-#~ msgstr "Elenco modelli"
-
-#~ msgid "Image Grid"
-#~ msgstr "Griglia immagine"
-
-#~ msgid "Brush Grid"
-#~ msgstr "Griglia pennello"
-
-#~ msgid "Pattern Grid"
-#~ msgstr "Griglia pattern"
-
-#~ msgid "Gradient Grid"
-#~ msgstr "Griglia gradienti"
-
-#~ msgid "Palette Grid"
-#~ msgstr "Griglia palette"
-
-#~ msgid "Font Grid"
-#~ msgstr "Griglia carattere"
-
-#~ msgid "Tool Grid"
-#~ msgstr "Griglia strumenti"
-
-#~ msgid "Buffer Grid"
-#~ msgstr "Griglia buffer"
-
-#~ msgid "Document History Grid"
-#~ msgstr "Storico operazioni"
-
-#~ msgid "Layer List"
-#~ msgstr "Elenco livelli"
-
-#~ msgid "Channel List"
-#~ msgstr "Elenco canali"
-
-#~ msgid "Path List"
-#~ msgstr "Elenco tracciati"
-
-#~ msgid "/_Delete Template..."
-#~ msgstr "/_Cancella modello..."
-
-#~ msgid "Save current settings as default values"
-#~ msgstr "Salva le impostazioni correnti come valori predefiniti"
-
-#~ msgid "Restore saved default values"
-#~ msgstr "Ripristina impostazioni predefine salvate"
-
-#~ msgid "Reset to factory defaults"
-#~ msgstr "Reimposta valori di fabbrica"
-
-#~ msgid "Nothing to see here. Move along."
-#~ msgstr "Non c'è nulla da vedere qui. Circolare."
-
-#~ msgid "Netscape"
-#~ msgstr "Netscape"
-
-#~ msgid "Add Color"
-#~ msgstr "Aggiungi colore"
-
-#~ msgid "New Color"
-#~ msgstr "Nuovo colore"
