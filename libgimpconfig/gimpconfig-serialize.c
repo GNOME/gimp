@@ -36,11 +36,6 @@
 #include "gimpconfigwriter.h"
 
 
-static void  serialize_unknown_token (const gchar  *key,
-				      const gchar  *value,
-				      gpointer      data);
-
-
 /**
  * gimp_config_serialize_properties:
  * @config: a #GimpConfig.
@@ -136,56 +131,6 @@ gimp_config_serialize_changed_properties (GimpConfig       *config,
 
   return TRUE;
 }
-
-/**
- * gimp_config_serialize_properties_diff:
- * @config: a #GimpConfig.
- * @compare: a #GimpConfig of the same type as @config.
- * @writer: a #GimpConfigWriter.
- *
- * This function compares @config and @compare and writes all
- * properties of @config that have different values than @compare to
- * the @writer.
- *
- * Returns: %TRUE if serialization succeeded, %FALSE otherwise
- **/
-gboolean
-gimp_config_serialize_properties_diff (GimpConfig       *config,
-                                       GimpConfig       *compare,
-				       GimpConfigWriter *writer)
-{
-  GObjectClass *klass;
-  GList        *diff;
-  GList        *list;
-
-  g_return_val_if_fail (G_IS_OBJECT (config), FALSE);
-  g_return_val_if_fail (G_IS_OBJECT (compare), FALSE);
-  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (config) ==
-                        G_TYPE_FROM_INSTANCE (compare), FALSE);
-
-  klass = G_OBJECT_GET_CLASS (config);
-
-  diff = gimp_config_diff (config, compare, GIMP_PARAM_SERIALIZE);
-
-  if (! diff)
-    return TRUE;
-
-  for (list = diff; list; list = g_list_next (list))
-    {
-      GParamSpec *prop_spec = (GParamSpec *) list->data;
-
-      if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
-        continue;
-
-      if (! gimp_config_serialize_property (config, prop_spec, writer))
-        return FALSE;
-    }
-
-  g_list_free (diff);
-
-  return TRUE;
-}
-
 
 gboolean
 gimp_config_serialize_property (GimpConfig       *config,
@@ -481,39 +426,4 @@ gimp_config_serialize_value (const GValue *value,
     }
 
   return FALSE;
-}
-
-
-/**
- * gimp_config_serialize_unknown_tokens:
- * @config: a #GimpConfig.
- * @writer: a #GimpConfigWriter.
- *
- * Writes all unknown tokens attached to @config to the @writer.  See
- * gimp_config_add_unknown_token().
- *
- * Returns: %TRUE if serialization succeeded, %FALSE otherwise
- **/
-gboolean
-gimp_config_serialize_unknown_tokens (GimpConfig       *config,
-                                      GimpConfigWriter *writer)
-{
-  g_return_val_if_fail (G_IS_OBJECT (config), FALSE);
-
-  gimp_config_writer_linefeed (writer);
-  gimp_config_foreach_unknown_token (config, serialize_unknown_token, writer);
-
-  return TRUE;
-}
-
-static void
-serialize_unknown_token (const gchar *key,
-                         const gchar *value,
-                         gpointer     data)
-{
-  GimpConfigWriter *writer = data;
-
-  gimp_config_writer_open (writer, key);
-  gimp_config_writer_string (writer, value);
-  gimp_config_writer_close (writer);
 }

@@ -34,6 +34,7 @@
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-utils.h"
+#include "gimprc-unknown.h"
 
 
 static void  notify_callback      (GObject     *object,
@@ -77,7 +78,7 @@ main (int   argc,
   g_print (" done.\n");
 
   g_print (" Adding the unknown token (foobar \"hadjaha\") ...");
-  gimp_config_add_unknown_token (grid, "foobar", "hadjaha");
+  gimp_rc_add_unknown_token (grid, "foobar", "hadjaha");
   g_print (" done.\n");
 
   g_print (" Serializing %s to '%s' ...",
@@ -104,7 +105,7 @@ main (int   argc,
       return EXIT_FAILURE;
     }
   header = " Unknown string tokens:\n";
-  gimp_config_foreach_unknown_token (grid, output_unknown_token, &header);
+  gimp_rc_foreach_unknown_token (grid, output_unknown_token, &header);
   g_print (" done.\n\n");
 
   g_print (" Changing a property ...");

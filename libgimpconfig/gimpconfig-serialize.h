@@ -27,12 +27,6 @@ gboolean  gimp_config_serialize_properties         (GimpConfig       *config,
 						    GimpConfigWriter *writer);
 gboolean  gimp_config_serialize_changed_properties (GimpConfig       *config,
 						    GimpConfigWriter *writer);
-gboolean  gimp_config_serialize_properties_diff    (GimpConfig       *config,
-                                                    GimpConfig       *compare,
-						    GimpConfigWriter *writer);
-
-gboolean  gimp_config_serialize_unknown_tokens     (GimpConfig       *config,
-						    GimpConfigWriter *writer);
 
 gboolean  gimp_config_serialize_property           (GimpConfig       *config,
 						    GParamSpec       *param_spec,

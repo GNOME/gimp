@@ -45,11 +45,6 @@
  *  couldn't parse it.
  */
 
-static GTokenType  gimp_config_deserialize_unknown     (GimpConfig *config,
-                                                        GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_property    (GimpConfig *config,
-                                                        GScanner   *scanner,
-                                                        gint        nest_level);
 static GTokenType  gimp_config_deserialize_value       (GValue     *value,
                                                         GimpConfig *config,
                                                         GParamSpec *prop_spec,
@@ -107,15 +102,8 @@ scanner_string_utf8_valid (GScanner    *scanner,
  * @config: a #GimpConfig.
  * @scanner: a #GScanner.
  * @nest_level:
- * @store_unknown_tokens: %TRUE if you want to store unknown tokens.
  *
  * This function uses the @scanner to configure the properties of @config.
- *
- * The store_unknown_tokens parameter is a special feature for #GimpRc.
- * If it set to %TRUE, unknown tokens (e.g. tokens that don't refer to
- * a property of @config) with string values are attached to @config as
- * unknown tokens. GimpConfig has a couple of functions to handle the
- * attached key/value pairs.
  *
  * Return value:
  **/
@@ -123,7 +111,7 @@ gboolean
 gimp_config_deserialize_properties (GimpConfig *config,
                                     GScanner   *scanner,
                                     gint        nest_level,
-                                    gboolean    store_unknown_tokens)
+                                    gboolean    unused)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -166,12 +154,8 @@ gimp_config_deserialize_properties (GimpConfig *config,
     {
       next = g_scanner_peek_next_token (scanner);
 
-      if (next != token &&
-          ! (store_unknown_tokens &&
-             token == G_TOKEN_SYMBOL && next == G_TOKEN_IDENTIFIER))
-        {
-          break;
-        }
+      if (next != token)
+        break;
 
       token = g_scanner_get_next_token (scanner);
 
@@ -179,10 +163,6 @@ gimp_config_deserialize_properties (GimpConfig *config,
         {
         case G_TOKEN_LEFT_PAREN:
           token = G_TOKEN_SYMBOL;
-          break;
-
-        case G_TOKEN_IDENTIFIER:
-          token = gimp_config_deserialize_unknown (config, scanner);
           break;
 
         case G_TOKEN_SYMBOL:
@@ -206,51 +186,10 @@ gimp_config_deserialize_properties (GimpConfig *config,
   if (token == G_TOKEN_NONE)
     return FALSE;
 
-  /* If store_unknown_tokens is TRUE but the unknown token value couldn't
-     be parsed the default error message is rather confusing.
-     We try to produce something more meaningful here ... */
-  if ((store_unknown_tokens &&
-       token == G_TOKEN_STRING && next == G_TOKEN_IDENTIFIER))
-    {
-      g_scanner_unexp_token (scanner, G_TOKEN_SYMBOL, NULL, NULL, NULL,
-			     _("fatal parse error"), TRUE);
-      return FALSE;
-    }
-
   return gimp_config_deserialize_return (scanner, token, nest_level);
 }
 
-static GTokenType
-gimp_config_deserialize_unknown (GimpConfig *config,
-                                 GScanner   *scanner)
-{
-  gchar *key;
-  guint  old_scope_id;
-
-  old_scope_id = g_scanner_set_scope (scanner, 0);
-
-  if (g_scanner_peek_next_token (scanner) != G_TOKEN_STRING)
-    return G_TOKEN_STRING;
-
-  key = g_strdup (scanner->value.v_identifier);
-
-  g_scanner_get_next_token (scanner);
-
-  g_scanner_set_scope (scanner, old_scope_id);
-
-  if (!scanner_string_utf8_valid (scanner, key))
-    {
-      g_free (key);
-      return G_TOKEN_NONE;
-    }
-
-  gimp_config_add_unknown_token (config, key, scanner->value.v_string);
-  g_free (key);
-
-  return G_TOKEN_RIGHT_PAREN;
-}
-
-static GTokenType
+GTokenType
 gimp_config_deserialize_property (GimpConfig *config,
                                   GScanner   *scanner,
                                   gint        nest_level)

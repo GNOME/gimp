@@ -1,5 +1,21 @@
 2005-01-24  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-deserialize.[ch]
+	* app/config/gimpconfig-serialize.[ch]
+	* app/config/gimpconfig.[ch]: factored out some rather obscure
+	GimpConfig features that were added solely for gimprc.
+
+	* app/config/Makefile.am
+	* app/config/gimprc-deserialize.[ch]
+	* app/config/gimprc-serialize.[ch]
+	* app/config/gimprc-unknown.[ch]: moved gimprc-specific code to
+	these new files.
+
+	* app/config/gimprc.c
+	* app/config/test-config.c: changed accordingly.
+
+2005-01-24  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpenumcombobox.c
 	* libgimpwidgets/gimpenumstore.[ch]: improved API docs.
 

@@ -37,6 +37,9 @@
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-utils.h"
 #include "gimprc.h"
+#include "gimprc-deserialize.h"
+#include "gimprc-serialize.h"
+#include "gimprc-unknown.h"
 
 #include "gimp-intl.h"
 
@@ -64,13 +67,6 @@ static void         gimp_rc_get_property      (GObject          *object,
                                                guint             property_id,
                                                GValue           *value,
                                                GParamSpec       *pspec);
-static gboolean     gimp_rc_serialize         (GimpConfig       *object,
-                                               GimpConfigWriter *writer,
-                                               gpointer          data);
-static gboolean     gimp_rc_deserialize       (GimpConfig       *object,
-                                               GScanner         *scanner,
-                                               gint              nest_level,
-                                               gpointer          data);
 static GimpConfig * gimp_rc_duplicate         (GimpConfig       *object);
 static void         gimp_rc_load              (GimpRc           *rc);
 static gboolean     gimp_rc_idle_save         (GimpRc           *rc);
@@ -273,42 +269,12 @@ gimp_rc_config_iface_init (gpointer  iface,
   config_iface->duplicate   = gimp_rc_duplicate;
 }
 
-static gboolean
-gimp_rc_serialize (GimpConfig       *config,
-                   GimpConfigWriter *writer,
-                   gpointer          data)
-{
-  if (data && GIMP_IS_RC (data))
-    {
-      if (! gimp_config_serialize_properties_diff (config, GIMP_CONFIG (data),
-                                                   writer))
-        return FALSE;
-    }
-  else
-    {
-      if (! gimp_config_serialize_properties (config, writer))
-        return FALSE;
-    }
-
-  return gimp_config_serialize_unknown_tokens (config, writer);
-}
-
-static gboolean
-gimp_rc_deserialize (GimpConfig *config,
-                     GScanner   *scanner,
-                     gint        nest_level,
-                     gpointer    data)
-{
-  return gimp_config_deserialize_properties (config,
-                                             scanner, nest_level, TRUE);
-}
-
 static void
 gimp_rc_duplicate_unknown_token (const gchar *key,
                                  const gchar *value,
                                  gpointer     user_data)
 {
-  gimp_config_add_unknown_token (GIMP_CONFIG (user_data), key, value);
+  gimp_rc_add_unknown_token (GIMP_CONFIG (user_data), key, value);
 }
 
 static GimpConfig *
@@ -318,8 +284,8 @@ gimp_rc_duplicate (GimpConfig *config)
 
   gimp_config_sync (config, dup, 0);
 
-  gimp_config_foreach_unknown_token (config,
-                                     gimp_rc_duplicate_unknown_token, dup);
+  gimp_rc_foreach_unknown_token (config,
+                                 gimp_rc_duplicate_unknown_token, dup);
 
   return dup;
 }
@@ -498,8 +464,7 @@ gimp_rc_query (GimpRc      *rc,
     }
   else
     {
-      retval = g_strdup (gimp_config_lookup_unknown_token (GIMP_CONFIG (rc),
-                                                           key));
+      retval = g_strdup (gimp_rc_lookup_unknown_token (GIMP_CONFIG (rc), key));
     }
 
   g_free (property_specs);
@@ -540,7 +505,7 @@ gimp_rc_query (GimpRc      *rc,
  * @token:
  * @value:
  *
- * Calls gimp_config_add_unknown_token() and triggers an idle-save if
+ * Calls gimp_rc_add_unknown_token() and triggers an idle-save if
  * autosave is enabled on @gimprc.
  **/
 void
@@ -550,7 +515,7 @@ gimp_rc_set_unknown_token (GimpRc      *rc,
 {
   g_return_if_fail (GIMP_IS_RC (rc));
 
-  gimp_config_add_unknown_token (GIMP_CONFIG (rc), token, value);
+  gimp_rc_add_unknown_token (GIMP_CONFIG (rc), token, value);
 
   if (rc->autosave)
     gimp_rc_notify (rc, NULL, NULL);

@@ -1,8 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * Object properties deserialization routines
- * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
+ * GimpRc serialization routines
+ * Copyright (C) 2001-2005  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,17 +19,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CONFIG_DESERIALIZE_H__
-#define __GIMP_CONFIG_DESERIALIZE_H__
+#ifndef __GIMP_RC_SERIALIZE_H__
+#define __GIMP_RC_SERIALIZE_H__
 
 
-gboolean    gimp_config_deserialize_properties (GimpConfig *config,
-                                                GScanner   *scanner,
-                                                gint        nest_level,
-                                                gboolean    unused);
-GTokenType  gimp_config_deserialize_property   (GimpConfig *config,
-                                                GScanner   *scanner,
-                                                gint        nest_level);
+gboolean  gimp_rc_serialize (GimpConfig       *config,
+                             GimpConfigWriter *writer,
+                             gpointer          data);
 
 
-#endif /* __GIMP_CONFIG_DESERIALIZE_H__ */
+#endif /* __GIMP_RC_SERIALIZE_H__ */

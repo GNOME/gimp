@@ -59,10 +59,6 @@ struct _GimpConfigInterface
   void         (* reset)                (GimpConfig       *config);
 };
 
-typedef void  (* GimpConfigForeachFunc) (const gchar *key,
-                                         const gchar *value,
-                                         gpointer     user_data);
-
 
 GType         gimp_config_interface_get_type    (void) G_GNUC_CONST;
 
@@ -94,15 +90,6 @@ gpointer      gimp_config_duplicate             (GimpConfig   *config);
 gboolean      gimp_config_is_equal_to           (GimpConfig   *a,
                                                  GimpConfig   *b);
 void          gimp_config_reset                 (GimpConfig   *config);
-
-void          gimp_config_add_unknown_token     (GimpConfig   *config,
-                                                 const gchar  *key,
-                                                 const gchar  *value);
-const gchar * gimp_config_lookup_unknown_token  (GimpConfig   *config,
-                                                 const gchar  *key);
-void          gimp_config_foreach_unknown_token (GimpConfig   *config,
-                                                 GimpConfigForeachFunc  func,
-                                                 gpointer      user_data);
 
 
 #endif  /* __GIMP_CONFIG_H__ */

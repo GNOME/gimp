@@ -72,6 +72,7 @@ app/config/gimpconfig.c
 app/config/gimpconfigwriter.c
 app/config/gimprc.c
 app/config/gimprc-blurbs.h
+app/config/gimprc-deserialize.c
 app/config/gimpscanner.c
 
 app/core/core-enums.c
