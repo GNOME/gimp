@@ -1,949 +1,2278 @@
-# -- gimp-perl tr.po --
 # Copyright (C) 2001 Free Software Foundation, Inc.
+# Ömer Fadıl USTA <omer_fad@hotmail.com>, 2002.
 # Fatih Demir <kabalak@gtranslator.org>, 2001.
 # Alper Ersoy <aersoy@tfz.net>, 2001.
-# Ömer Fadıl USTA <omer_fad@hotmail.com>, 2002.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-perl 1.3.5\n"
-"POT-Creation-Date: 1999-09-12 17:58+0200\n"
-"PO-Revision-Date: 2002-04-28 04:16+0200\n"
+"Project-Id-Version: GIMP 1.3.5\n"
+"POT-Creation-Date: 2002-04-14 19:23-0400\n"
+"PO-Revision-Date: 2002-04-28 04:07+0200\n"
 "Last-Translator: Ömer Fadıl USTA <omer_fad@hotmail.com>\n"
-"Language-Team: Turkish <tr@li.org>\n"
+"Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "expected perl-server at other end of socket, got @r\n"
-msgstr "soketin diğer ucunda perl-sunucusu bekleniyordu, @r ile karşılaşıldı\n"
+#: plug-ins/script-fu/script-fu-console.c:143
+msgid "Script-Fu console mode allows only interactive invocation"
+msgstr "Script-Fu konsolu sadece etkileşimli çağrıma olanak tanır"
 
-msgid "too many"
-msgstr "çok fazla"
+#: plug-ins/script-fu/script-fu-console.c:170
+msgid "Script-Fu Console"
+msgstr "Script-Fu Konsolu"
 
-msgid "<Image>/Filters/Logulator/Transparent Logo..."
-msgstr "<Image>/Filtreler/Logulatör/Şeffaf Logo..."
+#: plug-ins/script-fu/script-fu-console.c:194
+msgid "SIOD Output"
+msgstr "SIOD Çıktısı"
 
-msgid "$s: not an integer\n"
-msgstr "$s: tamsayı değil\n"
+#. The current command
+#: plug-ins/script-fu/script-fu-console.c:265
+msgid "Current Command"
+msgstr "Şu Anki Komut"
 
-msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "<Image>/Seçim/Yuvarlatılmış Dörtgen Seçim..."
+#: plug-ins/script-fu/script-fu-console.c:285
+msgid "Browse..."
+msgstr "Gözat..."
 
-msgid "<Image>/Guides/To Selection..."
-msgstr "<Image>/Kılavuzlar/Seçime Dönüştür..."
+#: plug-ins/script-fu/script-fu-console.c:570
+msgid "Unable to open a stream on the SIOD output pipe"
+msgstr "SIOD çıkış veriyoluna akış açılamadı"
 
-msgid "Help for "
-msgstr "Yardım"
+#: plug-ins/script-fu/script-fu-console.c:576
+msgid "Unable to open the SIOD output pipe"
+msgstr "SIOD çıkış borusu açılamadı"
 
-msgid "illegal parasite specification, expected three array members"
-msgstr "geçersiz parazit tanımı, üç dizi elemanı bekleniyordu"
+#: plug-ins/script-fu/script-fu-console.c:621
+msgid "Script-Fu evaluate mode allows only noninteractive invocation"
+msgstr "Script-Fu değerlendirme modu sadece etkileşimsiz çağrıma olanak tanır"
 
-msgid "Last Modified"
-msgstr "Son Değiştirme"
+#. strip the first part of the menupath if it contains _("/Script-Fu/")
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
+msgid "/Script-Fu/"
+msgstr "/Script-Fu/"
 
-msgid "unable to read '$fn': $!"
-msgstr "'$fn' okunamadı: $!"
+#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1199
+#, c-format
+msgid "Script-Fu: %s"
+msgstr "Script-Fu: %s"
 
-msgid "<Image>/Filters/Map/Image Tile..."
-msgstr "<Image>/Filtreler/Bindirme/Resim Döşeme..."
+#. the script arguments frame
+#: plug-ins/script-fu/script-fu-scripts.c:1223
+msgid "Script Arguments"
+msgstr "Program Argümanları"
 
-msgid "<Image>/Filters/Logulator/Crystal"
-msgstr "<Image>/Filtreler/Logulatör/Kristal"
+#: plug-ins/script-fu/script-fu-scripts.c:1246
+#, c-format
+msgid "%s:"
+msgstr "%s:"
 
-msgid "Unable to read temporary image tile $tmp: $!"
-msgstr "$tmp geçici döşeme resmi okunamadı: $!"
+#: plug-ins/script-fu/script-fu-scripts.c:1293
+msgid "Script-Fu Color Selection"
+msgstr "Script-Fu Renk Seçimi"
 
-msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
-msgstr "çalışma modu INTERACTIVE, NONINTERACTIVE veya RUN_WITH_LAST_VALS olmalı\n"
+#: plug-ins/script-fu/script-fu-scripts.c:1376
+msgid "Script-Fu File Selection"
+msgstr "Script-Fu Dosya Seçimi"
 
-msgid "Font Selection Dialog ($desc)"
-msgstr "Dosya Seçim Penceresi ($desc)"
+#: plug-ins/script-fu/script-fu-scripts.c:1381
+msgid "Script-Fu Folder Selection"
+msgstr "Script-Fu Dizin Seçimi"
 
-msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
-msgstr "xlfd_unpack: karşılıksız XLFD '$fontname'\n"
+#: plug-ins/script-fu/script-fu-scripts.c:1416
+msgid "Script-fu Pattern Selection"
+msgstr "Script-Fu Desen Seçimi"
 
-msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr "<Image>/Filtreler/Gürültü/Xach Görüntüsü..."
+#: plug-ins/script-fu/script-fu-scripts.c:1423
+msgid "Script-Fu Gradient Selection"
+msgstr "Script-Fu Gradyan Secimi"
 
+#: plug-ins/script-fu/script-fu-scripts.c:1431
+msgid "Script-Fu Brush Selection"
+msgstr "Script-Fu Fırça Seçimi"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1479
+msgid "Reset to Defaults"
+msgstr "Öntanımlı Değerlere Döndür"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1507
+msgid "About"
+msgstr "Hakkında"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1703
 msgid ""
-"$function: function name contains unusual characters, good style is to use "
-"only 0-9, a-z and _"
+"At least one font you've choosen is invalid.\n"
+"Please check your settings.\n"
 msgstr ""
-"$function: fonksiyon ismi garip karakterler içeriyor, düzgün stil sadece 0-"
-"9, a-z ve _ karakterlerini kullanmak"
+"Seçtiğiniz yazıtiplerinden en az biri geçersiz.\n"
+"Lütfen ayarlarını kontrol edin.\n"
 
-msgid "Help"
-msgstr "Yardım"
+#: plug-ins/script-fu/script-fu-scripts.c:2002
+#: plug-ins/dbbrowser/dbbrowser_utils.c:487
+msgid "Author:"
+msgstr "Yazar:"
 
-msgid "<Image>/Image/Alpha/Clear Alpha..."
-msgstr "<Image>/Resim/Alfa/Alfa'yı Sil..."
+#: plug-ins/script-fu/script-fu-scripts.c:2008
+#: plug-ins/dbbrowser/dbbrowser_utils.c:503
+msgid "Copyright:"
+msgstr "Telif Hakkı:"
 
-msgid "<Image>/Filters/Map/Pixelmap..."
-msgstr "<Image>/Filtreler/Bindirme/Pikselbindirme..."
+#: plug-ins/script-fu/script-fu-scripts.c:2014
+#: plug-ins/dbbrowser/dbbrowser_utils.c:495
+msgid "Date:"
+msgstr "Tarih:"
 
-msgid "unable to fork: $!"
-msgstr "çatallanamıyor: $!"
+#: plug-ins/script-fu/script-fu-scripts.c:2022
+msgid "Image Types:"
+msgstr "Resim Tipleri:"
 
-msgid "FG"
-msgstr "ÖP"
+#: plug-ins/script-fu/script-fu-scripts.c:2167
+msgid "Script-Fu Font Selection"
+msgstr "Script-Fu Yazıtipi Seçimi"
 
-msgid "FATAL: unable to create $tmp: $!\n"
-msgstr "HAYATİ: $tmp oluşturulamadı: $!\n"
+#: plug-ins/script-fu/script-fu-scripts.c:2237
+#, c-format
+msgid ""
+"Script-Fu Error while executing\n"
+" %s\n"
+"%s"
+msgstr ""
+"%s çalıştırılırken Script-Fu hatası\n"
+"%s"
 
-msgid "/Filters/Logulator"
-msgstr "/Filtreler/Logulatör"
+#: plug-ins/script-fu/script-fu-server.c:551
+msgid "Script-Fu Server Options"
+msgstr "Script-Fu Sunucu Ayarları"
 
-msgid "dunno how to return param type %d"
-msgstr "%d parametre tipinin nasıl geri döndürüldüğü bilinmiyor"
+#: plug-ins/script-fu/script-fu-server.c:578
+msgid "Server Port:"
+msgstr "Sunucu Portu:"
 
-msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr "<Image>/Resim/Alfa/Alfa'dan Renge..."
+#: plug-ins/script-fu/script-fu-server.c:584
+msgid "Server Logfile:"
+msgstr "Sunucu Kütüğü:"
 
-msgid "Image Types"
-msgstr "Resim Tipleri"
+#: plug-ins/script-fu/script-fu.c:127
+msgid "<Toolbox>/Xtns/Script-Fu/Console..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Konsol..."
 
-msgid "<Image>/Filters/Render/Stampify..."
-msgstr "<Image>/Filtreler/Hesapla/Pullaştır..."
+#: plug-ins/script-fu/script-fu.c:152
+msgid "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Sunucu..."
 
-msgid "could not connect to the gimp server (make sure Perl-Server is running)"
-msgstr "gimp sunucusuna bağlanılamadı (Perl-Sunucusu'nun çalıştığından emin olun)"
+#: plug-ins/script-fu/script-fu.c:276 plug-ins/script-fu/script-fu.c:277
+msgid "Re-read all available scripts"
+msgstr "Tüm programları tekrar oku"
 
-msgid "<Toolbox>/Xtns/Render/Stamps..."
-msgstr "<Toolbox>/Xtns/Hesapla/Pullar..."
+#: plug-ins/script-fu/script-fu.c:281
+msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
+msgstr "<Toolbox>/Xtns/Script-Fu/Tazele..."
 
-msgid "More..."
-msgstr "Daha fazla..."
+#: plug-ins/dbbrowser/dbbrowser_utils.c:125
+#: plug-ins/dbbrowser/dbbrowser_utils.c:144
+msgid "DB Browser (init...)"
+msgstr "Veri Tabanı Tarayıcısı (başlıyor...)"
 
-msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
-msgstr "<Toolbox>/Xtns/Hesapla/Logolar/Ateşyazı..."
+#: plug-ins/dbbrowser/dbbrowser_utils.c:130
+#: plug-ins/dbbrowser/dbbrowser_utils.c:149
+msgid "Search by Name"
+msgstr "İsme Göre Ara"
 
-msgid "interface=... tag is no longer supported\n"
-msgstr "interface=... etiketi artık desteklenmiyor\n"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:132
+#: plug-ins/dbbrowser/dbbrowser_utils.c:151
+msgid "Search by Blurb"
+msgstr "Tanıtıcıya göre Ara"
 
+#: plug-ins/dbbrowser/dbbrowser_utils.c:215
+msgid "Search:"
+msgstr "Ara:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:346
+msgid "Name:"
+msgstr "İsim:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:355
+msgid "Blurb:"
+msgstr "Tanımlayıcı Yazı:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+msgid "In:"
+msgstr "içinde:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:415
+msgid "Out:"
+msgstr "Dışında:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:469
+msgid "Help:"
+msgstr "Yardım:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:572
+msgid "DB Browser (by name - please wait)"
+msgstr "Veri Tabanı Tarayıcısı (isme göre - Lütfen bekleyin)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:596
+msgid "DB Browser (by blurb - please wait)"
+msgstr "Veri Tabanı Tarayıcısı (tanımlayıcıya göre - Lütfen bekleyin)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
+msgid "DB Browser (please wait)"
+msgstr "Veri Tabanı Tarayıcısı (Lütfen bekleyin)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:632
+msgid "DB Browser"
+msgstr "Veri Tabanı Tarayıcısı"
+
+#: plug-ins/gap/sel-to-anim-img.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+msgstr "<Image>/Script-Fu/Animatörler/Seçimden AnimResim'e..."
+
+#: plug-ins/gap/sel-to-anim-img.scm.h:2
+msgid "Anim-Filter for all Copies"
+msgstr "Tüm Kopyalar İçin Anim-Filtre"
+
+#: plug-ins/gap/sel-to-anim-img.scm.h:3
+msgid "Fill with BG Color"
+msgstr "Arkaplan Rengiyle Doldur"
+
+#: plug-ins/gap/sel-to-anim-img.scm.h:4
+msgid "Number of Copies"
+msgstr "Kopya Sayısı"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/3B Dış Hat..."
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/3B Dış Çizgi..."
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:3
+msgid "Bumpmap (Alpha Layer) Blur Radius"
+msgstr "Kabartı Haritası (Alfa Katmanı) Bulanıklık Yarıçapı"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:4
+#: plug-ins/script-fu/scripts/glossy.scm.h:6
+msgid "Default Bumpmap Settings"
+msgstr "Öntanımlı Kabartı Haritası Ayarları"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
+#: plug-ins/script-fu/scripts/asc2img.scm.h:7
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:10
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:4
+#: plug-ins/script-fu/scripts/chalk.scm.h:5
+#: plug-ins/script-fu/scripts/chip-away.scm.h:7
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:4
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:5
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+#: plug-ins/script-fu/scripts/glossy.scm.h:7
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:6
+#: plug-ins/script-fu/scripts/news-text.scm.h:7
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:3
+#: plug-ins/script-fu/scripts/slide.scm.h:2
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/speed-text.scm.h:5
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:6
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
+#: plug-ins/script-fu/scripts/text-circle.scm.h:4
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:6
+#: plug-ins/script-fu/scripts/title-header.scm.h:2
+msgid "Font"
+msgstr "Yazıtipi"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
+#: plug-ins/script-fu/scripts/asc2img.scm.h:8
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:11
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:5
+#: plug-ins/script-fu/scripts/chalk.scm.h:6
+#: plug-ins/script-fu/scripts/chip-away.scm.h:8
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:5
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:6
+#: plug-ins/script-fu/scripts/font-map.scm.h:3
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+#: plug-ins/script-fu/scripts/glossy.scm.h:8
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:7
+#: plug-ins/script-fu/scripts/news-text.scm.h:8
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
+#: plug-ins/script-fu/scripts/speed-text.scm.h:6
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:7
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
+#: plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:7
+#: plug-ins/script-fu/scripts/title-header.scm.h:3
+msgid "Font Size (pixels)"
+msgstr "Yazıtipi Boyu (piksel)"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:7
+msgid "Outline Blur Radius"
+msgstr "Dış Çizgi Bulanıklık Yarıçapı"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: plug-ins/script-fu/scripts/chip-away.scm.h:12
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:11
+msgid "Pattern"
+msgstr "Desen"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:9
+msgid "Shadow Blur Radius"
+msgstr "Gölge Bulanıklığı Yarıçapı"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#: plug-ins/script-fu/scripts/round-corners.scm.h:6
+msgid "Shadow X Offset"
+msgstr "Gölge X Ofseti"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#: plug-ins/script-fu/scripts/glossy.scm.h:15
+#: plug-ins/script-fu/scripts/round-corners.scm.h:7
+msgid "Shadow Y Offset"
+msgstr "Gölge Y Ofseti"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:12
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:6
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:15
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:7
+#: plug-ins/script-fu/scripts/chalk.scm.h:7
+#: plug-ins/script-fu/scripts/chip-away.scm.h:13
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:9
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+#: plug-ins/script-fu/scripts/glossy.scm.h:16
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:9
+#: plug-ins/script-fu/scripts/news-text.scm.h:9
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:13
+#: plug-ins/script-fu/scripts/slide.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
+#: plug-ins/script-fu/scripts/speed-text.scm.h:7
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:8
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:7
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
+#: plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:14
+#: plug-ins/script-fu/scripts/title-header.scm.h:4
 msgid "Text"
 msgstr "Metin"
 
-msgid "<Image>/Filters/Render/Random Blends..."
-msgstr "<Image>/Filtreler/Hesapla/Raslantısal Harmanlar..."
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/3D Truchet..."
 
-msgid "Synopsis"
-msgstr "Özet"
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/asc2img.scm.h:3
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:3
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chalk.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:3
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+#: plug-ins/script-fu/scripts/glossy.scm.h:3
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
+#: plug-ins/script-fu/scripts/image-structure.scm.h:3
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/news-text.scm.h:2
+#: plug-ins/script-fu/scripts/speed-text.scm.h:2
+#: plug-ins/script-fu/scripts/sphere.scm.h:2
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:3
+#: plug-ins/script-fu/scripts/swirltile.scm.h:3
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:2
+msgid "Background Color"
+msgstr "Arkaplan Rengi"
 
-msgid "Plug-In Path"
-msgstr "Eklem Yolu"
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:3
+msgid "Block Size"
+msgstr "Blok Büyüklüğü"
 
-msgid "Restore values to the previous ones"
-msgstr "Değerleri bir önceki seçime çevir"
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:6
+msgid "End Blend"
+msgstr "Bitiş Harmanı"
 
-msgid "Illegal default font description for $function: $val\n"
-msgstr "$function için gerersiz yazıtipi tanımı: $val\n"
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
+#: plug-ins/script-fu/scripts/truchet.scm.h:5
+msgid "Number of X Tiles"
+msgstr "X Döşemelerin Sayısı"
 
-msgid "parameter '$entry->[1]' is not optional\n"
-msgstr "'$entry->[1]' parametresi seçimli değil\n"
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
+#: plug-ins/script-fu/scripts/truchet.scm.h:6
+msgid "Number of Y Tiles"
+msgstr "Y Döşemelerin Sayısı"
 
-msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
-msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-9"
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:14
+msgid "Start Blend"
+msgstr "Başlama Harmanı"
 
-msgid "WARNING: client tried to unlock without holding a lock"
-msgstr "UYARI: alıcı kilitlenmeden kilidi açmaya çalıştı"
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:8
+msgid "Supersample"
+msgstr "Üstörneklem"
 
-msgid "<Toolbox>/Xtns/Perl/Control Center..."
-msgstr "<Toolbox>/Xtns/Perl/Yönetim Merkezi..."
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:9
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:7
+msgid "Thickness"
+msgstr "Kalınlık"
 
-msgid "register called with too many or wrong arguments\n"
-msgstr "kayıt çok fazla veya yanlış argümanla çağrıldı\n"
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Add Bevel..."
+msgstr "<Image>/Script-Fu/Süs/Kabartı Ekle..."
 
-msgid "<Image>/Filters/Animation/Animate Cells..."
-msgstr "<Image>/Filtreler/Animasyon/Hücreleri Anime Et..."
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:2
+#: plug-ins/script-fu/scripts/chip-away.scm.h:11
+msgid "Keep Bump Layer"
+msgstr "Vurma Katmanını Sakla"
 
-msgid "Spin Layer SRC (250ms)"
-msgstr "Dönüş Katmanı KAYNAK (250ms)"
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
+#: plug-ins/script-fu/scripts/old_photo.scm.h:6
+#: plug-ins/script-fu/scripts/round-corners.scm.h:8
+#: plug-ins/script-fu/scripts/slide.scm.h:6
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:6
+msgid "Work on Copy"
+msgstr "Kopya Üzerinde Çalış"
 
+#: plug-ins/script-fu/scripts/addborder.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Add Border..."
+msgstr "<Image>/Script-Fu/Süs/Sınır Ekle..."
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:2
+msgid "Border Color"
+msgstr "Çevre Rengi"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:3
+msgid "Border X Size"
+msgstr "Çevre X Büyüklüğü"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:4
+msgid "Border Y Size"
+msgstr "Çevre Y Büyüklüğü"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:5
+msgid "Delta Value on Color"
+msgstr "Renkteki Fark Miktarı"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Yaratık Parlaması/Ok..."
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+msgid "Down"
+msgstr "Aşağı"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+#: plug-ins/script-fu/scripts/camo.scm.h:5
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+msgid "Flatten Image"
+msgstr "Resmi Düzleştir"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:8
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+msgid "Glow Color"
+msgstr "Parlama Rengi"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+msgid "Left"
+msgstr "Sol"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
+msgid "Orientation"
+msgstr "Konum"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
+msgid "Right"
+msgstr "Sağ"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: plug-ins/script-fu/scripts/lava.scm.h:7
+msgid "Size"
+msgstr "Boyut"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+msgid "Up"
+msgstr "Yukarı"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Yaratık Parlaması/Yatay "
+"Ayraç..."
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+msgid "Bar Height"
+msgstr "Çubuk Yüksekliği"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+msgid "Bar Length"
+msgstr "Çubuk Uzunluğu"
+
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Yaratık Parlaması/Madde İmi..."
+
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: plug-ins/script-fu/scripts/tileblur.scm.h:7
+msgid "Radius"
+msgstr "Yarıçap"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Yaratık Parlaması/Düğme..."
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+msgid "Glow Radius"
+msgstr "Parlama Yarıçapı"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:6
+msgid "Padding"
+msgstr "Tampon"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: plug-ins/script-fu/scripts/asc2img.scm.h:9
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:16
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
+#: plug-ins/script-fu/scripts/news-text.scm.h:10
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:14
+#: plug-ins/script-fu/scripts/speed-text.scm.h:8
+msgid "Text Color"
+msgstr "Metin Rengi"
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Yaratık Parlaması..."
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Yaratık Parlaması..."
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
+msgid "Glow Size (pixels * 4)"
+msgstr "Parlama Büyüklüğü (piksel * 4)"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Yaratık Lambası..."
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Yaratık Lambası..."
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
+msgid "Fade Away"
+msgstr "Soldur"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
+msgid "Number of Bands"
+msgstr "Kuşak Sayısı"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+msgid "Width of Bands"
+msgstr "Kuşakların Genişliği"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
+msgid "Width of Gaps"
+msgstr "Boşlukların Genişliği"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:1
+msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
+msgstr "<Image>/Script-Fu/Araçlar/ASCII'den Resim Katmanına..."
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Araçlar/ASCII'den Resme..."
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:5
+#, no-c-format
+msgid "Buffer Amount (% Height of Text)"
+msgstr "Önbellek Miktarı (Metin Yüksekliği Yüzdesi)"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:6
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:3
+msgid "Filename"
+msgstr "Dosya İsmi"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:10
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:4
+msgid "Transparent Background"
+msgstr "Şeffaf Arkaplan"
+
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Temel I..."
+
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Temel I..."
+
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Temel II..."
+
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Temel II..."
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Düğmeler/Basit Kabartılı Düğme..."
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:2
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:2
+msgid "Bevel Width"
+msgstr "Kabartı Genişliği"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:5
+msgid "Lower-Right color"
+msgstr "Alt-Sağ rengi"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:11
+msgid "Pressed"
+msgstr "Basılı"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:10
+msgid "Upper-Left color"
+msgstr "Üst-Sol Renk"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Kabartılı Desen/Ok..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Kabartılı Desen/Madde İmi..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+msgid "Diameter"
+msgstr "Çevre"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Kabartılı Desen/Düğme..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Kabartılı Desen/Başlık..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Kabartılı Desen/Yatay Ayraç..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#: plug-ins/script-fu/scripts/swirltile.scm.h:7
+msgid "Height"
+msgstr "Yükseklik"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:9
+#: plug-ins/script-fu/scripts/swirltile.scm.h:10
+msgid "Width"
+msgstr "Genişlik"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Blend..."
+msgstr "<Image>/Script-Fu/Animatörler/Harmanla..."
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:2
+msgid "Intermediate Frames"
+msgstr "Ara Kareler"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:3
+msgid "Looped"
+msgstr "Dönüşlü"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:4
+msgid "Max. Blur Radius"
+msgstr "Azami Bulanıklık Yarıçapı"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Harman..."
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Harman..."
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:4
+msgid "Blend Mode"
+msgstr "Harman Modu"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:5
+msgid "Custom Gradient"
+msgstr "Seçimli Gradyan"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:7
+msgid "FG-BG-HSV"
+msgstr "OP-AP-RDD"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:8
+msgid "FG-BG-RGB"
+msgstr "ÖP-AP-KYM"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:9
+msgid "FG-Transparent"
+msgstr "ÖP-Şeffaf"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:12
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:6
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
+#: plug-ins/script-fu/scripts/land.scm.h:3
+#: plug-ins/script-fu/scripts/lava.scm.h:2
+#: plug-ins/script-fu/scripts/rendermap.scm.h:4
+msgid "Gradient"
+msgstr "Gradyan"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:13
+msgid "Offset (pixels)"
+msgstr "Ofset (piksel)"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/İnekleşme..."
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/İnekleşme..."
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+msgid "Spots density X"
+msgstr "X'te Noktaların Yoğunluğu"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+msgid "Spots density Y"
+msgstr "Y'de Noktaların Yoğunluğu"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
+msgid "Add Glowing"
+msgstr "Parlama Ekle"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+msgid "After Glow"
+msgstr "Parıltı Sonrası"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid ""
-"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
-"PARAM_TYPE"
+"Burn-In: Need two layers in total!\n"
+"        A foreground text layer with transparency\n"
+"        and a background layer."
 msgstr ""
-"bozuk parametre tanımı, [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] veya "
-"PARAM_TYPE bekleniyordu"
+"İçe Doğru Yan: Toplam iki katmana ihtiyaç var!\n"
+"               Şeffaflığı olan önplan yazı katmanı\n"
+"               ve bir arkaplan katmanı."
 
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+msgid "Corona Width"
+msgstr "Korona Genişliği"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+msgid "Fadeout"
+msgstr "Solma"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+msgid "Fadeout Width"
+msgstr "Solma Genişliği"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+msgid "Prepare for GIF"
+msgstr "GIF İçin Hazırla"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+msgid "Speed (pixels/frame)"
+msgstr "Hız (piksel/kare)"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/Kamuflaj..."
+
+#: plug-ins/script-fu/scripts/camo.scm.h:2
+msgid "Color 1"
+msgstr "1. Renk"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:3
+msgid "Color 2"
+msgstr "2. Renk"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:4
+msgid "Color 3"
+msgstr "3. Renk"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:6
+#: plug-ins/script-fu/scripts/rendermap.scm.h:5
+msgid "Granularity"
+msgstr "Parçacıklılık"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:7
+#: plug-ins/script-fu/scripts/rendermap.scm.h:6
+msgid "Image Size"
+msgstr "Resim Boyutu"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:8
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:3
+msgid "Smooth"
+msgstr "Yumuşat"
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:1
+msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
+msgstr "<Image>/Script-Fu/Şablon İşlemleri/Oy..."
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:2
+msgid "Carve White Areas"
+msgstr "Beyaz Alanları Oy"
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:3
+msgid "Image to Carve"
+msgstr "Oyulacak Resim"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Oyuk..."
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:2
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
+msgid "Background Image"
+msgstr "Arkaplan Resmi"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:3
+msgid "Carve Raised Text"
+msgstr "Yükselen Metni Oy"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:6
+msgid "Padding Around Text"
+msgstr "Metin Çevresinde Tampon Alan"
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Tebeşir..."
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Tebeşir..."
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:4
+msgid "Chalk Color"
+msgstr "Tebeşir Rengi"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Kıymıkla..."
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Kıymıkla..."
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:3
+msgid "Blur Amount"
+msgstr "Bulanma Oranı"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:4
+msgid "Chip Amount"
+msgstr "Kıymıklama Miktarı"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:5
+msgid "Drop Shadow"
+msgstr "Düşen Gölge"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:6
+msgid "Fill BG with Pattern"
+msgstr "Arkplanı Desenle Doldur"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:9
+msgid "Invert"
+msgstr "Tersine Çevir"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:10
+msgid "Keep Background"
+msgstr "Arkaplanı Sakla"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:1
+msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
+msgstr "<Image>/Script-Fu/Şablon İşlemleri/Krom Yap..."
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
+msgid "Chrome Balance"
+msgstr "Krom Dengesi"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
+msgid "Chrome Factor"
+msgstr "Krom Etkeni"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
+msgid "Chrome Lightness"
+msgstr "Krom Parlaklığı"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+msgid "Chrome Saturation"
+msgstr "Krom Matlığı"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:6
+msgid "Chrome White Areas"
+msgstr "Krom Beyaz Alanları"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
+msgid "Environment Map"
+msgstr "Çevre Kaplaması"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+msgid "Highlight Balance"
+msgstr "Parlama Dengesi"
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Krom..."
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Krom..."
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+msgid "Offsets (pixels * 2)"
+msgstr "Ofset (piksel * 2)"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:1
+msgid "<Image>/Script-Fu/Render/Circuit..."
+msgstr "<Image>/Script-Fu/Hesap/Devre..."
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:2
+msgid "Circuit Seed"
+msgstr "Devre Tohumu"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:3
+#: plug-ins/script-fu/scripts/lava.scm.h:3
+#: plug-ins/script-fu/scripts/predator.scm.h:3
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:11
+msgid "Keep Selection"
+msgstr "Seçimi Sakla"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:4
+msgid "No Background (only for separate layer)"
+msgstr "Arkaplan yok (sadece ayrı katman için)"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:5
+msgid "Oilify Mask Size"
+msgstr "Yağlama Maskesi Büyüklüğü"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:6
+#: plug-ins/script-fu/scripts/lava.scm.h:6
+#: plug-ins/script-fu/scripts/predator.scm.h:6
+msgid "Separate Layer"
+msgstr "Ayrı Katman"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Clothify..."
+msgstr "<Image>/Script-Fu/Simya/Kumaşlaştır..."
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:2
+#: plug-ins/script-fu/scripts/swirltile.scm.h:2
+msgid "Azimuth"
+msgstr "Azimut"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:3
+msgid "Blur X"
+msgstr "X Bulanıklığı"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:4
+msgid "Blur Y"
+msgstr "Y Bulanıklığı"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:5
+#: plug-ins/script-fu/scripts/swirltile.scm.h:5
+msgid "Depth"
+msgstr "Derinlik"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:6
+#: plug-ins/script-fu/scripts/swirltile.scm.h:6
+msgid "Elevation"
+msgstr "Kaldırma"
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
+msgstr "<Image>/Script-Fu/Süs/Kahve Lekesi..."
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid ""
-"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-"
-"1.1 and report this error"
+"Darken Only\n"
+"(Better, but only for Images with alot of White)"
 msgstr ""
-"gimp_pixel_rgns_register sadece 1, 2 veya 3 argümanı destekler, kurulumu "
-"gimp-1.1'e yükseltin ve bu hatayı bildirin"
-
-msgid "last argument to gimp_pattern_select_widget must be scalar ref"
-msgstr "gimp_pattern_select_widget'a son argüman sayıl dayanak olmalı"
-
-msgid ""
-"\n"
-"\n"
-"EMBEDDED POD DOCUMENTATION:\n"
-"\n"
-msgstr ""
-"\n"
-"\n"
-"GÖMÜLÜ POD BELGELERİ:\n"
-
-msgid "Fileselector for $name"
-msgstr "$name icin dosyaismi"
-
-msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr "<Toolbox>/Xtns/Hesapla/Pikseloluşturucu..."
-
-msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
-msgstr "Gimp::Drawable, Gimp::GimpDrawable olarak dönüştürülemedi (id %d)"
-
-msgid "<Image>/Filters/Distorts/MirrorSplit..."
-msgstr "<Image>/Filtreler/Boz/AynaAyrımı..."
-
-msgid "<Image>/Filters/Noise/Feedback..."
-msgstr "<Image>/Filtreler/Gürültü/Geri İtilim..."
-
-msgid "<Toolbox>/Xtns/Animation/Billboard..."
-msgstr "<Toolbox>/Xtns/Animasyon/Işıklı Tabela..."
-
-msgid "unable to create listening unix socket: $!\n"
-msgstr "unix dinleme soketi oluşturulamadı: $!\n"
-
-msgid ", %d bytes data]"
-msgstr ", %d bayt veri]"
-
-msgid "server requests authorization, but no authorization available\n"
-msgstr "sunucu yetki istiyor, fakat yetki mevcut değil\n"
-
-msgid "pdl height != region height"
-msgstr "pdl yüksekliği != bölüm yüksekliği"
-
-msgid "<Image>/Guides/Center Guide..."
-msgstr "<Image>/Kılavuzlar/Orta Kılavuz..."
-
-msgid "Close"
-msgstr "Kapat"
-
-msgid "unable to open $rgb_db_path"
-msgstr "$rgb_db_path açılamadı"
-
-msgid "You can't run this script with an INDEXED image!!"
-msgstr "Bu programı DİZİNLİ bir resimle çalıştıramazsınız!!"
-
-msgid ""
-"An even number of frames is needed for spin back.\n"
-"Adjusted frames up to $frames"
-msgstr ""
-"Geri döndürme için çift sayıda kare gerekir.\n"
-"Kare sayısı $frame olarak düzeltildi"
-
-msgid "<Image>/Filters/Render/Add Glow"
-msgstr "<Image>/Filtreler/Hesapla/Parlama Ekle"
-
-msgid "function name contains dashes instead of underscores"
-msgstr "fonksiyon ismi alt çizgi yerine tireler içeriyor"
-
-msgid "required callback 'run' not found\n"
-msgstr "gerekli geriçağrı 'run' bulunamadı\n"
-
-msgid ""
-"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-"
-"z and _ allowed"
-msgstr ""
-"$function: '$p->[1]' argümanı geçersiz karakterler içeriyor, sadece 0-9, a-z "
-"ve _ kullanılabilir"
-
-msgid "required callback 'query' not found\n"
-msgstr "gerekli geriçağrı 'query' bulunamadı\n"
-
-msgid ""
-"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
-"string"
-msgstr ""
-"INT32 değer bekleniyordu fakat '%s' alındı. Eğer gerçekten dizgi içinde "
-"geçirmek istiyorsanız '*1' ekleyin"
-
-msgid "wrong authorization, aborting connection"
-msgstr "yanlış yetki, bağlantı kesiliyor"
-
-msgid "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
-msgstr "geçersiz GIMP_HOST: 'spawn' bu sunucu için geçerli bir bağlantı yöntemi değil"
-
-msgid "WARNING"
-msgstr "UYARI"
-
-msgid "Brush Selection Dialog"
-msgstr "Fırça Seçim Penceresi"
-
-msgid "(none)"
-msgstr "(yok)"
-
-msgid ""
-"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
-"'use strict'"
-msgstr ""
-"INT32 değer bekleniyordu fakat '%s' alındı. Belki '%s' demek istediniz ve "
-"'use strict'i unuttunuz."
-
-msgid "authorization required for tcp connections"
-msgstr "tcp bağlantıları için yetki gerekiyor"
-
-msgid "[undefined]"
-msgstr "[tanımsız]"
-
-msgid "<Image>/Guides/Remove Guides"
-msgstr "<Image>/Kılavuzlar/Kılavuzları Kaldır"
-
-msgid "unable to open Gimp::Net communications socket: $!\n"
-msgstr "Gimp::Net iletişim soketi açılamadı: $!\n"
-
-msgid "You can't run this script without an ALPHA CHANNEL!!"
-msgstr "Bu programı ALFA KANALI olmadan çalıştıramazsınız!"
-
-msgid "WARNING: shared locking requested but not implemented"
-msgstr "UYARI: paylaşımlı kilitlenme istendi fakat desteklenmiyor"
-
-msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
-msgstr "<Toolbox>/Xtns/Hesapla/Yin-Yang..."
-
-msgid "<Image>/Filters/Logulator/SOTA Chrome"
-msgstr "<Image>/Filtreler/Logulatör/SOTA Krom"
-
-msgid "%s: procedural database execution failed"
-msgstr "%s: İşlemsel Veritabanı çalıştırılırken hata"
-
-msgid "<Image>/Video/VCR Console..."
-msgstr "<Image>/Video/VCR Konsolu..."
-
-msgid ", authorization required"
-msgstr ", yetki gerekli"
-
-msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr "<Toolbox>/Xtns/Hesapla/Altın Oran..."
-
-msgid "unable to create socketpair for gimp communications: $!"
-msgstr "gimp iletişimi için soket çifti oluşturulamadı: $!"
-
-msgid "<Image>/View/3D Surface..."
-msgstr "<Image>/Görüntü/3B Yüzey..."
-
-msgid "trying to start gimp with options \"$opt\"\n"
-msgstr "\"$opt\" seçenekleriyle gimp'i çalıştırma deneniyor\n"
-
-msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
-msgstr "<Toolbox>/Xtns/Hesapla/Logolar/İç Kabartı..."
-
-msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
-msgstr ""
-"menüyolu _mutlaka_ <Image>, <Toolbox>, <Load>, <Save> veya <None> ile "
-"başlamalı!"
-
-msgid "<Image>/Filters/Misc/Magick..."
-msgstr "<Image>/Filtreler/Çeşitli/Magick..."
-
-msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr "<Toolbox>/Xtns/Perl/Sunucu"
-
-msgid "<Image>/Edit/Repeat & Duplicate..."
-msgstr "<Image>/Düzenleme/Tekrar Et & Çoğalt"
-
-msgid "accepted unix connection"
-msgstr "unix bağlantısı kabul edildi"
-
-msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr "<Image>/Filtreler/Renkler/Gradyana Bindir..."
-
-msgid "<Image>/Filters/Logulator/Imigre-26"
-msgstr "<Image>/Filtreler/Logulatör/Imigre-26"
-
-msgid "gimp_tile_get_data is not yet implemented\n"
-msgstr "gimp_tile_get_data henüz desteklenmiyor\n"
-
-msgid "dunno how to pass arg type %d"
-msgstr "%d argüman tipinin nasıl geçirileceği bilinmiyor"
-
-msgid "Browse"
-msgstr "Gözat"
-
-msgid "Author"
-msgstr "Yazar"
-
-msgid "unable to create '$fn': $!"
-msgstr "'$fn' oluşturulamadı: $!"
-
-msgid "received QUIT request"
-msgstr "QUIT isteği alındı"
-
-msgid "unable to create listening tcp socket: $!\n"
-msgstr "tcp dinleme soketi oluşturulamadı: $!\n"
-
-msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
-msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-9"
-
-msgid ""
-"BLURB:\n"
-"\n"
-"$blurb\n"
-"\n"
-"HELP:\n"
-"\n"
-"$help"
-msgstr ""
-"ZIRILTI:\n"
-"\n"
-"$blurb\n"
-"\n"
-"YARDIM:\n"
-"\n"
-"$help"
-
-msgid "OK"
-msgstr "Tamam"
-
-msgid "gimp_tile_set_data is not yet implemented\n"
-msgstr "gimp_tile_set_data henüz desteklenmiyor\n"
-
-msgid "argument incompatible with type IMAGE"
-msgstr "argüman IMAGE tipi ile uyumsuz"
-
-msgid "accepting connections on port $port"
-msgstr "$port iskelesinden bağlantılar kabul ediliyor"
-
-msgid "<Image>/Filters/Text/Terral Text..."
-msgstr "<Image>/Filtreler/Hesapla/Yüzeysel Metin..."
-
-msgid "Description"
-msgstr "Tanımlama"
-
-msgid "params and return_vals must be array refs (even if empty)!"
-msgstr "parametreler ve dönüş değerleri dizi dayanak olmalı (boş olsa bile)!"
-
-msgid "<Image>/Filters/Logulator/Newsprint text"
-msgstr "<Image>/Filtreler/Logulatör/Gazete Baskısı Metin"
-
-msgid "<Image>/Filters/Animation/BlowInOut..."
-msgstr "<Image>/Filtreler/Animasyon/İçeDışaÜfle..."
-
-msgid "$_: illegal switch, try $0 --help\n"
-msgstr "$_: hatalı anahtar $0, --help'i deneyin\n"
-
-msgid "Unable to convert a reference to type '%s'"
-msgstr "Dayanak '%s' tipine dönüştürülemiyor"
-
-msgid "<Image>/Filters/Text/TeX String..."
-msgstr "<Image>/Filtreler/Metin/TeX Dizgisi..."
-
-msgid "<Image>/Guides/Guide Grid..."
-msgstr "<Image>/Kılavuzlar/Izgara Kılavuzlar..."
-
-msgid "<Toolbox>/Xtns/PDB Explorer..."
-msgstr "<Toolbox>/Xtns/IVT Gezgini..."
-
-msgid "<Image>/Filters/Distorts/Windify..."
-msgstr "<Image>/Filtreler/Boz/Rüzgar..."
-
-msgid "<Image>/Filters/Apply Perl Expression..."
-msgstr "<Image>/Filtreler/Perl İfadesi Uygula..."
-
-msgid "gimp procedure '%s' not found"
-msgstr "gimp işlemi '%s' bulunamadı"
-
-msgid "Visual Scriptor"
-msgstr "Görsel Senaryolayici"
-
-msgid "<Image>/Filters/Map/Xach Blocks..."
-msgstr "<Image>/Filtreler/Bindirme/Xach Blokları..."
-
-msgid "server going down..."
-msgstr "sunucu kapanıyor..."
-
-msgid "unable to read temporary file $tmp: $!"
-msgstr "$tmp geçici dosyası okunamadı: $!"
-
-msgid "Saving '$filename' as COLORHTML..."
-msgstr "'$filename' COLORHTML olarak kaydediliyor..."
-
-msgid "being called as '%s', but '%s' not registered in the pdb"
-msgstr "'%s' olarak çağrıldı, ancak '%s' IVT'de kayıtlı değil"
-
-msgid "Shortcuts"
-msgstr "Kısa yollar"
-
-msgid "<Image>/Filters/Logulator/Speed text"
-msgstr "<Image>/Filtreler/Logulatör/Hızlı Metin"
-
-msgid "<Toolbox>/Xtns/Create_Images"
-msgstr "<Toolbox>/Xtns/Resimler_Oluştur"
-
-msgid "<Toolbox>/Xtns/Parasite Editor..."
-msgstr "<Toolbox>/Xtns/Parazit Editörü..."
-
-msgid "9x15bold"
-msgstr "9x15bold"
-
-msgid "unauthorized command received, aborting connection"
-msgstr "yetkisiz komut alındı, bağlantı kesiliyor"
-
-msgid "%s: procedural database execution failed on invalid input arguments"
-msgstr ""
-"%s: İşlemsel Veritabanı çalıştırılırken geçersiz giriş argümanları hatası "
-"oluştu"
-
-msgid "<Toolbox>/Xtns/Visual Scriptor..."
-msgstr "<Toolbox>/Xtns/Görsel Programlayıcı..."
-
-msgid "NAME"
-msgstr "ISIM"
-
-msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
-msgstr "UYARI: $function geriye resim olmayan bir değer döndürdü: \"$img\"\n"
-
-msgid "<Image>/Filters/Colors/Fire..."
-msgstr "<Image>/Filtreler/Renkler/Ateş..."
-
-msgid "<Image>/Filters/Logulator/Web title header"
-msgstr "<Image>/Filtreler/Logulatör/Web başlığı"
-
-msgid "FATAL: canonicalize_colour did not return a value!"
-msgstr "HAYATİ: canonicalize_colour geriye değer döndürmedi!"
-
-msgid "export failed"
-msgstr "dışa aktarım başarısız"
-
-msgid ""
-"       interface-arguments are\n"
-"           -o | --output <filespec>   write image to disk, don't display\n"
-"           -i | --interact            let the user edit the values first\n"
-"       script-arguments are\n"
-msgstr ""
-"       arayüz-argümanları\n"
-"           -o | --output <dosya>  resmi diske kaydet, gösterme\n"
-"           -i | --interact        kullanıcının değerleri değiştirmesine\n"
-"                                  izin ver\n"
-"       program-argümanları\n"
-
-msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
-msgstr "<Image>/Filtreler/Kenar-Tarama/2x2 Kenar Tarama"
-
-msgid "<Image>/Layers/Center Layer"
-msgstr "<Image>/Katmanlar/Katmanı Ortala"
-
-msgid "closing connection %d (%d requests in %g seconds)"
-msgstr "%d bağlantısı kapaniyor (%d istek / %g saniye)"
-
-msgid "Reset all values to their default"
-msgstr "Tüm değerleri öntanımlı değerlere çevir"
-
-msgid "<Image>/Filters/Misc/Border Average..."
-msgstr "<Image>/Filtreler/Çeşitli/Çerçeve Ortalaması..."
-
-msgid ""
-"conversion from string to type $pf_type2string{$type} is not yet "
-"implemented\n"
-msgstr "dizgiden $pf_type2string{$type} tipine dönüş henüz desteklenmiyor\n"
-
-msgid ""
-"Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
-"       gimp-arguments are\n"
-"           -gimp <anything>           used internally only\n"
-"           -h | -help | --help | -?   print some help\n"
-"           -v | --verbose             be more verbose in what you do\n"
-"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using "
-"PORT)\n"
-"                                      (for more info, see Gimp::Net(3))\n"
-msgstr ""
-"Kullanılışı: $0 [gimp-argümanları] [arayüz-argümanları] [program-"
-"argümanları]\n"
-"             gimp-argümanları\n"
-"                 -gimp <herhangi birşey>\n"
-"                 -h | -help | --help | -?   Yardım\n"
-"                 -v | --verbose             Yaptıkların hakkında daha fazla\n"
-"                                            bilgi ver\n"
-"                 --host|--tcp HOST[:PORT]   HOST'a bağlan (tercihen "
-"PORT'tan)\n"
-"                                            (daha fazla bilgi için, Gimp::Net"
-"(3)'i\n"
-"                                            okuyun)\n"
-
-msgid "too many arguments"
-msgstr "çok fazla argüman"
-
-msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
-msgstr "boyut uyumsuzluğu, pdl %d boyutunda, fakat en çok %d boyutu kabul ediliyor"
-
-msgid "Load"
-msgstr "Yükle"
-
-msgid "unable to grok colour specification"
-msgstr "renk tanımı anlaşılamadı"
-
-msgid "no additional information available, use --help\n"
-msgstr "daha fazla bilgi mevcut değil, --help'i kullanın\n"
-
-msgid ""
-"the gtk perl module is required to open a dialog\n"
-"window, running with default values"
-msgstr ""
-"pencere açmak için gtk perl modülüne ihtiyaç var,\n"
-"öntanımlı değerlerle çalıştırılıyor"
-
-msgid "Gradient Selection Dialog"
-msgstr "Gradyan Seçim Penceresi"
-
-msgid " matching functions"
-msgstr " eşlenen fonksiyon"
-
-msgid "authorization ok, but: $r[1]\n"
-msgstr "yetki tamam, fakat: $r[1]\n"
-
-msgid "Cannot call '$AUTOLOAD' at this time"
-msgstr "'$AUTOLOAD' şu an çağrılamaz"
-
-msgid "function/macro \"$name\" not found in $class"
-msgstr "fonksiyon/makro \"$name\", $class içinde bulunamadı"
-
-msgid "arguments to main not yet supported!"
-msgstr "main'e argümanlar henüz desteklenmiyor!"
-
-msgid "accepting connections in $host"
-msgstr "$host adresinde bağlantılar kabul ediliyor"
-
-msgid " (press Tab to complete)"
-msgstr " (tamamlamak icin Tab'a basın)"
-
-msgid "Save $name"
-msgstr "$name dosyasını kaydet"
-
-msgid "<Image>/Filters/Enhance/Warp Sharp..."
-msgstr "<Image>/Filtreler/İyileştir/Silerek Keskinleştir..."
-
-msgid "<Image>/Filters/Web/Prepare for GIF..."
-msgstr "<Image>/Filtreler/Ağ/GIF için hazırla..."
-
-msgid "illegal type for colour specification"
-msgstr "renk tanımı için geçersiz tip"
-
-msgid "<Image> plug-in called without both image and drawable arguments!\n"
-msgstr "<Image> eklemi resim ve çizilebilir argümanları olmadan çağrıldı!\n"
-
-msgid "Seth Spin..."
-msgstr "Seth Dönüşü..."
-
-msgid "get current background colour from the gimp"
-msgstr "gimp'ten seçili arkaplan rengini al"
-
-msgid "<Image>/Filters/Text/Fit Text..."
-msgstr "<Image>/Filtreler/Text/Uygun Yazı..."
-
-msgid "No horizontal or vertical guides found. Aborted."
-msgstr "Hiç yatay veya dikey kılavuz bulunamadı. İptal edildi."
-
-msgid "accepting connections on port $Gimp::Net::default_tcp_port"
-msgstr "$Gimp::Net::default_tcp_port portundan bağlantılar kabul ediliyor"
-
-msgid "Menu Path"
-msgstr "Menü Yolu"
-
-msgid "TYPE"
-msgstr "TİP"
-
-msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
-msgstr "<Toolbox>/Xtns/Hesapla/Povray/Kaplama..."
-
-msgid "You need at least 2 layers to perform prep4gif"
-msgstr "prep4gif için en azından 2 katmana ihtiyacınız var"
-
-msgid "<Image>/Filters/Blur/2x2 Blur"
-msgstr "<Image>/Filtreler/Bulanık/2x2 Bulanık"
-
-msgid "interface '$interface_type' unsupported."
-msgstr "'$interface_type' arayüzü desteklenmiyor."
-
-msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr "<Image>/Filtreler/İyileştir/2x2 Kontrastı İyileştir"
-
-msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr "<Load> eklemi 3 standart argüman olmadan çağrıldı!\n"
-
-msgid "Unable to grok '%s' as colour specifier"
-msgstr "'%s' renk tanımı olarak algılanamıyor"
-
-msgid "gimp-perl-pixel functions require the PDL::Core module"
-msgstr "gimp-perl-pixel fonksiyonları PDL:Core modülüne ihtiyac duyar"
-
-msgid "a color must have three components (array elements)"
-msgstr "bir renk üç bileşene sahip olmalı (dizi elemanları)"
-
-msgid "Defaults"
-msgstr "Öntanımlılar"
-
-msgid "Copyright"
-msgstr "Telif hakkı"
-
-msgid "<Image>/Select/Triangle..."
-msgstr "<Image>/Seçim/Üçgen..."
-
-msgid "<Image>/Filters/Render/Burst..."
-msgstr "<Image>/Filtreler/Hesapla/Patlama..."
-
-msgid "WARNING: client disconnected while holding an active lock\n"
-msgstr "UYARI: aktif bir kilit varken alıcı bağlantıyı kesti\n"
-
-msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
-msgstr "<Toolbox>/Xtns/Gimp::Fu Örneği..."
-
-msgid "/Xtns/Render/Logos"
-msgstr "/Xtns/Hesapla/Logolar"
-
-msgid "argument is not of type %s"
-msgstr "argüman %s tipinde değil"
-
-msgid "server version $Gimp::VERSION started"
-msgstr "sürüm $Gimp::VERSION sunucu çalıştı"
-
-msgid "Background"
-msgstr "Arkaplan"
-
-msgid "%s arguments for function '%s'"
-msgstr "%s tane '%s' fonksiyonu için argüman"
-
-msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr "<Toolbox>/Xtns/Hesapla/Logolar/Parlayan Çelik"
-
-msgid "only blessed scalars accepted here"
-msgstr "Sadece tam degerli girdiler burda kabul edilir"
-
-msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
-msgstr ""
-"$Gimp::_PROT_VERSION protokol versiyonu bekleniyordu, fakat sunucu $r[0] "
-"kullanıyor.\n"
-
-msgid "illegal parasite specification, arrayref expected"
-msgstr "geçersiz parazit tanımı, dizidayanak bekleniyordu"
-
-msgid "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
-msgstr "boyut uyumsuzluğu, pdl %d boyutunda, ancak en az %d boyutu gerekiyor"
-
-msgid "Save"
-msgstr "Kaydet"
-
-msgid "<Image>/Filters/Logulator/Carved"
-msgstr "<Image>/Filtreler/Logulatör/Oyuk"
-
-msgid "Function Info"
-msgstr "Fonksiyon Bilgisi"
-
-msgid "no font specified, using default"
-msgstr "yazıtipi tanımlanmadı, öntanımlı değer kullanılıyor"
-
-msgid ""
-"the gtk perl module is required to run\n"
-"this plug-in in interactive mode\n"
-msgstr ""
-"bu eklemi etkileşimli olarak çalıştırmak için\n"
-"gtk perl modülüne ihtiyaç duyuluyor\n"
-
-msgid "authorization failed: $r[1]\n"
-msgstr "yetki başarısız: $r[1]\n"
-
-msgid "Previous"
-msgstr "Önceki"
-
-msgid "Command"
-msgstr "Komut"
-
-msgid ""
-"$function: calling $AUTOLOAD without specifying the :auto import tag is "
-"deprecated!\n"
-msgstr ""
-"$function: :otomatik dışa aktarım etiketi olmadan $AUTOLOAD çağrımı artık "
-"geçersiz!\n"
-
-msgid "<Toolbox>/Xtns/Render/Bricks..."
-msgstr "<Toolbox>/Xtns/Hesapla/Tuğlalar..."
-
-msgid "DESCRIPTION"
-msgstr "TANIMLAMA"
-
-msgid "Accelerator"
-msgstr "Basam"
-
-msgid "Cancel"
-msgstr "İptal"
-
-msgid "<Image>/Filters/Map/Xach Shadows..."
-msgstr "<Image>/Filtreler/Bindirme/Xach Gölgeleri..."
-
-msgid "argument type %s expected (not %s)"
-msgstr "argüman tipi %s bekleniyordu (%s değil)"
-
-msgid "BG"
-msgstr "AP"
-
-msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
-msgstr "piksel boyu uyumsuzluğu, pdl %d kanallı piksele sahip fakat %d kanal gerekli"
-
-msgid "<Image>/Filters/Render/Highlight Edges..."
-msgstr "<Image>/Filtreler/Hesapla/Parlayan Kenarlar..."
-
-msgid "This module was built without support for PDL."
-msgstr "Bu modül IVT desteği olmadan kurulmuş."
-
-msgid "[unfinished]\n"
-msgstr "[bitmemiş]\n"
-
-msgid "Spin Layer DEST (250ms)"
-msgstr "Dönüş Katmanı HEDEF (250ms)"
-
-msgid "Bumpmap"
-msgstr "Kabartıharita"
-
-msgid "Date/Version"
-msgstr "Tarih/Sürüm"
-
-msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
-msgstr "$function: argüman/dönüş değeri '$p->[1]' geçersiz '$p->[0]' tipine sahip"
-
-msgid "required callback 'net' not found\n"
-msgstr "gerekli geriçağrı 'net' bulunamadı\n"
-
-msgid "function '$exe' not found in this script (must be one of "
-msgstr "'$exe' fonksiyonu bu programda bulunamadı (şunlardan biri olmalı: "
-
-msgid "<Image>/Filters/Colors/Colour To Alpha..."
-msgstr "<Image>/Filtreler/Renkler/Renk Alfa'ya..."
-
-msgid "/Xtns/Perl"
-msgstr "/Xtns/Perl"
-
-msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr "<Toolbox>/Xtns/Hesapla/Raslantısal Sanat #1..."
-
-msgid "accepted tcp connection from "
-msgstr "tcp bağlantısının kabul edildiği adres"
-
-msgid "Status"
-msgstr "Durum"
-
-msgid "Load $name"
-msgstr "$name Yüklensin"
-
-msgid "<Save> plug-in called without the 5 standard arguments!\n"
-msgstr "<Save> eklemi 5 standart argüman olmadan çağrıldı!\n"
-
-msgid "unable to accept unix connection: $!\n"
-msgstr "unix bağlantısı kabul edilemedi: $!\n"
-
-msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr "<Toolbox>/Xtns/Örnek Perl Eklem"
-
-msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
-msgstr "<Toolbox>/Xtns/Hesapla/Povray/Ayarlar..."
-
-msgid "unable to accept tcp connection: $!\n"
-msgstr "tcp bağlantısı kabul edilemedi: $!\n"
-
-msgid "(UNINITIALIZED)"
-msgstr "(ÖN HAZIRLIKSIZ)"
-
-msgid "<Image>/Filters/Render/Brushed Metal..."
-msgstr "<Image>/Filtreler/Hesapla/Fırçalanmış Metal..."
-
-msgid "perl-arrayref required as datatype for a gimp-array"
-msgstr "perl-dizidayanak gimp-dizisi için veritipi olarak gerekli"
-
-msgid "<Image>/Filters/Web/Webify..."
-msgstr "<Image>/Filtreler/Ağ/Ağ'laştır..."
-
-msgid "Unable to open '$filename' for writing: $!\n"
-msgstr "'$filename' yazma için açılamadı: $!\n"
-
-msgid "Unsupported argumenttype $type"
-msgstr "$type desteklenmeyen argüman tipi"
-
-msgid "/Xtns/Render/Povray"
-msgstr "/Xtns/Hesapla/Povray"
-
+"Sadece Karart\n"
+"(Sadece cok fazla beyaz alanlı resimler için daha iyi)"
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:3
+msgid "Stains"
+msgstr "Lekeler"
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Çizgi Roman..."
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Çizgi Roman..."
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:7
+msgid "Outline Color"
+msgstr "Dış Çizgi Rengi"
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:8
+#: plug-ins/script-fu/scripts/glossy.scm.h:9
+msgid "Outline Size"
+msgstr "Dış Çizgi Boyutu"
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Havalı Metal..."
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Havalı Metal..."
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+msgid "Effect Size (pixels)"
+msgstr "Etki Büyüklüğü (piksel)"
+
+#: plug-ins/script-fu/scripts/copy-visible.scm.h:1
+msgid "<Image>/Edit/Copy Visible"
+msgstr "<Image>/Düzenle/Görüneni Kopyala"
+
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Kristal..."
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:1
+msgid "<Image>/Script-Fu/Selection/Distress Selection..."
+msgstr "<Image>/Script-Fu/Seçim/Seçime Zarar Ver..."
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:2
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
+msgid "Granularity (1 is Low)"
+msgstr "Parçacıklılık (1 Küçük Olmak Üzere)"
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:4
+msgid "Smooth Horizontally"
+msgstr "Yatay Olarak Yumuşat"
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:5
+msgid "Smooth Vertically"
+msgstr "Dikey Olarak Yumuşat"
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:6
+msgid "Spread"
+msgstr "Etrafa Saç"
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:7
+msgid "Threshold (Bigger 1<-->255 Smaller)"
+msgstr "Alt Eşik (Büyük 1<-->255 Küçük)"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
+msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
+msgstr "<Image>/Script-Fu/Gölge/Düşen Gölge..."
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
+msgid "Allow Resizing"
+msgstr "Boyutlandırma İzni"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:3
+#: plug-ins/script-fu/scripts/news-text.scm.h:3
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
+#: plug-ins/script-fu/scripts/round-corners.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:4
+msgid "Blur Radius"
+msgstr "Bulanma Yarıçapı"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
 msgid "Color"
 msgstr "Renk"
 
-msgid "authorization unnecessary"
-msgstr "yetki gerekli değil"
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
+msgid "Offset X"
+msgstr "X Ofset"
 
-msgid "illegal parasite specification, reference expected"
-msgstr "geçersiz parazit tanımı, dayanak bekleniyordu"
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:12
+msgid "Offset Y"
+msgstr "Y Ofset"
 
-msgid "too many arguments, use --help\n"
-msgstr "çok fazla argüman, --help'i deneyin\n"
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+msgid "Opacity"
+msgstr "Saydamsızlık"
 
-msgid "<Toolbox>/Xtns/Render/Font Table..."
-msgstr "<Toolbox>/Xtns/Hesapla/Yazıtipi Tablosu..."
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
+msgstr "<Image>/Script-Fu/Simya/Her Diğer Satırı Sil..."
 
-msgid "Edit"
-msgstr "Düzenle"
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:2
+msgid "Columns"
+msgstr "Sütunlar"
 
-msgid "<Image>/Filters/Logulator/Blended II..."
-msgstr "<Image>/Filtreler/Logulatör/Harman II..."
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:3
+msgid "Erase"
+msgstr "Sil"
 
-msgid "Saving '$filename' as DATAURL..."
-msgstr "'$filename' DATAURL olarak kaydediliyor..."
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:4
+msgid "Erase/Fill"
+msgstr "Sil/Doldur"
 
-msgid "text string is empty"
-msgstr "metin dizgisi boş"
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:5
+msgid "Even"
+msgstr "Çift"
 
-msgid "<Image>/Filters/Distorts/Scratches..."
-msgstr "<Image>/Filtreler/Boz/İzler..."
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:6
+msgid "Even/Odd"
+msgstr "Çift/Tek"
 
-msgid "$_: unknown/illegal file-save option"
-msgstr "$_: bilinmeyen/hatalı dosya-kayıt seçeneği"
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:7
+msgid "Fill with BG"
+msgstr "Arkaplanla Doldur"
 
-msgid "/Xtns/Render"
-msgstr "/Xtns/Hesapla"
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:8
+msgid "Odd"
+msgstr "Tek"
 
-msgid " = [argument error]\n"
-msgstr "= [argüman hatası]\n"
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:9
+msgid "Rows"
+msgstr "Satırlar"
 
-msgid "<Image>/Select/Round..."
-msgstr "<Image>/Seçim/Yuvarlaklaştır..."
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:10
+msgid "Rows/Cols"
+msgstr "Satır/Sütun"
 
-msgid "plug-in returned %d more values than expected"
-msgstr "eklem beklenenden %d fazla değer geri döndürdü"
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:1
+msgid "<Image>/Script-Fu/Selection/Fade Outline..."
+msgstr "<Image>/Script-Fu/Seçim/Dış Çizgiyi Soldur..."
 
-msgid "$_ is not a valid import tag for package $pkg"
-msgstr "$pkg paketi için $_ geçerli bir içe aktarım etiketi değil"
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:2
+msgid "Apply Generated Layermask"
+msgstr "Oluşturulan Katman Maskesini Uygula"
 
-msgid "url size is too large ($max > 1024)\n"
-msgstr "url boyu çok büyük ($max > 1024)\n"
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:3
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+msgid "Border Size"
+msgstr "Çevre Büyüklüğü"
 
-msgid "illegal command received, aborting connection"
-msgstr "geçersiz komut alındı, bağlantı kesiliyor"
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:4
+msgid "Clear Unselected Maskarea"
+msgstr "Seçilmemiş Maske Alanını Temizle"
 
-msgid "<Image>/Filters/Noise/Ditherize..."
-msgstr "<Image>/Filtreler/Gürültü/Geçişlendir..."
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:6
+#, no-c-format
+msgid "Fade From %"
+msgstr "Başlama %"
 
-msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/Xtns/Animasyon/Seth Dönüşü..."
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:8
+#, no-c-format
+msgid "Fade To   %"
+msgstr "Bitiş %"
 
-msgid "Pattern Selection Dialog"
-msgstr "Desen Seçim Penceresi"
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:9
+msgid "Use Growing Selection"
+msgstr "Artan Seçim Kullan"
 
-msgid "get current foreground colour from the gimp"
-msgstr "gimp'ten seçili önplan rengini al"
+#: plug-ins/script-fu/scripts/flatland.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/Düzalan..."
 
-msgid "<Image>/Filters/Render/Add Dust..."
-msgstr "<Image>/Filtreler/Hesapla/Toz Ekle..."
+#: plug-ins/script-fu/scripts/flatland.scm.h:2
+#: plug-ins/script-fu/scripts/land.scm.h:2
+msgid "Detail Level"
+msgstr "Detay Seviyesi"
 
-msgid "not enough"
-msgstr "yeterli değil"
+#: plug-ins/script-fu/scripts/flatland.scm.h:3
+#: plug-ins/script-fu/scripts/land.scm.h:4
+msgid "Image Height"
+msgstr "Resim Yüksekliği"
 
-msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-msgstr "IVT Gezgini - olof baskısı (halen alfa sürüm)"
+#: plug-ins/script-fu/scripts/flatland.scm.h:4
+#: plug-ins/script-fu/scripts/land.scm.h:5
+msgid "Image Width"
+msgstr "Resim Genişliği"
 
-msgid "<Image>/Filters/Web/Perl-o-tine..."
-msgstr "<Image>/Filtreler/Ağ/Perl-o-tin..."
+#: plug-ins/script-fu/scripts/flatland.scm.h:5
+#: plug-ins/script-fu/scripts/land.scm.h:7
+msgid "Random Seed"
+msgstr "Raslantısallık Tohumu"
 
-msgid "<Image>/Layers/Stack/Reorder Layers..."
-msgstr "<Image>/Katmanlar/Küme/Katmanları Tekrar Sırala..."
+#: plug-ins/script-fu/scripts/flatland.scm.h:6
+#: plug-ins/script-fu/scripts/land.scm.h:8
+msgid "Scale X"
+msgstr "X Ölçeği"
 
-msgid "accepting connections on $unix_path"
-msgstr "$unix_path yolundan bağlantılar kabul ediliyor"
+#: plug-ins/script-fu/scripts/flatland.scm.h:7
+#: plug-ins/script-fu/scripts/land.scm.h:9
+msgid "Scale Y"
+msgstr "Y Ölçeği"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Araçlar/Yazıtipi Haritası..."
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:2
+#: plug-ins/script-fu/scripts/old_photo.scm.h:2
+msgid "Border"
+msgstr "Çevre"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:4
+msgid "Fonts"
+msgstr "Yazıtipleri"
+
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Buzlu..."
+
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Buzlu..."
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
+msgstr "<Image>/Script-Fu/Süs/Bulanık Sınır..."
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
+msgid "Add Shadow"
+msgstr "Gölge Ekle"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
+msgid "Blur Border"
+msgstr "Bulanma Sınırı"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
+#, no-c-format
+msgid "Shadow Weight (%)"
+msgstr "Gölge Ağırlığı (%)"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Büyük Başlık..."
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Küçük Başlık..."
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
+msgid "AutoCrop"
+msgstr "OtoKes"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
+msgid "Dark Color"
+msgstr "Koyu Renk"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:7
+msgid "Highlight Color"
+msgstr "Parlama Rengi"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
+msgid "Index Image"
+msgstr "Katalog Resmi"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
+msgid "Number of Colors"
+msgstr "Renk Sayısı"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
+msgid "Remove Background"
+msgstr "Arkaplanı Kaldır"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
+msgid "Select-By-Color Threshold"
+msgstr "Renkle Seçme Alt Eşiği"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
+msgid "Shadow Color"
+msgstr "Gölge Rengi"
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Genel Tüp İsimler..."
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Tüp Düğme İsmi..."
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Tüp Alt-Düğme İsmi..."
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
+"Label..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Tüp Alt-Alt-Düğme "
+"İsmi..."
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Cilalı..."
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Cilalı..."
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:4
+msgid "Blend Gradient (Outline)"
+msgstr "Harman Gradyanı (Dış çizgi)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:5
+msgid "Blend Gradient (Text)"
+msgstr "Harman Gradyanı (Metin)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:10
+msgid "Pattern (Outline)"
+msgstr "Desen (Dış Çizgi)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:11
+msgid "Pattern (Overlay)"
+msgstr "Desen (Üstüne Koyma)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:12
+msgid "Pattern (Text)"
+msgstr "Desen (Metin)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:13
+#: plug-ins/script-fu/scripts/sphere.scm.h:5
+msgid "Shadow"
+msgstr "Gölge"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:17
+msgid "Use Pattern Overlay"
+msgstr "Deseni Üstüne Koy"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:18
+msgid "Use Pattern for Outline instead of Gradient"
+msgstr "Dış Çizgi için Gradyan yerine Desen kullan"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:19
+msgid "Use Pattern for Text instead of Gradient"
+msgstr "Metin için Gradyan yerine Desen kullan"
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Parıltılı Sıcaklık..."
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Parlayan Sıcaklık..."
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+msgid "Effect Size (pixels * 3)"
+msgstr "Etki Büyüklüğü (piksel * 3)"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Gradyan Kabartı..."
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Gradyan Kabartı..."
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+msgid "Bevel Height (Sharpness)"
+msgstr "Kabartı Yüksekliği (Keskinlik)"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:4
+msgid "Border Size (pixels)"
+msgstr "Çevre Büyüklüğü (piksel)"
+
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Araçlar/Seçimli Gradyan..."
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:1
+msgid "<Image>/Script-Fu/Render/Make Grid System..."
+msgstr "<Image>/Script-Fu/Hesap/Izgara Sistemi Yap..."
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:2
+msgid "Grids X"
+msgstr "Izgara X"
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:3
+msgid "Grids Y"
+msgstr "Izgara Y"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
+msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
+msgstr "<Image>/Script-Fu/Araçlar/HSV Grafiğini Çiz..."
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
+msgid "BG Opacity"
+msgstr "AP Saydamsızlığı"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
+msgid "End X"
+msgstr "Bitiş X"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:4
+msgid "End Y"
+msgstr "Bitiş Y"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:5
+msgid "From Top-Left to Bottom-Right"
+msgstr "Üst-Soldan Aşağı-Sağa"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
+msgid "Graph Scale"
+msgstr "Grafik Ölçeği"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
+msgid "Start X"
+msgstr "Başlama X"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:8
+msgid "Start Y"
+msgstr "Başlama Y"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
+msgid "Use Selection Bounds Instead of Belows"
+msgstr "Aşağıdakiler Yerine Seçimi Kullan"
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Imigre-26..."
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
+msgid "Frame Color"
+msgstr "Çerçeve Rengi"
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
+msgid "Frame Size"
+msgstr "Çerçeve Boyutu"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:1
+msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
+msgstr "<Image>/Script-Fu/Araçlar/Resmin Yapısını Göster..."
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:2
+msgid "Apply Layer Mask (or discard)"
+msgstr "Katman Maskesini Uygulua (veya iptal et)"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:4
+msgid "Create New Image"
+msgstr "Yeni Resim Oluştur"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:5
+msgid "Insert Layer Names"
+msgstr "Katman İsimlerini Yaz"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:6
+msgid "Make New Background"
+msgstr "Yeni Arkaplan Yap"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:7
+msgid "Outer Border"
+msgstr "Dış Sınır"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:8
+msgid "Pad Color"
+msgstr "Tampon Rengi"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:9
+msgid "Pad Opacity"
+msgstr "Tampon Saydamsızlığı"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:10
+msgid "Padding for Transparent Regions"
+msgstr "Şeffaf Alanlar İçin Tampon"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:11
+msgid "Shear Length"
+msgstr "Eğme Uzaklığı"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:12
+msgid "Space Between Layers"
+msgstr "Katmanlar Arası Boşluk"
+
+#: plug-ins/script-fu/scripts/land.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/Alan..."
+
+#: plug-ins/script-fu/scripts/land.scm.h:6
+msgid "Land Height"
+msgstr "Alan Yüksekliği"
+
+#: plug-ins/script-fu/scripts/land.scm.h:10
+msgid "Sea Depth"
+msgstr "Deniz Derinliği"
+
+#: plug-ins/script-fu/scripts/lava.scm.h:1
+msgid "<Image>/Script-Fu/Render/Lava..."
+msgstr "<Image>/Script-Fu/Hesap/Lav..."
+
+#: plug-ins/script-fu/scripts/lava.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:8
+msgid "Roughness"
+msgstr "Engebe Miktarı"
+
+#: plug-ins/script-fu/scripts/lava.scm.h:5
+msgid "Seed"
+msgstr "Tohum"
+
+#: plug-ins/script-fu/scripts/lava.scm.h:8
+msgid "Use Current Gradient"
+msgstr "Etkin Gradyanı Kullan"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:1
+msgid "<Image>/Script-Fu/Render/Line Nova..."
+msgstr "<Image>/Script-Fu/Hesap/Çizgi Nova..."
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:2
+msgid "Number of Lines"
+msgstr "Çizgi Sayısı"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:3
+msgid "Offset Radius"
+msgstr "Ofset Yarıçapı"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:4
+msgid "Randomness"
+msgstr "Raslantısallık"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:5
+msgid "Sharpness (degrees)"
+msgstr "Keskinlik (derece)"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Fırça Yap/Eliptik, Yumuşak Geçişli..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Fırça Yap/Eliptik..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:3
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Fırça Yap/Dörtgen, Yumuşak Geçişli..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Fırça Yap/Dörtgen..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:5
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:2
+msgid "Description"
+msgstr "Açıklama"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:6
+msgid "Feathering"
+msgstr "Yumuşak Geçiş"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:8
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:4
+msgid "Spacing"
+msgstr "Boşluk"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Lamba..."
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Lamba..."
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:4
+msgid "Create Shadow"
+msgstr "Gölge Oluştur"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:5
+msgid "Effect Size (pixels * 5)"
+msgstr "Etki Büyüklüğü (piksel * 5)"
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Gazete Metni..."
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:4
+msgid "Cell Size (pixels)"
+msgstr "Hücre Boyutu (piksel)"
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:6
+#: plug-ins/script-fu/scripts/speed-text.scm.h:4
+#, no-c-format
+msgid "Density (%)"
+msgstr "Yoğunluk (%)"
+
+#: plug-ins/script-fu/scripts/old_photo.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Old Photo..."
+msgstr "<Image>/Script-Fu/Süs/Eski Resim..."
+
+#: plug-ins/script-fu/scripts/old_photo.scm.h:3
+msgid "Defocus"
+msgstr "Odak Dışına Çıkar"
+
+#: plug-ins/script-fu/scripts/old_photo.scm.h:4
+msgid "Mottle"
+msgstr "Benekle"
+
+#: plug-ins/script-fu/scripts/old_photo.scm.h:5
+msgid "Sepia"
+msgstr "Renksiz"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+msgid "<Image>/Script-Fu/Shadow/Perspective..."
+msgstr "<Image>/Script-Fu/Gölge/Perspektif..."
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
+msgid "Angle"
+msgstr "Açı"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
+msgid "Interpolate"
+msgstr "Aradeğerleme"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+msgid "Relative Distance of Horizon"
+msgstr "Ufuğa Göreli Uzaklık"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+msgid "Relative Length of Shadow"
+msgstr "Gölgenin Göreli Uzunluğu"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Predator..."
+msgstr "<Image>/Script-Fu/Simya/Predatör..."
+
+#: plug-ins/script-fu/scripts/predator.scm.h:2
+msgid "Edge Amount"
+msgstr "Kenar Miktarı"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:4
+msgid "Pixel Amount"
+msgstr "Piksel Miktarı"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:5
+msgid "Pixelize"
+msgstr "Pikselleştir"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Düğmeler/Yuvarlak Düğme..."
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:5
+msgid "Lower Color"
+msgstr "Alt Renk"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:6
+msgid "Lower Color (Active)"
+msgstr "Alt Renk (Etken)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:7
+msgid "Not Pressed"
+msgstr "Basılı Değil"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:8
+msgid "Not Pressed (Active)"
+msgstr "Basılı Değil (Aktif)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:9
+msgid "Padding X"
+msgstr "X'te Tampon"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:10
+msgid "Padding Y"
+msgstr "Y'de Tampon"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:12
+msgid "Round Ratio"
+msgstr "Yuvarlaklık Oranı"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:15
+msgid "Text Color (Active)"
+msgstr "Metin Rengi (Aktif)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:16
+msgid "Upper Color"
+msgstr "Üst Renk"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:17
+msgid "Upper Color (Active)"
+msgstr "Üst Renk (Aktif)"
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/Harita Hesapla..."
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:2
+msgid "Behaviour"
+msgstr "Davranış"
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:3
+msgid "Detail in Middle"
+msgstr "Detay Ortada"
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:7
+msgid "Tile"
+msgstr "Döşe"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Rippling..."
+msgstr "<Image>/Script-Fu/Animatörler/Hafif Dalgalandır..."
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:4
+msgid "Number of Frames"
+msgstr "Kare Sayısı"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+msgid "Rippling Strength"
+msgstr "Dalgacıklandırma Şiddeti"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Round Corners..."
+msgstr "<Image>/Script-Fu/Süs/Yuvarlak Köşeler..."
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:2
+msgid "Add Background"
+msgstr "Arkaplan Ekle"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:3
+msgid "Add Drop-Shadow"
+msgstr "Düşen Gölge Ekle"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:5
+msgid "Edge Radius"
+msgstr "Kenar Yarıçapı"
+
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:1
+msgid "<Image>/Script-Fu/Selection/To Brush..."
+msgstr "<Image>/Script-Fu/Seçim/Fırçaya..."
+
+#: plug-ins/script-fu/scripts/select_to_image.scm.h:1
+msgid "<Image>/Script-Fu/Selection/To Image"
+msgstr "<Image>/Script-Fu/Seçim/Resme..."
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:1
+msgid "<Image>/Script-Fu/Selection/Round..."
+msgstr "<Image>/Script-Fu/Seçim/Yuvarlat..."
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:2
+msgid "Relative Radius"
+msgstr "Göreli Yarıçap"
+
+#: plug-ins/script-fu/scripts/slide.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Slide..."
+msgstr "<Image>/Script-Fu/Süs/Slayt..."
+
+#: plug-ins/script-fu/scripts/slide.scm.h:3
+msgid "Font Color"
+msgstr "Yazıtipi Rengi"
+
+#: plug-ins/script-fu/scripts/slide.scm.h:4
+msgid "Number"
+msgstr "Sayı"
+
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/SOTA Krom..."
+
+#: plug-ins/script-fu/scripts/speed-text.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Hızlı Metin..."
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Çeşitli/Küre..."
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:3
+msgid "Lighting (degrees)"
+msgstr "Aydınlanma (derece)"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:4
+msgid "Radius (pixels)"
+msgstr "Yarıçap (piksel)"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:6
+msgid "Sphere Color"
+msgstr "Küre Rengi"
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
+msgstr "<Image>/Script-Fu/Animatörler/Dönen Yerküre..."
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:2
+msgid "Frames"
+msgstr "Kare Sayısı"
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:3
+msgid "Index to n Colors (0 = Remain RGB)"
+msgstr "n Renge Katalogla (0 = KYM kal)"
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:5
+msgid "Turn from Left to Right"
+msgstr "Soldan Sağa Çevir"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Yıldız Patlaması..."
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Yıldız Patlaması..."
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
+msgid "Burst Color"
+msgstr "Patlama Rengi"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
+msgid "Effect Size (pixels * 30)"
+msgstr "Effet Büyüklüğü (piksel * 30)"
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Yıldızdelen..."
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Yıldızdelen..."
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
+msgid "Effect Size (pixels * 4)"
+msgstr "Etki Büyüklüğü (piksel * 4)"
+
+#: plug-ins/script-fu/scripts/swirltile.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/Dönen Döşeme..."
+
+#: plug-ins/script-fu/scripts/swirltile.scm.h:9
+msgid "Whirl Amount"
+msgstr "Döndürme Miktarı"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/Hafif Dönüşlü (döşenebilir)..."
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
+msgid "Number of Times to Whirl"
+msgstr "Dönüş Sayısı"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
+msgid "Quarter Size"
+msgstr "Çeyrek Boyut"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
+msgid "Whirl Angle"
+msgstr "Döndürme Açısı"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Parçacık İzi..."
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Parçacık İzleri..."
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
+msgid "Base Color"
+msgstr "Temel Renk"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
+msgid "Edge Only"
+msgstr "Sadece Kenar"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
+msgid "Edge Width"
+msgstr "Kenar Genişliği"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
+msgid "Hit Rate"
+msgstr "Çarpma Oranı"
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Metin Çemberi..."
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:2
+msgid "Antialias"
+msgstr "Örtüşmeönleyici"
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:3
+msgid "Fill Angle"
+msgstr "Doldurma Açısı"
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:7
+msgid "Start Angle"
+msgstr "Başlama Açısı"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
+msgstr "<Image>/Script-Fu/Alfadan Logoya/Kaplamalı..."
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Kaplamalı..."
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:5
+msgid "Ending Blend"
+msgstr "Son Harman"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:8
+msgid "Hexagons"
+msgstr "Altıgenler"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:9
+msgid "Mosaic Tile Type"
+msgstr "Mozayik Döşeme Tipi"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:10
+msgid "Octagons"
+msgstr "Sekizgenler"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:12
+msgid "Squares"
+msgstr "Kareler"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:13
+msgid "Starting Blend"
+msgstr "Başlama Harmanı"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:15
+msgid "Text Pattern"
+msgstr "Metin Deseni"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:1
+msgid "<Image>/Filters/Blur/Tileable Blur..."
+msgstr "<Image>/Filtreler/Bulanık/Döşenebilir Bulanıklık..."
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:2
+msgid "Blur Horizontally"
+msgstr "Yatay Bulanıklık"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:3
+msgid "Blur Type"
+msgstr "Bulanma Cinsi"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:4
+msgid "Blur Vertically"
+msgstr "Dikey Bulanıklık"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:5
+msgid "IIR"
+msgstr "IIR"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:6
+msgid "RLE"
+msgstr "RLE"
+
+#: plug-ins/script-fu/scripts/title-header.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Web Başlığı"
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/trochoid..."
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:2
+msgid "Base Radius (pixels)"
+msgstr "Temel Yarıçap (piksel)"
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:3
+msgid "Erase before Draw"
+msgstr "Çizmeden Önce Sil"
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:4
+msgid "Hue Rate"
+msgstr "Renk Oranı"
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:5
+msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
+msgstr "Kalem Yarıçapı / Tekerlek Yarıçapı [0.0:1.0]"
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:6
+msgid "Use Brush"
+msgstr "Fırça"
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:7
+msgid "Wheel Radius (hypo < 0 < epi)"
+msgstr "Tekerlek Yarıçapı (hipo < 0 < epi)"
+
+#: plug-ins/script-fu/scripts/truchet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/Truchet..."
+
+#: plug-ins/script-fu/scripts/truchet.scm.h:4
+msgid "Foreground Color"
+msgstr "ÖP Rengi"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
+msgstr "<Image>/Script-Fu/Simya/Maskeyi Yumuşat..."
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
+msgid "Mask Opacity"
+msgstr "Saydamsızlığı Maskele"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
+msgid "Mask Size"
+msgstr "Maske Boyutu"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Waves..."
+msgstr "<Image>/Script-Fu/Animatörler/Dalgalar..."
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:2
+msgid "Amplitude"
+msgstr "Boyut"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:3
+msgid "Invert direction"
+msgstr "Yönü Tersine Çevir"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:5
+msgid "Wavelength"
+msgstr "Dalgaboyu"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Weave..."
+msgstr "<Image>/Script-Fu/Simya/Örgü..."
+
+#: plug-ins/script-fu/scripts/weave.scm.h:2
+msgid "Ribbon Spacing"
+msgstr "Düğüm Boşluğu"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:3
+msgid "Ribbon Width"
+msgstr "Düğüm Genişliği"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:4
+msgid "Shadow Darkness"
+msgstr "Gölge Koyuluğu"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:5
+msgid "Shadow Depth"
+msgstr "Gölge Derinliği"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:6
+msgid "Thread Density"
+msgstr "İplik Yoğunluğu"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:7
+msgid "Thread Intensity"
+msgstr "İplik Sertliği"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:8
+msgid "Thread Length"
+msgstr "İplik Uzunluğu"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:1
+msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
+msgstr "<Image>/Script-Fu/Gölge/Xach-Etkisi..."
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:2
+msgid "Drop Shadow Blur Radius"
+msgstr "Düşen Gölgenin Bulanıklık Yarıçapı"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:3
+msgid "Drop Shadow Color"
+msgstr "Düşen Gölgenin Rengi"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:4
+msgid "Drop Shadow Opacity"
+msgstr "Düşen Gölgenin Saydamsızlığı"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:5
+msgid "Drop Shadow X Offset"
+msgstr "Düşen Gölgenin X Ofseti"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:6
+msgid "Drop Shadow Y Offset"
+msgstr "Düşen Gölgenin Y Ofseti"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:8
+msgid "Highlight Opacity"
+msgstr "Parlama Saydamsızlığı"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:9
+msgid "Highlight X Offset"
+msgstr "Parlama X Ofseti"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:10
+msgid "Highlight Y Offset"
+msgstr "Parlama Y Ofseti"
+
+#: plug-ins/webbrowser/web-browser.scm.h:1
+msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/Geliştirici ÇSS"
+
+#: plug-ins/webbrowser/web-browser.scm.h:2
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/GIMP Hataları"
+
+#: plug-ins/webbrowser/web-browser.scm.h:3
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/GIMP Elkitabı"
+
+#: plug-ins/webbrowser/web-browser.scm.h:4
+msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/GIMP Haberleri"
+
+#: plug-ins/webbrowser/web-browser.scm.h:5
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/GIMP Eğitim Yazıları"
+
+#: plug-ins/webbrowser/web-browser.scm.h:6
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/GIMP.ORG/Belge"
+
+#: plug-ins/webbrowser/web-browser.scm.h:7
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/GIMP.ORG/İndir"
+
+#: plug-ins/webbrowser/web-browser.scm.h:8
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/GIMP.ORG/GIMP Sanatı"
+
+#: plug-ins/webbrowser/web-browser.scm.h:9
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/GIMP.ORG/GTK"
+
+#: plug-ins/webbrowser/web-browser.scm.h:10
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/GIMP.ORG/Bağlantılar"
+
+#: plug-ins/webbrowser/web-browser.scm.h:11
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/GIMP.ORG/E-Posta Listeleri"
+
+#: plug-ins/webbrowser/web-browser.scm.h:12
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/GIMP.ORG/Kaynaklar"
+
+#: plug-ins/webbrowser/web-browser.scm.h:13
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/GIMP.ORG/GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:14
+msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/Gimp-Savvy.com"
+
+#: plug-ins/webbrowser/web-browser.scm.h:15
+msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/GIMP.ORG/Grokking the GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:16
+msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/Eklem Listesi"
+
+#: plug-ins/webbrowser/web-browser.scm.h:17
+msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+msgstr "<Toolbox>/Xtns/Web Tarayıcı/Kullanıcı ÇSS"
 
