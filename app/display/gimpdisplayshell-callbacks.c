@@ -1201,7 +1201,7 @@ gimp_display_shell_hruler_button_press (GtkWidget        *widget,
   if (gdisp->gimage->gimp->busy)
     return TRUE;
 
-  if (event->button == 1)
+  if (event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
       GimpToolInfo *tool_info;
       GimpTool     *active_tool;
@@ -1245,7 +1245,7 @@ gimp_display_shell_vruler_button_press (GtkWidget        *widget,
   if (gdisp->gimage->gimp->busy)
     return TRUE;
 
-  if (event->button == 1)
+  if (event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
       GimpToolInfo *tool_info;
       GimpTool     *active_tool;

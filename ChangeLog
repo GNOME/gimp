@@ -1,3 +1,10 @@
+2003-07-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_[hv]ruler_button_press): skip double clicks by
+	checking event->type == GDK_BUTTON_PRESS. Brings press and release
+	events sent to the move tool back in sync and fixes bug #75351.
+
 2003-07-29  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version number to 1.3.18.
@@ -78,7 +85,7 @@
 
 	* libgimp/gimpcompat.h: removed the name from the
 	GimpOrientationType[Compat] enum. The enums in this header are
-	just an anonymous mappings and not types by themselves.
+	just anonymous mappings and not types by themselves.
 
 2003-07-27  Tor Lillqvist  <tml@iki.fi>
 
