@@ -1,3 +1,8 @@
+2004-12-06  Roman Joost	<romanofski@gimp.org>
+
+	* tools/authorsgen/contributors: added Róman Joost to
+	contributors
+
 2004-12-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptransformtool.c: applied patch from Sven Neumann
