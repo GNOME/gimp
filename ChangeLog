@@ -1,3 +1,24 @@
+2003-10-15  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-utils.c (gimp_config_diff) (gimp_config_sync)
+	* app/config/gimpconfig.c (gimp_config_iface_equal): compare and sync
+	aggregate objects recursively.
+
+	* app/core/gimptemplate.c (gimp_template_finalize): don't leak the
+	filename.
+
+	* app/display/gimpdisplayshell-title.c
+	* app/config/gimpconfig-dump.c: added %L format identifier for
+	verbose layer count. Renamed former %L to %n (layer name).
+
+	* app/config/gimpdisplayconfig.c: changed default image title and
+	image status format strings.
+
+	* app/gui/dialogs-constructors.c: added a blurb for Templates
+	dockables.
+
+	* app/display/gimpdisplayshell.h: fixed typo.
+
 2003-10-14  Dave Neary  <bolsh@gimp.org>
 
 	* libgimpcolor/gimpcolorspace.c: Some more gtkdocs. 

@@ -23,7 +23,7 @@
 #include <gtk/gtkwindow.h>
 
 
-/* FIXME remmove all gui/ stuff */
+/*  FIXME: remove all gui/ stuff  */
 #include "gui/gui-types.h"
 
 

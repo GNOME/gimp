@@ -59,7 +59,6 @@ enum
 
 
 static void  gimp_template_class_init        (GimpTemplateClass   *klass);
-static void  gimp_template_init              (GimpTemplate        *template);
 static void  gimp_template_config_iface_init (GimpConfigInterface *config_iface);
 
 static void      gimp_template_finalize      (GObject          *object);
@@ -103,7 +102,7 @@ gimp_template_get_type (void)
 	NULL,		/* class_data     */
 	sizeof (GimpTemplate),
 	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_template_init,
+	NULL            /* instance_init  */
       };
       static const GInterfaceInfo config_iface_info =
       {
@@ -193,11 +192,6 @@ gimp_template_class_init (GimpTemplateClass *klass)
 }
 
 static void
-gimp_template_init (GimpTemplate *template)
-{
-}
-
-static void
 gimp_template_config_iface_init (GimpConfigInterface *config_iface)
 {
   config_iface->serialize   = gimp_template_serialize;
@@ -207,9 +201,13 @@ gimp_template_config_iface_init (GimpConfigInterface *config_iface)
 static void
 gimp_template_finalize (GObject *object)
 {
-  GimpTemplate *template;
+  GimpTemplate *template = GIMP_TEMPLATE (object);
 
-  template = GIMP_TEMPLATE (object);
+  if (template->filename)
+    {
+      g_free (template->filename);
+      template->filename = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -220,9 +218,7 @@ gimp_template_set_property (GObject      *object,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
-  GimpTemplate *template;
-
-  template = GIMP_TEMPLATE (object);
+  GimpTemplate *template = GIMP_TEMPLATE (object);
 
   switch (property_id)
     {
@@ -267,9 +263,7 @@ gimp_template_get_property (GObject    *object,
                             GValue     *value,
                             GParamSpec *pspec)
 {
-  GimpTemplate *template;
-
-  template = GIMP_TEMPLATE (object);
+  GimpTemplate *template = GIMP_TEMPLATE (object);
 
   switch (property_id)
     {
@@ -432,10 +426,12 @@ gimp_template_create_image (Gimp         *gimp,
   switch (template->fill_type)
     {
     case GIMP_TRANSPARENT_FILL:
-      type = (template->image_type == GIMP_RGB) ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE;
+      type = ((template->image_type == GIMP_RGB) ?
+              GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE);
       break;
     default:
-      type = (template->image_type == GIMP_RGB) ? GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE;
+      type = ((template->image_type == GIMP_RGB) ?
+              GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE);
       break;
     }
 

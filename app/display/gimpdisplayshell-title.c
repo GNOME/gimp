@@ -271,7 +271,6 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                 gchar  *memsize_str;
 
                 memsize = gimp_object_get_memsize (GIMP_OBJECT (gimage), NULL);
-
                 memsize_str = gimp_memsize_to_string (memsize);
 
                 i += print (title, title_len, i, "%s", memsize_str);
@@ -285,11 +284,18 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                           gimp_container_num_children (gimage->layers));
               break;
 
-            case 'L': /* active drawable name */
+            case 'L': /* number of layers (long) */
               {
-                GimpDrawable *drawable;
+                gint num = gimp_container_num_children (gimage->layers);
 
-                drawable = gimp_image_active_drawable (gimage);
+                i += print (title, title_len, i,
+                            num == 1 ? _("1 layer") : _("%d layers"), num);
+              }
+              break;
+
+            case 'n': /* active drawable name */
+              {
+                GimpDrawable *drawable = gimp_image_active_drawable (gimage);
 
                 if (drawable)
                   i += print (title, title_len, i, "%s",

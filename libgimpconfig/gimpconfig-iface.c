@@ -30,8 +30,9 @@
 #include "config-types.h"
 
 #include "gimpconfig.h"
-#include "gimpconfig-serialize.h"
 #include "gimpconfig-deserialize.h"
+#include "gimpconfig-serialize.h"
+#include "gimpconfig-params.h"
 #include "gimpconfig-utils.h"
 #include "gimpconfigwriter.h"
 #include "gimpscanner.h"
@@ -195,7 +196,24 @@ gimp_config_iface_equal (GimpConfig *a,
       g_object_get_property (G_OBJECT (a), prop_spec->name, &a_value);
       g_object_get_property (G_OBJECT (b), prop_spec->name, &b_value);
 
-      equal = (g_param_values_cmp (prop_spec, &a_value, &b_value) == 0);
+      if (g_param_values_cmp (prop_spec, &a_value, &b_value))
+        {
+          if ((prop_spec->flags & GIMP_PARAM_AGGREGATE) &&
+              G_IS_PARAM_SPEC_OBJECT (prop_spec)        &&
+              g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
+                                     GIMP_TYPE_CONFIG))
+            {
+              if (! gimp_config_is_equal_to (g_value_get_object (&a_value),
+                                             g_value_get_object (&b_value)))
+                {
+                  equal = FALSE;
+                }
+            }
+          else
+            {
+              equal = FALSE;
+            }
+        }
 
       g_value_unset (&a_value);
       g_value_unset (&b_value);

@@ -96,6 +96,64 @@ gimp_config_disconnect (GObject *src,
                                         dest);
 }
 
+
+static GList *
+gimp_config_diff_internal (GimpConfig  *a,
+                           GimpConfig  *b,
+                           GParamFlags  flags)
+{
+  GParamSpec **param_specs;
+  guint        n_param_specs;
+  gint         i;
+  GList       *list = NULL;
+
+  param_specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (a),
+                                                &n_param_specs);
+
+  for (i = 0; i < n_param_specs; i++)
+    {
+      GParamSpec *prop_spec = param_specs[i];
+
+      if (! flags || ((prop_spec->flags & flags) == flags))
+        {
+          GValue a_value = { 0, };
+          GValue b_value = { 0, };
+
+          g_value_init (&a_value, prop_spec->value_type);
+          g_value_init (&b_value, prop_spec->value_type);
+
+          g_object_get_property (G_OBJECT (a), prop_spec->name, &a_value);
+          g_object_get_property (G_OBJECT (b), prop_spec->name, &b_value);
+
+          if (g_param_values_cmp (param_specs[i], &a_value, &b_value))
+            {
+              if ((prop_spec->flags & GIMP_PARAM_AGGREGATE) &&
+                  G_IS_PARAM_SPEC_OBJECT (prop_spec)        &&
+                  g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
+                                         GIMP_TYPE_CONFIG))
+                {
+                  if (! gimp_config_is_equal_to (g_value_get_object (&a_value),
+                                                 g_value_get_object (&b_value)))
+                    {
+                      list = g_list_prepend (list, param_specs[i]);
+                    }
+                }
+              else
+                {
+                  list = g_list_prepend (list, param_specs[i]);
+                }
+            }
+
+          g_value_unset (&a_value);
+          g_value_unset (&b_value);
+        }
+    }
+
+  g_free (param_specs);
+
+  return list;
+}
+
 /**
  * gimp_config_diff:
  * @a: a #GimpConfig
@@ -112,43 +170,12 @@ gimp_config_diff (GimpConfig  *a,
                   GimpConfig  *b,
                   GParamFlags  flags)
 {
-  GParamSpec **param_specs;
-  guint        n_param_specs;
-  gint         i;
-  GList       *list = NULL;
-
   g_return_val_if_fail (GIMP_IS_CONFIG (a), FALSE);
   g_return_val_if_fail (GIMP_IS_CONFIG (b), FALSE);
   g_return_val_if_fail (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b),
                         FALSE);
 
-  param_specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (a),
-                                                &n_param_specs);
-
-  for (i = 0; i < n_param_specs; i++)
-    {
-      if (! flags || ((param_specs[i]->flags & flags) == flags))
-        {
-          GValue a_value = { 0, };
-          GValue b_value = { 0, };
-
-          g_value_init (&a_value, param_specs[i]->value_type);
-          g_value_init (&b_value, param_specs[i]->value_type);
-
-          g_object_get_property (G_OBJECT (a), param_specs[i]->name, &a_value);
-          g_object_get_property (G_OBJECT (b), param_specs[i]->name, &b_value);
-
-          if (g_param_values_cmp (param_specs[i], &a_value, &b_value))
-            list = g_list_prepend (list, param_specs[i]);
-
-          g_value_unset (&a_value);
-          g_value_unset (&b_value);
-        }
-    }
-
-  g_free (param_specs);
-
-  return g_list_reverse (list);
+  return g_list_reverse (gimp_config_diff_internal (a, b, flags));
 }
 
 /**
@@ -157,9 +184,10 @@ gimp_config_diff (GimpConfig  *a,
  * @dest: another #GimpConfig of the same type as @src
  * @flags: a mask of GParamFlags
  *
- * Compares all read and writeable property settings from @src and @dest
- * that have all @flags set. Differing values are then copied from @src
- * to @dest. If @flags is 0, all read/write properties are synced.
+ * Compares all read- and write-able properties from @src and @dest
+ * that have all @flags set. Differing values are then copied from
+ * @src to @dest. If @flags is 0, all differing read/write properties
+ * are synced.
  **/
 gboolean
 gimp_config_sync (GimpConfig  *src,
@@ -174,7 +202,13 @@ gimp_config_sync (GimpConfig  *src,
   g_return_val_if_fail (G_TYPE_FROM_INSTANCE (src) == G_TYPE_FROM_INSTANCE (dest),
                         FALSE);
 
-  diff = gimp_config_diff (src, dest, (flags | G_PARAM_READWRITE));
+  /* we use the internal version here for a number of reasons:
+   *  - it saves a g_list_reverse()
+   *  - it avoids duplicated parameter checks
+   *  - it makes GimpTemplateEditor work (resolution is set before size)
+   */
+  diff = gimp_config_diff_internal (src, dest, (flags | G_PARAM_READWRITE));
+
   if (!diff)
     return FALSE;
 

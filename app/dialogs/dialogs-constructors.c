@@ -456,7 +456,7 @@ dialogs_template_list_new (GimpDialogFactory *factory,
   template_view->edit_template_func = templates_edit_template_dialog;
 
   return dialogs_dockable_new (view,
-			       _("Templates"), NULL,
+			       _("Templates"), _("Image Templates"),
                                GIMP_STOCK_TEMPLATE,
                                GIMP_HELP_TEMPLATE_DIALOG);
 }

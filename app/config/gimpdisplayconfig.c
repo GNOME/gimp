@@ -50,8 +50,8 @@ static void  gimp_display_config_get_property (GObject      *object,
                                                GParamSpec   *pspec);
 
 
-#define DEFAULT_IMAGE_TITLE_FORMAT  "%f-%p.%i (%t) %z%%"
-#define DEFAULT_IMAGE_STATUS_FORMAT "%L (%l layers, %m)"
+#define DEFAULT_IMAGE_TITLE_FORMAT  "%f-%p.%i (%t, %L) %z%%"
+#define DEFAULT_IMAGE_STATUS_FORMAT "%n (%m)"
 
 enum
 {
