@@ -142,7 +142,7 @@ static gboolean  save_image             (const gchar *filename,
                                          gint32       drawable,
                                          gint32       orig_image);
 
-static gboolean  save_dialog            (void);
+static gboolean  save_dialog            (gboolean     alpha);
 
 static void      comment_entry_callback (GtkWidget   *widget,
                                          gpointer     data);
@@ -354,7 +354,7 @@ run (const gchar      *name,
           gimp_parasite_free (parasite);
 
           /*  First acquire information with a dialog  */
-          if (! save_dialog ())
+          if (! save_dialog (gimp_drawable_has_alpha (drawable)))
             status = GIMP_PDB_CANCEL;
           break;
 
@@ -2076,7 +2076,7 @@ save_image (const gchar *filename,
 }
 
 static gboolean
-save_dialog (void)
+save_dialog (gboolean alpha)
 {
   GtkWidget *dlg;
   GtkWidget *vbox;
@@ -2120,7 +2120,8 @@ save_dialog (void)
   toggle = gtk_check_button_new_with_mnemonic
     ( _("Save _color values from transparent pixels"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                tsvals.save_transp_pixels);
+                                alpha && tsvals.save_transp_pixels);
+  gtk_widget_set_sensitive (toggle, alpha);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
