@@ -82,3 +82,13 @@ File operations (load, save, etc.)
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_register_file_handler_mime ##### -->
+<para>
+
+</para>
+
+@procedure_name: 
+@mime_type: 
+@Returns: 
+
+

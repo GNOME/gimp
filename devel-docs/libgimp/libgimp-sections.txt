@@ -233,6 +233,7 @@ gimp_file_save
 gimp_register_magic_load_handler
 gimp_register_load_handler
 gimp_register_save_handler
+gimp_register_file_handler_mime
 </SECTION>
 
 <SECTION>
