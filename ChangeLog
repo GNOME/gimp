@@ -1,3 +1,9 @@
+2003-06-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpvectorstreeview.c
+	(gimp_vectors_tree_view_toselection_extended_clicked): added
+	missing gimp_image_flush(). Fixes bug #116190.
+
 2003-06-29  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: fix --enable-default-binary

@@ -258,6 +258,7 @@ gimp_vectors_tree_view_toselection_extended_clicked (GtkWidget           *widget
                                       operation,
                                       TRUE,
                                       FALSE, 0, 0);
+      gimp_image_flush (gimage);
     }
 }
 
