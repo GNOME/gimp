@@ -5,6 +5,7 @@ libgimpbaseincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpbase
 AM_CPPFLAGS = @STRIP_BEGIN@ \
 	-DGIMPDIR=\""$(gimpdir)"\"		\
 	-DDATADIR=\""$(gimpdatadir)"\"		\
+	-DPLUGINDIR=\""$(gimpplugindir)"\"	\
 	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
 	-DG_LOG_DOMAIN=\"LibGimpBase\"		\
 	@GIMP_THREAD_FLAGS@			\

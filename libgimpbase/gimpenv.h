@@ -30,11 +30,12 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-const gchar * gimp_directory                  (void);
+const gchar * gimp_directory                  (void) G_GNUC_CONST;
+const gchar * gimp_data_directory             (void) G_GNUC_CONST;
+const gchar * gimp_sysconf_directory	      (void) G_GNUC_CONST;
+const gchar * gimp_plug_in_directory          (void) G_GNUC_CONST;
+const gchar * gimp_gtkrc                      (void) G_GNUC_CONST;
 gchar       * gimp_personal_rc_file           (const gchar  *basename);
-const gchar * gimp_data_directory             (void);
-const gchar * gimp_sysconf_directory	      (void);
-const gchar * gimp_gtkrc                      (void);
 
 GList       * gimp_path_parse                 (const gchar  *path,
 					       gint          max_paths,

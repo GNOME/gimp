@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * GimpBaseConfig class
+ * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -64,8 +67,8 @@ gimp_base_config_get_type (void)
       static const GTypeInfo config_info =
       {
         sizeof (GimpBaseConfigClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
+	NULL,           /* base_init      */
+        NULL,           /* base_finalize  */
 	(GClassInitFunc) gimp_base_config_class_init,
 	NULL,           /* class_finalize */
 	NULL,           /* class_data     */
@@ -73,16 +76,14 @@ gimp_base_config_get_type (void)
 	0,              /* n_preallocs    */
 	NULL            /* instance_init  */
       };
-      static const GInterfaceInfo config_iface_info =
-      {
-        NULL,           /* iface_init     */
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
+      static const GInterfaceInfo config_iface_info = { NULL, NULL, NULL };
 
-      config_type = g_type_register_static (G_TYPE_OBJECT, "GimpBaseConfig", 
+      config_type = g_type_register_static (G_TYPE_OBJECT, 
+                                            "GimpBaseConfig", 
                                             &config_info, 0);
-      g_type_add_interface_static (config_type, GIMP_TYPE_CONFIG_INTERFACE,
+
+      g_type_add_interface_static (config_type, 
+                                   GIMP_TYPE_CONFIG_INTERFACE,
                                    &config_iface_info);
     }
 

@@ -24,9 +24,8 @@
 #include <glib-object.h>
 
 #include "gimpconfig.h"
-#include "gimpbaseconfig.h"
+#include "gimpcoreconfig.h"
 
-#define FILENAME "foorc"
 
 static void  notify_callback      (GObject     *object,
                                    GParamSpec  *pspec);
@@ -40,28 +39,32 @@ main (int   argc,
       char *argv[])
 {
   GimpBaseConfig *config;
-  gboolean        header = TRUE;
+  const gchar    *filename = "foorc";
+  gboolean        header   = TRUE;
 
   g_type_init ();
 
   g_print ("Testing GimpConfig ...\n");
 
-  config = g_object_new (GIMP_TYPE_BASE_CONFIG, NULL);
+  config = g_object_new (GIMP_TYPE_CORE_CONFIG, NULL);
 
-  g_print (" Serializing default properties of GimpBaseConfig to '" 
-           FILENAME "' ...\n");
 
-  gimp_config_serialize (G_OBJECT (config), FILENAME);
+  g_print (" Serializing default properties of %s to '%s' ...\n", 
+           g_type_name (G_TYPE_FROM_INSTANCE (config)), filename);
 
-  g_print (" Deserializing from '" FILENAME "' ...\n");
+  gimp_config_serialize (G_OBJECT (config), filename);
+
+
+  g_print (" Deserializing from '%s' ...\n", filename);
 
   g_signal_connect (G_OBJECT (config), "notify",
                     G_CALLBACK (notify_callback),
                     NULL);
-  gimp_config_deserialize (G_OBJECT (config), FILENAME, TRUE);
+  gimp_config_deserialize (G_OBJECT (config), filename, TRUE);
   
   gimp_config_foreach_unknown_token (G_OBJECT (config), 
                                      output_unknown_token, &header);
+
 
   g_object_unref (config);
   
@@ -89,17 +92,14 @@ notify_callback (GObject    *object,
       g_value_init (&dest, G_TYPE_STRING);      
       g_value_transform (&src, &dest);
 
-      g_print ("  %s::%s -> %s\n", 
-               g_type_name (G_TYPE_FROM_INSTANCE (object)), pspec->name, 
-               g_value_get_string (&dest));
+      g_print ("  %s -> %s\n", pspec->name, g_value_get_string (&dest));
 
       g_value_unset (&src);
       g_value_unset (&dest);
     }
   else
     {
-      g_print ("  %s::%s changed\n", 
-               g_type_name (G_TYPE_FROM_INSTANCE (object)), pspec->name);
+      g_print ("  %s changed\n", pspec->name);
     }
 }
 

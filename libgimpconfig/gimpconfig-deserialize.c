@@ -86,7 +86,8 @@ gimp_config_deserialize_properties (GObject  *object,
   klass = G_OBJECT_GET_CLASS (object);
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
-  g_return_val_if_fail (property_specs != NULL && n_property_specs > 0, FALSE);
+  if (!property_specs)
+    return TRUE;
 
   scope_id = g_quark_from_static_string ("gimp_config_deserialize_properties");
   old_scope_id = g_scanner_set_scope (scanner, scope_id);

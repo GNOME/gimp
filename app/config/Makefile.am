@@ -18,6 +18,8 @@ libappconfig_a_SOURCES = @STRIP_BEGIN@ 	\
 	gimpconfig-types.h		\
 	gimpbaseconfig.c		\
 	gimpbaseconfig.h		\
+	gimpcoreconfig.c		\
+	gimpcoreconfig.h		\
 @STRIP_END@
 
 AM_CPPFLAGS = @STRIP_BEGIN@ 		\

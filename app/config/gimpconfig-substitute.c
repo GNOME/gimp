@@ -72,8 +72,19 @@ gimp_config_substitute_path (GObject     *object,
 
 	  if (!subst && use_env) 
 	    {
-	      if (strcmp (token, "gimp_dir") == 0)
+	      if (!subst && strcmp (token, "gimp_dir") == 0)
                 subst = gimp_directory ();
+
+	      if (!subst && strcmp (token, "gimp_datadir") == 0)
+                subst = gimp_data_directory ();
+
+	      if (!subst && 
+                  ((strcmp (token, "gimp_plug_in_dir")) == 0 || 
+                   (strcmp (token, "gimp_plugin_dir")) == 0))
+                subst = gimp_plug_in_directory ();
+
+	      if (!subst && strcmp (token, "gimp_sysconfdir") == 0)
+                subst = gimp_sysconf_directory ();
 
               if (!subst)
                 subst = g_getenv (token);

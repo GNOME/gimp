@@ -57,6 +57,9 @@
 extern const char *__XOS2RedirRoot(const char *);
 #endif
 
+static gchar * gimp_env_get_dir (const gchar *gimp_env_name,
+                                 const gchar *env_dir);
+
 /**
  * gimp_directory:
  *
@@ -87,7 +90,7 @@ gimp_directory (void)
   const gchar  *env_gimp_dir;
   const gchar  *home_dir;
 
-  if (gimp_dir != NULL)
+  if (gimp_dir)
     return gimp_dir;
 
   env_gimp_dir = g_getenv ("GIMP_DIRECTORY");
@@ -120,7 +123,7 @@ gimp_directory (void)
 	gimp_dir = g_strdup(__XOS2RedirRoot(GIMPDIR));
 	return gimp_dir;  
 #endif      
-	if (NULL != home_dir)
+	if (home_dir)
 	{
 	  gimp_dir = g_build_filename (home_dir, GIMPDIR, NULL);
 	}
@@ -175,61 +178,11 @@ gimp_data_directory (void)
 {
   static gchar *gimp_data_dir = NULL;
 
-  const gchar  *env_gimp_data_dir;
-  
-  if (gimp_data_dir != NULL)
+  if (gimp_data_dir)
     return gimp_data_dir;
 
-  env_gimp_data_dir = g_getenv ("GIMP_DATADIR");
+  gimp_data_dir = gimp_env_get_dir ("GIMP_DATADIR", DATADIR);
 
-  if (NULL != env_gimp_data_dir)
-    {
-      if (!g_path_is_absolute (env_gimp_data_dir))
-	g_error ("GIMP_DATADIR environment variable should be an absolute path.");
-#ifndef __EMX__
-      gimp_data_dir = g_strdup (env_gimp_data_dir);
-#else      
-      gimp_data_dir = g_strdup (__XOS2RedirRoot(env_gimp_data_dir));
-#endif      
-    }
-  else
-    {
-#ifndef G_OS_WIN32
-#ifndef __EMX__
-      gimp_data_dir = DATADIR;
-#else
-      gimp_data_dir = g_strdup(__XOS2RedirRoot(DATADIR));
-#endif
-#else
-      /* Figure it out from the executable name */
-      gchar filename[MAX_PATH];
-      gchar *sep1, *sep2;
-
-      if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
-	g_error ("GetModuleFilename failed\n");
-      
-      /* If the executable file name is of the format
-       * <foobar>\bin\gimp.exe of <foobar>\plug-ins\filter.exe, * use
-       * <foobar>. Otherwise, use the directory where the executable
-       * is.
-       */
-
-      sep1 = strrchr (filename, G_DIR_SEPARATOR);
-
-      *sep1 = '\0';
-
-      sep2 = strrchr (filename, G_DIR_SEPARATOR);
-
-      if (sep2 != NULL)
-	{
-	  if (g_strcasecmp (sep2 + 1, "bin") == 0
-	      || g_strcasecmp (sep2 + 1, "plug-ins") == 0)
-	    *sep2 = '\0';
-	}
-
-      gimp_data_dir = g_strdup (filename);
-#endif
-    }
   return gimp_data_dir;
 }
 
@@ -252,62 +205,39 @@ gimp_sysconf_directory (void)
 {
   static gchar *gimp_sysconf_dir = NULL;
 
-  const gchar  *env_gimp_sysconf_dir;
-  
   if (gimp_sysconf_dir != NULL)
     return gimp_sysconf_dir;
 
-  env_gimp_sysconf_dir = g_getenv ("GIMP_SYSCONFDIR");
+  gimp_sysconf_dir = gimp_env_get_dir ("GIMP_SYSCONFDIR", SYSCONFDIR);
 
-  if (NULL != env_gimp_sysconf_dir)
-    {
-      if (! g_path_is_absolute (env_gimp_sysconf_dir))
-	g_error ("GIMP_SYSCONFDIR environment variable should be an absolute path.");
-#ifndef __EMX__
-      gimp_sysconf_dir = g_strdup (env_gimp_sysconf_dir);
-#else
-      gimp_sysconf_dir = g_strdup (__XOS2RedirRoot (env_gimp_sysconf_dir));
-#endif
-    }
-  else
-    {
-#ifndef G_OS_WIN32
-#ifndef __EMX__
-      gimp_sysconf_dir = SYSCONFDIR;
-#else
-      gimp_sysconf_dir = g_strdup (__XOS2RedirRoot(SYSCONFDIR));
-#endif
-#else
-      /* Figure it out from the executable name */
-      gchar filename[MAX_PATH];
-      gchar *sep1, *sep2;
-
-      if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
-	g_error ("GetModuleFilename failed\n");
-
-      /* If the executable file name is of the format
-       * <foobar>\bin\gimp.exe or <foobar>\plug-ins\filter.exe, use
-       * <foobar>. Otherwise, use the directory where the executable
-       * is.
-       */
-
-      sep1 = strrchr (filename, G_DIR_SEPARATOR);
-
-      *sep1 = '\0';
-
-      sep2 = strrchr (filename, G_DIR_SEPARATOR);
-
-      if (sep2 != NULL)
-	{
-	  if (g_strcasecmp (sep2 + 1, "bin") == 0
-	      || g_strcasecmp (sep2 + 1, "plug-ins") == 0)
-	    *sep2 = '\0';
-	}
-
-      gimp_sysconf_dir = g_strdup (filename);
-#endif
-    }
   return gimp_sysconf_dir;
+}
+
+/**
+ * gimp_plug_in_directory:
+ *
+ * Returns the top directory for GIMP plug_ins and modules. If the 
+ * environment variable GIMP_PLUGINDIR exists, that is used.  It 
+ * should be an absolute pathname. Otherwise, on Unix the compile-time 
+ * defined directory is used. On Win32, the installation directory as 
+ * deduced from the executable's name is used.
+ *
+ * The returned string is allocated just once, and should *NOT* be
+ * freed with g_free().
+ *
+ * Returns: The top directory for GIMP plug_ins and modules.
+ **/
+const gchar *
+gimp_plug_in_directory (void)
+{
+  static gchar *gimp_plug_in_dir = NULL;
+
+  if (gimp_plug_in_dir)
+    return gimp_plug_in_dir;
+
+  gimp_plug_in_dir = gimp_env_get_dir ("GIMP_PLUGINDIR", PLUGINDIR);
+
+  return gimp_plug_in_dir;
 }
 
 /**
@@ -523,4 +453,63 @@ gimp_path_get_user_writable_dir (GList *path)
     }
 
   return NULL;
+}
+
+static gchar *
+gimp_env_get_dir (const gchar *gimp_env_name,
+                  const gchar *env_dir)
+{
+  const gchar *env;
+
+  env = g_getenv (gimp_env_name);
+
+  if (env)
+    {
+      if (! g_path_is_absolute (env))
+	g_error ("%s environment variable should be an absolute path.", 
+                 gimp_env_name);
+#ifndef __EMX__
+      return g_strdup (env);
+#else
+      return g_strdup (__XOS2RedirRoot(env));
+#endif
+    }
+  else
+    {
+#ifndef G_OS_WIN32
+#ifndef __EMX__
+      return (gchar *) env_dir;
+#else
+      return g_strdup (__XOS2RedirRoot(env_dir));
+#endif
+#else
+      /* Figure it out from the executable name */
+      gchar filename[MAX_PATH];
+      gchar *sep1, *sep2;
+
+      if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
+	g_error ("GetModuleFilename failed\n");
+
+      /* If the executable file name is of the format
+       * <foobar>\bin\gimp.exe or <foobar>\plug-ins\filter.exe, use
+       * <foobar>. Otherwise, use the directory where the executable
+       * is.
+       */
+
+      sep1 = strrchr (filename, G_DIR_SEPARATOR);
+
+      *sep1 = '\0';
+
+      sep2 = strrchr (filename, G_DIR_SEPARATOR);
+
+      if (sep2 != NULL)
+	{
+	  if (g_strcasecmp (sep2 + 1, "bin") == 0
+	      || g_strcasecmp (sep2 + 1, "plug-ins") == 0)
+	    *sep2 = '\0';
+	}
+
+      return g_strdup (filename);
+#endif
+    }
 }

@@ -1,5 +1,27 @@
 2001-12-10  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimpenv.[ch]: added new function gimp_plug_in_directory()
+	to retrieve the compile_time defined plug_in directory. Declared some
+	functions G_GNUC_CONST and simplified code by introducing a helper
+	function.
+	
+	* app/config/Makefile.am
+	* app/config/gimpcoreconfig.[ch]: started to implement GimpCoreConfig
+	derived from GimpBaseConfig.
+	
+	* app/config/gimpbaseconfig.[ch]: misc small changes.
+
+	* app/config/gimpconfig-deserialize.c
+	(gimp_config_deserialize_properties): return quietly if there are no
+	properties.
+	
+	* app/config/gimpconfig-substitute.c: more special cases.
+	
+	* app/config/test-config.c: test GimpCoreConfig.
+
+2001-12-10  Sven Neumann  <sven@gimp.org>
+
 	* app/config/Makefile.am
 	* app/config/gimpconfig-substitute.[ch]: new files with code to do
 	substitution magic on path strings. Similar to the code in gimprc.c
