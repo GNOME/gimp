@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:05+0200\n"
-"PO-Revision-Date: 2004-10-02 00:14-0400\n"
+"POT-Creation-Date: 2004-10-17 14:56-0400\n"
+"PO-Revision-Date: 2004-10-17 00:14-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -666,9 +666,9 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Buffer amount (% height of text)"
-msgstr "Buffer Amount (% Height of Text)"
+msgstr "Buffer amount (% height of text)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
@@ -1569,9 +1569,8 @@ msgid "Bevel height (Sharpness)"
 msgstr "Bevel height (Sharpness)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
-#, fuzzy
 msgid "Bevel height (sharpness)"
-msgstr "Bevel height (Sharpness)"
+msgstr "Bevel height (sharpness)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
@@ -1597,46 +1596,43 @@ msgstr "Y divisions"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
 msgid "<Image>/Image/Guides/New Guides from _Selection"
-msgstr ""
+msgstr "<Image>/Image/Guides/New Guides from _Selection"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "Creates four Guides around the bounding box of the current selection."
-msgstr ""
+msgstr "Creates four guides around the bounding box of the current selection."
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "<Image>/Image/Guides/New Guide (by _Percent)..."
-msgstr ""
+msgstr "<Image>/Image/Guides/New Guide (by _Percent)..."
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: plug-ins/script-fu/scripts/guides-new.scm.h:2
-#, fuzzy
 msgid "Direction"
-msgstr "Invert direction"
+msgstr "Direction"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
 #: plug-ins/script-fu/scripts/guides-new.scm.h:3
-#, fuzzy
 msgid "Horizontal"
-msgstr "Blur horizontally"
+msgstr "Horizontal"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:5
 #, no-c-format
 msgid "Position (in %)"
-msgstr ""
+msgstr "Position (in %)"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
 #: plug-ins/script-fu/scripts/guides-new.scm.h:4
-#, fuzzy
 msgid "Vertical"
-msgstr "Blur vertically"
+msgstr "Vertical"
 
 #: plug-ins/script-fu/scripts/guides-new.scm.h:1
 msgid "<Image>/Image/Guides/New _Guide..."
-msgstr ""
+msgstr "<Image>/Image/Guides/New _Guide..."
 
 #: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "<Image>/Image/Guides/_Remove all Guides"
-msgstr ""
+msgstr "<Image>/Image/Guides/_Remove all Guides"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
@@ -2016,18 +2012,17 @@ msgid "Pattern name"
 msgstr "Pattern name"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
-#, fuzzy
 msgid "<Image>/Select/Rounded R_ectangle..."
-msgstr "<Image>/Script-Fu/Selection/_Round..."
+msgstr "<Image>/Select/Rounded R_ectangle..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
 msgid "Concave"
-msgstr ""
+msgstr "Concave"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:4
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Radius (%)"
-msgstr "Radius"
+msgstr "Radius (%)"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "<Image>/Script-Fu/Decor/_Slide..."
@@ -2473,32 +2468,3 @@ msgstr "Highlight Y offset"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Highlight opacity"
-
-#~ msgid ""
-#~ "\n"
-#~ "\t\t    SF-ADJUSTMENT _"
-#~ msgstr ""
-#~ "\n"
-#~ "\t\t    SF-ADJUSTMENT _"
-
-#~ msgid ""
-#~ "\n"
-#~ "\t\t    SF-COLOR      _"
-#~ msgstr ""
-#~ "\n"
-#~ "\t\t    SF-COLOUR      _"
-
-#~ msgid "Relative radius"
-#~ msgstr "Relative radius"
-
-#~ msgid "_About"
-#~ msgstr "_About"
-
-#~ msgid "Font Size (pixels)"
-#~ msgstr "Font Size (pixels)"
-
-#~ msgid "Text Color"
-#~ msgstr "Text Colour"
-
-#~ msgid "Transparent Background"
-#~ msgstr "Transparent Background"

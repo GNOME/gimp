@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:04+0200\n"
-"PO-Revision-Date: 2004-10-02 14:31-0400\n"
+"POT-Creation-Date: 2004-10-17 14:56-0400\n"
+"PO-Revision-Date: 2004-10-17 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -199,7 +199,7 @@ msgid "Co_lors"
 msgstr "Co_lours"
 
 #. Number of Colors frame
-#: plug-ins/FractalExplorer/Dialogs.c:883 plug-ins/common/borderaverage.c:404
+#: plug-ins/FractalExplorer/Dialogs.c:883 plug-ins/common/borderaverage.c:405
 msgid "Number of Colors"
 msgstr "Number of Colours"
 
@@ -2099,27 +2099,27 @@ msgstr "_Blur"
 msgid "Blurring..."
 msgstr "Blurring..."
 
-#: plug-ins/common/borderaverage.c:100
+#: plug-ins/common/borderaverage.c:101
 msgid "_Border Average..."
 msgstr "_Border Average..."
 
-#: plug-ins/common/borderaverage.c:167
+#: plug-ins/common/borderaverage.c:168
 msgid "Border Average..."
 msgstr "Border Average..."
 
-#: plug-ins/common/borderaverage.c:347
+#: plug-ins/common/borderaverage.c:348
 msgid "Borderaverage"
 msgstr "Borderaverage"
 
-#: plug-ins/common/borderaverage.c:361
+#: plug-ins/common/borderaverage.c:362
 msgid "Border Size"
 msgstr "Border Size"
 
-#: plug-ins/common/borderaverage.c:369
+#: plug-ins/common/borderaverage.c:370
 msgid "_Thickness:"
 msgstr "_Thickness:"
 
-#: plug-ins/common/borderaverage.c:412
+#: plug-ins/common/borderaverage.c:413
 msgid "_Bucket size:"
 msgstr "_Bucket size:"
 
@@ -2381,28 +2381,28 @@ msgstr "Custom Colour:"
 msgid "Colorify Custom Color"
 msgstr "Colourify Custom Colour"
 
-#: plug-ins/common/colortoalpha.c:97
+#: plug-ins/common/colortoalpha.c:105
 msgid "Color to _Alpha..."
 msgstr "Colour to _Alpha..."
 
-#: plug-ins/common/colortoalpha.c:176
+#: plug-ins/common/colortoalpha.c:183
 msgid "Removing color..."
 msgstr "Removing colour..."
 
-#: plug-ins/common/colortoalpha.c:317
+#: plug-ins/common/colortoalpha.c:364
 msgid "Color to Alpha"
 msgstr "Colour to Alpha"
 
-#: plug-ins/common/colortoalpha.c:333 plug-ins/common/mapcolor.c:424
+#: plug-ins/common/colortoalpha.c:389 plug-ins/common/mapcolor.c:424
 #: plug-ins/gfli/gfli.c:838 plug-ins/gfli/gfli.c:901
 msgid "From:"
 msgstr "From:"
 
-#: plug-ins/common/colortoalpha.c:337
+#: plug-ins/common/colortoalpha.c:393
 msgid "Color to Alpha Color Picker"
 msgstr "Colour to Alpha Colour Picker"
 
-#: plug-ins/common/colortoalpha.c:348
+#: plug-ins/common/colortoalpha.c:407
 msgid "to alpha"
 msgstr "to alpha"
 
@@ -2603,7 +2603,7 @@ msgstr "_Alpha"
 msgid "E_xtend"
 msgstr "E_xtend"
 
-#: plug-ins/common/convmatrix.c:97 plug-ins/common/displace.c:357
+#: plug-ins/common/convmatrix.c:97 plug-ins/common/displace.c:394
 #: plug-ins/common/edge.c:716 plug-ins/common/ripple.c:560
 msgid "_Wrap"
 msgstr "_Wrap"
@@ -3235,38 +3235,38 @@ msgstr "Po_larization:"
 msgid "Other options"
 msgstr "Other options"
 
-#: plug-ins/common/displace.c:151
+#: plug-ins/common/displace.c:154
 msgid "_Displace..."
 msgstr "_Displace..."
 
-#: plug-ins/common/displace.c:225
+#: plug-ins/common/displace.c:228
 msgid "Displacing..."
 msgstr "Displacing..."
 
-#: plug-ins/common/displace.c:260
+#: plug-ins/common/displace.c:268
 msgid "Displace"
 msgstr "Displace"
 
 #. X options
-#: plug-ins/common/displace.c:278
+#: plug-ins/common/displace.c:297
 msgid "_X displacement:"
 msgstr "_X displacement:"
 
 #. Y Options
-#: plug-ins/common/displace.c:316
+#: plug-ins/common/displace.c:344
 msgid "_Y displacement:"
 msgstr "_Y displacement:"
 
-#: plug-ins/common/displace.c:353
+#: plug-ins/common/displace.c:390
 msgid "On Edges:"
 msgstr "On Edges:"
 
-#: plug-ins/common/displace.c:359 plug-ins/common/edge.c:729
+#: plug-ins/common/displace.c:396 plug-ins/common/edge.c:729
 #: plug-ins/common/ripple.c:561 plug-ins/common/waves.c:274
 msgid "_Smear"
 msgstr "_Smear"
 
-#: plug-ins/common/displace.c:361 plug-ins/common/edge.c:742
+#: plug-ins/common/displace.c:398 plug-ins/common/edge.c:742
 #: plug-ins/common/fractaltrace.c:735 plug-ins/common/newsprint.c:407
 #: plug-ins/common/ripple.c:562
 msgid "_Black"
@@ -4105,23 +4105,23 @@ msgstr "Dimension:"
 msgid "Ranks:"
 msgstr "Ranks:"
 
-#: plug-ins/common/glasstile.c:116
+#: plug-ins/common/glasstile.c:112
 msgid "_Glass Tile..."
 msgstr "_Glass Tile..."
 
-#: plug-ins/common/glasstile.c:194
+#: plug-ins/common/glasstile.c:191
 msgid "Glass Tile..."
 msgstr "Glass Tile..."
 
-#: plug-ins/common/glasstile.c:232
+#: plug-ins/common/glasstile.c:229
 msgid "Glass Tile"
 msgstr "Glass Tile"
 
-#: plug-ins/common/glasstile.c:270
+#: plug-ins/common/glasstile.c:259
 msgid "Tile _width:"
 msgstr "Tile _width:"
 
-#: plug-ins/common/glasstile.c:284 plug-ins/common/mosaic.c:621
+#: plug-ins/common/glasstile.c:273 plug-ins/common/mosaic.c:621
 msgid "Tile _height:"
 msgstr "Tile _height:"
 
@@ -4904,8 +4904,6 @@ msgstr "_Angle:"
 msgid "Blur Center"
 msgstr "Blur Centre"
 
-#. Inform the user that we couldn't losslessly save the
-#. * transparency & just use the full palette
 #: plug-ins/common/mng.c:494 plug-ins/common/png.c:1564
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Couldn't losslessly save transparency, saving opacity instead."
@@ -5741,9 +5739,9 @@ msgid "Error starting ghostscript (%s)"
 msgstr "Error starting ghostscript (%s)"
 
 #: plug-ins/common/postscript.c:1568
-#, fuzzy, c-format
+#, c-format
 msgid "Error starting ghostscript: %s"
-msgstr "Error starting ghostscript (%s)"
+msgstr "Error starting ghostscript: %s"
 
 #: plug-ins/common/postscript.c:2368 plug-ins/common/postscript.c:2500
 #: plug-ins/common/postscript.c:2650 plug-ins/common/postscript.c:2778
@@ -6665,14 +6663,12 @@ msgid "Amount:"
 msgstr "Amount:"
 
 #: plug-ins/common/spheredesigner.c:2700
-#, fuzzy
 msgid "Exp.:"
-msgstr "Exp:"
+msgstr "Exp.:"
 
 #: plug-ins/common/spheredesigner.c:2707
-#, fuzzy
 msgid "Texture Transformations"
-msgstr "Transformation %s"
+msgstr "Texture Transformations"
 
 #: plug-ins/common/spheredesigner.c:2730
 msgid "Scale Y:"
@@ -6695,19 +6691,16 @@ msgid "Rotate Z:"
 msgstr "Rotate Z:"
 
 #: plug-ins/common/spheredesigner.c:2764
-#, fuzzy
 msgid "Position X:"
-msgstr "Position"
+msgstr "Position X:"
 
 #: plug-ins/common/spheredesigner.c:2771
-#, fuzzy
 msgid "Position Y:"
-msgstr "Position"
+msgstr "Position Y:"
 
 #: plug-ins/common/spheredesigner.c:2778
-#, fuzzy
 msgid "Position Z:"
-msgstr "Position"
+msgstr "Position Z:"
 
 #: plug-ins/common/spheredesigner.c:2926
 msgid "Rendering Sphere..."
@@ -7825,7 +7818,6 @@ msgstr ""
 "'%s':\n"
 "No image data type specified"
 
-#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:964
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -9478,7 +9470,6 @@ msgstr ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 
-#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/utils.c:135
 #, c-format
 msgid ""
@@ -9517,9 +9508,8 @@ msgstr ""
 "%s"
 
 #: plug-ins/helpbrowser/dialog.c:148
-#, fuzzy
 msgid "GIMP Help browser"
-msgstr "GIMP Help Browser"
+msgstr "GIMP Help browser"
 
 #: plug-ins/helpbrowser/dialog.c:520
 msgid "Document Not Found"
@@ -11528,117 +11518,3 @@ msgstr "Error: Could not read XJT property file '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: XJT property file '%s' is empty."
-
-#~ msgid "<Image>/Filters/Render"
-#~ msgstr "<Image>/Filters/Render"
-
-#~ msgid "<Image>/Filters/Light Effects"
-#~ msgstr "<Image>/Filters/Light Effects"
-
-#~ msgid "<Image>/Filters/Map"
-#~ msgstr "<Image>/Filters/Map"
-
-#~ msgid "<Image>/Filters/Colors/Map"
-#~ msgstr "<Image>/Filters/Colours/Map"
-
-#~ msgid "<Image>/Filters/Render/Pattern"
-#~ msgstr "<Image>/Filters/Render/Pattern"
-
-#~ msgid "<Image>/Layer"
-#~ msgstr "<Image>/Layer"
-
-#~ msgid "<Image>/Filters/Animation"
-#~ msgstr "<Image>/Filters/Animation"
-
-#~ msgid "<Image>/Filters/Glass Effects"
-#~ msgstr "<Image>/Filters/Glass Effects"
-
-#~ msgid "<Image>/Image/Crop"
-#~ msgstr "<Image>/Image/Crop"
-
-#~ msgid "<Image>/Layer/Crop"
-#~ msgstr "<Image>/Layer/Crop"
-
-#~ msgid "<Image>/Layer/Colors/Auto"
-#~ msgstr "<Image>/Layer/Colours/Auto"
-
-#~ msgid "<Image>/Filters/Distorts"
-#~ msgstr "<Image>/Filters/Distorts"
-
-#~ msgid "<Image>/Filters/Blur"
-#~ msgstr "<Image>/Filters/Blur"
-
-#~ msgid "<Image>/Filters/Colors"
-#~ msgstr "<Image>/Filters/Colours"
-
-#~ msgid "<Image>/Layer/Colors/Info"
-#~ msgstr "<Image>/Layer/Colours/Info"
-
-#~ msgid "<Image>/Layer/Transparency/Modify"
-#~ msgstr "<Image>/Layer/Transparency/Modify"
-
-#~ msgid "<Image>/Image/Mode"
-#~ msgstr "<Image>/Image/Mode"
-
-#~ msgid "<Image>/Filters/Generic"
-#~ msgstr "<Image>/Filters/Generic"
-
-#~ msgid "<Image>/Filters/Artistic"
-#~ msgstr "<Image>/Filters/Artistic"
-
-#~ msgid "<Image>/Filters/Enhance"
-#~ msgstr "<Image>/Filters/Enhance"
-
-#~ msgid "<Image>/Filters/Combine"
-#~ msgstr "<Image>/Filters/Combine"
-
-#~ msgid "<Image>/Filters/Edge-Detect"
-#~ msgstr "<Image>/Filters/Edge-Detect"
-
-#~ msgid "<Image>/Filters/Toys"
-#~ msgstr "<Image>/Filters/Toys"
-
-#~ msgid "<Image>/Image/Transform"
-#~ msgstr "<Image>/Image/Transform"
-
-#~ msgid "<Image>/File/Send"
-#~ msgstr "<Image>/File/Send"
-
-#~ msgid "_Do preview"
-#~ msgstr "_Do preview"
-
-#~ msgid "<Image>/Filters/Noise"
-#~ msgstr "<Image>/Filters/Noise"
-
-#~ msgid "<Image>/Filters/Render/Clouds"
-#~ msgstr "<Image>/Filters/Render/Clouds"
-
-#~ msgid "Right-Click Preview to Jump"
-#~ msgstr "Right-Click Preview to Jump"
-
-#~ msgid "<Toolbox>/File/Acquire"
-#~ msgstr "<Toolbox>/File/Acquire"
-
-#~ msgid "Pos X:"
-#~ msgstr "Pos X:"
-
-#~ msgid "Pos Y:"
-#~ msgstr "Pos Y:"
-
-#~ msgid "Pos Z:"
-#~ msgstr "Pos Z:"
-
-#~ msgid "<Toolbox>/Xtns/Extensions"
-#~ msgstr "<Toolbox>/Xtns/Extensions"
-
-#~ msgid "<Image>/Edit"
-#~ msgstr "<Image>/Edit"
-
-#~ msgid "<Image>/Filters/Render/Nature"
-#~ msgstr "<Image>/Filters/Render/Nature"
-
-#~ msgid "<Image>/Filters/Web"
-#~ msgstr "<Image>/Filters/Web"
-
-#~ msgid "Do pre_view"
-#~ msgstr "Do pre_view"
