@@ -42,7 +42,7 @@
 #include <unistd.h>
 #endif
 
-#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
+#if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
 #define STRICT
 #include <windows.h>
 #include <process.h>
@@ -52,7 +52,7 @@
 #include <io.h>
 #endif
 
-#ifdef G_HAVE_CYGWIN
+#ifdef G_WITH_CYGWIN
 #define O_TEXT		0x0100	/* text file */
 #define _O_TEXT		0x0100	/* text file */
 #define O_BINARY	0x0200	/* binary file */
@@ -183,7 +183,7 @@ static ProcRecord *last_plug_in = NULL;
 static int shm_ID = -1;
 static guchar *shm_addr = NULL;
 
-#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
+#if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
 static HANDLE shm_handle;
 #endif
 
@@ -220,7 +220,7 @@ plug_in_init_shm (void)
 #endif
     }
 #else
-#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
+#if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
   /* Use Win32 shared memory mechanisms for
    * transfering tile data.
    */
@@ -421,7 +421,7 @@ plug_in_kill (void)
   GSList *tmp;
   PlugIn *plug_in;
   
-#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
+#if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
   CloseHandle (shm_handle);
 #else
 #ifdef HAVE_SHM_H
@@ -829,7 +829,7 @@ plug_in_open (PlugIn *plug_in)
 	  return 0;
 	}
 
-#if defined(G_HAVE_CYGWIN) || defined(__EMX__)
+#if defined(G_WITH_CYGWIN) || defined(__EMX__)
       /* Set to binary mode */
       setmode(my_read[0], _O_BINARY);
       setmode(my_write[0], _O_BINARY);
@@ -889,7 +889,7 @@ plug_in_open (PlugIn *plug_in)
       fcntl(my_read[0], F_SETFD, 1);
       fcntl(my_write[1], F_SETFD, 1);
 #endif
-#if defined(G_OS_WIN32) || defined (G_HAVE_CYGWIN) || defined(__EMX__)
+#if defined(G_OS_WIN32) || defined (G_WITH_CYGWIN) || defined(__EMX__)
       plug_in->pid = _spawnv (_P_NOWAIT, plug_in->args[0], plug_in->args);
       if (plug_in->pid == -1)
 #else

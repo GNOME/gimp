@@ -51,7 +51,7 @@
 #include <sys/select.h>
 #endif
 
-#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
+#if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
 #  define STRICT
 #  include <windows.h>
 #  undef RGB
@@ -96,7 +96,7 @@ guint gimp_major_version = GIMP_MAJOR_VERSION;
 guint gimp_minor_version = GIMP_MINOR_VERSION;
 guint gimp_micro_version = GIMP_MICRO_VERSION;
 
-#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
+#if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
 static HANDLE shm_handle;
 #endif
 
@@ -264,7 +264,7 @@ gimp_close (void)
   if (PLUG_IN_INFO.quit_proc)
     (* PLUG_IN_INFO.quit_proc) ();
 
-#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
+#if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
   CloseHandle (shm_handle);
 #else
 #ifdef HAVE_SHM_H
@@ -1319,7 +1319,7 @@ gimp_config (GPConfig *config)
 
   if (_shm_ID != -1)
     {
-#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
+#if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
       /*
        * Use Win32 shared memory mechanisms for
        * transfering tile data

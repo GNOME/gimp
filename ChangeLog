@@ -1,3 +1,9 @@
+Wed Oct  6 14:24:46 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* libgimp/gimp.c
+	* app/module_db.c
+	* app/plug_in.c: s/G_HAVE_CYGWIN/G_WITH_CYGWIN/
+
 1999-10-06  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/gpb.c: Fix the file_gih_save RUN_WITH_LAST_VALS

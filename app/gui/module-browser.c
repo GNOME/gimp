@@ -453,7 +453,7 @@ valid_module_name (const char *filename)
 
   len = strlen (basename);
 
-#if !defined(G_OS_WIN32) && !defined(G_HAVE_CYGWIN) && !defined(__EMX__)
+#if !defined(G_OS_WIN32) && !defined(G_WITH_CYGWIN) && !defined(__EMX__)
   if (len < 3 + 1 + 3)
     return FALSE;
 
