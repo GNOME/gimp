@@ -37,18 +37,26 @@ enum
   EVEN_FIELDS
 };
 
+typedef struct
+{
+  gint     evenness;
+  gboolean preview;
+} DeinterlaceValues;
+
 /* Declare local functions.
  */
 static void      query  (void);
 static void      run    (const gchar      *name,
-			 gint              nparams,
-			 const GimpParam  *param,
-			 gint             *nreturn_vals,
-			 GimpParam       **return_vals);
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
-static void      deinterlace        (GimpDrawable  *drawable);
 
-static gboolean  deinterlace_dialog (void);
+static void      deinterlace        (GimpDrawable        *drawable,
+                                     GimpDrawablePreview *preview);
+
+static gboolean  deinterlace_dialog (GimpDrawable        *drawable);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -59,7 +67,11 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-static gint DeinterlaceValue = EVEN_FIELDS;
+static DeinterlaceValues devals =
+{
+  EVEN_FIELDS,  /* evenness */
+  TRUE          /* preview */
+};
 
 MAIN ()
 
@@ -75,20 +87,20 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_deinterlace",
-			  "Deinterlace",
-			  "Deinterlace is useful for processing images from "
-			  "video capture cards. When only the odd or even "
-			  "fields get captured, deinterlace can be used to "
-			  "interpolate between the existing fields to correct "
-			  "this.",
-			  "Andrew Kieschnick",
-			  "Andrew Kieschnick",
-			  "1997",
-			  N_("_Deinterlace..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Deinterlace",
+                          "Deinterlace is useful for processing images from "
+                          "video capture cards. When only the odd or even "
+                          "fields get captured, deinterlace can be used to "
+                          "interpolate between the existing fields to correct "
+                          "this.",
+                          "Andrew Kieschnick",
+                          "Andrew Kieschnick",
+                          "1997",
+                          N_("_Deinterlace..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_deinterlace",
                              N_("<Image>/Filters/Enhance"));
@@ -116,20 +128,20 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data ("plug_in_deinterlace", &DeinterlaceValue);
-      if (! deinterlace_dialog ())
-	status = GIMP_PDB_EXECUTION_ERROR;
+      gimp_get_data ("plug_in_deinterlace", &devals);
+      if (! deinterlace_dialog (drawable))
+        status = GIMP_PDB_EXECUTION_ERROR;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 4)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       if (status == GIMP_PDB_SUCCESS)
-	DeinterlaceValue = param[3].data.d_int32;
+        devals.evenness = param[3].data.d_int32;
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data ("plug_in_deinterlace", &DeinterlaceValue);
+      gimp_get_data ("plug_in_deinterlace", &devals);
       break;
 
     default:
@@ -140,24 +152,24 @@ run (const gchar      *name,
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-	  gimp_drawable_is_gray (drawable->drawable_id))
-	{
-	  gimp_progress_init (_("Deinterlace..."));
-	  gimp_tile_cache_ntiles (2 * (drawable->width /
-				       gimp_tile_width () + 1));
-	  deinterlace (drawable);
+          gimp_drawable_is_gray (drawable->drawable_id))
+        {
+          gimp_progress_init (_("Deinterlace..."));
+          gimp_tile_cache_ntiles (2 * (drawable->width /
+                                       gimp_tile_width () + 1));
+          deinterlace (drawable, NULL);
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data ("plug_in_deinterlace",
-			   &DeinterlaceValue, sizeof (DeinterlaceValue));
-	}
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_set_data ("plug_in_deinterlace",
+                           &devals, sizeof (DeinterlaceValues));
+        }
       else
-	{
-	  /* gimp_message ("deinterlace: cannot operate on indexed color images"); */
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          /* gimp_message ("deinterlace: cannot operate on indexed color images"); */
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
   *nreturn_vals = 1;
   *return_vals = values;
@@ -169,53 +181,62 @@ run (const gchar      *name,
 }
 
 static void
-deinterlace (GimpDrawable *drawable)
+deinterlace (GimpDrawable        *drawable,
+             GimpDrawablePreview *preview)
 {
-  GimpPixelRgn srcPR, destPR;
-  gint width, height;
-  gint bytes;
-  gint has_alpha;
-  guchar *dest;
-  guchar *upper;
-  guchar *lower;
-  gint row, col;
-  gint x1, y1, x2, y2;
+  GimpPixelRgn  srcPR, destPR;
+  gint          width, height;
+  gint          bytes;
+  gboolean      has_alpha;
+  guchar       *dest;
+  guchar       *dest_buffer = NULL;
+  guchar       *upper;
+  guchar       *lower;
+  gint          row, col;
+  gint          x1, y1, x2, y2;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  /* Get the size of the input image. (This will/must be the same
-   *  as the size of the output image.
-   */
-  width  = drawable->width;
-  height = drawable->height;
   bytes  = drawable->bpp;
 
+  if (preview)
+    {
+      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      dest_buffer = dest  = g_new (guchar, width * height * bytes);
+    }
+  else
+    {
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      width  = x2 - x1;
+      height = y2 - y1;
+      dest  = g_new (guchar, width * height * bytes);
+    }
+
+
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   /*  allocate row buffers  */
-  dest  = g_new (guchar, (x2 - x1) * bytes);
-  upper = g_new (guchar, (x2 - x1) * bytes);
-  lower = g_new (guchar, (x2 - x1) * bytes);
+  upper = g_new (guchar, width * bytes);
+  lower = g_new (guchar, width * bytes);
 
   /*  initialize the pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
   /*  loop through the rows, performing our magic*/
-  for (row = y1; row < y2; row++)
+  for (row = y1; row < y1 + height; row++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, dest, x1, row, x2 - x1);
+      gimp_pixel_rgn_get_row (&srcPR, dest, x1, row, width);
 
       /* Only do interpolation if the row:
-	 (1) Isn't one we want to keep
-	 (2) Has both an upper and a lower row
-	 Otherwise, just duplicate the source row
+         (1) Isn't one we want to keep
+         (2) Has both an upper and a lower row
+         Otherwise, just duplicate the source row
       */
-      if (!((row % 2 == DeinterlaceValue) ||
-	    (row - 1 < 0) ||
-	    (row + 1 >= height)))
-	{
-	  gimp_pixel_rgn_get_row (&srcPR, upper, x1, row - 1, x2 - x1);
-	  gimp_pixel_rgn_get_row (&srcPR, lower, x1, row + 1, x2 - x1);
+      if (!((row % 2 == devals.evenness) ||
+            (row - 1 < 0) ||
+            (row + 1 >= height)))
+        {
+          gimp_pixel_rgn_get_row (&srcPR, upper, x1, row - 1, width);
+          gimp_pixel_rgn_get_row (&srcPR, lower, x1, row + 1, width);
 
           if (has_alpha)
             {
@@ -223,7 +244,7 @@ deinterlace (GimpDrawable *drawable)
               guchar *lpix = lower;
               guchar *dpix = dest;
 
-	      for (col = 0; col < x2-x1; col++)
+              for (col = 0; col < width; col++)
                 {
                   gint  b;
                   guint ualpha = upix[bytes-1];
@@ -233,7 +254,7 @@ deinterlace (GimpDrawable *drawable)
                   if ((dpix[bytes-1] = (alpha >> 1)))
                     {
                       for (b = 0; b < bytes-1; b++)
-			dpix[b] = (upix[b] * ualpha + lpix[b] * lalpha) / alpha;
+                        dpix[b] = (upix[b] * ualpha + lpix[b] * lalpha) / alpha;
                     }
 
                   upix += bytes;
@@ -243,20 +264,35 @@ deinterlace (GimpDrawable *drawable)
             }
           else
             {
-              for (col = 0; col < (x2 - x1) * bytes; col++)
+              for (col = 0; col < width * bytes; col++)
                    dest[col] = (upper[col] + lower[col]) / 2;
             }
-	}
-      gimp_pixel_rgn_set_row (&destPR, dest, x1, row, x2 - x1);
+        }
+      if (preview)
+        {
+          dest += width * bytes;
+        }
+      else
+        {
+          gimp_pixel_rgn_set_row (&destPR, dest, x1, row, width);
 
-      if ((row % 5) == 0)
-	gimp_progress_update ((double) row / (double) (y2 - y1));
+          if ((row % 5) == 0)
+            gimp_progress_update ((double) row / (double) (height));
+        }
     }
 
-  /*  update the deinterlaced region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
+  if (preview)
+    {
+      gimp_drawable_preview_draw_buffer (preview, dest_buffer, width * bytes);
+      dest = dest_buffer;
+    }
+  else
+    {
+      /*  update the deinterlaced region  */
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+    }
 
   g_free (lower);
   g_free (upper);
@@ -264,41 +300,63 @@ deinterlace (GimpDrawable *drawable)
 }
 
 static gboolean
-deinterlace_dialog (void)
+deinterlace_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *frame;
+  GtkWidget *odd;
+  GtkWidget *even;
   gboolean   run;
 
   gimp_ui_init ("deinterlace", FALSE);
 
-  dlg = gimp_dialog_new (_("Deinterlace"), "deinterlace",
-                         NULL, 0,
-			 gimp_standard_help_func, "plug-in-deinterlace",
+  dialog = gimp_dialog_new (_("Deinterlace"), "deinterlace",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-deinterlace",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                            NULL);
+
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
+
+  preview = gimp_drawable_preview_new (drawable, &devals.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (deinterlace),
+                            drawable);
 
   frame = gimp_int_radio_group_new (FALSE, NULL,
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &DeinterlaceValue, DeinterlaceValue,
+                                    &devals.evenness, devals.evenness,
 
-                                    _("Keep o_dd fields"),  ODD_FIELDS,  NULL,
-                                    _("Keep _even fields"), EVEN_FIELDS, NULL,
+                                    _("Keep o_dd fields"),  ODD_FIELDS,  &odd,
+                                    _("Keep _even fields"), EVEN_FIELDS, &even,
 
                                     NULL);
 
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  g_signal_connect_swapped (odd, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (even, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
