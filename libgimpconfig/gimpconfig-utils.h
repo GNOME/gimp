@@ -23,8 +23,6 @@
 #define __GIMP_CONFIG_UTILS_H__
 
 
-gboolean   gimp_config_values_equal       (const GValue *a,
-                                           const GValue *b);
 void       gimp_config_copy_properties    (GObject      *src,
                                            GObject      *dest);
 

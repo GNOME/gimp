@@ -101,4 +101,14 @@ GtkWidget     * gimp_prop_coordinates_new         (GObject     *config,
                                                    gboolean     has_chainbutton);
 
 
+/*  GimpParamColor  */
+
+GtkWidget     * gimp_prop_color_button_new        (GObject     *config,
+                                                   const gchar *property_name,
+                                                   const gchar *title,
+                                                   gint         width,
+                                                   gint         height,
+                                                   GimpColorAreaType  type);
+
+
 #endif /* __GIMP_PROP_WIDGETS_H__ */

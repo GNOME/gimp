@@ -35,9 +35,9 @@
 
 /* finding the effective screen resolution (double) */
 #define  SCREEN_XRES(s)   (s->dot_for_dot ? \
-                           s->gdisp->gimage->xresolution : s->gdisp->monitor_xres)
+                           s->gdisp->gimage->xresolution : s->monitor_xres)
 #define  SCREEN_YRES(s)   (s->dot_for_dot ? \
-                           s->gdisp->gimage->yresolution : s->gdisp->monitor_yres)
+                           s->gdisp->gimage->yresolution : s->monitor_yres)
 
 /* calculate scale factors (double) */
 #define  SCALEFACTOR_X(s) ((SCALEDEST(s) * SCREEN_XRES(s)) / \
@@ -74,6 +74,9 @@ struct _GimpDisplayShell
   GimpDisplay      *gdisp;
 
   GimpItemFactory  *item_factory;
+
+  gdouble           monitor_xres;
+  gdouble           monitor_yres;
 
   gint              scale;             /*  scale factor from original raw image    */
   gboolean          dot_for_dot;       /*  is monitor resolution being ignored?    */
@@ -127,6 +130,8 @@ struct _GimpDisplayShell
   gint              cursor_y;          /* software cursor Y value             */
 
   GtkWidget        *padding_button;    /* GimpColorPanel in the NE corner     */
+  GimpDisplayPaddingMode padding_mode;
+  gboolean          padding_mode_set;
   GimpRGB           padding_color;     /* color of the empty around the image */
   GdkGC            *padding_gc;        /* GC with padding_color as BG         */
 
@@ -253,6 +258,10 @@ void	    gimp_display_shell_update_cursor	     (GimpDisplayShell *shell,
                                                       gint              y);
 void        gimp_display_shell_update_title          (GimpDisplayShell *shell);
 void        gimp_display_shell_update_icon           (GimpDisplayShell *shell);
+
+void        gimp_display_shell_set_padding           (GimpDisplayShell *shell,
+                                                      GimpDisplayPaddingMode  mode,
+                                                      GimpRGB          *color);
 
 void        gimp_display_shell_draw_guide            (GimpDisplayShell *shell,
                                                       GimpGuide        *guide,

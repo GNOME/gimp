@@ -1,3 +1,46 @@
+2002-11-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig-utils.[ch]: removed
+	gimp_config_values_equal().
+
+	* app/config/gimpconfig-serialize.c
+	* app/config/gimpconfig.c: use g_param_values_cmp() instead so
+	our registered compare methods are used.
+
+	* app/config/gimpdisplayconfig.[ch]: added "canvas_padding_mode"
+	and "canvas_padding_color" properties.
+
+	* app/display/display-enums.[ch]: added enum GimpDisplayPaddingMode
+	which can be one of { theme, light check, dark check, custom }.
+
+	* app/display/gimpdisplay.h
+	* app/display/gimpdisplay-handlers.c: removed cached monitor
+	resolution values...
+
+	* app/display/gimpdisplayshell.[ch]: ...and added them here. Added
+	padding state as in GimpDisplayConfig. Added utility function
+	gimp_display_shell_set_padding() which hides all the details.
+	Added the new padding modes to the padding color button's context
+	menu.
+
+	* app/display/gimpdisplayshell-callbacks.[ch]: don't fiddle
+	with colors manually but use gimp_display_shell_set_padding()
+	in realize() and in the color button callbacks.
+
+	* app/display/gimpdisplayshell-handlers.c: connect to
+	notify::monitor-[xy]resolution and
+	notify::canvas-padding-[mode|color] and update accordingly.
+
+	* app/widgets/gimppropwidgets.[ch]: added
+	gimp_prop_color_button_new().
+
+	* app/widgets/gimpdialogfactory.[ch]: added
+	gimp_dialog_factories_session_clear() (unimplemented).
+
+	* app/gui/preferences-dialog.c: added widgets for padding mode and
+	color. Removed some callbacks by connecting the functions they
+	called directly. Cleanup.
+
 2002-11-23  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/preferences/folders-environ.png:

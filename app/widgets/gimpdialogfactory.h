@@ -147,6 +147,7 @@ void        gimp_dialog_factory_remove_dialog     (GimpDialogFactory *factory,
 
 void        gimp_dialog_factories_session_save    (FILE              *file);
 void        gimp_dialog_factories_session_restore (void);
+void        gimp_dialog_factories_session_clear   (void);
 
 void        gimp_dialog_factories_toggle          (GimpDialogFactory *toolbox_factory);
 

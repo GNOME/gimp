@@ -177,7 +177,7 @@ gimp_config_serialize_changed_properties (GObject *new,
       g_object_get_property (new, prop_spec->name, &new_value);
       g_object_get_property (old, prop_spec->name, &old_value);
 
-      if (!gimp_config_values_equal (&new_value, &old_value))
+      if (g_param_values_cmp (prop_spec, &new_value, &old_value) != 0)
         {
           if (property_written)
             g_string_assign (str, "\n");

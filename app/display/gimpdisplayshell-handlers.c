@@ -72,6 +72,12 @@ static void   gimp_display_shell_title_notify_handler       (GObject          *c
 static void   gimp_display_shell_nav_size_notify_handler    (GObject          *config,
                                                              GParamSpec       *param_spec,
                                                              GimpDisplayShell *shell);
+static void   gimp_display_shell_monitor_res_notify_handler (GObject          *config,
+                                                             GParamSpec       *param_spec,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_padding_notify_handler     (GObject          *config,
+                                                             GParamSpec       *param_spec,
+                                                             GimpDisplayShell *shell);
 
 static gboolean   gimp_display_shell_idle_update_icon       (gpointer          data);
 
@@ -81,13 +87,21 @@ static gboolean   gimp_display_shell_idle_update_icon       (gpointer          d
 void
 gimp_display_shell_connect (GimpDisplayShell *shell)
 {
-  GimpImage *gimage;
+  GimpDisplayConfig *display_config;
+  GimpImage         *gimage;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->gdisp));
   g_return_if_fail (GIMP_IS_IMAGE (shell->gdisp->gimage));
 
   gimage = shell->gdisp->gimage;
+
+  display_config = GIMP_DISPLAY_CONFIG (gimage->gimp->config);
+
+  shell->monitor_xres  = display_config->monitor_xres;
+  shell->monitor_yres  = display_config->monitor_yres;
+  shell->padding_mode  = display_config->canvas_padding_mode;
+  shell->padding_color = display_config->canvas_padding_color;
 
   g_signal_connect (G_OBJECT (gimage), "clean",
                     G_CALLBACK (gimp_display_shell_clean_dirty_handler),
@@ -143,6 +157,22 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     "notify::navigation-preview-size",
                     G_CALLBACK (gimp_display_shell_nav_size_notify_handler),
                     shell);
+  g_signal_connect (G_OBJECT (gimage->gimp->config),
+                    "notify::monitor-xresolutuion",
+                    G_CALLBACK (gimp_display_shell_monitor_res_notify_handler),
+                    shell);
+  g_signal_connect (G_OBJECT (gimage->gimp->config),
+                    "notify::monitor-yresolutuion",
+                    G_CALLBACK (gimp_display_shell_monitor_res_notify_handler),
+                    shell);
+  g_signal_connect (G_OBJECT (gimage->gimp->config),
+                    "notify::canvas-padding-mode",
+                    G_CALLBACK (gimp_display_shell_padding_notify_handler),
+                    shell);
+  g_signal_connect (G_OBJECT (gimage->gimp->config),
+                    "notify::canvas-padding-color",
+                    G_CALLBACK (gimp_display_shell_padding_notify_handler),
+                    shell);
 
   gimp_display_shell_invalidate_preview_handler (gimage, shell);
   gimp_display_shell_qmask_changed_handler (gimage, shell);
@@ -165,6 +195,12 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
       shell->icon_idle_id = 0;
     }
 
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
+                                        gimp_display_shell_padding_notify_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
+                                        gimp_display_shell_monitor_res_notify_handler,
+                                        shell);
   g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
                                         gimp_display_shell_nav_size_notify_handler,
                                         shell);
@@ -320,6 +356,19 @@ gimp_display_shell_check_notify_handler (GObject          *config,
                                          GParamSpec       *param_spec,
                                          GimpDisplayShell *shell)
 {
+  switch (shell->padding_mode)
+    {
+    case GIMP_DISPLAY_PADDING_MODE_LIGHT_CHECK:
+    case GIMP_DISPLAY_PADDING_MODE_DARK_CHECK:
+      gimp_display_shell_set_padding (shell,
+                                      shell->padding_mode,
+                                      &shell->padding_color);
+      break;
+
+    default:
+      break;
+    }
+
   gimp_display_shell_expose_full (shell);
   gimp_display_shell_flush (shell);
 }
@@ -349,6 +398,40 @@ gimp_display_shell_nav_size_notify_handler (GObject          *config,
     GIMP_DISPLAY_CONFIG (config)->nav_preview_size != GIMP_PREVIEW_SIZE_NONE;
 
   gtk_widget_set_sensitive (shell->nav_ebox, sensitive);
+}
+
+static void
+gimp_display_shell_monitor_res_notify_handler (GObject          *config,
+                                               GParamSpec       *param_spec,
+                                               GimpDisplayShell *shell)
+{
+  shell->monitor_xres = GIMP_DISPLAY_CONFIG (config)->monitor_xres;
+  shell->monitor_yres = GIMP_DISPLAY_CONFIG (config)->monitor_yres;
+
+#ifdef __GNUC__
+#warning FIXME: update displays on monitor resolution change
+#endif
+}
+
+static void
+gimp_display_shell_padding_notify_handler (GObject          *config,
+                                           GParamSpec       *param_spec,
+                                           GimpDisplayShell *shell)
+{
+  /*  if the user did not set the padding mode for this display explicitely  */
+  if (! shell->padding_mode_set)
+    {
+      GimpDisplayConfig *display_config;
+
+      display_config = GIMP_DISPLAY_CONFIG (config);
+
+      gimp_display_shell_set_padding (shell,
+                                      display_config->canvas_padding_mode,
+                                      &display_config->canvas_padding_color);
+
+      gimp_display_shell_expose_full (shell);
+      gimp_display_shell_flush (shell);
+    }
 }
 
 static gboolean

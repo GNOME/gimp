@@ -163,7 +163,7 @@ gimp_config_iface_equal (GObject *a,
       g_object_get_property (a, prop_spec->name, &a_value);
       g_object_get_property (b, prop_spec->name, &b_value);
 
-      equal = gimp_config_values_equal (&a_value, &b_value);
+      equal = (g_param_values_cmp (prop_spec, &a_value, &b_value) == 0);
 
       g_value_unset (&a_value);
       g_value_unset (&b_value);

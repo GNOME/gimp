@@ -31,6 +31,7 @@
 
 #include "config/gimpconfig-params.h"
 
+#include "gimpcolorpanel.h"
 #include "gimpenummenu.h"
 #include "gimppropwidgets.h"
 
@@ -1397,6 +1398,105 @@ gimp_prop_coordinates_notify_unit (GObject       *config,
                                          gimp_prop_coordinates_callback,
                                          config);
     }
+}
+
+
+/******************/
+/*  color button  */
+/******************/
+
+static void   gimp_prop_color_button_callback (GtkWidget  *widget,
+                                               GObject    *config);
+static void   gimp_prop_color_button_notify   (GObject    *config,
+                                               GParamSpec *param_spec,
+                                               GtkWidget  *button);
+
+GtkWidget *
+gimp_prop_color_button_new (GObject           *config,
+                            const gchar       *property_name,
+                            const gchar       *title,
+                            gint               width,
+                            gint               height,
+                            GimpColorAreaType  type)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *button;
+  GimpRGB    *value;
+
+  param_spec = check_param_spec (config, property_name,
+                                 GIMP_TYPE_PARAM_COLOR, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  button = gimp_color_panel_new (title, value, type, width, height);
+
+  g_free (value);
+
+  set_param_spec (G_OBJECT (button), param_spec);
+
+  g_signal_connect (G_OBJECT (button), "color_changed",
+		    G_CALLBACK (gimp_prop_color_button_callback),
+		    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_color_button_notify),
+                  button);
+
+  return button;
+}
+
+static void
+gimp_prop_color_button_callback (GtkWidget *button,
+                                 GObject   *config)
+{
+  GParamSpec *param_spec;
+  GimpRGB     value;
+
+  param_spec = get_param_spec (G_OBJECT (button));
+  if (! param_spec)
+    return;
+
+  gimp_color_button_get_color (GIMP_COLOR_BUTTON (button), &value);
+
+  g_signal_handlers_block_by_func (config,
+                                   gimp_prop_color_button_notify,
+                                   button);
+
+  g_object_set (config,
+                param_spec->name, &value,
+                NULL);
+
+  g_signal_handlers_unblock_by_func (config,
+                                     gimp_prop_color_button_notify,
+                                     button);
+}
+
+static void
+gimp_prop_color_button_notify (GObject    *config,
+                               GParamSpec *param_spec,
+                               GtkWidget  *button)
+{
+  GimpRGB *value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  g_signal_handlers_block_by_func (G_OBJECT (button),
+                                   gimp_prop_color_button_callback,
+                                   config);
+
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (button), value);
+
+  g_free (value);
+
+  g_signal_handlers_unblock_by_func (G_OBJECT (button),
+                                     gimp_prop_color_button_callback,
+                                     config);
 }
 
 

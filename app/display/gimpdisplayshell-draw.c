@@ -74,7 +74,6 @@
 #include "gimpdisplayshell-selection.h"
 #include "gimpstatusbar.h"
 
-#include "app_procs.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -266,7 +265,9 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->cursor_y              = 0;
 
   shell->padding_button        = NULL;
-  gimp_rgb_set (&shell->padding_color, 1.0, 1.0, 1.0);
+  shell->padding_mode          = GIMP_DISPLAY_PADDING_MODE_DEFAULT;
+  shell->padding_mode_set      = FALSE;
+  gimp_rgba_set (&shell->padding_color, 1.0, 1.0, 1.0, 1.0);
   shell->padding_gc            = NULL;
 
   shell->warning_dialog        = NULL;
@@ -646,8 +647,21 @@ gimp_display_shell_new (GimpDisplay *gdisp,
     static GtkItemFactoryEntry menu_items[] =
     {
       { "/---", NULL, NULL, 0, "<Separator>"},
-      { N_("/Default Color"), NULL, 
-        gimp_display_shell_color_button_default, 0, NULL }
+      { N_("/From Theme"), NULL,
+        gimp_display_shell_color_button_menu_callback,
+        GIMP_DISPLAY_PADDING_MODE_DEFAULT, NULL },
+      { N_("/Light Check Color"), NULL,
+        gimp_display_shell_color_button_menu_callback,
+        GIMP_DISPLAY_PADDING_MODE_LIGHT_CHECK, NULL },
+      { N_("/Dark Check Color"), NULL,
+        gimp_display_shell_color_button_menu_callback,
+        GIMP_DISPLAY_PADDING_MODE_DARK_CHECK, NULL },
+      { N_("/Select Custom Color..."), NULL,
+        gimp_display_shell_color_button_menu_callback,
+        GIMP_DISPLAY_PADDING_MODE_CUSTOM, NULL },
+      { N_("/As in Preferences"), NULL,
+        gimp_display_shell_color_button_menu_callback,
+        0xffff, NULL }
     };
 
     gtk_item_factory_create_items (GIMP_COLOR_BUTTON (shell->padding_button)->item_factory,
@@ -757,12 +771,11 @@ void
 gimp_display_shell_close (GimpDisplayShell *shell,
                           gboolean          kill_it)
 {
-  /* FIXME!! */
-  GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (the_gimp->config);
-
-  GimpImage *gimage;
+  GimpDisplayConfig *config;
+  GimpImage         *gimage;
 
   gimage = shell->gdisp->gimage;
+  config = GIMP_DISPLAY_CONFIG (gimage->gimp->config);
 
   /*  FIXME: gimp_busy HACK not really appropriate here because we only
    *  want to prevent the busy image and display to be closed.  --Mitch
@@ -1691,12 +1704,12 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
 void
 gimp_display_shell_update_title (GimpDisplayShell *shell)
 {
-  /* FIXME!! */
-  GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (the_gimp->config);
-  
-  gchar title[MAX_TITLE_BUF];
+  GimpDisplayConfig *config;
+  gchar              title[MAX_TITLE_BUF];
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
 
   /* format the title */
   gimp_display_shell_format_title (shell, title, sizeof (title),
@@ -1743,6 +1756,83 @@ gimp_display_shell_update_icon (GimpDisplayShell *shell)
   gtk_window_set_icon (GTK_WINDOW (shell), pixbuf);
 
   g_object_unref (G_OBJECT (pixbuf));
+}
+
+void
+gimp_display_shell_set_padding (GimpDisplayShell       *shell,
+                                GimpDisplayPaddingMode  padding_mode,
+                                GimpRGB                *padding_color)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (padding_color != NULL);
+
+  shell->padding_mode = padding_mode;
+
+  switch (shell->padding_mode)
+    {
+    case GIMP_DISPLAY_PADDING_MODE_DEFAULT:
+      if (shell->padding_gc)
+        {
+          guchar r, g, b;
+
+          r = shell->canvas->style->bg[GTK_STATE_NORMAL].red   >> 8;
+          g = shell->canvas->style->bg[GTK_STATE_NORMAL].green >> 8;
+          b = shell->canvas->style->bg[GTK_STATE_NORMAL].blue  >> 8;
+
+          gimp_rgb_set_uchar (&shell->padding_color, r, g, b);
+        }
+      else
+        {
+          shell->padding_color = *padding_color;
+       }
+      break;
+
+    case GIMP_DISPLAY_PADDING_MODE_LIGHT_CHECK:
+      gimp_rgb_set_uchar (&shell->padding_color,
+                          render_blend_light_check[0],
+                          render_blend_light_check[1],
+                          render_blend_light_check[2]);
+      break;
+
+    case GIMP_DISPLAY_PADDING_MODE_DARK_CHECK:
+      gimp_rgb_set_uchar (&shell->padding_color,
+                          render_blend_dark_check[0],
+                          render_blend_dark_check[1],
+                          render_blend_dark_check[2]);
+      break;
+
+    case GIMP_DISPLAY_PADDING_MODE_CUSTOM:
+      shell->padding_color = *padding_color;
+      break;
+    }
+
+  if (shell->padding_gc)
+    {
+      GdkColor gdk_color;
+      guchar   r, g, b;
+
+      gimp_rgb_get_uchar (&shell->padding_color, &r, &g, &b);
+
+      gdk_color.red   = r + r * 256;
+      gdk_color.green = g + g * 256;
+      gdk_color.blue  = b + b * 256;
+
+      gdk_gc_set_rgb_fg_color (shell->padding_gc, &gdk_color);
+    }
+
+  if (shell->padding_button)
+    {
+      g_signal_handlers_block_by_func (G_OBJECT (shell->padding_button),
+                                       gimp_display_shell_color_button_changed,
+                                       shell);
+
+      gimp_color_button_set_color (GIMP_COLOR_BUTTON (shell->padding_button),
+                                   &shell->padding_color);
+
+      g_signal_handlers_unblock_by_func (G_OBJECT (shell->padding_button),
+                                         gimp_display_shell_color_button_changed,
+                                         shell);
+    }
 }
 
 void
@@ -2183,10 +2273,11 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
                                     GimpCursorModifier  modifier,
                                     gboolean            always_install)
 {
-  /* FIXME!! */
-  GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (the_gimp->config);
+  GimpDisplayConfig *config;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
 
   if (cursor_type != GIMP_BAD_CURSOR)
     {

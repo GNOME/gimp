@@ -65,7 +65,7 @@ gboolean   gimp_display_shell_color_button_press   (GtkWidget         *widget,
                                                     GimpDisplayShell  *shell);
 void       gimp_display_shell_color_button_changed (GtkWidget         *widget,
                                                     GimpDisplayShell  *shell);
-void       gimp_display_shell_color_button_default (gpointer           data, 
+void gimp_display_shell_color_button_menu_callback (gpointer           data, 
                                                     guint              action, 
                                                     GtkWidget         *widget);
 

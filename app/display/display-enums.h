@@ -32,4 +32,17 @@ typedef enum
 } GimpCursorMode;
 
 
+#define GIMP_TYPE_DISPLAY_PADDING_MODE (gimp_display_padding_mode_get_type ())
+
+GType gimp_display_padding_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_DISPLAY_PADDING_MODE_DEFAULT,      /*< desc="From Theme"        >*/
+  GIMP_DISPLAY_PADDING_MODE_LIGHT_CHECK,  /*< desc="Light Check Color" >*/ 
+  GIMP_DISPLAY_PADDING_MODE_DARK_CHECK,   /*< desc="Dark Check Color"  >*/
+  GIMP_DISPLAY_PADDING_MODE_CUSTOM        /*< desc="Custom Color"      >*/
+} GimpDisplayPaddingMode;
+
+
 #endif /* __DISPLAY_ENUMS_H__ */

@@ -38,25 +38,27 @@ typedef struct _GimpDisplayConfigClass GimpDisplayConfigClass;
 
 struct _GimpDisplayConfig
 {
-  GimpCoreConfig       parent_instance;
+  GimpCoreConfig          parent_instance;
 
-  gint                 marching_ants_speed;
-  gboolean             colormap_cycling;
-  gboolean             resize_windows_on_zoom;
-  gboolean             resize_windows_on_resize;
-  gboolean             default_dot_for_dot;
-  gboolean             perfect_mouse;
-  GimpCursorMode       cursor_mode;
-  gboolean             cursor_updating;
-  gchar               *image_title_format;
-  gchar               *image_status_format;
-  gboolean             show_rulers;
-  gboolean             show_statusbar;
-  gboolean             confirm_on_close;
-  gdouble              monitor_xres;
-  gdouble              monitor_yres;
-  gboolean             monitor_res_from_gdk;
-  GimpPreviewSize      nav_preview_size;
+  gint                    marching_ants_speed;
+  gboolean                colormap_cycling;
+  gboolean                resize_windows_on_zoom;
+  gboolean                resize_windows_on_resize;
+  gboolean                default_dot_for_dot;
+  gboolean                perfect_mouse;
+  GimpCursorMode          cursor_mode;
+  gboolean                cursor_updating;
+  gchar                  *image_title_format;
+  gchar                  *image_status_format;
+  gboolean                show_rulers;
+  gboolean                show_statusbar;
+  gboolean                confirm_on_close;
+  gdouble                 monitor_xres;
+  gdouble                 monitor_yres;
+  gboolean                monitor_res_from_gdk;
+  GimpPreviewSize         nav_preview_size;
+  GimpDisplayPaddingMode  canvas_padding_mode;
+  GimpRGB                 canvas_padding_color;
 };
 
 struct _GimpDisplayConfigClass

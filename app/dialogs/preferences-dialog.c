@@ -36,6 +36,7 @@
 
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdevices.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimppropwidgets.h"
 
 #include "gui.h"
@@ -66,18 +67,14 @@ static void        prefs_cancel_callback          (GtkWidget  *widget,
 static void        prefs_ok_callback              (GtkWidget  *widget,
                                                    GtkWidget  *dialog);
 
-static void   prefs_clear_session_info_callback   (GtkWidget  *widget,
-                                                   gpointer    data);
 static void   prefs_default_resolution_callback   (GtkWidget  *widget,
                                                    GtkWidget  *size_sizeentry);
 static void   prefs_res_source_callback           (GtkWidget  *widget,
                                                    GObject    *config);
 static void   prefs_resolution_calibrate_callback (GtkWidget  *widget,
-                                                   gpointer    data);
+                                                   GtkWidget  *sizeentry);
 static void   prefs_input_dialog_able_callback    (GtkWidget  *widget,
                                                    GdkDevice  *device,
-                                                   gpointer    data);
-static void   prefs_input_dialog_save_callback    (GtkWidget  *widget,
                                                    gpointer    data);
 static void   prefs_restart_notification          (void);
 
@@ -423,19 +420,6 @@ prefs_ok_callback (GtkWidget *widget,
 }
 
 static void
-prefs_clear_session_info_callback (GtkWidget *widget,
-				   gpointer   data)
-{
-#ifdef __GNUC__
-#warning FIXME: g_list_free (session_info_updates);
-#endif
-#if 0
-  g_list_free (session_info_updates);
-  session_info_updates = NULL;
-#endif
-}
-
-static void
 prefs_default_resolution_callback (GtkWidget *widget,
 				   GtkWidget *size_sizeentry)
 {
@@ -489,19 +473,18 @@ prefs_res_source_callback (GtkWidget *widget,
 
 static void
 prefs_resolution_calibrate_callback (GtkWidget *widget,
-				     gpointer   data)
+				     GtkWidget *sizeentry)
 {
   GtkWidget *dialog;
   GtkWidget *notebook;
   GtkWidget *image;
 
-  dialog = gtk_widget_get_toplevel (GTK_WIDGET (data));
+  dialog = gtk_widget_get_toplevel (sizeentry);
 
-  notebook = g_object_get_data (G_OBJECT (dialog), "notebook");
+  notebook = g_object_get_data (G_OBJECT (dialog),   "notebook");
+  image    = g_object_get_data (G_OBJECT (notebook), "image");
 
-  image = g_object_get_data (G_OBJECT (notebook), "image");
-
-  resolution_calibrate_dialog (GTK_WIDGET (data),
+  resolution_calibrate_dialog (sizeentry,
                                gtk_image_get_pixbuf (GTK_IMAGE (image)),
                                NULL, NULL, NULL);
 }
@@ -512,13 +495,6 @@ prefs_input_dialog_able_callback (GtkWidget *widget,
                                   gpointer   data)
 {
   gimp_device_info_changed_by_device (device);
-}
-
-static void
-prefs_input_dialog_save_callback (GtkWidget *widget,
-                                  gpointer   data)
-{
-  gimp_devices_save (GIMP (data));
 }
 
 static GtkWidget *
@@ -654,7 +630,7 @@ prefs_frame_new (gchar        *label,
                  gboolean      expand)
 {
   GtkWidget *frame;
-  GtkWidget *vbox2;
+  GtkWidget *vbox;
 
   frame = gtk_frame_new (label);
 
@@ -665,12 +641,12 @@ prefs_frame_new (gchar        *label,
 
   gtk_widget_show (frame);
 
-  vbox2 = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
-  return vbox2;
+  return vbox;
 }
 
 static GtkWidget *
@@ -729,6 +705,27 @@ prefs_check_button_add (GObject     *config,
       gtk_box_pack_start (vbox, button, FALSE, FALSE, 0);
       gtk_widget_show (button);
     }
+
+  return button;
+}
+
+static GtkWidget *
+prefs_color_button_add (GObject     *config,
+                        const gchar *property_name,
+                        const gchar *label,
+                        const gchar *title,
+                        GtkTable    *table,
+                        gint         table_row)
+{
+  GtkWidget *button;
+
+  button = gimp_prop_color_button_new (config, property_name, title,
+                                       20, 20, GIMP_COLOR_AREA_SMALL_CHECKS);
+
+  if (button)
+    gimp_table_attach_aligned (table, 0, table_row,
+                               label, 1.0, 0.5,
+                               button, 1, TRUE);
 
   return button;
 }
@@ -1231,7 +1228,7 @@ prefs_dialog_new (Gimp    *gimp,
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "clicked",
-                    G_CALLBACK (prefs_clear_session_info_callback),
+                    G_CALLBACK (gimp_dialog_factories_session_clear),
                     NULL);
 
 
@@ -1369,9 +1366,9 @@ prefs_dialog_new (Gimp    *gimp,
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
-                    G_CALLBACK (prefs_input_dialog_save_callback),
-                    gimp);
+  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+                            G_CALLBACK (gimp_devices_save),
+                            gimp);
 
 
   /*******************************/
@@ -1406,11 +1403,18 @@ prefs_dialog_new (Gimp    *gimp,
                           _("Show S_tatusbar"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (3, GTK_CONTAINER (vbox2), FALSE);
 
   prefs_spin_button_add (config, "marching-ants-speed", 10.0, 100.0, 0,
                          _("Marching _Ants Speed:"),
                          GTK_TABLE (table), 0);
+  prefs_enum_option_menu_add (config, "canvas-padding-mode", 0, 0,
+                              _("Canvas Padding Mode:"),
+                              GTK_TABLE (table), 1);
+  prefs_color_button_add (config, "canvas-padding-color",
+                          _("Custom Canvas _Padding Color:"),
+                          _("Select Custom Canvas Padding Color"),
+                          GTK_TABLE (table), 2);
 
   vbox2 = prefs_frame_new (_("Pointer Movement Feedback"),
                            GTK_CONTAINER (vbox), FALSE);
@@ -1464,29 +1468,29 @@ prefs_dialog_new (Gimp    *gimp,
       N_("Show memory usage")
     };
 
-    gchar *formats[] =
+    struct
     {
-      display_config->image_title_format,
-      display_config->image_status_format
-    };
-
-    const gchar *format_titles[] =
+      gchar       *current_setting;
+      const gchar *title;
+      const gchar *property_name;
+    }
+    formats[] =
     {
-      N_("Image Title Format"),
-      N_("Image Statusbar Format")
-    };
-
-    const gchar *format_properties[] =
-    {
-      "image-title-format",
-      "image-status-format"
+      {
+        display_config->image_title_format,
+        N_("Image Title Format"),
+        "image-title-format"
+      },
+      {
+        display_config->image_status_format,
+        N_("Image Statusbar Format"),
+        "image-status-format"
+      }
     };
 
     gint format;
 
     g_assert (G_N_ELEMENTS (format_strings) == G_N_ELEMENTS (format_names));
-    g_assert (G_N_ELEMENTS (formats)        == G_N_ELEMENTS (format_titles));
-    g_assert (G_N_ELEMENTS (formats)        == G_N_ELEMENTS (format_properties));
 
     for (format = 0; format < G_N_ELEMENTS (formats); format++)
       {
@@ -1500,12 +1504,12 @@ prefs_dialog_new (Gimp    *gimp,
         GtkTreeSelection  *sel;
         gint               i;
 
-        format_strings[0] = formats[format];
+        format_strings[0] = formats[format].current_setting;
 
-        vbox2 = prefs_frame_new (gettext (format_titles[format]),
-                                          GTK_CONTAINER (vbox), TRUE);
+        vbox2 = prefs_frame_new (gettext (formats[format].title),
+                                 GTK_CONTAINER (vbox), TRUE);
 
-        entry = gimp_prop_entry_new (config, format_properties[format], 0);
+        entry = gimp_prop_entry_new (config, formats[format].property_name, 0);
         gtk_box_pack_start (GTK_BOX (vbox2), entry, FALSE, FALSE, 0);
         gtk_widget_show (entry);
 
@@ -1813,7 +1817,10 @@ prefs_dialog_new (Gimp    *gimp,
       }
   }
 
+
+  /*********************/
   /* Folders / <paths> */
+  /*********************/
   {
     static const struct
     {

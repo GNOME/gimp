@@ -23,6 +23,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpbase/gimpbase.h"
 
 #include "config-types.h"
@@ -68,7 +69,9 @@ enum
   PROP_MONITOR_XRESOLUTION,
   PROP_MONITOR_YRESOLUTION,
   PROP_MONITOR_RES_FROM_GDK,
-  PROP_NAV_PREVIEW_SIZE
+  PROP_NAV_PREVIEW_SIZE,
+  PROP_CANVAS_PADDING_MODE,
+  PROP_CANVAS_PADDING_COLOR
 };
 
 static GObjectClass *parent_class = NULL;
@@ -106,6 +109,7 @@ static void
 gimp_display_config_class_init (GimpDisplayConfigClass *klass)
 {
   GObjectClass *object_class;
+  GimpRGB       white;
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -114,6 +118,8 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   object_class->finalize     = gimp_display_config_finalize;
   object_class->set_property = gimp_display_config_set_property;
   object_class->get_property = gimp_display_config_get_property;
+
+  gimp_rgba_set (&white, 1.0, 1.0, 1.0, 1.0);
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_MARCHING_ANTS_SPEED,
                                 "marching-ants-speed",
@@ -182,8 +188,18 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_NAV_PREVIEW_SIZE,
                                  "navigation-preview-size",
-                                 GIMP_TYPE_PREVIEW_SIZE, GIMP_PREVIEW_SIZE_MEDIUM,
+                                 GIMP_TYPE_PREVIEW_SIZE,
+                                 GIMP_PREVIEW_SIZE_MEDIUM,
                                  0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CANVAS_PADDING_MODE,
+                                 "canvas-padding-mode",
+                                 GIMP_TYPE_DISPLAY_PADDING_MODE,
+                                 GIMP_DISPLAY_PADDING_MODE_DEFAULT,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_CANVAS_PADDING_COLOR,
+                                  "canvas-padding-color",
+                                  &white,
+                                  0);
 }
 
 static void
@@ -264,6 +280,12 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_NAV_PREVIEW_SIZE:
       display_config->nav_preview_size = g_value_get_enum (value);
       break;
+    case PROP_CANVAS_PADDING_MODE:
+      display_config->canvas_padding_mode = g_value_get_enum (value);
+      break;
+    case PROP_CANVAS_PADDING_COLOR:
+      display_config->canvas_padding_color = *(GimpRGB *) g_value_get_boxed (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -333,6 +355,12 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_NAV_PREVIEW_SIZE:
       g_value_set_enum (value, display_config->nav_preview_size);
+      break;
+    case PROP_CANVAS_PADDING_MODE:
+      g_value_set_enum (value, display_config->canvas_padding_mode);
+      break;
+    case PROP_CANVAS_PADDING_COLOR:
+      g_value_set_boxed (value, &display_config->canvas_padding_color);
       break;
 
     default:

@@ -79,6 +79,9 @@ static void   gimp_dialog_factories_save_foreach      (gchar             *name,
 static void   gimp_dialog_factories_restore_foreach   (gchar             *name,
 						       GimpDialogFactory *factory,
 						       gpointer           data);
+static void   gimp_dialog_factories_clear_foreach     (gchar             *name,
+						       GimpDialogFactory *factory,
+						       gpointer           data);
 static void   gimp_dialog_factory_get_window_info     (GtkWidget         *window, 
 						       GimpSessionInfo   *info);
 static void   gimp_dialog_factory_set_window_geometry (GtkWidget         *window,
@@ -905,6 +908,18 @@ gimp_dialog_factories_session_restore (void)
 }
 
 void
+gimp_dialog_factories_session_clear (void)
+{
+  GimpDialogFactoryClass *factory_class;
+
+  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
+
+  g_hash_table_foreach (factory_class->factories,
+			(GHFunc) gimp_dialog_factories_clear_foreach,
+			NULL);
+}
+
+void
 gimp_dialog_factories_toggle (GimpDialogFactory *toolbox_factory)
 {
   static GimpDialogShowState toggle_state = GIMP_DIALOG_SHOW_ALL;
@@ -1219,6 +1234,28 @@ gimp_dialog_factories_restore_foreach (gchar             *name,
       g_list_foreach (info->aux_info, (GFunc) g_free, NULL);
       g_list_free (info->aux_info);
       info->aux_info = NULL;
+    }
+}
+
+static void
+gimp_dialog_factories_clear_foreach (gchar             *name,
+                                     GimpDialogFactory *factory,
+                                     gpointer           data)
+{
+  GList *list;
+
+  for (list = factory->session_infos; list; list = g_list_next (list))
+    {
+      GimpSessionInfo *info;
+
+      info = (GimpSessionInfo *) list->data;
+
+      if (info->widget)
+        continue;
+
+#ifdef __GNUC__
+#warning FIXME: implement session info deletion
+#endif
     }
 }
 

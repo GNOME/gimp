@@ -55,13 +55,12 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-layer-select.h"
+#include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpnavigationview.h"
 #include "gimpstatusbar.h"
-
-#include "app_procs.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -238,46 +237,19 @@ void
 gimp_display_shell_canvas_realize (GtkWidget        *canvas,
                                    GimpDisplayShell *shell)
 {
-  /* FIXME!! */
-  GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (the_gimp->config);
+  GimpDisplayConfig *config;
+  GimpDisplay       *gdisp;
 
-  GimpDisplay *gdisp;
-  GdkColor     color;
-  guchar       r, g, b;
-
-  gdisp = shell->gdisp;
+  gdisp  = shell->gdisp;
+  config = GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config);
 
   gtk_widget_grab_focus (shell->canvas);
 
-  if (TRUE /* gimprc.use_style_padding_color */)
-    {
-      r = shell->canvas->style->bg[GTK_STATE_NORMAL].red   >> 8;
-      g = shell->canvas->style->bg[GTK_STATE_NORMAL].green >> 8;
-      b = shell->canvas->style->bg[GTK_STATE_NORMAL].blue  >> 8;
-
-      gimp_rgb_set_uchar (&shell->padding_color, r, g, b);
-
-      g_signal_handlers_block_by_func (G_OBJECT (shell->padding_button),
-                                       gimp_display_shell_color_button_changed,
-                                       shell);
-
-      gimp_color_button_set_color (GIMP_COLOR_BUTTON (shell->padding_button),
-                                   &shell->padding_color);
-
-      g_signal_handlers_unblock_by_func (G_OBJECT (shell->padding_button),
-                                         gimp_display_shell_color_button_changed,
-                                         shell);
-    }
-
-  gimp_rgb_get_uchar (&shell->padding_color, &r, &g, &b);
-
   shell->padding_gc = gdk_gc_new (canvas->window);
 
-  color.red   = (r << 8) | r;
-  color.green = (g << 8) | g;
-  color.blue  = (b << 8) | b;
-
-  gdk_gc_set_rgb_fg_color (shell->padding_gc, &color);
+  gimp_display_shell_set_padding (shell,
+                                  shell->padding_mode,
+                                  &shell->padding_color);
 
   gdk_window_set_back_pixmap (shell->canvas->window, NULL, FALSE);
 
@@ -1292,9 +1264,24 @@ gimp_display_shell_color_button_press (GtkWidget        *widget,
       b = shell->canvas->style->bg[GTK_STATE_NORMAL].blue  >> 8;
 
       gimp_rgba_set_uchar (&color, r, g, b, 255);
-
       gimp_item_factory_set_color (color_button->item_factory,
-                                   "/Default Color", &color, FALSE);
+                                   "/Default from Theme", &color, FALSE);
+
+      gimp_rgba_set_uchar (&color,
+                           render_blend_light_check[0],
+                           render_blend_light_check[1],
+                           render_blend_light_check[2],
+                           255);
+      gimp_item_factory_set_color (color_button->item_factory,
+                                   "/Light Check Color", &color, FALSE);
+
+      gimp_rgba_set_uchar (&color,
+                           render_blend_dark_check[0],
+                           render_blend_dark_check[1],
+                           render_blend_dark_check[2],
+                           255);
+      gimp_item_factory_set_color (color_button->item_factory,
+                                   "/Dark Check Color", &color, FALSE);
     }
 
   return FALSE;
@@ -1304,43 +1291,58 @@ void
 gimp_display_shell_color_button_changed (GtkWidget        *widget,
                                          GimpDisplayShell *shell)
 {
-  GdkColor gdk_color;
-  guchar   r, g, b;
+  GimpRGB color;
 
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget),
-                               &shell->padding_color);
+  shell->padding_mode_set = TRUE;
 
-  gimp_rgb_get_uchar (&shell->padding_color, &r, &g, &b);
+  gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget), &color);
 
-  gdk_color.red   = r + r * 256;
-  gdk_color.green = g + g * 256;
-  gdk_color.blue  = b + b * 256;
-
-  gdk_gc_set_rgb_fg_color (shell->padding_gc, &gdk_color);
+  gimp_display_shell_set_padding (shell,
+                                  GIMP_DISPLAY_PADDING_MODE_CUSTOM,
+                                  &color);
 
   gimp_display_shell_expose_full (shell);
   gimp_display_shell_flush (shell);
 }
 
 void  
-gimp_display_shell_color_button_default (gpointer   callback_data, 
-                                         guint      callback_action, 
-                                         GtkWidget *widget)
+gimp_display_shell_color_button_menu_callback (gpointer   callback_data, 
+                                               guint      callback_action, 
+                                               GtkWidget *widget)
 {
   GimpDisplayShell *shell;
-  guchar            r, g, b;
-  GimpRGB           color;
 
   shell = GIMP_DISPLAY_SHELL (callback_data);
 
-  r = shell->canvas->style->bg[GTK_STATE_NORMAL].red   >> 8;
-  g = shell->canvas->style->bg[GTK_STATE_NORMAL].green >> 8;
-  b = shell->canvas->style->bg[GTK_STATE_NORMAL].blue  >> 8;
+  if (callback_action == GIMP_DISPLAY_PADDING_MODE_CUSTOM)
+    {
+      gtk_button_clicked (GTK_BUTTON (shell->padding_button));
+    }
+  else
+    {
+      if (callback_action == 0xffff)
+        {
+          GimpDisplayConfig *config;
 
-  gimp_rgb_set_uchar (&color, r, g, b);
+          config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
 
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (shell->padding_button),
-                               &color);
+          shell->padding_mode_set = FALSE;
+
+          gimp_display_shell_set_padding (shell,
+                                          config->canvas_padding_mode,
+                                          &config->canvas_padding_color);
+        }
+      else
+        {
+          shell->padding_mode_set = TRUE;
+
+          gimp_display_shell_set_padding (shell, callback_action,
+                                          &shell->padding_color);
+        }
+
+      gimp_display_shell_expose_full (shell);
+      gimp_display_shell_flush (shell);
+    }
 }
 
 gboolean
