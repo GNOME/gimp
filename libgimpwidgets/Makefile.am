@@ -84,6 +84,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpcolorbutton.h	\
 	gimpcolordisplay.h	\
 	gimpcolornotebook.h	\
+	gimpcolorscale.h	\
 	gimpcolorscales.h	\
 	gimpcolorselector.h	\
 	gimpcolorselect.h	\
