@@ -48,8 +48,8 @@ enum
   PROP_SHOW_SELECTION,
   PROP_SHOW_LAYER_BOUNDARY,
   PROP_SHOW_GUIDES,
-  PROP_SHOW_SAMPLE_POINTS,
   PROP_SHOW_GRID,
+  PROP_SHOW_SAMPLE_POINTS,
   PROP_PADDING_MODE,
   PROP_PADDING_COLOR
 };
@@ -182,13 +182,13 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
                                     "show-guides", SHOW_GUIDES_BLURB,
                                     TRUE,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
-                                    "show-sample-points", SHOW_SAMPLE_POINTS_BLURB,
-                                    TRUE,
-                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GRID,
                                     "show-grid", SHOW_GRID_BLURB,
                                     FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
+                                    "show-sample-points", SHOW_SAMPLE_POINTS_BLURB,
+                                    TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PADDING_MODE,
                                  "padding-mode", CANVAS_PADDING_MODE_BLURB,
@@ -240,12 +240,12 @@ gimp_display_options_fs_class_init (GimpDisplayOptionsClass *klass)
                                     "show-guides", SHOW_GUIDES_BLURB,
                                     FALSE,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
-                                    "show-sample-points", SHOW_SAMPLE_POINTS_BLURB,
-                                    FALSE,
-                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GRID,
                                     "show-grid", SHOW_GRID_BLURB,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
+                                    "show-sample-points", SHOW_SAMPLE_POINTS_BLURB,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PADDING_MODE,
@@ -296,11 +296,11 @@ gimp_display_options_set_property (GObject      *object,
     case PROP_SHOW_GUIDES:
       options->show_guides = g_value_get_boolean (value);
       break;
-    case PROP_SHOW_SAMPLE_POINTS:
-      options->show_sample_points = g_value_get_boolean (value);
-      break;
     case PROP_SHOW_GRID:
       options->show_grid = g_value_get_boolean (value);
+      break;
+    case PROP_SHOW_SAMPLE_POINTS:
+      options->show_sample_points = g_value_get_boolean (value);
       break;
     case PROP_PADDING_MODE:
       options->padding_mode = g_value_get_enum (value);
@@ -346,11 +346,11 @@ gimp_display_options_get_property (GObject    *object,
     case PROP_SHOW_GUIDES:
       g_value_set_boolean (value, options->show_guides);
       break;
-    case PROP_SHOW_SAMPLE_POINTS:
-      g_value_set_boolean (value, options->show_sample_points);
-      break;
     case PROP_SHOW_GRID:
       g_value_set_boolean (value, options->show_grid);
+      break;
+    case PROP_SHOW_SAMPLE_POINTS:
+      g_value_set_boolean (value, options->show_sample_points);
       break;
     case PROP_PADDING_MODE:
       g_value_set_enum (value, options->padding_mode);

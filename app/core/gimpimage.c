@@ -543,10 +543,8 @@ gimp_image_init (GimpImage *gimage)
   gimage->projection            = gimp_projection_new (gimage);
 
   gimage->guides                = NULL;
-
-  gimage->sample_points         = NULL;
-
   gimage->grid                  = NULL;
+  gimage->sample_points         = NULL;
 
   gimage->layers                = gimp_list_new (GIMP_TYPE_LAYER,   TRUE);
   gimage->channels              = gimp_list_new (GIMP_TYPE_CHANNEL, TRUE);
@@ -867,17 +865,18 @@ gimp_image_finalize (GObject *object)
       gimage->guides = NULL;
     }
 
-  if (gimage->sample_points)
-    {
-      g_list_foreach (gimage->sample_points, (GFunc) gimp_image_sample_point_unref, NULL);
-      g_list_free (gimage->sample_points);
-      gimage->sample_points = NULL;
-    }
-
   if (gimage->grid)
     {
       g_object_unref (gimage->grid);
       gimage->grid = NULL;
+    }
+
+  if (gimage->sample_points)
+    {
+      g_list_foreach (gimage->sample_points,
+                      (GFunc) gimp_image_sample_point_unref, NULL);
+      g_list_free (gimage->sample_points);
+      gimage->sample_points = NULL;
     }
 
   if (gimage->undo_stack)
@@ -936,11 +935,11 @@ gimp_image_get_memsize (GimpObject *object,
                                         gui_size);
 
   memsize += gimp_g_list_get_memsize (gimage->guides, sizeof (GimpGuide));
-
-  memsize += gimp_g_list_get_memsize (gimage->sample_points, sizeof (GimpSamplePoint));
-
   if (gimage->grid)
     memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->grid), gui_size);
+
+  memsize += gimp_g_list_get_memsize (gimage->sample_points,
+                                      sizeof (GimpSamplePoint));
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->layers),
                                       gui_size);
@@ -1662,7 +1661,8 @@ gimp_image_update_sample_point (GimpImage       *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (sample_point != NULL);
 
-  g_signal_emit (gimage, gimp_image_signals[UPDATE_SAMPLE_POINT], 0, sample_point);
+  g_signal_emit (gimage, gimp_image_signals[UPDATE_SAMPLE_POINT], 0,
+                 sample_point);
 }
 
 void

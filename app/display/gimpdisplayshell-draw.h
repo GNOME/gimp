@@ -24,12 +24,12 @@ void   gimp_display_shell_draw_guide         (GimpDisplayShell   *shell,
                                               GimpGuide          *guide,
                                               gboolean            active);
 void   gimp_display_shell_draw_guides        (GimpDisplayShell   *shell);
-void   gimp_display_shell_draw_sample_point  (GimpDisplayShell   *shell,
-                                             GimpSamplePoint     *sample_point,
-                                             gboolean             active);
-void   gimp_display_shell_draw_sample_points (GimpDisplayShell   *shell);
 void   gimp_display_shell_draw_grid          (GimpDisplayShell   *shell,
                                               const GdkRectangle *area);
+void   gimp_display_shell_draw_sample_point  (GimpDisplayShell   *shell,
+                                              GimpSamplePoint    *sample_point,
+                                              gboolean            active);
+void   gimp_display_shell_draw_sample_points (GimpDisplayShell   *shell);
 void   gimp_display_shell_draw_vector        (GimpDisplayShell   *shell,
                                               GimpVectors        *vectors);
 void   gimp_display_shell_draw_vectors       (GimpDisplayShell   *shell);

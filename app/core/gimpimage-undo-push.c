@@ -308,83 +308,6 @@ undo_free_image_resolution (GimpUndo      *undo,
 
 
 /****************/
-/*  Grid Undo   */
-/****************/
-
-typedef struct _GridUndo GridUndo;
-
-struct _GridUndo
-{
-  GimpGrid *grid;
-};
-
-static gboolean undo_pop_image_grid  (GimpUndo            *undo,
-                                      GimpUndoMode         undo_mode,
-                                      GimpUndoAccumulator *accum);
-static void     undo_free_image_grid (GimpUndo            *undo,
-                                      GimpUndoMode         undo_mode);
-
-gboolean
-gimp_image_undo_push_image_grid (GimpImage   *gimage,
-                                 const gchar *undo_desc,
-                                 GimpGrid    *grid)
-{
-  GimpUndo *new;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (GIMP_IS_GRID (grid), FALSE);
-
-  if ((new = gimp_image_undo_push (gimage, GIMP_TYPE_UNDO,
-                                   sizeof (GridUndo),
-                                   sizeof (GridUndo),
-                                   GIMP_UNDO_IMAGE_GRID, undo_desc,
-                                   GIMP_DIRTY_IMAGE_META,
-                                   undo_pop_image_grid,
-                                   undo_free_image_grid,
-                                   NULL)))
-    {
-      GridUndo *gu = new->data;
-
-      gu->grid = gimp_config_duplicate (GIMP_CONFIG (grid));
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static gboolean
-undo_pop_image_grid (GimpUndo            *undo,
-                     GimpUndoMode         undo_mode,
-                     GimpUndoAccumulator *accum)
-{
-  GridUndo *gu = undo->data;
-  GimpGrid *grid;
-
-  grid = gimp_config_duplicate (GIMP_CONFIG (undo->gimage->grid));
-
-  gimp_image_set_grid (undo->gimage, gu->grid, FALSE);
-
-  g_object_unref (gu->grid);
-  gu->grid = grid;
-
-  return TRUE;
-}
-
-static void
-undo_free_image_grid (GimpUndo     *undo,
-                      GimpUndoMode  undo_mode)
-{
-  GridUndo *gu = undo->data;
-
-  if (gu->grid)
-    g_object_unref (gu->grid);
-
-  g_free (gu);
-}
-
-
-/****************/
 /*  Guide Undo  */
 /****************/
 
@@ -483,6 +406,83 @@ undo_free_image_guide (GimpUndo     *undo,
 }
 
 
+/****************/
+/*  Grid Undo   */
+/****************/
+
+typedef struct _GridUndo GridUndo;
+
+struct _GridUndo
+{
+  GimpGrid *grid;
+};
+
+static gboolean undo_pop_image_grid  (GimpUndo            *undo,
+                                      GimpUndoMode         undo_mode,
+                                      GimpUndoAccumulator *accum);
+static void     undo_free_image_grid (GimpUndo            *undo,
+                                      GimpUndoMode         undo_mode);
+
+gboolean
+gimp_image_undo_push_image_grid (GimpImage   *gimage,
+                                 const gchar *undo_desc,
+                                 GimpGrid    *grid)
+{
+  GimpUndo *new;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_GRID (grid), FALSE);
+
+  if ((new = gimp_image_undo_push (gimage, GIMP_TYPE_UNDO,
+                                   sizeof (GridUndo),
+                                   sizeof (GridUndo),
+                                   GIMP_UNDO_IMAGE_GRID, undo_desc,
+                                   GIMP_DIRTY_IMAGE_META,
+                                   undo_pop_image_grid,
+                                   undo_free_image_grid,
+                                   NULL)))
+    {
+      GridUndo *gu = new->data;
+
+      gu->grid = gimp_config_duplicate (GIMP_CONFIG (grid));
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_image_grid (GimpUndo            *undo,
+                     GimpUndoMode         undo_mode,
+                     GimpUndoAccumulator *accum)
+{
+  GridUndo *gu = undo->data;
+  GimpGrid *grid;
+
+  grid = gimp_config_duplicate (GIMP_CONFIG (undo->gimage->grid));
+
+  gimp_image_set_grid (undo->gimage, gu->grid, FALSE);
+
+  g_object_unref (gu->grid);
+  gu->grid = grid;
+
+  return TRUE;
+}
+
+static void
+undo_free_image_grid (GimpUndo     *undo,
+                      GimpUndoMode  undo_mode)
+{
+  GridUndo *gu = undo->data;
+
+  if (gu->grid)
+    g_object_unref (gu->grid);
+
+  g_free (gu);
+}
+
+
 /**********************/
 /*  Sampe Point Undo  */
 /**********************/
@@ -491,9 +491,9 @@ typedef struct _SamplePointUndo SamplePointUndo;
 
 struct _SamplePointUndo
 {
-  GimpSamplePoint     *sample_point;
-  gint                 x;
-  gint                 y;
+  GimpSamplePoint *sample_point;
+  gint             x;
+  gint             y;
 };
 
 static gboolean undo_pop_image_sample_point  (GimpUndo            *undo,
@@ -523,9 +523,9 @@ gimp_image_undo_push_image_sample_point (GimpImage       *gimage,
     {
       SamplePointUndo *gu = new->data;
 
-      gu->sample_point    = gimp_image_sample_point_ref (sample_point);
-      gu->x               = sample_point->x;
-      gu->y               = sample_point->y;
+      gu->sample_point = gimp_image_sample_point_ref (sample_point);
+      gu->x            = sample_point->x;
+      gu->y            = sample_point->y;
 
       return TRUE;
     }
@@ -547,7 +547,8 @@ undo_pop_image_sample_point (GimpUndo            *undo,
 
   if (gu->sample_point->x == -1)
     {
-      undo->gimage->sample_points = g_list_prepend (undo->gimage->sample_points, gu->sample_point);
+      undo->gimage->sample_points = g_list_prepend (undo->gimage->sample_points,
+                                                    gu->sample_point);
       gu->sample_point->x = gu->x;
       gu->sample_point->y = gu->y;
       gimp_image_sample_point_ref (gu->sample_point);

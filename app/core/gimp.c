@@ -239,10 +239,10 @@ gimp_init (Gimp *gimp)
   gimp->images              = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
   gimp_object_set_name (GIMP_OBJECT (gimp->images), "images");
 
-  gimp->next_image_ID       = 1;
-  gimp->next_guide_ID       = 1;
+  gimp->next_image_ID        = 1;
+  gimp->next_guide_ID        = 1;
   gimp->next_sample_point_ID = 1;
-  gimp->image_table         = g_hash_table_new (g_direct_hash, NULL);
+  gimp->image_table          = g_hash_table_new (g_direct_hash, NULL);
 
   gimp->next_item_ID        = 1;
   gimp->item_table          = g_hash_table_new (g_direct_hash, NULL);

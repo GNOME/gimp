@@ -345,35 +345,6 @@ gimp_display_shell_get_show_transform (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
-                                  gboolean          show)
-{
-  GimpDisplayOptions *options;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  options = GET_OPTIONS (shell);
-
-  g_object_set (options, "show-grid", show, NULL);
-
-  if (shell->gdisp->gimage->grid)
-    gimp_display_shell_expose_full (shell);
-
-  SET_ACTIVE (shell->menubar_manager, "view-show-grid", show);
-
-  if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view-show-grid", show);
-}
-
-gboolean
-gimp_display_shell_get_show_grid (GimpDisplayShell *shell)
-{
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
-
-  return GET_OPTIONS (shell)->show_grid;
-}
-
-void
 gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
                                     gboolean          show)
 {
@@ -400,6 +371,35 @@ gimp_display_shell_get_show_guides (GimpDisplayShell *shell)
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
   return GET_OPTIONS (shell)->show_guides;
+}
+
+void
+gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
+                                  gboolean          show)
+{
+  GimpDisplayOptions *options;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  options = GET_OPTIONS (shell);
+
+  g_object_set (options, "show-grid", show, NULL);
+
+  if (shell->gdisp->gimage->grid)
+    gimp_display_shell_expose_full (shell);
+
+  SET_ACTIVE (shell->menubar_manager, "view-show-grid", show);
+
+  if (IS_ACTIVE_DISPLAY (shell))
+    SET_ACTIVE (shell->popup_manager, "view-show-grid", show);
+}
+
+gboolean
+gimp_display_shell_get_show_grid (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return GET_OPTIONS (shell)->show_grid;
 }
 
 void

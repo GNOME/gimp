@@ -1,3 +1,21 @@
+2005-03-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/view-actions.c
+	* app/actions/view-commands.[ch]
+	* app/config/gimprc-blurbs.h
+	* app/core/core-enums.[ch]
+	* app/core/gimp.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-undo-push.[ch]
+	* app/core/gimpimage.c
+	* app/display/gimpdisplayoptions.[ch]
+	* app/display/gimpdisplayshell-appearance.[ch]
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-draw.[ch]
+	* app/widgets/gimphelp-ids.h
+	* menus/image-menu.xml.in: reordered stuff to be in guides, grid,
+	sample points order. Some cleanup and indentation.
+
 2005-03-04  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/metadata/xmpdump.c: test program that tries to extract

@@ -204,27 +204,27 @@ gimp_display_shell_events (GtkWidget        *widget,
 
         options = fullscreen ? shell->fullscreen_options : shell->options;
 
-        gimp_display_shell_set_show_menubar    (shell,
-                                                options->show_menubar);
-        gimp_display_shell_set_show_rulers     (shell,
-                                                options->show_rulers);
-        gimp_display_shell_set_show_scrollbars (shell,
-                                                options->show_scrollbars);
-        gimp_display_shell_set_show_statusbar  (shell,
-                                                options->show_statusbar);
-        gimp_display_shell_set_show_selection  (shell,
-                                                options->show_selection);
-        gimp_display_shell_set_show_layer      (shell,
-                                                options->show_layer_boundary);
-        gimp_display_shell_set_show_guides     (shell,
-                                                options->show_guides);
+        gimp_display_shell_set_show_menubar       (shell,
+                                                   options->show_menubar);
+        gimp_display_shell_set_show_rulers        (shell,
+                                                   options->show_rulers);
+        gimp_display_shell_set_show_scrollbars    (shell,
+                                                   options->show_scrollbars);
+        gimp_display_shell_set_show_statusbar     (shell,
+                                                   options->show_statusbar);
+        gimp_display_shell_set_show_selection     (shell,
+                                                   options->show_selection);
+        gimp_display_shell_set_show_layer         (shell,
+                                                   options->show_layer_boundary);
+        gimp_display_shell_set_show_guides        (shell,
+                                                   options->show_guides);
+        gimp_display_shell_set_show_grid          (shell,
+                                                   options->show_grid);
         gimp_display_shell_set_show_sample_points (shell,
                                                    options->show_sample_points);
-        gimp_display_shell_set_show_grid       (shell,
-                                                options->show_grid);
-        gimp_display_shell_set_padding         (shell,
-                                                options->padding_mode,
-                                                &options->padding_color);
+        gimp_display_shell_set_padding            (shell,
+                                                   options->padding_mode,
+                                                   &options->padding_color);
 
         group = gimp_ui_manager_get_action_group (shell->menubar_manager,
                                                   "view");
@@ -411,11 +411,11 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   /* draw the guides */
   gimp_display_shell_draw_guides (shell);
 
-  /* draw the sample points */
-  gimp_display_shell_draw_sample_points (shell);
-
   /* draw the grid */
   gimp_display_shell_draw_grid (shell, &eevent->area);
+
+  /* draw the sample points */
+  gimp_display_shell_draw_sample_points (shell);
 
   /* and the cursor (if we have a software cursor) */
   gimp_display_shell_draw_cursor (shell);

@@ -252,7 +252,8 @@ gimp_image_crop (GimpImage   *gimage,
           if (remove_sample_point)
             gimp_image_remove_sample_point (gimage, sample_point, TRUE);
           else if (new_x != sample_point->x || new_y != sample_point->y)
-            gimp_image_move_sample_point (gimage, sample_point, new_x, new_y, TRUE);
+            gimp_image_move_sample_point (gimage, sample_point,
+                                          new_x, new_y, TRUE);
         }
 
       gimp_image_undo_group_end (gimage);

@@ -138,17 +138,17 @@ static GimpToggleActionEntry view_toggle_actions[] =
     TRUE,
     GIMP_HELP_VIEW_SHOW_GUIDES },
 
-  { "view-show-sample-points", NULL,
-    N_("Show Sample Points"), NULL, NULL,
-    G_CALLBACK (view_toggle_sample_points_cmd_callback),
-    TRUE,
-    GIMP_HELP_VIEW_SHOW_SAMPLE_POINTS },
-
   { "view-show-grid", NULL,
     N_("S_how Grid"), NULL, NULL,
     G_CALLBACK (view_toggle_grid_cmd_callback),
     FALSE,
     GIMP_HELP_VIEW_SHOW_GRID },
+
+  { "view-show-sample-points", NULL,
+    N_("Show Sample Points"), NULL, NULL,
+    G_CALLBACK (view_toggle_sample_points_cmd_callback),
+    TRUE,
+    GIMP_HELP_VIEW_SHOW_SAMPLE_POINTS },
 
   { "view-snap-to-guides", NULL,
     N_("Sn_ap to Guides"), NULL, NULL,
@@ -528,8 +528,8 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-show-layer-boundary", gdisp);
   SET_ACTIVE    ("view-show-layer-boundary", gdisp && options->show_layer_boundary);
   SET_ACTIVE    ("view-show-guides",         gdisp && options->show_guides);
-  SET_ACTIVE    ("view-show-sample-points",  gdisp && options->show_sample_points);
   SET_ACTIVE    ("view-show-grid",           gdisp && options->show_grid);
+  SET_ACTIVE    ("view-show-sample-points",  gdisp && options->show_sample_points);
   SET_ACTIVE    ("view-snap-to-guides",      gdisp && shell->snap_to_guides);
   SET_ACTIVE    ("view-snap-to-grid",        gdisp && shell->snap_to_grid);
   SET_ACTIVE    ("view-snap-to-canvas",      gdisp && shell->snap_to_canvas);

@@ -28,12 +28,12 @@ gboolean gimp_image_undo_push_image_size            (GimpImage     *gimage,
                                                      const gchar   *undo_desc);
 gboolean gimp_image_undo_push_image_resolution      (GimpImage     *gimage,
                                                      const gchar   *undo_desc);
-gboolean gimp_image_undo_push_image_grid            (GimpImage     *gimage,
-                                                     const gchar   *undo_desc,
-                                                     GimpGrid      *grid);
 gboolean gimp_image_undo_push_image_guide           (GimpImage     *gimage,
                                                      const gchar   *undo_desc,
                                                      GimpGuide     *guide);
+gboolean gimp_image_undo_push_image_grid            (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpGrid      *grid);
 gboolean gimp_image_undo_push_image_sample_point    (GimpImage     *gimage,
                                                      const gchar   *undo_desc,
                                                      GimpSamplePoint *sample_point);
