@@ -109,6 +109,7 @@
     'spread' => { libdep => 'gtk', ui => 1 },
     'struc' => { libdep => 'gtk', ui => 1 },
     'sunras' => { libdep => 'gtk', ui => 1 },
+    'svg' => { libdep => 'gtk', ui => 1, optional => 1 },
     'tga' => { libdep => 'gtk', ui => 1 },
     'threshold_alpha' => { libdep => 'gtk', ui => 1 },
     'tiff' => { libdep => 'gtk', ui => 1, optional => 1 },

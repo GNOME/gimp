@@ -53,10 +53,11 @@ EXTRA_DIST = \\
 	plugin-defs.pl$extra
 
 INCLUDES = \\
-	-I\$(top_srcdir)		\\
-	\@GTK_CFLAGS\@		\\
-	\@X_CFLAGS\@		\\
-	\@EXIF_CFLAGS\@		\\
+	-I\$(top_srcdir)	\\
+	\@GTK_CFLAGS\@	\\
+	\@X_CFLAGS\@	\\
+	\@EXIF_CFLAGS\@	\\
+	\@SVG_CFLAGS\@	\\
 	-I\$(includedir)
 
 libexec_PROGRAMS = \\

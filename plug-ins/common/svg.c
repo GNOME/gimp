@@ -28,11 +28,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <rsvg.h>
+
+#include <librsvg/rsvg.h>
 
 #include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
+#include "libgimp/stdplugins-intl.h"
+
+
+#define VERSION  "2.4.0"
 
 typedef struct
 {
@@ -60,15 +67,12 @@ typedef struct
   GtkAdjustment *scale;
 } LoadDialogVals;
 
-/* TODO: remove me, initialize gimp i18n services */
-#define _(String) (String)
-
-static void     query  (void);
-static void     run    (const gchar      *name,
-                        gint              nparams,
-                        const GimpParam  *param,
-                        gint             *nreturn_vals,
-                        GimpParam       **return_vals);
+static void  query  (void);
+static void  run    (const gchar      *name,
+                     gint              nparams,
+                     const GimpParam  *param,
+                     gint             *nreturn_vals,
+                     GimpParam       **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO = {
   NULL,                         /* init_proc  */

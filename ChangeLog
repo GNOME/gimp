@@ -1,3 +1,15 @@
+2003-09-18  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: added a check for librsvg-2.0.
+
+	* plug-ins/common/mkgen.pl
+	* plug-ins/common/svg.c: added SVG import plug-in. This plug-in
+	was written by Dom Lachowicz and used to live in the librsvg source
+	tree (bug #103039).
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl: regenerated.
+
 2003-09-18  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.c: Cursor keys now move the currently

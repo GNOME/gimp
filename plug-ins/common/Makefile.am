@@ -13,10 +13,11 @@ EXTRA_DIST = \
 	plugin-defs.pl
 
 INCLUDES = \
-	-I$(top_srcdir)		\
-	@GTK_CFLAGS@		\
-	@X_CFLAGS@		\
-	@EXIF_CFLAGS@		\
+	-I$(top_srcdir)	\
+	@GTK_CFLAGS@	\
+	@X_CFLAGS@	\
+	@EXIF_CFLAGS@	\
+	@SVG_CFLAGS@	\
 	-I$(includedir)
 
 libexec_PROGRAMS = \
@@ -130,6 +131,7 @@ libexec_PROGRAMS = \
 	spread \
 	struc \
 	sunras \
+	$(SVG) \
 	tga \
 	threshold_alpha \
 	$(TIFF) \
@@ -163,6 +165,7 @@ EXTRA_PROGRAMS = \
 	png \
 	psp \
 	screenshot \
+	svg \
 	tiff \
 	url \
 	winclipboard \
@@ -1477,6 +1480,19 @@ sunras_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	@GTK_LIBS@							\
+	@INTLLIBS@
+
+svg_SOURCES = \
+	svg.c
+
+svg_LDADD = \
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(LIBSVG)							\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 

@@ -59,8 +59,8 @@ plug-ins/common/gee.c
 plug-ins/common/gee_zoom.c
 plug-ins/common/gicon.c
 plug-ins/common/gif.c
-plug-ins/common/gih.c
 plug-ins/common/gifload.c
+plug-ins/common/gih.c
 plug-ins/common/gih.c
 plug-ins/common/glasstile.c
 plug-ins/common/gqbist.c
@@ -121,6 +121,7 @@ plug-ins/common/spheredesigner.c
 plug-ins/common/spread.c
 plug-ins/common/struc.c
 plug-ins/common/sunras.c
+plug-ins/common/svg.c
 plug-ins/common/tga.c
 plug-ins/common/threshold_alpha.c
 plug-ins/common/tiff.c
@@ -168,6 +169,7 @@ plug-ins/gimpressionist/preview.c
 plug-ins/gimpressionist/repaint.c
 plug-ins/gimpressionist/size.c
 plug-ins/gimpressionist/sizemap.c
+plug-ins/helpbrowser/dialog.c
 plug-ins/helpbrowser/helpbrowser.c
 plug-ins/ifscompose/ifscompose.c
 plug-ins/imagemap/imap_about.c
