@@ -9790,11 +9790,11 @@ msgstr "<%s>"
 
 #: app/widgets/widgets-enums.c:14
 msgid "Portrait"
-msgstr "Querformat"
+msgstr "Hochformat"
 
 #: app/widgets/widgets-enums.c:15
 msgid "Landscape"
-msgstr "Hochformat"
+msgstr "Querformat"
 
 #: app/widgets/widgets-enums.c:33
 msgid "Pixel Values"
