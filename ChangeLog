@@ -1,5 +1,15 @@
 2004-08-18  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/color-notebook.c: no need to set a size_request here.
+
+	* libgimpwidgets/gimpcolorselection.c: HIG-ified spacings.
+
+	* libgimpwidgets/gimpcolorscales.c
+	* modules/colorsel_cmyk.c: don't set a minimum width on the color
+	scales. Improves behaviour for narrow color dockables.
+
+2004-08-18  Sven Neumann  <sven@gimp.org>
+
 	* modules/colorsel_triangle.c: fixed crashes that occured with
 	small sizes, some code cleanups and a simple optimization.
 

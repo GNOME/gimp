@@ -154,7 +154,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_widget_show (main_hbox);
 
   /*  The left vbox with the notebook  */
-  selection->left_vbox = gtk_vbox_new (FALSE, 4);
+  selection->left_vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (main_hbox), selection->left_vbox,
                       TRUE, TRUE, 0);
   gtk_widget_show (selection->left_vbox);
@@ -190,7 +190,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   /*  The table for the color_areas  */
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_end (GTK_BOX (selection->left_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -236,7 +236,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_widget_show (selection->old_color);
 
   /*  The right vbox with color scales  */
-  selection->right_vbox = gtk_vbox_new (FALSE, 4);
+  selection->right_vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (main_hbox), selection->right_vbox,
                       TRUE, TRUE, 0);
   gtk_widget_show (selection->right_vbox);

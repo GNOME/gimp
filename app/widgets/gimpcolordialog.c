@@ -178,7 +178,6 @@ color_notebook_new (GimpViewable          *viewable,
   gtk_widget_show (table);
 
   button = gtk_button_new ();
-  gtk_widget_set_size_request (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 0, 1);
   gimp_help_set_help_data (button,
 			   _("Add the current color to the color history"),

@@ -172,7 +172,7 @@ colorsel_cmyk_init (ColorselCmyk *module)
     {
       adj = gimp_scale_entry_new (GTK_TABLE (table), 1, i,
 				  gettext (cmyk_labels[i]),
-				  80, -1,
+				  -1, -1,
 				  0.0,
 				  0.0, 100.0,
 				  1.0, 10.0,
@@ -188,10 +188,10 @@ colorsel_cmyk_init (ColorselCmyk *module)
       module->adj[i] = GTK_ADJUSTMENT (adj);
     }
 
-  label = gtk_label_new_with_mnemonic (_("Black Pullout (%):"));
+  label = gtk_label_new_with_mnemonic (_("Black _Pullout:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label,
-                    2, 3, i, i + 1,
+                    1, 3, i, i + 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
@@ -204,6 +204,9 @@ colorsel_cmyk_init (ColorselCmyk *module)
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (spinbutton);
 
+  gimp_help_set_help_data (spinbutton,
+                           _("The percentage of black to pull out "
+                             "of the colored inks."), NULL);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   g_signal_connect (adj, "value_changed",
