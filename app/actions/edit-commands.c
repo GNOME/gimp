@@ -135,7 +135,6 @@ edit_paste_cmd_callback (GtkWidget *widget,
 			   gdisp->gimage->gimp->global_buffer,
 			   FALSE))
 	{
-	  gdisplays_update_title (gdisp->gimage);
 	  gdisplays_flush ();
 	}
     }
@@ -158,7 +157,6 @@ edit_paste_into_cmd_callback (GtkWidget *widget,
 			   gdisp->gimage->gimp->global_buffer,
 			   TRUE))
 	{
-	  gdisplays_update_title (gdisp->gimage);
 	  gdisplays_flush ();
 	}
     }

@@ -28,6 +28,7 @@
 #include "core/gimpmarshal.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimptool.h"
 #include "tool_manager.h"
@@ -417,10 +418,14 @@ gimp_tool_real_cursor_update (GimpTool       *tool,
 			      GdkEventMotion *mevent,
 			      GimpDisplay    *gdisp)
 {
-  gdisplay_install_tool_cursor (gdisp,
-                                GDK_TOP_LEFT_ARROW,
-				tool->tool_cursor,
-				GIMP_CURSOR_MODIFIER_NONE);
+  GimpDisplayShell *shell;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_display_shell_install_tool_cursor (shell,
+                                          GDK_TOP_LEFT_ARROW,
+                                          tool->tool_cursor,
+                                          GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void

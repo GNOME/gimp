@@ -38,14 +38,14 @@
 #include "core/gimplayer.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-ops.h"
-
-#include "undo.h"
-#include "path_transform.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpfliptool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
+
+#include "undo.h"
+#include "path_transform.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -261,9 +261,12 @@ gimp_flip_tool_cursor_update (GimpTool       *tool,
 			      GdkEventMotion *mevent,
 			      GimpDisplay    *gdisp)
 {
+  GimpDisplayShell   *shell;
   GimpDrawable       *drawable;
   GdkCursorType       ctype       = GIMP_BAD_CURSOR;
   GimpToolCursorType  tool_cursor = GIMP_FLIP_HORIZONTAL_TOOL_CURSOR;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
     {
@@ -296,10 +299,10 @@ gimp_flip_tool_cursor_update (GimpTool       *tool,
   else
     tool_cursor = GIMP_FLIP_VERTICAL_TOOL_CURSOR;
 
-  gdisplay_install_tool_cursor (gdisp,
-				ctype,
-				tool_cursor,
-				GIMP_CURSOR_MODIFIER_NONE);
+  gimp_display_shell_install_tool_cursor (shell,
+                                          ctype,
+                                          tool_cursor,
+                                          GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void

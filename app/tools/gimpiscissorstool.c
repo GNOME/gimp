@@ -61,6 +61,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpbezierselecttool.h"
 #include "gimpiscissorstool.h"
@@ -448,10 +449,13 @@ gimp_iscissors_tool_button_press (GimpTool       *tool,
                                   GimpDisplay    *gdisp)
 {
   GimpIscissorsTool *iscissors;
+  GimpDisplayShell  *shell;
   GimpDrawable      *drawable;
   gboolean           grab_pointer = FALSE;
 
   iscissors = GIMP_ISCISSORS_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   drawable  = gimp_image_active_drawable (gdisp->gimage);
 
@@ -487,8 +491,7 @@ gimp_iscissors_tool_button_press (GimpTool       *tool,
       iscissors->iy = iscissors->y;
 
       /*  Initialize the selection core only on starting the tool  */
-      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
-                            gdisp->canvas->window);
+      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
       break;
 
     default:
@@ -545,7 +548,7 @@ gimp_iscissors_tool_button_press (GimpTool       *tool,
     }
 
   if (grab_pointer)
-    gdk_pointer_grab (gdisp->canvas->window, FALSE,
+    gdk_pointer_grab (shell->canvas->window, FALSE,
 		      GDK_POINTER_MOTION_HINT_MASK |
 		      GDK_BUTTON1_MOTION_MASK |
 		      GDK_BUTTON_RELEASE_MASK,
@@ -1068,69 +1071,72 @@ gimp_iscissors_tool_cursor_update (GimpTool       *tool,
                                    GimpDisplay    *gdisp)
 {
   GimpIscissorsTool *iscissors;
+  GimpDisplayShell  *shell;
 
   iscissors = GIMP_ISCISSORS_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   switch (iscissors->op)
     {
     case SELECTION_REPLACE:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    GIMP_RECT_SELECT_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_NONE);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              GIMP_RECT_SELECT_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_NONE);
       break;
     case SELECTION_ADD:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    GIMP_RECT_SELECT_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_PLUS);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              GIMP_RECT_SELECT_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_PLUS);
       break;
     case SELECTION_SUB:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    GIMP_RECT_SELECT_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_MINUS);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              GIMP_RECT_SELECT_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_MINUS);
       break;
     case SELECTION_INTERSECT:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    GIMP_RECT_SELECT_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_INTERSECT);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              GIMP_RECT_SELECT_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_INTERSECT);
       break;
     case SELECTION_MOVE_MASK: /* abused */
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    GIMP_SCISSORS_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_MOVE);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              GIMP_SCISSORS_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_MOVE);
       break;
     case SELECTION_MOVE: /* abused */
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    GIMP_SCISSORS_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_PLUS);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              GIMP_SCISSORS_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_PLUS);
       break;
     case -1:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_BAD_CURSOR,
-				    GIMP_SCISSORS_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_NONE);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_BAD_CURSOR,
+                                              GIMP_SCISSORS_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_NONE);
       break;
     default:
       switch (iscissors->state)
 	{
 	case WAITING:
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_SCISSORS_TOOL_CURSOR,
-					GIMP_CURSOR_MODIFIER_PLUS);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_SCISSORS_TOOL_CURSOR,
+                                                  GIMP_CURSOR_MODIFIER_PLUS);
 	  break;
 	case SEED_PLACEMENT:
 	case SEED_ADJUSTMENT:
 	default:
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_SCISSORS_TOOL_CURSOR,
-					GIMP_CURSOR_MODIFIER_NONE);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_SCISSORS_TOOL_CURSOR,
+                                                  GIMP_CURSOR_MODIFIER_NONE);
 	  break;
 	}
     }

@@ -38,6 +38,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpdrawtool.h"
 #include "gimpmeasuretool.h"
@@ -202,9 +203,12 @@ gimp_measure_tool_control (GimpTool    *tool,
                            ToolAction   action,
                            GimpDisplay *gdisp)
 {
-  GimpMeasureTool *measure_tool;
+  GimpMeasureTool  *measure_tool;
+  GimpDisplayShell *shell;
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   switch (action)
     {
@@ -215,7 +219,7 @@ gimp_measure_tool_control (GimpTool    *tool,
       break;
 
     case HALT:
-      gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar),
+      gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar),
 			 measure_tool->context_id);
       tool->state = INACTIVE;
       break;
@@ -233,21 +237,25 @@ gimp_measure_tool_button_press (GimpTool       *tool,
                                 GdkEventButton *bevent,
                                 GimpDisplay    *gdisp)
 {
-  GimpMeasureTool *measure_tool;
-  gint             x[3];
-  gint             y[3];
-  gint             i;
+  GimpMeasureTool  *measure_tool;
+  GimpDisplayShell *shell;
+  gint              x[3];
+  gint              y[3];
+  gint              i;
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  if we are changing displays, pop the statusbar of the old one  */ 
   if (tool->state == ACTIVE && gdisp != tool->gdisp)
     {
       GimpDisplay *old_gdisp = tool->gdisp;
 
-      gtk_statusbar_pop (GTK_STATUSBAR (old_gdisp->statusbar),
+      gtk_statusbar_pop (GTK_STATUSBAR (GIMP_DISPLAY_SHELL (old_gdisp->shell)->statusbar),
 			 measure_tool->context_id);
-      gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), 
+
+      gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar), 
 			  measure_tool->context_id, (""));
     } 
   
@@ -341,9 +349,9 @@ gimp_measure_tool_button_press (GimpTool       *tool,
 	  /* reset everything */
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (measure_tool));
 
-	  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar),
+	  gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar),
 			     measure_tool->context_id);
-	  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
+	  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),
 			      measure_tool->context_id, "");
 
 	  distance_buf[0] = '\0';
@@ -355,7 +363,7 @@ gimp_measure_tool_button_press (GimpTool       *tool,
 	{
 	  /* initialize the statusbar display */
 	  measure_tool->context_id =
-	    gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar),
+	    gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar),
 					  "measure");
 	}
 
@@ -371,13 +379,13 @@ gimp_measure_tool_button_press (GimpTool       *tool,
       tool->gdisp = gdisp;
 
       /*  start drawing the measure tool  */
-      gimp_draw_tool_start (GIMP_DRAW_TOOL(measure_tool), gdisp->canvas->window);
+      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
     }
 
   /*  create the info window if necessary  */
   if (! measure_tool_info &&
       (measure_tool_options->use_info_window ||
-       ! GTK_WIDGET_VISIBLE (gdisp->statusarea)))
+       ! GTK_WIDGET_VISIBLE (shell->statusarea)))
     {
       measure_tool_info = info_dialog_new (_("Measure Tool"),
 					   tool_manager_help_func, NULL);
@@ -393,20 +401,21 @@ gimp_measure_tool_button_press (GimpTool       *tool,
 				      NULL);
     }
 
-  gdk_pointer_grab (gdisp->canvas->window, FALSE,
+  gdk_pointer_grab (shell->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK |
 		    GDK_BUTTON1_MOTION_MASK |
 		    GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
+
   tool->state = ACTIVE;
 
   /*  set the pointer to the crosshair,
    *  so one actually sees the cursor position
    */
-  gdisplay_install_tool_cursor (gdisp,
-				GIMP_CROSSHAIR_SMALL_CURSOR,
-				GIMP_MEASURE_TOOL_CURSOR,
-				GIMP_CURSOR_MODIFIER_NONE);
+  gimp_display_shell_install_tool_cursor (shell,
+                                          GIMP_CROSSHAIR_SMALL_CURSOR,
+                                          GIMP_MEASURE_TOOL_CURSOR,
+                                          GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void
@@ -429,18 +438,21 @@ gimp_measure_tool_motion (GimpTool       *tool,
                           GdkEventMotion *mevent,
                           GimpDisplay    *gdisp)
 {
-  GimpMeasureTool *measure_tool;
-  gint             x, y;
-  gint             ax, ay;
-  gint             bx, by;
-  gint             dx, dy;
-  gint             i;
-  gint             tmp;
-  gdouble          angle;
-  gdouble          distance;
-  gchar            status_str[STATUSBAR_SIZE];
+  GimpMeasureTool  *measure_tool;
+  GimpDisplayShell *shell;
+  gint              x, y;
+  gint              ax, ay;
+  gint              bx, by;
+  gint              dx, dy;
+  gint              i;
+  gint              tmp;
+  gdouble           angle;
+  gdouble           distance;
+  gchar             status_str[STATUSBAR_SIZE];
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  undraw the current tool  */
   gimp_draw_tool_pause (GIMP_DRAW_TOOL(measure_tool));
@@ -618,9 +630,9 @@ gimp_measure_tool_motion (GimpTool       *tool,
 	}
 
       /*  show info in statusbar  */
-      gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar),
+      gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar),
 			 measure_tool->context_id);
-      gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
+      gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),
 			  measure_tool->context_id,
 			  status_str);
 
@@ -631,7 +643,7 @@ gimp_measure_tool_motion (GimpTool       *tool,
     }  /*  measure_tool->function == MOVING  */
 
   /*  redraw the current tool  */
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL(measure_tool));
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (measure_tool));
 }
 
 static void
@@ -639,16 +651,18 @@ gimp_measure_tool_cursor_update (GimpTool       *tool,
                                  GdkEventMotion *mevent,
                                  GimpDisplay    *gdisp)
 {
-  GimpMeasureTool *measure_tool;
-  gint             x[3];
-  gint             y[3];
-  gint             i;
-  gboolean         in_handle = FALSE;
-
+  GimpMeasureTool   *measure_tool;
+  GimpDisplayShell  *shell;
+  gint               x[3];
+  gint               y[3];
+  gint               i;
+  gboolean           in_handle = FALSE;
   GdkCursorType      ctype     = GIMP_CROSSHAIR_SMALL_CURSOR;
   GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if (tool->state == ACTIVE && tool->gdisp == gdisp)
     {
@@ -693,10 +707,10 @@ gimp_measure_tool_cursor_update (GimpTool       *tool,
 	cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
     }
 
-  gdisplay_install_tool_cursor (gdisp,
-				ctype,
-				GIMP_MEASURE_TOOL_CURSOR,
-				cmodifier);
+  gimp_display_shell_install_tool_cursor (shell,
+                                          ctype,
+                                          GIMP_MEASURE_TOOL_CURSOR,
+                                          cmodifier);
 }
 
 static void

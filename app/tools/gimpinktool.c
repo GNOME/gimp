@@ -43,6 +43,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpinktool.h"
 #include "gimpinktool-blob.h"
@@ -929,12 +930,15 @@ ink_button_press (GimpTool       *tool,
 		  GdkEventButton *bevent,
 		  GimpDisplay    *gdisp)
 {
-  GimpInkTool  *ink_tool;
-  GimpDrawable *drawable;
-  Blob         *b;
-  gdouble       x, y;
+  GimpInkTool      *ink_tool;
+  GimpDisplayShell *shell;
+  GimpDrawable     *drawable;
+  Blob             *b;
+  gdouble           x, y;
 
   ink_tool = GIMP_INK_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  Keep the coordinates of the target  */
   gdisplay_untransform_coords_f (gdisp, bevent->x, bevent->y,
@@ -952,12 +956,14 @@ ink_button_press (GimpTool       *tool,
 
   /* add motion memory if you press mod1 first ^ perfectmouse */
   if (((bevent->state & GDK_MOD1_MASK) != 0) != (gimprc.perfectmouse != 0))
-    gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		      GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+    gdk_pointer_grab (shell->canvas->window, FALSE,
+		      GDK_BUTTON1_MOTION_MASK |
+                      GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);
   else
-    gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK |
+    gdk_pointer_grab (shell->canvas->window, FALSE,
+		      GDK_POINTER_MOTION_HINT_MASK |
+                      GDK_BUTTON1_MOTION_MASK |
 		      GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);
   
@@ -1176,9 +1182,12 @@ ink_cursor_update (GimpTool       *tool,
 		   GdkEventMotion *mevent,
 		   GimpDisplay    *gdisp)
 {
-  GimpLayer     *layer;
-  GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
-  gint           x, y;
+  GimpDisplayShell *shell;
+  GimpLayer        *layer;
+  GdkCursorType     ctype = GDK_TOP_LEFT_ARROW;
+  gint              x, y;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
@@ -1202,10 +1211,10 @@ ink_cursor_update (GimpTool       *tool,
 	}
     }
 
-  gdisplay_install_tool_cursor (gdisp,
-				ctype,
-				GIMP_INK_TOOL_CURSOR,
-				GIMP_CURSOR_MODIFIER_NONE);
+  gimp_display_shell_install_tool_cursor (shell,
+                                          ctype,
+                                          GIMP_INK_TOOL_CURSOR,
+                                          GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void
@@ -1585,13 +1594,16 @@ ink_paste (GimpInkTool  *ink_tool,
   ink_tool->x2 = MAX (ink_tool->x2, (canvas_buf->x + canvas_buf->width));
   ink_tool->y2 = MAX (ink_tool->y2, (canvas_buf->y + canvas_buf->height));
 
-  /*  Update the gimage--it is important to call gdisplays_update_area
+  /*  Update the gimage--it is important to call gimp_image_update
    *  instead of drawable_update because we don't want the drawable
    *  preview to be constantly invalidated
    */
   gimp_drawable_offsets (drawable, &offx, &offy);
-  gdisplays_update_area (gimage, canvas_buf->x + offx, canvas_buf->y + offy,
-			 canvas_buf->width, canvas_buf->height);
+  gimp_image_update (gimage,
+                     canvas_buf->x + offx,
+                     canvas_buf->y + offy,
+                     canvas_buf->width,
+                     canvas_buf->height);
 }
 
 /* This routine a) updates the representation of the stroke

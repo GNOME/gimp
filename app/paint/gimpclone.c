@@ -41,6 +41,7 @@
 #include "core/gimpbrush.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpclonetool.h"
 #include "paint_options.h"
@@ -371,22 +372,27 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
 
   /*  Calculate the coordinates of the target  */
   src_gdisp = the_src_gdisp;
-  if (!src_gdisp)
+  if (! src_gdisp)
     {
       the_src_gdisp = gdisp;
       src_gdisp = the_src_gdisp;
     }
 
   if (state == INIT_PAINT)
-    /*  Initialize the tool drawing core  */
-    gimp_draw_tool_start (draw_tool,
-			  src_gdisp->canvas->window);
+    {
+      GimpDisplayShell *src_shell;
+
+      src_shell = GIMP_DISPLAY_SHELL (src_gdisp->shell);
+
+      /*  Initialize the tool drawing core  */
+      gimp_draw_tool_start (draw_tool, src_shell->canvas->window);
+    }
   else if (state == POSTTRACE_PAINT)
     {
       /*  Find the target cursor's location onscreen  */
       gdisplay_transform_coords (src_gdisp, src_x, src_y,
 				 &trans_tx, &trans_ty, 1);
-      gimp_draw_tool_resume (draw_tool);      
+      gimp_draw_tool_resume (draw_tool);
     }
 }
 
@@ -395,9 +401,12 @@ gimp_clone_tool_cursor_update (GimpTool       *tool,
 			       GdkEventMotion *mevent,
 			       GimpDisplay    *gdisp)
 {
-  GimpLayer     *layer;
-  GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
-  gint           x, y;
+  GimpDisplayShell *shell;
+  GimpLayer        *layer;
+  GdkCursorType     ctype = GDK_TOP_LEFT_ARROW;
+  gint              x, y;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gdisplay_untransform_coords (gdisp, (double) mevent->x, (double) mevent->y,
 			       &x, &y, TRUE, FALSE);
@@ -430,12 +439,12 @@ gimp_clone_tool_cursor_update (GimpTool       *tool,
 	ctype = GIMP_BAD_CURSOR;
     }
 
-  gdisplay_install_tool_cursor (gdisp,
-				ctype,
-				ctype == GIMP_CROSSHAIR_SMALL_CURSOR ?
-				GIMP_TOOL_CURSOR_NONE :
-				GIMP_CLONE_TOOL_CURSOR,
-				GIMP_CURSOR_MODIFIER_NONE);
+  gimp_display_shell_install_tool_cursor (shell,
+                                          ctype,
+                                          ctype == GIMP_CROSSHAIR_SMALL_CURSOR ?
+                                          GIMP_TOOL_CURSOR_NONE :
+                                          GIMP_CLONE_TOOL_CURSOR,
+                                          GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void

@@ -512,9 +512,8 @@ toolbox_drop_drawable (GtkWidget    *widget,
     }
   else
     {
-      /*  a non-layer drawable can't have an alpha channel,
-       *  so add one
-       */
+      /*  a non-layer drawable can't have an alpha channel so add one  */
+
       PixelRegion  srcPR, destPR;
       TileManager *tiles;
 
@@ -548,7 +547,9 @@ toolbox_drop_drawable (GtkWidget    *widget,
 
   gimp_image_undo_enable (new_gimage);
 
-  gimp_create_display (gimage->gimp, new_gimage);
+  gimp_create_display (gimage->gimp, new_gimage, 0x0101);
+
+  g_object_unref (G_OBJECT (new_gimage));
 }
 
 static void

@@ -16,18 +16,21 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DISPLAY_SCALE_H__
-#define __GIMP_DISPLAY_SCALE_H__
+#ifndef __GIMP_DISPLAY_SHELL_SCALE_H__
+#define __GIMP_DISPLAY_SHELL_SCALE_H__
 
 
-void   gimp_display_scale             (GimpDisplay  *gdisp,
-                                       GimpZoomType  zoom_type);
-void   gimp_display_scale_setup       (GimpDisplay  *gdisp);
+void   gimp_display_shell_scale_setup           (GimpDisplayShell *shell);
 
-void   gimp_display_scale_resize      (GimpDisplay  *gdisp,
-                                       gboolean      resize_window,
-                                       gboolean      redisplay);
-void   gimp_display_scale_shrink_wrap (GimpDisplay  *gdisp);
+void   gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *gdisp, 
+                                                 gboolean          dot_for_dot);
+
+void   gimp_display_shell_scale                 (GimpDisplayShell *gdisp,
+                                                 GimpZoomType      zoom_type);
+void   gimp_display_shell_scale_resize          (GimpDisplayShell *shell,
+                                                 gboolean          resize_window,
+                                                 gboolean          redisplay);
+void   gimp_display_shell_scale_shrink_wrap     (GimpDisplayShell *shell);
 
 
-#endif  /*  __GIMP_DISPLAY_SCALE_H__  */
+#endif  /*  __GIMP_DISPLAY_SHELL_SCALE_H__  */

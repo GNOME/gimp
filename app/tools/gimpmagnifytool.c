@@ -29,6 +29,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-scale.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpmagnifytool.h"
 #include "tool_options.h"
@@ -290,10 +291,13 @@ gimp_magnify_tool_button_press (GimpTool       *tool,
 				GdkEventButton *bevent,
 				GimpDisplay    *gdisp)
 {
-  GimpMagnifyTool *magnify;
-  gint             x, y;
+  GimpMagnifyTool  *magnify;
+  GimpDisplayShell *shell;
+  gint              x, y;
 
   magnify = GIMP_MAGNIFY_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
 
@@ -302,7 +306,7 @@ gimp_magnify_tool_button_press (GimpTool       *tool,
   magnify->w = 0;
   magnify->h = 0;
 
-  gdk_pointer_grab (gdisp->canvas->window, FALSE,
+  gdk_pointer_grab (shell->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK |
 		    GDK_BUTTON1_MOTION_MASK |
 		    GDK_BUTTON_RELEASE_MASK,
@@ -311,8 +315,7 @@ gimp_magnify_tool_button_press (GimpTool       *tool,
   tool->state = ACTIVE;
   tool->gdisp = gdisp;
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
-			gdisp->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
 }
 
 static void
@@ -320,14 +323,17 @@ gimp_magnify_tool_button_release (GimpTool       *tool,
 				  GdkEventButton *bevent,
 				  GimpDisplay    *gdisp)
 {
-  GimpMagnifyTool *magnify;
-  gint             win_width, win_height;
-  gint             width, height;
-  gint             scalesrc, scaledest;
-  gint             scale;
-  gint             x1, y1, x2, y2, w, h;
+  GimpMagnifyTool  *magnify;
+  GimpDisplayShell *shell;
+  gint              win_width, win_height;
+  gint              width, height;
+  gint              scalesrc, scaledest;
+  gint              scale;
+  gint              x1, y1, x2, y2, w, h;
 
   magnify = GIMP_MAGNIFY_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
@@ -374,13 +380,14 @@ gimp_magnify_tool_button_release (GimpTool       *tool,
 	}
 
       gdisp->scale = (scaledest << 8) + scalesrc;
+
       gdisp->offset_x = (scaledest * ((x1 + x2) / 2)) / scalesrc -
 	(win_width / 2);
       gdisp->offset_y = (scaledest * ((y1 + y2) / 2)) / scalesrc -
 	(win_height / 2);
 
       /*  resize the image  */
-      gimp_display_scale_resize (gdisp, gimprc.allow_resize_windows, TRUE);
+      gimp_display_shell_scale_resize (shell, gimprc.allow_resize_windows, TRUE);
     }
 }
 
@@ -433,19 +440,23 @@ gimp_magnify_tool_cursor_update (GimpTool       *tool,
 				 GdkEventMotion *mevent,
 				 GimpDisplay    *gdisp)
 {
+  GimpDisplayShell *shell;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
   if (magnify_options->type == GIMP_ZOOM_IN)
     {
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_ZOOM_CURSOR,
-				    GIMP_ZOOM_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_PLUS);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_ZOOM_CURSOR,
+                                              GIMP_ZOOM_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_PLUS);
     }
   else
     {
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_ZOOM_CURSOR,
-				    GIMP_ZOOM_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_MINUS);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_ZOOM_CURSOR,
+                                              GIMP_ZOOM_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_MINUS);
    }
 }
 

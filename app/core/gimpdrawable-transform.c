@@ -50,6 +50,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "tool_manager.h"
 #include "tool_options.h"
@@ -355,15 +356,18 @@ gimp_transform_tool_button_press (GimpTool       *tool,
                                   GdkEventButton *bevent,
 			          GimpDisplay    *gdisp)
 {
-  GimpTransformTool  *gt_tool;
-  GimpDrawable       *drawable;
-  gint                dist;
-  gint                closest_dist;
-  gint                x, y;
-  gint                i;
-  gint                off_x, off_y;
+  GimpTransformTool *gt_tool;
+  GimpDisplayShell  *shell;
+  GimpDrawable      *drawable;
+  gint               dist;
+  gint               closest_dist;
+  gint               x, y;
+  gint               i;
+  gint               off_x, off_y;
 
   gt_tool = GIMP_TRANSFORM_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gt_tool->bpressed = TRUE; /* ALT */
 
@@ -383,7 +387,7 @@ gimp_transform_tool_button_press (GimpTool       *tool,
   if ((gdisp == tool->gdisp) && gt_tool->interactive)
     {
       /*  start drawing the bounding box and handles...  */
-      gimp_draw_tool_start (GIMP_DRAW_TOOL (gt_tool), gdisp->canvas->window);
+      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
 
       x = bevent->x;
       y = bevent->y;
@@ -425,7 +429,7 @@ gimp_transform_tool_button_press (GimpTool       *tool,
       gt_tool->lastx = gt_tool->startx;
       gt_tool->lasty = gt_tool->starty;
 
-      gdk_pointer_grab (gdisp->canvas->window, FALSE,
+      gdk_pointer_grab (shell->canvas->window, FALSE,
 			GDK_POINTER_MOTION_HINT_MASK |
 			GDK_BUTTON1_MOTION_MASK |
 			GDK_BUTTON_RELEASE_MASK,
@@ -472,10 +476,10 @@ gimp_transform_tool_button_press (GimpTool       *tool,
 
 	  /*  Grab the pointer if we're in non-interactive mode  */
 	  if (!gt_tool->interactive)
-	    gdk_pointer_grab (gdisp->canvas->window, FALSE,
-			      (GDK_POINTER_MOTION_HINT_MASK |
-			       GDK_BUTTON1_MOTION_MASK |
-			       GDK_BUTTON_RELEASE_MASK),
+	    gdk_pointer_grab (shell->canvas->window, FALSE,
+			      GDK_POINTER_MOTION_HINT_MASK |
+                              GDK_BUTTON1_MOTION_MASK |
+                              GDK_BUTTON_RELEASE_MASK,
 			      NULL, NULL, bevent->time);
 
 	  /*  Find the transform bounds for some tools (like scale,
@@ -592,16 +596,19 @@ static void
 gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
 		          GimpDisplay        *gdisp)
 {
-  GimpTool      *tool;
-  TileManager   *new_tiles;
-  TransformUndo *tu;
-  PathUndo      *pundo;
-  gboolean       new_layer;
-  gint           i, x, y;
+  GimpDisplayShell *shell;
+  GimpTool         *tool;
+  TileManager      *new_tiles;
+  TransformUndo    *tu;
+  PathUndo         *pundo;
+  gboolean          new_layer;
+  gint              i, x, y;
 
   gimp_set_busy (gdisp->gimage->gimp);
 
   tool = GIMP_TOOL (gt_tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /* undraw the tool before we muck around with the transform matrix */
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (gt_tool));
@@ -679,22 +686,28 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
   /*  Flush the gdisplays  */
   if (gdisp->disp_xoffset || gdisp->disp_yoffset)
     {
-      x = gdisp->canvas->allocation.width;
-      y = gdisp->canvas->allocation.height;
+      x = shell->canvas->allocation.width;
+      y = shell->canvas->allocation.height;
 
       if (gdisp->disp_yoffset)
 	{
-	  gdisplay_expose_area (gdisp, 0, 0, gdisp->disp_width,
-				gdisp->disp_yoffset);
-	  gdisplay_expose_area (gdisp, 0, gdisp->disp_yoffset + y,
-				gdisp->disp_width, gdisp->disp_height);
+	  gimp_display_shell_add_expose_area (shell,
+                                              0, 0,
+                                              gdisp->disp_width,
+                                              gdisp->disp_yoffset);
+	  gimp_display_shell_add_expose_area (shell,
+                                              0, gdisp->disp_yoffset + y,
+                                              gdisp->disp_width, gdisp->disp_height);
 	}
+
       if (gdisp->disp_xoffset)
 	{
-	  gdisplay_expose_area (gdisp, 0, 0, gdisp->disp_xoffset,
-				gdisp->disp_height);
-	  gdisplay_expose_area (gdisp, gdisp->disp_xoffset + x, 0,
-				gdisp->disp_width, gdisp->disp_height);
+	  gimp_display_shell_add_expose_area (shell,
+                                              0, 0,
+                                              gdisp->disp_xoffset, gdisp->disp_height);
+	  gimp_display_shell_add_expose_area (shell,
+                                              gdisp->disp_xoffset + x, 0,
+                                              gdisp->disp_width, gdisp->disp_height);
 	}
     }
 
@@ -752,11 +765,14 @@ gimp_transform_tool_cursor_update (GimpTool       *tool,
 			           GimpDisplay    *gdisp)
 {
   GimpTransformTool  *tr_tool;
+  GimpDisplayShell   *shell;
   GimpDrawable       *drawable;
   GdkCursorType       ctype = GDK_TOP_LEFT_ARROW;
   gint                x, y;
 
   tr_tool = GIMP_TRANSFORM_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
 			       FALSE, FALSE);
@@ -781,10 +797,10 @@ gimp_transform_tool_cursor_update (GimpTool       *tool,
 	}
     }
 
-  gdisplay_install_tool_cursor (gdisp,
-				ctype,
-				tool->tool_cursor,
-				GIMP_CURSOR_MODIFIER_NONE);
+  gimp_display_shell_install_tool_cursor (shell,
+                                          ctype,
+                                          tool->tool_cursor,
+                                          GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void
@@ -1647,11 +1663,11 @@ gimp_transform_tool_paste (GimpImage    *gimage,
       if (floating_layer)
 	floating_sel_relax (floating_layer, TRUE);
 
-      gdisplays_update_area (gimage,
-			     drawable->offset_x,
-			     drawable->offset_y,
-			     drawable->width,
-			     drawable->height);
+      gimp_image_update (gimage,
+                         drawable->offset_x,
+                         drawable->offset_y,
+                         drawable->width,
+                         drawable->height);
 
       /*  Push an undo  */
       if (layer)

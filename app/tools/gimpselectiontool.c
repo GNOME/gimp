@@ -27,6 +27,7 @@
 #include "core/gimpimage-mask.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpdrawtool.h"
 #include "gimpselectiontool.h"
@@ -117,52 +118,55 @@ gimp_selection_tool_cursor_update (GimpTool       *tool,
                                    GimpDisplay    *gdisp)
 {
   GimpSelectionTool *selection_tool;
+  GimpDisplayShell  *shell;
 
   selection_tool = GIMP_SELECTION_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   switch (selection_tool->op)
     {
     case SELECTION_ADD:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    tool->tool_cursor,
-				    GIMP_CURSOR_MODIFIER_PLUS);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              tool->tool_cursor,
+                                              GIMP_CURSOR_MODIFIER_PLUS);
       break;
     case SELECTION_SUB:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    tool->tool_cursor,
-				    GIMP_CURSOR_MODIFIER_MINUS);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              tool->tool_cursor,
+                                              GIMP_CURSOR_MODIFIER_MINUS);
       break;
     case SELECTION_INTERSECT: 
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    tool->tool_cursor,
-				    GIMP_CURSOR_MODIFIER_INTERSECT);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              tool->tool_cursor,
+                                              GIMP_CURSOR_MODIFIER_INTERSECT);
       break;
     case SELECTION_REPLACE:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    tool->tool_cursor,
-				    GIMP_CURSOR_MODIFIER_NONE);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              tool->tool_cursor,
+                                              GIMP_CURSOR_MODIFIER_NONE);
       break;
     case SELECTION_MOVE_MASK:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    tool->tool_cursor,
-				    GIMP_CURSOR_MODIFIER_MOVE);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              tool->tool_cursor,
+                                              GIMP_CURSOR_MODIFIER_MOVE);
       break;
     case SELECTION_MOVE:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    GIMP_MOVE_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_NONE);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              GIMP_MOVE_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_NONE);
       break;
     case SELECTION_ANCHOR:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    tool->tool_cursor,
-				    GIMP_CURSOR_MODIFIER_ANCHOR);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              tool->tool_cursor,
+                                              GIMP_CURSOR_MODIFIER_ANCHOR);
       break;
     }
 }
@@ -255,7 +259,7 @@ gimp_selection_tool_update_op_state (GimpSelectionTool *selection_tool,
   else if (!(state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) &&
 	   layer &&
 	   (layer == floating_sel ||
-	    (gdisplay_mask_value (gdisp, x, y) &&
+	    (gimage_mask_value (gdisp->gimage, x, y) &&
 	     floating_sel == NULL)))
     {
       selection_tool->op = SELECTION_MOVE;      /* move the selection */

@@ -29,8 +29,8 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-marching-ants.h"
-#include "gimpdisplay-ops.h"
 #include "gimpdisplay-selection.h"
+#include "gimpdisplayshell.h"
 
 #include "colormaps.h"
 #include "gimprc.h"
@@ -138,8 +138,8 @@ selection_create (GdkWindow   *win,
   else
     {
       /*  get black and white pixels for this gdisplay  */
-      fg.pixel = gdisplay_black_pixel (gdisp);
-      bg.pixel = gdisplay_white_pixel (gdisp);
+      fg.pixel = g_black_pixel;
+      bg.pixel = g_white_pixel;
 
       gdk_gc_set_foreground (new->gc_in, &fg);
       gdk_gc_set_background (new->gc_in, &bg);
@@ -156,8 +156,8 @@ selection_create (GdkWindow   *win,
 #endif
 
   /*  Setup 2nd & 3rd GCs  */
-  fg.pixel = gdisplay_white_pixel (gdisp);
-  bg.pixel = gdisplay_gray_pixel (gdisp);
+  fg.pixel = g_white_pixel;
+  bg.pixel = g_gray_pixel;
 
   /*  create a new graphics context  */
   new->gc_out = gdk_gc_new (new->win);
@@ -167,8 +167,8 @@ selection_create (GdkWindow   *win,
   gdk_gc_set_line_attributes (new->gc_out, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
 
   /*  get black and color pixels for this gdisplay  */
-  fg.pixel = gdisplay_black_pixel (gdisp);
-  bg.pixel = gdisplay_color_pixel (gdisp);
+  fg.pixel = g_black_pixel;
+  bg.pixel = g_color_pixel;
 
   /*  create a new graphics context  */
   new->gc_layer = gdk_gc_new (new->win);
@@ -265,7 +265,10 @@ selection_start (Selection *select,
 void
 selection_invis (Selection *select)
 {
-  gint x1, y1, x2, y2;
+  GimpDisplayShell *shell;
+  gint              x1, y1, x2, y2;
+
+  shell = GIMP_DISPLAY_SHELL (select->gdisp->shell);
 
   if (select->state != INVISIBLE)
     {
@@ -276,9 +279,11 @@ selection_invis (Selection *select)
     }
 
   /*  Find the bounds of the selection  */
-  if (gdisplay_mask_bounds (select->gdisp, &x1, &y1, &x2, &y2))
+  if (gimp_display_shell_mask_bounds (shell, &x1, &y1, &x2, &y2))
     {
-      gdisplay_expose_area (select->gdisp, x1, y1, (x2 - x1), (y2 - y1));
+      gimp_display_shell_add_expose_area (shell,
+                                          x1, y1,
+                                          (x2 - x1), (y2 - y1));
     }
   else
     {
@@ -305,9 +310,9 @@ selection_layer_invis (Selection *select)
 
   if (select->segs_layer != NULL && select->num_segs_layer == 4)
     {
-      GimpDisplay *gdisp;
+      GimpDisplayShell *shell;
 
-      gdisp = select->gdisp;
+      shell = GIMP_DISPLAY_SHELL (select->gdisp->shell);
 
       x1 = select->segs_layer[0].x1 - 1;
       y1 = select->segs_layer[0].y1 - 1;
@@ -320,10 +325,18 @@ selection_layer_invis (Selection *select)
       y4 = select->segs_layer[3].y2 - 1;
 
       /*  expose the region  */
-      gdisplay_expose_area (gdisp, x1, y1, (x2 - x1) + 1, (y3 - y1) + 1);
-      gdisplay_expose_area (gdisp, x1, y3, (x3 - x1) + 1, (y4 - y3) + 1);
-      gdisplay_expose_area (gdisp, x1, y4, (x2 - x1) + 1, (y2 - y4) + 1);
-      gdisplay_expose_area (gdisp, x4, y3, (x2 - x4) + 1, (y4 - y3) + 1);
+      gimp_display_shell_add_expose_area (shell,
+                                          x1, y1,
+                                          (x2 - x1) + 1, (y3 - y1) + 1);
+      gimp_display_shell_add_expose_area (shell,
+                                          x1, y3,
+                                          (x3 - x1) + 1, (y4 - y3) + 1);
+      gimp_display_shell_add_expose_area (shell,
+                                          x1, y4,
+                                          (x2 - x1) + 1, (y2 - y4) + 1);
+      gimp_display_shell_add_expose_area (shell,
+                                          x4, y3,
+                                          (x2 - x4) + 1, (y4 - y3) + 1);
     }
 }
 

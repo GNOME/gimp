@@ -47,6 +47,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "app_procs.h"
 #include "errors.h"
@@ -370,9 +371,12 @@ gimp_blend_tool_button_press (GimpTool       *tool,
                               GdkEventButton *bevent,
                               GimpDisplay    *gdisp)
 {
-  GimpBlendTool *blend_tool;
+  GimpBlendTool    *blend_tool;
+  GimpDisplayShell *shell;
 
   blend_tool = GIMP_BLEND_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
     {
@@ -386,7 +390,8 @@ gimp_blend_tool_button_press (GimpTool       *tool,
     }
 
   /*  Keep the coordinates of the target  */
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
+  gdisplay_untransform_coords (gdisp,
+                               bevent->x, bevent->y,
 			       &blend_tool->startx, &blend_tool->starty,
 			       FALSE, TRUE);
 
@@ -394,7 +399,7 @@ gimp_blend_tool_button_press (GimpTool       *tool,
   blend_tool->endy = blend_tool->starty;
 
   /*  Make the tool active and set the gdisplay which owns it  */
-  gdk_pointer_grab (gdisp->canvas->window, FALSE,
+  gdk_pointer_grab (shell->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK |
 		    GDK_BUTTON1_MOTION_MASK |
 		    GDK_BUTTON_RELEASE_MASK,
@@ -405,13 +410,14 @@ gimp_blend_tool_button_press (GimpTool       *tool,
 
   /* initialize the statusbar display */
   blend_tool->context_id =
-    gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "blend");
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
-		      blend_tool->context_id, _("Blend: 0, 0"));
+    gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar), "blend");
+  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),
+		      blend_tool->context_id,
+                      _("Blend: 0, 0"));
 
   /*  Start drawing the blend tool  */
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
-                        gdisp->canvas->window);
+                        shell->canvas->window);
 }
 
 static void
@@ -419,23 +425,26 @@ gimp_blend_tool_button_release (GimpTool       *tool,
                                 GdkEventButton *bevent,
                                 GimpDisplay    *gdisp)
 {
-  GimpImage     *gimage;
-  GimpBlendTool *blend_tool;
+  GimpImage        *gimage;
+  GimpBlendTool    *blend_tool;
+  GimpDisplayShell *shell;
 #ifdef BLEND_UI_CALLS_VIA_PDB
-  Argument      *return_vals;
-  gint           nreturn_vals;
+  Argument         *return_vals;
+  gint              nreturn_vals;
 #else
-  GimpProgress  *progress;
+  GimpProgress     *progress;
 #endif
 
   blend_tool = GIMP_BLEND_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gimage = gdisp->gimage;
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
 
-  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id);
+  gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), blend_tool->context_id);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
@@ -510,10 +519,13 @@ gimp_blend_tool_motion (GimpTool       *tool,
                         GdkEventMotion *mevent,
                         GimpDisplay    *gdisp)
 {
-  GimpBlendTool *blend_tool;
-  gchar          vector[STATUSBAR_SIZE];
+  GimpBlendTool    *blend_tool;
+  GimpDisplayShell *shell;
+  gchar             vector[STATUSBAR_SIZE];
 
   blend_tool = GIMP_BLEND_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  undraw the current tool  */
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
@@ -549,11 +561,11 @@ gimp_blend_tool_motion (GimpTool       *tool,
       blend_tool->endy = blend_tool->starty + dy;
     }
 
-  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id);
+  gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), blend_tool->context_id);
 
   if (gdisp->dot_for_dot)
     {
-      g_snprintf (vector, sizeof (vector), gdisp->cursor_format_str,
+      g_snprintf (vector, sizeof (vector), shell->cursor_format_str,
 		  _("Blend: "),
 		  blend_tool->endx - blend_tool->startx,
 		  ", ",
@@ -563,7 +575,7 @@ gimp_blend_tool_motion (GimpTool       *tool,
     {
       gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
 
-      g_snprintf (vector, sizeof (vector), gdisp->cursor_format_str,
+      g_snprintf (vector, sizeof (vector), shell->cursor_format_str,
 		  _("Blend: "),
 		  blend_tool->endx - blend_tool->startx * unit_factor /
 		  gdisp->gimage->xresolution,
@@ -572,7 +584,7 @@ gimp_blend_tool_motion (GimpTool       *tool,
 		  gdisp->gimage->yresolution);
     }
 
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id,
+  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar), blend_tool->context_id,
 		      vector);
 
   /*  redraw the current tool  */
@@ -584,20 +596,24 @@ gimp_blend_tool_cursor_update (GimpTool       *tool,
                                GdkEventMotion *mevent,
                                GimpDisplay    *gdisp)
 {
+  GimpDisplayShell *shell;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
   switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
     {
     case INDEXED_GIMAGE:
     case INDEXEDA_GIMAGE:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_BAD_CURSOR,
-				    GIMP_BLEND_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_NONE);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_BAD_CURSOR,
+                                              GIMP_BLEND_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_NONE);
       break;
     default:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    GIMP_BLEND_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_NONE);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              GIMP_BLEND_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_NONE);
       break;
     }
 }

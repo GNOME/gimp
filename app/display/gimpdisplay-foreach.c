@@ -27,6 +27,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplay-scale.h"
+#include "gimpdisplayshell.h"
 
 #include "nav_window.h"
 
@@ -36,103 +37,6 @@ gdisplays_foreach (GFunc    func,
 		   gpointer user_data)
 {
   g_slist_foreach (display_list, func, user_data);
-}
-
-void
-gdisplays_update_title (GimpImage *gimage)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	gdisplay_update_title (gdisp);
-    }
-}
-
-void
-gdisplays_resize_cursor_label (GimpImage *gimage)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	gdisplay_resize_cursor_label (gdisp);
-    }
-}
-
-void
-gdisplays_setup_scale (GimpImage *gimage)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	gimp_display_scale_setup (gdisp);
-    }
-}
-
-void
-gdisplays_update_area (GimpImage *gimage,
-		       gint       x,
-		       gint       y,
-		       gint       w,
-		       gint       h)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	gdisplay_add_update_area (gdisp, x, y, w, h);
-    }
-}
-
-void
-gdisplays_expose_guides (GimpImage *gimage)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-  GList       *guide_list;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	{
-	  for (guide_list = gdisp->gimage->guides;
-	       guide_list;
-	       guide_list = g_list_next (guide_list))
-	    {
-	      gdisplay_expose_guide (gdisp, guide_list->data);
-	    }
-	}
-    }
 }
 
 void
@@ -150,26 +54,8 @@ gdisplays_expose_guide (GimpImage *gimage,
       gdisp = (GimpDisplay *) list->data;
 
       if (gdisp->gimage == gimage)
-	gdisplay_expose_guide (gdisp, guide);
-    }
-}
-
-void
-gdisplays_update_full (GimpImage *gimage)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	gdisplay_add_update_area (gdisp, 0, 0,
-				  gdisp->gimage->width,
-				  gdisp->gimage->height);
+	gimp_display_shell_expose_guide (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                         guide);
     }
 }
 
@@ -186,7 +72,7 @@ gdisplays_shrink_wrap (GimpImage *gimage)
       gdisp = (GimpDisplay *) list->data;
 
       if (gdisp->gimage == gimage)
-	gimp_display_scale_shrink_wrap (gdisp);
+	gimp_display_shell_scale_shrink_wrap (GIMP_DISPLAY_SHELL (gdisp->shell));
     }
 }
 
@@ -200,46 +86,28 @@ gdisplays_expose_full (void)
     {
       gdisp = (GimpDisplay *) list->data;
 
-      gdisplay_expose_full (gdisp);
+      gimp_display_shell_expose_full (GIMP_DISPLAY_SHELL (gdisp->shell));
     }
 }
 
 void
 gdisplays_nav_preview_resized (void)
 {
-  GimpDisplay *gdisp;
-  GSList      *list;
+  GimpDisplayShell *shell;
+  GSList           *list;
 
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = (GimpDisplay *) list->data;
+      shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
 
-      if (gdisp->window_nav_dialog)
-	nav_dialog_preview_resized (gdisp->window_nav_dialog);
+      if (shell->nav_dialog)
+	nav_dialog_preview_resized (shell->nav_dialog);
       
-      if (gdisp->nav_popup)
+      if (shell->nav_popup)
 	{
-	  nav_dialog_free (NULL, gdisp->nav_popup);
-	  gdisp->nav_popup = NULL;
+	  nav_dialog_free (NULL, shell->nav_popup);
+	  shell->nav_popup = NULL;
 	}
-    }
-}
-
-void
-gdisplays_selection_visibility (GimpImage            *gimage,
-				GimpSelectionControl  control)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	gdisplay_selection_visibility (gdisp, control);
     }
 }
 
@@ -301,12 +169,13 @@ gdisplays_check_valid (GimpDisplay *gtest,
   return gdisp_found;
 }
 
-static void
-gdisplays_flush_whenever (gboolean now)
+void
+gdisplays_flush (void)
 {
   static gboolean flushing = FALSE;
 
-  GSList *list;
+  GSList      *list;
+  GimpDisplay *gdisp;
 
   /*  this prevents multiple recursive calls to this procedure  */
   if (flushing == TRUE)
@@ -319,22 +188,12 @@ gdisplays_flush_whenever (gboolean now)
 
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisplay_flush_whenever ((GimpDisplay *) list->data, now);
+      gdisp = list->data;
+
+      gdisplay_flush (gdisp);
     }
 
   flushing = FALSE;
-}
-
-void
-gdisplays_flush (void)
-{
-  gdisplays_flush_whenever (FALSE);
-}
-
-void
-gdisplays_flush_now (void)
-{
-  gdisplays_flush_whenever (TRUE);
 }
 
 void
@@ -359,27 +218,27 @@ gdisplays_reconnect (GimpImage *old,
 void
 gdisplays_set_busy (void)
 {
-  GSList      *list;
-  GimpDisplay *gdisp;
+  GSList           *list;
+  GimpDisplayShell *shell;
 
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = list->data;
-      
-      gdisplay_install_override_cursor (gdisp, GDK_WATCH);
+      shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
+
+      gimp_display_shell_install_override_cursor (shell, GDK_WATCH);
     }
 }
 
 void
 gdisplays_unset_busy (void)
 {
-  GSList      *list;
-  GimpDisplay *gdisp;
+  GSList           *list;
+  GimpDisplayShell *shell;
 
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = list->data;
+      shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
       
-      gdisplay_remove_override_cursor (gdisp);
+      gimp_display_shell_remove_override_cursor (shell);
     }
 }

@@ -33,6 +33,7 @@
 #include "gui/palette-editor.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpdrawtool.h"
 #include "gimpcolorpickertool.h"
@@ -277,9 +278,12 @@ gimp_color_picker_tool_button_press (GimpTool       *tool,
 			   	     GimpDisplay    *gdisp)
 {
   GimpColorPickerTool *cp_tool;
+  GimpDisplayShell    *shell;
   gint                 x, y;
 
-  cp_tool = GIMP_COLOR_PICKER_TOOL(tool);
+  cp_tool = GIMP_COLOR_PICKER_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  Make the tool active and set it's gdisplay & drawable  */
   tool->gdisp    = gdisp;
@@ -364,10 +368,10 @@ gimp_color_picker_tool_button_press (GimpTool       *tool,
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
 			       &cp_tool->centerx, &cp_tool->centery, FALSE, 1);
 
-  gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		    (GDK_POINTER_MOTION_HINT_MASK |
-		     GDK_BUTTON1_MOTION_MASK |
-		     GDK_BUTTON_RELEASE_MASK),
+  gdk_pointer_grab (shell->canvas->window, FALSE,
+		    GDK_POINTER_MOTION_HINT_MASK |
+                    GDK_BUTTON1_MOTION_MASK |
+                    GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
 
   /*  First, transform the coordinates to gimp image space  */
@@ -401,7 +405,7 @@ gimp_color_picker_tool_button_press (GimpTool       *tool,
     }
 
   /*  Start drawing the colorpicker tool  */
-  gimp_draw_tool_start (GIMP_DRAW_TOOL(cp_tool), gdisp->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
 }
 
 static void
@@ -471,7 +475,10 @@ gimp_color_picker_tool_cursor_update (GimpTool       *tool,
 			              GdkEventMotion *mevent,
 			              GimpDisplay    *gdisp)
 {
-  gint x, y;
+  GimpDisplayShell *shell;
+  gint              x, y;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
 			       FALSE, FALSE);
@@ -485,15 +492,17 @@ gimp_color_picker_tool_cursor_update (GimpTool       *tool,
       x > 0 && x < gdisp->gimage->width &&
       y > 0 && y < gdisp->gimage->height)
     {
-      gdisplay_install_tool_cursor (gdisp, GIMP_COLOR_PICKER_CURSOR,
-				    GIMP_COLOR_PICKER_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_NONE);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_COLOR_PICKER_CURSOR,
+                                              GIMP_COLOR_PICKER_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_NONE);
     }
   else
     {
-      gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR,
-				    GIMP_COLOR_PICKER_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_NONE);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_BAD_CURSOR,
+                                              GIMP_COLOR_PICKER_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_NONE);
     }
 }
 

@@ -33,6 +33,7 @@
 #include "core/gimpunit.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "widgets/gimppreview.h"
 
@@ -348,9 +349,6 @@ info_window_create (GimpDisplay *gdisp)
 			 iwd->visual_class_str);
   info_dialog_add_label (info_win, _("Visual Depth:"),
 			 iwd->visual_depth_str);
-  /*  update the fields  */
-  /*gdisp->window_info_dialog = info_win;*/
-  info_window_update (gdisp);
 
   /*  Add extra tabs  */
   info_window_create_extended (info_win, gdisp->gimage->gimp);
@@ -359,6 +357,9 @@ info_window_create (GimpDisplay *gdisp)
   g_signal_connect (G_OBJECT (gdisp->gimage), "name_changed",
 		    G_CALLBACK (info_window_image_renamed_callback),
 		    info_win);
+
+  /*  update the fields  */
+  info_window_update (gdisp);
 
   return info_win;
 }
@@ -454,10 +455,12 @@ info_window_update_extended (GimpDisplay *gdisp,
   gchar          buf[32];
   guchar        *color;
   GimpImageType  sample_type;
-  InfoDialog    *info_win     = gdisp->window_info_dialog;
+  InfoDialog    *info_win;
   gboolean       force_update = FALSE;
   gint           i;
  
+  info_win = GIMP_DISPLAY_SHELL (gdisp->shell)->info_dialog;
+
   if (! info_win && info_window_auto != NULL)
     info_win = info_window_auto;
 
@@ -591,7 +594,9 @@ info_window_update (GimpDisplay *gdisp)
   gdouble      unit_factor;
   gint         unit_digits;
   gchar        format_buf[32];
-  InfoDialog  *info_win = gdisp->window_info_dialog;
+  InfoDialog  *info_win;
+
+  info_win = GIMP_DISPLAY_SHELL (gdisp->shell)->info_dialog;
 
   if (! info_win && info_window_auto != NULL)
     info_win = info_window_auto;

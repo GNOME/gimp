@@ -37,6 +37,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpcroptool.h"
 #include "gimpdrawtool.h"
@@ -301,14 +302,16 @@ gimp_crop_tool_button_press (GimpTool       *tool,
 			     GdkEventButton *bevent,
 			     GimpDisplay    *gdisp)
 {
-  GimpCropTool *crop;
-  GimpDrawTool *draw;
+  GimpCropTool     *crop;
+  GimpDrawTool     *draw;
+  GimpDisplayShell *shell;
   
   crop = GIMP_CROP_TOOL (tool);
   draw = GIMP_DRAW_TOOL (tool);
-  
-  if (tool->state == INACTIVE ||
-      gdisp != tool->gdisp)
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  if (tool->state == INACTIVE || gdisp != tool->gdisp)
     {
       crop->function = CREATING;
     }
@@ -365,8 +368,9 @@ gimp_crop_tool_button_press (GimpTool       *tool,
   crop->lastx = crop->startx;
   crop->lasty = crop->starty;
 
-  gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK |
+  gdk_pointer_grab (shell->canvas->window, FALSE,
+		    GDK_POINTER_MOTION_HINT_MASK |
+                    GDK_BUTTON1_MOTION_MASK |
 		    GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
 
@@ -378,14 +382,17 @@ gimp_crop_tool_button_release (GimpTool       *tool,
 			       GdkEventButton *bevent,
 			       GimpDisplay    *gdisp)
 {
-  GimpCropTool *crop;
+  GimpCropTool     *crop;
+  GimpDisplayShell *shell;
 
   crop = GIMP_CROP_TOOL (tool);
-  
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
 
-  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), crop->context_id);
+  gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), crop->context_id);
 
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
@@ -413,18 +420,21 @@ gimp_crop_tool_motion (GimpTool       *tool,
 		       GdkEventMotion *mevent,
 		       GimpDisplay    *gdisp)
 {
-  GimpCropTool *crop;
-  GimpDrawTool *draw;
-  GimpLayer    *layer;
-  gint          x1, y1, x2, y2;
-  gint          curx, cury;
-  gint          inc_x, inc_y;
-  gchar         size[STATUSBAR_SIZE];
-  gint          min_x, min_y, max_x, max_y; 
+  GimpCropTool     *crop;
+  GimpDrawTool     *draw;
+  GimpDisplayShell *shell;
+  GimpLayer        *layer;
+  gint              x1, y1, x2, y2;
+  gint              curx, cury;
+  gint              inc_x, inc_y;
+  gchar             size[STATUSBAR_SIZE];
+  gint              min_x, min_y, max_x, max_y; 
 
   crop = GIMP_CROP_TOOL (tool);
   draw = GIMP_DRAW_TOOL (tool);
-  
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
   /*  This is the only case when the motion events should be ignored--
       we're just waiting for the button release event to crop the image  */
   if (crop->function == CROPPING)
@@ -530,10 +540,10 @@ gimp_crop_tool_motion (GimpTool       *tool,
   if (crop->function == CREATING || 
       crop->function == RESIZING_LEFT || crop->function == RESIZING_RIGHT)
     {
-      gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), crop->context_id);
+      gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), crop->context_id);
       if (gdisp->dot_for_dot)
 	{
-	  g_snprintf (size, STATUSBAR_SIZE, gdisp->cursor_format_str,
+	  g_snprintf (size, STATUSBAR_SIZE, shell->cursor_format_str,
 		      _("Crop: "), 
 		      (crop->tx2 - crop->tx1), " x ", (crop->ty2 - crop->ty1));
 	}
@@ -541,7 +551,7 @@ gimp_crop_tool_motion (GimpTool       *tool,
 	{
 	  gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
 	  
-	  g_snprintf (size, STATUSBAR_SIZE, gdisp->cursor_format_str,
+	  g_snprintf (size, STATUSBAR_SIZE, shell->cursor_format_str,
 		      _("Crop: "), 
 		      (gdouble) (crop->tx2 - crop->tx1) * unit_factor /
 		      gdisp->gimage->xresolution,
@@ -549,7 +559,7 @@ gimp_crop_tool_motion (GimpTool       *tool,
 		      (gdouble) (crop->ty2 - crop->ty1) * unit_factor /
 		      gdisp->gimage->yresolution);
 	}
-      gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), crop->context_id,
+      gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar), crop->context_id,
 			  size);
     }
 
@@ -562,10 +572,13 @@ gimp_crop_tool_cursor_update (GimpTool       *tool,
 			      GimpDisplay    *gdisp)
 {
   GimpCropTool      *crop;
+  GimpDisplayShell  *shell;
   GdkCursorType      ctype     = GIMP_MOUSE_CURSOR;
   GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
   crop = GIMP_CROP_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if (tool->state == INACTIVE ||
       (tool->state == ACTIVE && tool->gdisp != gdisp))
@@ -598,11 +611,12 @@ gimp_crop_tool_cursor_update (GimpTool       *tool,
       ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
     }
 
-  gdisplay_install_tool_cursor (gdisp,
-				ctype,
-				crop_options->type == CROP_CROP ?
-				GIMP_CROP_TOOL_CURSOR : GIMP_RESIZE_TOOL_CURSOR,
-				cmodifier);
+  gimp_display_shell_install_tool_cursor (shell,
+                                          ctype,
+                                          crop_options->type == CROP_CROP ?
+                                          GIMP_CROP_TOOL_CURSOR :
+                                          GIMP_RESIZE_TOOL_CURSOR,
+                                          cmodifier);
 }
 
 static void
@@ -716,35 +730,46 @@ gimp_crop_tool_modifier_key (GimpTool    *tool,
 void
 gimp_crop_tool_draw (GimpDrawTool *draw)
 {
-  GimpCropTool *crop;
-  GimpTool     *tool;
+  GimpCropTool     *crop;
+  GimpTool         *tool;
+  GimpDisplayShell *shell;
 
   crop = GIMP_CROP_TOOL (draw);
   tool = GIMP_TOOL (draw);
-  
+
+  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+
 #define SRW 10
 #define SRH 10
 
-  gdk_draw_line (draw->win, draw->gc,crop->x1, crop->y1, 
+  gdk_draw_line (draw->win, draw->gc,
+                 crop->x1, crop->y1, 
                  tool->gdisp->disp_width, crop->y1);
   gdk_draw_line (draw->win, draw->gc,
-		 crop->x1, crop->y1, crop->x1, tool->gdisp->disp_height);
+		 crop->x1, crop->y1,
+                 crop->x1, tool->gdisp->disp_height);
   gdk_draw_line (draw->win, draw->gc,
-		 crop->x2, crop->y2, 0, crop->y2);
+		 crop->x2, crop->y2,
+                 0, crop->y2);
   gdk_draw_line (draw->win, draw->gc,
-		 crop->x2, crop->y2, crop->x2, 0);
+		 crop->x2, crop->y2,
+                 crop->x2, 0);
 
   crop->srw = ((crop->x2 - crop->x1) < SRW) ? (crop->x2 - crop->x1) : SRW;
   crop->srh = ((crop->y2 - crop->y1) < SRH) ? (crop->y2 - crop->y1) : SRH;
 
-  gdk_draw_rectangle (draw->win, draw->gc, 1,
-		      crop->x1, crop->y1, crop->srw, crop->srh);
-  gdk_draw_rectangle (draw->win, draw->gc, 1,
-		      crop->x2 - crop->srw, crop->y2-crop->srh, crop->srw, crop->srh);
-  gdk_draw_rectangle (draw->win, draw->gc, 1,
-		      crop->x2 - crop->srw, crop->y1, crop->srw, crop->srh);
-  gdk_draw_rectangle (draw->win, draw->gc, 1,
-		      crop->x1, crop->y2-crop->srh, crop->srw, crop->srh);
+  gdk_draw_rectangle (draw->win, draw->gc, TRUE,
+		      crop->x1, crop->y1,
+                      crop->srw, crop->srh);
+  gdk_draw_rectangle (draw->win, draw->gc, TRUE,
+		      crop->x2 - crop->srw, crop->y2-crop->srh,
+                      crop->srw, crop->srh);
+  gdk_draw_rectangle (draw->win, draw->gc, TRUE,
+		      crop->x2 - crop->srw, crop->y1,
+                      crop->srw, crop->srh);
+  gdk_draw_rectangle (draw->win, draw->gc, TRUE,
+		      crop->x1, crop->y2-crop->srh,
+                      crop->srw, crop->srh);
 
 #undef SRW
 #undef SRH
@@ -769,7 +794,6 @@ crop_tool_crop_image (GimpImage *gimage,
 		   layer_only,
 		   crop_layers);
 
-  gdisplays_update_full (gimage);
   gdisplays_shrink_wrap (gimage);
 
   gdisplays_flush ();
@@ -779,10 +803,14 @@ static void
 crop_recalc (GimpTool     *tool,
 	     GimpCropTool *crop)
 {
-  gdisplay_transform_coords (tool->gdisp, crop->tx1, crop->ty1,
-			     &crop->x1, &crop->y1, FALSE);
-  gdisplay_transform_coords (tool->gdisp, crop->tx2, crop->ty2,
-			     &crop->x2, &crop->y2, FALSE);
+  gdisplay_transform_coords (tool->gdisp,
+                             crop->tx1, crop->ty1,
+			     &crop->x1, &crop->y1,
+                             FALSE);
+  gdisplay_transform_coords (tool->gdisp,
+                             crop->tx2, crop->ty2,
+			     &crop->x2, &crop->y2,
+                             FALSE);
 }
 
 static void
@@ -790,9 +818,14 @@ crop_start (GimpTool     *tool,
 	    GimpCropTool *crop)
 {
   static GimpDisplay *old_gdisp = NULL;
-  GimpDrawTool *draw;
+
+  GimpDrawTool     *draw;
+  GimpDisplayShell *shell;
 
   draw = GIMP_DRAW_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+
   crop_recalc (tool, crop);
 
   if (! crop_info)
@@ -852,12 +885,12 @@ crop_start (GimpTool     *tool,
 
   /* initialize the statusbar display */
   crop->context_id =
-    gtk_statusbar_get_context_id (GTK_STATUSBAR (tool->gdisp->statusbar),
+    gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar),
 				  "crop");
-  gtk_statusbar_push (GTK_STATUSBAR (tool->gdisp->statusbar),
+  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),
 		      crop->context_id, _("Crop: 0 x 0"));
 
-  gimp_draw_tool_start(draw, tool->gdisp->canvas->window);
+  gimp_draw_tool_start (draw, shell->canvas->window);
 }
 
 

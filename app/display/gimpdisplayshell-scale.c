@@ -33,9 +33,9 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
-#include "gimpdisplay-ops.h"
 #include "gimpdisplay-scale.h"
 #include "gimpdisplay-scroll.h"
+#include "gimpdisplayshell.h"
 
 #include "gimprc.h"
 #include "nav_window.h"
@@ -51,21 +51,153 @@ static gdouble   img2real (GimpDisplay *gdisp,
 /*  public functions  */
 
 void
-gimp_display_scale (GimpDisplay  *gdisp,
-                    GimpZoomType  zoom_type)
+gimp_display_shell_scale_setup (GimpDisplayShell *shell)
+{
+  GtkRuler *hruler;
+  GtkRuler *vruler;
+  gfloat    sx, sy;
+  gfloat    stepx, stepy;
+  gint      image_width, image_height;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  image_width  = shell->gdisp->gimage->width;
+  image_height = shell->gdisp->gimage->height;
+
+  sx    = SCALEX (shell->gdisp, image_width);
+  sy    = SCALEY (shell->gdisp, image_height);
+  stepx = SCALEFACTOR_X (shell->gdisp);
+  stepy = SCALEFACTOR_Y (shell->gdisp);
+
+  shell->hsbdata->value          = shell->gdisp->offset_x;
+  shell->hsbdata->upper          = sx;
+  shell->hsbdata->page_size      = MIN (sx, shell->gdisp->disp_width);
+  shell->hsbdata->page_increment = shell->gdisp->disp_width / 2;
+  shell->hsbdata->step_increment = stepx;
+
+  shell->vsbdata->value          = shell->gdisp->offset_y;
+  shell->vsbdata->upper          = sy;
+  shell->vsbdata->page_size      = MIN (sy, shell->gdisp->disp_height);
+  shell->vsbdata->page_increment = shell->gdisp->disp_height / 2;
+  shell->vsbdata->step_increment = stepy;
+
+  gtk_adjustment_changed (shell->hsbdata);
+  gtk_adjustment_changed (shell->vsbdata);
+
+  hruler = GTK_RULER (shell->hrule);
+  vruler = GTK_RULER (shell->vrule);
+
+  hruler->lower    = 0;
+  hruler->upper    = img2real (shell->gdisp, TRUE,
+                               FUNSCALEX (shell->gdisp, shell->gdisp->disp_width));
+  hruler->max_size = img2real (shell->gdisp, TRUE,
+                               MAX (image_width, image_height));
+
+  vruler->lower    = 0;
+  vruler->upper    = img2real (shell->gdisp, FALSE,
+                               FUNSCALEY (shell->gdisp, shell->gdisp->disp_height));
+  vruler->max_size = img2real (shell->gdisp, FALSE,
+                               MAX (image_width, image_height));
+
+  if (sx < shell->gdisp->disp_width)
+    {
+      shell->gdisp->disp_xoffset = (shell->gdisp->disp_width - sx) / 2;
+
+      hruler->lower -= img2real (shell->gdisp, TRUE,
+                                 FUNSCALEX (shell->gdisp,
+                                            (gdouble) shell->gdisp->disp_xoffset));
+      hruler->upper -= img2real (shell->gdisp, TRUE,
+                                 FUNSCALEX (shell->gdisp,
+                                            (gdouble) shell->gdisp->disp_xoffset));
+    }
+  else
+    {
+      shell->gdisp->disp_xoffset = 0;
+
+      hruler->lower += img2real (shell->gdisp, TRUE,
+				 FUNSCALEX (shell->gdisp,
+                                            (gdouble) shell->gdisp->offset_x));
+      hruler->upper += img2real (shell->gdisp, TRUE,
+				 FUNSCALEX (shell->gdisp,
+                                            (gdouble) shell->gdisp->offset_x));
+    }
+
+  if (sy < shell->gdisp->disp_height)
+    {
+      shell->gdisp->disp_yoffset = (shell->gdisp->disp_height - sy) / 2;
+
+      vruler->lower -= img2real (shell->gdisp, FALSE,
+				 FUNSCALEY (shell->gdisp,
+                                            (gdouble) shell->gdisp->disp_yoffset));
+      vruler->upper -= img2real (shell->gdisp, FALSE,
+				 FUNSCALEY (shell->gdisp,
+                                            (gdouble) shell->gdisp->disp_yoffset));
+    }
+  else
+    {
+      shell->gdisp->disp_yoffset = 0;
+
+      vruler->lower += img2real (shell->gdisp, FALSE,
+				 FUNSCALEY (shell->gdisp,
+                                            (gdouble) shell->gdisp->offset_y));
+      vruler->upper += img2real (shell->gdisp, FALSE,
+				 FUNSCALEY (shell->gdisp,
+                                            (gdouble) shell->gdisp->offset_y));
+    }
+
+  gtk_widget_queue_draw (GTK_WIDGET (hruler));
+  gtk_widget_queue_draw (GTK_WIDGET (vruler));
+
+  nav_dialog_update_window_marker (shell->nav_dialog);
+
+  if (shell->nav_popup)
+    nav_dialog_update_window_marker (shell->nav_popup);
+
+#if 0
+  g_print ("offset_x:     %d\n"
+           "offset_y:     %d\n"
+           "disp_width:   %d\n"
+           "disp_height:  %d\n"
+           "disp_xoffset: %d\n"
+           "disp_yoffset: %d\n\n",
+           shell->gdisp->offset_x, shell->gdisp->offset_y,
+           shell->gdisp->disp_width, shell->gdisp->disp_height,
+           shell->gdisp->disp_xoffset, shell->gdisp->disp_yoffset);
+#endif
+}
+
+void
+gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
+                                          gboolean          dot_for_dot)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (dot_for_dot != shell->gdisp->dot_for_dot)
+    {
+      shell->gdisp->dot_for_dot = dot_for_dot;
+
+      gimp_display_shell_resize_cursor_label (shell);
+      gimp_display_shell_scale_resize (shell,
+                                       gimprc.allow_resize_windows, TRUE);
+    }
+}
+
+void
+gimp_display_shell_scale (GimpDisplayShell *shell,
+                          GimpZoomType      zoom_type)
 {
   guchar  scalesrc, scaledest;
   gdouble offset_x, offset_y;
   glong   sx, sy;
 
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   /* user zoom control, so resolution versions not needed -- austin */
-  scalesrc  = SCALESRC (gdisp);
-  scaledest = SCALEDEST (gdisp);
+  scalesrc  = SCALESRC (shell->gdisp);
+  scaledest = SCALEDEST (shell->gdisp);
 
-  offset_x = gdisp->offset_x + (gdisp->disp_width / 2.0);
-  offset_y = gdisp->offset_y + (gdisp->disp_height / 2.0);
+  offset_x = shell->gdisp->offset_x + (shell->gdisp->disp_width / 2.0);
+  offset_y = shell->gdisp->offset_y + (shell->gdisp->disp_height / 2.0);
 
   offset_x *= ((double) scalesrc / (double) scaledest);
   offset_y *= ((double) scalesrc / (double) scaledest);
@@ -106,161 +238,66 @@ gimp_display_scale (GimpDisplay  *gdisp,
       break;
     }
 
-  sx = (gdisp->gimage->width * scaledest) / scalesrc;
-  sy = (gdisp->gimage->height * scaledest) / scalesrc;
+  sx = (shell->gdisp->gimage->width  * scaledest) / scalesrc;
+  sy = (shell->gdisp->gimage->height * scaledest) / scalesrc;
 
   /*  The slider value is a short, so make sure we are within its
    *  range.  If we are trying to scale past it, then stop the scale
    */
   if (sx < 0xffff && sy < 0xffff)
     {
-      gdisp->scale = (scaledest << 8) + scalesrc;
+      shell->gdisp->scale = (scaledest << 8) + scalesrc;
 
       /*  set the offsets  */
-      offset_x *= ((double) scaledest / (double) scalesrc);
-      offset_y *= ((double) scaledest / (double) scalesrc);
+      offset_x *= ((gdouble) scaledest / (gdouble) scalesrc);
+      offset_y *= ((gdouble) scaledest / (gdouble) scalesrc);
 
-      gdisp->offset_x = (int) (offset_x - (gdisp->disp_width / 2));
-      gdisp->offset_y = (int) (offset_y - (gdisp->disp_height / 2));
+      shell->gdisp->offset_x = (gint) (offset_x - (shell->gdisp->disp_width / 2));
+      shell->gdisp->offset_y = (gint) (offset_y - (shell->gdisp->disp_height / 2));
 
       /*  resize the display  */
-      gimp_display_scale_resize (gdisp, gimprc.allow_resize_windows, TRUE);
+      gimp_display_shell_scale_resize (shell, gimprc.allow_resize_windows, TRUE);
     }
 }
 
 void
-gimp_display_scale_setup (GimpDisplay *gdisp)
+gimp_display_shell_scale_resize (GimpDisplayShell *shell,
+                                 gboolean          resize_window,
+                                 gboolean          redisplay)
 {
-  GtkRuler *hruler;
-  GtkRuler *vruler;
-  gfloat    sx, sy;
-  gfloat    stepx, stepy;
-
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
-
-  sx = SCALEX (gdisp, gdisp->gimage->width);
-  sy = SCALEY (gdisp, gdisp->gimage->height);
-  stepx = SCALEFACTOR_X (gdisp);
-  stepy = SCALEFACTOR_Y (gdisp);
-
-  gdisp->hsbdata->value = gdisp->offset_x;
-  gdisp->hsbdata->upper = sx;
-  gdisp->hsbdata->page_size = MIN (sx, gdisp->disp_width);
-  gdisp->hsbdata->page_increment = (gdisp->disp_width / 2);
-  gdisp->hsbdata->step_increment = stepx;
-
-  gdisp->vsbdata->value = gdisp->offset_y;
-  gdisp->vsbdata->upper = sy;
-  gdisp->vsbdata->page_size = MIN (sy, gdisp->disp_height);
-  gdisp->vsbdata->page_increment = (gdisp->disp_height / 2);
-  gdisp->vsbdata->step_increment = stepy;
-
-  gtk_adjustment_changed (gdisp->hsbdata);
-  gtk_adjustment_changed (gdisp->vsbdata);
-
-  hruler = GTK_RULER (gdisp->hrule);
-  vruler = GTK_RULER (gdisp->vrule);
-
-  hruler->lower = 0;
-  hruler->upper = img2real (gdisp, TRUE, FUNSCALEX (gdisp, gdisp->disp_width));
-  hruler->max_size = img2real (gdisp, TRUE, MAX (gdisp->gimage->width,
-						 gdisp->gimage->height));
-
-  vruler->lower = 0;
-  vruler->upper = img2real(gdisp, FALSE, FUNSCALEY(gdisp, gdisp->disp_height));
-  vruler->max_size = img2real (gdisp, FALSE, MAX (gdisp->gimage->width,
-						  gdisp->gimage->height));
-
-  if (sx < gdisp->disp_width)
-    {
-      gdisp->disp_xoffset = (gdisp->disp_width - sx) / 2;
-      hruler->lower -= img2real(gdisp, TRUE,
-				FUNSCALEX (gdisp, (double) gdisp->disp_xoffset));
-      hruler->upper -= img2real(gdisp, TRUE,
-				FUNSCALEX (gdisp, (double) gdisp->disp_xoffset));
-    }
-  else
-    {
-      gdisp->disp_xoffset = 0;
-      hruler->lower += img2real (gdisp, TRUE,
-				 FUNSCALEX (gdisp, (double) gdisp->offset_x));
-      hruler->upper += img2real (gdisp, TRUE,
-				 FUNSCALEX (gdisp, (double) gdisp->offset_x));
-    }
-
-  if (sy < gdisp->disp_height)
-    {
-      gdisp->disp_yoffset = (gdisp->disp_height - sy) / 2;
-      vruler->lower -= img2real(gdisp, FALSE,
-				FUNSCALEY (gdisp, (double) gdisp->disp_yoffset));
-      vruler->upper -= img2real(gdisp, FALSE,
-				FUNSCALEY (gdisp, (double) gdisp->disp_yoffset));
-    }
-  else
-    {
-      gdisp->disp_yoffset = 0;
-      vruler->lower += img2real (gdisp, FALSE,
-				 FUNSCALEY (gdisp, (double) gdisp->offset_y));
-      vruler->upper += img2real (gdisp, FALSE,
-				 FUNSCALEY (gdisp, (double) gdisp->offset_y));
-    }
-
-  gtk_widget_queue_draw (GTK_WIDGET (hruler));
-  gtk_widget_queue_draw (GTK_WIDGET (vruler));
-
-  nav_dialog_update_window_marker (gdisp->window_nav_dialog);
-
-  if (gdisp->nav_popup)
-    nav_dialog_update_window_marker (gdisp->nav_popup);
-}
-
-void
-gimp_display_scale_resize (GimpDisplay *gdisp,
-                           gboolean     resize_window,
-                           gboolean     redisplay)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   /* freeze the active tool */
-  tool_manager_control_active (gdisp->gimage->gimp, PAUSE, gdisp);
+  tool_manager_control_active (shell->gdisp->gimage->gimp, PAUSE,
+                               shell->gdisp);
 
   if (resize_window)
-    gdisplay_shrink_wrap (gdisp);
+    gimp_display_shell_shrink_wrap (shell);
 
-  gimp_display_scroll_clamp_offsets (gdisp);
-  gimp_display_scale_setup (gdisp);
+  gimp_display_shell_scroll_clamp_offsets (shell);
+  gimp_display_shell_scale_setup (shell);
 
   if (resize_window || redisplay)
     {
-      gdisplay_expose_full (gdisp);
+      gimp_display_shell_expose_full (shell);
       gdisplays_flush ();
+
       /* title may have changed if it includes the zoom ratio */
-      gdisplay_update_title (gdisp);
+      gimp_display_shell_update_title (shell);
     }
 
   /* re-enable the active tool */
-  tool_manager_control_active (gdisp->gimage->gimp, RESUME, gdisp);
+  tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
+                               shell->gdisp);
 }
 
 
 void
-gimp_display_scale_shrink_wrap (GimpDisplay *gdisp)
+gimp_display_shell_scale_shrink_wrap (GimpDisplayShell *shell)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  /* freeze the active tool */
-  tool_manager_control_active (gdisp->gimage->gimp, PAUSE, gdisp);
-
-  gdisplay_shrink_wrap (gdisp);
-
-  gimp_display_scroll_clamp_offsets (gdisp);
-  gimp_display_scale_setup (gdisp);
-
-  gdisplay_expose_full (gdisp);
-  gdisplays_flush ();
-
-  /* re-enable the active tool */
-  tool_manager_control_active (gdisp->gimage->gimp, RESUME, gdisp);
+  gimp_display_shell_scale_resize (shell, TRUE, TRUE);
 }
 
 

@@ -29,6 +29,7 @@
 #include "display/display-types.h"
 #include "procedural_db.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplay.h"
@@ -53,7 +54,6 @@ display_new_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpImage *gimage;
   GimpDisplay *gdisp = NULL;
-  guint scale = 0x101;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (gimage == NULL)
@@ -61,7 +61,9 @@ display_new_invoker (Gimp     *gimp,
 
   if (success)
     {
-      success = (gdisp = gdisplay_new (gimage, scale)) != NULL;
+      gdisp = (GimpDisplay *) gimp_create_display (gimp, gimage, 0x0101);
+    
+      success = (gdisp != NULL);
     }
 
   return_args = procedural_db_return_args (&display_new_proc, success);

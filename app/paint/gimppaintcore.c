@@ -48,6 +48,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpdrawtool.h"
 #include "gimpdodgeburntool.h"
@@ -315,16 +316,19 @@ gimp_paint_tool_button_press (GimpTool       *tool,
 			      GdkEventButton *bevent,
 			      GimpDisplay    *gdisp)
 {
-  GimpPaintTool *paint_tool;
-  GimpBrush    	*current_brush;
-  gboolean       draw_line;
-  gdouble        x, y;
-  GimpDrawable  *drawable;
+  GimpPaintTool    *paint_tool;
+  GimpDisplayShell *shell;
+  GimpBrush    	   *current_brush;
+  gboolean          draw_line;
+  gdouble           x, y;
+  GimpDrawable     *drawable;
 
   g_return_if_fail (gdisp != NULL);
   g_return_if_fail (tool != NULL);
 
   paint_tool = GIMP_PAINT_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gdisplay_untransform_coords_f (gdisp, (double) bevent->x, (double) bevent->y,
 				 &x, &y, TRUE);
@@ -349,7 +353,7 @@ gimp_paint_tool_button_press (GimpTool       *tool,
     {
       /* initialize the statusbar display */
       paint_tool->context_id =
-	gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "paint");
+	gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar), "paint");
     }
 
   /*  if this is a new image, reinit the core vals  */
@@ -411,12 +415,12 @@ gimp_paint_tool_button_press (GimpTool       *tool,
 
   /* add motion memory if perfectmouse is set */
   if (gimprc.perfectmouse != 0)
-    gdk_pointer_grab (gdisp->canvas->window, FALSE,
+    gdk_pointer_grab (shell->canvas->window, FALSE,
 		      GDK_BUTTON1_MOTION_MASK |
 		      GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);
   else
-    gdk_pointer_grab (gdisp->canvas->window, FALSE,
+    gdk_pointer_grab (shell->canvas->window, FALSE,
 		      GDK_POINTER_MOTION_HINT_MASK |
 		      GDK_BUTTON1_MOTION_MASK |
 		      GDK_BUTTON_RELEASE_MASK,
@@ -587,11 +591,12 @@ gimp_paint_tool_cursor_update (GimpTool       *tool,
 			       GdkEventMotion *mevent,
 			       GimpDisplay    *gdisp)
 {
-  GimpLayer     *layer;
-  GimpPaintTool *paint_tool;
-  GimpDrawTool  *draw_tool;
-  gint           x, y;
-  gchar          status_str[STATUSBAR_SIZE];
+  GimpPaintTool    *paint_tool;
+  GimpDrawTool     *draw_tool;
+  GimpDisplayShell *shell;
+  GimpLayer        *layer;
+  gint              x, y;
+  gchar             status_str[STATUSBAR_SIZE];
 
   GdkCursorType      ctype     = GIMP_MOUSE_CURSOR;
   GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
@@ -600,6 +605,8 @@ gimp_paint_tool_cursor_update (GimpTool       *tool,
   paint_tool = GIMP_PAINT_TOOL (tool);
   draw_tool  = GIMP_DRAW_TOOL (tool);
 
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
   /*  undraw the current tool  */
   gimp_draw_tool_pause (draw_tool);
 
@@ -607,11 +614,11 @@ gimp_paint_tool_cursor_update (GimpTool       *tool,
     {
       /* initialize the statusbar display */
       paint_tool->context_id =
-	gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "paint");
+	gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar), "paint");
     }
 
   if (paint_tool->context_id)
-    gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), paint_tool->context_id);
+    gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), paint_tool->context_id);
 
 #ifdef __GNUC__
 #warning this doesnt belong here
@@ -707,12 +714,12 @@ gimp_paint_tool_cursor_update (GimpTool       *tool,
 	      g_free (format_str);
 	    }
 
-	  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
+	  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),
 			      paint_tool->context_id, status_str);
 
 	  if (draw_tool->gc == NULL)
 	    {
-	      gimp_draw_tool_start (draw_tool, gdisp->canvas->window);
+	      gimp_draw_tool_start (draw_tool, shell->canvas->window);
 	    }
 	  else
 	    {
@@ -752,32 +759,36 @@ gimp_paint_tool_cursor_update (GimpTool       *tool,
 	    }
 	}
 
-      gdisplay_install_tool_cursor (gdisp,
-				    ctype,
-				    ctype == GIMP_COLOR_PICKER_CURSOR ?
-				    GIMP_COLOR_PICKER_TOOL_CURSOR :
-				    ctoggle ?
-				    tool->toggle_cursor : tool->tool_cursor,
-				    cmodifier);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              ctype,
+                                              ctype == GIMP_COLOR_PICKER_CURSOR ?
+                                              GIMP_COLOR_PICKER_TOOL_CURSOR :
+                                              ctoggle ?
+                                              tool->toggle_cursor : tool->tool_cursor,
+                                              cmodifier);
     }
 }
 
 static void
 gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpDisplay   *gdisp;
-  GimpPaintTool *paint_tool;
-  GimpTool      *tool;
-  gint           tx1, ty1, tx2, ty2;
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  GimpPaintTool    *paint_tool;
+  GimpTool         *tool;
+  gint              tx1, ty1, tx2, ty2;
 
   paint_tool = GIMP_PAINT_TOOL (draw_tool);
   tool       = GIMP_TOOL (draw_tool);
 
   /* if shift was never used, draw_tool->gc is NULL
-     and we don't care about a redraw                       */
-  if (draw_tool->gc != NULL)
+   * and we don't care about a redraw
+   */
+  if (draw_tool->gc)
     {
       gdisp = tool->gdisp;
+
+      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
       gdisplay_transform_coords (gdisp, paint_tool->lastx, paint_tool->lasty,
 				 &tx1, &ty1, 1);
@@ -801,24 +812,24 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 	  ty2 += offy;
 
 	  /*  Draw start target  */
-	  gdk_draw_line (gdisp->canvas->window, draw_tool->gc,
-			tx1 - (TARGET_WIDTH >> 1), ty1,
-			tx1 + (TARGET_WIDTH >> 1), ty1);
-	  gdk_draw_line (gdisp->canvas->window, draw_tool->gc,
-			tx1, ty1 - (TARGET_HEIGHT >> 1),
-			tx1, ty1 + (TARGET_HEIGHT >> 1));
+	  gdk_draw_line (shell->canvas->window, draw_tool->gc,
+                         tx1 - (TARGET_WIDTH >> 1), ty1,
+                         tx1 + (TARGET_WIDTH >> 1), ty1);
+	  gdk_draw_line (shell->canvas->window, draw_tool->gc,
+                         tx1, ty1 - (TARGET_HEIGHT >> 1),
+                         tx1, ty1 + (TARGET_HEIGHT >> 1));
 
 	  /*  Draw end target  */
-	  gdk_draw_line (gdisp->canvas->window, draw_tool->gc,
-			tx2 - (TARGET_WIDTH >> 1), ty2,
-			tx2 + (TARGET_WIDTH >> 1), ty2);
-	  gdk_draw_line (gdisp->canvas->window, draw_tool->gc,
-			tx2, ty2 - (TARGET_HEIGHT >> 1),
-			tx2, ty2 + (TARGET_HEIGHT >> 1));
+	  gdk_draw_line (shell->canvas->window, draw_tool->gc,
+                         tx2 - (TARGET_WIDTH >> 1), ty2,
+                         tx2 + (TARGET_WIDTH >> 1), ty2);
+	  gdk_draw_line (shell->canvas->window, draw_tool->gc,
+                         tx2, ty2 - (TARGET_HEIGHT >> 1),
+                         tx2, ty2 + (TARGET_HEIGHT >> 1));
 
 	  /*  Draw the line between the start and end coords  */
-	  gdk_draw_line (gdisp->canvas->window, draw_tool->gc,
-			tx1, ty1, tx2, ty2);
+	  gdk_draw_line (shell->canvas->window, draw_tool->gc,
+                         tx1, ty1, tx2, ty2);
 	}
     }
   return;
@@ -1735,13 +1746,16 @@ gimp_paint_tool_paste (GimpPaintTool        *paint_tool,
   paint_tool->x2 = MAX (paint_tool->x2, (canvas_buf->x + canvas_buf->width));
   paint_tool->y2 = MAX (paint_tool->y2, (canvas_buf->y + canvas_buf->height));
 
-  /*  Update the gimage--it is important to call gdisplays_update_area
+  /*  Update the gimage--it is important to call gimp_image_update
    *  instead of drawable_update because we don't want the drawable
    *  preview to be constantly invalidated
    */
   gimp_drawable_offsets (drawable, &offx, &offy);
-  gdisplays_update_area (gimage, canvas_buf->x + offx, canvas_buf->y + offy,
-			 canvas_buf->width, canvas_buf->height);
+  gimp_image_update (gimage,
+                     canvas_buf->x + offx,
+                     canvas_buf->y + offy,
+                     canvas_buf->width,
+                     canvas_buf->height);
 }
 
 /* This works similarly to gimp_paint_tool_paste. However, instead of combining
@@ -1833,13 +1847,16 @@ gimp_paint_tool_replace (GimpPaintTool        *paint_tool,
   paint_tool->x2 = MAX (paint_tool->x2, (canvas_buf->x + canvas_buf->width));
   paint_tool->y2 = MAX (paint_tool->y2, (canvas_buf->y + canvas_buf->height));
 
-  /*  Update the gimage--it is important to call gdisplays_update_area
+  /*  Update the gimage--it is important to call gimp_image_update
    *  instead of drawable_update because we don't want the drawable
    *  preview to be constantly invalidated
    */
   gimp_drawable_offsets (drawable, &offx, &offy);
-  gdisplays_update_area (gimage, canvas_buf->x + offx, canvas_buf->y + offy,
-			 canvas_buf->width, canvas_buf->height);
+  gimp_image_update (gimage,
+                     canvas_buf->x + offx,
+                     canvas_buf->y + offy,
+                     canvas_buf->width,
+                     canvas_buf->height);
 }
 
 static void

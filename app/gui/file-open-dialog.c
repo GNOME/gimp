@@ -206,8 +206,9 @@ file_open_with_proc_and_display (Gimp          *gimp,
       /* set the image to clean  */
       gimp_image_clean_all (gimage);
 
-      /* display the image */
-      gimp_create_display (gimage->gimp, gimage);
+      gimp_create_display (gimage->gimp, gimage, 0x0101);
+
+      g_object_unref (G_OBJECT (gimage));
 
       absolute = file_open_absolute_filename (gimp, filename);
 

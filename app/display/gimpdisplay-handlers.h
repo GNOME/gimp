@@ -16,22 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMPDISPLAY_OPS_H__
-#define __GIMPDISPLAY_OPS_H__
+#ifndef __GIMP_DISPLAY_HANDLERS_H__
+#define __GIMP_DISPLAY_HANDLERS_H__
 
 
-gulong  gdisplay_black_pixel        (GimpDisplay *gdisp);
-gulong  gdisplay_gray_pixel         (GimpDisplay *gdisp);
-gulong  gdisplay_white_pixel        (GimpDisplay *gdisp);
-gulong  gdisplay_color_pixel        (GimpDisplay *gdisp);
-
-void    gdisplay_xserver_resolution (gdouble     *xres,
-				     gdouble     *yres);
-
-void    gdisplay_new_view           (GimpDisplay *gdisp);
-void    gdisplay_close_window       (GimpDisplay *gdisp,
-				     gboolean     kill_it);
-void    gdisplay_shrink_wrap        (GimpDisplay *gdisp);
+void   gimp_display_connect    (GimpDisplay *gdisp,
+                                GimpImage   *gimage);
+void   gimp_display_disconnect (GimpDisplay *gdisp);
 
 
-#endif  /* __GIMPDISPLAY_OPS_H__ */
+#endif /*  __GIMP_DISPLAY_HANDLERS_H__  */

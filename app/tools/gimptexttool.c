@@ -43,6 +43,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimptexttool.h"
@@ -387,8 +388,11 @@ text_tool_cursor_update (GimpTool       *tool,
 			 GdkEventMotion *mevent,
 			 GimpDisplay    *gdisp)
 {
-  GimpLayer *layer;
-  gint x, y;
+  GimpDisplayShell *shell;
+  GimpLayer        *layer;
+  gint              x, y;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
@@ -397,15 +401,17 @@ text_tool_cursor_update (GimpTool       *tool,
     /* if there is a floating selection, and this aint it ... */
     if (gimp_layer_is_floating_sel (layer))
       {
-	gdisplay_install_tool_cursor (gdisp, GDK_FLEUR,
-				      GIMP_MOVE_TOOL_CURSOR,
-				      GIMP_CURSOR_MODIFIER_NONE);
+	gimp_display_shell_install_tool_cursor (shell,
+                                                GDK_FLEUR,
+                                                GIMP_MOVE_TOOL_CURSOR,
+                                                GIMP_CURSOR_MODIFIER_NONE);
 	return;
       }
 
-  gdisplay_install_tool_cursor (gdisp, GDK_XTERM,
-				GIMP_TEXT_TOOL_CURSOR,
-				GIMP_CURSOR_MODIFIER_NONE);
+  gimp_display_shell_install_tool_cursor (shell,
+                                          GDK_XTERM,
+                                          GIMP_TEXT_TOOL_CURSOR,
+                                          GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void

@@ -25,6 +25,7 @@
 #include "tools-types.h"
  
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpdrawtool.h"
 
@@ -235,14 +236,19 @@ gimp_draw_tool_pause (GimpDrawTool *core)
 
 void
 gimp_draw_tool_draw_handle (GimpDrawTool *draw_tool, 
-			    gdouble x,
-			    gdouble y,
-			    gint size,
-			    gint type)
+			    gdouble       x,
+			    gdouble       y,
+			    gint          size,
+			    gint          type)
 {
-  GimpTool *tool = GIMP_TOOL (draw_tool);
-  gdouble hx, hy;
-  gint filled;
+  GimpTool         *tool;
+  GimpDisplayShell *shell;
+  gdouble           hx, hy;
+  gint              filled;
+
+  tool = GIMP_TOOL (draw_tool);
+
+  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
   gdisplay_transform_coords_f (tool->gdisp, x, y, &hx, &hy, TRUE);
 
@@ -252,49 +258,61 @@ gimp_draw_tool_draw_handle (GimpDrawTool *draw_tool,
   filled = type % 2;
 
   if (type < 2)
-    gdk_draw_rectangle (tool->gdisp->canvas->window,
-			draw_tool->gc, filled,
-			hx - size/2, hy - size/2,
-			size, size); 
+    {
+      gdk_draw_rectangle (shell->canvas->window,
+                          draw_tool->gc, filled,
+                          hx - size / 2, hy - size / 2,
+                          size, size);
+    }
   else
-    gdk_draw_arc       (tool->gdisp->canvas->window,
-			draw_tool->gc, filled,
-			hx - size/2, hy - size/2,
-			size, size, 0, 360*64); 
-
+    {
+      gdk_draw_arc (shell->canvas->window,
+                    draw_tool->gc, filled,
+                    hx - size / 2, hy - size / 2,
+                    size, size,
+                    0, 360 * 64);
+    }
 }
 
 
 void
 gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool, 
-			   gdouble *points,
-			   gint npoints,
-			   gint filled)
+			   gdouble      *points,
+			   gint          npoints,
+			   gint          filled)
 {
-  GimpTool *tool = GIMP_TOOL (draw_tool);
-  GdkPoint *coords = g_new (GdkPoint, npoints);
+  GimpTool         *tool;
+  GimpDisplayShell *shell;
+  GdkPoint         *coords;
+  gint              i;
+  gdouble           sx, sy;
 
-  gint i;
-  gdouble sx, sy;
+  tool = GIMP_TOOL (draw_tool);
 
-  for (i=0; i < npoints ; i++)
-  {
-    gdisplay_transform_coords_f (tool->gdisp, points[i*2], points[i*2+1],
-				 &sx, &sy, TRUE);
-    coords[i].x = ROUND (sx);
-    coords[i].y = ROUND (sy);
-  }
+  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
+  coords = g_new (GdkPoint, npoints);
+
+  for (i = 0; i < npoints ; i++)
+    {
+      gdisplay_transform_coords_f (tool->gdisp, points[i*2], points[i*2+1],
+                                   &sx, &sy, TRUE);
+      coords[i].x = ROUND (sx);
+      coords[i].y = ROUND (sy);
+    }
 
   if (filled)
-    gdk_draw_polygon (tool->gdisp->canvas->window,
-	              draw_tool->gc, TRUE,
-		      coords, npoints);
+    {
+      gdk_draw_polygon (shell->canvas->window,
+                        draw_tool->gc, TRUE,
+                        coords, npoints);
+    }
   else
-    gdk_draw_lines (tool->gdisp->canvas->window,
-	            draw_tool->gc,
-		    coords, npoints);
+    {
+      gdk_draw_lines (shell->canvas->window,
+                      draw_tool->gc,
+                      coords, npoints);
+    }
 
   g_free (coords);
-
 }

@@ -37,6 +37,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimprectselecttool.h"
@@ -200,6 +201,7 @@ gimp_rect_select_tool_button_press (GimpTool       *tool,
 {
   GimpRectSelectTool *rect_sel;
   GimpSelectionTool  *sel_tool;
+  GimpDisplayShell   *shell;
   SelectionOptions   *sel_options;
   gchar               select_mode[STATUSBAR_SIZE];
   gint                x, y;
@@ -208,6 +210,8 @@ gimp_rect_select_tool_button_press (GimpTool       *tool,
 
   rect_sel = GIMP_RECT_SELECT_TOOL (tool);
   sel_tool = GIMP_SELECTION_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
@@ -248,7 +252,7 @@ gimp_rect_select_tool_button_press (GimpTool       *tool,
 
   rect_sel->center = FALSE;
 
-  gdk_pointer_grab (gdisp->canvas->window, FALSE,
+  gdk_pointer_grab (shell->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK |
 		    GDK_BUTTON1_MOTION_MASK |
 		    GDK_BUTTON_RELEASE_MASK,
@@ -271,7 +275,7 @@ gimp_rect_select_tool_button_press (GimpTool       *tool,
 
   /* initialize the statusbar display */
   rect_sel->context_id =
-    gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "selection");
+    gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar), "selection");
 
   switch (sel_tool->op)
     {
@@ -291,11 +295,10 @@ gimp_rect_select_tool_button_press (GimpTool       *tool,
       break;
     }
 
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
+  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),
 		      rect_sel->context_id, select_mode);
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
-                        gdisp->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
 }
 
 static void
@@ -305,6 +308,7 @@ gimp_rect_select_tool_button_release (GimpTool       *tool,
 {
   GimpRectSelectTool *rect_sel;
   GimpSelectionTool  *sel_tool;
+  GimpDisplayShell   *shell;
   gint                x1, y1;
   gint                x2, y2;
   gint                w, h;
@@ -312,10 +316,12 @@ gimp_rect_select_tool_button_release (GimpTool       *tool,
   rect_sel = GIMP_RECT_SELECT_TOOL (tool);
   sel_tool = GIMP_SELECTION_TOOL (tool);
 
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
 
-  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id);
+  gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), rect_sel->context_id);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
@@ -361,6 +367,7 @@ gimp_rect_select_tool_motion (GimpTool       *tool,
 {
   GimpRectSelectTool *rect_sel;
   GimpSelectionTool  *sel_tool;
+  GimpDisplayShell   *shell;
   gchar               size[STATUSBAR_SIZE];
   gint                ox, oy;
   gint                x, y;
@@ -370,6 +377,8 @@ gimp_rect_select_tool_motion (GimpTool       *tool,
 
   rect_sel = GIMP_RECT_SELECT_TOOL (tool);
   sel_tool = GIMP_SELECTION_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  needed for immediate cursor update on modifier event  */
   sel_tool->current_x = mevent->x;
@@ -503,18 +512,18 @@ gimp_rect_select_tool_motion (GimpTool       *tool,
       rect_sel->center = FALSE;
     }
 
-  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id);
+  gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), rect_sel->context_id);
 
   if (gdisp->dot_for_dot)
     {
-      g_snprintf (size, STATUSBAR_SIZE, gdisp->cursor_format_str,
+      g_snprintf (size, STATUSBAR_SIZE, shell->cursor_format_str,
 		  _("Selection: "), abs(rect_sel->w), " x ", abs(rect_sel->h));
     }
   else /* show real world units */
     {
       gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
 
-      g_snprintf (size, STATUSBAR_SIZE, gdisp->cursor_format_str,
+      g_snprintf (size, STATUSBAR_SIZE, shell->cursor_format_str,
 		  _("Selection: "),
 		  (gdouble) abs(rect_sel->w) * unit_factor /
 		  gdisp->gimage->xresolution,
@@ -523,7 +532,7 @@ gimp_rect_select_tool_motion (GimpTool       *tool,
 		  gdisp->gimage->yresolution);
     }
 
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id,
+  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar), rect_sel->context_id,
 		      size);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));

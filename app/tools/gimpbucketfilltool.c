@@ -44,6 +44,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpbucketfilltool.h"
 #include "paint_options.h"
@@ -303,9 +304,12 @@ gimp_bucket_fill_tool_button_press (GimpTool       *tool,
 				    GimpDisplay    *gdisp)
 {
   GimpBucketFillTool *bucket_tool;
+  GimpDisplayShell   *shell;
   gboolean            use_offsets;
 
   bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   use_offsets = (bucket_options->sample_merged) ? FALSE : TRUE;
 
@@ -314,7 +318,7 @@ gimp_bucket_fill_tool_button_press (GimpTool       *tool,
 			       &bucket_tool->target_y, FALSE, use_offsets);
 
   /*  Make the tool active and set the gdisplay which owns it  */
-  gdk_pointer_grab (gdisp->canvas->window, FALSE,
+  gdk_pointer_grab (shell->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK |
 		    GDK_BUTTON1_MOTION_MASK |
 		    GDK_BUTTON_RELEASE_MASK,
@@ -376,11 +380,14 @@ gimp_bucket_fill_tool_cursor_update (GimpTool       *tool,
 				     GdkEventMotion *mevent,
 				     GimpDisplay    *gdisp)
 {
+  GimpDisplayShell   *shell;
   GimpLayer          *layer;
   GdkCursorType       ctype     = GDK_TOP_LEFT_ARROW;
   GimpCursorModifier  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
   gint                x, y;
   gint                off_x, off_y;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
@@ -417,10 +424,10 @@ gimp_bucket_fill_tool_cursor_update (GimpTool       *tool,
 	}
     }
 
-  gdisplay_install_tool_cursor (gdisp,
-				ctype,
-				GIMP_BUCKET_FILL_TOOL_CURSOR,
-				cmodifier);
+  gimp_display_shell_install_tool_cursor (shell,
+                                          ctype,
+                                          GIMP_BUCKET_FILL_TOOL_CURSOR,
+                                          cmodifier);
 }
 
 static void

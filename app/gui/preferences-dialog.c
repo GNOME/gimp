@@ -38,11 +38,11 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplay-ops.h"
 #include "display/gimpdisplay-render.h"
 
 #include "tools/tool_manager.h"
 
+#include "gui.h"
 #include "layer-select.h"
 #include "resolution-calibrate-dialog.h"
 #include "session.h"
@@ -837,8 +837,8 @@ prefs_save_callback (GtkWidget *widget,
 
 
   if (gimprc.using_xserver_resolution)
-    gdisplay_xserver_resolution (&gimprc.monitor_xres,
-				 &gimprc.monitor_yres);
+    gui_get_screen_resolution (&gimprc.monitor_xres,
+                               &gimprc.monitor_yres);
 
   /*  restore variables which must not change  */
   base_config->stingy_memory_use = save_stingy_memory_use;
@@ -1256,8 +1256,8 @@ prefs_res_source_callback (GtkWidget *widget,
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      gdisplay_xserver_resolution (&gimprc.monitor_xres,
-				   &gimprc.monitor_yres);
+      gui_get_screen_resolution (&gimprc.monitor_xres,
+                                 &gimprc.monitor_yres);
       gimprc.using_xserver_resolution = TRUE;
     }
   else
@@ -2561,7 +2561,7 @@ preferences_dialog_create (Gimp *gimp)
     gdouble  xres, yres;
     gchar   *str;
 
-    gdisplay_xserver_resolution (&xres, &yres);
+    gui_get_screen_resolution (&xres, &yres);
 
     str = g_strdup_printf (_("(Currently %d x %d dpi)"),
 			   ROUND (xres), ROUND (yres));

@@ -268,7 +268,9 @@ image_duplicate_cmd_callback (GtkWidget *widget,
 
   new_gimage = gimp_image_duplicate (gimage);
 
-  gimp_create_display (new_gimage->gimp, new_gimage);
+  gimp_create_display (new_gimage->gimp, new_gimage, 0x0101);
+
+  g_object_unref (G_OBJECT (new_gimage));
 }
 
 
@@ -375,7 +377,6 @@ static void
 image_scale_implement (ImageResize *image_scale)
 {
   GimpImage *gimage        = NULL;
-  gboolean   rulers_flush  = FALSE;
   gboolean   display_flush = FALSE;  /* this is a bit ugly: 
 					we hijack the flush variable 
 					to check if an undo_group was 
@@ -395,20 +396,16 @@ image_scale_implement (ImageResize *image_scale)
 				 image_scale->resize->resolution_x,
 				 image_scale->resize->resolution_y);
 
-      rulers_flush = TRUE;
       display_flush = TRUE;
     }
 
   if (image_scale->resize->unit != gimage->unit)
     {
-      if (!display_flush)
+      if (! display_flush)
 	undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
 
       gimp_image_set_unit (gimage, image_scale->resize->unit);
-      gdisplays_setup_scale (gimage);
-      gdisplays_resize_cursor_label (gimage);
 
-      rulers_flush = TRUE;
       display_flush = TRUE;
     }
 
@@ -418,7 +415,7 @@ image_scale_implement (ImageResize *image_scale)
       if (image_scale->resize->width > 0 &&
 	  image_scale->resize->height > 0) 
 	{
-	  if (!display_flush)
+	  if (! display_flush)
 	    undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
 
 	  gimp_image_scale (gimage,
@@ -435,12 +432,6 @@ image_scale_implement (ImageResize *image_scale)
 	}
     }
 
-  if (rulers_flush)
-    {
-      gdisplays_setup_scale (gimage);
-      gdisplays_resize_cursor_label (gimage);
-    }
-      
   if (display_flush)
     {
       undo_push_group_end (gimage);

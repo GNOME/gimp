@@ -271,7 +271,6 @@ gimp_component_list_item_eye_toggled (GtkWidget *widget,
 					 gimp_component_list_item_visibility_changed,
 					 list_item);
 
-      gdisplays_update_area (gimage, 0, 0, gimage->width, gimage->height);
       gdisplays_flush ();
     }
 }

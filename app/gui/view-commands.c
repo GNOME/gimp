@@ -30,9 +30,9 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplay-ops.h"
 #include "display/gimpdisplay-scale.h"
 #include "display/gimpdisplay-selection.h"
+#include "display/gimpdisplayshell.h"
 
 #include "info-dialog.h"
 #include "info-window.h"
@@ -55,7 +55,7 @@ view_zoomin_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  gimp_display_scale (gdisp, GIMP_ZOOM_IN);
+  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (gdisp->shell), GIMP_ZOOM_IN);
 }
 
 void
@@ -65,7 +65,7 @@ view_zoomout_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  gimp_display_scale (gdisp, GIMP_ZOOM_OUT);
+  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (gdisp->shell), GIMP_ZOOM_OUT);
 }
 
 void
@@ -76,7 +76,7 @@ view_zoom_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  gimp_display_scale (gdisp, action);
+  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (gdisp->shell), action);
 }
 
 void
@@ -86,23 +86,26 @@ view_dot_for_dot_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  gdisplay_set_dot_for_dot (gdisp, GTK_CHECK_MENU_ITEM (widget)->active);
+  gimp_display_shell_scale_set_dot_for_dot (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                            GTK_CHECK_MENU_ITEM (widget)->active);
 }
 
 void
 view_info_window_cmd_callback (GtkWidget *widget,
 			       gpointer   data)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
   return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if (! gimprc.info_window_follows_mouse)
     {
-      if (! gdisp->window_info_dialog)
-	gdisp->window_info_dialog = info_window_create (gdisp);
+      if (! shell->info_dialog)
+	shell->info_dialog = info_window_create (gdisp);
 
-      info_window_update (gdisp);
-      info_dialog_popup (gdisp->window_info_dialog);
+      info_dialog_popup (shell->info_dialog);
     }
   else
     {
@@ -114,15 +117,18 @@ void
 view_nav_window_cmd_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
   return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if (gimprc.nav_window_per_display)
     {
-      if (! gdisp->window_nav_dialog)
-	gdisp->window_nav_dialog = nav_dialog_create (gdisp);
+      if (! shell->nav_dialog)
+	shell->nav_dialog = nav_dialog_create (gdisp);
 
-      nav_dialog_popup (gdisp->window_nav_dialog);
+      nav_dialog_popup (shell->nav_dialog);
     }
   else
     {
@@ -154,29 +160,32 @@ void
 view_toggle_rulers_cmd_callback (GtkWidget *widget,
 				 gpointer   data)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
   return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if (! GTK_CHECK_MENU_ITEM (widget)->active)
     {
-      if (GTK_WIDGET_VISIBLE (gdisp->origin))
+      if (GTK_WIDGET_VISIBLE (shell->origin))
 	{
-	  gtk_widget_hide (gdisp->origin);
-	  gtk_widget_hide (gdisp->hrule);
-	  gtk_widget_hide (gdisp->vrule);
+	  gtk_widget_hide (shell->origin);
+	  gtk_widget_hide (shell->hrule);
+	  gtk_widget_hide (shell->vrule);
 
-	  gtk_widget_queue_resize (GTK_WIDGET (gdisp->origin->parent));
+	  gtk_widget_queue_resize (GTK_WIDGET (shell->origin->parent));
 	}
     }
   else
     {
-      if (! GTK_WIDGET_VISIBLE (gdisp->origin))
+      if (! GTK_WIDGET_VISIBLE (shell->origin))
 	{
-	  gtk_widget_show (gdisp->origin);
-	  gtk_widget_show (gdisp->hrule);
-	  gtk_widget_show (gdisp->vrule);
+	  gtk_widget_show (shell->origin);
+	  gtk_widget_show (shell->hrule);
+	  gtk_widget_show (shell->vrule);
 
-	  gtk_widget_queue_resize (GTK_WIDGET (gdisp->origin->parent));
+	  gtk_widget_queue_resize (GTK_WIDGET (shell->origin->parent));
 	}
     }
 }
@@ -185,18 +194,21 @@ void
 view_toggle_statusbar_cmd_callback (GtkWidget *widget,
 				    gpointer   data)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
   return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if (! GTK_CHECK_MENU_ITEM (widget)->active)
     {
-      if (GTK_WIDGET_VISIBLE (gdisp->statusarea))
-	gtk_widget_hide (gdisp->statusarea);
+      if (GTK_WIDGET_VISIBLE (shell->statusarea))
+	gtk_widget_hide (shell->statusarea);
     }
   else
     {
-      if (! GTK_WIDGET_VISIBLE (gdisp->statusarea))
-	gtk_widget_show (gdisp->statusarea);
+      if (! GTK_WIDGET_VISIBLE (shell->statusarea))
+	gtk_widget_show (shell->statusarea);
     }
 }
 
@@ -213,8 +225,8 @@ view_toggle_guides_cmd_callback (GtkWidget *widget,
 
   if ((old_val != gdisp->draw_guides) && gdisp->gimage->guides)
     {
-      gdisplay_expose_full (gdisp);
-      gdisplays_flush ();
+      gimp_display_shell_expose_full (GIMP_DISPLAY_SHELL (gdisp->shell));
+      gdisplay_flush (gdisp);
     }
 }
 
@@ -235,7 +247,7 @@ view_new_view_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  gdisplay_new_view (gdisp);
+  gimp_create_display (gdisp->gimage->gimp, gdisp->gimage, gdisp->scale);
 }
 
 void
@@ -245,5 +257,5 @@ view_shrink_wrap_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  gimp_display_scale_shrink_wrap (gdisp);
+  gimp_display_shell_scale_shrink_wrap (GIMP_DISPLAY_SHELL (gdisp->shell));
 }

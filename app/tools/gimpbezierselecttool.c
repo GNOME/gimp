@@ -43,6 +43,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gui/paths-dialog.h"
 
@@ -393,6 +394,7 @@ gimp_bezier_select_tool_button_press (GimpTool       *tool,
 				      GimpDisplay    *gdisp)
 {
   GimpBezierSelectTool  *bezier_sel;
+  GimpDisplayShell      *shell;
   GimpBezierSelectPoint *points;
   GimpBezierSelectPoint *start_pt;
   GimpBezierSelectPoint *curve_start;
@@ -401,15 +403,18 @@ gimp_bezier_select_tool_button_press (GimpTool       *tool,
   gint                   x, y;
   gint                   halfwidth, dummy;
 
-  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
+  bezier_sel = GIMP_BEZIER_SELECT_TOOL (tool);
 
-  bezier_sel = GIMP_BEZIER_SELECT_TOOL(tool);
+  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+
   grab_pointer = FALSE;
+
+  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
   /*  If the tool was being used in another image...reset it  */
   if (tool->state == ACTIVE && gdisp != tool->gdisp)
     {
-      gimp_draw_tool_stop ((GimpDrawTool *)bezier_sel);
+      gimp_draw_tool_stop (GIMP_DRAW_TOOL (bezier_sel));
       bezier_select_reset (bezier_sel);
     }
 
@@ -443,7 +448,8 @@ gimp_bezier_select_tool_button_press (GimpTool       *tool,
       bezier_add_point (bezier_sel, BEZIER_ANCHOR, (gdouble)x, (gdouble)y);
       bezier_add_point (bezier_sel, BEZIER_CONTROL, (gdouble)x, (gdouble)y);
 
-      gimp_draw_tool_start ((GimpDrawTool *)bezier_sel, gdisp->canvas->window);
+      gimp_draw_tool_start (GIMP_DRAW_TOOL (bezier_sel),
+                            shell->canvas->window);
       break;
 
     case BEZIER_ADD:
@@ -470,7 +476,7 @@ gimp_bezier_select_tool_button_press (GimpTool       *tool,
 
 	  if (grab_pointer)
 	    {
-	      gdk_pointer_grab (gdisp->canvas->window, FALSE,
+	      gdk_pointer_grab (shell->canvas->window, FALSE,
 				GDK_POINTER_MOTION_HINT_MASK |
 				GDK_BUTTON1_MOTION_MASK |
 				GDK_BUTTON_RELEASE_MASK,
@@ -541,7 +547,7 @@ gimp_bezier_select_tool_button_press (GimpTool       *tool,
 	  gimp_draw_tool_resume ((GimpDrawTool *)bezier_sel);
 	  if (grab_pointer)
 	    {
-	      gdk_pointer_grab (gdisp->canvas->window, FALSE,
+	      gdk_pointer_grab (shell->canvas->window, FALSE,
 				GDK_POINTER_MOTION_HINT_MASK |
 				GDK_BUTTON1_MOTION_MASK |
 				GDK_BUTTON_RELEASE_MASK,
@@ -685,7 +691,7 @@ gimp_bezier_select_tool_button_press (GimpTool       *tool,
     }
 
   if (grab_pointer)
-    gdk_pointer_grab (gdisp->canvas->window, FALSE,
+    gdk_pointer_grab (shell->canvas->window, FALSE,
 		      GDK_POINTER_MOTION_HINT_MASK |
 		      GDK_BUTTON1_MOTION_MASK |
 		      GDK_BUTTON_RELEASE_MASK,
@@ -905,6 +911,9 @@ bezier_select_load (GimpDisplay           *gdisp,
 {
   GimpTool             *tool;
   GimpBezierSelectTool *bezier_sel;
+  GimpDisplayShell     *shell;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  select the bezier tool  */
   gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp), 
@@ -925,7 +934,7 @@ bezier_select_load (GimpDisplay           *gdisp,
 
   bezier_convert (bezier_sel, tool->gdisp, SUBDIVIDE, FALSE);
 
-  gimp_draw_tool_start ((GimpDrawTool *) bezier_sel, gdisp->canvas->window);
+  gimp_draw_tool_start ((GimpDrawTool *) bezier_sel, shell->canvas->window);
 
   return 1;
 }
@@ -1618,18 +1627,22 @@ bezier_select_button_press (GimpTool       *tool,
 			    GdkEventButton *bevent,
 			    GimpDisplay    *gdisp)
 {
-  GimpBezierSelectTool *bezier_sel;
+  GimpBezierSelectTool   *bezier_sel;
+  GimpDisplayShell       *shell;
   GimpBezierSelectPoint  *points;
   GimpBezierSelectPoint  *start_pt;
   GimpBezierSelectPoint  *curve_start;
-  gboolean      grab_pointer;
-  gint          op;
-  gint          x, y;
-  gint          halfwidth, dummy;
+  gboolean                grab_pointer;
+  gint                    op;
+  gint                    x, y;
+  gint                    halfwidth, dummy;
 
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
   bezier_sel = (GimpBezierSelectTool *) tool;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
   grab_pointer = FALSE;
 
   /*  If the tool was being used in another image...reset it  */
@@ -1683,7 +1696,7 @@ bezier_select_button_press (GimpTool       *tool,
       bezier_add_point (bezier_sel, BEZIER_ANCHOR, (gdouble)x, (gdouble)y);
       bezier_add_point (bezier_sel, BEZIER_CONTROL, (gdouble)x, (gdouble)y);
 
-      gimp_draw_tool_start ( (GimpDrawTool *) bezier_sel, gdisp->canvas->window);
+      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
       break;
 
     case BEZIER_ADD:
@@ -1706,11 +1719,11 @@ bezier_select_button_press (GimpTool       *tool,
 						     tool, bevent);
 
 	  bezier_sel->draw_mode = BEZIER_DRAW_ALL;  
-	  gimp_draw_tool_resume ( (GimpDrawTool *) bezier_sel);
+	  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
 	  if (grab_pointer)
 	    {
-	      gdk_pointer_grab (gdisp->canvas->window, FALSE,
+	      gdk_pointer_grab (shell->canvas->window, FALSE,
 				GDK_POINTER_MOTION_HINT_MASK |
 				GDK_BUTTON1_MOTION_MASK |
 				GDK_BUTTON_RELEASE_MASK,
@@ -1781,7 +1794,7 @@ bezier_select_button_press (GimpTool       *tool,
 	  gimp_draw_tool_resume ( (GimpDrawTool *) bezier_sel);
 	  if (grab_pointer)
 	    {
-	      gdk_pointer_grab (gdisp->canvas->window, FALSE,
+	      gdk_pointer_grab (shell->canvas->window, FALSE,
 				GDK_POINTER_MOTION_HINT_MASK |
 				GDK_BUTTON1_MOTION_MASK |
 				GDK_BUTTON_RELEASE_MASK,
@@ -1919,13 +1932,13 @@ bezier_select_button_press (GimpTool       *tool,
 	    }
  	  bezier_sel->draw_mode = BEZIER_DRAW_ALL;
 
-	  gimp_draw_tool_resume ( (GimpDrawTool *) bezier_sel);
+	  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 	}
       break;
     }
 
   if (grab_pointer)
-    gdk_pointer_grab (gdisp->canvas->window, FALSE,
+    gdk_pointer_grab (shell->canvas->window, FALSE,
 		      GDK_POINTER_MOTION_HINT_MASK |
 		      GDK_BUTTON1_MOTION_MASK |
 		      GDK_BUTTON_RELEASE_MASK,
@@ -1933,7 +1946,7 @@ bezier_select_button_press (GimpTool       *tool,
 
   /* Don't bother doing this if we don't have any points */
   if (bezier_sel->num_points > 0)
-    paths_first_button_press(bezier_sel, gdisp);
+    paths_first_button_press (bezier_sel, gdisp);
 }
 
 
@@ -2109,22 +2122,25 @@ gimp_bezier_select_tool_cursor_update (GimpTool       *tool,
 				       GimpDisplay    *gdisp)
 {
   GimpBezierSelectTool *bezier_sel;
-  GimpDrawTool *draw_tool;
-  gboolean      on_curve;
-  gboolean      on_control_pnt;
-  gboolean      in_selection_area;
-  gint          halfwidth, dummy;
-  gint          x, y;
+  GimpDrawTool         *draw_tool;
+  GimpDisplayShell     *shell;
+  gboolean              on_curve;
+  gboolean              on_control_pnt;
+  gboolean              in_selection_area;
+  gint                  halfwidth, dummy;
+  gint                  x, y;
 
-  bezier_sel = (GimpBezierSelectTool *) tool;
-  draw_tool = GIMP_DRAW_TOOL(bezier_sel);
+  bezier_sel = GIMP_BEZIER_SELECT_TOOL (tool);
+  draw_tool  = GIMP_DRAW_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if (gdisp != tool->gdisp || draw_tool->draw_state == INVISIBLE)
     {
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    GIMP_BEZIER_SELECT_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_NONE);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_NONE);
       return;
     }
 
@@ -2149,33 +2165,33 @@ gimp_bezier_select_tool_cursor_update (GimpTool       *tool,
       if ((mevent->state & GDK_SHIFT_MASK) &&
 	  !(mevent->state & GDK_CONTROL_MASK))
 	{
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_RECT_SELECT_TOOL_CURSOR,
-					GIMP_CURSOR_MODIFIER_PLUS);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_RECT_SELECT_TOOL_CURSOR,
+                                                  GIMP_CURSOR_MODIFIER_PLUS);
 	}
       else if ((mevent->state & GDK_CONTROL_MASK) &&
 	       !(mevent->state & GDK_SHIFT_MASK))
 	{
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_RECT_SELECT_TOOL_CURSOR,
-					GIMP_CURSOR_MODIFIER_MINUS);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_RECT_SELECT_TOOL_CURSOR,
+                                                  GIMP_CURSOR_MODIFIER_MINUS);
 	}
       else if ((mevent->state & GDK_CONTROL_MASK) &&
 	       (mevent->state & GDK_SHIFT_MASK))
 	{
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_RECT_SELECT_TOOL_CURSOR,
-					GIMP_CURSOR_MODIFIER_INTERSECT);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_RECT_SELECT_TOOL_CURSOR,
+                                                  GIMP_CURSOR_MODIFIER_INTERSECT);
 	}
       else
 	{
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_RECT_SELECT_TOOL_CURSOR,
-					GIMP_CURSOR_MODIFIER_NONE);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_RECT_SELECT_TOOL_CURSOR,
+                                                  GIMP_CURSOR_MODIFIER_NONE);
 	}
       return;
     }
@@ -2186,17 +2202,17 @@ gimp_bezier_select_tool_cursor_update (GimpTool       *tool,
       if (mevent->state & GDK_SHIFT_MASK)
 	{
 	  /* moving on 1 curve */
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_BEZIER_SELECT_TOOL_CURSOR,
-					GIMP_CURSOR_MODIFIER_MOVE);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                                  GIMP_CURSOR_MODIFIER_MOVE);
 	}
       else
 	{
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_BEZIER_SELECT_TOOL_CURSOR,
-					GIMP_CURSOR_MODIFIER_MOVE);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                                  GIMP_CURSOR_MODIFIER_MOVE);
 	}
     }
   else
@@ -2206,44 +2222,44 @@ gimp_bezier_select_tool_cursor_update (GimpTool       *tool,
 	case EXTEND_NEW:
 	  if (on_control_pnt && bezier_sel->closed)
 	    {
-	      gdisplay_install_tool_cursor (gdisp,
-					    GIMP_MOUSE_CURSOR,
-					    GIMP_BEZIER_SELECT_TOOL_CURSOR,
-					    GIMP_CURSOR_MODIFIER_CONTROL);
+	      gimp_display_shell_install_tool_cursor (shell,
+                                                      GIMP_MOUSE_CURSOR,
+                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                                      GIMP_CURSOR_MODIFIER_CONTROL);
 /* 	      g_print ("add to curve cursor\n"); */
 	    }
 	  else if (on_curve)
 	    {
-	      gdisplay_install_tool_cursor (gdisp,
-					    GIMP_MOUSE_CURSOR,
-					    GIMP_BEZIER_SELECT_TOOL_CURSOR,
-					    GIMP_CURSOR_MODIFIER_NONE);
+	      gimp_display_shell_install_tool_cursor (shell,
+                                                      GIMP_MOUSE_CURSOR,
+                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                                      GIMP_CURSOR_MODIFIER_NONE);
 /* 	      g_print ("edit control point cursor\n"); */
 	    }
 	  else
 	    {
-	      gdisplay_install_tool_cursor (gdisp,
-					    GIMP_MOUSE_CURSOR,
-					    GIMP_BEZIER_SELECT_TOOL_CURSOR,
-					    GIMP_CURSOR_MODIFIER_NONE);
+	      gimp_display_shell_install_tool_cursor (shell,
+                                                      GIMP_MOUSE_CURSOR,
+                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                                      GIMP_CURSOR_MODIFIER_NONE);
 	    }
 	  break;
 
 	case EXTEND_ADD:
 	  if (on_curve)
 	    {
-	      gdisplay_install_tool_cursor (gdisp,
-					    GIMP_MOUSE_CURSOR,
-					    GIMP_BEZIER_SELECT_TOOL_CURSOR,
-					    GIMP_CURSOR_MODIFIER_PLUS);
+	      gimp_display_shell_install_tool_cursor (shell,
+                                                      GIMP_MOUSE_CURSOR,
+                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                                      GIMP_CURSOR_MODIFIER_PLUS);
 /* 	      g_print ("add to curve cursor\n"); */
 	    }
 	  else
 	    {
-	      gdisplay_install_tool_cursor (gdisp,
-					    GIMP_MOUSE_CURSOR,
-					    GIMP_BEZIER_SELECT_TOOL_CURSOR,
-					    GIMP_CURSOR_MODIFIER_NONE);
+	      gimp_display_shell_install_tool_cursor (shell,
+                                                      GIMP_MOUSE_CURSOR,
+                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                                      GIMP_CURSOR_MODIFIER_NONE);
 /* 	      g_print ("default no action cursor\n"); */
 	    }
 	  break;
@@ -2251,18 +2267,18 @@ gimp_bezier_select_tool_cursor_update (GimpTool       *tool,
 	case EXTEND_EDIT:
 	  if (on_control_pnt)
 	    {
-	      gdisplay_install_tool_cursor (gdisp,
-					    GIMP_MOUSE_CURSOR,
-					    GIMP_BEZIER_SELECT_TOOL_CURSOR,
-					    GIMP_CURSOR_MODIFIER_CONTROL);
+	      gimp_display_shell_install_tool_cursor (shell,
+                                                      GIMP_MOUSE_CURSOR,
+                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                                      GIMP_CURSOR_MODIFIER_CONTROL);
 /* 	      g_print ("edit control point cursor\n"); */
 	    }
 	  else
 	    {
-	      gdisplay_install_tool_cursor (gdisp,
-					    GIMP_MOUSE_CURSOR,
-					    GIMP_BEZIER_SELECT_TOOL_CURSOR,
-					    GIMP_CURSOR_MODIFIER_NONE);
+	      gimp_display_shell_install_tool_cursor (shell,
+                                                      GIMP_MOUSE_CURSOR,
+                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                                      GIMP_CURSOR_MODIFIER_NONE);
 /* 	      g_print ("default no action cursor\n"); */
 	    }
 	  break;
@@ -2270,36 +2286,36 @@ gimp_bezier_select_tool_cursor_update (GimpTool       *tool,
 	case EXTEND_REMOVE:
 	  if (on_control_pnt && mevent->state & GDK_SHIFT_MASK)
 	    {
-	      gdisplay_install_tool_cursor (gdisp,
-					    GIMP_MOUSE_CURSOR,
-					    GIMP_BEZIER_SELECT_TOOL_CURSOR,
-					    GIMP_CURSOR_MODIFIER_MINUS);
+	      gimp_display_shell_install_tool_cursor (shell,
+                                                      GIMP_MOUSE_CURSOR,
+                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                                      GIMP_CURSOR_MODIFIER_MINUS);
 /*            g_print ("delete whole curve cursor\n"); */
 	    }
 	  else if (on_control_pnt)
 	    {
-	      gdisplay_install_tool_cursor (gdisp,
-					    GIMP_MOUSE_CURSOR,
-					    GIMP_BEZIER_SELECT_TOOL_CURSOR,
-					    GIMP_CURSOR_MODIFIER_MINUS);
+	      gimp_display_shell_install_tool_cursor (shell,
+                                                      GIMP_MOUSE_CURSOR,
+                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                                      GIMP_CURSOR_MODIFIER_MINUS);
 /* 	      g_print ("remove point cursor\n"); */
 	    }
 	  else
 	    {
-	      gdisplay_install_tool_cursor (gdisp,
-					    GIMP_MOUSE_CURSOR,
-					    GIMP_BEZIER_SELECT_TOOL_CURSOR,
-					    GIMP_CURSOR_MODIFIER_NONE);
+	      gimp_display_shell_install_tool_cursor (shell,
+                                                      GIMP_MOUSE_CURSOR,
+                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                                      GIMP_CURSOR_MODIFIER_NONE);
 /* 	      g_print ("default no action cursor\n"); */
 	    }
 	  break;
 
 	default:
 	  g_print ("In default\n");
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_BEZIER_SELECT_TOOL_CURSOR,
-					GIMP_CURSOR_MODIFIER_NONE);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                                  GIMP_CURSOR_MODIFIER_NONE);
 	  break;
 	}
     }
@@ -3175,6 +3191,7 @@ void
 bezier_paste_bezierselect_to_current (GimpDisplay          *gdisp,
 				      GimpBezierSelectTool *bsel)
 {
+  GimpDisplayShell      *shell;
   GimpBezierSelectPoint *pts;
   gint                   i;
   GimpTool              *tool;
@@ -3184,12 +3201,12 @@ bezier_paste_bezierselect_to_current (GimpDisplay          *gdisp,
 /*   g_print ("bezier_paste_bezierselect_to_current::\n"); */
 /*   printSel(bsel); */
 
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
   tool = tool_manager_get_active (gdisp->gimage->gimp);
 
   /*  If the tool was being used before clear it */
-  if (tool                              &&
-      GIMP_IS_BEZIER_SELECT_TOOL (tool) &&
-      tool->state == ACTIVE)
+  if (GIMP_IS_BEZIER_SELECT_TOOL (tool) && tool->state == ACTIVE)
     {
       GimpBezierSelectTool *bezier_sel = (GimpBezierSelectTool *) tool;
 
@@ -3212,7 +3229,7 @@ bezier_paste_bezierselect_to_current (GimpDisplay          *gdisp,
 
   bezier_select_reset (curSel);
 
-  gimp_draw_tool_start ((GimpDrawTool *) curSel, gdisp->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
 
   tool->state = ACTIVE;
 

@@ -45,6 +45,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpbycolorselecttool.h"
 #include "selection_options.h"
@@ -260,9 +261,12 @@ by_color_select_button_press (GimpTool       *tool,
 {
   GimpByColorSelectTool *by_color_sel;
   GimpDrawTool          *draw_tool;
+  GimpDisplayShell      *shell;
 
   draw_tool    = GIMP_DRAW_TOOL (tool);
   by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -300,7 +304,7 @@ by_color_select_button_press (GimpTool       *tool,
   /* gdisp->gimage->by_color_select = TRUE;
    * Temporarily commented out - do we need something to replace this? */
 
-  gdk_pointer_grab (gdisp->canvas->window, FALSE,
+  gdk_pointer_grab (shell->canvas->window, FALSE,
                     GDK_POINTER_MOTION_HINT_MASK |
 		    GDK_BUTTON1_MOTION_MASK |
                     GDK_BUTTON_RELEASE_MASK,
@@ -379,10 +383,13 @@ by_color_select_cursor_update (GimpTool       *tool,
 			       GimpDisplay    *gdisp)
 {
   GimpByColorSelectTool *by_col_sel;
+  GimpDisplayShell      *shell;
   GimpLayer             *layer;
   gint                   x, y;
 
   by_col_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
@@ -394,55 +401,55 @@ by_color_select_cursor_update (GimpTool       *tool,
       switch (by_col_sel->operation)
 	{
 	case SELECTION_ADD:
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_TOOL_CURSOR_NONE,
-					GIMP_CURSOR_MODIFIER_PLUS);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_TOOL_CURSOR_NONE,
+                                                  GIMP_CURSOR_MODIFIER_PLUS);
 	  break;
 	case SELECTION_SUB:
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_TOOL_CURSOR_NONE,
-					GIMP_CURSOR_MODIFIER_MINUS);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_TOOL_CURSOR_NONE,
+                                                  GIMP_CURSOR_MODIFIER_MINUS);
 	  break;
 	case SELECTION_INTERSECT: 
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_TOOL_CURSOR_NONE,
-					GIMP_CURSOR_MODIFIER_INTERSECT);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_TOOL_CURSOR_NONE,
+                                                  GIMP_CURSOR_MODIFIER_INTERSECT);
 	  break;
 	case SELECTION_REPLACE:
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_TOOL_CURSOR_NONE,
-					GIMP_CURSOR_MODIFIER_NONE);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_TOOL_CURSOR_NONE,
+                                                  GIMP_CURSOR_MODIFIER_NONE);
 	  break;
 	case SELECTION_MOVE_MASK:
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_RECT_SELECT_TOOL_CURSOR,
-					GIMP_CURSOR_MODIFIER_MOVE);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_RECT_SELECT_TOOL_CURSOR,
+                                                  GIMP_CURSOR_MODIFIER_MOVE);
 	  break;
 	case SELECTION_MOVE: 
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_MOVE_TOOL_CURSOR,
-					GIMP_CURSOR_MODIFIER_NONE);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_MOVE_TOOL_CURSOR,
+                                                  GIMP_CURSOR_MODIFIER_NONE);
 	  break;
 	case SELECTION_ANCHOR:
-	  gdisplay_install_tool_cursor (gdisp,
-					GIMP_MOUSE_CURSOR,
-					GIMP_RECT_SELECT_TOOL_CURSOR,
-					GIMP_CURSOR_MODIFIER_ANCHOR);
+	  gimp_display_shell_install_tool_cursor (shell,
+                                                  GIMP_MOUSE_CURSOR,
+                                                  GIMP_RECT_SELECT_TOOL_CURSOR,
+                                                  GIMP_CURSOR_MODIFIER_ANCHOR);
 	}
 
       return;
     }
 
-  gdisplay_install_tool_cursor (gdisp,
-				GIMP_BAD_CURSOR,
-				GIMP_TOOL_CURSOR_NONE,
-				GIMP_CURSOR_MODIFIER_NONE);
+  gimp_display_shell_install_tool_cursor (shell,
+                                          GIMP_BAD_CURSOR,
+                                          GIMP_TOOL_CURSOR_NONE,
+                                          GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void

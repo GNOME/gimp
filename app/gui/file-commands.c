@@ -35,7 +35,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplay-ops.h"
+#include "display/gimpdisplayshell.h"
 
 #include "file-commands.h"
 #include "file-new-dialog.h"
@@ -272,7 +272,7 @@ file_close_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  gdisplay_close_window (gdisp, FALSE);
+  gimp_display_shell_close (GIMP_DISPLAY_SHELL (gdisp->shell), FALSE);
 }
 
 void
@@ -315,11 +315,12 @@ file_revert_confirm_callback (GtkWidget *widget,
       if (new_gimage != NULL)
 	{
 	  undo_free (new_gimage);
+
 	  gdisplays_reconnect (old_gimage, new_gimage);
-	  gdisplays_resize_cursor_label (new_gimage);
-	  gdisplays_update_full (new_gimage);
-	  gdisplays_shrink_wrap (new_gimage);
+
 	  gimp_image_clean_all (new_gimage);
+
+          gdisplays_flush ();
 	}
       else if (status != GIMP_PDB_CANCEL)
 	{

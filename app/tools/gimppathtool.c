@@ -27,6 +27,7 @@
 #include "tools-types.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpdrawtool.h"
 #include "gimppathtool.h"
@@ -267,10 +268,15 @@ gimp_path_tool_button_press (GimpTool       *tool,
                              GdkEventButton *bevent,
                              GimpDisplay    *gdisp)
 {
-  GimpPathTool *path_tool = GIMP_PATH_TOOL (tool);
-  gint grab_pointer=0;
-  gdouble x, y;
-  gint halfwidth, dummy;
+  GimpPathTool     *path_tool;
+  GimpDisplayShell *shell;
+  gint              grab_pointer = 0;
+  gdouble           x, y;
+  gint              halfwidth, dummy;
+
+  path_tool = GIMP_PATH_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
 #ifdef PATH_TOOL_DEBUG
   g_printerr ("path_tool_button_press\n");
@@ -293,7 +299,7 @@ gimp_path_tool_button_press (GimpTool       *tool,
   tool->state = ACTIVE;
 
   if (!path_tool->cur_path->curves)
-    gimp_draw_tool_start (GIMP_DRAW_TOOL(path_tool), gdisp->canvas->window);
+    gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
 
   /* determine point, where clicked,
    * switch accordingly.
@@ -308,35 +314,33 @@ gimp_path_tool_button_press (GimpTool       *tool,
 					  &(path_tool->click_handle_id));
  
   switch (path_tool->click_type)
-  {
-  case ON_CANVAS:
-     grab_pointer = gimp_path_tool_button_press_canvas(path_tool, bevent, gdisp);
-     break;
+    {
+    case ON_CANVAS:
+      grab_pointer = gimp_path_tool_button_press_canvas(path_tool, bevent, gdisp);
+      break;
 
-  case ON_ANCHOR:
-     grab_pointer = gimp_path_tool_button_press_anchor(path_tool, bevent, gdisp);
-     break;
+    case ON_ANCHOR:
+      grab_pointer = gimp_path_tool_button_press_anchor(path_tool, bevent, gdisp);
+      break;
 
-  case ON_HANDLE:
-     grab_pointer = gimp_path_tool_button_press_handle(path_tool, bevent, gdisp);
-     break;
+    case ON_HANDLE:
+      grab_pointer = gimp_path_tool_button_press_handle(path_tool, bevent, gdisp);
+      break;
 
-  case ON_CURVE:
-     grab_pointer = gimp_path_tool_button_press_curve(path_tool, bevent, gdisp);
-     break;
+    case ON_CURVE:
+      grab_pointer = gimp_path_tool_button_press_curve(path_tool, bevent, gdisp);
+      break;
 
-  default:
-     g_message("Huh? Whats happening here? (button_press_*)");
-  }
+    default:
+      g_message("Huh? Whats happening here? (button_press_*)");
+    }
  
   if (grab_pointer)
-     gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		       GDK_POINTER_MOTION_HINT_MASK |
-		       GDK_BUTTON1_MOTION_MASK |
-		       GDK_BUTTON_RELEASE_MASK,
-		       NULL, NULL, bevent->time);
-
-
+    gdk_pointer_grab (shell->canvas->window, FALSE,
+                      GDK_POINTER_MOTION_HINT_MASK |
+                      GDK_BUTTON1_MOTION_MASK |
+                      GDK_BUTTON_RELEASE_MASK,
+                      NULL, NULL, bevent->time);
 }
 
 static gint

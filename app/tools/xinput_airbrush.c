@@ -3089,13 +3089,16 @@ xinput_airbrush_paste (XinputAirbrushTool      *xinput_airbrush_tool,
   xinput_airbrush_tool->x2 = MAX (xinput_airbrush_tool->x2, (canvas_buf->x + canvas_buf->width));
   xinput_airbrush_tool->y2 = MAX (xinput_airbrush_tool->y2, (canvas_buf->y + canvas_buf->height));
 
-  /*  Update the gimage--it is important to call gdisplays_update_area
+  /*  Update the gimage--it is important to call gimp_image_update
    *  instead of drawable_update because we don't want the drawable
    *  preview to be constantly invalidated
    */
   drawable_offsets (drawable, &offx, &offy);
-  gdisplays_update_area (gimage, canvas_buf->x + offx, canvas_buf->y + offy,
-                           canvas_buf->width, canvas_buf->height);
+  gimp_image_update (gimage,
+                     canvas_buf->x + offx,
+                     canvas_buf->y + offy,
+                     canvas_buf->width,
+                     canvas_buf->height);
 
   mask_buf_free(brush_mask);
 

@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __DISP_CALLBACKS_H__
-#define __DISP_CALLBACKS_H__
+#ifndef __GIMP_DISPLAY_CALLBACKS_H__
+#define __GIMP_DISPLAY_CALLBACKS_H__
 
 
 #define CANVAS_EVENT_MASK (GDK_EXPOSURE_MASK            | \
@@ -33,35 +33,35 @@
 			   GDK_PROXIMITY_OUT_MASK)
 
 
-gboolean   gdisplay_shell_events        (GtkWidget      *widget,
-					 GdkEvent       *event,
-					 GimpDisplay    *gdisp);
-gboolean   gdisplay_canvas_events       (GtkWidget      *widget,
-					 GdkEvent       *event,
-					 GimpDisplay    *gdisp);
+gboolean   gdisplay_shell_events        (GtkWidget        *widget,
+					 GdkEvent         *event,
+					 GimpDisplayShell *shell);
+gboolean   gdisplay_canvas_events       (GtkWidget        *widget,
+					 GdkEvent         *event,
+					 GimpDisplayShell *shell);
 
-gboolean   gdisplay_hruler_button_press (GtkWidget      *widget,
-					 GdkEventButton *bevent,
-					 gpointer        data);
-gboolean   gdisplay_vruler_button_press (GtkWidget      *widget,
-					 GdkEventButton *bevent,
-					 gpointer        data);
-gboolean   gdisplay_origin_button_press (GtkWidget      *widget,
-					 GdkEventButton *bevent,
-					 gpointer        data);
+gboolean   gdisplay_hruler_button_press (GtkWidget        *widget,
+					 GdkEventButton   *bevent,
+					 GimpDisplayShell *shell);
+gboolean   gdisplay_vruler_button_press (GtkWidget        *widget,
+					 GdkEventButton   *bevent,
+					 GimpDisplayShell *shell);
+gboolean   gdisplay_origin_button_press (GtkWidget        *widget,
+					 GdkEventButton   *bevent,
+					 GimpDisplayShell *shell);
 
-void       gdisplay_drop_drawable       (GtkWidget      *widget,
-					 GimpViewable   *viewable,
-					 gpointer        data);
-void       gdisplay_drop_pattern        (GtkWidget      *widget,
-					 GimpViewable   *viewable,
-					 gpointer        data);
-void       gdisplay_drop_color          (GtkWidget      *widget,
-					 const GimpRGB  *color,
-					 gpointer        data);
-void       gdisplay_drop_buffer         (GtkWidget      *widget,
-					 GimpViewable   *viewable,
-					 gpointer        data);
+void       gdisplay_drop_drawable       (GtkWidget        *widget,
+					 GimpViewable     *viewable,
+					 gpointer          data);
+void       gdisplay_drop_pattern        (GtkWidget        *widget,
+					 GimpViewable     *viewable,
+					 gpointer          data);
+void       gdisplay_drop_color          (GtkWidget        *widget,
+					 const GimpRGB    *color,
+					 gpointer          data);
+void       gdisplay_drop_buffer         (GtkWidget        *widget,
+					 GimpViewable     *viewable,
+					 gpointer          data);
 
 
-#endif /* __DISP_CALLBACKS_H__ */
+#endif /* __GIMP_DISPLAY_CALLBACKS_H__ */

@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DISPLAY_SCROLL_H__
-#define __GIMP_DISPLAY_SCROLL_H__
+#ifndef __GIMP_DISPLAY_SHELL_SCROLL_H__
+#define __GIMP_DISPLAY_SHELL_SCROLL_H__
 
 
-gboolean   gimp_display_scroll               (GimpDisplay    *gdisp,
-                                              gint            x_offset,
-                                              gint            y_offset);
+gboolean   gimp_display_shell_scroll               (GimpDisplayShell *shell,
+                                                    gint              x_offset,
+                                                    gint              y_offset);
 
-void       gimp_display_scroll_clamp_offsets (GimpDisplay    *gdisp);
+void       gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell);
 
 
-#endif  /*  __GIMP_DISPLAY_SCROLL_H__  */
+#endif  /*  __GIMP_DISPLAY_SHELL_SCROLL_H__  */

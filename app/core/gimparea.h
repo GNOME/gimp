@@ -16,21 +16,21 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_SCALE_H__
-#define __GIMP_DISPLAY_SHELL_SCALE_H__
+#ifndef __GIMP_DISPLAY_AREA_H__
+#define __GIMP_DISPLAY_AREA_H__
 
 
-void   gimp_display_shell_scale_setup           (GimpDisplayShell *shell);
+typedef struct _GimpArea GimpArea;
 
-void   gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *gdisp, 
-                                                 gboolean          dot_for_dot);
-
-void   gimp_display_shell_scale                 (GimpDisplayShell *gdisp,
-                                                 GimpZoomType      zoom_type);
-void   gimp_display_shell_scale_resize          (GimpDisplayShell *shell,
-                                                 gboolean          resize_window,
-                                                 gboolean          redisplay);
-void   gimp_display_shell_scale_shrink_wrap     (GimpDisplayShell *shell);
+struct _GimpArea
+{
+  gint x1, y1, x2, y2;   /*  area bounds  */
+};
 
 
-#endif  /*  __GIMP_DISPLAY_SHELL_SCALE_H__  */
+GSList * gimp_display_area_list_process (GSList   *list,
+                                         GimpArea *area);
+GSList * gimp_display_area_list_free    (GSList   *list);
+
+
+#endif /*  __GIMP_DISPLAY_AREA_H__  */

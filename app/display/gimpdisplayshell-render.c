@@ -32,6 +32,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-render.h"
+#include "gimpdisplayshell.h"
 #include "gximage.h"
 
 #include "gimprc.h"

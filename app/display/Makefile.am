@@ -6,13 +6,15 @@ libappdisplay_a_SOURCES = @STRIP_BEGIN@ \
 	display-types.h			\
 	gimpdisplay.c			\
 	gimpdisplay.h			\
+	gimpdisplay-area.c		\
+	gimpdisplay-area.h		\
 	gimpdisplay-callbacks.c		\
 	gimpdisplay-callbacks.h		\
 	gimpdisplay-foreach.c		\
 	gimpdisplay-foreach.h		\
+	gimpdisplay-handlers.c		\
+	gimpdisplay-handlers.h		\
 	gimpdisplay-marching-ants.h	\
-	gimpdisplay-ops.c		\
-	gimpdisplay-ops.h		\
 	gimpdisplay-render.c		\
 	gimpdisplay-render.h		\
 	gimpdisplay-scale.c		\
