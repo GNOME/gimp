@@ -1,3 +1,7 @@
+1999-05-13  Jay Cox  <jaycox@earthlink.net>
+
+	* app/pencil.c: use the new color picking feature of paint_core.
+
 Thu May 13 22:41:26 BST 1999 Andy Thomas <alt@gimp.org>
 
 	Changed:-
@@ -47,6 +51,23 @@ Thu May 13 22:41:26 BST 1999 Andy Thomas <alt@gimp.org>
 	curves dialog corresponding to the current position in 
 	the currently selected channel. MB1 + CNTRL will add the point
 	to all channels. (Thanks to Carey Bunks for the initial idea).
+
+1999-05-13  Jay Cox  <jaycox@earthlink.net>
+
+	* app/paint_core.[ch]: set the fg or bg color if ctrl or alt is
+ 	held.  use the new dropper cursor.
+
+	* app/cursorutil.[ch], app/gdisplay.[ch], app/rect_select.c: Use
+ 	GimpCursorType enum values > GDK_CURSOR_LAST instead of seperate
+ 	functions to choose between cursor types.
+
+	* app/color_picker.c: use the new dropper cursor.
+
+	* app/paintbrush.c, app/airbrush.c, app/paintbrush.c: use the new
+ 	color picking feature of paint_core.
+
+	* cursors/dropper, cursors/droppermsk: new cursor for the color
+ 	picker tool. (this cursor is REALLY ugly, someone should fix it)
 
 1999-05-12  Scott Goehring  <scott@poverty.bloomington.in.us>
 
@@ -249,7 +270,8 @@ Wed May  5 12:40:54 MEST 1999 Sven Neumann <sven@gimp.org>
 
 1999-05-05  Jay Cox  <jaycox@earthlink.net>
 
-	* pixmaps/mouse1*: new bitmap files containing the new mouse cursors.
+	* pixmaps/mouse1*: new bitmap files containing the new mouse
+ 	cursors. (based on the work of Tuomas Kuosmanen)
 
 	* app/parasitelist.c: use g_str_equal instead of parasite_compare_func.
 

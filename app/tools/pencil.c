@@ -89,6 +89,7 @@ tools_new_pencil (void)
 
   private = (PaintCore *) tool->private;
   private->paint_func = pencil_paint_func;
+  private->pick_colors = TRUE;
 
   return tool;
 }
@@ -131,8 +132,8 @@ pencil_motion (PaintCore    *paint_core,
 
 static void *
 pencil_non_gui_paint_func (PaintCore    *paint_core,
-			   GimpDrawable *drawable,
-			   int           state)
+                          GimpDrawable *drawable,
+                          int           state)
 {
   pencil_motion (paint_core, drawable);
 
@@ -142,13 +143,13 @@ pencil_non_gui_paint_func (PaintCore    *paint_core,
 
 gboolean
 pencil_non_gui (GimpDrawable *drawable,
-    		int           num_strokes,
-		double       *stroke_array)
+               int           num_strokes,
+               double       *stroke_array)
 {
   int i;
 
   if (paint_core_init (&non_gui_paint_core, drawable,
-		       stroke_array[0], stroke_array[1]))
+                      stroke_array[0], stroke_array[1]))
     {
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = pencil_non_gui_paint_func;
@@ -157,18 +158,18 @@ pencil_non_gui (GimpDrawable *drawable,
       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
 
       if (num_strokes == 1)
-	pencil_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
+       pencil_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
-	{
-	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+       {
+         non_gui_paint_core.curx = stroke_array[i * 2 + 0];
+         non_gui_paint_core.cury = stroke_array[i * 2 + 1];
 
-	  paint_core_interpolate (&non_gui_paint_core, drawable);
+         paint_core_interpolate (&non_gui_paint_core, drawable);
 
-	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
-	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
-	}
+         non_gui_paint_core.lastx = non_gui_paint_core.curx;
+         non_gui_paint_core.lasty = non_gui_paint_core.cury;
+       }
 
       /* Finish the painting */
       paint_core_finish (&non_gui_paint_core, drawable, -1);
