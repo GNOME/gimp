@@ -72,8 +72,8 @@ xxxgimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 
   for (; op.n_pixels >= 4; op.n_pixels -= 4)
     {
-						asm ("  movdqu  (%0), %%xmm2; addl $16, %0\n"
-											"\tmovdqu  (%1), %%xmm3; addl $16, %1\n"
+						asm ("  movdqu  %0, %%xmm2\n"
+											"\tmovdqu  %1, %%xmm3\n"
 											"\tmovdqu  %%xmm2, %%xmm4\n"
 											"\tpaddusb %%xmm3, %%xmm4\n"
 
@@ -82,10 +82,13 @@ xxxgimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 											"\t" pminub(xmm3, xmm2, xmm4) "\n"
 											"\tpand    %%xmm0, %%xmm2\n"
 											"\tpor     %%xmm2, %%xmm1\n"
-											"\tmovdqu  %%xmm1, (%2); addl $16, %2\n"
-											: "+r" (op.A), "+r" (op.B), "+r" (op.D)
+											"\tmovdqu  %%xmm1, %2\n"
 											: /* empty */
+											: "m" (*op.A), "m" (*op.B), "m" (*op.D)
 											: "0", "1", "2", "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5", "%xmm6", "%xmm7");
+						op.A += 16;
+						op.B += 16;
+						op.D += 16;
 				}
 
   if (op.n_pixels)
