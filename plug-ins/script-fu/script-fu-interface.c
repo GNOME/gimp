@@ -56,6 +56,7 @@ typedef struct
 
   GtkWidget     *about_dialog;
 
+  gchar         *short_title;
   gchar         *title;
   gchar         *help_id;
   gchar         *last_command;
@@ -161,7 +162,6 @@ script_fu_interface (SFScript *script)
   GtkWidget    *vbox2;
   GtkSizeGroup *group;
   GSList       *list;
-  gchar        *title;
   gchar        *tmp;
   gint          i;
 
@@ -171,7 +171,18 @@ script_fu_interface (SFScript *script)
       ugly workaround for the fact that we can not process two
       scripts at a time.  */
   if (sf_interface != NULL)
-    return;
+    {
+      gchar *message =
+        g_strdup_printf ("%s\n\n%s",
+                         _("Script-Fu cannot process two scripts "
+                           "at the same time."),
+                         _("You are already running the \"%s\" script."));
+
+      g_message (message, sf_interface->short_title);
+      g_free (message);
+
+      return;
+    }
 
   g_return_if_fail (script != NULL);
 
@@ -190,22 +201,21 @@ script_fu_interface (SFScript *script)
   /* strip the first part of the menupath if it contains _("/Script-Fu/") */
   tmp = strstr (gettext (script->menu_path), _("/Script-Fu/"));
   if (tmp)
-    title = g_strdup (tmp + strlen (_("/Script-Fu/")));
+    sf_interface->short_title = g_strdup (tmp + strlen (_("/Script-Fu/")));
   else
-    title = g_strdup (gettext (script->menu_path));
+    sf_interface->short_title = g_strdup (gettext (script->menu_path));
 
   /* strip mnemonics from the menupath */
-  tmp = gimp_strip_uline (title);
+  tmp = gimp_strip_uline (sf_interface->short_title);
+  g_free (sf_interface->short_title);
+  sf_interface->short_title = tmp;
 
-  g_free (title);
-  title = tmp;
-
-  tmp = strstr (title, "...");
+  tmp = strstr (sf_interface->short_title, "...");
   if (tmp)
     *tmp = '\0';
 
-  sf_interface->title = g_strdup_printf (_("Script-Fu: %s"), title);
-  g_free (title);
+  sf_interface->title = g_strdup_printf (_("Script-Fu: %s"),
+                                         sf_interface->short_title);
 
   sf_interface->help_id = g_strdup (script->pdb_name);
 
@@ -558,6 +568,7 @@ script_fu_interface_quit (SFScript *script)
   g_return_if_fail (script != NULL);
   g_return_if_fail (sf_interface != NULL);
 
+  g_free (sf_interface->short_title);
   g_free (sf_interface->title);
   g_free (sf_interface->help_id);
 

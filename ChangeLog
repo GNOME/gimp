@@ -1,3 +1,10 @@
+2004-11-02  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
+	don't silently return when there is already a script running but
+	show a message instead. Unfortunately introduces two new strings,
+	but bugs are bugs. Fixes bug #123882.
+
 2004-11-02  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.c (gimp_imagefile_save_thumb): minor
