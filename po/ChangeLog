@@ -1,3 +1,8 @@
+2002-10-21  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed app/gui/color-select.c.
+	* de.po: updated german translation.
+
 2002-10-21  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: removed app/core/gimpmoduleinfo.c

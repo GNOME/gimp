@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.9\n"
-"POT-Creation-Date: 2002-10-10 23:12+0200\n"
-"PO-Revision-Date: 2002-10-10 16:52+0200\n"
+"POT-Creation-Date: 2002-10-21 16:40+0200\n"
+"PO-Revision-Date: 2002-10-21 17:09+0200\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -470,31 +470,31 @@ msgstr "Nur Grau"
 msgid "Black Only"
 msgstr "Nur Schwarz"
 
-#: app/base/base-enums.c:113 app/gui/color-notebook.c:306
+#: app/base/base-enums.c:113 app/gui/color-notebook.c:267
 #: app/widgets/gimpwidgets-constructors.c:68
 #: app/widgets/gimpwidgets-constructors.c:98
 msgid "Value"
 msgstr "Wert"
 
-#: app/base/base-enums.c:114 app/gui/color-notebook.c:307
+#: app/base/base-enums.c:114 app/gui/color-notebook.c:268
 #: app/tools/gimpcolorbalancetool.c:306
 #: app/widgets/gimpcomponentlistitem.c:481
 msgid "Red"
 msgstr "Rot"
 
-#: app/base/base-enums.c:115 app/gui/color-notebook.c:308
+#: app/base/base-enums.c:115 app/gui/color-notebook.c:269
 #: app/tools/gimpcolorbalancetool.c:313
 #: app/widgets/gimpcomponentlistitem.c:482
 msgid "Green"
 msgstr "Grün"
 
-#: app/base/base-enums.c:116 app/gui/color-notebook.c:309
+#: app/base/base-enums.c:116 app/gui/color-notebook.c:270
 #: app/tools/gimpcolorbalancetool.c:320
 #: app/widgets/gimpcomponentlistitem.c:483
 msgid "Blue"
 msgstr "Blau"
 
-#: app/base/base-enums.c:117 app/gui/color-notebook.c:310
+#: app/base/base-enums.c:117 app/gui/color-notebook.c:271
 #: app/widgets/gimpcomponentlistitem.c:486
 msgid "Alpha"
 msgstr "Alpha"
@@ -563,8 +563,7 @@ msgstr "Schwerwiegender Fehler beim Interpretieren"
 
 #: app/config/gimpscanner.c:74 app/core/gimpbrushpipe.c:308
 #: app/gui/paths-dialog.c:1886 app/gui/paths-dialog.c:2011
-#: app/tools/gimpcurvestool.c:1398 app/tools/gimpcurvestool.c:1414
-#: app/tools/gimplevelstool.c:1309 app/tools/gimplevelstool.c:1325
+#: app/tools/gimpcurvestool.c:1440 app/tools/gimplevelstool.c:1411
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Kann Datei '%s' nicht öffnen: %s"
@@ -931,14 +930,18 @@ msgstr ""
 "da der ausgewählte Bereich leer ist."
 
 #: app/core/gimpimage-mask.c:373
-msgid "Cannot float selection: No selection made."
-msgstr "Schwebende Auswahl: Keine Auswahl vorhanden."
+msgid ""
+"Cannot float selection because the\n"
+"selected region is empty."
+msgstr ""
+"Kann die Selektion nicht schwebend machen,\n"
+"da der ausgewählte Bereich leer ist."
 
-#: app/core/gimpimage-mask.c:390 app/gui/layers-commands.c:821
+#: app/core/gimpimage-mask.c:391 app/gui/layers-commands.c:821
 msgid "Floating Selection"
 msgstr "Schwebende Auswahl"
 
-#: app/core/gimpimage-mask.c:594
+#: app/core/gimpimage-mask.c:595
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
@@ -946,7 +949,7 @@ msgstr ""
 "Die aktive Ebene hat keinen Alphakanal\n"
 "um ihn in eine Auswahl umzuwandeln."
 
-#: app/core/gimpimage-mask.c:618
+#: app/core/gimpimage-mask.c:619
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
@@ -954,11 +957,11 @@ msgstr ""
 "Die aktive Ebene hat keine Maske\n"
 "um sie in eine Auswahl umzuwandeln."
 
-#: app/core/gimpimage-mask.c:671
+#: app/core/gimpimage-mask.c:672
 msgid "No selection to stroke."
 msgstr "Es gibt keine Auswahl, die nachgezogen werden kann."
 
-#: app/core/gimpimage-mask.c:725
+#: app/core/gimpimage-mask.c:726
 msgid "Paint operation failed."
 msgstr "Pinseloperation schlug fehl."
 
@@ -1190,29 +1193,6 @@ msgstr ""
 "Kann keine neue Ebene aus dieser\n"
 "schwebenden Auswahl erzeugen, da sie zu einer\n"
 "Ebenenmaske oder einer einem Kanal gehört."
-
-#: app/core/gimpmoduleinfo.c:286 app/core/gimpmoduleinfo.c:307
-#, c-format
-msgid ""
-"Module '%s' load error:\n"
-"%s"
-msgstr ""
-"Fehler beim Laden von Modul »%s«:\n"
-"%s"
-
-#: app/core/gimpmoduleinfo.c:304
-msgid "Missing module_init() symbol"
-msgstr "Fehlendes »module_init()«-Symbol"
-
-#: app/core/gimpmodules.c:277
-#, c-format
-msgid "loading module: '%s'\n"
-msgstr "lade Modul: '%s'\n"
-
-#: app/core/gimpmodules.c:284
-#, c-format
-msgid "skipping module: '%s'\n"
-msgstr "Modul »%s« wird übersprungen\n"
 
 #: app/core/gimppalette.c:293
 #, c-format
@@ -1476,35 +1456,35 @@ msgstr ""
 "An %s wurden Veränderungen vorgenommen.\n"
 "Trotzdem schließen?"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:117
+#: app/display/gimpdisplayshell-filter-dialog.c:115
 msgid "Color Display Filters"
 msgstr "Anzeigenfarbfilter"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:153
+#: app/display/gimpdisplayshell-filter-dialog.c:151
 msgid "Available Filters"
 msgstr "Verfügbare Filter"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:179
+#: app/display/gimpdisplayshell-filter-dialog.c:177
 msgid "Add the selected filter to the list of active filters."
 msgstr "Den gewählten Filter zur Liste aktiver Filter hinzufügen."
 
-#: app/display/gimpdisplayshell-filter-dialog.c:196
+#: app/display/gimpdisplayshell-filter-dialog.c:194
 msgid "Remove the selected filter from the list of active filters."
 msgstr "Den gewählten Filter aus der Liste aktiver Filter entfernen."
 
-#: app/display/gimpdisplayshell-filter-dialog.c:210
+#: app/display/gimpdisplayshell-filter-dialog.c:208
 msgid "Move the selected filter up"
 msgstr "Den gewählten Filter nach oben verschieben"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:219
+#: app/display/gimpdisplayshell-filter-dialog.c:217
 msgid "Move the selected filter down"
 msgstr "Den gewählten Filter nach unten verschieben"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:228
+#: app/display/gimpdisplayshell-filter-dialog.c:226
 msgid "Configure the selected filter"
 msgstr "Den gewählten Filter konfigurieren"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:255
+#: app/display/gimpdisplayshell-filter-dialog.c:253
 msgid "Active Filters"
 msgstr "Aktive Filter"
 
@@ -1655,67 +1635,67 @@ msgid "Edit Channel Attributes"
 msgstr "Kanaleigenschaften ändern"
 
 #. Hue
-#: app/gui/color-notebook.c:288
+#: app/gui/color-notebook.c:249
 msgid "H"
 msgstr "H"
 
 #. Saturation
-#: app/gui/color-notebook.c:290
+#: app/gui/color-notebook.c:251
 msgid "S"
 msgstr "S"
 
 #. Value
-#: app/gui/color-notebook.c:292
+#: app/gui/color-notebook.c:253
 msgid "V"
 msgstr "V"
 
 #. Red
-#: app/gui/color-notebook.c:294
+#: app/gui/color-notebook.c:255
 msgid "R"
 msgstr "R"
 
 #. Green
-#: app/gui/color-notebook.c:296
+#: app/gui/color-notebook.c:257
 msgid "G"
 msgstr "G"
 
 #. Blue
-#: app/gui/color-notebook.c:298
+#: app/gui/color-notebook.c:259
 msgid "B"
 msgstr "B"
 
 #. Alpha
-#: app/gui/color-notebook.c:300
+#: app/gui/color-notebook.c:261
 msgid "A"
 msgstr "A"
 
-#: app/gui/color-notebook.c:304 app/widgets/gimpwidgets-constructors.c:65
+#: app/gui/color-notebook.c:265 app/widgets/gimpwidgets-constructors.c:65
 #: app/widgets/gimpwidgets-constructors.c:95
 msgid "Hue"
 msgstr "Farbton"
 
-#: app/gui/color-notebook.c:305 app/widgets/gimpwidgets-constructors.c:66
+#: app/gui/color-notebook.c:266 app/widgets/gimpwidgets-constructors.c:66
 #: app/widgets/gimpwidgets-constructors.c:96
 msgid "Saturation"
 msgstr "Sättigung"
 
-#: app/gui/color-notebook.c:479
+#: app/gui/color-notebook.c:431
 msgid "Current:"
 msgstr "Aktuell:"
 
-#: app/gui/color-notebook.c:500
+#: app/gui/color-notebook.c:452
 msgid "Old:"
 msgstr "Alt:"
 
-#: app/gui/color-notebook.c:522
+#: app/gui/color-notebook.c:474
 msgid "Revert to old color"
 msgstr "Zurück zur alten Farbe"
 
-#: app/gui/color-notebook.c:626
+#: app/gui/color-notebook.c:578
 msgid "Add the current color to the color history"
 msgstr "Die aktuelle Farbe der Farbliste hinzufügen"
 
-#: app/gui/color-notebook.c:686
+#: app/gui/color-notebook.c:638
 msgid "He_x Triplet:"
 msgstr "He_x Triplet:"
 
@@ -1963,7 +1943,7 @@ msgstr "Ansichtsnavigation"
 msgid "Navigation"
 msgstr "Navigation"
 
-#: app/gui/dialogs-constructors.c:1153 app/gui/dialogs-constructors.c:1197
+#: app/gui/dialogs-constructors.c:1159 app/gui/dialogs-constructors.c:1197
 #, c-format
 msgid "%s Options"
 msgstr "%s Optionen"
@@ -2373,11 +2353,11 @@ msgstr "»%s« Als POV-Ray Datei speichern"
 msgid "Parsing '%s'\n"
 msgstr "Lese '%s'\n"
 
-#: app/gui/gui.c:373
+#: app/gui/gui.c:371
 msgid "Quit The GIMP?"
 msgstr "GIMP beenden?"
 
-#: app/gui/gui.c:377
+#: app/gui/gui.c:375
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -2387,7 +2367,7 @@ msgstr ""
 "\n"
 "GIMP wirklich beenden?"
 
-#: app/gui/gui.c:479
+#: app/gui/gui.c:477
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Thema »%s« (%s) wird hinzugefügt\n"
@@ -3906,87 +3886,87 @@ msgstr "/Maske aus invertierter Auswahl"
 msgid "/Configure Color and Opacity..."
 msgstr "/Farbe und Deckkraft einstellen..."
 
-#: app/gui/module-browser.c:108
+#: app/gui/module-browser.c:112
 msgid "Module DB"
 msgstr "Modul-DB"
 
-#: app/gui/module-browser.c:166 app/widgets/gimpdatafactoryview.c:227
+#: app/gui/module-browser.c:170 app/widgets/gimpdatafactoryview.c:227
 msgid "Refresh"
 msgstr "Auffrischen"
 
-#: app/gui/module-browser.c:367
+#: app/gui/module-browser.c:370
 msgid "Module error"
 msgstr "Modul-Fehler"
 
-#: app/gui/module-browser.c:368
+#: app/gui/module-browser.c:371
 msgid "Loaded OK"
 msgstr "Erfolgreich geladen"
 
-#: app/gui/module-browser.c:369
+#: app/gui/module-browser.c:372
 msgid "Load failed"
 msgstr "Fehler beim Laden"
 
-#: app/gui/module-browser.c:370
-msgid "Unload requested"
-msgstr "Soll entladen werden"
-
-#: app/gui/module-browser.c:371
+#: app/gui/module-browser.c:373
 msgid "Unloaded OK"
 msgstr "Erfolgreich entladen"
 
-#: app/gui/module-browser.c:382
+#: app/gui/module-browser.c:384
 msgid "<No modules>"
 msgstr "<Keine Module>"
 
-#: app/gui/module-browser.c:395 app/gui/module-browser.c:404
+#: app/gui/module-browser.c:397 app/gui/module-browser.c:406
 msgid "On disk"
 msgstr "Auf Festplatte"
 
-#: app/gui/module-browser.c:395
+#: app/gui/module-browser.c:397
 msgid "Only in memory"
 msgstr "Nur im Speicher"
 
-#: app/gui/module-browser.c:404
+#: app/gui/module-browser.c:406
 msgid "No longer available"
 msgstr "Nicht mehr verfügbar"
 
-#: app/gui/module-browser.c:436
+#: app/gui/module-browser.c:429
 msgid "Load"
 msgstr "Öffnen"
 
-#: app/gui/module-browser.c:441 app/gui/module-browser.c:446
+#: app/gui/module-browser.c:434
 msgid "Unload"
 msgstr "Entladen"
 
-#: app/gui/module-browser.c:462
+#: app/gui/module-browser.c:449
 msgid "Purpose:"
 msgstr "Zweck:"
 
-#: app/gui/module-browser.c:463
+#: app/gui/module-browser.c:450
 msgid "Author:"
 msgstr "Autor:"
 
-#: app/gui/module-browser.c:464
+#: app/gui/module-browser.c:451
 msgid "Version:"
 msgstr "Version:"
 
-#: app/gui/module-browser.c:465
+#: app/gui/module-browser.c:452
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: app/gui/module-browser.c:466
+#: app/gui/module-browser.c:453
 msgid "Date:"
 msgstr "Datum:"
 
-#: app/gui/module-browser.c:467
+#: app/gui/module-browser.c:454
 msgid "Location:"
 msgstr "Ort:"
 
-#: app/gui/module-browser.c:468
+#: app/gui/module-browser.c:455
 msgid "State:"
 msgstr "Status:"
 
-#: app/gui/module-browser.c:487
+#: app/gui/module-browser.c:456
+msgid "Last Error:"
+msgstr "Letzter Fehler:"
+
+#: app/gui/module-browser.c:476
 msgid "Autoload during start-up"
 msgstr "Automatisch beim Start laden"
 
@@ -4833,7 +4813,7 @@ msgstr "Neue Auswahl größer um:"
 msgid "GIMP Startup"
 msgstr "GIMP Start"
 
-#: app/gui/splash.c:96 app/widgets/gimptoolbox.c:163
+#: app/gui/splash.c:96 app/widgets/gimptoolbox.c:173
 msgid "The GIMP"
 msgstr "GIMP"
 
@@ -6073,64 +6053,64 @@ msgstr "Nur die aktive Ebene"
 msgid "Allow Enlarging (<Alt>)"
 msgstr "Vergrößern zulassen (<Alt>)"
 
-#: app/tools/gimpcurvestool.c:171
+#: app/tools/gimpcurvestool.c:173
 msgid "Curves"
 msgstr "Kurven"
 
-#: app/tools/gimpcurvestool.c:172
+#: app/tools/gimpcurvestool.c:174
 msgid "Adjust color curves"
 msgstr "Farbkurven einstellen"
 
-#: app/tools/gimpcurvestool.c:173
+#: app/tools/gimpcurvestool.c:175
 msgid "/Layer/Colors/Curves..."
 msgstr "/Ebene/Farben/Kurven..."
 
-#: app/tools/gimpcurvestool.c:243
+#: app/tools/gimpcurvestool.c:246
 msgid "Adjust Color Curves"
 msgstr "Farbkurven anpassen"
 
-#: app/tools/gimpcurvestool.c:309
+#: app/tools/gimpcurvestool.c:312
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Kurven können bei indizierten Bildern nicht angepaßt werden."
 
-#: app/tools/gimpcurvestool.c:587 app/tools/gimplevelstool.c:361
+#: app/tools/gimpcurvestool.c:622 app/tools/gimplevelstool.c:392
 msgid "R_eset Channel"
 msgstr "Kanal _zurücksetzen"
 
-#: app/tools/gimpcurvestool.c:596
+#: app/tools/gimpcurvestool.c:631
 msgid "Modify Curves for Channel:"
 msgstr "Kurven für Kanal ändern:"
 
-#: app/tools/gimpcurvestool.c:603
+#: app/tools/gimpcurvestool.c:638
 msgid "Smooth"
 msgstr "Weich"
 
-#: app/tools/gimpcurvestool.c:606
+#: app/tools/gimpcurvestool.c:641
 msgid "Free"
 msgstr "Frei"
 
-#: app/tools/gimpcurvestool.c:612
+#: app/tools/gimpcurvestool.c:647
 msgid "Curve Type:"
 msgstr "Kurventyp:"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:668 app/tools/gimplevelstool.c:563
+#: app/tools/gimpcurvestool.c:707 app/tools/gimplevelstool.c:647
 msgid "All Channels"
 msgstr "Alle Kanäle"
 
-#: app/tools/gimpcurvestool.c:682
+#: app/tools/gimpcurvestool.c:721
 msgid "Read curves settings from file"
 msgstr "Einstellungen aus Datei lesen"
 
-#: app/tools/gimpcurvestool.c:692
+#: app/tools/gimpcurvestool.c:731
 msgid "Save curves settings to file"
 msgstr "Aktuelle Einstellungen in Datei speichern"
 
-#: app/tools/gimpcurvestool.c:1322
+#: app/tools/gimpcurvestool.c:1367
 msgid "Load Curves"
 msgstr "Kurven öffnen"
 
-#: app/tools/gimpcurvestool.c:1341
+#: app/tools/gimpcurvestool.c:1386
 msgid "Save Curves"
 msgstr "Kurven speichern"
 
@@ -6236,55 +6216,55 @@ msgstr "Zusammenhängenden Bereich wählen"
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/Werkzeuge/Auswahlwerkzeuge/Unscharfe Auswahl"
 
-#: app/tools/gimphistogramtool.c:132
+#: app/tools/gimphistogramtool.c:120
 msgid "Histogram"
 msgstr "Histogramm"
 
-#: app/tools/gimphistogramtool.c:133
+#: app/tools/gimphistogramtool.c:121
 msgid "View image histogram"
 msgstr "Histogramm anzeigen"
 
-#: app/tools/gimphistogramtool.c:134
+#: app/tools/gimphistogramtool.c:122
 msgid "/Layer/Colors/Histogram..."
 msgstr "/Ebene/Farben/Histogramm..."
 
-#: app/tools/gimphistogramtool.c:195
+#: app/tools/gimphistogramtool.c:183
 msgid "Histogram does not operate on indexed drawables."
 msgstr "Histogramm funktioniert nicht mit indizierten Bildern."
 
-#: app/tools/gimphistogramtool.c:344
+#: app/tools/gimphistogramtool.c:328
 msgid "Mean:"
 msgstr "Durchschnitt:"
 
-#: app/tools/gimphistogramtool.c:345
+#: app/tools/gimphistogramtool.c:329
 msgid "Std Dev:"
 msgstr "Std.-Abweichung:"
 
-#: app/tools/gimphistogramtool.c:346
+#: app/tools/gimphistogramtool.c:330
 msgid "Median:"
 msgstr "Median:"
 
-#: app/tools/gimphistogramtool.c:347
+#: app/tools/gimphistogramtool.c:331
 msgid "Pixels:"
 msgstr "Pixel:"
 
-#: app/tools/gimphistogramtool.c:348
+#: app/tools/gimphistogramtool.c:332
 msgid "Count:"
 msgstr "Anzahl:"
 
-#: app/tools/gimphistogramtool.c:349
+#: app/tools/gimphistogramtool.c:333
 msgid "Percentile:"
 msgstr "Prozentsatz:"
 
-#: app/tools/gimphistogramtool.c:362
+#: app/tools/gimphistogramtool.c:346
 msgid "View Image Histogram"
 msgstr "Histogramm anzeigen"
 
-#: app/tools/gimphistogramtool.c:384
+#: app/tools/gimphistogramtool.c:364
 msgid "Information on Channel:"
 msgstr "Informationen über Kanal:"
 
-#: app/tools/gimphistogramtool.c:397
+#: app/tools/gimphistogramtool.c:377
 msgid "Intensity Range:"
 msgstr "Intensitätsbereich:"
 
@@ -6364,52 +6344,52 @@ msgstr "_Sättigung:"
 msgid "R_eset Color"
 msgstr "Farbe _zurücksetzen"
 
-#: app/tools/gimpinktool.c:257
+#: app/tools/gimpinktool.c:256
 msgid "Ink Tool"
 msgstr "Tinte"
 
-#: app/tools/gimpinktool.c:258
+#: app/tools/gimpinktool.c:257
 msgid "Draw in ink"
 msgstr "Mit Tinte zeichnen"
 
-#: app/tools/gimpinktool.c:259
+#: app/tools/gimpinktool.c:258
 msgid "/Tools/Paint Tools/Ink"
 msgstr "/Werkzeuge/Malwerkzeuge/Tinte"
 
 #. adjust sliders
-#: app/tools/gimpinktool.c:1444
+#: app/tools/gimpinktool.c:1413
 msgid "Adjustment"
 msgstr "Justierung"
 
-#: app/tools/gimpinktool.c:1457 app/tools/gimpinktool.c:1493
+#: app/tools/gimpinktool.c:1426 app/tools/gimpinktool.c:1462
 msgid "Size:"
 msgstr "Größe:"
 
-#: app/tools/gimpinktool.c:1469 app/tools/gimpmeasuretool.c:400
+#: app/tools/gimpinktool.c:1438 app/tools/gimpmeasuretool.c:400
 #: app/tools/gimprotatetool.c:192 app/widgets/gimpbrusheditor.c:188
 msgid "Angle:"
 msgstr "Winkel:"
 
 #. sens sliders
-#: app/tools/gimpinktool.c:1480
+#: app/tools/gimpinktool.c:1449
 msgid "Sensitivity"
 msgstr "Empfindlichkeit"
 
-#: app/tools/gimpinktool.c:1505
+#: app/tools/gimpinktool.c:1474
 msgid "Tilt:"
 msgstr "Neigung:"
 
-#: app/tools/gimpinktool.c:1517
+#: app/tools/gimpinktool.c:1486
 msgid "Speed:"
 msgstr "Geschwindigkeit:"
 
 #. Brush type radiobuttons
-#: app/tools/gimpinktool.c:1533
+#: app/tools/gimpinktool.c:1502
 msgid "Type"
 msgstr "Typ"
 
 #. Brush shape widget
-#: app/tools/gimpinktool.c:1605
+#: app/tools/gimpinktool.c:1564
 msgid "Shape"
 msgstr "Form"
 
@@ -6425,66 +6405,78 @@ msgstr "Umrisse aus Bild wählen"
 msgid "/Tools/Selection Tools/Intelligent Scissors"
 msgstr "/Werkzeuge/Auswahlwerkzeuge/Intelligente Schere"
 
-#: app/tools/gimplevelstool.c:151
+#: app/tools/gimplevelstool.c:156
 msgid "Levels"
 msgstr "Werte"
 
-#: app/tools/gimplevelstool.c:152
+#: app/tools/gimplevelstool.c:157
 msgid "Adjust color levels"
 msgstr "Farbwerte einstellen"
 
-#: app/tools/gimplevelstool.c:153
+#: app/tools/gimplevelstool.c:158
 msgid "/Layer/Colors/Levels..."
 msgstr "/Ebene/Farben/Werte..."
 
-#: app/tools/gimplevelstool.c:219
+#: app/tools/gimplevelstool.c:225
 msgid "Adjust Color Levels"
 msgstr "Farbwerte anpassen"
 
-#: app/tools/gimplevelstool.c:268
+#: app/tools/gimplevelstool.c:275
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "Werte für indizierte Bilder können nicht geändert werden. "
 
-#: app/tools/gimplevelstool.c:349
+#: app/tools/gimplevelstool.c:380
 msgid "Modify Levels for Channel:"
 msgstr "Verändere Werte für Kanal:"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:371
+#: app/tools/gimplevelstool.c:402
 msgid "Input Levels"
 msgstr "Quellwerte"
 
-#: app/tools/gimplevelstool.c:462 modules/cdisplay_gamma.c:35
-#: modules/cdisplay_gamma.c:331
+#: app/tools/gimplevelstool.c:479
+msgid "Pick Black Point"
+msgstr ""
+
+#: app/tools/gimplevelstool.c:511
+msgid "Pick Gray Point"
+msgstr ""
+
+#: app/tools/gimplevelstool.c:527 modules/cdisplay_gamma.c:163
+#: modules/cdisplay_gamma.c:334
 msgid "Gamma"
 msgstr "Gamma"
 
+#: app/tools/gimplevelstool.c:544
+msgid "Pick White Point"
+msgstr ""
+
 #. Output levels frame
-#: app/tools/gimplevelstool.c:484
+#: app/tools/gimplevelstool.c:568
 msgid "Output Levels"
 msgstr "Zielwerte"
 
-#: app/tools/gimplevelstool.c:574
+#: app/tools/gimplevelstool.c:658
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/tools/gimplevelstool.c:577
+#: app/tools/gimplevelstool.c:661
 msgid "Adjust levels automatically"
 msgstr "Werte automatisch anpassen"
 
-#: app/tools/gimplevelstool.c:587
+#: app/tools/gimplevelstool.c:671
 msgid "Read levels settings from file"
 msgstr "Einstellungen aus Datei lesen"
 
-#: app/tools/gimplevelstool.c:597
+#: app/tools/gimplevelstool.c:681
 msgid "Save levels settings to file"
 msgstr "Aktuelle Einstellungen in Datei speichern"
 
-#: app/tools/gimplevelstool.c:1233
+#: app/tools/gimplevelstool.c:1338
 msgid "Load Levels"
 msgstr "Werte öffnen"
 
-#: app/tools/gimplevelstool.c:1252
+#: app/tools/gimplevelstool.c:1357
 msgid "Save Levels"
 msgstr "Werte speichern"
 
@@ -6778,42 +6770,63 @@ msgstr "Bild verschmieren"
 msgid "/Tools/Paint Tools/Smudge"
 msgstr "/Werkzeuge/Malwerkzeuge/Verschmieren"
 
-#: app/tools/gimptexttool.c:139
+#: app/tools/gimptexttool.c:148
 msgid "Text Tool"
 msgstr "Textwerkzeug"
 
-#: app/tools/gimptexttool.c:140
+#: app/tools/gimptexttool.c:149
 msgid "Add text to the image"
 msgstr "Text zum Bild hinzufügen"
 
-#: app/tools/gimptexttool.c:141
+#: app/tools/gimptexttool.c:150
 msgid "/Tools/Text"
 msgstr "/Werkzeuge/Text"
 
-#: app/tools/gimptexttool.c:341
+#: app/tools/gimptexttool.c:348
 msgid "No font chosen or font invalid."
 msgstr "Keine Schrift gewählt oder ungültige Schrift."
 
-#: app/tools/gimptexttool.c:436
+#: app/tools/gimptexttool.c:443
 msgid "Font:"
 msgstr "Schrift:"
 
-#: app/tools/gimptexttool.c:440
+#: app/tools/gimptexttool.c:447
 msgid "_Size:"
 msgstr "_Größe:"
 
-#: app/tools/gimptexttool.c:453
+#: app/tools/gimptexttool.c:460
 msgid "_Border:"
 msgstr "_Rand:"
 
-#: app/tools/gimptexttool.c:469 app/tools/selection_options.c:428
+#: app/tools/gimptexttool.c:476 app/tools/selection_options.c:428
 msgid "Unit:"
 msgstr "Einheit:"
 
-#: app/tools/gimptexttool.c:554
-#, fuzzy
+#: app/tools/gimptexttool.c:565
 msgid "GIMP Text Editor"
-msgstr "Farbpaletteneditor"
+msgstr "GIMP Text Editor"
+
+#: app/tools/gimptexttool.c:590
+msgid "Load Text from File"
+msgstr "Text aus Datei laden"
+
+#: app/tools/gimptexttool.c:594
+msgid "Clear all Text"
+msgstr ""
+
+#: app/tools/gimptexttool.c:637
+msgid "Open Text File (UTF-8)"
+msgstr ""
+
+#: app/tools/gimptexttool.c:687
+#, c-format
+msgid "Error opening file '%s': %s"
+msgstr "Kann Datei '%s' nicht öffnen: %s"
+
+#: app/tools/gimptexttool.c:716
+#, c-format
+msgid "Invalid UTF-8 data in file '%s'."
+msgstr "Ungültiger UTF-8 Text in Datei '%s'."
 
 #: app/tools/gimpthresholdtool.c:85
 msgid "Threshold"
@@ -6835,7 +6848,7 @@ msgstr "Schwellwert anwenden"
 msgid "Threshold does not operate on indexed drawables."
 msgstr "Schwellwert funktioniert nicht mit indizierten Bildern"
 
-#: app/tools/gimpthresholdtool.c:258
+#: app/tools/gimpthresholdtool.c:249
 msgid "Threshold Range:"
 msgstr "Schwellwert Bereich:"
 
@@ -7358,7 +7371,7 @@ msgstr ""
 "Der aktive Farbverlauf.\n"
 "Klick öffnet die Farbverlaufsauswahl."
 
-#: app/widgets/gimptoolbox.c:671
+#: app/widgets/gimptoolbox.c:685
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
@@ -7447,16 +7460,16 @@ msgstr "Nur Abdunkeln"
 msgid "Lighten Only"
 msgstr "Nur Aufhellen"
 
-#: app/widgets/gimpwidgets-utils.c:93
+#: app/widgets/gimpwidgets-utils.c:95
 #, c-format
-msgid "Message repeated %d times"
-msgstr "Meldung %d mal wiederholt"
+msgid "Message repeated %d times."
+msgstr "Meldung %d mal wiederholt."
 
-#: app/widgets/gimpwidgets-utils.c:106
-msgid "Message repeated once"
-msgstr "Meldung einmal wiederholt"
+#: app/widgets/gimpwidgets-utils.c:105
+msgid "Message repeated once."
+msgstr "Meldung einmal wiederholt."
 
-#: app/widgets/gimpwidgets-utils.c:120
+#: app/widgets/gimpwidgets-utils.c:122
 msgid ""
 "WARNING:\n"
 "Too many open message dialogs.\n"
@@ -7466,7 +7479,7 @@ msgstr ""
 "Es sind zu viele Dialoge mit Fehlermeldungen geöffnet.\n"
 "Ausgabe erfolgt jetzt auf der Standard-Fehlerausgabe."
 
-#: app/widgets/gimpwidgets-utils.c:128
+#: app/widgets/gimpwidgets-utils.c:130
 msgid "GIMP Message"
 msgstr "GIMP Meldung"
 
@@ -7494,43 +7507,47 @@ msgstr "XCF Fehler: nicht unterstützte XCF-Dateiversion %d aufgetreten"
 msgid "open failed on %s: %s\n"
 msgstr "%s konnte nicht geöffnet werden: %s\n"
 
-#: modules/cdisplay_gamma.c:94
+#: modules/cdisplay_gamma.c:97
 msgid "Gamma color display filter"
 msgstr "Gamma Anzeigenfarbfilter"
 
-#: modules/cdisplay_gamma.c:353
+#: modules/cdisplay_gamma.c:352
 msgid "Gamma:"
 msgstr "Gamma:"
 
-#: modules/cdisplay_highcontrast.c:36 modules/cdisplay_highcontrast.c:324
-msgid "High Contrast"
-msgstr "Hochkontrast"
-
-#: modules/cdisplay_highcontrast.c:95
+#: modules/cdisplay_highcontrast.c:97
 msgid "High Contrast color display filter"
 msgstr "Hochkontrast Anzeigenfarbfilter"
 
-#: modules/cdisplay_highcontrast.c:346
+#: modules/cdisplay_highcontrast.c:163
+msgid "Contrast"
+msgstr "Kontrast"
+
+#: modules/cdisplay_highcontrast.c:331
+msgid "High Contrast"
+msgstr "Hochkontrast"
+
+#: modules/cdisplay_highcontrast.c:349
 msgid "Contrast Cycles:"
 msgstr "Kontrastverstärkung:"
 
-#: modules/colorsel_triangle.c:84
+#: modules/colorsel_triangle.c:110
 msgid "Painter-style color selector as a pluggable color selector"
 msgstr "Farbauswahl im Stil von Painter als ladbares Modul"
 
-#: modules/colorsel_triangle.c:150 modules/colorsel_triangle.c:152
+#: modules/colorsel_triangle.c:182
 msgid "Triangle"
 msgstr "Dreieck"
 
-#: modules/colorsel_water.c:88
+#: modules/colorsel_water.c:107
 msgid "Watercolor style color selector as a pluggable module"
 msgstr "Farbauswahl im Stil von Wasserfarben als ladbares Modul"
 
-#: modules/colorsel_water.c:110 modules/colorsel_water.c:113
+#: modules/colorsel_water.c:179
 msgid "Watercolor"
 msgstr "Wasserfarbe"
 
-#: modules/colorsel_water.c:472
+#: modules/colorsel_water.c:253
 msgid "Pressure"
 msgstr "Druck"
 

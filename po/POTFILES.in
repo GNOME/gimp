@@ -63,7 +63,6 @@ app/gui/about-dialog.c
 app/gui/brush-select.c
 app/gui/channels-commands.c
 app/gui/color-notebook.c
-app/gui/color-select.c
 app/gui/colormap-editor-commands.c
 app/gui/convert-dialog.c
 app/gui/device-status-dialog.c

@@ -171,7 +171,7 @@ gimp_module_load (GTypeModule *module)
   g_return_val_if_fail (gimp_module->module == NULL, FALSE);
 
   if (gimp_module->verbose)
-    g_print (_("loading module: '%s'\n"), gimp_module->filename);
+    g_print (_("Loading module: '%s'\n"), gimp_module->filename);
 
   gimp_module->module = g_module_open (gimp_module->filename,
                                        G_MODULE_BIND_LAZY);
@@ -183,7 +183,7 @@ gimp_module_load (GTypeModule *module)
 
       if (gimp_module->verbose)
 	g_message (_("Module '%s' load error:\n%s"),
-		   gimp_module->filename, gimp_module->last_module_error);
+                   gimp_module->filename, gimp_module->last_module_error);
       return FALSE;
     }
 
@@ -193,11 +193,11 @@ gimp_module_load (GTypeModule *module)
       gimp_module->state = GIMP_MODULE_STATE_ERROR;
 
       gimp_module_set_last_error (gimp_module,
-                                  _("Missing gimp_module_query() symbol"));
+                                  "Missing gimp_module_query() symbol");
 
       if (gimp_module->verbose)
-	g_message (_("Module '%s' load error:\n%s"),
-		   gimp_module->filename, gimp_module->last_module_error);
+	g_print (_("Module '%s' load error:\n%s"),
+                 gimp_module->filename, gimp_module->last_module_error);
       g_module_close (gimp_module->module);
       gimp_module->module = NULL;
       return FALSE;
@@ -218,7 +218,7 @@ gimp_module_load (GTypeModule *module)
       gimp_module->state = GIMP_MODULE_STATE_ERROR;
 
       gimp_module_set_last_error (gimp_module,
-                                  _("gimp_module_query() returned NULL"));
+                                  "gimp_module_query() returned NULL");
 
       if (gimp_module->verbose)
 	g_message (_("Module '%s' load error:\n%s"),
@@ -237,7 +237,7 @@ gimp_module_load (GTypeModule *module)
       gimp_module->state = GIMP_MODULE_STATE_ERROR;
 
       gimp_module_set_last_error (gimp_module,
-                                  _("Missing gimp_module_register() symbol"));
+                                  "Missing gimp_module_register() symbol");
 
       if (gimp_module->verbose)
 	g_message (_("Module '%s' load error:\n%s"),
@@ -303,7 +303,7 @@ gimp_module_new (const gchar *filename,
   else
     {
       if (verbose)
-	g_print (_("skipping module: '%s'\n"), filename);
+	g_print (_("Skipping module: '%s'\n"), filename);
 
       module->state = GIMP_MODULE_STATE_UNLOADED_OK;
     }

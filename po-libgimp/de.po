@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.9\n"
-"POT-Creation-Date: 2002-10-10 23:16+0200\n"
-"PO-Revision-Date: 2002-10-09 13:56+0200\n"
+"POT-Creation-Date: 2002-10-21 17:10+0200\n"
+"PO-Revision-Date: 2002-10-21 17:10+0200\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -162,6 +162,26 @@ msgstr "Keine"
 msgid "percent"
 msgstr "Prozent"
 
+#: libgimpmodule/gimpmodule.c:174
+#, c-format
+msgid "Loading module: '%s'\n"
+msgstr "Lade Modul: '%s'\n"
+
+#: libgimpmodule/gimpmodule.c:185 libgimpmodule/gimpmodule.c:199
+#: libgimpmodule/gimpmodule.c:224 libgimpmodule/gimpmodule.c:243
+#, c-format
+msgid ""
+"Module '%s' load error:\n"
+"%s"
+msgstr ""
+"Fehler beim Laden von Modul '%s':\n"
+"%s"
+
+#: libgimpmodule/gimpmodule.c:306
+#, c-format
+msgid "Skipping module: '%s'\n"
+msgstr "Ignoriere Modul: '%s'\n"
+
 #: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
 msgstr "/Vordergrundfarbe"
@@ -222,31 +242,31 @@ msgstr "Sichtbar"
 msgid "_Resize"
 msgstr "_Größe ändern"
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:175
+#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:179
 msgid "_Scale"
 msgstr "_Skalieren"
 
-#: libgimpwidgets/gimpstock.c:131
+#: libgimpwidgets/gimpstock.c:135
 msgid "L_etter Spacing"
 msgstr "L_aufweite"
 
-#: libgimpwidgets/gimpstock.c:132
+#: libgimpwidgets/gimpstock.c:136
 msgid "L_ine Spacing"
 msgstr "Z_eilenabstand"
 
-#: libgimpwidgets/gimpstock.c:153
+#: libgimpwidgets/gimpstock.c:157
 msgid "Crop"
 msgstr "Zuschneiden"
 
-#: libgimpwidgets/gimpstock.c:171
+#: libgimpwidgets/gimpstock.c:175
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: libgimpwidgets/gimpstock.c:174
+#: libgimpwidgets/gimpstock.c:178
 msgid "_Rotate"
 msgstr "_Rotieren"
 
-#: libgimpwidgets/gimpstock.c:176
+#: libgimpwidgets/gimpstock.c:180
 msgid "_Shear"
 msgstr "_Scheren"
 
