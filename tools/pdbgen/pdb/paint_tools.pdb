@@ -172,14 +172,21 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("tools/gimpblendtool.h") ],
-	vars => [ 'GimpImage *gimage' ],
+        headers => [ qw("core/gimpdrawable-blend.h") ],
 	code => <<'CODE'
 {
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-  blend (gimage, drawable, blend_mode, paint_mode, gradient_type, opacity,
-	 offset, repeat, supersample, max_depth, threshold, x1, y1, x2, y2,
-	 NULL, NULL);
+  if (! gimp_drawable_gimage (drawable))
+    {
+      success = FALSE;
+    }
+  else
+    {
+      gimp_drawable_blend (drawable,
+                           blend_mode, paint_mode, gradient_type, opacity,
+	                   offset, repeat, supersample, max_depth, threshold,
+                           x1, y1, x2, y2,
+	                   NULL, NULL);
+    }
 }
 CODE
     );

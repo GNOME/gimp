@@ -163,6 +163,36 @@ typedef enum
   PATTERN_BUCKET_FILL
 } BucketFillMode;
 
+typedef enum
+{
+  LINEAR,
+  BILINEAR,
+  RADIAL,
+  SQUARE,
+  CONICAL_SYMMETRIC,
+  CONICAL_ASYMMETRIC,
+  SHAPEBURST_ANGULAR,
+  SHAPEBURST_SPHERICAL,
+  SHAPEBURST_DIMPLED,
+  SPIRAL_CLOCKWISE,
+  SPIRAL_ANTICLOCKWISE
+} GradientType;
+
+typedef enum  /*< chop=_MODE >*/
+{
+  FG_BG_RGB_MODE,
+  FG_BG_HSV_MODE,
+  FG_TRANS_MODE,
+  CUSTOM_MODE
+} BlendMode;
+
+typedef enum
+{
+  REPEAT_NONE,
+  REPEAT_SAWTOOTH,
+  REPEAT_TRIANGULAR
+} RepeatMode;
+
 
 /*  base objects  */
 

@@ -48,6 +48,10 @@ extern "C" {
 #define GIMP_STOCK_TO_SELECTION "gimp-to-selection"
 #define GIMP_STOCK_VISIBLE      "gimp-visible"
 
+#define GIMP_STOCK_NAVIGATION   "gimp-navigation"
+#define GIMP_STOCK_QMASK_OFF    "gimp-qmask-off"
+#define GIMP_STOCK_QMASK_ON     "gimp-qmask-on"
+
 #define GIMP_STOCK_TOOL_AIRBRUSH            "gimp-tool-airbrush"
 #define GIMP_STOCK_TOOL_BEZIER_SELECT       "gimp-tool-bezier-select"
 #define GIMP_STOCK_TOOL_BLEND               "gimp-tool-blend"

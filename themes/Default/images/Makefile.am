@@ -21,6 +21,9 @@ STOCK_IMAGES = @STRIP_BEGIN@ \
 	stock-button-refresh.png	\
 	stock-button-to-path.png	\
 	stock-button-to-selection.png	\
+	stock-menu-navigation.png	\
+	stock-menu-qmask-off.png	\
+	stock-menu-qmask-on.png		\
 @STRIP_END@
 
 themedata_DATA = $(STOCK_IMAGES)

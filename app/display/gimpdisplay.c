@@ -173,6 +173,8 @@ gdisplay_new (GimpImage *gimage,
   /*  create the shell for the image  */
   gdisp->shell = gimp_display_shell_new (gdisp);
 
+  gtk_widget_show (gdisp->shell);
+
   return gdisp;
 }
 

@@ -66,10 +66,6 @@
 #include "gdisplay_color.h"
 #endif /* DISPLAY_FILTERS */
 
-#include "pixmaps/qmasksel.xpm"
-#include "pixmaps/qmasknosel.xpm"
-#include "pixmaps/navbutton.xpm"
-
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps/wilber.xpm"
@@ -321,33 +317,23 @@ gimp_display_shell_delete_event (GtkWidget   *widget,
 GtkWidget *
 gimp_display_shell_new (GimpDisplay *gdisp)
 {
-  static GdkPixmap *qmasksel_pixmap   = NULL;
-  static GdkBitmap *qmasksel_mask     = NULL;
-  static GdkPixmap *qmasknosel_pixmap = NULL;
-  static GdkBitmap *qmasknosel_mask   = NULL;
-  static GdkPixmap *navbutton_pixmap  = NULL;
-  static GdkBitmap *navbutton_mask    = NULL;
-
   GimpDisplayShell *shell;
-
-  GtkWidget *main_vbox;
-  GtkWidget *disp_vbox;
-  GtkWidget *upper_hbox;
-  GtkWidget *lower_hbox;
-  GtkWidget *inner_table;
-  GtkWidget *status_hbox;
-  GtkWidget *arrow;
-  GtkWidget *pixmap;
-  GtkWidget *label_frame;
-  GtkWidget *nav_ebox;
-
-  GSList *group = NULL;
-
-  gint image_width, image_height;
-  gint n_width, n_height;
-  gint s_width, s_height;
-  gint scalesrc, scaledest;
-  gint contextid;
+  GtkWidget        *main_vbox;
+  GtkWidget        *disp_vbox;
+  GtkWidget        *upper_hbox;
+  GtkWidget        *lower_hbox;
+  GtkWidget        *inner_table;
+  GtkWidget        *status_hbox;
+  GtkWidget        *arrow;
+  GtkWidget        *image;
+  GtkWidget        *label_frame;
+  GtkWidget        *nav_ebox;
+  GSList           *group = NULL;
+  gint              image_width, image_height;
+  gint              n_width, n_height;
+  gint              s_width, s_height;
+  gint              scalesrc, scaledest;
+  gint              contextid;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), NULL);
 
@@ -594,14 +580,9 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   gtk_widget_set_extension_events (shell->canvas, GDK_EXTENSION_EVENTS_ALL);
   GTK_WIDGET_SET_FLAGS (shell->canvas, GTK_CAN_FOCUS);
 
-#if 0
-
-  FIXME
-
   g_signal_connect (G_OBJECT (shell->canvas), "realize",
-                    G_CALLBACK (gimp_display_shell_canvas_events),
+                    G_CALLBACK (gimp_display_shell_canvas_realize),
                     shell);
-#endif
 
   /*  set the active display before doing any other canvas event processing  */
   g_signal_connect (G_OBJECT (shell->canvas), "event",
@@ -617,9 +598,28 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   /*  the qmask buttons  */
   shell->qmaskoff = gtk_radio_button_new (group);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (shell->qmaskoff));
-  gtk_widget_set_usize (GTK_WIDGET (shell->qmaskoff), 15, 15);
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->qmaskoff), FALSE);
   GTK_WIDGET_UNSET_FLAGS (shell->qmaskoff, GTK_CAN_FOCUS);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_QMASK_OFF, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (shell->qmaskoff), image);
+  gtk_widget_show (image);
+
+  gimp_help_set_help_data (shell->qmaskoff, NULL, "#qmask_off_button");
+
+  shell->qmaskon = gtk_radio_button_new (group);
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (shell->qmaskon));
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->qmaskon), FALSE);
+  GTK_WIDGET_UNSET_FLAGS (shell->qmaskon, GTK_CAN_FOCUS);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_QMASK_ON, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (shell->qmaskon), image);
+  gtk_widget_show (image);
+
+  if (gdisp->gimage->qmask_state)
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmaskon), TRUE);
+  else
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmaskoff), TRUE);
 
   g_signal_connect (G_OBJECT (shell->qmaskoff), "toggled",
 		    G_CALLBACK (qmask_deactivate_callback),
@@ -627,14 +627,6 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   g_signal_connect (G_OBJECT (shell->qmaskoff), "button_press_event",
 		    G_CALLBACK (qmask_button_press_callback),
 		    gdisp);
-
-  gimp_help_set_help_data (shell->qmaskoff, NULL, "#qmask_off_button");
-
-  shell->qmaskon = gtk_radio_button_new (group);
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (shell->qmaskon));
-  gtk_widget_set_usize (GTK_WIDGET (shell->qmaskon), 15, 15);
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->qmaskon), FALSE);
-  GTK_WIDGET_UNSET_FLAGS (shell->qmaskon, GTK_CAN_FOCUS);
 
   g_signal_connect (G_OBJECT (shell->qmaskon), "toggled",
 		    G_CALLBACK (qmask_activate_callback),
@@ -645,10 +637,12 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 
   gimp_help_set_help_data (shell->qmaskon, NULL, "#qmask_on_button");
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmaskoff), TRUE);
-
   /*  the navigation window button  */
   nav_ebox = gtk_event_box_new ();
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_NAVIGATION, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (nav_ebox), image); 
+  gtk_widget_show (image);
 
   g_signal_connect (G_OBJECT (nav_ebox), "button_press_event",
 		    G_CALLBACK (nav_popup_click_handler),
@@ -656,57 +650,12 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 
   gimp_help_set_help_data (nav_ebox, NULL, "#nav_window_button");
 
-  /* We need to realize the shell so that we have a GdkWindow for
-   * the pixmap creation.
-   */
-
-  /* EEK */ gdisp->shell  = GTK_WIDGET (shell);
-
-  gtk_widget_realize (GTK_WIDGET (shell));
-
-  /*  create the pixmaps  ****************************************************/
-  if (! qmasksel_pixmap)
-    {
-      GtkStyle *style;
-
-      style = gtk_widget_get_style (GTK_WIDGET (shell));
-
-      qmasksel_pixmap =
-	gdk_pixmap_create_from_xpm_d (GTK_WIDGET (shell)->window,
-				      &qmasksel_mask,
-				      &style->bg[GTK_STATE_NORMAL],
-				      qmasksel_xpm);   
-      qmasknosel_pixmap =
-	gdk_pixmap_create_from_xpm_d (GTK_WIDGET (shell)->window,
-				      &qmasknosel_mask,
-				      &style->bg[GTK_STATE_NORMAL],
-				      qmasknosel_xpm);   
-      navbutton_pixmap =
-	gdk_pixmap_create_from_xpm_d (GTK_WIDGET (shell)->window,
-				      &navbutton_mask,
-				      &style->bg[GTK_STATE_NORMAL],
-				      navbutton_xpm);   
-    }
-
   /*  Icon stuff  */
   g_signal_connect (G_OBJECT (gdisp->gimage), "invalidate_preview",
 		    G_CALLBACK (gimp_display_shell_update_icon_scheduler),
 		    shell);
 
   gimp_display_shell_update_icon_scheduler (gdisp->gimage, shell);
-
-  /*  create the GtkPixmaps  */
-  pixmap = gtk_pixmap_new (qmasksel_pixmap, qmasksel_mask);
-  gtk_container_add (GTK_CONTAINER (shell->qmaskon), pixmap);
-  gtk_widget_show (pixmap);
-
-  pixmap = gtk_pixmap_new (qmasknosel_pixmap, qmasknosel_mask);
-  gtk_container_add (GTK_CONTAINER (shell->qmaskoff), pixmap);
-  gtk_widget_show (pixmap);
-
-  pixmap = gtk_pixmap_new (navbutton_pixmap, navbutton_mask);
-  gtk_container_add (GTK_CONTAINER (nav_ebox), pixmap); 
-  gtk_widget_show (pixmap);
 
   /*  create the contents of the status area *********************************/
 
@@ -791,32 +740,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
       gtk_widget_show (shell->statusarea);
     }
 
-  gtk_widget_realize (shell->canvas);
-  gdk_window_set_back_pixmap (shell->canvas->window, NULL, FALSE);
-
-  /*  we need to realize the cursor_label widget here, so the size gets
-   *  computed correctly
-   */
-  gtk_widget_realize (shell->cursor_label);
-  gimp_display_shell_resize_cursor_label (shell);
-
   gtk_widget_show (main_vbox);
-  gtk_widget_show (GTK_WIDGET (shell));
-
-  /*  set the focus to the canvas area  */
-  gtk_widget_grab_focus (shell->canvas);
-
-  /*  update the title  */
-  gimp_display_shell_update_title (shell);
-
-  /* set the qmask buttons */
-  qmask_buttons_update (gdisp);
-
-  /*  set the current tool cursor  */
-  gimp_display_shell_install_tool_cursor (shell,
-                                          GDK_TOP_LEFT_ARROW,
-                                          GIMP_TOOL_CURSOR_NONE,
-                                          GIMP_CURSOR_MODIFIER_NONE);
 
   return GTK_WIDGET (shell);
 }

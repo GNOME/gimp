@@ -48,6 +48,8 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpdocuments.h			\
 	gimpdrawable.c			\
 	gimpdrawable.h			\
+	gimpdrawable-blend.c		\
+	gimpdrawable-blend.h		\
 	gimpdrawable-bucket-fill.c	\
 	gimpdrawable-bucket-fill.h	\
 	gimpdrawable-desaturate.c	\

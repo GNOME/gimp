@@ -360,6 +360,47 @@ package Gimp::CodeGen::enums;
 		       BG_BUCKET_FILL => '1',
 		       PATTERN_BUCKET_FILL => '2' }
 	},
+    GradientType =>
+	{ contig => 1,
+	  header => 'core/core-types.h',
+	  symbols => [ qw(LINEAR BILINEAR RADIAL SQUARE CONICAL_SYMMETRIC
+			  CONICAL_ASYMMETRIC SHAPEBURST_ANGULAR
+			  SHAPEBURST_SPHERICAL SHAPEBURST_DIMPLED
+			  SPIRAL_CLOCKWISE SPIRAL_ANTICLOCKWISE) ],
+	  mapping => { LINEAR => '0',
+		       BILINEAR => '1',
+		       RADIAL => '2',
+		       SQUARE => '3',
+		       CONICAL_SYMMETRIC => '4',
+		       CONICAL_ASYMMETRIC => '5',
+		       SHAPEBURST_ANGULAR => '6',
+		       SHAPEBURST_SPHERICAL => '7',
+		       SHAPEBURST_DIMPLED => '8',
+		       SPIRAL_CLOCKWISE => '9',
+		       SPIRAL_ANTICLOCKWISE => '10' }
+	},
+    BlendMode =>
+	{ contig => 1,
+	  header => 'core/core-types.h',
+	  symbols => [ qw(FG_BG_RGB_MODE FG_BG_HSV_MODE FG_TRANS_MODE
+			  CUSTOM_MODE) ],
+	  mapping => { FG_BG_RGB_MODE => '0',
+		       FG_BG_HSV_MODE => '1',
+		       FG_TRANS_MODE => '2',
+		       CUSTOM_MODE => '3' },
+	  nicks   => { FG_BG_RGB_MODE => 'FG_BG_RGB',
+		       FG_BG_HSV_MODE => 'FG_BG_HSV',
+		       FG_TRANS_MODE => 'FG_TRANS',
+		       CUSTOM_MODE => 'CUSTOM' }
+	},
+    RepeatMode =>
+	{ contig => 1,
+	  header => 'core/core-types.h',
+	  symbols => [ qw(REPEAT_NONE REPEAT_SAWTOOTH REPEAT_TRIANGULAR) ],
+	  mapping => { REPEAT_NONE => '0',
+		       REPEAT_SAWTOOTH => '1',
+		       REPEAT_TRIANGULAR => '2' }
+	},
     RunModeType =>
 	{ contig => 1,
 	  header => 'plug-in/plug-in-types.h',
@@ -395,47 +436,6 @@ package Gimp::CodeGen::enums;
 		       LOOP_SAWTOOTH => '2',
 		       LOOP_TRIANGLE => '3',
 		       ONCE_END_COLOR => '4' }
-	},
-    GradientType =>
-	{ contig => 1,
-	  header => 'tools/gimpblendtool.h',
-	  symbols => [ qw(LINEAR BILINEAR RADIAL SQUARE CONICAL_SYMMETRIC
-			  CONICAL_ASYMMETRIC SHAPEBURST_ANGULAR
-			  SHAPEBURST_SPHERICAL SHAPEBURST_DIMPLED
-			  SPIRAL_CLOCKWISE SPIRAL_ANTICLOCKWISE) ],
-	  mapping => { LINEAR => '0',
-		       BILINEAR => '1',
-		       RADIAL => '2',
-		       SQUARE => '3',
-		       CONICAL_SYMMETRIC => '4',
-		       CONICAL_ASYMMETRIC => '5',
-		       SHAPEBURST_ANGULAR => '6',
-		       SHAPEBURST_SPHERICAL => '7',
-		       SHAPEBURST_DIMPLED => '8',
-		       SPIRAL_CLOCKWISE => '9',
-		       SPIRAL_ANTICLOCKWISE => '10' }
-	},
-    BlendMode =>
-	{ contig => 1,
-	  header => 'tools/gimpblendtool.h',
-	  symbols => [ qw(FG_BG_RGB_MODE FG_BG_HSV_MODE FG_TRANS_MODE
-			  CUSTOM_MODE) ],
-	  mapping => { FG_BG_RGB_MODE => '0',
-		       FG_BG_HSV_MODE => '1',
-		       FG_TRANS_MODE => '2',
-		       CUSTOM_MODE => '3' },
-	  nicks   => { FG_BG_RGB_MODE => 'FG_BG_RGB',
-		       FG_BG_HSV_MODE => 'FG_BG_HSV',
-		       FG_TRANS_MODE => 'FG_TRANS',
-		       CUSTOM_MODE => 'CUSTOM' }
-	},
-    RepeatMode =>
-	{ contig => 1,
-	  header => 'tools/gimpblendtool.h',
-	  symbols => [ qw(REPEAT_NONE REPEAT_SAWTOOTH REPEAT_TRIANGULAR) ],
-	  mapping => { REPEAT_NONE => '0',
-		       REPEAT_SAWTOOTH => '1',
-		       REPEAT_TRIANGULAR => '2' }
 	},
     CloneType =>
 	{ contig => 1,

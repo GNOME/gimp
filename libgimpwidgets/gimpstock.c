@@ -101,7 +101,11 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_STROKE,       N_("_Stroke"),           0, 0, "gimp-libgimp" },
   { GIMP_STOCK_TO_PATH,      N_("Selection To Path"), 0, 0, "gimp-libgimp" },
   { GIMP_STOCK_TO_SELECTION, N_("To Sleection"),      0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_VISIBLE,      N_("Visible"),           0, 0, "gimp-libgimp" }
+  { GIMP_STOCK_VISIBLE,      N_("Visible"),           0, 0, "gimp-libgimp" },
+
+  { GIMP_STOCK_NAVIGATION,   NULL,                    0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_QMASK_OFF,    NULL,                    0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_QMASK_ON,     NULL,                    0, 0, "gimp-libgimp" }
 };
 
 static struct
@@ -109,7 +113,7 @@ static struct
   const gchar   *stock_id;
   gconstpointer  inline_data;
 }
-gimp_stock_pixbufs[] =
+gimp_stock_button_pixbufs[] =
 {
   { GIMP_STOCK_ANCHOR,                   stock_button_anchor                   },
   { GIMP_STOCK_DELETE,                   stock_button_delete                   },
@@ -169,6 +173,19 @@ gimp_stock_pixbufs[] =
   { GIMP_STOCK_TOOL_ZOOM,                stock_tool_button_zoom                }
 };
 
+static struct
+{
+  const gchar   *stock_id;
+  gconstpointer  inline_data;
+}
+gimp_stock_menu_pixbufs[] =
+{
+  { GIMP_STOCK_NAVIGATION, stock_menu_navigation },
+  { GIMP_STOCK_QMASK_OFF,  stock_menu_qmask_off  },
+  { GIMP_STOCK_QMASK_ON,   stock_menu_qmask_on   }
+};
+
+
 void
 gimp_stock_init (void)
 {
@@ -181,12 +198,20 @@ gimp_stock_init (void)
 
   gimp_stock_factory = gtk_icon_factory_new ();
 
-  for (i = 0; i < G_N_ELEMENTS (gimp_stock_pixbufs); i++)
+  for (i = 0; i < G_N_ELEMENTS (gimp_stock_button_pixbufs); i++)
     {
       add_sized_with_same_fallback (gimp_stock_factory,
-				    gimp_stock_pixbufs[i].inline_data,
+				    gimp_stock_button_pixbufs[i].inline_data,
 				    GTK_ICON_SIZE_BUTTON,
-				    gimp_stock_pixbufs[i].stock_id);
+				    gimp_stock_button_pixbufs[i].stock_id);
+    }
+
+  for (i = 0; i < G_N_ELEMENTS (gimp_stock_menu_pixbufs); i++)
+    {
+      add_sized_with_same_fallback (gimp_stock_factory,
+				    gimp_stock_menu_pixbufs[i].inline_data,
+				    GTK_ICON_SIZE_MENU,
+				    gimp_stock_menu_pixbufs[i].stock_id);
     }
 
   gtk_icon_factory_add_default (gimp_stock_factory);

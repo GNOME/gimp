@@ -45,9 +45,7 @@
 #include "core/gimpparasite.h"
 #include "core/gimpparasitelist.h"
 
-#include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
 
 #include "tools/gimpbycolorselecttool.h"
 #include "tools/gimptool.h"
@@ -2029,6 +2027,7 @@ undo_push_fs_to_layer (GimpImage *gimage,
   else
     {
       tile_manager_destroy (fsu->layer->fs.backing_store);
+      fsu->layer->fs.backing_store = NULL;
       g_free (fsu);
       return FALSE;
     }
@@ -2109,7 +2108,11 @@ undo_free_fs_to_layer (UndoState  state,
   fsu = (FStoLayerUndo *) fsu_ptr;
 
   if (state == UNDO)
-    tile_manager_destroy (fsu->layer->fs.backing_store);
+    {
+      tile_manager_destroy (fsu->layer->fs.backing_store);
+      fsu->layer->fs.backing_store = NULL;
+    }
+
   g_free (fsu);
 }
 

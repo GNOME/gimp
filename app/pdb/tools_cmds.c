@@ -32,12 +32,12 @@
 #include "base/base-types.h"
 #include "base/tile-manager.h"
 #include "core/core-types.h"
+#include "core/gimpdrawable-blend.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-mask-select.h"
 #include "core/gimpimage.h"
 #include "tools/gimpairbrushtool.h"
-#include "tools/gimpblendtool.h"
 #include "tools/gimpclonetool.h"
 #include "tools/gimpcolorpickertool.h"
 #include "tools/gimpconvolvetool.h"
@@ -264,7 +264,6 @@ blend_invoker (Gimp     *gimp,
   gdouble y1;
   gdouble x2;
   gdouble y2;
-  GimpImage *gimage;
 
   drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
@@ -314,10 +313,18 @@ blend_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-      blend (gimage, drawable, blend_mode, paint_mode, gradient_type, opacity,
-	     offset, repeat, supersample, max_depth, threshold, x1, y1, x2, y2,
-	     NULL, NULL);
+      if (! gimp_drawable_gimage (drawable))
+	{
+	  success = FALSE;
+	}
+      else
+	{
+	  gimp_drawable_blend (drawable,
+			       blend_mode, paint_mode, gradient_type, opacity,
+			       offset, repeat, supersample, max_depth, threshold,
+			       x1, y1, x2, y2,
+			       NULL, NULL);
+	}
     }
 
   return procedural_db_return_args (&blend_proc, success);

@@ -41,6 +41,13 @@ STOCK_VARIABLES = @STRIP_BEGIN@ \
 	$(srcdir)/images/stock-button-to-path.png	\
 	stock_button_to_selection			\
 	$(srcdir)/images/stock-button-to-selection.png	\
+	\
+	stock_menu_navigation				\
+	$(srcdir)/images/stock-menu-navigation.png	\
+	stock_menu_qmask_off 				\
+	$(srcdir)/images/stock-menu-qmask-off.png	\
+	stock_menu_qmask_on  				\
+	$(srcdir)/images/stock-menu-qmask-on.png	\
 @STRIP_END@
 
 STOCK_TOOL_VARIABLES = @STRIP_BEGIN@ \

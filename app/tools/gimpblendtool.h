@@ -23,40 +23,6 @@
 #include "gimpdrawtool.h"
 
 
-typedef enum
-{
-  LINEAR,
-  BILINEAR,
-  RADIAL,
-  SQUARE,
-  CONICAL_SYMMETRIC,
-  CONICAL_ASYMMETRIC,
-  SHAPEBURST_ANGULAR,
-  SHAPEBURST_SPHERICAL,
-  SHAPEBURST_DIMPLED,
-  SPIRAL_CLOCKWISE,
-  SPIRAL_ANTICLOCKWISE,
-  GRADIENT_TYPE_LAST  /*< skip >*/
-} GradientType;
-
-typedef enum  /*< chop=_MODE >*/
-{
-  FG_BG_RGB_MODE,
-  FG_BG_HSV_MODE,
-  FG_TRANS_MODE,
-  CUSTOM_MODE,
-  BLEND_MODE_LAST /*< skip >*/
-} BlendMode;
-
-typedef enum
-{
-  REPEAT_NONE,
-  REPEAT_SAWTOOTH,
-  REPEAT_TRIANGULAR,
-  REPEAT_LAST /*< skip >*/
-} RepeatMode;
-
-
 #define GIMP_TYPE_BLEND_TOOL            (gimp_blend_tool_get_type ())
 #define GIMP_BLEND_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BLEND_TOOL, GimpBlendTool))
 #define GIMP_BLEND_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BLEND_TOOL, GimpBlendToolClass))
@@ -86,27 +52,9 @@ struct _GimpBlendToolClass
 };
 
 
-void      gimp_blend_tool_register (Gimp             *gimp);
+void    gimp_blend_tool_register (Gimp *gimp);
 
-GType     gimp_blend_tool_get_type (void);
-
-void      blend                    (GimpImage        *gimage,
-                                    GimpDrawable     *drawable,
-                                    BlendMode         blend_mode,
-                                    gint              paint_mode,
-                                    GradientType      gradient_type,
-                                    gdouble           opacity,
-                                    gdouble           offset,
-                                    RepeatMode        repeat,
-                                    gint              supersample,
-                                    gint              max_depth,
-                                    gdouble           threshold,
-                                    gdouble           startx,
-                                    gdouble           starty,
-                                    gdouble           endx,
-                                    gdouble           endy,
-                                    GimpProgressFunc  progress_callback,
-                                    gpointer          progress_data);
+GType   gimp_blend_tool_get_type (void);
 
 
 #endif  /*  __GIMP_BLEND_TOOL_H__  */

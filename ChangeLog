@@ -1,3 +1,48 @@
+2001-11-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/undo.c: should set the fs.backing_store TileManager pointer
+	to NULL after deleting it. Why the heck didn't this crash
+	before...?
+
+	* app/core/Makefile.am
+	* app/core/gimpdrawable-blend.[ch]: the blend stuff taken from
+	the blend tool.
+
+	* app/core/core-types.h: added the blend enums.
+
+	* app/tools/gimpblendtool.[ch]: removed the stuff here.
+
+	* tools/pdbgen/pdb/tools.pdb: changed blend wrapper accordingly.
+
+	* app/pdb/tools_cmds.c: regenerated.
+
+	* tools/pdbgen/Makefile.am: don't scan tools/gimpblendtool.c.
+
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* app/tools/gimpbucketfilltool.c: fixed crash caused by my last
+	change.
+
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell.c: removed lots of uglyness by
+	using GtkImages for the qmask and navigation buttons. Don't realize
+	anything before the shell is shown. Connect the realize
+	callback and do stuff there. Don't call the realize callback
+	from gimp_display_shell_canvas_events() any more.
+
+	* pixmaps/navbutton.xpm
+	* pixmaps/qmasknosel.xpm
+	* pixmaps/qmasksel.xpm: removed.
+
+	* themes/Default/Makefile.am
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-menu-navigation.png
+	* themes/Default/images/stock-menu-qmask-off.png
+	* themes/Default/images/stock-menu-qmask-on.png: new PNGs instead.
+
+	* libgimpwidgets/gimpstock.[ch]: register them as stock icons.
+
 2001-11-09  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/file-open-dialog.c: merged fix for bug #63880 from stable

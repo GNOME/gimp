@@ -166,6 +166,13 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 
   gdisp = shell->gdisp;
 
+  gtk_widget_grab_focus (shell->canvas);
+
+  gdk_window_set_back_pixmap (shell->canvas->window, NULL, FALSE);
+
+  gimp_display_shell_resize_cursor_label (shell);
+  gimp_display_shell_update_title (shell);
+
   /*  create the selection object  */
   gdisp->select = selection_create (canvas->window,
                                     gdisp,
@@ -190,6 +197,12 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 
   /*  setup scale properly  */
   gimp_display_shell_scale_setup (shell);
+
+  /*  set the initial cursor  */
+  gimp_display_shell_install_tool_cursor (shell,
+                                          GDK_TOP_LEFT_ARROW,
+                                          GIMP_TOOL_CURSOR_NONE,
+                                          GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void
@@ -290,19 +303,13 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
   if (! canvas->window)
     {
-      g_warning ("imp_display_shell_canvas_events(): called unrealized");
+      g_warning ("gimp_display_shell_canvas_events(): called unrealized");
       return FALSE;
     }
 
   gdisp = shell->gdisp;
 
   active_tool = tool_manager_get_active (gdisp->gimage->gimp);
-
-  /* FIXME */
-  if (! gdisp->select)
-    {
-      gimp_display_shell_canvas_realize (shell->canvas, shell);
-    }
 
   /*  Find out what device the event occurred upon  */
   if (! gdisp->gimage->gimp->busy && devices_check_change (event))
