@@ -1,4 +1,4 @@
-2005-02-23  Manish Singh  <yosh@gimp.org>
+2005-02-24  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/url.c: Handle HTTP 302 Redirect output from wget
 	properly. Also give a little more informative display for unspecified
