@@ -70,16 +70,12 @@ typedef enum
 
 typedef enum
 {
-  FILL_FOREGROUND = 0,
+  FILL_NONE = 0,
+  FILL_FOREGROUND,
   FILL_BACKGROUND,
-  FILL_PATTERN
+  FILL_PATTERN,
+  FILL_GRADIENT
 } FillType;
-
-typedef enum
-{
-  FILL_EACH = 0,
-  FILL_AFTER
-} FillWhen;
 
 typedef struct
 {
@@ -89,7 +85,6 @@ typedef struct
   gdouble       feather_radius; /* Radius to feather */
   ArcType       as_pie;         /* Arc type selection segment/sector */
   FillType      fill_type;      /* Fill type for selection */
-  FillWhen      fill_when;      /* Fill on each selection or after all? */
   gdouble       fill_opacity;   /* You can guess this one */
 } selection_option;
 
@@ -124,14 +119,6 @@ typedef enum
     BRUSH_PATTERN_TYPE
   } BrushType;
 
-typedef enum
-  {
-    STYLE_SOURCE_GIMP = 0,
-    STYLE_SOURCE_DEFAULT,
-    STYLE_SOURCE_STYLE,
-    STYLE_SOURCE_OBJECT
-  } StyleSource;
-
 typedef struct 
 {
   gchar        *name;
@@ -143,18 +130,13 @@ typedef struct
   gdouble       brushfade;
   gdouble       brushgradient;
   gdouble       airbrushpressure;
-  StyleSource   brush_source;
   FillType      fill_type;
-  StyleSource   fill_type_source;
+  gdouble       fill_opacity;
   gchar        *pattern;
-  StyleSource   pattern_source;
   gchar        *gradient;
-  StyleSource   gradient_source;
   PaintType     paint_type;
   GimpRGB       foreground;
-  StyleSource   foreground_source;
   GimpRGB       background;
-  StyleSource   background_source;
   gboolean      reverselines;
 } Style;
 
@@ -336,8 +318,6 @@ typedef struct
 
 GFigContext *gfig_context;
 
-extern GFigObj  *pic_obj;
-
 extern selection_option selopt;
 extern SelectItVals selvals;
 
@@ -408,12 +388,12 @@ void   gfig_free                (GFigObj *gfig);
 
 void   save_options             (GString *string);
 
-GString *gfig_save_as_string    (void);
-gboolean gfig_save_as_parasite  (void);
-GFigObj *gfig_load_from_parasite (void);
-GFigObj  * gfig_new             (void);
-void     gfig_save_callbk       (void);
-
+GString   *gfig_save_as_string     (void);
+gboolean   gfig_save_as_parasite   (void);
+GFigObj   *gfig_load_from_parasite (void);
+GFigObj  * gfig_new                (void);
+void       gfig_save_callbk        (void);
+void       paint_layer_fill        (void);
 
 
 

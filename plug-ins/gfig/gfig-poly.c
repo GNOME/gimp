@@ -233,22 +233,17 @@ d_paint_poly (Dobject *obj)
   else
     scale_to_xy (&line_pnts[0], i/2);
 
-  /* One go */
-  if (selvals.painttype == PAINT_BRUSH_TYPE)
-    {
-      gfig_paint (selvals.brshtype,
-                  gfig_context->drawable_id,
-                  i, line_pnts);
-    }
-  else
-    {
-      gimp_free_select (gfig_context->image_id,
-                        i, line_pnts,
-                        selopt.type,
-                        selopt.antia,
-                        selopt.feather,
-                        selopt.feather_radius);
-    }
+
+  gimp_free_select (gfig_context->image_id,
+                    i, line_pnts,
+                    selopt.type,
+                    selopt.antia,
+                    selopt.feather,
+                    selopt.feather_radius);
+
+  paint_layer_fill ();
+
+  gimp_edit_stroke (gfig_context->drawable_id);
 
   g_free (line_pnts);
 }

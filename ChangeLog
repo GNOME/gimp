@@ -1,3 +1,17 @@
+2004-07-09  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+	* gimp/plug-ins/gfig/gfig-circle.c
+	* gimp/plug-ins/gfig/gfig-dialog.c
+	* gimp/plug-ins/gfig/gfig-dobject.c
+	* gimp/plug-ins/gfig/gfig-ellipse.c
+	* gimp/plug-ins/gfig/gfig-poly.c
+	* gimp/plug-ins/gfig/gfig-preview.c
+	* gimp/plug-ins/gfig/gfig-star.c
+	* gimp/plug-ins/gfig/gfig-style.c
+	* gimp/plug-ins/gfig/gfig-style.h
+	* gimp/plug-ins/gfig/gfig.c
+	* gimp/plug-ins/gfig/gfig.h: Made FG, BG, and pattern fill work for
+	fillable objects; other miscellaneous cleanups and minor fixes.
+	
 2004-07-09  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/gui.c: removed the quit dialog code here.

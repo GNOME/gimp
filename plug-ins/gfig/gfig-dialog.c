@@ -143,7 +143,6 @@ selection_option selopt =
   10.0,         /* feather radius */
   ARC_SEGMENT,  /* Arc as a segment */
   FILL_PATTERN, /* Fill as pattern */
-  FILL_EACH,    /* Fill after each selection */
   100.0,        /* Max opacity */
 };
 
@@ -250,10 +249,8 @@ gfig_dialog (void)
   /* initial gimp and default styles */
   gfig_read_gimp_style (&gfig_context->gimp_style, "Gimp");
   gfig_context->current_style = &gfig_context->default_style;
-  gfig_style_set_all_sources (&gfig_context->gimp_style, STYLE_SOURCE_GIMP);
   gfig_style_append (&gfig_context->gimp_style);
   gfig_read_gimp_style (&gfig_context->default_style, "Base");
-  gfig_style_set_all_sources (&gfig_context->default_style, STYLE_SOURCE_DEFAULT);
   gfig_style_append (&gfig_context->default_style);
 
   if (parasite)
@@ -472,9 +469,11 @@ gfig_dialog (void)
 
   /* fill style combo box in Style frame  */
   gfig_context->fillstyle_combo = combo
-    = gimp_int_combo_box_new (_("Pattern"),    FILL_PATTERN,
-                              _("Foreground"), FILL_FOREGROUND,
-                              _("Background"), FILL_BACKGROUND,
+    = gimp_int_combo_box_new (_("No fill"),    FILL_NONE,
+                              _("FG fill"),    FILL_FOREGROUND,
+                              _("BG fill"),    FILL_BACKGROUND,
+                              _("Pattern fill"),  FILL_PATTERN,
+                              _("Gradient fill"), FILL_GRADIENT,
                               NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
   g_signal_connect (combo, "changed",
@@ -536,7 +535,6 @@ gfig_response (GtkWidget *widget,
           /* Update the screen */
           gtk_widget_queue_draw (gfig_context->preview);
           /* And preview */
-          list_button_update (gfig_context->current_obj);
           gfig_context->current_obj->obj_status |= GFIG_MODIFIED;
         }
 
@@ -558,8 +556,6 @@ gfig_response (GtkWidget *widget,
       tmp_line = NULL;
       tmp_bezier = NULL;
       gtk_widget_queue_draw (gfig_context->preview);
-      /* And preview */
-      list_button_update (gfig_context->current_obj);
       gfig_paint_callback ();
       break;
 
@@ -637,8 +633,6 @@ merge_button_callback (GtkWidget *widget,
 
       /* redraw all */
       gtk_widget_queue_draw (gfig_context->preview);
-      /* And preview */
-      list_button_update (gfig_context->current_obj);
     }
 }
 
@@ -691,7 +685,7 @@ static void
 gfig_list_load_all (const gchar *path)
 {
   /*  Make sure to clear any existing gfigs  */
-  gfig_context->current_obj = pic_obj = NULL;
+  gfig_context->current_obj = NULL;
   gfig_list_free_all ();
 
 
@@ -705,7 +699,7 @@ gfig_list_load_all (const gchar *path)
       gfig_list_insert (gfig);
     }
 
-  pic_obj = gfig_context->current_obj = gfig_list->data;  /* set to first entry */
+  gfig_context->current_obj = gfig_list->data;  /* set to first entry */
 }
 
 static void
@@ -777,8 +771,6 @@ create_save_file_chooser (GFigObj   *obj,
     }
 
 
-
-  fprintf (stderr, "Got here.\n");
   gtk_window_present (GTK_WINDOW (window));
 }
 
@@ -938,10 +930,7 @@ select_combo_callback (GtkWidget *widget,
       selopt.as_pie = (ArcType) value;
       break;
     case SELECT_TYPE_MENU_FILL:
-      selopt.fill_type = (FillType) value;
-      break;
-    case SELECT_TYPE_MENU_WHEN:
-      selopt.fill_when = (FillWhen) value;
+      gfig_context->current_style->fill_type = (FillType) value;
       break;
     default:
       g_return_if_reached ();
@@ -1252,17 +1241,6 @@ update_options (GFigObj *old_obj)
     {
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (gfig_opt_widget.gridtypemenu),
                                      gfig_context->current_obj->opts.gridtype);
-
-#ifdef DEBUG
-      printf ("Gridtype set in options to ");
-      if (gfig_context->current_obj->opts.gridtype == RECT_GRID)
-        printf ("RECT_GRID\n");
-      else if (gfig_context->current_obj->opts.gridtype == POLAR_GRID)
-        printf ("POLAR_GRID\n");
-      else if (gfig_context->current_obj->opts.gridtype == ISO_GRID)
-        printf ("ISO_GRID\n");
-      else printf ("NONE\n");
-#endif /* DEBUG */
     }
 }
 
@@ -1553,23 +1531,8 @@ paint_combo_callback (GtkWidget *widget,
 
   switch (mtype)
     {
-    case PAINT_LAYERS_MENU:
-      selvals.onlayers = (DrawonLayers) value;
-
-    case PAINT_BGS_MENU:
-      selvals.onlayerbg = (LayersBGType) value;
-
-#ifdef DEBUG
-      printf ("BG type = %d\n", selvals.onlayerbg);
-#endif /* DEBUG */
-      break;
-
     case PAINT_TYPE_MENU:
       selvals.painttype = (PaintType) value;
-
-#ifdef DEBUG
-      printf ("Got type menu = %d\n", selvals.painttype);
-#endif /* DEBUG */
 
     default:
       g_return_if_reached ();
@@ -1621,16 +1584,6 @@ typedef struct _GfigListOptions
   gboolean   created;
 } GfigListOptions;
 
-void
-list_button_update (GFigObj *obj)
-{
-  g_return_if_fail (obj != NULL);
-
-  pic_obj = (GFigObj *) obj;
-
-}
-
-
 static void
 gfig_load_file_chooser_response (GtkFileChooser *chooser,
                                  gint            response_id,
@@ -1672,13 +1625,32 @@ gfig_load_file_chooser_response (GtkFileChooser *chooser,
   gfig_paint_callback ();
 }
 
-static void
+void
 paint_layer_fill (void)
 {
+  GimpBucketFillMode fill_mode;
+
+  switch (gfig_context->current_style->fill_type)
+    {
+    case FILL_NONE:
+      return;
+    case FILL_FOREGROUND:
+      fill_mode = GIMP_FG_BUCKET_FILL;
+      break;
+    case FILL_BACKGROUND:
+      fill_mode = GIMP_BG_BUCKET_FILL;
+      break;
+    case FILL_PATTERN:
+      fill_mode = GIMP_PATTERN_BUCKET_FILL;
+      break;
+    default:
+      return;
+    }
+
   gimp_edit_bucket_fill (gfig_context->drawable_id,
-                         selopt.fill_type,    /* Fill mode */
+                         fill_mode,    /* Fill mode */
                          GIMP_NORMAL_MODE,
-                         selopt.fill_opacity, /* Fill opacity */
+                         gfig_context->current_style->fill_opacity, /* Fill opacity */
                          0.0,                 /* threshold - ignored */
                          FALSE,               /* Sample merged - ignored */
                          0.0,                 /* x - ignored */
@@ -1693,6 +1665,7 @@ gfig_paint_callback (void)
   gchar      buf[128];
   gint       count;
   gint       ccount = 0;
+  Style    *style0;
 
   if (!gfig_context->enable_repaint || !gfig_context->current_obj)
     return;
@@ -1702,6 +1675,9 @@ gfig_paint_callback (void)
   count = gfig_obj_counts (objs);
 
   gimp_drawable_fill (gfig_context->drawable_id, GIMP_TRANSPARENT_FILL);
+
+  /* remember current style because it will be changed while painting */
+  style0 = gfig_context->current_style;
 
   while (objs)
     {
@@ -1713,10 +1689,8 @@ gfig_paint_callback (void)
 
           objs->obj->class->paintfunc (objs->obj);
 
-          /* Fill layer if required */
-          if (selvals.painttype == PAINT_SELECTION_FILL_TYPE
-              && selopt.fill_when == FILL_EACH)
-            paint_layer_fill ();
+          gimp_selection_clear (gfig_context->image_id);
+
         }
 
       objs = objs->next;
@@ -1724,12 +1698,8 @@ gfig_paint_callback (void)
       ccount++;
     }
 
-  /* Fill layer if required */
-  if (selvals.painttype == PAINT_SELECTION_FILL_TYPE
-      && selopt.fill_when == FILL_AFTER)
-    paint_layer_fill ();
-
-/*   gfig_style_apply (&gfig_context->gimp_style); */
+  /* set style back to its value on entry*/
+  gfig_context->current_style = style0;
 
   gimp_displays_flush ();
 
@@ -1796,8 +1766,6 @@ toggle_obj_type (GtkWidget *widget,
         }
       /* Update draw areas */
       gtk_widget_queue_draw (gfig_context->preview);
-      /* And preview */
-      list_button_update (gfig_context->current_obj);
     }
 
   selvals.otype = (DobjType) GPOINTER_TO_INT (data);

@@ -66,8 +66,8 @@ d_draw_ellipse (Dobject * obj)
   draw_sqr (&center_pnt->pnt);
   draw_sqr (&edge_pnt->pnt);
 
-  bound_wx = abs (center_pnt->pnt.x - edge_pnt->pnt.x) * 2;
-  bound_wy = abs (center_pnt->pnt.y - edge_pnt->pnt.y) * 2;
+  bound_wx = abs (center_pnt->pnt.x - edge_pnt->pnt.x);
+  bound_wy = abs (center_pnt->pnt.y - edge_pnt->pnt.y);
 
   if (edge_pnt->pnt.x > center_pnt->pnt.x)
     top_x = 2 * center_pnt->pnt.x - edge_pnt->pnt.x;
@@ -79,7 +79,7 @@ d_draw_ellipse (Dobject * obj)
   else
     top_y = edge_pnt->pnt.y;
 
-  gfig_draw_arc (top_x, top_y, bound_wx, bound_wy, 0, 360);
+  gfig_draw_arc (center_pnt->pnt.x, center_pnt->pnt.y, bound_wx, bound_wy, 0, 360);
 }
 
 static void
@@ -256,7 +256,6 @@ d_paint_ellipse (Dobject *obj)
   else
     scale_to_xy (&dpnts[0], 2);
 
-
   gimp_ellipse_select (gfig_context->image_id,
                        dpnts[0], dpnts[1],
                        dpnts[2], dpnts[3],
@@ -265,13 +264,9 @@ d_paint_ellipse (Dobject *obj)
                        selopt.feather,
                        selopt.feather_radius);
 
-  /* Is selection all we need ? */
-  if (selvals.painttype == PAINT_SELECTION_TYPE)
-    return;
-
+  paint_layer_fill ();
+          
   gimp_edit_stroke (gfig_context->drawable_id);
-
-  gimp_selection_clear (gfig_context->image_id);
 }
 
 static Dobject *

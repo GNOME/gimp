@@ -440,10 +440,7 @@ object_operation_end (GdkPoint *pnt,
     }
 
   if (operation_obj)
-    {
-      gfig_style_set_context_from_style (&operation_obj->style);
-      gfig_paint_callback ();
-    }
+    gfig_style_set_context_from_style (&operation_obj->style);
 
   operation_obj = NULL;
 
@@ -1099,8 +1096,6 @@ new_obj_2edit (GFigObj *obj)
 
   /* redraw with new */
   gtk_widget_queue_draw (gfig_context->preview);
-  /* And preview */
-  list_button_update (gfig_context->current_obj);
 
   if (obj->obj_status & GFIG_READONLY)
     {

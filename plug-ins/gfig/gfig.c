@@ -109,14 +109,11 @@ Dobject *obj_creating; /* Object we are creating */
 Dobject *tmp_line;     /* Needed when drawing lines */
 
 
-GFigObj  *pic_obj;
 gint      need_to_scale;
 
 
 static gint       load_options            (GFigObj *gfig, 
                                            FILE    *fp);
-static gboolean   match_element           (gchar   *buf,
-                                           gchar   *element_name);
 /* globals */
 
 GdkGC  *gfig_gc;
@@ -515,8 +512,8 @@ gfig_load (const gchar *filename,
   
   fclose (fp);
 
-  if (!pic_obj)
-    pic_obj = gfig;
+  if (!gfig_context->current_obj)
+    gfig_context->current_obj = gfig;
 
   gfig->obj_status = GFIG_OK;
 
@@ -557,42 +554,16 @@ static void
 gfig_save_obj_start (Dobject *obj, 
                      GString *string)
 {
-  switch (obj->type)
-    {
-    case LINE:
-      g_string_append_printf (string, "<Line>\n");
-      break;
-    case CIRCLE:
-      g_string_append_printf (string, "<Circle>\n");
-      break;
-    case ELLIPSE:
-      g_string_append_printf (string, "<Ellipse>\n");
-      break;
-    case ARC:
-      g_string_append_printf (string, "<Arc>\n");
-      break;
-    case POLY:
-      g_string_append_printf (string, "<Poly>\n");
-      break;
-    case STAR:
-      g_string_append_printf (string, "<Star>\n");
-      break;
-    case SPIRAL:
-      g_string_append_printf (string, "<Spiral>\n");
-      break;
-    case BEZIER:
-      g_string_append_printf (string, "<Bezier>\n");
-      break;
-    default:
-      g_message ("Unknown object type in gfig_save_obj_start");
-    }
+  g_string_append_printf (string, "<%s ", obj->class->name);
+  gfig_style_save_as_attributes (&obj->style, string);
+  g_string_append_printf (string, ">\n");
 }
 
 static void 
 gfig_save_obj_end (Dobject *obj, 
                    GString *string)
 {
-  g_string_append_printf (string, "</Object>\n");
+  g_string_append_printf (string, "</%s>\n",obj->class->name);
 }
 
 static gint

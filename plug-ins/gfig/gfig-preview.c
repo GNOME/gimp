@@ -1,4 +1,4 @@
-/*
+ /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This is a plug-in for the GIMP.
@@ -364,7 +364,7 @@ gfig_preview_expose (GtkWidget *widget,
     draw_background ();
 
   draw_grid ();
-  draw_objects (pic_obj->obj_list, TRUE);
+  draw_objects (gfig_context->current_obj->obj_list, TRUE);
 
   return FALSE;
 }
@@ -457,7 +457,6 @@ gfig_preview_events (GtkWidget *widget,
         }
 
       gfig_paint_callback ();
-      list_button_update (gfig_context->current_obj);
       break;
 
     case GDK_MOTION_NOTIFY:

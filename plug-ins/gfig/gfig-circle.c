@@ -128,13 +128,10 @@ d_paint_circle (Dobject *obj)
                        selopt.feather,
                        selopt.feather_radius);
 
-  /* Is selection all we need ? */
-  if (selvals.painttype == PAINT_SELECTION_TYPE)
-    return;
-
+  paint_layer_fill ();
+          
   gimp_edit_stroke (gfig_context->drawable_id);
 
-  gimp_selection_clear (gfig_context->image_id);
 }
 
 static Dobject*

@@ -68,9 +68,6 @@ void gfig_read_gimp_style          (Style *style,
 
 void gfig_style_append             (Style *style);
 
-void gfig_style_set_all_sources   (Style *style,
-                                   StyleSource source);
-
 void gfig_style_apply             (Style *style);
 
 void gfig_style_copy              (Style *style1, 
@@ -95,6 +92,10 @@ gboolean gfig_load_styles         (GFigObj *gfig,
 
 void gfig_save_style              (Style   *style, 
                                    GString *string);
+
+void gfig_style_save_as_attributes (Style   *style,
+                                    GString *string);
+
 void gfig_save_styles             (GString *string);
 
 void gfig_style_set_context_from_style (Style *style);

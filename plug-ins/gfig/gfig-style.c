@@ -243,10 +243,13 @@ gfig_load_style (Style *style,
   if (! &style->brush_name )
     g_message ("Error loading style: got NULL for brush name.");
 
-  gfig_read_parameter_string   (style_text, nitems, "Pattern",    &style->pattern);
-  gfig_read_parameter_string   (style_text, nitems, "Gradient",   &style->gradient);
-  gfig_read_parameter_gimp_rgb (style_text, nitems, "Foreground", &style->foreground);
-  gfig_read_parameter_gimp_rgb (style_text, nitems, "Background", &style->background);
+  gfig_read_parameter_string   (style_text, nitems, "Pattern",     &style->pattern);
+  gfig_read_parameter_string   (style_text, nitems, "Gradient",    &style->gradient);
+  gfig_read_parameter_gimp_rgb (style_text, nitems, "Foreground",  &style->foreground);
+  gfig_read_parameter_gimp_rgb (style_text, nitems, "Background",  &style->background);
+  gfig_read_parameter_int      (style_text, nitems, "FillType",    (gint *)&style->fill_type);
+  gfig_read_parameter_double   (style_text, nitems, "FillOpacity", 
+                                (gdouble *)&style->fill_opacity);
 
   for (k = 0; k < nitems; k++)
     {
@@ -316,6 +319,7 @@ void
 gfig_save_style (Style *style, 
                  GString *string)
 {
+  gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];
   gchar buffer_r[G_ASCII_DTOSTR_BUF_SIZE];
   gchar buffer_g[G_ASCII_DTOSTR_BUF_SIZE];
   gchar buffer_b[G_ASCII_DTOSTR_BUF_SIZE];
@@ -329,26 +333,64 @@ gfig_save_style (Style *style,
   g_string_append_printf (string, "BrushName:      %s\n",          style->brush_name);
   if (!style->brush_name)
     g_message ("Error saving style %s: saving NULL for brush name", style->name);
-  g_string_append_printf (string, "BrushSource:    %d\n",          style->brush_source);
+
   g_string_append_printf (string, "FillType:       %d\n",          style->fill_type);
-  g_string_append_printf (string, "FillTypeSource: %d\n",          style->fill_type_source);
+
+  g_string_append_printf (string, "FillOpacity:    %s\n", 
+                          g_ascii_dtostr (buffer, blen, style->fill_opacity));
+
   g_string_append_printf (string, "Pattern:        %s\n",          style->pattern);
-  g_string_append_printf (string, "PatternSource:  %d\n",          style->pattern_source);
+
   g_string_append_printf (string, "Gradient:       %s\n",          style->gradient);
-  g_string_append_printf (string, "GradientSource: %d\n",          style->gradient_source);
+
   g_string_append_printf (string, "Foreground: %s %s %s %s\n", 
                           g_ascii_dtostr (buffer_r, blen, style->foreground.r),
                           g_ascii_dtostr (buffer_g, blen, style->foreground.g), 
                           g_ascii_dtostr (buffer_b, blen, style->foreground.b), 
                           g_ascii_dtostr (buffer_a, blen, style->foreground.a));
-  g_string_append_printf (string, "ForegroundSource: %d\n",  style->background_source);
+
   g_string_append_printf (string, "Background: %s %s %s %s\n", 
                           g_ascii_dtostr (buffer_r, blen, style->background.r),
                           g_ascii_dtostr (buffer_g, blen, style->background.g), 
                           g_ascii_dtostr (buffer_b, blen, style->background.b), 
                           g_ascii_dtostr (buffer_a, blen, style->background.a));
-  g_string_append_printf (string, "BackgroundSource: %d\n", style->background_source);
+
   g_string_append_printf (string, "</Style>\n");
+}
+
+void
+gfig_style_save_as_attributes (Style   *style,
+                               GString *string)
+{
+  gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar buffer_r[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar buffer_g[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar buffer_b[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar buffer_a[G_ASCII_DTOSTR_BUF_SIZE];
+  gint  blen = G_ASCII_DTOSTR_BUF_SIZE;
+
+  if (gfig_context->debug_styles)
+    fprintf (stderr, "Saving style %s as attributes\n", style->name);
+  g_string_append_printf (string, "BrushName=\"%s\" ",  style->brush_name);
+
+  g_string_append_printf (string, "Foreground=\"%s %s %s %s\" ",  
+                          g_ascii_dtostr (buffer_r, blen, style->foreground.r),
+                          g_ascii_dtostr (buffer_g, blen, style->foreground.g), 
+                          g_ascii_dtostr (buffer_b, blen, style->foreground.b), 
+                          g_ascii_dtostr (buffer_a, blen, style->foreground.a));
+
+  g_string_append_printf (string, "Background=\"%s %s %s %s\" ",  
+                          g_ascii_dtostr (buffer_r, blen, style->background.r),
+                          g_ascii_dtostr (buffer_g, blen, style->background.g), 
+                          g_ascii_dtostr (buffer_b, blen, style->background.b), 
+                          g_ascii_dtostr (buffer_a, blen, style->background.a));
+
+  g_string_append_printf (string, "FillType=%d ", style->fill_type);
+
+  g_string_append_printf (string, "FillOpacity=%s ", 
+                          g_ascii_dtostr (buffer, blen, style->fill_opacity));
+
+
 }
 
 void
@@ -449,8 +491,8 @@ gfig_pattern_changed_callback (const gchar *pattern_name,
                                gboolean dialog_closing,
                                gpointer user_data)
 {
-  gfig_context->current_style->pattern = (gchar *) pattern_name;
-  gfig_context->default_style.pattern = (gchar *) pattern_name;
+  gfig_context->current_style->pattern = g_strdup (pattern_name);
+  gfig_context->default_style.pattern = g_strdup (pattern_name);
 
   gfig_paint_callback ();
 }
@@ -462,8 +504,8 @@ gfig_gradient_changed_callback (const gchar *gradient_name,
                                 gboolean dialog_closing,
                                 gpointer user_data)
 {
-  gfig_context->current_style->gradient = (gchar *) gradient_name;
-  gfig_context->default_style.gradient = (gchar *) gradient_name;
+  gfig_context->current_style->gradient = g_strdup (gradient_name);
+  gfig_context->default_style.gradient = g_strdup (gradient_name);
 
   gfig_paint_callback ();
 }
@@ -497,11 +539,11 @@ gfig_style_copy (Style *style1,
   if (!style0->brush_name)
     g_message ("Error copying style %s: brush name is NULL.", style0->name);
 
-  style1->brush_name = g_strdup (style0->brush_name);
-
-  style1->gradient = g_strdup (style0->gradient);
-
-  style1->pattern = g_strdup (style0->pattern);
+  style1->brush_name    = g_strdup (style0->brush_name);
+  style1->gradient      = g_strdup (style0->gradient);
+  style1->pattern       = g_strdup (style0->pattern);
+  style1->fill_type    = style0->fill_type;
+  style1->fill_opacity = style0->fill_opacity;
 }
 
 /*
@@ -514,25 +556,23 @@ gfig_style_apply (Style *style)
 {
   if (gfig_context->debug_styles)
     fprintf (stderr, "Applying style '%s' -- ", style->name);
+
   gimp_palette_set_foreground (&style->foreground);
+
   gimp_palette_set_background (&style->background);
+
   if (!gimp_brushes_set_brush (style->brush_name))
     g_message ("Style apply: Failed to set brush to '%s' in style '%s'", 
                style->brush_name, style->name);
+
+  gimp_patterns_set_pattern (style->pattern);
+
+  gimp_gradients_set_gradient (style->gradient);
+
+  gfig_context->current_style = style;
+
   if (gfig_context->debug_styles)
     fprintf (stderr, "done.\n");
-}
-
-void
-gfig_style_set_all_sources (Style *style,
-                            StyleSource source)
-{
-  style->foreground_source = source;
-  style->background_source = source;
-  style->brush_source = source;
-  style->gradient_source = source;
-  style->pattern_source = source;
-
 }
 
 void
@@ -568,6 +608,8 @@ gfig_read_gimp_style (Style *style,
                                                         &style->brush_spacing);
   style->gradient = gimp_gradients_get_gradient ();
   style->pattern = gimp_patterns_get_pattern (&w, &h);
+
+  style->fill_opacity = 100.;
 
   gfig_context->bdesc.name = style->brush_name;
   gfig_context->bdesc.width = style->brush_width;
@@ -605,9 +647,18 @@ gfig_style_set_context_from_style (Style *style)
                                 style->brush_name,
                                 -1., -1, -1);  /* FIXME */
 
+  gimp_pattern_select_widget_set (gfig_context->pattern_select,
+                                  style->pattern);
+
+  gimp_gradient_select_widget_set (gfig_context->gradient_select,
+                                  style->gradient);
+
   gfig_context->bdesc.name = style->brush_name;
   if (gfig_context->debug_styles)
     fprintf (stderr, "done.\n");
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (gfig_context->fillstyle_combo),
+                                 (gint) style->fill_type);
 
   gfig_context->enable_repaint = enable_repaint;
 }
@@ -633,9 +684,20 @@ gfig_style_set_style_from_context (Style *style)
                                &color);
   gfig_rgba_copy (&style->background, &color);
 
-  style->brush_name = gfig_context->current_style->brush_name;
-  style->pattern = gfig_context->current_style->pattern;
-  style->gradient = gfig_context->current_style->gradient;
+  style->brush_name   = gfig_context->current_style->brush_name;
+
+  if (!style->pattern || strcmp (style->pattern, gfig_context->current_style->pattern))
+    {
+      style->pattern    = g_strdup (gfig_context->current_style->pattern);
+    }
+
+  style->gradient     = gfig_context->current_style->gradient;
+
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (gfig_context->fillstyle_combo),
+                                 (gint *) &style->fill_type);
+
+  /* FIXME when there is an opacity control widget to read */
+  style->fill_opacity = 100.;
 }
 
 char *
