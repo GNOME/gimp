@@ -1,20 +1,20 @@
 # Hungarian translation of gimp.
-# Copyright (C) 1998, 2000, 2001, 2003, 2004 Free Software Foundation, Inc.
+# Copyright (C) 1998, 2000, 2001, 2003, 2004, 2005 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Balazs Nagy <julian7@kva.hu>, 1998.
 # Andras Timar <timar@gnome.hu>, 2000, 2001, 2003.
 # Gabor Suveg <gabor@suveg.hu>, 2001.
 # Emese Kovacs <emese@gnome.hu>, 2001.
-# Laszlo Dvornik <dvornik@gnome.hu>, 2004.
+# Laszlo Dvornik <dvornik@gnome.hu>, 2004, 2005.
 # Arpad Biro <biro_arpad@yahoo.com>, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
-"PO-Revision-Date: 2004-12-06 11:59+0100\n"
-"Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
+"POT-Creation-Date: 2005-01-13 11:03+0100\n"
+"PO-Revision-Date: 2005-01-13 14:02+0100\n"
+"Last-Translator: Laszlo Dvornik <dvornik@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1168,9 +1168,8 @@ msgstr "_Másolás"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: app/actions/edit-actions.c:93
-#, fuzzy
 msgid "Copy _Visible"
-msgstr "_Látható"
+msgstr "_Látható másolása"
 
 #: app/actions/edit-actions.c:98
 msgid "_Paste"
@@ -4630,21 +4629,19 @@ msgid "Could not read %d bytes from '%s': %s"
 msgstr "Nem lehet %d bájtot beolvasni a(z) \"%s\" fájlból: %s"
 
 #: app/core/gimpbrush.c:554
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr ""
-"Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: ismeretlen \"%d\" "
-"mélység."
+msgstr "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: szélesség = 0."
 
 #: app/core/gimpbrush.c:563
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: a fájl sérült."
+msgstr "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: magasság = 0."
 
 #: app/core/gimpbrush.c:572
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: a fájl sérült."
+msgstr "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: bájt = 0."
 
 #: app/core/gimpbrush.c:596
 #, c-format
@@ -6253,11 +6250,12 @@ msgid "Configure Keyboard Shortcuts"
 msgstr "Gyorsbillentyűk beállítása"
 
 #: app/dialogs/preferences-dialog.c:551
-#, fuzzy
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
-msgstr "Adjon meg egy új gyorsbillentyűt, vagy nyomjon Backspace-t a törléshez"
+msgstr ""
+"Gyorsbillentyű szerkesztéséhez kattintson a megfelelő sorra és nyomja le az "
+"új gyorsbillentyűt, vagy nyomja meg a Backspace billentyűt a törléshez."
 
 #: app/dialogs/preferences-dialog.c:595
 msgid ""
@@ -6925,9 +6923,8 @@ msgid "There are %d images with unsaved changes:"
 msgstr "A következő %d kép nem mentett módosítást tartalmaz:"
 
 #: app/dialogs/quit-dialog.c:183
-#, fuzzy
 msgid "_Discard Changes"
-msgstr "Csatorna _felemelése"
+msgstr "_Változtatások eldobása"
 
 #: app/dialogs/resize-dialog.c:115
 msgid "Canvas Size"
@@ -9145,9 +9142,8 @@ msgid "Center X:"
 msgstr "Középpont X:"
 
 #: app/tools/gimprotatetool.c:190
-#, fuzzy
 msgid "Center Y:"
-msgstr "Középpont X:"
+msgstr "Középpont Y:"
 
 #: app/tools/gimpscaletool.c:91
 msgid "Scale"
@@ -10161,14 +10157,12 @@ msgid "Background: %d, %d, %d"
 msgstr "Háttér: %d, %d, %d"
 
 #: app/widgets/gimpdock.c:348 app/widgets/gimpdock.c:359
-#, fuzzy
 msgid "Close all tabs?"
-msgstr "Lap _bezárása"
+msgstr "Bezárja az összes lapot?"
 
 #: app/widgets/gimpdock.c:354
-#, fuzzy
 msgid "Close all Tabs"
-msgstr "Lap _bezárása"
+msgstr "Összes lap bezárása"
 
 #: app/widgets/gimpdock.c:361
 #, c-format
@@ -10176,6 +10170,8 @@ msgid ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
 msgstr ""
+"Ez az ablak %d megnyitott lappal rendelkezik. Az ablak bezárásával az összes "
+"lap is be fog záródni."
 
 #: app/widgets/gimpdock.c:474
 msgid "You can drop dockable dialogs here."
@@ -10904,12 +10900,3 @@ msgstr "Képek vagy fotók létrehozása és szerkesztése"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Képszerkesztő"
-
-#~ msgid "Keep aspect ratio"
-#~ msgstr "Méretarány megtartása"
-
-#~ msgid "Y:"
-#~ msgstr "Y:"
-
-#~ msgid "Transformations do not work on layers that contain layer masks."
-#~ msgstr "Az átalakítások nem működnek rétegmaszkot tartalmazó rétegeken."
