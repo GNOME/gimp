@@ -526,7 +526,8 @@ if test $ac_cv_path_LPC_COMMAND != ":"; then
 fi
 
 dnl This is for the gimp-perl plug-in
-AC_ARG_ENABLE(perl, [  --disable-perl          do not build perl extension [by default enabled]])
+AC_ARG_ENABLE(perl, [  --disable-perl          do not build perl extension [by default enabled]
+  --enable-perl[=prefix]  use specified prefix for perl (see INSTALL)])
 
 AC_ARG_WITH(pdbgen, [  --with-pdbgen           use 'pdbgen' code generation tool],
 ,
@@ -562,9 +563,12 @@ if test "x$enable_perl" != xno; then
       sinclude(plug-ins/perl/etc/configure.frag)
 
       dnl we ignore prefix
+      if test -n "$enable_perl" && test "$enable_perl" != xyes; then
+         perl_prefix="PREFIX=$enable_perl"
+      fi
       cat >plug-ins/perl/config.status <<EOF
       echo invoking perl for configuration...
-      $PERL Makefile.PL --writemakefile
+      $PERL Makefile.PL --writemakefile $perl_prefix
 EOF
       GIMP_PERL=perl
    else

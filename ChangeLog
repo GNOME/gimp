@@ -1,3 +1,9 @@
+Mon May 31 06:48:56 CEST 1999 Marc Lehmann <pcg@goof.com>
+
+        * configure.in, README: Set the PREFIX env. var. to the value of
+        --enable-perl.
+        * docs/parasites.txt: updated.
+
 1999-05-31  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/info_dialog.c
