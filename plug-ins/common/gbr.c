@@ -229,6 +229,7 @@ run (gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
+	  strncpy (info.description, gimp_drawable_name (drawable_ID), 256);
 	  gimp_get_data ("file_gbr_save", &info);
 	  if (! save_dialog ())
 	    status = GIMP_PDB_CANCEL;
@@ -279,6 +280,7 @@ static gint32
 load_image (gchar *filename) 
 {
   gchar         *temp;
+  gchar         *name = NULL;
   gint           fd;
   BrushHeader    bh;
   guchar        *brush_buf   = NULL;
@@ -287,6 +289,7 @@ load_image (gchar *filename)
   GimpDrawable  *drawable;
   GimpPixelRgn   pixel_rgn;
   gint           version_extra;
+  gint           bn_size;
   GimpImageBaseType  base_type;
   GimpImageType      image_type;
   
@@ -336,11 +339,20 @@ load_image (gchar *filename)
       return -1;
     }
   
-  if (lseek (fd, bh.header_size - sizeof (bh) + version_extra, SEEK_CUR) 
-      != bh.header_size) 
+  if ((bn_size = (bh.header_size - sizeof (bh))) > 0)
     {
-      close (fd);
-      return -1; 
+      name = g_new (gchar, bn_size);
+      if ((read (fd, name, bn_size)) < bn_size)
+	{
+	  g_message (_("Error in GIMP brush file \"%s\"."), filename);
+	  close (fd);
+	  g_free (name);
+	  return -1;
+	}
+    }
+  else
+    {
+      name = g_strdup (_("Unnamed"));
     }
  
   /* Now there's just raw data left. */
@@ -352,6 +364,7 @@ load_image (gchar *filename)
     {
       close (fd);
       g_free (brush_buf);
+      g_free (name);
       return -1;
     }
 
@@ -389,6 +402,7 @@ load_image (gchar *filename)
 		  if (read (fd, brush_buf + i * 4, 3) != 3)
 		    {
 		      close (fd);
+		      g_free (name);
 		      g_free (plain_brush);
 		      g_free (brush_buf);
 		      return -1;
@@ -424,10 +438,12 @@ load_image (gchar *filename)
   image_ID = gimp_image_new (bh.width, bh.height, base_type);
   gimp_image_set_filename (image_ID, filename);
   
-  layer_ID = gimp_layer_new (image_ID, _("Background"), 
+  layer_ID = gimp_layer_new (image_ID, name, 
 			     bh.width, bh.height, 
 			     image_type, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
+
+  g_free (name);
 
   drawable = gimp_drawable_get (layer_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 
@@ -436,14 +452,15 @@ load_image (gchar *filename)
 
   gimp_pixel_rgn_set_rect (&pixel_rgn, (guchar *) brush_buf, 
 			   0, 0, bh.width, bh.height);
+  g_free (brush_buf);
 
   if (image_type == GIMP_GRAY_IMAGE)
     gimp_invert (layer_ID);
 
   close (fd);
-  g_free (brush_buf);
 
   gimp_drawable_flush (drawable);
+  gimp_progress_update (1.0);
   
   return image_ID;
 }

@@ -1,4 +1,4 @@
-/* Plug-in to save .gih (GIMP Brush Pipe) files.
+/* Plug-in to load and save .gih (GIMP Brush Pipe) files.
  *
  * Copyright (C) 1999 Tor Lillqvist
  * Copyright (C) 2000 Jens Lautenbacher, Sven Neumann
@@ -52,6 +52,7 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+#include <ctype.h>
 
 #ifdef G_OS_WIN32
 #include <io.h>
@@ -68,6 +69,7 @@
 #include <libgimp/gimpparasiteio.h>
 
 #include "app/brush_header.h"
+#include "app/pattern_header.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -91,8 +93,8 @@ static struct
 };
 
 
-static gint run_flag = 0;
-static gint num_useable_layers;
+static gboolean run_flag = FALSE;
+static gint     num_useable_layers;
 
 
 static GimpPixPipeParams gihparms;
@@ -100,14 +102,14 @@ static GimpPixPipeParams gihparms;
 typedef struct
 {
   GimpOrientationType orientation;
-  gint32 image;
-  gint32 toplayer;
-  gint nguides;
-  gint32 *guides;
-  gint *value;
+  gint32     image;
+  gint32     toplayer;
+  gint       nguides;
+  gint32    *guides;
+  gint      *value;
   GtkWidget *count_label;	/* Corresponding count adjustment, */
-  gint *count;			/* cols or rows */
-  gint *other_count;		/* And the other one */
+  gint      *count;		/* cols or rows                    */
+  gint      *other_count;       /* and the other one               */
   GtkObject *ncells;
   GtkObject *rank0;
   GtkWidget *warning_label;
@@ -125,13 +127,18 @@ static void   run      (gchar      *name,
 			gint       *nreturn_vals,
 			GimpParam **return_vals);
 
-static gint      gih_save_dialog (gint32        image_ID);
-static gboolean  save_one_brush  (gint          fd,
-				  GimpPixelRgn *pixel_rgn);
-static gboolean  gih_save_image  (gchar        *filename,
-				  gint32        image_ID,
-				  gint32        orig_image_ID,
-				  gint32        drawable_ID);
+static gint32    gih_load_image      (gchar        *filename); 
+static gboolean  gih_load_one_brush  (gint          fd,
+				      gint32        image_ID); 
+
+static gint      gih_save_dialog     (gint32        image_ID);
+static gboolean  gih_save_one_brush  (gint          fd,
+				      GimpPixelRgn *pixel_rgn,
+				      gchar        *name);
+static gboolean  gih_save_image      (gchar        *filename,
+				      gint32        image_ID,
+				      gint32        orig_image_ID,
+				      gint32        drawable_ID);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -169,6 +176,21 @@ query (void)
   static const gint ngih_save_args = (sizeof (gih_save_args) /
 				      sizeof (gih_save_args[0]));
 
+
+  static GimpParamDef gih_load_args[] =
+  {
+    { GIMP_PDB_INT32,  "run_mode",       "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename",       "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename",   "The name of the file to load" }
+  };
+  static GimpParamDef gih_load_return_vals[] =
+  {
+    { GIMP_PDB_IMAGE,  "image",          "Output image" }
+  };
+  static gint ngih_load_args = sizeof (gih_load_args) / sizeof (gih_load_args[0]);
+  static gint ngih_load_return_vals = (sizeof (gih_load_return_vals) /
+				       sizeof (gih_load_return_vals[0]));
+
   gimp_install_procedure ("file_gih_save",
 			  "saves images in GIMP brush pipe format", 
 			  "This plug-in saves an image in the GIMP brush pipe format. The image must have an alpha chnannel and can be multi-layered, and additionally the layers can be divided into a rectangular array of brushes.",
@@ -181,11 +203,26 @@ query (void)
                           ngih_save_args, 0,
 			  gih_save_args, NULL);
   
+  gimp_install_procedure ("file_gih_load",
+			  "loads images in GIMP brush pipe format", 
+			  "This plug-in loads a GIMP brush pipe as an image.",
+			  "Jens Lautenbacher, Sven Neumann",
+			  "Jens Lautenbacher, Sven Neumann",
+			  "2000",
+			  "<Load>/GIH",
+			  NULL,
+			  GIMP_PLUGIN,
+                          ngih_load_args, ngih_load_return_vals,
+                          gih_load_args, gih_load_return_vals);
+
   gimp_register_save_handler ("file_gih_save",
 			      "gih",
 			      "");
+  gimp_register_magic_load_handler ("file_gih_load",
+				    "gih",
+				    "",
+				    "");
 }
-
 
 static void
 run (gchar      *name,
@@ -194,18 +231,18 @@ run (gchar      *name,
      gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpRunModeType  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  GimpParasite *pipe_parasite;
-  gint32        image_ID;
-  gint32        orig_image_ID;
-  gint32        drawable_ID;
-  gint32       *layer_ID;
-  gint          nlayers, layer;
-  gchar        *layer_name;
-  gint          i;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam      values[1];
+  GimpRunModeType       run_mode;
+  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
+  GimpParasite         *pipe_parasite;
+  gint32                image_ID;
+  gint32                orig_image_ID;
+  gint32                drawable_ID;
+  gint32               *layer_ID;
+  gint                  nlayers, layer;
+  gchar                *layer_name;
+  gint                  i;
+  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -223,7 +260,22 @@ run (gchar      *name,
       INIT_I18N();
     }
 
-  if (strcmp (name, "file_gih_save") == 0)
+  if (strcmp (name, "file_gih_load") == 0) 
+    {
+      image_ID = gih_load_image (param[1].data.d_string);
+      
+      if (image_ID != -1) 
+	{
+	  *nreturn_vals = 2;
+	  values[1].type         = GIMP_PDB_IMAGE;
+	  values[1].data.d_image = image_ID;
+	}
+      else
+	{
+	  status = GIMP_PDB_EXECUTION_ERROR;
+	}
+    }
+  else if (strcmp (name, "file_gih_save") == 0)
     {
       image_ID = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32; 
@@ -269,10 +321,26 @@ run (gchar      *name,
 	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_gih_save", &info);
+
+	  gimp_pixpipe_params_init (&gihparms);
+
+	  /* Setup default values */
+	  if (gihparms.rows < 1) gihparms.rows = 1;	  
+	  if (gihparms.cols < 1) gihparms.cols = 1;
+	  
+	  gihparms.ncells = num_useable_layers * gihparms.rows * gihparms.cols;
+	  
+	  if (gihparms.cellwidth == 1 && gihparms.cellheight == 1)
+	    {
+	      gihparms.cellwidth  = 
+		gimp_image_width (image_ID)  / gihparms.cols;
+	      gihparms.cellheight = 
+		gimp_image_height (image_ID) / gihparms.rows;
+	    }
+
 	  pipe_parasite =
 	    gimp_image_parasite_find (orig_image_ID,
 				      "gimp-brush-pipe-parameters");
-	  gimp_pixpipe_params_init (&gihparms);
 	  if (pipe_parasite)
 	    gimp_pixpipe_params_parse (pipe_parasite->data, &gihparms);
 
@@ -293,9 +361,9 @@ run (gchar      *name,
 
 	      gimp_pixpipe_params_init (&gihparms);
 
-	      gihparms.cellwidth  =  param[7].data.d_int32;
-	      gihparms.cellheight =  param[8].data.d_int32;
-	      gihparms.cols       =  param[9].data.d_int8;
+	      gihparms.cellwidth  = param[7].data.d_int32;
+	      gihparms.cellheight = param[8].data.d_int32;
+	      gihparms.cols       = param[9].data.d_int8;
 	      gihparms.rows       = param[10].data.d_int8;
 	      gihparms.dim        = param[11].data.d_int32;
 	      gihparms.ncells     = 1; 
@@ -339,13 +407,314 @@ run (gchar      *name,
 	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	}
-    }
 
-  if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image_ID);
+      if (export == GIMP_EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
+    }
+  else
+    {
+      status = GIMP_PDB_CALLING_ERROR;
+    }
 
   values[0].data.d_status = status;
 }
+
+
+/*  load routines  */
+
+static gboolean
+gih_load_one_brush (gint   fd,
+		    gint32 image_ID)
+{
+  static gint    num_layers = 0;
+  gchar         *name       = NULL;
+  BrushHeader    bh;
+  guchar        *brush_buf  = NULL;
+  gint32         layer_ID;
+  GimpDrawable  *drawable;
+  GimpPixelRgn   pixel_rgn;
+  gint           version_extra;
+  gint           bn_size;
+  GimpImageType  image_type;
+  gint           width, height;
+  gint           new_width, new_height;
+
+  g_return_val_if_fail (fd != -1, FALSE);
+  g_return_val_if_fail (image_ID != -1, FALSE);
+
+  if (read (fd, &bh, sizeof (bh)) != sizeof (bh)) 
+    return FALSE;
+
+  /*  rearrange the bytes in each unsigned int  */
+  bh.header_size  = g_ntohl (bh.header_size);
+  bh.version      = g_ntohl (bh.version);
+  bh.width        = g_ntohl (bh.width);
+  bh.height       = g_ntohl (bh.height);
+  bh.bytes        = g_ntohl (bh.bytes);
+  bh.magic_number = g_ntohl (bh.magic_number);
+  bh.spacing      = g_ntohl (bh.spacing);
+  
+  /* How much extra to add to the header seek - 1 needs a bit more */
+  version_extra = 0;
+  
+  if (bh.version == 1) 
+    {
+      /* Version 1 didn't know about spacing */	
+      bh.spacing = 25;
+      /* And we need to rewind the handle a bit too */
+      lseek (fd, -8, SEEK_CUR);
+      version_extra = 8;
+    }
+  /* Version 1 didn't know about magic either */
+  if ((bh.version != 1 && 
+       (bh.magic_number != GBRUSH_MAGIC || bh.version != 2)) ||
+      bh.header_size <= sizeof (bh)) 
+    {
+      close (fd);
+      return FALSE;
+    }
+  
+  if ((bn_size = (bh.header_size - sizeof (bh))) > 0)
+    {
+      name = g_new (gchar, bn_size);
+      if ((read (fd, name, bn_size)) < bn_size)
+	{
+	  g_message (_("Error in GIMP brush pipe file."));
+	  g_free (name);
+	  return FALSE;
+	}
+    }
+  else
+    {
+      name = g_strdup (_("Unnamed"));
+    }
+ 
+  /* Now there's just raw data left. */
+  
+  brush_buf = g_malloc (bh.width * bh.height * bh.bytes);
+
+  if (read (fd, brush_buf, 
+	    bh.width * bh.height * bh.bytes) != bh.width * bh.height * bh.bytes) 
+    {
+      g_free (brush_buf);
+      g_free (name);
+      return FALSE;
+    }
+
+
+  if (bh.bytes == 1)
+    {
+      PatternHeader ph;
+
+      /*  For backwards-compatibility, check if a pattern follows.
+	  The obsolete .gpb format did it this way.  */
+
+      if (read (fd, &ph, sizeof(ph)) == sizeof(ph)) 
+	{
+	  /*  rearrange the bytes in each unsigned int  */
+	  ph.header_size  = g_ntohl (ph.header_size);
+	  ph.version      = g_ntohl (ph.version);
+	  ph.width        = g_ntohl (ph.width);
+	  ph.height       = g_ntohl (ph.height);
+	  ph.bytes        = g_ntohl (ph.bytes);
+	  ph.magic_number = g_ntohl (ph.magic_number);
+
+	  if (ph.magic_number == GPATTERN_MAGIC && ph.version == 1 &&
+	      ph.header_size > sizeof (ph) &&
+	      ph.bytes == 3 && ph.width == bh.width && ph.height == bh.height &&
+	      lseek (fd, ph.header_size - sizeof (ph), SEEK_CUR) > 0)
+	    {
+	      guchar *plain_brush = brush_buf;
+	      gint    i;
+
+	      bh.bytes = 4;
+	      brush_buf = g_malloc (4 * bh.width * bh.height);
+	      
+	      for (i = 0; i < ph.width * ph.height; i++)
+		{
+		  if (read (fd, brush_buf + i * 4, 3) != 3)
+		    {
+		      g_free (name);
+		      g_free (plain_brush);
+		      g_free (brush_buf);
+		      return FALSE;
+		    }
+		  brush_buf[i * 4 + 3] = plain_brush[i];
+		}
+	      g_free (plain_brush);
+	    }
+	  else if (lseek (fd, - sizeof (PatternHeader), SEEK_CUR) < 0)
+	    {
+	      g_message (_("GIMP brush file appears to be corrupted."));
+	      g_free (name);
+	      g_free (brush_buf);
+	      return FALSE;
+	    }
+	}
+    }
+
+  /*
+   * Create a new layer of the proper size.
+   */
+  
+  switch (bh.bytes)
+    {
+    case 1:
+      image_type = GIMP_GRAY_IMAGE;
+      break;
+
+    case 4:
+      image_type = GIMP_RGBA_IMAGE;
+      if (gimp_image_base_type (image_ID) == GIMP_GRAY)
+	gimp_convert_rgb (image_ID);
+      break;
+
+    default:
+      g_message ("Unsupported brush depth: %d\nGIMP Brushes must be GRAY or RGBA\n",
+		 bh.bytes);
+      return FALSE;
+    }
+
+  new_width  = width  = gimp_image_width (image_ID);
+  new_height = height = gimp_image_height (image_ID);
+
+  if (bh.width > width || bh.height > height)
+    {
+      new_width  = MAX (width, bh.width);
+      new_height = MAX (height, bh.height);
+      gimp_image_resize (image_ID,
+			 new_width, new_height,
+			 (width - new_width) / 2, (height - new_height) / 2);
+    }
+
+  layer_ID = gimp_layer_new (image_ID, name, 
+			     bh.width, bh.height, 
+			     image_type, 100, GIMP_NORMAL_MODE);
+  g_free (name);
+
+  if (layer_ID != -1)
+    {
+      gimp_image_add_layer (image_ID, layer_ID, num_layers++);
+      gimp_layer_set_offsets (layer_ID, 
+			      (new_width - bh.width)   / 2, 
+			      (new_height - bh.height) / 2);
+
+      drawable = gimp_drawable_get (layer_ID);
+      gimp_pixel_rgn_init (&pixel_rgn, drawable, 
+			   0, 0, drawable->width, drawable->height, 
+			   TRUE, FALSE);
+      
+      gimp_pixel_rgn_set_rect (&pixel_rgn, (guchar *) brush_buf, 
+			       0, 0, bh.width, bh.height);
+
+      if (image_type == GIMP_GRAY_IMAGE)
+	gimp_invert (layer_ID);
+    }
+
+  g_free (brush_buf);
+
+  return TRUE;
+}
+
+static gint32 
+gih_load_image (gchar *filename) 
+{
+  gchar   *temp;
+  gint     fd;
+  gint     i;
+  gint32   image_ID;
+  GString *buffer;
+  gchar    c;
+  gchar   *name = NULL;
+  gint     num_of_brushes = 0;
+  gchar   *paramstring;
+  GimpParasite *pipe_parasite;
+
+  temp = g_strdup_printf (_("Loading %s:"), filename);
+  gimp_progress_init (temp);
+  g_free (temp);
+  
+  fd = open (filename, O_RDONLY | _O_BINARY);
+  
+  if (fd == -1) 
+    {
+      return -1;
+    }
+
+  /* The file format starts with a painfully simple text header */
+
+  /*  get the name  */
+  buffer = g_string_new (NULL);
+  while (read (fd, &c, 1) == 1 && c != '\n' && buffer->len < 1024)
+    g_string_append_c (buffer, c);
+    
+  if (buffer->len > 0 && buffer->len < 1024)
+    name = buffer->str;
+ 
+  g_string_free (buffer, FALSE);
+
+  if (!name)
+    {
+      g_message ("Couldn't read name for brush pipe from file '%s'\n", 
+		 filename);
+      close (fd);
+      return -1;
+    }
+
+  /*  get the number of brushes  */
+  buffer = g_string_new (NULL);
+  while (read (fd, &c, 1) == 1 && c != '\n' && buffer->len < 1024)
+    g_string_append_c (buffer, c);
+
+  if (buffer->len > 0 && buffer->len < 1024)
+    {
+      num_of_brushes = strtol (buffer->str, &paramstring, 10);
+    }
+
+  if (num_of_brushes < 1)
+    {
+      g_message ("Brush pipes should have at least one brush.");
+      close (fd);
+      g_free (name);
+      g_string_free (buffer, TRUE);
+      return -1;
+    }
+
+  image_ID = gimp_image_new (1, 1, GIMP_GRAY);
+  gimp_image_set_filename (image_ID, filename);
+
+  for (i = 0; i < num_of_brushes; i++)
+    {
+      if (! gih_load_one_brush (fd, image_ID))
+	{
+	  g_message (_("Couldn't load one brush in the pipe, giving up."));
+	  close (fd);
+	  g_free (name);
+	  g_string_free (buffer, TRUE);
+	  return -1;
+	}
+	
+      gimp_progress_update ((gdouble) i / (gdouble) num_of_brushes);
+    }
+  
+  while (*paramstring && isspace (*paramstring))
+    paramstring++;
+
+  if (*paramstring)
+    {
+      pipe_parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
+					 GIMP_PARASITE_PERSISTENT,
+					 strlen (paramstring) + 1, paramstring);
+      gimp_image_parasite_attach (image_ID, pipe_parasite);
+      gimp_parasite_free (pipe_parasite);
+    }
+
+  g_string_free (buffer, TRUE);
+
+  return image_ID;
+}
+
+/*  save routines */
 
 static void
 size_adjustment_callback (GtkWidget *widget,
@@ -357,8 +726,8 @@ size_adjustment_callback (GtkWidget *widget,
   gint  i;
   gint  size;
   gint  newn;
-  SizeAdjustmentData *adj = (SizeAdjustmentData *) data;
   gchar buf[10];
+  SizeAdjustmentData *adj = (SizeAdjustmentData *) data;
 
   for (i = 0; i < adj->nguides; i++)
     gimp_image_delete_guide (adj->image, adj->guides[i]);
@@ -431,12 +800,12 @@ static void
 ok_callback (GtkWidget *widget,
 	     gpointer    data)
 {
-  int i;
+  gint i;
 
   for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
     gihparms.selection[i] = g_strdup (gihparms.selection[i]);
 
-  run_flag = 1;
+  run_flag = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
@@ -460,20 +829,8 @@ gih_save_dialog (gint32 image_ID)
   gint32    *layer_ID;
   gint32     nlayers;
 
-  /* Setup default values */
-  if (gihparms.rows >= 1 && gihparms.cols >= 1)
-    gihparms.ncells = num_useable_layers * gihparms.rows * gihparms.cols;
-  else
-    gihparms.ncells = num_useable_layers;
-
-  if (gihparms.cellwidth == 1 && gihparms.cellheight == 1)
-    {
-      gihparms.cellwidth  = gimp_image_width (image_ID)  / gihparms.cols;
-      gihparms.cellheight = gimp_image_height (image_ID) / gihparms.rows;
-    }
-
   dlg = gimp_dialog_new (_("Save as Brush Pipe"), "gih",
-			 gimp_standard_help_func, "filters/gpb.html",
+			 gimp_standard_help_func, "filters/gih.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 			 
@@ -727,12 +1084,14 @@ gih_save_dialog (gint32 image_ID)
 	MIN (gihparms.ncells, 
 	     num_useable_layers * gihparms.rows * gihparms.cols);
     }
+
   return run_flag;
 }
 
 static gboolean
-save_one_brush (gint          fd,
-		GimpPixelRgn *pixel_rgn)
+gih_save_one_brush (gint          fd,
+		    GimpPixelRgn *pixel_rgn,
+		    gchar        *name)
 {
   BrushHeader  header;
   guint        x;
@@ -742,14 +1101,23 @@ save_one_brush (gint          fd,
   g_return_val_if_fail (fd != -1, FALSE);
   g_return_val_if_fail (pixel_rgn != NULL, FALSE);
 
+  if (!name)
+    name = g_strdup (_("Unnamed"));
+
   if (pixel_rgn->bpp != 2 && pixel_rgn->bpp != 4)
-    return FALSE;
+    {
+      g_free (name);
+      return FALSE;
+    }
 
   if (pixel_rgn->w < 1 || pixel_rgn->h < 1)
-    return FALSE;
+    {
+      g_free (name);
+      return FALSE;
+    }
 
   header.header_size  = 
-    g_htonl (sizeof (header) + strlen (info.description) + 1);
+    g_htonl (sizeof (header) + strlen (name) + 1);
   header.version      = g_htonl (2);
   header.width        = g_htonl (pixel_rgn->w);
   header.height       = g_htonl (pixel_rgn->h);
@@ -760,10 +1128,15 @@ save_one_brush (gint          fd,
   if (write (fd, &header, sizeof (header)) != sizeof (header)) 
     return FALSE;
   
-  if (write (fd, info.description, strlen (info.description) + 1) !=
-      strlen (info.description) + 1) 
-    return FALSE;
-  
+  if (write (fd, name, strlen (name) + 1) !=
+      strlen (name) + 1) 
+    {
+      g_free (name);
+      return FALSE;
+    }
+
+  g_free (name);
+
   buffer = g_malloc (pixel_rgn->w * pixel_rgn->bpp);
 
   for (y = 0; y < pixel_rgn->h; y++)
@@ -894,7 +1267,8 @@ gih_save_image (gchar  *filename,
 	      gimp_pixel_rgn_init (&pixel_rgn, drawable, thisx, thisy, 
 				   thisw, thish, FALSE, FALSE);
 	      
-	      if (! save_one_brush (fd, &pixel_rgn))
+	      if (! gih_save_one_brush (fd, &pixel_rgn, 
+					gimp_drawable_name (layer_ID[layer])))
 		{
 		  close (fd);
 		  return FALSE;
@@ -913,3 +1287,4 @@ gih_save_image (gchar  *filename,
 
   return TRUE;
 }
+

@@ -1,3 +1,12 @@
+2000-12-18  Sven Neumann  <sven@gimp.org>
+	    Jens Lautenbacher <jtl@gimp.org>
+
+	* plug-ins/common/gbr.c: save and load brush name into/from layer name.
+
+	* plug-ins/common/gih.c: added gih loader. The loader is able to read
+	the old brush pipe format too. Brush pipes will only be saved in the 
+	new format. Fixes bugs #21806, #34167 and #34168.
+	
 2000-12-18  Daniel Egger <egger@suse.de>
 
 	* plug-ins/ifcompose/ifscompose.c:

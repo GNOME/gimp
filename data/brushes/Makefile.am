@@ -14,7 +14,7 @@ EXTRA_DIST = $(brushdata_DATA)
 FILES = \
 	10x10square.gbr		\
 	10x10squareBlur.gbr	\
-	11circle.gb		\
+	11circle.gbr		\
 	11fcircle.gbr		\
 	13circle.gbr		\
 	13fcircle.gbr		\
