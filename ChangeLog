@@ -1,3 +1,9 @@
+Sun Apr  2 15:59:25 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* configure.in: applied fix for missing "-" as reported in bug
+	#8283. The other half of that bug is fixed by my previous configure.in
+	change.
+
 2000-04-03  Sven Neumann  <sven@gimp.org>
 
 	* app/module_db.c
@@ -43,7 +49,7 @@
 	I reverted the png change since, while it worked fine for RGBA and 
 	INDEXEDA it totally shred RGB and INDEXED images to pieces.. :(
 
-Sun Apr  2 16:55:47 BST 2000
+Sun Apr  2 16:55:47 BST 2000 Andy Thomas <alt@gimp.org>
 	
 	* app/bezier_select.c
 

@@ -548,7 +548,7 @@ if test "$GNOME_CONFIG" = "no"; then
   dnl Test for standalone GtkXMHTML widget
   AC_CHECK_LIB(gtkxmhtml, gtk_xmhtml_new,
     GTKXMHTML_CFLAGS=$GTK_CFLAGS
-    GTKXMHTML_LIBS="lgtkxmhtml $GTK_LIBS"
+    GTKXMHTML_LIBS="-lgtkxmhtml $GTK_LIBS"
     HELPBROWSER=helpbrowser,
     AC_MSG_WARN(*** Help browser plug-in will not be built (GtkXMHTML library not found) ***))
 else
