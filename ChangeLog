@@ -1,3 +1,12 @@
+2004-02-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c (struct RenderInfo)
+	(render_image_accelerate_scaling): use gdouble instead of gfloat
+	for x and y scale factors so gfloat's limited precision can't add
+	up to off-by-one pixel errors. Fixes display artefacts (missing
+	updates) at the bottom and right sides of updated areas at certain
+	irrational zoom factors like 1:3.
+
 2004-02-04  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/image-menu.c (image_menu_entries): added percentages to

@@ -56,8 +56,8 @@ struct _RenderInfo
   guchar           *dest;
   gint              x, y;
   gint              w, h;
-  gfloat            scalex;
-  gfloat            scaley;
+  gdouble           scalex;
+  gdouble           scaley;
   gint              src_x, src_y;
   gint              src_bpp;
   gint              dest_bpp;
@@ -288,7 +288,7 @@ static void     render_image_init_info          (RenderInfo       *info,
 static guint  * render_image_init_alpha         (gint              mult);
 static guchar * render_image_accelerate_scaling (gint              width,
 						 gint              start,
-						 gfloat            scalex);
+						 gdouble           scalex);
 static guchar * render_image_tile_fault         (RenderInfo       *info);
 
 
@@ -794,8 +794,8 @@ render_image_init_info (RenderInfo       *info,
   info->h          = h;
   info->scalex     = SCALEFACTOR_X (shell);
   info->scaley     = SCALEFACTOR_Y (shell);
-  info->src_x      = (gfloat) info->x / info->scalex;
-  info->src_y      = (gfloat) info->y / info->scaley;
+  info->src_x      = (gdouble) info->x / info->scalex;
+  info->src_y      = (gdouble) info->y / info->scaley;
   info->src_bpp    = gimp_image_projection_bytes (shell->gdisp->gimage);
   info->dest       = shell->render_buf;
   info->dest_bpp   = 3;
@@ -835,9 +835,9 @@ render_image_init_alpha (gint mult)
 }
 
 static guchar *
-render_image_accelerate_scaling (gint   width,
-				 gint   start,
-				 gfloat scalex)
+render_image_accelerate_scaling (gint    width,
+				 gint    start,
+				 gdouble scalex)
 {
   static guchar *scale = NULL;
 
