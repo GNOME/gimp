@@ -1,0 +1,114 @@
+What's new in GIMP Imagemap plug-in 1.2
+
+* Implemented Undo/Redo
+* User defineable image URL in settings dialog.
+* A few bug fixes.
+
+What's new in GIMP Imagemap plug-in 1.1
+
+* Rescale objects after rescaling of image.
+* Added 2 new HTML 4.0 tags (ONFOCUS, ONBLUR)
+* Option to make image gray to allow easier editing of images with lots of
+  colors.
+* Most recently used list.
+* Rectangular selection of objects.
+* Drag and drop of links (e.g. from Netscape) to URL field.
+* Usage of shift + left mousebutton during rectangle drawing makes width and
+  height equal.
+* Usage of shift + left mousebutton at start of circle drawing defines 2 points
+  on circle side.
+
+What's new in GIMP Imagemap plug-in 1.0
+
+* Code cleanup
+* Memory leaks fixed.
+* All (?) bugs fixed.
+* Use right mousebutton to cancel drawing operation of circle, rectangle or
+  polygon.
+
+What's new in GIMP Imagemap plug-in 0.9
+
+* Added list of standard prefixes (http://, news:, ftp://, gopher://, etc.) 
+  before URL in settings dialog.
+* Invalid input in dialogs (area settings, numeric values) is now handled 
+  correctly.
+* Add 'Apply' button to some dialogs.
+* Default author field in settings dialog with user name.
+* Show resulting source in 'View Source' dialog to allow copy/paste of 
+  generated code to other programs.
+
+What's new in GIMP Imagemap plug-in 0.7
+
+* Plug-in now works correctly for GIF and grayscale images.
+* Finished implementation of NCSA and CERN mapfiles.
+* Implemented 'Close'.
+* The usual bug fixes.
+
+What's new in GIMP Imagemap plug-in 0.6
+
+* Implemented 'Preferences' dialog:
+* Dropped support for GTK 1.0.6. Support for GTK 1.2 and GIMP 1.1.x or
+  GIMP 1.0.4 has greatly improved.
+* Synchronized Mapping menu items and toolbar items (arrow, rectangle, circle
+  and polygon)
+* Synchronized zoom icon and 'Zoom To' menu item.
+* synchronize grid icon and 'snap to grid' toggle button in 'grid settings'
+  dialog.
+* Warn against overwriting of existing files.
+* Lots of serious and cosmetic bug fixes.
+
+What's new in GIMP Imagemap plug-in 0.5
+
+* New better looking icons (thanks Mete Cirali!)
+* Implemented 'Map Info' dialog.
+* Add/remove polygon points by clicking with right mousebutton on edges/sashes.
+* Added icon showing type (arrow, rectangle, circle) in selection.
+* Implemented pop-up menu when right-button is pressed.
+* Restrict size of preview window for large images.
+* Shapes cannot be moved outside the picture anymore.
+* Use hourglass cursor for lengthy operations (e.g. zooming, saving, loading).
+* Show resulting dimension in 'guides' dialog.
+* Added "cut/copy/paste/select all" functionality.
+* You can now select multiple objects.
+* Lots of bug fixes.
+
+What's new in GIMP Imagemap plug-in 0.4
+
+* Ported to Gimp 1.1.x and GTK 1.2
+* Implemented zooming
+* Removed C++ stuff. The binary immediately shrunk from 140 to 90k!
+* Objects that are currently being edited cannot be deleted anymore.
+* Show area info in statusbar when moving mouse over areas.
+* Added warning dialog for unsaved changes when quiting.
+
+What's new in GIMP Imagemap plug-in 0.3
+
+* You can now load a CSIM file that was saved by this plug-in. Files saved by
+  other programs may cause problems. I haven't tested this yet.
+* Accelerators in menus
+* Selection operations (move up/down, delete, edit).
+* Warning/error dialog for file operations
+* Map-name in title in main dialog
+* 'target frame name' in area settings.
+* JavaScript (onMouseover, onMouseout) in area settings.
+* Doubleclick on shape pops up area settings dialog.
+* Browse button in URL field in area settings dialog.
+* Fixed size of statusbar fields.
+* Move to front/send to back
+* Write image size in HTML file
+* Deselect all if clicked in area with no object.
+* Implement statusbar dimension field
+* Added 4 extra handles to rectangular selection.
+
+What's new in GIMP Imagemap plug-in 0.2
+
+* Implementation of grid
+* Properties tabs for rectangles, circles and polygons.
+* Resizing of objects
+* Moving objects
+* Guide creation
+* GUI for 'Map info' dialog
+* 'Save' menu now popups 'Save As' dialog if no file is selected yet.
+* Several minor cosmetic changes
+
+GIMP Imagemap plug-in 0.1 released.

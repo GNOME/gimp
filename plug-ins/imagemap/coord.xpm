@@ -1,0 +1,22 @@
+/* XPM */
+static char * coord_xpm[] = {
+"16 16 3 1",
+" 	c None",
+".	c red",
+"X	c black",
+"                ",
+"   .            ",
+"   .            ",
+"   .            ",
+"... ... X X X X ",
+"   .            ",
+"   .          X ",
+"   .            ",
+"              X ",
+"   X            ",
+"              X ",
+"   X            ",
+"              X ",
+"   X            ",
+"              X ",
+"   X X X X X X  "};

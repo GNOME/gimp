@@ -52,6 +52,7 @@ SUBDIRS = 			\
 	gfli			\
 	gimpressionist		\
 	ifscompose		\
+	imagemap		\
 	maze			\
 	mosaic			\
 	pagecurl		\

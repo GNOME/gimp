@@ -1,0 +1,46 @@
+/*
+ * This is a plug-in for the GIMP.
+ *
+ * Generates clickable image maps.
+ *
+ * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *
+ */
+
+#ifndef _IMAP_BROWSE_H
+#define _IMAP_BROWSE_H
+
+#include "gtk/gtk.h"
+
+typedef const gchar* (*BrowseFilter_t)(const gchar*, gpointer data);
+
+typedef struct {
+   const gchar *name;
+   BrowseFilter_t filter;
+   gpointer filter_data;
+   GtkWidget *hbox;
+   GtkWidget *file;
+   GtkWidget *button;
+   GtkWidget *file_selection;
+} BrowseWidget_t;
+
+BrowseWidget_t *browse_widget_new(const gchar *name);
+void browse_widget_set_filename(BrowseWidget_t *browse, const gchar *filename);
+void browse_widget_set_filter(BrowseWidget_t *browse, BrowseFilter_t filter, 
+			      gpointer data);
+
+#endif /* _IMAP_BROWSE_H */

@@ -1,3 +1,10 @@
+Tue Sep  7 02:03:18 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* configure.in
+	* plug-ins/Makefile.am
+	* plug-ins/imagemap/*: new files
+	Added the ImageMap plug-in by Maurits Rijk <lpeek.mrijk@consunet.nl>.
+
 Tue Sep  7 00:35:19 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/gflare: new directory, lotsa files!

@@ -1,0 +1,23 @@
+/* XPM */
+static char * copy_xpm[] = {
+"16 16 4 1",
+" 	c black",
+".	c None",
+"X	c blue",
+"o	c white",
+"        .....X..",
+" oooooo  ....X..",
+" o    o   .XXXXX",
+" oooooooo ...X..",
+" o      o ...X..",
+" ooooo        ..",
+" o   o oooooo  .",
+" ooooo o    o   ",
+" o   o oooooooo ",
+" ooooo o      o ",
+"       oooooooo ",
+"...... o      o ",
+"...... oooooooo ",
+"...... o      o ",
+"...... oooooooo ",
+"......          "};

@@ -1,0 +1,22 @@
+/* XPM */
+static char * dimension_xpm[] = {
+"16 16 3 1",
+" 	c None",
+".	c red",
+"X	c black",
+"      .       . ",
+"           X    ",
+"      . XXXXX . ",
+"           X    ",
+"      .       . ",
+" . . .XXXXXXXXX ",
+"      X       X ",
+"   X  X       X ",
+"   X  X       X ",
+"   X  X       X ",
+"   X  X       X ",
+"  XXX X       X ",
+"   X  X       X ",
+"      X       X ",
+" . . .XXXXXXXXX ",
+"                "};

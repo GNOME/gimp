@@ -1,0 +1,78 @@
+/*
+ * This is a plug-in for the GIMP.
+ *
+ * Generates clickable image maps.
+ *
+ * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *
+ */
+
+#include "imap_cmd_create.h"
+#include "imap_main.h"
+
+static gboolean create_command_execute(Command_t *parent);
+static void create_command_destruct(Command_t *parent);
+static void create_command_undo(Command_t *parent);
+
+static CommandClass_t create_command_class = {
+   create_command_destruct,
+   create_command_execute,
+   create_command_undo,
+   NULL				/* create_command_redo */
+};
+
+typedef struct {
+   Command_t 	 parent;
+   ObjectList_t *list;
+   Object_t    	*obj;
+   gboolean	 changed;
+} CreateCommand_t;
+
+Command_t* 
+create_command_new(ObjectList_t *list, Object_t *obj)
+{
+   CreateCommand_t *command = g_new(CreateCommand_t, 1);
+   command->list = list;
+   command->obj = object_ref(obj);
+   return command_init(&command->parent, "Create", &create_command_class);
+}
+
+static void
+create_command_destruct(Command_t *parent)
+{
+   CreateCommand_t *command = (CreateCommand_t*) parent;
+   object_unref(command->obj);
+}
+
+static gboolean
+create_command_execute(Command_t *parent)
+{
+   CreateCommand_t *command = (CreateCommand_t*) parent;
+   command->changed = object_list_get_changed(command->list);
+   object_list_append(command->list, object_ref(command->obj));
+   redraw_preview();		/* fix me! */
+   return TRUE;
+}
+
+static void
+create_command_undo(Command_t *parent)
+{
+   CreateCommand_t *command = (CreateCommand_t*) parent;
+   object_list_remove(command->list, command->obj);
+   object_list_set_changed(command->list, command->changed);
+   redraw_preview();		/* fix me! */
+}
