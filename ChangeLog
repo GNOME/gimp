@@ -1,5 +1,15 @@
 2003-11-05  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptextoptions.c (gimp_text_options_gui): use
+	GTK_STOCK_SELECT_FONT stock icon instead of text tool icon.
+
+	* app/text/gimpfont.c: fixed default stock id.
+
+	* app/text/gimp-fonts.c (gimp_fonts_load): don't leave gimp busy
+	and the fonts container frozen in case of error.
+
+2003-11-05  Sven Neumann  <sven@gimp.org>
+
 	* app/main.c: added new command-line option --no-fonts. Might be
 	useful to reduce startup time or if there are problems with the
 	font configuration.

@@ -82,15 +82,15 @@ gimp_fonts_load (Gimp *gimp)
   config = FcInitLoadConfig ();
 
   if (! config)
-    return;
+    goto cleanup;
 
   fonts_conf = gimp_personal_rc_file (CONF_FNAME);
   if (! gimp_fonts_load_fonts_conf (config, fonts_conf))
-    return;
+    goto cleanup;
 
   fonts_conf = g_build_filename (gimp_sysconf_directory (), CONF_FNAME, NULL);
   if (! gimp_fonts_load_fonts_conf (config, fonts_conf))
-    return;
+    goto cleanup;
 
   path = gimp_config_path_expand (gimp->config->font_path, TRUE, NULL);
   gimp_fonts_add_directories (config, path);
@@ -99,15 +99,15 @@ gimp_fonts_load (Gimp *gimp)
   if (! FcConfigBuildFonts (config))
     {
       FcConfigDestroy (config);
-      return;
+      goto cleanup;
     }
 
   FcConfigSetCurrent (config);
 
   gimp_font_list_restore (GIMP_FONT_LIST (gimp->fonts));
 
+ cleanup:
   gimp_container_thaw (GIMP_CONTAINER (gimp->fonts));
-
   gimp_unset_busy (gimp);
 }
 
@@ -115,6 +115,9 @@ void
 gimp_fonts_reset (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->no_fonts)
+    return;
 
   /* We clear the default config here, so any subsequent fontconfig use will
    * reinit the library with defaults. (Maybe we should call FcFini here too?)
@@ -156,4 +159,4 @@ gimp_fonts_add_directories (FcConfig    *config,
 
   gimp_path_free (path);
 }
-\
+

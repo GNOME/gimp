@@ -140,7 +140,7 @@ gimp_font_class_init (GimpFontClass *klass)
   viewable_class->get_popup_size   = gimp_font_get_popup_size;
   viewable_class->get_new_preview  = gimp_font_get_new_preview;
 
-  viewable_class->default_stock_id = "gtk-font";
+  viewable_class->default_stock_id = "gtk-select-font";
 
   param_spec = g_param_spec_object ("pango-context", NULL, NULL,
                                     PANGO_TYPE_CONTEXT,
