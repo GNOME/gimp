@@ -79,6 +79,8 @@ void exit_callback         (GtkWidget *widget, gpointer client_data);
 void color_ok_callback     (GtkWidget *widget, gpointer client_data);
 void color_cancel_callback (GtkWidget *widget, gpointer client_data);
 void light_color_callback  (GtkWidget *widget, gpointer client_data);
+gint color_delete_callback (GtkWidget *widget, GdkEvent *event, gpointer client_data);
+void color_changed_callback (GtkColorSelection *colorsel, gpointer client_data);
 
 gint box_constrain         (gint32 image_id, gint32 drawable_id, gpointer data);
 void box_drawable_callback (gint32 id, gpointer data);
@@ -480,6 +482,12 @@ void color_changed_callback  (GtkColorSelection *colorsel, gpointer client_data)
   mapvals.lightsource.color.b=color[2];
 }
 
+gint color_delete_callback(GtkWidget *widget, GdkEvent *event, gpointer client_data)
+{
+  color_select_diag=NULL;
+  return FALSE;
+}
+
 void color_cancel_callback(GtkWidget *widget, gpointer client_data)
 {
   gtk_widget_destroy(color_select_diag);
@@ -496,6 +504,8 @@ void light_color_callback(GtkWidget *widget, gpointer client_data)
       gtk_window_position (GTK_WINDOW (color_select_diag), GTK_WIN_POS_MOUSE);
       gtk_widget_show(color_select_diag);
       csd=GTK_COLOR_SELECTION_DIALOG(color_select_diag);
+      gtk_signal_connect(GTK_OBJECT(csd),"delete_event",
+        (GtkSignalFunc)color_delete_callback,(gpointer)color_select_diag);
       gtk_signal_connect(GTK_OBJECT(csd->ok_button),"clicked",
         (GtkSignalFunc)color_ok_callback,(gpointer)color_select_diag);
       gtk_signal_connect(GTK_OBJECT(csd->cancel_button),"clicked",
