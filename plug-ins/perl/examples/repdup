@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+
+use Gimp qw( :auto );
+use Gimp::Fu;
+
+#Gimp::set_trace(TRACE_ALL);
+
+register	"RepDup", 
+		"Repeats and duplicates a selection.",
+		"Hopefully self-explanatory...",
+		"Claes G Lindblad <claesg\@algonet.se>",
+		"Claes G Lindblad <claesg\@algonet.se>",
+		"990328",
+		"<Image>/Edit/Repeat & Duplicate",
+		"*",
+		[
+		[PF_SPINNER, "repeats", "Number of repetitions",
+			3, [1, 1000, 1] ],
+		[PF_SPINNER, "xoffset", "X-offset",
+			50, [-1000, 1000, 1] ],
+		[PF_SPINNER, "yoffset", "Y-offset",
+			50, [-1000, 1000, 1] ],
+		],
+	sub {
+		my ($img, $layer, $repeats, $xoffset, $yoffset) = @_;
+
+		eval { $img->undo_push_group_start };
+		@b  = gimp_selection_bounds($img);
+		my $w = $b[3] - $b[1];
+		my $h = $b[4] - $b[2];
+		gimp_edit_copy($layer);
+		gimp_selection_none($img);
+		for ($i = 0; $i < $repeats; $i++) {
+			$b[1] = $b[1] + $xoffset;
+			$b[2] = $b[2] + $yoffset;
+			gimp_rect_select($img, $b[1], $b[2], $w, $h, REPLACE, 0, 0);
+			$bit_bucket = gimp_edit_paste($layer, 0);
+			gimp_floating_sel_anchor($bit_bucket);
+			gimp_selection_none($img);
+		}
+		eval { $img->undo_push_group_end };
+		return $img;
+	};
+exit main;

@@ -78,4 +78,8 @@ examples/innerbevel
 examples/fit-text
 examples/guidegrid
 examples/roundrectsel
-
+examples/repdup
+examples/centerguide
+examples/stampify
+examples/goldenmean
+examples/triangle

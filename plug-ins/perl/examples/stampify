@@ -1,0 +1,68 @@
+#!/usr/bin/perl
+
+use Gimp qw( :auto );
+use Gimp::Fu;
+
+#Gimp::set_trace(TRACE_ALL);
+
+register	"Stampify", 
+		"Makes an image look like a postage stamp.",
+		"This plug-in works from the active layer. Depending on the size of the image, perforations may look strange. Test alternatives!",
+		"Claes G Lindblad <claesg\@algonet.se>",
+		"Claes G Lindblad <claesg\@algonet.se>",
+		"990328",
+		"<Image>/Filters/Decor/Stampify",
+		"*",
+		[
+	[PF_COLOR, "paper", "Paper colour", [242, 242, 242]],
+	[PF_COLOR, "hole", "Hole colour", [0, 0, 0]],
+	[PF_INT32, "diameter", "Diameter of perforation", 10],
+	[PF_INT32, "gap", "Gap between perforations", 5],
+	[PF_INT32, "marg", "Marginal between art and perforations", 7]
+		],
+	sub {
+		my ($img, $drawable, $paper, $hole, $diameter, $gap, $marg) = @_;
+		$nw = int(gimp_image_width($img) + 2 * $marg + $diameter);
+		$nh = int(gimp_image_height($img) + 2 * $marg + $diameter);
+		my $img2 = gimp_image_new($nw, $nh, RGB);
+		my $layer1 = gimp_layer_new($img2, $nw, $nh, RGBA, "Layer 1", 100, NORMAL_MODE);
+		gimp_image_add_layer($img2, $layer1, 0);
+		gimp_image_set_active_layer($img2, $layer1);
+		gimp_palette_set_background($paper);
+		gimp_drawable_fill($layer1, 1);
+# create horisontal holes
+		gimp_selection_none($img2);
+		my $nholes = int (($nw + $gap) / ($diameter + $gap) + 0.5); 
+		$pos = 0;
+		for ($i = 0; $i<$nholes; $i++) {
+			gimp_ellipse_select($img2,
+				$pos, 0,
+				$diameter, $diameter,
+				ADD, 1, 0, 0);
+			$pos = $pos + $diameter + $gap;
+		}
+# create vertical holes
+		my $nholes = int (($nh + $gap) / ($diameter + $gap) + 0.5); 
+		$pos = 0;
+		for ($i = 0; $i<$nholes; $i++) {
+			gimp_ellipse_select($img2,
+				0, $pos,
+				$diameter, $diameter,
+				ADD, 1, 0, 0);
+			$pos = $pos + $diameter + $gap;
+		}
+		gimp_palette_set_background($hole);
+		gimp_edit_fill($layer1);
+		gimp_selection_none($img2);
+# here comes the clever part! :-)
+# offset horis and vert holes by half the diameter
+		gimp_channel_ops_offset($layer1, 1, 0, -($diameter / 2), -($diameter / 2));
+# insert $img into a new layer in $img2
+#		gimp_selection_all($img);
+		gimp_edit_copy($drawable);
+		my $float = gimp_edit_paste($layer1, 0);
+		gimp_floating_sel_anchor($float);
+# and return command to The Gimp.
+		return $img2;
+	};
+exit main;

@@ -11,6 +11,7 @@ $|=1;
       scratches.pl blowinout.pl terral_text xachvision.pl gimpmagick perlcc
       sethspin.pl animate_cells image_tile yinyang stamps font_table
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel
+      repdup centerguide stampify goldenmean triangle
    );
 @shebang = (map("examples/$_",@examples),
    qw(Perl-Server examples/example-net.pl examples/homepage-logo.pl

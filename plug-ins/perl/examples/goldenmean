@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+
+use Gimp qw( :auto );
+use Gimp::Fu;
+
+sub goldenmean {
+	my ($short, $type) = @_;
+
+	$long = int(($short * 1.618) + 0.5);
+	
+	$width = $short;
+	$height = $long;
+
+	if ($type == 1) {
+		$width = $long;
+		$height = $short;
+	}
+
+	$img = gimp_image_new($width, $height, RGB);
+	$layer = gimp_layer_new($img, $width, $height, RGB, "Layer 1", 100, NORMAL_MODE);
+
+	gimp_image_add_layer($layer, -1);
+	gimp_palette_set_background([255, 255, 255]);
+	$layer->gimp_edit_fill;
+
+	return $img;
+}
+
+register	"Golden Mean", 
+		"Creates a new image with a ratio according to the Golden Mean",
+		"Select shortest side and orientation and I will automagically calculate the long side. As a plug-in companion, see <Image>/Center Guide.",
+		"Claes G Lindblad <claesg\@algonet.se>",
+		"Claes G Lindblad <claesg\@algonet.se>",
+		"990328",
+		"<Toolbox>/Xtns/Render/Golden Mean",
+		"*",
+	[
+	[PF_INT32, "short", "Shortest side", 233],
+	[PF_RADIO, "type", "Orientation", 0, [Portrait => 0, Landscape => 1]]
+	],
+	\&goldenmean;
+
+exit main;
+

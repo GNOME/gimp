@@ -1,6 +1,7 @@
 Revision history for Gimp-Perl extension.
 
-	- added guidegrid, git-text, roundrectsel.
+	- added guidegrid, git-text, roundrectsel, repdup, centerguide,
+          stampify, goldenmean, triangle.
 
 1.072 Sat Mar 27 21:04:39 CET 1999
 	- scripts will now be correctly installed when IN_GIMP.

@@ -1,0 +1,42 @@
+#!/usr/bin/perl
+
+use Gimp qw( :auto );
+use Gimp::Fu;
+
+register	"Triangle", 
+		"Creates a triangular selection with the diagonal as one of its sides.",
+		"Tick appropriate radio buttons.",
+		"Claes G Lindblad <claesg\@algonet.se>",
+		"Claes G Lindblad <claesg\@algonet.se>",
+		"990328",
+		"<Image>/Select/Triangle",
+		"*",
+		[
+		[PF_RADIO, "type", "Select position", 0,
+			[Upper_left => 0, Lower_left => 1, Upper_right => 2, Lower_right => 3]
+		],
+		[PF_RADIO, "mode", "Selection mode", 2,
+			[Add => 0, Subtract => 1, Replace => 2, Intersect => 3]
+		]
+		],
+	sub {
+		my ($img, $layer, $type, $mode) = @_;
+
+		$w = $img->width();
+		$h = $img->height();
+
+		if ($type == 0) {
+			@lista= [0, 0, $w, 0, 0, $h, 0, 0];
+		};
+		if ($type == 1) {
+			@lista= [0, 0, 0, $h, $w, $h, 0, 0];
+		};
+		if ($type == 2) {
+			@lista= [0, 0, $w, 0, $w, $h, 0, 0];
+		};
+		if ($type == 3) {
+			@lista= [$w, 0, $w, $h, 0, $h, $w, 0];
+		};
+		$img->free_select(8, @lista, $mode, 0, 0, 0);
+	};
+exit main;

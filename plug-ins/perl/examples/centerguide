@@ -1,0 +1,38 @@
+#!/usr/bin/perl
+
+use Gimp qw( :auto );
+use Gimp::Fu;
+
+register	"center_guide", 
+		"Creates h- & v-guides at the center of the image.",
+		"Physical center = width/2 and height/2; Optical center = the Golden Mean.",
+		"Claes G Lindblad <claesg\@algonet.se>",
+		"Claes G Lindblad",
+		"990323",
+		"<Image>/Center Guide",
+		"*",
+		[
+		[PF_RADIO,
+			"center",
+			"center",
+			 0,
+			[Physical => 0, Optical => 1]
+		]
+		],
+	sub {
+		my ($img, $layer, $center) = @_;
+
+		$w = $img->width();
+		$h = $img->height();
+		$hc = int($h/2 + 0.5);
+		$vc = int($w/2 + 0.5);
+
+		if ($center == 1) {
+			$hc = int(($h / 2.6179) + 0.5);
+		};
+		$bit_bucket = $img->add_hguide($hc);
+		$bit_bucket = $img->add_vguide($vc);
+		gimp_drawable_update($layer, 0, 0, $w, $h);
+	};
+exit main;
+

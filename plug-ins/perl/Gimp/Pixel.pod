@@ -60,6 +60,7 @@ expects pixel coordinates and will return the tile that pixel is in:
 The C<data> method returns and sets the raw pixel data.
 
  $piddle = $tile->data;	# get the tile data as a piddle
+ $piddle *= 0.5;	# do sth. with the pixels
  $tile->data($piddle);	# and modify the tile
 
 =head1 PIXELREGIONS
@@ -98,12 +99,10 @@ functions, each one corresponding to a get-function:
  $region->set_pixel($piddle,45,60);		# set pixel at (45|60)
  $region->set_row($piddle,45,60);		# set a row
  $region->set_col($piddle,45,60);		# set a column
- $region->set_rect($piddle,45,60,10);		# a 10 pixel wide rectangle
+ $region->set_rect($piddle,45,60);		# set a whole rectangle
 
-Please note that (different to the C functions they call), the last
-parameter (width or height) is missing, it can be calculcated from the perl
-string (if you use piddles, C<set_rect> can calculcate both dimensions from the
-piddle).
+Please note that (unlike the C functions they call), the size arguments
+(width and/or height) are missing, they can be calculated from the piddle.
 
 =head1 AUTHOR
 
