@@ -1,5 +1,22 @@
 2004-05-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in-proc.[ch]: removed member "accelerator". 
+	It was never set and this is the conceptually wrong place to store
+	it anyway.
+
+	* app/actions/file-dialog-actions.c
+	* app/actions/plug-in-actions.c
+	* app/plug-in/plug-in-message.c
+	* app/xcf/xcf.c: changed accordingly.
+
+	* tools/pdbgen/pdb/plug_in.pdb (plugins_query): always return NULL
+	as accelerator. Cleaned up the function a bit and made it aware of
+	proc_def->menu_label added below.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+2004-05-07  Michael Natterer  <mitch@gimp.org>
+
 	Changed plug-in menu registration again to allow passing just the
 	menu item's label (not the full path) in gimp_install_procedure()
 	and only the path (excluding the item's label) in

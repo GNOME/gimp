@@ -690,7 +690,6 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     }
 
   proc_def->prog            = g_strdup (prog);
-  proc_def->accelerator     = NULL;
   proc_def->extensions      = NULL;
   proc_def->prefixes        = NULL;
   proc_def->magics          = NULL;

@@ -86,7 +86,7 @@ file_dialog_actions_setup (GimpActionGroup *group,
       entry.name        = file_proc->db_info.name;
       entry.stock_id    = stock_id;
       entry.label       = label;
-      entry.accelerator = file_proc->accelerator;
+      entry.accelerator = NULL;
       entry.tooltip     = NULL;
       entry.proc_def    = file_proc;
       entry.help_id     = help_id;

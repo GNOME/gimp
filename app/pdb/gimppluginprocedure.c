@@ -78,7 +78,6 @@ plug_in_proc_def_free (PlugInProcDef *proc_def)
   g_list_foreach (proc_def->menu_paths, (GFunc) g_free, NULL);
   g_list_free (proc_def->menu_paths);
 
-  g_free (proc_def->accelerator);
   g_free (proc_def->extensions);
   g_free (proc_def->prefixes);
   g_free (proc_def->magics);

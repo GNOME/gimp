@@ -83,7 +83,6 @@ static PlugInProcDef xcf_plug_in_load_proc =
   "gimp_xcf_load",
   "XCF (GIMP)",
   NULL,
-  NULL,
   "xcf",
   "",
   "0,string,gimp\\040xcf\\040",
@@ -132,7 +131,6 @@ static PlugInProcDef xcf_plug_in_save_proc =
 {
   "gimp_xcf_save",
   "XCF (GIMP)",
-  NULL,
   NULL,
   "xcf",
   "",
