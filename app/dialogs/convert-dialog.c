@@ -366,7 +366,9 @@ static gboolean
 convert_dialog_palette_filter (const GimpObject *object,
                                gpointer          user_data)
 {
-  return GIMP_PALETTE (object)->n_colors <= 256;
+  GimpPalette *palette = GIMP_PALETTE (object);
+
+  return palette->n_colors > 0 && palette->n_colors <= 256;
 }
 
 static void
