@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-23 16:11+0100\n"
-"PO-Revision-Date: 2004-02-23 12:59+0100\n"
+"PO-Revision-Date: 2004-04-01 20:56+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -5001,7 +5001,7 @@ msgstr "millisecondi"
 
 #: plug-ins/common/mosaic.c:309
 msgid "<Image>/Filters/Distorts/_Mosaic..."
-msgstr "<Image>/Filtri/Distorsioni/_Emboss..."
+msgstr "<Image>/Filtri/Distorsioni/_Mosaico..."
 
 #. progress bar for gradient finding
 #: plug-ins/common/mosaic.c:433
@@ -5941,6 +5941,7 @@ msgid "R_andomization (%):"
 msgstr "Cas_ualità (%):"
 
 #: plug-ins/common/ripple.c:137
+#, fuzzy
 msgid "<Image>/Filters/Distorts/_Ripple..."
 msgstr "<Image>/Filtri/Distorsioni/_Onde..."
 
@@ -7500,6 +7501,7 @@ msgid "Flow Step %d..."
 msgstr "Passo di flusso %d..."
 
 #: plug-ins/common/waves.c:125
+#, fuzzy
 msgid "<Image>/Filters/Distorts/_Waves..."
 msgstr "<Image>/Filtri/Distorsioni/_Onde..."
 

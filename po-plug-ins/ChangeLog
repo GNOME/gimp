@@ -1,3 +1,9 @@
+2004-04-01  Michael Natterer  <mitch@gimp.org>
+
+	* it.po: Fixed translation of "Mosaic..." and made translations of
+	"Ripple..." and "Waves..." fuzzy because they were both translated
+	as "Onde...". Fixes bug #138737.
+
 2004-03-30  Gareth Owen  <gowen72@yahoo.com>
 
 	* en_GB.po: Updated British English translation
