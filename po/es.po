@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.x\n"
-"POT-Creation-Date: 2003-02-18 00:38+0100\n"
-"PO-Revision-Date: 2003-02-17 14:57-0300\n"
+"POT-Creation-Date: 2003-02-18 03:57+0100\n"
+"PO-Revision-Date: 2003-02-18 15:47-0300\n"
 "Last-Translator: Pablo Gonzalo del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -110,8 +110,7 @@ msgstr "  -s, --no-splash          No mostrar la ventana de inicio.\n"
 
 #: app/main.c:467
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-msgstr ""
-"  -S, --no-splash-image    No poner una imagen en la ventana de inicio.\n"
+msgstr "  -S, --no-splash-image    No poner una imagen en la ventana de inicio.\n"
 
 #: app/main.c:468
 msgid "  -v, --version            Output version information.\n"
@@ -135,8 +134,7 @@ msgstr "  --no-xshm                No utilizar las rutinas MMX.\n"
 
 # //R Posiblemente estará mal
 #: app/main.c:472
-msgid ""
-"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Activar depuración de manejadores de señales no "
 "fatales.\n"
@@ -147,8 +145,7 @@ msgstr "  --display <display>      Usar la pantalla X designada.\n"
 
 #: app/main.c:474
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr ""
-"  --system-gimprc <gimprc> Usar un archivo de sistema «gimprc» alternativo.\n"
+msgstr "  --system-gimprc <gimprc> Usar un archivo de sistema «gimprc» alternativo.\n"
 
 #: app/main.c:475
 msgid ""
@@ -424,12 +421,10 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:130
 msgid "Sets the text to appear in image window titles."
-msgstr ""
-"Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
+msgstr "Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
 
 #: app/config/gimprc-blurbs.h:133
-msgid ""
-"When set to yes, the GIMP will use a different info window per image view."
+msgid "When set to yes, the GIMP will use a different info window per image view."
 msgstr ""
 "Cuando esta definido como «sí», El GIMP utilizará una ventana de información "
 "diferente por cada vista de imagen."
@@ -441,8 +436,7 @@ msgstr ""
 "de pseudo-color."
 
 #: app/config/gimprc-blurbs.h:140
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Establece el nivel de interpolación utilizado para el redimensionado y otras "
 "transformaciones."
@@ -535,8 +529,7 @@ msgstr ""
 "inicio."
 
 #: app/config/gimprc-blurbs.h:220
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Recordar la herramienta, el patrón, color y brochas actuales por medio de "
 "las sesiones de El GIMP."
@@ -574,8 +567,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:242
 msgid "To display a handy GIMP tip on startup, set to yes."
-msgstr ""
-"Para mostrar un consejo útil de El GIMP al inicio defina esto como «sí»."
+msgstr "Para mostrar un consejo útil de El GIMP al inicio defina esto como «sí»."
 
 #: app/config/gimprc-blurbs.h:245
 msgid "To display tooltips, set to yes."
@@ -646,13 +638,11 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:290
 msgid "Sets the manner in which transparency is displayed in images."
-msgstr ""
-"Establece la forma en que la transparencia es mostrada en las imágenes."
+msgstr "Establece la forma en que la transparencia es mostrada en las imágenes."
 
 #: app/config/gimprc-blurbs.h:293
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr ""
-"Establece el tamaño del cuadriculado utilizado para mostrar la transparencia."
+msgstr "Establece el tamaño del cuadriculado utilizado para mostrar la transparencia."
 
 #: app/config/gimprc-blurbs.h:296
 msgid ""
@@ -664,8 +654,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:300
 msgid "Sets the number of operations kept on the undo stack."
-msgstr ""
-"Establece la cantidad de operaciones mantenidas en la pila de deshacer."
+msgstr "Establece la cantidad de operaciones mantenidas en la pila de deshacer."
 
 #: app/config/gimprc-blurbs.h:303
 msgid "Sets the maximum memory used by operations kept on the undo stack."
@@ -1261,8 +1250,7 @@ msgstr "Error de análisis fatal: «%s» no es un archivo de brocha de El GIMP"
 #: app/core/gimpbrushgenerated.c:411
 #, c-format
 msgid "Fatal Parse Error: '%s': unknown GIMP Brush version"
-msgstr ""
-"Error de análisis fatal: «%s»: versión de brocha de El GIMP desconocida"
+msgstr "Error de análisis fatal: «%s»: versión de brocha de El GIMP desconocida"
 
 #: app/core/gimpbrushpipe.c:351 app/core/gimpbrushpipe.c:371
 #: app/core/gimpbrushpipe.c:461
@@ -1432,23 +1420,20 @@ msgid "Clear"
 msgstr "Limpiar"
 
 #: app/core/gimpedit.c:352
-#, fuzzy
 msgid "Fill with FG Color"
-msgstr "/Editar/Rellenar con el color de frente"
+msgstr "Rellenar con el color de frente"
 
 #: app/core/gimpedit.c:357 app/core/gimpedit.c:382
-#, fuzzy
 msgid "Fill with BG Color"
-msgstr "/Editar/Rellenar con el color de fondo"
+msgstr "Rellenar con el color de fondo"
 
 #: app/core/gimpedit.c:364
 msgid "Fill with White"
-msgstr ""
+msgstr "Rellenar con blanco"
 
 #: app/core/gimpedit.c:373
-#, fuzzy
 msgid "Fill with Transparency"
-msgstr "Frente a transparente"
+msgstr "Rellenar con transparencia"
 
 #: app/core/gimpenvirontable.c:283
 #, c-format
@@ -1615,9 +1600,8 @@ msgid "Paint operation failed."
 msgstr "Ha fallado la operación de pintado. "
 
 #: app/core/gimpimage-merge.c:89
-#, fuzzy
 msgid "Merge Visible Layers"
-msgstr "/Imagen/Combinar las capas visibles..."
+msgstr "Combinar las capas visibles"
 
 #: app/core/gimpimage-merge.c:105
 msgid ""
@@ -1628,14 +1612,12 @@ msgstr ""
 "Al menos debe haber dos."
 
 #: app/core/gimpimage-merge.c:138
-#, fuzzy
 msgid "Flatten Image"
-msgstr "/Imagen/Aplanar la imagen"
+msgstr "Aplanar la imagen"
 
 #: app/core/gimpimage-merge.c:187
-#, fuzzy
 msgid "Merge Down"
-msgstr "/Combinar hacia abajo"
+msgstr "Combinar hacia abajo"
 
 #: app/core/gimpimage-merge.c:196
 msgid "There are not enough visible layers for a merge down."
@@ -1719,40 +1701,36 @@ msgid "Layer cannot be raised higher."
 msgstr "La capa no puede ser elevada mas alto."
 
 #: app/core/gimpimage.c:2843 app/widgets/gimplayerlistview.c:140
-#, fuzzy
 msgid "Raise Layer"
-msgstr "/Elevar capa"
+msgstr "Elevar la capa"
 
 #: app/core/gimpimage.c:2863
 msgid "Layer cannot be lowered more."
-msgstr "La capa no puede descender mas."
+msgstr "La capa no puede bajarse mas."
 
 #: app/core/gimpimage.c:2868 app/widgets/gimplayerlistview.c:142
-#, fuzzy
 msgid "Lower Layer"
-msgstr "/Bajar capa"
+msgstr "Bajar la capa"
 
 #: app/core/gimpimage.c:2885
 msgid "Layer is already on top."
-msgstr "La capa ya se encuentra al inicio."
+msgstr "La capa ya se encuentra al principio."
 
 #: app/core/gimpimage.c:2891
 msgid "Cannot raise a layer without alpha."
 msgstr "No se puede elevar una capa sin alfa."
 
 #: app/core/gimpimage.c:2896 app/widgets/gimplayerlistview.c:141
-#, fuzzy
 msgid "Raise Layer to Top"
-msgstr "/Capa al inicio"
+msgstr "Elevar la capa hasta el principio"
 
 #: app/core/gimpimage.c:2916
 msgid "Layer is already on the bottom."
 msgstr "La capa ya se encuentra al final."
 
 #: app/core/gimpimage.c:2921 app/widgets/gimplayerlistview.c:143
-#, fuzzy
 msgid "Lower Layer to Bottom"
-msgstr "/Capa al final"
+msgstr "Bajar la capa hasta el final"
 
 #: app/core/gimpimage.c:2965
 #, c-format
@@ -1772,18 +1750,16 @@ msgid "Channel cannot be raised higher."
 msgstr "El canal no puede ser elevado mas alto."
 
 #: app/core/gimpimage.c:3119 app/widgets/gimpchannellistview.c:139
-#, fuzzy
 msgid "Raise Channel"
-msgstr "/Elevar canal"
+msgstr "Elevar el canal"
 
 #: app/core/gimpimage.c:3135
 msgid "Channel cannot be lowered more."
 msgstr "El canal no puede descender mas."
 
 #: app/core/gimpimage.c:3140 app/widgets/gimpchannellistview.c:141
-#, fuzzy
 msgid "Lower Channel"
-msgstr "/Hundir canal"
+msgstr "Bajar el canal"
 
 #: app/core/gimpimage.c:3206
 msgid "Add Path to Image"
@@ -1798,18 +1774,16 @@ msgid "Path cannot be raised higher."
 msgstr "La ruta no puede ser elevada mas alto."
 
 #: app/core/gimpimage.c:3308 app/widgets/gimpvectorslistview.c:121
-#, fuzzy
 msgid "Raise Path"
-msgstr "/Elevar ruta"
+msgstr "Elevar la ruta"
 
 #: app/core/gimpimage.c:3324
 msgid "Path cannot be lowered more."
 msgstr "La ruta no puede descender mas."
 
 #: app/core/gimpimage.c:3329 app/widgets/gimpvectorslistview.c:123
-#, fuzzy
 msgid "Lower Path"
-msgstr "/Bajar ruta"
+msgstr "Bajar la ruta"
 
 #: app/core/gimpimagefile.c:458 app/core/gimpimagefile.c:967
 #, c-format
@@ -2066,8 +2040,7 @@ msgstr "Cadena UTF-8 inválida en el archivo de patrón «%s»"
 #: app/core/gimppattern.c:379
 #, c-format
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
-msgstr ""
-"Error de análisis fatal: El archivo de patrón  «%s» parece estar trucado."
+msgstr "Error de análisis fatal: El archivo de patrón  «%s» parece estar trucado."
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
@@ -2458,11 +2431,11 @@ msgstr "/Nuevo canal..."
 
 #: app/gui/channels-menu.c:47
 msgid "/Raise Channel"
-msgstr "/Elevar canal"
+msgstr "/Elevar el canal"
 
 #: app/gui/channels-menu.c:52
 msgid "/Lower Channel"
-msgstr "/Hundir canal"
+msgstr "/Bajar el canal"
 
 #: app/gui/channels-menu.c:57
 msgid "/Duplicate Channel"
@@ -3074,6 +3047,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #: app/gui/file-new-dialog.c:323 app/gui/resize-dialog.c:639
+#, c-format
 msgid "pixels/%a"
 msgstr "píxeles/%a"
 
@@ -3507,7 +3481,7 @@ msgstr "Recortada según la imagen"
 
 #: app/gui/image-commands.c:348
 msgid "Clipped to bottom layer"
-msgstr "Recortada según la capa del fondo"
+msgstr "Recortada hasta la capa final"
 
 #: app/gui/image-commands.c:388
 msgid "Resize Error: Both width and height must be greater than zero."
@@ -3844,15 +3818,15 @@ msgstr "/Capa/Pila/Elevar la capa"
 
 #: app/gui/image-menu.c:493
 msgid "/Layer/Stack/Lower Layer"
-msgstr "/Capa/Pila/Hundir la capa"
+msgstr "/Capa/Pila/Bajar la capa"
 
 #: app/gui/image-menu.c:498
 msgid "/Layer/Stack/Layer to Top"
-msgstr "/Capa/Pila/Enviar la capa al inicio"
+msgstr "/Capa/Pila/Enviar la capa al principio"
 
 #: app/gui/image-menu.c:503
 msgid "/Layer/Stack/Layer to Bottom"
-msgstr "/Capa/Pila/Enviar la capa al final"
+msgstr "/Capa/Pila/Capa al final"
 
 #: app/gui/image-menu.c:511
 msgid "/Layer/New Layer..."
@@ -4133,7 +4107,7 @@ msgstr "Rehacer"
 
 #: app/gui/images-menu.c:42
 msgid "/Raise Displays"
-msgstr "/Elevar pantallas"
+msgstr "/Elevar las pantallas"
 
 #: app/gui/images-menu.c:46
 msgid "/New Display"
@@ -4362,15 +4336,15 @@ msgstr "/Nueva capa..."
 
 #: app/gui/layers-menu.c:49
 msgid "/Raise Layer"
-msgstr "/Elevar capa"
+msgstr "/Elevar la capa"
 
 #: app/gui/layers-menu.c:54
 msgid "/Layer to Top"
-msgstr "/Capa al inicio"
+msgstr "/Capa al principio"
 
 #: app/gui/layers-menu.c:59
 msgid "/Lower Layer"
-msgstr "/Bajar capa"
+msgstr "/Bajar la capa"
 
 #: app/gui/layers-menu.c:64
 msgid "/Layer to Bottom"
@@ -6170,13 +6144,11 @@ msgstr ""
 #: app/gui/user-install-dialog.c:1247
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr ""
-"Obtener la resolución desde el sistema de ventanas (actualmente %d x %d ppp)"
+msgstr "Obtener la resolución desde el sistema de ventanas (actualmente %d x %d ppp)"
 
 #: app/gui/user-install-dialog.c:1265
 msgid "Alternatively, you can set the monitor resolution manually."
-msgstr ""
-"Alternativamente usted puede definir la resolución del monitor manualmente."
+msgstr "Alternativamente usted puede definir la resolución del monitor manualmente."
 
 #: app/gui/user-install-dialog.c:1311
 msgid ""
@@ -6221,11 +6193,11 @@ msgstr "/Nueva ruta..."
 
 #: app/gui/vectors-menu.c:48
 msgid "/Raise Path"
-msgstr "/Elevar ruta"
+msgstr "/Elevar la ruta"
 
 #: app/gui/vectors-menu.c:53
 msgid "/Lower Path"
-msgstr "/Bajar ruta"
+msgstr "/Bajar la ruta"
 
 #: app/gui/vectors-menu.c:131
 msgid "/Path Tool"
@@ -7610,8 +7582,7 @@ msgstr "Bordes suavizados"
 
 #: app/tools/gimpselectionoptions.c:152
 msgid "Allow completely transparent regions to be selected"
-msgstr ""
-"Permitir que las regiones completamente transparentes sean seleccionadas"
+msgstr "Permitir que las regiones completamente transparentes sean seleccionadas"
 
 #: app/tools/gimpselectionoptions.c:158
 msgid "Base selection on all visible layers"
@@ -7619,8 +7590,7 @@ msgstr "Selección base en todas las capas visibles"
 
 #: app/tools/gimpselectionoptions.c:173
 msgid "Use all visible layers when shrinking the selection"
-msgstr ""
-"Utilizar todas las capas visibles cuando se esta achicando la selección"
+msgstr "Utilizar todas las capas visibles cuando se esta achicando la selección"
 
 #: app/tools/gimpselectionoptions.c:406
 msgid "Antialiasing"
@@ -7895,21 +7865,16 @@ msgid "Delete"
 msgstr "Borrar"
 
 #: app/widgets/gimpchannellistview.c:136
-#, fuzzy
 msgid "Duplicate Channel"
-msgstr "/Duplicar canal"
+msgstr "Duplicar canal"
 
 #: app/widgets/gimpchannellistview.c:140
-#, fuzzy
 msgid "Raise Channel to Top"
-msgstr "/Elevar canal"
+msgstr "Elevar el canal hasta el principio"
 
 #: app/widgets/gimpchannellistview.c:142
-#, fuzzy
 msgid "Lower Channel to Bottom"
-msgstr ""
-"Descender\n"
-"%s  hacia el fondo"
+msgstr "Bajar el canal hasta el final"
 
 #: app/widgets/gimpchannellistview.c:177
 #, c-format
@@ -7998,8 +7963,8 @@ msgid ""
 "%s  Open image dialog"
 msgstr ""
 "Abrir la entrada seleccionada\n"
-"%s  Elevar la  ventana si ya se encuentra abierta\n"
-"%s  Abrir dialogo de apertura"
+"%s  Elevar la ventana si ya se encuentra abierta\n"
+"%s  Abrir el dialogo de apertura de imagen"
 
 #: app/widgets/gimpdocumentview.c:184
 msgid "Remove selected entry"
@@ -8159,7 +8124,7 @@ msgstr "Base de El GIMP #%d"
 
 #: app/widgets/gimpimageview.c:143
 msgid "Raise this image's displays"
-msgstr "Elevar esta pantalla de imagen"
+msgstr "Elevar estas pantallas de imagen"
 
 #: app/widgets/gimpimageview.c:152
 msgid "Create a new display for this image"
@@ -8175,27 +8140,26 @@ msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpitemlistview.c:216
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "%s  To Top"
 msgstr ""
-"Elevar\n"
-"%s  hacia el frente"
+"%s\n"
+"%s  al principio"
 
 #: app/widgets/gimpitemlistview.c:230
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "%s  To Bottom"
 msgstr ""
-"Descender\n"
-"%s  hacia el fondo"
+"%s\n"
+"%s  al final"
 
 #: app/widgets/gimplayerlistview.c:137
-#, fuzzy
 msgid "Duplicate Layer"
-msgstr "/Duplicar la capa"
+msgstr "Duplicar la capa"
 
 #: app/widgets/gimplayerlistview.c:183
 msgid "Keep Trans."
@@ -8206,9 +8170,8 @@ msgid "Keep Transparency"
 msgstr "Mantener transparencia"
 
 #: app/widgets/gimplayerlistview.c:215
-#, fuzzy
 msgid "Anchor Floating Layer"
-msgstr "Selección flotante anclada"
+msgstr "Capa flotante anclada"
 
 #: app/widgets/gimppaletteeditor.c:244 app/widgets/gimppaletteeditor.c:353
 msgid "Undefined"
@@ -8291,18 +8254,12 @@ msgstr ""
 "el diálogo de selección de colores."
 
 #: app/widgets/gimpvectorslistview.c:122
-#, fuzzy
 msgid "Raise Path to Top"
-msgstr ""
-"Elevar\n"
-"%s  hacia el frente"
+msgstr "Elevar la ruta hasta el principio"
 
 #: app/widgets/gimpvectorslistview.c:124
-#, fuzzy
 msgid "Lower Path to Bottom"
-msgstr ""
-"Descender\n"
-"%s  hacia el fondo"
+msgstr "Bajar la ruta hasta el final"
 
 #: app/widgets/gimpvectorslistview.c:135
 #, c-format
@@ -8564,3 +8521,4 @@ msgstr "Espaciado de las líneas de la rejilla"
 
 #~ msgid "Reset"
 #~ msgstr "Restaurar"
+
