@@ -1,3 +1,7 @@
+2004-05-13  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/tmpl/gimpthumbnail.sgml: regenerated.
+
 2004-05-12  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am: make it compile again.
