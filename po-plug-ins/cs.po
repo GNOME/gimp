@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.3.0\n"
 "POT-Creation-Date: 2001-02-17 12:02+0100\n"
-"PO-Revision-Date: 2001-03-29 13:07+02:00\n"
+"PO-Revision-Date: 2001-05-22 14:36+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -11111,7 +11111,7 @@ msgstr "Pou¾ít prùhledné pozadí; Pouze kreslené tahy budou viditelné"
 
 #: plug-ins/gimpressionist/general.c:261
 msgid "Paint edges"
-msgstr "Kreslit hrany"
+msgstr "Kreslit okraje"
 
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:269 plug-ins/maze/maze_face.c:282
@@ -11403,7 +11403,7 @@ msgstr "Náhled papíru:"
 #. updatepaperprev(NULL);
 #: plug-ins/gimpressionist/paper.c:141
 msgid "Invert"
-msgstr "Intertovat"
+msgstr "Invertovat"
 
 #: plug-ins/gimpressionist/paper.c:148
 msgid "Inverts the Papers texture"
@@ -11465,7 +11465,7 @@ msgstr "Støedovat"
 
 #: plug-ins/gimpressionist/placement.c:129
 msgid "Focus the brush strokes around the center of the image"
-msgstr "Míøí tahy ¹tìtce na støedu obrázku"
+msgstr "Míøí tahy ¹tìtce do støedu obrázku"
 
 #: plug-ins/gimpressionist/presets.c:572 plug-ins/gimpressionist/presets.c:577
 msgid "Presets"
