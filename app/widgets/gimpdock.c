@@ -364,9 +364,9 @@ gimp_dock_tab_drag_begin (GtkWidget      *widget,
 
   gtk_widget_show (window);
 
-  gtk_object_set_data_full (GTK_OBJECT (dockable), "gimp-dock-drag-widget",
-			    window,
-			    (GtkDestroyNotify) gtk_widget_destroy);
+  g_object_set_data_full (G_OBJECT (dockable), "gimp-dock-drag-widget",
+			  window,
+			  (GDestroyNotify) gtk_widget_destroy);
 
   gtk_drag_set_icon_widget (context, window,
 			    -8, -8);
@@ -382,25 +382,25 @@ gimp_dock_tab_drag_end (GtkWidget      *widget,
 
   dockable = GIMP_DOCKABLE (data);
 
-  drag_widget = gtk_object_get_data (GTK_OBJECT (dockable),
+  drag_widget = g_object_get_data (G_OBJECT (dockable),
 				     "gimp-dock-drag-widget");
 
   if (drag_widget)
     {
       GtkWidget *dock;
 
-      gtk_object_set_data (GTK_OBJECT (dockable), "gimp-dock-drag-widget", NULL);
+      g_object_set_data (G_OBJECT (dockable), "gimp-dock-drag-widget", NULL);
 
       dock = gimp_dock_new ();
 
       gtk_window_set_position (GTK_WINDOW (dock), GTK_WIN_POS_MOUSE);
 
-      gtk_object_ref (GTK_OBJECT (dockable));
+      g_object_ref (G_OBJECT (dockable));
 
       gimp_dock_remove (dockable->dock, dockable);
       gimp_dock_add (GIMP_DOCK (dock), dockable, -1, -1);
 
-      gtk_object_unref (GTK_OBJECT (dockable));
+      g_object_unref (G_OBJECT (dockable));
 
       gtk_widget_show (dock);
     }

@@ -157,7 +157,9 @@ color_area_draw_rect (GdkDrawable *drawable,
     {
       if (color_area_rgb_buf)
 	g_free (color_area_rgb_buf);
-      color_area_rgb_buf = g_malloc (color_area_rgb_buf_size = rowstride * height);
+
+      color_area_rgb_buf = 
+        g_malloc (color_area_rgb_buf_size = rowstride * height);
     }
 
   bp = color_area_rgb_buf;
@@ -491,9 +493,12 @@ color_area_create (gint       width,
 			 GDK_BUTTON_RELEASE_MASK |
 			 GDK_ENTER_NOTIFY_MASK |
 			 GDK_LEAVE_NOTIFY_MASK);
+
+#ifndef GDK_WINDOWING_DIRECTFB
   gtk_signal_connect (GTK_OBJECT (color_area), "event",
 		      GTK_SIGNAL_FUNC (color_area_events),
 		      NULL);
+#endif
 
   gtk_signal_connect (GTK_OBJECT (color_area), "realize",
 		      GTK_SIGNAL_FUNC (color_area_realize),

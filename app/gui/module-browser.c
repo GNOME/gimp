@@ -358,7 +358,7 @@ module_db_browser_new (void)
   button = gtk_button_new_with_label (_("Refresh"));
   gtk_widget_show (button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      browser_refresh_callback, st);
+		      GTK_SIGNAL_FUNC (browser_refresh_callback), st);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
   st->button = gtk_button_new_with_label ("");
@@ -366,29 +366,30 @@ module_db_browser_new (void)
   gtk_box_pack_start (GTK_BOX (hbox), st->button, TRUE, TRUE, 0);
   gtk_widget_show (st->button);
   gtk_signal_connect (GTK_OBJECT (st->button), "clicked",
-		      browser_load_unload_callback, st);
+		      GTK_SIGNAL_FUNC (browser_load_unload_callback), st);
 
   browser_info_init (st, st->table);
   browser_info_update (st->last_update, st);
 
-  gtk_object_set_user_data (GTK_OBJECT (st->list), st);
+  g_object_set_data (G_OBJECT (st->list), "state", st);
 
-  gtk_signal_connect (GTK_OBJECT (st->list), "select_child",
-		      browser_select_callback, NULL);
+  g_signal_connect (G_OBJECT (st->list), "select_child",
+                    G_CALLBACK (browser_select_callback), NULL);
 
   /* hook the GimpContainer signals so we can refresh the display
    * appropriately.
    */
   modules_handler_id =
-    gimp_container_add_handler (modules, "modified", browser_info_update, st);
+    gimp_container_add_handler (modules, "modified", 
+                                G_CALLBACK (browser_info_update), st);
 
-  gtk_signal_connect (GTK_OBJECT (modules), "add", 
-		      browser_info_add, st);
-  gtk_signal_connect (GTK_OBJECT (modules), "remove", 
-		      browser_info_remove, st);
+  g_signal_connect (G_OBJECT (modules), "add", 
+                   G_CALLBACK (browser_info_add), st);
+  g_signal_connect (G_OBJECT (modules), "remove", 
+                    G_CALLBACK (browser_info_remove), st);
 
   gtk_signal_connect (GTK_OBJECT (shell), "destroy",
-		      browser_destroy_callback, st);
+		      GTK_SIGNAL_FUNC (browser_destroy_callback), st);
 
   return shell;
 }
@@ -493,7 +494,7 @@ module_info_get_type (void)
 static void
 module_info_modified (ModuleInfo *mod)
 {
-  gtk_signal_emit (GTK_OBJECT (mod), module_info_signals[MODIFIED]);
+  g_signal_emit (G_OBJECT (mod), module_info_signals[MODIFIED], 0);
 }
 
 static ModuleInfo *
@@ -799,7 +800,9 @@ static void
 browser_destroy_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  gtk_signal_disconnect_by_data (GTK_OBJECT (modules), data);
+  g_signal_handlers_disconnect_matched (G_OBJECT (modules), 
+                                        G_SIGNAL_MATCH_DATA,
+                                        0, 0, 0, NULL, data);
   gimp_container_remove_handler (modules, modules_handler_id);
   g_free (data);
 }
@@ -948,24 +951,24 @@ browser_info_init (BrowserState *st,
   gtk_table_attach (GTK_TABLE (table), st->load_inhibit_check,
 		    0, 2, i, i+1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
-  gtk_signal_connect (GTK_OBJECT (st->load_inhibit_check), "toggled",
-		      browser_load_inhibit_callback, st);
+  g_signal_connect (G_OBJECT (st->load_inhibit_check), "toggled",
+                    G_CALLBACK (browser_load_inhibit_callback), st);
 }
 
 static void
 browser_select_callback (GtkWidget *widget, 
 			 GtkWidget *child)
 {
-  ModuleInfo *i;
+  ModuleInfo *info;
   BrowserState *st;
 
-  i = gtk_object_get_user_data (GTK_OBJECT (child));
-  st = gtk_object_get_user_data (GTK_OBJECT (widget));
+  info = g_object_get_data (G_OBJECT (child), "module_info");
+  st = g_object_get_data (G_OBJECT (widget), "state");
 
-  if (st->last_update == i)
+  if (st->last_update == info)
     return;
 
-  st->last_update = i;
+  st->last_update = info;
 
   browser_info_update (st->last_update, st);
 }
@@ -1000,7 +1003,7 @@ make_list_item (gpointer data,
   list_item = gtk_list_item_new_with_label (info->fullpath);
 
   gtk_widget_show (list_item);
-  gtk_object_set_user_data (GTK_OBJECT (list_item), info);
+  g_object_set_data (G_OBJECT (list_item), "module_info", info);
 
   gtk_container_add (GTK_CONTAINER (st->list), list_item);
 }
@@ -1023,7 +1026,7 @@ browser_info_remove (GimpContainer *container,
   GList      *dlist;
   GList      *free_list;
   GtkWidget  *list_item;
-  ModuleInfo *i;
+  ModuleInfo *info;
 
   dlist = gtk_container_children (GTK_CONTAINER (st->list));
   free_list = dlist;
@@ -1032,13 +1035,13 @@ browser_info_remove (GimpContainer *container,
   {
     list_item = dlist->data;
 
-    i = gtk_object_get_user_data (GTK_OBJECT (list_item));
-    g_return_if_fail (i != NULL);
+    info = g_object_get_data (G_OBJECT (list_item), "module_info");
+    g_return_if_fail (info != NULL);
 
-    if (i == mod)
+    if (info == mod)
     {
       gtk_container_remove (GTK_CONTAINER (st->list), list_item);
-      g_list_free(free_list);
+      g_list_free (free_list);
       return;
     }
 

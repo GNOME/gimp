@@ -1,3 +1,15 @@
+2001-07-27  Sven Neumann  <sven@gimp.org>
+
+	* app/module_db.c
+	* app/gui/color-area.c
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpcontainerlistview.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimpdock.c: more GObject porting
+
 2001-07-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/errorconsole.c

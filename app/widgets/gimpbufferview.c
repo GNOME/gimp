@@ -182,7 +182,7 @@ gimp_buffer_view_new (GimpViewType              view_type,
 					 min_items_y,
 					 context_func))
     {
-      gtk_object_unref (GTK_OBJECT (buffer_view));
+      g_object_unref (G_OBJECT (buffer_view));
       return NULL;
     }
 

@@ -380,12 +380,10 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 
       if (dialog)
 	{
-	  gtk_object_set_data (GTK_OBJECT (dialog),
-			       "gimp-dialog-factory",
-			       factory);
-	  gtk_object_set_data (GTK_OBJECT (dialog),
-			       "gimp-dialog-factory-entry",
-			       entry);
+	  g_object_set_data (G_OBJECT (dialog), "gimp-dialog-factory", 
+                             factory);
+	  g_object_set_data (G_OBJECT (dialog), "gimp-dialog-factory-entry",
+                             entry);
 
 	  /*  If we created a dock before, the newly created dialog is
 	   *  supposed to be a GimpDockable.
@@ -585,9 +583,7 @@ gimp_dialog_factory_dock_new (GimpDialogFactory *factory)
 
   if (dock)
     {
-      gtk_object_set_data (GTK_OBJECT (dock),
-			   "gimp-dialog-factory",
-			   factory);
+      g_object_set_data (G_OBJECT (dock), "gimp-dialog-factory", factory);
 
       gimp_dialog_factory_add_dialog (factory, dock);
     }
@@ -615,8 +611,8 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
       return;
     }
 
-  dialog_factory = gtk_object_get_data (GTK_OBJECT (dialog),
-					"gimp-dialog-factory");
+  dialog_factory = g_object_get_data (G_OBJECT (dialog), 
+                                      "gimp-dialog-factory");
 
   if (! dialog_factory)
     {
@@ -632,10 +628,9 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
       return;
     }
 
-  entry = gtk_object_get_data (GTK_OBJECT (dialog),
-			       "gimp-dialog-factory-entry");
+  entry = g_object_get_data (G_OBJECT (dialog), "gimp-dialog-factory-entry");
 
-  if (entry) /*  dialog is a toplevel (but not a GimpDock) or a GimpDockable  */
+  if (entry) /* dialog is a toplevel (but not a GimpDock) or a GimpDockable */
     {
       gboolean toplevel;
 

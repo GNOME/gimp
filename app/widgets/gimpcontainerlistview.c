@@ -286,7 +286,7 @@ gimp_container_list_view_reorder_item (GimpContainerView *view,
 
       selected = GTK_WIDGET_STATE (list_item) == GTK_STATE_SELECTED;
 
-      gtk_object_ref (GTK_OBJECT (list_item));
+      g_object_ref (G_OBJECT (list_item));
 
       gtk_list_remove_items (GTK_LIST (list_view->gtk_list), list);
 
@@ -298,7 +298,7 @@ gimp_container_list_view_reorder_item (GimpContainerView *view,
       if (selected)
 	gimp_container_view_select_item (view, viewable);
 
-      gtk_object_unref (GTK_OBJECT (list_item));
+      g_object_unref (G_OBJECT (list_item));
     }
 }
 

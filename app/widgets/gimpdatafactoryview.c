@@ -196,7 +196,7 @@ gimp_data_factory_view_new (GimpViewType              view_type,
 					  min_items_y,
 					  context_func))
     {
-      gtk_object_unref (GTK_OBJECT (factory_view));
+      g_object_unref (G_OBJECT (factory_view));
       return NULL;
     }
 

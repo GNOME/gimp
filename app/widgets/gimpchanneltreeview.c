@@ -326,7 +326,7 @@ gimp_channel_list_view_to_selection (GimpChannelListView *view,
 	{
 	  new_channel = channel;
 
-	  gtk_object_ref (GTK_OBJECT (channel));
+	  g_object_ref (G_OBJECT (channel));
 	}
       else
 	{
@@ -340,7 +340,7 @@ gimp_channel_list_view_to_selection (GimpChannelListView *view,
 
       gimage_mask_load (gimage, new_channel);
 
-      gtk_object_unref (GTK_OBJECT (new_channel));
+      g_object_unref (G_OBJECT (new_channel));
 
       gdisplays_flush ();
     }
