@@ -31,6 +31,7 @@
 
 #include "base/temp-buf.h"
 
+#include "config/gimpconfig-serialize.h"
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
@@ -85,6 +86,10 @@ static void       gimp_context_get_property   (GObject               *object,
                                                GParamSpec            *pspec);
 static gsize      gimp_context_get_memsize    (GimpObject            *object);
 
+static gboolean   gimp_context_serialize            (GObject      *object,
+                                                     gint          fd,
+                                                     gint          indent_level,
+                                                     gpointer      data);
 static gboolean   gimp_context_serialize_property   (GObject      *object,
                                                      guint         property_id,
                                                      const GValue *value,
@@ -622,6 +627,8 @@ gimp_context_init (GimpContext *context)
 static void
 gimp_context_config_iface_init (GimpConfigInterface *config_iface)
 {
+  config_iface->serialize            = gimp_context_serialize;
+
   config_iface->serialize_property   = gimp_context_serialize_property;
   config_iface->deserialize_property = gimp_context_deserialize_property;
 }
@@ -968,6 +975,15 @@ gimp_context_get_memsize (GimpObject *object)
     memsize += strlen (context->palette_name) + 1;
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
+static gboolean
+gimp_context_serialize (GObject  *object,
+                        gint      fd,
+                        gint      indent_level,
+                        gpointer  data)
+{
+  return gimp_config_serialize_changed_properties (object, fd, indent_level);
 }
 
 static gboolean

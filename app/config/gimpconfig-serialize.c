@@ -101,35 +101,98 @@ gimp_config_serialize_properties (GObject  *object,
   return TRUE;
 }
 
-
 /**
- * gimp_config_serialize_properties:
- * @new: a #GObject. 
- * @old: a #GObject of the same type as @new. 
+ * gimp_config_serialize_changed_properties:
+ * @object: a #GObject. 
  * @fd: a file descriptor to write to.
  * 
- * This function compares the objects @new and @old and writes all properties
- * of @new that have different values than @old to the file descriptor @fd.
+ * This function writes all object properties that have been changed from
+ * their default values to the file descriptor @fd.
  **/
 gboolean
-gimp_config_serialize_changed_properties (GObject *new,
-                                          GObject *old,
+gimp_config_serialize_changed_properties (GObject *object,
                                           gint     fd,
                                           gint     indent_level)
+{
+  GObjectClass  *klass;
+  GParamSpec   **property_specs;
+  guint          n_property_specs;
+  guint          i;
+  GString       *str;
+  GValue         value = { 0, };
+
+  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+
+  klass = G_OBJECT_GET_CLASS (object);
+
+  property_specs = g_object_class_list_properties (klass, &n_property_specs);
+
+  if (! property_specs)
+    return TRUE;
+
+  str = g_string_new (NULL);
+
+  for (i = 0; i < n_property_specs; i++)
+    {
+      GParamSpec *prop_spec = property_specs[i];
+
+      if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
+        continue;
+
+      g_value_init (&value, prop_spec->value_type);
+      g_object_get_property (object, prop_spec->name, &value);
+
+      if (! g_param_value_defaults (prop_spec, &value))
+        {
+          gimp_config_string_indent (str, indent_level);
+
+          if (gimp_config_serialize_property (object, prop_spec, str, TRUE))
+            {
+              if (write (fd, str->str, str->len) == -1)
+                return FALSE;
+            }
+
+          g_string_truncate (str, 0);
+        }
+
+      g_value_unset (&value);
+    }
+
+  g_free (property_specs);
+  g_string_free (str, TRUE);
+
+  return TRUE;
+}
+
+/**
+ * gimp_config_serialize_properties_diff:
+ * @object: a #GObject. 
+ * @compare: a #GObject of the same type as @object. 
+ * @fd: a file descriptor to write to.
+ * 
+ * This function compares @object and @compare and writes all
+ * properties of @object that have different values than @compare to
+ * the file descriptor @fd.
+ **/
+gboolean
+gimp_config_serialize_properties_diff (GObject *object,
+                                       GObject *compare,
+                                       gint     fd,
+                                       gint     indent_level)
 {
   GObjectClass *klass;
   GList        *diff;
   GList        *list;
   GString      *str;
 
-  g_return_val_if_fail (G_IS_OBJECT (new), FALSE);
-  g_return_val_if_fail (G_IS_OBJECT (old), FALSE);
-  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (new) == 
-                        G_TYPE_FROM_INSTANCE (old), FALSE);
+  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+  g_return_val_if_fail (G_IS_OBJECT (compare), FALSE);
+  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (object) == 
+                        G_TYPE_FROM_INSTANCE (compare), FALSE);
 
-  klass = G_OBJECT_GET_CLASS (new);
+  klass = G_OBJECT_GET_CLASS (object);
 
-  diff = gimp_config_diff (new, old, GIMP_PARAM_SERIALIZE);
+  diff = gimp_config_diff (object, compare, GIMP_PARAM_SERIALIZE);
 
   if (! diff)
     return TRUE;
@@ -145,7 +208,7 @@ gimp_config_serialize_changed_properties (GObject *new,
 
       gimp_config_string_indent (str, indent_level);
 
-      if (gimp_config_serialize_property (new, prop_spec, str, TRUE))
+      if (gimp_config_serialize_property (object, prop_spec, str, TRUE))
 	{
           if (write (fd, str->str, str->len) == -1)
             return FALSE;

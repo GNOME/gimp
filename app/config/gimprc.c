@@ -289,8 +289,8 @@ gimp_rc_serialize (GObject *object,
 {
   if (data && GIMP_IS_RC (data))
     {
-      if (!gimp_config_serialize_changed_properties (object, G_OBJECT (data),
-                                                     fd, indent_level))
+      if (!gimp_config_serialize_properties_diff (object, G_OBJECT (data),
+                                                  fd, indent_level))
         return FALSE;
     }
   else

@@ -26,8 +26,11 @@
 gboolean  gimp_config_serialize_properties         (GObject      *object,
                                                     gint          fd,
                                                     gint          indent_level);
-gboolean  gimp_config_serialize_changed_properties (GObject      *new,
-                                                    GObject      *old,
+gboolean  gimp_config_serialize_changed_properties (GObject      *object,
+                                                    gint          fd,
+                                                    gint          indent_level);
+gboolean  gimp_config_serialize_properties_diff    (GObject      *object,
+                                                    GObject      *compare,
                                                     gint          fd,
                                                     gint          indent_level);
 gboolean  gimp_config_serialize_unknown_tokens     (GObject      *object,

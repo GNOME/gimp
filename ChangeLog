@@ -1,5 +1,19 @@
 2003-02-28  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-serialize.[ch]: renamed
+	gimp_config_serialize_changed_properties() to
+	gimp_config_serialize_properties_diff() and added a new function
+	gimp_config_serialize_changed_properties() that saves only
+	properties that have been changed from their default values.
+	
+	* app/config/gimprc.c: follow the function name change.
+
+	* app/core/gimpcontext.c: override GimpConfigInterface::serialize
+	with gimp_config_serialize_changed_properties() so we store only
+	tool_options that have been changed from their default values.
+
+2003-02-28  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-serialize.c
 	(gimp_config_serialize_changed_properties): simplified by using
 	gimp_config_serialize_property() instead of doing it all by hand.
