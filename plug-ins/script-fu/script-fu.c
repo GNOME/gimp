@@ -1099,7 +1099,7 @@ script_fu_auxillary_init (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  INIT_I18N();
+  INIT_I18N_UI();
 
   gimp_install_temp_proc ("script_fu_refresh",
 			  _("Re-read all available scripts"),

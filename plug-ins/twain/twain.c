@@ -467,7 +467,7 @@ query(void)
   static GimpParamDef args[] = { IN_ARGS };
   static GimpParamDef return_vals[] = { OUT_ARGS };
 
-  INIT_I18N ();
+  INIT_I18N_UI ();
 
 #ifdef _DEBUG
   if (twain_run_mode == RUN_DUMP)

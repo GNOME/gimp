@@ -159,7 +159,7 @@ run (gchar   *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  INIT_I18N();
+  INIT_I18N_UI();
 
   if (strcmp (name, "file_mpeg_load") == 0)
     {

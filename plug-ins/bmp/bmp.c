@@ -175,7 +175,7 @@ run (gchar   *name,
 
   if (strcmp (name, "file_bmp_load") == 0)
     {
-       INIT_I18N();
+       INIT_I18N_UI();
 
        switch (run_mode)
         {
@@ -212,7 +212,7 @@ run (gchar   *name,
     }
   else if (strcmp (name, "file_bmp_save") == 0)
     {
-      INIT_I18N();
+      INIT_I18N_UI();
 
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
