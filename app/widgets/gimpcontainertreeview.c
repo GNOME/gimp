@@ -815,7 +815,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                   gtk_tree_view_set_cursor_on_cell (tree_view->view, path,
                                                     column, edit_cell, TRUE);
                 }
-              else
+              else if (! toggled_cell) /* ignore double click on toggles */
                 {
                   gimp_container_view_item_activated (container_view,
                                                       renderer->viewable);

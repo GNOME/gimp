@@ -1,3 +1,9 @@
+2003-03-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_button_press): ignore double clicks on
+	toggle cells (fixes bug #109114).
+
 2003-03-24  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpenummenu.[ch]: added new functions
