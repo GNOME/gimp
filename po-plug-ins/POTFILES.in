@@ -87,3 +87,4 @@ plug-ins/script-fu/script-fu-console.c
 plug-ins/script-fu/script-fu-scripts.c
 plug-ins/script-fu/script-fu-server.c
 plug-ins/script-fu/script-fu.c
+plug-ins/common/film.c

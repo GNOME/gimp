@@ -24,4 +24,7 @@ package {
 	module <color_select.h>{
 		foreign ColorSelectP;
 	}
+	module <color_notebook.h>{
+		foreign ColorNotebookP;
+	}
 }

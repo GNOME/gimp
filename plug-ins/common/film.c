@@ -28,8 +28,10 @@
  * V 1.02, PK, 24-Sep-97, Try different font sizes when inquire failed.
  *                        Fit film height to images
  * V 1.03, nn, 20-Dec-97, Initialize layers in film()
+ * V 1.04, PK, 08-Oct-99, Fix problem with image id zero
+ *                        Internationalization
  */
-static char ident[] = "@(#) GIMP Film plug-in v1.03a 1999-07-22";
+static char ident[] = "@(#) GIMP Film plug-in v1.04 1999-10-08";
 
 #include "config.h"
 
@@ -40,6 +42,7 @@ static char ident[] = "@(#) GIMP Film plug-in v1.03a 1999-07-22";
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Maximum number of pictures per film */
 #define MAX_FILM_PICTURES 64
@@ -235,13 +238,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
+  INIT_I18N ();
+
   gimp_install_procedure ("plug_in_film",
-			  "Compose several images to a roll film",
-			  "Compose several images to a roll film",
+			  _("Compose several images to a roll film"),
+			  _("Compose several images to a roll film"),
 			  "Peter Kirchgessner",
-			  "Peter Kirchgessner (pkirchg@aol.com)",
+			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1997",
-			  "<Image>/Filters/Combine/Film",
+			  N_("<Image>/Filters/Combine/Film"),
 			  "INDEXED*, GRAY*, RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -259,6 +264,8 @@ run (char    *name,
   GStatusType status = STATUS_SUCCESS;
   gint32 image_ID;
   int k;
+
+  INIT_I18N_UI();
 
   run_mode = param[0].data.d_int32;
 
@@ -326,11 +333,11 @@ run (char    *name,
   if (status == STATUS_SUCCESS)
     {
       if (run_mode != RUN_NONINTERACTIVE)
-        gimp_progress_init ("Composing Images...");
+        gimp_progress_init (_("Composing Images..."));
 
       image_ID = film ();
 
-      if (image_ID <= 0)
+      if (image_ID < 0)
       {
         status = STATUS_EXECUTION_ERROR;
       }
@@ -438,7 +445,7 @@ film (void)
  printf ("Number of pictures = %d\n", num_pictures);
 #endif
 
- image_ID_dst = create_new_image ("Untitled", (guint)film_width,
+ image_ID_dst = create_new_image (_("Untitled"), (guint)film_width,
                    (guint)film_height, RGB_IMAGE, &layer_ID_dst,
                    &drawable_dst, &pixel_rgn_dst);
 
@@ -707,7 +714,7 @@ static int scale_layer (gint32 src_layer,
 
  /*** Get a RGB copy of the source region ***/
 
- tmp_image = create_new_image ("Temporary", src_width, src_height,
+ tmp_image = create_new_image (_("Temporary"), src_width, src_height,
                RGB_IMAGE, &tmp_layer, &tmp_drawable, &tmp_pixel_rgn);
 
  src = (unsigned char *)g_malloc (src_width * tile_height * src_drawable->bpp);
@@ -975,7 +982,7 @@ create_new_image (char *filename,
  image_ID = gimp_image_new (width, height, gitype);
  gimp_image_set_filename (image_ID, filename);
 
- *layer_ID = gimp_layer_new (image_ID, "Background", width, height,
+ *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
                              gdtype, 100, NORMAL_MODE);
  gimp_image_add_layer (image_ID, *layer_ID, 0);
 
@@ -1050,7 +1057,7 @@ add_color_button (int csel_index,
  GtkWidget *button;
  GtkWidget *preview;
 
- label = gtk_label_new ("Color:");
+ label = gtk_label_new (_("Color:"));
  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
  gtk_table_attach (GTK_TABLE (table), label, 0, 1, tab_index, tab_index+1,
                    GTK_FILL, GTK_FILL, 0, 0);
@@ -1156,8 +1163,8 @@ add_image_list (int add_box_flag,
   gtk_box_pack_start (GTK_BOX (box1), box2, TRUE, TRUE, 0);
   gtk_widget_show (box2);
 
-  label = gtk_label_new (add_box_flag ? "Available images:"
-                                      : "On film:");
+  label = gtk_label_new (add_box_flag ? _("Available images:")
+                                      : _("On film:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (box2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -1184,7 +1191,7 @@ add_image_list (int add_box_flag,
     gtk_widget_show (list_item);
   }
 
-  button = gtk_button_new_with_label (add_box_flag ? "add -->" : "remove");
+  button = gtk_button_new_with_label (add_box_flag ? _("add -->"):_("remove"));
   GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       add_box_flag ? (GtkSignalFunc) add_list_item_callback
@@ -1218,7 +1225,7 @@ film_dialog (gint32 image_ID)
 
   argc = 1;
   argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("Film");
+  argv[0] = g_strdup (_("Film"));
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
@@ -1234,14 +1241,14 @@ film_dialog (gint32 image_ID)
   gtk_widget_set_default_colormap(gtk_preview_get_cmap());
 
   filmint.dialog = dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Film");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Film"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
                       (GtkSignalFunc) film_close_callback,
                       NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) film_ok_callback, dlg);
@@ -1250,7 +1257,7 @@ film_dialog (gint32 image_ID)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
                              (GtkSignalFunc) gtk_widget_destroy,
@@ -1273,7 +1280,7 @@ film_dialog (gint32 image_ID)
   gtk_widget_show (v0box);
 
   /* Film height/colour */
-  frame = gtk_frame_new ("Film");
+  frame = gtk_frame_new (_("Film"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 5);
   gtk_box_pack_start (GTK_BOX (v0box), frame, TRUE, TRUE, 0);
@@ -1283,7 +1290,7 @@ film_dialog (gint32 image_ID)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /* Keep maximum image height */
-  toggle = gtk_check_button_new_with_label ("Fit height to images");
+  toggle = gtk_check_button_new_with_label (_("Fit height to images"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   filmint.keep_height = filmvals.keep_height;
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -1301,7 +1308,7 @@ film_dialog (gint32 image_ID)
 
   /* Film height */
   sprintf (buffer, "%d", (int)filmvals.film_height);
-  filmint.left_entry[0] = add_label_with_entry ("Height:", buffer, 0, table);
+  filmint.left_entry[0] = add_label_with_entry (_("Height:"), buffer, 0, table);
 
   /* Film colour */
   add_color_button (0, 1, table);
@@ -1310,7 +1317,7 @@ film_dialog (gint32 image_ID)
   gtk_widget_show (frame);
 
   /* Film numbering: Startindex/Font/colour */
-  frame = gtk_frame_new ("Numbering");
+  frame = gtk_frame_new (_("Numbering"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 5);
   gtk_box_pack_start (GTK_BOX (v0box), frame, TRUE, TRUE, 0);
@@ -1327,17 +1334,19 @@ film_dialog (gint32 image_ID)
 
   /* Startindex */
   sprintf (buffer, "%d", (int)filmvals.number_start);
-  filmint.left_entry[1] = add_label_with_entry ("Startindex:", buffer, 0, table);
+  filmint.left_entry[1] = add_label_with_entry (_("Startindex:"), buffer,
+                                                0, table);
 
   /* Fontfamily for numbering */
-  filmint.left_entry[2] = add_label_with_entry ("Font:", filmvals.number_fontf,
+  filmint.left_entry[2] = add_label_with_entry (_("Font:"),
+                                                filmvals.number_fontf,
                                                 1, table);
   /* Numbering colour */
   add_color_button (1, 2, table);
 
   for (j = 0; j < 2; j++)
   {
-    toggle = gtk_check_button_new_with_label (j ? "at bottom" : "at top");
+    toggle = gtk_check_button_new_with_label (j ? _("at bottom") : _("at top"));
     gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
     filmint.number_pos[j] = filmvals.number_pos[j];
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -1358,7 +1367,7 @@ film_dialog (gint32 image_ID)
   gtk_widget_show (h0box);
 
   /*** The right frame keeps the image selection ***/
-  frame = gtk_frame_new ("Image selection");
+  frame = gtk_frame_new (_("Image selection"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 5);
   gtk_box_pack_start (GTK_BOX (h0box), frame, TRUE, TRUE, 0);
@@ -1414,8 +1423,8 @@ film_color_button_callback (GtkWidget *widget,
    colour[j] = filmint.csel[idx].color[j] / 255.0;
 
  dialog = filmint.csel[idx].colselect = gtk_color_selection_dialog_new (
-           (idx == 0) ? "Films color Color Picker"
-                      : "Numbers color Color Picker");
+           (idx == 0) ? _("Films color Color Picker")
+                      : _("Numbers color Color Picker"));
  csd = GTK_COLOR_SELECTION_DIALOG (dialog);
 
  gtk_widget_destroy (csd->help_button);
@@ -1486,7 +1495,7 @@ film_ok_callback (GtkWidget *widget,
       if ((label = (GtkWidget *)tmp_list->data) != NULL)
       {
         image_ID = (gint32)gtk_object_get_user_data (GTK_OBJECT (label));
-        if ((image_ID > 0) && (num_images < MAX_FILM_PICTURES))
+        if ((image_ID >= 0) && (num_images < MAX_FILM_PICTURES))
           filmvals.image[num_images++] = image_ID;
       }
       tmp_list = tmp_list->next;

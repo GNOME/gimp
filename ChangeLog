@@ -1,3 +1,11 @@
+Fri Oct  8 18:29:56 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/common/film.c: applied gimp-kirchgessner-991009-0, allow
+	image ids == 0 and i18n
+
+	* app/gimp.gh
+	* app/colormap_dialog.gc: sync with changes
+
 Sat Oct  9 02:59:04 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/undo_history.c: use the preview_size set for the layers dialog
