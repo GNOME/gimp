@@ -523,7 +523,7 @@ create_options_page (void)
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &mapvals.pixel_treshold);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Treshold:"), 1.0, 1.0,
+			     _("Threshold:"), 1.0, 1.0,
 			     spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton,
