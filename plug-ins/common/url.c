@@ -181,7 +181,14 @@ load_image (gchar             *filename,
       close (2);
       dup (p[1]);
       close (p[1]);
-      putenv ("LC_ALL=C");  /* produce deterministic output */
+
+#ifdef HAVE_PUTENV
+      /* produce deterministic output */
+      putenv ("LANGUAGE=C");
+      putenv ("LC_ALL=C");
+      putenv ("LANG=C");
+#endif
+
       execlp ("wget", "wget", "-T", TIMEOUT, filename, "-O", tmpname, NULL);
       g_message ("url: exec() failed: wget: %s", g_strerror (errno));
       g_free (tmpname);
