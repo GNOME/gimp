@@ -95,12 +95,12 @@ msgid ""
 "(Do it manually to tune the result)"
 msgstr ""
 "Converter para Indexada usando configurações\n"
-"padrão (faça isso manualmente para ajustar oresultado)"
+"padrão (faça isso manualmente para ajustar o resultado)"
 
 #: libgimp/gimpexport.c:306
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s só pode tratar imagens bitmap (duas cores)³indexadas"
+msgstr "%s só pode tratar imagens bitmap (duas cores) indexadas"
 
 #: libgimp/gimpexport.c:307
 msgid ""
@@ -162,7 +162,7 @@ msgid ""
 "reasons:"
 msgstr ""
 "Sua imagem deve ser exportada antes de poder ser salva como %s, pelas "
-"razõesa seguir:"
+"razões a seguir:"
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
@@ -477,7 +477,7 @@ msgstr "E_scalar"
 
 #: libgimpwidgets/gimpstock.c:263
 msgid "Crop"
-msgstr "Aparar"
+msgstr "Cortar"
 
 #: libgimpwidgets/gimpstock.c:280
 msgid "_Transform"
