@@ -260,7 +260,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   }
   hue_partition_table[] =
   {
-    { N_("_Master"), 2, 3, 0, 0 },
+    { N_("M_aster"), 2, 3, 0, 0 },
     { N_("_R"),      2, 1, 2, 0 },
     { N_("_Y"),      1, 2, 0, 2 },
     { N_("_G"),      1, 4, 0, 4 },
