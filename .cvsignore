@@ -12,3 +12,4 @@ aclocal.m4
 gimprc_user
 gimptool
 intl
+config.h.in
