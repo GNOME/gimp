@@ -4350,7 +4350,8 @@ combine_sub_region (struct combine_regions_struct *st,
   guint                 mode_affect = 0;
   guchar               *s, *s1, *s2;
   guchar               *d, *m;
-  guchar                buf[MAX (src1->w * src1->bytes,
+  guchar                buf[MAX (MAX (src1->w * src1->bytes,
+                                      src2->w * src2->bytes),
                                  dest->w * dest->bytes)];
   gboolean              opacity_quickskip_possible;
   gboolean              transparency_quickskip_possible;

@@ -1,5 +1,12 @@
 2002-05-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint-core/paint-core.c (combine_sub_region): this is
+	getting silly: this time (maybe) really fix #83418 and #26072: of
+	course the local buffer needs to take the sizes of all three
+	passed in regions into account, not only two of them *sigh*
+
+2002-05-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpscanner.[ch]: configure the scanner the same
 	way GimpConfig did (scanner->user_data is, if set, a GError).
 	Added gimp_scanner_parse_color(). Added "GError **error" to
