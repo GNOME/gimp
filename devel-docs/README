@@ -1,17 +1,21 @@
 Developers documentation 
 ------------------------
 
+The goal is to provide useful source documentation. Right 
+now this is limited to libgimp since that is the part that 
+is by third-party coders (plug-in developers). Other parts
+of the code may follow later, but not before libgimp is 
+properly documented.
+
+
 Principle
 ---------
-
-Right now this only applies to libgimp. Other parts of the 
-code may follow later, but not before libgimp is properly
-documented. The documentation is extracted out of the source 
-using gtk-doc. We use a combination of comment blocks 
-embedded into the source and additional information added 
-manually into the SGML files. It is planned to extract useful 
-inforamtion about the PDB wrappers out of the PDB (probably 
-using pdbgen).
+The documentation is extracted out of the source using 
+gtk-doc. We use a combination of comment blocks embedded 
+into the source and additional information added manually 
+into the SGML files. It is planned to extract useful 
+inforamtion about the PDB wrappers out of the PDB 
+(probably using pdbgen).
 
 
 Requirements
