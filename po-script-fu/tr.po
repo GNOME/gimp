@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "POT-Creation-Date: 2001-07-14 13:55+0300\n"
-"PO-Revision-Date: 2001-07-16 07:18+0300\n"
+"PO-Revision-Date: 2001-07-18 13:43+0300\n"
 "Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -165,7 +165,7 @@ msgstr "Sunucu Portu:"
 
 #: plug-ins/script-fu/script-fu-server.c:582
 msgid "Server Logfile:"
-msgstr "Sunucu Kayýt Dosyasý:"
+msgstr "Sunucu Kütüðü:"
 
 #: plug-ins/script-fu/script-fu.c:166
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
@@ -367,7 +367,7 @@ msgstr "<Image>/Script-Fu/Hesap/Çizgi Nova..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "<Image>/Script-Fu/Render/Make Grid System..."
-msgstr "<Image>/Script-Fu/Hesap/Elek Sistemi Yap..."
+msgstr "<Image>/Script-Fu/Hesap/Izgara Sistemi Yap..."
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
@@ -567,7 +567,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Çeþitli/Küre..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/3B Truþe..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
@@ -599,7 +599,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/Truchet..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
@@ -615,145 +615,147 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Araçlar/Yazýtipi Haritasý..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Yaratýk Parlamasý/Ok..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Yaratýk Parlamasý/Ok..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
 msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Yaratýk Parlamasý/Madde Ými..."
+"<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Yaratýk Parlamasý/Madde Ými..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
 msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Yaratýk Parlamasý/Düðme..."
+"<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Yaratýk Parlamasý/Düðme..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
 msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Yaratýk Parlamasý/Yatay Ayraç..."
+"<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Yaratýk Parlamasý/Yatay "
+"Ayraç..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Kabartýlý Desen/Ok..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Kabartýlý Desen/Ok..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
 msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Kabartýlý Desen/Madde Ými..."
+"<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Kabartýlý Desen/Madde Ými..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Kabartýlý Desen/Düðme..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Kabartýlý Desen/Düðme..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Kabartýlý Desen/Baþlýk..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Kabartýlý Desen/Baþlýk..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
 msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Kabartýlý Desen/Yatay Ayraç..."
+"<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Kabartýlý Desen/Yatay Ayraç..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Gimp.Org/Büyük Baþlýk..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Gimp.Org/Büyük Baþlýk..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
 msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Gimp.Org/Genel Tüp Ýsimler..."
+"<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Gimp.Org/Genel Tüp Ýsimler..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Gimp.Org/Küçük Baþlýk..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Gimp.Org/Küçük Baþlýk..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
 msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Gimp.Org/Tüp Düðme Ýsmi..."
+"<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Gimp.Org/Tüp Düðme Ýsmi..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Gimp.Org/Tüp Alt-Düðme Ýsmi..."
+"<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Gimp.Org/Tüp Alt-Düðme Ýsmi..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Að Sayfasý Temalarý/Gimp.Org/Tüp Alt-Alt-Düðme "
+"<Toolbox>/Xtns/Script-Fu/Web Sayfasý Temalarý/Gimp.Org/Tüp Alt-Alt-Düðme "
 "Ýsmi..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Xtns/Að Gezgini/Geliþtirici ÇSS"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/Geliþtirici ÇSS"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/Xtns/Að Gezgini/GIMP Hatalarý"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP Hatalarý"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox>/Xtns/Að Gezgini/GIMP Elkitabý"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP Elkitabý"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox>/Xtns/Að Gezgini/GIMP Haberleri"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP Haberleri"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Xtns/Að Gezgini/GIMP Eðitim Yazýlarý"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP Eðitim Yazýlarý"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Toolbox>/Xtns/Að Gezgini/GIMP.ORG/Belge"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP.ORG/Belge"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Toolbox>/Xtns/Að Gezgini/GIMP.ORG/Ýndir"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP.ORG/Ýndir"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox>/Xtns/Að Gezgini/GIMP.ORG/GIMP Sanatý"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP.ORG/GIMP Sanatý"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Toolbox>/Xtns/Að Gezgini/GIMP.ORG/GTK"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP.ORG/GTK"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Toolbox>/Xtns/Að Gezgini/GIMP.ORG/Baðlantýlar"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP.ORG/Baðlantýlar"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Toolbox>/Xtns/Að Gezgini/GIMP.ORG/E-Posta Listeleri"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP.ORG/E-Posta Listeleri"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Toolbox>/Xtns/Að Gezgini/GIMP.ORG/Kaynaklar"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP.ORG/Kaynaklar"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Toolbox>/Xtns/Að Gezgini/GIMP.ORG/GIMP"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP.ORG/GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox>/Xtns/Að Gezgini/Gimp-Savvy.com"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/Gimp-Savvy.com"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox>/Xtns/Að Gezgini/GIMP.ORG/Grokking the GIMP"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP.ORG/Grokking the GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr "<Toolbox>/Xtns/Að Gezgini/Eklenti Listesi"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/Eklem Listesi"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Xtns/Að Gezgini/Kullanýcý ÇSS"
+msgstr "<Toolbox>/Xtns/Web Tarayýcý/Kullanýcý ÇSS"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Background"
@@ -1456,11 +1458,11 @@ msgstr "Grafik Ölçeði"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids X"
-msgstr "X' Elek "
+msgstr "Izgara X"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids Y"
-msgstr "Y'de Elek"
+msgstr "Izgara Y"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -2048,7 +2050,7 @@ msgstr "Baþlama Harmaný"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "Supersample"
-msgstr "Süperörnekleme"
+msgstr "Üstörneklem"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Text Color (Active)"
@@ -2235,5 +2237,4 @@ msgstr "Geniþlik"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Kopya Üzerinde Çalýþ"
-
 
