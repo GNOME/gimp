@@ -1,5 +1,10 @@
 2003-09-05  Sven Neumann  <sven@gimp.org>
 
+	* app/base/temp-buf.c (temp_buf_new_check): fixed loop boundaries,
+	spotted by Wolfgang Hofer (bug #121521).
+
+2003-09-05  Sven Neumann  <sven@gimp.org>
+
 	* app/base/gimplut.[ch] (gimp_lut_free): free the memory allocated
 	for the GimpLut structure. Removed trailing whitespace.
 

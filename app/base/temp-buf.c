@@ -303,12 +303,12 @@ temp_buf_new_check (gint           width,
   newbuf = temp_buf_new (width, height, 3, 0, 0, NULL);
   data = temp_buf_data (newbuf);
 
-  for (y = 0; y <= height; y++)
+  for (y = 0; y < height; y++)
     {
       guchar dark  = y >> check_shift;
       guchar color = (dark & 0x1) ? bg_color : fg_color;
 
-      for (x = 0; x <= width; x++)
+      for (x = 0; x < width; x++)
 	{
           *data++ = color;
           *data++ = color;
