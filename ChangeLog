@@ -1,3 +1,12 @@
+2004-10-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplay-foreach.c: keep the container of dirty
+	images up to date.
+
+	* app/dialogs/quit-dialog.c: fixed model/view behavior here, too.
+
+	(both are still far from perfect)
+
 2004-10-13  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-close.c

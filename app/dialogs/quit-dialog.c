@@ -89,10 +89,12 @@ quit_dialog_new (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
   gtk_widget_show (box);
 
+  g_signal_connect_object (images, "add",
+                           G_CALLBACK (quit_dialog_container_changed),
+                           box, 0);
   g_signal_connect_object (images, "remove",
                            G_CALLBACK (quit_dialog_container_changed),
                            box, 0);
-  quit_dialog_container_changed (images, NULL, GIMP_MESSAGE_BOX (box));
 
   preview_size = gimp->config->layer_preview_size;
 
@@ -111,6 +113,10 @@ quit_dialog_new (Gimp *gimp)
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  g_object_set_data (G_OBJECT (box), "lost-label", label);
+
+  quit_dialog_container_changed (images, NULL, GIMP_MESSAGE_BOX (box));
 
   return dialog;
 }
@@ -131,7 +137,8 @@ quit_dialog_container_changed (GimpContainer  *images,
                                GimpObject     *image,
                                GimpMessageBox *box)
 {
-  gint  num_images = gimp_container_num_children (images);
+  gint       num_images = gimp_container_num_children (images);
+  GtkWidget *label      = g_object_get_data (G_OBJECT (box), "lost-label");
 
   if (num_images == 1)
     gimp_message_box_set_primary_text (box,
@@ -140,5 +147,9 @@ quit_dialog_container_changed (GimpContainer  *images,
     gimp_message_box_set_primary_text (box,
                                        _("There are %d images with unsaved changes:"),
                                        num_images);
-}
 
+  if (num_images == 0)
+    gtk_widget_hide (label);
+  else
+    gtk_widget_show (label);
+}

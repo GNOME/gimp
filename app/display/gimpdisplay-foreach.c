@@ -54,18 +54,37 @@ gimp_displays_dirty (Gimp *gimp)
 }
 
 static void
+gimp_displays_image_dirty_callback (GimpImage     *image,
+                                    GimpDirtyMask  dirty_mask,
+                                    GimpContainer *container)
+{
+  if (image->dirty && image->disp_count > 0 &&
+      ! gimp_container_have (container, GIMP_OBJECT (image)))
+    gimp_container_add (container, GIMP_OBJECT (image));
+}
+
+static void
+gimp_displays_dirty_images_disconnect (GimpContainer *dirty_container,
+                                       GimpContainer *global_container)
+{
+  GQuark handler;
+
+  handler = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dirty_container),
+                                                "clean-handler"));
+  gimp_container_remove_handler (global_container, handler);
+
+  handler = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dirty_container),
+                                                "dirty-handler"));
+  gimp_container_remove_handler (global_container, handler);
+}
+
+static void
 gimp_displays_image_clean_callback (GimpImage     *image,
                                     GimpDirtyMask  dirty_mask,
                                     GimpContainer *container)
 {
   if (! image->dirty)
-    {
-      g_signal_handlers_disconnect_by_func (image,
-                                            gimp_displays_image_clean_callback,
-                                            container);
-
-      gimp_container_remove (container, GIMP_OBJECT (image));
-    }
+    gimp_container_remove (container, GIMP_OBJECT (image));
 }
 
 GimpContainer *
@@ -77,6 +96,25 @@ gimp_displays_get_dirty_images (Gimp *gimp)
     {
       GimpContainer *container = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
       GList         *list;
+      GQuark         handler;
+
+      handler =
+        gimp_container_add_handler (gimp->images, "clean",
+                                    G_CALLBACK (gimp_displays_image_dirty_callback),
+                                    container);
+      g_object_set_data (G_OBJECT (container), "clean-handler",
+                         GINT_TO_POINTER (handler));
+
+      handler =
+        gimp_container_add_handler (gimp->images, "dirty",
+                                    G_CALLBACK (gimp_displays_image_dirty_callback),
+                                    container);
+      g_object_set_data (G_OBJECT (container), "dirty-handler",
+                         GINT_TO_POINTER (handler));
+
+      g_signal_connect_object (container, "disconnect",
+                               G_CALLBACK (gimp_displays_dirty_images_disconnect),
+                               G_OBJECT (gimp->images), 0);
 
       gimp_container_add_handler (container, "clean",
                                   G_CALLBACK (gimp_displays_image_clean_callback),
@@ -85,18 +123,14 @@ gimp_displays_get_dirty_images (Gimp *gimp)
                                   G_CALLBACK (gimp_displays_image_clean_callback),
                                   container);
 
-      for (list = GIMP_LIST (gimp->displays)->list;
+      for (list = GIMP_LIST (gimp->images)->list;
            list;
            list = g_list_next (list))
         {
-          GimpDisplay *display = list->data;
-          GimpImage   *image   = display->gimage;
+          GimpImage *image = list->data;
 
-          if (image->dirty &&
-              ! gimp_container_have (container, GIMP_OBJECT (image)))
-            {
-              gimp_container_add (container, GIMP_OBJECT (image));
-            }
+          if (image->dirty && image->disp_count > 0)
+            gimp_container_add (container, GIMP_OBJECT (image));
         }
 
       return container;
