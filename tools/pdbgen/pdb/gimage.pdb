@@ -1296,8 +1296,8 @@ HELP
         { name => 'thumbnail_data', type => 'int8array',
 	  desc => 'The thumbnail data', init => 1,
 	  array => { name => 'thumbnail_data_count',
-		     desc => 'The number of pixels in thumbnail data',
-		     alias => 'num_pixels', init => 1 } }
+		     desc => 'The number of bytes in thumbnail data',
+		     alias => 'num_bytes', init => 1 } }
     );
 
     %invoke = (
@@ -1321,13 +1321,13 @@ HELP
       buf = gimp_image_construct_composite_preview (gimage,
 						    req_width,
 						    req_height);
-      num_pixels = buf->height * buf->width * buf->bytes;
-      thumbnail_data = g_new (guint8, num_pixels);
-      g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
+      num_bytes = buf->height * buf->width * buf->bytes;
+      thumbnail_data = g_new (guint8, num_bytes);
+      g_memmove (thumbnail_data, temp_buf_data (buf), num_bytes);
       width = buf->width;	
       height = buf->height;
       bpp = buf->bytes;
-      temp_buf_free(buf);
+      temp_buf_free (buf);
     }
 }
 CODE

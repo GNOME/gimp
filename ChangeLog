@@ -1,3 +1,17 @@
+Tue Jan 18 22:34:30 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/fileops_cmds.c
+	* tools/pdbgen/pdb/fileops.pdb: hopefully fixed 
+	gimp_file_load_thumbnail () PDB function
+
+	* app/gimage_cmds.c
+	* tools/pdbgen/pdb/gimage.pdb: in gimp_image_get_thumbnail changed
+	a variable name from num_pixels to num_bytes, since that`s what it
+	contains
+
+	* tools/pdbgen/pdbgen.pl: arrays need a length argument again since
+	the PDB relies on it
+
 Tue Jan 18 21:46:25 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/gauss_iir.c

@@ -2369,7 +2369,7 @@ image_thumbnail_invoker (Argument *args)
   gint32 width = 0;
   gint32 height = 0;
   gint32 bpp = 0;
-  gint32 num_pixels = 0;
+  gint32 num_bytes = 0;
   guint8 *thumbnail_data = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
@@ -2403,13 +2403,13 @@ image_thumbnail_invoker (Argument *args)
 	  buf = gimp_image_construct_composite_preview (gimage,
 							req_width,
 							req_height);
-	  num_pixels = buf->height * buf->width * buf->bytes;
-	  thumbnail_data = g_new (guint8, num_pixels);
-	  g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
+	  num_bytes = buf->height * buf->width * buf->bytes;
+	  thumbnail_data = g_new (guint8, num_bytes);
+	  g_memmove (thumbnail_data, temp_buf_data (buf), num_bytes);
 	  width = buf->width;        
 	  height = buf->height;
 	  bpp = buf->bytes;
-	  temp_buf_free(buf);
+	  temp_buf_free (buf);
 	}
     }
 
@@ -2420,7 +2420,7 @@ image_thumbnail_invoker (Argument *args)
       return_args[1].value.pdb_int = width;
       return_args[2].value.pdb_int = height;
       return_args[3].value.pdb_int = bpp;
-      return_args[4].value.pdb_int = num_pixels;
+      return_args[4].value.pdb_int = num_bytes;
       return_args[5].value.pdb_pointer = thumbnail_data;
     }
 
@@ -2466,7 +2466,7 @@ static ProcArg image_thumbnail_outargs[] =
   {
     PDB_INT32,
     "thumbnail_data_count",
-    "The number of pixels in thumbnail data"
+    "The number of bytes in thumbnail data"
   },
   {
     PDB_INT8ARRAY,

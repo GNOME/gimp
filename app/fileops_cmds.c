@@ -201,6 +201,7 @@ file_load_thumbnail_invoker (Argument *args)
   gchar *filename;
   gint32 width = 0;
   gint32 height = 0;
+  gint32 num_bytes = 0;
   guint8 *thumb_data = NULL;
   gchar *pname;
   gchar *fname;
@@ -226,7 +227,8 @@ file_load_thumbnail_invoker (Argument *args)
     
       if (raw_thumb)
 	{
-	  thumb_data = g_malloc (3 * width * height);
+	  num_bytes = 3 * width * height;
+	  thumb_data = g_malloc (num_bytes);
 	      
 	  for (i=0; i<width*height; i++)
 	    {
@@ -247,7 +249,8 @@ file_load_thumbnail_invoker (Argument *args)
     {
       return_args[1].value.pdb_int = width;
       return_args[2].value.pdb_int = height;
-      return_args[3].value.pdb_pointer = thumb_data;
+      return_args[3].value.pdb_int = num_bytes;
+      return_args[4].value.pdb_pointer = thumb_data;
     }
 
   return return_args;
@@ -275,6 +278,11 @@ static ProcArg file_load_thumbnail_outargs[] =
     "The height of the thumbnail"
   },
   {
+    PDB_INT32,
+    "thumbnail_data_count",
+    "The number of bytes in thumbnail data"
+  },
+  {
     PDB_INT8ARRAY,
     "thumb_data",
     "The thumbnail data"
@@ -288,11 +296,11 @@ static ProcRecord file_load_thumbnail_proc =
   "This procedure tries to load a thumbnail that belongs to the file with the given filename. This name is a full pathname. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use gimp_image_thumbnail instead.",
   "Adam D. Moss, Sven Neumann",
   "Adam D. Moss, Sven Neumann",
-  "1999",
+  "1999-2000",
   PDB_INTERNAL,
   1,
   file_load_thumbnail_inargs,
-  3,
+  4,
   file_load_thumbnail_outargs,
   { { file_load_thumbnail_invoker } }
 };

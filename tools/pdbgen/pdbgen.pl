@@ -156,7 +156,7 @@ sub arrayexpand {
     my $newargs;
 
     foreach (@$$args) {
-	if (exists $_->{array} && defined $_->{array}) {
+	if (exists $_->{array}) {
 	    my $arg = $_->{array};
 
 	    $arg->{name} = 'num_' . $_->{name} unless exists $arg->{name};

@@ -167,7 +167,7 @@ instead.
 HELP
 
     $author = $copyright = 'Adam D. Moss, Sven Neumann';
-    $date = '1999';
+    $date = '1999-2000';
 
     @inargs = (
 	{ name => 'filename', type => 'string',
@@ -180,7 +180,10 @@ HELP
 	{ name => 'height', type => 'int32', init => 1, 
 	  desc => 'The height of the thumbnail' },
 	{ name => 'thumb_data', type => 'int8array', init => 1,
-	  desc => 'The thumbnail data', array => undef },
+	  desc => 'The thumbnail data', 
+          array =>  { name => 'thumbnail_data_count',
+		      desc => 'The number of bytes in thumbnail data',
+		      alias => 'num_bytes', init => 1 } },
     );
 
     %invoke = (
@@ -200,7 +203,8 @@ HELP
 
   if (raw_thumb)
     {
-      thumb_data = g_malloc (3 * width * height);
+      num_bytes = 3 * width * height;
+      thumb_data = g_malloc (num_bytes);
 	  
       for (i=0; i<width*height; i++)
         {
