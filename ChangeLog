@@ -1,5 +1,19 @@
 2003-10-08  Michael Natterer  <mitch@gimp.org>
 
+	Fixed bug #119423. There was no speed regression with the actual
+	painting, just with the display update (which effectively led to
+	faster painting, it just felt slower).
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_flush): added
+	"gboolean now" parameter and update the display immediately if
+	it is TRUE.
+
+	* app/display/gimpdisplay.c (gimp_display_flush_whenever): pass
+	the "now" we got passed to the function above, so calling
+	gimp_display_flush_now() really flushes *now* again.
+
+2003-10-08  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/fileops.pdb (file_load_invoker):
 	procedural_db_execute() *must* get the correct number of args, so
 	do like file_save_invoker and create a full Argument array with

@@ -1174,11 +1174,15 @@ gimp_display_shell_expose_full (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_flush (GimpDisplayShell *shell)
+gimp_display_shell_flush (GimpDisplayShell *shell,
+                          gboolean          now)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   gimp_display_shell_update_title (shell);
+
+  if (now)
+    gdk_window_process_updates (shell->canvas->window, FALSE);
 }
 
 void

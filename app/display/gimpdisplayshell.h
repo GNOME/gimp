@@ -226,7 +226,8 @@ void        gimp_display_shell_expose_guide          (GimpDisplayShell *shell,
                                                       GimpGuide        *guide);
 void        gimp_display_shell_expose_full           (GimpDisplayShell *shell);
 
-void        gimp_display_shell_flush                 (GimpDisplayShell *shell);
+void        gimp_display_shell_flush                 (GimpDisplayShell *shell,
+                                                      gboolean          now);
 
 void        gimp_display_shell_pause                 (GimpDisplayShell *shell);
 void        gimp_display_shell_resume                (GimpDisplayShell *shell);

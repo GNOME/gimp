@@ -68,7 +68,7 @@ static void       gimp_display_get_property          (GObject          *object,
                                                       GValue           *value,
                                                       GParamSpec       *pspec);
 
-static void       gimp_display_flush_whenever        (GimpDisplay      *gdisp, 
+static void       gimp_display_flush_whenever        (GimpDisplay      *gdisp,
                                                       gboolean          now);
 static void       gimp_display_idlerender_init       (GimpDisplay      *gdisp);
 static gboolean   gimp_display_idlerender_callback   (gpointer          data);
@@ -308,7 +308,7 @@ gimp_display_get_by_ID (Gimp *gimp,
 }
 
 void
-gimp_display_reconnect (GimpDisplay *gdisp, 
+gimp_display_reconnect (GimpDisplay *gdisp,
                         GimpImage   *gimage)
 {
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
@@ -428,7 +428,7 @@ gimp_display_coords_in_active_drawable (GimpDisplay      *gdisp,
 /*  private functions  */
 
 static void
-gimp_display_flush_whenever (GimpDisplay *gdisp, 
+gimp_display_flush_whenever (GimpDisplay *gdisp,
                              gboolean     now)
 {
   GimpDisplayShell *shell;
@@ -488,7 +488,7 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
     }
 
   /*  Next the displays...  */
-  gimp_display_shell_flush (shell);
+  gimp_display_shell_flush (shell, now);
 
   /*  ensure the consistency of the menus  */
   if (! now)
@@ -512,7 +512,7 @@ gimp_display_idlerender_init (GimpDisplay *gdisp)
 
   /* We need to merge the IdleRender's and the GimpDisplay's update_areas list
    * to keep track of which of the updates have been flushed and hence need
-   * to be drawn. 
+   * to be drawn.
    */
   for (list = gdisp->update_areas; list; list = g_slist_next (list))
     {
@@ -591,7 +591,7 @@ gimp_display_idlerender_callback (gpointer data)
   if (worky + workh > gdisp->idle_render.basey + gdisp->idle_render.height)
     {
       workh = gdisp->idle_render.basey + gdisp->idle_render.height - worky;
-    }  
+    }
 
   gimp_display_paint_area (gdisp, workx, worky, workw, workh);
 
