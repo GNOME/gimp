@@ -89,7 +89,7 @@ themes_init (Gimp *gimp)
   themes_apply_theme (gimp, config->theme);
 
   themerc = gimp_personal_rc_file ("themerc");
-  gtk_rc_add_default_file (themerc);
+  gtk_rc_parse (themerc);
   g_free (themerc);
 
   g_signal_connect (config, "notify::theme",

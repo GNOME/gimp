@@ -1,5 +1,12 @@
 2004-11-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/themes.c (themes_init): use gtk_rc_parse() instead of
+	gtk_rc_add_default_file() to add ~/.gimp-2.2/themerc to the list
+	of files parsed by GTK+ because the latter works only before
+	gtk_init(). Fixes bug #155963.
+
+2004-11-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/print-size-dialog.c: reordered prototypes to match
 	order of implementations.
 
