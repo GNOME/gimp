@@ -1043,9 +1043,9 @@ extract_lab (guchar  *src,
       ftx = ((tx = x/Xn) > 0.008856) ? cbrt (tx) : 7.78 * tx + sixteenth;
       ftz = ((tz = z/Zn) > 0.008856) ? cbrt (tz) : 7.78 * tz + sixteenth;
 
-      *l_dst++ = (guchar) (l * 2.5599);
-      *a_dst++ = (guchar) (128.0 + (ftx - fty) * 635 );
-      *b_dst++ = (guchar) (128.0 + (fty - ftz) * 254 );
+      *l_dst++ = (guchar) CLAMP (l * 2.5599, 0., 256.);
+      *a_dst++ = (guchar) CLAMP (128.0 + (ftx - fty) * 635, 0., 256.);
+      *b_dst++ = (guchar) CLAMP (128.0 + (fty - ftz) * 254, 0., 256.);
 
       rgb_src += offset;
     }
