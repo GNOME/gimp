@@ -105,7 +105,7 @@ init_edit_selection (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  undo_push_group_start (gdisp->gimage, MISC_UNDO);
+  undo_push_group_start (gdisp->gimage, LAYER_DISPLACE_UNDO);
 
   /*  Move the (x, y) point from screen to image space  */
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, TRUE);

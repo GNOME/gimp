@@ -247,15 +247,17 @@
 # This string sets how image window titles are formatted.
 # The following percent expansions are performed:
 #   %%  literal percent sign
-#   %f  bare filename, or "Untiltled"
+#   %f  bare filename, or "Untitled"
 #   %F  full path to file
 #   %p  PDB image id
 #   %i  view instance number
 #   %t  image type (RGB, indexed, greyscale)
 #   %z  zoom factor as a percentage
 #   %s  source scale factor
+#   %d  destination scale factor
 #   %Dx expands to x if the image is dirty
-(image-title-format "%f-%p.%i (%t) %z%%")
+# See gimprc(5) for further details.
+(image-title-format "%D*%f-%p.%i (%t) %z%%")
 
 # Global paint options
 #  By default options for the paint tools are global, e.g. all paint tools

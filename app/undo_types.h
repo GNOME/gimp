@@ -19,21 +19,28 @@
 #define __UNDO_TYPES_H__
 
 
+
 /*  Undo types  */
+
+/* NOTE: If you change this list, please update the textual mapping at
+ * the bottom of undo.c as well. */
 typedef enum
 {
     /* Type 0 is special - in the gimpimage structure it means
      * there is no undo group currently being added to. */
+
     IMAGE_UNDO = 1,
     IMAGE_MOD_UNDO,
     MASK_UNDO,
     LAYER_DISPLACE_UNDO,
     TRANSFORM_UNDO,
     PAINT_UNDO,
-    LAYER_UNDO,
+    LAYER_ADD_UNDO,
+    LAYER_REMOVE_UNDO,
     LAYER_MOD,
-    LAYER_MASK_UNDO,
-    LAYER_CHANGE,
+    LAYER_MASK_ADD_UNDO,
+    LAYER_MASK_REMOVE_UNDO,
+    LAYER_RENAME_UNDO,
     LAYER_POSITION,
     CHANNEL_UNDO,
     CHANNEL_MOD,
@@ -60,6 +67,8 @@ typedef enum
     LAYER_SCALE_UNDO,
     LAYER_RESIZE_UNDO,
     QMASK_UNDO,		   /*  34 */
+    PARASITE_ATTACH_UNDO,
+    PARASITE_REMOVE_UNDO,
     RESOLUTION_UNDO,
 
     MISC_UNDO = 100

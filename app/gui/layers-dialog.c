@@ -1545,7 +1545,7 @@ layers_dialog_duplicate_layer_callback (GtkWidget *widget,
     return;
 
   /*  Start a group undo  */
-  undo_push_group_start (gimage, EDIT_PASTE_UNDO);
+  undo_push_group_start (gimage, LAYER_ADD_UNDO);
 
   active_layer = gimage_get_active_layer (gimage);
   new_layer = layer_copy (active_layer, TRUE);
@@ -3218,7 +3218,7 @@ new_layer_query_ok_callback (GtkWidget *widget,
   if ((gimage = options->gimage))
     {
       /*  Start a group undo  */
-      undo_push_group_start (gimage, EDIT_PASTE_UNDO);
+      undo_push_group_start (gimage, LAYER_ADD_UNDO);
 
       layer = layer_new (gimage, options->xsize, options->ysize,
 			 gimage_base_type_with_alpha (gimage),
@@ -3228,7 +3228,7 @@ new_layer_query_ok_callback (GtkWidget *widget,
 	  drawable_fill (GIMP_DRAWABLE(layer), fill_type);
 	  gimage_add_layer (gimage, layer, -1);
 	  
-	  /*  Endx the group undo  */
+	  /*  End the group undo  */
 	  undo_push_group_end (gimage);
 	  
 	  gdisplays_flush ();

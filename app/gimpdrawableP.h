@@ -34,7 +34,6 @@ struct _GimpDrawable
   gint           offset_x, offset_y;	/* offset of layer in image       */
 
   gint           bytes;			/* bytes per pixel                */
-  gboolean       dirty;			/* dirty bit                      */
   gint           ID;			/* provides a unique ID           */
   guint32        tattoo;		/* provides a perminant ID        */
   GimpImage     *gimage;		/* gimage owner                   */

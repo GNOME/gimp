@@ -2013,7 +2013,7 @@ gdisplays_shrink_wrap (GimpImage* gimage)
 
 
 void
-gdisplays_expose_full ()
+gdisplays_expose_full (void)
 {
   GDisplay *gdisp;
   GSList *list = display_list;
@@ -2028,7 +2028,7 @@ gdisplays_expose_full ()
 }
 
 void
-gdisplays_nav_preview_resized ()
+gdisplays_nav_preview_resized (void)
 {
   GDisplay *gdisp;
   GSList *list = display_list;
@@ -2089,7 +2089,7 @@ gdisplays_selection_visibility (GimpImage* gimage,
 
 
 int
-gdisplays_dirty ()
+gdisplays_dirty (void)
 {
   int dirty = 0;
   GSList *list = display_list;
@@ -2107,7 +2107,7 @@ gdisplays_dirty ()
 
 
 void
-gdisplays_delete ()
+gdisplays_delete (void)
 {
   GSList *list = display_list;
   GDisplay *gdisp;

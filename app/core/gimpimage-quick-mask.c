@@ -140,15 +140,17 @@ qmask_deactivate (GtkWidget *w,
       if ( (gmask = gimp_image_get_channel_by_name (gimg, "Qmask")) )
   	{ 
 	  gimage_mask_load (gimg, gmask);
-	  gimage_remove_channel(gimg, gmask);
-	  undo_push_qmask(gimg,1);
+	  gimage_remove_channel (gimg, gmask);
+	  undo_push_qmask (gimg);
 	  gdisp->gimage->qmask_state = 0;
-	  gdisplays_flush (); 
 	}
       else
         gdisp->gimage->qmask_state = 0;
  
       undo_push_group_end (gimg);
+
+      if (gmask)
+	  gdisplays_flush ();
     }
 }
 
@@ -198,9 +200,8 @@ qmask_activate (GtkWidget *w,
 	  gimp_image_add_channel (gimg, gmask, 0);
 	  gimp_drawable_fill (GIMP_DRAWABLE(gmask), 0, 0, 0, 0);
 	  /* edit_clear(gimg,GIMP_DRAWABLE(gmask));  */
-	  undo_push_qmask(gimg,0);
+	  undo_push_qmask (gimg);
 	  gdisp->gimage->qmask_state = 1;
-	  gdisplays_flush();  
 	}
       else 
 	{ /* if selection */
@@ -210,11 +211,11 @@ qmask_activate (GtkWidget *w,
 	  channel_set_name(gmask, "Qmask");
 	  channel_set_opacity(gmask, opacity);
 	  gimage_mask_none (gimg);           /* Clear the selection */
-	  undo_push_qmask(gimg,0);
+	  undo_push_qmask (gimg);
 	  gdisp->gimage->qmask_state = 1;
-	  gdisplays_flush();
 	}
       undo_push_group_end(gimg);
+      gdisplays_flush();
     }
 }
 

@@ -1,3 +1,41 @@
+Fri Oct  1 12:46:12 1999  Austin Donnelly  <austin@gimp.org>
+
+	* gimprc.in: comment typo fix, plus add %D* to default
+	    image-title-format string, so people get a '*' in the titlebar
+	    if their image is dirty.
+	* app/fileops.c: initialise filename before using it.
+	* app/gdisplay.c: empty parameter list () is K&R - should be
+	    stronger (void) in ANSI C.
+	* app/gimpdrawable.c: gimp_drawable_{dirty,clean} functions
+	    removed - no one uses them anyway.  Parasite undo type is
+	    proper parasite undo type, not MISC_UNDO.
+	* app/gimpdrawableP.h: drawable dirty bit removed.
+	* app/gimpimage.c: don't change the resolution if there's no
+	    difference from the old one.  Call gdisplay_shrink_wrap() to
+	    re-calculate scale factors and refresh the display on
+	    resolution change.  Layer undo doesn't have sub-types
+	    anymore, uses main UndoType instead.
+	* app/layer.h: Remove LayerUndoType
+	* app/qmask.c: fix qmask undo so it actually works.
+	* app/undo.h: new types for undo_push_layer{,_mask} and
+	    undo_push_qmask.
+	* app/undo.c: change way group boundaries are represented:
+	    each Undo has a group_boundary boolean set to TRUE if this is
+	    the start or the end of a group, and the type of the Undo is
+	    the group's type.  Within a group, each Undo keeps its own
+	    type.  This allows pop funcs and free funcs to do
+	    type-specific things (eg needed by layer and channel stuff).
+	    Don't maintain per-drawable dirty flags anymore.   Floating
+	    sel to layer and layer rename now uses meaningful undo types.
+	* app/undo_types.h: more specific undo types:
+	    LAYER_{ADD,REMOVE}_UNDO, LAYER_MASK_{ADD,REMOVE}_UNDO,
+	    LAYER_RENAME_UNDO, and PARASITE_{ATTACH,DETACH}_UNDO.
+	* app/undo_history.c: oops - undo stack was being placed into gtk
+	    list in wrong order.
+	* app/edit_selection.c: push more descriptive LAYER_DISPLACE_UNDO
+	    rather than MISC_UNDO.
+	* app/layers_dialog.c: better tagging of undo types
+
 Fri Oct  1 17:14:51 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/unittest/parse_gimprc.c: Add parameters options.

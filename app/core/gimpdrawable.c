@@ -233,23 +233,6 @@ gimp_drawable_invalidate_preview (GimpDrawable *drawable)
     }
 }
 
-gint
-gimp_drawable_dirty (GimpDrawable *drawable)
-{
-  if (drawable) 
-    return drawable->dirty = (drawable->dirty < 0) ? 2 : drawable->dirty + 1;
-  else
-    return 0;
-}
-
-gint
-gimp_drawable_clean (GimpDrawable *drawable)
-{
-  if (drawable) 
-    return drawable->dirty = (drawable->dirty <= 0) ? 0 : drawable->dirty - 1;
-  else
-    return 0;
-}
 
 GimpImage *
 gimp_drawable_gimage (GimpDrawable *drawable)
@@ -485,8 +468,9 @@ gimp_drawable_attach_parasite (GimpDrawable *drawable,
      parasite differs from the current one and we arn't undoable */
   if (parasite_is_undoable (parasite))
     {
-      undo_push_group_start (drawable->gimage, MISC_UNDO); /* do a group in case we have
-							      attach_parrent set        */
+      /* do a group in case we have attach_parent set */
+      undo_push_group_start (drawable->gimage, PARASITE_ATTACH_UNDO);
+
       undo_push_drawable_parasite (drawable->gimage, drawable, parasite);
     }
   else if (parasite_is_persistent(parasite) &&
@@ -661,7 +645,6 @@ gimp_drawable_init (GimpDrawable *drawable)
   drawable->offset_x      = 0;
   drawable->offset_y      = 0;
   drawable->bytes         = 0;
-  drawable->dirty         = FALSE;
   drawable->gimage        = NULL;
   drawable->type          = -1;
   drawable->has_alpha     = FALSE;
@@ -752,7 +735,6 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
   drawable->tiles = tile_manager_new (width, height, bpp);
-  drawable->dirty   = FALSE;
   drawable->visible = TRUE;
 
   if (gimage)

@@ -186,7 +186,7 @@ undo_history_redo_callback (GtkWidget *widget, gpointer data)
 /* Always start clist with dummy entry for image state before
  * the first action on the undo stack */
 static void
-undo_history_append_special (GtkCList *clist)
+undo_history_prepend_special (GtkCList *clist)
 {
     char *name = _("[ base image ]");
     char *namelist[2];
@@ -194,7 +194,7 @@ undo_history_append_special (GtkCList *clist)
     namelist[0] = NULL;
     namelist[1] = name;
 
-    gtk_clist_append (clist, namelist);
+    gtk_clist_prepend (clist, namelist);
 }
 
 
@@ -280,7 +280,7 @@ undo_history_undo_event (GtkWidget *widget, int ev, gpointer data)
 	/* clear all info other that the special first line */
 	gtk_clist_freeze (clist);
 	gtk_clist_clear (clist);
-	undo_history_append_special (clist);
+	undo_history_prepend_special (clist);
 	gtk_clist_thaw (clist);
 	cur_selection = 0;
 	break;
@@ -370,7 +370,7 @@ undo_history_init_undo (const char *undoitemname, void *data)
 
     namelist[0] = NULL;
     namelist[1] = (char *) undoitemname;
-    gtk_clist_append (GTK_CLIST (st->clist), namelist);
+    gtk_clist_prepend (GTK_CLIST (st->clist), namelist);
 
     /* force selection to bottom */
     gtk_clist_select_row (GTK_CLIST (st->clist),
@@ -456,11 +456,11 @@ undo_history_new (GImage *gimage)
     gtk_clist_set_selection_mode (GTK_CLIST (st->clist), GTK_SELECTION_BROWSE);
     gtk_clist_set_reorderable (GTK_CLIST (st->clist), FALSE);
     gtk_clist_set_column_width (GTK_CLIST (st->clist), 0, 52);
-    undo_history_append_special (GTK_CLIST (st->clist));
 
     /* work out the initial contents */
     undo_map_over_undo_stack (st->gimage, undo_history_init_undo, st);
     undo_map_over_redo_stack (st->gimage, undo_history_init_redo, st);
+    undo_history_prepend_special (GTK_CLIST (st->clist));
 
     st->old_selection = GPOINTER_TO_INT(GTK_CLIST(st->clist)->selection->data);
 

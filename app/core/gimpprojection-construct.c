@@ -41,6 +41,13 @@
 #include "drawable_pvt.h"		/* ick ick. */
 
 
+#ifdef DEBUG
+#define TRC(x) printf x
+#else
+#define TRC(x)
+#endif
+
+
 /*  Local function declarations  */
 static void     gimp_image_free_projection       (GimpImage *);
 static void     gimp_image_allocate_shadow       (GimpImage *, gint, gint, gint);
@@ -343,10 +350,18 @@ gimp_image_set_resolution (GimpImage *gimage,
 			   gdouble    xresolution,
 			   gdouble    yresolution)
 {
+  /* nothing to do if setting res to the same as before */
+  if ((ABS (gimage->xresolution - xresolution) < 1e-5) &&
+      (ABS (gimage->yresolution - yresolution) < 1e-5))
+      return;
+
   undo_push_resolution (gimage);
-  
+
   gimage->xresolution = xresolution;
   gimage->yresolution = yresolution;
+
+  /* really just want to recalc size and repaint */
+  gdisplays_shrink_wrap (gimage);
 }
 
 void
@@ -2839,8 +2854,7 @@ gimp_image_add_layer (GimpImage *gimage,
   lu->layer         = float_layer;
   lu->prev_position = 0;
   lu->prev_layer    = gimage->active_layer;
-  lu->undo_type     = 0;
-  undo_push_layer (gimage, lu);
+  undo_push_layer (gimage, LAYER_ADD_UNDO, lu);
 
   /*  If the layer is a floating selection, set the ID  */
   if (layer_is_floating_sel (float_layer))
@@ -2906,7 +2920,6 @@ gimp_image_remove_layer (GimpImage *gimage,
       lu->layer         = layer;
       lu->prev_position = gimp_image_get_layer_index (gimage, layer);
       lu->prev_layer    = layer;
-      lu->undo_type     = 1;
 
       gimage->layers = g_slist_remove (gimage->layers, layer);
       gimage->layer_stack = g_slist_remove (gimage->layer_stack, layer);
@@ -2939,7 +2952,7 @@ gimp_image_remove_layer (GimpImage *gimage,
       /*  Push the layer undo--It is important it goes here since layer might
        *   be immediately destroyed if the undo push fails
        */
-      undo_push_layer (gimage, lu);
+      undo_push_layer (gimage, LAYER_REMOVE_UNDO, lu);
 
       /*  invalidate the composite preview  */
       gimp_image_invalidate_preview (gimage);
@@ -2984,11 +2997,10 @@ gimp_image_add_layer_mask (GimpImage *gimage,
   lmu = g_new (LayerMaskUndo, 1);
   lmu->layer      = layer;
   lmu->mask       = mask;
-  lmu->undo_type  = 0;
   lmu->apply_mask = layer->apply_mask;
   lmu->edit_mask  = layer->edit_mask;
   lmu->show_mask  = layer->show_mask;
-  undo_push_layer_mask (gimage, lmu);
+  undo_push_layer_mask (gimage, LAYER_MASK_ADD_UNDO, lmu);
   
   return mask;
 }
@@ -3011,7 +3023,6 @@ gimp_image_remove_layer_mask (GimpImage     *gimage,
   lmu = g_new (LayerMaskUndo, 1);
   lmu->layer      = layer;
   lmu->mask       = layer->mask;
-  lmu->undo_type  = 1;
   lmu->mode       = mode;
   lmu->apply_mask = layer->apply_mask;
   lmu->edit_mask  = layer->edit_mask;
@@ -3023,7 +3034,7 @@ gimp_image_remove_layer_mask (GimpImage     *gimage,
    *   to layer_apply_mask, in case the undo push fails and the
    *   mask is delete : NULL)d
    */
-  undo_push_layer_mask (gimage, lmu);
+  undo_push_layer_mask (gimage, LAYER_MASK_REMOVE_UNDO, lmu);
 
   /*  end the undo group  */
   undo_push_group_end (gimage);
@@ -3410,6 +3421,8 @@ gimp_image_dirty (GimpImage *gimage)
     gimage->dirty++;
     gtk_signal_emit(GTK_OBJECT(gimage), gimp_image_signals[DIRTY]);
 
+    TRC (("dirty %d -> %d\n", gimage->dirty-1, gimage->dirty));
+
     return gimage->dirty;
 }
 
@@ -3418,6 +3431,8 @@ gimp_image_clean (GimpImage *gimage)
 {
     gimage->dirty--;
     gtk_signal_emit(GTK_OBJECT(gimage), gimp_image_signals[CLEAN]);
+
+    TRC (("clean %d -> %d\n", gimage->dirty+1, gimage->dirty));
 
     return gimage->dirty;
 }
