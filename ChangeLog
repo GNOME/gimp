@@ -1,5 +1,13 @@
 2003-01-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimptoolbox.c: convince more window managers to
+	actually use the specified window positions/sizes by adding
+	GDK_HINT_USER_POS and GDK_HINT_USER_SIZE to the windows'
+	geometry hints.
+
+2003-01-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptoolcontrol.c (gimp_tool_control_halt): don't
 	set paused_count to 0.
 

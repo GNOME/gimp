@@ -1296,6 +1296,8 @@ gimp_dialog_factory_set_window_geometry (GtkWidget       *window,
   static gint screen_width  = 0;
   static gint screen_height = 0;
 
+  gboolean size_set = FALSE;
+
   g_return_if_fail (GTK_IS_WINDOW (window));
   g_return_if_fail (GTK_WIDGET_TOPLEVEL (window));
   g_return_if_fail (info != NULL);
@@ -1314,9 +1316,17 @@ gimp_dialog_factory_set_window_geometry (GtkWidget       *window,
   if (! info->toplevel_entry || info->toplevel_entry->remember_size)
     {
       if (info->width > 0 && info->height > 0)
-	gtk_window_set_default_size (GTK_WINDOW (window),
-				     info->width, info->height);
+        {
+          gtk_window_set_default_size (GTK_WINDOW (window),
+                                       info->width, info->height);
+          size_set = TRUE;
+        }
     }
+
+  gtk_window_set_geometry_hints (GTK_WINDOW (window), NULL, NULL,
+                                 size_set ?
+                                 (GDK_HINT_USER_POS | GDK_HINT_USER_SIZE) :
+                                 (GDK_HINT_USER_POS));
 }
 
 static void
