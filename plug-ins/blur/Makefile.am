@@ -16,9 +16,7 @@ LDADD = \
 	$(top_builddir)/plug-ins/gpc/libgpc.a	\
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(X_LIBS)				\
-	-lc
-
+	$(X_LIBS)
 DEPS = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/plug-ins/gpc/libgpc.a	\

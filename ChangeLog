@@ -1,3 +1,8 @@
+Sun Aug 30 16:33:30 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/*/Makefile.am: removed -lc from all Makefiles, since it
+	causes weird problems on DU4
+
 Thu Aug 27 18:58:44 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* acconfig.h
