@@ -1,3 +1,9 @@
+2004-11-10  Michael Schumacher <schumaml@cvs.gnome.org>
+
+	* plug-ins/winsnap/winsnap.c: applied a patch from Sven Neumann
+	with some minor modifications. Fixes bug #157612
+	Removed some unused variables.
+
 2004-11-10  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimputils.c (gimp_escape_uline): "Since: GIMP 2.2".

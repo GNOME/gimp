@@ -56,6 +56,7 @@
  * Plug-in Definitions
  */
 #define PLUG_IN_NAME        "plug_in_winsnap"
+#define HELP_ID             "plug-in-winsnap"
 #define PLUG_IN_PRINT_NAME  "WinSnap"
 #define PLUG_IN_DESCRIPTION "Capture a Win32 window or desktop image"
 #define PLUG_IN_HELP        "This plug-in will capture an image of a Win32 window or desktop"
@@ -77,7 +78,7 @@
 /* File variables */
 static int			captureType;
 static char			buffer[512];
-static char		       *capBytes = NULL;
+static guchar		       *capBytes = NULL;
 static HWND			mainHwnd = NULL;
 static HINSTANCE		hInst = NULL;
 static HCURSOR			selectCursor = 0;
@@ -119,7 +120,6 @@ typedef struct {
   GtkWidget *single_button;
   GtkWidget *root_button;
   GtkWidget *delay_spinner;
-  gboolean   run;
 } WinSnapInterface;
 
 /* The dialog data */
@@ -130,8 +130,7 @@ static WinSnapInterface winsnapintf =
 #endif
   NULL,
   NULL,
-  NULL,
-  FALSE	    /* run */
+  NULL
 };
 
 /* This plug-in's functions */
@@ -228,7 +227,7 @@ primDoWindowCapture(HDC hdcWindow, HDC hdcCompat, RECT rect)
   if (!hbmCopy) {
     formatWindowsError(buffer);
     g_error("Error creating DIB section: %s", buffer);
-    return NULL;
+  return NULL;
   }
 
   /* Select the bitmap into the compatible DC. */
@@ -269,12 +268,10 @@ doCapture(HWND selectedHwnd)
 {
   HDC		hdcSrc;
   HDC		hdcCompat;
-  MSG		msg;
   HRGN		capRegion;
   HWND		oldForeground;
   RECT		rect;
   HBITMAP	hbm;
-  HANDLE	tHandle;
 
   /* Try and get everything out of the way before the
    * capture.
@@ -810,33 +807,6 @@ doWindowCapture(void)
  * Snapshot configuration dialog
  ******************************************************************/
 
-/*
- * snap_close_callback
- *
- * The close button has been pressed... Close
- * down the widgetry.
- */
-static void
-snap_close_callback(GtkWidget *widget,
-		    gpointer data)
-{
-  gtk_main_quit();
-}
-
-/*
- * snap_grab_callback
- *
- * The "grab" button has been selected.
- */
-static void
-snap_grab_callback(GtkWidget *widget,
-		   gpointer data)
-{
-  winsnapintf.run = TRUE;
-  winsnapvals.delay =
-    gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON (winsnapintf.delay_spinner));
-  gtk_widget_destroy(GTK_WIDGET (data));
-}
 
 /*
  * snap_toggle_update
@@ -847,9 +817,7 @@ static void
 snap_toggle_update (GtkWidget *widget,
 		    gpointer   radio_button)
 {
-  gint *toggle_val;
-
-  toggle_val = (gint *) radio_button;
+  gint *toggle_val = (gint *) radio_button;
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     *toggle_val = TRUE;
@@ -868,121 +836,60 @@ snap_toggle_update (GtkWidget *widget,
  * Bring up the GTK dialog for setting snapshot
  * parameters.
  */
-static gint
-snap_dialog(void)
+static gboolean
+snap_dialog (void)
 {
-  GtkWidget		*dialog;
-  GtkWidget		*frame;
-  GtkWidget		*vbox;
-  GtkWidget		*button;
-  GtkWidget		*hbox;
-  GtkWidget		*radio_label;
-  GtkWidget             *label;
-  GtkAdjustment         *adj;
-  GSList		*radio_group = NULL;
-  gint			 radio_pressed[2];
-  gint			 decorations;
-  guint                  delay;
+  GtkWidget	*dialog;
+  GtkWidget	*vbox;
+  GtkWidget	*hbox;
+  GtkWidget     *label;
+  GtkAdjustment *adj;
+  GSList	*radio_group = NULL;
+  gint		 radio_pressed[2];
+  gint		 decorations;
+  gboolean       run;
 
   /* Set defaults */
   radio_pressed[0] = (winsnapvals.root == FALSE);
   radio_pressed[1] = (winsnapvals.root == TRUE);
-  decorations = winsnapvals.decor;
-  delay = winsnapvals.delay;
+  decorations      = winsnapvals.decor;
 
   /* Init GTK  */
   gimp_ui_init ("winsnap", FALSE);
 
   /* Main Dialog */
-  dialog = gtk_dialog_new ();
-  gtk_window_set_title(GTK_WINDOW(dialog), PLUG_IN_PRINT_NAME);
-  gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (snap_close_callback),
-                    NULL);
+  dialog = gimp_dialog_new (PLUG_IN_PRINT_NAME, "winsnap",
+                            NULL, 0,
+			    gimp_standard_help_func, HELP_ID,
 
-  /*  Action area  */
-  button = gtk_button_new_with_label(_("Grab"));
-  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (snap_grab_callback),
-                    dialog);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
-		button, TRUE, TRUE, 0);
-  gtk_widget_grab_default(button);
-  gtk_widget_show(button);
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            _("Grab"),        GTK_RESPONSE_OK,
 
-  button = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            dialog);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG (dialog)->action_area),
-		      button, TRUE, TRUE, 0);
-  gtk_widget_show(button);
+			    NULL);
 
-  /*  Single Window */
-  frame = gtk_frame_new(NULL);
-  gtk_container_set_border_width(GTK_CONTAINER(frame), 4);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),
-		     frame, TRUE, TRUE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
-  vbox = gtk_vbox_new(FALSE, 4);
-  gtk_container_set_border_width(GTK_CONTAINER(vbox), 4);
-  gtk_container_add(GTK_CONTAINER(frame), vbox);
+  winsnapintf.single_button =
+    gtk_radio_button_new_with_label (radio_group,
+                                     _("Grab a single window"));
+  gtk_box_pack_start (GTK_BOX (vbox), winsnapintf.single_button, FALSE, FALSE, 0);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox),
-		      hbox, TRUE, TRUE, 0);
-  winsnapintf.single_button = gtk_radio_button_new ( radio_group );
-  radio_group = gtk_radio_button_get_group ( GTK_RADIO_BUTTON (winsnapintf.single_button) );
-  gtk_box_pack_start (GTK_BOX (hbox),
-		      winsnapintf.single_button, TRUE, TRUE, 0);
   g_signal_connect (winsnapintf.single_button, "toggled",
 		    G_CALLBACK (snap_toggle_update),
                     &radio_pressed[0]);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (winsnapintf.single_button),
 				radio_pressed[0]);
   gtk_widget_show (winsnapintf.single_button);
-  radio_label = gtk_label_new (_("Grab a single window"));
-  gtk_box_pack_start (GTK_BOX (hbox),
-		      radio_label, TRUE, TRUE, 0);
-  gtk_widget_show (radio_label);
-  gtk_widget_show (hbox);
 
-#ifdef CAN_SET_DECOR
-  /* With decorations */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_end (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-  winsnapintf.decor_button =
-    gtk_check_button_new_with_label (_("Include decorations"));
-  g_signal_connect (winsnapintf.decor_button, "toggled",
-                    G_CALLBACK (snap_toggle_update),
-                    &decorations);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (winsnapintf.decor_button),
-				decorations);
-  gtk_box_pack_end (GTK_BOX (hbox), winsnapintf.decor_button, FALSE, FALSE, 0);
-  gtk_widget_set_sensitive (winsnapintf.decor_button, radio_pressed[0]);
-  gtk_widget_show (winsnapintf.decor_button);
-#endif /* CAN_SET_DECOR */
+  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (winsnapintf.single_button));
 
-  gtk_widget_show (hbox);
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
-
-  /* Root Window */
-  frame = gtk_frame_new (NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-		      frame, TRUE, TRUE, 0);
-
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-
-  winsnapintf.root_button = gtk_radio_button_new ( radio_group );
-  radio_group = gtk_radio_button_get_group ( GTK_RADIO_BUTTON (winsnapintf.root_button) );
-  gtk_box_pack_start (GTK_BOX (hbox),  winsnapintf.root_button, TRUE, TRUE, 0);
+  winsnapintf.root_button =
+    gtk_radio_button_new_with_label (radio_group,
+                                     _("Grab the whole screen"));
+  gtk_box_pack_start (GTK_BOX (vbox), winsnapintf.root_button, FALSE, FALSE, 0);
   g_signal_connect (winsnapintf.root_button, "toggled",
                     G_CALLBACK (snap_toggle_update),
                     &radio_pressed[1]);
@@ -990,48 +897,58 @@ snap_dialog(void)
 				radio_pressed[1]);
   gtk_widget_show (winsnapintf.root_button);
 
-  radio_label = gtk_label_new (_("Grab the whole screen"));
-  gtk_box_pack_start (GTK_BOX (hbox), radio_label, TRUE, TRUE, 0);
-  gtk_widget_show (radio_label);
-
-  gtk_widget_show (hbox);
-  gtk_widget_show (frame);
+  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (winsnapintf.root_button));
 
   /* with delay */
-  frame = gtk_frame_new (NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-		      frame, TRUE, TRUE, 0);
-
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   label = gtk_label_new (_("after"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  adj = (GtkAdjustment *) gtk_adjustment_new ((gfloat)delay, 0.0, 100.0, 1.0, 5.0, 0.0);
+  adj = (GtkAdjustment *) gtk_adjustment_new ((gfloat) winsnapvals.delay,
+                                              0.0, 100.0,
+                                              1.0, 5.0, 0.0);
   winsnapintf.delay_spinner = gtk_spin_button_new (adj, 0, 0);
-  gtk_box_pack_start (GTK_BOX(hbox), winsnapintf.delay_spinner, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox),
+                      winsnapintf.delay_spinner, FALSE, FALSE, 0);
   gtk_widget_show (winsnapintf.delay_spinner);
 
   label = gtk_label_new (_("Seconds delay"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  gtk_widget_show (hbox);
-  gtk_widget_show (frame);
+#ifdef CAN_SET_DECOR
+  /* With decorations */
+  winsnapintf.decor_button =
+    gtk_check_button_new_with_label (_("Include decorations"));
+  g_signal_connect (winsnapintf.decor_button, "toggled",
+                    G_CALLBACK (snap_toggle_update),
+                    &decorations);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (winsnapintf.decor_button),
+				decorations);
+  gtk_box_pack_end (GTK_BOX (vbox), winsnapintf.decor_button, FALSE, FALSE, 0);
+  gtk_widget_set_sensitive (winsnapintf.decor_button, radio_pressed[0]);
+  gtk_widget_show (winsnapintf.decor_button);
+#endif /* CAN_SET_DECOR */
 
   gtk_widget_show (dialog);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  winsnapvals.root = radio_pressed[1];
-  winsnapvals.decor = decorations;
+  if (run)
+    {
+      winsnapvals.root  = radio_pressed[1];
+      winsnapvals.decor = decorations;
+      winsnapvals.delay =
+        gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (winsnapintf.delay_spinner));
+    }
 
-  return winsnapintf.run;
+  gtk_widget_destroy (dialog);
+
+  return run;
 }
 
 /******************************************************************
@@ -1099,7 +1016,6 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   GimpRunMode run_mode;
-  int wait = 1;
 
   /* Initialize the return values
    * Always return at least the status to the caller.
@@ -1207,7 +1123,6 @@ flipRedAndBlueBytes(int width, int height)
 static void
 sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
 {
-  int		row;
   int		width, height;
   int		imageType, layerType;
   gint32	image_id;
