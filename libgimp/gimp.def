@@ -49,6 +49,7 @@ EXPORTS
 	gimp_channel_get_opacity
 	gimp_channel_get_show_masked
 	gimp_channel_new
+	gimp_channel_new_from_component
 	gimp_channel_set_color
 	gimp_channel_set_opacity
 	gimp_channel_set_show_masked

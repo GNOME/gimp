@@ -1,3 +1,16 @@
+2005-02-22  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* tools/pdbgen/pdb/channel.pdb: add the 
+	gimp_channel_new_from_component() PDB function.
+
+	* libgimp/gimpchannel_pdb.c
+	* app/pdb/channel_cmds.c: resultant files.
+
+	* libgimp/gimp.def: add the new function to the def file
+
+	* devel-docs/libgimp/libgimp-sections.txt: add the new function
+	to devel-docs
+
 2005-02-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpmagnifytool.c (gimp_magnify_tool_init)

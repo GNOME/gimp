@@ -1,3 +1,7 @@
+2005-02-22  Shlomi Fish   <shlomif@iglu.org.il>
+
+	* libgimp/libgimp-sections.txt: added new function
+
 2005-02-14  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am

@@ -77,6 +77,44 @@ _gimp_channel_new (gint32         image_ID,
 }
 
 /**
+ * gimp_channel_new_from_component:
+ * @image_ID: The image to which to add the channel.
+ * @component: The image component.
+ * @name: The channel name.
+ *
+ * Create a new channel from a color component
+ *
+ * This procedure creates a new channel from a color component.
+ *
+ * Returns: The newly created channel.
+ *
+ * Since: GIMP 2.4
+ */
+gint32
+gimp_channel_new_from_component (gint32           image_ID,
+				 GimpChannelType  component,
+				 const gchar     *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 channel_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_channel_new_from_component",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_INT32, component,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    channel_ID = return_vals[1].data.d_channel;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return channel_ID;
+}
+
+/**
  * gimp_channel_copy:
  * @channel_ID: The channel to copy.
  *

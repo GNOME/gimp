@@ -33,6 +33,7 @@
 #include "core/gimpimage.h"
 
 static ProcRecord channel_new_proc;
+static ProcRecord channel_new_from_component_proc;
 static ProcRecord channel_copy_proc;
 static ProcRecord channel_combine_masks_proc;
 static ProcRecord channel_get_show_masked_proc;
@@ -46,6 +47,7 @@ void
 register_channel_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &channel_new_proc);
+  procedural_db_register (gimp, &channel_new_from_component_proc);
   procedural_db_register (gimp, &channel_copy_proc);
   procedural_db_register (gimp, &channel_combine_masks_proc);
   procedural_db_register (gimp, &channel_get_show_masked_proc);
@@ -169,6 +171,96 @@ static ProcRecord channel_new_proc =
   1,
   channel_new_outargs,
   { { channel_new_invoker } }
+};
+
+static Argument *
+channel_new_from_component_invoker (Gimp         *gimp,
+                                    GimpContext  *context,
+                                    GimpProgress *progress,
+                                    Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gint32 component;
+  gchar *name;
+  GimpChannel *channel = NULL;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  component = args[1].value.pdb_int;
+  if (component < GIMP_RED_CHANNEL || component > GIMP_ALPHA_CHANNEL)
+    success = FALSE;
+
+  name = (gchar *) args[2].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      if (gimp_image_get_component_index (gimage, component) != -1)
+        channel = gimp_channel_new_from_component (gimage,
+                                                   component, name, NULL);
+
+      if (channel)
+        gimp_item_set_visible (GIMP_ITEM (channel), FALSE, FALSE);
+      else
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&channel_new_from_component_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (channel));
+
+  return return_args;
+}
+
+static ProcArg channel_new_from_component_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image to which to add the channel"
+  },
+  {
+    GIMP_PDB_INT32,
+    "component",
+    "The image component: { GIMP_RED_CHANNEL (0), GIMP_GREEN_CHANNEL (1), GIMP_BLUE_CHANNEL (2), GIMP_GRAY_CHANNEL (3), GIMP_INDEXED_CHANNEL (4), GIMP_ALPHA_CHANNEL (5) }"
+  },
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The channel name"
+  }
+};
+
+static ProcArg channel_new_from_component_outargs[] =
+{
+  {
+    GIMP_PDB_CHANNEL,
+    "channel",
+    "The newly created channel"
+  }
+};
+
+static ProcRecord channel_new_from_component_proc =
+{
+  "gimp_channel_new_from_component",
+  "Create a new channel from a color component",
+  "This procedure creates a new channel from a color component.",
+  "Shlomi Fish <shlomif@iglu.org.il>",
+  "Shlomi Fish",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  3,
+  channel_new_from_component_inargs,
+  1,
+  channel_new_from_component_outargs,
+  { { channel_new_from_component_invoker } }
 };
 
 static Argument *

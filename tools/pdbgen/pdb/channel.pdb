@@ -231,6 +231,48 @@ CODE
     );
 }
 
+sub channel_new_from_component {
+    $blurb = 'Create a new channel from a color component';
+
+    $help = <<'HELP';
+This procedure creates a new channel from a color component.
+HELP
+
+    $author = 'Shlomi Fish <shlomif@iglu.org.il>';
+    $copyright = 'Shlomi Fish';
+    $date = '2005';
+    $since = '2.4';
+
+    @inargs = (
+	&std_image_arg,
+    { name => 'component', type => 'enum GimpChannelType',
+      desc => 'The image component: { %%desc%% }' },
+    { name => 'name', type => 'string',
+      desc => 'The channel name' },
+    );
+    $inargs[0]->{desc} .= ' to which to add the channel';
+
+    @outargs = (
+	{ name => 'channel', type => 'channel', init => 1,
+	  desc => 'The newly created channel' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_image_get_component_index (gimage, component) != -1)
+    channel = gimp_channel_new_from_component (gimage,
+                                               component, name, NULL);
+
+  if (channel)
+    gimp_item_set_visible (GIMP_ITEM (channel), FALSE, FALSE);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 &channel_accessors('show_masked', 'boolean', 'composite method', 0,
 		   <<'CODE');
     $help .= <<'HELP'
@@ -248,7 +290,8 @@ CODE
 &channel_accessors('color', 'color', 'compositing color', 0,
                    [ '$outargs[0]->{void_ret} = 1', '' ]);
 
-unshift @procs, qw(channel_new channel_copy channel_combine_masks);
+unshift @procs, qw(channel_new channel_new_from_component channel_copy
+                   channel_combine_masks);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Channel';

@@ -176,6 +176,7 @@ gimp_brushes_set_popup
 <SECTION>
 <FILE>gimpchannel</FILE>
 gimp_channel_new
+gimp_channel_new_from_component
 gimp_channel_copy
 gimp_channel_get_show_masked
 gimp_channel_set_show_masked
