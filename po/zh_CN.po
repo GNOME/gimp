@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:57+0200\n"
-"PO-Revision-Date: 2004-06-01 20:04+0800\n"
+"POT-Creation-Date: 2004-06-26 03:39+0200\n"
+"PO-Revision-Date: 2004-06-26 17:50+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -8389,12 +8389,14 @@ msgstr "/工具(T)/涂画工具(P)/涂抹(_S)"
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
+"微调将修改字体的轮廓，使之产生清晰的小尺寸位图"
 
 #: app/tools/gimptextoptions.c:153
 msgid ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
 msgstr ""
+"一般只在字体提供微调时才进行微调，但是你也可以首选总是使用自动微调"
 
 #: app/tools/gimptextoptions.c:178
 msgid "Indentation of the first line"
@@ -8418,11 +8420,11 @@ msgstr "大小(_S)："
 
 #: app/tools/gimptextoptions.c:444
 msgid "_Hinting"
-msgstr "平滑边缘(_H)"
+msgstr "微调(_H)"
 
 #: app/tools/gimptextoptions.c:451
 msgid "Force Auto-Hinter"
-msgstr "强制平滑"
+msgstr "强制自动微调"
 
 #: app/tools/gimptextoptions.c:466
 msgid "Text Color"
