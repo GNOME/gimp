@@ -15,6 +15,7 @@ TEST_TYPE=-d
 FILE=plug-ins
 
 LIBTOOL_REQUIRED_VERSION=1.3.4
+LIBTOOL_WIN32=1.5.0
 AUTOCONF_REQUIRED_VERSION=2.54
 AUTOMAKE_REQUIRED_VERSION=1.6
 GLIB_REQUIRED_VERSION=2.0.0
@@ -44,6 +45,17 @@ echo "so if anything goes wrong, see the file HACKING for more information..."
 echo
 
 DIE=0
+
+
+OS=`uname -s`
+case $OS in 
+    *ygwin* | *ingw*)
+	echo "Looks like Win32, you will need libtool $LIBTOOL_WIN32 or newer."
+	echo
+	LIBTOOL_REQUIRED_VERSION=$LIBTOOL_WIN32
+	;;
+esac
+
 
 echo -n "checking for libtool >= $LIBTOOL_REQUIRED_VERSION ... "
 if (libtoolize --version) < /dev/null > /dev/null 2>&1; then
