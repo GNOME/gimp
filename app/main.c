@@ -47,6 +47,7 @@ int be_verbose;
 int use_shm;
 int use_debug_handler;
 int console_messages;
+int restore_session;
 GimpSet* image_context;
 
 MessageHandlerType message_handler;
@@ -113,6 +114,7 @@ main (int argc, char **argv)
   no_splash_image = FALSE;
   use_shm = TRUE;
   use_debug_handler = FALSE;
+  restore_session = FALSE;
   console_messages = FALSE;
 
   message_handler = CONSOLE;
@@ -206,6 +208,11 @@ main (int argc, char **argv)
 	{
 	  console_messages = TRUE;
 	}
+      else if ((strcmp (argv[i], "--restore-session") == 0) ||
+	       (strcmp (argv[i], "-r") == 0))
+	{
+	  restore_session = TRUE;
+	}
 /*
  *    ANYTHING ELSE starting with a '-' is an error.
  */
@@ -227,6 +234,7 @@ main (int argc, char **argv)
       g_print ("  -b --batch <commands>    Run in batch mode.\n");
       g_print ("  -g --gimprc <gimprc>     Use an alternate gimprc file.\n");
       g_print ("  -n --no-interface        Run without a user interface.\n");
+      g_print ("  -r --restore-session     Try to restore saved session.\n");
       g_print ("  --no-data                Do not load patterns, gradients, palettes, brushes.\n");
       g_print ("  --verbose                Show startup messages.\n");
       g_print ("  --no-splash              Do not show the startup window.\n");
@@ -237,7 +245,6 @@ main (int argc, char **argv)
       g_print ("  --debug-handlers         Enable debugging signal handlers.\n");
       g_print ("  --display <display>      Use the designated X display.\n\n");
       g_print ("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n");
-
     }
 
   if (show_version || show_help)

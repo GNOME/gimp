@@ -17,25 +17,29 @@
  */
 
 
-/* Session-managment stuff
+/* Session-managment stuff   Copyright (C) 1998 Sven Neumann <sven@gimp.org>
 
    I include a short description here on what is done and what problems 
-   are left.
+   are left:
 
    Since everything saved in sessionrc changes often (with each session?) 
    the whole file is rewritten each time the gimp exits. I don't see any
    use in implementing a more flexible scheme like it is used for gimprc.
 
-   Right now session-managment is limited to window geometry. I plan to add 
-   at least the saving of Last-Used-Images (using nuke's patch).
+   Right now session-managment is limited to window geometry. Restoring 
+   openend images is planned, but I'm still not sure how to deal with dirty
+   images.
 
    There is a problem with the offset introduced by the window-manager adding
    decorations to the windows. This is annoying and should be fixed somehow.
    ( Update: I was promised that this will be fixed in gtk. )
    
-   Still not sure how to implement stuff for opening windows on start-up.
-   Probably the best thing to do, would be to have a list of dialogs in
-   the preferences-dialog that should always be opened.
+   Dialogs are now reopened if the gimp is called with the command-line-option
+   --restore-session or if the related entry is set in gimprc.
+   Probably there should alternatively be a list of dialogs in the preferences 
+   that should always be opened on start-up. 
+
+   Please point me into the right direction to make this work with Gnome-SM.
  */
 
 #include <stdlib.h>
@@ -43,50 +47,69 @@
 #include <unistd.h>
 
 #include "appenv.h"
+#include "commands.h"
 #include "gimprc.h"
 #include "session.h"
 
-static void sessionrc_write_geometry (SessionGeometry *, FILE *);
+static void sessionrc_write_info (SessionInfo *, FILE *);
+static void session_open_dialog (SessionInfo *info);
+static void session_reset_open_state (SessionInfo *info);
 
-GList *session_geometry_updates = NULL;
+GList *session_info_updates = NULL;
 
 /* global session variables */
-SessionGeometry toolbox_geometry = { "toolbox", 0, 0, 0, 0 };
-SessionGeometry lc_dialog_geometry = { "lc-dialog", 0, 400, 0, 0 };
-SessionGeometry info_dialog_geometry = { "info-dialog", 165, 0, 0, 0 };
-SessionGeometry tool_options_geometry = { "tool-options", 0, 345, 0, 0 };
-SessionGeometry palette_geometry = { "palette", 140, 180, 0, 0 };
-SessionGeometry brush_select_geometry = { "brush-select", 150, 180, 0, 0 };
-SessionGeometry pattern_select_geometry = { "pattern-select", 160, 180, 0, 0 };
-SessionGeometry gradient_editor_geometry = { "gradient-editor", 170, 180, 0, 0 };
+SessionInfo toolbox_session_info = 
+  { "toolbox", NULL, 0, 0, 0, 0, FALSE };
+SessionInfo lc_dialog_session_info = 
+  { "lc-dialog", dialogs_lc_cmd_callback, 0, 400, 0, 0, FALSE };
+SessionInfo info_dialog_session_info = 
+  { "info-dialog", NULL, 165, 0, 0, 0, FALSE };
+SessionInfo tool_options_session_info = 
+  { "tool-options", dialogs_tools_options_cmd_callback, 0, 345, 0, 0, FALSE };
+SessionInfo palette_session_info = 
+  { "palette", dialogs_palette_cmd_callback, 140, 180, 0, 0, FALSE };
+SessionInfo brush_select_session_info = 
+  { "brush-select",  dialogs_brushes_cmd_callback, 150, 180, 0, 0, FALSE };
+SessionInfo pattern_select_session_info = 
+  { "pattern-select", dialogs_patterns_cmd_callback, 160, 180, 0, 0, FALSE };
+SessionInfo gradient_editor_session_info = 
+  { "gradient-editor", dialogs_gradient_editor_cmd_callback, 170, 180, 0, 0, FALSE };
 
 /* public functions */
 void 
-session_get_window_geometry (GtkWidget       *window, 
-			     SessionGeometry *geometry)
+session_get_window_info (GtkWidget   *window, 
+			 SessionInfo *info)
 {
-  if ( !save_window_positions_on_exit || geometry == NULL || window->window == NULL )
+  if ( !save_session_info || info == NULL || window->window == NULL )
     return;
 
-  gdk_window_get_origin (window->window, &geometry->x, &geometry->y);
-  gdk_window_get_size (window->window, &geometry->width, &geometry->height);
+  gdk_window_get_origin (window->window, &info->x, &info->y);
+  gdk_window_get_size (window->window, &info->width, &info->height);
 
-  if (g_list_find (session_geometry_updates, geometry) == NULL)
-    session_geometry_updates = g_list_append (session_geometry_updates, geometry);
+  /* This is a very ugly hack to work against the offset 
+     introduced by window decorations.
+     The problem should be handled in gtk ... */
+  info->y += -20;
+
+  if ( we_are_exiting )
+    info->open = GTK_WIDGET_VISIBLE (window);
+
+  if ( g_list_find (session_info_updates, info) == NULL )
+    session_info_updates = g_list_append (session_info_updates, info);
 }
 
 void 
-session_set_window_geometry (GtkWidget       *window, 
-			     SessionGeometry *geometry,
-			     int              set_size)
+session_set_window_geometry (GtkWidget   *window, 
+			     SessionInfo *info,
+			     int          set_size)
 {
-  if ( window == NULL || geometry == NULL)
+  if ( window == NULL || info == NULL)
     return;
   
-  gtk_widget_set_uposition (window, geometry->x, geometry->y);
+  gtk_widget_set_uposition (window, info->x, info->y);
   
-  if ( (set_size) && (geometry->width > 0) && (geometry->height > 0) )
-    gtk_widget_set_usize (window, geometry->width, geometry->height);
+  if ( (set_size) && (info->width > 0) && (info->height > 0) )
+    gtk_widget_set_usize (window, info->width, info->height);
 }
 
 void
@@ -114,7 +137,7 @@ save_sessionrc (void)
       fprintf(fp, "# are used.\n\n");
 
       /* save window geometries */
-      g_list_foreach (session_geometry_updates, (GFunc)sessionrc_write_geometry, fp);
+      g_list_foreach (session_info_updates, (GFunc)sessionrc_write_info, fp);
 
       /* save last tip shown */
       fprintf(fp, "(last-tip-shown %d)\n\n", last_tip + 1);
@@ -138,19 +161,49 @@ session_init (void)
     }
 }
 
+void
+session_restore (void)
+{      
+  /* open dialogs */
+  if (restore_session)
+    g_list_foreach (session_info_updates, (GFunc)session_open_dialog, NULL);
+
+  /* reset the open state in the session_infos */
+  g_list_foreach (session_info_updates, (GFunc)session_reset_open_state, NULL);
+}
 
 /* internal function */
 static void
-sessionrc_write_geometry (SessionGeometry *geometry, FILE *fp)
+sessionrc_write_info (SessionInfo *info, FILE *fp)
 {
-  if (fp == NULL || geometry == NULL) 
+  if (fp == NULL || info == NULL) 
     return;
   
-  fprintf (fp,"(session-geometry \"%s\"\n", geometry->name);
-  fprintf (fp,"   (position %d %d)\n", geometry->x, geometry->y);
-  fprintf (fp,"   (size %d %d))\n\n", geometry->width, geometry->height);
+  fprintf (fp,"(session-info \"%s\"\n", info->name);
+  fprintf (fp,"   (position %d %d)\n", info->x, info->y);
+  fprintf (fp,"   (size %d %d)", info->width, info->height);
+  if ( info->open ) 
+    fprintf (fp,"\n   (open-on-exit)");
+  fprintf (fp,")\n\n"); 
 }
 
+static void
+session_open_dialog (SessionInfo *info)
+{
+  if (info == NULL || info->open == FALSE) 
+    return;
+
+  (info->open_callback) (NULL, NULL);
+}
+
+static void
+session_reset_open_state (SessionInfo *info)
+{
+  if (info == NULL ) 
+    return;
+
+  info->open = FALSE;
+}
 
 
 

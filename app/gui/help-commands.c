@@ -968,8 +968,8 @@ dialogs_palette_cmd_callback (GtkWidget *widget,
 }
 
 void
-dialogs_gradient_editor_cmd_callback(GtkWidget *widget,
-				     gpointer   client_data)
+dialogs_gradient_editor_cmd_callback (GtkWidget *widget,
+				      gpointer   client_data)
 {
   grad_create_gradient_editor ();
 } /* dialogs_gradient_editor_cmd_callback */

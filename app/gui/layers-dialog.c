@@ -306,7 +306,7 @@ lc_dialog_create (GimpImage* gimage)
       
       gtk_window_set_title (GTK_WINDOW (lc_shell), "Layers & Channels");
       gtk_window_set_wmclass (GTK_WINDOW (lc_shell), "layers_and_channels", "Gimp");
-      session_set_window_geometry (lc_shell, &lc_dialog_geometry, TRUE);
+      session_set_window_geometry (lc_shell, &lc_dialog_session_info, TRUE);
       gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (lc_shell)->vbox), 2);
       gtk_signal_connect (GTK_OBJECT (lc_shell),
 			  "delete_event", 
@@ -457,7 +457,7 @@ lc_dialog_free ()
   if (lc_shell == NULL)
     return;
 
-  session_get_window_geometry (lc_shell, &lc_dialog_geometry);
+  session_get_window_info (lc_shell, &lc_dialog_session_info);
 
   layers_dialog_free ();
   channels_dialog_free ();

@@ -94,7 +94,7 @@ pattern_select_new ()
   psp->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (psp->shell), "patternselection", "Gimp");
   gtk_window_set_title (GTK_WINDOW (psp->shell), "Pattern Selection");
-  session_set_window_geometry (psp->shell, &pattern_select_geometry, TRUE);
+  session_set_window_geometry (psp->shell, &pattern_select_session_info, TRUE);
   gtk_window_set_policy(GTK_WINDOW(psp->shell), FALSE, TRUE, FALSE);
 
   vbox = gtk_vbox_new (FALSE, 1);
@@ -204,7 +204,7 @@ pattern_select_free (PatternSelectP psp)
 {
   if (psp)
     {
-      session_get_window_geometry (psp->shell, &pattern_select_geometry);
+      session_get_window_info (psp->shell, &pattern_select_session_info);
       if (psp->pattern_popup != NULL)
 	gtk_widget_destroy (psp->pattern_popup);
       g_free (psp);

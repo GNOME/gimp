@@ -165,7 +165,7 @@ brush_select_new ()
   bsp->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (bsp->shell), "brushselection", "Gimp");
   gtk_window_set_title (GTK_WINDOW (bsp->shell), "Brush Selection");
-  session_set_window_geometry (bsp->shell, &brush_select_geometry, TRUE);
+  session_set_window_geometry (bsp->shell, &brush_select_session_info, TRUE);
   gtk_window_set_policy(GTK_WINDOW(bsp->shell), FALSE, TRUE, FALSE);
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_border_width (GTK_CONTAINER (vbox), 2);
@@ -365,7 +365,7 @@ brush_select_free (BrushSelectP bsp)
 {
   if (bsp)
     {
-      session_get_window_geometry (bsp->shell, &brush_select_geometry);
+      session_get_window_info (bsp->shell, &brush_select_session_info);
       if (bsp->brush_popup != NULL)
 	gtk_widget_destroy (bsp->brush_popup);
       g_free (bsp);

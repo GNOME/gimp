@@ -21,38 +21,41 @@
 #include <glib.h>
 
 /* Structures */
-typedef struct _SessionGeometry SessionGeometry;
+typedef struct _SessionInfo SessionInfo;
 
-struct _SessionGeometry
+struct _SessionInfo
 {
-  char name[16]; 
+  char name[16];
+  GtkItemFactoryCallback open_callback;
   int x;
   int y;
   int width;
   int height;
+  int open;
 };
 
 /*  global session variables  */
-extern SessionGeometry toolbox_geometry;
-extern SessionGeometry lc_dialog_geometry;
-extern SessionGeometry info_dialog_geometry;
-extern SessionGeometry tool_options_geometry;
-extern SessionGeometry palette_geometry;
-extern SessionGeometry brush_select_geometry;
-extern SessionGeometry pattern_select_geometry;
-extern SessionGeometry gradient_editor_geometry;
+extern SessionInfo toolbox_session_info;
+extern SessionInfo lc_dialog_session_info;
+extern SessionInfo info_dialog_session_info;
+extern SessionInfo tool_options_session_info;
+extern SessionInfo palette_session_info;
+extern SessionInfo brush_select_session_info;
+extern SessionInfo pattern_select_session_info;
+extern SessionInfo gradient_editor_session_info;
 
-extern GList *session_geometry_updates;  /* This list holds all geometries
-					    that should be written to the
-					    sessionrc on exit.             */  
+extern GList *session_info_updates;  /* This list holds all session_infos
+					that should be written to the
+					sessionrc on exit.             */  
 
 /*  function prototypes  */
-void session_get_window_geometry (GtkWidget       *window, 
-				  SessionGeometry *geometry);
-void session_set_window_geometry (GtkWidget       *window,
-				  SessionGeometry *geometry,
-				  int              set_size);
+void session_get_window_info (GtkWidget   *window, 
+			      SessionInfo *info);
+void session_set_window_geometry (GtkWidget   *window,
+				  SessionInfo *info,
+				  int          set_size);
 void session_init (void);
+void session_restore (void);
 void save_sessionrc (void);
 
 #endif  /*  __SESSION_H__  */

@@ -443,7 +443,7 @@ create_toolbox ()
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
   gtk_window_set_title (GTK_WINDOW (window), "The GIMP");
-  session_set_window_geometry (window, &toolbox_geometry, TRUE);
+  session_set_window_geometry (window, &toolbox_session_info, TRUE);
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
 		      GTK_SIGNAL_FUNC (toolbox_delete),
 		      NULL);
@@ -521,7 +521,7 @@ toolbox_free ()
 {
   int i;
 
-  session_get_window_geometry (toolbox_shell, &toolbox_geometry);
+  session_get_window_info (toolbox_shell, &toolbox_session_info);
 
   gtk_widget_destroy (toolbox_shell);
   for (i = 0; i < num_tools; i++)

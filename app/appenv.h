@@ -41,6 +41,8 @@ extern int no_data;
 extern int be_verbose;
 extern int use_debug_handler;
 extern int console_messages;
+extern int restore_session;
+extern int we_are_exiting;       /* this is used in session_get_window_info() */
 extern GimpSet* image_context;
 
 extern MessageHandlerType message_handler;

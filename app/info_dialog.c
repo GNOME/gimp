@@ -86,7 +86,7 @@ info_dialog_new (char *title)
   shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (shell), "info_dialog", "Gimp");
   gtk_window_set_title (GTK_WINDOW (shell), title);
-  session_set_window_geometry (shell, &info_dialog_geometry, FALSE );
+  session_set_window_geometry (shell, &info_dialog_session_info, FALSE );
 
   gtk_signal_connect (GTK_OBJECT (shell), "delete_event",
 		      GTK_SIGNAL_FUNC (info_dialog_delete_callback),
@@ -140,7 +140,7 @@ info_dialog_free (InfoDialog *idialog)
   /*  Free the actual field linked list  */
   g_slist_free (idialog->field_list);
 
-  session_get_window_geometry (idialog->shell, &info_dialog_geometry);
+  session_get_window_info (idialog->shell, &info_dialog_session_info);
 
   /*  Destroy the associated widgets  */
   gtk_widget_destroy (idialog->shell);

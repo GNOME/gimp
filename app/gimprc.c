@@ -56,7 +56,7 @@ typedef enum {
   TT_XPLUGINDEF,
   TT_XMENUPATH,
   TT_XDEVICE,
-  TT_XSESSIONGEOM
+  TT_XSESSIONINFO
 } TokenType;
 
 typedef struct _ParseFunc ParseFunc;
@@ -109,7 +109,8 @@ int       ruler_units = GTK_PIXELS;
 int       auto_save = TRUE;
 int       cubic_interpolation = FALSE;
 int       confirm_on_close = TRUE;
-int       save_window_positions_on_exit = TRUE;
+int       save_session_info = TRUE;
+int       always_restore_session = FALSE;
 int       default_width = 256;
 int       default_height = 256;
 int       default_type = RGB;
@@ -140,7 +141,7 @@ static int parse_plug_in (gpointer val1p, gpointer val2p);
 static int parse_plug_in_def (gpointer val1p, gpointer val2p);
 static int parse_device (gpointer val1p, gpointer val2p);
 static int parse_menu_path (gpointer val1p, gpointer val2p);
-static int parse_session_geometry (gpointer val1p, gpointer val2p);
+static int parse_session_info (gpointer val1p, gpointer val2p);
 
 static int parse_proc_def (PlugInProcDef **proc_def);
 static int parse_proc_arg (ProcArg *arg);
@@ -214,10 +215,9 @@ static ParseFunc funcs[] =
   { "cubic-interpolation",   TT_BOOLEAN,    &cubic_interpolation, NULL },
   { "confirm-on-close",      TT_BOOLEAN,    &confirm_on_close, NULL },
   { "dont-confirm-on-close", TT_BOOLEAN,    NULL, &confirm_on_close },
-  { "save-window-positions-on-exit", 
-                             TT_BOOLEAN,    &save_window_positions_on_exit, NULL },
-  { "dont-save-window-positions-on-exit",
-                             TT_BOOLEAN,    NULL, &save_window_positions_on_exit},
+  { "save-session-info",     TT_BOOLEAN,    &save_session_info, NULL },
+  { "dont-save-session-info", TT_BOOLEAN,   NULL, &save_session_info},
+  { "always-restore-session", TT_BOOLEAN,   &always_restore_session, NULL },
   { "show-tips",             TT_BOOLEAN,    &show_tips, NULL },
   { "dont-show-tips",        TT_BOOLEAN,    NULL, &show_tips },
   { "last-tip-shown",        TT_INT,        &last_tip, NULL },
@@ -231,22 +231,22 @@ static ParseFunc funcs[] =
   { "plug-in-def",           TT_XPLUGINDEF, NULL, NULL },
   { "menu-path",             TT_XMENUPATH,  NULL, NULL },
   { "device",                TT_XDEVICE,    NULL, NULL },
-  { "session-geometry",      TT_XSESSIONGEOM, NULL, NULL}
+  { "session-info",          TT_XSESSIONINFO, NULL, NULL}
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 
-static SessionGeometry *session_geometries[] =
+static SessionInfo *session_infos[] =
 {
-  &toolbox_geometry,
-  &lc_dialog_geometry,
-  &info_dialog_geometry,
-  &tool_options_geometry,
-  &palette_geometry,
-  &brush_select_geometry,
-  &pattern_select_geometry,
-  &gradient_editor_geometry
+  &toolbox_session_info,
+  &lc_dialog_session_info,
+  &info_dialog_session_info,
+  &tool_options_session_info,
+  &palette_session_info,
+  &brush_select_session_info,
+  &pattern_select_session_info,
+  &gradient_editor_session_info
 };
-static int nsession_geometries = sizeof (session_geometries) / sizeof (session_geometries[0]);
+static int nsession_infos = sizeof (session_infos) / sizeof (session_infos[0]);
 
 extern char* alternate_gimprc;
 extern char* alternate_system_gimprc;
@@ -609,8 +609,8 @@ parse_statement ()
 	  return parse_menu_path (funcs[i].val1p, funcs[i].val2p);
 	case TT_XDEVICE:
 	  return parse_device (funcs[i].val1p, funcs[i].val2p);
-	case TT_XSESSIONGEOM:
-	  return parse_session_geometry (funcs[i].val1p, funcs[i].val2p);
+	case TT_XSESSIONINFO:
+	  return parse_session_info (funcs[i].val1p, funcs[i].val2p);
 	}
 
   return parse_unknown (token_sym);
@@ -1758,28 +1758,28 @@ error:
 }
 
 static int
-parse_session_geometry (gpointer val1p, 
-			gpointer val2p)
+parse_session_info (gpointer val1p, 
+		    gpointer val2p)
 {
   int i;
   int token;
-  SessionGeometry *geometry = NULL;
+  SessionInfo *info = NULL;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))
     return ERROR;
   token = get_next_token ();
 
-  for (i = 0; i < nsession_geometries; i++)
+  for (i = 0; i < nsession_infos; i++)
     { 
-      if (strcmp (session_geometries[i]->name, token_str) == 0)
-	geometry = session_geometries[i];
+      if (strcmp (session_infos[i]->name, token_str) == 0)
+	info = session_infos[i];
     }
 
-  if (geometry == NULL)
+  if (info == NULL)
     return ERROR;
 
-  /* Parse options for session geometry */
+  /* Parse options for session info */
 
   while ( peek_next_token () == TOKEN_LEFT_PAREN )
     {
@@ -1796,13 +1796,13 @@ parse_session_geometry (gpointer val1p,
 	  if (!token || (token != TOKEN_NUMBER))
 	    return ERROR;
 	  token = get_next_token ();
-	  geometry->x = token_int;
+	  info->x = token_int;
 
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_NUMBER))
 	    return ERROR;
 	  token = get_next_token ();
-	  geometry->y = token_int;
+	  info->y = token_int;
 	}
       else if (!strcmp ("size", token_sym))
 	{
@@ -1810,14 +1810,16 @@ parse_session_geometry (gpointer val1p,
 	  if (!token || (token != TOKEN_NUMBER))
 	    return ERROR;
 	  token = get_next_token ();
-	  geometry->width = token_int;
+	  info->width = token_int;
 
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_NUMBER))
 	    return ERROR;
 	  token = get_next_token ();
-	  geometry->height = token_int;
+	  info->height = token_int;
 	}
+      else if (!strcmp ("open-on-exit", token_sym))
+	  info->open = TRUE;
       else
 	return ERROR;
       
@@ -1831,7 +1833,7 @@ parse_session_geometry (gpointer val1p,
     return ERROR;
   token = get_next_token ();
 
-  session_geometry_updates = g_list_append (session_geometry_updates, geometry);
+  session_info_updates = g_list_append (session_info_updates, info);
 
   return OK;
 }
@@ -1924,7 +1926,7 @@ value_to_str (char *name)
 	case TT_XPLUGINDEF:
 	case TT_XMENUPATH:
 	case TT_XDEVICE:
-	case TT_XSESSIONGEOM:
+	case TT_XSESSIONINFO:
 	  return NULL;
 	}
   return NULL;

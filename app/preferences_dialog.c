@@ -66,7 +66,7 @@ static void file_prefs_toggle_callback (GtkWidget *, gpointer);
 static void file_prefs_spinbutton_callback (GtkWidget *, gpointer);
 static void file_prefs_preview_size_callback (GtkWidget *, gpointer);
 static void file_prefs_mem_size_unit_callback (GtkWidget *, gpointer);
-static void file_prefs_clear_window_positions_callback (GtkWidget *, gpointer);
+static void file_prefs_clear_session_info_callback (GtkWidget *, gpointer);
 
 /*  static variables  */
 static   int          last_type = RGB;
@@ -83,7 +83,8 @@ static   int          old_no_cursor_updating;
 static   int          old_show_tool_tips;
 static   int          old_cubic_interpolation;
 static   int          old_confirm_on_close;
-static   int          old_save_window_positions_on_exit;
+static   int          old_save_session_info;
+static   int          old_always_restore_session;
 static   int          old_default_width;
 static   int          old_default_height;
 static   int          old_default_type;
@@ -294,11 +295,13 @@ file_prefs_save_callback (GtkWidget *widget,
       update = g_list_append (update, "confirm-on-close");
       remove = g_list_append (remove, "dont-confirm-on-close");
     }
-  if (save_window_positions_on_exit != old_save_window_positions_on_exit)
+  if (save_session_info != old_save_session_info)
     {
-      update = g_list_append (update, "save-window-positions-on-exit");
-      remove = g_list_append (remove, "dont-save-window-positions-on-exit");
+      update = g_list_append (update, "save-session-info");
+      remove = g_list_append (remove, "dont-save-session-info");
     }
+  if (always_restore_session != old_always_restore_session)
+    update = g_list_append (update, "always-restore-session");
   if (default_width != old_default_width ||
       default_height != old_default_height)
     update = g_list_append (update, "default-image-size");
@@ -424,7 +427,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   show_tool_tips = old_show_tool_tips;
   cubic_interpolation = old_cubic_interpolation;
   confirm_on_close = old_confirm_on_close;
-  save_window_positions_on_exit = old_save_window_positions_on_exit;
+  save_session_info = old_save_session_info;
   default_width = old_default_width;
   default_height = old_default_height;
   default_type = old_default_type;
@@ -478,8 +481,10 @@ file_prefs_toggle_callback (GtkWidget *widget,
     cubic_interpolation = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &confirm_on_close)
     confirm_on_close = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &save_window_positions_on_exit)
-    save_window_positions_on_exit = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data == &save_session_info)
+    save_session_info = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data == &always_restore_session)
+    always_restore_session = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &edit_stingy_memory_use)
     edit_stingy_memory_use = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &edit_install_cmap)
@@ -560,11 +565,11 @@ file_prefs_string_callback (GtkWidget *widget,
 }
 
 static void
-file_prefs_clear_window_positions_callback (GtkWidget *widget,
-					    gpointer data)
+file_prefs_clear_session_info_callback (GtkWidget *widget,
+					gpointer data)
 {
-  g_list_free (session_geometry_updates);
-  session_geometry_updates = NULL;
+  g_list_free (session_info_updates);
+  session_info_updates = NULL;
 }
 
 void
@@ -686,7 +691,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       old_show_tool_tips = show_tool_tips;
       old_cubic_interpolation = cubic_interpolation;
       old_confirm_on_close = confirm_on_close;
-      old_save_window_positions_on_exit = save_window_positions_on_exit;
+      old_save_session_info = save_session_info;
+      old_always_restore_session = always_restore_session;
       old_default_width = default_width;
       old_default_height = default_height;
       old_default_type = default_type;
@@ -1131,11 +1137,11 @@ file_pref_cmd_callback (GtkWidget *widget,
 
       button = gtk_check_button_new_with_label ("Save window positions on exit");
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-                                   save_window_positions_on_exit);
+                                   save_session_info);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
-                          &save_window_positions_on_exit);
+                          &save_session_info);
       gtk_widget_show (button);
 
       hbox = gtk_hbox_new (FALSE, 2);
@@ -1146,10 +1152,19 @@ file_pref_cmd_callback (GtkWidget *widget,
       button = gtk_button_new_with_label ("Clear saved window positions");
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                          (GtkSignalFunc) file_prefs_clear_window_positions_callback,
+                          (GtkSignalFunc) file_prefs_clear_session_info_callback,
                           NULL);
       gtk_widget_show (button);
 
+      button = gtk_check_button_new_with_label ("Always try to restore session");
+      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
+                                   always_restore_session);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                          (GtkSignalFunc) file_prefs_toggle_callback,
+                          &always_restore_session);
+      gtk_widget_show (button);
+      
       label = gtk_label_new ("Session");
       gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
 

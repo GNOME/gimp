@@ -86,6 +86,7 @@ static void splash_logo_expose (GtkWidget *widget);
 
 
 static gint is_app_exit_finish_done = FALSE;
+int we_are_exiting = FALSE;
 
 static ProcArg quit_args[] =
 {
@@ -476,6 +477,8 @@ app_init (void)
 
   RESET_BAR();
   parse_gimprc ();         /*  parse the local GIMP configuration file  */
+  if (always_restore_session)
+    restore_session = TRUE;
 
   /* Now we are ready to draw the splash-screen-image to the start-up window */
   if (no_interface == FALSE)
@@ -534,6 +537,8 @@ app_init (void)
   get_active_pattern ();
   paint_funcs_setup ();
 
+  if (no_interface == FALSE)
+    session_restore();
 }
 
 int
@@ -550,6 +555,7 @@ app_exit_finish (void)
   is_app_exit_finish_done = TRUE;
 
   message_handler = CONSOLE;
+  we_are_exiting = TRUE;
 
   lc_dialog_free ();
   gdisplays_delete ();

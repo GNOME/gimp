@@ -702,7 +702,7 @@ tools_options_dialog_new ()
   gtk_window_set_wmclass (GTK_WINDOW (options_shell), "tool_options", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options_shell), "Tool Options");
   gtk_window_set_policy (GTK_WINDOW (options_shell), FALSE, TRUE, TRUE);
-  session_set_window_geometry (options_shell, &tool_options_geometry, FALSE );
+  session_set_window_geometry (options_shell, &tool_options_session_info, FALSE );
 
   options_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_border_width (GTK_CONTAINER (options_vbox), 2);
@@ -741,7 +741,7 @@ tools_options_dialog_show ()
 void
 tools_options_dialog_free ()
 {
-  session_get_window_geometry (options_shell, &tool_options_geometry);
+  session_get_window_info (options_shell, &tool_options_session_info);
   gtk_widget_destroy (options_shell);
 }
 

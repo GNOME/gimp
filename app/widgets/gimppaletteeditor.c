@@ -173,7 +173,7 @@ palette_create ()
       /*  The shell and main vbox  */
       palette->shell = gtk_dialog_new ();
       gtk_window_set_wmclass (GTK_WINDOW (palette->shell), "color_palette", "Gimp");
-      session_set_window_geometry (palette->shell, &palette_geometry, FALSE);
+      session_set_window_geometry (palette->shell, &palette_session_info, FALSE);
       gtk_window_set_policy (GTK_WINDOW (palette->shell), FALSE, FALSE, FALSE);
       gtk_window_set_title (GTK_WINDOW (palette->shell), "Color Palette");
       vbox = gtk_vbox_new (FALSE, 1);
@@ -298,7 +298,7 @@ palette_free ()
       if (palette->color_select)
 	color_select_free (palette->color_select);
 
-      session_get_window_geometry (palette->shell, &palette_geometry);
+      session_get_window_info (palette->shell, &palette_session_info);
 
       g_free (palette);
 

@@ -1,3 +1,28 @@
+Sun Jul 12 00:13:02 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* gimprc.in
+	* app/app_procs.c
+	* app/appenv.h
+	* app/brush_select.c
+	* app/gimprc.c
+	* app/gimprc.h
+	* app/gradient.c
+	* app/info_dialog.c
+	* app/interface.c
+	* app/layers_dialog.c
+	* app/main.c
+	* app/palette.c
+	* app/pattern_select.c
+	* app/preferences_dialog.c
+	* app/session.c
+	* app/session.h
+	* app/tools.c: More session-managment functionality. Opened dialogs
+	are saved and eventually reopened. Try to use the --restore-session
+	command-line option. The format of gimprc and sessionrc have
+        slightly changed. You should remove your sessionrc and delete the
+	line (save-window-positions-on-exit) from your gimprc to avoid
+	warnings.
+
 Sat Jul 11 12:20:50 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/paint_funcs.c (copy_region): Added missing tile_release
